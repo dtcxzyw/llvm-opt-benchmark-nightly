@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph257, %._crit_
 
 .lr.ph.us.us.preheader:                           ; preds = %.lr.ph243.us
   %i.cs = shl i32 %i.cg, 6
-  %1 = sext i32 %i.cs to i64
+  %1 = zext i32 %i.cs to i64
   br label %.lr.ph.us.us
 
 ..loopexit230_crit_edge.us:                       ; preds = %._crit_edge.us.us, %.lr.ph243.us, %.lr.ph.split.us
@@ -232,7 +232,7 @@ bb.e:                                             ; preds = %bb.d
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 24
   %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !65 ; 2 uses
   %i.cw = getelementptr inbounds nuw [24 x i8], ptr %i.cv, i64 %indvars.iv309 ; 2 uses
-  %i.cx = getelementptr inbounds [24 x i8], ptr %i.cv, i64 %indvars.iv ; 2 uses
+  %i.cx = getelementptr inbounds nuw [24 x i8], ptr %i.cv, i64 %indvars.iv ; 2 uses
   %i.cy = load <2 x double>, ptr %i.cw, align 8, !tbaa !18
   %i.cz = load <2 x double>, ptr %i.cx, align 8, !tbaa !18
   %i.da = fsub <2 x double> %i.cy, %i.cz          ; 3 uses
@@ -265,7 +265,7 @@ bb.f:                                             ; preds = %bb.e
   %i.dy = getelementptr inbounds nuw i8, ptr %i.ct, i64 40
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !60 ; 2 uses
   %i.ea = getelementptr inbounds nuw [24 x i8], ptr %i.dz, i64 %indvars.iv309 ; 3 uses
-  %i.eb = getelementptr inbounds [24 x i8], ptr %i.dz, i64 %indvars.iv ; 3 uses
+  %i.eb = getelementptr inbounds nuw [24 x i8], ptr %i.dz, i64 %indvars.iv ; 3 uses
   %i.ec = insertelement <2 x double> poison, double %i.dm, i64 0
   %i.ed = shufflevector <2 x double> %i.ec, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ee = load <2 x double>, ptr %i.ea, align 8, !tbaa !18
@@ -378,7 +378,7 @@ bb.f:                                             ; preds = %bb.e
   %i.hx = load double, ptr %i.hw, align 8, !tbaa !18
   %i.hy = call double @llvm.fmuladd.f64(double %i.hn, double 5.000000e-01, double %i.hx)
   store double %i.hy, ptr %i.hw, align 8, !tbaa !18
-  %i.hz = getelementptr inbounds [8 x i8], ptr %i.hv, i64 %indvars.iv ; 2 uses
+  %i.hz = getelementptr inbounds nuw [8 x i8], ptr %i.hv, i64 %indvars.iv ; 2 uses
   %i.ia = load double, ptr %i.hz, align 8, !tbaa !18
   %i.ib = call double @llvm.fmuladd.f64(double %i.hn, double 5.000000e-01, double %i.ia)
   store double %i.ib, ptr %i.hz, align 8, !tbaa !18
@@ -388,7 +388,7 @@ bb.f:                                             ; preds = %bb.e
   %i.if = extractelement <2 x double> %i.hr, i64 0 ; 2 uses
   %i.ig = fadd double %i.if, %i.ie
   store double %i.ig, ptr %i.id, align 8, !tbaa !18
-  %i.ih = getelementptr inbounds [8 x i8], ptr %i.ic, i64 %indvars.iv ; 2 uses
+  %i.ih = getelementptr inbounds nuw [8 x i8], ptr %i.ic, i64 %indvars.iv ; 2 uses
   %i.ii = load double, ptr %i.ih, align 8, !tbaa !18
   %i.ij = fadd double %i.if, %i.ii
   store double %i.ij, ptr %i.ih, align 8, !tbaa !18
@@ -397,7 +397,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e, %bb.f, %bb.d
   %.6.us.us = phi double [ %.3235.us.us, %bb.d ], [ %.4.us.us, %bb.f ], [ %.3235.us.us, %bb.e ] ; 3 uses
   %i.ik = add nuw nsw i32 %.0198238.us.us, 1      ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %exitcond.not = icmp eq i32 %i.ik, %i.cn
   br i1 %exitcond.not, label %._crit_edge.us.us, label %bb.d
 
@@ -569,7 +569,7 @@ bb.j:                                             ; preds = %.lr.ph293, %._crit_
 
 .lr.ph279.us.preheader:                           ; preds = %.lr.ph284.us
   %i.lx = shl i32 %i.lm, 6
-  %2 = sext i32 %i.lx to i64
+  %2 = zext i32 %i.lx to i64
   br label %.lr.ph279.us
 
 .lr.ph279.us:                                     ; preds = %.lr.ph279.us.preheader, %._crit_edge280.us
@@ -589,7 +589,7 @@ bb.l:                                             ; preds = %bb.k
   %i.lz = getelementptr inbounds nuw i8, ptr %i.ly, i64 24
   %i.ma = load ptr, ptr %i.lz, align 8, !tbaa !65 ; 2 uses
   %i.mb = getelementptr inbounds nuw [24 x i8], ptr %i.ma, i64 %indvars.iv345 ; 3 uses
-  %i.mc = getelementptr inbounds [24 x i8], ptr %i.ma, i64 %indvars.iv339 ; 3 uses
+  %i.mc = getelementptr inbounds nuw [24 x i8], ptr %i.ma, i64 %indvars.iv339 ; 3 uses
   %i.md = load double, ptr %i.mb, align 8, !tbaa !18
   %i.me = load double, ptr %i.mc, align 8, !tbaa !18
   %i.mf = fsub double %i.md, %i.me                ; 4 uses
@@ -649,11 +649,11 @@ bb.l:                                             ; preds = %bb.k
   %i.ob = fmul double %i.nd, %i.oa                ; 6 uses
   %i.oc = load ptr, ptr %i.av, align 8, !tbaa !52 ; 2 uses
   %i.od = getelementptr inbounds nuw [8 x i8], ptr %i.oc, i64 %indvars.iv345 ; 6 uses
-  %i.oe = getelementptr inbounds [8 x i8], ptr %i.oc, i64 %indvars.iv339 ; 6 uses
+  %i.oe = getelementptr inbounds nuw [8 x i8], ptr %i.oc, i64 %indvars.iv339 ; 6 uses
   %i.of = getelementptr inbounds nuw i8, ptr %i.ly, i64 40
   %i.og = load ptr, ptr %i.of, align 8, !tbaa !60 ; 2 uses
   %i.oh = getelementptr inbounds nuw [24 x i8], ptr %i.og, i64 %indvars.iv345 ; 4 uses
-  %i.oi = getelementptr inbounds [24 x i8], ptr %i.og, i64 %indvars.iv339 ; 4 uses
+  %i.oi = getelementptr inbounds nuw [24 x i8], ptr %i.og, i64 %indvars.iv339 ; 4 uses
   %i.oj = load double, ptr %i.od, align 8, !tbaa !18
   %i.ok = load double, ptr %i.oe, align 8, !tbaa !18
   %i.ol = fadd double %i.oj, %i.ok
@@ -716,7 +716,7 @@ bb.l:                                             ; preds = %bb.k
 
 .loopexit.us:                                     ; preds = %bb.l, %.loopexit.us.loopexit, %bb.k
   %i.qj = add nuw nsw i32 %.0186277.us, 1         ; 2 uses
-  %indvars.iv.next340 = add nsw i64 %indvars.iv339, 1
+  %indvars.iv.next340 = add nuw nsw i64 %indvars.iv339, 1
   %exitcond342.not = icmp eq i32 %i.qj, %i.lt
   br i1 %exitcond342.not, label %._crit_edge280.us, label %bb.k
 

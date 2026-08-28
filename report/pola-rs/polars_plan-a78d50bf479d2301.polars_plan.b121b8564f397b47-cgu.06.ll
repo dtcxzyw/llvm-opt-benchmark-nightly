@@ -204,7 +204,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecINtCse4dvU5uQ85g_8indexmap6BucketNtNt
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 80, !dbg !69401
   %i.h = xor i64 %2, -1, !dbg !69403
   %i.i = add nsw i64 %i.b, %i.h, !dbg !69403
-  %i.j = mul nsw i64 %i.i, 80, !dbg !69404
+  %i.j = mul nuw nsw i64 %i.i, 80, !dbg !69404
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 16 %i.f, ptr nonnull align 16 %i.g, i64 %i.j, i1 false), !dbg !69404, !noalias !69407
   %i.k = add nsw i64 %i.b, -1, !dbg !69408        ; 2 uses
   store i64 %i.k, ptr %i.a, align 8, !dbg !69409, !alias.scope !69368, !noalias !69377
@@ -249,7 +249,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecINtCse4dvU5uQ85g_8indexmap6BucketNtNt
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 32, !dbg !69458
   %i.h = xor i64 %2, -1, !dbg !69460
   %i.i = add nsw i64 %i.b, %i.h, !dbg !69460
-  %i.j = shl nsw i64 %i.i, 5, !dbg !69461
+  %i.j = shl nuw nsw i64 %i.i, 5, !dbg !69461
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %i.g, i64 %i.j, i1 false), !dbg !69461, !noalias !69464
   %i.k = add nsw i64 %i.b, -1, !dbg !69465        ; 2 uses
   store i64 %i.k, ptr %i.a, align 8, !dbg !69466, !alias.scope !69425, !noalias !69434
@@ -652,7 +652,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecNtNtCslovz2ii29zg_17crossbeam_channel
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 24, !dbg !70288
   %i.h = xor i64 %2, -1, !dbg !70290
   %i.i = add nsw i64 %i.b, %i.h, !dbg !70290
-  %i.j = mul nsw i64 %i.i, 24, !dbg !70291
+  %i.j = mul nuw nsw i64 %i.i, 24, !dbg !70291
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %i.g, i64 %i.j, i1 false), !dbg !70291, !noalias !70294
   %i.k = add nsw i64 %i.b, -1, !dbg !70295        ; 2 uses
   store i64 %i.k, ptr %i.a, align 8, !dbg !70296, !alias.scope !70255, !noalias !70264
@@ -977,7 +977,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecNtNtNtCsfcROwRM8ZtH_11polars_plan5pla
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 112, !dbg !70519
   %i.h = xor i64 %2, -1, !dbg !70521
   %i.i = add nsw i64 %i.b, %i.h, !dbg !70521
-  %i.j = mul nsw i64 %i.i, 112, !dbg !70522
+  %i.j = mul nuw nsw i64 %i.i, 112, !dbg !70522
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 16 %i.f, ptr nonnull align 16 %i.g, i64 %i.j, i1 false), !dbg !70522, !noalias !70525
   %i.k = add nsw i64 %i.b, -1, !dbg !70526        ; 2 uses
   store i64 %i.k, ptr %i.a, align 8, !dbg !70527, !alias.scope !70486, !noalias !70495

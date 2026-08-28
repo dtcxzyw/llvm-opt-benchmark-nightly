@@ -205,9 +205,8 @@ bb.a:
   br i1 %i.m, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph
+  %i.n = shl nuw nsw i64 %indvars.iv, 2           ; 3 uses
   %17 = getelementptr inbounds nuw i8, ptr %i.k, i64 16
-  %i.n = shl i64 %indvars.iv, 2
-  %18 = and i64 %i.n, 4294967292                  ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 4
   %i.p = load i32, ptr %i.o, align 4, !tbaa !12   ; 4 uses
   %i.q = add i32 %i.p, 1
@@ -535,7 +534,7 @@ bb.ag:                                            ; preds = %bb.ab
   %i.ee = and i32 %i.ed, 3
   %i.ef = or disjoint i32 %i.ee, %i.ec
   %i.eg = zext i32 %i.ef to i64
-  %i.eh = icmp eq i64 %18, %i.eg
+  %i.eh = icmp eq i64 %i.n, %i.eg
   br i1 %i.eh, label %bb.al, label %split91
 
 split91:                                          ; preds = %bb.ax, %bb.ag
@@ -593,7 +592,7 @@ bb.al:                                            ; preds = %bb.ag
   %i.fc = and i32 %i.fb, 3
   %i.fd = or disjoint i32 %i.fc, %i.fa
   %i.fe = zext i32 %i.fd to i64
-  %i.ff = icmp eq i64 %18, %i.fe
+  %i.ff = icmp eq i64 %i.n, %i.fe
   br i1 %i.ff, label %._crit_edge86, label %split94
 
 split94:                                          ; preds = %bb.ay, %bb.al
@@ -671,7 +670,7 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %i.gk, label %bb.at, label %bb.r
 
 bb.at:                                            ; preds = %bb.as
-  %i.gl = or disjoint i64 %18, 2                  ; 2 uses
+  %i.gl = or disjoint i64 %i.n, 2                 ; 2 uses
   %i.gm = add i32 %i.t, 1
   %i.gn = and i32 %i.gm, 3                        ; 2 uses
   %i.go = add i32 %i.p, 3

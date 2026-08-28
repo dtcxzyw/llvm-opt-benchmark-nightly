@@ -206,7 +206,7 @@ bb.bc:                                            ; preds = %bb.ba
   %i.hb = getelementptr inbounds nuw i8, ptr %i.ha, i64 24
   %i.hc = xor i64 %.sroa.02.012.i.i.i, -1
   %i.hd = add nsw i64 %i.fo, %i.hc
-  %i.he = mul nsw i64 %i.hd, 24
+  %i.he = mul nuw nsw i64 %i.hd, 24
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ha, ptr nonnull align 8 %i.hb, i64 %i.he, i1 false), !noalias !31290
   %i.hf = add nsw i64 %i.fo, -1
   store i64 %i.hf, ptr %i.de, align 8, !alias.scope !31292, !noalias !31293
@@ -609,7 +609,7 @@ bb.bv:                                            ; preds = %"_ZN8indexmap5inner
   %i.kl = getelementptr inbounds nuw i8, ptr %i.kk, i64 64
   %i.km = xor i64 %.sroa.6145.0.copyload, -1
   %i.kn = add nsw i64 %i.ib, %i.km
-  %i.ko = shl nsw i64 %i.kn, 6
+  %i.ko = shl nuw nsw i64 %i.kn, 6
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.kk, ptr nonnull align 8 %i.kl, i64 %i.ko, i1 false), !noalias !63083
   %i.kp = add nsw i64 %i.ib, -1
   store i64 %i.kp, ptr %i.eq, align 8, !alias.scope !63085, !noalias !63086
@@ -1012,7 +1012,7 @@ bb.l:                                             ; preds = %bb.h, %_ZN4core5all
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   %i.al = xor i64 %i.k, -1                        ; 2 uses
   %i.am = add nsw i64 %i.h, %i.al
-  %i.an = shl nsw i64 %i.am, 3
+  %i.an = shl nuw nsw i64 %i.am, 3
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aj, ptr nonnull align 8 %i.ak, i64 %i.an, i1 false), !noalias !66898
   %i.ao = add nsw i64 %i.h, -1
   %i.ap = icmp samesign ult i64 %i.x, 1152921504606846976
@@ -1031,7 +1031,7 @@ bb.n:                                             ; preds = %bb.l
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.10.0.i.i35, i64 %i.k ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
   %i.as = add nsw i64 %i.x, %i.al
-  %i.at = shl nsw i64 %i.as, 3
+  %i.at = shl nuw nsw i64 %i.as, 3
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aq, ptr nonnull align 8 %i.ar, i64 %i.at, i1 false), !noalias !66902
   %i.au = atomicrmw add ptr @_ZN11candle_core6tensor8TensorId3new7COUNTER17h55aeb3824ed1ed25E, i64 1 monotonic, align 8
   %i.av = getelementptr inbounds nuw i8, ptr %.0.val, i64 128 ; 2 uses
@@ -1434,7 +1434,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
   %i.af = xor i64 %i.z, -1
   %i.ag = add nsw i64 %i.s, %i.af
-  %i.ah = mul nsw i64 %i.ag, 24
+  %i.ah = mul nuw nsw i64 %i.ag, 24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ad, ptr nonnull align 8 %i.ae, i64 %i.ah, i1 false), !noalias !80796
   %i.ai = add nsw i64 %i.s, -1                    ; 2 uses
   store i64 %i.ai, ptr %i.r, align 8, !alias.scope !80799, !noalias !80800
@@ -1669,7 +1669,7 @@ _ZN17crossbeam_channel5waker5Waker10try_select17hae7af18c8499d04dE.exit: ; preds
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 24
   %i.bg = xor i64 %.sroa.02.015.i.i, -1
   %i.bh = add nsw i64 %i.y, %i.bg
-  %i.bi = mul nsw i64 %i.bh, 24
+  %i.bi = mul nuw nsw i64 %i.bh, 24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.be, ptr nonnull align 8 %i.bf, i64 %i.bi, i1 false), !noalias !80833
   %i.bj = add nsw i64 %i.y, -1
   store i64 %i.bj, ptr %i.x, align 8, !alias.scope !80836, !noalias !80837
@@ -2072,7 +2072,7 @@ _ZN17crossbeam_channel5waker5Waker10try_select17hae7af18c8499d04dE.exit.i: ; pre
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ii, i64 24
   %i.ik = xor i64 %.sroa.02.015.i.i.i, -1
   %i.il = add nsw i64 %i.hc, %i.ik
-  %i.im = mul nsw i64 %i.il, 24
+  %i.im = mul nuw nsw i64 %i.il, 24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ii, ptr nonnull align 8 %i.ij, i64 %i.im, i1 false), !noalias !80998
   %i.in = add nsw i64 %i.hc, -1
   store i64 %i.in, ptr %i.hb, align 8, !alias.scope !81001, !noalias !81002
@@ -2475,7 +2475,7 @@ _ZN17crossbeam_channel5waker5Waker10try_select17hae7af18c8499d04dE.exit.i: ; pre
   %i.fl = getelementptr inbounds nuw i8, ptr %i.fk, i64 24
   %i.fm = xor i64 %.sroa.02.015.i.i.i, -1
   %i.fn = add nsw i64 %i.ed, %i.fm
-  %i.fo = mul nsw i64 %i.fn, 24
+  %i.fo = mul nuw nsw i64 %i.fn, 24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fk, ptr nonnull align 8 %i.fl, i64 %i.fo, i1 false), !noalias !81179
   %i.fp = add nsw i64 %i.ed, -1
   store i64 %i.fp, ptr %i.ec, align 8, !alias.scope !81182, !noalias !81183
@@ -2878,7 +2878,7 @@ _ZN17crossbeam_channel5waker5Waker10try_select17hae7af18c8499d04dE.exit.i: ; pre
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hg, i64 24
   %i.hi = xor i64 %.sroa.02.015.i.i.i, -1
   %i.hj = add nsw i64 %i.fz, %i.hi
-  %i.hk = mul nsw i64 %i.hj, 24
+  %i.hk = mul nuw nsw i64 %i.hj, 24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.hg, ptr nonnull align 8 %i.hh, i64 %i.hk, i1 false), !noalias !81270
   %i.hl = add nsw i64 %i.fz, -1
   store i64 %i.hl, ptr %i.fy, align 8, !alias.scope !81273, !noalias !81274
@@ -3281,7 +3281,7 @@ _ZN17crossbeam_channel5waker5Waker10try_select17hae7af18c8499d04dE.exit: ; preds
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 24
   %i.bn = xor i64 %.sroa.02.015.i.i, -1
   %i.bo = add nsw i64 %i.af, %i.bn
-  %i.bp = mul nsw i64 %i.bo, 24
+  %i.bp = mul nuw nsw i64 %i.bo, 24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bl, ptr nonnull align 8 %i.bm, i64 %i.bp, i1 false), !noalias !81588
   %i.bq = add nsw i64 %i.af, -1
   store i64 %i.bq, ptr %i.ae, align 8, !alias.scope !81591, !noalias !81592
@@ -3684,7 +3684,7 @@ _ZN17crossbeam_channel5waker5Waker10unregister17h663566122414acc6E.exit: ; preds
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 24
   %i.di = xor i64 %i.db, -1
   %i.dj = add nsw i64 %i.cu, %i.di
-  %i.dk = mul nsw i64 %i.dj, 24
+  %i.dk = mul nuw nsw i64 %i.dj, 24
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.dg, ptr nonnull align 8 %i.dh, i64 %i.dk, i1 false), !noalias !81715
   %i.dl = add nsw i64 %i.cu, -1
   store i64 %i.dl, ptr %i.ct, align 8, !alias.scope !81718, !noalias !81719
@@ -3871,7 +3871,7 @@ _ZN17crossbeam_channel5waker5Waker10unregister17h663566122414acc6E.exit64: ; pre
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 24
   %i.fa = xor i64 %i.et, -1
   %i.fb = add nsw i64 %i.em, %i.fa
-  %i.fc = mul nsw i64 %i.fb, 24
+  %i.fc = mul nuw nsw i64 %i.fb, 24
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ey, ptr nonnull align 8 %i.ez, i64 %i.fc, i1 false), !noalias !81764
   %i.fd = add nsw i64 %i.em, -1
   store i64 %i.fd, ptr %i.el, align 8, !alias.scope !81767, !noalias !81768
@@ -4274,7 +4274,7 @@ _ZN17crossbeam_channel5waker5Waker10unregister17h663566122414acc6E.exit: ; preds
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 24
   %i.dj = xor i64 %i.dc, -1
   %i.dk = add nsw i64 %i.cv, %i.dj
-  %i.dl = mul nsw i64 %i.dk, 24
+  %i.dl = mul nuw nsw i64 %i.dk, 24
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.dh, ptr nonnull align 8 %i.di, i64 %i.dl, i1 false), !noalias !81821
   %i.dm = add nsw i64 %i.cv, -1
   store i64 %i.dm, ptr %i.cu, align 8, !alias.scope !81824, !noalias !81825
@@ -4479,7 +4479,7 @@ _ZN17crossbeam_channel5waker5Waker10unregister17h663566122414acc6E.exit76: ; pre
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 24
   %i.fb = xor i64 %i.eu, -1
   %i.fc = add nsw i64 %i.en, %i.fb
-  %i.fd = mul nsw i64 %i.fc, 24
+  %i.fd = mul nuw nsw i64 %i.fc, 24
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ez, ptr nonnull align 8 %i.fa, i64 %i.fd, i1 false), !noalias !81870
   %i.fe = add nsw i64 %i.en, -1
   store i64 %i.fe, ptr %i.em, align 8, !alias.scope !81873, !noalias !81874
@@ -4882,7 +4882,7 @@ bb.pd:                                            ; preds = %bb.pc, %bb.pb
   %i.aqt = getelementptr inbounds nuw i8, ptr %i.apw, i64 32
   %i.aqu = xor i64 %.sroa.05.0.lcssa.i.i.i.i.i.i, -1
   %i.aqv = add nsw i64 %i.apu, %i.aqu
-  %i.aqw = shl nsw i64 %i.aqv, 5
+  %i.aqw = shl nuw nsw i64 %i.aqv, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.apw, ptr nonnull align 8 %i.aqt, i64 %i.aqw, i1 false), !noalias !145778
   %i.aqx = add nsw i64 %i.apu, -1
   store i64 %i.aqx, ptr %i.apt, align 8, !alias.scope !145780, !noalias !145781
@@ -5285,7 +5285,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   %i.mt = getelementptr inbounds nuw i8, ptr %i.lx, i64 32
   %i.mu = xor i64 %.sroa.05.0.lcssa.i.i.i, -1
   %i.mv = add nsw i64 %i.gd, %i.mu
-  %i.mw = shl nsw i64 %i.mv, 5
+  %i.mw = shl nuw nsw i64 %i.mv, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.lx, ptr nonnull align 8 %i.mt, i64 %i.mw, i1 false), !noalias !195720
   %i.mx = add nsw i64 %i.gd, -1                   ; 3 uses
   switch i64 %i.mo, label %bb.au [
@@ -5688,7 +5688,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   %i.mt = getelementptr inbounds nuw i8, ptr %i.lx, i64 32
   %i.mu = xor i64 %.sroa.05.0.lcssa.i.i.i, -1
   %i.mv = add nsw i64 %i.gd, %i.mu
-  %i.mw = shl nsw i64 %i.mv, 5
+  %i.mw = shl nuw nsw i64 %i.mv, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.lx, ptr nonnull align 8 %i.mt, i64 %i.mw, i1 false), !noalias !196164
   %i.mx = add nsw i64 %i.gd, -1                   ; 3 uses
   switch i64 %i.mo, label %bb.au [
@@ -6091,7 +6091,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.bi = getelementptr inbounds nuw i8, ptr %i.al, i64 32
   %i.bj = xor i64 %.sroa.05.0.lcssa.i.i.i, -1
   %i.bk = add nsw i64 %i.aj, %i.bj
-  %i.bl = shl nsw i64 %i.bk, 5
+  %i.bl = shl nuw nsw i64 %i.bk, 5
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.al, ptr nonnull align 8 %i.bi, i64 %i.bl, i1 false), !noalias !238236
   %i.bm = add nsw i64 %i.aj, -1
   store i64 %i.bm, ptr %i.ai, align 8, !alias.scope !238235, !noalias !238238
@@ -6494,7 +6494,7 @@ bb.g:                                             ; preds = %bb.e
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 24
   %i.ar = xor i64 %.sroa.02.012.i, -1
   %i.as = add nsw i64 %i.d, %i.ar
-  %i.at = mul nsw i64 %i.as, 24
+  %i.at = mul nuw nsw i64 %i.as, 24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ap, ptr nonnull align 8 %i.aq, i64 %i.at, i1 false), !noalias !238565
   %i.au = add nsw i64 %i.d, -1
   store i64 %i.au, ptr %i.c, align 8, !alias.scope !238562, !noalias !238567
@@ -6897,7 +6897,7 @@ bb.ave:                                           ; preds = %bb.avd, %bb.avc
   %i.dcp = getelementptr inbounds nuw i8, ptr %i.dbs, i64 32
   %i.dcq = xor i64 %.sroa.05.0.lcssa.i.i.i, -1
   %i.dcr = add nsw i64 %i.dbq, %i.dcq
-  %i.dcs = shl nsw i64 %i.dcr, 5
+  %i.dcs = shl nuw nsw i64 %i.dcr, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.dbs, ptr nonnull align 8 %i.dcp, i64 %i.dcs, i1 false), !noalias !240015
   %i.dct = add nsw i64 %i.dbq, -1
   store i64 %i.dct, ptr %.sroa.55007.0..sroa_idx, align 8, !alias.scope !240014, !noalias !240017
@@ -7300,7 +7300,7 @@ bb.dv:                                            ; preds = %bb.du, %bb.dt
   %i.jt = getelementptr inbounds nuw i8, ptr %i.iw, i64 32
   %i.ju = xor i64 %.sroa.05.0.lcssa.i.i.i, -1
   %i.jv = add nsw i64 %i.iu, %i.ju
-  %i.jw = shl nsw i64 %i.jv, 5
+  %i.jw = shl nuw nsw i64 %i.jv, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.iw, ptr nonnull align 8 %i.jt, i64 %i.jw, i1 false), !noalias !259133
   %i.jx = add nsw i64 %i.iu, -1
   store i64 %i.jx, ptr %.sroa.5420.0..sroa_idx, align 8, !alias.scope !259132, !noalias !259135
@@ -7703,7 +7703,7 @@ bb.gc:                                            ; preds = %bb.gb, %bb.ga
   %i.wy = getelementptr inbounds nuw i8, ptr %i.wb, i64 32
   %i.wz = xor i64 %.sroa.05.0.lcssa.i.i.i.i.i.i, -1
   %i.xa = add nsw i64 %i.vz, %i.wz
-  %i.xb = shl nsw i64 %i.xa, 5
+  %i.xb = shl nuw nsw i64 %i.xa, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.wb, ptr nonnull align 8 %i.wy, i64 %i.xb, i1 false), !noalias !302734
   %i.xc = add nsw i64 %i.vz, -1
   store i64 %i.xc, ptr %i.me, align 8, !alias.scope !302736, !noalias !302737
@@ -8106,7 +8106,7 @@ bb.nf:                                            ; preds = %bb.ne, %bb.nd
   %i.arx = getelementptr inbounds nuw i8, ptr %i.ara, i64 32
   %i.ary = xor i64 %.sroa.05.0.lcssa.i.i.i.i.i.i329, -1
   %i.arz = add nsw i64 %i.aqy, %i.ary
-  %i.asa = shl nsw i64 %i.arz, 5
+  %i.asa = shl nuw nsw i64 %i.arz, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ara, ptr nonnull align 8 %i.arx, i64 %i.asa, i1 false), !noalias !303267
   %i.asb = add nsw i64 %i.aqy, -1
   store i64 %i.asb, ptr %i.ahl, align 8, !alias.scope !303269, !noalias !303270
@@ -8509,7 +8509,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   %i.da = getelementptr inbounds nuw i8, ptr %i.ce, i64 32
   %i.db = xor i64 %.sroa.05.0.lcssa.i.i.i81, -1
   %i.dc = add nsw i64 %.ph386, %i.db
-  %i.dd = shl nsw i64 %i.dc, 5
+  %i.dd = shl nuw nsw i64 %i.dc, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ce, ptr nonnull align 8 %i.da, i64 %i.dd, i1 false), !noalias !323342
   %i.de = add nsw i64 %.ph386, -1                 ; 7 uses
   store i64 %i.de, ptr %i.h, align 8, !alias.scope !323341, !noalias !323344
@@ -8696,7 +8696,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   %i.fp = getelementptr inbounds nuw i8, ptr %i.et, i64 32
   %i.fq = xor i64 %.sroa.05.0.lcssa.i.i.i90, -1
   %i.fr = add nsw i64 %.ph386, %i.fq
-  %i.fs = shl nsw i64 %i.fr, 5
+  %i.fs = shl nuw nsw i64 %i.fr, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.et, ptr nonnull align 8 %i.fp, i64 %i.fs, i1 false), !noalias !323361
   %i.ft = add nsw i64 %.ph386, -1                 ; 7 uses
   store i64 %i.ft, ptr %i.h, align 8, !alias.scope !323360, !noalias !323363
@@ -9099,7 +9099,7 @@ bb.x:                                             ; preds = %bb.s
   %i.dm = getelementptr inbounds nuw i8, ptr %i.cj, i64 4
   %i.dn = xor i64 %i.ch, -1
   %i.do = add nsw i64 %i.bt, %i.dn
-  %i.dp = shl nsw i64 %i.do, 2
+  %i.dp = shl nuw nsw i64 %i.do, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 2 %i.cj, ptr nonnull align 2 %i.dm, i64 %i.dp, i1 false), !noalias !361986
   %i.dq = add nsw i64 %i.bt, -1
   store i64 %i.dq, ptr %i.bs, align 8, !alias.scope !361986
@@ -9423,7 +9423,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %i.af = getelementptr inbounds nuw i8, ptr %i.i, i64 32
   %i.ag = xor i64 %.sroa.05.0.lcssa.i.i, -1
   %i.ah = add nsw i64 %i.g, %i.ag
-  %i.ai = shl nsw i64 %i.ah, 5
+  %i.ai = shl nuw nsw i64 %i.ah, 5
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.i, ptr nonnull align 8 %i.af, i64 %i.ai, i1 false), !noalias !362036
   %i.aj = add nsw i64 %i.g, -1
   store i64 %i.aj, ptr %i.f, align 8, !alias.scope !362033, !noalias !362038

@@ -205,14 +205,14 @@ bb.ci:                                            ; preds = %bb.ch
   br i1 %or.cond.i537, label %_path_find_self_intersection.exit, label %bb.cj
 
 bb.cj:                                            ; preds = %bb.ci
-  %i.tu = mul nsw i32 %i.ai, 3                    ; 8 uses
+  %i.tu = mul nuw nsw i32 %i.ai, 3                ; 8 uses
   %i.tv = sub nsw i32 %i.ts, %i.tu                ; 9 uses
   %i.tw = icmp slt i32 %i.tu, %i.ts               ; 2 uses
   br i1 %i.tw, label %.lr.ph.i551, label %bb.ck
 
 .lr.ph.i551:                                      ; preds = %bb.cj
-  %17 = sext i32 %i.tu to i64
-  %wide.trip.count.i = sext i32 %i.ts to i64
+  %17 = zext nneg i32 %i.tu to i64
+  %wide.trip.count.i = zext nneg i32 %i.ts to i64
   br label %bb.cl
 
 ._crit_edge.i553:                                 ; preds = %bb.co
@@ -258,8 +258,8 @@ bb.cl:                                            ; preds = %bb.co, %.lr.ph.i551
   %.0232369370.i = phi i32 [ -1, %.lr.ph.i551 ], [ %spec.select418.i, %bb.co ]
   %i.us = phi <2 x i32> [ splat (i32 -2147483648), %.lr.ph.i551 ], [ %i.vr, %bb.co ] ; 2 uses
   %i.ut = phi <2 x i32> [ splat (i32 2147483647), %.lr.ph.i551 ], [ %i.vp, %bb.co ] ; 2 uses
-  %.idx.i = shl nsw i64 %indvars.iv.i, 3
-  %i.uu = getelementptr inbounds i8, ptr %i.tr, i64 %.idx.i ; 4 uses
+  %.idx.i = shl nuw nsw i64 %indvars.iv.i, 3
+  %i.uu = getelementptr inbounds nuw i8, ptr %i.tr, i64 %.idx.i ; 4 uses
   %i.uv = load float, ptr %i.uu, align 4, !tbaa !11 ; 2 uses
   %i.uw = fcmp reassoc nsz arcp contract afn oeq float %i.uv, f0xFF7FFFFF
   br i1 %i.uw, label %bb.cn, label %bb.cm
@@ -297,7 +297,7 @@ bb.co:                                            ; preds = %bb.cn, %bb.cm
   %i.vq = extractelement <2 x i1> %i.vm, i64 0
   %.0232375388.i = select i1 %i.vq, i32 %i.vi, i32 %.0232375387.i ; 2 uses
   %i.vr = select <2 x i1> %i.vm, <2 x i32> %i.vh, <2 x i32> %i.us ; 2 uses
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i552 = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i552, label %._crit_edge.i553, label %bb.cl
 
@@ -330,7 +330,7 @@ bb.cr:                                            ; preds = %bb.cq
   %i.wf = getelementptr inbounds [4 x i8], ptr %i.tr, i64 %i.we
   %i.wg = load float, ptr %i.wf, align 4, !tbaa !11
   %i.wh = fptosi float %i.wg to i32
-  %i.wi = shl nsw i32 %i.ai, 2
+  %i.wi = shl nuw nsw i32 %i.ai, 2
   %i.wj = getelementptr inbounds nuw i8, ptr %i.vv, i64 136 ; 10 uses
   %i.wk = getelementptr inbounds nuw i8, ptr %i.vv, i64 144 ; 3 uses
   %i.wl = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
@@ -733,7 +733,7 @@ vector.body849:                                   ; preds = %vector.body849, %ve
 
 .lr.ph625:                                        ; preds = %.preheader
   %.val464 = load ptr, ptr %i.az, align 8, !tbaa !234
-  %i.amt = mul nsw i32 %i.ai, 3
+  %i.amt = mul nuw nsw i32 %i.ai, 3
   %i.amu = mul i32 %i.ai, 6                       ; 2 uses
   %i.amv = zext i32 %i.amu to i64
   %i.amw = or disjoint i32 %i.amu, 1
@@ -777,7 +777,7 @@ bb.ff:                                            ; preds = %bb.fe
   %i.ann = getelementptr inbounds nuw [4 x i8], ptr %.pre677, i64 %i.amx ; 3 uses
   %i.ano = load float, ptr %i.ann, align 4, !tbaa !11 ; 3 uses
   %i.anp = fcmp reassoc nsz arcp contract afn oeq float %i.ano, f0xFF7FFFFF
-  %18 = sitofp reassoc nsz arcp contract afn i32 %i.and to float ; 3 uses
+  %18 = uitofp nneg i32 %i.and to float           ; 3 uses
   br i1 %i.anp, label %bb.fg, label %bb.fh
 
 bb.fg:                                            ; preds = %bb.ff
@@ -791,7 +791,7 @@ bb.fh:                                            ; preds = %bb.ff
   br label %bb.fj
 
 bb.fi:                                            ; preds = %bb.fe
-  %19 = sitofp reassoc nsz arcp contract afn i32 %i.and to float
+  %19 = uitofp nneg i32 %i.and to float
   %i.anr = getelementptr inbounds nuw [4 x i8], ptr %.pre677, i64 %i.amx
   store float %19, ptr %i.anr, align 4, !tbaa !11
   br label %bb.fj

@@ -205,8 +205,7 @@ Ivy_NodeCompareSims.exit.split.us:                ; preds = %bb.b
   br i1 %i.ab, label %.loopexit.i, label %.preheader.i
 
 .preheader.i:                                     ; preds = %.lr.ph.i58
-  %i.ac = shl nuw nsw i64 %indvars.iv6.i, 5
-  %2 = and i64 %i.ac, 4294967264                  ; 2 uses
+  %i.ac = shl nuw nsw i64 %indvars.iv6.i, 7       ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.h, %.preheader.i
@@ -220,10 +219,10 @@ bb.d:                                             ; preds = %bb.h, %.preheader.i
 bb.e:                                             ; preds = %bb.d
   %i.ag = load ptr, ptr %i.c, align 8, !tbaa !111
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %indvars.iv.i59
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %2 ; 2 uses
-  %i.ai = load i32, ptr %3, align 4, !tbaa !39
+  %2 = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.ac ; 2 uses
+  %i.ai = load i32, ptr %2, align 4, !tbaa !39
   %i.aj = add nsw i32 %i.ai, 1
-  store i32 %i.aj, ptr %3, align 4, !tbaa !39
+  store i32 %i.aj, ptr %2, align 4, !tbaa !39
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -237,10 +236,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 bb.g:                                             ; preds = %bb.f
   %i.an = load ptr, ptr %i.c, align 8, !tbaa !111
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %indvars.iv.next.i61
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %2 ; 2 uses
-  %i.ap = load i32, ptr %4, align 4, !tbaa !39
+  %3 = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.ac ; 2 uses
+  %i.ap = load i32, ptr %3, align 4, !tbaa !39
   %i.aq = add nsw i32 %i.ap, 1
-  store i32 %i.aq, ptr %4, align 4, !tbaa !39
+  store i32 %i.aq, ptr %3, align 4, !tbaa !39
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f

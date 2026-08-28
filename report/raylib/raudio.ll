@@ -205,7 +205,7 @@ bb.ej:                                            ; preds = %bb.eh, %bb.ei
   %i.sg = tail call float @llvm.fmuladd.f32(float %i.sd, float %i.se, float %i.sf)
   %i.sh = fadd float %.19481364, %i.sg            ; 2 uses
   %i.si = load ptr, ptr %i.rd, align 8
-  %i.sj = mul nsw i32 %i.rw, %i.rq
+  %i.sj = mul nuw nsw i32 %i.rw, %i.rq
   %i.sk = add nsw i32 %i.sj, %.09761363
   %i.sl = sext i32 %i.sk to i64
   %i.sm = getelementptr inbounds [4 x i8], ptr %i.si, i64 %i.sl
@@ -608,7 +608,7 @@ codebook_decode_start.exit374.us.us.us:           ; preds = %bb.eu, %codebook_de
   br i1 %i.we, label %.lr.ph.i.i.us.us.us, label %.loopexit.i.us.us.us
 
 .lr.ph.i.i.us.us.us:                              ; preds = %codebook_decode_start.exit374.us.us.us
-  %i.wf = mul nsw i32 %i.wd, %.025.i364.us.us.us
+  %i.wf = mul nuw nsw i32 %i.wd, %.025.i364.us.us.us
   %i.wg = sext i32 %i.wf to i64
   %wide.trip.count.i.i.us.us.us = zext nneg i32 %spec.select.i.i.us.us.us to i64
   br label %bb.ev

@@ -205,9 +205,9 @@ bb.m:                                             ; preds = %bb.l
   br label %.preheader164
 
 .preheader166:                                    ; preds = %bb.s
-  %i.az = mul nsw i32 %i.ax, 5
+  %i.az = mul nuw nsw i32 %i.ax, 5
   %i.ba = sext i32 %i.ax to i64                   ; 5 uses
-  %12 = sext i32 %i.az to i64                     ; 5 uses
+  %12 = zext nneg i32 %i.az to i64                ; 5 uses
   %i.bb = load ptr, ptr %i.i, align 8, !tbaa !93
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ay, i64 %12
   %i.bd = load i8, ptr %i.bc, align 1, !tbaa !42
@@ -286,8 +286,8 @@ bb.t:                                             ; preds = %bb.r, %bb.q, %bb.p,
 
 bb.u:                                             ; preds = %.preheader166
   %i.co = load ptr, ptr %i.i, align 8, !tbaa !93
-  %i.cp = getelementptr i8, ptr %i.ay, i64 %12
-  %i.cq = getelementptr i8, ptr %i.cp, i64 1
+  %i.cp = getelementptr inbounds nuw i8, ptr %i.ay, i64 %12
+  %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 1
   %i.cr = load i8, ptr %i.cq, align 1, !tbaa !42
   %i.cs = add i8 %i.cr, 3
   %i.ct = and i8 %i.cs, 15
@@ -298,8 +298,8 @@ bb.u:                                             ; preds = %.preheader166
 
 bb.v:                                             ; preds = %bb.u
   %i.cw = load ptr, ptr %i.i, align 8, !tbaa !93
-  %i.cx = getelementptr i8, ptr %i.ay, i64 %12
-  %i.cy = getelementptr i8, ptr %i.cx, i64 2
+  %i.cx = getelementptr inbounds nuw i8, ptr %i.ay, i64 %12
+  %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 2
   %i.cz = load i8, ptr %i.cy, align 1, !tbaa !42
   %i.da = add i8 %i.cz, 3
   %i.db = and i8 %i.da, 15
@@ -310,8 +310,8 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v
   %i.de = load ptr, ptr %i.i, align 8, !tbaa !93
-  %i.df = getelementptr i8, ptr %i.ay, i64 %12
-  %i.dg = getelementptr i8, ptr %i.df, i64 3
+  %i.df = getelementptr inbounds nuw i8, ptr %i.ay, i64 %12
+  %i.dg = getelementptr inbounds nuw i8, ptr %i.df, i64 3
   %i.dh = load i8, ptr %i.dg, align 1, !tbaa !42
   %i.di = add i8 %i.dh, 3
   %i.dj = and i8 %i.di, 15
@@ -322,8 +322,8 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w
   %i.dm = load ptr, ptr %i.i, align 8, !tbaa !93
-  %i.dn = getelementptr i8, ptr %i.ay, i64 %12
-  %i.do = getelementptr i8, ptr %i.dn, i64 4
+  %i.dn = getelementptr inbounds nuw i8, ptr %i.ay, i64 %12
+  %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 4
   %i.dp = load i8, ptr %i.do, align 1, !tbaa !42
   %i.dq = add i8 %i.dp, 3
   %i.dr = and i8 %i.dq, 15

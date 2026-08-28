@@ -204,7 +204,7 @@ _ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i: ; preds = %_ZSt6fill_nIPxmxE
   br i1 %i.t, label %bb.c, label %bb.d, !prof !76
 
 bb.c:                                             ; preds = %_ZNSt12_Vector_baseIxSaIxEEC2EmRKS0_.exit.thread.i
-  %.idx = shl nsw i64 %2, 3
+  %.idx = shl nuw nsw i64 %2, 3
   %i.u = add nuw nsw i64 %.idx, 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.s, ptr noundef nonnull align 8 dereferenceable(1) %3, i64 %i.u, i1 false)
   br label %_ZSt4copyIPKxN9__gnu_cxx17__normal_iteratorIPxSt6vectorIxSaIxEEEEET0_T_SA_S9_.exit
@@ -226,7 +226,7 @@ _ZSt4copyIPKxN9__gnu_cxx17__normal_iteratorIPxSt6vectorIxSaIxEEEEET0_T_SA_S9_.ex
   br i1 %i.aa, label %bb.f, label %bb.g, !prof !76
 
 bb.f:                                             ; preds = %_ZSt4copyIPKxN9__gnu_cxx17__normal_iteratorIPxSt6vectorIxSaIxEEEEET0_T_SA_S9_.exit
-  %.idx28 = shl nsw i64 %i.x, 3
+  %.idx28 = shl nuw nsw i64 %i.x, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.z, ptr align 8 %4, i64 %.idx28, i1 false)
   br label %_ZSt4copyIPKxN9__gnu_cxx17__normal_iteratorIPxSt6vectorIxSaIxEEEEET0_T_SA_S9_.exit23
 
@@ -629,7 +629,7 @@ _ZNSt6vectorIxSaIxEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.f
 
 _ZSt6fill_nIPxmxET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc103
   %i.w = getelementptr i8, ptr %i.u, i64 8
-  %.idx.i.i.i.i.i.i.i = shl nsw i64 %i.q, 4
+  %.idx.i.i.i.i.i.i.i = shl nuw nsw i64 %i.q, 4
   call void @llvm.memset.p0.i64(ptr align 8 %i.w, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !8
   br label %_ZNSt6vectorIxSaIxEEC2EmRKS0_.exit
 
@@ -1032,12 +1032,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit171: ; preds = %_Z
 bb.be:                                            ; preds = %bb.ae
   %i.gh = getelementptr inbounds [8 x i8], ptr %i.s, i64 %i.o
   %i.gi = load i64, ptr %i.gh, align 8, !tbaa !8  ; 5 uses
-  %i.gj = mul nsw i64 %i.w, %i.o
+  %i.gj = mul nuw nsw i64 %i.w, %i.o
   %i.gk = icmp eq i64 %i.gi, %i.gj
   br i1 %i.gk, label %bb.bf, label %bb.bg
 
 bb.bf:                                            ; preds = %bb.be
-  %i.gl = mul nsw i64 %i.q, %i.w
+  %i.gl = mul nuw nsw i64 %i.q, %i.w
   %i.gm = add nuw nsw i64 %i.gl, %i.j
   br label %.loopexit
 
@@ -1440,7 +1440,7 @@ bb.bf:                                            ; preds = %_ZSt4copyIN9__gnu_c
   br i1 %i.jt, label %bb.bg, label %bb.bh, !prof !76
 
 bb.bg:                                            ; preds = %bb.bf
-  %.idx = shl nsw i64 %i.js, 3
+  %.idx = shl nuw nsw i64 %i.js, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.go, ptr align 8 %i.bw, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKxN9__gnu_cxx17__normal_iteratorIPxSt6vectorIxSaIxEEEEET0_T_SA_S9_.exit
 
@@ -1843,7 +1843,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.f, !prof !76
 
 bb.e:                                             ; preds = %bb.d
-  %.idx.neg = shl nsw i64 %2, 3
+  %.idx.neg = shl nuw nsw i64 %2, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr nonnull align 8 %i.o, i64 %.idx.neg, i1 false)
   %.pre97 = load ptr, ptr %i.c, align 8, !tbaa !66
   br label %_ZSt22__uninitialized_move_aIPxS0_SaIxEET0_T_S3_S2_RT1_.exit

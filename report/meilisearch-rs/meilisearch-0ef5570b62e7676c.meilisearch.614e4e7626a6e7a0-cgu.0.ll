@@ -205,7 +205,7 @@ bb.bc:                                            ; preds = %bb.bb
 bb.bd:                                            ; preds = %bb.bd, %bb.bc
   %.sroa.0101.1.i.i = phi i64 [ %spec.select.i168.i, %bb.bc ], [ %i.lo, %bb.bd ] ; 9 uses
   %i.ln = icmp ult i64 %.sroa.0101.1.i.i, %.sroa.0.0.i.i
-  %i.lo = shl nsw i64 %.sroa.0101.1.i.i, 1
+  %i.lo = shl nuw nsw i64 %.sroa.0101.1.i.i, 1
   br i1 %i.ln, label %bb.bd, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
@@ -251,7 +251,7 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %bb.bi, %bb.bh
   %.sroa.0104.1.i.i = phi i64 [ %spec.select247.i.i, %bb.bh ], [ %i.lx, %bb.bi ] ; 8 uses
   %i.lw = icmp ult i64 %.sroa.0104.1.i.i, %.sroa.0.0.i.i
-  %i.lx = shl nsw i64 %.sroa.0104.1.i.i, 1
+  %i.lx = shl nuw nsw i64 %.sroa.0104.1.i.i, 1
   br i1 %i.lw, label %bb.bi, label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
@@ -654,7 +654,7 @@ bb.is:                                            ; preds = %bb.ir
 bb.it:                                            ; preds = %bb.it, %bb.is
   %.sroa.0101.1.i.i368 = phi i64 [ %spec.select.i170.i, %bb.is ], [ %i.bdz, %bb.it ] ; 9 uses
   %i.bdy = icmp ult i64 %.sroa.0101.1.i.i368, %.sroa.0.0.i.i204
-  %i.bdz = shl nsw i64 %.sroa.0101.1.i.i368, 1
+  %i.bdz = shl nuw nsw i64 %.sroa.0101.1.i.i368, 1
   br i1 %i.bdy, label %bb.it, label %bb.iu
 
 bb.iu:                                            ; preds = %bb.it
@@ -700,7 +700,7 @@ bb.ix:                                            ; preds = %bb.iw
 bb.iy:                                            ; preds = %bb.iy, %bb.ix
   %.sroa.0104.1.i.i363 = phi i64 [ %spec.select247.i.i362, %bb.ix ], [ %i.bei, %bb.iy ] ; 8 uses
   %i.beh = icmp ult i64 %.sroa.0104.1.i.i363, %.sroa.0.0.i.i204
-  %i.bei = shl nsw i64 %.sroa.0104.1.i.i363, 1
+  %i.bei = shl nuw nsw i64 %.sroa.0104.1.i.i363, 1
   br i1 %i.beh, label %bb.iy, label %bb.iz
 
 bb.iz:                                            ; preds = %bb.iy
@@ -1103,7 +1103,7 @@ bb.qp:                                            ; preds = %bb.qo
 bb.qq:                                            ; preds = %bb.qq, %bb.qp
   %.sroa.0101.1.i.i909 = phi i64 [ %spec.select.i170.i908, %bb.qp ], [ %i.cuz, %bb.qq ] ; 9 uses
   %i.cuy = icmp ult i64 %.sroa.0101.1.i.i909, %.sroa.0.0.i.i634
-  %i.cuz = shl nsw i64 %.sroa.0101.1.i.i909, 1
+  %i.cuz = shl nuw nsw i64 %.sroa.0101.1.i.i909, 1
   br i1 %i.cuy, label %bb.qq, label %bb.qr
 
 bb.qr:                                            ; preds = %bb.qq
@@ -1149,7 +1149,7 @@ bb.qu:                                            ; preds = %bb.qt
 bb.qv:                                            ; preds = %bb.qv, %bb.qu
   %.sroa.0104.1.i.i901 = phi i64 [ %spec.select247.i.i900, %bb.qu ], [ %i.cvi, %bb.qv ] ; 8 uses
   %i.cvh = icmp ult i64 %.sroa.0104.1.i.i901, %.sroa.0.0.i.i634
-  %i.cvi = shl nsw i64 %.sroa.0104.1.i.i901, 1
+  %i.cvi = shl nuw nsw i64 %.sroa.0104.1.i.i901, 1
   br i1 %i.cvh, label %bb.qv, label %bb.qw
 
 bb.qw:                                            ; preds = %bb.qv

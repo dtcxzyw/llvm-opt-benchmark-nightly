@@ -205,7 +205,7 @@ scalar.ph73.prol.loopexit:                        ; preds = %scalar.ph73.prol, %
 
 .loopexit:                                        ; preds = %scalar.ph73.prol.loopexit, %scalar.ph73, %middle.block86
   %i.sc = add nsw i32 %i.iw, -1                   ; 2 uses
-  %i.sd = shl nsw i32 %i.sc, 2
+  %i.sd = shl nuw nsw i32 %i.sc, 2
   %i.se = zext nneg i32 %i.sd to i64              ; 17 uses
   %i.sf = shl i32 %i.iw, 2                        ; 2 uses
   %i.sg = zext nneg i32 %i.sf to i64              ; 18 uses
@@ -608,14 +608,15 @@ _nearest_color.exit355.i:                         ; preds = %.loopexit.loopexit3
   %.pn188.i = phi float [ %i.adi, %.preheader.preheader.i354.i ], [ %i.ads, %.loopexit.loopexit32.i353.i ]
   %i.adz = phi <2 x float> [ %i.adh, %.preheader.preheader.i354.i ], [ %i.adw, %.loopexit.loopexit32.i353.i ]
   %.sroa.0.3.i = fsub reassoc nsz arcp contract afn float %i.acq, %.pn188.i
-  %i.aea = getelementptr inbounds nuw [4 x i8], ptr %i.acp, i64 %i.se ; 6 uses
+  %i.aea = getelementptr inbounds nuw [4 x i8], ptr %i.acp, i64 %i.se ; 7 uses
   %i.aeb = insertelement <4 x float> poison, float %.sroa.0.3.i, i64 0
   %i.aec = insertelement <4 x float> %i.aeb, float %.sroa.81.3.i, i64 1
   %i.aed = shufflevector <2 x float> %i.adz, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.aee = shufflevector <4 x float> %i.aec, <4 x float> %i.aed, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 2 uses
   %i.aef = fmul reassoc nsz arcp contract afn <4 x float> %i.aee, splat (float 1.875000e-01)
   %i.aeg = load <4 x float>, ptr %i.aea, align 4, !tbaa !88, !alias.scope !282, !noalias !285
-  %i.aeh = fadd reassoc nsz arcp contract afn <4 x float> %i.aef, %i.aeg ; 4 uses
+  %i.aeh = fadd reassoc nsz arcp contract afn <4 x float> %i.aef, %i.aeg ; 5 uses
+  store <4 x float> %i.aeh, ptr %i.aea, align 4, !tbaa !88, !alias.scope !282, !noalias !285
   %i.aei = getelementptr inbounds nuw [4 x i8], ptr %i.acp, i64 %i.sg ; 8 uses
   %i.aej = getelementptr inbounds nuw i8, ptr %i.aei, i64 4 ; 3 uses
   %i.aek = getelementptr inbounds nuw i8, ptr %i.aei, i64 8 ; 3 uses
@@ -833,10 +834,11 @@ _nearest_color.exit367.i:                         ; preds = %.loopexit.loopexit3
   %i.aka = load <4 x float>, ptr %i.aju, align 4, !tbaa !88, !alias.scope !353, !noalias !356
   %i.akb = fadd reassoc nsz arcp contract afn <4 x float> %i.aka, %i.ajz
   store <4 x float> %i.akb, ptr %i.aju, align 4, !tbaa !88, !alias.scope !353, !noalias !356
-  %i.akc = getelementptr inbounds nuw [4 x i8], ptr %i.ahz, i64 %i.se ; 6 uses
+  %i.akc = getelementptr inbounds nuw [4 x i8], ptr %i.ahz, i64 %i.se ; 7 uses
   %i.akd = fmul reassoc nsz arcp contract afn <4 x float> %i.ajy, splat (float 1.875000e-01)
   %i.ake = load <4 x float>, ptr %i.akc, align 4, !tbaa !88, !alias.scope !358, !noalias !361
-  %i.akf = fadd reassoc nsz arcp contract afn <4 x float> %i.ake, %i.akd ; 3 uses
+  %i.akf = fadd reassoc nsz arcp contract afn <4 x float> %i.ake, %i.akd ; 4 uses
+  store <4 x float> %i.akf, ptr %i.akc, align 4, !tbaa !88, !alias.scope !358, !noalias !361
   %i.akg = getelementptr inbounds nuw [4 x i8], ptr %i.ahz, i64 %i.sg ; 2 uses
   %i.akh = fmul reassoc nsz arcp contract afn <4 x float> %i.ajy, splat (float 3.125000e-01)
   %i.aki = load <4 x float>, ptr %i.akg, align 4, !tbaa !88, !alias.scope !363, !noalias !366

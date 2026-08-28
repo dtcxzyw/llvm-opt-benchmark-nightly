@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %bb.l
   %.0126.i91 = phi i64 [ %.0126.i, %bb.j ], [ %.0126.i90, %.preheader.i ]
   %i.aw = add nsw i32 %.in, -1                    ; 2 uses
   call void @riscv_iommu_hpm_incr_ctr(ptr noundef nonnull %0, ptr noundef nonnull %i.t, i32 noundef 5) #17
-  %i.ax = mul nsw i32 %i.aw, 9
-  %i.ay = add i32 %i.ax, %i.as
+  %i.ax = mul nuw nsw i32 %i.aw, 9
+  %i.ay = add nuw i32 %i.ax, %i.as
   %i.az = load i64, ptr %i.t, align 8
   %i.ba = trunc i64 %i.az to i32
   %i.bb = and i32 %i.ba, 16777215

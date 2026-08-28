@@ -204,8 +204,8 @@ bb.a:
   %i.c = load i32, ptr %1, align 8, !tbaa !17     ; 3 uses
   %i.d = sext i32 %i.c to i64
   %i.e = shl nsw i64 %i.d, 2
-  %i.f = add nsw i64 %i.e, 4
-  %i.g = and i64 %i.f, -8                         ; 2 uses
+  %i.f = add nsw i64 %i.e, 4                      ; 2 uses
+  %i.g = and i64 %i.f, -8
   %i.h = zext i32 %i.c to i64
   %i.i = add nuw nsw i64 %i.h, 63
   %sh.diff = lshr i64 %i.i, 3
@@ -219,9 +219,8 @@ bb.b:                                             ; preds = %bb.a
   %.pre = load i32, ptr %1, align 8, !tbaa !17    ; 2 uses
   %.pre108 = load ptr, ptr %i.a, align 8, !tbaa !12
   %.pre109 = sext i32 %.pre to i64
-  %.pre110 = shl nsw i64 %.pre109, 2
-  %.pre112 = add nsw i64 %.pre110, 4
-  %.pre114 = and i64 %.pre112, -8
+  %.pre110 = shl nuw nsw i64 %.pre109, 2
+  %.pre112 = add nuw nsw i64 %.pre110, 4
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -229,11 +228,12 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.pre-phi115 = phi i64 [ %i.g, %bb.c ], [ %.pre114, %bb.b ]
+  %.pre-phi115 = phi i64 [ %i.f, %bb.c ], [ %.pre112, %bb.b ]
   %i.o = phi ptr [ %i.b, %bb.c ], [ %.pre108, %bb.b ] ; 2 uses
   %i.p = phi i32 [ %i.c, %bb.c ], [ %.pre, %bb.b ] ; 6 uses
   %i.q = phi ptr [ %i.n, %bb.c ], [ %i.m, %bb.b ] ; 5 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %.pre-phi115 ; 7 uses
+  %3 = and i64 %.pre-phi115, 9223372036854775800
+  %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 %3 ; 7 uses
   %narrow = add nuw i32 %i.p, 63
   %i.s = lshr i32 %narrow, 3
   %i.t = and i32 %i.s, 536870904

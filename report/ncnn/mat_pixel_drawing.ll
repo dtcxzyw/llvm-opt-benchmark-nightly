@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not208.us, label %bb.e, label %.loopexit.us
 
 bb.e:                                             ; preds = %bb.d
-  %i.n = shl nsw i32 %.0182255.us, 2
+  %i.n = shl nuw nsw i32 %.0182255.us, 2
   %i.o = zext nneg i32 %i.n to i64
   %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.o
   store i32 %8, ptr %i.p, align 1
@@ -269,7 +269,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not200.us, label %bb.k, label %.loopexit216.us
 
 bb.k:                                             ; preds = %bb.j
-  %i.am = shl nsw i32 %.0180217.us, 2
+  %i.am = shl nuw nsw i32 %.0180217.us, 2
   %i.an = zext nneg i32 %i.am to i64
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.an
   store i32 %8, ptr %i.ao, align 1
@@ -331,7 +331,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not202.us, label %bb.p, label %.loopexit215.us
 
 bb.p:                                             ; preds = %bb.o
-  %i.bg = shl nsw i32 %.0178224.us, 2
+  %i.bg = shl nuw nsw i32 %.0178224.us, 2
   %i.bh = zext nneg i32 %i.bg to i64
   %i.bi = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.bh
   store i32 %8, ptr %i.bi, align 1
@@ -400,7 +400,7 @@ bb.v:                                             ; preds = %bb.u, %bb.s
   br i1 %exitcond292.not, label %._crit_edge240, label %.lr.ph239.split.us, !llvm.loop !48
 
 .preheader213.us:                                 ; preds = %bb.r
-  %i.bx = shl nsw i32 %.0177236.us, 2
+  %i.bx = shl nuw nsw i32 %.0177236.us, 2
   %i.by = zext nneg i32 %i.bx to i64
   %invariant.gep.us = getelementptr i8, ptr %0, i64 %i.by
   br label %bb.s
@@ -459,7 +459,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.x
   br i1 %exitcond296.not, label %.loopexit209, label %.lr.ph249.split.us, !llvm.loop !50
 
 .preheader210.us:                                 ; preds = %bb.w
-  %i.cn = shl nsw i32 %.0174246.us, 2
+  %i.cn = shl nuw nsw i32 %.0174246.us, 2
   %i.co = zext nneg i32 %i.cn to i64
   %invariant.gep.us253 = getelementptr i8, ptr %0, i64 %i.co
   br label %bb.x
@@ -862,7 +862,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.y, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.z = shl nsw i32 %.087106.us, 2
+  %i.z = shl nuw nsw i32 %.087106.us, 2
   %i.aa = zext nneg i32 %i.z to i64
   %i.ab = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.aa
   store i32 %7, ptr %i.ab, align 1
@@ -955,7 +955,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.bu, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.bv = shl nsw i32 %.0100.us, 2
+  %i.bv = shl nuw nsw i32 %.0100.us, 2
   %i.bw = zext nneg i32 %i.bv to i64
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.bw
   store i32 %7, ptr %i.bx, align 1
@@ -1358,7 +1358,7 @@ _ZN4ncnnL17distance_lessthanEiiiiiif.exit.us:     ; preds = %bb.e
   br i1 %i.bh, label %bb.f, label %_ZN4ncnnL17distance_lessthanEiiiiiif.exit.thread.us
 
 bb.f:                                             ; preds = %_ZN4ncnnL17distance_lessthanEiiiiiif.exit.us
-  %i.bi = shl nsw i32 %.080.us, 2
+  %i.bi = shl nuw nsw i32 %.080.us, 2
   %i.bj = zext nneg i32 %i.bi to i64
   %i.bk = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.bj
   store i32 %8, ptr %i.bk, align 1
@@ -1761,7 +1761,7 @@ bb.f:                                             ; preds = %bb.e
   %i.aa = sext i32 %.099112 to i64
   %i.ab = sub nsw i64 0, %i.aa
   %invariant.gep108 = getelementptr i8, ptr %invariant.gep, i64 %i.ab
-  %i.ac = shl nsw i32 %.sroa.speculated71, 2
+  %i.ac = shl nuw nsw i32 %.sroa.speculated71, 2
   %i.ad = zext nneg i32 %i.ac to i64
   %invariant.gep110 = getelementptr i8, ptr %0, i64 %i.ad
   %i.ae = icmp slt i32 %.sroa.speculated71, %.sroa.speculated

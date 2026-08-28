@@ -205,7 +205,7 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i.i: ; preds = %bb.e, %_ZNK20b
   %i.aw = shl nsw i64 %i.av, 2
   %scevgep.i = getelementptr i8, ptr %i.au, i64 %i.aw
   %i.ax = sub nsw i64 %wide.trip.count.i.i, %i.av
-  %i.ay = shl nsw i64 %i.ax, 2
+  %i.ay = shl nuw nsw i64 %i.ax, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i, i8 0, i64 %i.ay, i1 false), !tbaa !103
   br label %bb.f
 
@@ -360,7 +360,7 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i.i394: ; preds = %bb.j, %_ZNK
   %i.cq = shl nsw i64 %i.cp, 2
   %scevgep.i386 = getelementptr i8, ptr %i.co, i64 %i.cq
   %i.cr = sub nsw i64 %wide.trip.count.i.i385, %i.cp
-  %i.cs = shl nsw i64 %i.cr, 2
+  %i.cs = shl nuw nsw i64 %i.cr, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i386, i8 0, i64 %i.cs, i1 false), !tbaa !103
   br label %bb.k
 
@@ -546,7 +546,7 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i.i419: ; preds = %bb.o, %_ZNK
   %i.ez = shl nsw i64 %i.ey, 2
   %scevgep.i411 = getelementptr i8, ptr %i.ex, i64 %i.ez
   %i.fa = sub nsw i64 %wide.trip.count.i.i410, %i.ey
-  %i.fb = shl nsw i64 %i.fa, 2
+  %i.fb = shl nuw nsw i64 %i.fa, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i411, i8 0, i64 %i.fb, i1 false), !tbaa !103
   br label %_ZN9btVectorXIfE6resizeEi.exit425
 
@@ -695,7 +695,7 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i.i439: ; preds = %bb.s, %_ZNK
   %i.gt = shl nsw i64 %i.gs, 2
   %scevgep.i431 = getelementptr i8, ptr %i.gr, i64 %i.gt
   %i.gu = sub nsw i64 %wide.trip.count.i.i430, %i.gs
-  %i.gv = shl nsw i64 %i.gu, 2
+  %i.gv = shl nuw nsw i64 %i.gu, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i431, i8 0, i64 %i.gv, i1 false), !tbaa !103
   br label %_ZN9btVectorXIfE6resizeEi.exit445
 
@@ -1098,7 +1098,7 @@ _ZN9btMatrixXIfE16multiplyAdd2_p8rEPKfS2_iiii.exit.us: ; preds = %._crit_edge.i.
 .lr.ph781:                                        ; preds = %._crit_edge777
   %i.ach = icmp sgt i32 %.fr802, 0
   %i.aci = sext i32 %.fr802 to i64
-  %.idx351 = shl nsw i64 %i.aci, 5
+  %.idx351 = shl nuw nsw i64 %i.aci, 5
   %i.acj = getelementptr inbounds nuw i8, ptr %i.zc, i64 %.idx351
   br label %bb.cv
 
@@ -1501,7 +1501,7 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i.i601: ; preds = %bb.du, %_ZN
   %i.asz = shl nsw i64 %i.asy, 2
   %scevgep.i593 = getelementptr i8, ptr %i.asx, i64 %i.asz
   %i.ata = sub nsw i64 %wide.trip.count.i.i592, %i.asy
-  %i.atb = shl nsw i64 %i.ata, 2
+  %i.atb = shl nuw nsw i64 %i.ata, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i593, i8 0, i64 %i.atb, i1 false), !tbaa !103
   br label %bb.dv
 
@@ -1653,7 +1653,7 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i.i623: ; preds = %bb.dz, %_ZN
   %i.aut = shl nsw i64 %i.aus, 2
   %scevgep.i615 = getelementptr i8, ptr %i.aur, i64 %i.aut
   %i.auu = sub nsw i64 %wide.trip.count.i.i614, %i.aus
-  %i.auv = shl nsw i64 %i.auu, 2
+  %i.auv = shl nuw nsw i64 %i.auu, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i615, i8 0, i64 %i.auv, i1 false), !tbaa !103
   br label %bb.ea
 
@@ -2015,7 +2015,7 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i.i: ; preds = %bb.e, %_ZNK20b
   %i.av = shl nsw i64 %i.au, 2
   %scevgep.i = getelementptr i8, ptr %i.at, i64 %i.av
   %i.aw = sub nsw i64 %wide.trip.count.i.i, %i.au
-  %i.ax = shl nsw i64 %i.aw, 2
+  %i.ax = shl nuw nsw i64 %i.aw, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i, i8 0, i64 %i.ax, i1 false), !tbaa !103
   br label %_ZN9btVectorXIfE6resizeEi.exit
 
@@ -2171,7 +2171,7 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i.i179: ; preds = %bb.j, %_ZNK
   %i.cp = shl nsw i64 %i.co, 2
   %scevgep.i171 = getelementptr i8, ptr %i.cn, i64 %i.cp
   %i.cq = sub nsw i64 %wide.trip.count.i.i170, %i.co
-  %i.cr = shl nsw i64 %i.cq, 2
+  %i.cr = shl nuw nsw i64 %i.cq, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i171, i8 0, i64 %i.cr, i1 false), !tbaa !103
   br label %_ZN9btVectorXIfE6resizeEi.exit185
 
@@ -2461,7 +2461,7 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i.i207: ; preds = %bb.s, %_ZNK
   %i.gp = shl nsw i64 %i.go, 2
   %scevgep.i199 = getelementptr i8, ptr %i.gn, i64 %i.gp
   %i.gq = sub nsw i64 %wide.trip.count.i.i198, %i.go
-  %i.gr = shl nsw i64 %i.gq, 2
+  %i.gr = shl nuw nsw i64 %i.gq, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i199, i8 0, i64 %i.gr, i1 false), !tbaa !103
   br label %_ZN9btVectorXIfE6resizeEi.exit213
 
@@ -2611,7 +2611,7 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i.i227: ; preds = %bb.w, %_ZNK
   %i.ij = shl nsw i64 %i.ii, 2
   %scevgep.i219 = getelementptr i8, ptr %i.ih, i64 %i.ij
   %i.ik = sub nsw i64 %wide.trip.count.i.i218, %i.ii
-  %i.il = shl nsw i64 %i.ik, 2
+  %i.il = shl nuw nsw i64 %i.ik, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i219, i8 0, i64 %i.il, i1 false), !tbaa !103
   br label %_ZN9btVectorXIfE6resizeEi.exit233
 
@@ -2943,7 +2943,7 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i.i.i.i: ; preds = %bb.ab, %_Z
   %i.oz = shl nsw i64 %i.oy, 2
   %scevgep.i.i.i = getelementptr i8, ptr %i.ox, i64 %i.oz
   %i.pa = sub nsw i64 %wide.trip.count.i.i.i.i235, %i.oy
-  %i.pb = shl nsw i64 %i.pa, 2
+  %i.pb = shl nuw nsw i64 %i.pa, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i.i.i, i8 0, i64 %i.pb, i1 false), !tbaa !103
   br label %_ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit.i.i.i
 
@@ -3346,7 +3346,7 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i.i.i.i265: ; preds = %bb.as, 
   %i.ws = shl nsw i64 %i.wr, 2
   %scevgep.i.i.i257 = getelementptr i8, ptr %i.wq, i64 %i.ws
   %i.wt = sub nsw i64 %wide.trip.count.i.i.i.i256, %i.wr
-  %i.wu = shl nsw i64 %i.wt, 2
+  %i.wu = shl nuw nsw i64 %i.wt, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i.i.i257, i8 0, i64 %i.wu, i1 false), !tbaa !103
   br label %_ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit.i.i.i245
 
@@ -3694,7 +3694,7 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i.i.i.i311: ; preds = %bb.be, 
   %i.aaw = shl nsw i64 %i.aav, 2
   %scevgep.i.i.i303 = getelementptr i8, ptr %i.aau, i64 %i.aaw
   %i.aax = sub nsw i64 %wide.trip.count.i.i.i.i302, %i.aav
-  %i.aay = shl nsw i64 %i.aax, 2
+  %i.aay = shl nuw nsw i64 %i.aax, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i.i.i303, i8 0, i64 %i.aay, i1 false), !tbaa !103
   br label %_ZN20btAlignedObjectArrayIfE6resizeEiRKf.exit.i.i.i291
 
@@ -4072,7 +4072,7 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i.i347: ; preds = %bb.bq, %_ZN
   %i.afs = shl nsw i64 %i.afr, 2
   %scevgep.i339 = getelementptr i8, ptr %i.afq, i64 %i.afs
   %i.aft = sub nsw i64 %wide.trip.count.i.i338, %i.afr
-  %i.afu = shl nsw i64 %i.aft, 2
+  %i.afu = shl nuw nsw i64 %i.aft, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i339, i8 0, i64 %i.afu, i1 false), !tbaa !103
   br label %_ZN9btVectorXIfE6resizeEi.exit353
 
@@ -4299,7 +4299,7 @@ _ZN20btAlignedObjectArrayIfE10deallocateEv.exit.i.i.i367: ; preds = %bb.cd, %_ZN
   %i.ail = shl nsw i64 %i.aik, 2
   %scevgep.i359 = getelementptr i8, ptr %i.aij, i64 %i.ail
   %i.aim = sub nsw i64 %wide.trip.count.i.i358, %i.aik
-  %i.ain = shl nsw i64 %i.aim, 2
+  %i.ain = shl nuw nsw i64 %i.aim, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i359, i8 0, i64 %i.ain, i1 false), !tbaa !103
   br label %_ZN9btVectorXIfE6resizeEi.exit373
 

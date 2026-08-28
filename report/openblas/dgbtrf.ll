@@ -202,8 +202,8 @@ bb.v:                                             ; preds = %bb.u
   %i.kl = add i32 %i.kk, %i.kh
   %i.km = sext i32 %i.kl to i64
   %i.kn = getelementptr inbounds [8 x i8], ptr %i.r, i64 %i.km
-  %i.ko = mul nsw i32 %.reass, 65
-  %8 = sext i32 %i.ko to i64
+  %i.ko = mul nuw nsw i32 %.reass, 65
+  %8 = zext nneg i32 %i.ko to i64
   %i.kp = getelementptr [8 x i8], ptr %i.h, i64 %8
   %i.kq = getelementptr i8, ptr %i.kp, i64 -520
   call void @dcopy_(ptr noundef nonnull %i.o, ptr noundef %i.kn, ptr noundef nonnull @c__1, ptr noundef %i.kq, ptr noundef nonnull @c__1) #6
@@ -606,8 +606,8 @@ bb.au:                                            ; preds = %._crit_edge692, %bb
   br i1 %i.aav, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %bb.au
-  %i.aaw = mul nsw i32 %i.aat, 65
-  %9 = sext i32 %i.aaw to i64
+  %i.aaw = mul nuw nsw i32 %i.aat, 65
+  %9 = zext nneg i32 %i.aaw to i64
   %i.aax = getelementptr [8 x i8], ptr %i.h, i64 %9
   %i.aay = getelementptr i8, ptr %i.aax, i64 -520
   %i.aaz = load i32, ptr %2, align 4, !tbaa !8

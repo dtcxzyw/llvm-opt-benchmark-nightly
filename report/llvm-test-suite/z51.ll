@@ -187,35 +187,35 @@ bb.a:
 .preheader:                                       ; preds = %.preheader, %.preheader.preheader.new
   %indvar = phi i64 [ 0, %.preheader.preheader.new ], [ %indvar.next.7, %.preheader ] ; 9 uses
   %niter = phi i64 [ 0, %.preheader.preheader.new ], [ %niter.next.7, %.preheader ]
-  %i.r = mul nsw i64 %i.n, %indvar
+  %i.r = mul nuw nsw i64 %i.n, %indvar
   %scevgep = getelementptr i8, ptr %i.k, i64 %i.r
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i8 32, i64 %i.o, i1 false), !tbaa !14
   %indvar.next = or disjoint i64 %indvar, 1
-  %i.s = mul nsw i64 %i.n, %indvar.next
+  %i.s = mul nuw nsw i64 %i.n, %indvar.next
   %scevgep.1 = getelementptr i8, ptr %i.k, i64 %i.s
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.1, i8 32, i64 %i.o, i1 false), !tbaa !14
   %indvar.next.1 = or disjoint i64 %indvar, 2
-  %i.t = mul nsw i64 %i.n, %indvar.next.1
+  %i.t = mul nuw nsw i64 %i.n, %indvar.next.1
   %scevgep.2 = getelementptr i8, ptr %i.k, i64 %i.t
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.2, i8 32, i64 %i.o, i1 false), !tbaa !14
   %indvar.next.2 = or disjoint i64 %indvar, 3
-  %i.u = mul nsw i64 %i.n, %indvar.next.2
+  %i.u = mul nuw nsw i64 %i.n, %indvar.next.2
   %scevgep.3 = getelementptr i8, ptr %i.k, i64 %i.u
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.3, i8 32, i64 %i.o, i1 false), !tbaa !14
   %indvar.next.3 = or disjoint i64 %indvar, 4
-  %i.v = mul nsw i64 %i.n, %indvar.next.3
+  %i.v = mul nuw nsw i64 %i.n, %indvar.next.3
   %scevgep.4 = getelementptr i8, ptr %i.k, i64 %i.v
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.4, i8 32, i64 %i.o, i1 false), !tbaa !14
   %indvar.next.4 = or disjoint i64 %indvar, 5
-  %i.w = mul nsw i64 %i.n, %indvar.next.4
+  %i.w = mul nuw nsw i64 %i.n, %indvar.next.4
   %scevgep.5 = getelementptr i8, ptr %i.k, i64 %i.w
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.5, i8 32, i64 %i.o, i1 false), !tbaa !14
   %indvar.next.5 = or disjoint i64 %indvar, 6
-  %i.x = mul nsw i64 %i.n, %indvar.next.5
+  %i.x = mul nuw nsw i64 %i.n, %indvar.next.5
   %scevgep.6 = getelementptr i8, ptr %i.k, i64 %i.x
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.6, i8 32, i64 %i.o, i1 false), !tbaa !14
   %indvar.next.6 = or disjoint i64 %indvar, 7
-  %i.y = mul nsw i64 %i.n, %indvar.next.6
+  %i.y = mul nuw nsw i64 %i.n, %indvar.next.6
   %scevgep.7 = getelementptr i8, ptr %i.k, i64 %i.y
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.7, i8 32, i64 %i.o, i1 false), !tbaa !14
   %indvar.next.7 = add nuw nsw i64 %indvar, 8     ; 2 uses
@@ -236,7 +236,7 @@ bb.a:
 .preheader.epil:                                  ; preds = %.preheader.epil, %.preheader.epil.preheader
   %indvar.epil = phi i64 [ %indvar.epil.init, %.preheader.epil.preheader ], [ %indvar.next.epil, %.preheader.epil ] ; 2 uses
   %epil.iter = phi i64 [ 0, %.preheader.epil.preheader ], [ %epil.iter.next, %.preheader.epil ]
-  %i.z = mul nsw i64 %i.n, %indvar.epil
+  %i.z = mul nuw nsw i64 %i.n, %indvar.epil
   %scevgep.epil = getelementptr i8, ptr %i.k, i64 %i.z
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep.epil, i8 32, i64 %i.o, i1 false), !tbaa !14
   %indvar.next.epil = add nuw nsw i64 %indvar.epil, 1
@@ -261,7 +261,7 @@ bb.a:
   %.02433 = add nsw i32 %.02433.in, -1            ; 3 uses
   %i.c = load i32, ptr @hsize, align 4, !tbaa !4  ; 3 uses
   %i.d = load ptr, ptr @page, align 8
-  %i.e = mul nsw i32 %i.c, %.02433
+  %i.e = mul nuw nsw i32 %i.c, %.02433
   %i.f = sext i32 %i.e to i64
   %invariant.gep = getelementptr i8, ptr %i.d, i64 %i.f
   %i.g = icmp sgt i32 %i.c, 0
@@ -377,7 +377,7 @@ bb.a:
   %.01216 = add nsw i32 %.01216.in, -1            ; 3 uses
   %i.c = load i32, ptr @hsize, align 4, !tbaa !4  ; 3 uses
   %i.d = load ptr, ptr @page, align 8
-  %i.e = mul nsw i32 %i.c, %.01216
+  %i.e = mul nuw nsw i32 %i.c, %.01216
   %i.f = sext i32 %i.e to i64
   %invariant.gep = getelementptr i8, ptr %i.d, i64 %i.f
   %i.g = icmp sgt i32 %i.c, 0

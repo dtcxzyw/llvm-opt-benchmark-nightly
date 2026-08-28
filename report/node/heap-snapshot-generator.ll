@@ -204,8 +204,7 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE21GetHeapObjectIfStrongEPNS0_6TaggedINS0_10HeapObjectEEE.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE21GetHeapObjectIfStrongEPNS0_6TaggedINS0_10HeapObjectEEE.exit ] ; 4 uses
-  %indvars27 = trunc i64 %indvars.iv to i32       ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE21GetHeapObjectIfStrongEPNS0_6TaggedINS0_10HeapObjectEEE.exit ] ; 6 uses
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv
   %i.j = load atomic volatile i64, ptr %i.i monotonic, align 8 ; 4 uses
   %i.k = and i64 %i.j, 3                          ; 2 uses
@@ -219,10 +218,11 @@ bb.c:                                             ; preds = %bb.b
   %i.p = and i64 %i.j, -3
   %indvars.iv.tr.a = trunc i64 %indvars.iv to i32
   %i.q = shl i32 %indvars.iv.tr.a, 3
-  %i.r = add i32 %i.q, %1
+  %i.r = add nsw i32 %i.q, %1
   %.sroa.012.0.insert.ext = zext i32 %i.r to i64
   %.sroa.012.0.insert.insert = or disjoint i64 %.sroa.012.0.insert.ext, 4294967296
-  tail call void @_ZN2v88internal14V8HeapExplorer16SetWeakReferenceEPNS0_9HeapEntryEiNS0_6TaggedINS0_6ObjectEEESt8optionalIiE(ptr noundef nonnull align 8 dereferenceable(280) %0, ptr noundef %2, i32 noundef %indvars27, i64 %i.p, i64 %.sroa.012.0.insert.insert)
+  %4 = trunc nuw nsw i64 %indvars.iv to i32
+  tail call void @_ZN2v88internal14V8HeapExplorer16SetWeakReferenceEPNS0_9HeapEntryEiNS0_6TaggedINS0_6ObjectEEESt8optionalIiE(ptr noundef nonnull align 8 dereferenceable(280) %0, ptr noundef %2, i32 noundef %4, i64 %i.p, i64 %.sroa.012.0.insert.insert)
   br label %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE21GetHeapObjectIfStrongEPNS0_6TaggedINS0_10HeapObjectEEE.exit
 
 _ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectIfWeakEPNS0_6TaggedINS0_10HeapObjectEEE.exit: ; preds = %bb.b
@@ -230,9 +230,11 @@ _ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectI
   br i1 %i.s, label %bb.d, label %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE21GetHeapObjectIfStrongEPNS0_6TaggedINS0_10HeapObjectEEE.exit
 
 bb.d:                                             ; preds = %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectIfWeakEPNS0_6TaggedINS0_10HeapObjectEEE.exit
-  %i.t = shl nsw i32 %indvars27, 3
+  %indvars.iv.tr = trunc i64 %indvars.iv to i32
+  %i.t = shl i32 %indvars.iv.tr, 3
   %i.u = add nsw i32 %i.t, %1
-  tail call void @_ZN2v88internal14V8HeapExplorer20SetInternalReferenceEPNS0_9HeapEntryEiNS0_6TaggedINS0_6ObjectEEEi(ptr noundef nonnull align 8 dereferenceable(280) %0, ptr noundef %2, i32 noundef %indvars27, i64 %i.j, i32 noundef %i.u)
+  %5 = trunc nuw nsw i64 %indvars.iv to i32
+  tail call void @_ZN2v88internal14V8HeapExplorer20SetInternalReferenceEPNS0_9HeapEntryEiNS0_6TaggedINS0_6ObjectEEEi(ptr noundef nonnull align 8 dereferenceable(280) %0, ptr noundef %2, i32 noundef %5, i64 %i.j, i32 noundef %i.u)
   br label %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE21GetHeapObjectIfStrongEPNS0_6TaggedINS0_10HeapObjectEEE.exit
 
 _ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE21GetHeapObjectIfStrongEPNS0_6TaggedINS0_10HeapObjectEEE.exit: ; preds = %_ZNK2v88internal10TaggedImplILNS0_23HeapObjectReferenceTypeE0EmE19GetHeapObjectIfWeakEPNS0_6TaggedINS0_10HeapObjectEEE.exit, %bb.d, %bb.c
@@ -574,7 +576,7 @@ bb.k:                                             ; preds = %._crit_edge
   br i1 %i.ek, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %i.el = shl nsw i32 %i.ej, 3                    ; 2 uses
+  %i.el = shl nuw nsw i32 %i.ej, 3                ; 2 uses
   %narrow = add nuw i32 %i.el, 15
   %i.em = zext i32 %narrow to i64
   %i.en = add i64 %2, %i.em
@@ -897,14 +899,13 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 3 uses
+  %indvars10 = trunc i64 %indvars.iv to i32       ; 2 uses
   %3 = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv
   %4 = load atomic volatile i64, ptr %3 monotonic, align 8
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.i = shl i32 %indvars.iv.tr, 3
+  %i.i = shl nuw nsw i32 %indvars10, 3
   %i.j = add nuw i32 %i.i, 16
-  %5 = trunc nuw nsw i64 %indvars.iv to i32
-  tail call void @_ZN2v88internal14V8HeapExplorer20SetInternalReferenceEPNS0_9HeapEntryEiNS0_6TaggedINS0_6ObjectEEEi(ptr noundef nonnull align 8 dereferenceable(280) %0, ptr noundef %1, i32 noundef %5, i64 %4, i32 noundef %i.j)
+  tail call void @_ZN2v88internal14V8HeapExplorer20SetInternalReferenceEPNS0_9HeapEntryEiNS0_6TaggedINS0_6ObjectEEEi(ptr noundef nonnull align 8 dereferenceable(280) %0, ptr noundef %1, i32 noundef %indvars10, i64 %4, i32 noundef %i.j)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.e
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !123
@@ -1307,7 +1308,7 @@ bb.e:                                             ; preds = %._crit_edge
 
 bb.f:                                             ; preds = %._crit_edge
   %i.bl = sub nsw i32 %i.at, %i.bc
-  %i.bm = shl nsw i32 %i.bl, 3
+  %i.bm = shl nuw nsw i32 %i.bl, 3
   %i.bn = add nuw nsw i32 %i.bm, 16
   br label %bb.g
 

@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.f
   store <16 x i8> %i.gu, ptr %i.dm, align 16, !tbaa !9
   store <16 x i8> %i.gv, ptr %i.dn, align 16, !tbaa !9
   %i.gw = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv274
-  %i.gx = shl nsw i64 %indvars.iv274, 2           ; 2 uses
+  %i.gx = shl nuw nsw i64 %indvars.iv274, 2       ; 2 uses
   %i.gy = getelementptr inbounds nuw i8, ptr %6, i64 %i.gx
   call void @VP8YuvToRgba32_SSE2(ptr noundef nonnull %i.gw, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %i.gy) #8
   br i1 %.not, label %bb.f, label %bb.e
@@ -393,7 +393,7 @@ bb.g:                                             ; preds = %._crit_edge
 
 .thread261:                                       ; preds = %bb.g
   call void @VP8YuvToRgba32_SSE2(ptr noundef nonnull %i.hk, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %i.hj) #8
-  %i.lu = shl nsw i32 %.0255.lcssa, 2
+  %i.lu = shl nuw nsw i32 %.0255.lcssa, 2
   %i.lv = zext nneg i32 %i.lu to i64
   %i.lw = getelementptr inbounds nuw i8, ptr %6, i64 %i.lv
   %i.lx = shl nsw i32 %i.ls, 2
@@ -408,7 +408,7 @@ bb.h:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.lz, ptr nonnull align 1 %i.mb, i64 %i.lt, i1 false)
   call void @VP8YuvToRgba32_SSE2(ptr noundef nonnull %i.hk, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %i.hj) #8
   call void @VP8YuvToRgba32_SSE2(ptr noundef nonnull %i.lz, ptr noundef nonnull %i.jo, ptr noundef nonnull %i.lo, ptr noundef nonnull %i.ma) #8
-  %i.mc = shl nsw i32 %.0255.lcssa, 2
+  %i.mc = shl nuw nsw i32 %.0255.lcssa, 2
   %i.md = zext nneg i32 %i.mc to i64              ; 2 uses
   %i.me = getelementptr inbounds nuw i8, ptr %6, i64 %i.md
   %i.mf = shl nsw i32 %i.ls, 2
@@ -672,7 +672,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.f
   store <16 x i8> %i.gu, ptr %i.dm, align 16, !tbaa !9
   store <16 x i8> %i.gv, ptr %i.dn, align 16, !tbaa !9
   %i.gw = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv274
-  %i.gx = shl nsw i64 %indvars.iv274, 2           ; 2 uses
+  %i.gx = shl nuw nsw i64 %indvars.iv274, 2       ; 2 uses
   %i.gy = getelementptr inbounds nuw i8, ptr %6, i64 %i.gx
   call void @VP8YuvToBgra32_SSE2(ptr noundef nonnull %i.gw, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %i.gy) #8
   br i1 %.not, label %bb.f, label %bb.e
@@ -863,7 +863,7 @@ bb.g:                                             ; preds = %._crit_edge
 
 .thread261:                                       ; preds = %bb.g
   call void @VP8YuvToBgra32_SSE2(ptr noundef nonnull %i.hk, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %i.hj) #8
-  %i.lu = shl nsw i32 %.0255.lcssa, 2
+  %i.lu = shl nuw nsw i32 %.0255.lcssa, 2
   %i.lv = zext nneg i32 %i.lu to i64
   %i.lw = getelementptr inbounds nuw i8, ptr %6, i64 %i.lv
   %i.lx = shl nsw i32 %i.ls, 2
@@ -878,7 +878,7 @@ bb.h:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.lz, ptr nonnull align 1 %i.mb, i64 %i.lt, i1 false)
   call void @VP8YuvToBgra32_SSE2(ptr noundef nonnull %i.hk, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %i.hj) #8
   call void @VP8YuvToBgra32_SSE2(ptr noundef nonnull %i.lz, ptr noundef nonnull %i.jo, ptr noundef nonnull %i.lo, ptr noundef nonnull %i.ma) #8
-  %i.mc = shl nsw i32 %.0255.lcssa, 2
+  %i.mc = shl nuw nsw i32 %.0255.lcssa, 2
   %i.md = zext nneg i32 %i.mc to i64              ; 2 uses
   %i.me = getelementptr inbounds nuw i8, ptr %6, i64 %i.md
   %i.mf = shl nsw i32 %i.ls, 2
@@ -1281,7 +1281,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.f
   store <16 x i8> %i.gu, ptr %i.dm, align 16, !tbaa !9
   store <16 x i8> %i.gv, ptr %i.dn, align 16, !tbaa !9
   %i.gw = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv274
-  %i.gx = shl nsw i64 %indvars.iv274, 2           ; 2 uses
+  %i.gx = shl nuw nsw i64 %indvars.iv274, 2       ; 2 uses
   %i.gy = getelementptr inbounds nuw i8, ptr %6, i64 %i.gx
   call void @VP8YuvToArgb32_SSE2(ptr noundef nonnull %i.gw, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %i.gy) #8
   br i1 %.not, label %bb.f, label %bb.e
@@ -1472,7 +1472,7 @@ bb.g:                                             ; preds = %._crit_edge
 
 .thread261:                                       ; preds = %bb.g
   call void @VP8YuvToArgb32_SSE2(ptr noundef nonnull %i.hk, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %i.hj) #8
-  %i.lu = shl nsw i32 %.0255.lcssa, 2
+  %i.lu = shl nuw nsw i32 %.0255.lcssa, 2
   %i.lv = zext nneg i32 %i.lu to i64
   %i.lw = getelementptr inbounds nuw i8, ptr %6, i64 %i.lv
   %i.lx = shl nsw i32 %i.ls, 2
@@ -1487,7 +1487,7 @@ bb.h:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.lz, ptr nonnull align 1 %i.mb, i64 %i.lt, i1 false)
   call void @VP8YuvToArgb32_SSE2(ptr noundef nonnull %i.hk, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %i.hj) #8
   call void @VP8YuvToArgb32_SSE2(ptr noundef nonnull %i.lz, ptr noundef nonnull %i.jo, ptr noundef nonnull %i.lo, ptr noundef nonnull %i.ma) #8
-  %i.mc = shl nsw i32 %.0255.lcssa, 2
+  %i.mc = shl nuw nsw i32 %.0255.lcssa, 2
   %i.md = zext nneg i32 %i.mc to i64              ; 2 uses
   %i.me = getelementptr inbounds nuw i8, ptr %6, i64 %i.md
   %i.mf = shl nsw i32 %i.ls, 2
@@ -1890,7 +1890,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %i.l
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 %i.l
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 %i.l
-  %i.p = shl nsw i32 %.0.lcssa, 2
+  %i.p = shl nuw nsw i32 %.0.lcssa, 2
   %i.q = zext nneg i32 %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 %i.q
   %i.s = sub nuw nsw i32 %4, %.0.lcssa
@@ -1938,7 +1938,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %i.l
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 %i.l
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 %i.l
-  %i.p = shl nsw i32 %.0.lcssa, 2
+  %i.p = shl nuw nsw i32 %.0.lcssa, 2
   %i.q = zext nneg i32 %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 %i.q
   %i.s = sub nuw nsw i32 %4, %.0.lcssa
@@ -2082,7 +2082,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %i.l
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 %i.l
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 %i.l
-  %i.p = shl nsw i32 %.0.lcssa, 2
+  %i.p = shl nuw nsw i32 %.0.lcssa, 2
   %i.q = zext nneg i32 %i.p to i64
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 %i.q
   %i.s = sub nuw nsw i32 %4, %.0.lcssa

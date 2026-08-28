@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ca = shl nsw i32 %i.bz, 3                    ; 2 uses
   %i.cb = sub nsw i32 %i.ca, %.sext               ; 3 uses
   %i.cc = shl nuw nsw i64 %indvars.iv534, 3       ; 3 uses
-  %i.cd = trunc nsw i64 %i.cc to i32
+  %i.cd = trunc nuw i64 %i.cc to i32
   %i.ce = add nsw i32 %i.cd, %.sext434            ; 3 uses
   %i.cf = icmp slt i32 %i.cb, 0
   br i1 %i.cf, label %.critedge.thread, label %bb.h
@@ -276,8 +276,7 @@ vector.ph600:                                     ; preds = %bb.i
   %i.dz = getelementptr inbounds nuw [2 x i8], ptr %i.dx, i64 %i.dy
   tail call void %i.dw(ptr noundef %i.dz) #13
   %i.ea = load ptr, ptr %i.n, align 16, !tbaa !120 ; 2 uses
-  %7 = and i64 %i.dy, 4294967232
-  %invariant.gep = getelementptr inbounds nuw [2 x i8], ptr %i.ea, i64 %7 ; 9 uses
+  %invariant.gep = getelementptr inbounds nuw [2 x i8], ptr %i.ea, i64 %i.dy ; 9 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 16 ; 2 uses
   %wide.load603 = load <8 x i16>, ptr %invariant.gep, align 2, !tbaa !121
   %wide.load604 = load <8 x i16>, ptr %i.eb, align 2, !tbaa !121
@@ -680,7 +679,7 @@ bb.an:                                            ; preds = %decode_inter_block.
   %i.lu = shl nsw i32 %i.lt, 3                    ; 2 uses
   %i.lv = sub nsw i32 %i.lu, %.sext440            ; 3 uses
   %i.lw = shl nuw nsw i64 %indvars.iv521, 3       ; 3 uses
-  %i.lx = trunc nsw i64 %i.lw to i32
+  %i.lx = trunc nuw i64 %i.lw to i32
   %i.ly = add nsw i32 %i.lx, %.sext437            ; 3 uses
   %i.lz = icmp slt i32 %i.lv, 0
   br i1 %i.lz, label %.critedge.thread, label %bb.ao
