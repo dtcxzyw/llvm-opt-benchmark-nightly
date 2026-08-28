@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %._crit_edge
-  %indvars.iv80 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next81.pre-phi, %._crit_edge ] ; 5 uses
+  %indvars.iv80 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next81.pre-phi, %._crit_edge ] ; 6 uses
   %indvars.iv76 = phi i32 [ %i.l, %.lr.ph ], [ %indvars.iv.next77, %._crit_edge ] ; 2 uses
   %indvars.iv = phi i64 [ 2, %.lr.ph ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
   %.068 = phi i32 [ 0, %.lr.ph ], [ %.1.lcssa, %._crit_edge ] ; 2 uses
@@ -244,8 +244,9 @@ bb.e:                                             ; preds = %.lr.ph, %._crit_edg
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 4 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   %i.am = getelementptr inbounds nuw i8, ptr %i.x, i64 56 ; 2 uses
-  %i.an = trunc nuw nsw i64 %indvars.iv80 to i32  ; 2 uses
+  %i.an = trunc i64 %indvars.iv80 to i32
   %i.ao = shl i32 %i.an, 16
+  %8 = trunc nuw nsw i64 %indvars.iv80 to i32
   br label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.i.preheader.lr.ph, %bb.k
@@ -337,7 +338,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.ch = trunc nuw nsw i64 %indvars.iv74 to i32
-  %i.ci = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.19, i32 noundef %i.an, i32 noundef %i.ch, i32 noundef %i.cb, i32 noundef %.256) ; 0 uses
+  %i.ci = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.19, i32 noundef %8, i32 noundef %i.ch, i32 noundef %i.cb, i32 noundef %.256) ; 0 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i

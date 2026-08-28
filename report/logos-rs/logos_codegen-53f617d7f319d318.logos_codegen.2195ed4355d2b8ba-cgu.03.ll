@@ -1,4 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/logos-rs/original/logos_codegen-53f617d7f319d318.logos_codegen.2195ed4355d2b8ba-cgu.03?download=true
+inline.NumInlined: 320
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort25insertion_sort_shift_leftTRAbj100_RjENCINvMB8_SB1m_20sort_unstable_by_keyjNCNvMNtCs2SM5xCHwwDm_13logos_codegen9generatorNtB2e_9Generator11render_luts0E0EB2g_:bb.a
   unreachable
 
@@ -200,7 +203,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
   store i64 0, ptr %.sroa.324.0..sroa_idx, align 8
   %.sroa.425.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   store i64 %i.h, ptr %.sroa.425.0..sroa_idx, align 8
-  %i.bw = sub i64 %1, %i.h
+  %i.bw = sub nuw i64 %1, %i.h
   %i.bx = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %.loopexit
@@ -444,7 +447,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   store i64 0, ptr %.sroa.324.0..sroa_idx, align 8
   %.sroa.425.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   store i64 %i.h, ptr %.sroa.425.0..sroa_idx, align 8
-  %i.br = sub i64 %1, %i.h
+  %i.br = sub nuw i64 %1, %i.h
   %i.bs = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %.loopexit
@@ -711,7 +714,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
   store i64 0, ptr %.sroa.324.0..sroa_idx, align 8
   %.sroa.425.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   store i64 %i.h, ptr %.sroa.425.0..sroa_idx, align 8
-  %i.cg = sub i64 %1, %i.h
+  %i.cg = sub nuw i64 %1, %i.h
   %i.ch = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %.loopexit33
@@ -1067,7 +1070,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
   store i64 0, ptr %.sroa.324.0..sroa_idx, align 8
   %.sroa.425.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   store i64 %i.h, ptr %.sroa.425.0..sroa_idx, align 8
-  %i.cg = sub i64 %1, %i.h
+  %i.cg = sub nuw i64 %1, %i.h
   %i.ch = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %.loopexit33
@@ -1400,7 +1403,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   store i64 0, ptr %.sroa.324.0..sroa_idx, align 8
   %.sroa.425.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   store i64 %i.h, ptr %.sroa.425.0..sroa_idx, align 8
-  %i.br = sub i64 %1, %i.h
+  %i.br = sub nuw i64 %1, %i.h
   %i.bs = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %.loopexit
@@ -1657,7 +1660,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
   store i64 0, ptr %.sroa.324.0..sroa_idx, align 8
   %.sroa.425.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   store i64 %i.h, ptr %.sroa.425.0..sroa_idx, align 8
-  %i.bw = sub i64 %1, %i.h
+  %i.bw = sub nuw i64 %1, %i.h
   %i.bx = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %.loopexit

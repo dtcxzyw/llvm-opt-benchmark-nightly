@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %.lr.ph, %_ZNK4llvm6
 bb.k:                                             ; preds = %bb.j
   %i.ck = load ptr, ptr %i.ch, align 8, !tbaa !174 ; 4 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ch, i64 8
-  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !174 ; 2 uses
+  %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !174 ; 3 uses
   %i.cn = ptrtoint ptr %i.cm to i64               ; 2 uses
   %i.co = ptrtoint ptr %i.ck to i64
   %i.cp = sub i64 %i.cn, %i.co                    ; 3 uses
@@ -286,7 +286,8 @@ bb.t:                                             ; preds = %bb.s, %._crit_edge.
   %.sroa.025.2.i.i.i.i.i.i = phi ptr [ %i.dn, %bb.s ], [ %.sroa.025.0.lcssa.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ] ; 2 uses
   %i.do = load double, ptr %.sroa.025.2.i.i.i.i.i.i, align 8, !tbaa !123
   %i.dp = fcmp une double %i.do, 0.000000e+00
-  br i1 %i.dp, label %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit, label %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.thread
+  %spec.select.i.i.i.i.i.i = select i1 %i.dp, ptr %.sroa.025.2.i.i.i.i.i.i, ptr %i.cm
+  br label %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit
 
 _ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.loopexit.split.loop.exit: ; preds = %bb.l
   %i.dq = getelementptr inbounds nuw i8, ptr %.sroa.025.044.i.i.i.i.i.i, i64 8
@@ -301,7 +302,7 @@ _ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.loopexit.split.loop.exit53: ; preds = %
   br label %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit
 
 _ZNK4llvm6ir2vec9Embedding6isZeroEv.exit:         ; preds = %.lr.ph.i.i.i.i.i.i, %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.loopexit.split.loop.exit, %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.loopexit.split.loop.exit51, %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.loopexit.split.loop.exit53, %bb.p, %bb.r, %bb.t
-  %.sroa.08.0.in.sroa.speculated.i.i.i.i.i.i = phi ptr [ %.sroa.025.1.i.i.i.i.i.i, %bb.r ], [ %.sroa.025.2.i.i.i.i.i.i, %bb.t ], [ %.sroa.025.0.lcssa.i.i.i.i.i.i, %bb.p ], [ %i.ds, %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.loopexit.split.loop.exit53 ], [ %i.dq, %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.loopexit.split.loop.exit ], [ %i.dr, %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.loopexit.split.loop.exit51 ], [ %.sroa.025.044.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ]
+  %.sroa.08.0.in.sroa.speculated.i.i.i.i.i.i = phi ptr [ %.sroa.025.1.i.i.i.i.i.i, %bb.r ], [ %spec.select.i.i.i.i.i.i, %bb.t ], [ %.sroa.025.0.lcssa.i.i.i.i.i.i, %bb.p ], [ %i.ds, %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.loopexit.split.loop.exit53 ], [ %i.dr, %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.loopexit.split.loop.exit51 ], [ %i.dq, %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.loopexit.split.loop.exit ], [ %.sroa.025.044.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ]
   %i.dt = icmp eq ptr %i.cm, %.sroa.08.0.in.sroa.speculated.i.i.i.i.i.i
   br i1 %i.dt, label %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.thread, label %bb.u
 
@@ -373,7 +374,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23: ; preds = %_ZN
   call void @_ZNK4llvm6ir2vec9Embedding5printERNS_11raw_ostreamE(ptr noundef nonnull align 8 dereferenceable(24) %i.ch, ptr noundef nonnull align 8 dereferenceable(48) %i.ey) #23
   br label %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.thread
 
-_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.thread:  ; preds = %bb.t, %._crit_edge.i.i.i.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23, %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit
+_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit.thread:  ; preds = %._crit_edge.i.i.i.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23, %_ZNK4llvm6ir2vec9Embedding6isZeroEv.exit
   %i.ez = add i32 %.035, 1
   %i.fa = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN4llvm6ir2vec12VocabStorage14const_iteratorppEv(ptr noundef nonnull align 8 dereferenceable(24) %5) #23 ; 0 uses
   %i.fb = call noundef zeroext i1 @_ZNK4llvm6ir2vec12VocabStorage14const_iteratorneERKS2_(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %6) #23

@@ -204,6 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit151: ; preds = %_Z
 bb.ah:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit151
   %i.fc = load i32, ptr %i.a, align 4, !tbaa !28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
+  %23 = sitofp i32 %i.fc to double                ; 2 uses
   %i.fd = load ptr, ptr %20, align 8, !tbaa !18   ; 2 uses
   %i.fe = icmp eq ptr %i.fd, %i.ez
   br i1 %i.fe, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit159, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i157
@@ -343,8 +344,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit180: ; preds = %bb
   br label %bb.cc
 
 bb.ao:                                            ; preds = %bb.ai
-  %.024287 = call i32 @llvm.smax.i32(i32 %i.fc, i32 1)
-  %.024 = uitofp nneg i32 %.024287 to double
+  %24 = fcmp olt double %23, 1.000000e+00
+  %spec.store.select = select i1 %24, double 1.000000e+00, double %23
   %i.go = invoke noundef zeroext i1 @_ZN2cv17CascadeClassifier4loadERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(32) @_Z11cascadeNameB5cxx11)
           to label %bb.ap unwind label %.loopexit.split-lp
 
@@ -685,7 +686,7 @@ bb.br:                                            ; preds = %bb.bq
           to label %bb.bs unwind label %bb.bv
 
 bb.bs:                                            ; preds = %bb.br
-  invoke void @_Z13detectAndDrawRN2cv3MatERNS_17CascadeClassifierES3_db(ptr noundef nonnull align 8 dereferenceable(208) %22, ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %7, double noundef %.024, i1 noundef zeroext %i.do)
+  invoke void @_Z13detectAndDrawRN2cv3MatERNS_17CascadeClassifierES3_db(ptr noundef nonnull align 8 dereferenceable(208) %22, ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %7, double noundef %spec.store.select, i1 noundef zeroext %i.do)
           to label %bb.bt unwind label %bb.bw
 
 bb.bt:                                            ; preds = %bb.bs

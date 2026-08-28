@@ -164,41 +164,41 @@ bb.l:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
   %i.al = call i32 @stat(ptr noundef nonnull %0, ptr noundef nonnull %5) #10
   %i.am = icmp eq i32 %i.al, 0
-  br i1 %i.am, label %bb.m, label %bb.o
+  br i1 %i.am, label %bb.m, label %_ZL23whichFileModTimeIsLaterPKcS0_.exit.a
 
 bb.m:                                             ; preds = %bb.l
   %i.an = call i32 @stat(ptr noundef %i.ak, ptr noundef nonnull %6) #10
   %i.ao = icmp eq i32 %i.an, 0
-  br i1 %i.ao, label %bb.n, label %bb.o
+  br i1 %i.ao, label %bb.n, label %_ZL23whichFileModTimeIsLaterPKcS0_.exit.a
 
 bb.n:                                             ; preds = %bb.m
   %i.ap = load i64, ptr %i.k, align 8, !tbaa !21
   %i.aq = load i64, ptr %i.l, align 8, !tbaa !21
   %i.ar = call double @difftime(i64 noundef %i.ap, i64 noundef %i.aq) #11
   %i.as = fcmp olt double %i.ar, 0.000000e+00
-  br i1 %i.as, label %_ZL23whichFileModTimeIsLaterPKcS0_.exit.thread, label %_ZL23whichFileModTimeIsLaterPKcS0_.exit.a
+  br i1 %i.as, label %bb.o, label %_ZL23whichFileModTimeIsLaterPKcS0_.exit.thread
 
-_ZL23whichFileModTimeIsLaterPKcS0_.exit.a:        ; preds = %bb.n
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
-  br label %spec.select80.si.unfold.false.jt0
-
-bb.o:                                             ; preds = %bb.m, %bb.l
+_ZL23whichFileModTimeIsLaterPKcS0_.exit.a:        ; preds = %bb.m, %bb.l
   %8 = load ptr, ptr @stderr, align 8, !tbaa !19
   %9 = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %8, ptr noundef nonnull @.str.6, ptr noundef nonnull %0, ptr noundef %i.ak) #12 ; 0 uses
-  br label %_ZL23whichFileModTimeIsLaterPKcS0_.exit.thread
+  br label %bb.o
 
-_ZL23whichFileModTimeIsLaterPKcS0_.exit.thread:   ; preds = %bb.n, %bb.o
+bb.o:                                             ; preds = %bb.n, %_ZL23whichFileModTimeIsLaterPKcS0_.exit.a
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
   br label %.loopexit100
 
-spec.select80.si.unfold.false.jt0:                ; preds = %bb.k, %_ZL23whichFileModTimeIsLaterPKcS0_.exit.a
+_ZL23whichFileModTimeIsLaterPKcS0_.exit.thread:   ; preds = %bb.n
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
+  br label %spec.select80.si.unfold.false.jt0
+
+spec.select80.si.unfold.false.jt0:                ; preds = %bb.k, %_ZL23whichFileModTimeIsLaterPKcS0_.exit.thread
   %i.at = load i8, ptr %i.i, align 4, !tbaa !15
   %.not.i.i.i.jt0 = icmp eq i8 %i.at, 0
   br i1 %.not.i.i.i.jt0, label %_ZN6icu_7810CharStringD2Ev.exit.jt0, label %bb.q
 
-.loopexit100:                                     ; preds = %bb.k, %_ZL23whichFileModTimeIsLaterPKcS0_.exit.thread
+.loopexit100:                                     ; preds = %bb.k, %bb.o
   %i.au = load i8, ptr %i.i, align 4, !tbaa !15
   %.not.i.i.i.jt3 = icmp eq i8 %i.au, 0
   br i1 %.not.i.i.i.jt3, label %_ZN6icu_7810CharStringD2Ev.exit.jt3, label %bb.r
@@ -292,11 +292,13 @@ bb.y:                                             ; preds = %bb.x
   %i.bl = load i64, ptr %i.bk, align 8, !tbaa !21
   %i.bm = getelementptr inbounds nuw i8, ptr %4, i64 88
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !21
-  %i.bo = tail call double @difftime(i64 noundef %i.bl, i64 noundef %i.bn) #11
+  %i.bo = tail call double @difftime(i64 noundef %i.bl, i64 noundef %i.bn) #11 ; 2 uses
   %i.bp = fcmp olt double %i.bo, 0.000000e+00
   br i1 %i.bp, label %_ZL23whichFileModTimeIsLaterPKcS0_.exit69, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
+  %10 = fcmp ogt double %i.bo, 0.000000e+00
+  %spec.select.i69 = zext i1 %10 to i32
   br label %_ZL23whichFileModTimeIsLaterPKcS0_.exit69
 
 bb.aa:                                            ; preds = %bb.x, %bb.w
@@ -304,14 +306,18 @@ bb.aa:                                            ; preds = %bb.x, %bb.w
   %i.br = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.bq, ptr noundef nonnull @.str.6, ptr noundef nonnull %0, ptr noundef nonnull %1) #12 ; 0 uses
   br label %_ZL23whichFileModTimeIsLaterPKcS0_.exit69
 
-_ZL23whichFileModTimeIsLaterPKcS0_.exit69:        ; preds = %bb.z, %bb.y, %bb.aa
-  %not.or.cond7 = phi i8 [ 0, %bb.aa ], [ 1, %bb.z ], [ 0, %bb.y ]
+_ZL23whichFileModTimeIsLaterPKcS0_.exit69:        ; preds = %bb.y, %bb.z, %bb.aa
+  %.1.i68 = phi i32 [ -1, %bb.aa ], [ %spec.select.i69, %bb.z ], [ 2, %bb.y ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #10
+  %11 = icmp sgt i32 %.1.i68, -1
+  %12 = icmp ne i32 %.1.i68, 2
+  %or.cond7.not = and i1 %11, %12
+  %spec.select = zext i1 %or.cond7.not to i8
   br label %bb.ab
 
 bb.ab:                                            ; preds = %_ZN6icu_7810CharStringD2Ev.exit.jt1, %.thread, %_ZL23whichFileModTimeIsLaterPKcS0_.exit69, %bb.v, %.critedge, %bb.a
-  %.649 = phi i8 [ 0, %bb.v ], [ 0, %.critedge ], [ 0, %bb.a ], [ %not.or.cond7, %_ZL23whichFileModTimeIsLaterPKcS0_.exit69 ], [ %.5, %.thread ], [ 0, %_ZN6icu_7810CharStringD2Ev.exit.jt1 ]
+  %.649 = phi i8 [ 0, %bb.v ], [ 0, %.critedge ], [ 0, %bb.a ], [ %spec.select, %_ZL23whichFileModTimeIsLaterPKcS0_.exit69 ], [ %.5, %.thread ], [ 0, %_ZN6icu_7810CharStringD2Ev.exit.jt1 ]
   ret i8 %.649
 }
 

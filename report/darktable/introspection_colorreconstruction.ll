@@ -205,7 +205,11 @@ bb.an:                                            ; preds = %.thread.i, %.lr.ph.
   %i.lg = fmul reassoc nsz arcp contract afn float %i.lf, %i.kn
   %i.lh = fadd reassoc nsz arcp contract afn float %i.lg, -1.900000e+01 ; 3 uses
   %i.li = fcmp reassoc nsz arcp contract afn ogt float %i.lh, 0.000000e+00
-  br i1 %i.li, label %.thread294.i, label %.thread.i
+  %6 = fcmp reassoc nsz arcp contract afn olt float %i.lh, 1.000000e+00
+  %spec.select.i82 = select reassoc nsz arcp contract afn i1 %6, float %i.lh, float 1.000000e+00
+  %7 = select reassoc nsz arcp contract afn i1 %i.li, float %spec.select.i82, float 0.000000e+00 ; 3 uses
+  %8 = fcmp reassoc nsz arcp contract afn oeq float %7, 0.000000e+00
+  br i1 %8, label %.thread.i, label %.thread294.i
 
 .thread294.i:                                     ; preds = %bb.an
   %i.lj = load <2 x i32>, ptr %4, align 4, !tbaa !24
@@ -316,8 +320,6 @@ bb.an:                                            ; preds = %.thread.i, %.lr.ph.
   br i1 %i.oz, label %bb.ao, label %.critedge.i
 
 bb.ao:                                            ; preds = %.thread294.i
-  %6 = fcmp reassoc nsz arcp contract afn olt float %i.lh, 1.000000e+00
-  %7 = select i1 %6, float %i.lh, float 1.000000e+00 ; 2 uses
   %i.pa = load float, ptr %i.ng, align 4, !tbaa !117
   %i.pb = fmul reassoc nsz arcp contract afn float %i.pa, %i.nh
   %i.pc = load float, ptr %i.nk, align 4, !tbaa !117

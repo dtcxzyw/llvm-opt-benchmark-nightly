@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/raft-rs/original/raft-bbaa2c867252f069.raft.b69bdf7286237635-cgu.13?download=true
+inline.NumInlined: 166
+inline.NumDeleted: 80
 begin_hunk_0_@_RNvNtNtCsfG1pxJcRFT5_4raft10confchange7restore7restore:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.010)
   br label %bb.y
@@ -200,8 +202,8 @@ bb.am:                                            ; preds = %bb.ak
   unreachable
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit.thread106: ; preds = %bb.bb, %bb.ak, %bb.an, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit.thread, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit
-  %.sroa.016.4 = phi i8 [ %.sroa.016.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit ], [ %.sroa.016.0104, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit.thread ], [ %.sroa.016.2, %bb.ak ], [ %.sroa.016.5, %bb.an ], [ %.sroa.016.3, %bb.bb ]
-  %.pn42 = phi { ptr, i32 } [ %i.dw, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit ], [ %.pn40105, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit.thread ], [ %i.ew, %bb.ak ], [ %i.ez, %bb.an ], [ %i.fo, %bb.bb ] ; 2 uses
+  %.pn42 = phi { ptr, i32 } [ %i.dw, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit ], [ %.pn40104, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit.thread ], [ %i.ew, %bb.ak ], [ %i.ez, %bb.an ], [ %i.fo, %bb.bb ] ; 2 uses
+  %.sroa.016.4 = phi i8 [ %.sroa.016.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit ], [ %.sroa.016.0105, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit.thread ], [ %.sroa.016.2, %bb.ak ], [ %.sroa.016.5, %bb.an ], [ %.sroa.016.3, %bb.bb ]
   %i.ey = trunc nuw i8 %.sroa.016.4 to i1
   br i1 %i.ey, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit.thread106.thread, label %common.resume
 
@@ -380,8 +382,8 @@ bb.bg:                                            ; preds = %bb.bf
   unreachable
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit.thread: ; preds = %.critedge, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit
-  %.pn40105 = phi { ptr, i32 } [ %i.dw, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit ], [ %.pn, %.critedge ]
-  %.sroa.016.0104 = phi i8 [ %.sroa.016.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit ], [ 0, %.critedge ]
+  %.sroa.016.0105 = phi i8 [ %.sroa.016.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit ], [ 0, %.critedge ]
+  %.pn40104 = phi { ptr, i32 } [ %i.dw, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit ], [ %.pn, %.critedge ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft(ptr noalias nofree noundef align 8 dereferenceable(24) %i.v) #16
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEECsfG1pxJcRFT5_4raft.exit.thread106 unwind label %bb.ag
 

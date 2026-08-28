@@ -205,10 +205,11 @@ _ZZZN6embree4sse226BVHNSubdivPatch1BuilderSAHILi4EE5buildEvENKUlPNS_10SubdivMesh
   br label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph149, %_ZZZN6embree4sse226BVHNSubdivPatch1BuilderSAHILi4EE5buildEvENKUlPNS_10SubdivMeshERKNS_5rangeImEEmmRKNS_9PrimInfoTINS_4BBoxINS_6Vec3faEEEEEE_clES4_S8_mmSF_ENKUlPKNS_4Vec2IfEEPKiPKfiE_clESK_SM_SO_i.exit55
-  %indvars.iv159 = phi i64 [ 0, %.lr.ph149 ], [ %indvars.iv.next160, %_ZZZN6embree4sse226BVHNSubdivPatch1BuilderSAHILi4EE5buildEvENKUlPNS_10SubdivMeshERKNS_5rangeImEEmmRKNS_9PrimInfoTINS_4BBoxINS_6Vec3faEEEEEE_clES4_S8_mmSF_ENKUlPKNS_4Vec2IfEEPKiPKfiE_clESK_SM_SO_i.exit55 ] ; 3 uses
+  %indvars.iv159 = phi i64 [ 0, %.lr.ph149 ], [ %indvars.iv.next160, %_ZZZN6embree4sse226BVHNSubdivPatch1BuilderSAHILi4EE5buildEvENKUlPNS_10SubdivMeshERKNS_5rangeImEEmmRKNS_9PrimInfoTINS_4BBoxINS_6Vec3faEEEEEE_clES4_S8_mmSF_ENKUlPKNS_4Vec2IfEEPKiPKfiE_clESK_SM_SO_i.exit55 ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #20
-  %i.ek = trunc nuw i64 %indvars.iv159 to i32     ; 4 uses
-  %i.el = shl i32 %i.ek, 1
+  %indvars.iv159.tr = trunc i64 %indvars.iv159 to i32
+  %i.ek = trunc nuw i64 %indvars.iv159 to i32     ; 3 uses
+  %i.el = shl i32 %indvars.iv159.tr, 1
   %i.em = lshr i32 %i.ek, 1
   %i.en = and i32 %i.el, 6
   %i.eo = and i32 %i.em, 6
@@ -611,10 +612,11 @@ bb.c:                                             ; preds = %._crit_edge
   br label %.loopexit
 
 bb.d:                                             ; preds = %.lr.ph125, %bb.d
-  %indvars.iv131 = phi i64 [ 0, %.lr.ph125 ], [ %indvars.iv.next132, %bb.d ] ; 3 uses
+  %indvars.iv131 = phi i64 [ 0, %.lr.ph125 ], [ %indvars.iv.next132, %bb.d ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  %i.as = trunc nuw i64 %indvars.iv131 to i32     ; 4 uses
-  %i.at = shl i32 %i.as, 1
+  %indvars.iv131.tr = trunc i64 %indvars.iv131 to i32
+  %i.as = trunc nuw i64 %indvars.iv131 to i32     ; 3 uses
+  %i.at = shl i32 %indvars.iv131.tr, 1
   %i.au = lshr i32 %i.as, 1
   %i.av = and i32 %i.at, 6
   %i.aw = and i32 %i.au, 6

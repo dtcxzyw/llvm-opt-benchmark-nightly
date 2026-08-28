@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/xet-core-rs/original/git_xet.git_xet.731ec678f938a728-cgu.13?download=true
+inline.NumInlined: 719
+inline.NumDeleted: 299
 begin_hunk_0_@_RNvMs_NtNtCsUrhh0HcRih_5tokio4task8join_setINtB4_7JoinSetINtNtCskKLDkoKarTP_4core6result6ResultuNtNtCsjHtSR7YjKD4_8xet_data5error9DataErrorEE6insertCs9SMuO7kbZ2K_7git_xet:bb.a
 bb.aa:                                            ; preds = %bb.ab, %.thread12, %bb.x
   %i.bc = landingpad { ptr, i32 }
@@ -200,7 +202,7 @@ _RNvMsq_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcShE18allocate_for_sliceCs9SMuO7kbZ2
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 8
   store i64 1, ptr %i.j, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.k, ptr nonnull align 1 %0, i64 %1, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.k, ptr nonnull align 1 %0, i64 %1, i1 false)
   ret { ptr, i64 } %i.i
 }
 

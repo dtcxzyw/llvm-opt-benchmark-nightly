@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !69   ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !69   ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !69   ; 3 uses
   %i.g = ptrtoint ptr %i.f to i64                 ; 2 uses
   %i.h = ptrtoint ptr %i.d to i64
   %i.i = sub i64 %i.g, %i.h                       ; 3 uses
@@ -298,7 +298,8 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
   %i.ah = getelementptr i8, ptr %.sroa.037.2.i.i.i.i, i64 4
   %.val1.i27.i.i.i.i = load float, ptr %i.ah, align 4, !tbaa !92
   %i.ai = fcmp une float %.val.i26.i.i.i.i, %.val1.i27.i.i.i.i
-  br i1 %i.ai, label %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit", label %.thread
+  %spec.select.i.i.i.i = select i1 %i.ai, ptr %.sroa.037.2.i.i.i.i, ptr %i.f
+  br label %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit"
 
 "_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit.loopexit.split.loop.exit": ; preds = %bb.c
   %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.037.056.i.i.i.i, i64 8
@@ -313,7 +314,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
   br label %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit"
 
 "_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit": ; preds = %.lr.ph.i.i.i.i, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit.loopexit.split.loop.exit", %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit.loopexit.split.loop.exit88", %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit.loopexit.split.loop.exit90", %bb.g, %bb.i, %bb.k
-  %.sroa.08.0.in.sroa.speculated.i.i.i.i = phi ptr [ %.sroa.037.1.i.i.i.i, %bb.i ], [ %.sroa.037.2.i.i.i.i, %bb.k ], [ %.sroa.037.0.lcssa.i.i.i.i, %bb.g ], [ %i.al, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit.loopexit.split.loop.exit90" ], [ %i.aj, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit.loopexit.split.loop.exit" ], [ %i.ak, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit.loopexit.split.loop.exit88" ], [ %.sroa.037.056.i.i.i.i, %.lr.ph.i.i.i.i ]
+  %.sroa.08.0.in.sroa.speculated.i.i.i.i = phi ptr [ %.sroa.037.1.i.i.i.i, %bb.i ], [ %spec.select.i.i.i.i, %bb.k ], [ %.sroa.037.0.lcssa.i.i.i.i, %bb.g ], [ %i.al, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit.loopexit.split.loop.exit90" ], [ %i.ak, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit.loopexit.split.loop.exit88" ], [ %i.aj, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit.loopexit.split.loop.exit" ], [ %.sroa.037.056.i.i.i.i, %.lr.ph.i.i.i.i ]
   %i.am = icmp eq ptr %i.f, %.sroa.08.0.in.sroa.speculated.i.i.i.i
   br i1 %i.am, label %.thread, label %bb.ai
 
@@ -321,7 +322,7 @@ bb.l:                                             ; preds = %bb.a
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !69 ; 4 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !69 ; 2 uses
+  %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !69 ; 3 uses
   %i.ar = ptrtoint ptr %i.aq to i64               ; 2 uses
   %i.as = ptrtoint ptr %i.ao to i64
   %i.at = sub i64 %i.ar, %i.as                    ; 3 uses
@@ -407,7 +408,8 @@ bb.u:                                             ; preds = %bb.t, %._crit_edge.
   %i.bp = getelementptr i8, ptr %.sroa.031.2.i.i.i.i, i64 4
   %.val.i21.i.i.i.i = load float, ptr %i.bp, align 4, !tbaa !92
   %i.bq = fcmp une float %.val.i21.i.i.i.i, 0.000000e+00
-  br i1 %i.bq, label %.loopexit, label %.thread
+  %spec.select.i.i.i.i12 = select i1 %i.bq, ptr %.sroa.031.2.i.i.i.i, ptr %i.aq
+  br label %.loopexit
 
 .loopexit.split.loop.exit41.i.i.i.i:              ; preds = %bb.m
   %i.br = getelementptr inbounds nuw i8, ptr %.sroa.031.050.i.i.i.i, i64 8
@@ -425,7 +427,7 @@ bb.v:                                             ; preds = %bb.a, %bb.a
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !69 ; 4 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !69 ; 2 uses
+  %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !69 ; 3 uses
   %i.by = ptrtoint ptr %i.bx to i64               ; 2 uses
   %i.bz = ptrtoint ptr %i.bv to i64
   %i.ca = sub i64 %i.by, %i.bz                    ; 3 uses
@@ -511,7 +513,8 @@ bb.ae:                                            ; preds = %bb.ad, %._crit_edge
   %i.cw = getelementptr i8, ptr %.sroa.031.2.i.i.i.i25, i64 4
   %.val.i21.i.i.i.i26 = load float, ptr %i.cw, align 4, !tbaa !92
   %i.cx = fcmp une float %.val.i21.i.i.i.i26, 1.000000e+00
-  br i1 %i.cx, label %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_2EbT_SC_T0_.exit", label %.thread
+  %spec.select.i.i.i.i28 = select i1 %i.cx, ptr %.sroa.031.2.i.i.i.i25, ptr %i.bx
+  br label %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_2EbT_SC_T0_.exit"
 
 .loopexit.split.loop.exit41.i.i.i.i45:            ; preds = %bb.w
   %i.cy = getelementptr inbounds nuw i8, ptr %.sroa.031.050.i.i.i.i35, i64 8
@@ -526,7 +529,7 @@ bb.ae:                                            ; preds = %bb.ad, %._crit_edge
   br label %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_2EbT_SC_T0_.exit"
 
 "_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_2EbT_SC_T0_.exit": ; preds = %.lr.ph.i.i.i.i33, %bb.aa, %bb.ac, %bb.ae, %.loopexit.split.loop.exit41.i.i.i.i45, %.loopexit.split.loop.exit43.i.i.i.i44, %.loopexit.split.loop.exit45.i.i.i.i43
-  %.sroa.08.0.in.sroa.speculated.i.i.i.i27 = phi ptr [ %.sroa.031.1.i.i.i.i28, %bb.ac ], [ %i.da, %.loopexit.split.loop.exit45.i.i.i.i43 ], [ %.sroa.031.0.lcssa.i.i.i.i24, %bb.aa ], [ %i.cy, %.loopexit.split.loop.exit41.i.i.i.i45 ], [ %.sroa.031.2.i.i.i.i25, %bb.ae ], [ %i.cz, %.loopexit.split.loop.exit43.i.i.i.i44 ], [ %.sroa.031.050.i.i.i.i35, %.lr.ph.i.i.i.i33 ]
+  %.sroa.08.0.in.sroa.speculated.i.i.i.i27 = phi ptr [ %.sroa.031.1.i.i.i.i28, %bb.ac ], [ %spec.select.i.i.i.i28, %bb.ae ], [ %i.da, %.loopexit.split.loop.exit45.i.i.i.i43 ], [ %.sroa.031.0.lcssa.i.i.i.i24, %bb.aa ], [ %i.cz, %.loopexit.split.loop.exit43.i.i.i.i44 ], [ %i.cy, %.loopexit.split.loop.exit41.i.i.i.i45 ], [ %.sroa.031.050.i.i.i.i35, %.lr.ph.i.i.i.i33 ]
   %i.db = icmp eq ptr %i.bx, %.sroa.08.0.in.sroa.speculated.i.i.i.i27
   br i1 %i.db, label %.thread, label %bb.ai
 
@@ -546,11 +549,11 @@ bb.ah:                                            ; preds = %bb.af
   resume { ptr, i32 } %i.dd
 
 .loopexit:                                        ; preds = %.lr.ph.i.i.i.i16, %.loopexit.split.loop.exit45.i.i.i.i, %.loopexit.split.loop.exit43.i.i.i.i, %.loopexit.split.loop.exit41.i.i.i.i, %bb.u, %bb.s, %bb.q
-  %.sroa.08.0.in.sroa.speculated.i.i.i.i12 = phi ptr [ %.sroa.031.1.i.i.i.i, %bb.s ], [ %i.bt, %.loopexit.split.loop.exit45.i.i.i.i ], [ %.sroa.031.0.lcssa.i.i.i.i, %bb.q ], [ %i.br, %.loopexit.split.loop.exit41.i.i.i.i ], [ %.sroa.031.2.i.i.i.i, %bb.u ], [ %i.bs, %.loopexit.split.loop.exit43.i.i.i.i ], [ %.sroa.031.050.i.i.i.i, %.lr.ph.i.i.i.i16 ]
+  %.sroa.08.0.in.sroa.speculated.i.i.i.i12 = phi ptr [ %.sroa.031.1.i.i.i.i, %bb.s ], [ %spec.select.i.i.i.i12, %bb.u ], [ %i.bt, %.loopexit.split.loop.exit45.i.i.i.i ], [ %.sroa.031.0.lcssa.i.i.i.i, %bb.q ], [ %i.bs, %.loopexit.split.loop.exit43.i.i.i.i ], [ %i.br, %.loopexit.split.loop.exit41.i.i.i.i ], [ %.sroa.031.050.i.i.i.i, %.lr.ph.i.i.i.i16 ]
   %i.de = icmp eq ptr %i.aq, %.sroa.08.0.in.sroa.speculated.i.i.i.i12
   br i1 %i.de, label %.thread, label %bb.ai
 
-.thread:                                          ; preds = %bb.ae, %._crit_edge.i.i.i.i22, %bb.k, %._crit_edge.i.i.i.i, %bb.u, %._crit_edge.i.i.i.i11, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_2EbT_SC_T0_.exit", %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit", %.loopexit
+.thread:                                          ; preds = %._crit_edge.i.i.i.i22, %._crit_edge.i.i.i.i, %._crit_edge.i.i.i.i11, %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_2EbT_SC_T0_.exit", %"_ZSt6all_ofIN9__gnu_cxx17__normal_iteratorIPKN16OpenColorIO_v2_519GradingControlPointESt6vectorIS3_SaIS3_EEEEZNKS2_23GradingBSplineCurveImpl10isIdentityEvE3$_0EbT_SC_T0_.exit", %.loopexit
   %i.df = load ptr, ptr %0, align 8, !tbaa !25
   %i.dg = getelementptr inbounds nuw i8, ptr %i.df, i64 56
   %i.dh = load ptr, ptr %i.dg, align 8
