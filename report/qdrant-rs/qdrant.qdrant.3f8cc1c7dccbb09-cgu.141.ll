@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/qdrant.qdrant.3f8cc1c7dccbb09-cgu.141?download=true
+inline.NumInlined: 270
+inline.NumDeleted: 121
 begin_hunk_0_@_RINvXNvXNvNtNtCs607s0NAIaWN_7segment10data_types8order_by1__NtB8_9DirectionNtNtCs4NSHK7GLW4I_10serde_core2de11Deserialize11deserializeNtB3_14___FieldVisitorNtB1d_7Visitor9visit_u64NtNtCs3cfoFdbzKJ1_12erased_serde5error5ErrorECsl8OoimOLbh_6qdrant:bb.a
   ], !prof !76
 
@@ -200,8 +202,8 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.l, %bb.m, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
-  %.sroa.12.sroa.0.0 = phi ptr [ undef, %bb.i ], [ undef, %bb.h ], [ undef, %bb.b ], [ undef, %bb.c ], [ undef, %bb.d ], [ undef, %bb.e ], [ undef, %bb.f ], [ undef, %bb.g ], [ %i.ca, %bb.m ], [ %i.ca, %bb.l ]
   %.sroa.12.sroa.4.0 = phi i64 [ undef, %bb.i ], [ undef, %bb.h ], [ undef, %bb.b ], [ undef, %bb.c ], [ undef, %bb.d ], [ undef, %bb.e ], [ undef, %bb.f ], [ undef, %bb.g ], [ %2, %bb.m ], [ 0, %bb.l ]
+  %.sroa.12.sroa.0.0 = phi ptr [ undef, %bb.i ], [ undef, %bb.h ], [ undef, %bb.b ], [ undef, %bb.c ], [ undef, %bb.d ], [ undef, %bb.e ], [ undef, %bb.f ], [ undef, %bb.g ], [ %i.ca, %bb.m ], [ %i.ca, %bb.l ]
   %.sroa.0.0 = phi i64 [ -9223372036854775801, %bb.i ], [ -9223372036854775802, %bb.h ], [ -9223372036854775808, %bb.b ], [ -9223372036854775807, %bb.c ], [ -9223372036854775806, %bb.d ], [ -9223372036854775805, %bb.e ], [ -9223372036854775804, %bb.f ], [ -9223372036854775803, %bb.g ], [ %i.bx, %bb.m ], [ %i.bx, %bb.l ]
   store i64 %.sroa.0.0, ptr %0, align 8
   %.sroa.12.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -272,8 +274,8 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g, %bb.c, %bb.b
-  %.sroa.6.sroa.0.0 = phi ptr [ undef, %bb.c ], [ undef, %bb.b ], [ %i.ab, %bb.g ], [ %i.ab, %bb.f ]
   %.sroa.6.sroa.4.0 = phi i64 [ undef, %bb.c ], [ undef, %bb.b ], [ %2, %bb.g ], [ 0, %bb.f ]
+  %.sroa.6.sroa.0.0 = phi ptr [ undef, %bb.c ], [ undef, %bb.b ], [ %i.ab, %bb.g ], [ %i.ab, %bb.f ]
   %.sroa.0.0 = phi i64 [ -9223372036854775807, %bb.c ], [ -9223372036854775808, %bb.b ], [ %i.y, %bb.g ], [ %i.y, %bb.f ]
   store i64 %.sroa.0.0, ptr %0, align 8
   %.sroa.6.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %0, i64 8

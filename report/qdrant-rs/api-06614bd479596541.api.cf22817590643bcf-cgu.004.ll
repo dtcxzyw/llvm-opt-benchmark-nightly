@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/api-06614bd479596541.api.cf22817590643bcf-cgu.004?download=true
+inline.NumInlined: 1259
+inline.NumDeleted: 603
 begin_hunk_0_@_RINvYNtNtNtCs8O45qwFIwQX_10serde_json5value3ser10SerializerNtNtCs4NSHK7GLW4I_10serde_core3ser10Serializer11collect_seqRINtNtCshqfBqtY9aGF_8indexmap3set8IndexSetxINtNtCskKLDkoKarTP_4core4hash18BuildHasherDefaultNtCsbojlWnkViqs_3fnv9FnvHasherEEECshMzyYDJGtjv_3api:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   ret void
@@ -200,8 +202,8 @@ bb.a:
   %i.i = load i64, ptr %i.h, align 8, !alias.scope !3896, !noalias !3893
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.k = load i64, ptr %i.j, align 8, !alias.scope !3896, !noalias !3893
-  %.sroa.0.sroa.0.0.i = zext i1 %.not.i to i64    ; 2 uses
   %.sroa.0.sroa.5.sroa.6.0.i = select i1 %.not.i, i64 %i.i, i64 undef ; 2 uses
+  %.sroa.0.sroa.0.0.i = zext i1 %.not.i to i64    ; 2 uses
   %.sroa.5.0.i = select i1 %.not.i, i64 %i.k, i64 0 ; 2 uses
   store i64 %.sroa.0.sroa.0.0.i, ptr %i.f, align 8, !alias.scope !3893, !noalias !3896
   %.sroa.01.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -390,8 +392,8 @@ bb.a:
   %i.i = load i64, ptr %i.h, align 8, !alias.scope !3931, !noalias !3928
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.k = load i64, ptr %i.j, align 8, !alias.scope !3931, !noalias !3928
-  %.sroa.0.sroa.0.0.i = zext i1 %.not.i to i64    ; 2 uses
   %.sroa.0.sroa.5.sroa.6.0.i = select i1 %.not.i, i64 %i.i, i64 undef ; 2 uses
+  %.sroa.0.sroa.0.0.i = zext i1 %.not.i to i64    ; 2 uses
   %.sroa.5.0.i = select i1 %.not.i, i64 %i.k, i64 0 ; 2 uses
   store i64 %.sroa.0.sroa.0.0.i, ptr %i.f, align 8, !alias.scope !3928, !noalias !3931
   %.sroa.01.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8

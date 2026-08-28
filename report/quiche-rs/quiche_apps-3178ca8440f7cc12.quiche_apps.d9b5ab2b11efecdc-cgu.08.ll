@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quiche-rs/original/quiche_apps-3178ca8440f7cc12.quiche_apps.d9b5ab2b11efecdc-cgu.08?download=true
+inline.NumInlined: 262
+inline.NumDeleted: 93
 begin_hunk_0_@_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs3JBf551F2Kj_4qlog6events5http315PriorityUpdatedECsiGRwBGCeC5s_11quiche_apps:bb.a
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsiGRwBGCeC5s_11quiche_apps(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.a)
           to label %.body unwind label %bb.d, !dbg !11201
@@ -200,15 +202,15 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvMs1_Cs3f36owOmepS_6quicheNtB5_10Connection14destination_idCsiGRwBGCeC5s_11quiche_apps.exit.i: ; preds = %bb.e, %.noexc41
   %.pn.i.i = phi ptr [ %i.al, %.noexc41 ], [ %i.ae, %bb.e ] ; 2 uses
-  %.sroa.33.0.sink.in.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 64, !dbg !11757
-  %.sroa.33.0.sink.i.i = load i64, ptr %.sroa.33.0.sink.in.i.i, align 16, !dbg !11757, !noalias !11347, !noundef !504
-  %.sroa.02.0.sink.in.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 56, !dbg !11757
-  %.sroa.02.0.sink.i.i = load ptr, ptr %.sroa.02.0.sink.in.i.i, align 8, !dbg !11757, !noalias !11347, !nonnull !504, !noundef !504
+  %.sroa.33.0.sink.in.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 56, !dbg !11757
+  %.sroa.02.0.i.i = load ptr, ptr %.sroa.33.0.sink.in.i.i, align 8, !dbg !11757, !noalias !11347, !nonnull !504, !noundef !504
+  %.sroa.02.0.sink.in.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 64, !dbg !11757
+  %.sroa.33.0.i.i = load i64, ptr %.sroa.02.0.sink.in.i.i, align 16, !dbg !11757, !noalias !11347, !noundef !504
   store i64 -1, ptr %i.d, align 8, !dbg !11777, !alias.scope !11347, !noalias !11784
   %.sroa.49.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8, !dbg !11777
-  store ptr %.sroa.02.0.sink.i.i, ptr %.sroa.49.0..sroa_idx.i.i, align 8, !dbg !11777, !alias.scope !11347, !noalias !11784
+  store ptr %.sroa.02.0.i.i, ptr %.sroa.49.0..sroa_idx.i.i, align 8, !dbg !11777, !alias.scope !11347, !noalias !11784
   %.sroa.510.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16, !dbg !11777 ; 2 uses
-  store i64 %.sroa.33.0.sink.i.i, ptr %.sroa.510.0..sroa_idx.i.i, align 8, !dbg !11777, !alias.scope !11347, !noalias !11784
+  store i64 %.sroa.33.0.i.i, ptr %.sroa.510.0..sroa_idx.i.i, align 8, !dbg !11777, !alias.scope !11347, !noalias !11784
   call void @llvm.experimental.noalias.scope.decl(metadata !11785), !dbg !11788
     #dbg_value(ptr %0, !11789, !DIExpression(), !11799)
     #dbg_value(ptr %0, !11801, !DIExpression(), !11807)
@@ -611,12 +613,12 @@ bb.aa:                                            ; preds = %bb.y
     #dbg_value(ptr %i.n, !14298, !DIExpression(), !14606)
   %i.bp = icmp eq i64 %.sink81, 0, !dbg !14607
   %..i = select i1 %i.bp, i8 0, i8 3, !dbg !14607
-  %.sroa.049.0.i.a = select i1 %i.ae, i8 -2, i8 17, !dbg !14607
-  %.sroa.050.0.i = select i1 %i.ae, i8 17, i8 -1, !dbg !14607
+  %.sroa.049.0.i.a = select i1 %i.ae, i8 17, i8 -1, !dbg !14607
+  %.sroa.050.0.i = select i1 %i.ae, i8 -2, i8 17, !dbg !14607
   %.sroa.01.1.i = select i1 %i.ae, i8 -1, i8 %..i, !dbg !14607
     #dbg_value(i8 %.sroa.01.1.i, !14303, !DIExpression(), !14608)
-    #dbg_value(i8 %.sroa.050.0.i, !14302, !DIExpression(), !14608)
-    #dbg_value(i8 %.sroa.049.0.i.a, !14300, !DIExpression(), !14608)
+    #dbg_value(i8 %.sroa.050.0.i, !14300, !DIExpression(), !14608)
+    #dbg_value(i8 %.sroa.049.0.i.a, !14302, !DIExpression(), !14608)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !14609, !noalias !14279
   call void @_RNvMNtCsexYYUdYSQU6_5alloc6stringNtB2_6String15from_utf8_lossy(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sink83, i64 noundef %.sink82), !dbg !14609, !noalias !14279
     #dbg_value(ptr %i.f, !14495, !DIExpression(), !14610)
@@ -626,12 +628,12 @@ bb.aa:                                            ; preds = %bb.y
   %i.br = load ptr, ptr %i.bq, align 8, !dbg !14631, !noalias !14279, !nonnull !504
   %i.bs = getelementptr inbounds nuw i8, ptr %i.f, i64 16, !dbg !14631
   %i.bt = load i64, ptr %i.bs, align 8, !dbg !14631, !noalias !14279 ; 5 uses
-    #dbg_value(i64 %i.bt, !14352, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14632)
-    #dbg_value(i64 %i.bt, !14343, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14633)
-    #dbg_value(i64 %i.bt, !14489, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14634)
     #dbg_value(ptr %i.br, !14352, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14632)
     #dbg_value(ptr %i.br, !14343, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14633)
     #dbg_value(ptr %i.br, !14489, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14634)
+    #dbg_value(i64 %i.bt, !14352, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14632)
+    #dbg_value(i64 %i.bt, !14343, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14633)
+    #dbg_value(i64 %i.bt, !14489, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14634)
     #dbg_value(ptr %i.br, !14368, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14635)
     #dbg_value(ptr %i.br, !14363, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14636)
     #dbg_value(ptr %i.br, !14358, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14637)
@@ -706,9 +708,9 @@ bb.ag:                                            ; preds = %bb.ak, %bb.af
   %i.cg = getelementptr inbounds nuw i8, ptr %i.g, i64 56, !dbg !14667
   store i8 0, ptr %i.cg, align 8, !dbg !14667, !noalias !14279
   %i.ch = getelementptr inbounds nuw i8, ptr %i.g, i64 59, !dbg !14667
-  store i8 %.sroa.049.0.i.a, ptr %i.ch, align 1, !dbg !14667, !noalias !14279
+  store i8 %.sroa.050.0.i, ptr %i.ch, align 1, !dbg !14667, !noalias !14279
   %i.ci = getelementptr inbounds nuw i8, ptr %i.g, i64 58, !dbg !14667
-  store i8 %.sroa.050.0.i, ptr %i.ci, align 2, !dbg !14667, !noalias !14279
+  store i8 %.sroa.049.0.i.a, ptr %i.ci, align 2, !dbg !14667, !noalias !14279
   store i64 1, ptr %i.g, align 8, !dbg !14667, !noalias !14279
   %i.cj = getelementptr inbounds nuw i8, ptr %i.g, i64 8, !dbg !14667
   store i64 %.sink81, ptr %i.cj, align 8, !dbg !14667, !noalias !14279

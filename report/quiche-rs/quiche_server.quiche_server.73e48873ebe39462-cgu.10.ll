@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quiche-rs/original/quiche_server.quiche_server.73e48873ebe39462-cgu.10?download=true
+inline.NumInlined: 294
+inline.NumDeleted: 94
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RNvXNvNtNtCskKLDkoKarTP_4core2io5write17default_write_fmtINtB2_7AdapterINtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufwriter9BufWriterNtNtCsG258MDvU3F_3std2fs4FileEENtNtB8_3fmt5Write9write_strCs9WTr9tUZcLm_13quiche_server:bb.a
   invoke void @_RNvXsd_NtNtCskKLDkoKarTP_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.v)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs9WTr9tUZcLm_13quiche_server.exit.i unwind label %bb.g, !dbg !7006
@@ -200,7 +204,7 @@ bb.b:                                             ; preds = %_RNvXs8_NtCs3f36owO
   br label %_RNCNvMs0_NtCs3f36owOmepS_6quiche3cidNtB7_21ConnectionIdentifiers13find_scid_seq0Cs9WTr9tUZcLm_13quiche_server.exit.i, !dbg !7337
 
 _RNCNvMs0_NtCs3f36owOmepS_6quiche3cidNtB7_21ConnectionIdentifiers13find_scid_seq0Cs9WTr9tUZcLm_13quiche_server.exit.i: ; preds = %bb.b, %_RNvXs8_NtCs3f36owOmepS_6quiche6packetNtB5_12ConnectionIdNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i.i, %bb.a
-  %.sroa.0.0.i = phi i64 [ %i.g, %bb.b ], [ undef, %_RNvXs8_NtCs3f36owOmepS_6quiche6packetNtB5_12ConnectionIdNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i.i ], [ undef, %bb.a ]
+  %.sroa.0.0.i = phi i64 [ %i.g, %bb.b ], [ undef, %_RNvXs8_NtCs3f36owOmepS_6quiche6packetNtB5_12ConnectionIdNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i.i ], [ undef, %bb.a ], !dbg !7279
   %.sink2.i.sroa.phi.i = phi ptr [ %.sroa.8.i, %bb.b ], [ %.sroa.4.i, %_RNvXs8_NtCs3f36owOmepS_6quiche6packetNtB5_12ConnectionIdNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i.i ], [ %.sroa.4.i, %bb.a ]
   %.sink.i.i = phi i64 [ %i.k, %bb.b ], [ 2, %_RNvXs8_NtCs3f36owOmepS_6quiche6packetNtB5_12ConnectionIdNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i.i ], [ 2, %bb.a ]
   store i64 %.sink.i.i, ptr %.sink2.i.sroa.phi.i, align 8, !dbg !7306, !alias.scope !7280, !noalias !7336
@@ -603,19 +607,19 @@ _RNvXs3_NtNtCskKLDkoKarTP_4core5array4iterINtB5_8IntoIterTyyEKj4_ENtNtNtNtB9_4it
 
 .preheader:                                       ; preds = %_RNvXs3_NtNtCskKLDkoKarTP_4core5array4iterINtB5_8IntoIterTyyEKj4_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9WTr9tUZcLm_13quiche_server.exit.thread, %bb.a
   %.ph = phi i64 [ %.promoted29, %bb.a ], [ %i.e, %_RNvXs3_NtNtCskKLDkoKarTP_4core5array4iterINtB5_8IntoIterTyyEKj4_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9WTr9tUZcLm_13quiche_server.exit.thread ] ; 2 uses
-  %.sroa.9.118.ph.in = phi ptr [ %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx, %bb.a ], [ %i.h, %_RNvXs3_NtNtCskKLDkoKarTP_4core5array4iterINtB5_8IntoIterTyyEKj4_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9WTr9tUZcLm_13quiche_server.exit.thread ]
-  %.sroa.6.117.ph.in = phi ptr [ %.sroa.5.0..sroa_idx, %bb.a ], [ %i.g, %_RNvXs3_NtNtCskKLDkoKarTP_4core5array4iterINtB5_8IntoIterTyyEKj4_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9WTr9tUZcLm_13quiche_server.exit.thread ]
-  %.sroa.6.117.ph = load i64, ptr %.sroa.6.117.ph.in, align 8 ; 3 uses
-  %.sroa.9.118.ph = load i64, ptr %.sroa.9.118.ph.in, align 8 ; 2 uses
-    #dbg_value(i64 %.sroa.6.117.ph, !8587, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8768)
-    #dbg_value(i64 %.sroa.9.118.ph, !8587, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8768)
+  %.sroa.9.118.ph.in = phi ptr [ %.sroa.5.0..sroa_idx, %bb.a ], [ %i.g, %_RNvXs3_NtNtCskKLDkoKarTP_4core5array4iterINtB5_8IntoIterTyyEKj4_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9WTr9tUZcLm_13quiche_server.exit.thread ]
+  %.sroa.6.117.ph.in = phi ptr [ %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx, %bb.a ], [ %i.h, %_RNvXs3_NtNtCskKLDkoKarTP_4core5array4iterINtB5_8IntoIterTyyEKj4_ENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9WTr9tUZcLm_13quiche_server.exit.thread ]
+  %.sroa.6.117.ph = load i64, ptr %.sroa.6.117.ph.in, align 8 ; 2 uses
+  %.sroa.9.118.ph = load i64, ptr %.sroa.9.118.ph.in, align 8 ; 3 uses
+    #dbg_value(i64 %.sroa.9.118.ph, !8587, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8768)
+    #dbg_value(i64 %.sroa.6.117.ph, !8587, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8768)
     #dbg_value(ptr %1, !8769, !DIExpression(), !8790)
     #dbg_value(ptr %i.a, !8788, !DIExpression(), !8792)
   %.not.i.i.i.i.not39 = icmp eq i64 %i.c, %.ph, !dbg !8793
   br i1 %.not.i.i.i.i.not39, label %._crit_edge, label %.lr.ph, !dbg !8793
 
 bb.c:                                             ; preds = %.lr.ph
-    #dbg_value(i64 %.sroa.6.117.ph, !8587, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8768)
+    #dbg_value(i64 %.sroa.9.118.ph, !8587, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8768)
     #dbg_value(i64 %i.o, !8587, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8768)
     #dbg_value(ptr %1, !8769, !DIExpression(), !8790)
     #dbg_value(ptr %i.a, !8788, !DIExpression(), !8792)
@@ -643,7 +647,7 @@ bb.d:                                             ; preds = %bb.e, %._crit_edge,
   ret void, !dbg !8849
 
 .lr.ph:                                           ; preds = %.preheader, %bb.c
-  %.sroa.9.11840 = phi i64 [ %i.o, %bb.c ], [ %.sroa.9.118.ph, %.preheader ]
+  %.sroa.9.11840 = phi i64 [ %i.o, %bb.c ], [ %.sroa.6.117.ph, %.preheader ]
   %i.i = phi i64 [ %i.j, %bb.c ], [ %.ph, %.preheader ] ; 3 uses
     #dbg_value(i64 %.sroa.9.11840, !8587, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8768)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8850), !dbg !8853
@@ -672,13 +676,13 @@ bb.d:                                             ; preds = %bb.e, %._crit_edge,
   %i.m = load i64, ptr %i.l, align 8, !dbg !8876, !alias.scope !8877, !noalias !8884, !noundef !56 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 8, !dbg !8876
   %i.o = load i64, ptr %i.n, align 8, !dbg !8876, !alias.scope !8877, !noalias !8884, !noundef !56 ; 4 uses
-    #dbg_value(i64 %i.o, !8827, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8828)
     #dbg_value(i64 %i.m, !8827, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8828)
+    #dbg_value(i64 %i.o, !8827, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8828)
     #dbg_value(i64 poison, !8827, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8828)
     #dbg_value(ptr %.sroa.5.0..sroa_idx, !8591, !DIExpression(), !8888)
     #dbg_value(ptr poison, !8889, !DIExpression(), !8896)
     #dbg_value(ptr poison, !8895, !DIExpression(), !8896)
-  %.not = icmp eq i64 %.sroa.6.117.ph, %i.m, !dbg !8898
+  %.not = icmp eq i64 %.sroa.9.118.ph, %i.m, !dbg !8898
   br i1 %.not, label %bb.c, label %bb.e, !dbg !8899
 
 ._crit_edge.loopexit:                             ; preds = %bb.c
@@ -688,13 +692,13 @@ bb.d:                                             ; preds = %bb.e, %._crit_edge,
   br label %._crit_edge, !dbg !8596
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
-  %.sroa.9.118.lcssa = phi i64 [ %.sroa.9.118.ph, %.preheader ], [ %i.o, %._crit_edge.loopexit ]
-    #dbg_value(i64 undef, !8827, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8828)
+  %.sroa.9.118.lcssa = phi i64 [ %.sroa.6.117.ph, %.preheader ], [ %i.o, %._crit_edge.loopexit ]
     #dbg_value(i64 undef, !8827, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !8828)
+    #dbg_value(i64 undef, !8827, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8828)
     #dbg_value(i64 poison, !8827, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8828)
   store i64 0, ptr %1, align 8, !dbg !8596
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !8902
-  store i64 %.sroa.6.117.ph, ptr %i.p, align 8, !dbg !8902
+  store i64 %.sroa.9.118.ph, ptr %i.p, align 8, !dbg !8902
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !8902
   store i64 %.sroa.9.118.lcssa, ptr %i.q, align 8, !dbg !8902
   br label %bb.d, !dbg !8903
@@ -705,7 +709,7 @@ bb.e:                                             ; preds = %.lr.ph
   store i64 %i.o, ptr %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx, align 8, !dbg !8901, !alias.scope !8850, !noalias !8854
   store i64 1, ptr %1, align 8, !dbg !8596
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !8905
-  store i64 %.sroa.6.117.ph, ptr %i.r, align 8, !dbg !8905
+  store i64 %.sroa.9.118.ph, ptr %i.r, align 8, !dbg !8905
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !8905
   store i64 %.sroa.9.11840, ptr %i.s, align 8, !dbg !8905
   br label %bb.d, !dbg !8906

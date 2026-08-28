@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ripgrep-rs/original/rg.rg.209bb3de479c597c-cgu.07?download=true
+inline.NumInlined: 669
+inline.NumDeleted: 154
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_RNvMs2_Cs4h1mOclLn8u_14encoding_rs_ioINtB5_17DecodeReaderBytesRNtNtCsG258MDvU3F_3std2fs4FileQINtNtCsexYYUdYSQU6_5alloc3vec3VechEE4fillCs2NzvFoTxuAy_2rg:bb.a
 
 bb.f:                                             ; preds = %bb.c
@@ -200,10 +204,10 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not, label %bb.e, label %_RNvXsp_Cs6Ur84ob3I15_9termcolorNtB5_6BufferNtB5_10WriteColor5reset.exit, !dbg !1664
 
 bb.e:                                             ; preds = %bb.d
-  %.sroa.3.0.in.a = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !1665
-  %.sroa.3.0 = load i64, ptr %.sroa.3.0.in.a, align 8, !dbg !1665, !noundef !15
-  %.sroa.07.0.in = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !1665
-  %.sroa.07.0 = load ptr, ptr %.sroa.07.0.in, align 8, !dbg !1665, !nonnull !15, !noundef !15
+  %.sroa.3.0.in.a = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !1665
+  %.sroa.07.0 = load ptr, ptr %.sroa.3.0.in.a, align 8, !dbg !1665, !nonnull !15, !noundef !15
+  %.sroa.07.0.in = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !1665
+  %.sroa.3.0 = load i64, ptr %.sroa.07.0.in, align 8, !dbg !1665, !noundef !15
   %i.n = invoke noundef ptr @_RNvYINtNtCshhHc5tDBDRu_12grep_printer7counter13CounterWriterNtCs6Ur84ob3I15_9termcolor6BufferENtNtNtCskKLDkoKarTP_4core2io5write5Write9write_allCs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.h, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.07.0, i64 noundef %.sroa.3.0)
           to label %bb.f unwind label %bb.i, !dbg !1673 ; 2 uses
 
@@ -606,8 +610,8 @@ bb.ny:                                            ; preds = %bb.nx
   br label %bb.nz, !dbg !7478
 
 bb.nz:                                            ; preds = %bb.ny, %bb.nx
-  %.sroa.010.0.i.i.a = phi i64 [ 1, %bb.ny ], [ 0, %bb.nx ], !dbg !7479 ; 2 uses
-  %.sroa.5.0.i101.i = phi i64 [ %i.ayj, %bb.ny ], [ undef, %bb.nx ], !dbg !7479 ; 2 uses
+  %.sroa.010.0.i.i.a = phi i64 [ %i.ayj, %bb.ny ], [ undef, %bb.nx ], !dbg !7479 ; 2 uses
+  %.sroa.5.0.i101.i = phi i64 [ 1, %bb.ny ], [ 0, %bb.nx ], !dbg !7479 ; 2 uses
   %i.ayk = call i64 @llvm.usub.sat.i64(i64 %i.axx, i64 %i.ayc), !dbg !7480
   %i.ayl = add nuw i64 %i.ayk, 1, !dbg !7483      ; 2 uses
   %i.aym = load ptr, ptr %i.ail, align 8, !dbg !7484, !noundef !15
@@ -649,8 +653,8 @@ bb.oc:                                            ; preds = %bb.ob, %bb.oa
 
 bb.od:                                            ; preds = %bb.oc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x), !dbg !7531, !noalias !7526
-  store i64 %.sroa.010.0.i.i.a, ptr %i.x, align 8, !dbg !7532, !noalias !7526
-  store i64 %.sroa.5.0.i101.i, ptr %.sroa.3.0..sroa_idx.i.i94.i, align 8, !dbg !7532, !noalias !7526
+  store i64 %.sroa.5.0.i101.i, ptr %i.x, align 8, !dbg !7532, !noalias !7526
+  store i64 %.sroa.010.0.i.i.a, ptr %.sroa.3.0..sroa_idx.i.i94.i, align 8, !dbg !7532, !noalias !7526
   store i64 1, ptr %.sroa.5.0..sroa_idx.i.i95.i, align 8, !dbg !7532, !noalias !7526
   store i64 %i.ayl, ptr %.sroa.7.0..sroa_idx.i.i96.i, align 8, !dbg !7532, !noalias !7526
   store ptr %i.azb, ptr %.sroa.9.0..sroa_idx.i.i97.i, align 8, !dbg !7532, !noalias !7526
@@ -739,7 +743,7 @@ bb.ol:                                            ; preds = %bb.ok, %bb.oi, %bb.
   %i.baf = phi ptr [ %i.bac, %bb.ok ], [ %i.azs, %bb.oi ], [ %i.azs, %bb.oh ] ; 6 uses
   %.val145.i.i = phi ptr [ %i.baa, %bb.ok ], [ %i.azt, %bb.oi ], [ %i.azt, %bb.oh ]
   %.sroa.37.0.ph.i116.i = phi i8 [ %..i.i115.i, %bb.ok ], [ 0, %bb.oi ], [ 0, %bb.oh ] ; 2 uses
-  %i.bag = trunc nuw i64 %.sroa.010.0.i.i.a to i1, !dbg !7597
+  %i.bag = trunc nuw i64 %.sroa.5.0.i101.i to i1, !dbg !7597
   br i1 %i.bag, label %bb.om, label %bb.pg, !dbg !7597
 
 bb.om:                                            ; preds = %bb.ol
@@ -818,7 +822,7 @@ _RNvMs6_NtCshhHc5tDBDRu_12grep_printer8standardINtB5_12StandardImplRRNtNtCsdq8xs
 
 _RNvMs7_NtCshhHc5tDBDRu_12grep_printer8standardINtB5_13PreludeWriterRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherNtCs6Ur84ob3I15_9termcolor6BufferE15write_separatorCs2NzvFoTxuAy_2rg.exit.i118.i.i: ; preds = %_RNvMs6_NtCshhHc5tDBDRu_12grep_printer8standardINtB5_12StandardImplRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherNtCs6Ur84ob3I15_9termcolor6BufferE5writeCs2NzvFoTxuAy_2rg.exit166.i.i, %bb.or, %_RNvMs6_NtCshhHc5tDBDRu_12grep_printer8standardINtB5_12StandardImplRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherNtCs6Ur84ob3I15_9termcolor6BufferE5writeCs2NzvFoTxuAy_2rg.exit165.i.i, %bb.om
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad), !dbg !7673, !noalias !7674
-  call void @_RNvMs5_NtCshhHc5tDBDRu_12grep_printer4utilNtB5_16DecimalFormatter3new(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.ad, i64 noundef %.sroa.5.0.i101.i), !dbg !7675, !noalias !7674
+  call void @_RNvMs5_NtCshhHc5tDBDRu_12grep_printer4utilNtB5_16DecimalFormatter3new(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.ad, i64 noundef %.sroa.010.0.i.i.a), !dbg !7675, !noalias !7674
   %i.bbc = load ptr, ptr %i.de, align 8, !dbg !7676, !noalias !7674, !nonnull !15, !align !519, !noundef !15
   %i.bbd = getelementptr inbounds nuw i8, ptr %i.bbc, i64 240, !dbg !7676
   %i.bbe = load ptr, ptr %i.bbd, align 8, !dbg !7676, !noalias !7674, !nonnull !15, !align !519, !noundef !15
@@ -1221,10 +1225,10 @@ _RNvXs_NtCsgwyS1EwTFAS_8grep_cli3wtrNtB4_14StandardStreamNtCs6Ur84ob3I15_9termco
   br i1 %.not, label %_RNvXs_NtCsgwyS1EwTFAS_8grep_cli3wtrNtB4_14StandardStreamNtCs6Ur84ob3I15_9termcolor10WriteColor9set_color.exit.thread, label %_RNvXs_NtCsgwyS1EwTFAS_8grep_cli3wtrNtB4_14StandardStreamNtCs6Ur84ob3I15_9termcolor10WriteColor5reset.exit, !dbg !10720
 
 _RNvXs_NtCsgwyS1EwTFAS_8grep_cli3wtrNtB4_14StandardStreamNtCs6Ur84ob3I15_9termcolor10WriteColor9set_color.exit.thread: ; preds = %bb.b, %_RNvXs_NtCsgwyS1EwTFAS_8grep_cli3wtrNtB4_14StandardStreamNtCs6Ur84ob3I15_9termcolor10WriteColor9set_color.exit
-  %.sroa.3.0.in.a = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !10721
-  %.sroa.3.0 = load i64, ptr %.sroa.3.0.in.a, align 8, !dbg !10721, !noundef !15
-  %.sroa.07.0.in = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !10721
-  %.sroa.07.0 = load ptr, ptr %.sroa.07.0.in, align 8, !dbg !10721, !nonnull !15, !noundef !15
+  %.sroa.3.0.in.a = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !10721
+  %.sroa.07.0 = load ptr, ptr %.sroa.3.0.in.a, align 8, !dbg !10721, !nonnull !15, !noundef !15
+  %.sroa.07.0.in = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !10721
+  %.sroa.3.0 = load i64, ptr %.sroa.07.0.in, align 8, !dbg !10721, !noundef !15
   %i.r = invoke noundef ptr @_RNvYINtNtCshhHc5tDBDRu_12grep_printer7counter13CounterWriterNtNtCsgwyS1EwTFAS_8grep_cli3wtr14StandardStreamENtNtNtCskKLDkoKarTP_4core2io5write5Write9write_allCs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull align 8 dereferenceable(80) %i.h, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.07.0, i64 noundef %.sroa.3.0)
           to label %bb.d unwind label %bb.f, !dbg !10726 ; 2 uses
 
@@ -1627,8 +1631,8 @@ bb.ml:                                            ; preds = %bb.mk
   br label %bb.mm, !dbg !16096
 
 bb.mm:                                            ; preds = %bb.ml, %bb.mk
-  %.sroa.010.0.i.i.a = phi i64 [ 1, %bb.ml ], [ 0, %bb.mk ], !dbg !16097 ; 2 uses
-  %.sroa.5.0.i101.i = phi i64 [ %i.axf, %bb.ml ], [ undef, %bb.mk ], !dbg !16097 ; 2 uses
+  %.sroa.010.0.i.i.a = phi i64 [ %i.axf, %bb.ml ], [ undef, %bb.mk ], !dbg !16097 ; 2 uses
+  %.sroa.5.0.i101.i = phi i64 [ 1, %bb.ml ], [ 0, %bb.mk ], !dbg !16097 ; 2 uses
   %i.axg = call i64 @llvm.usub.sat.i64(i64 %i.awt, i64 %i.awy), !dbg !16098
   %i.axh = add nuw i64 %i.axg, 1, !dbg !16101     ; 2 uses
   %i.axi = load ptr, ptr %i.aht, align 8, !dbg !16102, !noundef !15
@@ -1670,8 +1674,8 @@ bb.mp:                                            ; preds = %bb.mo, %bb.mn
 
 bb.mq:                                            ; preds = %bb.mp
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x), !dbg !16149, !noalias !16144
-  store i64 %.sroa.010.0.i.i.a, ptr %i.x, align 8, !dbg !16150, !noalias !16144
-  store i64 %.sroa.5.0.i101.i, ptr %.sroa.3.0..sroa_idx.i.i94.i, align 8, !dbg !16150, !noalias !16144
+  store i64 %.sroa.5.0.i101.i, ptr %i.x, align 8, !dbg !16150, !noalias !16144
+  store i64 %.sroa.010.0.i.i.a, ptr %.sroa.3.0..sroa_idx.i.i94.i, align 8, !dbg !16150, !noalias !16144
   store i64 1, ptr %.sroa.5.0..sroa_idx.i.i95.i, align 8, !dbg !16150, !noalias !16144
   store i64 %i.axh, ptr %.sroa.7.0..sroa_idx.i.i96.i, align 8, !dbg !16150, !noalias !16144
   store ptr %i.axx, ptr %.sroa.9.0..sroa_idx.i.i97.i, align 8, !dbg !16150, !noalias !16144
@@ -1760,7 +1764,7 @@ bb.my:                                            ; preds = %bb.mx, %bb.mv, %bb.
   %i.azb = phi ptr [ %i.ayy, %bb.mx ], [ %i.ayo, %bb.mv ], [ %i.ayo, %bb.mu ] ; 6 uses
   %.val145.i.i = phi ptr [ %i.ayw, %bb.mx ], [ %i.ayp, %bb.mv ], [ %i.ayp, %bb.mu ]
   %.sroa.37.0.ph.i118.i = phi i8 [ %..i.i117.i, %bb.mx ], [ 0, %bb.mv ], [ 0, %bb.mu ] ; 2 uses
-  %i.azc = trunc nuw i64 %.sroa.010.0.i.i.a to i1, !dbg !16215
+  %i.azc = trunc nuw i64 %.sroa.5.0.i101.i to i1, !dbg !16215
   br i1 %i.azc, label %bb.mz, label %bb.np, !dbg !16215
 
 bb.mz:                                            ; preds = %bb.my
@@ -1839,7 +1843,7 @@ _RNvMs6_NtCshhHc5tDBDRu_12grep_printer8standardINtB5_12StandardImplRRNtNtCsdq8xs
 
 _RNvMs7_NtCshhHc5tDBDRu_12grep_printer8standardINtB5_13PreludeWriterRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherNtNtCsgwyS1EwTFAS_8grep_cli3wtr14StandardStreamE15write_separatorCs2NzvFoTxuAy_2rg.exit.i118.i.i: ; preds = %_RNvMs6_NtCshhHc5tDBDRu_12grep_printer8standardINtB5_12StandardImplRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherNtNtCsgwyS1EwTFAS_8grep_cli3wtr14StandardStreamE5writeCs2NzvFoTxuAy_2rg.exit166.i.i, %bb.ne, %_RNvMs6_NtCshhHc5tDBDRu_12grep_printer8standardINtB5_12StandardImplRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherNtNtCsgwyS1EwTFAS_8grep_cli3wtr14StandardStreamE5writeCs2NzvFoTxuAy_2rg.exit165.i149.i, %bb.mz
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad), !dbg !16291, !noalias !16292
-  call void @_RNvMs5_NtCshhHc5tDBDRu_12grep_printer4utilNtB5_16DecimalFormatter3new(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.ad, i64 noundef %.sroa.5.0.i101.i), !dbg !16293, !noalias !16292
+  call void @_RNvMs5_NtCshhHc5tDBDRu_12grep_printer4utilNtB5_16DecimalFormatter3new(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.ad, i64 noundef %.sroa.010.0.i.i.a), !dbg !16293, !noalias !16292
   %i.azy = load ptr, ptr %i.de, align 8, !dbg !16294, !noalias !16292, !nonnull !15, !align !519, !noundef !15
   %i.azz = getelementptr inbounds nuw i8, ptr %i.azy, i64 240, !dbg !16294
   %i.baa = load ptr, ptr %i.azz, align 8, !dbg !16294, !noalias !16292, !nonnull !15, !align !519, !noundef !15

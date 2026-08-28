@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/salsa-rs/original/salsa-18876957f0a83274.salsa.72a3b6749c32557-cgu.14?download=true
+inline.NumInlined: 266
+inline.NumDeleted: 123
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvMs_NtNtCsC8CapfvpQ1_5salsa8function4syncNtB4_10ClaimGuard9drop_impl:bb.a
   %i.ad = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i32 %i.ab, ptr %i.ad, align 8, !noalias !363
@@ -200,12 +204,12 @@ bb.h:                                             ; preds = %bb.e
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.e, %bb.h, %bb.g
-  %.sroa.055.0.a = phi i64 [ %.sroa.055.0.copyload56, %bb.h ], [ %.sroa.055.0.copyload, %bb.g ], [ 1, %bb.e ] ; 5 uses
+  %.sroa.055.0.a = phi i64 [ %.sroa.8.0.copyload61, %bb.h ], [ %.sroa.8.0.copyload, %bb.g ], [ 0, %bb.e ] ; 2 uses
   %.sroa.657.0 = phi ptr [ %.sroa.657.0.copyload59, %bb.h ], [ %.sroa.657.0.copyload, %bb.g ], [ inttoptr (i64 4 to ptr), %bb.e ] ; 6 uses
-  %.sroa.8.0 = phi i64 [ %.sroa.8.0.copyload61, %bb.h ], [ %.sroa.8.0.copyload, %bb.g ], [ 0, %bb.e ] ; 2 uses
-  %i.af = trunc nuw i64 %.sroa.055.0.a to i1
-  %i.ag = getelementptr inbounds nuw [12 x i8], ptr %.sroa.657.0, i64 %.sroa.8.0
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %.sroa.657.0, i64 %.sroa.8.0
+  %.sroa.8.0 = phi i64 [ %.sroa.055.0.copyload56, %bb.h ], [ %.sroa.055.0.copyload, %bb.g ], [ 1, %bb.e ] ; 5 uses
+  %i.af = trunc nuw i64 %.sroa.8.0 to i1
+  %i.ag = getelementptr inbounds nuw [12 x i8], ptr %.sroa.657.0, i64 %.sroa.055.0.a
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %.sroa.657.0, i64 %.sroa.055.0.a
   %.sroa.5.0.i = select i1 %i.af, ptr %i.ag, ptr %i.ah ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   %i.ai = icmp eq i8 %4, 0
@@ -213,7 +217,7 @@ bb.i:                                             ; preds = %bb.e, %bb.h, %bb.g
 
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  store i64 %.sroa.055.0.a, ptr %i.g, align 8
+  store i64 %.sroa.8.0, ptr %i.g, align 8
   %.sroa.549.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 3 uses
   store ptr %.sroa.657.0, ptr %.sroa.549.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
@@ -227,7 +231,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
-  store i64 %.sroa.055.0.a, ptr %i.i, align 8
+  store i64 %.sroa.8.0, ptr %i.i, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 3 uses
   store ptr %.sroa.657.0, ptr %.sroa.2.0..sroa_idx, align 8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
@@ -243,7 +247,7 @@ bb.k:                                             ; preds = %bb.i
 bb.l:                                             ; preds = %bb.o, %bb.j
   %.promoted.i = phi ptr [ %.promoted.i.pre, %bb.o ], [ %.sroa.657.0, %bb.j ] ; 3 uses
   %i.ap = phi ptr [ %.pre121, %bb.o ], [ %.sroa.5.0.i, %bb.j ] ; 3 uses
-  %i.aq = phi i64 [ %.pre120, %bb.o ], [ %.sroa.055.0.a, %bb.j ]
+  %i.aq = phi i64 [ %.pre120, %bb.o ], [ %.sroa.8.0, %bb.j ]
   call void @llvm.experimental.noalias.scope.decl(metadata !367)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store ptr %i.aj, ptr %i.f, align 8, !noalias !370
@@ -342,7 +346,7 @@ bb.p:                                             ; preds = %.loopexit
 bb.q:                                             ; preds = %bb.x, %bb.k
   %.pre115117 = phi ptr [ %.sroa.5.0.i, %bb.k ], [ %.pre115, %bb.x ] ; 4 uses
   %.promoted.i23 = phi ptr [ %.sroa.657.0, %bb.k ], [ %.promoted.i23.pre, %bb.x ] ; 3 uses
-  %i.bq = phi i64 [ %.sroa.055.0.a, %bb.k ], [ %i.cx, %bb.x ] ; 2 uses
+  %i.bq = phi i64 [ %.sroa.8.0, %bb.k ], [ %i.cx, %bb.x ] ; 2 uses
   %.sroa.0.0 = phi i64 [ 0, %bb.k ], [ %.sroa.0.1, %bb.x ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !390)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/html5ever-rs/original/html5ever-7c94b86f9147eabc.html5ever.8469159039506d9f-cgu.3?download=true
+inline.NumInlined: 68
+inline.NumDeleted: 45
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E14try_subtendrilCsbmOI1VUejFP_9html5ever:bb.a
   br i1 %i.f, label %bb.o, label %bb.m
 
@@ -200,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.j
   %i.bu = getelementptr inbounds nuw i8, ptr %.139, i64 %i.y
-  %gepdiff = sub nsw i64 %., %i.y
+  %gepdiff = sub nuw nsw i64 %., %i.y
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_RNCINvNvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters10take_whileINtBa_9TakeWhileppENtNtNtBe_6traits8iterator8Iterator8try_fold5checkRhjINtNtNtBg_3ops9try_trait17NeverShortCircuitjENCNvNtCsbmOI1VUejFP_9html5ever8encoding48extract_a_character_encoding_from_a_meta_element0NCINvMB2b_B28_10wrap_mut_2jB25_NCNvYIB10_INtNtNtBg_5slice4iter4IterhEB2R_EB1i_5count0E0E0B2X_.exit.i.i.i, %.lr.ph.preheader.i.i.i
@@ -247,7 +251,7 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph.preheader.i.i.i66:                         ; preds = %bb.m
   %i.ci = getelementptr inbounds nuw i8, ptr %spec.select169, i64 %i.cf
-  %gepdiff121 = sub nsw i64 %spec.select, %i.cf
+  %gepdiff121 = sub nuw nsw i64 %spec.select, %i.cf
   br label %.lr.ph.i.i.i68
 
 .lr.ph.i.i.i68:                                   ; preds = %_RNCINvNvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters10take_whileINtBa_9TakeWhileppENtNtNtBe_6traits8iterator8Iterator8try_fold5checkRhjINtNtNtBg_3ops9try_trait17NeverShortCircuitjENCNvNtCsbmOI1VUejFP_9html5ever8encoding48extract_a_character_encoding_from_a_meta_elements_0NCINvMB2b_B28_10wrap_mut_2jB25_NCNvYIB10_INtNtNtBg_5slice4iter4IterhEB2R_EB1i_5count0E0E0B2X_.exit.i.i.i, %.lr.ph.preheader.i.i.i66
@@ -301,7 +305,7 @@ bb.p:                                             ; preds = %bb.n, %bb.n
 
 bb.q:                                             ; preds = %bb.p
   %i.cv = getelementptr inbounds nuw i8, ptr %spec.select173, i64 %spec.select172
-  %gepdiff122 = sub nsw i64 %spec.select172, %i.cu
+  %gepdiff122 = sub nuw nsw i64 %spec.select172, %i.cu
   %i.cw = icmp samesign eq i64 %i.cu, %spec.select172
   br i1 %i.cw, label %.thread106, label %.lr.ph.i.preheader
 
@@ -516,8 +520,8 @@ bb.g:                                             ; preds = %bb.h, %bb.f, %bb.e
   %i.j = phi i1 [ false, %bb.f ], [ false, %bb.e ], [ true, %bb.h ]
   %i.k = phi i1 [ true, %bb.f ], [ false, %bb.e ], [ false, %bb.h ]
   %.sroa.13.0 = phi i64 [ 3, %bb.f ], [ 4, %bb.e ], [ 2, %bb.h ] ; 5 uses
-  %i.l = sub nsw i64 %2, %3                       ; 3 uses
-  %.not88 = icmp ult i64 %i.l, %.sroa.13.0
+  %i.l = sub nuw nsw i64 %2, %3                   ; 3 uses
+  %.not88 = icmp samesign ult i64 %i.l, %.sroa.13.0
   br i1 %.not88, label %bb.j, label %.lr.ph172
 
 bb.h:                                             ; preds = %bb.f
@@ -761,8 +765,8 @@ bb.af:                                            ; preds = %bb.ab
 
 bb.ag:                                            ; preds = %bb.ah, %bb.af, %bb.ab
   %.sroa.1355.0 = phi i64 [ 3, %bb.af ], [ 4, %bb.ab ], [ 2, %bb.ah ] ; 6 uses
-  %i.cl = sub nsw i64 %2, %.lcssa161              ; 3 uses
-  %.not86 = icmp ult i64 %i.cl, %.sroa.1355.0
+  %i.cl = sub nuw nsw i64 %2, %.lcssa161          ; 3 uses
+  %.not86 = icmp samesign ult i64 %i.cl, %.sroa.1355.0
   br i1 %.not86, label %bb.aj, label %bb.ak
 
 bb.ah:                                            ; preds = %bb.af
@@ -775,7 +779,7 @@ bb.ai:                                            ; preds = %bb.ah
   br label %bb.ax
 
 bb.aj:                                            ; preds = %bb.ag
-  %i.co = sub nsw i64 %3, %.lcssa161
+  %i.co = sub nuw nsw i64 %3, %.lcssa161
   %i.cp = sub nuw nsw i64 %.sroa.1355.0, %i.cl
   store i16 3, ptr %0, align 8
   %.sroa.064.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -902,7 +906,7 @@ _RNvNtCsldpiDtalS19_7tendril4futf6decode.exit:    ; preds = %bb.av, %bb.au, %bb.
   %.sroa.14104.0 = phi i32 [ undef, %bb.au ], [ undef, %bb.at ], [ %.sroa.0.0.i, %bb.av ]
   %.sroa.12103.0 = phi i16 [ %i.eq, %bb.au ], [ %i.eo, %bb.at ], [ undef, %bb.av ]
   %.sroa.0102.0 = phi i16 [ 2, %bb.au ], [ 1, %bb.at ], [ 0, %bb.av ]
-  %i.es = sub nsw i64 %3, %.lcssa161
+  %i.es = sub nuw nsw i64 %3, %.lcssa161
   store i16 %.sroa.0102.0, ptr %0, align 8
   %.sroa.060.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2
   store i16 %.sroa.12103.0, ptr %.sroa.060.sroa.4.0..sroa_idx, align 2

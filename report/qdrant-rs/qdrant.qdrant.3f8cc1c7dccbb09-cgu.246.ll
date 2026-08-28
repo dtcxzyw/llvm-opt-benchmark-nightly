@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/qdrant.qdrant.3f8cc1c7dccbb09-cgu.246?download=true
+inline.NumInlined: 695
+inline.NumDeleted: 340
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RINvXs1j_Cs3EstPQUvMw7_13ordered_floatINtB7_12OrderedFloatdENtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant:bb.a
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
@@ -200,8 +205,8 @@ _RNvMNtNtCs577yCKf7gy3_4http3uri4pathNtB2_12PathAndQuery4path.exit: ; preds = %b
   br label %_RNvMNtNtCs577yCKf7gy3_4http3uri4pathNtB2_12PathAndQuery4path.exit.thread13
 
 _RNvMNtNtCs577yCKf7gy3_4http3uri4pathNtB2_12PathAndQuery4path.exit.thread13: ; preds = %_RNvMNtNtCs577yCKf7gy3_4http3uri4pathNtB2_12PathAndQuery4path.exit.thread, %_RNvMNtNtCs577yCKf7gy3_4http3uri4pathNtB2_12PathAndQuery4path.exit, %_RNvXs8_NtNtCskKLDkoKarTP_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i, %_RINvXsf_NtNtCs577yCKf7gy3_4http3uri9authorityNtB6_9AuthorityNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit
-  %.sroa.01.0 = phi ptr [ inttoptr (i64 1 to ptr), %_RINvXsf_NtNtCs577yCKf7gy3_4http3uri9authorityNtB6_9AuthorityNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit ], [ %i.av, %_RNvMNtNtCs577yCKf7gy3_4http3uri4pathNtB2_12PathAndQuery4path.exit.thread ], [ %spec.select, %_RNvMNtNtCs577yCKf7gy3_4http3uri4pathNtB2_12PathAndQuery4path.exit ], [ @29, %_RNvXs8_NtNtCskKLDkoKarTP_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i ] ; 2 uses
   %.sroa.3.0 = phi i64 [ 0, %_RINvXsf_NtNtCs577yCKf7gy3_4http3uri9authorityNtB6_9AuthorityNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit ], [ %.sroa.5.0.i.ph, %_RNvMNtNtCs577yCKf7gy3_4http3uri4pathNtB2_12PathAndQuery4path.exit.thread ], [ %spec.select.i, %_RNvMNtNtCs577yCKf7gy3_4http3uri4pathNtB2_12PathAndQuery4path.exit ], [ 1, %_RNvXs8_NtNtCskKLDkoKarTP_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i ]
+  %.sroa.01.0 = phi ptr [ inttoptr (i64 1 to ptr), %_RINvXsf_NtNtCs577yCKf7gy3_4http3uri9authorityNtB6_9AuthorityNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit ], [ %i.av, %_RNvMNtNtCs577yCKf7gy3_4http3uri4pathNtB2_12PathAndQuery4path.exit.thread ], [ %spec.select, %_RNvMNtNtCs577yCKf7gy3_4http3uri4pathNtB2_12PathAndQuery4path.exit ], [ @29, %_RNvXs8_NtNtCskKLDkoKarTP_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB9_5slice5index10SliceIndexeE3get.exit.i ] ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.01.0) ]
   tail call fastcc void @_RNvXs2_NtNtCsG258MDvU3F_3std4hash6randomNtB5_13DefaultHasherNtNtCskKLDkoKarTP_4core4hash6Hasher5write(ptr noalias nofree noundef align 8 dereferenceable(72) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.01.0, i64 noundef %.sroa.3.0) #30
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 80

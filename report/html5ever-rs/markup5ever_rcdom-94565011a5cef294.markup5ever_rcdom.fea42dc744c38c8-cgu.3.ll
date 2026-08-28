@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/html5ever-rs/original/markup5ever_rcdom-94565011a5cef294.markup5ever_rcdom.fea42dc744c38c8-cgu.3?download=true
+inline.NumInlined: 102
+inline.NumDeleted: 67
 begin_hunk_0_@_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecINtNtB7_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropB12_:bb.a
 
 _RNvMs3_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner10deallocateCs1mImOlsSUsK_17markup5ever_rcdom.exit: ; preds = %bb.a, %bb.b
@@ -200,12 +202,12 @@ bb.e:                                             ; preds = %bb.c, %bb.a
   unreachable
 
 _RINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecINtNtB8_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtNtB1Z_5slice4iter4IterBG_ENCNvMBW_BU_18clone_with_subtree0EEBW_.exit.i: ; preds = %bb.d, %bb.b
-  %.sroa.4.0.i.a = phi i64 [ %i.f, %bb.d ], [ 0, %bb.b ] ; 2 uses
-  %.sroa.10.0.i = phi i64 [ %i.j, %bb.d ], [ 8, %bb.b ]
-  %i.k = inttoptr i64 %.sroa.10.0.i to ptr        ; 2 uses
-  %i.l = icmp samesign ule i64 %i.f, %.sroa.4.0.i.a
+  %.sroa.4.0.i.a = phi i64 [ %i.j, %bb.d ], [ 8, %bb.b ]
+  %.sroa.10.0.i = phi i64 [ %i.f, %bb.d ], [ 0, %bb.b ] ; 2 uses
+  %i.k = inttoptr i64 %.sroa.4.0.i.a to ptr       ; 2 uses
+  %i.l = icmp samesign ule i64 %i.f, %.sroa.10.0.i
   tail call void @llvm.assume(i1 %i.l)
-  store i64 %.sroa.4.0.i.a, ptr %i.b, align 8
+  store i64 %.sroa.10.0.i, ptr %i.b, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.k, ptr %i.m, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
@@ -253,7 +255,6 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !5, !noundef !5 ; 2 uses
   %i.i = load i64, ptr %i.f, align 8, !noundef !5 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !162
   %i.j = mul nuw nsw i64 %i.i, 40                 ; 2 uses
   %i.k = icmp eq i64 %i.i, 0
@@ -288,11 +289,11 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.z, %.lr.ph.i
-  %.sroa.10.030.i = phi i64 [ %i.i, %.lr.ph.i ], [ %i.v, %bb.z ]
-  %.sroa.014.029.i = phi ptr [ %i.h, %.lr.ph.i ], [ %i.y, %bb.z ] ; 7 uses
-  %.sroa.7.028.i = phi i64 [ 0, %.lr.ph.i ], [ %i.z, %bb.z ] ; 3 uses
-  %i.v = add nsw i64 %.sroa.10.030.i, -1          ; 2 uses
-  %i.w = icmp eq ptr %.sroa.014.029.i, %i.r
+  %.sroa.014.030.i = phi ptr [ %i.h, %.lr.ph.i ], [ %i.y, %bb.z ] ; 7 uses
+  %.sroa.7.029.i = phi i64 [ 0, %.lr.ph.i ], [ %i.z, %bb.z ] ; 3 uses
+  %.sroa.7.028.i = phi i64 [ %i.i, %.lr.ph.i ], [ %i.v, %bb.z ]
+  %i.v = add nsw i64 %.sroa.7.028.i, -1           ; 2 uses
+  %i.w = icmp eq ptr %.sroa.014.030.i, %i.r
   br i1 %i.w, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit, label %bb.f
 
 bb.e:                                             ; preds = %bb.i
@@ -301,13 +302,14 @@ bb.e:                                             ; preds = %bb.i
   br label %bb.ab
 
 bb.f:                                             ; preds = %bb.d
-  %i.y = getelementptr inbounds nuw i8, ptr %.sroa.014.029.i, i64 40
-  %i.z = add nuw nsw i64 %.sroa.7.028.i, 1
+  %i.y = getelementptr inbounds nuw i8, ptr %.sroa.014.030.i, i64 40
+  %i.z = add nuw nsw i64 %.sroa.7.029.i, 1
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !168
   tail call void @llvm.experimental.noalias.scope.decl(metadata !171)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !174)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !176
-  %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.014.029.i, i64 16
+  %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.014.030.i, i64 16
   %i.ab = load i64, ptr %i.aa, align 8, !alias.scope !174, !noalias !177, !noundef !5 ; 4 uses
   %.not.i.i12.i = icmp ne i64 %i.ab, 0
   %i.ac = and i64 %i.ab, 3
@@ -318,7 +320,7 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.h, %bb.f
   store i64 %i.ab, ptr %i.b, align 8, !noalias !176
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !176
-  %i.ae = load i64, ptr %.sroa.014.029.i, align 8, !range !80, !alias.scope !174, !noalias !177, !noundef !5 ; 4 uses
+  %i.ae = load i64, ptr %.sroa.014.030.i, align 8, !range !80, !alias.scope !174, !noalias !177, !noundef !5 ; 4 uses
   %i.af = and i64 %i.ae, 3
   %i.ag = icmp eq i64 %i.af, 0
   br i1 %i.ag, label %bb.j, label %bb.n
@@ -363,7 +365,7 @@ bb.m:                                             ; preds = %bb.p, %bb.k
 
 bb.n:                                             ; preds = %bb.j, %bb.g
   store i64 %i.ae, ptr %i.a, align 8, !noalias !176
-  %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.014.029.i, i64 8
+  %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.014.030.i, i64 8
   %i.ar = load i64, ptr %i.aq, align 8, !range !80, !alias.scope !174, !noalias !177, !noundef !5 ; 3 uses
   %i.as = and i64 %i.ar, 3
   %i.at = icmp eq i64 %i.as, 0
@@ -419,7 +421,7 @@ _RNvXsl_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4
   store i64 %i.ar, ptr %i.t, align 8, !alias.scope !171, !noalias !186
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !176
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !176
-  %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.014.029.i, i64 24 ; 3 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.014.030.i, i64 24 ; 3 uses
   %i.bk = load ptr, ptr %i.bj, align 8, !noalias !187, !nonnull !5, !noundef !5 ; 5 uses
   %i.bl = icmp ugt ptr %i.bk, inttoptr (i64 15 to ptr)
   br i1 %i.bl, label %bb.u, label %bb.z
@@ -431,7 +433,7 @@ bb.u:                                             ; preds = %_RNvXsl_NtCsa2F6HLA
   br i1 %i.bo, label %bb.v, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i
 
 bb.v:                                             ; preds = %bb.u
-  %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.014.029.i, i64 36 ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.014.030.i, i64 36 ; 2 uses
   %i.bq = load i32, ptr %i.bp, align 4, !noalias !187, !noundef !5
   %i.br = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   store i32 %i.bq, ptr %i.br, align 8, !noalias !187
@@ -478,8 +480,9 @@ bb.z:                                             ; preds = %_RNvXNtCsldpiDtalS1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.u, ptr noundef nonnull align 8 dereferenceable(16) %i.bj, i64 16, i1 false), !noalias !162
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.d, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !noalias !162
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !168
-  %i.cc = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.7.028.i
+  %i.cc = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %.sroa.7.029.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.cc, ptr noundef nonnull align 8 dereferenceable(40) %i.d, i64 40, i1 false), !noalias !162
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %i.cd = icmp eq i64 %i.v, 0
   br i1 %i.cd, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit, label %bb.d
 
@@ -491,7 +494,7 @@ bb.aa:                                            ; preds = %bb.ab
 
 bb.ab:                                            ; preds = %bb.x, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEECs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i, %bb.e
   %eh.lpad-body.i = phi { ptr, i32 } [ %i.x, %bb.e ], [ %.pn.i.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEECs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i ], [ %i.ca, %bb.x ]
-  store i64 %.sroa.7.028.i, ptr %i.q, align 8, !noalias !162
+  store i64 %.sroa.7.029.i, ptr %i.q, align 8, !noalias !162
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeEECs1mImOlsSUsK_17markup5ever_rcdom(ptr noalias nofree noundef align 8 dereferenceable(24) %i.e) #21
           to label %bb.ac unwind label %bb.aa, !noalias !162
 
@@ -503,7 +506,6 @@ _RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtCsa2F6HLACPlS_11markup5ever
   store i64 %i.i, ptr %i.cf, align 8, !noalias !162
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !162
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   ret void
 }
 

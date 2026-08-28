@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/html5ever-rs/original/xml5ever-7ad231a96e8c14d3.xml5ever.dd9596b111d44890-cgu.4?download=true
+inline.NumInlined: 88
+inline.NumDeleted: 55
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -143,8 +145,7 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = alloca [16 x i8], align 8                ; 4 uses
   %i.c = alloca [16 x i8], align 8                ; 4 uses
-  %1 = alloca [24 x i8], align 8                  ; 9 uses
-  %i.d = alloca [24 x i8], align 8                ; 4 uses
+  %i.d = alloca [24 x i8], align 8                ; 9 uses
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #24
   %i.e = tail call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef 24, i64 noundef 8) #24 ; 4 uses
   %i.f = icmp eq ptr %i.e, null
@@ -155,19 +156,18 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  call void @llvm.lifetime.start.p0(ptr nonnull %1), !noalias !26
-  store ptr null, ptr %1, align 8, !noalias !26
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !26
+  store ptr null, ptr %i.d, align 8, !noalias !26
+  %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store i64 0, ptr %i.g, align 8, !noalias !26
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !26
-  %i.h = invoke { i64, i64 } @_RNvMsi_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8BTreeMapINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEEIB18_IB1K_NtB2s_18NamespaceStaticSetEEE6insertCsj1ugBVjDER0_8xml5ever(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, i64 noundef 0, i64 noundef 0)
+  %i.h = invoke { i64, i64 } @_RNvMsi_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8BTreeMapINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEEIB18_IB1K_NtB2s_18NamespaceStaticSetEEE6insertCsj1ugBVjDER0_8xml5ever(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.d, i64 noundef 0, i64 noundef 0)
           to label %bb.d unwind label %bb.c, !noalias !26 ; 2 uses
 
 bb.c:                                             ; preds = %bb.o, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEEEECsj1ugBVjDER0_8xml5ever.exit3.i, %bb.k, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEEEECsj1ugBVjDER0_8xml5ever.exit.i, %bb.g, %_RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit
   %i.i = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RNvXNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB2_8BTreeMapINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEEIB15_IB1H_NtB2p_18NamespaceStaticSetEEENtNtNtB19_3ops4drop4Drop4dropCsj1ugBVjDER0_8xml5ever(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
+  invoke void @_RNvXNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB2_8BTreeMapINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEEIB15_IB1H_NtB2p_18NamespaceStaticSetEEENtNtNtB19_3ops4drop4Drop4dropCsj1ugBVjDER0_8xml5ever(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.d)
           to label %bb.r unwind label %bb.p, !noalias !26
 
 bb.d:                                             ; preds = %_RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit
@@ -200,7 +200,7 @@ bb.g:                                             ; preds = %bb.f
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEEEECsj1ugBVjDER0_8xml5ever.exit.i: ; preds = %bb.g, %bb.f, %bb.e, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !26
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !26
-  %i.u = invoke { i64, i64 } @_RNvMsi_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8BTreeMapINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEEIB18_IB1K_NtB2s_18NamespaceStaticSetEEE6insertCsj1ugBVjDER0_8xml5ever(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, i64 noundef 1819113521, i64 noundef 2)
+  %i.u = invoke { i64, i64 } @_RNvMsi_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8BTreeMapINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEEIB18_IB1K_NtB2s_18NamespaceStaticSetEEE6insertCsj1ugBVjDER0_8xml5ever(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.d, i64 noundef 1819113521, i64 noundef 2)
           to label %bb.h unwind label %bb.c, !noalias !26 ; 2 uses
 
 bb.h:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEEEECsj1ugBVjDER0_8xml5ever.exit.i
@@ -233,7 +233,7 @@ bb.k:                                             ; preds = %bb.j
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEEEECsj1ugBVjDER0_8xml5ever.exit3.i: ; preds = %bb.k, %bb.j, %bb.i, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !26
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !26
-  %i.ag = invoke { i64, i64 } @_RNvMsi_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8BTreeMapINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEEIB18_IB1K_NtB2s_18NamespaceStaticSetEEE6insertCsj1ugBVjDER0_8xml5ever(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, i64 noundef 126918102710353, i64 noundef 4294967298)
+  %i.ag = invoke { i64, i64 } @_RNvMsi_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB5_8BTreeMapINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEEIB18_IB1K_NtB2s_18NamespaceStaticSetEEE6insertCsj1ugBVjDER0_8xml5ever(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.d, i64 noundef 126918102710353, i64 noundef 4294967298)
           to label %bb.l unwind label %bb.c, !noalias !26 ; 2 uses
 
 bb.l:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEEEECsj1ugBVjDER0_8xml5ever.exit3.i
@@ -271,10 +271,8 @@ bb.p:                                             ; preds = %bb.c
 
 bb.q:                                             ; preds = %bb.o, %bb.n, %bb.m, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !26
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %1), !noalias !26
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !26
   store i64 1, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.e, ptr %.sroa.4.0..sroa_idx, align 8

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ripgrep-rs/original/grep_regex-342b229b6101d80c.grep_regex.9c5453b099169300-cgu.3?download=true
+inline.NumInlined: 196
+inline.NumDeleted: 116
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_RINvMs0_NtNtCs2G6gJ0Mq9lu_12regex_syntax3hir8intervalINtB6_11IntervalSetNtB8_17ClassUnicodeRangeE3newINtNtCskKLDkoKarTP_4core6option6OptionB18_EECsdq8xsXUia3c_10grep_regex:bb.a
 bb.n:                                             ; preds = %.loopexit.split-lp
   %i.av = landingpad { ptr, i32 }
@@ -200,8 +204,8 @@ _RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_unin
 .lr.ph275.prol.loopexit:                          ; preds = %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90.prol, %.lr.ph275.preheader
   %.lcssa340.unr = phi i64 [ poison, %.lr.ph275.preheader ], [ %i.ar, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90.prol ]
   %.sroa.012.0274.unr = phi ptr [ %i.e, %.lr.ph275.preheader ], [ %i.ap, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90.prol ]
-  %.sroa.26.0273.unr = phi i64 [ %i.ak, %.lr.ph275.preheader ], [ %i.ar, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90.prol ]
-  %.sroa.035.0272.unr = phi ptr [ %i.aj, %.lr.ph275.preheader ], [ %i.aq, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90.prol ]
+  %.sroa.035.0273.unr = phi ptr [ %i.aj, %.lr.ph275.preheader ], [ %i.aq, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90.prol ]
+  %.sroa.26.0272.unr = phi i64 [ %i.ak, %.lr.ph275.preheader ], [ %i.ar, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90.prol ]
   %i.as = icmp eq i64 %2, 2, !dbg !870
   br i1 %i.as, label %.loopexit, label %.lr.ph275, !dbg !870
 
@@ -210,25 +214,25 @@ _RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_unin
 
 .lr.ph275:                                        ; preds = %.lr.ph275.prol.loopexit, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90.1
   %.sroa.012.0274 = phi ptr [ %i.az, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90.1 ], [ %.sroa.012.0274.unr, %.lr.ph275.prol.loopexit ] ; 5 uses
-  %.sroa.26.0273 = phi i64 [ %i.bb, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90.1 ], [ %.sroa.26.0273.unr, %.lr.ph275.prol.loopexit ] ; 2 uses
-  %.sroa.035.0272 = phi ptr [ %i.ba, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90.1 ], [ %.sroa.035.0272.unr, %.lr.ph275.prol.loopexit ] ; 2 uses
+  %.sroa.035.0273 = phi ptr [ %i.ba, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90.1 ], [ %.sroa.035.0273.unr, %.lr.ph275.prol.loopexit ] ; 2 uses
+  %.sroa.26.0272 = phi i64 [ %i.bb, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90.1 ], [ %.sroa.26.0272.unr, %.lr.ph275.prol.loopexit ] ; 2 uses
   %i.at = getelementptr i8, ptr %.sroa.012.0274, i64 16, !dbg !880
   %.sroa.012.0.val81 = load i64, ptr %i.at, align 8, !dbg !880, !noundef !14 ; 4 uses
-  %.not.i83 = icmp ugt i64 %.sroa.012.0.val81, %.sroa.26.0273, !dbg !870
+  %.not.i83 = icmp ugt i64 %.sroa.012.0.val81, %.sroa.26.0272, !dbg !870
   br i1 %.not.i83, label %.invoke, label %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90, !dbg !870, !prof !58
 
 _RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90: ; preds = %.lr.ph275
   %i.au = getelementptr i8, ptr %.sroa.012.0274, i64 8, !dbg !880
   %.sroa.012.0.val = load ptr, ptr %i.au, align 8, !dbg !880, !nonnull !14, !noundef !14
-  %i.av = sub nuw nsw i64 %.sroa.26.0273, %.sroa.012.0.val81, !dbg !900 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.035.0272, ptr nonnull readonly align 1 %.sroa.012.0.val, i64 range(i64 0, -9223372036854775808) %.sroa.012.0.val81, i1 false), !dbg !901, !alias.scope !910
+  %i.av = sub nuw nsw i64 %.sroa.26.0272, %.sroa.012.0.val81, !dbg !900 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.035.0273, ptr nonnull readonly align 1 %.sroa.012.0.val, i64 range(i64 0, -9223372036854775808) %.sroa.012.0.val81, i1 false), !dbg !901, !alias.scope !910
   %i.aw = getelementptr i8, ptr %.sroa.012.0274, i64 40, !dbg !880
   %.sroa.012.0.val81.1 = load i64, ptr %i.aw, align 8, !dbg !880, !noundef !14 ; 4 uses
   %.not.i83.1 = icmp ugt i64 %.sroa.012.0.val81.1, %i.av, !dbg !870
   br i1 %.not.i83.1, label %.invoke, label %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90.1, !dbg !870, !prof !58
 
 _RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90.1: ; preds = %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit90
-  %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.035.0272, i64 %.sroa.012.0.val81, !dbg !893 ; 2 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.035.0273, i64 %.sroa.012.0.val81, !dbg !893 ; 2 uses
   %i.ay = getelementptr i8, ptr %.sroa.012.0274, i64 32, !dbg !880
   %.sroa.012.0.val.1 = load ptr, ptr %i.ay, align 8, !dbg !880, !nonnull !14, !noundef !14
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.012.0274, i64 48, !dbg !890 ; 2 uses
@@ -248,25 +252,25 @@ _RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_unin
 
 .lr.ph270:                                        ; preds = %.preheader233, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit108
   %.sroa.012.1269 = phi ptr [ %i.be, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit108 ], [ %i.e, %.preheader233 ] ; 3 uses
-  %.sroa.26.2268 = phi i64 [ %i.bl, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit108 ], [ %i.ak, %.preheader233 ] ; 2 uses
-  %.sroa.035.2267 = phi ptr [ %i.bk, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit108 ], [ %i.aj, %.preheader233 ] ; 2 uses
+  %.sroa.035.2268 = phi ptr [ %i.bk, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit108 ], [ %i.aj, %.preheader233 ] ; 2 uses
+  %.sroa.26.2267 = phi i64 [ %i.bl, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit108 ], [ %i.ak, %.preheader233 ] ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.012.1269, i64 24, !dbg !935 ; 2 uses
   %i.bf = getelementptr i8, ptr %.sroa.012.1269, i64 8, !dbg !938
   %.sroa.012.1.val = load ptr, ptr %i.bf, align 8, !dbg !938, !nonnull !14, !noundef !14
   %i.bg = getelementptr i8, ptr %.sroa.012.1269, i64 16, !dbg !938
   %.sroa.012.1.val80 = load i64, ptr %i.bg, align 8, !dbg !938, !noundef !14 ; 4 uses
-  %.not.i91 = icmp eq i64 %.sroa.26.2268, 0, !dbg !945
+  %.not.i91 = icmp eq i64 %.sroa.26.2267, 0, !dbg !945
   br i1 %.not.i91, label %.invoke, label %bb.f, !dbg !945, !prof !58
 
 bb.f:                                             ; preds = %.lr.ph270
-  %i.bh = add nsw i64 %.sroa.26.2268, -1, !dbg !950 ; 2 uses
+  %i.bh = add nsw i64 %.sroa.26.2267, -1, !dbg !950 ; 2 uses
   %i.bi = load i8, ptr %3, align 1, !dbg !952, !alias.scope !958
-  store i8 %i.bi, ptr %.sroa.035.2267, align 1, !dbg !952, !alias.scope !958
+  store i8 %i.bi, ptr %.sroa.035.2268, align 1, !dbg !952, !alias.scope !958
   %.not.i100 = icmp ugt i64 %.sroa.012.1.val80, %i.bh, !dbg !962
   br i1 %.not.i100, label %.invoke, label %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit108, !dbg !962, !prof !58
 
 _RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit108: ; preds = %bb.f
-  %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.035.2267, i64 1, !dbg !967 ; 2 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.035.2268, i64 1, !dbg !967 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 %.sroa.012.1.val80, !dbg !969
   %i.bl = sub nuw nsw i64 %i.bh, %.sroa.012.1.val80, !dbg !972 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bj, ptr nonnull readonly align 1 %.sroa.012.1.val, i64 range(i64 0, -9223372036854775808) %.sroa.012.1.val80, i1 false), !dbg !973, !alias.scope !979
@@ -275,25 +279,25 @@ _RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_unin
 
 .lr.ph265:                                        ; preds = %.preheader235, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit126
   %.sroa.012.2264 = phi ptr [ %i.bn, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit126 ], [ %i.e, %.preheader235 ] ; 3 uses
-  %.sroa.26.3263 = phi i64 [ %i.bu, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit126 ], [ %i.ak, %.preheader235 ] ; 2 uses
-  %.sroa.035.3262 = phi ptr [ %i.bt, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit126 ], [ %i.aj, %.preheader235 ] ; 2 uses
+  %.sroa.035.3263 = phi ptr [ %i.bt, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit126 ], [ %i.aj, %.preheader235 ] ; 2 uses
+  %.sroa.26.3262 = phi i64 [ %i.bu, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit126 ], [ %i.ak, %.preheader235 ] ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.sroa.012.2264, i64 24, !dbg !985 ; 2 uses
   %i.bo = getelementptr i8, ptr %.sroa.012.2264, i64 8, !dbg !988
   %.sroa.012.2.val = load ptr, ptr %i.bo, align 8, !dbg !988, !nonnull !14, !noundef !14
   %i.bp = getelementptr i8, ptr %.sroa.012.2264, i64 16, !dbg !988
   %.sroa.012.2.val79 = load i64, ptr %i.bp, align 8, !dbg !988, !noundef !14 ; 4 uses
-  %.not.i109 = icmp ult i64 %.sroa.26.3263, 2, !dbg !995
+  %.not.i109 = icmp ult i64 %.sroa.26.3262, 2, !dbg !995
   br i1 %.not.i109, label %.invoke, label %bb.g, !dbg !995, !prof !58
 
 bb.g:                                             ; preds = %.lr.ph265
-  %i.bq = add nsw i64 %.sroa.26.3263, -2, !dbg !1000 ; 2 uses
+  %i.bq = add nsw i64 %.sroa.26.3262, -2, !dbg !1000 ; 2 uses
   %i.br = load i16, ptr %3, align 1, !dbg !1002, !alias.scope !1008
-  store i16 %i.br, ptr %.sroa.035.3262, align 1, !dbg !1002, !alias.scope !1008
+  store i16 %i.br, ptr %.sroa.035.3263, align 1, !dbg !1002, !alias.scope !1008
   %.not.i118 = icmp ugt i64 %.sroa.012.2.val79, %i.bq, !dbg !1012
   br i1 %.not.i118, label %.invoke, label %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit126, !dbg !1012, !prof !58
 
 _RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit126: ; preds = %bb.g
-  %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.035.3262, i64 2, !dbg !1017 ; 2 uses
+  %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.035.3263, i64 2, !dbg !1017 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 %.sroa.012.2.val79, !dbg !1019
   %i.bu = sub nuw nsw i64 %i.bq, %.sroa.012.2.val79, !dbg !1022 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bs, ptr nonnull readonly align 1 %.sroa.012.2.val, i64 range(i64 0, -9223372036854775808) %.sroa.012.2.val79, i1 false), !dbg !1023, !alias.scope !1029
@@ -302,24 +306,24 @@ _RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_unin
 
 .lr.ph260:                                        ; preds = %.preheader237, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit144
   %.sroa.012.3259 = phi ptr [ %i.bw, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit144 ], [ %i.e, %.preheader237 ] ; 3 uses
-  %.sroa.26.4258 = phi i64 [ %i.cc, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit144 ], [ %i.ak, %.preheader237 ] ; 2 uses
-  %.sroa.035.4257 = phi ptr [ %i.cb, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit144 ], [ %i.aj, %.preheader237 ] ; 2 uses
+  %.sroa.035.4258 = phi ptr [ %i.cb, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit144 ], [ %i.aj, %.preheader237 ] ; 2 uses
+  %.sroa.26.4257 = phi i64 [ %i.cc, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit144 ], [ %i.ak, %.preheader237 ] ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.012.3259, i64 24, !dbg !1035 ; 2 uses
   %i.bx = getelementptr i8, ptr %.sroa.012.3259, i64 8, !dbg !1038
   %.sroa.012.3.val = load ptr, ptr %i.bx, align 8, !dbg !1038, !nonnull !14, !noundef !14
   %i.by = getelementptr i8, ptr %.sroa.012.3259, i64 16, !dbg !1038
   %.sroa.012.3.val78 = load i64, ptr %i.by, align 8, !dbg !1038, !noundef !14 ; 4 uses
-  %.not.i127 = icmp ult i64 %.sroa.26.4258, 3, !dbg !1045
+  %.not.i127 = icmp ult i64 %.sroa.26.4257, 3, !dbg !1045
   br i1 %.not.i127, label %.invoke, label %bb.h, !dbg !1045, !prof !58
 
 bb.h:                                             ; preds = %.lr.ph260
-  %i.bz = add nsw i64 %.sroa.26.4258, -3, !dbg !1050 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.035.4257, ptr noundef nonnull readonly align 1 dereferenceable(3) %3, i64 range(i64 0, -9223372036854775808) 3, i1 false), !dbg !1052, !alias.scope !1058
+  %i.bz = add nsw i64 %.sroa.26.4257, -3, !dbg !1050 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.035.4258, ptr noundef nonnull readonly align 1 dereferenceable(3) %3, i64 range(i64 0, -9223372036854775808) 3, i1 false), !dbg !1052, !alias.scope !1058
   %.not.i136 = icmp ugt i64 %.sroa.012.3.val78, %i.bz, !dbg !1062
   br i1 %.not.i136, label %.invoke, label %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit144, !dbg !1062, !prof !58
 
 _RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit144: ; preds = %bb.h
-  %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.035.4257, i64 3, !dbg !1067 ; 2 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %.sroa.035.4258, i64 3, !dbg !1067 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 %.sroa.012.3.val78, !dbg !1069
   %i.cc = sub nuw nsw i64 %i.bz, %.sroa.012.3.val78, !dbg !1072 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ca, ptr nonnull readonly align 1 %.sroa.012.3.val, i64 range(i64 0, -9223372036854775808) %.sroa.012.3.val78, i1 false), !dbg !1073, !alias.scope !1079
@@ -328,25 +332,25 @@ _RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_unin
 
 .lr.ph:                                           ; preds = %.preheader239, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit162
   %.sroa.012.4256 = phi ptr [ %i.ce, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit162 ], [ %i.e, %.preheader239 ] ; 3 uses
-  %.sroa.26.5255 = phi i64 [ %i.cl, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit162 ], [ %i.ak, %.preheader239 ] ; 2 uses
-  %.sroa.035.5254 = phi ptr [ %i.ck, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit162 ], [ %i.aj, %.preheader239 ] ; 2 uses
+  %.sroa.035.5255 = phi ptr [ %i.ck, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit162 ], [ %i.aj, %.preheader239 ] ; 2 uses
+  %.sroa.26.5254 = phi i64 [ %i.cl, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit162 ], [ %i.ak, %.preheader239 ] ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %.sroa.012.4256, i64 24, !dbg !1085 ; 2 uses
   %i.cf = getelementptr i8, ptr %.sroa.012.4256, i64 8, !dbg !1088
   %.sroa.012.4.val = load ptr, ptr %i.cf, align 8, !dbg !1088, !nonnull !14, !noundef !14
   %i.cg = getelementptr i8, ptr %.sroa.012.4256, i64 16, !dbg !1088
   %.sroa.012.4.val77 = load i64, ptr %i.cg, align 8, !dbg !1088, !noundef !14 ; 4 uses
-  %.not.i145 = icmp ult i64 %.sroa.26.5255, 4, !dbg !1095
+  %.not.i145 = icmp ult i64 %.sroa.26.5254, 4, !dbg !1095
   br i1 %.not.i145, label %.invoke, label %bb.i, !dbg !1095, !prof !58
 
 bb.i:                                             ; preds = %.lr.ph
-  %i.ch = add nsw i64 %.sroa.26.5255, -4, !dbg !1100 ; 2 uses
+  %i.ch = add nsw i64 %.sroa.26.5254, -4, !dbg !1100 ; 2 uses
   %i.ci = load i32, ptr %3, align 1, !dbg !1102, !alias.scope !1108
-  store i32 %i.ci, ptr %.sroa.035.5254, align 1, !dbg !1102, !alias.scope !1108
+  store i32 %i.ci, ptr %.sroa.035.5255, align 1, !dbg !1102, !alias.scope !1108
   %.not.i154 = icmp ugt i64 %.sroa.012.4.val77, %i.ch, !dbg !1112
   br i1 %.not.i154, label %.invoke, label %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit162, !dbg !1112, !prof !58
 
 _RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit162: ; preds = %bb.i
-  %i.cj = getelementptr inbounds nuw i8, ptr %.sroa.035.5254, i64 4, !dbg !1117 ; 2 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %.sroa.035.5255, i64 4, !dbg !1117 ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 %.sroa.012.4.val77, !dbg !1119
   %i.cl = sub nuw nsw i64 %i.ch, %.sroa.012.4.val77, !dbg !1122 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cj, ptr nonnull readonly align 1 %.sroa.012.4.val, i64 range(i64 0, -9223372036854775808) %.sroa.012.4.val77, i1 false), !dbg !1123, !alias.scope !1129
@@ -355,20 +359,19 @@ _RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_unin
 
 .lr.ph280:                                        ; preds = %.preheader, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit180
   %.sroa.012.5279 = phi ptr [ %i.cn, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit180 ], [ %i.e, %.preheader ] ; 3 uses
-  %.sroa.26.6278 = phi i64 [ %i.ct, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit180 ], [ %i.ak, %.preheader ] ; 2 uses
-  %.sroa.035.6277 = phi ptr [ %i.cs, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit180 ], [ %i.aj, %.preheader ] ; 3 uses
+  %.sroa.035.6278 = phi ptr [ %i.cs, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit180 ], [ %i.aj, %.preheader ] ; 2 uses
+  %.sroa.26.6277 = phi i64 [ %i.ct, %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit180 ], [ %i.ak, %.preheader ] ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %.sroa.012.5279, i64 24, !dbg !1135 ; 2 uses
   %i.co = getelementptr i8, ptr %.sroa.012.5279, i64 8, !dbg !1138
   %.sroa.012.5.val = load ptr, ptr %i.co, align 8, !dbg !1138, !nonnull !14, !noundef !14
   %i.cp = getelementptr i8, ptr %.sroa.012.5279, i64 16, !dbg !1138
   %.sroa.012.5.val76 = load i64, ptr %i.cp, align 8, !dbg !1138, !noundef !14 ; 4 uses
-  %.not.i163 = icmp ugt i64 %4, %.sroa.26.6278, !dbg !1145
+  %.not.i163 = icmp ugt i64 %4, %.sroa.26.6277, !dbg !1145
   br i1 %.not.i163, label %.invoke, label %bb.j, !dbg !1145, !prof !58
 
 bb.j:                                             ; preds = %.lr.ph280
-  %i.cq = sub nuw nsw i64 %.sroa.26.6278, %4, !dbg !1150 ; 2 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.035.6277) ]
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.035.6277, ptr nonnull readonly align 1 %3, i64 range(i64 0, -9223372036854775808) %4, i1 false), !dbg !1152, !alias.scope !1158
+  %i.cq = sub nuw nsw i64 %.sroa.26.6277, %4, !dbg !1150 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.035.6278, ptr nonnull readonly align 1 %3, i64 range(i64 0, -9223372036854775808) %4, i1 false), !dbg !1152, !alias.scope !1158
   %.not.i172 = icmp ugt i64 %.sroa.012.5.val76, %i.cq, !dbg !1162
   br i1 %.not.i172, label %.invoke, label %_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit180, !dbg !1162, !prof !58
 
@@ -380,7 +383,7 @@ bb.j:                                             ; preds = %.lr.ph280
   unreachable
 
 _RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implINtNtNtB4_3mem12maybe_uninit11MaybeUninithEECsdq8xsXUia3c_10grep_regex.exit180: ; preds = %bb.j
-  %i.cr = getelementptr inbounds nuw i8, ptr %.sroa.035.6277, i64 %4, !dbg !1169 ; 2 uses
+  %i.cr = getelementptr inbounds nuw i8, ptr %.sroa.035.6278, i64 %4, !dbg !1169 ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 %.sroa.012.5.val76, !dbg !1171
   %i.ct = sub nuw nsw i64 %i.cq, %.sroa.012.5.val76, !dbg !1174 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cr, ptr nonnull readonly align 1 %.sroa.012.5.val, i64 range(i64 0, -9223372036854775808) %.sroa.012.5.val76, i1 false), !dbg !1175, !alias.scope !1181

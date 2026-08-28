@@ -204,17 +204,18 @@ bb.b:                                             ; preds = %bb.a
   %i.au = load i32, ptr %i.at, align 4, !tbaa !143
   %i.av = sitofp reassoc nsz arcp contract afn i32 %i.au to float ; 2 uses
   %i.aw = load float, ptr %i.q, align 4, !tbaa !63
-  %i.ax = fdiv reassoc nsz arcp contract afn float %i.aw, %i.av ; 4 uses
+  %i.ax = fdiv reassoc nsz arcp contract afn float %i.aw, %i.av ; 3 uses
   %i.ay = load float, ptr %i.r, align 4, !tbaa !63
   %i.az = fdiv reassoc nsz arcp contract afn float %i.ay, %i.av ; 2 uses
   %reass.add.i = fsub reassoc nsz arcp contract afn float %i.az, %i.ax ; 2 uses
   %reass.mul.i = fmul reassoc nsz arcp contract afn float %reass.add.i, f0x3F7B14BE
-  %i.ba = extractelement <2 x float> %i.as, i64 0 ; 5 uses
-  %i.bb = extractelement <2 x float> %i.as, i64 1 ; 4 uses
+  %i.ba = extractelement <2 x float> %i.as, i64 0 ; 3 uses
+  %i.bb = extractelement <2 x float> %i.as, i64 1 ; 2 uses
   %reass.add = fsub reassoc nsz arcp contract afn float %i.ba, %i.bb
   %reass.mul = fmul reassoc nsz arcp contract afn float %reass.add, f0x3E47C5CD
   %i.bc = fadd reassoc nsz arcp contract afn float %reass.mul.i, %reass.mul
-  %factor.op.fmul.i = fneg reassoc nsz arcp contract afn float %i.az ; 2 uses
+  %reass.add108.i = fsub reassoc nsz arcp contract afn float %i.bb, %i.ba ; 4 uses
+  %reass.add106.i = fsub reassoc nsz arcp contract afn float %i.ax, %i.az ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
@@ -225,15 +226,11 @@ bb.c:                                             ; preds = %bb.f, %bb.b
   %i.bd = fadd reassoc nsz arcp contract afn float %.186.i, %.088.i
   %i.be = fmul reassoc nsz arcp contract afn float %i.bd, 5.000000e-01 ; 4 uses
   %sincos.i = call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %i.be) ; 2 uses
-  %sin.i = extractvalue { float, float } %sincos.i, 0 ; 2 uses
-  %cos.i = extractvalue { float, float } %sincos.i, 1 ; 2 uses
-  %6 = fmul reassoc nsz arcp contract afn float %cos.i, %i.ax
-  %7 = fmul reassoc nsz arcp contract afn float %sin.i, %i.bb
-  %.neg102.reass.i = fmul reassoc nsz arcp contract afn float %cos.i, %factor.op.fmul.i
-  %.neg103.i = fadd reassoc nsz arcp contract afn float %6, %7
-  %i.bf = fmul reassoc nsz arcp contract afn float %sin.i, %i.ba
-  %reass.add104.i = fsub reassoc nsz arcp contract afn float %.neg102.reass.i, %i.bf
-  %i.bg = fadd reassoc nsz arcp contract afn float %.neg103.i, %reass.add104.i ; 3 uses
+  %sin.i = extractvalue { float, float } %sincos.i, 0
+  %cos.i = extractvalue { float, float } %sincos.i, 1
+  %.neg102.reass.i = fmul reassoc nsz arcp contract afn float %cos.i, %reass.add106.i
+  %i.bf = fmul reassoc nsz arcp contract afn float %sin.i, %reass.add108.i
+  %i.bg = fadd reassoc nsz arcp contract afn float %i.bf, %.neg102.reass.i ; 3 uses
   %i.bh = call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.bg)
   %or.cond3.i = fcmp reassoc nsz arcp contract afn olt float %i.bh, f0x38D1B717
   br i1 %or.cond3.i, label %.split.loop.exit37, label %bb.d
@@ -251,15 +248,11 @@ bb.e:                                             ; preds = %bb.d
   %i.bk = fadd reassoc nsz arcp contract afn float %.186..i, %..088.i
   %i.bl = fmul reassoc nsz arcp contract afn float %i.bk, 5.000000e-01 ; 4 uses
   %sincos.i.1 = call reassoc nsz arcp contract afn { float, float } @llvm.sincos.f32(float %i.bl) ; 2 uses
-  %sin.i.1 = extractvalue { float, float } %sincos.i.1, 0 ; 2 uses
-  %cos.i.1 = extractvalue { float, float } %sincos.i.1, 1 ; 2 uses
-  %8 = fmul reassoc nsz arcp contract afn float %cos.i.1, %i.ax
-  %9 = fmul reassoc nsz arcp contract afn float %sin.i.1, %i.bb
-  %.neg102.reass.i.1 = fmul reassoc nsz arcp contract afn float %cos.i.1, %factor.op.fmul.i
-  %.neg103.i.1 = fadd reassoc nsz arcp contract afn float %8, %9
-  %i.bm = fmul reassoc nsz arcp contract afn float %sin.i.1, %i.ba
-  %reass.add104.i.1 = fsub reassoc nsz arcp contract afn float %.neg102.reass.i.1, %i.bm
-  %i.bn = fadd reassoc nsz arcp contract afn float %.neg103.i.1, %reass.add104.i.1 ; 3 uses
+  %sin.i.1 = extractvalue { float, float } %sincos.i.1, 0
+  %cos.i.1 = extractvalue { float, float } %sincos.i.1, 1
+  %.neg102.reass.i.1 = fmul reassoc nsz arcp contract afn float %cos.i.1, %reass.add106.i
+  %i.bm = fmul reassoc nsz arcp contract afn float %sin.i.1, %reass.add108.i
+  %i.bn = fadd reassoc nsz arcp contract afn float %i.bm, %.neg102.reass.i.1 ; 3 uses
   %i.bo = call reassoc nsz arcp contract afn float @llvm.fabs.f32(float %i.bn)
   %or.cond3.i.1 = fcmp reassoc nsz arcp contract afn olt float %i.bo, f0x38D1B717
   br i1 %or.cond3.i.1, label %.split.loop.exit, label %bb.f
@@ -284,8 +277,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.bt, label %_set_grad_from_points.exit, label %bb.g
 
 bb.g:                                             ; preds = %.split.loop.exit37
-  %10 = fsub reassoc nsz arcp contract afn float %i.bb, %i.ba ; 2 uses
-  %i.bu = fcmp reassoc nsz arcp contract afn ogt float %10, f0x38D1B717
+  %i.bu = fcmp reassoc nsz arcp contract afn ogt float %reass.add108.i, f0x38D1B717
   br i1 %i.bu, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
@@ -300,7 +292,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.m
 
 bb.j:                                             ; preds = %bb.g
-  %i.bz = fcmp reassoc nsz arcp contract afn olt float %10, f0xB8D1B717
+  %i.bz = fcmp reassoc nsz arcp contract afn olt float %reass.add108.i, f0xB8D1B717
   br i1 %i.bz, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/html5ever-rs/original/html5ever-7c94b86f9147eabc.html5ever.8469159039506d9f-cgu.2?download=true
+inline.NumInlined: 102
+inline.NumDeleted: 76
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -64,12 +68,12 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 8 uses
   %i.b = alloca [4096 x i8], align 8              ; 3 uses
   %i.c = lshr i64 %1, 1
-  %i.d = sub nsw i64 %1, %i.c
+  %i.d = sub nuw nsw i64 %1, %i.c
   %..i = tail call noundef range(i64 0, 230584300921369396) i64 @llvm.umin.i64(i64 range(i64 0, 230584300921369396) %1, i64 200000)
   %..i8 = tail call noundef range(i64 -230584300921369394, 230584300921369396) i64 @llvm.umax.i64(i64 range(i64 -230584300921369394, 230584300921369396) %..i, i64 range(i64 -230584300921369394, 230584300921369396) %i.d) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.e = icmp ugt i64 %..i8, 102                  ; 3 uses
+  %i.e = icmp samesign ugt i64 %..i8, 102         ; 3 uses
   br i1 %i.e, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a

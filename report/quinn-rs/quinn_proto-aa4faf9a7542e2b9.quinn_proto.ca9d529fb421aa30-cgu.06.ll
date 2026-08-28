@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quinn-rs/original/quinn_proto-aa4faf9a7542e2b9.quinn_proto.ca9d529fb421aa30-cgu.06?download=true
+inline.NumInlined: 730
+inline.NumDeleted: 243
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvMNtNtCshovLROGBtMy_11quinn_proto10connection4mtudNtB2_12MtuDiscovery19black_hole_detected:bb.a
     #dbg_value(ptr undef, !21220, !DIExpression(DW_OP_deref), !21381)
     #dbg_value(ptr poison, !21227, !DIExpression(DW_OP_deref), !21382)
@@ -200,10 +204,10 @@ _RNvMNtNtCshovLROGBtMy_11quinn_proto10connection4mtudNtB2_12MtuDiscovery10with_s
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4), !dbg !21628
   %i.j = trunc nuw i16 %3 to i1, !dbg !21629      ; 2 uses
   %..i.i = tail call i16 @llvm.umin.i16(i16 %4, i16 %1), !dbg !21629
-  %.sroa.11.0.a = select i1 %i.j, i16 %4, i16 -9, !dbg !21629
-  %.sroa.1314.0 = select i1 %i.j, i16 %..i.i, i16 %1, !dbg !21629
-    #dbg_value(i16 %.sroa.1314.0, !21522, !DIExpression(DW_OP_LLVM_fragment, 1152, 16), !21625)
-    #dbg_value(i16 %.sroa.11.0.a, !21522, !DIExpression(DW_OP_LLVM_fragment, 1088, 16), !21625)
+  %.sroa.11.0.a = select i1 %i.j, i16 %..i.i, i16 %1, !dbg !21629
+  %.sroa.1314.0 = select i1 %i.j, i16 %4, i16 -9, !dbg !21629
+    #dbg_value(i16 %.sroa.1314.0, !21522, !DIExpression(DW_OP_LLVM_fragment, 1088, 16), !21625)
+    #dbg_value(i16 %.sroa.11.0.a, !21522, !DIExpression(DW_OP_LLVM_fragment, 1152, 16), !21625)
   store i64 0, ptr %0, align 8, !dbg !21630
   %.sroa.412.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !21630
   store i64 %i.e, ptr %.sroa.412.0..sroa_idx, align 8, !dbg !21630
@@ -220,9 +224,9 @@ _RNvMNtNtCshovLROGBtMy_11quinn_proto10connection4mtudNtB2_12MtuDiscovery10with_s
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72, !dbg !21630
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.10.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.10, i64 64, i1 false), !dbg !21630
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 136, !dbg !21630
-  store i16 %.sroa.11.0.a, ptr %.sroa.11.0..sroa_idx, align 8, !dbg !21630
+  store i16 %.sroa.1314.0, ptr %.sroa.11.0..sroa_idx, align 8, !dbg !21630
   %.sroa.1314.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 144, !dbg !21630
-  store i16 %.sroa.1314.0, ptr %.sroa.1314.0..sroa_idx, align 8, !dbg !21630
+  store i16 %.sroa.11.0.a, ptr %.sroa.1314.0..sroa_idx, align 8, !dbg !21630
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10), !dbg !21631
   ret void, !dbg !21632
 }
@@ -625,9 +629,9 @@ bb.bf:                                            ; preds = %bb.ak
   unreachable, !dbg !28066
 
 _RNvXsG_NtCsjx2R6KBUtVL_6rustls5errorNtB5_16CertificateErrorNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit: ; preds = %bb.o, %bb.q, %bb.r, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ab, %bb.ae, %bb.ag, %bb.ai, %bb.aj, %bb.am, %bb.ap, %bb.ax, %bb.bd, %bb.be
-  %.sroa.36.sroa.0.0 = phi i64 [ undef, %bb.o ], [ undef, %bb.q ], [ undef, %bb.r ], [ undef, %bb.s ], [ undef, %bb.t ], [ undef, %bb.u ], [ undef, %bb.v ], [ undef, %bb.w ], [ undef, %bb.x ], [ undef, %bb.y ], [ undef, %bb.z ], [ undef, %bb.aa ], [ undef, %bb.ab ], [ %i.cd, %bb.am ], [ %i.ch, %bb.ap ], [ undef, %bb.ae ], [ %.sroa.36.sroa.0.0.copyload41, %bb.ax ], [ undef, %bb.ag ], [ %i.cv, %bb.bd ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ undef, %bb.be ]
+  %.sroa.36.sroa.0.0 = phi i64 [ undef, %bb.o ], [ undef, %bb.q ], [ undef, %bb.r ], [ undef, %bb.s ], [ undef, %bb.t ], [ undef, %bb.u ], [ undef, %bb.v ], [ undef, %bb.w ], [ undef, %bb.x ], [ undef, %bb.y ], [ undef, %bb.z ], [ undef, %bb.aa ], [ undef, %bb.ab ], [ %i.cd, %bb.am ], [ %i.ch, %bb.ap ], [ undef, %bb.ae ], [ %.sroa.36.sroa.0.0.copyload41, %bb.ax ], [ undef, %bb.ag ], [ %i.cv, %bb.bd ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ undef, %bb.be ], !dbg !27855
   %.sroa.018.0 = phi i64 [ -9223372036854775808, %bb.o ], [ -9223372036854775807, %bb.q ], [ -9223372036854775806, %bb.r ], [ -9223372036854775805, %bb.s ], [ -9223372036854775804, %bb.t ], [ -9223372036854775803, %bb.u ], [ -9223372036854775802, %bb.v ], [ -9223372036854775801, %bb.w ], [ -9223372036854775800, %bb.x ], [ -9223372036854775799, %bb.y ], [ -9223372036854775798, %bb.z ], [ -9223372036854775797, %bb.aa ], [ -9223372036854775796, %bb.ab ], [ -9223372036854775795, %bb.am ], [ -9223372036854775794, %bb.ap ], [ -9223372036854775793, %bb.ae ], [ %.sroa.018.0.copyload19, %bb.ax ], [ -9223372036854775791, %bb.ag ], [ -9223372036854775790, %bb.bd ], [ -9223372036854775789, %bb.ai ], [ -9223372036854775788, %bb.aj ], [ -9223372036854775787, %bb.be ], !dbg !27920
-  %i.db = phi <2 x i64> [ undef, %bb.o ], [ undef, %bb.q ], [ %i.bf, %bb.r ], [ undef, %bb.s ], [ %i.bh, %bb.t ], [ undef, %bb.u ], [ undef, %bb.v ], [ undef, %bb.w ], [ undef, %bb.x ], [ undef, %bb.y ], [ %i.bj, %bb.z ], [ undef, %bb.aa ], [ undef, %bb.ab ], [ %i.cc, %bb.am ], [ %i.cg, %bb.ap ], [ undef, %bb.ae ], [ %i.cs, %bb.ax ], [ undef, %bb.ag ], [ %i.cu, %bb.bd ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ %i.da, %bb.be ]
+  %i.db = phi <2 x i64> [ undef, %bb.o ], [ undef, %bb.q ], [ %i.bf, %bb.r ], [ undef, %bb.s ], [ %i.bh, %bb.t ], [ undef, %bb.u ], [ undef, %bb.v ], [ undef, %bb.w ], [ undef, %bb.x ], [ undef, %bb.y ], [ %i.bj, %bb.z ], [ undef, %bb.aa ], [ undef, %bb.ab ], [ %i.cc, %bb.am ], [ %i.cg, %bb.ap ], [ undef, %bb.ae ], [ %i.cs, %bb.ax ], [ undef, %bb.ag ], [ %i.cu, %bb.bd ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ %i.da, %bb.be ], !dbg !27855
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !28067
   store i64 %.sroa.018.0, ptr %i.dc, align 8, !dbg !28067
   %.sroa.2520.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !28067
@@ -743,8 +747,8 @@ bb.bo:                                            ; preds = %bb.bi
 bb.bp:                                            ; preds = %bb.bj
   %i.du = getelementptr inbounds nuw i8, ptr %1, i64 24, !dbg !28138
   %i.dv = load ptr, ptr %i.du, align 8, !dbg !28150, !alias.scope !28072, !noalias !28117, !nonnull !52, !align !4299, !noundef !52
-  %i.dw = insertelement <2 x ptr> poison, ptr %i.dk, i64 0
-  %i.dx = insertelement <2 x ptr> %i.dw, ptr %i.dv, i64 1
+  %i.dw = insertelement <2 x ptr> poison, ptr %i.dk, i64 0, !dbg !28071
+  %i.dx = insertelement <2 x ptr> %i.dw, ptr %i.dv, i64 1, !dbg !28071
   br label %_RNvXsN_NtCsjx2R6KBUtVL_6rustls5errorNtB5_23CertRevocationListErrorNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit, !dbg !28147
 
 bb.bq:                                            ; preds = %bb.bj
@@ -752,8 +756,8 @@ bb.bq:                                            ; preds = %bb.bj
   unreachable, !dbg !28151
 
 _RNvXsN_NtCsjx2R6KBUtVL_6rustls5errorNtB5_23CertRevocationListErrorNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit: ; preds = %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bg, %bb.bl, %bb.bo, %bb.bp
-  %.sroa.21.sroa.0.0 = phi i64 [ %i.dp, %bb.bl ], [ %i.dt, %bb.bo ], [ undef, %bb.bp ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ]
-  %i.dy = phi <2 x ptr> [ %i.do, %bb.bl ], [ %i.ds, %bb.bo ], [ %i.dx, %bb.bp ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ]
+  %.sroa.21.sroa.0.0 = phi i64 [ %i.dp, %bb.bl ], [ %i.dt, %bb.bo ], [ undef, %bb.bp ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], !dbg !28071
+  %i.dy = phi <2 x ptr> [ %i.do, %bb.bl ], [ %i.ds, %bb.bo ], [ %i.dx, %bb.bp ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], [ undef, %bb.bg ], !dbg !28071
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !28152
   store i64 %i.de, ptr %i.dz, align 8, !dbg !28152
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !28152

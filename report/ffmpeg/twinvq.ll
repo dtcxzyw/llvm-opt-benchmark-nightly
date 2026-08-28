@@ -205,13 +205,13 @@ bb.a:
   %indvars.iv62 = phi i64 [ %indvars.iv.next63, %.critedge.us.us ], [ 0, %.lr.ph.us.us.preheader ] ; 4 uses
   %i.j = trunc i64 %indvars.iv62 to i32
   %i.k = mul i32 %1, %i.j
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.k, i32 %i.f)
   %6 = trunc i64 %indvars.iv62 to i32
   %7 = mul i32 %1, %6
-  %i.l = sub i32 %smax, %7
+  %8 = mul nuw nsw i64 %indvars.iv62, %i.h        ; 3 uses
+  %9 = tail call i32 @llvm.smax.i32(i32 %7, i32 %i.f)
+  %i.l = sub i32 %9, %i.k
   %i.m = zext i32 %i.l to i64
   %umin = tail call i64 @llvm.umin.i64(i64 %i.i, i64 %i.m) ; 2 uses
-  %8 = mul nuw nsw i64 %indvars.iv62, %i.h        ; 3 uses
   %min.iters.check = icmp samesign ult i64 %umin, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 

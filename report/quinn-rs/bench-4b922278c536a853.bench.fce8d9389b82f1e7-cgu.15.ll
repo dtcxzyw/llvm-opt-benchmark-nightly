@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quinn-rs/original/bench-4b922278c536a853.bench.fce8d9389b82f1e7-cgu.15?download=true
+inline.NumInlined: 132
+inline.NumDeleted: 78
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_7HashMapNtNtCskKLDkoKarTP_4core3any6TypeIdINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtBP_3AnyNtNtBR_6marker4SendNtB26_4SyncEL_EINtNtBR_4hash18BuildHasherDefaultNtNtNtCs7n8GKOt6esj_18tracing_subscriber8registry10extensions8IdHasherEE6insertCslIemzedAtQF_5bench:bb.a
   %i.at = load ptr, ptr %i.as, align 8, !dbg !5513, !nonnull !42, !align !4516, !noundef !42
   store ptr %2, ptr %i.aq, align 8, !dbg !5514
@@ -200,7 +204,7 @@ bb.e:                                             ; preds = %bb.a, %bb.c, %bb.d
     #dbg_value(ptr %i.q, !5946, !DIExpression(), !5953)
     #dbg_value(i8 1, !5951, !DIExpression(), !5953)
     #dbg_value(i8 1, !5952, !DIExpression(), !5953)
-  store atomic i8 1, ptr %i.q release, align 1, !dbg !5955
+  store atomic i8 1, ptr %i.q release, align 8, !dbg !5955
     #dbg_value(ptr %0, !5713, !DIExpression(DW_OP_plus_uconst, 504, DW_OP_stack_value), !5956)
     #dbg_value(ptr %0, !5957, !DIExpression(DW_OP_plus_uconst, 504, DW_OP_stack_value), !5963)
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 504, !dbg !5965
@@ -603,7 +607,7 @@ begin_hunk_1_@llvm.umin.i64
 !5935 = !{!5933}
 !5936 = !DILocation(line: 0, scope: !5934, inlinedAt: !5937)
 !5937 = !DILocation(line: 1404, column: 18, scope: !5647, inlinedAt: !5653)
-!5938 = !DILocation(line: 1964, column: 41, scope: !5934, inlinedAt: !5937)
+!5938 = !DILocation(line: 262, column: 51, scope: !5641)
 !5939 = !DILocation(line: 792, column: 24, scope: !5697, inlinedAt: !5705)
 !5940 = !DILocalVariable(name: "self", arg: 1, scope: !5941, file: !2655, line: 2434, type: !2659)
 !5941 = distinct !DISubprogram(name: "get<core::sync::atomic::private::Align1<u8>>", linkageName: "_RNvMsX_NtCskKLDkoKarTP_4core4cellINtB5_10UnsafeCellINtNtNtNtB7_4sync6atomic7private6Align1hEE3getCslIemzedAtQF_5bench", scope: !626, file: !2655, line: 2434, type: !2656, scopeLine: 2434, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !379, templateParams: !632, declaration: !2660, retainedNodes: !5942)

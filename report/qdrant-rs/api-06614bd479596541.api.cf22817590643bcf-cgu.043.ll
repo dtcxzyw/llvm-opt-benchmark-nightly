@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/api-06614bd479596541.api.cf22817590643bcf-cgu.043?download=true
+inline.NumInlined: 237
+inline.NumDeleted: 103
 begin_hunk_0_@_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs8O45qwFIwQX_10serde_json5value5ValueECshMzyYDJGtjv_3api:bb.a
           filter [0 x ptr] zeroinitializer        ; 0 uses
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #17
@@ -200,7 +202,7 @@ bb.k:                                             ; preds = %_RNvMs1_NtCshqfBqtY
   %i.ae = icmp eq i64 %i.ad, 0
   %i.af = lshr i64 %i.ab, 1
   %spec.select.i = select i1 %i.ae, i64 0, i64 %i.af
-  %.sroa.0.0.i = sub i64 %i.ab, %spec.select.i
+  %.sroa.0.0.i = sub nuw i64 %i.ab, %spec.select.i
   invoke void @_RNvMs_NtCshqfBqtY9aGF_8indexmap5innerINtB4_4CoreNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCs8O45qwFIwQX_10serde_json5value5ValueE7reserveCshMzyYDJGtjv_3api(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.f, i64 noundef %.sroa.0.0.i)
           to label %bb.l unwind label %bb.o, !noalias !42
 
@@ -392,7 +394,7 @@ bb.k:                                             ; preds = %_RNvMs1_NtCshqfBqtY
   %i.ae = icmp eq i64 %i.ad, 0
   %i.af = lshr i64 %i.ab, 1
   %spec.select.i = select i1 %i.ae, i64 0, i64 %i.af
-  %.sroa.0.0.i = sub i64 %i.ab, %spec.select.i
+  %.sroa.0.0.i = sub nuw i64 %i.ab, %spec.select.i
   invoke void @_RNvMs_NtCshqfBqtY9aGF_8indexmap5innerINtB4_4CoreNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtCs8O45qwFIwQX_10serde_json5value5ValueE7reserveCshMzyYDJGtjv_3api(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.f, i64 noundef %.sroa.0.0.i)
           to label %bb.l unwind label %bb.o, !noalias !58
 

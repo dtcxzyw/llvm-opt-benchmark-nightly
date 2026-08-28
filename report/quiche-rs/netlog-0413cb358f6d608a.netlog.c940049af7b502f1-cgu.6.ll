@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quiche-rs/original/netlog-0413cb358f6d608a.netlog.c940049af7b502f1-cgu.6?download=true
+inline.NumInlined: 267
+inline.NumDeleted: 131
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RINvMs0_NtNtNtNtCsG258MDvU3F_3std3sys12thread_local6native4lazyINtB6_7StoragejzE16get_or_init_slowNvNvNtNtNtCseN4S6VTYCs1_14regex_automata4util4pool5inner9THREAD_ID27___rust_std_internal_init_fnECshhfsHpF03Qr_6netlog:bb.a
   store i64 %.sroa.03.0, ptr %0, align 8, !dbg !492
     #dbg_value(ptr %0, !493, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !500)
@@ -200,8 +204,6 @@ bb.a:
   %i.k = load ptr, ptr %3, align 8, !dbg !1325, !alias.scope !1187, !nonnull !206, !noundef !206
     #dbg_value(ptr %i.k, !1286, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !1304)
     #dbg_value(i64 2, !1289, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !1326)
-    #dbg_value(ptr undef, !1289, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !1326)
-    #dbg_value(i64 undef, !1289, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !1326)
     #dbg_value(i64 2, !1289, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !1326)
     #dbg_value(ptr undef, !1289, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !1326)
     #dbg_value(i64 undef, !1289, !DIExpression(DW_OP_LLVM_fragment, 320, 64), !1326)
@@ -604,8 +606,8 @@ _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Al
 
 bb.h:                                             ; preds = %bb.g, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit
   %.pn29 = phi ptr [ %i.j, %bb.g ], [ %i.k, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit ] ; 2 uses
-    #dbg_value(i64 poison, !9294, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9388)
     #dbg_value(ptr %.pn29, !9294, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9388)
+    #dbg_value(i64 poison, !9294, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9388)
   %i.l = icmp eq ptr %.pn29, null, !dbg !9406
   br i1 %i.l, label %bb.i, label %bb.j, !dbg !9407
 
@@ -1008,9 +1010,6 @@ bb.d:                                             ; preds = %bb.b
     #dbg_value(ptr %.sroa.013.0.prol, !10063, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10066)
     #dbg_value(ptr %.sroa.013.0.prol, !10040, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10062)
     #dbg_value(ptr %.sroa.013.0.prol, !10039, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10061)
-    #dbg_value(i64 %i.k, !10063, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !10066)
-    #dbg_value(i64 %i.k, !10040, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !10062)
-    #dbg_value(i64 %i.k, !10039, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !10061)
   %prol.iter.next = add i64 %prol.iter, 1, !dbg !10070 ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter, !dbg !10070
   br i1 %prol.iter.cmp.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol, !dbg !10070, !llvm.loop !10075
@@ -1051,8 +1050,6 @@ bb.d:                                             ; preds = %bb.b
     #dbg_value(ptr %.sroa.013.0, !10063, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10066)
     #dbg_value(ptr %.sroa.013.0, !10040, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10062)
     #dbg_value(ptr %.sroa.013.0, !10039, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10061)
-    #dbg_value(i64 %.sroa.011.030, !10040, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10062)
-    #dbg_value(i64 %.sroa.011.030, !10039, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10061)
     #dbg_value(i64 %.sroa.011.030, !10063, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10066)
     #dbg_value(i64 %.sroa.011.030, !10043, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10071)
     #dbg_value(i64 %.sroa.011.030, !10026, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10033)
@@ -1072,8 +1069,6 @@ bb.d:                                             ; preds = %bb.b
     #dbg_value(ptr %.sroa.013.0.1, !10063, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10066)
     #dbg_value(ptr %.sroa.013.0.1, !10040, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10062)
     #dbg_value(ptr %.sroa.013.0.1, !10039, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10061)
-    #dbg_value(i64 %.sroa.011.030, !10040, !DIExpression(DW_OP_constu, 2, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10062)
-    #dbg_value(i64 %.sroa.011.030, !10039, !DIExpression(DW_OP_constu, 2, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10061)
     #dbg_value(i64 %.sroa.011.030, !10063, !DIExpression(DW_OP_constu, 2, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10066)
     #dbg_value(i64 %.sroa.011.030, !10043, !DIExpression(DW_OP_constu, 2, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10071)
     #dbg_value(i64 %.sroa.011.030, !10026, !DIExpression(DW_OP_constu, 2, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10033)
@@ -1093,8 +1088,6 @@ bb.d:                                             ; preds = %bb.b
     #dbg_value(ptr %.sroa.013.0.2, !10063, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10066)
     #dbg_value(ptr %.sroa.013.0.2, !10040, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10062)
     #dbg_value(ptr %.sroa.013.0.2, !10039, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10061)
-    #dbg_value(i64 %.sroa.011.030, !10040, !DIExpression(DW_OP_constu, 3, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10062)
-    #dbg_value(i64 %.sroa.011.030, !10039, !DIExpression(DW_OP_constu, 3, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10061)
     #dbg_value(i64 %.sroa.011.030, !10063, !DIExpression(DW_OP_constu, 3, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10066)
     #dbg_value(i64 %.sroa.011.030, !10043, !DIExpression(DW_OP_constu, 3, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10071)
     #dbg_value(i64 %.sroa.011.030, !10026, !DIExpression(DW_OP_constu, 3, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10033)
@@ -1114,8 +1107,6 @@ bb.d:                                             ; preds = %bb.b
     #dbg_value(ptr %.sroa.013.0.3, !10063, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10066)
     #dbg_value(ptr %.sroa.013.0.3, !10040, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10062)
     #dbg_value(ptr %.sroa.013.0.3, !10039, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10061)
-    #dbg_value(i64 %.sroa.011.030, !10040, !DIExpression(DW_OP_constu, 4, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10062)
-    #dbg_value(i64 %.sroa.011.030, !10039, !DIExpression(DW_OP_constu, 4, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10061)
     #dbg_value(i64 %.sroa.011.030, !10063, !DIExpression(DW_OP_constu, 4, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10066)
     #dbg_value(i64 %.sroa.011.030, !10043, !DIExpression(DW_OP_constu, 4, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10071)
     #dbg_value(i64 %.sroa.011.030, !10026, !DIExpression(DW_OP_constu, 4, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10033)
@@ -1135,8 +1126,6 @@ bb.d:                                             ; preds = %bb.b
     #dbg_value(ptr %.sroa.013.0.4, !10063, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10066)
     #dbg_value(ptr %.sroa.013.0.4, !10040, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10062)
     #dbg_value(ptr %.sroa.013.0.4, !10039, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10061)
-    #dbg_value(i64 %.sroa.011.030, !10040, !DIExpression(DW_OP_constu, 5, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10062)
-    #dbg_value(i64 %.sroa.011.030, !10039, !DIExpression(DW_OP_constu, 5, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10061)
     #dbg_value(i64 %.sroa.011.030, !10063, !DIExpression(DW_OP_constu, 5, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10066)
     #dbg_value(i64 %.sroa.011.030, !10043, !DIExpression(DW_OP_constu, 5, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10071)
     #dbg_value(i64 %.sroa.011.030, !10026, !DIExpression(DW_OP_constu, 5, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10033)
@@ -1156,8 +1145,6 @@ bb.d:                                             ; preds = %bb.b
     #dbg_value(ptr %.sroa.013.0.5, !10063, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10066)
     #dbg_value(ptr %.sroa.013.0.5, !10040, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10062)
     #dbg_value(ptr %.sroa.013.0.5, !10039, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10061)
-    #dbg_value(i64 %.sroa.011.030, !10040, !DIExpression(DW_OP_constu, 6, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10062)
-    #dbg_value(i64 %.sroa.011.030, !10039, !DIExpression(DW_OP_constu, 6, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10061)
     #dbg_value(i64 %.sroa.011.030, !10063, !DIExpression(DW_OP_constu, 6, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10066)
     #dbg_value(i64 %.sroa.011.030, !10043, !DIExpression(DW_OP_constu, 6, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10071)
     #dbg_value(i64 %.sroa.011.030, !10026, !DIExpression(DW_OP_constu, 6, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10033)
@@ -1177,8 +1164,6 @@ bb.d:                                             ; preds = %bb.b
     #dbg_value(ptr %.sroa.013.0.6, !10063, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10066)
     #dbg_value(ptr %.sroa.013.0.6, !10040, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10062)
     #dbg_value(ptr %.sroa.013.0.6, !10039, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10061)
-    #dbg_value(i64 %.sroa.011.030, !10040, !DIExpression(DW_OP_constu, 7, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10062)
-    #dbg_value(i64 %.sroa.011.030, !10039, !DIExpression(DW_OP_constu, 7, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10061)
     #dbg_value(i64 %.sroa.011.030, !10063, !DIExpression(DW_OP_constu, 7, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10066)
     #dbg_value(i64 %.sroa.011.030, !10043, !DIExpression(DW_OP_constu, 7, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10071)
     #dbg_value(i64 %.sroa.011.030, !10026, !DIExpression(DW_OP_constu, 7, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !10033)
@@ -1199,9 +1184,6 @@ bb.d:                                             ; preds = %bb.b
     #dbg_value(ptr %.sroa.013.0.7, !10063, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10066)
     #dbg_value(ptr %.sroa.013.0.7, !10040, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10062)
     #dbg_value(ptr %.sroa.013.0.7, !10039, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10061)
-    #dbg_value(i64 %i.u, !10063, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !10066)
-    #dbg_value(i64 %i.u, !10040, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !10062)
-    #dbg_value(i64 %i.u, !10039, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !10061)
   %i.v = icmp eq i64 %i.u, 0, !dbg !10070
   br i1 %i.v, label %._crit_edge, label %.lr.ph, !dbg !10070
 }

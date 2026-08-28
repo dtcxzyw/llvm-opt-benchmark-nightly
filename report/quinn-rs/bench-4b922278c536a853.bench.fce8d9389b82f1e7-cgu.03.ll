@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quinn-rs/original/bench-4b922278c536a853.bench.fce8d9389b82f1e7-cgu.03?download=true
+inline.NumInlined: 104
+inline.NumDeleted: 73
 begin_hunk_0_@_RINvMNtCsB8MOEg02Qk_5quinn11send_streamNtB3_10SendStream12execute_pollNCNCNCNvB2_12write_chunks000NtNtNtNtCshovLROGBtMy_11quinn_proto10connection7streams4send7WrittenECslIemzedAtQF_5bench:bb.a
 bb.g:                                             ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison5mutex10MutexGuardNtNtCsB8MOEg02Qk_5quinn10connection5StateEINtBM_11PoisonErrorBH_EE6unwrapCslIemzedAtQF_5bench.exit
     #dbg_value(ptr %i.r, !6437, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value), !6459)
@@ -200,8 +202,8 @@ bb.aa:                                            ; preds = %bb.s
   br label %bb.ab, !dbg !6796
 
 bb.ab:                                            ; preds = %bb.aa, %bb.s
-  %.sroa.07.0.i.a = phi i64 [ 1, %bb.aa ], [ 0, %bb.s ], !dbg !6797
-  %.sroa.58.0.i = phi i64 [ %i.br, %bb.aa ], [ undef, %bb.s ], !dbg !6797
+  %.sroa.07.0.i.a = phi i64 [ %i.br, %bb.aa ], [ undef, %bb.s ], !dbg !6797
+  %.sroa.58.0.i = phi i64 [ 1, %bb.aa ], [ 0, %bb.s ], !dbg !6797
     #dbg_value(ptr %i.y, !6760, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value), !6798)
   %i.bs = getelementptr inbounds nuw i8, ptr %i.r, i64 6656, !dbg !6801
   %i.bt = load ptr, ptr %i.bs, align 16, !dbg !6801, !noalias !6668, !nonnull !24, !align !6772, !noundef !24
@@ -216,9 +218,9 @@ bb.ab:                                            ; preds = %bb.aa, %bb.s
           to label %.noexc65 unwind label %bb.ae, !dbg !6801, !inline_history !6777
 
 .noexc65:                                         ; preds = %bb.ab
-  store i64 %.sroa.07.0.i.a, ptr %i.e, align 8, !dbg !6805, !alias.scope !6668
+  store i64 %.sroa.58.0.i, ptr %i.e, align 8, !dbg !6805, !alias.scope !6668
   %.sroa.42.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8, !dbg !6805
-  store i64 %.sroa.58.0.i, ptr %.sroa.42.0..sroa_idx.i, align 8, !dbg !6805, !alias.scope !6668
+  store i64 %.sroa.07.0.i.a, ptr %.sroa.42.0..sroa_idx.i, align 8, !dbg !6805, !alias.scope !6668
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 48, !dbg !6805
   store i64 %i.az, ptr %.sroa.64.0..sroa_idx.i, align 8, !dbg !6805, !alias.scope !6668
   br label %_RNvXsb_NtCshovLROGBtMy_11quinn_proto10connectionNtB5_15ConnectionErrorNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit, !dbg !6778

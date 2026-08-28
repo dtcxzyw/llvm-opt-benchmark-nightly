@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quinn-rs/original/quinn_perf.quinn_perf.ec62102bf437a985-cgu.03?download=true
+inline.NumInlined: 827
+inline.NumDeleted: 476
 begin_hunk_0_@_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCshovLROGBtMy_11quinn_proto6crypto4KeysECskigd7sy4fqX_10quinn_perf:bb.a
 bb.l:                                             ; preds = %.body.i
   %i.ad = landingpad { ptr, i32 }
@@ -199,7 +201,6 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c, !dbg !18568
 
 bb.b:                                             ; preds = %bb.a
-    #dbg_value(ptr %0, !18569, !DIExpression(), !18574)
     #dbg_value(ptr %0, !18569, !DIExpression(), !18574)
     #dbg_value(ptr undef, !18569, !DIExpression(DW_OP_deref), !18574)
   tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNtNtNtCsar2VadbF9t7_5tokio7runtime4task4core4CellINtNtB4_3pin3PinIBC_NCNCNvNtCs7OITKvp9Irj_4perf6client8drive_bi00EEINtNtBG_4sync3ArcNtNtNtB1h_9scheduler14current_thread6HandleEEEECskigd7sy4fqX_10quinn_perf(ptr nonnull %0), !dbg !18576
@@ -603,7 +604,7 @@ bb.h:                                             ; preds = %bb.f, %.thread.i.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.z = phi ptr [ null, %bb.h ], [ %i.s, %bb.g ]
-  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ]
+  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ], !dbg !19407
   %.sroa.06.0.i.i = phi i64 [ 0, %bb.h ], [ %i.v, %bb.g ], !dbg !19407
     #dbg_value(ptr %i.z, !19173, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19414)
     #dbg_value(ptr %.sroa.6.sroa.5.0.i.i, !19173, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !19414)
@@ -1005,7 +1006,6 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c, !dbg !20096
 
 bb.b:                                             ; preds = %bb.a
-    #dbg_value(ptr %0, !20097, !DIExpression(), !20102)
     #dbg_value(ptr %0, !20097, !DIExpression(), !20102)
     #dbg_value(ptr undef, !20097, !DIExpression(DW_OP_deref), !20102)
   tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNtNtNtCsar2VadbF9t7_5tokio7runtime4task4core4CellINtNtB4_3pin3PinIBC_NCNCNvNtCs7OITKvp9Irj_4perf6client9drive_uni00EEINtNtBG_4sync3ArcNtNtNtB1h_9scheduler14current_thread6HandleEEEECskigd7sy4fqX_10quinn_perf(ptr nonnull %0), !dbg !20104
@@ -1409,7 +1409,7 @@ bb.h:                                             ; preds = %bb.f, %.thread.i.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.z = phi ptr [ null, %bb.h ], [ %i.s, %bb.g ]
-  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ]
+  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ], !dbg !20783
   %.sroa.06.0.i.i = phi i64 [ 0, %bb.h ], [ %i.v, %bb.g ], !dbg !20783
     #dbg_value(ptr %i.z, !20577, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !20788)
     #dbg_value(ptr %.sroa.6.sroa.5.0.i.i, !20577, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !20788)
@@ -1811,7 +1811,6 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c, !dbg !21444
 
 bb.b:                                             ; preds = %bb.a
-    #dbg_value(ptr %0, !21445, !DIExpression(), !21450)
     #dbg_value(ptr %0, !21445, !DIExpression(), !21450)
     #dbg_value(ptr undef, !21445, !DIExpression(DW_OP_deref), !21450)
   tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNtNtNtCsar2VadbF9t7_5tokio7runtime4task4core4CellINtNtB4_3pin3PinIBC_NCNCNvNtCs7OITKvp9Irj_4perf6server3run00EEINtNtBG_4sync3ArcNtNtNtB1h_9scheduler14current_thread6HandleEEEECskigd7sy4fqX_10quinn_perf(ptr nonnull %0), !dbg !21452
@@ -2215,7 +2214,7 @@ bb.h:                                             ; preds = %bb.f, %.thread.i.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.z = phi ptr [ null, %bb.h ], [ %i.s, %bb.g ]
-  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ]
+  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ], !dbg !22131
   %.sroa.06.0.i.i = phi i64 [ 0, %bb.h ], [ %i.v, %bb.g ], !dbg !22131
     #dbg_value(ptr %i.z, !21925, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !22136)
     #dbg_value(ptr %.sroa.6.sroa.5.0.i.i, !21925, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !22136)
@@ -2617,7 +2616,6 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c, !dbg !22792
 
 bb.b:                                             ; preds = %bb.a
-    #dbg_value(ptr %0, !22793, !DIExpression(), !22798)
     #dbg_value(ptr %0, !22793, !DIExpression(), !22798)
     #dbg_value(ptr undef, !22793, !DIExpression(DW_OP_deref), !22798)
   tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNtNtNtCsar2VadbF9t7_5tokio7runtime4task4core4CellINtNtB4_3pin3PinIBC_NCNCNvNtCs7OITKvp9Irj_4perf6server8drive_bi00EEINtNtBG_4sync3ArcNtNtNtB1h_9scheduler14current_thread6HandleEEEECskigd7sy4fqX_10quinn_perf(ptr nonnull %0), !dbg !22800
@@ -3021,7 +3019,7 @@ bb.h:                                             ; preds = %bb.f, %.thread.i.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.z = phi ptr [ null, %bb.h ], [ %i.s, %bb.g ]
-  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ]
+  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ], !dbg !23479
   %.sroa.06.0.i.i = phi i64 [ 0, %bb.h ], [ %i.v, %bb.g ], !dbg !23479
     #dbg_value(ptr %i.z, !23273, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23484)
     #dbg_value(ptr %.sroa.6.sroa.5.0.i.i, !23273, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23484)
@@ -3423,7 +3421,6 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c, !dbg !24140
 
 bb.b:                                             ; preds = %bb.a
-    #dbg_value(ptr %0, !24141, !DIExpression(), !24146)
     #dbg_value(ptr %0, !24141, !DIExpression(), !24146)
     #dbg_value(ptr undef, !24141, !DIExpression(DW_OP_deref), !24146)
   tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNtNtNtCsar2VadbF9t7_5tokio7runtime4task4core4CellINtNtB4_3pin3PinIBC_NCNCNvNtCs7OITKvp9Irj_4perf6server9drive_uni00EEINtNtBG_4sync3ArcNtNtNtB1h_9scheduler14current_thread6HandleEEEECskigd7sy4fqX_10quinn_perf(ptr nonnull %0), !dbg !24148
@@ -3827,7 +3824,7 @@ bb.h:                                             ; preds = %bb.f, %.thread.i.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.z = phi ptr [ null, %bb.h ], [ %i.s, %bb.g ]
-  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ]
+  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ], !dbg !24827
   %.sroa.06.0.i.i = phi i64 [ 0, %bb.h ], [ %i.v, %bb.g ], !dbg !24827
     #dbg_value(ptr %i.z, !24621, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !24832)
     #dbg_value(ptr %.sroa.6.sroa.5.0.i.i, !24621, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !24832)
@@ -4229,7 +4226,6 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c, !dbg !25488
 
 bb.b:                                             ; preds = %bb.a
-    #dbg_value(ptr %0, !25489, !DIExpression(), !25494)
     #dbg_value(ptr %0, !25489, !DIExpression(), !25494)
     #dbg_value(ptr undef, !25489, !DIExpression(DW_OP_deref), !25494)
   tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNtNtNtCsar2VadbF9t7_5tokio7runtime4task4core4CellNCNCNvNtCs7OITKvp9Irj_4perf6client8drive_bi00INtNtBG_4sync3ArcNtNtNtB1h_9scheduler14current_thread6HandleEEEECskigd7sy4fqX_10quinn_perf(ptr nonnull %0), !dbg !25496
@@ -4633,7 +4629,7 @@ bb.h:                                             ; preds = %bb.f, %.thread.i.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.z = phi ptr [ null, %bb.h ], [ %i.s, %bb.g ]
-  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ]
+  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ], !dbg !26175
   %.sroa.06.0.i.i = phi i64 [ 0, %bb.h ], [ %i.v, %bb.g ], !dbg !26175
     #dbg_value(ptr %i.z, !25969, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !26180)
     #dbg_value(ptr %.sroa.6.sroa.5.0.i.i, !25969, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !26180)
@@ -5035,7 +5031,6 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c, !dbg !26836
 
 bb.b:                                             ; preds = %bb.a
-    #dbg_value(ptr %0, !26837, !DIExpression(), !26842)
     #dbg_value(ptr %0, !26837, !DIExpression(), !26842)
     #dbg_value(ptr undef, !26837, !DIExpression(DW_OP_deref), !26842)
   tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNtNtNtCsar2VadbF9t7_5tokio7runtime4task4core4CellNCNCNvNtCs7OITKvp9Irj_4perf6client9drive_uni00INtNtBG_4sync3ArcNtNtNtB1h_9scheduler14current_thread6HandleEEEECskigd7sy4fqX_10quinn_perf(ptr nonnull %0), !dbg !26844
@@ -5439,7 +5434,7 @@ bb.h:                                             ; preds = %bb.f, %.thread.i.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.z = phi ptr [ null, %bb.h ], [ %i.s, %bb.g ]
-  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ]
+  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ], !dbg !27523
   %.sroa.06.0.i.i = phi i64 [ 0, %bb.h ], [ %i.v, %bb.g ], !dbg !27523
     #dbg_value(ptr %i.z, !27317, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !27528)
     #dbg_value(ptr %.sroa.6.sroa.5.0.i.i, !27317, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !27528)
@@ -5841,7 +5836,6 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c, !dbg !28184
 
 bb.b:                                             ; preds = %bb.a
-    #dbg_value(ptr %0, !28185, !DIExpression(), !28190)
     #dbg_value(ptr %0, !28185, !DIExpression(), !28190)
     #dbg_value(ptr undef, !28185, !DIExpression(DW_OP_deref), !28190)
   tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNtNtNtCsar2VadbF9t7_5tokio7runtime4task4core4CellNCNCNvNtCs7OITKvp9Irj_4perf6server3run00INtNtBG_4sync3ArcNtNtNtB1h_9scheduler14current_thread6HandleEEEECskigd7sy4fqX_10quinn_perf(ptr nonnull %0), !dbg !28192
@@ -6245,7 +6239,7 @@ bb.h:                                             ; preds = %bb.f, %.thread.i.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.z = phi ptr [ null, %bb.h ], [ %i.s, %bb.g ]
-  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ]
+  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ], !dbg !28871
   %.sroa.06.0.i.i = phi i64 [ 0, %bb.h ], [ %i.v, %bb.g ], !dbg !28871
     #dbg_value(ptr %i.z, !28665, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !28876)
     #dbg_value(ptr %.sroa.6.sroa.5.0.i.i, !28665, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !28876)
@@ -6647,7 +6641,6 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c, !dbg !29532
 
 bb.b:                                             ; preds = %bb.a
-    #dbg_value(ptr %0, !29533, !DIExpression(), !29538)
     #dbg_value(ptr %0, !29533, !DIExpression(), !29538)
     #dbg_value(ptr undef, !29533, !DIExpression(DW_OP_deref), !29538)
   tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNtNtNtCsar2VadbF9t7_5tokio7runtime4task4core4CellNCNCNvNtCs7OITKvp9Irj_4perf6server8drive_bi00INtNtBG_4sync3ArcNtNtNtB1h_9scheduler14current_thread6HandleEEEECskigd7sy4fqX_10quinn_perf(ptr nonnull %0), !dbg !29540
@@ -7051,7 +7044,7 @@ bb.h:                                             ; preds = %bb.f, %.thread.i.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.z = phi ptr [ null, %bb.h ], [ %i.s, %bb.g ]
-  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ]
+  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ], !dbg !30219
   %.sroa.06.0.i.i = phi i64 [ 0, %bb.h ], [ %i.v, %bb.g ], !dbg !30219
     #dbg_value(ptr %i.z, !30013, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !30224)
     #dbg_value(ptr %.sroa.6.sroa.5.0.i.i, !30013, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !30224)
@@ -7453,7 +7446,6 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.c, !dbg !30880
 
 bb.b:                                             ; preds = %bb.a
-    #dbg_value(ptr %0, !30881, !DIExpression(), !30886)
     #dbg_value(ptr %0, !30881, !DIExpression(), !30886)
     #dbg_value(ptr undef, !30881, !DIExpression(DW_OP_deref), !30886)
   tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNtNtNtCsar2VadbF9t7_5tokio7runtime4task4core4CellNCNCNvNtCs7OITKvp9Irj_4perf6server9drive_uni00INtNtBG_4sync3ArcNtNtNtB1h_9scheduler14current_thread6HandleEEEECskigd7sy4fqX_10quinn_perf(ptr nonnull %0), !dbg !30888
@@ -7857,7 +7849,7 @@ bb.h:                                             ; preds = %bb.f, %.thread.i.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.z = phi ptr [ null, %bb.h ], [ %i.s, %bb.g ]
-  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ]
+  %.sroa.6.sroa.5.0.i.i = phi ptr [ undef, %bb.h ], [ %i.t, %bb.g ], !dbg !31567
   %.sroa.06.0.i.i = phi i64 [ 0, %bb.h ], [ %i.v, %bb.g ], !dbg !31567
     #dbg_value(ptr %i.z, !31361, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !31572)
     #dbg_value(ptr %.sroa.6.sroa.5.0.i.i, !31361, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !31572)

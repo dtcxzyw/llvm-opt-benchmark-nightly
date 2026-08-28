@@ -205,13 +205,8 @@ bb.a:
 bb.b:                                             ; preds = %.preheader117, %.loopexit116
   %.097129 = phi i32 [ 0, %.preheader117 ], [ %i.s, %.loopexit116 ] ; 7 uses
   %.099128 = phi i32 [ 0, %.preheader117 ], [ %.1100.lcssa, %.loopexit116 ] ; 4 uses
-  %0 = sub nsw i32 5, %.097129                    ; 2 uses
-  %1 = zext i32 %0 to i64
-  %2 = add nuw nsw i64 %1, 1                      ; 2 uses
   %i.r = sub nsw i32 5, %.097129                  ; 2 uses
-  %3 = zext i32 %i.r to i64
-  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
-  %i.s = add nuw nsw i32 %.097129, 1              ; 8 uses
+  %i.s = add nuw nsw i32 %.097129, 1              ; 7 uses
   %i.t = icmp samesign ult i32 %.097129, 6
   br i1 %i.t, label %.lr.ph, label %.loopexit116
 
@@ -219,16 +214,14 @@ bb.b:                                             ; preds = %.preheader117, %.lo
   %i.u = icmp samesign ult i32 %.097129, 3
   %i.v = lshr i32 %i.h, %.097129
   %i.w = and i32 %i.v, 1                          ; 2 uses
-  br i1 %i.u, label %Gia_GetMValue.exit.us.preheader, label %.lr.ph.split
+  br i1 %i.u, label %vector.ph, label %.lr.ph.split
 
-Gia_GetMValue.exit.us.preheader:                  ; preds = %.lr.ph
-  %5 = sext i32 %.099128 to i64                   ; 3 uses
-  %min.iters.check = icmp ult i32 %i.r, 3
-  br i1 %min.iters.check, label %Gia_GetMValue.exit.us.preheader464, label %vector.ph
-
-vector.ph:                                        ; preds = %Gia_GetMValue.exit.us.preheader
-  %n.vec = and i64 %4, 12                         ; 4 uses
-  %i.x = add nsw i64 %n.vec, %5                   ; 2 uses
+vector.ph:                                        ; preds = %.lr.ph
+  %0 = sext i32 %.099128 to i64                   ; 2 uses
+  %narrow = sub nuw nsw i32 6, %.097129
+  %1 = zext nneg i32 %narrow to i64               ; 2 uses
+  %n.vec = and i64 %1, 4                          ; 4 uses
+  %i.x = add nsw i64 %n.vec, %0                   ; 2 uses
   %i.y = trunc nuw nsw i64 %n.vec to i32
   %i.z = add nuw nsw i32 %i.s, %i.y
   %broadcast.splatinsert435 = insertelement <4 x i32> poison, i32 %i.w, i64 0
@@ -236,7 +229,7 @@ vector.ph:                                        ; preds = %Gia_GetMValue.exit.
   %broadcast.splatinsert437 = insertelement <4 x i32> poison, i32 %i.s, i64 0
   %broadcast.splat438 = shufflevector <4 x i32> %broadcast.splatinsert437, <4 x i32> poison, <4 x i32> zeroinitializer
   %induction = add nuw nsw <4 x i32> %broadcast.splat438, <i32 0, i32 1, i32 2, i32 3>
-  %invariant.gep478 = getelementptr [4 x i8], ptr %i.l, i64 %5
+  %invariant.gep478 = getelementptr [4 x i8], ptr %i.l, i64 %0
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -258,17 +251,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ai, label %middle.block, label %vector.body, !llvm.loop !314
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %4, %n.vec
-  br i1 %cmp.n, label %.loopexit116.loopexit, label %Gia_GetMValue.exit.us.preheader464
+  %cmp.n = icmp eq i64 %n.vec, %1
+  br i1 %cmp.n, label %.loopexit116.loopexit, label %Gia_GetMValue.exit.us
 
-Gia_GetMValue.exit.us.preheader464:               ; preds = %Gia_GetMValue.exit.us.preheader, %middle.block
-  %indvars.iv162.ph = phi i64 [ %5, %Gia_GetMValue.exit.us.preheader ], [ %i.x, %middle.block ]
-  %.0106118.us.ph = phi i32 [ %i.s, %Gia_GetMValue.exit.us.preheader ], [ %i.z, %middle.block ]
-  br label %Gia_GetMValue.exit.us
-
-Gia_GetMValue.exit.us:                            ; preds = %Gia_GetMValue.exit.us.preheader464, %Gia_GetMValue.exit.us
-  %indvars.iv162 = phi i64 [ %indvars.iv.next163, %Gia_GetMValue.exit.us ], [ %indvars.iv162.ph, %Gia_GetMValue.exit.us.preheader464 ] ; 2 uses
-  %.0106118.us = phi i32 [ %i.aq, %Gia_GetMValue.exit.us ], [ %.0106118.us.ph, %Gia_GetMValue.exit.us.preheader464 ] ; 4 uses
+Gia_GetMValue.exit.us:                            ; preds = %middle.block, %Gia_GetMValue.exit.us
+  %indvars.iv162 = phi i64 [ %indvars.iv.next163, %Gia_GetMValue.exit.us ], [ %i.x, %middle.block ] ; 2 uses
+  %.0106118.us = phi i32 [ %i.aq, %Gia_GetMValue.exit.us ], [ %i.z, %middle.block ] ; 4 uses
   %i.aj = icmp samesign ult i32 %.0106118.us, 3
   %i.ak = lshr i32 %i.h, %.0106118.us
   %i.al = and i32 %i.ak, 1
@@ -290,11 +278,13 @@ Gia_GetMValue.exit.us:                            ; preds = %Gia_GetMValue.exit.
   br i1 %i.ar, label %.lr.ph.split.split.us, label %Gia_GetMValue.exit.preheader
 
 Gia_GetMValue.exit.preheader:                     ; preds = %.lr.ph.split
-  %min.iters.check441 = icmp ult i32 %0, 3
+  %2 = zext i32 %i.r to i64
+  %3 = add nuw nsw i64 %2, 1                      ; 2 uses
+  %min.iters.check441 = icmp ult i32 %i.r, 3
   br i1 %min.iters.check441, label %Gia_GetMValue.exit.preheader465, label %vector.ph442
 
 vector.ph442:                                     ; preds = %Gia_GetMValue.exit.preheader
-  %n.vec443 = and i64 %2, 8589934588              ; 4 uses
+  %n.vec443 = and i64 %3, 8589934588              ; 4 uses
   %i.at = add nsw i64 %n.vec443, %i.as            ; 2 uses
   %i.au = trunc i64 %n.vec443 to i32
   %i.av = add i32 %i.s, %i.au
@@ -323,7 +313,7 @@ vector.body451:                                   ; preds = %vector.body451, %ve
   br i1 %i.be, label %middle.block456, label %vector.body451, !llvm.loop !316
 
 middle.block456:                                  ; preds = %vector.body451
-  %cmp.n457 = icmp eq i64 %2, %n.vec443
+  %cmp.n457 = icmp eq i64 %3, %n.vec443
   br i1 %cmp.n457, label %.loopexit116.loopexit153, label %Gia_GetMValue.exit.preheader465
 
 Gia_GetMValue.exit.preheader465:                  ; preds = %Gia_GetMValue.exit.preheader, %middle.block456

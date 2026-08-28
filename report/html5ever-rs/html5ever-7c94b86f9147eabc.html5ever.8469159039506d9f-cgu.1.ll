@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/html5ever-rs/original/html5ever-7c94b86f9147eabc.html5ever.8469159039506d9f-cgu.1?download=true
+inline.NumInlined: 66
+inline.NumDeleted: 42
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_RNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks:bb.a
   %i.e = trunc nuw i64 %i.d to i1
   br i1 %i.e, label %bb.b, label %_RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks20opt_tendril_as_slice.exit
@@ -200,8 +204,7 @@ bb.ac:                                            ; preds = %_RNvNvNtNtCsbmOI1VU
 
 ._RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks18opt_to_ascii_lower.exit94_crit_edge: ; preds = %bb.ac
   %.pre = load i64, ptr %i.b, align 8, !range !4
-  %.pre.fr = freeze i64 %.pre
-  %i.bu = icmp ne i64 %.pre.fr, -1
+  %i.bu = icmp ne i64 %.pre, -1
   br label %_RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks18opt_to_ascii_lower.exit94
 
 bb.ad:                                            ; preds = %_RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks18opt_to_ascii_lower.exit
@@ -377,7 +380,7 @@ bb.ax:                                            ; preds = %bb.ac
   br label %.body
 
 _RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks18opt_to_ascii_lower.exit94: ; preds = %._RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks18opt_to_ascii_lower.exit94_crit_edge, %bb.ad
-  %.not73 = phi i1 [ %i.bu, %._RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks18opt_to_ascii_lower.exit94_crit_edge ], [ false, %bb.ad ] ; 5 uses
+  %.not73 = phi i1 [ %i.bu, %._RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks18opt_to_ascii_lower.exit94_crit_edge ], [ false, %bb.ad ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.fe = load i64, ptr %i.c, align 8, !range !4, !noundef !5
   %.not72 = icmp eq i64 %i.fe, -1                 ; 4 uses
@@ -385,21 +388,20 @@ _RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks1
   %i.fg = load ptr, ptr %i.ff, align 8, !nonnull !5 ; 6 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.fi = load i64, ptr %i.fh, align 8
-  %.sroa.042.0 = select i1 %.not72, ptr null, ptr %i.fg
   %.sroa.5.0 = select i1 %.not72, i64 undef, i64 %i.fi ; 6 uses
+  %.sroa.042.0 = select i1 %.not72, ptr null, ptr %i.fg
   %i.fj = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
   %i.fk = load ptr, ptr %i.fj, align 8, !nonnull !5
   %i.fl = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.fm = load i64, ptr %i.fl, align 8
   %spec.select = select i1 %.not73, ptr %i.fk, ptr null
-  %.sroa.544.0 = select i1 %.not73, i64 %i.fm, i64 undef
   store ptr %.sroa.042.0, ptr %i.a, align 8
   %i.fn = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %.sroa.5.0, ptr %i.fn, align 8
   %i.fo = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   store ptr %spec.select, ptr %i.fo, align 8
   %i.fp = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store i64 %.sroa.544.0, ptr %i.fp, align 8
+  store i64 %i.fm, ptr %i.fp, align 8
   %i.fq = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.fr = load i8, ptr %i.fq, align 8, !range !64, !noundef !5
   %i.fs = trunc nuw i8 %i.fr to i1

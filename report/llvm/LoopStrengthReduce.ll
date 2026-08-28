@@ -205,7 +205,6 @@ _ZN4llvm11SmallVectorINS_8SCEVUseTIPKNS_4SCEVEEELj8EEC2IPKS4_vEET_SA_.exit: ; pr
   store i32 %i.fs, ptr %i.aq, align 8, !tbaa !50
   %i.ft = getelementptr inbounds nuw i8, ptr %.0155, i64 8 ; 6 uses
   %i.fu = load ptr, ptr %9, align 8, !tbaa !21    ; 2 uses
-  %13 = ptrtoaddr ptr %i.fu to i64
   %i.fv = load i32, ptr %i.s, align 8, !tbaa !50
   %i.fw = zext i32 %i.fv to i64                   ; 2 uses
   %i.fx = getelementptr inbounds nuw [8 x i8], ptr %i.fu, i64 %i.fw ; 3 uses
@@ -235,6 +234,7 @@ _ZN4llvm15SmallVectorImplINS_8SCEVUseTIPKNS_4SCEVEEEE7reserveEm.exit.i: ; preds 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZN4llvm15SmallVectorImplINS_8SCEVUseTIPKNS_4SCEVEEEE7reserveEm.exit.i
   %i.gi = load ptr, ptr %10, align 8, !tbaa !21   ; 2 uses
   %i.gj = getelementptr inbounds nuw [8 x i8], ptr %i.gi, i64 %.pre-phi.i ; 4 uses
+  %13 = ptrtoaddr ptr %i.fu to i64
   %i.gk = add i64 %.reass, %13
   %i.gl = lshr i64 %i.gk, 3
   %i.gm = add nuw nsw i64 %i.gl, %i.fw

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quinn-rs/original/bench-4b922278c536a853.bench.fce8d9389b82f1e7-cgu.06?download=true
+inline.NumInlined: 261
+inline.NumDeleted: 106
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -139,7 +141,6 @@ bb.a:
     #dbg_value(ptr %0, !2194, !DIExpression(), !2213)
     #dbg_value(ptr %0, !2195, !DIExpression(), !2214)
     #dbg_value(ptr %0, !2215, !DIExpression(), !2224)
-    #dbg_value(ptr %0, !2215, !DIExpression(), !2224)
     #dbg_value(ptr undef, !2215, !DIExpression(DW_OP_deref), !2224)
     #dbg_value(ptr poison, !2226, !DIExpression(), !2233)
     #dbg_value(ptr %0, !2235, !DIExpression(), !2241)
@@ -250,7 +251,6 @@ bb.a:
     #dbg_value(ptr %0, !2413, !DIExpression(), !2432)
     #dbg_value(ptr %0, !2414, !DIExpression(), !2433)
     #dbg_value(ptr %0, !2434, !DIExpression(), !2442)
-    #dbg_value(ptr %0, !2434, !DIExpression(), !2442)
     #dbg_value(ptr undef, !2434, !DIExpression(DW_OP_deref), !2442)
     #dbg_value(ptr poison, !2444, !DIExpression(), !2450)
     #dbg_value(ptr %0, !2452, !DIExpression(), !2458)
@@ -344,7 +344,6 @@ define hidden void @_RINvNtCsbHiBx3jRrxb_6anyhow5error11object_dropINtNtB4_7wrap
 bb.a:
     #dbg_value(ptr %0, !2534, !DIExpression(), !2553)
     #dbg_value(ptr %0, !2535, !DIExpression(), !2554)
-    #dbg_value(ptr %0, !2555, !DIExpression(), !2563)
     #dbg_value(ptr %0, !2555, !DIExpression(), !2563)
     #dbg_value(ptr undef, !2555, !DIExpression(DW_OP_deref), !2563)
     #dbg_value(ptr poison, !2565, !DIExpression(), !2571)
@@ -459,7 +458,6 @@ bb.a:
     #dbg_value(ptr %0, !2682, !DIExpression(), !2701)
     #dbg_value(ptr %0, !2683, !DIExpression(), !2702)
     #dbg_value(ptr %0, !2703, !DIExpression(), !2711)
-    #dbg_value(ptr %0, !2703, !DIExpression(), !2711)
     #dbg_value(ptr undef, !2703, !DIExpression(DW_OP_deref), !2711)
     #dbg_value(ptr poison, !2713, !DIExpression(), !2719)
     #dbg_value(ptr %0, !2721, !DIExpression(), !2727)
@@ -568,7 +566,6 @@ bb.a:
     #dbg_value(ptr %0, !2810, !DIExpression(), !2829)
     #dbg_value(ptr %0, !2811, !DIExpression(), !2830)
     #dbg_value(ptr %0, !2831, !DIExpression(), !2839)
-    #dbg_value(ptr %0, !2831, !DIExpression(), !2839)
     #dbg_value(ptr undef, !2831, !DIExpression(DW_OP_deref), !2839)
     #dbg_value(ptr poison, !2841, !DIExpression(), !2847)
     #dbg_value(ptr %0, !2849, !DIExpression(), !2855)
@@ -661,7 +658,6 @@ bb.a:
     #dbg_value(ptr %0, !2917, !DIExpression(), !2936)
     #dbg_value(ptr %0, !2918, !DIExpression(), !2937)
     #dbg_value(ptr %0, !2938, !DIExpression(), !2946)
-    #dbg_value(ptr %0, !2938, !DIExpression(), !2946)
     #dbg_value(ptr undef, !2938, !DIExpression(DW_OP_deref), !2946)
     #dbg_value(ptr poison, !2948, !DIExpression(), !2954)
     #dbg_value(ptr %0, !2956, !DIExpression(), !2962)
@@ -749,7 +745,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
     #dbg_value(ptr %0, !3060, !DIExpression(), !3174)
     #dbg_value(ptr %0, !3163, !DIExpression(), !3175)
-    #dbg_value(ptr %0, !3163, !DIExpression(), !3175)
     #dbg_value(ptr undef, !3163, !DIExpression(DW_OP_deref), !3175)
     #dbg_value(ptr poison, !3155, !DIExpression(), !3176)
     #dbg_value(ptr %0, !3147, !DIExpression(), !3177)
@@ -791,7 +786,6 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.a
     #dbg_value(ptr %0, !3026, !DIExpression(), !3209)
-    #dbg_value(ptr %0, !3138, !DIExpression(), !3210)
     #dbg_value(ptr %0, !3138, !DIExpression(), !3210)
     #dbg_value(ptr undef, !3138, !DIExpression(DW_OP_deref), !3210)
     #dbg_value(ptr poison, !3130, !DIExpression(), !3211)
@@ -873,7 +867,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
     #dbg_value(ptr %0, !3280, !DIExpression(), !3387)
     #dbg_value(ptr %0, !3376, !DIExpression(), !3388)
-    #dbg_value(ptr %0, !3376, !DIExpression(), !3388)
     #dbg_value(ptr undef, !3376, !DIExpression(DW_OP_deref), !3388)
     #dbg_value(ptr poison, !3368, !DIExpression(), !3389)
     #dbg_value(ptr %0, !3360, !DIExpression(), !3390)
@@ -915,7 +908,6 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.a
     #dbg_value(ptr %0, !3257, !DIExpression(), !3422)
-    #dbg_value(ptr %0, !3351, !DIExpression(), !3423)
     #dbg_value(ptr %0, !3351, !DIExpression(), !3423)
     #dbg_value(ptr undef, !3351, !DIExpression(DW_OP_deref), !3423)
     #dbg_value(ptr poison, !3343, !DIExpression(), !3424)
@@ -964,7 +956,6 @@ bb.a:
     #dbg_value(ptr %0, !3450, !DIExpression(), !3478)
     #dbg_declare(ptr %1, !3451, !DIExpression(), !3479)
     #dbg_value(ptr %0, !3452, !DIExpression(), !3480)
-    #dbg_value(ptr %0, !3481, !DIExpression(), !3489)
     #dbg_value(ptr %0, !3481, !DIExpression(), !3489)
     #dbg_value(ptr undef, !3481, !DIExpression(DW_OP_deref), !3489)
     #dbg_value(ptr poison, !3491, !DIExpression(), !3497)
@@ -1037,7 +1028,6 @@ bb.a:
     #dbg_declare(ptr %1, !3568, !DIExpression(), !3598)
     #dbg_value(ptr %0, !3569, !DIExpression(), !3599)
     #dbg_value(ptr %0, !3600, !DIExpression(), !3608)
-    #dbg_value(ptr %0, !3600, !DIExpression(), !3608)
     #dbg_value(ptr undef, !3600, !DIExpression(DW_OP_deref), !3608)
     #dbg_value(ptr poison, !3610, !DIExpression(), !3616)
     #dbg_value(ptr %0, !3618, !DIExpression(), !3624)
@@ -1109,7 +1099,6 @@ bb.a:
     #dbg_declare(ptr %1, !3687, !DIExpression(), !3717)
     #dbg_value(ptr %0, !3688, !DIExpression(), !3718)
     #dbg_value(ptr %0, !3719, !DIExpression(), !3727)
-    #dbg_value(ptr %0, !3719, !DIExpression(), !3727)
     #dbg_value(ptr undef, !3719, !DIExpression(DW_OP_deref), !3727)
     #dbg_value(ptr poison, !3729, !DIExpression(), !3735)
     #dbg_value(ptr %0, !3737, !DIExpression(), !3743)
@@ -1180,7 +1169,6 @@ bb.a:
     #dbg_value(ptr %0, !3805, !DIExpression(), !3835)
     #dbg_declare(ptr %1, !3806, !DIExpression(), !3836)
     #dbg_value(ptr %0, !3807, !DIExpression(), !3837)
-    #dbg_value(ptr %0, !3838, !DIExpression(), !3846)
     #dbg_value(ptr %0, !3838, !DIExpression(), !3846)
     #dbg_value(ptr undef, !3838, !DIExpression(DW_OP_deref), !3846)
     #dbg_value(ptr poison, !3848, !DIExpression(), !3854)
@@ -1584,7 +1572,7 @@ bb.a:
   store <2 x i64> %i.f, ptr %.sroa.59.0..sroa_idx.i, align 16, !dbg !6271, !alias.scope !6274
   store <2 x i64> %i.b, ptr %.sroa.711.0..sroa_idx.i, align 16, !dbg !6271, !alias.scope !6274
   %.sroa.913.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 48, !dbg !6271 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.913.0..sroa_idx.i, i8 0, i64 24, i1 false), !dbg !6271, !alias.scope !6274
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.913.0..sroa_idx.i, i8 0, i64 24, i1 false), !dbg !6271, !alias.scope !6274
     #dbg_value(ptr undef, !6254, !DIExpression(DW_OP_deref), !6259)
     #dbg_value(ptr poison, !6278, !DIExpression(), !6287)
     #dbg_value(ptr %i.a, !6284, !DIExpression(), !6287)

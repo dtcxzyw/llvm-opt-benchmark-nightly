@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quiche-rs/original/quiche_server.quiche_server.73e48873ebe39462-cgu.15?download=true
+inline.NumInlined: 327
+inline.NumDeleted: 135
 begin_hunk_0_@_RINvXst_Cs5kGgRUzsVpH_8smallvecINtB6_8SmallVecAyj8_EINtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect6ExtendyE6extendINtNtNtBV_8adapters6copied6CopiedINtNtNtNtCsG258MDvU3F_3std11collections4hash3set4IteryEEECs9WTr9tUZcLm_13quiche_server:bb.a
   %i.av = extractvalue { i64, i64 } %i.ad, 1, !dbg !8945
     #dbg_value(i64 %i.av, !8672, !DIExpression(), !8947)
@@ -200,8 +202,8 @@ bb.m:                                             ; preds = %bb.g
   br i1 %or.cond.i.i, label %_RINvCs5kGgRUzsVpH_8smallvec10deallocateNtNtCs3f36owOmepS_6quiche5frame5FrameECs9WTr9tUZcLm_13quiche_server.exit.i, label %bb.n, !dbg !9413, !prof !9265
 
 bb.n:                                             ; preds = %bb.m
-    #dbg_value(i64 undef, !9414, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !9424)
     #dbg_value(i64 0, !9414, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9424)
+    #dbg_value(i64 undef, !9414, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !9424)
     #dbg_value(i64 1, !9414, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9424)
     #dbg_declare(ptr %i.a, !9422, !DIExpression(), !9426)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !9427, !noalias !9428
@@ -212,8 +214,8 @@ bb.n:                                             ; preds = %bb.m
 _RINvCs5kGgRUzsVpH_8smallvec10deallocateNtNtCs3f36owOmepS_6quiche5frame5FrameECs9WTr9tUZcLm_13quiche_server.exit.i: ; preds = %bb.m
   %i.x = shl nuw nsw i64 %.sink.i.i, 7, !dbg !9432
     #dbg_value(i64 %i.x, !9240, !DIExpression(), !9410)
-    #dbg_value(i64 %i.x, !9414, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !9424)
     #dbg_value(i64 8, !9414, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9424)
+    #dbg_value(i64 %i.x, !9414, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !9424)
     #dbg_value(i64 0, !9414, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9424)
     #dbg_declare(ptr %i.a, !9422, !DIExpression(), !9426)
     #dbg_value(i64 8, !9400, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9433)
@@ -493,8 +495,8 @@ bb.k:                                             ; preds = %bb.e
   br i1 %or.cond.i, label %_RINvCs5kGgRUzsVpH_8smallvec10deallocateTyyEECs9WTr9tUZcLm_13quiche_server.exit, label %bb.l, !dbg !9873, !prof !9265
 
 bb.l:                                             ; preds = %bb.k
-    #dbg_value(i64 undef, !9414, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !9874)
     #dbg_value(i64 0, !9414, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9874)
+    #dbg_value(i64 undef, !9414, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !9874)
     #dbg_value(i64 1, !9414, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9874)
     #dbg_declare(ptr %i.a, !9422, !DIExpression(), !9876)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !9877, !noalias !9878
@@ -505,8 +507,8 @@ bb.l:                                             ; preds = %bb.k
 _RINvCs5kGgRUzsVpH_8smallvec10deallocateTyyEECs9WTr9tUZcLm_13quiche_server.exit: ; preds = %bb.k
   %i.s = shl nuw nsw i64 %.sink.i, 4, !dbg !9882
     #dbg_value(i64 %i.s, !9736, !DIExpression(), !9870)
-    #dbg_value(i64 %i.s, !9414, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !9874)
     #dbg_value(i64 8, !9414, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9874)
+    #dbg_value(i64 %i.s, !9414, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !9874)
     #dbg_value(i64 0, !9414, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9874)
     #dbg_declare(ptr %i.a, !9422, !DIExpression(), !9876)
     #dbg_value(i64 8, !9860, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9883)
@@ -739,8 +741,8 @@ bb.k:                                             ; preds = %bb.e
   br i1 %or.cond.i, label %_RINvCs5kGgRUzsVpH_8smallvec10deallocateyECs9WTr9tUZcLm_13quiche_server.exit, label %bb.l, !dbg !10234, !prof !9265
 
 bb.l:                                             ; preds = %bb.k
-    #dbg_value(i64 undef, !9414, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !10235)
     #dbg_value(i64 0, !9414, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !10235)
+    #dbg_value(i64 undef, !9414, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !10235)
     #dbg_value(i64 1, !9414, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10235)
     #dbg_declare(ptr %i.a, !9422, !DIExpression(), !10237)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !10238, !noalias !10239
@@ -751,8 +753,8 @@ bb.l:                                             ; preds = %bb.k
 _RINvCs5kGgRUzsVpH_8smallvec10deallocateyECs9WTr9tUZcLm_13quiche_server.exit: ; preds = %bb.k
   %i.s = shl nuw nsw i64 %.sink.i, 3, !dbg !10243
     #dbg_value(i64 %i.s, !10097, !DIExpression(), !10231)
-    #dbg_value(i64 %i.s, !9414, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !10235)
     #dbg_value(i64 8, !9414, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !10235)
+    #dbg_value(i64 %i.s, !9414, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !10235)
     #dbg_value(i64 0, !9414, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10235)
     #dbg_declare(ptr %i.a, !9422, !DIExpression(), !10237)
     #dbg_value(i64 8, !10221, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10244)

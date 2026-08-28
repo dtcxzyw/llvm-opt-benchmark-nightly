@@ -205,12 +205,8 @@ bb.aq:                                            ; preds = %bb.ap
   %indvar713 = phi i32 [ %indvar.next714, %._crit_edge.i.i260 ], [ 0, %.lr.ph46.preheader.i.i ] ; 4 uses
   %indvars.iv55.i.i = phi i64 [ %indvars.iv.next56.i.i, %._crit_edge.i.i260 ], [ 1, %.lr.ph46.preheader.i.i ] ; 3 uses
   %indvars.iv.in.i.i = phi i32 [ %indvars.iv.i.i258, %._crit_edge.i.i260 ], [ %i.acg, %.lr.ph46.preheader.i.i ] ; 3 uses
-  %smax732 = call i32 @llvm.smax.i32(i32 %i.acg, i32 %indvars.iv.in.i.i)
   %i.acm = trunc i35 %indvar722 to i32
   %i.acn = sub i32 %i.acm, %i.acg
-  %1 = add i32 %smax732, %i.acn                   ; 2 uses
-  %2 = zext i32 %1 to i64
-  %3 = add nuw nsw i64 %2, 1                      ; 2 uses
   %indvars.iv.i.i258 = add i32 %indvars.iv.in.i.i, -1 ; 2 uses
   %i.aco = zext i32 %indvars.iv.i.i258 to i64     ; 4 uses
   %i.acp = shl nuw i64 %indvars.iv55.i.i, 33
@@ -222,7 +218,11 @@ bb.aq:                                            ; preds = %bb.ap
   %i.act = add i32 %i.acs, -1
   %i.acu = sext i32 %i.act to i64
   %i.acv = getelementptr inbounds [8 x i8], ptr %i.acf, i64 %i.acu ; 3 uses
-  %min.iters.check734 = icmp eq i32 %1, 0
+  %1 = call i32 @llvm.smax.i32(i32 %i.acg, i32 %indvars.iv.in.i.i)
+  %2 = add i32 %1, %i.acn                         ; 2 uses
+  %3 = zext i32 %2 to i64
+  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
+  %min.iters.check734 = icmp eq i32 %2, 0
   br i1 %min.iters.check734, label %scalar.ph733.preheader, label %vector.memcheck712
 
 vector.memcheck712:                               ; preds = %.lr.ph.i.i257
@@ -255,7 +255,7 @@ vector.memcheck712:                               ; preds = %.lr.ph.i.i257
   br i1 %conflict.rdx731, label %scalar.ph733.preheader, label %vector.ph735
 
 vector.ph735:                                     ; preds = %vector.memcheck712
-  %n.vec736 = and i64 %3, 8589934590              ; 3 uses
+  %n.vec736 = and i64 %4, 8589934590              ; 3 uses
   %i.adk = add nuw nsw i64 %n.vec736, %i.aco
   %i.adl = load double, ptr %i.acr, align 8, !tbaa !77, !alias.scope !122
   %broadcast.splatinsert744 = insertelement <2 x double> poison, double %i.adl, i64 0
@@ -293,7 +293,7 @@ vector.body739:                                   ; preds = %vector.body739, %ve
   br i1 %i.aea, label %middle.block751, label %vector.body739, !llvm.loop !130
 
 middle.block751:                                  ; preds = %vector.body739
-  %cmp.n752 = icmp eq i64 %3, %n.vec736
+  %cmp.n752 = icmp eq i64 %4, %n.vec736
   br i1 %cmp.n752, label %._crit_edge.i.i260, label %scalar.ph733.preheader
 
 scalar.ph733.preheader:                           ; preds = %vector.memcheck712, %.lr.ph.i.i257, %middle.block751
@@ -385,12 +385,8 @@ bb.ar:                                            ; preds = %.lr.ph49.i.i263
   %indvar = phi i32 [ %indvar.next, %._crit_edge.i70.i ], [ 0, %.lr.ph46.preheader.i58.i ] ; 4 uses
   %indvars.iv55.i61.i = phi i64 [ %indvars.iv.next56.i71.i, %._crit_edge.i70.i ], [ 1, %.lr.ph46.preheader.i58.i ] ; 3 uses
   %indvars.iv.in.i62.i = phi i32 [ %indvars.iv.i63.i, %._crit_edge.i70.i ], [ %i.afe, %.lr.ph46.preheader.i58.i ] ; 3 uses
-  %smax690 = call i32 @llvm.smax.i32(i32 %i.afe, i32 %indvars.iv.in.i62.i)
   %i.afj = trunc i35 %indvar681 to i32
   %i.afk = sub i32 %i.afj, %i.afe
-  %4 = add i32 %smax690, %i.afk                   ; 2 uses
-  %5 = zext i32 %4 to i64
-  %6 = add nuw nsw i64 %5, 1                      ; 2 uses
   %indvars.iv.i63.i = add i32 %indvars.iv.in.i62.i, -1 ; 2 uses
   %i.afl = zext i32 %indvars.iv.i63.i to i64      ; 4 uses
   %i.afm = shl nuw i64 %indvars.iv55.i61.i, 33
@@ -402,7 +398,11 @@ bb.ar:                                            ; preds = %.lr.ph49.i.i263
   %i.afq = add i32 %i.afp, -1
   %i.afr = sext i32 %i.afq to i64
   %i.afs = getelementptr inbounds [8 x i8], ptr %i.afd, i64 %i.afr ; 3 uses
-  %min.iters.check692 = icmp eq i32 %4, 0
+  %5 = call i32 @llvm.smax.i32(i32 %i.afe, i32 %indvars.iv.in.i62.i)
+  %6 = add i32 %5, %i.afk                         ; 2 uses
+  %7 = zext i32 %6 to i64
+  %8 = add nuw nsw i64 %7, 1                      ; 2 uses
+  %min.iters.check692 = icmp eq i32 %6, 0
   br i1 %min.iters.check692, label %scalar.ph691.preheader, label %vector.memcheck673
 
 vector.memcheck673:                               ; preds = %.lr.ph.i60.i
@@ -435,7 +435,7 @@ vector.memcheck673:                               ; preds = %.lr.ph.i60.i
   br i1 %conflict.rdx, label %scalar.ph691.preheader, label %vector.ph693
 
 vector.ph693:                                     ; preds = %vector.memcheck673
-  %n.vec694 = and i64 %6, 8589934590              ; 3 uses
+  %n.vec694 = and i64 %8, 8589934590              ; 3 uses
   %i.agh = add nuw nsw i64 %n.vec694, %i.afl
   %i.agi = load double, ptr %i.afo, align 8, !tbaa !77, !alias.scope !134
   %broadcast.splatinsert702 = insertelement <2 x double> poison, double %i.agi, i64 0
@@ -473,7 +473,7 @@ vector.body697:                                   ; preds = %vector.body697, %ve
   br i1 %i.agx, label %middle.block709, label %vector.body697, !llvm.loop !142
 
 middle.block709:                                  ; preds = %vector.body697
-  %cmp.n710 = icmp eq i64 %6, %n.vec694
+  %cmp.n710 = icmp eq i64 %8, %n.vec694
   br i1 %cmp.n710, label %._crit_edge.i70.i, label %scalar.ph691.preheader
 
 scalar.ph691.preheader:                           ; preds = %vector.memcheck673, %.lr.ph.i60.i, %middle.block709

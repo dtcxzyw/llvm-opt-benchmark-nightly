@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ropey-rs/original/ropey-993bb32e63343616.ropey.1d6c3238c2c56af2-cgu.4?download=true
+inline.NumInlined: 208
+inline.NumDeleted: 71
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_RNvNtCs2wCc12Mnjqg_5ropey9str_utils27byte_to_utf16_surrogate_idx:bb.a
   %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.0.05172, i64 %.idx
   %i.ar = add nsw i64 %.idx, -16                  ; 2 uses
@@ -200,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph
   %.sroa.9.0.i165 = phi i64 [ %i.ad, %._crit_edge160 ], [ %i.i, %.lr.ph171.preheader ] ; 2 uses
   %..i = tail call i64 @llvm.umin.i64(i64 %.sroa.015.0.i167, i64 %.sroa.9.0.i165)
   %..i42 = tail call i64 @llvm.umin.i64(i64 %..i, i64 255) ; 3 uses
-  %i.ac = sub i64 %.sroa.015.0.i167, %..i42       ; 2 uses
+  %i.ac = sub nuw nsw i64 %.sroa.015.0.i167, %..i42 ; 2 uses
   %i.ad = sub nuw i64 %.sroa.9.0.i165, %..i42     ; 3 uses
   %.idx = shl nuw nsw i64 %..i42, 4               ; 4 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.018.0.i166, i64 %.idx ; 3 uses

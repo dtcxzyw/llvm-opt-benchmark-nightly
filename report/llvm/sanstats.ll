@@ -202,7 +202,7 @@ bb.v:                                             ; preds = %_ZN4llvm11raw_ostre
 bb.w:                                             ; preds = %bb.n
   %i.dm = ptrtoaddr ptr %i.bx to i64              ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.bv, i64 1
-  %i.do = load i8, ptr %i.bv, align 1, !tbaa !19  ; 5 uses
+  %i.do = load i8, ptr %i.bv, align 1, !tbaa !19  ; 6 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 7 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 6 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %3, i64 32
@@ -258,11 +258,12 @@ bb.w:                                             ; preds = %bb.n
   %i.fo = xor i64 %notmask.i.i, -1
   %i.fp = add i64 %i.dm, -2
   %i.fq = mul nsw i64 %i.eu, -2
-  %16 = add i8 %i.do, -1                          ; 2 uses
-  %17 = zext i8 %16 to i64
-  %18 = add i64 %i.dm, -2
-  %19 = mul nsw i64 %i.eu, -2
-  %i.fr = zext i8 %16 to i64
+  %16 = add i64 %i.dm, -2
+  %17 = mul nsw i64 %i.eu, -2
+  %18 = add i8 %i.do, -1
+  %19 = zext i8 %18 to i64
+  %20 = add i8 %i.do, -1
+  %i.fr = zext i8 %20 to i64
   br label %bb.x
 
 bb.x:                                             ; preds = %_ZL10ReadModulecPKcS0_.exit, %bb.w
@@ -665,30 +666,28 @@ bb.az:                                            ; preds = %bb.ay
   %i.kc = add i64 %i.kb, %indvar
   %i.kd = sub i64 %i.fp, %i.kc
   %i.ke = add i64 %indvar, %i.fv
-  %i.kf = sub i64 %18, %i.ke
+  %i.kf = sub i64 %16, %i.ke
   br label %bb.ba
 
 bb.ba:                                            ; preds = %_ZN4llvm11raw_ostreamlsEc.exit95.i, %bb.az
   %indvar140 = phi i64 [ %indvar.next141, %_ZN4llvm11raw_ostreamlsEc.exit95.i ], [ 0, %bb.az ] ; 3 uses
   %.139.i = phi ptr [ %i.mt, %_ZN4llvm11raw_ostreamlsEc.exit95.i ], [ %i.jy, %bb.az ] ; 5 uses
-  %20 = mul i64 %19, %indvar140
-  %21 = add i64 %i.kf, %20
-  %umin145 = call i64 @llvm.umin.i64(i64 %21, i64 %i.fr) ; 2 uses
-  %22 = add nuw nsw i64 %umin145, 1               ; 2 uses
   %i.kg = mul i64 %i.fq, %indvar140
-  %23 = add i64 %i.kd, %i.kg
-  %umin = call i64 @llvm.umin.i64(i64 %23, i64 %17) ; 2 uses
-  %i.kh = add nuw nsw i64 %umin, 1                ; 2 uses
+  %i.kh = add i64 %i.kd, %i.kg
   %i.ki = icmp ult ptr %.139.i, %i.bx
   %i.kj = and i1 %i.et, %i.ki
   br i1 %i.kj, label %.lr.ph.i.i.preheader, label %_ZL6ReadLEcPKcS0_.exit.i
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.ba
-  %min.iters.check147 = icmp samesign ult i64 %umin145, 3
+  %21 = mul i64 %17, %indvar140
+  %22 = add i64 %i.kf, %21
+  %23 = call i64 @llvm.umin.i64(i64 %22, i64 %19) ; 2 uses
+  %24 = add nuw nsw i64 %23, 1                    ; 2 uses
+  %min.iters.check147 = icmp samesign ult i64 %23, 3
   br i1 %min.iters.check147, label %.lr.ph.i.i.preheader169, label %vector.ph148
 
 vector.ph148:                                     ; preds = %.lr.ph.i.i.preheader
-  %n.vec149 = and i64 %22, 508                    ; 4 uses
+  %n.vec149 = and i64 %24, 508                    ; 4 uses
   %i.kk = trunc i64 %n.vec149 to i8
   %i.kl = getelementptr i8, ptr %.139.i, i64 %n.vec149
   br label %vector.body150
@@ -723,7 +722,7 @@ vector.body150:                                   ; preds = %vector.body150, %ve
 middle.block161:                                  ; preds = %vector.body150
   %bin.rdx162 = or <2 x i64> %i.ky, %i.kx
   %i.la = call i64 @llvm.vector.reduce.or.v2i64(<2 x i64> %bin.rdx162) ; 2 uses
-  %cmp.n163 = icmp eq i64 %22, %n.vec149
+  %cmp.n163 = icmp eq i64 %24, %n.vec149
   br i1 %cmp.n163, label %_ZL6ReadLEcPKcS0_.exit.i, label %.lr.ph.i.i.preheader169
 
 .lr.ph.i.i.preheader169:                          ; preds = %.lr.ph.i.i.preheader, %middle.block161
@@ -758,11 +757,13 @@ _ZL6ReadLEcPKcS0_.exit.i:                         ; preds = %.lr.ph.i.i, %middle
   br i1 %i.lp, label %.lr.ph.i59.i.preheader, label %_ZL6ReadLEcPKcS0_.exit63.i
 
 .lr.ph.i59.i.preheader:                           ; preds = %_ZL6ReadLEcPKcS0_.exit.i
-  %min.iters.check = icmp samesign ult i64 %umin, 3
+  %25 = call i64 @llvm.umin.i64(i64 %i.kh, i64 %i.fr) ; 2 uses
+  %26 = add nuw nsw i64 %25, 1                    ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %25, 3
   br i1 %min.iters.check, label %.lr.ph.i59.i.preheader168, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i59.i.preheader
-  %n.vec = and i64 %i.kh, 508                     ; 4 uses
+  %n.vec = and i64 %26, 508                       ; 4 uses
   %i.lq = trunc i64 %n.vec to i8
   %i.lr = getelementptr i8, ptr %i.ln, i64 %n.vec
   br label %vector.body
@@ -797,7 +798,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = or <2 x i64> %i.me, %i.md
   %i.mg = call i64 @llvm.vector.reduce.or.v2i64(<2 x i64> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %i.kh, %n.vec
+  %cmp.n = icmp eq i64 %26, %n.vec
   br i1 %cmp.n, label %_ZL6ReadLEcPKcS0_.exit63.i, label %.lr.ph.i59.i.preheader168
 
 .lr.ph.i59.i.preheader168:                        ; preds = %.lr.ph.i59.i.preheader, %middle.block

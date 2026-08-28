@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quiche-rs/original/tokio_quiche-c91d6529b0ffc3f4.tokio_quiche.74e4f61a4e01e0f4-cgu.03?download=true
+inline.NumInlined: 273
+inline.NumDeleted: 130
 begin_hunk_0_@_RNvMNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http36driver7streamsNtB2_9StreamCtx24handle_sent_stop_sending:bb.a
 bb.a:
     #dbg_value(ptr %0, !12017, !DIExpression(), !12019)
@@ -200,8 +202,8 @@ bb.a:
           to label %bb.d unwind label %bb.c, !dbg !12218 ; 2 uses
 
 bb.b:                                             ; preds = %.body59, %.thread73, %bb.c
-  %.sroa.016.0 = phi i1 [ false, %.thread73 ], [ true, %bb.c ], [ false, %.body59 ], !dbg !12210
   %.pn.pn = phi { ptr, i32 } [ %.pn7276, %.thread73 ], [ %i.t, %bb.c ], [ %i.av, %.body59 ]
+  %.sroa.016.0 = phi i1 [ false, %.thread73 ], [ true, %bb.c ], [ false, %.body59 ], !dbg !12210
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs2sJxpAufolh_5tokio4sync4mpsc7bounded8ReceiverNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http36driver12InboundFrameEEB1B_(ptr noalias nofree noundef align 8 dereferenceable(8) %i.n) #22
           to label %bb.ac unwind label %bb.y, !dbg !12219
 
@@ -604,9 +606,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.e, %bb.a
   %i.i = phi i64 [ 3, %bb.a ], [ 0, %bb.e ], !dbg !19417 ; 2 uses
-    #dbg_value(ptr %i.d, !19414, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19502)
     #dbg_value(ptr %i.d, !19412, !DIExpression(), !19502)
     #dbg_value(i64 %i.i, !19414, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19502)
+    #dbg_value(ptr %i.d, !19414, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19502)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !19503
   store ptr %i.d, ptr %i.b, align 8, !dbg !19503
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !19504

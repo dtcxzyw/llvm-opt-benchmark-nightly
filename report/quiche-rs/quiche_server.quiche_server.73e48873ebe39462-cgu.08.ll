@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quiche-rs/original/quiche_server.quiche_server.73e48873ebe39462-cgu.08?download=true
+inline.NumInlined: 334
+inline.NumDeleted: 146
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RINvMs0_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapyNtNtCsiGRwBGCeC5s_11quiche_apps6common6ClientNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE6retainNCNvCs9WTr9tUZcLm_13quiche_server4mains0_0EB2w_:bb.a
   %i.cq = shufflevector <2 x i64> %i.cp, <2 x i64> poison, <2 x i32> <i32 1, i32 0>, !dbg !4261
   %i.cr = load <2 x i64>, ptr %i.ca, align 8, !dbg !4242, !alias.scope !4215, !noalias !4216
@@ -200,12 +204,12 @@ bb.o:                                             ; preds = %_RNvXs2_NtNtNtCsexY
     #dbg_declare(ptr poison, !4548, !DIExpression(), !4555)
     #dbg_declare(ptr poison, !4557, !DIExpression(), !4593)
     #dbg_value(i64 0, !4595, !DIExpression(), !4604)
-    #dbg_value(i64 %.val63.i, !4532, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4606)
-    #dbg_value(i64 %.val63.i, !4518, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4607)
-    #dbg_value(i64 %.val63.i, !4525, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4608)
     #dbg_value(ptr %.val.i, !4532, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4606)
     #dbg_value(ptr %.val.i, !4518, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4607)
     #dbg_value(ptr %.val.i, !4525, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4608)
+    #dbg_value(i64 %.val63.i, !4532, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4606)
+    #dbg_value(i64 %.val63.i, !4518, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4607)
+    #dbg_value(i64 %.val63.i, !4525, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4608)
     #dbg_value(i64 %.val63.i, !4533, !DIExpression(), !4609)
     #dbg_value(i64 %.val63.i, !4545, !DIExpression(), !4610)
     #dbg_value(i64 %.val63.i, !4554, !DIExpression(), !4611)
@@ -260,9 +264,9 @@ _RNvXs7_NtCs3f36owOmepS_6quiche6packetINtNtCsexYYUdYSQU6_5alloc3vec3VechEINtNtCs
     #dbg_value(i64 %i.ds, !4665, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4671)
     #dbg_value(ptr %i.du, !4665, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4671)
     #dbg_value(i64 %.val63.i, !4665, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !4671)
-    #dbg_value(i64 %.val63.i, !4673, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !4679)
-    #dbg_value(ptr %i.du, !4673, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4679)
     #dbg_value(i64 %i.ds, !4673, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4679)
+    #dbg_value(ptr %i.du, !4673, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !4679)
+    #dbg_value(i64 %.val63.i, !4673, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !4679)
   store i64 %i.ds, ptr %i.c, align 8, !dbg !4681, !noalias !4085
   store ptr %i.du, ptr %.sroa.4.0..sroa_idx10.i, align 8, !dbg !4681, !noalias !4085
   store i64 %.val63.i, ptr %.sroa.511.0..sroa_idx.i, align 8, !dbg !4681, !noalias !4085

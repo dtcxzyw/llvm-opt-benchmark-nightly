@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quinn-rs/original/quinn_udp-b50ff704bf3d8cd6.quinn_udp.fbaf1ac2f4f50edd-cgu.1?download=true
+inline.NumInlined: 78
+inline.NumDeleted: 36
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvMNtCslBHTH8BfjuP_9quinn_udp3impNtB2_14UdpSocketState3new:bb.a
 
 bb.al:                                            ; preds = %bb.q
@@ -200,10 +204,10 @@ bb.bc:                                            ; preds = %_RINvNtCslBHTH8Bfju
     #dbg_value(i32 %i.ec, !1738, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !2484)
   %.not198 = icmp eq i32 %i.ec, -1, !dbg !2485    ; 2 uses
   %i.ed = extractvalue { i64, i32 } %i.eb, 0, !dbg !2486
-  %.sroa.055.0 = select i1 %.not198, i64 %i.dy, i64 %i.ed, !dbg !2486
   %.sroa.556.0 = select i1 %.not198, i32 %i.dz, i32 %i.ec, !dbg !2486 ; 2 uses
-    #dbg_value(i32 %.sroa.556.0, !1760, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !2487)
+  %.sroa.055.0 = select i1 %.not198, i64 %i.dy, i64 %i.ed, !dbg !2486
     #dbg_value(i64 %.sroa.055.0, !1760, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !2487)
+    #dbg_value(i32 %.sroa.556.0, !1760, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !2487)
   %i.ee = icmp ult i32 %.sroa.556.0, 1000000000, !dbg !2488
   call void @llvm.assume(i1 %i.ee), !dbg !2488
   %i.ef = call noundef i64 @_RNvNtNtCslBHTH8BfjuP_9quinn_udp3imp3gso16max_gso_segments(), !dbg !2495
@@ -599,7 +603,6 @@ bb.m:                                             ; preds = %._crit_edge.i.i
     #dbg_value(i32 %.sroa.564.0.copyload.i.i, !2651, !DIExpression(DW_OP_LLVM_fragment, 160, 32), !3196)
     #dbg_value(i32 %.sroa.967.0.copyload.i.i, !2651, !DIExpression(DW_OP_LLVM_fragment, 192, 32), !3196)
     #dbg_value(i16 %i.bi, !2651, !DIExpression(DW_OP_LLVM_fragment, 224, 16), !3196)
-    #dbg_value(i16 undef, !2651, !DIExpression(DW_OP_LLVM_fragment, 240, 16), !3196)
     #dbg_value(i16 1, !2651, !DIExpression(DW_OP_LLVM_fragment, 0, 16), !3196)
   br label %_RNvNtCslBHTH8BfjuP_9quinn_udp3imp11decode_recv.exit.i, !dbg !3206
 
@@ -677,8 +680,8 @@ bb.w:                                             ; preds = %bb.q
 
 _RNvNtCslBHTH8BfjuP_9quinn_udp3imp11decode_recv.exit.i: ; preds = %bb.m, %bb.l
   %.sroa.3.sroa.3.0.i.i = phi i16 [ %i.bh, %bb.l ], [ %.sroa.7.0.copyload.i.i, %bb.m ], !dbg !3166
-  %.sroa.020.0.i.i = phi i16 [ 0, %bb.l ], [ 1, %bb.m ], !dbg !3166
   %.sroa.3.sroa.0.0.i.i = phi i32 [ %.sroa.564.0.copyload.i.i, %bb.l ], [ %.sroa.3.sroa.0.2.insert.shift.i.i, %bb.m ], !dbg !3166
+  %.sroa.020.0.i.i = phi i16 [ 0, %bb.l ], [ 1, %bb.m ], !dbg !3166
   %.sroa.3.sroa.4.sroa.2.0.i.i = phi i32 [ undef, %bb.l ], [ %.sroa.564.0.copyload.i.i, %bb.m ]
   %.sroa.3.sroa.4.sroa.3.0.i.i = phi i32 [ undef, %bb.l ], [ %.sroa.967.0.copyload.i.i, %bb.m ]
   %.sroa.3.sroa.4.sroa.4.0.i.i = phi i16 [ undef, %bb.l ], [ %i.bi, %bb.m ]
@@ -686,8 +689,8 @@ _RNvNtCslBHTH8BfjuP_9quinn_udp3imp11decode_recv.exit.i: ; preds = %bb.m, %bb.l
     #dbg_value(i16 %.sroa.3.sroa.4.sroa.4.0.i.i, !2651, !DIExpression(DW_OP_LLVM_fragment, 224, 16), !3196)
     #dbg_value(i32 %.sroa.3.sroa.4.sroa.3.0.i.i, !2651, !DIExpression(DW_OP_LLVM_fragment, 192, 32), !3196)
     #dbg_value(i32 %.sroa.3.sroa.4.sroa.2.0.i.i, !2651, !DIExpression(DW_OP_LLVM_fragment, 160, 32), !3196)
-    #dbg_value(i32 %.sroa.3.sroa.0.0.i.i, !2651, !DIExpression(DW_OP_LLVM_fragment, 16, 32), !3196)
     #dbg_value(i16 %.sroa.020.0.i.i, !2651, !DIExpression(DW_OP_LLVM_fragment, 0, 16), !3196)
+    #dbg_value(i32 %.sroa.3.sroa.0.0.i.i, !2651, !DIExpression(DW_OP_LLVM_fragment, 16, 32), !3196)
     #dbg_value(i16 %.sroa.3.sroa.3.0.i.i, !2651, !DIExpression(DW_OP_LLVM_fragment, 48, 16), !3196)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.6.i, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.3.sroa.4.sroa.0.i.i, i64 12, i1 false), !dbg !3224, !noalias !3225
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %.sroa.14.i, ptr noundef nonnull align 4 dereferenceable(12) %i.ae, i64 12, i1 false), !dbg !3224, !noalias !3225

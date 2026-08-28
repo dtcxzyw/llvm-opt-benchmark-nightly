@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ripgrep-rs/original/grep_regex-342b229b6101d80c.grep_regex.9c5453b099169300-cgu.4?download=true
+inline.NumInlined: 355
+inline.NumDeleted: 169
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -156,15 +158,15 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7l
   br i1 %i.w, label %.lr.ph, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit._crit_edge, !dbg !270
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit._crit_edge: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit15, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit.preheader
-  %.sroa.12.1.lcssa = phi i64 [ %.sroa.0.028, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit.preheader ], [ %.sroa.12.2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit15 ], !dbg !271
+  %.sroa.12.1.lcssa = phi i64 [ %.sroa.0.028, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit.preheader ], [ %.sroa.5.2.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit15 ], !dbg !271
   store i64 %.sroa.12.1.lcssa, ptr %i.a, align 8, !dbg !272
   br label %.thread, !dbg !275
 
 .lr.ph:                                           ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit.preheader, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit15
-  %.sroa.12.130 = phi i64 [ %.sroa.12.2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit15 ], [ %.sroa.0.028, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit.preheader ] ; 4 uses
-  %.sroa.5.129 = phi i64 [ %.sroa.5.2.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit15 ], [ %i.v, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit.preheader ] ; 3 uses
-  %i.x = getelementptr inbounds nuw [32 x i8], ptr %i.f, i64 %.sroa.5.129, !dbg !276 ; 5 uses
-  %i.y = getelementptr [32 x i8], ptr %i.f, i64 %.sroa.12.130, !dbg !278 ; 4 uses
+  %.sroa.12.130 = phi i64 [ %.sroa.12.2, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit15 ], [ %i.v, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit.preheader ] ; 3 uses
+  %.sroa.5.129 = phi i64 [ %.sroa.5.2.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit15 ], [ %.sroa.0.028, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit.preheader ] ; 4 uses
+  %i.x = getelementptr inbounds nuw [32 x i8], ptr %i.f, i64 %.sroa.12.130, !dbg !276 ; 5 uses
+  %i.y = getelementptr [32 x i8], ptr %i.f, i64 %.sroa.5.129, !dbg !278 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !281), !dbg !284
   tail call void @llvm.experimental.noalias.scope.decl(metadata !286), !dbg !284
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 16, !dbg !288
@@ -201,19 +203,19 @@ bb.j:                                             ; preds = %bb.i
 
 _RNCNvMs2_NtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literalNtB7_3Seq5dedup0Csdq8xsXUia3c_10grep_regex.exit14: ; preds = %.lr.ph, %bb.h
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.y, ptr noundef nonnull align 8 dereferenceable(32) %i.x, i64 32, i1 false), !dbg !326
-  %i.am = add i64 %.sroa.12.130, 1, !dbg !331
-  %i.an = add nuw nsw i64 %.sroa.5.129, 1, !dbg !332
+  %i.am = add i64 %.sroa.5.129, 1, !dbg !331
+  %i.an = add nuw nsw i64 %.sroa.12.130, 1, !dbg !332
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit15, !dbg !333
 
 bb.k:                                             ; preds = %bb.i, %bb.j
-  %i.ao = add nuw nsw i64 %.sroa.5.129, 1, !dbg !334 ; 2 uses
+  %i.ao = add nuw nsw i64 %.sroa.12.130, 1, !dbg !334 ; 2 uses
   invoke void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsdq8xsXUia3c_10grep_regex(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.x)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit15 unwind label %.loopexit, !dbg !335
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit15: ; preds = %bb.k, %_RNCNvMs2_NtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literalNtB7_3Seq5dedup0Csdq8xsXUia3c_10grep_regex.exit14
-  %.sroa.5.2.a = phi i64 [ %i.an, %_RNCNvMs2_NtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literalNtB7_3Seq5dedup0Csdq8xsXUia3c_10grep_regex.exit14 ], [ %i.ao, %bb.k ], !dbg !340 ; 2 uses
-  %.sroa.12.2 = phi i64 [ %i.am, %_RNCNvMs2_NtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literalNtB7_3Seq5dedup0Csdq8xsXUia3c_10grep_regex.exit14 ], [ %.sroa.12.130, %bb.k ], !dbg !341 ; 2 uses
-  %i.ap = icmp samesign ult i64 %.sroa.5.2.a, %i.b, !dbg !270
+  %.sroa.5.2.a = phi i64 [ %i.am, %_RNCNvMs2_NtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literalNtB7_3Seq5dedup0Csdq8xsXUia3c_10grep_regex.exit14 ], [ %.sroa.5.129, %bb.k ], !dbg !340 ; 2 uses
+  %.sroa.12.2 = phi i64 [ %i.an, %_RNCNvMs2_NtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literalNtB7_3Seq5dedup0Csdq8xsXUia3c_10grep_regex.exit14 ], [ %i.ao, %bb.k ], !dbg !341 ; 2 uses
+  %i.ap = icmp samesign ult i64 %.sroa.12.2, %i.b, !dbg !270
   br i1 %i.ap, label %.lr.ph, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralECsdq8xsXUia3c_10grep_regex.exit._crit_edge, !dbg !270
 
 .loopexit:                                        ; preds = %bb.k
@@ -227,15 +229,15 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7l
   br label %bb.l
 
 bb.l:                                             ; preds = %.loopexit.split-lp, %.loopexit
-  %.sroa.5.0.a = phi i64 [ %i.ao, %.loopexit ], [ %i.v, %.loopexit.split-lp ], !dbg !341 ; 2 uses
-  %.sroa.12.0 = phi i64 [ %.sroa.12.130, %.loopexit ], [ %.sroa.0.028, %.loopexit.split-lp ], !dbg !271 ; 2 uses
+  %.sroa.5.0.a = phi i64 [ %.sroa.5.129, %.loopexit ], [ %.sroa.0.028, %.loopexit.split-lp ], !dbg !271 ; 2 uses
+  %.sroa.12.0 = phi i64 [ %i.ao, %.loopexit ], [ %i.v, %.loopexit.split-lp ], !dbg !340 ; 2 uses
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
-  %i.aq = sub i64 %i.b, %.sroa.5.0.a, !dbg !342   ; 2 uses
-  %i.ar = getelementptr inbounds nuw [32 x i8], ptr %i.f, i64 %.sroa.12.0, !dbg !357
-  %i.as = getelementptr inbounds nuw [32 x i8], ptr %i.f, i64 %.sroa.5.0.a, !dbg !361
+  %i.aq = sub i64 %i.b, %.sroa.12.0, !dbg !342    ; 2 uses
+  %i.ar = getelementptr inbounds nuw [32 x i8], ptr %i.f, i64 %.sroa.5.0.a, !dbg !357
+  %i.as = getelementptr inbounds nuw [32 x i8], ptr %i.f, i64 %.sroa.12.0, !dbg !361
   %i.at = shl nuw nsw i64 %i.aq, 5, !dbg !364
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ar, ptr nonnull align 8 %i.as, i64 %i.at, i1 false), !dbg !364, !noalias !368
-  %i.au = add i64 %i.aq, %.sroa.12.0, !dbg !373
+  %i.au = add i64 %i.aq, %.sroa.5.0.a, !dbg !373
   store i64 %i.au, ptr %i.a, align 8, !dbg !375, !noalias !368
   resume { ptr, i32 } %lpad.phi, !dbg !378
 }
@@ -638,20 +640,20 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdq8x
   br label %bb.c, !dbg !2389
 
 bb.c:                                             ; preds = %bb.g, %.lr.ph.i
-  %.sroa.10.046.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.v, %bb.g ]
-  %.sroa.013.045.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.x, %bb.g ] ; 5 uses
-  %.sroa.7.044.i = phi i64 [ 0, %.lr.ph.i ], [ %i.y, %bb.g ] ; 3 uses
-  %i.v = add i64 %.sroa.10.046.i, -1, !dbg !2398  ; 2 uses
-  %i.w = icmp eq ptr %.sroa.013.045.i, %i.r, !dbg !2399
+  %.sroa.013.046.i = phi ptr [ %i.f, %.lr.ph.i ], [ %i.x, %bb.g ] ; 5 uses
+  %.sroa.7.045.i = phi i64 [ 0, %.lr.ph.i ], [ %i.y, %bb.g ] ; 3 uses
+  %.sroa.7.044.i = phi i64 [ %i.k, %.lr.ph.i ], [ %i.v, %bb.g ]
+  %i.v = add i64 %.sroa.7.044.i, -1, !dbg !2398   ; 2 uses
+  %i.w = icmp eq ptr %.sroa.013.046.i, %i.r, !dbg !2399
   br i1 %i.w, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsdq8xsXUia3c_10grep_regex.exit, label %bb.d, !dbg !2411
 
 bb.d:                                             ; preds = %bb.c
-  %i.x = getelementptr inbounds nuw i8, ptr %.sroa.013.045.i, i64 32, !dbg !2412
-  %i.y = add nuw nsw i64 %.sroa.7.044.i, 1, !dbg !2415
+  %i.x = getelementptr inbounds nuw i8, ptr %.sroa.013.046.i, i64 32, !dbg !2412
+  %i.y = add nuw nsw i64 %.sroa.7.045.i, 1, !dbg !2415
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2418), !dbg !2421
-  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.013.045.i, i64 8, !dbg !2423
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.013.046.i, i64 8, !dbg !2423
   %.val.i.i = load ptr, ptr %i.z, align 8, !dbg !2423, !alias.scope !2427, !noalias !2428, !nonnull !14, !noundef !14
-  %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.013.045.i, i64 16, !dbg !2423
+  %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.013.046.i, i64 16, !dbg !2423
   %.val1.i.i = load i64, ptr %i.aa, align 8, !dbg !2423, !alias.scope !2427, !noalias !2428, !noundef !14 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !2430, !noalias !2445
   invoke void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsdq8xsXUia3c_10grep_regex(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef range(i64 0, -9223372036854775808) %.val1.i.i, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
@@ -684,9 +686,9 @@ bb.f:                                             ; preds = %_RNvMs5_NtCsexYYUdY
   br label %bb.g, !dbg !2469
 
 bb.g:                                             ; preds = %bb.f, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsdq8xsXUia3c_10grep_regex.exit.i.i.i.i
-  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.013.045.i, i64 24, !dbg !2470
+  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.013.046.i, i64 24, !dbg !2470
   %i.ai = load i8, ptr %i.ah, align 8, !dbg !2470, !range !246, !alias.scope !2427, !noalias !2428, !noundef !14
-  %i.aj = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %.sroa.7.044.i, !dbg !2471 ; 4 uses
+  %i.aj = getelementptr inbounds nuw [32 x i8], ptr %i.n, i64 %.sroa.7.045.i, !dbg !2471 ; 4 uses
   store i64 %i.ad, ptr %i.aj, align 8, !dbg !2472, !noalias !2358
   %.sroa.429.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.aj, i64 8, !dbg !2472
   store ptr %i.af, ptr %.sroa.429.0..sroa_idx.i, align 8, !dbg !2472, !noalias !2358
@@ -715,7 +717,7 @@ bb.h:                                             ; preds = %bb.i
 
 bb.i:                                             ; preds = %.loopexit.split-lp.i, %.loopexit.i
   %lpad.phi.i = phi { ptr, i32 } [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
-  store i64 %.sroa.7.044.i, ptr %i.q, align 8, !dbg !2480, !noalias !2358
+  store i64 %.sroa.7.045.i, ptr %i.q, align 8, !dbg !2480, !noalias !2358
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7literal7LiteralEECsdq8xsXUia3c_10grep_regex(ptr noalias nofree noundef align 8 dereferenceable(24) %i.c) #17
           to label %bb.j unwind label %bb.h, !dbg !2489, !noalias !2358
 
@@ -1118,8 +1120,8 @@ begin_hunk_2_@llvm.experimental.noalias.scope.decl
 !337 = distinct !DILocation(line: 848, column: 1, scope: !265, inlinedAt: !338)
 !338 = distinct !DILocation(line: 843, column: 14, scope: !267, inlinedAt: !339)
 !339 = !DILocation(line: 2774, column: 21, scope: !330)
-!340 = !DILocation(line: 0, scope: !330)
-!341 = !DILocation(line: 0, scope: !166)
+!340 = !DILocation(line: 0, scope: !166)
+!341 = !DILocation(line: 0, scope: !330)
 !342 = !DILocation(line: 2719, column: 13, scope: !343, inlinedAt: !347)
 !343 = distinct !DISubprogram(name: "wrapping_sub", linkageName: "_RNvMs9_NtCskKLDkoKarTP_4core3numj12wrapping_sub", scope: !345, file: !344, line: 2718, type: !13, scopeLine: 2718, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !6, templateParams: !14)
 !344 = !DIFile(filename: "library/core/src/num/uint_macros.rs", directory: "/rustc/bff8e12ff5e6bcd53dfb1dbccdcec80a60a856ed", checksumkind: CSK_MD5, checksum: "346a9515419f6590f35e1630dc7e24c4")

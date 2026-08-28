@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/salsa-rs/original/salsa_macros-fbc2f095275dd02c.salsa_macros.d0d34daddd3cd1da-cgu.03?download=true
+inline.NumInlined: 236
+inline.NumDeleted: 203
 begin_hunk_0_@_RNvMNtCscdodAO9FK5_5alloc3vecINtB2_3VecNtNtCshVzvyy7iigg_12salsa_macros11salsa_value12CheckedFieldE3newBF_:bb.a
   store i64 0, ptr %i.b, align 8
   ret void
@@ -200,7 +202,7 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtCs3Eghgi3KVFH_3syn4attr9AttributeE
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !noalias !280
   %i.e = getelementptr inbounds nuw [248 x i8], ptr %i.d, i64 %2 ; 4 uses
-  %.sroa.03.0.copyload = load i64, ptr %i.e, align 8, !noalias !280 ; 2 uses
+  %.sroa.03.0.copyload = load i64, ptr %i.e, align 8 ; 2 uses
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(240) %.sroa.4, ptr noundef nonnull align 8 dereferenceable(240) %.sroa.44.0..sroa_idx, i64 240, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 248
@@ -220,7 +222,7 @@ bb.b:                                             ; preds = %_RNvMs_NtCscdodAO9F
   ret void
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtCs3Eghgi3KVFH_3syn4attr9AttributeE10try_removeCshVzvyy7iigg_12salsa_macros.exit.thread: ; preds = %bb.a, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtCs3Eghgi3KVFH_3syn4attr9AttributeE10try_removeCshVzvyy7iigg_12salsa_macros.exit
-  %i.k = phi i64 [ %i.j, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtCs3Eghgi3KVFH_3syn4attr9AttributeE10try_removeCshVzvyy7iigg_12salsa_macros.exit ], [ %i.b, %bb.a ]
+  %i.k = phi i64 [ %i.b, %bb.a ], [ %i.j, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtCs3Eghgi3KVFH_3syn4attr9AttributeE10try_removeCshVzvyy7iigg_12salsa_macros.exit ]
   tail call void @_RNvNvMs_NtCscdodAO9FK5_5alloc3vecINtB6_3VecppE6remove13assert_failed(i64 %2, i64 %i.k, ptr align 8 %3) #19
   unreachable
 }

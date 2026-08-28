@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/salsa-rs/original/salsa-18876957f0a83274.salsa.72a3b6749c32557-cgu.01?download=true
+inline.NumInlined: 295
+inline.NumDeleted: 129
 begin_hunk_0_@_RNvMsa_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14OriginAndExtra20is_derived_untracked:bb.a
 }
 
@@ -200,15 +202,15 @@ _RNvMs7_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14QueryOriginTag4kind.exit39.i: ;
   %spec.select.i = getelementptr inbounds nuw i8, ptr %i.k, i64 %spec.select.idx.i
   %.sroa.07.0.in.in.i = lshr i8 %i.f, 2
   %.sroa.07.0.in.i = and i8 %.sroa.07.0.in.in.i, 1
-  %i.n = zext i32 %i.i to i64
-  %i.o = zext nneg i8 %.sroa.07.0.in.i to i64
+  %i.n = zext nneg i8 %.sroa.07.0.in.i to i64
+  %i.o = zext i32 %i.i to i64
   br label %_RNvMsa_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14OriginAndExtra20is_derived_untracked.exit
 
 _RNvMsa_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14OriginAndExtra20is_derived_untracked.exit: ; preds = %._RNvMsa_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14OriginAndExtra20is_derived_untracked.exit_crit_edge, %_RNvMs7_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14QueryOriginTag4kind.exit39.i
   %.pre-phi = phi i8 [ %.pre, %._RNvMsa_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14OriginAndExtra20is_derived_untracked.exit_crit_edge ], [ %i.l, %_RNvMs7_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14QueryOriginTag4kind.exit39.i ]
+  %.sroa.9.0.shrunk = phi i64 [ 0, %._RNvMsa_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14OriginAndExtra20is_derived_untracked.exit_crit_edge ], [ %i.o, %_RNvMs7_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14QueryOriginTag4kind.exit39.i ]
   %.sroa.6.0 = phi ptr [ inttoptr (i64 4 to ptr), %._RNvMsa_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14OriginAndExtra20is_derived_untracked.exit_crit_edge ], [ %spec.select.i, %_RNvMs7_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14QueryOriginTag4kind.exit39.i ]
-  %.sroa.022.0.shrunk = phi i64 [ 1, %._RNvMsa_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14OriginAndExtra20is_derived_untracked.exit_crit_edge ], [ %i.o, %_RNvMs7_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14QueryOriginTag4kind.exit39.i ]
-  %.sroa.9.0.shrunk.a = phi i64 [ 0, %._RNvMsa_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14OriginAndExtra20is_derived_untracked.exit_crit_edge ], [ %i.n, %_RNvMs7_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14QueryOriginTag4kind.exit39.i ]
+  %.sroa.9.0.shrunk.a = phi i64 [ 1, %._RNvMsa_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14OriginAndExtra20is_derived_untracked.exit_crit_edge ], [ %i.n, %_RNvMs7_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14QueryOriginTag4kind.exit39.i ]
   %i.p = icmp eq i8 %i.g, 2
   %i.q = icmp eq i8 %.pre-phi, 0
   br i1 %i.q, label %_RNvMs5_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_14QueryRevisions18tracked_struct_ids.exit, label %bb.c
@@ -261,11 +263,11 @@ bb.g:                                             ; preds = %bb.e
   %i.af = getelementptr [184 x i8], ptr %i.ac, i64 %i.aa
   %i.ag = getelementptr i8, ptr %i.af, i64 -184
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !417
-  store i64 %.sroa.022.0.shrunk, ptr %i.a, align 8, !noalias !417
+  store i64 %.sroa.9.0.shrunk.a, ptr %i.a, align 8, !noalias !417
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %.sroa.6.0, ptr %.sroa.6.0..sroa_idx, align 8, !noalias !417
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store i64 %.sroa.9.0.shrunk.a, ptr %.sroa.9.0..sroa_idx, align 8, !noalias !417
+  store i64 %.sroa.9.0.shrunk, ptr %.sroa.9.0..sroa_idx, align 8, !noalias !417
   invoke void @_RNvMNtCsC8CapfvpQ1_5salsa12active_queryNtB2_11ActiveQuery14seed_iteration(ptr noalias noundef nonnull align 8 dereferenceable(184) %i.ag, i8 noundef %i.c, i64 noundef %i.d, ptr noalias noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.a, i1 noundef zeroext %i.p, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %.sroa.0.0.i3, i64 noundef %.sroa.3.0.i2)
           to label %_RINvMs_NtCsC8CapfvpQ1_5salsa11zalsa_localNtB5_10ZalsaLocal30with_query_stack_unchecked_mutuNCNvMst_B5_NtB5_16ActiveQueryGuard14seed_iteration0EB7_.exit unwind label %bb.h
 

@@ -205,11 +205,11 @@ bb.k:                                             ; preds = %.lr.ph123.1
   br i1 %i.bg, label %.preheader.preheader, label %bb.l
 
 .preheader.preheader:                             ; preds = %.preheader94
-  %i.bh = add nuw nsw i64 %.068116.lcssa, 1
-  %i.bi = add i64 %i.bh, %indvar
-  %smax = tail call i64 @llvm.smax.i64(i64 %.0.i83, i64 %i.bi)
-  %2 = add i64 %indvar, %.068116.lcssa
-  %i.bj = sub i64 %smax, %2                       ; 3 uses
+  %i.bh = add i64 %indvar, %.068116.lcssa
+  %i.bi = add nuw nsw i64 %.068116.lcssa, 1
+  %2 = add i64 %i.bi, %indvar
+  %3 = tail call i64 @llvm.smax.i64(i64 %.0.i83, i64 %2)
+  %i.bj = sub i64 %3, %i.bh                       ; 3 uses
   %min.iters.check203 = icmp ult i64 %i.bj, 8
   %i.bk = sub i64 %.0.i92201, %.0.i86200
   %diff.check = icmp ugt i64 %i.bk, -32
@@ -612,11 +612,11 @@ bb.o:                                             ; preds = %.lr.ph110.1
   br i1 %i.bu, label %.preheader.preheader, label %bb.p
 
 .preheader.preheader:                             ; preds = %.preheader86
-  %i.bv = add nuw nsw i64 %.064104.lcssa, 1
-  %i.bw = add i64 %i.bv, %indvar
-  %smax = tail call i64 @llvm.smax.i64(i64 %.0.i77, i64 %i.bw)
-  %2 = add i64 %indvar, %.064104.lcssa
-  %i.bx = sub i64 %smax, %2                       ; 3 uses
+  %i.bv = add i64 %indvar, %.064104.lcssa
+  %i.bw = add nuw nsw i64 %.064104.lcssa, 1
+  %2 = add i64 %i.bw, %indvar
+  %3 = tail call i64 @llvm.smax.i64(i64 %.0.i77, i64 %2)
+  %i.bx = sub i64 %3, %i.bv                       ; 3 uses
   %min.iters.check = icmp ult i64 %i.bx, 8
   %i.by = sub i64 %.0.i84163, %.0.i80162
   %diff.check = icmp ugt i64 %i.by, -32

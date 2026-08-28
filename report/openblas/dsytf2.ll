@@ -200,9 +200,6 @@ bb.x:                                             ; preds = %bb.v
   %indvar = phi i64 [ 0, %.lr.ph.preheader ], [ %indvar.next, %.loopexit671 ] ; 5 uses
   %indvars.iv = phi i64 [ %i.gd, %.lr.ph.preheader ], [ %indvars.iv.next, %.loopexit671 ] ; 11 uses
   %i.gw = sub i64 %i.gp, %indvar
-  %6 = icmp ne i64 %indvars.iv, 0
-  %umin617.neg = sext i1 %6 to i64
-  %7 = add i64 %i.gw, %umin617.neg                ; 3 uses
   %gep592 = getelementptr [8 x i8], ptr %invariant.gep591, i64 %indvars.iv ; 2 uses
   %i.gx = load double, ptr %gep592, align 8, !tbaa !9 ; 2 uses
   %gep594 = getelementptr [8 x i8], ptr %invariant.gep593, i64 %indvars.iv ; 2 uses
@@ -215,6 +212,9 @@ bb.x:                                             ; preds = %bb.v
   %i.he = fmul double %i.gb, %i.hd                ; 3 uses
   %i.hf = mul nsw i64 %indvars.iv, %i.ai
   %invariant.gep = getelementptr [8 x i8], ptr %i.h, i64 %i.hf ; 2 uses
+  %6 = icmp ne i64 %indvars.iv, 0
+  %.neg = sext i1 %6 to i64
+  %7 = add i64 %i.gw, %.neg                       ; 3 uses
   %min.iters.check = icmp ult i64 %7, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -617,9 +617,7 @@ bb.au:                                            ; preds = %bb.at
 .lr.ph553:                                        ; preds = %.lr.ph553.preheader, %.loopexit670
   %indvar633 = phi i64 [ 0, %.lr.ph553.preheader ], [ %indvar.next634, %.loopexit670 ] ; 5 uses
   %indvars.iv564 = phi i64 [ %i.ov, %.lr.ph553.preheader ], [ %indvars.iv.next565, %.loopexit670 ] ; 10 uses
-  %smax649 = call i64 @llvm.smax.i64(i64 %indvars.iv564, i64 %i.oy)
   %i.pp = sub i64 %i.pg, %indvar633
-  %8 = add i64 %smax649, %i.pp                    ; 3 uses
   %gep602 = getelementptr [8 x i8], ptr %invariant.gep601, i64 %indvars.iv564 ; 3 uses
   %i.pq = load double, ptr %gep602, align 8, !tbaa !9 ; 2 uses
   %gep604 = getelementptr [8 x i8], ptr %invariant.gep603, i64 %indvars.iv564 ; 3 uses
@@ -632,7 +630,9 @@ bb.au:                                            ; preds = %bb.at
   %i.px = fmul double %i.ot, %i.pw                ; 3 uses
   %i.py = mul nsw i64 %indvars.iv564, %i.u
   %invariant.gep595 = getelementptr [8 x i8], ptr %i.h, i64 %i.py ; 2 uses
-  %min.iters.check651 = icmp ult i64 %8, 8
+  %8 = call i64 @llvm.smax.i64(i64 %indvars.iv564, i64 %i.oy)
+  %9 = add i64 %8, %i.pp                          ; 3 uses
+  %min.iters.check651 = icmp ult i64 %9, 8
   br i1 %min.iters.check651, label %scalar.ph650.preheader, label %vector.memcheck632
 
 vector.memcheck632:                               ; preds = %.lr.ph553
@@ -660,7 +660,7 @@ vector.memcheck632:                               ; preds = %.lr.ph553
   br i1 %conflict.rdx648, label %scalar.ph650.preheader, label %vector.ph652
 
 vector.ph652:                                     ; preds = %vector.memcheck632
-  %n.vec653 = and i64 %8, -8                      ; 3 uses
+  %n.vec653 = and i64 %9, -8                      ; 3 uses
   %i.qe = add i64 %indvars.iv564, %n.vec653
   %broadcast.splatinsert654.a = insertelement <4 x double> poison, double %i.pu, i64 0
   %broadcast.splat655.a = shufflevector <4 x double> %broadcast.splatinsert654.a, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -698,7 +698,7 @@ vector.body658:                                   ; preds = %vector.body658, %ve
   br i1 %i.qu, label %middle.block667, label %vector.body658, !llvm.loop !33
 
 middle.block667:                                  ; preds = %vector.body658
-  %cmp.n668 = icmp eq i64 %8, %n.vec653
+  %cmp.n668 = icmp eq i64 %9, %n.vec653
   br i1 %cmp.n668, label %.loopexit670, label %scalar.ph650.preheader
 
 scalar.ph650.preheader:                           ; preds = %vector.memcheck632, %.lr.ph553, %middle.block667

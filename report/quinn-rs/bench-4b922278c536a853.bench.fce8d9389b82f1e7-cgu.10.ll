@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quinn-rs/original/bench-4b922278c536a853.bench.fce8d9389b82f1e7-cgu.10?download=true
+inline.NumInlined: 198
+inline.NumDeleted: 125
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -168,9 +170,9 @@ bb.f:                                             ; preds = %_RINvMsF_NtCsexYYUd
   br i1 %i.y, label %bb.i, label %bb.g, !dbg !2142
 
 bb.g:                                             ; preds = %bb.f
-    #dbg_value(ptr poison, !1824, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !2143)
-    #dbg_value(i8 poison, !1824, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !2143)
     #dbg_value(i8 1, !1824, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !2143)
+    #dbg_value(i8 poison, !1824, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !2143)
+    #dbg_value(ptr poison, !1824, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !2143)
     #dbg_value(ptr poison, !1871, !DIExpression(), !2144)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.f, ptr %i.a, align 8
@@ -217,9 +219,8 @@ bb.i:                                             ; preds = %bb.f
     #dbg_value(ptr %i.b, !2224, !DIExpression(), !2232)
   call void @_RNvXsO_NtCsexYYUdYSQU6_5alloc4syncINtB5_4WeakNtCslIemzedAtQF_5bench11CipherSuiteENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b), !dbg !2234, !noalias !2139
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !2235, !noalias !2139
-    #dbg_value(ptr poison, !1824, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !2143)
     #dbg_value(i8 %i.ad, !1824, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !2143)
-    #dbg_value(i8 0, !1824, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !2143)
+    #dbg_value(ptr poison, !1824, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !2143)
     #dbg_value(i8 %i.ad, !1822, !DIExpression(), !2206)
   br label %bb.j, !dbg !2236
 
@@ -352,9 +353,9 @@ bb.f:                                             ; preds = %_RINvMsF_NtCsexYYUd
   br i1 %i.y, label %bb.i, label %bb.g, !dbg !2512
 
 bb.g:                                             ; preds = %bb.f
-    #dbg_value(ptr poison, !2287, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !2513)
-    #dbg_value(i8 poison, !2287, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !2513)
     #dbg_value(i8 1, !2287, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !2513)
+    #dbg_value(i8 poison, !2287, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !2513)
+    #dbg_value(ptr poison, !2287, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !2513)
     #dbg_value(ptr poison, !2314, !DIExpression(), !2514)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.f, ptr %i.a, align 8
@@ -402,9 +403,8 @@ bb.i:                                             ; preds = %bb.f
     #dbg_value(ptr %i.b, !2608, !DIExpression(), !2616)
   call void @_RNvXsO_NtCsexYYUdYSQU6_5alloc4syncINtB5_4WeakbENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCslIemzedAtQF_5bench(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b), !dbg !2618, !noalias !2509
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !2619, !noalias !2509
-    #dbg_value(ptr poison, !2287, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !2513)
     #dbg_value(i8 %i.ae, !2287, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !2513)
-    #dbg_value(i8 0, !2287, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !2513)
+    #dbg_value(ptr poison, !2287, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !2513)
     #dbg_value(i8 %i.ae, !2285, !DIExpression(), !2590)
   br label %bb.j, !dbg !2620
 
@@ -718,9 +718,9 @@ bb.f:                                             ; preds = %_RINvMsF_NtCsexYYUd
   br i1 %i.y, label %bb.i, label %bb.g, !dbg !3274
 
 bb.g:                                             ; preds = %bb.f
-    #dbg_value(ptr poison, !3049, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !3275)
-    #dbg_value(i16 poison, !3049, !DIExpression(DW_OP_LLVM_fragment, 16, 16), !3275)
     #dbg_value(i16 1, !3049, !DIExpression(DW_OP_LLVM_fragment, 0, 16), !3275)
+    #dbg_value(i16 poison, !3049, !DIExpression(DW_OP_LLVM_fragment, 16, 16), !3275)
+    #dbg_value(ptr poison, !3049, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !3275)
     #dbg_value(ptr poison, !3076, !DIExpression(), !3276)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.f, ptr %i.a, align 8
@@ -768,9 +768,8 @@ bb.i:                                             ; preds = %bb.f
     #dbg_value(ptr %i.b, !3366, !DIExpression(), !3374)
   call void @_RNvXsO_NtCsexYYUdYSQU6_5alloc4syncINtB5_4WeaktENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCslIemzedAtQF_5bench(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b), !dbg !3376, !noalias !3271
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !3377, !noalias !3271
-    #dbg_value(ptr poison, !3049, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !3275)
     #dbg_value(i16 %i.ae, !3049, !DIExpression(DW_OP_LLVM_fragment, 16, 16), !3275)
-    #dbg_value(i16 0, !3049, !DIExpression(DW_OP_LLVM_fragment, 0, 16), !3275)
+    #dbg_value(ptr poison, !3049, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !3275)
     #dbg_value(i16 %i.ae, !3047, !DIExpression(), !3348)
   br label %bb.j, !dbg !3378
 

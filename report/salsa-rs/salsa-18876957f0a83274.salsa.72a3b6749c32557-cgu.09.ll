@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/salsa-rs/original/salsa-18876957f0a83274.salsa.72a3b6749c32557-cgu.09?download=true
+inline.NumInlined: 236
+inline.NumDeleted: 126
 begin_hunk_0_@_RINvMs3_NtCsffXo9NmvYC7_8indexmap3mapINtB6_8IndexMapNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexuINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCs3CTDFEpwZhE_10rustc_hash8FxHasherEE11swap_removeBO_EBS_:bb.a
 
 bb.s:                                             ; preds = %.lr.ph.i.i.i.i.i
@@ -200,7 +202,7 @@ _RINvMsh_NtCsgMW4BsFgQdt_9hashbrown3rawINtB6_12RawIterRangejE9next_implKb0_ECsC8
   br i1 %.not.i5.i.i, label %_RNCNvMs_NtCsffXo9NmvYC7_8indexmap5innerINtB6_4CoreNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuE13erase_indices0BQ_.exit.i.i, label %_RNCNvMs_NtCsffXo9NmvYC7_8indexmap5innerINtB6_4CoreNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuE13erase_indices0BQ_.exit.thread.i.i
 
 _RNCNvMs_NtCsffXo9NmvYC7_8indexmap5innerINtB6_4CoreNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuE13erase_indices0BQ_.exit.thread.i.i: ; preds = %_RINvMsh_NtCsgMW4BsFgQdt_9hashbrown3rawINtB6_12RawIterRangejE9next_implKb0_ECsC8CapfvpQ1_5salsa.exit.i.i
-  %i.br = sub i64 %i.bq, %i.l
+  %i.br = sub nuw i64 %i.bq, %i.l
   store i64 %i.br, ptr %i.bp, align 8, !alias.scope !222, !noalias !225
   br label %bb.q
 
@@ -262,11 +264,11 @@ _RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_3ops5rang
 _RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_3ops5range9RangeFromjEINtNtNtBb_5slice4iter4IterINtCsffXo9NmvYC7_8indexmap6BucketNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuEEEINtB5_7ZipImplBW_B1s_E4nextB2t_.exit.i: ; preds = %_RNvNtCsffXo9NmvYC7_8indexmap5inner11erase_index.exit.i, %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_3ops5range9RangeFromjEINtNtNtBb_5slice4iter4IterINtCsffXo9NmvYC7_8indexmap6BucketNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuEEEINtB5_7ZipImplBW_B1s_E4nextB2t_.exit.lr.ph.i
   %i.cs = phi i64 [ %i.o, %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_3ops5range9RangeFromjEINtNtNtBb_5slice4iter4IterINtCsffXo9NmvYC7_8indexmap6BucketNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuEEEINtB5_7ZipImplBW_B1s_E4nextB2t_.exit.lr.ph.i ], [ %i.ei, %_RNvNtCsffXo9NmvYC7_8indexmap5inner11erase_index.exit.i ] ; 2 uses
   %i.ct = phi i64 [ %i.q, %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_3ops5range9RangeFromjEINtNtNtBb_5slice4iter4IterINtCsffXo9NmvYC7_8indexmap6BucketNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuEEEINtB5_7ZipImplBW_B1s_E4nextB2t_.exit.lr.ph.i ], [ %i.ej, %_RNvNtCsffXo9NmvYC7_8indexmap5inner11erase_index.exit.i ] ; 3 uses
-  %.sroa.7.064.i = phi i64 [ %i.e, %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_3ops5range9RangeFromjEINtNtNtBb_5slice4iter4IterINtCsffXo9NmvYC7_8indexmap6BucketNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuEEEINtB5_7ZipImplBW_B1s_E4nextB2t_.exit.lr.ph.i ], [ %i.cu, %_RNvNtCsffXo9NmvYC7_8indexmap5inner11erase_index.exit.i ] ; 2 uses
-  %.sroa.031.063.i = phi ptr [ %i.k, %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_3ops5range9RangeFromjEINtNtNtBb_5slice4iter4IterINtCsffXo9NmvYC7_8indexmap6BucketNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuEEEINtB5_7ZipImplBW_B1s_E4nextB2t_.exit.lr.ph.i ], [ %i.cv, %_RNvNtCsffXo9NmvYC7_8indexmap5inner11erase_index.exit.i ] ; 2 uses
-  %i.cu = add i64 %.sroa.7.064.i, 1
-  %i.cv = getelementptr inbounds nuw i8, ptr %.sroa.031.063.i, i64 24 ; 2 uses
-  %i.cw = load i64, ptr %.sroa.031.063.i, align 8, !noalias !194, !noundef !3 ; 2 uses
+  %.sroa.031.064.i = phi ptr [ %i.k, %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_3ops5range9RangeFromjEINtNtNtBb_5slice4iter4IterINtCsffXo9NmvYC7_8indexmap6BucketNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuEEEINtB5_7ZipImplBW_B1s_E4nextB2t_.exit.lr.ph.i ], [ %i.cv, %_RNvNtCsffXo9NmvYC7_8indexmap5inner11erase_index.exit.i ] ; 2 uses
+  %.sroa.7.063.i = phi i64 [ %i.e, %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_3ops5range9RangeFromjEINtNtNtBb_5slice4iter4IterINtCsffXo9NmvYC7_8indexmap6BucketNtNtCsC8CapfvpQ1_5salsa11zalsa_local9QueryEdgeuEEEINtB5_7ZipImplBW_B1s_E4nextB2t_.exit.lr.ph.i ], [ %i.cu, %_RNvNtCsffXo9NmvYC7_8indexmap5inner11erase_index.exit.i ] ; 2 uses
+  %i.cu = add i64 %.sroa.7.063.i, 1
+  %i.cv = getelementptr inbounds nuw i8, ptr %.sroa.031.064.i, i64 24 ; 2 uses
+  %i.cw = load i64, ptr %.sroa.031.064.i, align 8, !noalias !194, !noundef !3 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !251)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !252)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !253)
@@ -297,7 +299,7 @@ bb.r:                                             ; preds = %bb.t, %_RNvXs1_NtNt
   %i.dj = getelementptr inbounds [8 x i8], ptr %i.cr, i64 %i.di
   %i.dk = getelementptr inbounds i8, ptr %i.dj, i64 -8
   %.val2.i.i.i.i = load i64, ptr %i.dk, align 8, !noalias !257, !noundef !3
-  %i.dl = icmp eq i64 %.val2.i.i.i.i, %.sroa.7.064.i
+  %i.dl = icmp eq i64 %.val2.i.i.i.i, %.sroa.7.063.i
   br i1 %i.dl, label %_RINvMs6_NtCsgMW4BsFgQdt_9hashbrown3rawINtB6_8RawTablejE4findNCNvNtCsffXo9NmvYC7_8indexmap5inner11erase_index0ECsC8CapfvpQ1_5salsa.exit.i.i, label %bb.s, !prof !98
 
 ._crit_edge.i.i.i:                                ; preds = %bb.s, %bb.r
@@ -656,7 +658,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.i = lshr i64 %1, 1
-  %i.j = sub nsw i64 %1, %i.i
+  %i.j = sub nuw nsw i64 %1, %i.i
   %.sroa.0.0.i32 = tail call noundef range(i64 0, 384307168202282326) i64 @llvm.umin.i64(i64 %i.j, i64 64)
   br label %bb.e
 

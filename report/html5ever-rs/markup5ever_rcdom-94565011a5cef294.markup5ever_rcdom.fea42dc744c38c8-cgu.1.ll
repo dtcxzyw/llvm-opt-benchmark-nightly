@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/html5ever-rs/original/markup5ever_rcdom-94565011a5cef294.markup5ever_rcdom.fea42dc744c38c8-cgu.1?download=true
+inline.NumInlined: 278
+inline.NumDeleted: 106
 begin_hunk_0_@_RNvCs1mImOlsSUsK_17markup5ever_rcdom20get_parent_and_index:bb.a
   store i64 %i.af, ptr %i.n, align 8
   %.pre = load ptr, ptr %i.b, align 8, !alias.scope !151
@@ -200,7 +202,7 @@ _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10owned_c
   store i32 0, ptr %.sroa.47.0..sroa_idx.i.i.i.i, align 8, !noalias !186
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !178
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bg, ptr nonnull readonly align 1 %.sroa.0.0.i.i.i.i, i64 range(i64 0, 4294967296) %.sroa.4.0.i.i.i.i, i1 false), !noalias !187
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bg, ptr nonnull readonly align 1 %.sroa.0.0.i.i.i.i, i64 range(i64 0, 4294967296) %.sroa.4.0.i.i.i.i, i1 false), !noalias !187
   %.sroa.4.0.insert.shift.i.i.i.i = shl nuw i64 %i.bc, 32
   %.sroa.04.0.insert.insert.i.i.i.i = add nuw nsw i64 %.sroa.4.0.insert.shift.i.i.i.i, %.sroa.4.0.i.i.i.i ; 2 uses
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBG_3fmt4UTF8EECs1mImOlsSUsK_17markup5ever_rcdom(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.m)
@@ -603,10 +605,10 @@ _RNvXs6_Cs1mImOlsSUsK_17markup5ever_rcdomNtB5_8NodeDataNtNtCskKLDkoKarTP_4core5c
   %.sroa.15.sroa.8.sroa.0.0 = phi i64 [ undef, %bb.j ], [ %.sroa.15.sroa.8.sroa.0.0.copyload60, %bb.bd ], [ %i.cs, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ undef, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ %.sroa.15.sroa.8.sroa.0.0.copyload, %bb.bl ], [ %.sroa.15.sroa.8.sroa.0.0.copyload59, %bb.bn ]
   %i.ic = phi ptr [ %i.ac, %bb.j ], [ %i.ac, %bb.bd ], [ %i.ac, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ %i.ac, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ %.pre, %bb.bl ], [ %i.ac, %bb.bn ]
   %.sroa.15.sroa.0.0 = phi i64 [ undef, %bb.j ], [ %i.he, %bb.bd ], [ %.sroa.15.sroa.0.0.copyload35, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ %i.di, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ %.sroa.15.sroa.0.0.copyload, %bb.bl ], [ %i.hy, %bb.bn ]
-  %.sroa.1020.0 = phi i64 [ undef, %bb.j ], [ %.sroa.1020.8.copyload23, %bb.bd ], [ 0, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ %.sroa.1020.8.copyload22, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ 0, %bb.bl ], [ %.sroa.1020.8.copyload21, %bb.bn ]
-  %.sroa.9.0 = phi i8 [ undef, %bb.j ], [ undef, %bb.bd ], [ undef, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ undef, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ %i.hw, %bb.bl ], [ undef, %bb.bn ]
-  %.sroa.18.0.a = phi i64 [ undef, %bb.j ], [ %.sroa.18.40.copyload, %bb.bd ], [ undef, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ undef, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ 0, %bb.bl ], [ undef, %bb.bn ]
   %.sroa.20.0 = phi ptr [ undef, %bb.j ], [ %.sroa.20.40.copyload, %bb.bd ], [ undef, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ undef, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ %.val.i.i, %bb.bl ], [ undef, %bb.bn ]
+  %.sroa.18.0 = phi i64 [ undef, %bb.j ], [ %.sroa.18.40.copyload, %bb.bd ], [ undef, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ undef, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ 0, %bb.bl ], [ undef, %bb.bn ]
+  %.sroa.18.0.a = phi i64 [ undef, %bb.j ], [ %.sroa.1020.8.copyload23, %bb.bd ], [ 0, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ %.sroa.1020.8.copyload22, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ 0, %bb.bl ], [ %.sroa.1020.8.copyload21, %bb.bn ]
+  %.sroa.9.0 = phi i8 [ undef, %bb.j ], [ undef, %bb.bd ], [ undef, %_RNvXsx_NtCskKLDkoKarTP_4core4cellINtB5_7RefCellINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBO_3fmt4UTF8EENtNtB7_5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit.i ], [ undef, %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs1mImOlsSUsK_17markup5ever_rcdom.exit10.i ], [ %i.hw, %bb.bl ], [ undef, %bb.bn ]
   %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 112
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false)
@@ -619,7 +621,7 @@ _RNvXs6_Cs1mImOlsSUsK_17markup5ever_rcdomNtB5_8NodeDataNtNtCskKLDkoKarTP_4core5c
   %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 17
   store i8 %.sroa.9.0, ptr %.sroa.0.sroa.4.0..sroa_idx, align 1
   %.sroa.0.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 24
-  store i64 %.sroa.1020.0, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8
+  store i64 %.sroa.18.0.a, ptr %.sroa.0.sroa.6.0..sroa_idx, align 8
   %.sroa.0.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   store i64 %.sroa.15.sroa.0.0, ptr %.sroa.0.sroa.7.0..sroa_idx, align 8
   %.sroa.0.sroa.7.sroa.4.0..sroa.0.sroa.7.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 40
@@ -627,7 +629,7 @@ _RNvXs6_Cs1mImOlsSUsK_17markup5ever_rcdomNtB5_8NodeDataNtNtCskKLDkoKarTP_4core5c
   %.sroa.15.sroa.8.sroa.5.0..sroa.0.sroa.7.sroa.4.0..sroa.0.sroa.7.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 48
   store i64 %.sroa.15.sroa.8.sroa.5.0, ptr %.sroa.15.sroa.8.sroa.5.0..sroa.0.sroa.7.sroa.4.0..sroa.0.sroa.7.0..sroa_idx.sroa_idx.sroa_idx, align 8
   %.sroa.0.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 56
-  store i64 %.sroa.18.0.a, ptr %.sroa.0.sroa.8.0..sroa_idx, align 8
+  store i64 %.sroa.18.0, ptr %.sroa.0.sroa.8.0..sroa_idx, align 8
   %.sroa.0.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 64
   store ptr %.sroa.20.0, ptr %.sroa.0.sroa.9.0..sroa_idx, align 8
   %.sroa.0.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 72

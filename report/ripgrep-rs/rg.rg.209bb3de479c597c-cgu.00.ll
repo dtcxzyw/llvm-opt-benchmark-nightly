@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ripgrep-rs/original/rg.rg.209bb3de479c597c-cgu.00?download=true
+inline.NumInlined: 973
+inline.NumDeleted: 98
 begin_hunk_0_@_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher11search_pathRNtNtCsG258MDvU3F_3std4path4PathRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherQINtNtCshhHc5tDBDRu_12grep_printer4json8JSONSinkB1H_NtCs6Ur84ob3I15_9termcolor6BufferEECs2NzvFoTxuAy_2rg:bb.a
   br i1 %i.db, label %bb.r, label %bb.o, !dbg !250
 
@@ -200,11 +202,11 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %or.cond93.i.i.i, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit.i.i.i, label %bb.ac, !dbg !399
 
 bb.ac:                                            ; preds = %bb.ab, %._crit_edge.i.i.i.i, %bb.y
-  %.sroa.11.0.ph.i.i.i = phi i8 [ %i.fc, %._crit_edge.i.i.i.i ], [ 0, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.10.0.ph.i.i.i = phi i8 [ %.val1.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ %.val1.i.i.i.i.i.i.i, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.9.0.ph.i.i.i = phi i8 [ %.val.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ 0, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.064.0.ph.i.i.i = phi i64 [ -9223372036854775807, %._crit_edge.i.i.i.i ], [ -9223372036854775807, %bb.ab ], [ -9223372036854775808, %bb.y ]
-  %.sroa.12.0.ph.i.i.i = phi i8 [ %.pre.i.i.i.i, %._crit_edge.i.i.i.i ], [ %i.ff, %bb.ab ], [ undef, %bb.y ]
+  %.sroa.12.0.ph.i.i.i = phi i8 [ %i.ff, %bb.ab ], [ %.pre.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.11.0.ph.i.i.i = phi i8 [ 0, %bb.ab ], [ %i.fc, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.10.0.ph.i.i.i = phi i8 [ %.val1.i.i.i.i.i.i.i, %bb.ab ], [ %.val1.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.9.0.ph.i.i.i = phi i8 [ 0, %bb.ab ], [ %.val.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.064.0.ph.i.i.i = phi i64 [ -9223372036854775807, %bb.ab ], [ -9223372036854775807, %._crit_edge.i.i.i.i ], [ -9223372036854775808, %bb.y ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !dbg !401, !noalias !404
   store i64 %.sroa.064.0.ph.i.i.i, ptr %i.r, align 8, !dbg !401, !noalias !404
   %.sroa.9.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.r, i64 8, !dbg !401
@@ -607,11 +609,11 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %or.cond83.i.i, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit.i59.i, label %bb.cv, !dbg !1110
 
 bb.cv:                                            ; preds = %bb.cu, %._crit_edge.i.i55.i, %bb.cr
-  %.sroa.11.0.ph.i43.i = phi i8 [ %i.mc, %._crit_edge.i.i55.i ], [ 0, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.10.0.ph.i44.i = phi i8 [ %.val1.i.i.i.i.i53.i, %._crit_edge.i.i55.i ], [ %.val1.i.i.i.i.i53.i, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.9.0.ph.i45.i = phi i8 [ %.val.i.i.i.i.i52.i, %._crit_edge.i.i55.i ], [ 0, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.060.0.ph.i.i = phi i64 [ -9223372036854775807, %._crit_edge.i.i55.i ], [ -9223372036854775807, %bb.cu ], [ -9223372036854775808, %bb.cr ]
-  %.sroa.12.0.ph.i46.i = phi i8 [ %.pre.i.i56.i, %._crit_edge.i.i55.i ], [ %i.mf, %bb.cu ], [ undef, %bb.cr ]
+  %.sroa.12.0.ph.i43.i = phi i8 [ %i.mf, %bb.cu ], [ %.pre.i.i56.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.11.0.ph.i43.i = phi i8 [ 0, %bb.cu ], [ %i.mc, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.10.0.ph.i44.i = phi i8 [ %.val1.i.i.i.i.i53.i, %bb.cu ], [ %.val1.i.i.i.i.i53.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.9.0.ph.i45.i = phi i8 [ 0, %bb.cu ], [ %.val.i.i.i.i.i52.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.060.0.ph.i.i = phi i64 [ -9223372036854775807, %bb.cu ], [ -9223372036854775807, %._crit_edge.i.i55.i ], [ -9223372036854775808, %bb.cr ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !dbg !1112, !noalias !1115
   store i64 %.sroa.060.0.ph.i.i, ptr %i.g, align 8, !dbg !1112, !noalias !1115
   %.sroa.9.0..sroa_idx.i47.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8, !dbg !1112
@@ -621,7 +623,7 @@ bb.cv:                                            ; preds = %bb.cu, %._crit_edge
   %.sroa.11.0..sroa_idx.i49.i = getelementptr inbounds nuw i8, ptr %i.g, i64 10, !dbg !1112
   store i8 %.sroa.11.0.ph.i43.i, ptr %.sroa.11.0..sroa_idx.i49.i, align 2, !dbg !1112, !noalias !1115
   %.sroa.12.0..sroa_idx.i50.i = getelementptr inbounds nuw i8, ptr %i.g, i64 11, !dbg !1112
-  store i8 %.sroa.12.0.ph.i46.i, ptr %.sroa.12.0..sroa_idx.i50.i, align 1, !dbg !1112, !noalias !1115
+  store i8 %.sroa.12.0.ph.i43.i, ptr %.sroa.12.0..sroa_idx.i50.i, align 1, !dbg !1112, !noalias !1115
   %i.mg = invoke noundef nonnull ptr @_RNvYNtNtNtCskKLDkoKarTP_4core2io5error5ErrorNtNtCshqpdr3wwzuw_13grep_searcher4sink9SinkError12error_configCs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.g)
           to label %.noexc13 unwind label %bb.fi, !dbg !1116
 
@@ -1024,11 +1026,11 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %or.cond93.i.i.i, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit.i.i.i, label %bb.ac, !dbg !2026
 
 bb.ac:                                            ; preds = %bb.ab, %._crit_edge.i.i.i.i, %bb.y
-  %.sroa.11.0.ph.i.i.i = phi i8 [ %i.fc, %._crit_edge.i.i.i.i ], [ 0, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.10.0.ph.i.i.i = phi i8 [ %.val1.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ %.val1.i.i.i.i.i.i.i, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.9.0.ph.i.i.i = phi i8 [ %.val.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ 0, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.064.0.ph.i.i.i = phi i64 [ -9223372036854775807, %._crit_edge.i.i.i.i ], [ -9223372036854775807, %bb.ab ], [ -9223372036854775808, %bb.y ]
-  %.sroa.12.0.ph.i.i.i = phi i8 [ %.pre.i.i.i.i, %._crit_edge.i.i.i.i ], [ %i.ff, %bb.ab ], [ undef, %bb.y ]
+  %.sroa.12.0.ph.i.i.i = phi i8 [ %i.ff, %bb.ab ], [ %.pre.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.11.0.ph.i.i.i = phi i8 [ 0, %bb.ab ], [ %i.fc, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.10.0.ph.i.i.i = phi i8 [ %.val1.i.i.i.i.i.i.i, %bb.ab ], [ %.val1.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.9.0.ph.i.i.i = phi i8 [ 0, %bb.ab ], [ %.val.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.064.0.ph.i.i.i = phi i64 [ -9223372036854775807, %bb.ab ], [ -9223372036854775807, %._crit_edge.i.i.i.i ], [ -9223372036854775808, %bb.y ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !dbg !2028, !noalias !2031
   store i64 %.sroa.064.0.ph.i.i.i, ptr %i.r, align 8, !dbg !2028, !noalias !2031
   %.sroa.9.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.r, i64 8, !dbg !2028
@@ -1431,11 +1433,11 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %or.cond83.i.i, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit.i59.i, label %bb.cv, !dbg !2612
 
 bb.cv:                                            ; preds = %bb.cu, %._crit_edge.i.i55.i, %bb.cr
-  %.sroa.11.0.ph.i43.i = phi i8 [ %i.mc, %._crit_edge.i.i55.i ], [ 0, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.10.0.ph.i44.i = phi i8 [ %.val1.i.i.i.i.i53.i, %._crit_edge.i.i55.i ], [ %.val1.i.i.i.i.i53.i, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.9.0.ph.i45.i = phi i8 [ %.val.i.i.i.i.i52.i, %._crit_edge.i.i55.i ], [ 0, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.060.0.ph.i.i = phi i64 [ -9223372036854775807, %._crit_edge.i.i55.i ], [ -9223372036854775807, %bb.cu ], [ -9223372036854775808, %bb.cr ]
-  %.sroa.12.0.ph.i46.i = phi i8 [ %.pre.i.i56.i, %._crit_edge.i.i55.i ], [ %i.mf, %bb.cu ], [ undef, %bb.cr ]
+  %.sroa.12.0.ph.i43.i = phi i8 [ %i.mf, %bb.cu ], [ %.pre.i.i56.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.11.0.ph.i43.i = phi i8 [ 0, %bb.cu ], [ %i.mc, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.10.0.ph.i44.i = phi i8 [ %.val1.i.i.i.i.i53.i, %bb.cu ], [ %.val1.i.i.i.i.i53.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.9.0.ph.i45.i = phi i8 [ 0, %bb.cu ], [ %.val.i.i.i.i.i52.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.060.0.ph.i.i = phi i64 [ -9223372036854775807, %bb.cu ], [ -9223372036854775807, %._crit_edge.i.i55.i ], [ -9223372036854775808, %bb.cr ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !dbg !2614, !noalias !2617
   store i64 %.sroa.060.0.ph.i.i, ptr %i.g, align 8, !dbg !2614, !noalias !2617
   %.sroa.9.0..sroa_idx.i47.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8, !dbg !2614
@@ -1445,7 +1447,7 @@ bb.cv:                                            ; preds = %bb.cu, %._crit_edge
   %.sroa.11.0..sroa_idx.i49.i = getelementptr inbounds nuw i8, ptr %i.g, i64 10, !dbg !2614
   store i8 %.sroa.11.0.ph.i43.i, ptr %.sroa.11.0..sroa_idx.i49.i, align 2, !dbg !2614, !noalias !2617
   %.sroa.12.0..sroa_idx.i50.i = getelementptr inbounds nuw i8, ptr %i.g, i64 11, !dbg !2614
-  store i8 %.sroa.12.0.ph.i46.i, ptr %.sroa.12.0..sroa_idx.i50.i, align 1, !dbg !2614, !noalias !2617
+  store i8 %.sroa.12.0.ph.i43.i, ptr %.sroa.12.0..sroa_idx.i50.i, align 1, !dbg !2614, !noalias !2617
   %i.mg = invoke noundef nonnull ptr @_RNvYNtNtNtCskKLDkoKarTP_4core2io5error5ErrorNtNtCshqpdr3wwzuw_13grep_searcher4sink9SinkError12error_configCs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.g)
           to label %.noexc13 unwind label %bb.fi, !dbg !2618
 
@@ -1848,11 +1850,11 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %or.cond93.i.i.i, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit.i.i.i, label %bb.ac, !dbg !3509
 
 bb.ac:                                            ; preds = %bb.ab, %._crit_edge.i.i.i.i, %bb.y
-  %.sroa.11.0.ph.i.i.i = phi i8 [ %i.fc, %._crit_edge.i.i.i.i ], [ 0, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.10.0.ph.i.i.i = phi i8 [ %.val1.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ %.val1.i.i.i.i.i.i.i, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.9.0.ph.i.i.i = phi i8 [ %.val.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ 0, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.064.0.ph.i.i.i = phi i64 [ -9223372036854775807, %._crit_edge.i.i.i.i ], [ -9223372036854775807, %bb.ab ], [ -9223372036854775808, %bb.y ]
-  %.sroa.12.0.ph.i.i.i = phi i8 [ %.pre.i.i.i.i, %._crit_edge.i.i.i.i ], [ %i.ff, %bb.ab ], [ undef, %bb.y ]
+  %.sroa.12.0.ph.i.i.i = phi i8 [ %i.ff, %bb.ab ], [ %.pre.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.11.0.ph.i.i.i = phi i8 [ 0, %bb.ab ], [ %i.fc, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.10.0.ph.i.i.i = phi i8 [ %.val1.i.i.i.i.i.i.i, %bb.ab ], [ %.val1.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.9.0.ph.i.i.i = phi i8 [ 0, %bb.ab ], [ %.val.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.064.0.ph.i.i.i = phi i64 [ -9223372036854775807, %bb.ab ], [ -9223372036854775807, %._crit_edge.i.i.i.i ], [ -9223372036854775808, %bb.y ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !dbg !3511, !noalias !3514
   store i64 %.sroa.064.0.ph.i.i.i, ptr %i.r, align 8, !dbg !3511, !noalias !3514
   %.sroa.9.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.r, i64 8, !dbg !3511
@@ -2255,11 +2257,11 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %or.cond83.i.i, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit.i59.i, label %bb.cv, !dbg !4095
 
 bb.cv:                                            ; preds = %bb.cu, %._crit_edge.i.i55.i, %bb.cr
-  %.sroa.11.0.ph.i43.i = phi i8 [ %i.mc, %._crit_edge.i.i55.i ], [ 0, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.10.0.ph.i44.i = phi i8 [ %.val1.i.i.i.i.i53.i, %._crit_edge.i.i55.i ], [ %.val1.i.i.i.i.i53.i, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.9.0.ph.i45.i = phi i8 [ %.val.i.i.i.i.i52.i, %._crit_edge.i.i55.i ], [ 0, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.060.0.ph.i.i = phi i64 [ -9223372036854775807, %._crit_edge.i.i55.i ], [ -9223372036854775807, %bb.cu ], [ -9223372036854775808, %bb.cr ]
-  %.sroa.12.0.ph.i46.i = phi i8 [ %.pre.i.i56.i, %._crit_edge.i.i55.i ], [ %i.mf, %bb.cu ], [ undef, %bb.cr ]
+  %.sroa.12.0.ph.i43.i = phi i8 [ %i.mf, %bb.cu ], [ %.pre.i.i56.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.11.0.ph.i43.i = phi i8 [ 0, %bb.cu ], [ %i.mc, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.10.0.ph.i44.i = phi i8 [ %.val1.i.i.i.i.i53.i, %bb.cu ], [ %.val1.i.i.i.i.i53.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.9.0.ph.i45.i = phi i8 [ 0, %bb.cu ], [ %.val.i.i.i.i.i52.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.060.0.ph.i.i = phi i64 [ -9223372036854775807, %bb.cu ], [ -9223372036854775807, %._crit_edge.i.i55.i ], [ -9223372036854775808, %bb.cr ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !dbg !4097, !noalias !4100
   store i64 %.sroa.060.0.ph.i.i, ptr %i.g, align 8, !dbg !4097, !noalias !4100
   %.sroa.9.0..sroa_idx.i47.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8, !dbg !4097
@@ -2269,7 +2271,7 @@ bb.cv:                                            ; preds = %bb.cu, %._crit_edge
   %.sroa.11.0..sroa_idx.i49.i = getelementptr inbounds nuw i8, ptr %i.g, i64 10, !dbg !4097
   store i8 %.sroa.11.0.ph.i43.i, ptr %.sroa.11.0..sroa_idx.i49.i, align 2, !dbg !4097, !noalias !4100
   %.sroa.12.0..sroa_idx.i50.i = getelementptr inbounds nuw i8, ptr %i.g, i64 11, !dbg !4097
-  store i8 %.sroa.12.0.ph.i46.i, ptr %.sroa.12.0..sroa_idx.i50.i, align 1, !dbg !4097, !noalias !4100
+  store i8 %.sroa.12.0.ph.i43.i, ptr %.sroa.12.0..sroa_idx.i50.i, align 1, !dbg !4097, !noalias !4100
   %i.mg = invoke noundef nonnull ptr @_RNvYNtNtNtCskKLDkoKarTP_4core2io5error5ErrorNtNtCshqpdr3wwzuw_13grep_searcher4sink9SinkError12error_configCs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.g)
           to label %.noexc13 unwind label %bb.fi, !dbg !4101
 
@@ -2672,11 +2674,11 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %or.cond93.i.i.i, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit.i.i.i, label %bb.ac, !dbg !4992
 
 bb.ac:                                            ; preds = %bb.ab, %._crit_edge.i.i.i.i, %bb.y
-  %.sroa.11.0.ph.i.i.i = phi i8 [ %i.fc, %._crit_edge.i.i.i.i ], [ 0, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.10.0.ph.i.i.i = phi i8 [ %.val1.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ %.val1.i.i.i.i.i.i.i, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.9.0.ph.i.i.i = phi i8 [ %.val.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ 0, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.064.0.ph.i.i.i = phi i64 [ -9223372036854775807, %._crit_edge.i.i.i.i ], [ -9223372036854775807, %bb.ab ], [ -9223372036854775808, %bb.y ]
-  %.sroa.12.0.ph.i.i.i = phi i8 [ %.pre.i.i.i.i, %._crit_edge.i.i.i.i ], [ %i.ff, %bb.ab ], [ undef, %bb.y ]
+  %.sroa.12.0.ph.i.i.i = phi i8 [ %i.ff, %bb.ab ], [ %.pre.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.11.0.ph.i.i.i = phi i8 [ 0, %bb.ab ], [ %i.fc, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.10.0.ph.i.i.i = phi i8 [ %.val1.i.i.i.i.i.i.i, %bb.ab ], [ %.val1.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.9.0.ph.i.i.i = phi i8 [ 0, %bb.ab ], [ %.val.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.064.0.ph.i.i.i = phi i64 [ -9223372036854775807, %bb.ab ], [ -9223372036854775807, %._crit_edge.i.i.i.i ], [ -9223372036854775808, %bb.y ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !dbg !4994, !noalias !4997
   store i64 %.sroa.064.0.ph.i.i.i, ptr %i.r, align 8, !dbg !4994, !noalias !4997
   %.sroa.9.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.r, i64 8, !dbg !4994
@@ -3079,11 +3081,11 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %or.cond83.i.i, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit.i59.i, label %bb.cv, !dbg !5578
 
 bb.cv:                                            ; preds = %bb.cu, %._crit_edge.i.i55.i, %bb.cr
-  %.sroa.11.0.ph.i43.i = phi i8 [ %i.mc, %._crit_edge.i.i55.i ], [ 0, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.10.0.ph.i44.i = phi i8 [ %.val1.i.i.i.i.i53.i, %._crit_edge.i.i55.i ], [ %.val1.i.i.i.i.i53.i, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.9.0.ph.i45.i = phi i8 [ %.val.i.i.i.i.i52.i, %._crit_edge.i.i55.i ], [ 0, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.060.0.ph.i.i = phi i64 [ -9223372036854775807, %._crit_edge.i.i55.i ], [ -9223372036854775807, %bb.cu ], [ -9223372036854775808, %bb.cr ]
-  %.sroa.12.0.ph.i46.i = phi i8 [ %.pre.i.i56.i, %._crit_edge.i.i55.i ], [ %i.mf, %bb.cu ], [ undef, %bb.cr ]
+  %.sroa.12.0.ph.i43.i = phi i8 [ %i.mf, %bb.cu ], [ %.pre.i.i56.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.11.0.ph.i43.i = phi i8 [ 0, %bb.cu ], [ %i.mc, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.10.0.ph.i44.i = phi i8 [ %.val1.i.i.i.i.i53.i, %bb.cu ], [ %.val1.i.i.i.i.i53.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.9.0.ph.i45.i = phi i8 [ 0, %bb.cu ], [ %.val.i.i.i.i.i52.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.060.0.ph.i.i = phi i64 [ -9223372036854775807, %bb.cu ], [ -9223372036854775807, %._crit_edge.i.i55.i ], [ -9223372036854775808, %bb.cr ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !dbg !5580, !noalias !5583
   store i64 %.sroa.060.0.ph.i.i, ptr %i.g, align 8, !dbg !5580, !noalias !5583
   %.sroa.9.0..sroa_idx.i47.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8, !dbg !5580
@@ -3093,7 +3095,7 @@ bb.cv:                                            ; preds = %bb.cu, %._crit_edge
   %.sroa.11.0..sroa_idx.i49.i = getelementptr inbounds nuw i8, ptr %i.g, i64 10, !dbg !5580
   store i8 %.sroa.11.0.ph.i43.i, ptr %.sroa.11.0..sroa_idx.i49.i, align 2, !dbg !5580, !noalias !5583
   %.sroa.12.0..sroa_idx.i50.i = getelementptr inbounds nuw i8, ptr %i.g, i64 11, !dbg !5580
-  store i8 %.sroa.12.0.ph.i46.i, ptr %.sroa.12.0..sroa_idx.i50.i, align 1, !dbg !5580, !noalias !5583
+  store i8 %.sroa.12.0.ph.i43.i, ptr %.sroa.12.0..sroa_idx.i50.i, align 1, !dbg !5580, !noalias !5583
   %i.mg = invoke noundef nonnull ptr @_RNvYNtNtNtCskKLDkoKarTP_4core2io5error5ErrorNtNtCshqpdr3wwzuw_13grep_searcher4sink9SinkError12error_configCs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.g)
           to label %.noexc13 unwind label %bb.fi, !dbg !5584
 
@@ -3496,11 +3498,11 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %or.cond93.i.i.i, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit.i.i.i, label %bb.ac, !dbg !6475
 
 bb.ac:                                            ; preds = %bb.ab, %._crit_edge.i.i.i.i, %bb.y
-  %.sroa.11.0.ph.i.i.i = phi i8 [ %i.fc, %._crit_edge.i.i.i.i ], [ 0, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.10.0.ph.i.i.i = phi i8 [ %.val1.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ %.val1.i.i.i.i.i.i.i, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.9.0.ph.i.i.i = phi i8 [ %.val.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ 0, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.064.0.ph.i.i.i = phi i64 [ -9223372036854775807, %._crit_edge.i.i.i.i ], [ -9223372036854775807, %bb.ab ], [ -9223372036854775808, %bb.y ]
-  %.sroa.12.0.ph.i.i.i = phi i8 [ %.pre.i.i.i.i, %._crit_edge.i.i.i.i ], [ %i.ff, %bb.ab ], [ undef, %bb.y ]
+  %.sroa.12.0.ph.i.i.i = phi i8 [ %i.ff, %bb.ab ], [ %.pre.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.11.0.ph.i.i.i = phi i8 [ 0, %bb.ab ], [ %i.fc, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.10.0.ph.i.i.i = phi i8 [ %.val1.i.i.i.i.i.i.i, %bb.ab ], [ %.val1.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.9.0.ph.i.i.i = phi i8 [ 0, %bb.ab ], [ %.val.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.064.0.ph.i.i.i = phi i64 [ -9223372036854775807, %bb.ab ], [ -9223372036854775807, %._crit_edge.i.i.i.i ], [ -9223372036854775808, %bb.y ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !dbg !6477, !noalias !6480
   store i64 %.sroa.064.0.ph.i.i.i, ptr %i.r, align 8, !dbg !6477, !noalias !6480
   %.sroa.9.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.r, i64 8, !dbg !6477
@@ -3903,11 +3905,11 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %or.cond83.i.i, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit.i59.i, label %bb.cv, !dbg !7061
 
 bb.cv:                                            ; preds = %bb.cu, %._crit_edge.i.i55.i, %bb.cr
-  %.sroa.11.0.ph.i43.i = phi i8 [ %i.mc, %._crit_edge.i.i55.i ], [ 0, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.10.0.ph.i44.i = phi i8 [ %.val1.i.i.i.i.i53.i, %._crit_edge.i.i55.i ], [ %.val1.i.i.i.i.i53.i, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.9.0.ph.i45.i = phi i8 [ %.val.i.i.i.i.i52.i, %._crit_edge.i.i55.i ], [ 0, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.060.0.ph.i.i = phi i64 [ -9223372036854775807, %._crit_edge.i.i55.i ], [ -9223372036854775807, %bb.cu ], [ -9223372036854775808, %bb.cr ]
-  %.sroa.12.0.ph.i46.i = phi i8 [ %.pre.i.i56.i, %._crit_edge.i.i55.i ], [ %i.mf, %bb.cu ], [ undef, %bb.cr ]
+  %.sroa.12.0.ph.i43.i = phi i8 [ %i.mf, %bb.cu ], [ %.pre.i.i56.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.11.0.ph.i43.i = phi i8 [ 0, %bb.cu ], [ %i.mc, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.10.0.ph.i44.i = phi i8 [ %.val1.i.i.i.i.i53.i, %bb.cu ], [ %.val1.i.i.i.i.i53.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.9.0.ph.i45.i = phi i8 [ 0, %bb.cu ], [ %.val.i.i.i.i.i52.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.060.0.ph.i.i = phi i64 [ -9223372036854775807, %bb.cu ], [ -9223372036854775807, %._crit_edge.i.i55.i ], [ -9223372036854775808, %bb.cr ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !dbg !7063, !noalias !7066
   store i64 %.sroa.060.0.ph.i.i, ptr %i.g, align 8, !dbg !7063, !noalias !7066
   %.sroa.9.0..sroa_idx.i47.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8, !dbg !7063
@@ -3917,7 +3919,7 @@ bb.cv:                                            ; preds = %bb.cu, %._crit_edge
   %.sroa.11.0..sroa_idx.i49.i = getelementptr inbounds nuw i8, ptr %i.g, i64 10, !dbg !7063
   store i8 %.sroa.11.0.ph.i43.i, ptr %.sroa.11.0..sroa_idx.i49.i, align 2, !dbg !7063, !noalias !7066
   %.sroa.12.0..sroa_idx.i50.i = getelementptr inbounds nuw i8, ptr %i.g, i64 11, !dbg !7063
-  store i8 %.sroa.12.0.ph.i46.i, ptr %.sroa.12.0..sroa_idx.i50.i, align 1, !dbg !7063, !noalias !7066
+  store i8 %.sroa.12.0.ph.i43.i, ptr %.sroa.12.0..sroa_idx.i50.i, align 1, !dbg !7063, !noalias !7066
   %i.mg = invoke noundef nonnull ptr @_RNvYNtNtNtCskKLDkoKarTP_4core2io5error5ErrorNtNtCshqpdr3wwzuw_13grep_searcher4sink9SinkError12error_configCs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.g)
           to label %.noexc13 unwind label %bb.fi, !dbg !7067
 
@@ -4320,11 +4322,11 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %or.cond93.i.i.i, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit.i.i.i, label %bb.ac, !dbg !7958
 
 bb.ac:                                            ; preds = %bb.ab, %._crit_edge.i.i.i.i, %bb.y
-  %.sroa.11.0.ph.i.i.i = phi i8 [ %i.fc, %._crit_edge.i.i.i.i ], [ 0, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.10.0.ph.i.i.i = phi i8 [ %.val1.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ %.val1.i.i.i.i.i.i.i, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.9.0.ph.i.i.i = phi i8 [ %.val.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ 0, %bb.ab ], [ undef, %bb.y ]
-  %.sroa.064.0.ph.i.i.i = phi i64 [ -9223372036854775807, %._crit_edge.i.i.i.i ], [ -9223372036854775807, %bb.ab ], [ -9223372036854775808, %bb.y ]
-  %.sroa.12.0.ph.i.i.i = phi i8 [ %.pre.i.i.i.i, %._crit_edge.i.i.i.i ], [ %i.ff, %bb.ab ], [ undef, %bb.y ]
+  %.sroa.12.0.ph.i.i.i = phi i8 [ %i.ff, %bb.ab ], [ %.pre.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.11.0.ph.i.i.i = phi i8 [ 0, %bb.ab ], [ %i.fc, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.10.0.ph.i.i.i = phi i8 [ %.val1.i.i.i.i.i.i.i, %bb.ab ], [ %.val1.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.9.0.ph.i.i.i = phi i8 [ 0, %bb.ab ], [ %.val.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i ], [ undef, %bb.y ]
+  %.sroa.064.0.ph.i.i.i = phi i64 [ -9223372036854775807, %bb.ab ], [ -9223372036854775807, %._crit_edge.i.i.i.i ], [ -9223372036854775808, %bb.y ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !dbg !7960, !noalias !7963
   store i64 %.sroa.064.0.ph.i.i.i, ptr %i.r, align 8, !dbg !7960, !noalias !7963
   %.sroa.9.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.r, i64 8, !dbg !7960
@@ -4727,11 +4729,11 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %or.cond83.i.i, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit.i59.i, label %bb.cv, !dbg !8544
 
 bb.cv:                                            ; preds = %bb.cu, %._crit_edge.i.i55.i, %bb.cr
-  %.sroa.11.0.ph.i43.i = phi i8 [ %i.mc, %._crit_edge.i.i55.i ], [ 0, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.10.0.ph.i44.i = phi i8 [ %.val1.i.i.i.i.i53.i, %._crit_edge.i.i55.i ], [ %.val1.i.i.i.i.i53.i, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.9.0.ph.i45.i = phi i8 [ %.val.i.i.i.i.i52.i, %._crit_edge.i.i55.i ], [ 0, %bb.cu ], [ undef, %bb.cr ]
-  %.sroa.060.0.ph.i.i = phi i64 [ -9223372036854775807, %._crit_edge.i.i55.i ], [ -9223372036854775807, %bb.cu ], [ -9223372036854775808, %bb.cr ]
-  %.sroa.12.0.ph.i46.i = phi i8 [ %.pre.i.i56.i, %._crit_edge.i.i55.i ], [ %i.mf, %bb.cu ], [ undef, %bb.cr ]
+  %.sroa.12.0.ph.i43.i = phi i8 [ %i.mf, %bb.cu ], [ %.pre.i.i56.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.11.0.ph.i43.i = phi i8 [ 0, %bb.cu ], [ %i.mc, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.10.0.ph.i44.i = phi i8 [ %.val1.i.i.i.i.i53.i, %bb.cu ], [ %.val1.i.i.i.i.i53.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.9.0.ph.i45.i = phi i8 [ 0, %bb.cu ], [ %.val.i.i.i.i.i52.i, %._crit_edge.i.i55.i ], [ undef, %bb.cr ]
+  %.sroa.060.0.ph.i.i = phi i64 [ -9223372036854775807, %bb.cu ], [ -9223372036854775807, %._crit_edge.i.i55.i ], [ -9223372036854775808, %bb.cr ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !dbg !8546, !noalias !8549
   store i64 %.sroa.060.0.ph.i.i, ptr %i.g, align 8, !dbg !8546, !noalias !8549
   %.sroa.9.0..sroa_idx.i47.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8, !dbg !8546
@@ -4741,7 +4743,7 @@ bb.cv:                                            ; preds = %bb.cu, %._crit_edge
   %.sroa.11.0..sroa_idx.i49.i = getelementptr inbounds nuw i8, ptr %i.g, i64 10, !dbg !8546
   store i8 %.sroa.11.0.ph.i43.i, ptr %.sroa.11.0..sroa_idx.i49.i, align 2, !dbg !8546, !noalias !8549
   %.sroa.12.0..sroa_idx.i50.i = getelementptr inbounds nuw i8, ptr %i.g, i64 11, !dbg !8546
-  store i8 %.sroa.12.0.ph.i46.i, ptr %.sroa.12.0..sroa_idx.i50.i, align 1, !dbg !8546, !noalias !8549
+  store i8 %.sroa.12.0.ph.i43.i, ptr %.sroa.12.0..sroa_idx.i50.i, align 1, !dbg !8546, !noalias !8549
   %i.mg = invoke noundef nonnull ptr @_RNvYNtNtNtCskKLDkoKarTP_4core2io5error5ErrorNtNtCshqpdr3wwzuw_13grep_searcher4sink9SinkError12error_configCs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.g)
           to label %.noexc13 unwind label %bb.fi, !dbg !8550
 
@@ -5144,11 +5146,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !9159
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !9161
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !9161
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !9161
@@ -5551,11 +5553,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !9674
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !9676
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !9676
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !9676
@@ -5958,11 +5960,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !10189
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !10191
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !10191
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !10191
@@ -6365,11 +6367,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !10704
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !10706
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !10706
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !10706
@@ -6772,11 +6774,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !11219
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !11221
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !11221
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !11221
@@ -7179,11 +7181,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !11734
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !11736
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !11736
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !11736
@@ -7586,11 +7588,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !12249
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !12251
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !12251
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !12251
@@ -7993,11 +7995,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !12764
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !12766
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !12766
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !12766
@@ -8400,11 +8402,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !13279
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !13281
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !13281
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !13281
@@ -8807,11 +8809,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !13794
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !13796
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !13796
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !13796
@@ -9214,11 +9216,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !14309
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !14311
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !14311
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !14311
@@ -9621,11 +9623,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !14824
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !14826
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !14826
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !14826
@@ -10028,11 +10030,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !15339
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !15341
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !15341
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !15341
@@ -10435,11 +10437,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !15854
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !15856
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !15856
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !15856
@@ -10842,11 +10844,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !16369
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !16371
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !16371
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !16371
@@ -11249,11 +11251,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !16884
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !16886
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !16886
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !16886
@@ -11656,11 +11658,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !17399
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !17401
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !17401
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !17401
@@ -12063,11 +12065,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond93, label %_RINvMs6_NtCshqpdr3wwzuw_13grep_searcher8searcherNtB6_8Searcher12check_configRRRNtNtCsdq8xsXUia3c_10grep_regex7matcher12RegexMatcherECs2NzvFoTxuAy_2rg.exit, label %bb.e, !dbg !17914
 
 bb.e:                                             ; preds = %bb.d, %bb.a, %._crit_edge.i
-  %.sroa.11.0.ph = phi i8 [ %i.w, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %._crit_edge.i ], [ %.val1.i.i.i.i, %bb.d ], [ undef, %bb.a ]
-  %.sroa.9.0.ph = phi i8 [ %.val.i.i.i.i, %._crit_edge.i ], [ 0, %bb.d ], [ undef, %bb.a ]
-  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775807, %bb.d ], [ -9223372036854775808, %bb.a ]
-  %.sroa.12.0.ph = phi i8 [ %.pre.i, %._crit_edge.i ], [ %i.z, %bb.d ], [ undef, %bb.a ]
+  %.sroa.12.0.ph = phi i8 [ %i.z, %bb.d ], [ %.pre.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.11.0.ph = phi i8 [ 0, %bb.d ], [ %i.w, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.10.0.ph = phi i8 [ %.val1.i.i.i.i, %bb.d ], [ %.val1.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.9.0.ph = phi i8 [ 0, %bb.d ], [ %.val.i.i.i.i, %._crit_edge.i ], [ undef, %bb.a ]
+  %.sroa.064.0.ph = phi i64 [ -9223372036854775807, %bb.d ], [ -9223372036854775807, %._crit_edge.i ], [ -9223372036854775808, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !17916
   store i64 %.sroa.064.0.ph, ptr %i.c, align 8, !dbg !17916
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !17916
