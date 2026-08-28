@@ -7,7 +7,6 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-%"struct.std::pair" = type { i32, i32 }
 %"class.llvm::APInt" = type <{ %union.anon.168, i32, [4 x i8] }>
 %union.anon.168 = type { i64 }
 %"class.llvm::ConstantRange" = type { %"class.llvm::APInt", %"class.llvm::APInt" }
@@ -410,12 +409,12 @@ declare i64 @_ZN4llvm6AMDGPU23getIntegerPairAttributeERKNS_8FunctionENS_9StringR
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local i64 @_ZNK4llvm15AMDGPUSubtarget22getEffectiveWavesPerEUESt4pairIjjES2_j(ptr noundef nonnull align 8 dereferenceable(48) %0, i64 %1, i64 %2, i32 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = alloca %"struct.std::pair", align 8        ; 3 uses
-  %5 = alloca %"struct.std::pair", align 4        ; 6 uses
-  store i64 %1, ptr %4, align 8
+  %.sroa.027 = alloca i64, align 8                ; 3 uses
+  %.sroa.0 = alloca i64, align 8                  ; 6 uses
+  store i64 %1, ptr %.sroa.027, align 8
   %.sroa.2.0.extract.shift = lshr i64 %2, 32
   %.sroa.2.0.extract.trunc = trunc nuw i64 %.sroa.2.0.extract.shift to i32
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.a = load ptr, ptr %0, align 8, !tbaa !18
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 2168
   %i.c = load ptr, ptr %i.b, align 8
@@ -423,10 +422,10 @@ bb.a:
   %i.e = tail call i64 @_ZNK4llvm15AMDGPUSubtarget30getOccupancyWithWorkGroupSizesEjSt4pairIjjE(ptr noundef nonnull align 8 dereferenceable(48) %0, i32 noundef %3, i64 %2)
   %.sroa.3.0.extract.shift = lshr i64 %i.e, 32    ; 2 uses
   %.sroa.3.0.extract.trunc = trunc nuw i64 %.sroa.3.0.extract.shift to i32 ; 3 uses
-  %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   store i32 %.sroa.3.0.extract.trunc, ptr %.4..4..4..sroa_idx, align 4, !tbaa !162
   %i.f = tail call i32 @llvm.umin.i32(i32 %i.d, i32 %.sroa.3.0.extract.trunc) ; 2 uses
-  store i32 %i.f, ptr %5, align 4, !tbaa !164
+  store i32 %i.f, ptr %.sroa.0, align 8, !tbaa !164
   %i.g = trunc i64 %1 to i32                      ; 3 uses
   %i.h = icmp ugt i32 %i.f, %i.g
   %i.i = icmp ugt i32 %i.g, %.sroa.3.0.extract.trunc
@@ -446,22 +445,22 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.p = tail call i64 @llvm.umin.i64(i64 %i.j, i64 %.sroa.3.0.extract.shift)
   %i.q = trunc nuw i64 %i.p to i32
-  %.4..4..4..sroa_idx26 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %.4..4..4..sroa_idx26 = getelementptr inbounds nuw i8, ptr %.sroa.027, i64 4
   store i32 %i.q, ptr %.4..4..4..sroa_idx26, align 4, !tbaa !162
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
-  %.sroa.02.0.in = phi ptr [ %4, %bb.c ], [ %5, %bb.b ], [ %5, %bb.a ]
-  %.sroa.02.0 = load i64, ptr %.sroa.02.0.in, align 4
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  %.sroa.02.0.in = phi ptr [ %.sroa.027, %bb.c ], [ %.sroa.0, %bb.b ], [ %.sroa.0, %bb.a ]
+  %.sroa.02.0 = load i64, ptr %.sroa.02.0.in, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret i64 %.sroa.02.0
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local i64 @_ZNK4llvm15AMDGPUSubtarget13getWavesPerEUERKNS_8FunctionE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(140) %1) local_unnamed_addr #0 align 2 {
 bb.a:
-  %2 = alloca %"struct.std::pair", align 8        ; 5 uses
-  %3 = alloca %"struct.std::pair", align 4        ; 6 uses
+  %.sroa.013 = alloca i64, align 8                ; 5 uses
+  %.sroa.0 = alloca i64, align 8                  ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.b = load i16, ptr %i.a, align 2, !tbaa !13
   %i.c = lshr i16 %i.b, 4
@@ -533,11 +532,11 @@ _ZNK4llvm15AMDGPUSubtarget21getFlatWorkGroupSizesERKNS_8FunctionE.exit: ; preds 
   %.sroa.4.0.insert.shift.i = shl nuw i64 %.sroa.4.0.insert.ext.i, 32
   %.sroa.08.0.insert.insert.i = or disjoint i64 %.sroa.4.0.insert.shift.i, 1
   %i.ad = tail call i64 @_ZN4llvm6AMDGPU23getIntegerPairAttributeERKNS_8FunctionENS_9StringRefESt4pairIjjEb(ptr noundef nonnull align 8 dereferenceable(140) %1, ptr nonnull @.str.2, i64 19, i64 %.sroa.08.0.insert.insert.i, i1 noundef zeroext true) #10 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  store i64 %i.ad, ptr %2, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.013)
+  store i64 %i.ad, ptr %.sroa.013, align 8
   %.sroa.2.0.extract.shift.i.i = lshr i64 %.sroa.09.0.insert.insert.i, 32
   %.sroa.2.0.extract.trunc.i.i = trunc nuw i64 %.sroa.2.0.extract.shift.i.i to i32
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.ae = load ptr, ptr %0, align 8, !tbaa !18
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 2168
   %i.ag = load ptr, ptr %i.af, align 8
@@ -545,10 +544,10 @@ _ZNK4llvm15AMDGPUSubtarget21getFlatWorkGroupSizesERKNS_8FunctionE.exit: ; preds 
   %i.ai = tail call i64 @_ZNK4llvm15AMDGPUSubtarget30getOccupancyWithWorkGroupSizesEjSt4pairIjjE(ptr noundef nonnull align 8 dereferenceable(48) %0, i32 noundef %.sroa.01.0.extract.trunc, i64 %.sroa.09.0.insert.insert.i)
   %.sroa.3.0.extract.shift.i.i = lshr i64 %i.ai, 32 ; 2 uses
   %.sroa.3.0.extract.trunc.i.i = trunc nuw i64 %.sroa.3.0.extract.shift.i.i to i32 ; 3 uses
-  %.4..4..4..4..4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %.4..4..4..4..4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   store i32 %.sroa.3.0.extract.trunc.i.i, ptr %.4..4..4..4..4..4..4..sroa_idx, align 4, !tbaa !162
   %i.aj = tail call i32 @llvm.umin.i32(i32 %i.ah, i32 %.sroa.3.0.extract.trunc.i.i) ; 2 uses
-  store i32 %i.aj, ptr %3, align 4, !tbaa !164
+  store i32 %i.aj, ptr %.sroa.0, align 8, !tbaa !164
   %i.ak = trunc i64 %i.ad to i32                  ; 3 uses
   %i.al = icmp ugt i32 %i.aj, %i.ak
   %i.am = icmp ugt i32 %i.ak, %.sroa.3.0.extract.trunc.i.i
@@ -567,34 +566,34 @@ bb.f:                                             ; preds = %_ZNK4llvm15AMDGPUSu
 bb.g:                                             ; preds = %bb.f
   %i.as = tail call i64 @llvm.umin.i64(i64 %i.an, i64 %.sroa.3.0.extract.shift.i.i)
   %i.at = trunc nuw i64 %i.as to i32
-  %.4..4..4..4..4..4..4..sroa_idx12 = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %.4..4..4..4..4..4..4..sroa_idx12 = getelementptr inbounds nuw i8, ptr %.sroa.013, i64 4
   store i32 %i.at, ptr %.4..4..4..4..4..4..4..sroa_idx12, align 4, !tbaa !162
   br label %_ZNK4llvm15AMDGPUSubtarget13getWavesPerEUESt4pairIjjEjRKNS_8FunctionE.exit
 
 _ZNK4llvm15AMDGPUSubtarget13getWavesPerEUESt4pairIjjEjRKNS_8FunctionE.exit: ; preds = %_ZNK4llvm15AMDGPUSubtarget21getFlatWorkGroupSizesERKNS_8FunctionE.exit, %bb.f, %bb.g
-  %.sroa.02.0.in.i.i = phi ptr [ %2, %bb.g ], [ %3, %bb.f ], [ %3, %_ZNK4llvm15AMDGPUSubtarget21getFlatWorkGroupSizesERKNS_8FunctionE.exit ]
-  %.sroa.02.0.i.i = load i64, ptr %.sroa.02.0.in.i.i, align 4
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  %.sroa.02.0.in.i.i = phi ptr [ %.sroa.013, %bb.g ], [ %.sroa.0, %bb.f ], [ %.sroa.0, %_ZNK4llvm15AMDGPUSubtarget21getFlatWorkGroupSizesERKNS_8FunctionE.exit ]
+  %.sroa.02.0.i.i = load i64, ptr %.sroa.02.0.in.i.i, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.013)
   ret i64 %.sroa.02.0.i.i
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local i64 @_ZNK4llvm15AMDGPUSubtarget13getWavesPerEUESt4pairIjjEjRKNS_8FunctionE(ptr noundef nonnull align 8 dereferenceable(48) %0, i64 %1, i32 noundef %2, ptr noundef nonnull align 8 dereferenceable(140) %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = alloca %"struct.std::pair", align 8        ; 5 uses
-  %5 = alloca %"struct.std::pair", align 4        ; 6 uses
+  %.sroa.012 = alloca i64, align 8                ; 5 uses
+  %.sroa.0 = alloca i64, align 8                  ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !26
   %.sroa.4.0.insert.ext = zext i32 %i.b to i64
   %.sroa.4.0.insert.shift = shl nuw i64 %.sroa.4.0.insert.ext, 32
   %.sroa.08.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.shift, 1
   %i.c = tail call i64 @_ZN4llvm6AMDGPU23getIntegerPairAttributeERKNS_8FunctionENS_9StringRefESt4pairIjjEb(ptr noundef nonnull align 8 dereferenceable(140) %3, ptr nonnull @.str.2, i64 19, i64 %.sroa.08.0.insert.insert, i1 noundef zeroext true) #10 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  store i64 %i.c, ptr %4, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.012)
+  store i64 %i.c, ptr %.sroa.012, align 8
   %.sroa.2.0.extract.shift.i = lshr i64 %1, 32
   %.sroa.2.0.extract.trunc.i = trunc nuw i64 %.sroa.2.0.extract.shift.i to i32
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.d = load ptr, ptr %0, align 8, !tbaa !18
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 2168
   %i.f = load ptr, ptr %i.e, align 8
@@ -602,10 +601,10 @@ bb.a:
   %i.h = tail call i64 @_ZNK4llvm15AMDGPUSubtarget30getOccupancyWithWorkGroupSizesEjSt4pairIjjE(ptr noundef nonnull align 8 dereferenceable(48) %0, i32 noundef %2, i64 %1)
   %.sroa.3.0.extract.shift.i = lshr i64 %i.h, 32  ; 2 uses
   %.sroa.3.0.extract.trunc.i = trunc nuw i64 %.sroa.3.0.extract.shift.i to i32 ; 3 uses
-  %.4..4..4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %.4..4..4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   store i32 %.sroa.3.0.extract.trunc.i, ptr %.4..4..4..4..4..sroa_idx, align 4, !tbaa !162
   %i.i = tail call i32 @llvm.umin.i32(i32 %i.g, i32 %.sroa.3.0.extract.trunc.i) ; 2 uses
-  store i32 %i.i, ptr %5, align 4, !tbaa !164
+  store i32 %i.i, ptr %.sroa.0, align 8, !tbaa !164
   %i.j = trunc i64 %i.c to i32                    ; 3 uses
   %i.k = icmp ugt i32 %i.i, %i.j
   %i.l = icmp ugt i32 %i.j, %.sroa.3.0.extract.trunc.i
@@ -624,15 +623,15 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.r = tail call i64 @llvm.umin.i64(i64 %i.m, i64 %.sroa.3.0.extract.shift.i)
   %i.s = trunc nuw i64 %i.r to i32
-  %.4..4..4..4..4..sroa_idx11 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %.4..4..4..4..4..sroa_idx11 = getelementptr inbounds nuw i8, ptr %.sroa.012, i64 4
   store i32 %i.s, ptr %.4..4..4..4..4..sroa_idx11, align 4, !tbaa !162
   br label %_ZNK4llvm15AMDGPUSubtarget22getEffectiveWavesPerEUESt4pairIjjES2_j.exit
 
 _ZNK4llvm15AMDGPUSubtarget22getEffectiveWavesPerEUESt4pairIjjES2_j.exit: ; preds = %bb.a, %bb.b, %bb.c
-  %.sroa.02.0.in.i = phi ptr [ %4, %bb.c ], [ %5, %bb.b ], [ %5, %bb.a ]
-  %.sroa.02.0.i = load i64, ptr %.sroa.02.0.in.i, align 4
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  %.sroa.02.0.in.i = phi ptr [ %.sroa.012, %bb.c ], [ %.sroa.0, %bb.b ], [ %.sroa.0, %bb.a ]
+  %.sroa.02.0.i = load i64, ptr %.sroa.02.0.in.i, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.012)
   ret i64 %.sroa.02.0.i
 }
 

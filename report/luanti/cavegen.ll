@@ -14,7 +14,6 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87", target_cpu:
 %"struct.std::__cxx11::basic_string<char>::_Alloc_hider" = type { ptr }
 %union.anon = type { i64, [8 x i8] }
 %"class.std::allocator.5" = type { i8 }
-%struct.MapNode = type { i16, i8, i8 }
 
 $_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_ = comdat any
 
@@ -417,23 +416,23 @@ _ZN15CavesRandomWalk17isPosAboveSurfaceEN4core8vector3dIsEE.exit.thread: ; preds
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN15CavesRandomWalk10carveRouteEN4core8vector3dIfEEfb(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(150) %0, <2 x float> %1, float %2, float noundef %3, i1 noundef zeroext %4) local_unnamed_addr #8 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %5 = alloca %struct.MapNode, align 4            ; 7 uses
-  %6 = alloca %struct.MapNode, align 4            ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
+  %.sroa.0176 = alloca i32, align 4               ; 7 uses
+  %.sroa.0 = alloca i32, align 4                  ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0176)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.b = load i16, ptr %i.a, align 8, !tbaa !162
-  store i16 %i.b, ptr %5, align 4, !tbaa !71
-  %.2..2..2..sroa_idx174 = getelementptr inbounds nuw i8, ptr %5, i64 2
+  store i16 %i.b, ptr %.sroa.0176, align 4, !tbaa !71
+  %.2..2..2..sroa_idx174 = getelementptr inbounds nuw i8, ptr %.sroa.0176, i64 2
   store i8 0, ptr %.2..2..2..sroa_idx174, align 2, !tbaa !199
-  %.3..3..3..sroa_idx175 = getelementptr inbounds nuw i8, ptr %5, i64 3
+  %.3..3..3..sroa_idx175 = getelementptr inbounds nuw i8, ptr %.sroa.0176, i64 3
   store i8 0, ptr %.3..3..3..sroa_idx175, align 1, !tbaa !200
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 146
   %i.d = load i16, ptr %i.c, align 2, !tbaa !163
-  store i16 %i.d, ptr %6, align 4, !tbaa !71
-  %.2..2..2..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 2
+  store i16 %i.d, ptr %.sroa.0, align 4, !tbaa !71
+  %.2..2..2..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
   store i8 0, ptr %.2..2..2..sroa_idx, align 2, !tbaa !199
-  %.3..3..3..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 3
+  %.3..3..3..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 3
   store i8 0, ptr %.3..3..3..sroa_idx, align 1, !tbaa !200
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 92
   %i.f = load float, ptr %i.e, align 4, !tbaa !192 ; 2 uses
@@ -525,7 +524,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
-  %i.bv = phi ptr [ %5, %bb.f ], [ %6, %bb.e ]
+  %i.bv = phi ptr [ %.sroa.0176, %bb.f ], [ %.sroa.0, %bb.e ]
   %i.bw = load i32, ptr %i.bv, align 4
   br label %bb.h
 
@@ -593,14 +592,14 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.dl = extractelement <2 x i16> %i.q, i64 0
   %i.dm = sext i16 %i.dl to i32
   %i.dn = add nsw i32 %i.dm, -4
-  %.0..0..0..val79 = load i32, ptr %5, align 4
+  %.0..0..0..val79 = load i32, ptr %.sroa.0176, align 4
   %.pre = load ptr, ptr %i.u, align 8, !tbaa !165 ; 3 uses
   %.pre151 = load i32, ptr %.pre, align 4, !tbaa !169
   br label %bb.m
 
 ._crit_edge147:                                   ; preds = %._crit_edge142, %bb.l
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0176)
   ret void
 
 bb.m:                                             ; preds = %.lr.ph146, %._crit_edge142

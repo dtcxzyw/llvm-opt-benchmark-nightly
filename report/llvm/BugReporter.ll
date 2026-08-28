@@ -47,9 +47,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"struct.std::pair.120" = type <{ ptr, i32, [4 x i8] }>
 %class.anon.1584 = type { i8 }
 %class.anon.1574 = type { i8 }
-%"struct.std::_Optional_payload.115" = type { %"struct.std::_Optional_payload_base.base.117", [3 x i8] }
-%"struct.std::_Optional_payload_base.base.117" = type <{ %"union.std::_Optional_payload_base<clang::ento::bugreporter::TrackingKind>::_Storage", i8 }>
-%"union.std::_Optional_payload_base<clang::ento::bugreporter::TrackingKind>::_Storage" = type { i32 }
 %"class.clang::ento::PathPieces" = type { %"class.std::__cxx11::list" }
 %"class.std::__cxx11::list" = type { %"class.std::__cxx11::_List_base" }
 %"class.std::__cxx11::_List_base" = type { %"struct.std::__cxx11::_List_base<std::shared_ptr<clang::ento::PathDiagnosticPiece>, std::allocator<std::shared_ptr<clang::ento::PathDiagnosticPiece>>>::_List_impl" }
@@ -452,16 +449,16 @@ _ZN4llvm15SmallPtrSetImplIPKN5clang10StackFrameEE6insertES4_.exit: ; preds = %.l
 define dso_local i64 @_ZNK5clang4ento22PathSensitiveBugReport22getInterestingnessKindENS0_4SValE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(1000) %0, ptr %1, i8 %2) local_unnamed_addr #3 align 2 {
 bb.a:
   %3 = alloca %"class.clang::ento::SVal", align 8 ; 4 uses
-  %.sroa.05 = alloca %"struct.std::_Optional_payload.115", align 8 ; 5 uses
-  %.sroa.0 = alloca %"struct.std::_Optional_payload.115", align 8 ; 5 uses
+  %.sroa.05.sroa.0 = alloca i64, align 8          ; 5 uses
+  %.sroa.0.sroa.0 = alloca i64, align 8           ; 5 uses
   store ptr %1, ptr %3, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i8 %2, ptr %i.a, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.05)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.05.sroa.0)
   %i.b = call noundef ptr @_ZNK5clang4ento4SVal11getAsRegionEv(ptr noundef nonnull align 8 dereferenceable(9) %3) #29
   %i.c = call i64 @_ZNK5clang4ento22PathSensitiveBugReport22getInterestingnessKindEPKNS0_9MemRegionE(ptr noundef nonnull align 8 dereferenceable(1000) %0, ptr noundef %i.b) ; 3 uses
-  store i64 %i.c, ptr %.sroa.05, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store i64 %i.c, ptr %.sroa.05.sroa.0, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.sroa.0)
   %i.d = call noundef ptr @_ZNK5clang4ento4SVal11getAsSymbolEb(ptr noundef nonnull align 8 dereferenceable(9) %3, i1 noundef zeroext false) #29 ; 3 uses
   %.not.i = icmp eq ptr %i.d, null
   br i1 %.not.i, label %_ZNK5clang4ento22PathSensitiveBugReport22getInterestingnessKindEPKNS0_7SymExprE.exit, label %bb.b
@@ -538,7 +535,7 @@ bb.e:                                             ; preds = %_ZNK4llvm12DenseMap
 
 _ZNK5clang4ento22PathSensitiveBugReport22getInterestingnessKindEPKNS0_7SymExprE.exit: ; preds = %bb.a, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPKN5clang4ento7SymExprENS3_11bugreporter12TrackingKindENS_12DenseMapInfoIS6_vEENS_6detail12DenseMapPairIS6_S8_EEEES6_S8_SA_SD_E4findES6_.exit.i, %bb.e
   %.sroa.2.1.i = phi i64 [ 0, %bb.a ], [ %i.at, %bb.e ], [ 0, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIPKN5clang4ento7SymExprENS3_11bugreporter12TrackingKindENS_12DenseMapInfoIS6_vEENS_6detail12DenseMapPairIS6_S8_EEEES6_S8_SA_SD_E4findES6_.exit.i ] ; 2 uses
-  store i64 %.sroa.2.1.i, ptr %.sroa.0, align 8
+  store i64 %.sroa.2.1.i, ptr %.sroa.0.sroa.0, align 8
   %.not = icmp samesign ult i64 %i.c, 4294967296
   br i1 %.not, label %bb.h, label %bb.f
 
@@ -550,14 +547,14 @@ bb.f:                                             ; preds = %_ZNK5clang4ento22Pa
 bb.g:                                             ; preds = %bb.f
   %i.av = and i64 %i.c, 4294967295
   %i.aw = icmp eq i64 %i.av, 0
-  %. = select i1 %i.aw, ptr %.sroa.05, ptr %.sroa.0
+  %. = select i1 %i.aw, ptr %.sroa.05.sroa.0, ptr %.sroa.0.sroa.0
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %_ZNK5clang4ento22PathSensitiveBugReport22getInterestingnessKindEPKNS0_7SymExprE.exit
-  %.sroa.0.0.in = phi ptr [ %., %bb.g ], [ %.sroa.05, %bb.f ], [ %.sroa.0, %_ZNK5clang4ento22PathSensitiveBugReport22getInterestingnessKindEPKNS0_7SymExprE.exit ]
+  %.sroa.0.0.in = phi ptr [ %., %bb.g ], [ %.sroa.05.sroa.0, %bb.f ], [ %.sroa.0.sroa.0, %_ZNK5clang4ento22PathSensitiveBugReport22getInterestingnessKindEPKNS0_7SymExprE.exit ]
   %.sroa.0.0 = load i64, ptr %.sroa.0.0.in, align 4
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.05)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.05.sroa.0)
   ret i64 %.sroa.0.0
 }
 
