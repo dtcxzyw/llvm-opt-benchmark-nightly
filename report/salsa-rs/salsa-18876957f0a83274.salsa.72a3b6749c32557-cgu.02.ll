@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/salsa-rs/original/salsa-18876957f0a83274.salsa.72a3b6749c32557-cgu.02?download=true
+inline.NumInlined: 266
+inline.NumDeleted: 104
 begin_hunk_0_@_RNvNtNtCsC8CapfvpQ1_5salsa8function8backdate25report_backdate_violation:bb.a
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 16
   %i.bb = load i64, ptr %i.ba, align 8, !range !38, !invariant.load !6, !noalias !225
@@ -200,17 +202,15 @@ define void @_RNvXs5_NtCsC8CapfvpQ1_5salsa5tableNtB5_11ErasedSlotsNtNtNtNtCs4NRV
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 4 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
-  %.sroa.55.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 3 uses
+  %.sroa.55.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %.pre = load ptr, ptr %i.a, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.i, %bb.a
-  %i.f = phi ptr [ %.pre, %bb.a ], [ %i.k, %bb.i ] ; 3 uses
-  %.sroa.55.sroa.0.0 = phi i64 [ undef, %bb.a ], [ %i.ae, %bb.i ]
-  %.sroa.55.sroa.5.0 = phi i64 [ undef, %bb.a ], [ %i.ag, %bb.i ]
+  %i.f = phi ptr [ %i.k, %bb.i ], [ %.pre, %bb.a ] ; 3 uses
   %.not = icmp eq ptr %i.f, null
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -270,9 +270,9 @@ bb.h:                                             ; preds = %bb.j, %bb.g
   ret void
 
 bb.i:                                             ; preds = %bb.f
-  %i.ae = extractvalue { i64, ptr } %i.j, 0       ; 2 uses
+  %i.ae = extractvalue { i64, ptr } %i.j, 0
   %i.af = getelementptr inbounds nuw i8, ptr %i.k, i64 24
-  %i.ag = load atomic i64, ptr %i.af acquire, align 8, !noalias !254 ; 2 uses
+  %i.ag = load atomic i64, ptr %i.af acquire, align 8, !noalias !254
   store ptr %i.k, ptr %i.a, align 8
   store i64 %i.ae, ptr %.sroa.55.0..sroa_idx6, align 8
   store i64 0, ptr %i.b, align 8
@@ -281,9 +281,7 @@ bb.i:                                             ; preds = %bb.f
 
 bb.j:                                             ; preds = %bb.e
   store ptr null, ptr %i.a, align 8
-  store i64 %.sroa.55.sroa.0.0, ptr %.sroa.55.0..sroa_idx6, align 8
   store i64 0, ptr %i.b, align 8
-  store i64 %.sroa.55.sroa.5.0, ptr %i.c, align 8
   store i32 0, ptr %0, align 8
   br label %bb.h
 }

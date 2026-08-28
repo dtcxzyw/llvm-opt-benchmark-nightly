@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %_ZSt4endlIcSt11char
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !20 ; 2 uses
-  %i.bt = trunc i64 %i.bs to i32                  ; 4 uses
+  %i.bt = trunc i64 %i.bs to i32                  ; 2 uses
   %i.bu = load ptr, ptr %i.bq, align 8, !tbaa !13 ; 16 uses
   %i.bv = load ptr, ptr %i.bp, align 8, !tbaa !13 ; 16 uses
   %wide.trip.count = zext i32 %i.bh to i64        ; 5 uses
@@ -414,26 +414,24 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.de = fmul <4 x float> %broadcast.splat222, %i.dd ; 2 uses
   %i.df = fcmp ogt <4 x float> %i.de, splat (float 1.000000e+00)
   %i.dg = select <4 x i1> %i.df, <4 x float> splat (float 1.000000e+00), <4 x float> %i.de ; 4 uses
-  %i.dh = add i32 %i.bo, %i.cz
-  %5 = mul nuw i32 %i.dh, %i.bt                   ; 2 uses
-  %i.di = add i32 %5, %i.cl
+  %i.dh = add i32 %i.bo, %i.cz                    ; 2 uses
+  %i.di = add i32 %i.dh, %i.cl
   %i.dj = zext i32 %i.di to i64                   ; 2 uses
   %i.dk = getelementptr inbounds nuw [4 x i8], ptr %i.bu, i64 %i.dj
   store <4 x float> %i.dg, ptr %i.dk, align 4, !tbaa !14, !alias.scope !66, !noalias !69
-  %i.dl = add i32 %5, %i.cn
+  %i.dl = add i32 %i.dh, %i.cn
   %i.dm = zext i32 %i.dl to i64                   ; 2 uses
   %i.dn = getelementptr inbounds nuw [4 x i8], ptr %i.bu, i64 %i.dm
   store <4 x float> %i.dg, ptr %i.dn, align 4, !tbaa !14, !alias.scope !77, !noalias !78
   %i.do = xor i32 %i.cz, -1
-  %i.dp = add i32 %i.bh, %i.do
-  %6 = mul nuw i32 %i.dp, %i.bt                   ; 2 uses
-  %i.dq = add i32 %6, %i.cl
+  %i.dp = add i32 %i.bh, %i.do                    ; 2 uses
+  %i.dq = add i32 %i.dp, %i.cl
   %i.dr = zext i32 %i.dq to i64                   ; 2 uses
   %i.ds = getelementptr inbounds nuw [4 x i8], ptr %i.bu, i64 %i.dr
   %i.dt = getelementptr inbounds i8, ptr %i.ds, i64 -12
   %reverse = shufflevector <4 x float> %i.dg, <4 x float> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0> ; 2 uses
   store <4 x float> %reverse, ptr %i.dt, align 4, !tbaa !14, !alias.scope !79, !noalias !80
-  %i.du = add i32 %6, %i.cn
+  %i.du = add i32 %i.dp, %i.cn
   %i.dv = zext i32 %i.du to i64                   ; 2 uses
   %i.dw = getelementptr inbounds nuw [4 x i8], ptr %i.bu, i64 %i.dv
   %i.dx = getelementptr inbounds i8, ptr %i.dw, i64 -12
@@ -699,7 +697,7 @@ bb.n:                                             ; preds = %_ZSt4endlIcSt11char
   store float %2, ptr %i.bw, align 4, !tbaa !14
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.by = load i64, ptr %i.bx, align 8, !tbaa !20 ; 3 uses
-  %i.bz = trunc i64 %i.by to i32                  ; 4 uses
+  %i.bz = trunc i64 %i.by to i32                  ; 3 uses
   %.not64 = icmp eq i32 %i.bz, 0
   br i1 %.not64, label %.loopexit, label %.preheader.lr.ph
 
@@ -779,8 +777,7 @@ vector.ph:                                        ; preds = %vector.scevcheck
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.cv = trunc nuw i64 %index to i32
-  %6 = mul nuw i32 %i.cv, %i.bz
-  %i.cw = add i32 %6, %.04363
+  %i.cw = add i32 %.04363, %i.cv
   %i.cx = zext i32 %i.cw to i64                   ; 3 uses
   %i.cy = getelementptr inbounds nuw [4 x i8], ptr %i.ch, i64 %i.cx
   %wide.load = load <4 x float>, ptr %i.cy, align 4, !tbaa !14, !alias.scope !102

@@ -203,8 +203,8 @@ middle.block728:                                  ; preds = %vector.body709
   br i1 %i.ge, label %.lr.ph413.preheader, label %._crit_edge414
 
 .lr.ph413.preheader:                              ; preds = %._crit_edge401
-  %i.gf = sext i32 %i.gd to i64                   ; 23 uses
-  %i.gg = sext i32 %1 to i64                      ; 23 uses
+  %i.gf = sext i32 %i.gd to i64                   ; 22 uses
+  %i.gg = sext i32 %1 to i64                      ; 22 uses
   %i.gh = mul i32 %1, 12
   %i.gi = sext i32 %i.a to i64                    ; 2 uses
   %i.gj = zext nneg i32 %0 to i64
@@ -252,9 +252,8 @@ middle.block728:                                  ; preds = %vector.body709
   %i.hi = shl nsw i64 %i.hd, 3                    ; 3 uses
   %i.hj = mul nsw i64 %i.gg, 24
   %i.hk = add nsw i64 %i.hj, %i.hb                ; 3 uses
-  %4 = add nsw i64 %i.gg, %i.gf
+  %4 = xor i64 %i.gf, -1
   %i.hl = or disjoint i64 %i.gf, 2
-  %5 = xor i64 %i.gf, -1
   %i.hm = getelementptr i8, ptr %2, i64 %i.hb
   %i.hn = getelementptr i8, ptr %2, i64 %i.hb
   %i.ho = getelementptr i8, ptr %i.hn, i64 8
@@ -292,15 +291,6 @@ middle.block728:                                  ; preds = %vector.body709
   %indvars.iv429 = phi i64 [ 0, %.lr.ph413.preheader ], [ %indvars.iv.next430, %._crit_edge409 ] ; 2 uses
   %indvars.iv424 = phi i32 [ %i.gh, %.lr.ph413.preheader ], [ %indvars.iv.next425, %._crit_edge409 ] ; 3 uses
   %indvars.iv419 = phi i64 [ %i.gf, %.lr.ph413.preheader ], [ %indvars.iv.next420, %._crit_edge409 ] ; 8 uses
-  %6 = mul i64 %indvar, %i.gf                     ; 2 uses
-  %7 = add i64 %4, %6
-  %8 = add i64 %i.hl, %6
-  %smax1050 = tail call i64 @llvm.smax.i64(i64 %7, i64 %8)
-  %9 = mul i64 %indvar, %i.gf
-  %10 = sub i64 %5, %9
-  %11 = add i64 %smax1050, %10                    ; 2 uses
-  %12 = lshr i64 %11, 1
-  %13 = add nuw i64 %12, 1                        ; 2 uses
   %i.iq = mul i64 %i.hc, %indvar                  ; 12 uses
   %scevgep918 = getelementptr i8, ptr %i.hm, i64 %i.iq ; 7 uses
   %scevgep919 = getelementptr i8, ptr %i.ho, i64 %i.iq ; 8 uses
@@ -392,11 +382,19 @@ middle.block728:                                  ; preds = %vector.body709
   %i.kg = fneg <2 x double> %i.ka
   %i.kh = shufflevector <2 x double> %i.kg, <2 x double> %i.ka, <2 x i32> <i32 1, i32 2>
   %i.ki = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ke, <2 x double> %i.ka, <2 x double> %i.kh) ; 4 uses
-  %i.kj = add i64 %indvars.iv419, %i.gg
+  %i.kj = add i64 %indvars.iv419, %i.gg           ; 2 uses
   br i1 %i.b, label %.lr.ph404.preheader, label %._crit_edge409
 
 .lr.ph404.preheader:                              ; preds = %.lr.ph413
-  %min.iters.check1052 = icmp ult i64 %11, 18
+  %5 = mul i64 %indvar, %i.gf
+  %6 = add i64 %i.hl, %5
+  %7 = mul i64 %indvar, %i.gf
+  %8 = sub i64 %4, %7
+  %9 = tail call i64 @llvm.smax.i64(i64 %i.kj, i64 %6)
+  %10 = add i64 %9, %8                            ; 2 uses
+  %11 = lshr i64 %10, 1
+  %12 = add nuw i64 %11, 1                        ; 2 uses
+  %min.iters.check1052 = icmp ult i64 %10, 18
   br i1 %min.iters.check1052, label %.lr.ph404.preheader1092, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph404.preheader
@@ -535,7 +533,7 @@ vector.memcheck917:                               ; preds = %vector.scevcheck
   br i1 %conflict.rdx1049, label %.lr.ph404.preheader1092, label %vector.ph1053
 
 vector.ph1053:                                    ; preds = %vector.memcheck917
-  %n.vec1054 = and i64 %13, -2                    ; 3 uses
+  %n.vec1054 = and i64 %12, -2                    ; 3 uses
   %i.la = shl i64 %n.vec1054, 1
   %i.lb = add i64 %indvars.iv419, %i.la
   %broadcast.splatinsert1055 = insertelement <2 x double> poison, double %i.jy, i64 0
@@ -613,7 +611,7 @@ vector.body1067:                                  ; preds = %vector.body1067, %v
   br i1 %i.mp, label %middle.block1086, label %vector.body1067, !llvm.loop !62
 
 middle.block1086:                                 ; preds = %vector.body1067
-  %cmp.n1087 = icmp eq i64 %13, %n.vec1054
+  %cmp.n1087 = icmp eq i64 %12, %n.vec1054
   br i1 %cmp.n1087, label %._crit_edge405, label %.lr.ph404.preheader1092
 
 .lr.ph404.preheader1092:                          ; preds = %vector.memcheck917, %vector.scevcheck, %.lr.ph404.preheader, %middle.block1086

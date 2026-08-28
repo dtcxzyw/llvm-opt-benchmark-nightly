@@ -205,8 +205,8 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   call void @pango_layout_set_font_description(ptr noundef %i.kp, ptr noundef %i.kk) #18
   %i.kq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 104), align 8, !tbaa !34
   %i.kr = getelementptr inbounds nuw i8, ptr %i.kq, i64 1432
-  %i.ks = load double, ptr %i.kr, align 8, !tbaa !120 ; 26 uses
-  %i.kt = fmul reassoc nsz arcp contract afn double %i.ks, 1.800000e+01 ; 10 uses
+  %i.ks = load double, ptr %i.kr, align 8, !tbaa !120 ; 25 uses
+  %i.kt = fmul reassoc nsz arcp contract afn double %i.ks, 1.800000e+01 ; 8 uses
   %i.ku = fmul reassoc nsz arcp contract afn double %i.ks, 6.000000e+00 ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #18
   %i.kv = fmul reassoc nsz arcp contract afn double %i.ks, 4.000000e+00
@@ -256,35 +256,28 @@ bb.ah:                                            ; preds = %bb.ag
   %i.me = fmul reassoc nsz arcp contract afn double %i.md, 5.000000e-01
   %i.mf = fadd reassoc nsz arcp contract afn double %i.me, %i.lw ; 2 uses
   %i.mg = fcmp reassoc nsz arcp contract afn olt double %i.mf, %i.ly
-  br i1 %i.mg, label %bb.ai, label %._crit_edge583
-
-._crit_edge583:                                   ; preds = %bb.ah
-  %.pre588 = fmul reassoc nsz arcp contract afn double %i.ks, 9.000000e+00
-  %.pre590 = fmul reassoc nsz arcp contract afn double %i.ks, 1.200000e+01
-  br label %bb.aj
+  %8 = fmul reassoc nsz arcp contract afn double %i.ks, 1.200000e+01 ; 2 uses
+  br i1 %i.mg, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  %8 = fmul reassoc nsz arcp contract afn double %i.ks, 1.200000e+01 ; 2 uses
   %i.mh = fadd reassoc nsz arcp contract afn double %8, %i.lx
   %i.mi = fpext reassoc nsz arcp contract afn float %i.kf to double
   %i.mj = fsub reassoc nsz arcp contract afn double %i.mi, %i.kt ; 2 uses
-  %9 = fadd reassoc nsz arcp contract afn double %i.lk, %i.mb
-  %i.mk = fmul reassoc nsz arcp contract afn double %i.ks, 9.000000e+00 ; 2 uses
-  %i.ml = fadd reassoc nsz arcp contract afn double %i.mk, %9
-  %i.mm = fadd reassoc nsz arcp contract afn double %i.ml, %i.kt ; 2 uses
+  %i.mk = fmul reassoc nsz arcp contract afn double %i.ks, 2.700000e+01
+  %i.ml = fadd reassoc nsz arcp contract afn double %i.lk, %i.mb
+  %i.mm = fadd reassoc nsz arcp contract afn double %i.ml, %i.mk ; 2 uses
   %i.mn = fcmp reassoc nsz arcp contract afn olt double %i.mj, %i.mm
   %. = select reassoc nsz arcp contract afn i1 %i.mn, double %i.mj, double %i.mm
   br label %bb.aj
 
-bb.aj:                                            ; preds = %._crit_edge583, %bb.ai
-  %.pre-phi591 = phi double [ %.pre590, %._crit_edge583 ], [ %8, %bb.ai ]
-  %.pre-phi589 = phi double [ %.pre588, %._crit_edge583 ], [ %i.mk, %bb.ai ]
-  %.0477 = phi nsz double [ %i.mf, %._crit_edge583 ], [ %i.mh, %bb.ai ] ; 2 uses
-  %.0 = phi nsz double [ %i.lk, %._crit_edge583 ], [ %., %bb.ai ] ; 4 uses
+bb.aj:                                            ; preds = %bb.ah, %bb.ai
+  %.0477 = phi nsz double [ %i.mh, %bb.ai ], [ %i.mf, %bb.ah ] ; 2 uses
+  %.0 = phi nsz double [ %., %bb.ai ], [ %i.lk, %bb.ah ] ; 4 uses
   call void @cairo_set_source_rgba(ptr noundef %1, double noundef f0x3FE6666666666666, double noundef f0x3FE6666666666666, double noundef f0x3FE6666666666666, double noundef 9.000000e-01) #18
   %i.mo = load float, ptr %i.ll, align 8, !tbaa !100
   %i.mp = fpext reassoc nsz arcp contract afn float %i.mo to double
-  %i.mq = fadd reassoc nsz arcp contract afn double %.0, %.pre-phi589 ; 2 uses
+  %9 = fmul reassoc nsz arcp contract afn double %i.ks, 9.000000e+00
+  %i.mq = fadd reassoc nsz arcp contract afn double %.0, %9 ; 2 uses
   call void @cairo_move_to(ptr noundef %1, double noundef %i.mp, double noundef %i.mq) #18
   call void @cairo_line_to(ptr noundef %1, double noundef %i.lx, double noundef %i.mq) #18
   call void @cairo_stroke_preserve(ptr noundef %1) #18
@@ -295,7 +288,7 @@ bb.aj:                                            ; preds = %._crit_edge583, %bb
   call void @cairo_set_dash(ptr noundef %1, ptr noundef null, i32 noundef 0, double noundef 0.000000e+00) #18
   %i.ms = load i32, ptr %i.lz, align 4, !tbaa !153
   %i.mt = sitofp reassoc nsz arcp contract afn i32 %i.ms to double
-  %i.mu = fadd reassoc nsz arcp contract afn double %.pre-phi591, %i.mt
+  %i.mu = fadd reassoc nsz arcp contract afn double %8, %i.mt
   %i.mv = fptrunc reassoc nsz arcp contract afn double %i.mu to float
   %i.mw = fmul reassoc nsz arcp contract afn double %i.ks, 3.000000e+01
   %i.mx = fptrunc reassoc nsz arcp contract afn double %i.mw to float
@@ -428,17 +421,15 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %i.qe, label %bb.aq, label %._crit_edge584
 
 ._crit_edge584:                                   ; preds = %bb.ap
-  %.pre585 = fmul reassoc nsz arcp contract afn double %i.ks, 9.000000e+00
   %.pre586 = fmul reassoc nsz arcp contract afn double %i.ks, 1.200000e+01
   br label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ap
   %i.qf = fpext reassoc nsz arcp contract afn float %i.kd to double
   %i.qg = fsub reassoc nsz arcp contract afn double %i.qf, %i.kt ; 2 uses
-  %10 = fadd reassoc nsz arcp contract afn double %i.pj, %i.pz
-  %i.qh = fmul reassoc nsz arcp contract afn double %i.ks, 9.000000e+00 ; 2 uses
-  %i.qi = fadd reassoc nsz arcp contract afn double %i.qh, %10
-  %i.qj = fadd reassoc nsz arcp contract afn double %i.qi, %i.kt ; 2 uses
+  %i.qh = fmul reassoc nsz arcp contract afn double %i.ks, 2.700000e+01
+  %i.qi = fadd reassoc nsz arcp contract afn double %i.pj, %i.pz
+  %i.qj = fadd reassoc nsz arcp contract afn double %i.qi, %i.qh ; 2 uses
   %i.qk = fcmp reassoc nsz arcp contract afn olt double %i.qg, %i.qj
   %.523 = select reassoc nsz arcp contract afn i1 %i.qk, double %i.qg, double %i.qj
   %i.ql = fmul reassoc nsz arcp contract afn double %i.ks, 1.200000e+01 ; 2 uses
@@ -447,11 +438,11 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %._crit_edge584, %bb.aq
   %.pre-phi587 = phi double [ %.pre586, %._crit_edge584 ], [ %i.ql, %bb.aq ]
-  %.pre-phi = phi double [ %.pre585, %._crit_edge584 ], [ %i.qh, %bb.aq ]
   %.2479 = phi nsz double [ %i.pj, %._crit_edge584 ], [ %.523, %bb.aq ] ; 3 uses
   %.2 = phi nsz double [ %i.qd, %._crit_edge584 ], [ %i.qm, %bb.aq ] ; 2 uses
   call void @cairo_set_source_rgba(ptr noundef %1, double noundef f0x3FE6666666666666, double noundef f0x3FE6666666666666, double noundef f0x3FE6666666666666, double noundef 9.000000e-01) #18
-  %i.qn = fadd reassoc nsz arcp contract afn double %.2479, %.pre-phi ; 3 uses
+  %10 = fmul reassoc nsz arcp contract afn double %i.ks, 9.000000e+00
+  %i.qn = fadd reassoc nsz arcp contract afn double %.2479, %10 ; 3 uses
   %i.qo = load float, ptr %i.pk, align 4, !tbaa !101
   %i.qp = fpext reassoc nsz arcp contract afn float %i.qo to double
   call void @cairo_move_to(ptr noundef %1, double noundef %i.qn, double noundef %i.qp) #18

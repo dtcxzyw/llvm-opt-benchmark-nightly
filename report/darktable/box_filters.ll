@@ -205,7 +205,7 @@ _ZL11_window_minPKfi.exit.i.i.epil:               ; preds = %_ZL11_window_minPKf
   %i.ee = zext i32 %i.ed to i64                   ; 2 uses
   %sext126.i = shl i64 %2, 32
   %i.ef = ashr exact i64 %sext126.i, 32           ; 9 uses
-  %i.eg = and i64 %1, 4294967295                  ; 5 uses
+  %i.eg = and i64 %1, 4294967295                  ; 4 uses
   %.not212.i.i = icmp eq i32 %i.ea, 0
   %i.eh = add nuw nsw i64 %i.c, 1                 ; 2 uses
   %xtraiter415 = and i64 %i.ee, 1
@@ -270,7 +270,7 @@ _ZL11_window_minPKfi.exit.i.i:                    ; preds = %_ZL11_window_minPKf
   %i.fn = zext i32 %i.fm to i64                   ; 2 uses
   %sext124.i = shl i64 %2, 32
   %i.fo = ashr exact i64 %sext124.i, 32           ; 9 uses
-  %i.fp = and i64 %1, 4294967295                  ; 5 uses
+  %i.fp = and i64 %1, 4294967295                  ; 4 uses
   %.not104.i.i = icmp eq i32 %i.fj, 0
   %i.fq = add nuw nsw i64 %i.c, 1                 ; 2 uses
   %xtraiter422 = and i64 %i.fn, 1
@@ -360,15 +360,13 @@ bb.g:                                             ; preds = %_ZL13_box_min_vertI
   br i1 %niter421.ncmp.1, label %.preheader.i.i.loopexit.unr-lcssa, label %.lr.ph.i70.i, !llvm.loop !903
 
 .lr.ph135.i.i:                                    ; preds = %.lr.ph135.i.i.preheader, %bb.j
-  %indvars.iv.i72.i = phi i64 [ %indvars.iv.next.i75.i, %bb.j ], [ %i.eh, %.lr.ph135.i.i.preheader ] ; 3 uses
+  %indvars.iv.i72.i = phi i64 [ %indvars.iv.next.i75.i, %bb.j ], [ %i.eh, %.lr.ph135.i.i.preheader ] ; 2 uses
   %.051134.i.i = phi i64 [ %i.md, %bb.j ], [ 0, %.lr.ph135.i.i.preheader ] ; 7 uses
   %i.gz = phi <16 x float> [ %i.me, %bb.j ], [ %i.gc, %.lr.ph135.i.i.preheader ]
   %i.ha = phi <32 x float> [ %i.mc, %bb.j ], [ %i.gd, %.lr.ph135.i.i.preheader ] ; 3 uses
-  %umin = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i72.i, i64 %i.eg)
   %i.hb = xor i64 %.051134.i.i, -1
-  %5 = add nsw i64 %i.c, %i.hb
-  %i.hc = add i64 %umin, %5                       ; 3 uses
-  %umin.i.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i72.i, i64 %i.eg)
+  %i.hc = add nsw i64 %i.c, %i.hb
+  %umin.i.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i72.i, i64 %i.eg) ; 2 uses
   %i.hd = add nuw nsw i64 %.051134.i.i, 24
   %i.he = mul i64 %i.hd, %i.ef
   %i.hf = getelementptr inbounds nuw [4 x i8], ptr %i.fs, i64 %i.he
@@ -391,11 +389,12 @@ bb.h:                                             ; preds = %.lr.ph135.i.i
   br i1 %i.hk, label %.lr.ph111.i.i.preheader, label %.loopexit.i.i
 
 .lr.ph111.i.i.preheader:                          ; preds = %bb.h
-  %min.iters.check = icmp ult i64 %i.hc, 8
+  %5 = add i64 %umin.i.i, %i.hc                   ; 3 uses
+  %min.iters.check = icmp ult i64 %5, 8
   br i1 %min.iters.check, label %.lr.ph111.i.i.preheader376, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph111.i.i.preheader
-  %n.vec = and i64 %i.hc, -8                      ; 3 uses
+  %n.vec = and i64 %5, -8                         ; 3 uses
   %broadcast.splatinsert208 = insertelement <8 x i64> poison, i64 %.0109.reass.reass.i.reass.reass.i.reass.reass.reass, i64 0
   %broadcast.splat209 = shufflevector <8 x i64> %broadcast.splatinsert208, <8 x i64> poison, <8 x i32> zeroinitializer
   %induction = add nuw nsw <8 x i64> %broadcast.splat209, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
@@ -529,7 +528,7 @@ middle.block:                                     ; preds = %vector.body
   %i.kc = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fmin.v8f32(<8 x float> %i.jk) ; 2 uses
   %i.kd = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fmin.v8f32(<8 x float> %i.jl) ; 2 uses
   %i.ke = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fmin.v8f32(<8 x float> %i.jm) ; 2 uses
-  %cmp.n = icmp ne i64 %i.hc, %n.vec
+  %cmp.n = icmp ne i64 %5, %n.vec
   %.not = or i1 %cmp.n, %i.iu
   %i.kf = insertelement <16 x float> poison, float %i.jo, i64 0
   %i.kg = insertelement <16 x float> %i.kf, float %i.jq, i64 1
@@ -633,7 +632,7 @@ _ZL13_box_min_vertILm16EEvjPfS0_ijm.exit.i:       ; preds = %bb.j, %.preheader.i
   %.not71.i.i = icmp eq i32 %i.ml, 0
   %sext.i = shl i64 %2, 32
   %i.mn = ashr exact i64 %sext.i, 32              ; 13 uses
-  %i.mo = and i64 %1, 4294967295                  ; 5 uses
+  %i.mo = and i64 %1, 4294967295                  ; 4 uses
   %.not72.i.i = icmp eq i32 %i.mi, 0
   %i.mp = add nuw nsw i64 %i.c, 1                 ; 2 uses
   %xtraiter431 = and i64 %i.mm, 3                 ; 3 uses
@@ -719,15 +718,13 @@ bb.k:                                             ; preds = %_ZL13_box_min_vertI
   br i1 %niter430.ncmp.1, label %.preheader.i80.i.loopexit.unr-lcssa, label %.lr.ph.i76.i, !llvm.loop !938
 
 .lr.ph90.i.i:                                     ; preds = %.preheader.i80.i, %bb.n
-  %indvars.iv.i88.i = phi i64 [ %indvars.iv.next.i106.i, %bb.n ], [ %i.fq, %.preheader.i80.i ] ; 3 uses
+  %indvars.iv.i88.i = phi i64 [ %indvars.iv.next.i106.i, %bb.n ], [ %i.fq, %.preheader.i80.i ] ; 2 uses
   %.05189.i.i = phi i64 [ %i.qo, %bb.n ], [ 0, %.preheader.i80.i ] ; 7 uses
   %i.nx = phi <4 x float> [ %i.qn, %bb.n ], [ %i.nb, %.preheader.i80.i ]
   %i.ny = phi <4 x float> [ %i.qm, %bb.n ], [ %i.nb, %.preheader.i80.i ] ; 2 uses
-  %umin270 = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i88.i, i64 %i.fp)
   %i.nz = xor i64 %.05189.i.i, -1
-  %6 = add nsw i64 %i.c, %i.nz
-  %i.oa = add i64 %umin270, %6                    ; 3 uses
-  %umin.i89.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i88.i, i64 %i.fp)
+  %i.oa = add nsw i64 %i.c, %i.nz
+  %umin.i89.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i88.i, i64 %i.fp) ; 2 uses
   %i.ob = add nuw nsw i64 %.05189.i.i, 24
   %i.oc = mul i64 %i.ob, %i.fo
   %i.od = getelementptr inbounds nuw [4 x i8], ptr %i.mr, i64 %i.oc
@@ -746,11 +743,12 @@ bb.l:                                             ; preds = %.lr.ph90.i.i
   br i1 %i.og, label %.lr.ph79.i.i.preheader, label %.loopexit.i97.i
 
 .lr.ph79.i.i.preheader:                           ; preds = %bb.l
-  %min.iters.check272 = icmp ult i64 %i.oa, 16
+  %6 = add i64 %umin.i89.i, %i.oa                 ; 3 uses
+  %min.iters.check272 = icmp ult i64 %6, 16
   br i1 %min.iters.check272, label %.lr.ph79.i.i.preheader363, label %vector.ph273
 
 vector.ph273:                                     ; preds = %.lr.ph79.i.i.preheader
-  %n.vec274 = and i64 %i.oa, -16                  ; 3 uses
+  %n.vec274 = and i64 %6, -16                     ; 3 uses
   %broadcast.splatinsert277 = insertelement <8 x i64> poison, i64 %.077.reass.reass.i.reass.reass.i.reass.reass.reass, i64 0
   %broadcast.splat278 = shufflevector <8 x i64> %broadcast.splatinsert277, <8 x i64> poison, <8 x i32> zeroinitializer
   %induction279 = add nuw nsw <8 x i64> %broadcast.splat278, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
@@ -832,7 +830,7 @@ middle.block309:                                  ; preds = %vector.body280
   %i.ps = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fmin.v8f32(<8 x float> %rdx.minmax311.a)
   %rdx.minmax312 = tail call reassoc nsz arcp contract afn <8 x float> @llvm.minnum.v8f32(<8 x float> %i.pm, <8 x float> %i.pn)
   %i.pt = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fmin.v8f32(<8 x float> %rdx.minmax312)
-  %cmp.n313 = icmp ne i64 %i.oa, %n.vec274
+  %cmp.n313 = icmp ne i64 %6, %n.vec274
   %.not354 = or i1 %cmp.n313, %i.pd
   %i.pu = insertelement <4 x float> poison, float %i.pp, i64 0
   %i.pv = insertelement <4 x float> %i.pu, float %i.pr, i64 1
@@ -998,14 +996,12 @@ bb.o:                                             ; preds = %_ZL13_box_min_vertI
   br i1 %niter437.ncmp.3, label %.preheader.i113.i.loopexit.unr-lcssa, label %.lr.ph.i110.i, !llvm.loop !988
 
 .lr.ph70.i.i:                                     ; preds = %.preheader.i113.i, %bb.r
-  %indvars.iv.i114.i = phi i64 [ %indvars.iv.next.i121.i, %bb.r ], [ %i.mp, %.preheader.i113.i ] ; 3 uses
+  %indvars.iv.i114.i = phi i64 [ %indvars.iv.next.i121.i, %bb.r ], [ %i.mp, %.preheader.i113.i ] ; 2 uses
   %.05169.i.i = phi i64 [ %i.uh, %bb.r ], [ 0, %.preheader.i113.i ] ; 7 uses
   %.sroa.0.268.i.i = phi float [ %.sroa.0.5.i.i, %bb.r ], [ %.sroa.0.1.lcssa.i.i, %.preheader.i113.i ] ; 2 uses
-  %umin319 = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i114.i, i64 %i.mo)
   %i.sq = xor i64 %.05169.i.i, -1
-  %7 = add nsw i64 %i.c, %i.sq
-  %i.sr = add i64 %umin319, %7                    ; 3 uses
-  %umin.i115.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i114.i, i64 %i.mo)
+  %i.sr = add nsw i64 %i.c, %i.sq
+  %umin.i115.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i114.i, i64 %i.mo) ; 2 uses
   %i.ss = add nuw nsw i64 %.05169.i.i, 24
   %i.st = mul i64 %i.ss, %i.mn
   %i.su = getelementptr inbounds nuw [4 x i8], ptr %i.qr, i64 %i.st
@@ -1024,11 +1020,12 @@ bb.p:                                             ; preds = %.lr.ph70.i.i
   br i1 %i.sx, label %.lr.ph66.i.i.preheader, label %.loopexit.i120.i
 
 .lr.ph66.i.i.preheader:                           ; preds = %bb.p
-  %min.iters.check321 = icmp ult i64 %i.sr, 32
+  %7 = add i64 %umin.i115.i, %i.sr                ; 3 uses
+  %min.iters.check321 = icmp ult i64 %7, 32
   br i1 %min.iters.check321, label %.lr.ph66.i.i.preheader356, label %vector.ph322
 
 vector.ph322:                                     ; preds = %.lr.ph66.i.i.preheader
-  %n.vec323 = and i64 %i.sr, -32                  ; 3 uses
+  %n.vec323 = and i64 %7, -32                     ; 3 uses
   %broadcast.splatinsert326 = insertelement <8 x i64> poison, i64 %.063.reass.reass.i.reass.reass.i.reass.reass.reass, i64 0
   %broadcast.splat327 = shufflevector <8 x i64> %broadcast.splatinsert326, <8 x i64> poison, <8 x i32> zeroinitializer
   %induction328 = add nuw nsw <8 x i64> %broadcast.splat327, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
@@ -1084,7 +1081,7 @@ middle.block347:                                  ; preds = %vector.body329
   %rdx.minmax350 = tail call reassoc nsz arcp contract afn <8 x float> @llvm.minnum.v8f32(<8 x float> %rdx.minmax349, <8 x float> %i.ts)
   %i.tu = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fmin.v8f32(<8 x float> %rdx.minmax350) ; 2 uses
   %i.tv = add i64 %.063.reass.reass.i.reass.reass.i.reass.reass.reass, %i.tt
-  %cmp.n351 = icmp ne i64 %i.sr, %n.vec323
+  %cmp.n351 = icmp ne i64 %7, %n.vec323
   %.not355 = or i1 %cmp.n351, %i.tm
   br i1 %.not355, label %.lr.ph66.i.i.preheader356, label %.loopexit.i120.i
 
@@ -1482,7 +1479,7 @@ _ZL11_window_maxPKfi.exit.i.i.epil:               ; preds = %_ZL11_window_maxPKf
   %i.ec = add i32 %i.b, 1
   %i.ed = tail call i32 @llvm.umin.i32(i32 %i.ec, i32 %i.ea) ; 4 uses
   %i.ee = zext i32 %i.ed to i64                   ; 2 uses
-  %i.ef = and i64 %1, 4294967295                  ; 5 uses
+  %i.ef = and i64 %1, 4294967295                  ; 4 uses
   %.not212.i.i = icmp eq i32 %i.ea, 0
   %i.eg = add nuw nsw i64 %i.c, 1                 ; 2 uses
   %xtraiter415 = and i64 %i.ee, 1
@@ -1547,7 +1544,7 @@ _ZL11_window_maxPKfi.exit.i.i:                    ; preds = %_ZL11_window_maxPKf
   %i.fk = add i32 %i.b, 1
   %i.fl = tail call i32 @llvm.umin.i32(i32 %i.fk, i32 %i.fi) ; 4 uses
   %i.fm = zext i32 %i.fl to i64                   ; 2 uses
-  %i.fn = and i64 %1, 4294967295                  ; 5 uses
+  %i.fn = and i64 %1, 4294967295                  ; 4 uses
   %.not104.i.i = icmp eq i32 %i.fi, 0
   %i.fo = add nuw nsw i64 %i.c, 1                 ; 2 uses
   %xtraiter422 = and i64 %i.fm, 1
@@ -1637,15 +1634,13 @@ bb.g:                                             ; preds = %_ZL13_box_max_vertI
   br i1 %niter421.ncmp.1, label %.preheader.i.i.loopexit.unr-lcssa, label %.lr.ph.i70.i, !llvm.loop !1033
 
 .lr.ph135.i.i:                                    ; preds = %.lr.ph135.i.i.preheader, %bb.j
-  %indvars.iv.i72.i = phi i64 [ %indvars.iv.next.i75.i, %bb.j ], [ %i.eg, %.lr.ph135.i.i.preheader ] ; 3 uses
+  %indvars.iv.i72.i = phi i64 [ %indvars.iv.next.i75.i, %bb.j ], [ %i.eg, %.lr.ph135.i.i.preheader ] ; 2 uses
   %.051134.i.i = phi i64 [ %i.mb, %bb.j ], [ 0, %.lr.ph135.i.i.preheader ] ; 7 uses
   %i.gx = phi <16 x float> [ %i.mc, %bb.j ], [ %i.ga, %.lr.ph135.i.i.preheader ]
   %i.gy = phi <32 x float> [ %i.ma, %bb.j ], [ %i.gb, %.lr.ph135.i.i.preheader ] ; 3 uses
-  %umin = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i72.i, i64 %i.ef)
   %i.gz = xor i64 %.051134.i.i, -1
-  %5 = add nsw i64 %i.c, %i.gz
-  %i.ha = add i64 %umin, %5                       ; 3 uses
-  %umin.i.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i72.i, i64 %i.ef)
+  %i.ha = add nsw i64 %i.c, %i.gz
+  %umin.i.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i72.i, i64 %i.ef) ; 2 uses
   %i.hb = add nuw nsw i64 %.051134.i.i, 24
   %i.hc = mul i64 %i.hb, %2
   %i.hd = getelementptr inbounds nuw [4 x i8], ptr %i.fq, i64 %i.hc
@@ -1668,11 +1663,12 @@ bb.h:                                             ; preds = %.lr.ph135.i.i
   br i1 %i.hi, label %.lr.ph111.i.i.preheader, label %.loopexit.i.i
 
 .lr.ph111.i.i.preheader:                          ; preds = %bb.h
-  %min.iters.check = icmp ult i64 %i.ha, 8
+  %5 = add i64 %umin.i.i, %i.ha                   ; 3 uses
+  %min.iters.check = icmp ult i64 %5, 8
   br i1 %min.iters.check, label %.lr.ph111.i.i.preheader376, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph111.i.i.preheader
-  %n.vec = and i64 %i.ha, -8                      ; 3 uses
+  %n.vec = and i64 %5, -8                         ; 3 uses
   %broadcast.splatinsert208 = insertelement <8 x i64> poison, i64 %.0109.reass.reass.i.reass.reass.i.reass.reass.reass, i64 0
   %broadcast.splat209 = shufflevector <8 x i64> %broadcast.splatinsert208, <8 x i64> poison, <8 x i32> zeroinitializer
   %induction = add nuw nsw <8 x i64> %broadcast.splat209, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
@@ -1806,7 +1802,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ka = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fmax.v8f32(<8 x float> %i.ji) ; 2 uses
   %i.kb = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fmax.v8f32(<8 x float> %i.jj) ; 2 uses
   %i.kc = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fmax.v8f32(<8 x float> %i.jk) ; 2 uses
-  %cmp.n = icmp ne i64 %i.ha, %n.vec
+  %cmp.n = icmp ne i64 %5, %n.vec
   %.not = or i1 %cmp.n, %i.is
   %i.kd = insertelement <16 x float> poison, float %i.jm, i64 0
   %i.ke = insertelement <16 x float> %i.kd, float %i.jo, i64 1
@@ -1908,7 +1904,7 @@ _ZL13_box_max_vertILm16EEvjPfS0_mjm.exit.i:       ; preds = %bb.j, %.preheader.i
   %i.mj = tail call i32 @llvm.umin.i32(i32 %i.mi, i32 %i.mg) ; 3 uses
   %i.mk = zext i32 %i.mj to i64                   ; 2 uses
   %.not71.i.i = icmp eq i32 %i.mj, 0
-  %i.ml = and i64 %1, 4294967295                  ; 5 uses
+  %i.ml = and i64 %1, 4294967295                  ; 4 uses
   %.not72.i.i = icmp eq i32 %i.mg, 0
   %i.mm = add nuw nsw i64 %i.c, 1                 ; 2 uses
   %xtraiter431 = and i64 %i.mk, 3                 ; 3 uses
@@ -1994,15 +1990,13 @@ bb.k:                                             ; preds = %_ZL13_box_max_vertI
   br i1 %niter430.ncmp.1, label %.preheader.i80.i.loopexit.unr-lcssa, label %.lr.ph.i76.i, !llvm.loop !1068
 
 .lr.ph90.i.i:                                     ; preds = %.preheader.i80.i, %bb.n
-  %indvars.iv.i88.i = phi i64 [ %indvars.iv.next.i106.i, %bb.n ], [ %i.fo, %.preheader.i80.i ] ; 3 uses
+  %indvars.iv.i88.i = phi i64 [ %indvars.iv.next.i106.i, %bb.n ], [ %i.fo, %.preheader.i80.i ] ; 2 uses
   %.05189.i.i = phi i64 [ %i.ql, %bb.n ], [ 0, %.preheader.i80.i ] ; 7 uses
   %i.nu = phi <4 x float> [ %i.qk, %bb.n ], [ %i.my, %.preheader.i80.i ]
   %i.nv = phi <4 x float> [ %i.qj, %bb.n ], [ %i.my, %.preheader.i80.i ] ; 2 uses
-  %umin270 = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i88.i, i64 %i.fn)
   %i.nw = xor i64 %.05189.i.i, -1
-  %6 = add nsw i64 %i.c, %i.nw
-  %i.nx = add i64 %umin270, %6                    ; 3 uses
-  %umin.i89.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i88.i, i64 %i.fn)
+  %i.nx = add nsw i64 %i.c, %i.nw
+  %umin.i89.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i88.i, i64 %i.fn) ; 2 uses
   %i.ny = add nuw nsw i64 %.05189.i.i, 24
   %i.nz = mul i64 %i.ny, %2
   %i.oa = getelementptr inbounds nuw [4 x i8], ptr %i.mo, i64 %i.nz
@@ -2021,11 +2015,12 @@ bb.l:                                             ; preds = %.lr.ph90.i.i
   br i1 %i.od, label %.lr.ph79.i.i.preheader, label %.loopexit.i97.i
 
 .lr.ph79.i.i.preheader:                           ; preds = %bb.l
-  %min.iters.check272 = icmp ult i64 %i.nx, 16
+  %6 = add i64 %umin.i89.i, %i.nx                 ; 3 uses
+  %min.iters.check272 = icmp ult i64 %6, 16
   br i1 %min.iters.check272, label %.lr.ph79.i.i.preheader363, label %vector.ph273
 
 vector.ph273:                                     ; preds = %.lr.ph79.i.i.preheader
-  %n.vec274 = and i64 %i.nx, -16                  ; 3 uses
+  %n.vec274 = and i64 %6, -16                     ; 3 uses
   %broadcast.splatinsert277 = insertelement <8 x i64> poison, i64 %.077.reass.reass.i.reass.reass.i.reass.reass.reass, i64 0
   %broadcast.splat278 = shufflevector <8 x i64> %broadcast.splatinsert277, <8 x i64> poison, <8 x i32> zeroinitializer
   %induction279 = add nuw nsw <8 x i64> %broadcast.splat278, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
@@ -2107,7 +2102,7 @@ middle.block309:                                  ; preds = %vector.body280
   %i.pp = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fmax.v8f32(<8 x float> %rdx.minmax311.a)
   %rdx.minmax312 = tail call reassoc nsz arcp contract afn <8 x float> @llvm.maxnum.v8f32(<8 x float> %i.pj, <8 x float> %i.pk)
   %i.pq = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fmax.v8f32(<8 x float> %rdx.minmax312)
-  %cmp.n313 = icmp ne i64 %i.nx, %n.vec274
+  %cmp.n313 = icmp ne i64 %6, %n.vec274
   %.not354 = or i1 %cmp.n313, %i.pa
   %i.pr = insertelement <4 x float> poison, float %i.pm, i64 0
   %i.ps = insertelement <4 x float> %i.pr, float %i.po, i64 1
@@ -2273,14 +2268,12 @@ bb.o:                                             ; preds = %_ZL13_box_max_vertI
   br i1 %niter437.ncmp.3, label %.preheader.i113.i.loopexit.unr-lcssa, label %.lr.ph.i110.i, !llvm.loop !1118
 
 .lr.ph70.i.i:                                     ; preds = %.preheader.i113.i, %bb.r
-  %indvars.iv.i114.i = phi i64 [ %indvars.iv.next.i121.i, %bb.r ], [ %i.mm, %.preheader.i113.i ] ; 3 uses
+  %indvars.iv.i114.i = phi i64 [ %indvars.iv.next.i121.i, %bb.r ], [ %i.mm, %.preheader.i113.i ] ; 2 uses
   %.05169.i.i = phi i64 [ %i.ue, %bb.r ], [ 0, %.preheader.i113.i ] ; 7 uses
   %.sroa.0.268.i.i = phi float [ %.sroa.0.5.i.i, %bb.r ], [ %.sroa.0.1.lcssa.i.i, %.preheader.i113.i ] ; 2 uses
-  %umin319 = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i114.i, i64 %i.ml)
   %i.sn = xor i64 %.05169.i.i, -1
-  %7 = add nsw i64 %i.c, %i.sn
-  %i.so = add i64 %umin319, %7                    ; 3 uses
-  %umin.i115.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i114.i, i64 %i.ml)
+  %i.so = add nsw i64 %i.c, %i.sn
+  %umin.i115.i = tail call i64 @llvm.umin.i64(i64 %indvars.iv.i114.i, i64 %i.ml) ; 2 uses
   %i.sp = add nuw nsw i64 %.05169.i.i, 24
   %i.sq = mul i64 %i.sp, %2
   %i.sr = getelementptr inbounds nuw [4 x i8], ptr %i.qo, i64 %i.sq
@@ -2299,11 +2292,12 @@ bb.p:                                             ; preds = %.lr.ph70.i.i
   br i1 %i.su, label %.lr.ph66.i.i.preheader, label %.loopexit.i120.i
 
 .lr.ph66.i.i.preheader:                           ; preds = %bb.p
-  %min.iters.check321 = icmp ult i64 %i.so, 32
+  %7 = add i64 %umin.i115.i, %i.so                ; 3 uses
+  %min.iters.check321 = icmp ult i64 %7, 32
   br i1 %min.iters.check321, label %.lr.ph66.i.i.preheader356, label %vector.ph322
 
 vector.ph322:                                     ; preds = %.lr.ph66.i.i.preheader
-  %n.vec323 = and i64 %i.so, -32                  ; 3 uses
+  %n.vec323 = and i64 %7, -32                     ; 3 uses
   %broadcast.splatinsert326 = insertelement <8 x i64> poison, i64 %.063.reass.reass.i.reass.reass.i.reass.reass.reass, i64 0
   %broadcast.splat327 = shufflevector <8 x i64> %broadcast.splatinsert326, <8 x i64> poison, <8 x i32> zeroinitializer
   %induction328 = add nuw nsw <8 x i64> %broadcast.splat327, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
@@ -2359,7 +2353,7 @@ middle.block347:                                  ; preds = %vector.body329
   %rdx.minmax350 = tail call reassoc nsz arcp contract afn <8 x float> @llvm.maxnum.v8f32(<8 x float> %rdx.minmax349, <8 x float> %i.tp)
   %i.tr = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fmax.v8f32(<8 x float> %rdx.minmax350) ; 2 uses
   %i.ts = add i64 %.063.reass.reass.i.reass.reass.i.reass.reass.reass, %i.tq
-  %cmp.n351 = icmp ne i64 %i.so, %n.vec323
+  %cmp.n351 = icmp ne i64 %7, %n.vec323
   %.not355 = or i1 %cmp.n351, %i.tj
   br i1 %.not355, label %.lr.ph66.i.i.preheader356, label %.loopexit.i120.i
 

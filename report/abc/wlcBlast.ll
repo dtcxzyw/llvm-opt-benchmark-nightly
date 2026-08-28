@@ -205,12 +205,8 @@ Vec_IntFill.exit64:                               ; preds = %Vec_IntGrow.exit.i5
 
 .preheader75:                                     ; preds = %.preheader75.preheader, %._crit_edge84
   %indvars.iv94 = phi i64 [ 1, %.preheader75.preheader ], [ %indvars.iv.next95, %._crit_edge84 ] ; 2 uses
-  %indvars.iv = phi i64 [ 0, %.preheader75.preheader ], [ %indvars.iv.next, %._crit_edge84 ] ; 14 uses
+  %indvars.iv = phi i64 [ 0, %.preheader75.preheader ], [ %indvars.iv.next, %._crit_edge84 ] ; 13 uses
   %.07286 = phi i32 [ 1, %.preheader75.preheader ], [ %.274, %._crit_edge84 ] ; 3 uses
-  %5 = shl nuw i64 %indvars.iv, 1
-  %6 = icmp eq i64 %indvars.iv, 0
-  %umax = select i1 %6, i64 1, i64 %5
-  %7 = sub i64 %umax, %indvars.iv                 ; 3 uses
   %i.an = shl i64 %indvars.iv, 2
   %i.ao = icmp samesign ugt i64 %indvars.iv, 1
   br i1 %i.ao, label %.preheader.thread, label %.preheader
@@ -227,7 +223,10 @@ Vec_IntFill.exit64:                               ; preds = %Vec_IntGrow.exit.i5
   br i1 %.not, label %.lr.ph83, label %.lr.ph78.preheader
 
 .lr.ph78.preheader:                               ; preds = %.preheader.thread, %.preheader
-  %i.as = shl nuw nsw i64 %indvars.iv, 1          ; 2 uses
+  %i.as = shl nuw nsw i64 %indvars.iv, 1          ; 3 uses
+  %5 = icmp eq i64 %indvars.iv, 0
+  %6 = select i1 %5, i64 1, i64 %i.as
+  %7 = sub nsw i64 %6, %indvars.iv                ; 3 uses
   %min.iters.check = icmp ult i64 %7, 8
   %.reass = add i64 %i.an, %invariant.op
   %diff.check = icmp ult i64 %.reass, 31

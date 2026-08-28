@@ -205,8 +205,9 @@ bb.bu:                                            ; preds = %bb.bt
   br i1 %i.us, label %.lr.ph.i.i.preheader, label %._crit_edge.thread.i.i
 
 .lr.ph.i.i.preheader:                             ; preds = %.preheader437.i.i
-  %5 = insertelement <2 x float> poison, float %i.um, i64 0
-  %6 = insertelement <2 x float> %5, float %i.un, i64 1
+  %5 = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %square374.i.i, i64 1
+  %6 = insertelement <4 x float> %5, float %i.um, i64 2
+  %7 = insertelement <4 x float> %6, float %i.un, i64 3
   br label %.lr.ph.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
@@ -215,22 +216,12 @@ bb.bu:                                            ; preds = %bb.bt
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %.lr.ph.i.i
   %indvars.iv544.i.i = phi i64 [ %indvars.iv.next545.i.i, %.lr.ph.i.i ], [ 0, %.lr.ph.i.i.preheader ] ; 3 uses
-  %i.uu = getelementptr inbounds nuw [24 x i8], ptr %i.kt, i64 %indvars.iv544.i.i ; 3 uses
-  %7 = load float, ptr %i.uu, align 4, !tbaa !59
-  %8 = getelementptr inbounds nuw i8, ptr %i.uu, i64 4
-  %9 = load float, ptr %8, align 4, !tbaa !59
-  %10 = fmul reassoc nsz arcp contract afn float %9, %square374.i.i
-  %11 = fadd reassoc nsz arcp contract afn float %7, %10
-  %12 = getelementptr inbounds nuw i8, ptr %i.uu, i64 8
-  %13 = load <2 x float>, ptr %12, align 4, !tbaa !59
-  %14 = fmul reassoc nsz arcp contract afn <2 x float> %13, %6 ; 2 uses
-  %15 = extractelement <2 x float> %14, i64 0
-  %16 = fadd reassoc nsz arcp contract afn float %11, %15
-  %17 = extractelement <2 x float> %14, i64 1
-  %18 = fadd reassoc nsz arcp contract afn float %16, %17
+  %i.uu = getelementptr inbounds nuw [24 x i8], ptr %i.kt, i64 %indvars.iv544.i.i
+  %8 = load <4 x float>, ptr %i.uu, align 4, !tbaa !59
+  %9 = fmul reassoc nsz arcp contract afn <4 x float> %8, %7
   %i.uv = load float, ptr %i.el, align 4, !tbaa !300
-  %19 = fadd reassoc nsz arcp contract afn float %18, -1.000000e+00
-  %i.uw = fmul reassoc nsz arcp contract afn float %19, %i.uv
+  %op.rdx478 = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v4f32(float -1.000000e+00, <4 x float> %9)
+  %i.uw = fmul reassoc nsz arcp contract afn float %op.rdx478, %i.uv
   %i.ux = fadd reassoc nsz arcp contract afn float %i.uw, 1.000000e+00
   %gep.i.i = getelementptr inbounds nuw [64 x i8], ptr %i.uk, i64 %indvars.iv544.i.i
   store float %i.ux, ptr %gep.i.i, align 4, !tbaa !24
@@ -633,8 +624,9 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.oi, label %.lr.ph.preheader, label %._crit_edge.thread
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %7 = insertelement <2 x float> poison, float %i.oc, i64 0
-  %8 = insertelement <2 x float> %7, float %i.od, i64 1
+  %7 = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %square, i64 1
+  %8 = insertelement <4 x float> %7, float %i.oc, i64 2
+  %9 = insertelement <4 x float> %8, float %i.od, i64 3
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph
@@ -643,22 +635,12 @@ bb.v:                                             ; preds = %bb.u
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %.lr.ph.preheader ] ; 3 uses
-  %i.ok = getelementptr inbounds nuw [24 x i8], ptr %i.h, i64 %indvars.iv ; 3 uses
-  %9 = load float, ptr %i.ok, align 4, !tbaa !59
-  %10 = getelementptr inbounds nuw i8, ptr %i.ok, i64 4
-  %11 = load float, ptr %10, align 4, !tbaa !59
-  %12 = fmul reassoc nsz arcp contract afn float %11, %square
-  %13 = fadd reassoc nsz arcp contract afn float %9, %12
-  %14 = getelementptr inbounds nuw i8, ptr %i.ok, i64 8
-  %15 = load <2 x float>, ptr %14, align 4, !tbaa !59
-  %16 = fmul reassoc nsz arcp contract afn <2 x float> %15, %8 ; 2 uses
-  %17 = extractelement <2 x float> %16, i64 0
-  %18 = fadd reassoc nsz arcp contract afn float %13, %17
-  %19 = extractelement <2 x float> %16, i64 1
-  %20 = fadd reassoc nsz arcp contract afn float %18, %19
+  %i.ok = getelementptr inbounds nuw [24 x i8], ptr %i.h, i64 %indvars.iv
+  %10 = load <4 x float>, ptr %i.ok, align 4, !tbaa !59
+  %11 = fmul reassoc nsz arcp contract afn <4 x float> %10, %9
   %i.ol = load float, ptr %i.i, align 4, !tbaa !300
-  %21 = fadd reassoc nsz arcp contract afn float %20, -1.000000e+00
-  %i.om = fmul reassoc nsz arcp contract afn float %21, %i.ol
+  %op.rdx601 = tail call reassoc nsz arcp contract afn float @llvm.vector.reduce.fadd.v4f32(float -1.000000e+00, <4 x float> %11)
+  %i.om = fmul reassoc nsz arcp contract afn float %op.rdx601, %i.ol
   %i.on = fadd reassoc nsz arcp contract afn float %i.om, 1.000000e+00
   %i.oo = fmul reassoc nsz arcp contract afn float %i.on, %2
   %gep = getelementptr inbounds nuw [64 x i8], ptr %invariant.gep, i64 %indvars.iv

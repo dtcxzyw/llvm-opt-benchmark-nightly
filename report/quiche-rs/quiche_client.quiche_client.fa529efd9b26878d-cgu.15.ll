@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quiche-rs/original/quiche_client.quiche_client.fa529efd9b26878d-cgu.15?download=true
+inline.NumInlined: 297
+inline.NumDeleted: 150
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -109,8 +111,6 @@ bb.b:                                             ; preds = %bb.a
     #dbg_value(i64 9, !1197, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !1415)
     #dbg_value(ptr @2, !1197, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !1415)
     #dbg_value(i64 2, !1201, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !1416)
-    #dbg_value(ptr undef, !1201, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !1416)
-    #dbg_value(i64 undef, !1201, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !1416)
     #dbg_value(i64 2, !1201, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !1416)
     #dbg_value(ptr undef, !1201, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !1416)
     #dbg_value(i64 undef, !1201, !DIExpression(DW_OP_LLVM_fragment, 320, 64), !1416)
@@ -513,8 +513,6 @@ bb.a:
   %i.k = load ptr, ptr %3, align 8, !dbg !2634, !alias.scope !2602, !nonnull !13, !noundef !13
     #dbg_value(ptr %i.k, !1197, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !2613)
     #dbg_value(i64 2, !1201, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !2635)
-    #dbg_value(ptr undef, !1201, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !2635)
-    #dbg_value(i64 undef, !1201, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !2635)
     #dbg_value(i64 2, !1201, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !2635)
     #dbg_value(ptr undef, !1201, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !2635)
     #dbg_value(i64 undef, !1201, !DIExpression(DW_OP_LLVM_fragment, 320, 64), !2635)

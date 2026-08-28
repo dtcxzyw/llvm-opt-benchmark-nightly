@@ -121,7 +121,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.n = load float, ptr %i.m, align 4, !tbaa !11
   %i.o = getelementptr inbounds [4 x i8], ptr %1, i64 %i.f
   %i.p = load float, ptr %i.o, align 4, !tbaa !11 ; 2 uses
-  %i.q = fsub reassoc nsz arcp contract afn float %i.n, %i.p ; 3 uses
+  %i.q = fsub reassoc nsz arcp contract afn float %i.n, %i.p ; 2 uses
   %i.r = fsub reassoc nsz arcp contract afn float %2, %i.p
   %i.s = fdiv reassoc nsz arcp contract afn float %i.r, %i.q ; 4 uses
   %i.t = fmul reassoc nsz arcp contract afn float %i.s, %i.s ; 3 uses
@@ -143,17 +143,16 @@ bb.b:                                             ; preds = %.lr.ph
   %i.ai = fsub reassoc nsz arcp contract afn float %i.u, %i.t
   %i.aj = getelementptr inbounds [4 x i8], ptr %3, i64 %i.f
   %i.ak = load float, ptr %i.aj, align 4, !tbaa !11
-  %5 = fmul reassoc nsz arcp contract afn float %i.ak, %i.ab
-  %i.al = fmul reassoc nsz arcp contract afn float %i.q, %i.h
-  %i.am = fmul reassoc nsz arcp contract afn float %i.al, %i.af
-  %6 = fadd reassoc nsz arcp contract afn float %5, %i.am
-  %7 = getelementptr inbounds [4 x i8], ptr %3, i64 %i.j
-  %8 = load float, ptr %7, align 4, !tbaa !11
-  %i.an = fmul reassoc nsz arcp contract afn float %8, %i.ah
-  %i.ao = fadd reassoc nsz arcp contract afn float %i.an, %6
-  %i.ap = fmul reassoc nsz arcp contract afn float %i.q, %i.l
-  %9 = fmul reassoc nsz arcp contract afn float %i.ap, %i.ai
-  %i.aq = fadd reassoc nsz arcp contract afn float %i.ao, %9
+  %i.al = fmul reassoc nsz arcp contract afn float %i.ak, %i.ab
+  %i.am = fmul reassoc nsz arcp contract afn float %i.h, %i.af
+  %5 = getelementptr inbounds [4 x i8], ptr %3, i64 %i.j
+  %6 = load float, ptr %5, align 4, !tbaa !11
+  %7 = fmul reassoc nsz arcp contract afn float %6, %i.ah
+  %i.an = fmul reassoc nsz arcp contract afn float %i.ai, %i.l
+  %i.ao = fadd reassoc nsz arcp contract afn float %i.am, %i.an
+  %i.ap = fmul reassoc nsz arcp contract afn float %i.ao, %i.q
+  %8 = fadd reassoc nsz arcp contract afn float %i.al, %7
+  %i.aq = fadd reassoc nsz arcp contract afn float %8, %i.ap
   ret float %i.aq
 }
 

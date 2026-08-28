@@ -205,7 +205,7 @@ bb.dq:                                            ; preds = %_ZN6brotli3enc14blo
 
 bb.dr:                                            ; preds = %bb.dq
   %i.xw = add i64 %.sroa.0.0423.i, 7
-  %i.xx = lshr i64 %i.xw, 3                       ; 9 uses
+  %i.xx = lshr i64 %i.xw, 3                       ; 8 uses
   %i.xy = icmp eq i64 %.sroa.0.0423.i, 1
   br i1 %i.xy, label %.preheader.i.i.preheader, label %bb.ds
 
@@ -294,8 +294,6 @@ bb.du:                                            ; preds = %.lr.ph403.i.prehead
 .lr.ph434.split.preheader.i.i:                    ; preds = %.lr.ph434.i.i
   %.idx453.i.i = shl nuw nsw i64 %i.yp, 2         ; 3 uses
   %i.yr = icmp eq i64 %i.yp, 0
-  %10 = add i64 %.idx452.i.i, -32
-  %11 = lshr exact i64 %10, 5
   %i.ys = lshr i64 %.sroa.0.0423.i, 3             ; 3 uses
   %i.yt = icmp samesign ult i64 %i.ys, %i.fs
   %i.yu = getelementptr inbounds nuw [32 x i8], ptr %i.fz, i64 %i.ys ; 2 uses
@@ -345,6 +343,8 @@ bb.du:                                            ; preds = %.lr.ph403.i.prehead
   %i.aaj = getelementptr inbounds nuw i8, ptr %i.aai, i64 24 ; 2 uses
   %i.aak = trunc i64 %i.yo to i8
   %i.aal = or disjoint i8 %i.aak, 6
+  %10 = add i64 %.idx452.i.i, -32
+  %11 = lshr exact i64 %10, 5
   br label %.lr.ph434.split.i.i
 
 .lr.ph434.split.us.i.i:                           ; preds = %.lr.ph434.i.i
@@ -382,13 +382,8 @@ _ZN6brotli3enc14block_splitter22update_cost_and_signal17h81de535e3596d66fE.exit.
 
 .lr.ph434.split.i.i:                              ; preds = %_ZN6brotli3enc14block_splitter22update_cost_and_signal17h81de535e3596d66fE.exit.loopexit.i.i, %.lr.ph434.split.preheader.i.i
   %.sroa.0.0336432.i.i = phi ptr [ %i.aas, %_ZN6brotli3enc14block_splitter22update_cost_and_signal17h81de535e3596d66fE.exit.loopexit.i.i ], [ %i.ax, %.lr.ph434.split.preheader.i.i ] ; 2 uses
-  %.sroa.7.0431.i.i = phi i64 [ %i.aat, %_ZN6brotli3enc14block_splitter22update_cost_and_signal17h81de535e3596d66fE.exit.loopexit.i.i ], [ 0, %.lr.ph434.split.preheader.i.i ] ; 8 uses
-  %12 = mul i64 %i.xx, %.sroa.7.0431.i.i
-  %umax = tail call i64 @llvm.umax.i64(i64 %12, i64 %i.ge)
+  %.sroa.7.0431.i.i = phi i64 [ %i.aat, %_ZN6brotli3enc14block_splitter22update_cost_and_signal17h81de535e3596d66fE.exit.loopexit.i.i ], [ 0, %.lr.ph434.split.preheader.i.i ] ; 7 uses
   %i.aar = mul i64 %i.xx, %.sroa.7.0431.i.i
-  %13 = sub i64 %umax, %i.aar
-  %umin = tail call i64 @llvm.umin.i64(i64 %11, i64 %13) ; 2 uses
-  %14 = add nuw nsw i64 %umin, 1                  ; 2 uses
   %i.aas = getelementptr inbounds nuw i8, ptr %.sroa.0.0336432.i.i, i64 1 ; 2 uses
   %i.aat = add nuw i64 %.sroa.7.0431.i.i, 1
   %exitcond486.not.i.i = icmp eq i64 %.sroa.7.0431.i.i, %i.aq
@@ -439,7 +434,7 @@ bb.dx:                                            ; preds = %bb.dw, %bb.dv
 
 bb.dy:                                            ; preds = %.lr.ph434.split.i.i
   %i.abm = getelementptr inbounds nuw i8, ptr %i.fp, i64 %.sroa.7.0431.i.i ; 15 uses
-  %i.abn = mul i64 %.sroa.7.0431.i.i, %i.xx       ; 2 uses
+  %i.abn = mul i64 %.sroa.7.0431.i.i, %i.xx       ; 3 uses
   %i.abo = load i8, ptr %.sroa.0.0336432.i.i, align 1, !alias.scope !34582, !noalias !34585, !noundef !27
   %i.abp = zext i8 %i.abo to i64
   %i.abq = mul nuw nsw i64 %.sroa.0.0423.i, %i.abp ; 4 uses
@@ -504,14 +499,18 @@ bb.ee:                                            ; preds = %bb.eg, %._crit_edge
   br i1 %.not.i.i178.i, label %.invoke1149.i, label %.lr.ph430.i.i.preheader, !prof !2494
 
 .lr.ph430.i.i.preheader:                          ; preds = %bb.ee
-  %min.iters.check3737 = icmp samesign ult i64 %umin, 4
+  %12 = tail call i64 @llvm.umax.i64(i64 %i.abn, i64 %i.ge)
+  %13 = sub i64 %12, %i.aar
+  %14 = tail call i64 @llvm.umin.i64(i64 %11, i64 %13) ; 2 uses
+  %min.iters.check3737 = icmp samesign ult i64 %14, 4
   br i1 %min.iters.check3737, label %.lr.ph430.i.i.preheader4585, label %vector.ph3738
 
 vector.ph3738:                                    ; preds = %.lr.ph430.i.i.preheader
-  %i.acb = and i64 %14, 3                         ; 2 uses
+  %15 = add nuw nsw i64 %14, 1                    ; 2 uses
+  %i.acb = and i64 %15, 3                         ; 2 uses
   %i.acc = icmp eq i64 %i.acb, 0
   %i.acd = select i1 %i.acc, i64 4, i64 %i.acb
-  %n.vec3739 = sub nsw i64 %14, %i.acd            ; 3 uses
+  %n.vec3739 = sub nsw i64 %15, %i.acd            ; 3 uses
   %i.ace = shl i64 %n.vec3739, 5
   %i.acf = getelementptr i8, ptr %i.fz, i64 %i.ace
   %broadcast.splatinsert = insertelement <4 x float> poison, float %.sroa.029.1.lcssa.i.i, i64 0
@@ -914,7 +913,7 @@ bb.li:                                            ; preds = %_ZN6brotli3enc14blo
 
 bb.lj:                                            ; preds = %bb.li
   %i.bqj = add i64 %.sroa.0.0441.i, 7
-  %i.bqk = lshr i64 %i.bqj, 3                     ; 9 uses
+  %i.bqk = lshr i64 %i.bqj, 3                     ; 8 uses
   %i.bql = icmp eq i64 %.sroa.0.0441.i, 1
   br i1 %i.bql, label %.preheader.i.i413.preheader, label %bb.lk
 
@@ -1006,8 +1005,6 @@ bb.ln:                                            ; preds = %.lr.ph403.i.prehead
 .lr.ph434.split.preheader.i.i110:                 ; preds = %.lr.ph434.i.i106
   %.idx454.i.i = shl nuw nsw i64 %i.brc, 2        ; 3 uses
   %i.bre = icmp eq i64 %i.brc, 0
-  %15 = add i64 %.idx453.i.i109, -32
-  %16 = lshr exact i64 %15, 5
   %i.brf = lshr i64 %.sroa.0.0441.i, 3            ; 3 uses
   %i.brg = icmp samesign ult i64 %i.brf, %i.axx
   %i.brh = getelementptr inbounds nuw [32 x i8], ptr %i.aye, i64 %i.brf ; 2 uses
@@ -1057,6 +1054,8 @@ bb.ln:                                            ; preds = %.lr.ph403.i.prehead
   %i.bsw = getelementptr inbounds nuw i8, ptr %i.bsv, i64 24 ; 2 uses
   %i.bsx = trunc i64 %i.brb to i8
   %i.bsy = or disjoint i8 %i.bsx, 6
+  %16 = add i64 %.idx453.i.i109, -32
+  %17 = lshr exact i64 %16, 5
   br label %.lr.ph434.split.i.i111
 
 .lr.ph434.split.us.i.i410:                        ; preds = %.lr.ph434.i.i106
@@ -1094,13 +1093,8 @@ _ZN6brotli3enc14block_splitter22update_cost_and_signal17h81de535e3596d66fE.exit.
 
 .lr.ph434.split.i.i111:                           ; preds = %_ZN6brotli3enc14block_splitter22update_cost_and_signal17h81de535e3596d66fE.exit.loopexit.i.i191, %.lr.ph434.split.preheader.i.i110
   %.sroa.0.0336432.i.i112 = phi ptr [ %i.btf, %_ZN6brotli3enc14block_splitter22update_cost_and_signal17h81de535e3596d66fE.exit.loopexit.i.i191 ], [ %i.aqv, %.lr.ph434.split.preheader.i.i110 ] ; 2 uses
-  %.sroa.7.0431.i.i113 = phi i64 [ %i.btg, %_ZN6brotli3enc14block_splitter22update_cost_and_signal17h81de535e3596d66fE.exit.loopexit.i.i191 ], [ 0, %.lr.ph434.split.preheader.i.i110 ] ; 8 uses
-  %17 = mul i64 %i.bqk, %.sroa.7.0431.i.i113
-  %umax3822 = call i64 @llvm.umax.i64(i64 %17, i64 %i.ayj)
+  %.sroa.7.0431.i.i113 = phi i64 [ %i.btg, %_ZN6brotli3enc14block_splitter22update_cost_and_signal17h81de535e3596d66fE.exit.loopexit.i.i191 ], [ 0, %.lr.ph434.split.preheader.i.i110 ] ; 7 uses
   %i.bte = mul i64 %i.bqk, %.sroa.7.0431.i.i113
-  %18 = sub i64 %umax3822, %i.bte
-  %umin3823 = call i64 @llvm.umin.i64(i64 %16, i64 %18) ; 2 uses
-  %19 = add nuw nsw i64 %umin3823, 1              ; 2 uses
   %i.btf = getelementptr inbounds nuw i8, ptr %.sroa.0.0336432.i.i112, i64 2 ; 2 uses
   %i.btg = add nuw nsw i64 %.sroa.7.0431.i.i113, 1
   %exitcond487.not.i.i114 = icmp eq i64 %.sroa.7.0431.i.i113, %2
@@ -1151,7 +1145,7 @@ bb.lq:                                            ; preds = %bb.lp, %bb.lo
 
 bb.lr:                                            ; preds = %.lr.ph434.split.i.i111
   %i.btz = getelementptr inbounds nuw i8, ptr %i.axu, i64 %.sroa.7.0431.i.i113 ; 15 uses
-  %i.bua = mul i64 %.sroa.7.0431.i.i113, %i.bqk   ; 2 uses
+  %i.bua = mul i64 %.sroa.7.0431.i.i113, %i.bqk   ; 3 uses
   %i.bub = load i16, ptr %.sroa.0.0336432.i.i112, align 2, !alias.scope !35031, !noalias !35034, !noundef !27
   %i.buc = zext i16 %i.bub to i64
   %i.bud = mul nuw nsw i64 %.sroa.0.0441.i, %i.buc ; 4 uses
@@ -1216,14 +1210,18 @@ bb.lx:                                            ; preds = %bb.lz, %._crit_edge
   br i1 %.not.i.i180.i, label %.invoke1203.i, label %.lr.ph430.i.i164.preheader, !prof !2494
 
 .lr.ph430.i.i164.preheader:                       ; preds = %bb.lx
-  %min.iters.check3825 = icmp samesign ult i64 %umin3823, 4
+  %18 = call i64 @llvm.umax.i64(i64 %i.bua, i64 %i.ayj)
+  %19 = sub i64 %18, %i.bte
+  %20 = call i64 @llvm.umin.i64(i64 %17, i64 %19) ; 2 uses
+  %min.iters.check3825 = icmp samesign ult i64 %20, 4
   br i1 %min.iters.check3825, label %.lr.ph430.i.i164.preheader4368, label %vector.ph3826
 
 vector.ph3826:                                    ; preds = %.lr.ph430.i.i164.preheader
-  %i.buo = and i64 %19, 3                         ; 2 uses
+  %21 = add nuw nsw i64 %20, 1                    ; 2 uses
+  %i.buo = and i64 %21, 3                         ; 2 uses
   %i.bup = icmp eq i64 %i.buo, 0
   %i.buq = select i1 %i.bup, i64 4, i64 %i.buo
-  %n.vec3827 = sub nsw i64 %19, %i.buq            ; 3 uses
+  %n.vec3827 = sub nsw i64 %21, %i.buq            ; 3 uses
   %i.bur = shl i64 %n.vec3827, 5
   %i.bus = getelementptr i8, ptr %i.aye, i64 %i.bur
   %broadcast.splatinsert3828.a = insertelement <4 x float> poison, float %.sroa.029.1.lcssa.i.i162, i64 0
@@ -1626,7 +1624,7 @@ bb.tg:                                            ; preds = %_ZN6brotli3enc14blo
 
 bb.th:                                            ; preds = %bb.tg
   %i.dhh = add i64 %.sroa.0.0441.i499, 7
-  %i.dhi = lshr i64 %i.dhh, 3                     ; 9 uses
+  %i.dhi = lshr i64 %i.dhh, 3                     ; 8 uses
   %i.dhj = icmp eq i64 %.sroa.0.0441.i499, 1
   br i1 %i.dhj, label %.preheader.i.i985.preheader, label %bb.ti
 
@@ -1721,8 +1719,6 @@ bb.tl:                                            ; preds = %.lr.ph403.i.prehead
 .lr.ph434.split.preheader.i.i539:                 ; preds = %.lr.ph434.i.i534
   %.idx454.i.i540 = shl nuw nsw i64 %i.dia, 2     ; 3 uses
   %i.dic = icmp eq i64 %i.dia, 0
-  %20 = add i64 %.idx453.i.i538, -32
-  %21 = lshr exact i64 %20, 5
   %i.did = lshr i64 %.sroa.0.0441.i499, 3         ; 3 uses
   %i.die = icmp samesign ult i64 %i.did, %i.cor
   %i.dif = getelementptr inbounds nuw [32 x i8], ptr %i.coy, i64 %i.did ; 2 uses
@@ -1772,6 +1768,8 @@ bb.tl:                                            ; preds = %.lr.ph403.i.prehead
   %i.dju = getelementptr inbounds nuw i8, ptr %i.djt, i64 24 ; 2 uses
   %i.djv = trunc i64 %i.dhz to i8
   %i.djw = or disjoint i8 %i.djv, 6
+  %22 = add i64 %.idx453.i.i538, -32
+  %23 = lshr exact i64 %22, 5
   br label %.lr.ph434.split.i.i541
 
 .lr.ph434.split.us.i.i982:                        ; preds = %.lr.ph434.i.i534
@@ -1809,13 +1807,8 @@ _ZN6brotli3enc14block_splitter22update_cost_and_signal17h81de535e3596d66fE.exit.
 
 .lr.ph434.split.i.i541:                           ; preds = %_ZN6brotli3enc14block_splitter22update_cost_and_signal17h81de535e3596d66fE.exit.loopexit.i.i621, %.lr.ph434.split.preheader.i.i539
   %.sroa.0.0336432.i.i542 = phi ptr [ %i.dkd, %_ZN6brotli3enc14block_splitter22update_cost_and_signal17h81de535e3596d66fE.exit.loopexit.i.i621 ], [ %i.cjd, %.lr.ph434.split.preheader.i.i539 ] ; 2 uses
-  %.sroa.7.0431.i.i543 = phi i64 [ %i.dke, %_ZN6brotli3enc14block_splitter22update_cost_and_signal17h81de535e3596d66fE.exit.loopexit.i.i621 ], [ 0, %.lr.ph434.split.preheader.i.i539 ] ; 8 uses
-  %22 = mul i64 %i.dhi, %.sroa.7.0431.i.i543
-  %umax3907 = call i64 @llvm.umax.i64(i64 %22, i64 %i.cpd)
+  %.sroa.7.0431.i.i543 = phi i64 [ %i.dke, %_ZN6brotli3enc14block_splitter22update_cost_and_signal17h81de535e3596d66fE.exit.loopexit.i.i621 ], [ 0, %.lr.ph434.split.preheader.i.i539 ] ; 7 uses
   %i.dkc = mul i64 %i.dhi, %.sroa.7.0431.i.i543
-  %23 = sub i64 %umax3907, %i.dkc
-  %umin3908 = call i64 @llvm.umin.i64(i64 %21, i64 %23) ; 2 uses
-  %24 = add nuw nsw i64 %umin3908, 1              ; 2 uses
   %i.dkd = getelementptr inbounds nuw i8, ptr %.sroa.0.0336432.i.i542, i64 2 ; 2 uses
   %i.dke = add nuw nsw i64 %.sroa.7.0431.i.i543, 1
   %exitcond487.not.i.i544 = icmp eq i64 %.sroa.7.0431.i.i543, %.sroa.01.1
@@ -1866,7 +1859,7 @@ bb.to:                                            ; preds = %bb.tn, %bb.tm
 
 bb.tp:                                            ; preds = %.lr.ph434.split.i.i541
   %i.dkx = getelementptr inbounds nuw i8, ptr %i.coo, i64 %.sroa.7.0431.i.i543 ; 15 uses
-  %i.dky = mul i64 %.sroa.7.0431.i.i543, %i.dhi   ; 2 uses
+  %i.dky = mul i64 %.sroa.7.0431.i.i543, %i.dhi   ; 3 uses
   %i.dkz = load i16, ptr %.sroa.0.0336432.i.i542, align 2, !alias.scope !35473, !noalias !35476, !noundef !27
   %i.dla = zext i16 %i.dkz to i64
   %i.dlb = mul nuw nsw i64 %.sroa.0.0441.i499, %i.dla ; 4 uses
@@ -1931,14 +1924,18 @@ bb.tv:                                            ; preds = %bb.tx, %._crit_edge
   br i1 %.not.i.i180.i537, label %.invoke1203.i979, label %.lr.ph430.i.i594.preheader, !prof !2494
 
 .lr.ph430.i.i594.preheader:                       ; preds = %bb.tv
-  %min.iters.check3910 = icmp samesign ult i64 %umin3908, 4
+  %24 = call i64 @llvm.umax.i64(i64 %i.dky, i64 %i.cpd)
+  %25 = sub i64 %24, %i.dkc
+  %26 = call i64 @llvm.umin.i64(i64 %23, i64 %25) ; 2 uses
+  %min.iters.check3910 = icmp samesign ult i64 %26, 4
   br i1 %min.iters.check3910, label %.lr.ph430.i.i594.preheader4133, label %vector.ph3911
 
 vector.ph3911:                                    ; preds = %.lr.ph430.i.i594.preheader
-  %i.dlm = and i64 %24, 3                         ; 2 uses
+  %27 = add nuw nsw i64 %26, 1                    ; 2 uses
+  %i.dlm = and i64 %27, 3                         ; 2 uses
   %i.dln = icmp eq i64 %i.dlm, 0
   %i.dlo = select i1 %i.dln, i64 4, i64 %i.dlm
-  %n.vec3912 = sub nsw i64 %24, %i.dlo            ; 3 uses
+  %n.vec3912 = sub nsw i64 %27, %i.dlo            ; 3 uses
   %i.dlp = shl i64 %n.vec3912, 5
   %i.dlq = getelementptr i8, ptr %i.coy, i64 %i.dlp
   %broadcast.splatinsert3913 = insertelement <4 x float> poison, float %.sroa.029.1.lcssa.i.i592, i64 0
@@ -2341,10 +2338,10 @@ bb.o:                                             ; preds = %bb.l
 .lr.ph68:                                         ; preds = %bb.o
   %i.dn = add nuw i64 %.sroa.016.066, 1           ; 3 uses
   %invariant.gep = getelementptr [4 x i8], ptr %6, i64 %.sroa.016.066 ; 2 uses
+  %14 = xor i64 %.sroa.016.066, -1
   %i.do = add i64 %indvar, %.sroa.016.066
   %i.dp = sub i64 %i.u, %i.do
   %umax331 = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.dn)
-  %14 = xor i64 %.sroa.016.066, -1
   %i.dq = add i64 %umax331, %14
   %umin = tail call i64 @llvm.umin.i64(i64 %i.dp, i64 %i.dq)
   %i.dr = add i64 %umin, 1                        ; 3 uses
@@ -2747,10 +2744,10 @@ bb.o:                                             ; preds = %bb.l
 .lr.ph68:                                         ; preds = %bb.o
   %i.dn = add nuw i64 %.sroa.016.066, 1           ; 3 uses
   %invariant.gep = getelementptr [4 x i8], ptr %6, i64 %.sroa.016.066 ; 2 uses
+  %14 = xor i64 %.sroa.016.066, -1
   %i.do = add i64 %indvar, %.sroa.016.066
   %i.dp = sub i64 %i.u, %i.do
   %umax331 = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.dn)
-  %14 = xor i64 %.sroa.016.066, -1
   %i.dq = add i64 %umax331, %14
   %umin = tail call i64 @llvm.umin.i64(i64 %i.dp, i64 %i.dq)
   %i.dr = add i64 %umin, 1                        ; 3 uses
@@ -3153,10 +3150,10 @@ bb.o:                                             ; preds = %bb.l
 .lr.ph68:                                         ; preds = %bb.o
   %i.dn = add nuw i64 %.sroa.016.066, 1           ; 3 uses
   %invariant.gep = getelementptr [4 x i8], ptr %6, i64 %.sroa.016.066 ; 2 uses
+  %14 = xor i64 %.sroa.016.066, -1
   %i.do = add i64 %indvar, %.sroa.016.066
   %i.dp = sub i64 %i.u, %i.do
   %umax331 = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.dn)
-  %14 = xor i64 %.sroa.016.066, -1
   %i.dq = add i64 %umax331, %14
   %umin = tail call i64 @llvm.umin.i64(i64 %i.dp, i64 %i.dq)
   %i.dr = add i64 %umin, 1                        ; 3 uses
@@ -3559,34 +3556,33 @@ bb.ba:                                            ; preds = %bb.ay, %bb.ax
   br i1 %.not.i154, label %_ZN6brotli3enc9metablock17MapStaticContexts17h4e4a6d16511c8e67E.exit, label %.lr.ph.i
 
 .loopexit.i:                                      ; preds = %bb.bd
-  %exitcond9.not.i = icmp eq i64 %17, %i.ib
+  %exitcond9.not.i = icmp eq i64 %14, %i.ib
   br i1 %exitcond9.not.i, label %_ZN6brotli3enc9metablock17MapStaticContexts17h4e4a6d16511c8e67E.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hd73f7e4c840310d1E.exit.i153", %.loopexit.i
-  %.sroa.03.04.i = phi i64 [ %17, %.loopexit.i ], [ 0, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hd73f7e4c840310d1E.exit.i153" ] ; 5 uses
-  %14 = shl i64 %.sroa.03.04.i, 6
-  %umax = call i64 @llvm.umax.i64(i64 %14, i64 %i.id)
-  %15 = shl i64 %.sroa.03.04.i, 6
-  %16 = sub i64 %umax, %15
-  %umin = call i64 @llvm.umin.i64(i64 %9, i64 %16) ; 2 uses
-  %17 = add nuw i64 %.sroa.03.04.i, 1             ; 2 uses
-  %18 = mul i64 %.sroa.03.04.i, %7
-  %19 = trunc i64 %18 to i32                      ; 2 uses
-  %20 = shl i64 %.sroa.03.04.i, 6                 ; 2 uses
-  %min.iters.check = icmp ult i64 %umin, 8
+  %.sroa.03.04.i = phi i64 [ %14, %.loopexit.i ], [ 0, %"_ZN111_$LT$alloc_stdlib..std_alloc..StandardAlloc$u20$as$u20$alloc_no_stdlib..stack_allocator..Allocator$LT$T$GT$$GT$9free_cell17hd73f7e4c840310d1E.exit.i153" ] ; 4 uses
+  %14 = add nuw i64 %.sroa.03.04.i, 1             ; 2 uses
+  %15 = mul i64 %.sroa.03.04.i, %7
+  %16 = trunc i64 %15 to i32                      ; 2 uses
+  %17 = shl i64 %.sroa.03.04.i, 6                 ; 3 uses
+  %umin = call i64 @llvm.umax.i64(i64 %17, i64 %i.id)
+  %18 = shl i64 %.sroa.03.04.i, 6
+  %19 = sub i64 %umin, %18
+  %20 = call i64 @llvm.umin.i64(i64 %9, i64 %19)  ; 2 uses
+  %min.iters.check = icmp ult i64 %20, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %umin461 = call i64 @llvm.umin.i64(i64 %umin, i64 63)
+  %umin461 = call i64 @llvm.umin.i64(i64 %20, i64 63)
   %i.is = add nuw nsw i64 %umin461, 1             ; 2 uses
   %i.it = and i64 %i.is, 7                        ; 2 uses
   %i.iu = icmp eq i64 %i.it, 0
   %i.iv = select i1 %i.iu, i64 8, i64 %i.it
   %n.vec = sub nsw i64 %i.is, %i.iv               ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.il) ]
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %19, i64 0
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %16, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %invariant.gep = getelementptr [4 x i8], ptr %i.il, i64 %20
+  %invariant.gep = getelementptr [4 x i8], ptr %i.il, i64 %17
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -3617,7 +3613,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 bb.bb:                                            ; preds = %scalar.ph
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.il) ]
-  %i.jd = add nuw nsw i64 %.sroa.05.03.i, %20     ; 3 uses
+  %i.jd = add nuw nsw i64 %.sroa.05.03.i, %17     ; 3 uses
   %i.je = icmp ult i64 %i.jd, %i.id
   br i1 %i.je, label %bb.bd, label %bb.be
 
@@ -3628,7 +3624,7 @@ bb.bc:                                            ; preds = %scalar.ph
 bb.bd:                                            ; preds = %bb.bb
   %i.jf = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %.sroa.05.03.i
   %i.jg = load i32, ptr %i.jf, align 4, !alias.scope !39441, !noalias !39444, !noundef !27
-  %i.jh = add i32 %i.jg, %19
+  %i.jh = add i32 %i.jg, %16
   %i.ji = getelementptr inbounds nuw [4 x i8], ptr %i.il, i64 %i.jd
   store i32 %i.jh, ptr %i.ji, align 4, !noalias !39452
   %exitcond8.not.i = icmp eq i64 %i.jc, 64
