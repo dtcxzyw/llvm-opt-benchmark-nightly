@@ -178,8 +178,10 @@ define internal fastcc noundef ptr @_ZN12_GLOBAL__N_121CalcLiveRangeUtilBaseINS_
 bb.a:
   %3 = alloca %"struct.std::_Rb_tree<llvm::LiveRange::Segment, llvm::LiveRange::Segment, std::_Identity<llvm::LiveRange::Segment>, std::less<llvm::LiveRange::Segment>>::_Alloc_node", align 8 ; 4 uses
   %4 = alloca %"struct.std::_Rb_tree<llvm::LiveRange::Segment, llvm::LiveRange::Segment, std::_Identity<llvm::LiveRange::Segment>, std::less<llvm::LiveRange::Segment>>::_Alloc_node", align 8 ; 4 uses
+  %.sroa.02 = alloca [8 x i8], align 8            ; 2 uses
   %5 = alloca %"struct.llvm::LiveRange::Segment", align 8 ; 6 uses
   %6 = alloca %"struct.llvm::LiveRange::Segment", align 8 ; 6 uses
+  store i64 %0, ptr %.sroa.02, align 8
   %i.a = getelementptr i8, ptr %.0.val, i64 96    ; 3 uses
   %.val.val = load ptr, ptr %i.a, align 8, !tbaa !22 ; 3 uses
   %i.b = trunc i64 %0 to i32
@@ -376,7 +378,7 @@ _ZN4llvm9LiveRange12getNextValueENS_9SlotIndexERNS_20BumpPtrAllocatorImplINS_15M
   br label %bb.v
 
 bb.l:                                             ; preds = %_ZN12_GLOBAL__N_120CalcLiveRangeUtilSet4findEN4llvm9SlotIndexE.exit
-  %i.cw = getelementptr inbounds nuw i8, ptr %.sroa.04.1.i, i64 32 ; 2 uses
+  %i.cw = getelementptr inbounds nuw i8, ptr %.sroa.04.1.i, i64 32 ; 3 uses
   %.sroa.07.0.copyload = load i64, ptr %i.cw, align 8, !tbaa !31 ; 4 uses
   %i.cx = xor i64 %.sroa.07.0.copyload, %0
   %i.cy = icmp ult i64 %i.cx, 8
@@ -396,16 +398,17 @@ bb.m:                                             ; preds = %bb.l
   %i.dj = load i32, ptr %i.di, align 8, !tbaa !12
   %i.dk = or i32 %i.dj, %i.d
   %i.dl = icmp ult i32 %i.dg, %i.dk
-  %.not1415 = icmp eq i64 %0, %.sroa.07.0.copyload
-  %.not14 = or i1 %.not1415, %i.dl
-  br i1 %.not14, label %bb.o, label %bb.n
+  %..i = select i1 %i.dl, ptr %i.cw, ptr %.sroa.02
+  %7 = load i64, ptr %..i, align 8, !tbaa !31     ; 3 uses
+  %.not3 = icmp eq i64 %7, %.sroa.07.0.copyload
+  br i1 %.not3, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.dm = getelementptr inbounds nuw i8, ptr %.sroa.04.1.i, i64 48
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !55
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 8
-  store i64 %0, ptr %i.do, align 8, !tbaa !31
-  store i64 %0, ptr %i.cw, align 8, !tbaa !31
+  store i64 %7, ptr %i.do, align 8, !tbaa !31
+  store i64 %7, ptr %i.cw, align 8, !tbaa !31
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
@@ -497,8 +500,10 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc noundef ptr @_ZN12_GLOBAL__N_121CalcLiveRangeUtilBaseINS_23CalcLiveRangeUtilVectorEPN4llvm9LiveRange7SegmentENS2_11SmallVectorIS4_Lj2EEEE13createDeadDefENS2_9SlotIndexEPNS2_20BumpPtrAllocatorImplINS2_15MallocAllocatorELm4096ELm4096ELm128ELm8EEEPNS2_6VNInfoE(ptr %.0.val, i64 %0, ptr noundef %1, ptr noundef %2) unnamed_addr #1 align 2 {
 bb.a:
+  %.sroa.0 = alloca [8 x i8], align 8             ; 2 uses
   %3 = alloca %"struct.llvm::LiveRange::Segment", align 8 ; 7 uses
   %4 = alloca %"struct.llvm::LiveRange::Segment", align 8 ; 6 uses
+  store i64 %0, ptr %.sroa.0, align 8
   %.val.val = load ptr, ptr %.0.val, align 8, !tbaa !8 ; 3 uses
   %i.a = getelementptr i8, ptr %.0.val, i64 8     ; 4 uses
   %.val.val34 = load i32, ptr %i.a, align 8, !tbaa !11 ; 2 uses
@@ -543,7 +548,7 @@ _ZSt9__advanceIPN4llvm9LiveRange7SegmentElEvRT_T0_St26random_access_iterator_tag
 
 _ZN12_GLOBAL__N_123CalcLiveRangeUtilVector4findEN4llvm9SlotIndexE.exit: ; preds = %_ZSt9__advanceIPN4llvm9LiveRange7SegmentElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i, %bb.a
   %.pre-phi = phi i64 [ 0, %bb.a ], [ %i.b, %_ZSt9__advanceIPN4llvm9LiveRange7SegmentElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i ]
-  %.010.lcssa.i.i.i.i = phi ptr [ %.val.val, %bb.a ], [ %.111.i.i.i.i, %_ZSt9__advanceIPN4llvm9LiveRange7SegmentElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i ] ; 6 uses
+  %.010.lcssa.i.i.i.i = phi ptr [ %.val.val, %bb.a ], [ %.111.i.i.i.i, %_ZSt9__advanceIPN4llvm9LiveRange7SegmentElEvRT_T0_St26random_access_iterator_tag.exit.i.i.i.i ] ; 7 uses
   %i.z = getelementptr inbounds nuw [24 x i8], ptr %.val.val, i64 %.pre-phi
   %i.aa = icmp eq ptr %.010.lcssa.i.i.i.i, %i.z
   br i1 %i.aa, label %bb.b, label %bb.j
@@ -659,16 +664,17 @@ bb.k:                                             ; preds = %bb.j
   %i.cb = and i32 %i.ca, 3
   %i.cc = or i32 %i.by, %i.cb
   %i.cd = icmp ult i32 %i.bu, %i.cc
-  %.not1213 = icmp eq i64 %0, %.sroa.05.0.copyload
-  %.not12 = select i1 %i.cd, i1 true, i1 %.not1213
-  br i1 %.not12, label %bb.m, label %bb.l
+  %..i = select i1 %i.cd, ptr %.010.lcssa.i.i.i.i, ptr %.sroa.0
+  %5 = load i64, ptr %..i, align 8, !tbaa !31     ; 3 uses
+  %.not1 = icmp eq i64 %5, %.sroa.05.0.copyload
+  br i1 %.not1, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.ce = getelementptr inbounds nuw i8, ptr %.010.lcssa.i.i.i.i, i64 16
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !55
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
-  store i64 %0, ptr %i.cg, align 8, !tbaa !31
-  store i64 %0, ptr %.010.lcssa.i.i.i.i, align 8, !tbaa !31
+  store i64 %5, ptr %i.cg, align 8, !tbaa !31
+  store i64 %5, ptr %.010.lcssa.i.i.i.i, align 8, !tbaa !31
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k

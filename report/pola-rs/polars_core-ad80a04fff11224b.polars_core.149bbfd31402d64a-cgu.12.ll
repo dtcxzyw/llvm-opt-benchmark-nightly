@@ -206,9 +206,13 @@ _RNvMNtCsgZ49sUHp3tW_5alloc5boxedINtB2_3BoxNCINvMs0_NtNtCsbm5zPlkZccl_4pyo33err9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !7291
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56, !dbg !7292
   store i32 3, ptr %i.g, align 8, !dbg !7292
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !7292
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false), !dbg !7292
-  store i64 1, ptr %i.h, align 8, !dbg !7292
+  store i32 0, ptr %0, align 8, !dbg !7292
+  %.sroa.03.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4, !dbg !7292
+  store i8 0, ptr %.sroa.03.sroa.4.0..sroa_idx, align 4, !dbg !7292
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !7292
+  store i64 0, ptr %i.h, align 8, !dbg !7292
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !7292
+  store i64 1, ptr %3, align 8, !dbg !7292
   %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !7292
   store ptr null, ptr %.sroa.411.0..sroa_idx, align 8, !dbg !7292
   %.sroa.512.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !7292
@@ -611,11 +615,9 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define hidden void @_RNvXsb_NtNtNtCsh8eZTKRCwoO_3std4sync6poison6rwlockINtB5_6RwLockINtNtCscgRAwXFJnXP_4core6option6OptionNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array6object8registry14ObjectRegistryEENtNtB14_7default7Default7defaultB1J_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([128 x i8]) align 8 captures(none) dereferenceable(128) initializes((0, 9), (16, 17)) %0) unnamed_addr #12 !dbg !260813 {
 bb.a:
-  store i64 0, ptr %0, align 8, !dbg !260815
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !260815
-  store i8 0, ptr %i.a, align 8, !dbg !260815
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !260815
-  store i8 42, ptr %1, align 8, !dbg !260815
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !260815
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %0, i8 0, i64 9, i1 false), !dbg !260815
+  store i8 42, ptr %i.a, align 8, !dbg !260815
   ret void, !dbg !260818
 }
 

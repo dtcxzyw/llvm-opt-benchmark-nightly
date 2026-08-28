@@ -205,7 +205,7 @@ _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef ptr @_RINvXs1_NtNtCs8Nb2mar7w9E_7inquire2ui7backendINtB6_7BackendNtNtNtBa_8terminal9crossterm18CrosstermKeyReaderNtBX_17CrosstermTerminalENtB6_13SelectBackend14render_optionsRReECsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef align 8 dereferenceable(888) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !8220 {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 7 uses
+  %i.a = alloca [32 x i8], align 8                ; 8 uses
   %i.b = alloca [32 x i8], align 8                ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 5 uses
   %i.d = alloca [9 x i8], align 1                 ; 5 uses
@@ -219,7 +219,7 @@ bb.a:
   %i.l = alloca [8 x i8], align 8                 ; 7 uses
   %i.m = alloca [32 x i8], align 8                ; 4 uses
   %i.n = alloca [32 x i8], align 8                ; 4 uses
-  %i.o = alloca [32 x i8], align 8                ; 6 uses
+  %i.o = alloca [32 x i8], align 8                ; 7 uses
     #dbg_value(ptr poison, !8837, !DIExpression(), !8860)
     #dbg_value(ptr poison, !8886, !DIExpression(), !8896)
     #dbg_value(ptr %0, !8769, !DIExpression(), !8897)
@@ -260,8 +260,9 @@ bb.a:
   %i.ac = load i8, ptr %i.ab, align 1, !range !2401
   %i.ad = trunc nuw i8 %i.ac to i1
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 7 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.o, i64 16
+  %2 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
+  %i.af = getelementptr inbounds nuw i8, ptr %i.o, i64 16
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.o, i64 20
   %.sroa.327.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 24
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ai = load i64, ptr %i.ah, align 8
@@ -281,9 +282,10 @@ bb.a:
   %i.ao = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 868 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 877 ; 2 uses
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.as = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.as = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 792
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 776
@@ -366,8 +368,9 @@ _RNvMNtNtCs8Nb2mar7w9E_7inquire2ui7backendINtB2_7BackendNtNtNtB6_8terminal9cross
 bb.e:                                             ; preds = %_RINvMNtNtCs8Nb2mar7w9E_7inquire2ui7backendINtB3_7BackendNtNtNtB7_8terminal9crossterm18CrosstermKeyReaderNtBU_17CrosstermTerminalE19print_option_prefixRReECsjfnSKV9Rz3v_3h3i.exit
     #dbg_value(ptr %i.ae, !8909, !DIExpression(), !8910)
   store ptr @4, ptr %i.o, align 8, !dbg !9074
-  store i64 1, ptr %i.af, align 8, !dbg !9074
-  store i64 1095216660735, ptr %i.ag, align 8, !dbg !9074
+  store i64 1, ptr %2, align 8, !dbg !9074
+  store i8 -1, ptr %i.af, align 8, !dbg !9074
+  store i8 -1, ptr %i.ag, align 4, !dbg !9074
   store i8 0, ptr %.sroa.327.0..sroa_idx, align 8, !dbg !9074
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !dbg !9075
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.n, ptr noundef nonnull align 8 dereferenceable(32) %i.o, i64 32, i1 false), !dbg !9075
@@ -562,7 +565,7 @@ bb.m:                                             ; preds = %bb.l
 _RINvMNtNtCs8Nb2mar7w9E_7inquire2ui7backendINtB3_7BackendNtNtNtB7_8terminal9crossterm18CrosstermKeyReaderNtBU_17CrosstermTerminalE18print_option_valueRReECsjfnSKV9Rz3v_3h3i.exit: ; preds = %bb.m, %.sink.split.i
     #dbg_value(ptr %.sroa.0.089108, !9333, !DIExpression(), !9339)
   store ptr %.sroa.0.089108, ptr %i.c, align 8, !dbg !9341, !noalias !9342
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.ar, ptr noundef nonnull align 1 dereferenceable(9) %i.d, i64 9, i1 false), !dbg !9343, !noalias !9342
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %3, ptr noundef nonnull align 1 dereferenceable(9) %i.d, i64 9, i1 false), !dbg !9343, !noalias !9342
   %i.bs = call noundef ptr @_RINvMs0_NtNtCs8Nb2mar7w9E_7inquire2ui14frame_rendererINtB6_13FrameRendererNtNtNtBa_8terminal9crossterm17CrosstermTerminalE12write_styledRRReECsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef nonnull align 8 dereferenceable(384) %i.ae, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.c), !dbg !9344 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !9345
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !9345
@@ -588,8 +591,9 @@ bb.o:                                             ; preds = %_RINvMNtNtCs8Nb2mar
     #dbg_value(ptr %i.ae, !9381, !DIExpression(), !9382)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !9389, !noalias !9355
   store ptr @16, ptr %i.a, align 8, !dbg !9390, !noalias !9355
-  store i64 1, ptr %i.as, align 8, !dbg !9390, !noalias !9355
-  store i64 1095216660735, ptr %i.at, align 8, !dbg !9390, !noalias !9355
+  store i64 1, ptr %i.ar, align 8, !dbg !9390, !noalias !9355
+  store i8 -1, ptr %i.as, align 8, !dbg !9390, !noalias !9355
+  store i8 -1, ptr %i.at, align 4, !dbg !9390, !noalias !9355
   store i8 0, ptr %.sroa.5.0..sroa_idx.i, align 8, !dbg !9390, !noalias !9355
   %i.bu = call noundef ptr @_RINvMs0_NtNtCs8Nb2mar7w9E_7inquire2ui14frame_rendererINtB6_13FrameRendererNtNtNtBa_8terminal9crossterm17CrosstermTerminalE12write_styledReECsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef nonnull align 8 dereferenceable(384) %i.ae, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(32) %i.a), !dbg !9391 ; 2 uses
     #dbg_value(ptr %i.bu, !9392, !DIExpression(), !9403)
@@ -919,18 +923,18 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef ptr @_RNvXs1_NtNtCs8Nb2mar7w9E_7inquire2ui7backendINtB5_7BackendNtNtNtB9_8terminal9crossterm18CrosstermKeyReaderNtBW_17CrosstermTerminalENtB5_13SelectBackend20render_select_promptCsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef align 8 dereferenceable(888) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(64) %3) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !9662 {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 7 uses
+  %i.a = alloca [32 x i8], align 8                ; 8 uses
   %i.b = alloca [32 x i8], align 8                ; 4 uses
   %i.c = alloca [32 x i8], align 8                ; 4 uses
-  %i.d = alloca [32 x i8], align 8                ; 10 uses
+  %i.d = alloca [32 x i8], align 8                ; 11 uses
   %i.e = alloca [32 x i8], align 8                ; 8 uses
-  %i.f = alloca [32 x i8], align 8                ; 7 uses
+  %i.f = alloca [32 x i8], align 8                ; 8 uses
   %i.g = alloca [32 x i8], align 8                ; 4 uses
-  %i.h = alloca [16 x i8], align 4                ; 6 uses
+  %i.h = alloca [16 x i8], align 4                ; 7 uses
   %i.i = alloca [32 x i8], align 8                ; 8 uses
   %i.j = alloca [32 x i8], align 8                ; 8 uses
   %i.k = alloca [32 x i8], align 8                ; 4 uses
-  %i.l = alloca [32 x i8], align 8                ; 10 uses
+  %i.l = alloca [32 x i8], align 8                ; 11 uses
   %i.m = alloca [32 x i8], align 8                ; 8 uses
   %i.n = alloca [32 x i8], align 8                ; 6 uses
   %i.o = alloca [32 x i8], align 8                ; 6 uses
@@ -990,7 +994,9 @@ bb.c:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %i.l, i64 8, !dbg !9833
   store i64 1, ptr %i.s, align 8, !dbg !9833, !noalias !9834
   %i.t = getelementptr inbounds nuw i8, ptr %i.l, i64 16, !dbg !9833
-  store i64 1095216660735, ptr %i.t, align 8, !dbg !9833, !noalias !9834
+  store i8 -1, ptr %i.t, align 8, !dbg !9833, !noalias !9834
+  %.sroa.013.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 20, !dbg !9833
+  store i8 -1, ptr %.sroa.013.sroa.4.0..sroa_idx.i.i, align 4, !dbg !9833, !noalias !9834
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 24, !dbg !9833
   store i8 0, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !dbg !9833, !noalias !9834
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !dbg !9837, !noalias !9834
@@ -1393,7 +1399,9 @@ _RNvMNtNtCs8Nb2mar7w9E_7inquire2ui7backendINtB2_7BackendNtNtNtB6_8terminal9cross
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !dbg !10835, !noalias !10345
   store i32 32, ptr %i.h, align 4, !dbg !10836, !noalias !10345
   %i.he = getelementptr inbounds nuw i8, ptr %i.h, i64 4, !dbg !10836
-  store i64 1095216660735, ptr %i.he, align 4, !dbg !10836, !noalias !10345
+  store i8 -1, ptr %i.he, align 4, !dbg !10836, !noalias !10345
+  %.sroa.023.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8, !dbg !10836
+  store i8 -1, ptr %.sroa.023.sroa.5.0..sroa_idx.i.i, align 4, !dbg !10836, !noalias !10345
   %.sroa.540.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 12, !dbg !10836
   store i8 0, ptr %.sroa.540.0..sroa_idx.i.i, align 4, !dbg !10836, !noalias !10345
   %i.hf = call noundef ptr @_RINvMs0_NtNtCs8Nb2mar7w9E_7inquire2ui14frame_rendererINtB6_13FrameRendererNtNtNtBa_8terminal9crossterm17CrosstermTerminalE12write_styledcECsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef nonnull align 8 dereferenceable(384) %i.q, ptr noalias nofree noundef nonnull readonly align 4 captures(address) dereferenceable(16) %i.h), !dbg !10837 ; 2 uses
@@ -1419,7 +1427,9 @@ bb.dd:                                            ; preds = %_RNvMNtNtCs8Nb2mar7
   %i.hg = getelementptr inbounds nuw i8, ptr %i.f, i64 8, !dbg !10855
   store i64 1, ptr %i.hg, align 8, !dbg !10855, !noalias !10854
   %i.hh = getelementptr inbounds nuw i8, ptr %i.f, i64 16, !dbg !10855
-  store i64 1095216660735, ptr %i.hh, align 8, !dbg !10855, !noalias !10854
+  store i8 -1, ptr %i.hh, align 8, !dbg !10855, !noalias !10854
+  %.sroa.07.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 20, !dbg !10855
+  store i8 -1, ptr %.sroa.07.sroa.5.0..sroa_idx.i.i, align 4, !dbg !10855, !noalias !10854
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 24, !dbg !10855
   store i8 0, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !dbg !10855, !noalias !10854
   %i.hi = call noundef ptr @_RINvMs0_NtNtCs8Nb2mar7w9E_7inquire2ui14frame_rendererINtB6_13FrameRendererNtNtNtBa_8terminal9crossterm17CrosstermTerminalE12write_styledReECsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef nonnull align 8 dereferenceable(384) %i.q, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(32) %i.f), !dbg !10856 ; 2 uses
@@ -1477,7 +1487,9 @@ bb.dh:                                            ; preds = %bb.dg
   %i.hq = getelementptr inbounds nuw i8, ptr %i.d, i64 8, !dbg !10895
   store i64 1, ptr %i.hq, align 8, !dbg !10895, !noalias !10896
   %i.hr = getelementptr inbounds nuw i8, ptr %i.d, i64 16, !dbg !10895
-  store i64 1095216660735, ptr %i.hr, align 8, !dbg !10895, !noalias !10896
+  store i8 -1, ptr %i.hr, align 8, !dbg !10895, !noalias !10896
+  %.sroa.013.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 20, !dbg !10895
+  store i8 -1, ptr %.sroa.013.sroa.4.0..sroa_idx.i, align 4, !dbg !10895, !noalias !10896
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 24, !dbg !10895
   store i8 0, ptr %.sroa.4.0..sroa_idx.i, align 8, !dbg !10895, !noalias !10896
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !10899, !noalias !10896
@@ -1548,7 +1560,9 @@ bb.dk:                                            ; preds = %_RNvMNtNtCs8Nb2mar7
   %i.hz = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !10945
   store i64 1, ptr %i.hz, align 8, !dbg !10945, !noalias !10933
   %i.ia = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !10945
-  store i64 1095216660735, ptr %i.ia, align 8, !dbg !10945, !noalias !10933
+  store i8 -1, ptr %i.ia, align 8, !dbg !10945, !noalias !10933
+  %.sroa.07.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 20, !dbg !10945
+  store i8 -1, ptr %.sroa.07.sroa.5.0..sroa_idx.i, align 4, !dbg !10945, !noalias !10933
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24, !dbg !10945
   store i8 0, ptr %.sroa.5.0..sroa_idx.i, align 8, !dbg !10945, !noalias !10933
   %i.ib = call noundef ptr @_RINvMs0_NtNtCs8Nb2mar7w9E_7inquire2ui14frame_rendererINtB6_13FrameRendererNtNtNtBa_8terminal9crossterm17CrosstermTerminalE12write_styledReECsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef nonnull align 8 dereferenceable(384) %i.ho, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(32) %i.a), !dbg !10946 ; 2 uses
@@ -1603,7 +1617,7 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef ptr @_RNvXs_NtNtCs8Nb2mar7w9E_7inquire2ui7backendINtB4_7BackendNtNtNtB8_8terminal9crossterm18CrosstermKeyReaderNtBV_17CrosstermTerminalENtB4_13CommonBackend19render_help_messageCsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef align 8 dereferenceable(888) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 !dbg !11029 {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 7 uses
+  %i.a = alloca [32 x i8], align 8                ; 8 uses
   %i.b = alloca [32 x i8], align 8                ; 4 uses
   %i.c = alloca [32 x i8], align 8                ; 4 uses
   %i.d = alloca [32 x i8], align 8                ; 4 uses
@@ -1671,7 +1685,9 @@ bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !11128
   store i64 1, ptr %i.q, align 8, !dbg !11128, !noalias !11116
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !11128
-  store i64 1095216660735, ptr %i.r, align 8, !dbg !11128, !noalias !11116
+  store i8 -1, ptr %i.r, align 8, !dbg !11128, !noalias !11116
+  %.sroa.07.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 20, !dbg !11128
+  store i8 -1, ptr %.sroa.07.sroa.5.0..sroa_idx.i, align 4, !dbg !11128, !noalias !11116
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24, !dbg !11128
   store i8 0, ptr %.sroa.5.0..sroa_idx.i, align 8, !dbg !11128, !noalias !11116
   %i.s = call noundef ptr @_RINvMs0_NtNtCs8Nb2mar7w9E_7inquire2ui14frame_rendererINtB6_13FrameRendererNtNtNtBa_8terminal9crossterm17CrosstermTerminalE12write_styledReECsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef nonnull align 8 dereferenceable(384) %i.f, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(32) %i.a), !dbg !11129 ; 2 uses
@@ -1703,10 +1719,10 @@ _RNvMNtNtCs8Nb2mar7w9E_7inquire2ui7backendINtB2_7BackendNtNtNtB6_8terminal9cross
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef ptr @_RNvXs_NtNtCs8Nb2mar7w9E_7inquire2ui7backendINtB4_7BackendNtNtNtB8_8terminal9crossterm18CrosstermKeyReaderNtBV_17CrosstermTerminalENtB4_13CommonBackend22render_canceled_promptCsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef align 8 dereferenceable(888) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 !dbg !11143 {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 7 uses
+  %i.a = alloca [32 x i8], align 8                ; 8 uses
   %i.b = alloca [32 x i8], align 8                ; 4 uses
   %i.c = alloca [32 x i8], align 8                ; 4 uses
-  %i.d = alloca [32 x i8], align 8                ; 10 uses
+  %i.d = alloca [32 x i8], align 8                ; 11 uses
   %i.e = alloca [32 x i8], align 8                ; 8 uses
   %i.f = alloca [32 x i8], align 8                ; 6 uses
   %i.g = alloca [32 x i8], align 8                ; 4 uses
@@ -1749,7 +1765,9 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 8, !dbg !11191
   store i64 1, ptr %i.k, align 8, !dbg !11191, !noalias !11192
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 16, !dbg !11191
-  store i64 1095216660735, ptr %i.l, align 8, !dbg !11191, !noalias !11192
+  store i8 -1, ptr %i.l, align 8, !dbg !11191, !noalias !11192
+  %.sroa.013.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 20, !dbg !11191
+  store i8 -1, ptr %.sroa.013.sroa.4.0..sroa_idx.i, align 4, !dbg !11191, !noalias !11192
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 24, !dbg !11191
   store i8 0, ptr %.sroa.4.0..sroa_idx.i, align 8, !dbg !11191, !noalias !11192
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !11195, !noalias !11192
@@ -1826,7 +1844,9 @@ bb.f:                                             ; preds = %bb.e
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !11255
   store i64 1, ptr %i.v, align 8, !dbg !11255, !noalias !11243
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !11255
-  store i64 1095216660735, ptr %i.w, align 8, !dbg !11255, !noalias !11243
+  store i8 -1, ptr %i.w, align 8, !dbg !11255, !noalias !11243
+  %.sroa.07.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 20, !dbg !11255
+  store i8 -1, ptr %.sroa.07.sroa.5.0..sroa_idx.i, align 4, !dbg !11255, !noalias !11243
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24, !dbg !11255
   store i8 0, ptr %.sroa.5.0..sroa_idx.i, align 8, !dbg !11255, !noalias !11243
   %i.x = call noundef ptr @_RINvMs0_NtNtCs8Nb2mar7w9E_7inquire2ui14frame_rendererINtB6_13FrameRendererNtNtNtBa_8terminal9crossterm17CrosstermTerminalE12write_styledReECsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef nonnull align 8 dereferenceable(384) %i.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(32) %i.a), !dbg !11256 ; 2 uses
@@ -1858,16 +1878,16 @@ _RNvMNtNtCs8Nb2mar7w9E_7inquire2ui7backendINtB2_7BackendNtNtNtB6_8terminal9cross
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef ptr @_RNvXs_NtNtCs8Nb2mar7w9E_7inquire2ui7backendINtB4_7BackendNtNtNtB8_8terminal9crossterm18CrosstermKeyReaderNtBV_17CrosstermTerminalENtB4_13CommonBackend25render_prompt_with_answerCsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef align 8 dereferenceable(888) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !11270 {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 7 uses
+  %i.a = alloca [32 x i8], align 8                ; 8 uses
   %i.b = alloca [32 x i8], align 8                ; 4 uses
-  %i.c = alloca [32 x i8], align 8                ; 7 uses
+  %i.c = alloca [32 x i8], align 8                ; 8 uses
   %i.d = alloca [32 x i8], align 8                ; 4 uses
   %i.e = alloca [4 x i8], align 4                 ; 4 uses
   %i.f = alloca [4 x i8], align 4                 ; 4 uses
-  %i.g = alloca [32 x i8], align 8                ; 7 uses
+  %i.g = alloca [32 x i8], align 8                ; 8 uses
   %i.h = alloca [32 x i8], align 8                ; 4 uses
   %i.i = alloca [32 x i8], align 8                ; 4 uses
-  %i.j = alloca [32 x i8], align 8                ; 10 uses
+  %i.j = alloca [32 x i8], align 8                ; 11 uses
   %i.k = alloca [32 x i8], align 8                ; 8 uses
   %i.l = alloca [32 x i8], align 8                ; 4 uses
     #dbg_declare(ptr poison, !11285, !DIExpression(DW_OP_LLVM_fragment, 0, 448), !11345)
@@ -1915,7 +1935,9 @@ bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %i.j, i64 8, !dbg !11413
   store i64 1, ptr %i.q, align 8, !dbg !11413, !noalias !11414
   %i.r = getelementptr inbounds nuw i8, ptr %i.j, i64 16, !dbg !11413
-  store i64 1095216660735, ptr %i.r, align 8, !dbg !11413, !noalias !11414
+  store i8 -1, ptr %i.r, align 8, !dbg !11413, !noalias !11414
+  %.sroa.013.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.j, i64 20, !dbg !11413
+  store i8 -1, ptr %.sroa.013.sroa.4.0..sroa_idx.i, align 4, !dbg !11413, !noalias !11414
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.j, i64 24, !dbg !11413
   store i8 0, ptr %.sroa.4.0..sroa_idx.i, align 8, !dbg !11413, !noalias !11414
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !dbg !11417, !noalias !11414
@@ -1978,6 +2000,7 @@ _RNvMNtNtCs8Nb2mar7w9E_7inquire2ui7backendINtB2_7BackendNtNtNtB6_8terminal9cross
     #dbg_value(i32 10, !11285, !DIExpression(DW_OP_LLVM_fragment, 448, 32), !11467)
   %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %.sroa.07.sroa.5.0..sroa_idx.i80 = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   %.sroa.5.0..sroa_idx.i87 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 792 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 776 ; 2 uses
@@ -2000,7 +2023,9 @@ bb.f:                                             ; preds = %bb.e
   %i.aj = getelementptr inbounds nuw i8, ptr %i.g, i64 8, !dbg !11481
   store i64 1, ptr %i.aj, align 8, !dbg !11481, !noalias !11469
   %i.ak = getelementptr inbounds nuw i8, ptr %i.g, i64 16, !dbg !11481
-  store i64 1095216660735, ptr %i.ak, align 8, !dbg !11481, !noalias !11469
+  store i8 -1, ptr %i.ak, align 8, !dbg !11481, !noalias !11469
+  %.sroa.07.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.g, i64 20, !dbg !11481
+  store i8 -1, ptr %.sroa.07.sroa.5.0..sroa_idx.i, align 4, !dbg !11481, !noalias !11469
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.g, i64 24, !dbg !11481
   store i8 0, ptr %.sroa.5.0..sroa_idx.i, align 8, !dbg !11481, !noalias !11469
   %i.al = call noundef ptr @_RINvMs0_NtNtCs8Nb2mar7w9E_7inquire2ui14frame_rendererINtB6_13FrameRendererNtNtNtBa_8terminal9crossterm17CrosstermTerminalE12write_styledReECsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef nonnull align 8 dereferenceable(384) %i.o, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(32) %i.g), !dbg !11482 ; 2 uses
@@ -2330,7 +2355,9 @@ bb.p:                                             ; preds = %_RNvXss_NtNtCskKLDk
   %i.bz = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !11954
   store i64 1, ptr %i.bz, align 8, !dbg !11954, !noalias !11942
   %i.ca = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !11954
-  store i64 1095216660735, ptr %i.ca, align 8, !dbg !11954, !noalias !11942
+  store i8 -1, ptr %i.ca, align 8, !dbg !11954, !noalias !11942
+  %.sroa.07.sroa.5.0..sroa_idx.i74 = getelementptr inbounds nuw i8, ptr %i.c, i64 20, !dbg !11954
+  store i8 -1, ptr %.sroa.07.sroa.5.0..sroa_idx.i74, align 4, !dbg !11954, !noalias !11942
   %.sroa.5.0..sroa_idx.i82 = getelementptr inbounds nuw i8, ptr %i.c, i64 24, !dbg !11954
   store i8 0, ptr %.sroa.5.0..sroa_idx.i82, align 8, !dbg !11954, !noalias !11942
   %i.cb = call noundef ptr @_RINvMs0_NtNtCs8Nb2mar7w9E_7inquire2ui14frame_rendererINtB6_13FrameRendererNtNtNtBa_8terminal9crossterm17CrosstermTerminalE12write_styledReECsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef nonnull align 8 dereferenceable(384) %i.o, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(32) %i.c), !dbg !11955 ; 2 uses
@@ -2377,7 +2404,8 @@ bb.s:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !11987, !noalias !11976
   store ptr @16, ptr %i.a, align 8, !dbg !11988, !noalias !11976
   store i64 1, ptr %i.ac, align 8, !dbg !11988, !noalias !11976
-  store i64 1095216660735, ptr %i.ad, align 8, !dbg !11988, !noalias !11976
+  store i8 -1, ptr %i.ad, align 8, !dbg !11988, !noalias !11976
+  store i8 -1, ptr %.sroa.07.sroa.5.0..sroa_idx.i80, align 4, !dbg !11988, !noalias !11976
   store i8 0, ptr %.sroa.5.0..sroa_idx.i87, align 8, !dbg !11988, !noalias !11976
   %i.cf = call noundef ptr @_RINvMs0_NtNtCs8Nb2mar7w9E_7inquire2ui14frame_rendererINtB6_13FrameRendererNtNtNtBa_8terminal9crossterm17CrosstermTerminalE12write_styledReECsjfnSKV9Rz3v_3h3i(ptr noalias nofree noundef nonnull align 8 dereferenceable(384) %i.o, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(32) %i.a), !dbg !11989 ; 2 uses
     #dbg_value(ptr %i.cf, !9392, !DIExpression(), !11990)

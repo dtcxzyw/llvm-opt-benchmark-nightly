@@ -202,7 +202,7 @@ _RNvMNtNtCshmPyUV8PP35_6chrono5naive4dateNtB2_9NaiveDate16num_days_from_ce.exit:
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.n = load i32, ptr %i.m, align 4, !noundef !3
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16, !noalias !471
-  %i.o = tail call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef 32, i64 noundef 8) #16, !noalias !471 ; 6 uses
+  %i.o = tail call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef 32, i64 noundef 8) #16, !noalias !471 ; 7 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %bb.c, label %_RNvNtCs6Po7BT7Nknu_5alloc5boxed14box_new_uninit.exit, !prof !106
 
@@ -234,7 +234,9 @@ _RNvNtCs6Po7BT7Nknu_5alloc5boxed14box_new_uninit.exit: ; preds = %_RNvMNtNtCshmP
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  store i64 0, ptr %.sroa.5.0..sroa_idx9, align 8
+  store i32 0, ptr %.sroa.5.0..sroa_idx9, align 8
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 20
+  store i8 0, ptr %.sroa.6.0..sroa_idx, align 4
   %.sroa.6.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.o, i64 24
   store i64 %i.ah, ptr %.sroa.6.0..sroa_idx.a, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
