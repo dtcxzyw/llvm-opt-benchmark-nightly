@@ -205,20 +205,20 @@ _ZZN8facebook5velox4exec7EvalCtx22applyToSelectedNoThrowIZNKS0_9functions12_GLOB
 define internal void @_GLOBAL__sub_I_FromUtf8.cpp() #36 section ".text.startup" personality ptr @__gxx_personality_v0 {
 bb.a:
   %.sroa.4.i = alloca [12 x i8], align 4          ; 7 uses
-  %.sroa.0.i = alloca i32, align 4                ; 6 uses
+  %0 = alloca [4 x i8], align 1                   ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
-  store i8 -17, ptr %.sroa.0.i, align 4, !tbaa !33
-  %.sroa.0.i.1.i.1.i.1..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 1
+  call void @llvm.lifetime.start.p0(ptr nonnull %0)
+  store i8 -17, ptr %0, align 1, !tbaa !33
+  %.sroa.0.i.1.i.1.i.1..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 -65, ptr %.sroa.0.i.1.i.1.i.1..sroa_idx, align 1, !tbaa !33
-  %.sroa.0.i.2.i.2.i.2..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 2
-  store i8 -67, ptr %.sroa.0.i.2.i.2.i.2..sroa_idx, align 2, !tbaa !33
+  %.sroa.0.i.2.i.2.i.2..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2
+  store i8 -67, ptr %.sroa.0.i.2.i.2.i.2..sroa_idx, align 1, !tbaa !33
   store i32 0, ptr %.sroa.4.i, align 4
   %.sroa.4.i.4.i.4.i.4..8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.4.i, i64 4
   store ptr null, ptr %.sroa.4.i.4.i.4.i.4..8..sroa_idx, align 4, !tbaa !33
   %i.a = tail call i64 asm sideeffect "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i64 3) #27, !srcloc !309
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.4.i, ptr nonnull align 4 %.sroa.0.i, i64 %i.a, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.4.i, ptr nonnull align 1 %0, i64 %i.a, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %0)
   %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.4..0..fca.0.load.i9.i = load i32, ptr %.sroa.4.i, align 4
   %.sroa.4.i.4.i.4.i.4..8..sroa_idx3 = getelementptr inbounds nuw i8, ptr %.sroa.4.i, i64 4
   %.sroa.4.i.4..sroa.4.i.4..sroa.4.i.4..sroa.4.4..sroa.4.8..8..fca.1.load.i.i = load ptr, ptr %.sroa.4.i.4.i.4.i.4..8..sroa_idx3, align 4

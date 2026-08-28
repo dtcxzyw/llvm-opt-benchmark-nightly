@@ -53,8 +53,8 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.24 = private unnamed_addr constant [17 x i8] c"invalid BLEND_CS\00", align 1
 @switch.table.dt_develop_blend_process = private unnamed_addr constant [4 x i8] c"\00\01\02\02", align 4
 @switch.table.dt_develop_blend_process.7 = private unnamed_addr constant [5 x ptr] [ptr @.str.19, ptr @.str.20, ptr @.str.21, ptr @.str.22, ptr @.str.23], align 8
-@switch.table.dt_develop_blend_legacy_params = private unnamed_addr constant [6 x float] [float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float f0xC0D49A78], align 4
-@switch.table.dt_develop_blend_legacy_params.8 = private unnamed_addr constant [6 x i8] c"\01\02\03\02\03\04", align 4
+@switch.table.dt_develop_blend_legacy_params = private unnamed_addr constant [6 x i8] c"\01\02\03\02\03\04", align 4
+@switch.table.dt_develop_blend_legacy_params.8 = private unnamed_addr constant [6 x float] [float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float f0xC0D49A78], align 4
 @switch.table._blend_legacy_blend_mode = private unnamed_addr constant [37 x i32] [i32 24, i32 25, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 -2147483623, i32 24, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 -2147483644], align 4
 
 ; Function Attrs: nounwind uwtable
@@ -457,17 +457,17 @@ bb.b:                                             ; preds = %bb.a
 
 switch.lookup:                                    ; preds = %bb.b
   %i.k = zext nneg i32 %i.i to i64
-  %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table.dt_develop_blend_legacy_params, i64 %i.k
-  %switch.load = load float, ptr %switch.gep, align 4
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.dt_develop_blend_legacy_params, i64 %i.k
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %switch.ext = zext i8 %switch.load to i32
   %6 = zext nneg i32 %i.i to i64
-  %switch.gep577 = getelementptr inbounds nuw i8, ptr @switch.table.dt_develop_blend_legacy_params.8, i64 %6
-  %switch.load578 = load i8, ptr %switch.gep577, align 1
-  %switch.ext = zext i8 %switch.load578 to i32
+  %switch.gep590 = getelementptr inbounds nuw [4 x i8], ptr @switch.table.dt_develop_blend_legacy_params.8, i64 %6
+  %switch.load591 = load float, ptr %switch.gep590, align 4
   br label %_blend_default_module_blend_colorspace.exit
 
 _blend_default_module_blend_colorspace.exit:      ; preds = %bb.b, %switch.lookup, %bb.a
-  %.sroa.18.0 = phi float [ 0.000000e+00, %bb.a ], [ %switch.load, %switch.lookup ], [ 0.000000e+00, %bb.b ] ; 44 uses
-  %.0.i = phi i32 [ 0, %bb.a ], [ %switch.ext, %switch.lookup ], [ 0, %bb.b ] ; 11 uses
+  %.0.i581 = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ %switch.ext, %switch.lookup ] ; 11 uses
+  %.sroa.18.0 = phi nsz float [ 0.000000e+00, %bb.b ], [ 0.000000e+00, %bb.a ], [ %switch.load591, %switch.lookup ] ; 44 uses
   %i.l = sext i32 %5 to i64
   %.not910.i = icmp eq i32 %5, 0
   br i1 %.not910.i, label %.loopexit, label %.lr.ph.i
@@ -487,7 +487,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 .loopexit:                                        ; preds = %bb.c, %_blend_default_module_blend_colorspace.exit
   store i32 0, ptr %3, align 4, !tbaa !82
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %.0.i, ptr %.sroa.14.0..sroa_idx, align 4, !tbaa !82
+  store i32 %.0.i581, ptr %.sroa.14.0..sroa_idx, align 4, !tbaa !82
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(348) %.sroa.15.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(348) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 8), i64 348, i1 false), !tbaa.struct !190
   %.sroa.15463.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 356
@@ -517,7 +517,7 @@ bb.d:                                             ; preds = %_develop_blend_para
 bb.e:                                             ; preds = %bb.d
   store i32 0, ptr %3, align 4, !tbaa !82
   %.sroa.14.0..sroa_idx432 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %.0.i, ptr %.sroa.14.0..sroa_idx432, align 4, !tbaa !82
+  store i32 %.0.i581, ptr %.sroa.14.0..sroa_idx432, align 4, !tbaa !82
   %.sroa.15.0..sroa_idx453 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(348) %.sroa.15.0..sroa_idx453, ptr noundef nonnull align 4 dereferenceable(348) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 8), i64 348, i1 false), !tbaa.struct !190
   %.sroa.15463.0..sroa_idx464 = getelementptr inbounds nuw i8, ptr %3, i64 356
@@ -582,7 +582,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   store i32 0, ptr %3, align 4, !tbaa !82
   %.sroa.14.0..sroa_idx434 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %.0.i, ptr %.sroa.14.0..sroa_idx434, align 4, !tbaa !82
+  store i32 %.0.i581, ptr %.sroa.14.0..sroa_idx434, align 4, !tbaa !82
   %.sroa.15.0..sroa_idx454 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(348) %.sroa.15.0..sroa_idx454, ptr noundef nonnull align 4 dereferenceable(348) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 8), i64 348, i1 false), !tbaa.struct !190
   %.sroa.15463.0..sroa_idx466 = getelementptr inbounds nuw i8, ptr %3, i64 356
@@ -649,7 +649,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   store i32 0, ptr %3, align 4, !tbaa !82
   %.sroa.14.0..sroa_idx436 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %.0.i, ptr %.sroa.14.0..sroa_idx436, align 4, !tbaa !82
+  store i32 %.0.i581, ptr %.sroa.14.0..sroa_idx436, align 4, !tbaa !82
   %.sroa.15.0..sroa_idx455 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(348) %.sroa.15.0..sroa_idx455, ptr noundef nonnull align 4 dereferenceable(348) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 8), i64 348, i1 false), !tbaa.struct !190
   %.sroa.15463.0..sroa_idx468 = getelementptr inbounds nuw i8, ptr %3, i64 356
@@ -726,7 +726,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   store i32 0, ptr %3, align 4, !tbaa !82
   %.sroa.14.0..sroa_idx438 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %.0.i, ptr %.sroa.14.0..sroa_idx438, align 4, !tbaa !82
+  store i32 %.0.i581, ptr %.sroa.14.0..sroa_idx438, align 4, !tbaa !82
   %.sroa.15.0..sroa_idx456 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(348) %.sroa.15.0..sroa_idx456, ptr noundef nonnull align 4 dereferenceable(348) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 8), i64 348, i1 false), !tbaa.struct !190
   %.sroa.15463.0..sroa_idx470 = getelementptr inbounds nuw i8, ptr %3, i64 356
@@ -785,7 +785,7 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   store i32 0, ptr %3, align 4, !tbaa !82
   %.sroa.14.0..sroa_idx440 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %.0.i, ptr %.sroa.14.0..sroa_idx440, align 4, !tbaa !82
+  store i32 %.0.i581, ptr %.sroa.14.0..sroa_idx440, align 4, !tbaa !82
   %.sroa.15.0..sroa_idx457 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(348) %.sroa.15.0..sroa_idx457, ptr noundef nonnull align 4 dereferenceable(348) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 8), i64 348, i1 false), !tbaa.struct !190
   %.sroa.15463.0..sroa_idx472 = getelementptr inbounds nuw i8, ptr %3, i64 356
@@ -869,7 +869,7 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   store i32 0, ptr %3, align 4, !tbaa !82
   %.sroa.14.0..sroa_idx442 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %.0.i, ptr %.sroa.14.0..sroa_idx442, align 4, !tbaa !82
+  store i32 %.0.i581, ptr %.sroa.14.0..sroa_idx442, align 4, !tbaa !82
   %.sroa.15.0..sroa_idx458 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(348) %.sroa.15.0..sroa_idx458, ptr noundef nonnull align 4 dereferenceable(348) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 8), i64 348, i1 false), !tbaa.struct !190
   %.sroa.15463.0..sroa_idx474 = getelementptr inbounds nuw i8, ptr %3, i64 356
@@ -949,7 +949,7 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab
   store i32 0, ptr %3, align 4, !tbaa !82
   %.sroa.14.0..sroa_idx444 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %.0.i, ptr %.sroa.14.0..sroa_idx444, align 4, !tbaa !82
+  store i32 %.0.i581, ptr %.sroa.14.0..sroa_idx444, align 4, !tbaa !82
   %.sroa.15.0..sroa_idx459 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(348) %.sroa.15.0..sroa_idx459, ptr noundef nonnull align 4 dereferenceable(348) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 8), i64 348, i1 false), !tbaa.struct !190
   %.sroa.15463.0..sroa_idx476 = getelementptr inbounds nuw i8, ptr %3, i64 356
@@ -1029,7 +1029,7 @@ bb.ah:                                            ; preds = %bb.ag
 bb.ai:                                            ; preds = %bb.ah
   store i32 0, ptr %3, align 4, !tbaa !82
   %.sroa.14.0..sroa_idx446 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %.0.i, ptr %.sroa.14.0..sroa_idx446, align 4, !tbaa !82
+  store i32 %.0.i581, ptr %.sroa.14.0..sroa_idx446, align 4, !tbaa !82
   %.sroa.15.0..sroa_idx460 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(348) %.sroa.15.0..sroa_idx460, ptr noundef nonnull align 4 dereferenceable(348) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 8), i64 348, i1 false), !tbaa.struct !190
   %.sroa.15463.0..sroa_idx478 = getelementptr inbounds nuw i8, ptr %3, i64 356
@@ -1121,7 +1121,7 @@ bb.an:                                            ; preds = %bb.am
 bb.ao:                                            ; preds = %bb.an
   store i32 0, ptr %3, align 4, !tbaa !82
   %.sroa.14.0..sroa_idx448 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %.0.i, ptr %.sroa.14.0..sroa_idx448, align 4, !tbaa !82
+  store i32 %.0.i581, ptr %.sroa.14.0..sroa_idx448, align 4, !tbaa !82
   %.sroa.15.0..sroa_idx461 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(348) %.sroa.15.0..sroa_idx461, ptr noundef nonnull align 4 dereferenceable(348) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 8), i64 348, i1 false), !tbaa.struct !190
   %.sroa.15463.0..sroa_idx480 = getelementptr inbounds nuw i8, ptr %3, i64 356
@@ -1248,7 +1248,7 @@ bb.aw:                                            ; preds = %bb.av
 bb.ax:                                            ; preds = %bb.aw
   store i32 0, ptr %3, align 4, !tbaa !82
   %.sroa.14.0..sroa_idx450 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 %.0.i, ptr %.sroa.14.0..sroa_idx450, align 4, !tbaa !82
+  store i32 %.0.i581, ptr %.sroa.14.0..sroa_idx450, align 4, !tbaa !82
   %.sroa.15.0..sroa_idx462 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(348) %.sroa.15.0..sroa_idx462, ptr noundef nonnull align 4 dereferenceable(348) getelementptr inbounds nuw (i8, ptr @_default_blendop_params, i64 8), i64 348, i1 false), !tbaa.struct !190
   %.sroa.15463.0..sroa_idx482 = getelementptr inbounds nuw i8, ptr %3, i64 356

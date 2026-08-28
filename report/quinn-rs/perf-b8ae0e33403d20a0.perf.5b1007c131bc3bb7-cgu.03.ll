@@ -204,9 +204,9 @@ bb.a:
   %i.c = alloca [17 x i8], align 8                ; 8 uses
   %i.d = alloca [24 x i8], align 8                ; 10 uses
   %i.e = alloca [24 x i8], align 8                ; 4 uses
-  %.sroa.5.i.i.i = alloca i64, align 8            ; 4 uses
-  %.sroa.712.i.i.i = alloca i64, align 8          ; 4 uses
-  %.sroa.8.i.i.i = alloca i64, align 8            ; 4 uses
+  %.sroa.5.i.i.i = alloca [8 x i8], align 8       ; 4 uses
+  %.sroa.712.i.i.i = alloca [8 x i8], align 8     ; 4 uses
+  %.sroa.8.i.i.i = alloca [8 x i8], align 8       ; 4 uses
     #dbg_value(ptr %1, !11061, !DIExpression(), !11062)
     #dbg_value(ptr %1, !11063, !DIExpression(), !11090)
     #dbg_declare(ptr poison, !11086, !DIExpression(), !11092)
