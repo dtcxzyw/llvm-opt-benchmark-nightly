@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quiche-rs/original/tokio_quiche-c91d6529b0ffc3f4.tokio_quiche.74e4f61a4e01e0f4-cgu.15?download=true
+inline.NumInlined: 508
+inline.NumDeleted: 154
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RINvNtCsazSMmbOrWdo_21intrusive_collections6rbtree6removeNtB2_13AtomicLinkOpsECsa2e0UnRrdBM_12tokio_quiche:bb.a
     #dbg_value(i64 %i.hd, !3250, !DIExpression(), !6547)
     #dbg_value(i64 %i.hd, !3256, !DIExpression(), !6549)
@@ -200,8 +204,6 @@ bb.a:
   %i.k = load ptr, ptr %3, align 8, !dbg !6909, !alias.scope !6784, !nonnull !12, !noundef !12
     #dbg_value(ptr %i.k, !6870, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6888)
     #dbg_value(i64 2, !6873, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6910)
-    #dbg_value(ptr undef, !6873, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !6910)
-    #dbg_value(i64 undef, !6873, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !6910)
     #dbg_value(i64 2, !6873, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !6910)
     #dbg_value(ptr undef, !6873, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !6910)
     #dbg_value(i64 undef, !6873, !DIExpression(DW_OP_LLVM_fragment, 320, 64), !6910)

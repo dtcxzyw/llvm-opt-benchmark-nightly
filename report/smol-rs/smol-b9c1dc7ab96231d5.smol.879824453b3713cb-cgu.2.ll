@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/smol-rs/original/smol-b9c1dc7ab96231d5.smol.879824453b3713cb-cgu.2?download=true
+inline.NumInlined: 170
+inline.NumDeleted: 96
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -53,7 +57,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.i, label %bb.e, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCs3iPtYnXk70z_14event_listener5StateuEECsbDLrNlwBX3H_4smol.exit
 
 bb.d:                                             ; preds = %bb.b
-  %i.j = sub i64 %1, %.sroa.01.116
+  %i.j = sub nuw i64 %1, %.sroa.01.116
   br label %.loopexit
 
 bb.e:                                             ; preds = %bb.c
@@ -194,7 +198,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.l, label %bb.f, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtCs3iPtYnXk70z_14event_listener5StateuEECsbDLrNlwBX3H_4smol.exit
 
 bb.e:                                             ; preds = %bb.c
-  %i.m = sub i64 %i.e, %.sroa.01.116
+  %i.m = sub nuw i64 %i.e, %.sroa.01.116
   br label %.loopexit
 
 bb.f:                                             ; preds = %bb.d

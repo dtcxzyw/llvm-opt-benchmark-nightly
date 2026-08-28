@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quinn-rs/original/perf-b8ae0e33403d20a0.perf.5b1007c131bc3bb7-cgu.10?download=true
+inline.NumInlined: 262
+inline.NumDeleted: 158
 begin_hunk_0_@_RINvMsb_CscbFFjjIlwRm_5rcgenNtB6_11KeyIdMethod6deriveRShECs7OITKvp9Irj_4perf:bb.a
   %.not = icmp eq i64 %i.k, 0, !dbg !9926
   br i1 %.not, label %bb.i, label %bb.l, !dbg !9926
@@ -200,8 +202,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.z, label %bb.h, label %bb.i, !dbg !10493
 
 bb.h:                                             ; preds = %bb.g
-    #dbg_value(i8 %i.o, !10352, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !10494)
     #dbg_value(i8 8, !10352, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !10494)
+    #dbg_value(i8 %i.o, !10352, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !10494)
     #dbg_value(i8 8, !10495, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !10510)
     #dbg_value(i8 %i.o, !10495, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !10510)
     #dbg_value(ptr poison, !10500, !DIExpression(), !10510)
@@ -428,8 +430,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.z, label %bb.h, label %bb.i, !dbg !10883
 
 bb.h:                                             ; preds = %bb.g
-    #dbg_value(i8 %i.o, !10821, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !10884)
     #dbg_value(i8 8, !10821, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !10884)
+    #dbg_value(i8 %i.o, !10821, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !10884)
     #dbg_value(i8 8, !10885, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !10898)
     #dbg_value(i8 %i.o, !10885, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !10898)
     #dbg_value(ptr poison, !10890, !DIExpression(), !10898)
@@ -832,7 +834,6 @@ _RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill
     #dbg_value(ptr null, !17161, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !17168)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !17170, !noalias !17131
     #dbg_value(i64 %i.aa, !17161, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !17168)
-    #dbg_value(ptr null, !17161, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !17168)
   br label %bb.f, !dbg !17171
 
 _RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQNtNtCsG258MDvU3F_3std2fs4FileECs7OITKvp9Irj_4perf.exit.thread28: ; preds = %bb.d
@@ -850,8 +851,8 @@ _RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill
     #dbg_value(i64 %i.y, !16087, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !17174)
     #dbg_value(i64 %i.y, !16088, !DIExpression(), !17178)
     #dbg_value(i64 %i.y, !16096, !DIExpression(), !17176)
-    #dbg_value(i64 %i.y, !17161, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !17168)
     #dbg_value(!DIArgList(ptr %.pre.i, i64 0), !17161, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !17168)
+    #dbg_value(i64 %i.y, !17161, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !17168)
   br label %bb.g, !dbg !17171
 
 _RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQNtNtCsG258MDvU3F_3std2fs4FileECs7OITKvp9Irj_4perf.exit: ; preds = %bb.c
@@ -869,8 +870,8 @@ _RINvMNtNtNtNtCsexYYUdYSQU6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill
   %i.ab = sub nuw i64 %i.e, %i.c, !dbg !17179     ; 2 uses
     #dbg_value(i64 %i.ab, !16088, !DIExpression(), !17178)
     #dbg_value(i64 %i.ab, !16096, !DIExpression(), !17176)
-    #dbg_value(i64 %i.ab, !17161, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !17168)
     #dbg_value(!DIArgList(ptr %.pre.i, i64 %i.c), !17161, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !17168)
+    #dbg_value(i64 %i.ab, !17161, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !17168)
   %i.ac = icmp eq ptr %.pre.i, null, !dbg !17180
   br i1 %i.ac, label %bb.f, label %bb.g, !dbg !17171
 

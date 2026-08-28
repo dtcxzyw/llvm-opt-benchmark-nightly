@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ropey-rs/original/ropey-993bb32e63343616.ropey.1d6c3238c2c56af2-cgu.7?download=true
+inline.NumInlined: 150
+inline.NumDeleted: 66
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_RNvMNtCs2wCc12Mnjqg_5ropey12rope_builderNtB2_11RopeBuilder15finish_internal:_RNvMsc_Cs2efQY0w7vw4_8smallvecINtB5_8SmallVecAINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEj4_E6tripleB1m_.exit
   %i.hi = load <16 x i8>, ptr %i.hh, align 16, !noalias !85
   %i.hj = icmp slt <16 x i8> %i.hi, splat (i8 -64)
@@ -200,7 +204,7 @@ _RNvMsc_Cs2efQY0w7vw4_8smallvecINtB5_8SmallVecAINtNtCsexYYUdYSQU6_5alloc4sync3Ar
   br i1 %i.ab, label %bb.a, label %bb.b, !prof !12
 
 .body42:                                          ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children12NodeChildrenEBH_.exit
-  br i1 %.sroa.019.4, label %.body42.thread124, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit87
+  br i1 %.sroa.014.2.a, label %.body42.thread124, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit87
 
 bb.a:                                             ; preds = %_RNvMsc_Cs2efQY0w7vw4_8smallvecINtB5_8SmallVecAINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEj4_E10triple_mutB1m_.exit
   invoke void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8) #19
@@ -487,15 +491,15 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNt
   ret void
 
 bb.ak:                                            ; preds = %bb.x, %bb.w, %bb.v, %bb.n
-  %.sroa.014.2.a = phi i1 [ false, %bb.v ], [ true, %bb.n ], [ false, %bb.x ], [ false, %bb.w ]
-  %.sroa.019.4 = phi i1 [ true, %bb.v ], [ true, %bb.n ], [ false, %bb.x ], [ true, %bb.w ] ; 2 uses
+  %.sroa.014.2.a = phi i1 [ true, %bb.v ], [ true, %bb.n ], [ false, %bb.x ], [ true, %bb.w ] ; 2 uses
+  %.sroa.019.4 = phi i1 [ false, %bb.v ], [ true, %bb.n ], [ false, %bb.x ], [ false, %bb.w ]
   %i.cp = landingpad { ptr, i32 }
           cleanup                                 ; 3 uses
   invoke void @_RNvXs_NtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children5innerNtB4_20NodeChildrenInternalNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(968) %i.t)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children12NodeChildrenEBH_.exit unwind label %bb.al
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children12NodeChildrenEBH_.exit: ; preds = %bb.ak
-  br i1 %.sroa.014.2.a, label %.body42.thread, label %.body42
+  br i1 %.sroa.019.4, label %.body42.thread, label %.body42
 
 bb.al:                                            ; preds = %bb.bq, %bb.bp, %bb.bo, %bb.bn, %bb.ak
   %i.cq = landingpad { ptr, i32 }
@@ -775,8 +779,8 @@ bb.bo:                                            ; preds = %.body36.thread109
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit87 unwind label %bb.al
 
 .body42.thread:                                   ; preds = %bb.q, %bb.r, %bb.l, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children12NodeChildrenEBH_.exit
-  %.pn.pn97 = phi { ptr, i32 } [ %i.cp, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children12NodeChildrenEBH_.exit ], [ %i.ay, %bb.l ], [ %i.bh, %bb.r ], [ %i.bh, %bb.q ] ; 2 uses
-  %.sroa.019.296 = phi i1 [ %.sroa.019.4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children12NodeChildrenEBH_.exit ], [ true, %bb.l ], [ false, %bb.r ], [ false, %bb.q ]
+  %.sroa.019.297 = phi i1 [ %.sroa.014.2.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children12NodeChildrenEBH_.exit ], [ true, %bb.l ], [ false, %bb.r ], [ false, %bb.q ]
+  %.pn.pn96 = phi { ptr, i32 } [ %i.cp, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children12NodeChildrenEBH_.exit ], [ %i.ay, %bb.l ], [ %i.bh, %bb.r ], [ %i.bh, %bb.q ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !194)
   call void @llvm.experimental.noalias.scope.decl(metadata !197)
   %i.eu = load ptr, ptr %i.u, align 8, !alias.scope !200, !nonnull !8, !noundef !8
@@ -790,14 +794,14 @@ bb.bp:                                            ; preds = %.body42.thread
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit85 unwind label %bb.al
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit85: ; preds = %bb.bp, %.body42.thread
-  br i1 %.sroa.019.296, label %.body42.thread124, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit87
+  br i1 %.sroa.019.297, label %.body42.thread124, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit87
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit87: ; preds = %bb.bk, %bb.ae, %bb.af, %bb.aa, %.body36.thread109, %bb.bo, %bb.ay, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children12NodeChildrenEBH_.exit81, %.body42.thread124, %bb.bq, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit85, %.body42
-  %.pn3490 = phi { ptr, i32 } [ %i.ep, %bb.bk ], [ %.pn.pn97, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit85 ], [ %i.cp, %.body42 ], [ %.pn3491, %bb.bq ], [ %.pn3491, %.body42.thread124 ], [ %.pn106, %.body36.thread109 ], [ %lpad.thr_comm115, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children12NodeChildrenEBH_.exit81 ], [ %i.cd, %bb.ae ], [ %i.ea, %bb.ay ], [ %i.cd, %bb.af ], [ %.pn106, %bb.bo ], [ %i.bx, %bb.aa ]
+  %.pn3490 = phi { ptr, i32 } [ %i.ep, %bb.bk ], [ %.pn.pn96, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit85 ], [ %i.cp, %.body42 ], [ %.pn3491, %bb.bq ], [ %.pn3491, %.body42.thread124 ], [ %.pn106, %.body36.thread109 ], [ %lpad.thr_comm115, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children12NodeChildrenEBH_.exit81 ], [ %i.cd, %bb.ae ], [ %i.ea, %bb.ay ], [ %i.cd, %bb.af ], [ %.pn106, %bb.bo ], [ %i.bx, %bb.aa ]
   resume { ptr, i32 } %.pn3490
 
 .body42.thread124:                                ; preds = %bb.g, %bb.f, %.split.thread, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit85, %.body42
-  %.pn3491 = phi { ptr, i32 } [ %i.ac, %.split.thread ], [ %i.cp, %.body42 ], [ %.pn.pn97, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit85 ], [ %i.ap, %bb.f ], [ %i.ap, %bb.g ] ; 2 uses
+  %.pn3491 = phi { ptr, i32 } [ %i.ac, %.split.thread ], [ %i.cp, %.body42 ], [ %.pn.pn96, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit85 ], [ %i.ap, %bb.f ], [ %i.ap, %bb.g ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !201)
   call void @llvm.experimental.noalias.scope.decl(metadata !204)
   %i.ex = load ptr, ptr %i.v, align 8, !alias.scope !207, !nonnull !8, !noundef !8
@@ -987,7 +991,7 @@ bb.g:                                             ; preds = %bb.f
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.u = load ptr, ptr %i.t, align 8, !nonnull !8, !noundef !8
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.s
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1008) %i.v, ptr noundef nonnull align 1 dereferenceable(1008) %i.o, i64 1008, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1008) %i.v, ptr noundef nonnull align 8 dereferenceable(1008) %i.o, i64 1008, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.g, ptr %i.a, align 8
   %i.w = invoke noundef nonnull ptr @_RNvMs1m_NtCsexYYUdYSQU6_5alloc4syncINtB6_15UniqueArcUninitNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeNtNtB8_5alloc6GlobalE8into_arcB10_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.b)

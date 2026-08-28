@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quiche-rs/original/h3i-bf848a31a08909a0.h3i.e031f187eee866af-cgu.13?download=true
+inline.NumInlined: 469
+inline.NumDeleted: 165
 begin_hunk_0_@_RNvMs5_NtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map5entryINtB5_13OccupiedEntryyNtNtCs3f36owOmepS_6quiche9range_buf8RangeBufE9remove_kvCsjfnSKV9Rz3v_3h3i:bb.a
     #dbg_value(i64 1, !6124, !DIExpression(), !12844)
     #dbg_value(i8 1, !6130, !DIExpression(), !12844)
@@ -200,8 +202,8 @@ bb.m:                                             ; preds = %bb.g
   br i1 %or.cond.i.i, label %_RINvCs5kGgRUzsVpH_8smallvec10deallocateNtNtCs3f36owOmepS_6quiche5frame5FrameECsjfnSKV9Rz3v_3h3i.exit.i, label %bb.n, !dbg !13257, !prof !13108
 
 bb.n:                                             ; preds = %bb.m
-    #dbg_value(i64 undef, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13268)
     #dbg_value(i64 0, !13258, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13268)
+    #dbg_value(i64 undef, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13268)
     #dbg_value(i64 1, !13258, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13268)
     #dbg_declare(ptr %i.a, !13266, !DIExpression(), !13270)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !13271, !noalias !13272
@@ -212,8 +214,8 @@ bb.n:                                             ; preds = %bb.m
 _RINvCs5kGgRUzsVpH_8smallvec10deallocateNtNtCs3f36owOmepS_6quiche5frame5FrameECsjfnSKV9Rz3v_3h3i.exit.i: ; preds = %bb.m
   %i.x = shl nuw nsw i64 %.sink.i.i, 7, !dbg !13276
     #dbg_value(i64 %i.x, !13083, !DIExpression(), !13254)
-    #dbg_value(i64 %i.x, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13268)
     #dbg_value(i64 8, !13258, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13268)
+    #dbg_value(i64 %i.x, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13268)
     #dbg_value(i64 0, !13258, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13268)
     #dbg_declare(ptr %i.a, !13266, !DIExpression(), !13270)
     #dbg_value(i64 8, !13244, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13277)
@@ -462,8 +464,8 @@ bb.k:                                             ; preds = %bb.e
   br i1 %or.cond.i, label %_RINvCs5kGgRUzsVpH_8smallvec10deallocateNtNtNtCskKLDkoKarTP_4core3net11socket_addr10SocketAddrECsjfnSKV9Rz3v_3h3i.exit, label %bb.l, !dbg !13638, !prof !13108
 
 bb.l:                                             ; preds = %bb.k
-    #dbg_value(i64 undef, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13639)
     #dbg_value(i64 0, !13258, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13639)
+    #dbg_value(i64 undef, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13639)
     #dbg_value(i64 1, !13258, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13639)
     #dbg_declare(ptr %i.a, !13266, !DIExpression(), !13641)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !13642, !noalias !13643
@@ -474,8 +476,8 @@ bb.l:                                             ; preds = %bb.k
 _RINvCs5kGgRUzsVpH_8smallvec10deallocateNtNtNtCskKLDkoKarTP_4core3net11socket_addr10SocketAddrECsjfnSKV9Rz3v_3h3i.exit: ; preds = %bb.k
   %i.s = shl nuw nsw i64 %.sink.i, 5, !dbg !13647
     #dbg_value(i64 %i.s, !13502, !DIExpression(), !13635)
-    #dbg_value(i64 %i.s, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13639)
     #dbg_value(i64 4, !13258, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13639)
+    #dbg_value(i64 %i.s, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !13639)
     #dbg_value(i64 0, !13258, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13639)
     #dbg_declare(ptr %i.a, !13266, !DIExpression(), !13641)
     #dbg_value(i64 4, !13625, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13648)
@@ -739,8 +741,8 @@ bb.k:                                             ; preds = %bb.e
   br i1 %or.cond.i, label %_RINvCs5kGgRUzsVpH_8smallvec10deallocateTyyEECsjfnSKV9Rz3v_3h3i.exit, label %bb.l, !dbg !14079, !prof !13108
 
 bb.l:                                             ; preds = %bb.k
-    #dbg_value(i64 undef, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14080)
     #dbg_value(i64 0, !13258, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14080)
+    #dbg_value(i64 undef, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14080)
     #dbg_value(i64 1, !13258, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14080)
     #dbg_declare(ptr %i.a, !13266, !DIExpression(), !14082)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !14083, !noalias !14084
@@ -751,8 +753,8 @@ bb.l:                                             ; preds = %bb.k
 _RINvCs5kGgRUzsVpH_8smallvec10deallocateTyyEECsjfnSKV9Rz3v_3h3i.exit: ; preds = %bb.k
   %i.s = shl nuw nsw i64 %.sink.i, 4, !dbg !14088
     #dbg_value(i64 %i.s, !13942, !DIExpression(), !14076)
-    #dbg_value(i64 %i.s, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14080)
     #dbg_value(i64 8, !13258, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14080)
+    #dbg_value(i64 %i.s, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14080)
     #dbg_value(i64 0, !13258, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14080)
     #dbg_declare(ptr %i.a, !13266, !DIExpression(), !14082)
     #dbg_value(i64 8, !14066, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14089)
@@ -985,8 +987,8 @@ bb.k:                                             ; preds = %bb.e
   br i1 %or.cond.i, label %_RINvCs5kGgRUzsVpH_8smallvec10deallocateyECsjfnSKV9Rz3v_3h3i.exit, label %bb.l, !dbg !14439, !prof !13108
 
 bb.l:                                             ; preds = %bb.k
-    #dbg_value(i64 undef, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14440)
     #dbg_value(i64 0, !13258, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14440)
+    #dbg_value(i64 undef, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14440)
     #dbg_value(i64 1, !13258, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14440)
     #dbg_declare(ptr %i.a, !13266, !DIExpression(), !14442)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !14443, !noalias !14444
@@ -997,8 +999,8 @@ bb.l:                                             ; preds = %bb.k
 _RINvCs5kGgRUzsVpH_8smallvec10deallocateyECsjfnSKV9Rz3v_3h3i.exit: ; preds = %bb.k
   %i.s = shl nuw nsw i64 %.sink.i, 3, !dbg !14448
     #dbg_value(i64 %i.s, !14303, !DIExpression(), !14436)
-    #dbg_value(i64 %i.s, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14440)
     #dbg_value(i64 8, !13258, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14440)
+    #dbg_value(i64 %i.s, !13258, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !14440)
     #dbg_value(i64 0, !13258, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14440)
     #dbg_declare(ptr %i.a, !13266, !DIExpression(), !14442)
     #dbg_value(i64 8, !14426, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14449)

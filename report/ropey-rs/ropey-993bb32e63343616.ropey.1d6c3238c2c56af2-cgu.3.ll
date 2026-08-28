@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ropey-rs/original/ropey-993bb32e63343616.ropey.1d6c3238c2c56af2-cgu.3?download=true
+inline.NumInlined: 125
+inline.NumDeleted: 57
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -174,7 +178,7 @@ bb.a:
   %i.d = zext i8 %i.c to i64
   %i.e = add nuw nsw i64 %i.d, 1                  ; 2 uses
   %i.f = lshr i64 %i.e, 1
-  %i.g = sub nsw i64 %i.e, %i.f
+  %i.g = sub nuw nsw i64 %i.e, %i.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   invoke void @_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren9split_off(ptr noalias nofree noundef nonnull sret([968 x i8]) align 8 captures(none) dereferenceable(968) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(968) %1, i64 noundef %i.g)
           to label %bb.b unwind label %bb.m
@@ -577,7 +581,7 @@ bb.e:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %1 ; 2 uses
   %i.n = add nuw nsw i64 %1, 1                    ; 2 uses
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.n
-  %i.p = sub nsw i64 %i.c, %1
+  %i.p = sub nuw nsw i64 %i.c, %1
   %i.q = shl nuw nsw i64 %i.p, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.o, ptr nonnull align 8 %i.m, i64 %i.q, i1 false), !alias.scope !308, !noalias !311
   %i.r = invoke { i64, i64 } @_RINvNtNtCskKLDkoKarTP_4core5slice5index5rangeINtNtNtB6_3ops5range5RangejEECs2wCc12Mnjqg_5ropey(i64 noundef range(i64 0, 256) %1, i64 noundef range(i64 0, 256) %i.c, i64 noundef 24, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @38)
@@ -980,7 +984,7 @@ bb.j:                                             ; preds = %_RNCNvMs1m_NtCsexYY
   store i64 1, ptr %i.r, align 8, !noalias !385
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1008) %i.t, ptr noundef nonnull align 1 dereferenceable(1008) %i.s, i64 1008, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1008) %i.t, ptr noundef nonnull align 8 dereferenceable(1008) %i.s, i64 1008, i1 false)
   store ptr %.sroa.0.0.i.i.i.i.i, ptr %0, align 8
   %i.u = icmp eq ptr %i.a, inttoptr (i64 -1 to ptr)
   br i1 %i.u, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync4WeakNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1g_.exit9, label %bb.k

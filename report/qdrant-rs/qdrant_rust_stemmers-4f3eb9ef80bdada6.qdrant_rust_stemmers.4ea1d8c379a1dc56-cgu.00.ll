@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/qdrant_rust_stemmers-4f3eb9ef80bdada6.qdrant_rust_stemmers.4ea1d8c379a1dc56-cgu.00?download=true
+inline.NumInlined: 48
+inline.NumDeleted: 12
 begin_hunk_0_@_RNvMNtNtCs6KyyKVsJz8w_20qdrant_rust_stemmers8snowball12snowball_envNtB2_11SnowballEnv6insert:bb.a
 bb.a:
   %i.a = tail call fastcc noundef i32 @_RNvMNtNtCs6KyyKVsJz8w_20qdrant_rust_stemmers8snowball12snowball_envNtB2_11SnowballEnv9replace_s(ptr noalias nofree noundef align 8 dereferenceable(64) %0, i64 noundef %1, i64 noundef %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4) ; 2 uses
@@ -200,8 +202,8 @@ bb.h:                                             ; preds = %bb.g
   br label %_RNvMNtCskKLDkoKarTP_4core3stre16split_at_checked.exit28
 
 _RNvMNtCskKLDkoKarTP_4core3stre16split_at_checked.exit28: ; preds = %bb.f, %.split.i21
-  %.sroa.6.0 = phi ptr [ %.sroa.01.0, %bb.f ], [ %i.z, %.split.i21 ]
   %.sroa.841.0 = phi i64 [ %.sroa.3.0, %bb.f ], [ %i.aa, %.split.i21 ] ; 4 uses
+  %.sroa.6.0 = phi ptr [ %.sroa.01.0, %bb.f ], [ %i.z, %.split.i21 ]
   invoke void @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VechE7reserveCs6KyyKVsJz8w_20qdrant_rust_stemmers(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef %1)
           to label %.noexc unwind label %bb.w
 

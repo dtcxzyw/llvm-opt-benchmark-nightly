@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/html5ever-rs/original/markup5ever_rcdom-94565011a5cef294.markup5ever_rcdom.fea42dc744c38c8-cgu.0?download=true
+inline.NumInlined: 238
+inline.NumDeleted: 156
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RNvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE9pop_frontB1l_:bb.a
   %i.j = icmp ult i64 %i.i, %i.g
   tail call void @llvm.assume(i1 %i.j)
@@ -200,8 +204,8 @@ _RINvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2
   %i.f = sub i64 %.val, %.sroa.04.0.i             ; 3 uses
   %.not11.i = icmp ult i64 %i.f, %i.b
   %i.g = add i64 %.sroa.04.0.i, %i.b
-  %.sroa.11.0 = tail call i64 @llvm.usub.sat.i64(i64 %i.b, i64 %i.f) ; 4 uses
   %.sroa.58.0 = select i1 %.not11.i, i64 %.val, i64 %i.g ; 2 uses
+  %.sroa.11.0 = tail call i64 @llvm.usub.sat.i64(i64 %i.b, i64 %i.f) ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.i = load ptr, ptr %i.h, align 8, !nonnull !4, !noundef !4 ; 4 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.sroa.04.0.i ; 2 uses

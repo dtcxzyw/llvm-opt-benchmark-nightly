@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/collection-65f4deb478ee6f80.collection.9c3f6a4bd60d140-cgu.029?download=true
+inline.NumInlined: 1389
+inline.NumDeleted: 677
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_RNvXst_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxNCNCNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11local_shard8snapshotNtBS_10LocalShard20get_snapshot_creator000EINtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceuE9call_onceBW_:bb.a
   store i64 %.sroa.0205.0.copyload206.i, ptr %i.ad, align 8, !noalias !2757
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
@@ -200,7 +204,7 @@ bb.aq:                                            ; preds = %bb.t
   %.sroa.66.sroa.8.0.copyload.i = load i64, ptr %.sroa.66.sroa.8.0..sroa.66.0..sroa_idx.sroa_idx.i, align 8, !noalias !2757
   %.sroa.88.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.p, i64 32
   %.sroa.547.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.547.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.88.0..sroa_idx.i, i64 16, i1 false), !noalias !2755
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.547.0..sroa_idx.i, ptr noundef nonnull align 16 dereferenceable(16) %.sroa.88.0..sroa_idx.i, i64 16, i1 false), !noalias !2755
   %i.ck = load <2 x i64>, ptr %i.p, align 16, !noalias !2757
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !noalias !2757
   store <2 x i64> %i.ck, ptr %0, align 8, !alias.scope !2752, !noalias !2755

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/html5ever-rs/original/xml5ever-7ad231a96e8c14d3.xml5ever.dd9596b111d44890-cgu.2?download=true
+inline.NumInlined: 83
+inline.NumDeleted: 56
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -179,12 +183,12 @@ bb.o:                                             ; preds = %.noexc.i
   store i16 %i.bf, ptr %i.n, align 2, !noalias !31
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !31
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !31
-  %spec.select.i = select i1 %.sroa.09.0.i, ptr %i.ai, ptr %i.m ; 6 uses
-  %spec.select31.i = select i1 %.sroa.09.0.i, i64 0, i64 %i.ah ; 2 uses
-  %i.bg = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 186 ; 2 uses
+  %spec.select.i = select i1 %.sroa.09.0.i, i64 0, i64 %i.ah ; 2 uses
+  %spec.select31.i = select i1 %.sroa.09.0.i, ptr %i.ai, ptr %i.m ; 6 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %spec.select31.i, i64 186 ; 2 uses
   %i.bh = load i16, ptr %i.bg, align 2, !noalias !41, !noundef !10 ; 2 uses
   %i.bi = zext i16 %i.bh to i64                   ; 2 uses
-  %i.bj = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 8 ; 3 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %spec.select31.i, i64 8 ; 3 uses
   %.not.i16.not.i = icmp ult i64 %.sroa.510.0.i, %i.bi
   br i1 %.not.i16.not.i, label %bb.p, label %bb.t
 
@@ -195,7 +199,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bn = sub nuw nsw i64 %i.bi, %.sroa.510.0.i
   %i.bo = shl nuw nsw i64 %i.bn, 3                ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bm, ptr nonnull align 8 %i.bl, i64 %i.bo, i1 false), !alias.scope !45, !noalias !41
-  %i.bp = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 96 ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %spec.select31.i, i64 96 ; 2 uses
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %.sroa.510.0.i
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %i.bk
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.br, ptr nonnull align 8 %i.bq, i64 %i.bo, i1 false), !alias.scope !48, !noalias !41
@@ -219,7 +223,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.p, %bb.o
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.bj, i64 %.sroa.510.0.i
   store i64 %2, ptr %i.bt, align 8, !alias.scope !45, !noalias !41
-  %i.bu = getelementptr inbounds nuw i8, ptr %spec.select.i, i64 96
+  %i.bu = getelementptr inbounds nuw i8, ptr %spec.select31.i, i64 96
   %i.bv = add i16 %i.bh, 1
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %i.bu, i64 %.sroa.510.0.i
   store i64 %3, ptr %i.bw, align 8, !alias.scope !48, !noalias !41
@@ -442,7 +446,7 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.ap
   %i.dv = getelementptr inbounds nuw [8 x i8], ptr %i.dq, i64 %i.dr
-  %i.dw = sub nsw i64 %i.do, %i.dj
+  %i.dw = sub nuw nsw i64 %i.do, %i.dj
   %i.dx = shl nuw nsw i64 %i.dw, 3                ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.dv, ptr nonnull align 8 %i.ds, i64 %i.dx, i1 false), !alias.scope !73, !noalias !76
   %i.dy = getelementptr inbounds nuw i8, ptr %i.da, i64 96 ; 2 uses
@@ -458,7 +462,7 @@ bb.ar:                                            ; preds = %bb.ap
   %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.ee, i64 %i.dr
   %i.eg = getelementptr inbounds nuw [8 x i8], ptr %i.ee, i64 %i.dj
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 16
-  %i.ei = sub nsw i64 %i.do, %i.dj
+  %i.ei = sub nuw nsw i64 %i.do, %i.dj
   %i.ej = shl nuw nsw i64 %i.ei, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.eh, ptr nonnull align 8 %i.ef, i64 %i.ej, i1 false), !alias.scope !82, !noalias !76
   br label %bb.as
@@ -861,8 +865,8 @@ bb.bs:                                            ; preds = %bb.br
   br label %bb.bt
 
 bb.bt:                                            ; preds = %.loopexit, %bb.u, %bb.bu
-  %spec.select.i.sink.a = phi ptr [ %spec.select.i, %.loopexit ], [ %i.m, %bb.u ], [ %spec.select.i, %bb.bu ]
-  %spec.select31.i.sink = phi i64 [ %spec.select31.i, %.loopexit ], [ %i.cf, %bb.u ], [ %spec.select31.i, %bb.bu ]
+  %spec.select.i.sink.a = phi ptr [ %spec.select31.i, %.loopexit ], [ %i.m, %bb.u ], [ %spec.select31.i, %bb.bu ]
+  %spec.select31.i.sink = phi i64 [ %spec.select.i, %.loopexit ], [ %i.cf, %bb.u ], [ %spec.select.i, %bb.bu ]
   %.sroa.510.0.i.sink = phi i64 [ %.sroa.510.0.i, %.loopexit ], [ %i.w, %bb.u ], [ %.sroa.510.0.i, %bb.bu ]
   store ptr %spec.select.i.sink.a, ptr %0, align 8
   %i.ko = getelementptr inbounds nuw i8, ptr %0, i64 8

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/salsa-rs/original/salsa-18876957f0a83274.salsa.72a3b6749c32557-cgu.05?download=true
+inline.NumInlined: 234
+inline.NumDeleted: 131
 begin_hunk_0_@_RNvMNtNtCsC8CapfvpQ1_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on:bb.a
 
 .split.i:                                         ; preds = %bb.a, %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapNtNtNtCs2AWtUsOyxgP_3std6thread2id8ThreadIdNtNtNtNtCsC8CapfvpQ1_5salsa7runtime16dependency_graph4edge4EdgeNtCs3CTDFEpwZhE_10rustc_hash13FxBuildHasherE3getBO_EB1D_.exit.i
@@ -200,8 +202,8 @@ bb.o:                                             ; preds = %bb.n
           to label %bb.p unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.p:                                             ; preds = %bb.o
-  store i64 %.sroa.05.0, ptr %i.aj, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.av, ptr noundef nonnull align 4 dereferenceable(12) %3, i64 12, i1 false)
+  store i64 %.sroa.05.0, ptr %i.aj, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.k, ptr noundef nonnull align 4 dereferenceable(12) %3, i64 12, i1 false)
@@ -233,14 +235,14 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.aj
 
 bb.r:                                             ; preds = %.lr.ph, %bb.u
-  %.sroa.8.1174 = phi ptr [ %.sroa.557.0.copyload, %.lr.ph ], [ %.sroa.565.0.copyload, %bb.u ] ; 2 uses
-  %.sroa.534.1173 = phi ptr [ %.sroa.456.0.copyload, %.lr.ph ], [ %.sroa.464.0.copyload, %bb.u ] ; 5 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.1174) ]
+  %.sroa.8.1174 = phi ptr [ %.sroa.456.0.copyload, %.lr.ph ], [ %.sroa.464.0.copyload, %bb.u ] ; 5 uses
+  %.sroa.534.1173 = phi ptr [ %.sroa.557.0.copyload, %.lr.ph ], [ %.sroa.565.0.copyload, %bb.u ] ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.534.1173) ]
-  %i.bf = getelementptr inbounds i8, ptr %.sroa.534.1173, i64 -40
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.1174) ]
+  %i.bf = getelementptr inbounds i8, ptr %.sroa.8.1174, i64 -40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.j, ptr noundef nonnull align 8 dereferenceable(12) %i.bf, i64 12, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)
-  %i.bg = getelementptr inbounds i8, ptr %.sroa.534.1173, i64 -16 ; 2 uses
+  %i.bg = getelementptr inbounds i8, ptr %.sroa.8.1174, i64 -16 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.t, ptr noundef nonnull align 8 dereferenceable(12) %i.bg, i64 12, i1 false)
   %i.bh = load <2 x i32>, ptr %i.t, align 8
   %i.bi = icmp eq <2 x i32> %i.bh, %i.bb          ; 2 uses
@@ -258,7 +260,7 @@ bb.s:                                             ; preds = %bb.r
           to label %bb.u unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 bb.t:                                             ; preds = %bb.r
-  %i.bn = getelementptr inbounds i8, ptr %.sroa.534.1173, i64 -24
+  %i.bn = getelementptr inbounds i8, ptr %.sroa.8.1174, i64 -24
   %i.bo = invoke noundef align 8 ptr @_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexINtNtNtBS_7runtime16dependency_graph8SmallSetBO_Kj4_ENtCs3CTDFEpwZhE_10rustc_hash13FxBuildHasherE7get_mutBO_EBS_(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.aw, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %1)
           to label %bb.v unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
@@ -305,7 +307,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 
 bb.aa:                                            ; preds = %bb.y
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
-  invoke void @_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexTNtNtNtCs2AWtUsOyxgP_3std6thread2id8ThreadIdBP_EEE6removeBT_(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.p, ptr noalias noundef nonnull align 8 dereferenceable(32) %.sroa.8.1174, ptr noundef nonnull %.sroa.534.1173)
+  invoke void @_RNvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexTNtNtNtCs2AWtUsOyxgP_3std6thread2id8ThreadIdBP_EEE6removeBT_(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.p, ptr noalias noundef nonnull align 8 dereferenceable(32) %.sroa.534.1173, ptr noundef nonnull %.sroa.8.1174)
           to label %bb.ai unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.ab:                                            ; preds = %bb.z

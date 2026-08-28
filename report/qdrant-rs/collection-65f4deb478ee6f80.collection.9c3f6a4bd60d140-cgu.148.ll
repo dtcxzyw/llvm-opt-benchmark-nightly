@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/collection-65f4deb478ee6f80.collection.9c3f6a4bd60d140-cgu.148?download=true
+inline.NumInlined: 36
+inline.NumDeleted: 26
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -24,14 +26,14 @@ bb.a:
   %.sroa.01.019.i = phi i64 [ %i.g, %.lr.ph.i ], [ %1, %.preheader.i ] ; 2 uses
   %.sroa.05.018.i = phi i64 [ %i.f, %.lr.ph.i ], [ 0, %.preheader.i ] ; 2 uses
   %i.b = lshr i64 %.sroa.01.019.i, 1              ; 2 uses
-  %i.c = add nuw i64 %i.b, %.sroa.05.018.i        ; 3 uses
+  %i.c = add nuw nsw i64 %i.b, %.sroa.05.018.i    ; 3 uses
   %i.d = icmp ult i64 %i.c, %1
   tail call void @llvm.assume(i1 %i.d)
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.c
   %.val12.i = load i64, ptr %i.e, align 8, !alias.scope !9, !noalias !12, !noundef !14
   %.not.i16.i = icmp ugt i64 %.val12.i, %.pre.i
   %i.f = select i1 %.not.i16.i, i64 %.sroa.05.018.i, i64 %i.c, !unpredictable !14 ; 2 uses
-  %i.g = sub i64 %.sroa.01.019.i, %i.b            ; 2 uses
+  %i.g = sub nuw nsw i64 %.sroa.01.019.i, %i.b    ; 2 uses
   %i.h = icmp ugt i64 %i.g, 1
   br i1 %i.h, label %.lr.ph.i, label %._crit_edge.i
 

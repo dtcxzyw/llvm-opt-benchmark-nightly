@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/html5ever-rs/original/markup5ever_rcdom-94565011a5cef294.markup5ever_rcdom.fea42dc744c38c8-cgu.2?download=true
+inline.NumInlined: 152
+inline.NumDeleted: 92
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 @6 = private unnamed_addr constant [101 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/string_cache-0.11.0/src/atom.rs\00", align 1
 @7 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @6, [16 x i8] c"d\00\00\00\00\00\00\00\CF\00\00\00\1B\00\00\00" }>, align 8
@@ -200,11 +204,11 @@ bb.l:                                             ; preds = %bb.e
 _RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit: ; preds = %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i
   %i.aq = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.ag ; 9 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.aq, i8 -1, i64 %i.ah, i1 false), !noalias !43
-  %4 = add nsw i64 %.sroa.4.0.i.ph.i, -1          ; 6 uses
-  %5 = icmp samesign ult i64 %.sroa.4.0.i.ph.i, 9
+  %4 = icmp samesign ult i64 %.sroa.4.0.i.ph.i, 9
+  %5 = add nsw i64 %.sroa.4.0.i.ph.i, -1          ; 6 uses
   %i.ar = lshr i64 %.sroa.4.0.i.ph.i, 3
   %i.as = mul nuw nsw i64 %i.ar, 7
-  %.sroa.07.0.i.i = select i1 %5, i64 %4, i64 %i.as ; 2 uses
+  %.sroa.07.0.i.i = select i1 %4, i64 %5, i64 %i.as ; 2 uses
   store ptr %i.c, ptr %i.b, align 8, !noalias !35
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   store i64 24, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !35
@@ -213,7 +217,7 @@ _RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capac
   %.sroa.619.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 3 uses
   store ptr %i.aq, ptr %.sroa.619.0..sroa_idx.i.i, align 8, !noalias !35
   %.sroa.619.sroa.4.0..sroa.619.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
-  store i64 %4, ptr %.sroa.619.sroa.4.0..sroa.619.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !35
+  store i64 %5, ptr %.sroa.619.sroa.4.0..sroa.619.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !35
   %.sroa.619.sroa.5.0..sroa.619.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   store i64 %.sroa.07.0.i.i, ptr %.sroa.619.sroa.5.0..sroa.619.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !35
   %.sroa.619.sroa.6.0..sroa.619.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 2 uses
@@ -231,8 +235,8 @@ _RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capac
 
 _RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit.thread: ; preds = %bb.j, %bb.k, %bb.l
   %.pn.i.pn = phi { i64, i64 } [ %i.ap, %bb.l ], [ %i.an, %bb.j ], [ %i.ao, %bb.k ] ; 2 uses
-  %.sroa.7.032 = extractvalue { i64, i64 } %.pn.i.pn, 0
-  %.sroa.12.033 = extractvalue { i64, i64 } %.pn.i.pn, 1
+  %.sroa.12.032 = extractvalue { i64, i64 } %.pn.i.pn, 1
+  %.sroa.7.033 = extractvalue { i64, i64 } %.pn.i.pn, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !35
   br label %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit
 
@@ -340,7 +344,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjqcU1oJFKXj_9hashbrown10scopeguar
           to label %_RNCINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB8_8RawTableTNtNtCsa2F6HLACPlS_11markup5ever9interface8QualNameuEE14reserve_rehashNCINvNtBa_3map11make_hasherBS_uNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE0E0Cs1mImOlsSUsK_17markup5ever_rcdom.exit unwind label %bb.m ; 2 uses
 
 _RNCINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB8_8RawTableTNtNtCsa2F6HLACPlS_11markup5ever9interface8QualNameuEE14reserve_rehashNCINvNtBa_3map11make_hasherBS_uNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE0E0Cs1mImOlsSUsK_17markup5ever_rcdom.exit: ; preds = %._crit_edge
-  %.sroa.0.07.i = and i64 %4, %i.ch               ; 3 uses
+  %.sroa.0.07.i = and i64 %5, %i.ch               ; 3 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.aq, i64 %.sroa.0.07.i
   %.sroa.0.0.copyload.i68.i = load <16 x i8>, ptr %i.ci, align 1, !noalias !58
   %i.cj = icmp slt <16 x i8> %.sroa.0.0.copyload.i68.i, zeroinitializer
@@ -354,7 +358,7 @@ _RNCINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB8_8RawTableTNtNtCsa2F6HLACPlS_11mar
   %i.cl = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i, i1 true)
   %i.cm = zext nneg i16 %i.cl to i64
   %i.cn = add nuw nsw i64 %.sroa.0.0.lcssa.i, %i.cm
-  %i.co = and i64 %i.cn, %4                       ; 2 uses
+  %i.co = and i64 %i.cn, %5                       ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.co
   %i.cq = load i8, ptr %i.cp, align 1, !noundef !4
   %i.cr = icmp sgt i8 %i.cq, -1
@@ -375,7 +379,7 @@ bb.p:                                             ; preds = %._crit_edge.i
   %i.cw = phi i64 [ %i.cx, %.lr.ph.i ], [ 0, %_RNCINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB8_8RawTableTNtNtCsa2F6HLACPlS_11markup5ever9interface8QualNameuEE14reserve_rehashNCINvNtBa_3map11make_hasherBS_uNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE0E0Cs1mImOlsSUsK_17markup5ever_rcdom.exit ]
   %i.cx = add i64 %i.cw, 16                       ; 2 uses
   %i.cy = add i64 %i.cx, %.sroa.0.010.i
-  %.sroa.0.0.i9 = and i64 %i.cy, %4               ; 3 uses
+  %.sroa.0.0.i9 = and i64 %i.cy, %5               ; 3 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.aq, i64 %.sroa.0.0.i9
   %.sroa.0.0.copyload.i6.i = load <16 x i8>, ptr %i.cz, align 1, !noalias !58
   %i.da = icmp slt <16 x i8> %.sroa.0.0.copyload.i6.i, zeroinitializer
@@ -389,7 +393,7 @@ _RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.ex
   %i.dd = lshr i64 %i.ch, 57
   %i.de = trunc nuw nsw i64 %i.dd to i8           ; 2 uses
   %i.df = add nsw i64 %.sroa.0.0.i5.i, -16
-  %i.dg = and i64 %i.df, %4
+  %i.dg = and i64 %i.df, %5
   store i8 %i.de, ptr %i.dc, align 1
   %i.dh = getelementptr i8, ptr %i.aq, i64 %i.dg
   %i.di = getelementptr i8, ptr %i.dh, i64 16
@@ -648,8 +652,8 @@ bb.ab:                                            ; preds = %_RNvMsa_NtCsjqcU1oJ
   br label %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit
 
 _RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit: ; preds = %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit.thread, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjqcU1oJFKXj_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalE0EECs1mImOlsSUsK_17markup5ever_rcdom.exit, %bb.c, %bb.ab
-  %.sroa.4.0.i = phi i64 [ %i.q, %bb.c ], [ undef, %bb.ab ], [ %.sroa.12.033, %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit.thread ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjqcU1oJFKXj_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalE0EECs1mImOlsSUsK_17markup5ever_rcdom.exit ]
-  %.sroa.0.0.i = phi i64 [ %i.p, %bb.c ], [ -1, %bb.ab ], [ %.sroa.7.032, %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit.thread ], [ -1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjqcU1oJFKXj_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalE0EECs1mImOlsSUsK_17markup5ever_rcdom.exit ]
+  %.sroa.4.0.i = phi i64 [ %i.q, %bb.c ], [ undef, %bb.ab ], [ %.sroa.12.032, %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit.thread ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjqcU1oJFKXj_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalE0EECs1mImOlsSUsK_17markup5ever_rcdom.exit ]
+  %.sroa.0.0.i = phi i64 [ %i.p, %bb.c ], [ -1, %bb.ab ], [ %.sroa.7.033, %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs1mImOlsSUsK_17markup5ever_rcdom.exit.thread ], [ -1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjqcU1oJFKXj_9hashbrown10scopeguard10ScopeGuardNtNtBG_3raw13RawTableInnerNCINvMsa_B1u_B1s_14prepare_resizeNtNtCsexYYUdYSQU6_5alloc5alloc6GlobalE0EECs1mImOlsSUsK_17markup5ever_rcdom.exit ]
   %i.ha = insertvalue { i64, i64 } poison, i64 %.sroa.0.0.i, 0
   %i.hb = insertvalue { i64, i64 } %i.ha, i64 %.sroa.4.0.i, 1
   ret { i64, i64 } %i.hb
@@ -1052,9 +1056,9 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %_RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTNtNtCsa2F6HLACPlS_11markup5ever9interface8QualNameuEE9next_implKb0_ECs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i, %bb.c
   %.sroa.05.016.i.i = phi ptr [ %i.g, %bb.c ], [ %.sroa.05.1.i.i, %_RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTNtNtCsa2F6HLACPlS_11markup5ever9interface8QualNameuEE9next_implKb0_ECs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i ] ; 2 uses
   %.sroa.6.015.i.i = phi ptr [ %i.i, %bb.c ], [ %.sroa.6.1.i.i, %_RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTNtNtCsa2F6HLACPlS_11markup5ever9interface8QualNameuEE9next_implKb0_ECs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i ] ; 2 uses
-  %.sroa.107.014.i.i = phi i64 [ %i.e, %bb.c ], [ %i.v, %_RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTNtNtCsa2F6HLACPlS_11markup5ever9interface8QualNameuEE9next_implKb0_ECs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i ]
-  %.sroa.86.013.i.i = phi i16 [ %i.j, %bb.c ], [ %i.s, %_RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTNtNtCsa2F6HLACPlS_11markup5ever9interface8QualNameuEE9next_implKb0_ECs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i ] ; 2 uses
-  %.not11.i.i.i = icmp eq i16 %.sroa.86.013.i.i, 0
+  %.sroa.86.014.i.i = phi i16 [ %i.j, %bb.c ], [ %i.s, %_RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTNtNtCsa2F6HLACPlS_11markup5ever9interface8QualNameuEE9next_implKb0_ECs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i ] ; 2 uses
+  %.sroa.107.013.i.i = phi i64 [ %i.e, %bb.c ], [ %i.v, %_RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTNtNtCsa2F6HLACPlS_11markup5ever9interface8QualNameuEE9next_implKb0_ECs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i ]
+  %.not11.i.i.i = icmp eq i16 %.sroa.86.014.i.i, 0
   br i1 %.not11.i.i.i, label %.lr.ph.i.i.i, label %_RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTNtNtCsa2F6HLACPlS_11markup5ever9interface8QualNameuEE9next_implKb0_ECs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.d, %.lr.ph.i.i.i
@@ -1071,14 +1075,14 @@ bb.d:                                             ; preds = %_RINvMsi_NtCsjqcU1o
 _RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTNtNtCsa2F6HLACPlS_11markup5ever9interface8QualNameuEE9next_implKb0_ECs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i: ; preds = %.lr.ph.i.i.i, %bb.d
   %.sroa.6.1.i.i = phi ptr [ %.sroa.6.015.i.i, %bb.d ], [ %i.o, %.lr.ph.i.i.i ]
   %.sroa.05.1.i.i = phi ptr [ %.sroa.05.016.i.i, %bb.d ], [ %i.n, %.lr.ph.i.i.i ] ; 2 uses
-  %.lcssa.i.i.i = phi i16 [ %.sroa.86.013.i.i, %bb.d ], [ %.cast.i.i.i, %.lr.ph.i.i.i ] ; 3 uses
+  %.lcssa.i.i.i = phi i16 [ %.sroa.86.014.i.i, %bb.d ], [ %.cast.i.i.i, %.lr.ph.i.i.i ] ; 3 uses
   %i.p = add i16 %.lcssa.i.i.i, -1
   %i.q = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i, i1 true)
   %i.r = zext nneg i16 %i.q to i64
   %i.s = and i16 %i.p, %.lcssa.i.i.i
   %i.t = sub nsw i64 0, %i.r
   %i.u = getelementptr inbounds [24 x i8], ptr %.sroa.05.1.i.i, i64 %i.t
-  %i.v = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
+  %i.v = add i64 %.sroa.107.013.i.i, -1           ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %i.u, i64 -24
   tail call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsa2F6HLACPlS_11markup5ever9interface8QualNameECs1mImOlsSUsK_17markup5ever_rcdom(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(24) %i.w), !noalias !173
   %i.x = icmp eq i64 %i.v, 0

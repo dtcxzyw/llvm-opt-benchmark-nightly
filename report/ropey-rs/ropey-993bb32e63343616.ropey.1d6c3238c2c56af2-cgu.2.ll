@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ropey-rs/original/ropey-993bb32e63343616.ropey.1d6c3238c2c56af2-cgu.2?download=true
+inline.NumInlined: 711
+inline.NumDeleted: 57
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 11
+loop-unroll.NumUnrolled: 12
 begin_hunk_0_@_RNvMNtCs2wCc12Mnjqg_5ropey5sliceNtB2_9RopeSlice14new_with_range:bb.a
   %i.ht = icmp eq i8 %i.fv, 13
   %or.cond2189 = select i1 %.not1635, i1 %i.ht, i1 false
@@ -200,19 +205,19 @@ bb.bc:                                            ; preds = %._crit_edge
   br i1 %i.kk, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit113, label %.lr.ph2281
 
 .lr.ph1698:                                       ; preds = %bb.bb, %bb.bd
-  %.sroa.027.0.i851696 = phi ptr [ %i.kq, %bb.bd ], [ %i.ka, %bb.bb ] ; 2 uses
-  %.sroa.013.0.i841695 = phi i64 [ %i.kr, %bb.bd ], [ 0, %bb.bb ] ; 2 uses
-  %.sroa.020.0.i831694 = phi i64 [ %i.ko, %bb.bd ], [ 0, %bb.bb ]
-  %i.kl = load i8, ptr %.sroa.027.0.i851696, align 1, !noundef !8
+  %.sroa.013.0.i851696 = phi i64 [ %i.kr, %bb.bd ], [ 0, %bb.bb ] ; 2 uses
+  %.sroa.013.0.i841695 = phi i64 [ %i.ko, %bb.bd ], [ 0, %bb.bb ]
+  %.sroa.027.0.i831694 = phi ptr [ %i.kq, %bb.bd ], [ %i.ka, %bb.bb ] ; 2 uses
+  %i.kl = load i8, ptr %.sroa.027.0.i831694, align 1, !noundef !8
   %i.km = icmp sgt i8 %i.kl, -65
   %i.kn = zext i1 %i.km to i64
-  %i.ko = add i64 %.sroa.020.0.i831694, %i.kn     ; 3 uses
+  %i.ko = add i64 %.sroa.013.0.i841695, %i.kn     ; 3 uses
   %i.kp = icmp ugt i64 %i.ko, %.sroa.014.0.lcssa
   br i1 %i.kp, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit113, label %bb.bd
 
 bb.bd:                                            ; preds = %.lr.ph1698
-  %i.kq = getelementptr inbounds nuw i8, ptr %.sroa.027.0.i851696, i64 1 ; 2 uses
-  %i.kr = add nuw i64 %.sroa.013.0.i841695, 1
+  %i.kq = getelementptr inbounds nuw i8, ptr %.sroa.027.0.i831694, i64 1 ; 2 uses
+  %i.kr = add nuw i64 %.sroa.013.0.i851696, 1
   %i.ks = icmp eq ptr %i.kq, %i.kh
   br i1 %i.ks, label %._crit_edge1699, label %.lr.ph1698
 
@@ -302,24 +307,24 @@ bb.bj:                                            ; preds = %.lr.ph1727
   br i1 %i.lv, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit113, label %.lr.ph1727
 
 .lr.ph1708:                                       ; preds = %._crit_edge1699, %.lr.ph1708
-  %.sroa.5.0.i961706 = phi i64 [ %i.lx, %.lr.ph1708 ], [ %i.kv, %._crit_edge1699 ]
-  %.sroa.030.0.i951705 = phi ptr [ %i.lw, %.lr.ph1708 ], [ %i.ke, %._crit_edge1699 ] ; 5 uses
-  %.sroa.013.1.i941704 = phi i64 [ %i.mt, %.lr.ph1708 ], [ %i.kc, %._crit_edge1699 ]
-  %.sroa.020.1.i931703 = phi i64 [ %i.ms, %.lr.ph1708 ], [ %.sroa.020.0.i83.lcssa, %._crit_edge1699 ]
-  %i.lw = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i951705, i64 64
-  %i.lx = add i64 %.sroa.5.0.i961706, -4          ; 2 uses
-  %i.ly = load <16 x i8>, ptr %.sroa.030.0.i951705, align 16
+  %.sroa.5.0.i961706 = phi i64 [ %i.mt, %.lr.ph1708 ], [ %i.kc, %._crit_edge1699 ]
+  %.sroa.020.1.i951705 = phi i64 [ %i.ms, %.lr.ph1708 ], [ %.sroa.020.0.i83.lcssa, %._crit_edge1699 ]
+  %.sroa.030.0.i941704 = phi ptr [ %i.lw, %.lr.ph1708 ], [ %i.ke, %._crit_edge1699 ] ; 5 uses
+  %.sroa.020.1.i931703 = phi i64 [ %i.lx, %.lr.ph1708 ], [ %i.kv, %._crit_edge1699 ]
+  %i.lw = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i941704, i64 64
+  %i.lx = add i64 %.sroa.020.1.i931703, -4        ; 2 uses
+  %i.ly = load <16 x i8>, ptr %.sroa.030.0.i941704, align 16
   %i.lz = icmp slt <16 x i8> %i.ly, splat (i8 -64)
   %i.ma = zext <16 x i1> %i.lz to <16 x i8>
-  %i.mb = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i951705, i64 16
+  %i.mb = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i941704, i64 16
   %i.mc = load <16 x i8>, ptr %i.mb, align 16
   %i.md = icmp slt <16 x i8> %i.mc, splat (i8 -64)
   %i.me = zext <16 x i1> %i.md to <16 x i8>
-  %i.mf = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i951705, i64 32
+  %i.mf = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i941704, i64 32
   %i.mg = load <16 x i8>, ptr %i.mf, align 16
   %i.mh = icmp slt <16 x i8> %i.mg, splat (i8 -64)
   %i.mi = zext <16 x i1> %i.mh to <16 x i8>
-  %i.mj = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i951705, i64 48
+  %i.mj = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i941704, i64 48
   %i.mk = load <16 x i8>, ptr %i.mj, align 16
   %i.ml = icmp slt <16 x i8> %i.mk, splat (i8 -64)
   %i.mm = zext <16 x i1> %i.ml to <16 x i8>
@@ -327,10 +332,10 @@ bb.bj:                                            ; preds = %.lr.ph1727
   %i.mo = add nuw nsw <16 x i8> %i.mn, %i.mi
   %i.mp = add nuw nsw <16 x i8> %i.mo, %i.mm
   %i.mq = call <2 x i64> @llvm.x86.sse2.psad.bw(<16 x i8> %i.mp, <16 x i8> zeroinitializer)
-  %.neg1636 = add i64 %.sroa.020.1.i931703, 64
+  %.neg1636 = add i64 %.sroa.020.1.i951705, 64
   %i.mr = call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %i.mq)
   %i.ms = sub i64 %.neg1636, %i.mr                ; 2 uses
-  %i.mt = add i64 %.sroa.013.1.i941704, 64        ; 2 uses
+  %i.mt = add i64 %.sroa.5.0.i961706, 64          ; 2 uses
   %.not51.i97 = icmp eq i64 %i.lx, 0
   br i1 %.not51.i97, label %._crit_edge1709, label %.lr.ph1708
 
@@ -352,7 +357,7 @@ bb.bk:                                            ; preds = %.lr.ph2281
   br i1 %i.nb, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit113, label %bb.bk
 
 _RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit113: ; preds = %.lr.ph1698, %.lr.ph1727, %bb.bj, %bb.bk, %.lr.ph2281, %bb.bc, %bb.bh
-  %.sroa.0.0.i86 = phi i64 [ %i.jy, %bb.bh ], [ %i.jy, %bb.bc ], [ %i.jy, %bb.bj ], [ %.sroa.8656.02277, %.lr.ph2281 ], [ %i.jy, %bb.bk ], [ %.sroa.013.3.i1071724, %.lr.ph1727 ], [ %.sroa.013.0.i841695, %.lr.ph1698 ] ; 23 uses
+  %.sroa.0.0.i86 = phi i64 [ %i.jy, %bb.bh ], [ %i.jy, %bb.bc ], [ %i.jy, %bb.bj ], [ %.sroa.8656.02277, %.lr.ph2281 ], [ %i.jy, %bb.bk ], [ %.sroa.013.3.i1071724, %.lr.ph1727 ], [ %.sroa.013.0.i851696, %.lr.ph1698 ] ; 23 uses
   %i.nc = call { ptr, i64 } @_RNvXs5_NtNtCs2wCc12Mnjqg_5ropey4tree9node_textNtB5_8NodeTextNtNtNtCskKLDkoKarTP_4core3ops5deref5Deref5deref(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1000) %i.jv) ; 2 uses
   %i.nd = extractvalue { ptr, i64 } %i.nc, 0      ; 7 uses
   %i.ne = extractvalue { ptr, i64 } %i.nc, 1      ; 9 uses
@@ -408,19 +413,19 @@ bb.bo:                                            ; preds = %_RNvXs9_NtNtCskKLDk
   br i1 %i.ny, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit, label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs2wCc12Mnjqg_5ropey.exit585
 
 .lr.ph1735:                                       ; preds = %bb.bn, %bb.bp
-  %.sroa.027.0.i1733 = phi ptr [ %i.oe, %bb.bp ], [ %i.no, %bb.bn ] ; 2 uses
-  %.sroa.013.0.i1732 = phi i64 [ %i.of, %bb.bp ], [ 0, %bb.bn ] ; 2 uses
-  %.sroa.020.0.i1731 = phi i64 [ %i.oc, %bb.bp ], [ 0, %bb.bn ]
-  %i.nz = load i8, ptr %.sroa.027.0.i1733, align 1, !noundef !8
+  %.sroa.013.0.i1733 = phi i64 [ %i.of, %bb.bp ], [ 0, %bb.bn ] ; 2 uses
+  %.sroa.013.0.i1732 = phi i64 [ %i.oc, %bb.bp ], [ 0, %bb.bn ]
+  %.sroa.027.0.i1731 = phi ptr [ %i.oe, %bb.bp ], [ %i.no, %bb.bn ] ; 2 uses
+  %i.nz = load i8, ptr %.sroa.027.0.i1731, align 1, !noundef !8
   %i.oa = icmp sgt i8 %i.nz, -65
   %i.ob = zext i1 %i.oa to i64
-  %i.oc = add i64 %.sroa.020.0.i1731, %i.ob       ; 3 uses
+  %i.oc = add i64 %.sroa.013.0.i1732, %i.ob       ; 3 uses
   %i.od = icmp ugt i64 %i.oc, %i.nm
   br i1 %i.od, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit, label %bb.bp
 
 bb.bp:                                            ; preds = %.lr.ph1735
-  %i.oe = getelementptr inbounds nuw i8, ptr %.sroa.027.0.i1733, i64 1 ; 2 uses
-  %i.of = add nuw i64 %.sroa.013.0.i1732, 1
+  %i.oe = getelementptr inbounds nuw i8, ptr %.sroa.027.0.i1731, i64 1 ; 2 uses
+  %i.of = add nuw i64 %.sroa.013.0.i1733, 1
   %i.og = icmp eq ptr %i.oe, %i.nv
   br i1 %i.og, label %._crit_edge1736, label %.lr.ph1735
 
@@ -511,24 +516,24 @@ bb.bv:                                            ; preds = %.lr.ph1764
   br i1 %i.pk, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit, label %.lr.ph1764
 
 .lr.ph1745:                                       ; preds = %._crit_edge1736, %.lr.ph1745
-  %.sroa.5.0.i1743 = phi i64 [ %i.pm, %.lr.ph1745 ], [ %i.oj, %._crit_edge1736 ]
-  %.sroa.030.0.i1742 = phi ptr [ %i.pl, %.lr.ph1745 ], [ %i.ns, %._crit_edge1736 ] ; 5 uses
-  %.sroa.013.1.i1741 = phi i64 [ %i.qi, %.lr.ph1745 ], [ %i.nq, %._crit_edge1736 ]
-  %.sroa.020.1.i1740 = phi i64 [ %i.qh, %.lr.ph1745 ], [ %.sroa.020.0.i.lcssa, %._crit_edge1736 ]
-  %i.pl = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i1742, i64 64
-  %i.pm = add i64 %.sroa.5.0.i1743, -4            ; 2 uses
-  %i.pn = load <16 x i8>, ptr %.sroa.030.0.i1742, align 16
+  %.sroa.5.0.i1743 = phi i64 [ %i.qi, %.lr.ph1745 ], [ %i.nq, %._crit_edge1736 ]
+  %.sroa.020.1.i1742 = phi i64 [ %i.qh, %.lr.ph1745 ], [ %.sroa.020.0.i.lcssa, %._crit_edge1736 ]
+  %.sroa.030.0.i1741 = phi ptr [ %i.pl, %.lr.ph1745 ], [ %i.ns, %._crit_edge1736 ] ; 5 uses
+  %.sroa.020.1.i1740 = phi i64 [ %i.pm, %.lr.ph1745 ], [ %i.oj, %._crit_edge1736 ]
+  %i.pl = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i1741, i64 64
+  %i.pm = add i64 %.sroa.020.1.i1740, -4          ; 2 uses
+  %i.pn = load <16 x i8>, ptr %.sroa.030.0.i1741, align 16
   %i.po = icmp slt <16 x i8> %i.pn, splat (i8 -64)
   %i.pp = zext <16 x i1> %i.po to <16 x i8>
-  %i.pq = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i1742, i64 16
+  %i.pq = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i1741, i64 16
   %i.pr = load <16 x i8>, ptr %i.pq, align 16
   %i.ps = icmp slt <16 x i8> %i.pr, splat (i8 -64)
   %i.pt = zext <16 x i1> %i.ps to <16 x i8>
-  %i.pu = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i1742, i64 32
+  %i.pu = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i1741, i64 32
   %i.pv = load <16 x i8>, ptr %i.pu, align 16
   %i.pw = icmp slt <16 x i8> %i.pv, splat (i8 -64)
   %i.px = zext <16 x i1> %i.pw to <16 x i8>
-  %i.py = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i1742, i64 48
+  %i.py = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i1741, i64 48
   %i.pz = load <16 x i8>, ptr %i.py, align 16
   %i.qa = icmp slt <16 x i8> %i.pz, splat (i8 -64)
   %i.qb = zext <16 x i1> %i.qa to <16 x i8>
@@ -536,10 +541,10 @@ bb.bv:                                            ; preds = %.lr.ph1764
   %i.qd = add nuw nsw <16 x i8> %i.qc, %i.px
   %i.qe = add nuw nsw <16 x i8> %i.qd, %i.qb
   %i.qf = call <2 x i64> @llvm.x86.sse2.psad.bw(<16 x i8> %i.qe, <16 x i8> zeroinitializer)
-  %.neg1638 = add i64 %.sroa.020.1.i1740, 64
+  %.neg1638 = add i64 %.sroa.020.1.i1742, 64
   %i.qg = call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %i.qf)
   %i.qh = sub i64 %.neg1638, %i.qg                ; 2 uses
-  %i.qi = add i64 %.sroa.013.1.i1741, 64          ; 2 uses
+  %i.qi = add i64 %.sroa.5.0.i1743, 64            ; 2 uses
   %.not51.i = icmp eq i64 %i.pm, 0
   br i1 %.not51.i, label %._crit_edge1746, label %.lr.ph1745
 
@@ -561,7 +566,7 @@ _RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
   br i1 %i.qq, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit, label %bb.bw
 
 _RINvNtCsk17MtNlfUKQ_11str_indices5chars16to_byte_idx_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit: ; preds = %.lr.ph1735, %.lr.ph1764, %bb.bv, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs2wCc12Mnjqg_5ropey.exit585, %bb.bw, %bb.bo, %bb.bt
-  %.sroa.0.0.i = phi i64 [ %.sroa.013.2.i.lcssa, %bb.bt ], [ %i.nk, %bb.bw ], [ %i.nk, %bb.bv ], [ %i.nk, %bb.bo ], [ %.sroa.8610.02284, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs2wCc12Mnjqg_5ropey.exit585 ], [ %.sroa.013.3.i1761, %.lr.ph1764 ], [ %.sroa.013.0.i1732, %.lr.ph1735 ] ; 15 uses
+  %.sroa.0.0.i = phi i64 [ %.sroa.013.2.i.lcssa, %bb.bt ], [ %i.nk, %bb.bw ], [ %i.nk, %bb.bv ], [ %i.nk, %bb.bo ], [ %.sroa.8610.02284, %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterhEENtNtNtB8_6traits8iterator8Iterator4nextCs2wCc12Mnjqg_5ropey.exit585 ], [ %.sroa.013.3.i1761, %.lr.ph1764 ], [ %.sroa.013.0.i1733, %.lr.ph1735 ] ; 15 uses
   %i.qr = add i64 %.sroa.0.0.i, %.sroa.0.0.i86    ; 13 uses
   %i.qs = call { ptr, i64 } @_RNvXs5_NtNtCs2wCc12Mnjqg_5ropey4tree9node_textNtB5_8NodeTextNtNtNtCskKLDkoKarTP_4core3ops5deref5Deref5deref(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1000) %i.jv) ; 2 uses
   %i.qt = extractvalue { ptr, i64 } %i.qs, 0      ; 4 uses
@@ -964,19 +969,19 @@ bb.ea:                                            ; preds = %_RNvXs_NtNtNtCskKLD
   br i1 %i.acj, label %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree4nodeNtB2_4Node17char_to_text_info.exit175, label %.lr.ph2293
 
 .lr.ph1813:                                       ; preds = %bb.dz, %bb.eb
-  %.sroa.027.0.i.i1471811 = phi ptr [ %i.acp, %bb.eb ], [ %i.abz, %bb.dz ] ; 2 uses
-  %.sroa.013.0.i.i1461810 = phi i64 [ %i.acq, %bb.eb ], [ 0, %bb.dz ] ; 2 uses
-  %.sroa.020.0.i.i1451809 = phi i64 [ %i.acn, %bb.eb ], [ 0, %bb.dz ]
-  %i.ack = load i8, ptr %.sroa.027.0.i.i1471811, align 1, !noalias !101, !noundef !8
+  %.sroa.013.0.i.i1471811 = phi i64 [ %i.acq, %bb.eb ], [ 0, %bb.dz ] ; 2 uses
+  %.sroa.013.0.i.i1461810 = phi i64 [ %i.acn, %bb.eb ], [ 0, %bb.dz ]
+  %.sroa.027.0.i.i1451809 = phi ptr [ %i.acp, %bb.eb ], [ %i.abz, %bb.dz ] ; 2 uses
+  %i.ack = load i8, ptr %.sroa.027.0.i.i1451809, align 1, !noalias !101, !noundef !8
   %i.acl = icmp sgt i8 %i.ack, -65
   %i.acm = zext i1 %i.acl to i64
-  %i.acn = add i64 %.sroa.020.0.i.i1451809, %i.acm ; 3 uses
+  %i.acn = add i64 %.sroa.013.0.i.i1461810, %i.acm ; 3 uses
   %i.aco = icmp ugt i64 %i.acn, %i.abx
   br i1 %i.aco, label %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree4nodeNtB2_4Node17char_to_text_info.exit175, label %bb.eb
 
 bb.eb:                                            ; preds = %.lr.ph1813
-  %i.acp = getelementptr inbounds nuw i8, ptr %.sroa.027.0.i.i1471811, i64 1 ; 2 uses
-  %i.acq = add nuw i64 %.sroa.013.0.i.i1461810, 1
+  %i.acp = getelementptr inbounds nuw i8, ptr %.sroa.027.0.i.i1451809, i64 1 ; 2 uses
+  %i.acq = add nuw i64 %.sroa.013.0.i.i1471811, 1
   %i.acr = icmp eq ptr %i.acp, %i.acg
   br i1 %i.acr, label %._crit_edge1814, label %.lr.ph1813
 
@@ -1066,24 +1071,24 @@ bb.eh:                                            ; preds = %.lr.ph1842
   br i1 %i.adu, label %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree4nodeNtB2_4Node17char_to_text_info.exit175, label %.lr.ph1842
 
 .lr.ph1823:                                       ; preds = %._crit_edge1814, %.lr.ph1823
-  %.sroa.5.0.i.i1581821 = phi i64 [ %i.adw, %.lr.ph1823 ], [ %i.acu, %._crit_edge1814 ]
-  %.sroa.030.0.i.i1571820 = phi ptr [ %i.adv, %.lr.ph1823 ], [ %i.acd, %._crit_edge1814 ] ; 5 uses
-  %.sroa.013.1.i.i1561819 = phi i64 [ %i.aes, %.lr.ph1823 ], [ %i.acb, %._crit_edge1814 ]
-  %.sroa.020.1.i.i1551818 = phi i64 [ %i.aer, %.lr.ph1823 ], [ %.sroa.020.0.i.i145.lcssa, %._crit_edge1814 ]
-  %i.adv = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1571820, i64 64
-  %i.adw = add i64 %.sroa.5.0.i.i1581821, -4      ; 2 uses
-  %i.adx = load <16 x i8>, ptr %.sroa.030.0.i.i1571820, align 16, !noalias !101
+  %.sroa.5.0.i.i1581821 = phi i64 [ %i.aes, %.lr.ph1823 ], [ %i.acb, %._crit_edge1814 ]
+  %.sroa.020.1.i.i1571820 = phi i64 [ %i.aer, %.lr.ph1823 ], [ %.sroa.020.0.i.i145.lcssa, %._crit_edge1814 ]
+  %.sroa.030.0.i.i1561819 = phi ptr [ %i.adv, %.lr.ph1823 ], [ %i.acd, %._crit_edge1814 ] ; 5 uses
+  %.sroa.020.1.i.i1551818 = phi i64 [ %i.adw, %.lr.ph1823 ], [ %i.acu, %._crit_edge1814 ]
+  %i.adv = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1561819, i64 64
+  %i.adw = add i64 %.sroa.020.1.i.i1551818, -4    ; 2 uses
+  %i.adx = load <16 x i8>, ptr %.sroa.030.0.i.i1561819, align 16, !noalias !101
   %i.ady = icmp slt <16 x i8> %i.adx, splat (i8 -64)
   %i.adz = zext <16 x i1> %i.ady to <16 x i8>
-  %i.aea = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1571820, i64 16
+  %i.aea = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1561819, i64 16
   %i.aeb = load <16 x i8>, ptr %i.aea, align 16, !noalias !101
   %i.aec = icmp slt <16 x i8> %i.aeb, splat (i8 -64)
   %i.aed = zext <16 x i1> %i.aec to <16 x i8>
-  %i.aee = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1571820, i64 32
+  %i.aee = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1561819, i64 32
   %i.aef = load <16 x i8>, ptr %i.aee, align 16, !noalias !101
   %i.aeg = icmp slt <16 x i8> %i.aef, splat (i8 -64)
   %i.aeh = zext <16 x i1> %i.aeg to <16 x i8>
-  %i.aei = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1571820, i64 48
+  %i.aei = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1561819, i64 48
   %i.aej = load <16 x i8>, ptr %i.aei, align 16, !noalias !101
   %i.aek = icmp slt <16 x i8> %i.aej, splat (i8 -64)
   %i.ael = zext <16 x i1> %i.aek to <16 x i8>
@@ -1091,10 +1096,10 @@ bb.eh:                                            ; preds = %.lr.ph1842
   %i.aen = add nuw nsw <16 x i8> %i.aem, %i.aeh
   %i.aeo = add nuw nsw <16 x i8> %i.aen, %i.ael
   %i.aep = call <2 x i64> @llvm.x86.sse2.psad.bw(<16 x i8> %i.aeo, <16 x i8> zeroinitializer)
-  %.neg1640 = add i64 %.sroa.020.1.i.i1551818, 64
+  %.neg1640 = add i64 %.sroa.020.1.i.i1571820, 64
   %i.aeq = call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %i.aep)
   %i.aer = sub i64 %.neg1640, %i.aeq              ; 2 uses
-  %i.aes = add i64 %.sroa.013.1.i.i1561819, 64    ; 2 uses
+  %i.aes = add i64 %.sroa.5.0.i.i1581821, 64      ; 2 uses
   %.not51.i.i159 = icmp eq i64 %i.adw, 0
   br i1 %.not51.i.i159, label %._crit_edge1824, label %.lr.ph1823
 
@@ -1116,7 +1121,7 @@ bb.ei:                                            ; preds = %.lr.ph2293
   br i1 %i.afa, label %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree4nodeNtB2_4Node17char_to_text_info.exit175, label %bb.ei
 
 _RNvMNtNtCs2wCc12Mnjqg_5ropey4tree4nodeNtB2_4Node17char_to_text_info.exit175: ; preds = %.lr.ph1813, %.lr.ph1842, %bb.eh, %bb.ei, %.lr.ph2293, %bb.ea, %bb.ef
-  %.sroa.0.0.i.i148 = phi i64 [ %i.abo, %bb.ef ], [ %i.abo, %bb.ea ], [ %i.abo, %bb.eh ], [ %.sroa.8926.02290, %.lr.ph2293 ], [ %i.abo, %bb.ei ], [ %.sroa.013.3.i.i1691839, %.lr.ph1842 ], [ %.sroa.013.0.i.i1461810, %.lr.ph1813 ] ; 3 uses
+  %.sroa.0.0.i.i148 = phi i64 [ %i.abo, %bb.ef ], [ %i.abo, %bb.ea ], [ %i.abo, %bb.eh ], [ %.sroa.8926.02290, %.lr.ph2293 ], [ %i.abo, %bb.ei ], [ %.sroa.013.3.i.i1691839, %.lr.ph1842 ], [ %.sroa.013.0.i.i1471811, %.lr.ph1813 ] ; 3 uses
   %i.afb = add i64 %.sroa.0.0.i.i148, %i.abq
   %i.afc = call noundef i64 @_RNvNtCs2wCc12Mnjqg_5ropey9str_utils27byte_to_utf16_surrogate_idx(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.abm, i64 noundef %i.abo, i64 noundef %.sroa.0.0.i.i148), !noalias !101
   %i.afd = add i64 %i.afc, %i.abu
@@ -1164,19 +1169,19 @@ bb.ek:                                            ; preds = %_RNvMNtNtCs2wCc12Mn
   br i1 %i.agf, label %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree4nodeNtB2_4Node17char_to_text_info.exit, label %.lr.ph2301
 
 .lr.ph1850:                                       ; preds = %bb.ej, %bb.el
-  %.sroa.027.0.i.i1848 = phi ptr [ %i.agl, %bb.el ], [ %i.afv, %bb.ej ] ; 2 uses
-  %.sroa.013.0.i.i1847 = phi i64 [ %i.agm, %bb.el ], [ 0, %bb.ej ] ; 2 uses
-  %.sroa.020.0.i.i1846 = phi i64 [ %i.agj, %bb.el ], [ 0, %bb.ej ]
-  %i.agg = load i8, ptr %.sroa.027.0.i.i1848, align 1, !noalias !110, !noundef !8
+  %.sroa.013.0.i.i1848 = phi i64 [ %i.agm, %bb.el ], [ 0, %bb.ej ] ; 2 uses
+  %.sroa.013.0.i.i1847 = phi i64 [ %i.agj, %bb.el ], [ 0, %bb.ej ]
+  %.sroa.027.0.i.i1846 = phi ptr [ %i.agl, %bb.el ], [ %i.afv, %bb.ej ] ; 2 uses
+  %i.agg = load i8, ptr %.sroa.027.0.i.i1846, align 1, !noalias !110, !noundef !8
   %i.agh = icmp sgt i8 %i.agg, -65
   %i.agi = zext i1 %i.agh to i64
-  %i.agj = add i64 %.sroa.020.0.i.i1846, %i.agi   ; 3 uses
+  %i.agj = add i64 %.sroa.013.0.i.i1847, %i.agi   ; 3 uses
   %i.agk = icmp ugt i64 %i.agj, %i.aft
   br i1 %i.agk, label %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree4nodeNtB2_4Node17char_to_text_info.exit, label %bb.el
 
 bb.el:                                            ; preds = %.lr.ph1850
-  %i.agl = getelementptr inbounds nuw i8, ptr %.sroa.027.0.i.i1848, i64 1 ; 2 uses
-  %i.agm = add nuw i64 %.sroa.013.0.i.i1847, 1
+  %i.agl = getelementptr inbounds nuw i8, ptr %.sroa.027.0.i.i1846, i64 1 ; 2 uses
+  %i.agm = add nuw i64 %.sroa.013.0.i.i1848, 1
   %i.agn = icmp eq ptr %i.agl, %i.agc
   br i1 %i.agn, label %._crit_edge1851, label %.lr.ph1850
 
@@ -1266,24 +1271,24 @@ bb.er:                                            ; preds = %.lr.ph1879
   br i1 %i.ahq, label %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree4nodeNtB2_4Node17char_to_text_info.exit, label %.lr.ph1879
 
 .lr.ph1860:                                       ; preds = %._crit_edge1851, %.lr.ph1860
-  %.sroa.5.0.i.i1858 = phi i64 [ %i.ahs, %.lr.ph1860 ], [ %i.agq, %._crit_edge1851 ]
-  %.sroa.030.0.i.i1857 = phi ptr [ %i.ahr, %.lr.ph1860 ], [ %i.afz, %._crit_edge1851 ] ; 5 uses
-  %.sroa.013.1.i.i1856 = phi i64 [ %i.aio, %.lr.ph1860 ], [ %i.afx, %._crit_edge1851 ]
-  %.sroa.020.1.i.i1855 = phi i64 [ %i.ain, %.lr.ph1860 ], [ %.sroa.020.0.i.i.lcssa, %._crit_edge1851 ]
-  %i.ahr = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1857, i64 64
-  %i.ahs = add i64 %.sroa.5.0.i.i1858, -4         ; 2 uses
-  %i.aht = load <16 x i8>, ptr %.sroa.030.0.i.i1857, align 16, !noalias !110
+  %.sroa.5.0.i.i1858 = phi i64 [ %i.aio, %.lr.ph1860 ], [ %i.afx, %._crit_edge1851 ]
+  %.sroa.020.1.i.i1857 = phi i64 [ %i.ain, %.lr.ph1860 ], [ %.sroa.020.0.i.i.lcssa, %._crit_edge1851 ]
+  %.sroa.030.0.i.i1856 = phi ptr [ %i.ahr, %.lr.ph1860 ], [ %i.afz, %._crit_edge1851 ] ; 5 uses
+  %.sroa.020.1.i.i1855 = phi i64 [ %i.ahs, %.lr.ph1860 ], [ %i.agq, %._crit_edge1851 ]
+  %i.ahr = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1856, i64 64
+  %i.ahs = add i64 %.sroa.020.1.i.i1855, -4       ; 2 uses
+  %i.aht = load <16 x i8>, ptr %.sroa.030.0.i.i1856, align 16, !noalias !110
   %i.ahu = icmp slt <16 x i8> %i.aht, splat (i8 -64)
   %i.ahv = zext <16 x i1> %i.ahu to <16 x i8>
-  %i.ahw = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1857, i64 16
+  %i.ahw = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1856, i64 16
   %i.ahx = load <16 x i8>, ptr %i.ahw, align 16, !noalias !110
   %i.ahy = icmp slt <16 x i8> %i.ahx, splat (i8 -64)
   %i.ahz = zext <16 x i1> %i.ahy to <16 x i8>
-  %i.aia = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1857, i64 32
+  %i.aia = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1856, i64 32
   %i.aib = load <16 x i8>, ptr %i.aia, align 16, !noalias !110
   %i.aic = icmp slt <16 x i8> %i.aib, splat (i8 -64)
   %i.aid = zext <16 x i1> %i.aic to <16 x i8>
-  %i.aie = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1857, i64 48
+  %i.aie = getelementptr inbounds nuw i8, ptr %.sroa.030.0.i.i1856, i64 48
   %i.aif = load <16 x i8>, ptr %i.aie, align 16, !noalias !110
   %i.aig = icmp slt <16 x i8> %i.aif, splat (i8 -64)
   %i.aih = zext <16 x i1> %i.aig to <16 x i8>
@@ -1291,10 +1296,10 @@ bb.er:                                            ; preds = %.lr.ph1879
   %i.aij = add nuw nsw <16 x i8> %i.aii, %i.aid
   %i.aik = add nuw nsw <16 x i8> %i.aij, %i.aih
   %i.ail = call <2 x i64> @llvm.x86.sse2.psad.bw(<16 x i8> %i.aik, <16 x i8> zeroinitializer)
-  %.neg1642 = add i64 %.sroa.020.1.i.i1855, 64
+  %.neg1642 = add i64 %.sroa.020.1.i.i1857, 64
   %i.aim = call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %i.ail)
   %i.ain = sub i64 %.neg1642, %i.aim              ; 2 uses
-  %i.aio = add i64 %.sroa.013.1.i.i1856, 64       ; 2 uses
+  %i.aio = add i64 %.sroa.5.0.i.i1858, 64         ; 2 uses
   %.not51.i.i = icmp eq i64 %i.ahs, 0
   br i1 %.not51.i.i, label %._crit_edge1861, label %.lr.ph1860
 
@@ -1316,7 +1321,7 @@ bb.es:                                            ; preds = %.lr.ph2301
   br i1 %i.aiw, label %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree4nodeNtB2_4Node17char_to_text_info.exit, label %bb.es
 
 _RNvMNtNtCs2wCc12Mnjqg_5ropey4tree4nodeNtB2_4Node17char_to_text_info.exit: ; preds = %.lr.ph1850, %.lr.ph1879, %bb.er, %bb.es, %.lr.ph2301, %bb.ek, %bb.ep
-  %.sroa.0.0.i.i = phi i64 [ %i.afk, %bb.ep ], [ %i.afk, %bb.ek ], [ %i.afk, %bb.er ], [ %.sroa.8879.02298, %.lr.ph2301 ], [ %i.afk, %bb.es ], [ %.sroa.013.3.i.i1876, %.lr.ph1879 ], [ %.sroa.013.0.i.i1847, %.lr.ph1850 ] ; 3 uses
+  %.sroa.0.0.i.i = phi i64 [ %i.afk, %bb.ep ], [ %i.afk, %bb.ek ], [ %i.afk, %bb.er ], [ %.sroa.8879.02298, %.lr.ph2301 ], [ %i.afk, %bb.es ], [ %.sroa.013.3.i.i1876, %.lr.ph1879 ], [ %.sroa.013.0.i.i1848, %.lr.ph1850 ] ; 3 uses
   %i.aix = add i64 %.sroa.0.0.i.i, %i.afm
   %i.aiy = call noundef i64 @_RNvNtCs2wCc12Mnjqg_5ropey9str_utils27byte_to_utf16_surrogate_idx(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.afi, i64 noundef %i.afk, i64 noundef %.sroa.0.0.i.i), !noalias !110
   %i.aiz = add i64 %i.aiy, %i.afq
@@ -1355,7 +1360,7 @@ bb.et:                                            ; preds = %_RNvXs_NtNtNtCskKLD
 bb.eu:                                            ; preds = %bb.et
   %i.ajm = extractvalue { ptr, i64 } %i.ajj, 0
   %i.ajn = sub i64 %.sroa.023.01688, %.sroa.052.01681 ; 2 uses
-  %i.ajo = sub i64 %.sroa.014.01689, %.sroa.052.01681 ; 2 uses
+  %i.ajo = sub nuw i64 %.sroa.014.01689, %.sroa.052.01681 ; 2 uses
   %i.ajp = getelementptr inbounds nuw [8 x i8], ptr %i.ajm, i64 %.sroa.8.01679 ; 2 uses
   %i.ajq = load ptr, ptr %i.ajp, align 8, !nonnull !8, !noundef !8 ; 3 uses
   %i.ajr = getelementptr inbounds nuw i8, ptr %i.ajq, i64 16
@@ -1758,7 +1763,7 @@ bb.eb:                                            ; preds = %_RNvXs_NtNtNtCskKLD
 bb.ec:                                            ; preds = %bb.eb
   %i.aum = extractvalue { ptr, i64 } %i.auj, 0
   %i.aun = sub i64 %.sroa.060.01450, %.sroa.0101.01442 ; 2 uses
-  %i.auo = sub i64 %.sroa.037.01449, %.sroa.0101.01442 ; 2 uses
+  %i.auo = sub nuw i64 %.sroa.037.01449, %.sroa.0101.01442 ; 2 uses
   %i.aup = getelementptr inbounds nuw [8 x i8], ptr %i.aum, i64 %.sroa.8.01440 ; 2 uses
   %i.auq = load ptr, ptr %i.aup, align 8, !nonnull !8, !noundef !8 ; 3 uses
   %i.aur = getelementptr inbounds nuw i8, ptr %i.auq, i64 16
@@ -2161,8 +2166,7 @@ bb.p:                                             ; preds = %bb.t
 
 .split.loop.exit:                                 ; preds = %bb.o, %bb.t
   %.lcssa135.sink = phi i32 [ %i.bj, %bb.t ], [ %i.bb, %bb.o ]
-  %2 = sext i32 %.lcssa135.sink to i64
-  %i.bf = call i8 @llvm.scmp.i8.i64(i64 %2, i64 0) ; 2 uses
+  %i.bf = call i8 @llvm.scmp.i8.i32(i32 %.lcssa135.sink, i32 0) ; 2 uses
   %i.bg = load i64, ptr %i.c, align 8, !range !4, !alias.scope !325, !noundef !8
   %.not.i.i = icmp eq i64 %i.bg, -1
   br i1 %.not.i.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs2wCc12Mnjqg_5ropey4iter6ChunksEBF_.exit, label %bb.q
@@ -2461,9 +2465,6 @@ declare { ptr, i64 } @_RNvMs7_NtCs2wCc12Mnjqg_5ropey4iterNtB5_6Chunks9prev_impl(
 declare i32 @memcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64, i64) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read)
@@ -2477,6 +2478,9 @@ declare i64 @llvm.umin.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #8

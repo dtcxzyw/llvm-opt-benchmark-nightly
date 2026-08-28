@@ -205,8 +205,8 @@ bb.y:                                             ; preds = %stbir__calculate_co
   %.1141 = phi i32 [ %.0140, %stbir__calculate_coefficients_for_gather_downsample.exit ], [ %i.cv, %bb.k ]
   %i.gl = xor i32 %i.co, -1                       ; 2 uses
   %i.gm = icmp sgt i32 %.1149, 0
-  %.pre = load ptr, ptr %0, align 8, !tbaa !35    ; 5 uses
-  %.pre209 = ptrtoaddr ptr %.pre to i64           ; 6 uses
+  %.pre = load ptr, ptr %0, align 8, !tbaa !35    ; 6 uses
+  %.pre209 = ptrtoaddr ptr %.pre to i64           ; 4 uses
   br i1 %i.gm, label %.lr.ph184, label %._crit_edge185
 
 .lr.ph184:                                        ; preds = %bb.y
@@ -214,7 +214,8 @@ bb.y:                                             ; preds = %stbir__calculate_co
   %i.go = load ptr, ptr %i.m, align 8, !tbaa !148
   %i.gp = sext i32 %i.gn to i64
   %i.gq = sext i32 %.1141 to i64
-  %i.gr = add i64 %.pre209, 16
+  %3 = ptrtoaddr ptr %.pre to i64                 ; 2 uses
+  %i.gr = add i64 %3, 16
   br label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph184, %._crit_edge178
@@ -276,10 +277,10 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
 
 .lr.ph.preheader:                                 ; preds = %bb.ad
   %i.hs = shl nsw i64 %i.hp, 3                    ; 2 uses
-  %i.ht = add i64 %i.gr, %i.hs
+  %i.ht = add i64 %i.hs, %i.gr
   %umax = tail call i64 @llvm.umax.i64(i64 %i.hf, i64 %i.ht)
   %i.hu = add i64 %umax, -9
-  %i.hv = add i64 %i.hs, %.pre209
+  %i.hv = add i64 %i.hs, %3
   %i.hw = sub i64 %i.hu, %i.hv                    ; 2 uses
   %i.hx = lshr i64 %i.hw, 3
   %i.hy = add nuw nsw i64 %i.hx, 1                ; 2 uses

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/collection-65f4deb478ee6f80.collection.9c3f6a4bd60d140-cgu.203?download=true
+inline.NumInlined: 194
+inline.NumDeleted: 85
 begin_hunk_0_@_RNvXNtNtNtCsPYQCUnoTxQ_10collection10operations11generalizer5countNtNtCs5QaNqjAn6vc_5shard5count20CountRequestInternalNtB4_11Generalizer14remove_details:bb.a
   %.sroa.0.0 = phi i64 [ %.sroa.0.0.copyload, %bb.b ], [ -2, %bb.a ]
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -200,8 +202,8 @@ _RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5
   %.sroa.54.i.sroa.0.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx.i, align 4
   %.sroa.54.i.sroa.4.0..sroa.4.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 232
   %.sroa.54.i.sroa.4.0.copyload = load i64, ptr %.sroa.54.i.sroa.4.0..sroa.4.0..sroa_idx.i.sroa_idx, align 8
-  %.sroa.54.i.sroa.0.0 = select i1 %.not6.i, i32 undef, i32 %.sroa.54.i.sroa.0.0.copyload
   %.sroa.54.i.sroa.4.0 = select i1 %.not6.i, i64 undef, i64 %.sroa.54.i.sroa.4.0.copyload
+  %.sroa.54.i.sroa.0.0 = select i1 %.not6.i, i32 undef, i32 %.sroa.54.i.sroa.0.0.copyload
   br label %bb.aa
 
 bb.x:                                             ; preds = %bb.t
@@ -604,7 +606,7 @@ _RNvXs_NtNtCsgOCJwUSa4vG_5tonic5codec6bufferNtB4_9DecodeBufNtNtNtCs14kzo5Se9zC_5
   %i.m = sub nuw nsw i64 %.sroa.9.021.i, %..i.i   ; 2 uses
   tail call void @_RNvMs_NtCs14kzo5Se9zC_5bytes9bytes_mutNtB4_8BytesMut17advance_unchecked(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %.val17.i, i64 noundef range(i64 0, 9) %..i.i), !noalias !433
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !431
-  %i.n = sub i64 %.val181920.i, %..i.i            ; 2 uses
+  %i.n = sub nuw i64 %.val181920.i, %..i.i        ; 2 uses
   store i64 %i.n, ptr %i.e, align 8, !alias.scope !435, !noalias !421
   %i.o = icmp eq i64 %i.m, 0
   br i1 %i.o, label %_RNvYNtNtNtCsgOCJwUSa4vG_5tonic5codec6buffer9DecodeBufNtNtNtCs14kzo5Se9zC_5bytes3buf8buf_impl3Buf17try_copy_to_sliceCsPYQCUnoTxQ_10collection.exit, label %bb.b

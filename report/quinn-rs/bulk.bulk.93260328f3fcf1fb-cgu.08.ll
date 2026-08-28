@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quinn-rs/original/bulk.bulk.93260328f3fcf1fb-cgu.08?download=true
+inline.NumInlined: 399
+inline.NumDeleted: 201
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RINvMNtNtCsar2VadbF9t7_5tokio7runtime7runtimeNtB3_7Runtime8block_onNCNvCscDgBWNIBxoJ_4bulk6server0EB17_:bb.a
   %i.k = load ptr, ptr %i.a, align 8, !dbg !10537, !alias.scope !10538, !noalias !10516, !noundef !23 ; 2 uses
   %i.l = icmp eq ptr %i.k, null, !dbg !10537
@@ -200,6 +204,7 @@ bb.g:                                             ; preds = %bb.f
     #dbg_value(i1 false, !10964, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !11006)
   %i.m = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.i, i64 noundef range(i64 1, -9223372036854775807) 1) #20, !dbg !11034, !noalias !11021 ; 3 uses
     #dbg_value(ptr %i.m, !10848, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11024)
+    #dbg_value(i64 poison, !10848, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11024)
   %i.n = icmp eq ptr %i.m, null, !dbg !11035
   br i1 %i.n, label %.invoke, label %bb.u, !dbg !11036
 
@@ -275,6 +280,7 @@ bb.j:                                             ; preds = %bb.i
     #dbg_value(i1 false, !10964, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !11084)
   %i.r = call noundef dereferenceable_or_null(20) ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) 20, i64 noundef range(i64 1, -9223372036854775807) 1) #20, !dbg !11098, !noalias !11090 ; 3 uses
     #dbg_value(ptr %i.r, !10848, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11093)
+    #dbg_value(i64 poison, !10848, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11093)
   %i.s = icmp eq ptr %i.r, null, !dbg !11099
   br i1 %i.s, label %.invoke, label %bb.k, !dbg !11100
 
@@ -609,6 +615,7 @@ bb.g:                                             ; preds = %bb.f
     #dbg_value(i1 false, !10964, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !11415)
   %i.m = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.i, i64 noundef range(i64 1, -9223372036854775807) 1) #20, !dbg !11429, !noalias !11421 ; 3 uses
     #dbg_value(ptr %i.m, !10848, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11424)
+    #dbg_value(i64 poison, !10848, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11424)
   %i.n = icmp eq ptr %i.m, null, !dbg !11430
   br i1 %i.n, label %bb.l, label %bb.m, !dbg !11431
 
@@ -671,6 +678,7 @@ bb.h:                                             ; preds = %bb.a, %bb.d, %bb.c
     #dbg_value(i1 false, !10964, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !11472)
   %i.o = call noundef dereferenceable_or_null(20) ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) 20, i64 noundef range(i64 1, -9223372036854775807) 1) #20, !dbg !11486, !noalias !11478 ; 3 uses
     #dbg_value(ptr %i.o, !10848, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11481)
+    #dbg_value(i64 poison, !10848, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11481)
   %i.p = icmp eq ptr %i.o, null, !dbg !11487
   br i1 %i.p, label %bb.i, label %bb.j, !dbg !11488
 
@@ -1073,8 +1081,8 @@ _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Al
 
 bb.h:                                             ; preds = %bb.g, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit
   %.pn29 = phi ptr [ %i.j, %bb.g ], [ %i.k, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit ] ; 2 uses
-    #dbg_value(i64 poison, !10848, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !20149)
     #dbg_value(ptr %.pn29, !10848, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20149)
+    #dbg_value(i64 poison, !10848, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !20149)
   %i.l = icmp eq ptr %.pn29, null, !dbg !20167
   br i1 %i.l, label %bb.i, label %bb.j, !dbg !20168
 

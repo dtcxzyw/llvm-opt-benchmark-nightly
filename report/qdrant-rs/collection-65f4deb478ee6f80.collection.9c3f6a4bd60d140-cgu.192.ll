@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/collection-65f4deb478ee6f80.collection.9c3f6a4bd60d140-cgu.192?download=true
+inline.NumInlined: 226
+inline.NumDeleted: 113
 begin_hunk_0_@_RINvYNtNvXNtNtCs8O45qwFIwQX_10serde_json5value2deNtBa_5ValueNtNtCs4NSHK7GLW4I_10serde_core2de11Deserialize11deserialize12ValueVisitorNtBY_7Visitor14visit_byte_bufNtNtCsadazKHFPhDw_11serde_value2de17DeserializerErrorECsPYQCUnoTxQ_10collection:bb.a
 bb.e:                                             ; preds = %bb.d
   %i.l = landingpad { ptr, i32 }
@@ -200,8 +202,8 @@ bb.c:                                             ; preds = %bb.a
   br label %_RINvXNvXNtNtCs8O45qwFIwQX_10serde_json5value2deNtB8_5ValueNtNtCs4NSHK7GLW4I_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtCs8jn5zD2RXga_10serde_cbor5error5ErrorECsPYQCUnoTxQ_10collection.exit
 
 _RINvXNvXNtNtCs8O45qwFIwQX_10serde_json5value2deNtB8_5ValueNtNtCs4NSHK7GLW4I_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtCs8jn5zD2RXga_10serde_cbor5error5ErrorECsPYQCUnoTxQ_10collection.exit: ; preds = %bb.b, %bb.c
-  %.sroa.5.sroa.0.0.i = phi i64 [ %.sroa.5.sroa.0.0.copyload8.i, %bb.b ], [ 2, %bb.c ]
   %.sroa.5.sroa.5.0.i = phi double [ %.sroa.5.sroa.5.0.copyload9.i, %bb.b ], [ %i.b, %bb.c ]
+  %.sroa.5.sroa.0.0.i = phi i64 [ %.sroa.5.sroa.0.0.copyload8.i, %bb.b ], [ 2, %bb.c ]
   %.sroa.0.0.i = phi i64 [ -9223372036854775808, %bb.b ], [ -9223372036854775806, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !384
   store i64 %.sroa.0.0.i, ptr %0, align 8, !alias.scope !384
@@ -237,8 +239,8 @@ bb.c:                                             ; preds = %bb.a
   br label %_RINvXNvXNtNtCs8O45qwFIwQX_10serde_json5value2deNtB8_5ValueNtNtCs4NSHK7GLW4I_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtCsadazKHFPhDw_11serde_value2de17DeserializerErrorECsPYQCUnoTxQ_10collection.exit
 
 _RINvXNvXNtNtCs8O45qwFIwQX_10serde_json5value2deNtB8_5ValueNtNtCs4NSHK7GLW4I_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtCsadazKHFPhDw_11serde_value2de17DeserializerErrorECsPYQCUnoTxQ_10collection.exit: ; preds = %bb.b, %bb.c
-  %.sroa.5.sroa.0.0.i = phi i64 [ %.sroa.5.sroa.0.0.copyload8.i, %bb.b ], [ 2, %bb.c ]
   %.sroa.5.sroa.5.0.i = phi double [ %.sroa.5.sroa.5.0.copyload9.i, %bb.b ], [ %i.b, %bb.c ]
+  %.sroa.5.sroa.0.0.i = phi i64 [ %.sroa.5.sroa.0.0.copyload8.i, %bb.b ], [ 2, %bb.c ]
   %.sroa.0.0.i = phi i64 [ -9223372036854775808, %bb.b ], [ -9223372036854775806, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !395
   store i64 %.sroa.0.0.i, ptr %0, align 8, !alias.scope !395
@@ -274,8 +276,8 @@ bb.c:                                             ; preds = %bb.a
   br label %_RINvXNvXNtNtCs8O45qwFIwQX_10serde_json5value2deNtB8_5ValueNtNtCs4NSHK7GLW4I_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtCsb3nlOWP6RTB_9rmp_serde6decode5ErrorECsPYQCUnoTxQ_10collection.exit
 
 _RINvXNvXNtNtCs8O45qwFIwQX_10serde_json5value2deNtB8_5ValueNtNtCs4NSHK7GLW4I_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtCsb3nlOWP6RTB_9rmp_serde6decode5ErrorECsPYQCUnoTxQ_10collection.exit: ; preds = %bb.b, %bb.c
-  %.sroa.5.sroa.0.0.i = phi i64 [ %.sroa.5.sroa.0.0.copyload8.i, %bb.b ], [ 2, %bb.c ]
   %.sroa.5.sroa.5.0.i = phi double [ %.sroa.5.sroa.5.0.copyload9.i, %bb.b ], [ %i.b, %bb.c ]
+  %.sroa.5.sroa.0.0.i = phi i64 [ %.sroa.5.sroa.0.0.copyload8.i, %bb.b ], [ 2, %bb.c ]
   %.sroa.0.0.i = phi i64 [ -9223372036854775808, %bb.b ], [ -9223372036854775806, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !406
   store i64 %.sroa.0.0.i, ptr %0, align 8, !alias.scope !406

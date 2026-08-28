@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quiche-rs/original/quiche.quiche.25c52dd429969cee-cgu.15?download=true
+inline.NumInlined: 225
+inline.NumDeleted: 114
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvNtCs3f36owOmepS_6quiche3tls16set_write_secret:bb.a
     #dbg_value(ptr %3, !11450, !DIExpression(), !11477)
     #dbg_value(i64 %4, !11451, !DIExpression(), !11477)
@@ -200,8 +204,8 @@ bb.m:                                             ; preds = %bb.i
   br i1 %i.ah, label %_RNvNtCs3f36owOmepS_6quiche3tls19get_cipher_from_ptr.exit, label %bb.n, !dbg !11659
 
 bb.n:                                             ; preds = %bb.l, %bb.m
-  %.sroa.03.1 = phi ptr [ %i.ae, %bb.m ], [ %.sroa.03.0, %bb.l ], !dbg !11645 ; 6 uses
   %.sroa.09.0.in = phi i32 [ %switch.tableidx.i, %bb.m ], [ %switch.tableidx.i78, %bb.l ]
+  %.sroa.03.1 = phi ptr [ %i.ae, %bb.m ], [ %.sroa.03.0, %bb.l ], !dbg !11645 ; 6 uses
   %.sroa.09.0 = trunc nuw nsw i32 %.sroa.09.0.in to i8, !dbg !11660
     #dbg_value(ptr %.sroa.03.1, !11465, !DIExpression(), !11632)
     #dbg_value(ptr %3, !11471, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11662)

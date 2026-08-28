@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quinn-rs/original/quinn_proto-aa4faf9a7542e2b9.quinn_proto.ca9d529fb421aa30-cgu.14?download=true
+inline.NumInlined: 504
+inline.NumDeleted: 240
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_RNvMNtNtCshovLROGBtMy_11quinn_proto10connection6pacingNtB2_5Pacer5delay:bb.a
 
 bb.k:                                             ; preds = %bb.j
@@ -200,7 +205,7 @@ bb.u:                                             ; preds = %bb.t
     #dbg_value(ptr undef, !8957, !DIExpression(DW_OP_deref), !8961)
     #dbg_value(ptr undef, !8960, !DIExpression(DW_OP_deref), !8961)
   %..i67 = call noundef i64 @llvm.umax.i64(i64 %i.dm, i64 %3), !dbg !8963
-  %i.dn = sub i64 %..i67, %..i66, !dbg !8964
+  %i.dn = sub nuw i64 %..i67, %..i66, !dbg !8964
     #dbg_value(i64 %1, !8965, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8982)
     #dbg_value(i32 %2, !8965, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !8982)
   %i.do = and i64 %i.dn, 4294967295, !dbg !8984   ; 2 uses
@@ -247,8 +252,8 @@ _RNvMNtCskKLDkoKarTP_4core4timeNtB2_8Duration11checked_mul.exit: ; preds = %bb.u
   %.sroa.0.0.i = phi i64 [ undef, %bb.u ], [ %i.dx, %bb.v ], !dbg !9016
     #dbg_value(i64 poison, !8471, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8496)
     #dbg_value(i32 %.sroa.3.0.i, !8471, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !8496)
-    #dbg_value(i32 poison, !8464, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !8544)
     #dbg_value(i64 poison, !8464, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8544)
+    #dbg_value(i32 poison, !8464, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !8544)
     #dbg_value(i64 poison, !9037, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9048)
     #dbg_value(i32 poison, !9037, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !9048)
     #dbg_value(i32 %i.ai, !9041, !DIExpression(), !9048)
@@ -257,12 +262,12 @@ _RNvMNtCskKLDkoKarTP_4core4timeNtB2_8Duration11checked_mul.exit: ; preds = %bb.u
 
 bb.w:                                             ; preds = %_RNvMNtCskKLDkoKarTP_4core4timeNtB2_8Duration11checked_mul.exit
   %.not61 = icmp eq i32 %.sroa.3.0.i, -1, !dbg !9051 ; 2 uses
-  %.sroa.59.0 = select i1 %.not61, i32 999999999, i32 %.sroa.3.0.i, !dbg !9052 ; 2 uses
-    #dbg_value(i32 %.sroa.59.0, !8464, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !8544)
-    #dbg_value(i32 %.sroa.59.0, !9037, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !9048)
   %.sroa.08.0 = select i1 %.not61, i64 -1, i64 %.sroa.0.0.i, !dbg !9052 ; 2 uses
     #dbg_value(i64 %.sroa.08.0, !8464, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8544)
     #dbg_value(i64 %.sroa.08.0, !9037, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9048)
+  %.sroa.59.0 = select i1 %.not61, i32 999999999, i32 %.sroa.3.0.i, !dbg !9052 ; 2 uses
+    #dbg_value(i32 %.sroa.59.0, !8464, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !8544)
+    #dbg_value(i32 %.sroa.59.0, !9037, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !9048)
   %i.ea = udiv i64 %.sroa.08.0, %5, !dbg !9053    ; 3 uses
     #dbg_value(i64 %i.ea, !9042, !DIExpression(), !9054)
     #dbg_value(i64 poison, !9044, !DIExpression(), !9054)
@@ -367,15 +372,15 @@ bb.aa:                                            ; preds = %bb.x, %bb.w
     #dbg_value(i32 poison, !9047, !DIExpression(), !9110)
     #dbg_value(!DIArgList(i32 poison, i64 poison, i32 poison), !8972, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_plus, DW_OP_LLVM_convert, 32, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !9123)
     #dbg_value(!DIArgList(i32 poison, i32 poison), !8965, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 32), !9117)
-    #dbg_value(!DIArgList(i32 poison, i32 poison), !8432, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 32), !8499)
     #dbg_value(!DIArgList(i32 poison, i32 poison), !8452, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 32), !8500)
+    #dbg_value(!DIArgList(i32 poison, i32 poison), !8432, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 32), !8499)
     #dbg_value(!DIArgList(i32 poison, i32 poison), !9070, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value), !9111)
     #dbg_value(!DIArgList(i32 poison, i32 poison), !9045, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value), !9110)
     #dbg_value(!DIArgList(i32 poison, i64 poison, i32 poison), !8972, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_plus, DW_OP_LLVM_convert, 32, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !9123)
     #dbg_value(!DIArgList(i32 poison, i32 poison), !9045, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value), !9110)
     #dbg_value(!DIArgList(i32 poison, i32 poison), !9070, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value), !9111)
-    #dbg_value(!DIArgList(i32 poison, i32 poison), !8452, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 32), !8500)
     #dbg_value(!DIArgList(i32 poison, i32 poison), !8432, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 32), !8499)
+    #dbg_value(!DIArgList(i32 poison, i32 poison), !8452, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 32), !8500)
     #dbg_value(!DIArgList(i32 poison, i32 poison), !8965, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 32), !9117)
     #dbg_value(!DIArgList(i32 poison, i64 poison, i32 poison), !8972, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 2, DW_OP_plus, DW_OP_LLVM_convert, 32, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !9123)
     #dbg_value(!DIArgList(i32 poison, i32 poison), !8972, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_LLVM_convert, 32, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_constu, 2, DW_OP_shl, DW_OP_stack_value), !9123)
@@ -416,13 +421,13 @@ bb.aa:                                            ; preds = %bb.x, %bb.w
     #dbg_value(!DIArgList(i32 %i.es, i32 %i.ex), !8972, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_LLVM_convert, 32, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_constu, 2, DW_OP_shl, DW_OP_stack_value), !9123)
     #dbg_value(!DIArgList(i32 %i.es, i32 %i.ex), !9045, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value), !9110)
     #dbg_value(!DIArgList(i32 %i.es, i32 %i.ex), !9070, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value), !9111)
-    #dbg_value(!DIArgList(i32 %i.es, i32 %i.ex), !8452, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 32), !8500)
     #dbg_value(!DIArgList(i32 %i.es, i32 %i.ex), !8432, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 32), !8499)
+    #dbg_value(!DIArgList(i32 %i.es, i32 %i.ex), !8452, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 32), !8500)
     #dbg_value(!DIArgList(i32 %i.es, i32 %i.ex), !8965, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 32), !9117)
   %i.ey = add nuw nsw i32 %i.ex, %i.es, !dbg !9140 ; 2 uses
     #dbg_value(i32 %i.ey, !8965, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !9117)
-    #dbg_value(i32 %i.ey, !8432, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !8499)
     #dbg_value(i32 %i.ey, !8452, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !8500)
+    #dbg_value(i32 %i.ey, !8432, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !8499)
     #dbg_value(i32 %i.ey, !9070, !DIExpression(), !9111)
     #dbg_value(i32 %i.ey, !9045, !DIExpression(), !9110)
     #dbg_value(i32 %i.ey, !8972, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_constu, 2, DW_OP_shl, DW_OP_stack_value), !9123)
@@ -825,7 +830,7 @@ bb.b:                                             ; preds = %bb.a
     #dbg_value(ptr %0, !21473, !DIExpression(DW_OP_plus_uconst, 16, DW_OP_stack_value), !21479)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !21479
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !21437
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %i.j, i64 24, i1 false), !dbg !21479
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %i.j, i64 24, i1 false), !dbg !21479
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 40, !dbg !21437
   %i.m = load i64, ptr %i.l, align 8, !dbg !21437, !noundef !64
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 48, !dbg !21437 ; 2 uses
@@ -899,7 +904,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCshovLROGBtMy_11quinn_proto10conge
 
 _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNtNtNtCshovLROGBtMy_11quinn_proto10congestion5cubic5CubicE3newBK_.exit: ; preds = %bb.b
     #dbg_value(ptr %i.s, !21488, !DIExpression(), !21591)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.s, ptr noundef nonnull align 8 dereferenceable(72) %i.a, i64 72, i1 false), !dbg !21592
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.s, ptr noundef nonnull align 16 dereferenceable(72) %i.a, i64 72, i1 false), !dbg !21592
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !21593
   %i.y = insertvalue { ptr, ptr } poison, ptr %i.s, 0, !dbg !21594
   %i.z = insertvalue { ptr, ptr } %i.y, ptr @116, 1, !dbg !21594
@@ -1302,7 +1307,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCshovLROGBtMy_11quinn_proto10conge
 
 _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNtNtNtCshovLROGBtMy_11quinn_proto10congestion8new_reno7NewRenoE3newBK_.exit: ; preds = %bb.b
     #dbg_value(ptr %i.q, !22787, !DIExpression(), !26123)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.q, ptr noundef nonnull align 8 dereferenceable(56) %i.a, i64 56, i1 false), !dbg !26124
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.q, ptr noundef nonnull align 16 dereferenceable(56) %i.a, i64 56, i1 false), !dbg !26124
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !26125
   %i.w = insertvalue { ptr, ptr } poison, ptr %i.q, 0, !dbg !26126
   %i.x = insertvalue { ptr, ptr } %i.w, ptr @126, 1, !dbg !26126

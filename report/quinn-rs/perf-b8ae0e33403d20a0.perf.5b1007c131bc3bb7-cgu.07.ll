@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quinn-rs/original/perf-b8ae0e33403d20a0.perf.5b1007c131bc3bb7-cgu.07?download=true
+inline.NumInlined: 201
+inline.NumDeleted: 102
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_RNvMNtCs172jLVBUT4Z_12clap_builder5errorNtB2_5Error12invalid_utf8Cs7OITKvp9Irj_4perf:bb.a
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 148, !dbg !7331
   store i8 -1, ptr %.sroa.7.0..sroa_idx, align 4, !dbg !7331
@@ -200,7 +204,7 @@ bb.a:
           to label %bb.c unwind label %.thread, !dbg !7479
 
 bb.b:                                             ; preds = %bb.z, %bb.j
-  br i1 %.sroa.014.1, label %bb.ab, label %bb.aa, !dbg !7538
+  br i1 %.sroa.012.0.a, label %bb.ab, label %bb.aa, !dbg !7538
 
 .thread:                                          ; preds = %bb.a
   %i.n = landingpad { ptr, i32 }
@@ -263,12 +267,12 @@ bb.i:                                             ; preds = %bb.g
   unreachable, !dbg !7608
 
 bb.j:                                             ; preds = %bb.s, %.thread113, %.body
-  %.sroa.012.0.a = phi i1 [ %i.ad, %.body ], [ true, %.thread113 ], [ true, %bb.s ], !dbg !7390
-  %.sroa.014.1 = phi i1 [ %i.ae, %.body ], [ true, %.thread113 ], [ true, %bb.s ], !dbg !7615
+  %.sroa.012.0.a = phi i1 [ %i.ae, %.body ], [ true, %.thread113 ], [ true, %bb.s ], !dbg !7615
+  %.sroa.014.1 = phi i1 [ %i.ad, %.body ], [ true, %.thread113 ], [ true, %bb.s ], !dbg !7390
   %.pn101 = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.ar, %.thread113 ], [ %i.av, %bb.s ] ; 2 uses
   %i.aa = load i64, ptr %i.h, align 8, !dbg !7538, !range !7356, !noundef !30
   %i.ab = icmp ne i64 %i.aa, -1, !dbg !7538
-  %or.cond = select i1 %i.ab, i1 %.sroa.012.0.a, i1 false, !dbg !7538
+  %or.cond = select i1 %i.ab, i1 %.sroa.014.1, i1 false, !dbg !7538
   br i1 %or.cond, label %bb.z, label %bb.b, !dbg !7538
 
 bb.k:                                             ; preds = %bb.h, %bb.u, %bb.o
@@ -671,7 +675,7 @@ begin_hunk_1_@llvm.memset.p0.i64
 !7612 = !DILocation(line: 0, scope: !5684, inlinedAt: !7613)
 !7613 = distinct !DILocation(line: 848, column: 1, scope: !5673, inlinedAt: !7607)
 !7614 = !DILocation(line: 848, column: 1, scope: !5684, inlinedAt: !7613)
-!7615 = !DILocation(line: 467, column: 66, scope: !7387)
+!7615 = !DILocation(line: 466, column: 64, scope: !7387)
 !7616 = !DILocation(line: 460, column: 85, scope: !7370)
 !7617 = !DILocation(line: 130, column: 29, scope: !7474, inlinedAt: !7477)
 !7618 = !DILocation(line: 288, column: 16, scope: !2209, inlinedAt: !7619)

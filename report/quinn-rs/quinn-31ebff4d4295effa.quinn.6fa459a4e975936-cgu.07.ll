@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quinn-rs/original/quinn-31ebff4d4295effa.quinn.6fa459a4e975936-cgu.07?download=true
+inline.NumInlined: 223
+inline.NumDeleted: 98
 begin_hunk_0_@_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner11finish_growCsB8MOEg02Qk_5quinn:bb.a
     #dbg_value(i64 %i.b, !9635, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9636)
     #dbg_value(i64 %i.b, !9644, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9646)
@@ -200,8 +202,8 @@ _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Al
 
 bb.h:                                             ; preds = %bb.g, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit
   %.pn29 = phi ptr [ %i.j, %bb.g ], [ %i.k, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit ] ; 2 uses
-    #dbg_value(i64 poison, !9792, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9892)
     #dbg_value(ptr %.pn29, !9792, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9892)
+    #dbg_value(i64 poison, !9792, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9892)
   %i.l = icmp eq ptr %.pn29, null, !dbg !9910
   br i1 %i.l, label %bb.i, label %bb.j, !dbg !9911
 

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rand-rs/original/getrandom-d59209e3097fc442.getrandom.d4a16d4303df7226-cgu.0?download=true
+inline.NumInlined: 50
+inline.NumDeleted: 34
 begin_hunk_0_@_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file12open_or_wait:bb.a
 
 bb.k:                                             ; preds = %bb.j
@@ -200,16 +202,16 @@ bb.k:                                             ; preds = %bb.e
 
 switch.lookup:                                    ; preds = %bb.d
   %i.ac = zext nneg i32 %switch.tableidx to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1_NtCsifPj74NEIss_9getrandom5errorNtB5_5ErrorNtNtCskKLDkoKarTP_4core3fmt7Display3fmt.20, i64 %i.ac
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  %i.ad = zext nneg i32 %switch.tableidx to i64
-  %switch.gep5 = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs1_NtCsifPj74NEIss_9getrandom5errorNtB5_5ErrorNtNtCskKLDkoKarTP_4core3fmt7Display3fmt, i64 %i.ad
-  %switch.load6 = load i8, ptr %switch.gep5, align 1
-  %switch.ext = zext i8 %switch.load6 to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvXs1_NtCsifPj74NEIss_9getrandom5errorNtB5_5ErrorNtNtCskKLDkoKarTP_4core3fmt7Display3fmt, i64 %i.ac
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %i.ad = zext i8 %switch.load to i64
+  %2 = zext nneg i32 %switch.tableidx to i64
+  %switch.gep5 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs1_NtCsifPj74NEIss_9getrandom5errorNtB5_5ErrorNtNtCskKLDkoKarTP_4core3fmt7Display3fmt.20, i64 %2
+  %switch.load6 = load ptr, ptr %switch.gep5, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  store ptr %switch.load, ptr %i.d, align 8, !captures !34
+  store ptr %switch.load6, ptr %i.d, align 8, !captures !34
   %i.ae = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store i64 %switch.ext, ptr %i.ae, align 8
+  store i64 %i.ad, ptr %i.ae, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i32 %i.h, ptr %i.c, align 4
   %i.af = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.g, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @12, i64 noundef 13, ptr noundef nonnull %i.c, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @5) ; 0 uses

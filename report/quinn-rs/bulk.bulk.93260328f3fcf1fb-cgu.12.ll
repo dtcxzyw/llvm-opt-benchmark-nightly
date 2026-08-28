@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quinn-rs/original/bulk.bulk.93260328f3fcf1fb-cgu.12?download=true
+inline.NumInlined: 309
+inline.NumDeleted: 159
 begin_hunk_0_@_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync8ArcInnerINtNtNtCsG258MDvU3F_3std6thread9lifecycle6PacketINtNtB4_6result6ResultNtCscDgBWNIBxoJ_4bulk11ClientStatsNtCsbHiBx3jRrxb_6anyhow5ErrorEEEEB2o_:bb.a
   br i1 %i.l, label %bb.g, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsG258MDvU3F_3std6thread9lifecycle6PacketINtNtB4_6result6ResultNtCscDgBWNIBxoJ_4bulk11ClientStatsNtCsbHiBx3jRrxb_6anyhow5ErrorEEEB1L_.exit, !dbg !7788
 
@@ -200,15 +202,15 @@ bb.i:                                             ; preds = %.body.i.i.i.i.i.i
 
 .thread.i.i:                                      ; preds = %bb.f, %bb.e, %bb.b, %bb.a
   store i64 0, ptr %i.c, align 8, !dbg !7987, !alias.scope !8048
-    #dbg_value(ptr undef, !7894, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7937)
     #dbg_value(ptr %i.c, !7894, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7937)
+    #dbg_value(ptr undef, !7894, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7937)
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEECscDgBWNIBxoJ_4bulk.exit.i.i, !dbg !8052
 
 bb.j:                                             ; preds = %.body.i.i.i.i.i.i
   %i.aa = extractvalue { ptr, ptr } %i.y, 0, !dbg !8050 ; 2 uses
   %i.ab = extractvalue { ptr, ptr } %i.y, 1, !dbg !8050 ; 2 uses
-    #dbg_value(ptr %i.ab, !7894, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7937)
     #dbg_value(ptr %i.aa, !7894, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7937)
+    #dbg_value(ptr %i.ab, !7894, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7937)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ]
   %.not.i.i = icmp eq ptr %i.aa, null, !dbg !8053
   br i1 %.not.i.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEECscDgBWNIBxoJ_4bulk.exit.i.i, label %bb.k, !dbg !8052
@@ -611,15 +613,15 @@ bb.b:                                             ; preds = %.body
 
 .thread:                                          ; preds = %bb.a
   store i64 -3, ptr %0, align 8, !dbg !16788, !alias.scope !16789
-    #dbg_value(ptr undef, !16731, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !16755)
     #dbg_value(ptr %0, !16731, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !16755)
+    #dbg_value(ptr undef, !16731, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !16755)
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEECscDgBWNIBxoJ_4bulk.exit, !dbg !16797
 
 bb.c:                                             ; preds = %.body
   %i.h = extractvalue { ptr, ptr } %i.f, 0, !dbg !16795 ; 2 uses
   %i.i = extractvalue { ptr, ptr } %i.f, 1, !dbg !16795 ; 2 uses
-    #dbg_value(ptr %i.i, !16731, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !16755)
     #dbg_value(ptr %i.h, !16731, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !16755)
+    #dbg_value(ptr %i.i, !16731, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !16755)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.i) ]
   %.not7 = icmp eq ptr %i.h, null, !dbg !16737
   br i1 %.not7, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEECscDgBWNIBxoJ_4bulk.exit, label %bb.d, !dbg !16797

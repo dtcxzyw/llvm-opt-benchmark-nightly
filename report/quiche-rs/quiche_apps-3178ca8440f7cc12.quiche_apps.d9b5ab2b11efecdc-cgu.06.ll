@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quiche-rs/original/quiche_apps-3178ca8440f7cc12.quiche_apps.d9b5ab2b11efecdc-cgu.06?download=true
+inline.NumInlined: 382
+inline.NumDeleted: 94
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvMs0_NtCs3f36owOmepS_6quiche6streamNtB5_9StreamMap7collectCsiGRwBGCeC5s_11quiche_apps:bb.a
   %i.bb = and i64 %.sroa.0.0.val.i.i.i36, -2, !dbg !11119 ; 2 uses
     #dbg_value(i64 %i.bb, !4590, !DIExpression(), !11120)
@@ -200,14 +204,14 @@ bb.a:
   br i1 %.not12.i, label %_RNvMst_NtCsazSMmbOrWdo_21intrusive_collections6rbtreeINtB5_6RBTreeNtNtCs3f36owOmepS_6quiche6stream29StreamReadablePriorityAdapterE4iterCsiGRwBGCeC5s_11quiche_apps.exit, label %.preheader.i, !dbg !11366
 
 _RNvMst_NtCsazSMmbOrWdo_21intrusive_collections6rbtreeINtB5_6RBTreeNtNtCs3f36owOmepS_6quiche6stream29StreamReadablePriorityAdapterE4iterCsiGRwBGCeC5s_11quiche_apps.exit: ; preds = %.preheader.i, %bb.a
-  %.sroa.6.0.a = phi ptr [ null, %bb.a ], [ %.sroa.0.0.i, %.preheader.i ], !dbg !11329
-  %.sroa.4.0 = phi ptr [ null, %bb.a ], [ %.sroa.03.0.i, %.preheader.i ], !dbg !11329
+  %.sroa.6.0.a = phi ptr [ null, %bb.a ], [ %.sroa.03.0.i, %.preheader.i ], !dbg !11329
+  %.sroa.4.0 = phi ptr [ null, %bb.a ], [ %.sroa.0.0.i, %.preheader.i ], !dbg !11329
     #dbg_value(ptr %i.c, !11367, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11409)
     #dbg_value(ptr %i.c, !11411, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11420)
-    #dbg_value(ptr %.sroa.4.0, !11367, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11409)
-    #dbg_value(ptr %.sroa.4.0, !11411, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11420)
-    #dbg_value(ptr %.sroa.6.0.a, !11367, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11409)
-    #dbg_value(ptr %.sroa.6.0.a, !11411, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11420)
+    #dbg_value(ptr %.sroa.6.0.a, !11367, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11409)
+    #dbg_value(ptr %.sroa.6.0.a, !11411, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11420)
+    #dbg_value(ptr %.sroa.4.0, !11367, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11409)
+    #dbg_value(ptr %.sroa.4.0, !11411, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11420)
     #dbg_declare(ptr %i.b, !11416, !DIExpression(), !11422)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !11423, !noalias !11424
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 64, !dbg !11428
@@ -215,9 +219,9 @@ _RNvMst_NtCsazSMmbOrWdo_21intrusive_collections6rbtreeINtB5_6RBTreeNtNtCs3f36owO
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !11434, !noalias !11424
   store ptr %i.c, ptr %i.a, align 8, !dbg !11434, !noalias !11435
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !11434
-  store ptr %.sroa.4.0, ptr %.sroa.42.0..sroa_idx, align 8, !dbg !11434, !noalias !11435
+  store ptr %.sroa.6.0.a, ptr %.sroa.42.0..sroa_idx, align 8, !dbg !11434, !noalias !11435
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !11434
-  store ptr %.sroa.6.0.a, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !11434, !noalias !11435
+  store ptr %.sroa.4.0, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !11434, !noalias !11435
   invoke void @_RINvXst_Cs5kGgRUzsVpH_8smallvecINtB6_8SmallVecAyj8_EINtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect6ExtendyE6extendINtNtNtBV_8adapters3map3MapINtNtCsazSMmbOrWdo_21intrusive_collections6rbtree4IterNtNtCs3f36owOmepS_6quiche6stream29StreamReadablePriorityAdapterENCNvMs0_B3b_NtB3b_9StreamMap8readable0EECsiGRwBGCeC5s_11quiche_apps(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.b, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.a)
           to label %_RINvXss_Cs5kGgRUzsVpH_8smallvecINtB6_8SmallVecAyj8_EINtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12FromIteratoryE9from_iterINtNtNtBV_8adapters3map3MapINtNtCsazSMmbOrWdo_21intrusive_collections6rbtree4IterNtNtCs3f36owOmepS_6quiche6stream29StreamReadablePriorityAdapterENCNvMs0_B3l_NtB3l_9StreamMap8readable0EECsiGRwBGCeC5s_11quiche_apps.exit unwind label %bb.b, !dbg !11436, !noalias !11424
 
@@ -283,14 +287,14 @@ bb.a:
   br i1 %.not12.i, label %_RNvMst_NtCsazSMmbOrWdo_21intrusive_collections6rbtreeINtB5_6RBTreeNtNtCs3f36owOmepS_6quiche6stream29StreamWritablePriorityAdapterE4iterCsiGRwBGCeC5s_11quiche_apps.exit, label %.preheader.i, !dbg !11519
 
 _RNvMst_NtCsazSMmbOrWdo_21intrusive_collections6rbtreeINtB5_6RBTreeNtNtCs3f36owOmepS_6quiche6stream29StreamWritablePriorityAdapterE4iterCsiGRwBGCeC5s_11quiche_apps.exit: ; preds = %.preheader.i, %bb.a
-  %.sroa.6.0.a = phi ptr [ null, %bb.a ], [ %.sroa.0.0.i, %.preheader.i ], !dbg !11482
-  %.sroa.4.0 = phi ptr [ null, %bb.a ], [ %.sroa.03.0.i, %.preheader.i ], !dbg !11482
+  %.sroa.6.0.a = phi ptr [ null, %bb.a ], [ %.sroa.03.0.i, %.preheader.i ], !dbg !11482
+  %.sroa.4.0 = phi ptr [ null, %bb.a ], [ %.sroa.0.0.i, %.preheader.i ], !dbg !11482
     #dbg_value(ptr %i.c, !11520, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11544)
     #dbg_value(ptr %i.c, !11546, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11553)
-    #dbg_value(ptr %.sroa.4.0, !11520, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11544)
-    #dbg_value(ptr %.sroa.4.0, !11546, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11553)
-    #dbg_value(ptr %.sroa.6.0.a, !11520, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11544)
-    #dbg_value(ptr %.sroa.6.0.a, !11546, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11553)
+    #dbg_value(ptr %.sroa.6.0.a, !11520, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11544)
+    #dbg_value(ptr %.sroa.6.0.a, !11546, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11553)
+    #dbg_value(ptr %.sroa.4.0, !11520, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11544)
+    #dbg_value(ptr %.sroa.4.0, !11546, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11553)
     #dbg_declare(ptr %i.b, !11549, !DIExpression(), !11555)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !11556, !noalias !11557
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 64, !dbg !11561
@@ -298,9 +302,9 @@ _RNvMst_NtCsazSMmbOrWdo_21intrusive_collections6rbtreeINtB5_6RBTreeNtNtCs3f36owO
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !11564, !noalias !11557
   store ptr %i.c, ptr %i.a, align 8, !dbg !11564, !noalias !11565
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !11564
-  store ptr %.sroa.4.0, ptr %.sroa.42.0..sroa_idx, align 8, !dbg !11564, !noalias !11565
+  store ptr %.sroa.6.0.a, ptr %.sroa.42.0..sroa_idx, align 8, !dbg !11564, !noalias !11565
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !11564
-  store ptr %.sroa.6.0.a, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !11564, !noalias !11565
+  store ptr %.sroa.4.0, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !11564, !noalias !11565
   invoke void @_RINvXst_Cs5kGgRUzsVpH_8smallvecINtB6_8SmallVecAyj8_EINtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect6ExtendyE6extendINtNtNtBV_8adapters3map3MapINtNtCsazSMmbOrWdo_21intrusive_collections6rbtree4IterNtNtCs3f36owOmepS_6quiche6stream29StreamWritablePriorityAdapterENCNvMs0_B3b_NtB3b_9StreamMap8writable0EECsiGRwBGCeC5s_11quiche_apps(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.b, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.a)
           to label %_RINvXss_Cs5kGgRUzsVpH_8smallvecINtB6_8SmallVecAyj8_EINtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12FromIteratoryE9from_iterINtNtNtBV_8adapters3map3MapINtNtCsazSMmbOrWdo_21intrusive_collections6rbtree4IterNtNtCs3f36owOmepS_6quiche6stream29StreamWritablePriorityAdapterENCNvMs0_B3l_NtB3l_9StreamMap8writable0EECsiGRwBGCeC5s_11quiche_apps.exit unwind label %bb.b, !dbg !11566, !noalias !11557
 

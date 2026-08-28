@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rand-rs/original/rand-d72e341731f1a4f6.rand.3fc05d4845318284-cgu.0?download=true
+inline.NumInlined: 131
+inline.NumDeleted: 101
 begin_hunk_0_@_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNvNtNtB4_2io5write17default_write_fmt7AdapterNtNtNtNtCsG258MDvU3F_3std3sys5stdio4unix6StderrEECs5tlx8D5GURI_4rand:bb.a
   ], !prof !18
 
@@ -200,29 +202,30 @@ bb.j:                                             ; preds = %_RNvXNtCs1aYz1mjYrQ
 ; Function Attrs: nonlazybind uwtable
 define noundef i32 @_RNvMs0_NtNtCs5tlx8D5GURI_4rand4rngs6threadNtB5_9ThreadRng6reseed(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [68 x i8], align 4                ; 5 uses
+  %i.a = alloca [68 x i8], align 4                ; 6 uses
   %i.b = load ptr, ptr %0, align 8, !nonnull !5, !noundef !5 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i32 64, ptr %i.c, align 4, !alias.scope !59
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !62
   call fastcc void @_RINvYINtCs1aYz1mjYrQZ_8chacha2010ChaChaCoreNtB6_3R12NtNtB6_8variants6LegacyENtNtCsenQHu2qVDfv_9rand_core12seedable_rng11SeedableRng12try_from_rngNtNtCsifPj74NEIss_9getrandom7sys_rng6SysRngECs5tlx8D5GURI_4rand(ptr noalias nofree noundef align 4 captures(none) dereferenceable(68) %i.a), !noalias !62
   %i.d = load i32, ptr %i.a, align 4, !range !6, !noalias !62, !noundef !5
   %i.e = trunc nuw i32 %i.d to i1
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   br i1 %i.e, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.f = load i32, ptr %1, align 4, !range !8, !noalias !62, !noundef !5
   br label %_RNvMs_NtNtCs5tlx8D5GURI_4rand4rngs6threadNtB4_13ReseedingCore6reseed.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 272
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.g, ptr noundef nonnull align 4 dereferenceable(64) %1, i64 64, i1 false)
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.g, ptr noundef nonnull align 4 dereferenceable(64) %2, i64 64, i1 false)
   br label %_RNvMs_NtNtCs5tlx8D5GURI_4rand4rngs6threadNtB4_13ReseedingCore6reseed.exit
 
 _RNvMs_NtNtCs5tlx8D5GURI_4rand4rngs6threadNtB4_13ReseedingCore6reseed.exit: ; preds = %bb.b, %bb.c
   %.sroa.0.0.i = phi i32 [ %i.f, %bb.b ], [ 0, %bb.c ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !62
   ret i32 %.sroa.0.0.i
 }
 
@@ -255,7 +258,7 @@ bb.a:
   %i.a = alloca [68 x i8], align 4                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 4 uses
   %i.c = alloca [4 x i8], align 4                 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !65
   call fastcc void @_RINvYINtCs1aYz1mjYrQZ_8chacha2010ChaChaCoreNtB6_3R12NtNtB6_8variants6LegacyENtNtCsenQHu2qVDfv_9rand_core12seedable_rng11SeedableRng12try_from_rngNtNtCsifPj74NEIss_9getrandom7sys_rng6SysRngECs5tlx8D5GURI_4rand(ptr noalias nofree noundef align 4 captures(none) dereferenceable(68) %i.a), !noalias !65
   %i.d = load i32, ptr %i.a, align 4, !range !6, !noalias !65, !noundef !5
   %i.e = trunc nuw i32 %i.d to i1
@@ -264,7 +267,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = load i32, ptr %i.f, align 4, !range !8, !noalias !65, !noundef !5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !65
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i32 %i.g, ptr %i.c, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -276,7 +279,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %0, ptr noundef nonnull align 4 dereferenceable(64) %i.f, i64 64, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !65
   ret void
 }
 

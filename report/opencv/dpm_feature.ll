@@ -205,7 +205,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !94 ; 5 uses
   %i.df = getelementptr inbounds nuw i8, ptr %17, i64 24
   %i.dg = load ptr, ptr %i.df, align 8, !tbaa !94 ; 5 uses
-  %i.dh = ptrtoaddr ptr %i.dg to i64              ; 3 uses
+  %i.dh = ptrtoaddr ptr %i.dg to i64              ; 4 uses
   %i.di = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.dj = load ptr, ptr %i.di, align 8, !tbaa !94 ; 18 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 8 uses
@@ -260,16 +260,17 @@ bb.al:                                            ; preds = %bb.ak
 
 .lr.ph512:                                        ; preds = %.preheader498
   %i.er = sext i32 %i.bn to i64
-  %.idx = shl nsw i64 %i.er, 3                    ; 2 uses
+  %.idx = shl nsw i64 %i.er, 3                    ; 3 uses
   %i.es = icmp sgt i32 %i.bn, 0
   %i.et = shl i64 %i.cz, 3
-  %i.eu = add i64 %.idx, %i.dh                    ; 2 uses
+  %i.eu = add i64 %.idx, %i.dh
   %i.ev = add i64 %i.dh, 8                        ; 2 uses
   %i.ew = xor i64 %i.dh, -1                       ; 2 uses
   %i.ex = mul i64 %i.cz, -8
   %i.ey = shl i64 %i.cy, 3
-  %i.ez = shl i64 %i.cz, 3
   %20 = mul i64 %i.cz, -8
+  %i.ez = shl i64 %i.cz, 3
+  %21 = add i64 %.idx, %i.dh
   br label %bb.cg
 
 bb.am:                                            ; preds = %_ZNK2cv7MatExprcvNS_3MatEEv.exit
@@ -615,15 +616,6 @@ bb.cf:                                            ; preds = %bb.ce, %bb.cd, %bb.
 
 bb.cg:                                            ; preds = %.lr.ph512, %._crit_edge510
   %indvars.iv = phi i64 [ 0, %.lr.ph512 ], [ %indvars.iv.next, %._crit_edge510 ] ; 8 uses
-  %21 = mul i64 %i.ez, %indvars.iv                ; 2 uses
-  %22 = add i64 %i.eu, %21
-  %23 = add i64 %i.ev, %21
-  %umax638 = call i64 @llvm.umax.i64(i64 %22, i64 %23)
-  %24 = mul i64 %20, %indvars.iv
-  %25 = add i64 %24, %i.ew
-  %26 = add i64 %umax638, %25
-  %27 = lshr i64 %26, 3                           ; 2 uses
-  %28 = add nuw nsw i64 %27, 1                    ; 2 uses
   %i.kj = mul i64 %i.et, %indvars.iv              ; 3 uses
   %i.kk = getelementptr i8, ptr %i.dg, i64 %i.kj
   %scevgep = getelementptr i8, ptr %i.kk, i64 8
@@ -647,9 +639,18 @@ bb.cg:                                            ; preds = %.lr.ph512, %._crit_
   br i1 %i.es, label %.lr.ph.preheader, label %._crit_edge510
 
 .lr.ph.preheader:                                 ; preds = %bb.cg
+  %22 = mul i64 %i.ez, %indvars.iv                ; 2 uses
+  %23 = add i64 %21, %22
+  %24 = add i64 %i.ev, %22
+  %25 = mul i64 %20, %indvars.iv
+  %26 = add i64 %25, %i.ew
   %i.ky = mul i64 %i.cy, %indvars.iv
   %i.kz = getelementptr [8 x i8], ptr %i.de, i64 %i.ky ; 6 uses
-  %min.iters.check = icmp eq i64 %27, 0
+  %27 = call i64 @llvm.umax.i64(i64 %23, i64 %24)
+  %28 = add i64 %27, %26
+  %29 = lshr i64 %28, 3                           ; 2 uses
+  %30 = add nuw nsw i64 %29, 1                    ; 2 uses
+  %min.iters.check = icmp eq i64 %29, 0
   br i1 %min.iters.check, label %.lr.ph.preheader652, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
@@ -659,7 +660,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %found.conflict, label %.lr.ph.preheader652, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %28, 4611686018427387902       ; 4 uses
+  %n.vec = and i64 %30, 4611686018427387902       ; 4 uses
   %i.la = shl i64 %n.vec, 3
   %i.lb = getelementptr i8, ptr %i.kw, i64 %i.la
   %i.lc = mul i64 %n.vec, 144
@@ -813,7 +814,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.qb, label %middle.block, label %vector.body, !llvm.loop !104
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %28, %n.vec
+  %cmp.n = icmp eq i64 %30, %n.vec
   br i1 %cmp.n, label %._crit_edge510, label %.lr.ph.preheader652
 
 .lr.ph.preheader652:                              ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block

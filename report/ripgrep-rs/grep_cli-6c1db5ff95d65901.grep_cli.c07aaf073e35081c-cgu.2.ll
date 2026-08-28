@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ripgrep-rs/original/grep_cli-6c1db5ff95d65901.grep_cli.c07aaf073e35081c-cgu.2?download=true
+inline.NumInlined: 177
+inline.NumDeleted: 105
 begin_hunk_0_@_RNvNtCsgwyS1EwTFAS_8grep_cli8hostname8hostname:bb.a
           to label %_RNvMs2_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner6shrinkCsgwyS1EwTFAS_8grep_cli.exit.i unwind label %bb.k, !dbg !1777, !noalias !1581 ; 2 uses
 
@@ -200,9 +202,9 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBD_TjNtNtNtCsgPiXjGfBJkm_14regex_automata4meta5regex5RegexEEEECsgwyS1EwTFAS_8grep_cli.exit.i.i, %bb.c
   %.sroa.05.023.i.i = phi ptr [ %i.g, %bb.c ], [ %.sroa.05.1.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBD_TjNtNtNtCsgPiXjGfBJkm_14regex_automata4meta5regex5RegexEEEECsgwyS1EwTFAS_8grep_cli.exit.i.i ] ; 2 uses
   %.sroa.6.022.i.i = phi ptr [ %i.i, %bb.c ], [ %.sroa.6.1.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBD_TjNtNtNtCsgPiXjGfBJkm_14regex_automata4meta5regex5RegexEEEECsgwyS1EwTFAS_8grep_cli.exit.i.i ] ; 2 uses
-  %.sroa.107.021.i.i = phi i64 [ %i.e, %bb.c ], [ %i.v, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBD_TjNtNtNtCsgPiXjGfBJkm_14regex_automata4meta5regex5RegexEEEECsgwyS1EwTFAS_8grep_cli.exit.i.i ]
-  %.sroa.86.020.i.i = phi i16 [ %i.j, %bb.c ], [ %i.s, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBD_TjNtNtNtCsgPiXjGfBJkm_14regex_automata4meta5regex5RegexEEEECsgwyS1EwTFAS_8grep_cli.exit.i.i ] ; 2 uses
-  %.not11.i.i.i = icmp eq i16 %.sroa.86.020.i.i, 0, !dbg !1959
+  %.sroa.86.021.i.i = phi i16 [ %i.j, %bb.c ], [ %i.s, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBD_TjNtNtNtCsgPiXjGfBJkm_14regex_automata4meta5regex5RegexEEEECsgwyS1EwTFAS_8grep_cli.exit.i.i ] ; 2 uses
+  %.sroa.107.020.i.i = phi i64 [ %i.e, %bb.c ], [ %i.v, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBD_TjNtNtNtCsgPiXjGfBJkm_14regex_automata4meta5regex5RegexEEEECsgwyS1EwTFAS_8grep_cli.exit.i.i ]
+  %.not11.i.i.i = icmp eq i16 %.sroa.86.021.i.i, 0, !dbg !1959
   br i1 %.not11.i.i.i, label %.lr.ph.i.i.i, label %_RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBW_TjNtNtNtCsgPiXjGfBJkm_14regex_automata4meta5regex5RegexEEEE9next_implKb0_ECsgwyS1EwTFAS_8grep_cli.exit.i.i, !dbg !1972
 
 .lr.ph.i.i.i:                                     ; preds = %bb.d, %.lr.ph.i.i.i
@@ -219,14 +221,14 @@ bb.d:                                             ; preds = %_RINvNtCskKLDkoKarT
 _RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBW_TjNtNtNtCsgPiXjGfBJkm_14regex_automata4meta5regex5RegexEEEE9next_implKb0_ECsgwyS1EwTFAS_8grep_cli.exit.i.i: ; preds = %.lr.ph.i.i.i, %bb.d
   %.sroa.6.1.i.i = phi ptr [ %.sroa.6.022.i.i, %bb.d ], [ %i.o, %.lr.ph.i.i.i ], !dbg !1998
   %.sroa.05.1.i.i = phi ptr [ %.sroa.05.023.i.i, %bb.d ], [ %i.n, %.lr.ph.i.i.i ], !dbg !1998 ; 2 uses
-  %.lcssa.i.i.i = phi i16 [ %.sroa.86.020.i.i, %bb.d ], [ %.cast.i.i.i, %.lr.ph.i.i.i ], !dbg !1997 ; 3 uses
+  %.lcssa.i.i.i = phi i16 [ %.sroa.86.021.i.i, %bb.d ], [ %.cast.i.i.i, %.lr.ph.i.i.i ], !dbg !1997 ; 3 uses
   %i.p = add i16 %.lcssa.i.i.i, -1, !dbg !1999
   %i.q = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i, i1 true), !dbg !2009
   %i.r = zext nneg i16 %i.q to i64, !dbg !2010
   %i.s = and i16 %i.p, %.lcssa.i.i.i, !dbg !2011
   %i.t = sub nsw i64 0, %i.r, !dbg !2015
   %i.u = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i, i64 %i.t, !dbg !2018 ; 3 uses
-  %i.v = add i64 %.sroa.107.021.i.i, -1, !dbg !2019 ; 2 uses
+  %i.v = add i64 %.sroa.107.020.i.i, -1, !dbg !2019 ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %i.u, i64 -48, !dbg !2021 ; 3 uses
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsgwyS1EwTFAS_8grep_cli(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.w)
           to label %bb.f unwind label %bb.e, !dbg !2029, !noalias !1909
@@ -340,9 +342,9 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBD_jEEECsgwyS1EwTFAS_8grep_cli.exit.i.i, %bb.c
   %.sroa.05.023.i.i = phi ptr [ %i.g, %bb.c ], [ %.sroa.05.1.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBD_jEEECsgwyS1EwTFAS_8grep_cli.exit.i.i ] ; 2 uses
   %.sroa.6.022.i.i = phi ptr [ %i.i, %bb.c ], [ %.sroa.6.1.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBD_jEEECsgwyS1EwTFAS_8grep_cli.exit.i.i ] ; 2 uses
-  %.sroa.107.021.i.i = phi i64 [ %i.e, %bb.c ], [ %i.v, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBD_jEEECsgwyS1EwTFAS_8grep_cli.exit.i.i ]
-  %.sroa.86.020.i.i = phi i16 [ %i.j, %bb.c ], [ %i.s, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBD_jEEECsgwyS1EwTFAS_8grep_cli.exit.i.i ] ; 2 uses
-  %.not11.i.i.i = icmp eq i16 %.sroa.86.020.i.i, 0, !dbg !2136
+  %.sroa.86.021.i.i = phi i16 [ %i.j, %bb.c ], [ %i.s, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBD_jEEECsgwyS1EwTFAS_8grep_cli.exit.i.i ] ; 2 uses
+  %.sroa.107.020.i.i = phi i64 [ %i.e, %bb.c ], [ %i.v, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBD_jEEECsgwyS1EwTFAS_8grep_cli.exit.i.i ]
+  %.not11.i.i.i = icmp eq i16 %.sroa.86.021.i.i, 0, !dbg !2136
   br i1 %.not11.i.i.i, label %.lr.ph.i.i.i, label %_RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBW_jEEE9next_implKb0_ECsgwyS1EwTFAS_8grep_cli.exit.i.i, !dbg !2145
 
 .lr.ph.i.i.i:                                     ; preds = %bb.d, %.lr.ph.i.i.i
@@ -359,14 +361,14 @@ bb.d:                                             ; preds = %_RINvNtCskKLDkoKarT
 _RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTINtNtCsexYYUdYSQU6_5alloc3vec3VechEIBW_jEEE9next_implKb0_ECsgwyS1EwTFAS_8grep_cli.exit.i.i: ; preds = %.lr.ph.i.i.i, %bb.d
   %.sroa.6.1.i.i = phi ptr [ %.sroa.6.022.i.i, %bb.d ], [ %i.o, %.lr.ph.i.i.i ], !dbg !2170
   %.sroa.05.1.i.i = phi ptr [ %.sroa.05.023.i.i, %bb.d ], [ %i.n, %.lr.ph.i.i.i ], !dbg !2170 ; 2 uses
-  %.lcssa.i.i.i = phi i16 [ %.sroa.86.020.i.i, %bb.d ], [ %.cast.i.i.i, %.lr.ph.i.i.i ], !dbg !2169 ; 3 uses
+  %.lcssa.i.i.i = phi i16 [ %.sroa.86.021.i.i, %bb.d ], [ %.cast.i.i.i, %.lr.ph.i.i.i ], !dbg !2169 ; 3 uses
   %i.p = add i16 %.lcssa.i.i.i, -1, !dbg !2171
   %i.q = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i, i1 true), !dbg !2178
   %i.r = zext nneg i16 %i.q to i64, !dbg !2179
   %i.s = and i16 %i.p, %.lcssa.i.i.i, !dbg !2180
   %i.t = sub nsw i64 0, %i.r, !dbg !2184
   %i.u = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i, i64 %i.t, !dbg !2187 ; 3 uses
-  %i.v = add i64 %.sroa.107.021.i.i, -1, !dbg !2188 ; 2 uses
+  %i.v = add i64 %.sroa.107.020.i.i, -1, !dbg !2188 ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %i.u, i64 -48, !dbg !2190 ; 3 uses
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsgwyS1EwTFAS_8grep_cli(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.w)
           to label %bb.f unwind label %bb.e, !dbg !2198, !noalias !2103
@@ -480,9 +482,9 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtNtNtCsgPiXjGfBJkm_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsgwyS1EwTFAS_8grep_cli.exit.i.i, %bb.c
   %.sroa.05.016.i.i = phi ptr [ %i.g, %bb.c ], [ %.sroa.05.1.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtNtNtCsgPiXjGfBJkm_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsgwyS1EwTFAS_8grep_cli.exit.i.i ] ; 2 uses
   %.sroa.6.015.i.i = phi ptr [ %i.i, %bb.c ], [ %.sroa.6.1.i.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtNtNtCsgPiXjGfBJkm_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsgwyS1EwTFAS_8grep_cli.exit.i.i ] ; 2 uses
-  %.sroa.107.014.i.i = phi i64 [ %i.e, %bb.c ], [ %i.v, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtNtNtCsgPiXjGfBJkm_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsgwyS1EwTFAS_8grep_cli.exit.i.i ]
-  %.sroa.86.013.i.i = phi i16 [ %i.j, %bb.c ], [ %i.s, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtNtNtCsgPiXjGfBJkm_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsgwyS1EwTFAS_8grep_cli.exit.i.i ] ; 2 uses
-  %.not11.i.i.i = icmp eq i16 %.sroa.86.013.i.i, 0, !dbg !2296
+  %.sroa.86.014.i.i = phi i16 [ %i.j, %bb.c ], [ %i.s, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtNtNtCsgPiXjGfBJkm_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsgwyS1EwTFAS_8grep_cli.exit.i.i ] ; 2 uses
+  %.sroa.107.013.i.i = phi i64 [ %i.e, %bb.c ], [ %i.v, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtNtNtCsgPiXjGfBJkm_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsgwyS1EwTFAS_8grep_cli.exit.i.i ]
+  %.not11.i.i.i = icmp eq i16 %.sroa.86.014.i.i, 0, !dbg !2296
   br i1 %.not11.i.i.i, label %.lr.ph.i.i.i, label %_RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtNtCsgPiXjGfBJkm_14regex_automata4util11determinize5state5StateNtNtNtB13_6hybrid2id11LazyStateIDEE9next_implKb0_ECsgwyS1EwTFAS_8grep_cli.exit.i.i, !dbg !2305
 
 .lr.ph.i.i.i:                                     ; preds = %bb.d, %.lr.ph.i.i.i
@@ -499,14 +501,14 @@ bb.d:                                             ; preds = %_RINvNtCskKLDkoKarT
 _RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtNtCsgPiXjGfBJkm_14regex_automata4util11determinize5state5StateNtNtNtB13_6hybrid2id11LazyStateIDEE9next_implKb0_ECsgwyS1EwTFAS_8grep_cli.exit.i.i: ; preds = %.lr.ph.i.i.i, %bb.d
   %.sroa.6.1.i.i = phi ptr [ %.sroa.6.015.i.i, %bb.d ], [ %i.o, %.lr.ph.i.i.i ], !dbg !2330
   %.sroa.05.1.i.i = phi ptr [ %.sroa.05.016.i.i, %bb.d ], [ %i.n, %.lr.ph.i.i.i ], !dbg !2330 ; 2 uses
-  %.lcssa.i.i.i = phi i16 [ %.sroa.86.013.i.i, %bb.d ], [ %.cast.i.i.i, %.lr.ph.i.i.i ], !dbg !2329 ; 3 uses
+  %.lcssa.i.i.i = phi i16 [ %.sroa.86.014.i.i, %bb.d ], [ %.cast.i.i.i, %.lr.ph.i.i.i ], !dbg !2329 ; 3 uses
   %i.p = add i16 %.lcssa.i.i.i, -1, !dbg !2331
   %i.q = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i, i1 true), !dbg !2338
   %i.r = zext nneg i16 %i.q to i64, !dbg !2339
   %i.s = and i16 %i.p, %.lcssa.i.i.i, !dbg !2340
   %i.t = sub nsw i64 0, %i.r, !dbg !2344
   %i.u = getelementptr inbounds [24 x i8], ptr %.sroa.05.1.i.i, i64 %i.t, !dbg !2347
-  %i.v = add i64 %.sroa.107.014.i.i, -1, !dbg !2348 ; 2 uses
+  %i.v = add i64 %.sroa.107.013.i.i, -1, !dbg !2348 ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %i.u, i64 -24, !dbg !2350 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2358), !dbg !2361
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2366), !dbg !2369

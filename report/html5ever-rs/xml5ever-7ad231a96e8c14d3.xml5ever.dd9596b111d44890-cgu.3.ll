@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/html5ever-rs/original/xml5ever-7ad231a96e8c14d3.xml5ever.dd9596b111d44890-cgu.3?download=true
+inline.NumInlined: 96
+inline.NumDeleted: 49
 begin_hunk_0_@_RINvCsf0tt01pzWYu_10phf_shared4hasheECsj1ugBVjDER0_8xml5ever:bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = xor i64 %.0.val, 7237128888997146499
@@ -200,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.i = lshr i64 %1, 1
-  %i.j = sub nsw i64 %1, %i.i
+  %i.j = sub nuw nsw i64 %1, %i.i
   %..i = tail call noundef range(i64 0, 230584300921369396) i64 @llvm.umin.i64(i64 %i.j, i64 64)
   br label %bb.e
 
