@@ -204,10 +204,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i21
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit23: ; preds = %_ZNK9ItemStack13getDefinitionEPK15IItemDefManager.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i21
-  %4 = extractvalue { <2 x float>, i64 } %i.ad, 0
   %i.an = extractvalue { <2 x float>, i64 } %i.ad, 1 ; 2 uses
   %i.ao = and i64 %i.an, 4294967296
   %.not = icmp eq i64 %i.ao, 0                    ; 2 uses
+  %4 = extractvalue { <2 x float>, i64 } %i.ad, 0
   %.sroa.02.0.i = select i1 %.not, <2 x float> %.val, <2 x float> %4
   %.fca.0.insert.i19 = insertvalue { <2 x float>, float } poison, <2 x float> %.sroa.02.0.i, 0
   %.sroa.5.sroa.0.0.extract.trunc = trunc i64 %i.an to i32
