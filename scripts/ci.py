@@ -1784,7 +1784,7 @@ def update():
             pr_body += f"## Commits in this update:\n```\n{llvm_history}\n```\n\n"
 
         if stats_cmp:
-            pr_body += f"## Changes in statistics\n"
+            pr_body += "## Changes in statistics\n"
             if has_opt_errors():
                 pr_body += (
                     "> Warning: opt errors occurred during this run "
@@ -2084,7 +2084,7 @@ def test(user: str, comment_body: str, issue_url: str):
         if config.stats:
             pr_body += f"## Changes in {config.stats}\n"
         else:
-            pr_body += f"## Changes in statistics\n"
+            pr_body += "## Changes in statistics\n"
         if has_opt_errors():
             pr_body += (
                 "> Warning: opt errors occurred during this run "
