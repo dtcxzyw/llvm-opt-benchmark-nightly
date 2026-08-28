@@ -204,15 +204,14 @@ bb.af:                                            ; preds = %bb.k, %_RNvXs5_NtCs
   br label %bb.ah, !dbg !23002
 
 bb.ag:                                            ; preds = %.thread144, %.thread141
-  %.sroa.22.sroa.21.sroa.0.0.in.in = phi i64 [ %.sroa.22.sroa.21.sroa.0.4.in.in, %.thread144 ], [ %.sroa.22.sroa.21.sroa.0.3.in.in, %.thread141 ] ; 3 uses
+  %.sroa.22.sroa.21.sroa.0.0.in.in = phi i64 [ %.sroa.22.sroa.21.sroa.0.4.in.in, %.thread144 ], [ %.sroa.22.sroa.21.sroa.0.3.in.in, %.thread141 ], !dbg !22755 ; 2 uses
   %.sroa.45.0 = phi i64 [ %.sroa.45.3, %.thread144 ], [ %.sroa.45.2, %.thread141 ], !dbg !22755
   %.sroa.37.0 = phi i64 [ %.sroa.37.4, %.thread144 ], [ %.sroa.37.3, %.thread141 ], !dbg !22755
   %.sroa.0.0 = phi i64 [ %.sroa.0.4, %.thread144 ], [ %.sroa.0.3, %.thread141 ], !dbg !22755 ; 2 uses
     #dbg_value(i64 %.sroa.0.0, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
     #dbg_value(i64 %.sroa.37.0, !22628, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23004)
     #dbg_value(i64 %.sroa.45.0, !22628, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !23004)
-    #dbg_value(i64 %.sroa.22.sroa.21.sroa.0.0.in.in, !22628, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i64 %.sroa.22.sroa.21.sroa.0.0.in.in, !22628, !DIExpression(DW_OP_constu, 8, DW_OP_shr, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 56, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %.sroa.22.sroa.21.sroa.0.0.in.in, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
   %i.cu = icmp eq i64 %.sroa.0.0, -1, !dbg !23005
   br i1 %i.cu, label %._crit_edge, label %.thread, !dbg !23006, !prof !23007
 
@@ -299,12 +298,11 @@ bb.ao:                                            ; preds = %bb.am
 
 _RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.i: ; preds = %bb.ao, %bb.an
   %i.dd = phi i64 [ %.sroa.5.sroa.5.0.copyload10.i.i240, %bb.an ], [ %.sroa.2.0.copyload, %bb.ao ], !dbg !23110
-  %.sroa.5.sroa.0.0.i.i = phi i64 [ %.sroa.5.sroa.0.0.copyload9.i.i, %bb.an ], [ 2, %bb.ao ], !dbg !23110 ; 2 uses
+  %.sroa.5.sroa.0.0.i.i = phi i64 [ %.sroa.5.sroa.0.0.copyload9.i.i, %bb.an ], [ 2, %bb.ao ], !dbg !23110
   %.sroa.0.0.i.i = phi i64 [ -9223372036854775808, %bb.an ], [ -9223372036854775806, %bb.ao ], !dbg !23110
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !dbg !23133, !noalias !23113
     #dbg_value(i64 %.sroa.0.0.i.i, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
-    #dbg_value(i64 %.sroa.5.sroa.0.0.i.i, !22628, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i64 %.sroa.5.sroa.0.0.i.i, !22628, !DIExpression(DW_OP_constu, 8, DW_OP_shr, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 56, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %.sroa.5.sroa.0.0.i.i, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
     #dbg_value(i64 %i.dd, !22628, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23004)
   br label %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit, !dbg !23134
 
@@ -317,20 +315,17 @@ bb.ap:                                            ; preds = %bb.al
     #dbg_declare(ptr poison, !23141, !DIExpression(), !23143)
   %.lobit.i.i = lshr i64 %.sroa.2.0.copyload, 63, !dbg !23167
     #dbg_value(i64 -9223372036854775806, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
-    #dbg_value(i64 %.lobit.i.i, !22628, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i64 %.lobit.i.i, !22628, !DIExpression(DW_OP_constu, 8, DW_OP_shr, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 56, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %.lobit.i.i, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
     #dbg_value(i64 %.sroa.2.0.copyload, !22628, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23004)
   br label %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit, !dbg !23168
 
 _RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit: ; preds = %bb.al, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.i, %bb.ap
-  %.sroa.22.sroa.21.sroa.0.1 = phi i64 [ %.sroa.5.sroa.0.0.i.i, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.i ], [ 0, %bb.ap ], [ 0, %bb.al ], !dbg !23032
   %.sroa.22.sroa.0.1 = phi i64 [ %.sroa.5.sroa.0.0.i.i, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.i ], [ %.lobit.i.i, %bb.ap ], [ 0, %bb.al ], !dbg !23032
   %.sroa.37.1 = phi i64 [ %i.dd, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.i ], [ %.sroa.2.0.copyload, %bb.ap ], [ %.sroa.2.0.copyload, %bb.al ], !dbg !23032
   %.sroa.0.1 = phi i64 [ %.sroa.0.0.i.i, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.i ], [ -9223372036854775806, %bb.ap ], [ -9223372036854775806, %bb.al ], !dbg !23032
     #dbg_value(i64 %.sroa.0.1, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
     #dbg_value(i64 %.sroa.37.1, !22628, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23004)
-    #dbg_value(i8 poison, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i56 poison, !22628, !DIExpression(DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %.sroa.22.sroa.0.1, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !dbg !23017
   br label %.thread, !dbg !23017
 
@@ -493,14 +488,13 @@ _RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10s
   br label %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit, !dbg !22755
 
 _RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit: ; preds = %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.sink.split, %bb.ax, %bb.au
-  %.sroa.22.sroa.21.sroa.0.2.in.in = phi i64 [ %i.dr, %bb.ax ], [ %i.dj, %bb.au ], [ %.sroa.22.sroa.21.sroa.0.2.in.in.ph, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.sink.split ] ; 2 uses
+  %.sroa.22.sroa.21.sroa.0.2.in.in = phi i64 [ %i.dr, %bb.ax ], [ %i.dj, %bb.au ], [ %.sroa.22.sroa.21.sroa.0.2.in.in.ph, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.sink.split ], !dbg !22755
   %.sroa.37.2.in = phi ptr [ %i.du, %bb.ax ], [ %i.dm, %bb.au ], [ %.sink, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.sink.split ]
   %.sroa.37.2 = ptrtoint ptr %.sroa.37.2.in to i64, !dbg !22755
     #dbg_value(i64 -9223372036854775805, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
     #dbg_value(i64 %.sroa.37.2, !22628, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23004)
     #dbg_value(i64 %.sroa.4.0.copyload, !22628, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !23004)
-    #dbg_value(i64 %.sroa.22.sroa.21.sroa.0.2.in.in, !22628, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i64 %.sroa.22.sroa.21.sroa.0.2.in.in, !22628, !DIExpression(DW_OP_constu, 8, DW_OP_shr, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 56, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %.sroa.22.sroa.21.sroa.0.2.in.in, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !dbg !23171
   br label %.thread, !dbg !23171
 
@@ -731,8 +725,7 @@ bb.bs:                                            ; preds = %bb.br
     #dbg_value(i64 %i.fe, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
   %.sroa.22.0..sroa_idx179 = getelementptr inbounds nuw i8, ptr %i.v, i64 8, !dbg !23676
   %.sroa.22.0.copyload180 = load i64, ptr %.sroa.22.0..sroa_idx179, align 8, !dbg !23676
-    #dbg_value(i64 %.sroa.22.0.copyload180, !22628, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i64 %.sroa.22.0.copyload180, !22628, !DIExpression(DW_OP_constu, 8, DW_OP_shr, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 56, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %.sroa.22.0.copyload180, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
   %.sroa.37.0..sroa_idx183.a = getelementptr inbounds nuw i8, ptr %i.v, i64 16, !dbg !23676
   %.sroa.37.0.copyload184.a = load i64, ptr %.sroa.37.0..sroa_idx183.a, align 8, !dbg !23676
     #dbg_value(i64 %.sroa.37.0.copyload184.a, !22628, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23004)
@@ -749,8 +742,7 @@ bb.bt:                                            ; preds = %bb.br
   %i.fh = load ptr, ptr %i.fg, align 8, !dbg !23678, !nonnull !18, !align !6802, !noundef !18
     #dbg_value(ptr %i.fh, !22662, !DIExpression(), !23679)
   %i.fi = ptrtoint ptr %i.fh to i64, !dbg !23680  ; 2 uses
-    #dbg_value(i64 %i.fi, !22628, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i64 %i.fi, !22628, !DIExpression(DW_OP_constu, 8, DW_OP_shr, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 56, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %i.fi, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
     #dbg_value(i64 -1, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8), !dbg !23677
   %.not148 = icmp eq ptr %i.fb, null, !dbg !23677
@@ -759,8 +751,7 @@ bb.bt:                                            ; preds = %bb.br
 bb.bu:                                            ; preds = %bb.bs
     #dbg_value(ptr %i.fb, !22662, !DIExpression(), !23679)
   %i.fj = ptrtoint ptr %i.fb to i64, !dbg !23680
-    #dbg_value(i64 %i.fj, !22628, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i64 %i.fj, !22628, !DIExpression(DW_OP_constu, 8, DW_OP_shr, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 56, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %i.fj, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
     #dbg_value(i64 -1, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8), !dbg !23677
   call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsenfyI6F4F2A_10serde_json5value5ValueECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef align 8 dereferenceable(72) %i.v), !dbg !23677
@@ -773,15 +764,14 @@ bb.bv:                                            ; preds = %bb.bz, %bb.bq
   unreachable, !dbg !23681
 
 .thread141:                                       ; preds = %.thread169, %bb.bu, %bb.bw, %bb.bt
-  %.sroa.22.sroa.21.sroa.0.3.in.in = phi i64 [ %i.fi, %bb.bt ], [ %i.fi, %bb.bw ], [ %.sroa.22.0.copyload180, %.thread169 ], [ %i.fj, %bb.bu ]
+  %.sroa.22.sroa.21.sroa.0.3.in.in = phi i64 [ %i.fi, %bb.bt ], [ %i.fi, %bb.bw ], [ %.sroa.22.0.copyload180, %.thread169 ], [ %i.fj, %bb.bu ], !dbg !23570
   %.sroa.45.2 = phi i64 [ undef, %bb.bt ], [ undef, %bb.bw ], [ %.sroa.45.0.copyload188.a, %.thread169 ], [ undef, %bb.bu ], !dbg !22755
   %.sroa.37.3 = phi i64 [ undef, %bb.bt ], [ undef, %bb.bw ], [ %.sroa.37.0.copyload184.a, %.thread169 ], [ undef, %bb.bu ], !dbg !22755
   %.sroa.0.3 = phi i64 [ -1, %bb.bt ], [ -1, %bb.bw ], [ %i.fe, %.thread169 ], [ -1, %bb.bu ], !dbg !23570
     #dbg_value(i64 %.sroa.0.3, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
     #dbg_value(i64 %.sroa.37.3, !22628, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23004)
     #dbg_value(i64 %.sroa.45.2, !22628, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !23004)
-    #dbg_value(i64 %.sroa.22.sroa.21.sroa.0.3.in.in, !22628, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i64 %.sroa.22.sroa.21.sroa.0.3.in.in, !22628, !DIExpression(DW_OP_constu, 8, DW_OP_shr, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 56, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %.sroa.22.sroa.21.sroa.0.3.in.in, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !dbg !23677
   br label %bb.ag, !dbg !23677
 
@@ -838,8 +828,7 @@ bb.cb:                                            ; preds = %bb.ca
     #dbg_value(i64 %.sroa.0.0.copyload178, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
   %.sroa.22.0..sroa_idx181 = getelementptr inbounds nuw i8, ptr %i.s, i64 8, !dbg !23696
   %.sroa.22.0.copyload182 = load i64, ptr %.sroa.22.0..sroa_idx181, align 8, !dbg !23696
-    #dbg_value(i64 %.sroa.22.0.copyload182, !22628, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i64 %.sroa.22.0.copyload182, !22628, !DIExpression(DW_OP_constu, 8, DW_OP_shr, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 56, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %.sroa.22.0.copyload182, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
   %.sroa.37.0..sroa_idx185 = getelementptr inbounds nuw i8, ptr %i.s, i64 16, !dbg !23696
   %.sroa.37.0.copyload186 = load i64, ptr %.sroa.37.0..sroa_idx185, align 8, !dbg !23696
     #dbg_value(i64 %.sroa.37.0.copyload186, !22628, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23004)
@@ -856,8 +845,7 @@ bb.cc:                                            ; preds = %bb.ca
   %i.fw = load ptr, ptr %i.fv, align 8, !dbg !23698, !nonnull !18, !align !6802, !noundef !18
     #dbg_value(ptr %i.fw, !22668, !DIExpression(), !23699)
   %i.fx = ptrtoint ptr %i.fw to i64, !dbg !23700  ; 2 uses
-    #dbg_value(i64 %i.fx, !22628, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i64 %i.fx, !22628, !DIExpression(DW_OP_constu, 8, DW_OP_shr, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 56, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %i.fx, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
     #dbg_value(i64 -1, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !dbg !23697
   %.not147 = icmp eq ptr %i.fq, null, !dbg !23697
@@ -866,23 +854,21 @@ bb.cc:                                            ; preds = %bb.ca
 bb.cd:                                            ; preds = %bb.cb
     #dbg_value(ptr %i.fq, !22668, !DIExpression(), !23699)
   %i.fy = ptrtoint ptr %i.fq to i64, !dbg !23700
-    #dbg_value(i64 %i.fy, !22628, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i64 %i.fy, !22628, !DIExpression(DW_OP_constu, 8, DW_OP_shr, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 56, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %i.fy, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
     #dbg_value(i64 -1, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !dbg !23697
   call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsenfyI6F4F2A_10serde_json5value5ValueECsaTqK2fWTXJW_11qlog_dancer(ptr noalias nofree noundef align 8 dereferenceable(72) %i.r), !dbg !23697
   br label %.thread144, !dbg !23697
 
 .thread144:                                       ; preds = %.thread171, %bb.cd, %bb.ce, %bb.cc
-  %.sroa.22.sroa.21.sroa.0.4.in.in = phi i64 [ %i.fx, %bb.cc ], [ %i.fx, %bb.ce ], [ %.sroa.22.0.copyload182, %.thread171 ], [ %i.fy, %bb.cd ]
+  %.sroa.22.sroa.21.sroa.0.4.in.in = phi i64 [ %i.fx, %bb.cc ], [ %i.fx, %bb.ce ], [ %.sroa.22.0.copyload182, %.thread171 ], [ %i.fy, %bb.cd ], !dbg !23701
   %.sroa.45.3 = phi i64 [ undef, %bb.cc ], [ undef, %bb.ce ], [ %.sroa.45.0.copyload190, %.thread171 ], [ undef, %bb.cd ], !dbg !22755
   %.sroa.37.4 = phi i64 [ undef, %bb.cc ], [ undef, %bb.ce ], [ %.sroa.37.0.copyload186, %.thread171 ], [ undef, %bb.cd ], !dbg !22755
   %.sroa.0.4 = phi i64 [ -1, %bb.cc ], [ -1, %bb.ce ], [ %.sroa.0.0.copyload178, %.thread171 ], [ -1, %bb.cd ], !dbg !23701
     #dbg_value(i64 %.sroa.0.4, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
     #dbg_value(i64 %.sroa.37.4, !22628, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23004)
     #dbg_value(i64 %.sroa.45.3, !22628, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !23004)
-    #dbg_value(i64 %.sroa.22.sroa.21.sroa.0.4.in.in, !22628, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i64 %.sroa.22.sroa.21.sroa.0.4.in.in, !22628, !DIExpression(DW_OP_constu, 8, DW_OP_shr, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 56, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %.sroa.22.sroa.21.sroa.0.4.in.in, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !dbg !23697
   br label %bb.ag, !dbg !23697
 
@@ -972,12 +958,11 @@ bb.cm:                                            ; preds = %bb.ck
 
 _RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.i85: ; preds = %bb.cm, %bb.cl
   %i.gl = phi i64 [ %.sroa.5.sroa.5.0.copyload10.i.i94241, %bb.cl ], [ %.sroa.2102.0.copyload, %bb.cm ], !dbg !23733
-  %.sroa.5.sroa.0.0.i.i87 = phi i64 [ %.sroa.5.sroa.0.0.copyload9.i.i92, %bb.cl ], [ 2, %bb.cm ], !dbg !23733 ; 2 uses
+  %.sroa.5.sroa.0.0.i.i87 = phi i64 [ %.sroa.5.sroa.0.0.copyload9.i.i92, %bb.cl ], [ 2, %bb.cm ], !dbg !23733
   %.sroa.0.0.i.i88 = phi i64 [ -9223372036854775808, %bb.cl ], [ -9223372036854775806, %bb.cm ], !dbg !23733
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !dbg !23756, !noalias !23736
     #dbg_value(i64 %.sroa.0.0.i.i88, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
-    #dbg_value(i64 %.sroa.5.sroa.0.0.i.i87, !22628, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i64 %.sroa.5.sroa.0.0.i.i87, !22628, !DIExpression(DW_OP_constu, 8, DW_OP_shr, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 56, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %.sroa.5.sroa.0.0.i.i87, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
     #dbg_value(i64 %i.gl, !22628, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23004)
   br label %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit96, !dbg !23757
 
@@ -990,40 +975,32 @@ bb.cn:                                            ; preds = %bb.cj
     #dbg_declare(ptr poison, !23141, !DIExpression(), !23759)
   %.lobit.i.i80 = lshr i64 %.sroa.2102.0.copyload, 63, !dbg !23766
     #dbg_value(i64 -9223372036854775806, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
-    #dbg_value(i64 %.lobit.i.i80, !22628, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i64 %.lobit.i.i80, !22628, !DIExpression(DW_OP_constu, 8, DW_OP_shr, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 56, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %.lobit.i.i80, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
     #dbg_value(i64 %.sroa.2102.0.copyload, !22628, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23004)
   br label %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit96, !dbg !23767
 
 _RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit96: ; preds = %bb.cj, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.i85, %bb.cn
-  %.sroa.22.sroa.21.sroa.0.5 = phi i64 [ %.sroa.5.sroa.0.0.i.i87, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.i85 ], [ 0, %bb.cn ], [ 0, %bb.cj ], !dbg !23716
   %.sroa.22.sroa.0.5 = phi i64 [ %.sroa.5.sroa.0.0.i.i87, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.i85 ], [ %.lobit.i.i80, %bb.cn ], [ 0, %bb.cj ], !dbg !23716
   %.sroa.37.5 = phi i64 [ %i.gl, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.i85 ], [ %.sroa.2102.0.copyload, %bb.cn ], [ %.sroa.2102.0.copyload, %bb.cj ], !dbg !23716
   %.sroa.0.5 = phi i64 [ %.sroa.0.0.i.i88, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit.i85 ], [ -9223372036854775806, %bb.cn ], [ -9223372036854775806, %bb.cj ], !dbg !23716
     #dbg_value(i64 %.sroa.0.5, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
     #dbg_value(i64 %.sroa.37.5, !22628, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23004)
-    #dbg_value(i8 poison, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i56 poison, !22628, !DIExpression(DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %.sroa.22.sroa.0.5, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !dbg !23715
   br label %.thread, !dbg !23715
 
 .thread:                                          ; preds = %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit, %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit, %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit96, %bb.z, %bb.q, %bb.j, %bb.ag
-  %.sroa.22.sroa.21.sroa.0.6 = phi i64 [ %.sroa.22.sroa.21.sroa.0.0.in.in, %bb.ag ], [ 0, %bb.q ], [ 0, %bb.z ], [ 0, %bb.j ], [ %.sroa.22.sroa.21.sroa.0.2.in.in, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit ], [ %.sroa.22.sroa.21.sroa.0.1, %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit ], [ %.sroa.22.sroa.21.sroa.0.5, %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit96 ], !dbg !22755
-  %.sroa.22.sroa.0.6 = phi i64 [ %.sroa.22.sroa.21.sroa.0.0.in.in, %bb.ag ], [ 1, %bb.q ], [ 0, %bb.z ], [ 0, %bb.j ], [ %.sroa.22.sroa.21.sroa.0.2.in.in, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit ], [ %.sroa.22.sroa.0.1, %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit ], [ %.sroa.22.sroa.0.5, %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit96 ], !dbg !22755
+  %.sroa.22.sroa.0.6 = phi i64 [ %.sroa.22.sroa.21.sroa.0.0.in.in, %bb.ag ], [ 1, %bb.q ], [ 0, %bb.z ], [ undef, %bb.j ], [ %.sroa.22.sroa.21.sroa.0.2.in.in, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit ], [ %.sroa.22.sroa.0.1, %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit ], [ %.sroa.22.sroa.0.5, %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit96 ], !dbg !22755
   %.sroa.45.4 = phi i64 [ %.sroa.45.0, %bb.ag ], [ undef, %bb.q ], [ undef, %bb.z ], [ undef, %bb.j ], [ %.sroa.4.0.copyload, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit ], [ undef, %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit ], [ undef, %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit96 ], !dbg !22756
   %.sroa.37.6 = phi i64 [ %.sroa.37.0, %bb.ag ], [ undef, %bb.q ], [ undef, %bb.z ], [ undef, %bb.j ], [ %.sroa.37.2, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit ], [ %.sroa.37.1, %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit ], [ %.sroa.37.5, %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit96 ], !dbg !22755
   %.sroa.0.6 = phi i64 [ %.sroa.0.0, %bb.ag ], [ -9223372036854775807, %bb.q ], [ -9223372036854775807, %bb.z ], [ -9223372036854775808, %bb.j ], [ -9223372036854775805, %_RINvXNvXNtNtCsenfyI6F4F2A_10serde_json5value2deNtB8_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECsaTqK2fWTXJW_11qlog_dancer.exit ], [ %.sroa.0.1, %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit ], [ %.sroa.0.5, %_RINvMs2_NtCsenfyI6F4F2A_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCs9xKKqPmwf7Y_10serde_core2de11Deserialize11deserialize12ValueVisitorECsaTqK2fWTXJW_11qlog_dancer.exit96 ], !dbg !22755
     #dbg_value(i64 %.sroa.0.6, !22628, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23004)
     #dbg_value(i64 %.sroa.37.6, !22628, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23004)
     #dbg_value(i64 %.sroa.45.4, !22628, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !23004)
-    #dbg_value(i8 poison, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !23004)
-    #dbg_value(i56 poison, !22628, !DIExpression(DW_OP_LLVM_fragment, 72, 56), !23004)
+    #dbg_value(i64 %.sroa.22.sroa.0.6, !22628, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23004)
   store i64 %.sroa.0.6, ptr %0, align 8, !dbg !23768
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !23768
-  %.sroa.22.sroa.21.0.insert.ext = and i64 %.sroa.22.sroa.21.sroa.0.6, -256, !dbg !23768
-  %.sroa.22.sroa.0.0.insert.ext = and i64 %.sroa.22.sroa.0.6, 255, !dbg !23768
-  %.sroa.22.sroa.0.0.insert.insert = or disjoint i64 %.sroa.22.sroa.0.0.insert.ext, %.sroa.22.sroa.21.0.insert.ext, !dbg !23768
-  store i64 %.sroa.22.sroa.0.0.insert.insert, ptr %.sroa.22.0..sroa_idx, align 8, !dbg !23768
+  store i64 %.sroa.22.sroa.0.6, ptr %.sroa.22.0..sroa_idx, align 8, !dbg !23768
   %.sroa.37.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !23768
   store i64 %.sroa.37.6, ptr %.sroa.37.0..sroa_idx, align 8, !dbg !23768
   %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !23768

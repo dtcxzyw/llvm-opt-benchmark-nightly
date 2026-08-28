@@ -202,7 +202,7 @@ bb.a:
   %i.ac = alloca [16 x i8], align 8               ; 5 uses
   %i.ad = alloca [24 x i8], align 8               ; 2 uses
   %i.ae = alloca [1 x i8], align 1                ; 5 uses
-  %i.af = alloca [40 x i8], align 8               ; 7 uses
+  %i.af = alloca [40 x i8], align 8               ; 6 uses
   %i.ag = alloca [136 x i8], align 8              ; 4 uses
   %i.ah = alloca [24 x i8], align 8               ; 9 uses
   %i.ai = alloca [288 x i8], align 8              ; 12 uses
@@ -605,9 +605,7 @@ bb.cv:                                            ; preds = %bb.cu
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af)
   %i.li = getelementptr inbounds nuw i8, ptr %i.af, i64 16 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.li, ptr noundef nonnull align 8 dereferenceable(24) %i.ch, i64 24, i1 false)
-  store i64 0, ptr %i.af, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  store i8 0, ptr %6, align 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.af, i8 0, i64 9, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae)
   store i8 %.sroa.019.0, ptr %i.ae, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !5172

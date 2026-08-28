@@ -205,7 +205,7 @@ bb.a:
   %i.e = alloca [32 x i8], align 8                ; 8 uses
   %i.f = alloca [32 x i8], align 8                ; 8 uses
   %i.g = alloca [32 x i8], align 8                ; 6 uses
-  %.sroa.011.i.i.i = alloca i64, align 8          ; 6 uses
+  %.sroa.011.i.i.i = alloca [8 x i8], align 8     ; 6 uses
   %i.h = alloca [24 x i8], align 8                ; 10 uses
   %i.i = alloca [32 x i8], align 8                ; 5 uses
   %i.j = alloca [32 x i8], align 8                ; 15 uses
@@ -608,8 +608,7 @@ bb.lu:                                            ; preds = %bb.lt
   %i.bec = load ptr, ptr %i.beb, align 8, !noalias !10875, !noundef !10
   %i.bed = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   %i.bee = load i64, ptr %i.bed, align 8, !noalias !10875, !noundef !10 ; 4 uses
-  %2 = ptrtoint ptr %i.bec to i64
-  store i64 %2, ptr %.sroa.011.i.i.i, align 8, !noalias !10875
+  store ptr %i.bec, ptr %.sroa.011.i.i.i, align 8, !noalias !10875
   %i.bef = icmp eq i64 %i.bee, 0
   br i1 %i.bef, label %_RINvYINtNtNtCs1xwejQucwHj_5alloc11collections11linked_list4IterINtNtBa_3vec3VecTNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location8LocationNtNtCsakL8LGkl72C_4ecow6string9EcoStringEEENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4foldjNCINvNtNtB39_8adapters3map8map_foldRBZ_jjNvMs_B12_BZ_3lenNCINvXsK_NtB37_5accumjNtB58_3Sum3sumINtB49_3MapB3_B4J_EE0E0ECsgpMJJHpo27b_12typst_bundle.exit.thread.i.i.i, label %.lr.ph.i.i.i.i141.preheader
 

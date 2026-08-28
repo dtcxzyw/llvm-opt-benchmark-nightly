@@ -202,13 +202,11 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(25) %.sroa.1117.0..sroa_idx, i8 0, i64 25, i1 false)
   %.sroa.1420.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 192
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(49) %.sroa.1420.0..sroa_idx, i8 0, i64 49, i1 false)
-  store i64 0, ptr %0, align 8
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 0, ptr %i.a, align 8
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 0, ptr %i.b, align 8
-  %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr inttoptr (i64 8 to ptr), ptr %.sroa.410.0..sroa_idx, align 8
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 0, ptr %i.a, align 8
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %0, i8 0, i64 9, i1 false)
+  store ptr inttoptr (i64 8 to ptr), ptr %i.b, align 8
   %.sroa.612.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.612.0..sroa_idx, align 8
   %.sroa.814.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72

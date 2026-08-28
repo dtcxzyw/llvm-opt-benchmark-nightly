@@ -205,9 +205,7 @@ _RNCNvNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes9extension8registry8REGISTRY0B9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !290746, !noalias !290636
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !290770
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ai, ptr noundef nonnull align 8 dereferenceable(40) %i.g, i64 40, i1 false), !dbg !290773
-  store i64 0, ptr %0, align 8, !dbg !290770, !alias.scope !290636
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !290770
-  store i8 0, ptr %1, align 8, !dbg !290770, !alias.scope !290636
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %0, i8 0, i64 9, i1 false), !dbg !290770, !alias.scope !290636
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !290774, !noalias !290636
   ret void, !dbg !290639
 }

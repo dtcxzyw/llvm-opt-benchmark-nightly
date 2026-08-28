@@ -205,8 +205,8 @@ bb.a:
   %i.p = alloca [192 x i8], align 8               ; 7 uses
   %i.q = alloca [136 x i8], align 8               ; 11 uses
   %i.r = alloca [24 x i8], align 8                ; 5 uses
-  %.sroa.11 = alloca i32, align 4                 ; 9 uses
-  %.sroa.19 = alloca i32, align 4                 ; 3 uses
+  %.sroa.11 = alloca [4 x i8], align 4            ; 9 uses
+  %.sroa.19 = alloca [4 x i8], align 4            ; 3 uses
   %i.s = alloca [136 x i8], align 8               ; 6 uses
   %.sroa.321 = alloca [32 x i8], align 8          ; 2 uses
   %.sroa.4 = alloca [152 x i8], align 8           ; 2 uses
@@ -609,11 +609,11 @@ _RINvXNvMNtCsgZ49sUHp3tW_5alloc5sliceSp9to_vec_inNtNtNtCs8774dFTUdNv_12polars_ar
 define hidden void @_RNvXsa_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow5write5pages6NestedENtNtCscgRAwXFJnXP_4core5clone5Clone5cloneBN_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #1 personality ptr @rust_eh_personality !dbg !38288 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.14.i = alloca i64, align 8               ; 8 uses
-  %.sroa.19.i = alloca i64, align 8               ; 8 uses
-  %.sroa.24.i = alloca i64, align 8               ; 8 uses
-  %.sroa.29.i = alloca i64, align 8               ; 8 uses
-  %.sroa.34.i = alloca i64, align 8               ; 6 uses
+  %.sroa.14.i = alloca [8 x i8], align 8          ; 8 uses
+  %.sroa.19.i = alloca [8 x i8], align 8          ; 8 uses
+  %.sroa.24.i = alloca [8 x i8], align 8          ; 8 uses
+  %.sroa.29.i = alloca [8 x i8], align 8          ; 8 uses
+  %.sroa.34.i = alloca [8 x i8], align 8          ; 6 uses
   %.sroa.37.i = alloca i8, align 8                ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !38289
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !38296
@@ -728,8 +728,7 @@ _RNvXs8_NtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow5write5pagesINtB5_10ListNested
   %.sroa.5.sroa.0.0.i.i.i = phi i64 [ undef, %bb.f ], [ %i.aq, %bb.j ], !dbg !38484
   %i.av = ptrtoint ptr %i.ae to i64, !dbg !38485
   store i64 %i.ag, ptr %.sroa.14.i, align 8, !dbg !38485, !alias.scope !38371, !noalias !38321
-  %2 = ptrtoint ptr %i.ai to i64, !dbg !38485
-  store i64 %2, ptr %.sroa.19.i, align 8, !dbg !38485, !alias.scope !38371, !noalias !38321
+  store ptr %i.ai, ptr %.sroa.19.i, align 8, !dbg !38485, !alias.scope !38371, !noalias !38321
   br label %bb.ab, !dbg !38486
 
 bb.k:                                             ; preds = %bb.c
@@ -780,8 +779,7 @@ _RNvXs8_NtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow5write5pagesINtB5_10ListNested
   %.sroa.5.sroa.0.0.i23.i.i = phi i64 [ undef, %bb.l ], [ %i.bo, %bb.p ], !dbg !38552
   %i.bt = ptrtoint ptr %i.bc to i64, !dbg !38553
   store i64 %i.be, ptr %.sroa.14.i, align 8, !dbg !38553, !alias.scope !38371, !noalias !38321
-  %3 = ptrtoint ptr %i.bg to i64, !dbg !38553
-  store i64 %3, ptr %.sroa.19.i, align 8, !dbg !38553, !alias.scope !38371, !noalias !38321
+  store ptr %i.bg, ptr %.sroa.19.i, align 8, !dbg !38553, !alias.scope !38371, !noalias !38321
   br label %bb.ab, !dbg !38486
 
 bb.q:                                             ; preds = %bb.c

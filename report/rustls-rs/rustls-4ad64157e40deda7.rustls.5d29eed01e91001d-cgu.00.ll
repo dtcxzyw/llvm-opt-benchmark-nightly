@@ -204,6 +204,10 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.i, %bb.g
   call void @_RNvMs_NtNtCs7ZUl82OSlxp_6rustls4msgs4baseNtB4_7Payload4read(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z)
   %.sroa.5182.sroa.3.6.copyload = load i32, ptr %i.c, align 8
+  %.sroa.25.sroa.0.0.insert.ext = zext nneg i8 %i.ae to i64
+  %.sroa.25.sroa.0.1.insert.ext435 = zext i8 %i.ag to i64
+  %.sroa.25.sroa.0.1.insert.shift436 = shl nuw nsw i64 %.sroa.25.sroa.0.1.insert.ext435, 8
+  %.sroa.25.sroa.0.1.insert.insert438 = or disjoint i64 %.sroa.25.sroa.0.1.insert.shift436, %.sroa.25.sroa.0.0.insert.ext
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.070.sroa.4, ptr noundef nonnull align 4 dereferenceable(20) %i.d, i64 20, i1 false)
   br label %bb.aa
 
@@ -222,7 +226,7 @@ bb.j:                                             ; preds = %bb.g
   %i.au = load i64, ptr %i.x, align 8, !range !7, !noundef !5 ; 2 uses
   %i.av = icmp eq i64 %i.au, -1
   %i.aw = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %.sroa.0619.0.copyload.a = load i64, ptr %i.aw, align 8 ; 4 uses
+  %.sroa.0619.0.copyload.a = load i64, ptr %i.aw, align 8 ; 2 uses
   %.sroa.4620.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %.sroa.4620.0.copyload = load i32, ptr %.sroa.4620.0..sroa_idx.a, align 8 ; 2 uses
   %.sroa.5621.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.x, i64 20
@@ -276,7 +280,7 @@ bb.q:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.686.sroa.7)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   call void @_RNvXs1v_NtNtCs7ZUl82OSlxp_6rustls4msgs9handshakeNtB6_24ServerKeyExchangePayloadNtNtB8_5codec5Codec4read(ptr noalias nofree noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.q, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z)
-  %i.bh = load i64, ptr %i.q, align 8, !range !8, !noundef !5 ; 4 uses
+  %i.bh = load i64, ptr %i.q, align 8, !range !8, !noundef !5 ; 2 uses
   %i.bi = icmp eq i64 %i.bh, -2
   %i.bj = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %.sroa.0678.0.copyload = load i32, ptr %i.bj, align 8 ; 2 uses
@@ -300,7 +304,7 @@ bb.t:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6119.sroa.7)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   call void @_RNvXs4_NtCs7ZUl82OSlxp_6rustls6verifyNtB5_21DigitallySignedStructNtNtNtB7_4msgs5codec5Codec4read(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.l, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z)
-  %i.bo = load i64, ptr %i.l, align 8, !range !7, !noundef !5 ; 4 uses
+  %i.bo = load i64, ptr %i.l, align 8, !range !7, !noundef !5 ; 2 uses
   %i.bp = icmp eq i64 %i.bo, -1
   %i.bq = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %.sroa.4703.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 12
@@ -312,11 +316,7 @@ bb.t:                                             ; preds = %bb.g
 bb.u:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   call void @_RNvMs_NtNtCs7ZUl82OSlxp_6rustls4msgs4baseNtB4_7Payload4read(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.p, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z)
-  %.sroa.25.8.copyload381 = load i64, ptr %i.p, align 8 ; 3 uses
-  %.sroa.25.sroa.0.0.extract.trunc442 = trunc i64 %.sroa.25.8.copyload381 to i8
-  %.sroa.25.sroa.23.0.extract.shift471 = lshr i64 %.sroa.25.8.copyload381, 8
-  %.sroa.25.sroa.23.0.extract.trunc472 = trunc i64 %.sroa.25.sroa.23.0.extract.shift471 to i8
-  %.sroa.25.sroa.25.0.extract.shift505 = and i64 %.sroa.25.8.copyload381, -65536
+  %.sroa.25.8.copyload381 = load i64, ptr %i.p, align 8
   %.sroa.46.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   %.sroa.46.8.copyload389 = load i32, ptr %.sroa.46.8..sroa_idx, align 8
   %.sroa.55.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 12
@@ -327,11 +327,7 @@ bb.u:                                             ; preds = %bb.g
 bb.v:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @_RNvMs_NtNtCs7ZUl82OSlxp_6rustls4msgs4baseNtB4_7Payload4read(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.f, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z)
-  %.sroa.25.8.copyload382 = load i64, ptr %i.f, align 8 ; 3 uses
-  %.sroa.25.sroa.0.0.extract.trunc443 = trunc i64 %.sroa.25.8.copyload382 to i8
-  %.sroa.25.sroa.23.0.extract.shift473 = lshr i64 %.sroa.25.8.copyload382, 8
-  %.sroa.25.sroa.23.0.extract.trunc474 = trunc i64 %.sroa.25.sroa.23.0.extract.shift473 to i8
-  %.sroa.25.sroa.25.0.extract.shift507 = and i64 %.sroa.25.8.copyload382, -65536
+  %.sroa.25.8.copyload382 = load i64, ptr %i.f, align 8
   %.sroa.46.8..sroa_idx390 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %.sroa.46.8.copyload391 = load i32, ptr %.sroa.46.8..sroa_idx390, align 8
   %.sroa.55.8..sroa_idx405 = getelementptr inbounds nuw i8, ptr %i.f, i64 12
@@ -348,7 +344,7 @@ bb.w:                                             ; preds = %bb.g
   %i.bt = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %.sroa.4719.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %.sroa.5720.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 20
-  %.sroa.0718.0.copyload = load i64, ptr %i.bt, align 8 ; 4 uses
+  %.sroa.0718.0.copyload = load i64, ptr %i.bt, align 8 ; 2 uses
   %.sroa.4719.0.copyload = load i32, ptr %.sroa.4719.0..sroa_idx, align 8 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.5171.sroa.8, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.5720.0..sroa_idx, i64 12, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
@@ -369,7 +365,7 @@ bb.y:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6113.sroa.7)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   call void @_RNvXs1K_NtNtCs7ZUl82OSlxp_6rustls4msgs9handshakeNtB6_28CompressedCertificatePayloadNtNtB8_5codec5Codec4read(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.m, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z)
-  %i.bz = load i64, ptr %i.m, align 8, !range !8, !noundef !5 ; 4 uses
+  %i.bz = load i64, ptr %i.m, align 8, !range !8, !noundef !5 ; 2 uses
   %i.ca = icmp eq i64 %i.bz, -2
   %i.cb = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %.sroa.4697.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 12
@@ -389,9 +385,7 @@ bb.z:                                             ; preds = %bb.g
   br label %bb.ad
 
 bb.aa:                                            ; preds = %bb.s, %bb.m, %bb.i, %bb.bv, %bb.bt, %bb.br, %bb.bp, %bb.bn, %bb.bl, %bb.bh, %bb.bf, %bb.bd, %_RNvMNtCs4wP2HXfJTCR_5alloc5boxedINtB2_3BoxNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16ServerExtensionsE3newBK_.exit, %bb.av, %bb.at, %bb.am, %bb.ac, %bb.v, %bb.u, %bb.h
-  %.sroa.25.sroa.25.sroa.0.0 = phi i64 [ 0, %bb.h ], [ %.sroa.25.sroa.25.0.extract.shift501, %bb.bv ], [ %.sroa.25.sroa.25.0.extract.shift513, %bb.ac ], [ %.sroa.25.sroa.25.sroa.0.1.in, %bb.am ], [ %.sroa.25.sroa.25.0.extract.shift489, %bb.av ], [ %.sroa.25.sroa.25.0.extract.shift, %bb.at ], [ 0, %bb.i ], [ %.sroa.25.sroa.25.0.extract.shift485, %_RNvMNtCs4wP2HXfJTCR_5alloc5boxedINtB2_3BoxNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16ServerExtensionsE3newBK_.exit ], [ %.sroa.25.sroa.25.0.extract.shift491, %bb.bf ], [ %.sroa.25.sroa.25.0.extract.shift509, %bb.bd ], [ %.sroa.25.sroa.25.0.extract.shift493, %bb.bh ], [ %.sroa.25.sroa.25.0.extract.shift497, %bb.bn ], [ %.sroa.25.sroa.25.0.extract.shift495, %bb.bl ], [ 0, %bb.m ], [ %.sroa.25.sroa.25.0.extract.shift499, %bb.bp ], [ %.sroa.25.sroa.25.0.extract.shift505, %bb.u ], [ %.sroa.25.sroa.25.0.extract.shift507, %bb.v ], [ %.sroa.25.sroa.25.0.extract.shift511, %bb.br ], [ 0, %bb.bt ], [ 0, %bb.s ]
-  %.sroa.25.sroa.23.0 = phi i8 [ %i.ag, %bb.h ], [ %.sroa.25.sroa.23.0.extract.trunc468, %bb.bv ], [ %.sroa.25.sroa.23.0.extract.trunc480, %bb.ac ], [ %.sroa.25.sroa.23.1, %bb.am ], [ %.sroa.25.sroa.23.0.extract.trunc456, %bb.av ], [ %.sroa.25.sroa.23.0.extract.trunc, %bb.at ], [ undef, %bb.i ], [ %.sroa.25.sroa.23.0.extract.trunc452, %_RNvMNtCs4wP2HXfJTCR_5alloc5boxedINtB2_3BoxNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16ServerExtensionsE3newBK_.exit ], [ %.sroa.25.sroa.23.0.extract.trunc458, %bb.bf ], [ %.sroa.25.sroa.23.0.extract.trunc476, %bb.bd ], [ %.sroa.25.sroa.23.0.extract.trunc460, %bb.bh ], [ %.sroa.25.sroa.23.0.extract.trunc464, %bb.bn ], [ %.sroa.25.sroa.23.0.extract.trunc462, %bb.bl ], [ undef, %bb.m ], [ %.sroa.25.sroa.23.0.extract.trunc466, %bb.bp ], [ %.sroa.25.sroa.23.0.extract.trunc472, %bb.u ], [ %.sroa.25.sroa.23.0.extract.trunc474, %bb.v ], [ %.sroa.25.sroa.23.0.extract.trunc478, %bb.br ], [ %i.by, %bb.bt ], [ undef, %bb.s ]
-  %.sroa.25.sroa.0.0 = phi i8 [ %i.ae, %bb.h ], [ %.sroa.25.sroa.0.0.extract.trunc440, %bb.bv ], [ %.sroa.25.sroa.0.0.extract.trunc446, %bb.ac ], [ %.sroa.25.sroa.0.1, %bb.am ], [ %.sroa.25.sroa.0.0.extract.trunc434, %bb.av ], [ %.sroa.25.sroa.0.0.extract.trunc, %bb.at ], [ undef, %bb.i ], [ %.sroa.25.sroa.0.0.extract.trunc432, %_RNvMNtCs4wP2HXfJTCR_5alloc5boxedINtB2_3BoxNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16ServerExtensionsE3newBK_.exit ], [ %.sroa.25.sroa.0.0.extract.trunc435, %bb.bf ], [ %.sroa.25.sroa.0.0.extract.trunc444, %bb.bd ], [ %.sroa.25.sroa.0.0.extract.trunc436, %bb.bh ], [ %.sroa.25.sroa.0.0.extract.trunc438, %bb.bn ], [ %.sroa.25.sroa.0.0.extract.trunc437, %bb.bl ], [ undef, %bb.m ], [ %.sroa.25.sroa.0.0.extract.trunc439, %bb.bp ], [ %.sroa.25.sroa.0.0.extract.trunc442, %bb.u ], [ %.sroa.25.sroa.0.0.extract.trunc443, %bb.v ], [ %.sroa.25.sroa.0.0.extract.trunc445, %bb.br ], [ %i.bw, %bb.bt ], [ undef, %bb.s ]
+  %.sroa.25.sroa.25.sroa.0.0 = phi i64 [ %.sroa.25.sroa.0.1.insert.insert438, %bb.h ], [ %i.bz, %bb.bv ], [ %.sroa.0619.0.copyload.a, %bb.ac ], [ %.sroa.25.sroa.25.sroa.0.1.in.in, %bb.am ], [ %i.dp, %bb.av ], [ %i.dy, %bb.at ], [ undef, %bb.i ], [ %i.ef, %_RNvMNtCs4wP2HXfJTCR_5alloc5boxedINtB2_3BoxNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16ServerExtensionsE3newBK_.exit ], [ %i.ej, %bb.bf ], [ %.sroa.5.sroa.0.0.copyload662, %bb.bd ], [ %i.bh, %bb.bh ], [ %i.et, %bb.bn ], [ %i.eq, %bb.bl ], [ undef, %bb.m ], [ %i.bo, %bb.bp ], [ %.sroa.25.8.copyload381, %bb.u ], [ %.sroa.25.8.copyload382, %bb.v ], [ %.sroa.0718.0.copyload, %bb.br ], [ %.sroa.25.sroa.0.1.insert.insert, %bb.bt ], [ undef, %bb.s ]
   %.sroa.66.0 = phi i32 [ undef, %bb.h ], [ undef, %bb.bv ], [ %.sroa.5210.sroa.10.0.copyload, %bb.ac ], [ %.sroa.66.1, %bb.am ], [ undef, %bb.av ], [ undef, %bb.at ], [ undef, %bb.i ], [ undef, %_RNvMNtCs4wP2HXfJTCR_5alloc5boxedINtB2_3BoxNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16ServerExtensionsE3newBK_.exit ], [ undef, %bb.bf ], [ undef, %bb.bd ], [ undef, %bb.bh ], [ undef, %bb.bn ], [ undef, %bb.bl ], [ undef, %bb.m ], [ undef, %bb.bp ], [ undef, %bb.u ], [ undef, %bb.v ], [ undef, %bb.br ], [ undef, %bb.bt ], [ undef, %bb.s ]
   %.sroa.65.0 = phi i16 [ undef, %bb.h ], [ undef, %bb.bv ], [ %.sroa.5210.sroa.9.0.copyload, %bb.ac ], [ %.sroa.65.1, %bb.am ], [ undef, %bb.av ], [ undef, %bb.at ], [ undef, %bb.i ], [ undef, %_RNvMNtCs4wP2HXfJTCR_5alloc5boxedINtB2_3BoxNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16ServerExtensionsE3newBK_.exit ], [ undef, %bb.bf ], [ undef, %bb.bd ], [ undef, %bb.bh ], [ undef, %bb.bn ], [ undef, %bb.bl ], [ undef, %bb.m ], [ undef, %bb.bp ], [ undef, %bb.u ], [ undef, %bb.v ], [ undef, %bb.br ], [ undef, %bb.bt ], [ undef, %bb.s ]
   %.sroa.64422.0 = phi i16 [ undef, %bb.h ], [ undef, %bb.bv ], [ %.sroa.5210.sroa.8.0.copyload, %bb.ac ], [ %i.cm, %bb.am ], [ undef, %bb.av ], [ undef, %bb.at ], [ undef, %bb.i ], [ undef, %_RNvMNtCs4wP2HXfJTCR_5alloc5boxedINtB2_3BoxNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16ServerExtensionsE3newBK_.exit ], [ undef, %bb.bf ], [ undef, %bb.bd ], [ undef, %bb.bh ], [ undef, %bb.bn ], [ undef, %bb.bl ], [ undef, %bb.m ], [ undef, %bb.bp ], [ undef, %bb.u ], [ undef, %bb.v ], [ undef, %bb.br ], [ undef, %bb.bt ], [ undef, %bb.s ]
@@ -407,12 +401,7 @@ bb.aa:                                            ; preds = %bb.s, %bb.m, %bb.i,
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %.sroa.0.0, ptr %i.b, align 8
   %.sroa.25.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %.sroa.25.sroa.23.0.insert.ext = zext i8 %.sroa.25.sroa.23.0 to i64
-  %.sroa.25.sroa.23.0.insert.shift = shl nuw nsw i64 %.sroa.25.sroa.23.0.insert.ext, 8
-  %.sroa.25.sroa.23.0.insert.insert = or disjoint i64 %.sroa.25.sroa.25.sroa.0.0, %.sroa.25.sroa.23.0.insert.shift
-  %.sroa.25.sroa.0.0.insert.ext = zext i8 %.sroa.25.sroa.0.0 to i64
-  %.sroa.25.sroa.0.0.insert.insert = or disjoint i64 %.sroa.25.sroa.23.0.insert.insert, %.sroa.25.sroa.0.0.insert.ext
-  store i64 %.sroa.25.sroa.0.0.insert.insert, ptr %.sroa.25.0..sroa_idx, align 8
+  store i64 %.sroa.25.sroa.25.sroa.0.0, ptr %.sroa.25.0..sroa_idx, align 8
   %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i32 %.sroa.46.0, ptr %.sroa.46.0..sroa_idx, align 8
   %.sroa.55.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 20
@@ -460,10 +449,6 @@ bb.ac:                                            ; preds = %bb.j
   %.sroa.5210.sroa.10.0.copyload = load i32, ptr %.sroa.5210.sroa.10.0..sroa.5210.0..sroa_idx.sroa_idx, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.070.sroa.4, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.626.sroa.8, i64 12, i1 false)
-  %.sroa.25.sroa.0.0.extract.trunc446 = trunc i64 %.sroa.0619.0.copyload.a to i8
-  %.sroa.25.sroa.23.0.extract.shift479 = lshr i64 %.sroa.0619.0.copyload.a, 8
-  %.sroa.25.sroa.23.0.extract.trunc480 = trunc i64 %.sroa.25.sroa.23.0.extract.shift479 to i8
-  %.sroa.25.sroa.25.0.extract.shift513 = and i64 %.sroa.0619.0.copyload.a, -65536
   %.sroa.55.32..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.070.sroa.4, i64 12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(62) %.sroa.55.32..sroa_idx, ptr noundef nonnull align 8 dereferenceable(62) %.sroa.3.sroa.0, i64 62, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.626.sroa.8)
@@ -600,17 +585,13 @@ bb.al:                                            ; preds = %bb.ai
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.ao, %bb.al
-  %.sroa.25.sroa.25.sroa.0.1.in.in = phi i64 [ %i.dg, %bb.ao ], [ %.sroa.0625.0.copyload, %bb.al ] ; 3 uses
+  %.sroa.25.sroa.25.sroa.0.1.in.in = phi i64 [ %i.dg, %bb.ao ], [ %.sroa.0625.0.copyload, %bb.al ]
   %.sroa.66.1 = phi i32 [ %.sroa.8231.0.copyload, %bb.ao ], [ undef, %bb.al ]
   %.sroa.65.1 = phi i16 [ %i.co, %bb.ao ], [ undef, %bb.al ]
   %.sroa.62.1 = phi i16 [ %.sroa.5228.sroa.4.0.copyload, %bb.ao ], [ %i.cm, %bb.al ]
   %.sroa.46.1 = phi i32 [ %.sroa.0639.0.copyload, %bb.ao ], [ %.sroa.4632.0.copyload, %bb.al ]
   %storemerge = phi i64 [ -9223372036854775805, %bb.ao ], [ -9223372036854775806, %bb.al ]
   %i.dl = phi <2 x i64> [ %i.dn, %bb.ao ], [ %i.dk, %bb.al ]
-  %.sroa.25.sroa.0.1 = trunc i64 %.sroa.25.sroa.25.sroa.0.1.in.in to i8
-  %.sroa.25.sroa.23.1.in = lshr i64 %.sroa.25.sroa.25.sroa.0.1.in.in, 8
-  %.sroa.25.sroa.23.1 = trunc i64 %.sroa.25.sroa.23.1.in to i8
-  %.sroa.25.sroa.25.sroa.0.1.in = and i64 %.sroa.25.sroa.25.sroa.0.1.in.in, -65536
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v)
   br label %bb.aa
 
@@ -657,7 +638,7 @@ bb.ar:                                            ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6125.sroa.7)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   call void @_RNvXs1H_NtNtCs7ZUl82OSlxp_6rustls4msgs9handshakeNtB6_28NewSessionTicketPayloadTls13NtNtB8_5codec5Codec4read(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.k, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z)
-  %i.dp = load i64, ptr %i.k, align 8, !range !7, !noundef !5 ; 4 uses
+  %i.dp = load i64, ptr %i.k, align 8, !range !7, !noundef !5 ; 2 uses
   %i.dq = icmp eq i64 %i.dp, -1
   %i.dr = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %.sroa.0708.0.copyload = load i32, ptr %i.dr, align 8 ; 2 uses
@@ -689,11 +670,7 @@ bb.at:                                            ; preds = %bb.aq
   %i.dw = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.dx = load i32, ptr %i.dw, align 8, !noundef !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  %i.dy = ptrtoint ptr %i.dv to i64               ; 3 uses
-  %.sroa.25.sroa.0.0.extract.trunc = trunc i64 %i.dy to i8
-  %.sroa.25.sroa.23.0.extract.shift = lshr i64 %i.dy, 8
-  %.sroa.25.sroa.23.0.extract.trunc = trunc i64 %.sroa.25.sroa.23.0.extract.shift to i8
-  %.sroa.25.sroa.25.0.extract.shift = and i64 %i.dy, -65536
+  %i.dy = ptrtoint ptr %i.dv to i64
   br label %bb.aa
 
 bb.au:                                            ; preds = %bb.ar
@@ -712,10 +689,6 @@ bb.av:                                            ; preds = %bb.ar
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.070.sroa.4, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6125.sroa.7, i64 20, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6125.sroa.7)
-  %.sroa.25.sroa.0.0.extract.trunc434 = trunc i64 %i.dp to i8
-  %.sroa.25.sroa.23.0.extract.shift455 = lshr i64 %i.dp, 8
-  %.sroa.25.sroa.23.0.extract.trunc456 = trunc i64 %.sroa.25.sroa.23.0.extract.shift455 to i8
-  %.sroa.25.sroa.25.0.extract.shift489 = and i64 %i.dp, -65536
   %.sroa.55.40..sroa_idx412 = getelementptr inbounds nuw i8, ptr %.sroa.070.sroa.4, i64 20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.55.40..sroa_idx412, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.3131, i64 16, i1 false)
   br label %bb.aa
@@ -766,11 +739,7 @@ common.resume:                                    ; preds = %bb.ay
 
 _RNvMNtCs4wP2HXfJTCR_5alloc5boxedINtB2_3BoxNtNtNtCs7ZUl82OSlxp_6rustls4msgs9handshake16ServerExtensionsE3newBK_.exit: ; preds = %bb.ax
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(200) %i.ec, ptr noundef nonnull align 8 dereferenceable(200) %i.h, i64 200, i1 false)
-  %i.ef = ptrtoint ptr %i.ec to i64               ; 3 uses
-  %.sroa.25.sroa.0.0.extract.trunc432 = trunc i64 %i.ef to i8
-  %.sroa.25.sroa.23.0.extract.shift451 = lshr i64 %i.ef, 8
-  %.sroa.25.sroa.23.0.extract.trunc452 = trunc i64 %.sroa.25.sroa.23.0.extract.shift451 to i8
-  %.sroa.25.sroa.25.0.extract.shift485 = and i64 %i.ef, -65536
+  %i.ef = ptrtoint ptr %i.ec to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6152)
   br label %bb.aa
 
@@ -782,7 +751,7 @@ bb.ba:                                            ; preds = %bb.p
   %i.eg = load i64, ptr %i.a, align 8, !range !303, !noalias !305, !noundef !5
   %i.eh = trunc nuw i64 %i.eg to i1
   %i.ei = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.5.sroa.0.0.copyload662 = load i64, ptr %i.ei, align 8, !noalias !310 ; 4 uses
+  %.sroa.5.sroa.0.0.copyload662 = load i64, ptr %i.ei, align 8, !noalias !310 ; 2 uses
   %.sroa.5.sroa.7.0..sroa_idx665 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.5.sroa.7.0.copyload666 = load i32, ptr %.sroa.5.sroa.7.0..sroa_idx665, align 8, !noalias !310 ; 2 uses
   %.sroa.5.sroa.8.0..sroa_idx668 = getelementptr inbounds nuw i8, ptr %i.a, i64 20
@@ -796,7 +765,7 @@ bb.bb:                                            ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.675.sroa.7)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
   call void @_RNvXs1g_NtNtCs7ZUl82OSlxp_6rustls4msgs9handshakeNtB6_23CertificatePayloadTls13NtNtB8_5codec5Codec4read(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.r, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z)
-  %i.ej = load i64, ptr %i.r, align 8, !range !7, !noundef !5 ; 4 uses
+  %i.ej = load i64, ptr %i.r, align 8, !range !7, !noundef !5 ; 2 uses
   %i.ek = icmp eq i64 %i.ej, -1
   %i.el = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %.sroa.0654.0.copyload = load i32, ptr %i.el, align 8 ; 2 uses
@@ -817,10 +786,6 @@ bb.bc:                                            ; preds = %bb.ba
 
 bb.bd:                                            ; preds = %bb.ba
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.070.sroa.4, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.583.sroa.8, i64 12, i1 false)
-  %.sroa.25.sroa.0.0.extract.trunc444 = trunc i64 %.sroa.5.sroa.0.0.copyload662 to i8
-  %.sroa.25.sroa.23.0.extract.shift475 = lshr i64 %.sroa.5.sroa.0.0.copyload662, 8
-  %.sroa.25.sroa.23.0.extract.trunc476 = trunc i64 %.sroa.25.sroa.23.0.extract.shift475 to i8
-  %.sroa.25.sroa.25.0.extract.shift509 = and i64 %.sroa.5.sroa.0.0.copyload662, -65536
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.583.sroa.8)
   br label %bb.aa
 
@@ -840,10 +805,6 @@ bb.bf:                                            ; preds = %bb.bb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.070.sroa.4, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.675.sroa.7, i64 20, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.675.sroa.7)
-  %.sroa.25.sroa.0.0.extract.trunc435 = trunc i64 %i.ej to i8
-  %.sroa.25.sroa.23.0.extract.shift457 = lshr i64 %i.ej, 8
-  %.sroa.25.sroa.23.0.extract.trunc458 = trunc i64 %.sroa.25.sroa.23.0.extract.shift457 to i8
-  %.sroa.25.sroa.25.0.extract.shift491 = and i64 %i.ej, -65536
   %.sroa.55.40..sroa_idx411 = getelementptr inbounds nuw i8, ptr %.sroa.070.sroa.4, i64 20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.55.40..sroa_idx411, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.381, i64 16, i1 false)
   br label %bb.aa
@@ -868,10 +829,6 @@ bb.bh:                                            ; preds = %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.070.sroa.4, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.686.sroa.7, i64 20, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.686.sroa.7)
-  %.sroa.25.sroa.0.0.extract.trunc436 = trunc i64 %i.bh to i8
-  %.sroa.25.sroa.23.0.extract.shift459 = lshr i64 %i.bh, 8
-  %.sroa.25.sroa.23.0.extract.trunc460 = trunc i64 %.sroa.25.sroa.23.0.extract.shift459 to i8
-  %.sroa.25.sroa.25.0.extract.shift493 = and i64 %i.bh, -65536
   %.sroa.55.40..sroa_idx408 = getelementptr inbounds nuw i8, ptr %.sroa.070.sroa.4, i64 20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(54) %.sroa.55.40..sroa_idx408, ptr noundef nonnull align 8 dereferenceable(54) %.sroa.392.sroa.0, i64 54, i1 false)
   br label %bb.aa
@@ -880,7 +837,7 @@ bb.bi:                                            ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6104.sroa.7)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   call void @_RNvXs1A_NtNtCs7ZUl82OSlxp_6rustls4msgs9handshakeNtB6_25CertificateRequestPayloadNtNtB8_5codec5Codec4read(ptr noalias nofree noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.n, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z)
-  %i.eq = load i64, ptr %i.n, align 8, !range !7, !noundef !5 ; 4 uses
+  %i.eq = load i64, ptr %i.n, align 8, !range !7, !noundef !5 ; 2 uses
   %i.er = icmp eq i64 %i.eq, -1
   %i.es = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %.sroa.0690.0.copyload = load i32, ptr %i.es, align 8 ; 2 uses
@@ -892,7 +849,7 @@ bb.bj:                                            ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.695.sroa.7)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
   call void @_RNvXs1C_NtNtCs7ZUl82OSlxp_6rustls4msgs9handshakeNtB6_30CertificateRequestPayloadTls13NtNtB8_5codec5Codec4read(ptr noalias nofree noundef nonnull sret([96 x i8]) align 8 captures(none) dereferenceable(96) %i.o, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.z)
-  %i.et = load i64, ptr %i.o, align 8, !range !7, !noundef !5 ; 4 uses
+  %i.et = load i64, ptr %i.o, align 8, !range !7, !noundef !5 ; 2 uses
   %i.eu = icmp eq i64 %i.et, -1
   %i.ev = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %.sroa.0684.0.copyload = load i32, ptr %i.ev, align 8 ; 2 uses
@@ -916,10 +873,6 @@ bb.bl:                                            ; preds = %bb.bi
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.070.sroa.4, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6104.sroa.7, i64 20, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6104.sroa.7)
-  %.sroa.25.sroa.0.0.extract.trunc437 = trunc i64 %i.eq to i8
-  %.sroa.25.sroa.23.0.extract.shift461 = lshr i64 %i.eq, 8
-  %.sroa.25.sroa.23.0.extract.trunc462 = trunc i64 %.sroa.25.sroa.23.0.extract.shift461 to i8
-  %.sroa.25.sroa.25.0.extract.shift495 = and i64 %i.eq, -65536
   %.sroa.55.40..sroa_idx410 = getelementptr inbounds nuw i8, ptr %.sroa.070.sroa.4, i64 20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(40) %.sroa.55.40..sroa_idx410, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.3110, i64 40, i1 false)
   br label %bb.aa
@@ -944,10 +897,6 @@ bb.bn:                                            ; preds = %bb.bj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.070.sroa.4, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.695.sroa.7, i64 20, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.695.sroa.7)
-  %.sroa.25.sroa.0.0.extract.trunc438 = trunc i64 %i.et to i8
-  %.sroa.25.sroa.23.0.extract.shift463 = lshr i64 %i.et, 8
-  %.sroa.25.sroa.23.0.extract.trunc464 = trunc i64 %.sroa.25.sroa.23.0.extract.shift463 to i8
-  %.sroa.25.sroa.25.0.extract.shift497 = and i64 %i.et, -65536
   %.sroa.55.40..sroa_idx409 = getelementptr inbounds nuw i8, ptr %.sroa.070.sroa.4, i64 20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(54) %.sroa.55.40..sroa_idx409, ptr noundef nonnull align 8 dereferenceable(54) %.sroa.3101.sroa.0, i64 54, i1 false)
   %i.ey = insertelement <2 x i64> <i64 poison, i64 undef>, i64 %.sroa.5243.sroa.5.0.copyload, i64 0
@@ -974,10 +923,6 @@ bb.bo:                                            ; preds = %bb.t
 
 bb.bp:                                            ; preds = %bb.t
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.070.sroa.4, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6119.sroa.7, i64 20, i1 false)
-  %.sroa.25.sroa.0.0.extract.trunc439 = trunc i64 %i.bo to i8
-  %.sroa.25.sroa.23.0.extract.shift465 = lshr i64 %i.bo, 8
-  %.sroa.25.sroa.23.0.extract.trunc466 = trunc i64 %.sroa.25.sroa.23.0.extract.shift465 to i8
-  %.sroa.25.sroa.25.0.extract.shift499 = and i64 %i.bo, -65536
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6119.sroa.7)
   br label %bb.aa
 
@@ -994,10 +939,6 @@ bb.bq:                                            ; preds = %bb.w
 
 bb.br:                                            ; preds = %bb.w
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.070.sroa.4, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.5171.sroa.8, i64 12, i1 false)
-  %.sroa.25.sroa.0.0.extract.trunc445 = trunc i64 %.sroa.0718.0.copyload to i8
-  %.sroa.25.sroa.23.0.extract.shift477 = lshr i64 %.sroa.0718.0.copyload, 8
-  %.sroa.25.sroa.23.0.extract.trunc478 = trunc i64 %.sroa.25.sroa.23.0.extract.shift477 to i8
-  %.sroa.25.sroa.25.0.extract.shift511 = and i64 %.sroa.0718.0.copyload, -65536
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5171.sroa.8)
   br label %bb.aa
 
@@ -1017,6 +958,10 @@ bb.bs:                                            ; preds = %bb.x
 
 bb.bt:                                            ; preds = %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
+  %.sroa.25.sroa.0.0.insert.ext424 = zext nneg i8 %i.bw to i64
+  %.sroa.25.sroa.0.1.insert.ext = zext i8 %i.by to i64
+  %.sroa.25.sroa.0.1.insert.shift = shl nuw nsw i64 %.sroa.25.sroa.0.1.insert.ext, 8
+  %.sroa.25.sroa.0.1.insert.insert = or disjoint i64 %.sroa.25.sroa.0.1.insert.shift, %.sroa.25.sroa.0.0.insert.ext424
   br label %bb.aa
 
 bb.bu:                                            ; preds = %bb.y
@@ -1030,10 +975,6 @@ bb.bu:                                            ; preds = %bb.y
 
 bb.bv:                                            ; preds = %bb.y
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.070.sroa.4, ptr noundef nonnull align 4 dereferenceable(20) %.sroa.6113.sroa.7, i64 20, i1 false)
-  %.sroa.25.sroa.0.0.extract.trunc440 = trunc i64 %i.bz to i8
-  %.sroa.25.sroa.23.0.extract.shift467 = lshr i64 %i.bz, 8
-  %.sroa.25.sroa.23.0.extract.trunc468 = trunc i64 %.sroa.25.sroa.23.0.extract.shift467 to i8
-  %.sroa.25.sroa.25.0.extract.shift501 = and i64 %i.bz, -65536
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6113.sroa.7)
   br label %bb.aa
 
