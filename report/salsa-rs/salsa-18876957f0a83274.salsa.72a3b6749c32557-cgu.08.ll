@@ -202,8 +202,8 @@ bb.a:
   %i.a = alloca [12 x i8], align 4                ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
   %i.c = alloca [12 x i8], align 4                ; 7 uses
-  %.sroa.42.i.i.i.i = alloca i64, align 8         ; 5 uses
-  %.sroa.7.i.i.i.i = alloca i64, align 8          ; 4 uses
+  %.sroa.42.i.i.i.i = alloca [8 x i8], align 8    ; 5 uses
+  %.sroa.7.i.i.i.i = alloca [8 x i8], align 8     ; 4 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [16 x i8], align 8                ; 5 uses
   %i.f = alloca [16 x i8], align 8                ; 5 uses
@@ -290,8 +290,7 @@ bb.d:                                             ; preds = %.noexc4
           to label %.body unwind label %bb.f, !noalias !231
 
 bb.e:                                             ; preds = %.noexc4
-  %6 = ptrtoint ptr %i.af to i64
-  store i64 %6, ptr %.sroa.42.i.i.i.i, align 8, !alias.scope !215, !noalias !232
+  store ptr %i.af, ptr %.sroa.42.i.i.i.i, align 8, !alias.scope !215, !noalias !232
   %i.aj = zext i32 %i.ah to i64
   br label %_RNCINvMs6_NtNtCsC8CapfvpQ1_5salsa5table4memoNtB8_21MemoTableWithTypesMut10take_memosNCNvNvMs6_NtBc_8internedINtB1u_14IngredientImplpE11clear_memos5inner0E0Bc_.exit.i.i.i.i
 
@@ -306,14 +305,12 @@ _RNCINvMs6_NtNtCsC8CapfvpQ1_5salsa5table4memoNtB8_21MemoTableWithTypesMut10take_
   %.sink4.i.sroa.phi.i.i.i.i = phi ptr [ %.sroa.42.i.i.i.i, %bb.b ], [ %.sroa.7.i.i.i.i, %bb.e ]
   %.sink.i.i.i.i.i = phi ptr [ null, %bb.b ], [ %i.ag, %bb.e ]
   store ptr %.sink.i.i.i.i.i, ptr %.sink4.i.sroa.phi.i.i.i.i, align 8, !alias.scope !215, !noalias !232
-  %.sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.0..sroa.42.i.i.0..sroa.42.i.0..sroa.42.i.0..sroa.42.0..sroa.42.0..sroa.42.8..i.i.i.i = load i64, ptr %.sroa.42.i.i.i.i, align 8, !noalias !233, !noundef !3 ; 2 uses
-  %7 = inttoptr i64 %.sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.0..sroa.42.i.i.0..sroa.42.i.0..sroa.42.i.0..sroa.42.0..sroa.42.0..sroa.42.8..i.i.i.i to ptr ; 5 uses
-  %.not.i.i.i.i = icmp eq i64 %.sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.0..sroa.42.i.i.0..sroa.42.i.0..sroa.42.i.0..sroa.42.0..sroa.42.0..sroa.42.8..i.i.i.i, 0
+  %.sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.0..sroa.42.i.i.0..sroa.42.i.0..sroa.42.i.0..sroa.42.0..sroa.42.0..sroa.42.0..sroa.42.0..sroa.42.8..i.i.i.i = load ptr, ptr %.sroa.42.i.i.i.i, align 8, !noalias !233 ; 6 uses
+  %.not.i.i.i.i = icmp eq ptr %.sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.0..sroa.42.i.i.0..sroa.42.i.0..sroa.42.i.0..sroa.42.0..sroa.42.0..sroa.42.0..sroa.42.0..sroa.42.8..i.i.i.i, null
   br i1 %.not.i.i.i.i, label %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateTQNtNtNtCsC8CapfvpQ1_5salsa5table4memo9MemoEntryRNtB25_13MemoEntryTypeEuNCINvNtBb_10filter_map15filter_map_foldTjB21_ETNtNtB29_5zalsa19MemoIngredientIndexINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtB25_4MemoEL_EEuNCINvMs6_B25_NtB25_21MemoTableWithTypesMut10take_memosNCNvNvMs6_NtB29_8internedINtB6n_14IngredientImplpE11clear_memos5inner0E0NCINvNvB1e_8for_each4callB3V_NCB5n_s_0E0E0E0B29_.exit.i.i, label %bb.g
 
 bb.g:                                             ; preds = %_RNCINvMs6_NtNtCsC8CapfvpQ1_5salsa5table4memoNtB8_21MemoTableWithTypesMut10take_memosNCNvNvMs6_NtBc_8internedINtB1u_14IngredientImplpE11clear_memos5inner0E0Bc_.exit.i.i.i.i
-  %.sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.0..sroa.7.i.i.0..sroa.7.i.0..sroa.7.i.0..sroa.7.0..sroa.7.0..sroa.7.0.copyload.i.i.i.i = load i64, ptr %.sroa.7.i.i.i.i, align 8, !noalias !233
-  %8 = inttoptr i64 %.sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.0..sroa.7.i.i.0..sroa.7.i.0..sroa.7.i.0..sroa.7.0..sroa.7.0..sroa.7.0.copyload.i.i.i.i to ptr ; 7 uses
+  %.sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.0..sroa.7.i.i.0..sroa.7.i.0..sroa.7.i.0..sroa.7.0..sroa.7.0..sroa.6.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %.sroa.7.i.i.i.i, align 8, !noalias !233 ; 7 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !234)
   %i.al = load i64, ptr %i.t, align 8, !noalias !237, !noundef !3 ; 2 uses
   %i.am = icmp ugt i64 %i.al, %i.y
@@ -349,7 +346,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %.loopexit.split-lp.i.i, %.loopexit.i.i
   %lpad.phi.i.i = phi { ptr, i32 } [ %lpad.loopexit.i.i, %.loopexit.i.i ], [ %lpad.loopexit.split-lp.i.i, %.loopexit.split-lp.i.i ]
-  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtCsC8CapfvpQ1_5salsa5table4memo4MemoEL_EEB1g_(ptr nonnull %7, ptr nonnull readonly align 8 dereferenceable(56) %8) #29
+  invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtCsC8CapfvpQ1_5salsa5table4memo4MemoEL_EEB1g_(ptr nonnull %.sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.0..sroa.42.i.i.0..sroa.42.i.0..sroa.42.i.0..sroa.42.0..sroa.42.0..sroa.42.0..sroa.42.0..sroa.42.8..i.i.i.i, ptr nonnull readonly align 8 dereferenceable(56) %.sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.0..sroa.7.i.i.0..sroa.7.i.0..sroa.7.i.0..sroa.7.0..sroa.7.0..sroa.6.sroa.0.0.copyload.i.i.i.i) #29
           to label %.body unwind label %bb.s, !noalias !243
 
 bb.j:                                             ; preds = %bb.h
@@ -373,48 +370,48 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !237
-  %i.ba = getelementptr inbounds nuw i8, ptr %8, i64 40
+  %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.0..sroa.7.i.i.0..sroa.7.i.0..sroa.7.i.0..sroa.7.0..sroa.7.0..sroa.6.sroa.0.0.copyload.i.i.i.i, i64 40
   %i.bb = load ptr, ptr %i.ba, align 8, !invariant.load !3, !alias.scope !234, !noalias !243, !nonnull !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !237
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.a, ptr noundef nonnull align 4 dereferenceable(12) %i.c, i64 12, i1 false), !noalias !237
-  invoke void %i.bb(ptr noundef nonnull %7, ptr noundef nonnull align 8 %0, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(12) %i.a)
+  invoke void %i.bb(ptr noundef nonnull %.sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.0..sroa.42.i.i.0..sroa.42.i.0..sroa.42.i.0..sroa.42.0..sroa.42.0..sroa.42.0..sroa.42.0..sroa.42.8..i.i.i.i, ptr noundef nonnull align 8 %0, ptr noalias noundef nonnull align 4 captures(address) dereferenceable(12) %i.a)
           to label %bb.m unwind label %.loopexit.i.i, !noalias !237
 
 bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !237
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !237
-  %i.bc = load ptr, ptr %8, align 8, !invariant.load !3, !alias.scope !234, !noalias !243 ; 2 uses
+  %i.bc = load ptr, ptr %.sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.0..sroa.7.i.i.0..sroa.7.i.0..sroa.7.i.0..sroa.7.0..sroa.7.0..sroa.6.sroa.0.0.copyload.i.i.i.i, align 8, !invariant.load !3, !alias.scope !234, !noalias !243 ; 2 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.bc, null
   br i1 %.not.i.i.i.i.i.i.i.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  invoke void %i.bc(ptr noundef nonnull %7)
+  invoke void %i.bc(ptr noundef nonnull %.sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.0..sroa.42.i.i.0..sroa.42.i.0..sroa.42.i.0..sroa.42.0..sroa.42.0..sroa.42.0..sroa.42.0..sroa.42.8..i.i.i.i)
           to label %bb.o unwind label %bb.q, !noalias !237
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %i.bd = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.0..sroa.7.i.i.0..sroa.7.i.0..sroa.7.i.0..sroa.7.0..sroa.7.0..sroa.6.sroa.0.0.copyload.i.i.i.i, i64 8
   %i.be = load i64, ptr %i.bd, align 8, !range !4, !invariant.load !3, !alias.scope !234, !noalias !243 ; 2 uses
   %i.bf = icmp eq i64 %i.be, 0
   br i1 %i.bf, label %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateTQNtNtNtCsC8CapfvpQ1_5salsa5table4memo9MemoEntryRNtB25_13MemoEntryTypeEuNCINvNtBb_10filter_map15filter_map_foldTjB21_ETNtNtB29_5zalsa19MemoIngredientIndexINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtB25_4MemoEL_EEuNCINvMs6_B25_NtB25_21MemoTableWithTypesMut10take_memosNCNvNvMs6_NtB29_8internedINtB6n_14IngredientImplpE11clear_memos5inner0E0NCINvNvB1e_8for_each4callB3V_NCB5n_s_0E0E0E0B29_.exit.i.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.bg = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.0..sroa.7.i.i.0..sroa.7.i.0..sroa.7.i.0..sroa.7.0..sroa.7.0..sroa.6.sroa.0.0.copyload.i.i.i.i, i64 16
   %i.bh = load i64, ptr %i.bg, align 8, !range !5, !invariant.load !3, !alias.scope !234, !noalias !243
-  call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %7, i64 noundef range(i64 1, -9223372036854775808) %i.be, i64 noundef range(i64 1, 536870913) %i.bh) #27, !noalias !237
+  call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.0..sroa.42.i.i.0..sroa.42.i.0..sroa.42.i.0..sroa.42.0..sroa.42.0..sroa.42.0..sroa.42.0..sroa.42.8..i.i.i.i, i64 noundef range(i64 1, -9223372036854775808) %i.be, i64 noundef range(i64 1, 536870913) %i.bh) #27, !noalias !237
   br label %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateTQNtNtNtCsC8CapfvpQ1_5salsa5table4memo9MemoEntryRNtB25_13MemoEntryTypeEuNCINvNtBb_10filter_map15filter_map_foldTjB21_ETNtNtB29_5zalsa19MemoIngredientIndexINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtB25_4MemoEL_EEuNCINvMs6_B25_NtB25_21MemoTableWithTypesMut10take_memosNCNvNvMs6_NtB29_8internedINtB6n_14IngredientImplpE11clear_memos5inner0E0NCINvNvB1e_8for_each4callB3V_NCB5n_s_0E0E0E0B29_.exit.i.i
 
 bb.q:                                             ; preds = %bb.n
   %i.bi = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.bj = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.0..sroa.7.i.i.0..sroa.7.i.0..sroa.7.i.0..sroa.7.0..sroa.7.0..sroa.6.sroa.0.0.copyload.i.i.i.i, i64 8
   %i.bk = load i64, ptr %i.bj, align 8, !range !4, !invariant.load !3, !alias.scope !234, !noalias !243 ; 2 uses
   %i.bl = icmp eq i64 %i.bk, 0
   br i1 %i.bl, label %.body, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.bm = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.i.0..sroa.7.i.i.0..sroa.7.i.i.0..sroa.7.i.0..sroa.7.i.0..sroa.7.0..sroa.7.0..sroa.6.sroa.0.0.copyload.i.i.i.i, i64 16
   %i.bn = load i64, ptr %i.bm, align 8, !range !5, !invariant.load !3, !alias.scope !234, !noalias !243
-  call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %7, i64 noundef range(i64 1, -9223372036854775808) %i.bk, i64 noundef range(i64 1, 536870913) %i.bn) #27, !noalias !237
+  call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.i.0..sroa.42.i.i.0..sroa.42.i.i.0..sroa.42.i.0..sroa.42.i.0..sroa.42.0..sroa.42.0..sroa.42.0..sroa.42.0..sroa.42.8..i.i.i.i, i64 noundef range(i64 1, -9223372036854775808) %i.bk, i64 noundef range(i64 1, 536870913) %i.bn) #27, !noalias !237
   br label %.body
 
 bb.s:                                             ; preds = %bb.i

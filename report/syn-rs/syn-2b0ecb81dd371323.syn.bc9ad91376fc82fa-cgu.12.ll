@@ -204,10 +204,9 @@ bb.k:                                             ; preds = %bb.g
   %.not14.i = icmp eq i8 %i.ac, 2                 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.ae = load i32, ptr %i.ad, align 4, !range !20, !noalias !247
-  %2 = zext i32 %i.ae to i64
-  %.sroa.08.0.i = select i1 %.not14.i, i64 %2, i64 0
+  %.sroa.04.0.i = select i1 %.not14.i, i32 %i.ae, i32 0
   %i.af = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  store i64 %.sroa.08.0.i, ptr %i.af, align 8, !alias.scope !244, !noalias !265
+  store i32 %.sroa.04.0.i, ptr %i.af, align 8, !alias.scope !244, !noalias !265
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store <2 x ptr> %i.n, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !244, !noalias !265
   call void @llvm.experimental.noalias.scope.decl(metadata !266)
@@ -237,9 +236,8 @@ bb.n:                                             ; preds = %bb.c
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.ak = load i32, ptr %i.aj, align 4, !noalias !247, !noundef !4
-  %.sroa.03.0.insert.ext.i = zext i32 %i.ak to i64
   %i.al = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  store i64 %.sroa.03.0.insert.ext.i, ptr %i.al, align 8, !alias.scope !244, !noalias !265
+  store i32 %i.ak, ptr %i.al, align 8, !alias.scope !244, !noalias !265
   %.sroa.44.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.am = load <2 x ptr>, ptr %i.ai, align 8, !noalias !247
   store <2 x ptr> %i.am, ptr %.sroa.44.0..sroa_idx.i, align 8, !alias.scope !244, !noalias !265
@@ -501,7 +499,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 define hidden void @_RINvMs9_NtCsgbWeKYPjk8w_3syn5parseNtB6_11ParseBuffer4stepNCNvXsf_B6_NtCs6et67aoV1xO_11proc_macro25PunctNtB6_5Parse5parse0B14_EB8_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 20)) %0, ptr nofree noundef nonnull align 8 captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 6 uses
-  %i.b = alloca [32 x i8], align 8                ; 11 uses
+  %i.b = alloca [32 x i8], align 8                ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.d = load i32, ptr %i.c, align 8, !noundef !4
@@ -540,20 +538,15 @@ bb.b:                                             ; preds = %_RNCNvXsf_NtCsgbWeK
 
 bb.c:                                             ; preds = %_RNCNvXsf_NtCsgbWeKYPjk8w_3syn5parseNtCs6et67aoV1xO_11proc_macro25PunctNtB7_5Parse5parse0B9_.exit
   %.sroa.416.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %.sroa.416.0.copyload = load i32, ptr %.sroa.416.0..sroa_idx, align 4
-  %.sroa.517.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %.sroa.517.0.copyload = load i64, ptr %.sroa.517.0..sroa_idx, align 8
+  %.sroa.517.0.copyload = load i64, ptr %.sroa.416.0..sroa_idx, align 4
   %.sroa.6.0..sroa_idx18 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %.sroa.6.sroa.5.0.extract.trunc = trunc i64 %.sroa.517.0.copyload to i32
   %i.m = load <2 x ptr>, ptr %.sroa.6.0..sroa_idx18, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   store <2 x ptr> %i.m, ptr %1, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %.pr, ptr %i.n, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %.sroa.416.0.copyload, ptr %.sroa.2.0..sroa_idx, align 4
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %.sroa.6.sroa.5.0.extract.trunc, ptr %.sroa.3.0..sroa_idx, align 8
+  store i64 %.sroa.517.0.copyload, ptr %.sroa.2.0..sroa_idx, align 4
   store i64 -1, ptr %0, align 8
   br label %bb.d
 

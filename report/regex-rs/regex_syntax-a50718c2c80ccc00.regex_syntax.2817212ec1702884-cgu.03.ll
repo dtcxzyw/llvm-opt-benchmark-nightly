@@ -205,13 +205,9 @@ bb.ad:                                            ; preds = %bb.aa
   %.sroa.074.0.copyload.i = load ptr, ptr %i.c, align 8, !dbg !9527, !noalias !9110 ; 2 uses
     #dbg_value(ptr %.sroa.074.0.copyload.i, !9149, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9531)
     #dbg_value(ptr %.sroa.074.0.copyload.i, !9114, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !9532)
-    #dbg_value(i64 poison, !9149, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9531)
-    #dbg_value(i64 poison, !9114, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9532)
   %.sroa.475.0.copyload.i = load ptr, ptr %.sroa.475.0..sroa_idx.i, align 8, !dbg !9527, !noalias !9110 ; 2 uses
     #dbg_value(ptr %.sroa.475.0.copyload.i, !9149, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !9531)
     #dbg_value(ptr %.sroa.475.0.copyload.i, !9114, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !9532)
-    #dbg_value(i64 poison, !9149, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !9531)
-    #dbg_value(i64 poison, !9114, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !9532)
   %.sroa.576.0.copyload.i = load i64, ptr %.sroa.576.0..sroa_idx.i, align 8, !dbg !9527, !noalias !9110 ; 3 uses
     #dbg_value(i64 %.sroa.576.0.copyload.i, !9149, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !9531)
     #dbg_value(i64 %.sroa.576.0.copyload.i, !9114, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !9532)

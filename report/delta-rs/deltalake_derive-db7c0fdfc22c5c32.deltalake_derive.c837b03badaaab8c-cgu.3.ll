@@ -202,6 +202,7 @@ bb.a:
   %i.e = alloca [48 x i8], align 8                ; 2 uses
   %i.f = alloca [48 x i8], align 8                ; 2 uses
   %i.g = alloca [48 x i8], align 8                ; 2 uses
+  %4 = alloca [8 x i8], align 8                   ; 3 uses
   %i.h = alloca [200 x i8], align 8               ; 3 uses
   %i.i = alloca [48 x i8], align 8                ; 3 uses
   %i.j = alloca [24 x i8], align 8                ; 7 uses
@@ -317,7 +318,8 @@ bb.h:                                             ; preds = %bb.f
   %i.ai = getelementptr inbounds nuw [16 x i8], ptr %.val15, i64 %i.ab
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
   %i.ak = load i64, ptr %i.aj, align 8, !noundef !17
-  %i.al = add i64 %i.ak, %i.ah                    ; 2 uses
+  %i.al = add i64 %i.ak, %i.ah
+  store i64 %i.al, ptr %4, align 8
   %i.am = getelementptr inbounds nuw [48 x i8], ptr %2, i64 %3
   br label %.lr.ph
 
@@ -480,20 +482,14 @@ bb.aa:                                            ; preds = %bb.z
   %.val22 = load i64, ptr %i.ad, align 8, !noundef !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.f, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.049.0, i64 48, i1 false)
   %i.bp = invoke noundef i64 @_RNvMNtCsl1mHGn7pXMx_12convert_case8boundaryNtB2_8Boundary5start(ptr noalias noundef nonnull align 8 captures(address) dereferenceable(48) %i.f)
-          to label %4 unwind label %.loopexit.split-lp.loopexit
+          to label %bb.ab unwind label %.loopexit.split-lp.loopexit
 
-4:                                                ; preds = %bb.aa
+bb.ab:                                            ; preds = %bb.aa
   %5 = add i64 %i.bp, %.sroa.048.088              ; 2 uses
   %.not = icmp ult i64 %5, %.val22
-  br i1 %.not, label %.else45, label %bb.ab
-
-.else45:                                          ; preds = %4
   %6 = getelementptr inbounds nuw [8 x i8], ptr %.val21, i64 %5
-  %.else.val46 = load i64, ptr %6, align 8, !noundef !17
-  br label %bb.ab
-
-bb.ab:                                            ; preds = %.else45, %4
-  %7 = phi i64 [ %i.al, %4 ], [ %.else.val46, %.else45 ] ; 11 uses
+  %..i = select i1 %.not, ptr %6, ptr %4
+  %7 = load i64, ptr %..i, align 8, !noundef !17  ; 11 uses
   %.val19 = load ptr, ptr %i.ac, align 8, !nonnull !17, !noundef !17
   %.val20 = load i64, ptr %i.ad, align 8, !noundef !17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.e, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.049.0, i64 48, i1 false)
@@ -509,19 +505,13 @@ bb.ad:                                            ; preds = %bb.ac
   %i.bs = add i64 %i.bq, %.sroa.048.088
   %i.bt = add i64 %i.bs, %i.br                    ; 2 uses
   %.not69 = icmp ult i64 %i.bt, %.val20
-  br i1 %.not69, label %.else, label %.cont
-
-.else:                                            ; preds = %bb.ad
   %8 = getelementptr inbounds nuw [8 x i8], ptr %.val19, i64 %i.bt
-  %.else.val = load i64, ptr %8, align 8, !noundef !17
-  br label %.cont
-
-.cont:                                            ; preds = %bb.ad, %.else
-  %9 = phi i64 [ %i.al, %bb.ad ], [ %.else.val, %.else ] ; 2 uses
+  %..i37 = select i1 %.not69, ptr %8, ptr %4
+  %9 = load i64, ptr %..i37, align 8, !noundef !17 ; 2 uses
   %.not.i.i.i38 = icmp ugt i64 %.sroa.0.0.ph91, %7
   br i1 %.not.i.i.i38, label %.invoke, label %bb.ae
 
-bb.ae:                                            ; preds = %.cont
+bb.ae:                                            ; preds = %bb.ad
   %i.bu = icmp eq i64 %.sroa.0.0.ph91, 0
   br i1 %i.bu, label %bb.ag, label %bb.af
 
@@ -557,10 +547,10 @@ bb.aj:                                            ; preds = %bb.ai
   %i.cd = icmp sgt i8 %i.cc, -65
   br i1 %i.cd, label %bb.ak, label %.invoke
 
-.invoke:                                          ; preds = %.cont, %.split.i.i.i39, %bb.ah, %.split7.i.i.i, %bb.aj, %.split.i.i.i, %bb.j
-  %i.ce = phi i64 [ %.sroa.0.0.ph.lcssa87, %.split.i.i.i ], [ %.sroa.0.0.ph.lcssa87, %bb.j ], [ %.sroa.0.0.ph91, %bb.aj ], [ %.sroa.0.0.ph91, %.split7.i.i.i ], [ %.sroa.0.0.ph91, %bb.ah ], [ %.sroa.0.0.ph91, %.split.i.i.i39 ], [ %.sroa.0.0.ph91, %.cont ]
-  %i.cf = phi i64 [ %.val1.i, %.split.i.i.i ], [ %.val1.i, %bb.j ], [ %7, %bb.aj ], [ %7, %.split7.i.i.i ], [ %7, %bb.ah ], [ %7, %.split.i.i.i39 ], [ %7, %.cont ]
-  %i.cg = phi ptr [ @4, %.split.i.i.i ], [ @4, %bb.j ], [ @6, %bb.aj ], [ @6, %.split7.i.i.i ], [ @6, %bb.ah ], [ @6, %.split.i.i.i39 ], [ @6, %.cont ]
+.invoke:                                          ; preds = %bb.ad, %.split.i.i.i39, %bb.ah, %.split7.i.i.i, %bb.aj, %.split.i.i.i, %bb.j
+  %i.ce = phi i64 [ %.sroa.0.0.ph.lcssa87, %.split.i.i.i ], [ %.sroa.0.0.ph.lcssa87, %bb.j ], [ %.sroa.0.0.ph91, %bb.aj ], [ %.sroa.0.0.ph91, %.split7.i.i.i ], [ %.sroa.0.0.ph91, %bb.ah ], [ %.sroa.0.0.ph91, %.split.i.i.i39 ], [ %.sroa.0.0.ph91, %bb.ad ]
+  %i.cf = phi i64 [ %.val1.i, %.split.i.i.i ], [ %.val1.i, %bb.j ], [ %7, %bb.aj ], [ %7, %.split7.i.i.i ], [ %7, %bb.ah ], [ %7, %.split.i.i.i39 ], [ %7, %bb.ad ]
+  %i.cg = phi ptr [ @4, %.split.i.i.i ], [ @4, %bb.j ], [ @6, %bb.aj ], [ @6, %.split7.i.i.i ], [ @6, %bb.ah ], [ @6, %.split.i.i.i39 ], [ @6, %bb.ad ]
   invoke void @_RNvNtCsbvkFyIu7lgC_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.val.i, i64 noundef %.val1.i, i64 noundef %i.ce, i64 noundef %i.cf, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.cg) #15
           to label %.cont138 unwind label %.loopexit.split-lp.loopexit.split-lp
 

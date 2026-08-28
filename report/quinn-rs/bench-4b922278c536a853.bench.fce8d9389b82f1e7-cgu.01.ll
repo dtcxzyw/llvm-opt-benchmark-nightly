@@ -202,7 +202,6 @@ bb.e:                                             ; preds = %_RNvMNtCskKLDkoKarT
     #dbg_value(i64 2, !11970, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11973)
     #dbg_value(i64 undef, !11970, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !11973)
     #dbg_value(i32 -1, !11970, !DIExpression(DW_OP_LLVM_fragment, 192, 32), !11973)
-    #dbg_value(i32 undef, !11970, !DIExpression(DW_OP_LLVM_fragment, 224, 32), !11973)
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 104, !dbg !11974
   store i64 10, ptr %i.n, align 8, !dbg !11974
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 112, !dbg !11974

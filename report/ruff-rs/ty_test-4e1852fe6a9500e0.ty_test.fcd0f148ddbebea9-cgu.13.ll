@@ -205,7 +205,7 @@ bb.a:
   %i.e = alloca [24 x i8], align 8                ; 6 uses
   %i.f = alloca [8 x i8], align 8                 ; 4 uses
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #32
-  %i.g = tail call noundef align 8 dereferenceable_or_null(256) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef 256, i64 noundef range(i64 1, -9223372036854775807) 8) #32 ; 32 uses
+  %i.g = tail call noundef align 8 dereferenceable_or_null(256) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef 256, i64 noundef range(i64 1, -9223372036854775807) 8) #32 ; 31 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %bb.b, label %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit, !prof !6
 
@@ -388,9 +388,7 @@ bb.l:                                             ; preds = %_RNvMs1_CseeqNL4LYP
   %.sroa.511.sroa.11.0..sroa.511.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 80
   store i64 %i.az, ptr %.sroa.511.sroa.11.0..sroa.511.0..sroa_idx.sroa_idx, align 8
   %.sroa.511.sroa.12.0..sroa.511.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 88
-  store i64 0, ptr %.sroa.511.sroa.12.0..sroa.511.0..sroa_idx.sroa_idx, align 8
-  %.sroa.511.sroa.13.0..sroa.511.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 96
-  store i8 0, ptr %.sroa.511.sroa.13.0..sroa.511.0..sroa_idx.sroa_idx, align 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %.sroa.511.sroa.12.0..sroa.511.0..sroa_idx.sroa_idx, i8 0, i64 9, i1 false)
   %.sroa.511.sroa.15.0..sroa.511.0..sroa_idx.sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.g, i64 104
   store i64 0, ptr %.sroa.511.sroa.15.0..sroa.511.0..sroa_idx.sroa_idx.a, align 8
   %.sroa.511.sroa.16.0..sroa.511.0..sroa_idx.sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.g, i64 112

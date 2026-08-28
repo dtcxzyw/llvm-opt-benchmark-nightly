@@ -206,13 +206,11 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define internal void @_RNvYNCNvNtCs6xpQEr8gLsQ_11typst_utils4pico8INTERNER0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceuE9call_onceB8_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) initializes((0, 9), (16, 72)) %0) unnamed_addr #13 personality ptr @rust_eh_personality {
 bb.a:
-  store i64 0, ptr %0, align 8, !alias.scope !546
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 0, ptr %i.a, align 8, !alias.scope !546
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 0, ptr %i.b, align 8, !alias.scope !546
-  %.sroa.49.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr inttoptr (i64 8 to ptr), ptr %.sroa.49.0..sroa_idx.i, align 8, !alias.scope !546
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 0, ptr %i.a, align 8, !alias.scope !546
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %0, i8 0, i64 9, i1 false), !alias.scope !546
+  store ptr inttoptr (i64 8 to ptr), ptr %i.b, align 8, !alias.scope !546
   %.sroa.510.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 0, ptr %.sroa.510.0..sroa_idx.i, align 8, !alias.scope !546
   %.sroa.611.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 40

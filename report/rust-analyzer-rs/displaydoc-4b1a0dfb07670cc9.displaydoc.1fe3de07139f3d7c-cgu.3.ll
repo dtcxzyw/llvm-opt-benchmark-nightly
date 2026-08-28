@@ -204,7 +204,7 @@ bb.a:
   %i.e = alloca [88 x i8], align 8                ; 5 uses
   %i.f = alloca [32 x i8], align 8                ; 8 uses
   %i.g = alloca [120 x i8], align 8               ; 2 uses
-  %i.h = alloca [120 x i8], align 8               ; 8 uses
+  %i.h = alloca [120 x i8], align 8               ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
@@ -340,10 +340,6 @@ common.resume:                                    ; preds = %bb.aa, %bb.b
   resume { ptr, i32 } %common.resume.op
 
 _RNvNtCs2JKw6W5IoNc_10displaydoc6expand10join_paths.exit: ; preds = %bb.p
-  %.sroa.212.0.insert.ext.i = zext i32 %i.z to i64
-  %.sroa.212.0.insert.shift.i = shl nuw i64 %.sroa.212.0.insert.ext.i, 32
-  %.sroa.011.0.insert.ext.i = zext i32 %i.y to i64
-  %.sroa.011.0.insert.insert.i = or disjoint i64 %.sroa.212.0.insert.shift.i, %.sroa.011.0.insert.ext.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.h, ptr noundef nonnull align 8 dereferenceable(32) %i.f, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -354,13 +350,15 @@ _RNvNtCs2JKw6W5IoNc_10displaydoc6expand10join_paths.exit: ; preds = %bb.p
   %.sroa.01.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 32
   store i32 1, ptr %.sroa.01.sroa.0.sroa.2.0..sroa_idx, align 8
   %.sroa.01.sroa.0.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 36
-  store i64 %.sroa.011.0.insert.insert.i, ptr %.sroa.01.sroa.0.sroa.3.0..sroa_idx, align 4
+  store i32 %i.y, ptr %.sroa.01.sroa.0.sroa.3.0..sroa_idx, align 4
+  %.sroa.01.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 40
+  store i32 %i.z, ptr %.sroa.01.sroa.0.sroa.4.0..sroa_idx, align 8
   %.sroa.01.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 48
   store i64 -1, ptr %.sroa.01.sroa.2.0..sroa_idx, align 8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 96
   store i32 0, ptr %.sroa.3.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 112
-  store i64 0, ptr %.sroa.5.0..sroa_idx, align 8
+  store i32 0, ptr %.sroa.5.0..sroa_idx, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 3 uses
   %i.ah = invoke zeroext i1 @_RNvMNtCsgFSQ9XOTBNe_3syn10punctuatedINtB2_10PunctuatedNtNtB4_8generics14TypeParamBoundNtNtB4_5token4PlusE8is_emptyB4_(ptr nonnull align 8 %i.ag)
           to label %bb.w unwind label %bb.aa

@@ -204,8 +204,7 @@ bb.a:
   %2 = alloca %"struct.std::pair", align 4        ; 4 uses
   %3 = alloca %"struct.std::pair", align 8        ; 5 uses
   %4 = alloca %"struct.std::array.120", align 4   ; 8 uses
-  %.sroa.0.sroa.0 = alloca i16, align 4           ; 5 uses
-  %.sroa.0.sroa.5 = alloca i16, align 2           ; 5 uses
+  %.sroa.0 = alloca [2 x i16], align 4            ; 6 uses
   %5 = alloca %"class.rawspeed::Cr2VerticalOutputStripIterator", align 8 ; 19 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !49     ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 568
@@ -229,12 +228,12 @@ bb.a:
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !157, !nonnull !154, !align !161
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !157, !nonnull !154, !align !161
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.sroa.5)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !53   ; 3 uses
   %i.w = icmp eq ptr %i.q, %i.v
+  %.sroa.0.2.gep486.sroa_idx487 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
   br i1 %i.w, label %_ZNK8rawspeed15Cr2DecompressorINS_20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS2_EEEEE15getInitialPredsILi2EEESt5arrayItXT_EEv.exit, label %iter.check
 
 iter.check:                                       ; preds = %bb.a
@@ -327,13 +326,9 @@ _ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKN8rawspeed15Cr2DecompressorINS2_
   br label %_ZNK8rawspeed15Cr2DecompressorINS_20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS2_EEEEE15getInitialPredsILi2EEESt5arrayItXT_EEv.exit
 
 _ZNK8rawspeed15Cr2DecompressorINS_20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS2_EEEEE15getInitialPredsILi2EEESt5arrayItXT_EEv.exit: ; preds = %bb.a, %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKN8rawspeed15Cr2DecompressorINS2_20PrefixCodeLUTDecoderINS2_15BaselineCodeTagENS2_23PrefixCodeLookupDecoderIS5_EEEEE18PerComponentRecipeESt6vectorISA_SaISA_EEEEPtZNKS9_15getInitialPredsILi2EEESt5arrayItXT_EEvEUlRSB_E_ET0_T_SO_SN_T1_.exit.loopexit.i
-  %i.be = phi i32 [ %.pre.i, %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKN8rawspeed15Cr2DecompressorINS2_20PrefixCodeLUTDecoderINS2_15BaselineCodeTagENS2_23PrefixCodeLookupDecoderIS5_EEEEE18PerComponentRecipeESt6vectorISA_SaISA_EEEEPtZNKS9_15getInitialPredsILi2EEESt5arrayItXT_EEvEUlRSB_E_ET0_T_SO_SN_T1_.exit.loopexit.i ], [ undef, %bb.a ] ; 2 uses
+  %i.be = phi i32 [ %.pre.i, %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKN8rawspeed15Cr2DecompressorINS2_20PrefixCodeLUTDecoderINS2_15BaselineCodeTagENS2_23PrefixCodeLookupDecoderIS5_EEEEE18PerComponentRecipeESt6vectorISA_SaISA_EEEEPtZNKS9_15getInitialPredsILi2EEESt5arrayItXT_EEvEUlRSB_E_ET0_T_SO_SN_T1_.exit.loopexit.i ], [ undef, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %.sroa.0.sroa.0.0.extract.trunc487 = trunc i32 %i.be to i16
-  store i16 %.sroa.0.sroa.0.0.extract.trunc487, ptr %.sroa.0.sroa.0, align 4
-  %.sroa.0.sroa.5.0.extract.shift488 = lshr i32 %i.be, 16
-  %.sroa.0.sroa.5.0.extract.trunc489 = trunc nuw i32 %.sroa.0.sroa.5.0.extract.shift488 to i16
-  store i16 %.sroa.0.sroa.5.0.extract.trunc489, ptr %.sroa.0.sroa.5, align 2
+  store i32 %i.be, ptr %.sroa.0, align 4
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 80
   %.sroa.033.0.copyload = load ptr, ptr %i.bf, align 8, !tbaa !58 ; 2 uses
   %.sroa.234.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
@@ -490,8 +485,7 @@ _ZNK8rawspeed15Cr2DecompressorINS_20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS
 
 bb.c:                                             ; preds = %._crit_edge373, %._crit_edge373.thread
   %i.dc = phi i32 [ %spec.select, %._crit_edge373 ], [ 0, %._crit_edge373.thread ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.sroa.5)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret i32 %i.dc
 
 bb.d:                                             ; preds = %.lr.ph372, %_ZN8rawspeed30Cr2VerticalOutputStripIteratorppEv.exit
@@ -692,12 +686,8 @@ bb.i:                                             ; preds = %.lr.ph, %.loopexit
   br i1 %i.fi, label %.preheader239.preheader, label %bb.j
 
 .preheader239.preheader:                          ; preds = %bb.i
-  %6 = load i32, ptr %.sroa.0174.2330, align 2, !tbaa !208 ; 2 uses
-  %.sroa.0.sroa.0.0.extract.trunc = trunc i32 %6 to i16
-  store i16 %.sroa.0.sroa.0.0.extract.trunc, ptr %.sroa.0.sroa.0, align 4, !tbaa !208
-  %.sroa.0.sroa.5.0.extract.shift = lshr i32 %6, 16
-  %.sroa.0.sroa.5.0.extract.trunc = trunc nuw i32 %.sroa.0.sroa.5.0.extract.shift to i16
-  store i16 %.sroa.0.sroa.5.0.extract.trunc, ptr %.sroa.0.sroa.5, align 2, !tbaa !208
+  %6 = load <2 x i16>, ptr %.sroa.0174.2330, align 2, !tbaa !208
+  store <2 x i16> %6, ptr %.sroa.0, align 4, !tbaa !208
   call void @llvm.assume(i1 %i.fb)
   %i.fj = icmp samesign ule i32 %.046331, %i.h
   call void @llvm.assume(i1 %i.fj)
@@ -743,7 +733,7 @@ bb.k:                                             ; preds = %_ZNK8rawspeed20Pref
 
 bb.l:                                             ; preds = %.preheader, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE6decodeINS_15BitStreamerJPEGELb1EEEiRT_.exit
   %i.fx = phi i1 [ true, %.preheader ], [ false, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE6decodeINS_15BitStreamerJPEGELb1EEEiRT_.exit ]
-  %indvars.iv.sroa.phi = phi ptr [ %.sroa.0.sroa.0, %.preheader ], [ %.sroa.0.sroa.5, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE6decodeINS_15BitStreamerJPEGELb1EEEiRT_.exit ] ; 2 uses
+  %indvars.iv.sroa.phi = phi ptr [ %.sroa.0, %.preheader ], [ %.sroa.0.2.gep486.sroa_idx487, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE6decodeINS_15BitStreamerJPEGELb1EEEiRT_.exit ] ; 2 uses
   %indvars.iv.sroa.phi490.sroa.speculated = phi ptr [ %i.r, %.preheader ], [ %i.t, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE6decodeINS_15BitStreamerJPEGELb1EEEiRT_.exit ] ; 8 uses
   %indvars.iv = phi i64 [ 0, %.preheader ], [ 1, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE6decodeINS_15BitStreamerJPEGELb1EEEiRT_.exit ]
   %.sroa.63164.4310 = phi i32 [ %.sroa.63164.3317, %.preheader ], [ %.sroa.63164.5, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS1_EEE6decodeINS_15BitStreamerJPEGELb1EEEiRT_.exit ] ; 4 uses

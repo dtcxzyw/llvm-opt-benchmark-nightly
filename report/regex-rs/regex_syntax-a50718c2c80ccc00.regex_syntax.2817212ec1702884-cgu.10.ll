@@ -202,8 +202,6 @@ bb.k:                                             ; preds = %.preheader.i
     #dbg_value(ptr %.sroa.035.0.copyload.i, !4571, !DIExpression(), !5100)
     #dbg_value(i64 %.sroa.4.sroa.0.0.copyload.i, !4572, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !5100)
     #dbg_value(i64 %.sroa.4.sroa.0.0.copyload.i, !5101, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !5113)
-    #dbg_value(i64 poison, !4572, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !5100)
-    #dbg_value(i64 poison, !5101, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !5113)
     #dbg_value(ptr %.sroa.4.sroa.5.0.copyload.i, !4572, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !5100)
     #dbg_value(ptr %.sroa.4.sroa.5.0.copyload.i, !5101, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !5113)
     #dbg_value(i64 %.sroa.4.sroa.6.0.copyload.i, !4572, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !5100)

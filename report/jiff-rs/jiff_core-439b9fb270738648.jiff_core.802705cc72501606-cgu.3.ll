@@ -204,7 +204,8 @@ bb.d:                                             ; preds = %_RNvMs2_NtNtCsb09rM
   br i1 %i.j, label %_RNvMNtNtCsb09rMIQFAXO_9jiff_core2tz6offsetNtB2_6Offset11to_datetime.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.k = udiv i32 %i.f, 3600                      ; 2 uses
+  %i.k = udiv i32 %i.f, 3600
+  %2 = trunc nuw nsw i32 %i.k to i8               ; 2 uses
   %i.l = urem i32 %i.f, 3600                      ; 2 uses
   %i.m = icmp eq i32 %i.l, 0
   br i1 %i.m, label %_RNvMNtNtCsb09rMIQFAXO_9jiff_core2tz6offsetNtB2_6Offset11to_datetime.exit, label %bb.f
@@ -214,16 +215,15 @@ bb.f:                                             ; preds = %bb.e
   %i.n = udiv i16 %.lhs.trunc.i, 60
   %i.o = zext nneg i16 %i.n to i64
   %i.p = urem i16 %.lhs.trunc.i, 60
-  %2 = zext nneg i16 %i.p to i64
-  %3 = shl nuw nsw i64 %2, 48
-  %4 = shl nuw nsw i64 %i.o, 40
-  %i.q = or disjoint i64 %3, %4
+  %3 = shl nuw nsw i64 %i.o, 16
+  %4 = shl nuw nsw i16 %i.p, 8
+  %5 = zext nneg i16 %4 to i64
+  %i.q = or disjoint i64 %3, %5
   br label %_RNvMNtNtCsb09rMIQFAXO_9jiff_core2tz6offsetNtB2_6Offset11to_datetime.exit
 
 _RNvMNtNtCsb09rMIQFAXO_9jiff_core2tz6offsetNtB2_6Offset11to_datetime.exit: ; preds = %bb.d, %bb.e, %bb.f
-  %.sroa.041.0.i.shrunk = phi i32 [ 0, %bb.d ], [ %i.k, %bb.e ], [ %i.k, %bb.f ]
-  %.sroa.043.0.i = phi i64 [ 0, %bb.d ], [ 0, %bb.e ], [ %i.q, %bb.f ] ; 3 uses
-  %.sroa.041.0.i = zext nneg i32 %.sroa.041.0.i.shrunk to i64
+  %.sroa.041.0.i = phi i8 [ 0, %bb.d ], [ %2, %bb.e ], [ %2, %bb.f ]
+  %.sroa.043.0.i = phi i64 [ 0, %bb.d ], [ 0, %bb.e ], [ %i.q, %bb.f ]
   %i.r = shl nuw nsw i32 %i.h, 2
   %i.s = add nuw nsw i32 %i.r, 33266051           ; 2 uses
   %i.t = urem i32 %i.s, 146097
@@ -253,24 +253,16 @@ _RNvMNtNtCsb09rMIQFAXO_9jiff_core2tz6offsetNtB2_6Offset11to_datetime.exit: ; pre
   %.sroa.6.10.extract.trunc = zext nneg i32 %.sroa.6.10.extract.shift to i64
   %narrow = add nuw nsw i16 %i.ab, 1
   %.sroa.6.11.extract.trunc = zext nneg i16 %narrow to i64
-  %5 = lshr i64 %.sroa.043.0.i, 32
-  %.sroa.0.4.extract.trunc = or i64 %5, %.sroa.041.0.i
   %sext = shl i64 %.sroa.6.8.extract.trunc, 48
   %sext2 = shl i64 %.sroa.6.10.extract.trunc, 56
   %i.an = ashr exact i64 %sext2, 16
   %i.ao = or i64 %sext, %i.an
   %i.ap = shl nuw nsw i64 %.sroa.6.11.extract.trunc, 32
   %i.aq = or disjoint i64 %i.ao, %i.ap
-  %sext3 = shl i64 %.sroa.0.4.extract.trunc, 56
-  %6 = ashr exact i64 %sext3, 32
-  %i.ar = shl i64 %.sroa.043.0.i, 16
-  %7 = ashr i64 %i.ar, 40
-  %8 = and i64 %7, -65536
-  %9 = lshr i64 %.sroa.043.0.i, 40
-  %10 = and i64 %9, 16776960
-  %11 = or disjoint i64 %10, %i.aq
-  %i.as = or i64 %11, %8
-  %i.at = or i64 %i.as, %6
+  %6 = zext nneg i8 %.sroa.041.0.i to i64
+  %i.ar = shl nuw nsw i64 %6, 24
+  %i.as = or disjoint i64 %i.ar, %i.aq
+  %i.at = or i64 %.sroa.043.0.i, %i.as
   ret i64 %i.at
 }
 
