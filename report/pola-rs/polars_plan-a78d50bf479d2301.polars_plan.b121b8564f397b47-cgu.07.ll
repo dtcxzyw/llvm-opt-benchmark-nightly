@@ -204,7 +204,9 @@ bb.g:                                             ; preds = %_RNvMNtCscgRAwXFJnX
 
 bb.h:                                             ; preds = %_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultINtNtNtNtCsh8eZTKRCwoO_3std4sync6poison5mutex10MutexGuardINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtype8DataTypeuEEEEINtBM_11PoisonErrorBH_EE6unwrapCsfcROwRM8ZtH_11polars_plan.exit, %bb.m
   %.sroa.02.0 = phi ptr [ %i.ab, %bb.m ], [ null, %_RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultINtNtNtNtCsh8eZTKRCwoO_3std4sync6poison5mutex10MutexGuardINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc4sync3ArcINtNtCshe0pyuXM1S4_13polars_schema6schema6SchemaNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtype8DataTypeuEEEEINtBM_11PoisonErrorBH_EE6unwrapCsfcROwRM8ZtH_11polars_plan.exit ], !dbg !157408
-  store i64 0, ptr %0, align 8, !dbg !157409
+  store i32 0, ptr %0, align 8, !dbg !157409
+  %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4, !dbg !157409
+  store i8 0, ptr %.sroa.0.sroa.4.0..sroa_idx, align 4, !dbg !157409
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !157409
   store ptr %.sroa.02.0, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !157409
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 4, !dbg !157410

@@ -202,7 +202,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsG258MDvU3F_3std6thread6thread6Th
 define noundef zeroext i1 @_RNvMsb_NtNtCsdc6yCHiM2ZJ_4pyo35impl_7pyclassNtB5_17ThreadCheckerImpl8can_drop(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
-  %i.b = alloca [48 x i8], align 8                ; 6 uses
+  %i.b = alloca [48 x i8], align 8                ; 8 uses
   %i.c = alloca [16 x i8], align 8                ; 5 uses
   %i.d = alloca [8 x i8], align 8                 ; 6 uses
   %i.e = alloca [16 x i8], align 8                ; 3 uses
@@ -281,9 +281,13 @@ _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNCINvMs_NtCsdc6yCHiM2ZJ_4pyo33errNtBM
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   store i32 3, ptr %i.q, align 8
-  %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
-  store i64 1, ptr %i.r, align 8
+  store i32 0, ptr %i.b, align 8
+  %.sroa.09.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  store i8 0, ptr %.sroa.09.sroa.4.0..sroa_idx, align 4
+  %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  store i64 0, ptr %i.r, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  store i64 1, ptr %3, align 8
   %.sroa.416.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store ptr %i.m, ptr %.sroa.416.0..sroa_idx, align 8
   %.sroa.517.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 32

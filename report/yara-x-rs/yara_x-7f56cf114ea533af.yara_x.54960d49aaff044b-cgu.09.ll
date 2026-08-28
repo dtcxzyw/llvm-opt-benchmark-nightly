@@ -205,6 +205,10 @@ bb.a:
 define hidden void @_RNvXsH_Cs6ObhOmryMwL_8smallvecINtB5_8IntoIterAhj4_ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs7gfv9tzbXmh_6yara_x(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([40 x i8]) align 8 captures(none) dereferenceable(40) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
+  %.sroa.4 = alloca [8 x i8], align 8             ; 5 uses
+  %.sroa.6 = alloca [8 x i8], align 8             ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.c = load i64, ptr %i.b, align 8, !noundef !4
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -241,22 +245,29 @@ _RINvXsu_Cs6ObhOmryMwL_8smallvecINtB6_8SmallVecAhj4_EINtNtNtNtCskKLDkoKarTP_4cor
   %.sroa.0.0.copyload = load i64, ptr %i.a, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8 ; 2 uses
+  store i64 %.sroa.4.0.copyload, ptr %.sroa.4, align 8
   %.sroa.6.0.copyload = load i64, ptr %i.l, align 8 ; 3 uses
+  store i64 %.sroa.6.0.copyload, ptr %.sroa.6, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !10286
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10289)
-  %i.o = icmp ugt i64 %.sroa.6.0.copyload, 4      ; 3 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !10292)
+  %i.o = icmp ugt i64 %.sroa.6.0.copyload, 4      ; 2 uses
   %.sink10.i.i = select i1 %i.o, i64 %.sroa.4.0.copyload, i64 %.sroa.6.0.copyload
-  %spec.select = select i1 %i.o, i64 0, i64 %.sroa.4.0.copyload
-  %spec.select10 = select i1 %i.o, i64 %.sroa.6.0.copyload, i64 0
-  store i64 %.sroa.0.0.copyload, ptr %0, align 8, !alias.scope !10292
+  %.sink9.i.i = select i1 %i.o, ptr %.sroa.4, ptr %.sroa.6
+  store i64 0, ptr %.sink9.i.i, align 8, !alias.scope !10292, !noalias !10289
+  store i64 %.sroa.0.0.copyload, ptr %0, align 8, !alias.scope !10294
   %.sroa.4.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %spec.select, ptr %.sroa.4.0..sroa_idx2, align 8, !alias.scope !10292
+  %.sroa.4.0..sroa.4.0. = load i64, ptr %.sroa.4, align 8, !alias.scope !10294
+  store i64 %.sroa.4.0..sroa.4.0., ptr %.sroa.4.0..sroa_idx2, align 8, !alias.scope !10294
   %.sroa.6.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %spec.select10, ptr %.sroa.6.0..sroa_idx4, align 8, !alias.scope !10292
+  %.sroa.6.0..sroa.6.0. = load i64, ptr %.sroa.6, align 8, !alias.scope !10294
+  store i64 %.sroa.6.0..sroa.6.0., ptr %.sroa.6.0..sroa_idx4, align 8, !alias.scope !10294
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 0, ptr %i.p, align 8, !alias.scope !10294, !noalias !10289
+  store i64 0, ptr %i.p, align 8, !alias.scope !10289, !noalias !10292
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i64 %.sink10.i.i, ptr %i.q, align 8, !alias.scope !10294, !noalias !10289
+  store i64 %.sink10.i.i, ptr %i.q, align 8, !alias.scope !10289, !noalias !10292
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   ret void
 }
 
@@ -659,11 +670,11 @@ begin_hunk_1_@llvm.vector.reduce.or.v6i64
 !10287 = distinct !{!10287, !10288, !"_RINvXsu_Cs6ObhOmryMwL_8smallvecINtB6_8SmallVecAhj4_EINtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12FromIteratorhE9from_iterINtNtNtBV_8adapters6cloned6ClonedINtNtNtBX_5slice4iter4IterhEEECs7gfv9tzbXmh_6yara_x: argument 0"}
 !10288 = distinct !{!10288, !"_RINvXsu_Cs6ObhOmryMwL_8smallvecINtB6_8SmallVecAhj4_EINtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12FromIteratorhE9from_iterINtNtNtBV_8adapters6cloned6ClonedINtNtNtBX_5slice4iter4IterhEEECs7gfv9tzbXmh_6yara_x"}
 !10289 = !{!10290}
-!10290 = distinct !{!10290, !10291, !"_RNvXsO_Cs6ObhOmryMwL_8smallvecINtB5_8SmallVecAhj4_ENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCs7gfv9tzbXmh_6yara_x: argument 1"}
+!10290 = distinct !{!10290, !10291, !"_RNvXsO_Cs6ObhOmryMwL_8smallvecINtB5_8SmallVecAhj4_ENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCs7gfv9tzbXmh_6yara_x: argument 0"}
 !10291 = distinct !{!10291, !"_RNvXsO_Cs6ObhOmryMwL_8smallvecINtB5_8SmallVecAhj4_ENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCs7gfv9tzbXmh_6yara_x"}
-!10292 = !{!10293, !10290}
-!10293 = distinct !{!10293, !10291, !"_RNvXsO_Cs6ObhOmryMwL_8smallvecINtB5_8SmallVecAhj4_ENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCs7gfv9tzbXmh_6yara_x: argument 0"}
-!10294 = !{!10293}
+!10292 = !{!10293}
+!10293 = distinct !{!10293, !10291, !"_RNvXsO_Cs6ObhOmryMwL_8smallvecINtB5_8SmallVecAhj4_ENtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12IntoIterator9into_iterCs7gfv9tzbXmh_6yara_x: argument 1"}
+!10294 = !{!10290, !10293}
 !10295 = !{!10296, !10298, !10300, !10302}
 !10296 = distinct !{!10296, !10297, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsiOkGTpNE17y_8wasmtime7runtime5types8HeapTypeECs7gfv9tzbXmh_6yara_x: argument 0"}
 !10297 = distinct !{!10297, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsiOkGTpNE17y_8wasmtime7runtime5types8HeapTypeECs7gfv9tzbXmh_6yara_x"}
