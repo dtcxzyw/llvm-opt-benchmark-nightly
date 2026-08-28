@@ -205,7 +205,7 @@ bb.ay:                                            ; preds = %bb.av
   %i.gx = getelementptr inbounds nuw i8, ptr %i.ab, i64 120
   %i.gy = getelementptr inbounds nuw i8, ptr %i.ab, i64 144
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gx, i8 0, i64 24, i1 false), !alias.scope !1748, !noalias !1746
-  store i64 3, ptr %i.gy, align 8, !alias.scope !1748, !noalias !1746
+  store i32 3, ptr %i.gy, align 8, !alias.scope !1748, !noalias !1746
   %i.gz = getelementptr inbounds nuw i8, ptr %i.ab, i64 152
   %i.ha = getelementptr inbounds nuw i8, ptr %i.ab, i64 208
   store i32 0, ptr %i.ha, align 8, !alias.scope !1748, !noalias !1746
@@ -608,7 +608,7 @@ bb.cm:                                            ; preds = %bb.cl, %bb.ce
   store ptr inttoptr (i64 4 to ptr), ptr %.sroa.422.0..sroa_idx.i64.i, align 8, !alias.scope !1785, !noalias !1746
   store i64 0, ptr %.sroa.523.0..sroa_idx.i65.i, align 8, !alias.scope !1785, !noalias !1746
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ib, i8 0, i64 24, i1 false), !alias.scope !1785, !noalias !1746
-  store i64 3, ptr %i.ic, align 8, !alias.scope !1785, !noalias !1746
+  store i32 3, ptr %i.ic, align 8, !alias.scope !1785, !noalias !1746
   store i32 0, ptr %i.ie, align 8, !alias.scope !1785, !noalias !1746
   store i64 0, ptr %i.ih, align 8, !alias.scope !1785, !noalias !1746
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.id, i8 0, i64 20, i1 false), !alias.scope !1785, !noalias !1746

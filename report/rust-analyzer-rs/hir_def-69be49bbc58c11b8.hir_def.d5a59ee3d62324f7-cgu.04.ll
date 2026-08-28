@@ -204,8 +204,8 @@ bb.a:
   %i.m = alloca [8 x i8], align 8                 ; 4 uses
   %i.n = alloca [16 x i8], align 8                ; 5 uses
   %i.o = alloca [16 x i8], align 8                ; 5 uses
-  %.sroa.5474 = alloca i64, align 8               ; 7 uses
-  %.sroa.9 = alloca i64, align 8                  ; 5 uses
+  %.sroa.5474 = alloca [8 x i8], align 8          ; 7 uses
+  %.sroa.9 = alloca [8 x i8], align 8             ; 5 uses
   %i.p = alloca [32 x i8], align 8                ; 4 uses
   %i.q = alloca [96 x i8], align 8                ; 13 uses
   %i.r = alloca [16 x i8], align 8                ; 5 uses
@@ -608,8 +608,7 @@ bb.df:                                            ; preds = %_RNvXs_NtNtNtCshzWf
   %.not.i.i.i = icmp eq i8 %i.ld, 2
   %..i.i.i = select i1 %.not.i.i.i, ptr null, ptr %spec.select.i.i.i.i.i.i
   %i.le = add i64 %.sroa.21470.0, 1
-  %2 = ptrtoint ptr %.sroa.18.0 to i64
-  store i64 %2, ptr %.sroa.5474, align 8, !alias.scope !1712, !noalias !1723
+  store ptr %.sroa.18.0, ptr %.sroa.5474, align 8, !alias.scope !1712, !noalias !1723
   %i.lf = icmp eq i64 %.sroa.21470.0, 0
   br label %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3map3MapINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterNtNtCs33K2ylI4knu_10hir_expand4name4NameEINtNtB6_5chain5ChainINtNtB6_7flatten7FlattenINtNtBa_6option8IntoIterRSINtB3t_6OptionNtNtNtCsileJQcQObtj_7hir_def10expr_store4path11GenericArgsEEEINtNtNtB8_7sources6repeat6RepeatRB3Q_EEENCNvMs0_B46_NtB46_12PathSegments4iter0EENtNtNtB8_6traits8iterator8Iterator4nextB4a_.exit
 
@@ -625,14 +624,12 @@ _RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_
   %.sink.i.sroa.phi = phi ptr [ %.sroa.5474, %bb.dc ], [ %.sroa.5474, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters5chainINtB4_5ChainINtNtB6_7flatten7FlattenINtNtBa_6option8IntoIterRSINtB1q_6OptionNtNtNtCsileJQcQObtj_7hir_def10expr_store4path11GenericArgsEEEINtNtNtB8_7sources6repeat6RepeatRB1N_EENtNtNtB8_6traits8iterator8Iterator4nextB27_.exit.i.i.i.i ], [ %.sroa.9, %bb.df ]
   %..i.i.sink.i = phi ptr [ null, %bb.dc ], [ null, %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters5chainINtB4_5ChainINtNtB6_7flatten7FlattenINtNtBa_6option8IntoIterRSINtB1q_6OptionNtNtNtCsileJQcQObtj_7hir_def10expr_store4path11GenericArgsEEEINtNtNtB8_7sources6repeat6RepeatRB1N_EENtNtNtB8_6traits8iterator8Iterator4nextB27_.exit.i.i.i.i ], [ %..i.i.i, %bb.df ]
   store ptr %..i.i.sink.i, ptr %.sink.i.sroa.phi, align 8, !alias.scope !1712, !noalias !1723
-  %.sroa.5474.0..sroa.5474.0..sroa.5474.0..sroa.5474.8. = load i64, ptr %.sroa.5474, align 8, !noundef !4 ; 2 uses
-  %3 = inttoptr i64 %.sroa.5474.0..sroa.5474.0..sroa.5474.0..sroa.5474.8. to ptr
-  %.not427 = icmp eq i64 %.sroa.5474.0..sroa.5474.0..sroa.5474.0..sroa.5474.8., 0
+  %.sroa.5474.0..sroa.5474.0..sroa.5474.0..sroa.5474.8. = load ptr, ptr %.sroa.5474, align 8 ; 2 uses
+  %.not427 = icmp eq ptr %.sroa.5474.0..sroa.5474.0..sroa.5474.0..sroa.5474.8., null
   br i1 %.not427, label %bb.dh, label %bb.dg
 
 bb.dg:                                            ; preds = %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3map3MapINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterNtNtCs33K2ylI4knu_10hir_expand4name4NameEINtNtB6_5chain5ChainINtNtB6_7flatten7FlattenINtNtBa_6option8IntoIterRSINtB3t_6OptionNtNtNtCsileJQcQObtj_7hir_def10expr_store4path11GenericArgsEEEINtNtNtB8_7sources6repeat6RepeatRB3Q_EEENCNvMs0_B46_NtB46_12PathSegments4iter0EENtNtNtB8_6traits8iterator8Iterator4nextB4a_.exit
-  %.sroa.9.0..sroa.9.0..sroa.9.0..sroa.9.16. = load i64, ptr %.sroa.9, align 8, !noundef !4 ; 2 uses
-  %4 = inttoptr i64 %.sroa.9.0..sroa.9.0..sroa.9.0..sroa.9.16. to ptr
+  %.sroa.9.0..sroa.9.0..sroa.9.0..sroa.9.16. = load ptr, ptr %.sroa.9, align 8 ; 2 uses
   br i1 %.sroa.0473.0, label %bb.di, label %bb.dl
 
 bb.dh:                                            ; preds = %_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3map3MapINtNtB6_3zip3ZipINtNtNtBa_5slice4iter4IterNtNtCs33K2ylI4knu_10hir_expand4name4NameEINtNtB6_5chain5ChainINtNtB6_7flatten7FlattenINtNtBa_6option8IntoIterRSINtB3t_6OptionNtNtNtCsileJQcQObtj_7hir_def10expr_store4path11GenericArgsEEEINtNtNtB8_7sources6repeat6RepeatRB3Q_EEENCNvMs0_B46_NtB46_12PathSegments4iter0EENtNtNtB8_6traits8iterator8Iterator4nextB4a_.exit
@@ -658,7 +655,7 @@ _RNvMNtNtCsileJQcQObtj_7hir_def10expr_store4pathNtB2_4Path4kind.exit469: ; preds
 bb.dk:                                            ; preds = %_RNvMNtNtCsileJQcQObtj_7hir_def10expr_store4pathNtB2_4Path4kind.exit469, %bb.dl
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
   %i.lj = load i8, ptr %i.je, align 1, !range !78, !noundef !4
-  store ptr %3, ptr %i.o, align 8
+  store ptr %.sroa.5474.0..sroa.5474.0..sroa.5474.0..sroa.5474.8., ptr %i.o, align 8
   store i8 %i.lj, ptr %i.jf, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   store ptr %i.o, ptr %i.n, align 8
@@ -666,7 +663,7 @@ bb.dk:                                            ; preds = %_RNvMNtNtCsileJQcQO
   %i.lk = call noundef zeroext i1 @_RNvNtCshzWfHUSfYae_4core3fmt5write(ptr noundef nonnull %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @27, ptr noundef nonnull @38, ptr noundef nonnull %i.n) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
-  %.not428 = icmp eq i64 %.sroa.9.0..sroa.9.0..sroa.9.0..sroa.9.16., 0
+  %.not428 = icmp eq ptr %.sroa.9.0..sroa.9.0..sroa.9.0..sroa.9.16., null
   br i1 %.not428, label %bb.dm, label %bb.dn
 
 bb.dl:                                            ; preds = %_RNvMNtNtCsileJQcQObtj_7hir_def10expr_store4pathNtB2_4Path4kind.exit469, %bb.dg
@@ -680,7 +677,7 @@ bb.dm:                                            ; preds = %bb.dn, %bb.dk
 
 bb.dn:                                            ; preds = %bb.dk
   %i.lm = call noundef zeroext i1 @_RNvXNtNtCsileJQcQObtj_7hir_def10expr_store6prettyNtB2_7PrinterNtNtCshzWfHUSfYae_4core3fmt5Write9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @233, i64 noundef 3) ; 0 uses
-  call fastcc void @_RNvMs_NtNtCsileJQcQObtj_7hir_def10expr_store6prettyNtB4_7Printer18print_generic_args(ptr noalias nofree noundef align 8 dereferenceable(64) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %4)
+  call fastcc void @_RNvMs_NtNtCsileJQcQObtj_7hir_def10expr_store6prettyNtB4_7Printer18print_generic_args(ptr noalias nofree noundef align 8 dereferenceable(64) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %.sroa.9.0..sroa.9.0..sroa.9.0..sroa.9.16.)
   %i.ln = call noundef zeroext i1 @_RNvXNtNtCsileJQcQObtj_7hir_def10expr_store6prettyNtB2_7PrinterNtNtCshzWfHUSfYae_4core3fmt5Write9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @234, i64 noundef 1) ; 0 uses
   br label %bb.dm
 }

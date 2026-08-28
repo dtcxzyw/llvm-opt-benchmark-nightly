@@ -113,8 +113,8 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 ; Function Attrs: nounwind uwtable
 define internal i32 @wavpack_decode_frame(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) #0 {
 bb.a:
-  %.sroa.0.i = alloca i32, align 4                ; 8 uses
-  %4 = alloca %struct.AVChannelLayout, align 8    ; 9 uses
+  %4 = alloca [4 x i8], align 1                   ; 8 uses
+  %5 = alloca %struct.AVChannelLayout, align 8    ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -146,7 +146,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 28
   store i32 %.lobit, ptr %i.o, align 4, !tbaa !47
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 348 ; 4 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 3 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 652
@@ -154,9 +154,9 @@ bb.c:                                             ; preds = %bb.b
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 356
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 528
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 96
-  %.sroa.0.i.1.i.1.i.1..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 1
-  %.sroa.0.i.2.i.2.i.2..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 2
-  %.sroa.0.i.3.i.3.i.3..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 3
+  %.sroa.0.i.1.i.1.i.1..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 1
+  %.sroa.0.i.2.i.2.i.2..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 2
+  %.sroa.0.i.3.i.3.i.3..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 3
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %wavpack_decode_block.exit
@@ -559,7 +559,7 @@ wp_exp2.exit.i:                                   ; preds = %bb.ea, %bytestream2
   br i1 %niter1194.ncmp.7, label %bytestream2_get_le24.exit.i.loopexit987.unr-lcssa, label %.lr.ph1007.i, !llvm.loop !86
 
 bb.eb:                                            ; preds = %bb.z
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %.not515.i = icmp eq i32 %spec.select557.i, 4
   br i1 %.not515.i, label %bb.ed, label %bb.ec
 
@@ -574,9 +574,9 @@ bb.ec:                                            ; preds = %bb.eb
 bb.ed:                                            ; preds = %bb.eb
   %i.ajj = call i64 @llvm.smin.i64(i64 %i.el, i64 4)
   %i.ajk = and i64 %i.ajj, 4294967295             ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0.i, ptr align 1 %.sroa.0690.1.i, i64 %i.ajk, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %4, ptr align 1 %.sroa.0690.1.i, i64 %i.ajk, i1 false)
   %i.ajl = getelementptr inbounds nuw i8, ptr %.sroa.0690.1.i, i64 %i.ajk ; 3 uses
-  %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..i = load i8, ptr %.sroa.0.i, align 4, !tbaa !45 ; 2 uses
+  %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..i = load i8, ptr %4, align 1, !tbaa !45 ; 2 uses
   %i.ajm = zext i8 %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..i to i32 ; 2 uses
   %i.ajn = icmp ugt i8 %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..i, 30
   br i1 %i.ajn, label %bb.ee, label %bb.ef
@@ -597,7 +597,7 @@ bb.eg:                                            ; preds = %bb.ef
   br label %bb.eh
 
 bb.eh:                                            ; preds = %bb.eg, %bb.ef
-  %.sroa.0.i.2..sroa.0.i.2..sroa.0.i.2..sroa.0.2..sroa.0.2..sroa.0.2.682.i = load i8, ptr %.sroa.0.i.2.i.2.i.2..sroa_idx, align 2, !tbaa !45 ; 2 uses
+  %.sroa.0.i.2..sroa.0.i.2..sroa.0.i.2..sroa.0.2..sroa.0.2..sroa.0.2.682.i = load i8, ptr %.sroa.0.i.2.i.2.i.2..sroa_idx, align 1, !tbaa !45 ; 2 uses
   %.not517.i = icmp eq i8 %.sroa.0.i.2..sroa.0.i.2..sroa.0.i.2..sroa.0.2..sroa.0.2..sroa.0.2.682.i, 0
   br i1 %.not517.i, label %bb.ej, label %bb.ei
 
@@ -659,12 +659,12 @@ bb.ep:                                            ; preds = %bb.eo
   br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.ep, %bb.eo, %bb.en
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   br label %bytestream2_get_le24.exit.i
 
 bb.eq:                                            ; preds = %bb.em, %bb.ee, %bb.ec
   %.sroa.0690.16.i = phi ptr [ %i.ajl, %bb.ee ], [ %i.ajl, %bb.em ], [ %i.aji, %bb.ec ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   br label %.backedge.i
 
 bb.er:                                            ; preds = %bb.z
@@ -1067,8 +1067,8 @@ bb.gu:                                            ; preds = %bb.gt, %.thread1303
   br i1 %.not539.i, label %bb.gv, label %bb.hq
 
 bb.gv:                                            ; preds = %bb.gu
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   %i.aqm = load i32, ptr %i.bl, align 8, !tbaa !56
   %i.aqn = lshr i32 %i.aqm, 23
   %i.aqo = and i32 %i.aqn, 15                     ; 2 uses
@@ -1102,7 +1102,7 @@ bb.ha:                                            ; preds = %bb.gz
   br i1 %.not541.i, label %.sink.split.i, label %bb.hb
 
 bb.hb:                                            ; preds = %bb.ha
-  %i.aqy = call i32 @av_channel_layout_from_mask(ptr noundef nonnull %4, i64 noundef %.0435897.i) #13 ; 0 uses
+  %i.aqy = call i32 @av_channel_layout_from_mask(ptr noundef nonnull %5, i64 noundef %.0435897.i) #13 ; 0 uses
   %.not542.i = icmp eq i32 %.0443925.i, 0
   %i.aqz = load i32, ptr %i.q, align 4
   %.not543.i = icmp eq i32 %i.aqz, %.0443925.i
@@ -1116,7 +1116,7 @@ bb.hc:                                            ; preds = %bb.gz
 
 .sink.split.i:                                    ; preds = %bb.hc, %bb.ha
   %.044392512851317.sink.i = phi i32 [ %i.arb, %bb.hc ], [ %.0443925.i, %bb.ha ]
-  call void @av_channel_layout_default(ptr noundef nonnull %4, i32 noundef %.044392512851317.sink.i) #13
+  call void @av_channel_layout_default(ptr noundef nonnull %5, i32 noundef %.044392512851317.sink.i) #13
   br label %bb.hd
 
 bb.hd:                                            ; preds = %.sink.split.i, %bb.hb
@@ -1137,7 +1137,7 @@ bb.hf:                                            ; preds = %bb.he
   br i1 %.not544.i, label %bb.hg, label %bb.hi
 
 bb.hg:                                            ; preds = %bb.hf
-  %i.ari = call i32 @av_channel_layout_compare(ptr noundef nonnull %4, ptr noundef nonnull %i.r) #13
+  %i.ari = call i32 @av_channel_layout_compare(ptr noundef nonnull %5, ptr noundef nonnull %i.r) #13
   %.not545.i = icmp eq i32 %i.ari, 0
   br i1 %.not545.i, label %bb.hh, label %bb.hi
 
@@ -1154,7 +1154,7 @@ bb.hi:                                            ; preds = %bb.hh, %bb.hg, %bb.
   br i1 %i.arn, label %.thread869.i.sink.split, label %bb.hj
 
 bb.hj:                                            ; preds = %bb.hi, %bb.hh, %bb.he
-  %i.aro = call i32 @av_channel_layout_copy(ptr noundef nonnull %i.r, ptr noundef nonnull %4) #13 ; 0 uses
+  %i.aro = call i32 @av_channel_layout_copy(ptr noundef nonnull %i.r, ptr noundef nonnull %5) #13 ; 0 uses
   store i32 %i.aqx, ptr %i.s, align 8, !tbaa !106
   store i32 %.0476.i, ptr %i.p, align 4, !tbaa !57
   store i32 %i.bv, ptr %i.t, align 4, !tbaa !107
@@ -1204,12 +1204,12 @@ bb.ho:                                            ; preds = %bb.hn, %bb.hl
 
 .thread869.i:                                     ; preds = %bb.hm, %bb.hj, %bb.gy, %.thread869.i.sink.split
   %.0.ph.i = phi i32 [ %.0.ph.i.ph, %.thread869.i.sink.split ], [ -1094995529, %bb.gy ], [ -12, %bb.hm ], [ %i.arq, %bb.hj ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   br label %wavpack_decode_block.exit.thread
 
 bb.hp:                                            ; preds = %bb.ho, %bb.hk
   %.4 = phi i32 [ %.071294, %bb.hk ], [ %.3, %bb.ho ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   %.pre1209.i = load i32, ptr %i.bo, align 8, !tbaa !44
   br label %bb.hq
 

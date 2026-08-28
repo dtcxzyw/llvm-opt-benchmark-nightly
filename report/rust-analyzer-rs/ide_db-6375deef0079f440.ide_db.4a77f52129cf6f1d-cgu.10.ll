@@ -204,8 +204,8 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.5.i = alloca i64, align 8                ; 6 uses
-  %.sroa.8.i = alloca i64, align 8                ; 4 uses
+  %.sroa.5.i = alloca [8 x i8], align 8           ; 6 uses
+  %.sroa.8.i = alloca [8 x i8], align 8           ; 4 uses
   %i.e = alloca [24 x i8], align 8                ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2171)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2174)
@@ -412,17 +412,18 @@ _RNvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters3mapINtB5_3MapINtNtB7_7flatten7Fl
   %.sink79.i.i.i16.sroa.phi.i = phi ptr [ %.sroa.8.i, %bb.q ], [ %.sroa.5.i, %bb.p ], [ %.sroa.5.i, %bb.o ]
   %.sink.i.i.i17.i = phi i64 [ %i.bl, %bb.q ], [ 0, %bb.p ], [ 0, %bb.o ]
   store i64 %.sink.i.i.i17.i, ptr %.sink79.i.i.i16.sroa.phi.i, align 8, !alias.scope !2225, !noalias !2226
-  %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.8..i = load i64, ptr %.sroa.5.i, align 8, !range !380, !noalias !2200, !noundef !10
+  %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.8..i = load i64, ptr %.sroa.5.i, align 8, !noalias !2200
   %.sroa.8.i.0..sroa.8.i.0..sroa.8.i.0..sroa.8.0..sroa.8.0..sroa.8.16..i = load i64, ptr %.sroa.8.i, align 8, !noalias !2200
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   %i.bn = call i64 @llvm.uadd.sat.i64(i64 %i.al, i64 %i.bc)
-  %2 = and i64 %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.8..i, %i.an
-  %or.cond.not.i = icmp ne i64 %2, 0              ; 2 uses
+  %2 = trunc nuw i64 %i.an to i1
+  %3 = trunc nuw i64 %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.8..i to i1
+  %or.cond.i = select i1 %2, i1 %3, i1 false      ; 2 uses
   %i.bo = add i64 %.sroa.8.i.0..sroa.8.i.0..sroa.8.i.0..sroa.8.0..sroa.8.0..sroa.8.16..i, %i.ap ; 2 uses
   %i.bp = icmp uge i64 %i.bo, %i.ap
-  %.sroa.46.0.i = select i1 %or.cond.not.i, i64 %i.bo, i64 undef
-  %narrow.i = select i1 %or.cond.not.i, i1 %i.bp, i1 false
+  %.sroa.46.0.i = select i1 %or.cond.i, i64 %i.bo, i64 undef
+  %narrow.i = select i1 %or.cond.i, i1 %i.bp, i1 false
   %.sroa.05.0.i = zext i1 %narrow.i to i64
   store i64 %i.bn, ptr %0, align 8, !alias.scope !2171, !noalias !2174
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 8

@@ -205,7 +205,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @png_do_read_interlace(ptr nofree noundef captures(address_is_null) %0, ptr nofree noundef captures(address_is_null) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #5 {
 bb.a:
-  %.sroa.0 = alloca i64, align 8                  ; 8 uses
+  %4 = alloca [8 x i8], align 1                   ; 8 uses
   %i.a = icmp ne ptr %1, null
   %i.b = icmp ne ptr %0, null
   %or.cond = and i1 %i.b, %i.a
@@ -608,20 +608,20 @@ bb.o:                                             ; preds = %bb.b
   %.0146255.us = phi i32 [ %i.gk, %._crit_edge251.us ], [ 0, %.lr.ph250.us.preheader ]
   %.0147254.us = phi ptr [ %.lcssa, %._crit_edge251.us ], [ %i.fx, %.lr.ph250.us.preheader ] ; 2 uses
   %.0148253.us = phi ptr [ %i.gj, %._crit_edge251.us ], [ %i.gb, %.lr.ph250.us.preheader ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0, ptr align 1 %.0148253.us, i64 %i.fs, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %4, ptr align 1 %.0148253.us, i64 %i.fs, i1 false)
   br i1 %i.gd, label %.epil.preheader311, label %.lr.ph250.us.new
 
 .lr.ph250.us.new:                                 ; preds = %.lr.ph250.us, %.lr.ph250.us.new
   %.1247.us = phi ptr [ %i.gh, %.lr.ph250.us.new ], [ %.0147254.us, %.lr.ph250.us ] ; 2 uses
   %niter317 = phi i32 [ %niter317.next.3, %.lr.ph250.us.new ], [ 0, %.lr.ph250.us ]
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.1247.us, ptr nonnull align 8 %.sroa.0, i64 %i.fs, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.1247.us, ptr nonnull align 1 %4, i64 %i.fs, i1 false)
   %i.ge = getelementptr inbounds i8, ptr %.1247.us, i64 %i.ft ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ge, ptr nonnull align 8 %.sroa.0, i64 %i.fs, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ge, ptr nonnull align 1 %4, i64 %i.fs, i1 false)
   %i.gf = getelementptr inbounds i8, ptr %i.ge, i64 %i.ft ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.gf, ptr nonnull align 8 %.sroa.0, i64 %i.fs, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.gf, ptr nonnull align 1 %4, i64 %i.fs, i1 false)
   %i.gg = getelementptr inbounds i8, ptr %i.gf, i64 %i.ft ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.gg, ptr nonnull align 8 %.sroa.0, i64 %i.fs, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.gg, ptr nonnull align 1 %4, i64 %i.fs, i1 false)
   %i.gh = getelementptr inbounds i8, ptr %i.gg, i64 %i.ft ; 3 uses
   %niter317.next.3 = add i32 %niter317, 4         ; 2 uses
   %niter317.ncmp.3 = icmp eq i32 %niter317.next.3, %unroll_iter316
@@ -638,7 +638,7 @@ bb.o:                                             ; preds = %bb.b
 bb.p:                                             ; preds = %bb.p, %.epil.preheader311
   %.1247.us.epil = phi ptr [ %.1247.us.epil.init, %.epil.preheader311 ], [ %i.gi, %bb.p ] ; 2 uses
   %epil.iter = phi i32 [ 0, %.epil.preheader311 ], [ %epil.iter.next, %bb.p ]
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.1247.us.epil, ptr nonnull align 8 %.sroa.0, i64 %i.fs, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.1247.us.epil, ptr nonnull align 1 %4, i64 %i.fs, i1 false)
   %i.gi = getelementptr inbounds i8, ptr %.1247.us.epil, i64 %i.ft ; 2 uses
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter312
@@ -647,7 +647,7 @@ bb.p:                                             ; preds = %bb.p, %.epil.prehea
 ._crit_edge251.us:                                ; preds = %bb.p, %._crit_edge251.us.unr-lcssa
   %.lcssa = phi ptr [ %i.gh, %._crit_edge251.us.unr-lcssa ], [ %i.gi, %bb.p ]
   %i.gj = getelementptr inbounds i8, ptr %.0148253.us, i64 %i.ft
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %i.gk = add nuw i32 %.0146255.us, 1             ; 2 uses
   %i.gl = load i32, ptr %0, align 8, !tbaa !85
   %i.gm = icmp ult i32 %i.gk, %i.gl

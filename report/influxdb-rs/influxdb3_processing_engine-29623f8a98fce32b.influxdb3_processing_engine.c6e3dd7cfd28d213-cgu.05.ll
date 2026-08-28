@@ -204,7 +204,7 @@ _RNvMs4_NtNtCs5SRHcsv2kA9_12futures_util6stream17futures_unorderedINtB5_16Future
   %i.ae = getelementptr inbounds nuw i8, ptr %i.l, i64 72
   %i.af = atomicrmw xchg ptr %i.ae, i8 1 seq_cst, align 1
   %i.ag = icmp eq i8 %i.af, 0                     ; 2 uses
-  %.sroa.0.0.sroa.speculated.i = load ptr, ptr %i.a, align 8, !nonnull !16, !noundef !16 ; 2 uses
+  %.sroa.0.0.sroa.speculated.i = load ptr, ptr %i.a, align 8 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.0.sroa.speculated.i, i64 24 ; 3 uses
   %.val.i = load ptr, ptr %i.ah, align 8, !noundef !16 ; 4 uses
   %i.ai = getelementptr i8, ptr %.sroa.0.0.sroa.speculated.i, i64 32

@@ -205,7 +205,7 @@ bb.a:
   %i.ds = alloca [24 x i8], align 8               ; 14 uses
   %.sroa.5 = alloca i64, align 8                  ; 5 uses
   %i.dt = alloca [24 x i8], align 8               ; 8 uses
-  %.sroa.11 = alloca i64, align 8                 ; 7 uses
+  %.sroa.11 = alloca [8 x i8], align 8            ; 7 uses
   %i.du = alloca [24 x i8], align 8               ; 4 uses
   %i.dv = alloca [24 x i8], align 8               ; 6 uses
   %i.dw = alloca [24 x i8], align 8               ; 15 uses
@@ -608,8 +608,8 @@ bb.a:
   %i.g = alloca [4 x i8], align 4                 ; 5 uses
   %i.h = alloca [16 x i8], align 8                ; 7 uses
   %i.i = alloca [2 x i8], align 2                 ; 6 uses
-  %.sroa.4172 = alloca i64, align 8               ; 7 uses
-  %.sroa.9173 = alloca i64, align 8               ; 5 uses
+  %.sroa.4172 = alloca [8 x i8], align 8          ; 7 uses
+  %.sroa.9173 = alloca [8 x i8], align 8          ; 5 uses
   %i.j = alloca [24 x i8], align 8                ; 7 uses
   %i.k = alloca [8 x i8], align 8                 ; 4 uses
   %i.l = alloca [48 x i8], align 8                ; 9 uses
@@ -1012,24 +1012,22 @@ _RNvXCsbV8h3pAeO5B_10phf_sharedReINtB2_5PhfEqeE6phf_eqCsl8pJiQOn4hA_9coreutils.e
 
 bb.bc:                                            ; preds = %_RNvXCsbV8h3pAeO5B_10phf_sharedReINtB2_5PhfEqeE6phf_eqCsl8pJiQOn4hA_9coreutils.exit.i
   %i.nz = getelementptr inbounds nuw i8, ptr %i.nv, i64 16
-  %0 = ptrtoint ptr %i.nv to i64
-  store i64 %0, ptr %.sroa.4172, align 8, !alias.scope !34246, !noalias !34283
+  store ptr %i.nv, ptr %.sroa.4172, align 8, !alias.scope !34246, !noalias !34283
   br label %_RINvMs2_NtCs5Jw8sa4iA4K_3phf11ordered_mapINtB6_10OrderedMapReTFINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters5chain5ChainINtNtNtCs7tKScEop1B6_5alloc3vec9into_iter8IntoIterNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringEINtNtB14_6cloned6ClonedINtNtNtB18_5slice4iter4IterB2F_EEEElFENtNtNtCsgNwXemyrBWj_12clap_builder7builder7command7CommandEE12get_internaleECsl8pJiQOn4hA_9coreutils.exit
 
 _RINvMs2_NtCs5Jw8sa4iA4K_3phf11ordered_mapINtB6_10OrderedMapReTFINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters5chain5ChainINtNtNtCs7tKScEop1B6_5alloc3vec9into_iter8IntoIterNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringEINtNtB14_6cloned6ClonedINtNtNtB18_5slice4iter4IterB2F_EEEElFENtNtNtCsgNwXemyrBWj_12clap_builder7builder7command7CommandEE12get_internaleECsl8pJiQOn4hA_9coreutils.exit: ; preds = %bb.bb, %_RNvXCsbV8h3pAeO5B_10phf_sharedReINtB2_5PhfEqeE6phf_eqCsl8pJiQOn4hA_9coreutils.exit.i, %bb.bc
   %.sink29.i.sroa.phi = phi ptr [ %.sroa.4172, %_RNvXCsbV8h3pAeO5B_10phf_sharedReINtB2_5PhfEqeE6phf_eqCsl8pJiQOn4hA_9coreutils.exit.i ], [ %.sroa.9173, %bb.bc ], [ %.sroa.4172, %bb.bb ]
   %.sink.i108 = phi ptr [ null, %_RNvXCsbV8h3pAeO5B_10phf_sharedReINtB2_5PhfEqeE6phf_eqCsl8pJiQOn4hA_9coreutils.exit.i ], [ %i.nz, %bb.bc ], [ null, %bb.bb ]
   store ptr %.sink.i108, ptr %.sink29.i.sroa.phi, align 8, !alias.scope !34246, !noalias !34283
-  %.sroa.4172.0..sroa.4172.0..sroa.4172.0..sroa.4172.8. = load i64, ptr %.sroa.4172, align 8, !noundef !12
-  %.not64 = icmp eq i64 %.sroa.4172.0..sroa.4172.0..sroa.4172.0..sroa.4172.8., 0
+  %.sroa.4172.0..sroa.4172.0..sroa.4172.0..sroa.4172.8. = load ptr, ptr %.sroa.4172, align 8
+  %.not64 = icmp eq ptr %.sroa.4172.0..sroa.4172.0..sroa.4172.0..sroa.4172.8., null
   br i1 %.not64, label %bb.be, label %bb.bd
 
 bb.bd:                                            ; preds = %_RINvMs2_NtCs5Jw8sa4iA4K_3phf11ordered_mapINtB6_10OrderedMapReTFINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters5chain5ChainINtNtNtCs7tKScEop1B6_5alloc3vec9into_iter8IntoIterNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringEINtNtB14_6cloned6ClonedINtNtNtB18_5slice4iter4IterB2F_EEEElFENtNtNtCsgNwXemyrBWj_12clap_builder7builder7command7CommandEE12get_internaleECsl8pJiQOn4hA_9coreutils.exit
-  %.sroa.9173.0..sroa.9173.0..sroa.9173.0..sroa.9173.16. = load i64, ptr %.sroa.9173, align 8, !range !19053, !noundef !12
-  %1 = inttoptr i64 %.sroa.9173.0..sroa.9173.0..sroa.9173.0..sroa.9173.16. to ptr
+  %.sroa.9173.0..sroa.9173.0..sroa.9173.0..sroa.9173.16. = load ptr, ptr %.sroa.9173, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4172)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9173)
-  %i.oa = load ptr, ptr %1, align 8, !nonnull !12, !noundef !12
+  %i.oa = load ptr, ptr %.sroa.9173.0..sroa.9173.0..sroa.9173.0..sroa.9173.16., align 8, !nonnull !12, !noundef !12
   call void @_RNvNtNtCsdSs45UTkAAB_9coreutils6common10validation26setup_localization_or_exit(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.fo, i64 noundef %i.fq) #45
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   %i.ob = call fastcc noundef ptr @_RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit(i64 noundef 8, i64 noundef 24) #51 ; 6 uses

@@ -205,11 +205,11 @@ bb.ea:                                            ; preds = %.thread81, %bb.dy
 define internal fastcc void @_RINvXNvMNtCsgZ49sUHp3tW_5alloc5sliceSp9to_vec_inNtNtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow5write5pages6NestedNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEBS_(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull align 8 captures(address) %1, i64 noundef range(i64 1, 128102389400760776) %2) unnamed_addr #2 personality ptr @rust_eh_personality !dbg !40293 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.14 = alloca i64, align 8                 ; 8 uses
-  %.sroa.19 = alloca i64, align 8                 ; 8 uses
-  %.sroa.24 = alloca i64, align 8                 ; 8 uses
-  %.sroa.29 = alloca i64, align 8                 ; 8 uses
-  %.sroa.34 = alloca i64, align 8                 ; 6 uses
+  %.sroa.14 = alloca [8 x i8], align 8            ; 8 uses
+  %.sroa.19 = alloca [8 x i8], align 8            ; 8 uses
+  %.sroa.24 = alloca [8 x i8], align 8            ; 8 uses
+  %.sroa.29 = alloca [8 x i8], align 8            ; 8 uses
+  %.sroa.34 = alloca [8 x i8], align 8            ; 6 uses
   %.sroa.37 = alloca i8, align 8                  ; 5 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !40295
@@ -335,8 +335,7 @@ _RNvXs8_NtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow5write5pagesINtB5_10ListNested
   %.sroa.5.sroa.0.0.i.i = phi i64 [ undef, %bb.h ], [ %i.ao, %bb.l ], !dbg !40448
   %i.at = ptrtoint ptr %i.ac to i64, !dbg !40449
   store i64 %i.ae, ptr %.sroa.14, align 8, !dbg !40449, !alias.scope !40362
-  %3 = ptrtoint ptr %i.ag to i64, !dbg !40449
-  store i64 %3, ptr %.sroa.19, align 8, !dbg !40449, !alias.scope !40362
+  store ptr %i.ag, ptr %.sroa.19, align 8, !dbg !40449, !alias.scope !40362
   br label %bb.af, !dbg !40450
 
 bb.m:                                             ; preds = %bb.e
@@ -387,8 +386,7 @@ _RNvXs8_NtNtNtCsfISxE4fmY1Y_14polars_parquet5arrow5write5pagesINtB5_10ListNested
   %.sroa.5.sroa.0.0.i23.i = phi i64 [ undef, %bb.n ], [ %i.bm, %bb.r ], !dbg !40516
   %i.br = ptrtoint ptr %i.ba to i64, !dbg !40517
   store i64 %i.bc, ptr %.sroa.14, align 8, !dbg !40517, !alias.scope !40362
-  %4 = ptrtoint ptr %i.be to i64, !dbg !40517
-  store i64 %4, ptr %.sroa.19, align 8, !dbg !40517, !alias.scope !40362
+  store ptr %i.be, ptr %.sroa.19, align 8, !dbg !40517, !alias.scope !40362
   br label %bb.af, !dbg !40450
 
 bb.s:                                             ; preds = %bb.e

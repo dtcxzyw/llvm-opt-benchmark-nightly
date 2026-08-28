@@ -205,8 +205,8 @@ bb.a:
   %i.b = alloca [16 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 7 uses
   %i.d = alloca [16 x i8], align 8                ; 7 uses
-  %.sroa.8 = alloca i64, align 8                  ; 7 uses
-  %.sroa.17 = alloca i64, align 8                 ; 6 uses
+  %.sroa.8 = alloca [8 x i8], align 8             ; 7 uses
+  %.sroa.17 = alloca [8 x i8], align 8            ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 8 uses
   %i.f = load i8, ptr %i.e, align 8, !range !76, !noundef !3
   %i.g = icmp eq i8 %i.f, 2
@@ -326,8 +326,7 @@ bb.k:                                             ; preds = %bb.j
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsbYyEjVLvvus_5tonic5codec6decode5StateECsgsNUVCRJO2f_13influxdb3_lib.exit.i: ; preds = %bb.j, %bb.i, %bb.h
   store i8 0, ptr %i.e, align 8, !alias.scope !12706, !noalias !12703
-  %3 = ptrtoint ptr %i.ah to i64
-  store i64 %3, ptr %.sroa.8, align 8, !alias.scope !12703, !noalias !12706
+  store ptr %i.ah, ptr %.sroa.8, align 8, !alias.scope !12703, !noalias !12706
   br label %_RNvMs1_NtNtCsbYyEjVLvvus_5tonic5codec6decodeINtB5_9StreamingNtNtCsekDO8Mha3LU_12arrow_flight3gen6TicketE12decode_chunkCsgsNUVCRJO2f_13influxdb3_lib.exit
 
 bb.l:                                             ; preds = %bb.k
@@ -361,18 +360,17 @@ _RNvMs1_NtNtCsbYyEjVLvvus_5tonic5codec6decodeINtB5_9StreamingNtNtCsekDO8Mha3LU_1
   %.sroa.420.sroa.5.0.copyload.sink.i = phi ptr [ null, %bb.g ], [ %.sroa.420.sroa.5.0.copyload.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsbYyEjVLvvus_5tonic5codec6decode5StateECsgsNUVCRJO2f_13influxdb3_lib.exit.i ]
   store ptr %.sroa.420.sroa.5.0.copyload.sink.i, ptr %.sink.i.sroa.phi, align 8, !alias.scope !12703, !noalias !12706
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !12708
-  %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.8..sroa.034.0.copyload.pre = load i64, ptr %.sroa.8, align 8 ; 2 uses
+  %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.8..sroa.034.0.copyload.pr = load ptr, ptr %.sroa.8, align 8 ; 2 uses
   %.sroa.17.0..sroa.17.0..sroa.17.0..sroa.17.16.copyload.pre = load i64, ptr %.sroa.17, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.17)
-  %.not = icmp eq i64 %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.8..sroa.034.0.copyload.pre, 0
+  %.not = icmp eq ptr %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.8..sroa.034.0.copyload.pr, null
   br i1 %.not, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %_RNvMs1_NtNtCsbYyEjVLvvus_5tonic5codec6decodeINtB5_9StreamingNtNtCsekDO8Mha3LU_12arrow_flight3gen6TicketE12decode_chunkCsgsNUVCRJO2f_13influxdb3_lib.exit
-  %4 = inttoptr i64 %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.8..sroa.034.0.copyload.pre to ptr
   store i64 1, ptr %0, align 8
   %.sroa.415.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %4, ptr %.sroa.415.0..sroa_idx, align 8
+  store ptr %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.8..sroa.034.0.copyload.pr, ptr %.sroa.415.0..sroa_idx, align 8
   %.sroa.415.sroa.4.0..sroa.415.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %.sroa.14.0, ptr %.sroa.415.sroa.4.0..sroa.415.0..sroa_idx.sroa_idx, align 8
   %.sroa.415.sroa.4.sroa.4.0..sroa.415.sroa.4.0..sroa.415.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -462,8 +460,8 @@ bb.a:
   %i.b = alloca [16 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 7 uses
   %i.d = alloca [16 x i8], align 8                ; 7 uses
-  %.sroa.8 = alloca i64, align 8                  ; 7 uses
-  %.sroa.17 = alloca i64, align 8                 ; 6 uses
+  %.sroa.8 = alloca [8 x i8], align 8             ; 7 uses
+  %.sroa.17 = alloca [8 x i8], align 8            ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 8 uses
   %i.f = load i8, ptr %i.e, align 8, !range !76, !noundef !3
   %i.g = icmp eq i8 %i.f, 2
@@ -583,8 +581,7 @@ bb.k:                                             ; preds = %bb.j
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsbYyEjVLvvus_5tonic5codec6decode5StateECsgsNUVCRJO2f_13influxdb3_lib.exit.i: ; preds = %bb.j, %bb.i, %bb.h
   store i8 0, ptr %i.e, align 8, !alias.scope !12733, !noalias !12730
-  %3 = ptrtoint ptr %i.ah to i64
-  store i64 %3, ptr %.sroa.8, align 8, !alias.scope !12730, !noalias !12733
+  store ptr %i.ah, ptr %.sroa.8, align 8, !alias.scope !12730, !noalias !12733
   br label %_RNvMs1_NtNtCsbYyEjVLvvus_5tonic5codec6decodeINtB5_9StreamingNtNtCsekDO8Mha3LU_12arrow_flight3gen8CriteriaE12decode_chunkCsgsNUVCRJO2f_13influxdb3_lib.exit
 
 bb.l:                                             ; preds = %bb.k
@@ -618,18 +615,17 @@ _RNvMs1_NtNtCsbYyEjVLvvus_5tonic5codec6decodeINtB5_9StreamingNtNtCsekDO8Mha3LU_1
   %.sroa.420.sroa.5.0.copyload.sink.i = phi ptr [ null, %bb.g ], [ %.sroa.420.sroa.5.0.copyload.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsbYyEjVLvvus_5tonic5codec6decode5StateECsgsNUVCRJO2f_13influxdb3_lib.exit.i ]
   store ptr %.sroa.420.sroa.5.0.copyload.sink.i, ptr %.sink.i.sroa.phi, align 8, !alias.scope !12730, !noalias !12733
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !12735
-  %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.8..sroa.034.0.copyload.pre = load i64, ptr %.sroa.8, align 8 ; 2 uses
+  %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.8..sroa.034.0.copyload.pr = load ptr, ptr %.sroa.8, align 8 ; 2 uses
   %.sroa.17.0..sroa.17.0..sroa.17.0..sroa.17.16.copyload.pre = load i64, ptr %.sroa.17, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.17)
-  %.not = icmp eq i64 %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.8..sroa.034.0.copyload.pre, 0
+  %.not = icmp eq ptr %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.8..sroa.034.0.copyload.pr, null
   br i1 %.not, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %_RNvMs1_NtNtCsbYyEjVLvvus_5tonic5codec6decodeINtB5_9StreamingNtNtCsekDO8Mha3LU_12arrow_flight3gen8CriteriaE12decode_chunkCsgsNUVCRJO2f_13influxdb3_lib.exit
-  %4 = inttoptr i64 %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.8..sroa.034.0.copyload.pre to ptr
   store i64 1, ptr %0, align 8
   %.sroa.415.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %4, ptr %.sroa.415.0..sroa_idx, align 8
+  store ptr %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.8..sroa.034.0.copyload.pr, ptr %.sroa.415.0..sroa_idx, align 8
   %.sroa.415.sroa.4.0..sroa.415.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %.sroa.14.0, ptr %.sroa.415.sroa.4.0..sroa.415.0..sroa_idx.sroa_idx, align 8
   %.sroa.415.sroa.4.sroa.4.0..sroa.415.sroa.4.0..sroa.415.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24

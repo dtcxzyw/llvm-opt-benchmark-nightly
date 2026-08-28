@@ -205,8 +205,8 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
 define internal fastcc void @_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters5chainINtB4_5ChainIBO_INtNtNtBa_5slice4iter4IterINtNtCs50pZefIA5Ye_8triomphe3arc3ArcNtNtCs6u1mgJOKDyY_13rust_analyzer6config16ConfigErrorInnerEEINtNtB6_7flatten7FlatMapINtNtBa_6option8IntoIterRTNtB25_31GlobalWorkspaceLocalConfigInputNtB25_12ConfigErrorsEEB13_NCNvMs0_B25_NtB25_6Config12apply_change0EEIB32_INtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map6ValuesNtNtCsgIpRO4v45SJ_7base_db5input12SourceRootIdTNtB25_10RatomlFileB4s_EEB13_NCB4U_s_0EENtNtNtB8_6traits8iterator8Iterator9size_hintB27_(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(144) %1) unnamed_addr #22 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.7 = alloca i64, align 8                  ; 8 uses
-  %.sroa.12 = alloca i64, align 8                 ; 7 uses
+  %.sroa.7 = alloca [8 x i8], align 8             ; 8 uses
+  %.sroa.12 = alloca [8 x i8], align 8            ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.b = load i64, ptr %i.a, align 8, !range !20, !noundef !4 ; 7 uses
   %.not = icmp eq i64 %i.b, -1
@@ -390,7 +390,7 @@ _RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters5chainINtB4_5ChainINtNtNtBa_5slice
   %.sink30.i.sroa.phi = phi ptr [ %.sroa.12, %bb.l ], [ %.sroa.12, %_RNvXs1_NtNtNtCshzWfHUSfYae_4core4iter8adapters7flattenINtB5_7FlatMapINtNtBb_6option8IntoIterRTNtNtCs6u1mgJOKDyY_13rust_analyzer6config31GlobalWorkspaceLocalConfigInputNtB1w_12ConfigErrorsEEINtNtNtBb_5slice4iter4IterINtNtCs50pZefIA5Ye_8triomphe3arc3ArcNtB1w_16ConfigErrorInnerEENCNvMs0_B1w_NtB1w_6Config12apply_change0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1y_.exit23.i ], [ %.sroa.12, %bb.m ], [ %.sroa.7, %bb.k ], [ %.sroa.7, %bb.j ]
   %.sroa.46.0.sink.i = phi i64 [ 0, %bb.l ], [ %.sroa.46.0.i, %_RNvXs1_NtNtNtCshzWfHUSfYae_4core4iter8adapters7flattenINtB5_7FlatMapINtNtBb_6option8IntoIterRTNtNtCs6u1mgJOKDyY_13rust_analyzer6config31GlobalWorkspaceLocalConfigInputNtB1w_12ConfigErrorsEEINtNtNtBb_5slice4iter4IterINtNtCs50pZefIA5Ye_8triomphe3arc3ArcNtB1w_16ConfigErrorInnerEENCNvMs0_B1w_NtB1w_6Config12apply_change0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1y_.exit23.i ], [ %i.ah, %bb.m ], [ 1, %bb.k ], [ 0, %bb.j ]
   store i64 %.sroa.46.0.sink.i, ptr %.sink30.i.sroa.phi, align 8, !alias.scope !12944, !noalias !12947
-  %.sroa.7.0..sroa.7.0..sroa.7.0..sroa.7.8. = load i64, ptr %.sroa.7, align 8, !range !12, !noundef !4
+  %.sroa.7.0..sroa.7.0..sroa.7.0..sroa.7.8. = load i64, ptr %.sroa.7, align 8
   %.sroa.12.0..sroa.12.0..sroa.12.0..sroa.12.16. = load i64, ptr %.sroa.12, align 8 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.12)
@@ -793,8 +793,8 @@ bb.bo:                                            ; preds = %_RNvXs_NtNtNtCshzWf
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
 define hidden void @_RNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters6clonedINtB4_6ClonedINtNtB6_5chain5ChainIB12_INtNtB6_7flatten7FlatMapINtNtBa_6option8IntoIterRTjINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtCs1lnireelaHN_13gen_lsp_types9generated10structures10DiagnosticEEERB2f_NCNvMNtCs6u1mgJOKDyY_13rust_analyzer11diagnosticsNtB46_20DiagnosticCollection15diagnostics_for0EIB1r_B1O_B3W_NCB43_s_0EEINtB1t_7FlattenINtNtB6_10filter_map9FilterMapIB1r_INtNtNtBa_5slice4iter4IterNtB46_27WorkspaceFlycheckDiagnosticEINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map6ValuesINtB1R_6OptionNtNtB48_8flycheck16PackageSpecifierENtB46_25PackageFlycheckDiagnosticENCB43_s0_0ENCB43_s1_0EEEENtNtNtB8_6traits8iterator8Iterator9size_hintB48_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(240) %1) unnamed_addr #23 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.i = alloca i64, align 8                ; 5 uses
-  %.sroa.8.i = alloca i64, align 8                ; 4 uses
+  %.sroa.5.i = alloca [8 x i8], align 8           ; 5 uses
+  %.sroa.8.i = alloca [8 x i8], align 8           ; 4 uses
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13397)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13400)
@@ -988,17 +988,18 @@ _RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters7flattenINtB5_7FlattenINtNtB7_10f
   %.sink78.i.i18.sroa.phi.i = phi ptr [ %.sroa.8.i, %bb.o ], [ %.sroa.5.i, %bb.n ]
   %.sink.i.i19.i = phi i64 [ %i.be, %bb.o ], [ 0, %bb.n ]
   store i64 %.sink.i.i19.i, ptr %.sink78.i.i18.sroa.phi.i, align 8, !alias.scope !13473, !noalias !13474
-  %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.8..i = load i64, ptr %.sroa.5.i, align 8, !range !12, !noalias !13437, !noundef !4
+  %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.8..i = load i64, ptr %.sroa.5.i, align 8, !noalias !13437
   %.sroa.8.i.0..sroa.8.i.0..sroa.8.i.0..sroa.8.0..sroa.8.0..sroa.8.16..i = load i64, ptr %.sroa.8.i, align 8, !noalias !13437
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   %i.bt = tail call i64 @llvm.uadd.sat.i64(i64 %i.al, i64 %i.be)
-  %2 = and i64 %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.8..i, %i.an
-  %or.cond.not.i = icmp ne i64 %2, 0              ; 2 uses
+  %2 = trunc nuw i64 %i.an to i1
+  %3 = trunc nuw i64 %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.8..i to i1
+  %or.cond.i = select i1 %2, i1 %3, i1 false      ; 2 uses
   %i.bu = add i64 %.sroa.8.i.0..sroa.8.i.0..sroa.8.i.0..sroa.8.0..sroa.8.0..sroa.8.16..i, %i.ap ; 2 uses
   %i.bv = icmp uge i64 %i.bu, %i.ap
-  %.sroa.46.0.i = select i1 %or.cond.not.i, i64 %i.bu, i64 undef
-  %narrow.i = select i1 %or.cond.not.i, i1 %i.bv, i1 false
+  %.sroa.46.0.i = select i1 %or.cond.i, i64 %i.bu, i64 undef
+  %narrow.i = select i1 %or.cond.i, i1 %i.bv, i1 false
   %.sroa.05.0.i = zext i1 %narrow.i to i64
   store i64 %i.bt, ptr %0, align 8, !alias.scope !13397, !noalias !13400
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 8

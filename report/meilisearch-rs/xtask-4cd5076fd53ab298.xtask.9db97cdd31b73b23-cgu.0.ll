@@ -205,8 +205,6 @@ bb.af:                                            ; preds = %bb.k, %"_ZN70_$LT$s
 
 bb.ag:                                            ; preds = %bb.j
   store i64 -9223372036854775808, ptr %0, align 8
-  %.sroa.36.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %.sroa.36.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.56)
   br label %"_ZN98_$LT$$RF$mut$u20$serde_json..de..Deserializer$LT$R$GT$$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17h00942df1743577daE.exit"
 
@@ -609,8 +607,6 @@ bb.af:                                            ; preds = %bb.k, %"_ZN68_$LT$s
 
 bb.ag:                                            ; preds = %bb.j
   store i64 -9223372036854775808, ptr %0, align 8
-  %.sroa.34.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %.sroa.34.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.52)
   br label %"_ZN98_$LT$$RF$mut$u20$serde_json..de..Deserializer$LT$R$GT$$u20$as$u20$serde_core..de..Deserializer$GT$15deserialize_any17ha0fb66df0ca558a1E.exit"
 

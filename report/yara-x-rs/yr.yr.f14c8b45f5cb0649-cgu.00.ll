@@ -204,12 +204,12 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecRNtNtBG
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCsexYYUdYSQU6_5alloc3vec21spec_from_iter_nestedINtB4_3VecRNtNtB6_6string6StringEINtB2_18SpecFromIterNestedB11_INtNtNtNtCskKLDkoKarTP_4core4iter8adapters5chain5ChainINtNtB1X_7flatten7FlattenINtNtB21_6option8IntoIterINtNtNtNtCs1ZTs3ySsPIM_12clap_builder6parser7matches11arg_matches9ValuesRefB12_EEEINtNtB1X_10filter_map9FilterMapINtNtNtNtB6_11collections5btree3map4IterB12_NtNtCskIqAKC4t9Ft_2yr6config13WarningConfigENCNvNtB69_8commands15create_compiler0EEE9from_iterB69_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(272) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.7.i.i = alloca i64, align 8              ; 3 uses
-  %.sroa.11.i.i = alloca i64, align 8             ; 4 uses
+  %.sroa.7.i.i = alloca [8 x i8], align 8         ; 3 uses
+  %.sroa.11.i.i = alloca [8 x i8], align 8        ; 4 uses
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [272 x i8], align 8               ; 13 uses
-  %.sroa.7 = alloca i64, align 8                  ; 3 uses
-  %.sroa.11 = alloca i64, align 8                 ; 5 uses
+  %.sroa.7 = alloca [8 x i8], align 8             ; 3 uses
+  %.sroa.11 = alloca [8 x i8], align 8            ; 5 uses
   %i.c = alloca [24 x i8], align 8                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.d = tail call fastcc noundef align 8 ptr @_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters5chainINtB4_5ChainINtNtB6_7flatten7FlattenINtNtBa_6option8IntoIterINtNtNtNtCs1ZTs3ySsPIM_12clap_builder6parser7matches11arg_matches9ValuesRefNtNtCsexYYUdYSQU6_5alloc6string6StringEEEINtNtB6_10filter_map9FilterMapINtNtNtNtB32_11collections5btree3map4IterB2Y_NtNtCskIqAKC4t9Ft_2yr6config13WarningConfigENCNvNtB4U_8commands15create_compiler0EENtNtNtB8_6traits8iterator8Iterator4nextB4U_(ptr noalias nofree noundef align 8 dereferenceable(272) %1) #21 ; 2 uses
@@ -612,8 +612,8 @@ bb.a:
   %i.f = alloca [16 x i8], align 8                ; 5 uses
   %i.g = alloca [16 x i8], align 8                ; 5 uses
   %i.h = alloca [24 x i8], align 8                ; 7 uses
-  %.sroa.5 = alloca i64, align 8                  ; 5 uses
-  %.sroa.9 = alloca i64, align 8                  ; 4 uses
+  %.sroa.5 = alloca [8 x i8], align 8             ; 5 uses
+  %.sroa.9 = alloca [8 x i8], align 8             ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4187)
@@ -635,7 +635,7 @@ bb.b:                                             ; preds = %bb.a
     i64 2, label %bb.e
   ]
 
-default.unreachable:                              ; preds = %bb.i, %bb.b
+default.unreachable:                              ; preds = %bb.b
   unreachable
 
 bb.c:                                             ; preds = %bb.b
@@ -687,7 +687,7 @@ _RNvXNtCs7gfv9tzbXmh_6yara_x8compilerNtB2_12IgnoredRulesNtNtNtNtCskKLDkoKarTP_4c
   %.sink.i.sroa.phi = phi ptr [ %.sroa.5, %bb.a ], [ %.sroa.9, %bb.f ]
   %.sroa.7.0.sink.i = phi i64 [ -1, %bb.a ], [ %.sroa.7.0.i, %bb.f ]
   store i64 %.sroa.7.0.sink.i, ptr %.sink.i.sroa.phi, align 8, !alias.scope !4187, !noalias !4190
-  %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.16. = load i64, ptr %.sroa.5, align 8, !range !761, !noundef !5 ; 2 uses
+  %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.16. = load i64, ptr %.sroa.5, align 8 ; 2 uses
   %.not = icmp eq i64 %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.16., -1
   br i1 %.not, label %bb.r, label %bb.i
 
@@ -695,11 +695,14 @@ bb.i:                                             ; preds = %_RNvXNtCs7gfv9tzbXm
   %.sroa.9.0..sroa.9.0..sroa.9.0..sroa.9.0.copyload = load i64, ptr %.sroa.9, align 8 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !4193
-  switch i64 %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.16., label %default.unreachable [
+  switch i64 %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.16., label %2 [
     i64 0, label %.split.i
     i64 1, label %.split32.i
     i64 2, label %.split36.i
   ]
+
+2:                                                ; preds = %bb.i
+  unreachable
 
 .split.i:                                         ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !4193
