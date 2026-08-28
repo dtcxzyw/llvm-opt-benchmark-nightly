@@ -202,7 +202,7 @@ define range(i64 0, 2147483648) i64 @mca_pml_ob1_rdma_pipeline_btls_count(ptr no
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 184
   %.val23 = load i64, ptr %i.a, align 8, !tbaa !8 ; 4 uses
-  %i.b = trunc i64 %.val23 to i32                 ; 4 uses
+  %i.b = trunc i64 %.val23 to i32                 ; 3 uses
   %i.c = getelementptr i8, ptr %0, i64 88
   %.val = load i64, ptr %i.c, align 8, !tbaa !8   ; 3 uses
   %i.d = icmp sgt i32 %i.b, 0
@@ -281,18 +281,14 @@ mca_bml_base_btl_array_get_index.exit.us.us:      ; preds = %mca_bml_base_btl_ar
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   %i.ai = zext nneg i8 %i.l to i32                ; 2 uses
-  br i1 %i.i, label %.lr.ph.split.split.us, label %mca_bml_base_btl_array_get_next.exit.preheader
+  br i1 %i.i, label %._crit_edge31, label %mca_bml_base_btl_array_get_next.exit.preheader
 
 mca_bml_base_btl_array_get_next.exit.preheader:   ; preds = %.lr.ph.split
   %.pre = load i64, ptr %i.j, align 8, !tbaa !60
   br label %mca_bml_base_btl_array_get_next.exit
 
-.lr.ph.split.split.us:                            ; preds = %.lr.ph.split
-  %1 = mul nuw nsw i32 %i.b, %i.ai
-  br label %._crit_edge31
-
-._crit_edge31:                                    ; preds = %mca_bml_base_btl_array_get_next.exit, %._crit_edge.split.us33.us, %.lr.ph.split.split.us, %bb.a
-  %.021.lcssa = phi i32 [ 0, %bb.a ], [ %1, %.lr.ph.split.split.us ], [ %spec.select.us.us, %._crit_edge.split.us33.us ], [ %spec.select, %mca_bml_base_btl_array_get_next.exit ]
+._crit_edge31:                                    ; preds = %mca_bml_base_btl_array_get_next.exit, %._crit_edge.split.us33.us, %.lr.ph.split, %bb.a
+  %.021.lcssa = phi i32 [ 0, %bb.a ], [ %spec.select.us.us, %._crit_edge.split.us33.us ], [ %i.ai, %.lr.ph.split ], [ %spec.select, %mca_bml_base_btl_array_get_next.exit ]
   %i.aj = zext nneg i32 %.021.lcssa to i64
   ret i64 %i.aj
 

@@ -206,18 +206,17 @@ bb.pa:                                            ; preds = %bb.oz
   %i.dhd = getelementptr inbounds nuw [4 x i8], ptr %i.dhc, i64 %i.dgw
   %i.dhe = load i32, ptr %i.dhd, align 4, !tbaa !56
   %i.dhf = lshr i32 %i.dhe, %i.dgz
-  %87 = and i32 %i.dhf, 1
   br label %bb.pb
 
 bb.pb:                                            ; preds = %bb.pa, %bb.oz
   %.0217.i = phi i32 [ %i.dhb, %bb.pa ], [ 0, %bb.oz ] ; 3 uses
-  %.0216.i = phi i32 [ %87, %bb.pa ], [ 0, %bb.oz ]
+  %.0216.i = phi i32 [ %i.dhf, %bb.pa ], [ 0, %bb.oz ]
   %i.dhg = uitofp nneg i32 %.0217.i to float
   %i.dhh = getelementptr inbounds nuw [4 x i8], ptr %i.dgs, i64 %indvars.iv497.i ; 2 uses
   store float %i.dhg, ptr %i.dhh, align 4, !tbaa !63
   %i.dhi = xor i32 %.0217.i, 1
   %i.dhj = select i1 %or.cond3.i722, i32 1, i32 %.0216.i
-  %.sink.in.i = mul nuw nsw i32 %i.dhj, %i.dhi
+  %.sink.in.i = and i32 %i.dhj, %i.dhi
   %.sink.i = uitofp nneg i32 %.sink.in.i to float
   %i.dhk = getelementptr inbounds nuw [4 x i8], ptr %i.dcj, i64 %indvars.iv497.i
   store float %.sink.i, ptr %i.dhk, align 4, !tbaa !63

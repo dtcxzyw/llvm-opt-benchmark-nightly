@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %_ZNK2cv8MatShapeixE
   %i.bt = getelementptr i8, ptr %i.bs, i64 %i.bq  ; 2 uses
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !167, !range !169, !noundef !157
   %i.bv = load i8, ptr %i.br, align 1, !tbaa !167, !range !169, !noundef !157
-  %narrow.i73.us = mul nuw nsw i8 %i.bv, %i.bu
-  store i8 %narrow.i73.us, ptr %i.bt, align 1, !tbaa !167
+  %8 = and i8 %i.bv, %i.bu
+  store i8 %8, ptr %i.bt, align 1, !tbaa !167
   %i.bw = add nsw i32 %.04285.us, 1               ; 2 uses
   %exitcond96.not = icmp eq i32 %i.bw, %i.c
   br i1 %exitcond96.not, label %._crit_edge88, label %.lr.ph.us, !llvm.loop !203
@@ -268,25 +268,21 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.cw = and i32 %i.cu, 28
   %n.vec = and i32 %i.cu, -32                     ; 4 uses
   %i.cx = add i32 %i.a, %n.vec
-  %i.cy = insertelement <16 x i8> <i8 poison, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1>, i8 %.pre, i64 0
+  %i.cy = insertelement <16 x i8> <i8 poison, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1>, i8 %.pre, i64 0
   %i.cz = load i8, ptr %i.m, align 1, !tbaa !167, !range !169, !alias.scope !205, !noundef !157
   %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %i.cz, i64 0
-  %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer
+  %9 = and <16 x i8> %broadcast.splat, %i.cy
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
-  %vec.phi = phi <16 x i8> [ %i.cy, %vector.ph ], [ %8, %vector.body ]
-  %vec.phi116 = phi <16 x i8> [ splat (i8 1), %vector.ph ], [ %9, %vector.body ]
-  %8 = mul nuw <16 x i8> %broadcast.splat, %vec.phi ; 2 uses
-  %9 = mul nuw <16 x i8> %broadcast.splat, %vec.phi116 ; 2 uses
   %index.next = add nuw i32 %index, 32            ; 2 uses
   %i.da = icmp eq i32 %index.next, %n.vec
   br i1 %i.da, label %middle.block, label %vector.body, !llvm.loop !208
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = mul <16 x i8> %9, %8
-  %i.db = tail call i8 @llvm.vector.reduce.mul.v16i8(<16 x i8> %bin.rdx) ; 3 uses
+  %i.db = tail call i8 @llvm.vector.reduce.and.v16i8(<16 x i8> %9) ; 3 uses
   store i8 %i.db, ptr %i.ct, align 1, !tbaa !167, !alias.scope !209, !noalias !205
   %cmp.n = icmp eq i32 %i.cu, %n.vec
   br i1 %cmp.n, label %._crit_edge88, label %vec.epilog.iter.check
@@ -300,22 +296,21 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %bc.merge.rdx = phi i8 [ %i.db, %vec.epilog.iter.check ], [ %.pre, %vector.main.loop.iter.check ]
   %n.vec117 = and i32 %i.cu, -4                   ; 3 uses
   %i.dc = add i32 %i.a, %n.vec117
-  %i.dd = insertelement <4 x i8> <i8 poison, i8 1, i8 1, i8 1>, i8 %bc.merge.rdx, i64 0
+  %i.dd = insertelement <4 x i8> <i8 poison, i8 -1, i8 -1, i8 -1>, i8 %bc.merge.rdx, i64 0
   %i.de = load i8, ptr %i.m, align 1, !tbaa !167, !range !169, !alias.scope !205, !noundef !157
   %broadcast.splatinsert120 = insertelement <4 x i8> poison, i8 %i.de, i64 0
   %broadcast.splat121 = shufflevector <4 x i8> %broadcast.splatinsert120, <4 x i8> poison, <4 x i32> zeroinitializer
+  %10 = and <4 x i8> %broadcast.splat121, %i.dd
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index118 = phi i32 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next122, %vec.epilog.vector.body ]
-  %vec.phi119 = phi <4 x i8> [ %i.dd, %vec.epilog.ph ], [ %10, %vec.epilog.vector.body ]
-  %10 = mul nuw <4 x i8> %broadcast.splat121, %vec.phi119 ; 2 uses
   %index.next122 = add nuw i32 %index118, 4       ; 2 uses
   %i.df = icmp eq i32 %index.next122, %n.vec117
   br i1 %i.df, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !211
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %i.dg = tail call i8 @llvm.vector.reduce.mul.v4i8(<4 x i8> %10) ; 2 uses
+  %i.dg = tail call i8 @llvm.vector.reduce.and.v4i8(<4 x i8> %10) ; 2 uses
   store i8 %i.dg, ptr %i.ct, align 1, !tbaa !167, !alias.scope !209, !noalias !205
   %cmp.n123 = icmp eq i32 %i.cu, %n.vec117
   br i1 %cmp.n123, label %._crit_edge88, label %_ZNK2cv8MatShapeixEm.exit60.preheader
@@ -329,19 +324,19 @@ _ZNK2cv8MatShapeixEm.exit60.preheader:            ; preds = %vector.memcheck, %i
   br i1 %lcmp.mod.not, label %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit, label %_ZNK2cv8MatShapeixEm.exit60.prol
 
 _ZNK2cv8MatShapeixEm.exit60.prol:                 ; preds = %_ZNK2cv8MatShapeixEm.exit60.preheader, %_ZNK2cv8MatShapeixEm.exit60.prol
-  %i.di = phi i8 [ %narrow.i73.prol, %_ZNK2cv8MatShapeixEm.exit60.prol ], [ %.ph, %_ZNK2cv8MatShapeixEm.exit60.preheader ]
+  %i.di = phi i8 [ %11, %_ZNK2cv8MatShapeixEm.exit60.prol ], [ %.ph, %_ZNK2cv8MatShapeixEm.exit60.preheader ]
   %.04285.prol = phi i32 [ %i.dk, %_ZNK2cv8MatShapeixEm.exit60.prol ], [ %.04285.ph, %_ZNK2cv8MatShapeixEm.exit60.preheader ]
   %prol.iter = phi i32 [ %prol.iter.next, %_ZNK2cv8MatShapeixEm.exit60.prol ], [ 0, %_ZNK2cv8MatShapeixEm.exit60.preheader ]
   %i.dj = load i8, ptr %i.m, align 1, !tbaa !167, !range !169, !noundef !157
-  %narrow.i73.prol = mul nuw nsw i8 %i.dj, %i.di  ; 3 uses
-  store i8 %narrow.i73.prol, ptr %i.ct, align 1, !tbaa !167
+  %11 = and i8 %i.dj, %i.di                       ; 3 uses
+  store i8 %11, ptr %i.ct, align 1, !tbaa !167
   %i.dk = add nsw i32 %.04285.prol, 1             ; 2 uses
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit, label %_ZNK2cv8MatShapeixEm.exit60.prol, !llvm.loop !212
 
 _ZNK2cv8MatShapeixEm.exit60.prol.loopexit:        ; preds = %_ZNK2cv8MatShapeixEm.exit60.prol, %_ZNK2cv8MatShapeixEm.exit60.preheader
-  %.unr = phi i8 [ %.ph, %_ZNK2cv8MatShapeixEm.exit60.preheader ], [ %narrow.i73.prol, %_ZNK2cv8MatShapeixEm.exit60.prol ]
+  %.unr = phi i8 [ %.ph, %_ZNK2cv8MatShapeixEm.exit60.preheader ], [ %11, %_ZNK2cv8MatShapeixEm.exit60.prol ]
   %.04285.unr = phi i32 [ %.04285.ph, %_ZNK2cv8MatShapeixEm.exit60.preheader ], [ %i.dk, %_ZNK2cv8MatShapeixEm.exit60.prol ]
   %i.dl = sub i32 %.04285.ph, %i.c
   %i.dm = icmp ugt i32 %i.dl, -4
@@ -351,20 +346,20 @@ _ZNK2cv8MatShapeixEm.exit60.prol.loopexit:        ; preds = %_ZNK2cv8MatShapeixE
   ret void
 
 _ZNK2cv8MatShapeixEm.exit60:                      ; preds = %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit, %_ZNK2cv8MatShapeixEm.exit60
-  %i.dn = phi i8 [ %narrow.i73.3, %_ZNK2cv8MatShapeixEm.exit60 ], [ %.unr, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit ]
+  %i.dn = phi i8 [ %15, %_ZNK2cv8MatShapeixEm.exit60 ], [ %.unr, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit ]
   %.04285 = phi i32 [ %i.ds, %_ZNK2cv8MatShapeixEm.exit60 ], [ %.04285.unr, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit ]
   %i.do = load i8, ptr %i.m, align 1, !tbaa !167, !range !169, !noundef !157
-  %narrow.i73 = mul nuw nsw i8 %i.do, %i.dn       ; 2 uses
-  store i8 %narrow.i73, ptr %i.ct, align 1, !tbaa !167
+  %12 = and i8 %i.do, %i.dn                       ; 2 uses
+  store i8 %12, ptr %i.ct, align 1, !tbaa !167
   %i.dp = load i8, ptr %i.m, align 1, !tbaa !167, !range !169, !noundef !157
-  %narrow.i73.1 = mul nuw nsw i8 %i.dp, %narrow.i73 ; 2 uses
-  store i8 %narrow.i73.1, ptr %i.ct, align 1, !tbaa !167
+  %13 = and i8 %i.dp, %12                         ; 2 uses
+  store i8 %13, ptr %i.ct, align 1, !tbaa !167
   %i.dq = load i8, ptr %i.m, align 1, !tbaa !167, !range !169, !noundef !157
-  %narrow.i73.2 = mul nuw nsw i8 %i.dq, %narrow.i73.1 ; 2 uses
-  store i8 %narrow.i73.2, ptr %i.ct, align 1, !tbaa !167
+  %14 = and i8 %i.dq, %13                         ; 2 uses
+  store i8 %14, ptr %i.ct, align 1, !tbaa !167
   %i.dr = load i8, ptr %i.m, align 1, !tbaa !167, !range !169, !noundef !157
-  %narrow.i73.3 = mul nuw nsw i8 %i.dr, %narrow.i73.2 ; 2 uses
-  store i8 %narrow.i73.3, ptr %i.ct, align 1, !tbaa !167
+  %15 = and i8 %i.dr, %14                         ; 2 uses
+  store i8 %15, ptr %i.ct, align 1, !tbaa !167
   %i.ds = add nsw i32 %.04285, 4                  ; 2 uses
   %exitcond.not.3 = icmp eq i32 %i.ds, %i.c
   br i1 %exitcond.not.3, label %._crit_edge88, label %_ZNK2cv8MatShapeixEm.exit60, !llvm.loop !213
@@ -767,8 +762,8 @@ bb.c:                                             ; preds = %_ZNK2cv8MatShapeixE
   %i.bu = getelementptr i8, ptr %i.bt, i64 %i.br  ; 2 uses
   %i.bv = load i8, ptr %i.bu, align 1, !tbaa !167, !range !169, !noundef !157
   %i.bw = load i8, ptr %i.bs, align 1, !tbaa !167, !range !169, !noundef !157
-  %narrow.i73.us = mul nuw nsw i8 %i.bw, %i.bv
-  store i8 %narrow.i73.us, ptr %i.bu, align 1, !tbaa !167
+  %8 = and i8 %i.bw, %i.bv
+  store i8 %8, ptr %i.bu, align 1, !tbaa !167
   %i.bx = add nsw i32 %.04285.us, 1               ; 2 uses
   %exitcond96.not = icmp eq i32 %i.bx, %i.c
   br i1 %exitcond96.not, label %._crit_edge88, label %.lr.ph.us, !llvm.loop !639
@@ -832,25 +827,21 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   %i.cy = and i32 %i.cw, 28
   %n.vec = and i32 %i.cw, -32                     ; 4 uses
   %i.cz = add i32 %i.a, %n.vec
-  %i.da = insertelement <16 x i8> <i8 poison, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1>, i8 %.pre, i64 0
+  %i.da = insertelement <16 x i8> <i8 poison, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1>, i8 %.pre, i64 0
   %i.db = load i8, ptr %i.m, align 1, !tbaa !167, !range !169, !alias.scope !641, !noundef !157
   %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %i.db, i64 0
-  %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer
+  %9 = and <16 x i8> %broadcast.splat, %i.da
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
-  %vec.phi = phi <16 x i8> [ %i.da, %vector.ph ], [ %8, %vector.body ]
-  %vec.phi116 = phi <16 x i8> [ splat (i8 1), %vector.ph ], [ %9, %vector.body ]
-  %8 = mul nuw <16 x i8> %broadcast.splat, %vec.phi ; 2 uses
-  %9 = mul nuw <16 x i8> %broadcast.splat, %vec.phi116 ; 2 uses
   %index.next = add nuw i32 %index, 32            ; 2 uses
   %i.dc = icmp eq i32 %index.next, %n.vec
   br i1 %i.dc, label %middle.block, label %vector.body, !llvm.loop !644
 
 middle.block:                                     ; preds = %vector.body
-  %bin.rdx = mul <16 x i8> %9, %8
-  %i.dd = tail call i8 @llvm.vector.reduce.mul.v16i8(<16 x i8> %bin.rdx) ; 3 uses
+  %i.dd = tail call i8 @llvm.vector.reduce.and.v16i8(<16 x i8> %9) ; 3 uses
   store i8 %i.dd, ptr %i.cv, align 1, !tbaa !167, !alias.scope !645, !noalias !641
   %cmp.n = icmp eq i32 %i.cw, %n.vec
   br i1 %cmp.n, label %._crit_edge88, label %vec.epilog.iter.check
@@ -864,22 +855,21 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %bc.merge.rdx = phi i8 [ %i.dd, %vec.epilog.iter.check ], [ %.pre, %vector.main.loop.iter.check ]
   %n.vec117 = and i32 %i.cw, -4                   ; 3 uses
   %i.de = add i32 %i.a, %n.vec117
-  %i.df = insertelement <4 x i8> <i8 poison, i8 1, i8 1, i8 1>, i8 %bc.merge.rdx, i64 0
+  %i.df = insertelement <4 x i8> <i8 poison, i8 -1, i8 -1, i8 -1>, i8 %bc.merge.rdx, i64 0
   %i.dg = load i8, ptr %i.m, align 1, !tbaa !167, !range !169, !alias.scope !641, !noundef !157
   %broadcast.splatinsert120 = insertelement <4 x i8> poison, i8 %i.dg, i64 0
   %broadcast.splat121 = shufflevector <4 x i8> %broadcast.splatinsert120, <4 x i8> poison, <4 x i32> zeroinitializer
+  %10 = and <4 x i8> %broadcast.splat121, %i.df
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index118 = phi i32 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next122, %vec.epilog.vector.body ]
-  %vec.phi119 = phi <4 x i8> [ %i.df, %vec.epilog.ph ], [ %10, %vec.epilog.vector.body ]
-  %10 = mul nuw <4 x i8> %broadcast.splat121, %vec.phi119 ; 2 uses
   %index.next122 = add nuw i32 %index118, 4       ; 2 uses
   %i.dh = icmp eq i32 %index.next122, %n.vec117
   br i1 %i.dh, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !647
 
 vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.body
-  %i.di = tail call i8 @llvm.vector.reduce.mul.v4i8(<4 x i8> %10) ; 2 uses
+  %i.di = tail call i8 @llvm.vector.reduce.and.v4i8(<4 x i8> %10) ; 2 uses
   store i8 %i.di, ptr %i.cv, align 1, !tbaa !167, !alias.scope !645, !noalias !641
   %cmp.n123 = icmp eq i32 %i.cw, %n.vec117
   br i1 %cmp.n123, label %._crit_edge88, label %_ZNK2cv8MatShapeixEm.exit60.preheader
@@ -893,19 +883,19 @@ _ZNK2cv8MatShapeixEm.exit60.preheader:            ; preds = %vector.memcheck, %i
   br i1 %lcmp.mod.not, label %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit, label %_ZNK2cv8MatShapeixEm.exit60.prol
 
 _ZNK2cv8MatShapeixEm.exit60.prol:                 ; preds = %_ZNK2cv8MatShapeixEm.exit60.preheader, %_ZNK2cv8MatShapeixEm.exit60.prol
-  %i.dk = phi i8 [ %narrow.i73.prol, %_ZNK2cv8MatShapeixEm.exit60.prol ], [ %.ph, %_ZNK2cv8MatShapeixEm.exit60.preheader ]
+  %i.dk = phi i8 [ %11, %_ZNK2cv8MatShapeixEm.exit60.prol ], [ %.ph, %_ZNK2cv8MatShapeixEm.exit60.preheader ]
   %.04285.prol = phi i32 [ %i.dm, %_ZNK2cv8MatShapeixEm.exit60.prol ], [ %.04285.ph, %_ZNK2cv8MatShapeixEm.exit60.preheader ]
   %prol.iter = phi i32 [ %prol.iter.next, %_ZNK2cv8MatShapeixEm.exit60.prol ], [ 0, %_ZNK2cv8MatShapeixEm.exit60.preheader ]
   %i.dl = load i8, ptr %i.m, align 1, !tbaa !167, !range !169, !noundef !157
-  %narrow.i73.prol = mul nuw nsw i8 %i.dl, %i.dk  ; 3 uses
-  store i8 %narrow.i73.prol, ptr %i.cv, align 1, !tbaa !167
+  %11 = and i8 %i.dl, %i.dk                       ; 3 uses
+  store i8 %11, ptr %i.cv, align 1, !tbaa !167
   %i.dm = add nsw i32 %.04285.prol, 1             ; 2 uses
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit, label %_ZNK2cv8MatShapeixEm.exit60.prol, !llvm.loop !648
 
 _ZNK2cv8MatShapeixEm.exit60.prol.loopexit:        ; preds = %_ZNK2cv8MatShapeixEm.exit60.prol, %_ZNK2cv8MatShapeixEm.exit60.preheader
-  %.unr = phi i8 [ %.ph, %_ZNK2cv8MatShapeixEm.exit60.preheader ], [ %narrow.i73.prol, %_ZNK2cv8MatShapeixEm.exit60.prol ]
+  %.unr = phi i8 [ %.ph, %_ZNK2cv8MatShapeixEm.exit60.preheader ], [ %11, %_ZNK2cv8MatShapeixEm.exit60.prol ]
   %.04285.unr = phi i32 [ %.04285.ph, %_ZNK2cv8MatShapeixEm.exit60.preheader ], [ %i.dm, %_ZNK2cv8MatShapeixEm.exit60.prol ]
   %i.dn = sub i32 %.04285.ph, %i.c
   %i.do = icmp ugt i32 %i.dn, -4
@@ -915,20 +905,20 @@ _ZNK2cv8MatShapeixEm.exit60.prol.loopexit:        ; preds = %_ZNK2cv8MatShapeixE
   ret void
 
 _ZNK2cv8MatShapeixEm.exit60:                      ; preds = %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit, %_ZNK2cv8MatShapeixEm.exit60
-  %i.dp = phi i8 [ %narrow.i73.3, %_ZNK2cv8MatShapeixEm.exit60 ], [ %.unr, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit ]
+  %i.dp = phi i8 [ %15, %_ZNK2cv8MatShapeixEm.exit60 ], [ %.unr, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit ]
   %.04285 = phi i32 [ %i.du, %_ZNK2cv8MatShapeixEm.exit60 ], [ %.04285.unr, %_ZNK2cv8MatShapeixEm.exit60.prol.loopexit ]
   %i.dq = load i8, ptr %i.m, align 1, !tbaa !167, !range !169, !noundef !157
-  %narrow.i73 = mul nuw nsw i8 %i.dq, %i.dp       ; 2 uses
-  store i8 %narrow.i73, ptr %i.cv, align 1, !tbaa !167
+  %12 = and i8 %i.dq, %i.dp                       ; 2 uses
+  store i8 %12, ptr %i.cv, align 1, !tbaa !167
   %i.dr = load i8, ptr %i.m, align 1, !tbaa !167, !range !169, !noundef !157
-  %narrow.i73.1 = mul nuw nsw i8 %i.dr, %narrow.i73 ; 2 uses
-  store i8 %narrow.i73.1, ptr %i.cv, align 1, !tbaa !167
+  %13 = and i8 %i.dr, %12                         ; 2 uses
+  store i8 %13, ptr %i.cv, align 1, !tbaa !167
   %i.ds = load i8, ptr %i.m, align 1, !tbaa !167, !range !169, !noundef !157
-  %narrow.i73.2 = mul nuw nsw i8 %i.ds, %narrow.i73.1 ; 2 uses
-  store i8 %narrow.i73.2, ptr %i.cv, align 1, !tbaa !167
+  %14 = and i8 %i.ds, %13                         ; 2 uses
+  store i8 %14, ptr %i.cv, align 1, !tbaa !167
   %i.dt = load i8, ptr %i.m, align 1, !tbaa !167, !range !169, !noundef !157
-  %narrow.i73.3 = mul nuw nsw i8 %i.dt, %narrow.i73.2 ; 2 uses
-  store i8 %narrow.i73.3, ptr %i.cv, align 1, !tbaa !167
+  %15 = and i8 %i.dt, %14                         ; 2 uses
+  store i8 %15, ptr %i.cv, align 1, !tbaa !167
   %i.du = add nsw i32 %.04285, 4                  ; 2 uses
   %exitcond.not.3 = icmp eq i32 %i.du, %i.c
   br i1 %exitcond.not.3, label %._crit_edge88, label %_ZNK2cv8MatShapeixEm.exit60, !llvm.loop !649
@@ -1331,10 +1321,10 @@ declare i8 @llvm.vector.reduce.or.v16i8(<16 x i8>) #18
 declare i8 @llvm.vector.reduce.or.v4i8(<4 x i8>) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.vector.reduce.mul.v16i8(<16 x i8>) #18
+declare i8 @llvm.vector.reduce.and.v16i8(<16 x i8>) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.vector.reduce.mul.v4i8(<4 x i8>) #18
+declare i8 @llvm.vector.reduce.and.v4i8(<4 x i8>) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x i8> @llvm.umax.v16i8(<16 x i8>, <16 x i8>) #18
