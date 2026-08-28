@@ -205,8 +205,8 @@ _ZN7testing15AssertionResultD2Ev.exit330:         ; preds = %bb.et, %_ZNKSt14def
   store i8 %i.nz, ptr %49, align 8, !tbaa !31
   %i.oa = getelementptr inbounds nuw i8, ptr %49, i64 8 ; 2 uses
   store ptr null, ptr %i.oa, align 8, !tbaa !608
-  %.not.not = icmp eq i8 %i.ny, 0
-  br i1 %.not.not, label %_ZN7testing15AssertionResultD2Ev.exit347, label %bb.ev
+  %.not = trunc nuw i8 %i.ny to i1
+  br i1 %.not, label %bb.ev, label %_ZN7testing15AssertionResultD2Ev.exit347
 
 bb.ev:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit330
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #28
@@ -609,8 +609,8 @@ _ZN7testing15AssertionResultD2Ev.exit399:         ; preds = %bb.gt, %_ZNKSt14def
   store i8 %i.sx, ptr %63, align 8, !tbaa !31
   %i.sy = getelementptr inbounds nuw i8, ptr %63, i64 8 ; 2 uses
   store ptr null, ptr %i.sy, align 8, !tbaa !608
-  %.not.not611 = icmp eq i8 %i.sw, 0
-  br i1 %.not.not611, label %_ZN7testing15AssertionResultD2Ev.exit416, label %bb.gv
+  %.not611 = trunc nuw i8 %i.sw to i1
+  br i1 %.not611, label %bb.gv, label %_ZN7testing15AssertionResultD2Ev.exit416
 
 bb.gv:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit399
   call void @llvm.lifetime.start.p0(ptr nonnull %64) #28

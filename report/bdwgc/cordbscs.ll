@@ -203,9 +203,9 @@ bb.q:                                             ; preds = %bb.p
   %i.am = load ptr, ptr %i.al, align 8
   %i.an = sub nuw i64 %.tr64.ph, %i.ak
   %i.ao = tail call i32 @CORD_riter4(ptr noundef %i.am, i64 noundef %i.an, ptr noundef %2, ptr noundef %3)
-  %.not61 = icmp eq i32 %i.ao, 0
+  %.not61 = trunc nuw i32 %i.ao to i1
   %i.ap = add i64 %i.ak, -1
-  br i1 %.not61, label %tailrecurse.outer, label %.loopexit
+  br i1 %.not61, label %.loopexit, label %tailrecurse.outer
 
 .lr.ph115:                                        ; preds = %.lr.ph.preheader, %.lr.ph
   %.079114 = phi i64 [ %i.aq, %.lr.ph ], [ %.tr64.ph, %.lr.ph.preheader ]
