@@ -205,6 +205,8 @@ bb.a:
   %i.c = alloca i64, align 8                      ; 6 uses
   %i.d = alloca [4096 x i8], align 16             ; 11 uses
   %.sroa.6137 = alloca [16 x i8], align 1         ; 4 uses
+  %.sroa.6133 = alloca [2 x i8], align 1          ; 4 uses
+  %.sroa.6 = alloca [2 x i8], align 1             ; 4 uses
   %i.e = alloca i64, align 8                      ; 6 uses
   %i.f = alloca [2048 x i16], align 16            ; 7 uses
   %i.g = alloca i64, align 8                      ; 6 uses
@@ -607,6 +609,10 @@ bb.bx:                                            ; preds = %trace_pci_nvme_iden
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(4096) %i.d, i8 0, i64 4096, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6137)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6133)
+  store i16 0, ptr %.sroa.6133, align 1
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
+  store i16 0, ptr %.sroa.6, align 1
   %i.fb = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i.i81 = icmp eq i32 %i.fb, 0
   br i1 %.not.i.i81, label %trace_pci_nvme_identify_ns_descr_list.exit.i, label %bb.by, !prof !7
@@ -687,7 +693,8 @@ bb.cg:                                            ; preds = %bb.cf
   %.sroa.5132.0..1.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.1.i, i64 1
   store i8 8, ptr %.sroa.5132.0..1.i.sroa_idx, align 1
   %.sroa.6133.0..1.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.1.i, i64 2
-  store i16 0, ptr %.sroa.6133.0..1.i.sroa_idx, align 1
+  %3 = load i16, ptr %.sroa.6133, align 1
+  store i16 %3, ptr %.sroa.6133.0..1.i.sroa_idx, align 1
   %.sroa.6134.0..1.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.1.i, i64 4
   store i64 %i.fs, ptr %.sroa.6134.0..1.i.sroa_idx, align 1
   %i.ft = getelementptr inbounds nuw i8, ptr %.1.i, i64 12
@@ -701,7 +708,8 @@ bb.ch:                                            ; preds = %bb.cg, %bb.cf
   %.sroa.5.0..2.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.2.i, i64 1
   store i8 1, ptr %.sroa.5.0..2.i.sroa_idx, align 1
   %.sroa.6.0..2.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.2.i, i64 2
-  store i16 0, ptr %.sroa.6.0..2.i.sroa_idx, align 1
+  %4 = load i16, ptr %.sroa.6, align 1
+  store i16 %4, ptr %.sroa.6.0..2.i.sroa_idx, align 1
   %.sroa.6130.0..2.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.2.i, i64 4
   store i8 %i.fv, ptr %.sroa.6130.0..2.i.sroa_idx, align 1
   %i.fw = getelementptr inbounds nuw i8, ptr %1, i64 144 ; 2 uses
@@ -755,6 +763,8 @@ bb.co:                                            ; preds = %bb.cn
 
 nvme_identify_ns_descr_list.exit:                 ; preds = %trace_pci_nvme_identify_ns_descr_list.exit.i, %nvme_ns.exit.i, %bb.ch, %.thread.i.i.i89, %bb.cm, %bb.cn, %bb.co
   %.027.i = phi i16 [ 0, %bb.cn ], [ 16395, %trace_pci_nvme_identify_ns_descr_list.exit.i ], [ 16386, %nvme_ns.exit.i ], [ %i.fy, %bb.ch ], [ 16386, %bb.co ], [ 16386, %bb.cm ], [ 0, %.thread.i.i.i89 ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6133)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6137)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #23
   br label %nvme_identify_pri_ctrl_cap.exit

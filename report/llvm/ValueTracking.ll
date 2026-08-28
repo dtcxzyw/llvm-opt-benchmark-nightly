@@ -205,31 +205,31 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds i8, ptr %0, i64 -64
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !55   ; 2 uses
   %.not.i.not.i.i.i = icmp eq ptr %i.c, null
-  br i1 %.not.i.not.i.i.i, label %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS0_14BinaryOp_matchINS_19PatternMatchHelpers10match_bindIS3_EENS5_17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS5_14match_deferredIS3_EEEEEEELj17ELb0EEEEEbPT_RKT0_.exit, label %bb.c
+  br i1 %.not.i.not.i.i.i, label %1, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds i8, ptr %0, i64 -32
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !55   ; 4 uses
   %i.f = load i8, ptr %i.e, align 8, !tbaa !41
   %.not.i.i.i.i.i = icmp eq i8 %i.f, 88
-  br i1 %.not.i.i.i.i.i, label %bb.d, label %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS0_14BinaryOp_matchINS_19PatternMatchHelpers10match_bindIS3_EENS5_17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS5_14match_deferredIS3_EEEEEEELj17ELb0EEEEEbPT_RKT0_.exit
+  br i1 %.not.i.i.i.i.i, label %bb.d, label %1
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds i8, ptr %i.e, i64 -32
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !55   ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.h, null
-  br i1 %.not.i.i.i.i.i.i.i, label %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS0_14BinaryOp_matchINS_19PatternMatchHelpers10match_bindIS3_EENS5_17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS5_14match_deferredIS3_EEEEEEELj17ELb0EEEEEbPT_RKT0_.exit, label %bb.e
+  br i1 %.not.i.i.i.i.i.i.i, label %1, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.i = load i8, ptr %i.h, align 8, !tbaa !41
   %i.j = icmp eq i8 %i.i, 14
-  br i1 %i.j, label %_ZNK4llvm12PatternMatch17IntrinsicID_match5matchINS_5ValueEEEbPT_.exit.i.i.i.i, label %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS0_14BinaryOp_matchINS_19PatternMatchHelpers10match_bindIS3_EENS5_17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS5_14match_deferredIS3_EEEEEEELj17ELb0EEEEEbPT_RKT0_.exit
+  br i1 %i.j, label %_ZNK4llvm12PatternMatch17IntrinsicID_match5matchINS_5ValueEEEbPT_.exit.i.i.i.i, label %1
 
 _ZNK4llvm12PatternMatch17IntrinsicID_match5matchINS_5ValueEEEbPT_.exit.i.i.i.i: ; preds = %bb.e
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 36
   %i.l = load i32, ptr %i.k, align 4, !tbaa !171
   %i.m = icmp eq i32 %i.l, 182
-  br i1 %i.m, label %_ZNK4llvm19PatternMatchHelpers17match_combine_andIJNS_12PatternMatch17IntrinsicID_matchENS2_14Argument_matchINS0_14match_deferredIKNS_5ValueEEEEEEE5matchIS6_EEbPT_.exit.i.i.i, label %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS0_14BinaryOp_matchINS_19PatternMatchHelpers10match_bindIS3_EENS5_17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS5_14match_deferredIS3_EEEEEEELj17ELb0EEEEEbPT_RKT0_.exit
+  br i1 %i.m, label %_ZNK4llvm19PatternMatchHelpers17match_combine_andIJNS_12PatternMatch17IntrinsicID_matchENS2_14Argument_matchINS0_14match_deferredIKNS_5ValueEEEEEEE5matchIS6_EEbPT_.exit.i.i.i, label %1
 
 _ZNK4llvm19PatternMatchHelpers17match_combine_andIJNS_12PatternMatch17IntrinsicID_matchENS2_14Argument_matchINS0_14match_deferredIKNS_5ValueEEEEEEE5matchIS6_EEbPT_.exit.i.i.i: ; preds = %_ZNK4llvm12PatternMatch17IntrinsicID_match5matchINS_5ValueEEEbPT_.exit.i.i.i.i
   %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 4
@@ -240,7 +240,7 @@ _ZNK4llvm19PatternMatchHelpers17match_combine_andIJNS_12PatternMatch17IntrinsicI
   %i.s = getelementptr inbounds [32 x i8], ptr %i.e, i64 %i.r
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !55
   %i.u = icmp eq ptr %i.t, %i.c
-  br label %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS0_14BinaryOp_matchINS_19PatternMatchHelpers10match_bindIS3_EENS5_17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS5_14match_deferredIS3_EEEEEEELj17ELb0EEEEEbPT_RKT0_.exit
+  br i1 %i.u, label %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS0_14BinaryOp_matchINS_19PatternMatchHelpers10match_bindIS3_EENS5_17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS5_14match_deferredIS3_EEEEEEELj17ELb0EEEEEbPT_RKT0_.exit, label %1
 
 bb.f:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds i8, ptr %0, i64 -32
@@ -259,6 +259,9 @@ _ZN4llvm12PatternMatch5matchIKNS_5ValueENS_19PatternMatchHelpers17match_combine_
   %i.ab = icmp eq i32 %i.aa, 3652
   br i1 %i.ab, label %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS0_14BinaryOp_matchINS_19PatternMatchHelpers10match_bindIS3_EENS5_17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS5_14match_deferredIS3_EEEEEEELj17ELb0EEEEEbPT_RKT0_.exit, label %bb.h
 
+1:                                                ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %_ZNK4llvm12PatternMatch17IntrinsicID_match5matchINS_5ValueEEEbPT_.exit.i.i.i.i, %_ZNK4llvm19PatternMatchHelpers17match_combine_andIJNS_12PatternMatch17IntrinsicID_matchENS2_14Argument_matchINS0_14match_deferredIKNS_5ValueEEEEEEE5matchIS6_EEbPT_.exit.i.i.i
+  br label %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS0_14BinaryOp_matchINS_19PatternMatchHelpers10match_bindIS3_EENS5_17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS5_14match_deferredIS3_EEEEEEELj17ELb0EEEEEbPT_RKT0_.exit
+
 bb.h:                                             ; preds = %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS_19PatternMatchHelpers17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS4_9match_isaIJS2_EEEEEEEEEEbPT_RKT0_.exit
   %.pr = load i8, ptr %i.w, align 8, !tbaa !41
   %i.ac = icmp eq i8 %.pr, 14
@@ -270,8 +273,8 @@ _ZNK4llvm12PatternMatch17IntrinsicID_match5matchIKNS_5ValueEEEbPT_.exit.i.i11: ;
   %i.af = icmp eq i32 %i.ae, 2498
   br label %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS0_14BinaryOp_matchINS_19PatternMatchHelpers10match_bindIS3_EENS5_17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS5_14match_deferredIS3_EEEEEEELj17ELb0EEEEEbPT_RKT0_.exit
 
-_ZN4llvm12PatternMatch5matchIKNS_5ValueENS0_14BinaryOp_matchINS_19PatternMatchHelpers10match_bindIS3_EENS5_17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS5_14match_deferredIS3_EEEEEEELj17ELb0EEEEEbPT_RKT0_.exit: ; preds = %bb.g, %bb.f, %_ZNK4llvm19PatternMatchHelpers17match_combine_andIJNS_12PatternMatch17IntrinsicID_matchENS2_14Argument_matchINS0_14match_deferredIKNS_5ValueEEEEEEE5matchIS6_EEbPT_.exit.i.i.i, %bb.a, %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS_19PatternMatchHelpers17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS4_9match_isaIJS2_EEEEEEEEEEbPT_RKT0_.exit, %_ZNK4llvm12PatternMatch17IntrinsicID_match5matchINS_5ValueEEEbPT_.exit.i.i.i.i, %bb.e, %bb.d, %bb.c, %bb.b, %bb.h, %_ZNK4llvm12PatternMatch17IntrinsicID_match5matchIKNS_5ValueEEEbPT_.exit.i.i11
-  %.0 = phi i1 [ %i.u, %_ZNK4llvm19PatternMatchHelpers17match_combine_andIJNS_12PatternMatch17IntrinsicID_matchENS2_14Argument_matchINS0_14match_deferredIKNS_5ValueEEEEEEE5matchIS6_EEbPT_.exit.i.i.i ], [ true, %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS_19PatternMatchHelpers17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS4_9match_isaIJS2_EEEEEEEEEEbPT_RKT0_.exit ], [ %i.af, %_ZNK4llvm12PatternMatch17IntrinsicID_match5matchIKNS_5ValueEEEbPT_.exit.i.i11 ], [ false, %_ZNK4llvm12PatternMatch17IntrinsicID_match5matchINS_5ValueEEEbPT_.exit.i.i.i.i ], [ false, %bb.a ], [ false, %bb.h ], [ false, %bb.b ], [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.e ], [ false, %bb.f ], [ false, %bb.g ]
+_ZN4llvm12PatternMatch5matchIKNS_5ValueENS0_14BinaryOp_matchINS_19PatternMatchHelpers10match_bindIS3_EENS5_17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS5_14match_deferredIS3_EEEEEEELj17ELb0EEEEEbPT_RKT0_.exit: ; preds = %bb.g, %bb.f, %bb.a, %_ZNK4llvm19PatternMatchHelpers17match_combine_andIJNS_12PatternMatch17IntrinsicID_matchENS2_14Argument_matchINS0_14match_deferredIKNS_5ValueEEEEEEE5matchIS6_EEbPT_.exit.i.i.i, %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS_19PatternMatchHelpers17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS4_9match_isaIJS2_EEEEEEEEEEbPT_RKT0_.exit, %1, %bb.h, %_ZNK4llvm12PatternMatch17IntrinsicID_match5matchIKNS_5ValueEEEbPT_.exit.i.i11
+  %.0 = phi i1 [ false, %bb.a ], [ true, %_ZN4llvm12PatternMatch5matchIKNS_5ValueENS_19PatternMatchHelpers17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS4_9match_isaIJS2_EEEEEEEEEEbPT_RKT0_.exit ], [ %i.af, %_ZNK4llvm12PatternMatch17IntrinsicID_match5matchIKNS_5ValueEEEbPT_.exit.i.i11 ], [ true, %_ZNK4llvm19PatternMatchHelpers17match_combine_andIJNS_12PatternMatch17IntrinsicID_matchENS2_14Argument_matchINS0_14match_deferredIKNS_5ValueEEEEEEE5matchIS6_EEbPT_.exit.i.i.i ], [ false, %1 ], [ false, %bb.h ], [ false, %bb.f ], [ false, %bb.g ]
   ret i1 %.0
 }
 

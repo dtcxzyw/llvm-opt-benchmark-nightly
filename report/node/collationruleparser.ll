@@ -74,6 +74,7 @@ $_ZN6icu_7813UnicodeString5setToEDs = comdat any
 @.str.43 = private unnamed_addr constant [7 x i16] [i16 105, i16 109, i16 112, i16 111, i16 114, i16 116, i16 0], align 2
 @.str.44 = private unnamed_addr constant [42 x i8] c"expected language tag in [import langTag]\00", align 1
 @.str.45 = private unnamed_addr constant [5 x i8] c"root\00", align 1
+@__const._ZN6icu_7819CollationRuleParser12parseSettingER10UErrorCode.und = private unnamed_addr constant [4 x i8] c"und\00", align 1
 @.str.46 = private unnamed_addr constant [10 x i8] c"collation\00", align 1
 @.str.47 = private unnamed_addr constant [34 x i8] c"[import langTag] is not supported\00", align 1
 @.str.48 = private unnamed_addr constant [9 x i8] c"standard\00", align 1
@@ -476,7 +477,7 @@ bb.bn:                                            ; preds = %bb.bm
   %i.lj = load i32, ptr %i.kx, align 8
   %i.lk = sext i32 %i.lj to i64
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.li, ptr align 1 %i.lh, i64 %i.lk, i1 false)
-  store i24 6581877, ptr %i.lh, align 1
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.lh, ptr noundef nonnull align 1 dereferenceable(3) @__const._ZN6icu_7819CollationRuleParser12parseSettingER10UErrorCode.und, i64 3, i1 false)
   %i.ll = call noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEPKciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %46, ptr noundef %i.lg, i32 noundef 3, ptr noundef nonnull align 4 dereferenceable(4) %1) #11 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   br label %bb.bo
@@ -878,6 +879,9 @@ declare noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString2
 declare void @_Z25ulocimp_forLanguageTag_78PKciPiR10UErrorCode(ptr dead_on_unwind writable sret(%"class.icu_78::CharString") align 8, ptr noundef, i32 noundef, ptr noundef, ptr noundef nonnull align 4 dereferenceable(4)) local_unnamed_addr #5
 
 declare void @_Z22ulocimp_getBaseName_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode(ptr dead_on_unwind writable sret(%"class.icu_78::CharString") align 8, i64, ptr, ptr noundef nonnull align 4 dereferenceable(4)) local_unnamed_addr #5
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #6
 
 declare noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString8copyFromENS_11StringPieceER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60), ptr, i32, ptr noundef nonnull align 4 dereferenceable(4)) local_unnamed_addr #5
 

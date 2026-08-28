@@ -204,7 +204,8 @@ bb.h:                                             ; preds = %.thread67.i, %bb.g,
   %.sroa.06.05665.i = phi i32 [ %i.i, %bb.f ], [ %i.i, %bb.g ], [ %.sroa.06.0566471.i, %.thread67.i ]
   %.sroa.0.05763.i = phi i32 [ %.sroa.0.0.i, %bb.f ], [ %.sroa.0.0.i, %bb.g ], [ %.sroa.0.0576272.i, %.thread67.i ] ; 2 uses
   %.sroa.041.0.i = phi i8 [ 0, %bb.f ], [ %i.t, %bb.g ], [ %i.x, %.thread67.i ]
-  %.sroa.043.0.i = phi i64 [ 0, %bb.f ], [ 0, %bb.g ], [ %2, %.thread67.i ]
+  %.sroa.042.0.i = phi i64 [ 0, %bb.f ], [ 0, %bb.g ], [ %2, %.thread67.i ]
+  %.sroa.043.0.i = phi i64 [ 0, %bb.f ], [ 0, %bb.g ], [ %i.ad, %.thread67.i ]
   %or.cond2.i = icmp ult i32 %.sroa.0.05763.i, 1000000000
   br i1 %or.cond2.i, label %_RNvMNtNtCsb09rMIQFAXO_9jiff_core2tz6offsetNtB2_6Offset11to_datetime.exit, label %bb.i, !prof !91
 
@@ -218,9 +219,9 @@ bb.h:                                             ; preds = %.thread67.i, %bb.g,
   %i.z = zext nneg i16 %i.y to i64
   %i.aa = urem i16 %.lhs.trunc.i, 60
   %i.ab = zext nneg i16 %i.aa to i64
-  %i.ac = shl nuw nsw i64 %i.ab, 48
-  %i.ad = shl nuw nsw i64 %i.z, 40
-  %2 = or disjoint i64 %i.ac, %i.ad
+  %i.ac = shl nuw nsw i64 %i.z, 40
+  %i.ad = shl nuw nsw i64 %i.ab, 48
+  %2 = and i64 %i.ac, 280375465082880
   br label %bb.h
 
 bb.i:                                             ; preds = %bb.h
@@ -259,11 +260,12 @@ _RNvMNtNtCsb09rMIQFAXO_9jiff_core2tz6offsetNtB2_6Offset11to_datetime.exit: ; pre
   %i.az = add nuw nsw i32 %i.ax, %i.ay
   %.sroa.0.0.insert.ext.i.i = and i32 %i.az, 65535
   %.sroa.0.0.insert.insert.i.i = or disjoint i32 %.sroa.2.0.insert.insert.i.i, %.sroa.0.0.insert.ext.i.i
+  %.sroa.0.0.insert.ext = zext nneg i32 %.sroa.0.05763.i to i64
   %.sroa.440.0.insert.ext.i = zext nneg i8 %.sroa.041.0.i to i64
   %.sroa.440.0.insert.shift.i = shl nuw nsw i64 %.sroa.440.0.insert.ext.i, 32
-  %.sroa.039.0.insert.ext.i = zext nneg i32 %.sroa.0.05763.i to i64
-  %.sroa.440.0.insert.insert.i = or i64 %.sroa.043.0.i, %.sroa.039.0.insert.ext.i
-  %.sroa.039.0.insert.insert.i = or i64 %.sroa.440.0.insert.insert.i, %.sroa.440.0.insert.shift.i
+  %.sroa.0.4.insert.insert = or disjoint i64 %.sroa.440.0.insert.shift.i, %.sroa.0.0.insert.ext
+  %.sroa.440.0.insert.insert.i = or disjoint i64 %.sroa.0.4.insert.insert, %.sroa.042.0.i
+  %.sroa.039.0.insert.insert.i = or disjoint i64 %.sroa.440.0.insert.insert.i, %.sroa.043.0.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !95)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !98
   store i32 %.sroa.0.0.insert.insert.i.i, ptr %i.c, align 4, !noalias !98

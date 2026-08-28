@@ -205,7 +205,11 @@ bb.i:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.411.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %i.a, i64 40, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 721141097979576833, ptr %i.m, align 8
+  store i8 1, ptr %i.m, align 8
+  %.sroa.017.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 25
+  %.sroa.017.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 31
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %.sroa.017.sroa.4.0..sroa_idx, i8 2, i64 6, i1 false)
+  store i8 10, ptr %.sroa.017.sroa.5.0..sroa_idx, align 1
   %.sroa.419.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 250, ptr %.sroa.419.0..sroa_idx, align 8
   %.sroa.520.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -608,9 +612,9 @@ bb.ic:                                            ; preds = %bb.ia
   br i1 %i.xe, label %bb.id, label %bb.ie
 
 bb.id:                                            ; preds = %bb.ic
-  %3 = load ptr, ptr %i.um, align 8, !noalias !871, !nonnull !3, !noundef !3
   %.sroa.02.0.insert.insert.i.i = or disjoint i64 %.sroa.42.0.insert.insert.i.i.i.i, %i.vo
   %i.xf = load i16, ptr %i.un, align 8, !noalias !871, !noundef !3
+  %3 = load ptr, ptr %i.um, align 8, !noalias !871, !nonnull !3, !noundef !3
   %i.xg = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %i.vx ; 3 uses
   store i64 %.sroa.02.0.insert.insert.i.i, ptr %i.xg, align 4, !noalias !872
   %.sroa.481.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.xg, i64 8

@@ -202,6 +202,7 @@ bb.a:
   %5 = alloca %"class.std::function", align 16    ; 9 uses
   %6 = alloca %"class.std::function", align 16    ; 9 uses
   %7 = alloca %"class.std::function", align 16    ; 9 uses
+  %.sroa.3.sroa.0 = alloca [2 x i8], align 8      ; 2 uses
   %.sroa.3.sroa.2 = alloca [24 x i8], align 8     ; 3 uses
   %i.a = add nsw i64 %2, -1
   %i.b = sdiv i64 %i.a, 2                         ; 2 uses
@@ -336,6 +337,7 @@ bb.k:                                             ; preds = %_ZN12_GLOBAL__N_14F
   %.sroa.0.0.copyload = load ptr, ptr %3, align 8 ; 2 uses
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.sroa.3.sroa.0.0.copyload = load i16, ptr %.sroa.3.0..sroa_idx, align 8
+  store i16 %.sroa.3.sroa.0.0.copyload, ptr %.sroa.3.sroa.0, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.3.sroa.2, i8 0, i64 24, i1 false)
   %i.au = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 3 uses
   %i.av = load <2 x ptr>, ptr %i.au, align 8, !tbaa !921
@@ -418,7 +420,8 @@ _ZN12_GLOBAL__N_14FlagI10TestConfigEaSEOS2_.exit.i: ; preds = %bb.p, %_ZNSt8func
   %i.bq = getelementptr inbounds [48 x i8], ptr %0, i64 %.0.lcssa.i ; 4 uses
   store ptr %.sroa.0.0.copyload, ptr %i.bq, align 8
   %.sroa.3.0..sroa_idx60 = getelementptr inbounds nuw i8, ptr %i.bq, i64 8
-  store i16 %.sroa.3.sroa.0.0.copyload, ptr %.sroa.3.0..sroa_idx60, align 8
+  %8 = load i16, ptr %.sroa.3.sroa.0, align 8
+  store i16 %8, ptr %.sroa.3.0..sroa_idx60, align 8
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %4, i8 0, i64 24, i1 false)

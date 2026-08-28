@@ -205,13 +205,13 @@ bb.a:
   %6 = alloca %"class.clang::CodeGen::Address", align 8 ; 4 uses
   %.sroa.4226 = alloca [36 x i8], align 4         ; 4 uses
   %7 = alloca %"struct.clang::CodeGen::TBAAAccessInfo", align 8 ; 5 uses
-  %.sroa.0212 = alloca { %"class.llvm::PointerIntPair.173", ptr, %"class.clang::CharUnits" }, align 8 ; 2 uses
+  %.sroa.0208 = alloca { %"class.llvm::PointerIntPair.173", ptr, %"class.clang::CharUnits" }, align 8 ; 2 uses
   %.sroa.3 = alloca [23 x i8], align 1            ; 2 uses
   %8 = alloca %"struct.clang::CodeGen::TBAAAccessInfo", align 8 ; 4 uses
   %.sroa.4.i.sroa.0 = alloca [28 x i8], align 4   ; 4 uses
   %9 = alloca %"struct.clang::CodeGen::TBAAAccessInfo", align 8 ; 4 uses
   %10 = alloca %"class.clang::CodeGen::LValue", align 8 ; 14 uses
-  %.sroa.0213 = alloca { %"class.llvm::PointerIntPair.173", ptr, %"class.clang::CharUnits" }, align 8 ; 2 uses
+  %.sroa.0209 = alloca { %"class.llvm::PointerIntPair.173", ptr, %"class.clang::CharUnits" }, align 8 ; 2 uses
   %.sroa.6217 = alloca [23 x i8], align 1         ; 2 uses
   %11 = alloca %"class.llvm::SmallVector.1426", align 8 ; 8 uses
   %.sroa.6147 = alloca [28 x i8], align 4         ; 6 uses
@@ -381,11 +381,13 @@ bb.c:                                             ; preds = %.lr.ph243, %_ZNK5cl
 bb.d:                                             ; preds = %bb.c
   %i.av = call noundef ptr @_ZNK5clang12CapturedStmt7Capture14getCapturedVarEv(ptr noundef nonnull align 8 dereferenceable(12) %.051242) #20 ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 48 ; 3 uses
-  %.sroa.0.0.copyload.i = load i64, ptr %i.aw, align 8, !tbaa !456
+  %.sroa.0.0.copyload.i = load i64, ptr %i.aw, align 8, !tbaa !456 ; 2 uses
   %i.ax = and i64 %.sroa.0.0.copyload.i, -16
   %i.ay = inttoptr i64 %i.ax to ptr
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
-  %i.ba = load i64, ptr %i.az, align 8, !tbaa !456 ; 3 uses
+  %i.ba = load i64, ptr %i.az, align 8, !tbaa !456 ; 2 uses
+  %20 = and i64 %.sroa.0.0.copyload.i, 7
+  %21 = or i64 %20, %i.ba                         ; 2 uses
   %i.bb = and i64 %i.ba, -16
   %i.bc = inttoptr i64 %i.bb to ptr
   %i.bd = load ptr, ptr %i.bc, align 16, !tbaa !1390 ; 4 uses
@@ -452,7 +454,7 @@ _ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i: ; preds = %_ZNK5clang4Type6c
   br label %_ZNK5clang8QualType19getNonReferenceTypeEv.exit
 
 _ZNK5clang8QualType19getNonReferenceTypeEv.exit:  ; preds = %bb.e, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i
-  %.sroa.0.0.in.i.sroa.speculated = phi i64 [ %.sroa.0.0.in.i.sroa.speculate.load._ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i ], [ %i.ba, %bb.e ], [ %i.ba, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i ]
+  %.sroa.0.0.in.i.sroa.speculated = phi i64 [ %.sroa.0.0.in.i.sroa.speculate.load._ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i ], [ %21, %bb.e ], [ %21, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i ]
   %i.ce = and i64 %.sroa.0.0.in.i.sroa.speculated, -16
   %i.cf = inttoptr i64 %i.ce to ptr
   %i.cg = load ptr, ptr %i.cf, align 16, !tbaa !1390
@@ -554,7 +556,7 @@ _ZN5clang7CodeGen15CodeGenFunction17GetAddrOfLocalVarEPKNS_7VarDeclE.exit: ; pre
   %i.ej = phi i64 [ %i.ei, %.loopexit.i.i.i ], [ %i.dv, %.lr.ph.i.i.i.i.i ]
   %i.ek = getelementptr inbounds nuw [56 x i8], ptr %i.dd, i64 %i.ej ; 3 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.ek, i64 8 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0213, ptr noundef nonnull align 8 dereferenceable(24) %i.el, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0209, ptr noundef nonnull align 8 dereferenceable(24) %i.el, i64 24, i1 false)
   %.sroa.5214.0..sroa_idx215 = getelementptr inbounds nuw i8, ptr %i.ek, i64 32
   %.sroa.5214.0.copyload216 = load i8, ptr %.sroa.5214.0..sroa_idx215, align 8, !tbaa !456 ; 2 uses
   %.sroa.6217.0..sroa_idx218 = getelementptr inbounds nuw i8, ptr %i.ek, i64 33 ; 2 uses
@@ -621,7 +623,7 @@ _ZN5clang7CodeGen15CodeGenFunction25EmitLoadOfReferenceLValueENS0_7AddressENS_8Q
   %i.fq = shl i32 %i.fo, 4
   %i.fr = sext i32 %i.fq to i64
   %i.fs = or i64 %i.fp, %i.fr
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.4.i.sroa.0.4..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0213, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.4.i.sroa.0.4..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0209, i64 24, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %.sroa.4.i.sroa.5.0..sroa.4.0..sroa_idx.i.sroa_idx, ptr noundef nonnull align 1 dereferenceable(23) %.sroa.6217, i64 23, i1 false)
   store i32 0, ptr %10, align 8, !tbaa !815, !noalias !1866
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4.0..sroa_idx.i, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.4.i.sroa.0, i64 28, i1 false), !tbaa.struct !817, !noalias !1866
@@ -659,7 +661,7 @@ bb.n:                                             ; preds = %_ZN5clang7CodeGen15
   %i.ft = and i64 %.sroa.0.0.copyload.i61, 7
   %i.fu = or i64 %i.ft, %i.ep
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4137.sroa.0)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0212, ptr noundef nonnull align 8 dereferenceable(24) %i.el, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0208, ptr noundef nonnull align 8 dereferenceable(24) %i.el, i64 24, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %.sroa.3, ptr noundef nonnull align 1 dereferenceable(23) %.sroa.6217.0..sroa_idx218, i64 23, i1 false)
   %i.fv = getelementptr inbounds nuw i8, ptr %i.es, i64 16 ; 2 uses
   %i.fw = load i8, ptr %i.fv, align 16
@@ -741,7 +743,7 @@ _ZN5clang7CodeGen15CodeGenFunction14MakeAddrLValueENS0_7AddressENS_8QualTypeENS0
   %i.hd = sext i32 %i.hc to i64
   %i.he = or i64 %i.hb, %i.hd
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.22, ptr noundef nonnull align 4 dereferenceable(36) %.sroa.4226, i64 36, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.4137.sroa.0.4..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0212, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(24) %.sroa.4137.sroa.0.4..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0208, i64 24, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(23) %.sroa.10155, ptr noundef nonnull align 1 dereferenceable(23) %.sroa.3, i64 23, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4226)
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
@@ -1121,7 +1123,7 @@ bb.ai:                                            ; preds = %_ZNK5clang7CodeGen7
   %.not56 = icmp eq ptr %i.nd, %i.if
   br i1 %.not56, label %._crit_edge, label %.lr.ph
 
-_ZNK5clang4Type18getAsCXXRecordDeclEv.exit.thread: ; preds = %_ZNK5clang4Type18getAsCXXRecordDeclEv.exit, %_ZNK5clang8QualType19getNonReferenceTypeEv.exit, %bb.h, %_ZN4llvm8DenseMapIPKN5clang9ValueDeclEPNS1_9FieldDeclENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S6_EEED2Ev.exit, %_ZNK5clang13CXXRecordDecl8isLambdaEv.exit, %bb.c
+_ZNK5clang4Type18getAsCXXRecordDeclEv.exit.thread: ; preds = %_ZNK5clang8QualType19getNonReferenceTypeEv.exit, %bb.h, %_ZNK5clang4Type18getAsCXXRecordDeclEv.exit, %_ZN4llvm8DenseMapIPKN5clang9ValueDeclEPNS1_9FieldDeclENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S6_EEED2Ev.exit, %_ZNK5clang13CXXRecordDecl8isLambdaEv.exit, %bb.c
   %i.ne = getelementptr inbounds nuw i8, ptr %.051242, i64 16 ; 2 uses
   %.not = icmp eq ptr %i.ne, %i.ai
   br i1 %.not, label %._crit_edge244, label %bb.c

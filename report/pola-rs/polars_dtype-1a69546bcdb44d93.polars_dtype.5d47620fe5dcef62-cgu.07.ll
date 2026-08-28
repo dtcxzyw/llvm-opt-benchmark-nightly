@@ -204,8 +204,7 @@ bb.d:                                             ; preds = %bb.b
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 32, !dbg !726
   %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !726 ; 2 uses
   %.sroa.414.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !727
-  %.sroa.414.0.copyload = load i64, ptr %.sroa.414.0..sroa_idx, align 8, !dbg !727
-  %3 = load <2 x i64>, ptr %1, align 8, !dbg !727
+  %.sroa.414.0.copyload = load i64, ptr %.sroa.414.0..sroa_idx, align 8, !dbg !727 ; 2 uses
   %.sroa.516.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !727
   %.sroa.516.0.copyload = load i64, ptr %.sroa.516.0..sroa_idx, align 8, !dbg !727 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !729
@@ -234,7 +233,10 @@ _RNvMNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB2_15ZipVal
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.010.sroa.6.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !dbg !781
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !782
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !782
-  store <2 x i64> %3, ptr %0, align 8, !dbg !780
+  %3 = load i64, ptr %1, align 8, !dbg !780
+  store i64 %3, ptr %0, align 8, !dbg !780
+  %.sroa.010.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !780
+  store i64 %.sroa.414.0.copyload, ptr %.sroa.010.sroa.4.0..sroa_idx, align 8, !dbg !780
   %.sroa.010.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !780
   store i64 %.sroa.516.0.copyload, ptr %.sroa.010.sroa.5.0..sroa_idx, align 8, !dbg !780
   %.sroa.511.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48, !dbg !780

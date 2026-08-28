@@ -169,7 +169,7 @@ bb.d:                                             ; preds = %_ZNKSt6vectorISt4pa
   %indvars.iv = phi i64 [ 0, %_ZNKSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE12_M_check_lenEmPKc.exit.i.i.i ], [ %indvars.iv.next, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit90 ] ; 4 uses
   %.sroa.29.0186 = phi ptr [ %i.p, %_ZNKSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE12_M_check_lenEmPKc.exit.i.i.i ], [ %.sroa.29.2, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit90 ] ; 11 uses
   %.sroa.13.0185 = phi ptr [ %i.p, %_ZNKSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE12_M_check_lenEmPKc.exit.i.i.i ], [ %.sroa.13.2, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit90 ] ; 3 uses
-  %.sroa.0121.0184 = phi ptr [ %i.o, %_ZNKSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE12_M_check_lenEmPKc.exit.i.i.i ], [ %.sroa.0121.2, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit90 ] ; 11 uses
+  %.sroa.0121.0184 = phi ptr [ %i.o, %_ZNKSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE12_M_check_lenEmPKc.exit.i.i.i ], [ %.sroa.0118.2, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit90 ] ; 11 uses
   %i.as = getelementptr inbounds i8, ptr %.sroa.13.0185, i64 -16 ; 4 uses
   %.sroa.0.0.copyload = load ptr, ptr %i.as, align 8 ; 3 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds i8, ptr %.sroa.13.0185, i64 -8 ; 2 uses
@@ -376,8 +376,7 @@ bb.p:                                             ; preds = %bb.o
   store ptr %i.ch, ptr %.sroa.13.1, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.13.1, i64 8
   store i32 %i.ci, ptr %.sroa.6.0..sroa_idx, align 8
-  %16 = getelementptr inbounds nuw i8, ptr %.sroa.13.1, i64 16
-  br label %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit90
+  br label %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87.a
 
 bb.q:                                             ; preds = %bb.o
   %i.cj = ptrtoint ptr %.sroa.13.1 to i64
@@ -412,7 +411,7 @@ _ZNKSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3
   %.sroa.6.0..sroa_idx95 = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
   store i32 %i.ci, ptr %.sroa.6.0..sroa_idx95, align 8
   %.not10.i.i.i.i.i.i79 = icmp eq ptr %.sroa.0121.1, %.sroa.13.1
-  br i1 %.not10.i.i.i.i.i.i79, label %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87.a, label %.lr.ph.i.i.i.i.i.i80
+  br i1 %.not10.i.i.i.i.i.i79, label %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87, label %.lr.ph.i.i.i.i.i.i80
 
 .lr.ph.i.i.i.i.i.i80:                             ; preds = %.noexc89, %.lr.ph.i.i.i.i.i.i80
   %.012.i.i.i.i.i.i81 = phi ptr [ %i.cw, %.lr.ph.i.i.i.i.i.i80 ], [ %i.ct, %.noexc89 ] ; 2 uses
@@ -421,13 +420,19 @@ _ZNKSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3
   %i.cv = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i82, i64 16 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i81, i64 16 ; 2 uses
   %.not.i.i.i.i.i.i83 = icmp eq ptr %i.cv, %.sroa.13.1
-  br i1 %.not.i.i.i.i.i.i83, label %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87.a, label %.lr.ph.i.i.i.i.i.i80, !llvm.loop !88
+  br i1 %.not.i.i.i.i.i.i83, label %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87, label %.lr.ph.i.i.i.i.i.i80, !llvm.loop !88
 
-_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87.a: ; preds = %.lr.ph.i.i.i.i.i.i80, %.noexc89
-  %.0.lcssa.i.i.i.i.i.i85.a = phi ptr [ %i.ct, %.noexc89 ], [ %i.cw, %.lr.ph.i.i.i.i.i.i80 ]
-  %17 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i85.a, i64 16
+_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87: ; preds = %.lr.ph.i.i.i.i.i.i80, %.noexc89
+  %.0.lcssa.i.i.i.i.i.i85 = phi ptr [ %i.ct, %.noexc89 ], [ %i.cw, %.lr.ph.i.i.i.i.i.i80 ]
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0121.1, i64 noundef %i.cl) #20
-  %18 = getelementptr inbounds nuw [16 x i8], ptr %i.ct, i64 %i.cr
+  %16 = getelementptr inbounds nuw [16 x i8], ptr %i.ct, i64 %i.cr
+  br label %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87.a
+
+_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87.a: ; preds = %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87, %bb.p
+  %.0.lcssa.i.i.i.i.i.i85.a = phi ptr [ %i.ct, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87 ], [ %.sroa.0121.1, %bb.p ]
+  %.0.lcssa.i.i.i.i.i.i85.pn = phi ptr [ %.0.lcssa.i.i.i.i.i.i85, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87 ], [ %.sroa.13.1, %bb.p ]
+  %.sroa.29.7 = phi ptr [ %16, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87 ], [ %.sroa.29.1, %bb.p ]
+  %.sroa.13.5 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i85.pn, i64 16
   br label %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit90
 
 .loopexit158:                                     ; preds = %_ZNKSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE12_M_check_lenEmPKc.exit.i.i.i76
@@ -440,24 +445,24 @@ _ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3E
           cleanup
   br label %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EED2Ev.exit92
 
-_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit90: ; preds = %bb.p, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87.a, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit74
-  %.sroa.0121.2 = phi ptr [ %.sroa.0121.1, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit74 ], [ %i.ct, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87.a ], [ %.sroa.0121.1, %bb.p ] ; 4 uses
-  %.sroa.13.2 = phi ptr [ %.sroa.13.1, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit74 ], [ %17, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87.a ], [ %16, %bb.p ] ; 2 uses
-  %.sroa.29.2 = phi ptr [ %.sroa.29.1, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit74 ], [ %18, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87.a ], [ %.sroa.29.1, %bb.p ] ; 2 uses
+_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit90: ; preds = %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87.a, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit74
+  %.sroa.0118.2 = phi ptr [ %.sroa.0121.1, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit74 ], [ %.0.lcssa.i.i.i.i.i.i85.a, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87.a ] ; 4 uses
+  %.sroa.13.2 = phi ptr [ %.sroa.13.1, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit74 ], [ %.sroa.13.5, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87.a ] ; 2 uses
+  %.sroa.29.2 = phi ptr [ %.sroa.29.1, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit74 ], [ %.sroa.29.7, %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE17_M_realloc_insertIJS9_EEEvN9__gnu_cxx17__normal_iteratorIPS9_SB_EEDpOT_.exit.i.i87.a ] ; 2 uses
   %i.cx = load ptr, ptr %13, align 8, !tbaa !51
   call void @free(ptr noundef %i.cx) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #16
   %i.cy = load ptr, ptr %12, align 8, !tbaa !21
   call void @free(ptr noundef %i.cy) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #16
-  %i.cz = icmp eq ptr %.sroa.0121.2, %.sroa.13.2
+  %i.cz = icmp eq ptr %.sroa.0118.2, %.sroa.13.2
   br i1 %i.cz, label %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EED2Ev.exit, label %bb.d, !llvm.loop !95
 
 _ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EED2Ev.exit: ; preds = %_ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EE9push_backEOS9_.exit90
   %i.da = ptrtoint ptr %.sroa.29.2 to i64
-  %i.db = ptrtoint ptr %.sroa.0121.2 to i64
+  %i.db = ptrtoint ptr %.sroa.0118.2 to i64
   %i.dc = sub i64 %i.da, %i.db
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0121.2, i64 noundef %i.dc) #20
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0118.2, i64 noundef %i.dc) #20
   ret void
 
 _ZNSt6vectorISt4pairIPKN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EEEiESaIS9_EED2Ev.exit92: ; preds = %.loopexit158, %.loopexit.split-lp159, %.loopexit, %.loopexit.split-lp, %bb.n, %bb.m, %bb.l

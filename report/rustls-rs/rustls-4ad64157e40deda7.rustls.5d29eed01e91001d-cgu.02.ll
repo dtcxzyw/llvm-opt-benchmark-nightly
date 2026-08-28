@@ -205,6 +205,8 @@ _RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.t
   %.sroa.0.0.i22 = phi i8 [ 5, %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit ], [ 0, %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.loopexit11 ], [ 2, %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.thread.loopexit27 ], [ 1, %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.thread.loopexit ], [ 3, %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.thread.loopexit37 ], [ 4, %.lr.ph ]
   %.sroa.8.0.i21 = phi i8 [ %.sroa.8.0.i, %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit ], [ 0, %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.loopexit11 ], [ 0, %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.thread.loopexit27 ], [ 0, %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.thread.loopexit ], [ 0, %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.thread.loopexit37 ], [ 0, %.lr.ph ]
   %i.k = phi i64 [ %i.i, %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit ], [ %i.f, %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.loopexit11 ], [ %i.f, %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.thread.loopexit27 ], [ %i.f, %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.thread.loopexit ], [ %i.f, %_RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.thread.loopexit37 ], [ %i.f, %.lr.ph ]
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 20
+  %3 = load i16, ptr %2, align 4
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.d, ptr %i.l, align 8
   %.sroa.49.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -215,6 +217,8 @@ _RNvNtNtNtCs7ZUl82OSlxp_6rustls4msgs7message7inbound19unpad_tls13_payload.exit.t
   store i8 %.sroa.8.0.i21, ptr %.sroa.6.0..sroa_idx, align 1
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 26
   store i16 5, ptr %.sroa.7.0..sroa_idx, align 2
+  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 28
+  store i16 %3, ptr %.sroa.8.0..sroa_idx, align 4
   store i8 -1, ptr %0, align 8
   br label %bb.f
 }

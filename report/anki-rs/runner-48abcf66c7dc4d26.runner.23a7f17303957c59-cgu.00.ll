@@ -202,7 +202,7 @@ bb.a:
   %i.ac = alloca [24 x i8], align 8               ; 12 uses
   %i.ad = alloca [200 x i8], align 8              ; 8 uses
   %i.ae = alloca [24 x i8], align 8               ; 12 uses
-  %i.af = alloca [24 x i8], align 8               ; 6 uses
+  %i.af = alloca [24 x i8], align 8               ; 7 uses
   %i.ag = alloca [24 x i8], align 8               ; 19 uses
   %i.ah = alloca [16 x i8], align 8               ; 6 uses
   %i.ai = alloca [4 x i8], align 4                ; 6 uses
@@ -535,21 +535,22 @@ bb.ae:                                            ; preds = %bb.z
   %i.ew = icmp eq i64 %i.ev, -9223372036854775808
   %i.ex = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.ey = load ptr, ptr %i.ex, align 8            ; 2 uses
-  %.sroa.5165.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 16
-  %.sroa.5165.0.copyload = load i64, ptr %.sroa.5165.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.af)
   br i1 %i.ew, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.af)
   %i.ez = invoke noundef nonnull ptr @"_ZN6anyhow5error72_$LT$impl$u20$core..convert..From$LT$E$GT$$u20$for$u20$anyhow..Error$GT$4from17hccafdeb1e397fd61E"(ptr noundef nonnull %i.ey)
           to label %.thread371 unwind label %bb.ad
 
 bb.ag:                                            ; preds = %bb.ae
+  %.sroa.5163.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 16
+  %4 = load i64, ptr %.sroa.5163.0..sroa_idx, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.af)
   store i64 %i.ev, ptr %i.ag, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   store ptr %i.ey, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.539.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
-  store i64 %.sroa.5165.0.copyload, ptr %.sroa.539.0..sroa_idx, align 8
+  store i64 %4, ptr %.sroa.539.0..sroa_idx, align 8
   br label %bb.ah
 
 bb.ah:                                            ; preds = %"_ZN4core3ptr66drop_in_place$LT$xz2..read..XzDecoder$LT$$RF$std..fs..File$GT$$GT$17h9671f04c661724a0E.exit", %bb.aq, %bb.ag, %bb.ac

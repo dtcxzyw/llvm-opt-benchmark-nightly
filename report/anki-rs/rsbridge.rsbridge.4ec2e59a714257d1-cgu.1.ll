@@ -202,10 +202,14 @@ bb.n:                                             ; preds = %.body.i
 bb.o:                                             ; preds = %bb.j
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.p, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false), !noalias !105
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !105
-  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.u, i8 0, i64 16, i1 false)
   call fastcc void @"_ZN4core3ptr65drop_in_place$LT$snafu..report..Report$LT$snafu..Whatever$GT$$GT$17h5618de4924456616E"(ptr noalias noundef align 8 dereferenceable(88) %i.f), !noalias !105
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !105
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i32 0, ptr %i.u, align 8
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
+  store i8 0, ptr %.sroa.5.0..sroa_idx, align 4
+  %.sroa.77.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 0, ptr %.sroa.77.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 1, ptr %.sroa.5.0..sroa_idx.a, align 8
   %.sroa.65.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -346,12 +350,12 @@ _ZN4pyo310conversion15IntoPyObjectExt17into_bound_py_any17h8c0563d06c78c8c4E.exi
   br label %bb.m
 
 bb.m:                                             ; preds = %_ZN4pyo310conversion15IntoPyObjectExt17into_bound_py_any17h8c0563d06c78c8c4E.exit.thread, %bb.k
-  %.sroa.1020.sroa.9.0 = phi i64 [ undef, %bb.k ], [ %.sroa.1020.sroa.9.0.copyload35, %_ZN4pyo310conversion15IntoPyObjectExt17into_bound_py_any17h8c0563d06c78c8c4E.exit.thread ]
-  %.sroa.1020.sroa.6.0 = phi ptr [ null, %bb.k ], [ %.sroa.1020.sroa.6.0.copyload32, %_ZN4pyo310conversion15IntoPyObjectExt17into_bound_py_any17h8c0563d06c78c8c4E.exit.thread ]
-  %.sroa.5.0 = phi ptr [ null, %bb.k ], [ %.sroa.5.8.copyload19, %_ZN4pyo310conversion15IntoPyObjectExt17into_bound_py_any17h8c0563d06c78c8c4E.exit.thread ]
-  %i.ah = phi <2 x i32> [ <i32 3, i32 undef>, %bb.k ], [ %i.ag, %_ZN4pyo310conversion15IntoPyObjectExt17into_bound_py_any17h8c0563d06c78c8c4E.exit.thread ]
-  %i.ai = phi <2 x i64> [ <i64 0, i64 1>, %bb.k ], [ %i.ae, %_ZN4pyo310conversion15IntoPyObjectExt17into_bound_py_any17h8c0563d06c78c8c4E.exit.thread ]
-  %i.aj = phi <2 x ptr> [ %i.y, %bb.k ], [ %i.af, %_ZN4pyo310conversion15IntoPyObjectExt17into_bound_py_any17h8c0563d06c78c8c4E.exit.thread ]
+  %.sroa.1020.sroa.9.0 = phi i64 [ %.sroa.1020.sroa.9.0.copyload35, %_ZN4pyo310conversion15IntoPyObjectExt17into_bound_py_any17h8c0563d06c78c8c4E.exit.thread ], [ undef, %bb.k ]
+  %.sroa.1020.sroa.6.0 = phi ptr [ %.sroa.1020.sroa.6.0.copyload32, %_ZN4pyo310conversion15IntoPyObjectExt17into_bound_py_any17h8c0563d06c78c8c4E.exit.thread ], [ null, %bb.k ]
+  %.sroa.5.0 = phi ptr [ %.sroa.5.8.copyload19, %_ZN4pyo310conversion15IntoPyObjectExt17into_bound_py_any17h8c0563d06c78c8c4E.exit.thread ], [ null, %bb.k ]
+  %i.ah = phi <2 x i32> [ %i.ag, %_ZN4pyo310conversion15IntoPyObjectExt17into_bound_py_any17h8c0563d06c78c8c4E.exit.thread ], [ <i32 3, i32 undef>, %bb.k ]
+  %i.ai = phi <2 x i64> [ %i.ae, %_ZN4pyo310conversion15IntoPyObjectExt17into_bound_py_any17h8c0563d06c78c8c4E.exit.thread ], [ <i64 0, i64 1>, %bb.k ]
+  %i.aj = phi <2 x ptr> [ %i.af, %_ZN4pyo310conversion15IntoPyObjectExt17into_bound_py_any17h8c0563d06c78c8c4E.exit.thread ], [ %i.y, %bb.k ]
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.5.0, ptr %i.ak, align 8
   %.sroa.539.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -594,7 +598,11 @@ bb.v:                                             ; preds = %"_ZN8rsbridge18init
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !132
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !132
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, i8 0, i64 16, i1 false)
+  store i32 0, ptr %i.aj, align 8
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
+  store i8 0, ptr %.sroa.5.0..sroa_idx, align 4
+  %.sroa.733.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 0, ptr %.sroa.733.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 1, ptr %.sroa.5.0..sroa_idx.a, align 8
   %.sroa.631.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32

@@ -204,10 +204,10 @@ bb.a:
   %i.an = alloca [24 x i8], align 8               ; 12 uses
   %i.ao = alloca [24 x i8], align 8               ; 12 uses
   %i.ap = alloca [24 x i8], align 8               ; 4 uses
-  %i.aq = alloca [24 x i8], align 8               ; 6 uses
+  %i.aq = alloca [24 x i8], align 8               ; 7 uses
   %i.ar = alloca [24 x i8], align 8               ; 15 uses
   %i.as = alloca [24 x i8], align 8               ; 4 uses
-  %i.at = alloca [24 x i8], align 8               ; 6 uses
+  %i.at = alloca [24 x i8], align 8               ; 7 uses
   %i.au = alloca [24 x i8], align 8               ; 13 uses
   %i.av = alloca [24 x i8], align 8               ; 17 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.av)
@@ -251,12 +251,10 @@ bb.f:                                             ; preds = %bb.e
   %i.be = icmp eq i64 %i.bd, -9223372036854775808
   %i.bf = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   %i.bg = load ptr, ptr %i.bf, align 8            ; 2 uses
-  %.sroa.537.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.at, i64 16
-  %.sroa.537.0.copyload = load i64, ptr %.sroa.537.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.at)
   br i1 %i.be, label %bb.g, label %bb.j
 
 bb.g:                                             ; preds = %bb.f
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.at)
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17ha2c6ce00ed65d182E"(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.au)
           to label %"_ZN4core3ptr39drop_in_place$LT$std..path..PathBuf$GT$17hd9925dbe57a1a26cE.exit" unwind label %bb.h
 
@@ -282,11 +280,14 @@ common.resume:                                    ; preds = %bb.dk, %bb.db, %bb.
   br label %bb.dd
 
 bb.j:                                             ; preds = %bb.f
+  %.sroa.535.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.at, i64 16
+  %6 = load i64, ptr %.sroa.535.0..sroa_idx, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.at)
   store i64 %i.bd, ptr %i.av, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 8
   store ptr %i.bg, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 16
-  store i64 %.sroa.537.0.copyload, ptr %.sroa.5.0..sroa_idx, align 8
+  store i64 %6, ptr %.sroa.5.0..sroa_idx, align 8
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17ha2c6ce00ed65d182E"(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.au)
           to label %"_ZN4core3ptr39drop_in_place$LT$std..path..PathBuf$GT$17hd9925dbe57a1a26cE.exit78" unwind label %bb.k
 
@@ -383,10 +384,10 @@ bb.u:                                             ; preds = %.noexc79
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(108) %i.cf, ptr noundef nonnull align 1 dereferenceable(108) @133, i64 108, i1 false), !noalias !588
   br label %bb.v
 
-bb.v:                                             ; preds = %bb.z, %bb.u
-  %.sink43 = phi i64 [ %i.cc, %bb.u ], [ %i.cj, %bb.z ]
-  %.sink.a = phi ptr [ %i.cf, %bb.u ], [ %i.cm, %bb.z ]
-  %.sroa.540.0.copyload.sink = phi i64 [ 108, %bb.u ], [ %.sroa.540.0.copyload, %bb.z ]
+bb.v:                                             ; preds = %7, %bb.u
+  %.sink43 = phi i64 [ %i.cj, %7 ], [ %i.cc, %bb.u ]
+  %.sink.a = phi ptr [ %i.cm, %7 ], [ %i.cf, %bb.u ]
+  %.sroa.540.0.copyload.sink = phi i64 [ %8, %7 ], [ 108, %bb.u ]
   store i64 %.sink43, ptr %i.av, align 8
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 8
   store ptr %.sink.a, ptr %.sroa.417.0..sroa_idx, align 8
@@ -422,12 +423,10 @@ bb.z:                                             ; preds = %bb.y
   %i.ck = icmp eq i64 %i.cj, -9223372036854775808
   %i.cl = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
   %i.cm = load ptr, ptr %i.cl, align 8            ; 2 uses
-  %.sroa.540.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
-  %.sroa.540.0.copyload = load i64, ptr %.sroa.540.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.aq)
-  br i1 %i.ck, label %bb.aa, label %bb.v
+  br i1 %i.ck, label %bb.aa, label %7
 
 bb.aa:                                            ; preds = %bb.z
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.aq)
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17ha2c6ce00ed65d182E"(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.ar)
           to label %"_ZN4core3ptr39drop_in_place$LT$std..path..PathBuf$GT$17hd9925dbe57a1a26cE.exit84" unwind label %bb.ab
 
@@ -447,6 +446,12 @@ bb.ac:                                            ; preds = %bb.ab
   call void @"_ZN77_$LT$alloc..raw_vec..RawVec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h93b4b5a267dc2fabE"(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.ar)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar)
   br label %bb.dd
+
+7:                                                ; preds = %bb.z
+  %.sroa.538.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
+  %8 = load i64, ptr %.sroa.538.0..sroa_idx, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.aq)
+  br label %bb.v
 
 .body127:                                         ; preds = %bb.di, %bb.cz, %bb.ad, %"_ZN4core3ptr97drop_in_place$LT$serde_json..map..Map$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17hc607968807f699b9E.exit"
   %.pn62 = phi { ptr, i32 } [ %.pn60, %"_ZN4core3ptr97drop_in_place$LT$serde_json..map..Map$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17hc607968807f699b9E.exit" ], [ %i.if, %bb.cz ], [ %i.cp, %bb.ad ], [ %i.il, %bb.di ]
