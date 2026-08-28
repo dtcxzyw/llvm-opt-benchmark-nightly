@@ -205,7 +205,7 @@ _ZN11hb_vector_tIN5graph7graph_t8vertex_tELb0EEixEi.exit.i.i: ; preds = %_ZN11hb
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !377, !noalias !955
   %i.ad = zext i32 %i.y to i64                    ; 2 uses
   %i.ae = getelementptr inbounds nuw [216 x i8], ptr %i.ac, i64 %i.ad ; 5 uses
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !446, !noalias !955 ; 13 uses
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !446, !noalias !955 ; 17 uses
   %.not4.i.i = icmp eq ptr %i.af, null
   br i1 %.not4.i.i, label %_ZN5graph7graph_t16as_mutable_tableINS_8CoverageEJEEENS0_18vertex_and_table_tIT_LNS0_19vertex_mutability_tE1EEEjPKvDpT0_.exit.thread, label %bb.e
 
@@ -337,51 +337,65 @@ bb.n:                                             ; preds = %_ZNK2OT7ArrayOfINS_
   br label %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.thread
 
 _ZNK2OT6Layout6Common8Coverage4iterEv.exit.thread: ; preds = %bb.j, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i, %bb.n
-  %.sroa.11.2.ph = phi i32 [ %.sroa.11.1, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i ], [ 0, %bb.n ], [ 0, %bb.j ] ; 2 uses
-  %.sroa.7.0.ph = phi i32 [ 0, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i ], [ %i.cj, %bb.n ], [ 0, %bb.j ] ; 3 uses
-  %i.ck = getelementptr inbounds nuw i8, ptr %i.af, i64 2 ; 5 uses
-  %i.cl = icmp eq i16 %i.bn, 256
+  %.sroa.11.2.ph = phi i32 [ %.sroa.11.1, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i ], [ 0, %bb.n ], [ 0, %bb.j ] ; 6 uses
+  %.sroa.7.0.ph = phi i32 [ 0, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i ], [ %i.cj, %bb.n ], [ 0, %bb.j ] ; 8 uses
+  %i.ck = getelementptr inbounds nuw i8, ptr %i.af, i64 2 ; 6 uses
+  %i.cl = icmp eq i16 %i.bn, 256                  ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.af, i64 4 ; 2 uses
-  %.not236244 = icmp eq i32 %3, 0
   %.not236 = icmp eq i32 %3, 0
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #20
   %i.cn = load i16, ptr %i.ck, align 1, !tbaa !231
   %i.co = tail call noundef i16 @llvm.bswap.i16(i16 %i.cn)
   %i.cp = zext i16 %i.co to i32
-  %.not298 = icmp samesign ult i32 %.sroa.7.0.ph, %i.cp
+  %.not298 = icmp samesign ult i32 %.sroa.7.0.ph, %i.cp ; 2 uses
+  br i1 %.not236, label %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.preheader, label %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.us
+
+_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.preheader: ; preds = %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.thread
   br i1 %.not298, label %.lr.ph, label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.split"
 
-.lr.ph:                                           ; preds = %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.thread, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit
-  %.sroa.13.0286 = phi i32 [ %.sroa.13.2, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ], [ %.sroa.7.0.ph, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.thread ] ; 8 uses
-  %.sroa.22.0285 = phi i32 [ %.sroa.22.2, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ], [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.thread ] ; 6 uses
-  %.sroa.27.0284 = phi i32 [ %.sroa.27.1, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ], [ %.sroa.11.2.ph, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.thread ] ; 5 uses
-  %.sroa.33.sroa.0.0283 = phi i32 [ %i.dv, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ], [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.thread ] ; 3 uses
+_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.us: ; preds = %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.thread
+  br i1 %.not298, label %11, label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.split"
+
+11:                                               ; preds = %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.us
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #20
-  br i1 %i.cl, label %bb.o, label %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i.thread
+  br i1 %i.cl, label %12, label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.split"
+
+12:                                               ; preds = %11
+  %13 = load i16, ptr %i.ck, align 1, !tbaa !231
+  %14 = tail call noundef i16 @llvm.bswap.i16(i16 %13)
+  %15 = zext i16 %14 to i32
+  %.not.i.i.i.i.i.i.i.i.i.i.us = icmp samesign ult i32 %.sroa.7.0.ph, %15
+  br i1 %.not.i.i.i.i.i.i.i.i.i.i.us, label %16, label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.split", !prof !137
+
+16:                                               ; preds = %12
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #20, !srcloc !230
+  br label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.split"
+
+.lr.ph:                                           ; preds = %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.preheader, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit
+  %.sroa.13.0286 = phi i32 [ %.sroa.13.2, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ], [ %.sroa.7.0.ph, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.preheader ] ; 6 uses
+  %.sroa.22.0285 = phi i32 [ %.sroa.22.2, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ], [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.preheader ] ; 4 uses
+  %.sroa.27.0284 = phi i32 [ %.sroa.27.1, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ], [ %.sroa.11.2.ph, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.preheader ] ; 3 uses
+  %.sroa.33.sroa.0.0283 = phi i32 [ %i.dv, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ], [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.preheader ]
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #20
+  br i1 %i.cl, label %bb.o, label %.thread
 
 bb.o:                                             ; preds = %.lr.ph
   %i.cq = load i16, ptr %i.ck, align 1, !tbaa !231
   %i.cr = tail call noundef i16 @llvm.bswap.i16(i16 %i.cq)
   %i.cs = zext i16 %i.cr to i32
   %.not.i.i.i.i.i.i.i.i.i.i = icmp samesign ult i32 %.sroa.13.0286, %i.cs
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %bb.p, label %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i, !prof !137
+  br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %bb.p, label %bb.q, !prof !137
 
 bb.p:                                             ; preds = %bb.o
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #20, !srcloc !230
-  br label %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i
+  br label %bb.q
 
-_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i: ; preds = %bb.p, %bb.o
-  br i1 %.not236, label %bb.q, label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit"
-
-_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i.thread: ; preds = %.lr.ph
-  br i1 %.not236244, label %.thread, label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit"
-
-bb.q:                                             ; preds = %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i
+bb.q:                                             ; preds = %bb.p, %bb.o
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #20, !srcloc !230
   %i.ct = add nuw nsw i32 %.sroa.13.0286, 1
   br label %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit
 
-.thread:                                          ; preds = %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i.thread
+.thread:                                          ; preds = %.lr.ph
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #20, !srcloc !230
   %i.cu = load i16, ptr %i.ck, align 1, !tbaa !231
   %i.cv = tail call noundef i16 @llvm.bswap.i16(i16 %i.cu)
@@ -444,26 +458,22 @@ _ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__n
   %i.dw = load i16, ptr %i.ck, align 1, !tbaa !231
   %i.dx = tail call noundef i16 @llvm.bswap.i16(i16 %i.dw)
   %i.dy = zext i16 %i.dx to i32
-  %i.dz = icmp uge i32 %.sroa.13.2, %i.dy
+  %i.dz = icmp samesign uge i32 %.sroa.13.2, %i.dy
   %.not.i.i.i18 = icmp eq i32 %i.dv, -1
   %or.cond112 = select i1 %i.dz, i1 true, i1 %.not.i.i.i18
   br i1 %or.cond112, label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit", label %.lr.ph, !llvm.loop !961
 
-"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit": ; preds = %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i.thread, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit, %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i
-  %.sroa.33.sroa.0.0.lcssa.ph = phi i32 [ %.sroa.33.sroa.0.0283, %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i ], [ %i.dv, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ], [ %.sroa.33.sroa.0.0283, %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i.thread ]
-  %.sroa.27.0.lcssa.ph = phi i32 [ %.sroa.27.0284, %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i ], [ %.sroa.27.1, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ], [ %.sroa.27.0284, %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i.thread ]
-  %.sroa.22.0.lcssa.ph = phi i32 [ %.sroa.22.0285, %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i ], [ %.sroa.22.2, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ], [ %.sroa.22.0285, %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i.thread ]
-  %.sroa.13.0.lcssa.ph = phi i32 [ %.sroa.13.0286, %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i ], [ %.sroa.13.2, %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit ], [ %.sroa.13.0286, %_ZN9hb_iter_tI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE9hb_pair_tIjjEEdeEv.exit.i.i.i.thread ]
-  %i.ea = zext i32 %.sroa.33.sroa.0.0.lcssa.ph to i64
+"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit": ; preds = %_ZN13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE8__next__Ev.exit
+  %i.ea = zext i32 %i.dv to i64
   %i.eb = or disjoint i64 %i.ea, -4294967296
   br label %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.split"
 
-"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.split": ; preds = %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.thread, %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit", %bb.i
-  %.sroa.532.0242 = phi ptr [ null, %bb.i ], [ %i.af, %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit" ], [ %i.af, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.thread ]
-  %.sroa.33.sroa.0.0.lcssa.split = phi i64 [ -4294967296, %bb.i ], [ -4294967296, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.thread ], [ %i.eb, %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit" ]
-  %.sroa.27.0.lcssa.split = phi i32 [ 0, %bb.i ], [ %.sroa.11.2.ph, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.thread ], [ %.sroa.27.0.lcssa.ph, %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit" ]
-  %.sroa.22.0.lcssa.split = phi i32 [ 0, %bb.i ], [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.thread ], [ %.sroa.22.0.lcssa.ph, %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit" ]
-  %.sroa.13.0.lcssa.split = phi i32 [ 0, %bb.i ], [ %.sroa.7.0.ph, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.thread ], [ %.sroa.13.0.lcssa.ph, %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit" ]
+"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.split": ; preds = %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.preheader, %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit", %11, %bb.i, %12, %16, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.us
+  %.sroa.532.0248 = phi ptr [ %i.af, %11 ], [ %i.af, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.us ], [ %i.af, %16 ], [ %i.af, %12 ], [ null, %bb.i ], [ %i.af, %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit" ], [ %i.af, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.preheader ]
+  %.sroa.33.sroa.0.0.lcssa.split = phi i64 [ -4294967296, %11 ], [ -4294967296, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.us ], [ -4294967296, %16 ], [ -4294967296, %12 ], [ -4294967296, %bb.i ], [ %i.eb, %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit" ], [ -4294967296, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.preheader ]
+  %.sroa.27.0.lcssa.split = phi i32 [ %.sroa.11.2.ph, %11 ], [ %.sroa.11.2.ph, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.us ], [ %.sroa.11.2.ph, %16 ], [ %.sroa.11.2.ph, %12 ], [ 0, %bb.i ], [ %.sroa.27.1, %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit" ], [ %.sroa.11.2.ph, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.preheader ]
+  %.sroa.22.0.lcssa.split = phi i32 [ 0, %11 ], [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.us ], [ 0, %16 ], [ 0, %12 ], [ 0, %bb.i ], [ %.sroa.22.2, %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit" ], [ 0, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.preheader ]
+  %.sroa.13.0.lcssa.split = phi i32 [ %.sroa.7.0.ph, %11 ], [ %.sroa.7.0.ph, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.us ], [ %.sroa.7.0.ph, %16 ], [ %.sroa.7.0.ph, %12 ], [ 0, %bb.i ], [ %.sroa.13.2, %"_ZorI13hb_zip_iter_tIN2OT6Layout6Common8Coverage6iter_tE15hb_range_iter_tIjjEE24hb_filter_iter_factory_tIZN5graph14PairPosFormat16shrinkERNSA_24gsubgpos_graph_context_tEjjEUl9hb_pair_tIjjEE_RK4$_19ETnPN12hb_enable_ifIXsr17hb_is_iterator_ofIT_NSM_6item_tEEE5valueEvE4typeELPv0EEDTclclsr3stdE7forwardIT0_Efp0_Eclsr3stdE7forwardISM_Efp_EEEOSM_OSS_.exit.loopexit" ], [ %.sroa.7.0.ph, %_ZNK2OT6Layout6Common8Coverage4iterEv.exit.split.split.preheader ]
   %i.ec = and i64 %i.bm, 4294967295               ; 2 uses
   %i.ed = tail call ptr @hb_calloc(i64 noundef 1, i64 noundef %i.ec) #20 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #20
@@ -610,7 +620,7 @@ _ZN22hb_serialize_context_tC2EPvm.exit.i:         ; preds = %.critedge.i.i.i.i, 
   %.sroa.493.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 4
   store i32 0, ptr %.sroa.493.0..sroa_idx, align 4
   %.sroa.594.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
-  store ptr %.sroa.532.0242, ptr %.sroa.594.0..sroa_idx, align 8
+  store ptr %.sroa.532.0248, ptr %.sroa.594.0..sroa_idx, align 8
   %.sroa.695.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
   store i32 %.sroa.13.0.lcssa.split, ptr %.sroa.695.0..sroa_idx, align 8
   %.sroa.796.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 20 ; 2 uses

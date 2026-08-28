@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.a
 .outer:                                           ; preds = %.outer.outer, %bb.by
   %.ph = phi i64 [ %i.hl, %bb.by ], [ %.ph.ph, %.outer.outer ] ; 9 uses
   %.0112.ph = phi i1 [ true, %bb.by ], [ %i.q, %.outer.outer ] ; 3 uses
-  %.0108.ph = phi i32 [ %.0108262, %bb.by ], [ %.0108.ph.ph, %.outer.outer ] ; 7 uses
+  %.0108.ph = phi i32 [ %.0108262, %bb.by ], [ %.0108.ph.ph, %.outer.outer ] ; 8 uses
   %.0106.ph = phi i64 [ %.0106252, %bb.by ], [ %.0106.ph.ph, %.outer.outer ] ; 5 uses
   %.0104.ph = phi i32 [ %.0104242, %bb.by ], [ %.0104.ph.ph, %.outer.outer ] ; 11 uses
   %i.r = load ptr, ptr %i.e, align 8, !tbaa !355  ; 4 uses
@@ -373,6 +373,8 @@ bb.x:                                             ; preds = %bb.w
   br i1 %or.cond9, label %bb.ac, label %._crit_edge487
 
 bb.y:                                             ; preds = %bb.w
+  %5 = add i32 %.0108.ph, -20
+  %6 = icmp ult i32 %5, -16                       ; 3 uses
   %i.ca = zext nneg i8 %.pre to i32               ; 2 uses
   %i.cb = shl nuw nsw i64 %i.ax, 6                ; 3 uses
   br i1 %or.cond, label %bb.z, label %bb.aa
@@ -389,6 +391,8 @@ bb.ab:                                            ; preds = %bb.aa
   br label %bb.ae
 
 bb.ac:                                            ; preds = %bb.x
+  %7 = add i32 %.0108.ph, -20
+  %8 = icmp ult i32 %7, -16                       ; 2 uses
   %i.ce = shl nuw nsw i64 %i.ax, 6                ; 2 uses
   %i.cf = add nsw i8 %.pre, -48
   %or.cond15 = icmp ult i8 %i.cf, 10
@@ -400,20 +404,20 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.ae
 
 .thread209:                                       ; preds = %bb.aa, %bb.ac
+  %9 = phi i1 [ %8, %bb.ac ], [ %6, %bb.aa ]
   %i.ch = phi i64 [ %i.ce, %bb.ac ], [ %i.cb, %bb.aa ]
   %i.ci = icmp eq i8 %.pre, 43
   %i.cj = select i1 %i.ci, i32 62, i32 63
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ab, %.thread209, %bb.ad, %bb.z
+  %10 = phi i1 [ %6, %bb.z ], [ %6, %bb.ab ], [ %8, %bb.ad ], [ %9, %.thread209 ]
   %i.ck = phi i64 [ %i.cb, %bb.z ], [ %i.cb, %bb.ab ], [ %i.ce, %bb.ad ], [ %i.ch, %.thread209 ]
   %i.cl = phi i32 [ %i.cc, %bb.z ], [ %i.cd, %bb.ab ], [ %i.cg, %bb.ad ], [ %i.cj, %.thread209 ]
   %i.cm = zext nneg i32 %i.cl to i64
   %i.cn = or i64 %i.ck, %i.cm                     ; 3 uses
   %i.co = getelementptr i8, ptr %.promoted, i64 2 ; 2 uses
-  %5 = add i32 %.0108.ph, -20
-  %6 = icmp ult i32 %5, -16
-  br i1 %6, label %.loopexit233.loopexit, label %.thread217.loopexit.loopexit
+  br i1 %10, label %.loopexit233.loopexit, label %.thread217.loopexit.loopexit
 
 .loopexit476:                                     ; preds = %bb.o
   store ptr %i.ar, ptr %i.a, align 8
@@ -816,7 +820,7 @@ bb.bx:                                            ; preds = %bb.bq
   br label %bb.by
 
 .thread217.loopexit.loopexit:                     ; preds = %bb.ae
-  %i.hk = add nuw nsw i32 %indvars.peel, 6
+  %i.hk = add nuw i32 %indvars.peel, 6
   br label %.thread217.loopexit
 
 .thread217.loopexit:                              ; preds = %bb.m, %.thread217.loopexit.loopexit

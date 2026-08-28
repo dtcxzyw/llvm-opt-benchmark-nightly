@@ -19,9 +19,9 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 2) i32 @petite_inflate2x_1to9(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef %10) local_unnamed_addr #0 {
 bb.a:
-  %i.a = zext i32 %1 to i64                       ; 10 uses
+  %i.a = zext i32 %1 to i64                       ; 14 uses
   %i.b = sub nsw i64 0, %i.a
-  %i.c = getelementptr inbounds i8, ptr %0, i64 %i.b ; 10 uses
+  %i.c = getelementptr inbounds i8, ptr %0, i64 %i.b ; 11 uses
   %i.d = icmp eq i32 %8, 2                        ; 2 uses
   br i1 %i.d, label %.sink.split, label %bb.b
 
@@ -52,8 +52,8 @@ bb.c:                                             ; preds = %.sink.split, %bb.b
   br i1 %or.cond1249, label %.thread1042, label %.lr.ph1259
 
 .lr.ph1259:                                       ; preds = %bb.c
-  %i.n = zext i32 %2 to i64                       ; 5 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %i.n ; 16 uses
+  %i.n = zext i32 %2 to i64                       ; 8 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %i.n ; 17 uses
   %i.p = icmp ult i32 %2, 8
   %i.q = xor i64 %i.a, -1
   %i.r = icmp ugt i32 %2, 7
@@ -75,7 +75,7 @@ bb.d:                                             ; preds = %.lr.ph1259, %.threa
   %.06631255 = phi i32 [ 0, %.lr.ph1259 ], [ %.6, %.thread1022 ]
   %.06681254 = phi i32 [ 0, %.lr.ph1259 ], [ %.3671, %.thread1022 ] ; 13 uses
   %.06811253 = phi i32 [ 0, %.lr.ph1259 ], [ %.6687, %.thread1022 ] ; 15 uses
-  %.06881252 = phi i32 [ 0, %.lr.ph1259 ], [ %.15, %.thread1022 ] ; 17 uses
+  %.06881252 = phi i32 [ 0, %.lr.ph1259 ], [ %.15, %.thread1022 ] ; 18 uses
   %.06951251 = phi i32 [ 0, %.lr.ph1259 ], [ %.2697, %.thread1022 ] ; 3 uses
   %.27001250 = phi ptr [ %.1699, %.lr.ph1259 ], [ %.5703, %.thread1022 ] ; 7 uses
   %.06631255.fr = freeze i32 %.06631255           ; 14 uses
@@ -228,8 +228,8 @@ bb.m:                                             ; preds = %.lr.ph1270.epil.pre
 bb.n:                                             ; preds = %._crit_edge1271
   %i.bk = add i32 %6, 5                           ; 2 uses
   %i.bl = add i32 %i.bk, %5                       ; 2 uses
-  %i.bm = zext i32 %.06811253 to i64              ; 3 uses
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.bm ; 2 uses
+  %i.bm = zext i32 %.06811253 to i64              ; 4 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.bm ; 4 uses
   br i1 %i.d, label %.preheader, label %.critedge.thread
 
 .preheader:                                       ; preds = %bb.n
@@ -248,13 +248,14 @@ bb.n:                                             ; preds = %._crit_edge1271
   %scevgep = getelementptr i8, ptr %0, i64 %i.br  ; 2 uses
   %scevgep1465 = getelementptr i8, ptr %scevgep, i64 %i.bm
   %.not776.us = icmp ult ptr %scevgep1465, %0
+  %invariant.op2013 = sub i64 4, %i.a
   br label %.lr.ph1309.split.us
 
 .lr.ph1309.split.us:                              ; preds = %.lr.ph1309.split.us.preheader, %.critedge7.us
   %.06131308.us = phi ptr [ %i.bs, %.critedge7.us ], [ %i.bn, %.lr.ph1309.split.us.preheader ] ; 2 uses
-  %.06171307.us = phi i32 [ %.16181275.us, %.critedge7.us ], [ 0, %.lr.ph1309.split.us.preheader ]
-  %.06211306.us = phi i32 [ %.16221274.us, %.critedge7.us ], [ %i.bl, %.lr.ph1309.split.us.preheader ]
-  %.16891305.us = phi i32 [ %.26901273.us1312, %.critedge7.us ], [ %.06881252, %.lr.ph1309.split.us.preheader ] ; 2 uses
+  %.06171307.us = phi i32 [ %.us-phi1466, %.critedge7.us ], [ 0, %.lr.ph1309.split.us.preheader ] ; 2 uses
+  %.06211306.us = phi i32 [ %.us-phi1465, %.critedge7.us ], [ %i.bl, %.lr.ph1309.split.us.preheader ] ; 2 uses
+  %.16891305.us = phi i32 [ %.us-phi, %.critedge7.us ], [ %.06881252, %.lr.ph1309.split.us.preheader ] ; 3 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %.06131308.us, i64 4 ; 2 uses
   %.not777.us.not = icmp ugt ptr %i.bs, %i.o
   br i1 %.not777.us.not, label %.critedge, label %bb.o
@@ -265,37 +266,51 @@ bb.o:                                             ; preds = %.lr.ph1309.split.us
   br i1 %.not778.us, label %.critedge.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.bt = sext i32 %.0613.val891.us to i64        ; 3 uses
+  %i.bt = sext i32 %.0613.val891.us to i64        ; 4 uses
+  %11 = getelementptr inbounds i8, ptr %i.c, i64 %i.bt ; 3 uses
   %.not7791272.us = icmp slt i64 %i.bt, %i.a
   br i1 %.not7791272.us, label %.critedge, label %.lr.ph1278.us.preheader
 
 .lr.ph1278.us.preheader:                          ; preds = %bb.p
-  %i.bu = getelementptr inbounds i8, ptr %i.c, i64 %i.bt
-  %scevgep1464 = getelementptr i8, ptr %scevgep, i64 %i.bt
-  %.not779.us1318 = icmp ult ptr %scevgep1464, %0
+  %i.bu = getelementptr i8, ptr %scevgep, i64 %i.bt
+  %scevgep1464.fr = freeze ptr %i.bu
+  %.not779.us1318 = icmp ult ptr %scevgep1464.fr, %0
+  %.reass.reass = add i64 %i.bt, %invariant.op2013
+  %.not780.us1313.not.us = icmp sgt i64 %.reass.reass, %i.n ; 2 uses
+  br i1 %.not779.us1318, label %.lr.ph1278.us.preheader.split.us, label %.lr.ph1278.us.preheader1731, !llvm.loop !16
+
+.lr.ph1278.us.preheader1731:                      ; preds = %.lr.ph1278.us.preheader
+  br i1 %.not780.us1313.not.us, label %.critedge, label %.lr.ph1821
+
+.lr.ph1821:                                       ; preds = %.lr.ph1278.us.preheader1731
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 4
   br label %.lr.ph1278.us.a
 
-.lr.ph1278.us.a:                                  ; preds = %.lr.ph1278.us.preheader, %bb.t
-  %.06121276.us1311 = phi ptr [ %11, %bb.t ], [ %i.bu, %.lr.ph1278.us.preheader ] ; 2 uses
-  %.16181275.us = phi i32 [ %.3620.us, %bb.t ], [ %.06171307.us, %.lr.ph1278.us.preheader ] ; 4 uses
-  %.16221274.us = phi i32 [ %.2623.us, %bb.t ], [ %.06211306.us, %.lr.ph1278.us.preheader ] ; 5 uses
-  %.26901273.us1312 = phi i32 [ %i.cg, %bb.t ], [ %.16891305.us, %.lr.ph1278.us.preheader ] ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %.06121276.us1311, i64 4 ; 2 uses
-  %.not780.us1313.not = icmp ugt ptr %11, %i.o
-  br i1 %.not780.us1313.not, label %.critedge, label %12
+.lr.ph1278.us.preheader.split.us:                 ; preds = %.lr.ph1278.us.preheader
+  br i1 %.not780.us1313.not.us, label %.critedge, label %13
 
-12:                                               ; preds = %.lr.ph1278.us.a
-  %.0612.val.us1314 = load i32, ptr %.06121276.us1311, align 1 ; 2 uses
+13:                                               ; preds = %.lr.ph1278.us.preheader.split.us
+  %.0612.val.us1314.us = load i32, ptr %11, align 1
+  %.not781.us1315.us = icmp eq i32 %.0612.val.us1314.us, 0
+  br i1 %.not781.us1315.us, label %.critedge7.us, label %.critedge
+
+.lr.ph1278.us.a:                                  ; preds = %.lr.ph1821, %bb.t
+  %.06121276.us1311 = phi ptr [ %12, %.lr.ph1821 ], [ %14, %bb.t ] ; 2 uses
+  %.16181275.us = phi i32 [ %.16891305.us, %.lr.ph1821 ], [ %i.cg, %bb.t ] ; 2 uses
+  %.16221274.us = phi i32 [ %.06211306.us, %.lr.ph1821 ], [ %.2623.us, %bb.t ] ; 5 uses
+  %.26901273.us1312 = phi i32 [ %.06171307.us, %.lr.ph1821 ], [ %.3620.us, %bb.t ] ; 4 uses
+  %.06121276.us13111817 = phi ptr [ %11, %.lr.ph1821 ], [ %.06121276.us1311, %bb.t ]
+  %.0612.val.us1314 = load i32, ptr %.06121276.us13111817, align 1 ; 2 uses
   %.not781.us1315 = icmp eq i32 %.0612.val.us1314, 0
   br i1 %.not781.us1315, label %.critedge7.us, label %bb.q
 
-bb.q:                                             ; preds = %12
+bb.q:                                             ; preds = %.lr.ph1278.us.a
   %i.bv = icmp sgt i32 %.0612.val.us1314, -1
   br i1 %i.bv, label %bb.r, label %bb.t
 
 bb.r:                                             ; preds = %bb.q
-  %i.bw = add nsw i32 %.16181275.us, -1
-  %i.bx = icmp slt i32 %.16181275.us, 1
+  %i.bw = add nsw i32 %.26901273.us1312, -1
+  %i.bx = icmp slt i32 %.26901273.us1312, 1
   br i1 %i.bx, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
@@ -305,7 +320,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   %.2623.us = phi i32 [ %i.by, %bb.s ], [ %.16221274.us, %bb.r ], [ %.16221274.us, %bb.q ] ; 2 uses
-  %.3620.us = phi i32 [ %i.bz, %bb.s ], [ %i.bw, %bb.r ], [ %.16181275.us, %bb.q ]
+  %.3620.us = phi i32 [ %i.bz, %bb.s ], [ %i.bw, %bb.r ], [ %.26901273.us1312, %bb.q ]
   %.0611.us = phi i32 [ %.16221274.us, %bb.s ], [ -1074785481, %bb.r ], [ -1074785481, %bb.q ] ; 2 uses
   %i.ca = load i32, ptr %i.bq, align 4, !tbaa !8
   %i.cb = add i32 %i.ca, %5
@@ -313,55 +328,114 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   %i.cd = sext i1 %i.cc to i32
   %i.ce = icmp ult i32 %.0611.us, %.2623.us
   %i.cf = sext i1 %i.ce to i32
-  %spec.select.us1316 = add i32 %.26901273.us1312, %i.cf
+  %spec.select.us1316 = add i32 %.16181275.us, %i.cf
   %.4692.us1317 = add i32 %spec.select.us1316, %i.cd ; 2 uses
   %i.cg = tail call i32 @llvm.fshl.i32(i32 %.4692.us1317, i32 %.4692.us1317, i32 29)
-  br i1 %.not779.us1318, label %.critedge, label %.lr.ph1278.us.a, !llvm.loop !16
+  %14 = getelementptr inbounds nuw i8, ptr %.06121276.us1311, i64 4 ; 2 uses
+  %.not780.us1313.not = icmp ugt ptr %14, %i.o
+  br i1 %.not780.us1313.not, label %.critedge, label %.lr.ph1278.us.a
 
-.critedge7.us:                                    ; preds = %12
+.critedge7.us:                                    ; preds = %.lr.ph1278.us.a, %13
+  %.us-phi = phi i32 [ %.16891305.us, %13 ], [ %.16181275.us, %.lr.ph1278.us.a ]
+  %.us-phi1465 = phi i32 [ %.06211306.us, %13 ], [ %.16221274.us, %.lr.ph1278.us.a ]
+  %.us-phi1466 = phi i32 [ %.06171307.us, %13 ], [ %.26901273.us1312, %.lr.ph1278.us.a ]
   br i1 %.not776.us, label %.critedge, label %.lr.ph1309.split.us
 
 .lr.ph1309.split:                                 ; preds = %.lr.ph1309
   %i.ch = icmp ugt i32 %i.bl, -1074785481
   %i.ci = sext i1 %i.ch to i32
   %i.cj = sub nsw i64 4, %i.a
-  %scevgep1466 = getelementptr i8, ptr %0, i64 %i.cj ; 2 uses
+  %scevgep1466 = getelementptr i8, ptr %0, i64 %i.cj ; 3 uses
   %scevgep1468 = getelementptr i8, ptr %scevgep1466, i64 %i.bm
-  %.not776 = icmp ult ptr %scevgep1468, %0
+  %scevgep1474.fr = freeze ptr %scevgep1468
+  %.not776 = icmp ult ptr %scevgep1474.fr, %0
+  %15 = sub nsw i64 %i.bm, %i.a
+  %16 = add nsw i64 %15, 4
+  %.not777.not.us = icmp sgt i64 %16, %i.n        ; 2 uses
+  br i1 %.not776, label %.lr.ph1309.split.split.us, label %.lr.ph1309.split.split
+
+.lr.ph1309.split.split.us:                        ; preds = %.lr.ph1309.split
+  br i1 %.not777.not.us, label %.critedge, label %17
+
+17:                                               ; preds = %.lr.ph1309.split.split.us
+  %.0613.val891.us1477 = load i32, ptr %i.bn, align 1 ; 2 uses
+  %.not778.us1478 = icmp eq i32 %.0613.val891.us1477, 0
+  br i1 %.not778.us1478, label %.critedge.thread, label %18
+
+18:                                               ; preds = %17
+  %19 = sext i32 %.0613.val891.us1477 to i64      ; 3 uses
+  %.not7791272.us1479 = icmp slt i64 %19, %i.a
+  %scevgep1470.us = getelementptr i8, ptr %scevgep1466, i64 %19
+  %scevgep1470.us.fr = freeze ptr %scevgep1470.us
+  %.not779.us.us = icmp ult ptr %scevgep1470.us.fr, %0
+  %or.cond1726 = or i1 %.not7791272.us1479, %.not779.us.us
+  br i1 %or.cond1726, label %.critedge, label %.lr.ph1278.us1480.preheader, !llvm.loop !16
+
+.lr.ph1278.us1480.preheader:                      ; preds = %18
+  %20 = getelementptr inbounds i8, ptr %i.c, i64 %19
   br label %bb.u
 
-bb.u:                                             ; preds = %.lr.ph1309.split, %.critedge7
-  %.06131308 = phi ptr [ %i.bn, %.lr.ph1309.split ], [ %i.ck, %.critedge7 ] ; 2 uses
-  %.16891305 = phi i32 [ %.06881252, %.lr.ph1309.split ], [ %.26901273.us, %.critedge7 ] ; 2 uses
+bb.u:                                             ; preds = %.lr.ph1278.us1480.preheader, %bb.v
+  %.06131308 = phi ptr [ %i.ck, %bb.v ], [ %20, %.lr.ph1278.us1480.preheader ] ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %.06131308, i64 4 ; 2 uses
   %.not777.not.a = icmp ugt ptr %i.ck, %i.o
   br i1 %.not777.not.a, label %.critedge, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %.0613.val891.a = load i32, ptr %.06131308, align 1 ; 2 uses
+  %.0613.val891.a = load i32, ptr %.06131308, align 1
   %.not778.a = icmp eq i32 %.0613.val891.a, 0
-  br i1 %.not778.a, label %.critedge.thread, label %bb.w
+  br i1 %.not778.a, label %.critedge, label %bb.u
 
-bb.w:                                             ; preds = %bb.v
-  %13 = sext i32 %.0613.val891.a to i64           ; 3 uses
-  %.not7791272 = icmp slt i64 %13, %i.a
-  br i1 %.not7791272, label %.critedge, label %.lr.ph1278.preheader.a
+.lr.ph1309.split.split:                           ; preds = %.lr.ph1309.split
+  br i1 %.not777.not.us, label %.critedge, label %.lr.ph1829
+
+.lr.ph1829:                                       ; preds = %.lr.ph1309.split.split
+  %21 = getelementptr inbounds nuw i8, ptr %i.bn, i64 4
+  %invariant.op2014 = sub i64 4, %i.a
+  br label %bb.w
+
+bb.w:                                             ; preds = %.lr.ph1829, %.critedge7
+  %22 = phi ptr [ %21, %.lr.ph1829 ], [ %28, %.critedge7 ] ; 2 uses
+  %.168913051828 = phi i32 [ %.06881252, %.lr.ph1829 ], [ %.2690.lcssa, %.critedge7 ] ; 3 uses
+  %.061313081827 = phi ptr [ %i.bn, %.lr.ph1829 ], [ %22, %.critedge7 ]
+  %.0613.val891 = load i32, ptr %.061313081827, align 1 ; 2 uses
+  %.not778 = icmp eq i32 %.0613.val891, 0
+  br i1 %.not778, label %.critedge.thread, label %.lr.ph1278.preheader.a
 
 .lr.ph1278.preheader.a:                           ; preds = %bb.w
-  %14 = getelementptr inbounds i8, ptr %i.c, i64 %13
-  %scevgep1467 = getelementptr i8, ptr %scevgep1466, i64 %13
-  %.not779.us = icmp ult ptr %scevgep1467, %0
-  br label %.lr.ph1278.a
+  %23 = sext i32 %.0613.val891 to i64             ; 4 uses
+  %scevgep1467 = getelementptr inbounds i8, ptr %i.c, i64 %23 ; 3 uses
+  %.not7791272 = icmp slt i64 %23, %i.a
+  br i1 %.not7791272, label %.critedge, label %.lr.ph1278.a
 
-.lr.ph1278.a:                                     ; preds = %.lr.ph1278.preheader.a, %bb.y
-  %.06121276.us = phi ptr [ %15, %bb.y ], [ %14, %.lr.ph1278.preheader.a ] ; 2 uses
-  %.26901273.us = phi i32 [ %i.cp, %bb.y ], [ %.16891305, %.lr.ph1278.preheader.a ] ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %.06121276.us, i64 4 ; 2 uses
-  %.not780.us.not = icmp ugt ptr %15, %i.o
-  br i1 %.not780.us.not, label %.critedge, label %bb.x
+.lr.ph1278.a:                                     ; preds = %.lr.ph1278.preheader.a
+  %scevgep1470 = getelementptr i8, ptr %scevgep1466, i64 %23
+  %scevgep1470.fr = freeze ptr %scevgep1470
+  %.not779.us = icmp ult ptr %scevgep1470.fr, %0
+  %.reass1721.reass = add i64 %23, %invariant.op2014
+  %.not780.us.not.us = icmp sgt i64 %.reass1721.reass, %i.n ; 2 uses
+  br i1 %.not779.us, label %.lr.ph1278.preheader.split.us, label %.lr.ph1278.preheader1728, !llvm.loop !16
 
-bb.x:                                             ; preds = %.lr.ph1278.a
-  %.0612.val.us = load i32, ptr %.06121276.us, align 1
+.lr.ph1278.preheader1728:                         ; preds = %.lr.ph1278.a
+  br i1 %.not780.us.not.us, label %.critedge, label %.lr.ph1825
+
+.lr.ph1825:                                       ; preds = %.lr.ph1278.preheader1728
+  %24 = getelementptr inbounds nuw i8, ptr %scevgep1467, i64 4
+  br label %bb.x
+
+.lr.ph1278.preheader.split.us:                    ; preds = %.lr.ph1278.a
+  br i1 %.not780.us.not.us, label %.critedge, label %25
+
+25:                                               ; preds = %.lr.ph1278.preheader.split.us
+  %.0612.val.us.us = load i32, ptr %scevgep1467, align 1
+  %.not781.us.us = icmp eq i32 %.0612.val.us.us, 0
+  br i1 %.not781.us.us, label %.critedge7, label %.critedge
+
+bb.x:                                             ; preds = %.lr.ph1825, %bb.y
+  %26 = phi ptr [ %24, %.lr.ph1825 ], [ %27, %bb.y ] ; 2 uses
+  %.26901273.us1824 = phi i32 [ %.168913051828, %.lr.ph1825 ], [ %i.cp, %bb.y ] ; 2 uses
+  %.06121276.us1823 = phi ptr [ %scevgep1467, %.lr.ph1825 ], [ %26, %bb.y ]
+  %.0612.val.us = load i32, ptr %.06121276.us1823, align 1
   %.not781.us = icmp eq i32 %.0612.val.us, 0
   br i1 %.not781.us, label %.critedge7, label %bb.y
 
@@ -370,21 +444,26 @@ bb.y:                                             ; preds = %bb.x
   %i.cm = add i32 %i.cl, %5
   %i.cn = icmp ult i32 %i.cm, -1074785481
   %i.co = sext i1 %i.cn to i32
-  %spec.select.us = add i32 %.26901273.us, %i.ci
+  %spec.select.us = add i32 %.26901273.us1824, %i.ci
   %.4692.us = add i32 %spec.select.us, %i.co      ; 2 uses
   %i.cp = tail call i32 @llvm.fshl.i32(i32 %.4692.us, i32 %.4692.us, i32 29)
-  br i1 %.not779.us, label %.critedge, label %.lr.ph1278.a, !llvm.loop !16
+  %27 = getelementptr inbounds nuw i8, ptr %26, i64 4 ; 2 uses
+  %.not780.us.not = icmp ugt ptr %27, %i.o
+  br i1 %.not780.us.not, label %.critedge, label %bb.x
 
-.critedge7:                                       ; preds = %bb.x
-  br i1 %.not776, label %.critedge, label %bb.u
+.critedge7:                                       ; preds = %bb.x, %25
+  %.2690.lcssa = phi i32 [ %.168913051828, %25 ], [ %.26901273.us1824, %bb.x ]
+  %28 = getelementptr inbounds nuw i8, ptr %22, i64 4 ; 2 uses
+  %.not777.not = icmp ugt ptr %28, %i.o
+  br i1 %.not777.not, label %.critedge, label %bb.w
 
-.critedge.thread:                                 ; preds = %bb.o, %bb.v, %bb.n
-  %.6694992 = phi i32 [ %.06881252, %bb.n ], [ %.16891305, %bb.v ], [ %.16891305.us, %bb.o ]
+.critedge.thread:                                 ; preds = %bb.o, %bb.w, %17, %bb.n
+  %.6694992 = phi i32 [ %.06881252, %bb.n ], [ %.168913051828, %bb.w ], [ %.06881252, %17 ], [ %.16891305.us, %bb.o ]
   %i.cq = add i32 %.6694992, %i.bk                ; 2 uses
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str, i32 noundef %i.cq) #6
   br label %bb.z
 
-.critedge:                                        ; preds = %bb.p, %.lr.ph1309.split.us, %.critedge7.us, %bb.t, %.lr.ph1278.us.a, %bb.w, %bb.u, %.critedge7, %.lr.ph1278.a, %bb.y, %.preheader
+.critedge:                                        ; preds = %.lr.ph1278.us.preheader.split.us, %bb.p, %.lr.ph1309.split.us, %.critedge7.us, %13, %.lr.ph1278.us.preheader1731, %bb.t, %.critedge7, %.lr.ph1278.preheader.a, %.lr.ph1278.preheader.split.us, %25, %.lr.ph1278.preheader1728, %bb.y, %bb.v, %bb.u, %.lr.ph1309.split.split, %18, %.lr.ph1309.split.split.us, %.preheader
   %i.cr = load i32, ptr %.06551257, align 4, !tbaa !8 ; 2 uses
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.1, i32 noundef %i.cr) #6
   br label %bb.z

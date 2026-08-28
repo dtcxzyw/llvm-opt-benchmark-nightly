@@ -188,7 +188,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.bh = phi i32 [ %i.bf, %bb.d ], [ 0, %bb.c ]  ; 2 uses
   %i.bi = phi i32 [ %i.bg, %bb.d ], [ 0, %bb.c ]  ; 2 uses
   %i.bj = ashr i32 %i.aa, %i.bh                   ; 2 uses
-  %i.bk = sub nsw i32 0, %i.bj                    ; 17 uses
+  %i.bk = sub nsw i32 0, %i.bj                    ; 16 uses
   %i.bl = ashr i32 %i.ab, %i.bi
   %i.bm = sub nsw i32 0, %i.bl                    ; 6 uses
   %i.bn = trunc nuw nsw i64 %indvars.iv to i32
@@ -221,7 +221,7 @@ bb.f:                                             ; preds = %bb.e
   %i.cf = load i32, ptr %i.ak, align 8, !tbaa !59
   %i.cg = sub nsw i32 0, %i.cf
   %i.ch = ashr i32 %i.cg, %i.bh                   ; 2 uses
-  %i.ci = sub nsw i32 0, %i.ch                    ; 3 uses
+  %i.ci = sub nsw i32 0, %i.ch                    ; 2 uses
   %i.cj = load i32, ptr %i.al, align 4, !tbaa !60
   %i.ck = sub nsw i32 0, %i.cj
   %i.cl = ashr i32 %i.ck, %i.bi                   ; 2 uses
@@ -233,7 +233,7 @@ bb.f:                                             ; preds = %bb.e
 
 .preheader265.lr.ph.i:                            ; preds = %bb.f
   %i.cq = icmp slt i32 %i.co, 1
-  %i.cr = sext i32 %i.bk to i64                   ; 5 uses
+  %i.cr = sext i32 %i.bk to i64                   ; 6 uses
   %i.cs = sext i32 %i.bm to i64                   ; 2 uses
   %i.ct = and i32 %i.ch, %i.cl
   %i.cu = icmp sgt i32 %i.ct, -1
@@ -241,8 +241,10 @@ bb.f:                                             ; preds = %bb.e
   br i1 %brmerge.i, label %._crit_edge298.i, label %.preheader265.us.us.us.preheader.i
 
 .preheader265.us.us.us.preheader.i:               ; preds = %.preheader265.lr.ph.i
+  %2 = zext nneg i32 %i.ci to i64                 ; 2 uses
   %i.cv = zext nneg i32 %i.cm to i64              ; 2 uses
   %wide.trip.count356.i.a = zext nneg i32 %i.cn to i64
+  %wide.trip.count356.i = zext nneg i32 %i.co to i64
   br label %.preheader265.us.us.us.i
 
 .preheader265.us.us.us.i:                         ; preds = %._crit_edge.split.us.split.us.us.us.us.i, %.preheader265.us.us.us.preheader.i
@@ -252,9 +254,10 @@ bb.f:                                             ; preds = %bb.e
   br label %.preheader264.us.us.us.us.us.i
 
 .preheader264.us.us.us.us.us.i:                   ; preds = %bb.h, %.preheader265.us.us.us.i
-  %.1289.us.us.us.us.us.i = phi i32 [ %.0192297.us.us.us.i, %.preheader265.us.us.us.i ], [ %.2.us.us.us.us.us.i, %bb.h ] ; 3 uses
-  %.0221288.us.us.us.us.us.i = phi i32 [ 0, %.preheader265.us.us.us.i ], [ %3, %bb.h ] ; 2 uses
-  %2 = mul nuw nsw i32 %.0221288.us.us.us.us.us.i, %i.ci
+  %indvars.iv353.i = phi i64 [ %indvars.iv.next354.i, %bb.h ], [ 0, %.preheader265.us.us.us.i ] ; 2 uses
+  %.1289.us.us.us.us.us.i = phi i32 [ %.2.us.us.us.us.us.i, %bb.h ], [ %.0192297.us.us.us.i, %.preheader265.us.us.us.i ] ; 3 uses
+  %3 = mul nuw nsw i64 %indvars.iv353.i, %2       ; 2 uses
+  %4 = trunc nsw i64 %3 to i32
   br label %.preheader263.us.us.us.us.us.us.i
 
 bb.g:                                             ; preds = %._crit_edge282.split.us.us.us.us.us.us.i
@@ -269,34 +272,36 @@ bb.g:                                             ; preds = %._crit_edge282.spli
 
 bb.h:                                             ; preds = %._crit_edge282.split.us.us.us.us.us.us.i, %bb.g
   %.2.us.us.us.us.us.i = phi i32 [ %i.dc, %bb.g ], [ %.1289.us.us.us.us.us.i, %._crit_edge282.split.us.us.us.us.us.us.i ] ; 3 uses
-  %3 = add nuw nsw i32 %.0221288.us.us.us.us.us.i, 1 ; 2 uses
-  %exitcond352.not.i.a = icmp eq i32 %3, %i.co
+  %indvars.iv.next354.i = add nuw nsw i64 %indvars.iv353.i, 1 ; 2 uses
+  %exitcond352.not.i.a = icmp eq i64 %indvars.iv.next354.i, %wide.trip.count356.i
   br i1 %exitcond352.not.i.a, label %._crit_edge.split.us.split.us.us.us.us.i, label %.preheader264.us.us.us.us.us.i, !llvm.loop !61
 
 .preheader263.us.us.us.us.us.us.i:                ; preds = %._crit_edge.us.us.us.us.us.us.i, %.preheader264.us.us.us.us.us.i
   %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i.a, %._crit_edge.us.us.us.us.us.us.i ], [ 0, %.preheader264.us.us.us.us.us.i ] ; 2 uses
   %.0213280.us.us.us.us.us.us.i = phi i32 [ %.3216.us.us.us.us.us.us.i, %._crit_edge.us.us.us.us.us.us.i ], [ 0, %.preheader264.us.us.us.us.us.i ]
   %.0217279.us.us.us.us.us.us.i = phi double [ %.3220.us.us.us.us.us.us.i, %._crit_edge.us.us.us.us.us.us.i ], [ 0.000000e+00, %.preheader264.us.us.us.us.us.i ]
-  %i.dd = add nuw nsw i64 %indvars.iv.i.a, %i.cw  ; 3 uses
-  %4 = trunc nuw i64 %i.dd to i32                 ; 2 uses
-  %5 = mul nsw i32 %i.bk, %4
+  %i.dd = add nuw nsw i64 %indvars.iv.i.a, %i.cw  ; 4 uses
+  %5 = mul nsw i64 %i.dd, %i.cr                   ; 3 uses
+  %invariant.gep.i = getelementptr i8, ptr %i.k, i64 %5
+  %invariant.gep400.i = getelementptr i8, ptr %i.q, i64 %5
+  %invariant.gep402.i = getelementptr i8, ptr %i.m, i64 %5
+  %6 = trunc nsw i64 %i.dd to i32
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.q, %.preheader263.us.us.us.us.us.us.i
-  %.0211277.us.us.us.us.us.us.i = phi i32 [ 0, %.preheader263.us.us.us.us.us.us.i ], [ %10, %bb.q ] ; 2 uses
-  %.1214276.us.us.us.us.us.us.i = phi i32 [ %.0213280.us.us.us.us.us.us.i, %.preheader263.us.us.us.us.us.us.i ], [ %.3216.us.us.us.us.us.us.i, %bb.q ] ; 2 uses
-  %.1218275.us.us.us.us.us.us.i = phi double [ %.0217279.us.us.us.us.us.us.i, %.preheader263.us.us.us.us.us.us.i ], [ %.3220.us.us.us.us.us.us.i, %bb.q ] ; 3 uses
-  %6 = add nuw nsw i32 %.0211277.us.us.us.us.us.us.i, %2
-  %.fr335.i = freeze i32 %6                       ; 4 uses
-  %i.de = add nsw i32 %.fr335.i, %5
-  %7 = sext i32 %i.de to i64                      ; 3 uses
-  %i.df = getelementptr inbounds i8, ptr %i.k, i64 %7
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.q ], [ 0, %.preheader263.us.us.us.us.us.us.i ] ; 3 uses
+  %.1214276.us.us.us.us.us.us.i = phi i32 [ %.3216.us.us.us.us.us.us.i, %bb.q ], [ %.0213280.us.us.us.us.us.us.i, %.preheader263.us.us.us.us.us.us.i ] ; 2 uses
+  %.1218275.us.us.us.us.us.us.i = phi double [ %.3220.us.us.us.us.us.us.i, %bb.q ], [ %.0217279.us.us.us.us.us.us.i, %.preheader263.us.us.us.us.us.us.i ] ; 3 uses
+  %indvars347.i = trunc i64 %indvars.iv.i to i32
+  %7 = add nuw nsw i64 %indvars.iv.i, %3          ; 6 uses
+  %i.de = add nuw nsw i32 %indvars347.i, %4
+  %i.df = getelementptr i8, ptr %invariant.gep.i, i64 %7
   %i.dg = load i8, ptr %i.df, align 1, !tbaa !63
   %.not236.us.us.us.us.us.us.i = icmp eq i8 %i.dg, 0
   br i1 %.not236.us.us.us.us.us.us.i, label %bb.q, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.dh = getelementptr inbounds i8, ptr %i.q, i64 %7
+  %i.dh = getelementptr i8, ptr %invariant.gep400.i, i64 %7
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !63  ; 4 uses
   %.val.us.us.us.us.us.us.i = load i32, ptr %i.am, align 8, !tbaa !64 ; 4 uses
   %i.dj = icmp ult i8 %i.di, 4
@@ -315,11 +320,12 @@ switch.lookup:                                    ; preds = %bb.j
 bb.k:                                             ; preds = %bb.j, %switch.lookup
   %.089.i.us.us.us.us.us.us.i = phi i32 [ %switch.ext, %switch.lookup ], [ 1, %bb.j ] ; 3 uses
   %.088.i.us.us.us.us.us.us.i = phi i32 [ %switch.load180, %switch.lookup ], [ 1, %bb.j ] ; 2 uses
-  %i.dm = getelementptr inbounds i8, ptr %i.m, i64 %7
+  %i.dm = getelementptr i8, ptr %invariant.gep402.i, i64 %7
   %i.dn = load i8, ptr %i.dm, align 1, !tbaa !63
-  %.neg = sub i32 %.088.i.us.us.us.us.us.us.i, %4
+  %.neg = sub i32 %.088.i.us.us.us.us.us.us.i, %6
   %i.do = mul i32 %.neg, %i.bj
-  %i.dp = sub i32 %.fr335.i, %.089.i.us.us.us.us.us.us.i ; 2 uses
+  %8 = trunc nsw i64 %7 to i32
+  %i.dp = sub nsw i32 %8, %.089.i.us.us.us.us.us.us.i ; 2 uses
   %i.dq = add i32 %i.do, %i.dp
   %i.dr = sext i32 %i.dq to i64
   %i.ds = getelementptr inbounds i8, ptr %i.m, i64 %i.dr
@@ -330,21 +336,20 @@ bb.k:                                             ; preds = %bb.j, %switch.looku
   br i1 %i.dw, label %.lr.ph.preheader.i.us.us.us.us.us.us.i, label %._crit_edge16.i.us.us.us.us.us.us.i
 
 .lr.ph.preheader.i.us.us.us.us.us.us.i:           ; preds = %bb.k
-  %8 = zext nneg i32 %.089.i.us.us.us.us.us.us.i to i64 ; 4 uses
-  %i.dx = zext nneg i32 %.fr335.i to i64          ; 2 uses
+  %9 = icmp slt i32 %i.dp, %i.bk
+  %i.dx = zext nneg i32 %.089.i.us.us.us.us.us.us.i to i64 ; 4 uses
   %i.dy = sext i32 %.088.i.us.us.us.us.us.us.i to i64 ; 4 uses
   %wide.trip.count.i.us.us.us.us.us.us.i = zext nneg i32 %.val.us.us.us.us.us.us.i to i64 ; 2 uses
-  %9 = icmp slt i32 %i.dp, %i.bk
   br i1 %9, label %.lr.ph.i.us.us.us.us.us.us.i, label %edge_width.exit.us.us.us.us.us.us.i
 
 .lr.ph.i.us.us.us.us.us.us.i:                     ; preds = %.lr.ph.preheader.i.us.us.us.us.us.us.i, %bb.n
   %indvars.iv.i.us.us.us.us.us.us.i = phi i64 [ %indvars.iv.next.i.us.us.us.us.us.us.i, %bb.n ], [ 0, %.lr.ph.preheader.i.us.us.us.us.us.us.i ] ; 4 uses
-  %i.dz = mul nuw nsw i64 %indvars.iv.i.us.us.us.us.us.us.i, %8
-  %i.ea = sub nsw i64 %i.dx, %i.dz                ; 2 uses
+  %i.dz = mul nuw nsw i64 %indvars.iv.i.us.us.us.us.us.us.i, %i.dx
+  %i.ea = sub nsw i64 %7, %i.dz                   ; 2 uses
   %i.eb = mul nsw i64 %indvars.iv.i.us.us.us.us.us.us.i, %i.dy
   %i.ec = sub nsw i64 %i.dd, %i.eb                ; 2 uses
   %i.ed = mul nsw i64 %i.ec, %i.cr
-  %i.ee = sub nsw i64 %i.ea, %8                   ; 2 uses
+  %i.ee = sub nsw i64 %i.ea, %i.dx                ; 2 uses
   %i.ef = sub nsw i64 %i.ec, %i.dy                ; 3 uses
   %i.eg = mul nsw i64 %i.ef, %i.cr
   %i.eh = icmp slt i64 %i.ee, 0
@@ -382,17 +387,17 @@ bb.n:                                             ; preds = %bb.m
 ._crit_edge.i.us.us.us.us.us.us.i:                ; preds = %bb.n, %._crit_edge.split.loop.exit29.i.us.us.us.us.us.us.i
   %.0.lcssa.ph.i.us.us.us.us.us.us.i = phi i32 [ %i.ev, %._crit_edge.split.loop.exit29.i.us.us.us.us.us.us.i ], [ %.val.us.us.us.us.us.us.i, %bb.n ]
   %i.ew = uitofp nneg i32 %.0.lcssa.ph.i.us.us.us.us.us.us.i to float
-  %i.ex = add i32 %.089.i.us.us.us.us.us.us.i, %.fr335.i
+  %i.ex = add nuw i32 %i.de, %.089.i.us.us.us.us.us.us.i
   %i.ey = icmp slt i32 %i.ex, 0
   br i1 %i.ey, label %edge_width.exit.us.us.us.us.us.us.i, label %.lr.ph15.i.us.us.us.us.us.us.i
 
 .lr.ph15.i.us.us.us.us.us.us.i:                   ; preds = %._crit_edge.i.us.us.us.us.us.us.i, %bb.p
   %indvars.iv22.i.us.us.us.us.us.us.i = phi i64 [ %indvars.iv.next23.i.us.us.us.us.us.us.i, %bb.p ], [ 0, %._crit_edge.i.us.us.us.us.us.us.i ] ; 4 uses
-  %i.ez = mul nuw nsw i64 %indvars.iv22.i.us.us.us.us.us.us.i, %8
-  %i.fa = add nuw nsw i64 %i.ez, %i.dx            ; 2 uses
+  %i.ez = mul nuw nsw i64 %indvars.iv22.i.us.us.us.us.us.us.i, %i.dx
+  %i.fa = add nuw nsw i64 %i.ez, %7               ; 2 uses
   %i.fb = mul nsw i64 %indvars.iv22.i.us.us.us.us.us.us.i, %i.dy
   %i.fc = add nsw i64 %i.fb, %i.dd                ; 2 uses
-  %i.fd = add nuw nsw i64 %i.fa, %8               ; 2 uses
+  %i.fd = add nuw nsw i64 %i.fa, %i.dx            ; 2 uses
   %i.fe = add nsw i64 %i.fc, %i.dy                ; 3 uses
   %i.ff = icmp slt i64 %i.fd, %i.cr
   %i.fg = icmp sgt i64 %i.fe, -1
@@ -443,7 +448,7 @@ bb.p:                                             ; preds = %bb.o
   br label %edge_width.exit.us.us.us.us.us.us.i
 
 edge_width.exit.us.us.us.us.us.us.i:              ; preds = %bb.l, %.lr.ph.i.us.us.us.us.us.us.i, %.lr.ph15.i.us.us.us.us.us.us.i, %._crit_edge16.i.us.us.us.us.us.us.i, %._crit_edge.i.us.us.us.us.us.us.i, %.lr.ph.preheader.i.us.us.us.us.us.us.i
-  %.091.i.us.us.us.us.us.us.i = phi double [ %i.gb, %._crit_edge16.i.us.us.us.us.us.us.i ], [ 0.000000e+00, %.lr.ph15.i.us.us.us.us.us.us.i ], [ 0.000000e+00, %._crit_edge.i.us.us.us.us.us.us.i ], [ 0.000000e+00, %.lr.ph.preheader.i.us.us.us.us.us.us.i ], [ 0.000000e+00, %.lr.ph.i.us.us.us.us.us.us.i ], [ 0.000000e+00, %bb.l ] ; 2 uses
+  %.091.i.us.us.us.us.us.us.i = phi double [ %i.gb, %._crit_edge16.i.us.us.us.us.us.us.i ], [ 0.000000e+00, %._crit_edge.i.us.us.us.us.us.us.i ], [ 0.000000e+00, %.lr.ph15.i.us.us.us.us.us.us.i ], [ 0.000000e+00, %.lr.ph.preheader.i.us.us.us.us.us.us.i ], [ 0.000000e+00, %.lr.ph.i.us.us.us.us.us.us.i ], [ 0.000000e+00, %bb.l ] ; 2 uses
   %i.gc = fcmp nsz ogt double %.091.i.us.us.us.us.us.us.i, 1.000000e-03 ; 2 uses
   %i.gd = fadd nsz double %.1218275.us.us.us.us.us.us.i, %.091.i.us.us.us.us.us.us.i
   %.2219.us.us.us.us.us.us.i = select nsz i1 %i.gc, double %i.gd, double %.1218275.us.us.us.us.us.us.i
@@ -454,8 +459,8 @@ edge_width.exit.us.us.us.us.us.us.i:              ; preds = %bb.l, %.lr.ph.i.us.
 bb.q:                                             ; preds = %edge_width.exit.us.us.us.us.us.us.i, %bb.i
   %.3220.us.us.us.us.us.us.i = phi nsz double [ %.2219.us.us.us.us.us.us.i, %edge_width.exit.us.us.us.us.us.us.i ], [ %.1218275.us.us.us.us.us.us.i, %bb.i ] ; 4 uses
   %.3216.us.us.us.us.us.us.i = phi i32 [ %.2215.us.us.us.us.us.us.i, %edge_width.exit.us.us.us.us.us.us.i ], [ %.1214276.us.us.us.us.us.us.i, %bb.i ] ; 4 uses
-  %10 = add nuw nsw i32 %.0211277.us.us.us.us.us.us.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i32 %10, %i.ci
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %2
   br i1 %exitcond.not.i, label %._crit_edge.us.us.us.us.us.us.i, label %bb.i, !llvm.loop !67
 
 ._crit_edge.us.us.us.us.us.us.i:                  ; preds = %bb.q
