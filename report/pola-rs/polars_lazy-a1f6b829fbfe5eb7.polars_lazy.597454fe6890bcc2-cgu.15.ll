@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.l, label %bb.d, label %bb.e, !dbg !10983
 
 bb.c:                                             ; preds = %bb.a, %bb.f
-  %.sroa.3.0 = phi i64 [ %.sroa.530.24.insert.ext, %bb.f ], [ undef, %bb.a ]
+  %.sroa.3.sroa.0.0 = phi i32 [ %i.q, %bb.f ], [ undef, %bb.a ]
   %.sroa.2.0 = phi i8 [ %.sroa.434.0.copyload, %bb.f ], [ -38, %bb.a ], !dbg !10986
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !10987
   %i.n = load i64, ptr %i.m, align 8, !dbg !10987, !range !10991, !noundef !14
@@ -224,7 +224,6 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !11001
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 120, !dbg !10969
   %i.q = load i32, ptr %i.p, align 8, !dbg !10969, !noundef !14
-  %.sroa.530.24.insert.ext = zext i32 %i.q to i64, !dbg !10969
   br label %bb.c, !dbg !11002
 
 bb.g:                                             ; preds = %bb.c
@@ -278,7 +277,7 @@ bb.h:                                             ; preds = %bb.c, %bb.g
   %.sroa.2.0..sroa_idx1 = getelementptr inbounds nuw i8, ptr %i.c, i64 255, !dbg !11016
   store i8 %.sroa.2.0, ptr %.sroa.2.0..sroa_idx1, align 1, !dbg !11016
   %.sroa.3.0..sroa_idx3 = getelementptr inbounds nuw i8, ptr %i.c, i64 256, !dbg !11016
-  store i64 %.sroa.3.0, ptr %.sroa.3.0..sroa_idx3, align 8, !dbg !11016
+  store i32 %.sroa.3.sroa.0.0, ptr %.sroa.3.0..sroa_idx3, align 8, !dbg !11016
   %i.an = getelementptr inbounds nuw i8, ptr %i.c, i64 168, !dbg !11016
   store i64 %.sroa.06.0, ptr %i.an, align 8, !dbg !11016
   %.sroa.38.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %i.c, i64 176, !dbg !11016

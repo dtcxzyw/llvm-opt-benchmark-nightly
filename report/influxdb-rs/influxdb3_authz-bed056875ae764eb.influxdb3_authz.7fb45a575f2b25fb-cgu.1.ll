@@ -202,7 +202,7 @@ bb.by:                                            ; preds = %bb.bt, %bb.be, %bb.
   br label %.body214
 
 .body214:                                         ; preds = %bb.et, %bb.es, %bb.ei, %bb.eh, %bb.cq, %bb.cb, %bb.cd, %bb.ay, %bb.aj, %bb.al, %bb.u, %bb.f, %bb.h, %bb.dz, %bb.ek, %bb.dg, %bb.de, %bb.by, %bb.ba, %bb.af, %bb.dv, %bb.du, %bb.ds, %bb.dq, %bb.do, %bb.dm, %bb.dk, %bb.dj, %bb.di, %bb.ct, %bb.x, %bb.ac
-  %.pn90.pn = phi { ptr, i32 } [ %i.em, %bb.al ], [ %.pn39.pn.pn.pn, %bb.ay ], [ %i.km, %bb.di ], [ %i.kn, %bb.dj ], [ %i.ko, %bb.dk ], [ %i.kp, %bb.dm ], [ %i.kt, %bb.do ], [ %i.kv, %bb.dq ], [ %i.kz, %bb.ds ], [ %i.ld, %bb.du ], [ %i.le, %bb.dv ], [ %i.jf, %bb.ct ], [ %.pn23.pn.pn.pn.pn, %bb.u ], [ %i.hs, %bb.cb ], [ %.pn69.pn.pn.pn.pn, %bb.cq ], [ %i.ee, %bb.af ], [ %i.bt, %bb.h ], [ %i.mb, %bb.ek ], [ %i.ek, %bb.aj ], [ %i.kh, %bb.de ], [ %i.li, %bb.dz ], [ %i.kl, %bb.dg ], [ %i.do, %bb.ac ], [ %i.mn, %bb.es ], [ %i.hu, %bb.cd ], [ %i.df, %bb.x ], [ %i.lu, %bb.eh ], [ %i.br, %bb.f ], [ %i.fs, %bb.ba ], [ %i.lu, %bb.ei ], [ %.pn59.pn.pn.pn, %bb.by ], [ %i.mn, %bb.et ]
+  %.pn90.pn = phi { ptr, i32 } [ %i.kh, %bb.de ], [ %.pn39.pn.pn.pn, %bb.ay ], [ %i.km, %bb.di ], [ %i.kn, %bb.dj ], [ %i.ko, %bb.dk ], [ %i.kp, %bb.dm ], [ %i.kt, %bb.do ], [ %i.kv, %bb.dq ], [ %i.kz, %bb.ds ], [ %i.ld, %bb.du ], [ %i.le, %bb.dv ], [ %i.jf, %bb.ct ], [ %.pn23.pn.pn.pn.pn, %bb.u ], [ %i.hs, %bb.cb ], [ %.pn69.pn.pn.pn.pn, %bb.cq ], [ %i.ee, %bb.af ], [ %i.bt, %bb.h ], [ %i.mb, %bb.ek ], [ %i.ek, %bb.aj ], [ %i.em, %bb.al ], [ %i.li, %bb.dz ], [ %i.kl, %bb.dg ], [ %i.do, %bb.ac ], [ %i.mn, %bb.es ], [ %i.hu, %bb.cd ], [ %i.df, %bb.x ], [ %i.lu, %bb.eh ], [ %i.br, %bb.f ], [ %i.fs, %bb.ba ], [ %i.lu, %bb.ei ], [ %.pn59.pn.pn.pn, %bb.by ], [ %i.mn, %bb.et ]
   store i8 2, ptr %i.bc, align 8
   resume { ptr, i32 } %.pn90.pn
 
@@ -605,9 +605,9 @@ common.ret:                                       ; preds = %bb.en, %bb.ec, %_RI
   ret void
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsaXLCtUcOqO5_15influxdb3_authz26ResourceAuthorizationErrorENtNtB4_6marker4SendEL_EEEB2r_.exit: ; preds = %bb.b, %bb.bu, %bb.er, %bb.eq, %bb.eg, %bb.ef, %bb.dh, %.split, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtNtCsaXLCtUcOqO5_15influxdb3_authz4role16role_permissions10Permission8containsBA_.exit, %.split323, %.split324, %.split325, %bb.bb, %.thread309, %bb.ao, %bb.au, %.critedge108
-  %.sroa.9.sroa.4.0 = phi i64 [ undef, %bb.dh ], [ %.sroa.9.sroa.4.0.copyload240, %bb.eq ], [ %.sroa.9.sroa.4.0.copyload240, %bb.er ], [ undef, %bb.bu ], [ %.sroa.9.sroa.4.0.copyload239, %bb.eg ], [ undef, %.critedge108 ], [ undef, %bb.bb ], [ undef, %bb.au ], [ undef, %bb.ao ], [ undef, %.thread309 ], [ undef, %.split325 ], [ undef, %.split324 ], [ undef, %.split323 ], [ undef, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtNtCsaXLCtUcOqO5_15influxdb3_authz4role16role_permissions10Permission8containsBA_.exit ], [ undef, %.split ], [ %.sroa.9.sroa.4.0.copyload239, %bb.ef ], [ undef, %bb.b ]
-  %.sroa.9.sroa.0.0 = phi ptr [ undef, %bb.dh ], [ %.sroa.9.sroa.0.0.copyload238, %bb.eq ], [ %.sroa.9.sroa.0.0.copyload238, %bb.er ], [ undef, %bb.bu ], [ %.sroa.9.sroa.0.0.copyload237.a, %bb.eg ], [ undef, %.critedge108 ], [ undef, %bb.bb ], [ undef, %bb.au ], [ undef, %bb.ao ], [ undef, %.thread309 ], [ undef, %.split325 ], [ undef, %.split324 ], [ undef, %.split323 ], [ undef, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtNtCsaXLCtUcOqO5_15influxdb3_authz4role16role_permissions10Permission8containsBA_.exit ], [ undef, %.split ], [ %.sroa.9.sroa.0.0.copyload237.a, %bb.ef ], [ undef, %bb.b ]
-  %.sroa.0.0 = phi i64 [ -1, %bb.dh ], [ %i.me, %bb.eq ], [ %i.me, %bb.er ], [ %., %bb.bu ], [ %i.ll, %bb.eg ], [ -2, %.critedge108 ], [ -1, %bb.bb ], [ -1, %bb.au ], [ -1, %bb.ao ], [ -1, %.thread309 ], [ -1, %.split325 ], [ -1, %.split324 ], [ -1, %.split323 ], [ -1, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtNtCsaXLCtUcOqO5_15influxdb3_authz4role16role_permissions10Permission8containsBA_.exit ], [ -1, %.split ], [ %i.ll, %bb.ef ], [ -1, %bb.b ]
+  %.sroa.9.sroa.4.0 = phi i64 [ undef, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtNtCsaXLCtUcOqO5_15influxdb3_authz4role16role_permissions10Permission8containsBA_.exit ], [ %.sroa.9.sroa.4.0.copyload239, %bb.ef ], [ %.sroa.9.sroa.4.0.copyload239, %bb.eg ], [ undef, %bb.au ], [ undef, %bb.ao ], [ undef, %.thread309 ], [ undef, %bb.bb ], [ undef, %bb.bu ], [ %.sroa.9.sroa.4.0.copyload240, %bb.eq ], [ %.sroa.9.sroa.4.0.copyload240, %bb.er ], [ undef, %.critedge108 ], [ undef, %bb.dh ], [ undef, %.split325 ], [ undef, %.split324 ], [ undef, %.split323 ], [ undef, %.split ], [ undef, %bb.b ]
+  %.sroa.9.sroa.0.0 = phi ptr [ undef, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtNtCsaXLCtUcOqO5_15influxdb3_authz4role16role_permissions10Permission8containsBA_.exit ], [ %.sroa.9.sroa.0.0.copyload237.a, %bb.ef ], [ %.sroa.9.sroa.0.0.copyload237.a, %bb.eg ], [ undef, %bb.au ], [ undef, %bb.ao ], [ undef, %.thread309 ], [ undef, %bb.bb ], [ undef, %bb.bu ], [ %.sroa.9.sroa.0.0.copyload238, %bb.eq ], [ %.sroa.9.sroa.0.0.copyload238, %bb.er ], [ undef, %.critedge108 ], [ undef, %bb.dh ], [ undef, %.split325 ], [ undef, %.split324 ], [ undef, %.split323 ], [ undef, %.split ], [ undef, %bb.b ]
+  %.sroa.0.0 = phi i64 [ -1, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtNtCsaXLCtUcOqO5_15influxdb3_authz4role16role_permissions10Permission8containsBA_.exit ], [ %i.ll, %bb.ef ], [ %i.ll, %bb.eg ], [ -1, %bb.au ], [ -1, %bb.ao ], [ -1, %.thread309 ], [ -1, %bb.bb ], [ %., %bb.bu ], [ %i.me, %bb.eq ], [ %i.me, %bb.er ], [ -2, %.critedge108 ], [ -1, %bb.dh ], [ -1, %.split325 ], [ -1, %.split324 ], [ -1, %.split323 ], [ -1, %.split ], [ -1, %bb.b ]
   store i64 %.sroa.0.0, ptr %0, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.9.sroa.0.0, ptr %.sroa.9.0..sroa_idx, align 8
@@ -1010,7 +1010,6 @@ bb.cq:                                            ; preds = %bb.bl
   %.sroa.094.0.copyload.i.i = load i64, ptr %i.jk, align 8, !noalias !336
   %.sroa.022.0.copyload.i.i = load i64, ptr %i.ev, align 8, !noalias !332 ; 2 uses
   %.sroa.423.sroa.0.0.copyload.i.i = load i64, ptr %i.ew, align 8, !noalias !332
-  %.sroa.715.56.insert.ext.i.i = zext nneg i32 %.sroa.595.0.copyload.i.i to i64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.927, ptr noundef nonnull align 8 dereferenceable(32) %i.ez, i64 32, i1 false)
   store i8 1, ptr %i.es, align 8, !noalias !332
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.2.sroa.0.sroa.3.i.i)
@@ -1018,9 +1017,9 @@ bb.cq:                                            ; preds = %bb.bl
   br i1 %i.jl, label %bb.cu, label %bb.cr
 
 bb.cr:                                            ; preds = %.thread, %bb.cq
-  %.sroa.715.1.i.i46 = phi i64 [ undef, %.thread ], [ %.sroa.715.56.insert.ext.i.i, %bb.cq ]
-  %.sroa.010.1.i.i45 = phi i64 [ -2, %.thread ], [ %.sroa.022.0.copyload.i.i, %bb.cq ] ; 2 uses
-  %.sroa.613.1.i.i44 = phi i64 [ undef, %.thread ], [ %.sroa.094.0.copyload.i.i, %bb.cq ] ; 2 uses
+  %.sroa.715.1.i.i46 = phi i64 [ -2, %.thread ], [ %.sroa.022.0.copyload.i.i, %bb.cq ] ; 2 uses
+  %.sroa.010.1.i.i45 = phi i64 [ undef, %.thread ], [ %.sroa.094.0.copyload.i.i, %bb.cq ] ; 2 uses
+  %.sroa.715.1.i.i47 = phi i32 [ undef, %.thread ], [ %.sroa.595.0.copyload.i.i, %bb.cq ]
   %.sroa.412.sroa.0.0.i.i43 = phi i64 [ -1, %.thread ], [ %.sroa.423.sroa.0.0.copyload.i.i, %bb.cq ] ; 2 uses
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNCINvMs0_CsegCbah0zZ22_7backoffNtBK_7Backoff23retry_some_with_backoffNCNCINvBG_18retry_with_backoffNCNCNvYNtNtCsaXLCtUcOqO5_15influxdb3_authz10authorizer31TokenAuthenticatorAndAuthorizerNtNtCs21s4ZTvHFSd_5authz10authorizer10Authorizer5probe00INCNCB2e_00lEINtNtB4_6result6ResultuNtNtB3F_14iox_authorizer5ErrorEB55_E00B2c_B4v_B4I_B55_E0EB2n_(ptr noundef nonnull align 8 %i.et)
           to label %bb.cv unwind label %bb.cs, !noalias !331
@@ -1052,20 +1051,20 @@ bb.cv:                                            ; preds = %bb.cr
   store i8 1, ptr %i.er, align 8, !noalias !327
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.5, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.927, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.927)
-  %.not.i = icmp eq i64 %.sroa.010.1.i.i45, -2
+  %.not.i = icmp eq i64 %.sroa.715.1.i.i46, -2
   br i1 %.not.i, label %bb.da, label %bb.cw, !prof !395
 
 bb.cw:                                            ; preds = %bb.cv
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !396
-  store i64 %.sroa.010.1.i.i45, ptr %i.a, align 8, !noalias !400
+  store i64 %.sroa.715.1.i.i46, ptr %i.a, align 8, !noalias !400
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   store i64 %.sroa.412.sroa.0.0.i.i43, ptr %.sroa.3.0..sroa_idx, align 8, !noalias !400
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.5, i64 32, i1 false)
   %.sroa.631.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  store i64 %.sroa.613.1.i.i44, ptr %.sroa.631.0..sroa_idx, align 8, !noalias !400
+  store i64 %.sroa.010.1.i.i45, ptr %.sroa.631.0..sroa_idx, align 8, !noalias !400
   %.sroa.732.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  store i64 %.sroa.715.1.i.i46, ptr %.sroa.732.0..sroa_idx, align 8, !noalias !400
+  store i32 %.sroa.715.1.i.i47, ptr %.sroa.732.0..sroa_idx, align 8, !noalias !400
   invoke void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @37, i64 noundef 13, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @40, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @38) #20
           to label %bb.cy unwind label %bb.cx, !noalias !396
 
@@ -1136,7 +1135,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtCsegCbah0zZ22_7backoff7BackoffECsaXLCt
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.2.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.5, i64 32, i1 false)
   %.sroa.334.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i64 %.sroa.613.1.i.i44, ptr %.sroa.334.0..sroa_idx, align 8
+  store i64 %.sroa.010.1.i.i45, ptr %.sroa.334.0..sroa_idx, align 8
   br label %common.ret
 
 bb.dh:                                            ; preds = %bb.f, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNCINvMs0_CsegCbah0zZ22_7backoffNtBK_7Backoff18retry_with_backoffNCNCNvYNtNtCsaXLCtUcOqO5_15influxdb3_authz10authorizer31TokenAuthenticatorAndAuthorizerNtNtCs21s4ZTvHFSd_5authz10authorizer10Authorizer5probe00INCNCB1F_00lEINtNtB4_6result6ResultuNtNtB36_14iox_authorizer5ErrorEB4w_E0EB1O_.exit

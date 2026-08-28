@@ -202,10 +202,10 @@ bb.a:
   %i.bw = alloca [48 x i8], align 8               ; 2 uses
   %i.bx = alloca [24 x i8], align 8               ; 2 uses
   %i.by = alloca [32 x i8], align 8               ; 2 uses
-  %i.bz = alloca [40 x i8], align 8               ; 27 uses
+  %i.bz = alloca [40 x i8], align 8               ; 28 uses
   %i.ca = alloca [40 x i8], align 8               ; 5 uses
   %i.cb = alloca [32 x i8], align 8               ; 2 uses
-  %i.cc = alloca [40 x i8], align 8               ; 11 uses
+  %i.cc = alloca [40 x i8], align 8               ; 12 uses
   %i.cd = alloca [40 x i8], align 8               ; 5 uses
   %i.ce = alloca [16 x i8], align 8               ; 3 uses
   store ptr %1, ptr %i.ce, align 8
@@ -379,15 +379,14 @@ bb.r:                                             ; preds = %bb.o
   %i.dp = load i32, ptr %i.bo, align 4, !noalias !25
   %i.dq = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dq, ptr noundef nonnull align 8 dereferenceable(16) %i.bg, i64 16, i1 false)
-  %.sroa.29.0.insert.ext.i = zext i8 %i.dm to i16
-  %.sroa.29.0.insert.shift.i = shl nuw i16 %.sroa.29.0.insert.ext.i, 8
-  %.sroa.08.0.insert.insert.i = or disjoint i16 %.sroa.29.0.insert.shift.i, 1
-  %.sroa.24.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.cc, i64 24
-  store i32 %i.dp, ptr %.sroa.24.0..sroa_idx.i.a, align 8, !alias.scope !25
-  %.sroa.35.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cc, i64 28
-  store i32 %i.dg, ptr %.sroa.35.0..sroa_idx.i, align 4, !alias.scope !25
-  %.sroa.46.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cc, i64 32
-  store i16 %.sroa.08.0.insert.insert.i, ptr %.sroa.46.0..sroa_idx.i, align 8, !alias.scope !25
+  %.sroa.24.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cc, i64 24
+  store i32 %i.dp, ptr %.sroa.24.0..sroa_idx.i, align 8, !alias.scope !25
+  %.sroa.24.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.cc, i64 28
+  store i32 %i.dg, ptr %.sroa.24.0..sroa_idx.i.a, align 4, !alias.scope !25
+  %.sroa.35.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cc, i64 32
+  store i8 1, ptr %.sroa.35.0..sroa_idx.i, align 8, !alias.scope !25
+  %.sroa.46.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cc, i64 33
+  store i8 %i.dm, ptr %.sroa.46.0..sroa_idx.i, align 1, !alias.scope !25
   store i64 0, ptr %i.cc, align 8, !alias.scope !25
   br label %_ZN9jobserver3imp6Client9from_fifo17hc0adcf6951f9579eE.exit
 
@@ -790,15 +789,14 @@ bb.br:                                            ; preds = %bb.bq
 bb.bs:                                            ; preds = %bb.bp
   %i.ft = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ft, ptr noundef nonnull align 8 dereferenceable(16) %i.l, i64 16, i1 false)
-  %.sroa.226.0.insert.ext.i = zext i8 %i.fp to i16
-  %.sroa.226.0.insert.shift.i = shl nuw i16 %.sroa.226.0.insert.ext.i, 8
-  %.sroa.025.0.insert.insert.i = or disjoint i16 %.sroa.226.0.insert.shift.i, 1
-  %.sroa.221.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bz, i64 24
-  store i32 %i.fm, ptr %.sroa.221.0..sroa_idx.i, align 8, !alias.scope !31
-  %.sroa.322.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bz, i64 28
-  store i32 %i.fo, ptr %.sroa.322.0..sroa_idx.i, align 4, !alias.scope !31
-  %.sroa.423.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bz, i64 32
-  store i16 %.sroa.025.0.insert.insert.i, ptr %.sroa.423.0..sroa_idx.i, align 8, !alias.scope !31
+  %.sroa.217.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bz, i64 24
+  store i32 %i.fm, ptr %.sroa.217.0..sroa_idx.i, align 8, !alias.scope !31
+  %.sroa.221.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bz, i64 28
+  store i32 %i.fo, ptr %.sroa.221.0..sroa_idx.i, align 4, !alias.scope !31
+  %.sroa.322.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bz, i64 32
+  store i8 1, ptr %.sroa.322.0..sroa_idx.i, align 8, !alias.scope !31
+  %.sroa.423.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bz, i64 33
+  store i8 %i.fp, ptr %.sroa.423.0..sroa_idx.i, align 1, !alias.scope !31
   store i64 0, ptr %i.bz, align 8, !alias.scope !31
   %i.fu = load i32, ptr %i.ab, align 8, !noalias !31
   %i.fv = trunc i32 %i.fu to i1
@@ -993,7 +991,7 @@ bb.cu:                                            ; preds = %bb.cs
   %.sroa.335.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bz, i64 28
   store i32 %i.hb, ptr %.sroa.335.0..sroa_idx.i, align 4, !alias.scope !31
   %.sroa.436.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bz, i64 32
-  store i16 0, ptr %.sroa.436.0..sroa_idx.i, align 8, !alias.scope !31
+  store i8 0, ptr %.sroa.436.0..sroa_idx.i, align 8, !alias.scope !31
   store i64 0, ptr %i.bz, align 8, !alias.scope !31
   br label %_ZN9jobserver3imp6Client9from_pipe17h7dce4dded359e1f4E.exit
 

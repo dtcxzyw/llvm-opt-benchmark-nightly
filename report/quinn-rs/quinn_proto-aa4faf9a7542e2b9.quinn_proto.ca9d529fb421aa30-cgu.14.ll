@@ -205,7 +205,6 @@ bb.e:                                             ; preds = %bb.d
     #dbg_value(i64 %i.q, !7159, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7248)
     #dbg_value(i64 %i.q, !7054, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7251)
     #dbg_value(i32 %i.o, !7054, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !7251)
-    #dbg_value(i32 undef, !7054, !DIExpression(DW_OP_LLVM_fragment, 96, 32), !7251)
     #dbg_value(i8 %.val20.i, !7054, !DIExpression(DW_OP_LLVM_fragment, 128, 8), !7251)
     #dbg_declare(ptr undef, !7034, !DIExpression(), !7252)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !7253
@@ -608,8 +607,8 @@ _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultINtNtCs8shshkhJObF_4ring4hkdf3OkmN
     #dbg_value(ptr %i.c, !26412, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !26433)
     #dbg_value(i64 1, !26203, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !26411)
     #dbg_value(i64 1, !26412, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !26433)
-    #dbg_value(ptr %i.f, !26203, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !26411)
     #dbg_value(ptr %i.f, !26412, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !26433)
+    #dbg_value(ptr %i.f, !26203, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !26411)
     #dbg_value(i64 %i.i, !26203, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !26411)
     #dbg_value(i64 %i.i, !26412, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !26433)
     #dbg_value(ptr %i.d, !26432, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !26433)

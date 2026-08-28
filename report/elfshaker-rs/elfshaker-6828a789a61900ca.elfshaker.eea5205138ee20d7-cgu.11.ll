@@ -204,9 +204,9 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCskuiImRAV2ip_9elfshaker7packidx9Fil
   br i1 %i.ds, label %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskuiImRAV2ip_9elfshaker7packidx9FileEntryENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextB10_.exit.thread.i, label %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterNtNtCskuiImRAV2ip_9elfshaker7packidx9FileEntryENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextB10_.exit.i
 
 .thread.i:                                        ; preds = %bb.r, %bb.n, %.thread156.i.loopexit, %.thread.i.loopexit, %.loopexit.i, %bb.v
-  %.sroa.15.0 = phi i32 [ %.sroa.10146.8.copyload.i, %.loopexit.i ], [ %.sroa.10.8.copyload.i, %bb.v ], [ undef, %.thread.i.loopexit ], [ undef, %.thread156.i.loopexit ], [ undef, %bb.n ], [ undef, %bb.r ]
-  %.sroa.10.0 = phi i64 [ %.sroa.6145.8.copyload.i, %.loopexit.i ], [ %.sroa.6142.8.copyload.i, %bb.v ], [ %i.as, %.thread.i.loopexit ], [ %i.bm, %.thread156.i.loopexit ], [ %i.bj, %bb.r ], [ %i.ap, %bb.n ]
-  %.sroa.0.0 = phi i64 [ %i.df, %.loopexit.i ], [ %i.ca, %bb.v ], [ -9223372036854775808, %.thread.i.loopexit ], [ -9223372036854775808, %.thread156.i.loopexit ], [ -9223372036854775808, %bb.n ], [ -9223372036854775808, %bb.r ]
+  %.sroa.10.sroa.0.0 = phi i64 [ %.sroa.6145.8.copyload.i, %.loopexit.i ], [ %.sroa.6142.8.copyload.i, %bb.v ], [ %i.bm, %.thread156.i.loopexit ], [ %i.as, %.thread.i.loopexit ], [ %i.bj, %bb.r ], [ %i.ap, %bb.n ]
+  %.sroa.15.0 = phi i32 [ %.sroa.10146.8.copyload.i, %.loopexit.i ], [ %.sroa.10.8.copyload.i, %bb.v ], [ undef, %.thread156.i.loopexit ], [ undef, %.thread.i.loopexit ], [ undef, %bb.n ], [ undef, %bb.r ]
+  %.sroa.0.0 = phi i64 [ %i.df, %.loopexit.i ], [ %i.ca, %bb.v ], [ -9223372036854775808, %.thread156.i.loopexit ], [ -9223372036854775808, %.thread.i.loopexit ], [ -9223372036854775808, %bb.n ], [ -9223372036854775808, %bb.r ]
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCskuiImRAV2ip_9elfshaker(ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %i.c)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringECskuiImRAV2ip_9elfshaker.exit.i117.i unwind label %bb.ad, !noalias !98
 
@@ -297,7 +297,7 @@ bb.al:                                            ; preds = %_RINvNtCs3oUPovFnLW
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
-  %.sroa.10.1.sink = phi i64 [ %i.ee, %bb.al ], [ %.sroa.10.0, %bb.ak ]
+  %.sroa.10.1.sink = phi i64 [ %i.ee, %bb.al ], [ %.sroa.10.sroa.0.0, %bb.ak ]
   %.sroa.15.1.sink = phi i32 [ %i.ef, %bb.al ], [ %.sroa.15.0, %bb.ak ]
   %.sroa.0.1.sink = phi i64 [ -2, %bb.al ], [ %.sroa.0.0, %bb.ak ]
   %i.eg = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -700,10 +700,8 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b, !prof !567
 
 bb.b:                                             ; preds = %bb.a
-  %.val = load ptr, ptr %i.b, align 8, !nonnull !5, !align !65, !noundef !5 ; 3 uses
-  store i64 0, ptr %.val, align 8
-  %.sroa.410.0..0.val.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 8
-  store i8 0, ptr %.sroa.410.0..0.val.sroa_idx.i, align 8
+  %.val = load ptr, ptr %i.b, align 8, !nonnull !5, !align !65, !noundef !5 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %.val, i8 0, i64 9, i1 false)
   %.sroa.612.0..0.val.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 16
   store i64 1, ptr %.sroa.612.0..0.val.sroa_idx.i, align 8
   ret void
@@ -740,10 +738,8 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _RNvYNCINvMs0_NtNtCsaL1QbXo9JQH_3std4sync4onceNtBb_4Once9call_onceNCINvMNtCs4oabfA5r5hf_11lazy_static4lazyINtB17_4LazyINtNtNtBd_6poison6rwlock6RwLockNtCse7cAXHj51Pq_3log5LevelEE3getNvNvXs0_NtCskuiImRAV2ip_9elfshaker3logNtB30_14INIT_LOG_LEVELNtNtNtCs3oUPovFnLWP_4core3ops5deref5Deref5deref23___static_ref_initializeE0E0INtNtB3U_8function6FnOnceTRNtBb_9OnceStateEE9call_onceB32_.exit: ; preds = %bb.a
-  %.val.i.i = load ptr, ptr %i.b, align 8, !noalias !595, !nonnull !5, !align !65, !noundef !5 ; 3 uses
-  store i64 0, ptr %.val.i.i, align 8, !noalias !595
-  %.sroa.410.0..0.val.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 8
-  store i8 0, ptr %.sroa.410.0..0.val.sroa_idx.i.i.i, align 8, !noalias !595
+  %.val.i.i = load ptr, ptr %i.b, align 8, !noalias !595, !nonnull !5, !align !65, !noundef !5 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %.val.i.i, i8 0, i64 9, i1 false), !noalias !595
   %.sroa.612.0..0.val.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 16
   store i64 1, ptr %.sroa.612.0..0.val.sroa_idx.i.i.i, align 8, !noalias !595
   ret void

@@ -204,22 +204,20 @@ _ZNK6vectorISt4pairIPK15sexpr_compositejELb1EjE5emptyEv.exit: ; preds = %bb.n, %
   %i.e = load ptr, ptr %2, align 8, !tbaa !111    ; 3 uses
   %i.f = getelementptr inbounds i8, ptr %i.e, i64 -4 ; 2 uses
   %i.g = load i32, ptr %i.f, align 4, !tbaa !59
-  %i.h = add i32 %i.g, %.sink97                   ; 3 uses
+  %i.h = add i32 %i.g, %.sink97                   ; 2 uses
   store i32 %i.h, ptr %i.f, align 4, !tbaa !59
   %i.i = icmp eq i32 %i.h, 0
-  br i1 %i.i, label %bb.p, label %thread-pre-split68
+  br i1 %i.i, label %bb.p, label %bb.d
 
-thread-pre-split68:                               ; preds = %_ZNK6vectorISt4pairIPK15sexpr_compositejELb1EjE5emptyEv.exit
-  %3 = add i32 %i.h, -1
-  br label %bb.d
-
-bb.d:                                             ; preds = %thread-pre-split68, %bb.o
-  %.pre = phi i32 [ %3, %thread-pre-split68 ], [ %i.aw, %bb.o ]
-  %4 = phi ptr [ %i.e, %thread-pre-split68 ], [ %i.au, %bb.o ] ; 2 uses
-  %i.j = zext i32 %.pre to i64                    ; 2 uses
-  %i.k = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %i.j
+bb.d:                                             ; preds = %_ZNK6vectorISt4pairIPK15sexpr_compositejELb1EjE5emptyEv.exit, %bb.o
+  %3 = phi ptr [ %i.au, %bb.o ], [ %i.e, %_ZNK6vectorISt4pairIPK15sexpr_compositejELb1EjE5emptyEv.exit ] ; 3 uses
+  %4 = getelementptr inbounds i8, ptr %3, i64 -4
+  %5 = load i32, ptr %4, align 4, !tbaa !59
+  %6 = add i32 %5, -1
+  %i.j = zext i32 %6 to i64                       ; 2 uses
+  %i.k = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %i.j
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !114  ; 2 uses
-  %i.m = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %i.j
+  %i.m = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %i.j
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.p = load i32, ptr %i.o, align 8, !tbaa !24   ; 2 uses
@@ -312,7 +310,7 @@ bb.n:                                             ; preds = %bb.g
   %i.ap = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.5, i64 noundef 1)
           to label %_ZNK6vectorISt4pairIPK15sexpr_compositejELb1EjE5emptyEv.exit unwind label %.loopexit.split-lp ; 0 uses
 
-bb.o:                                             ; preds = %bb.j, %.noexc50
+bb.o:                                             ; preds = %.noexc50, %bb.j
   %i.aq = phi i32 [ %.pre2.i49, %.noexc50 ], [ %i.ak, %bb.j ]
   %i.ar = phi ptr [ %.pre.i47, %.noexc50 ], [ %i.ah, %bb.j ]
   %i.as = zext i32 %i.aq to i64
@@ -322,7 +320,7 @@ bb.o:                                             ; preds = %bb.j, %.noexc50
   store i32 0, ptr %.sroa.555.0..sroa_idx, align 8
   %i.au = load ptr, ptr %2, align 8, !tbaa !111   ; 2 uses
   %i.av = getelementptr inbounds i8, ptr %i.au, i64 -4 ; 2 uses
-  %i.aw = load i32, ptr %i.av, align 4, !tbaa !59 ; 2 uses
+  %i.aw = load i32, ptr %i.av, align 4, !tbaa !59
   %i.ax = add i32 %i.aw, 1
   store i32 %i.ax, ptr %i.av, align 4, !tbaa !59
   br label %bb.d

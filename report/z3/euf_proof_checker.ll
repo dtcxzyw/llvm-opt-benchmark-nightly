@@ -46,7 +46,6 @@ module asm(target_features: "+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87", target_cpu:
 %"struct.arith::theory_checker::row" = type { %class.obj_map.28, %class.rational }
 %class.obj_map.28 = type { %class.core_hashtable.29 }
 %class.core_hashtable.29 = type <{ ptr, i32, i32, i32, [4 x i8] }>
-%"struct.std::pair.132" = type { i32, i32 }
 
 $_ZN5arith14theory_checkerC2ER11ast_manager = comdat any
 
@@ -449,12 +448,12 @@ bb.l:                                             ; preds = %_ZN17default_except
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef i32 @_ZN3euf17eq_theory_checker7expr2idEP4expr(ptr noundef nonnull align 8 dereferenceable(100) %0, ptr noundef %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %2 = alloca %"struct.std::pair.132", align 4    ; 6 uses
+  %.sroa.0 = alloca i64, align 8                  ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 5 uses
   %i.b = load i32, ptr %1, align 4, !tbaa !112    ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  store i32 0, ptr %2, align 4, !tbaa !545
-  %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 4
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store i32 0, ptr %.sroa.0, align 8, !tbaa !545
+  %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   store i32 0, ptr %.4..4..4..sroa_idx, align 4, !tbaa !547
   %i.c = load ptr, ptr %i.a, align 8, !tbaa !420  ; 3 uses
   %i.d = icmp eq ptr %i.c, null
@@ -472,12 +471,12 @@ bb.b:                                             ; preds = %_ZNK6vectorISt4pair
   br label %_ZNK6vectorISt4pairIjjELb0EjE3getEjRKS1_.exit
 
 _ZNK6vectorISt4pairIjjELb0EjE3getEjRKS1_.exit:    ; preds = %bb.a, %_ZNK6vectorISt4pairIjjELb0EjE4sizeEv.exit.i, %bb.b
-  %.0.i = phi ptr [ %i.h, %bb.b ], [ %2, %_ZNK6vectorISt4pairIjjELb0EjE4sizeEv.exit.i ], [ %2, %bb.a ]
+  %.0.i = phi ptr [ %i.h, %bb.b ], [ %.sroa.0, %_ZNK6vectorISt4pairIjjELb0EjE4sizeEv.exit.i ], [ %.sroa.0, %bb.a ]
   %i.i = load i64, ptr %.0.i, align 4             ; 2 uses
   %.sroa.026.0.extract.trunc = trunc i64 %i.i to i32
   %.sroa.427.0.extract.shift = lshr i64 %i.i, 32
   %.sroa.427.0.extract.trunc = trunc nuw i64 %.sroa.427.0.extract.shift to i32
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.k = load i32, ptr %i.j, align 8, !tbaa !533
   %.not = icmp eq i32 %i.k, %.sroa.026.0.extract.trunc
