@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 34
 inline.NumDeleted: 11
 loop-unroll.NumCompletelyUnrolled: 10
-loop-unroll.NumRuntimeUnrolled: 33
-loop-unroll.NumUnrolled: 47
+loop-unroll.NumRuntimeUnrolled: 34
+loop-unroll.NumUnrolled: 48
 begin_hunk_0_@svq1_encode_frame:bb.a
   br label %put_bits.exit22.i
 
@@ -205,20 +205,20 @@ bb.k:                                             ; preds = %svq1_write_header.e
   %i.hf = load i32, ptr %i.ad, align 4, !tbaa !94 ; 2 uses
   %i.hg = shl i32 %i.hd, 5
   %i.hh = sext i32 %i.hg to i64                   ; 33 uses
-  %i.hi = getelementptr inbounds i8, ptr %i.he, i64 %i.hh ; 69 uses
+  %i.hi = getelementptr inbounds i8, ptr %i.he, i64 %i.hh ; 73 uses
   %i.hj = mul nsw i32 %i.hf, %i.hf
   %i.hk = lshr i32 %i.hj, 14                      ; 5 uses
   %i.hl = add i32 %i.gw, 15                       ; 3 uses
   %i.hm = sdiv i32 %i.hl, 16                      ; 7 uses
   %i.hn = add nsw i32 %i.gy, 15
-  %i.ho = sdiv i32 %i.hn, 16                      ; 4 uses
+  %i.ho = sdiv i32 %i.hn, 16                      ; 3 uses
   %i.hp = load i32, ptr %i.ae, align 16, !tbaa !88
   %i.hq = icmp eq i32 %i.hp, 2
   br i1 %i.hq, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
   store ptr %i.gq, ptr %i.ca, align 16, !tbaa !104
-  %i.hr = sext i32 %i.hd to i64                   ; 25 uses
+  %i.hr = sext i32 %i.hd to i64                   ; 29 uses
   store i64 %i.hr, ptr %i.cb, align 8, !tbaa !105
   %i.hs = load ptr, ptr %i.cc, align 16, !tbaa !82
   %i.ht = getelementptr inbounds nuw i8, ptr %i.hs, i64 64
@@ -277,7 +277,7 @@ bb.l:                                             ; preds = %bb.k
   %i.it = sext i32 %i.gw to i64                   ; 82 uses
   %i.iu = shl nsw i32 %i.hm, 4                    ; 2 uses
   %i.iv = icmp slt i32 %i.gw, %i.iu
-  %i.iw = sext i32 %i.iu to i64                   ; 19 uses
+  %i.iw = sext i32 %i.iu to i64                   ; 21 uses
   %i.ix = icmp sgt i32 %i.hl, 15
   %i.iy = sext i32 %i.ha to i64                   ; 32 uses
   %i.iz = zext nneg i32 %i.gy to i64              ; 31 uses
@@ -312,8 +312,6 @@ bb.l:                                             ; preds = %bb.k
   %i.ka = getelementptr i8, ptr %i.hi, i64 %i.jz  ; 11 uses
   %i.kb = mul nsw i64 %i.hr, 15                   ; 2 uses
   %i.kc = getelementptr i8, ptr %i.hi, i64 %i.kb  ; 11 uses
-  %5 = shl nuw nsw i32 %i.ho, 4
-  %6 = zext nneg i32 %5 to i64
   %i.kd = shl nsw i64 %i.hr, 1                    ; 2 uses
   %i.ke = getelementptr i8, ptr %i.hi, i64 %i.kd  ; 10 uses
   %i.kf = shl nsw i64 %i.hr, 2                    ; 2 uses
@@ -429,8 +427,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %._crit_edge.i, %.lr.ph369.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge.i ], [ %6, %.lr.ph369.i ] ; 2 uses
-  %indvars.iv414.i = phi i64 [ %indvars.iv.next415.i, %._crit_edge.i ], [ 0, %.lr.ph369.i ] ; 3 uses
+  %indvars.iv414.i = phi i64 [ 0, %.lr.ph369.i ], [ %indvars.iv.next415.i, %._crit_edge.i ] ; 3 uses
   %i.mh = shl nuw nsw i64 %indvars.iv414.i, 4     ; 34 uses
   %i.mi = mul i64 %i.mh, %i.hr
   %i.mj = sub i64 0, %i.mi
@@ -440,15 +437,36 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   %i.mm = trunc nuw nsw i64 %indvars.iv414.i to i32 ; 2 uses
   store i32 %i.mm, ptr %i.de, align 8, !tbaa !127
   %i.mn = icmp samesign ult i64 %i.mh, %i.iz      ; 2 uses
-  br i1 %i.iv, label %.split.us.i.preheader.a, label %.split.preheader.i.a
+  br i1 %i.iv, label %.split.us.i.preheader, label %.split.preheader.i
 
-.split.us.i.preheader.a:                          ; preds = %bb.m
-  br i1 %i.mn, label %.lr.ph.us.i, label %.lr.ph.i
+.split.us.i.preheader:                            ; preds = %bb.m
+  br i1 %i.mn, label %.lr.ph.us.i, label %.split.us.i.preheader.a
 
-.split.preheader.i.a:                             ; preds = %bb.m
-  br i1 %i.mn, label %.split.1.i, label %.lr.ph.i
+.split.preheader.i:                               ; preds = %bb.m
+  br i1 %i.mn, label %.split.1.i, label %.split.us.i.preheader.a
 
-.lr.ph.us.i:                                      ; preds = %.split.us.i.preheader.a
+.split.us.i.preheader.a:                          ; preds = %.split.us.i.preheader, %._crit_edge.us.i, %._crit_edge.us.i.1, %._crit_edge.us.i.2, %._crit_edge.us.i.3, %._crit_edge.us.i.4, %._crit_edge.us.i.5, %._crit_edge.us.i.6, %._crit_edge.us.i.7, %._crit_edge.us.i.8, %._crit_edge.us.i.9, %._crit_edge.us.i.10, %._crit_edge.us.i.11, %._crit_edge.us.i.12, %._crit_edge.us.i.13, %._crit_edge.us.i.14, %.split.15.i, %.split.14.i, %.split.13.i, %.split.12.i, %.split.11.i, %.split.10.i, %.split.9.i, %.split.8.i, %.split.7.i, %.split.6.i, %.split.5.i, %.split.4.i, %.split.3.i, %.split.2.i, %.split.1.i, %.split.preheader.i
+  %5 = phi i1 [ true, %._crit_edge.us.i.14 ], [ false, %._crit_edge.us.i.13 ], [ false, %._crit_edge.us.i.12 ], [ false, %._crit_edge.us.i.11 ], [ false, %._crit_edge.us.i.10 ], [ false, %._crit_edge.us.i.9 ], [ false, %._crit_edge.us.i.8 ], [ false, %._crit_edge.us.i.7 ], [ false, %._crit_edge.us.i.6 ], [ false, %._crit_edge.us.i.5 ], [ false, %._crit_edge.us.i.4 ], [ false, %._crit_edge.us.i.3 ], [ false, %._crit_edge.us.i.2 ], [ false, %._crit_edge.us.i.1 ], [ false, %._crit_edge.us.i ], [ false, %.split.us.i.preheader ], [ false, %.split.1.i ], [ true, %.split.15.i ], [ false, %.split.2.i ], [ false, %.split.10.i ], [ false, %.split.3.i ], [ false, %.split.14.i ], [ false, %.split.4.i ], [ false, %.split.9.i ], [ false, %.split.5.i ], [ false, %.split.13.i ], [ false, %.split.6.i ], [ false, %.split.11.i ], [ false, %.split.7.i ], [ false, %.split.12.i ], [ false, %.split.8.i ], [ false, %.split.preheader.i ]
+  %indvars.iv407.i.ph = phi i64 [ 15, %._crit_edge.us.i.14 ], [ 14, %._crit_edge.us.i.13 ], [ 13, %._crit_edge.us.i.12 ], [ 12, %._crit_edge.us.i.11 ], [ 11, %._crit_edge.us.i.10 ], [ 10, %._crit_edge.us.i.9 ], [ 9, %._crit_edge.us.i.8 ], [ 8, %._crit_edge.us.i.7 ], [ 7, %._crit_edge.us.i.6 ], [ 6, %._crit_edge.us.i.5 ], [ 5, %._crit_edge.us.i.4 ], [ 4, %._crit_edge.us.i.3 ], [ 3, %._crit_edge.us.i.2 ], [ 2, %._crit_edge.us.i.1 ], [ 1, %._crit_edge.us.i ], [ 0, %.split.us.i.preheader ], [ 1, %.split.1.i ], [ 15, %.split.15.i ], [ 2, %.split.2.i ], [ 10, %.split.10.i ], [ 3, %.split.3.i ], [ 14, %.split.14.i ], [ 4, %.split.4.i ], [ 9, %.split.9.i ], [ 5, %.split.5.i ], [ 13, %.split.13.i ], [ 6, %.split.6.i ], [ 11, %.split.11.i ], [ 7, %.split.7.i ], [ 12, %.split.12.i ], [ 8, %.split.8.i ], [ 0, %.split.preheader.i ] ; 5 uses
+  %xtraiter558 = and i64 %indvars.iv407.i.ph, 1
+  %lcmp.mod559.not = icmp eq i64 %xtraiter558, 0
+  br i1 %lcmp.mod559.not, label %.split.preheader.i.a, label %.lr.ph.i.prol
+
+.lr.ph.i.prol:                                    ; preds = %.split.us.i.preheader.a
+  %6 = mul nsw i64 %indvars.iv407.i.ph, %i.hr
+  %7 = getelementptr inbounds i8, ptr %i.hi, i64 %6
+  %8 = add nsw i64 %indvars.iv407.i.ph, -1
+  %9 = mul nsw i64 %8, %i.hr
+  %10 = getelementptr inbounds i8, ptr %i.hi, i64 %9
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %7, ptr align 1 %10, i64 %i.iw, i1 false)
+  %indvars.iv.next408.i.prol = add nuw nsw i64 %indvars.iv407.i.ph, 1
+  br label %.split.preheader.i.a
+
+.split.preheader.i.a:                             ; preds = %.lr.ph.i.prol, %.split.us.i.preheader.a
+  %indvars.iv407.i.unr = phi i64 [ %indvars.iv407.i.ph, %.split.us.i.preheader.a ], [ %indvars.iv.next408.i.prol, %.lr.ph.i.prol ]
+  br i1 %5, label %.critedge2.i, label %bb.n
+
+.lr.ph.us.i:                                      ; preds = %.split.us.i.preheader
   %i.mo = mul nsw i64 %i.mh, %i.iy
   %i.mp = getelementptr inbounds i8, ptr %i.gn, i64 %i.mo
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.hi, ptr readonly align 1 %i.mp, i64 %i.it, i1 false)
@@ -501,7 +519,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
 ._crit_edge.us.i:                                 ; preds = %.lr.ph.us.i.new, %.prol.loopexit
   %i.mx = or disjoint i64 %i.mh, 1                ; 2 uses
   %i.my = icmp samesign ult i64 %i.mx, %i.iz
-  br i1 %i.my, label %.lr.ph.us.i.1, label %.lr.ph.i
+  br i1 %i.my, label %.lr.ph.us.i.1, label %.split.us.i.preheader.a
 
 .lr.ph.us.i.1:                                    ; preds = %._crit_edge.us.i
   %i.mz = mul nsw i64 %i.mx, %i.iy
@@ -556,7 +574,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
 ._crit_edge.us.i.1:                               ; preds = %.lr.ph.us.i.1.new, %.prol.loopexit492
   %i.ni = or disjoint i64 %i.mh, 2                ; 2 uses
   %i.nj = icmp samesign ult i64 %i.ni, %i.iz
-  br i1 %i.nj, label %.lr.ph.us.i.2, label %.lr.ph.i
+  br i1 %i.nj, label %.lr.ph.us.i.2, label %.split.us.i.preheader.a
 
 .lr.ph.us.i.2:                                    ; preds = %._crit_edge.us.i.1
   %i.nk = mul nsw i64 %i.ni, %i.iy
@@ -611,7 +629,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
 ._crit_edge.us.i.2:                               ; preds = %.lr.ph.us.i.2.new, %.prol.loopexit497
   %i.nt = or disjoint i64 %i.mh, 3                ; 2 uses
   %i.nu = icmp samesign ult i64 %i.nt, %i.iz
-  br i1 %i.nu, label %.lr.ph.us.i.3, label %.lr.ph.i
+  br i1 %i.nu, label %.lr.ph.us.i.3, label %.split.us.i.preheader.a
 
 .lr.ph.us.i.3:                                    ; preds = %._crit_edge.us.i.2
   %i.nv = mul nsw i64 %i.nt, %i.iy
@@ -666,7 +684,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
 ._crit_edge.us.i.3:                               ; preds = %.lr.ph.us.i.3.new, %.prol.loopexit502
   %i.oe = or disjoint i64 %i.mh, 4                ; 2 uses
   %i.of = icmp samesign ult i64 %i.oe, %i.iz
-  br i1 %i.of, label %.lr.ph.us.i.4, label %.lr.ph.i
+  br i1 %i.of, label %.lr.ph.us.i.4, label %.split.us.i.preheader.a
 
 .lr.ph.us.i.4:                                    ; preds = %._crit_edge.us.i.3
   %i.og = mul nsw i64 %i.oe, %i.iy
@@ -721,7 +739,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
 ._crit_edge.us.i.4:                               ; preds = %.lr.ph.us.i.4.new, %.prol.loopexit507
   %i.op = or disjoint i64 %i.mh, 5                ; 2 uses
   %i.oq = icmp samesign ult i64 %i.op, %i.iz
-  br i1 %i.oq, label %.lr.ph.us.i.5, label %.lr.ph.i
+  br i1 %i.oq, label %.lr.ph.us.i.5, label %.split.us.i.preheader.a
 
 .lr.ph.us.i.5:                                    ; preds = %._crit_edge.us.i.4
   %i.or = mul nsw i64 %i.op, %i.iy
@@ -776,7 +794,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
 ._crit_edge.us.i.5:                               ; preds = %.lr.ph.us.i.5.new, %.prol.loopexit512
   %i.pa = or disjoint i64 %i.mh, 6                ; 2 uses
   %i.pb = icmp samesign ult i64 %i.pa, %i.iz
-  br i1 %i.pb, label %.lr.ph.us.i.6, label %.lr.ph.i
+  br i1 %i.pb, label %.lr.ph.us.i.6, label %.split.us.i.preheader.a
 
 .lr.ph.us.i.6:                                    ; preds = %._crit_edge.us.i.5
   %i.pc = mul nsw i64 %i.pa, %i.iy
@@ -831,7 +849,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
 ._crit_edge.us.i.6:                               ; preds = %.lr.ph.us.i.6.new, %.prol.loopexit517
   %i.pl = or disjoint i64 %i.mh, 7                ; 2 uses
   %i.pm = icmp samesign ult i64 %i.pl, %i.iz
-  br i1 %i.pm, label %.lr.ph.us.i.7, label %.lr.ph.i
+  br i1 %i.pm, label %.lr.ph.us.i.7, label %.split.us.i.preheader.a
 
 .lr.ph.us.i.7:                                    ; preds = %._crit_edge.us.i.6
   %i.pn = mul nsw i64 %i.pl, %i.iy
@@ -886,7 +904,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
 ._crit_edge.us.i.7:                               ; preds = %.lr.ph.us.i.7.new, %.prol.loopexit522
   %i.pw = or disjoint i64 %i.mh, 8                ; 2 uses
   %i.px = icmp samesign ult i64 %i.pw, %i.iz
-  br i1 %i.px, label %.lr.ph.us.i.8, label %.lr.ph.i
+  br i1 %i.px, label %.lr.ph.us.i.8, label %.split.us.i.preheader.a
 
 .lr.ph.us.i.8:                                    ; preds = %._crit_edge.us.i.7
   %i.py = mul nsw i64 %i.pw, %i.iy
@@ -941,7 +959,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
 ._crit_edge.us.i.8:                               ; preds = %.lr.ph.us.i.8.new, %.prol.loopexit527
   %i.qh = or disjoint i64 %i.mh, 9                ; 2 uses
   %i.qi = icmp samesign ult i64 %i.qh, %i.iz
-  br i1 %i.qi, label %.lr.ph.us.i.9, label %.lr.ph.i
+  br i1 %i.qi, label %.lr.ph.us.i.9, label %.split.us.i.preheader.a
 
 .lr.ph.us.i.9:                                    ; preds = %._crit_edge.us.i.8
   %i.qj = mul nsw i64 %i.qh, %i.iy
@@ -996,7 +1014,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
 ._crit_edge.us.i.9:                               ; preds = %.lr.ph.us.i.9.new, %.prol.loopexit532
   %i.qs = or disjoint i64 %i.mh, 10               ; 2 uses
   %i.qt = icmp samesign ult i64 %i.qs, %i.iz
-  br i1 %i.qt, label %.lr.ph.us.i.10, label %.lr.ph.i
+  br i1 %i.qt, label %.lr.ph.us.i.10, label %.split.us.i.preheader.a
 
 .lr.ph.us.i.10:                                   ; preds = %._crit_edge.us.i.9
   %i.qu = mul nsw i64 %i.qs, %i.iy
@@ -1051,7 +1069,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
 ._crit_edge.us.i.10:                              ; preds = %.lr.ph.us.i.10.new, %.prol.loopexit537
   %i.rd = or disjoint i64 %i.mh, 11               ; 2 uses
   %i.re = icmp samesign ult i64 %i.rd, %i.iz
-  br i1 %i.re, label %.lr.ph.us.i.11, label %.lr.ph.i
+  br i1 %i.re, label %.lr.ph.us.i.11, label %.split.us.i.preheader.a
 
 .lr.ph.us.i.11:                                   ; preds = %._crit_edge.us.i.10
   %i.rf = mul nsw i64 %i.rd, %i.iy
@@ -1106,7 +1124,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
 ._crit_edge.us.i.11:                              ; preds = %.lr.ph.us.i.11.new, %.prol.loopexit542
   %i.ro = or disjoint i64 %i.mh, 12               ; 2 uses
   %i.rp = icmp samesign ult i64 %i.ro, %i.iz
-  br i1 %i.rp, label %.lr.ph.us.i.12, label %.lr.ph.i
+  br i1 %i.rp, label %.lr.ph.us.i.12, label %.split.us.i.preheader.a
 
 .lr.ph.us.i.12:                                   ; preds = %._crit_edge.us.i.11
   %i.rq = mul nsw i64 %i.ro, %i.iy
@@ -1161,7 +1179,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
 ._crit_edge.us.i.12:                              ; preds = %.lr.ph.us.i.12.new, %.prol.loopexit547
   %i.rz = or disjoint i64 %i.mh, 13               ; 2 uses
   %i.sa = icmp samesign ult i64 %i.rz, %i.iz
-  br i1 %i.sa, label %.lr.ph.us.i.13, label %.lr.ph.i
+  br i1 %i.sa, label %.lr.ph.us.i.13, label %.split.us.i.preheader.a
 
 .lr.ph.us.i.13:                                   ; preds = %._crit_edge.us.i.12
   %i.sb = mul nsw i64 %i.rz, %i.iy
@@ -1216,7 +1234,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
 ._crit_edge.us.i.13:                              ; preds = %.lr.ph.us.i.13.new, %.prol.loopexit552
   %i.sk = or disjoint i64 %i.mh, 14               ; 2 uses
   %i.sl = icmp samesign ult i64 %i.sk, %i.iz
-  br i1 %i.sl, label %.lr.ph.us.i.14, label %.lr.ph.i
+  br i1 %i.sl, label %.lr.ph.us.i.14, label %.split.us.i.preheader.a
 
 .lr.ph.us.i.14:                                   ; preds = %._crit_edge.us.i.13
   %i.sm = mul nsw i64 %i.sk, %i.iy
@@ -1271,7 +1289,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
 ._crit_edge.us.i.14:                              ; preds = %.lr.ph.us.i.14.new, %.prol.loopexit557
   %i.sv = or disjoint i64 %i.mh, 15               ; 2 uses
   %i.sw = icmp samesign ult i64 %i.sv, %i.iz
-  br i1 %i.sw, label %.lr.ph.us.i.15, label %.lr.ph.i
+  br i1 %i.sw, label %.lr.ph.us.i.15, label %.split.us.i.preheader.a
 
 .lr.ph.us.i.15:                                   ; preds = %._crit_edge.us.i.14
   %i.sx = mul nsw i64 %i.sv, %i.iy
@@ -1323,13 +1341,13 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   %exitcond.not.i.15.7 = icmp eq i64 %indvars.iv.next.i.15.7, %i.iw
   br i1 %exitcond.not.i.15.7, label %.critedge2.i, label %.lr.ph.us.i.15.new, !llvm.loop !130
 
-.split.1.i:                                       ; preds = %.split.preheader.i.a
+.split.1.i:                                       ; preds = %.split.preheader.i
   %i.tg = mul nsw i64 %i.mh, %i.iy
   %i.th = getelementptr inbounds i8, ptr %i.gn, i64 %i.tg
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.hi, ptr readonly align 1 %i.th, i64 %i.it, i1 false)
   %i.ti = or disjoint i64 %i.mh, 1                ; 2 uses
   %i.tj = icmp samesign ult i64 %i.ti, %i.iz
-  br i1 %i.tj, label %.split.2.i, label %.lr.ph.i
+  br i1 %i.tj, label %.split.2.i, label %.split.us.i.preheader.a
 
 .split.2.i:                                       ; preds = %.split.1.i
   %i.tk = mul nsw i64 %i.ti, %i.iy
@@ -1337,7 +1355,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ja, ptr readonly align 1 %i.tl, i64 %i.it, i1 false)
   %i.tm = or disjoint i64 %i.mh, 2                ; 2 uses
   %i.tn = icmp samesign ult i64 %i.tm, %i.iz
-  br i1 %i.tn, label %.split.3.i, label %.lr.ph.i
+  br i1 %i.tn, label %.split.3.i, label %.split.us.i.preheader.a
 
 .split.3.i:                                       ; preds = %.split.2.i
   %i.to = mul nsw i64 %i.tm, %i.iy
@@ -1345,7 +1363,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jc, ptr readonly align 1 %i.tp, i64 %i.it, i1 false)
   %i.tq = or disjoint i64 %i.mh, 3                ; 2 uses
   %i.tr = icmp samesign ult i64 %i.tq, %i.iz
-  br i1 %i.tr, label %.split.4.i, label %.lr.ph.i
+  br i1 %i.tr, label %.split.4.i, label %.split.us.i.preheader.a
 
 .split.4.i:                                       ; preds = %.split.3.i
   %i.ts = mul nsw i64 %i.tq, %i.iy
@@ -1353,7 +1371,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.je, ptr readonly align 1 %i.tt, i64 %i.it, i1 false)
   %i.tu = or disjoint i64 %i.mh, 4                ; 2 uses
   %i.tv = icmp samesign ult i64 %i.tu, %i.iz
-  br i1 %i.tv, label %.split.5.i, label %.lr.ph.i
+  br i1 %i.tv, label %.split.5.i, label %.split.us.i.preheader.a
 
 .split.5.i:                                       ; preds = %.split.4.i
   %i.tw = mul nsw i64 %i.tu, %i.iy
@@ -1361,7 +1379,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jg, ptr readonly align 1 %i.tx, i64 %i.it, i1 false)
   %i.ty = or disjoint i64 %i.mh, 5                ; 2 uses
   %i.tz = icmp samesign ult i64 %i.ty, %i.iz
-  br i1 %i.tz, label %.split.6.i, label %.lr.ph.i
+  br i1 %i.tz, label %.split.6.i, label %.split.us.i.preheader.a
 
 .split.6.i:                                       ; preds = %.split.5.i
   %i.ua = mul nsw i64 %i.ty, %i.iy
@@ -1369,7 +1387,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ji, ptr readonly align 1 %i.ub, i64 %i.it, i1 false)
   %i.uc = or disjoint i64 %i.mh, 6                ; 2 uses
   %i.ud = icmp samesign ult i64 %i.uc, %i.iz
-  br i1 %i.ud, label %.split.7.i, label %.lr.ph.i
+  br i1 %i.ud, label %.split.7.i, label %.split.us.i.preheader.a
 
 .split.7.i:                                       ; preds = %.split.6.i
   %i.ue = mul nsw i64 %i.uc, %i.iy
@@ -1377,7 +1395,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jk, ptr readonly align 1 %i.uf, i64 %i.it, i1 false)
   %i.ug = or disjoint i64 %i.mh, 7                ; 2 uses
   %i.uh = icmp samesign ult i64 %i.ug, %i.iz
-  br i1 %i.uh, label %.split.8.i, label %.lr.ph.i
+  br i1 %i.uh, label %.split.8.i, label %.split.us.i.preheader.a
 
 .split.8.i:                                       ; preds = %.split.7.i
   %i.ui = mul nsw i64 %i.ug, %i.iy
@@ -1385,7 +1403,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jm, ptr readonly align 1 %i.uj, i64 %i.it, i1 false)
   %i.uk = or disjoint i64 %i.mh, 8                ; 2 uses
   %i.ul = icmp samesign ult i64 %i.uk, %i.iz
-  br i1 %i.ul, label %.split.9.i, label %.lr.ph.i
+  br i1 %i.ul, label %.split.9.i, label %.split.us.i.preheader.a
 
 .split.9.i:                                       ; preds = %.split.8.i
   %i.um = mul nsw i64 %i.uk, %i.iy
@@ -1393,7 +1411,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jo, ptr readonly align 1 %i.un, i64 %i.it, i1 false)
   %i.uo = or disjoint i64 %i.mh, 9                ; 2 uses
   %i.up = icmp samesign ult i64 %i.uo, %i.iz
-  br i1 %i.up, label %.split.10.i, label %.lr.ph.i
+  br i1 %i.up, label %.split.10.i, label %.split.us.i.preheader.a
 
 .split.10.i:                                      ; preds = %.split.9.i
   %i.uq = mul nsw i64 %i.uo, %i.iy
@@ -1401,7 +1419,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jq, ptr readonly align 1 %i.ur, i64 %i.it, i1 false)
   %i.us = or disjoint i64 %i.mh, 10               ; 2 uses
   %i.ut = icmp samesign ult i64 %i.us, %i.iz
-  br i1 %i.ut, label %.split.11.i, label %.lr.ph.i
+  br i1 %i.ut, label %.split.11.i, label %.split.us.i.preheader.a
 
 .split.11.i:                                      ; preds = %.split.10.i
   %i.uu = mul nsw i64 %i.us, %i.iy
@@ -1409,7 +1427,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.js, ptr readonly align 1 %i.uv, i64 %i.it, i1 false)
   %i.uw = or disjoint i64 %i.mh, 11               ; 2 uses
   %i.ux = icmp samesign ult i64 %i.uw, %i.iz
-  br i1 %i.ux, label %.split.12.i, label %.lr.ph.i
+  br i1 %i.ux, label %.split.12.i, label %.split.us.i.preheader.a
 
 .split.12.i:                                      ; preds = %.split.11.i
   %i.uy = mul nsw i64 %i.uw, %i.iy
@@ -1417,7 +1435,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ju, ptr readonly align 1 %i.uz, i64 %i.it, i1 false)
   %i.va = or disjoint i64 %i.mh, 12               ; 2 uses
   %i.vb = icmp samesign ult i64 %i.va, %i.iz
-  br i1 %i.vb, label %.split.13.i, label %.lr.ph.i
+  br i1 %i.vb, label %.split.13.i, label %.split.us.i.preheader.a
 
 .split.13.i:                                      ; preds = %.split.12.i
   %i.vc = mul nsw i64 %i.va, %i.iy
@@ -1425,7 +1443,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jw, ptr readonly align 1 %i.vd, i64 %i.it, i1 false)
   %i.ve = or disjoint i64 %i.mh, 13               ; 2 uses
   %i.vf = icmp samesign ult i64 %i.ve, %i.iz
-  br i1 %i.vf, label %.split.14.i, label %.lr.ph.i
+  br i1 %i.vf, label %.split.14.i, label %.split.us.i.preheader.a
 
 .split.14.i:                                      ; preds = %.split.13.i
   %i.vg = mul nsw i64 %i.ve, %i.iy
@@ -1433,7 +1451,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.jy, ptr readonly align 1 %i.vh, i64 %i.it, i1 false)
   %i.vi = or disjoint i64 %i.mh, 14               ; 2 uses
   %i.vj = icmp samesign ult i64 %i.vi, %i.iz
-  br i1 %i.vj, label %.split.15.i, label %.lr.ph.i
+  br i1 %i.vj, label %.split.15.i, label %.split.us.i.preheader.a
 
 .split.15.i:                                      ; preds = %.split.14.i
   %i.vk = mul nsw i64 %i.vi, %i.iy
@@ -1441,7 +1459,7 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ka, ptr readonly align 1 %i.vl, i64 %i.it, i1 false)
   %i.vm = or disjoint i64 %i.mh, 15               ; 2 uses
   %i.vn = icmp samesign ult i64 %i.vm, %i.iz
-  br i1 %i.vn, label %.critedge.thread567.i, label %.lr.ph.i
+  br i1 %i.vn, label %.critedge.thread567.i, label %.split.us.i.preheader.a
 
 .critedge.thread567.i:                            ; preds = %.split.15.i
   %i.vo = mul nsw i64 %i.vm, %i.iy
@@ -1449,28 +1467,25 @@ bb.m:                                             ; preds = %._crit_edge.i, %.lr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.kc, ptr readonly align 1 %i.vp, i64 %i.it, i1 false)
   br label %.critedge2.i
 
-.lr.ph.i:                                         ; preds = %.split.us.i.preheader.a, %._crit_edge.us.i, %._crit_edge.us.i.1, %._crit_edge.us.i.2, %._crit_edge.us.i.3, %._crit_edge.us.i.4, %._crit_edge.us.i.5, %._crit_edge.us.i.6, %._crit_edge.us.i.7, %._crit_edge.us.i.8, %._crit_edge.us.i.9, %._crit_edge.us.i.10, %._crit_edge.us.i.11, %._crit_edge.us.i.12, %._crit_edge.us.i.13, %._crit_edge.us.i.14, %.split.15.i, %.split.14.i, %.split.13.i, %.split.12.i, %.split.11.i, %.split.10.i, %.split.9.i, %.split.8.i, %.split.7.i, %.split.6.i, %.split.5.i, %.split.4.i, %.split.3.i, %.split.2.i, %.split.1.i, %.split.preheader.i.a
-  %.us-phi566.i = phi i64 [ 0, %.split.preheader.i.a ], [ 8, %.split.8.i ], [ 12, %.split.12.i ], [ 7, %.split.7.i ], [ 11, %.split.11.i ], [ 6, %.split.6.i ], [ 13, %.split.13.i ], [ 5, %.split.5.i ], [ 9, %.split.9.i ], [ 4, %.split.4.i ], [ 14, %.split.14.i ], [ 3, %.split.3.i ], [ 10, %.split.10.i ], [ 2, %.split.2.i ], [ 15, %.split.15.i ], [ 1, %.split.1.i ], [ 0, %.split.us.i.preheader.a ], [ 1, %._crit_edge.us.i ], [ 2, %._crit_edge.us.i.1 ], [ 3, %._crit_edge.us.i.2 ], [ 4, %._crit_edge.us.i.3 ], [ 5, %._crit_edge.us.i.4 ], [ 6, %._crit_edge.us.i.5 ], [ 7, %._crit_edge.us.i.6 ], [ 8, %._crit_edge.us.i.7 ], [ 9, %._crit_edge.us.i.8 ], [ 10, %._crit_edge.us.i.9 ], [ 11, %._crit_edge.us.i.10 ], [ 12, %._crit_edge.us.i.11 ], [ 13, %._crit_edge.us.i.12 ], [ 14, %._crit_edge.us.i.13 ], [ 15, %._crit_edge.us.i.14 ] ; 2 uses
-  %smax = call i64 @llvm.smax.i64(i64 %indvars.iv, i64 %.us-phi566.i)
-  br label %7
-
-7:                                                ; preds = %bb.n, %.lr.ph.i
-  %indvars.iv408.i = phi i64 [ %.us-phi566.i, %.lr.ph.i ], [ %indvars.iv.next409.i, %bb.n ] ; 4 uses
-  %exitcond.not = icmp eq i64 %indvars.iv408.i, %smax
-  br i1 %exitcond.not, label %.critedge2.i, label %bb.n
-
-bb.n:                                             ; preds = %7
-  %i.vq = mul nsw i64 %indvars.iv408.i, %i.hr
+bb.n:                                             ; preds = %.split.preheader.i.a, %bb.n
+  %indvars.iv407.i = phi i64 [ %indvars.iv.next409.i, %bb.n ], [ %indvars.iv407.i.unr, %.split.preheader.i.a ] ; 5 uses
+  %11 = mul nsw i64 %indvars.iv407.i, %i.hr
+  %12 = getelementptr inbounds i8, ptr %i.hi, i64 %11
+  %13 = add nsw i64 %indvars.iv407.i, -1
+  %i.vq = mul nsw i64 %13, %i.hr
   %i.vr = getelementptr inbounds i8, ptr %i.hi, i64 %i.vq
-  %i.vs = add nsw i64 %indvars.iv408.i, -1
-  %i.vt = mul nsw i64 %i.vs, %i.hr
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %12, ptr align 1 %i.vr, i64 %i.iw, i1 false)
+  %i.vs = add nuw nsw i64 %indvars.iv407.i, 1
+  %14 = mul nsw i64 %i.vs, %i.hr
+  %15 = getelementptr inbounds i8, ptr %i.hi, i64 %14
+  %i.vt = mul nsw i64 %indvars.iv407.i, %i.hr
   %i.vu = getelementptr inbounds i8, ptr %i.hi, i64 %i.vt
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.vr, ptr align 1 %i.vu, i64 %i.iw, i1 false)
-  %indvars.iv.next409.i = add nuw nsw i64 %indvars.iv408.i, 1 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %15, ptr align 1 %i.vu, i64 %i.iw, i1 false)
+  %indvars.iv.next409.i = add nuw nsw i64 %indvars.iv407.i, 2 ; 2 uses
   %exitcond412.not.i.a = icmp eq i64 %indvars.iv.next409.i, 16
-  br i1 %exitcond412.not.i.a, label %.critedge2.i, label %7, !llvm.loop !146
+  br i1 %exitcond412.not.i.a, label %.critedge2.i, label %bb.n, !llvm.loop !146
 
-.critedge2.i:                                     ; preds = %bb.n, %7, %.prol.loopexit562, %.lr.ph.us.i.15.new, %.critedge.thread567.i
+.critedge2.i:                                     ; preds = %.split.preheader.i.a, %bb.n, %.prol.loopexit562, %.lr.ph.us.i.15.new, %.critedge.thread567.i
   br i1 %i.ix, label %.lr.ph366.i, label %._crit_edge.i
 
 .lr.ph366.i:                                      ; preds = %.critedge2.i, %.lr.ph366.i
@@ -1501,7 +1516,6 @@ bb.n:                                             ; preds = %7
   store i32 0, ptr %i.dd, align 4, !tbaa !126
   %indvars.iv.next415.i = add nuw nsw i64 %indvars.iv414.i, 1 ; 2 uses
   %exitcond420.not.i = icmp eq i64 %indvars.iv.next415.i, %wide.trip.count419.i
-  %indvars.iv.next = add nsw i64 %indvars.iv, -16
   br i1 %exitcond420.not.i, label %._crit_edge370.i, label %bb.m, !llvm.loop !149
 
 ._crit_edge370.i:                                 ; preds = %._crit_edge.i, %bb.l
@@ -1902,9 +1916,6 @@ declare i32 @llvm.smax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #7
