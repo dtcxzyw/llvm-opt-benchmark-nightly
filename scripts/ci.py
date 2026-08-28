@@ -1281,6 +1281,10 @@ def run_opt(
     os.makedirs(OPT_OUT_DIR)
 
     tasks = list_dataset_bc_tasks()
+    tasks.sort(
+        key=lambda t: os.path.getsize(os.path.join(DATA_DIR, t[0], "original", t[1])),
+        reverse=True,
+    )
 
     # Keep worker count bounded and configurable for CI environments.
     workers_env = os.environ.get("OPT_BENCH_WORKERS")
