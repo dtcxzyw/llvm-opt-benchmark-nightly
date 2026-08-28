@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p, %bb.l
   %i.aq = fcmp une double %i.am, %i.ap
   %or.cond559 = and i1 %i.ao, %i.aq
   %i.ar = sext i1 %or.cond559 to i32
-  %.0399 = add i32 %i.ar, %i.an                   ; 5 uses
+  %.0399 = add i32 %i.ar, %i.an                   ; 4 uses
   %or.cond = icmp ugt i32 %.0399, 22              ; 3 uses
   br i1 %or.cond, label %bb.s, label %bb.r
 
@@ -213,14 +213,12 @@ bb.r:                                             ; preds = %bb.q
   %i.at = getelementptr [8 x i8], ptr @tens, i64 %i.as
   %i.au = load double, ptr %i.at, align 8, !tbaa !39
   %i.av = fcmp olt double %.sroa.090.0, %i.au
-  br i1 %i.av, label %select.unfold, label %bb.s
-
-select.unfold:                                    ; preds = %bb.r
-  %6 = add nsw i32 %.0399, -1
+  %6 = sext i1 %i.av to i32
+  %spec.select = add nsw i32 %.0399, %6
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.r, %select.unfold, %bb.q
-  %.2401 = phi i32 [ %.0399, %bb.r ], [ %.0399, %bb.q ], [ %6, %select.unfold ] ; 28 uses
+bb.s:                                             ; preds = %bb.r, %bb.q
+  %.2401 = phi i32 [ %spec.select, %bb.r ], [ %.0399, %bb.q ] ; 28 uses
   %i.aw = load i32, ptr %i.a, align 4, !tbaa !7   ; 2 uses
   %i.ax = xor i32 %.0427, -1
   %i.ay = add i32 %i.aw, %i.ax                    ; 3 uses

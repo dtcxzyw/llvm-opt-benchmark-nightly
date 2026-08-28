@@ -204,10 +204,8 @@ bb.k:                                             ; preds = %bb.j
   store i64 %i.bk, ptr %1, align 16, !tbaa !12
   store i64 %.narrow.i.i.i.i.i.i51, ptr %.sroa.22.0..sroa_idx.i.i.i.i42, align 8, !tbaa !12
   %i.cy = fcmp ogt double %i.cd, f0x43E0000000000000
-  br i1 %i.cy, label %.thread, label %3
-
-3:                                                ; preds = %bb.k
-  %4 = fptosi double %i.cd to i64
+  %3 = fptosi double %i.cd to i64
+  %spec.select = select i1 %i.cy, i64 9223372036854775807, i64 %3
   br label %.thread
 
 ..thread.loopexit_crit_edge:                      ; preds = %bb.d
@@ -215,8 +213,8 @@ bb.k:                                             ; preds = %bb.j
   store i64 %i.m, ptr %1, align 16, !tbaa !12
   br label %.thread
 
-.thread:                                          ; preds = %.preheader55, %..thread.loopexit_crit_edge, %bb.k, %3
-  %.3 = phi i64 [ %4, %3 ], [ 9223372036854775807, %bb.k ], [ %.136, %..thread.loopexit_crit_edge ], [ 0, %.preheader55 ]
+.thread:                                          ; preds = %.preheader55, %..thread.loopexit_crit_edge, %bb.k
+  %.3 = phi i64 [ %spec.select, %bb.k ], [ %.136, %..thread.loopexit_crit_edge ], [ 0, %.preheader55 ]
   ret i64 %.3
 }
 
@@ -619,17 +617,15 @@ bb.h:                                             ; preds = %bb.e
   %i.ba = tail call double @llvm.fmuladd.f64(double %i.az, double %i.ax, double -1.000000e+00) ; 2 uses
   %i.bb = fcmp ogt double %i.az, f0x43F0000000000000
   %i.bc = fptoui double %i.az to i64
-  %i.bd = select i1 %i.bb, i64 -1, i64 %i.bc      ; 2 uses
+  %i.bd = select i1 %i.bb, i64 -1, i64 %i.bc
   %i.be = fcmp ogt double %i.ba, f0x43F0000000000000
-  br i1 %i.be, label %bb.i, label %3
-
-3:                                                ; preds = %bb.h
-  %4 = fptoui double %i.ba to i64
+  %3 = fptoui double %i.ba to i64
+  %spec.select45 = select i1 %i.be, i64 -1, i64 %3
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %bb.f, %3, %bb.g
-  %.027 = phi i64 [ %i.au, %bb.f ], [ %i.au, %bb.g ], [ %i.bd, %3 ], [ %i.bd, %bb.h ]
-  %.0 = phi i64 [ -1, %bb.f ], [ %i.aw, %bb.g ], [ %4, %3 ], [ -1, %bb.h ]
+bb.i:                                             ; preds = %bb.h, %bb.f, %bb.g
+  %.027 = phi i64 [ %i.au, %bb.f ], [ %i.au, %bb.g ], [ %i.bd, %bb.h ]
+  %.0 = phi i64 [ -1, %bb.f ], [ %i.aw, %bb.g ], [ %spec.select45, %bb.h ]
   %i.bf = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !237 ; 2 uses
   %spec.select = tail call i64 @llvm.umin.i64(i64 %.027, i64 %i.bg) ; 2 uses

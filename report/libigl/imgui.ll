@@ -205,13 +205,10 @@ bb.ad:                                            ; preds = %bb.ac
   %i.ed = icmp samesign ugt i32 %.097, 1
   %i.ee = select i1 %i.ed, float %.0.i110157, float %.098
   %i.ef = fcmp olt float %i.ee, 0.000000e+00
-  br i1 %i.ef, label %1, label %._crit_edge
-
-1:                                                ; preds = %bb.ad
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.w, %bb.z, %bb.ac, %1, %bb.ad, %bb.ab
-  %.0 = phi i1 [ true, %bb.ab ], [ true, %1 ], [ false, %bb.ad ], [ false, %bb.ac ], [ false, %bb.z ], [ false, %bb.w ] ; 4 uses
+._crit_edge:                                      ; preds = %bb.w, %bb.ad, %bb.z, %bb.ac, %bb.ab
+  %.0 = phi i1 [ true, %bb.ab ], [ false, %bb.z ], [ %i.ef, %bb.ad ], [ false, %bb.ac ], [ false, %bb.w ] ; 4 uses
   %i.eg = fcmp oeq float %i.dv, f0x7F7FFFFF
   br i1 %i.eg, label %bb.ae, label %_ZNK6ImRect8OverlapsERKS_.exit.thread
 

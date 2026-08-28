@@ -205,7 +205,7 @@ bb.ap:                                            ; preds = %bb.ao
   %i.id = zext nneg i32 %i.ic to i64              ; 2 uses
   %i.ie = trunc i64 %i.hz to i32
   store i32 %i.ie, ptr %.5.i425, align 4, !tbaa !69
-  %i.if = shl i64 %.0.i426, 5
+  %i.if = shl nuw nsw i64 %.0.i426, 5
   %i.ig = icmp eq i64 %.0.i426, %i.id
   %i.ih = select i1 %i.ig, i64 0, i64 %i.id
   %i.ii = or disjoint i64 %i.ih, %i.if
@@ -608,7 +608,7 @@ bb.av:                                            ; preds = %bb.au
   %i.hp = zext nneg i32 %i.ho to i64              ; 2 uses
   %i.hq = trunc i64 %i.hl to i32
   store i32 %i.hq, ptr %.5.i523, align 4, !tbaa !69
-  %i.hr = shl i64 %.0.i524, 5
+  %i.hr = shl nuw nsw i64 %.0.i524, 5
   %i.hs = icmp eq i64 %.0.i524, %i.hp
   %i.ht = select i1 %i.hs, i64 0, i64 %i.hp
   %i.hu = or disjoint i64 %i.ht, %i.hr
@@ -1011,16 +1011,13 @@ _ZN13duckdb_brotliL8FastLog2Em.exit.i.i:          ; preds = %bb.dd, %bb.dc
   %.0.i.i.i = phi double [ %i.acd, %bb.dc ], [ %i.acf, %bb.dd ]
   %i.acg = fptrunc double %.0.i.i.i to float
   %i.ach = fsub float %i.abu, %i.acg              ; 2 uses
-  %i.aci = getelementptr inbounds nuw [4 x i8], ptr %i.yd, i64 %.248.i.i ; 2 uses
-  store float %i.ach, ptr %i.aci, align 4, !tbaa !160
+  %i.aci = getelementptr inbounds nuw [4 x i8], ptr %i.yd, i64 %.248.i.i
   %16 = fcmp olt float %i.ach, 1.000000e+00
-  br i1 %16, label %17, label %bb.de
-
-17:                                               ; preds = %_ZN13duckdb_brotliL8FastLog2Em.exit.i.i
-  store float 1.000000e+00, ptr %i.aci, align 4, !tbaa !160
+  %spec.store.select.i.i = select i1 %16, float 1.000000e+00, float %i.ach
+  store float %spec.store.select.i.i, ptr %i.aci, align 4
   br label %bb.de
 
-bb.de:                                            ; preds = %17, %_ZN13duckdb_brotliL8FastLog2Em.exit.i.i, %bb.da
+bb.de:                                            ; preds = %_ZN13duckdb_brotliL8FastLog2Em.exit.i.i, %bb.da
   %i.acj = add nuw nsw i64 %.248.i.i, 1           ; 2 uses
   %exitcond54.not.i.i = icmp eq i64 %i.acj, 256
   br i1 %exitcond54.not.i.i, label %_ZL7SetCostPKjmiPf.exit.i, label %.lr.ph49.i.i, !llvm.loop !260
@@ -1423,16 +1420,13 @@ _ZN13duckdb_brotliL8FastLog2Em.exit:              ; preds = %bb.g, %bb.h
   %.0.i = phi double [ %i.ay, %bb.g ], [ %i.ba, %bb.h ]
   %i.bb = fptrunc double %.0.i to float
   %i.bc = fsub float %i.s, %i.bb                  ; 2 uses
-  %i.bd = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.248 ; 2 uses
-  store float %i.bc, ptr %i.bd, align 4, !tbaa !160
+  %i.bd = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %.248
   %4 = fcmp olt float %i.bc, 1.000000e+00
-  br i1 %4, label %5, label %bb.i
-
-5:                                                ; preds = %_ZN13duckdb_brotliL8FastLog2Em.exit
-  store float 1.000000e+00, ptr %i.bd, align 4, !tbaa !160
+  %spec.store.select = select i1 %4, float 1.000000e+00, float %i.bc
+  store float %spec.store.select, ptr %i.bd, align 4
   br label %bb.i
 
-bb.i:                                             ; preds = %_ZN13duckdb_brotliL8FastLog2Em.exit, %5, %bb.e
+bb.i:                                             ; preds = %_ZN13duckdb_brotliL8FastLog2Em.exit, %bb.e
   %i.be = add nuw nsw i64 %.248, 1                ; 2 uses
   %exitcond54.not = icmp eq i64 %i.be, %1
   br i1 %exitcond54.not, label %._crit_edge50, label %.lr.ph49, !llvm.loop !260

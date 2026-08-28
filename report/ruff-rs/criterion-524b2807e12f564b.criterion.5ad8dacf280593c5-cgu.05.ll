@@ -204,10 +204,10 @@ bb.gn:                                            ; preds = %bb.bf, %_RINvNtCs4N
   br i1 %i.rk, label %_RNvMNtNtNtNtCs7NzLGBMhIGf_9criterion5stats10univariate8outliers5tukeyINtB2_13LabeledSampledE5countBa_.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.gn, %bb.gu
-  %.sroa.0.048.i.i = phi i64 [ %.sroa.0.1.i.i, %bb.gu ], [ 0, %bb.gn ] ; 5 uses
-  %.sroa.02.047.i.i = phi i64 [ %.sroa.02.1.i.i, %bb.gu ], [ 0, %bb.gn ] ; 5 uses
-  %.sroa.06.045.i.i = phi i64 [ %.sroa.06.1.i.i, %bb.gu ], [ 0, %bb.gn ] ; 5 uses
-  %.sroa.08.044.i.i = phi i64 [ %.sroa.08.1.i.i, %bb.gu ], [ 0, %bb.gn ] ; 5 uses
+  %.sroa.0.048.i.i = phi i64 [ %.sroa.0.1.i.i, %bb.gu ], [ 0, %bb.gn ] ; 4 uses
+  %.sroa.02.047.i.i = phi i64 [ %.sroa.02.1.i.i, %bb.gu ], [ 0, %bb.gn ] ; 4 uses
+  %.sroa.06.045.i.i = phi i64 [ %.sroa.06.1.i.i, %bb.gu ], [ 0, %bb.gn ] ; 4 uses
+  %.sroa.08.044.i.i = phi i64 [ %.sroa.08.1.i.i, %bb.gu ], [ 0, %bb.gn ] ; 4 uses
   %.sroa.0.01743.i.i = phi ptr [ %i.rl, %bb.gu ], [ %i.rg, %bb.gn ] ; 2 uses
   %i.rl = getelementptr inbounds nuw i8, ptr %.sroa.0.01743.i.i, i64 8 ; 2 uses
   %.val.i.i.i = load double, ptr %.sroa.0.01743.i.i, align 8, !noalias !544, !noundef !19 ; 4 uses
@@ -220,14 +220,12 @@ bb.go:                                            ; preds = %.lr.ph.i.i
 
 bb.gp:                                            ; preds = %bb.go
   %i.ro = fcmp olt double %.val.i.i.i, %.sroa.4.0.copyload.i.i
-  br i1 %i.ro, label %bb.gs, label %6
+  br i1 %i.ro, label %bb.gs, label %bb.gq
 
-6:                                                ; preds = %bb.gp
-  %7 = fcmp ogt double %.val.i.i.i, %.sroa.5.0.copyload.i.i
-  br i1 %7, label %bb.gq, label %bb.gu
-
-bb.gq:                                            ; preds = %6
-  %i.rp = add i64 %.sroa.06.045.i.i, 1
+bb.gq:                                            ; preds = %bb.gp
+  %6 = fcmp ogt double %.val.i.i.i, %.sroa.5.0.copyload.i.i
+  %7 = zext i1 %6 to i64
+  %i.rp = add i64 %.sroa.06.045.i.i, %7
   br label %bb.gu
 
 bb.gr:                                            ; preds = %bb.go
@@ -242,11 +240,11 @@ bb.gt:                                            ; preds = %.lr.ph.i.i
   %i.rs = add i64 %.sroa.0.048.i.i, 1
   br label %bb.gu
 
-bb.gu:                                            ; preds = %bb.gt, %bb.gs, %bb.gr, %bb.gq, %6
-  %.sroa.08.1.i.i = phi i64 [ %.sroa.08.044.i.i, %bb.gq ], [ %i.rq, %bb.gr ], [ %.sroa.08.044.i.i, %bb.gs ], [ %.sroa.08.044.i.i, %bb.gt ], [ %.sroa.08.044.i.i, %6 ] ; 2 uses
-  %.sroa.06.1.i.i = phi i64 [ %i.rp, %bb.gq ], [ %.sroa.06.045.i.i, %bb.gr ], [ %.sroa.06.045.i.i, %bb.gs ], [ %.sroa.06.045.i.i, %bb.gt ], [ %.sroa.06.045.i.i, %6 ] ; 2 uses
-  %.sroa.02.1.i.i = phi i64 [ %.sroa.02.047.i.i, %bb.gq ], [ %.sroa.02.047.i.i, %bb.gr ], [ %i.rr, %bb.gs ], [ %.sroa.02.047.i.i, %bb.gt ], [ %.sroa.02.047.i.i, %6 ] ; 2 uses
-  %.sroa.0.1.i.i = phi i64 [ %.sroa.0.048.i.i, %bb.gq ], [ %.sroa.0.048.i.i, %bb.gr ], [ %.sroa.0.048.i.i, %bb.gs ], [ %i.rs, %bb.gt ], [ %.sroa.0.048.i.i, %6 ] ; 2 uses
+bb.gu:                                            ; preds = %bb.gt, %bb.gs, %bb.gr, %bb.gq
+  %.sroa.08.1.i.i = phi i64 [ %.sroa.08.044.i.i, %bb.gq ], [ %i.rq, %bb.gr ], [ %.sroa.08.044.i.i, %bb.gs ], [ %.sroa.08.044.i.i, %bb.gt ] ; 2 uses
+  %.sroa.06.1.i.i = phi i64 [ %i.rp, %bb.gq ], [ %.sroa.06.045.i.i, %bb.gr ], [ %.sroa.06.045.i.i, %bb.gs ], [ %.sroa.06.045.i.i, %bb.gt ] ; 2 uses
+  %.sroa.02.1.i.i = phi i64 [ %.sroa.02.047.i.i, %bb.gq ], [ %.sroa.02.047.i.i, %bb.gr ], [ %i.rr, %bb.gs ], [ %.sroa.02.047.i.i, %bb.gt ] ; 2 uses
+  %.sroa.0.1.i.i = phi i64 [ %.sroa.0.048.i.i, %bb.gq ], [ %.sroa.0.048.i.i, %bb.gr ], [ %.sroa.0.048.i.i, %bb.gs ], [ %i.rs, %bb.gt ] ; 2 uses
   %i.rt = icmp eq ptr %i.rl, %i.rj
   br i1 %i.rt, label %_RNvMNtNtNtNtCs7NzLGBMhIGf_9criterion5stats10univariate8outliers5tukeyINtB2_13LabeledSampledE5countBa_.exit.i, label %.lr.ph.i.i
 

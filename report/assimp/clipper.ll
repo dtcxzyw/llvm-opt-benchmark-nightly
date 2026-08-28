@@ -205,13 +205,11 @@ bb.g:                                             ; preds = %bb.f
   %i.ai = getelementptr inbounds nuw i8, ptr %.0.i.ph, i64 48
   %i.aj = load double, ptr %i.ai, align 8
   %i.ak = fcmp oeq double %i.aj, -1.000000e+40
-  br i1 %i.ak, label %_ZN10ClipperLib13GetMaximaPairEPNS_5TEdgeE.exit, label %bb.h
-
-_ZN10ClipperLib13GetMaximaPairEPNS_5TEdgeE.exit:  ; preds = %bb.g
+  %spec.select = select i1 %i.ak, ptr %.0.i.ph, ptr null
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.f, %bb.c, %bb.d, %bb.e, %bb.g, %_ZN10ClipperLib13GetMaximaPairEPNS_5TEdgeE.exit
-  %.0 = phi ptr [ null, %bb.e ], [ null, %bb.g ], [ %.0.i.ph, %bb.f ], [ null, %bb.c ], [ null, %bb.d ], [ %.0.i.ph, %_ZN10ClipperLib13GetMaximaPairEPNS_5TEdgeE.exit ]
+bb.h:                                             ; preds = %bb.g, %bb.f, %bb.c, %bb.d, %bb.e
+  %.0 = phi ptr [ null, %bb.e ], [ %spec.select, %bb.g ], [ %.0.i.ph, %bb.f ], [ null, %bb.c ], [ null, %bb.d ]
   ret ptr %.0
 }
 

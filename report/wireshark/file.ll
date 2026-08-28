@@ -204,16 +204,14 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   %.018 = phi float [ %i.j, %bb.d ], [ %i.c, %bb.c ], [ %i.c, %bb.b ] ; 2 uses
-  %.0 = phi i64 [ %i.g, %bb.d ], [ %i.g, %bb.c ], [ %1, %bb.b ] ; 2 uses
+  %.0 = phi i64 [ %i.g, %bb.d ], [ %i.g, %bb.c ], [ %1, %bb.b ]
   %i.k = fcmp ogt float %.018, 1.000000e+00
-  br i1 %i.k, label %4, label %bb.f
-
-4:                                                ; preds = %bb.e
+  %spec.store.select = select i1 %i.k, float 1.000000e+00, float %.018
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %4, %bb.a
-  %.119 = phi float [ 1.000000e+00, %4 ], [ %.018, %bb.e ], [ %i.c, %bb.a ]
-  %.1 = phi i64 [ %.0, %4 ], [ %.0, %bb.e ], [ %1, %bb.a ]
+bb.f:                                             ; preds = %bb.e, %bb.a
+  %.119 = phi float [ %spec.store.select, %bb.e ], [ %i.c, %bb.a ]
+  %.1 = phi i64 [ %.0, %bb.e ], [ %1, %bb.a ]
   %i.l = tail call ptr @format_size_wmem(ptr noundef null, i64 noundef %2, i32 noundef 1, i16 noundef zeroext 2) ; 2 uses
   %i.m = tail call ptr @format_size_wmem(ptr noundef null, i64 noundef %.1, i32 noundef 1, i16 noundef zeroext 2) ; 2 uses
   %i.n = tail call i32 (ptr, i64, i32, i64, ptr, ...) @__snprintf_chk(ptr noundef %3, i64 noundef 100, i32 noundef 2, i64 noundef -1, ptr noundef nonnull @.str.53, ptr noundef %i.l, ptr noundef %i.m) ; 0 uses

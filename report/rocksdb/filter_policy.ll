@@ -205,13 +205,11 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.f = fcmp olt double %1, 1.000000e+02
-  br i1 %i.f, label %bb.d, label %2
-
-2:                                                ; preds = %bb.c
+  %spec.store.select = select i1 %i.f, double %1, double 1.000000e+02
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %bb.a, %2, %bb.c
-  %.0 = phi double [ 1.000000e+02, %2 ], [ 0.000000e+00, %bb.a ], [ %1, %bb.c ], [ 1.000000e+00, %bb.b ] ; 3 uses
+bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
+  %.0 = phi double [ %spec.store.select, %bb.c ], [ 0.000000e+00, %bb.a ], [ 1.000000e+00, %bb.b ] ; 3 uses
   %i.g = tail call double @llvm.fmuladd.f64(double %.0, double 1.000000e+03, double 5.000010e-01)
   %i.h = fptosi double %i.g to i32                ; 16 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -614,15 +612,14 @@ bb.f:                                             ; preds = %bb.e
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 80
   %i.bg = load ptr, ptr %i.bf, align 8
   %i.bh = tail call noundef double %i.bg(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %2, i64 noundef %i.bd) ; 2 uses
-  %i.bi = fcmp ugt double %i.bh, %i.l
-  br i1 %i.bi, label %4, label %bb.g
-
-4:                                                ; preds = %bb.f
+  %i.bi = fcmp ugt double %i.bh, %i.l             ; 2 uses
+  %spec.select = select i1 %i.bi, double %i.g, double %i.bh
+  %spec.select75 = select i1 %i.bi, i64 %1, i64 %i.bd
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.c, %bb.d, %bb.e, %bb.f, %4, %bb.b
-  %.353 = phi double [ %i.g, %bb.b ], [ %i.ab, %bb.c ], [ %i.g, %4 ], [ %i.an, %bb.d ], [ %i.bh, %bb.f ], [ %i.ax, %bb.e ]
-  %.3 = phi i64 [ %1, %bb.b ], [ %i.x, %bb.c ], [ %1, %4 ], [ %i.aj, %bb.d ], [ %i.bd, %bb.f ], [ %i.at, %bb.e ] ; 2 uses
+bb.g:                                             ; preds = %bb.f, %bb.c, %bb.d, %bb.e, %bb.b
+  %.353 = phi double [ %i.g, %bb.b ], [ %i.ab, %bb.c ], [ %i.ax, %bb.e ], [ %i.an, %bb.d ], [ %spec.select, %bb.f ]
+  %.3 = phi i64 [ %1, %bb.b ], [ %i.x, %bb.c ], [ %i.at, %bb.e ], [ %i.aj, %bb.d ], [ %spec.select75, %bb.f ] ; 2 uses
   %i.bj = add i64 %.3, 5                          ; 3 uses
   %i.bk = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.bj) #40 ; 2 uses
   %i.bl = load ptr, ptr %3, align 8, !tbaa !304   ; 2 uses

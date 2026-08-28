@@ -40,14 +40,12 @@ bb.d:                                             ; preds = %bb.c
   %i.p = fadd double %i.f, f0xC04DF853E2556B28
   %i.q = call noundef double @llvm.fabs.f64(double %i.p)
   %i.r = fcmp olt double %i.q, 2.000000e-03
-  br i1 %i.r, label %_ZN7Imf_3_413guessExactFpsERKNS_8RationalE.exit, label %2
-
-2:                                                ; preds = %bb.d
   %.sroa.0.0.copyload.i = load i64, ptr %1, align 8
+  %spec.select.i = select i1 %i.r, i64 4299262323296, i64 %.sroa.0.0.copyload.i
   br label %_ZN7Imf_3_413guessExactFpsERKNS_8RationalE.exit
 
-_ZN7Imf_3_413guessExactFpsERKNS_8RationalE.exit:  ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %2
-  %.sroa.0.0.i = phi i64 [ %.sroa.0.0.copyload.i, %2 ], [ 4299262287296, %bb.a ], [ 4299262293296, %bb.b ], [ 4299262311296, %bb.c ], [ 4299262323296, %bb.d ]
+_ZN7Imf_3_413guessExactFpsERKNS_8RationalE.exit:  ; preds = %bb.a, %bb.b, %bb.c, %bb.d
+  %.sroa.0.0.i = phi i64 [ %spec.select.i, %bb.d ], [ 4299262287296, %bb.a ], [ 4299262293296, %bb.b ], [ 4299262311296, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #5
   ret i64 %.sroa.0.0.i
 }
@@ -82,14 +80,12 @@ bb.d:                                             ; preds = %bb.c
   %i.p = fadd double %i.f, f0xC04DF853E2556B28
   %i.q = tail call noundef double @llvm.fabs.f64(double %i.p)
   %i.r = fcmp olt double %i.q, 2.000000e-03
-  br i1 %i.r, label %bb.e, label %1
-
-1:                                                ; preds = %bb.d
   %.sroa.0.0.copyload = load i64, ptr %0, align 4
+  %spec.select = select i1 %i.r, i64 4299262323296, i64 %.sroa.0.0.copyload
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a, %1
-  %.sroa.0.0 = phi i64 [ %.sroa.0.0.copyload, %1 ], [ 4299262287296, %bb.a ], [ 4299262293296, %bb.b ], [ 4299262311296, %bb.c ], [ 4299262323296, %bb.d ]
+bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a
+  %.sroa.0.0 = phi i64 [ %spec.select, %bb.d ], [ 4299262287296, %bb.a ], [ 4299262293296, %bb.b ], [ 4299262311296, %bb.c ]
   ret i64 %.sroa.0.0
 }
 

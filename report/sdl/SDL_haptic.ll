@@ -202,15 +202,13 @@ bb.d:                                             ; preds = %SDL_ObjectValid.exi
 
 bb.e:                                             ; preds = %bb.d
   %i.j = fcmp olt float %1, 0.000000e+00
-  br i1 %i.j, label %3, label %bb.f
-
-3:                                                ; preds = %bb.e
+  %spec.store.select = select i1 %i.j, float 0.000000e+00, float %1
+  %3 = fmul float %spec.store.select, 3.276700e+04
+  %4 = fptosi float %3 to i16
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.d, %bb.e, %3
-  %.022 = phi float [ %1, %bb.e ], [ 0.000000e+00, %3 ], [ 1.000000e+00, %bb.d ]
-  %4 = fmul float %.022, 3.276700e+04
-  %5 = fptosi float %4 to i16                     ; 3 uses
+bb.f:                                             ; preds = %bb.d, %bb.e
+  %.022 = phi i16 [ %4, %bb.e ], [ 32767, %bb.d ] ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.l = load i16, ptr %i.k, align 8
   switch i16 %i.l, label %bb.i [
@@ -220,14 +218,14 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %3
 
 bb.g:                                             ; preds = %bb.f
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store i16 %5, ptr %i.m, align 8
+  store i16 %.022, ptr %i.m, align 8
   br label %.sink.split
 
 bb.h:                                             ; preds = %bb.f
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i16 %5, ptr %i.n, align 8
+  store i16 %.022, ptr %i.n, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 66
-  store i16 %5, ptr %i.o, align 2
+  store i16 %.022, ptr %i.o, align 2
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.g, %bb.h

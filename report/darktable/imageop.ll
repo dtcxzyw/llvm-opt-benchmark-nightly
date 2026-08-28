@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %.not92 = icmp eq i32 %2, 0
-  %spec.select = select i1 %.not92, double 3.000000e-01, double 1.000000e+00
+  %spec.select = select nsz i1 %.not92, double 3.000000e-01, double 1.000000e+00
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.j
@@ -608,15 +608,14 @@ bb.p:                                             ; preds = %.thread174
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 68
   %i.bi = load float, ptr %i.bh, align 4, !tbaa !102
   %i.bj = fmul reassoc nsz arcp contract afn float %i.bi, 1.000010e+00
-  %4 = fcmp reassoc nsz arcp contract afn ugt float %i.az, %i.bj
-  br i1 %4, label %.thread, label %5
-
-5:                                                ; preds = %bb.p
+  %4 = fcmp reassoc nsz arcp contract afn ole float %i.az, %i.bj ; 2 uses
+  %spec.select = zext i1 %4 to i32
+  %spec.select174 = select i1 %4, ptr @.str.106, ptr @.str.70
   br label %.thread
 
-.thread:                                          ; preds = %bb.m, %.thread174, %bb.p, %5, %bb.o
-  %.6 = phi i32 [ 1, %bb.o ], [ 1, %5 ], [ 0, %bb.p ], [ 0, %.thread174 ], [ 1, %bb.m ]
-  %.1 = phi ptr [ @.str.70, %bb.o ], [ @.str.106, %5 ], [ @.str.70, %bb.p ], [ @.str.70, %.thread174 ], [ @.str.70, %bb.m ]
+.thread:                                          ; preds = %bb.m, %bb.p, %.thread174, %bb.o
+  %.6 = phi i32 [ 1, %bb.o ], [ 0, %.thread174 ], [ %spec.select, %bb.p ], [ 1, %bb.m ]
+  %.1 = phi ptr [ @.str.70, %bb.o ], [ @.str.70, %.thread174 ], [ %spec.select174, %bb.p ], [ @.str.70, %bb.m ]
   %i.bk = fpext reassoc nsz arcp contract afn float %i.az to double
   %i.bl = fpext reassoc nsz arcp contract afn float %.pre242 to double
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 68

@@ -202,18 +202,16 @@ bb.z:                                             ; preds = %bb.y
   %i.cf = fmul double %..i.i.i.i, 1.000000e+03
   %i.cg = select i1 %i.cd, double 1.000000e+01, double %i.cf ; 3 uses
   %i.ch = fcmp ult double %i.cg, f0x43E0000000000000
-  br i1 %i.ch, label %_ZN9grpc_core8Duration19FromSecondsAsDoubleEd.exit.i.i.i, label %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit.i.i.i
-
-_ZN9grpc_core8Duration19FromSecondsAsDoubleEd.exit.i.i.i: ; preds = %.noexc52
-  %.inv.i.i.i = fcmp ole double %i.cg, f0xC3E0000000000000
-  %.sroa.0.0.i60.i.i.i = select i1 %.inv.i.i.i, double f0xC3E0000000000000, double %i.cg
-  %.sroa.0.0.i.i.i.i = fptosi double %.sroa.0.0.i60.i.i.i to i64 ; 5 uses
+  %.inv.i.i.i.i = fcmp ole double %i.cg, f0xC3E0000000000000
+  %spec.select4.i.i.i.i = select i1 %.inv.i.i.i.i, double f0xC3E0000000000000, double %i.cg
+  %spec.select.i.i.i.i = fptosi double %spec.select4.i.i.i.i to i64
+  %.sroa.0.0.i.i.i.i = select i1 %i.ch, i64 %spec.select.i.i.i.i, i64 9223372036854775807 ; 5 uses
   %14 = icmp eq i64 %.sroa.010.0.copyload.sroa.speculated.i.i.i, 9223372036854775807
   %15 = icmp eq i64 %.sroa.0.0.i.i.i.i, 9223372036854775807
   %or.cond.i.i.i.i.i = or i1 %15, %14
   br i1 %or.cond.i.i.i.i.i, label %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit.i.i.i, label %bb.aa
 
-bb.aa:                                            ; preds = %_ZN9grpc_core8Duration19FromSecondsAsDoubleEd.exit.i.i.i
+bb.aa:                                            ; preds = %.noexc52
   %i.ci = icmp eq i64 %.sroa.010.0.copyload.sroa.speculated.i.i.i, -9223372036854775808
   %i.cj = icmp eq i64 %.sroa.0.0.i.i.i.i, -9223372036854775808
   %or.cond9.i.i.i.i.i = or i1 %i.cj, %i.ci
@@ -225,20 +223,20 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab
   %i.cl = sub nuw nsw i64 9223372036854775807, %.sroa.010.0.copyload.sroa.speculated.i.i.i
-  %16 = icmp slt i64 %i.cl, %.sroa.0.0.i.i.i.i
+  %16 = icmp sgt i64 %.sroa.0.0.i.i.i.i, %i.cl
   br i1 %16, label %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit.i.i.i, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ab
   %i.cm = sub nsw i64 -9223372036854775808, %.sroa.010.0.copyload.sroa.speculated.i.i.i
-  %17 = icmp sgt i64 %i.cm, %.sroa.0.0.i.i.i.i
+  %17 = icmp slt i64 %.sroa.0.0.i.i.i.i, %i.cm
   br i1 %17, label %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit.i.i.i, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.cn = add nsw i64 %.sroa.010.0.copyload.sroa.speculated.i.i.i, %.sroa.0.0.i.i.i.i
   br label %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit.i.i.i
 
-_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit.i.i.i: ; preds = %bb.ae, %bb.ad, %bb.ac, %bb.aa, %_ZN9grpc_core8Duration19FromSecondsAsDoubleEd.exit.i.i.i, %.noexc52
-  %.0.i.i.i.i.i = phi i64 [ -9223372036854775808, %bb.aa ], [ 9223372036854775807, %_ZN9grpc_core8Duration19FromSecondsAsDoubleEd.exit.i.i.i ], [ -9223372036854775808, %bb.ad ], [ %i.cn, %bb.ae ], [ 9223372036854775807, %bb.ac ], [ 9223372036854775807, %.noexc52 ]
+_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit.i.i.i: ; preds = %bb.ae, %bb.ad, %bb.ac, %bb.aa, %.noexc52
+  %.0.i.i.i.i.i = phi i64 [ -9223372036854775808, %bb.aa ], [ 9223372036854775807, %.noexc52 ], [ -9223372036854775808, %bb.ad ], [ %i.cn, %bb.ae ], [ 9223372036854775807, %bb.ac ]
   store i64 %.0.i.i.i.i.i, ptr %i.be, align 8, !tbaa !19
   %i.co = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN9grpc_core17timer_check_traceE, i64 8) monotonic, align 8, !range !22, !noundef !23
   %i.cp = trunc nuw i8 %i.co to i1

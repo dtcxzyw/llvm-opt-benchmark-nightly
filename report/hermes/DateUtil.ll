@@ -204,13 +204,11 @@ _ZN6hermes2vm10inLeapYearEd.exit.9:               ; preds = %_ZN6hermes2vm10inLe
 _ZN6hermes2vm10inLeapYearEd.exit.10:              ; preds = %_ZN6hermes2vm10inLeapYearEd.exit.9
   %i.au = fadd double %i.as, 3.000000e+01
   %i.av = fcmp olt double %i.t, %i.au
-  br i1 %i.av, label %bb.c, label %1
-
-1:                                                ; preds = %_ZN6hermes2vm10inLeapYearEd.exit.10
+  %spec.select29 = select i1 %i.av, i32 10, i32 11
   br label %bb.c
 
-bb.c:                                             ; preds = %1, %_ZN6hermes2vm10inLeapYearEd.exit.10, %_ZN6hermes2vm10inLeapYearEd.exit.9, %_ZN6hermes2vm10inLeapYearEd.exit.8, %_ZN6hermes2vm10inLeapYearEd.exit.7, %_ZN6hermes2vm10inLeapYearEd.exit.6, %_ZN6hermes2vm10inLeapYearEd.exit.5, %_ZN6hermes2vm10inLeapYearEd.exit.4, %_ZN6hermes2vm10inLeapYearEd.exit.3, %_ZN6hermes2vm10inLeapYearEd.exit.2, %_ZN6hermes2vm10inLeapYearEd.exit.1, %_ZN6hermes2vm10inLeapYearEd.exit
-  %spec.select = phi i32 [ 0, %_ZN6hermes2vm10inLeapYearEd.exit ], [ 11, %1 ], [ 1, %_ZN6hermes2vm10inLeapYearEd.exit.1 ], [ 10, %_ZN6hermes2vm10inLeapYearEd.exit.10 ], [ 2, %_ZN6hermes2vm10inLeapYearEd.exit.2 ], [ 6, %_ZN6hermes2vm10inLeapYearEd.exit.6 ], [ 3, %_ZN6hermes2vm10inLeapYearEd.exit.3 ], [ 9, %_ZN6hermes2vm10inLeapYearEd.exit.9 ], [ 4, %_ZN6hermes2vm10inLeapYearEd.exit.4 ], [ 7, %_ZN6hermes2vm10inLeapYearEd.exit.7 ], [ 5, %_ZN6hermes2vm10inLeapYearEd.exit.5 ], [ 8, %_ZN6hermes2vm10inLeapYearEd.exit.8 ]
+bb.c:                                             ; preds = %_ZN6hermes2vm10inLeapYearEd.exit.10, %_ZN6hermes2vm10inLeapYearEd.exit.9, %_ZN6hermes2vm10inLeapYearEd.exit.8, %_ZN6hermes2vm10inLeapYearEd.exit.7, %_ZN6hermes2vm10inLeapYearEd.exit.6, %_ZN6hermes2vm10inLeapYearEd.exit.5, %_ZN6hermes2vm10inLeapYearEd.exit.4, %_ZN6hermes2vm10inLeapYearEd.exit.3, %_ZN6hermes2vm10inLeapYearEd.exit.2, %_ZN6hermes2vm10inLeapYearEd.exit.1, %_ZN6hermes2vm10inLeapYearEd.exit
+  %spec.select = phi i32 [ 0, %_ZN6hermes2vm10inLeapYearEd.exit ], [ 8, %_ZN6hermes2vm10inLeapYearEd.exit.8 ], [ 1, %_ZN6hermes2vm10inLeapYearEd.exit.1 ], [ %spec.select29, %_ZN6hermes2vm10inLeapYearEd.exit.10 ], [ 2, %_ZN6hermes2vm10inLeapYearEd.exit.2 ], [ 6, %_ZN6hermes2vm10inLeapYearEd.exit.6 ], [ 3, %_ZN6hermes2vm10inLeapYearEd.exit.3 ], [ 9, %_ZN6hermes2vm10inLeapYearEd.exit.9 ], [ 4, %_ZN6hermes2vm10inLeapYearEd.exit.4 ], [ 7, %_ZN6hermes2vm10inLeapYearEd.exit.7 ], [ 5, %_ZN6hermes2vm10inLeapYearEd.exit.5 ]
   ret i32 %spec.select
 }
 

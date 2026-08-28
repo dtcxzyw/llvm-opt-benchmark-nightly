@@ -202,8 +202,8 @@ bb.g:                                             ; preds = %bb.f
   %i.ae = fcmp olt double %i.ab, %i.ad
   br i1 %i.ae, label %bb.h, label %bb.l
 
-bb.h:                                             ; preds = %._crit_edge.i.thread, %._crit_edge.thread.i, %bb.g
-  %.sroa.4.0.i.ph = phi ptr [ %.021.lcssa36.i, %bb.g ], [ %.021.lcssa37.i, %._crit_edge.thread.i ], [ %.021.lcssa36.i, %._crit_edge.i.thread ] ; 3 uses
+bb.h:                                             ; preds = %._crit_edge.thread.i, %bb.g, %._crit_edge.i.thread
+  %.sroa.4.0.i.ph = phi ptr [ %.021.lcssa36.i, %._crit_edge.i.thread ], [ %.021.lcssa36.i, %bb.g ], [ %.021.lcssa37.i, %._crit_edge.thread.i ] ; 3 uses
   %i.af = icmp eq ptr %.sroa.4.0.i.ph, %i.b
   br i1 %i.af, label %_ZNSt8_Rb_treeIPKN4geos4geom10CoordinateES4_St9_IdentityIS4_ENS1_18CoordinateLessThenESaIS4_EE10_M_insert_IRKS4_NS9_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS4_EPSt18_Rb_tree_node_baseSH_OT_RT0_.exit, label %bb.i
 
@@ -226,18 +226,15 @@ bb.k:                                             ; preds = %bb.j
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
   %i.aq = load double, ptr %i.ap, align 8, !tbaa !110
   %i.ar = fcmp olt double %i.ao, %i.aq
-  br i1 %i.ar, label %_ZNSt8_Rb_treeIPKN4geos4geom10CoordinateES4_St9_IdentityIS4_ENS1_18CoordinateLessThenESaIS4_EE10_M_insert_IRKS4_NS9_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS4_EPSt18_Rb_tree_node_baseSH_OT_RT0_.exit, label %2
-
-2:                                                ; preds = %bb.k
   br label %_ZNSt8_Rb_treeIPKN4geos4geom10CoordinateES4_St9_IdentityIS4_ENS1_18CoordinateLessThenESaIS4_EE10_M_insert_IRKS4_NS9_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS4_EPSt18_Rb_tree_node_baseSH_OT_RT0_.exit
 
-_ZNSt8_Rb_treeIPKN4geos4geom10CoordinateES4_St9_IdentityIS4_ENS1_18CoordinateLessThenESaIS4_EE10_M_insert_IRKS4_NS9_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS4_EPSt18_Rb_tree_node_baseSH_OT_RT0_.exit: ; preds = %bb.h, %bb.i, %bb.j, %bb.k, %2
-  %3 = phi i1 [ false, %2 ], [ true, %bb.h ], [ true, %bb.k ], [ true, %bb.i ], [ false, %bb.j ]
+_ZNSt8_Rb_treeIPKN4geos4geom10CoordinateES4_St9_IdentityIS4_ENS1_18CoordinateLessThenESaIS4_EE10_M_insert_IRKS4_NS9_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS4_EPSt18_Rb_tree_node_baseSH_OT_RT0_.exit: ; preds = %bb.h, %bb.i, %bb.j, %bb.k
+  %2 = phi i1 [ false, %bb.j ], [ true, %bb.h ], [ %i.ar, %bb.k ], [ true, %bb.i ]
   %i.as = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #22 ; 3 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 32
   %i.au = load ptr, ptr %1, align 8, !tbaa !113
   store ptr %i.au, ptr %i.at, align 8, !tbaa !113
-  tail call void @_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_(i1 noundef zeroext %3, ptr noundef nonnull %i.as, ptr noundef nonnull %.sroa.4.0.i.ph, ptr noundef nonnull align 8 dereferenceable(32) %i.b) #18
+  tail call void @_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_(i1 noundef zeroext %2, ptr noundef nonnull %i.as, ptr noundef nonnull %.sroa.4.0.i.ph, ptr noundef nonnull align 8 dereferenceable(32) %i.b) #18
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.aw = load i64, ptr %i.av, align 8, !tbaa !65
   %i.ax = add i64 %i.aw, 1

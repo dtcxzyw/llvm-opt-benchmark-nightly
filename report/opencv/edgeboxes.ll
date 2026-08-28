@@ -205,13 +205,11 @@ bb.bx:                                            ; preds = %bb.bw
   %i.qz = fsub float 1.000000e+00, %i.qx
   %.0266.2.2 = select i1 %i.qy, float %i.qz, float %i.qx
   %i.ra = fcmp olt float %.0266.2.2, %.2265.1.2
-  br i1 %i.ra, label %4, label %bb.by
-
-4:                                                ; preds = %bb.bx
+  %spec.select1564 = select i1 %i.ra, i32 %i.qr, i32 %.4304.1.2
   br label %bb.by
 
-bb.by:                                            ; preds = %4, %bb.bx, %bb.bw
-  %.4304.2.2 = phi i32 [ %.4304.1.2, %bb.bw ], [ %i.qr, %4 ], [ %.4304.1.2, %bb.bx ] ; 2 uses
+bb.by:                                            ; preds = %bb.bx, %bb.bw
+  %.4304.2.2 = phi i32 [ %.4304.1.2, %bb.bw ], [ %spec.select1564, %bb.bx ] ; 2 uses
   store i32 %.4304.2.2, ptr %i.nl, align 4, !tbaa !89
   %i.rb = icmp ne i32 %.4304.2.2, 0
   %i.rc = zext i1 %i.rb to i32

@@ -205,15 +205,13 @@ bb.g:                                             ; preds = %_ZN6duckdb12Progres
 bb.h:                                             ; preds = %bb.g
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.au = load double, ptr %i.at, align 8, !tbaa !766 ; 2 uses
-  %4 = fcmp ugt double %i.ar, %i.au
-  br i1 %4, label %_ZNK6duckdb12ProgressData7IsValidEv.exit, label %5
-
-5:                                                ; preds = %bb.h
-  %6 = fcmp oge double %i.au, 0.000000e+00
+  %4 = fcmp ole double %i.ar, %i.au
+  %5 = fcmp oge double %i.au, 0.000000e+00
+  %spec.select.i = and i1 %4, %5
   br label %_ZNK6duckdb12ProgressData7IsValidEv.exit
 
-_ZNK6duckdb12ProgressData7IsValidEv.exit:         ; preds = %5, %bb.h, %bb.g, %_ZN6duckdb12ProgressData9NormalizeEd.exit, %bb.b
-  %.0 = phi i1 [ true, %bb.b ], [ false, %bb.h ], [ false, %bb.g ], [ false, %_ZN6duckdb12ProgressData9NormalizeEd.exit ], [ %6, %5 ]
+_ZNK6duckdb12ProgressData7IsValidEv.exit:         ; preds = %bb.h, %bb.g, %_ZN6duckdb12ProgressData9NormalizeEd.exit, %bb.b
+  %.0 = phi i1 [ true, %bb.b ], [ %spec.select.i, %bb.h ], [ false, %bb.g ], [ false, %_ZN6duckdb12ProgressData9NormalizeEd.exit ]
   ret i1 %.0
 }
 

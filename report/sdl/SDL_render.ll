@@ -205,22 +205,19 @@ bb.e:                                             ; preds = %SDL_GetRendererProp
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 524
   store float %i.u, ptr %i.v, align 4
   %i.w = tail call float @SDL_GetFloatProperty_REAL(i32 noundef %i.c, ptr noundef nonnull @.str.103, float noundef 1.000000e+00) #14 ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 528 ; 3 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 528 ; 2 uses
   store float %i.w, ptr %i.x, align 8
   %i.y = fcmp ogt float %i.w, 1.000000e+00
-  br i1 %i.y, label %bb.f, label %1
-
-1:                                                ; preds = %bb.e
   br label %bb.f
 
-bb.f:                                             ; preds = %.thread, %bb.e, %1
-  %.sink = phi i1 [ true, %bb.e ], [ false, %.thread ], [ false, %1 ]
-  %2 = phi ptr [ %i.x, %bb.e ], [ %i.t, %.thread ], [ %i.x, %1 ]
+bb.f:                                             ; preds = %bb.e, %.thread
+  %.sink = phi i1 [ %i.y, %bb.e ], [ false, %.thread ]
+  %1 = phi ptr [ %i.x, %bb.e ], [ %i.t, %.thread ]
   %i.z = tail call zeroext i1 @SDL_SetBooleanProperty_REAL(i32 noundef %.0.i26, ptr noundef nonnull @.str.104, i1 noundef zeroext %.sink) #14 ; 0 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 524 ; 2 uses
   %i.ab = load float, ptr %i.aa, align 4
   %i.ac = tail call zeroext i1 @SDL_SetFloatProperty_REAL(i32 noundef %.0.i26, ptr noundef nonnull @.str.105, float noundef %i.ab) #14 ; 0 uses
-  %i.ad = load float, ptr %2, align 8
+  %i.ad = load float, ptr %1, align 8
   %i.ae = tail call zeroext i1 @SDL_SetFloatProperty_REAL(i32 noundef %.0.i26, ptr noundef nonnull @.str.106, float noundef %i.ad) #14 ; 0 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 496
   %i.ag = load ptr, ptr %i.af, align 8            ; 2 uses
@@ -623,9 +620,10 @@ bb.l:                                             ; preds = %bb.k
   %i.bd = fptosi float %. to i32
   %i.be = fptosi float %.180 to i32
   %i.bf = sdiv i32 %i.bd, %i.be
-  %.1159 = call i32 @llvm.smax.i32(i32 %i.bf, i32 1)
-  %.1 = uitofp nneg i32 %.1159 to float           ; 2 uses
-  %i.bg = fmul nnan float %i.i, %.1
+  %.0 = sitofp i32 %i.bf to float                 ; 2 uses
+  %3 = fcmp olt float %.0, 1.000000e+00
+  %spec.store.select = select i1 %3, float 1.000000e+00, float %.0 ; 2 uses
+  %i.bg = fmul nnan float %spec.store.select, %i.i
   %i.bh = call float @SDL_floorf_REAL(float noundef %i.bg) #14 ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.d, i64 112
   %i.bj = getelementptr inbounds nuw i8, ptr %i.d, i64 120
@@ -633,7 +631,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bk = fsub float %i.av, %i.bh
   %i.bl = fmul float %i.bk, 5.000000e-01
   store float %i.bl, ptr %i.bi, align 4
-  %i.bm = fmul nnan float %i.l, %.1
+  %i.bm = fmul nnan float %spec.store.select, %i.l
   %i.bn = call float @SDL_floorf_REAL(float noundef %i.bm) #14 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.d, i64 124
   store float %i.bn, ptr %i.bo, align 4

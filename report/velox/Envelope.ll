@@ -202,13 +202,10 @@ bb.j:                                             ; preds = %bb.i
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.w = load double, ptr %i.v, align 8, !tbaa !15
   %i.x = fcmp olt double %i.u, %i.w
-  br i1 %i.x, label %bb.k, label %2
-
-2:                                                ; preds = %bb.j
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %2
-  %.0 = phi i1 [ %i.f, %bb.b ], [ false, %2 ], [ false, %bb.i ], [ false, %bb.c ], [ true, %bb.d ], [ false, %bb.e ], [ true, %bb.f ], [ false, %bb.g ], [ true, %bb.h ], [ true, %bb.j ]
+bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
+  %.0 = phi i1 [ %i.f, %bb.b ], [ %i.x, %bb.j ], [ false, %bb.i ], [ false, %bb.c ], [ true, %bb.d ], [ false, %bb.e ], [ true, %bb.f ], [ false, %bb.g ], [ true, %bb.h ]
   ret i1 %.0
 }
 

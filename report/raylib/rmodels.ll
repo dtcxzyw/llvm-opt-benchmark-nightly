@@ -205,21 +205,13 @@ bb.a:
   %i.a = icmp sgt i32 %4, 2
   %i.b = icmp sgt i32 %3, 2
   %or.cond = and i1 %i.b, %i.a
-  br i1 %or.cond, label %5, label %bb.d
+  br i1 %or.cond, label %bb.b, label %bb.d
 
-5:                                                ; preds = %bb.a
-  %6 = fcmp ogt float %1, 1.000000e+00
-  br i1 %6, label %bb.b, label %7
-
-7:                                                ; preds = %5
-  %8 = fcmp olt float %1, 1.000000e-01
-  br i1 %8, label %9, label %bb.b
-
-9:                                                ; preds = %7
-  br label %bb.b
-
-bb.b:                                             ; preds = %5, %7, %9
-  %.051 = phi float [ %1, %7 ], [ 1.000000e-01, %9 ], [ 1.000000e+00, %5 ]
+bb.b:                                             ; preds = %bb.a
+  %5 = fcmp ogt float %1, 1.000000e+00
+  %6 = fcmp olt float %1, 1.000000e-01
+  %spec.store.select = select i1 %6, float 1.000000e-01, float %1
+  %.051 = select i1 %5, float 1.000000e+00, float %spec.store.select
   %i.c = tail call ptr @par_shapes_create_torus(i32 noundef %3, i32 noundef %4, float noundef %.051) ; 7 uses
   %i.d = fmul float %2, 5.000000e-01              ; 3 uses
   tail call void @par_shapes_scale(ptr noundef %i.c, float noundef %i.d, float noundef %i.d, float noundef %i.d)
@@ -356,21 +348,13 @@ bb.a:
   %i.b = icmp sgt i32 %4, 2
   %i.c = icmp sgt i32 %3, 2
   %or.cond = and i1 %i.c, %i.b
-  br i1 %or.cond, label %5, label %bb.c
+  br i1 %or.cond, label %par_shapes_create_trefoil_knot.exit, label %bb.c
 
-5:                                                ; preds = %bb.a
-  %6 = fcmp ogt float %1, 3.000000e+00
-  br i1 %6, label %par_shapes_create_trefoil_knot.exit, label %7
-
-7:                                                ; preds = %5
-  %8 = fcmp olt float %1, 5.000000e-01
-  br i1 %8, label %9, label %par_shapes_create_trefoil_knot.exit
-
-9:                                                ; preds = %7
-  br label %par_shapes_create_trefoil_knot.exit
-
-par_shapes_create_trefoil_knot.exit:              ; preds = %5, %7, %9
-  %.051 = phi float [ %1, %7 ], [ 5.000000e-01, %9 ], [ 3.000000e+00, %5 ]
+par_shapes_create_trefoil_knot.exit:              ; preds = %bb.a
+  %5 = fcmp ogt float %1, 3.000000e+00
+  %6 = fcmp olt float %1, 5.000000e-01
+  %spec.store.select = select i1 %6, float 5.000000e-01, float %1
+  %.051 = select i1 %5, float 3.000000e+00, float %spec.store.select
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store float %.051, ptr %i.a, align 4
   %i.d = call ptr @par_shapes_create_parametric(ptr noundef nonnull @par_shapes__trefoil, i32 noundef %3, i32 noundef %4, ptr noundef nonnull %i.a) ; 7 uses

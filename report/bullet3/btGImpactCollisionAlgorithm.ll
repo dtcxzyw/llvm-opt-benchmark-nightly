@@ -205,8 +205,8 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.ax = load float, ptr %i.q, align 4, !tbaa !65
   %i.ay = load float, ptr %i.r, align 4, !tbaa !65
-  %8 = fcmp olt float %i.ax, %i.ay
-  br i1 %8, label %_ZNK6btAABB13has_collisionERKS_.exit.thread, label %_ZNK6btAABB13has_collisionERKS_.exit
+  %8 = fcmp uge float %i.ax, %i.ay
+  br i1 %8, label %_ZNK6btAABB13has_collisionERKS_.exit, label %_ZNK6btAABB13has_collisionERKS_.exit.thread
 
 _ZNK6btAABB13has_collisionERKS_.exit:             ; preds = %bb.j
   %i.az = load i32, ptr %i.s, align 4, !tbaa !66  ; 7 uses
@@ -368,7 +368,7 @@ _ZN9btPairSet9push_pairEii.exit:                  ; preds = %_ZNK6btAABB13has_co
   store i32 %i.cq, ptr %i.s, align 4, !tbaa !66
   br label %_ZNK6btAABB13has_collisionERKS_.exit.thread
 
-_ZNK6btAABB13has_collisionERKS_.exit.thread:      ; preds = %.lr.ph, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %_ZN9btPairSet9push_pairEii.exit
+_ZNK6btAABB13has_collisionERKS_.exit.thread:      ; preds = %bb.f, %bb.g, %bb.h, %bb.i, %.lr.ph, %_ZN9btPairSet9push_pairEii.exit, %bb.j
   %.not20 = icmp eq i32 %i.ae, 0
   br i1 %.not20, label %.loopexit, label %.lr.ph, !llvm.loop !84
 
@@ -601,8 +601,8 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.fi = load float, ptr %i.ej, align 4, !tbaa !65
   %i.fj = load float, ptr %i.ek, align 4, !tbaa !65
-  %9 = fcmp olt float %i.fi, %i.fj
-  br i1 %9, label %_ZNK6btAABB13has_collisionERKS_.exit.thread, label %_ZNK6btAABB13has_collisionERKS_.exit
+  %9 = fcmp uge float %i.fi, %i.fj
+  br i1 %9, label %_ZNK6btAABB13has_collisionERKS_.exit, label %_ZNK6btAABB13has_collisionERKS_.exit.thread
 
 _ZNK6btAABB13has_collisionERKS_.exit:             ; preds = %bb.i
   %i.fk = load i32, ptr %i.el, align 4, !tbaa !92 ; 7 uses
@@ -751,7 +751,7 @@ _ZN20btAlignedObjectArrayIiE9push_backERKi.exit:  ; preds = %_ZNK6btAABB13has_co
   store i32 %i.hb, ptr %i.el, align 4, !tbaa !92
   br label %_ZNK6btAABB13has_collisionERKS_.exit.thread
 
-_ZNK6btAABB13has_collisionERKS_.exit.thread:      ; preds = %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %_ZN20btAlignedObjectArrayIiE9push_backERKi.exit
+_ZNK6btAABB13has_collisionERKS_.exit.thread:      ; preds = %bb.e, %bb.f, %bb.g, %bb.h, %bb.d, %_ZN20btAlignedObjectArrayIiE9push_backERKi.exit, %bb.i
   %.not = icmp eq i32 %i.ep, 0
   br i1 %.not, label %._crit_edge, label %bb.d, !llvm.loop !102
 
@@ -1154,13 +1154,10 @@ bb.c:                                             ; preds = %bb.b
   %i.ge = fcmp uge float %i.gd, %i.ba
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
-  br i1 %i.ge, label %5, label %.loopexit
-
-5:                                                ; preds = %bb.c
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.preheader, %bb.b, %bb.c, %5, %bb.a
-  %.3 = phi i1 [ false, %bb.a ], [ false, %.preheader ], [ true, %5 ], [ false, %bb.b ], [ false, %bb.c ]
+.loopexit:                                        ; preds = %bb.c, %.preheader, %bb.b, %bb.a
+  %.3 = phi i1 [ false, %bb.a ], [ false, %.preheader ], [ %i.ge, %bb.c ], [ false, %bb.b ]
   ret i1 %.3
 }
 

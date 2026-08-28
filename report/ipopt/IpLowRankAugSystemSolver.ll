@@ -202,13 +202,13 @@ bb.x:                                             ; preds = %bb.w
   %.not44.i = icmp eq i32 %i.co, 0
   br i1 %.not44.i, label %bb.y, label %_ZN5Ipopt22LowRankAugSystemSolver29AugmentedSystemRequiresChangeEPKNS_9SymMatrixEdPKNS_6VectorEdS6_dRKNS_6MatrixES6_dS9_S6_d.exit.thread
 
-bb.y:                                             ; preds = %.critedge52.i, %bb.x
+bb.y:                                             ; preds = %bb.x, %.critedge52.i
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.cq = load double, ptr %i.cp, align 8, !tbaa !115
   %i.cr = fcmp une double %12, %i.cq
   br i1 %i.cr, label %_ZN5Ipopt22LowRankAugSystemSolver29AugmentedSystemRequiresChangeEPKNS_9SymMatrixEdPKNS_6VectorEdS6_dRKNS_6MatrixES6_dS9_S6_d.exit.thread, label %_ZN5Ipopt22LowRankAugSystemSolver29AugmentedSystemRequiresChangeEPKNS_9SymMatrixEdPKNS_6VectorEdS6_dRKNS_6MatrixES6_dS9_S6_d.exit
 
-_ZN5Ipopt22LowRankAugSystemSolver29AugmentedSystemRequiresChangeEPKNS_9SymMatrixEdPKNS_6VectorEdS6_dRKNS_6MatrixES6_dS9_S6_d.exit.thread: ; preds = %bb.j, %.critedge.i, %bb.k, %bb.m, %.critedge46.i, %bb.n, %bb.p, %.critedge48.i, %bb.q, %bb.r, %bb.t, %.critedge50.i, %bb.u, %bb.v, %bb.x, %.critedge52.i, %bb.y, %_ZN5Ipopt8SmartPtrINS_15DiagMatrixSpaceEED2Ev.exit
+_ZN5Ipopt22LowRankAugSystemSolver29AugmentedSystemRequiresChangeEPKNS_9SymMatrixEdPKNS_6VectorEdS6_dRKNS_6MatrixES6_dS9_S6_d.exit.thread: ; preds = %.critedge.i, %bb.k, %bb.m, %.critedge46.i, %bb.n, %bb.p, %.critedge48.i, %bb.q, %bb.r, %bb.t, %.critedge50.i, %bb.u, %bb.v, %bb.x, %.critedge52.i, %bb.j, %bb.y, %_ZN5Ipopt8SmartPtrINS_15DiagMatrixSpaceEED2Ev.exit
   %i.cs = tail call noundef i32 @_ZN5Ipopt22LowRankAugSystemSolver19UpdateFactorizationEPKNS_9SymMatrixEdPKNS_6VectorEdS6_dRKNS_6MatrixES6_dS9_S6_dRS5_SA_SA_SA_bi(ptr noundef nonnull align 8 dereferenceable(204) %0, ptr noundef %1, double noundef %2, ptr noundef %3, double noundef %4, ptr noundef %5, double noundef %6, ptr noundef nonnull align 8 dereferenceable(69) %7, ptr noundef %8, double noundef %9, ptr noundef nonnull align 8 dereferenceable(69) %10, ptr noundef %11, double noundef %12, ptr noundef nonnull align 8 dereferenceable(205) %13, ptr noundef nonnull align 8 dereferenceable(205) %14, ptr noundef nonnull align 8 dereferenceable(205) %15, ptr noundef nonnull align 8 dereferenceable(205) %16, i1 noundef zeroext %spec.select, i32 noundef %22) ; 2 uses
   %.not = icmp eq i32 %i.cs, 0
   br i1 %.not, label %bb.z, label %_ZN5Ipopt8SmartPtrINS_14CompoundVectorEED2Ev.exit164
@@ -287,7 +287,7 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   store i8 0, ptr %i.a, align 8, !tbaa !79
   br label %_ZN5Ipopt22LowRankAugSystemSolver29AugmentedSystemRequiresChangeEPKNS_9SymMatrixEdPKNS_6VectorEdS6_dRKNS_6MatrixES6_dS9_S6_d.exit
 
-_ZN5Ipopt22LowRankAugSystemSolver29AugmentedSystemRequiresChangeEPKNS_9SymMatrixEdPKNS_6VectorEdS6_dRKNS_6MatrixES6_dS9_S6_d.exit: ; preds = %bb.y, %bb.ah
+_ZN5Ipopt22LowRankAugSystemSolver29AugmentedSystemRequiresChangeEPKNS_9SymMatrixEdPKNS_6VectorEdS6_dRKNS_6MatrixES6_dS9_S6_d.exit: ; preds = %bb.ah, %bb.y
   %i.dt = load ptr, ptr %i.aj, align 8, !tbaa !33 ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.dv = load ptr, ptr %i.du, align 8, !tbaa !64
@@ -690,13 +690,10 @@ bb.q:                                             ; preds = %bb.p, %.critedge52
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.az = load double, ptr %i.ay, align 8, !tbaa !115
   %i.ba = fcmp une double %12, %i.az
-  br i1 %i.ba, label %bb.r, label %13
-
-13:                                               ; preds = %bb.q
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.b, %.critedge, %bb.c, %bb.e, %.critedge46, %bb.f, %bb.h, %.critedge48, %bb.i, %bb.j, %bb.l, %.critedge50, %bb.m, %bb.n, %bb.p, %.critedge52, %bb.q, %13
-  %.0 = phi i1 [ false, %13 ], [ true, %bb.q ], [ true, %.critedge52 ], [ true, %bb.p ], [ true, %bb.n ], [ true, %bb.m ], [ true, %.critedge50 ], [ true, %bb.l ], [ true, %bb.j ], [ true, %bb.i ], [ true, %.critedge48 ], [ true, %bb.h ], [ true, %bb.f ], [ true, %.critedge46 ], [ true, %bb.e ], [ true, %bb.c ], [ true, %.critedge ], [ true, %bb.b ]
+bb.r:                                             ; preds = %bb.q, %bb.b, %.critedge, %bb.c, %bb.e, %.critedge46, %bb.f, %bb.h, %.critedge48, %bb.i, %bb.j, %bb.l, %.critedge50, %bb.m, %bb.n, %bb.p, %.critedge52
+  %.0 = phi i1 [ true, %bb.b ], [ %i.ba, %bb.q ], [ true, %.critedge52 ], [ true, %bb.p ], [ true, %bb.n ], [ true, %bb.m ], [ true, %.critedge50 ], [ true, %bb.l ], [ true, %bb.j ], [ true, %bb.i ], [ true, %.critedge48 ], [ true, %bb.h ], [ true, %bb.f ], [ true, %.critedge46 ], [ true, %bb.e ], [ true, %bb.c ], [ true, %.critedge ]
   ret i1 %.0
 }
 

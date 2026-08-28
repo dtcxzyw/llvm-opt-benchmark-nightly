@@ -205,7 +205,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.av
   %i.fx = fcmp une double %i.ft, %i.fw
   %or.cond629 = and i1 %i.fv, %i.fx
   %i.fy = sext i1 %or.cond629 to i32
-  %.0463 = add i32 %i.fy, %i.fu                   ; 5 uses
+  %.0463 = add i32 %i.fy, %i.fu                   ; 4 uses
   %or.cond = icmp ugt i32 %.0463, 22              ; 3 uses
   br i1 %or.cond, label %bb.bc, label %bb.bb
 
@@ -214,14 +214,12 @@ bb.bb:                                            ; preds = %bb.ba
   %i.ga = getelementptr [8 x i8], ptr @tens, i64 %i.fz
   %i.gb = load double, ptr %i.ga, align 8, !tbaa !26
   %i.gc = fcmp olt double %.sroa.0.0794, %i.gb
-  br i1 %i.gc, label %select.unfold, label %bb.bc
-
-select.unfold:                                    ; preds = %bb.bb
-  %6 = add nsw i32 %.0463, -1
+  %6 = sext i1 %i.gc to i32
+  %spec.select = add nsw i32 %.0463, %6
   br label %bb.bc
 
-bb.bc:                                            ; preds = %bb.bb, %select.unfold, %bb.ba
-  %.2465 = phi i32 [ %.0463, %bb.bb ], [ %.0463, %bb.ba ], [ %6, %select.unfold ] ; 30 uses
+bb.bc:                                            ; preds = %bb.bb, %bb.ba
+  %.2465 = phi i32 [ %spec.select, %bb.bb ], [ %.0463, %bb.ba ] ; 30 uses
   %i.gd = xor i32 %.0491, -1
   %i.ge = add nsw i32 %.0797.ph1340, %i.gd        ; 3 uses
   %i.gf = icmp sgt i32 %i.ge, -1                  ; 2 uses

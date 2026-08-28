@@ -205,17 +205,14 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %i.ci = getelementptr inbounds nuw i8, ptr %.16.val, i64 112
   %i.cj = load double, ptr %i.ci, align 8, !tbaa !55
-  %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.cl = fsub double %.sink, %i.cj               ; 2 uses
-  store double %i.cl, ptr %i.ck, align 8, !tbaa !234
   %5 = fcmp olt double %i.cl, %storemerge
-  br i1 %5, label %6, label %bb.x
-
-6:                                                ; preds = %bb.w
-  store double %i.b, ptr %i.ck, align 8, !tbaa !234
+  %spec.store.select = select i1 %5, double %i.b, double %i.cl
+  store double %spec.store.select, ptr %i.ck, align 8
   br label %bb.x
 
-bb.x:                                             ; preds = %bb.w, %6, %bb.v, %bb.u
+bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
   %i.cm = getelementptr inbounds nuw i8, ptr %.16.val, i64 40
   %i.cn = load double, ptr %i.cm, align 8, !tbaa !85 ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %.16.val, i64 360

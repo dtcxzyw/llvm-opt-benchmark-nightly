@@ -205,18 +205,16 @@ bb.dv:                                            ; preds = %bb.du
 bb.dw:                                            ; preds = %bb.dv
   %i.ajl = fdiv reassoc nsz arcp contract afn float %i.ajj, %i.ajg ; 3 uses
   %i.ajm = fcmp reassoc nsz arcp contract afn ogt float %i.ajl, 2.000000e+01
-  br i1 %i.ajm, label %bb.dy, label %7
+  br i1 %i.ajm, label %bb.dy, label %bb.dx
 
-7:                                                ; preds = %bb.dw
-  %8 = fcmp reassoc nsz arcp contract afn olt float %i.ajl, 1.000000e-01
-  br i1 %8, label %bb.dy, label %bb.dx
-
-bb.dx:                                            ; preds = %7
-  %i.ajn = fpext reassoc nsz arcp contract afn float %i.ajl to double
+bb.dx:                                            ; preds = %bb.dw
+  %.inv.i = fcmp reassoc nsz arcp contract afn ole float %i.ajl, 1.000000e-01
+  %spec.select44.i = select i1 %.inv.i, float 1.000000e-01, float %i.ajl
+  %i.ajn = fpext float %spec.select44.i to double
   br label %bb.dy
 
-bb.dy:                                            ; preds = %bb.dx, %7, %bb.dw, %bb.dv, %bb.du
-  %.0.i = phi double [ 1.000000e+00, %bb.du ], [ 1.000000e+00, %bb.dv ], [ 2.000000e+01, %bb.dw ], [ %i.ajn, %bb.dx ], [ f0x3FB99999A0000000, %7 ] ; 3 uses
+bb.dy:                                            ; preds = %bb.dx, %bb.dw, %bb.dv, %bb.du
+  %.0.i = phi double [ 1.000000e+00, %bb.du ], [ 1.000000e+00, %bb.dv ], [ 2.000000e+01, %bb.dw ], [ %i.ajn, %bb.dx ] ; 3 uses
   %i.ajo = fpext reassoc nsz arcp contract afn float %i.aje to double ; 2 uses
   call void @cairo_scale(ptr noundef %1, double noundef %i.ajo, double noundef %i.ajo) #22
   call void @cairo_save(ptr noundef %1) #22

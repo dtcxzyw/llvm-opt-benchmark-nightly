@@ -165,8 +165,8 @@ bb.l:                                             ; preds = %bb.a, %bb.a, %bb.a
   %i.ab = icmp eq i64 %i.z, 0
   br i1 %i.ab, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes8DictItemENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCINvMs4_NtBU_7helpersNtB2x_10Truthiness9from_exprNCNvNtCs2O29vuvTAEJ_14ty_python_core7builder27literal_iterable_truthiness0E0EB3i_.exit, label %.lr.ph
 
-_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes8DictItemENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCINvMs4_NtBU_7helpersNtB2x_10Truthiness9from_exprNCNvNtCs2O29vuvTAEJ_14ty_python_core7builder27literal_iterable_truthiness0E0EB3i_.exit: ; preds = %bb.s, %bb.t, %bb.j, %bb.k, %bb.q, %bb.m, %bb.f, %bb.e, %bb.l, %bb.p, %bb.r, %bb.n, %bb.o, %bb.d, %bb.c, %bb.h, %bb.a, %1, %bb.b, %bb.i
-  %.sroa.0.0 = phi i8 [ %spec.select, %bb.e ], [ 3, %bb.b ], [ 3, %bb.n ], [ 2, %bb.l ], [ %.7, %bb.o ], [ %spec.select10, %bb.m ], [ %spec.select11, %bb.q ], [ 2, %bb.d ], [ 5, %bb.a ], [ %not., %bb.h ], [ 3, %bb.r ], [ 3, %bb.p ], [ 4, %bb.i ], [ 2, %1 ], [ 2, %bb.c ], [ 3, %bb.k ], [ %spec.select8, %bb.f ], [ 5, %bb.j ], [ 3, %bb.t ], [ 5, %bb.s ]
+_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes8DictItemENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCINvMs4_NtBU_7helpersNtB2x_10Truthiness9from_exprNCNvNtCs2O29vuvTAEJ_14ty_python_core7builder27literal_iterable_truthiness0E0EB3i_.exit: ; preds = %bb.s, %bb.t, %bb.j, %bb.k, %bb.r, %bb.q, %bb.m, %bb.f, %bb.e, %bb.l, %bb.p, %bb.n, %bb.o, %bb.d, %bb.c, %bb.h, %bb.a, %bb.b, %bb.i
+  %.sroa.0.0 = phi i8 [ %spec.select, %bb.e ], [ 3, %bb.b ], [ 3, %bb.n ], [ 2, %bb.l ], [ %spec.select11, %bb.q ], [ %spec.select10, %bb.m ], [ %.7, %bb.o ], [ %spec.select8, %bb.f ], [ 5, %bb.a ], [ %not., %bb.h ], [ %spec.select12, %bb.r ], [ 3, %bb.p ], [ 4, %bb.i ], [ 2, %bb.d ], [ 2, %bb.c ], [ 3, %bb.k ], [ 5, %bb.j ], [ 3, %bb.t ], [ 5, %bb.s ]
   ret i8 %.sroa.0.0
 
 bb.m:                                             ; preds = %bb.d
@@ -204,9 +204,7 @@ bb.r:                                             ; preds = %bb.p
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.al = load double, ptr %i.ak, align 8, !noundef !4
   %i.am = fcmp oeq double %i.al, 0.000000e+00
-  br i1 %i.am, label %1, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes8DictItemENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCINvMs4_NtBU_7helpersNtB2x_10Truthiness9from_exprNCNvNtCs2O29vuvTAEJ_14ty_python_core7builder27literal_iterable_truthiness0E0EB3i_.exit
-
-1:                                                ; preds = %bb.r
+  %spec.select12 = select i1 %i.am, i8 2, i8 3
   br label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCskLngH8kgpZI_15ruff_python_ast5nodes8DictItemENtNtNtNtBb_4iter6traits8iterator8Iterator3allNCINvMs4_NtBU_7helpersNtB2x_10Truthiness9from_exprNCNvNtCs2O29vuvTAEJ_14ty_python_core7builder27literal_iterable_truthiness0E0EB3i_.exit
 
 .lr.ph:                                           ; preds = %bb.l

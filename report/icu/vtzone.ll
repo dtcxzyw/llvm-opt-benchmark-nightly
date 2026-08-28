@@ -205,24 +205,16 @@ bb.a:
   %i.c = alloca [20 x i32], align 16              ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #18
   %i.d = fcmp olt double %0, f0xC384763B62073280
-  br i1 %i.d, label %6, label %2
-
-2:                                                ; preds = %bb.a
-  %3 = fcmp ogt double %0, f0x43846A3EDDF8CD80
-  br i1 %3, label %6, label %4
-
-4:                                                ; preds = %2
-  %5 = fptosi double %0 to i64
-  br label %6
-
-6:                                                ; preds = %2, %bb.a, %4
-  %.0 = phi i64 [ %5, %4 ], [ -184303902528000000, %bb.a ], [ 183882168921600000, %2 ] ; 2 uses
+  %.inv = fcmp oge double %0, f0x43846A3EDDF8CD80
+  %spec.select2021 = select i1 %.inv, double f0x43846A3EDDF8CD80, double %0
+  %spec.select20 = fptosi double %spec.select2021 to i64
+  %.0 = select i1 %i.d, i64 -184303902528000000, i64 %spec.select20 ; 2 uses
   %spec.select = tail call i64 @llvm.abs.i64(i64 %.0, i1 true)
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.b, %6
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %6 ] ; 3 uses
-  %.2 = phi i64 [ %i.h, %bb.b ], [ %spec.select, %6 ] ; 3 uses
+bb.b:                                             ; preds = %bb.b, %bb.a
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %bb.a ] ; 3 uses
+  %.2 = phi i64 [ %i.h, %bb.b ], [ %spec.select, %bb.a ] ; 3 uses
   %i.e = urem i64 %.2, 10
   %i.f = trunc nuw nsw i64 %i.e to i32
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1

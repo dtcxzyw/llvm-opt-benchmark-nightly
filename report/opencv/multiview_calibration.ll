@@ -205,13 +205,11 @@ bb.sq:                                            ; preds = %.epil.preheader
   %i.bix = getelementptr inbounds nuw [8 x i8], ptr %i.bia, i64 %indvars.iv.next325.i.1
   %i.biy = load double, ptr %i.bix, align 8, !tbaa !149
   %i.biz = fcmp olt double %.1.i.1, %i.biy
-  br i1 %i.biz, label %343, label %.critedge.i.epil
-
-343:                                              ; preds = %bb.sq
+  %spec.select = select i1 %i.biz, i32 %i.biq, i32 %.1103.i.1
   br label %.critedge.i.epil
 
-.critedge.i.epil:                                 ; preds = %.epil.preheader, %bb.sq, %343, %.unr-lcssa
-  %.1103.i.lcssa = phi i32 [ %.1103.i.1, %.unr-lcssa ], [ %.1103.i.1, %bb.sq ], [ %i.biq, %343 ], [ %.1103.i.1, %.epil.preheader ] ; 4 uses
+.critedge.i.epil:                                 ; preds = %bb.sq, %.epil.preheader, %.unr-lcssa
+  %.1103.i.lcssa = phi i32 [ %.1103.i.1, %.unr-lcssa ], [ %spec.select, %bb.sq ], [ %.1103.i.1, %.epil.preheader ] ; 4 uses
   %.not.not.i.not = icmp eq i32 %.1103.i.lcssa, -1 ; 2 uses
   br i1 %.not.not.i.not, label %_ZNSt13_Bvector_baseISaIbEED2Ev.exit.i1128, label %bb.sw
 

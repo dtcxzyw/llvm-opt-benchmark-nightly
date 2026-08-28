@@ -205,25 +205,17 @@ SDL_ObjectValid.exit.thread:                      ; preds = %SDL_ObjectValid.exi
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 160
   %i.i = load ptr, ptr %i.h, align 8              ; 2 uses
   %.not11 = icmp eq ptr %i.i, null
-  br i1 %.not11, label %bb.e, label %2
+  br i1 %.not11, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %SDL_ObjectValid.exit.thread
   %i.j = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.25) #19
   br label %bb.h
 
-2:                                                ; preds = %SDL_ObjectValid.exit.thread
-  %3 = fcmp olt float %1, 0.000000e+00
-  br i1 %3, label %bb.f, label %4
-
-4:                                                ; preds = %2
-  %5 = fcmp ogt float %1, 1.000000e+00
-  br i1 %5, label %6, label %bb.f
-
-6:                                                ; preds = %4
-  br label %bb.f
-
-bb.f:                                             ; preds = %2, %4, %6
-  %.0 = phi float [ %1, %4 ], [ 1.000000e+00, %6 ], [ 0.000000e+00, %2 ] ; 2 uses
+bb.f:                                             ; preds = %SDL_ObjectValid.exit.thread
+  %2 = fcmp olt float %1, 0.000000e+00
+  %3 = fcmp ogt float %1, 1.000000e+00
+  %spec.store.select = select i1 %3, float 1.000000e+00, float %1
+  %.0 = select i1 %2, float 0.000000e+00, float %spec.store.select ; 2 uses
   %i.k = tail call zeroext i1 %i.i(ptr noundef nonnull %i.g, ptr noundef nonnull %0, float noundef %.0) #19
   br i1 %i.k, label %bb.g, label %bb.h
 

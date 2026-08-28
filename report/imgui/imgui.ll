@@ -205,7 +205,7 @@ bb.ia:                                            ; preds = %bb.hz
   br label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit355.i.i
 
 _ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit355.i.i:  ; preds = %.thread398.i.i, %bb.ia, %.split400.i.i, %bb.hy, %bb.hx, %bb.hv, %bb.hu
-  %.230.i344.i.i = phi i32 [ 0, %bb.hu ], [ 0, %bb.hv ], [ 0, %bb.ia ], [ 0, %bb.hy ], [ 0, %bb.hx ], [ %i.baq, %.thread398.i.i ], [ 0, %.split400.i.i ]
+  %.230.i344.i.i = phi i32 [ 0, %bb.hu ], [ 0, %bb.hv ], [ 0, %bb.ia ], [ %i.baq, %.thread398.i.i ], [ 0, %bb.hy ], [ 0, %bb.hx ], [ 0, %.split400.i.i ]
   %i.bar = getelementptr i8, ptr %i.azd, i64 2404
   %i.bas = load i8, ptr %i.bar, align 4, !tbaa !208, !range !64, !noundef !204
   %i.bat = trunc nuw i8 %i.bas to i1
@@ -273,7 +273,7 @@ bb.ig:                                            ; preds = %bb.if
   br label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit370.i.i
 
 _ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit370.i.i:  ; preds = %.thread401.i.i, %bb.ig, %.split403.i.i, %bb.ie, %bb.id, %bb.ib, %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit355.i.i
-  %.230.i358.i.i = phi i32 [ 0, %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit355.i.i ], [ 0, %bb.ib ], [ 0, %bb.ig ], [ 0, %bb.ie ], [ 0, %bb.id ], [ %i.bcc, %.thread401.i.i ], [ 0, %.split403.i.i ]
+  %.230.i358.i.i = phi i32 [ 0, %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit355.i.i ], [ 0, %bb.ib ], [ 0, %bb.ig ], [ %i.bcc, %.thread401.i.i ], [ 0, %bb.ie ], [ 0, %bb.id ], [ 0, %.split403.i.i ]
   %i.bcd = add nsw i32 %.230.i358.i.i, %.230.i344.i.i ; 5 uses
   %i.bce = icmp eq i32 %i.bcd, 0
   %or.cond5.i.i = or i1 %.2205.i.i, %i.bce
@@ -676,14 +676,11 @@ bb.pg:                                            ; preds = %bb.pf
 bb.ph:                                            ; preds = %bb.pg
   %i.chw = getelementptr i8, ptr %i.chs, i64 -7880
   %i.chx = load float, ptr %i.chw, align 4, !tbaa !1008
-  %2 = fcmp ult float %i.chx, 6.000000e-01
-  br i1 %2, label %bb.pi, label %3
-
-3:                                                ; preds = %bb.ph
+  %2 = fcmp oge float %i.chx, 6.000000e-01
   br label %bb.pi
 
-bb.pi:                                            ; preds = %3, %bb.ph, %bb.pg, %bb.pf, %bb.pe, %.thread361.i
-  %.0.i342 = phi i1 [ true, %3 ], [ false, %bb.ph ], [ false, %bb.pg ], [ false, %bb.pf ], [ false, %bb.pe ], [ false, %.thread361.i ] ; 3 uses
+bb.pi:                                            ; preds = %bb.ph, %bb.pg, %bb.pf, %bb.pe, %.thread361.i
+  %.0.i342 = phi i1 [ false, %.thread361.i ], [ %2, %bb.ph ], [ false, %bb.pg ], [ false, %bb.pf ], [ false, %bb.pe ] ; 3 uses
   %i.chy = getelementptr inbounds nuw i8, ptr %i.aln, i64 5428
   %i.chz = load i32, ptr %i.chy, align 4, !tbaa !819 ; 2 uses
   %i.cia = icmp eq i32 %i.chz, 0                  ; 2 uses
@@ -1086,7 +1083,7 @@ bb.rv:                                            ; preds = %bb.ru, %.thread.i.i
   br label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit.i.i.i
 
 _ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit.i.i.i:   ; preds = %bb.rv, %bb.ru, %bb.rt, %.split.i.i.i, %bb.rr, %bb.rq, %bb.ro, %_ZN5ImGui9IsKeyDownE8ImGuiKeyj.exit57.i.i.i
-  %.230.i.i.i.i = phi i1 [ false, %_ZN5ImGui9IsKeyDownE8ImGuiKeyj.exit57.i.i.i ], [ false, %bb.ro ], [ false, %bb.rt ], [ false, %bb.rq ], [ %.not.i.i58.i.i.i, %bb.rv ], [ false, %bb.ru ], [ false, %bb.rr ], [ false, %.split.i.i.i ] ; 3 uses
+  %.230.i.i.i.i = phi i1 [ false, %_ZN5ImGui9IsKeyDownE8ImGuiKeyj.exit57.i.i.i ], [ false, %bb.ro ], [ false, %bb.rt ], [ false, %bb.rr ], [ false, %bb.rq ], [ %.not.i.i58.i.i.i, %bb.rv ], [ false, %bb.ru ], [ false, %.split.i.i.i ] ; 3 uses
   %i.coc = getelementptr i8, ptr %i.clj, i64 436
   %i.cod = load i8, ptr %i.coc, align 4, !tbaa !208, !range !64, !noundef !204
   %i.coe = trunc nuw i8 %i.cod to i1
@@ -1165,7 +1162,7 @@ bb.sd:                                            ; preds = %bb.sc, %.thread83.i
   br label %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit65.i.i.i
 
 _ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit65.i.i.i: ; preds = %bb.sd, %bb.sc, %bb.sb, %.split85.i.i.i, %bb.rz, %bb.ry, %bb.rw, %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit.i.i.i
-  %.230.i60.i.i.i = phi i1 [ false, %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit.i.i.i ], [ false, %bb.rw ], [ false, %bb.sb ], [ false, %bb.ry ], [ %.not.i.i63.i.i.i, %bb.sd ], [ false, %bb.sc ], [ false, %bb.rz ], [ false, %.split85.i.i.i ] ; 3 uses
+  %.230.i60.i.i.i = phi i1 [ false, %_ZN5ImGui12IsKeyPressedE8ImGuiKeyij.exit.i.i.i ], [ false, %bb.rw ], [ false, %bb.sb ], [ false, %bb.rz ], [ false, %bb.ry ], [ %.not.i.i63.i.i.i, %bb.sd ], [ false, %bb.sc ], [ false, %.split85.i.i.i ] ; 3 uses
   %i.cps = xor i1 %.230.i.i.i.i, %.230.i60.i.i.i
   %or.cond.i.i317.i = or i1 %.0.i55.i.i.i, %i.cps
   br i1 %or.cond.i.i317.i, label %bb.se, label %_ZN5ImGuiL23NavUpdatePageUpPageDownEv.exit.i.i
@@ -1568,26 +1565,22 @@ bb.em:                                            ; preds = %._crit_edge1039
   %i.acl = getelementptr inbounds nuw i8, ptr %i.abi, i64 80
   %i.acm = load float, ptr %i.acl, align 8, !tbaa !1242
   %i.acn = fcmp une float %i.acm, 0.000000e+00
-  br i1 %i.acn, label %31, label %bb.en
-
-31:                                               ; preds = %bb.em
+  %spec.select516 = or i1 %i.eg, %i.acn
   br label %bb.en
 
-bb.en:                                            ; preds = %31, %bb.em, %._crit_edge1039
-  %.0412 = phi i1 [ true, %31 ], [ %i.eg, %bb.em ], [ %i.eg, %._crit_edge1039 ]
+bb.en:                                            ; preds = %bb.em, %._crit_edge1039
+  %.0412 = phi i1 [ %i.eg, %._crit_edge1039 ], [ %spec.select516, %bb.em ]
   br i1 %.0419, label %bb.eo, label %bb.ep
 
 bb.eo:                                            ; preds = %bb.en
   %i.aco = getelementptr inbounds nuw i8, ptr %i.abi, i64 84
   %i.acp = load float, ptr %i.aco, align 4, !tbaa !1243
   %i.acq = fcmp une float %i.acp, 0.000000e+00
-  br i1 %i.acq, label %32, label %bb.ep
-
-32:                                               ; preds = %bb.eo
+  %spec.select517 = or i1 %i.eg, %i.acq
   br label %bb.ep
 
-bb.ep:                                            ; preds = %32, %bb.eo, %bb.en
-  %.0410 = phi i1 [ true, %32 ], [ %i.eg, %bb.eo ], [ %i.eg, %bb.en ] ; 3 uses
+bb.ep:                                            ; preds = %bb.eo, %bb.en
+  %.0410 = phi i1 [ %i.eg, %bb.en ], [ %spec.select517, %bb.eo ] ; 3 uses
   %i.acr = and i32 %.1403, 33
   %or.cond516 = icmp eq i32 %i.acr, 0
   br i1 %or.cond516, label %bb.eq, label %bb.fb
@@ -1669,7 +1662,7 @@ bb.ey:                                            ; preds = %bb.ex
   %i.aee = xor i8 %i.aed, 1
   store i8 %i.aee, ptr %i.aec, align 1, !tbaa !721
   %.not1002 = icmp ne i8 %i.aed, 0
-  %spec.select517 = or i1 %.0410, %.not1002       ; 3 uses
+  %spec.select519 = select i1 %.not1002, i1 true, i1 %.0410 ; 3 uses
   %i.aef = getelementptr inbounds nuw i8, ptr %i.abi, i64 20
   %i.aeg = load i32, ptr %i.aef, align 4, !tbaa !722
   %i.aeh = and i32 %i.aeg, 256
@@ -1689,7 +1682,7 @@ bb.fa:                                            ; preds = %bb.ez
   br label %_ZN5ImGui20MarkIniSettingsDirtyEP11ImGuiWindow.exit
 
 _ZN5ImGui20MarkIniSettingsDirtyEP11ImGuiWindow.exit: ; preds = %bb.fa, %bb.ez, %bb.ey, %bb.ex
-  %.2 = phi i1 [ %.0410, %bb.ex ], [ %spec.select517, %bb.ey ], [ %spec.select517, %bb.ez ], [ %spec.select517, %bb.fa ]
+  %.2 = phi i1 [ %.0410, %bb.ex ], [ %spec.select519, %bb.ey ], [ %spec.select519, %bb.ez ], [ %spec.select519, %bb.fa ]
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #41
   br label %bb.fc
 
@@ -2092,16 +2085,16 @@ _ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowPiS2_iPjRK6ImRect.exit: ; pre
 
 bb.ka:                                            ; preds = %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowPiS2_iPjRK6ImRect.exit
   %.not484 = trunc i32 %.5.i to i1
-  %spec.select530 = or i1 %.1413, %.not484
+  %spec.select532 = select i1 %.not484, i1 true, i1 %.1413
   %.not485 = icmp ne i32 %.5.i, 1
-  %spec.select547 = or i1 %.4, %.not485
+  %spec.select549 = select i1 %.not485, i1 true, i1 %.4
   br label %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowPiS2_iPjRK6ImRect.exit.thread
 
 _ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowPiS2_iPjRK6ImRect.exit.thread: ; preds = %bb.he, %bb.ha, %bb.hb, %bb.hd, %bb.gz, %bb.ka, %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowPiS2_iPjRK6ImRect.exit, %bb.gy, %bb.gx
   %.0956 = phi i32 [ -1, %bb.gy ], [ %.3959, %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowPiS2_iPjRK6ImRect.exit ], [ %.3959, %bb.ka ], [ -1, %bb.gx ], [ -1, %bb.gz ], [ -1, %bb.hd ], [ -1, %bb.hb ], [ -1, %bb.ha ], [ -1, %bb.he ]
   %.0951 = phi i32 [ -1, %bb.gy ], [ %.3954, %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowPiS2_iPjRK6ImRect.exit ], [ %.3954, %bb.ka ], [ -1, %bb.gx ], [ -1, %bb.gz ], [ -1, %bb.hd ], [ -1, %bb.hb ], [ -1, %bb.ha ], [ -1, %bb.he ]
-  %.4416 = phi i1 [ %.1413, %bb.gy ], [ %.1413, %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowPiS2_iPjRK6ImRect.exit ], [ %spec.select530, %bb.ka ], [ %.1413, %bb.gx ], [ %.1413, %bb.gz ], [ %.1413, %bb.hd ], [ %.1413, %bb.hb ], [ %.1413, %bb.ha ], [ %.1413, %bb.he ]
-  %.6 = phi i1 [ %.4, %bb.gy ], [ %.4, %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowPiS2_iPjRK6ImRect.exit ], [ %spec.select547, %bb.ka ], [ %.4, %bb.gx ], [ %.4, %bb.gz ], [ %.4, %bb.hd ], [ %.4, %bb.hb ], [ %.4, %bb.ha ], [ %.4, %bb.he ]
+  %.4416 = phi i1 [ %.1413, %bb.gy ], [ %.1413, %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowPiS2_iPjRK6ImRect.exit ], [ %spec.select532, %bb.ka ], [ %.1413, %bb.gx ], [ %.1413, %bb.gz ], [ %.1413, %bb.hd ], [ %.1413, %bb.hb ], [ %.1413, %bb.ha ], [ %.1413, %bb.he ]
+  %.6 = phi i1 [ %.4, %bb.gy ], [ %.4, %_ZN5ImGuiL24UpdateWindowManualResizeEP11ImGuiWindowPiS2_iPjRK6ImRect.exit ], [ %spec.select549, %bb.ka ], [ %.4, %bb.gx ], [ %.4, %bb.gz ], [ %.4, %bb.hd ], [ %.4, %bb.hb ], [ %.4, %bb.ha ], [ %.4, %bb.he ]
   %i.bgm = trunc i32 %.0956 to i8
   %i.bgn = load ptr, ptr %i.g, align 8, !tbaa !705 ; 40 uses
   %i.bgo = getelementptr inbounds nuw i8, ptr %i.bgn, i64 216
@@ -2504,14 +2497,11 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o
   %i.bu = getelementptr inbounds nuw i8, ptr %i.a, i64 5520
   %i.bv = load double, ptr %i.bu, align 8, !tbaa !1005
-  %3 = fcmp ogt double %i.bv, %i.bs
-  br i1 %3, label %4, label %bb.q
-
-4:                                                ; preds = %bb.p
+  %3 = fcmp ule double %i.bv, %i.bs
   br label %bb.q
 
-bb.q:                                             ; preds = %4, %bb.p, %bb.o
-  %.0 = phi i1 [ false, %4 ], [ true, %bb.p ], [ true, %bb.o ] ; 2 uses
+bb.q:                                             ; preds = %bb.p, %bb.o
+  %.0 = phi i1 [ true, %bb.o ], [ %3, %bb.p ]     ; 2 uses
   %i.bw = and i32 %1, 64
   %.not37 = icmp eq i32 %i.bw, 0
   br i1 %.not37, label %bb.s, label %bb.r
@@ -2519,14 +2509,12 @@ bb.q:                                             ; preds = %4, %bb.p, %bb.o
 bb.r:                                             ; preds = %bb.q
   %i.bx = getelementptr inbounds nuw i8, ptr %i.a, i64 5528
   %i.by = load double, ptr %i.bx, align 8, !tbaa !1006
-  %5 = fcmp ogt double %i.by, %i.bs
-  br i1 %5, label %6, label %bb.s
-
-6:                                                ; preds = %bb.r
+  %4 = fcmp ule double %i.by, %i.bs
+  %spec.select42 = select i1 %4, i1 %.0, i1 false
   br label %bb.s
 
-bb.s:                                             ; preds = %6, %bb.r, %bb.q
-  %.1 = phi i1 [ false, %6 ], [ %.0, %bb.r ], [ %.0, %bb.q ] ; 2 uses
+bb.s:                                             ; preds = %bb.r, %bb.q
+  %.1 = phi i1 [ %.0, %bb.q ], [ %spec.select42, %bb.r ] ; 2 uses
   %i.bz = and i32 %1, 128
   %.not38 = icmp eq i32 %i.bz, 0
   br i1 %.not38, label %bb.u, label %bb.t
@@ -2534,14 +2522,15 @@ bb.s:                                             ; preds = %6, %bb.r, %bb.q
 bb.t:                                             ; preds = %bb.s
   %i.ca = getelementptr inbounds nuw i8, ptr %i.a, i64 5536
   %i.cb = load double, ptr %i.ca, align 8, !tbaa !648
-  %7 = fcmp ogt double %i.cb, %i.bs
-  br i1 %7, label %_ZN5ImGui12TestKeyOwnerE8ImGuiKeyj.exit, label %bb.u
+  %5 = fcmp ule double %i.cb, %i.bs
+  %spec.select43 = select i1 %5, i1 %.1, i1 false
+  br i1 %spec.select43, label %bb.v, label %_ZN5ImGui12TestKeyOwnerE8ImGuiKeyj.exit
 
-bb.u:                                             ; preds = %bb.n, %bb.t, %bb.s, %bb.c
-  %.4 = phi i1 [ %i.p, %bb.c ], [ %.0.i, %bb.n ], [ %.1, %bb.s ], [ %.1, %bb.t ]
+bb.u:                                             ; preds = %bb.n, %bb.s, %bb.c
+  %.4 = phi i1 [ %i.p, %bb.c ], [ %.0.i, %bb.n ], [ %.1, %bb.s ]
   br i1 %.4, label %bb.v, label %_ZN5ImGui12TestKeyOwnerE8ImGuiKeyj.exit
 
-bb.v:                                             ; preds = %bb.u
+bb.v:                                             ; preds = %bb.t, %bb.u
   %i.cc = add i32 %0, -512                        ; 2 uses
   %or.cond.i.i41 = icmp ult i32 %i.cc, 155
   br i1 %or.cond.i.i41, label %bb.w, label %switch.early.test.i.i
@@ -2612,8 +2601,8 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
   br label %_ZN5ImGui12TestKeyOwnerE8ImGuiKeyj.exit
 
-_ZN5ImGui12TestKeyOwnerE8ImGuiKeyj.exit:          ; preds = %bb.t, %bb.j, %_ZN5ImGui10GetKeyDataE8ImGuiKey.exit.i, %_ZN5ImGui22GetTypematicRepeatRateEiPfS0_.exit, %bb.ac, %bb.ab, %bb.z, %bb.x, %switch.early.test.split.i.i, %switch.early.test.i.i, %bb.b, %bb.u, %_ZN5ImGui10GetKeyDataE8ImGuiKey.exit
-  %.230 = phi i1 [ false, %_ZN5ImGui10GetKeyDataE8ImGuiKey.exit ], [ false, %bb.b ], [ false, %bb.u ], [ true, %switch.early.test.split.i.i ], [ false, %bb.ab ], [ false, %bb.x ], [ %i.cu, %bb.z ], [ true, %bb.ac ], [ true, %switch.early.test.i.i ], [ false, %_ZN5ImGui22GetTypematicRepeatRateEiPfS0_.exit ], [ false, %_ZN5ImGui10GetKeyDataE8ImGuiKey.exit.i ], [ false, %bb.j ], [ false, %bb.t ]
+_ZN5ImGui12TestKeyOwnerE8ImGuiKeyj.exit:          ; preds = %bb.j, %_ZN5ImGui10GetKeyDataE8ImGuiKey.exit.i, %_ZN5ImGui22GetTypematicRepeatRateEiPfS0_.exit, %bb.ac, %bb.ab, %bb.z, %bb.x, %switch.early.test.split.i.i, %switch.early.test.i.i, %bb.t, %bb.b, %bb.u, %_ZN5ImGui10GetKeyDataE8ImGuiKey.exit
+  %.230 = phi i1 [ false, %_ZN5ImGui10GetKeyDataE8ImGuiKey.exit ], [ false, %bb.b ], [ false, %bb.u ], [ false, %bb.t ], [ true, %switch.early.test.split.i.i ], [ false, %bb.ab ], [ false, %bb.x ], [ %i.cu, %bb.z ], [ true, %bb.ac ], [ true, %switch.early.test.i.i ], [ false, %_ZN5ImGui22GetTypematicRepeatRateEiPfS0_.exit ], [ false, %_ZN5ImGui10GetKeyDataE8ImGuiKey.exit.i ], [ false, %bb.j ]
   ret i1 %.230
 }
 
@@ -3016,7 +3005,7 @@ _ZN5ImGui15GetKeyOwnerDataEP12ImGuiContext8ImGuiKey.exit.i.i: ; preds = %.split.
   br label %_ZN5ImGui17IsKeyChordPressedEiij.exit
 
 _ZN5ImGui17IsKeyChordPressedEiij.exit:            ; preds = %_ZN5ImGui15GetKeyOwnerDataEP12ImGuiContext8ImGuiKey.exit.i.i, %switch.early.test.split.i.i.i, %switch.early.test.i.i.i, %bb.f, %_ZN5ImGui10GetKeyDataE8ImGuiKey.exit.i, %_ZN5ImGui13FixupKeyChordEi.exit.i
-  %.1.i = phi i1 [ false, %_ZN5ImGui13FixupKeyChordEi.exit.i ], [ false, %_ZN5ImGui10GetKeyDataE8ImGuiKey.exit.i ], [ false, %bb.f ], [ true, %switch.early.test.i.i.i ], [ true, %switch.early.test.split.i.i.i ], [ %i.aq, %_ZN5ImGui15GetKeyOwnerDataEP12ImGuiContext8ImGuiKey.exit.i.i ]
+  %.1.i = phi i1 [ false, %_ZN5ImGui13FixupKeyChordEi.exit.i ], [ false, %_ZN5ImGui10GetKeyDataE8ImGuiKey.exit.i ], [ false, %bb.f ], [ %i.aq, %_ZN5ImGui15GetKeyOwnerDataEP12ImGuiContext8ImGuiKey.exit.i.i ], [ true, %switch.early.test.i.i.i ], [ true, %switch.early.test.split.i.i.i ]
   ret i1 %.1.i
 }
 
@@ -3419,13 +3408,10 @@ bb.y:                                             ; preds = %bb.x
   %i.dg = icmp samesign ugt i32 %.095, 1
   %i.dh = select i1 %i.dg, float %.0.i108143, float %.096
   %i.di = fcmp olt float %i.dh, 0.000000e+00
-  br i1 %i.di, label %2, label %._crit_edge
-
-2:                                                ; preds = %bb.y
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.r, %bb.u, %bb.x, %2, %bb.y, %bb.w
-  %.0 = phi i1 [ true, %bb.w ], [ true, %2 ], [ false, %bb.y ], [ false, %bb.x ], [ false, %bb.u ], [ false, %bb.r ] ; 4 uses
+._crit_edge:                                      ; preds = %bb.r, %bb.y, %bb.u, %bb.x, %bb.w
+  %.0 = phi i1 [ true, %bb.w ], [ false, %bb.u ], [ %i.di, %bb.y ], [ false, %bb.x ], [ false, %bb.r ] ; 4 uses
   %i.dj = fcmp oeq float %i.cy, f0x7F7FFFFF
   br i1 %i.dj, label %bb.z, label %_ZNK6ImRect8OverlapsERKS_.exit.thread
 

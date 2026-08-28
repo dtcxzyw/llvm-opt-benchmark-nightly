@@ -202,21 +202,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.b = load double, ptr %i.a, align 8, !tbaa !37
   %i.c = fcmp uno double %i.b, 0.000000e+00
-  br i1 %i.c, label %1, label %7
-
-1:                                                ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %3 = load double, ptr %2, align 8, !tbaa !36    ; 2 uses
-  %4 = fcmp uno double %3, 0.000000e+00
-  br i1 %4, label %7, label %5
-
-5:                                                ; preds = %1
-  %6 = fcmp oeq double %3, 0.000000e+00
-  br label %7
-
-7:                                                ; preds = %5, %1, %bb.a
-  %8 = phi i1 [ false, %1 ], [ false, %bb.a ], [ %6, %5 ]
-  ret i1 %8
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 168
+  %2 = load double, ptr %1, align 8
+  %3 = fcmp oeq double %2, 0.000000e+00
+  %4 = select i1 %i.c, i1 %3, i1 false
+  ret i1 %4
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)

@@ -205,15 +205,14 @@ bb.k:                                             ; preds = %bb.j
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.an = load i64, ptr %i.am, align 8, !tbaa !280
   %i.ao = sitofp i64 %i.an to double
-  %i.ap = fcmp ugt double %i.f, %i.ao
-  br i1 %i.ap, label %._crit_edge.i.i, label %10
-
-10:                                               ; preds = %bb.k
+  %i.ap = fcmp ugt double %i.f, %i.ao             ; 2 uses
+  %spec.select = select i1 %i.ap, ptr @.str.67, ptr @.str.71
+  %spec.select104 = select i1 %i.ap, i64 7, i64 5
   br label %._crit_edge.i.i
 
-._crit_edge.i.i:                                  ; preds = %bb.i, %bb.g, %bb.e, %10, %bb.k, %bb.j, %bb.c
-  %.sroa.085.0 = phi ptr [ @.str.67, %bb.j ], [ @.str.67, %bb.k ], [ @.str.71, %10 ], [ @.str.69, %bb.g ], [ @.str.68, %bb.e ], [ @.str.67, %bb.c ], [ @.str.70, %bb.i ] ; 2 uses
-  %.sroa.9.0 = phi i64 [ 7, %bb.j ], [ 7, %bb.k ], [ 5, %10 ], [ 5, %bb.g ], [ 4, %bb.e ], [ 7, %bb.c ], [ 5, %bb.i ] ; 6 uses
+._crit_edge.i.i:                                  ; preds = %bb.k, %bb.i, %bb.g, %bb.e, %bb.j, %bb.c
+  %.sroa.085.0 = phi ptr [ @.str.67, %bb.j ], [ %spec.select, %bb.k ], [ @.str.70, %bb.i ], [ @.str.69, %bb.g ], [ @.str.68, %bb.e ], [ @.str.67, %bb.c ] ; 2 uses
+  %.sroa.9.0 = phi i64 [ 7, %bb.j ], [ %spec.select104, %bb.k ], [ 5, %bb.i ], [ 5, %bb.g ], [ 4, %bb.e ], [ 7, %bb.c ] ; 6 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
   %i.ar = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses

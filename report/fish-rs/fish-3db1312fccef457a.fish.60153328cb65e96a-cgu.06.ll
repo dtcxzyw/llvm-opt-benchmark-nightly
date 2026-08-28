@@ -205,21 +205,20 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.p = tail call noundef float @_RNvMs1_CsfWaNi3IUeZW_11xterm_colorNtB5_5Color19perceived_lightness(ptr noalias nofree noundef nonnull readonly align 2 captures(address, read_provenance) dereferenceable(8) %1)
-  %i.q = fcmp olt float %i.p, 5.000000e-01
-  br i1 %i.q, label %2, label %bb.c
+  %i.q = fcmp olt float %i.p, 5.000000e-01        ; 2 uses
+  %spec.select = select i1 %i.q, i64 4, i64 5
+  %spec.select43 = select i1 %i.q, ptr @215, ptr @214
+  br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a, %2
-  %.sroa.7.0 = phi i64 [ 7, %bb.a ], [ 4, %2 ], [ 5, %bb.b ] ; 6 uses
-  %.sroa.0.0 = phi ptr [ @213, %bb.a ], [ @215, %2 ], [ @214, %bb.b ] ; 3 uses
+bb.c:                                             ; preds = %bb.b, %bb.a
+  %.sroa.7.0 = phi i64 [ 7, %bb.a ], [ %spec.select, %bb.b ] ; 6 uses
+  %.sroa.0.0 = phi ptr [ @213, %bb.a ], [ %spec.select43, %bb.b ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 192
   call void @_RNvYNtNtNtCs8frGy5WneL6_4fish3env11environment8EnvStackNtB4_11Environment3getB8_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.o, ptr noundef nonnull align 8 %i.r, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) @216, i64 noundef 25)
   %i.s = load ptr, ptr %i.o, align 8, !noundef !9
   %.not24 = icmp eq ptr %i.s, null
   br i1 %.not24, label %bb.j, label %bb.d
-
-2:                                                ; preds = %bb.b
-  br label %bb.c
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)

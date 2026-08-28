@@ -205,18 +205,16 @@ bb.ox:                                            ; preds = %bb.ow
 
 bb.oy:                                            ; preds = %._crit_edge.i.us.us.i
   %i.cna = fcmp ogt float %i.cmy, 2.550000e+02
-  br i1 %i.cna, label %10, label %bb.oz
-
-10:                                               ; preds = %bb.oy
+  %spec.store.select.i.us.us.i = select i1 %i.cna, float 2.550000e+02, float %i.cmy
+  %10 = fptoui float %spec.store.select.i.us.us.i to i8
   br label %bb.oz
 
-bb.oz:                                            ; preds = %10, %bb.oy, %._crit_edge.i.us.us.i
-  %.0431.i.us.us.i = phi float [ %i.cmy, %bb.oy ], [ 2.550000e+02, %10 ], [ 0.000000e+00, %._crit_edge.i.us.us.i ]
-  %11 = fptoui float %.0431.i.us.us.i to i8
+bb.oz:                                            ; preds = %bb.oy, %._crit_edge.i.us.us.i
+  %.0431.i.us.us.i = phi i8 [ %10, %bb.oy ], [ 0, %._crit_edge.i.us.us.i ]
   %i.cnb = add i32 %.reass.i.us.i, %i.bvp
   %i.cnc = sext i32 %i.cnb to i64
   %i.cnd = getelementptr inbounds i8, ptr %i.buh, i64 %i.cnc
-  store i8 %11, ptr %i.cnd, align 1
+  store i8 %.0431.i.us.us.i, ptr %i.cnd, align 1
   %indvars.iv.next503.i.us.us.i = add nuw nsw i64 %indvars.iv502.i.us.us.i, 1 ; 2 uses
   %lftr.wideiv.i.us.us.i = trunc i64 %indvars.iv.next503.i.us.us.i to i32
   %exitcond505.not.i.us.us.i = icmp eq i32 %i.bua, %lftr.wideiv.i.us.us.i

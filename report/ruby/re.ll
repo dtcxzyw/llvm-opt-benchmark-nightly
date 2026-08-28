@@ -205,24 +205,22 @@ bb.e:                                             ; preds = %bb.d
   %i.p = call double @rb_num2dbl(i64 noundef %i.n) #28
   %.fr.i = freeze double %i.p                     ; 3 uses
   %i.q = fcmp ugt double %.fr.i, 0.000000e+00
-  br i1 %i.q, label %.split.i, label %bb.f
+  br i1 %i.q, label %.thread12.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.r = load i64, ptr @rb_eArgError, align 8, !tbaa !19
   call void (i64, ptr, ...) @rb_raise(i64 noundef %i.r, ptr noundef nonnull @.str.117, i64 noundef %i.n) #29
   unreachable
 
-.split.i:                                         ; preds = %bb.e
-  %4 = fcmp ult double %.fr.i, f0x43E0000000000000
-  br i1 %4, label %.thread12.i, label %set_timeout.exit
-
-.thread12.i:                                      ; preds = %.split.i
+.thread12.i:                                      ; preds = %bb.e
   %i.s = fmul double %.fr.i, 1.000000e+09
   %i.t = fptoui double %i.s to i64
+  %4 = fcmp ult double %.fr.i, f0x43E0000000000000
+  %spec.select.i = select i1 %4, i64 %i.t, i64 -1
   br label %set_timeout.exit
 
-set_timeout.exit:                                 ; preds = %bb.d, %.split.i, %.thread12.i
-  %5 = phi i64 [ -1, %.split.i ], [ 0, %bb.d ], [ %i.t, %.thread12.i ]
+set_timeout.exit:                                 ; preds = %bb.d, %.thread12.i
+  %5 = phi i64 [ %spec.select.i, %.thread12.i ], [ 0, %bb.d ]
   %i.u = getelementptr i8, ptr %i.l, i64 440
   store i64 %5, ptr %i.u, align 8, !tbaa !19
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
@@ -625,24 +623,22 @@ bb.b:                                             ; preds = %bb.a
   %i.b = tail call double @rb_num2dbl(i64 noundef %1) #28
   %.fr.i = freeze double %i.b                     ; 3 uses
   %i.c = fcmp ugt double %.fr.i, 0.000000e+00
-  br i1 %i.c, label %.split.i, label %bb.c
+  br i1 %i.c, label %.thread12.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = load i64, ptr @rb_eArgError, align 8, !tbaa !19
   tail call void (i64, ptr, ...) @rb_raise(i64 noundef %i.d, ptr noundef nonnull @.str.117, i64 noundef %1) #29
   unreachable
 
-.split.i:                                         ; preds = %bb.b
-  %2 = fcmp ult double %.fr.i, f0x43E0000000000000
-  br i1 %2, label %.thread12.i, label %set_timeout.exit
-
-.thread12.i:                                      ; preds = %.split.i
+.thread12.i:                                      ; preds = %bb.b
   %i.e = fmul double %.fr.i, 1.000000e+09
   %i.f = fptoui double %i.e to i64
+  %2 = fcmp ult double %.fr.i, f0x43E0000000000000
+  %spec.select.i = select i1 %2, i64 %i.f, i64 -1
   br label %set_timeout.exit
 
-set_timeout.exit:                                 ; preds = %bb.a, %.split.i, %.thread12.i
-  %3 = phi i64 [ -1, %.split.i ], [ 0, %bb.a ], [ %i.f, %.thread12.i ]
+set_timeout.exit:                                 ; preds = %bb.a, %.thread12.i
+  %3 = phi i64 [ %spec.select.i, %.thread12.i ], [ 0, %bb.a ]
   store i64 %3, ptr @rb_reg_match_time_limit, align 8, !tbaa !19
   ret i64 %1
 }

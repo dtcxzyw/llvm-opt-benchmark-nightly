@@ -204,13 +204,11 @@ bb.p:                                             ; preds = %bb.o
   %i.cd = getelementptr inbounds nuw [8 x i8], ptr %i.cc, i64 %indvars.iv.i.i.i.epil.init
   %i.ce = load double, ptr %i.cd, align 8, !tbaa !16
   %i.cf = fcmp ogt double %i.ce, %.028.i.i.i.epil.init
-  br i1 %i.cf, label %8, label %allocate_vertex2.exit.i.i
-
-8:                                                ; preds = %bb.p
+  %spec.select = select i1 %i.cf, i32 %i.bx, i32 %.02127.i.i.i.epil.init
   br label %allocate_vertex2.exit.i.i
 
-allocate_vertex2.exit.i.i:                        ; preds = %allocate_vertex2.exit.i.i.loopexit.unr-lcssa, %8, %bb.p, %bb.o, %.epil.preheader, %bb.f
-  %.021.lcssa.i.i.i = phi i32 [ -1, %bb.f ], [ %.122.i.i.i.1, %allocate_vertex2.exit.i.i.loopexit.unr-lcssa ], [ %i.bx, %8 ], [ %.02127.i.i.i.epil.init, %bb.p ], [ %.02127.i.i.i.epil.init, %bb.o ], [ %.02127.i.i.i.epil.init, %.epil.preheader ] ; 2 uses
+allocate_vertex2.exit.i.i:                        ; preds = %bb.p, %allocate_vertex2.exit.i.i.loopexit.unr-lcssa, %bb.o, %.epil.preheader, %bb.f
+  %.021.lcssa.i.i.i = phi i32 [ -1, %bb.f ], [ %.122.i.i.i.1, %allocate_vertex2.exit.i.i.loopexit.unr-lcssa ], [ %.02127.i.i.i.epil.init, %.epil.preheader ], [ %spec.select, %bb.p ], [ %.02127.i.i.i.epil.init, %bb.o ] ; 2 uses
   store i32 %.021.lcssa.i.i.i, ptr %i.ay, align 4, !tbaa !8
   %i.cg = sext i32 %.021.lcssa.i.i.i to i64
   %i.ch = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.cg ; 2 uses

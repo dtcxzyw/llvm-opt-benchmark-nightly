@@ -141,7 +141,7 @@ bb.e:                                             ; preds = %.preheader.preheade
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #6
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef zeroext i1 @Overlap(ptr nofree noundef readonly byval(%struct.Rect) align 8 captures(none) %0, ptr nofree noundef readonly byval(%struct.Rect) align 8 captures(none) %1) local_unnamed_addr #7 {
+define zeroext i1 @Overlap(ptr nofree noundef readonly byval(%struct.Rect) align 8 captures(none) %0, ptr nofree noundef readonly byval(%struct.Rect) align 8 captures(none) %1) local_unnamed_addr #7 {
 bb.a:
   %i.a = load double, ptr %0, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -162,10 +162,7 @@ bb.b:                                             ; preds = %.critedge
   %i.k = load double, ptr %i.j, align 8, !tbaa !8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.m = load double, ptr %i.l, align 8, !tbaa !8
-  %2 = fcmp ogt double %i.k, %i.m
-  br i1 %2, label %bb.c, label %3
-
-3:                                                ; preds = %.critedge.1
+  %2 = fcmp ule double %i.k, %i.m
   br label %bb.c
 
 .critedge:                                        ; preds = %bb.a
@@ -175,8 +172,8 @@ bb.b:                                             ; preds = %.critedge
   %i.q = fcmp ogt double %i.n, %i.p
   br i1 %i.q, label %bb.c, label %bb.b
 
-bb.c:                                             ; preds = %3, %.critedge.1, %bb.b, %.critedge, %bb.a
-  %.lcssa = phi i1 [ false, %.critedge ], [ false, %bb.a ], [ true, %3 ], [ false, %bb.b ], [ false, %.critedge.1 ]
+bb.c:                                             ; preds = %.critedge.1, %bb.b, %.critedge, %bb.a
+  %.lcssa = phi i1 [ false, %.critedge ], [ false, %bb.a ], [ %2, %.critedge.1 ], [ false, %bb.b ]
   ret i1 %.lcssa
 }
 

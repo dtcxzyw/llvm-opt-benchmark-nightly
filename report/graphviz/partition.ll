@@ -204,13 +204,11 @@ bb.s:                                             ; preds = %bb.q
 get_angle.exit.3.i:                               ; preds = %bb.s, %bb.r
   %.0.i.3.i = phi double [ %i.fa, %bb.r ], [ %i.fj, %bb.s ]
   %i.fk = fcmp ogt double %.0.i.3.i, %.130.2.i
-  br i1 %i.fk, label %4, label %bb.t
-
-4:                                                ; preds = %get_angle.exit.3.i
+  %spec.select.i = select i1 %i.fk, i32 3, i32 %.128.2.i
   br label %bb.t
 
-bb.t:                                             ; preds = %4, %get_angle.exit.3.i, %bb.p
-  %.128.3.i = phi i32 [ %.128.2.i, %bb.p ], [ 3, %4 ], [ %.128.2.i, %get_angle.exit.3.i ]
+bb.t:                                             ; preds = %get_angle.exit.3.i, %bb.p
+  %.128.3.i = phi i32 [ %.128.2.i, %bb.p ], [ %spec.select.i, %get_angle.exit.3.i ]
   %i.fl = getelementptr inbounds nuw i8, ptr %i.g, i64 16 ; 2 uses
   %i.fm = load i32, ptr %i.fl, align 4, !tbaa !11 ; 2 uses
   %i.fn = icmp slt i32 %i.fm, 1
@@ -454,13 +452,11 @@ bb.al:                                            ; preds = %bb.aj
 get_angle.exit49.3.i:                             ; preds = %bb.al, %bb.ak
   %.0.i48.3.i = phi double [ %i.le, %bb.ak ], [ %i.ln, %bb.al ]
   %i.lo = fcmp ogt double %.0.i48.3.i, %.3.2.i
-  br i1 %i.lo, label %5, label %get_vertex_positions.exit
-
-5:                                                ; preds = %get_angle.exit49.3.i
+  %spec.select65.i = select i1 %i.lo, i32 3, i32 %.1.2.i
   br label %get_vertex_positions.exit
 
-get_vertex_positions.exit:                        ; preds = %bb.ai, %get_angle.exit49.3.i, %5
-  %.1.3.i = phi i32 [ %.1.2.i, %bb.ai ], [ 3, %5 ], [ %.1.2.i, %get_angle.exit49.3.i ]
+get_vertex_positions.exit:                        ; preds = %bb.ai, %get_angle.exit49.3.i
+  %.1.3.i = phi i32 [ %.1.2.i, %bb.ai ], [ %spec.select65.i, %get_angle.exit49.3.i ]
   %i.lp = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
   %i.lq = zext nneg i32 %.128.3.i to i64          ; 2 uses
   %i.lr = getelementptr inbounds nuw [4 x i8], ptr %i.lp, i64 %i.lq

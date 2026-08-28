@@ -205,13 +205,11 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.ac = fcmp ogt float %i.e, f0x4E000000
-  br i1 %i.ac, label %2, label %.critedge
-
-2:                                                ; preds = %bb.y
+  %spec.select = select i1 %i.ac, i32 1073741824, i32 536870912
   br label %.critedge
 
-.critedge:                                        ; preds = %2, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %.preheader
-  %.0.lcssa = phi i32 [ 1073741824, %2 ], [ 64, %.preheader ], [ 128, %bb.c ], [ 536870912, %bb.y ], [ 256, %bb.d ], [ 2097152, %bb.q ], [ 512, %bb.e ], [ 268435456, %bb.x ], [ 1024, %bb.f ], [ 524288, %bb.o ], [ 2048, %bb.g ], [ 134217728, %bb.w ], [ 4096, %bb.h ], [ 8388608, %bb.s ], [ 8192, %bb.i ], [ 67108864, %bb.v ], [ 16384, %bb.j ], [ 1048576, %bb.p ], [ 32768, %bb.k ], [ 33554432, %bb.u ], [ 65536, %bb.l ], [ 4194304, %bb.r ], [ 131072, %bb.m ], [ 16777216, %bb.t ], [ 262144, %bb.n ] ; 3 uses
+.critedge:                                        ; preds = %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %.preheader
+  %.0.lcssa = phi i32 [ 262144, %bb.n ], [ 64, %.preheader ], [ 128, %bb.c ], [ %spec.select, %bb.y ], [ 256, %bb.d ], [ 2097152, %bb.q ], [ 512, %bb.e ], [ 268435456, %bb.x ], [ 1024, %bb.f ], [ 524288, %bb.o ], [ 2048, %bb.g ], [ 134217728, %bb.w ], [ 4096, %bb.h ], [ 8388608, %bb.s ], [ 8192, %bb.i ], [ 67108864, %bb.v ], [ 16384, %bb.j ], [ 1048576, %bb.p ], [ 32768, %bb.k ], [ 33554432, %bb.u ], [ 65536, %bb.l ], [ 4194304, %bb.r ], [ 131072, %bb.m ], [ 16777216, %bb.t ] ; 3 uses
   %i.ad = zext nneg i32 %.0.lcssa to i64          ; 4 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !36 ; 2 uses

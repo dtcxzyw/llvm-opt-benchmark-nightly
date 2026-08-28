@@ -204,8 +204,8 @@ bb.ac:                                            ; preds = %bb.z
   br label %.outer.i
 
 .outer.i:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit206.i, %bb.ac
-  %.074.ph.i = phi double [ %.377.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit206.i ], [ undef, %bb.ac ] ; 6 uses
-  %.0.ph.i = phi double [ %.2.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit206.i ], [ -1.000000e+00, %bb.ac ] ; 7 uses
+  %.074.ph.i = phi double [ %.377.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit206.i ], [ undef, %bb.ac ] ; 5 uses
+  %.0.ph.i = phi double [ %.2.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit206.i ], [ -1.000000e+00, %bb.ac ] ; 6 uses
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ai, %.outer.i
@@ -578,8 +578,9 @@ bb.bd:                                            ; preds = %bb.bb
 bb.be:                                            ; preds = %bb.bd, %bb.bb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #22
   %i.jq = fmul double %i.jj, 1.000000e+06         ; 2 uses
-  %i.jr = fcmp ule double %i.jq, 0.000000e+00
-  br i1 %i.jr, label %33, label %bb.bo
+  %i.jr = fcmp ule double %i.jq, 0.000000e+00     ; 2 uses
+  %.074..i = select i1 %i.jr, double %.074.ph.i, double %i.jq
+  br label %bb.bo
 
 ._crit_edge.i.i182.i:                             ; preds = %.lr.ph.i.i.6.i, %.lr.ph.i.i.5.i, %.lr.ph.i.i.4.i, %.lr.ph.i.i.3.i, %.lr.ph.i.i.2.i, %.lr.ph.i.i.1.i, %.lr.ph.i.i.preheader.i
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #22
@@ -726,18 +727,13 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bk
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #22
   %i.lz = fmul double %i.ls, 1.000000e+06         ; 2 uses
   %i.ma = fcmp olt double %i.lz, 0.000000e+00
-  br i1 %i.ma, label %32, label %bb.bo
-
-32:                                               ; preds = %bb.bn
+  %spec.store.select.i = select i1 %i.ma, double -1.000000e+00, double %i.lz
   br label %bb.bo
 
-33:                                               ; preds = %bb.be
-  br label %bb.bo
-
-bb.bo:                                            ; preds = %33, %32, %bb.bn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.thread.i, %bb.be, %bb.av
-  %.377.i = phi double [ %i.jq, %bb.be ], [ %.074.ph.i, %bb.av ], [ %.074.ph.i, %33 ], [ %.074.ph.i, %32 ], [ %.074.ph.i, %bb.bn ], [ %.074.ph.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.i ], [ %.074.ph.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.thread.i ] ; 2 uses
-  %cond.i = phi i1 [ false, %bb.be ], [ true, %bb.av ], [ true, %33 ], [ true, %32 ], [ true, %bb.bn ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.i ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.thread.i ]
-  %.2.i = phi double [ %.0.ph.i, %bb.be ], [ %.0.ph.i, %bb.av ], [ %.0.ph.i, %33 ], [ -1.000000e+00, %32 ], [ %i.lz, %bb.bn ], [ %.0.ph.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.i ], [ %.0.ph.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.thread.i ]
+bb.bo:                                            ; preds = %bb.bn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.thread.i, %bb.be, %bb.av
+  %.377.i = phi double [ %.074..i, %bb.be ], [ %.074.ph.i, %bb.av ], [ %.074.ph.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.i ], [ %.074.ph.i, %bb.bn ], [ %.074.ph.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.thread.i ] ; 2 uses
+  %cond.i = phi i1 [ %i.jr, %bb.be ], [ true, %bb.av ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.i ], [ true, %bb.bn ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.thread.i ]
+  %.2.i = phi double [ %.0.ph.i, %bb.be ], [ %.0.ph.i, %bb.av ], [ %.0.ph.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.i ], [ %spec.store.select.i, %bb.bn ], [ %.0.ph.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195.thread.i ]
   %i.mb = load ptr, ptr %25, align 8, !tbaa !35   ; 2 uses
   %i.mc = icmp eq ptr %i.mb, %i.fc
   br i1 %i.mc, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit206.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i204.i

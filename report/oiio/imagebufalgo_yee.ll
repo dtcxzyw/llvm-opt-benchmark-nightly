@@ -204,8 +204,8 @@ bb.at:                                            ; preds = %bb.as
   %or.cond = or i1 %i.ew, %i.ex
   br i1 %or.cond, label %._crit_edge, label %.lr.ph.1
 
-._crit_edge:                                      ; preds = %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %.lr.ph.7, %bb.at
-  %.0141.lcssa = phi i64 [ 0, %bb.at ], [ 7, %.lr.ph.7 ], [ 1, %.lr.ph.1 ], [ 2, %.lr.ph.2 ], [ 3, %.lr.ph.3 ], [ 4, %.lr.ph.4 ], [ 5, %.lr.ph.5 ], [ 6, %.lr.ph.6 ] ; 2 uses
+._crit_edge:                                      ; preds = %.lr.ph.6, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %bb.at
+  %.0140.lcssa = phi i64 [ 0, %bb.at ], [ %spec.select, %.lr.ph.6 ], [ 1, %.lr.ph.1 ], [ 2, %.lr.ph.2 ], [ 3, %.lr.ph.3 ], [ 4, %.lr.ph.4 ], [ 5, %.lr.ph.5 ] ; 2 uses
   %i.ey = fmul float %i.ev, 5.000000e-01          ; 5 uses
   %i.ez = fmul float %i.ey, 5.000000e-01          ; 5 uses
   %i.fa = fmul float %i.ez, 5.000000e-01          ; 4 uses
@@ -325,15 +325,13 @@ bb.bf:                                            ; preds = %bb.as
 
 .lr.ph.6:                                         ; preds = %.lr.ph.5
   %i.gw = fcmp ult double %i.eq, f0x405FFFFFF0000000
-  br i1 %i.gw, label %._crit_edge, label %.lr.ph.7
-
-.lr.ph.7:                                         ; preds = %.lr.ph.6
+  %spec.select = select i1 %i.gw, i64 6, i64 7
   br label %._crit_edge
 
 .preheader282.lr.ph:                              ; preds = %._crit_edge
   %i.gx = icmp sgt i32 %i.et, 0
-  %i.gy = getelementptr inbounds nuw [16 x i8], ptr %36, i64 %.0141.lcssa
-  %i.gz = getelementptr inbounds nuw [16 x i8], ptr %37, i64 %.0141.lcssa
+  %i.gy = getelementptr inbounds nuw [16 x i8], ptr %36, i64 %.0140.lcssa
+  %i.gz = getelementptr inbounds nuw [16 x i8], ptr %37, i64 %.0140.lcssa
   br i1 %i.gx, label %.preheader282.preheader, label %._crit_edge301.split
 
 .preheader282.preheader:                          ; preds = %.preheader282.lr.ph

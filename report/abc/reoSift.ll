@@ -172,14 +172,12 @@ bb.n:                                             ; preds = %.epil.preheader
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !31
   %i.bb = sitofp i32 %i.ba to double
   %i.bc = fcmp olt double %.0285368.epil.init, %i.bb
-  br i1 %i.bc, label %1, label %._crit_edge
-
-1:                                                ; preds = %bb.n
-  %2 = trunc nuw nsw i64 %indvars.iv.epil.init to i32
+  %1 = trunc nuw nsw i64 %indvars.iv.epil.init to i32
+  %spec.select727 = select i1 %i.bc, i32 %1, i32 %.0275369.epil.init
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %1, %bb.n, %.epil.preheader, %.preheader367
-  %.0275.lcssa = phi i32 [ -1, %.preheader367 ], [ %.1276.1, %._crit_edge.loopexit.unr-lcssa ], [ %.0275369.epil.init, %.epil.preheader ], [ %2, %1 ], [ %.0275369.epil.init, %bb.n ] ; 18 uses
+._crit_edge:                                      ; preds = %bb.n, %._crit_edge.loopexit.unr-lcssa, %.epil.preheader, %.preheader367
+  %.0275.lcssa = phi i32 [ -1, %.preheader367 ], [ %.1276.1, %._crit_edge.loopexit.unr-lcssa ], [ %.0275369.epil.init, %.epil.preheader ], [ %spec.select727, %bb.n ] ; 18 uses
   %i.bd = sext i32 %.0275.lcssa to i64            ; 9 uses
   %i.be = getelementptr inbounds [56 x i8], ptr %.pre, i64 %i.bd
   store i32 1, ptr %i.be, align 8, !tbaa !29

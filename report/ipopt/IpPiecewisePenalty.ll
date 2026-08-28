@@ -189,13 +189,10 @@ bb.i:                                             ; preds = %.lr.ph117
   %i.cw = getelementptr inbounds i8, ptr %i.c, i64 -8
   %i.cx = load double, ptr %i.cw, align 8, !tbaa !24
   %i.cy = fcmp olt double %2, %i.cx
-  br i1 %i.cy, label %3, label %.critedge
-
-3:                                                ; preds = %.critedge108
   br label %.critedge
 
-.critedge:                                        ; preds = %.lr.ph, %.lr.ph117, %.critedge108, %3, %bb.d, %bb.f, %bb.c
-  %.3 = phi i1 [ false, %bb.f ], [ true, %.lr.ph117 ], [ false, %bb.d ], [ false, %bb.c ], [ true, %3 ], [ false, %.critedge108 ], [ false, %.lr.ph ]
+.critedge:                                        ; preds = %.lr.ph, %.lr.ph117, %.critedge108, %bb.d, %bb.f, %bb.c
+  %.3 = phi i1 [ false, %bb.f ], [ %i.cy, %.critedge108 ], [ false, %bb.d ], [ false, %bb.c ], [ true, %.lr.ph117 ], [ false, %.lr.ph ]
   ret i1 %.3
 }
 

@@ -205,13 +205,11 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.l = call double @llvm.round.f64(double %i.h)
   %i.m = fcmp une double %i.l, %i.h
-  br i1 %i.m, label %6, label %bb.e
-
-6:                                                ; preds = %bb.d
+  %spec.store.select.i = select i1 %i.m, i32 6, i32 3
   br label %bb.e
 
-bb.e:                                             ; preds = %6, %bb.d, %bb.c
-  %.0.i = phi i32 [ 6, %6 ], [ 3, %bb.d ], [ %i.j, %bb.c ]
+bb.e:                                             ; preds = %bb.d, %bb.c
+  %.0.i = phi i32 [ %spec.store.select.i, %bb.d ], [ %i.j, %bb.c ]
   %i.n = fdiv double %i.h, 1.000000e+03
   %i.o = call double @fmod(double noundef %i.n, double noundef 6.000000e+01) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28

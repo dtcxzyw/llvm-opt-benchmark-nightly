@@ -157,13 +157,11 @@ bb.p:                                             ; preds = %._crit_edge, %bb.m
   %i.ba = getelementptr inbounds nuw i8, ptr %i.f, i64 48
   %i.bb = load double, ptr %i.ba, align 8, !tbaa !25
   %i.bc = fcmp ult double %i.bb, 0.000000e+00
-  br i1 %i.bc, label %.critedge, label %3
-
-3:                                                ; preds = %bb.p
+  %spec.select = select i1 %i.bc, i1 true, i1 %i.az
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.k, %bb.j, %bb.i, %bb.l, %3, %bb.p
-  %4 = phi i1 [ true, %bb.p ], [ true, %bb.k ], [ %i.az, %3 ], [ true, %bb.l ], [ true, %bb.i ], [ true, %bb.j ]
+.critedge:                                        ; preds = %bb.p, %bb.k, %bb.j, %bb.i, %bb.l
+  %3 = phi i1 [ %spec.select, %bb.p ], [ true, %bb.k ], [ true, %bb.j ], [ true, %bb.l ], [ true, %bb.i ]
   br i1 %.not57, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %.critedge
@@ -186,7 +184,7 @@ bb.q:                                             ; preds = %.critedge
   br label %bb.t
 
 bb.r:                                             ; preds = %.critedge, %bb.q
-  br i1 %4, label %bb.s, label %bb.t
+  br i1 %3, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
   %i.bo = tail call ptr @cs_sfree(ptr noundef nonnull %i.f) #4

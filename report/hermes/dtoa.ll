@@ -205,7 +205,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.y
   %i.dh = fcmp une double %i.dd, %i.dg
   %or.cond582 = and i1 %i.df, %i.dh
   %i.di = sext i1 %or.cond582 to i32
-  %.0463 = add nsw i32 %i.di, %i.de               ; 5 uses
+  %.0463 = add nsw i32 %i.di, %i.de               ; 4 uses
   %or.cond = icmp ugt i32 %.0463, 22              ; 3 uses
   br i1 %or.cond, label %bb.af, label %bb.ae
 
@@ -215,14 +215,12 @@ bb.ae:                                            ; preds = %bb.ad
   %i.dl = getelementptr inbounds nuw [8 x i8], ptr @tens, i64 %i.dk
   %i.dm = load double, ptr %i.dl, align 8, !tbaa !27
   %i.dn = fcmp olt double %i.dj, %i.dm
-  br i1 %i.dn, label %select.unfold, label %bb.af
-
-select.unfold:                                    ; preds = %bb.ae
-  %8 = add nsw i32 %.0463, -1
+  %8 = sext i1 %i.dn to i32
+  %spec.select = add nsw i32 %.0463, %8
   br label %bb.af
 
-bb.af:                                            ; preds = %bb.ae, %select.unfold, %bb.ad
-  %.2465 = phi i32 [ %.0463, %bb.ae ], [ %.0463, %bb.ad ], [ %8, %select.unfold ] ; 27 uses
+bb.af:                                            ; preds = %bb.ae, %bb.ad
+  %.2465 = phi i32 [ %spec.select, %bb.ae ], [ %.0463, %bb.ad ] ; 27 uses
   %i.do = load i32, ptr %i.a, align 4, !tbaa !3
   %i.dp = xor i32 %.0493, -1
   %i.dq = add i32 %i.do, %i.dp                    ; 3 uses
@@ -625,7 +623,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.y
   %i.dh = fcmp une double %i.dd, %i.dg
   %or.cond555 = and i1 %i.df, %i.dh
   %i.di = sext i1 %or.cond555 to i32
-  %.0448 = add nsw i32 %i.di, %i.de               ; 5 uses
+  %.0448 = add nsw i32 %i.di, %i.de               ; 4 uses
   %or.cond = icmp ugt i32 %.0448, 22              ; 3 uses
   br i1 %or.cond, label %bb.af, label %bb.ae
 
@@ -635,14 +633,12 @@ bb.ae:                                            ; preds = %bb.ad
   %i.dl = getelementptr inbounds nuw [8 x i8], ptr @tens, i64 %i.dk
   %i.dm = load double, ptr %i.dl, align 8, !tbaa !27
   %i.dn = fcmp olt double %i.dj, %i.dm
-  br i1 %i.dn, label %select.unfold, label %bb.af
-
-select.unfold:                                    ; preds = %bb.ae
-  %8 = add nsw i32 %.0448, -1
+  %8 = sext i1 %i.dn to i32
+  %spec.select = add nsw i32 %.0448, %8
   br label %bb.af
 
-bb.af:                                            ; preds = %bb.ae, %select.unfold, %bb.ad
-  %.2450 = phi i32 [ %.0448, %bb.ae ], [ %.0448, %bb.ad ], [ %8, %select.unfold ] ; 26 uses
+bb.af:                                            ; preds = %bb.ae, %bb.ad
+  %.2450 = phi i32 [ %spec.select, %bb.ae ], [ %.0448, %bb.ad ] ; 26 uses
   %i.do = load i32, ptr %i.a, align 4, !tbaa !3
   %i.dp = xor i32 %.0478, -1
   %i.dq = add i32 %i.do, %i.dp                    ; 3 uses

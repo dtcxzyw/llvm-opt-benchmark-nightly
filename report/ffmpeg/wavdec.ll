@@ -204,13 +204,11 @@ bb.dg:                                            ; preds = %bb.df
   %i.mo = fadd nsz double %i.mn, -1.000000e+00
   %i.mp = call nsz double @llvm.fabs.f64(double %i.mo)
   %i.mq = fcmp nsz olt double %i.mp, 3.000000e-01
-  br i1 %i.mq, label %1, label %bb.dh
-
-1:                                                ; preds = %bb.dg
+  %spec.select = select i1 %i.mq, i64 %i.mc, i64 %.3315427469
   br label %bb.dh
 
-bb.dh:                                            ; preds = %bb.dg, %1, %bb.df, %bb.de, %bb.dd, %bb.dc
-  %.4316 = phi i64 [ %i.mc, %1 ], [ %.3315427469, %bb.dg ], [ %.3315427469, %bb.df ], [ %.3315427469, %bb.de ], [ %.3315427469, %bb.dd ], [ %.3315427469, %bb.dc ] ; 6 uses
+bb.dh:                                            ; preds = %bb.dg, %bb.df, %bb.de, %bb.dd, %bb.dc
+  %.4316 = phi i64 [ %.3315427469, %bb.dc ], [ %spec.select, %bb.dg ], [ %.3315427469, %bb.df ], [ %.3315427469, %bb.de ], [ %.3315427469, %bb.dd ] ; 6 uses
   %i.mr = icmp ne i64 %.4316, 0
   %or.cond31 = select i1 %i.ls, i1 %i.mr, i1 false
   br i1 %or.cond31, label %bb.di, label %bb.dl

@@ -205,14 +205,11 @@ bb.r:                                             ; preds = %bb.q
   %i.pg = tail call float @llvm.fmuladd.f32(float %i.op, float %i.op, float %i.pf)
   %i.ph = tail call float @llvm.fmuladd.f32(float %i.oz, float %i.oz, float %i.pg)
   %i.pi = tail call noundef float @llvm.fmuladd.f32(float %i.pe, float %i.pe, float %i.ph)
-  %2 = fcmp ogt float %i.pi, f0x2EDBE6FE
-  br i1 %2, label %_ZNK12_GLOBAL__N_126CompareVerticesAlmostEqualclERKN6Assimp6VertexES4_.exit, label %3
-
-3:                                                ; preds = %bb.r
+  %2 = fcmp ule float %i.pi, f0x2EDBE6FE
   br label %_ZNK12_GLOBAL__N_126CompareVerticesAlmostEqualclERKN6Assimp6VertexES4_.exit
 
-_ZNK12_GLOBAL__N_126CompareVerticesAlmostEqualclERKN6Assimp6VertexES4_.exit: ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %.preheader10.i, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %.preheader.i, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %3
-  %.2.i = phi i1 [ false, %bb.o ], [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.c ], [ false, %bb.d ], [ true, %3 ], [ false, %.preheader.i ], [ false, %bb.l ], [ false, %bb.r ], [ false, %bb.m ], [ false, %bb.p ], [ false, %bb.n ], [ false, %bb.q ], [ false, %bb.k ], [ false, %bb.j ], [ false, %bb.i ], [ false, %bb.h ], [ false, %bb.g ], [ false, %bb.f ], [ false, %bb.e ], [ false, %.preheader10.i ]
+_ZNK12_GLOBAL__N_126CompareVerticesAlmostEqualclERKN6Assimp6VertexES4_.exit: ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %.preheader10.i, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %.preheader.i, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r
+  %.2.i = phi i1 [ false, %bb.o ], [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.c ], [ false, %bb.d ], [ false, %.preheader10.i ], [ false, %.preheader.i ], [ false, %bb.l ], [ %2, %bb.r ], [ false, %bb.m ], [ false, %bb.p ], [ false, %bb.n ], [ false, %bb.q ], [ false, %bb.k ], [ false, %bb.j ], [ false, %bb.i ], [ false, %bb.h ], [ false, %bb.g ], [ false, %bb.f ], [ false, %bb.e ]
   ret i1 %.2.i
 }
 

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 ._crit_edge216:                                   ; preds = %bb.e, %bb.c
   %.0125.lcssa = phi i32 [ 0, %bb.c ], [ %.1126, %bb.e ] ; 3 uses
   %.0123.lcssa = phi i64 [ 0, %bb.c ], [ %.1124, %bb.e ] ; 6 uses
-  %.1.lcssa = phi double [ %.0234, %bb.c ], [ %i.bd, %bb.e ] ; 8 uses
+  %.1.lcssa = phi double [ %.0234, %bb.c ], [ %i.bd, %bb.e ] ; 7 uses
   %i.ay = icmp ne i8 %i.aq, 1
   %brmerge = select i1 %i.ay, i1 true, i1 %.not133220
   br i1 %brmerge, label %.loopexit205, label %.lr.ph223.preheader
@@ -608,10 +608,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 bb.ay:                                            ; preds = %._crit_edge229, %bb.aw
   %.3199 = phi double [ %.sroa.speculated159, %._crit_edge229 ], [ %.2, %bb.aw ] ; 3 uses
   %i.lc = fcmp ogt double %.3199, 1.000000e+00
-  br i1 %i.lc, label %6, label %_ZN7rocksdb12_GLOBAL__N_127ShouldChangeFileTemperatureERKNS_16ImmutableOptionsERKNS_16MutableCFOptionsERKSt6vectorIPNS_12FileMetaDataESaIS9_EE.exit.thread
-
-6:                                                ; preds = %bb.ay
-  %7 = fmul nnan double %.3199, 1.000000e+01
+  %6 = fmul nnan double %.3199, 1.000000e+01
+  %spec.select204 = select i1 %i.lc, double %6, double %.3199
   br label %_ZN7rocksdb12_GLOBAL__N_127ShouldChangeFileTemperatureERKNS_16ImmutableOptionsERKNS_16MutableCFOptionsERKSt6vectorIPNS_12FileMetaDataESaIS9_EE.exit.thread
 
 bb.az:                                            ; preds = %bb.av
@@ -725,9 +723,9 @@ bb.bj:                                            ; preds = %bb.bi
   %i.ng = fadd double %.0234, %i.nf
   br label %_ZN7rocksdb12_GLOBAL__N_127ShouldChangeFileTemperatureERKNS_16ImmutableOptionsERKNS_16MutableCFOptionsERKSt6vectorIPNS_12FileMetaDataESaIS9_EE.exit.thread
 
-_ZN7rocksdb12_GLOBAL__N_127ShouldChangeFileTemperatureERKNS_16ImmutableOptionsERKNS_16MutableCFOptionsERKSt6vectorIPNS_12FileMetaDataESaIS9_EE.exit.thread: ; preds = %_ZN7rocksdb12_GLOBAL__N_127ShouldChangeFileTemperatureERKNS_16ImmutableOptionsERKNS_16MutableCFOptionsERKSt6vectorIPNS_12FileMetaDataESaIS9_EE.exit, %bb.ac, %bb.ab, %bb.bh, %bb.bj, %bb.bi, %bb.az, %6, %bb.ay, %bb.au, %bb.aa
-  %.5 = phi double [ %.1198, %bb.ac ], [ %.1198, %bb.ab ], [ %.1198, %bb.aa ], [ %7, %6 ], [ %.3199, %bb.ay ], [ %.sroa.speculated155, %bb.az ], [ %.5.i, %_ZN7rocksdb12_GLOBAL__N_127ShouldChangeFileTemperatureERKNS_16ImmutableOptionsERKNS_16MutableCFOptionsERKSt6vectorIPNS_12FileMetaDataESaIS9_EE.exit ], [ %i.iz, %bb.au ], [ %.4200, %bb.bj ], [ %.4200, %bb.bi ], [ %.4200, %bb.bh ]
-  %.3 = phi double [ %.1.lcssa, %bb.ac ], [ %.1.lcssa, %bb.ab ], [ %.1.lcssa, %bb.aa ], [ %.1.lcssa, %6 ], [ %.1.lcssa, %bb.ay ], [ %.1.lcssa, %bb.az ], [ %.1.lcssa, %_ZN7rocksdb12_GLOBAL__N_127ShouldChangeFileTemperatureERKNS_16ImmutableOptionsERKNS_16MutableCFOptionsERKSt6vectorIPNS_12FileMetaDataESaIS9_EE.exit ], [ %.1.lcssa, %bb.au ], [ %i.ng, %bb.bj ], [ %.0234, %bb.bi ], [ %i.nc, %bb.bh ]
+_ZN7rocksdb12_GLOBAL__N_127ShouldChangeFileTemperatureERKNS_16ImmutableOptionsERKNS_16MutableCFOptionsERKSt6vectorIPNS_12FileMetaDataESaIS9_EE.exit.thread: ; preds = %bb.ay, %_ZN7rocksdb12_GLOBAL__N_127ShouldChangeFileTemperatureERKNS_16ImmutableOptionsERKNS_16MutableCFOptionsERKSt6vectorIPNS_12FileMetaDataESaIS9_EE.exit, %bb.ac, %bb.ab, %bb.bh, %bb.bj, %bb.bi, %bb.az, %bb.au, %bb.aa
+  %.5 = phi double [ %.1198, %bb.ac ], [ %.4200, %bb.bh ], [ %.1198, %bb.aa ], [ %.1198, %bb.ab ], [ %spec.select204, %bb.ay ], [ %.sroa.speculated155, %bb.az ], [ %.5.i, %_ZN7rocksdb12_GLOBAL__N_127ShouldChangeFileTemperatureERKNS_16ImmutableOptionsERKNS_16MutableCFOptionsERKSt6vectorIPNS_12FileMetaDataESaIS9_EE.exit ], [ %i.iz, %bb.au ], [ %.4200, %bb.bj ], [ %.4200, %bb.bi ]
+  %.3 = phi double [ %.1.lcssa, %bb.ac ], [ %i.nc, %bb.bh ], [ %.1.lcssa, %bb.aa ], [ %.1.lcssa, %bb.ab ], [ %.1.lcssa, %bb.ay ], [ %.1.lcssa, %bb.az ], [ %.1.lcssa, %_ZN7rocksdb12_GLOBAL__N_127ShouldChangeFileTemperatureERKNS_16ImmutableOptionsERKNS_16MutableCFOptionsERKSt6vectorIPNS_12FileMetaDataESaIS9_EE.exit ], [ %.1.lcssa, %bb.au ], [ %i.ng, %bb.bj ], [ %.0234, %bb.bi ]
   %i.nh = load ptr, ptr %i.ag, align 16, !tbaa !122
   %i.ni = getelementptr inbounds nuw [4 x i8], ptr %i.nh, i64 %indvars.iv250
   %i.nj = trunc nuw nsw i64 %indvars.iv250 to i32

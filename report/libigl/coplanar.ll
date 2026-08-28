@@ -205,14 +205,12 @@ bb.b:                                             ; preds = %.noexc
   br i1 %i.cf, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %14 = fcmp oeq double %i.ce, %i.cc
-  br i1 %14, label %bb.d, label %15
-
-15:                                               ; preds = %bb.c
+  %14 = fcmp une double %i.ce, %i.cc
+  %15 = select i1 %14, i64 8589934591, i64 0
   br label %bb.d
 
-bb.d:                                             ; preds = %.noexc, %bb.b, %bb.c, %15
-  %.sroa.5.0.i.i.i.i.i.i = phi i64 [ 8589934591, %15 ], [ 4294967297, %.noexc ], [ -1, %bb.b ], [ 0, %bb.c ] ; 2 uses
+bb.d:                                             ; preds = %.noexc, %bb.b, %bb.c
+  %.sroa.5.0.i.i.i.i.i.i = phi i64 [ %15, %bb.c ], [ 4294967297, %.noexc ], [ -1, %bb.b ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #26

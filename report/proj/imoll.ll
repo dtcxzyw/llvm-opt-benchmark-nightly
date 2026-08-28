@@ -203,8 +203,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %i.g = load double, ptr %i.f, align 8, !tbaa !50
-  %3 = fcmp ugt double %0, %i.g
-  br i1 %3, label %bb.g, label %select.unfold74
+  %3 = fcmp ole double %0, %i.g
+  %spec.select = select i1 %3, i32 1, i32 2
+  br label %bb.g
 
 bb.d:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 56
@@ -222,16 +223,11 @@ bb.f:                                             ; preds = %bb.e
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   %i.o = load double, ptr %i.n, align 8, !tbaa !54
   %i.p = fcmp ugt double %0, %i.o
-  br i1 %i.p, label %select.unfold, label %bb.g
-
-select.unfold:                                    ; preds = %bb.f
+  %spec.select104 = select i1 %i.p, i32 6, i32 5
   br label %bb.g
 
-select.unfold74:                                  ; preds = %bb.c
-  br label %bb.g
-
-bb.g:                                             ; preds = %bb.c, %bb.f, %bb.e, %select.unfold74, %bb.d, %select.unfold
-  %.066.ph = phi i32 [ 5, %bb.f ], [ 3, %bb.d ], [ 2, %bb.c ], [ 4, %bb.e ], [ 6, %select.unfold ], [ 1, %select.unfold74 ] ; 2 uses
+bb.g:                                             ; preds = %bb.f, %bb.c, %bb.e, %bb.d
+  %.066.ph = phi i32 [ %spec.select104, %bb.f ], [ 3, %bb.d ], [ %spec.select, %bb.c ], [ 4, %bb.e ] ; 2 uses
   %i.q = zext nneg i32 %.066.ph to i64
   %i.r = getelementptr [8 x i8], ptr %i.b, i64 %i.q
   %i.s = getelementptr i8, ptr %i.r, i64 -8       ; 2 uses

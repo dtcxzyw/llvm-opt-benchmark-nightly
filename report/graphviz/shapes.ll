@@ -205,13 +205,11 @@ bb.ax:                                            ; preds = %bb.aw
 
 bb.ay:                                            ; preds = %bb.ax
   %i.db = fcmp oeq double %.0125, f0xBFF921FB54442D18
-  br i1 %i.db, label %6, label %invflip_angle.exit
-
-6:                                                ; preds = %bb.ay
+  %spec.store.select.i = select i1 %i.db, double f0x400921FB54442D18, double %.0125
   br label %invflip_angle.exit
 
-invflip_angle.exit:                               ; preds = %invflip_side.exit, %bb.ar, %bb.as, %bb.at, %bb.au, %bb.av, %bb.aw, %bb.ax, %bb.ay, %6
-  %.0.i151 = phi double [ %.0125, %invflip_side.exit ], [ %i.cu, %bb.ar ], [ %i.cv, %bb.as ], [ %.0125, %bb.ay ], [ f0xBFF921FB54442D18, %bb.at ], [ f0xBFE921FB54442D18, %bb.au ], [ 0.000000e+00, %bb.av ], [ f0x3FF921FB54442D18, %bb.aw ], [ f0x400921FB54442D18, %6 ], [ f0x4002D97C7F3321D2, %bb.ax ]
+invflip_angle.exit:                               ; preds = %invflip_side.exit, %bb.ar, %bb.as, %bb.at, %bb.au, %bb.av, %bb.aw, %bb.ax, %bb.ay
+  %.0.i151 = phi double [ %.0125, %invflip_side.exit ], [ %i.cu, %bb.ar ], [ %i.cv, %bb.as ], [ %spec.store.select.i, %bb.ay ], [ f0xBFF921FB54442D18, %bb.at ], [ f0xBFE921FB54442D18, %bb.au ], [ 0.000000e+00, %bb.av ], [ f0x3FF921FB54442D18, %bb.aw ], [ f0x4002D97C7F3321D2, %bb.ax ]
   %i.dc = getelementptr inbounds nuw i8, ptr %2, i64 16
   store double %.0.i151, ptr %i.dc, align 8, !tbaa !143
   %i.dd = fcmp oeq double %i.bu, 0.000000e+00

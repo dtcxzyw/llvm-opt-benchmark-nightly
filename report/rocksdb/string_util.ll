@@ -204,16 +204,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %.0.2 = fmul nnan double %.0.1, f0x3F50000000000000 ; 3 uses
-  %i.e = fcmp ult double %.0.2, 1.024000e+03
-  br i1 %i.e, label %bb.d, label %2
-
-2:                                                ; preds = %bb.c
+  %i.e = fcmp ult double %.0.2, 1.024000e+03      ; 2 uses
   %.0.3 = fmul nnan double %.0.2, f0x3F50000000000000
+  %spec.select = select i1 %i.e, i64 2, i64 3
+  %spec.select14 = select i1 %i.e, double %.0.2, double %.0.3
   br label %bb.d
 
-bb.d:                                             ; preds = %2, %bb.c, %bb.b, %bb.a
-  %.09.lcssa = phi i64 [ 0, %bb.a ], [ 1, %bb.b ], [ 2, %bb.c ], [ 3, %2 ]
-  %.0.lcssa = phi double [ %.0, %bb.a ], [ %.0.1, %bb.b ], [ %.0.2, %bb.c ], [ %.0.3, %2 ]
+bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
+  %.09.lcssa = phi i64 [ 0, %bb.a ], [ 1, %bb.b ], [ %spec.select, %bb.c ]
+  %.0.lcssa = phi double [ %.0, %bb.a ], [ %.0.1, %bb.b ], [ %spec.select14, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27
   %i.f = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN7rocksdb18BytesToHumanStringB5cxx11Em.size_name, i64 %.09.lcssa
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !43

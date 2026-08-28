@@ -205,21 +205,19 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   %i.hn = tail call double @llvm.fmuladd.f64(double %i.hl, double 2.000000e+00, double %i.hm)
   %i.ho = fadd double %i.hk, %i.hn
   %i.hp = fcmp olt double %i.ho, %i.gw
-  br i1 %i.hp, label %3, label %.backedge
+  br i1 %i.hp, label %bb.k, label %.backedge
 
 .backedge:                                        ; preds = %bb.j, %bb.f
   br label %bb.f, !llvm.loop !231
 
-3:                                                ; preds = %bb.j
-  %4 = fcmp ogt double %i.gt, f0x41EFFFFFFFE00000
-  br i1 %4, label %.thread, label %bb.k
-
-bb.k:                                             ; preds = %3
-  %i.hq = fptoui double %i.gt to i32
+bb.k:                                             ; preds = %bb.j
+  %.inv = fcmp oge double %i.gt, f0x41EFFFFFFFE00000
+  %spec.select57 = select i1 %.inv, double f0x41EFFFFFFFE00000, double %i.gt
+  %i.hq = fptoui double %spec.select57 to i32
   br label %.thread
 
-.thread:                                          ; preds = %bb.d, %.preheader57, %3, %bb.k
-  %.3 = phi i32 [ %i.hq, %bb.k ], [ -1, %3 ], [ 0, %.preheader57 ], [ %.136, %bb.d ]
+.thread:                                          ; preds = %bb.d, %.preheader57, %bb.k
+  %.3 = phi i32 [ %i.hq, %bb.k ], [ 0, %.preheader57 ], [ %.136, %bb.d ]
   ret i32 %.3
 }
 

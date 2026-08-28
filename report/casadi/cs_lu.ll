@@ -202,13 +202,11 @@ bb.r:                                             ; preds = %bb.q
   %i.cs = tail call double @llvm.fabs.f64(double %i.cr)
   %i.ct = fmul double %2, %.1198
   %i.cu = fcmp ult double %i.cs, %i.ct
-  br i1 %i.cu, label %.lr.ph240.preheader, label %3
-
-3:                                                ; preds = %bb.r
+  %spec.select = select i1 %i.cu, i32 %.1195, i32 %i.bq
   br label %.lr.ph240.preheader
 
-.lr.ph240.preheader:                              ; preds = %3, %bb.r, %bb.q
-  %.2196 = phi i32 [ %i.bq, %3 ], [ %.1195, %bb.r ], [ %.1195, %bb.q ] ; 2 uses
+.lr.ph240.preheader:                              ; preds = %bb.r, %bb.q
+  %.2196 = phi i32 [ %.1195, %bb.q ], [ %spec.select, %bb.r ] ; 2 uses
   %i.cv = sext i32 %.2196 to i64                  ; 2 uses
   %i.cw = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.cv
   %i.cx = load double, ptr %i.cw, align 8, !tbaa !17 ; 2 uses

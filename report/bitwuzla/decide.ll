@@ -202,7 +202,7 @@ _ZN7CaDiCaL4heapINS_13score_smallerEE4leftEj.exit: ; preds = %bb.d, %bb.e
   %i.al = or disjoint i32 %i.ak, 1
   %i.am = zext i32 %i.al to i64
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %i.am
-  %i.ao = load i32, ptr %i.an, align 4, !tbaa !156 ; 6 uses
+  %i.ao = load i32, ptr %i.an, align 4, !tbaa !156 ; 5 uses
   %.not.i.i15 = icmp ugt i64 %.pre-phi56, %i.a
   br i1 %.not.i.i15, label %_ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit, label %bb.f
 
@@ -233,8 +233,10 @@ _ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit: ; preds = %_ZN7CaDiCaL4h
 _ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit._ZN7CaDiCaL13score_smallerclEjj.exit.thread25_crit_edge: ; preds = %_ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit
   %.pre45 = load ptr, ptr %i.f, align 8, !tbaa !204
   %.phi.trans.insert46 = getelementptr inbounds nuw i8, ptr %.pre45, i64 688
-  %.pre47 = load ptr, ptr %.phi.trans.insert46, align 8, !tbaa !193
-  %.pre48 = zext i32 %i.ao to i64
+  %.pre47 = load ptr, ptr %.phi.trans.insert46, align 8, !tbaa !193 ; 2 uses
+  %.pre48 = zext i32 %i.ao to i64                 ; 2 uses
+  %.phi.trans.insert41 = getelementptr inbounds nuw [8 x i8], ptr %.pre47, i64 %.pre48
+  %.pre42 = load double, ptr %.phi.trans.insert41, align 8, !tbaa !194
   br label %_ZN7CaDiCaL13score_smallerclEjj.exit.thread25
 
 bb.g:                                             ; preds = %_ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit
@@ -256,7 +258,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN7CaDiCaL4heapINS_13score_smallerEE5rightEj.exit
 
 _ZN7CaDiCaL4heapINS_13score_smallerEE5rightEj.exit: ; preds = %bb.g, %bb.h
-  %i.bi = phi ptr [ %.pre.i.i18, %bb.h ], [ %i.aq, %bb.g ] ; 3 uses
+  %i.bi = phi ptr [ %.pre.i.i18, %bb.h ], [ %i.aq, %bb.g ]
   %i.bj = phi ptr [ %.pre44, %bb.h ], [ %i.ar, %bb.g ]
   %i.bk = phi i32 [ %.pre43.a, %bb.h ], [ %i.as, %bb.g ]
   %i.bl = shl i32 %i.bk, 1
@@ -266,47 +268,39 @@ _ZN7CaDiCaL4heapINS_13score_smallerEE5rightEj.exit: ; preds = %bb.g, %bb.h
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !156 ; 3 uses
   %i.bq = load ptr, ptr %i.f, align 8, !tbaa !204
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 688
-  %i.bs = zext i32 %i.ao to i64                   ; 3 uses
-  %i.bt = load ptr, ptr %i.br, align 8, !tbaa !193 ; 5 uses
+  %i.bs = zext i32 %i.ao to i64
+  %i.bt = load ptr, ptr %i.br, align 8, !tbaa !193 ; 3 uses
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %i.bs
-  %i.bv = load double, ptr %i.bu, align 8, !tbaa !194 ; 2 uses
-  %i.bw = zext i32 %i.bp to i64                   ; 2 uses
+  %i.bv = load double, ptr %i.bu, align 8, !tbaa !194 ; 3 uses
+  %i.bw = zext i32 %i.bp to i64
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %i.bt, i64 %i.bw
-  %i.by = load double, ptr %i.bx, align 8, !tbaa !194 ; 2 uses
+  %i.by = load double, ptr %i.bx, align 8, !tbaa !194 ; 3 uses
   %i.bz = fcmp olt double %i.bv, %i.by
-  br i1 %i.bz, label %_ZN7CaDiCaL13score_smallerclEjj.exit.thread, label %2
-
-2:                                                ; preds = %_ZN7CaDiCaL4heapINS_13score_smallerEE5rightEj.exit
-  %3 = fcmp ogt double %i.bv, %i.by
-  br i1 %3, label %_ZN7CaDiCaL13score_smallerclEjj.exit.thread25, label %_ZN7CaDiCaL13score_smallerclEjj.exit
-
-_ZN7CaDiCaL13score_smallerclEjj.exit:             ; preds = %2
-  %4 = icmp ugt i32 %i.ao, %i.bp
-  %cond.fr = freeze i1 %4
-  br i1 %cond.fr, label %_ZN7CaDiCaL13score_smallerclEjj.exit.thread, label %_ZN7CaDiCaL13score_smallerclEjj.exit.thread25
-
-_ZN7CaDiCaL13score_smallerclEjj.exit.thread:      ; preds = %_ZN7CaDiCaL4heapINS_13score_smallerEE5rightEj.exit, %_ZN7CaDiCaL13score_smallerclEjj.exit
+  %2 = fcmp ule double %i.bv, %i.by
+  %3 = icmp ugt i32 %i.ao, %i.bp
+  %spec.select.i = and i1 %3, %2
+  %.0.i = or i1 %i.bz, %spec.select.i             ; 2 uses
+  %spec.select = select i1 %.0.i, i32 %i.bp, i32 %i.ao ; 2 uses
+  %4 = select i1 %.0.i, double %i.by, double %i.bv
+  %.pre43 = zext i32 %spec.select to i64
   br label %_ZN7CaDiCaL13score_smallerclEjj.exit.thread25
 
-_ZN7CaDiCaL13score_smallerclEjj.exit.thread25:    ; preds = %_ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit._ZN7CaDiCaL13score_smallerclEjj.exit.thread25_crit_edge, %2, %_ZN7CaDiCaL13score_smallerclEjj.exit.thread, %_ZN7CaDiCaL13score_smallerclEjj.exit
-  %5 = phi ptr [ %i.aq, %_ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit._ZN7CaDiCaL13score_smallerclEjj.exit.thread25_crit_edge ], [ %i.bi, %2 ], [ %i.bi, %_ZN7CaDiCaL13score_smallerclEjj.exit.thread ], [ %i.bi, %_ZN7CaDiCaL13score_smallerclEjj.exit ] ; 2 uses
-  %.pre-phi = phi i64 [ %.pre48, %_ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit._ZN7CaDiCaL13score_smallerclEjj.exit.thread25_crit_edge ], [ %i.bs, %2 ], [ %i.bw, %_ZN7CaDiCaL13score_smallerclEjj.exit.thread ], [ %i.bs, %_ZN7CaDiCaL13score_smallerclEjj.exit ] ; 4 uses
-  %6 = phi ptr [ %.pre47, %_ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit._ZN7CaDiCaL13score_smallerclEjj.exit.thread25_crit_edge ], [ %i.bt, %2 ], [ %i.bt, %_ZN7CaDiCaL13score_smallerclEjj.exit.thread ], [ %i.bt, %_ZN7CaDiCaL13score_smallerclEjj.exit ] ; 2 uses
-  %.1 = phi i32 [ %i.ao, %_ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit._ZN7CaDiCaL13score_smallerclEjj.exit.thread25_crit_edge ], [ %i.ao, %2 ], [ %i.bp, %_ZN7CaDiCaL13score_smallerclEjj.exit.thread ], [ %i.ao, %_ZN7CaDiCaL13score_smallerclEjj.exit ]
-  %i.ca = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.a
+_ZN7CaDiCaL13score_smallerclEjj.exit.thread25:    ; preds = %_ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit._ZN7CaDiCaL13score_smallerclEjj.exit.thread25_crit_edge, %_ZN7CaDiCaL4heapINS_13score_smallerEE5rightEj.exit
+  %.pre-phi = phi i64 [ %.pre48, %_ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit._ZN7CaDiCaL13score_smallerclEjj.exit.thread25_crit_edge ], [ %.pre43, %_ZN7CaDiCaL4heapINS_13score_smallerEE5rightEj.exit ] ; 3 uses
+  %5 = phi ptr [ %i.aq, %_ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit._ZN7CaDiCaL13score_smallerclEjj.exit.thread25_crit_edge ], [ %i.bi, %_ZN7CaDiCaL4heapINS_13score_smallerEE5rightEj.exit ] ; 2 uses
+  %6 = phi double [ %.pre42, %_ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit._ZN7CaDiCaL13score_smallerclEjj.exit.thread25_crit_edge ], [ %4, %_ZN7CaDiCaL4heapINS_13score_smallerEE5rightEj.exit ] ; 2 uses
+  %7 = phi ptr [ %.pre47, %_ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit._ZN7CaDiCaL13score_smallerclEjj.exit.thread25_crit_edge ], [ %i.bt, %_ZN7CaDiCaL4heapINS_13score_smallerEE5rightEj.exit ]
+  %.1 = phi i32 [ %i.ao, %_ZN7CaDiCaL4heapINS_13score_smallerEE9has_rightEj.exit._ZN7CaDiCaL13score_smallerclEjj.exit.thread25_crit_edge ], [ %spec.select, %_ZN7CaDiCaL4heapINS_13score_smallerEE5rightEj.exit ]
+  %i.ca = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.a
   %i.cb = load double, ptr %i.ca, align 8, !tbaa !194 ; 2 uses
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.pre-phi
-  %8 = load double, ptr %7, align 8, !tbaa !194   ; 2 uses
-  %9 = fcmp olt double %i.cb, %8
-  br i1 %9, label %_ZN7CaDiCaL13score_smallerclEjj.exit20.thread, label %10
+  %8 = fcmp olt double %i.cb, %6
+  %9 = fcmp ule double %i.cb, %6
+  %10 = icmp ugt i32 %1, %.1
+  %spec.select.i19 = and i1 %10, %9
+  %.0.i20 = or i1 %8, %spec.select.i19
+  br i1 %.0.i20, label %_ZN7CaDiCaL13score_smallerclEjj.exit20.thread, label %.thread
 
-10:                                               ; preds = %_ZN7CaDiCaL13score_smallerclEjj.exit.thread25
-  %11 = fcmp ule double %i.cb, %8
-  %12 = icmp ugt i32 %1, %.1
-  %or.cond = and i1 %12, %11
-  br i1 %or.cond, label %_ZN7CaDiCaL13score_smallerclEjj.exit20.thread, label %.thread
-
-_ZN7CaDiCaL13score_smallerclEjj.exit20.thread:    ; preds = %10, %_ZN7CaDiCaL13score_smallerclEjj.exit.thread25
+_ZN7CaDiCaL13score_smallerclEjj.exit20.thread:    ; preds = %_ZN7CaDiCaL13score_smallerclEjj.exit.thread25
   %i.cc = load ptr, ptr %i.c, align 8, !tbaa !169 ; 3 uses
   %i.cd = ptrtoint ptr %i.cc to i64
   %i.ce = ptrtoint ptr %5 to i64
@@ -361,7 +355,7 @@ bb.k:                                             ; preds = %bb.j, %_ZN7CaDiCaL4
   store i32 %i.cy, ptr %i.co, align 4, !tbaa !156
   br label %bb.b
 
-.thread:                                          ; preds = %10, %_ZN7CaDiCaL4heapINS_13score_smallerEE8has_leftEj.exit
+.thread:                                          ; preds = %_ZN7CaDiCaL13score_smallerclEjj.exit.thread25, %_ZN7CaDiCaL4heapINS_13score_smallerEE8has_leftEj.exit
   ret void
 }
 

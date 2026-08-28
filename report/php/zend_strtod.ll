@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.x
   %i.cn = fcmp une double %i.cj, %i.cm
   %or.cond550 = and i1 %i.cl, %i.cn
   %i.co = sext i1 %or.cond550 to i32
-  %.0429 = add nsw i32 %i.co, %i.ck               ; 5 uses
+  %.0429 = add nsw i32 %i.co, %i.ck               ; 4 uses
   %or.cond = icmp ugt i32 %.0429, 22              ; 3 uses
   br i1 %or.cond, label %bb.ae, label %bb.ad
 
@@ -215,20 +215,18 @@ bb.ad:                                            ; preds = %bb.ac
   %i.cr = getelementptr inbounds nuw [8 x i8], ptr @tens, i64 %i.cq
   %i.cs = load double, ptr %i.cr, align 8, !tbaa !62
   %i.ct = fcmp olt double %i.cp, %i.cs
+  %7 = sext i1 %i.ct to i32
+  %spec.select = add nsw i32 %.0429, %7
   %i.cu = bitcast double %i.cp to i64             ; 2 uses
-  %i.cv = trunc i64 %i.cu to i32                  ; 2 uses
+  %i.cv = trunc i64 %i.cu to i32
   %i.cw = lshr i64 %i.cu, 32
-  %i.cx = trunc nuw i64 %i.cw to i32              ; 2 uses
-  br i1 %i.ct, label %select.unfold, label %bb.ae
-
-select.unfold:                                    ; preds = %bb.ad
-  %7 = add nsw i32 %.0429, -1
+  %i.cx = trunc nuw i64 %i.cw to i32
   br label %bb.ae
 
-bb.ae:                                            ; preds = %bb.ad, %select.unfold, %bb.ac
-  %8 = phi i32 [ %i.cv, %bb.ad ], [ %i.cc, %bb.ac ], [ %i.cv, %select.unfold ]
-  %9 = phi i32 [ %i.cx, %bb.ad ], [ %i.cd, %bb.ac ], [ %i.cx, %select.unfold ]
-  %.2431 = phi i32 [ %.0429, %bb.ad ], [ %.0429, %bb.ac ], [ %7, %select.unfold ] ; 27 uses
+bb.ae:                                            ; preds = %bb.ad, %bb.ac
+  %8 = phi i32 [ %i.cv, %bb.ad ], [ %i.cc, %bb.ac ]
+  %9 = phi i32 [ %i.cx, %bb.ad ], [ %i.cd, %bb.ac ]
+  %.2431 = phi i32 [ %spec.select, %bb.ad ], [ %.0429, %bb.ac ] ; 27 uses
   %i.cy = load i32, ptr %i.a, align 4, !tbaa !75  ; 2 uses
   %i.cz = xor i32 %.0459, -1
   %i.da = add i32 %i.cy, %i.cz                    ; 3 uses
@@ -303,7 +301,7 @@ bb.am:                                            ; preds = %bb.al, %bb.aj
   %.015.i = phi i32 [ %i.dm, %.lr.ph.i579 ], [ 0, %bb.am ] ; 2 uses
   %.01114.i = phi i32 [ %i.dn, %.lr.ph.i579 ], [ 4, %bb.am ]
   %i.dm = add nuw nsw i32 %.015.i, 1              ; 3 uses
-  %i.dn = shl i32 %.01114.i, 1                    ; 2 uses
+  %i.dn = shl nsw i32 %.01114.i, 1                ; 2 uses
   %i.do = sext i32 %i.dn to i64
   %i.dp = add nsw i64 %i.do, 24
   %.not.i580 = icmp ugt i64 %i.dp, %i.dl

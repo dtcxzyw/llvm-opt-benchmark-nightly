@@ -202,16 +202,12 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 328
-  %i.ac = load double, ptr %i.ab, align 8         ; 2 uses
-  %5 = fcmp ult double %i.ac, 0.000000e+00
-  br i1 %5, label %bb.f, label %6
-
-6:                                                ; preds = %bb.e
-  %7 = fcmp oeq double %i.ac, 0.000000e+00
+  %i.ac = load double, ptr %i.ab, align 8
+  %5 = fcmp oeq double %i.ac, 0.000000e+00
   br label %bb.f
 
-bb.f:                                             ; preds = %6, %bb.e, %bb.d
-  %.0240 = phi i1 [ %7, %6 ], [ false, %bb.e ], [ false, %bb.d ]
+bb.f:                                             ; preds = %bb.e, %bb.d
+  %.0240 = phi i1 [ false, %bb.d ], [ %5, %bb.e ]
   %i.ad = load i32, ptr @slurmctld_tres_cnt, align 4 ; 2 uses
   %i.ae = icmp sgt i32 %i.ad, 0
   br i1 %i.ae, label %.lr.ph, label %._crit_edge

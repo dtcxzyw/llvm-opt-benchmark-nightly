@@ -202,13 +202,11 @@ bb.o:                                             ; preds = %bb.m
 bb.p:                                             ; preds = %_ZN2v88internal6Object11NumberValueENS0_6TaggedIS1_EE.exit.thread, %_ZN2v88internal6Object11NumberValueENS0_6TaggedIS1_EE.exit
   %i.cc = phi double [ %i.bn, %_ZN2v88internal6Object11NumberValueENS0_6TaggedIS1_EE.exit.thread ], [ %.0.copyload.i.i.i.i.i.i94.a, %_ZN2v88internal6Object11NumberValueENS0_6TaggedIS1_EE.exit ] ; 2 uses
   %i.cd = fcmp olt double %i.cc, 0.000000e+00
-  br i1 %i.cd, label %12, label %_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_10HeapNumberEEE.exit
-
-12:                                               ; preds = %bb.p
+  %spec.store.select = select i1 %i.cd, double 0.000000e+00, double %i.cc
   br label %_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_10HeapNumberEEE.exit
 
-_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_10HeapNumberEEE.exit: ; preds = %bb.o, %bb.n, %bb.j, %bb.i, %12, %bb.p
-  %.077 = phi double [ %i.cc, %bb.p ], [ %.0.copyload.i.i.i.i.i.i, %bb.j ], [ 0.000000e+00, %12 ], [ %i.ar, %bb.i ], [ %i.by, %bb.n ], [ %.0.copyload.i.i.i.i.i.i95, %bb.o ] ; 2 uses
+_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_10HeapNumberEEE.exit: ; preds = %bb.o, %bb.n, %bb.j, %bb.i, %bb.p
+  %.077 = phi double [ %spec.store.select, %bb.p ], [ %.0.copyload.i.i.i.i.i.i, %bb.j ], [ %i.ar, %bb.i ], [ %i.by, %bb.n ], [ %.0.copyload.i.i.i.i.i.i95, %bb.o ] ; 2 uses
   %i.ce = icmp eq i32 %1, 0
   br i1 %i.ce, label %bb.q, label %bb.t
 

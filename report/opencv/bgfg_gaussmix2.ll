@@ -205,13 +205,11 @@ bb.w:                                             ; preds = %.loopexit253
   %i.gc = load float, ptr %i.ap, align 8, !tbaa !154
   %i.gd = fmul float %i.et, %i.gc
   %i.ge = fcmp olt float %.1, %i.gd
-  br i1 %i.ge, label %8, label %bb.x
-
-8:                                                ; preds = %bb.w
+  %spec.select = select i1 %i.ge, i1 true, i1 %.0209266
   br label %bb.x
 
-bb.x:                                             ; preds = %8, %bb.w, %.loopexit253
-  %.1210 = phi i1 [ true, %8 ], [ %.0209266, %bb.w ], [ %.0209266, %.loopexit253 ] ; 4 uses
+bb.x:                                             ; preds = %bb.w, %.loopexit253
+  %.1210 = phi i1 [ %.0209266, %.loopexit253 ], [ %spec.select, %bb.w ] ; 4 uses
   %i.gf = load float, ptr %i.aq, align 8, !tbaa !155
   %i.gg = fmul float %i.et, %i.gf
   %i.gh = fcmp olt float %.1, %i.gg

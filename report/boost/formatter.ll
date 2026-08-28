@@ -204,29 +204,21 @@ bb.h:                                             ; preds = %bb.g
           to label %bb.i unwind label %bb.j       ; 2 uses
 
 bb.i:                                             ; preds = %bb.h
-  %5 = sext i32 %i.v to i64
   %i.w = icmp eq i32 %i.v, 0
-  br i1 %i.w, label %bb.k, label %6
+  br i1 %i.w, label %bb.k, label %.sink.split
 
 bb.j:                                             ; preds = %bb.h
   %i.x = landingpad { ptr, i32 }
           cleanup
   br label %bb.l
 
-6:                                                ; preds = %bb.i
-  %7 = fcmp oeq double %i.s, f0x43F0000000000000
-  br i1 %7, label %.sink.split, label %8
-
-8:                                                ; preds = %6
-  %9 = fcmp oeq double %i.s, 0.000000e+00
-  br i1 %9, label %.sink.split, label %10
-
-10:                                               ; preds = %8
-  %11 = fptoui double %i.s to i64
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %8, %6, %10
-  %.sink = phi i64 [ -1, %6 ], [ %11, %10 ], [ 0, %8 ]
+.sink.split:                                      ; preds = %bb.i
+  %5 = sext i32 %i.v to i64
+  %6 = fcmp oeq double %i.s, f0x43F0000000000000
+  %7 = fcmp oeq double %i.s, 0.000000e+00
+  %8 = fptoui double %i.s to i64
+  %spec.select = select i1 %7, i64 0, i64 %8
+  %.sink = select i1 %6, i64 -1, i64 %spec.select
   store i64 %.sink, ptr %2, align 8, !tbaa !73
   br label %bb.k
 
@@ -325,29 +317,21 @@ bb.h:                                             ; preds = %bb.g
           to label %bb.i unwind label %bb.j       ; 2 uses
 
 bb.i:                                             ; preds = %bb.h
-  %5 = sext i32 %i.u to i64
   %i.v = icmp eq i32 %i.u, 0
-  br i1 %i.v, label %bb.k, label %6
+  br i1 %i.v, label %bb.k, label %.sink.split
 
 bb.j:                                             ; preds = %bb.h
   %i.w = landingpad { ptr, i32 }
           cleanup
   br label %bb.l
 
-6:                                                ; preds = %bb.i
-  %7 = fcmp oeq double %i.s, f0x43E0000000000000
-  br i1 %7, label %.sink.split, label %8
-
-8:                                                ; preds = %6
-  %9 = fcmp oeq double %i.s, f0xC3E0000000000000
-  br i1 %9, label %.sink.split, label %10
-
-10:                                               ; preds = %8
-  %11 = fptosi double %i.s to i64
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %8, %6, %10
-  %.sink = phi i64 [ 9223372036854775807, %6 ], [ %11, %10 ], [ -9223372036854775808, %8 ]
+.sink.split:                                      ; preds = %bb.i
+  %5 = sext i32 %i.u to i64
+  %6 = fcmp oeq double %i.s, f0x43E0000000000000
+  %7 = fcmp oeq double %i.s, f0xC3E0000000000000
+  %8 = fptosi double %i.s to i64
+  %spec.select = select i1 %7, i64 -9223372036854775808, i64 %8
+  %.sink = select i1 %6, i64 9223372036854775807, i64 %spec.select
   store i64 %.sink, ptr %2, align 8, !tbaa !73
   br label %bb.k
 
@@ -447,29 +431,21 @@ bb.h:                                             ; preds = %bb.g
           to label %bb.i unwind label %bb.j       ; 2 uses
 
 bb.i:                                             ; preds = %bb.h
-  %5 = sext i32 %i.v to i64
   %i.w = icmp eq i32 %i.v, 0
-  br i1 %i.w, label %bb.k, label %6
+  br i1 %i.w, label %bb.k, label %.sink.split
 
 bb.j:                                             ; preds = %bb.h
   %i.x = landingpad { ptr, i32 }
           cleanup
   br label %bb.l
 
-6:                                                ; preds = %bb.i
-  %7 = fcmp oeq double %i.s, f0x41DFFFFFFFC00000
-  br i1 %7, label %.sink.split, label %8
-
-8:                                                ; preds = %6
-  %9 = fcmp oeq double %i.s, f0xC1E0000000000000
-  br i1 %9, label %.sink.split, label %10
-
-10:                                               ; preds = %8
-  %11 = fptosi double %i.s to i32
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %8, %6, %10
-  %.sink = phi i32 [ 2147483647, %6 ], [ %11, %10 ], [ -2147483648, %8 ]
+.sink.split:                                      ; preds = %bb.i
+  %5 = sext i32 %i.v to i64
+  %6 = fcmp oeq double %i.s, f0x41DFFFFFFFC00000
+  %7 = fcmp oeq double %i.s, f0xC1E0000000000000
+  %8 = fptosi double %i.s to i32
+  %spec.select = select i1 %7, i32 -2147483648, i32 %8
+  %.sink = select i1 %6, i32 2147483647, i32 %spec.select
   store i32 %.sink, ptr %2, align 4, !tbaa !149
   br label %bb.k
 
