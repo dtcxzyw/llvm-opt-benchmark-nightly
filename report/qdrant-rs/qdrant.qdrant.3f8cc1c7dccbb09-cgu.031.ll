@@ -202,11 +202,11 @@ bb.a:
   %i.k = alloca [24 x i8], align 8                ; 6 uses
   %i.l = alloca [24 x i8], align 8                ; 5 uses
   %.sroa.0.i3.i = alloca [48 x i8], align 8       ; 5 uses
-  %.sroa.4.i.i.i.i.i = alloca i64, align 8        ; 5 uses
-  %.sroa.6.i.i.i.i.i = alloca i64, align 8        ; 4 uses
+  %.sroa.4.i.i.i.i.i = alloca [8 x i8], align 8   ; 5 uses
+  %.sroa.6.i.i.i.i.i = alloca [8 x i8], align 8   ; 4 uses
   %i.m = alloca [24 x i8], align 8                ; 7 uses
-  %.sroa.4.i.i.i.i = alloca i64, align 8          ; 5 uses
-  %.sroa.6.i.i.i.i = alloca i64, align 8          ; 4 uses
+  %.sroa.4.i.i.i.i = alloca [8 x i8], align 8     ; 5 uses
+  %.sroa.6.i.i.i.i = alloca [8 x i8], align 8     ; 4 uses
   %i.n = alloca [48 x i8], align 8                ; 12 uses
   %.sroa.5.i2.i.i = alloca [40 x i8], align 8     ; 4 uses
   %i.o = alloca [24 x i8], align 8                ; 5 uses
@@ -609,8 +609,7 @@ bb.ao:                                            ; preds = %bb.an
 
 _RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i.i.i.i: ; preds = %bb.am, %bb.ao, %bb.an
   %.sroa.06.0.i.i.i.i.i = phi ptr [ %.val.i.i.i.i.i, %bb.ao ], [ inttoptr (i64 16 to ptr), %bb.an ], [ %.val.i.i.i.i.i, %bb.am ]
-  %2 = ptrtoint ptr %.sroa.06.0.i.i.i.i.i to i64
-  store i64 %2, ptr %.sroa.4.i.i.i.i, align 8, !alias.scope !6650, !noalias !6658
+  store ptr %.sroa.06.0.i.i.i.i.i, ptr %.sroa.4.i.i.i.i, align 8, !alias.scope !6650, !noalias !6658
   br label %_RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i.i
 
 _RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i.i: ; preds = %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i.i.i.i, %bb.al
@@ -732,8 +731,7 @@ bb.az:                                            ; preds = %bb.ay
 
 _RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i4.i.i.i.i.i: ; preds = %bb.aw, %bb.ay, %bb.ax
   %.sroa.06.0.i6.i.i.i.i.i = phi ptr [ %.val.i11.i.i.i.i.i, %bb.ay ], [ inttoptr (i64 16 to ptr), %bb.ax ], [ %.val.i11.i.i.i.i.i, %bb.aw ]
-  %3 = ptrtoint ptr %.sroa.06.0.i6.i.i.i.i.i to i64
-  store i64 %3, ptr %.sroa.4.i.i.i.i.i, align 8, !alias.scope !6675, !noalias !6684
+  store ptr %.sroa.06.0.i6.i.i.i.i.i, ptr %.sroa.4.i.i.i.i.i, align 8, !alias.scope !6675, !noalias !6684
   br label %_RNvXs1n_NtNtCshMzyYDJGtjv_3api4rest6schemaNtB6_20ShardKeyWithFallbackNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i.i
 
 bb.ba:                                            ; preds = %bb.az

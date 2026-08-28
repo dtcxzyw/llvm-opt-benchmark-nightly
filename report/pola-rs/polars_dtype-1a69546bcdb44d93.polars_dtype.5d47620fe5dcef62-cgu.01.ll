@@ -202,23 +202,27 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sU
 ; Function Attrs: nonlazybind uwtable
 define void @_RNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtB2_18CategoricalMapping11with_hasher(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([640 x i8]) align 128 captures(none) dereferenceable(640) %0, i64 noundef %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %2, i64 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !656 {
 bb.a:
-  %i.a = alloca [128 x i8], align 128             ; 12 uses
+  %i.a = alloca [128 x i8], align 128             ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !662
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32, !dbg !663
   store ptr @_RNvNtNtCs2mZqlW55729_12polars_utils5parma3raw15EMPTY_ALLOC_LOC, ptr %i.b, align 32, !dbg !663
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 40, !dbg !663
   store ptr null, ptr %i.c, align 8, !dbg !663
   store i32 0, ptr %i.a, align 128, !dbg !663
-  %.sroa.414.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 4, !dbg !663
-  store i8 0, ptr %.sroa.414.0..sroa_idx, align 4, !dbg !663
-  %.sroa.515.sroa.3.0..sroa.515.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !663
-  store i64 0, ptr %.sroa.515.sroa.3.0..sroa.515.0..sroa_idx.sroa_idx, align 8, !dbg !663
-  %.sroa.515.sroa.4.0..sroa.515.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !663
-  store ptr inttoptr (i64 8 to ptr), ptr %.sroa.515.sroa.4.0..sroa.515.0..sroa_idx.sroa_idx, align 16, !dbg !663
-  %.sroa.515.sroa.5.0..sroa.515.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24, !dbg !663
-  store i64 0, ptr %.sroa.515.sroa.5.0..sroa.515.0..sroa_idx.sroa_idx, align 8, !dbg !663
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 48, !dbg !663
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(25) %i.d, i8 0, i64 25, i1 false), !dbg !663
+  %.sroa.416.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 4, !dbg !663
+  store i8 0, ptr %.sroa.416.0..sroa_idx, align 4, !dbg !663
+  %.sroa.414.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !663
+  store i64 0, ptr %.sroa.414.0..sroa_idx, align 8, !dbg !663
+  %.sroa.515.sroa.3.0..sroa.515.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !663
+  store ptr inttoptr (i64 8 to ptr), ptr %.sroa.515.sroa.3.0..sroa.515.0..sroa_idx.sroa_idx, align 16, !dbg !663
+  %.sroa.515.sroa.4.0..sroa.515.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24, !dbg !663
+  store i64 0, ptr %.sroa.515.sroa.4.0..sroa.515.0..sroa_idx.sroa_idx, align 8, !dbg !663
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 56, !dbg !663
+  %.sroa.515.sroa.5.0..sroa.515.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 48, !dbg !663
+  store i32 0, ptr %.sroa.515.sroa.5.0..sroa.515.0..sroa_idx.sroa_idx, align 16, !dbg !663
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 52, !dbg !663
+  store i8 0, ptr %i.d, align 4, !dbg !663
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %4, i8 0, i64 17, i1 false), !dbg !663
   %i.e = invoke noundef i64 @_RNvMs8_NtCsaIrsFcbE0XP_6boxcar7bucketsINtB5_5IndexKj3a_E13new_uncheckedCs80wj1cxFixi_12polars_dtype(i64 noundef 0)
           to label %bb.c unwind label %bb.b, !dbg !673
 
@@ -280,7 +284,7 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtB2_18CategoricalMapping3new(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([640 x i8]) align 128 captures(none) dereferenceable(640) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !724 {
 bb.a:
-  %i.a = alloca [128 x i8], align 128             ; 12 uses
+  %i.a = alloca [128 x i8], align 128             ; 14 uses
   %i.b = tail call noundef i64 @_RNvNtCsk79RHlfmHDk_8foldhash4seed19gen_per_hasher_seed(), !dbg !725
   %i.c = load atomic i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNtNtCsk79RHlfmHDk_8foldhash4seed6global19GLOBAL_SEED_STORAGE, i64 48) acquire, align 8, !dbg !740
   %i.d = icmp eq i8 %i.c, 2, !dbg !754
@@ -306,8 +310,12 @@ _RNvMs3_NtCsk79RHlfmHDk_8foldhash4fastNtB5_19SeedableRandomState6random.exit: ; 
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.515.sroa.4.0..sroa.515.0..sroa_idx.sroa_idx.i, align 16, !dbg !765, !noalias !763
   %.sroa.515.sroa.5.0..sroa.515.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24, !dbg !765
   store i64 0, ptr %.sroa.515.sroa.5.0..sroa.515.0..sroa_idx.sroa_idx.i, align 8, !dbg !765, !noalias !763
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 56, !dbg !765
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 48, !dbg !765
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(25) %i.g, i8 0, i64 25, i1 false), !dbg !765, !noalias !763
+  store i32 0, ptr %i.g, align 16, !dbg !765, !noalias !763
+  %.sroa.413.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 52, !dbg !765
+  store i8 0, ptr %.sroa.413.0..sroa_idx.i, align 4, !dbg !765, !noalias !763
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %2, i8 0, i64 17, i1 false), !dbg !765, !noalias !763
   %i.h = invoke noundef i64 @_RNvMs8_NtCsaIrsFcbE0XP_6boxcar7bucketsINtB5_5IndexKj3a_E13new_uncheckedCs80wj1cxFixi_12polars_dtype(i64 noundef 0)
           to label %_RNvMNtNtCs80wj1cxFixi_12polars_dtype11categorical7mappingNtB2_18CategoricalMapping11with_hasher.exit unwind label %bb.c, !dbg !768, !noalias !763
 

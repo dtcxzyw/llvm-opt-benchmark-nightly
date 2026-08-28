@@ -204,7 +204,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.c = atomicrmw xchg ptr %i.b, i8 1 seq_cst, align 1
   %i.d = icmp eq i8 %i.c, 0                       ; 2 uses
-  %.sroa.0.0.sroa.speculated = load ptr, ptr %i.a, align 8, !nonnull !3, !noundef !3 ; 2 uses
+  %.sroa.0.0.sroa.speculated = load ptr, ptr %i.a, align 8 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0.sroa.speculated, i64 24 ; 3 uses
   %.val = load ptr, ptr %i.e, align 8, !noundef !3 ; 4 uses
   %i.f = getelementptr i8, ptr %.sroa.0.0.sroa.speculated, i64 32
@@ -312,7 +312,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.c = atomicrmw xchg ptr %i.b, i8 1 seq_cst, align 1
   %i.d = icmp eq i8 %i.c, 0                       ; 2 uses
-  %.sroa.0.0.sroa.speculated = load ptr, ptr %i.a, align 8, !nonnull !3, !noundef !3 ; 2 uses
+  %.sroa.0.0.sroa.speculated = load ptr, ptr %i.a, align 8 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0.0.sroa.speculated, i64 24 ; 3 uses
   %.val = load ptr, ptr %i.e, align 8, !noundef !3 ; 4 uses
   %i.f = getelementptr i8, ptr %.sroa.0.0.sroa.speculated, i64 32

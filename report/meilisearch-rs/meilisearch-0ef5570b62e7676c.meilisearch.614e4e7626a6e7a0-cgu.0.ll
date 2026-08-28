@@ -205,7 +205,7 @@ bb.a:
   %i.w = alloca [24 x i8], align 8                ; 6 uses
   %i.x = alloca [32 x i8], align 8                ; 7 uses
   %i.y = alloca [112 x i8], align 8               ; 9 uses
-  %i.z = alloca [272 x i8], align 8               ; 15 uses
+  %i.z = alloca [272 x i8], align 8               ; 17 uses
   %i.aa = alloca [8 x i8], align 8                ; 4 uses
   %i.ab = alloca [8 x i8], align 8                ; 7 uses
   %i.ac = alloca [24 x i8], align 8               ; 6 uses
@@ -608,11 +608,9 @@ _ZN10prometheus9histogram13HistogramCore3new17hba1c07fd92f5901dE.exit.i.i.i.i.i.
   %.sroa.018.sroa.0.i.sroa.7.136..sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.018.sroa.0.i.sroa.7.i.i.i.i.i.i.i.i.i, i64 104
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.018.sroa.0.i.sroa.7.136..sroa_idx.i.i.i.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(80) %i.t, i64 80, i1 false), !noalias !12524
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t)
-  %.sroa.3.sroa.5.0..sroa.3.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.z, i64 256
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !12524
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.3.sroa.5.0..sroa.3.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i.i.i, i8 0, i64 16, i1 false), !noalias !12524
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !12524
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !12524
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !12524
   store i64 1, ptr %i.z, align 8, !noalias !12524
   %i.ahp = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   store i64 1, ptr %i.ahp, align 8, !noalias !12524
@@ -632,6 +630,12 @@ _ZN10prometheus9histogram13HistogramCore3new17hba1c07fd92f5901dE.exit.i.i.i.i.i.
   store ptr %.sroa.4173.0.copyload.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.3.sroa.3.0..sroa.3.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !noalias !12524
   %.sroa.3.sroa.4.0..sroa.3.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.z, i64 248
   store i64 %.sroa.5174.0.copyload.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.3.sroa.4.0..sroa.3.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !noalias !12524
+  %.sroa.3.sroa.5.0..sroa.3.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.z, i64 256
+  store i32 0, ptr %.sroa.3.sroa.5.0..sroa.3.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !noalias !12524
+  %.sroa.3.sroa.6.0..sroa.3.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.z, i64 260
+  store i8 0, ptr %.sroa.3.sroa.6.0..sroa.3.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i.i.i, align 4, !noalias !12524
+  %.sroa.3.sroa.8.0..sroa.3.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.z, i64 264
+  store i64 0, ptr %.sroa.3.sroa.8.0..sroa.3.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !noalias !12524
   call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #38, !noalias !12672
   %i.ahr = call noundef ptr @mi_malloc_aligned(i64 noundef 272, i64 noundef range(i64 1, -9223372036854775807) 8) #38, !noalias !12672 ; 3 uses
   %i.ahs = icmp eq ptr %i.ahr, null
@@ -1034,8 +1038,6 @@ bb.af:                                            ; preds = %bb.k, %"_ZN68_$LT$s
 
 bb.ag:                                            ; preds = %bb.j
   store i64 -9223372036854775808, ptr %0, align 8
-  %.sroa.36.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %.sroa.36.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.56)
   br label %bb.ah
 

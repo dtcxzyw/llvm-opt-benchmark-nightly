@@ -206,12 +206,12 @@ bb.cd:                                            ; preds = %_RNvXs6_NtCsakL8LGk
   br label %bb.ce
 
 bb.ce:                                            ; preds = %bb.ci, %bb.cd
+  %.sroa.53.sroa.8.sroa.5.0 = phi i32 [ undef, %bb.ci ], [ %.sroa.6165.sroa.4.0.copyload, %bb.cd ]
+  %.sroa.53.sroa.8.sroa.0.0 = phi i64 [ %.sroa.9.sroa.0.0.insert.ext, %bb.ci ], [ %.sroa.6165.sroa.0.0.copyload, %bb.cd ]
   %.sroa.53.sroa.0.sroa.0.sroa.0.sroa.4.0 = phi i64 [ %i.fa, %bb.ci ], [ %.sroa.4178.0.copyload, %bb.cd ]
   %.sroa.53.sroa.0.sroa.0.sroa.0.sroa.0.0 = phi i32 [ undef, %bb.ci ], [ %.sroa.0177.0.copyload, %bb.cd ]
   %.sroa.53.sroa.0.sroa.0.sroa.5.0 = phi i64 [ %i.ah, %bb.ci ], [ %i.fn, %bb.cd ]
   %.sroa.53.sroa.0.sroa.6.0 = phi ptr [ %.sroa.027.0.i105, %bb.ci ], [ %i.fo, %bb.cd ]
-  %.sroa.53.sroa.8.sroa.5.0 = phi i32 [ undef, %bb.ci ], [ %.sroa.6165.sroa.4.0.copyload, %bb.cd ]
-  %.sroa.53.sroa.8.sroa.0.0 = phi i64 [ %.sroa.9.0.insert.ext, %bb.ci ], [ %.sroa.6165.sroa.0.0.copyload, %bb.cd ]
   %.sroa.53.sroa.7.0 = phi i64 [ %.sroa.7170.32.copyload, %bb.ci ], [ %.val45.i133, %bb.cd ]
   %.sroa.53.sroa.6.0 = phi ptr [ %i.gg, %bb.ci ], [ %.sroa.027.0.i129, %bb.cd ]
   %.sroa.02.0 = phi i32 [ 0, %bb.ci ], [ 1, %bb.cd ]
@@ -293,9 +293,9 @@ bb.ci:                                            ; preds = %_RNvXs6_NtCsakL8LGk
   %.sroa.7170.32.copyload = load i64, ptr %i.au, align 8, !alias.scope !7519
   %.sroa.9.32..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 40
   %.sroa.9.0.copyload = load i32, ptr %.sroa.9.32..sroa_idx, align 8, !alias.scope !7519
-  %.sroa.9.0.insert.ext = zext i32 %.sroa.9.0.copyload to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !7519
   %i.gg = inttoptr i64 %.val45.i109 to ptr
+  %.sroa.9.sroa.0.0.insert.ext = zext i32 %.sroa.9.0.copyload to i64
   br label %bb.ce
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs5PEMdK7bMAG_12typst_syntax7package14PackageVersionNtNtCsakL8LGkl72C_4ecow6string9EcoStringEECsc4241EHy6Do_9typst_kit.exit: ; preds = %.noexc146, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionRNtNtCsakL8LGkl72C_4ecow3vec6HeaderE6map_orbNCNvXs7_BL_INtBL_6EcoVechENtNtNtB5_3ops4drop4Drop4drop0ECsc4241EHy6Do_9typst_kit.exit.i.i.i.i.i, %bb.cg, %bb.cf, %bb.ce

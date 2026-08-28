@@ -202,13 +202,16 @@ declare void @_ZN4mlir30OffsetSizeAndStrideOpInterface15getMixedStridesEv(ptr de
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN4mlir6affine41resolveIndicesIntoOpWithOffsetsAndStridesERNS_12RewriterBaseENS_8LocationEN4llvm8ArrayRefINS_12OpFoldResultEEES7_RKNS4_14SmallBitVectorES7_RNS4_15SmallVectorImplINS_5ValueEEE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr %1, ptr nofree readonly captures(address) %2, i64 %3, ptr nofree readonly captures(none) %4, i64 %5, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %6, ptr nofree noundef readonly byval(%"class.llvm::ArrayRef") align 8 captures(none) %7, ptr noundef nonnull align 8 dereferenceable(16) %8) local_unnamed_addr #0 {
 bb.a:
+  %.sroa.052 = alloca [8 x i8], align 8           ; 5 uses
   %9 = alloca %"class.llvm::SmallVector", align 8 ; 10 uses
   %10 = alloca %"class.mlir::AffineExpr", align 8 ; 5 uses
   %11 = alloca %"class.mlir::AffineExpr", align 8 ; 5 uses
   %12 = alloca [3 x %"class.mlir::OpFoldResult"], align 8 ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.052)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.b = tail call ptr @_ZN4mlir7Builder12getIndexAttrEl(ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0) #6
-  %i.c = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.c = ptrtoint ptr %i.b to i64
+  store i64 %i.c, ptr %.sroa.052, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #6
   %i.d = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
   store ptr %i.d, ptr %9, align 8, !tbaa !12
@@ -308,26 +311,26 @@ _ZNK4llvm14SmallBitVector4testEj.exit:            ; preds = %bb.d
 bb.e:                                             ; preds = %.split, %_ZNK4llvm14SmallBitVector4testEj.exit
   %i.aq = add nsw i64 %.063, 1
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %.063
-  %.sroa.speculate.load. = load i64, ptr %i.ar, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %.split, %_ZNK4llvm14SmallBitVector4testEj.exit, %bb.e
   %.1 = phi i64 [ %.063, %_ZNK4llvm14SmallBitVector4testEj.exit ], [ %i.aq, %bb.e ], [ %.063, %.split ]
-  %.sroa.speculated = phi i64 [ %i.c, %_ZNK4llvm14SmallBitVector4testEj.exit ], [ %.sroa.speculate.load., %bb.e ], [ %i.c, %.split ] ; 2 uses
+  %13 = phi ptr [ %.sroa.052, %_ZNK4llvm14SmallBitVector4testEj.exit ], [ %i.ar, %bb.e ], [ %.sroa.052, %.split ]
+  %.sroa.015.0.copyload = load i64, ptr %13, align 8 ; 2 uses
   %i.as = load i32, ptr %i.e, align 8, !tbaa !8   ; 2 uses
   %i.at = load i32, ptr %i.f, align 4, !tbaa !11
   %.not.i = icmp ult i32 %i.as, %i.at
   br i1 %.not.i, label %bb.h, label %bb.g, !prof !29
 
 bb.g:                                             ; preds = %bb.f
-  call void @_ZN4llvm23SmallVectorTemplateBaseIN4mlir12OpFoldResultELb1EE15growAndPushBackES2_(ptr noundef nonnull align 8 dereferenceable(16) %9, i64 %.sroa.speculated)
+  call void @_ZN4llvm23SmallVectorTemplateBaseIN4mlir12OpFoldResultELb1EE15growAndPushBackES2_(ptr noundef nonnull align 8 dereferenceable(16) %9, i64 %.sroa.015.0.copyload)
   br label %_ZN4llvm23SmallVectorTemplateBaseIN4mlir12OpFoldResultELb1EE9push_backES2_.exit
 
 bb.h:                                             ; preds = %bb.f
   %i.au = zext i32 %i.as to i64
   %i.av = load ptr, ptr %9, align 8, !tbaa !12
   %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %i.au
-  store i64 %.sroa.speculated, ptr %i.aw, align 1
+  store i64 %.sroa.015.0.copyload, ptr %i.aw, align 1
   %i.ax = load i32, ptr %i.e, align 8, !tbaa !8
   %i.ay = add i32 %i.ax, 1
   store i32 %i.ay, ptr %i.e, align 8, !tbaa !8
@@ -353,6 +356,7 @@ bb.i:                                             ; preds = %._crit_edge69
 
 _ZN4llvm11SmallVectorIN4mlir12OpFoldResultELj6EED2Ev.exit: ; preds = %._crit_edge69, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.052)
   ret void
 
 bb.j:                                             ; preds = %.lr.ph68, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir5ValueELb1EE9push_backES2_.exit

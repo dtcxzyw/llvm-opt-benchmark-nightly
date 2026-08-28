@@ -202,7 +202,7 @@ bb.a:
   %i.e = alloca [56 x i8], align 8                ; 8 uses
   %i.f = alloca [56 x i8], align 8                ; 8 uses
   %i.g = alloca [56 x i8], align 8                ; 8 uses
-  %i.h = alloca [56 x i8], align 8                ; 9 uses
+  %i.h = alloca [56 x i8], align 8                ; 8 uses
   %.sroa.37 = alloca [32 x i8], align 8           ; 12 uses
   %.sroa.39 = alloca [40 x i8], align 8           ; 5 uses
   %.sroa.6.sroa.9 = alloca [32 x i8], align 8     ; 7 uses
@@ -232,22 +232,20 @@ bb.a:
 .noexc:                                           ; preds = %bb.a
   %i.o = load i64, ptr %i.h, align 8, !range !17, !noalias !176, !noundef !4 ; 2 uses
   %.not.i = icmp eq i64 %i.o, -1
-  %i.p = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %4 = load i8, ptr %i.p, align 8, !noalias !176  ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.noexc
-  %.sroa.575.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.h, i64 9
-  %.sroa.26.sroa.13.sroa.0.0.copyload = load i56, ptr %.sroa.575.0..sroa_idx.i, align 1, !noalias !178
+  %.sroa.474.0.copyload.i = load i64, ptr %i.p, align 8, !noalias !178
   %.sroa.33.17..sroa.575.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %.sroa.33.17.copyload = load i64, ptr %.sroa.33.17..sroa.575.0..sroa_idx.i.sroa_idx, align 8, !noalias !178
   %.sroa.37.17..sroa.575.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.37, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.37.17..sroa.575.0..sroa_idx.i.sroa_idx, i64 32, i1 false), !noalias !178
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !176
-  %5 = zext i56 %.sroa.26.sroa.13.sroa.0.0.copyload to i64
   br label %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit.thread
 
 bb.c:                                             ; preds = %.noexc
+  %4 = load i8, ptr %i.p, align 8, !noalias !176, !noundef !4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !176
   %i.q = icmp eq i8 %4, 1
   br i1 %i.q, label %bb.d, label %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit.thread
@@ -270,9 +268,7 @@ bb.e:                                             ; preds = %.noexc17
   %.sroa.686.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.37, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.686.0..sroa_idx.i, i64 32, i1 false), !noalias !178
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !176
-  %i.w = ptrtoint ptr %i.t to i64                 ; 2 uses
-  %.sroa.26.sroa.0.0.extract.trunc36 = trunc i64 %i.w to i8
-  %.sroa.26.sroa.13.0.extract.shift46 = lshr i64 %i.w, 8
+  %i.w = ptrtoint ptr %i.t to i64
   br label %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit.thread
 
 bb.f:                                             ; preds = %.noexc17
@@ -307,9 +303,7 @@ bb.i:                                             ; preds = %.noexc18
   %.sroa.698.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.37, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.698.0..sroa_idx.i, i64 32, i1 false), !noalias !178
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !176
-  %i.ai = ptrtoint ptr %i.af to i64               ; 2 uses
-  %.sroa.26.sroa.0.0.extract.trunc37 = trunc i64 %i.ai to i8
-  %.sroa.26.sroa.13.0.extract.shift48 = lshr i64 %i.ai, 8
+  %i.ai = ptrtoint ptr %i.af to i64
   br label %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit.thread
 
 bb.j:                                             ; preds = %.noexc18
@@ -325,14 +319,12 @@ bb.j:                                             ; preds = %.noexc18
 
 bb.k:                                             ; preds = %.noexc19
   %.sroa.4107.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %.sroa.4107.0.copyload.i = load i64, ptr %.sroa.4107.0..sroa_idx.i, align 8, !noalias !176 ; 2 uses
+  %.sroa.4107.0.copyload.i = load i64, ptr %.sroa.4107.0..sroa_idx.i, align 8, !noalias !176
   %.sroa.5108.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %.sroa.33.24.copyload = load i64, ptr %.sroa.5108.0..sroa_idx.i, align 8, !noalias !178
   %.sroa.37.24..sroa.5108.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.37, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.37.24..sroa.5108.0..sroa_idx.i.sroa_idx, i64 32, i1 false), !noalias !178
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !176
-  %.sroa.26.sroa.0.0.extract.trunc38 = trunc i64 %.sroa.4107.0.copyload.i to i8
-  %.sroa.26.sroa.13.0.extract.shift52 = lshr i64 %.sroa.4107.0.copyload.i, 8
   br label %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit.thread
 
 bb.l:                                             ; preds = %.noexc19
@@ -345,7 +337,7 @@ bb.l:                                             ; preds = %.noexc19
   %i.ak = load i64, ptr %i.d, align 8, !range !17, !noalias !176, !noundef !4 ; 2 uses
   %.not137.i = icmp eq i64 %i.ak, -1
   %i.al = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.am = load i64, ptr %i.al, align 8, !noalias !176 ; 3 uses
+  %i.am = load i64, ptr %i.al, align 8, !noalias !176 ; 2 uses
   br i1 %.not137.i, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %.noexc20
@@ -354,8 +346,6 @@ bb.m:                                             ; preds = %.noexc20
   %.sroa.37.24..sroa.5117.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.37, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.37.24..sroa.5117.0..sroa_idx.i.sroa_idx, i64 32, i1 false), !noalias !178
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !176
-  %.sroa.26.sroa.0.0.extract.trunc39 = trunc i64 %i.am to i8
-  %.sroa.26.sroa.13.0.extract.shift54 = lshr i64 %i.am, 8
   br label %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit.thread
 
 bb.n:                                             ; preds = %.noexc20
@@ -557,9 +547,7 @@ bb.aj:                                            ; preds = %.thread.i
 
 bb.ak:                                            ; preds = %.noexc21
   %.sroa.26.8..sroa_idx25 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %.sroa.26.8.copyload26 = load i64, ptr %.sroa.26.8..sroa_idx25, align 8, !noalias !178 ; 2 uses
-  %.sroa.26.sroa.0.0.extract.trunc35 = trunc i64 %.sroa.26.8.copyload26 to i8
-  %.sroa.26.sroa.13.0.extract.shift44 = lshr i64 %.sroa.26.8.copyload26, 8
+  %.sroa.26.8.copyload26 = load i64, ptr %.sroa.26.8..sroa_idx25, align 8, !noalias !178
   %.sroa.33.8..sroa_idx28 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.33.8.copyload29 = load i64, ptr %.sroa.33.8..sroa_idx28, align 8, !noalias !178
   %.sroa.37.8..sroa_idx31 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
@@ -580,9 +568,7 @@ _RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNt
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %.sroa.15.0.copyload = load i64, ptr %.sroa.15.0..sroa_idx, align 8, !noalias !178 ; 2 uses
   %.sroa.26.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %.sroa.26.0.copyload = load i64, ptr %.sroa.26.0..sroa_idx, align 8, !noalias !178 ; 3 uses
-  %.sroa.26.sroa.0.0.extract.trunc = trunc i64 %.sroa.26.0.copyload to i8
-  %.sroa.26.sroa.13.0.extract.shift = lshr i64 %.sroa.26.0.copyload, 8
+  %.sroa.26.0.copyload = load i64, ptr %.sroa.26.0..sroa_idx, align 8, !noalias !178 ; 2 uses
   %.sroa.33.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %.sroa.33.0.copyload = load i64, ptr %.sroa.33.0..sroa_idx, align 8, !noalias !178 ; 2 uses
   %.sroa.37.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 32
@@ -592,14 +578,10 @@ _RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNt
   %i.eb = icmp eq ptr %.sroa.0.0.copyload, null
   br i1 %i.eb, label %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit.thread, label %bb.am
 
-_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit.thread: ; preds = %bb.p, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad, %bb.ae, %bb.af, %bb.ag, %bb.ah, %.thread.i, %bb.f, %bb.g, %bb.b, %bb.e, %bb.c, %bb.i, %bb.k, %bb.m, %bb.ak, %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit
-  %.sroa.15.088 = phi i64 [ %.sroa.15.0.copyload, %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit ], [ -9223372036854775779, %bb.f ], [ -9223372036854775779, %bb.g ], [ %i.o, %bb.b ], [ %i.r, %bb.e ], [ -9223372036854775772, %bb.c ], [ %i.ad, %bb.i ], [ %i.aj, %bb.k ], [ %i.ak, %bb.m ], [ %i.dy, %bb.ak ], [ -9223372036854775808, %.thread.i ], [ -9223372036854775808, %bb.ah ], [ -9223372036854775808, %bb.ag ], [ -9223372036854775808, %bb.af ], [ -9223372036854775808, %bb.ae ], [ -9223372036854775808, %bb.ad ], [ -9223372036854775808, %bb.ac ], [ -9223372036854775808, %bb.ab ], [ -9223372036854775808, %bb.aa ], [ -9223372036854775808, %bb.z ], [ -9223372036854775808, %bb.x ], [ -9223372036854775808, %bb.w ], [ -9223372036854775808, %bb.v ], [ -9223372036854775808, %bb.u ], [ -9223372036854775808, %bb.t ], [ -9223372036854775808, %bb.s ], [ -9223372036854775808, %bb.p ]
-  %.sroa.33.087 = phi i64 [ %.sroa.33.0.copyload, %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit ], [ undef, %bb.f ], [ undef, %bb.g ], [ %.sroa.33.17.copyload, %bb.b ], [ %i.v, %bb.e ], [ undef, %bb.c ], [ %i.ah, %bb.i ], [ %.sroa.33.24.copyload, %bb.k ], [ %.sroa.33.24.copyload30, %bb.m ], [ %.sroa.33.8.copyload29, %bb.ak ], [ undef, %.thread.i ], [ undef, %bb.ah ], [ undef, %bb.ag ], [ undef, %bb.af ], [ undef, %bb.ae ], [ undef, %bb.ad ], [ undef, %bb.ac ], [ undef, %bb.ab ], [ undef, %bb.aa ], [ undef, %bb.z ], [ undef, %bb.x ], [ undef, %bb.w ], [ undef, %bb.v ], [ undef, %bb.u ], [ undef, %bb.t ], [ undef, %bb.s ], [ undef, %bb.p ]
-  %.sroa.26.sroa.0.086 = phi i8 [ %.sroa.26.sroa.0.0.extract.trunc, %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit ], [ undef, %bb.f ], [ undef, %bb.g ], [ %4, %bb.b ], [ %.sroa.26.sroa.0.0.extract.trunc36, %bb.e ], [ undef, %bb.c ], [ %.sroa.26.sroa.0.0.extract.trunc37, %bb.i ], [ %.sroa.26.sroa.0.0.extract.trunc38, %bb.k ], [ %.sroa.26.sroa.0.0.extract.trunc39, %bb.m ], [ %.sroa.26.sroa.0.0.extract.trunc35, %bb.ak ], [ 48, %.thread.i ], [ 48, %bb.ah ], [ 48, %bb.ag ], [ 48, %bb.af ], [ 48, %bb.ae ], [ 48, %bb.ad ], [ 48, %bb.ac ], [ 48, %bb.ab ], [ 48, %bb.aa ], [ 48, %bb.z ], [ 48, %bb.x ], [ 48, %bb.w ], [ 48, %bb.v ], [ 48, %bb.u ], [ 48, %bb.t ], [ 48, %bb.s ], [ 48, %bb.p ]
-  %.sroa.26.sroa.13.sroa.0.085 = phi i64 [ %.sroa.26.sroa.13.0.extract.shift, %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit ], [ 0, %bb.f ], [ 0, %bb.g ], [ %5, %bb.b ], [ %.sroa.26.sroa.13.0.extract.shift46, %bb.e ], [ 0, %bb.c ], [ %.sroa.26.sroa.13.0.extract.shift48, %bb.i ], [ %.sroa.26.sroa.13.0.extract.shift52, %bb.k ], [ %.sroa.26.sroa.13.0.extract.shift54, %bb.m ], [ %.sroa.26.sroa.13.0.extract.shift44, %bb.ak ], [ 0, %.thread.i ], [ 0, %bb.ah ], [ 0, %bb.ag ], [ 0, %bb.af ], [ 0, %bb.ae ], [ 0, %bb.ad ], [ 0, %bb.ac ], [ 0, %bb.ab ], [ 0, %bb.aa ], [ 0, %bb.z ], [ 0, %bb.x ], [ 0, %bb.w ], [ 0, %bb.v ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %bb.s ], [ 0, %bb.p ]
-  %.sroa.26.sroa.13.0.insert.shift = shl nuw i64 %.sroa.26.sroa.13.sroa.0.085, 8
-  %.sroa.26.sroa.0.0.insert.ext = zext i8 %.sroa.26.sroa.0.086 to i64
-  %.sroa.26.sroa.0.0.insert.insert = or disjoint i64 %.sroa.26.sroa.13.0.insert.shift, %.sroa.26.sroa.0.0.insert.ext
+_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit.thread: ; preds = %bb.p, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad, %bb.ae, %bb.af, %bb.ag, %bb.ah, %.thread.i, %bb.g, %bb.b, %bb.e, %bb.c, %bb.i, %bb.k, %bb.m, %bb.ak, %bb.f, %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit
+  %.sroa.15.088 = phi i64 [ %.sroa.15.0.copyload, %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit ], [ -9223372036854775808, %bb.p ], [ -9223372036854775808, %bb.s ], [ -9223372036854775808, %bb.t ], [ -9223372036854775808, %bb.u ], [ -9223372036854775808, %bb.v ], [ -9223372036854775808, %bb.w ], [ -9223372036854775808, %bb.x ], [ -9223372036854775808, %bb.z ], [ -9223372036854775808, %bb.aa ], [ -9223372036854775808, %bb.ab ], [ -9223372036854775808, %bb.ac ], [ -9223372036854775808, %bb.ad ], [ -9223372036854775808, %bb.ae ], [ -9223372036854775808, %bb.af ], [ -9223372036854775808, %bb.ag ], [ -9223372036854775808, %bb.ah ], [ -9223372036854775808, %.thread.i ], [ -9223372036854775779, %bb.g ], [ %i.o, %bb.b ], [ %i.r, %bb.e ], [ -9223372036854775772, %bb.c ], [ %i.ad, %bb.i ], [ %i.aj, %bb.k ], [ %i.ak, %bb.m ], [ %i.dy, %bb.ak ], [ -9223372036854775779, %bb.f ]
+  %.sroa.33.087 = phi i64 [ %.sroa.33.0.copyload, %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit ], [ undef, %bb.p ], [ undef, %bb.s ], [ undef, %bb.t ], [ undef, %bb.u ], [ undef, %bb.v ], [ undef, %bb.w ], [ undef, %bb.x ], [ undef, %bb.z ], [ undef, %bb.aa ], [ undef, %bb.ab ], [ undef, %bb.ac ], [ undef, %bb.ad ], [ undef, %bb.ae ], [ undef, %bb.af ], [ undef, %bb.ag ], [ undef, %bb.ah ], [ undef, %.thread.i ], [ undef, %bb.g ], [ %.sroa.33.17.copyload, %bb.b ], [ %i.v, %bb.e ], [ undef, %bb.c ], [ %i.ah, %bb.i ], [ %.sroa.33.24.copyload, %bb.k ], [ %.sroa.33.24.copyload30, %bb.m ], [ %.sroa.33.8.copyload29, %bb.ak ], [ undef, %bb.f ]
+  %.sroa.26.sroa.13.sroa.0.085 = phi i64 [ %.sroa.26.0.copyload, %_RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNtNtBb_3der7FromDer8from_ders_0Bb_.exit ], [ 48, %bb.p ], [ 48, %bb.s ], [ 48, %bb.t ], [ 48, %bb.u ], [ 48, %bb.v ], [ 48, %bb.w ], [ 48, %bb.x ], [ 48, %bb.z ], [ 48, %bb.aa ], [ 48, %bb.ab ], [ 48, %bb.ac ], [ 48, %bb.ad ], [ 48, %bb.ae ], [ 48, %bb.af ], [ 48, %bb.ag ], [ 48, %bb.ah ], [ 48, %.thread.i ], [ undef, %bb.g ], [ %.sroa.474.0.copyload.i, %bb.b ], [ %i.w, %bb.e ], [ undef, %bb.c ], [ %i.ai, %bb.i ], [ %.sroa.4107.0.copyload.i, %bb.k ], [ %i.am, %bb.m ], [ %.sroa.26.8.copyload26, %bb.ak ], [ undef, %bb.f ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.6.sroa.9, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.37, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.37)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.39)
@@ -608,7 +590,7 @@ _RNCNvXs3_NtNtCshVVPy9isBpn_6webpki3crl5typesNtB7_26BorrowedCertRevocationListNt
   %i.ec = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.15.088, ptr %i.ec, align 8
   %.sroa.477.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.26.sroa.0.0.insert.insert, ptr %.sroa.477.0..sroa_idx, align 8
+  store i64 %.sroa.26.sroa.13.sroa.0.085, ptr %.sroa.477.0..sroa_idx, align 8
   %.sroa.578.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %.sroa.33.087, ptr %.sroa.578.0..sroa_idx, align 8
   store ptr null, ptr %0, align 8

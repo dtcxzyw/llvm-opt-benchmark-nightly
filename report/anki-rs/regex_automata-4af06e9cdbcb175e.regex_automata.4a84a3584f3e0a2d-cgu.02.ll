@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.ab, label %"_ZN106_$LT$regex_automata..dfa..dense..StateTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h83ca9c6ee674b6e8E.exit.thread", label %bb.b
 
 bb.i:                                             ; preds = %bb.g
-  %.sroa.050.0.copyload = load i64, ptr %i.g, align 8
+  %2 = load <2 x i32>, ptr %i.g, align 8
   store i32 %.sroa.01.0.i.i, ptr %i.g, align 8
   store i32 %.sroa.01.0.i.i, ptr %i.h, align 4
   store i32 %.val7.i, ptr %i.i, align 8
@@ -217,7 +217,7 @@ bb.j:                                             ; preds = %bb.g
   br label %.backedge
 
 bb.k:                                             ; preds = %bb.i
-  store i64 %.sroa.050.0.copyload, ptr %0, align 4
+  store <2 x i32> %2, ptr %0, align 4
   %.sroa.542.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.j, ptr %.sroa.542.0..sroa_idx, align 4
   br label %bb.l
@@ -620,20 +620,18 @@ bb.f:                                             ; preds = %"_ZN106_$LT$regex_a
   %.sroa.27.3 = phi i32 [ %.sroa.27.0, %bb.b ], [ %.sroa.27.2, %.backedge.i ], [ %.sroa.27.1, %"_ZN106_$LT$regex_automata..dfa..dense..StateTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h83ca9c6ee674b6e8E.exit.i" ] ; 3 uses
   %.sroa.11.1 = phi i64 [ %.sroa.11.0, %bb.b ], [ %i.aq, %"_ZN106_$LT$regex_automata..dfa..dense..StateTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h83ca9c6ee674b6e8E.exit.i" ], [ %i.aq, %.backedge.i ]
   %.sroa.6.1 = phi ptr [ %i.l, %bb.b ], [ %i.l, %.backedge.i ], [ %i.ap, %"_ZN106_$LT$regex_automata..dfa..dense..StateTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h83ca9c6ee674b6e8E.exit.i" ]
-  %.sroa.16.sroa.0.sroa.10.0.insert.ext75 = zext i24 %.sroa.16.sroa.0.sroa.10.sroa.0.3 to i64
-  %.sroa.16.sroa.0.sroa.10.0.insert.shift76 = shl nuw nsw i64 %.sroa.16.sroa.0.sroa.10.0.insert.ext75, 8
-  %.sroa.16.sroa.10.sroa.8.0.insert.ext63 = zext i24 %.sroa.16.sroa.10.sroa.8.3 to i64
-  %.sroa.16.sroa.10.sroa.0.0.insert.ext59 = zext i8 %.sroa.16.sroa.10.sroa.0.3 to i64
-  %2 = shl nuw i64 %.sroa.16.sroa.10.sroa.8.0.insert.ext63, 40
-  %3 = shl nuw nsw i64 %.sroa.16.sroa.10.sroa.0.0.insert.ext59, 32
-  %.sroa.16.sroa.10.0.insert.shift56 = or disjoint i64 %3, %2
-  %.sroa.16.sroa.0.0.insert.insert54 = or disjoint i64 %.sroa.16.sroa.10.0.insert.shift56, %.sroa.16.sroa.0.sroa.10.0.insert.shift76
+  %.sroa.16.sroa.10.0.insert.ext66 = zext i24 %.sroa.16.sroa.0.sroa.10.sroa.0.3 to i32
+  %.sroa.16.sroa.10.0.insert.shift67 = shl nuw i32 %.sroa.16.sroa.10.0.insert.ext66, 8
+  %.sroa.23.sroa.8.0.insert.ext = zext i24 %.sroa.16.sroa.10.sroa.8.3 to i32
+  %.sroa.23.sroa.8.0.insert.shift = shl nuw i32 %.sroa.23.sroa.8.0.insert.ext, 8
+  %.sroa.23.sroa.0.0.insert.ext = zext i8 %.sroa.16.sroa.10.sroa.0.3 to i32
+  %.sroa.23.sroa.0.0.insert.insert = or disjoint i32 %.sroa.23.sroa.8.0.insert.shift, %.sroa.23.sroa.0.0.insert.ext
   %.not61.i.a = icmp eq i8 %.sroa.16.sroa.0.sroa.0.3, 2
   %.not62.i = icmp eq i32 %.sroa.27.3, 0
   %or.cond66.i = select i1 %.not61.i.a, i1 true, i1 %.not62.i
-  %4 = zext i8 %.sroa.16.sroa.0.sroa.0.3 to i64
-  %.sroa.084.0.insert.ext = select i1 %or.cond66.i, i64 2, i64 %4
-  %.sroa.084.0.insert.insert = or disjoint i64 %.sroa.16.sroa.0.0.insert.insert54, %.sroa.084.0.insert.ext
+  %2 = zext i8 %.sroa.16.sroa.0.sroa.0.3 to i32
+  %.sroa.075.0.insert.ext = select i1 %or.cond66.i, i32 2, i32 %2
+  %.sroa.075.0.insert.insert = or disjoint i32 %.sroa.075.0.insert.ext, %.sroa.16.sroa.10.0.insert.shift67
   br label %"_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit"
 
 bb.g:                                             ; preds = %bb.f
@@ -661,20 +659,19 @@ bb.i:                                             ; preds = %bb.g
   br i1 %.not64.i, label %.backedge.i, label %"_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit.loopexit"
 
 "_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit.loopexit": ; preds = %bb.i
-  %.sroa.16.sroa.0.sroa.10.0.insert.ext.le = zext i24 %.sroa.16.sroa.0.sroa.10.sroa.0.1 to i64
-  %.sroa.16.sroa.0.sroa.10.0.insert.shift.le = shl nuw nsw i64 %.sroa.16.sroa.0.sroa.10.0.insert.ext.le, 8
-  %.sroa.16.sroa.0.sroa.0.0.insert.ext.le = zext i8 %.sroa.16.sroa.0.sroa.0.1 to i64
-  %.sroa.16.sroa.0.sroa.0.0.insert.insert.le = or disjoint i64 %.sroa.16.sroa.0.sroa.10.0.insert.shift.le, %.sroa.16.sroa.0.sroa.0.0.insert.ext.le
-  %.sroa.16.sroa.10.sroa.8.0.insert.ext.le = zext i24 %.sroa.16.sroa.10.sroa.8.1 to i64
-  %.sroa.16.sroa.10.sroa.0.0.insert.ext.le = zext i8 %.sroa.16.sroa.10.sroa.0.1 to i64
-  %5 = shl nuw i64 %.sroa.16.sroa.10.sroa.8.0.insert.ext.le, 40
-  %6 = shl nuw nsw i64 %.sroa.16.sroa.10.sroa.0.0.insert.ext.le, 32
-  %.sroa.16.sroa.10.0.insert.shift.le = or disjoint i64 %6, %5
-  %.sroa.16.sroa.0.0.insert.insert.le = or disjoint i64 %.sroa.16.sroa.10.0.insert.shift.le, %.sroa.16.sroa.0.sroa.0.0.insert.insert.le
+  %.sroa.23.sroa.8.0.insert.ext54.le = zext i24 %.sroa.16.sroa.10.sroa.8.1 to i32
+  %.sroa.23.sroa.8.0.insert.shift55.le = shl nuw i32 %.sroa.23.sroa.8.0.insert.ext54.le, 8
+  %.sroa.23.sroa.0.0.insert.ext50.le = zext i8 %.sroa.16.sroa.10.sroa.0.1 to i32
+  %.sroa.23.sroa.0.0.insert.insert52.le = or disjoint i32 %.sroa.23.sroa.8.0.insert.shift55.le, %.sroa.23.sroa.0.0.insert.ext50.le
+  %.sroa.16.sroa.10.0.insert.ext.le = zext i24 %.sroa.16.sroa.0.sroa.10.sroa.0.1 to i32
+  %.sroa.16.sroa.10.0.insert.shift.le = shl nuw i32 %.sroa.16.sroa.10.0.insert.ext.le, 8
+  %.sroa.16.sroa.0.0.insert.ext.le = zext i8 %.sroa.16.sroa.0.sroa.0.1 to i32
+  %.sroa.16.sroa.0.0.insert.insert.le = or disjoint i32 %.sroa.16.sroa.10.0.insert.shift.le, %.sroa.16.sroa.0.0.insert.ext.le
   br label %"_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit"
 
 "_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit": ; preds = %"_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit.loopexit", %"_ZN106_$LT$regex_automata..dfa..dense..StateTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h83ca9c6ee674b6e8E.exit.thread.i"
-  %.sroa.084.0 = phi i64 [ %.sroa.084.0.insert.insert, %"_ZN106_$LT$regex_automata..dfa..dense..StateTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h83ca9c6ee674b6e8E.exit.thread.i" ], [ %.sroa.16.sroa.0.0.insert.insert.le, %"_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit.loopexit" ] ; 4 uses
+  %.sroa.075.0 = phi i32 [ %.sroa.075.0.insert.insert, %"_ZN106_$LT$regex_automata..dfa..dense..StateTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h83ca9c6ee674b6e8E.exit.thread.i" ], [ %.sroa.16.sroa.0.0.insert.insert.le, %"_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit.loopexit" ] ; 3 uses
+  %.sroa.979.0 = phi i32 [ %.sroa.23.sroa.0.0.insert.insert, %"_ZN106_$LT$regex_automata..dfa..dense..StateTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h83ca9c6ee674b6e8E.exit.thread.i" ], [ %.sroa.23.sroa.0.0.insert.insert52.le, %"_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit.loopexit" ] ; 2 uses
   %.sroa.16.sroa.0.sroa.10.sroa.0.4 = phi i24 [ %.sroa.16.sroa.0.sroa.10.sroa.0.3, %"_ZN106_$LT$regex_automata..dfa..dense..StateTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h83ca9c6ee674b6e8E.exit.thread.i" ], [ %.sroa.454.0.extract.trunc.i, %"_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit.loopexit" ]
   %.sroa.16.sroa.0.sroa.0.4 = phi i8 [ 2, %"_ZN106_$LT$regex_automata..dfa..dense..StateTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h83ca9c6ee674b6e8E.exit.thread.i" ], [ %.sroa.16.sroa.0.sroa.0.0.extract.trunc, %"_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit.loopexit" ]
   %.sroa.16.sroa.10.sroa.8.4 = phi i24 [ %.sroa.16.sroa.10.sroa.8.3, %"_ZN106_$LT$regex_automata..dfa..dense..StateTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h83ca9c6ee674b6e8E.exit.thread.i" ], [ %.sroa.454.0.extract.trunc.i, %"_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit.loopexit" ]
@@ -683,26 +680,23 @@ bb.i:                                             ; preds = %bb.g
   %.sroa.27.4 = phi i32 [ %.sroa.27.3, %"_ZN106_$LT$regex_automata..dfa..dense..StateTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h83ca9c6ee674b6e8E.exit.thread.i" ], [ %.val7.i.i, %"_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit.loopexit" ]
   %.sroa.11.2 = phi i64 [ %.sroa.11.1, %"_ZN106_$LT$regex_automata..dfa..dense..StateTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h83ca9c6ee674b6e8E.exit.thread.i" ], [ %i.aq, %"_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit.loopexit" ]
   %.sroa.6.2 = phi ptr [ %.sroa.6.1, %"_ZN106_$LT$regex_automata..dfa..dense..StateTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h83ca9c6ee674b6e8E.exit.thread.i" ], [ %i.ap, %"_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit.loopexit" ]
-  %7 = and i64 %.sroa.084.0, 255
-  %.not.i.not.not.not = icmp ne i64 %7, 2         ; 2 uses
+  %3 = and i32 %.sroa.075.0, 255
+  %.not.i.not.not.not = icmp ne i32 %3, 2         ; 2 uses
   br i1 %.not.i.not.not.not, label %bb.j, label %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hb81af6ad9b316625E.exit.thread"
 
 bb.j:                                             ; preds = %"_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit"
   %i.ba = add i64 %.sroa.0.0, 1
-  %.sroa.084.4.extract.shift = lshr i64 %.sroa.084.0, 32 ; 2 uses
-  %.sroa.084.4.extract.trunc = trunc nuw i64 %.sroa.084.4.extract.shift to i32
-  %.sroa.084.0.extract.trunc = trunc i64 %.sroa.084.0 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
-  store i32 %.sroa.084.0.extract.trunc, ptr %i.h, align 4
+  store i32 %.sroa.075.0, ptr %i.h, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  store i32 %.sroa.084.4.extract.trunc, ptr %i.g, align 4
+  store i32 %.sroa.979.0, ptr %i.g, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.bb = zext i32 %.sroa.1089.0 to i64
   %storemerge = lshr i64 %i.bb, %i.t
   store i64 %storemerge, ptr %i.f, align 8
   %.not33 = icmp eq i64 %.sroa.0.0, 0
-  %i.bc = trunc i64 %.sroa.084.0 to i8
-  %i.bd = trunc i64 %.sroa.084.4.extract.shift to i8
+  %i.bc = trunc i32 %.sroa.075.0 to i8
+  %i.bd = trunc i32 %.sroa.979.0 to i8
   br i1 %.not33, label %bb.k, label %.split
 
 "_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hb81af6ad9b316625E.exit.thread": ; preds = %"_ZN112_$LT$regex_automata..dfa..dense..StateSparseTransitionIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h52585d4cd9b63884E.exit", %.loopexit

@@ -204,6 +204,8 @@ _ZNSt10unique_ptrIN4mlir8dataflow7LatticeINS1_13ConstantValueEEESt14default_dele
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr i64 @_ZNK4mlir14DataFlowSolver21getLeaderAnchorOrSelfINS_8dataflow7LatticeINS2_13ConstantValueEEEEENS_13LatticeAnchorES6_(ptr noundef nonnull align 8 dereferenceable(208) %0, i64 %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
+  %.sroa.014 = alloca [8 x i8], align 8           ; 7 uses
+  store i64 %1, ptr %.sroa.014, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
   %i.b = load atomic i8, ptr @_ZGVZN4mlir6detail14TypeIDResolverINS_8dataflow7LatticeINS2_13ConstantValueEEEvE13resolveTypeIDEvE2id acquire, align 8
   %i.c = icmp eq i8 %i.b, 0
@@ -228,7 +230,7 @@ _ZN4mlir6TypeID3getINS_8dataflow7LatticeINS2_13ConstantValueEEEEES0_v.exit: ; pr
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 204 ; 2 uses
   %i.j = load i32, ptr %i.i, align 4, !tbaa !190, !noalias !184 ; 2 uses
   %i.k = icmp eq i32 %i.j, 0
-  br i1 %i.k, label %_ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE10findLeaderERKS2_.exit.thread, label %bb.d
+  br i1 %i.k, label %bb.l, label %bb.d
 
 bb.d:                                             ; preds = %_ZN4mlir6TypeID3getINS_8dataflow7LatticeINS2_13ConstantValueEEEEES0_v.exit
   %i.l = add i32 %i.j, -1                         ; 2 uses
@@ -245,7 +247,7 @@ bb.d:                                             ; preds = %_ZN4mlir6TypeID3get
   %i.w = and i32 %i.r, 31
   %i.x = lshr i32 %i.v, %i.w
   %i.y = trunc i32 %i.x to i1
-  br i1 %i.y, label %.lr.ph.i.i, label %_ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE10findLeaderERKS2_.exit.thread, !prof !192
+  br i1 %i.y, label %.lr.ph.i.i, label %bb.l, !prof !192
 
 .lr.ph.i.i:                                       ; preds = %bb.d, %bb.e
   %i.z = phi i64 [ %i.ae, %bb.e ], [ %i.s, %bb.d ]
@@ -265,7 +267,7 @@ bb.e:                                             ; preds = %.lr.ph.i.i
   %i.ai = and i32 %i.ad, 31
   %i.aj = lshr i32 %i.ah, %i.ai
   %i.ak = trunc i32 %i.aj to i1
-  br i1 %i.ak, label %.lr.ph.i.i, label %_ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE10findLeaderERKS2_.exit.thread, !prof !193
+  br i1 %i.ak, label %.lr.ph.i.i, label %bb.l, !prof !193
 
 _ZNK4llvm12DenseMapBaseINS_8DenseMapIN4mlir6TypeIDENS_18EquivalenceClassesINS2_13LatticeAnchorEEENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S6_EEEES3_S6_S8_SB_E8containsERKS3_.exit: ; preds = %.lr.ph.i.i
   %i.al = load atomic i8, ptr @_ZGVZN4mlir6detail14TypeIDResolverINS_8dataflow7LatticeINS2_13ConstantValueEEEvE13resolveTypeIDEvE2id acquire, align 8
@@ -346,7 +348,8 @@ _ZNK4llvm12DenseMapBaseINS_8DenseMapIN4mlir6TypeIDENS_18EquivalenceClassesINS2_1
 
 bb.j:                                             ; preds = %_ZNK4llvm12DenseMapBaseINS_8DenseMapIN4mlir6TypeIDENS_18EquivalenceClassesINS2_13LatticeAnchorEEENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S6_EEEES3_S6_S8_SB_E2atERKS3_.exit
   %i.cd = add i32 %i.cb, -1                       ; 2 uses
-  %i.ce = mul i64 %1, -4658895280553007687        ; 2 uses
+  %.sroa.014.0..sroa.014.0..sroa.014.0..sroa.014.0..0.copyload.i.i.i.i.i.i.i = load i64, ptr %.sroa.014, align 8, !noalias !218 ; 2 uses
+  %i.ce = mul i64 %.sroa.014.0..sroa.014.0..sroa.014.0..sroa.014.0..0.copyload.i.i.i.i.i.i.i, -4658895280553007687 ; 2 uses
   %i.cf = lshr i64 %i.ce, 31
   %i.cg = xor i64 %i.cf, %i.ce
   %i.ch = trunc i64 %i.cg to i32
@@ -365,7 +368,7 @@ bb.j:                                             ; preds = %_ZNK4llvm12DenseMap
   %.017.i.i.i.i = phi i32 [ %i.cu, %bb.k ], [ %i.ci, %bb.j ]
   %i.cr = getelementptr inbounds nuw [16 x i8], ptr %i.bx, i64 %i.cq ; 2 uses
   %.sroa.0.0.copyload.i.i.i.i.i = load i64, ptr %i.cr, align 8, !noalias !218
-  %i.cs = icmp eq i64 %1, %.sroa.0.0.copyload.i.i.i.i.i
+  %i.cs = icmp eq i64 %.sroa.014.0..sroa.014.0..sroa.014.0..sroa.014.0..0.copyload.i.i.i.i.i.i.i, %.sroa.0.0.copyload.i.i.i.i.i
   br i1 %i.cs, label %_ZNK4llvm12DenseMapBaseINS_8DenseMapIN4mlir13LatticeAnchorEPNS_18EquivalenceClassesIS3_E7ECValueENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EEEES3_S7_S9_SC_E4findERKS3_.exit.loopexit.i, label %bb.k, !prof !32
 
 bb.k:                                             ; preds = %.lr.ph.i.i.i.i9
@@ -394,23 +397,21 @@ _ZNK4llvm12DenseMapBaseINS_8DenseMapIN4mlir13LatticeAnchorEPNS_18EquivalenceClas
   %.lcssa.sink.i.i.i = phi ptr [ %i.cr, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIN4mlir13LatticeAnchorEPNS_18EquivalenceClassesIS3_E7ECValueENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EEEES3_S7_S9_SC_E4findERKS3_.exit.loopexit.i ], [ %i.dd, %.loopexit.i.i.i8 ] ; 2 uses
   %i.de = getelementptr inbounds nuw [16 x i8], ptr %i.bx, i64 %.pre-phi.i
   %i.df = icmp eq ptr %.lcssa.sink.i.i.i, %i.de
-  br i1 %i.df, label %_ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE10findLeaderERKS2_.exit.thread, label %_ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE10findLeaderERKS2_.exit
+  br i1 %i.df, label %bb.l, label %_ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE10findLeaderERKS2_.exit
 
 _ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE10findLeaderERKS2_.exit: ; preds = %_ZNK4llvm12DenseMapBaseINS_8DenseMapIN4mlir13LatticeAnchorEPNS_18EquivalenceClassesIS3_E7ECValueENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EEEES3_S7_S9_SC_E4findERKS3_.exit.i
   %i.dg = getelementptr inbounds nuw i8, ptr %.lcssa.sink.i.i.i, i64 8
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !219
   %i.di = tail call noundef ptr @_ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE7ECValue9getLeaderEv(ptr noundef nonnull align 8 dereferenceable(24) %i.dh) ; 2 uses
   %.not = icmp eq ptr %i.di, null
-  br i1 %.not, label %_ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE10findLeaderERKS2_.exit.thread, label %bb.l
-
-bb.l:                                             ; preds = %_ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE10findLeaderERKS2_.exit
   %2 = getelementptr inbounds nuw i8, ptr %i.di, i64 16
-  %.sroa.0.0.in.sroa.speculate.load. = load i64, ptr %2, align 8
-  br label %_ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE10findLeaderERKS2_.exit.thread
+  %spec.select = select i1 %.not, ptr %.sroa.014, ptr %2
+  br label %bb.l
 
-_ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE10findLeaderERKS2_.exit.thread: ; preds = %bb.e, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIN4mlir13LatticeAnchorEPNS_18EquivalenceClassesIS3_E7ECValueENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EEEES3_S7_S9_SC_E4findERKS3_.exit.i, %bb.l, %_ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE10findLeaderERKS2_.exit, %bb.d, %_ZN4mlir6TypeID3getINS_8dataflow7LatticeINS2_13ConstantValueEEEEES0_v.exit
-  %.sroa.0.1 = phi i64 [ %1, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIN4mlir13LatticeAnchorEPNS_18EquivalenceClassesIS3_E7ECValueENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EEEES3_S7_S9_SC_E4findERKS3_.exit.i ], [ %1, %_ZN4mlir6TypeID3getINS_8dataflow7LatticeINS2_13ConstantValueEEEEES0_v.exit ], [ %1, %bb.d ], [ %.sroa.0.0.in.sroa.speculate.load., %bb.l ], [ %1, %_ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE10findLeaderERKS2_.exit ], [ %1, %bb.e ]
-  ret i64 %.sroa.0.1
+bb.l:                                             ; preds = %bb.e, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIN4mlir13LatticeAnchorEPNS_18EquivalenceClassesIS3_E7ECValueENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EEEES3_S7_S9_SC_E4findERKS3_.exit.i, %_ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE10findLeaderERKS2_.exit, %bb.d, %_ZN4mlir6TypeID3getINS_8dataflow7LatticeINS2_13ConstantValueEEEEES0_v.exit
+  %.sroa.0.1.in = phi ptr [ %spec.select, %_ZNK4llvm18EquivalenceClassesIN4mlir13LatticeAnchorEE10findLeaderERKS2_.exit ], [ %.sroa.014, %_ZN4mlir6TypeID3getINS_8dataflow7LatticeINS2_13ConstantValueEEEEES0_v.exit ], [ %.sroa.014, %bb.d ], [ %.sroa.014, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIN4mlir13LatticeAnchorEPNS_18EquivalenceClassesIS3_E7ECValueENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EEEES3_S7_S9_SC_E4findERKS3_.exit.i ], [ %.sroa.014, %bb.e ]
+  %.sroa.0.0.in.sroa.speculate.load. = load i64, ptr %.sroa.0.1.in, align 8
+  ret i64 %.sroa.0.0.in.sroa.speculate.load.
 }
 
 ; Function Attrs: nobuiltin allocsize(0)

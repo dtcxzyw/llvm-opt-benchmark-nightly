@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.h, ptr %i.a, align 8, !noalias !113
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #29, !dbg !117, !noalias !150
-  %i.i = tail call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef range(i64 0, 1433) 32, i64 noundef range(i64 1, 129) 8) #29, !dbg !153, !noalias !150 ; 9 uses
+  %i.i = tail call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef range(i64 0, 1433) 32, i64 noundef range(i64 1, 129) 8) #29, !dbg !153, !noalias !150 ; 11 uses
   %i.j = icmp eq ptr %i.i, null, !dbg !154
   br i1 %i.j, label %bb.c, label %bb.d, !dbg !155, !prof !156
 
@@ -224,7 +224,11 @@ bb.d:                                             ; preds = %bb.b
   %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 8, !dbg !159
   store i64 1, ptr %.sroa.411.0..sroa_idx, align 8, !dbg !159, !noalias !113
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 16, !dbg !159
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx, i8 0, i64 16, i1 false), !dbg !159
+  store i32 0, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !159, !noalias !113
+  %.sroa.612.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 20, !dbg !159
+  store i8 0, ptr %.sroa.612.0..sroa_idx, align 4, !dbg !159, !noalias !113
+  %.sroa.714.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 24, !dbg !159
+  store ptr null, ptr %.sroa.714.0..sroa_idx, align 8, !dbg !159, !noalias !113
   %i.l = atomicrmw add ptr %i.i, i64 1 monotonic, align 8, !dbg !161, !noalias !113
   %i.m = icmp slt i64 %i.l, 0, !dbg !177
   br i1 %i.m, label %bb.e, label %bb.h, !dbg !177
@@ -627,11 +631,11 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #27
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #28
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #15
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #28
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

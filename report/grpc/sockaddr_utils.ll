@@ -204,8 +204,8 @@ bb.e:                                             ; preds = %.critedge, %bb.d
 ; Function Attrs: mustprogress uwtable
 define noundef range(i32 0, 2) i32 @_Z25grpc_sockaddr_is_wildcardPK21grpc_resolved_addressPi(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 .critedge.i:
-  %.sroa.2 = alloca i16, align 2                  ; 4 uses
-  %.sroa.4 = alloca i32, align 4                  ; 4 uses
+  %.sroa.2 = alloca [2 x i8], align 2             ; 4 uses
+  %.sroa.4 = alloca [4 x i8], align 4             ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.2)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   %i.a = load i16, ptr %0, align 2, !tbaa !9

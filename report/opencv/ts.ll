@@ -204,7 +204,7 @@ define hidden void @_ZN6cvtest12fillGradientIhEEvRN2cv3MatEi(ptr noundef nonnull
 bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %3 = alloca %"class.std::allocator", align 1    ; 3 uses
-  %.sroa.0 = alloca i32, align 4                  ; 7 uses
+  %4 = alloca [4 x i8], align 1                   ; 7 uses
   %i.a = load i32, ptr %0, align 8, !tbaa !137    ; 2 uses
   %i.b = lshr i32 %i.a, 5
   %i.c = tail call noundef zeroext i1 @_ZNK2cv3Mat5emptyEv(ptr noundef nonnull align 8 dereferenceable(208) %0)
@@ -269,9 +269,9 @@ bb.f:                                             ; preds = %bb.b
   %i.z = and i32 %i.b, 127
   %narrow = add nuw nsw i32 %i.z, 1
   %i.aa = zext nneg i32 %narrow to i64
-  %.sroa.0.1..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1
-  %.sroa.0.2..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
-  %.sroa.0.3..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 3
+  %.sroa.0.1..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 1
+  %.sroa.0.2..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 2
+  %.sroa.0.3..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 3
   br label %.lr.ph61.split
 
 .lr.ph61.split:                                   ; preds = %.lr.ph61.split.preheader, %._crit_edge
@@ -301,14 +301,14 @@ bb.g:                                             ; preds = %.lr.ph, %_ZN2cv3Mat
   %i.an = sub nsw i32 %i.r, %i.am
   %.pn53 = select i1 %.not52, i32 %i.an, i32 %i.am
   %i.ao = mul nsw i32 %.pn53, %1
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  store i8 %i.ai, ptr %.sroa.0, align 4, !tbaa !17
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  store i8 %i.ai, ptr %4, align 1, !tbaa !17
   %i.ap = trunc i32 %i.ao to i8
   store i8 %i.ap, ptr %.sroa.0.1..sroa_idx, align 1, !tbaa !17
   %i.aq = load i32, ptr %i.o, align 8, !tbaa !144
   %i.ar = sdiv i32 %i.ak, %i.aq
   %i.as = trunc i32 %i.ar to i8
-  store i8 %i.as, ptr %.sroa.0.2..sroa_idx, align 2, !tbaa !17
+  store i8 %i.as, ptr %.sroa.0.2..sroa_idx, align 1, !tbaa !17
   store i8 -1, ptr %.sroa.0.3..sroa_idx, align 1, !tbaa !17
   %i.at = load i32, ptr %i.t, align 4, !tbaa !146
   %i.au = icmp slt i32 %i.at, 2
@@ -327,8 +327,8 @@ _ZN2cv3Mat3ptrEii.exit:                           ; preds = %bb.g, %bb.h
   %.sink = phi ptr [ %i.ay, %bb.h ], [ %i.av, %bb.g ]
   %i.ba = mul i64 %.sink77, %indvars.iv
   %i.bb = getelementptr inbounds nuw i8, ptr %.sink, i64 %i.ba
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0, i64 %i.aa, i1 false), !tbaa !17
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, ptr noundef nonnull align 1 dereferenceable(1) %4, i64 %i.aa, i1 false), !tbaa !17
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.bc = load i32, ptr %i.s, align 4, !tbaa !145 ; 2 uses
   %i.bd = sext i32 %i.bc to i64

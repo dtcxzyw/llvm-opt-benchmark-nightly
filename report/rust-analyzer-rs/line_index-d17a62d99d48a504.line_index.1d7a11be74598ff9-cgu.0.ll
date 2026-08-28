@@ -204,6 +204,7 @@ bb.a:
 define internal fastcc noundef i64 @_RNvCs2wU4RHBJEmX_10line_index27analyze_source_file_generic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1, i64 noundef %2, i32 noundef %3, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %4, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %5) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
+  %6 = alloca [4 x i8], align 4                   ; 4 uses
   %.not = icmp ult i64 %1, %2
   br i1 %.not, label %bb.b, label %.preheader, !prof !11
 
@@ -261,8 +262,8 @@ bb.f:                                             ; preds = %bb.c
   %i.r = icmp ugt i8 %i.h, 126
   br i1 %i.r, label %bb.h, label %bb.g
 
-bb.g:                                             ; preds = %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtCs2wU4RHBJEmX_10line_index8WideCharE8push_mutBH_.exit, %10, %bb.f, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE8push_mutCs2wU4RHBJEmX_10line_index.exit
-  %i.s = phi i64 [ %.sroa.08.0, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtCs2wU4RHBJEmX_10line_index8WideCharE8push_mutBH_.exit ], [ 1, %10 ], [ 1, %bb.f ], [ 1, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE8push_mutCs2wU4RHBJEmX_10line_index.exit ]
+bb.g:                                             ; preds = %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtCs2wU4RHBJEmX_10line_index8WideCharE8push_mutBH_.exit, %.thread, %bb.f, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE8push_mutCs2wU4RHBJEmX_10line_index.exit
+  %i.s = phi i64 [ %.sroa.08.0, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtCs2wU4RHBJEmX_10line_index8WideCharE8push_mutBH_.exit ], [ 1, %.thread ], [ 1, %bb.f ], [ 1, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtCsuAhG64lL82_9text_size4size8TextSizeE8push_mutCs2wU4RHBJEmX_10line_index.exit ]
   %i.t = add i64 %i.s, %.sroa.0.051               ; 3 uses
   %i.u = icmp ult i64 %i.t, %2
   br i1 %i.u, label %bb.c, label %._crit_edge
@@ -349,21 +350,18 @@ bb.m:                                             ; preds = %bb.l
   %i.bl = add i32 %3, %i.bk
   %i.bm = load i64, ptr %i.b, align 8, !noundef !10 ; 4 uses
   %.not23.a = icmp eq i64 %i.bm, 0
-  br i1 %.not23.a, label %10, label %6
-
-6:                                                ; preds = %.thread
-  %7 = load ptr, ptr %i.c, align 8, !nonnull !10, !noundef !10
+  %7 = load ptr, ptr %i.c, align 8, !nonnull !10
   %8 = getelementptr [4 x i8], ptr %7, i64 %i.bm
   %9 = getelementptr i8, ptr %8, i64 -4
-  %.sroa.010.0.sroa.speculate.load. = load i32, ptr %9, align 4
-  br label %10
-
-10:                                               ; preds = %.thread, %6
-  %.sroa.010.0.sroa.speculated = phi i32 [ %.sroa.010.0.sroa.speculate.load., %6 ], [ 0, %.thread ]
-  %11 = sub i32 %i.bl, %.sroa.010.0.sroa.speculated ; 2 uses
+  %.sroa.010.0 = select i1 %.not23.a, ptr %6, ptr %9
+  call void @llvm.lifetime.start.p0(ptr nonnull %6)
+  store i32 0, ptr %6, align 4
+  %10 = load i32, ptr %.sroa.010.0, align 4, !noundef !10
+  %11 = sub i32 %i.bl, %10                        ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %6)
   br i1 %i.bj, label %bb.n, label %bb.g
 
-bb.n:                                             ; preds = %10
+bb.n:                                             ; preds = %.thread
   %.not68 = icmp eq i64 %.sroa.08.0, 1
   br i1 %.not68, label %bb.o, label %bb.p, !prof !11
 

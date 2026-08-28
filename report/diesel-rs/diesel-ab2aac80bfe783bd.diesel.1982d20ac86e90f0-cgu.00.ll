@@ -204,14 +204,14 @@ bb.o:                                             ; preds = %bb.e, %.body
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCs40k4W9msRzi_5alloc3vec21spec_from_iter_nestedINtB4_3VecNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures20ForeignKeyConstraintEINtB2_18SpecFromIterNestedB11_INtNtNtNtCscI6d9CVNmLh_4core4iter8adapters7flatten7FlattenINtNtB4_9into_iter8IntoIterBR_EEE9from_iterB17_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(96) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.i.i = alloca i64, align 8              ; 3 uses
-  %.sroa.7.i.i = alloca i64, align 8              ; 3 uses
+  %.sroa.5.i.i = alloca [8 x i8], align 8         ; 3 uses
+  %.sroa.7.i.i = alloca [8 x i8], align 8         ; 3 uses
   %i.a = alloca [216 x i8], align 8               ; 4 uses
   %i.b = alloca [216 x i8], align 8               ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [96 x i8], align 8                ; 15 uses
-  %.sroa.5 = alloca i64, align 8                  ; 3 uses
-  %.sroa.7 = alloca i64, align 8                  ; 3 uses
+  %.sroa.5 = alloca [8 x i8], align 8             ; 3 uses
+  %.sroa.7 = alloca [8 x i8], align 8             ; 3 uses
   %i.e = alloca [216 x i8], align 8               ; 4 uses
   %i.f = alloca [216 x i8], align 8               ; 7 uses
   %i.g = alloca [24 x i8], align 8                ; 10 uses
@@ -614,8 +614,8 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecTRNtNtN
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCs40k4W9msRzi_5alloc3vec21spec_from_iter_nestedINtB4_3VecTRNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures10ColumnTypeRNtNtB17_10table_data9TableNameRNtB15_16ColumnDefinitionEEINtB2_18SpecFromIterNestedB11_INtNtNtNtCscI6d9CVNmLh_4core4iter8adapters10filter_map9FilterMapINtNtB3Q_7flatten7FlatMapINtNtB3Q_3zip3ZipINtNtNtB3U_5slice4iter4IterIBS_INtNtB3U_6option6OptionB13_EEEIB5u_NtB2o_9TableDataEEINtNtB3Q_3map3MapIB5d_IB5u_B5Y_EIB5u_B2R_EENCNCNvXNtB19_12print_schemaNtB7D_30CustomTypesForTablesForDisplayNtNtB3U_3fmt7Display3fmts1_00ENCB7A_s1_0ENCB7A_s2_0EE9from_iterB19_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(160) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.4.i.i.i = alloca i64, align 8            ; 3 uses
-  %.sroa.7.i.i.i = alloca i64, align 8            ; 3 uses
+  %.sroa.4.i.i.i = alloca [8 x i8], align 8       ; 3 uses
+  %.sroa.7.i.i.i = alloca [8 x i8], align 8       ; 3 uses
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
@@ -623,8 +623,8 @@ bb.a:
   %.sroa.5.i.i.i.i = alloca [16 x i8], align 8    ; 7 uses
   %.sroa.4.i.i = alloca [16 x i8], align 8        ; 4 uses
   %i.e = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.4.i = alloca i64, align 8                ; 3 uses
-  %.sroa.7.i = alloca i64, align 8                ; 3 uses
+  %.sroa.4.i = alloca [8 x i8], align 8           ; 3 uses
+  %.sroa.7.i = alloca [8 x i8], align 8           ; 3 uses
   %i.f = alloca [24 x i8], align 8                ; 6 uses
   %i.g = alloca [24 x i8], align 8                ; 6 uses
   %i.h = alloca [24 x i8], align 8                ; 6 uses
@@ -1027,8 +1027,8 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 5 uses
   %i.c = alloca [24 x i8], align 8                ; 5 uses
   %i.d = alloca [24 x i8], align 8                ; 5 uses
-  %.sroa.4 = alloca i64, align 8                  ; 6 uses
-  %.sroa.7 = alloca i64, align 8                  ; 4 uses
+  %.sroa.4 = alloca [8 x i8], align 8             ; 6 uses
+  %.sroa.7 = alloca [8 x i8], align 8             ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8155)
@@ -1180,7 +1180,7 @@ _RNvXs1_NtNtNtCscI6d9CVNmLh_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtBb_5
   %.sink90.i.i.sroa.phi = phi ptr [ %.sroa.7, %bb.p ], [ %.sroa.4, %bb.o ], [ %.sroa.4, %bb.n ]
   %.sink.i.i = phi i64 [ %i.as, %bb.p ], [ 0, %bb.o ], [ 0, %bb.n ]
   store i64 %.sink.i.i, ptr %.sink90.i.i.sroa.phi, align 8, !alias.scope !8167, !noalias !8166
-  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. = load i64, ptr %.sroa.4, align 8, !range !71, !noundef !4
+  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. = load i64, ptr %.sroa.4, align 8
   %.sroa.7.0..sroa.7.0..sroa.7.0..sroa.7.16. = load i64, ptr %.sroa.7, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)

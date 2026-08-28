@@ -204,7 +204,7 @@ bb.a:
   %i.h = alloca [16 x i8], align 8                ; 5 uses
   %i.i = alloca [16 x i8], align 8                ; 5 uses
   %i.j = alloca [24 x i8], align 8                ; 4 uses
-  %i.k = alloca [40 x i8], align 8                ; 12 uses
+  %i.k = alloca [40 x i8], align 8                ; 13 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.24.val) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !96)
   %i.l = tail call noundef i64 @_RNvNtCsl6EuCK7xub1_5insta5utils10term_width(), !noalias !96 ; 6 uses
@@ -222,7 +222,9 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !96
   call void @_RNvNtCsl6EuCK7xub1_5insta5utils22format_rust_expression(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.j, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.p, i64 noundef %i.r), !noalias !96
   %i.s = getelementptr inbounds nuw i8, ptr %i.k, i64 24
-  store i64 1095216660735, ptr %i.s, align 8, !noalias !96
+  store i8 -1, ptr %i.s, align 8, !noalias !96
+  %.sroa.07.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.k, i64 28
+  store i8 -1, ptr %.sroa.07.sroa.5.0..sroa_idx.i, align 4, !noalias !96
   %.sroa.58.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   store i16 0, ptr %.sroa.58.0..sroa_idx.i, align 8, !noalias !96
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.k, i64 34
@@ -555,7 +557,7 @@ bb.a:
   %i.ct = alloca [32 x i8], align 8               ; 7 uses
   %i.cu = alloca [16 x i8], align 8               ; 5 uses
   %.sroa.07 = alloca [24 x i8], align 8           ; 4 uses
-  %i.cv = alloca [40 x i8], align 8               ; 11 uses
+  %i.cv = alloca [40 x i8], align 8               ; 12 uses
   %i.cw = alloca [16 x i8], align 8               ; 5 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.cy = load ptr, ptr %i.cx, align 8, !noundef !4 ; 2 uses
@@ -580,7 +582,9 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cu)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cv, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.07, i64 24, i1 false)
   %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cv, i64 24
-  store i64 1095216660735, ptr %.sroa.48.0..sroa_idx, align 8
+  store i8 -1, ptr %.sroa.48.0..sroa_idx, align 8
+  %.sroa.06.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cv, i64 28
+  store i8 -1, ptr %.sroa.06.sroa.8.0..sroa_idx, align 4
   %.sroa.710.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cv, i64 32
   store i16 1, ptr %.sroa.710.0..sroa_idx, align 8
   %.sroa.813.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cv, i64 34

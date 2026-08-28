@@ -204,7 +204,7 @@ bb.a:
   %i.i = alloca [24 x i8], align 8                ; 4 uses
   %i.j = alloca [8 x i8], align 8                 ; 4 uses
   %i.k = alloca [8 x i8], align 8                 ; 7 uses
-  %i.l = alloca [128 x i8], align 128             ; 5 uses
+  %i.l = alloca [128 x i8], align 128             ; 7 uses
   %i.m = alloca [8 x i8], align 8                 ; 6 uses
   %i.n = alloca [24 x i8], align 8                ; 4 uses
   %i.o = alloca [24 x i8], align 8                ; 7 uses
@@ -447,7 +447,11 @@ bb.ab:                                            ; preds = %bb.bo, %bb.aa
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   store ptr %i.ar, ptr %i.m, align 8, !noalias !576
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !576
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 128 dereferenceable(48) %i.l, i8 0, i64 48, i1 false), !noalias !576
+  store i32 0, ptr %i.l, align 128, !noalias !576
+  %.sroa.029.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 4
+  store i8 0, ptr %.sroa.029.sroa.4.0..sroa_idx.i, align 4, !noalias !576
+  %.sroa.530.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.530.0..sroa_idx.i, i8 0, i64 40, i1 false), !noalias !576
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !576
   %i.cu = invoke noundef nonnull ptr @_RNvNtNtCsaL1QbXo9JQH_3std6thread7current7current()
           to label %bb.ac unwind label %.thread107.i, !noalias !576 ; 2 uses

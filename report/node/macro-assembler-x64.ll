@@ -72,9 +72,9 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit
 
 _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit:   ; preds = %bb.b, %bb.a, %bb.c
-  %.sroa.6.sroa.4.sroa.0.0 = phi i32 [ %.sroa.6.sroa.4.0.extract.shift, %bb.c ], [ 0, %bb.a ], [ 0, %bb.b ]
   %.sroa.6.sroa.0.0 = phi i32 [ %i.b, %bb.c ], [ 0, %bb.a ], [ %i.b, %bb.b ]
   %.sroa.2.0 = phi i64 [ 8650752, %bb.c ], [ 262144, %bb.a ], [ 4456448, %bb.b ]
+  %.sroa.6.sroa.4.sroa.0.0 = phi i32 [ %.sroa.6.sroa.4.0.extract.shift, %bb.c ], [ 0, %bb.a ], [ 0, %bb.b ]
   %.fca.1.load = phi ptr [ inttoptr (i64 6 to ptr), %bb.c ], [ inttoptr (i64 2 to ptr), %bb.a ], [ inttoptr (i64 3 to ptr), %bb.b ]
   %.sroa.6.sroa.0.0.insert.ext = and i32 %.sroa.6.sroa.0.0, 255
   %.sroa.6.sroa.0.0.insert.insert = or disjoint i32 %.sroa.6.sroa.4.sroa.0.0, %.sroa.6.sroa.0.0.insert.ext
@@ -477,9 +477,9 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit
 
 _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit:   ; preds = %bb.c, %_ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit, %bb.d
-  %.sroa.6.sroa.4.sroa.0.0 = phi i32 [ %.sroa.6.sroa.4.0.extract.shift, %bb.d ], [ 0, %_ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit ], [ 0, %bb.c ]
   %.sroa.6.sroa.0.0 = phi i32 [ %i.c, %bb.d ], [ 0, %_ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit ], [ %i.c, %bb.c ]
   %.sroa.2.0 = phi i64 [ 8650752, %bb.d ], [ 262144, %_ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit ], [ 4456448, %bb.c ]
+  %.sroa.6.sroa.4.sroa.0.0 = phi i32 [ %.sroa.6.sroa.4.0.extract.shift, %bb.d ], [ 0, %_ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit ], [ 0, %bb.c ]
   %i.k = phi ptr [ inttoptr (i64 6 to ptr), %bb.d ], [ inttoptr (i64 2 to ptr), %_ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit ], [ inttoptr (i64 3 to ptr), %bb.c ]
   %.sroa.6.sroa.0.0.insert.ext = and i32 %.sroa.6.sroa.0.0, 255
   %.sroa.6.sroa.0.0.insert.insert = or disjoint i32 %.sroa.6.sroa.4.sroa.0.0, %.sroa.6.sroa.0.0.insert.ext
@@ -882,8 +882,8 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit:   ; preds = %bb.f, %bb.e
   %i.w = icmp ult i32 %i.u, 128                   ; 2 uses
   %. = select i1 %i.w, i64 4456448, i64 8650752
   %.47 = select i1 %i.w, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 6 to ptr)
-  %.sroa.6.sroa.4.sroa.0.0 = select i1 %i.v, i32 0, i32 %i.u
   %.sroa.2.0 = select i1 %i.v, i64 262144, i64 %.
+  %.sroa.6.sroa.4.sroa.0.0 = select i1 %i.v, i32 0, i32 %i.u
   %i.x = select i1 %i.v, ptr inttoptr (i64 2 to ptr), ptr %.47
   %.sroa.6.0.insert.ext = zext i32 %.sroa.6.sroa.4.sroa.0.0 to i64
   %.sroa.6.0.insert.shift = shl nuw i64 %.sroa.6.0.insert.ext, 32

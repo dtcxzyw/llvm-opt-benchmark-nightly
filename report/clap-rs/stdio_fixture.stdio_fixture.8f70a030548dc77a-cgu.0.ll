@@ -204,7 +204,7 @@ bb.a:
   %.sroa.9912 = alloca [208 x i8], align 8        ; 4 uses
   %i.al = alloca [600 x i8], align 8              ; 8 uses
   %i.am = alloca [600 x i8], align 8              ; 59 uses
-  %i.an = alloca [600 x i8], align 8              ; 57 uses
+  %i.an = alloca [600 x i8], align 8              ; 56 uses
   %i.ao = alloca [712 x i8], align 8              ; 53 uses
   %i.ap = alloca [712 x i8], align 8              ; 7 uses
   %i.aq = alloca [712 x i8], align 8              ; 7 uses
@@ -607,8 +607,6 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsfu0rQaTkGU
   store i32 0, ptr %.sroa.7674.sroa.13.0..sroa.7674.0..sroa_idx.sroa_idx, align 8
   %.sroa.7675.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.an, i64 596
   store i8 2, ptr %.sroa.7675.0..sroa_idx, align 4
-  %.sroa.8676.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.an, i64 597
-  store i24 0, ptr %.sroa.8676.0..sroa_idx, align 1
   call void @_RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB2_7Command12arg_internal(ptr noalias nofree noundef nonnull align 8 dereferenceable(712) %i.bj, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(600) %i.an) #19
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(712) %i.bk, ptr noundef nonnull align 8 dereferenceable(712) %i.bj, i64 712, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.an)

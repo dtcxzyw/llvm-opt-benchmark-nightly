@@ -205,7 +205,7 @@ bb.a:
   %i.c = trunc nuw i8 %.val.val to i1
   %i.d = icmp ult i64 %2, 65535
   %or.cond.not = or i1 %i.d, %i.c
-  br i1 %or.cond.not, label %bb.g, label %bb.b
+  br i1 %or.cond.not, label %_ZNSt6vectorIN12_GLOBAL__N_112SectionEntryESaIS1_EE9push_backEOS1_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 56
@@ -240,7 +240,7 @@ bb.c:                                             ; preds = %bb.b
   %i.q = load ptr, ptr %i.l, align 8, !tbaa !205
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 64
   store ptr %i.r, ptr %i.l, align 8, !tbaa !205
-  br label %_ZNSt6vectorIN12_GLOBAL__N_112SectionEntryESaIS1_EE9push_backEOS1_.exit
+  br label %bb.g
 
 bb.d:                                             ; preds = %bb.b
   %.val.i.i.i = load ptr, ptr %i.k, align 8, !tbaa !204 ; 5 uses
@@ -318,16 +318,20 @@ _ZNSt6vectorIN12_GLOBAL__N_112SectionEntryESaIS1_EE17_M_realloc_insertIJS1_EEEvN
   store ptr %i.an, ptr %i.l, align 8, !tbaa !205
   %i.ar = getelementptr inbounds nuw [64 x i8], ptr %i.ad, i64 %i.ab
   store ptr %i.ar, ptr %i.n, align 8, !tbaa !208
-  br label %_ZNSt6vectorIN12_GLOBAL__N_112SectionEntryESaIS1_EE9push_backEOS1_.exit
+  br label %bb.g
 
-bb.g:                                             ; preds = %bb.a
-  %3 = trunc i64 %2 to i32
-  br label %_ZNSt6vectorIN12_GLOBAL__N_112SectionEntryESaIS1_EE9push_backEOS1_.exit
+bb.g:                                             ; preds = %bb.c, %_ZNSt6vectorIN12_GLOBAL__N_112SectionEntryESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 48
+  store i32 65535, ptr %3, align 8, !tbaa !540
+  br label %5
 
-_ZNSt6vectorIN12_GLOBAL__N_112SectionEntryESaIS1_EE9push_backEOS1_.exit: ; preds = %_ZNSt6vectorIN12_GLOBAL__N_112SectionEntryESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, %bb.c, %bb.g
-  %.sink = phi i32 [ %3, %bb.g ], [ 65535, %bb.c ], [ 65535, %_ZNSt6vectorIN12_GLOBAL__N_112SectionEntryESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ]
+_ZNSt6vectorIN12_GLOBAL__N_112SectionEntryESaIS1_EE9push_backEOS1_.exit: ; preds = %bb.a
+  %4 = trunc i64 %2 to i32
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 48
-  store i32 %.sink, ptr %i.as, align 8, !tbaa !540
+  store i32 %4, ptr %i.as, align 8, !tbaa !540
+  br label %5
+
+5:                                                ; preds = %_ZNSt6vectorIN12_GLOBAL__N_112SectionEntryESaIS1_EE9push_backEOS1_.exit, %bb.g
   ret void
 }
 

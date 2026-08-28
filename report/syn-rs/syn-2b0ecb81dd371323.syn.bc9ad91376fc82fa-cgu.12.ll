@@ -204,10 +204,9 @@ bb.k:                                             ; preds = %bb.g
   %.not14.i = icmp eq i8 %i.ac, 2                 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.ae = load i32, ptr %i.ad, align 4, !range !20, !noalias !247
-  %2 = zext i32 %i.ae to i64
-  %.sroa.08.0.i = select i1 %.not14.i, i64 %2, i64 0
+  %.sroa.0.0.i = select i1 %.not14.i, i32 %i.ae, i32 0
   %i.af = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  store i64 %.sroa.08.0.i, ptr %i.af, align 8, !alias.scope !244, !noalias !265
+  store i32 %.sroa.0.0.i, ptr %i.af, align 8, !alias.scope !244, !noalias !265
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store <2 x ptr> %i.n, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !244, !noalias !265
   call void @llvm.experimental.noalias.scope.decl(metadata !266)
@@ -237,9 +236,8 @@ bb.n:                                             ; preds = %bb.c
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.ak = load i32, ptr %i.aj, align 4, !noalias !247, !noundef !4
-  %.sroa.03.0.insert.ext.i = zext i32 %i.ak to i64
   %i.al = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  store i64 %.sroa.03.0.insert.ext.i, ptr %i.al, align 8, !alias.scope !244, !noalias !265
+  store i32 %i.ak, ptr %i.al, align 8, !alias.scope !244, !noalias !265
   %.sroa.44.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.am = load <2 x ptr>, ptr %i.ai, align 8, !noalias !247
   store <2 x ptr> %i.am, ptr %.sroa.44.0..sroa_idx.i, align 8, !alias.scope !244, !noalias !265
