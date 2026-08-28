@@ -202,9 +202,8 @@ sg_set_buf.exit.i:                                ; preds = %bb.c
   br i1 %.not.i, label %pack_sg_list.exit, label %.lr.ph.i, !llvm.loop !29
 
 pack_sg_list.exit:                                ; preds = %sg_set_buf.exit.i
-  %sext.i = shl i64 %indvars.iv.i165, 32
-  %3 = ashr exact i64 %sext.i, 27
-  %i.au = getelementptr i8, ptr %i.e, i64 %3      ; 2 uses
+  %sext.i = shl nuw nsw i64 %indvars.iv.i165, 5
+  %i.au = getelementptr i8, ptr %i.e, i64 %sext.i ; 2 uses
   %i.av = load i64, ptr %i.au, align 8
   %i.aw = and i64 %i.av, -4
   %i.ax = or disjoint i64 %i.aw, 2
@@ -294,9 +293,8 @@ sg_set_buf.exit.i70:                              ; preds = %bb.f
   br i1 %.not.i73, label %pack_sg_list.exit77.thread87, label %.lr.ph.i63, !llvm.loop !29
 
 pack_sg_list.exit77.thread87:                     ; preds = %sg_set_buf.exit.i70
-  %sext.i75 = shl i64 %indvars.iv.i64170, 32
-  %4 = ashr exact i64 %sext.i75, 27
-  %i.cl = getelementptr i8, ptr %i.e, i64 %4      ; 2 uses
+  %sext.i75 = shl nuw nsw i64 %indvars.iv.i64170, 5
+  %i.cl = getelementptr i8, ptr %i.e, i64 %sext.i75 ; 2 uses
   %i.cm = load i64, ptr %i.cl, align 8
   %i.cn = and i64 %i.cm, -4
   %i.co = or disjoint i64 %i.cn, 2
@@ -582,9 +580,8 @@ sg_set_buf.exit.i:                                ; preds = %bb.j
   br i1 %.not.i, label %pack_sg_list.exit, label %.lr.ph.i, !llvm.loop !29
 
 pack_sg_list.exit:                                ; preds = %sg_set_buf.exit.i
-  %sext.i = shl i64 %indvars.iv.i281, 32
-  %9 = ashr exact i64 %sext.i, 27
-  %i.ce = getelementptr i8, ptr %i.ap, i64 %9     ; 2 uses
+  %sext.i = shl nuw nsw i64 %indvars.iv.i281, 5
+  %i.ce = getelementptr i8, ptr %i.ap, i64 %sext.i ; 2 uses
   %i.cf = load i64, ptr %i.ce, align 8
   %i.cg = and i64 %i.cf, -4
   %i.ch = or disjoint i64 %i.cg, 2

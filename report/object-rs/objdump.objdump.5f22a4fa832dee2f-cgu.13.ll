@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/object-rs/original/objdump.objdump.5f22a4fa832dee2f-cgu.13?download=true
+inline.NumInlined: 116
+inline.NumDeleted: 69
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RINvNtCsiZvaoMVVkxx_15object_examples7objdump5printNtNtNtCsG258MDvU3F_3std2io5stdio10StdoutLockNtBP_10StderrLockECs8aoZCP6pRcV_7objdump:bb.a
   store ptr %i.by, ptr %.sroa.46.0..sroa_idx, align 8
   %.sroa.57.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bd, i64 48
@@ -200,8 +204,8 @@ bb.ac:                                            ; preds = %_RINvNtCskKLDkoKarT
   br i1 %or.cond, label %.thread272, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CoweEECs8aoZCP6pRcV_7objdump.exit202
-  %.sroa.621.0 = phi ptr [ inttoptr (i64 1 to ptr), %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CoweEECs8aoZCP6pRcV_7objdump.exit202 ], [ %i.ds, %bb.ac ] ; 3 uses
   %.sroa.9.0 = phi i64 [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CoweEECs8aoZCP6pRcV_7objdump.exit202 ], [ %.sroa.12.0.copyload, %bb.ac ] ; 3 uses
+  %.sroa.621.0 = phi ptr [ inttoptr (i64 1 to ptr), %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CoweEECs8aoZCP6pRcV_7objdump.exit202 ], [ %i.ds, %bb.ac ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.az)
   invoke void @_RINvMs3_NtCseHTIzroA4w0_6object4readNtB6_8FileKind8parse_atRShECs8aoZCP6pRcV_7objdump(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.az, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.621.0, i64 noundef %.sroa.9.0, i64 noundef 0)
           to label %bb.ae unwind label %.thread268.loopexit.split-lp.loopexit.split-lp.loopexit

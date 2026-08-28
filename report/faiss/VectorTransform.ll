@@ -204,14 +204,12 @@ bb.ai:                                            ; preds = %.lr.ph.epil.prehead
   %i.ft = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0135.0, i64 %indvars.iv191.epil.init
   %i.fu = load float, ptr %i.ft, align 4, !tbaa !33
   %i.fv = fcmp olt float %i.fu, %.063160.epil.init
-  br i1 %i.fv, label %5, label %._crit_edge
-
-5:                                                ; preds = %bb.ai
-  %6 = trunc nuw nsw i64 %indvars.iv191.epil.init to i32
+  %5 = trunc nuw nsw i64 %indvars.iv191.epil.init to i32
+  %spec.select = select i1 %i.fv, i32 %5, i32 %.064159.epil.init
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %5, %bb.ai, %.lr.ph.epil.preheader, %.preheader151
-  %.064.lcssa = phi i32 [ -1, %.preheader151 ], [ %.165.1, %._crit_edge.loopexit.unr-lcssa ], [ %6, %5 ], [ %.064159.epil.init, %bb.ai ], [ %.064159.epil.init, %.lr.ph.epil.preheader ] ; 2 uses
+._crit_edge:                                      ; preds = %bb.ai, %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil.preheader, %.preheader151
+  %.064.lcssa = phi i32 [ -1, %.preheader151 ], [ %.165.1, %._crit_edge.loopexit.unr-lcssa ], [ %.064159.epil.init, %.lr.ph.epil.preheader ], [ %spec.select, %bb.ai ] ; 2 uses
   %i.fw = mul nsw i32 %.064.lcssa, %i.dl
   %i.fx = sext i32 %.064.lcssa to i64             ; 2 uses
   %i.fy = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0130.0, i64 %i.fx ; 2 uses

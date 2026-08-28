@@ -24,7 +24,7 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a
   %i.b = fcmp olt double %0, f0x41731C05E5EB851F
-  br i1 %i.b, label %.lr.ph, label %._crit_edge
+  br i1 %i.b, label %.lr.ph, label %bb.b
 
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
   %.022 = phi i32 [ %i.d, %.lr.ph ], [ 1, %.preheader ]
@@ -32,26 +32,16 @@ bb.a:
   %i.c = fmul nnan double %.01921, 2.000000e+00   ; 2 uses
   %i.d = add nuw nsw i32 %.022, 1                 ; 2 uses
   %i.e = fcmp olt double %i.c, f0x41731C05E5EB851F
-  br i1 %i.e, label %.lr.ph, label %._crit_edge, !llvm.loop !13
+  br i1 %i.e, label %.lr.ph, label %bb.b, !llvm.loop !13
 
-._crit_edge:                                      ; preds = %.lr.ph, %.preheader
-  %.0.lcssa = phi i32 [ 1, %.preheader ], [ %i.d, %.lr.ph ] ; 3 uses
-  %2 = add nsw i32 %.0.lcssa, -2
-  %3 = tail call double @llvm.fabs.f64(double %1) ; 2 uses
-  %or.cond = fcmp ogt double %3, 6.600000e+01
-  br i1 %or.cond, label %4, label %bb.b
-
-4:                                                ; preds = %._crit_edge
-  %5 = add nsw i32 %.0.lcssa, -3
-  %or.cond3 = fcmp ogt double %3, 8.000000e+01
-  br i1 %or.cond3, label %6, label %bb.b
-
-6:                                                ; preds = %4
-  %7 = add nsw i32 %.0.lcssa, -4
-  br label %bb.b
-
-bb.b:                                             ; preds = %6, %4, %._crit_edge
-  %.1 = phi i32 [ %7, %6 ], [ %5, %4 ], [ %2, %._crit_edge ]
+bb.b:                                             ; preds = %.lr.ph, %.preheader
+  %.0.lcssa = phi i32 [ 1, %.preheader ], [ %i.d, %.lr.ph ]
+  %2 = tail call double @llvm.fabs.f64(double %1) ; 2 uses
+  %or.cond = fcmp ogt double %2, 6.600000e+01
+  %or.cond3 = fcmp ogt double %2, 8.000000e+01
+  %spec.select.v = select i1 %or.cond3, i32 -4, i32 -3
+  %.1.v = select i1 %or.cond, i32 %spec.select.v, i32 -2
+  %.1 = add nsw i32 %.0.lcssa, %.1.v
   %spec.store.select = tail call i32 @llvm.smax.i32(i32 %.1, i32 1)
   %spec.store.select4 = tail call i32 @llvm.umin.i32(i32 %spec.store.select, i32 26)
   %i.f = trunc nuw nsw i32 %spec.store.select4 to i8
@@ -223,7 +213,7 @@ bb.d:                                             ; preds = %geohashBoundingBox.
 
 .preheader.i:                                     ; preds = %bb.d
   %i.aw = fcmp olt double %i.au, f0x41731C05E5EB851F
-  br i1 %i.aw, label %.lr.ph.i, label %._crit_edge.i
+  br i1 %i.aw, label %.lr.ph.i, label %bb.e
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %.lr.ph.i
   %.022.i = phi i32 [ %i.ay, %.lr.ph.i ], [ 1, %.preheader.i ]
@@ -231,26 +221,16 @@ bb.d:                                             ; preds = %geohashBoundingBox.
   %i.ax = fmul nnan double %.01921.i, 2.000000e+00 ; 2 uses
   %i.ay = add nuw nsw i32 %.022.i, 1              ; 2 uses
   %i.az = fcmp olt double %i.ax, f0x41731C05E5EB851F
-  br i1 %i.az, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !13
+  br i1 %i.az, label %.lr.ph.i, label %bb.e, !llvm.loop !13
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %.preheader.i
-  %.0.lcssa.i = phi i32 [ 1, %.preheader.i ], [ %i.ay, %.lr.ph.i ] ; 3 uses
-  %11 = add nsw i32 %.0.lcssa.i, -2
-  %12 = tail call double @llvm.fabs.f64(double %i.e) ; 2 uses
-  %or.cond.i = fcmp ogt double %12, 6.600000e+01
-  br i1 %or.cond.i, label %13, label %bb.e
-
-13:                                               ; preds = %._crit_edge.i
-  %14 = add nsw i32 %.0.lcssa.i, -3
-  %or.cond3.i = fcmp ogt double %12, 8.000000e+01
-  br i1 %or.cond3.i, label %15, label %bb.e
-
-15:                                               ; preds = %13
-  %16 = add nsw i32 %.0.lcssa.i, -4
-  br label %bb.e
-
-bb.e:                                             ; preds = %15, %13, %._crit_edge.i
-  %.1.i = phi i32 [ %16, %15 ], [ %14, %13 ], [ %11, %._crit_edge.i ]
+bb.e:                                             ; preds = %.lr.ph.i, %.preheader.i
+  %.0.lcssa.i = phi i32 [ 1, %.preheader.i ], [ %i.ay, %.lr.ph.i ]
+  %11 = tail call double @llvm.fabs.f64(double %i.e) ; 2 uses
+  %or.cond.i = fcmp ogt double %11, 6.600000e+01
+  %or.cond3.i = fcmp ogt double %11, 8.000000e+01
+  %spec.select.v.i = select i1 %or.cond3.i, i32 -4, i32 -3
+  %.1.v.i = select i1 %or.cond.i, i32 %spec.select.v.i, i32 -2
+  %.1.i = add nsw i32 %.0.lcssa.i, %.1.v.i
   %spec.store.select.i = tail call i32 @llvm.smax.i32(i32 %.1.i, i32 1)
   %spec.store.select4.i = tail call i32 @llvm.umin.i32(i32 %spec.store.select.i, i32 26)
   %i.ba = trunc nuw nsw i32 %spec.store.select4.i to i8

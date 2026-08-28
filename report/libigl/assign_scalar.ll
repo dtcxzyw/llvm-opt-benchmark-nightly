@@ -205,21 +205,19 @@ bb.c:                                             ; preds = %bb.b
   %i.n = extractelement <2 x double> %i.m, i64 0
   %i.o = fneg double %i.n
   %i.p = fcmp ugt double %i.l, %i.o
-  br i1 %i.p, label %6, label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit
-
-6:                                                ; preds = %bb.c
+  %6 = select i1 %i.p, i16 256, i16 0
   br label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit
 
-_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit:     ; preds = %bb.b, %bb.c, %6
-  %.sroa.4.0.i = phi i16 [ 257, %bb.b ], [ 256, %6 ], [ 0, %bb.c ] ; 3 uses
-  %.sroa.0.0.extract.trunc.i = trunc i16 %.sroa.4.0.i to i8
-  %.sroa.2.0.extract.shift.i = lshr i16 %.sroa.4.0.i, 8
+_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit:     ; preds = %bb.b, %bb.c
+  %.sroa.0.0.insert.insert.i = phi i16 [ 257, %bb.b ], [ %6, %bb.c ] ; 3 uses
+  %.sroa.0.0.extract.trunc.i = trunc i16 %.sroa.0.0.insert.insert.i to i8
+  %.sroa.2.0.extract.shift.i = lshr i16 %.sroa.0.0.insert.insert.i, 8
   %.sroa.2.0.extract.trunc.i = trunc nuw nsw i16 %.sroa.2.0.extract.shift.i to i8
   %i.q = icmp eq i8 %.sroa.0.0.extract.trunc.i, %.sroa.2.0.extract.trunc.i
   br i1 %i.q, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit
-  %i.r = trunc i16 %.sroa.4.0.i to i1
+  %i.r = trunc i16 %.sroa.0.0.insert.insert.i to i1
   br label %bb.l
 
 bb.e:                                             ; preds = %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit

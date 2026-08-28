@@ -204,14 +204,12 @@ bb.bv:                                            ; preds = %bb.bt
 bb.bw:                                            ; preds = %bb.bv
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cl, i64 8
   %i.cs = load double, ptr %i.cr, align 8, !tbaa !91
-  %11 = fcmp olt double %2, %i.cs
-  br i1 %11, label %_ZN6icu_7813umtx_initOnceERNS_9UInitOnceEPFvR10UErrorCodeES3_.exit.thread, label %12
-
-12:                                               ; preds = %bb.bw
+  %11 = fcmp uge double %2, %i.cs
+  %spec.select = zext i1 %11 to i8
   br label %_ZN6icu_7813umtx_initOnceERNS_9UInitOnceEPFvR10UErrorCodeES3_.exit.thread
 
-_ZN6icu_7813umtx_initOnceERNS_9UInitOnceEPFvR10UErrorCodeES3_.exit.thread: ; preds = %bb.br, %bb.a, %bb.bu, %12, %bb.bs, %bb.bw, %bb.bv, %_ZN6icu_7813umtx_initOnceERNS_9UInitOnceEPFvR10UErrorCodeES3_.exit
-  %.1 = phi i8 [ 0, %_ZN6icu_7813umtx_initOnceERNS_9UInitOnceEPFvR10UErrorCodeES3_.exit ], [ 1, %12 ], [ 0, %bb.bu ], [ 0, %bb.bs ], [ 0, %bb.bw ], [ 0, %bb.bv ], [ 0, %bb.a ], [ 0, %bb.br ]
+_ZN6icu_7813umtx_initOnceERNS_9UInitOnceEPFvR10UErrorCodeES3_.exit.thread: ; preds = %bb.br, %bb.a, %bb.bw, %bb.bu, %bb.bs, %bb.bv, %_ZN6icu_7813umtx_initOnceERNS_9UInitOnceEPFvR10UErrorCodeES3_.exit
+  %.1 = phi i8 [ 0, %_ZN6icu_7813umtx_initOnceERNS_9UInitOnceEPFvR10UErrorCodeES3_.exit ], [ 0, %bb.bv ], [ 0, %bb.bu ], [ 0, %bb.bs ], [ %spec.select, %bb.bw ], [ 0, %bb.a ], [ 0, %bb.br ]
   ret i8 %.1
 }
 
@@ -328,7 +326,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.u, label %.loopexit.thread, label %.preheader
 
 .preheader:                                       ; preds = %bb.j, %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit79
-  %.051 = phi i32 [ %.253, %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit79 ], [ 0, %bb.j ] ; 7 uses
+  %.051 = phi i32 [ %.253, %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit79 ], [ 0, %bb.j ] ; 5 uses
   %.0 = phi i32 [ %i.bn, %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit79 ], [ 0, %bb.j ] ; 3 uses
   %i.v = invoke i32 @ures_getSize_78(ptr noundef %i.s)
           to label %bb.k unwind label %bb.o
@@ -389,7 +387,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %i.an = icmp sgt i32 %i.am, 2
-  br i1 %i.an, label %bb.u, label %10
+  br i1 %i.an, label %bb.u, label %bb.ai
 
 bb.u:                                             ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #17
@@ -417,10 +415,8 @@ bb.x:                                             ; preds = %bb.w
   %i.ax = or disjoint i64 %i.at, %i.aw
   %i.ay = sitofp i64 %i.ax to double
   %i.az = fcmp olt double %1, %i.ay
-  br i1 %i.az, label %8, label %bb.ae
-
-8:                                                ; preds = %bb.x
-  %9 = add nsw i32 %.051, 1
+  %8 = zext i1 %i.az to i32
+  %spec.select = add nsw i32 %.051, %8
   br label %bb.ae
 
 bb.y:                                             ; preds = %bb.p
@@ -454,8 +450,8 @@ bb.ad:                                            ; preds = %bb.v
   call void @_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %7) #17
   br label %bb.ah
 
-bb.ae:                                            ; preds = %8, %bb.x, %bb.w
-  %.152 = phi i32 [ %9, %8 ], [ %.051, %bb.x ], [ %.051, %bb.w ]
+bb.ae:                                            ; preds = %bb.x, %bb.w
+  %.152 = phi i32 [ %.051, %bb.w ], [ %spec.select, %bb.x ]
   %.not.i = icmp eq ptr %i.ao, null
   br i1 %.not.i, label %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit, label %bb.af
 
@@ -481,16 +477,14 @@ bb.ah:                                            ; preds = %bb.ad, %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #17
   br label %bb.ao
 
-10:                                               ; preds = %bb.t
-  %11 = fcmp ult double %1, %i.al
-  br i1 %11, label %bb.aj, label %bb.ai
-
-bb.ai:                                            ; preds = %10
-  %i.bi = add nsw i32 %.051, 1
+bb.ai:                                            ; preds = %bb.t
+  %9 = fcmp oge double %1, %i.al
+  %10 = zext i1 %9 to i32
+  %i.bi = add nsw i32 %.051, %10
   br label %bb.aj
 
-bb.aj:                                            ; preds = %10, %bb.ai, %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit
-  %.253 = phi i32 [ %.152, %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit ], [ %i.bi, %bb.ai ], [ %.051, %10 ]
+bb.aj:                                            ; preds = %bb.ai, %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit
+  %.253 = phi i32 [ %.152, %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit ], [ %i.bi, %bb.ai ]
   %.not.i76 = icmp eq ptr %i.ac, null
   br i1 %.not.i76, label %_ZN6icu_788internal16LocalOpenPointerI15UResourceBundleXadL_Z13ures_close_78EEED2Ev.exit77, label %bb.ak
 

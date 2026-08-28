@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.l, %._crit_edge.
   br i1 %i.cf, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %bb.m, %._crit_edge.thread.i.i
-  %.sroa.4.0.i.ph.i = phi ptr [ %.019.lcssa27.i.i, %bb.m ], [ %.019.lcssa28.i.i.a, %._crit_edge.thread.i.i ] ; 3 uses
+  %.sroa.4.0.i.ph.i = phi ptr [ %.019.lcssa28.i.i.a, %._crit_edge.thread.i.i ], [ %.019.lcssa27.i.i, %bb.m ] ; 3 uses
   %i.cg = icmp eq ptr %.sroa.4.0.i.ph.i, %i.bw
   br i1 %i.cg, label %.thread24.i, label %bb.o
 
@@ -384,8 +384,8 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge.
   %i.n = fcmp olt float %i.m, %i.c
   br i1 %i.n, label %bb.d, label %bb.f
 
-bb.d:                                             ; preds = %._crit_edge.thread.i, %bb.c
-  %.sroa.4.0.i.ph = phi ptr [ %.019.lcssa27.i, %bb.c ], [ %.019.lcssa28.i.a, %._crit_edge.thread.i ] ; 3 uses
+bb.d:                                             ; preds = %bb.c, %._crit_edge.thread.i
+  %.sroa.4.0.i.ph = phi ptr [ %.019.lcssa28.i.a, %._crit_edge.thread.i ], [ %.019.lcssa27.i, %bb.c ] ; 3 uses
   %i.o = icmp eq ptr %.sroa.4.0.i.ph, %i.e
   br i1 %i.o, label %.thread24, label %bb.e
 
@@ -788,8 +788,8 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge.
   %i.n = fcmp olt float %i.m, %i.c
   br i1 %i.n, label %bb.d, label %bb.f
 
-bb.d:                                             ; preds = %._crit_edge.thread.i, %bb.c
-  %.sroa.4.0.i.ph = phi ptr [ %.019.lcssa27.i, %bb.c ], [ %.019.lcssa28.i.a, %._crit_edge.thread.i ] ; 3 uses
+bb.d:                                             ; preds = %bb.c, %._crit_edge.thread.i
+  %.sroa.4.0.i.ph = phi ptr [ %.019.lcssa28.i.a, %._crit_edge.thread.i ], [ %.019.lcssa27.i, %bb.c ] ; 3 uses
   %i.o = icmp eq ptr %.sroa.4.0.i.ph, %i.e
   br i1 %i.o, label %.thread24, label %bb.e
 
@@ -1192,10 +1192,9 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge.
   %i.u = phi float [ %.pre77, %bb.f ], [ %i.n, %._crit_edge.i ]
   %.019.lcssa27.i = phi ptr [ %.019.lcssa28.i.a, %bb.f ], [ %.02023.i, %._crit_edge.i ]
   %.sroa.05.0.i = phi ptr [ %i.s, %bb.f ], [ %.02023.i, %._crit_edge.i ]
-  %i.v = fcmp olt float %i.u, %i.t
-  br i1 %i.v, label %_ZNSt8_Rb_treeIffSt9_IdentityIfESt4lessIfESaIfEE24_M_get_insert_unique_posERKf.exit, label %3
-
-3:                                                ; preds = %bb.g
+  %i.v = fcmp olt float %i.u, %i.t                ; 2 uses
+  %spec.select.i = select i1 %i.v, ptr null, ptr %.sroa.05.0.i
+  %spec.select21.i = select i1 %i.v, ptr %.019.lcssa27.i, ptr null
   br label %_ZNSt8_Rb_treeIffSt9_IdentityIfESt4lessIfESaIfEE24_M_get_insert_unique_posERKf.exit
 
 bb.h:                                             ; preds = %bb.a
@@ -1261,10 +1260,9 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge.
   %i.aq = phi float [ %.pre75, %bb.m ], [ %i.am, %._crit_edge.i18 ]
   %.019.lcssa27.i19 = phi ptr [ %.019.lcssa28.i26, %bb.m ], [ %.02023.i13, %._crit_edge.i18 ]
   %.sroa.05.0.i20 = phi ptr [ %i.ap, %bb.m ], [ %.02023.i13, %._crit_edge.i18 ]
-  %i.ar = fcmp olt float %i.aq, %i.x
-  br i1 %i.ar, label %_ZNSt8_Rb_treeIffSt9_IdentityIfESt4lessIfESaIfEE24_M_get_insert_unique_posERKf.exit, label %4
-
-4:                                                ; preds = %bb.n
+  %i.ar = fcmp olt float %i.aq, %i.x              ; 2 uses
+  %spec.select.i21 = select i1 %i.ar, ptr null, ptr %.sroa.05.0.i20
+  %spec.select21.i22 = select i1 %i.ar, ptr %.019.lcssa27.i19, ptr null
   br label %_ZNSt8_Rb_treeIffSt9_IdentityIfESt4lessIfESaIfEE24_M_get_insert_unique_posERKf.exit
 
 bb.o:                                             ; preds = %bb.h
@@ -1329,16 +1327,15 @@ bb.u:                                             ; preds = %bb.t, %._crit_edge.
   %i.bl = phi float [ %.pre, %bb.t ], [ %i.bf, %._crit_edge.i36 ]
   %.019.lcssa27.i37 = phi ptr [ %.019.lcssa28.i44, %bb.t ], [ %.02023.i31, %._crit_edge.i36 ]
   %.sroa.05.0.i38 = phi ptr [ %i.bk, %bb.t ], [ %.02023.i31, %._crit_edge.i36 ]
-  %i.bm = fcmp olt float %i.bl, %i.x
-  br i1 %i.bm, label %_ZNSt8_Rb_treeIffSt9_IdentityIfESt4lessIfESaIfEE24_M_get_insert_unique_posERKf.exit, label %5
-
-5:                                                ; preds = %bb.u
+  %i.bm = fcmp olt float %i.bl, %i.x              ; 2 uses
+  %spec.select.i41 = select i1 %i.bm, ptr null, ptr %.sroa.05.0.i38
+  %spec.select21.i42 = select i1 %i.bm, ptr %.019.lcssa27.i37, ptr null
   br label %_ZNSt8_Rb_treeIffSt9_IdentityIfESt4lessIfESaIfEE24_M_get_insert_unique_posERKf.exit
 
-_ZNSt8_Rb_treeIffSt9_IdentityIfESt4lessIfESaIfEE24_M_get_insert_unique_posERKf.exit: ; preds = %5, %bb.u, %._crit_edge.thread.i43, %4, %bb.n, %._crit_edge.thread.i25, %3, %bb.g, %._crit_edge.thread.i, %bb.r, %bb.k, %bb.o, %bb.p, %bb.i, %bb.c
-  %.sroa.066.2 = phi ptr [ null, %bb.p ], [ %spec.select, %bb.k ], [ null, %bb.c ], [ %spec.select68, %bb.r ], [ null, %bb.g ], [ %i.ab, %bb.i ], [ %1, %bb.o ], [ null, %bb.n ], [ %.sroa.05.0.i, %3 ], [ null, %._crit_edge.thread.i ], [ %.sroa.05.0.i20, %4 ], [ null, %._crit_edge.thread.i25 ], [ %.sroa.05.0.i38, %5 ], [ null, %._crit_edge.thread.i43 ], [ null, %bb.u ]
-  %.sroa.12.2 = phi ptr [ %i.au, %bb.p ], [ %spec.select67, %bb.k ], [ %i.f, %bb.c ], [ %spec.select69, %bb.r ], [ %.019.lcssa27.i, %bb.g ], [ %i.ab, %bb.i ], [ null, %bb.o ], [ %.019.lcssa27.i19, %bb.n ], [ null, %3 ], [ %.019.lcssa28.i.a, %._crit_edge.thread.i ], [ null, %4 ], [ %.019.lcssa28.i26, %._crit_edge.thread.i25 ], [ null, %5 ], [ %.019.lcssa28.i44, %._crit_edge.thread.i43 ], [ %.019.lcssa27.i37, %bb.u ]
-  %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %.sroa.066.2, 0
+_ZNSt8_Rb_treeIffSt9_IdentityIfESt4lessIfESaIfEE24_M_get_insert_unique_posERKf.exit: ; preds = %bb.u, %._crit_edge.thread.i43, %bb.n, %._crit_edge.thread.i25, %bb.g, %._crit_edge.thread.i, %bb.r, %bb.k, %bb.o, %bb.p, %bb.i, %bb.c
+  %.sroa.070.2 = phi ptr [ null, %bb.p ], [ %spec.select, %bb.k ], [ null, %bb.c ], [ %spec.select68, %bb.r ], [ null, %._crit_edge.thread.i ], [ %i.ab, %bb.i ], [ %1, %bb.o ], [ null, %._crit_edge.thread.i25 ], [ %spec.select.i, %bb.g ], [ %spec.select.i21, %bb.n ], [ %spec.select.i41, %bb.u ], [ null, %._crit_edge.thread.i43 ]
+  %.sroa.12.2 = phi ptr [ %i.au, %bb.p ], [ %spec.select67, %bb.k ], [ %i.f, %bb.c ], [ %spec.select69, %bb.r ], [ %.019.lcssa28.i.a, %._crit_edge.thread.i ], [ %i.ab, %bb.i ], [ null, %bb.o ], [ %.019.lcssa28.i26, %._crit_edge.thread.i25 ], [ %spec.select21.i, %bb.g ], [ %spec.select21.i22, %bb.n ], [ %spec.select21.i42, %bb.u ], [ %.019.lcssa28.i44, %._crit_edge.thread.i43 ]
+  %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %.sroa.070.2, 0
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %.sroa.12.2, 1
   ret { ptr, ptr } %.fca.1.insert
 }

@@ -205,13 +205,11 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.s = fcmp olt double %0, f0x41F0000000000000
-  br i1 %i.s, label %_ZN2v88internal8compiler10BitsetType3LubEdd.exit, label %1
-
-1:                                                ; preds = %bb.i
+  %spec.select = select i1 %i.s, i64 4, i64 16
   br label %_ZN2v88internal8compiler10BitsetType3LubEdd.exit
 
-_ZN2v88internal8compiler10BitsetType3LubEdd.exit: ; preds = %bb.d, %1, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %_ZN2v88internal13IsInt32DoubleEd.exit, %bb.b, %bb.a
-  %.0 = phi i64 [ 4096, %bb.b ], [ 2048, %bb.a ], [ 4, %bb.i ], [ 16, %_ZN2v88internal13IsInt32DoubleEd.exit ], [ 16, %1 ], [ 2, %bb.h ], [ 16, %bb.d ], [ 8, %bb.e ], [ 64, %bb.f ], [ 1024, %bb.g ]
+_ZN2v88internal8compiler10BitsetType3LubEdd.exit: ; preds = %bb.i, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %_ZN2v88internal13IsInt32DoubleEd.exit, %bb.b, %bb.a
+  %.0 = phi i64 [ 4096, %bb.b ], [ 2048, %bb.a ], [ %spec.select, %bb.i ], [ 16, %_ZN2v88internal13IsInt32DoubleEd.exit ], [ 16, %bb.d ], [ 2, %bb.h ], [ 1024, %bb.g ], [ 8, %bb.e ], [ 64, %bb.f ]
   ret i64 %.0
 }
 
@@ -614,13 +612,11 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.j = fcmp olt double %0, f0x41F0000000000000
-  br i1 %i.j, label %_ZN2v88internal8compiler10BitsetType3LubEdd.exit.i.i.i, label %2
-
-2:                                                ; preds = %bb.g
+  %spec.select = select i1 %i.j, i64 4, i64 16
   br label %_ZN2v88internal8compiler10BitsetType3LubEdd.exit.i.i.i
 
-_ZN2v88internal8compiler10BitsetType3LubEdd.exit.i.i.i: ; preds = %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %2
-  %.118.i.i.i.i = phi i64 [ 16, %2 ], [ 2, %bb.f ], [ 16, %bb.b ], [ 8, %bb.c ], [ 64, %bb.d ], [ 1024, %bb.e ], [ 4, %bb.g ]
+_ZN2v88internal8compiler10BitsetType3LubEdd.exit.i.i.i: ; preds = %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
+  %.118.i.i.i.i = phi i64 [ %spec.select, %bb.g ], [ 2, %bb.f ], [ 16, %bb.b ], [ 8, %bb.c ], [ 64, %bb.d ], [ 1024, %bb.e ]
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.l = load i64, ptr %i.k, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses

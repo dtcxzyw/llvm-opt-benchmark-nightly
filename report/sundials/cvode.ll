@@ -205,9 +205,7 @@ bb.j:                                             ; preds = %bb.i
   %i.bt = load double, ptr %i.bs, align 8, !tbaa !25
   %i.bu = fmul double %i.bt, %i.bq
   %i.bv = fcmp ugt double %i.bu, 0.000000e+00
-  br i1 %i.bv, label %bb.n, label %3
-
-3:                                                ; preds = %bb.j
+  %spec.select.i = select i1 %i.bv, i32 %.0209267.i, i32 1
   br label %bb.n
 
 bb.k:                                             ; preds = %bb.i
@@ -236,8 +234,8 @@ bb.m:                                             ; preds = %bb.l
   %i.cl = fcmp ogt double %i.ck, %.0224264.ph.i
   br i1 %i.cl, label %.thread.i, label %bb.n
 
-bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k, %3, %bb.j, %bb.h
-  %.1210.i = phi i32 [ 1, %3 ], [ %.0209267.i, %bb.j ], [ %.0209267.i, %bb.k ], [ %.0209267.i, %bb.h ], [ %.0209267.i, %bb.m ], [ %.0209267.i, %bb.l ] ; 2 uses
+bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.h
+  %.1210.i = phi i32 [ %.0209267.i, %bb.h ], [ %spec.select.i, %bb.j ], [ %.0209267.i, %bb.k ], [ %.0209267.i, %bb.l ], [ %.0209267.i, %bb.m ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.h
@@ -517,9 +515,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.hc = load double, ptr %i.hb, align 8, !tbaa !25
   %i.hd = fmul double %i.hc, %i.gz
   %i.he = fcmp ugt double %i.hd, 0.000000e+00
-  br i1 %i.he, label %bb.af, label %4
-
-4:                                                ; preds = %bb.ab
+  %spec.select248.i = select i1 %i.he, i32 %.2211275.i, i32 1
   br label %bb.af
 
 bb.ac:                                            ; preds = %bb.aa
@@ -548,8 +544,8 @@ bb.ae:                                            ; preds = %bb.ad
   %i.hu = fcmp ogt double %i.ht, %.2226272.ph.i
   br i1 %i.hu, label %.thread405.i, label %bb.af
 
-bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.ac, %4, %bb.ab, %bb.z
-  %.3212.i = phi i32 [ 1, %4 ], [ %.2211275.i, %bb.ab ], [ %.2211275.i, %bb.ac ], [ %.2211275.i, %bb.z ], [ %.2211275.i, %bb.ae ], [ %.2211275.i, %bb.ad ] ; 2 uses
+bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.z
+  %.3212.i = phi i32 [ %.2211275.i, %bb.z ], [ %spec.select248.i, %bb.ab ], [ %.2211275.i, %bb.ac ], [ %.2211275.i, %bb.ad ], [ %.2211275.i, %bb.ae ] ; 2 uses
   %indvars.iv.next322.i = add nuw nsw i64 %indvars.iv321.i, 1 ; 2 uses
   %exitcond325.not.i = icmp eq i64 %indvars.iv.next322.i, %wide.trip.count324.i
   br i1 %exitcond325.not.i, label %._crit_edge278.i, label %bb.z

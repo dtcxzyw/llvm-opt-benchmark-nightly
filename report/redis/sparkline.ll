@@ -158,13 +158,11 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.m = fcmp oeq double %i.e, 0.000000e+00
-  br i1 %i.m, label %6, label %bb.d
-
-6:                                                ; preds = %bb.c
+  %spec.store.select = select i1 %i.m, double 1.000000e+00, double %i.e
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %6, %bb.b
-  %.071 = phi double [ %i.l, %bb.b ], [ 1.000000e+00, %6 ], [ %i.e, %bb.c ]
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.072 = phi double [ %i.l, %bb.b ], [ %spec.store.select, %bb.c ]
   %i.n = icmp sgt i32 %4, 0
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -277,7 +275,7 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.split
   %i.av = fmul double %.067.us.us, %i.r
   %i.aw = fptosi double %i.av to i32
   %i.ax = sitofp i32 %i.aw to double
-  %i.ay = fdiv double %i.ax, %.071
+  %i.ay = fdiv double %i.ax, %.072
   %i.az = fptosi double %i.ay to i32
   %spec.store.select.us.us = tail call i32 @llvm.smax.i32(i32 %i.az, i32 0)
   %spec.select.us.us = tail call i32 @llvm.smin.i32(i32 %spec.store.select.us.us, i32 %i.s)

@@ -204,7 +204,7 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.ex
 
 bb.n:                                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ch, i64 464
-  %i.cm = load double, ptr %i.cl, align 8, !tbaa !164 ; 4 uses
+  %i.cm = load double, ptr %i.cl, align 8, !tbaa !164 ; 3 uses
   %i.cn = fcmp uge double %i.cm, 0.000000e+00
   br i1 %i.cn, label %bb.r, label %bb.s
 
@@ -241,10 +241,7 @@ bb.q:                                             ; preds = %_ZNSt6vectorINSt7__
   br label %common.resume
 
 bb.r:                                             ; preds = %bb.n
-  %30 = fcmp oeq double %i.cm, 0.000000e+00
-  br i1 %30, label %31, label %bb.u
-
-31:                                               ; preds = %bb.r
+  %30 = fcmp une double %i.cm, 0.000000e+00
   br label %bb.u
 
 bb.s:                                             ; preds = %bb.n, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit
@@ -267,9 +264,9 @@ bb.t:                                             ; preds = %bb.s
 _ZNSt8optionalINSt6chrono8durationIdSt5ratioILl1ELl1EEEEEaSIRS4_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS5_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS4_ESA_IS4_NSt5decayISD_E4typeEEEEESt16is_constructibleIS4_JSD_EESt13is_assignableIS7_SD_EEERS5_E4typeEOSD_.exit: ; preds = %bb.t
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.t, %_ZNSt8optionalINSt6chrono8durationIdSt5ratioILl1ELl1EEEEEaSIRS4_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS5_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS4_ESA_IS4_NSt5decayISD_E4typeEEEEESt16is_constructibleIS4_JSD_EESt13is_assignableIS7_SD_EEERS5_E4typeEOSD_.exit, %.thread, %bb.r, %31
-  %.sroa.0358.3 = phi double [ %i.cm, %31 ], [ %i.cm, %bb.r ], [ %i.de, %.thread ], [ %i.df, %_ZNSt8optionalINSt6chrono8durationIdSt5ratioILl1ELl1EEEEEaSIRS4_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS5_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS4_ESA_IS4_NSt5decayISD_E4typeEEEEESt16is_constructibleIS4_JSD_EESt13is_assignableIS7_SD_EEERS5_E4typeEOSD_.exit ], [ undef, %bb.t ] ; 2 uses
-  %.sroa.13.3 = phi i1 [ false, %31 ], [ true, %bb.r ], [ true, %.thread ], [ true, %_ZNSt8optionalINSt6chrono8durationIdSt5ratioILl1ELl1EEEEEaSIRS4_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS5_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS4_ESA_IS4_NSt5decayISD_E4typeEEEEESt16is_constructibleIS4_JSD_EESt13is_assignableIS7_SD_EEERS5_E4typeEOSD_.exit ], [ false, %bb.t ]
+bb.u:                                             ; preds = %bb.r, %bb.t, %_ZNSt8optionalINSt6chrono8durationIdSt5ratioILl1ELl1EEEEEaSIRS4_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS5_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS4_ESA_IS4_NSt5decayISD_E4typeEEEEESt16is_constructibleIS4_JSD_EESt13is_assignableIS7_SD_EEERS5_E4typeEOSD_.exit, %.thread
+  %.sroa.0358.3 = phi double [ undef, %bb.t ], [ %i.cm, %bb.r ], [ %i.de, %.thread ], [ %i.df, %_ZNSt8optionalINSt6chrono8durationIdSt5ratioILl1ELl1EEEEEaSIRS4_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS5_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS4_ESA_IS4_NSt5decayISD_E4typeEEEEESt16is_constructibleIS4_JSD_EESt13is_assignableIS7_SD_EEERS5_E4typeEOSD_.exit ] ; 2 uses
+  %.sroa.13.3 = phi i1 [ false, %bb.t ], [ %30, %bb.r ], [ true, %.thread ], [ true, %_ZNSt8optionalINSt6chrono8durationIdSt5ratioILl1ELl1EEEEEaSIRS4_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS5_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES9_ISt6__and_IJSt9is_scalarIS4_ESA_IS4_NSt5decayISD_E4typeEEEEESt16is_constructibleIS4_JSD_EESt13is_assignableIS7_SD_EEERS5_E4typeEOSD_.exit ]
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.di = load ptr, ptr %i.dh, align 8, !tbaa !107
   %i.dj = call double @_ZNK7cmCTest23GetRemainingTimeAllowedEv(ptr noundef nonnull align 8 dereferenceable(8) %i.di) ; 3 uses

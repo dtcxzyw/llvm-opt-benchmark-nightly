@@ -204,7 +204,7 @@ _ZNK13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11ch
   br label %_ZNK13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES2_IhSaIhEEE3endEv.exit889
 
 _ZNK13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES2_IhSaIhEEE3endEv.exit889: ; preds = %_ZNK13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES2_IhSaIhEEE3endEv.exit889.backedge, %_ZNK13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES2_IhSaIhEEE3endEv.exit889.preheader
-  %.0254 = phi i1 [ false, %_ZNK13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES2_IhSaIhEEE3endEv.exit889.preheader ], [ %.3257, %_ZNK13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES2_IhSaIhEEE3endEv.exit889.backedge ] ; 5 uses
+  %.0254 = phi i1 [ false, %_ZNK13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES2_IhSaIhEEE3endEv.exit889.preheader ], [ %.3257, %_ZNK13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES2_IhSaIhEEE3endEv.exit889.backedge ] ; 4 uses
   %.0253 = phi i1 [ false, %_ZNK13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES2_IhSaIhEEE3endEv.exit889.preheader ], [ %.3, %_ZNK13proj_nlohmann10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES2_IhSaIhEEE3endEv.exit889.backedge ] ; 5 uses
   %i.amk = invoke noundef zeroext i1 @_ZNK13proj_nlohmann6detail9iter_implIKNS_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS_14adl_serializerES4_IhSaIhEEEEEeqERKSG_(ptr noundef nonnull align 8 dereferenceable(32) %54, ptr noundef nonnull align 8 dereferenceable(32) %55)
           to label %bb.kr unwind label %bb.kv
@@ -286,14 +286,12 @@ bb.ld:                                            ; preds = %bb.la
   %i.and = getelementptr inbounds nuw i8, ptr %i.amu, i64 16
   %i.ane = load double, ptr %i.and, align 8, !tbaa !173
   %i.anf = fcmp oeq double %i.ane, 1.800000e+02
-  br i1 %i.anf, label %60, label %bb.le
-
-60:                                               ; preds = %bb.ld
+  %spec.select528 = select i1 %i.anf, i1 true, i1 %.0253
   br label %bb.le
 
-bb.le:                                            ; preds = %bb.la, %bb.ld, %60
-  %.1255 = phi i1 [ %.0254, %bb.ld ], [ %.0254, %60 ], [ true, %bb.la ]
-  %.1 = phi i1 [ %.0253, %bb.ld ], [ true, %60 ], [ %.0253, %bb.la ]
+bb.le:                                            ; preds = %bb.ld, %bb.la
+  %.1255 = phi i1 [ %.0254, %bb.ld ], [ true, %bb.la ]
+  %.1 = phi i1 [ %spec.select528, %bb.ld ], [ %.0253, %bb.la ]
   invoke void @_ZNSt6vectorIS_IdSaIdEESaIS1_EE9push_backEOS1_(ptr noundef nonnull align 8 dereferenceable(24) %53, ptr noundef nonnull align 8 dereferenceable(24) %56)
           to label %._crit_edge2442 unwind label %bb.lf
 

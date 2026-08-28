@@ -205,13 +205,11 @@ bb.ap:                                            ; preds = %bb.ao
   %i.ja = load float, ptr %i.iz, align 4, !tbaa !47
   %i.jb = call nsz float @llvm.fabs.f32(float %i.ja)
   %i.jc = fcmp nsz ogt float %i.jb, 3.276800e+04
-  br i1 %i.jc, label %bb.aq, label %6
-
-6:                                                ; preds = %bb.ap
+  %spec.select = zext i1 %i.jc to i32
   br label %bb.aq
 
-bb.aq:                                            ; preds = %6, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
-  %.034 = phi i32 [ 1, %bb.c ], [ 0, %6 ], [ 1, %bb.d ], [ 1, %bb.ap ], [ 1, %bb.e ], [ 1, %bb.ab ], [ 1, %bb.f ], [ 1, %bb.ao ], [ 1, %bb.g ], [ 1, %bb.x ], [ 1, %bb.h ], [ 1, %bb.an ], [ 1, %bb.i ], [ 1, %bb.af ], [ 1, %bb.j ], [ 1, %bb.am ], [ 1, %bb.k ], [ 1, %bb.y ], [ 1, %bb.l ], [ 1, %bb.al ], [ 1, %bb.m ], [ 1, %bb.ad ], [ 1, %bb.n ], [ 1, %bb.ak ], [ 1, %bb.o ], [ 1, %bb.z ], [ 1, %bb.p ], [ 1, %bb.aj ], [ 1, %bb.q ], [ 1, %bb.ae ], [ 1, %bb.r ], [ 1, %bb.ai ], [ 1, %bb.s ], [ 1, %bb.aa ], [ 1, %bb.t ], [ 1, %bb.ah ], [ 1, %bb.u ], [ 1, %bb.ac ], [ 1, %bb.v ], [ 1, %bb.ag ], [ 1, %bb.w ]
+bb.aq:                                            ; preds = %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
+  %.034 = phi i32 [ 1, %bb.c ], [ 1, %bb.w ], [ 1, %bb.d ], [ %spec.select, %bb.ap ], [ 1, %bb.e ], [ 1, %bb.ab ], [ 1, %bb.f ], [ 1, %bb.ao ], [ 1, %bb.g ], [ 1, %bb.x ], [ 1, %bb.h ], [ 1, %bb.an ], [ 1, %bb.i ], [ 1, %bb.af ], [ 1, %bb.j ], [ 1, %bb.am ], [ 1, %bb.k ], [ 1, %bb.y ], [ 1, %bb.l ], [ 1, %bb.al ], [ 1, %bb.m ], [ 1, %bb.ad ], [ 1, %bb.n ], [ 1, %bb.ak ], [ 1, %bb.o ], [ 1, %bb.z ], [ 1, %bb.p ], [ 1, %bb.aj ], [ 1, %bb.q ], [ 1, %bb.ae ], [ 1, %bb.r ], [ 1, %bb.ai ], [ 1, %bb.s ], [ 1, %bb.aa ], [ 1, %bb.t ], [ 1, %bb.ah ], [ 1, %bb.u ], [ 1, %bb.ac ], [ 1, %bb.v ], [ 1, %bb.ag ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret i32 %.034
 }

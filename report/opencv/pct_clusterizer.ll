@@ -205,9 +205,7 @@ bb.a:
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   %i.m = load float, ptr %i.h, align 4, !tbaa !77
   %i.n = fcmp ogt float %i.m, %i.l
-  br i1 %i.n, label %.lr.ph.split.us.split.us.preheader, label %.critedge
-
-.lr.ph.split.us.split.us.preheader:               ; preds = %.lr.ph.split.us
+  %spec.select = select i1 %i.n, i32 %i.b, i32 0
   br label %.critedge
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %bb.b
@@ -227,8 +225,8 @@ bb.b:                                             ; preds = %.lr.ph.split
   %i.r = trunc nuw nsw i64 %indvars.iv to i32
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.b, %.critedge.loopexit.split.loop.exit52, %.lr.ph.split.us.split.us.preheader, %.lr.ph.split.us, %bb.a
-  %.024.lcssa = phi i32 [ 0, %bb.a ], [ 0, %.lr.ph.split.us ], [ %i.b, %.lr.ph.split.us.split.us.preheader ], [ %i.r, %.critedge.loopexit.split.loop.exit52 ], [ %i.b, %bb.b ] ; 5 uses
+.critedge:                                        ; preds = %bb.b, %.lr.ph.split.us, %.critedge.loopexit.split.loop.exit52, %bb.a
+  %.024.lcssa = phi i32 [ 0, %bb.a ], [ %i.r, %.critedge.loopexit.split.loop.exit52 ], [ %spec.select, %.lr.ph.split.us ], [ %i.b, %bb.b ] ; 5 uses
   %.12537 = add nuw nsw i32 %.024.lcssa, 1
   %i.s = icmp slt i32 %.12537, %i.b
   br i1 %i.s, label %.lr.ph41, label %._crit_edge

@@ -205,7 +205,7 @@ _ZN3sat6solver15num_diff_levelsEjPKNS_7literalE.exit: ; preds = %.preheader.i.ep
   %.0.lcssa36.i = phi i32 [ 0, %_ZN6vectorIcLb0EjE7reserveEjRKc.exit.i ], [ %.1.i, %_ZN3sat6solver15num_diff_levelsEjPKNS_7literalE.exit.loopexit.unr-lcssa ], [ %.1.i, %.preheader.i.epil.preheader ] ; 2 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %0, i64 3624
   %i.fn = uitofp i32 %.0.lcssa36.i to double      ; 2 uses
-  %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 3632 ; 3 uses
+  %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 3632 ; 2 uses
   %i.fp = load double, ptr %i.fo, align 8, !tbaa !186 ; 3 uses
   %i.fq = getelementptr inbounds nuw i8, ptr %0, i64 3640 ; 2 uses
   %i.fr = load double, ptr %i.fq, align 8, !tbaa !726 ; 2 uses
@@ -232,17 +232,14 @@ bb.v:                                             ; preds = %bb.u
   store i32 %i.gc, ptr %i.fz, align 8, !tbaa !792
   store i32 %i.gc, ptr %i.fw, align 4, !tbaa !791
   %i.gd = fmul double %i.fp, 5.000000e-01         ; 2 uses
-  store double %i.gd, ptr %i.fo, align 8, !tbaa !186
   %3 = fcmp olt double %i.gd, %i.fu
-  br i1 %3, label %4, label %_ZN3ema6updateEd.exit
-
-4:                                                ; preds = %bb.v
-  store double %i.fu, ptr %i.fo, align 8, !tbaa !186
+  %spec.store.select.i = select i1 %3, double %i.fu, double %i.gd
+  store double %spec.store.select.i, ptr %i.fo, align 8
   br label %_ZN3ema6updateEd.exit
 
-_ZN3ema6updateEd.exit:                            ; preds = %_ZN3sat6solver15num_diff_levelsEjPKNS_7literalE.exit, %bb.u, %bb.v, %4
+_ZN3ema6updateEd.exit:                            ; preds = %_ZN3sat6solver15num_diff_levelsEjPKNS_7literalE.exit, %bb.u, %bb.v
   %i.ge = getelementptr inbounds nuw i8, ptr %0, i64 3656
-  %i.gf = getelementptr inbounds nuw i8, ptr %0, i64 3664 ; 3 uses
+  %i.gf = getelementptr inbounds nuw i8, ptr %0, i64 3664 ; 2 uses
   %i.gg = load double, ptr %i.gf, align 8, !tbaa !186 ; 3 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %0, i64 3672 ; 2 uses
   %i.gi = load double, ptr %i.gh, align 8, !tbaa !726 ; 2 uses
@@ -269,15 +266,12 @@ bb.x:                                             ; preds = %bb.w
   store i32 %i.gt, ptr %i.gq, align 8, !tbaa !792
   store i32 %i.gt, ptr %i.gn, align 4, !tbaa !791
   %i.gu = fmul double %i.gg, 5.000000e-01         ; 2 uses
-  store double %i.gu, ptr %i.gf, align 8, !tbaa !186
-  %5 = fcmp olt double %i.gu, %i.gl
-  br i1 %5, label %6, label %_ZN3ema6updateEd.exit43
-
-6:                                                ; preds = %bb.x
-  store double %i.gl, ptr %i.gf, align 8, !tbaa !186
+  %4 = fcmp olt double %i.gu, %i.gl
+  %spec.store.select.i43 = select i1 %4, double %i.gl, double %i.gu
+  store double %spec.store.select.i43, ptr %i.gf, align 8
   br label %_ZN3ema6updateEd.exit43
 
-_ZN3ema6updateEd.exit43:                          ; preds = %_ZN3ema6updateEd.exit, %bb.w, %bb.x, %6
+_ZN3ema6updateEd.exit43:                          ; preds = %_ZN3ema6updateEd.exit, %bb.w, %bb.x
   %i.gv = load i32, ptr %i.dg, align 4, !tbaa !183 ; 3 uses
   %i.gw = sub i32 %i.gv, %.056.lcssa93            ; 2 uses
   %.not.i44 = icmp eq i32 %i.gv, %.056.lcssa93
@@ -680,7 +674,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.i:   ; preds = %bb.c, %bb.b
   %.0.i.i = phi double [ %i.m, %bb.c ], [ 0.000000e+00, %bb.b ]
-  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 3760 ; 3 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %0, i64 3760 ; 2 uses
   %i.o = load double, ptr %i.n, align 8, !tbaa !186 ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 3768 ; 2 uses
   %i.q = load double, ptr %i.p, align 8, !tbaa !726 ; 2 uses
@@ -707,15 +701,12 @@ bb.e:                                             ; preds = %bb.d
   store i32 %i.ab, ptr %i.y, align 8, !tbaa !792
   store i32 %i.ab, ptr %i.v, align 4, !tbaa !791
   %i.ac = fmul double %i.o, 5.000000e-01          ; 2 uses
-  store double %i.ac, ptr %i.n, align 8, !tbaa !186
   %3 = fcmp olt double %i.ac, %i.t
-  br i1 %3, label %4, label %_ZN3ema6updateEd.exit.i
-
-4:                                                ; preds = %bb.e
-  store double %i.t, ptr %i.n, align 8, !tbaa !186
+  %spec.store.select.i.i = select i1 %3, double %i.t, double %i.ac
+  store double %spec.store.select.i.i, ptr %i.n, align 8
   br label %_ZN3ema6updateEd.exit.i
 
-_ZN3ema6updateEd.exit.i:                          ; preds = %4, %bb.e, %bb.d, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.i, %bb.a
+_ZN3ema6updateEd.exit.i:                          ; preds = %bb.e, %bb.d, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit.i, %bb.a
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 3500 ; 2 uses
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !813
   %.not.i = icmp ult i32 %i.c, %i.ae
@@ -1118,7 +1109,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit:     ; preds = %bb.b, %bb.c
   %.0.i = phi double [ %i.j, %bb.c ], [ 0.000000e+00, %bb.b ]
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 3760 ; 3 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 3760 ; 2 uses
   %i.l = load double, ptr %i.k, align 8, !tbaa !186 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 3768 ; 2 uses
   %i.n = load double, ptr %i.m, align 8, !tbaa !726 ; 2 uses
@@ -1145,15 +1136,12 @@ bb.e:                                             ; preds = %bb.d
   store i32 %i.y, ptr %i.v, align 8, !tbaa !792
   store i32 %i.y, ptr %i.s, align 4, !tbaa !791
   %i.z = fmul double %i.l, 5.000000e-01           ; 2 uses
-  store double %i.z, ptr %i.k, align 8, !tbaa !186
   %1 = fcmp olt double %i.z, %i.q
-  br i1 %1, label %2, label %_ZN3ema6updateEd.exit
-
-2:                                                ; preds = %bb.e
-  store double %i.q, ptr %i.k, align 8, !tbaa !186
+  %spec.store.select.i = select i1 %1, double %i.q, double %i.z
+  store double %spec.store.select.i, ptr %i.k, align 8
   br label %_ZN3ema6updateEd.exit
 
-_ZN3ema6updateEd.exit:                            ; preds = %2, %bb.e, %bb.d, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit, %bb.a
+_ZN3ema6updateEd.exit:                            ; preds = %bb.e, %bb.d, %_ZNK6vectorIN3sat7literalELb0EjE4sizeEv.exit, %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 3504
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !573
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 3500

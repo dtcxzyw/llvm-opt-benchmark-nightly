@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %_ZNK4llvm15MCRegist
   br i1 %.not176, label %.thread, label %bb.e
 
 .thread:                                          ; preds = %_ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit36.thread169, %_ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit33.thread, %_ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit36.thread, %bb.d
-  %13 = tail call i64 @llvm.abs.i64(i64 %i.c, i1 false)
-  %i.bq = icmp ult i64 %13, 4294967296
+  %13 = add i64 %i.c, 4294967295
+  %i.bq = icmp ult i64 %13, 8589934591
   br i1 %i.bq, label %.thread161, label %_ZN4llvmplERKNS_5TwineES2_.exit100
 
 _ZN4llvmplERKNS_5TwineES2_.exit100:               ; preds = %.thread
@@ -249,8 +249,8 @@ _ZN4llvmplERKNS_5TwineES2_.exit100:               ; preds = %.thread
   br label %.thread161
 
 bb.e:                                             ; preds = %_ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit36.thread169, %bb.d
-  %14 = tail call i64 @llvm.abs.i64(i64 %i.c, i1 false)
-  %i.ch = icmp ult i64 %14, 65536
+  %14 = add i64 %i.c, 65535
+  %i.ch = icmp ult i64 %14, 131071
   br i1 %i.ch, label %.thread161, label %_ZN4llvmplERKNS_5TwineES2_.exit145
 
 _ZN4llvmplERKNS_5TwineES2_.exit145:               ; preds = %bb.e
@@ -652,9 +652,6 @@ declare i32 @llvm.umax.i32(i32, i32) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #17
-
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.abs.i64(i64, i1 immarg) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctpop.i32(i32) #16

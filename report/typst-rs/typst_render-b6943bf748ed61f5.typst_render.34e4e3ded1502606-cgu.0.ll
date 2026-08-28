@@ -204,14 +204,12 @@ bb.am:                                            ; preds = %.lr.ph, %bb.aw
   %i.il = insertelement <2 x double> poison, double %i.ia, i64 0
   %i.im = shufflevector <2 x double> %i.il, <2 x double> poison, <2 x i32> zeroinitializer
   %i.in = fmul <2 x double> %i.ik, %i.im          ; 2 uses
-  %3 = fcmp ord <2 x double> %i.in, zeroinitializer
-  %4 = select <2 x i1> %3, <2 x double> %i.in, <2 x double> zeroinitializer ; 2 uses
-  %i.io = call <2 x double> @llvm.fabs.v2f64(<2 x double> %4)
-  %5 = fcmp ueq <2 x double> %i.io, splat (double +inf)
-  %i.ip = select <2 x i1> %5, <2 x double> zeroinitializer, <2 x double> %4
+  %i.io = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.in)
+  %3 = fcmp one <2 x double> %i.io, splat (double +inf)
+  %i.ip = select <2 x i1> %3, <2 x double> %i.in, <2 x double> zeroinitializer
   %i.iq = fadd <2 x double> %i.ib, %i.ip          ; 2 uses
   %i.ir = fcmp ord <2 x double> %i.iq, zeroinitializer
-  %i.is = select <2 x i1> %i.ir, <2 x double> %i.iq, <2 x double> zeroinitializer ; 3 uses
+  %i.is = select <2 x i1> %i.ir, <2 x double> %i.iq, <2 x double> zeroinitializer ; 5 uses
   %i.it = call noundef zeroext i1 @_RNvNtNtNtCsdaEETE4DqmE_13typst_library4text4font5color14should_outline(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.hz, i16 noundef %i.ie), !noalias !587, !inline_history !588
   br i1 %i.it, label %bb.ao, label %bb.an
 
@@ -224,6 +222,8 @@ bb.an:                                            ; preds = %bb.am
   %.inv27 = fcmp ord double %i.iy, 0.000000e+00
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !589
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !589
+  %4 = extractelement <2 x double> %i.is, i64 0
+  %5 = fcmp uno double %4, 0.000000e+00
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !589
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(80) %i.b, ptr noundef nonnull readonly align 16 dereferenceable(80) %i.ar, i64 80, i1 false), !noalias !590
   call void @llvm.experimental.noalias.scope.decl(metadata !591)
@@ -234,7 +234,8 @@ bb.an:                                            ; preds = %bb.am
   %i.jc = insertelement <2 x double> %i.is, double %i.iy, i64 1
   %i.jd = fdiv <2 x double> %i.jc, <double -1.270000e+02, double 1.270000e+02> ; 2 uses
   %i.je = extractelement <2 x double> %i.jd, i64 0
-  %i.jf = fptrunc double %i.je to float
+  %6 = select i1 %5, double 0.000000e+00, double %i.je
+  %i.jf = fptrunc double %6 to float
   call void @_RNvMs_NtCsd315radwPZ_14tiny_skia_path9transformNtB4_9Transform13pre_translate(ptr noalias nofree noundef nonnull sret([24 x i8]) align 4 captures(address) dereferenceable(24) %i.bw, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(24) %i.bv, float noundef %i.jb, float noundef %i.jf), !noalias !587
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bx, ptr noundef nonnull align 8 dereferenceable(24) %i.er, i64 24, i1 false)
   %i.jg = load ptr, ptr %i.by, align 16, !alias.scope !594, !noalias !596, !align !448, !noundef !5 ; 2 uses
@@ -262,15 +263,19 @@ bb.an:                                            ; preds = %bb.am
 
 bb.ao:                                            ; preds = %bb.am
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !589
+  %7 = extractelement <2 x double> %i.is, i64 0
+  %8 = fcmp uno double %7, 0.000000e+00
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !589
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(80) %i.a, ptr noundef nonnull readonly align 16 dereferenceable(80) %i.ar, i64 80, i1 false), !noalias !590
   call void @llvm.experimental.noalias.scope.decl(metadata !604)
   call void @llvm.experimental.noalias.scope.decl(metadata !607)
-  %i.jo = fdiv <2 x double> %i.is, <double -1.270000e+02, double 1.270000e+02>
-  %6 = fptrunc <2 x double> %i.jo to <2 x float>  ; 2 uses
-  %7 = extractelement <2 x float> %6, i64 0
-  %8 = extractelement <2 x float> %6, i64 1
-  call void @_RNvMs_NtCsd315radwPZ_14tiny_skia_path9transformNtB4_9Transform13pre_translate(ptr noalias nofree noundef nonnull sret([24 x i8]) align 4 captures(address) dereferenceable(24) %i.ci, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(24) %i.ch, float noundef %8, float noundef %7), !noalias !587
+  %i.jo = fdiv <2 x double> %i.is, <double -1.270000e+02, double 1.270000e+02> ; 2 uses
+  %9 = extractelement <2 x double> %i.jo, i64 1
+  %10 = fptrunc double %9 to float
+  %11 = extractelement <2 x double> %i.jo, i64 0
+  %12 = select i1 %8, double 0.000000e+00, double %11
+  %13 = fptrunc double %12 to float
+  call void @_RNvMs_NtCsd315radwPZ_14tiny_skia_path9transformNtB4_9Transform13pre_translate(ptr noalias nofree noundef nonnull sret([24 x i8]) align 4 captures(address) dereferenceable(24) %i.ci, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(24) %i.ch, float noundef %10, float noundef %13), !noalias !587
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cj, ptr noundef nonnull align 8 dereferenceable(24) %i.es, i64 24, i1 false)
   %i.jp = load ptr, ptr %i.ck, align 16, !alias.scope !607, !noalias !609, !align !448, !noundef !5
   store ptr %i.jp, ptr %i.cl, align 16, !alias.scope !604, !noalias !610
@@ -348,11 +353,9 @@ bb.aw:                                            ; preds = %bb.au, %bb.ao
   %i.kh = insertelement <2 x double> poison, double %i.kc, i64 0
   %i.ki = shufflevector <2 x double> %i.kh, <2 x double> poison, <2 x i32> zeroinitializer
   %i.kj = fmul <2 x double> %i.kg, %i.ki          ; 2 uses
-  %9 = fcmp ord <2 x double> %i.kj, zeroinitializer
-  %10 = select <2 x i1> %9, <2 x double> %i.kj, <2 x double> zeroinitializer ; 2 uses
-  %i.kk = call <2 x double> @llvm.fabs.v2f64(<2 x double> %10)
-  %11 = fcmp ueq <2 x double> %i.kk, splat (double +inf)
-  %i.kl = select <2 x i1> %11, <2 x double> zeroinitializer, <2 x double> %10
+  %i.kk = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.kj)
+  %14 = fcmp one <2 x double> %i.kk, splat (double +inf)
+  %i.kl = select <2 x i1> %14, <2 x double> %i.kj, <2 x double> zeroinitializer
   %i.km = fadd <2 x double> %i.ib, %i.kl          ; 2 uses
   %i.kn = fcmp ord <2 x double> %i.km, zeroinitializer
   %i.ko = select <2 x i1> %i.kn, <2 x double> %i.km, <2 x double> zeroinitializer
@@ -755,8 +758,8 @@ bb.d:                                             ; preds = %bb.c
   %i.ba = select i1 %.inv.i, double %.neg, double -0.000000e+00
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c
-  %.sroa.071.0 = phi double [ 0.000000e+00, %bb.c ], [ %i.ba, %bb.d ]
+bb.e:                                             ; preds = %bb.c, %bb.d
+  %.sroa.071.0 = phi double [ %i.ba, %bb.d ], [ 0.000000e+00, %bb.c ]
   %i.bb = fcmp ord double %i.aq, 0.000000e+00     ; 2 uses
   %i.bc = bitcast double %i.aq to i64
   %i.bd = icmp slt i64 %i.bc, 0
@@ -776,8 +779,8 @@ bb.f:                                             ; preds = %bb.e
   %i.bk = select i1 %.inv12.i155, double %.neg185, double -0.000000e+00
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.e
-  %.sroa.074.0 = phi double [ 0.000000e+00, %bb.e ], [ %i.bk, %bb.f ]
+bb.g:                                             ; preds = %bb.e, %bb.f
+  %.sroa.074.0 = phi double [ %i.bk, %bb.f ], [ 0.000000e+00, %bb.e ]
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 72
   %i.bm = load float, ptr %i.bl, align 8, !noundef !5
   %i.bn = fpext float %i.bm to double

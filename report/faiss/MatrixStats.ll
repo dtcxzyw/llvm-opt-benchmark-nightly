@@ -204,8 +204,8 @@ bb.bf:                                            ; preds = %bb.be, %bb.bd
 bb.bg:                                            ; preds = %.lr.ph177, %bb.bj
   %.069175 = phi i64 [ 0, %.lr.ph177 ], [ %i.hm, %bb.bj ] ; 2 uses
   %.070174 = phi i64 [ 0, %.lr.ph177 ], [ %i.gz, %bb.bj ]
-  %.071173 = phi i64 [ 0, %.lr.ph177 ], [ %.172, %bb.bj ] ; 3 uses
-  %.073172 = phi i64 [ 0, %.lr.ph177 ], [ %.174, %bb.bj ] ; 3 uses
+  %.071173 = phi i64 [ 0, %.lr.ph177 ], [ %.172, %bb.bj ] ; 2 uses
+  %.073172 = phi i64 [ 0, %.lr.ph177 ], [ %.174, %bb.bj ] ; 2 uses
   %.075171 = phi double [ +inf, %.lr.ph177 ], [ %.176, %bb.bj ] ; 2 uses
   %.077170 = phi double [ 0.000000e+00, %.lr.ph177 ], [ %.178, %bb.bj ] ; 2 uses
   %i.ga = getelementptr inbounds nuw [80 x i8], ptr %i.fy, i64 %.069175 ; 10 uses
@@ -254,15 +254,13 @@ bb.bi:                                            ; preds = %bb.bg
   %i.hh = fpext float %i.hd to double
   %i.hi = fmul double %i.hh, 1.001000e+00
   %i.hj = fcmp ogt double %i.hi, %i.hg
-  br i1 %i.hj, label %4, label %bb.bj
-
-4:                                                ; preds = %bb.bi
-  %5 = add i64 %.073172, 1
+  %4 = zext i1 %i.hj to i64
+  %spec.select = add i64 %.073172, %4
   br label %bb.bj
 
-bb.bj:                                            ; preds = %bb.bi, %4, %bb.bh
-  %.174 = phi i64 [ %.073172, %bb.bh ], [ %5, %4 ], [ %.073172, %bb.bi ] ; 3 uses
-  %.172 = phi i64 [ %i.hf, %bb.bh ], [ %.071173, %4 ], [ %.071173, %bb.bi ] ; 3 uses
+bb.bj:                                            ; preds = %bb.bi, %bb.bh
+  %.174 = phi i64 [ %.073172, %bb.bh ], [ %spec.select, %bb.bi ] ; 3 uses
+  %.172 = phi i64 [ %i.hf, %bb.bh ], [ %.071173, %bb.bi ] ; 3 uses
   %i.hk = fcmp ogt double %i.gv, %.077170
   %.178 = select i1 %i.hk, double %i.gv, double %.077170 ; 3 uses
   %i.hl = fcmp olt double %i.gv, %.075171

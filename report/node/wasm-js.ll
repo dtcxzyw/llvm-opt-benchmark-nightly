@@ -205,9 +205,7 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.am
   %i.hl = fcmp ugt double %i.hi, f0x47EFFFFFEFFFFFFF
-  br i1 %i.hl, label %3, label %bb.ar
-
-3:                                                ; preds = %bb.an
+  %spec.select.i.i = select i1 %i.hl, i32 2139095040, i32 2139095039
   br label %bb.ar
 
 bb.ao:                                            ; preds = %bb.am
@@ -216,9 +214,7 @@ bb.ao:                                            ; preds = %bb.am
 
 bb.ap:                                            ; preds = %bb.ao
   %i.hn = fcmp ult double %i.hi, f0xC7EFFFFFEFFFFFFF
-  br i1 %i.hn, label %4, label %bb.ar
-
-4:                                                ; preds = %bb.ap
+  %spec.select71.i.i = select i1 %i.hn, i32 -8388608, i32 -8388609
   br label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ao
@@ -226,8 +222,8 @@ bb.aq:                                            ; preds = %bb.ao
   %i.hp = bitcast float %i.ho to i32
   br label %bb.ar
 
-bb.ar:                                            ; preds = %bb.aq, %4, %bb.ap, %3, %bb.an, %_ZNK2v85Value16QuickIsUndefinedEv.exit.i95.i.i
-  %.047.ph.i.i = phi i32 [ -8388609, %bb.ap ], [ -8388608, %4 ], [ 2139095039, %bb.an ], [ 2139095040, %3 ], [ %i.hp, %bb.aq ], [ 0, %_ZNK2v85Value16QuickIsUndefinedEv.exit.i95.i.i ]
+bb.ar:                                            ; preds = %bb.aq, %bb.ap, %bb.an, %_ZNK2v85Value16QuickIsUndefinedEv.exit.i95.i.i
+  %.047.ph.i.i = phi i32 [ %i.hp, %bb.aq ], [ %spec.select71.i.i, %bb.ap ], [ %spec.select.i.i, %bb.an ], [ 0, %_ZNK2v85Value16QuickIsUndefinedEv.exit.i95.i.i ]
   call void @_ZN2v88internal23EncodeI32ExceptionValueENS0_12DirectHandleINS0_10FixedArrayEEEPjj(ptr %i.dj, ptr noundef nonnull %i.a, i32 noundef %.047.ph.i.i) #20
   br label %.critedge78.i.i
 

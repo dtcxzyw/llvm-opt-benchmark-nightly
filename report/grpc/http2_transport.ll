@@ -202,25 +202,23 @@ bb.c:                                             ; preds = %_ZN9grpc_core27GetS
   %i.aj = fdiv nnan double %i.ai, 1.000000e+03
   %i.ak = fmul nnan double %i.aj, 1.000000e+03    ; 3 uses
   %i.al = fcmp ult double %i.ak, f0x43E0000000000000
-  br i1 %i.al, label %6, label %_ZN9grpc_coremlENS_8DurationEd.exit.thread120
-
-6:                                                ; preds = %bb.c
-  %7 = fcmp ugt double %i.ak, f0xC3E0000000000000
-  br i1 %7, label %_ZN9grpc_coremlENS_8DurationEd.exit, label %_ZN9grpc_coremlENS_8DurationEd.exit.thread
+  br i1 %i.al, label %_ZN9grpc_coremlENS_8DurationEd.exit, label %_ZN9grpc_coremlENS_8DurationEd.exit.thread120
 
 _ZN9grpc_coremlENS_8DurationEd.exit.thread120:    ; preds = %bb.c, %_ZN9grpc_core27GetSoftLimitFromChannelArgsERKNS_11ChannelArgsE.exit
   br label %_ZN9grpc_coremlENS_8DurationEd.exit.thread
 
-_ZN9grpc_coremlENS_8DurationEd.exit:              ; preds = %6
-  %i.am = fptosi double %i.ak to i64
+_ZN9grpc_coremlENS_8DurationEd.exit:              ; preds = %bb.c
+  %.inv.i.i = fcmp ole double %i.ak, f0xC3E0000000000000
+  %spec.select4.i.i = select i1 %.inv.i.i, double f0xC3E0000000000000, double %i.ak
+  %i.am = fptosi double %spec.select4.i.i to i64
   %.fr = freeze i64 %i.am
   %spec.select123 = tail call i64 @llvm.smax.i64(i64 %.fr, i64 60000)
   br label %_ZN9grpc_coremlENS_8DurationEd.exit.thread
 
-_ZN9grpc_coremlENS_8DurationEd.exit.thread:       ; preds = %_ZN9grpc_core27GetSoftLimitFromChannelArgsERKNS_11ChannelArgsE.exit, %6, %_ZN9grpc_coremlENS_8DurationEd.exit, %_ZN9grpc_coremlENS_8DurationEd.exit.thread120
-  %8 = phi i64 [ 9223372036854775807, %_ZN9grpc_coremlENS_8DurationEd.exit.thread120 ], [ %spec.select123, %_ZN9grpc_coremlENS_8DurationEd.exit ], [ 60000, %6 ], [ 60000, %_ZN9grpc_core27GetSoftLimitFromChannelArgsERKNS_11ChannelArgsE.exit ]
+_ZN9grpc_coremlENS_8DurationEd.exit.thread:       ; preds = %_ZN9grpc_core27GetSoftLimitFromChannelArgsERKNS_11ChannelArgsE.exit, %_ZN9grpc_coremlENS_8DurationEd.exit, %_ZN9grpc_coremlENS_8DurationEd.exit.thread120
+  %6 = phi i64 [ 9223372036854775807, %_ZN9grpc_coremlENS_8DurationEd.exit.thread120 ], [ %spec.select123, %_ZN9grpc_coremlENS_8DurationEd.exit ], [ 60000, %_ZN9grpc_core27GetSoftLimitFromChannelArgsERKNS_11ChannelArgsE.exit ]
   %i.an = trunc i8 %i.ag to i1
-  %.sroa.0.0.i49 = select i1 %i.an, i64 %i.af, i64 %8
+  %.sroa.0.0.i49 = select i1 %i.an, i64 %i.af, i64 %6
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 24
   store i64 %.sroa.0.0.i49, ptr %i.ao, align 8, !tbaa !22
   %i.ap = tail call i16 @_ZNK9grpc_core11ChannelArgs7GetBoolESt17basic_string_viewIcSt11char_traitsIcEE(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 35, ptr nonnull @.str.14) ; 2 uses

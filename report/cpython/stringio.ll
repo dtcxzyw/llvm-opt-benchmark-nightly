@@ -202,13 +202,11 @@ bb.aj:                                            ; preds = %bb.ai
   %i.cu = uitofp nneg i64 %i.cr to double
   %i.cv = fmul nnan double %i.cu, 1.125000e+00
   %i.cw = fcmp ult double %i.cv, 1.000000e+00
-  br i1 %i.cw, label %3, label %bb.ak
-
-3:                                                ; preds = %bb.aj
+  %spec.select.i = select i1 %i.cw, i64 2, i64 4
   br label %bb.ak
 
-bb.ak:                                            ; preds = %3, %bb.aj, %bb.ah
-  %.0.i.i = phi i64 [ 2, %3 ], [ 2, %bb.ah ], [ 4, %bb.aj ] ; 2 uses
+bb.ak:                                            ; preds = %bb.aj, %bb.ah
+  %.0.i.i = phi i64 [ %spec.select.i, %bb.aj ], [ 2, %bb.ah ] ; 2 uses
   %i.cx = getelementptr i8, ptr %0, i64 16        ; 2 uses
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !32
   %i.cz = shl nuw nsw i64 %.0.i.i, 2
@@ -248,13 +246,11 @@ bb.ao:                                            ; preds = %bb.an
   %i.dl = uitofp nneg i64 %i.di to double
   %i.dm = fmul nnan double %i.dl, 1.125000e+00
   %i.dn = fcmp ult double %i.dm, 1.000000e+00
-  br i1 %i.dn, label %4, label %bb.ap
-
-4:                                                ; preds = %bb.ao
+  %spec.select125.i = select i1 %i.dn, i64 2, i64 4
   br label %bb.ap
 
-bb.ap:                                            ; preds = %4, %bb.ao, %.critedge.i
-  %.0.i109.i = phi i64 [ 2, %4 ], [ 2, %.critedge.i ], [ 4, %bb.ao ] ; 2 uses
+bb.ap:                                            ; preds = %bb.ao, %.critedge.i
+  %.0.i109.i = phi i64 [ %spec.select125.i, %bb.ao ], [ 2, %.critedge.i ] ; 2 uses
   %i.do = getelementptr i8, ptr %0, i64 16        ; 2 uses
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !32
   %i.dq = shl nuw nsw i64 %.0.i109.i, 2
@@ -598,13 +594,11 @@ bb.c:                                             ; preds = %bb.b
   %i.f = uitofp nneg i64 %i.c to double
   %i.g = fmul nnan double %i.f, 1.125000e+00
   %i.h = fcmp ult double %i.g, 1.000000e+00
-  br i1 %i.h, label %2, label %bb.d
-
-2:                                                ; preds = %bb.c
+  %spec.select.i = select i1 %i.h, i64 2, i64 4
   br label %bb.d
 
-bb.d:                                             ; preds = %2, %bb.c, %bb.a
-  %.0.i.i = phi i64 [ 2, %2 ], [ 2, %bb.a ], [ 4, %bb.c ] ; 2 uses
+bb.d:                                             ; preds = %bb.c, %bb.a
+  %.0.i.i = phi i64 [ %spec.select.i, %bb.c ], [ 2, %bb.a ] ; 2 uses
   %i.i = getelementptr i8, ptr %0, i64 16         ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !32
   %i.k = shl nuw nsw i64 %.0.i.i, 2

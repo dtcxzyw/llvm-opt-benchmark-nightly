@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gimli-rs/original/names.names.9c854fec92e96318-cgu.14?download=true
+inline.NumInlined: 157
+inline.NumDeleted: 86
 begin_hunk_0_@_RNvCsdr9GKMNitvw_5names4main:bb.a
 
 .lr.ph:                                           ; preds = %bb.ci, %bb.cu
@@ -200,10 +202,10 @@ bb.di:                                            ; preds = %bb.dh, %bb.co
           to label %bb.dl unwind label %.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 bb.dj:                                            ; preds = %bb.dh, %bb.dg
-  %.sroa.6189.0.a = phi i64 [ 1, %bb.dg ], [ 0, %bb.dh ]
-  %.sroa.11191.0 = phi i64 [ %i.hp, %bb.dg ], [ undef, %bb.dh ]
-  store i64 %.sroa.6189.0.a, ptr %i.n, align 8
-  store i64 %.sroa.11191.0, ptr %i.ex, align 8
+  %.sroa.6189.0.a = phi i64 [ %i.hp, %bb.dg ], [ undef, %bb.dh ]
+  %.sroa.11191.0 = phi i64 [ 1, %bb.dg ], [ 0, %bb.dh ]
+  store i64 %.sroa.11191.0, ptr %i.n, align 8
+  store i64 %.sroa.6189.0.a, ptr %i.ex, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   store ptr %i.n, ptr %i.m, align 8
   store ptr @_RNvXsR_NtCskKLDkoKarTP_4core6optionINtB5_6OptionNtNtNtCsi68uqYEhoRA_5gimli4read5names15NameEntryOffsetENtNtB7_3fmt5Debug3fmtCsdr9GKMNitvw_5names, ptr %.sroa.4380.0..sroa_idx, align 8

@@ -205,14 +205,11 @@ bb.ax:                                            ; preds = %bb.aw
 bb.ay:                                            ; preds = %bb.ax
   %i.kj = getelementptr inbounds nuw i8, ptr %i.a, i64 9404
   %i.kk = load float, ptr %i.kj, align 4, !tbaa !800
-  %11 = fcmp ult float %i.kk, 3.000000e-01
-  br i1 %11, label %bb.az, label %12
-
-12:                                               ; preds = %bb.ay
+  %11 = fcmp oge float %i.kk, 3.000000e-01
   br label %bb.az
 
-bb.az:                                            ; preds = %bb.aw, %bb.av, %12, %bb.ay, %bb.ax
-  %.0205 = phi i1 [ true, %bb.av ], [ true, %12 ], [ false, %bb.ay ], [ false, %bb.ax ], [ %or.cond15.not, %bb.aw ] ; 2 uses
+bb.az:                                            ; preds = %bb.ay, %bb.aw, %bb.av, %bb.ax
+  %.0205 = phi i1 [ true, %bb.av ], [ %or.cond15.not, %bb.aw ], [ %11, %bb.ay ], [ false, %bb.ax ] ; 2 uses
   %i.kl = getelementptr inbounds nuw i8, ptr %i.a, i64 8220
   %i.km = load i32, ptr %i.kl, align 4, !tbaa !211
   %i.kn = icmp eq i32 %i.km, %i.h

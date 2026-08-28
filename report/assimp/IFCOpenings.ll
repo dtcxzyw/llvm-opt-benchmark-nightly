@@ -205,15 +205,13 @@ bb.i:                                             ; preds = %bb.h
   %i.aw = load double, ptr %i.m, align 8
   %i.ax = call noundef double @llvm.fmuladd.f64(double %.sroa.15396.0, double %i.aw, double %i.av)
   %i.ay = call double @llvm.fabs.f64(double %i.ax)
-  %i.az = fcmp ogt double %i.ay, 9.000000e-01
-  br i1 %i.az, label %18, label %bb.j
-
-18:                                               ; preds = %bb.i
+  %i.az = fcmp ogt double %i.ay, 9.000000e-01     ; 2 uses
+  %spec.select456 = select i1 %i.az, ptr %i.an, ptr %i.al
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %18, %bb.h, %_ZN10aiVector3tIdE9NormalizeEv.exit182
-  %.0144 = phi i1 [ true, %18 ], [ false, %bb.i ], [ false, %bb.h ], [ false, %_ZN10aiVector3tIdE9NormalizeEv.exit182 ] ; 2 uses
-  %.0143 = phi ptr [ %i.an, %18 ], [ %i.al, %bb.i ], [ %i.al, %bb.h ], [ %i.al, %_ZN10aiVector3tIdE9NormalizeEv.exit182 ] ; 5 uses
+bb.j:                                             ; preds = %bb.i, %bb.h, %_ZN10aiVector3tIdE9NormalizeEv.exit182
+  %.0144 = phi i1 [ false, %_ZN10aiVector3tIdE9NormalizeEv.exit182 ], [ %i.az, %bb.i ], [ false, %bb.h ] ; 2 uses
+  %.0143 = phi ptr [ %i.al, %_ZN10aiVector3tIdE9NormalizeEv.exit182 ], [ %spec.select456, %bb.i ], [ %i.al, %bb.h ] ; 5 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %.0143, i64 8 ; 2 uses
   %i.bb = load ptr, ptr %i.ba, align 8            ; 3 uses
   %i.bc = load ptr, ptr %.0143, align 8           ; 3 uses

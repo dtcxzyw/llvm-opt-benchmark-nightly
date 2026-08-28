@@ -200,22 +200,14 @@ bb.aj:                                            ; preds = %bb.ah
   %i.fo = load ptr, ptr %i.s, align 8
   %i.fp = call i32 @g_ascii_strncasecmp(ptr noundef %i.fo, ptr noundef nonnull @.str.71, i64 noundef 3)
   %i.fq = icmp eq i32 %i.fp, 0
-  br i1 %i.fq, label %4, label %bb.al
+  br i1 %i.fq, label %bb.ak, label %bb.al
 
-4:                                                ; preds = %bb.aj
-  %5 = call double @g_ascii_strtod(ptr noundef %.0277, ptr noundef null) ; 2 uses
-  %6 = fcmp oeq double %5, 1.000000e+00
-  br i1 %6, label %bb.ak, label %7
-
-7:                                                ; preds = %4
-  %8 = fcmp oeq double %5, 0.000000e+00
-  br i1 %8, label %9, label %bb.ak
-
-9:                                                ; preds = %7
-  br label %bb.ak
-
-bb.ak:                                            ; preds = %4, %7, %9
-  %.1 = phi ptr [ %.0277, %7 ], [ @.str.72, %9 ], [ @.str.55, %4 ]
+bb.ak:                                            ; preds = %bb.aj
+  %4 = call double @g_ascii_strtod(ptr noundef %.0277, ptr noundef null) ; 2 uses
+  %5 = fcmp oeq double %4, 1.000000e+00
+  %6 = fcmp oeq double %4, 0.000000e+00
+  %spec.select = select i1 %6, ptr @.str.72, ptr %.0277
+  %.1 = select i1 %5, ptr @.str.55, ptr %spec.select
   %i.fr = load i32, ptr @hf_hicp_ext, align 4
   %i.fs = load ptr, ptr %i.s, align 8
   %i.ft = call i64 @strlen(ptr noundef %i.fs) #5

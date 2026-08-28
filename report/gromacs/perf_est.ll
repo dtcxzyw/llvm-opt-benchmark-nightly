@@ -63,13 +63,11 @@ bb.d:                                             ; preds = %_ZL23usingFullElect
   %i.s = sitofp i32 %i.r to double
   %i.t = fdiv double 1.000000e+00, %i.s           ; 2 uses
   %i.u = fcmp ogt double %i.t, %.049
-  br i1 %i.u, label %4, label %bb.e
-
-4:                                                ; preds = %bb.d
+  %spec.select = select i1 %i.u, double %i.t, double %.049
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZL23usingFullElectrostaticsRK22CoulombInteractionType.exit, %bb.d, %4
-  %.1 = phi double [ %i.t, %4 ], [ %.049, %bb.d ], [ %.049, %_ZL23usingFullElectrostaticsRK22CoulombInteractionType.exit ] ; 3 uses
+bb.e:                                             ; preds = %bb.d, %_ZL23usingFullElectrostaticsRK22CoulombInteractionType.exit
+  %.1 = phi double [ %.049, %_ZL23usingFullElectrostaticsRK22CoulombInteractionType.exit ], [ %spec.select, %bb.d ] ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !114  ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 144

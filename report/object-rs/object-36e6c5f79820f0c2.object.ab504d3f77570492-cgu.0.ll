@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/object-rs/original/object-36e6c5f79820f0c2.object.ab504d3f77570492-cgu.0?download=true
+inline.NumInlined: 46
+inline.NumDeleted: 9
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -116,7 +120,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.i, label %bb.e, label %bb.d, !prof !8
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = sub i32 %..i.i, %i.c
+  %i.j = sub nuw i32 %..i.i, %i.c
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.h, ptr %i.k, align 4
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8

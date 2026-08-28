@@ -205,9 +205,9 @@ bb.a:
   %i.ae = alloca [72 x i8], align 8               ; 30 uses
   %i.af = alloca [80 x i8], align 8               ; 9 uses
   %i.ag = alloca [16 x i8], align 8               ; 6 uses
-  %i.ah = alloca [16 x i8], align 16              ; 5 uses
+  %i.ah = alloca [16 x i8], align 8               ; 5 uses
   %i.ai = alloca [16 x i8], align 8               ; 5 uses
-  %i.aj = alloca [16 x i8], align 16              ; 5 uses
+  %i.aj = alloca [16 x i8], align 16              ; 6 uses
   %i.ak = alloca [16 x i8], align 8               ; 5 uses
   %i.al = alloca [16 x i8], align 8               ; 5 uses
   %i.am = alloca [16 x i8], align 8               ; 5 uses
@@ -321,8 +321,9 @@ bb.b:                                             ; preds = %bb.a
   %i.ef = getelementptr inbounds nuw i8, ptr %i.dl, i64 16 ; 3 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %i.dl, i64 32 ; 5 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %i.dl, i64 40 ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   %i.ei = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
-  %i.ej = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
+  %i.ej = getelementptr inbounds nuw i8, ptr %i.ah, i64 8 ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %i.el = getelementptr inbounds nuw i8, ptr %i.di, i64 48
   %i.em = getelementptr inbounds nuw i8, ptr %i.di, i64 64
@@ -725,9 +726,9 @@ bb.ke:                                            ; preds = %bb.kd
   %i.aes = fmul <2 x double> %i.aer, splat (double 1.270000e+02) ; 2 uses
   %i.aet = fcmp ord <2 x double> %i.aes, zeroinitializer
   %i.aeu = fmul <2 x double> %i.aes, splat (double 5.000000e-01)
-  %i.aev = select <2 x i1> %i.aet, <2 x double> %i.aeu, <2 x double> zeroinitializer ; 3 uses
+  %i.aev = select <2 x i1> %i.aet, <2 x double> %i.aeu, <2 x double> zeroinitializer ; 2 uses
   %i.aew = fcmp ord <2 x double> %i.aev, zeroinitializer
-  %i.aex = select <2 x i1> %i.aew, <2 x double> %i.aev, <2 x double> zeroinitializer ; 2 uses
+  %i.aex = select <2 x i1> %i.aew, <2 x double> %i.aev, <2 x double> zeroinitializer ; 3 uses
   %i.aey = fdiv <2 x double> %i.aex, splat (double 1.270000e+02)
   %i.aez = fmul <2 x double> %i.aey, splat (double 1.000000e+09)
   %i.afa = call <2 x double> @llvm.round.v2f64(<2 x double> %i.aez)
@@ -771,6 +772,8 @@ bb.ke:                                            ; preds = %bb.kd
   %i.age = icmp ugt i64 %.sroa.0.0.i.i1.i, 9999
   %i.agf = extractelement <2 x i1> %i.afu, i64 0
   %i.agg = extractelement <2 x i1> %i.afu, i64 1
+  %2 = extractelement <2 x double> %i.aex, i64 0  ; 2 uses
+  %3 = extractelement <2 x double> %i.aex, i64 1  ; 2 uses
   br label %bb.kf
 
 .invoke:                                          ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsl4q486LaARA_9typst_svg5write7SvgElemEBF_.exit382, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library9visualize5color10ColorSpaceECsl4q486LaARA_9typst_svg.exit200
@@ -832,12 +835,14 @@ bb.kj:                                            ; preds = %bb.kg
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ef, i8 0, i64 32, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !4854)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aj)
-  store <2 x double> %i.aev, ptr %i.aj, align 16, !noalias !4854
+  store double %2, ptr %i.aj, align 16, !noalias !4854
+  store double %3, ptr %1, align 8, !noalias !4854
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai), !noalias !4854
   store ptr %i.dl, ptr %i.ai, align 8, !noalias !4854
   store ptr %i.aj, ptr %i.ei, align 8, !noalias !4854
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah), !noalias !4854
-  store <2 x double> %i.aex, ptr %i.ah, align 16, !noalias !4854
+  store double %2, ptr %i.ah, align 8, !noalias !4854
+  store double %3, ptr %i.ej, align 8, !noalias !4854
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag), !noalias !4854
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ag, i8 0, i64 16, i1 false), !noalias !4854
   %i.ahb = invoke noundef zeroext i1 @_RNvXs3_NtCs6xpQEr8gLsQ_11typst_utils6scalarNtB5_6ScalarNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.ah, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.ag)
@@ -1139,9 +1144,11 @@ bb.ll:                                            ; preds = %bb.lk
   %i.akv = fadd <2 x double> %i.akt, splat (double 5.000000e-01)
   %i.akw = fmul <2 x double> %i.akv, splat (double 1.270000e+02)
   %i.akx = select <2 x i1> %i.aku, <2 x double> %i.akw, <2 x double> splat (double 6.350000e+01) ; 2 uses
+  %4 = fmul <2 x double> %i.akx, splat (double 5.000000e-01)
   %i.aky = fcmp ord <2 x double> %i.akx, zeroinitializer
-  %1 = fmul <2 x double> %i.akx, splat (double 5.000000e-01)
-  %i.akz = select <2 x i1> %i.aky, <2 x double> %1, <2 x double> zeroinitializer ; 2 uses
+  %5 = select <2 x i1> %i.aky, <2 x double> %4, <2 x double> zeroinitializer ; 2 uses
+  %6 = fcmp ord <2 x double> %5, zeroinitializer
+  %i.akz = select <2 x i1> %6, <2 x double> %5, <2 x double> zeroinitializer ; 2 uses
   %i.ala = extractelement <2 x double> %i.akz, i64 0
   %i.alb = extractelement <2 x double> %i.akz, i64 1
   invoke fastcc void @_RNvMNtCsl4q486LaARA_9typst_svg4pathNtB2_14SvgPathBuilder7line_to(ptr noalias nofree noundef align 8 dereferenceable(56) %i.dl, double noundef %i.ala, double noundef %i.alb)
@@ -1168,7 +1175,9 @@ bb.lo:                                            ; preds = %bb.ln
   %i.aln = select <2 x i1> %i.alk, <2 x double> %i.alm, <2 x double> splat (double 6.350000e+01) ; 2 uses
   %i.alo = fcmp ord <2 x double> %i.aln, zeroinitializer
   %i.alp = fmul <2 x double> %i.aln, splat (double 5.000000e-01)
-  %i.alq = select <2 x i1> %i.alo, <2 x double> %i.alp, <2 x double> zeroinitializer ; 5 uses
+  %7 = select <2 x i1> %i.alo, <2 x double> %i.alp, <2 x double> zeroinitializer ; 2 uses
+  %8 = fcmp ord <2 x double> %7, zeroinitializer
+  %i.alq = select <2 x i1> %8, <2 x double> %7, <2 x double> zeroinitializer ; 5 uses
   %i.alr = load double, ptr %i.ee, align 8, !alias.scope !4872, !noundef !10
   %i.als = load <2 x double>, ptr %i.eg, align 8, !alias.scope !4872 ; 2 uses
   invoke void @_RNvMNtCsakL8LGkl72C_4ecow6stringNtB2_9EcoString8push_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.dl, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @127, i64 noundef 2)
@@ -1571,8 +1580,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.sroa.0.0, label %bb.d, label %bb.e
 
 bb.c:                                             ; preds = %bb.e, %bb.f, %bb.a
-  %.sroa.030.0 = phi double [ %.sroa.032.0, %bb.f ], [ %i.z, %bb.a ], [ %i.z, %bb.e ]
-  %.sroa.022.0 = phi double [ %.sroa.022.1, %bb.f ], [ %i.y, %bb.a ], [ %.sroa.022.1, %bb.e ]
+  %.sroa.030.0 = phi double [ %.sroa.022.1, %bb.f ], [ %i.y, %bb.a ], [ %.sroa.022.1, %bb.e ]
+  %.sroa.022.0 = phi double [ %.sroa.032.0, %bb.f ], [ %i.z, %bb.a ], [ %i.z, %bb.e ]
   %.sroa.06.0 = phi double [ %i.aw, %bb.f ], [ %i.u, %bb.a ], [ %i.u, %bb.e ]
   %.sroa.02.0 = phi double [ %.sroa.02.1, %bb.f ], [ %i.v, %bb.a ], [ %.sroa.02.1, %bb.e ]
   %i.ah = phi <2 x double> [ %i.ax, %bb.f ], [ %i.t, %bb.a ], [ %i.au, %bb.e ]
@@ -1663,9 +1672,9 @@ bb.g:                                             ; preds = %switch.lookup
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bp, i8 0, i64 16, i1 false)
   store double 1.000000e+00, ptr %i.bq, align 8
   %i.br = getelementptr inbounds nuw i8, ptr %i.g, i64 32
-  store double %.sroa.022.0, ptr %i.br, align 8
+  store double %.sroa.030.0, ptr %i.br, align 8
   %i.bs = getelementptr inbounds nuw i8, ptr %i.g, i64 40
-  store double %.sroa.030.0, ptr %i.bs, align 8
+  store double %.sroa.022.0, ptr %i.bs, align 8
   call void @_RNvMNtNtCsdaEETE4DqmE_13typst_library6layout9transformNtB2_9Transform11post_concat(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(48) %i.h, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(48) %i.g)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
@@ -2068,11 +2077,9 @@ bb.ax:                                            ; preds = %.lr.ph, %bb.ay
   %i.ka = insertelement <2 x double> poison, double %i.jx, i64 0
   %i.kb = insertelement <2 x double> %i.ka, double %i.jv, i64 1
   %i.kc = fmul <2 x double> %i.jz, %i.kb          ; 2 uses
-  %4 = fcmp ord <2 x double> %i.kc, zeroinitializer
-  %5 = select <2 x i1> %4, <2 x double> %i.kc, <2 x double> zeroinitializer ; 2 uses
-  %i.kd = call <2 x double> @llvm.fabs.v2f64(<2 x double> %5)
-  %6 = fcmp ueq <2 x double> %i.kd, splat (double +inf)
-  %i.ke = select <2 x i1> %6, <2 x double> zeroinitializer, <2 x double> %5
+  %i.kd = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.kc)
+  %4 = fcmp one <2 x double> %i.kd, splat (double +inf)
+  %i.ke = select <2 x i1> %4, <2 x double> %i.kc, <2 x double> zeroinitializer
   %i.kf = fadd <2 x double> %i.jr, %i.ke          ; 2 uses
   %i.kg = fcmp ord <2 x double> %i.kf, zeroinitializer
   %i.kh = select <2 x i1> %i.kg, <2 x double> %i.kf, <2 x double> zeroinitializer ; 2 uses
@@ -2093,11 +2100,9 @@ bb.ay:                                            ; preds = %bb.ax
   %i.ks = insertelement <2 x double> poison, double %i.kn, i64 0
   %i.kt = shufflevector <2 x double> %i.ks, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ku = fmul <2 x double> %i.kr, %i.kt          ; 2 uses
-  %7 = fcmp ord <2 x double> %i.ku, zeroinitializer
-  %8 = select <2 x i1> %7, <2 x double> %i.ku, <2 x double> zeroinitializer ; 2 uses
-  %i.kv = call <2 x double> @llvm.fabs.v2f64(<2 x double> %8)
-  %9 = fcmp ueq <2 x double> %i.kv, splat (double +inf)
-  %i.kw = select <2 x i1> %9, <2 x double> zeroinitializer, <2 x double> %8
+  %i.kv = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.ku)
+  %5 = fcmp one <2 x double> %i.kv, splat (double +inf)
+  %i.kw = select <2 x i1> %5, <2 x double> %i.ku, <2 x double> zeroinitializer
   %i.kx = fadd <2 x double> %i.jr, %i.kw          ; 2 uses
   %i.ky = fcmp ord <2 x double> %i.kx, zeroinitializer
   %i.kz = select <2 x i1> %i.ky, <2 x double> %i.kx, <2 x double> zeroinitializer

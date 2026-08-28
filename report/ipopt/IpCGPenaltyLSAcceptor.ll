@@ -202,9 +202,6 @@ bb.f:                                             ; preds = %_ZNK5Ipopt14Compoun
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dm, i64 96
   %i.do = load double, ptr %i.dn, align 8, !tbaa !101
   %i.dp = fcmp olt double %i.do, 1.000000e-02
-  br i1 %i.dp, label %.critedge, label %.thread427
-
-.thread427:                                       ; preds = %bb.f
   br label %.critedge
 
 bb.g:                                             ; preds = %bb.c
@@ -217,8 +214,8 @@ bb.g:                                             ; preds = %bb.c
   %i.dw = and i1 %i.dv, %i.du
   br label %.critedge296
 
-.critedge:                                        ; preds = %bb.f, %_ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i335, %.thread427
-  %1 = phi i1 [ false, %.thread427 ], [ true, %_ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i335 ], [ true, %bb.f ] ; 2 uses
+.critedge:                                        ; preds = %bb.f, %_ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i335
+  %1 = phi i1 [ %i.dp, %bb.f ], [ true, %_ZNK5Ipopt14CompoundVector9ConstCompEi.exit.thread.i.i.i335 ] ; 2 uses
   %i.dx = icmp eq i32 %i.de, 0
   br i1 %i.dx, label %bb.h, label %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit
 

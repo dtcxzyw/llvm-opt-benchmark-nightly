@@ -204,9 +204,7 @@ bb.j:                                             ; preds = %bb.i, %._crit_edge
   %i.dk = fsub double %i.dh, %i.dj                ; 2 uses
   %i.dl = fmul double %i.dk, %i.dk
   %i.dm = fcmp uge double %i.dl, f0x3D71979980000000
-  br i1 %i.dm, label %.loopexit, label %2
-
-2:                                                ; preds = %bb.j
+  %spec.select = select i1 %i.dm, ptr %.sroa.025.2, ptr %1
   br label %.loopexit
 
 .loopexit.split.loop.exit35:                      ; preds = %bb.b
@@ -221,8 +219,8 @@ bb.j:                                             ; preds = %bb.i, %._crit_edge
   %i.dp = getelementptr inbounds nuw i8, ptr %.sroa.025.044, i64 336
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph, %.loopexit.split.loop.exit35, %.loopexit.split.loop.exit37, %.loopexit.split.loop.exit39, %._crit_edge, %2, %bb.j, %bb.h, %bb.f
-  %.sroa.08.0.in.sroa.speculated = phi ptr [ %.sroa.025.1, %bb.h ], [ %1, %._crit_edge ], [ %.sroa.025.0.lcssa, %bb.f ], [ %1, %2 ], [ %.sroa.025.2, %bb.j ], [ %i.do, %.loopexit.split.loop.exit37 ], [ %i.dn, %.loopexit.split.loop.exit35 ], [ %i.dp, %.loopexit.split.loop.exit39 ], [ %.sroa.025.044, %.lr.ph ]
+.loopexit:                                        ; preds = %.lr.ph, %.loopexit.split.loop.exit35, %.loopexit.split.loop.exit37, %.loopexit.split.loop.exit39, %bb.j, %._crit_edge, %bb.h, %bb.f
+  %.sroa.08.0.in.sroa.speculated = phi ptr [ %.sroa.025.1, %bb.h ], [ %spec.select, %bb.j ], [ %1, %._crit_edge ], [ %.sroa.025.0.lcssa, %bb.f ], [ %i.do, %.loopexit.split.loop.exit37 ], [ %i.dn, %.loopexit.split.loop.exit35 ], [ %i.dp, %.loopexit.split.loop.exit39 ], [ %.sroa.025.044, %.lr.ph ]
   ret ptr %.sroa.08.0.in.sroa.speculated
 }
 

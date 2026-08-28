@@ -204,9 +204,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread33
-  %.036 = phi i64 [ %1, %.lr.ph ], [ %7, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread33 ] ; 2 uses
+  %.036 = phi i64 [ %1, %.lr.ph ], [ %6, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread33 ] ; 2 uses
   %i.f = shl i64 %.036, 1                         ; 4 uses
-  %i.g = add i64 %i.f, 2                          ; 4 uses
+  %i.g = add i64 %i.f, 2                          ; 3 uses
   %i.h = getelementptr inbounds [4 x i8], ptr %0, i64 %i.g
   %i.i = getelementptr [4 x i8], ptr %0, i64 %i.f
   %i.j = getelementptr i8, ptr %i.i, i64 4
@@ -232,34 +232,32 @@ bb.d:                                             ; preds = %bb.c
   %i.x = getelementptr inbounds [4 x i8], ptr %i.u, i64 %i.p
   %i.y = load float, ptr %i.x, align 4, !tbaa !10 ; 2 uses
   %i.z = fcmp olt float %i.w, %i.y
-  br i1 %i.z, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread, label %5
-
-5:                                                ; preds = %bb.d
-  %6 = fcmp ogt float %i.w, %i.y
-  br i1 %6, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread33, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit
+  br i1 %i.z, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread: ; preds = %bb.b, %bb.d
   %i.aa = or disjoint i64 %i.f, 1
   br label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread33
 
-_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit: ; preds = %5
+_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit: ; preds = %bb.d
+  %5 = fcmp ule float %i.w, %i.y
   %i.ab = icmp slt i32 %i.k, %i.l
+  %spec.select.i.i = and i1 %i.ab, %5
   %i.ac = or disjoint i64 %i.f, 1
-  %cond.fr = freeze i1 %i.ab
+  %cond.fr = freeze i1 %spec.select.i.i
   %spec.select = select i1 %cond.fr, i64 %i.ac, i64 %i.g
   br label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread33
 
-_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread33: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit, %bb.c, %5, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread
-  %7 = phi i64 [ %i.g, %bb.c ], [ %spec.select, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit ], [ %i.aa, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread ], [ %i.g, %5 ] ; 4 uses
-  %i.ad = getelementptr inbounds [4 x i8], ptr %0, i64 %7
+_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread33: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit, %bb.c, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread
+  %6 = phi i64 [ %i.g, %bb.c ], [ %spec.select, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit ], [ %i.aa, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread ] ; 4 uses
+  %i.ad = getelementptr inbounds [4 x i8], ptr %0, i64 %6
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !12
   %i.af = getelementptr inbounds [4 x i8], ptr %0, i64 %.036
   store i32 %i.ae, ptr %i.af, align 4, !tbaa !12
-  %i.ag = icmp slt i64 %7, %i.b
+  %i.ag = icmp slt i64 %6, %i.b
   br i1 %i.ag, label %bb.b, label %._crit_edge, !llvm.loop !33
 
 ._crit_edge:                                      ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread33, %bb.a
-  %.0.lcssa = phi i64 [ %1, %bb.a ], [ %7, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread33 ] ; 5 uses
+  %.0.lcssa = phi i64 [ %1, %bb.a ], [ %6, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread33 ] ; 5 uses
   %i.ah = and i64 %2, 1
   %i.ai = icmp eq i64 %i.ah, 0
   br i1 %i.ai, label %bb.e, label %bb.g
@@ -330,7 +328,7 @@ _ZN9__gnu_cxx5__ops14_Iter_comp_valIN7Imf_3_411sort_helperEEclIPiiEEbT_RT0_.exit
   br i1 %i.bn, label %bb.h, label %_ZSt11__push_heapIPiliN9__gnu_cxx5__ops14_Iter_comp_valIN7Imf_3_411sort_helperEEEEvT_T0_S8_T1_RT2_.exit, !llvm.loop !34
 
 _ZSt11__push_heapIPiliN9__gnu_cxx5__ops14_Iter_comp_valIN7Imf_3_411sort_helperEEEEvT_T0_S8_T1_RT2_.exit: ; preds = %bb.i, %bb.k, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIN7Imf_3_411sort_helperEEclIPiiEEbT_RT0_.exit.thread.i, %bb.g
-  %.013.lcssa.i = phi i64 [ %.128, %bb.g ], [ %.022.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIN7Imf_3_411sort_helperEEclIPiiEEbT_RT0_.exit.thread.i ], [ %.01321.i, %bb.k ], [ %.01321.i, %bb.i ]
+  %.013.lcssa.i = phi i64 [ %.128, %bb.g ], [ %.01321.i, %bb.k ], [ %.022.i, %_ZN9__gnu_cxx5__ops14_Iter_comp_valIN7Imf_3_411sort_helperEEclIPiiEEbT_RT0_.exit.thread.i ], [ %.01321.i, %bb.i ]
   %i.bo = getelementptr inbounds [4 x i8], ptr %0, i64 %.013.lcssa.i
   store i32 %3, ptr %i.bo, align 4, !tbaa !12
   ret void
@@ -371,7 +369,7 @@ bb.d:                                             ; preds = %bb.c
   %or.cond = and i1 %i.t, %i.s
   br i1 %or.cond, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread36
 
-_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread: ; preds = %bb.d, %bb.c, %bb.a
+_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread: ; preds = %bb.c, %bb.a, %bb.d
   %i.u = load i32, ptr %3, align 4, !tbaa !12     ; 6 uses
   %i.v = sext i32 %i.u to i64                     ; 3 uses
   %i.w = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.v
@@ -481,9 +479,9 @@ bb.p:                                             ; preds = %bb.o
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit29.thread52: ; preds = %bb.n, %bb.p
   br label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit23.thread
 
-_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit23.thread: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit27.thread48, %bb.o, %bb.p, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread36, %bb.l, %bb.m, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit23.thread40, %bb.i, %bb.j, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread, %bb.f, %bb.g, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit29.thread52, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit25.thread44
-  %.sink73 = phi i32 [ %i.u, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit23.thread40 ], [ %i.b, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit29.thread52 ], [ %i.a, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread36 ], [ %i.b, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread ], [ %i.a, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit25.thread44 ], [ %i.b, %bb.g ], [ %i.b, %bb.f ], [ %i.u, %bb.j ], [ %i.u, %bb.i ], [ %i.a, %bb.m ], [ %i.a, %bb.l ], [ %i.au, %bb.p ], [ %i.au, %bb.o ], [ %i.au, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit27.thread48 ]
-  %.sink72 = phi ptr [ %3, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit23.thread40 ], [ %2, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit29.thread52 ], [ %1, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread36 ], [ %2, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread ], [ %1, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit25.thread44 ], [ %2, %bb.g ], [ %2, %bb.f ], [ %3, %bb.j ], [ %3, %bb.i ], [ %1, %bb.m ], [ %1, %bb.l ], [ %3, %bb.p ], [ %3, %bb.o ], [ %3, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit27.thread48 ]
+_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit23.thread: ; preds = %bb.p, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit27.thread48, %bb.o, %bb.m, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread36, %bb.l, %bb.j, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit23.thread40, %bb.i, %bb.g, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread, %bb.f, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit29.thread52, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit25.thread44
+  %.sink73 = phi i32 [ %i.u, %bb.j ], [ %i.b, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit29.thread52 ], [ %i.a, %bb.m ], [ %i.b, %bb.g ], [ %i.a, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit25.thread44 ], [ %i.b, %bb.f ], [ %i.b, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread ], [ %i.u, %bb.i ], [ %i.u, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit23.thread40 ], [ %i.a, %bb.l ], [ %i.a, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread36 ], [ %i.au, %bb.o ], [ %i.au, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit27.thread48 ], [ %i.au, %bb.p ]
+  %.sink72 = phi ptr [ %3, %bb.j ], [ %2, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit29.thread52 ], [ %1, %bb.m ], [ %2, %bb.g ], [ %1, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit25.thread44 ], [ %2, %bb.f ], [ %2, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread ], [ %3, %bb.i ], [ %3, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit23.thread40 ], [ %1, %bb.l ], [ %1, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit.thread36 ], [ %3, %bb.o ], [ %3, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN7Imf_3_411sort_helperEEclIPiS6_EEbT_T0_.exit27.thread48 ], [ %3, %bb.p ]
   %i.bu = load i32, ptr %0, align 4, !tbaa !12
   store i32 %.sink73, ptr %0, align 4, !tbaa !12
   store i32 %i.bu, ptr %.sink72, align 4, !tbaa !12

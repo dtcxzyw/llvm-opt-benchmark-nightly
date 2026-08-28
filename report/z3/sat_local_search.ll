@@ -205,9 +205,9 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !104
   %i.c = add i32 %i.b, 1
   store i32 %i.c, ptr %i.a, align 8, !tbaa !104
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !51   ; 2 uses
-  %i.f = zext i32 %1 to i64                       ; 2 uses
+  %i.f = zext i32 %1 to i64                       ; 4 uses
   %i.g = getelementptr inbounds nuw [120 x i8], ptr %i.e, i64 %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.i = load i8, ptr %i.h, align 8, !tbaa !52, !range !10, !noundef !11
@@ -221,13 +221,11 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.k = phi ptr [ %.pre, %bb.b ], [ %i.e, %bb.a ]
-  %i.l = getelementptr inbounds nuw [120 x i8], ptr %i.k, i64 %i.f ; 10 uses
-  %i.m = load i8, ptr %i.l, align 8, !tbaa !56, !range !10, !noundef !11 ; 2 uses
-  %2 = trunc nuw i8 %i.m to i1
-  %3 = xor i1 %2, true                            ; 2 uses
-  %4 = zext i1 %3 to i8
-  store i8 %4, ptr %i.l, align 8, !tbaa !56
+  %i.k = phi ptr [ %.pre, %bb.b ], [ %i.e, %bb.a ] ; 3 uses
+  %i.l = getelementptr inbounds nuw [120 x i8], ptr %i.k, i64 %i.f ; 9 uses
+  %i.m = load i8, ptr %i.l, align 8, !tbaa !56, !range !10, !noundef !11
+  %2 = xor i8 %i.m, 1                             ; 3 uses
+  store i8 %2, ptr %i.l, align 8, !tbaa !56
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 72 ; 2 uses
   %i.o = load i32, ptr %i.n, align 8, !tbaa !105
   %i.p = add i32 %i.o, 1
@@ -237,7 +235,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.s = load i32, ptr %i.r, align 8, !tbaa !85
   %i.t = tail call i32 @llvm.abs.i32(i32 %i.s, i1 true)
   %i.u = uitofp nneg i32 %i.t to double
-  %i.v = getelementptr inbounds nuw i8, ptr %i.l, i64 88 ; 3 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %i.l, i64 88 ; 2 uses
   %i.w = load double, ptr %i.v, align 8, !tbaa !106 ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.l, i64 96 ; 2 uses
   %i.y = load double, ptr %i.x, align 8, !tbaa !107 ; 2 uses
@@ -264,19 +262,23 @@ bb.e:                                             ; preds = %bb.d
   store i32 %i.aj, ptr %i.ag, align 8, !tbaa !110
   store i32 %i.aj, ptr %i.ad, align 4, !tbaa !109
   %i.ak = fmul double %i.w, 5.000000e-01          ; 2 uses
-  store double %i.ak, ptr %i.v, align 8, !tbaa !106
-  %5 = fcmp olt double %i.ak, %i.ab
-  br i1 %5, label %6, label %_ZN3ema6updateEd.exit
-
-6:                                                ; preds = %bb.e
-  store double %i.ab, ptr %i.v, align 8, !tbaa !106
+  %3 = fcmp olt double %i.ak, %i.ab
+  %spec.store.select.i = select i1 %3, double %i.ab, double %i.ak
+  store double %spec.store.select.i, ptr %i.v, align 8
+  %.pre54 = load ptr, ptr %i.d, align 8, !tbaa !51 ; 2 uses
+  %.phi.trans.insert = getelementptr inbounds nuw [120 x i8], ptr %.pre54, i64 %i.f
+  %.pre55 = load i8, ptr %.phi.trans.insert, align 8, !tbaa !56, !range !10
   br label %_ZN3ema6updateEd.exit
 
-_ZN3ema6updateEd.exit:                            ; preds = %bb.c, %bb.d, %bb.e, %6
-  %i.al = getelementptr inbounds nuw i8, ptr %i.l, i64 40 ; 2 uses
-  %i.am = zext i1 %3 to i64
+_ZN3ema6updateEd.exit:                            ; preds = %bb.c, %bb.d, %bb.e
+  %4 = phi i8 [ %2, %bb.c ], [ %2, %bb.d ], [ %.pre55, %bb.e ] ; 2 uses
+  %5 = phi ptr [ %i.k, %bb.c ], [ %i.k, %bb.d ], [ %.pre54, %bb.e ]
+  %6 = getelementptr inbounds nuw [120 x i8], ptr %5, i64 %i.f
+  %i.al = getelementptr inbounds nuw i8, ptr %6, i64 40 ; 2 uses
+  %i.am = zext nneg i8 %4 to i64
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %i.am
-  %i.ao = zext nneg i8 %i.m to i64
+  %7 = xor i8 %4, 1
+  %i.ao = zext nneg i8 %7 to i64
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %i.ao
   %i.aq = load ptr, ptr %i.an, align 8, !tbaa !73 ; 4 uses
   %i.ar = icmp eq ptr %i.aq, null

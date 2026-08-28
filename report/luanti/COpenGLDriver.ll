@@ -205,13 +205,10 @@ bb.p:                                             ; preds = %bb.o
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 60
   %i.by = load float, ptr %i.bx, align 4, !tbaa !116
   %i.bz = fcmp oeq float %i.bw, %i.by
-  br i1 %i.bz, label %2, label %bb.q
-
-2:                                                ; preds = %bb.p
   br label %bb.q
 
-bb.q:                                             ; preds = %2, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.lcssa = phi i1 [ false, %bb.a ], [ true, %2 ], [ false, %bb.b ], [ false, %bb.p ], [ false, %bb.c ], [ false, %bb.k ], [ false, %bb.d ], [ false, %bb.o ], [ false, %bb.e ], [ false, %bb.j ], [ false, %bb.f ], [ false, %bb.n ], [ false, %bb.g ], [ false, %bb.l ], [ false, %bb.h ], [ false, %bb.m ], [ false, %bb.i ]
+bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %.lcssa = phi i1 [ false, %bb.a ], [ false, %bb.i ], [ false, %bb.b ], [ %i.bz, %bb.p ], [ false, %bb.c ], [ false, %bb.k ], [ false, %bb.d ], [ false, %bb.o ], [ false, %bb.e ], [ false, %bb.j ], [ false, %bb.f ], [ false, %bb.n ], [ false, %bb.g ], [ false, %bb.l ], [ false, %bb.h ], [ false, %bb.m ]
   ret i1 %.lcssa
 }
 

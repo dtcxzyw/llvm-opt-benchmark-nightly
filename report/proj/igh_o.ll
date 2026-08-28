@@ -204,7 +204,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.l = fcmp ult double %0, f0x3FF0C152382D7365
-  br i1 %i.l, label %select.unfold97, label %bb.m
+  %spec.select = select i1 %i.l, i32 2, i32 3
+  br label %bb.m
 
 bb.e:                                             ; preds = %bb.b
   %i.m = fcmp ult double %1, 0.000000e+00
@@ -216,7 +217,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.o = fcmp ult double %0, f0x3FF0C152382D7365
-  br i1 %i.o, label %select.unfold99, label %bb.m
+  %spec.select159 = select i1 %i.o, i32 5, i32 6
+  br label %bb.m
 
 bb.h:                                             ; preds = %bb.e
   %i.p = fcmp ult double %1, f0xBFE6C069E29BDA5B
@@ -228,29 +230,19 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.r = fcmp ult double %0, f0x3FF921FB54442D18
-  br i1 %i.r, label %select.unfold, label %bb.m
+  %spec.select160 = select i1 %i.r, i32 8, i32 9
+  br label %bb.m
 
 bb.k:                                             ; preds = %bb.h
   br i1 %i.q, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   %i.s = fcmp ult double %0, f0x3FF921FB54442D18
-  br i1 %i.s, label %select.unfold98, label %bb.m
-
-select.unfold:                                    ; preds = %bb.j
+  %spec.select161 = select i1 %i.s, i32 11, i32 12
   br label %bb.m
 
-select.unfold97:                                  ; preds = %bb.d
-  br label %bb.m
-
-select.unfold98:                                  ; preds = %bb.l
-  br label %bb.m
-
-select.unfold99:                                  ; preds = %bb.g
-  br label %bb.m
-
-bb.m:                                             ; preds = %bb.g, %bb.l, %bb.d, %bb.j, %bb.c, %select.unfold97, %bb.f, %select.unfold99, %bb.i, %select.unfold, %bb.k, %select.unfold98
-  %.087 = phi i32 [ 10, %bb.k ], [ 9, %bb.j ], [ 3, %bb.d ], [ 1, %bb.c ], [ 12, %bb.l ], [ 6, %bb.g ], [ 4, %bb.f ], [ 7, %bb.i ], [ 8, %select.unfold ], [ 2, %select.unfold97 ], [ 11, %select.unfold98 ], [ 5, %select.unfold99 ] ; 2 uses
+bb.m:                                             ; preds = %bb.l, %bb.j, %bb.g, %bb.d, %bb.c, %bb.f, %bb.i, %bb.k
+  %.087 = phi i32 [ 10, %bb.k ], [ %spec.select160, %bb.j ], [ %spec.select, %bb.d ], [ 1, %bb.c ], [ %spec.select161, %bb.l ], [ %spec.select159, %bb.g ], [ 4, %bb.f ], [ 7, %bb.i ] ; 2 uses
   %i.t = zext nneg i32 %.087 to i64
   %i.u = getelementptr [8 x i8], ptr %i.b, i64 %i.t
   %i.v = getelementptr i8, ptr %i.u, i64 -8       ; 2 uses

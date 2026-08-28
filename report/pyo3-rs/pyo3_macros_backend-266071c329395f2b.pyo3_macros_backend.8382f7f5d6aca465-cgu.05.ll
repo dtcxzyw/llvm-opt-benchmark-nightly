@@ -1,4 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pyo3-rs/original/pyo3_macros_backend-266071c329395f2b.pyo3_macros_backend.8382f7f5d6aca465-cgu.05?download=true
+inline.NumInlined: 132
 begin_hunk_0_@_RNvXNtCsbi23obv45GP_19pyo3_macros_backend14combine_errorsINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterINtNtCskKLDkoKarTP_4core6result6ResultNtNtB4_7pyclass15FieldPyO3OptionNtNtCs1QQTzni0HOp_3syn5error5ErrorEENtB2_13CombineErrors22try_combine_syn_errorsB4_:bb.a
 .backedge:                                        ; preds = %bb.s, %bb.r
   %i.al = load ptr, ptr %i.m, align 8
@@ -200,7 +201,7 @@ bb.q:                                             ; preds = %bb.u, %.thread72, %
 
 bb.r:                                             ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterINtNtCskKLDkoKarTP_4core6result6ResultNtNtCsbi23obv45GP_19pyo3_macros_backend7pyclass17PyClassPyO3OptionNtNtCs1QQTzni0HOp_3syn5error5ErrorEENtNtNtNtB11_4iter6traits8iterator8Iterator4nextB1C_.exit
   %i.al = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 4 dereferenceable(24) %i.al, i64 24, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.al, i64 24, i1 false)
   invoke void @_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCs1QQTzni0HOp_3syn5error5ErrorE4pushCsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %i.i, ptr nonnull align 8 %i.a)
           to label %.backedge unwind label %bb.f
 
@@ -603,7 +604,7 @@ bb.q:                                             ; preds = %bb.u, %.thread77, %
 
 bb.r:                                             ; preds = %_RNvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterINtNtCskKLDkoKarTP_4core6result6ResultTRNtNtCs1QQTzni0HOp_3syn4data5FieldNtNtCsbi23obv45GP_19pyo3_macros_backend7pyclass16FieldPyO3OptionsENtNtB1E_5error5ErrorEENtNtNtNtB11_4iter6traits8iterator8Iterator4nextB2b_.exit
   %i.al = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 4 dereferenceable(24) %i.al, i64 24, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.al, i64 24, i1 false)
   invoke void @_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCs1QQTzni0HOp_3syn5error5ErrorE4pushCsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %i.i, ptr nonnull align 8 %i.a)
           to label %.backedge unwind label %bb.f
 

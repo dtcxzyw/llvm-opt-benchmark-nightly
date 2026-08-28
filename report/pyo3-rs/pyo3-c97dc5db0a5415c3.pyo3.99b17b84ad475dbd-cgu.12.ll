@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pyo3-rs/original/pyo3-c97dc5db0a5415c3.pyo3.99b17b84ad475dbd-cgu.12?download=true
+inline.NumInlined: 202
+inline.NumDeleted: 116
 begin_hunk_0_@_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsdc6yCHiM2ZJ_4pyo33err9err_state15PyErrStateInnerEBH_:bb.a
   br i1 %.not.i.i.i.i, label %bb.k, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDG_INtNtNtB4_3ops8function6FnOnceTINtNtCsdc6yCHiM2ZJ_4pyo36marker6PythonL0_EEEp6OutputNtNtNtB1N_3err9err_state22PyErrStateLazyFnOutputNtNtB4_6marker4SendNtB3m_4SyncEL_EEB1N_.exit
 
@@ -200,9 +202,9 @@ bb.c:                                             ; preds = %bb.b
 
 _RNCNvMs1_NtCsdc6yCHiM2ZJ_4pyo34syncINtB7_11GILOnceCellNtNtNtB9_7pyclass18create_type_object17PyClassTypeObjectE3set0B9_.exit: ; preds = %bb.b
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store i64 %.sroa.0.0.copyload.i, ptr %i.b, align 8, !noalias !66
   %.sroa.411.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.411.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.5.0..sroa_idx.i, i64 32, i1 false)
+  store i64 %.sroa.0.0.copyload.i, ptr %i.b, align 8, !noalias !66
   ret void
 
 bb.d:                                             ; preds = %bb.a
@@ -588,9 +590,9 @@ bb.d:                                             ; preds = %bb.a
 
 _RNvYNCINvMs0_NtNtCsG258MDvU3F_3std4sync4onceNtBb_4Once15call_once_forceNCNvMs1_NtCsdc6yCHiM2ZJ_4pyo34syncINtB1f_11GILOnceCellNtNtNtB1h_7pyclass18create_type_object17PyClassTypeObjectE3set0E0INtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB1h_.exit: ; preds = %bb.b
   %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store i64 %.sroa.0.0.copyload.i.i.i, ptr %i.b, align 8, !noalias !133
   %.sroa.411.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.411.0..sroa_idx.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.5.0..sroa_idx.i.i.i, i64 32, i1 false), !noalias !132
+  store i64 %.sroa.0.0.copyload.i.i.i, ptr %i.b, align 8, !noalias !133
   ret void
 }
 

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wasmi-rs/original/wasmi_core-9d716076194cd758.wasmi_core.40db9b99ef49cf4e-cgu.0?download=true
+inline.NumInlined: 96
+inline.NumDeleted: 57
 begin_hunk_0_@_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs5zeGauAcNNa_10wasmi_core4trap10TrapReasonEBF_:bb.a
   br i1 %i.m, label %_RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCs5zeGauAcNNa_10wasmi_core10host_error9HostErrorEL_ENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropBM_.exit5.i, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit.i4.i
 
@@ -200,7 +202,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _RINvNtNtCskKLDkoKarTP_4core5slice5index5rangeINtNtNtB6_3ops5range5RangejEECs5zeGauAcNNa_10wasmi_core.exit.i: ; preds = %bb.f
-  %i.m = sub nsw i64 %.val, %3
+  %i.m = sub nuw nsw i64 %.val, %3
   %.not.i23 = icmp ugt i64 %1, %i.m
   br i1 %.not.i23, label %bb.h, label %_RINvMNtCskKLDkoKarTP_4core5sliceSNtNtNtCs5zeGauAcNNa_10wasmi_core5table3raw6RawRef11copy_withinINtNtNtB5_3ops5range5RangejEEBB_.exit, !prof !19
 
@@ -603,7 +605,7 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !106)
   %i.l = icmp sgt i64 %i.d, -1
   tail call void @llvm.assume(i1 %i.l)
-  %i.m = sub i64 %1, %i.d
+  %i.m = sub nuw i64 %1, %i.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !108)
   %i.n = sub nsw i64 %i.j, %i.d
   %i.o = icmp ugt i64 %i.m, %i.n

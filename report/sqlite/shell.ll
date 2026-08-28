@@ -206,16 +206,15 @@ bb.h:                                             ; preds = %bb.f
 
 ._crit_edge112:                                   ; preds = %.lr.ph111, %bb.h
   %.185.lcssa = phi i64 [ %.084, %bb.h ], [ %i.bn, %.lr.ph111 ] ; 2 uses
-  %.080.lcssa = phi i32 [ %i.bc, %bb.h ], [ %i.bo, %.lr.ph111 ] ; 2 uses
-  br i1 %i.ay, label %bb.i, label %3
-
-3:                                                ; preds = %._crit_edge112
-  %4 = sub nsw i64 0, %.185.lcssa
+  %.080.lcssa = phi i32 [ %i.bc, %bb.h ], [ %i.bo, %.lr.ph111 ]
+  %3 = sub nsw i64 0, %.185.lcssa
+  %spec.select = select i1 %i.ay, i64 %.185.lcssa, i64 %3
+  %4 = add nsw i32 %.080.lcssa, -1075
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.f, %bb.g, %3, %._crit_edge112
-  %.286 = phi i64 [ %.185.lcssa, %._crit_edge112 ], [ -1, %bb.g ], [ %4, %3 ], [ %i.ba, %bb.f ] ; 2 uses
-  %.181 = phi i32 [ %.080.lcssa, %._crit_edge112 ], [ -1996, %bb.g ], [ %.080.lcssa, %3 ], [ 0, %bb.f ] ; 2 uses
+bb.i:                                             ; preds = %._crit_edge112, %bb.f, %bb.g
+  %.286 = phi i64 [ %spec.select, %._crit_edge112 ], [ -1, %bb.g ], [ %i.ba, %bb.f ] ; 2 uses
+  %.181 = phi i32 [ %4, %._crit_edge112 ], [ -3071, %bb.g ], [ -1075, %bb.f ] ; 2 uses
   %i.bv = tail call ptr @sqlite3_user_data(ptr noundef %0) #45
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !17
   switch i32 %i.bw, label %bb.m [
@@ -225,8 +224,7 @@ bb.i:                                             ; preds = %bb.f, %bb.g, %3, %.
   ]
 
 bb.j:                                             ; preds = %bb.i
-  %5 = add nsw i32 %.181, -1075
-  %i.bx = call ptr (i32, ptr, ptr, ...) @sqlite3_snprintf(i32 noundef 100, ptr noundef nonnull %i.a, ptr noundef nonnull @.str.315, i64 noundef %.286, i32 noundef %5) #45 ; 0 uses
+  %i.bx = call ptr (i32, ptr, ptr, ...) @sqlite3_snprintf(i32 noundef 100, ptr noundef nonnull %i.a, ptr noundef nonnull @.str.315, i64 noundef %.286, i32 noundef %.181) #45 ; 0 uses
   call void @sqlite3_result_text(ptr noundef %0, ptr noundef nonnull %i.a, i32 noundef -1, ptr noundef nonnull inttoptr (i64 -1 to ptr)) #45
   br label %bb.m
 
@@ -235,8 +233,7 @@ bb.k:                                             ; preds = %bb.i
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.i
-  %6 = add nsw i32 %.181, -1075
-  tail call void @sqlite3_result_int(ptr noundef %0, i32 noundef %6) #45
+  tail call void @sqlite3_result_int(ptr noundef %0, i32 noundef %.181) #45
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j, %bb.i
@@ -639,18 +636,14 @@ bb.s:                                             ; preds = %bb.r
   %i.bo = tail call double @llvm.fabs.f64(double %i.bl)
   %i.bp = fcmp ole double %i.bo, f0x43E0000000000000
   %or.cond3 = and i1 %i.bn, %i.bp
-  br i1 %or.cond3, label %5, label %seriesRealToI64.exit
+  br i1 %or.cond3, label %bb.t, label %seriesRealToI64.exit
 
-5:                                                ; preds = %bb.s
-  %6 = fcmp olt double %i.bl, f0xC3DFFFFFFFFFFFFF
-  br i1 %6, label %seriesRealToI64.exit.thread, label %7
-
-7:                                                ; preds = %5
-  %8 = fcmp ogt double %i.bl, f0x43DFFFFFFFFFFFFF
-  br i1 %8, label %seriesRealToI64.exit.thread, label %bb.t
-
-bb.t:                                             ; preds = %7
-  %i.bq = fptosi double %i.bl to i64              ; 2 uses
+bb.t:                                             ; preds = %bb.s
+  %5 = fcmp olt double %i.bl, f0xC3DFFFFFFFFFFFFF
+  %6 = fcmp ogt double %i.bl, f0x43DFFFFFFFFFFFFF
+  %i.bq = fptosi double %i.bl to i64
+  %spec.select.i = select i1 %6, i64 9223372036854775807, i64 %i.bq
+  %.0.i = select i1 %5, i64 -9223372036854775808, i64 %spec.select.i ; 2 uses
   br label %seriesRealToI64.exit.thread
 
 bb.u:                                             ; preds = %bb.r
@@ -668,41 +661,31 @@ bb.w:                                             ; preds = %bb.v
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !154
   %i.bw = tail call i32 @sqlite3_value_numeric_type(ptr noundef %i.bv) #45
   %i.bx = icmp eq i32 %i.bw, 2
-  %i.by = add nuw nsw i32 %.3226, 1               ; 6 uses
+  %i.by = add nuw nsw i32 %.3226, 1               ; 5 uses
   %i.bz = load ptr, ptr %i.bu, align 8, !tbaa !154 ; 2 uses
   br i1 %i.bx, label %bb.x, label %bb.aa
 
 bb.x:                                             ; preds = %bb.w
-  %i.ca = tail call double @sqlite3_value_double(ptr noundef %i.bz) #45 ; 5 uses
+  %i.ca = tail call double @sqlite3_value_double(ptr noundef %i.bz) #45 ; 4 uses
   %i.cb = fcmp ugt double %i.ca, f0xC3E0000000000000
   br i1 %i.cb, label %bb.y, label %.thread291
 
 bb.y:                                             ; preds = %bb.x
   %i.cc = fcmp ogt double %i.ca, f0x43E0000000000000
-  br i1 %i.cc, label %seriesRealToI64.exit, label %9
+  br i1 %i.cc, label %seriesRealToI64.exit, label %seriesRealToI64.exit277
 
-9:                                                ; preds = %bb.y
-  %10 = tail call noundef double @llvm.ceil.f64(double %i.ca) ; 5 uses
-  %11 = fcmp olt double %10, f0xC3DFFFFFFFFFFFFF
-  br i1 %11, label %seriesRealToI64.exit277.thread, label %seriesRealToI64.exit277
-
-seriesRealToI64.exit277:                          ; preds = %9
-  %i.cd = fcmp ogt double %10, f0x43DFFFFFFFFFFFFF
-  %i.ce = fptosi double %10 to i64
-  %.0.i276 = select i1 %i.cd, i64 9223372036854775807, i64 %i.ce ; 3 uses
+seriesRealToI64.exit277:                          ; preds = %bb.y
+  %7 = tail call noundef double @llvm.ceil.f64(double %i.ca) ; 4 uses
+  %8 = fcmp olt double %7, f0xC3DFFFFFFFFFFFFF
+  %i.cd = fcmp ogt double %7, f0x43DFFFFFFFFFFFFF
+  %i.ce = fptosi double %7 to i64
+  %spec.select.i276 = select i1 %i.cd, i64 9223372036854775807, i64 %i.ce
+  %.0.i276 = select i1 %8, i64 -9223372036854775808, i64 %spec.select.i276 ; 3 uses
   %i.cf = and i32 %1, 512
   %.not258 = icmp ne i32 %i.cf, 0
-  %i.cg = fcmp oeq double %i.ca, %10
+  %i.cg = fcmp oeq double %i.ca, %7
   %or.cond313 = and i1 %.not258, %i.cg
   br i1 %or.cond313, label %bb.z, label %.thread291
-
-seriesRealToI64.exit277.thread:                   ; preds = %9
-  %12 = and i32 %1, 512
-  %.not258340 = icmp ne i32 %12, 0
-  %13 = fcmp oeq double %i.ca, %10
-  %or.cond313341 = and i1 %.not258340, %13
-  %spec.select = select i1 %or.cond313341, i64 -9223372036854775807, i64 -9223372036854775808
-  br label %.thread291
 
 bb.z:                                             ; preds = %seriesRealToI64.exit277
   %i.ch = icmp eq i64 %.0.i276, 9223372036854775807
@@ -723,9 +706,9 @@ bb.ac:                                            ; preds = %bb.ab
   %i.cm = add nsw i64 %i.cj, 1
   br label %.thread291
 
-.thread291:                                       ; preds = %seriesRealToI64.exit277.thread, %seriesRealToI64.exit277, %bb.x, %bb.z, %bb.ac, %bb.aa, %bb.v
-  %.4227 = phi i32 [ %.3226, %bb.v ], [ %i.by, %bb.ac ], [ %i.by, %bb.aa ], [ %i.by, %bb.z ], [ %i.by, %bb.x ], [ %i.by, %seriesRealToI64.exit277 ], [ %i.by, %seriesRealToI64.exit277.thread ]
-  %.3220 = phi i64 [ -9223372036854775808, %bb.v ], [ %i.cm, %bb.ac ], [ %i.cj, %bb.aa ], [ %i.ci, %bb.z ], [ -9223372036854775808, %bb.x ], [ %.0.i276, %seriesRealToI64.exit277 ], [ %spec.select, %seriesRealToI64.exit277.thread ] ; 2 uses
+.thread291:                                       ; preds = %seriesRealToI64.exit277, %bb.x, %bb.z, %bb.ac, %bb.aa, %bb.v
+  %.4227 = phi i32 [ %.3226, %bb.v ], [ %i.by, %bb.ac ], [ %i.by, %bb.aa ], [ %i.by, %bb.z ], [ %i.by, %bb.x ], [ %i.by, %seriesRealToI64.exit277 ]
+  %.3220 = phi i64 [ -9223372036854775808, %bb.v ], [ %i.cm, %bb.ac ], [ %i.cj, %bb.aa ], [ %i.ci, %bb.z ], [ -9223372036854775808, %bb.x ], [ %.0.i276, %seriesRealToI64.exit277 ] ; 2 uses
   %i.cn = and i32 %1, 12288
   %.not259 = icmp eq i32 %i.cn, 0
   br i1 %.not259, label %.thread296, label %bb.ad
@@ -740,46 +723,30 @@ bb.ad:                                            ; preds = %.thread291
   br i1 %i.cs, label %bb.ae, label %bb.ah
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.cu = tail call double @sqlite3_value_double(ptr noundef %i.ct) #45 ; 5 uses
+  %i.cu = tail call double @sqlite3_value_double(ptr noundef %i.ct) #45 ; 4 uses
   %i.cv = fcmp ult double %i.cu, f0x43E0000000000000
   br i1 %i.cv, label %bb.af, label %.thread296
 
 bb.af:                                            ; preds = %bb.ae
   %i.cw = fcmp ugt double %i.cu, f0xC3E0000000000000
-  br i1 %i.cw, label %14, label %seriesRealToI64.exit
+  br i1 %i.cw, label %seriesRealToI64.exit279, label %seriesRealToI64.exit
 
-14:                                               ; preds = %bb.af
-  %15 = tail call noundef double @llvm.floor.f64(double %i.cu) ; 5 uses
-  %16 = fcmp olt double %15, f0xC3DFFFFFFFFFFFFF
-  br i1 %16, label %seriesRealToI64.exit279, label %17
-
-17:                                               ; preds = %14
-  %18 = fcmp ogt double %15, f0x43DFFFFFFFFFFFFF
-  br i1 %18, label %seriesRealToI64.exit279.thread, label %19
-
-19:                                               ; preds = %17
-  %20 = fptosi double %15 to i64
-  br label %seriesRealToI64.exit279
-
-seriesRealToI64.exit279:                          ; preds = %14, %19
-  %.0.i278 = phi i64 [ %20, %19 ], [ -9223372036854775808, %14 ] ; 3 uses
+seriesRealToI64.exit279:                          ; preds = %bb.af
+  %9 = tail call noundef double @llvm.floor.f64(double %i.cu) ; 4 uses
+  %10 = fcmp olt double %9, f0xC3DFFFFFFFFFFFFF
+  %11 = fcmp ogt double %9, f0x43DFFFFFFFFFFFFF
+  %12 = fptosi double %9 to i64
+  %spec.select.i278 = select i1 %11, i64 9223372036854775807, i64 %12
+  %.0.i279 = select i1 %10, i64 -9223372036854775808, i64 %spec.select.i278 ; 3 uses
   %i.cx = and i32 %1, 8192
   %.not261 = icmp ne i32 %i.cx, 0
-  %i.cy = fcmp oeq double %i.cu, %15
+  %i.cy = fcmp oeq double %i.cu, %9
   %or.cond314 = and i1 %.not261, %i.cy
   br i1 %or.cond314, label %bb.ag, label %.thread296
 
-seriesRealToI64.exit279.thread:                   ; preds = %17
-  %21 = and i32 %1, 8192
-  %.not261346 = icmp ne i32 %21, 0
-  %22 = fcmp oeq double %i.cu, %15
-  %or.cond314347 = and i1 %.not261346, %22
-  %spec.select360 = select i1 %or.cond314347, i64 9223372036854775806, i64 9223372036854775807
-  br label %.thread296
-
 bb.ag:                                            ; preds = %seriesRealToI64.exit279
-  %i.cz = icmp eq i64 %.0.i278, -9223372036854775808
-  %i.da = add nsw i64 %.0.i278, -1
+  %i.cz = icmp eq i64 %.0.i279, -9223372036854775808
+  %i.da = add nsw i64 %.0.i279, -1
   br i1 %i.cz, label %seriesRealToI64.exit, label %.thread296
 
 bb.ah:                                            ; preds = %bb.ad
@@ -796,14 +763,14 @@ bb.aj:                                            ; preds = %bb.ai
   %i.de = add nsw i64 %i.db, -1
   br label %.thread296
 
-.thread296:                                       ; preds = %seriesRealToI64.exit279.thread, %seriesRealToI64.exit279, %bb.ae, %bb.ag, %bb.aj, %bb.ah, %.thread291
-  %.3215 = phi i64 [ 9223372036854775807, %.thread291 ], [ %i.de, %bb.aj ], [ %i.db, %bb.ah ], [ %i.da, %bb.ag ], [ 9223372036854775807, %bb.ae ], [ %.0.i278, %seriesRealToI64.exit279 ], [ %spec.select360, %seriesRealToI64.exit279.thread ] ; 2 uses
+.thread296:                                       ; preds = %seriesRealToI64.exit279, %bb.ae, %bb.ag, %bb.aj, %bb.ah, %.thread291
+  %.3215 = phi i64 [ 9223372036854775807, %.thread291 ], [ %i.de, %bb.aj ], [ %i.db, %bb.ah ], [ %i.da, %bb.ag ], [ 9223372036854775807, %bb.ae ], [ %.0.i279, %seriesRealToI64.exit279 ] ; 2 uses
   %i.df = icmp sgt i64 %.3220, %.3215
   br i1 %i.df, label %seriesRealToI64.exit, label %seriesRealToI64.exit.thread
 
-seriesRealToI64.exit.thread:                      ; preds = %bb.t, %7, %5, %.thread296, %bb.u
-  %.4221 = phi i64 [ %.3220, %.thread296 ], [ %i.br, %bb.u ], [ 9223372036854775807, %7 ], [ -9223372036854775808, %5 ], [ %i.bq, %bb.t ] ; 5 uses
-  %.4216 = phi i64 [ %.3215, %.thread296 ], [ %i.br, %bb.u ], [ 9223372036854775807, %7 ], [ -9223372036854775808, %5 ], [ %i.bq, %bb.t ] ; 5 uses
+seriesRealToI64.exit.thread:                      ; preds = %bb.t, %.thread296, %bb.u
+  %.4221 = phi i64 [ %.0.i, %bb.t ], [ %i.br, %bb.u ], [ %.3220, %.thread296 ] ; 5 uses
+  %.4216 = phi i64 [ %.0.i, %bb.t ], [ %i.br, %bb.u ], [ %.3215, %.thread296 ] ; 5 uses
   %i.dg = load i8, ptr %i.aq, align 8, !tbaa !919
   %i.dh = icmp eq i8 %i.dg, 0
   %i.di = load i64, ptr %i.ag, align 8, !tbaa !916 ; 6 uses

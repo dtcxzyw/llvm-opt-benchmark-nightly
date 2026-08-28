@@ -204,13 +204,10 @@ bb.c:                                             ; preds = %bb.b
   %i.ge = fcmp uge float %i.gd, %i.ba
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
-  br i1 %i.ge, label %5, label %.loopexit
-
-5:                                                ; preds = %bb.c
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.preheader, %bb.b, %bb.c, %5, %bb.a
-  %.3 = phi i1 [ false, %bb.a ], [ false, %.preheader ], [ true, %5 ], [ false, %bb.b ], [ false, %bb.c ]
+.loopexit:                                        ; preds = %bb.c, %.preheader, %bb.b, %bb.a
+  %.3 = phi i1 [ false, %bb.a ], [ false, %.preheader ], [ %i.ge, %bb.c ], [ false, %bb.b ]
   ret i1 %.3
 }
 

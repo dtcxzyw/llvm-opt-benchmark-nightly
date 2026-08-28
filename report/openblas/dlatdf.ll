@@ -85,16 +85,15 @@ bb.c:                                             ; preds = %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph
   %i.al = fadd double %i.u, -1.000000e+00
-  %i.am = fcmp ogt double %i.ag, %i.ai
-  br i1 %i.am, label %bb.e, label %9
-
-9:                                                ; preds = %bb.d
-  %10 = fadd double %.0160170, %i.ah
+  %i.am = fcmp ogt double %i.ag, %i.ai            ; 2 uses
+  %9 = fadd double %.0160170, %i.ah
+  %spec.select = select i1 %i.am, double %i.al, double %9
+  %spec.select204 = select i1 %i.am, double %.0160170, double 1.000000e+00
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %9, %bb.c
-  %.sink = phi double [ %i.ak, %bb.c ], [ %10, %9 ], [ %i.al, %bb.d ] ; 2 uses
-  %.1 = phi double [ %.0160170, %bb.c ], [ 1.000000e+00, %9 ], [ %.0160170, %bb.d ]
+bb.e:                                             ; preds = %bb.d, %bb.c
+  %.sink = phi double [ %i.ak, %bb.c ], [ %spec.select, %bb.d ] ; 2 uses
+  %.1 = phi double [ %.0160170, %bb.c ], [ %spec.select204, %bb.d ]
   store double %.sink, ptr %i.t, align 8, !tbaa !9
   %i.an = fneg double %.sink
   store double %i.an, ptr %i.d, align 8, !tbaa !9

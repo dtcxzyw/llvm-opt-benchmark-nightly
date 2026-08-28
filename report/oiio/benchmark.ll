@@ -205,13 +205,11 @@ bb.a:
 .preheader.3:                                     ; preds = %.preheader.2
   %i.y = fmul double %i.m, 1.000000e+03
   %i.z = fcmp ogt double %i.y, 1.000000e+04
-  br i1 %i.z, label %4, label %.critedge
-
-4:                                                ; preds = %.preheader.3
+  %spec.select = select i1 %i.z, i32 4, i32 3
   br label %.critedge
 
-.critedge:                                        ; preds = %.preheader.preheader, %.preheader.2, %.preheader.3, %4, %bb.a
-  %.153 = phi i32 [ %i.s, %bb.a ], [ 4, %4 ], [ 0, %.preheader.preheader ], [ 2, %.preheader.2 ], [ 3, %.preheader.3 ] ; 2 uses
+.critedge:                                        ; preds = %.preheader.3, %.preheader.preheader, %.preheader.2, %bb.a
+  %.153 = phi i32 [ %i.s, %bb.a ], [ %spec.select, %.preheader.3 ], [ 0, %.preheader.preheader ], [ 2, %.preheader.2 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #29
   %i.aa = sext i32 %.153 to i64                   ; 2 uses
   %i.ab = getelementptr inbounds [8 x i8], ptr @_ZZN11OpenImageIO4v3_1lsERSoRKNS0_11BenchmarkerEE9unitnames, i64 %i.aa
@@ -614,8 +612,8 @@ bb.ah:                                            ; preds = %bb.ag
   unreachable
 
 _ZN3fmt3v126detail9allocatorIjE8allocateEm.exit.i1234: ; preds = %bb.ah
-  %i.kq = shl i64 %i.jl, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ko, ptr nonnull align 4 %i.jp, i64 %i.kq, i1 false)
+  %i.kq = shl nuw nsw i64 %i.jl, 2
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ko, ptr noundef nonnull align 4 dereferenceable(1) %i.jp, i64 %i.kq, i1 false)
   store ptr %i.ko, ptr %5, align 8, !tbaa !374
   store i64 %.0.i1232, ptr %i.a, align 8, !tbaa !375
   %.not.i1235 = icmp eq ptr %i.jp, %i.d

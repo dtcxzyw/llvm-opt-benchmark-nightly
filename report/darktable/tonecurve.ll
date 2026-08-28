@@ -79,13 +79,11 @@ bb.b:                                             ; preds = %._crit_edge.i
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.n
   %i.p = load double, ptr %i.o, align 8, !tbaa !18
   %i.q = fcmp reassoc nsz arcp contract afn ugt double %i.p, %1
-  br i1 %i.q, label %._crit_edge.thread.i, label %2
-
-2:                                                ; preds = %bb.b
+  %spec.select.i = select i1 %i.q, i32 %.044..0.i, i32 %.0..042.i
   br label %._crit_edge.thread.i
 
-._crit_edge.thread.i:                             ; preds = %2, %bb.b, %._crit_edge.i, %.preheader.i
-  %.1.i = phi i32 [ %.0..042.i, %2 ], [ %.044..0.i, %bb.b ], [ %.044..0.i, %._crit_edge.i ], [ 0, %.preheader.i ] ; 3 uses
+._crit_edge.thread.i:                             ; preds = %bb.b, %._crit_edge.i, %.preheader.i
+  %.1.i = phi i32 [ %.044..0.i, %._crit_edge.i ], [ %spec.select.i, %bb.b ], [ 0, %.preheader.i ] ; 3 uses
   %i.r = zext i32 %.1.i to i64                    ; 3 uses
   %i.s = add nsw i32 %i.e, -1
   %i.t = icmp eq i32 %.1.i, %i.s
@@ -164,13 +162,11 @@ bb.b:                                             ; preds = %._crit_edge.i
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.n
   %i.p = load double, ptr %i.o, align 8, !tbaa !18
   %i.q = fcmp reassoc nsz arcp contract afn ugt double %i.p, %1
-  br i1 %i.q, label %._crit_edge.thread.i, label %2
-
-2:                                                ; preds = %bb.b
+  %spec.select.i = select i1 %i.q, i32 %.044..0.i, i32 %.0..042.i
   br label %._crit_edge.thread.i
 
-._crit_edge.thread.i:                             ; preds = %2, %bb.b, %._crit_edge.i, %.preheader.i
-  %.1.i = phi i32 [ %.0..042.i, %2 ], [ %.044..0.i, %bb.b ], [ %.044..0.i, %._crit_edge.i ], [ 0, %.preheader.i ] ; 3 uses
+._crit_edge.thread.i:                             ; preds = %bb.b, %._crit_edge.i, %.preheader.i
+  %.1.i = phi i32 [ %.044..0.i, %._crit_edge.i ], [ %spec.select.i, %bb.b ], [ 0, %.preheader.i ] ; 3 uses
   %i.r = zext i32 %.1.i to i64                    ; 3 uses
   %i.s = add nsw i32 %i.e, -1
   %i.t = icmp eq i32 %.1.i, %i.s

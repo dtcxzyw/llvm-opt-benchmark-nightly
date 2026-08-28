@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/yara-x-rs/original/yara_x_proto-a6df2c06781ea95b.yara_x_proto.f1622c5365b6210a-cgu.15?download=true
+inline.NumInlined: 146
+inline.NumDeleted: 69
 begin_hunk_0_@_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringBN_NtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE6insertCskIStwd7HrDO_12yara_x_proto:bb.a
   %i.ax = load i8, ptr %i.aw, align 1, !noalias !123, !noundef !5
   %i.ay = and i8 %i.ax, 1
@@ -200,8 +202,8 @@ bb.s:                                             ; preds = %bb.h
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.h, %bb.s
-  %.sroa.014.0 = phi ptr [ %i.au, %bb.s ], [ inttoptr (i64 1 to ptr), %bb.h ]
   %.sroa.315.0 = phi i64 [ %i.aw, %bb.s ], [ 0, %bb.h ] ; 2 uses
+  %.sroa.014.0 = phi ptr [ %i.au, %bb.s ], [ inttoptr (i64 1 to ptr), %bb.h ]
   %spec.store.select = tail call i64 @llvm.umin.i64(i64 %i.ab, i64 %.sroa.315.0)
   %i.ax = tail call i32 @memcmp(ptr nonnull %i.z, ptr nonnull %.sroa.014.0, i64 %spec.store.select) ; 2 uses
   %i.ay = sext i32 %i.ax to i64

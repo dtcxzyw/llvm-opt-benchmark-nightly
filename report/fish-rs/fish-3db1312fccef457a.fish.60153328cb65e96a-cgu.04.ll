@@ -205,20 +205,16 @@ bb.ab:                                            ; preds = %bb.v
   %i.cu = fcmp oeq double %i.cs, %i.ct
   br label %bb.ac
 
-bb.ac:                                            ; preds = %10, %bb.ag, %7, %bb.af, %bb.ae, %4, %bb.ad, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v
-  %.sroa.04.2.i = phi i1 [ %i.cu, %bb.ab ], [ %i.cp, %bb.z ], [ %.sroa.014.0.i, %bb.w ], [ false, %bb.v ], [ %i.cl, %bb.x ], [ %i.cn, %bb.y ], [ false, %bb.ad ], [ %5, %4 ], [ %i.cr, %bb.aa ], [ %i.cz, %bb.ae ], [ %8, %7 ], [ false, %bb.af ], [ true, %10 ], [ false, %bb.ag ]
+bb.ac:                                            ; preds = %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v
+  %.sroa.04.2.i = phi i1 [ %i.cu, %bb.ab ], [ %i.cp, %bb.z ], [ %.sroa.014.0.i, %bb.w ], [ false, %bb.v ], [ %i.cl, %bb.x ], [ %i.cn, %bb.y ], [ %spec.select25.i, %bb.ad ], [ %3, %bb.ag ], [ %i.cr, %bb.aa ], [ %i.cz, %bb.ae ], [ %spec.select.i, %bb.af ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !5171
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !5171
   br label %_RNvNtNtNtCs8frGy5WneL6_4fish8builtins4test16test_expressions23binary_primary_evaluate.exit
 
 bb.ad:                                            ; preds = %bb.x
-  %i.cv = load double, ptr %i.s, align 8, !noalias !5171, !noundef !4 ; 2 uses
-  %i.cw = load double, ptr %i.t, align 8, !noalias !5171, !noundef !4 ; 2 uses
-  %3 = fcmp ugt double %i.cv, %i.cw
-  br i1 %3, label %4, label %bb.ac
-
-4:                                                ; preds = %bb.ad
-  %5 = fcmp oge double %i.cv, %i.cw
+  %i.cv = load double, ptr %i.s, align 8, !noalias !5171, !noundef !4
+  %i.cw = load double, ptr %i.t, align 8, !noalias !5171, !noundef !4
+  %spec.select25.i = fcmp ogt double %i.cv, %i.cw
   br label %bb.ac
 
 bb.ae:                                            ; preds = %bb.y
@@ -228,22 +224,15 @@ bb.ae:                                            ; preds = %bb.y
   br label %bb.ac
 
 bb.af:                                            ; preds = %bb.z
-  %i.da = load double, ptr %i.s, align 8, !noalias !5171, !noundef !4 ; 2 uses
-  %i.db = load double, ptr %i.t, align 8, !noalias !5171, !noundef !4 ; 2 uses
-  %6 = fcmp ugt double %i.da, %i.db
-  br i1 %6, label %bb.ac, label %7
-
-7:                                                ; preds = %bb.af
-  %8 = fcmp ult double %i.da, %i.db
+  %i.da = load double, ptr %i.s, align 8, !noalias !5171, !noundef !4
+  %i.db = load double, ptr %i.t, align 8, !noalias !5171, !noundef !4
+  %spec.select.i = fcmp olt double %i.da, %i.db
   br label %bb.ac
 
 bb.ag:                                            ; preds = %bb.aa
   %i.dc = load double, ptr %i.s, align 8, !noalias !5171, !noundef !4
   %i.dd = load double, ptr %i.t, align 8, !noalias !5171, !noundef !4
-  %9 = fcmp ugt double %i.dc, %i.dd
-  br i1 %9, label %bb.ac, label %10
-
-10:                                               ; preds = %bb.ag
+  %3 = fcmp ole double %i.dc, %i.dd
   br label %bb.ac
 
 _RNvNtNtNtCs8frGy5WneL6_4fish8builtins4test16test_expressions23binary_primary_evaluate.exit: ; preds = %_RNvXsf_NtNtCs8frGy5WneL6_4fish5wutil6fileidNtB5_6FileIdNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit.i, %bb.o, %bb.p, %bb.q, %bb.r, %bb.t, %bb.ac

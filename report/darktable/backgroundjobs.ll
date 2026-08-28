@@ -202,19 +202,11 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load double, ptr %i.d, align 8, !tbaa !91 ; 3 uses
   %i.f = fcmp reassoc nsz arcp contract afn ogt double %i.e, 1.000000e+00
-  br i1 %i.f, label %4, label %1
-
-1:                                                ; preds = %bb.a
-  %2 = fcmp reassoc nsz arcp contract afn olt double %i.e, 0.000000e+00
-  br i1 %2, label %4, label %3
-
-3:                                                ; preds = %1
-  br label %4
-
-4:                                                ; preds = %3, %1, %bb.a
-  %5 = phi reassoc nsz arcp contract afn double [ 1.000000e+00, %bb.a ], [ %i.e, %3 ], [ 0.000000e+00, %1 ]
-  tail call void @gtk_progress_bar_set_fraction(ptr noundef %i.c, double noundef %5) #10
-  tail call void @free(ptr noundef nonnull %0) #10
+  %1 = fcmp reassoc nsz arcp contract afn olt double %i.e, 0.000000e+00
+  %spec.select = select reassoc nsz arcp contract afn i1 %1, double 0.000000e+00, double %i.e
+  %2 = select reassoc nsz arcp contract afn i1 %i.f, double 1.000000e+00, double %spec.select
+  tail call void @gtk_progress_bar_set_fraction(ptr noundef %i.c, double noundef %2) #10
+  tail call void @free(ptr noundef %0) #10
   ret i32 0
 }
 

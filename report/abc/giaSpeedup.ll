@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %.lr.ph407, %bb.p
 
 bb.m:                                             ; preds = %.lr.ph403, %bb.o
   %indvars.iv455 = phi i64 [ 0, %.lr.ph403 ], [ %indvars.iv.next456, %bb.o ] ; 2 uses
-  %.1242402 = phi i32 [ %.0241405, %.lr.ph403 ], [ %.2243, %bb.o ] ; 3 uses
+  %.1242402 = phi i32 [ %.0241405, %.lr.ph403 ], [ %.2243, %bb.o ] ; 2 uses
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.ax, i64 %indvars.iv455
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !8  ; 2 uses
   %i.ba = sext i32 %i.az to i64
@@ -225,14 +225,12 @@ bb.n:                                             ; preds = %bb.m
   %i.bh = getelementptr i8, ptr %i.bg, i64 8
   %i.bi = load float, ptr %i.bh, align 4, !tbaa !50
   %i.bj = fcmp olt float %i.bi, %i.j
-  br i1 %i.bj, label %5, label %bb.o
-
-5:                                                ; preds = %bb.n
-  %6 = add nsw i32 %.1242402, 1
+  %5 = zext i1 %i.bj to i32
+  %spec.select = add nsw i32 %.1242402, %5
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.m, %bb.n, %5
-  %.2243 = phi i32 [ %.1242402, %bb.m ], [ %6, %5 ], [ %.1242402, %bb.n ] ; 2 uses
+bb.o:                                             ; preds = %bb.n, %bb.m
+  %.2243 = phi i32 [ %.1242402, %bb.m ], [ %spec.select, %bb.n ] ; 2 uses
   %indvars.iv.next456 = add nuw nsw i64 %indvars.iv455, 1 ; 2 uses
   %exitcond459.not = icmp eq i64 %indvars.iv.next456, %wide.trip.count458
   br i1 %exitcond459.not, label %.critedge, label %bb.m, !llvm.loop !124

@@ -205,7 +205,7 @@ _RNvMsi_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree3mapINtB5_8BTreeMapTjNtNtBb
   %i.nc = uitofp i64 %i.na to float
   %i.nd = uitofp i64 %i.nb to float
   %i.ne = fdiv float %i.nc, %i.nd
-  %4 = fcmp ule float %i.ne, 4.000000e-01
+  %4 = fcmp ogt float %i.ne, 4.000000e-01
   %i.nf = sub nuw i64 %i.nb, %i.na
   br i1 %i.mz, label %.lr.ph.i.split.us.i, label %.lr.ph.i.split.i
 
@@ -277,11 +277,7 @@ bb.ay:                                            ; preds = %_RNCNvMs1_NtNtCsfu0
   br i1 %.not12.i.us.i, label %_RNvMs1_NtNtCsfu0rQaTkGUu_12clap_builder6output13help_templateNtB5_12HelpTemplate14will_args_wrap.exit, label %.lr.ph.i.split.us.split.i
 
 .lr.ph.i.split.i:                                 ; preds = %.loopexit
-  br i1 %i.mx, label %.lr.ph.i.split.split.us.i, label %.lr.ph.i.split.split.preheader.i
-
-.lr.ph.i.split.split.preheader.i:                 ; preds = %.lr.ph.i.split.i
-  %brmerge.i = select i1 %.not9.i.i.i.i.i.i, i1 true, i1 %4
-  br label %.lr.ph.i.split.split.i
+  br i1 %i.mx, label %.lr.ph.i.split.split.us.i, label %.lr.ph.i.split.split.i
 
 .lr.ph.i.split.split.us.i:                        ; preds = %.lr.ph.i.split.i, %.backedge.i.us17.i
   %i.nw = phi ptr [ %i.od, %.backedge.i.us17.i ], [ %1, %.lr.ph.i.split.i ] ; 2 uses
@@ -315,8 +311,8 @@ bb.az:                                            ; preds = %_RNCNvMs1_NtNtCsfu0
   %.not12.i.us18.i = icmp eq ptr %i.od, %i.x
   br i1 %.not12.i.us18.i, label %_RNvMs1_NtNtCsfu0rQaTkGUu_12clap_builder6output13help_templateNtB5_12HelpTemplate14will_args_wrap.exit, label %.lr.ph.i.split.split.us.i
 
-.lr.ph.i.split.split.i:                           ; preds = %.backedge.i.i, %.lr.ph.i.split.split.preheader.i
-  %i.oe = phi ptr [ %i.of, %.backedge.i.i ], [ %1, %.lr.ph.i.split.split.preheader.i ] ; 2 uses
+.lr.ph.i.split.split.i:                           ; preds = %.lr.ph.i.split.i, %.backedge.i.i
+  %i.oe = phi ptr [ %i.of, %.backedge.i.i ], [ %1, %.lr.ph.i.split.i ] ; 2 uses
   %i.of = getelementptr inbounds nuw i8, ptr %i.oe, i64 8 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !3614)
   %i.og = load ptr, ptr %i.oe, align 8, !alias.scope !3615, !noalias !3616, !nonnull !13, !align !239, !noundef !13 ; 4 uses
@@ -355,15 +351,16 @@ bb.ba:                                            ; preds = %_RNCNvMs1_NtNtCsfu0
   %.sroa.03.0.val10.i.i.i.i.i.i = load i64, ptr %i.ot, align 8, !noalias !3625, !noundef !13
   %i.ou = call fastcc noundef i64 @_RNvMNtNtCsfu0rQaTkGUu_12clap_builder7builder10styled_strNtB2_9StyledStr13display_width(ptr nonnull %.sroa.03.0.val.i.i.i.i.i.i, i64 %.sroa.03.0.val10.i.i.i.i.i.i) #42, !noalias !3633
   %i.ov = call fastcc noundef i64 @_RNvNtNtNtCsfu0rQaTkGUu_12clap_builder6output8textwrap4core13display_width(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ok, i64 noundef %i.ol) #42, !noalias !3634
-  br i1 %brmerge.i, label %_RNvMs1_NtNtCsfu0rQaTkGUu_12clap_builder6output13help_templateNtB5_12HelpTemplate18arg_next_line_help.exit.i.i.i.i.i, label %bb.bb
+  br i1 %.not9.i.i.i.i.i.i, label %_RNvMs1_NtNtCsfu0rQaTkGUu_12clap_builder6output13help_templateNtB5_12HelpTemplate18arg_next_line_help.exit.i.i.i.i.i, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
   %i.ow = add i64 %i.ov, %i.ou
   %i.ox = icmp ugt i64 %i.ow, %i.nf
+  %spec.select.i = select i1 %4, i1 %i.ox, i1 false
   br label %_RNvMs1_NtNtCsfu0rQaTkGUu_12clap_builder6output13help_templateNtB5_12HelpTemplate18arg_next_line_help.exit.i.i.i.i.i
 
 _RNvMs1_NtNtCsfu0rQaTkGUu_12clap_builder6output13help_templateNtB5_12HelpTemplate18arg_next_line_help.exit.i.i.i.i.i: ; preds = %bb.bb, %bb.ba, %_RNCNvMs1_NtNtCsfu0rQaTkGUu_12clap_builder6output13help_templateNtB7_12HelpTemplate14will_args_wrap0Bb_.exit.thread.i.i.i
-  %.sroa.0.0.i.i.i.i.i.i = phi i1 [ false, %bb.ba ], [ %i.ox, %bb.bb ], [ true, %_RNCNvMs1_NtNtCsfu0rQaTkGUu_12clap_builder6output13help_templateNtB7_12HelpTemplate14will_args_wrap0Bb_.exit.thread.i.i.i ]
+  %.sroa.0.0.i.i.i.i.i.i = phi i1 [ false, %bb.ba ], [ %spec.select.i, %bb.bb ], [ true, %_RNCNvMs1_NtNtCsfu0rQaTkGUu_12clap_builder6output13help_templateNtB7_12HelpTemplate14will_args_wrap0Bb_.exit.thread.i.i.i ]
   call void @llvm.experimental.noalias.scope.decl(metadata !3621)
   %.val.i.i.i.i.i.i = load i64, ptr %i.q, align 8, !range !14, !alias.scope !3621, !noalias !3617, !noundef !13 ; 2 uses
   %i.oy = icmp eq i64 %.val.i.i.i.i.i.i, 0

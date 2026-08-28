@@ -202,13 +202,11 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.bc = fadd double %i.ap, %i.ba                ; 2 uses
   %i.bd = fcmp olt double %i.bc, 0.000000e+00
-  br i1 %i.bd, label %4, label %bb.l
-
-4:                                                ; preds = %bb.k
+  %spec.store.select = select i1 %i.bd, double 0.000000e+00, double %i.bc
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.j, %bb.k, %4
-  %.038 = phi double [ %i.bc, %bb.k ], [ 0.000000e+00, %4 ], [ %i.ba, %bb.j ] ; 2 uses
+bb.l:                                             ; preds = %bb.j, %bb.k
+  %.038 = phi double [ %spec.store.select, %bb.k ], [ %i.ba, %bb.j ] ; 2 uses
   %i.be = load ptr, ptr %i.b, align 8, !tbaa !18  ; 3 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 192 ; 2 uses
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !21 ; 4 uses

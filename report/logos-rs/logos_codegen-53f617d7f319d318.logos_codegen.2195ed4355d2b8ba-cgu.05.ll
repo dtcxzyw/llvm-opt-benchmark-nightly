@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/logos-rs/original/logos_codegen-53f617d7f319d318.logos_codegen.2195ed4355d2b8ba-cgu.05?download=true
+inline.NumInlined: 76
+inline.NumDeleted: 17
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -106,7 +108,7 @@ bb.b:                                             ; preds = %bb.a, %._crit_edge,
   %i.j = call i8 @_RNCNvMNtCskKLDkoKarTP_4core5sliceSNtNtCs2SM5xCHwwDm_13logos_codegen5graph5State13binary_search0BA_(ptr nonnull align 8 %i.a, ptr align 8 %i.i) #19
   %i.k = icmp eq i8 %i.j, 1
   %i.l = select i1 %i.k, i64 %.sroa.05.012, i64 %i.h, !unpredictable !4 ; 2 uses
-  %i.m = sub i64 %.sroa.01.013, %i.g              ; 2 uses
+  %i.m = sub nuw i64 %.sroa.01.013, %i.g          ; 2 uses
   %i.n = icmp ugt i64 %i.m, 1
   br i1 %i.n, label %.lr.ph, label %._crit_edge
 
@@ -509,7 +511,7 @@ bb.a:
   %i.h = call i8 @_RNCNvMNtCskKLDkoKarTP_4core5sliceSNtNtCs2SM5xCHwwDm_13logos_codegen5graph5State13binary_search0BA_(ptr nonnull align 8 %i.a, ptr align 8 %i.g) #19
   %i.i = icmp eq i8 %i.h, 1
   %i.j = select i1 %i.i, i64 %.sroa.05.012.i, i64 %i.f, !unpredictable !4 ; 2 uses
-  %i.k = sub i64 %.sroa.01.013.i, %i.e            ; 2 uses
+  %i.k = sub nuw i64 %.sroa.01.013.i, %i.e        ; 2 uses
   %i.l = icmp ugt i64 %i.k, 1
   br i1 %i.l, label %.lr.ph.i, label %._crit_edge.i
 
@@ -912,7 +914,7 @@ bb.hi:                                            ; preds = %bb.hg
 .noexc147:                                        ; preds = %.lr.ph.i.i.i
   %i.ps = icmp eq i8 %i.pr, 1
   %i.pt = select i1 %i.ps, i64 %.sroa.05.012.i.i.i, i64 %i.pp, !unpredictable !4 ; 2 uses
-  %i.pu = sub i64 %.sroa.01.013.i.i.i, %i.po      ; 2 uses
+  %i.pu = sub nuw i64 %.sroa.01.013.i.i.i, %i.po  ; 2 uses
   %i.pv = icmp ugt i64 %i.pu, 1
   br i1 %i.pv, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 

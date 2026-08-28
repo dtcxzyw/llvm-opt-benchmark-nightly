@@ -204,15 +204,14 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.q, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.r = fcmp oeq double %3, 1.000000e-15
-  br i1 %i.r, label %bb.t, label %20
-
-20:                                               ; preds = %bb.s
+  %i.r = fcmp oeq double %3, 1.000000e-15         ; 2 uses
+  %spec.select.i = select i1 %i.r, i64 17, i64 18
+  %spec.select9.i = select i1 %i.r, i8 17, i8 18
   br label %bb.t
 
-bb.t:                                             ; preds = %20, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
-  %.07.lcssa.i = phi i64 [ 0, %bb.b ], [ 14, %bb.p ], [ 1, %bb.c ], [ 18, %20 ], [ 2, %bb.d ], [ 10, %bb.l ], [ 3, %bb.e ], [ 17, %bb.s ], [ 4, %bb.f ], [ 12, %bb.n ], [ 5, %bb.g ], [ 16, %bb.r ], [ 6, %bb.h ], [ 11, %bb.m ], [ 7, %bb.i ], [ 15, %bb.q ], [ 8, %bb.j ], [ 13, %bb.o ], [ 9, %bb.k ]
-  %.lcssa.i = phi i8 [ 0, %bb.b ], [ 14, %bb.p ], [ 1, %bb.c ], [ 18, %20 ], [ 2, %bb.d ], [ 10, %bb.l ], [ 3, %bb.e ], [ 17, %bb.s ], [ 4, %bb.f ], [ 12, %bb.n ], [ 5, %bb.g ], [ 16, %bb.r ], [ 6, %bb.h ], [ 11, %bb.m ], [ 7, %bb.i ], [ 15, %bb.q ], [ 8, %bb.j ], [ 13, %bb.o ], [ 9, %bb.k ]
+bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
+  %.07.lcssa.i = phi i64 [ 0, %bb.b ], [ 14, %bb.p ], [ 1, %bb.c ], [ 9, %bb.k ], [ 2, %bb.d ], [ 10, %bb.l ], [ 3, %bb.e ], [ %spec.select.i, %bb.s ], [ 4, %bb.f ], [ 12, %bb.n ], [ 5, %bb.g ], [ 16, %bb.r ], [ 6, %bb.h ], [ 11, %bb.m ], [ 7, %bb.i ], [ 15, %bb.q ], [ 8, %bb.j ], [ 13, %bb.o ]
+  %.lcssa.i = phi i8 [ 0, %bb.b ], [ 14, %bb.p ], [ 1, %bb.c ], [ 9, %bb.k ], [ 2, %bb.d ], [ 10, %bb.l ], [ 3, %bb.e ], [ %spec.select9.i, %bb.s ], [ 4, %bb.f ], [ 12, %bb.n ], [ 5, %bb.g ], [ 16, %bb.r ], [ 6, %bb.h ], [ 11, %bb.m ], [ 7, %bb.i ], [ 15, %bb.q ], [ 8, %bb.j ], [ 13, %bb.o ]
   %i.s = getelementptr inbounds nuw [8 x i8], ptr @_ZZNK10VTimescale10multiplierEvE6values, i64 %.07.lcssa.i
   %i.t = load double, ptr %i.s, align 8, !tbaa !283
   %i.u = fcmp une double %i.t, %3
@@ -584,22 +583,21 @@ bb.bi:                                            ; preds = %bb.bh
   br i1 %i.dp, label %bb.bk, label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
-  %i.dq = fcmp oeq double %5, 1.000000e-15
-  br i1 %i.dq, label %bb.bk, label %21
-
-21:                                               ; preds = %bb.bj
+  %i.dq = fcmp oeq double %5, 1.000000e-15        ; 2 uses
+  %spec.select.i76 = select i1 %i.dq, i64 17, i64 18
+  %spec.select9.i77 = select i1 %i.dq, i8 17, i8 18
   br label %bb.bk
 
-bb.bk:                                            ; preds = %21, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as
-  %.07.lcssa.i76 = phi i64 [ 0, %bb.as ], [ 14, %bb.bg ], [ 1, %bb.at ], [ 18, %21 ], [ 2, %bb.au ], [ 10, %bb.bc ], [ 3, %bb.av ], [ 17, %bb.bj ], [ 4, %bb.aw ], [ 12, %bb.be ], [ 5, %bb.ax ], [ 16, %bb.bi ], [ 6, %bb.ay ], [ 11, %bb.bd ], [ 7, %bb.az ], [ 15, %bb.bh ], [ 8, %bb.ba ], [ 13, %bb.bf ], [ 9, %bb.bb ]
-  %.lcssa.i77 = phi i8 [ 0, %bb.as ], [ 14, %bb.bg ], [ 1, %bb.at ], [ 18, %21 ], [ 2, %bb.au ], [ 10, %bb.bc ], [ 3, %bb.av ], [ 17, %bb.bj ], [ 4, %bb.aw ], [ 12, %bb.be ], [ 5, %bb.ax ], [ 16, %bb.bi ], [ 6, %bb.ay ], [ 11, %bb.bd ], [ 7, %bb.az ], [ 15, %bb.bh ], [ 8, %bb.ba ], [ 13, %bb.bf ], [ 9, %bb.bb ]
-  %i.dr = getelementptr inbounds nuw [8 x i8], ptr @_ZZNK10VTimescale10multiplierEvE6values, i64 %.07.lcssa.i76
+bb.bk:                                            ; preds = %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as
+  %.07.lcssa.i78 = phi i64 [ 0, %bb.as ], [ 14, %bb.bg ], [ 1, %bb.at ], [ 9, %bb.bb ], [ 2, %bb.au ], [ 10, %bb.bc ], [ 3, %bb.av ], [ %spec.select.i76, %bb.bj ], [ 4, %bb.aw ], [ 12, %bb.be ], [ 5, %bb.ax ], [ 16, %bb.bi ], [ 6, %bb.ay ], [ 11, %bb.bd ], [ 7, %bb.az ], [ 15, %bb.bh ], [ 8, %bb.ba ], [ 13, %bb.bf ]
+  %.lcssa.i79 = phi i8 [ 0, %bb.as ], [ 14, %bb.bg ], [ 1, %bb.at ], [ 9, %bb.bb ], [ 2, %bb.au ], [ 10, %bb.bc ], [ 3, %bb.av ], [ %spec.select9.i77, %bb.bj ], [ 4, %bb.aw ], [ 12, %bb.be ], [ 5, %bb.ax ], [ 16, %bb.bi ], [ 6, %bb.ay ], [ 11, %bb.bd ], [ 7, %bb.az ], [ 15, %bb.bh ], [ 8, %bb.ba ], [ 13, %bb.bf ]
+  %i.dr = getelementptr inbounds nuw [8 x i8], ptr @_ZZNK10VTimescale10multiplierEvE6values, i64 %.07.lcssa.i78
   %i.ds = load double, ptr %i.dr, align 8, !tbaa !283
   %i.dt = fcmp une double %i.ds, %5
   br i1 %i.dt, label %bb.bl, label %_ZN10VTimescaleC2EdRb.exit78
 
 _ZN10VTimescaleC2EdRb.exit78:                     ; preds = %bb.bk
-  store i8 %.lcssa.i77, ptr %13, align 1, !tbaa !282
+  store i8 %.lcssa.i79, ptr %13, align 1, !tbaa !282
   br label %bb.ci
 
 bb.bl:                                            ; preds = %bb.bk

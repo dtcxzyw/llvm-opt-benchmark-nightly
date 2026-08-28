@@ -202,29 +202,26 @@ bb.d:                                             ; preds = %bb.c
   %i.y = load double, ptr %i.x, align 8, !tbaa !10 ; 3 uses
   %i.z = fcmp oge double %i.u, %i.y
   %.neg = select i1 %i.z, i32 -10, i32 0
-  %i.aa = add i32 %.neg, %i.w                     ; 4 uses
+  %i.aa = add i32 %.neg, %i.w                     ; 3 uses
   %i.ab = add nsw i32 %i.aa, -1
   %i.ac = sitofp i32 %i.ab to double
   %i.ad = fneg double %i.ac
-  %i.ae = tail call double @llvm.fmuladd.f64(double %i.ad, double 8.640000e+07, double %i.u) ; 5 uses
+  %i.ae = tail call double @llvm.fmuladd.f64(double %i.ad, double 8.640000e+07, double %i.u) ; 4 uses
   %i.af = fcmp olt double %i.ae, %i.y
   br i1 %i.af, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.ag = add nsw i32 %i.q, -10                   ; 3 uses
+  %i.ag = add nsw i32 %i.q, -10                   ; 2 uses
   %i.ah = sitofp i32 %i.ag to double
   %i.ai = tail call double @llvm.fmuladd.f64(double %i.ah, double 8.640000e+07, double %i.ae)
   %i.aj = fcmp ult double %i.ai, %i.y
-  br i1 %i.aj, label %bb.f, label %4
-
-4:                                                ; preds = %bb.e
   br label %bb.f
 
-bb.f:                                             ; preds = %4, %bb.e, %bb.d, %bb.b
-  %.2118 = phi i32 [ 0, %bb.b ], [ 0, %bb.d ], [ %i.ag, %4 ], [ %i.ag, %bb.e ] ; 4 uses
-  %.1115 = phi i32 [ 0, %bb.b ], [ %i.aa, %bb.d ], [ %i.aa, %4 ], [ %i.aa, %bb.e ] ; 3 uses
-  %.1113 = phi double [ 0.000000e+00, %bb.b ], [ %i.ae, %bb.d ], [ %i.ae, %4 ], [ %i.ae, %bb.e ] ; 3 uses
-  %.not135 = phi i1 [ true, %bb.b ], [ true, %bb.d ], [ false, %4 ], [ true, %bb.e ] ; 2 uses
+bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b
+  %.2118 = phi i32 [ 0, %bb.b ], [ %i.ag, %bb.e ], [ 0, %bb.d ] ; 4 uses
+  %.1115 = phi i32 [ 0, %bb.b ], [ %i.aa, %bb.e ], [ %i.aa, %bb.d ] ; 3 uses
+  %.1113 = phi double [ 0.000000e+00, %bb.b ], [ %i.ae, %bb.e ], [ %i.ae, %bb.d ] ; 3 uses
+  %.2 = phi i1 [ true, %bb.b ], [ %i.aj, %bb.e ], [ true, %bb.d ] ; 2 uses
   switch i32 %1, label %bb.z [
     i32 3, label %bb.g
     i32 5, label %bb.t
@@ -343,7 +340,7 @@ bb.s:                                             ; preds = %bb.r, %bb.p
   br label %.critedge
 
 bb.t:                                             ; preds = %bb.f
-  br i1 %.not135, label %bb.u, label %bb.v
+  br i1 %.2, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
   tail call void @_ZN6icu_788Calendar4rollE19UCalendarDateFieldsiR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(256) %0, i32 noundef 5, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(4) %3)
@@ -366,7 +363,7 @@ bb.v:                                             ; preds = %bb.t
   br label %.critedge
 
 bb.w:                                             ; preds = %bb.f
-  br i1 %.not135, label %bb.x, label %bb.y
+  br i1 %.2, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
   tail call void @_ZN6icu_788Calendar4rollE19UCalendarDateFieldsiR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(256) %0, i32 noundef 4, i32 noundef %2, ptr noundef nonnull align 4 dereferenceable(4) %3)

@@ -202,14 +202,12 @@ bb.aa:                                            ; preds = %bb.z
   %i.kb = getelementptr inbounds [8 x i8], ptr %i.ag, i64 %i.ka
   %i.kc = load double, ptr %i.kb, align 8, !tbaa !9
   %i.kd = fcmp oeq double %i.kc, 0.000000e+00
-  br i1 %i.kd, label %bb.ab, label %26
-
-26:                                               ; preds = %bb.aa
-  %27 = add nsw i32 %i.jt, 3
+  %26 = add nsw i32 %i.jt, 3
+  %spec.select671 = select i1 %i.kd, i32 %i.jx, i32 %26
   br label %bb.ab
 
-bb.ab:                                            ; preds = %bb.z, %bb.aa, %26
-  %.0627 = phi i32 [ %i.jx, %bb.aa ], [ %27, %26 ], [ %i.jx, %bb.z ] ; 2 uses
+bb.ab:                                            ; preds = %bb.z, %bb.aa
+  %.0627 = phi i32 [ %spec.select671, %bb.aa ], [ %i.jx, %bb.z ] ; 2 uses
   %.not659.not681 = icmp slt i32 %.0627, %.0631689
   br i1 %.not659.not681, label %.lr.ph686.preheader, label %.loopexit674.loopexit
 

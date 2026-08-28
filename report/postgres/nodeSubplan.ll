@@ -196,13 +196,11 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   %i.ci = fmul double %i.bz, 6.250000e-02         ; 2 uses
   %i.cj = fcmp olt double %i.ci, 1.000000e+00
-  br i1 %i.cj, label %3, label %bb.r
-
-3:                                                ; preds = %bb.q
+  %spec.store.select.i.i = select i1 %i.cj, double 1.000000e+00, double %i.ci
   br label %bb.r
 
-bb.r:                                             ; preds = %3, %bb.q, %bb.p
-  %.072.i.i = phi double [ %i.ci, %bb.q ], [ 1.000000e+00, %3 ], [ 1.000000e+00, %bb.p ]
+bb.r:                                             ; preds = %bb.q, %bb.p
+  %.072.i.i = phi double [ %spec.store.select.i.i, %bb.q ], [ 1.000000e+00, %bb.p ]
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.cl = load ptr, ptr %i.ck, align 8            ; 2 uses
   %.not78.i.i.a = icmp eq ptr %i.cl, null

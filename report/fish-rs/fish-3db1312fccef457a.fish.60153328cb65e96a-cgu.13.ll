@@ -205,7 +205,7 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a, %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7maximum0B5_.exit.i
   %.sroa.04.0.i = phi i64 [ %i.h, %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7maximum0B5_.exit.i ], [ 0, %bb.a ] ; 2 uses
-  %.sroa.02.0.i = phi double [ %.sroa.0.0.i.i, %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7maximum0B5_.exit.i ], [ -inf, %bb.a ] ; 6 uses
+  %.sroa.02.0.i = phi double [ %.sroa.0.0.i.i, %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7maximum0B5_.exit.i ], [ -inf, %bb.a ] ; 7 uses
   %i.b = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.04.0.i
   %.val.i = load double, ptr %i.b, align 8, !noundef !4 ; 6 uses
   %i.c = fcmp uno double %.sroa.02.0.i, 0.000000e+00
@@ -221,18 +221,19 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.f = fcmp ogt double %.sroa.02.0.i, %.val.i
-  br i1 %i.f, label %bb.f, label %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7maximum0B5_.exit.i
+  %spec.store.select.i.i = select i1 %i.f, double %.sroa.02.0.i, double %.val.i
+  br label %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7maximum0B5_.exit.i
 
 bb.e:                                             ; preds = %bb.c
   %i.g = bitcast double %.sroa.02.0.i to i64
   %.not.i.i = icmp sgt i64 %i.g, -1
   br i1 %.not.i.i, label %bb.f, label %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7maximum0B5_.exit.i
 
-bb.f:                                             ; preds = %bb.e, %bb.d
+bb.f:                                             ; preds = %bb.e
   br label %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7maximum0B5_.exit.i
 
 _RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7maximum0B5_.exit.i: ; preds = %bb.f, %bb.e, %bb.d, %bb.b, %.preheader
-  %.sroa.0.0.i.i = phi double [ %.val.i, %bb.d ], [ %.val.i, %bb.b ], [ %.sroa.02.0.i, %bb.f ], [ %.val.i, %bb.e ], [ %.sroa.02.0.i, %.preheader ] ; 2 uses
+  %.sroa.0.0.i.i = phi double [ %spec.store.select.i.i, %bb.d ], [ %.val.i, %bb.b ], [ %.sroa.02.0.i, %bb.f ], [ %.val.i, %bb.e ], [ %.sroa.02.0.i, %.preheader ] ; 2 uses
   %i.h = add nuw nsw i64 %.sroa.04.0.i, 1         ; 2 uses
   %i.i = icmp eq i64 %i.h, %1
   br i1 %i.i, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCNvNtCs8frGy5WneL6_4fish8tinyexpr7maximum0EB1J_.exit, label %.preheader
@@ -250,7 +251,7 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a, %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7minimum0B5_.exit.i
   %.sroa.04.0.i = phi i64 [ %i.h, %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7minimum0B5_.exit.i ], [ 0, %bb.a ] ; 2 uses
-  %.sroa.02.0.i = phi double [ %.sroa.0.0.i.i, %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7minimum0B5_.exit.i ], [ +inf, %bb.a ] ; 6 uses
+  %.sroa.02.0.i = phi double [ %.sroa.0.0.i.i, %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7minimum0B5_.exit.i ], [ +inf, %bb.a ] ; 7 uses
   %i.b = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.04.0.i
   %.val.i = load double, ptr %i.b, align 8, !noundef !4 ; 6 uses
   %i.c = fcmp uno double %.sroa.02.0.i, 0.000000e+00
@@ -266,18 +267,19 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.f = fcmp olt double %.sroa.02.0.i, %.val.i
-  br i1 %i.f, label %bb.f, label %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7minimum0B5_.exit.i
+  %spec.store.select.i.i = select i1 %i.f, double %.sroa.02.0.i, double %.val.i
+  br label %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7minimum0B5_.exit.i
 
 bb.e:                                             ; preds = %bb.c
   %i.g = bitcast double %.sroa.02.0.i to i64
   %.not.i.i = icmp sgt i64 %i.g, -1
   br i1 %.not.i.i, label %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7minimum0B5_.exit.i, label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d
+bb.f:                                             ; preds = %bb.e
   br label %_RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7minimum0B5_.exit.i
 
 _RNCNvNtCs8frGy5WneL6_4fish8tinyexpr7minimum0B5_.exit.i: ; preds = %bb.f, %bb.e, %bb.d, %bb.b, %.preheader
-  %.sroa.0.0.i.i = phi double [ %.val.i, %bb.d ], [ %.val.i, %bb.b ], [ %.sroa.02.0.i, %bb.f ], [ %.val.i, %bb.e ], [ %.sroa.02.0.i, %.preheader ] ; 2 uses
+  %.sroa.0.0.i.i = phi double [ %spec.store.select.i.i, %bb.d ], [ %.val.i, %bb.b ], [ %.sroa.02.0.i, %bb.f ], [ %.val.i, %bb.e ], [ %.sroa.02.0.i, %.preheader ] ; 2 uses
   %i.h = add nuw nsw i64 %.sroa.04.0.i, 1         ; 2 uses
   %i.i = icmp eq i64 %i.h, %1
   br i1 %i.i, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCNvNtCs8frGy5WneL6_4fish8tinyexpr7minimum0EB1J_.exit, label %.preheader

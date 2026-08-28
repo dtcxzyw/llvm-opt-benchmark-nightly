@@ -202,18 +202,14 @@ bb.bn:                                            ; preds = %default_range_selec
   %i.fn = fmul double %i.fl, %.028.i
   br label %bb.bo
 
-bb.bo:                                            ; preds = %bb.bn, %bb.bm, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.aa, %bb.aa, %bb.aa, %bb.aa, %bb.aa
+bb.bo:                                            ; preds = %bb.aa, %bb.aa, %bb.aa, %bb.aa, %bb.aa, %bb.aa, %bb.ab, %bb.ac, %bb.ad, %bb.bm, %bb.bn
   %.026.i = phi double [ %i.fn, %bb.bn ], [ %.1.i, %bb.ab ], [ 1.000000e+00, %bb.ac ], [ %i.cn, %bb.ad ], [ %i.fm, %bb.bm ], [ 0.000000e+00, %bb.aa ], [ 0.000000e+00, %bb.aa ], [ 0.000000e+00, %bb.aa ], [ 0.000000e+00, %bb.aa ], [ 0.000000e+00, %bb.aa ], [ 0.000000e+00, %bb.aa ]
   %i.fo = fsub double 1.000000e+00, %.0.i45
   %i.fp = fmul double %i.fo, %.026.i              ; 3 uses
   %i.fq = fcmp olt double %i.fp, 0.000000e+00
-  br i1 %i.fq, label %calc_rangesel.exit, label %9
-
-9:                                                ; preds = %bb.bo
-  %10 = fcmp ogt double %i.fp, 1.000000e+00
-  br i1 %10, label %11, label %calc_rangesel.exit
-
-11:                                               ; preds = %9
+  %9 = fcmp ogt double %i.fp, 1.000000e+00
+  %spec.store.select.i = select i1 %9, double 1.000000e+00, double %i.fp
+  %.127.i = select i1 %i.fq, double 0.000000e+00, double %spec.store.select.i
   br label %calc_rangesel.exit
 
 .thread:                                          ; preds = %bb.q, %bb.s
@@ -227,8 +223,8 @@ switch.lookup72:                                  ; preds = %.thread
   %switch.load74 = load double, ptr %switch.gep73, align 8
   br label %calc_rangesel.exit
 
-calc_rangesel.exit:                               ; preds = %.thread, %switch.lookup72, %bb.o, %bb.n, %11, %9, %bb.bo
-  %.027 = phi double [ 0.000000e+00, %bb.bo ], [ %i.fp, %9 ], [ 1.000000e+00, %11 ], [ %switch.load74, %switch.lookup72 ], [ 5.000000e-03, %bb.n ], [ 5.000000e-03, %bb.o ], [ 1.000000e-02, %.thread ] ; 2 uses
+calc_rangesel.exit:                               ; preds = %.thread, %switch.lookup72, %bb.o, %bb.n, %bb.bo
+  %.027 = phi double [ %.127.i, %bb.bo ], [ %switch.load74, %switch.lookup72 ], [ 5.000000e-03, %bb.n ], [ 5.000000e-03, %bb.o ], [ 1.000000e-02, %.thread ] ; 2 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.fu = load ptr, ptr %i.ft, align 8            ; 2 uses
   %.not40 = icmp eq ptr %i.fu, null
@@ -240,10 +236,10 @@ bb.bp:                                            ; preds = %calc_rangesel.exit
   call void %i.fw(ptr noundef nonnull %i.fu) #8
   br label %bb.bq
 
-bb.bq:                                            ; preds = %bb.bp, %calc_rangesel.exit
-  %12 = fcmp ogt double %.027, 1.000000e+00
+bb.bq:                                            ; preds = %calc_rangesel.exit, %bb.bp
+  %10 = fcmp olt double %.027, 0.000000e+00
   %i.fx = bitcast double %.027 to i64
-  %i.fy = select i1 %12, i64 4607182418800017408, i64 %i.fx
+  %i.fy = select i1 %10, i64 0, i64 %i.fx
   br label %default_range_selectivity.exit
 
 switch.lookup:                                    ; preds = %bb.b

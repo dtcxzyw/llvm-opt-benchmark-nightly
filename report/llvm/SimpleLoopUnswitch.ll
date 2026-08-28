@@ -205,14 +205,11 @@ _ZN4llvm6sum_ofIRNS_11SmallVectorIjLj12EEEjEEDaOT_T0_.exit.loopexit: ; preds = %
 _ZN4llvm6sum_ofIRNS_11SmallVectorIjLj12EEEjEEDaOT_T0_.exit: ; preds = %_ZN4llvm6sum_ofIRNS_11SmallVectorIjLj12EEEjEEDaOT_T0_.exit.loopexit, %bb.c
   %.0.lcssa.i.i.i = phi double [ 0.000000e+00, %bb.c ], [ %i.ae, %_ZN4llvm6sum_ofIRNS_11SmallVectorIjLj12EEEjEEDaOT_T0_.exit.loopexit ]
   %i.af = fdiv double %i.m, %.0.lcssa.i.i.i
-  %21 = fcmp ogt double %i.af, 5.000000e-01
-  br i1 %21, label %22, label %.thread
-
-22:                                               ; preds = %_ZN4llvm6sum_ofIRNS_11SmallVectorIjLj12EEEjEEDaOT_T0_.exit
+  %21 = fcmp ule double %i.af, 5.000000e-01
   br label %.thread
 
-.thread:                                          ; preds = %bb.a, %22, %_ZN4llvm6sum_ofIRNS_11SmallVectorIjLj12EEEjEEDaOT_T0_.exit, %bb.b
-  %.0.shrunk = phi i1 [ false, %22 ], [ true, %_ZN4llvm6sum_ofIRNS_11SmallVectorIjLj12EEEjEEDaOT_T0_.exit ], [ false, %bb.b ], [ false, %bb.a ] ; 2 uses
+.thread:                                          ; preds = %bb.a, %_ZN4llvm6sum_ofIRNS_11SmallVectorIjLj12EEEjEEDaOT_T0_.exit, %bb.b
+  %.0.shrunk = phi i1 [ false, %bb.b ], [ %21, %_ZN4llvm6sum_ofIRNS_11SmallVectorIjLj12EEEjEEDaOT_T0_.exit ], [ false, %bb.a ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #24
   %i.ag = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK4llvm10BasicBlock10getContextEv(ptr noundef nonnull align 8 dereferenceable(80) %0) #24
   %i.ah = getelementptr inbounds nuw i8, ptr %18, i64 88 ; 3 uses

@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %.thread
-  %spec.store.select76.sink.i = phi i64 [ %spec.store.select76.i, %bb.j ], [ 0, %bb.i ], [ -1, %bb.g ], [ -1, %bb.h ], [ 0, %.thread ] ; 14 uses
+  %spec.store.select76.sink.i = phi i64 [ %spec.store.select76.i, %bb.j ], [ 0, %bb.i ], [ -1, %bb.g ], [ -1, %bb.h ], [ 0, %.thread ] ; 13 uses
   %.not75.i = icmp eq i64 %spec.store.select.sink.i, 0
   br i1 %.not75.i, label %bb.q, label %bb.l
 
@@ -263,10 +263,8 @@ bb.u:                                             ; preds = %bb.r
 
 bb.v:                                             ; preds = %bb.u
   %i.bi = fadd double %1, %.1.i                   ; 2 uses
-  %10 = fcmp ult double %i.bi, 1.000000e+00
-  br i1 %10, label %preprocess_limit.exit.thread, label %11
-
-11:                                               ; preds = %bb.v
+  %10 = fcmp oge double %i.bi, 1.000000e+00
+  %spec.store.select.i = select i1 %10, double 0.000000e+00, double %i.bi
   br label %preprocess_limit.exit.thread
 
 preprocess_limit.exit:                            ; preds = %bb.m, %bb.n, %bb.o, %bb.p
@@ -279,11 +277,11 @@ preprocess_limit.exit:                            ; preds = %bb.m, %bb.n, %bb.o,
 bb.w:                                             ; preds = %preprocess_limit.exit
   br label %preprocess_limit.exit.thread
 
-preprocess_limit.exit.thread:                     ; preds = %11, %bb.v, %bb.u, %bb.t, %bb.s, %bb.q, %preprocess_limit.exit, %bb.w, %bb.b
-  %.0649 = phi i64 [ 0, %bb.b ], [ %spec.store.select76.sink.i, %bb.w ], [ %spec.store.select76.sink.i, %preprocess_limit.exit ], [ %spec.store.select76.sink.i, %bb.q ], [ %spec.store.select76.sink.i, %bb.s ], [ %spec.store.select76.sink.i, %bb.t ], [ %spec.store.select76.sink.i, %bb.u ], [ %spec.store.select76.sink.i, %bb.v ], [ %spec.store.select76.sink.i, %11 ] ; 2 uses
-  %.0648 = phi i64 [ 0, %bb.b ], [ %spec.store.select.sink.i, %bb.w ], [ %spec.store.select.sink.i, %preprocess_limit.exit ], [ 0, %bb.q ], [ 0, %bb.s ], [ 0, %bb.t ], [ 0, %bb.u ], [ 0, %bb.v ], [ 0, %11 ] ; 2 uses
-  %.0351 = phi double [ -1.000000e+00, %bb.b ], [ %i.as, %bb.w ], [ -1.000000e+00, %preprocess_limit.exit ], [ -1.000000e+00, %bb.q ], [ -1.000000e+00, %bb.s ], [ -1.000000e+00, %bb.t ], [ -1.000000e+00, %bb.u ], [ -1.000000e+00, %bb.v ], [ -1.000000e+00, %11 ] ; 9 uses
-  %.0 = phi double [ %1, %bb.b ], [ %.061.i, %bb.w ], [ %.061.i, %preprocess_limit.exit ], [ %1, %bb.q ], [ %.1.i, %bb.s ], [ %i.bh, %bb.t ], [ %1, %bb.u ], [ %i.bi, %bb.v ], [ 0.000000e+00, %11 ]
+preprocess_limit.exit.thread:                     ; preds = %bb.v, %bb.u, %bb.t, %bb.s, %bb.q, %preprocess_limit.exit, %bb.w, %bb.b
+  %.0649 = phi i64 [ 0, %bb.b ], [ %spec.store.select76.sink.i, %bb.w ], [ %spec.store.select76.sink.i, %preprocess_limit.exit ], [ %spec.store.select76.sink.i, %bb.q ], [ %spec.store.select76.sink.i, %bb.s ], [ %spec.store.select76.sink.i, %bb.t ], [ %spec.store.select76.sink.i, %bb.u ], [ %spec.store.select76.sink.i, %bb.v ] ; 2 uses
+  %.0648 = phi i64 [ 0, %bb.b ], [ %spec.store.select.sink.i, %bb.w ], [ %spec.store.select.sink.i, %preprocess_limit.exit ], [ 0, %bb.q ], [ 0, %bb.s ], [ 0, %bb.t ], [ 0, %bb.u ], [ 0, %bb.v ] ; 2 uses
+  %.0351 = phi double [ -1.000000e+00, %bb.b ], [ %i.as, %bb.w ], [ -1.000000e+00, %preprocess_limit.exit ], [ -1.000000e+00, %bb.q ], [ -1.000000e+00, %bb.s ], [ -1.000000e+00, %bb.t ], [ -1.000000e+00, %bb.u ], [ -1.000000e+00, %bb.v ] ; 9 uses
+  %.0 = phi double [ %1, %bb.b ], [ %.061.i, %bb.w ], [ %.061.i, %preprocess_limit.exit ], [ %1, %bb.q ], [ %.1.i, %bb.s ], [ %i.bh, %bb.t ], [ %1, %bb.u ], [ %spec.store.select.i, %bb.v ]
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 616 ; 2 uses
   store double %.0, ptr %i.bl, align 8
   %i.bm = getelementptr inbounds nuw i8, ptr %i.r, i64 264

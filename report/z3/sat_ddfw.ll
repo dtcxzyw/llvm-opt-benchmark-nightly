@@ -204,7 +204,7 @@ bb.ab:                                            ; preds = %bb.b, %bb.aa, %._cr
   %i.ic = getelementptr inbounds nuw i8, ptr %i.hz, i64 48
   %i.id = getelementptr inbounds nuw i8, ptr %i.hz, i64 8
   %i.ie = load double, ptr %i.id, align 8, !tbaa !130
-  %i.if = getelementptr inbounds nuw i8, ptr %i.hz, i64 56 ; 3 uses
+  %i.if = getelementptr inbounds nuw i8, ptr %i.hz, i64 56 ; 2 uses
   %i.ig = load double, ptr %i.if, align 8, !tbaa !167 ; 3 uses
   %i.ih = getelementptr inbounds nuw i8, ptr %i.hz, i64 64 ; 2 uses
   %i.ii = load double, ptr %i.ih, align 8, !tbaa !168 ; 2 uses
@@ -231,15 +231,12 @@ bb.ad:                                            ; preds = %bb.ac
   store i32 %i.it, ptr %i.iq, align 8, !tbaa !171
   store i32 %i.it, ptr %i.in, align 4, !tbaa !170
   %i.iu = fmul double %i.ig, 5.000000e-01         ; 2 uses
-  store double %i.iu, ptr %i.if, align 8, !tbaa !167
   %6 = fcmp olt double %i.iu, %i.il
-  br i1 %6, label %7, label %_ZN3sat4ddfw17update_reward_avgEj.exit
-
-7:                                                ; preds = %bb.ad
-  store double %i.il, ptr %i.if, align 8, !tbaa !167
+  %spec.store.select.i.i = select i1 %6, double %i.il, double %i.iu
+  store double %spec.store.select.i.i, ptr %i.if, align 8
   br label %_ZN3sat4ddfw17update_reward_avgEj.exit
 
-_ZN3sat4ddfw17update_reward_avgEj.exit:           ; preds = %._crit_edge121, %bb.ac, %bb.ad, %7
+_ZN3sat4ddfw17update_reward_avgEj.exit:           ; preds = %._crit_edge121, %bb.ac, %bb.ad
   ret void
 
 bb.ae:                                            ; preds = %.lr.ph120, %bb.ao

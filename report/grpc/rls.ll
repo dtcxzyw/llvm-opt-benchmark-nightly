@@ -205,18 +205,14 @@ bb.ht:                                            ; preds = %_ZN9grpc_coreplENS_
   %i.zb = fdiv nnan double %i.za, 1.000000e+03
   %i.zc = fmul nnan double %i.zb, 1.000000e+03    ; 3 uses
   %i.zd = fcmp ult double %i.zc, f0x43E0000000000000
-  br i1 %i.zd, label %44, label %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit96.i
-
-44:                                               ; preds = %bb.ht
-  %45 = fcmp ugt double %i.zc, f0xC3E0000000000000
-  br i1 %45, label %46, label %_ZN9grpc_coremlENS_8DurationEd.exit.i
-
-46:                                               ; preds = %44
-  %47 = fptosi double %i.zc to i64
+  %.inv.i.i.i = fcmp ole double %i.zc, f0xC3E0000000000000
+  %spec.select4.i.i.i = select i1 %.inv.i.i.i, double f0xC3E0000000000000, double %i.zc
+  %spec.select.i.i.i = fptosi double %spec.select4.i.i.i to i64
+  %.sroa.0.0.i.i.i = select i1 %i.zd, i64 %spec.select.i.i.i, i64 9223372036854775807
   br label %_ZN9grpc_coremlENS_8DurationEd.exit.i
 
-_ZN9grpc_coremlENS_8DurationEd.exit.i:            ; preds = %46, %44, %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit.i
-  %.sroa.04.0.i.i = phi i64 [ -9223372036854775808, %44 ], [ %47, %46 ], [ %i.yj, %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit.i ] ; 5 uses
+_ZN9grpc_coremlENS_8DurationEd.exit.i:            ; preds = %bb.ht, %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit.i
+  %.sroa.04.0.i.i = phi i64 [ %.sroa.0.0.i.i.i, %bb.ht ], [ %i.yj, %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit.i ] ; 5 uses
   %i.ze = icmp eq i64 %.sroa.04.0.i.i, 9223372036854775807
   %or.cond.i.i93.i = or i1 %i.yo, %i.ze
   br i1 %or.cond.i.i93.i, label %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit96.i, label %bb.hu
@@ -245,8 +241,8 @@ bb.hy:                                            ; preds = %bb.hx, %bb.hw
   %i.zm = add nsw i64 %.sroa.04.0.i.i, %i.yn
   br label %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit96.i
 
-_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit96.i: ; preds = %bb.hy, %bb.hx, %bb.hw, %bb.hu, %_ZN9grpc_coremlENS_8DurationEd.exit.i, %bb.ht, %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit.i
-  %.0.i.i95.i = phi i64 [ -9223372036854775808, %bb.hu ], [ 9223372036854775807, %_ZN9grpc_coremlENS_8DurationEd.exit.i ], [ -9223372036854775808, %bb.hx ], [ %i.zm, %bb.hy ], [ 9223372036854775807, %bb.hw ], [ 9223372036854775807, %bb.ht ], [ %i.yj, %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit.i ]
+_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit96.i: ; preds = %bb.hy, %bb.hx, %bb.hw, %bb.hu, %_ZN9grpc_coremlENS_8DurationEd.exit.i, %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit.i
+  %.0.i.i95.i = phi i64 [ -9223372036854775808, %bb.hu ], [ 9223372036854775807, %_ZN9grpc_coremlENS_8DurationEd.exit.i ], [ -9223372036854775808, %bb.hx ], [ %i.zm, %bb.hy ], [ 9223372036854775807, %bb.hw ], [ %i.yj, %_ZN9grpc_coreplENS_9TimestampENS_8DurationE.exit.i ]
   %i.zn = getelementptr inbounds nuw i8, ptr %.034.i, i64 56
   store i64 %.0.i.i95.i, ptr %i.zn, align 8, !tbaa !25, !noalias !1040
   %i.zo = getelementptr inbounds nuw i8, ptr %.034.i, i64 8 ; 2 uses

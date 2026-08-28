@@ -205,12 +205,9 @@ bb.h:                                             ; preds = %._crit_edge
   %i.bm = load ptr, ptr %i.an, align 8, !tbaa !18 ; 2 uses
   %i.bn = load float, ptr %i.bm, align 4, !tbaa !53
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 4
-  %i.bp = load float, ptr %i.bo, align 4, !tbaa !53 ; 2 uses
-  %.0112 = call nnan ninf nsz float @llvm.maxnum.f32(float %.1.lcssa, float %i.bn) ; 2 uses
-  %13 = fcmp fast ogt float %.0112, %i.bp
-  br i1 %13, label %14, label %_ZL13activation_ssfiRKN4ncnn3MatE.exit
-
-14:                                               ; preds = %bb.h
+  %i.bp = load float, ptr %i.bo, align 4, !tbaa !53
+  %.0112 = call nnan ninf nsz float @llvm.maxnum.f32(float %.1.lcssa, float %i.bn)
+  %spec.select114 = call nnan ninf nsz float @llvm.minnum.f32(float %.0112, float %i.bp)
   br label %_ZL13activation_ssfiRKN4ncnn3MatE.exit
 
 bb.i:                                             ; preds = %._crit_edge
@@ -333,8 +330,8 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %bb.r,
   %exitcond140.not = icmp eq i32 %i.do, %i.ar
   br i1 %exitcond140.not, label %._crit_edge, label %bb.n, !llvm.loop !168
 
-_ZL13activation_ssfiRKN4ncnn3MatE.exit:           ; preds = %bb.m, %bb.l, %bb.j, %bb.i, %14, %bb.h, %bb.g, %bb.f, %._crit_edge, %bb.k
-  %.1113 = phi nsz float [ %.1.lcssa, %._crit_edge ], [ %i.bg, %bb.f ], [ %i.bl, %bb.g ], [ %i.bp, %14 ], [ %.0112, %bb.h ], [ %i.bt, %bb.i ], [ %i.by, %bb.j ], [ %i.cl, %bb.m ], [ %.1.lcssa, %bb.l ], [ 0.000000e+00, %bb.k ]
+_ZL13activation_ssfiRKN4ncnn3MatE.exit:           ; preds = %bb.h, %bb.m, %bb.l, %bb.j, %bb.i, %bb.g, %bb.f, %._crit_edge, %bb.k
+  %.1113 = phi nsz float [ %.1.lcssa, %._crit_edge ], [ %i.bg, %bb.f ], [ %i.bl, %bb.g ], [ 0.000000e+00, %bb.k ], [ %spec.select114, %bb.h ], [ %i.bt, %bb.i ], [ %i.by, %bb.j ], [ %i.cl, %bb.m ], [ %.1.lcssa, %bb.l ]
   store float %.1113, ptr %.165125, align 4, !tbaa !53
   %i.dp = getelementptr inbounds nuw i8, ptr %.165125, i64 4 ; 2 uses
   %i.dq = add nuw nsw i32 %.062126, 1             ; 2 uses

@@ -205,9 +205,8 @@ _ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi2ENS_4tree14ScalarTreeViewEE8Po
   br i1 %i.bx, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %._crit_edge.i
-  %sext.1.i = shl i64 %i.bq, 32
-  %7 = ashr exact i64 %sext.1.i, 30
-  %i.by = getelementptr inbounds nuw i8, ptr %i.bj, i64 %7
+  %sext.1.i = shl nuw nsw i64 %i.bq, 2
+  %i.by = getelementptr inbounds nuw i8, ptr %i.bj, i64 %sext.1.i
   %i.bz = load float, ptr %i.by, align 4, !tbaa !64
   %i.ca = fcmp uge float %i.bw, %i.bz
   br label %bb.j
@@ -610,9 +609,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.q, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge.i
-  %sext.1.i = shl i64 %i.j, 32
-  %7 = ashr exact i64 %sext.1.i, 30
-  %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 %7
+  %sext.1.i = shl nuw nsw i64 %i.j, 2
+  %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 %sext.1.i
   %i.s = load float, ptr %i.r, align 4, !tbaa !64
   %i.t = fcmp uge float %i.p, %i.s
   br label %bb.e
@@ -1015,7 +1013,7 @@ _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i.i:
   %i.ae = load ptr, ptr %i.z, align 8, !tbaa !59
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %i.ad
   %i.ag = load float, ptr %i.af, align 4, !tbaa !64
-  %i.ah = shl nsw i32 %i.y, 1
+  %i.ah = shl nuw nsw i32 %i.y, 1
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %i.aa
   %i.aj = load float, ptr %i.ai, align 4, !tbaa !64
   %i.ak = fcmp uge float %i.ag, %i.aj
@@ -1265,7 +1263,7 @@ _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i: ;
   %i.o = load ptr, ptr %i.j, align 8, !tbaa !59
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.n
   %i.q = load float, ptr %i.p, align 4, !tbaa !64 ; 5 uses
-  %i.r = shl nsw i32 %i.i, 1
+  %i.r = shl nuw nsw i32 %i.i, 1
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.k
   %i.t = load i8, ptr %i.s, align 1, !tbaa !26
   %.not.i.i = icmp eq i8 %i.t, 0
@@ -1668,9 +1666,8 @@ _ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi2ENS_4tree14ScalarTreeViewEE8Po
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.bm
   %i.bp = load float, ptr %i.bo, align 4, !tbaa !64
   %i.bq = shl nsw i32 %i.bg, 1
-  %sext.1.i = shl i64 %i.bj, 32
-  %7 = ashr exact i64 %sext.1.i, 30
-  %i.br = getelementptr inbounds nuw i8, ptr %i.bc, i64 %7
+  %sext.1.i = shl nuw nsw i64 %i.bj, 2
+  %i.br = getelementptr inbounds nuw i8, ptr %i.bc, i64 %sext.1.i
   %i.bs = load float, ptr %i.br, align 4, !tbaa !64
   %i.bt = fcmp uge float %i.bp, %i.bs
   %i.bu = zext i1 %i.bt to i32
@@ -2073,7 +2070,7 @@ _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i: ;
   %i.o = load ptr, ptr %i.j, align 8, !tbaa !59
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.n
   %i.q = load float, ptr %i.p, align 4, !tbaa !64 ; 5 uses
-  %i.r = shl nsw i32 %i.i, 1
+  %i.r = shl nuw nsw i32 %i.i, 1
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.k
   %i.t = load i8, ptr %i.s, align 1, !tbaa !26
   %.not.i.i = icmp eq i8 %i.t, 0
@@ -2476,7 +2473,7 @@ _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i: ;
   %i.af = load ptr, ptr %i.aa, align 8, !tbaa !59
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %i.ae
   %i.ah = load float, ptr %i.ag, align 4, !tbaa !64
-  %i.ai = shl nsw i32 %i.z, 1
+  %i.ai = shl nuw nsw i32 %i.z, 1
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.ab
   %i.ak = load float, ptr %i.aj, align 4, !tbaa !64
   %i.al = fcmp uge float %i.ah, %i.ak
@@ -2704,9 +2701,8 @@ _ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi2ENS_4tree19MultiTargetTreeView
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %i.bk
   %i.bn = load float, ptr %i.bm, align 4, !tbaa !64
   %i.bo = shl nsw i32 %i.be, 1
-  %sext.1.i = shl i64 %i.bh, 32
-  %7 = ashr exact i64 %sext.1.i, 30
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.ba, i64 %7
+  %sext.1.i = shl nuw nsw i64 %i.bh, 2
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.ba, i64 %sext.1.i
   %i.bq = load float, ptr %i.bp, align 4, !tbaa !64
   %i.br = fcmp uge float %i.bn, %i.bq
   %i.bs = zext i1 %i.br to i32

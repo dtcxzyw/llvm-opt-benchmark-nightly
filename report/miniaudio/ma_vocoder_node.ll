@@ -205,9 +205,10 @@ define internal fastcc void @voclib_initialize_filterbank(ptr nofree noundef cap
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 84872
   %i.b = load i32, ptr %i.a, align 4, !tbaa !10   ; 2 uses
-  %.0151158 = tail call i32 @llvm.umin.i32(i32 %i.b, i32 12000)
-  %.0151 = uitofp nneg i32 %.0151158 to double
-  %i.c = fdiv double %.0151, 8.000000e+01
+  %2 = uitofp i32 %i.b to double                  ; 2 uses
+  %3 = fcmp ogt double %2, 1.200000e+04
+  %spec.store.select = select i1 %3, double 1.200000e+04, double %2
+  %i.c = fdiv double %spec.store.select, 8.000000e+01
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 84876
   %i.e = load i8, ptr %i.d, align 4, !tbaa !12    ; 3 uses
   %i.f = uitofp i8 %i.e to double
@@ -609,9 +610,6 @@ bb.a:
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #10

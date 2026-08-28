@@ -205,17 +205,15 @@ bb.k:                                             ; preds = %bb.h
   %i.av = call double @llvm.fmuladd.f64(double %i.au, double %i.as, double -1.000000e+00) ; 2 uses
   %i.aw = fcmp ogt double %i.au, f0x43F0000000000000
   %i.ax = fptoui double %i.au to i64
-  %i.ay = select i1 %i.aw, i64 -1, i64 %i.ax      ; 2 uses
+  %i.ay = select i1 %i.aw, i64 -1, i64 %i.ax
   %i.az = fcmp ogt double %i.av, f0x43F0000000000000
-  br i1 %i.az, label %bb.l, label %5
-
-5:                                                ; preds = %bb.k
-  %6 = fptoui double %i.av to i64
+  %5 = fptoui double %i.av to i64
+  %spec.select34 = select i1 %i.az, i64 -1, i64 %5
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.k, %bb.i, %5, %bb.j
-  %.027 = phi i64 [ %i.ap, %bb.i ], [ %i.ap, %bb.j ], [ %i.ay, %5 ], [ %i.ay, %bb.k ]
-  %.0 = phi i64 [ -1, %bb.i ], [ %i.ar, %bb.j ], [ %6, %5 ], [ -1, %bb.k ]
+bb.l:                                             ; preds = %bb.k, %bb.i, %bb.j
+  %.027 = phi i64 [ %i.ap, %bb.i ], [ %i.ap, %bb.j ], [ %i.ay, %bb.k ]
+  %.0 = phi i64 [ -1, %bb.i ], [ %i.ar, %bb.j ], [ %spec.select34, %bb.k ]
   %i.ba = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.bb = load i64, ptr %i.ba, align 8, !tbaa !49 ; 2 uses
   %spec.select = call i64 @llvm.umin.i64(i64 %.027, i64 %i.bb) ; 2 uses

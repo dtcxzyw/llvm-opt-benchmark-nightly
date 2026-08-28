@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %.preheader.3
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define void @hexwave_generate_samples(ptr nofree noundef captures(none) %0, i32 noundef %1, ptr nofree noundef captures(none) %2, float noundef %3) local_unnamed_addr #6 {
 bb.a:
-  %4 = alloca [9 x %struct.hexvert], align 16     ; 28 uses
+  %4 = alloca [9 x %struct.hexvert], align 16     ; 23 uses
   %i.a = alloca [128 x float], align 16           ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   %i.b = load float, ptr %2, align 4, !tbaa !68   ; 6 uses
@@ -217,12 +217,6 @@ bb.a:
   %i.h = select i1 %i.f, float 0.000000e+00, float %i.g ; 4 uses
   %i.i = sdiv i32 %i.c, 2
   %i.j = icmp slt i32 %1, 1
-  %.0123.lcssa.sroa.gep = getelementptr inbounds nuw i8, ptr %4, i64 12
-  %.0123.lcssa.sroa.gep459 = getelementptr inbounds nuw i8, ptr %4, i64 72
-  %.0123.lcssa.sroa.gep460 = getelementptr inbounds nuw i8, ptr %4, i64 24
-  %.0123.lcssa.sroa.gep461 = getelementptr inbounds nuw i8, ptr %4, i64 60
-  %.0123.lcssa.sroa.gep462 = getelementptr inbounds nuw i8, ptr %4, i64 36
-  %.0123.lcssa.sroa.gep463 = getelementptr inbounds nuw i8, ptr %4, i64 48
   br i1 %i.j, label %bb.aa, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -260,14 +254,13 @@ bb.b:                                             ; preds = %bb.a
   %i.z = getelementptr inbounds nuw i8, ptr %4, i64 60
   %i.aa = load float, ptr %i.z, align 4, !tbaa !61
   %i.ab = fcmp olt float %i.b, %i.aa
-  br i1 %i.ab, label %bb.c, label %5
-
-5:                                                ; preds = %.preheader180.4
+  %spec.select = select i1 %i.ab, i64 5, i64 6
   br label %bb.c
 
-bb.c:                                             ; preds = %5, %.preheader180.4, %.preheader180.3, %.preheader180.2, %.preheader180.1, %.preheader180.preheader
-  %.0123.lcssa.sroa.phi = phi ptr [ %.0123.lcssa.sroa.gep, %.preheader180.preheader ], [ %.0123.lcssa.sroa.gep459, %5 ], [ %.0123.lcssa.sroa.gep460, %.preheader180.1 ], [ %.0123.lcssa.sroa.gep461, %.preheader180.4 ], [ %.0123.lcssa.sroa.gep462, %.preheader180.2 ], [ %.0123.lcssa.sroa.gep463, %.preheader180.3 ]
-  %i.ac = getelementptr inbounds nuw i8, ptr %.0123.lcssa.sroa.phi, i64 8
+bb.c:                                             ; preds = %.preheader180.4, %.preheader180.3, %.preheader180.2, %.preheader180.1, %.preheader180.preheader
+  %.0123.lcssa = phi i64 [ 1, %.preheader180.preheader ], [ 4, %.preheader180.3 ], [ 2, %.preheader180.1 ], [ %spec.select, %.preheader180.4 ], [ 3, %.preheader180.2 ]
+  %5 = getelementptr inbounds nuw [12 x i8], ptr %4, i64 %.0123.lcssa
+  %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.ad = load float, ptr %i.ac, align 4, !tbaa !67 ; 2 uses
   %i.ae = fcmp une float %i.ad, 0.000000e+00
   br i1 %i.ae, label %bb.d, label %hex_blamp.exit
@@ -501,13 +494,11 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o
   %i.ef = load float, ptr %i.do, align 16, !tbaa !61
   %i.eg = fcmp olt float %.0122196, %i.ef
-  br i1 %i.eg, label %bb.q, label %6
-
-6:                                                ; preds = %bb.p
+  %spec.select276 = select i1 %i.eg, i32 7, i32 8
   br label %bb.q
 
-bb.q:                                             ; preds = %6, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %.preheader205
-  %.1124.lcssa = phi i32 [ 0, %.preheader205 ], [ 4, %bb.m ], [ 8, %6 ], [ 1, %bb.j ], [ 7, %bb.p ], [ 2, %bb.k ], [ 5, %bb.n ], [ 3, %bb.l ], [ 6, %bb.o ]
+bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %.preheader205
+  %.1124.lcssa = phi i32 [ 0, %.preheader205 ], [ 4, %bb.m ], [ 6, %bb.o ], [ 1, %bb.j ], [ %spec.select276, %bb.p ], [ 2, %bb.k ], [ 5, %bb.n ], [ 3, %bb.l ]
   %i.eh = load i32, ptr @hexblep, align 8         ; 14 uses
   %i.ei = load i32, ptr getelementptr inbounds nuw (i8, ptr @hexblep, i64 4), align 4 ; 2 uses
   %i.ej = sitofp i32 %i.ei to float               ; 8 uses

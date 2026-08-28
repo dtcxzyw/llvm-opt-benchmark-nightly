@@ -204,15 +204,12 @@ bb.au:                                            ; preds = %bb.at
 bb.av:                                            ; preds = %bb.au
   %i.pa = load float, ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 5360), align 8, !tbaa !229
   %i.pb = tail call float @llvm.fmuladd.f32(float %i.pa, float 4.000000e+00, float %i.ox) ; 2 uses
-  store float %i.pb, ptr getelementptr inbounds nuw (i8, ptr @stbte__region, i64 20), align 4, !tbaa !126
   %1 = fcmp ogt float %i.pb, 1.000000e+00
-  br i1 %1, label %2, label %bb.aw
-
-2:                                                ; preds = %bb.av
-  store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @stbte__region, i64 20), align 4, !tbaa !126
+  %spec.store.select274 = select i1 %1, float 1.000000e+00, float %i.pb
+  store float %spec.store.select274, ptr getelementptr inbounds nuw (i8, ptr @stbte__region, i64 20), align 4
   br label %bb.aw
 
-bb.aw:                                            ; preds = %bb.au, %2, %bb.av, %bb.at
+bb.aw:                                            ; preds = %bb.av, %bb.au, %bb.at
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
   br label %bb.ax
 
@@ -263,15 +260,12 @@ bb.ba:                                            ; preds = %bb.az
 bb.bb:                                            ; preds = %bb.ba
   %i.ps = load float, ptr getelementptr inbounds nuw (i8, ptr @stbte__ui, i64 5360), align 8, !tbaa !229
   %i.pt = tail call float @llvm.fmuladd.f32(float %i.ps, float 4.000000e+00, float %i.pp) ; 2 uses
-  store float %i.pt, ptr getelementptr inbounds nuw (i8, ptr @stbte__region, i64 44), align 4, !tbaa !126
-  %3 = fcmp ogt float %i.pt, 1.000000e+00
-  br i1 %3, label %4, label %bb.bc
-
-4:                                                ; preds = %bb.bb
-  store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @stbte__region, i64 44), align 4, !tbaa !126
+  %2 = fcmp ogt float %i.pt, 1.000000e+00
+  %spec.store.select274.1 = select i1 %2, float 1.000000e+00, float %i.pt
+  store float %spec.store.select274.1, ptr getelementptr inbounds nuw (i8, ptr @stbte__region, i64 44), align 4
   br label %bb.bc
 
-bb.bc:                                            ; preds = %4, %bb.bb, %bb.ba, %bb.az
+bb.bc:                                            ; preds = %bb.bb, %bb.ba, %bb.az
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
   br label %bb.bd
 

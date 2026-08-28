@@ -204,18 +204,14 @@ bb.ap:                                            ; preds = %bb.ao
   %i.ch = fdiv nnan double %i.cg, 1.000000e+03
   %i.ci = fmul nnan double %i.ch, 1.000000e+03    ; 3 uses
   %i.cj = fcmp ult double %i.ci, f0x43E0000000000000
-  br i1 %i.cj, label %12, label %_ZN9grpc_coremlEdNS_8DurationE.exit
-
-12:                                               ; preds = %bb.ap
-  %13 = fcmp ugt double %i.ci, f0xC3E0000000000000
-  br i1 %13, label %14, label %_ZN9grpc_coremlEdNS_8DurationE.exit
-
-14:                                               ; preds = %12
-  %15 = fptosi double %i.ci to i64
+  %.inv.i.i.i = fcmp ole double %i.ci, f0xC3E0000000000000
+  %spec.select4.i.i.i = select i1 %.inv.i.i.i, double f0xC3E0000000000000, double %i.ci
+  %spec.select.i.i.i = fptosi double %spec.select4.i.i.i to i64
+  %.sroa.0.0.i.i.i = select i1 %i.cj, i64 %spec.select.i.i.i, i64 9223372036854775807
   br label %_ZN9grpc_coremlEdNS_8DurationE.exit
 
-_ZN9grpc_coremlEdNS_8DurationE.exit:              ; preds = %bb.ao, %14, %12, %bb.ap, %bb.aj
-  %storemerge = phi i64 [ %i.cc, %bb.aj ], [ 9223372036854775807, %bb.ap ], [ %15, %14 ], [ -9223372036854775808, %12 ], [ %.sroa.02.0.copyload, %bb.ao ]
+_ZN9grpc_coremlEdNS_8DurationE.exit:              ; preds = %bb.ao, %bb.ap, %bb.aj
+  %storemerge = phi i64 [ %i.cc, %bb.aj ], [ %.sroa.0.0.i.i.i, %bb.ap ], [ %.sroa.02.0.copyload, %bb.ao ]
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %storemerge, ptr %i.ck, align 8, !tbaa !67
   %i.cl = load ptr, ptr %11, align 8, !tbaa !58   ; 2 uses

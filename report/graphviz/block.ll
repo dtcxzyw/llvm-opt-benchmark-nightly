@@ -202,7 +202,7 @@ _ZN5Block13canFollowLeftEPK10ConstraintPK8Variable.exit.thread.us: ; preds = %bb
   br i1 %i.aq, label %.lr.ph100.split.us, label %.lr.ph100.split
 
 .lr.ph100.split.us:                               ; preds = %.lr.ph100, %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.thread.us
-  %.34997.us = phi ptr [ %.551.us, %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.thread.us ], [ %.046.lcssa, %.lr.ph100 ] ; 6 uses
+  %.34997.us = phi ptr [ %.551.us, %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.thread.us ], [ %.046.lcssa, %.lr.ph100 ] ; 5 uses
   %.sroa.056.096.us = phi ptr [ %i.bm, %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.thread.us ], [ %i.an, %.lr.ph100 ] ; 2 uses
   %.36995.us = phi ptr [ %.570.us, %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.thread.us ], [ %.067.lcssa, %.lr.ph100 ] ; 3 uses
   %.27394.us = phi double [ %.374.us, %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.thread.us ], [ %.071.lcssa, %.lr.ph100 ] ; 3 uses
@@ -231,7 +231,7 @@ bb.c:                                             ; preds = %_ZN5Block14canFollo
   %i.be = extractvalue { double, ptr } %i.bc, 1   ; 3 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ar, i64 24
   store double %i.bd, ptr %i.bf, align 8, !tbaa !63
-  %i.bg = fadd double %.27394.us, %i.bd           ; 3 uses
+  %i.bg = fadd double %.27394.us, %i.bd           ; 2 uses
   %i.bh = icmp ne ptr %spec.select78.us, null
   %i.bi = icmp ne ptr %i.be, null
   %or.cond5.us = select i1 %i.bh, i1 %i.bi, i1 false
@@ -241,15 +241,13 @@ bb.d:                                             ; preds = %bb.c
   %i.bj = getelementptr inbounds nuw i8, ptr %i.be, i64 24
   %i.bk = load double, ptr %i.bj, align 8, !tbaa !63
   %i.bl = fcmp olt double %i.bd, %i.bk
-  br i1 %i.bl, label %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.thread.us, label %6
-
-6:                                                ; preds = %bb.d
+  %spec.select = select i1 %i.bl, ptr %i.ar, ptr %i.be
   br label %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.thread.us
 
-_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.thread.us: ; preds = %bb.c, %6, %bb.d, %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.us, %.lr.ph100.split.us
-  %.374.us = phi double [ %i.bg, %6 ], [ %i.bg, %bb.c ], [ %.27394.us, %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.us ], [ %i.bg, %bb.d ], [ %.27394.us, %.lr.ph100.split.us ] ; 2 uses
-  %.570.us = phi ptr [ %i.be, %6 ], [ %spec.select77.us, %bb.c ], [ %.36995.us, %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.us ], [ %i.ar, %bb.d ], [ %.36995.us, %.lr.ph100.split.us ] ; 2 uses
-  %.551.us = phi ptr [ %.34997.us, %6 ], [ %spec.select78.us, %bb.c ], [ %.34997.us, %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.us ], [ %.34997.us, %bb.d ], [ %.34997.us, %.lr.ph100.split.us ]
+_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.thread.us: ; preds = %bb.d, %bb.c, %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.us, %.lr.ph100.split.us
+  %.374.us = phi double [ %.27394.us, %.lr.ph100.split.us ], [ %i.bg, %bb.c ], [ %.27394.us, %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.us ], [ %i.bg, %bb.d ] ; 2 uses
+  %.570.us = phi ptr [ %.36995.us, %.lr.ph100.split.us ], [ %spec.select77.us, %bb.c ], [ %.36995.us, %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.us ], [ %spec.select, %bb.d ] ; 2 uses
+  %.551.us = phi ptr [ %.34997.us, %.lr.ph100.split.us ], [ %spec.select78.us, %bb.c ], [ %.34997.us, %_ZN5Block14canFollowRightEPK10ConstraintPK8Variable.exit.us ], [ %.34997.us, %bb.d ]
   %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.056.096.us, i64 8 ; 2 uses
   %.not80.us = icmp eq ptr %i.bm, %i.ap
   br i1 %.not80.us, label %._crit_edge101, label %.lr.ph100.split.us

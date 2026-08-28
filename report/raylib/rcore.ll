@@ -205,9 +205,9 @@ GetCameraForward.exit:
   %.sroa.013.0.i.i = select i1 %i.h, <2 x float> %i.l, <2 x float> %i.b
   %.sroa.617.0.i.i = select i1 %i.h, float %i.m, float %i.c
   %i.n = fadd float %1, %sqrt.i                   ; 2 uses
-  %2 = fcmp ugt float %i.n, 0.000000e+00
+  %2 = fcmp ole float %i.n, 0.000000e+00
   %.neg = fneg float %i.n
-  %i.o = select i1 %2, float %.neg, float -1.000000e-03 ; 2 uses
+  %i.o = select i1 %2, float -1.000000e-03, float %.neg ; 2 uses
   %i.p = fmul float %i.o, %.sroa.617.0.i.i
   %i.q = insertelement <2 x float> poison, float %i.o, i64 0
   %i.r = shufflevector <2 x float> %i.q, <2 x float> poison, <2 x i32> zeroinitializer
@@ -610,9 +610,9 @@ bb.eg:                                            ; preds = %GetGamepadAxisMovem
   %.sroa.013.0.i.i.i840 = select i1 %i.ass, <2 x float> %i.asw, <2 x float> %i.asm
   %.sroa.617.0.i.i.i841 = select i1 %i.ass, float %i.asx, float %i.asn
   %i.asy = fsub float %sqrt.i.i836, %..i          ; 2 uses
-  %2 = fcmp ugt float %i.asy, 0.000000e+00
+  %2 = fcmp ole float %i.asy, 0.000000e+00
   %.neg.i = fneg float %i.asy
-  %i.asz = select i1 %2, float %.neg.i, float -1.000000e-03 ; 2 uses
+  %i.asz = select i1 %2, float -1.000000e-03, float %.neg.i ; 2 uses
   %i.ata = fmul float %i.asz, %.sroa.617.0.i.i.i841
   %i.atb = insertelement <2 x float> poison, float %i.asz, i64 0
   %i.atc = shufflevector <2 x float> %i.atb, <2 x float> poison, <2 x i32> zeroinitializer
@@ -684,9 +684,9 @@ CameraMoveToTarget.exit898:                       ; preds = %IsKeyPressed.exit.t
   %.sroa.013.0.i.i.i889 = select i1 %i.aun, <2 x float> %i.aur, <2 x float> %i.auh
   %.sroa.617.0.i.i.i890 = select i1 %i.aun, float %i.aus, float %i.aui
   %i.aut = fadd float %sqrt.i.i885, -2.000000e+00 ; 2 uses
-  %3 = fcmp ugt float %i.aut, 0.000000e+00
+  %3 = fcmp ole float %i.aut, 0.000000e+00
   %.neg.i891 = fneg float %i.aut
-  %i.auu = select i1 %3, float %.neg.i891, float -1.000000e-03 ; 2 uses
+  %i.auu = select i1 %3, float -1.000000e-03, float %.neg.i891 ; 2 uses
   %i.auv = fmul float %i.auu, %.sroa.617.0.i.i.i890
   %i.auw = insertelement <2 x float> poison, float %i.auu, i64 0
   %i.aux = shufflevector <2 x float> %i.auw, <2 x float> poison, <2 x i32> zeroinitializer
@@ -1089,9 +1089,9 @@ CameraMoveUp.exit:                                ; preds = %CameraMoveRight.exi
   %.sroa.013.0.i.i.i82 = select i1 %i.io, <2 x float> %i.is, <2 x float> %i.ii
   %.sroa.617.0.i.i.i83 = select i1 %i.io, float %i.it, float %i.ij
   %i.iu = fadd float %5, %sqrt.i.i78              ; 2 uses
-  %6 = fcmp ugt float %i.iu, 0.000000e+00
+  %6 = fcmp ole float %i.iu, 0.000000e+00
   %.neg.i = fneg float %i.iu
-  %i.iv = select i1 %6, float %.neg.i, float -1.000000e-03 ; 2 uses
+  %i.iv = select i1 %6, float -1.000000e-03, float %.neg.i ; 2 uses
   %i.iw = fmul float %i.iv, %.sroa.617.0.i.i.i83
   %i.ix = insertelement <2 x float> poison, float %i.iv, i64 0
   %i.iy = shufflevector <2 x float> %i.ix, <2 x float> poison, <2 x i32> zeroinitializer
@@ -1494,18 +1494,11 @@ declare void @glfwSetWindowSize(ptr noundef, i32 noundef, i32 noundef) local_unn
 
 ; Function Attrs: nounwind uwtable
 define void @SetWindowOpacity(float noundef %0) local_unnamed_addr #0 {
-  %2 = fcmp ult float %0, 1.000000e+00
-  br i1 %2, label %3, label %bb.a
-
-3:                                                ; preds = %1
-  %4 = fcmp ugt float %0, 0.000000e+00
-  br i1 %4, label %bb.a, label %5
-
-5:                                                ; preds = %3
-  br label %bb.a
-
-bb.a:                                             ; preds = %1, %3, %5
-  %.0 = phi float [ %0, %3 ], [ 0.000000e+00, %5 ], [ 1.000000e+00, %1 ]
+bb.a:
+  %1 = fcmp ult float %0, 1.000000e+00
+  %2 = fcmp ole float %0, 0.000000e+00
+  %spec.store.select = select i1 %2, float 0.000000e+00, float %0
+  %.0 = select i1 %1, float %spec.store.select, float 1.000000e+00
   %i.a = load ptr, ptr @platform.0, align 8
   tail call void @glfwSetWindowOpacity(ptr noundef %i.a, float noundef %.0) #56
   ret void

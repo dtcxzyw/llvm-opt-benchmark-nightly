@@ -204,7 +204,7 @@ bb.ao:                                            ; preds = %.lr.ph478, %zuiDisc
 
 .lr.ph456:                                        ; preds = %bb.ao, %zunionInterAggregate.exit
   %indvars.iv517 = phi i64 [ %indvars.iv.next518, %zunionInterAggregate.exit ], [ 1, %bb.ao ] ; 3 uses
-  %.0371453 = phi double [ %.1372, %zunionInterAggregate.exit ], [ %spec.store.select, %bb.ao ] ; 11 uses
+  %.0371453 = phi double [ %.1371, %zunionInterAggregate.exit ], [ %spec.store.select, %bb.ao ] ; 11 uses
   %i.ev = getelementptr inbounds nuw [56 x i8], ptr %i.ab, i64 %indvars.iv517 ; 4 uses
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !186
   %i.ex = load ptr, ptr %i.ab, align 8, !tbaa !186
@@ -224,8 +224,9 @@ bb.ap:                                            ; preds = %.lr.ph456
 
 bb.aq:                                            ; preds = %bb.ap
   %i.fd = fadd double %.0371453, %i.fc            ; 2 uses
-  %7 = fcmp uno double %i.fd, 0.000000e+00
-  br i1 %7, label %.sink.split.i325, label %zunionInterAggregate.exit
+  %.inv.i = fcmp ord double %i.fd, 0.000000e+00
+  %spec.store.select.i = select i1 %.inv.i, double %i.fd, double 0.000000e+00
+  br label %zunionInterAggregate.exit
 
 bb.ar:                                            ; preds = %bb.ap
   %i.fe = fcmp olt double %i.fc, %.0371453
@@ -259,8 +260,9 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.au
   %i.fl = fadd double %.0371453, %i.fk            ; 2 uses
-  %8 = fcmp uno double %i.fl, 0.000000e+00
-  br i1 %8, label %.sink.split.i325, label %zunionInterAggregate.exit
+  %.inv.i326 = fcmp ord double %i.fl, 0.000000e+00
+  %spec.store.select.i327 = select i1 %.inv.i326, double %i.fl, double 0.000000e+00
+  br label %zunionInterAggregate.exit
 
 bb.aw:                                            ; preds = %bb.au
   %i.fm = fcmp olt double %i.fk, %.0371453
@@ -272,11 +274,8 @@ bb.ax:                                            ; preds = %bb.au
   %.20.i328 = select i1 %i.fn, double %i.fk, double %.0371453
   br label %zunionInterAggregate.exit
 
-.sink.split.i325:                                 ; preds = %bb.aq, %bb.av
-  br label %zunionInterAggregate.exit
-
-zunionInterAggregate.exit:                        ; preds = %.sink.split.i325, %bb.av, %bb.ax, %bb.aw, %bb.aq, %bb.as, %bb.ar
-  %.1372 = phi double [ 0.000000e+00, %.sink.split.i325 ], [ %i.fd, %bb.aq ], [ %..i, %bb.ar ], [ %.20.i, %bb.as ], [ %i.fl, %bb.av ], [ %..i324, %bb.aw ], [ %.20.i328, %bb.ax ] ; 2 uses
+zunionInterAggregate.exit:                        ; preds = %bb.ax, %bb.aw, %bb.av, %bb.as, %bb.ar, %bb.aq
+  %.1371 = phi double [ %.20.i, %bb.as ], [ %spec.store.select.i, %bb.aq ], [ %..i, %bb.ar ], [ %spec.store.select.i327, %bb.av ], [ %..i324, %bb.aw ], [ %.20.i328, %bb.ax ] ; 2 uses
   %indvars.iv.next518 = add nuw nsw i64 %indvars.iv517, 1 ; 3 uses
   %i.fo = load i64, ptr %i.a, align 8, !tbaa !24  ; 2 uses
   %i.fp = icmp sgt i64 %i.fo, %indvars.iv.next518
@@ -284,7 +283,7 @@ zunionInterAggregate.exit:                        ; preds = %.sink.split.i325, %
 
 ._crit_edge457:                                   ; preds = %zunionInterAggregate.exit, %.._crit_edge457.loopexit_crit_edge, %bb.ao
   %i.fq = phi i64 [ %i.et, %bb.ao ], [ %.pre523.pre, %.._crit_edge457.loopexit_crit_edge ], [ %i.fo, %zunionInterAggregate.exit ]
-  %.0371.lcssa = phi double [ %spec.store.select, %bb.ao ], [ %.0371453, %.._crit_edge457.loopexit_crit_edge ], [ %.1372, %zunionInterAggregate.exit ] ; 2 uses
+  %.0371.lcssa = phi double [ %spec.store.select, %bb.ao ], [ %.0371453, %.._crit_edge457.loopexit_crit_edge ], [ %.1371, %zunionInterAggregate.exit ] ; 2 uses
   %.lcssa = phi i64 [ 1, %bb.ao ], [ %indvars.iv517, %.._crit_edge457.loopexit_crit_edge ], [ %indvars.iv.next518, %zunionInterAggregate.exit ]
   %i.fr = icmp eq i64 %i.fq, %.lcssa              ; 2 uses
   %or.cond14 = and i1 %i.eb, %i.fr
@@ -687,8 +686,9 @@ bb.cp:                                            ; preds = %zuiSdsFromValue.exi
 
 bb.cq:                                            ; preds = %bb.cp
   %i.ll = fadd double %spec.store.select15, %i.lk ; 2 uses
-  %9 = fcmp uno double %i.ll, 0.000000e+00
-  br i1 %9, label %.sink.split.i356, label %zunionInterAggregate.exit360
+  %.inv.i356 = fcmp ord double %i.ll, 0.000000e+00
+  %spec.store.select.i357 = select i1 %.inv.i356, double %i.ll, double 0.000000e+00
+  br label %zunionInterAggregate.exit360
 
 bb.cr:                                            ; preds = %bb.cp
   %i.lm = fcmp olt double %spec.store.select15, %i.lk
@@ -700,12 +700,9 @@ bb.cs:                                            ; preds = %bb.cp
   %.20.i359 = select i1 %i.ln, double %spec.store.select15, double %i.lk
   br label %zunionInterAggregate.exit360
 
-.sink.split.i356:                                 ; preds = %bb.cq
-  br label %zunionInterAggregate.exit360
-
-zunionInterAggregate.exit360:                     ; preds = %bb.cr, %bb.cs, %bb.cq, %.sink.split.i356
-  %storemerge.i358 = phi double [ %i.ll, %bb.cq ], [ %..i355, %bb.cr ], [ %.20.i359, %bb.cs ], [ 0.000000e+00, %.sink.split.i356 ]
-  store double %storemerge.i358, ptr %i.lj, align 8, !tbaa !16
+zunionInterAggregate.exit360:                     ; preds = %bb.cq, %bb.cr, %bb.cs
+  %spec.store.select.sink.i355 = phi double [ %spec.store.select.i357, %bb.cq ], [ %..i355, %bb.cr ], [ %.20.i359, %bb.cs ]
+  store double %spec.store.select.sink.i355, ptr %i.lj, align 8, !tbaa !16
   br label %bb.ct
 
 bb.ct:                                            ; preds = %zunionInterAggregate.exit360, %zslRandomLevel.exit

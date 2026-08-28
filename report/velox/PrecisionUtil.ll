@@ -204,13 +204,11 @@ bb.q:                                             ; preds = %bb.p
   %i.cd = fsub double %i.cb, %i.cc
   %i.ce = tail call double @llvm.fabs.f64(double %i.cd)
   %i.cf = fcmp ogt double %i.ce, 5.000000e-05
-  br i1 %i.cf, label %1, label %bb.r
-
-1:                                                ; preds = %bb.q
+  %spec.select = select i1 %i.cf, i32 17, i32 16
   br label %bb.r
 
-bb.r:                                             ; preds = %1, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.09 = phi i32 [ 17, %1 ], [ 0, %bb.a ], [ 1, %bb.b ], [ 16, %bb.q ], [ 2, %bb.c ], [ 9, %bb.j ], [ 3, %bb.d ], [ 15, %bb.p ], [ 4, %bb.e ], [ 12, %bb.m ], [ 5, %bb.f ], [ 14, %bb.o ], [ 6, %bb.g ], [ 10, %bb.k ], [ 7, %bb.h ], [ 13, %bb.n ], [ 8, %bb.i ], [ 11, %bb.l ]
+bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %.09 = phi i32 [ 11, %bb.l ], [ 0, %bb.a ], [ 1, %bb.b ], [ %spec.select, %bb.q ], [ 2, %bb.c ], [ 9, %bb.j ], [ 3, %bb.d ], [ 15, %bb.p ], [ 4, %bb.e ], [ 12, %bb.m ], [ 5, %bb.f ], [ 14, %bb.o ], [ 6, %bb.g ], [ 10, %bb.k ], [ 7, %bb.h ], [ 13, %bb.n ], [ 8, %bb.i ]
   ret i32 %.09
 }
 

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/object-rs/original/objdump.objdump.5f22a4fa832dee2f-cgu.01?download=true
+inline.NumInlined: 126
+inline.NumDeleted: 103
 begin_hunk_0
 @21 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRNtNtCseHTIzroA4w0_6object2pe12SectionFlagsNtB6_5Debug3fmtCs8aoZCP6pRcV_7objdump }>, align 8
 @22 = private unnamed_addr constant [4 x i8] c"Coff", align 1
@@ -200,9 +202,9 @@ bb.e:                                             ; preds = %_RNvMNtCseHTIzroA4w
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.h, %bb.e
+  %.sroa.6.sroa.7.0 = phi i64 [ %i.l, %bb.e ], [ %i.r, %bb.h ]
   %.sroa.6.sroa.6.0 = phi ptr [ %i.j, %bb.e ], [ %i.p, %bb.h ]
   %.sroa.6.sroa.0.0 = phi i64 [ %i.g, %bb.e ], [ %i.m, %bb.h ]
-  %.sroa.6.sroa.7.0 = phi i64 [ %i.l, %bb.e ], [ %i.r, %bb.h ]
   %.sroa.0.0 = phi i64 [ 4, %bb.e ], [ 5, %bb.h ]
   store i64 %.sroa.0.0, ptr %0, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -605,9 +607,9 @@ bb.n:                                             ; preds = %bb.e, %bb.d, %bb.ae
   br label %bb.af
 
 bb.o:                                             ; preds = %bb.ad, %bb.ab, %bb.z, %bb.x, %bb.v, %bb.t, %bb.s, %bb.r, %bb.p, %bb.l
-  %.sroa.13.sroa.0.0 = phi ptr [ %i.k, %bb.l ], [ %i.m, %bb.p ], [ %i.q, %bb.r ], [ %i.x, %bb.s ], [ %i.ac, %bb.t ], [ %i.ae, %bb.v ], [ %i.ag, %bb.x ], [ %i.ai, %bb.z ], [ %i.ak, %bb.ab ], [ %i.am, %bb.ad ]
-  %.sroa.13.sroa.13.0 = phi ptr [ %.sroa.4165.0.copyload, %bb.l ], [ %.sroa.4151.0.copyload, %bb.p ], [ %i.ao, %bb.r ], [ %i.at, %bb.s ], [ %.sroa.4191.0.copyload, %bb.t ], [ %.sroa.4206.0.copyload, %bb.v ], [ %.sroa.4221.0.copyload, %bb.x ], [ %.sroa.4236.0.copyload, %bb.z ], [ %.sroa.0242.sroa.4.0.copyload, %bb.ab ], [ %.sroa.0248.sroa.4.0.copyload, %bb.ad ]
   %.sroa.13.sroa.14.0 = phi i64 [ %.sroa.5166.0.copyload, %bb.l ], [ %.sroa.5152.0.copyload, %bb.p ], [ %i.p, %bb.r ], [ %i.w, %bb.s ], [ %.sroa.5192.0.copyload, %bb.t ], [ %.sroa.5207.0.copyload, %bb.v ], [ %.sroa.5222.0.copyload, %bb.x ], [ %.sroa.5237.0.copyload, %bb.z ], [ %.sroa.0242.sroa.5.0.copyload, %bb.ab ], [ %.sroa.0248.sroa.5.0.copyload, %bb.ad ]
+  %.sroa.13.sroa.13.0 = phi ptr [ %.sroa.4165.0.copyload, %bb.l ], [ %.sroa.4151.0.copyload, %bb.p ], [ %i.ao, %bb.r ], [ %i.at, %bb.s ], [ %.sroa.4191.0.copyload, %bb.t ], [ %.sroa.4206.0.copyload, %bb.v ], [ %.sroa.4221.0.copyload, %bb.x ], [ %.sroa.4236.0.copyload, %bb.z ], [ %.sroa.0242.sroa.4.0.copyload, %bb.ab ], [ %.sroa.0248.sroa.4.0.copyload, %bb.ad ]
+  %.sroa.13.sroa.0.0 = phi ptr [ %i.k, %bb.l ], [ %i.m, %bb.p ], [ %i.q, %bb.r ], [ %i.x, %bb.s ], [ %i.ac, %bb.t ], [ %i.ae, %bb.v ], [ %i.ag, %bb.x ], [ %i.ai, %bb.z ], [ %i.ak, %bb.ab ], [ %i.am, %bb.ad ]
   %.sroa.14.0 = phi i64 [ undef, %bb.l ], [ undef, %bb.p ], [ %.sroa.6110.24.insert.ext, %bb.r ], [ %.sroa.6177.24.insert.ext, %bb.s ], [ undef, %bb.t ], [ undef, %bb.v ], [ undef, %bb.x ], [ undef, %bb.z ], [ %.sroa.4243.0.copyload, %bb.ab ], [ %.sroa.4249.0.copyload, %bb.ad ]
   store i64 %i.i, ptr %0, align 8
   %.sroa.4256.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8

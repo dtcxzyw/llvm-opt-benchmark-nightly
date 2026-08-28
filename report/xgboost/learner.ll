@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !79   ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !79   ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !79   ; 3 uses
   %i.e = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.f = ptrtoint ptr %i.b to i64
   %i.g = sub i64 %i.e, %i.f                       ; 3 uses
@@ -294,7 +294,8 @@ bb.j:                                             ; preds = %bb.i, %._crit_edge.
   %i.al = load float, ptr %.sroa.025.2.i.i.i.i, align 4, !tbaa !356
   %i.am = tail call float @llvm.fabs.f32(float %i.al)
   %i.an = fcmp ueq float %i.am, +inf
-  br i1 %i.an, label %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit, label %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit.thread
+  %spec.select.i.i.i.i = select i1 %i.an, ptr %.sroa.025.2.i.i.i.i, ptr %i.d
+  br label %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit
 
 _ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit.loopexit.split.loop.exit: ; preds = %bb.b
   %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.025.044.i.i.i.i, i64 4
@@ -309,7 +310,7 @@ _ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23L
   br label %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit
 
 _ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit: ; preds = %.lr.ph.i.i.i.i, %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit.loopexit.split.loop.exit, %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit.loopexit.split.loop.exit110, %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit.loopexit.split.loop.exit112, %bb.f, %bb.h, %bb.j
-  %.sroa.08.0.in.sroa.speculated.i.i.i.i = phi ptr [ %.sroa.025.1.i.i.i.i, %bb.h ], [ %.sroa.025.2.i.i.i.i, %bb.j ], [ %.sroa.025.0.lcssa.i.i.i.i, %bb.f ], [ %i.aq, %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit.loopexit.split.loop.exit112 ], [ %i.ao, %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit.loopexit.split.loop.exit ], [ %i.ap, %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit.loopexit.split.loop.exit110 ], [ %.sroa.025.044.i.i.i.i, %.lr.ph.i.i.i.i ]
+  %.sroa.08.0.in.sroa.speculated.i.i.i.i = phi ptr [ %.sroa.025.1.i.i.i.i, %bb.h ], [ %spec.select.i.i.i.i, %bb.j ], [ %.sroa.025.0.lcssa.i.i.i.i, %bb.f ], [ %i.aq, %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit.loopexit.split.loop.exit112 ], [ %i.ap, %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit.loopexit.split.loop.exit110 ], [ %i.ao, %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit.loopexit.split.loop.exit ], [ %.sroa.025.044.i.i.i.i, %.lr.ph.i.i.i.i ]
   %i.ar = icmp eq ptr %i.d, %.sroa.08.0.in.sroa.speculated.i.i.i.i
   br i1 %i.ar, label %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit.thread, label %bb.k, !prof !949
 
@@ -343,7 +344,7 @@ bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
   br label %bb.bk
 
-_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit.thread: ; preds = %bb.j, %._crit_edge.i.i.i.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit29, %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit
+_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit.thread: ; preds = %._crit_edge.i.i.i.i, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit29, %_ZSt7none_ofIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEZNK7xgboost23LearnerModelParamLegacy8ValidateEPKNS8_7ContextEEUlfE_EbT_SE_T0_.exit
   %i.ax = call noundef zeroext i1 @_ZN7xgboost10collective13IsDistributedEv() #17
   br i1 %i.ax, label %bb.n, label %bb.bf
 
@@ -746,7 +747,7 @@ begin_hunk_1_@bcmp
 !946 = distinct !{!946, !"_ZN4dmlc11LogCheck_GEIjmEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_"}
 !947 = !{!724, !25, i64 0}
 !948 = distinct !{!948, !34}
-!949 = !{!"branch_weights", !"expected", i32 2145997093, i32 1486555}
+!949 = !{!"branch_weights", !"expected", i32 2146259859, i32 1223789}
 !950 = !{!"branch_weights", !"expected", i32 2146410175, i32 1073473}
 !951 = !{!952}
 !952 = distinct !{!952, !953, !"_ZN7xgboost6linalg7MakeVecIcEEDaPT_mNS_9DeviceOrdE: argument 0"}

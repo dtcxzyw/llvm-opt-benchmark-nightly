@@ -13,18 +13,10 @@ $_Z12cmDurationToIjET_NSt6chrono8durationIdSt5ratioILl1ELl1EEEE = comdat any
 define weak_odr dso_local noundef i32 @_Z12cmDurationToIiET_NSt6chrono8durationIdSt5ratioILl1ELl1EEEE(double %0) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = fcmp uge double %0, f0x41DFFFFFFFC00000
-  br i1 %i.a, label %5, label %1
-
-1:                                                ; preds = %bb.a
-  %2 = fcmp ule double %0, f0xC1E0000000000000
-  br i1 %2, label %5, label %3
-
-3:                                                ; preds = %1
-  %4 = fptosi double %0 to i32
-  br label %5
-
-5:                                                ; preds = %1, %bb.a, %3
-  %.0 = phi i32 [ %4, %3 ], [ 2147483647, %bb.a ], [ -2147483648, %1 ]
+  %1 = fcmp ogt double %0, f0xC1E0000000000000
+  %spec.select8 = select i1 %1, double %0, double f0xC1E0000000000000
+  %spec.select = fptosi double %spec.select8 to i32
+  %.0 = select i1 %i.a, i32 2147483647, i32 %spec.select
   ret i32 %.0
 }
 
@@ -32,18 +24,10 @@ bb.a:
 define weak_odr dso_local noundef i32 @_Z12cmDurationToIjET_NSt6chrono8durationIdSt5ratioILl1ELl1EEEE(double %0) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = fcmp uge double %0, f0x41EFFFFFFFE00000
-  br i1 %i.a, label %5, label %1
-
-1:                                                ; preds = %bb.a
-  %2 = fcmp ule double %0, 0.000000e+00
-  br i1 %2, label %5, label %3
-
-3:                                                ; preds = %1
-  %4 = fptoui double %0 to i32
-  br label %5
-
-5:                                                ; preds = %1, %bb.a, %3
-  %.0 = phi i32 [ %4, %3 ], [ -1, %bb.a ], [ 0, %1 ]
+  %1 = fcmp ogt double %0, 0.000000e+00
+  %spec.select8 = select i1 %1, double %0, double 0.000000e+00
+  %spec.select = fptoui double %spec.select8 to i32
+  %.0 = select i1 %i.a, i32 -1, i32 %spec.select
   ret i32 %.0
 }
 

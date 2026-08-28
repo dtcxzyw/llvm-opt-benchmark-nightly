@@ -204,7 +204,7 @@ bb.a:
   %27 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 8 uses
   %28 = alloca %"class.cvc5::internal::NodeTemplate", align 8 ; 10 uses
   %29 = alloca %"class.cvc5::internal::FatalStream", align 1 ; 6 uses
-  %i.a = alloca i32, align 4                      ; 10 uses
+  %i.a = alloca i32, align 4                      ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 289
   %i.c = load i8, ptr %i.b, align 1, !tbaa !141, !range !89, !noundef !90
   %i.d = trunc nuw i8 %i.c to i1
@@ -607,7 +607,7 @@ bb.cl:                                            ; preds = %_ZStlsISt11char_tra
   br label %bb.cp
 
 ._crit_edge556.loopexit:                          ; preds = %bb.du
-  %i.nk = zext i32 %36 to i64
+  %i.nk = zext i32 %.158 to i64
   br label %._crit_edge556
 
 ._crit_edge556:                                   ; preds = %._crit_edge556.loopexit, %.critedge
@@ -645,9 +645,9 @@ bb.co:                                            ; preds = %bb.cn
 
 bb.cp:                                            ; preds = %.lr.ph555, %bb.du
   %i.oa = phi i32 [ 0, %.lr.ph555 ], [ %i.sq, %bb.du ] ; 2 uses
-  %.055554 = phi i32 [ 1, %.lr.ph555 ], [ %.156456466, %bb.du ] ; 2 uses
-  %.057553 = phi i32 [ 0, %.lr.ph555 ], [ %36, %bb.du ] ; 2 uses
-  %.059552 = phi double [ 2.000000e+00, %.lr.ph555 ], [ %34, %bb.du ] ; 4 uses
+  %.055554 = phi i32 [ 1, %.lr.ph555 ], [ %.156, %bb.du ] ; 2 uses
+  %.057553 = phi i32 [ 0, %.lr.ph555 ], [ %.158, %bb.du ]
+  %.059552 = phi double [ 2.000000e+00, %.lr.ph555 ], [ %.160, %bb.du ] ; 3 uses
   %i.ob = load ptr, ptr %i.ae, align 8, !tbaa !17 ; 2 uses
   %.not10.i.i.i.i206 = icmp eq ptr %i.ob, null
   br i1 %.not10.i.i.i.i206, label %.critedge.i217, label %.lr.ph.i.i.i.i207
@@ -1009,12 +1009,12 @@ _ZN4cvc58internal11Cvc5ostreamlsIA3_cEERS1_RKT_.exit: ; preds = %bb.do, %_ZN4cvc
   br i1 %.not468, label %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit341, label %.lr.ph550
 
 _ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit341: ; preds = %_ZN4cvc58internal11Cvc5ostreamlsIA3_cEERS1_RKT_.exit, %bb.cr
-  %.0450.lcssa = phi double [ 0.000000e+00, %bb.cr ], [ %.3, %_ZN4cvc58internal11Cvc5ostreamlsIA3_cEERS1_RKT_.exit ] ; 4 uses
+  %.0450.lcssa = phi double [ 0.000000e+00, %bb.cr ], [ %.3, %_ZN4cvc58internal11Cvc5ostreamlsIA3_cEERS1_RKT_.exit ] ; 3 uses
   %i.sg = fcmp oeq double %.0450.lcssa, %.059552
   br i1 %i.sg, label %bb.dp, label %bb.dt
 
 bb.dp:                                            ; preds = %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit341
-  %i.sh = add nsw i32 %.055554, 1                 ; 3 uses
+  %i.sh = add nsw i32 %.055554, 1                 ; 2 uses
   %i.si = load i8, ptr @_ZGVZN4cvc58internal6Random9getRandomEvE9s_current, align 8
   %i.sj = icmp eq i8 %i.si, 0
   br i1 %i.sj, label %bb.dq, label %bb.dr, !prof !467
@@ -1032,7 +1032,7 @@ bb.dr:                                            ; preds = %.noexc342, %bb.dp
   %i.sl = sitofp i32 %i.sh to double
   %i.sm = fdiv double 1.000000e+00, %i.sl
   %i.sn = invoke noundef zeroext i1 @_ZN4cvc58internal6Random12pickWithProbEd(ptr noundef nonnull align 8 dereferenceable(2544) %i.nj, double noundef %i.sm)
-          to label %31 unwind label %bb.ds
+          to label %bb.du unwind label %bb.ds
 
 bb.ds:                                            ; preds = %bb.dq, %bb.dr
   %i.so = landingpad { ptr, i32 }
@@ -1040,26 +1040,17 @@ bb.ds:                                            ; preds = %bb.dq, %bb.dr
   br label %.body390
 
 bb.dt:                                            ; preds = %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit341
-  %i.sp = fcmp olt double %.0450.lcssa, %.059552  ; 3 uses
+  %i.sp = fcmp olt double %.0450.lcssa, %.059552  ; 2 uses
+  %..057 = select i1 %i.sp, i32 1, i32 %.055554
+  br label %bb.du
+
+bb.du:                                            ; preds = %bb.dr, %bb.dt
+  %.156 = phi i32 [ %..057, %bb.dt ], [ %i.sh, %bb.dr ]
+  %.0 = phi i1 [ %i.sp, %bb.dt ], [ %i.sn, %bb.dr ] ; 2 uses
   %30 = load i32, ptr %i.a, align 4               ; 2 uses
-  %.0450..059 = select i1 %i.sp, double %.0450.lcssa, double %.059552
-  %..055 = select i1 %i.sp, i32 1, i32 %.055554
-  %..057 = select i1 %i.sp, i32 %30, i32 %.057553
-  br label %bb.du
-
-31:                                               ; preds = %bb.dr
-  %32 = load i32, ptr %i.a, align 4               ; 3 uses
-  br i1 %i.sn, label %33, label %bb.du
-
-33:                                               ; preds = %31
-  br label %bb.du
-
-bb.du:                                            ; preds = %bb.dt, %33, %31
-  %34 = phi double [ %.059552, %31 ], [ %.0450..059, %bb.dt ], [ %.0450.lcssa, %33 ]
-  %.156456466 = phi i32 [ %i.sh, %31 ], [ %..055, %bb.dt ], [ %i.sh, %33 ]
-  %35 = phi i32 [ %32, %31 ], [ %30, %bb.dt ], [ %32, %33 ]
-  %36 = phi i32 [ %.057553, %31 ], [ %..057, %bb.dt ], [ %32, %33 ] ; 2 uses
-  %i.sq = add i32 %35, 1                          ; 3 uses
+  %.160 = select i1 %.0, double %.0450.lcssa, double %.059552
+  %.158 = select i1 %.0, i32 %30, i32 %.057553    ; 2 uses
+  %i.sq = add i32 %30, 1                          ; 3 uses
   store i32 %i.sq, ptr %i.a, align 4, !tbaa !64
   %i.sr = icmp ult i32 %i.sq, %i.au
   br i1 %i.sr, label %bb.cp, label %._crit_edge556.loopexit, !llvm.loop !530

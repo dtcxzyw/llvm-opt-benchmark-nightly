@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph45, %_ZN7CaDiCaL13score_smallerclEjj.exit.thread33
-  %indvars.iv54 = phi i64 [ %i.af, %.lr.ph45 ], [ %indvars.iv.next55, %_ZN7CaDiCaL13score_smallerclEjj.exit.thread33 ] ; 3 uses
+  %indvars.iv54 = phi i64 [ %i.af, %.lr.ph45 ], [ %indvars.iv.next55, %_ZN7CaDiCaL13score_smallerclEjj.exit.thread33 ] ; 2 uses
   %indvars.iv.next55 = add nsw i64 %indvars.iv54, 1 ; 3 uses
   %i.ah = getelementptr inbounds nuw [16 x i8], ptr %i.ac, i64 %indvars.iv.next55
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !172 ; 2 uses
@@ -217,15 +217,13 @@ bb.d:                                             ; preds = %bb.c
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %i.ae
   %i.ap = load double, ptr %i.ao, align 8, !tbaa !178 ; 2 uses
   %i.aq = fcmp olt double %i.an, %i.ap
-  br i1 %i.aq, label %.thread.loopexit.split.loop.exit69, label %1
+  %1 = fcmp ule double %i.an, %i.ap
+  %2 = icmp ugt i32 %i.aj, %i.s
+  %spec.select.i = and i1 %2, %1
+  %.0.i = or i1 %i.aq, %spec.select.i
+  br i1 %.0.i, label %.thread.loopexit.split.loop.exit69, label %_ZN7CaDiCaL13score_smallerclEjj.exit.thread33
 
-1:                                                ; preds = %bb.d
-  %2 = fcmp ule double %i.an, %i.ap
-  %3 = icmp ugt i32 %i.aj, %i.s
-  %or.cond = and i1 %3, %2
-  br i1 %or.cond, label %.thread.loopexit.split.loop.exit, label %_ZN7CaDiCaL13score_smallerclEjj.exit.thread33
-
-_ZN7CaDiCaL13score_smallerclEjj.exit.thread33:    ; preds = %1, %bb.c
+_ZN7CaDiCaL13score_smallerclEjj.exit.thread33:    ; preds = %bb.d, %bb.c
   %i.ar = icmp slt i64 %indvars.iv.next55, %i.ag
   br i1 %i.ar, label %bb.c, label %.thread
 
@@ -268,10 +266,6 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %i.bl = icmp slt i64 %indvars.iv.next, %i.bd
   br i1 %i.bl, label %bb.f, label %.thread
 
-.thread.loopexit.split.loop.exit:                 ; preds = %1
-  %4 = trunc nsw i64 %indvars.iv54 to i32
-  br label %.thread
-
 .thread.loopexit.split.loop.exit69:               ; preds = %bb.d
   %i.bm = trunc nsw i64 %indvars.iv54 to i32
   br label %.thread
@@ -280,8 +274,8 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %i.bn = trunc nsw i64 %indvars.iv to i32
   br label %.thread
 
-.thread:                                          ; preds = %bb.h, %_ZN7CaDiCaL13score_smallerclEjj.exit.thread33, %.thread.loopexit65.split.loop.exit, %.thread.loopexit.split.loop.exit, %.thread.loopexit.split.loop.exit69, %bb.e, %.preheader
-  %.5 = phi i32 [ %i.p, %bb.e ], [ %i.p, %.preheader ], [ %i.aa, %_ZN7CaDiCaL13score_smallerclEjj.exit.thread33 ], [ %i.bm, %.thread.loopexit.split.loop.exit69 ], [ %4, %.thread.loopexit.split.loop.exit ], [ %i.bn, %.thread.loopexit65.split.loop.exit ], [ %i.az, %bb.h ] ; 4 uses
+.thread:                                          ; preds = %bb.h, %_ZN7CaDiCaL13score_smallerclEjj.exit.thread33, %.thread.loopexit65.split.loop.exit, %.thread.loopexit.split.loop.exit69, %bb.e, %.preheader
+  %.5 = phi i32 [ %i.p, %bb.e ], [ %i.p, %.preheader ], [ %i.aa, %_ZN7CaDiCaL13score_smallerclEjj.exit.thread33 ], [ %i.bm, %.thread.loopexit.split.loop.exit69 ], [ %i.bn, %.thread.loopexit65.split.loop.exit ], [ %i.az, %bb.h ] ; 4 uses
   %i.bo = sub nsw i32 %.5, %i.p                   ; 2 uses
   %i.bp = icmp sgt i32 %i.bo, 0
   br i1 %i.bp, label %bb.i, label %bb.k

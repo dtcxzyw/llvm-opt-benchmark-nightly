@@ -205,25 +205,23 @@ bb.ef:                                            ; preds = %.noexc215
   %i.qs = fdiv nnan double %i.qr, 1.000000e+03
   %i.qt = fmul nnan double %i.qs, 1.000000e+03    ; 3 uses
   %i.qu = fcmp ult double %i.qt, f0x43E0000000000000
-  br i1 %i.qu, label %32, label %_ZN9grpc_coremlENS_8DurationEd.exit.thread403.i
-
-32:                                               ; preds = %bb.ef
-  %33 = fcmp ugt double %i.qt, f0xC3E0000000000000
-  br i1 %33, label %_ZN9grpc_coremlENS_8DurationEd.exit.i, label %_ZN9grpc_coremlENS_8DurationEd.exit.thread.i
+  br i1 %i.qu, label %_ZN9grpc_coremlENS_8DurationEd.exit.i, label %_ZN9grpc_coremlENS_8DurationEd.exit.thread403.i
 
 _ZN9grpc_coremlENS_8DurationEd.exit.thread403.i:  ; preds = %bb.ef, %.noexc215
   br label %_ZN9grpc_coremlENS_8DurationEd.exit.thread.i
 
-_ZN9grpc_coremlENS_8DurationEd.exit.i:            ; preds = %32
-  %i.qv = fptosi double %i.qt to i64
+_ZN9grpc_coremlENS_8DurationEd.exit.i:            ; preds = %bb.ef
+  %.inv.i.i.i = fcmp ole double %i.qt, f0xC3E0000000000000
+  %spec.select4.i.i.i = select i1 %.inv.i.i.i, double f0xC3E0000000000000, double %i.qt
+  %i.qv = fptosi double %spec.select4.i.i.i to i64
   %.fr.i = freeze i64 %i.qv
   %spec.select410.i = call i64 @llvm.smax.i64(i64 %.fr.i, i64 60000)
   br label %_ZN9grpc_coremlENS_8DurationEd.exit.thread.i
 
-_ZN9grpc_coremlENS_8DurationEd.exit.thread.i:     ; preds = %_ZN9grpc_coremlENS_8DurationEd.exit.i, %_ZN9grpc_coremlENS_8DurationEd.exit.thread403.i, %32, %.noexc215
-  %34 = phi i64 [ 9223372036854775807, %_ZN9grpc_coremlENS_8DurationEd.exit.thread403.i ], [ %spec.select410.i, %_ZN9grpc_coremlENS_8DurationEd.exit.i ], [ 60000, %32 ], [ 60000, %.noexc215 ]
+_ZN9grpc_coremlENS_8DurationEd.exit.thread.i:     ; preds = %_ZN9grpc_coremlENS_8DurationEd.exit.i, %_ZN9grpc_coremlENS_8DurationEd.exit.thread403.i, %.noexc215
+  %32 = phi i64 [ 9223372036854775807, %_ZN9grpc_coremlENS_8DurationEd.exit.thread403.i ], [ %spec.select410.i, %_ZN9grpc_coremlENS_8DurationEd.exit.i ], [ 60000, %.noexc215 ]
   %i.qw = trunc i8 %i.qp to i1
-  %.sroa.0.0.i150.i = select i1 %i.qw, i64 %i.qo, i64 %34
+  %.sroa.0.0.i150.i = select i1 %i.qw, i64 %i.qo, i64 %32
   store i64 %.sroa.0.0.i150.i, ptr %i.ie, align 8, !tbaa !69
   %i.qx = invoke i16 @_ZNK9grpc_core11ChannelArgs7GetBoolESt17basic_string_viewIcSt11char_traitsIcEE(ptr noundef nonnull align 8 dereferenceable(8) %1, i64 51, ptr nonnull @.str.136)
           to label %.noexc216 unwind label %bb.cm ; 2 uses

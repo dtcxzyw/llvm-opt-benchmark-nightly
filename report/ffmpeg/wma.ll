@@ -202,13 +202,11 @@ bb.bh:                                            ; preds = %bb.bg
 
 bb.bi:                                            ; preds = %bb.bh
   %i.if = fcmp nsz olt double %i.id, 1.160000e+00
-  br i1 %i.if, label %2, label %bb.bj
-
-2:                                                ; preds = %bb.bi
+  %spec.select293 = select i1 %i.if, i64 2, i64 4
   br label %bb.bj
 
-bb.bj:                                            ; preds = %bb.bh, %2, %bb.bi, %bb.bg
-  %.0259 = phi i64 [ 4, %bb.bg ], [ 2, %2 ], [ 4, %bb.bi ], [ 0, %bb.bh ]
+bb.bj:                                            ; preds = %bb.bi, %bb.bh, %bb.bg
+  %.0259 = phi i64 [ 4, %bb.bg ], [ 0, %bb.bh ], [ %spec.select293, %bb.bi ]
   %i.ig = getelementptr inbounds nuw [32 x i8], ptr @coef_vlcs, i64 %.0259 ; 3 uses
   %i.ih = getelementptr inbounds nuw i8, ptr %i.b, i64 1144
   store ptr %i.ig, ptr %i.ih, align 8, !tbaa !74

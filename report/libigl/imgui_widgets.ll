@@ -205,14 +205,12 @@ _ZN5ImStbL21STB_TEXTEDIT_GETWIDTHEP19ImGuiInputTextStateii.exit: ; preds = %bb.j
   br i1 %i.bn, label %bb.i, label %bb.l
 
 bb.l:                                             ; preds = %_ZN5ImStbL21STB_TEXTEDIT_GETWIDTHEP19ImGuiInputTextStateii.exit
-  %i.bo = trunc nuw i64 %i.ba to i32              ; 2 uses
+  %i.bo = trunc nuw i64 %i.ba to i32
   %i.bp = fmul float %.0.i, 5.000000e-01
   %i.bq = fadd float %.04378, %i.bp
-  %3 = fcmp olt float %1, %i.bq
-  br i1 %3, label %.thread, label %4
-
-4:                                                ; preds = %bb.l
-  %5 = add nuw nsw i32 %i.bo, 1
+  %3 = fcmp uge float %1, %i.bq
+  %4 = zext i1 %3 to i32
+  %spec.select = add nuw nsw i32 %i.bo, %4
   br label %.thread
 
 .loopexit:                                        ; preds = %bb.i, %bb.h
@@ -225,8 +223,8 @@ bb.l:                                             ; preds = %_ZN5ImStbL21STB_TEX
   %spec.select.a = select i1 %i.bw, i32 %i.bs, i32 %i.br
   br label %.thread
 
-.thread:                                          ; preds = %_ZN5ImStbL22STB_TEXTEDIT_LAYOUTROWEPNS_14StbTexteditRowEP19ImGuiInputTextStatei.exit, %bb.f, %bb.d, %bb.a, %.loopexit, %4, %bb.l, %bb.g
-  %.2 = phi i32 [ %5, %4 ], [ %.04274, %bb.g ], [ %spec.select.a, %.loopexit ], [ %i.bo, %bb.l ], [ %.val, %bb.a ], [ %.val, %_ZN5ImStbL22STB_TEXTEDIT_LAYOUTROWEPNS_14StbTexteditRowEP19ImGuiInputTextStatei.exit ], [ %.val, %bb.f ], [ 0, %bb.d ]
+.thread:                                          ; preds = %_ZN5ImStbL22STB_TEXTEDIT_LAYOUTROWEPNS_14StbTexteditRowEP19ImGuiInputTextStatei.exit, %bb.f, %bb.d, %bb.a, %.loopexit, %bb.l, %bb.g
+  %.2 = phi i32 [ %spec.select, %bb.l ], [ %.04274, %bb.g ], [ %spec.select.a, %.loopexit ], [ %.val, %bb.a ], [ %.val, %_ZN5ImStbL22STB_TEXTEDIT_LAYOUTROWEPNS_14StbTexteditRowEP19ImGuiInputTextStatei.exit ], [ %.val, %bb.f ], [ 0, %bb.d ]
   ret i32 %.2
 }
 

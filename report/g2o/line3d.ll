@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a, %.backedge
   %indvar = phi i64 [ 0, %bb.a ], [ %indvar.next, %.backedge ] ; 6 uses
   %.0116456 = phi i64 [ 0, %bb.a ], [ %.pre-phi, %.backedge ] ; 21 uses
   %.0118455 = phi i8 [ 1, %bb.a ], [ %.3, %.backedge ] ; 6 uses
-  %.0120454 = phi i1 [ false, %bb.a ], [ %.1121, %.backedge ] ; 2 uses
+  %.0120454 = phi i1 [ false, %bb.a ], [ %i.gr, %.backedge ] ; 2 uses
   %i.p = sub i64 2, %indvar                       ; 3 uses
   %i.q = mul nuw nsw i64 %indvar, 24
   %i.r = getelementptr nuw i8, ptr %0, i64 %i.q
@@ -572,8 +572,6 @@ bb.g:                                             ; preds = %bb.f
 _ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_cmp_opIddLNS2_14ComparisonNameE0EEEKNS_12ArrayWrapperINS_5BlockINS7_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIdEENS_5ArrayIdLin1ELi1ELi0ELi3ELi1EEEEEEEE3allEv.exit.1.thread: ; preds = %.preheader.us.i.1418, %.preheader.us.i.preheader, %bb.g
   %i.es = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i32 1, ptr %i.es, align 4, !tbaa !67
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i32 2, ptr %9, align 4, !tbaa !67
   br label %.thread439
 
 .preheader.us.i.preheader.1:                      ; preds = %.preheader.us.i.1418
@@ -582,15 +580,12 @@ _ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_cmp_opIddLNS2_14Com
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ev = load double, ptr %i.eu, align 8, !tbaa !12
   %i.ew = fcmp oeq double %i.ev, 0.000000e+00
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i32 2, ptr %10, align 4, !tbaa !67
-  br i1 %i.ew, label %11, label %.thread439
-
-11:                                               ; preds = %.preheader.us.i.preheader.1
   br label %.thread439
 
-.thread439:                                       ; preds = %.preheader.us.i.preheader.1, %11, %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_cmp_opIddLNS2_14ComparisonNameE0EEEKNS_12ArrayWrapperINS_5BlockINS7_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIdEENS_5ArrayIdLin1ELi1ELi0ELi3ELi1EEEEEEEE3allEv.exit.1.thread
-  %12 = phi i1 [ false, %.preheader.us.i.preheader.1 ], [ true, %11 ], [ false, %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_cmp_opIddLNS2_14ComparisonNameE0EEEKNS_12ArrayWrapperINS_5BlockINS7_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIdEENS_5ArrayIdLin1ELi1ELi0ELi3ELi1EEEEEEEE3allEv.exit.1.thread ]
+.thread439:                                       ; preds = %.preheader.us.i.preheader.1, %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_cmp_opIddLNS2_14ComparisonNameE0EEEKNS_12ArrayWrapperINS_5BlockINS7_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIdEENS_5ArrayIdLin1ELi1ELi0ELi3ELi1EEEEEEEE3allEv.exit.1.thread
+  %9 = phi i1 [ %i.ew, %.preheader.us.i.preheader.1 ], [ false, %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_cmp_opIddLNS2_14ComparisonNameE0EEEKNS_12ArrayWrapperINS_5BlockINS7_INS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEELin1ELi1ELb0EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIdEENS_5ArrayIdLin1ELi1ELi0ELi3ELi1EEEEEEEE3allEv.exit.1.thread ]
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store i32 2, ptr %10, align 4, !tbaa !67
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #7
   br label %.thread401
 
@@ -749,10 +744,10 @@ _ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEELin1ELi1ELb0EEEE
   %i.gp = phi double [ %i.ei, %middle.block ], [ %i.ec, %.thread431 ], [ %i.ei, %._crit_edge.i.i.i.i.i.i147 ], [ %i.ei, %bb.k ], [ %i.ei, %bb.l ], [ %i.ei, %.lr.ph.i17.i.i.i.i.i.i148 ], [ %i.ei, %.preheader.us.i158 ], [ %i.ei, %bb.m ] ; 4 uses
   %i.gq = phi i1 [ true, %middle.block ], [ %i.ed, %.thread431 ], [ true, %._crit_edge.i.i.i.i.i.i147 ], [ false, %bb.k ], [ false, %bb.l ], [ true, %.lr.ph.i17.i.i.i.i.i.i148 ], [ false, %.preheader.us.i158 ], [ false, %bb.m ] ; 2 uses
   %.2 = phi i8 [ %.0118455, %middle.block ], [ %.0118455, %.thread431 ], [ %.0118455, %._crit_edge.i.i.i.i.i.i147 ], [ 0, %bb.k ], [ 1, %bb.l ], [ %.0118455, %.lr.ph.i17.i.i.i.i.i.i148 ], [ 0, %.preheader.us.i158 ], [ 1, %bb.m ]
+  %or.cond6 = and i1 %.0120454, %i.gq
   %not. = xor i1 %i.gq, true
-  %.1121 = select i1 %not., i1 true, i1 %.0120454
-  %i.gr = select i1 %i.gq, i1 %.0120454, i1 false
-  %.3 = select i1 %i.gr, i8 0, i8 %.2             ; 2 uses
+  %i.gr = select i1 %not., i1 true, i1 %.0120454
+  %.3 = select i1 %or.cond6, i8 0, i8 %.2         ; 2 uses
   %i.gs = load i32, ptr %3, align 4, !tbaa !119
   switch i32 %i.gs, label %.backedge [
     i32 0, label %bb.n
@@ -792,7 +787,7 @@ bb.r:                                             ; preds = %.backedge
   br label %.thread401
 
 .thread401:                                       ; preds = %.thread439, %bb.r
-  %.3126 = phi i1 [ %i.gx, %bb.r ], [ %12, %.thread439 ]
+  %.3126 = phi i1 [ %i.gx, %bb.r ], [ %9, %.thread439 ]
   ret i1 %.3126
 }
 

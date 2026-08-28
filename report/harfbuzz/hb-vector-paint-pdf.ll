@@ -205,22 +205,18 @@ bb.l:                                             ; preds = %_ZN11hb_vector_tIcL
 _ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i: ; preds = %.thread.i881
   %i.bj = shl nuw i32 %i.bg, 2
   %i.bk = zext i32 %i.bj to i64
-  %i.bl = tail call ptr @hb_realloc(ptr noundef null, i64 noundef %i.bk) #12 ; 4 uses
+  %i.bl = tail call ptr @hb_realloc(ptr noundef null, i64 noundef %i.bk) #12 ; 3 uses
   %.not22.i884 = icmp eq ptr %i.bl, null
-  br i1 %.not22.i884, label %_ZN11hb_vector_tIjLb0EED2Ev.exit, label %3, !prof !69
+  br i1 %.not22.i884, label %_ZN11hb_vector_tIjLb0EED2Ev.exit, label %bb.m, !prof !69
 
-3:                                                ; preds = %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i
-  %4 = shl i32 %i.x, 2                            ; 2 uses
-  %.not.i.i.i.i93 = icmp eq i32 %4, 0
-  br i1 %.not.i.i.i.i93, label %bb.n, label %bb.m, !prof !22
-
-bb.m:                                             ; preds = %3
-  %i.bm = zext i32 %4 to i64
+bb.m:                                             ; preds = %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i
+  %3 = shl nuw i32 %i.x, 2
+  %i.bm = zext i32 %3 to i64
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.bl, i8 0, i64 %i.bm, i1 false)
   br label %bb.n
 
-bb.n:                                             ; preds = %3, %bb.m, %bb.l
-  %.sroa.11.0.ph = phi ptr [ null, %bb.l ], [ %i.bl, %3 ], [ %i.bl, %bb.m ] ; 7 uses
+bb.n:                                             ; preds = %bb.m, %bb.l
+  %.sroa.11.0.ph = phi ptr [ null, %bb.l ], [ %i.bl, %bb.m ] ; 7 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 101 uses
   %i.bo = icmp slt i32 %i.bc, 0
   br i1 %i.bo, label %_ZN15hb_vector_buf_t10append_strEPKc.exit, label %bb.o, !prof !22

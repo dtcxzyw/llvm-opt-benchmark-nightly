@@ -24,9 +24,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = load double, ptr %2, align 8, !tbaa !8
   %i.k = fsub double %i.e, %i.j
   %i.l = fcmp ogt double %i.i, %i.k
-  br i1 %i.l, label %3, label %bb.d
-
-3:                                                ; preds = %bb.b
+  %spec.select = select i1 %i.l, double 5.000000e-01, double 1.000000e+00
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -34,14 +32,12 @@ bb.c:                                             ; preds = %bb.a
   %i.n = fsub double %i.e, %i.m
   %i.o = fdiv double %i.n, %i.f
   %i.p = fcmp ogt double %i.h, %i.o
-  br i1 %i.p, label %4, label %bb.d
-
-4:                                                ; preds = %bb.c
-  %5 = fdiv double 5.000000e-01, %i.f
+  %3 = fdiv double 5.000000e-01, %i.f
+  %spec.select13 = select i1 %i.p, double %3, double 1.000000e+00
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %4, %bb.b, %3
-  %.0 = phi double [ 5.000000e-01, %3 ], [ 1.000000e+00, %bb.b ], [ %5, %4 ], [ 1.000000e+00, %bb.c ]
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.0 = phi double [ %spec.select, %bb.b ], [ %spec.select13, %bb.c ]
   ret double %.0
 }
 

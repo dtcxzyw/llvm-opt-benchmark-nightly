@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/logos-rs/original/logos_codegen-53f617d7f319d318.logos_codegen.2195ed4355d2b8ba-cgu.10?download=true
+inline.NumInlined: 102
+inline.NumDeleted: 4
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_RNvXsi_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_3map3MapINtNtNtBb_5slice4iter4IterTNtNtCs2SM5xCHwwDm_13logos_codegen5graph9ByteClassNtB1U_5StateEENCNvMs1_B1U_NtB1U_9StateData9can_error0EINtNtB7_6cloned6ClonedIB1s_INtNtNtBb_3ops5range14RangeInclusivehEEEENtNtNtB9_6traits8iterator8Iterator9size_hintB1W_:bb.a
 bb.l:                                             ; preds = %bb.c
   call void @_RNvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter4IterTNtNtCs2SM5xCHwwDm_13logos_codegen5graph9ByteClassNtB1p_5StateEENCNvMs1_B1p_NtB1p_9StateData9can_error0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1r_(ptr nonnull sret([24 x i8]) align 8 %i.b, ptr nonnull align 8 %1) #25
@@ -200,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph
   ret i64 %.sroa.0.0
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.e = sub i64 %1, %.sroa.01.012
+  %i.e = sub nuw i64 %1, %.sroa.01.012
   br label %.loopexit
 }
 
@@ -367,7 +371,7 @@ bb.b:                                             ; preds = %.lr.ph
   ret i64 %.sroa.0.0
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.e = sub i64 %1, %.sroa.01.012
+  %i.e = sub nuw i64 %1, %.sroa.01.012
   br label %.loopexit
 }
 
@@ -534,7 +538,7 @@ bb.b:                                             ; preds = %.lr.ph
   ret i64 %.sroa.0.0
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.e = sub i64 %1, %.sroa.01.012
+  %i.e = sub nuw i64 %1, %.sroa.01.012
   br label %.loopexit
 }
 
@@ -701,7 +705,7 @@ bb.b:                                             ; preds = %.lr.ph
   ret i64 %.sroa.0.0
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.e = sub i64 %1, %.sroa.01.012
+  %i.e = sub nuw i64 %1, %.sroa.01.012
   br label %.loopexit
 }
 
@@ -868,7 +872,7 @@ bb.b:                                             ; preds = %.lr.ph
   ret i64 %.sroa.0.0
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.e = sub i64 %1, %.sroa.01.012
+  %i.e = sub nuw i64 %1, %.sroa.01.012
   br label %.loopexit
 }
 

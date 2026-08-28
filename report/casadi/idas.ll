@@ -204,9 +204,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bs = load double, ptr %i.br, align 8, !tbaa !60
   %i.bt = fmul double %i.bs, %i.bp
   %i.bu = fcmp ugt double %i.bt, 0.000000e+00
-  br i1 %i.bu, label %bb.k, label %1
-
-1:                                                ; preds = %bb.g
+  %spec.select.i = select i1 %i.bu, i32 %.0211264.i, i32 1
   br label %bb.k
 
 bb.h:                                             ; preds = %bb.f
@@ -236,8 +234,8 @@ bb.j:                                             ; preds = %bb.i
   %i.cm = fcmp ogt double %i.cl, %.0226261.ph.i
   br i1 %i.cm, label %.thread.i, label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %1, %bb.g, %bb.e
-  %.1212.i = phi i32 [ 1, %1 ], [ %.0211264.i, %bb.g ], [ %.0211264.i, %bb.e ], [ %.0211264.i, %bb.j ], [ %.0211264.i, %bb.i ], [ %.0211264.i, %bb.h ] ; 2 uses
+bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.e
+  %.1212.i = phi i32 [ %.0211264.i, %bb.e ], [ %spec.select.i, %bb.g ], [ %.0211264.i, %bb.h ], [ %.0211264.i, %bb.j ], [ %.0211264.i, %bb.i ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.cn = load i32, ptr %i.au, align 8, !tbaa !108 ; 5 uses
   %i.co = sext i32 %i.cn to i64
@@ -549,9 +547,7 @@ bb.x:                                             ; preds = %bb.w
   %i.ik = load double, ptr %i.ij, align 8, !tbaa !60
   %i.il = fmul double %i.ik, %i.ih
   %i.im = fcmp ugt double %i.il, 0.000000e+00
-  br i1 %i.im, label %bb.ab, label %2
-
-2:                                                ; preds = %bb.x
+  %spec.select245.i = select i1 %i.im, i32 %.2213272.i, i32 1
   br label %bb.ab
 
 bb.y:                                             ; preds = %bb.w
@@ -581,8 +577,8 @@ bb.aa:                                            ; preds = %bb.z
   %i.je = fcmp ogt double %i.jd, %.2228269.ph.i
   br i1 %i.je, label %.thread387.i, label %bb.ab
 
-bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.y, %2, %bb.x, %.lr.ph274.i
-  %.3214.i = phi i32 [ 1, %2 ], [ %.2213272.i, %bb.x ], [ %.2213272.i, %.lr.ph274.i ], [ %.2213272.i, %bb.aa ], [ %.2213272.i, %bb.z ], [ %.2213272.i, %bb.y ] ; 2 uses
+bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.y, %bb.x, %.lr.ph274.i
+  %.3214.i = phi i32 [ %.2213272.i, %.lr.ph274.i ], [ %spec.select245.i, %bb.x ], [ %.2213272.i, %bb.y ], [ %.2213272.i, %bb.aa ], [ %.2213272.i, %bb.z ] ; 2 uses
   %indvars.iv.next321.i = add nuw nsw i64 %indvars.iv320.i, 1 ; 2 uses
   %i.jf = load i32, ptr %i.au, align 8, !tbaa !108 ; 7 uses
   %i.jg = sext i32 %i.jf to i64

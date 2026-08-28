@@ -202,13 +202,11 @@ bb.l:                                             ; preds = %._crit_edge, %bb.j,
   %i.cx = tail call double @llvm.fmuladd.f64(double %.1147, double %i.bx, double %i.cw) ; 2 uses
   store double %i.cx, ptr %i.bw, align 8, !tbaa !13
   %i.cy = fcmp oeq double %i.cx, 0.000000e+00
-  br i1 %i.cy, label %4, label %.loopexit
-
-4:                                                ; preds = %bb.l
+  %spec.select152 = select i1 %i.cy, i32 %0, i32 0
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.f, %.preheader155, %bb.l, %4
-  %.2 = phi i32 [ 0, %bb.l ], [ %0, %4 ], [ 0, %.preheader155 ], [ %.1, %bb.f ]
+.loopexit:                                        ; preds = %bb.f, %.preheader155, %bb.l
+  %.2 = phi i32 [ %spec.select152, %bb.l ], [ 0, %.preheader155 ], [ %.1, %bb.f ]
   ret i32 %.2
 }
 

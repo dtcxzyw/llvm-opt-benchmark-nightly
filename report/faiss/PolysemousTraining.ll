@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %.lr.ph, %bb.o
   %.03858 = phi i32 [ 0, %.lr.ph ], [ %i.bp, %bb.o ] ; 4 uses
-  %.03957 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.o ] ; 3 uses
+  %.03957 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.o ] ; 2 uses
   %.04056 = phi i32 [ 0, %.lr.ph ], [ %.141, %bb.o ] ; 2 uses
   %.04255 = phi double [ %i.o, %.lr.ph ], [ %i.y, %bb.o ]
   %.04454 = phi double [ %i.e, %.lr.ph ], [ %.145, %bb.o ] ; 2 uses
@@ -259,19 +259,17 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.bc = load i32, ptr %i.ba, align 4, !tbaa !13
   store i32 %i.bc, ptr %i.ay, align 4, !tbaa !13
   store i32 %i.bb, ptr %i.ba, align 4, !tbaa !13
-  %i.bd = fadd double %.04454, %i.ar              ; 2 uses
-  %i.be = add nsw i32 %.04056, 1                  ; 2 uses
-  %2 = fcmp ult double %i.ar, 0.000000e+00
-  br i1 %2, label %bb.j, label %3
-
-3:                                                ; preds = %bb.i
-  %4 = add nsw i32 %.03957, 1
+  %i.bd = fadd double %.04454, %i.ar
+  %i.be = add nsw i32 %.04056, 1
+  %2 = fcmp oge double %i.ar, 0.000000e+00
+  %3 = zext i1 %2 to i32
+  %spec.select53 = add nsw i32 %.03957, %3
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %3, %bb.h
-  %.145 = phi double [ %i.bd, %3 ], [ %i.bd, %bb.i ], [ %.04454, %bb.h ] ; 4 uses
-  %.141 = phi i32 [ %i.be, %3 ], [ %i.be, %bb.i ], [ %.04056, %bb.h ] ; 3 uses
-  %.1 = phi i32 [ %4, %3 ], [ %.03957, %bb.i ], [ %.03957, %bb.h ] ; 3 uses
+bb.j:                                             ; preds = %bb.i, %bb.h
+  %.145 = phi double [ %.04454, %bb.h ], [ %i.bd, %bb.i ] ; 4 uses
+  %.141 = phi i32 [ %.04056, %bb.h ], [ %i.be, %bb.i ] ; 3 uses
+  %.1 = phi i32 [ %.03957, %bb.h ], [ %spec.select53, %bb.i ] ; 3 uses
   %i.bf = load i32, ptr %i.s, align 4, !tbaa !56  ; 2 uses
   %i.bg = icmp sgt i32 %i.bf, 2
   br i1 %i.bg, label %bb.l, label %bb.k

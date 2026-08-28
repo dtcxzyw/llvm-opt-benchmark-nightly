@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.b
   br i1 %1, label %.thread, label %_ZN6duckdb11ProgressBar22FinishProgressBarPrintEv.exit
 
 .thread:                                          ; preds = %bb.c, %bb.d, %bb.e, %_ZN6duckdb12ProgressData9NormalizeEd.exit, %bb.h
-  %.015 = phi double [ 0.000000e+00, %bb.h ], [ %i.z, %_ZN6duckdb12ProgressData9NormalizeEd.exit ], [ 0.000000e+00, %bb.c ], [ 0.000000e+00, %bb.e ], [ 0.000000e+00, %bb.d ] ; 2 uses
+  %.015 = phi double [ 0.000000e+00, %bb.h ], [ %i.z, %_ZN6duckdb12ProgressData9NormalizeEd.exit ], [ 0.000000e+00, %bb.e ], [ 0.000000e+00, %bb.d ], [ 0.000000e+00, %bb.c ] ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 6 uses
   %i.ab = load atomic double, ptr %i.aa seq_cst, align 8
   %i.ac = fcmp ogt double %.015, %i.ab
@@ -433,18 +433,10 @@ _ZN6duckdb10unique_ptrINS_18ProgressBarDisplayESt14default_deleteIS1_ELb1EE13Ass
 define noundef i32 @_ZN6duckdb26TerminalProgressBarDisplay19NormalizePercentageEd(double noundef %0) local_unnamed_addr #7 align 2 {
 bb.a:
   %i.a = fcmp ogt double %0, 1.000000e+02
-  br i1 %i.a, label %5, label %1
-
-1:                                                ; preds = %bb.a
-  %2 = fcmp olt double %0, 0.000000e+00
-  br i1 %2, label %5, label %3
-
-3:                                                ; preds = %1
-  %4 = fptosi double %0 to i32
-  br label %5
-
-5:                                                ; preds = %1, %bb.a, %3
-  %.0 = phi i32 [ %4, %3 ], [ 100, %bb.a ], [ 0, %1 ]
+  %.inv = fcmp ole double %0, 0.000000e+00
+  %spec.select4 = select i1 %.inv, double 0.000000e+00, double %0
+  %spec.select = fptosi double %spec.select4 to i32
+  %.0 = select i1 %i.a, i32 100, i32 %spec.select
   ret i32 %.0
 }
 
@@ -847,7 +839,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN6duckdb21UnscentedKalmanFilter6UpdateEdd.exit: ; preds = %bb.b, %bb.c, %bb.d, %bb.e
   %i.ae = fcmp ogt double %i.l, f0x3FEFAE147AE147AE
-  br i1 %i.ae, label %3, label %bb.f
+  br i1 %i.ae, label %_ZN6duckdb26TerminalProgressBarDisplay19NormalizePercentageEd.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN6duckdb21UnscentedKalmanFilter6UpdateEdd.exit
   %i.af = load i8, ptr %i.n, align 8, !tbaa !160, !range !98, !noundef !99
@@ -877,23 +869,15 @@ _ZNK6duckdb21UnscentedKalmanFilter28GetEstimatedRemainingSecondsEv.exit: ; preds
   %.0.i = phi double [ f0x41DFFFFFFFC00000, %bb.f ], [ %.sroa.speculated.i, %bb.h ], [ +inf, %bb.g ] ; 2 uses
   %i.at = fcmp ogt double %.0.i, f0x41DFFFFFFFC00000
   %.sroa.speculated = select i1 %i.at, double f0x41DFFFFFFFC00000, double %.0.i
-  br label %3
-
-3:                                                ; preds = %_ZN6duckdb21UnscentedKalmanFilter6UpdateEdd.exit, %_ZNK6duckdb21UnscentedKalmanFilter28GetEstimatedRemainingSecondsEv.exit
-  %.0 = phi double [ %.sroa.speculated, %_ZNK6duckdb21UnscentedKalmanFilter28GetEstimatedRemainingSecondsEv.exit ], [ 5.000000e-01, %_ZN6duckdb21UnscentedKalmanFilter6UpdateEdd.exit ] ; 2 uses
-  %4 = fcmp ogt double %1, 1.000000e+02
-  br i1 %4, label %_ZN6duckdb26TerminalProgressBarDisplay19NormalizePercentageEd.exit, label %5
-
-5:                                                ; preds = %3
-  %6 = fcmp olt double %1, 0.000000e+00
-  br i1 %6, label %_ZN6duckdb26TerminalProgressBarDisplay19NormalizePercentageEd.exit, label %7
-
-7:                                                ; preds = %5
-  %8 = fptosi double %1 to i32
   br label %_ZN6duckdb26TerminalProgressBarDisplay19NormalizePercentageEd.exit
 
-_ZN6duckdb26TerminalProgressBarDisplay19NormalizePercentageEd.exit: ; preds = %3, %5, %7
-  %.0.i9 = phi i32 [ %8, %7 ], [ 100, %3 ], [ 0, %5 ] ; 2 uses
+_ZN6duckdb26TerminalProgressBarDisplay19NormalizePercentageEd.exit: ; preds = %_ZN6duckdb21UnscentedKalmanFilter6UpdateEdd.exit, %_ZNK6duckdb21UnscentedKalmanFilter28GetEstimatedRemainingSecondsEv.exit
+  %.0 = phi double [ %.sroa.speculated, %_ZNK6duckdb21UnscentedKalmanFilter28GetEstimatedRemainingSecondsEv.exit ], [ 5.000000e-01, %_ZN6duckdb21UnscentedKalmanFilter6UpdateEdd.exit ] ; 2 uses
+  %3 = fcmp ogt double %1, 1.000000e+02
+  %.inv.i = fcmp ole double %1, 0.000000e+00
+  %spec.select4.i = select i1 %.inv.i, double 0.000000e+00, double %1
+  %spec.select.i = fptosi double %spec.select4.i to i32
+  %.0.i9 = select i1 %3, i32 100, i32 %spec.select.i ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   %i.au = sext i32 %.0.i9 to i64
   call void @_ZN6duckdb12optional_idxC2Em(ptr noundef nonnull align 8 dereferenceable(8) %2, i64 noundef %i.au)

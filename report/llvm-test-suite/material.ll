@@ -203,13 +203,11 @@ define dso_local range(i32 0, 12) i32 @pick_mat(ptr noundef %0) local_unnamed_ad
 
 ._crit_edge.11:                                   ; preds = %._crit_edge.10
   %i.m = fcmp uge double %i.a, f0x3FEB8D4FDF3B645B
-  br i1 %i.m, label %1, label %bb.a
-
-1:                                                ; preds = %._crit_edge.11
+  %spec.select81 = select i1 %i.m, i32 0, i32 11
   br label %bb.a
 
-bb.a:                                             ; preds = %1, %._crit_edge.11, %._crit_edge.10, %._crit_edge.9, %._crit_edge.8, %._crit_edge.7, %._crit_edge.6, %._crit_edge.5, %._crit_edge.4, %._crit_edge.3, %._crit_edge.2, %._crit_edge.1, %._crit_edge
-  %spec.select = phi i32 [ 0, %1 ], [ 0, %._crit_edge ], [ 1, %._crit_edge.1 ], [ 11, %._crit_edge.11 ], [ 2, %._crit_edge.2 ], [ 8, %._crit_edge.8 ], [ 3, %._crit_edge.3 ], [ 10, %._crit_edge.10 ], [ 4, %._crit_edge.4 ], [ 7, %._crit_edge.7 ], [ 5, %._crit_edge.5 ], [ 9, %._crit_edge.9 ], [ 6, %._crit_edge.6 ]
+bb.a:                                             ; preds = %._crit_edge.11, %._crit_edge.10, %._crit_edge.9, %._crit_edge.8, %._crit_edge.7, %._crit_edge.6, %._crit_edge.5, %._crit_edge.4, %._crit_edge.3, %._crit_edge.2, %._crit_edge.1, %._crit_edge
+  %spec.select = phi i32 [ 6, %._crit_edge.6 ], [ 0, %._crit_edge ], [ 1, %._crit_edge.1 ], [ %spec.select81, %._crit_edge.11 ], [ 2, %._crit_edge.2 ], [ 8, %._crit_edge.8 ], [ 3, %._crit_edge.3 ], [ 10, %._crit_edge.10 ], [ 4, %._crit_edge.4 ], [ 7, %._crit_edge.7 ], [ 5, %._crit_edge.5 ], [ 9, %._crit_edge.9 ]
   ret i32 %spec.select
 }
 

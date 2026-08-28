@@ -204,27 +204,21 @@ bb.p:                                             ; preds = %.lr.ph.i
   %i.bt = load ptr, ptr @optarg, align 8
   %i.bu = tail call double @strtod(ptr noundef nonnull captures(none) %i.bt, ptr noundef null) #15, !inline_history !10
   %i.bv = fdiv double %i.bu, 1.000000e+02         ; 2 uses
-  store double %i.bv, ptr @resize_rate, align 8
   %2 = fcmp ogt double %i.bv, 1.000000e+00
-  br i1 %2, label %3, label %bb.r
-
-3:                                                ; preds = %bb.p
-  store double 1.000000e+00, ptr @resize_rate, align 8
+  %spec.store.select.i = select i1 %2, double 1.000000e+00, double %i.bv
+  store double %spec.store.select.i, ptr @resize_rate, align 8
   br label %bb.r
 
 bb.q:                                             ; preds = %.lr.ph.i
   %i.bw = load ptr, ptr @optarg, align 8
   %i.bx = tail call double @strtod(ptr noundef nonnull captures(none) %i.bw, ptr noundef null) #15, !inline_history !10
   %i.by = fdiv double %i.bx, 1.000000e+02         ; 2 uses
-  store double %i.by, ptr @update_rate, align 8
-  %4 = fcmp ogt double %i.by, 1.000000e+00
-  br i1 %4, label %5, label %bb.r
-
-5:                                                ; preds = %bb.q
-  store double 1.000000e+00, ptr @update_rate, align 8
+  %3 = fcmp ogt double %i.by, 1.000000e+00
+  %spec.store.select1.i = select i1 %3, double 1.000000e+00, double %i.by
+  store double %spec.store.select1.i, ptr @update_rate, align 8
   br label %bb.r
 
-bb.r:                                             ; preds = %5, %bb.q, %3, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.d, %bb.c, %bb.b, %.lr.ph.i
+bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.d, %bb.c, %bb.b, %.lr.ph.i
   %i.bz = tail call i32 @getopt(i32 noundef %0, ptr noundef %1, ptr noundef nonnull @.str) #15 ; 2 uses
   %i.ca = icmp slt i32 %i.bz, 0
   br i1 %i.ca, label %parse_args.exit, label %.lr.ph.i

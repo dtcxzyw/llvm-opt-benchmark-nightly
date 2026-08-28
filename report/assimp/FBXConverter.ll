@@ -205,9 +205,6 @@ bb.i:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.af = call float @llvm.fmuladd.f32(float %i.ab, float %i.ab, float %i.ae)
   %i.ag = call noundef float @llvm.fmuladd.f32(float %i.ad, float %i.ad, float %i.af)
   %i.ah = fcmp ogt float %i.ag, f0x34000000
-  br i1 %i.ah, label %.critedge, label %.thread
-
-.thread:                                          ; preds = %bb.i
   br label %.critedge
 
 bb.j:                                             ; preds = %bb.e
@@ -244,8 +241,8 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.b
   %exitcond.not = icmp eq i64 %i.ar, 17
   br i1 %exitcond.not, label %.critedge, label %bb.b, !llvm.loop !121
 
-.critedge:                                        ; preds = %bb.l, %bb.m, %.thread, %bb.i
-  %.lcssa59 = phi i1 [ false, %.thread ], [ true, %bb.i ], [ false, %bb.m ], [ true, %bb.l ]
+.critedge:                                        ; preds = %bb.l, %bb.m, %bb.i
+  %.lcssa59 = phi i1 [ %i.ah, %bb.i ], [ true, %bb.l ], [ false, %bb.m ]
   ret i1 %.lcssa59
 }
 

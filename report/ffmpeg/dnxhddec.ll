@@ -204,10 +204,8 @@ bb.bh:                                            ; preds = %bb.bi
 
 bb.bi:                                            ; preds = %.lr.ph, %bb.bh
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.bh ] ; 3 uses
-  %5 = trunc nuw nsw i64 %indvars.iv to i32
-  %6 = shl i32 %5, 2
-  %7 = sext i32 %6 to i64
-  %i.ii = getelementptr inbounds i8, ptr %i.if, i64 %7
+  %5 = shl nuw nsw i64 %indvars.iv, 2
+  %i.ii = getelementptr inbounds nuw i8, ptr %i.if, i64 %5
   %i.ij = load i32, ptr %i.ii, align 1, !tbaa !81
   %i.ik = tail call i32 @llvm.bswap.i32(i32 %i.ij) ; 3 uses
   %i.il = getelementptr inbounds nuw [4 x i8], ptr %i.ig, i64 %indvars.iv

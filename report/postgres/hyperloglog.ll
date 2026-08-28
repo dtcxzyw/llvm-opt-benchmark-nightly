@@ -123,13 +123,11 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.l = fcmp ogt double %1, f0x3F778852D0FF33F3
-  br i1 %i.l, label %bb.m, label %2
-
-2:                                                ; preds = %bb.l
+  %spec.select = select i1 %i.l, i8 15, i8 16
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %2
-  %.07.lcssa = phi i8 [ 4, %bb.a ], [ 10, %bb.g ], [ 16, %2 ], [ 5, %bb.b ], [ 15, %bb.l ], [ 6, %bb.c ], [ 12, %bb.i ], [ 7, %bb.d ], [ 14, %bb.k ], [ 8, %bb.e ], [ 11, %bb.h ], [ 9, %bb.f ], [ 13, %bb.j ] ; 2 uses
+bb.m:                                             ; preds = %bb.l, %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k
+  %.07.lcssa = phi i8 [ 4, %bb.a ], [ 10, %bb.g ], [ 13, %bb.j ], [ 5, %bb.b ], [ %spec.select, %bb.l ], [ 6, %bb.c ], [ 12, %bb.i ], [ 7, %bb.d ], [ 14, %bb.k ], [ 8, %bb.e ], [ 11, %bb.h ], [ 9, %bb.f ] ; 2 uses
   store i8 %.07.lcssa, ptr %0, align 8
   %i.m = zext nneg i8 %.07.lcssa to i64
   %i.n = shl nuw nsw i64 1, %i.m                  ; 2 uses

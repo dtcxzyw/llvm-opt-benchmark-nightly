@@ -204,10 +204,10 @@ bb.aw:                                            ; preds = %bb.av
 
 bb.ax:                                            ; preds = %bb.av
   %i.cv = getelementptr inbounds nuw i8, ptr %i.f, i64 4
-  %4 = call i32 @llvm.abs.i32(i32 %.sroa.4196.0.copyload, i1 false)
-  %i.cw = icmp ult i32 %4, 604800
-  %5 = call i32 @llvm.abs.i32(i32 %.sroa.4215.0.copyload, i1 false)
-  %i.cx = icmp ult i32 %5, 604800
+  %4 = add i32 %.sroa.4196.0.copyload, 604799
+  %i.cw = icmp ult i32 %4, 1209599
+  %5 = add i32 %.sroa.4215.0.copyload, 604799
+  %i.cx = icmp ult i32 %5, 1209599
   %or.cond.i280 = and i1 %i.cw, %i.cx
   br i1 %or.cond.i280, label %_RNvMs1_NtNtNtNtCscShS5OxKAqE_6chrono6offset5local7tz_info4ruleNtB5_13AlternateTime3new.exit, label %_RNvMs1_NtNtNtNtCscShS5OxKAqE_6chrono6offset5local7tz_info4ruleNtB5_13AlternateTime3new.exit.thread
 
@@ -610,7 +610,7 @@ bb.e:                                             ; preds = %bb.b
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.b
-  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.w, i64 noundef 12, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #7
+  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.w, i64 noundef 12, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #6
   unreachable
 
 bb.g:                                             ; preds = %bb.ab, %bb.k, %bb.e
@@ -706,7 +706,7 @@ bb.k:                                             ; preds = %bb.i
   br label %bb.g
 
 bb.l:                                             ; preds = %bb.i
-  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.cg, i64 noundef 12, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #7
+  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.cg, i64 noundef 12, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #6
   unreachable
 
 bb.m:                                             ; preds = %bb.d
@@ -797,7 +797,7 @@ _RNvNtNtNtNtCscShS5OxKAqE_6chrono6offset5local7tz_info4rule21days_since_unix_epo
   br label %bb.ab
 
 bb.v:                                             ; preds = %bb.n
-  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.cs, i64 noundef 12, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #7
+  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.cs, i64 noundef 12, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #6
   unreachable
 
 .split21:                                         ; preds = %bb.p
@@ -1200,7 +1200,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.ad, label %_RNvNtNtNtNtCscShS5OxKAqE_6chrono6offset5local7tz_info4rule21days_since_unix_epoch.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.ac, i64 noundef 12, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #7
+  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.ac, i64 noundef 12, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @26) #6
   unreachable
 
 _RNvNtNtNtNtCscShS5OxKAqE_6chrono6offset5local7tz_info4rule21days_since_unix_epoch.exit: ; preds = %bb.g
@@ -1603,9 +1603,6 @@ declare { i64, i1 } @llvm.sadd.with.overflow.i64(i64, i64) #3
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #5
 
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.abs.i32(i32, i1 immarg) #6
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #3
 
@@ -1618,8 +1615,7 @@ attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #4 = { cold minsize noinline noreturn nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #6 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #7 = { noreturn }
+attributes #6 = { noreturn }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

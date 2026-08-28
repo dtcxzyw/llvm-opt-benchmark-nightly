@@ -204,13 +204,11 @@ bb.o:                                             ; preds = %bb.n
   %i.bg = getelementptr inbounds nuw i8, ptr %.8.val, i64 204
   %i.bh = load float, ptr %i.bg, align 4, !tbaa !556
   %i.bi = fcmp olt float %2, %i.bh
-  br i1 %i.bi, label %9, label %bb.p
-
-9:                                                ; preds = %bb.o
+  %spec.select = select i1 %i.bi, ptr @.str.127, ptr @.str.124
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.n, %_ZN4llvm11raw_ostreamlsEc.exit17, %9, %bb.o
-  %.0 = phi ptr [ @.str.125, %_ZN4llvm11raw_ostreamlsEc.exit17 ], [ @.str.127, %9 ], [ @.str.124, %bb.o ], [ @.str.126, %bb.n ] ; 2 uses
+bb.p:                                             ; preds = %bb.o, %bb.n, %_ZN4llvm11raw_ostreamlsEc.exit17
+  %.0 = phi ptr [ @.str.125, %_ZN4llvm11raw_ostreamlsEc.exit17 ], [ @.str.126, %bb.n ], [ %spec.select, %bb.o ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   %i.bj = load ptr, ptr %4, align 8, !tbaa !24

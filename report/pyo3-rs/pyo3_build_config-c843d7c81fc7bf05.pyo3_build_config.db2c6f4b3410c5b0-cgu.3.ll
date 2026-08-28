@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pyo3-rs/original/pyo3_build_config-c843d7c81fc7bf05.pyo3_build_config.db2c6f4b3410c5b0-cgu.3?download=true
+inline.NumInlined: 64
+inline.NumDeleted: 5
 begin_hunk_0_@_RINvMNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable5mergeINtB3_10MergeStateNtNtCsG258MDvU3F_3std4path7PathBufE10merge_downNvYB1a_NtNtBb_3cmp10PartialOrd2ltECsiOEEQt9hBE2_17pyo3_build_config:bb.a
   %i.o = icmp eq ptr %i.m, %2
   %or.cond = select i1 %i.n, i1 true, i1 %i.o
@@ -200,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.j = lshr i64 %1, 1
-  %i.k = sub nsw i64 %1, %i.j
+  %i.k = sub nuw nsw i64 %1, %i.j
   %i.l = tail call i64 @_RNvYjNtNtCskKLDkoKarTP_4core3cmp3Ord3minCsiOEEQt9hBE2_17pyo3_build_config(i64 %i.k, i64 64) #23
   br label %bb.e
 

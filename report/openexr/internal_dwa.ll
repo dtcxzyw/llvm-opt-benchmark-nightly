@@ -205,24 +205,16 @@ bb.d:                                             ; preds = %._crit_edge
   %.2188.us = phi ptr [ %.1131192, %.lr.ph185.us.preheader ], [ %i.ed, %._crit_edge186.us ] ; 3 uses
   %i.ck = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %indvars.iv252 ; 2 uses
   %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !97
-  br label %3
-
-3:                                                ; preds = %.lr.ph185.us, %float_to_half.exit.us
-  %indvars.iv247 = phi i64 [ 0, %.lr.ph185.us ], [ %indvars.iv.next248, %float_to_half.exit.us ] ; 3 uses
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.cl, i64 %indvars.iv247
-  %5 = load float, ptr %4, align 4, !tbaa !185    ; 3 uses
-  %6 = fcmp ogt float %5, 6.550400e+04
-  br i1 %6, label %bb.e, label %7
-
-7:                                                ; preds = %3
-  %8 = fcmp olt float %5, -6.550400e+04
-  br i1 %8, label %9, label %bb.e
-
-9:                                                ; preds = %7
   br label %bb.e
 
-bb.e:                                             ; preds = %9, %7, %3
-  %.0125.us = phi float [ %5, %7 ], [ -6.550400e+04, %9 ], [ 6.550400e+04, %3 ] ; 2 uses
+bb.e:                                             ; preds = %.lr.ph185.us, %float_to_half.exit.us
+  %indvars.iv247 = phi i64 [ 0, %.lr.ph185.us ], [ %indvars.iv.next248, %float_to_half.exit.us ] ; 3 uses
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %i.cl, i64 %indvars.iv247
+  %4 = load float, ptr %3, align 4, !tbaa !185    ; 3 uses
+  %5 = fcmp ogt float %4, 6.550400e+04
+  %6 = fcmp olt float %4, -6.550400e+04
+  %spec.store.select.us = select i1 %6, float -6.550400e+04, float %4
+  %.0125.us = select i1 %5, float 6.550400e+04, float %spec.store.select.us ; 2 uses
   %i.cm = bitcast float %.0125.us to i32
   %i.cn = tail call float @llvm.fabs.f32(float %.0125.us)
   %i.co = bitcast float %i.cn to i32              ; 10 uses
@@ -305,7 +297,7 @@ float_to_half.exit.us:                            ; preds = %bb.o, %bb.n, %bb.m,
   store i16 %.033.i.i.us, ptr %i.ec, align 2, !tbaa !94
   %indvars.iv.next248 = add nuw nsw i64 %indvars.iv247, 1 ; 2 uses
   %exitcond251.not = icmp eq i64 %indvars.iv.next248, %wide.trip.count250
-  br i1 %exitcond251.not, label %._crit_edge186.us, label %3, !llvm.loop !219
+  br i1 %exitcond251.not, label %._crit_edge186.us, label %bb.e, !llvm.loop !219
 
 ._crit_edge186.us:                                ; preds = %float_to_half.exit.us
   store ptr %.2188.us, ptr %i.ck, align 8, !tbaa !97
@@ -708,7 +700,7 @@ bb.ew:                                            ; preds = %bb.ev, %half_to_flo
   %.6238.i = phi i32 [ %i.cy, %bb.au ], [ %.1233.i, %half_to_float.exit305.i ], [ %i.cy, %bb.bc ], [ %i.cy, %half_to_float.exit308.i ], [ %.1233.i, %bb.av ], [ %i.gx, %bb.cr ], [ %.3235.i, %half_to_float.exit323.i ], [ %.3235.i, %bb.cz ], [ %.3235.i, %half_to_float.exit326.i ], [ %.3235.i, %bb.cs ], [ %i.kq, %bb.en ], [ %.5237.i, %half_to_float.exit341.i ], [ %i.kq, %bb.ev ], [ %i.kq, %half_to_float.exit344.i ], [ %.5237.i, %bb.eo ] ; 2 uses
   %.6.i = phi float [ %i.dm, %bb.au ], [ %.1.i, %half_to_float.exit305.i ], [ %i.eb, %bb.bc ], [ %.1.i, %half_to_float.exit308.i ], [ %.1.i, %bb.av ], [ %i.hl, %bb.cr ], [ %.3.i, %half_to_float.exit323.i ], [ %i.ia, %bb.cz ], [ %.3.i, %half_to_float.exit326.i ], [ %.3.i, %bb.cs ], [ %i.le, %bb.en ], [ %.5.i, %half_to_float.exit341.i ], [ %i.lt, %bb.ev ], [ %.5.i, %half_to_float.exit344.i ], [ %.5.i, %bb.eo ]
   %i.lv = add nuw nsw i32 %i.t, %i.b
-  %i.lw = and i32 %i.lv, %i.v                     ; 6 uses
+  %i.lw = and i32 %i.lv, %i.v                     ; 7 uses
   %i.lx = trunc nuw i32 %i.lw to i16
   %i.ly = tail call range(i16 0, 16) i16 @llvm.ctpop.i16(i16 range(i16 0, -28672) %i.lx)
   %i.lz = zext nneg i16 %i.ly to i32              ; 2 uses
@@ -755,7 +747,8 @@ half_to_float.exit347.i:                          ; preds = %bb.fc, %bb.fb, %bb.
   %i.mq = bitcast i32 %.sroa.0.0.i.i346.i to float
   %i.mr = fsub float %i.mq, %i.c
   %i.ms = fcmp olt float %i.mr, %2
-  br i1 %i.ms, label %4, label %handleQuantizeGeneric.exit
+  %spec.select.i = select i1 %i.ms, i32 %i.lw, i32 %.6245.i
+  br label %handleQuantizeGeneric.exit
 
 bb.fd:                                            ; preds = %bb.ew
   %i.mt = icmp eq i32 %.6238.i, %i.lz
@@ -801,13 +794,11 @@ half_to_float.exit351.i:                          ; preds = %bb.fj, %bb.fi, %bb.
   %i.nj = bitcast i32 %.sroa.0.0.i.i350.i to float
   %i.nk = fsub float %i.nj, %i.c
   %i.nl = fcmp olt float %i.nk, %.6.i
-  br i1 %i.nl, label %4, label %handleQuantizeGeneric.exit
-
-4:                                                ; preds = %half_to_float.exit351.i, %half_to_float.exit347.i
+  %spec.select294.i = select i1 %i.nl, i32 %i.lw, i32 %.6245.i
   br label %handleQuantizeGeneric.exit
 
-handleQuantizeGeneric.exit:                       ; preds = %half_to_float.exit347.i, %bb.fd, %half_to_float.exit351.i, %4
-  %.7.i = phi i32 [ %.6245.i, %bb.fd ], [ %.6245.i, %half_to_float.exit347.i ], [ %i.lw, %4 ], [ %.6245.i, %half_to_float.exit351.i ]
+handleQuantizeGeneric.exit:                       ; preds = %half_to_float.exit347.i, %bb.fd, %half_to_float.exit351.i
+  %.7.i = phi i32 [ %.6245.i, %bb.fd ], [ %spec.select294.i, %half_to_float.exit351.i ], [ %spec.select.i, %half_to_float.exit347.i ]
   %i.nm = or i32 %.7.i, %i.a
   br label %bb.oj
 
@@ -1122,7 +1113,7 @@ bb.hh:                                            ; preds = %bb.hg, %half_to_flo
   %.2.i67 = phi float [ %i.rh, %bb.gy ], [ %.1.i66, %half_to_float.exit129.i ], [ %i.sa, %bb.hg ], [ %.1.i66, %half_to_float.exit133.i.a ], [ %.1.i66, %bb.gz ]
   %i.sc = shl nuw nsw i32 2, %i.np
   %i.sd = add nuw nsw i32 %i.sc, %i.b
-  %i.se = and i32 %i.sd, %i.nr                    ; 6 uses
+  %i.se = and i32 %i.sd, %i.nr                    ; 7 uses
   %i.sf = trunc nuw i32 %i.se to i16
   %i.sg = tail call range(i16 0, 16) i16 @llvm.ctpop.i16(i16 range(i16 0, -28672) %i.sf) ; 2 uses
   %i.sh = icmp samesign ult i16 %i.sg, %.297.in.i
@@ -1168,7 +1159,8 @@ half_to_float.exit137.i:                          ; preds = %bb.hn, %bb.hm, %bb.
   %i.sx = bitcast i32 %.sroa.0.0.i.i136.i to float
   %i.sy = fsub float %i.sx, %i.c
   %i.sz = fcmp olt float %i.sy, %2
-  br i1 %i.sz, label %5, label %handleQuantizeDenormTol.exit
+  %spec.select.i69 = select i1 %i.sz, i32 %i.se, i32 %.2100.i
+  br label %handleQuantizeDenormTol.exit
 
 bb.ho:                                            ; preds = %bb.hh
   %i.ta = icmp eq i16 %i.sg, %.297.in.i
@@ -1214,13 +1206,11 @@ half_to_float.exit141.i:                          ; preds = %bb.hu, %bb.ht, %bb.
   %i.tq = bitcast i32 %.sroa.0.0.i.i140.i to float
   %i.tr = fsub float %i.tq, %i.c
   %i.ts = fcmp olt float %i.tr, %.2.i67
-  br i1 %i.ts, label %5, label %handleQuantizeDenormTol.exit
-
-5:                                                ; preds = %half_to_float.exit141.i, %half_to_float.exit137.i
+  %spec.select118.i = select i1 %i.ts, i32 %i.se, i32 %.2100.i
   br label %handleQuantizeDenormTol.exit
 
-handleQuantizeDenormTol.exit:                     ; preds = %half_to_float.exit137.i, %bb.ho, %half_to_float.exit141.i, %5
-  %.3.i68 = phi i32 [ %.2100.i, %bb.ho ], [ %.2100.i, %half_to_float.exit137.i ], [ %i.se, %5 ], [ %.2100.i, %half_to_float.exit141.i ]
+handleQuantizeDenormTol.exit:                     ; preds = %half_to_float.exit137.i, %bb.ho, %half_to_float.exit141.i
+  %.3.i68 = phi i32 [ %.2100.i, %bb.ho ], [ %spec.select118.i, %half_to_float.exit141.i ], [ %spec.select.i69, %half_to_float.exit137.i ]
   %i.tt = or i32 %.3.i68, %i.a
   br label %bb.oj
 
@@ -1623,7 +1613,7 @@ bb.mw:                                            ; preds = %bb.mv, %half_to_flo
   %.2100.i76 = phi i32 [ %i.aha, %bb.ml ], [ %i.agx, %half_to_float.exit.i81 ], [ %i.agx, %bb.mn ], [ %i.agx, %half_to_float.exit128.i.a ], [ %i.agx, %bb.mm ], [ %i.aic, %bb.mt ], [ %.098.i75, %half_to_float.exit137.i80 ], [ %.098.i75, %bb.mv ], [ %.098.i75, %half_to_float.exit140.i ], [ %.098.i75, %bb.mu ] ; 2 uses
   %.2.i77 = phi float [ %i.ahc, %bb.ml ], [ %2, %half_to_float.exit.i81 ], [ %i.ahf, %bb.mn ], [ %2, %half_to_float.exit128.i.a ], [ %2, %bb.mm ], [ %i.aih, %bb.mt ], [ %.097.i, %half_to_float.exit137.i80 ], [ %i.ain, %bb.mv ], [ %.097.i, %half_to_float.exit140.i ], [ %.097.i, %bb.mu ]
   %i.aip = add nuw nsw i32 %i.b, 2048             ; 5 uses
-  %i.aiq = and i32 %i.aip, 63488                  ; 2 uses
+  %i.aiq = and i32 %i.aip, 63488                  ; 3 uses
   %i.air = trunc nuw i32 %i.aiq to i16
   %i.ais = tail call range(i16 0, 6) i16 @llvm.ctpop.i16(i16 range(i16 0, -28672) %i.air)
   %i.ait = zext nneg i16 %i.ais to i32            ; 2 uses
@@ -1642,7 +1632,8 @@ half_to_float.exit143.i:                          ; preds = %bb.mw
   %i.aja = bitcast i32 %.sroa.0.0.i.i142.i to float
   %i.ajb = fsub float %i.aja, %i.c
   %i.ajc = fcmp olt float %i.ajb, %2
-  br i1 %i.ajc, label %6, label %handleQuantizeEqualExp.exit
+  %spec.select126.i = select i1 %i.ajc, i32 %i.aiq, i32 %.2103.i
+  br label %handleQuantizeEqualExp.exit
 
 bb.mx:                                            ; preds = %bb.mw
   %i.ajd = icmp eq i32 %.2100.i76, %i.ait
@@ -1660,14 +1651,12 @@ half_to_float.exit147.i:                          ; preds = %bb.mx
   %i.ajj = bitcast i32 %.sroa.0.0.i.i146.i to float
   %i.ajk = fsub float %i.ajj, %i.c
   %i.ajl = fcmp olt float %i.ajk, %.2.i77
-  br i1 %i.ajl, label %6, label %handleQuantizeEqualExp.exit
-
-6:                                                ; preds = %half_to_float.exit147.i, %half_to_float.exit143.i
+  %spec.select127.i = select i1 %i.ajl, i32 %i.aiq, i32 %.2103.i
   br label %handleQuantizeEqualExp.exit
 
-handleQuantizeEqualExp.exit:                      ; preds = %half_to_float.exit143.i, %bb.mx, %half_to_float.exit147.i, %6
-  %.3.i78 = phi i32 [ %.2103.i, %bb.mx ], [ %.2103.i, %half_to_float.exit143.i ], [ %i.aiq, %6 ], [ %.2103.i, %half_to_float.exit147.i ]
-  %i.ajm = or i32 %.3.i78, %i.a
+handleQuantizeEqualExp.exit:                      ; preds = %half_to_float.exit143.i, %bb.mx, %half_to_float.exit147.i
+  %.3.i80 = phi i32 [ %.2103.i, %bb.mx ], [ %spec.select127.i, %half_to_float.exit147.i ], [ %spec.select126.i, %half_to_float.exit143.i ]
+  %i.ajm = or i32 %.3.i80, %i.a
   br label %bb.oj
 
 bb.my:                                            ; preds = %bb.mi
@@ -1723,7 +1712,7 @@ bb.nd:                                            ; preds = %half_to_float.exit1
   %.sroa.9.1.i = phi i32 [ %i.ajr, %bb.na ], [ %i.ajt, %bb.nb ], [ %.sroa.9.0.i, %half_to_float.exit.i90 ], [ %i.akc, %half_to_float.exit110.i ] ; 5 uses
   %.sroa.0.1.i = phi i32 [ %i.ajq, %bb.na ], [ %i.ajs, %bb.nb ], [ %i.aju, %half_to_float.exit.i90 ], [ %.sroa.0.0.i, %half_to_float.exit110.i ] ; 5 uses
   %i.aki = add nuw nsw i32 %i.b, 1024             ; 5 uses
-  %i.akj = and i32 %i.aki, 64512                  ; 2 uses
+  %i.akj = and i32 %i.aki, 64512                  ; 3 uses
   %i.akk = trunc nuw nsw i32 %i.b to i16
   %i.akl = trunc nsw i32 %.sroa.0.1.i to i16
   %i.akm = insertelement <2 x i16> poison, i16 %i.akl, i64 0
@@ -1916,7 +1905,8 @@ half_to_float.exit125.i:                          ; preds = %bb.oe, %bb.od, %bb.
   %i.ang = bitcast i32 %.sroa.0.0.i.i124.i to float
   %i.anh = fsub float %i.ang, %i.c
   %i.ani = fcmp olt float %i.anh, %2
-  br i1 %i.ani, label %7, label %handleQuantizeCloseExp.exit
+  %spec.select109.i = select i1 %i.ani, i32 %i.akj, i32 %.194.i
+  br label %handleQuantizeCloseExp.exit
 
 bb.of:                                            ; preds = %bb.ob
   %i.anj = icmp eq i16 %i.amy, %.192.in.i
@@ -1946,14 +1936,12 @@ half_to_float.exit129.i87:                        ; preds = %bb.oi, %bb.oh, %bb.
   %i.anq = bitcast i32 %.sroa.0.0.i.i128.i88 to float
   %i.anr = fsub float %i.anq, %i.c
   %i.ans = fcmp olt float %i.anr, %.1.i84
-  br i1 %i.ans, label %7, label %handleQuantizeCloseExp.exit
-
-7:                                                ; preds = %half_to_float.exit129.i87, %half_to_float.exit125.i
+  %spec.select110.i = select i1 %i.ans, i32 %i.akj, i32 %.194.i
   br label %handleQuantizeCloseExp.exit
 
-handleQuantizeCloseExp.exit:                      ; preds = %half_to_float.exit125.i, %bb.of, %half_to_float.exit129.i87, %7
-  %.2.i85 = phi i32 [ %.194.i, %bb.of ], [ %.194.i, %half_to_float.exit125.i ], [ %i.akj, %7 ], [ %.194.i, %half_to_float.exit129.i87 ]
-  %i.ant = or i32 %.2.i85, %i.a
+handleQuantizeCloseExp.exit:                      ; preds = %half_to_float.exit125.i, %bb.of, %half_to_float.exit129.i87
+  %.2.i88 = phi i32 [ %.194.i, %bb.of ], [ %spec.select110.i, %half_to_float.exit129.i87 ], [ %spec.select109.i, %half_to_float.exit125.i ]
+  %i.ant = or i32 %.2.i88, %i.a
   br label %bb.oj
 
 bb.oj:                                            ; preds = %bb.hv, %bb.fk, %bb.f, %handleQuantizeCloseExp.exit, %handleQuantizeEqualExp.exit, %handleQuantizeDefault.exit, %handleQuantizeDenormTol.exit, %handleQuantizeGeneric.exit

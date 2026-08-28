@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gimli-rs/original/dwarf_validate.dwarf_validate.fd51000a27e4c067-cgu.00?download=true
+inline.NumInlined: 162
+inline.NumDeleted: 46
 begin_hunk_0_@_RNvMs7_NtNtCsi68uqYEhoRA_5gimli4read4unitINtB5_24DebugInfoUnitHeadersIterINtNtB7_12endian_slice11EndianSliceNtNtB9_9endianity13RunTimeEndianEE4nextCslKoDbeUmNq5_14dwarf_validate:bb.a
 bb.u:                                             ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !15
@@ -200,12 +202,12 @@ bb.am:                                            ; preds = %bb.ak
   br label %bb.aq
 
 bb.an:                                            ; preds = %bb.r, %bb.al, %bb.aj, %bb.ah, %bb.af, %bb.ad, %bb.ab, %bb.z, %bb.x, %bb.q, %bb.o, %bb.m, %bb.l, %bb.g, %bb.e
+  %.sroa.21.sroa.36.0 = phi i32 [ 0, %bb.e ], [ %.sroa.21.sroa.36.2.copyload117, %bb.ah ], [ %.sroa.21.sroa.36.1.copyload116, %bb.af ], [ undef, %bb.m ], [ 0, %bb.g ], [ %.sroa.21.sroa.36.1.copyload115, %bb.al ], [ %.sroa.21.sroa.36.1.copyload114, %bb.aj ], [ %.sroa.21.sroa.36.1.copyload113, %bb.x ], [ %.sroa.21.sroa.36.1.copyload112, %bb.z ], [ %.sroa.21.sroa.36.1.copyload111, %bb.ad ], [ %.sroa.21.sroa.36.1.copyload110, %bb.ab ], [ %.sroa.21.sroa.36.1.copyload, %bb.q ], [ %.sroa.21.sroa.36.2.copyload, %bb.o ], [ undef, %bb.l ], [ undef, %bb.r ]
   %.sroa.21.sroa.33.0 = phi i16 [ 0, %bb.e ], [ %.sroa.21.sroa.33.2.copyload101, %bb.ah ], [ %.sroa.21.sroa.33.1.copyload100, %bb.af ], [ undef, %bb.m ], [ 0, %bb.g ], [ %.sroa.21.sroa.33.1.copyload99, %bb.al ], [ %.sroa.21.sroa.33.1.copyload98, %bb.aj ], [ %.sroa.21.sroa.33.1.copyload97, %bb.x ], [ %.sroa.21.sroa.33.1.copyload96, %bb.z ], [ %.sroa.21.sroa.33.1.copyload95, %bb.ad ], [ %.sroa.21.sroa.33.1.copyload94, %bb.ab ], [ %.sroa.21.sroa.33.1.copyload, %bb.q ], [ %.sroa.21.sroa.33.2.copyload, %bb.o ], [ undef, %bb.l ], [ undef, %bb.r ]
   %.sroa.21.sroa.21.0 = phi i8 [ 0, %bb.e ], [ %i.bq, %bb.ah ], [ %.sroa.21.sroa.21.1.copyload85, %bb.af ], [ undef, %bb.m ], [ 0, %bb.g ], [ %.sroa.21.sroa.21.1.copyload84, %bb.al ], [ %.sroa.21.sroa.21.1.copyload83, %bb.aj ], [ %.sroa.21.sroa.21.1.copyload82, %bb.x ], [ %.sroa.21.sroa.21.1.copyload81, %bb.z ], [ %.sroa.21.sroa.21.1.copyload80, %bb.ad ], [ %.sroa.21.sroa.21.1.copyload79, %bb.ab ], [ %.sroa.21.sroa.21.1.copyload, %bb.q ], [ %i.av, %bb.o ], [ undef, %bb.l ], [ %i.as, %bb.r ]
   %.sroa.21.sroa.0.0 = phi i8 [ 17, %bb.e ], [ %i.bo, %bb.ah ], [ %i.al, %bb.af ], [ 17, %bb.m ], [ 17, %bb.g ], [ %i.bt, %bb.al ], [ %i.az, %bb.aj ], [ %i.ba, %bb.x ], [ %i.bb, %bb.z ], [ %i.bj, %bb.ad ], [ %i.bc, %bb.ab ], [ %i.aw, %bb.q ], [ %i.at, %bb.o ], [ 15, %bb.l ], [ 60, %bb.r ]
   %.sroa.55.sroa.20.sroa.0.0 = phi i56 [ %.sroa.55.sroa.20.0.extract.trunc65, %bb.e ], [ %.sroa.55.sroa.20.0.extract.trunc39, %bb.ah ], [ %.sroa.55.sroa.20.0.extract.trunc63, %bb.af ], [ %.sroa.55.sroa.20.0.extract.trunc61, %bb.m ], [ %.sroa.55.sroa.20.0.extract.trunc41, %bb.g ], [ %.sroa.55.sroa.20.0.extract.trunc59, %bb.al ], [ %.sroa.55.sroa.20.0.extract.trunc57, %bb.aj ], [ %.sroa.55.sroa.20.0.extract.trunc55, %bb.x ], [ %.sroa.55.sroa.20.0.extract.trunc53, %bb.z ], [ %.sroa.55.sroa.20.0.extract.trunc49, %bb.ad ], [ %.sroa.55.sroa.20.0.extract.trunc47, %bb.ab ], [ %.sroa.55.sroa.20.0.extract.trunc45, %bb.q ], [ %.sroa.55.sroa.20.0.extract.trunc, %bb.o ], [ %.sroa.55.sroa.20.0.extract.trunc43, %bb.l ], [ undef, %bb.r ]
   %.sroa.55.sroa.0.0 = phi i8 [ %.sroa.55.sroa.0.0.extract.trunc33, %bb.e ], [ %.sroa.55.sroa.0.0.extract.trunc20, %bb.ah ], [ %.sroa.55.sroa.0.0.extract.trunc32, %bb.af ], [ %.sroa.55.sroa.0.0.extract.trunc31, %bb.m ], [ %.sroa.55.sroa.0.0.extract.trunc21, %bb.g ], [ %.sroa.55.sroa.0.0.extract.trunc30, %bb.al ], [ %.sroa.55.sroa.0.0.extract.trunc29, %bb.aj ], [ %.sroa.55.sroa.0.0.extract.trunc28, %bb.x ], [ %.sroa.55.sroa.0.0.extract.trunc27, %bb.z ], [ %.sroa.55.sroa.0.0.extract.trunc25, %bb.ad ], [ %.sroa.55.sroa.0.0.extract.trunc24, %bb.ab ], [ %.sroa.55.sroa.0.0.extract.trunc23, %bb.q ], [ %.sroa.55.sroa.0.0.extract.trunc, %bb.o ], [ %.sroa.55.sroa.0.0.extract.trunc22, %bb.l ], [ undef, %bb.r ]
-  %.sroa.21.sroa.36.0 = phi i32 [ 0, %bb.e ], [ %.sroa.21.sroa.36.2.copyload117, %bb.ah ], [ %.sroa.21.sroa.36.1.copyload116, %bb.af ], [ undef, %bb.m ], [ 0, %bb.g ], [ %.sroa.21.sroa.36.1.copyload115, %bb.al ], [ %.sroa.21.sroa.36.1.copyload114, %bb.aj ], [ %.sroa.21.sroa.36.1.copyload113, %bb.x ], [ %.sroa.21.sroa.36.1.copyload112, %bb.z ], [ %.sroa.21.sroa.36.1.copyload111, %bb.ad ], [ %.sroa.21.sroa.36.1.copyload110, %bb.ab ], [ %.sroa.21.sroa.36.1.copyload, %bb.q ], [ %.sroa.21.sroa.36.2.copyload, %bb.o ], [ undef, %bb.l ], [ undef, %bb.r ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !15
   %i.bw = zext i32 %.sroa.21.sroa.36.0 to i64
   br label %bb.ap
@@ -215,16 +217,16 @@ bb.ao:                                            ; preds = %bb.a
   br label %bb.ar
 
 bb.ap:                                            ; preds = %bb.c, %bb.an
+  %.sroa.21.sroa.36.1.ph = phi i64 [ %i.bw, %bb.an ], [ %.sroa.21.sroa.36.0.extract.shift104, %bb.c ]
   %.sroa.21.sroa.33.1.ph = phi i16 [ %.sroa.21.sroa.33.0, %bb.an ], [ %.sroa.21.sroa.33.0.extract.trunc89, %bb.c ]
   %.sroa.21.sroa.21.1.ph = phi i8 [ %.sroa.21.sroa.21.0, %bb.an ], [ %.sroa.21.sroa.21.0.extract.trunc74, %bb.c ]
   %.sroa.21.sroa.0.1.ph = phi i8 [ %.sroa.21.sroa.0.0, %bb.an ], [ %.sroa.21.sroa.0.0.extract.trunc67, %bb.c ]
   %.sroa.55.sroa.20.sroa.0.1.ph = phi i56 [ %.sroa.55.sroa.20.sroa.0.0, %bb.an ], [ %.sroa.55.sroa.20.sroa.0.0.copyload, %bb.c ]
   %.sroa.55.sroa.0.1.ph = phi i8 [ %.sroa.55.sroa.0.0, %bb.an ], [ %.sroa.4230.0.copyload.i, %bb.c ]
-  %.sroa.21.sroa.36.1.ph = phi i64 [ %i.bw, %bb.an ], [ %.sroa.21.sroa.36.0.extract.shift104, %bb.c ]
   %.sroa.21.sroa.36.0.insert.shift107 = shl nuw i64 %.sroa.21.sroa.36.1.ph, 32
   %.sroa.21.sroa.33.0.insert.ext90 = zext i16 %.sroa.21.sroa.33.1.ph to i64
   %.sroa.21.sroa.33.0.insert.shift91 = shl nuw nsw i64 %.sroa.21.sroa.33.0.insert.ext90, 16
-  %.sroa.21.sroa.33.0.insert.insert93 = or disjoint i64 %.sroa.21.sroa.36.0.insert.shift107, %.sroa.21.sroa.33.0.insert.shift91
+  %.sroa.21.sroa.33.0.insert.insert93 = or disjoint i64 %.sroa.21.sroa.33.0.insert.shift91, %.sroa.21.sroa.36.0.insert.shift107
   %.sroa.21.sroa.21.0.insert.ext75 = zext i8 %.sroa.21.sroa.21.1.ph to i64
   %.sroa.21.sroa.21.0.insert.shift76 = shl nuw nsw i64 %.sroa.21.sroa.21.0.insert.ext75, 8
   %.sroa.21.sroa.21.0.insert.insert78 = or disjoint i64 %.sroa.21.sroa.33.0.insert.insert93, %.sroa.21.sroa.21.0.insert.shift76

@@ -202,13 +202,13 @@ bb.r:                                             ; preds = %bb.q
   %.not44.i = icmp eq i32 %i.cn, 0
   br i1 %.not44.i, label %bb.s, label %bb.t
 
-bb.s:                                             ; preds = %.critedge52.i, %bb.r
+bb.s:                                             ; preds = %bb.r, %.critedge52.i
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.cp = load double, ptr %i.co, align 8, !tbaa !119
   %i.cq = fcmp une double %12, %i.cp
   br i1 %i.cq, label %bb.t, label %_ZN5Ipopt18StdAugSystemSolver29AugmentedSystemRequiresChangeEPKNS_9SymMatrixEdPKNS_6VectorEdS6_dRKNS_6MatrixES6_dS9_S6_d.exit
 
-bb.t:                                             ; preds = %bb.s, %.critedge52.i, %bb.r, %bb.p, %bb.o, %.critedge50.i, %bb.n, %bb.l, %bb.k, %.critedge48.i, %bb.j, %bb.h, %.critedge46.i, %bb.g, %bb.e, %.critedge.i, %bb.d
+bb.t:                                             ; preds = %.critedge.i, %bb.e, %bb.g, %.critedge46.i, %bb.h, %bb.j, %.critedge48.i, %bb.k, %bb.l, %bb.n, %.critedge50.i, %bb.o, %bb.p, %bb.r, %.critedge52.i, %bb.d, %bb.s
   %i.cr = load ptr, ptr %13, align 8, !tbaa !98
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !99
   %i.ct = load ptr, ptr %14, align 8, !tbaa !98
@@ -220,7 +220,7 @@ bb.t:                                             ; preds = %bb.s, %.critedge52.
   tail call void @_ZN5Ipopt18StdAugSystemSolver21CreateAugmentedSystemEPKNS_9SymMatrixEdPKNS_6VectorEdS6_dRKNS_6MatrixES6_dS9_S6_dRS5_SA_SA_SA_(ptr noundef nonnull align 8 dereferenceable(233) %0, ptr noundef %1, double noundef %2, ptr noundef %3, double noundef %4, ptr noundef %5, double noundef %6, ptr noundef nonnull align 8 dereferenceable(69) %7, ptr noundef %8, double noundef %9, ptr noundef nonnull align 8 dereferenceable(69) %10, ptr noundef %11, double noundef %12, ptr noundef nonnull align 8 dereferenceable(205) %i.cs, ptr noundef nonnull align 8 dereferenceable(205) %i.cu, ptr noundef nonnull align 8 dereferenceable(205) %i.cw, ptr noundef nonnull align 8 dereferenceable(205) %i.cy)
   br label %_ZN5Ipopt18StdAugSystemSolver29AugmentedSystemRequiresChangeEPKNS_9SymMatrixEdPKNS_6VectorEdS6_dRKNS_6MatrixES6_dS9_S6_d.exit
 
-_ZN5Ipopt18StdAugSystemSolver29AugmentedSystemRequiresChangeEPKNS_9SymMatrixEdPKNS_6VectorEdS6_dRKNS_6MatrixES6_dS9_S6_d.exit: ; preds = %bb.s, %bb.t
+_ZN5Ipopt18StdAugSystemSolver29AugmentedSystemRequiresChangeEPKNS_9SymMatrixEdPKNS_6VectorEdS6_dRKNS_6MatrixES6_dS9_S6_d.exit: ; preds = %bb.t, %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #14
   %sext = shl i64 %i.w, 29                        ; 4 uses
   %i.cz = ashr exact i64 %sext, 32                ; 3 uses
@@ -623,13 +623,10 @@ bb.q:                                             ; preds = %bb.p, %.critedge52
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.az = load double, ptr %i.ay, align 8, !tbaa !119
   %i.ba = fcmp une double %12, %i.az
-  br i1 %i.ba, label %bb.r, label %13
-
-13:                                               ; preds = %bb.q
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.b, %.critedge, %bb.c, %bb.e, %.critedge46, %bb.f, %bb.h, %.critedge48, %bb.i, %bb.j, %bb.l, %.critedge50, %bb.m, %bb.n, %bb.p, %.critedge52, %bb.q, %13
-  %.0 = phi i1 [ false, %13 ], [ true, %bb.q ], [ true, %.critedge52 ], [ true, %bb.p ], [ true, %bb.n ], [ true, %bb.m ], [ true, %.critedge50 ], [ true, %bb.l ], [ true, %bb.j ], [ true, %bb.i ], [ true, %.critedge48 ], [ true, %bb.h ], [ true, %bb.f ], [ true, %.critedge46 ], [ true, %bb.e ], [ true, %bb.c ], [ true, %.critedge ], [ true, %bb.b ]
+bb.r:                                             ; preds = %bb.q, %bb.b, %.critedge, %bb.c, %bb.e, %.critedge46, %bb.f, %bb.h, %.critedge48, %bb.i, %bb.j, %bb.l, %.critedge50, %bb.m, %bb.n, %bb.p, %.critedge52
+  %.0 = phi i1 [ true, %bb.b ], [ %i.ba, %bb.q ], [ true, %.critedge52 ], [ true, %bb.p ], [ true, %bb.n ], [ true, %bb.m ], [ true, %.critedge50 ], [ true, %bb.l ], [ true, %bb.j ], [ true, %bb.i ], [ true, %.critedge48 ], [ true, %bb.h ], [ true, %bb.f ], [ true, %.critedge46 ], [ true, %bb.e ], [ true, %bb.c ], [ true, %.critedge ]
   ret i1 %.0
 }
 

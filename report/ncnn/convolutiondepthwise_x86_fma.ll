@@ -205,12 +205,9 @@ bb.k:                                             ; preds = %bb.h
   %i.fe = load ptr, ptr %i.z, align 8, !tbaa !18  ; 2 uses
   %i.ff = load float, ptr %i.fe, align 4, !tbaa !45
   %i.fg = getelementptr inbounds nuw i8, ptr %i.fe, i64 4
-  %i.fh = load float, ptr %i.fg, align 4, !tbaa !45 ; 2 uses
-  %.0127 = call nnan ninf nsz float @llvm.maxnum.f32(float %.0, float %i.ff) ; 2 uses
-  %10 = fcmp fast ogt float %.0127, %i.fh
-  br i1 %10, label %11, label %_ZL13activation_ssfiRKN4ncnn3MatE.exit
-
-11:                                               ; preds = %bb.k
+  %i.fh = load float, ptr %i.fg, align 4, !tbaa !45
+  %.0127 = call nnan ninf nsz float @llvm.maxnum.f32(float %.0, float %i.ff)
+  %spec.select129 = call nnan ninf nsz float @llvm.minnum.f32(float %.0127, float %i.fh)
   br label %_ZL13activation_ssfiRKN4ncnn3MatE.exit
 
 bb.l:                                             ; preds = %bb.h
@@ -252,8 +249,8 @@ bb.p:                                             ; preds = %bb.o
   %i.gd = fmul fast float %i.gc, %.0
   br label %_ZL13activation_ssfiRKN4ncnn3MatE.exit
 
-_ZL13activation_ssfiRKN4ncnn3MatE.exit:           ; preds = %bb.p, %bb.o, %bb.m, %bb.l, %11, %bb.k, %bb.j, %bb.i, %bb.h, %bb.n
-  %.1128 = phi nsz float [ %.0, %bb.h ], [ %i.ey, %bb.i ], [ %i.fd, %bb.j ], [ %i.fh, %11 ], [ %.0127, %bb.k ], [ %i.fl, %bb.l ], [ %i.fq, %bb.m ], [ %i.gd, %bb.p ], [ %.0, %bb.o ], [ 0.000000e+00, %bb.n ] ; 2 uses
+_ZL13activation_ssfiRKN4ncnn3MatE.exit:           ; preds = %bb.k, %bb.p, %bb.o, %bb.m, %bb.l, %bb.j, %bb.i, %bb.h, %bb.n
+  %.1128 = phi nsz float [ %.0, %bb.h ], [ %i.ey, %bb.i ], [ %i.fd, %bb.j ], [ 0.000000e+00, %bb.n ], [ %spec.select129, %bb.k ], [ %i.fl, %bb.l ], [ %i.fq, %bb.m ], [ %i.gd, %bb.p ], [ %.0, %bb.o ] ; 2 uses
   %i.ge = load i8, ptr %9, align 1, !tbaa !101, !range !55, !noundef !56
   %i.gf = trunc nuw i8 %i.ge to i1
   br i1 %i.gf, label %bb.q, label %bb.r

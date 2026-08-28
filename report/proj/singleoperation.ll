@@ -204,9 +204,6 @@ bb.ap:                                            ; preds = %bb.ao
   %i.fv = call double @llvm.fabs.f64(double %i.fq)
   %i.fw = fmul double %i.fv, 1.000000e-10
   %i.fx = fcmp ule double %i.fu, %i.fw
-  br i1 %i.fx, label %12, label %_ZNSt6vectorIdSaIdEED2Ev.exit324
-
-12:                                               ; preds = %bb.ap
   br label %_ZNSt6vectorIdSaIdEED2Ev.exit324
 
 bb.aq:                                            ; preds = %bb.aj
@@ -230,8 +227,8 @@ _ZNSt6vectorIdSaIdEED2Ev.exit:                    ; preds = %bb.aq, %bb.ar
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #44
   br label %.body
 
-_ZNSt6vectorIdSaIdEED2Ev.exit324:                 ; preds = %12, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %.preheader532
-  %.lcssa594 = phi i1 [ true, %12 ], [ false, %.preheader532 ], [ false, %bb.ak ], [ false, %bb.ap ], [ false, %bb.al ], [ false, %bb.an ], [ false, %bb.am ], [ false, %bb.ao ]
+_ZNSt6vectorIdSaIdEED2Ev.exit324:                 ; preds = %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %.preheader532
+  %.lcssa594 = phi i1 [ false, %bb.ao ], [ false, %.preheader532 ], [ false, %bb.ak ], [ %i.fx, %bb.ap ], [ false, %bb.al ], [ false, %bb.an ], [ false, %bb.am ]
   %i.gf = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.gg = load ptr, ptr %i.gf, align 8, !tbaa !403
   %i.gh = ptrtoint ptr %i.gg to i64

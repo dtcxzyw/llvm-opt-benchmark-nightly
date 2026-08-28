@@ -202,22 +202,14 @@ bb.d:                                             ; preds = %bb.c
   %i.d = load double, ptr %i.a, align 8           ; 3 uses
   %i.e = tail call double @llvm.fabs.f64(double %i.d) #20
   %i.f = fcmp oeq double %i.e, +inf
-  br i1 %i.f, label %.sink.split, label %6
-
-6:                                                ; preds = %bb.d
-  %7 = fcmp uno double %i.d, 0.000000e+00
-  br i1 %7, label %.sink.split, label %8
-
-8:                                                ; preds = %6
-  %9 = fptoui double %i.d to i64
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %6, %bb.d, %8
-  %.sink = phi i64 [ -1, %bb.d ], [ %9, %8 ], [ -2, %6 ]
+  %6 = fcmp uno double %i.d, 0.000000e+00
+  %7 = fptoui double %i.d to i64
+  %spec.select = select i1 %6, i64 -2, i64 %7
+  %.sink = select i1 %i.f, i64 -1, i64 %spec.select
   store i64 %.sink, ptr %1, align 8
   br label %bb.e
 
-bb.e:                                             ; preds = %.sink.split, %bb.c
+bb.e:                                             ; preds = %bb.d, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   br label %bb.o
 
@@ -591,22 +583,14 @@ bb.d:                                             ; preds = %bb.c
   %i.d = load double, ptr %i.a, align 8           ; 3 uses
   %i.e = tail call double @llvm.fabs.f64(double %i.d) #20
   %i.f = fcmp oeq double %i.e, +inf
-  br i1 %i.f, label %.sink.split, label %6
-
-6:                                                ; preds = %bb.d
-  %7 = fcmp uno double %i.d, 0.000000e+00
-  br i1 %7, label %.sink.split, label %8
-
-8:                                                ; preds = %6
-  %9 = fptosi double %i.d to i64
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %6, %bb.d, %8
-  %.sink = phi i64 [ -1, %bb.d ], [ %9, %8 ], [ -2, %6 ]
+  %6 = fcmp uno double %i.d, 0.000000e+00
+  %7 = fptosi double %i.d to i64
+  %spec.select = select i1 %6, i64 -2, i64 %7
+  %.sink = select i1 %i.f, i64 -1, i64 %spec.select
   store i64 %.sink, ptr %1, align 8
   br label %bb.e
 
-bb.e:                                             ; preds = %.sink.split, %bb.c
+bb.e:                                             ; preds = %bb.d, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   br label %bb.o
 

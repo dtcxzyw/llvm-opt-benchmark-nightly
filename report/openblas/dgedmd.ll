@@ -202,13 +202,11 @@ bb.cd:                                            ; preds = %bb.cb
   %i.kx = load double, ptr %i.kw, align 8, !tbaa !9
   %i.ky = load double, ptr %i.e, align 8, !tbaa !9
   %i.kz = fcmp une double %i.kx, %i.ky
-  br i1 %i.kz, label %30, label %bb.ce
-
-30:                                               ; preds = %bb.cd
+  %spec.select994 = select i1 %i.kz, i32 1, i32 %.31074
   br label %bb.ce
 
-bb.ce:                                            ; preds = %bb.ca, %bb.cd, %30, %bb.cc
-  %.4 = phi i32 [ %.31074, %bb.ca ], [ %.31074, %bb.cc ], [ 1, %30 ], [ %.31074, %bb.cd ] ; 2 uses
+bb.ce:                                            ; preds = %bb.cd, %bb.ca, %bb.cc
+  %.4 = phi i32 [ %.31074, %bb.ca ], [ %.31074, %bb.cc ], [ %spec.select994, %bb.cd ] ; 2 uses
   %indvars.iv.next1125 = add nuw nsw i64 %indvars.iv1124, 1
   %i.la = load i32, ptr %i.a, align 4, !tbaa !8
   %i.lb = sext i32 %i.la to i64
