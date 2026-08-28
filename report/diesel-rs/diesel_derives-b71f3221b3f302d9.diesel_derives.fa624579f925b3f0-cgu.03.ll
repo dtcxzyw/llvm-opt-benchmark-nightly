@@ -204,8 +204,8 @@ bb.a:
   %i.f = alloca [32 x i8], align 8                ; 5 uses
   %i.g = alloca [32 x i8], align 8                ; 6 uses
   %i.h = alloca [32 x i8], align 8                ; 5 uses
-  %.sroa.5.i = alloca i64, align 8                ; 4 uses
-  %.sroa.7.i = alloca i64, align 8                ; 3 uses
+  %.sroa.5.i = alloca [8 x i8], align 8           ; 4 uses
+  %.sroa.7.i = alloca [8 x i8], align 8           ; 3 uses
   %i.i = alloca [32 x i8], align 8                ; 6 uses
   %.sroa.8.i = alloca [28 x i8], align 4          ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5638)
@@ -608,14 +608,14 @@ bb.ag:                                            ; preds = %bb.k, %bb.b
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCs40k4W9msRzi_5alloc3vec21spec_from_iter_nestedINtB4_3VecINtNtCshMFl0SviwmK_3syn10punctuated4PairNtNtCsluMP4ekZjHw_14diesel_derives12sql_function11StrictFnArgNtNtB16_5token5CommaEEINtB2_18SpecFromIterNestedB11_INtNtNtNtCscI6d9CVNmLh_4core4iter8adapters7flatten7FlatMapINtNtB3z_9enumerate9EnumerateINtNtNtB3B_7sources8repeat_n7RepeatNBR_EEBR_NCNvB1H_15expand_variadics0_0EE9from_iterB1J_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(112) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.i.i = alloca i64, align 8              ; 3 uses
-  %.sroa.7.i.i = alloca i64, align 8              ; 3 uses
+  %.sroa.5.i.i = alloca [8 x i8], align 8         ; 3 uses
+  %.sroa.7.i.i = alloca [8 x i8], align 8         ; 3 uses
   %i.a = alloca [264 x i8], align 8               ; 4 uses
   %i.b = alloca [264 x i8], align 8               ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [112 x i8], align 8               ; 14 uses
-  %.sroa.5 = alloca i64, align 8                  ; 3 uses
-  %.sroa.7 = alloca i64, align 8                  ; 3 uses
+  %.sroa.5 = alloca [8 x i8], align 8             ; 3 uses
+  %.sroa.7 = alloca [8 x i8], align 8             ; 3 uses
   %i.e = alloca [264 x i8], align 8               ; 4 uses
   %i.f = alloca [264 x i8], align 8               ; 7 uses
   %i.g = alloca [24 x i8], align 8                ; 10 uses

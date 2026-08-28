@@ -204,8 +204,8 @@ bb.l:                                             ; preds = %_RINvNtNtNtNtCsj6eK
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort8unstable9quicksort9quicksortTmmENvYB17_NtNtBa_3cmp10PartialOrd2ltECs7ZUl82OSlxp_6rustls(ptr noalias nofree noundef nonnull align 4 %0, i64 noundef range(i64 0, 1152921504606846976) %1, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable_or_null(8) %2, i32 noundef range(i32 0, 127) %3, ptr noalias nofree noundef nonnull %4) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.0.i.i42 = alloca i64, align 8            ; 5 uses
-  %.sroa.0.i.i = alloca i64, align 8              ; 5 uses
+  %5 = alloca [8 x i8], align 8                   ; 5 uses
+  %6 = alloca [8 x i8], align 8                   ; 5 uses
   %i.a = icmp samesign ult i64 %1, 33
   br i1 %i.a, label %._crit_edge, label %.lr.ph
 
@@ -297,9 +297,9 @@ bb.g:                                             ; preds = %_RINvNtNtNtNtCsj6eK
   %i.ab = getelementptr inbounds nuw i8, ptr %.sroa.0.092135, i64 8 ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !859)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !862)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
-  %5 = load i64, ptr %i.ab, align 4, !alias.scope !864, !noalias !862
-  store i64 %5, ptr %.sroa.0.i.i, align 8, !noalias !865
+  call void @llvm.lifetime.start.p0(ptr nonnull %6)
+  %7 = load <2 x i32>, ptr %i.ab, align 4, !alias.scope !864, !noalias !862
+  store <2 x i32> %7, ptr %6, align 8, !noalias !865
   %i.ac = getelementptr [8 x i8], ptr %.sroa.0.092135, i64 %.sroa.15.091136 ; 2 uses
   %i.ad = getelementptr i8, ptr %i.ac, i64 -8     ; 2 uses
   %.sroa.13.039.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.092135, i64 16 ; 3 uses
@@ -320,9 +320,9 @@ bb.g:                                             ; preds = %_RINvNtNtNtNtCsj6eK
   %.sroa.13.1.i.i = phi ptr [ %.sroa.13.1.sroa.gep32.i.i, %.preheader.i.i ], [ %.sroa.13.1.i.i.ph, %.preheader.i.i.preheader ] ; 5 uses
   %.sroa.021.1.i.i = phi ptr [ %.sroa.13.1.i.i, %.preheader.i.i ], [ %.sroa.021.1.i.i.ph, %.preheader.i.i.preheader ]
   %i.ag = icmp eq ptr %.sroa.13.1.i.i, %i.ac      ; 3 uses
-  %.sroa.01.0.i.i = select i1 %i.ag, ptr %.sroa.0.i.i, ptr %.sroa.13.1.i.i ; 2 uses
+  %.sroa.01.0.i.i = select i1 %i.ag, ptr %6, ptr %.sroa.13.1.i.i ; 2 uses
   %.val.i.i.i = load i32, ptr %.sroa.01.0.i.i, align 4, !noalias !867, !noundef !4 ; 2 uses
-  %.sroa.01.0.sroa.sel.i.i.v.sroa.sel.v = select i1 %i.ag, ptr %.sroa.0.i.i, ptr %.sroa.13.1.i.i
+  %.sroa.01.0.sroa.sel.i.i.v.sroa.sel.v = select i1 %i.ag, ptr %6, ptr %.sroa.13.1.i.i
   %.sroa.01.0.sroa.sel.i.i.v.sroa.sel = getelementptr i8, ptr %.sroa.01.0.sroa.sel.i.i.v.sroa.sel.v, i64 4
   %.val1.i.i.i = load i32, ptr %.sroa.01.0.sroa.sel.i.i.v.sroa.sel, align 4, !noalias !867
   %i.ah = icmp eq i32 %.val.i.i.i, %.val2.i.pre.i.i
@@ -377,7 +377,7 @@ bb.g:                                             ; preds = %_RINvNtNtNtNtCsj6eK
   br i1 %i.bi, label %.lr.ph.i.i, label %.preheader.i.i.preheader
 
 _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicTmmENvYB1x_NtNtBa_3cmp10PartialOrd2ltECs7ZUl82OSlxp_6rustls.exit.i: ; preds = %.preheader.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %.not7.i = icmp ult i64 %i.ao, %.sroa.15.091136
   br i1 %.not7.i, label %_RNvMNtCsj6eKBz9Db1c_4core5sliceSTmmE12split_at_mutCs7ZUl82OSlxp_6rustls.exit, label %bb.h
 
@@ -414,9 +414,9 @@ bb.j:                                             ; preds = %bb.i
   %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.0.092135, i64 8 ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !879)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !882)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i42)
-  %6 = load i64, ptr %i.bt, align 4, !alias.scope !884, !noalias !882
-  store i64 %6, ptr %.sroa.0.i.i42, align 8, !noalias !885
+  call void @llvm.lifetime.start.p0(ptr nonnull %5)
+  %8 = load <2 x i32>, ptr %i.bt, align 4, !alias.scope !884, !noalias !882
+  store <2 x i32> %8, ptr %5, align 8, !noalias !885
   %i.bu = getelementptr [8 x i8], ptr %.sroa.0.092135, i64 %.sroa.15.091136 ; 2 uses
   %i.bv = getelementptr i8, ptr %i.bu, i64 -8     ; 2 uses
   %.sroa.13.039.i.i45 = getelementptr inbounds nuw i8, ptr %.sroa.0.092135, i64 16 ; 3 uses
@@ -437,9 +437,9 @@ bb.j:                                             ; preds = %bb.i
   %.sroa.13.1.i.i53 = phi ptr [ %.sroa.13.1.sroa.gep32.i.i60, %.preheader.i.i48 ], [ %.sroa.13.1.i.i53.ph, %.preheader.i.i48.preheader ] ; 5 uses
   %.sroa.021.1.i.i54 = phi ptr [ %.sroa.13.1.i.i53, %.preheader.i.i48 ], [ %.sroa.021.1.i.i54.ph, %.preheader.i.i48.preheader ]
   %i.by = icmp eq ptr %.sroa.13.1.i.i53, %i.bu    ; 3 uses
-  %.sroa.01.0.i.i55 = select i1 %i.by, ptr %.sroa.0.i.i42, ptr %.sroa.13.1.i.i53 ; 2 uses
+  %.sroa.01.0.i.i55 = select i1 %i.by, ptr %5, ptr %.sroa.13.1.i.i53 ; 2 uses
   %.val.i.i.i56 = load i32, ptr %.sroa.01.0.i.i55, align 4, !noalias !887, !noundef !4 ; 2 uses
-  %.sroa.01.0.sroa.sel.i.i58.v.sroa.sel.v = select i1 %i.by, ptr %.sroa.0.i.i42, ptr %.sroa.13.1.i.i53
+  %.sroa.01.0.sroa.sel.i.i58.v.sroa.sel.v = select i1 %i.by, ptr %5, ptr %.sroa.13.1.i.i53
   %.sroa.01.0.sroa.sel.i.i58.v.sroa.sel = getelementptr i8, ptr %.sroa.01.0.sroa.sel.i.i58.v.sroa.sel.v, i64 4
   %.val1.i.i.i59 = load i32, ptr %.sroa.01.0.sroa.sel.i.i58.v.sroa.sel, align 4, !noalias !887
   %i.bz = icmp eq i32 %.val2.i.pre.i.i46, %.val.i.i.i56
@@ -494,7 +494,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.da, label %.lr.ph.i.i62, label %.preheader.i.i48.preheader
 
 _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicTmmENCINvB2_9quicksortB1x_NvYB1x_NtNtBa_3cmp10PartialOrd2ltE0ECs7ZUl82OSlxp_6rustls.exit.i: ; preds = %.preheader.i.i48
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i42)
+  call void @llvm.lifetime.end.p0(ptr nonnull %5)
   %.not7.i61 = icmp ult i64 %i.cg, %.sroa.15.091136
   br i1 %.not7.i61, label %bb.l, label %bb.k
 

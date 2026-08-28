@@ -206,7 +206,7 @@ bb.a:
   %i.g = alloca [4 x i8], align 1                 ; 7 uses
   %i.h = alloca [4 x i8], align 1                 ; 7 uses
   %i.i = alloca [4 x i8], align 1                 ; 7 uses
-  %.sroa.0.i.i.i = alloca i32, align 4            ; 9 uses
+  %2 = alloca [4 x i8], align 1                   ; 9 uses
   %i.j = alloca [40 x i8], align 8                ; 25 uses
   %i.k = alloca [24 x i8], align 8                ; 10 uses
   %i.l = alloca [40 x i8], align 8                ; 9 uses
@@ -564,9 +564,9 @@ bb.i:                                             ; preds = %bb.g
   %spec.select784 = select i1 %i.db, i64 %i.cy, i64 %..i137.i
   %brmerge486.not = select i1 %i.cl, i1 %i.dh, i1 false
   %invariant.op = sub i8 20, %.val.i143.i
-  %.sroa.0.i.i.i.2.i.i.i.2.i.i.i.2.i.i.2.i.i.2.i.2.i.2..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i.i.i, i64 2
-  %.sroa.0.i.i.i.3.i.i.i.3.i.i.i.3.i.i.3.i.i.3.i.3.i.3..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i.i.i, i64 3
-  %.sroa.0.i.i.i.1.i.i.i.1.i.i.i.1.i.i.1.i.i.1.i.1.i.1..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i.i.i, i64 1
+  %.sroa.0.i.i.i.2.i.i.i.2.i.i.i.2.i.i.2.i.i.2.i.2.i.2..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 2
+  %.sroa.0.i.i.i.3.i.i.i.3.i.i.i.3.i.i.3.i.i.3.i.3.i.3..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 3
+  %.sroa.0.i.i.i.1.i.i.i.1.i.i.i.1.i.i.1.i.i.1.i.1.i.1..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 1
   %i.eo = getelementptr inbounds nuw i8, ptr %i.v, i64 32
   %i.ep = getelementptr inbounds nuw i8, ptr %i.v, i64 64
   br label %.backedge524
@@ -969,14 +969,14 @@ bb.an:                                            ; preds = %bb.am
 
 _RNCNvMs_NtCs8frGy5WneL6_4fish5pagerNtB6_5Pager21completion_print_item0B8_.exit142.i.i.i: ; preds = %bb.an, %bb.am
   %.sroa.04.1.i.i.i = phi i64 [ %.sroa.04.0.i.i.i, %bb.an ], [ %i.hf, %bb.am ] ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %.spec.select.i137.i.i.i = select i1 %.sroa.05.0.i.i, i8 28, i8 %spec.select.i137.i.i.i
   %.spec.select.i.i.i.i = select i1 %.sroa.05.0.i.i, i8 26, i8 %spec.select.i.i.i.i ; 7 uses
   %.spec.select.i134.i.reass.i.i = select i1 %.sroa.05.0.i.i, i8 %i.dl, i8 %spec.select.i134.i.reass.reass.i.reass.i.reass.reass
   %.spec.select.i140.i.i.i = select i1 %.sroa.05.0.i.i, i8 29, i8 %spec.select.i140.i.i.i
-  store i8 %.spec.select.i137.i.i.i, ptr %.sroa.0.i.i.i.2.i.i.i.2.i.i.i.2.i.i.2.i.i.2.i.2.i.2..sroa_idx, align 2, !noalias !2860
+  store i8 %.spec.select.i137.i.i.i, ptr %.sroa.0.i.i.i.2.i.i.i.2.i.i.i.2.i.i.2.i.i.2.i.2.i.2..sroa_idx, align 1, !noalias !2860
   store i8 %.spec.select.i.i.i.i, ptr %.sroa.0.i.i.i.3.i.i.i.3.i.i.i.3.i.i.3.i.i.3.i.3.i.3..sroa_idx, align 1, !noalias !2860
-  store i8 0, ptr %.sroa.0.i.i.i, align 4, !noalias !2860
+  store i8 0, ptr %2, align 1, !noalias !2860
   store i8 0, ptr %.sroa.0.i.i.i.1.i.i.i.1.i.i.i.1.i.i.1.i.i.1.i.1.i.1..sroa_idx, align 1, !noalias !2860
   %i.ib = getelementptr inbounds nuw i8, ptr %i.gz, i64 8
   %i.ic = load ptr, ptr %i.ib, align 8, !alias.scope !2863, !noalias !2864, !nonnull !5, !noundef !5 ; 2 uses
@@ -1379,7 +1379,7 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs
   br label %_RNCNvMs_NtCs8frGy5WneL6_4fish5pagerNtB6_5Pager21completion_print_items_0B8_.exit.us.i.i.i.i
 
 _RNCNvMs_NtCs8frGy5WneL6_4fish5pagerNtB6_5Pager21completion_print_items_0B8_.exit.us.i.i.i.i: ; preds = %._crit_edge.i.us.i.i.i.i, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E4peek0ECs8frGy5WneL6_4fish.exit.thread.us.i.i.i.i
-  %.sroa.0.0.in.i.us.i.i.i.i = phi ptr [ %.sroa.0.i.i.i, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E4peek0ECs8frGy5WneL6_4fish.exit.thread.us.i.i.i.i ], [ %spec.select.i.us.i.i.i.i, %._crit_edge.i.us.i.i.i.i ]
+  %.sroa.0.0.in.i.us.i.i.i.i = phi ptr [ %2, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E4peek0ECs8frGy5WneL6_4fish.exit.thread.us.i.i.i.i ], [ %spec.select.i.us.i.i.i.i, %._crit_edge.i.us.i.i.i.i ]
   %.sroa.0.0.i33.us.i.i.i.i = load i32, ptr %.sroa.0.0.in.i.us.i.i.i.i, align 1, !noalias !2877
   invoke void @_RNvMNtCs8frGy5WneL6_4fish6screenNtB2_4Line6append(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.j, i32 noundef %i.nl, i32 noundef %.sroa.0.0.i33.us.i.i.i.i, i64 noundef 3, i64 range(i64 0, 64051194700380387) %i.gx)
           to label %.noexc146.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.i.i.i, !noalias !2865
@@ -1486,7 +1486,7 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs
   br label %_RNCNvMs_NtCs8frGy5WneL6_4fish5pagerNtB6_5Pager21completion_print_items_0B8_.exit.i.i.i.i
 
 _RNCNvMs_NtCs8frGy5WneL6_4fish5pagerNtB6_5Pager21completion_print_items_0B8_.exit.i.i.i.i: ; preds = %._crit_edge.i.i.i.i.i, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E4peek0ECs8frGy5WneL6_4fish.exit.thread.i.i.i.i
-  %.sroa.0.0.in.i.i.i.i.i = phi ptr [ %spec.select.i.i.i.i.i, %._crit_edge.i.i.i.i.i ], [ %.sroa.0.i.i.i, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E4peek0ECs8frGy5WneL6_4fish.exit.thread.i.i.i.i ]
+  %.sroa.0.0.in.i.i.i.i.i = phi ptr [ %spec.select.i.i.i.i.i, %._crit_edge.i.i.i.i.i ], [ %2, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1h_8PeekableNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32E4peek0ECs8frGy5WneL6_4fish.exit.thread.i.i.i.i ]
   %.sroa.0.0.i33.i.i.i.i = load i32, ptr %.sroa.0.0.in.i.i.i.i.i, align 1, !noalias !2877
   invoke void @_RNvMNtCs8frGy5WneL6_4fish6screenNtB2_4Line6append(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.j, i32 noundef %.lcssa105.i.i.i.i, i32 noundef %.sroa.0.0.i33.i.i.i.i, i64 noundef 3, i64 range(i64 0, 64051194700380387) %i.gx)
           to label %.noexc150.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.i.i, !noalias !2865
@@ -1528,7 +1528,7 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_cEE18get_or_insert_withNCNvMs
   br label %_RNCNvMs_NtCs8frGy5WneL6_4fish5pagerNtB6_5Pager21completion_print_items_0B8_.exit40.i.i.i.i
 
 _RNCNvMs_NtCs8frGy5WneL6_4fish5pagerNtB6_5Pager21completion_print_items_0B8_.exit40.i.i.i.i: ; preds = %._crit_edge.i34.i.i.i.i, %.loopexit.i.i.i.i
-  %.sroa.0.0.in.i38.i.i.i.i = phi ptr [ %spec.select.i37.i.i.i.i, %._crit_edge.i34.i.i.i.i ], [ %.sroa.0.i.i.i, %.loopexit.i.i.i.i ]
+  %.sroa.0.0.in.i38.i.i.i.i = phi ptr [ %spec.select.i37.i.i.i.i, %._crit_edge.i34.i.i.i.i ], [ %2, %.loopexit.i.i.i.i ]
   %.sroa.0.0.i39.i.i.i.i = load i32, ptr %.sroa.0.0.in.i38.i.i.i.i, align 1, !noalias !2891
   invoke void @_RNvMNtCs8frGy5WneL6_4fish6screenNtB2_4Line6append(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.j, i32 noundef 8230, i32 noundef %.sroa.0.0.i39.i.i.i.i, i64 noundef 3, i64 range(i64 0, 64051194700380387) %i.gx)
           to label %.noexc152.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i.loopexit.split-lp.loopexit.split-lp.loopexit.i.i, !noalias !2865
@@ -1585,7 +1585,7 @@ bb.ck:                                            ; preds = %_RINvNtCs3oUPovFnLW
 
 _RNvMs_NtCs8frGy5WneL6_4fish5pagerNtB4_5Pager21completion_print_item.exit.i.i: ; preds = %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.thread.i.i.i, %bb.bj, %_RNvXs2_NtNtNtCs3oUPovFnLWP_4core4iter7sources8repeat_nINtB5_7RepeatNcENtNtNtB9_6traits8iterator8Iterator4nextCs8frGy5WneL6_4fish.exit.thread.i114.i.i, %bb.ar
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.l, ptr noundef nonnull align 8 dereferenceable(40) %i.j, i64 40, i1 false), !noalias !2894
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !2860
   %i.pw = icmp ult i64 %i.gr, %i.eq
   br i1 %i.pw, label %bb.cl, label %bb.cm

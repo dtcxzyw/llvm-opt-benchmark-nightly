@@ -205,10 +205,10 @@ declare void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev(p
 define hidden void @_ZNK8rawspeed10NefDecoder17parseWhiteBalanceEv(ptr nofree noundef nonnull readonly align 8 captures(address) dereferenceable(104) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %.sroa.3 = alloca i32, align 4                  ; 8 uses
-  %.sroa.10 = alloca i16, align 2                 ; 6 uses
-  %.sroa.13 = alloca i32, align 4                 ; 8 uses
-  %.sroa.20 = alloca i16, align 2                 ; 6 uses
+  %.sroa.3 = alloca [4 x i8], align 1             ; 8 uses
+  %.sroa.10 = alloca [2 x i8], align 1            ; 6 uses
+  %.sroa.13 = alloca [4 x i8], align 1            ; 8 uses
+  %.sroa.20 = alloca [2 x i8], align 1            ; 6 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !19   ; 3 uses
@@ -611,7 +611,7 @@ bb.ak:                                            ; preds = %bb.ag
   %i.fe = mul <8 x i8> %i.fd, <i8 96, i8 97, i8 98, i8 99, i8 100, i8 101, i8 102, i8 1>
   %i.ff = call i8 @llvm.vector.reduce.add.v8i8(<8 x i8> %i.fe) ; 2 uses
   %i.fg = xor i8 %.0.copyload.i.i.i.i.i.i.6, %i.ff
-  store i8 %i.fg, ptr %.sroa.3, align 4, !tbaa !18
+  store i8 %i.fg, ptr %.sroa.3, align 1, !tbaa !18
   %exitcond.7.not = icmp eq i32 %i.et, 7
   br i1 %exitcond.7.not, label %bb.aj, label %bb.al
 
@@ -635,7 +635,7 @@ bb.am:                                            ; preds = %bb.al
   %i.fp = add i8 %i.fo, %i.fk                     ; 2 uses
   %i.fq = xor i8 %.0.copyload.i.i.i.i.i.i.8, %i.fp
   %.sroa.3.2..073.ptr275.8.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.3, i64 2
-  store i8 %i.fq, ptr %.sroa.3.2..073.ptr275.8.sroa_idx, align 2, !tbaa !18
+  store i8 %i.fq, ptr %.sroa.3.2..073.ptr275.8.sroa_idx, align 1, !tbaa !18
   %exitcond.9.not = icmp eq i32 %i.et, 9
   br i1 %exitcond.9.not, label %bb.aj, label %bb.an
 
@@ -663,7 +663,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.gc = mul i8 %i.dt, 108
   %i.gd = add i8 %i.gc, %i.fz                     ; 2 uses
   %i.ge = xor i8 %.0.copyload.i.i.i.i.i.i.12, %i.gd
-  store i8 %i.ge, ptr %.sroa.10, align 2, !tbaa !18
+  store i8 %i.ge, ptr %.sroa.10, align 1, !tbaa !18
   %exitcond.13.not = icmp eq i32 %i.et, 13
   br i1 %exitcond.13.not, label %bb.aj, label %bb.ap
 
@@ -686,7 +686,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.gm = mul i8 %i.dt, 110
   %i.gn = add i8 %i.gm, %i.gi                     ; 2 uses
   %i.go = xor i8 %.0.copyload.i.i.i.i.i.i.14, %i.gn
-  store i8 %i.go, ptr %.sroa.13, align 4, !tbaa !18
+  store i8 %i.go, ptr %.sroa.13, align 1, !tbaa !18
   %exitcond.15.not = icmp eq i32 %i.et, 15
   br i1 %exitcond.15.not, label %bb.aj, label %bb.ar
 
@@ -710,7 +710,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.gx = add i8 %i.gw, %i.gs                     ; 2 uses
   %i.gy = xor i8 %.0.copyload.i.i.i.i.i.i.16, %i.gx
   %.sroa.13.2..073.ptr275.16.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.13, i64 2
-  store i8 %i.gy, ptr %.sroa.13.2..073.ptr275.16.sroa_idx, align 2, !tbaa !18
+  store i8 %i.gy, ptr %.sroa.13.2..073.ptr275.16.sroa_idx, align 1, !tbaa !18
   %exitcond.17.not = icmp eq i32 %i.et, 17
   br i1 %exitcond.17.not, label %bb.aj, label %bb.at
 
@@ -738,7 +738,7 @@ bb.au:                                            ; preds = %bb.at
   %i.hk = mul i8 %i.dt, 116
   %i.hl = add i8 %i.hk, %i.hh                     ; 2 uses
   %i.hm = xor i8 %.0.copyload.i.i.i.i.i.i.20, %i.hl
-  store i8 %i.hm, ptr %.sroa.20, align 2, !tbaa !18
+  store i8 %i.hm, ptr %.sroa.20, align 1, !tbaa !18
   %exitcond.21.not = icmp eq i32 %i.et, 21
   br i1 %exitcond.21.not, label %bb.aj, label %bb.av
 
@@ -751,16 +751,16 @@ bb.av:                                            ; preds = %bb.au
   %i.hr = xor i8 %.0.copyload.i.i.i.i.i.i.21, %i.hq
   %.sroa.20.1..073.ptr275.21.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.20, i64 1
   store i8 %i.hr, ptr %.sroa.20.1..073.ptr275.21.sroa_idx, align 1, !tbaa !18
-  %.sroa.10.val = load i16, ptr %.sroa.10, align 2
-  %.sroa.20.val = load i16, ptr %.sroa.20, align 2
+  %.sroa.10.val = load i16, ptr %.sroa.10, align 1
+  %.sroa.20.val = load i16, ptr %.sroa.20, align 1
   %.0.copyload.i.i.i104 = select i1 %i.bu, i16 %.sroa.10.val, i16 %.sroa.20.val
   %i.hs = call noundef i16 @llvm.bswap.i16(i16 %.0.copyload.i.i.i104)
   %i.ht = uitofp i16 %i.hs to float
   %i.hu = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.hv = load ptr, ptr %i.hu, align 8, !tbaa !45 ; 4 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %i.hv, i64 256
-  %.sroa.3.val = load <2 x i16>, ptr %.sroa.3, align 4
-  %.sroa.13.val = load <2 x i16>, ptr %.sroa.13, align 4
+  %.sroa.3.val = load <2 x i16>, ptr %.sroa.3, align 1
+  %.sroa.13.val = load <2 x i16>, ptr %.sroa.13, align 1
   %i.hx = select i1 %i.bu, <2 x i16> %.sroa.3.val, <2 x i16> %.sroa.13.val
   %i.hy = call <2 x i16> @llvm.bswap.v2i16(<2 x i16> %i.hx)
   %i.hz = uitofp <2 x i16> %i.hy to <2 x float>

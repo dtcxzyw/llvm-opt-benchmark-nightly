@@ -205,8 +205,8 @@ bb.a:
   %.sroa.0201 = alloca i32, align 4               ; 64 uses
   %i.a = alloca [4 x i8], align 4                 ; 16 uses
   %i.b = alloca [5 x i8], align 1                 ; 9 uses
-  %.sroa.0 = alloca i32, align 4                  ; 4 uses
-  %1 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 3 uses
+  %1 = alloca [4 x i8], align 1                   ; 4 uses
+  %2 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 234
   %i.d = load i8, ptr %i.c, align 2, !tbaa !66    ; 2 uses
   %i.e = icmp eq i8 %i.d, 15
@@ -609,7 +609,7 @@ bb.bn:                                            ; preds = %.critedge156, %.cri
   br i1 %.not146, label %bb.bq, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.qx = getelementptr inbounds nuw i8, ptr %0, i64 68 ; 2 uses
   %i.qy = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
   %i.qz = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -626,7 +626,7 @@ bb.bo:                                            ; preds = %bb.bn
   br label %bb.bp
 
 ._crit_edge389:                                   ; preds = %._crit_edge, %bb.bo
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   br label %bb.bq
 
 bb.bp:                                            ; preds = %.lr.ph388, %._crit_edge
@@ -663,9 +663,9 @@ bb.bp:                                            ; preds = %.lr.ph388, %._crit_
   %i.rz = sub nsw i64 %i.ry, %.095384
   %i.sa = mul nsw i64 %i.rz, %i.ru
   %i.sb = getelementptr inbounds i8, ptr %i.rl, i64 %i.sa ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0, ptr align 1 %i.rw, i64 %i.rg, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %1, ptr align 1 %i.rw, i64 %i.rg, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.rw, ptr align 1 %i.sb, i64 %i.rg, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.sb, ptr nonnull align 4 %.sroa.0, i64 %i.rg, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.sb, ptr nonnull align 1 %1, i64 %i.rg, i1 false)
   %i.sc = add nuw nsw i64 %.095384, 1             ; 2 uses
   %i.sd = load i32, ptr %i.qy, align 4, !tbaa !149 ; 3 uses
   %i.se = sdiv i32 %i.sd, 2
@@ -726,10 +726,10 @@ bb.bv:                                            ; preds = %.lr.ph392, %bb.bu
   br i1 %i.sq, label %.loopexit, label %.critedge158
 
 .critedge158:                                     ; preds = %bb.bv, %._crit_edge393
-  store ptr @.str.36, ptr %1, align 8, !tbaa !61
-  %i.tc = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store ptr @.str.36, ptr %2, align 8, !tbaa !61
+  %i.tc = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 10, ptr %i.tc, align 8, !tbaa !63
-  %i.td = invoke noundef float @_ZNK11OpenImageIO4v3_19ImageSpec19get_float_attributeENS0_17basic_string_viewIcSt11char_traitsIcEEEf(ptr noundef nonnull align 8 dereferenceable(160) %i.n, ptr noundef nonnull dead_on_return %1, float noundef 1.000000e+00)
+  %i.td = invoke noundef float @_ZNK11OpenImageIO4v3_19ImageSpec19get_float_attributeENS0_17basic_string_viewIcSt11char_traitsIcEEEf(ptr noundef nonnull align 8 dereferenceable(160) %i.n, ptr noundef nonnull dead_on_return %2, float noundef 1.000000e+00)
           to label %bb.bw unwind label %bb.cf     ; 2 uses
 
 bb.bw:                                            ; preds = %.critedge158
