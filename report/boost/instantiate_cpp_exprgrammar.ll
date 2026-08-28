@@ -203,8 +203,8 @@ bb.y:                                             ; preds = %bb.v
   %i.be = load i8, ptr %i.bd, align 8, !tbaa !19, !range !59, !noundef !60
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bg = load i8, ptr %i.bf, align 8, !tbaa !19, !range !59, !noundef !60
-  %narrow = mul nuw nsw i8 %i.bg, %i.be
-  store i8 %narrow, ptr %i.bd, align 8, !tbaa !19
+  %2 = and i8 %i.bg, %i.be
+  store i8 %2, ptr %i.bd, align 8, !tbaa !19
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.t, %bb.u, %bb.l, %bb.m, %bb.h, %.critedge, %bb.v, %bb.w, %bb.x, %bb.y, %bb.b, %_ZN5boost4wave8grammars8closures7as_longERKNS2_13closure_valueE.exit, %bb.a

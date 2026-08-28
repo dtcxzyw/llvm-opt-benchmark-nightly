@@ -205,19 +205,19 @@ _ZN5Eigen8internal15unary_evaluatorINS_9TransposeINS_12SparseMatrixIbLi0EiEEEENS
 
 bb.an:                                            ; preds = %.lr.ph
   store i8 1, ptr %i.ll, align 1, !tbaa !198
-  %narrow = mul nuw nsw i8 %i.lk, %i.kq
+  %2 = and i8 %i.lk, %i.kq
   %i.lo = getelementptr inbounds i8, ptr %i.ac, i64 %i.li
-  store i8 %narrow, ptr %i.lo, align 1, !tbaa !198
+  store i8 %2, ptr %i.lo, align 1, !tbaa !198
   %i.lp = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %.168
   store i64 %i.li, ptr %i.lp, align 8, !tbaa !362
   %i.lq = add nsw i64 %.168, 1
   br label %bb.ap
 
 bb.ao:                                            ; preds = %.lr.ph
-  %narrow136 = mul nuw nsw i8 %i.lk, %i.kq
+  %3 = and i8 %i.lk, %i.kq
   %i.lr = getelementptr inbounds i8, ptr %i.ac, i64 %i.li ; 2 uses
   %i.ls = load i8, ptr %i.lr, align 1, !tbaa !198, !range !203, !noundef !204
-  %i.lt = or i8 %i.ls, %narrow136
+  %i.lt = or i8 %i.ls, %3
   store i8 %i.lt, ptr %i.lr, align 1, !tbaa !198
   br label %bb.ap
 
@@ -620,19 +620,19 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS
 
 bb.an:                                            ; preds = %.lr.ph
   store i8 1, ptr %i.lp, align 1, !tbaa !198
-  %narrow = mul nuw nsw i8 %i.lo, %i.ku
+  %4 = and i8 %i.lo, %i.ku
   %i.ls = getelementptr inbounds i8, ptr %i.ac, i64 %i.lm
-  store i8 %narrow, ptr %i.ls, align 1, !tbaa !198
+  store i8 %4, ptr %i.ls, align 1, !tbaa !198
   %i.lt = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %.1294
   store i64 %i.lm, ptr %i.lt, align 8, !tbaa !362
   %i.lu = add nsw i64 %.1294, 1
   br label %bb.ap
 
 bb.ao:                                            ; preds = %.lr.ph
-  %narrow138 = mul nuw nsw i8 %i.lo, %i.ku
+  %5 = and i8 %i.lo, %i.ku
   %i.lv = getelementptr inbounds i8, ptr %i.ac, i64 %i.lm ; 2 uses
   %i.lw = load i8, ptr %i.lv, align 1, !tbaa !198, !range !203, !noundef !204
-  %i.lx = or i8 %i.lw, %narrow138
+  %i.lx = or i8 %i.lw, %5
   store i8 %i.lx, ptr %i.lv, align 1, !tbaa !198
   br label %bb.ap
 
@@ -1035,13 +1035,13 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS
 .lr.ph.us.us.i.i.i.i.i.prol:                      ; preds = %.lr.ph.us.us.preheader.i.i.i.i.i
   %i.am = getelementptr inbounds i8, ptr %i.q, i64 %i.ak
   %i.an = load i8, ptr %i.am, align 1, !tbaa !198, !range !203, !noundef !204
-  %narrow20.us.us.i.i.i.i.i.prol = mul nuw nsw i8 %i.an, %i.ad
+  %2 = and i8 %i.an, %i.ad
   %i.ao = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.ak
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !56
   %i.aq = sext i32 %i.ap to i64
   %gep.us.us.i.i.i.i.i.prol = getelementptr i8, ptr %.sink, i64 %i.aq ; 2 uses
   %i.ar = load i8, ptr %gep.us.us.i.i.i.i.i.prol, align 1, !tbaa !198, !range !203, !noundef !204
-  %i.as = or i8 %i.ar, %narrow20.us.us.i.i.i.i.i.prol
+  %i.as = or i8 %i.ar, %2
   store i8 %i.as, ptr %gep.us.us.i.i.i.i.i.prol, align 1, !tbaa !198
   %i.at = add nsw i64 %i.ak, 1
   br label %.lr.ph.us.us.i.i.i.i.i.prol.loopexit
@@ -1056,24 +1056,24 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS
   %.sroa.8.027.us.us.i.i.i.i.i = phi i64 [ %i.bl, %.lr.ph.us.us.i.i.i.i.i ], [ %.sroa.8.027.us.us.i.i.i.i.i.unr, %.lr.ph.us.us.i.i.i.i.i.prol.loopexit ] ; 4 uses
   %i.aw = getelementptr inbounds i8, ptr %i.q, i64 %.sroa.8.027.us.us.i.i.i.i.i
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !198, !range !203, !noundef !204
-  %narrow20.us.us.i.i.i.i.i = mul nuw nsw i8 %i.ax, %i.ad
+  %3 = and i8 %i.ax, %i.ad
   %i.ay = getelementptr inbounds [4 x i8], ptr %i.s, i64 %.sroa.8.027.us.us.i.i.i.i.i
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !56
   %i.ba = sext i32 %i.az to i64
   %gep.us.us.i.i.i.i.i = getelementptr i8, ptr %.sink, i64 %i.ba ; 2 uses
   %i.bb = load i8, ptr %gep.us.us.i.i.i.i.i, align 1, !tbaa !198, !range !203, !noundef !204
-  %i.bc = or i8 %i.bb, %narrow20.us.us.i.i.i.i.i
+  %i.bc = or i8 %i.bb, %3
   store i8 %i.bc, ptr %gep.us.us.i.i.i.i.i, align 1, !tbaa !198
   %i.bd = add nsw i64 %.sroa.8.027.us.us.i.i.i.i.i, 1 ; 2 uses
   %i.be = getelementptr inbounds i8, ptr %i.q, i64 %i.bd
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !198, !range !203, !noundef !204
-  %narrow20.us.us.i.i.i.i.i.1 = mul nuw nsw i8 %i.bf, %i.ad
+  %4 = and i8 %i.bf, %i.ad
   %i.bg = getelementptr inbounds [4 x i8], ptr %i.s, i64 %i.bd
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !56
   %i.bi = sext i32 %i.bh to i64
   %gep.us.us.i.i.i.i.i.1 = getelementptr i8, ptr %.sink, i64 %i.bi ; 2 uses
   %i.bj = load i8, ptr %gep.us.us.i.i.i.i.i.1, align 1, !tbaa !198, !range !203, !noundef !204
-  %i.bk = or i8 %i.bj, %narrow20.us.us.i.i.i.i.i.1
+  %i.bk = or i8 %i.bj, %4
   store i8 %i.bk, ptr %gep.us.us.i.i.i.i.i.1, align 1, !tbaa !198
   %i.bl = add nsw i64 %.sroa.8.027.us.us.i.i.i.i.i, 2 ; 2 uses
   %exitcond37.not.i.i.i.i.i.1 = icmp eq i64 %i.bl, %i.ai
@@ -1107,13 +1107,13 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS
   %.sroa.8.027.i.i.i.i.i = phi i64 [ %i.cf, %.lr.ph.i.i.i.i.i ], [ %i.br, %_ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0EiEEE13InnerIteratorC2ERKS3_l.exit.i.i.i.i.i ] ; 3 uses
   %i.by = getelementptr inbounds i8, ptr %i.q, i64 %.sroa.8.027.i.i.i.i.i
   %i.bz = load i8, ptr %i.by, align 1, !tbaa !198, !range !203, !noundef !204
-  %narrow20.i.i.i.i.i = mul nuw nsw i8 %i.bz, %i.bo
+  %5 = and i8 %i.bz, %i.bo
   %i.ca = getelementptr inbounds [4 x i8], ptr %i.s, i64 %.sroa.8.027.i.i.i.i.i
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !56
   %i.cc = sext i32 %i.cb to i64
   %gep.i.i.i.i.i = getelementptr i8, ptr %.sink, i64 %i.cc ; 2 uses
   %i.cd = load i8, ptr %gep.i.i.i.i.i, align 1, !tbaa !198, !range !203, !noundef !204
-  %i.ce = or i8 %i.cd, %narrow20.i.i.i.i.i
+  %i.ce = or i8 %i.cd, %5
   store i8 %i.ce, ptr %gep.i.i.i.i.i, align 1, !tbaa !198
   %i.cf = add nsw i64 %.sroa.8.027.i.i.i.i.i, 1   ; 2 uses
   %i.cg = icmp slt i64 %i.cf, %i.bv
@@ -1516,19 +1516,19 @@ _ZN5Eigen20SparseCompressedBaseINS_12SparseMatrixIbLi0ElEEE13InnerIteratorC2ERKS
 
 bb.ah:                                            ; preds = %.lr.ph
   store i8 1, ptr %i.ik, align 1, !tbaa !198
-  %narrow = mul nuw nsw i8 %i.ij, %i.ht
+  %4 = and i8 %i.ij, %i.ht
   %i.in = getelementptr inbounds i8, ptr %i.ac, i64 %i.ih
-  store i8 %narrow, ptr %i.in, align 1, !tbaa !198
+  store i8 %4, ptr %i.in, align 1, !tbaa !198
   %i.io = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %.1253
   store i64 %i.ih, ptr %i.io, align 8, !tbaa !362
   %i.ip = add nsw i64 %.1253, 1
   br label %bb.aj
 
 bb.ai:                                            ; preds = %.lr.ph
-  %narrow138 = mul nuw nsw i8 %i.ij, %i.ht
+  %5 = and i8 %i.ij, %i.ht
   %i.iq = getelementptr inbounds i8, ptr %i.ac, i64 %i.ih ; 2 uses
   %i.ir = load i8, ptr %i.iq, align 1, !tbaa !198, !range !203, !noundef !204
-  %i.is = or i8 %i.ir, %narrow138
+  %i.is = or i8 %i.ir, %5
   store i8 %i.is, ptr %i.iq, align 1, !tbaa !198
   br label %bb.aj
 

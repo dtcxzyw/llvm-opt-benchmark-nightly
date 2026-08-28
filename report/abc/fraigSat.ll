@@ -202,17 +202,17 @@ bb.a:
   %i.g = phi i32 [ %i.z, %tailrecurse ], [ %i.c, %bb.a ]
   %i.h = phi ptr [ %i.y, %tailrecurse ], [ %i.b, %bb.a ]
   %.tr1522 = phi ptr [ %i.x, %tailrecurse ], [ %1, %bb.a ] ; 3 uses
-  %accumulator.tr21 = phi i32 [ %2, %tailrecurse ], [ 1, %bb.a ] ; 2 uses
+  %accumulator.tr21 = phi i32 [ %2, %tailrecurse ], [ -1, %bb.a ] ; 3 uses
   %i.i = add nsw i32 %i.f, -1
   %i.j = icmp eq i32 %i.g, %i.i
   store i32 %i.f, ptr %i.h, align 8, !tbaa !59
-  br i1 %i.j, label %.loopexit, label %bb.b
+  br i1 %i.j, label %.loopexit.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   %i.k = getelementptr inbounds nuw i8, ptr %.tr1522, i64 4
   %i.l = load i32, ptr %i.k, align 4, !tbaa !61
   %i.m = icmp sgt i32 %i.l, -1
-  br i1 %i.m, label %.loopexit, label %tailrecurse
+  br i1 %i.m, label %.loopexit.loopexit, label %tailrecurse
 
 tailrecurse:                                      ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %.tr1522, i64 32
@@ -226,16 +226,22 @@ tailrecurse:                                      ; preds = %bb.b
   %i.v = ptrtoint ptr %i.u to i64
   %i.w = and i64 %i.v, -2
   %i.x = inttoptr i64 %i.w to ptr                 ; 2 uses
-  %2 = mul nuw nsw i32 %i.s, %accumulator.tr21    ; 2 uses
+  %2 = and i32 %i.s, %accumulator.tr21            ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 16 ; 2 uses
   %i.z = load i32, ptr %i.y, align 8, !tbaa !59   ; 2 uses
   %i.aa = load i32, ptr %i.a, align 8, !tbaa !60  ; 2 uses
   %i.ab = icmp eq i32 %i.z, %i.aa
-  br i1 %i.ab, label %.loopexit, label %.lr.ph
+  br i1 %i.ab, label %.loopexit.loopexit, label %.lr.ph
 
-.loopexit:                                        ; preds = %tailrecurse, %bb.b, %.lr.ph, %bb.a
-  %.0 = phi i32 [ 1, %bb.a ], [ %2, %tailrecurse ], [ 0, %bb.b ], [ %accumulator.tr21, %.lr.ph ]
-  ret i32 %.0
+.loopexit.loopexit:                               ; preds = %.lr.ph, %bb.b, %tailrecurse
+  %accumulator.tr20.ph = phi i32 [ %2, %tailrecurse ], [ %accumulator.tr21, %bb.b ], [ %accumulator.tr21, %.lr.ph ]
+  %.0.ph = phi i32 [ 1, %tailrecurse ], [ 0, %bb.b ], [ 1, %.lr.ph ]
+  %3 = and i32 %.0.ph, %accumulator.tr20.ph
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.a
+  %accumulator.ret.tr = phi i32 [ 1, %bb.a ], [ %3, %.loopexit.loopexit ]
+  ret i32 %accumulator.ret.tr
 }
 
 ; Function Attrs: nofree nounwind uwtable

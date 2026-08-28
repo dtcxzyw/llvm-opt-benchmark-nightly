@@ -80,10 +80,9 @@ gv_calloc.exit40:                                 ; preds = %bb.f
 
 .preheader42:                                     ; preds = %bb.a
   %i.t = tail call noalias ptr @calloc(i64 noundef 0, i64 noundef 8) #16 ; 2 uses
-  %2 = mul nuw nsw i32 %1, %1
   %i.u = tail call noalias ptr @calloc(i64 noundef 0, i64 noundef 4) #16 ; 2 uses
   store ptr %i.u, ptr %i.t, align 8, !tbaa !11
-  tail call void @set_vector_valf(i32 noundef %2, float noundef 0.000000e+00, ptr noundef %i.u) #17
+  tail call void @set_vector_valf(i32 noundef %1, float noundef 0.000000e+00, ptr noundef %i.u) #17
   br label %._crit_edge
 
 .preheader.preheader.loopexit.unr-lcssa:          ; preds = %.lr.ph

@@ -202,7 +202,7 @@ hostlist_count.exit:                              ; preds = %bb.d
   store ptr null, ptr %i.a, align 8
   %.not = icmp eq i16 %3, 0
   %i.j = load i16, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 1584), align 8 ; 2 uses
-  %spec.select = select i1 %.not, i16 %i.j, i16 %3 ; 4 uses
+  %spec.select = select i1 %.not, i16 %i.j, i16 %3 ; 6 uses
   %i.k = icmp slt i32 %i.g, 1
   br i1 %i.k, label %_set_span.exit.thread54, label %bb.f
 
@@ -219,10 +219,10 @@ _set_span.exit.thread.thread:                     ; preds = %bb.f
 
 bb.g:                                             ; preds = %bb.f
   %i.n = zext i16 %spec.select.i to i64           ; 7 uses
-  %i.o = tail call ptr @slurm_xcalloc(i64 noundef %i.n, i64 noundef 4, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str.8, i32 noundef 2497, ptr noundef nonnull @__func__._set_span) #21 ; 9 uses
+  %i.o = tail call ptr @slurm_xcalloc(i64 noundef %i.n, i64 noundef 4, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str.8, i32 noundef 2497, ptr noundef nonnull @__func__._set_span) #21 ; 11 uses
   store ptr %i.o, ptr %i.a, align 8
   %.not85.i = icmp eq i16 %spec.select.i, 0
-  br i1 %.not85.i, label %.preheader.i.preheader, label %.preheader.us.i.preheader
+  br i1 %.not85.i, label %.preheader.i, label %.preheader.us.i.preheader
 
 .preheader.us.i.preheader:                        ; preds = %bb.g
   %min.iters.check = icmp ult i16 %spec.select.i, 4
@@ -281,6 +281,9 @@ bb.h:                                             ; preds = %._crit_edge.us.i
   %.not65.us.i = icmp eq i32 %i.x, 0
   br i1 %.not65.us.i, label %_set_span.exit.thread, label %bb.h
 
+.preheader.i:                                     ; preds = %bb.g, %.preheader.i
+  br label %.preheader.i
+
 .split78.us.i:                                    ; preds = %bb.h
   %i.z = udiv i32 %i.x, %i.l                      ; 3 uses
   %.recomposed = urem i32 %i.x, %i.l              ; 5 uses
@@ -312,9 +315,10 @@ scalar.ph116.preheader:                           ; preds = %.split78.us.i, %mid
   br label %scalar.ph116
 
 .loopexit:                                        ; preds = %scalar.ph116, %middle.block126
+  %4 = add nuw nsw i32 %.05174.us.i, 2            ; 3 uses
   %i.ad = mul i32 %i.z, %i.l                      ; 0 uses
   %.not6482.i = icmp eq i32 %.recomposed, 0
-  br i1 %.not6482.i, label %_set_span.exit, label %.lr.ph.i.preheader
+  br i1 %.not6482.i, label %_set_span.exit.thread.thread64, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.loopexit
   %i.ae = zext i32 %.recomposed to i64            ; 2 uses
@@ -339,7 +343,7 @@ vector.body133:                                   ; preds = %vector.body133, %ve
 
 middle.block137:                                  ; preds = %vector.body133
   %cmp.n138 = icmp eq i64 %n.vec132, %i.ae
-  br i1 %cmp.n138, label %_set_span.exit, label %.lr.ph.i.preheader141
+  br i1 %cmp.n138, label %_set_span.exit.thread.thread64, label %.lr.ph.i.preheader141
 
 .lr.ph.i.preheader141:                            ; preds = %.lr.ph.i.preheader, %middle.block137
   %indvars.iv101.i.ph = phi i64 [ 0, %.lr.ph.i.preheader ], [ %n.vec132, %middle.block137 ]
@@ -366,14 +370,7 @@ scalar.ph116:                                     ; preds = %scalar.ph116.prehea
   %indvars.iv.next102.i = add nuw nsw i64 %indvars.iv101.i, 1
   %i.aq = add nsw i32 %.15683.i, -1               ; 2 uses
   %.not64.i = icmp eq i32 %i.aq, 0
-  br i1 %.not64.i, label %_set_span.exit, label %.lr.ph.i, !llvm.loop !49
-
-.preheader.i.preheader:                           ; preds = %bb.g, %.preheader.i.preheader
-  br label %.preheader.i.preheader
-
-_set_span.exit:                                   ; preds = %.lr.ph.i, %middle.block137, %.loopexit
-  %4 = add nuw nsw i32 %.05174.us.i, 2
-  br label %_set_span.exit.thread.thread64
+  br i1 %.not64.i, label %_set_span.exit.thread.thread64, label %.lr.ph.i, !llvm.loop !49
 
 _set_span.exit.thread:                            ; preds = %._crit_edge.us.i
   %i.ar = icmp eq i32 %.05174.us.i, 0
@@ -381,10 +378,10 @@ _set_span.exit.thread:                            ; preds = %._crit_edge.us.i
   %spec.select69 = select i1 %i.ar, i16 %i.as, i16 %spec.select
   br label %_set_span.exit.thread.thread64
 
-_set_span.exit.thread.thread64:                   ; preds = %_set_span.exit, %_set_span.exit.thread, %_set_span.exit.thread.thread
-  %5 = phi ptr [ %i.o, %_set_span.exit ], [ %i.o, %_set_span.exit.thread ], [ null, %_set_span.exit.thread.thread ] ; 3 uses
-  %.053.i5262 = phi i32 [ %4, %_set_span.exit ], [ %i.y, %_set_span.exit.thread ], [ 1, %_set_span.exit.thread.thread ]
-  %6 = phi i16 [ %spec.select, %_set_span.exit ], [ %spec.select69, %_set_span.exit.thread ], [ %i.m, %_set_span.exit.thread.thread ] ; 3 uses
+_set_span.exit.thread.thread64:                   ; preds = %.lr.ph.i, %middle.block137, %_set_span.exit.thread, %.loopexit, %_set_span.exit.thread.thread
+  %5 = phi ptr [ %i.o, %.loopexit ], [ %i.o, %_set_span.exit.thread ], [ null, %_set_span.exit.thread.thread ], [ %i.o, %middle.block137 ], [ %i.o, %.lr.ph.i ] ; 3 uses
+  %.053.i.ph55 = phi i32 [ %4, %.loopexit ], [ %i.y, %_set_span.exit.thread ], [ 1, %_set_span.exit.thread.thread ], [ %4, %middle.block137 ], [ %4, %.lr.ph.i ]
+  %6 = phi i16 [ %spec.select, %.loopexit ], [ %spec.select69, %_set_span.exit.thread ], [ %i.m, %_set_span.exit.thread.thread ], [ %spec.select, %middle.block137 ], [ %spec.select, %.lr.ph.i ] ; 3 uses
   %i.at = zext i16 %6 to i64
   %i.au = tail call ptr @slurm_xcalloc(i64 noundef %i.at, i64 noundef 8, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str.8, i32 noundef 2566, ptr noundef nonnull @__func__.hostlist_split_treewidth) #21
   store ptr %i.au, ptr %1, align 8
@@ -495,7 +492,7 @@ bb.o:                                             ; preds = %.critedge2, %bb.n
   br label %_set_span.exit.thread54
 
 _set_span.exit.thread54:                          ; preds = %hostlist_count.exit, %hostlist_count.exit.thread, %.critedge
-  %.032 = phi i32 [ %.053.i5262, %.critedge ], [ -1, %hostlist_count.exit ], [ -1, %hostlist_count.exit.thread ]
+  %.032 = phi i32 [ %.053.i.ph55, %.critedge ], [ -1, %hostlist_count.exit.thread ], [ -1, %hostlist_count.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
   ret i32 %.032
 }
