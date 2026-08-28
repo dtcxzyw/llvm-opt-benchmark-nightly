@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %_ZNK2v88internal8co
   br i1 %i.ar, label %_ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit.i, label %bb.h
 
 _ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit.i: ; preds = %bb.g
-  %i.as = shl nsw i32 %.0.i, 3
+  %i.as = shl nuw nsw i32 %.0.i, 3
   br label %.sink.split.i
 
 bb.h:                                             ; preds = %bb.g
@@ -383,7 +383,7 @@ bb.x:                                             ; preds = %_ZNK2v88internal8co
   br i1 %i.dh, label %_ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit.i30, label %_ZN2v88internal8compiler12_GLOBAL__N_129AdjustStackPointerForTailCallEPNS1_11InstructionEPNS0_14MacroAssemblerEPNS1_7LinkageEPNS0_24OptimizedCompilationInfoEPNS1_16FrameAccessStateEib.exit36
 
 _ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit.i30: ; preds = %bb.x
-  %i.di = shl nsw i32 %.0.i24, 3
+  %i.di = shl nuw nsw i32 %.0.i24, 3
   %.sroa.0.0.insert.ext.i29 = zext nneg i32 %i.di to i64
   call void @_ZN2v88internal9Assembler23immediate_arithmetic_opEhNS0_8RegisterENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(408) %i.ck, i8 noundef zeroext 5, i8 4, i64 %.sroa.0.0.insert.ext.i29, i32 noundef 8) #18
   %i.dj = getelementptr inbounds nuw i8, ptr %i.cm, i64 12 ; 2 uses
@@ -460,7 +460,7 @@ bb.e:                                             ; preds = %_ZNK2v88internal8co
   br i1 %i.x, label %_ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit.i, label %bb.f
 
 _ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit.i: ; preds = %bb.e
-  %i.y = shl nsw i32 %.0.i, 3
+  %i.y = shl nuw nsw i32 %.0.i, 3
   br label %.sink.split.i
 
 bb.f:                                             ; preds = %bb.e
@@ -863,20 +863,21 @@ _ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.peel: ; preds
   br label %bb.i
 
 _ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratordeEv.exit.peel.next: ; preds = %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.peel, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit
-  %.0232 = phi i32 [ %i.ah, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit ], [ 1, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.peel ] ; 2 uses
+  %.0232 = phi i32 [ %i.ah, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit ], [ 1, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.peel ] ; 4 uses
   %.sroa.0154.0231 = phi i16 [ %i.aj, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit ], [ %i.z, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.peel ] ; 3 uses
   %i.ac = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.0154.0231, i1 true)
   %i.ad = trunc nuw nsw i16 %i.ac to i8           ; 2 uses
-  %5 = shl nsw i32 %.0232, 4                      ; 3 uses
-  %6 = icmp samesign ult i32 %5, 128              ; 3 uses
-  %.sroa.9.sroa.6.0.extract.shift = and i32 %5, 2147483392
-  %.sroa.4.0 = select i1 %6, i64 4456448, i64 8650752
-  %.sroa.9.sroa.6.sroa.0.0 = select i1 %6, i32 0, i32 %.sroa.9.sroa.6.0.extract.shift
-  %i.ae = select i1 %6, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 6 to ptr) ; 2 uses
-  %.sroa.9.sroa.0.0.insert.ext = and i32 %5, 240
+  %5 = icmp samesign ult i32 %.0232, 8            ; 3 uses
+  %6 = shl i32 %.0232, 4
+  %.sroa.9.sroa.6.0.extract.shift = and i32 %6, -256
+  %.sroa.4.0 = select i1 %5, i64 4456448, i64 8650752
+  %.sroa.9.sroa.6.sroa.0.0 = select i1 %5, i32 0, i32 %.sroa.9.sroa.6.0.extract.shift
+  %i.ae = select i1 %5, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 6 to ptr) ; 2 uses
+  %.sroa.9.sroa.0.0 = shl i32 %.0232, 4
+  %.sroa.9.sroa.0.0.insert.ext = and i32 %.sroa.9.sroa.0.0, 240
   %.sroa.9.sroa.0.0.insert.insert = or disjoint i32 %.sroa.9.sroa.6.sroa.0.0, %.sroa.9.sroa.0.0.insert.ext
-  %.sroa.9.0.insert.ext = zext nneg i32 %.sroa.9.sroa.0.0.insert.insert to i64
-  %.sroa.9.0.insert.shift = shl nuw nsw i64 %.sroa.9.0.insert.ext, 32
+  %.sroa.9.0.insert.ext = zext i32 %.sroa.9.sroa.0.0.insert.insert to i64
+  %.sroa.9.0.insert.shift = shl nuw i64 %.sroa.9.0.insert.ext, 32
   %.sroa.7.0.insert.insert = or disjoint i64 %.sroa.9.0.insert.shift, %.sroa.4.0
   %.sroa.4.0.insert.insert = or disjoint i64 %.sroa.7.0.insert.insert, 603979776 ; 2 uses
   %i.af = load i32, ptr @_ZN2v88internal11CpuFeatures10supported_E, align 4
@@ -1081,7 +1082,7 @@ bb.v:                                             ; preds = %bb.u
   unreachable
 
 bb.w:                                             ; preds = %bb.u
-  %i.dj = shl nsw i32 %i.dh, 3
+  %i.dj = shl nuw nsw i32 %i.dh, 3
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 208
   call void @_ZN2v88internal14MacroAssembler3RetEiNS0_8RegisterE(ptr noundef nonnull align 8 dereferenceable(436) %i.dk, i32 noundef %i.dj, i8 10) #18
   br label %bb.aa
@@ -1484,7 +1485,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.bv, label %bb.n, label %bb.v
 
 bb.n:                                             ; preds = %bb.m
-  %i.bw = shl nsw i32 %.0, 3                      ; 3 uses
+  %i.bw = shl nuw nsw i32 %.0, 3                  ; 3 uses
   %i.bx = icmp samesign ugt i32 %.0, 512
   br i1 %i.bx, label %bb.o, label %bb.v
 
@@ -1613,7 +1614,7 @@ bb.v:                                             ; preds = %bb.u, %bb.n, %bb.m
 
 _ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit: ; preds = %bb.v
   %i.ee = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %i.ef = shl nsw i32 %i.ec, 3
+  %i.ef = shl nuw nsw i32 %i.ec, 3
   %.sroa.0.0.insert.ext.i = zext nneg i32 %i.ef to i64
   call void @_ZN2v88internal9Assembler23immediate_arithmetic_opEhNS0_8RegisterENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(436) %i.ee, i8 noundef zeroext 5, i8 4, i64 %.sroa.0.0.insert.ext.i, i32 noundef 8) #18
   br label %bb.w
@@ -1650,20 +1651,21 @@ _ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.peel: ; preds
   br i1 %.not233.peel, label %.loopexit240, label %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratordeEv.exit.peel.next
 
 _ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratordeEv.exit.peel.next: ; preds = %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.peel, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit
-  %.082256 = phi i32 [ %i.ev, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit ], [ 1, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.peel ] ; 2 uses
+  %.082256 = phi i32 [ %i.ev, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit ], [ 1, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.peel ] ; 4 uses
   %.sroa.0143.0255 = phi i16 [ %i.ex, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit ], [ %i.ep, %_ZN2v88internal11RegListBaseINS0_11XMMRegisterEE8IteratorppEv.exit.peel ] ; 3 uses
   %i.eq = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.sroa.0143.0255, i1 true)
   %i.er = trunc nuw nsw i16 %i.eq to i8           ; 2 uses
-  %2 = shl nsw i32 %.082256, 4                    ; 3 uses
-  %3 = icmp samesign ult i32 %2, 128              ; 3 uses
-  %.sroa.9.sroa.6.0.extract.shift = and i32 %2, 2147483392
-  %.sroa.4.0 = select i1 %3, i64 4456448, i64 8650752
-  %.sroa.9.sroa.6.sroa.0.0 = select i1 %3, i32 0, i32 %.sroa.9.sroa.6.0.extract.shift
-  %i.es = select i1 %3, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 6 to ptr) ; 2 uses
-  %.sroa.9.sroa.0.0.insert.ext = and i32 %2, 240
+  %2 = icmp samesign ult i32 %.082256, 8          ; 3 uses
+  %3 = shl i32 %.082256, 4
+  %.sroa.9.sroa.6.0.extract.shift = and i32 %3, -256
+  %.sroa.4.0 = select i1 %2, i64 4456448, i64 8650752
+  %.sroa.9.sroa.6.sroa.0.0 = select i1 %2, i32 0, i32 %.sroa.9.sroa.6.0.extract.shift
+  %i.es = select i1 %2, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 6 to ptr) ; 2 uses
+  %.sroa.9.sroa.0.0 = shl i32 %.082256, 4
+  %.sroa.9.sroa.0.0.insert.ext = and i32 %.sroa.9.sroa.0.0, 240
   %.sroa.9.sroa.0.0.insert.insert = or disjoint i32 %.sroa.9.sroa.6.sroa.0.0, %.sroa.9.sroa.0.0.insert.ext
-  %.sroa.9.0.insert.ext = zext nneg i32 %.sroa.9.sroa.0.0.insert.insert to i64
-  %.sroa.9.0.insert.shift = shl nuw nsw i64 %.sroa.9.0.insert.ext, 32
+  %.sroa.9.0.insert.ext = zext i32 %.sroa.9.sroa.0.0.insert.insert to i64
+  %.sroa.9.0.insert.shift = shl nuw i64 %.sroa.9.0.insert.ext, 32
   %.sroa.7.0.insert.insert = or disjoint i64 %.sroa.9.0.insert.shift, %.sroa.4.0
   %.sroa.4.0.insert.insert332 = or disjoint i64 %.sroa.7.0.insert.insert, 603979776 ; 2 uses
   %i.et = load i32, ptr @_ZN2v88internal11CpuFeatures10supported_E, align 4
@@ -1719,7 +1721,7 @@ _ZN2v88internal11RegListBaseINS0_8RegisterEE15ReverseIteratorppEv.exit: ; preds 
 
 _ZN2v88internal14MacroAssembler18AllocateStackSpaceEi.exit130: ; preds = %.loopexit
   %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %i.fp = shl nsw i32 %i.fm, 3
+  %i.fp = shl nuw nsw i32 %i.fm, 3
   %.sroa.0.0.insert.ext.i129 = zext nneg i32 %i.fp to i64
   call void @_ZN2v88internal9Assembler23immediate_arithmetic_opEhNS0_8RegisterENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(436) %i.fo, i8 noundef zeroext 5, i8 4, i64 %.sroa.0.0.insert.ext.i129, i32 noundef 8) #18
   %.pre276 = load ptr, ptr %i.d, align 8

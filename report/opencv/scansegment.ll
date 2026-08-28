@@ -205,7 +205,7 @@ bb.ao:                                            ; preds = %bb.am, %bb.an
   %i.hx = sext i1 %i.hw to i32
   %i.hy = icmp sge i32 %i.hs, %.pre
   %i.hz = sext i1 %i.hy to i32
-  %i.ia = mul nsw i32 %i.gy, %.084364
+  %i.ia = mul nuw nsw i32 %i.gy, %.084364
   %i.ib = add nsw i32 %i.ia, %.083363
   %i.ic = sext i32 %i.ib to i64
   %i.id = getelementptr inbounds [16 x i8], ptr %i.fi, i64 %i.ic ; 4 uses
@@ -608,8 +608,8 @@ bb.f:                                             ; preds = %bb.e
 .preheader51:                                     ; preds = %.preheader51.lr.ph, %._crit_edge
   %i.v = phi i32 [ %i.hy, %._crit_edge ], [ %i.t, %.preheader51.lr.ph ] ; 3 uses
   %i.w = phi i32 [ %i.hz, %._crit_edge ], [ %i.t, %.preheader51.lr.ph ] ; 2 uses
-  %i.x = phi i32 [ %i.ia, %._crit_edge ], [ %i.t, %.preheader51.lr.ph ] ; 11 uses
-  %indvars.iv70 = phi i64 [ %indvars.iv.next71.pre-phi, %._crit_edge ], [ 0, %.preheader51.lr.ph ] ; 26 uses
+  %i.x = phi i32 [ %i.ia, %._crit_edge ], [ %i.t, %.preheader51.lr.ph ] ; 12 uses
+  %indvars.iv70 = phi i64 [ %indvars.iv.next71.pre-phi, %._crit_edge ], [ 0, %.preheader51.lr.ph ] ; 29 uses
   %i.y = icmp sgt i32 %i.x, 0
   br i1 %i.y, label %.preheader.lr.ph, label %.preheader51.._crit_edge_crit_edge
 
@@ -625,14 +625,12 @@ bb.f:                                             ; preds = %bb.e
   %i.ad = add nsw i64 %indvars.iv70, -1           ; 3 uses
   %i.ae = icmp sgt i64 %indvars.iv70, 0           ; 3 uses
   %i.af = icmp sgt i64 %indvars.iv70, 0           ; 3 uses
-  %i.ag = add nuw nsw i64 %indvars.iv70, 1        ; 17 uses
-  %6 = trunc nuw nsw i64 %i.ag to i32             ; 3 uses
-  %7 = trunc nuw nsw i64 %i.ag to i32             ; 3 uses
+  %i.ag = add nuw nsw i64 %indvars.iv70, 1        ; 21 uses
   %i.ah = trunc nuw nsw i64 %i.ag to i32          ; 2 uses
   br i1 %2, label %.preheader.us.peel, label %.preheader
 
 .preheader.us.peel:                               ; preds = %.preheader.lr.ph
-  %i.ai = mul nsw i32 %i.x, %i.z                  ; 2 uses
+  %i.ai = mul nuw nsw i32 %i.x, %i.z
   %i.aj = sext i32 %i.ai to i64                   ; 5 uses
   br i1 %i.ae, label %bb.g, label %bb.i
 
@@ -644,7 +642,7 @@ bb.g:                                             ; preds = %.preheader.us.peel
 
 bb.h:                                             ; preds = %bb.g
   %i.am = trunc nuw nsw i64 %i.ad to i32
-  %i.an = mul nsw i32 %i.x, %i.am
+  %i.an = mul nuw nsw i32 %i.x, %i.am
   %i.ao = zext i32 %i.an to i64
   %i.ap = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
   %i.aq = getelementptr inbounds [4 x i8], ptr %i.ap, i64 %i.aj
@@ -669,7 +667,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.ay = trunc nuw nsw i64 %i.ad to i32
-  %i.az = mul nsw i32 %i.x, %i.ay
+  %i.az = mul nuw nsw i32 %i.x, %i.ay
   %i.ba = zext i32 %i.az to i64
   %i.bb = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
   %i.bc = getelementptr inbounds [4 x i8], ptr %i.bb, i64 %i.aj
@@ -694,13 +692,14 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.bk, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.bl = zext i32 %i.ai to i64
+  %i.bl = zext nneg i32 %i.x to i64
+  %6 = mul nuw nsw i64 %indvars.iv70, %i.bl
   %i.bm = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
   %i.bn = getelementptr inbounds [4 x i8], ptr %i.bm, i64 %i.aj
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !63
-  %8 = getelementptr inbounds nuw i8, ptr %i.bm, i64 4
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %i.bl
-  %i.bp = load i32, ptr %9, align 4, !tbaa !63
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %6
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %i.bp = load i32, ptr %8, align 4, !tbaa !63
   %.not.us.us.4.peel = icmp ne i32 %i.bo, %i.bp
   %i.bq = zext i1 %.not.us.us.4.peel to i32
   %spec.select.4.peel = add nuw nsw i32 %.2.us.us.3.peel, %i.bq
@@ -718,14 +717,14 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.bt, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  %10 = mul nsw i32 %i.x, %6
-  %11 = zext i32 %10 to i64
+  %9 = zext nneg i32 %i.x to i64
+  %10 = mul nuw nsw i64 %i.ag, %9
   %i.bu = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
   %i.bv = getelementptr inbounds [4 x i8], ptr %i.bu, i64 %i.aj
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !63
-  %12 = getelementptr inbounds nuw i8, ptr %i.bu, i64 4
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %11
-  %i.bx = load i32, ptr %13, align 4, !tbaa !63
+  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.bu, i64 %10
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 4
+  %i.bx = load i32, ptr %12, align 4, !tbaa !63
   %.not.us.us.5.peel = icmp ne i32 %i.bw, %i.bx
   %i.by = zext i1 %.not.us.us.5.peel to i32
   %spec.select.5.peel = add nuw nsw i32 %.2.us.us.4.peel, %i.by
@@ -739,12 +738,12 @@ bb.r:                                             ; preds = %bb.o, %bb.p, %bb.q
   br i1 %i.cb, label %bb.s, label %.split.us.us.peel
 
 bb.s:                                             ; preds = %bb.r
-  %14 = mul nsw i32 %i.x, %7
-  %15 = zext i32 %14 to i64
+  %13 = zext nneg i32 %i.x to i64
+  %14 = mul nuw nsw i64 %i.ag, %13
   %i.cc = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
   %i.cd = getelementptr inbounds [4 x i8], ptr %i.cc, i64 %i.aj
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !63
-  %i.cf = getelementptr inbounds nuw [4 x i8], ptr %i.cc, i64 %15
+  %i.cf = getelementptr inbounds nuw [4 x i8], ptr %i.cc, i64 %14
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !63
   %.not.us.us.6.peel = icmp ne i32 %i.ce, %i.cg
   %i.ch = zext i1 %.not.us.us.6.peel to i32
@@ -780,8 +779,8 @@ bb.t:                                             ; preds = %_ZN2cv3Mat3ptrIhEEP
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader.peel.newph, %bb.u
   %indvars.iv67 = phi i64 [ %indvars.iv.next68, %bb.u ], [ 1, %.preheader.us.preheader.peel.newph ] ; 11 uses
-  %i.cs = phi i32 [ %i.dh, %bb.u ], [ %i.co, %.preheader.us.preheader.peel.newph ] ; 16 uses
-  %i.ct = mul nsw i32 %i.cs, %i.z                 ; 3 uses
+  %i.cs = phi i32 [ %i.dh, %bb.u ], [ %i.co, %.preheader.us.preheader.peel.newph ] ; 17 uses
+  %i.ct = mul nuw nsw i32 %i.cs, %i.z             ; 2 uses
   %i.cu = trunc nuw nsw i64 %indvars.iv67 to i32
   %i.cv = add nsw i32 %i.ct, %i.cu
   %i.cw = sext i32 %i.cv to i64                   ; 8 uses
@@ -845,7 +844,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not111, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.ea = mul nsw i32 %i.cs, %i.ac
+  %i.ea = mul nuw nsw i32 %i.cs, %i.ac
   %i.eb = trunc nuw nsw i64 %i.cx to i32
   %i.ec = add nuw nsw i32 %i.ea, %i.eb
   %i.ed = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
@@ -873,7 +872,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %.not112, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.eo = mul nsw i32 %i.cs, %i.cq
+  %i.eo = mul nuw nsw i32 %i.cs, %i.cq
   %i.ep = zext i32 %i.eo to i64
   %i.eq = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
   %i.er = getelementptr inbounds [4 x i8], ptr %i.eq, i64 %i.cw
@@ -901,7 +900,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %.not113, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.fb = mul nsw i32 %i.cs, %i.cr
+  %i.fb = mul nuw nsw i32 %i.cs, %i.cr
   %i.fc = zext i32 %i.fb to i64
   %i.fd = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
   %i.fe = getelementptr inbounds [4 x i8], ptr %i.fd, i64 %i.cw
@@ -927,12 +926,13 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.fo, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.fp = zext i32 %i.ct to i64
+  %i.fp = zext i32 %i.cs to i64
+  %15 = mul nuw nsw i64 %indvars.iv70, %i.fp
   %i.fq = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
   %i.fr = getelementptr inbounds [4 x i8], ptr %i.fq, i64 %i.cw
   %i.fs = load i32, ptr %i.fr, align 4, !tbaa !63
-  %i.ft = getelementptr inbounds nuw [4 x i8], ptr %i.fq, i64 %indvars.iv.next68
-  %i.fu = getelementptr inbounds nuw [4 x i8], ptr %i.ft, i64 %i.fp
+  %i.ft = getelementptr inbounds nuw [4 x i8], ptr %i.fq, i64 %15
+  %i.fu = getelementptr inbounds nuw [4 x i8], ptr %i.ft, i64 %indvars.iv.next68
   %i.fv = load i32, ptr %i.fu, align 4, !tbaa !63
   %.not.us.us.4 = icmp ne i32 %i.fs, %i.fv
   %i.fw = zext i1 %.not.us.us.4 to i32
@@ -952,13 +952,13 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %i.gb, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
-  %16 = mul nsw i32 %i.cs, %6
-  %17 = zext i32 %16 to i64
+  %16 = zext i32 %i.cs to i64
+  %17 = mul nuw nsw i64 %i.ag, %16
   %i.gc = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
   %i.gd = getelementptr inbounds [4 x i8], ptr %i.gc, i64 %i.cw
   %i.ge = load i32, ptr %i.gd, align 4, !tbaa !63
-  %i.gf = getelementptr inbounds nuw [4 x i8], ptr %i.gc, i64 %indvars.iv.next68
-  %i.gg = getelementptr inbounds nuw [4 x i8], ptr %i.gf, i64 %17
+  %i.gf = getelementptr inbounds nuw [4 x i8], ptr %i.gc, i64 %17
+  %i.gg = getelementptr inbounds nuw [4 x i8], ptr %i.gf, i64 %indvars.iv.next68
   %i.gh = load i32, ptr %i.gg, align 4, !tbaa !63
   %.not.us.us.5 = icmp ne i32 %i.ge, %i.gh
   %i.gi = zext i1 %.not.us.us.5 to i32
@@ -978,13 +978,13 @@ bb.an:                                            ; preds = %bb.am
   br i1 %i.gn, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an
-  %18 = mul nsw i32 %i.cs, %7
-  %19 = zext i32 %18 to i64
+  %18 = zext i32 %i.cs to i64
+  %19 = mul nuw nsw i64 %i.ag, %18
   %i.go = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
   %i.gp = getelementptr inbounds [4 x i8], ptr %i.go, i64 %i.cw
   %i.gq = load i32, ptr %i.gp, align 4, !tbaa !63
-  %i.gr = getelementptr inbounds nuw [4 x i8], ptr %i.go, i64 %indvars.iv67
-  %i.gs = getelementptr inbounds nuw [4 x i8], ptr %i.gr, i64 %19
+  %i.gr = getelementptr inbounds nuw [4 x i8], ptr %i.go, i64 %19
+  %i.gs = getelementptr inbounds nuw [4 x i8], ptr %i.gr, i64 %indvars.iv67
   %i.gt = load i32, ptr %i.gs, align 4, !tbaa !63
   %.not.us.us.6 = icmp ne i32 %i.gq, %i.gt
   %i.gu = zext i1 %.not.us.us.6 to i32
@@ -1004,7 +1004,7 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %i.gy, label %bb.ar, label %.split.us.us
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.gz = mul nsw i32 %i.cs, %i.ah
+  %i.gz = mul nuw nsw i32 %i.cs, %i.ah
   %i.ha = trunc nuw nsw i64 %i.cx to i32
   %i.hb = add nuw nsw i32 %i.gz, %i.ha
   %i.hc = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
@@ -1041,8 +1041,8 @@ bb.as:                                            ; preds = %bb.e, %bb.d
   %i.hl = phi i32 [ %i.nr, %bb.br ], [ %i.v, %.preheader.lr.ph ]
   %i.hm = phi i32 [ %i.ns, %bb.br ], [ %i.w, %.preheader.lr.ph ]
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.br ], [ 0, %.preheader.lr.ph ] ; 14 uses
-  %i.hn = phi i32 [ %i.ns, %bb.br ], [ %i.x, %.preheader.lr.ph ] ; 15 uses
-  %i.ho = mul nsw i32 %i.hn, %i.z                 ; 3 uses
+  %i.hn = phi i32 [ %i.ns, %bb.br ], [ %i.x, %.preheader.lr.ph ] ; 16 uses
+  %i.ho = mul nuw nsw i32 %i.hn, %i.z             ; 2 uses
   %i.hp = trunc nuw nsw i64 %indvars.iv to i32
   %i.hq = add nsw i32 %i.ho, %i.hp
   %i.hr = sext i32 %i.hq to i64                   ; 8 uses
@@ -1114,7 +1114,7 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %.not105, label %bb.az, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  %i.iz = mul nsw i32 %i.hn, %i.ac
+  %i.iz = mul nuw nsw i32 %i.hn, %i.ac
   %i.ja = trunc nuw nsw i64 %i.hx to i32
   %i.jb = add nuw nsw i32 %i.iz, %i.ja
   %i.jc = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
@@ -1155,7 +1155,7 @@ bb.ba:                                            ; preds = %bb.az
 
 bb.bb:                                            ; preds = %bb.ba
   %i.js = trunc nuw nsw i64 %i.jn to i32
-  %i.jt = mul nsw i32 %i.hn, %i.js
+  %i.jt = mul nuw nsw i32 %i.hn, %i.js
   %i.ju = zext i32 %i.jt to i64
   %i.jv = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
   %i.jw = getelementptr inbounds [4 x i8], ptr %i.jv, i64 %i.hr
@@ -1195,7 +1195,7 @@ bb.bd:                                            ; preds = %bb.bc
 
 bb.be:                                            ; preds = %bb.bd
   %i.kk = trunc nuw nsw i64 %i.jn to i32
-  %i.kl = mul nsw i32 %i.hn, %i.kk
+  %i.kl = mul nuw nsw i32 %i.hn, %i.kk
   %i.km = zext i32 %i.kl to i64
   %i.kn = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
   %i.ko = getelementptr inbounds [4 x i8], ptr %i.kn, i64 %i.hr
@@ -1232,12 +1232,13 @@ bb.bg:                                            ; preds = %bb.bf
   br i1 %i.lc, label %bb.bh, label %bb.bi
 
 bb.bh:                                            ; preds = %bb.bg
-  %i.ld = zext i32 %i.ho to i64
+  %i.ld = zext i32 %i.hn to i64
+  %20 = mul nuw nsw i64 %indvars.iv70, %i.ld
   %i.le = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
   %i.lf = getelementptr inbounds [4 x i8], ptr %i.le, i64 %i.hr
   %i.lg = load i32, ptr %i.lf, align 4, !tbaa !63
-  %i.lh = getelementptr inbounds nuw [4 x i8], ptr %i.le, i64 %indvars.iv.next
-  %i.li = getelementptr inbounds nuw [4 x i8], ptr %i.lh, i64 %i.ld
+  %i.lh = getelementptr inbounds nuw [4 x i8], ptr %i.le, i64 %20
+  %i.li = getelementptr inbounds nuw [4 x i8], ptr %i.lh, i64 %indvars.iv.next
   %i.lj = load i32, ptr %i.li, align 4, !tbaa !63
   %.not.4 = icmp eq i32 %i.lg, %i.lj
   br i1 %.not.4, label %bb.bi, label %_ZN2cv3Mat3ptrIhEEPT_ii.exit.4
@@ -1268,13 +1269,13 @@ bb.bj:                                            ; preds = %bb.bi
   br i1 %i.lt, label %bb.bk, label %bb.bl
 
 bb.bk:                                            ; preds = %bb.bj
-  %20 = mul nsw i32 %i.hn, %6
-  %21 = zext i32 %20 to i64
+  %21 = zext i32 %i.hn to i64
+  %22 = mul nuw nsw i64 %i.ag, %21
   %i.lu = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
   %i.lv = getelementptr inbounds [4 x i8], ptr %i.lu, i64 %i.hr
   %i.lw = load i32, ptr %i.lv, align 4, !tbaa !63
-  %i.lx = getelementptr inbounds nuw [4 x i8], ptr %i.lu, i64 %indvars.iv.next
-  %i.ly = getelementptr inbounds nuw [4 x i8], ptr %i.lx, i64 %21
+  %i.lx = getelementptr inbounds nuw [4 x i8], ptr %i.lu, i64 %22
+  %i.ly = getelementptr inbounds nuw [4 x i8], ptr %i.lx, i64 %indvars.iv.next
   %i.lz = load i32, ptr %i.ly, align 4, !tbaa !63
   %.not.5 = icmp eq i32 %i.lw, %i.lz
   br i1 %.not.5, label %bb.bl, label %_ZN2cv3Mat3ptrIhEEPT_ii.exit.5
@@ -1305,13 +1306,13 @@ bb.bm:                                            ; preds = %bb.bl
   br i1 %i.mj, label %bb.bn, label %bb.bo
 
 bb.bn:                                            ; preds = %bb.bm
-  %22 = mul nsw i32 %i.hn, %7
-  %23 = zext i32 %22 to i64
+  %23 = zext i32 %i.hn to i64
+  %24 = mul nuw nsw i64 %i.ag, %23
   %i.mk = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses
   %i.ml = getelementptr inbounds [4 x i8], ptr %i.mk, i64 %i.hr
   %i.mm = load i32, ptr %i.ml, align 4, !tbaa !63
-  %i.mn = getelementptr inbounds nuw [4 x i8], ptr %i.mk, i64 %indvars.iv
-  %i.mo = getelementptr inbounds nuw [4 x i8], ptr %i.mn, i64 %23
+  %i.mn = getelementptr inbounds nuw [4 x i8], ptr %i.mk, i64 %24
+  %i.mo = getelementptr inbounds nuw [4 x i8], ptr %i.mn, i64 %indvars.iv
   %i.mp = load i32, ptr %i.mo, align 4, !tbaa !63
   %.not.6 = icmp eq i32 %i.mm, %i.mp
   br i1 %.not.6, label %bb.bo, label %_ZN2cv3Mat3ptrIhEEPT_ii.exit.6
@@ -1343,7 +1344,7 @@ bb.bp:                                            ; preds = %bb.bo
   br i1 %i.my, label %bb.bq, label %.split
 
 bb.bq:                                            ; preds = %bb.bp
-  %i.mz = mul nsw i32 %i.hn, %i.ah
+  %i.mz = mul nuw nsw i32 %i.hn, %i.ah
   %i.na = trunc nuw nsw i64 %i.hx to i32
   %i.nb = add nuw nsw i32 %i.mz, %i.na
   %i.nc = load ptr, ptr %i.o, align 8, !tbaa !181 ; 2 uses

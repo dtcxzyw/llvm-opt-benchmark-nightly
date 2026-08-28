@@ -204,7 +204,7 @@ select.unfold.thread.i.i:                         ; preds = %bb.ae
 
 iter.check:                                       ; preds = %._crit_edge.i.i
   %wide.trip.count.i.i = zext nneg i32 %i.da to i64 ; 6 uses
-  %min.iters.check = icmp ult i32 %.087169.i.i, 9
+  %min.iters.check = icmp ult i32 %.087169.i.i, 5
   br i1 %min.iters.check, label %.lr.ph178.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
@@ -212,7 +212,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check568, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.db = and i64 %wide.trip.count.i.i, 8
+  %i.db = and i64 %wide.trip.count.i.i, 12
   %n.vec = and i64 %wide.trip.count.i.i, 2147483632 ; 5 uses
   %i.dc = getelementptr i8, ptr %.0100165.i.i, i64 %n.vec
   %broadcast.splatinsert = insertelement <16 x i64> poison, i64 %.2.i.i, i64 0
@@ -225,7 +225,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep = getelementptr i8, ptr %.0100165.i.i, i64 %index
   %i.dd = shl nuw nsw <16 x i64> %vec.ind, splat (i64 3)
   %i.de = sub nsw <16 x i64> splat (i64 24), %i.dd
-  %i.df = lshr <16 x i64> %broadcast.splat, %i.de
+  %11 = and <16 x i64> %i.de, splat (i64 4294967288)
+  %i.df = lshr <16 x i64> %broadcast.splat, %11
   %i.dg = trunc <16 x i64> %i.df to <16 x i8>
   store <16 x i8> %i.dg, ptr %next.gep, align 1, !tbaa !31
   %index.next = add nuw i64 %index, 16            ; 2 uses
@@ -243,26 +244,27 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
-  %n.vec569 = and i64 %wide.trip.count.i.i, 2147483640 ; 4 uses
+  %n.vec569 = and i64 %wide.trip.count.i.i, 2147483644 ; 4 uses
   %i.di = getelementptr i8, ptr %.0100165.i.i, i64 %n.vec569
-  %broadcast.splatinsert570 = insertelement <8 x i64> poison, i64 %.2.i.i, i64 0
-  %broadcast.splat571 = shufflevector <8 x i64> %broadcast.splatinsert570, <8 x i64> poison, <8 x i32> zeroinitializer
-  %broadcast.splatinsert572 = insertelement <8 x i64> poison, i64 %vec.epilog.resume.val, i64 0
-  %broadcast.splat573 = shufflevector <8 x i64> %broadcast.splatinsert572, <8 x i64> poison, <8 x i32> zeroinitializer
-  %induction = or disjoint <8 x i64> %broadcast.splat573, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7>
+  %broadcast.splatinsert570 = insertelement <4 x i64> poison, i64 %.2.i.i, i64 0
+  %broadcast.splat571 = shufflevector <4 x i64> %broadcast.splatinsert570, <4 x i64> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert572 = insertelement <4 x i64> poison, i64 %vec.epilog.resume.val, i64 0
+  %broadcast.splat573 = shufflevector <4 x i64> %broadcast.splatinsert572, <4 x i64> poison, <4 x i32> zeroinitializer
+  %induction = or disjoint <4 x i64> %broadcast.splat573, <i64 0, i64 1, i64 2, i64 3>
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index574 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next577, %vec.epilog.vector.body ] ; 2 uses
-  %vec.ind575 = phi <8 x i64> [ %induction, %vec.epilog.ph ], [ %vec.ind.next578, %vec.epilog.vector.body ] ; 2 uses
+  %vec.ind575 = phi <4 x i64> [ %induction, %vec.epilog.ph ], [ %vec.ind.next578, %vec.epilog.vector.body ] ; 2 uses
   %next.gep576 = getelementptr i8, ptr %.0100165.i.i, i64 %index574
-  %11 = shl nuw nsw <8 x i64> %vec.ind575, splat (i64 3)
-  %12 = sub nsw <8 x i64> splat (i64 24), %11
-  %13 = lshr <8 x i64> %broadcast.splat571, %12
-  %14 = trunc <8 x i64> %13 to <8 x i8>
-  store <8 x i8> %14, ptr %next.gep576, align 1, !tbaa !31
-  %index.next577 = add nuw i64 %index574, 8       ; 2 uses
-  %vec.ind.next578 = add nuw nsw <8 x i64> %vec.ind575, splat (i64 8)
+  %12 = shl nuw nsw <4 x i64> %vec.ind575, splat (i64 3)
+  %13 = sub nsw <4 x i64> splat (i64 24), %12
+  %14 = and <4 x i64> %13, splat (i64 4294967288)
+  %15 = lshr <4 x i64> %broadcast.splat571, %14
+  %16 = trunc <4 x i64> %15 to <4 x i8>
+  store <4 x i8> %16, ptr %next.gep576, align 1, !tbaa !31
+  %index.next577 = add nuw i64 %index574, 4       ; 2 uses
+  %vec.ind.next578 = add nuw nsw <4 x i64> %vec.ind575, splat (i64 4)
   %i.dj = icmp eq i64 %index.next577, %n.vec569
   br i1 %i.dj, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !38
 
@@ -280,7 +282,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %.1101175.i.i = phi ptr [ %i.do, %.lr.ph178.i.i ], [ %.1101175.i.i.ph, %.lr.ph178.i.i.preheader ] ; 2 uses
   %i.dk = shl nuw nsw i64 %indvars.iv.i.i, 3
   %i.dl = sub nsw i64 24, %i.dk
-  %i.dm = lshr i64 %.2.i.i, %i.dl
+  %17 = and i64 %i.dl, 4294967288
+  %i.dm = lshr i64 %.2.i.i, %17
   %i.dn = trunc i64 %i.dm to i8
   %i.do = getelementptr inbounds nuw i8, ptr %.1101175.i.i, i64 1
   store i8 %i.dn, ptr %.1101175.i.i, align 1, !tbaa !31
@@ -683,7 +686,7 @@ attributes #14 = { nounwind willreturn memory(read) }
 !34 = distinct !{!34, !35, !36}
 !35 = !{!"llvm.loop.isvectorized", i32 1}
 !36 = !{!"llvm.loop.unroll.runtime.disable"}
-!37 = !{!"branch_weights", i32 8, i32 8}
+!37 = !{!"branch_weights", i32 4, i32 12}
 !38 = distinct !{!38, !35, !36}
 !39 = distinct !{!39, !36, !35}
 !40 = !{!41, !41, i64 0}
