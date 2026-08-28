@@ -205,8 +205,8 @@ define hidden void @_ZN4anki9scheduler4fsrs12memory_state20get_last_revlog_info1
 "_ZN4core4cell16RefCell$LT$T$GT$10borrow_mut17he96c448d6f220bfcE.exit.i.lr.ph.i":
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 3 uses
-  %.sroa.5.i = alloca i64, align 8                ; 12 uses
-  %.sroa.14.i = alloca i64, align 8               ; 6 uses
+  %.sroa.5.i = alloca [8 x i8], align 8           ; 12 uses
+  %.sroa.14.i = alloca [8 x i8], align 8          ; 6 uses
   %i.c = alloca [120 x i8], align 8               ; 25 uses
   %i.d = alloca [48 x i8], align 8                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
@@ -247,7 +247,6 @@ define hidden void @_ZN4anki9scheduler4fsrs12memory_state20get_last_revlog_info1
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 72 ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 88
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 4 uses
-  %3 = ptrtoint ptr %i.c to i64
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 20
@@ -407,7 +406,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br label %"_ZN106_$LT$itertools..groupbylazy..Groups$LT$K$C$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next28_$u7b$$u7b$closure$u7d$$u7d$17h6a335774b5adb2dbE.exit.i.i"
 
 "_ZN106_$LT$itertools..groupbylazy..Groups$LT$K$C$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next28_$u7b$$u7b$closure$u7d$$u7d$17h6a335774b5adb2dbE.exit.i.i": ; preds = %bb.r, %bb.o
-  store i64 %3, ptr %.sroa.5.i, align 8, !alias.scope !1101, !noalias !1130
+  store ptr %i.c, ptr %.sroa.5.i, align 8, !alias.scope !1101, !noalias !1130
   br label %"_ZN106_$LT$itertools..groupbylazy..Groups$LT$K$C$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h74e634cbead1d58bE.exit.i"
 
 .loopexit.i:                                      ; preds = %bb.l, %bb.f
@@ -435,34 +434,33 @@ bb.s:                                             ; preds = %.loopexit.split-lp.
   %i.bl = load i64, ptr %i.c, align 8, !noalias !1109, !noundef !4
   %i.bm = add i64 %i.bl, 1
   store i64 %i.bm, ptr %i.c, align 8, !noalias !1109
-  %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.8..i = load i64, ptr %.sroa.5.i, align 8, !noalias !1131, !noundef !4 ; 2 uses
-  %4 = inttoptr i64 %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.8..i to ptr ; 26 uses
-  %.not.i = icmp eq i64 %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.8..i, 0
+  %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i = load ptr, ptr %.sroa.5.i, align 8, !noalias !1131 ; 27 uses
+  %.not.i = icmp eq ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, null
   br i1 %.not.i, label %bb.be, label %bb.t
 
 bb.t:                                             ; preds = %"_ZN106_$LT$itertools..groupbylazy..Groups$LT$K$C$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h74e634cbead1d58bE.exit.i"
   %.sroa.14.i.0..sroa.14.i.0..sroa.14.i.0..sroa.14.0..sroa.14.0..sroa.14.0.copyload.i = load i64, ptr %.sroa.14.i, align 8, !noalias !1131 ; 2 uses
   %i.bn = inttoptr i64 %.sroa.14.i.0..sroa.14.i.0..sroa.14.i.0..sroa.14.0..sroa.14.0..sroa.14.0.copyload.i to ptr
-  %i.bo = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 8 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %4, i64 80 ; 2 uses
-  %i.bq = getelementptr inbounds nuw i8, ptr %4, i64 72 ; 3 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %4, i64 104 ; 5 uses
-  %i.bs = getelementptr inbounds nuw i8, ptr %4, i64 40 ; 2 uses
-  %i.bt = getelementptr inbounds nuw i8, ptr %4, i64 88 ; 2 uses
-  %i.bu = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 5 uses
-  %i.bv = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 4 uses
-  %i.bw = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 2 uses
-  %i.bx = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, i64 8 ; 8 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, i64 80 ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, i64 72 ; 3 uses
+  %i.br = getelementptr inbounds nuw i8, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, i64 104 ; 5 uses
+  %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, i64 40 ; 2 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, i64 88 ; 2 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, i64 64 ; 5 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, i64 48 ; 4 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, i64 56 ; 2 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, i64 16 ; 4 uses
   %.not.peel.i.i.i = icmp eq i64 %.sroa.14.i.0..sroa.14.i.0..sroa.14.i.0..sroa.14.0..sroa.14.0..sroa.14.0.copyload.i, 0
   br i1 %.not.peel.i.i.i, label %bb.u, label %.thread.peel.i.i.i
 
 bb.u:                                             ; preds = %bb.t
-  %i.by = load i64, ptr %4, align 8, !noalias !1132, !noundef !4
+  %i.by = load i64, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, align 8, !noalias !1132, !noundef !4
   %i.bz = icmp eq i64 %i.by, 0
   br i1 %i.bz, label %"_ZN4core4cell16RefCell$LT$T$GT$10borrow_mut17he96c448d6f220bfcE.exit.i.peel.i.i.i", label %.loopexit81.i.i.i, !prof !125
 
 "_ZN4core4cell16RefCell$LT$T$GT$10borrow_mut17he96c448d6f220bfcE.exit.i.peel.i.i.i": ; preds = %bb.u
-  store i64 -1, ptr %4, align 8, !noalias !1132
+  store i64 -1, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, align 8, !noalias !1132
   %i.ca = load i64, ptr %i.bp, align 8, !alias.scope !1139, !noalias !1142, !noundef !4
   %i.cb = icmp ult i64 %i.w, %i.ca
   br i1 %i.cb, label %.loopexit.thread.i.i.i, label %bb.v
@@ -528,7 +526,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 .thread9.peel.i.i.i:                              ; preds = %bb.ac, %bb.aa
   %.sroa.0.0.i.i.ph.peel.i.i.i = phi ptr [ %i.cp, %bb.aa ], [ %i.cq, %bb.ac ]
-  store i64 0, ptr %4, align 8, !noalias !1142
+  store i64 0, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, align 8, !noalias !1142
   br label %.thread.peel.i.i.i
 
 bb.ad:                                            ; preds = %bb.y, %bb.v
@@ -537,9 +535,9 @@ bb.ad:                                            ; preds = %bb.y, %bb.v
 
 bb.ae:                                            ; preds = %bb.ad, %bb.x
   %.sroa.0.0.i.i.peel.i.i.i = phi ptr [ %i.da, %bb.ad ], [ %i.ch, %bb.x ] ; 2 uses
-  %i.db = load i64, ptr %4, align 8, !noalias !1142, !noundef !4
+  %i.db = load i64, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, align 8, !noalias !1142, !noundef !4
   %i.dc = add i64 %i.db, 1                        ; 2 uses
-  store i64 %i.dc, ptr %4, align 8, !noalias !1142
+  store i64 %i.dc, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, align 8, !noalias !1142
   %.not8.peel.i.i.i = icmp eq ptr %.sroa.0.0.i.i.peel.i.i.i, null
   br i1 %.not8.peel.i.i.i, label %.loopexit.i.i.i, label %.thread.peel.i.i.i
 
@@ -578,7 +576,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   %.sroa.01.1.peel.i.i.i = phi i32 [ 0, %bb.ag ], [ %.11.peel.i.i.i, %bb.ah ], [ 0, %.thread.peel.i.i.i ]
   %.sroa.4.1.peel.i.i.i = phi i64 [ undef, %bb.ag ], [ %i.dj, %bb.ah ], [ undef, %.thread.peel.i.i.i ]
   %.sroa.0.1.peel.i.i.i = phi i64 [ 0, %bb.ag ], [ 1, %bb.ah ], [ 0, %.thread.peel.i.i.i ]
-  %i.do = load i64, ptr %4, align 8, !noalias !1132, !noundef !4
+  %i.do = load i64, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, align 8, !noalias !1132, !noundef !4
   %i.dp = icmp eq i64 %i.do, 0
   br i1 %i.dp, label %"_ZN4core4cell16RefCell$LT$T$GT$10borrow_mut17he96c448d6f220bfcE.exit.i.i.i.i", label %.loopexit81.i.i.i, !prof !1151
 
@@ -594,7 +592,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   %.sroa.4.0.i27.i.i = phi i64 [ %.sroa.4.1.i.i.i, %.thread.i5.i ], [ %.sroa.4.1.peel.i.i.i, %.peel.next.i.i.i ] ; 9 uses
   %.sroa.01.0.i25.i.i = phi i32 [ %.sroa.01.1.i.i.i, %.thread.i5.i ], [ %.sroa.01.1.peel.i.i.i, %.peel.next.i.i.i ] ; 9 uses
   %.sroa.5.0.i23.i.i = phi i32 [ %.sroa.5.1.i.i.i, %.thread.i5.i ], [ %.sroa.5.1.peel.i.i.i, %.peel.next.i.i.i ] ; 9 uses
-  store i64 -1, ptr %4, align 8, !noalias !1132
+  store i64 -1, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, align 8, !noalias !1132
   %i.dq = load i64, ptr %i.bp, align 8, !alias.scope !1139, !noalias !1142, !noundef !4
   %i.dr = icmp ult i64 %i.w, %i.dq
   br i1 %i.dr, label %.loopexit.thread.i.i.i, label %bb.ai
@@ -692,9 +690,9 @@ bb.aq:                                            ; preds = %bb.ak, %bb.ai
 
 bb.ar:                                            ; preds = %.loopexit.split-lp.i.i.i, %.loopexit82.i.i.i
   %lpad.phi.i.i.i = phi { ptr, i32 } [ %lpad.loopexit.i.i.i, %.loopexit82.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i, %.loopexit.split-lp.i.i.i ]
-  %i.er = load i64, ptr %4, align 8, !noalias !1142, !noundef !4
+  %i.er = load i64, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, align 8, !noalias !1142, !noundef !4
   %i.es = add i64 %i.er, 1                        ; 2 uses
-  store i64 %i.es, ptr %4, align 8, !noalias !1142
+  store i64 %i.es, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, align 8, !noalias !1142
   br label %.body.i.i.i
 
 .loopexit.thread.i.i.i:                           ; preds = %.thread.i.i.i.i, %bb.al, %"_ZN4core4cell16RefCell$LT$T$GT$10borrow_mut17he96c448d6f220bfcE.exit.i.i.i.i", %.loopexit84.i.i.i, %.loopexit83.i.i.i, %bb.z, %.thread.i.peel.i.i.i, %"_ZN4core4cell16RefCell$LT$T$GT$10borrow_mut17he96c448d6f220bfcE.exit.i.peel.i.i.i"
@@ -702,26 +700,26 @@ bb.ar:                                            ; preds = %.loopexit.split-lp.
   %.sroa.01.071.i.i.i = phi i32 [ %.sroa.01.0.lcssa67.i.i.i, %.loopexit83.i.i.i ], [ %.sroa.01.0.lcssa68.i.i.i, %.loopexit84.i.i.i ], [ 0, %"_ZN4core4cell16RefCell$LT$T$GT$10borrow_mut17he96c448d6f220bfcE.exit.i.peel.i.i.i" ], [ 0, %.thread.i.peel.i.i.i ], [ 0, %bb.z ], [ %.sroa.01.0.i25.i.i, %"_ZN4core4cell16RefCell$LT$T$GT$10borrow_mut17he96c448d6f220bfcE.exit.i.i.i.i" ], [ %.sroa.01.0.i25.i.i, %bb.al ], [ %.sroa.01.0.i25.i.i, %.thread.i.i.i.i ]
   %.sroa.4.064.i.i.i = phi i64 [ %.sroa.4.0.lcssa60.i.i.i, %.loopexit83.i.i.i ], [ %.sroa.4.0.lcssa61.i.i.i, %.loopexit84.i.i.i ], [ undef, %"_ZN4core4cell16RefCell$LT$T$GT$10borrow_mut17he96c448d6f220bfcE.exit.i.peel.i.i.i" ], [ undef, %.thread.i.peel.i.i.i ], [ undef, %bb.z ], [ %.sroa.4.0.i27.i.i, %"_ZN4core4cell16RefCell$LT$T$GT$10borrow_mut17he96c448d6f220bfcE.exit.i.i.i.i" ], [ %.sroa.4.0.i27.i.i, %bb.al ], [ %.sroa.4.0.i27.i.i, %.thread.i.i.i.i ]
   %.sroa.0.057.i.i.i = phi i64 [ %.sroa.0.0.lcssa53.i.i.i, %.loopexit83.i.i.i ], [ %.sroa.0.0.lcssa54.i.i.i, %.loopexit84.i.i.i ], [ 0, %"_ZN4core4cell16RefCell$LT$T$GT$10borrow_mut17he96c448d6f220bfcE.exit.i.peel.i.i.i" ], [ 0, %.thread.i.peel.i.i.i ], [ 0, %bb.z ], [ %.sroa.0.0.i29.i.i, %"_ZN4core4cell16RefCell$LT$T$GT$10borrow_mut17he96c448d6f220bfcE.exit.i.i.i.i" ], [ %.sroa.0.0.i29.i.i, %bb.al ], [ %.sroa.0.0.i29.i.i, %.thread.i.i.i.i ]
-  store i64 0, ptr %4, align 8, !noalias !1142
+  store i64 0, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, align 8, !noalias !1142
   br label %"_ZN4core4cell16RefCell$LT$T$GT$10borrow_mut17he96c448d6f220bfcE.exit.i.i.i16.i.i.i"
 
 .thread9.i.i.i:                                   ; preds = %bb.ap, %bb.an
   %.sroa.0.0.i.i.ph.i.i.i = phi ptr [ %i.ef, %bb.an ], [ %i.eg, %bb.ap ]
-  store i64 0, ptr %4, align 8, !noalias !1142
+  store i64 0, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, align 8, !noalias !1142
   br label %.thread.i.i.i
 
 bb.as:                                            ; preds = %bb.aq, %bb.am
   %.sroa.0.0.i.i.i.i.i = phi ptr [ %i.eq, %bb.aq ], [ %i.ee, %bb.am ] ; 2 uses
-  %i.et = load i64, ptr %4, align 8, !noalias !1142, !noundef !4
+  %i.et = load i64, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, align 8, !noalias !1142, !noundef !4
   %i.eu = add i64 %i.et, 1                        ; 3 uses
-  store i64 %i.eu, ptr %4, align 8, !noalias !1142
+  store i64 %i.eu, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, align 8, !noalias !1142
   %.not8.i.i.i = icmp eq ptr %.sroa.0.0.i.i.i.i.i, null
   br i1 %.not8.i.i.i, label %.loopexit.i.i.i, label %.thread.i.i.i
 
 bb.at:                                            ; preds = %.loopexit81.i.i.i
   %i.ev = landingpad { ptr, i32 }
           cleanup
-  %.pr.i.i.i = load i64, ptr %4, align 8, !noalias !1156
+  %.pr.i.i.i = load i64, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, align 8, !noalias !1156
   br label %.body.i.i.i
 
 .body.i.i.i:                                      ; preds = %bb.at, %bb.ar
@@ -738,7 +736,7 @@ bb.au:                                            ; preds = %.body.i.i.i
   unreachable
 
 "_ZN4core4cell16RefCell$LT$T$GT$10borrow_mut17he96c448d6f220bfcE.exit.i.i.i.i.i.i": ; preds = %.body.i.i.i
-  %i.ey = getelementptr inbounds nuw i8, ptr %4, i64 96 ; 2 uses
+  %i.ey = getelementptr inbounds nuw i8, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, i64 96 ; 2 uses
   %i.ez = load i64, ptr %i.ey, align 8, !noalias !1142, !noundef !4 ; 2 uses
   %i.fa = icmp eq i64 %i.ez, -1
   %i.fb = icmp ugt i64 %i.w, %i.ez
@@ -773,7 +771,7 @@ bb.av:                                            ; preds = %"_ZN4core4cell16Ref
   %.sroa.4.06399.i.i.i = phi i64 [ %.sroa.4.064.i.i.i, %.loopexit.thread.i.i.i ], [ %.sroa.4.0.lcssa62.i.i.i, %.loopexit.i.i.i ]
   %.sroa.01.07098.i.i.i = phi i32 [ %.sroa.01.071.i.i.i, %.loopexit.thread.i.i.i ], [ %.sroa.01.0.lcssa69.i.i.i, %.loopexit.i.i.i ]
   %.sroa.5.07797.i.i.i = phi i32 [ %.sroa.5.078.i.i.i, %.loopexit.thread.i.i.i ], [ %.sroa.5.0.lcssa76.i.i.i, %.loopexit.i.i.i ]
-  %i.fg = getelementptr inbounds nuw i8, ptr %4, i64 96 ; 2 uses
+  %i.fg = getelementptr inbounds nuw i8, ptr %.sroa.5.i.0..sroa.5.i.0..sroa.5.i.0..sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8..i, i64 96 ; 2 uses
   %i.fh = load i64, ptr %i.fg, align 8, !noalias !1142, !noundef !4 ; 2 uses
   %i.fi = icmp eq i64 %i.fh, -1
   %i.fj = icmp ugt i64 %i.w, %i.fh

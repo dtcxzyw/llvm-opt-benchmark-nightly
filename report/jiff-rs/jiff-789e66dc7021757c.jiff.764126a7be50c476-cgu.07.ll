@@ -204,7 +204,7 @@ bb.a:
   %i.j = alloca [24 x i8], align 8                ; 13 uses
   %i.k = alloca [24 x i8], align 8                ; 4 uses
   %i.l = alloca [240 x i8], align 8               ; 6 uses
-  %i.m = alloca [104 x i8], align 8               ; 15 uses
+  %i.m = alloca [104 x i8], align 8               ; 14 uses
   %i.n = alloca [112 x i8], align 8               ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -432,13 +432,11 @@ bb.v:                                             ; preds = %bb.n
   store i32 %i.av, ptr %.sroa.2.sroa.7.0..sroa.2.0..sroa_idx.sroa_idx, align 8
   store i64 1, ptr %i.n, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
-  store i64 0, ptr %i.m, align 8
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  store i8 0, ptr %i.ay, align 8
-  %i.az = getelementptr inbounds nuw i8, ptr %i.m, i64 16
-  store i64 0, ptr %i.az, align 8
-  %.sroa.420.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 24
-  store ptr inttoptr (i64 8 to ptr), ptr %.sroa.420.0..sroa_idx, align 8
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.m, i64 16
+  store i64 0, ptr %i.ay, align 8
+  %i.az = getelementptr inbounds nuw i8, ptr %i.m, i64 24
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.m, i8 0, i64 9, i1 false)
+  store ptr inttoptr (i64 8 to ptr), ptr %i.az, align 8
   %.sroa.521.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 32
   %.sroa.723.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 48
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.521.0..sroa_idx, i8 0, i64 16, i1 false)

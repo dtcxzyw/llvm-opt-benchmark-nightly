@@ -205,8 +205,8 @@ bb.a:
   %i.ao = alloca [56 x i8], align 8               ; 7 uses
   %i.ap = alloca [48 x i8], align 8               ; 7 uses
   %i.aq = alloca [40 x i8], align 8               ; 10 uses
-  %.sroa.4.i.i.i = alloca i64, align 8            ; 5 uses
-  %.sroa.73.i.i.i = alloca i64, align 8           ; 4 uses
+  %.sroa.4.i.i.i = alloca [8 x i8], align 8       ; 5 uses
+  %.sroa.73.i.i.i = alloca [8 x i8], align 8      ; 4 uses
   %i.ar = alloca [40 x i8], align 8               ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !829)
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -609,8 +609,7 @@ bb.gm:                                            ; preds = %bb.bq
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af), !noalias !858
   call void @llvm.experimental.noalias.scope.decl(metadata !1460)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.mw) ]
-  %1 = ptrtoint ptr %i.mt to i64
-  store i64 %1, ptr %.sroa.4.i.i.i, align 8, !alias.scope !1461, !noalias !1462
+  store ptr %i.mt, ptr %.sroa.4.i.i.i, align 8, !alias.scope !1461, !noalias !1462
   br label %"_ZN106_$LT$core..iter..adapters..GenericShunt$LT$I$C$R$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h517383a0e0130d31E.exit"
 
 "_ZN4core3ptr137drop_in_place$LT$core..option..Option$LT$core..result..Result$LT$core..convert..Infallible$C$liquid_core..error..error..Error$GT$$GT$$GT$17hbbfd17415e1c1e41E.exit.i.i.i.i.i": ; preds = %"_ZN4core3ptr109drop_in_place$LT$core..result..Result$LT$core..convert..Infallible$C$liquid_core..error..error..Error$GT$$GT$17he66c09088c880230E.exit.i.i.i.i.i.i", %bb.gk
@@ -622,16 +621,14 @@ bb.gm:                                            ; preds = %bb.bq
   %.8.val1.sink.i.i.i.i.i = phi ptr [ %i.mw, %bb.gm ], [ null, %"_ZN4core3ptr137drop_in_place$LT$core..option..Option$LT$core..result..Result$LT$core..convert..Infallible$C$liquid_core..error..error..Error$GT$$GT$$GT$17hbbfd17415e1c1e41E.exit.i.i.i.i.i" ]
   store ptr %.8.val1.sink.i.i.i.i.i, ptr %.sink4.i.i.sroa.phi.i.i.i, align 8, !alias.scope !1461, !noalias !1462
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq), !noalias !837
-  %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i = load i64, ptr %.sroa.4.i.i.i, align 8, !alias.scope !1463, !noalias !1466, !noundef !3 ; 2 uses
-  %2 = inttoptr i64 %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i to ptr
-  %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i = load i64, ptr %.sroa.73.i.i.i, align 8, !alias.scope !1463, !noalias !1466
-  %3 = inttoptr i64 %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i to ptr
+  %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i = load ptr, ptr %.sroa.4.i.i.i, align 8, !alias.scope !1463, !noalias !1466 ; 2 uses
+  %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i = load ptr, ptr %.sroa.73.i.i.i, align 8, !alias.scope !1463, !noalias !1466
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.73.i.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !noalias !837
-  %i.yd = insertvalue { ptr, ptr } poison, ptr %2, 0
-  %.not = icmp eq i64 %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i, 0
-  %. = select i1 %.not, ptr undef, ptr %3
+  %i.yd = insertvalue { ptr, ptr } poison, ptr %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i, 0
+  %.not = icmp eq ptr %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i, null
+  %. = select i1 %.not, ptr undef, ptr %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i
   br label %"_ZN4core3ptr133drop_in_place$LT$core..ops..control_flow..ControlFlow$LT$alloc..boxed..Box$LT$dyn$u20$liquid_core..parser..filter..Filter$GT$$GT$$GT$17h100f353cfbdf32d5E.exit"
 
 "_ZN4core3ptr133drop_in_place$LT$core..ops..control_flow..ControlFlow$LT$alloc..boxed..Box$LT$dyn$u20$liquid_core..parser..filter..Filter$GT$$GT$$GT$17h100f353cfbdf32d5E.exit": ; preds = %"_ZN106_$LT$core..iter..adapters..GenericShunt$LT$I$C$R$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h517383a0e0130d31E.exit", %"_ZN106_$LT$core..iter..adapters..GenericShunt$LT$I$C$R$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h517383a0e0130d31E.exit.thread"
@@ -1034,10 +1031,10 @@ _ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i
 
 _ZN4time7parsing8parsable6sealed6Sealed5parse17h63b1d875608d6d83E.exit191: ; preds = %.loopexit.loopexit.i136
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.132, ptr noundef nonnull align 2 dereferenceable(10) %.sroa.33.i98, i64 10, i1 false), !noalias !3035
-  %.sroa.21.sroa.0.0.extract.trunc351 = trunc i64 %.sroa.0.0.copyload2.pre.i137201 to i32 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.33.i98)
   %i.an = icmp eq i8 %.sroa.32.0.copyload106.pre.i163, 2
   %.sroa.07.i.sroa.0.0.copyload6.fr.i.i.i.i = freeze i64 %.sroa.0.0.copyload2.pre.i137199 ; 2 uses
+  %.sroa.21.sroa.0.0.extract.trunc = trunc i64 %.sroa.0.0.copyload2.pre.i137201 to i32 ; 2 uses
   br i1 %i.an, label %_ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i.i.i, label %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.sink.split.i.i"
 
 "_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.sink.split.i.i": ; preds = %_ZN4time7parsing8parsable6sealed6Sealed5parse17h63b1d875608d6d83E.exit191
@@ -1057,7 +1054,7 @@ _ZN4time7parsing8parsable6sealed6Sealed5parse17h63b1d875608d6d83E.exit191: ; pre
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.811.0..sroa_idx12.i.i.i.i.i, ptr noundef nonnull align 2 dereferenceable(10) %.sroa.132, i64 10, i1 false), !noalias !3008
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.132)
   store i64 %.sroa.07.i.sroa.0.0.copyload6.fr.i.i.i.i, ptr %i.g, align 16, !noalias !3008
-  store i32 %.sroa.21.sroa.0.0.extract.trunc351, ptr %.sroa.07.i.sroa.6.0..sroa_idx7.i.i.i.i, align 8, !noalias !3008
+  store i32 %.sroa.21.sroa.0.0.extract.trunc, ptr %.sroa.07.i.sroa.6.0..sroa_idx7.i.i.i.i, align 8, !noalias !3008
   store i8 %.sroa.45.24.extract.trunc, ptr %.sroa.07.i.sroa.8.0..sroa_idx13.i.i.i.i, align 8, !noalias !3008
   store <4 x i8> %i.al, ptr %.sroa.117.32..sroa.07.i.sroa.10.0..sroa_idx19.i.i.i.i.sroa_idx, align 2, !noalias !3008
   call fastcc void @"_ZN4time7parsing6parsed106_$LT$impl$u20$core..convert..TryFrom$LT$time..parsing..parsed..Parsed$GT$$u20$for$u20$time..date..Date$GT$8try_from17h4f9089a24f77f352E"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.h, ptr noalias noundef align 16 captures(address) dereferenceable(64) %i.g), !noalias !3036
@@ -1076,7 +1073,7 @@ _ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i
   br i1 %.not.i.i.i.i, label %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.i.i", label %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.i.thread.i"
 
 "_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.i.i": ; preds = %_ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i.i.i, %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.sink.split.i.i"
-  %i.aq = phi i32 [ %i.ap, %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.sink.split.i.i" ], [ %.sroa.21.sroa.0.0.extract.trunc351, %_ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i.i.i ] ; 2 uses
+  %i.aq = phi i32 [ %i.ap, %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.sink.split.i.i" ], [ %.sroa.21.sroa.0.0.extract.trunc, %_ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i.i.i ] ; 2 uses
   %.not7.i.i = icmp eq i32 %i.aq, 0
   br i1 %.not7.i.i, label %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.i.thread.i", label %_ZN11liquid_core5model6scalar4date10parse_date17h413ad7904e39da05E.exit
 
@@ -1188,10 +1185,10 @@ _ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i
 
 _ZN4time7parsing8parsable6sealed6Sealed5parse17h63b1d875608d6d83E.exit97: ; preds = %.loopexit.loopexit.i42
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.132, ptr noundef nonnull align 2 dereferenceable(10) %.sroa.33.i4, i64 10, i1 false), !noalias !3058
-  %.sroa.21.sroa.0.0.extract.trunc350 = trunc i64 %.sroa.0.0.copyload2.pre.i43197 to i32 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.33.i4)
   %i.bk = icmp eq i8 %.sroa.32.0.copyload106.pre.i69, 2
   %.sroa.07.i.sroa.0.0.copyload6.fr.i.i.i.1.i = freeze i64 %.sroa.0.0.copyload2.pre.i43195 ; 2 uses
+  %.sroa.21.sroa.0.0.extract.trunc348 = trunc i64 %.sroa.0.0.copyload2.pre.i43197 to i32 ; 2 uses
   br i1 %i.bk, label %_ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i.i.1.i, label %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.sink.split.i.1.i"
 
 "_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.sink.split.i.1.i": ; preds = %_ZN4time7parsing8parsable6sealed6Sealed5parse17h63b1d875608d6d83E.exit97
@@ -1211,7 +1208,7 @@ _ZN4time7parsing8parsable6sealed6Sealed5parse17h63b1d875608d6d83E.exit97: ; pred
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.811.0..sroa_idx12.i.i.i.i.i, ptr noundef nonnull align 2 dereferenceable(10) %.sroa.132, i64 10, i1 false), !noalias !3008
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.132)
   store i64 %.sroa.07.i.sroa.0.0.copyload6.fr.i.i.i.1.i, ptr %i.g, align 16, !noalias !3008
-  store i32 %.sroa.21.sroa.0.0.extract.trunc350, ptr %.sroa.07.i.sroa.6.0..sroa_idx7.i.i.i.i, align 8, !noalias !3008
+  store i32 %.sroa.21.sroa.0.0.extract.trunc348, ptr %.sroa.07.i.sroa.6.0..sroa_idx7.i.i.i.i, align 8, !noalias !3008
   store i8 %.sroa.45.24.extract.trunc238, ptr %.sroa.07.i.sroa.8.0..sroa_idx13.i.i.i.i, align 8, !noalias !3008
   store <4 x i8> %i.bi, ptr %.sroa.117.32..sroa.07.i.sroa.10.0..sroa_idx19.i.i.i.i.sroa_idx333, align 2, !noalias !3008
   call fastcc void @"_ZN4time7parsing6parsed106_$LT$impl$u20$core..convert..TryFrom$LT$time..parsing..parsed..Parsed$GT$$u20$for$u20$time..date..Date$GT$8try_from17h4f9089a24f77f352E"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.h, ptr noalias noundef align 16 captures(address) dereferenceable(64) %i.g), !noalias !3036
@@ -1230,7 +1227,7 @@ _ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i
   br i1 %.not.i.i.i.1.i, label %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.i.1.i", label %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.i.1.thread.i"
 
 "_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.i.1.i": ; preds = %_ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i.i.1.i, %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.sink.split.i.1.i"
-  %i.bn = phi i32 [ %i.bm, %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.sink.split.i.1.i" ], [ %.sroa.21.sroa.0.0.extract.trunc350, %_ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i.i.1.i ] ; 2 uses
+  %i.bn = phi i32 [ %i.bm, %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.sink.split.i.1.i" ], [ %.sroa.21.sroa.0.0.extract.trunc348, %_ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i.i.1.i ] ; 2 uses
   %.not7.i.1.i = icmp eq i32 %i.bn, 0
   br i1 %.not7.i.1.i, label %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.i.1.thread.i", label %_ZN11liquid_core5model6scalar4date10parse_date17h413ad7904e39da05E.exit
 
@@ -1342,10 +1339,10 @@ _ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i
 
 _ZN4time7parsing8parsable6sealed6Sealed5parse17h63b1d875608d6d83E.exit: ; preds = %.loopexit.loopexit.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.132, ptr noundef nonnull align 2 dereferenceable(10) %.sroa.33.i, i64 10, i1 false), !noalias !3080
-  %.sroa.21.sroa.0.0.extract.trunc349 = trunc i64 %.sroa.0.0.copyload2.pre.i193 to i32 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.33.i)
   %i.ch = icmp eq i8 %.sroa.32.0.copyload106.pre.i, 2
   %.sroa.07.i.sroa.0.0.copyload6.fr.i.i.i.2.i = freeze i64 %.sroa.0.0.copyload2.pre.i192 ; 2 uses
+  %.sroa.21.sroa.0.0.extract.trunc350 = trunc i64 %.sroa.0.0.copyload2.pre.i193 to i32 ; 2 uses
   br i1 %i.ch, label %_ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i.i.2.i, label %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.sink.split.i.2.i"
 
 "_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.sink.split.i.2.i": ; preds = %_ZN4time7parsing8parsable6sealed6Sealed5parse17h63b1d875608d6d83E.exit
@@ -1365,7 +1362,7 @@ _ZN4time7parsing8parsable6sealed6Sealed5parse17h63b1d875608d6d83E.exit: ; preds 
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.811.0..sroa_idx12.i.i.i.i.i, ptr noundef nonnull align 2 dereferenceable(10) %.sroa.132, i64 10, i1 false), !noalias !3008
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.132)
   store i64 %.sroa.07.i.sroa.0.0.copyload6.fr.i.i.i.2.i, ptr %i.g, align 16, !noalias !3008
-  store i32 %.sroa.21.sroa.0.0.extract.trunc349, ptr %.sroa.07.i.sroa.6.0..sroa_idx7.i.i.i.i, align 8, !noalias !3008
+  store i32 %.sroa.21.sroa.0.0.extract.trunc350, ptr %.sroa.07.i.sroa.6.0..sroa_idx7.i.i.i.i, align 8, !noalias !3008
   store i8 %.sroa.45.24.extract.trunc240, ptr %.sroa.07.i.sroa.8.0..sroa_idx13.i.i.i.i, align 8, !noalias !3008
   store <4 x i8> %i.cf, ptr %.sroa.117.32..sroa.07.i.sroa.10.0..sroa_idx19.i.i.i.i.sroa_idx335, align 2, !noalias !3008
   call fastcc void @"_ZN4time7parsing6parsed106_$LT$impl$u20$core..convert..TryFrom$LT$time..parsing..parsed..Parsed$GT$$u20$for$u20$time..date..Date$GT$8try_from17h4f9089a24f77f352E"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.h, ptr noalias noundef align 16 captures(address) dereferenceable(64) %i.g), !noalias !3036
@@ -1384,7 +1381,7 @@ _ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i
   br i1 %.not.i.i.i.2.i, label %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.i.2.i", label %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.i.2.thread.i"
 
 "_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.i.2.i": ; preds = %_ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i.i.2.i, %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.sink.split.i.2.i"
-  %i.ck = phi i32 [ %i.cj, %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.sink.split.i.2.i" ], [ %.sroa.21.sroa.0.0.extract.trunc349, %_ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i.i.2.i ] ; 2 uses
+  %i.ck = phi i32 [ %i.cj, %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.sink.split.i.2.i" ], [ %.sroa.21.sroa.0.0.extract.trunc350, %_ZN4time7parsing8parsable6sealed6Sealed10parse_date17h2841cdc99e14c5c0E.exit.i.i.i.2.i ] ; 2 uses
   %.not7.i.2.i = icmp eq i32 %i.ck, 0
   br i1 %.not7.i.2.i, label %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17h42d4410205bf1487E.exit.i.2.thread.i", label %_ZN11liquid_core5model6scalar4date10parse_date17h413ad7904e39da05E.exit
 

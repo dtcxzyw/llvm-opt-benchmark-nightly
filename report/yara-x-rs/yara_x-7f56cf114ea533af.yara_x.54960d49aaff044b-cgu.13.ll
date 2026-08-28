@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v
   %i.dx = load i32, ptr %i.dn, align 8, !noalias !6299, !noundef !27
-  %.sroa.0.0.copyload.i = load i64, ptr %i.do, align 8, !noalias !6299 ; 4 uses
+  %.sroa.0.0.copyload.i = load i64, ptr %i.do, align 8, !noalias !6299 ; 3 uses
   %.sroa.736.0.copyload.i = load i64, ptr %.sroa.736.0..sroa_idx.i, align 8, !noalias !6299 ; 2 uses
   %i.dy = load ptr, ptr %i.dp, align 8, !alias.scope !6294, !noalias !6305, !nonnull !27, !align !287, !noundef !27 ; 2 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 272
@@ -407,13 +407,17 @@ bb.al:                                            ; preds = %bb.aj
   br label %bb.u
 
 bb.am:                                            ; preds = %_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs7gfv9tzbXmh_6yara_x.exit.thread.i16, %.lr.ph.i15
-  %.sroa.017.064.i = phi ptr [ %i.ga, %.lr.ph.i15 ], [ %i.gi, %_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs7gfv9tzbXmh_6yara_x.exit.thread.i16 ] ; 5 uses
+  %.sroa.017.064.i = phi ptr [ %i.ga, %.lr.ph.i15 ], [ %i.gi, %_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs7gfv9tzbXmh_6yara_x.exit.thread.i16 ] ; 4 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %.sroa.017.064.i, i64 24 ; 2 uses
   %i.gj = load i8, ptr %i.gf, align 4, !range !5198, !noalias !6305, !noundef !27
   %i.gk = icmp eq i8 %i.gj, 2
   %i.gl = load i32, ptr %i.fy, align 4, !noalias !6305, !noundef !27
-  %i.gm = zext i32 %i.gl to i64                   ; 2 uses
-  br i1 %i.gk, label %.split.i, label %bb.an
+  %i.gm = zext i32 %i.gl to i64
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.017.064.i, i64 8
+  %7 = load i64, ptr %6, align 8, !noalias !6305, !noundef !27 ; 3 uses
+  %8 = add i64 %7, %i.gm
+  %.not43.i = icmp ugt i64 %8, %.sroa.0.0.copyload.i ; 2 uses
+  br i1 %i.gk, label %.split.i, label %9
 
 ._crit_edge.i:                                    ; preds = %_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs7gfv9tzbXmh_6yara_x.exit.thread.i16, %bb.ak
   %i.gn = load i16, ptr %.sroa.013.0.le.i, align 2, !noalias !6305, !noundef !27
@@ -421,31 +425,24 @@ bb.am:                                            ; preds = %_RINvYINtNtNtCskKLD
   %or.cond.not.i = icmp eq i16 %i.go, 36
   br i1 %or.cond.not.i, label %bb.ar, label %.loopexit.i
 
-bb.an:                                            ; preds = %bb.am
+9:                                                ; preds = %bb.am
+  br i1 %.not43.i, label %_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs7gfv9tzbXmh_6yara_x.exit.thread.i16, label %bb.an
+
+bb.an:                                            ; preds = %9
   %i.gp = load i32, ptr %i.gg, align 4, !noalias !6305, !noundef !27
   %i.gq = zext i32 %i.gp to i64
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.017.064.i, i64 8
-  %7 = load i64, ptr %6, align 8, !noalias !6305, !noundef !27 ; 3 uses
-  %8 = add i64 %7, %i.gm
   %i.gr = add i64 %7, %i.gq
-  %.not.i.i = icmp ule i64 %8, %.sroa.0.0.copyload.i
-  %9 = icmp ule i64 %.sroa.0.0.copyload.i, %i.gr
-  %or.cond43.i = and i1 %.not.i.i, %9
-  br i1 %or.cond43.i, label %bb.ao, label %_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs7gfv9tzbXmh_6yara_x.exit.thread.i16
+  %.not42.i = icmp ugt i64 %.sroa.0.0.copyload.i, %i.gr
+  br i1 %.not42.i, label %_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs7gfv9tzbXmh_6yara_x.exit.thread.i16, label %bb.ao
 
 .split.i:                                         ; preds = %bb.am
-  %10 = getelementptr inbounds nuw i8, ptr %.sroa.017.064.i, i64 8
-  %11 = load i64, ptr %10, align 8, !noalias !6305, !noundef !27 ; 2 uses
-  %12 = add i64 %11, %i.gm
-  %.not44.i = icmp ugt i64 %12, %.sroa.0.0.copyload.i
-  br i1 %.not44.i, label %_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs7gfv9tzbXmh_6yara_x.exit.thread.i16, label %bb.ao
+  br i1 %.not43.i, label %_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs7gfv9tzbXmh_6yara_x.exit.thread.i16, label %bb.ao
 
-_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs7gfv9tzbXmh_6yara_x.exit.thread.i16: ; preds = %bb.aq, %bb.ao, %.split.i, %bb.an
+_RINvYINtNtNtCskKLDkoKarTP_4core3ops5range14RangeInclusivejEINtB6_11RangeBoundsjE8containsjECs7gfv9tzbXmh_6yara_x.exit.thread.i16: ; preds = %bb.aq, %bb.ao, %.split.i, %bb.an, %9
   %i.gs = icmp eq ptr %i.gi, %i.gd
   br i1 %i.gs, label %._crit_edge.i, label %bb.am
 
 bb.ao:                                            ; preds = %.split.i, %bb.an
-  %.sroa.017.0.val33.i = phi i64 [ %7, %bb.an ], [ %11, %.split.i ]
   %i.gt = getelementptr inbounds nuw i8, ptr %.sroa.017.064.i, i64 16 ; 2 uses
   %i.gu = load i64, ptr %i.gt, align 8, !noalias !6305, !noundef !27
   %.not28.i = icmp ugt i64 %i.gu, %.sroa.736.0.copyload.i
@@ -458,7 +455,7 @@ bb.ap:                                            ; preds = %bb.ao
   %.sroa.017.0.val.i = load i64, ptr %.sroa.017.064.i, align 8, !alias.scope !6310, !noalias !6305, !noundef !27
   store i32 %i.gv, ptr %i.a, align 8, !noalias !6299
   store i64 %.sroa.017.0.val.i, ptr %i.dq, align 8, !noalias !6299
-  store i64 %.sroa.017.0.val33.i, ptr %.sroa.421.0..sroa_idx.i, align 8, !noalias !6299
+  store i64 %7, ptr %.sroa.421.0..sroa_idx.i, align 8, !noalias !6299
   store i64 %i.gh, ptr %.sroa.522.0..sroa_idx.i, align 8, !noalias !6299
   %i.gw = invoke noundef nonnull align 8 ptr @_RNvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeTNtNtCs7gfv9tzbXmh_6yara_x8compiler12SubPatternIdNtNtNtB1a_7scanner7matches16UnconfirmedMatchEE13push_back_mutB1a_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.f, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.a)
           to label %bb.aq unwind label %.loopexit.split-lp.loopexit.i, !noalias !6305 ; 0 uses

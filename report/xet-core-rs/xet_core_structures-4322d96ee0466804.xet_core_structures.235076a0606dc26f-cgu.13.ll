@@ -202,6 +202,7 @@ bb.a:
   %i.aa = alloca [24 x i8], align 8               ; 5 uses
   %i.ab = alloca [24 x i8], align 8               ; 5 uses
   %i.ac = alloca [24 x i8], align 8               ; 13 uses
+  %5 = alloca [8 x i8], align 8                   ; 5 uses
   %i.ad = alloca [32 x i8], align 8               ; 5 uses
   %i.ae = alloca [160 x i8], align 8              ; 31 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae)
@@ -230,8 +231,10 @@ bb.c:                                             ; preds = %bb.a
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   %i.al = load i32, ptr %i.ak, align 8, !noundef !4
   %i.am = zext i32 %i.al to i64
+  call void @llvm.lifetime.start.p0(ptr nonnull %5)
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
   %i.ao = load i64, ptr %i.an, align 8, !noundef !4 ; 5 uses
+  store i64 %i.ao, ptr %5, align 8
   %i.ap = icmp ult i64 %i.ao, 288230376151711744
   tail call void @llvm.assume(i1 %i.ap)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac)
@@ -634,7 +637,7 @@ bb.aj:                                            ; preds = %bb.ad, %_RINvNtCskK
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-.loopexit267:                                     ; preds = %.loopexit261, %8
+.loopexit267:                                     ; preds = %.loopexit261, %bb.ak
   %i.fi = icmp eq ptr %i.fj, %i.dg
   br i1 %i.fi, label %.loopexit271, label %bb.ak
 
@@ -645,8 +648,13 @@ bb.ak:                                            ; preds = %.lr.ph303, %.loopex
   %i.fk = add nuw nsw i64 %.sroa.8217.0301, 1     ; 3 uses
   %i.fl = load i64, ptr %.sroa.0.0302, align 8, !noundef !4 ; 2 uses
   %i.fm = load i64, ptr %i.de, align 8, !noundef !4
-  %i.fn = icmp ult i64 %i.fk, %i.fm
-  br i1 %i.fn, label %5, label %8
+  %6 = icmp ult i64 %i.fk, %i.fm
+  %7 = load ptr, ptr %i.dc, align 8, !nonnull !4
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.fk
+  %.sroa.021.0 = select i1 %6, ptr %8, ptr %5
+  %9 = load i64, ptr %.sroa.021.0, align 8, !noundef !4 ; 3 uses
+  %i.fn = icmp ult i64 %i.fl, %9
+  br i1 %i.fn, label %.lr.ph300, label %.loopexit267
 
 bb.al:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtNtCs31YAwBA1AlL_19xet_core_structures11xorb_object18xorb_object_format10XorbObjectjEEBI_.exit, %.loopexit271
   %.sroa.047.0 = phi i64 [ 1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtNtCs31YAwBA1AlL_19xet_core_structures11xorb_object18xorb_object_format10XorbObjectjEEBI_.exit ], [ 0, %.loopexit271 ]
@@ -1049,6 +1057,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueTNtNtNtCs31YAwBA1AlL_19xet_core_structur
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashmEEEB1f_.exit: ; preds = %bb.an
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac)
+  call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad)
   br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecmEECs31YAwBA1AlL_19xet_core_structures.exit169, label %bb.ce
 
@@ -1247,25 +1256,14 @@ bb.df:                                            ; preds = %bb.dd
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #23
   unreachable
 
-5:                                                ; preds = %bb.ak
-  %6 = load ptr, ptr %i.dc, align 8, !nonnull !4, !noundef !4
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.fk
-  %.sroa.021.0.sroa.speculate.load. = load i64, ptr %7, align 8
-  br label %8
-
-8:                                                ; preds = %bb.ak, %5
-  %.sroa.021.0.sroa.speculated = phi i64 [ %.sroa.021.0.sroa.speculate.load., %5 ], [ %i.ao, %bb.ak ] ; 3 uses
-  %9 = icmp ult i64 %i.fl, %.sroa.021.0.sroa.speculated
-  br i1 %9, label %.lr.ph300, label %.loopexit267
-
 .loopexit261:                                     ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecmE8push_mutCs31YAwBA1AlL_19xet_core_structures.exit180, %bb.dl
-  %i.jb = icmp ult i64 %i.jc, %.sroa.021.0.sroa.speculated
+  %i.jb = icmp ult i64 %i.jc, %9
   br i1 %i.jb, label %.lr.ph300, label %.loopexit267
 
-.lr.ph300:                                        ; preds = %8, %.loopexit261
-  %.sroa.013.0299 = phi i64 [ %..i, %.loopexit261 ], [ %i.fl, %8 ] ; 8 uses
-  %i.jc = add i64 %.sroa.013.0299, %spec.select   ; 2 uses
-  %..i = call noundef i64 @llvm.umin.i64(i64 %.sroa.021.0.sroa.speculated, i64 %i.jc) ; 6 uses
+.lr.ph300:                                        ; preds = %bb.ak, %.loopexit261
+  %.sroa.013.0299 = phi i64 [ %..i, %.loopexit261 ], [ %i.fl, %bb.ak ] ; 8 uses
+  %i.jc = add i64 %.sroa.013.0299, %spec.select   ; 3 uses
+  %..i = call noundef i64 @llvm.umin.i64(i64 %9, i64 %i.jc) ; 5 uses
   %i.jd = load i64, ptr %i.an, align 8, !noundef !4 ; 2 uses
   %i.je = icmp ult i64 %.sroa.013.0299, %i.jd
   br i1 %i.je, label %bb.dg, label %bb.dh
@@ -1289,7 +1287,7 @@ bb.di:                                            ; preds = %bb.dk, %bb.dh
 
 bb.dj:                                            ; preds = %bb.dg
   %i.jm = load i64, ptr %i.an, align 8, !noundef !4 ; 2 uses
-  %i.jn = icmp ult i64 %..i, %.sroa.013.0299
+  %i.jn = icmp ult i64 %i.jc, %.sroa.013.0299
   %.not115 = icmp ugt i64 %..i, %i.jm
   %or.cond130 = or i1 %i.jn, %.not115
   br i1 %or.cond130, label %bb.dk, label %bb.dl, !prof !252
@@ -1385,6 +1383,7 @@ bb.ds:                                            ; preds = %bb.dq
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecTNtNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash9data_hash8DataHashmEEEB1f_.exit187: ; preds = %bb.dr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac)
+  call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad)
   br i1 %cond133, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecmEECs31YAwBA1AlL_19xet_core_structures.exit203, label %bb.dt
 

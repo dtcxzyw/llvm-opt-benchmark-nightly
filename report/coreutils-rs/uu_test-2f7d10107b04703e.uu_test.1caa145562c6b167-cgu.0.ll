@@ -204,8 +204,8 @@ bb.cz:                                            ; preds = %bb.cy
 
 bb.da:                                            ; preds = %bb.cz
   %.sroa.5538.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jo, i64 16
-  %.sroa.5538.0.copyload = load i64, ptr %.sroa.5538.0..sroa_idx, align 8 ; 20 uses
-  %i.jq = inttoptr i64 %.sroa.5538.0.copyload to ptr ; 22 uses
+  %.sroa.5538.0.copyload = load i64, ptr %.sroa.5538.0..sroa_idx, align 8
+  %i.jq = inttoptr i64 %.sroa.5538.0.copyload to ptr ; 41 uses
   %cond = icmp eq i64 %i.jg, 2
   br i1 %cond, label %bb.db, label %bb.en, !prof !249
 
@@ -217,8 +217,7 @@ bb.db:                                            ; preds = %bb.da
   br i1 %i.ju, label %bb.dc, label %bb.dd
 
 bb.dc:                                            ; preds = %bb.db
-  %2 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %2)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.jv = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 0) #21
   %i.jw = zext i1 %i.jv to i8
   br label %bb.ep
@@ -231,8 +230,7 @@ bb.dd:                                            ; preds = %bb.db
   br i1 %i.ka, label %bb.de, label %bb.df
 
 bb.de:                                            ; preds = %bb.dd
-  %3 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %3)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.kb = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 1) #21
   %i.kc = zext i1 %i.kb to i8
   br label %bb.ep
@@ -245,8 +243,7 @@ bb.df:                                            ; preds = %bb.dd
   br i1 %i.kg, label %bb.dg, label %bb.dh
 
 bb.dg:                                            ; preds = %bb.df
-  %4 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %4)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.kh = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 2) #21
   %i.ki = zext i1 %i.kh to i8
   br label %bb.ep
@@ -259,8 +256,7 @@ bb.dh:                                            ; preds = %bb.df
   br i1 %i.km, label %bb.di, label %bb.dj
 
 bb.di:                                            ; preds = %bb.dh
-  %5 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %5)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.kn = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 3) #21
   %i.ko = zext i1 %i.kn to i8
   br label %bb.ep
@@ -273,8 +269,7 @@ bb.dj:                                            ; preds = %bb.dh
   br i1 %i.ks, label %bb.dk, label %bb.dl
 
 bb.dk:                                            ; preds = %bb.dj
-  %6 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %6)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.kt = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 5) #21
   %i.ku = zext i1 %i.kt to i8
   br label %bb.ep
@@ -287,8 +282,7 @@ bb.dl:                                            ; preds = %bb.dj
   br i1 %i.ky, label %bb.dm, label %bb.dn
 
 bb.dm:                                            ; preds = %bb.dl
-  %7 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %7)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.kz = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 6) #21
   %i.la = zext i1 %i.kz to i8
   br label %bb.ep
@@ -301,8 +295,7 @@ bb.dn:                                            ; preds = %bb.dl
   br i1 %i.le, label %bb.do, label %bb.dp
 
 bb.do:                                            ; preds = %bb.dn
-  %8 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %8)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.lf = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 7) #21
   %i.lg = zext i1 %i.lf to i8
   br label %bb.ep
@@ -315,8 +308,7 @@ bb.dp:                                            ; preds = %bb.dn
   br i1 %i.lk, label %bb.dq, label %bb.dr
 
 bb.dq:                                            ; preds = %bb.dr, %bb.dp
-  %9 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %9)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.ll = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 8) #21
   %i.lm = zext i1 %i.ll to i8
   br label %bb.ep
@@ -336,8 +328,7 @@ bb.ds:                                            ; preds = %bb.dr
   br i1 %i.lu, label %bb.dt, label %bb.du
 
 bb.dt:                                            ; preds = %bb.ds
-  %10 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %10)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.lv = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 9) #21
   %i.lw = zext i1 %i.lv to i8
   br label %bb.ep
@@ -350,8 +341,7 @@ bb.du:                                            ; preds = %bb.ds
   br i1 %i.ma, label %bb.dv, label %bb.dw
 
 bb.dv:                                            ; preds = %bb.du
-  %11 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %11)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.mb = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 4) #21
   %i.mc = zext i1 %i.mb to i8
   br label %bb.ep
@@ -364,8 +354,7 @@ bb.dw:                                            ; preds = %bb.du
   br i1 %i.mg, label %bb.dx, label %bb.dy
 
 bb.dx:                                            ; preds = %bb.dw
-  %12 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %12)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.mh = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 10) #21
   %i.mi = zext i1 %i.mh to i8
   br label %bb.ep
@@ -378,8 +367,7 @@ bb.dy:                                            ; preds = %bb.dw
   br i1 %i.mm, label %bb.dz, label %bb.ea
 
 bb.dz:                                            ; preds = %bb.dy
-  %13 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %13)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.mn = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 11) #21
   %i.mo = zext i1 %i.mn to i8
   br label %bb.ep
@@ -392,8 +380,7 @@ bb.ea:                                            ; preds = %bb.dy
   br i1 %i.ms, label %bb.eb, label %bb.ec
 
 bb.eb:                                            ; preds = %bb.ea
-  %14 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %14)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.mt = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 12) #21
   %i.mu = zext i1 %i.mt to i8
   br label %bb.ep
@@ -406,8 +393,7 @@ bb.ec:                                            ; preds = %bb.ea
   br i1 %i.my, label %bb.ed, label %bb.ee
 
 bb.ed:                                            ; preds = %bb.ec
-  %15 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %15)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.mz = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 13) #21
   %i.na = zext i1 %i.mz to i8
   br label %bb.ep
@@ -420,8 +406,7 @@ bb.ee:                                            ; preds = %bb.ec
   br i1 %i.ne, label %bb.ef, label %bb.eg
 
 bb.ef:                                            ; preds = %bb.ee
-  %16 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %16)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.nf = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 14) #21
   %i.ng = zext i1 %i.nf to i8
   br label %bb.ep
@@ -435,8 +420,7 @@ bb.eg:                                            ; preds = %bb.ee
 
 bb.eh:                                            ; preds = %bb.eg
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)
-  %17 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %17)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   call fastcc void @_RNvCs2szWGFz6wmN_7uu_test6isatty(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.t, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload) #21
   %i.nl = load i64, ptr %i.t, align 8, !range !201, !noundef !18 ; 2 uses
   %.not232 = icmp eq i64 %i.nl, -1
@@ -452,8 +436,7 @@ bb.ei:                                            ; preds = %bb.eg
   br i1 %i.nr, label %bb.ej, label %bb.ek
 
 bb.ej:                                            ; preds = %bb.ei
-  %18 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %18)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.ns = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 15) #21
   %i.nt = zext i1 %i.ns to i8
   br label %bb.ep
@@ -466,8 +449,7 @@ bb.ek:                                            ; preds = %bb.ei
   br i1 %i.nx, label %bb.el, label %bb.em
 
 bb.el:                                            ; preds = %bb.ek
-  %19 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %19)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.ny = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 16) #21
   %i.nz = zext i1 %i.ny to i8
   br label %bb.ep
@@ -484,8 +466,7 @@ bb.en:                                            ; preds = %bb.da, %bb.em
   unreachable
 
 bb.eo:                                            ; preds = %bb.em
-  %20 = icmp ne i64 %.sroa.5538.0.copyload, 0
-  tail call void @llvm.assume(i1 %20)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.jq) ]
   %i.oe = tail call fastcc noundef zeroext i1 @_RNvCs2szWGFz6wmN_7uu_test4path(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.jq, i64 noundef %.sroa.6539.0.copyload, i8 17) #21
   %i.of = zext i1 %i.oe to i8
   br label %bb.ep
@@ -888,7 +869,7 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs2szWGFz6wmN_7uu_test6parser6Symbol
   br label %bb.b
 
 bb.ai:                                            ; preds = %bb.ac, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringECs2szWGFz6wmN_7uu_test.exit.sink.split.i25, %bb.ad, %bb.ae, %bb.af, %bb.ag
-  %.sroa.0.1.ph = phi i64 [ %.sroa.0113.0.ph, %bb.ag ], [ %.sroa.0113.0.ph, %bb.af ], [ %.sroa.0113.0.ph, %bb.ae ], [ %.sroa.0.0174, %bb.ad ], [ %.sroa.0.0173, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringECs2szWGFz6wmN_7uu_test.exit.sink.split.i25 ], [ %.sroa.0113.0.ph, %bb.ac ]
+  %.sroa.0.1.ph = phi i64 [ %.sroa.0113.0.ph, %bb.ac ], [ %.sroa.0.0173, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringECs2szWGFz6wmN_7uu_test.exit.sink.split.i25 ], [ %.sroa.0.0174, %bb.ad ], [ %.sroa.0113.0.ph, %bb.ae ], [ %.sroa.0113.0.ph, %bb.af ], [ %.sroa.0113.0.ph, %bb.ag ]
   store i64 %.sroa.0.1.ph, ptr %0, align 8
   %.sroa.479.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.479.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8116, i64 24, i1 false)

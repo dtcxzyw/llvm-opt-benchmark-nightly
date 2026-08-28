@@ -204,10 +204,8 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b, !prof !567
 
 bb.b:                                             ; preds = %bb.a
-  %.val = load ptr, ptr %i.b, align 8, !nonnull !5, !align !65, !noundef !5 ; 3 uses
-  store i64 0, ptr %.val, align 8
-  %.sroa.410.0..0.val.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 8
-  store i8 0, ptr %.sroa.410.0..0.val.sroa_idx.i, align 8
+  %.val = load ptr, ptr %i.b, align 8, !nonnull !5, !align !65, !noundef !5 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %.val, i8 0, i64 9, i1 false)
   %.sroa.612.0..0.val.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 16
   store i64 1, ptr %.sroa.612.0..0.val.sroa_idx.i, align 8
   ret void
@@ -244,10 +242,8 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _RNvYNCINvMs0_NtNtCsaL1QbXo9JQH_3std4sync4onceNtBb_4Once9call_onceNCINvMNtCs4oabfA5r5hf_11lazy_static4lazyINtB17_4LazyINtNtNtBd_6poison6rwlock6RwLockNtCse7cAXHj51Pq_3log5LevelEE3getNvNvXs0_NtCskuiImRAV2ip_9elfshaker3logNtB30_14INIT_LOG_LEVELNtNtNtCs3oUPovFnLWP_4core3ops5deref5Deref5deref23___static_ref_initializeE0E0INtNtB3U_8function6FnOnceTRNtBb_9OnceStateEE9call_onceB32_.exit: ; preds = %bb.a
-  %.val.i.i = load ptr, ptr %i.b, align 8, !noalias !595, !nonnull !5, !align !65, !noundef !5 ; 3 uses
-  store i64 0, ptr %.val.i.i, align 8, !noalias !595
-  %.sroa.410.0..0.val.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 8
-  store i8 0, ptr %.sroa.410.0..0.val.sroa_idx.i.i.i, align 8, !noalias !595
+  %.val.i.i = load ptr, ptr %i.b, align 8, !noalias !595, !nonnull !5, !align !65, !noundef !5 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %.val.i.i, i8 0, i64 9, i1 false), !noalias !595
   %.sroa.612.0..0.val.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 16
   store i64 1, ptr %.sroa.612.0..0.val.sroa_idx.i.i.i, align 8, !noalias !595
   ret void

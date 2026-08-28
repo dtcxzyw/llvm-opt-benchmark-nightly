@@ -204,7 +204,7 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.0 = alloca i64, align 8                  ; 3 uses
+  %.sroa.0 = alloca [8 x i8], align 8             ; 3 uses
   %i.e = alloca [40 x i8], align 8                ; 4 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
   %i.g = alloca [40 x i8], align 8                ; 5 uses
@@ -235,8 +235,7 @@ bb.d:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %i.f, align 8, !noundef !5
   %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.n = load i64, ptr %i.m, align 8, !noundef !5 ; 4 uses
-  %2 = ptrtoint ptr %i.l to i64
-  store i64 %2, ptr %.sroa.0, align 8
+  store ptr %i.l, ptr %.sroa.0, align 8
   %i.o = icmp eq i64 %i.n, 0
   br i1 %i.o, label %_RINvYINtNtNtCsexYYUdYSQU6_5alloc11collections11linked_list4IterINtNtBa_3vec3VecNtCslKoDbeUmNq5_14dwarf_validate11UnitSummaryEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4foldjNCINvNtNtB26_8adapters3map8map_foldRBZ_jjNvMs_B12_BZ_3lenNCINvXsK_NtB24_5accumjNtB45_3Sum3sumINtB36_3MapB3_B3G_EE0E0EB1h_.exit.thread, label %.lr.ph.i.preheader
 
