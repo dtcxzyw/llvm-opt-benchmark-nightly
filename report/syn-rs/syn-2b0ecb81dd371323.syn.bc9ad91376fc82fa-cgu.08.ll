@@ -202,7 +202,7 @@ bb.a:
   %i.w = alloca [32 x i8], align 8                ; 5 uses
   %.sroa.6409 = alloca [24 x i8], align 8         ; 6 uses
   %i.x = alloca [32 x i8], align 8                ; 7 uses
-  %i.y = alloca [24 x i8], align 8                ; 7 uses
+  %i.y = alloca [24 x i8], align 8                ; 8 uses
   %i.z = alloca [24 x i8], align 8                ; 7 uses
   %i.aa = alloca [120 x i8], align 8              ; 4 uses
   %i.ab = alloca [120 x i8], align 8              ; 7 uses
@@ -236,7 +236,7 @@ bb.a:
   %i.aw = alloca [120 x i8], align 8              ; 4 uses
   %i.ax = alloca [120 x i8], align 8              ; 7 uses
   %.sroa.6228 = alloca [24 x i8], align 8         ; 6 uses
-  %i.ay = alloca [24 x i8], align 8               ; 7 uses
+  %i.ay = alloca [24 x i8], align 8               ; 8 uses
   %i.az = alloca [120 x i8], align 8              ; 10 uses
   %i.ba = alloca [32 x i8], align 8               ; 12 uses
   %i.bb = alloca [24 x i8], align 8               ; 9 uses
@@ -266,7 +266,7 @@ bb.a:
   %i.bp = alloca [120 x i8], align 8              ; 4 uses
   %i.bq = alloca [120 x i8], align 8              ; 7 uses
   %.sroa.6126 = alloca [24 x i8], align 8         ; 6 uses
-  %i.br = alloca [24 x i8], align 8               ; 7 uses
+  %i.br = alloca [24 x i8], align 8               ; 8 uses
   %i.bs = alloca [120 x i8], align 8              ; 8 uses
   %.sroa.6105 = alloca [24 x i8], align 8         ; 6 uses
   %.sroa.8107 = alloca [64 x i8], align 8         ; 6 uses
@@ -669,17 +669,21 @@ bb.fb:                                            ; preds = %bb.fa
   %i.hj = load i64, ptr %i.y, align 8, !range !60, !noundef !5 ; 2 uses
   %.not736 = icmp eq i64 %i.hj, -1
   %i.hk = getelementptr inbounds nuw i8, ptr %i.y, i64 8
-  %.sroa.0664.0.copyload = load i64, ptr %i.hk, align 8 ; 2 uses
+  %.sroa.0633.0.copyload = load i32, ptr %i.hk, align 8 ; 2 uses
   br i1 %.not736, label %bb.fd, label %bb.fc
 
 bb.fc:                                            ; preds = %bb.fb
+  %.sroa.5641.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.y, i64 12
+  %4 = load i32, ptr %.sroa.5641.0..sroa_idx, align 4
   %.sroa.5670.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.y, i64 16
   %.sroa.5670.0.copyload = load i64, ptr %.sroa.5670.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y)
   %i.hl = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.hj, ptr %i.hl, align 8
   %.sroa.4672.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.0664.0.copyload, ptr %.sroa.4672.0..sroa_idx, align 8
+  store i32 %.sroa.0633.0.copyload, ptr %.sroa.4672.0..sroa_idx, align 8
+  %.sroa.5645.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
+  store i32 %4, ptr %.sroa.5645.0..sroa_idx, align 4
   %.sroa.5673.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %.sroa.5670.0.copyload, ptr %.sroa.5673.0..sroa_idx, align 8
   store i64 -1, ptr %0, align 8
@@ -714,8 +718,7 @@ bb.fg:                                            ; preds = %bb.fe
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4412.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6409, i64 24, i1 false)
   store i64 %i.hm, ptr %i.x, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6409)
-  %4 = and i64 %.sroa.0664.0.copyload, 4294967295
-  %i.hq = icmp eq i64 %4, 1
+  %i.hq = icmp eq i32 %.sroa.0633.0.copyload, 1
   br i1 %i.hq, label %bb.fk, label %bb.fh
 
 bb.fh:                                            ; preds = %bb.fg
@@ -956,7 +959,7 @@ bb.gk:                                            ; preds = %bb.ft, %bb.gj
   %.sroa.5348.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ad, i64 96
   store i32 0, ptr %.sroa.5348.0..sroa_idx, align 8
   %.sroa.7350.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ad, i64 112
-  store i64 0, ptr %.sroa.7350.0..sroa_idx, align 8
+  store i32 0, ptr %.sroa.7350.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0347)
   invoke void @_RNvMNtCsgbWeKYPjk8w_3syn10punctuatedINtB2_10PunctuatedNtNtB4_8generics14TypeParamBoundNtNtB4_5token4PlusE10push_valueB4_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ae, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(120) %i.ad)
           to label %bb.gm unwind label %.loopexit.split-lp1067
@@ -1359,6 +1362,7 @@ bb.lb:                                            ; preds = %.loopexit.split-lp1
 bb.lc:                                            ; preds = %bb.la
   call void @llvm.lifetime.end.p0(ptr nonnull %i.az)
   %i.mq = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
+  %.sroa.4539.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ay, i64 12
   %.sroa.4579.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
   %.sroa.5580.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ax, i64 32
   %.sroa.6228.0..sroa_idx229 = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
@@ -1373,7 +1377,8 @@ bb.ld:                                            ; preds = %bb.ln, %bb.lc
 bb.le:                                            ; preds = %bb.ld
   %i.mr = load i64, ptr %i.ay, align 8, !range !60, !noundef !5 ; 2 uses
   %.not753 = icmp eq i64 %i.mr, -1
-  %.sroa.0568.0.copyload = load i64, ptr %i.mq, align 8 ; 3 uses
+  %.sroa.0538.0.copyload = load i32, ptr %i.mq, align 8 ; 2 uses
+  %.sroa.4539.sroa.0.0.copyload = load i32, ptr %.sroa.4539.0..sroa_idx, align 4 ; 2 uses
   br i1 %.not753, label %bb.lg, label %bb.lf
 
 bb.lf:                                            ; preds = %bb.le
@@ -1383,7 +1388,9 @@ bb.lf:                                            ; preds = %bb.le
   %i.ms = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.mr, ptr %i.ms, align 8
   %.sroa.4576.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.0568.0.copyload, ptr %.sroa.4576.0..sroa_idx, align 8
+  store i32 %.sroa.0538.0.copyload, ptr %.sroa.4576.0..sroa_idx, align 8
+  %.sroa.5550.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
+  store i32 %.sroa.4539.sroa.0.0.copyload, ptr %.sroa.5550.0..sroa_idx, align 4
   %.sroa.5577.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %.sroa.5574.0.copyload, ptr %.sroa.5577.0..sroa_idx, align 8
   store i64 -1, ptr %0, align 8
@@ -1391,13 +1398,11 @@ bb.lf:                                            ; preds = %bb.le
 
 bb.lg:                                            ; preds = %bb.le
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ay)
-  %i.mt = trunc i64 %.sroa.0568.0.copyload to i1
+  %i.mt = trunc i32 %.sroa.0538.0.copyload to i1
   br i1 %i.mt, label %bb.lh, label %bb.li
 
 bb.lh:                                            ; preds = %bb.lg
-  %.sroa.2224.0.extract.shift = lshr i64 %.sroa.0568.0.copyload, 32
-  %.sroa.2224.0.extract.trunc = trunc nuw i64 %.sroa.2224.0.extract.shift to i32
-  invoke void @_RNvMNtCsgbWeKYPjk8w_3syn10punctuatedINtB2_10PunctuatedNtNtB4_8generics14TypeParamBoundNtNtB4_5token4PlusE10push_punctB4_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ba, i32 noundef %.sroa.2224.0.extract.trunc)
+  invoke void @_RNvMNtCsgbWeKYPjk8w_3syn10punctuatedINtB2_10PunctuatedNtNtB4_8generics14TypeParamBoundNtNtB4_5token4PlusE10push_punctB4_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ba, i32 noundef %.sroa.4539.sroa.0.0.copyload)
           to label %bb.lj unwind label %.loopexit1058
 
 bb.li:                                            ; preds = %bb.lg
@@ -1800,6 +1805,7 @@ bb.oa:                                            ; preds = %bb.nz
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6105)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8107)
   %i.pc = getelementptr inbounds nuw i8, ptr %i.br, i64 8
+  %.sroa.4498.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.br, i64 12
   %.sroa.4540.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bq, i64 8
   %.sroa.5541.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bq, i64 32
   %.sroa.6126.0..sroa_idx127 = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
@@ -1814,7 +1820,8 @@ bb.ob:                                            ; preds = %bb.ol, %bb.oa
 bb.oc:                                            ; preds = %bb.ob
   %i.pd = load i64, ptr %i.br, align 8, !range !60, !noundef !5 ; 2 uses
   %.not764 = icmp eq i64 %i.pd, -1
-  %.sroa.0529.0.copyload = load i64, ptr %i.pc, align 8 ; 3 uses
+  %.sroa.0497.0.copyload = load i32, ptr %i.pc, align 8 ; 2 uses
+  %.sroa.4498.sroa.0.0.copyload = load i32, ptr %.sroa.4498.0..sroa_idx, align 4 ; 2 uses
   br i1 %.not764, label %bb.oe, label %bb.od
 
 bb.od:                                            ; preds = %bb.oc
@@ -1824,7 +1831,9 @@ bb.od:                                            ; preds = %bb.oc
   %i.pe = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.pd, ptr %i.pe, align 8
   %.sroa.4537.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.0529.0.copyload, ptr %.sroa.4537.0..sroa_idx, align 8
+  store i32 %.sroa.0497.0.copyload, ptr %.sroa.4537.0..sroa_idx, align 8
+  %.sroa.5509.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
+  store i32 %.sroa.4498.sroa.0.0.copyload, ptr %.sroa.5509.0..sroa_idx, align 4
   %.sroa.5538.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %.sroa.5535.0.copyload, ptr %.sroa.5538.0..sroa_idx, align 8
   store i64 -1, ptr %0, align 8
@@ -1832,13 +1841,11 @@ bb.od:                                            ; preds = %bb.oc
 
 bb.oe:                                            ; preds = %bb.oc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.br)
-  %i.pf = trunc i64 %.sroa.0529.0.copyload to i1
+  %i.pf = trunc i32 %.sroa.0497.0.copyload to i1
   br i1 %i.pf, label %bb.of, label %bb.og
 
 bb.of:                                            ; preds = %bb.oe
-  %.sroa.2122.0.extract.shift = lshr i64 %.sroa.0529.0.copyload, 32
-  %.sroa.2122.0.extract.trunc = trunc nuw i64 %.sroa.2122.0.extract.shift to i32
-  invoke void @_RNvMNtCsgbWeKYPjk8w_3syn10punctuatedINtB2_10PunctuatedNtNtB4_8generics14TypeParamBoundNtNtB4_5token4PlusE10push_punctB4_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.bu, i32 noundef %.sroa.2122.0.extract.trunc)
+  invoke void @_RNvMNtCsgbWeKYPjk8w_3syn10punctuatedINtB2_10PunctuatedNtNtB4_8generics14TypeParamBoundNtNtB4_5token4PlusE10push_punctB4_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.bu, i32 noundef %.sroa.4498.sroa.0.0.copyload)
           to label %bb.oh unwind label %.loopexit
 
 bb.og:                                            ; preds = %bb.oe

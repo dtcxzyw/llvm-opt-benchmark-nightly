@@ -205,7 +205,8 @@ bb.a:
 .thread.a:                                        ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.c, ptr %0, align 8, !tbaa !7
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  store i32 0, ptr %i.d, align 8, !tbaa !10
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 8, ptr %i.e, align 4, !tbaa !11
   br label %_ZN4llvh11SmallVectorIPN6hermes10BasicBlockELj8EEC2ISt16reverse_iteratorINS_12SuccIteratorINS1_14TerminatorInstES2_EEEvEET_SB_.exit
@@ -254,10 +255,10 @@ _ZN4llvh23SmallVectorTemplateBaseIPN6hermes10BasicBlockELb1EE18uninitialized_cop
   br label %_ZN4llvh11SmallVectorIPN6hermes10BasicBlockELj8EEC2ISt16reverse_iteratorINS_12SuccIteratorINS1_14TerminatorInstES2_EEEvEET_SB_.exit
 
 _ZN4llvh11SmallVectorIPN6hermes10BasicBlockELj8EEC2ISt16reverse_iteratorINS_12SuccIteratorINS1_14TerminatorInstES2_EEEvEET_SB_.exit: ; preds = %.thread.a, %bb.b, %_ZN4llvh23SmallVectorTemplateBaseIPN6hermes10BasicBlockELb1EE18uninitialized_copyISt16reverse_iteratorINS_12SuccIteratorINS1_14TerminatorInstES2_EEEPS3_EEvT_SC_T0_.exit.loopexit.i.i
-  %.sink.i.i.i.i1115 = phi i32 [ %i.f, %_ZN4llvh23SmallVectorTemplateBaseIPN6hermes10BasicBlockELb1EE18uninitialized_copyISt16reverse_iteratorINS_12SuccIteratorINS1_14TerminatorInstES2_EEEPS3_EEvT_SC_T0_.exit.loopexit.i.i ], [ 0, %bb.b ], [ 0, %.thread.a ]
   %2 = phi ptr [ %i.h, %_ZN4llvh23SmallVectorTemplateBaseIPN6hermes10BasicBlockELb1EE18uninitialized_copyISt16reverse_iteratorINS_12SuccIteratorINS1_14TerminatorInstES2_EEEPS3_EEvT_SC_T0_.exit.loopexit.i.i ], [ %i.h, %bb.b ], [ %i.d, %.thread.a ]
+  %.sink.i.i.i.i16 = phi i32 [ %i.f, %_ZN4llvh23SmallVectorTemplateBaseIPN6hermes10BasicBlockELb1EE18uninitialized_copyISt16reverse_iteratorINS_12SuccIteratorINS1_14TerminatorInstES2_EEEPS3_EEvT_SC_T0_.exit.loopexit.i.i ], [ 0, %bb.b ], [ 0, %.thread.a ]
   %i.q = phi i32 [ %.pre14.i.i, %_ZN4llvh23SmallVectorTemplateBaseIPN6hermes10BasicBlockELb1EE18uninitialized_copyISt16reverse_iteratorINS_12SuccIteratorINS1_14TerminatorInstES2_EEEPS3_EEvT_SC_T0_.exit.loopexit.i.i ], [ 0, %bb.b ], [ 0, %.thread.a ]
-  %i.r = add i32 %i.q, %.sink.i.i.i.i1115
+  %i.r = add i32 %i.q, %.sink.i.i.i.i16
   store i32 %i.r, ptr %2, align 8, !tbaa !10
   ret void
 }

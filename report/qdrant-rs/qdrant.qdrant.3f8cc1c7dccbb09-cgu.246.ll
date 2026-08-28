@@ -205,7 +205,7 @@ _RNvMNtNtCs577yCKf7gy3_4http3uri4pathNtB2_12PathAndQuery5query.exit: ; preds = %
 define hidden void @_RNvMNtNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7service10user_agentINtB2_9UserAgentINtNtNtB8_7service12grpc_timeout11GrpcTimeoutINtNtNtCs5TwP8AC98I6_5tower4util6either6EitherINtNtNtNtB2c_5limit11concurrency7service16ConcurrencyLimitIB26_INtNtNtB2W_4rate7service9RateLimitINtNtB4_9reconnect9ReconnectINtNtB4_10connection22MakeSendRequestServiceINtNtB4_9connector9ConnectorNtNtB6_13uds_connector12UdsConnectorEENtNtCs577yCKf7gy3_4http3uri3UriEEB4o_EEB3L_EEE3newCsl8OoimOLbh_6qdrant(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([544 x i8]) align 8 captures(none) dereferenceable(544) %0, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(504) %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(40) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %i.b = alloca [40 x i8], align 16               ; 7 uses
+  %i.b = alloca [40 x i8], align 16               ; 8 uses
   %i.c = alloca [24 x i8], align 8                ; 13 uses
   %.sroa.821 = alloca [7 x i8], align 1           ; 4 uses
   %.sroa.7 = alloca [7 x i8], align 1             ; 2 uses
@@ -305,7 +305,9 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
   %i.ac = load <2 x ptr>, ptr %i.b, align 16, !alias.scope !1820, !noalias !1821
   %.sroa.518.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %3 = load <2 x i64>, ptr %.sroa.518.0..sroa_idx, align 16, !alias.scope !1820, !noalias !1821
+  %.sroa.518.0.copyload = load i64, ptr %.sroa.518.0..sroa_idx, align 16, !alias.scope !1820, !noalias !1821
+  %.sroa.619.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %.sroa.619.0.copyload = load ptr, ptr %.sroa.619.0..sroa_idx, align 8, !alias.scope !1820, !noalias !1821
   %.sroa.821.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 33
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.821, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.821.0..sroa_idx, i64 7, i1 false), !alias.scope !1820, !noalias !1821
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1800
@@ -367,13 +369,16 @@ bb.q:                                             ; preds = %_RINvNtCskKLDkoKarT
 
 bb.r:                                             ; preds = %bb.a, %_RNCNvMNtNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7service10user_agentINtB4_9UserAgentINtNtNtBa_7service12grpc_timeout11GrpcTimeoutINtNtNtCs5TwP8AC98I6_5tower4util6either6EitherINtNtNtNtB2e_5limit11concurrency7service16ConcurrencyLimitIB28_INtNtNtB2Y_4rate7service9RateLimitINtNtB6_9reconnect9ReconnectINtNtB6_10connection22MakeSendRequestServiceINtNtB6_9connector9ConnectorNtNtB8_13uds_connector12UdsConnectorEENtNtCs577yCKf7gy3_4http3uri3UriEEB4q_EEB3N_EEE3new0Csl8OoimOLbh_6qdrant.exit
   %.sroa.6.0 = phi i8 [ %i.aa, %_RNCNvMNtNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7service10user_agentINtB4_9UserAgentINtNtNtBa_7service12grpc_timeout11GrpcTimeoutINtNtNtCs5TwP8AC98I6_5tower4util6either6EitherINtNtNtNtB2e_5limit11concurrency7service16ConcurrencyLimitIB28_INtNtNtB2Y_4rate7service9RateLimitINtNtB6_9reconnect9ReconnectINtNtB6_10connection22MakeSendRequestServiceINtNtB6_9connector9ConnectorNtNtB8_13uds_connector12UdsConnectorEENtNtCs577yCKf7gy3_4http3uri3UriEEB4q_EEB3N_EEE3new0Csl8OoimOLbh_6qdrant.exit ], [ 0, %bb.a ]
-  %4 = phi <2 x i64> [ %3, %_RNCNvMNtNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7service10user_agentINtB4_9UserAgentINtNtNtBa_7service12grpc_timeout11GrpcTimeoutINtNtNtCs5TwP8AC98I6_5tower4util6either6EitherINtNtNtNtB2e_5limit11concurrency7service16ConcurrencyLimitIB28_INtNtNtB2Y_4rate7service9RateLimitINtNtB6_9reconnect9ReconnectINtNtB6_10connection22MakeSendRequestServiceINtNtB6_9connector9ConnectorNtNtB8_13uds_connector12UdsConnectorEENtNtCs577yCKf7gy3_4http3uri3UriEEB4q_EEB3N_EEE3new0Csl8OoimOLbh_6qdrant.exit ], [ <i64 12, i64 0>, %bb.a ]
+  %.sroa.5.0 = phi ptr [ %.sroa.619.0.copyload, %_RNCNvMNtNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7service10user_agentINtB4_9UserAgentINtNtNtBa_7service12grpc_timeout11GrpcTimeoutINtNtNtCs5TwP8AC98I6_5tower4util6either6EitherINtNtNtNtB2e_5limit11concurrency7service16ConcurrencyLimitIB28_INtNtNtB2Y_4rate7service9RateLimitINtNtB6_9reconnect9ReconnectINtNtB6_10connection22MakeSendRequestServiceINtNtB6_9connector9ConnectorNtNtB8_13uds_connector12UdsConnectorEENtNtCs577yCKf7gy3_4http3uri3UriEEB4q_EEB3N_EEE3new0Csl8OoimOLbh_6qdrant.exit ], [ null, %bb.a ]
+  %.sroa.4.0 = phi i64 [ %.sroa.518.0.copyload, %_RNCNvMNtNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7service10user_agentINtB4_9UserAgentINtNtNtBa_7service12grpc_timeout11GrpcTimeoutINtNtNtCs5TwP8AC98I6_5tower4util6either6EitherINtNtNtNtB2e_5limit11concurrency7service16ConcurrencyLimitIB28_INtNtNtB2Y_4rate7service9RateLimitINtNtB6_9reconnect9ReconnectINtNtB6_10connection22MakeSendRequestServiceINtNtB6_9connector9ConnectorNtNtB8_13uds_connector12UdsConnectorEENtNtCs577yCKf7gy3_4http3uri3UriEEB4q_EEB3N_EEE3new0Csl8OoimOLbh_6qdrant.exit ], [ 12, %bb.a ]
   %i.am = phi <2 x ptr> [ %i.ac, %_RNCNvMNtNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7service10user_agentINtB4_9UserAgentINtNtNtBa_7service12grpc_timeout11GrpcTimeoutINtNtNtCs5TwP8AC98I6_5tower4util6either6EitherINtNtNtNtB2e_5limit11concurrency7service16ConcurrencyLimitIB28_INtNtNtB2Y_4rate7service9RateLimitINtNtB6_9reconnect9ReconnectINtNtB6_10connection22MakeSendRequestServiceINtNtB6_9connector9ConnectorNtNtB8_13uds_connector12UdsConnectorEENtNtCs577yCKf7gy3_4http3uri3UriEEB4q_EEB3N_EEE3new0Csl8OoimOLbh_6qdrant.exit ], [ <ptr @31, ptr @21>, %bb.a ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(504) %0, ptr noundef nonnull align 8 dereferenceable(504) %1, i64 504, i1 false)
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 504
   store <2 x ptr> %i.am, ptr %i.an, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 520
-  store <2 x i64> %4, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.4.0, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 528
+  store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 536
   store i8 %.sroa.6.0, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 537
@@ -399,7 +404,7 @@ bb.t:                                             ; preds = %.body
 define hidden void @_RNvMNtNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7service10user_agentINtB2_9UserAgentINtNtNtB8_7service12grpc_timeout11GrpcTimeoutINtNtNtCs5TwP8AC98I6_5tower4util6either6EitherINtNtNtNtB2c_5limit11concurrency7service16ConcurrencyLimitIB26_INtNtNtB2W_4rate7service9RateLimitINtNtB4_9reconnect9ReconnectINtNtB4_10connection22MakeSendRequestServiceINtNtB4_9connector9ConnectorNtNtNtNtNtCslfxrBSw8aGw_10hyper_util6client6legacy7connect4http13HttpConnectorEENtNtCs577yCKf7gy3_4http3uri3UriEEB4o_EEB3L_EEE3newCsl8OoimOLbh_6qdrant(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([528 x i8]) align 8 captures(none) dereferenceable(528) %0, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(488) %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(40) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %i.b = alloca [40 x i8], align 16               ; 7 uses
+  %i.b = alloca [40 x i8], align 16               ; 8 uses
   %i.c = alloca [24 x i8], align 8                ; 13 uses
   %.sroa.821 = alloca [7 x i8], align 1           ; 4 uses
   %.sroa.7 = alloca [7 x i8], align 1             ; 2 uses
@@ -499,7 +504,9 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
   %i.ac = load <2 x ptr>, ptr %i.b, align 16, !alias.scope !1857, !noalias !1858
   %.sroa.518.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %3 = load <2 x i64>, ptr %.sroa.518.0..sroa_idx, align 16, !alias.scope !1857, !noalias !1858
+  %.sroa.518.0.copyload = load i64, ptr %.sroa.518.0..sroa_idx, align 16, !alias.scope !1857, !noalias !1858
+  %.sroa.619.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %.sroa.619.0.copyload = load ptr, ptr %.sroa.619.0..sroa_idx, align 8, !alias.scope !1857, !noalias !1858
   %.sroa.821.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 33
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.821, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.821.0..sroa_idx, i64 7, i1 false), !alias.scope !1857, !noalias !1858
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1837
@@ -561,13 +568,16 @@ bb.q:                                             ; preds = %_RINvNtCskKLDkoKarT
 
 bb.r:                                             ; preds = %bb.a, %_RNCNvMNtNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7service10user_agentINtB4_9UserAgentINtNtNtBa_7service12grpc_timeout11GrpcTimeoutINtNtNtCs5TwP8AC98I6_5tower4util6either6EitherINtNtNtNtB2e_5limit11concurrency7service16ConcurrencyLimitIB28_INtNtNtB2Y_4rate7service9RateLimitINtNtB6_9reconnect9ReconnectINtNtB6_10connection22MakeSendRequestServiceINtNtB6_9connector9ConnectorNtNtNtNtNtCslfxrBSw8aGw_10hyper_util6client6legacy7connect4http13HttpConnectorEENtNtCs577yCKf7gy3_4http3uri3UriEEB4q_EEB3N_EEE3new0Csl8OoimOLbh_6qdrant.exit
   %.sroa.6.0 = phi i8 [ %i.aa, %_RNCNvMNtNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7service10user_agentINtB4_9UserAgentINtNtNtBa_7service12grpc_timeout11GrpcTimeoutINtNtNtCs5TwP8AC98I6_5tower4util6either6EitherINtNtNtNtB2e_5limit11concurrency7service16ConcurrencyLimitIB28_INtNtNtB2Y_4rate7service9RateLimitINtNtB6_9reconnect9ReconnectINtNtB6_10connection22MakeSendRequestServiceINtNtB6_9connector9ConnectorNtNtNtNtNtCslfxrBSw8aGw_10hyper_util6client6legacy7connect4http13HttpConnectorEENtNtCs577yCKf7gy3_4http3uri3UriEEB4q_EEB3N_EEE3new0Csl8OoimOLbh_6qdrant.exit ], [ 0, %bb.a ]
-  %4 = phi <2 x i64> [ %3, %_RNCNvMNtNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7service10user_agentINtB4_9UserAgentINtNtNtBa_7service12grpc_timeout11GrpcTimeoutINtNtNtCs5TwP8AC98I6_5tower4util6either6EitherINtNtNtNtB2e_5limit11concurrency7service16ConcurrencyLimitIB28_INtNtNtB2Y_4rate7service9RateLimitINtNtB6_9reconnect9ReconnectINtNtB6_10connection22MakeSendRequestServiceINtNtB6_9connector9ConnectorNtNtNtNtNtCslfxrBSw8aGw_10hyper_util6client6legacy7connect4http13HttpConnectorEENtNtCs577yCKf7gy3_4http3uri3UriEEB4q_EEB3N_EEE3new0Csl8OoimOLbh_6qdrant.exit ], [ <i64 12, i64 0>, %bb.a ]
+  %.sroa.5.0 = phi ptr [ %.sroa.619.0.copyload, %_RNCNvMNtNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7service10user_agentINtB4_9UserAgentINtNtNtBa_7service12grpc_timeout11GrpcTimeoutINtNtNtCs5TwP8AC98I6_5tower4util6either6EitherINtNtNtNtB2e_5limit11concurrency7service16ConcurrencyLimitIB28_INtNtNtB2Y_4rate7service9RateLimitINtNtB6_9reconnect9ReconnectINtNtB6_10connection22MakeSendRequestServiceINtNtB6_9connector9ConnectorNtNtNtNtNtCslfxrBSw8aGw_10hyper_util6client6legacy7connect4http13HttpConnectorEENtNtCs577yCKf7gy3_4http3uri3UriEEB4q_EEB3N_EEE3new0Csl8OoimOLbh_6qdrant.exit ], [ null, %bb.a ]
+  %.sroa.4.0 = phi i64 [ %.sroa.518.0.copyload, %_RNCNvMNtNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7service10user_agentINtB4_9UserAgentINtNtNtBa_7service12grpc_timeout11GrpcTimeoutINtNtNtCs5TwP8AC98I6_5tower4util6either6EitherINtNtNtNtB2e_5limit11concurrency7service16ConcurrencyLimitIB28_INtNtNtB2Y_4rate7service9RateLimitINtNtB6_9reconnect9ReconnectINtNtB6_10connection22MakeSendRequestServiceINtNtB6_9connector9ConnectorNtNtNtNtNtCslfxrBSw8aGw_10hyper_util6client6legacy7connect4http13HttpConnectorEENtNtCs577yCKf7gy3_4http3uri3UriEEB4q_EEB3N_EEE3new0Csl8OoimOLbh_6qdrant.exit ], [ 12, %bb.a ]
   %i.am = phi <2 x ptr> [ %i.ac, %_RNCNvMNtNtNtNtCsgOCJwUSa4vG_5tonic9transport7channel7service10user_agentINtB4_9UserAgentINtNtNtBa_7service12grpc_timeout11GrpcTimeoutINtNtNtCs5TwP8AC98I6_5tower4util6either6EitherINtNtNtNtB2e_5limit11concurrency7service16ConcurrencyLimitIB28_INtNtNtB2Y_4rate7service9RateLimitINtNtB6_9reconnect9ReconnectINtNtB6_10connection22MakeSendRequestServiceINtNtB6_9connector9ConnectorNtNtNtNtNtCslfxrBSw8aGw_10hyper_util6client6legacy7connect4http13HttpConnectorEENtNtCs577yCKf7gy3_4http3uri3UriEEB4q_EEB3N_EEE3new0Csl8OoimOLbh_6qdrant.exit ], [ <ptr @31, ptr @21>, %bb.a ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(488) %0, ptr noundef nonnull align 8 dereferenceable(488) %1, i64 488, i1 false)
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 488
   store <2 x ptr> %i.am, ptr %i.an, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 504
-  store <2 x i64> %4, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.4.0, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 512
+  store ptr %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 520
   store i8 %.sroa.6.0, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 521

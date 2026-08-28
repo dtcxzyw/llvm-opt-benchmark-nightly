@@ -17,7 +17,7 @@ target triple = "x86_64-unknown-linux-gnu"
 define void @_RNvCs98gWJ9r8fEu_6uu_tty6uu_app(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([712 x i8]) align 8 captures(none) dereferenceable(712) initializes((0, 712)) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 _RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNtCs7tKScEop1B6_5alloc6string6StringECs98gWJ9r8fEu_6uu_tty.exit:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
-  %i.b = alloca [640 x i8], align 8               ; 55 uses
+  %i.b = alloca [640 x i8], align 8               ; 56 uses
   %.sroa.0 = alloca [488 x i8], align 8           ; 4 uses
   %.sroa.748.sroa.0.sroa.5 = alloca [112 x i8], align 8 ; 4 uses
   %.sroa.748.sroa.6 = alloca [12 x i8], align 4   ; 4 uses
@@ -35,8 +35,8 @@ _RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNt
   %.sroa.5.i.sroa.0.0.copyload = load ptr, ptr %.sroa.55.0..sroa_idx.i, align 8
   %.sroa.5.i.sroa.4.0..sroa.55.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %.sroa.5.i.sroa.4.0.copyload = load i64, ptr %.sroa.5.i.sroa.4.0..sroa.55.0..sroa_idx.i.sroa_idx, align 8
+  %.sroa.5.i.sroa.4.sroa.0.0 = select i1 %i.i, i64 undef, i64 %.sroa.5.i.sroa.4.0.copyload
   %.sroa.5.i.sroa.0.0 = select i1 %i.i, ptr undef, ptr %.sroa.5.i.sroa.0.0.copyload
-  %.sroa.5.i.sroa.4.0 = select i1 %i.i, i64 undef, i64 %.sroa.5.i.sroa.4.0.copyload
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
@@ -55,8 +55,8 @@ _RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNt
   %.sroa.5.i4.sroa.0.0.copyload = load ptr, ptr %.sroa.55.0..sroa_idx.i6, align 8
   %.sroa.5.i4.sroa.4.0..sroa.55.0..sroa_idx.i6.sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %.sroa.5.i4.sroa.4.0.copyload = load i64, ptr %.sroa.5.i4.sroa.4.0..sroa.55.0..sroa_idx.i6.sroa_idx, align 8
+  %.sroa.5.i4.sroa.4.sroa.0.0 = select i1 %i.n, i64 undef, i64 %.sroa.5.i4.sroa.4.0.copyload
   %.sroa.5.i4.sroa.0.0 = select i1 %i.n, ptr undef, ptr %.sroa.5.i4.sroa.0.0.copyload
-  %.sroa.5.i4.sroa.4.0 = select i1 %i.n, i64 undef, i64 %.sroa.5.i4.sroa.4.0.copyload
   store i64 0, ptr %i.h, align 8, !alias.scope !25, !noalias !19
   %.sroa.0.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store i64 1, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8, !alias.scope !25, !noalias !19
@@ -111,7 +111,7 @@ _RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNt
   %.sroa.0.sroa.35.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 328
   store ptr %.sroa.5.i.sroa.0.0, ptr %.sroa.0.sroa.35.0..sroa_idx, align 8, !alias.scope !25, !noalias !19
   %.sroa.0.sroa.36.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 336
-  store i64 %.sroa.5.i.sroa.4.0, ptr %.sroa.0.sroa.36.0..sroa_idx, align 8, !alias.scope !25, !noalias !19
+  store i64 %.sroa.5.i.sroa.4.sroa.0.0, ptr %.sroa.0.sroa.36.0..sroa_idx, align 8, !alias.scope !25, !noalias !19
   %.sroa.0.sroa.37.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 344
   store i64 -1, ptr %.sroa.0.sroa.37.0..sroa_idx, align 8, !alias.scope !25, !noalias !19
   %.sroa.0.sroa.39.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 368
@@ -127,7 +127,7 @@ _RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNt
   %.sroa.6.0..sroa_idx15 = getelementptr inbounds nuw i8, ptr %i.h, i64 472
   store ptr %.sroa.5.i4.sroa.0.0, ptr %.sroa.6.0..sroa_idx15, align 8, !alias.scope !25, !noalias !19
   %.sroa.8.0..sroa_idx17 = getelementptr inbounds nuw i8, ptr %i.h, i64 480
-  store i64 %.sroa.5.i4.sroa.4.0, ptr %.sroa.8.0..sroa_idx17, align 8, !alias.scope !25, !noalias !19
+  store i64 %.sroa.5.i4.sroa.4.sroa.0.0, ptr %.sroa.8.0..sroa_idx17, align 8, !alias.scope !25, !noalias !19
   %.sroa.8.sroa.5.0..sroa.8.0..sroa_idx17.sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 488
   store i64 -1, ptr %.sroa.8.sroa.5.0..sroa.8.0..sroa_idx17.sroa_idx, align 8, !alias.scope !25, !noalias !19
   %.sroa.8.sroa.7.0..sroa.8.0..sroa_idx17.sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 512
@@ -185,7 +185,7 @@ _RINvMNtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB3_3Arg13visible_aliasReECs9
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 584
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 488 ; 2 uses
   store i64 -1, ptr %i.s, align 8, !alias.scope !27
-  %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 512 ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 512
   store i64 -1, ptr %i.t, align 8, !alias.scope !27
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 636
   store i8 -1, ptr %i.u, align 4, !alias.scope !27
@@ -301,7 +301,8 @@ _RINvMNtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB3_3Arg13visible_aliasReECs9
   %.sroa.451.0.copyload = load i64, ptr %i.s, align 8, !alias.scope !42 ; 2 uses
   %.sroa.552.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 496
   %.sroa.552.0.copyload = load ptr, ptr %.sroa.552.0..sroa_idx, align 8, !alias.scope !42 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %.sroa.748.sroa.0.sroa.5, ptr noundef nonnull align 8 dereferenceable(112) %i.t, i64 112, i1 false)
+  %.sroa.652.sroa.4.0..sroa.652.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 512
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %.sroa.748.sroa.0.sroa.5, ptr noundef nonnull align 8 dereferenceable(112) %.sroa.652.sroa.4.0..sroa.652.0..sroa_idx.sroa_idx, i64 112, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.748.sroa.6, ptr noundef nonnull align 4 dereferenceable(12) %i.ac, i64 12, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvNtNtCsh036I4OHgIr_6uucore4mods6locale11get_message(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @6, i64 noundef 15) #12

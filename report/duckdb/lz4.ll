@@ -204,20 +204,25 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = load i8, ptr %1, align 1, !tbaa !7
+  %i.b = load i8, ptr %1, align 1, !tbaa !7       ; 2 uses
+  %.sroa.0.sroa.0.0.zext = zext i8 %i.b to i16
+  %.sroa.0.sroa.0.0.isplat = mul nuw i16 %.sroa.0.sroa.0.0.zext, 257 ; 2 uses
   %i.c = zext i8 %i.b to i32
   %.sroa.0.0.isplat = mul nuw i32 %i.c, 16843009
   br label %bb.i
 
 bb.c:                                             ; preds = %bb.a
-  %.sroa.0.0.copyload9 = load i16, ptr %1, align 1
+  %.sroa.0.0.copyload9 = load i16, ptr %1, align 1 ; 3 uses
   %.sroa.0.0.insert.ext = zext i16 %.sroa.0.0.copyload9 to i32 ; 2 uses
   %.sroa.0.2.insert.shift = shl nuw i32 %.sroa.0.0.insert.ext, 16
   %.sroa.0.2.insert.insert = or disjoint i32 %.sroa.0.2.insert.shift, %.sroa.0.0.insert.ext
   br label %bb.i
 
 bb.d:                                             ; preds = %bb.a
-  %.sroa.0.0.copyload2 = load i32, ptr %1, align 1
+  %.sroa.0.0.copyload2 = load i32, ptr %1, align 1 ; 3 uses
+  %.sroa.0.sroa.0.0.extract.trunc = trunc i32 %.sroa.0.0.copyload2 to i16
+  %.sroa.0.sroa.8.0.extract.shift = lshr i32 %.sroa.0.0.copyload2, 16
+  %.sroa.0.sroa.8.0.extract.trunc = trunc nuw i32 %.sroa.0.sroa.8.0.extract.shift to i16
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.a
@@ -322,8 +327,14 @@ scalar.ph37:                                      ; preds = %scalar.ph37.prehead
   br i1 %i.au, label %scalar.ph37, label %_ZN10duckdb_lz4L28LZ4_memcpy_using_offset_baseEPhPKhS0_m.exit, !llvm.loop !104
 
 bb.i:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.sroa.9.0 = phi i32 [ %.sroa.0.0.isplat, %bb.b ], [ %.sroa.0.2.insert.insert, %bb.c ], [ %.sroa.0.0.copyload2, %bb.d ] ; 5 uses
-  store i32 %.sroa.9.0, ptr %0, align 1
+  %.sroa.0.sroa.0.0 = phi i16 [ %.sroa.0.sroa.0.0.isplat, %bb.b ], [ %.sroa.0.0.copyload9, %bb.c ], [ %.sroa.0.sroa.0.0.extract.trunc, %bb.d ]
+  %.sroa.0.sroa.8.0 = phi i16 [ %.sroa.0.sroa.0.0.isplat, %bb.b ], [ %.sroa.0.0.copyload9, %bb.c ], [ %.sroa.0.sroa.8.0.extract.trunc, %bb.d ]
+  %.sroa.9.0 = phi i32 [ %.sroa.0.0.isplat, %bb.b ], [ %.sroa.0.2.insert.insert, %bb.c ], [ %.sroa.0.0.copyload2, %bb.d ] ; 3 uses
+  %.sroa.0.sroa.8.0.insert.ext26 = zext i16 %.sroa.0.sroa.8.0 to i32
+  %.sroa.0.sroa.8.0.insert.shift27 = shl nuw i32 %.sroa.0.sroa.8.0.insert.ext26, 16
+  %.sroa.0.sroa.0.0.insert.ext18 = zext i16 %.sroa.0.sroa.0.0 to i32
+  %.sroa.0.sroa.0.0.insert.insert20 = or disjoint i32 %.sroa.0.sroa.8.0.insert.shift27, %.sroa.0.sroa.0.0.insert.ext18 ; 3 uses
+  store i32 %.sroa.0.sroa.0.0.insert.insert20, ptr %0, align 1
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %.sroa.9.0, ptr %.sroa.9.0..sroa_idx, align 1
   %.025 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
@@ -347,8 +358,9 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
   %i.be = shl i64 %n.vec, 3                       ; 2 uses
   %i.bf = getelementptr i8, ptr %.025, i64 %i.be
   %i.bg = getelementptr i8, ptr %0, i64 %i.be
+  %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %.sroa.0.sroa.0.0.insert.insert20, i64 0
   %broadcast.splatinsert.a = insertelement <2 x i32> poison, i32 %.sroa.9.0, i64 0
-  %4 = shufflevector <2 x i32> %broadcast.splatinsert.a, <2 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %interleaved.vec = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> %broadcast.splatinsert.a, <4 x i32> <i32 0, i32 2, i32 0, i32 2> ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -357,8 +369,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep = getelementptr i8, ptr %.025, i64 %i.bh
   %i.bi = getelementptr i8, ptr %.025, i64 %i.bh
   %next.gep33 = getelementptr i8, ptr %i.bi, i64 16
-  store <4 x i32> %4, ptr %next.gep, align 1
-  store <4 x i32> %4, ptr %next.gep33, align 1
+  store <4 x i32> %interleaved.vec, ptr %next.gep, align 1
+  store <4 x i32> %interleaved.vec, ptr %next.gep33, align 1
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bj = icmp eq i64 %index.next, %n.vec
   br i1 %i.bj, label %middle.block, label %vector.body, !llvm.loop !105
@@ -375,7 +387,7 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph:                                           ; preds = %.lr.ph.preheader51, %.lr.ph
   %.027 = phi ptr [ %.0, %.lr.ph ], [ %.027.ph, %.lr.ph.preheader51 ] ; 3 uses
   %.pn26 = phi ptr [ %.027, %.lr.ph ], [ %.pn26.ph, %.lr.ph.preheader51 ]
-  store i32 %.sroa.9.0, ptr %.027, align 1
+  store i32 %.sroa.0.sroa.0.0.insert.insert20, ptr %.027, align 1
   %.sroa.9.0..sroa_idx3 = getelementptr inbounds nuw i8, ptr %.pn26, i64 12
   store i32 %.sroa.9.0, ptr %.sroa.9.0..sroa_idx3, align 1
   %.0 = getelementptr inbounds nuw i8, ptr %.027, i64 8 ; 2 uses

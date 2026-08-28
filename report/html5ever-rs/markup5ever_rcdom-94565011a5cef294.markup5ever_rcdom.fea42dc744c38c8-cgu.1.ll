@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   store i64 -1, ptr %i.j, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %.0.val, i64 32 ; 7 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %.0.val, i64 32 ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !165)
   %i.n = load ptr, ptr %i.m, align 8, !alias.scope !165, !noalias !168, !nonnull !11, !noundef !11 ; 7 uses
   %i.o = ptrtoint ptr %i.n to i64                 ; 7 uses
@@ -238,7 +238,11 @@ bb.f:                                             ; preds = %bb.e
   %i.aa = icmp ult ptr %i.n, inttoptr (i64 16 to ptr)
   %i.ab = trunc i64 %i.o to i1                    ; 2 uses
   %or.cond.i.i42.i = or i1 %i.aa, %i.ab
-  br i1 %or.cond.i.i42.i, label %bb.g, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i.i.a
+  br i1 %or.cond.i.i42.i, label %bb.g, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i.i
+
+_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i.i: ; preds = %.thread41.i
+  %2 = getelementptr inbounds nuw i8, ptr %.0.val, i64 44
+  br label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i.i.a
 
 bb.g:                                             ; preds = %.thread41.i
   br i1 %i.q, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i, label %bb.h
@@ -258,9 +262,9 @@ bb.h:                                             ; preds = %bb.g
 
 _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i: ; preds = %bb.h, %bb.g, %bb.f
   %i.al = phi i32 [ %i.v, %bb.h ], [ %i.x, %bb.f ], [ %i.v, %bb.g ]
-  %.sroa.4.0.i.i.i.i = phi i64 [ %i.aj, %bb.h ], [ 0, %bb.f ], [ %i.o, %bb.g ] ; 4 uses
+  %.sroa.4.0.i.i.i.i = phi i64 [ %i.aj, %bb.h ], [ 0, %bb.f ], [ %i.o, %bb.g ] ; 2 uses
   %.sroa.0.0.i.i.i.i = phi ptr [ %i.ak, %bb.h ], [ inttoptr (i64 1 to ptr), %bb.f ], [ %i.r, %bb.g ]
-  %i.am = trunc nuw i64 %.sroa.4.0.i.i.i.i to i32
+  %i.am = trunc nuw i64 %.sroa.4.0.i.i.i.i to i32 ; 4 uses
   %spec.store.select.i.i.i.i.i = tail call i32 @llvm.umax.i32(i32 %i.am, i32 16)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !178
   %i.an = zext i32 %spec.store.select.i.i.i.i.i to i64
@@ -300,7 +304,7 @@ bb.j:                                             ; preds = %.noexc3
   %i.bb = shl i64 %i.au, 4
   %i.bc = add i64 %i.bb, -16                      ; 2 uses
   %i.bd = icmp ugt i64 %i.bc, 4294967295
-  br i1 %i.bd, label %bb.k, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10owned_copyCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i, !prof !22
+  br i1 %i.bd, label %bb.k, label %common.resume.sink.split.i, !prof !22
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !178
@@ -325,44 +329,40 @@ bb.n:                                             ; preds = %bb.l
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !noalias !178
   unreachable
 
-common.resume.sink.split.i:                       ; preds = %bb.z, %2
-  %.sink.i = phi ptr [ %i.ax, %2 ], [ %i.dj, %bb.z ]
-  %.sroa.04.0.insert.insert.i.i.i.sink.i = phi i64 [ %.sroa.04.0.insert.insert.i.i.i.i, %2 ], [ %.sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.0.copyload.i.i, %bb.z ]
-  %common.resume.op.ph.i = phi { ptr, i32 } [ %3, %2 ], [ %i.dk, %bb.z ]
-  store ptr %.sink.i, ptr %i.m, align 8, !alias.scope !165, !noalias !168
-  %.sroa.5.0..sroa_idx.i.i.i.a = getelementptr inbounds nuw i8, ptr %.0.val, i64 40
-  store i64 %.sroa.04.0.insert.insert.i.i.i.sink.i, ptr %.sroa.5.0..sroa_idx.i.i.i.a, align 8, !alias.scope !165, !noalias !168
+common.resume.sink.split.i:                       ; preds = %bb.j
+  %3 = trunc nuw i64 %i.bc to i32                 ; 2 uses
+  store i64 1, ptr %i.ax, align 8, !noalias !186
+  %.sroa.46.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
+  store i32 0, ptr %.sroa.46.0..sroa_idx.i.i.i.i, align 8, !noalias !186
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !178
+  %.sroa.5.0..sroa_idx.i.i.i.a = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.5.0..sroa_idx.i.i.i.a, ptr nonnull readonly align 1 %.sroa.0.0.i.i.i.i, i64 range(i64 0, 4294967296) %.sroa.4.0.i.i.i.i, i1 false), !noalias !187
+  invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBG_3fmt4UTF8EECs1mImOlsSUsK_17markup5ever_rcdom(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.m)
+          to label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i unwind label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10owned_copyCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i, !noalias !168
+
+_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10owned_copyCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i: ; preds = %common.resume.sink.split.i
+  %4 = landingpad { ptr, i32 }
+          cleanup
+  store ptr %i.ax, ptr %i.m, align 8, !alias.scope !177, !noalias !168
+  %i.bg = getelementptr inbounds nuw i8, ptr %.0.val, i64 40
+  store i32 %i.am, ptr %i.bg, align 8, !alias.scope !177, !noalias !168
+  %.sroa.6.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.0.val, i64 44
+  store i32 %3, ptr %.sroa.6.0..sroa_idx.i.i.i, align 4, !alias.scope !177, !noalias !168
   br label %bb.ae
 
-_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10owned_copyCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i: ; preds = %bb.j
-  store i64 1, ptr %i.ax, align 8, !noalias !186
-  %.sroa.47.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
-  store i32 0, ptr %.sroa.47.0..sroa_idx.i.i.i.i, align 8, !noalias !186
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !178
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bg, ptr nonnull readonly align 1 %.sroa.0.0.i.i.i.i, i64 range(i64 0, 4294967296) %.sroa.4.0.i.i.i.i, i1 false), !noalias !187
-  %.sroa.4.0.insert.shift.i.i.i.i = shl nuw i64 %i.bc, 32
-  %.sroa.04.0.insert.insert.i.i.i.i = add nuw nsw i64 %.sroa.4.0.insert.shift.i.i.i.i, %.sroa.4.0.i.i.i.i ; 2 uses
-  invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsldpiDtalS19_7tendril7tendril7TendrilNtNtBG_3fmt4UTF8EECs1mImOlsSUsK_17markup5ever_rcdom(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.m)
-          to label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i unwind label %2, !noalias !168
-
-2:                                                ; preds = %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10owned_copyCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i
-  %3 = landingpad { ptr, i32 }
-          cleanup
-  br label %common.resume.sink.split.i
-
-_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i: ; preds = %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10owned_copyCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i
+_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i: ; preds = %common.resume.sink.split.i
   store ptr %i.ax, ptr %i.m, align 8, !alias.scope !177, !noalias !168
   %.sroa.5.0..sroa_idx5.i.i.i = getelementptr inbounds nuw i8, ptr %.0.val, i64 40
-  store i64 %.sroa.04.0.insert.insert.i.i.i.i, ptr %.sroa.5.0..sroa_idx5.i.i.i, align 8, !alias.scope !177, !noalias !168
-  %4 = trunc i64 %.sroa.4.0.i.i.i.i to i32
+  store i32 %i.am, ptr %.sroa.5.0..sroa_idx5.i.i.i, align 8, !alias.scope !177, !noalias !168
+  %.sroa.6.0..sroa_idx7.i.i.i = getelementptr inbounds nuw i8, ptr %.0.val, i64 44 ; 2 uses
+  store i32 %3, ptr %.sroa.6.0..sroa_idx7.i.i.i, align 4, !alias.scope !177, !noalias !168
   br label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i.i.a
 
-_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i.i.a: ; preds = %.thread41.i, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i
-  %i.bh = phi i32 [ %4, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i ], [ %i.s, %.thread41.i ]
-  %i.bi = phi i32 [ %i.al, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i ], [ %i.v, %.thread41.i ] ; 3 uses
-  %i.bj = phi ptr [ %i.ax, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i ], [ %i.n, %.thread41.i ] ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.0.val, i64 44 ; 2 uses
+_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i.i.a: ; preds = %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i.i
+  %i.bh = phi i32 [ %i.s, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i.i ], [ %i.am, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i ]
+  %i.bi = phi i32 [ %i.v, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i.i ], [ %i.al, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i ] ; 3 uses
+  %i.bj = phi ptr [ %i.n, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i.i ], [ %i.ax, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i ] ; 2 uses
+  %5 = phi ptr [ %2, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.thread.i.i ], [ %.sroa.6.0..sroa_idx7.i.i.i, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10make_ownedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i ] ; 2 uses
   %.sroa.0.0.i.i.i = load i32, ptr %5, align 4, !noalias !188, !noundef !11 ; 3 uses
   %.not.i.i.i = icmp ugt i32 %i.bi, %.sroa.0.0.i.i.i
   br i1 %.not.i.i.i, label %bb.o, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E24make_owned_with_capacityCs1mImOlsSUsK_17markup5ever_rcdom.exit.i
@@ -509,7 +509,10 @@ _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte
 bb.z:                                             ; preds = %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCs1mImOlsSUsK_17markup5ever_rcdom.exit24.i
   %i.dk = landingpad { ptr, i32 }
           cleanup
-  br label %common.resume.sink.split.i
+  store ptr %i.dj, ptr %i.m, align 8, !alias.scope !165, !noalias !168
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0.val, i64 40
+  store i64 %.sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.0.copyload.i.i, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !165, !noalias !168
+  br label %bb.ae
 
 bb.aa:                                            ; preds = %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCs1mImOlsSUsK_17markup5ever_rcdom.exit24.i
   store ptr %i.dj, ptr %i.m, align 8, !alias.scope !165, !noalias !168
@@ -536,8 +539,8 @@ _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E29push_by
 bb.ad:                                            ; preds = %bb.a, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E29push_bytes_without_validatingCs1mImOlsSUsK_17markup5ever_rcdom.exit
   ret i1 %i.i
 
-bb.ae:                                            ; preds = %bb.ac, %bb.p, %common.resume.sink.split.i, %bb.l
-  %eh.lpad-body = phi { ptr, i32 } [ %i.dl, %bb.ac ], [ %i.bq, %bb.p ], [ %i.be, %bb.l ], [ %common.resume.op.ph.i, %common.resume.sink.split.i ]
+bb.ae:                                            ; preds = %bb.ac, %bb.z, %bb.p, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10owned_copyCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i, %bb.l
+  %eh.lpad-body = phi { ptr, i32 } [ %i.dl, %bb.ac ], [ %i.dk, %bb.z ], [ %i.be, %bb.l ], [ %4, %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E10owned_copyCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i ], [ %i.bq, %bb.p ]
   %i.do = load i64, ptr %i.j, align 8, !noundef !11
   %i.dp = add i64 %i.do, 1
   store i64 %i.dp, ptr %i.j, align 8

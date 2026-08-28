@@ -202,7 +202,7 @@ bb.w:                                             ; preds = %bb.v
   unreachable
 
 _RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i: ; preds = %.noexc12
-  %.sroa.019.0.copyload = load i64, ptr %i.d, align 8, !noalias !184
+  %.sroa.019.0.copyload = load i64, ptr %i.d, align 8, !noalias !184 ; 2 uses
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.016, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx, i64 16, i1 false)
   %.sroa.4.24..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.016, i64 16
@@ -210,17 +210,11 @@ _RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !178
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !178
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 240
-  %i.aj = load i8, ptr %i.ai, align 8, !range !185, !alias.scope !175, !noalias !186, !noundef !5
+  %i.aj = load i8, ptr %i.ai, align 8, !range !185, !alias.scope !175, !noalias !186, !noundef !5 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 224
-  %i.al = load i32, ptr %i.ak, align 8, !range !187, !alias.scope !175, !noalias !186, !noundef !5 ; 2 uses
-  %.not6.i = icmp eq i32 %i.al, -1                ; 2 uses
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 228
-  %.sroa.54.i.sroa.0.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx.i, align 4
-  %.sroa.54.i.sroa.4.0..sroa.4.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 232
-  %.sroa.54.i.sroa.4.0.copyload = load i64, ptr %.sroa.54.i.sroa.4.0..sroa.4.0..sroa_idx.i.sroa_idx, align 8
-  %.sroa.54.i.sroa.4.0 = select i1 %.not6.i, i64 undef, i64 %.sroa.54.i.sroa.4.0.copyload
-  %.sroa.54.i.sroa.0.0 = select i1 %.not6.i, i32 undef, i32 %.sroa.54.i.sroa.0.0.copyload
-  br label %bb.aa
+  %i.al = load i32, ptr %i.ak, align 8, !range !187, !alias.scope !175, !noalias !186, !noundef !5 ; 3 uses
+  %.not6.i = icmp eq i32 %i.al, -1
+  br i1 %.not6.i, label %bb.aa, label %2
 
 bb.x:                                             ; preds = %bb.t
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 184
@@ -258,12 +252,19 @@ _RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !188
   br label %bb.aa
 
-bb.aa:                                            ; preds = %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit7.i, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i, %bb.p
-  %.sroa.5.sroa.5.sroa.4.0 = phi i64 [ undef, %bb.p ], [ undef, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit7.i ], [ %.sroa.54.i.sroa.4.0, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ]
-  %.sroa.5.sroa.5.sroa.0.0 = phi i32 [ undef, %bb.p ], [ %.sroa.6.24.copyload, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit7.i ], [ %.sroa.54.i.sroa.0.0, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ]
-  %.sroa.5.sroa.6.0 = phi i8 [ undef, %bb.p ], [ undef, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit7.i ], [ %i.aj, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ]
-  %.sroa.5.sroa.4.0 = phi i32 [ undef, %bb.p ], [ %.sroa.5.24.copyload, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit7.i ], [ %i.al, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ]
-  %.sroa.0.0 = phi i64 [ -2, %bb.p ], [ -1, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit7.i ], [ %.sroa.019.0.copyload, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ]
+2:                                                ; preds = %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i
+  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 228
+  %.sroa.54.i.sroa.0.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx.i, align 4, !noalias !186
+  %.sroa.54.i.sroa.4.0..sroa.4.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 232
+  %3 = load i64, ptr %.sroa.54.i.sroa.4.0..sroa.4.0..sroa_idx.i.sroa_idx, align 8, !noalias !186
+  br label %bb.aa
+
+bb.aa:                                            ; preds = %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit7.i, %2, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i, %bb.p
+  %.sroa.54.i.sroa.4.sroa.0.0 = phi i64 [ undef, %bb.p ], [ undef, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit7.i ], [ undef, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ %3, %2 ]
+  %.sroa.5.sroa.5.sroa.0.0 = phi i32 [ undef, %bb.p ], [ %.sroa.6.24.copyload, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit7.i ], [ undef, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ %.sroa.54.i.sroa.0.0.copyload, %2 ]
+  %.sroa.5.sroa.6.0 = phi i8 [ undef, %bb.p ], [ undef, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit7.i ], [ %i.aj, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ %i.aj, %2 ]
+  %.sroa.5.sroa.4.0 = phi i32 [ undef, %bb.p ], [ %.sroa.5.24.copyload, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit7.i ], [ %i.al, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ %i.al, %2 ]
+  %.sroa.0.0 = phi i64 [ -2, %bb.p ], [ -1, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit7.i ], [ %.sroa.019.0.copyload, %_RNvXs5_NtCs607s0NAIaWN_7segment9json_pathNtB5_8JsonPathNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i ], [ %.sroa.019.0.copyload, %2 ]
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 248
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 248
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ar, ptr noundef nonnull align 8 dereferenceable(24) %i.aq, i64 24, i1 false)
@@ -283,7 +284,7 @@ bb.aa:                                            ; preds = %_RNvXs5_NtCs607s0NA
   %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 228
   store i32 %.sroa.5.sroa.5.sroa.0.0, ptr %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx, align 4
   %.sroa.5.sroa.5.sroa.4.0..sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 232
-  store i64 %.sroa.5.sroa.5.sroa.4.0, ptr %.sroa.5.sroa.5.sroa.4.0..sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx.sroa_idx, align 8
+  store i64 %.sroa.54.i.sroa.4.sroa.0.0, ptr %.sroa.5.sroa.5.sroa.4.0..sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx.sroa_idx, align 8
   %.sroa.5.sroa.6.0..sroa.5.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 240
   store i8 %.sroa.5.sroa.6.0, ptr %.sroa.5.sroa.6.0..sroa.5.0..sroa_idx.sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)

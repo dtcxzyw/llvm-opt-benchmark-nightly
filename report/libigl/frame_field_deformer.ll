@@ -205,13 +205,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0458)
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !93   ; 2 uses
   %i.c = icmp sgt i64 %i.b, 0
   br i1 %i.c, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
@@ -303,7 +303,7 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 6 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 7 uses
   %i.bb = phi i64 [ %i.b, %.lr.ph ], [ %i.oz, %bb.d ] ; 2 uses
   %i.bc = load ptr, ptr %i.d, align 8, !tbaa !65
   %i.bd = getelementptr [4 x i8], ptr %i.bc, i64 %indvars.iv ; 4 uses
@@ -443,46 +443,67 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i.i.i)
   %i.fl = load i32, ptr %i.be, align 4, !tbaa !95
   %i.fm = sext i32 %i.fl to i64
-  %i.fn = load ptr, ptr %i.o, align 8, !tbaa !62, !noalias !151 ; 3 uses
+  %i.fn = load ptr, ptr %i.o, align 8, !tbaa !62, !noalias !151 ; 5 uses
   %i.fo = getelementptr inbounds [8 x i8], ptr %i.fn, i64 %i.fm ; 3 uses
   %i.fp = load i32, ptr %i.bd, align 4, !tbaa !95
   %i.fq = sext i32 %i.fp to i64
   %i.fr = getelementptr inbounds [8 x i8], ptr %i.fn, i64 %i.fq ; 3 uses
-  %i.fs = load i64, ptr %i.p, align 8, !tbaa !80  ; 4 uses
+  %i.fs = load i64, ptr %i.p, align 8, !tbaa !80  ; 6 uses
   %i.ft = load double, ptr %i.fo, align 8, !tbaa !84 ; 2 uses
-  %i.fu = load double, ptr %i.fr, align 8, !tbaa !84 ; 2 uses
+  %i.fu = load double, ptr %i.fr, align 8, !tbaa !84
   %i.fv = fsub double %i.ft, %i.fu
   %.sroa.0469.0.vec.insert = insertelement <2 x double> poison, double %i.fv, i64 0
   %i.fw = getelementptr inbounds [8 x i8], ptr %i.fo, i64 %i.fs
   %i.fx = getelementptr inbounds [8 x i8], ptr %i.fr, i64 %i.fs
   %i.fy = load double, ptr %i.fw, align 8, !tbaa !84 ; 2 uses
-  %i.fz = load double, ptr %i.fx, align 8, !tbaa !84 ; 2 uses
+  %i.fz = load double, ptr %i.fx, align 8, !tbaa !84
   %i.ga = fsub double %i.fy, %i.fz
   %.sroa.0469.8.vec.insert = insertelement <2 x double> %.sroa.0469.0.vec.insert, double %i.ga, i64 1 ; 3 uses
-  %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i37 = shl nsw i64 %i.fs, 4 ; 3 uses
+  %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i37 = shl nsw i64 %i.fs, 4 ; 5 uses
   %i.gb = getelementptr inbounds i8, ptr %i.fo, i64 %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i37
   %i.gc = getelementptr inbounds i8, ptr %i.fr, i64 %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i37
   %i.gd = load double, ptr %i.gb, align 8, !tbaa !84 ; 2 uses
-  %i.ge = load double, ptr %i.gc, align 8, !tbaa !84 ; 2 uses
+  %i.ge = load double, ptr %i.gc, align 8, !tbaa !84
   %i.gf = fsub double %i.gd, %i.ge                ; 3 uses
   %i.gg = load i32, ptr %i.ca, align 4, !tbaa !95
   %i.gh = sext i32 %i.gg to i64
   %i.gi = getelementptr inbounds [8 x i8], ptr %i.fn, i64 %i.gh ; 3 uses
-  %i.gj = load double, ptr %i.gi, align 8, !tbaa !84 ; 2 uses
+  %i.gj = load double, ptr %i.gi, align 8, !tbaa !84
   %i.gk = fsub double %i.gj, %i.ft
   %.sroa.6472.24.vec.insert = insertelement <2 x double> poison, double %i.gk, i64 0
   %i.gl = getelementptr inbounds [8 x i8], ptr %i.gi, i64 %i.fs
-  %i.gm = load double, ptr %i.gl, align 8, !tbaa !84 ; 2 uses
+  %i.gm = load double, ptr %i.gl, align 8, !tbaa !84
   %i.gn = fsub double %i.gm, %i.fy
   %.sroa.6472.32.vec.insert = insertelement <2 x double> %.sroa.6472.24.vec.insert, double %i.gn, i64 1 ; 3 uses
   %i.go = getelementptr inbounds i8, ptr %i.gi, i64 %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i37
-  %i.gp = load double, ptr %i.go, align 8, !tbaa !84 ; 2 uses
+  %i.gp = load double, ptr %i.go, align 8, !tbaa !84
   %i.gq = fsub double %i.gp, %i.gd                ; 3 uses
-  %i.gr = fsub double %i.fu, %i.gj
+  %9 = load ptr, ptr %i.d, align 8, !tbaa !65
+  %10 = getelementptr [4 x i8], ptr %9, i64 %indvars.iv ; 2 uses
+  %11 = load i32, ptr %10, align 4, !tbaa !95
+  %12 = sext i32 %11 to i64
+  %13 = getelementptr inbounds [8 x i8], ptr %i.fn, i64 %12 ; 3 uses
+  %14 = load i64, ptr %i.a, align 8, !tbaa !93
+  %.idx445 = shl i64 %14, 3
+  %15 = getelementptr i8, ptr %10, i64 %.idx445
+  %16 = load i32, ptr %15, align 4, !tbaa !95
+  %17 = sext i32 %16 to i64
+  %18 = getelementptr inbounds [8 x i8], ptr %i.fn, i64 %17 ; 3 uses
+  %19 = load double, ptr %13, align 8, !tbaa !84
+  %20 = load double, ptr %18, align 8, !tbaa !84
+  %i.gr = fsub double %19, %20
   %.sroa.11475.48.vec.insert = insertelement <2 x double> poison, double %i.gr, i64 0
-  %i.gs = fsub double %i.fz, %i.gm
+  %21 = getelementptr inbounds [8 x i8], ptr %13, i64 %i.fs
+  %22 = getelementptr inbounds [8 x i8], ptr %18, i64 %i.fs
+  %23 = load double, ptr %21, align 8, !tbaa !84
+  %24 = load double, ptr %22, align 8, !tbaa !84
+  %i.gs = fsub double %23, %24
   %.sroa.11475.56.vec.insert = insertelement <2 x double> %.sroa.11475.48.vec.insert, double %i.gs, i64 1 ; 3 uses
-  %i.gt = fsub double %i.ge, %i.gp                ; 3 uses
+  %25 = getelementptr inbounds i8, ptr %13, i64 %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i37
+  %26 = getelementptr inbounds i8, ptr %18, i64 %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i37
+  %27 = load double, ptr %25, align 8, !tbaa !84
+  %28 = load double, ptr %26, align 8, !tbaa !84
+  %i.gt = fsub double %27, %28                    ; 3 uses
   %i.gu = load ptr, ptr %i.q, align 8, !tbaa !62
   %i.gv = load i64, ptr %i.r, align 8, !tbaa !80  ; 2 uses
   %i.gw = getelementptr [8 x i8], ptr %i.gu, i64 %indvars.iv ; 3 uses

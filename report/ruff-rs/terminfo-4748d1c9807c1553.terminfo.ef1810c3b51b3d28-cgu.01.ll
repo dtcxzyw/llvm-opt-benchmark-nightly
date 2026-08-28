@@ -197,7 +197,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc void @_RNCINvNtCs5Q5FLCJ3YzS_3nom5multi5countRShbINtNtB6_5error5ErrorBA_ENvNtNtCskwGTd9yTe3I_8terminfo6parser8compiled7booleanE0B18_(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(48) %0, i64 %.0.val, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef range(i64 0, -9223372036854775808) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [2 x i8], align 2                 ; 4 uses
+  %i.a = alloca [2 x i8], align 1                 ; 5 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 4 uses
   %i.d = alloca [32 x i8], align 8                ; 6 uses
@@ -232,6 +232,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c
+  %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 24
@@ -269,7 +270,8 @@ bb.g:                                             ; preds = %.lr.ph, %bb.l
   %.sroa.01.010 = phi ptr [ %1, %.lr.ph ], [ %i.w, %bb.l ]
   %i.u = add nuw i64 %.sroa.010.012, 1            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !9
-  store i16 256, ptr %i.a, align 2, !noalias !9
+  store i8 0, ptr %i.a, align 1, !noalias !9
+  store i8 1, ptr %.sroa.4.0..sroa_idx.i.i.i, align 1, !noalias !9
   invoke void @_RNvXs_NtCs5Q5FLCJ3YzS_3nom6branchTNCINvNtB6_10combinator3mapRShBW_bINtNtB6_5error5ErrorBW_ENCINvNtNtB6_5bytes9streaming3tagAhj1_BW_B13_E0NCNvNtNtCskwGTd9yTe3I_8terminfo6parser8compiled7boolean0E0NCIBz_BW_BW_bB13_B1r_NCB2d_s_0E0EINtB4_3AltBW_bB13_E6choiceB2j_(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.d, ptr noalias noundef nonnull dereferenceable(2) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.01.010, i64 noundef range(i64 0, -9223372036854775808) %.sroa.6.011)
           to label %bb.h unwind label %bb.f
 
@@ -672,7 +674,7 @@ bb.a:
   %i.v = alloca [40 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
-  store i32 35520794, ptr %i.u, align 4
+  store <4 x i8> <i8 26, i8 1, i8 30, i8 2>, ptr %i.u, align 4
   call void @_RNvXs_NtCs5Q5FLCJ3YzS_3nom6branchTNCINvNtNtB6_5bytes9streaming3tagAhj2_RShINtNtB6_5error5ErrorB17_EE0Bw_EINtB4_3AltB17_B17_B1a_E6choiceCskwGTd9yTe3I_8terminfo(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.v, ptr noalias noundef nonnull dereferenceable(4) %i.u, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2)
   %i.w = load i64, ptr %i.v, align 8, !range !3, !noundef !4
   %i.x = trunc nuw i64 %i.w to i1

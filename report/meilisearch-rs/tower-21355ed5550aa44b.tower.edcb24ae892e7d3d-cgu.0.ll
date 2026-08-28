@@ -205,9 +205,10 @@ bb.b:                                             ; preds = %bb.a
   %spec.select.i.i = select i1 %i.i, i1 %i.j, i1 false
   br i1 %spec.select.i.i, label %"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E.exit.thread", label %"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E.exit"
 
-"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E.exit.thread": ; preds = %bb.a, %bb.b
-  %.sroa.0.0.ph = phi i64 [ ptrtoint (ptr @41 to i64), %bb.b ], [ ptrtoint (ptr @42 to i64), %bb.a ]
-  %.sink9.i.ph = phi i64 [ 24, %bb.b ], [ 37, %bb.a ]
+"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E.exit.thread": ; preds = %bb.b, %bb.a
+  %storemerge = phi ptr [ @42, %bb.a ], [ @41, %bb.b ]
+  %.sroa.0.0.ph = phi i64 [ 37, %bb.a ], [ 24, %bb.b ]
+  %1 = ptrtoint ptr %storemerge to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -223,8 +224,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.c, label %"_ZN4core6result19Result$LT$T$C$E$GT$6expect17hf460c4453691c5b8E.exit"
 
 bb.c:                                             ; preds = %"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E.exit.thread", %"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E.exit"
-  %.sroa.5.0 = phi i64 [ %.sink9.i.ph, %"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E.exit.thread" ], [ %i.e, %"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E.exit" ]
-  %.sroa.0.013 = phi i64 [ %.sroa.0.0.ph, %"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E.exit.thread" ], [ 4607092346807469998, %"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E.exit" ]
+  %.sroa.5.0 = phi i64 [ %.sroa.0.0.ph, %"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E.exit.thread" ], [ %i.e, %"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E.exit" ]
+  %.sroa.0.013 = phi i64 [ %1, %"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E.exit.thread" ], [ 4607092346807469998, %"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E.exit" ]
   %i.n = inttoptr i64 %.sroa.0.013 to ptr
   store ptr %i.n, ptr %i.a, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8

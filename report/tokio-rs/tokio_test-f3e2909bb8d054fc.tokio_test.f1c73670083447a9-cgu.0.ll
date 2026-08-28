@@ -204,7 +204,7 @@ bb.a:
 define noundef nonnull ptr @_RNvMs5_NtCskKYJnXoAH79_10tokio_test4taskNtB5_8MockTask3new() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #17, !noalias !119
-  %i.a = tail call noundef align 8 dereferenceable_or_null(40) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef 40, i64 noundef 8) #17, !noalias !119 ; 5 uses
+  %i.a = tail call noundef align 8 dereferenceable_or_null(40) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef 40, i64 noundef 8) #17, !noalias !119 ; 8 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.b, label %_RNvNtCs1xwejQucwHj_5alloc5boxed14box_new_uninit.exit, !prof !22
 
@@ -217,7 +217,13 @@ _RNvNtCs1xwejQucwHj_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.a
   %.sroa.4.0..sroa_idx12 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx12, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.5.0..sroa_idx, i8 0, i64 20, i1 false)
+  store i32 0, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 20
+  store i8 0, ptr %.sroa.6.0..sroa_idx, align 4
+  %.sroa.713.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
+  store i64 0, ptr %.sroa.713.0..sroa_idx, align 8
+  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  store i32 0, ptr %.sroa.8.0..sroa_idx, align 8
   ret ptr %i.a
 }
 
@@ -620,7 +626,7 @@ _RNvXsU_NtNtCs3oUPovFnLWP_4core3fmt3numhNtB7_5Debug3fmt.exit: ; preds = %bb.c, %
 define noundef nonnull ptr @_RNvXs6_NtCskKYJnXoAH79_10tokio_test4taskNtB5_8MockTaskNtNtCs3oUPovFnLWP_4core7default7Default7default() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #17, !noalias !226
-  %i.a = tail call noundef align 8 dereferenceable_or_null(40) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef 40, i64 noundef 8) #17, !noalias !226 ; 5 uses
+  %i.a = tail call noundef align 8 dereferenceable_or_null(40) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef 40, i64 noundef 8) #17, !noalias !226 ; 8 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.b, label %_RNvMs5_NtCskKYJnXoAH79_10tokio_test4taskNtB5_8MockTask3new.exit, !prof !22
 
@@ -633,7 +639,13 @@ _RNvMs5_NtCskKYJnXoAH79_10tokio_test4taskNtB5_8MockTask3new.exit: ; preds = %bb.
   %.sroa.4.0..sroa_idx12.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx12.i, align 8
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.5.0..sroa_idx.i, i8 0, i64 20, i1 false)
+  store i32 0, ptr %.sroa.5.0..sroa_idx.i, align 8
+  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 20
+  store i8 0, ptr %.sroa.6.0..sroa_idx.i, align 4
+  %.sroa.713.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
+  store i64 0, ptr %.sroa.713.0..sroa_idx.i, align 8
+  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  store i32 0, ptr %.sroa.8.0..sroa_idx.i, align 8
   ret ptr %i.a
 }
 

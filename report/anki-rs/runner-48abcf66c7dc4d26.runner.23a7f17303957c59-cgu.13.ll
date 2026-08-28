@@ -204,7 +204,7 @@ bb.br:                                            ; preds = %.noexc155.i.i.i
 bb.bs:                                            ; preds = %bb.br
   %.sroa.07.0.copyload.i.i.i.i = load i64, ptr %i.co, align 8, !noalias !679 ; 2 uses
   %.sroa.4.0..sroa_idx.i152.i.i.i = getelementptr inbounds nuw i8, ptr %i.co, i64 8
-  %.sroa.4.0.copyload.i.i.i.i = load ptr, ptr %.sroa.4.0..sroa_idx.i152.i.i.i, align 8, !noalias !679 ; 2 uses
+  %.sroa.4.0.copyload.i.i.i.i = load ptr, ptr %.sroa.4.0..sroa_idx.i152.i.i.i, align 8, !noalias !679 ; 3 uses
   %.sroa.58.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.co, i64 16
   %.sroa.58.0.copyload.i.i.i.i = load i64, ptr %.sroa.58.0..sroa_idx.i.i.i.i, align 8, !noalias !679
   call void @llvm.lifetime.end.p0(ptr nonnull %i.co), !noalias !679
@@ -214,6 +214,7 @@ bb.bs:                                            ; preds = %bb.br
   br i1 %i.hz, label %bb.bt, label %bb.m
 
 bb.bt:                                            ; preds = %bb.bs
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload.i.i.i.i) ]
   %i.ia = ptrtoint ptr %.sroa.4.0.copyload.i.i.i.i to i64
   br label %bb.m
 
@@ -616,7 +617,7 @@ bb.lq:                                            ; preds = %bb.lp
   store i8 1, ptr %i.ug, align 1, !noalias !694
   %i.ui = getelementptr inbounds nuw i8, ptr %i.bg, i64 6
   store i8 0, ptr %i.ui, align 1, !noalias !694
-  store i32 2, ptr %i.ue, align 1, !noalias !694
+  store i8 2, ptr %i.ue, align 1, !noalias !694
   store i8 1, ptr %i.bg, align 1, !noalias !694
   %i.uj = load i64, ptr %i.bh, align 8, !range !285, !noalias !694, !noundef !4
   %i.uk = trunc nuw i64 %i.uj to i1
@@ -633,7 +634,7 @@ bb.lr:                                            ; preds = %bb.lp
   store i8 1, ptr %i.un, align 1, !noalias !694
   %i.up = getelementptr inbounds nuw i8, ptr %i.bc, i64 6
   store i8 0, ptr %i.up, align 1, !noalias !694
-  store i32 3, ptr %i.ul, align 1, !noalias !694
+  store i8 3, ptr %i.ul, align 1, !noalias !694
   store i8 1, ptr %i.bc, align 1, !noalias !694
   %i.uq = load i64, ptr %i.bh, align 8, !range !285, !noalias !694, !noundef !4
   %i.ur = trunc nuw i64 %i.uq to i1

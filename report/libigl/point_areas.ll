@@ -205,18 +205,18 @@ bb.bs:                                            ; preds = %.preheader
   %i.aab = getelementptr [4 x i8], ptr %i.zh, i64 %i.aaa
   %i.aac = load i32, ptr %i.aab, align 4, !tbaa !40
   %i.aad = sext i32 %i.aac to i64
-  %i.aae = getelementptr inbounds [8 x i8], ptr %i.xt, i64 %i.aad ; 7 uses
+  %i.aae = getelementptr inbounds [8 x i8], ptr %i.xt, i64 %i.aad ; 9 uses
   %i.aaf = zext nneg i32 %i.zy to i64
   %i.aag = mul nuw nsw i64 %.1.i, %i.aaf
   %i.aah = getelementptr [4 x i8], ptr %i.zh, i64 %i.aag
   %i.aai = load i32, ptr %i.aah, align 4, !tbaa !40
   %i.aaj = sext i32 %i.aai to i64
-  %i.aak = getelementptr inbounds [8 x i8], ptr %i.xt, i64 %i.aaj ; 7 uses
+  %i.aak = getelementptr inbounds [8 x i8], ptr %i.xt, i64 %i.aaj ; 8 uses
   br i1 %i.xw, label %.loopexit, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
-  %i.aal = load double, ptr %i.aae, align 8, !tbaa !17 ; 3 uses
-  %i.aam = load double, ptr %i.aak, align 8, !tbaa !17 ; 2 uses
+  %i.aal = load double, ptr %i.aae, align 8, !tbaa !17
+  %i.aam = load double, ptr %i.aak, align 8, !tbaa !17
   %i.aan = fsub double %i.aal, %i.aam             ; 2 uses
   %i.aao = fmul double %i.aan, %i.aan             ; 3 uses
   br i1 %i.xy, label %.lr.ph.i.i.i.i.i276.preheader, label %.loopexit822
@@ -275,9 +275,10 @@ bb.bt:                                            ; preds = %bb.bs
   %i.abr = getelementptr [4 x i8], ptr %i.zh, i64 %i.abq
   %i.abs = load i32, ptr %i.abr, align 4, !tbaa !40
   %i.abt = sext i32 %i.abs to i64
-  %i.abu = getelementptr inbounds [8 x i8], ptr %i.xt, i64 %i.abt ; 7 uses
-  %i.abv = load double, ptr %i.abu, align 8, !tbaa !17 ; 3 uses
-  %i.abw = fsub double %i.abv, %i.aam             ; 2 uses
+  %i.abu = getelementptr inbounds [8 x i8], ptr %i.xt, i64 %i.abt ; 9 uses
+  %21 = load double, ptr %i.abu, align 8, !tbaa !17
+  %i.abv = load double, ptr %i.aak, align 8, !tbaa !17
+  %i.abw = fsub double %21, %i.abv                ; 2 uses
   %i.abx = fmul double %i.abw, %i.abw             ; 3 uses
   br i1 %i.xy, label %.lr.ph.i.i.i.i.i291.preheader, label %.loopexit821
 
@@ -312,7 +313,9 @@ bb.bt:                                            ; preds = %bb.bs
 
 .loopexit821:                                     ; preds = %.loopexit822
   %.scalar.i290809 = call noundef double @llvm.sqrt.f64(double %i.abx) ; 2 uses
-  %i.acq = fsub double %i.aal, %i.abv             ; 2 uses
+  %22 = load double, ptr %i.aae, align 8, !tbaa !17
+  %23 = load double, ptr %i.abu, align 8, !tbaa !17
+  %i.acq = fsub double %22, %23                   ; 2 uses
   %i.acr = fmul double %i.acq, %i.acq
   %i.acs = insertelement <2 x double> poison, double %.scalar.i290809, i64 0
   %i.act = insertelement <2 x double> %i.acs, double %.scalar.i802, i64 1
@@ -338,7 +341,9 @@ bb.bt:                                            ; preds = %bb.bs
 .lr.ph.i.i.i.i.i307.preheader:                    ; preds = %.lr.ph.i.i.i.i.i307.preheader.unr-lcssa, %.lr.ph.i.i.i.i.i291.epil.preheader
   %.lcssa1089 = phi double [ %i.aco, %.lr.ph.i.i.i.i.i307.preheader.unr-lcssa ], [ %i.adb, %.lr.ph.i.i.i.i.i291.epil.preheader ]
   %.scalar.i290809963 = call noundef double @llvm.sqrt.f64(double %.lcssa1089) ; 3 uses
-  %i.adc = fsub double %i.aal, %i.abv             ; 2 uses
+  %24 = load double, ptr %i.aae, align 8, !tbaa !17
+  %25 = load double, ptr %i.abu, align 8, !tbaa !17
+  %i.adc = fsub double %24, %25                   ; 2 uses
   %i.add = fmul double %i.adc, %i.adc             ; 2 uses
   %i.ade = insertelement <2 x double> poison, double %.scalar.i290809963, i64 0
   %i.adf = insertelement <2 x double> %i.ade, double %.scalar.i802, i64 1 ; 2 uses
@@ -387,7 +392,7 @@ bb.bt:                                            ; preds = %bb.bs
   %i.aef = fadd double %.02223.i.i.i.i.i309.epil.init, %i.aee
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i307.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.loopexit821, %bb.bs
+.loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i307.epil.preheader, %.loopexit.loopexit.unr-lcssa, %bb.bs, %.loopexit821
   %.scalar.i290813 = phi double [ 0.000000e+00, %bb.bs ], [ %.scalar.i290809, %.loopexit821 ], [ %.scalar.i290809963, %.loopexit.loopexit.unr-lcssa ], [ %.scalar.i290809963, %.lr.ph.i.i.i.i.i307.epil.preheader ] ; 4 uses
   %.scalar.i804811 = phi double [ 0.000000e+00, %bb.bs ], [ %.scalar.i802, %.loopexit821 ], [ %.scalar.i802, %.loopexit.loopexit.unr-lcssa ], [ %.scalar.i802, %.lr.ph.i.i.i.i.i307.epil.preheader ] ; 6 uses
   %.0.i.i.i305 = phi double [ 0.000000e+00, %bb.bs ], [ %i.acr, %.loopexit821 ], [ %i.adw, %.loopexit.loopexit.unr-lcssa ], [ %i.aef, %.lr.ph.i.i.i.i.i307.epil.preheader ]
@@ -408,7 +413,7 @@ bb.bt:                                            ; preds = %bb.bs
   %i.aet = shufflevector <2 x double> %i.aer, <2 x double> %i.aeg, <2 x i32> <i32 1, i32 2> ; 2 uses
   %i.aeu = fneg <2 x double> %i.aet
   %i.aev = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aeu, <2 x double> %i.aet, <2 x double> %i.aes)
-  %i.aew = fmul <2 x double> %i.aem, %i.aer
+  %i.aew = fmul <2 x double> %i.aer, %i.aem
   %i.aex = fdiv <2 x double> %i.aev, %i.aew       ; 3 uses
   %i.aey = fmul double %.scalar.i804811, %i.aep
   %i.aez = extractelement <2 x double> %i.aex, i64 1

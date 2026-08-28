@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.b
   %i.q = extractvalue { ptr, i64 } %i.p, 0        ; 4 uses
   %i.r = extractvalue { ptr, i64 } %i.p, 1        ; 3 uses
   call void @_RNvCs8mYq7K4qqSA_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #23
-  %i.s = call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef range(i64 16, 281) 24, i64 noundef 8) #23 ; 5 uses
+  %i.s = call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef range(i64 16, 281) 24, i64 noundef 8) #23 ; 6 uses
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %bb.f, label %bb.i, !prof !27
 
@@ -230,7 +230,9 @@ bb.i:                                             ; preds = %bb.e
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.516.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  store i64 0, ptr %.sroa.516.0..sroa_idx, align 8
+  store i32 0, ptr %.sroa.516.0..sroa_idx, align 8
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 20
+  store i8 0, ptr %.sroa.6.0..sroa_idx, align 4
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
   store ptr %i.q, ptr %0, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -311,7 +313,7 @@ bb.e:                                             ; preds = %bb.b
   %i.q = extractvalue { ptr, i64 } %i.p, 0        ; 4 uses
   %i.r = extractvalue { ptr, i64 } %i.p, 1        ; 3 uses
   call void @_RNvCs8mYq7K4qqSA_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #23
-  %i.s = call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef range(i64 16, 281) 24, i64 noundef 8) #23 ; 5 uses
+  %i.s = call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef range(i64 16, 281) 24, i64 noundef 8) #23 ; 6 uses
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %bb.f, label %bb.i, !prof !27
 
@@ -339,7 +341,9 @@ bb.i:                                             ; preds = %bb.e
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.516.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  store i64 0, ptr %.sroa.516.0..sroa_idx, align 8
+  store i32 0, ptr %.sroa.516.0..sroa_idx, align 8
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 20
+  store i8 0, ptr %.sroa.6.0..sroa_idx, align 4
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
   store ptr %i.q, ptr %0, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -420,7 +424,7 @@ bb.e:                                             ; preds = %bb.b
   %i.q = extractvalue { ptr, i64 } %i.p, 0        ; 4 uses
   %i.r = extractvalue { ptr, i64 } %i.p, 1        ; 3 uses
   call void @_RNvCs8mYq7K4qqSA_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #23
-  %i.s = call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef range(i64 16, 281) 24, i64 noundef 8) #23 ; 5 uses
+  %i.s = call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef range(i64 16, 281) 24, i64 noundef 8) #23 ; 6 uses
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %bb.f, label %bb.i, !prof !27
 
@@ -448,7 +452,9 @@ bb.i:                                             ; preds = %bb.e
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.516.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  store i64 0, ptr %.sroa.516.0..sroa_idx, align 8
+  store i32 0, ptr %.sroa.516.0..sroa_idx, align 8
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 20
+  store i8 0, ptr %.sroa.6.0..sroa_idx, align 4
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
   store ptr %i.q, ptr %0, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -529,7 +535,7 @@ bb.e:                                             ; preds = %bb.b
   %i.q = extractvalue { ptr, i64 } %i.p, 0        ; 4 uses
   %i.r = extractvalue { ptr, i64 } %i.p, 1        ; 3 uses
   call void @_RNvCs8mYq7K4qqSA_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #23
-  %i.s = call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef range(i64 16, 281) 24, i64 noundef 8) #23 ; 5 uses
+  %i.s = call noundef align 8 dereferenceable_or_null(24) ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef range(i64 16, 281) 24, i64 noundef 8) #23 ; 6 uses
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %bb.f, label %bb.i, !prof !27
 
@@ -557,7 +563,9 @@ bb.i:                                             ; preds = %bb.e
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   store i64 1, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.516.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  store i64 0, ptr %.sroa.516.0..sroa_idx, align 8
+  store i32 0, ptr %.sroa.516.0..sroa_idx, align 8
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 20
+  store i8 0, ptr %.sroa.6.0..sroa_idx, align 4
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
   store ptr %i.q, ptr %0, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
