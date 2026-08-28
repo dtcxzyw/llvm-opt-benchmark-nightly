@@ -17,7 +17,10 @@ jobs:
 
     steps:
       - name: Reset repository
-        run: git clean -ffdx -- report && git reset --hard HEAD
+        run: |
+          git clean -ffdx -- report
+          git reset --hard HEAD
+          rm -rf work/llvm-build work/perf-llvm-build work/opt-out work/opt-out-baseline work/opt-out-current work/artifacts
 
       - uses: actions/checkout@v6
         with:

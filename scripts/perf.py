@@ -38,6 +38,23 @@ def sync_dataset_from_remote():
     huggingface_hub.sync_bucket(apply=plan_file)
 
 
+def maybe_gc_llvm_repo():
+    marker = os.path.join(LLVM_REPO, ".git", "gc-marker")
+    try:
+        if (
+            os.path.exists(marker)
+            and time.time() - os.path.getmtime(marker) < 7 * 24 * 60 * 60
+        ):
+            return
+        subprocess.check_call(
+            ["git", "gc", "--prune=now"], cwd=LLVM_REPO, timeout=3600
+        )
+        with open(marker, "w") as f:
+            f.write("")
+    except Exception:
+        pass
+
+
 @retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
 def setup_llvm(revision: str):
     if not os.path.exists(LLVM_REPO):
@@ -47,6 +64,7 @@ def setup_llvm(revision: str):
     subprocess.check_call(["git", "clean", "-fdx"], cwd=LLVM_REPO)
     subprocess.check_call(["git", "fetch"], cwd=LLVM_REPO)
     subprocess.check_call(["git", "checkout", revision], cwd=LLVM_REPO)
+    maybe_gc_llvm_repo()
 
 
 def list_dataset_bc_tasks() -> List[Tuple[str, str]]:
@@ -471,6 +489,9 @@ def main():
 
     print("Generating index.html...")
     generate_index_html(llvm_revision, len(collapsed_sections), hotspots, callers_map)
+
+    if os.path.exists(PERF_BUILD_DIR):
+        shutil.rmtree(PERF_BUILD_DIR)
 
     print(f"Done. Report at {PERF_REPORT_DIR}/index.html")
 

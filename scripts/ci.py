@@ -106,6 +106,23 @@ def sync_dataset_to_remote():
     )
 
 
+def maybe_gc_llvm_repo():
+    marker = os.path.join(LLVM_REPO, ".git", "gc-marker")
+    try:
+        if (
+            os.path.exists(marker)
+            and time.time() - os.path.getmtime(marker) < 7 * 24 * 60 * 60
+        ):
+            return
+        subprocess.check_call(
+            ["git", "gc", "--prune=now"], cwd=LLVM_REPO, timeout=3600
+        )
+        with open(marker, "w") as f:
+            f.write("")
+    except Exception:
+        pass
+
+
 @retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
 def setup_llvm(revision: str):
     if not os.path.exists(LLVM_REPO):
@@ -115,6 +132,7 @@ def setup_llvm(revision: str):
     subprocess.check_call(["git", "clean", "-fdx"], cwd=LLVM_REPO)
     subprocess.check_call(["git", "fetch"], cwd=LLVM_REPO)
     subprocess.check_call(["git", "checkout", revision], cwd=LLVM_REPO)
+    maybe_gc_llvm_repo()
 
 
 @retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
@@ -351,9 +369,24 @@ def backup_opt_outputs(dest_dir: str):
     if os.path.exists(dest_dir):
         shutil.rmtree(dest_dir)
     if os.path.exists(OPT_OUT_DIR):
-        shutil.copytree(OPT_OUT_DIR, dest_dir)
+        try:
+            os.rename(OPT_OUT_DIR, dest_dir)
+        except OSError:
+            shutil.copytree(OPT_OUT_DIR, dest_dir)
+            shutil.rmtree(OPT_OUT_DIR)
     else:
         os.makedirs(dest_dir, exist_ok=True)
+
+
+def cleanup_work_dirs():
+    for path in (
+        OPT_OUT_DIR,
+        os.path.join(ROOT_DIR, "work", "opt-out-baseline"),
+        os.path.join(ROOT_DIR, "work", "opt-out-current"),
+        LLVM_BUILD_DIR,
+    ):
+        if os.path.exists(path):
+            shutil.rmtree(path)
 
 
 def dump_json_sorted(file_path: str, data: dict, trailing_newline: bool = False):
@@ -1823,6 +1856,7 @@ def update():
     with open(os.path.join(DATA_DIR, "LLVM_VERSION"), "w") as f:
         f.write(new_revision)
     sync_dataset_to_remote()
+    cleanup_work_dirs()
 
 
 def test(user: str, comment_body: str, issue_url: str):
@@ -1912,7 +1946,6 @@ def test(user: str, comment_body: str, issue_url: str):
     compare_baseline_stats = None
     baseline_stage_per_file_stats = {}
     baseline_stage_opt_dir = os.path.join(ROOT_DIR, "work", "opt-out-baseline")
-    current_stage_opt_dir = os.path.join(ROOT_DIR, "work", "opt-out-current")
 
     # Optional stage A: run baseline patch first, then run current patch on a clean llvm base.
     stages = []  # (stage_name, patch_url, stage_config)
@@ -2004,8 +2037,6 @@ def test(user: str, comment_body: str, issue_url: str):
             if stage_name == "baseline":
                 baseline_stage_per_file_stats = stage_per_file_stats
                 backup_opt_outputs(baseline_stage_opt_dir)
-            elif stage_name == "current":
-                backup_opt_outputs(current_stage_opt_dir)
 
         current_result = stage_results["current"]
         comptime = current_result["comptime"]
@@ -2130,6 +2161,7 @@ def test(user: str, comment_body: str, issue_url: str):
             "Failed to create pull request.",
             user,
         )
+    cleanup_work_dirs()
 
 
 if __name__ == "__main__":
