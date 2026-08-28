@@ -204,9 +204,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.a, %middle.block
   %.sroa.0.04.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.04.ph, 1
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %lcmp.mod.not = trunc i64 %2 to i1
+  br i1 %lcmp.mod.not, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.g = or disjoint i64 %.sroa.0.04.ph, 1
@@ -380,9 +379,8 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %i
   %i.af = sub i64 %i.b, %i.c
   %i.ag = xor i64 %.sroa.01.0.i.ph, -1
   %i.ah = add i64 %i.ag, %i.b
-  %xtraiter = and i64 %i.af, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
+  %lcmp.mod.not = trunc i64 %i.af to i1
+  br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol, label %vec.epilog.scalar.ph.prol.loopexit
 
 vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.01.0.i.ph
@@ -537,25 +535,28 @@ _RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtCsa2F6HLACPlS_11marku
   br i1 %i.af, label %bb.g, label %_RNvXs2_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsbmOI1VUejFP_9html5ever.exit
 
 bb.g:                                             ; preds = %_RINvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB7_4IterNtNtCsa2F6HLACPlS_11markup5ever9interface9AttributeENtNtNtNtBb_4iter6traits8iterator8Iterator4findNCNvMNtNtCsbmOI1VUejFP_9html5ever9tokenizer9interfaceNtB2v_3Tag13get_attribute0EB2z_.exit
-  %i.ag = ptrtoint ptr %i.ae to i64
-  %3 = and i64 %i.ag, 1
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %bb.h, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsbmOI1VUejFP_9html5ever.exit.i
+  %i.ag = ptrtoint ptr %i.ae to i64               ; 2 uses
+  %3 = trunc i64 %i.ag to i1
+  br i1 %3, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsbmOI1VUejFP_9html5ever.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.ah = getelementptr inbounds nuw i8, ptr %i.j, i64 36 ; 2 uses
   %i.ai = load i32, ptr %i.ah, align 4, !noalias !71, !noundef !39
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   store i32 %i.ai, ptr %i.aj, align 8, !noalias !71
-  %i.ak = getelementptr i8, ptr %i.ae, i64 1      ; 3 uses
+  %i.ak = getelementptr i8, ptr %i.ae, i64 1      ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ak) ]
   store ptr %i.ak, ptr %i.ad, align 8, !noalias !71
   store i32 0, ptr %i.ah, align 4, !noalias !71
+  %.pre.i = ptrtoint ptr %i.ak to i64
   br label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsbmOI1VUejFP_9html5ever.exit.i
 
 _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCsbmOI1VUejFP_9html5ever.exit.i: ; preds = %bb.h, %bb.g
+  %.pre-phi.i = phi i64 [ %i.ag, %bb.g ], [ %.pre.i, %bb.h ]
   %i.al = phi ptr [ %i.ae, %bb.g ], [ %i.ak, %bb.h ]
-  %i.am = getelementptr i8, ptr %i.al, i64 -1     ; 2 uses
+  %4 = and i64 %.pre-phi.i, 1
+  %5 = sub nsw i64 0, %4
+  %i.am = getelementptr i8, ptr %i.al, i64 %5     ; 2 uses
   %i.an = load i64, ptr %i.am, align 8, !noalias !71, !noundef !39 ; 2 uses
   %i.ao = icmp eq i64 %i.an, -1
   br i1 %i.ao, label %bb.i, label %_RNvXNtCsldpiDtalS19_7tendril7tendrilNtB2_9NonAtomicNtB2_9Atomicity9increment.exit.i, !prof !74

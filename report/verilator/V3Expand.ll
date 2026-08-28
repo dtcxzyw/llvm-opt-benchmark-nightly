@@ -202,15 +202,16 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.g = xor i1 %i.d, true
   %i.h = load i8, ptr %i.e, align 1, !tbaa !20, !range !73, !noundef !74
-  %2 = zext i1 %i.g to i8
-  %3 = or i8 %i.h, %2                             ; 2 uses
-  %.sroa.0.0.insert.ext.i = zext nneg i8 %3 to i64
+  %2 = trunc nuw i8 %i.h to i1
+  %3 = or i1 %i.g, %2                             ; 2 uses
+  %.sroa.0.0.insert.ext.i = zext i1 %3 to i64
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 120
   store i64 %.sroa.0.0.insert.ext.i, ptr %i.i, align 8, !tbaa !17
   %i.j = load i32, ptr @_ZN12VNUser2InUse12s_userCntGblE, align 4, !tbaa !28
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 116
   store i32 %i.j, ptr %i.k, align 4, !tbaa !86
-  %i.l = or i8 %3, %i.f
+  %4 = zext i1 %3 to i8
+  %i.l = or i8 %i.f, %4
   store i8 %i.l, ptr %i.e, align 1, !tbaa !20
   ret void
 

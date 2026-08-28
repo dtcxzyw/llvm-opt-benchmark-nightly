@@ -202,10 +202,10 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_
   %.val9.i = load i64, ptr %0, align 8, !range !489, !alias.scope !490, !noundef !5
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val10.i = load ptr, ptr %i.ab, align 8, !alias.scope !490 ; 2 uses
-  %1 = icmp eq i64 %.val9.i, 0
-  %2 = icmp eq ptr %.val10.i, null
-  %or.cond.i8 = select i1 %1, i1 true, i1 %2
-  br i1 %or.cond.i8, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit10, label %bb.q
+  %1 = trunc nuw i64 %.val9.i to i1
+  %2 = icmp ne ptr %.val10.i, null
+  %or.cond.i8 = select i1 %1, i1 %2, i1 false
+  br i1 %or.cond.i8, label %bb.q, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit10
 
 bb.q:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn8generics14BoundLifetimesEEB11_.exit13
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNtNtCsgbWeKYPjk8w_3syn3lit7LitReprEEB1e_(ptr nonnull %.val10.i)
@@ -220,10 +220,10 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_
   %.val.i = load i64, ptr %0, align 8, !range !489, !alias.scope !490, !noundef !5
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val8.i = load ptr, ptr %i.ad, align 8, !alias.scope !490 ; 2 uses
-  %3 = icmp eq i64 %.val.i, 0
-  %4 = icmp eq ptr %.val8.i, null
-  %or.cond.i = select i1 %3, i1 true, i1 %4
-  br i1 %or.cond.i, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit, label %bb.s
+  %3 = trunc nuw i64 %.val.i to i1
+  %4 = icmp ne ptr %.val8.i, null
+  %or.cond.i = select i1 %3, i1 %4, i1 false
+  br i1 %or.cond.i, label %bb.s, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit
 
 bb.s:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn8generics14BoundLifetimesEEB11_.exit
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNtNtCsgbWeKYPjk8w_3syn3lit7LitReprEEB1e_(ptr nonnull %.val8.i)
@@ -626,7 +626,7 @@ bb.d:                                             ; preds = %bb.f, %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 212
   %.val8 = load i32, ptr %i.m, align 4
   %i.n = load i64, ptr %1, align 8, !range !489, !noundef !5
-  %i.o = trunc nuw i64 %i.n to i1                 ; 2 uses
+  %i.o = trunc nuw i64 %i.n to i1
   br i1 %i.o, label %bb.i, label %bb.n
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn8generics14BoundLifetimesEEB11_.exit: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit, %bb.g, %bb.e
@@ -673,8 +673,9 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %.body, %bb.m
   %.pn.pn = phi { ptr, i32 } [ %.pn, %.body ], [ %i.z, %bb.m ] ; 2 uses
+  %2 = trunc nuw i64 %storemerge to i1
   %i.y = icmp ne ptr %.sroa.5.029, null
-  %or.cond.i.not = and i1 %i.y, %i.o
+  %or.cond.i.not = and i1 %i.y, %2
   br i1 %or.cond.i.not, label %bb.l, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit
 
 bb.l:                                             ; preds = %bb.k
@@ -689,7 +690,7 @@ bb.m:                                             ; preds = %bb.n
 bb.n:                                             ; preds = %bb.j, %bb.i, %bb.d
   %.sroa.7.0 = phi i32 [ undef, %bb.d ], [ %i.v, %bb.i ], [ %i.v, %bb.j ]
   %.sroa.5.029 = phi ptr [ undef, %bb.d ], [ null, %bb.i ], [ %i.x, %bb.j ] ; 3 uses
-  %storemerge = phi i64 [ 0, %bb.d ], [ 1, %bb.i ], [ 1, %bb.j ]
+  %storemerge = phi i64 [ 0, %bb.d ], [ 1, %bb.i ], [ 1, %bb.j ] ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 232
   %.val9 = load i32, ptr %i.aa, align 8, !noundef !5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
@@ -1092,10 +1093,10 @@ bb.t:                                             ; preds = %bb.q
 bb.u:                                             ; preds = %bb.t
   %i.az = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %2 = icmp eq i64 %.sroa.0276.0.copyload, 0
-  %3 = icmp eq ptr %.sroa.4277.0.copyload, null
-  %or.cond.i = select i1 %2, i1 true, i1 %3
-  br i1 %or.cond.i, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit, label %bb.v
+  %2 = trunc nuw i64 %.sroa.0276.0.copyload to i1
+  %3 = icmp ne ptr %.sroa.4277.0.copyload, null
+  %or.cond.i = select i1 %2, i1 %3, i1 false
+  br i1 %or.cond.i, label %bb.v, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit
 
 bb.v:                                             ; preds = %bb.u
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNtNtCsgbWeKYPjk8w_3syn3lit7LitReprEEB1e_(ptr nonnull %.sroa.4277.0.copyload)
@@ -1118,10 +1119,10 @@ bb.x:                                             ; preds = %bb.w
   %.sroa.499.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 %i.bc, ptr %.sroa.499.0..sroa_idx, align 8
   store i64 2, ptr %0, align 8
-  %4 = icmp eq i64 %.sroa.0276.0.copyload, 0
-  %5 = icmp eq ptr %.sroa.4277.0.copyload, null
-  %or.cond.i192 = select i1 %4, i1 true, i1 %5
-  br i1 %or.cond.i192, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit194, label %bb.y
+  %4 = trunc nuw i64 %.sroa.0276.0.copyload to i1
+  %5 = icmp ne ptr %.sroa.4277.0.copyload, null
+  %or.cond.i192 = select i1 %4, i1 %5, i1 false
+  br i1 %or.cond.i192, label %bb.y, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit194
 
 bb.y:                                             ; preds = %bb.x
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNtNtCsgbWeKYPjk8w_3syn3lit7LitReprEEB1e_(ptr nonnull %.sroa.4277.0.copyload)
@@ -1136,10 +1137,10 @@ bb.z:                                             ; preds = %bb.w
 bb.aa:                                            ; preds = %bb.z
   %i.be = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %6 = icmp eq i64 %.sroa.0276.0.copyload, 0
-  %7 = icmp eq ptr %.sroa.4277.0.copyload, null
-  %or.cond.i195 = select i1 %6, i1 true, i1 %7
-  br i1 %or.cond.i195, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit197, label %bb.ab
+  %6 = trunc nuw i64 %.sroa.0276.0.copyload to i1
+  %7 = icmp ne ptr %.sroa.4277.0.copyload, null
+  %or.cond.i195 = select i1 %6, i1 %7, i1 false
+  br i1 %or.cond.i195, label %bb.ab, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit197
 
 bb.ab:                                            ; preds = %bb.aa
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNtNtCsgbWeKYPjk8w_3syn3lit7LitReprEEB1e_(ptr nonnull %.sroa.4277.0.copyload)
@@ -1191,10 +1192,10 @@ bb.ae:                                            ; preds = %bb.ac
 bb.af:                                            ; preds = %bb.cv, %.thread284, %bb.ah
   %.sroa.076.0 = phi i1 [ false, %bb.cv ], [ true, %bb.ah ], [ true, %.thread284 ] ; 2 uses
   %.pn129 = phi { ptr, i32 } [ %i.cu, %bb.cv ], [ %i.bt, %bb.ah ], [ %.pn.pn, %.thread284 ] ; 2 uses
-  %8 = icmp eq i64 %.sroa.0276.0.copyload, 0
-  %9 = icmp eq ptr %.sroa.4277.0.copyload, null
-  %or.cond.i198 = select i1 %8, i1 true, i1 %9
-  br i1 %or.cond.i198, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit200, label %bb.ag
+  %8 = trunc nuw i64 %.sroa.0276.0.copyload to i1
+  %9 = icmp ne ptr %.sroa.4277.0.copyload, null
+  %or.cond.i198 = select i1 %8, i1 %9, i1 false
+  br i1 %or.cond.i198, label %bb.ag, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit200
 
 bb.ag:                                            ; preds = %bb.af
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNtNtCsgbWeKYPjk8w_3syn3lit7LitReprEEB1e_(ptr nonnull %.sroa.4277.0.copyload)
@@ -1506,10 +1507,10 @@ bb.bx:                                            ; preds = %bb.bm
 
 bb.by:                                            ; preds = %bb.bx, %bb.ad
   %.sroa.074.0 = phi i8 [ 0, %bb.ad ], [ 1, %bb.bx ] ; 6 uses
-  %10 = icmp eq i64 %.sroa.0276.0.copyload, 0
-  %11 = icmp eq ptr %.sroa.4277.0.copyload, null
-  %or.cond.i207 = select i1 %10, i1 true, i1 %11
-  br i1 %or.cond.i207, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit209, label %bb.bz
+  %10 = trunc nuw i64 %.sroa.0276.0.copyload to i1
+  %11 = icmp ne ptr %.sroa.4277.0.copyload, null
+  %or.cond.i207 = select i1 %10, i1 %11, i1 false
+  br i1 %or.cond.i207, label %bb.bz, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit209
 
 bb.bz:                                            ; preds = %bb.by
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNtNtCsgbWeKYPjk8w_3syn3lit7LitReprEEB1e_(ptr nonnull %.sroa.4277.0.copyload)
@@ -1590,10 +1591,10 @@ bb.cg:                                            ; preds = %bb.cc
 
 bb.ch:                                            ; preds = %bb.cj, %bb.cf
   %.pn132 = phi { ptr, i32 } [ %i.cz, %bb.cj ], [ %i.cy, %bb.cf ] ; 2 uses
-  %12 = icmp eq i64 %.sroa.0276.0.copyload, 0
-  %13 = icmp eq ptr %.sroa.4277.0.copyload, null
-  %or.cond.i210 = select i1 %12, i1 true, i1 %13
-  br i1 %or.cond.i210, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit212, label %bb.ci
+  %12 = trunc nuw i64 %.sroa.0276.0.copyload to i1
+  %13 = icmp ne ptr %.sroa.4277.0.copyload, null
+  %or.cond.i210 = select i1 %12, i1 %13, i1 false
+  br i1 %or.cond.i210, label %bb.ci, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit212
 
 bb.ci:                                            ; preds = %bb.ch
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNtNtCsgbWeKYPjk8w_3syn3lit7LitReprEEB1e_(ptr nonnull %.sroa.4277.0.copyload)
@@ -1606,10 +1607,10 @@ bb.cj:                                            ; preds = %bb.cg
 
 bb.ck:                                            ; preds = %bb.cg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
-  %14 = icmp eq i64 %.sroa.0276.0.copyload, 0
-  %15 = icmp eq ptr %.sroa.4277.0.copyload, null
-  %or.cond.i213 = select i1 %14, i1 true, i1 %15
-  br i1 %or.cond.i213, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit215, label %bb.cl
+  %14 = trunc nuw i64 %.sroa.0276.0.copyload to i1
+  %15 = icmp ne ptr %.sroa.4277.0.copyload, null
+  %or.cond.i213 = select i1 %14, i1 %15, i1 false
+  br i1 %or.cond.i213, label %bb.cl, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit215
 
 bb.cl:                                            ; preds = %bb.ck
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNtNtCsgbWeKYPjk8w_3syn3lit7LitReprEEB1e_(ptr nonnull %.sroa.4277.0.copyload)

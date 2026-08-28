@@ -176,8 +176,8 @@ bb.d:                                             ; preds = %_RNvNtCsexYYUdYSQU6
   store i64 %i.j, ptr %i.c, align 8, !noalias !26
   %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   store i64 %i.k, ptr %i.l, align 8, !noalias !26
-  %1 = icmp eq i64 %i.j, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEEEECsj1ugBVjDER0_8xml5ever.exit.i, label %bb.e
+  %1 = trunc nuw i64 %i.j to i1
+  br i1 %1, label %bb.e, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEEEECsj1ugBVjDER0_8xml5ever.exit.i
 
 bb.e:                                             ; preds = %bb.d
   %i.m = icmp ne i64 %i.k, 0
@@ -209,8 +209,8 @@ bb.h:                                             ; preds = %_RINvNtCskKLDkoKarT
   store i64 %i.u, ptr %i.b, align 8, !noalias !26
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   store i64 %i.v, ptr %i.w, align 8, !noalias !26
-  %2 = icmp eq i64 %i.u, 0
-  br i1 %2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEEEECsj1ugBVjDER0_8xml5ever.exit3.i, label %bb.i
+  %2 = trunc nuw i64 %i.u to i1
+  br i1 %2, label %bb.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEEEECsj1ugBVjDER0_8xml5ever.exit3.i
 
 bb.i:                                             ; preds = %bb.h
   %i.x = icmp ne i64 %i.v, 0
@@ -242,8 +242,8 @@ bb.l:                                             ; preds = %_RINvNtCskKLDkoKarT
   store i64 %i.af, ptr %i.a, align 8, !noalias !26
   %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   store i64 %i.ag, ptr %i.ah, align 8, !noalias !26
-  %3 = icmp eq i64 %i.af, 0
-  br i1 %3, label %bb.q, label %bb.m
+  %3 = trunc nuw i64 %i.af to i1
+  br i1 %3, label %bb.m, label %bb.q
 
 bb.m:                                             ; preds = %bb.l
   %i.ai = icmp ne i64 %i.ag, 0
@@ -288,7 +288,7 @@ bb.r:                                             ; preds = %bb.c
 ; Function Attrs: nonlazybind uwtable
 define void @_RNvMNtCsj1ugBVjDER0_8xml5ever12tree_builderNtB2_17NamespaceMapStack3pop(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %0) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 4 uses
+  %i.a = alloca [32 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !noundef !4 ; 3 uses
@@ -306,10 +306,11 @@ bb.b:                                             ; preds = %bb.a
   %i.j = icmp ult i64 %i.c, 384307168202282327
   tail call void @llvm.assume(i1 %i.j)
   %i.k = getelementptr inbounds nuw [24 x i8], ptr %i.i, i64 %i.e
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
   store i64 1, ptr %i.a, align 8
-  call void @_RNvXNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB2_8BTreeMapINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEEIB15_IB1H_NtB2p_18NamespaceStaticSetEEENtNtNtB19_3ops4drop4Drop4dropCsj1ugBVjDER0_8xml5ever(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.l)
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  call void @_RNvXNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB2_8BTreeMapINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEEIB15_IB1H_NtB2p_18NamespaceStaticSetEEENtNtNtB19_3ops4drop4Drop4dropCsj1ugBVjDER0_8xml5ever(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsj1ugBVjDER0_8xml5ever12tree_builder12NamespaceMapEEB11_.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsj1ugBVjDER0_8xml5ever12tree_builder12NamespaceMapEEB11_.exit: ; preds = %bb.a, %bb.b
@@ -459,8 +460,8 @@ bb.l:                                             ; preds = %bb.k
   store i64 %i.ah, ptr %i.b, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   store i64 %i.ai, ptr %i.aj, align 8
-  %2 = icmp eq i64 %i.ah, 0
-  br i1 %2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEEEECsj1ugBVjDER0_8xml5ever.exit, label %bb.m
+  %2 = trunc nuw i64 %i.ah to i1
+  br i1 %2, label %bb.m, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEEEECsj1ugBVjDER0_8xml5ever.exit
 
 bb.m:                                             ; preds = %bb.l
   %i.ak = icmp ne i64 %i.ai, 0
@@ -863,8 +864,8 @@ bb.bc:                                            ; preds = %._crit_edge, %bb.bb
   store i64 %i.fs, ptr %i.c, align 8
   %i.fu = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
   store i64 %i.ft, ptr %i.fu, align 8
-  %3 = icmp eq i64 %i.fs, 0
-  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEEEECsj1ugBVjDER0_8xml5ever.exit, label %bb.bi
+  %3 = trunc nuw i64 %i.fs to i1
+  br i1 %3, label %bb.bi, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_INtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetEEEECsj1ugBVjDER0_8xml5ever.exit
 
 bb.bd:                                            ; preds = %bb.bb
   %i.fv = invoke noundef align 8 ptr @_RINvMsi_NtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB6_8BTreeMapINtNtCskKLDkoKarTP_4core6option6OptionINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetEEIB19_IB1L_NtB2t_18NamespaceStaticSetEEE3getB18_ECsj1ugBVjDER0_8xml5ever(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.d)

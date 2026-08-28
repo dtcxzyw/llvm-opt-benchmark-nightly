@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !112)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !115)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !118)
-  %1 = icmp eq i8 %i.c, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit.i, label %bb.c
+  %1 = trunc nuw i8 %i.c to i1
+  br i1 %1, label %bb.c, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit.i
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -606,7 +606,7 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = load i8, ptr %1, align 8, !range !475, !noundef !17
-  %i.d = trunc nuw i8 %i.c to i1                  ; 2 uses
+  %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -638,7 +638,7 @@ bb.d:                                             ; preds = %bb.h, %bb.c
   %.sroa.6.sroa.0.0 = phi i8 [ %.sroa.6.sroa.0.0.extract.trunc, %bb.h ], [ %i.n, %bb.c ]
   %.sroa.9.0 = phi i32 [ undef, %bb.h ], [ %.sroa.46.0.copyload, %bb.c ]
   %.sroa.5.0 = phi i8 [ undef, %bb.h ], [ %i.l, %bb.c ]
-  %i.r = phi i8 [ 1, %bb.h ], [ 0, %bb.c ]
+  %i.r = phi i8 [ 1, %bb.h ], [ 0, %bb.c ]        ; 2 uses
   %.sroa.10.0.in = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.10.0 = load i64, ptr %.sroa.10.0.in, align 8
   %.sroa.6.sroa.5.0.insert.shift = shl nuw i16 %.sroa.6.sroa.5.0, 8
@@ -703,7 +703,8 @@ bb.i:                                             ; preds = %bb.b
 
 bb.j:                                             ; preds = %bb.r, %bb.m
   %.pn = phi { ptr, i32 } [ %i.ar, %bb.r ], [ %i.ae, %bb.m ]
-  br i1 %i.d, label %bb.k, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit
+  %2 = trunc nuw i8 %i.r to i1
+  br i1 %2, label %bb.k, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit
 
 bb.k:                                             ; preds = %bb.j
   %i.ac = atomicrmw sub ptr %i.q, i64 1 release, align 8, !noalias !481
