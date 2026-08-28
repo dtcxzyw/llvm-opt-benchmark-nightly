@@ -202,11 +202,11 @@ bb.a:
   %48 = alloca %"class.clang::ento::Loc", align 8 ; 3 uses
   %49 = alloca %"class.llvm::APSInt", align 8     ; 20 uses
   %50 = alloca %"class.llvm::APSInt", align 8     ; 16 uses
-  %51 = alloca %"class.clang::ento::APSIntType", align 4 ; 5 uses
-  %52 = alloca %"class.clang::ento::APSIntType", align 4 ; 5 uses
-  %53 = alloca %"class.clang::ento::APSIntType", align 8 ; 5 uses
-  %54 = alloca %"class.llvm::APSInt", align 8     ; 11 uses
-  %55 = alloca %"class.llvm::APSInt", align 8     ; 10 uses
+  %.sroa.0939 = alloca i64, align 8               ; 5 uses
+  %.sroa.0 = alloca i64, align 8                  ; 5 uses
+  %51 = alloca %"class.clang::ento::APSIntType", align 8 ; 5 uses
+  %52 = alloca %"class.llvm::APSInt", align 8     ; 11 uses
+  %53 = alloca %"class.llvm::APSInt", align 8     ; 10 uses
   store ptr %3, ptr %39, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %39, i64 8 ; 4 uses
   store i8 %4, ptr %i.c, align 8
@@ -482,9 +482,9 @@ bb.p:                                             ; preds = %bb.h, %bb.h
 bb.q:                                             ; preds = %bb.h, %_ZNK5clang4ento4SVal5getAsINS0_6NonLocEEESt8optionalIT_Ev.exit420
   %i.cs = getelementptr inbounds nuw i8, ptr %24, i64 8
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 13 uses
-  %i.cu = getelementptr inbounds nuw i8, ptr %54, i64 12
-  %i.cv = getelementptr inbounds nuw i8, ptr %55, i64 8
-  %i.cw = getelementptr inbounds nuw i8, ptr %54, i64 8
+  %i.cu = getelementptr inbounds nuw i8, ptr %52, i64 12
+  %i.cv = getelementptr inbounds nuw i8, ptr %53, i64 8
+  %i.cw = getelementptr inbounds nuw i8, ptr %52, i64 8
   %i.cx = getelementptr inbounds nuw i8, ptr %49, i64 8 ; 8 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %49, i64 12 ; 6 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %37, i64 8
@@ -502,8 +502,8 @@ bb.q:                                             ; preds = %bb.h, %_ZNK5clang4e
   %i.dd = getelementptr inbounds nuw i8, ptr %27, i64 12
   %i.de = getelementptr inbounds nuw i8, ptr %26, i64 8 ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %26, i64 12
-  %.4..4..4..sroa_idx938 = getelementptr inbounds nuw i8, ptr %51, i64 4
-  %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %52, i64 4
+  %.4..4..4..sroa_idx938 = getelementptr inbounds nuw i8, ptr %.sroa.0939, i64 4
+  %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %_ZN4llvm5APIntD2Ev.exit510
@@ -528,8 +528,8 @@ bb.r:                                             ; preds = %bb.q, %_ZN4llvm5API
   br i1 %.not913, label %.thread710, label %.lr.ph916
 
 .preheader:                                       ; preds = %_ZN4llvm5APIntD2Ev.exit531, %bb.dc, %bb.dd
-  call void @llvm.lifetime.end.p0(ptr nonnull %54) #17
-  call void @llvm.lifetime.end.p0(ptr nonnull %53) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %52) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %51) #17
   %.sroa.0.0.copyload.i.i.i511 = load ptr, ptr %39, align 8 ; 4 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i511, i64 16
   %i.dk = load i32, ptr %i.dj, align 8, !tbaa !56
@@ -871,14 +871,14 @@ _ZN4llvm6APSIntC2ERKS0_.exit482:                  ; preds = %bb.ay, %bb.az
   br i1 %i.gy, label %bb.ba, label %bb.bg
 
 bb.ba:                                            ; preds = %_ZN4llvm6APSIntC2ERKS0_.exit482
-  call void @llvm.lifetime.start.p0(ptr nonnull %51)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0939)
   %i.gz = load i32, ptr %i.cx, align 8, !tbaa !60 ; 3 uses
-  store i32 %i.gz, ptr %51, align 4, !tbaa !105
+  store i32 %i.gz, ptr %.sroa.0939, align 8, !tbaa !105
   %i.ha = load i8, ptr %i.cy, align 4, !tbaa !62, !range !65, !noundef !38 ; 3 uses
   store i8 %i.ha, ptr %.4..4..4..sroa_idx938, align 4, !tbaa !107
-  call void @llvm.lifetime.start.p0(ptr nonnull %52)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.hb = load i32, ptr %i.da, align 8, !tbaa !60 ; 3 uses
-  store i32 %i.hb, ptr %52, align 4, !tbaa !105
+  store i32 %i.hb, ptr %.sroa.0, align 8, !tbaa !105
   store i8 %i.gw, ptr %.4..4..4..sroa_idx, align 4, !tbaa !107
   %i.hc = icmp ult i32 %i.gz, %i.hb
   br i1 %i.hc, label %_ZNK5clang4ento10APSIntTypeltERKS1_.exit.thread.i, label %bb.bb
@@ -893,13 +893,13 @@ _ZNK5clang4ento10APSIntTypeltERKS1_.exit.thread.i: ; preds = %bb.bb, %bb.ba
   br label %_ZSt3maxIN5clang4ento10APSIntTypeEERKT_S5_S5_.exit
 
 _ZSt3maxIN5clang4ento10APSIntTypeEERKT_S5_S5_.exit: ; preds = %bb.bb, %_ZNK5clang4ento10APSIntTypeltERKS1_.exit.thread.i
-  %i.hf = phi ptr [ %52, %_ZNK5clang4ento10APSIntTypeltERKS1_.exit.thread.i ], [ %51, %bb.bb ]
-  %i.hg = load i64, ptr %i.hf, align 4            ; 2 uses
+  %i.hf = phi ptr [ %.sroa.0, %_ZNK5clang4ento10APSIntTypeltERKS1_.exit.thread.i ], [ %.sroa.0939, %bb.bb ]
+  %i.hg = load i64, ptr %i.hf, align 8            ; 2 uses
   %.sroa.0599.0.extract.trunc = trunc i64 %i.hg to i32 ; 4 uses
   %.sroa.5601.0.extract.shift = lshr i64 %i.hg, 32
   %.sroa.5601.0.extract.trunc = trunc i64 %.sroa.5601.0.extract.shift to i8 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %52)
-  call void @llvm.lifetime.end.p0(ptr nonnull %51)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0939)
   call void @llvm.lifetime.start.p0(ptr nonnull %35)
   call void @llvm.lifetime.start.p0(ptr nonnull %36)
   %i.hh = trunc nuw i8 %i.ha to i1
@@ -1302,21 +1302,21 @@ bb.cr:                                            ; preds = %bb.cq
   br i1 %i.lg, label %bb.cs, label %.thread764
 
 bb.cs:                                            ; preds = %bb.cr
-  call void @llvm.lifetime.start.p0(ptr nonnull %53) #17
+  call void @llvm.lifetime.start.p0(ptr nonnull %51) #17
   %i.lh = call i64 @_ZNK5clang4ento17BasicValueFactory13getAPSIntTypeENS_8QualTypeE(ptr noundef nonnull align 8 dereferenceable(144) %i.ct, i64 %6)
   %i.li = trunc i64 %i.lh to i40
-  store i40 %i.li, ptr %53, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %54) #17
+  store i40 %i.li, ptr %51, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %52) #17
   %i.lj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i511915, i64 48
   %.sroa.0.0.copyload.i530 = load ptr, ptr %i.lj, align 8, !tbaa !136
-  call void @_ZNK5clang4ento10APSIntType7convertERKN4llvm6APSIntE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::APSInt") align 8 %54, ptr noundef nonnull readonly align 4 dereferenceable(5) %53, ptr noundef nonnull readonly align 8 dereferenceable(13) %.sroa.0.0.copyload.i530) #20
-  call void @llvm.lifetime.start.p0(ptr nonnull %55) #17
-  call void @_ZNK5clang4ento10APSIntType7convertERKN4llvm6APSIntE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::APSInt") align 8 %55, ptr noundef nonnull readonly align 4 dereferenceable(5) %53, ptr noundef nonnull readonly align 8 dereferenceable(13) %.2.i523705) #20
+  call void @_ZNK5clang4ento10APSIntType7convertERKN4llvm6APSIntE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::APSInt") align 8 %52, ptr noundef nonnull readonly align 4 dereferenceable(5) %51, ptr noundef nonnull readonly align 8 dereferenceable(13) %.sroa.0.0.copyload.i530) #20
+  call void @llvm.lifetime.start.p0(ptr nonnull %53) #17
+  call void @_ZNK5clang4ento10APSIntType7convertERKN4llvm6APSIntE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::APSInt") align 8 %53, ptr noundef nonnull readonly align 4 dereferenceable(5) %51, ptr noundef nonnull readonly align 8 dereferenceable(13) %.2.i523705) #20
   %i.lk = icmp eq i32 %i.le, %.0876914
   br i1 %i.lk, label %bb.ct, label %bb.cu
 
 bb.ct:                                            ; preds = %bb.cs
-  %i.ll = call { ptr, i8 } @_ZN5clang4ento17BasicValueFactory10evalAPSIntENS_18BinaryOperatorKindERKN4llvm6APSIntES6_(ptr noundef nonnull align 8 dereferenceable(144) %i.ct, i32 noundef 5, ptr noundef nonnull align 8 dereferenceable(13) %54, ptr noundef nonnull align 8 dereferenceable(13) %55) #17
+  %i.ll = call { ptr, i8 } @_ZN5clang4ento17BasicValueFactory10evalAPSIntENS_18BinaryOperatorKindERKN4llvm6APSIntES6_(ptr noundef nonnull align 8 dereferenceable(144) %i.ct, i32 noundef 5, ptr noundef nonnull align 8 dereferenceable(13) %52, ptr noundef nonnull align 8 dereferenceable(13) %53) #17
   br label %bb.cz
 
 bb.cu:                                            ; preds = %bb.cs
@@ -1325,11 +1325,11 @@ bb.cu:                                            ; preds = %bb.cs
   br i1 %i.ln, label %bb.cv, label %bb.cw
 
 bb.cv:                                            ; preds = %bb.cu
-  %i.lo = call noundef i32 @_ZNK4llvm5APInt7compareERKS0_(ptr noundef nonnull align 8 dereferenceable(13) %54, ptr noundef nonnull align 8 dereferenceable(13) %55) #19
+  %i.lo = call noundef i32 @_ZNK4llvm5APInt7compareERKS0_(ptr noundef nonnull align 8 dereferenceable(13) %52, ptr noundef nonnull align 8 dereferenceable(13) %53) #19
   br label %_ZNK4llvm6APSIntgeERKS0_.exit
 
 bb.cw:                                            ; preds = %bb.cu
-  %i.lp = call noundef i32 @_ZNK4llvm5APInt13compareSignedERKS0_(ptr noundef nonnull align 8 dereferenceable(13) %54, ptr noundef nonnull align 8 dereferenceable(13) %55) #19
+  %i.lp = call noundef i32 @_ZNK4llvm5APInt13compareSignedERKS0_(ptr noundef nonnull align 8 dereferenceable(13) %52, ptr noundef nonnull align 8 dereferenceable(13) %53) #19
   br label %_ZNK4llvm6APSIntgeERKS0_.exit
 
 _ZNK4llvm6APSIntgeERKS0_.exit:                    ; preds = %bb.cv, %bb.cw
@@ -1338,11 +1338,11 @@ _ZNK4llvm6APSIntgeERKS0_.exit:                    ; preds = %bb.cv, %bb.cw
   br i1 %i.lq, label %bb.cx, label %bb.cy
 
 bb.cx:                                            ; preds = %_ZNK4llvm6APSIntgeERKS0_.exit
-  %i.lr = call { ptr, i8 } @_ZN5clang4ento17BasicValueFactory10evalAPSIntENS_18BinaryOperatorKindERKN4llvm6APSIntES6_(ptr noundef nonnull align 8 dereferenceable(144) %i.ct, i32 noundef 6, ptr noundef nonnull align 8 dereferenceable(13) %54, ptr noundef nonnull align 8 dereferenceable(13) %55) #17
+  %i.lr = call { ptr, i8 } @_ZN5clang4ento17BasicValueFactory10evalAPSIntENS_18BinaryOperatorKindERKN4llvm6APSIntES6_(ptr noundef nonnull align 8 dereferenceable(144) %i.ct, i32 noundef 6, ptr noundef nonnull align 8 dereferenceable(13) %52, ptr noundef nonnull align 8 dereferenceable(13) %53) #17
   br label %bb.cz
 
 bb.cy:                                            ; preds = %_ZNK4llvm6APSIntgeERKS0_.exit
-  %i.ls = call { ptr, i8 } @_ZN5clang4ento17BasicValueFactory10evalAPSIntENS_18BinaryOperatorKindERKN4llvm6APSIntES6_(ptr noundef nonnull align 8 dereferenceable(144) %i.ct, i32 noundef 6, ptr noundef nonnull align 8 dereferenceable(13) %55, ptr noundef nonnull align 8 dereferenceable(13) %54) #17
+  %i.ls = call { ptr, i8 } @_ZN5clang4ento17BasicValueFactory10evalAPSIntENS_18BinaryOperatorKindERKN4llvm6APSIntES6_(ptr noundef nonnull align 8 dereferenceable(144) %i.ct, i32 noundef 6, ptr noundef nonnull align 8 dereferenceable(13) %53, ptr noundef nonnull align 8 dereferenceable(13) %52) #17
   br label %bb.cz
 
 bb.cz:                                            ; preds = %bb.cx, %bb.cy, %bb.ct
@@ -1360,7 +1360,7 @@ bb.cz:                                            ; preds = %bb.cx, %bb.cy, %bb.
   br i1 %i.lw, label %bb.da, label %_ZN4llvm5APIntD2Ev.exit531
 
 bb.da:                                            ; preds = %bb.cz
-  %i.lx = load ptr, ptr %55, align 8, !tbaa !46   ; 2 uses
+  %i.lx = load ptr, ptr %53, align 8, !tbaa !46   ; 2 uses
   %i.ly = icmp eq ptr %i.lx, null
   br i1 %i.ly, label %_ZN4llvm5APIntD2Ev.exit531, label %bb.db
 
@@ -1369,13 +1369,13 @@ bb.db:                                            ; preds = %bb.da
   br label %_ZN4llvm5APIntD2Ev.exit531
 
 _ZN4llvm5APIntD2Ev.exit531:                       ; preds = %bb.cz, %bb.da, %bb.db
-  call void @llvm.lifetime.end.p0(ptr nonnull %55) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %53) #17
   %i.lz = load i32, ptr %i.cw, align 8, !tbaa !60
   %i.ma = icmp ugt i32 %i.lz, 64
   br i1 %i.ma, label %bb.dc, label %.preheader
 
 bb.dc:                                            ; preds = %_ZN4llvm5APIntD2Ev.exit531
-  %i.mb = load ptr, ptr %54, align 8, !tbaa !46   ; 2 uses
+  %i.mb = load ptr, ptr %52, align 8, !tbaa !46   ; 2 uses
   %i.mc = icmp eq ptr %i.mb, null
   br i1 %i.mc, label %.preheader, label %bb.dd
 

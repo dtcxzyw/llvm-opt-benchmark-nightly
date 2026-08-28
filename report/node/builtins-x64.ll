@@ -204,9 +204,9 @@ bb.f:                                             ; preds = %bb.a
   br label %.lr.ph.split.preheader
 
 .thread:                                          ; preds = %bb.d, %bb.c, %bb.e
-  %.sroa.6.sroa.4.sroa.0.0 = phi i32 [ %.sroa.6.sroa.4.0.extract.shift, %bb.e ], [ 0, %bb.c ], [ 0, %bb.d ]
   %.sroa.6.sroa.0.0 = phi i32 [ %i.p, %bb.e ], [ 0, %bb.c ], [ %i.p, %bb.d ]
   %.sroa.2.0 = phi i64 [ 8650752, %bb.e ], [ 262144, %bb.c ], [ 4456448, %bb.d ]
+  %.sroa.6.sroa.4.sroa.0.0 = phi i32 [ %.sroa.6.sroa.4.0.extract.shift, %bb.e ], [ 0, %bb.c ], [ 0, %bb.d ]
   %i.x = phi ptr [ inttoptr (i64 6 to ptr), %bb.e ], [ inttoptr (i64 2 to ptr), %bb.c ], [ inttoptr (i64 3 to ptr), %bb.d ]
   %.sroa.6.sroa.0.0.insert.ext = and i32 %.sroa.6.sroa.0.0, 255
   %.sroa.6.sroa.0.0.insert.insert = or disjoint i32 %.sroa.6.sroa.4.sroa.0.0, %.sroa.6.sroa.0.0.insert.ext

@@ -202,7 +202,6 @@ begin_hunk_0
 %struct._typeobject = type { %struct.PyVarObject, ptr, i64, i64, ptr, i64, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, i64, ptr, ptr, ptr, ptr, i64, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, i64, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, i32, ptr, ptr, i8, i16 }
 %struct.__va_list_tag = type { i32, i32, ptr, ptr }
 %struct.instruction_sequence = type { %struct._object, ptr, i32, i32, i32, ptr, i32, ptr, ptr }
-%struct.PyCompilerFlags = type { i32, i32 }
 %struct._PyFutureFeatures = type { i32, %struct._Py_SourceLocation }
 %struct._Py_SourceLocation = type { i32, i32, i32, i32 }
 
@@ -605,14 +604,14 @@ bb.d:                                             ; preds = %bb.a, %compiler_mod
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @new_compiler(ptr noundef %0, ptr noundef %1, ptr nofree noundef captures(address_is_null) %2, i32 noundef %3, ptr noundef %4, ptr noundef %5) unnamed_addr #0 {
 bb.a:
-  %6 = alloca %struct.PyCompilerFlags, align 8    ; 5 uses
+  %.sroa.0 = alloca i64, align 8                  ; 5 uses
   %i.a = tail call ptr @PyMem_Calloc(i64 noundef 1, i64 noundef 96) #11 ; 12 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.o, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  store i64 64424509440, ptr %6, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store i64 64424509440, ptr %.sroa.0, align 8
   %i.c = tail call ptr @PyDict_New() #11          ; 2 uses
   %i.d = getelementptr i8, ptr %i.a, i64 56
   store ptr %i.c, ptr %i.d, align 8, !tbaa !46
@@ -661,7 +660,7 @@ _Py_XNewRef.exit.i:                               ; preds = %bb.h, %bb.g, %bb.f
   %i.o = getelementptr i8, ptr %i.a, i64 88
   store ptr %5, ptr %i.o, align 8, !tbaa !98
   %.not38.i = icmp eq ptr %2, null
-  %spec.store.select.i = select i1 %.not38.i, ptr %6, ptr %2 ; 3 uses
+  %spec.store.select.i = select i1 %.not38.i, ptr %.sroa.0, ptr %2 ; 3 uses
   %i.p = load i32, ptr %i.j, align 8, !tbaa !99
   %i.q = load i32, ptr %spec.store.select.i, align 4, !tbaa !111
   %i.r = or i32 %i.q, %i.p                        ; 3 uses
@@ -707,11 +706,11 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 compiler_setup.exit:                              ; preds = %bb.k
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.o
 
 bb.n:                                             ; preds = %_Py_NewRef.exit.i, %bb.c, %bb.b, %bb.j, %bb.l, %bb.m
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   tail call fastcc void @compiler_free(ptr noundef %i.a)
   br label %bb.o
 

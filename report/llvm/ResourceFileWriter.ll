@@ -119,7 +119,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"struct.llvm::rc::ResourceDirEntryStart" = type { %union.anon.83, %"struct.llvm::support::detail::packed_endian_specific_integral.75", %"struct.llvm::support::detail::packed_endian_specific_integral.75", %"struct.llvm::support::detail::packed_endian_specific_integral" }
 %union.anon.83 = type { %"struct.llvm::rc::CursorDir" }
 %"struct.llvm::rc::CursorDir" = type { %"struct.llvm::support::detail::packed_endian_specific_integral.75", %"struct.llvm::support::detail::packed_endian_specific_integral.75" }
-%"class.llvm::rc::RCInt" = type <{ i32, i8, [3 x i8] }>
 %struct.anon.111 = type { %"struct.llvm::support::detail::packed_endian_specific_integral", %"struct.llvm::support::detail::packed_endian_specific_integral" }
 %struct.anon.112 = type { %"struct.llvm::support::detail::packed_endian_specific_integral", %"struct.llvm::support::detail::packed_endian_specific_integral", %"struct.llvm::support::detail::packed_endian_specific_integral" }
 %struct.anon.113 = type { %"struct.llvm::support::detail::packed_endian_specific_integral.75", %"struct.llvm::support::detail::packed_endian_specific_integral.75", %"struct.llvm::support::detail::packed_endian_specific_integral.75", %"struct.llvm::support::detail::packed_endian_specific_integral.75" }
@@ -522,16 +521,16 @@ bb.a:
   %6 = alloca %"struct.llvm::support::detail::packed_endian_specific_integral", align 4 ; 4 uses
   %7 = alloca %"struct.llvm::support::detail::packed_endian_specific_integral.75", align 2 ; 4 uses
   %8 = alloca %"struct.llvm::support::detail::packed_endian_specific_integral.247", align 1 ; 4 uses
-  %9 = alloca %"class.llvm::rc::RCInt", align 4   ; 5 uses
-  %10 = alloca %struct.anon.111, align 4          ; 5 uses
-  %11 = alloca %struct.anon.112, align 4          ; 6 uses
+  %.sroa.0 = alloca i64, align 8                  ; 5 uses
+  %9 = alloca %struct.anon.111, align 4           ; 5 uses
+  %10 = alloca %struct.anon.112, align 4          ; 6 uses
+  %11 = alloca %"class.llvm::Twine", align 8      ; 6 uses
   %12 = alloca %"class.llvm::Twine", align 8      ; 6 uses
   %13 = alloca %"class.llvm::Twine", align 8      ; 6 uses
   %14 = alloca %"class.llvm::Twine", align 8      ; 6 uses
-  %15 = alloca %"class.llvm::Twine", align 8      ; 6 uses
-  %16 = alloca %struct.anon.113, align 8          ; 4 uses
-  %17 = alloca %"class.llvm::Twine", align 8      ; 6 uses
-  %18 = alloca %"class.llvm::Twine", align 8      ; 7 uses
+  %15 = alloca %struct.anon.113, align 8          ; 4 uses
+  %16 = alloca %"class.llvm::Twine", align 8      ; 6 uses
+  %17 = alloca %"class.llvm::Twine", align 8      ; 7 uses
   %i.a = alloca i16, align 2                      ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 240 ; 17 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !8    ; 4 uses
@@ -597,23 +596,23 @@ bb.b:                                             ; preds = %_ZNK4llvm9StringMap
 _ZNK4llvm9StringMapINS_2rc7Control7CtlInfoENS_15MallocAllocatorEE6lookupENS_9StringRefE.exit: ; preds = %_ZN4llvm2rc18ResourceFileWriter9padStreamEm.exit, %_ZNK4llvm9StringMapINS_2rc7Control7CtlInfoENS_15MallocAllocatorEE4findENS_9StringRefE.exit.i, %bb.b
   %.sroa.03.0.i = phi i32 [ %i.ai, %bb.b ], [ 0, %_ZNK4llvm9StringMapINS_2rc7Control7CtlInfoENS_15MallocAllocatorEE4findENS_9StringRefE.exit.i ], [ 0, %_ZN4llvm2rc18ResourceFileWriter9padStreamEm.exit ]
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 60
-  call void @llvm.lifetime.start.p0(ptr nonnull %9)
-  store i32 0, ptr %9, align 4, !tbaa !844
-  %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 4
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  store i32 0, ptr %.sroa.0, align 8, !tbaa !844
+  %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   store i8 0, ptr %.4..4..4..sroa_idx, align 4, !tbaa !846
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 72
   %i.al = load i8, ptr %i.ak, align 8, !tbaa !847, !range !108, !noundef !63
   %i.am = trunc nuw i8 %i.al to i1                ; 2 uses
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 68
   %.sroa.3.0.copyload.i = load i32, ptr %.sroa.3.0..sroa_idx.i, align 4
-  %.sroa.0.0.in.i = select i1 %i.am, ptr %i.aj, ptr %9
+  %.sroa.0.0.in.i = select i1 %i.am, ptr %i.aj, ptr %.sroa.0
   %.sroa.0.0.i = load i64, ptr %.sroa.0.0.in.i, align 4
   %i.an = xor i32 %.sroa.3.0.copyload.i, -1
   %i.ao = select i1 %i.am, i32 %i.an, i32 -1
   %i.ap = and i32 %i.ao, %.sroa.03.0.i
   %.sroa.096.0.extract.trunc = trunc i64 %.sroa.0.0.i to i32
   %i.aq = or i32 %i.ap, %.sroa.096.0.extract.trunc ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %9)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 76
   %i.as = getelementptr inbounds nuw i8, ptr %2, i64 80
   %i.at = load i8, ptr %i.as, align 8, !tbaa !461, !range !108, !noundef !63
@@ -623,9 +622,9 @@ _ZNK4llvm9StringMapINS_2rc7Control7CtlInfoENS_15MallocAllocatorEE6lookupENS_9Str
   br i1 %3, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK4llvm9StringMapINS_2rc7Control7CtlInfoENS_15MallocAllocatorEE6lookupENS_9StringRefE.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #20
-  store i32 %i.aq, ptr %10, align 4
-  %i.av = getelementptr inbounds nuw i8, ptr %10, i64 4
+  call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
+  store i32 %i.aq, ptr %9, align 4
+  %i.av = getelementptr inbounds nuw i8, ptr %9, i64 4
   store i32 %.0.i, ptr %i.av, align 4
   %i.aw = load ptr, ptr %i.b, align 8, !tbaa !8   ; 2 uses
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !11
@@ -633,22 +632,22 @@ bb.c:                                             ; preds = %_ZNK4llvm9StringMap
   %i.az = load ptr, ptr %i.ay, align 8
   %i.ba = call noundef i64 %i.az(ptr noundef nonnull align 8 dereferenceable(48) %i.aw) #20, !inline_history !848 ; 0 uses
   %i.bb = load ptr, ptr %i.b, align 8, !tbaa !8
-  %i.bc = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %i.bb, ptr noundef nonnull align 1 dereferenceable(8) %10, i64 noundef 8) #20 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #20
+  %i.bc = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %i.bb, ptr noundef nonnull align 1 dereferenceable(8) %9, i64 noundef 8) #20 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #20
   br label %bb.e
 
 bb.d:                                             ; preds = %_ZNK4llvm9StringMapINS_2rc7Control7CtlInfoENS_15MallocAllocatorEE6lookupENS_9StringRefE.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %11) #20
+  call void @llvm.lifetime.start.p0(ptr nonnull %10) #20
   %i.bd = getelementptr inbounds nuw i8, ptr %2, i64 84
   %i.be = getelementptr inbounds nuw i8, ptr %2, i64 88
   %i.bf = load i8, ptr %i.be, align 8, !tbaa !461, !range !108, !noundef !63
   %i.bg = trunc nuw i8 %i.bf to i1
   %.val.i73 = load i32, ptr %i.bd, align 4
   %.0.i75 = select i1 %i.bg, i32 %.val.i73, i32 0
-  store i32 %.0.i75, ptr %11, align 4
-  %i.bh = getelementptr inbounds nuw i8, ptr %11, i64 4
+  store i32 %.0.i75, ptr %10, align 4
+  %i.bh = getelementptr inbounds nuw i8, ptr %10, i64 4
   store i32 %.0.i, ptr %i.bh, align 4
-  %i.bi = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %i.bi = getelementptr inbounds nuw i8, ptr %10, i64 8
   store i32 %i.aq, ptr %i.bi, align 4
   %i.bj = load ptr, ptr %i.b, align 8, !tbaa !8   ; 2 uses
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !11
@@ -656,21 +655,21 @@ bb.d:                                             ; preds = %_ZNK4llvm9StringMap
   %i.bm = load ptr, ptr %i.bl, align 8
   %i.bn = call noundef i64 %i.bm(ptr noundef nonnull align 8 dereferenceable(48) %i.bj) #20, !inline_history !849 ; 0 uses
   %i.bo = load ptr, ptr %i.b, align 8, !tbaa !8
-  %i.bp = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %i.bo, ptr noundef nonnull align 1 dereferenceable(12) %11, i64 noundef 12) #20 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #20
+  %i.bp = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %i.bo, ptr noundef nonnull align 1 dereferenceable(12) %10, i64 noundef 12) #20 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %10) #20
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.bq = getelementptr inbounds nuw i8, ptr %2, i64 44 ; 2 uses
   %i.br = load i32, ptr %i.bq, align 4, !tbaa !850
-  call void @llvm.lifetime.start.p0(ptr nonnull %12) #20
-  %i.bs = getelementptr inbounds nuw i8, ptr %12, i64 32
-  %i.bt = getelementptr inbounds nuw i8, ptr %12, i64 33
+  call void @llvm.lifetime.start.p0(ptr nonnull %11) #20
+  %i.bs = getelementptr inbounds nuw i8, ptr %11, i64 32
+  %i.bt = getelementptr inbounds nuw i8, ptr %11, i64 33
   store i8 1, ptr %i.bt, align 1, !tbaa !92
-  store ptr @.str.27, ptr %12, align 8, !tbaa !82
+  store ptr @.str.27, ptr %11, align 8, !tbaa !82
   store i8 3, ptr %i.bs, align 8, !tbaa !89
-  call fastcc void @_ZN4llvm2rcL21checkSignedNumberFitsIsEENS_5ErrorEjRKNS_5TwineEb(ptr dead_on_unwind noalias writable align 8 %0, i32 noundef %i.br, ptr noundef nonnull align 8 dereferenceable(34) %12, i1 noundef zeroext true)
-  call void @llvm.lifetime.end.p0(ptr nonnull %12) #20
+  call fastcc void @_ZN4llvm2rcL21checkSignedNumberFitsIsEENS_5ErrorEjRKNS_5TwineEb(ptr dead_on_unwind noalias writable align 8 %0, i32 noundef %i.br, ptr noundef nonnull align 8 dereferenceable(34) %11, i1 noundef zeroext true)
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #20
   %i.bu = load ptr, ptr %0, align 8, !tbaa !72
   %.not110 = icmp eq ptr %i.bu, null
   br i1 %.not110, label %_ZN4llvm5ErrorD2Ev.exit, label %.critedge
@@ -678,14 +677,14 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 _ZN4llvm5ErrorD2Ev.exit:                          ; preds = %bb.e
   %i.bv = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.bw = load i32, ptr %i.bv, align 8, !tbaa !851
-  call void @llvm.lifetime.start.p0(ptr nonnull %13) #20
-  %i.bx = getelementptr inbounds nuw i8, ptr %13, i64 32
-  %i.by = getelementptr inbounds nuw i8, ptr %13, i64 33
+  call void @llvm.lifetime.start.p0(ptr nonnull %12) #20
+  %i.bx = getelementptr inbounds nuw i8, ptr %12, i64 32
+  %i.by = getelementptr inbounds nuw i8, ptr %12, i64 33
   store i8 1, ptr %i.by, align 1, !tbaa !92
-  store ptr @.str.28, ptr %13, align 8, !tbaa !82
+  store ptr @.str.28, ptr %12, align 8, !tbaa !82
   store i8 3, ptr %i.bx, align 8, !tbaa !89
-  call fastcc void @_ZN4llvm2rcL21checkSignedNumberFitsIsEENS_5ErrorEjRKNS_5TwineEb(ptr dead_on_unwind noalias nonnull writable align 8 %0, i32 noundef %i.bw, ptr noundef nonnull align 8 dereferenceable(34) %13, i1 noundef zeroext true)
-  call void @llvm.lifetime.end.p0(ptr nonnull %13) #20
+  call fastcc void @_ZN4llvm2rcL21checkSignedNumberFitsIsEENS_5ErrorEjRKNS_5TwineEb(ptr dead_on_unwind noalias nonnull writable align 8 %0, i32 noundef %i.bw, ptr noundef nonnull align 8 dereferenceable(34) %12, i1 noundef zeroext true)
+  call void @llvm.lifetime.end.p0(ptr nonnull %12) #20
   %i.bz = load ptr, ptr %0, align 8, !tbaa !72
   %.not111 = icmp eq ptr %i.bz, null
   br i1 %.not111, label %_ZN4llvm5ErrorD2Ev.exit77, label %.critedge
@@ -693,14 +692,14 @@ _ZN4llvm5ErrorD2Ev.exit:                          ; preds = %bb.e
 _ZN4llvm5ErrorD2Ev.exit77:                        ; preds = %_ZN4llvm5ErrorD2Ev.exit
   %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 52
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !852
-  call void @llvm.lifetime.start.p0(ptr nonnull %14) #20
-  %i.cc = getelementptr inbounds nuw i8, ptr %14, i64 32
-  %i.cd = getelementptr inbounds nuw i8, ptr %14, i64 33
+  call void @llvm.lifetime.start.p0(ptr nonnull %13) #20
+  %i.cc = getelementptr inbounds nuw i8, ptr %13, i64 32
+  %i.cd = getelementptr inbounds nuw i8, ptr %13, i64 33
   store i8 1, ptr %i.cd, align 1, !tbaa !92
-  store ptr @.str.29, ptr %14, align 8, !tbaa !82
+  store ptr @.str.29, ptr %13, align 8, !tbaa !82
   store i8 3, ptr %i.cc, align 8, !tbaa !89
-  call fastcc void @_ZN4llvm2rcL21checkSignedNumberFitsIsEENS_5ErrorEjRKNS_5TwineEb(ptr dead_on_unwind noalias nonnull writable align 8 %0, i32 noundef %i.cb, ptr noundef nonnull align 8 dereferenceable(34) %14, i1 noundef zeroext false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %14) #20
+  call fastcc void @_ZN4llvm2rcL21checkSignedNumberFitsIsEENS_5ErrorEjRKNS_5TwineEb(ptr dead_on_unwind noalias nonnull writable align 8 %0, i32 noundef %i.cb, ptr noundef nonnull align 8 dereferenceable(34) %13, i1 noundef zeroext false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %13) #20
   %i.ce = load ptr, ptr %0, align 8, !tbaa !72
   %.not112 = icmp eq ptr %i.ce, null
   br i1 %.not112, label %_ZN4llvm5ErrorD2Ev.exit78, label %.critedge
@@ -708,30 +707,30 @@ _ZN4llvm5ErrorD2Ev.exit77:                        ; preds = %_ZN4llvm5ErrorD2Ev.
 _ZN4llvm5ErrorD2Ev.exit78:                        ; preds = %_ZN4llvm5ErrorD2Ev.exit77
   %i.cf = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.cg = load i32, ptr %i.cf, align 8, !tbaa !853
-  call void @llvm.lifetime.start.p0(ptr nonnull %15) #20
-  %i.ch = getelementptr inbounds nuw i8, ptr %15, i64 32
-  %i.ci = getelementptr inbounds nuw i8, ptr %15, i64 33
+  call void @llvm.lifetime.start.p0(ptr nonnull %14) #20
+  %i.ch = getelementptr inbounds nuw i8, ptr %14, i64 32
+  %i.ci = getelementptr inbounds nuw i8, ptr %14, i64 33
   store i8 1, ptr %i.ci, align 1, !tbaa !92
-  store ptr @.str.30, ptr %15, align 8, !tbaa !82
+  store ptr @.str.30, ptr %14, align 8, !tbaa !82
   store i8 3, ptr %i.ch, align 8, !tbaa !89
-  call fastcc void @_ZN4llvm2rcL21checkSignedNumberFitsIsEENS_5ErrorEjRKNS_5TwineEb(ptr dead_on_unwind noalias nonnull writable align 8 %0, i32 noundef %i.cg, ptr noundef nonnull align 8 dereferenceable(34) %15, i1 noundef zeroext false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %15) #20
+  call fastcc void @_ZN4llvm2rcL21checkSignedNumberFitsIsEENS_5ErrorEjRKNS_5TwineEb(ptr dead_on_unwind noalias nonnull writable align 8 %0, i32 noundef %i.cg, ptr noundef nonnull align 8 dereferenceable(34) %14, i1 noundef zeroext false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %14) #20
   %i.cj = load ptr, ptr %0, align 8, !tbaa !72
   %.not113 = icmp eq ptr %i.cj, null
   br i1 %.not113, label %_ZN4llvm5ErrorD2Ev.exit79, label %.critedge
 
 _ZN4llvm5ErrorD2Ev.exit79:                        ; preds = %_ZN4llvm5ErrorD2Ev.exit78
-  call void @llvm.lifetime.start.p0(ptr nonnull %16) #20
+  call void @llvm.lifetime.start.p0(ptr nonnull %15) #20
   %i.ck = load <4 x i32>, ptr %i.bq, align 4, !tbaa !233
   %i.cl = trunc <4 x i32> %i.ck to <4 x i16>
-  store <4 x i16> %i.cl, ptr %16, align 8
+  store <4 x i16> %i.cl, ptr %15, align 8
   %i.cm = load ptr, ptr %i.b, align 8, !tbaa !8   ; 2 uses
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !11
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 80
   %i.cp = load ptr, ptr %i.co, align 8
   %i.cq = call noundef i64 %i.cp(ptr noundef nonnull align 8 dereferenceable(48) %i.cm) #20, !inline_history !854 ; 0 uses
   %i.cr = load ptr, ptr %i.b, align 8, !tbaa !8
-  %i.cs = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %i.cr, ptr noundef nonnull align 1 dereferenceable(8) %16, i64 noundef 8) #20 ; 0 uses
+  %i.cs = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %i.cr, ptr noundef nonnull align 1 dereferenceable(8) %15, i64 noundef 8) #20 ; 0 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 3 uses
   br i1 %3, label %bb.h, label %bb.f
 
@@ -741,14 +740,14 @@ bb.f:                                             ; preds = %_ZN4llvm5ErrorD2Ev.
   br i1 %.not, label %_ZN4llvm5ErrorD2Ev.exit80, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  call void @llvm.lifetime.start.p0(ptr nonnull %17) #20
-  %i.cv = getelementptr inbounds nuw i8, ptr %17, i64 32
-  %i.cw = getelementptr inbounds nuw i8, ptr %17, i64 33
+  call void @llvm.lifetime.start.p0(ptr nonnull %16) #20
+  %i.cv = getelementptr inbounds nuw i8, ptr %16, i64 32
+  %i.cw = getelementptr inbounds nuw i8, ptr %16, i64 33
   store i8 1, ptr %i.cw, align 1, !tbaa !92
-  store ptr @.str.31, ptr %17, align 8, !tbaa !82
+  store ptr @.str.31, ptr %16, align 8, !tbaa !82
   store i8 3, ptr %i.cv, align 8, !tbaa !89
-  call fastcc void @_ZN4llvm2rcL15checkNumberFitsEjmRKNS_5TwineE(ptr dead_on_unwind noalias nonnull writable align 8 %0, i32 noundef %i.cu, i64 noundef 16, ptr noundef nonnull align 8 dereferenceable(34) %17)
-  call void @llvm.lifetime.end.p0(ptr nonnull %17) #20
+  call fastcc void @_ZN4llvm2rcL15checkNumberFitsEjmRKNS_5TwineE(ptr dead_on_unwind noalias nonnull writable align 8 %0, i32 noundef %i.cu, i64 noundef 16, ptr noundef nonnull align 8 dereferenceable(34) %16)
+  call void @llvm.lifetime.end.p0(ptr nonnull %16) #20
   %i.cx = load ptr, ptr %0, align 8, !tbaa !72
   %.not114 = icmp eq ptr %i.cx, null
   br i1 %.not114, label %._ZN4llvm5ErrorD2Ev.exit80_crit_edge, label %.critedge65
@@ -832,25 +831,25 @@ _ZN4llvm5ErrorD2Ev.exit82:                        ; preds = %_ZN4llvm2rc18Resour
   %.sroa.088.0.copyload = load i64, ptr %i.ei, align 8
   %.sroa.290.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32
   %.sroa.290.0.copyload = load i8, ptr %.sroa.290.0..sroa_idx, align 8, !tbaa !77
-  call void @llvm.lifetime.start.p0(ptr nonnull %18) #20
-  %i.ej = getelementptr inbounds nuw i8, ptr %18, i64 32
-  %i.ek = getelementptr inbounds nuw i8, ptr %18, i64 33
+  call void @llvm.lifetime.start.p0(ptr nonnull %17) #20
+  %i.ej = getelementptr inbounds nuw i8, ptr %17, i64 32
+  %i.ek = getelementptr inbounds nuw i8, ptr %17, i64 33
   store i8 1, ptr %i.ek, align 1, !tbaa !92
-  store ptr @.str.32, ptr %18, align 8, !tbaa !82
+  store ptr @.str.32, ptr %17, align 8, !tbaa !82
   store i8 3, ptr %i.ej, align 8, !tbaa !89
   %i.el = trunc nuw i8 %.sroa.290.0.copyload to i1
   br i1 %i.el, label %_ZN4llvm2rcL16checkIntOrStringENS0_11IntOrStringERKNS_5TwineE.exit, label %_ZN4llvm2rcL16checkIntOrStringENS0_11IntOrStringERKNS_5TwineE.exit.thread
 
 _ZN4llvm2rcL16checkIntOrStringENS0_11IntOrStringERKNS_5TwineE.exit.thread: ; preds = %_ZN4llvm5ErrorD2Ev.exit82
   store ptr null, ptr %0, align 8, !tbaa !72, !alias.scope !858
-  call void @llvm.lifetime.end.p0(ptr nonnull %18) #20
+  call void @llvm.lifetime.end.p0(ptr nonnull %17) #20
   br label %_ZN4llvm5ErrorD2Ev.exit84
 
 _ZN4llvm2rcL16checkIntOrStringENS0_11IntOrStringERKNS_5TwineE.exit: ; preds = %_ZN4llvm5ErrorD2Ev.exit82
   %.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.088.0.copyload to i32
-  call fastcc void @_ZN4llvm2rcL15checkNumberFitsEjmRKNS_5TwineE(ptr dead_on_unwind noalias nonnull writable align 8 %0, i32 noundef %.sroa.0.0.extract.trunc.i, i64 noundef 16, ptr noundef nonnull align 8 dereferenceable(34) %18)
+  call fastcc void @_ZN4llvm2rcL15checkNumberFitsEjmRKNS_5TwineE(ptr dead_on_unwind noalias nonnull writable align 8 %0, i32 noundef %.sroa.0.0.extract.trunc.i, i64 noundef 16, ptr noundef nonnull align 8 dereferenceable(34) %17)
   %.pr108 = load ptr, ptr %0, align 8, !tbaa !72
-  call void @llvm.lifetime.end.p0(ptr nonnull %18) #20
+  call void @llvm.lifetime.end.p0(ptr nonnull %17) #20
   %.not116 = icmp eq ptr %.pr108, null
   br i1 %.not116, label %_ZN4llvm5ErrorD2Ev.exit84, label %.critedge65
 
@@ -868,7 +867,7 @@ _ZN4llvm5ErrorD2Ev.exit86:                        ; preds = %_ZN4llvm5ErrorD2Ev.
   br label %.critedge65
 
 .critedge65:                                      ; preds = %_ZN4llvm5ErrorD2Ev.exit84, %_ZN4llvm2rcL16checkIntOrStringENS0_11IntOrStringERKNS_5TwineE.exit, %_ZN4llvm2rc18ResourceFileWriter16writeIntOrStringERKNS0_11IntOrStringE.exit, %bb.g, %_ZN4llvm5ErrorD2Ev.exit86
-  call void @llvm.lifetime.end.p0(ptr nonnull %16) #20
+  call void @llvm.lifetime.end.p0(ptr nonnull %15) #20
   br label %.critedge
 
 .critedge:                                        ; preds = %_ZN4llvm5ErrorD2Ev.exit78, %_ZN4llvm5ErrorD2Ev.exit77, %_ZN4llvm5ErrorD2Ev.exit, %bb.e, %.critedge65

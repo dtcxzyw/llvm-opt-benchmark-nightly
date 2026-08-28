@@ -205,13 +205,13 @@ bb.a:
   %49 = alloca %"class.std::map", align 8         ; 12 uses
   %50 = alloca %"class.std::optional.535", align 8 ; 8 uses
   %51 = alloca %"struct.Luau::Location", align 8  ; 6 uses
-  %.sroa.01455 = alloca %"struct.Luau::Position", align 8 ; 5 uses
-  %.sroa.51456 = alloca %"struct.Luau::Position", align 8 ; 5 uses
+  %.sroa.01455.sroa.0 = alloca i64, align 8       ; 5 uses
+  %.sroa.51456.sroa.0 = alloca i64, align 8       ; 5 uses
   %52 = alloca %"class.Luau::Variant", align 8    ; 7 uses
   %53 = alloca %"struct.Luau::GenericError", align 8 ; 13 uses
   %54 = alloca %"struct.Luau::Location", align 8  ; 6 uses
-  %.sroa.01450 = alloca %"struct.Luau::Position", align 8 ; 5 uses
-  %.sroa.51451 = alloca %"struct.Luau::Position", align 8 ; 5 uses
+  %.sroa.01450.sroa.0 = alloca i64, align 8       ; 5 uses
+  %.sroa.51451.sroa.0 = alloca i64, align 8       ; 5 uses
   %55 = alloca %"class.Luau::Variant", align 8    ; 7 uses
   %56 = alloca %"struct.Luau::GenericError", align 8 ; 13 uses
   %57 = alloca %"struct.Luau::Property", align 8  ; 14 uses
@@ -224,13 +224,13 @@ bb.a:
   %64 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %65 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %66 = alloca %"struct.Luau::Location", align 8  ; 6 uses
-  %.sroa.01444 = alloca %"struct.Luau::Position", align 8 ; 5 uses
-  %.sroa.51445 = alloca %"struct.Luau::Position", align 8 ; 5 uses
+  %.sroa.01444.sroa.0 = alloca i64, align 8       ; 5 uses
+  %.sroa.51445.sroa.0 = alloca i64, align 8       ; 5 uses
   %67 = alloca %"class.Luau::Variant", align 8    ; 7 uses
   %68 = alloca %"struct.Luau::GenericError", align 8 ; 13 uses
   %69 = alloca %"struct.Luau::Location", align 8  ; 6 uses
-  %.sroa.01440 = alloca %"struct.Luau::Position", align 8 ; 5 uses
-  %.sroa.5 = alloca %"struct.Luau::Position", align 8 ; 5 uses
+  %.sroa.01440.sroa.0 = alloca i64, align 8       ; 5 uses
+  %.sroa.5.sroa.0 = alloca i64, align 8           ; 5 uses
   %70 = alloca %"class.Luau::Variant", align 8    ; 7 uses
   %71 = alloca %"struct.Luau::GenericError", align 8 ; 13 uses
   %72 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -633,17 +633,17 @@ bb.mj:                                            ; preds = %.lr.ph1801, %bb.nu
 
 .noexc.i1056:                                     ; preds = %bb.mj
   call void @llvm.lifetime.start.p0(ptr nonnull %51) #35
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.01455)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.51456)
-  store i64 0, ptr %.sroa.01455, align 8
-  store i64 0, ptr %.sroa.51456, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.01455.sroa.0)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.51456.sroa.0)
+  store i64 0, ptr %.sroa.01455.sroa.0, align 8
+  store i64 0, ptr %.sroa.51456.sroa.0, align 8
   %i.bvm = getelementptr inbounds nuw i8, ptr %.03471799, i64 36
   %i.bvn = getelementptr inbounds nuw i8, ptr %.03471799, i64 52
   %i.bvo = load i8, ptr %i.bvn, align 4, !tbaa !853, !range !38, !noundef !39
   %i.bvp = trunc nuw i8 %i.bvo to i1              ; 2 uses
-  %spec.select.i1054 = select i1 %i.bvp, ptr %i.bvm, ptr %.sroa.01455
+  %spec.select.i1054 = select i1 %i.bvp, ptr %i.bvm, ptr %.sroa.01455.sroa.0
   %.sroa.gep1453 = getelementptr inbounds nuw i8, ptr %.03471799, i64 44
-  %spec.select.i1054.sroa.sel = select i1 %i.bvp, ptr %.sroa.gep1453, ptr %.sroa.51456
+  %spec.select.i1054.sroa.sel = select i1 %i.bvp, ptr %.sroa.gep1453, ptr %.sroa.51456.sroa.0
   %.sroa.3.0.i = load i64, ptr %spec.select.i1054.sroa.sel, align 4
   %.sroa.0.0.i = load i64, ptr %spec.select.i1054, align 4
   store i64 %.sroa.0.0.i, ptr %51, align 8
@@ -723,8 +723,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZN4Luau12GenericErrorD2Ev.exit1066:              ; preds = %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExte1063, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i1064
   call void @llvm.lifetime.end.p0(ptr nonnull %53) #35
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01455)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.51456)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01455.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.51456.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %51) #35
   br label %bb.nu
 
@@ -764,24 +764,24 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZN4Luau12GenericErrorD2Ev.exit1071:              ; preds = %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExte1068, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i1069, %bb.mn
   %.pn481 = phi { ptr, i32 } [ %i.bwl, %bb.mn ], [ %i.bwm, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i1069 ], [ %i.bwm, %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExte1068 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %53) #35
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01455)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.51456)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01455.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.51456.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %51) #35
   br label %bb.ox
 
 .noexc.i1079:                                     ; preds = %bb.mj
   call void @llvm.lifetime.start.p0(ptr nonnull %54) #35
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.01450)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.51451)
-  store i64 0, ptr %.sroa.01450, align 8
-  store i64 0, ptr %.sroa.51451, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.01450.sroa.0)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.51451.sroa.0)
+  store i64 0, ptr %.sroa.01450.sroa.0, align 8
+  store i64 0, ptr %.sroa.51451.sroa.0, align 8
   %i.bwx = getelementptr inbounds nuw i8, ptr %.03471799, i64 36
   %i.bwy = getelementptr inbounds nuw i8, ptr %.03471799, i64 52
   %i.bwz = load i8, ptr %i.bwy, align 4, !tbaa !853, !range !38, !noundef !39
   %i.bxa = trunc nuw i8 %i.bwz to i1              ; 2 uses
-  %spec.select.i1072 = select i1 %i.bxa, ptr %i.bwx, ptr %.sroa.01450
+  %spec.select.i1072 = select i1 %i.bxa, ptr %i.bwx, ptr %.sroa.01450.sroa.0
   %.sroa.gep1448 = getelementptr inbounds nuw i8, ptr %.03471799, i64 44
-  %spec.select.i1072.sroa.sel = select i1 %i.bxa, ptr %.sroa.gep1448, ptr %.sroa.51451
+  %spec.select.i1072.sroa.sel = select i1 %i.bxa, ptr %.sroa.gep1448, ptr %.sroa.51451.sroa.0
   %.sroa.3.0.i1074 = load i64, ptr %spec.select.i1072.sroa.sel, align 4
   %.sroa.0.0.i1075 = load i64, ptr %spec.select.i1072, align 4
   store i64 %.sroa.0.0.i1075, ptr %54, align 8
@@ -861,8 +861,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZN4Luau12GenericErrorD2Ev.exit1089:              ; preds = %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExte1086, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i1087
   call void @llvm.lifetime.end.p0(ptr nonnull %56) #35
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01450)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.51451)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01450.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.51451.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %54) #35
   br label %bb.nu
 
@@ -902,8 +902,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZN4Luau12GenericErrorD2Ev.exit1094:              ; preds = %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExte1091, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i1092, %bb.mt
   %.pn478 = phi { ptr, i32 } [ %i.bxw, %bb.mt ], [ %i.bxx, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i1092 ], [ %i.bxx, %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExte1091 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %56) #35
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01450)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.51451)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01450.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.51451.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %54) #35
   br label %bb.ox
 
@@ -1302,17 +1302,17 @@ bb.nv:                                            ; preds = %._crit_edge1802
 
 .noexc.i1149:                                     ; preds = %bb.nv
   call void @llvm.lifetime.start.p0(ptr nonnull %66) #35
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.01444)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.51445)
-  store i64 0, ptr %.sroa.01444, align 8
-  store i64 0, ptr %.sroa.51445, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.01444.sroa.0)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.51445.sroa.0)
+  store i64 0, ptr %.sroa.01444.sroa.0, align 8
+  store i64 0, ptr %.sroa.51445.sroa.0, align 8
   %i.ccg = getelementptr inbounds nuw i8, ptr %i.bvj, i64 36
   %i.cch = getelementptr inbounds nuw i8, ptr %i.bvj, i64 52
   %i.cci = load i8, ptr %i.cch, align 4, !tbaa !853, !range !38, !noundef !39
   %i.ccj = trunc nuw i8 %i.cci to i1              ; 2 uses
-  %spec.select.i1142 = select i1 %i.ccj, ptr %i.ccg, ptr %.sroa.01444
+  %spec.select.i1142 = select i1 %i.ccj, ptr %i.ccg, ptr %.sroa.01444.sroa.0
   %.sroa.gep1442 = getelementptr inbounds nuw i8, ptr %i.bvj, i64 44
-  %spec.select.i1142.sroa.sel = select i1 %i.ccj, ptr %.sroa.gep1442, ptr %.sroa.51445
+  %spec.select.i1142.sroa.sel = select i1 %i.ccj, ptr %.sroa.gep1442, ptr %.sroa.51445.sroa.0
   %.sroa.3.0.i1144 = load i64, ptr %spec.select.i1142.sroa.sel, align 4
   %.sroa.0.0.i1145 = load i64, ptr %spec.select.i1142, align 4
   store i64 %.sroa.0.0.i1145, ptr %66, align 8
@@ -1398,8 +1398,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZN4Luau12GenericErrorD2Ev.exit1159:              ; preds = %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExte1156, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i1157
   call void @llvm.lifetime.end.p0(ptr nonnull %68) #35
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01444)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.51445)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01444.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.51445.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %66) #35
   br label %_ZNSt8optionalIN4Luau12TableIndexerEEaSIS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES5_ISt6__and_IJSt9is_scalarIS1_ES6_IS1_NSt5decayIS9_E4typeEEEEESt16is_constructibleIS1_JS9_EESt13is_assignableIRS1_S9_EEERS2_E4typeEOS9_.exit
 
@@ -1439,24 +1439,24 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZN4Luau12GenericErrorD2Ev.exit1164:              ; preds = %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExte1161, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i1162, %bb.nz
   %.pn466 = phi { ptr, i32 } [ %i.cdl, %bb.nz ], [ %i.cdm, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i1162 ], [ %i.cdm, %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExte1161 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %68) #35
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01444)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.51445)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01444.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.51445.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %66) #35
   br label %bb.ox
 
 .noexc.i1172:                                     ; preds = %bb.nv
   call void @llvm.lifetime.start.p0(ptr nonnull %69) #35
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.01440)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  store i64 0, ptr %.sroa.01440, align 8
-  store i64 0, ptr %.sroa.5, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.01440.sroa.0)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.sroa.0)
+  store i64 0, ptr %.sroa.01440.sroa.0, align 8
+  store i64 0, ptr %.sroa.5.sroa.0, align 8
   %i.cdx = getelementptr inbounds nuw i8, ptr %i.bvj, i64 36
   %i.cdy = getelementptr inbounds nuw i8, ptr %i.bvj, i64 52
   %i.cdz = load i8, ptr %i.cdy, align 4, !tbaa !853, !range !38, !noundef !39
   %i.cea = trunc nuw i8 %i.cdz to i1              ; 2 uses
-  %spec.select.i1165 = select i1 %i.cea, ptr %i.cdx, ptr %.sroa.01440
+  %spec.select.i1165 = select i1 %i.cea, ptr %i.cdx, ptr %.sroa.01440.sroa.0
   %.sroa.gep = getelementptr inbounds nuw i8, ptr %i.bvj, i64 44
-  %spec.select.i1165.sroa.sel = select i1 %i.cea, ptr %.sroa.gep, ptr %.sroa.5
+  %spec.select.i1165.sroa.sel = select i1 %i.cea, ptr %.sroa.gep, ptr %.sroa.5.sroa.0
   %.sroa.3.0.i1167 = load i64, ptr %spec.select.i1165.sroa.sel, align 4
   %.sroa.0.0.i1168 = load i64, ptr %spec.select.i1165, align 4
   store i64 %.sroa.0.0.i1168, ptr %69, align 8
@@ -1542,8 +1542,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZN4Luau12GenericErrorD2Ev.exit1182:              ; preds = %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExte1179, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i1180
   call void @llvm.lifetime.end.p0(ptr nonnull %71) #35
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01440)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01440.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %69) #35
   br label %_ZNSt8optionalIN4Luau12TableIndexerEEaSIS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES5_ISt6__and_IJSt9is_scalarIS1_ES6_IS1_NSt5decayIS9_E4typeEEEEESt16is_constructibleIS1_JS9_EESt13is_assignableIRS1_S9_EEERS2_E4typeEOS9_.exit
 
@@ -1583,8 +1583,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZN4Luau12GenericErrorD2Ev.exit1187:              ; preds = %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExte1184, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i1185, %bb.of
   %.pn463 = phi { ptr, i32 } [ %i.cfc, %bb.of ], [ %i.cfd, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i1185 ], [ %i.cfd, %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExte1184 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %71) #35
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01440)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.01440.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %69) #35
   br label %bb.ox
 
