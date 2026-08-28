@@ -200,7 +200,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %1 = mul nuw nsw i32 %.1, %.020
+  %1 = and i32 %.1, %.020
   ret i32 %1
 }
 
