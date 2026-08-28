@@ -69,9 +69,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = load i32, ptr %i.d, align 8, !tbaa !20   ; 2 uses
-  %3 = and i32 %i.e, 1
-  %.not39 = icmp eq i32 %3, 0
-  br i1 %.not39, label %bb.r, label %bb.c
+  %.not39 = trunc i32 %i.e to i1
+  br i1 %.not39, label %bb.c, label %bb.r
 
 bb.c:                                             ; preds = %bb.b
   %.not40 = icmp eq ptr %i.b, null
@@ -267,9 +266,8 @@ bb.c:                                             ; preds = %bb.b, %bb.b, %bb.b,
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !87
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.m = load i32, ptr %i.l, align 8, !tbaa !88
-  %5 = and i32 %i.m, 1
-  %.not79 = icmp eq i32 %5, 0
-  br i1 %.not79, label %bb.e, label %bb.d
+  %.not79 = trunc i32 %i.m to i1
+  br i1 %.not79, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 168 ; 2 uses
@@ -416,9 +414,8 @@ thread-pre-split.thread:                          ; preds = %bb.g, %bb.f, %threa
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !87
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
   %i.bl = load i32, ptr %i.bk, align 8, !tbaa !88
-  %6 = and i32 %i.bl, 1
-  %.not87 = icmp eq i32 %6, 0
-  br i1 %.not87, label %bb.s, label %bb.r
+  %.not87 = trunc i32 %i.bl to i1
+  br i1 %.not87, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %.thread
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 168 ; 2 uses
@@ -600,7 +597,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %.lr.ph118, %bb.at
   %i.am = phi i64 [ %i.c, %.lr.ph118 ], [ %i.ib, %bb.at ]
-  %i.an = phi i1 [ true, %.lr.ph118 ], [ false, %bb.at ]
+  %i.an = phi i1 [ false, %.lr.ph118 ], [ true, %bb.at ]
   %.080116 = phi i32 [ %i.u, %.lr.ph118 ], [ %i.ao, %bb.at ] ; 3 uses
   store i32 %.080116, ptr %i.v, align 8, !tbaa !105
   %i.ao = add i32 %.080116, %i.w                  ; 2 uses
@@ -620,7 +617,7 @@ bb.d:                                             ; preds = %.lr.ph118, %bb.at
 
 bb.e:                                             ; preds = %bb.as, %bb.d
   %.078 = phi ptr [ %i.a, %bb.d ], [ %.179, %bb.as ] ; 5 uses
-  %.177 = phi i1 [ %i.an, %bb.d ], [ false, %bb.as ]
+  %.177 = phi i1 [ %i.an, %bb.d ], [ true, %bb.as ]
   %i.ax = getelementptr inbounds nuw i8, ptr %.078, i64 4 ; 4 uses
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !8
   store i32 %i.ay, ptr %i.ab, align 8, !tbaa !108
@@ -683,7 +680,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store ptr %i.bm, ptr %i.ad, align 8, !tbaa !116
   store ptr %i.bh, ptr %i.ae, align 8, !tbaa !117
   store i32 0, ptr %i.af, align 4, !tbaa !118
-  br i1 %.177, label %.thread.i.a, label %bb.f
+  br i1 %.177, label %bb.f, label %.thread.i.a
 
 .thread.i.a:                                      ; preds = %._crit_edge
   %i.bn = call i32 @FT_Outline_Decompose(ptr noundef nonnull %i.ag, ptr noundef nonnull @func_interface, ptr noundef nonnull %0) #9

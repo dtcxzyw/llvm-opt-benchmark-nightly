@@ -202,9 +202,8 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   br label %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE7reserveEm.exit388
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE7reserveEm.exit388: ; preds = %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit.i386, %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit.i
-  %126 = and i32 %i.bs, 1
-  %.not = icmp eq i32 %126, 0                     ; 2 uses
-  br i1 %.not, label %bb.t, label %._crit_edge.i.i
+  %.not = trunc i32 %i.bs to i1                   ; 2 uses
+  br i1 %.not, label %._crit_edge.i.i, label %bb.t
 
 ._crit_edge.i.i:                                  ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE7reserveEm.exit388
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
@@ -263,9 +262,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backEOS5_.exit.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
-  %127 = and i32 %i.bt, 1
-  %.not160 = icmp eq i32 %127, 0
-  br i1 %.not160, label %.noexc.i410, label %.noexc.i392
+  %.not160 = trunc i32 %i.bt to i1
+  br i1 %.not160, label %.noexc.i392, label %.noexc.i410
 
 .noexc.i392:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
@@ -668,9 +666,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit792: ; preds = %_Z
   %i.adx = getelementptr inbounds nuw i8, ptr %31, i64 8 ; 3 uses
   store i64 0, ptr %i.adx, align 8, !tbaa !22
   store i8 0, ptr %i.adw, align 8, !tbaa !24
-  %128 = and i32 %i.bt, 1
-  %.not229 = icmp eq i32 %128, 0
-  br i1 %.not229, label %bb.em, label %.invoke
+  %.not229 = trunc i32 %i.bt to i1
+  br i1 %.not229, label %.invoke, label %bb.em
 
 bb.ei:                                            ; preds = %bb.ee
   %i.ady = landingpad { ptr, i32 }
@@ -766,7 +763,7 @@ bb.et:                                            ; preds = %bb.es
 bb.eu:                                            ; preds = %bb.et
   %i.aev = and i32 %i.bt, 4
   %.not238 = icmp eq i32 %i.aev, 0
-  %.str.26..str = select i1 %.not, ptr @.str.26, ptr @.str
+  %.str.26..str = select i1 %.not, ptr @.str, ptr @.str.26
   %spec.select = select i1 %.not238, ptr %.str.26..str, ptr @.str.6
   br label %.invoke2837
 

@@ -204,17 +204,16 @@ bb.c:                                             ; preds = %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.d
   %indvars.iv = phi i64 [ 2, %bb.b ], [ %indvars.iv.next, %bb.d ] ; 3 uses
-  %3 = and i64 %indvars.iv, 1
-  %4 = icmp eq i64 %3, 0                          ; 4 uses
+  %3 = trunc i64 %indvars.iv to i1                ; 4 uses
   %i.b = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv ; 6 uses
   %i.c = load float, ptr %i.b, align 4
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.e = load float, ptr %i.d, align 4
   tail call void @rlVertex2f(float noundef %i.c, float noundef %i.e) #14
-  %. = select i1 %4, i64 -16, i64 -8
-  %.41 = select i1 %4, i64 -12, i64 -4
-  %.42 = select i1 %4, i64 -8, i64 -16
-  %.43 = select i1 %4, i64 -4, i64 -12
+  %. = select i1 %3, i64 -8, i64 -16
+  %.41 = select i1 %3, i64 -4, i64 -12
+  %.42 = select i1 %3, i64 -16, i64 -8
+  %.43 = select i1 %3, i64 -12, i64 -4
   %i.f = getelementptr i8, ptr %i.b, i64 %.
   %i.g = load float, ptr %i.f, align 4
   %i.h = getelementptr i8, ptr %i.b, i64 %.41
@@ -567,9 +566,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.d
   %.0127.lcssa = phi float [ %.0130, %bb.d ], [ %i.an, %bb.e ] ; 2 uses
-  %6 = and i32 %.1, 1
-  %.not = icmp eq i32 %6, 0
-  br i1 %.not, label %bb.g, label %bb.f
+  %6 = trunc i32 %.1 to i1
+  br i1 %6, label %bb.f, label %bb.g
 
 bb.e:                                             ; preds = %.lr.ph, %bb.e
   %.0137 = phi i32 [ 0, %.lr.ph ], [ %i.bt, %bb.e ]
@@ -972,8 +970,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.ad = extractelement <2 x float> %foldExtExtBinop372, i64 0 ; 14 uses
   %foldExtExtBinop374 = fadd <2 x float> %.sroa.0.0.copyload.i, %.sroa.2.0.copyload.i
   %i.ae = extractelement <2 x float> %foldExtExtBinop374, i64 1 ; 14 uses
-  %6 = and i32 %.0359, 1
-  %.not = icmp eq i32 %6, 0
+  %.not = trunc i32 %.0359 to i1
   %i.af = insertelement <2 x float> poison, float %i.d, i64 0
   %i.ag = shufflevector <2 x float> %i.af, <2 x float> poison, <2 x i32> zeroinitializer
   br label %bb.h
@@ -1161,7 +1158,7 @@ bb.h:                                             ; preds = %bb.f, %bb.j
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.h
   %.0357.lcssa = phi float [ %i.ey, %bb.h ], [ %i.fp, %.lr.ph ] ; 2 uses
-  br i1 %.not, label %bb.j, label %bb.i
+  br i1 %.not, label %bb.i, label %bb.j
 
 .lr.ph:                                           ; preds = %bb.h, %.lr.ph
   %.0365 = phi i32 [ %i.gv, %.lr.ph ], [ 0, %bb.h ]

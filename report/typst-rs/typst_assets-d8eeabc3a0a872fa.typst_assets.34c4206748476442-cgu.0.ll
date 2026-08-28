@@ -205,15 +205,12 @@ define internal fastcc noundef range(i8 0, 15) i8 @_RNvMNtCs4wS76oGtFbW_12typst_
 bb.a:
   %i.a = alloca [1 x i8], align 1                 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 12 uses
-  %3 = icmp samesign eq i64 %1, 0
-  br i1 %3, label %_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultjjE6map_orNtNtNtCs4wS76oGtFbW_12typst_assets6mathml4data8CategoryNCNvMBW_NtBW_12OperatorInfo21get_operator_categorys_0EBY_.exit, label %.preheader.i.preheader
+  switch i64 %1, label %.preheader.i.preheader.new [
+    i64 0, label %_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultjjE6map_orNtNtNtCs4wS76oGtFbW_12typst_assets6mathml4data8CategoryNCNvMBW_NtBW_12OperatorInfo21get_operator_categorys_0EBY_.exit
+    i64 1, label %.preheader.i.epil.preheader
+  ]
 
-.preheader.i.preheader:                           ; preds = %bb.a
-  %xtraiter = and i64 %1, 1
-  %4 = icmp eq i64 %1, 1
-  br i1 %4, label %.preheader.i.epil.preheader, label %.preheader.i.preheader.new
-
-.preheader.i.preheader.new:                       ; preds = %.preheader.i.preheader
+.preheader.i.preheader.new:                       ; preds = %bb.a
   %unroll_iter = and i64 %1, -2
   br label %.preheader.i
 
@@ -262,12 +259,12 @@ _RNCNvXsO_NtNtCs3oUPovFnLWP_4core3str4iterNtB7_11EncodeUtf16NtNtNtNtBb_4iter6tra
   br i1 %niter.ncmp.1, label %_RNvXsO_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11EncodeUtf16NtNtNtNtB9_4iter6traits8iterator8Iterator5count.exit.unr-lcssa, label %.preheader.i
 
 _RNvXsO_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11EncodeUtf16NtNtNtNtB9_4iter6traits8iterator8Iterator5count.exit.unr-lcssa: ; preds = %_RNCNvXsO_NtNtCs3oUPovFnLWP_4core3str4iterNtB7_11EncodeUtf16NtNtNtNtBb_4iter6traits8iterator8Iterator5count0Cs4wS76oGtFbW_12typst_assets.exit.i.i.1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RNvXsO_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11EncodeUtf16NtNtNtNtB9_4iter6traits8iterator8Iterator5count.exit, label %.preheader.i.epil.preheader
+  %lcmp.mod.not = trunc i64 %1 to i1
+  br i1 %lcmp.mod.not, label %.preheader.i.epil.preheader, label %_RNvXsO_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11EncodeUtf16NtNtNtNtB9_4iter6traits8iterator8Iterator5count.exit
 
-.preheader.i.epil.preheader:                      ; preds = %_RNvXsO_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11EncodeUtf16NtNtNtNtB9_4iter6traits8iterator8Iterator5count.exit.unr-lcssa, %.preheader.i.preheader
-  %.sroa.04.0.i.i.epil.init = phi i64 [ 0, %.preheader.i.preheader ], [ %i.n, %_RNvXsO_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11EncodeUtf16NtNtNtNtB9_4iter6traits8iterator8Iterator5count.exit.unr-lcssa ]
-  %.sroa.02.0.i.i.epil.init = phi i64 [ 0, %.preheader.i.preheader ], [ %i.m, %_RNvXsO_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11EncodeUtf16NtNtNtNtB9_4iter6traits8iterator8Iterator5count.exit.unr-lcssa ]
+.preheader.i.epil.preheader:                      ; preds = %bb.a, %_RNvXsO_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11EncodeUtf16NtNtNtNtB9_4iter6traits8iterator8Iterator5count.exit.unr-lcssa
+  %.sroa.04.0.i.i.epil.init = phi i64 [ 0, %bb.a ], [ %i.n, %_RNvXsO_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11EncodeUtf16NtNtNtNtB9_4iter6traits8iterator8Iterator5count.exit.unr-lcssa ]
+  %.sroa.02.0.i.i.epil.init = phi i64 [ 0, %bb.a ], [ %i.m, %_RNvXsO_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11EncodeUtf16NtNtNtNtB9_4iter6traits8iterator8Iterator5count.exit.unr-lcssa ]
   %lcmp.mod98 = trunc i64 %1 to i1
   tail call void @llvm.assume(i1 %lcmp.mod98)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.04.0.i.i.epil.init
@@ -670,7 +667,7 @@ switch.lookup94:                                  ; preds = %switch.hole_check93
   %switch.load = load i8, ptr %switch.gep, align 1
   br label %_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultjjE6map_orNtNtNtCs4wS76oGtFbW_12typst_assets6mathml4data8CategoryNCNvMBW_NtBW_12OperatorInfo21get_operator_categorys_0EBY_.exit
 
-_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultjjE6map_orNtNtNtCs4wS76oGtFbW_12typst_assets6mathml4data8CategoryNCNvMBW_NtBW_12OperatorInfo21get_operator_categorys_0EBY_.exit: ; preds = %switch.early.test, %switch.lookup94, %bb.x, %bb.x, %_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultjjE6map_orNtNtNtCs4wS76oGtFbW_12typst_assets6mathml4data8CategoryNCNvMBW_NtBW_12OperatorInfo21get_operator_categorys_0EBY_.exit.fold.split, %switch.lookup, %bb.a, %_RINvMNtCs3oUPovFnLWP_4core5sliceSTthE16binary_search_byNCNvMNtCs4wS76oGtFbW_12typst_assets6mathmlNtBW_12OperatorInfo21get_operator_category0EBY_.exit, %bb.ab, %bb.w, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultcNtNtNtB4_4char7convert14ParseCharErrorE6unwrapCs4wS76oGtFbW_12typst_assets.exit, %bb.aa, %_RNvXsO_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11EncodeUtf16NtNtNtNtB9_4iter6traits8iterator8Iterator5count.exit, %_RNvXs7_NtNtCs3oUPovFnLWP_4core4char7convertcNtNtNtB9_3str6traits7FromStr8from_str.exit47
+_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultjjE6map_orNtNtNtCs4wS76oGtFbW_12typst_assets6mathml4data8CategoryNCNvMBW_NtBW_12OperatorInfo21get_operator_categorys_0EBY_.exit: ; preds = %bb.a, %switch.early.test, %switch.lookup94, %bb.x, %bb.x, %_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultjjE6map_orNtNtNtCs4wS76oGtFbW_12typst_assets6mathml4data8CategoryNCNvMBW_NtBW_12OperatorInfo21get_operator_categorys_0EBY_.exit.fold.split, %switch.lookup, %_RINvMNtCs3oUPovFnLWP_4core5sliceSTthE16binary_search_byNCNvMNtCs4wS76oGtFbW_12typst_assets6mathmlNtBW_12OperatorInfo21get_operator_category0EBY_.exit, %bb.ab, %bb.w, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultcNtNtNtB4_4char7convert14ParseCharErrorE6unwrapCs4wS76oGtFbW_12typst_assets.exit, %bb.aa, %_RNvXsO_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11EncodeUtf16NtNtNtNtB9_4iter6traits8iterator8Iterator5count.exit, %_RNvXs7_NtNtCs3oUPovFnLWP_4core4char7convertcNtNtNtB9_3str6traits7FromStr8from_str.exit47
   %.sroa.0.1 = phi i8 [ %.sroa.0.0, %_RNvXs7_NtNtCs3oUPovFnLWP_4core4char7convertcNtNtNtB9_3str6traits7FromStr8from_str.exit47 ], [ 0, %bb.a ], [ 0, %bb.ab ], [ 13, %bb.aa ], [ 1, %bb.x ], [ 0, %_RINvMNtCs3oUPovFnLWP_4core5sliceSTthE16binary_search_byNCNvMNtCs4wS76oGtFbW_12typst_assets6mathmlNtBW_12OperatorInfo21get_operator_category0EBY_.exit ], [ 0, %_RNvXsO_NtNtCs3oUPovFnLWP_4core3str4iterNtB5_11EncodeUtf16NtNtNtNtB9_4iter6traits8iterator8Iterator5count.exit ], [ 0, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultcNtNtNtB4_4char7convert14ParseCharErrorE6unwrapCs4wS76oGtFbW_12typst_assets.exit ], [ 1, %bb.x ], [ %switch.load, %switch.lookup94 ], [ 0, %switch.lookup ], [ 0, %bb.w ], [ 14, %_RINvMNtCs3oUPovFnLWP_4core6resultINtB3_6ResultjjE6map_orNtNtNtCs4wS76oGtFbW_12typst_assets6mathml4data8CategoryNCNvMBW_NtBW_12OperatorInfo21get_operator_categorys_0EBY_.exit.fold.split ], [ 13, %switch.early.test ]
   ret i8 %.sroa.0.1
 }
@@ -1073,9 +1070,8 @@ define noundef zeroext i1 @_RNvXsa_NvNtCs4wS76oGtFbW_12typst_assets6mathml1__NtB
   br i1 %i.e, label %.thread.i, label %.lr.ph.split.i.i.peel
 
 .lr.ph.split.i.i.peel:                            ; preds = %.peel.begin
-  %2 = and i8 %i.d, 1
-  %or.cond.i.i.peel.not = icmp eq i8 %2, 0
-  br i1 %or.cond.i.i.peel.not, label %.lr.ph.split.i.i.1.peel, label %bb.a
+  %or.cond.i.i.peel = trunc i8 %i.d to i1
+  br i1 %or.cond.i.i.peel, label %bb.a, label %.lr.ph.split.i.i.1.peel
 
 .lr.ph.split.i.i.1.peel:                          ; preds = %.lr.ph.split.i.i.peel
   %i.f = and i8 %i.d, 2

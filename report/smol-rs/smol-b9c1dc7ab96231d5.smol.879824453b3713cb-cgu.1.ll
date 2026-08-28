@@ -202,8 +202,8 @@ bb.a:
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs3iPtYnXk70z_14event_listener3sys8ListeneruEEECsbDLrNlwBX3H_4smol(ptr noundef nonnull align 8 %0) unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !10, !noundef !4
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs3iPtYnXk70z_14event_listener3sys8ListeneruEECsbDLrNlwBX3H_4smol.exit, label %bb.b
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs3iPtYnXk70z_14event_listener3sys8ListeneruEECsbDLrNlwBX3H_4smol.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs3iPtYnXk70z_14event_listener3sys8ListeneruEECsbDLrNlwBX3H_4smol.exit: ; preds = %bb.f, %bb.e, %bb.d, %bb.b, %bb.a
   ret void
@@ -305,8 +305,8 @@ bb.h:                                             ; preds = %bb.g
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtCs3iPtYnXk70z_14event_listener5InneruEEECsbDLrNlwBX3H_4smol.exit3.i.i.i.i: ; preds = %bb.g, %bb.f
   %i.l = load i64, ptr %.0.val, align 8, !range !10, !noundef !4
-  %0 = icmp eq i64 %i.l, 0
-  br i1 %0, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit, label %bb.i
+  %0 = trunc nuw i64 %i.l to i1
+  br i1 %0, label %bb.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit
 
 bb.i:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtCs3iPtYnXk70z_14event_listener5InneruEEECsbDLrNlwBX3H_4smol.exit3.i.i.i.i
   %i.m = getelementptr inbounds nuw i8, ptr %.0.val, i64 8
@@ -584,9 +584,8 @@ bb.z:                                             ; preds = %bb.v
 bb.aa:                                            ; preds = %bb.x
   store ptr null, ptr %i.c, align 8, !alias.scope !108, !noalias !111
   %i.as = atomicrmw or ptr %i.n, i64 1 acquire, align 8
-  %3 = and i64 %i.as, 1
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %bb.ab, label %.backedge
+  %3 = trunc i64 %i.as to i1
+  br i1 %3, label %.backedge, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.at = load ptr, ptr %i.b, align 8, !align !100, !noundef !4 ; 4 uses
@@ -631,9 +630,8 @@ _RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10
 
 bb.ag:                                            ; preds = %bb.ae
   %.sroa.01.0.i57 = extractvalue { i64, i1 } %i.ax, 0
-  %5 = and i64 %.sroa.01.0.i57, 1
-  %.not36 = icmp eq i64 %5, 0
-  br i1 %.not36, label %bb.ai, label %.backedge
+  %4 = trunc i64 %.sroa.01.0.i57 to i1
+  br i1 %4, label %.backedge, label %bb.ai
 
 bb.ah:                                            ; preds = %_RNvMse_NtCs1gyvJd0MAV7_10async_lock5mutexINtB5_11AcquireSlowRINtB5_5MutexuEuE10take_mutexCsbDLrNlwBX3H_4smol.exit60
   call void @_RNvNtCskKLDkoKarTP_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8) #26
@@ -701,9 +699,8 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %i.j, label %bb.d, label %bb.e
 
 bb.c:                                             ; preds = %.lr.ph
-  %2 = and i64 %.sroa.01.0.i14, 1
-  %3 = icmp eq i64 %2, 0
-  br i1 %3, label %bb.h, label %bb.g
+  %2 = trunc i64 %.sroa.01.0.i14 to i1
+  br i1 %2, label %bb.g, label %bb.h
 
 bb.d:                                             ; preds = %bb.b
   store i8 0, ptr %i.k, align 1
@@ -1106,11 +1103,11 @@ _RINvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB5_4TakeINtNtB7_4skip4Ski
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB1G_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEEECsbDLrNlwBX3H_4smol.exit.i.i.i.i.i.i: ; preds = %.loopexit.split-lp.i.i.i.i.i, %.loopexit.i.i.i.i.i, %bb.ag
   %.pn.i.i.i.i.i.i = phi { ptr, i32 } [ %lpad.phi.i.i.i.i.i.i, %bb.ag ], [ %lpad.loopexit.i.i.i.i.i, %.loopexit.i.i.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i.i.i, %.loopexit.split-lp.i.i.i.i.i ] ; 2 uses
   %i.ex = load i64, ptr %i.g, align 8, !range !10, !noalias !155, !noundef !4
-  %2 = icmp eq i64 %i.ex, 0
+  %2 = trunc nuw i64 %i.ex to i1
   %i.ey = load ptr, ptr %i.au, align 8, !noalias !155
-  %.not.i.i18.i.i.i.i.i.i = icmp eq ptr %i.ey, null
-  %or.cond32.i.i.i.i.i.i = select i1 %2, i1 true, i1 %.not.i.i18.i.i.i.i.i.i
-  br i1 %or.cond32.i.i.i.i.i.i, label %.body.i.i.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsG258MDvU3F_3std4sync6poison12TryLockErrorINtNtBE_6rwlock15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB20_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEEEECsbDLrNlwBX3H_4smol.exit.sink.split.i20.i.i.i.i.i.i
+  %3 = icmp ne ptr %i.ey, null
+  %or.cond32.i.i.i.i.i.i = select i1 %2, i1 %3, i1 false
+  br i1 %or.cond32.i.i.i.i.i.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsG258MDvU3F_3std4sync6poison12TryLockErrorINtNtBE_6rwlock15RwLockReadGuardINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtB20_4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEEEECsbDLrNlwBX3H_4smol.exit.sink.split.i20.i.i.i.i.i.i, label %.body.i.i.i
 
 .loopexit.i.i.i.i.i:                              ; preds = %_RINvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB5_4TakeINtNtB7_4skip4SkipINtNtB7_5chain5ChainINtNtNtBb_5slice4iter4IterINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtCseSXqeRWftQm_16concurrent_queue15ConcurrentQueueNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableEEEB1A_EEENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB4k_4find5checkRB20_QNCNCNCNvMsf_Csa9iXSdNszRG_14async_executorNtB5G_6Runner8runnable000E0INtNtNtBb_3ops12control_flow11ControlFlowB5o_EECsbDLrNlwBX3H_4smol.exit.thread.i.i.i.i.i.i
   %lpad.loopexit.i.i.i.i.i = landingpad { ptr, i32 }

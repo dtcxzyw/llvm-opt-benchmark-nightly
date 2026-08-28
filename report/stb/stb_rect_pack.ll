@@ -203,7 +203,7 @@ bb.a:
   tail call void @qsort(ptr noundef nonnull %1, i64 noundef %i.ae, i64 noundef 24, ptr noundef nonnull @rect_height_compare) #10
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
-  %wide.trip.count68 = zext nneg i32 %2 to i64    ; 3 uses
+  %wide.trip.count68 = zext nneg i32 %2 to i64    ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph57, %bb.n
@@ -325,7 +325,6 @@ bb.n:                                             ; preds = %stbrp__skyline_pack
 
 ._crit_edge58:                                    ; preds = %bb.n
   tail call void @qsort(ptr noundef nonnull %1, i64 noundef %i.ae, i64 noundef 24, ptr noundef nonnull @rect_original_order) #10
-  %xtraiter83 = and i64 %wide.trip.count68, 1
   %i.bu = icmp eq i32 %2, 1
   br i1 %i.bu, label %.lr.ph62.epil.preheader, label %._crit_edge58.new
 
@@ -395,8 +394,8 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br i1 %niter89.ncmp.1, label %._crit_edge63.loopexit.unr-lcssa, label %.lr.ph62, !llvm.loop !44
 
 ._crit_edge63.loopexit.unr-lcssa:                 ; preds = %bb.s
-  %lcmp.mod85.not = icmp eq i64 %xtraiter83, 0
-  br i1 %lcmp.mod85.not, label %._crit_edge63, label %.lr.ph62.epil.preheader
+  %lcmp.mod85.not = trunc i32 %2 to i1
+  br i1 %lcmp.mod85.not, label %.lr.ph62.epil.preheader, label %._crit_edge63
 
 .lr.ph62.epil.preheader:                          ; preds = %._crit_edge63.loopexit.unr-lcssa, %._crit_edge58
   %indvars.iv70.epil.init = phi i64 [ 0, %._crit_edge58 ], [ %indvars.iv.next71.1, %._crit_edge63.loopexit.unr-lcssa ]

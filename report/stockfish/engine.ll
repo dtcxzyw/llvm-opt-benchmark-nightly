@@ -205,10 +205,9 @@ bb.e:                                             ; preds = %_ZNSt3setImSt4lessI
   %i.j = lshr i64 %storemerge19, 6
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.j
   %i.l = load i64, ptr %i.k, align 8, !tbaa !25
-  %1 = shl nuw i64 1, %i.i
-  %2 = and i64 %i.l, %1
-  %.not13 = icmp eq i64 %2, 0
-  br i1 %.not13, label %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit, label %bb.f
+  %1 = lshr i64 %i.l, %i.i
+  %.not13 = trunc i64 %1 to i1
+  br i1 %.not13, label %bb.f, label %_ZNSt3setImSt4lessImESaImEE6insertERKm.exit
 
 bb.f:                                             ; preds = %.preheader
   %.02022.i.i.i = load ptr, ptr %i.b, align 8, !tbaa !37 ; 2 uses

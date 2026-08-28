@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %.sroa.086.0.copyload = load i48, ptr %i.ai, align 2 ; 7 uses
+  %.sroa.086.0.copyload = load i48, ptr %i.ai, align 2 ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !216)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !219)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !221)
@@ -213,7 +213,7 @@ bb.d:                                             ; preds = %bb.a
   %.sroa.024.1.extract.trunc.i = trunc i48 %.sroa.024.1.extract.shift.i to i8 ; 10 uses
   %.sroa.024.2.extract.shift.i = lshr i48 %.sroa.086.0.copyload, 16 ; 2 uses
   %.sroa.024.2.extract.trunc.i = trunc i48 %.sroa.024.2.extract.shift.i to i8 ; 5 uses
-  %.sroa.024.3.extract.shift.i = lshr i48 %.sroa.086.0.copyload, 24 ; 2 uses
+  %.sroa.024.3.extract.shift.i = lshr i48 %.sroa.086.0.copyload, 24 ; 3 uses
   %trunc.i = trunc i48 %.sroa.086.0.copyload to i8
   switch i8 %trunc.i, label %bb.e [
     i8 0, label %bb.f
@@ -616,10 +616,9 @@ bb.dr:                                            ; preds = %bb.dp
   tail call void @llvm.experimental.noalias.scope.decl(metadata !925)
   %.sroa.02.3.extract.shift.i226.i = lshr i48 %.sroa.086.0.copyload, 32
   %.sroa.02.3.extract.trunc.i.i = trunc i48 %.sroa.02.3.extract.shift.i226.i to i8
-  %5 = and i48 %.sroa.086.0.copyload, 16777216
-  %.not.i210.i = icmp eq i48 %5, 0
-  %.sroa.02.4.extract.shift.i227.i = lshr i48 %.sroa.086.0.copyload, 40
-  %trunc.i211.i = trunc nuw i48 %.sroa.02.4.extract.shift.i227.i to i8
+  %sum.shift.i = lshr i48 %.sroa.086.0.copyload, 40
+  %.not.i210.i = trunc i48 %.sroa.024.3.extract.shift.i to i1
+  %trunc.i211.i = trunc nuw i48 %sum.shift.i to i8
   switch i8 %trunc.i211.i, label %bb.ds [
     i8 0, label %bb.dv
     i8 1, label %bb.dt
@@ -682,7 +681,7 @@ bb.eb:                                            ; preds = %bb.dt
 .thread.i.i:                                      ; preds = %bb.ea, %bb.dw
   %.sroa.04.0.i212.i = phi ptr [ @_ZN4time10formatting13format_number17h1ecb697c3cc399e9E, %bb.ea ], [ @_ZN4time10formatting13format_number17h0030835da6947410E, %bb.dw ] ; 2 uses
   %.sroa.03.7.i.i = phi i32 [ %i.zj, %bb.ea ], [ %.sroa.067.0.i, %bb.dw ] ; 2 uses
-  br i1 %.not.i210.i, label %bb.eg, label %bb.ee
+  br i1 %.not.i210.i, label %bb.ee, label %bb.eg
 
 bb.ec:                                            ; preds = %bb.eb, %bb.dx
   %.sroa.04.0.ph.i.i = phi ptr [ @_ZN4time10formatting13format_number17h1ecb697c3cc399e9E, %bb.eb ], [ @_ZN4time10formatting13format_number17h0030835da6947410E, %bb.dx ]
@@ -1085,8 +1084,8 @@ bb.bh:                                            ; preds = %bb.bf
   br i1 %.not222, label %bb.bj, label %.thread156
 
 bb.bi:                                            ; preds = %bb.bg
-  %or.cond.not = icmp eq i8 %.sroa.6.0.copyload224, 0
-  br i1 %or.cond.not, label %.split149, label %bb.bj
+  %or.cond.not = trunc nuw i8 %.sroa.6.0.copyload224 to i1
+  br i1 %or.cond.not, label %bb.bj, label %.split149
 
 .split149:                                        ; preds = %bb.bi
   %i.cw = tail call fastcc noundef zeroext i1 @"_ZN79_$LT$time..offset_date_time..OffsetDateTime$u20$as$u20$core..cmp..PartialEq$GT$2eq17hdd792d43ee76dda3E"(ptr noalias noundef readonly align 4 captures(address, read_provenance) dereferenceable(16) %i.ct, ptr noalias noundef readonly align 4 captures(address, read_provenance) dereferenceable(16) %i.cu)
@@ -1489,9 +1488,8 @@ bb.a:
   %i.v = alloca [1 x i8], align 1                 ; 6 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 153
   %i.x = load i8, ptr %i.w, align 1, !range !1771, !noundef !3
-  %1 = and i8 %i.x, 1
-  %or.cond.not = icmp eq i8 %1, 0
-  br i1 %or.cond.not, label %bb.b, label %.split
+  %or.cond.not = trunc i8 %i.x to i1
+  br i1 %or.cond.not, label %.split, label %bb.b
 
 bb.b:                                             ; preds = %.split, %bb.a
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 154
@@ -1542,9 +1540,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit124: ; preds = %bb.b
 
 bb.c:                                             ; preds = %._crit_edge, %bb.e
   %i.ae = phi i8 [ %.pre, %._crit_edge ], [ %i.ai, %bb.e ]
-  %2 = and i8 %i.ae, 1
-  %or.cond3.not = icmp eq i8 %2, 0
-  br i1 %or.cond3.not, label %bb.g, label %.split80
+  %or.cond3.not = trunc i8 %i.ae to i1
+  br i1 %or.cond3.not, label %.split80, label %bb.g
 
 bb.d:                                             ; preds = %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit124
   %i.af = load i8, ptr %i.v, align 1, !range !1771, !noundef !3
@@ -1947,7 +1944,6 @@ _ZN9hashbrown3raw13RawTableInner15rehash_in_place17h6243273e76fbd181E.exit.threa
   %i.dq = zext i1 %.not9.i.i.i.i to i64
   %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.do, %i.dq ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11.i) ]
-  %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1
   %i.dr = icmp eq i64 %.sroa.05.0.i.i.i.i, 1
   br i1 %i.dr, label %.epil.preheader, label %.lr.ph.i.i14.new
 
@@ -1956,8 +1952,8 @@ _ZN9hashbrown3raw13RawTableInner15rehash_in_place17h6243273e76fbd181E.exit.threa
   br label %bb.r
 
 ._crit_edge.i.i15.unr-lcssa:                      ; preds = %bb.r
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i.i15, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %.sroa.05.0.i.i.i.i to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge.i.i15
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.i15.unr-lcssa, %.lr.ph.i.i14
   %.sroa.0.08.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i14 ], [ %i.ec, %._crit_edge.i.i15.unr-lcssa ]

@@ -204,9 +204,8 @@ bb.d:                                             ; preds = %bb.b, %bb.b, %bb.b,
   br i1 %.not, label %.outer._crit_edge, label %bb.b, !llvm.loop !17
 
 bb.e:                                             ; preds = %bb.c
-  %2 = and i32 %.0.ph31, 1
-  %.not24 = icmp eq i32 %2, 0
-  br i1 %.not24, label %.loopexit, label %.outer
+  %.not24 = trunc i32 %.0.ph31 to i1
+  br i1 %.not24, label %.outer, label %.loopexit
 
 .outer:                                           ; preds = %bb.e
   %i.i = zext i8 %i.f to i32
@@ -554,9 +553,8 @@ bb.d:                                             ; preds = %bb.c, %.noexc, %.no
   br i1 %.not.i, label %_ZN6icu_7812PropNameData12containsNameERNS_9BytesTrieEPKc.exit, label %bb.b, !llvm.loop !17
 
 bb.e:                                             ; preds = %bb.c
-  %3 = and i32 %.0.ph31.i, 1
-  %.not24.i = icmp eq i32 %3, 0
-  br i1 %.not24.i, label %_ZNK6icu_789BytesTrie8getValueEv.exit, label %.outer.i
+  %.not24.i = trunc i32 %.0.ph31.i to i1
+  br i1 %.not24.i, label %.outer.i, label %_ZNK6icu_789BytesTrie8getValueEv.exit
 
 .outer.i:                                         ; preds = %bb.e
   %i.n = zext i8 %i.k to i32
@@ -570,8 +568,8 @@ bb.e:                                             ; preds = %bb.c
 
 _ZN6icu_7812PropNameData12containsNameERNS_9BytesTrieEPKc.exit: ; preds = %.noexc4, %bb.d
   %.0.ph.lcssa27.i = phi i32 [ %.0.ph31.i, %bb.d ], [ %i.o, %.noexc4 ]
-  %4 = icmp slt i32 %.0.ph.lcssa27.i, 2
-  br i1 %4, label %_ZNK6icu_789BytesTrie8getValueEv.exit, label %bb.f
+  %3 = icmp sgt i32 %.0.ph.lcssa27.i, 1
+  br i1 %3, label %bb.f, label %_ZNK6icu_789BytesTrie8getValueEv.exit
 
 bb.f:                                             ; preds = %_ZN6icu_7812PropNameData12containsNameERNS_9BytesTrieEPKc.exit
   %i.q = load ptr, ptr %i.d, align 8, !tbaa !23   ; 2 uses

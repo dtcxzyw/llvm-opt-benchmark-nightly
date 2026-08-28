@@ -202,8 +202,8 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs6et67aoV1xO_11proc_macro23imp11Tok
 define internal fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCs6et67aoV1xO_11proc_macro25GroupECsgbWeKYPjk8w_3syn(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load i32, ptr %0, align 8, !range !444, !alias.scope !445, !noundef !5
-  %1 = icmp eq i32 %i.a, 0
-  br i1 %1, label %bb.b, label %bb.d
+  %1 = trunc nuw i32 %i.a to i1
+  br i1 %1, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -336,8 +336,8 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs6et67aoV1xO_11proc_macro28fallback
 bb.f:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.h = load i32, ptr %i.g, align 8, !range !444, !alias.scope !490, !noundef !5
-  %1 = icmp eq i32 %i.h, 0
-  br i1 %1, label %bb.g, label %bb.i
+  %1 = trunc nuw i32 %i.h to i1
+  br i1 %1, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -613,10 +613,10 @@ bb.o:                                             ; preds = %bb.q, %.body13
   %.val9.i = load i64, ptr %0, align 8, !range !546, !alias.scope !547, !noundef !5
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val10.i = load ptr, ptr %i.x, align 8, !alias.scope !547 ; 2 uses
-  %1 = icmp eq i64 %.val9.i, 0
-  %2 = icmp eq ptr %.val10.i, null
-  %or.cond.i8 = select i1 %1, i1 true, i1 %2
-  br i1 %or.cond.i8, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit10, label %bb.p
+  %1 = trunc nuw i64 %.val9.i to i1
+  %2 = icmp ne ptr %.val10.i, null
+  %or.cond.i8 = select i1 %1, i1 %2, i1 false
+  br i1 %or.cond.i8, label %bb.p, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit10
 
 bb.p:                                             ; preds = %bb.o
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNtNtCsgbWeKYPjk8w_3syn3lit7LitReprEEB1e_(ptr nonnull %.val10.i)
@@ -631,10 +631,10 @@ bb.r:                                             ; preds = %_RINvNtCsj6eKBz9Db1
   %.val.i = load i64, ptr %0, align 8, !range !546, !alias.scope !547, !noundef !5
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val8.i = load ptr, ptr %i.z, align 8, !alias.scope !547 ; 2 uses
-  %3 = icmp eq i64 %.val.i, 0
-  %4 = icmp eq ptr %.val8.i, null
-  %or.cond.i = select i1 %3, i1 true, i1 %4
-  br i1 %or.cond.i, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit, label %bb.s
+  %3 = trunc nuw i64 %.val.i to i1
+  %4 = icmp ne ptr %.val8.i, null
+  %or.cond.i = select i1 %3, i1 %4, i1 false
+  br i1 %or.cond.i, label %bb.s, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgbWeKYPjk8w_3syn2ty3AbiEEB11_.exit
 
 bb.s:                                             ; preds = %bb.r
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxNtNtCsgbWeKYPjk8w_3syn3lit7LitReprEEB1e_(ptr nonnull %.val8.i)
@@ -1037,8 +1037,8 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !936)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.b = load i32, ptr %i.a, align 8, !range !444, !alias.scope !936, !noundef !5
-  %.not.i = icmp eq i32 %i.b, 0
-  br i1 %.not.i, label %bb.b, label %bb.g
+  %2 = trunc nuw i32 %i.b to i1
+  br i1 %2, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -1140,8 +1140,8 @@ define noundef align 8 ptr @_RNvMs_NtCsgbWeKYPjk8w_3syn4pathNtB4_4Path9get_ident
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load i32, ptr %i.a, align 8, !range !444, !noundef !5
-  %.not = icmp eq i32 %i.b, 0
-  br i1 %.not, label %bb.b, label %bb.g
+  %1 = trunc nuw i32 %i.b to i1
+  br i1 %1, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1544,8 +1544,8 @@ bb.b:                                             ; preds = %bb.a
           to label %common.resume unwind label %bb.l
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = load i32, ptr %i.b, align 8, !range !444, !noundef !5 ; 2 uses
-  %i.e = trunc nuw i32 %i.d to i1                 ; 3 uses
+  %i.d = load i32, ptr %i.b, align 8, !range !444, !noundef !5
+  %i.e = trunc nuw i32 %i.d to i1                 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   %i.h = load i32, ptr %i.g, align 4, !range !949
@@ -1560,8 +1560,7 @@ bb.c:                                             ; preds = %bb.a
   store i32 %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %.sroa.6.0, ptr %.sroa.6.0..sroa_idx, align 4
-  %2 = icmp eq i32 %i.d, 0
-  br i1 %2, label %bb.d, label %bb.f
+  br i1 %i.e, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
@@ -1964,16 +1963,16 @@ bb.m:                                             ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.64)
   %i.ak = icmp ne i64 %i.ag, 3
   call void @llvm.assume(i1 %i.ak)
-  %2 = icmp eq i64 %i.ag, 10
+  %2 = icmp ne i64 %i.ag, 10
   %i.al = getelementptr inbounds nuw i8, ptr %i.s, i64 80
   %i.am = load i32, ptr %i.al, align 8, !range !571
-  %.not = icmp eq i32 %i.am, 2
-  %or.cond = select i1 %2, i1 %.not, i1 false
+  %.not = icmp ne i32 %i.am, 2
+  %or.cond = select i1 %2, i1 true, i1 %.not
   %i.an = getelementptr inbounds nuw i8, ptr %i.s, i64 64
   %i.ao = load i32, ptr %i.an, align 8, !range !444
-  %.not152 = icmp eq i32 %i.ao, 0
-  %or.cond270 = select i1 %or.cond, i1 %.not152, i1 false
-  br i1 %or.cond270, label %bb.p, label %bb.n
+  %3 = trunc nuw i32 %i.ao to i1
+  %or.cond270 = select i1 %or.cond, i1 true, i1 %3
+  br i1 %or.cond270, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %bb.r, %bb.p, %bb.cz, %bb.m
   %.sroa.499.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8

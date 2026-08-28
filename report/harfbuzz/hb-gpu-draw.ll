@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.u
   %i.fi = insertelement <2 x i32> poison, i32 %.sroa.speculated793, i64 0
   %i.fj = shufflevector <2 x i32> %i.fi, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.fk = select <2 x i1> %i.fh, <2 x i32> %i.fj, <2 x i32> splat (i32 1) ; 5 uses
-  %i.fl = extractelement <2 x i32> %i.fk, i64 1   ; 18 uses
+  %i.fl = extractelement <2 x i32> %i.fk, i64 1   ; 19 uses
   %i.fm = uitofp nneg <2 x i32> %i.fk to <2 x double>
   %i.fn = fdiv <2 x double> %i.fg, %i.fm          ; 2 uses
   %i.fo = tail call noundef zeroext i1 @_ZN11hb_vector_tIjLb0EE5allocEjb(ptr noundef nonnull align 8 dereferenceable(16) %i.bc, i32 noundef %i.fl, i1 noundef zeroext false)
@@ -296,7 +296,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w, %bb.v
   store i32 %i.fl, ptr %i.hg, align 4, !tbaa !57
-  %i.hq = extractelement <2 x i32> %i.fk, i64 0   ; 17 uses
+  %i.hq = extractelement <2 x i32> %i.fk, i64 0   ; 18 uses
   %i.hr = tail call noundef zeroext i1 @_ZN11hb_vector_tIjLb0EE5allocEjb(ptr noundef nonnull align 8 dereferenceable(16) %i.bh, i32 noundef %i.hq, i1 noundef zeroext false)
   br i1 %i.hr, label %bb.y, label %.critedge501
 
@@ -321,12 +321,12 @@ _ZN11hb_vector_tIjLb0EE6resizeEi.exit549:         ; preds = %bb.y, %bb.z
   store i32 %i.hq, ptr %i.hs, align 4, !tbaa !57
   %i.ic = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 4 uses
   %i.id = load ptr, ptr %i.ic, align 8, !tbaa !67 ; 4 uses
-  %i.ie = zext nneg i32 %i.fl to i64              ; 10 uses
+  %i.ie = zext nneg i32 %i.fl to i64              ; 9 uses
   %i.if = shl nuw nsw i64 %i.ie, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.id, i8 0, i64 %i.if, i1 false), !tbaa !51
   %i.ig = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 4 uses
   %i.ih = load ptr, ptr %i.ig, align 8, !tbaa !68 ; 4 uses
-  %i.ii = zext nneg i32 %i.hq to i64              ; 10 uses
+  %i.ii = zext nneg i32 %i.hq to i64              ; 9 uses
   %i.ij = shl nuw nsw i64 %i.ii, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.ih, i8 0, i64 %i.ij, i1 false), !tbaa !51
   %i.ik = load ptr, ptr %i.et, align 8, !tbaa !60
@@ -505,7 +505,6 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.ls = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 4 uses
   %i.lt = load ptr, ptr %i.ls, align 8, !tbaa !79 ; 3 uses
   %i.lu = load ptr, ptr %i.ic, align 8, !tbaa !67 ; 3 uses
-  %xtraiter = and i64 %i.ie, 1
   %i.lv = icmp eq i32 %i.fl, 1
   br i1 %i.lv, label %.epil.preheader, label %.new
 
@@ -514,8 +513,8 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   br label %bb.aq
 
 .critedge505.preheader.unr-lcssa:                 ; preds = %bb.as
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.critedge505.preheader, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.fl to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.critedge505.preheader
 
 .epil.preheader:                                  ; preds = %.critedge505.preheader.unr-lcssa, %bb.ap
   %indvars.iv985.epil.init = phi i64 [ 0, %bb.ap ], [ %indvars.iv.next986.1, %.critedge505.preheader.unr-lcssa ] ; 2 uses
@@ -539,7 +538,6 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.mc = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 4 uses
   %i.md = load ptr, ptr %i.mc, align 8, !tbaa !80 ; 3 uses
   %i.me = load ptr, ptr %i.ig, align 8, !tbaa !68 ; 3 uses
-  %xtraiter1213 = and i64 %i.ii, 1
   %i.mf = icmp eq i32 %i.hq, 1
   br i1 %i.mf, label %.epil.preheader1212, label %.critedge505.preheader.new
 
@@ -608,8 +606,8 @@ bb.at:                                            ; preds = %.critedge505.1, %.c
   br i1 %niter1218.ncmp.1, label %.critedge507.unr-lcssa, label %bb.at, !llvm.loop !82
 
 .critedge507.unr-lcssa:                           ; preds = %.critedge505.1
-  %lcmp.mod1214.not = icmp eq i64 %xtraiter1213, 0
-  br i1 %lcmp.mod1214.not, label %.critedge507, label %.epil.preheader1212
+  %lcmp.mod1214.not = trunc i32 %i.hq to i1
+  br i1 %lcmp.mod1214.not, label %.epil.preheader1212, label %.critedge507
 
 .epil.preheader1212:                              ; preds = %.critedge507.unr-lcssa, %.critedge505.preheader
   %indvars.iv991.epil.init = phi i64 [ 0, %.critedge505.preheader ], [ %indvars.iv.next992.1, %.critedge507.unr-lcssa ] ; 2 uses
@@ -1012,7 +1010,7 @@ bb.cu:                                            ; preds = %bb.cl, %._crit_edge
   %i.aay = getelementptr inbounds nuw [4 x i8], ptr %i.yx, i64 %indvars.iv1062
   %i.aaz = load i32, ptr %i.aay, align 4, !tbaa !51 ; 8 uses
   %i.aba = getelementptr inbounds nuw [4 x i8], ptr %i.yy, i64 %indvars.iv1062
-  %i.abb = load i32, ptr %i.aba, align 4, !tbaa !51 ; 7 uses
+  %i.abb = load i32, ptr %i.aba, align 4, !tbaa !51 ; 9 uses
   %.not952 = icmp eq i32 %i.abb, 0
   br i1 %.not952, label %._crit_edge920, label %.lr.ph909
 
@@ -1020,7 +1018,7 @@ bb.cu:                                            ; preds = %bb.cl, %._crit_edge
   %i.abc = load ptr, ptr %i.et, align 8, !tbaa !60 ; 2 uses
   %i.abd = load ptr, ptr %i.sh, align 8, !tbaa !91
   %i.abe = add i32 %i.aaz, -1
-  %wide.trip.count1048 = zext i32 %i.abb to i64   ; 6 uses
+  %wide.trip.count1048 = zext i32 %i.abb to i64   ; 4 uses
   br label %bb.cv
 
 ._crit_edge910:                                   ; preds = %.critedge
@@ -1028,7 +1026,6 @@ bb.cu:                                            ; preds = %bb.cl, %._crit_edge
   %i.abg = call double @llvm.round.f64(double %i.abf) ; 2 uses
   %i.abh = load ptr, ptr %i.sh, align 8, !tbaa !91 ; 3 uses
   %i.abi = add nsw i64 %wide.trip.count1048, -1   ; 2 uses
-  %xtraiter1231 = and i64 %wide.trip.count1048, 1
   %i.abj = icmp eq i64 %i.abi, 0
   br i1 %i.abj, label %.epil.preheader1230, label %._crit_edge910.new
 
@@ -1089,8 +1086,8 @@ bb.cx:                                            ; preds = %bb.cw
   br i1 %exitcond1049.not, label %._crit_edge910, label %bb.cv, !llvm.loop !130
 
 .lr.ph919.unr-lcssa:                              ; preds = %bb.cy
-  %lcmp.mod1233.not = icmp eq i64 %xtraiter1231, 0
-  br i1 %lcmp.mod1233.not, label %.lr.ph919, label %.epil.preheader1230
+  %lcmp.mod1233.not = trunc i32 %i.abb to i1
+  br i1 %lcmp.mod1233.not, label %.epil.preheader1230, label %.lr.ph919
 
 .epil.preheader1230:                              ; preds = %.lr.ph919.unr-lcssa, %._crit_edge910
   %indvars.iv1050.epil.init = phi i64 [ 0, %._crit_edge910 ], [ %indvars.iv.next1051.1, %.lr.ph919.unr-lcssa ]
@@ -1117,7 +1114,6 @@ bb.cx:                                            ; preds = %bb.cw
 .lr.ph919:                                        ; preds = %.lr.ph919.unr-lcssa, %.epil.preheader1230
   %.lcssa1204 = phi i32 [ %i.adw, %.lr.ph919.unr-lcssa ], [ %i.act, %.epil.preheader1230 ] ; 4 uses
   %i.acu = load ptr, ptr %i.si, align 8, !tbaa !92 ; 3 uses
-  %xtraiter1239 = and i64 %wide.trip.count1048, 1
   %i.acv = icmp eq i64 %i.abi, 0
   br i1 %i.acv, label %.epil.preheader1238, label %.lr.ph919.new
 
@@ -1166,8 +1162,8 @@ bb.cy:                                            ; preds = %bb.cy, %._crit_edge
   br i1 %niter1237.ncmp.1, label %.lr.ph919.unr-lcssa, label %bb.cy, !llvm.loop !131
 
 ._crit_edge920.loopexit.unr-lcssa:                ; preds = %bb.cz
-  %lcmp.mod1241.not = icmp eq i64 %xtraiter1239, 0
-  br i1 %lcmp.mod1241.not, label %._crit_edge920, label %.epil.preheader1238
+  %lcmp.mod1241.not = trunc i32 %i.abb to i1
+  br i1 %lcmp.mod1241.not, label %.epil.preheader1238, label %._crit_edge920
 
 .epil.preheader1238:                              ; preds = %._crit_edge920.loopexit.unr-lcssa, %.lr.ph919
   %indvars.iv1056.epil.init = phi i64 [ 0, %.lr.ph919 ], [ %indvars.iv.next1057.1, %._crit_edge920.loopexit.unr-lcssa ]
@@ -1268,7 +1264,7 @@ bb.db:                                            ; preds = %.preheader853, %._c
   %i.aga = getelementptr inbounds nuw [4 x i8], ptr %i.aar, i64 %indvars.iv1090
   %i.agb = load i32, ptr %i.aga, align 4, !tbaa !51 ; 8 uses
   %i.agc = getelementptr inbounds nuw [4 x i8], ptr %i.aas, i64 %indvars.iv1090
-  %i.agd = load i32, ptr %i.agc, align 4, !tbaa !51 ; 7 uses
+  %i.agd = load i32, ptr %i.agc, align 4, !tbaa !51 ; 9 uses
   %.not955 = icmp eq i32 %i.agd, 0
   br i1 %.not955, label %._crit_edge947, label %.lr.ph936
 
@@ -1276,7 +1272,7 @@ bb.db:                                            ; preds = %.preheader853, %._c
   %i.age = load ptr, ptr %i.et, align 8, !tbaa !60 ; 2 uses
   %i.agf = load ptr, ptr %i.sj, align 8, !tbaa !93
   %i.agg = add i32 %i.agb, -1
-  %wide.trip.count1076 = zext i32 %i.agd to i64   ; 6 uses
+  %wide.trip.count1076 = zext i32 %i.agd to i64   ; 4 uses
   br label %bb.dc
 
 ._crit_edge937:                                   ; preds = %.critedge3
@@ -1284,7 +1280,6 @@ bb.db:                                            ; preds = %.preheader853, %._c
   %i.agi = call double @llvm.round.f64(double %i.agh) ; 2 uses
   %i.agj = load ptr, ptr %i.sj, align 8, !tbaa !93 ; 3 uses
   %i.agk = add nsw i64 %wide.trip.count1076, -1   ; 2 uses
-  %xtraiter1247 = and i64 %wide.trip.count1076, 1
   %i.agl = icmp eq i64 %i.agk, 0
   br i1 %i.agl, label %.epil.preheader1246, label %._crit_edge937.new
 
@@ -1346,8 +1341,8 @@ bb.de:                                            ; preds = %bb.dd
   br i1 %exitcond1077.not, label %._crit_edge937, label %bb.dc, !llvm.loop !140
 
 .lr.ph946.unr-lcssa:                              ; preds = %bb.df
-  %lcmp.mod1249.not = icmp eq i64 %xtraiter1247, 0
-  br i1 %lcmp.mod1249.not, label %.lr.ph946, label %.epil.preheader1246
+  %lcmp.mod1249.not = trunc i32 %i.agd to i1
+  br i1 %lcmp.mod1249.not, label %.epil.preheader1246, label %.lr.ph946
 
 .epil.preheader1246:                              ; preds = %.lr.ph946.unr-lcssa, %._crit_edge937
   %indvars.iv1078.epil.init = phi i64 [ 0, %._crit_edge937 ], [ %indvars.iv.next1079.1, %.lr.ph946.unr-lcssa ]
@@ -1374,7 +1369,6 @@ bb.de:                                            ; preds = %bb.dd
 .lr.ph946:                                        ; preds = %.lr.ph946.unr-lcssa, %.epil.preheader1246
   %.lcssa = phi i32 [ %i.aiz, %.lr.ph946.unr-lcssa ], [ %i.ahw, %.epil.preheader1246 ] ; 4 uses
   %i.ahx = load ptr, ptr %i.sk, align 8, !tbaa !94 ; 3 uses
-  %xtraiter1255 = and i64 %wide.trip.count1076, 1
   %i.ahy = icmp eq i64 %i.agk, 0
   br i1 %i.ahy, label %.epil.preheader1254, label %.lr.ph946.new
 
@@ -1423,8 +1417,8 @@ bb.df:                                            ; preds = %bb.df, %._crit_edge
   br i1 %niter1253.ncmp.1, label %.lr.ph946.unr-lcssa, label %bb.df, !llvm.loop !141
 
 ._crit_edge947.loopexit.unr-lcssa:                ; preds = %bb.dg
-  %lcmp.mod1257.not = icmp eq i64 %xtraiter1255, 0
-  br i1 %lcmp.mod1257.not, label %._crit_edge947, label %.epil.preheader1254
+  %lcmp.mod1257.not = trunc i32 %i.agd to i1
+  br i1 %lcmp.mod1257.not, label %.epil.preheader1254, label %._crit_edge947
 
 .epil.preheader1254:                              ; preds = %._crit_edge947.loopexit.unr-lcssa, %.lr.ph946
   %indvars.iv1084.epil.init = phi i64 [ 0, %.lr.ph946 ], [ %indvars.iv.next1085.1, %._crit_edge947.loopexit.unr-lcssa ]

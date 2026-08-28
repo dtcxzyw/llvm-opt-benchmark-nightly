@@ -204,9 +204,8 @@ bb.e:                                             ; preds = %_RNvMs5_NtCsexYYUdY
   br i1 %i.al, label %.loopexit, label %.lr.ph275.preheader, !dbg !863
 
 .lr.ph275.preheader:                              ; preds = %.preheader231
-  %5 = and i64 %2, 1, !dbg !870
-  %lcmp.mod.not.not = icmp eq i64 %5, 0, !dbg !870
-  br i1 %lcmp.mod.not.not, label %.lr.ph275.prol, label %.lr.ph275.prol.loopexit, !dbg !870
+  %5 = trunc i64 %2 to i1, !dbg !870
+  br i1 %5, label %.lr.ph275.prol.loopexit, label %.lr.ph275.prol, !dbg !870
 
 .lr.ph275.prol:                                   ; preds = %.lr.ph275.preheader
   %i.am = getelementptr i8, ptr %1, i64 40, !dbg !880
@@ -609,9 +608,9 @@ bb.f:                                             ; preds = %bb.e
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7LiteralECsdq8xsXUia3c_10grep_regex.exit, !dbg !1388
 
 bb.g:                                             ; preds = %bb.a
-  %1 = icmp eq i64 %i.a, 0, !dbg !1389
+  %1 = trunc nuw i64 %i.a to i1, !dbg !1389
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !1389 ; 6 uses
-  br i1 %1, label %bb.h, label %bb.k, !dbg !1389
+  br i1 %1, label %bb.k, label %bb.h, !dbg !1389
 
 bb.h:                                             ; preds = %bb.g
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir17ClassUnicodeRangeENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsdq8xsXUia3c_10grep_regex(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.k)
@@ -1014,9 +1013,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.a, %middle.block
   %.sroa.0.04.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.04.ph, 1, !dbg !1720
-  %xtraiter = and i64 %2, 1, !dbg !1720
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0, !dbg !1720
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol, !dbg !1720
+  %lcmp.mod.not = trunc i64 %2 to i1, !dbg !1720
+  br i1 %lcmp.mod.not, label %scalar.ph.prol, label %scalar.ph.prol.loopexit, !dbg !1720
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.g = or disjoint i64 %.sroa.0.04.ph, 1, !dbg !1728

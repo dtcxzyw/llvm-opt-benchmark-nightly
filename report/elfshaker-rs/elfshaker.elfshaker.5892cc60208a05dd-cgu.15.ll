@@ -204,9 +204,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.n = add i64 %.val11.i, 288230376151711743    ; 4 uses
-  %3 = and i64 %i.n, 288230376151711743
-  %xtraiter = and i64 %i.n, 1
-  %i.o = icmp eq i64 %3, 1
+  %xtraiter = and i64 %i.n, 288230376151711743
+  %i.o = icmp eq i64 %xtraiter, 1
   br i1 %i.o, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.e
@@ -237,8 +236,8 @@ bb.f:                                             ; preds = %bb.f, %.new
   br i1 %niter.ncmp.1, label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCskuiImRAV2ip_9elfshaker7packidx9FileEntryEINtNtBa_6option6OptionyEyNCINvMsa_NtNtB1w_4repo4packNtB2L_4Pack15extract_entriesRNtNtCsaL1QbXo9JQH_3std4path4PathE0NCINvNtB6_7flatten11flatten_oneB2d_yNCINvXsC_NtNtB8_6traits5accumyNtB4N_3Sum3sumINtB49_7FlatMapINtNtNtBa_5slice4iter4IterBV_EB2d_B2C_EE0E0E0Cs7BtpbLEd5q3_9elfshaker.exit.i.loopexit.unr-lcssa, label %bb.f
 
 _RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCskuiImRAV2ip_9elfshaker7packidx9FileEntryEINtNtBa_6option6OptionyEyNCINvMsa_NtNtB1w_4repo4packNtB2L_4Pack15extract_entriesRNtNtCsaL1QbXo9JQH_3std4path4PathE0NCINvNtB6_7flatten11flatten_oneB2d_yNCINvXsC_NtNtB8_6traits5accumyNtB4N_3Sum3sumINtB49_7FlatMapINtNtNtBa_5slice4iter4IterBV_EB2d_B2C_EE0E0E0Cs7BtpbLEd5q3_9elfshaker.exit.i.loopexit.unr-lcssa: ; preds = %bb.f
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCskuiImRAV2ip_9elfshaker7packidx9FileEntryEINtNtBa_6option6OptionyEyNCINvMsa_NtNtB1w_4repo4packNtB2L_4Pack15extract_entriesRNtNtCsaL1QbXo9JQH_3std4path4PathE0NCINvNtB6_7flatten11flatten_oneB2d_yNCINvXsC_NtNtB8_6traits5accumyNtB4N_3Sum3sumINtB49_7FlatMapINtNtNtBa_5slice4iter4IterBV_EB2d_B2C_EE0E0E0Cs7BtpbLEd5q3_9elfshaker.exit.i, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.n to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCskuiImRAV2ip_9elfshaker7packidx9FileEntryEINtNtBa_6option6OptionyEyNCINvMsa_NtNtB1w_4repo4packNtB2L_4Pack15extract_entriesRNtNtCsaL1QbXo9JQH_3std4path4PathE0NCINvNtB6_7flatten11flatten_oneB2d_yNCINvXsC_NtNtB8_6traits5accumyNtB4N_3Sum3sumINtB49_7FlatMapINtNtNtBa_5slice4iter4IterBV_EB2d_B2C_EE0E0E0Cs7BtpbLEd5q3_9elfshaker.exit.i
 
 .epil.preheader:                                  ; preds = %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCskuiImRAV2ip_9elfshaker7packidx9FileEntryEINtNtBa_6option6OptionyEyNCINvMsa_NtNtB1w_4repo4packNtB2L_4Pack15extract_entriesRNtNtCsaL1QbXo9JQH_3std4path4PathE0NCINvNtB6_7flatten11flatten_oneB2d_yNCINvXsC_NtNtB8_6traits5accumyNtB4N_3Sum3sumINtB49_7FlatMapINtNtNtBa_5slice4iter4IterBV_EB2d_B2C_EE0E0E0Cs7BtpbLEd5q3_9elfshaker.exit.i.loopexit.unr-lcssa, %bb.e
   %.sroa.04.0.i.i.i.i.i.i.epil.init = phi i64 [ 0, %bb.e ], [ %i.x, %_RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map8map_foldRINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCskuiImRAV2ip_9elfshaker7packidx9FileEntryEINtNtBa_6option6OptionyEyNCINvMsa_NtNtB1w_4repo4packNtB2L_4Pack15extract_entriesRNtNtCsaL1QbXo9JQH_3std4path4PathE0NCINvNtB6_7flatten11flatten_oneB2d_yNCINvXsC_NtNtB8_6traits5accumyNtB4N_3Sum3sumINtB49_7FlatMapINtNtNtBa_5slice4iter4IterBV_EB2d_B2C_EE0E0E0Cs7BtpbLEd5q3_9elfshaker.exit.i.loopexit.unr-lcssa ]
@@ -641,7 +640,6 @@ bb.b:                                             ; preds = %bb.a
   %i.i = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.j = ptrtoint ptr %i.a to i64                 ; 2 uses
   %i.k = sub i64 %i.i, %i.j                       ; 3 uses
-  %xtraiter = and i64 %i.k, 1
   %i.l = add i64 %i.i, -1
   %i.m = icmp eq i64 %i.l, %i.j
   br i1 %i.m, label %.epil.preheader, label %.new
@@ -691,8 +689,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCs1xwejQucwHj_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsk_NtB2l_3vecINtB3x_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs7BtpbLEd5q3_9elfshaker.exit.loopexit.unr-lcssa, label %bb.c
 
 _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCs1xwejQucwHj_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsk_NtB2l_3vecINtB3x_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs7BtpbLEd5q3_9elfshaker.exit.loopexit.unr-lcssa: ; preds = %bb.g
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCs1xwejQucwHj_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsk_NtB2l_3vecINtB3x_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs7BtpbLEd5q3_9elfshaker.exit, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.k to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCs1xwejQucwHj_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsk_NtB2l_3vecINtB3x_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs7BtpbLEd5q3_9elfshaker.exit
 
 .epil.preheader:                                  ; preds = %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCs1xwejQucwHj_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsk_NtB2l_3vecINtB3x_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs7BtpbLEd5q3_9elfshaker.exit.loopexit.unr-lcssa, %bb.b
   %.epil.init = phi i64 [ %.sroa.5.0.copyload, %bb.b ], [ %i.aa, %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRhhuNCNvNtCs1xwejQucwHj_5alloc3str13replace_ascii0NCINvNvBS_8for_each4callhNCINvMsk_NtB2l_3vecINtB3x_3VechE14extend_trustedINtB1I_3MapBF_B2f_EE0E0E0ECs7BtpbLEd5q3_9elfshaker.exit.loopexit.unr-lcssa ] ; 2 uses

@@ -202,8 +202,8 @@ bb.a:
   br i1 %exitcond.not, label %.lr.ph56.preheader, label %.lr.ph, !llvm.loop !25
 
 .loopexit.unr-lcssa:                              ; preds = %.lr.ph52
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph52.epil.preheader
+  %lcmp.mod.not = trunc i64 %indvars.iv6782 to i1
+  br i1 %lcmp.mod.not, label %.lr.ph52.epil.preheader, label %.loopexit
 
 .lr.ph52.epil.preheader:                          ; preds = %.loopexit.unr-lcssa, %.lr.ph52.preheader
   %indvars.iv60.epil.init = phi i64 [ 0, %.lr.ph52.preheader ], [ %indvars.iv.next61.1, %.loopexit.unr-lcssa ] ; 2 uses
@@ -246,7 +246,6 @@ bb.b:                                             ; preds = %.lr.ph84, %.loopexi
   br i1 %i.ar, label %.lr.ph52.preheader, label %._crit_edge
 
 .lr.ph52.preheader:                               ; preds = %bb.b
-  %xtraiter = and i64 %indvars.iv6782, 1
   %i.as = icmp eq i64 %indvar, %i.j
   br i1 %i.as, label %.lr.ph52.epil.preheader, label %.lr.ph52.preheader.new
 

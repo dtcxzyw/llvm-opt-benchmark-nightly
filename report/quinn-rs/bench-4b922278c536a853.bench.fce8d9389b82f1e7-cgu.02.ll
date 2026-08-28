@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %._crit_edge
     #dbg_value(ptr %.sroa.619.0..sroa_idx.i.i, !1980, !DIExpression(), !1994)
     #dbg_value(i64 32, !1981, !DIExpression(), !1994)
     #dbg_value(i64 32, !1982, !DIExpression(), !1996)
-    #dbg_value(i64 0, !1986, !DIExpression(), !1997)
+    #dbg_value(i64 32, !1986, !DIExpression(DW_OP_constu, 7, DW_OP_and, DW_OP_stack_value), !1997)
     #dbg_value(i64 4, !1984, !DIExpression(), !1998)
     #dbg_value(i64 4, !1988, !DIExpression(), !1999)
   invoke void @_RINvNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECslIemzedAtQF_5bench(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %.sroa.619.0..sroa_idx.i.i, i64 noundef 4)
@@ -607,7 +607,6 @@ _RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
     #dbg_value(i64 %.sroa.05.0.i.i.i.i, !2841, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !2949)
     #dbg_value(i64 %.sroa.05.0.i.i.i.i, !2968, !DIExpression(), !2982)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val52.i) ]
-  %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1, !dbg !2983
   %i.dt = icmp eq i64 %.sroa.05.0.i.i.i.i, 1, !dbg !2983
   br i1 %i.dt, label %.epil.preheader, label %.lr.ph.i.i.new, !dbg !2983
 
@@ -616,8 +615,8 @@ _RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   br label %bb.p, !dbg !2983
 
 ._crit_edge.i.i.unr-lcssa:                        ; preds = %bb.p
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0, !dbg !2983
-  br i1 %lcmp.mod.not, label %._crit_edge.i.i, label %.epil.preheader, !dbg !2983
+  %lcmp.mod.not = trunc i64 %.sroa.05.0.i.i.i.i to i1, !dbg !2983
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge.i.i, !dbg !2983
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.i.unr-lcssa, %.lr.ph.i.i
   %.sroa.0.08.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i ], [ %i.ed, %._crit_edge.i.i.unr-lcssa ]
@@ -1020,7 +1019,7 @@ bb.w:                                             ; preds = %bb.t
     #dbg_value(ptr %i.ft, !1980, !DIExpression(), !3360)
     #dbg_value(i64 16, !1981, !DIExpression(), !3360)
     #dbg_value(i64 16, !1982, !DIExpression(), !3362)
-    #dbg_value(i64 0, !1986, !DIExpression(), !3363)
+    #dbg_value(i64 16, !1986, !DIExpression(DW_OP_constu, 7, DW_OP_and, DW_OP_stack_value), !3363)
     #dbg_value(i64 2, !1984, !DIExpression(), !3364)
     #dbg_value(i64 2, !1988, !DIExpression(), !3365)
   invoke void @_RINvNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECslIemzedAtQF_5bench(ptr noundef nonnull %i.em, ptr noundef nonnull %i.ft, i64 noundef 2)

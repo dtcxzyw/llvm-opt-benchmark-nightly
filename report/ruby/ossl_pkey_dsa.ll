@@ -204,12 +204,11 @@ bb.k:                                             ; preds = %bb.j
 DSA_PRIVATE.exit.a:                               ; preds = %.lr.ph.i.i, %bb.k
   %.lcssa.i.i = phi i64 [ %.pr.i.i, %bb.k ], [ %i.ac, %.lr.ph.i.i ]
   %i.ad = call i64 @rb_attr_get(i64 noundef %0, i64 noundef %.lcssa.i.i) #5
-  %.fr = freeze i64 %i.ad
-  %.not11 = icmp eq i64 %.fr, 20
+  %.not11 = icmp eq i64 %i.ad, 20
   %spec.select = select i1 %.not11, i64 20, i64 0
   br label %DSA_PRIVATE.exit.thread
 
-DSA_PRIVATE.exit.thread:                          ; preds = %DSA_PRIVATE.exit.a, %bb.j
+DSA_PRIVATE.exit.thread:                          ; preds = %bb.j, %DSA_PRIVATE.exit.a
   %i.ae = phi i64 [ 20, %bb.j ], [ %spec.select, %DSA_PRIVATE.exit.a ]
   ret i64 %i.ae
 }

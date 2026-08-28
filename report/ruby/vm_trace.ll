@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.m
   tail call fastcc void @clean_hooks(ptr noundef nonnull %1)
   br label %exec_hooks_postcheck.exit
 
-exec_hooks_postcheck.exit:                        ; preds = %bb.a, %bb.n, %bb.m, %exec_hooks_body.exit
+exec_hooks_postcheck.exit:                        ; preds = %bb.n, %bb.m, %exec_hooks_body.exit, %bb.a
   ret void
 }
 
@@ -607,9 +607,8 @@ bb.w:                                             ; preds = %rb_current_ractor.e
 
 bb.x:                                             ; preds = %bb.w
   %i.bx = load i32, ptr %.1.i.i.i, align 8, !tbaa !146
-  %5 = and i32 %i.bx, 1
-  %6 = icmp eq i32 %5, 0
-  br i1 %6, label %bb.y, label %bb.z
+  %5 = trunc i32 %i.bx to i1
+  br i1 %5, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.by = load i64, ptr @rb_eArgError, align 8, !tbaa !34

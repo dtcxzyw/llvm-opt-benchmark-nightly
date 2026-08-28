@@ -92,11 +92,11 @@ bb.e:                                             ; preds = %bb.d
   %i.k = landingpad { ptr, i32 }
           cleanup
   %i.l = load i64, ptr %0, align 8, !range !5, !noundef !6
-  %1 = icmp eq i64 %i.l, 0
+  %1 = trunc nuw i64 %i.l to i1
   %i.m = load i64, ptr %i.d, align 8, !range !10
-  %2 = icmp eq i64 %i.m, -1
-  %or.cond = select i1 %1, i1 true, i1 %2
-  br i1 %or.cond, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs1xwejQucwHj_5alloc6string6StringNtNtCsaL1QbXo9JQH_3std3env8VarErrorEECs3tZ2SXJA1qv_8jiff_cli.exit5, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std3env8VarErrorECs3tZ2SXJA1qv_8jiff_cli.exit.sink.split.i4
+  %2 = icmp ne i64 %i.m, -1
+  %or.cond = select i1 %1, i1 %2, i1 false
+  br i1 %or.cond, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std3env8VarErrorECs3tZ2SXJA1qv_8jiff_cli.exit.sink.split.i4, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs1xwejQucwHj_5alloc6string6StringNtNtCsaL1QbXo9JQH_3std3env8VarErrorEECs3tZ2SXJA1qv_8jiff_cli.exit5
 
 bb.f:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -196,9 +196,9 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std9backtrace11BytesO
   ret void
 
 bb.b:                                             ; preds = %bb.a
-  %1 = icmp eq i64 %i.a, 0
+  %1 = trunc nuw i64 %i.a to i1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  br i1 %1, label %bb.c, label %bb.d
+  br i1 %1, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   tail call void @_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs3tZ2SXJA1qv_8jiff_cli(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c)
@@ -601,9 +601,9 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs1xwejQucwHj
   br i1 %i.l, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std9backtrace15BacktraceSymbolECs3tZ2SXJA1qv_8jiff_cli.exit.i.i.i, label %bb.d
 
 bb.d:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs1xwejQucwHj_5alloc3vec3VechEEECs3tZ2SXJA1qv_8jiff_cli.exit.i.i.i.i
-  %1 = icmp eq i64 %i.k, 0
+  %1 = trunc nuw i64 %i.k to i1
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
-  br i1 %1, label %bb.e, label %bb.f
+  br i1 %1, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   invoke void @_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs3tZ2SXJA1qv_8jiff_cli(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.m)
@@ -692,9 +692,9 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs1xwejQucwHj
   br i1 %i.f, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsaL1QbXo9JQH_3std9backtrace11BytesOrWideEECs3tZ2SXJA1qv_8jiff_cli.exit, label %bb.d
 
 bb.d:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs1xwejQucwHj_5alloc3vec3VechEEECs3tZ2SXJA1qv_8jiff_cli.exit
-  %1 = icmp eq i64 %i.e, 0
+  %1 = trunc nuw i64 %i.e to i1
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  br i1 %1, label %bb.e, label %bb.f
+  br i1 %1, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   tail call void @_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs3tZ2SXJA1qv_8jiff_cli(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.g)
@@ -910,9 +910,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.a, %middle.block
   %.sroa.0.04.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.04.ph, 1
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %lcmp.mod.not = trunc i64 %2 to i1
+  br i1 %lcmp.mod.not, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.g = or disjoint i64 %.sroa.0.04.ph, 1

@@ -202,7 +202,8 @@ bb.a:
   %.sroa.5.sroa.4.0.copyload = load i64, ptr %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx, align 8 ; 2 uses
   store ptr null, ptr %i.g, align 8
   %.not = icmp eq ptr %.sroa.0.0.copyload, null
-  %.pre = load i64, ptr %1, align 8, !range !15   ; 2 uses
+  %.pre = load i64, ptr %1, align 8, !range !15
+  %3 = trunc nuw i64 %.pre to i1                  ; 2 uses
   br i1 %.not, label %bb.j, label %bb.b
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCslmvYCXbQjWR_6common12universal_io8io_uring11IoUringFileEECsl8OoimOLbh_6qdrant.exit3.i.i: ; preds = %bb.f, %bb.g, %bb.i
@@ -217,8 +218,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNt
   br label %common.resume
 
 bb.b:                                             ; preds = %bb.a
-  %3 = icmp eq i64 %.pre, 0
-  br i1 %3, label %.thread, label %bb.c
+  br i1 %3, label %bb.c, label %.thread
 
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
@@ -298,8 +298,7 @@ common.resume:                                    ; preds = %.body, %bb.ax, %_RI
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.a
-  %4 = trunc nuw i64 %.pre to i1
-  br i1 %4, label %bb.k, label %bb.am
+  br i1 %3, label %bb.k, label %bb.am
 
 bb.k:                                             ; preds = %.thread, %bb.j
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses

@@ -205,9 +205,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f, !dbg !180
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1, !dbg !518
-  %.not30 = icmp eq i64 %6, 0, !dbg !518
-  br i1 %.not30, label %bb.aa, label %bb.ab, !dbg !521
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1, !dbg !518
+  br i1 %6, label %bb.ab, label %bb.aa, !dbg !521
 
 bb.aa:                                            ; preds = %bb.z
   %i.dd = or i64 %1, 1, !dbg !522
@@ -550,9 +549,8 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailNtNtCsh
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
   %i.fi = getelementptr i8, ptr %i.gj, i64 56, !dbg !902 ; 2 uses
   %i.fj = getelementptr i8, ptr %i.gi, i64 56, !dbg !907
-  %7 = and i64 %.sroa.16.0.lcssa, 1, !dbg !912
-  %8 = icmp eq i64 %7, 0, !dbg !912
-  br i1 %8, label %bb.j, label %bb.i, !dbg !916
+  %7 = trunc i64 %.sroa.16.0.lcssa to i1, !dbg !912
+  br i1 %7, label %bb.i, label %bb.j, !dbg !916
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.loopexit.1.i
   %.sroa.0.010.i.i = phi ptr [ %i.fy, %.lr.ph.i.i ], [ %.sroa.0.0.ph.lcssa103, %.loopexit.1.i ] ; 2 uses
@@ -856,7 +854,6 @@ bb.u:                                             ; preds = %._crit_edge.i
 .lr.ph16.i:                                       ; preds = %bb.u
   %i.jo = getelementptr [56 x i8], ptr %.sroa.0.0.ph112, i64 %.sroa.11.1.lcssa.i ; 3 uses
   %.neg = add i64 %.sroa.11.1.lcssa.i, 1, !dbg !1204
-  %xtraiter = and i64 %i.jn, 1, !dbg !1204
   %i.jp = icmp eq i64 %.sroa.16.0105256, %.neg, !dbg !1204
   br i1 %i.jp, label %.epil.preheader, label %.lr.ph16.i.new, !dbg !1204
 
@@ -882,8 +879,8 @@ bb.v:                                             ; preds = %bb.v, %.lr.ph16.i.n
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.v, !dbg !1204
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.v
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0, !dbg !1204
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader, !dbg !1204
+  %lcmp.mod.not = trunc i64 %i.jn to i1, !dbg !1204
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.loopexit, !dbg !1204
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph16.i
   %.sroa.06.014.i.epil.init = phi i64 [ 0, %.lr.ph16.i ], [ %i.jt, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -990,7 +987,6 @@ bb.ac:                                            ; preds = %._crit_edge.i53
 .lr.ph16.i58:                                     ; preds = %bb.ac
   %i.lc = getelementptr [56 x i8], ptr %.sroa.0.0.ph112, i64 %.sroa.11.1.lcssa.i55 ; 3 uses
   %.neg351 = add i64 %.sroa.11.1.lcssa.i55, 1, !dbg !1328
-  %xtraiter346 = and i64 %i.lb, 1, !dbg !1328
   %i.ld = icmp eq i64 %.sroa.16.0105256, %.neg351, !dbg !1328
   br i1 %i.ld, label %.epil.preheader339, label %.lr.ph16.i58.new, !dbg !1328
 
@@ -1016,8 +1012,8 @@ bb.ad:                                            ; preds = %bb.ad, %.lr.ph16.i5
   br i1 %niter350.ncmp.1, label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_11sort_by_keysNCNvXs5_B1f_NtB1f_20HyperlinkFormatErrorNtNtBa_3fmt7Display3fmt0E0E0EB1h_.exit.unr-lcssa, label %bb.ad, !dbg !1328
 
 _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_11sort_by_keysNCNvXs5_B1f_NtB1f_20HyperlinkFormatErrorNtNtBa_3fmt7Display3fmt0E0E0EB1h_.exit.unr-lcssa: ; preds = %bb.ad
-  %lcmp.mod347.not = icmp eq i64 %xtraiter346, 0, !dbg !1328
-  br i1 %lcmp.mod347.not, label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_11sort_by_keysNCNvXs5_B1f_NtB1f_20HyperlinkFormatErrorNtNtBa_3fmt7Display3fmt0E0E0EB1h_.exit, label %.epil.preheader339, !dbg !1328
+  %lcmp.mod347.not = trunc i64 %i.lb to i1, !dbg !1328
+  br i1 %lcmp.mod347.not, label %.epil.preheader339, label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_11sort_by_keysNCNvXs5_B1f_NtB1f_20HyperlinkFormatErrorNtNtBa_3fmt7Display3fmt0E0E0EB1h_.exit, !dbg !1328
 
 .epil.preheader339:                               ; preds = %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_11sort_by_keysNCNvXs5_B1f_NtB1f_20HyperlinkFormatErrorNtNtBa_3fmt7Display3fmt0E0E0EB1h_.exit.unr-lcssa, %.lr.ph16.i58
   %.sroa.06.014.i59.epil.init = phi i64 [ 0, %.lr.ph16.i58 ], [ %i.lh, %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionNtNtCshhHc5tDBDRu_12grep_printer9hyperlink14HyperlinkAliasNCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_11sort_by_keysNCNvXs5_B1f_NtB1f_20HyperlinkFormatErrorNtNtBa_3fmt7Display3fmt0E0E0EB1h_.exit.unr-lcssa ] ; 2 uses

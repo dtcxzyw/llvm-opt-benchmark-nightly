@@ -204,7 +204,6 @@ bb.c:                                             ; preds = %bb.b
 
 .thread.us.preheader:                             ; preds = %.lr.ph
   %i.o = add nsw i64 %i.e, -1                     ; 3 uses
-  %xtraiter143 = and i64 %i.o, 1
   %i.p = icmp eq i32 %i.d, 2
   br i1 %i.p, label %.thread.us.epil.preheader, label %.thread.us.preheader.new
 
@@ -271,8 +270,8 @@ bb.e:                                             ; preds = %bb.c, %bb.b
   br label %bb.q
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.thread.us
-  %lcmp.mod145.not = icmp eq i64 %xtraiter143, 0
-  br i1 %lcmp.mod145.not, label %._crit_edge, label %.thread.us.epil.preheader
+  %lcmp.mod145.not = trunc i64 %i.o to i1
+  br i1 %lcmp.mod145.not, label %.thread.us.epil.preheader, label %._crit_edge
 
 .thread.us.epil.preheader:                        ; preds = %._crit_edge.loopexit.unr-lcssa, %.thread.us.preheader
   %indvars.iv115.epil.init = phi i64 [ 1, %.thread.us.preheader ], [ %indvars.iv.next116.1, %._crit_edge.loopexit.unr-lcssa ]
@@ -360,7 +359,6 @@ bb.h:                                             ; preds = %bb.g
 
 .thread68.us.preheader:                           ; preds = %.lr.ph89
   %i.bp = add nsw i64 %i.bf, -1                   ; 3 uses
-  %xtraiter157 = and i64 %i.bp, 1
   %i.bq = icmp eq i32 %i.be, 2
   br i1 %i.bq, label %.thread68.us.epil.preheader, label %.thread68.us.preheader.new
 
@@ -459,8 +457,8 @@ bb.j:                                             ; preds = %bb.h, %bb.g, %bb.f
   br label %._crit_edge90
 
 ._crit_edge90.loopexit.unr-lcssa:                 ; preds = %.thread68.us
-  %lcmp.mod159.not = icmp eq i64 %xtraiter157, 0
-  br i1 %lcmp.mod159.not, label %._crit_edge90, label %.thread68.us.epil.preheader
+  %lcmp.mod159.not = trunc i64 %i.bp to i1
+  br i1 %lcmp.mod159.not, label %.thread68.us.epil.preheader, label %._crit_edge90
 
 .thread68.us.epil.preheader:                      ; preds = %._crit_edge90.loopexit.unr-lcssa, %.thread68.us.preheader
   %indvars.iv125.epil.init = phi i64 [ 1, %.thread68.us.preheader ], [ %indvars.iv.next126.1, %._crit_edge90.loopexit.unr-lcssa ]
@@ -863,8 +861,8 @@ bb.a:
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !107
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 41
   %i.l = load i8, ptr %i.k, align 1, !tbaa !544, !range !133, !noundef !76
-  %.not = icmp eq i8 %i.l, 0
-  br i1 %.not, label %bb.b, label %bb.c
+  %.not = trunc nuw i8 %i.l to i1
+  br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.m = fmul double %i.f, 1.000000e+09           ; 2 uses

@@ -205,14 +205,13 @@ bb.a:
     #dbg_value(ptr %3, !12828, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !12884)
     #dbg_value(ptr %3, !12885, !DIExpression(), !12891)
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 16, !dbg !12893
-  %i.b = load i8, ptr %i.a, align 8, !dbg !12893, !range !12894, !alias.scope !12895, !noalias !12898, !noundef !153 ; 2 uses
-  %i.c = trunc nuw i8 %i.b to i1, !dbg !12893
+  %i.b = load i8, ptr %i.a, align 8, !dbg !12893, !range !12894, !alias.scope !12895, !noalias !12898, !noundef !153
+  %i.c = trunc nuw i8 %i.b to i1, !dbg !12893     ; 2 uses
   %.sroa.3.0.idx.i.i = select i1 %i.c, i64 0, i64 8, !dbg !12893
   %.sroa.3.0.i.i = getelementptr inbounds nuw i8, ptr %3, i64 %.sroa.3.0.idx.i.i, !dbg !12893 ; 3 uses
     #dbg_value(i8 %i.b, !12845, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !12884)
     #dbg_value(ptr %.sroa.3.0.i.i, !12845, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !12884)
-  %4 = icmp eq i8 %i.b, 0, !dbg !12900
-  br i1 %4, label %bb.b, label %bb.c, !dbg !12900
+  br i1 %i.c, label %bb.c, label %bb.b, !dbg !12900
 
 bb.b:                                             ; preds = %bb.a
     #dbg_value(ptr undef, !12854, !DIExpression(), !12901)
@@ -615,8 +614,8 @@ bb.b:                                             ; preds = %_RNvXs0_NtNtNtCskKL
     #dbg_value(ptr %.ptr14.le, !23240, !DIExpression(), !23241)
     #dbg_value(ptr %.ptr14.le, !23243, !DIExpression(), !23251)
     #dbg_value(ptr %0, !23248, !DIExpression(DW_OP_plus_uconst, 160, DW_OP_stack_value), !23251)
-  %gepdiff = sub nuw nsw i64 144, %.idx, !dbg !23253 ; 2 uses
-  %i.c = lshr exact i64 %gepdiff, 4, !dbg !23253  ; 2 uses
+  %gepdiff = sub nuw nsw i64 144, %.idx, !dbg !23253
+  %i.c = lshr exact i64 %gepdiff, 4, !dbg !23253  ; 3 uses
     #dbg_value(i64 %i.c, !23196, !DIExpression(), !23254)
   %i.d = icmp eq i64 %.idx, 128, !dbg !23255
   br i1 %i.d, label %.epil.preheader, label %.new, !dbg !23255
@@ -745,9 +744,8 @@ _RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map15filter_map_foldRINtN
   br i1 %niter.ncmp.1, label %_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map9FilterMapINtNtNtBc_5slice4iter4IterINtNtBc_6option6OptionNtNtCsG258MDvU3F_3std4time7InstantEENCNvMs_NtNtCshovLROGBtMy_11quinn_proto10connection5timerNtB2y_10TimerTable12next_timeout0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYB1R_NtNtBc_3cmp3Ord3minEB2C_.exit.loopexit.unr-lcssa, label %bb.c, !dbg !23402
 
 _RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map9FilterMapINtNtNtBc_5slice4iter4IterINtNtBc_6option6OptionNtNtCsG258MDvU3F_3std4time7InstantEENCNvMs_NtNtCshovLROGBtMy_11quinn_proto10connection5timerNtB2y_10TimerTable12next_timeout0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYB1R_NtNtBc_3cmp3Ord3minEB2C_.exit.loopexit.unr-lcssa: ; preds = %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map15filter_map_foldRINtNtBa_6option6OptionNtNtCsG258MDvU3F_3std4time7InstantEB1x_B1x_NCNvMs_NtNtCshovLROGBtMy_11quinn_proto10connection5timerNtB2l_10TimerTable12next_timeout0NvYB1x_NtNtBa_3cmp3Ord3minE0B2p_.exit.i.i.i.1
-  %1 = and i64 %gepdiff, 16, !dbg !23282
-  %lcmp.mod.not = icmp eq i64 %1, 0, !dbg !23282
-  br i1 %lcmp.mod.not, label %_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map9FilterMapINtNtNtBc_5slice4iter4IterINtNtBc_6option6OptionNtNtCsG258MDvU3F_3std4time7InstantEENCNvMs_NtNtCshovLROGBtMy_11quinn_proto10connection5timerNtB2y_10TimerTable12next_timeout0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYB1R_NtNtBc_3cmp3Ord3minEB2C_.exit, label %.epil.preheader, !dbg !23282
+  %lcmp.mod.not = trunc i64 %i.c to i1, !dbg !23282
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map9FilterMapINtNtNtBc_5slice4iter4IterINtNtBc_6option6OptionNtNtCsG258MDvU3F_3std4time7InstantEENCNvMs_NtNtCshovLROGBtMy_11quinn_proto10connection5timerNtB2y_10TimerTable12next_timeout0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYB1R_NtNtBc_3cmp3Ord3minEB2C_.exit, !dbg !23282
 
 .epil.preheader:                                  ; preds = %_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map9FilterMapINtNtNtBc_5slice4iter4IterINtNtBc_6option6OptionNtNtCsG258MDvU3F_3std4time7InstantEENCNvMs_NtNtCshovLROGBtMy_11quinn_proto10connection5timerNtB2y_10TimerTable12next_timeout0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYB1R_NtNtBc_3cmp3Ord3minEB2C_.exit.loopexit.unr-lcssa, %bb.b
   %.sroa.05.0.i.i.i.epil.init = phi i64 [ 0, %bb.b ], [ %i.r, %_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters10filter_map9FilterMapINtNtNtBc_5slice4iter4IterINtNtBc_6option6OptionNtNtCsG258MDvU3F_3std4time7InstantEENCNvMs_NtNtCshovLROGBtMy_11quinn_proto10connection5timerNtB2y_10TimerTable12next_timeout0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYB1R_NtNtBc_3cmp3Ord3minEB2C_.exit.loopexit.unr-lcssa ]

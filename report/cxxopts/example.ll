@@ -205,7 +205,7 @@ bb.ot:                                            ; preds = %_ZNSolsEPFRSoS_E.ex
 _ZN7cxxopts11ParseResult8IteratorppEv.exit:       ; preds = %bb.ot, %_ZNSolsEPFRSoS_E.exit1455
   %.sroa.5.2 = phi ptr [ %i.bwq, %_ZNSolsEPFRSoS_E.exit1455 ], [ %spec.select, %bb.ot ] ; 2 uses
   %.sroa.12.2 = phi i8 [ 0, %_ZNSolsEPFRSoS_E.exit1455 ], [ %spec.select2304, %bb.ot ] ; 2 uses
-  %185 = icmp ne i8 %.sroa.12.2, 0
+  %185 = trunc nuw i8 %.sroa.12.2 to i1
   %i.bwv = icmp ne ptr %.sroa.5.2, %i.bve
   %.not3.i = select i1 %185, i1 true, i1 %i.bwv
   br i1 %.not3.i, label %bb.op, label %.loopexit2236
@@ -608,9 +608,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %.elt34 = getelementptr inbounds nuw i8, ptr %0, i64 240
   %.unpack35 = load i64, ptr %.elt34, align 8, !tbaa !543
   %i.ai = getelementptr inbounds i8, ptr %0, i64 %.unpack35 ; 2 uses
-  %1 = and i64 %.unpack, 1
-  %.not36 = icmp eq i64 %1, 0
-  br i1 %.not36, label %bb.l, label %bb.k
+  %.not36 = trunc i64 %.unpack to i1
+  br i1 %.not36, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !93
@@ -958,9 +957,8 @@ bb.o:                                             ; preds = %bb.n
   %.elt9 = getelementptr inbounds nuw i8, ptr %0, i64 240
   %.unpack10 = load i64, ptr %.elt9, align 8, !tbaa !543
   %i.ai = getelementptr inbounds i8, ptr %0, i64 %.unpack10 ; 2 uses
-  %1 = and i64 %.unpack, 1
-  %.not = icmp eq i64 %1, 0
-  br i1 %.not, label %bb.q, label %bb.p
+  %.not = trunc i64 %.unpack to i1
+  br i1 %.not, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !93
@@ -1363,14 +1361,13 @@ bb.h:                                             ; preds = %bb.c, %bb.d, %bb.e,
   %i.n = load i32, ptr %0, align 8, !tbaa !471    ; 3 uses
   %i.o = and i32 %i.n, 16
   %.not7 = icmp eq i32 %i.o, 0
-  %4 = and i32 %i.n, 1
-  %.not8 = icmp eq i32 %4, 0                      ; 2 uses
+  %.not8 = trunc i32 %i.n to i1                   ; 2 uses
   %i.p = and i32 %i.n, 8
   %.not9 = icmp eq i32 %i.p, 0                    ; 4 uses
   br i1 %.not7, label %bb.i, label %bb.p
 
 bb.i:                                             ; preds = %bb.h
-  br i1 %.not8, label %bb.j, label %bb.m
+  br i1 %.not8, label %bb.m, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   br i1 %.not9, label %bb.k, label %bb.l
@@ -1395,7 +1392,7 @@ bb.o:                                             ; preds = %bb.m
   br label %bb.co
 
 bb.p:                                             ; preds = %bb.h
-  br i1 %.not8, label %bb.q, label %bb.t
+  br i1 %.not8, label %bb.t, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   br i1 %.not9, label %bb.r, label %bb.s
@@ -1425,11 +1422,10 @@ _ZNSt8__detail9_CompilerINSt7__cxx1112regex_traitsIcEEE14_M_match_tokenENS_12_Sc
 
 bb.w:                                             ; preds = %_ZNSt8__detail9_CompilerINSt7__cxx1112regex_traitsIcEEE14_M_match_tokenENS_12_ScannerBase7_TokenTE.exit
   %i.r = load i32, ptr %0, align 8, !tbaa !471    ; 2 uses
-  %5 = and i32 %i.r, 1
-  %.not4 = icmp eq i32 %5, 0
+  %.not4 = trunc i32 %i.r to i1
   %i.s = and i32 %i.r, 8
   %.not5 = icmp eq i32 %i.s, 0                    ; 2 uses
-  br i1 %.not4, label %bb.x, label %bb.aa
+  br i1 %.not4, label %bb.aa, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   br i1 %.not5, label %bb.y, label %bb.z
@@ -1613,11 +1609,10 @@ bb.aw:                                            ; preds = %bb.at
 
 bb.ax:                                            ; preds = %bb.as, %bb.at, %bb.au, %bb.av, %bb.aw
   %i.bp = load i32, ptr %0, align 8, !tbaa !471   ; 2 uses
-  %6 = and i32 %i.bp, 1
-  %.not = icmp eq i32 %6, 0
+  %.not = trunc i32 %i.bp to i1
   %i.bq = and i32 %i.bp, 8
   %.not2 = icmp eq i32 %i.bq, 0                   ; 2 uses
-  br i1 %.not, label %bb.ay, label %bb.bb
+  br i1 %.not, label %bb.bb, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
   br i1 %.not2, label %bb.az, label %bb.ba
@@ -2020,11 +2015,10 @@ bb.m:                                             ; preds = %bb.j
 
 _ZNSt8__detail9_CompilerINSt7__cxx1112regex_traitsIcEEE14_M_match_tokenENS_12_ScannerBase7_TokenTE.exit.thread: ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
   %i.x = load i32, ptr %0, align 8, !tbaa !471    ; 2 uses
-  %1 = and i32 %i.x, 1
-  %.not = icmp eq i32 %1, 0
+  %.not = trunc i32 %i.x to i1
   %i.y = and i32 %i.x, 8
   %.not6 = icmp eq i32 %i.y, 0                    ; 2 uses
-  br i1 %.not, label %bb.n, label %bb.q
+  br i1 %.not, label %bb.q, label %bb.n
 
 bb.n:                                             ; preds = %_ZNSt8__detail9_CompilerINSt7__cxx1112regex_traitsIcEEE14_M_match_tokenENS_12_ScannerBase7_TokenTE.exit.thread
   br i1 %.not6, label %bb.o, label %bb.p
@@ -2427,14 +2421,14 @@ bb.i:                                             ; preds = %_ZNSt6bitsetILm256E
   store i8 %i.bg, ptr %i.be, align 8, !tbaa !830
   %i.bh = call noundef zeroext i1 @_ZZNKSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb0ELb0EE8_M_applyEcSt17integral_constantIbLb0EEENKUlvE_clEv(ptr noundef nonnull align 8 dereferenceable(9) %1)
   %i.bi = load i8, ptr %i.bf, align 8, !tbaa !710, !range !208, !noundef !209
-  %2 = zext i1 %i.bh to i8
-  %.not.i = icmp eq i8 %i.bi, %2
+  %2 = trunc nuw i8 %i.bi to i1
+  %3 = xor i1 %i.bh, %2
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #30
   %i.bj = lshr i64 %indvars.iv.i, 6
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %i.bj ; 3 uses
   %i.bl = and i64 %indvars.iv.i, 63
   %i.bm = shl nuw i64 1, %i.bl                    ; 2 uses
-  br i1 %.not.i, label %bb.k, label %bb.j
+  br i1 %3, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.bn = load i64, ptr %i.bk, align 8, !tbaa !13
@@ -2837,9 +2831,8 @@ bb.b:                                             ; preds = %_ZSt27__unguarded_p
 
 ._crit_edge.i.i.i.i:                              ; preds = %.lr.ph.i.i.i.i, %.lr.ph.i.i
   %.0.lcssa.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %spec.select.i.i.i.i, %.lr.ph.i.i.i.i ] ; 5 uses
-  %4 = and i64 %i.l, 1
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %bb.c, label %bb.d
+  %4 = trunc i64 %i.l to i1
+  br i1 %4, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ab = add nsw i64 %i.l, -2
@@ -3058,9 +3051,8 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEENS0_5
 .lr.ph.i6.preheader:                              ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_.exit
   %i.p = sub i64 %i.a, %i.b
   %i.q = add i64 %i.a, -17
-  %xtraiter = and i64 %i.p, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i6.prol.loopexit, label %.lr.ph.i6.prol
+  %lcmp.mod.not = trunc i64 %i.p to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i6.prol, label %.lr.ph.i6.prol.loopexit
 
 .lr.ph.i6.prol:                                   ; preds = %.lr.ph.i6.preheader
   %i.r = load i8, ptr %i.o, align 1, !tbaa !17    ; 3 uses
@@ -3211,10 +3203,9 @@ bb.b:                                             ; preds = %bb.a
   %i.f = lshr i64 %i.e, 1                         ; 2 uses
   %i.g = add nsw i64 %.fr, -1
   %i.h = lshr i64 %i.g, 1                         ; 4 uses
-  %3 = and i64 %.fr, 1
-  %4 = icmp eq i64 %3, 0
+  %3 = trunc i64 %.fr to i1
   %i.i = lshr exact i64 %i.e, 1                   ; 2 uses
-  br i1 %4, label %.split.preheader, label %.split.us
+  br i1 %3, label %.split.us, label %.split.preheader
 
 .split.preheader:                                 ; preds = %bb.b
   %i.j = or disjoint i64 %i.e, 1                  ; 2 uses
@@ -3337,7 +3328,7 @@ _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEElcNS0_5_
   %i.bh = add nsw i64 %.08, -1
   br i1 %.not, label %.loopexit, label %.split, !llvm.loop !844
 
-.loopexit:                                        ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEElcNS0_5__ops15_Iter_less_iterEEvT_T0_SA_T1_T2_.exit.us, %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEElcNS0_5__ops15_Iter_less_iterEEvT_T0_SA_T1_T2_.exit, %bb.a
+.loopexit:                                        ; preds = %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEElcNS0_5__ops15_Iter_less_iterEEvT_T0_SA_T1_T2_.exit, %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPcSt6vectorIcSaIcEEEElcNS0_5__ops15_Iter_less_iterEEvT_T0_SA_T1_T2_.exit.us, %bb.a
   ret void
 }
 
@@ -3740,14 +3731,14 @@ bb.i:                                             ; preds = %_ZNSt6bitsetILm256E
   store i8 %i.bg, ptr %i.be, align 8, !tbaa !873
   %i.bh = call noundef zeroext i1 @_ZZNKSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb0ELb1EE8_M_applyEcSt17integral_constantIbLb0EEENKUlvE_clEv(ptr noundef nonnull align 8 dereferenceable(9) %1)
   %i.bi = load i8, ptr %i.bf, align 8, !tbaa !741, !range !208, !noundef !209
-  %2 = zext i1 %i.bh to i8
-  %.not.i = icmp eq i8 %i.bi, %2
+  %2 = trunc nuw i8 %i.bi to i1
+  %3 = xor i1 %i.bh, %2
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #30
   %i.bj = lshr i64 %indvars.iv.i, 6
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %i.bj ; 3 uses
   %i.bl = and i64 %indvars.iv.i, 63
   %i.bm = shl nuw i64 1, %i.bl                    ; 2 uses
-  br i1 %.not.i, label %bb.k, label %bb.j
+  br i1 %3, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.bn = load i64, ptr %i.bk, align 8, !tbaa !13
@@ -4150,14 +4141,14 @@ bb.i:                                             ; preds = %_ZNSt6bitsetILm256E
   store i8 %i.bg, ptr %i.be, align 8, !tbaa !900
   %i.bh = call noundef zeroext i1 @_ZZNKSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb1ELb0EE8_M_applyEcSt17integral_constantIbLb0EEENKUlvE_clEv(ptr noundef nonnull align 8 dereferenceable(9) %1)
   %i.bi = load i8, ptr %i.bf, align 8, !tbaa !754, !range !208, !noundef !209
-  %2 = zext i1 %i.bh to i8
-  %.not.i = icmp eq i8 %i.bi, %2
+  %2 = trunc nuw i8 %i.bi to i1
+  %3 = xor i1 %i.bh, %2
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #30
   %i.bj = lshr i64 %indvars.iv.i, 6
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %i.bj ; 3 uses
   %i.bl = and i64 %indvars.iv.i, 63
   %i.bm = shl nuw i64 1, %i.bl                    ; 2 uses
-  br i1 %.not.i, label %bb.k, label %bb.j
+  br i1 %3, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.bn = load i64, ptr %i.bk, align 8, !tbaa !13
@@ -4560,14 +4551,14 @@ bb.i:                                             ; preds = %_ZNSt6bitsetILm256E
   store i8 %i.bg, ptr %i.be, align 8, !tbaa !919
   %i.bh = call noundef zeroext i1 @_ZZNKSt8__detail15_BracketMatcherINSt7__cxx1112regex_traitsIcEELb1ELb1EE8_M_applyEcSt17integral_constantIbLb0EEENKUlvE_clEv(ptr noundef nonnull align 8 dereferenceable(9) %1)
   %i.bi = load i8, ptr %i.bf, align 8, !tbaa !760, !range !208, !noundef !209
-  %2 = zext i1 %i.bh to i8
-  %.not.i = icmp eq i8 %i.bi, %2
+  %2 = trunc nuw i8 %i.bi to i1
+  %3 = xor i1 %i.bh, %2
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #30
   %i.bj = lshr i64 %indvars.iv.i, 6
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %i.bj ; 3 uses
   %i.bl = and i64 %indvars.iv.i, 63
   %i.bm = shl nuw i64 1, %i.bl                    ; 2 uses
-  br i1 %.not.i, label %bb.k, label %bb.j
+  br i1 %3, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.bn = load i64, ptr %i.bk, align 8, !tbaa !13
@@ -4970,9 +4961,8 @@ bb.l:                                             ; preds = %.lr.ph
 
 bb.m:                                             ; preds = %bb.l
   %i.bm = load i32, ptr %i.j, align 8, !tbaa !1049 ; 2 uses
-  %3 = and i32 %i.bm, 1
-  %.not.i27 = icmp eq i32 %3, 0
-  br i1 %.not.i27, label %bb.n, label %common.ret
+  %.not.i27 = trunc i32 %i.bm to i1
+  br i1 %.not.i27, label %common.ret, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bn = and i32 %i.bm, 128
@@ -5375,7 +5365,6 @@ _ZNSt8__detail9_ExecutorIPKcSaINSt7__cxx119sub_matchIS2_EEENS3_12regex_traitsIcE
   %i.ah = ptrtoint ptr %i.af to i64
   %i.ai = sub i64 %i.ag, %i.ah                    ; 2 uses
   %i.aj = sdiv exact i64 %i.ai, 24                ; 3 uses
-  %xtraiter = and i64 %i.aj, 1
   %i.ak = icmp eq i64 %i.ai, 24
   br i1 %i.ak, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -5436,8 +5425,8 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.1
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !1128
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.aj to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.epil.preheader, label %.loopexit
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %.020.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.be, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -5840,9 +5829,8 @@ bb.m:                                             ; preds = %tailrecurse
 
 bb.n:                                             ; preds = %bb.m
   %i.bu = load i32, ptr %i.f, align 8, !tbaa !1087 ; 2 uses
-  %3 = and i32 %i.bu, 1
-  %.not.i27 = icmp eq i32 %3, 0
-  br i1 %.not.i27, label %bb.o, label %common.ret
+  %.not.i27 = trunc i32 %i.bu to i1
+  br i1 %.not.i27, label %common.ret, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.bv = and i32 %i.bu, 128
@@ -6245,7 +6233,6 @@ bb.f:                                             ; preds = %.noexc
   %i.ce = ptrtoint ptr %i.cc to i64
   %i.cf = sub i64 %i.cd, %i.ce                    ; 2 uses
   %i.cg = sdiv exact i64 %i.cf, 24                ; 3 uses
-  %xtraiter39 = and i64 %i.cg, 1
   %i.ch = icmp eq i64 %i.cf, 24
   br i1 %i.ch, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -6301,8 +6288,8 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.1
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !1150
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.j
-  %lcmp.mod40.not = icmp eq i64 %xtraiter39, 0
-  br i1 %lcmp.mod40.not, label %.loopexit, label %.lr.ph.epil.preheader
+  %lcmp.mod40.not = trunc i64 %i.cg to i1
+  br i1 %lcmp.mod40.not, label %.lr.ph.epil.preheader, label %.loopexit
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %.023.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.da, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -6705,9 +6692,8 @@ bb.m:                                             ; preds = %.lr.ph
 
 bb.n:                                             ; preds = %bb.m
   %i.bq = load i32, ptr %i.j, align 8, !tbaa !1154 ; 2 uses
-  %3 = and i32 %i.bq, 1
-  %.not.i26 = icmp eq i32 %3, 0
-  br i1 %.not.i26, label %bb.o, label %common.ret
+  %.not.i26 = trunc i32 %i.bq to i1
+  br i1 %.not.i26, label %common.ret, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.br = and i32 %i.bq, 128
@@ -7110,7 +7096,6 @@ _ZNSt8__detail9_ExecutorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_st
   %i.af = ptrtoint ptr %i.ad to i64
   %i.ag = sub i64 %i.ae, %i.af                    ; 2 uses
   %i.ah = sdiv exact i64 %i.ag, 24                ; 3 uses
-  %xtraiter = and i64 %i.ah, 1
   %i.ai = icmp eq i64 %i.ag, 24
   br i1 %i.ai, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -7179,8 +7164,8 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.1
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !1232
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.ah to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.epil.preheader, label %.loopexit
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %.021.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.bi, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -7583,9 +7568,8 @@ bb.p:                                             ; preds = %tailrecurse
 
 bb.q:                                             ; preds = %bb.p
   %i.cd = load i32, ptr %i.f, align 8, !tbaa !1194 ; 2 uses
-  %3 = and i32 %i.cd, 1
-  %.not.i26 = icmp eq i32 %3, 0
-  br i1 %.not.i26, label %bb.r, label %common.ret
+  %.not.i26 = trunc i32 %i.cd to i1
+  br i1 %.not.i26, label %common.ret, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.ce = and i32 %i.cd, 128
@@ -7988,7 +7972,6 @@ bb.f:                                             ; preds = %.noexc
   %i.ce = ptrtoint ptr %i.cc to i64
   %i.cf = sub i64 %i.cd, %i.ce                    ; 2 uses
   %i.cg = sdiv exact i64 %i.cf, 24                ; 3 uses
-  %xtraiter40 = and i64 %i.cg, 1
   %i.ch = icmp eq i64 %i.cf, 24
   br i1 %i.ch, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -8052,8 +8035,8 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.1
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !1254
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.j
-  %lcmp.mod41.not = icmp eq i64 %xtraiter40, 0
-  br i1 %lcmp.mod41.not, label %.loopexit, label %.lr.ph.epil.preheader
+  %lcmp.mod41.not = trunc i64 %i.cg to i1
+  br i1 %lcmp.mod41.not, label %.lr.ph.epil.preheader, label %.loopexit
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %.024.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.dg, %.loopexit.loopexit.unr-lcssa ] ; 2 uses

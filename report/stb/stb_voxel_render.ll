@@ -203,11 +203,10 @@ bb.g:                                             ; preds = %.loopexit910.thread
   %i.ec = getelementptr inbounds nuw [4 x i8], ptr @stbvox_hasface, i64 %i.eb
   %i.ed = zext nneg i8 %.2800 to i64              ; 5 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %i.ec, i64 %i.ed
-  %i.ef = load i8, ptr %i.ee, align 1, !tbaa !8
-  %i.eg = zext i8 %i.ef to i32                    ; 6 uses
-  %3 = and i32 %i.eg, 1
-  %.not831 = icmp eq i32 %3, 0
-  br i1 %.not831, label %bb.i, label %bb.h
+  %i.ef = load i8, ptr %i.ee, align 1, !tbaa !8   ; 2 uses
+  %i.eg = zext i8 %i.ef to i32                    ; 5 uses
+  %.not831 = trunc i8 %i.ef to i1
+  br i1 %.not831, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.loopexit
   %i.eh = getelementptr inbounds nuw [6 x i8], ptr @stbvox_facetype, i64 %i.eb
@@ -610,9 +609,8 @@ bb.au:                                            ; preds = %bb.at
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.at
-  %4 = and i32 %.5, 1
-  %.not849 = icmp eq i32 %4, 0
-  br i1 %.not849, label %bb.ax, label %bb.aw
+  %.not849 = trunc i32 %.5 to i1
+  br i1 %.not849, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
   call void @stbvox_make_mesh_for_face(ptr noundef nonnull %0, i8 %i.so, i32 noundef 0, i32 noundef %2, i24 poison, i32 noundef %i.qs, ptr noundef nonnull %i.a, i8 noundef zeroext %.1790, i32 noundef 0)
@@ -1015,9 +1013,8 @@ bb.ce:                                            ; preds = %.thread888, %.threa
   br label %.thread887
 
 .thread887:                                       ; preds = %.thread885, %bb.ce, %bb.cd
-  %5 = and i32 %.5, 1
-  %.not868 = icmp eq i32 %5, 0
-  br i1 %.not868, label %bb.cf, label %bb.cg
+  %.not868 = trunc i32 %.5 to i1
+  br i1 %.not868, label %bb.cg, label %bb.cf
 
 .thread891:                                       ; preds = %.thread888, %.thread903, %.thread890
   %.not868892 = trunc i32 %.5 to i1

@@ -204,7 +204,7 @@ declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) loca
 define noalias nonnull ptr @ARKodeSPRKTable_Copy(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #6 {
 ARKodeSPRKTable_Alloc.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !13   ; 5 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !13   ; 6 uses
   %calloc.i = tail call dereferenceable_or_null(24) ptr @calloc(i64 1, i64 24) ; 6 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %calloc.i) ]
   %i.c = sext i32 %i.b to i64
@@ -231,7 +231,7 @@ ARKodeSPRKTable_Alloc.exit:
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !8    ; 5 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !12   ; 5 uses
-  %wide.trip.count = zext nneg i32 %i.b to i64    ; 5 uses
+  %wide.trip.count = zext nneg i32 %i.b to i64    ; 4 uses
   %min.iters.check = icmp ult i32 %i.b, 32
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -286,9 +286,8 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph, %middle.block
   %indvars.iv.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph ], [ %n.vec, %middle.block ] ; 7 uses
-  %xtraiter = and i64 %wide.trip.count, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %lcmp.mod.not = trunc i32 %i.b to i1
+  br i1 %lcmp.mod.not, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv.ph

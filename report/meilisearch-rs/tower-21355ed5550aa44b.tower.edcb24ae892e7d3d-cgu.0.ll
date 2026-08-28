@@ -81,8 +81,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %1 to i64
   %i.c = ptrtoint ptr %0 to i64
-  %i.d = sub nuw i64 %i.b, %i.c                   ; 3 uses
-  %i.e = lshr exact i64 %i.d, 3                   ; 2 uses
+  %i.d = sub nuw i64 %i.b, %i.c                   ; 2 uses
+  %i.e = lshr exact i64 %i.d, 3                   ; 3 uses
   %i.f = icmp eq i64 %i.d, 8
   br i1 %i.f, label %.epil.preheader, label %.new
 
@@ -107,9 +107,8 @@ bb.c:                                             ; preds = %bb.c, %.new
   br i1 %niter.ncmp.1, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h892299863ce45780E.exit.loopexit.unr-lcssa", label %bb.c
 
 "_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h892299863ce45780E.exit.loopexit.unr-lcssa": ; preds = %bb.c
-  %3 = and i64 %i.d, 8
-  %lcmp.mod.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod.not, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h892299863ce45780E.exit", label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.e to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h892299863ce45780E.exit"
 
 .epil.preheader:                                  ; preds = %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h892299863ce45780E.exit.loopexit.unr-lcssa", %bb.b
   %.sroa.07.0.i.epil.init = phi i64 [ %2, %bb.b ], [ %i.m, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h892299863ce45780E.exit.loopexit.unr-lcssa" ]
@@ -512,16 +511,13 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.j = load ptr, ptr %i.i, align 8              ; 3 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.l = load i64, ptr %i.k, align 8              ; 5 uses
-  %2 = icmp eq i64 %i.l, 0
-  br i1 %2, label %_ZN5tower5retry6budget10tps_budget9TpsBudget3sum17h7046136ecb1547f3E.exit, label %.preheader.i.preheader
+  %i.l = load i64, ptr %i.k, align 8              ; 4 uses
+  switch i64 %i.l, label %.preheader.i.preheader.new [
+    i64 0, label %_ZN5tower5retry6budget10tps_budget9TpsBudget3sum17h7046136ecb1547f3E.exit
+    i64 1, label %.preheader.i.epil.preheader
+  ]
 
-.preheader.i.preheader:                           ; preds = %bb.a
-  %xtraiter = and i64 %i.l, 1
-  %3 = icmp eq i64 %i.l, 1
-  br i1 %3, label %.preheader.i.epil.preheader, label %.preheader.i.preheader.new
-
-.preheader.i.preheader.new:                       ; preds = %.preheader.i.preheader
+.preheader.i.preheader.new:                       ; preds = %bb.a
   %unroll_iter = and i64 %i.l, -2
   br label %.preheader.i
 
@@ -542,12 +538,12 @@ bb.a:
   br i1 %niter.ncmp.1, label %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.unr-lcssa", label %.preheader.i
 
 "_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.unr-lcssa": ; preds = %.preheader.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i", label %.preheader.i.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.l to i1
+  br i1 %lcmp.mod.not, label %.preheader.i.epil.preheader, label %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i"
 
-.preheader.i.epil.preheader:                      ; preds = %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.unr-lcssa", %.preheader.i.preheader
-  %.sroa.07.0.i.i.i.epil.init = phi i64 [ 0, %.preheader.i.preheader ], [ %i.s, %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.unr-lcssa" ]
-  %.sroa.09.0.i.i.i.epil.init = phi i64 [ 0, %.preheader.i.preheader ], [ %i.t, %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.unr-lcssa" ]
+.preheader.i.epil.preheader:                      ; preds = %bb.a, %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.unr-lcssa"
+  %.sroa.07.0.i.i.i.epil.init = phi i64 [ 0, %bb.a ], [ %i.s, %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.unr-lcssa" ]
+  %.sroa.09.0.i.i.i.epil.init = phi i64 [ 0, %bb.a ], [ %i.t, %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.unr-lcssa" ]
   %lcmp.mod2 = trunc i64 %i.l to i1
   call void @llvm.assume(i1 %lcmp.mod2)
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %.sroa.09.0.i.i.i.epil.init
@@ -729,8 +725,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %1 to i64
   %i.c = ptrtoint ptr %0 to i64
-  %i.d = sub nuw i64 %i.b, %i.c                   ; 3 uses
-  %i.e = lshr exact i64 %i.d, 3                   ; 2 uses
+  %i.d = sub nuw i64 %i.b, %i.c                   ; 2 uses
+  %i.e = lshr exact i64 %i.d, 3                   ; 3 uses
   %i.f = icmp eq i64 %i.d, 8
   br i1 %i.f, label %.epil.preheader, label %.new
 
@@ -755,9 +751,8 @@ bb.c:                                             ; preds = %bb.c, %.new
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.c
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.c
-  %3 = and i64 %i.d, 8
-  %lcmp.mod.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.e to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %bb.b
   %.sroa.07.0.epil.init = phi i64 [ %2, %bb.b ], [ %i.m, %.loopexit.loopexit.unr-lcssa ]
@@ -804,16 +799,13 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.f = load ptr, ptr %i.e, align 8              ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.h = load i64, ptr %i.g, align 8              ; 5 uses
-  %1 = icmp eq i64 %i.h, 0
-  br i1 %1, label %_ZN5tower5retry6budget10tps_budget9TpsBudget3sum17h7046136ecb1547f3E.exit.i, label %.preheader.i.i.preheader
+  %i.h = load i64, ptr %i.g, align 8              ; 4 uses
+  switch i64 %i.h, label %.preheader.i.i.preheader.new [
+    i64 0, label %_ZN5tower5retry6budget10tps_budget9TpsBudget3sum17h7046136ecb1547f3E.exit.i
+    i64 1, label %.preheader.i.i.epil.preheader
+  ]
 
-.preheader.i.i.preheader:                         ; preds = %bb.a
-  %xtraiter = and i64 %i.h, 1
-  %2 = icmp eq i64 %i.h, 1
-  br i1 %2, label %.preheader.i.i.epil.preheader, label %.preheader.i.i.preheader.new
-
-.preheader.i.i.preheader.new:                     ; preds = %.preheader.i.i.preheader
+.preheader.i.i.preheader.new:                     ; preds = %bb.a
   %unroll_iter = and i64 %i.h, -2
   br label %.preheader.i.i
 
@@ -834,12 +826,12 @@ bb.a:
   br i1 %niter.ncmp.1, label %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.i.unr-lcssa", label %.preheader.i.i
 
 "_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.i.unr-lcssa": ; preds = %.preheader.i.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.i", label %.preheader.i.i.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.h to i1
+  br i1 %lcmp.mod.not, label %.preheader.i.i.epil.preheader, label %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.i"
 
-.preheader.i.i.epil.preheader:                    ; preds = %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.i.unr-lcssa", %.preheader.i.i.preheader
-  %.sroa.07.0.i.i.i.i.epil.init = phi i64 [ 0, %.preheader.i.i.preheader ], [ %i.o, %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.i.unr-lcssa" ]
-  %.sroa.09.0.i.i.i.i.epil.init = phi i64 [ 0, %.preheader.i.i.preheader ], [ %i.p, %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.i.unr-lcssa" ]
+.preheader.i.i.epil.preheader:                    ; preds = %bb.a, %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.i.unr-lcssa"
+  %.sroa.07.0.i.i.i.i.epil.init = phi i64 [ 0, %bb.a ], [ %i.o, %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.i.unr-lcssa" ]
+  %.sroa.09.0.i.i.i.i.epil.init = phi i64 [ 0, %bb.a ], [ %i.p, %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.i.unr-lcssa" ]
   %lcmp.mod3 = trunc i64 %i.h to i1
   tail call void @llvm.assume(i1 %lcmp.mod3)
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %.sroa.09.0.i.i.i.i.epil.init
@@ -852,7 +844,7 @@ bb.a:
   %i.t = tail call i64 @llvm.sadd.sat.i64(i64 %i.d, i64 %.lcssa)
   br label %_ZN5tower5retry6budget10tps_budget9TpsBudget3sum17h7046136ecb1547f3E.exit.i
 
-_ZN5tower5retry6budget10tps_budget9TpsBudget3sum17h7046136ecb1547f3E.exit.i: ; preds = %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.i", %bb.a
+_ZN5tower5retry6budget10tps_budget9TpsBudget3sum17h7046136ecb1547f3E.exit.i: ; preds = %bb.a, %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.i"
   %.sroa.04.0.i.i.i.i = phi i64 [ %i.d, %bb.a ], [ %i.t, %"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E.exit.loopexit.i.i" ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.v = load i64, ptr %i.u, align 8

@@ -24,10 +24,10 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define ptr @FSE_getErrorName(i64 noundef %0) local_unnamed_addr #1 {
 bb.a:
-  %1 = icmp ult i64 %0, -119
+  %1 = icmp ugt i64 %0, -120
   %i.a = trunc nsw i64 %0 to i32
   %i.b = sub i32 0, %i.a
-  %.0.i.i = select i1 %1, i32 0, i32 %i.b
+  %.0.i.i = select i1 %1, i32 %i.b, i32 0
   %i.c = tail call ptr @ERR_getErrorString(i32 noundef %.0.i.i) #10
   ret ptr %i.c
 }
@@ -43,10 +43,10 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define ptr @HUF_getErrorName(i64 noundef %0) local_unnamed_addr #1 {
 bb.a:
-  %1 = icmp ult i64 %0, -119
+  %1 = icmp ugt i64 %0, -120
   %i.a = trunc nsw i64 %0 to i32
   %i.b = sub i32 0, %i.a
-  %.0.i.i = select i1 %1, i32 0, i32 %i.b
+  %.0.i.i = select i1 %1, i32 %i.b, i32 0
   %i.c = tail call ptr @ERR_getErrorString(i32 noundef %.0.i.i) #10
   ret ptr %i.c
 }
@@ -74,10 +74,10 @@ bb.d:                                             ; preds = %bb.c
   store i64 0, ptr %i.a, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.a, ptr align 1 %3, i64 %4, i1 false)
   %i.g = call i64 @FSE_readNCount_bmi2(ptr noundef %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef nonnull %i.a, i64 noundef 8, i32 noundef 0), !inline_history !9 ; 3 uses
-  %6 = icmp ult i64 %i.g, -119
-  %7 = icmp ugt i64 %i.g, %4
-  %8 = and i1 %6, %7
-  %.0162.i.i = select i1 %8, i64 -20, i64 %i.g
+  %6 = icmp ugt i64 %i.g, -120
+  %7 = icmp ule i64 %i.g, %4
+  %8 = or i1 %6, %7
+  %.0162.i.i = select i1 %8, i64 %i.g, i64 -20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   br label %FSE_readNCount_body_default.exit
 
@@ -111,8 +111,8 @@ bb.g:                                             ; preds = %bb.y, %bb.f
   %.0139.i.i = phi i32 [ %i.m, %bb.f ], [ %i.cc, %bb.y ] ; 3 uses
   %.0135.i.i = phi i32 [ 4, %bb.f ], [ %.7.i.i, %bb.y ] ; 3 uses
   %.0133.i.i = phi i32 [ 0, %bb.f ], [ %i.bm, %bb.y ] ; 3 uses
-  %.0132.i.i = phi i1 [ true, %bb.f ], [ %9, %bb.y ]
-  br i1 %.0132.i.i, label %bb.o, label %bb.h
+  %.0132.i.i = phi i1 [ false, %bb.f ], [ %.not180.i.i, %bb.y ]
+  br i1 %.0132.i.i, label %bb.h, label %bb.o
 
 bb.h:                                             ; preds = %bb.g
   %i.u = xor i32 %.0139.i.i, -1
@@ -241,7 +241,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %i.bn = zext i32 %.2.i.i to i64
   %i.bo = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.bn
   store i16 %i.bl, ptr %i.bo, align 2, !tbaa !13
-  %9 = icmp ne i32 %i.bi, 0
+  %.not180.i.i = icmp eq i32 %i.bi, 0
   %i.bp = icmp slt i32 %.1148.i.i, %.0144.i.i
   br i1 %i.bp, label %bb.s, label %bb.u
 
@@ -341,10 +341,10 @@ bb.b:                                             ; preds = %bb.a
   store i64 0, ptr %i.a, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.a, ptr align 1 %3, i64 %4, i1 false)
   %i.f = call i64 @FSE_readNCount_bmi2(ptr noundef %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef nonnull %i.a, i64 noundef 8, i32 noundef 0), !inline_history !15 ; 3 uses
-  %5 = icmp ult i64 %i.f, -119
-  %6 = icmp ugt i64 %i.f, %4
-  %7 = and i1 %5, %6
-  %.0162.i = select i1 %7, i64 -20, i64 %i.f
+  %5 = icmp ugt i64 %i.f, -120
+  %6 = icmp ule i64 %i.f, %4
+  %7 = or i1 %5, %6
+  %.0162.i = select i1 %7, i64 %i.f, i64 -20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   br label %FSE_readNCount_body.exit
 
@@ -378,8 +378,8 @@ bb.e:                                             ; preds = %bb.w, %bb.d
   %.0139.i = phi i32 [ %i.l, %bb.d ], [ %i.cb, %bb.w ] ; 3 uses
   %.0135.i = phi i32 [ 4, %bb.d ], [ %.7.i, %bb.w ] ; 3 uses
   %.0133.i = phi i32 [ 0, %bb.d ], [ %i.bl, %bb.w ] ; 3 uses
-  %.0132.i = phi i1 [ true, %bb.d ], [ %8, %bb.w ]
-  br i1 %.0132.i, label %bb.m, label %bb.f
+  %.0132.i = phi i1 [ false, %bb.d ], [ %.not180.i, %bb.w ]
+  br i1 %.0132.i, label %bb.f, label %bb.m
 
 bb.f:                                             ; preds = %bb.e
   %i.t = xor i32 %.0139.i, -1
@@ -508,7 +508,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.bm = zext i32 %.2.i to i64
   %i.bn = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %i.bm
   store i16 %i.bk, ptr %i.bn, align 2, !tbaa !13
-  %8 = icmp ne i32 %i.bh, 0
+  %.not180.i = icmp eq i32 %i.bh, 0
   %i.bo = icmp slt i32 %.1148.i, %.0144.i
   br i1 %i.bo, label %bb.q, label %bb.s
 
@@ -616,9 +616,8 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #4
 ; Function Attrs: nounwind uwtable
 define range(i64 -119, -9223372036854775808) i64 @HUF_readStats_wksp(ptr noundef %0, i64 noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef writeonly captures(none) %3, ptr nofree noundef writeonly captures(none) %4, ptr noundef %5, i64 noundef %6, ptr noundef %7, i64 noundef %8, i32 noundef %9) local_unnamed_addr #1 {
 bb.a:
-  %10 = and i32 %9, 1
-  %.not = icmp eq i32 %10, 0
-  br i1 %.not, label %bb.c, label %bb.b
+  %.not = trunc i32 %9 to i1
+  br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.a = tail call fastcc i64 @HUF_readStats_body_bmi2(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, i64 noundef %6, ptr noundef %7, i64 noundef %8)
@@ -807,8 +806,8 @@ bb.h:                                             ; preds = %bb.g
   %i.br = add i64 %1, -1
   %i.bs = getelementptr inbounds nuw i8, ptr %5, i64 1
   %i.bt = tail call i64 @FSE_decompress_wksp_bmi2(ptr noundef %0, i64 noundef %i.br, ptr noundef nonnull %i.bs, i64 noundef %i.c, i32 noundef 6, ptr noundef %7, i64 noundef %8, i32 noundef 0) #10 ; 4 uses
-  %11 = icmp ult i64 %i.bt, -119
-  br i1 %11, label %.loopexit.i, label %HUF_readStats_body_default.exit
+  %10 = icmp ugt i64 %i.bt, -120
+  br i1 %10, label %HUF_readStats_body_default.exit, label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %bb.h
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(52) %2, i8 0, i64 52, i1 false)
@@ -877,11 +876,10 @@ bb.l:                                             ; preds = %bb.k
   store i32 %i.cx, ptr %i.cv, align 4, !tbaa !8
   %i.cy = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.cz = load i32, ptr %i.cy, align 4, !tbaa !8  ; 2 uses
-  %12 = icmp ugt i32 %i.cz, 1
-  %13 = and i32 %i.cz, 1
-  %.not94.i.i = icmp eq i32 %13, 0
-  %or.cond.i.i = and i1 %12, %.not94.i.i
-  br i1 %or.cond.i.i, label %bb.m, label %HUF_readStats_body_default.exit
+  %11 = icmp ult i32 %i.cz, 2
+  %.not94.i.i = trunc i32 %i.cz to i1
+  %or.cond.i.i = or i1 %11, %.not94.i.i
+  br i1 %or.cond.i.i, label %HUF_readStats_body_default.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.da = trunc nuw i64 %.074.i26.i to i32
@@ -1084,8 +1082,8 @@ bb.f:                                             ; preds = %bb.e
   %i.br = add i64 %1, -1
   %i.bs = getelementptr inbounds nuw i8, ptr %5, i64 1
   %i.bt = tail call i64 @FSE_decompress_wksp_bmi2(ptr noundef %0, i64 noundef %i.br, ptr noundef nonnull %i.bs, i64 noundef %i.b, i32 noundef 6, ptr noundef %7, i64 noundef %8, i32 noundef 1) #10 ; 4 uses
-  %9 = icmp ult i64 %i.bt, -119
-  br i1 %9, label %.loopexit, label %HUF_readStats_body.exit
+  %9 = icmp ugt i64 %i.bt, -120
+  br i1 %9, label %HUF_readStats_body.exit, label %.loopexit
 
 .loopexit:                                        ; preds = %bb.f
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(52) %2, i8 0, i64 52, i1 false)
@@ -1154,11 +1152,10 @@ bb.j:                                             ; preds = %bb.i
   store i32 %i.cx, ptr %i.cv, align 4, !tbaa !8
   %i.cy = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.cz = load i32, ptr %i.cy, align 4, !tbaa !8  ; 2 uses
-  %10 = icmp ugt i32 %i.cz, 1
-  %11 = and i32 %i.cz, 1
-  %.not94.i = icmp eq i32 %11, 0
-  %or.cond.i = and i1 %10, %.not94.i
-  br i1 %or.cond.i, label %bb.k, label %HUF_readStats_body.exit
+  %10 = icmp ult i32 %i.cz, 2
+  %.not94.i = trunc i32 %i.cz to i1
+  %or.cond.i = or i1 %10, %.not94.i
+  br i1 %or.cond.i, label %HUF_readStats_body.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.da = trunc nuw i64 %.074.i26 to i32

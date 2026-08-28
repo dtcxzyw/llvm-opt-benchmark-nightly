@@ -202,9 +202,8 @@ bb.f:                                             ; preds = %bb.g, %bb.d
   %i.ae = shl i64 %.sroa.05.0.i, %i.ad
   %i.af = add i64 %i.ae, %i.z
   store i64 %i.af, ptr %i.y, align 8, !alias.scope !151, !noalias !148
-  %2 = and i8 %i.o, 1
-  %3 = icmp eq i8 %2, 0
-  br i1 %3, label %bb.i, label %bb.h
+  %2 = trunc i8 %i.o to i1
+  br i1 %2, label %bb.h, label %bb.i
 
 bb.g:                                             ; preds = %bb.e
   %i.ag = extractvalue { i64, i64 } %i.v, 1
@@ -307,9 +306,9 @@ bb.q:                                             ; preds = %_RNvMsk_NtNtNtCseHT
   store i64 %.sroa.21.07, ptr %.sroa.21.0..sroa_idx, align 8
   br label %bb.s
 
-bb.r:                                             ; preds = %bb.c, %bb.k, %bb.h, %bb.e, %bb.n
-  %.sroa.16.0.ph = phi i64 [ 37, %bb.n ], [ 47, %bb.e ], [ 37, %bb.h ], [ 35, %bb.k ], [ 47, %bb.c ]
-  %.sroa.10.0.ph = phi ptr [ @25, %bb.n ], [ @28, %bb.e ], [ @27, %bb.h ], [ @26, %bb.k ], [ @28, %bb.c ]
+bb.r:                                             ; preds = %bb.c, %bb.e, %bb.k, %bb.h, %bb.n
+  %.sroa.16.0.ph = phi i64 [ 37, %bb.n ], [ 37, %bb.h ], [ 35, %bb.k ], [ 47, %bb.e ], [ 47, %bb.c ]
+  %.sroa.10.0.ph = phi ptr [ @25, %bb.n ], [ @27, %bb.h ], [ @26, %bb.k ], [ @28, %bb.e ], [ @28, %bb.c ]
   store i64 0, ptr %i.a, align 8
   br label %bb.q
 

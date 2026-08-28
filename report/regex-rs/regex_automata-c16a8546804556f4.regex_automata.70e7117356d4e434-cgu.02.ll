@@ -204,9 +204,9 @@ define internal fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs3roNz
 bb.a:
     #dbg_value(ptr %0, !7839, !DIExpression(), !7842)
   %i.a = load i64, ptr %0, align 8, !dbg !7843, !range !7844, !noundef !27
-  %1 = icmp eq i64 %i.a, 0, !dbg !7843
+  %1 = trunc nuw i64 %i.a to i1, !dbg !7843
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !7843 ; 6 uses
-  br i1 %1, label %bb.b, label %bb.e, !dbg !7843
+  br i1 %1, label %bb.e, label %bb.b, !dbg !7843
 
 bb.b:                                             ; preds = %bb.a
     #dbg_value(ptr %i.b, !7845, !DIExpression(), !7853)
@@ -609,9 +609,9 @@ bb.a:
 .lr.ph.i.preheader:                               ; preds = %bb.a
     #dbg_value(!DIArgList(ptr %i.e, i64 %i.g), !20532, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 3, DW_OP_shl, DW_OP_plus, DW_OP_stack_value), !20610)
     #dbg_value(!DIArgList(ptr %i.e, i64 %i.g), !20551, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_constu, 3, DW_OP_shl, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !20608)
-  %i.j = add i64 %i.g, 2305843009213693951, !dbg !20622 ; 2 uses
+  %i.j = add i64 %i.g, 2305843009213693951, !dbg !20622
   %i.k = and i64 %i.j, 2305843009213693951, !dbg !20622 ; 2 uses
-  %i.l = add nuw nsw i64 %i.k, 1, !dbg !20622     ; 2 uses
+  %i.l = add nuw nsw i64 %i.k, 1, !dbg !20622     ; 3 uses
   %i.m = icmp eq i64 %i.k, 0, !dbg !20622
   br i1 %i.m, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new, !dbg !20622
 
@@ -692,9 +692,8 @@ bb.a:
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i, !dbg !20622
 
 ._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %.lr.ph.i
-  %2 = and i64 %i.j, 1, !dbg !20622
-  %lcmp.mod.not.not = icmp eq i64 %2, 0, !dbg !20622
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.epil.preheader, label %._crit_edge.i, !dbg !20622
+  %lcmp.mod.not = trunc i64 %i.l to i1, !dbg !20622
+  br i1 %lcmp.mod.not, label %.lr.ph.i.epil.preheader, label %._crit_edge.i, !dbg !20622
 
 .lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.lr.ph.i.preheader
   %.sroa.0.02.i.epil.init = phi ptr [ %i.e, %.lr.ph.i.preheader ], [ %i.ac, %._crit_edge.i.loopexit.unr-lcssa ] ; 3 uses

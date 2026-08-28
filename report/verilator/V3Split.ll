@@ -202,10 +202,8 @@ bb.a:
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 8 dereferenceable(152) %1)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.f = load i8, ptr %i.e, align 8, !tbaa !43, !range !109, !noundef !110
-  %2 = icmp ne i8 %i.f, 0
-  %3 = and i1 %i.d, %2
-  %4 = zext i1 %3 to i8
-  store i8 %4, ptr %i.e, align 8, !tbaa !43
+  %2 = select i1 %i.d, i8 %i.f, i8 0
+  store i8 %2, ptr %i.e, align 8, !tbaa !43
   tail call void @_ZN7AstNode15iterateChildrenER9VNVisitor(ptr noundef nonnull align 8 dereferenceable(152) %1, ptr noundef nonnull align 8 dereferenceable(32) %0)
   ret void
 }

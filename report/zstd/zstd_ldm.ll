@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %bb.b
   %i.am = ptrtoint ptr %.val to i64               ; 3 uses
   %i.an = sub i64 %i.ak, %i.am
   %i.ao = trunc i64 %i.an to i32                  ; 2 uses
-  %6 = icmp ult i32 %i.ao, -624951295
-  br i1 %6, label %._crit_edge, label %bb.d
+  %6 = icmp ugt i32 %i.ao, -624951296
+  br i1 %6, label %bb.d, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.c
   %.pre99.a = load i32, ptr %i.m, align 8, !tbaa !27
@@ -213,7 +213,6 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.ap = load i32, ptr %i.o, align 4, !tbaa !13  ; 3 uses
-  %7 = shl nuw i32 1, %i.ap
   %i.aq = sub i64 %i.ag, %i.am
   %i.ar = trunc i64 %i.aq to i32
   %reass.sub.i = sub i32 %i.ar, %i.d              ; 3 uses
@@ -237,14 +236,14 @@ bb.d:                                             ; preds = %bb.c
   %i.bd = load i32, ptr %i.s, align 8, !tbaa !45
   %i.be = add i32 %i.bd, 1
   store i32 %i.be, ptr %i.s, align 8, !tbaa !45
-  %i.bf = load ptr, ptr %i.t, align 8, !tbaa !29  ; 3 uses
-  %wide.trip.count.i = zext i32 %7 to i64         ; 2 uses
-  %xtraiter = and i64 %wide.trip.count.i, 1
+  %i.bf = load ptr, ptr %i.t, align 8, !tbaa !29  ; 4 uses
   %i.bg = icmp eq i32 %i.ap, 0
   br i1 %i.bg, label %.lr.ph.i.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.d
-  %unroll_iter = and i64 %wide.trip.count.i, 4294967294
+  %7 = shl nuw i32 1, %i.ap
+  %8 = and i32 %7, -2
+  %unroll_iter = zext i32 %8 to i64
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.new
@@ -259,26 +258,20 @@ bb.d:                                             ; preds = %bb.c
   %i.bl = load i32, ptr %i.bk, align 4, !tbaa !46
   %storemerge.i61.1 = tail call i32 @llvm.usub.sat.i32(i32 %i.bl, i32 %i.as)
   store i32 %storemerge.i61.1, ptr %i.bk, align 4, !tbaa !46
-  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
+  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %ZSTD_ldm_reduceTable.exit.unr-lcssa, label %.lr.ph.i, !llvm.loop !48
+  br i1 %niter.ncmp.1, label %ZSTD_ldm_reduceTable.exit, label %.lr.ph.i, !llvm.loop !48
 
-ZSTD_ldm_reduceTable.exit.unr-lcssa:              ; preds = %.lr.ph.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %ZSTD_ldm_reduceTable.exit, label %.lr.ph.i.epil.preheader
-
-.lr.ph.i.epil.preheader:                          ; preds = %ZSTD_ldm_reduceTable.exit.unr-lcssa, %bb.d
-  %indvars.iv.i.epil.init = phi i64 [ 0, %bb.d ], [ %indvars.iv.next.i.1, %ZSTD_ldm_reduceTable.exit.unr-lcssa ]
+.lr.ph.i.epil.preheader:                          ; preds = %bb.d
   %lcmp.mod172 = icmp eq i32 %i.ap, 0
   tail call void @llvm.assume(i1 %lcmp.mod172)
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %indvars.iv.i.epil.init ; 2 uses
-  %i.bm = load i32, ptr %8, align 4, !tbaa !46
+  %i.bm = load i32, ptr %i.bf, align 4, !tbaa !46
   %storemerge.i61.epil = tail call i32 @llvm.usub.sat.i32(i32 %i.bm, i32 %i.as)
-  store i32 %storemerge.i61.epil, ptr %8, align 4, !tbaa !46
+  store i32 %storemerge.i61.epil, ptr %i.bf, align 4, !tbaa !46
   br label %ZSTD_ldm_reduceTable.exit
 
-ZSTD_ldm_reduceTable.exit:                        ; preds = %ZSTD_ldm_reduceTable.exit.unr-lcssa, %.lr.ph.i.epil.preheader
+ZSTD_ldm_reduceTable.exit:                        ; preds = %.lr.ph.i, %.lr.ph.i.epil.preheader
   store i32 0, ptr %i.m, align 8, !tbaa !49
   %.pre104.a = ptrtoint ptr %i.au to i64          ; 2 uses
   %.pre105 = sub i64 %i.ak, %.pre104.a
@@ -681,8 +674,8 @@ ZSTD_ldm_generateSequences_internal.exit:         ; preds = %ZSTD_ldm_generateSe
   %.pre-phi112 = phi i64 [ %.pre111, %ZSTD_ldm_generateSequences_internal.exit.loopexit ], [ %i.al, %ZSTD_ldm_gear_reset.exit.i ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
-  %9 = icmp ult i64 %.pre-phi112, -119
-  br i1 %9, label %ZSTD_ldm_generateSequences_internal.exit._crit_edge, label %.critedge
+  %9 = icmp ugt i64 %.pre-phi112, -120
+  br i1 %9, label %.critedge, label %ZSTD_ldm_generateSequences_internal.exit._crit_edge
 
 ZSTD_ldm_generateSequences_internal.exit._crit_edge: ; preds = %ZSTD_ldm_generateSequences_internal.exit
   %.pre103 = load i64, ptr %i.k, align 8, !tbaa !38

@@ -204,7 +204,6 @@ bytestream2_put_byte.exit89.i:                    ; preds = %bb.bc
   %i.jc = getelementptr inbounds nuw i8, ptr %i.jb, i64 1 ; 5 uses
   store ptr %i.jc, ptr %9, align 8, !tbaa !38
   %.pr177.i = load i32, ptr %i.dg, align 8, !tbaa !37
-  %.not25.i = icmp eq i8 %.0137, 0
   %.not.i86.i = icmp eq i32 %.pr177.i, 0
   br i1 %.not.i86.i, label %bb.bd, label %bb.bz
 
@@ -217,7 +216,7 @@ bb.bd:                                            ; preds = %bytestream2_put_byt
   br i1 %i.jh, label %bytestream2_put_byte.exit87.i, label %bb.bz
 
 bytestream2_put_byte.exit87.i:                    ; preds = %bb.bd
-  %10 = select i1 %.not25.i, i8 33, i8 34
+  %10 = add nuw nsw i8 %.0137, 33
   store i8 %10, ptr %i.jc, align 1, !tbaa !9
   %i.ji = load ptr, ptr %9, align 8, !tbaa !38
   %i.jj = getelementptr inbounds nuw i8, ptr %i.ji, i64 1 ; 5 uses

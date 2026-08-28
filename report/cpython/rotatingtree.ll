@@ -145,8 +145,7 @@ bb.k:                                             ; preds = %bb.j
   br label %randombits.exit53
 
 randombits.exit53:                                ; preds = %bb.j, %bb.k
-  %2 = and i32 %i.y, 1
-  %.not50 = icmp eq i32 %2, 0                     ; 2 uses
+  %.not50 = trunc i32 %i.y to i1                  ; 2 uses
   %i.ac = load ptr, ptr %.03863, align 8, !tbaa !13
   %i.ad = icmp ult ptr %1, %i.ac
   br i1 %i.ad, label %bb.l, label %bb.o
@@ -158,7 +157,7 @@ bb.l:                                             ; preds = %randombits.exit53
   br i1 %i.ag, label %.loopexit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  br i1 %.not50, label %bb.n, label %bb.r
+  br i1 %.not50, label %bb.r, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.ah = getelementptr i8, ptr %i.af, i64 16     ; 2 uses
@@ -174,7 +173,7 @@ bb.o:                                             ; preds = %randombits.exit53
   br i1 %i.al, label %.loopexit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  br i1 %.not50, label %bb.q, label %bb.r
+  br i1 %.not50, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.am = getelementptr i8, ptr %i.ak, i64 8      ; 2 uses

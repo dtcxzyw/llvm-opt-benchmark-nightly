@@ -204,9 +204,9 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2JiOgHzbbc7_10tokenizers14pre_to
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers19PreTokenizerWrapperEBF_.exit
 
 bb.i:                                             ; preds = %bb.b
-  %1 = icmp eq i64 %i.a, 0
+  %1 = trunc nuw i64 %i.a to i1
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
-  br i1 %1, label %bb.j, label %bb.m
+  br i1 %1, label %bb.m, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.m)
@@ -552,8 +552,8 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueTNtNtNtCsboAIIHEtPkY_10serde_core7privat
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtB4_6option6OptionhENtNtCs5PtHgSLqj5O_10serde_json5error5ErrorEECs2JiOgHzbbc7_10tokenizers(i8 %.0.val, ptr captures(address) %.8.val) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %0 = icmp eq i8 %.0.val, 0
-  br i1 %0, label %bb.b, label %bb.c
+  %0 = trunc nuw i8 %.0.val to i1
+  br i1 %0, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs5PtHgSLqj5O_10serde_json5error5ErrorECs2JiOgHzbbc7_10tokenizers.exit, %bb.a
   ret void
@@ -956,9 +956,9 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecNtNtNtCs
 define internal fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs2JiOgHzbbc7_10tokenizers11normalizers7replace7ReplaceEBH_(ptr noalias noundef nonnull align 8 dereferenceable(64) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !234, !alias.scope !235, !noundef !11
-  %1 = icmp eq i64 %i.a, 0
+  %1 = trunc nuw i64 %i.a to i1
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
-  br i1 %1, label %bb.b, label %bb.e
+  br i1 %1, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b)
@@ -1361,8 +1361,7 @@ bb.g:                                             ; preds = %bb.d
 
 .outer:                                           ; preds = %bb.ac, %bb.g
   %.sroa.412.0.i.ph = phi i32 [ %i.cs, %bb.ac ], [ undef, %bb.g ]
-  %.not72.i = phi i1 [ false, %bb.ac ], [ true, %bb.g ]
-  %.sroa.010.0.i.ph = phi i1 [ true, %bb.ac ], [ false, %bb.g ]
+  %.sroa.010.0.i.ph = phi i1 [ true, %bb.ac ], [ false, %bb.g ] ; 2 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %.outer, %bb.ai
@@ -1595,7 +1594,7 @@ bb.u:                                             ; preds = %bb.r
           to label %_RINvXs9_NtCs5PtHgSLqj5O_10serde_json2deINtB6_9MapAccessNtNtB8_4read7StrReadENtNtCsboAIIHEtPkY_10serde_core2de9MapAccess15next_value_seedNtNtNtNtCsctIyQp3ax5j_5serde7private2de7content14ContentVisitorECs2JiOgHzbbc7_10tokenizers.exit.i unwind label %.loopexit96.i, !noalias !1121
 
 bb.v:                                             ; preds = %_RINvYINtNtCs5PtHgSLqj5O_10serde_json2de9MapAccessNtNtB8_4read7StrReadENtNtCsboAIIHEtPkY_10serde_core2de9MapAccess8next_keyNtNvXNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer16added_vocabularys1_1__NtB23_16AddedTokenWithIdNtB18_11Deserialize11deserialize7___FieldEB27_.exit.thread90.i
-  br i1 %.not72.i, label %bb.x, label %bb.w, !prof !318
+  br i1 %.sroa.010.0.i.ph, label %bb.w, label %bb.x, !prof !293
 
 bb.w:                                             ; preds = %bb.v
   %i.ce = invoke noundef nonnull align 8 ptr @_RNvYNtNtCs5PtHgSLqj5O_10serde_json5error5ErrorNtNtCsboAIIHEtPkY_10serde_core2de5Error15duplicate_fieldCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull readonly captures(address, read_provenance) @61, i64 noundef 2)
@@ -1998,8 +1997,7 @@ bb.bo:                                            ; preds = %bb.f
 
 .outer:                                           ; preds = %bb.dm, %bb.bo
   %.sroa.437.0.i.ph = phi i32 [ %i.lz, %bb.dm ], [ undef, %bb.bo ]
-  %.not1689 = phi i1 [ false, %bb.dm ], [ true, %bb.bo ]
-  %.sroa.035.0.i.ph = phi i1 [ true, %bb.dm ], [ false, %bb.bo ]
+  %.sroa.035.0.i.ph = phi i1 [ true, %bb.dm ], [ false, %bb.bo ] ; 2 uses
   %.sroa.4.0.i.ph = phi i32 [ %.sroa.4.0.i.ph1698, %bb.dm ], [ undef, %bb.bo ]
   %.sroa.028.0.i.ph = phi i32 [ %.sroa.028.0.i.ph1699, %bb.dm ], [ 0, %bb.bo ]
   %.sroa.523.0.i.ph = phi i64 [ %.sroa.523.0.i.ph1709, %bb.dm ], [ undef, %bb.bo ]
@@ -2237,12 +2235,12 @@ bb.ce:                                            ; preds = %bb.bw
 
 bb.cf:                                            ; preds = %bb.bx
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !1923
-  %.not1690 = icmp eq i32 %.sroa.028.0.i.ph1699, 0
-  br i1 %.not1690, label %bb.db, label %.invoke.i, !prof !318
+  %6 = trunc nuw i32 %.sroa.028.0.i.ph1699 to i1
+  br i1 %6, label %.invoke.i, label %bb.db, !prof !293
 
 bb.cg:                                            ; preds = %bb.by
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !1923
-  br i1 %.not1689, label %bb.dh, label %.invoke.i, !prof !318
+  br i1 %.sroa.035.0.i.ph, label %.invoke.i, label %bb.dh, !prof !293
 
 bb.ch:                                            ; preds = %bb.bz
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !1923

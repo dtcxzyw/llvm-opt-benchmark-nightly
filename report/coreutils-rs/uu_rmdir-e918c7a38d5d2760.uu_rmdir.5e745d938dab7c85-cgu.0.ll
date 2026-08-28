@@ -204,10 +204,10 @@ bb.e:                                             ; preds = %bb.d
   store i8 %i.o, ptr %i.q, align 8, !noalias !155
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !155
   call void @_RNvXsz_NtCs2vKOLqTMYjT_3std2fsNtB5_7ReadDirNtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4next(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.c, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.d) #19, !noalias !155
-  %i.r = load i64, ptr %i.c, align 8, !range !146, !noalias !155, !noundef !4 ; 2 uses
+  %i.r = load i64, ptr %i.c, align 8, !range !146, !noalias !155, !noundef !4
+  %3 = trunc nuw i64 %i.r to i1                   ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !158)
-  %3 = icmp eq i64 %i.r, 0
-  br i1 %3, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtCs2vKOLqTMYjT_3std2fs8DirEntryNtNtNtB4_2io5error5ErrorEEECs86MjTkXjVIv_8uu_rmdir.exit.i.i.i, label %bb.f
+  br i1 %3, label %bb.f, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtCs2vKOLqTMYjT_3std2fs8DirEntryNtNtNtB4_2io5error5ErrorEEECs86MjTkXjVIv_8uu_rmdir.exit.i.i.i
 
 bb.f:                                             ; preds = %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
@@ -292,7 +292,6 @@ bb.l:                                             ; preds = %_RINvNtCs6JMX4GRUq9
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtCs2vKOLqTMYjT_3std2fs8DirEntryNtNtNtB4_2io5error5ErrorEEECs86MjTkXjVIv_8uu_rmdir.exit.i.i.i
-  %4 = icmp ne i64 %i.r, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !155
   br label %_RNCNvCs86MjTkXjVIv_8uu_rmdir13dir_not_empty0B3_.exit
 
@@ -332,7 +331,7 @@ _RNvXsF_NtNtCs6JMX4GRUq9U_4core5slice3cmplNtB5_13SliceContains14slice_contains.e
   br label %_RNCNvCs86MjTkXjVIv_8uu_rmdir13dir_not_empty0B3_.exit
 
 _RNCNvCs86MjTkXjVIv_8uu_rmdir13dir_not_empty0B3_.exit: ; preds = %bb.a, %bb.a, %bb.b, %_RNvXsF_NtNtCs6JMX4GRUq9U_4core5slice3cmplNtB5_13SliceContains14slice_contains.exit4.fold.split.i, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs2vKOLqTMYjT_3std2fs7ReadDirNtNtNtB4_2io5error5ErrorEECs86MjTkXjVIv_8uu_rmdir.exit.i.i, %bb.m, %bb.c, %bb.c
-  %.sroa.0.0 = phi i1 [ false, %_RNvXsF_NtNtCs6JMX4GRUq9U_4core5slice3cmplNtB5_13SliceContains14slice_contains.exit4.fold.split.i ], [ %4, %bb.m ], [ true, %bb.c ], [ false, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs2vKOLqTMYjT_3std2fs7ReadDirNtNtNtB4_2io5error5ErrorEECs86MjTkXjVIv_8uu_rmdir.exit.i.i ], [ true, %bb.c ], [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.a ]
+  %.sroa.0.0 = phi i1 [ false, %_RNvXsF_NtNtCs6JMX4GRUq9U_4core5slice3cmplNtB5_13SliceContains14slice_contains.exit4.fold.split.i ], [ %3, %bb.m ], [ true, %bb.c ], [ false, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs2vKOLqTMYjT_3std2fs7ReadDirNtNtNtB4_2io5error5ErrorEECs86MjTkXjVIv_8uu_rmdir.exit.i.i ], [ true, %bb.c ], [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.a ]
   ret i1 %.sroa.0.0
 }
 

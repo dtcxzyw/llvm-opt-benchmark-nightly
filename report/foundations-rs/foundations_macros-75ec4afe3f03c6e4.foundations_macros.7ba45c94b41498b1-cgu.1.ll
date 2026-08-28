@@ -202,10 +202,9 @@ bb.q:                                             ; preds = %bb.p
   %i.ci = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.ch, ptr %i.ci, align 8, !noalias !31
   %i.cj = ptrtoint ptr %i.ch to i64               ; 2 uses
-  %2 = and i64 %i.cj, 1
-  %.not.i.i.i = icmp eq i64 %2, 0
+  %2 = trunc i64 %i.cj to i1
   %i.ck = lshr i64 %i.cj, 1
-  %.sroa.0.0.i.i.i = select i1 %.not.i.i.i, ptr null, ptr %i.cg
+  %.sroa.0.0.i.i.i = select i1 %2, ptr %i.cg, ptr null
   invoke void @_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs1xwejQucwHj_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECse4VeaA6Ikg_11proc_macro2(ptr nonnull sret([24 x i8]) align 8 %i.ad, ptr %.sroa.0.0.i.i.i, i64 %i.ck, ptr nonnull align 8 %i.a) #26
           to label %bb.s unwind label %bb.o, !noalias !31
 
@@ -608,10 +607,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %2, ptr %i.b, align 8
   %i.c = ptrtoint ptr %2 to i64                   ; 2 uses
-  %3 = and i64 %i.c, 1
-  %.not = icmp eq i64 %3, 0
+  %3 = trunc i64 %i.c to i1
   %i.d = lshr i64 %i.c, 1
-  %.sroa.0.0 = select i1 %.not, ptr null, ptr %1
+  %.sroa.0.0 = select i1 %3, ptr %1, ptr null
   call void @_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs1xwejQucwHj_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECse4VeaA6Ikg_11proc_macro2(ptr sret([24 x i8]) align 8 %0, ptr %.sroa.0.0, i64 %i.d, ptr nonnull align 8 %i.a) #26
   ret void
 }

@@ -135,14 +135,13 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.x, label %.lr.ph49.preheader, label %._crit_edge50
 
 .lr.ph49.preheader:                               ; preds = %bb.f
-  %i.y = lshr i32 %i.w, 1                         ; 3 uses
-  %wide.trip.count65 = zext nneg i32 %i.y to i64  ; 2 uses
-  %xtraiter = and i64 %wide.trip.count65, 1
+  %i.y = lshr i32 %i.w, 1                         ; 4 uses
   %i.z = icmp eq i32 %i.y, 1
   br i1 %i.z, label %.lr.ph49.epil.preheader, label %.lr.ph49.preheader.new
 
 .lr.ph49.preheader.new:                           ; preds = %.lr.ph49.preheader
-  %unroll_iter = and i64 %wide.trip.count65, 1073741822
+  %4 = and i32 %i.y, 1073741822
+  %unroll_iter = zext nneg i32 %4 to i64
   br label %.lr.ph49
 
 .lr.ph49:                                         ; preds = %.lr.ph49, %.lr.ph49.preheader.new
@@ -175,8 +174,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %niter.ncmp.1, label %._crit_edge50.loopexit.unr-lcssa, label %.lr.ph49, !llvm.loop !12
 
 ._crit_edge50.loopexit.unr-lcssa:                 ; preds = %.lr.ph49
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge50, label %.lr.ph49.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.y to i1
+  br i1 %lcmp.mod.not, label %.lr.ph49.epil.preheader, label %._crit_edge50
 
 .lr.ph49.epil.preheader:                          ; preds = %._crit_edge50.loopexit.unr-lcssa, %.lr.ph49.preheader
   %indvars.iv62.epil.init = phi i64 [ 0, %.lr.ph49.preheader ], [ %indvars.iv.next63.1, %._crit_edge50.loopexit.unr-lcssa ] ; 2 uses

@@ -202,9 +202,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   %i.d = load i64, ptr %i.c, align 8, !alias.scope !33, !noundef !4 ; 2 uses
-  %1 = and i64 %i.d, 1
-  %.not.i.i = icmp eq i64 %1, 0
-  br i1 %.not.i.i, label %.noexc.i, label %bb.b
+  %1 = trunc i64 %i.d to i1
+  br i1 %1, label %bb.b, label %.noexc.i
 
 .noexc.i:                                         ; preds = %bb.b, %bb.a
   %i.e = and i64 %i.d, 8
@@ -225,8 +224,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
           cleanup                                 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.i = load i64, ptr %i.h, align 8, !range !38, !alias.scope !39, !noundef !4
-  %2 = icmp eq i64 %i.i, 0
-  br i1 %2, label %.body, label %bb.e
+  %2 = trunc nuw i64 %i.i to i1
+  br i1 %2, label %bb.e, label %.body
 
 bb.e:                                             ; preds = %bb.d
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 64
@@ -236,8 +235,8 @@ bb.e:                                             ; preds = %bb.d
 _RNvXs7_NtNtCs7iWyoMw7IzY_5tokio4sync7oneshotINtB5_5InnerINtNtCsj6eKBz9Db1c_4core6result6ResultNtNtCsaFXMpQk5M54_5hyper7upgrade8UpgradedNtNtB1y_5error5ErrorEENtNtNtBX_3ops4drop4Drop4dropB1y_.exit.i: ; preds = %bb.c, %.noexc.i
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.l = load i64, ptr %i.k, align 8, !range !38, !alias.scope !46, !noundef !4
-  %3 = icmp eq i64 %i.l, 0
-  br i1 %3, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7iWyoMw7IzY_5tokio4sync7oneshot5InnerINtNtB4_6result6ResultNtNtCsaFXMpQk5M54_5hyper7upgrade8UpgradedNtNtB1L_5error5ErrorEEEB1L_.exit, label %bb.f
+  %3 = trunc nuw i64 %i.l to i1
+  br i1 %3, label %bb.f, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs7iWyoMw7IzY_5tokio4sync7oneshot5InnerINtNtB4_6result6ResultNtNtCsaFXMpQk5M54_5hyper7upgrade8UpgradedNtNtB1L_5error5ErrorEEEB1L_.exit
 
 bb.f:                                             ; preds = %_RNvXs7_NtNtCs7iWyoMw7IzY_5tokio4sync7oneshotINtB5_5InnerINtNtCsj6eKBz9Db1c_4core6result6ResultNtNtCsaFXMpQk5M54_5hyper7upgrade8UpgradedNtNtB1y_5error5ErrorEENtNtNtBX_3ops4drop4Drop4dropB1y_.exit.i
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 64
@@ -635,9 +634,8 @@ bb.p:                                             ; preds = %bb.n
   br i1 %i.am, label %bb.ab, label %_RNvMs4_NtNtCs7iWyoMw7IzY_5tokio4sync7oneshotINtB5_5InnerINtNtCsj6eKBz9Db1c_4core6result6ResultNtNtCsaFXMpQk5M54_5hyper7upgrade8UpgradedNtNtB1y_5error5ErrorEE9poll_recvB1y_.exit.thread5.i
 
 bb.q:                                             ; preds = %bb.o
-  %3 = and i64 %i.ah, 1
-  %.not49.i.i = icmp eq i64 %3, 0
-  br i1 %.not49.i.i, label %.thread.i.i, label %bb.s
+  %3 = trunc i64 %i.ah to i1
+  br i1 %3, label %bb.s, label %.thread.i.i
 
 bb.r:                                             ; preds = %bb.o
   store i8 0, ptr %i.b, align 1, !noalias !77
@@ -730,8 +728,7 @@ bb.ad:                                            ; preds = %_RNvXNtNtCsaFXMpQk5
   unreachable
 
 _RNvMs4_NtNtCs7iWyoMw7IzY_5tokio4sync7oneshotINtB5_5InnerINtNtCsj6eKBz9Db1c_4core6result6ResultNtNtCsaFXMpQk5M54_5hyper7upgrade8UpgradedNtNtB1y_5error5ErrorEE9poll_recvB1y_.exit.thread5.i: ; preds = %bb.ab, %bb.aa, %bb.z, %bb.x, %bb.w, %bb.r, %bb.p
-  %4 = phi i1 [ false, %bb.w ], [ true, %bb.x ], [ false, %bb.p ], [ true, %bb.ab ], [ true, %bb.aa ], [ false, %bb.r ], [ false, %bb.z ]
-  %.sroa.0.17.i = phi i64 [ 1, %bb.w ], [ 0, %bb.x ], [ 1, %bb.p ], [ 0, %bb.ab ], [ 0, %bb.aa ], [ 1, %bb.r ], [ 1, %bb.z ] ; 2 uses
+  %.sroa.0.17.i = phi i64 [ 1, %bb.w ], [ 0, %bb.x ], [ 1, %bb.p ], [ 0, %bb.ab ], [ 0, %bb.aa ], [ 1, %bb.r ], [ 1, %bb.z ] ; 3 uses
   invoke void @_RNvXs4_NtNtCs7iWyoMw7IzY_5tokio4task4coopNtB5_16RestoreOnPendingNtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull dereferenceable(2) %i.b)
           to label %.noexc18 unwind label %bb.aj
 
@@ -753,7 +750,8 @@ bb.af:                                            ; preds = %bb.ae
   %i.bk = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   store ptr null, ptr %i.v, align 8, !alias.scope !66, !noalias !73
-  br i1 %4, label %bb.ag, label %.body
+  %4 = trunc nuw i64 %.sroa.0.17.i to i1
+  br i1 %4, label %.body, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsaFXMpQk5M54_5hyper7upgrade8UpgradedNtNtB11_5error5ErrorEEB11_(ptr noalias nofree noundef readonly align 8 dereferenceable(48) %.sroa.2.0..sroa_idx.i)

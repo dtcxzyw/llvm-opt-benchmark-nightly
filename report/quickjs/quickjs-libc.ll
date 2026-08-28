@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.d, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #34
   %i.ae = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #36 ; 2 uses
   %.not.i75 = icmp ult i64 %i.ae, 5
-  br i1 %.not.i75, label %js__has_suffix.exit.thread, label %js__has_suffix.exit.a
+  br i1 %.not.i75, label %bb.l, label %js__has_suffix.exit.a
 
 js__has_suffix.exit.a:                            ; preds = %bb.k
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 %i.ae
@@ -219,15 +219,12 @@ js__has_suffix.exit.a:                            ; preds = %bb.k
   %i.an = or i32 %i.ai, %i.am
   %i.ao = icmp ne i32 %i.an, 0
   %i.ap = zext i1 %i.ao to i32
-  %bcmp.i76.fr = freeze i32 %i.ap
-  %.not9.i.not = icmp eq i32 %bcmp.i76.fr, 0
-  br i1 %.not9.i.not, label %bb.l, label %js__has_suffix.exit.thread
-
-js__has_suffix.exit.thread:                       ; preds = %bb.k, %js__has_suffix.exit.a
+  %.not9.i = icmp eq i32 %i.ap, 0
+  %6 = zext i1 %.not9.i to i32
   br label %bb.l
 
-bb.l:                                             ; preds = %js__has_suffix.exit.thread, %js__has_suffix.exit.a, %bb.j
-  %.069 = phi i32 [ %.026.i.ph, %bb.j ], [ 0, %js__has_suffix.exit.thread ], [ 1, %js__has_suffix.exit.a ] ; 2 uses
+bb.l:                                             ; preds = %js__has_suffix.exit.a, %bb.k, %bb.j
+  %.069 = phi i32 [ %.026.i.ph, %bb.j ], [ 0, %bb.k ], [ %6, %js__has_suffix.exit.a ] ; 2 uses
   %i.aq = call ptr %5(ptr noundef %0, ptr noundef nonnull %i.b, ptr noundef %1) #34 ; 9 uses
   %.not73 = icmp eq ptr %i.aq, null
   br i1 %.not73, label %bb.m, label %bb.n
@@ -573,9 +570,8 @@ bb.e:                                             ; preds = %.lr.ph
   br label %bb.bc
 
 .thread:                                          ; preds = %bb.d, %bb.c, %bb.b, %bb.a
-  %6 = and i32 %2, 1
-  %.not137 = icmp eq i32 %6, 0
-  br i1 %.not137, label %bb.k, label %bb.f
+  %.not137 = trunc i32 %2 to i1
+  br i1 %.not137, label %bb.f, label %bb.k
 
 bb.f:                                             ; preds = %.thread
   %i.x = call fastcc i32 @js_os_run_timers(ptr noundef %i.c, ptr noundef %0, ptr noundef %i.e, ptr noundef %i.b)
@@ -978,9 +974,8 @@ bb.f:                                             ; preds = %.lr.ph
   %i.x = extractvalue { i64, i64 } %i.v, 1        ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.02936, i64 24
   %i.z = load i8, ptr %i.y, align 8
-  %5 = and i8 %i.z, 1
-  %.not32 = icmp eq i8 %5, 0
-  br i1 %.not32, label %bb.h, label %bb.g
+  %.not32 = trunc i8 %i.z to i1
+  br i1 %.not32, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.aa = getelementptr inbounds nuw i8, ptr %.02936, i64 32

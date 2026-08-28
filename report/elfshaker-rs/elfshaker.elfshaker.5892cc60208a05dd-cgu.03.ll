@@ -204,13 +204,12 @@ bb.oy:                                            ; preds = %bb.ox
 
 bb.oz:                                            ; preds = %bb.oy
   %i.afy = getelementptr inbounds nuw i8, ptr %i.be, i64 8
-  %i.afz = load i8, ptr %i.afy, align 4, !range !8, !alias.scope !813, !noalias !794, !noundef !9 ; 2 uses
-  %i.aga = trunc nuw i8 %i.afz to i1
+  %i.afz = load i8, ptr %i.afy, align 4, !range !8, !alias.scope !813, !noalias !794, !noundef !9
+  %i.aga = trunc nuw i8 %i.afz to i1              ; 2 uses
   %.sroa.3.0.idx.i.i.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx = select i1 %i.aga, i64 0, i64 4
   %.sroa.3.0.idx.i.i.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %i.be, i64 %.sroa.3.0.idx.i.i.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx
-  %0 = icmp eq i8 %i.afz, 0
   %i.agb = load i32, ptr %.sroa.3.0.idx.i.i.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.i.sroa.sel.idx.sroa.sel.idx.sroa.sel, align 4, !alias.scope !816, !noalias !794, !noundef !9 ; 2 uses
-  br i1 %0, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivelEINtB6_11RangeBoundslE8containslECs7BtpbLEd5q3_9elfshaker.exit.i.i, label %.split.i.i
+  br i1 %i.aga, label %.split.i.i, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivelEINtB6_11RangeBoundslE8containslECs7BtpbLEd5q3_9elfshaker.exit.i.i
 
 .split.i.i:                                       ; preds = %bb.oz
   %i.agc = icmp sgt i32 %i.agb, %.sroa.6198.0.extract.trunc.i.i

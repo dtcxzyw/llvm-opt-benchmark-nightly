@@ -202,8 +202,8 @@ define internal fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_4ce
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26)
   %i.a = load i64, ptr %0, align 8, !range !29, !alias.scope !26, !noundef !5
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultuINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEEECs7BtpbLEd5q3_9elfshaker.exit, label %bb.b
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultuINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEEECs7BtpbLEd5q3_9elfshaker.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -606,8 +606,8 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !49)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !52)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
-  %i.d = load i64, ptr %i.c, align 8, !range !29, !alias.scope !55, !noundef !5 ; 2 uses
-  %i.e = trunc nuw i64 %i.d to i1
+  %i.d = load i64, ptr %i.c, align 8, !range !29, !alias.scope !55, !noundef !5
+  %i.e = trunc nuw i64 %i.d to i1                 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !alias.scope !55 ; 5 uses
   %i.h = icmp ne ptr %i.g, null
@@ -615,8 +615,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !56)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !59)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !62)
-  %1 = icmp eq i64 %i.d, 0
-  br i1 %1, label %.thread.i.i, label %bb.b
+  br i1 %i.e, label %bb.b, label %.thread.i.i
 
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -767,8 +766,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs1xwejQucwHj
   tail call void @llvm.experimental.noalias.scope.decl(metadata !83)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !86)
   %i.ao = load i64, ptr %i.c, align 8, !range !29, !alias.scope !89, !noundef !5
-  %2 = icmp eq i64 %i.ao, 0
-  br i1 %2, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsaL1QbXo9JQH_3std6thread9lifecycle6PacketuEECs7BtpbLEd5q3_9elfshaker.exit, label %bb.x
+  %1 = trunc nuw i64 %i.ao to i1
+  br i1 %1, label %bb.x, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCsaL1QbXo9JQH_3std6thread9lifecycle6PacketuEECs7BtpbLEd5q3_9elfshaker.exit
 
 bb.x:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsaL1QbXo9JQH_3std6thread6scoped9ScopeDataEEECs7BtpbLEd5q3_9elfshaker.exit4.i
   %.val.i.i.i = load ptr, ptr %i.f, align 8, !alias.scope !89, !noundef !5 ; 4 uses
@@ -1171,8 +1170,8 @@ __rust_try.exit.i:                                ; preds = %bb.f, %_RNvXsl_NtNt
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 24 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !387)
   %i.u = load i64, ptr %i.t, align 8, !range !29, !alias.scope !387, !noalias !379, !noundef !5
-  %1 = icmp eq i64 %i.u, 0
-  br i1 %1, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultuINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEEECs7BtpbLEd5q3_9elfshaker.exit.i, label %bb.g
+  %1 = trunc nuw i64 %i.u to i1
+  br i1 %1, label %bb.g, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultuINtNtCs1xwejQucwHj_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEEECs7BtpbLEd5q3_9elfshaker.exit.i
 
 bb.g:                                             ; preds = %__rust_try.exit.i
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 32 ; 2 uses

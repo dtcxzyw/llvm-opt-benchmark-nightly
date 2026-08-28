@@ -86,9 +86,8 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecIBu_NtNtCsC8CapfvpQ1_5salsa5zalsa15Ing
   %.in.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.y = load ptr, ptr %.in.i, align 8, !alias.scope !14, !nonnull !3, !noundef !3 ; 3 uses
   %.neg = add nuw nsw i64 %i.b, 1
-  %xtraiter = and i64 %i.s, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  %lcmp.mod.not = trunc i64 %i.s to i1
+  br i1 %lcmp.mod.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecIBu_NtNtCsC8CapfvpQ1_5salsa5zalsa15IngredientIndexEE7reserveBL_.exit.i
   %.sroa.0.0.i.i.i.i.prol = add nsw i64 %i.s, -1
@@ -491,8 +490,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !184)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !187)
-  %1 = icmp eq i64 %i.c, 0
-  br i1 %1, label %_RINvNtNtCs2AWtUsOyxgP_3std3sys12thread_local20abort_on_dtor_unwindNCINvNtNtB2_6native5eager7destroyNtNtCsjvLTWb8VeNU_12tracing_core10dispatcher5StateE0ECsC8CapfvpQ1_5salsa.exit, label %bb.c
+  %1 = trunc nuw i64 %i.c to i1
+  br i1 %1, label %bb.c, label %_RINvNtNtCs2AWtUsOyxgP_3std3sys12thread_local20abort_on_dtor_unwindNCINvNtNtB2_6native5eager7destroyNtNtCsjvLTWb8VeNU_12tracing_core10dispatcher5StateE0ECsC8CapfvpQ1_5salsa.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses

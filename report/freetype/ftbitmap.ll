@@ -205,9 +205,8 @@ bb.r:                                             ; preds = %bb.q
 .lr.ph.split.preheader.i:                         ; preds = %.lr.ph.i
   %i.ce = xor i64 %i.cb, -1
   %i.cf = add nsw i64 %i.ce, %i.bw                ; 3 uses
-  %xtraiter = and i32 %i.bn, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.split.i.prol.loopexit, label %.lr.ph.split.i.prol
+  %lcmp.mod.not = trunc i32 %i.bn to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.split.i.prol, label %.lr.ph.split.i.prol.loopexit
 
 .lr.ph.split.i.prol:                              ; preds = %.lr.ph.split.preheader.i
   %i.cg = load i8, ptr %i.cc, align 1, !tbaa !25
@@ -610,9 +609,8 @@ bb.z:                                             ; preds = %bb.p, %bb.p, %bb.p
 
 .lr.ph291:                                        ; preds = %bb.z
   %i.cy = zext i32 %i.cv to i64                   ; 3 uses
-  %xtraiter400 = and i32 %i.cx, 1
-  %lcmp.mod401.not = icmp eq i32 %xtraiter400, 0
-  br i1 %lcmp.mod401.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  %lcmp.mod401.not = trunc i32 %i.cx to i1
+  br i1 %lcmp.mod401.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph291
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.0202, ptr align 1 %.0191, i64 %i.cy, i1 false)
@@ -669,15 +667,14 @@ bb.ab:                                            ; preds = %.lr.ph285, %.loopex
   %.0188283 = phi i32 [ %i.dv, %.lr.ph285 ], [ %i.gc, %.loopexit240 ]
   %.3282 = phi ptr [ %.0191, %.lr.ph285 ], [ %i.fy, %.loopexit240 ] ; 5 uses
   %.3205281 = phi ptr [ %.0202, %.lr.ph285 ], [ %i.gb, %.loopexit240 ] ; 8 uses
-  %i.dx = load i32, ptr %i.dw, align 4, !tbaa !33 ; 3 uses
-  %i.dy = lshr i32 %i.dx, 2                       ; 4 uses
+  %i.dx = load i32, ptr %i.dw, align 4, !tbaa !33 ; 2 uses
+  %i.dy = lshr i32 %i.dx, 2                       ; 5 uses
   %.not226268 = icmp eq i32 %i.dy, 0
   br i1 %.not226268, label %._crit_edge274, label %.lr.ph273.preheader
 
 .lr.ph273.preheader:                              ; preds = %bb.ab
-  %4 = and i32 %i.dx, 4
-  %lcmp.mod398.not = icmp eq i32 %4, 0
-  br i1 %lcmp.mod398.not, label %.lr.ph273.prol.loopexit, label %.lr.ph273.prol
+  %lcmp.mod398.not = trunc i32 %i.dy to i1
+  br i1 %lcmp.mod398.not, label %.lr.ph273.prol, label %.lr.ph273.prol.loopexit
 
 .lr.ph273.prol:                                   ; preds = %.lr.ph273.preheader
   %i.dz = load i8, ptr %.3282, align 1, !tbaa !25 ; 4 uses
@@ -992,9 +989,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.is = phi i32 [ %i.gg, %bb.ag ], [ %.pre322, %._crit_edge260.loopexit ]
   %.0180.lcssa = phi ptr [ %.4264, %bb.ag ], [ %.lcssa366, %._crit_edge260.loopexit ]
   %.0179.lcssa = phi ptr [ %.4206263, %bb.ag ], [ %.lcssa365, %._crit_edge260.loopexit ]
-  %5 = and i32 %i.is, 1
-  %.not224 = icmp eq i32 %5, 0
-  br i1 %.not224, label %bb.ai, label %bb.ah
+  %.not224 = trunc i32 %i.is to i1
+  br i1 %.not224, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %._crit_edge260
   %i.it = load i8, ptr %.0180.lcssa, align 1, !tbaa !25
@@ -1397,9 +1393,8 @@ bb.c:                                             ; preds = %bb.b
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !100
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.g = load i32, ptr %i.f, align 8, !tbaa !101
-  %2 = and i32 %i.g, 1
-  %.not12 = icmp eq i32 %2, 0
-  br i1 %.not12, label %bb.d, label %bb.e
+  %.not12 = trunc i32 %i.g to i1
+  br i1 %.not12, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #7

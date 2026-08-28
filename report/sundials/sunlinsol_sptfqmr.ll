@@ -202,7 +202,7 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai, %bb.
 
 bb.al:                                            ; preds = %.lr.ph, %bb.dd
   %.0435624 = phi i32 [ 0, %.lr.ph ], [ %i.go, %bb.dd ] ; 2 uses
-  %.0436623 = phi i32 [ 0, %.lr.ph ], [ %.3, %bb.dd ]
+  %.0436623 = phi i1 [ false, %.lr.ph ], [ %.3, %bb.dd ]
   %.0440622 = phi double [ -1.000000e+00, %.lr.ph ], [ %.2442, %bb.dd ]
   %.sroa.0.0621 = phi double [ %i.bd, %.lr.ph ], [ %i.fs, %bb.dd ] ; 2 uses
   %.0450620 = phi double [ 0.000000e+00, %.lr.ph ], [ %i.ee, %bb.dd ]
@@ -305,7 +305,7 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
 bb.ba:                                            ; preds = %bb.az, %bb.cn
   %i.dl = phi i1 [ true, %bb.az ], [ false, %bb.cn ] ; 2 uses
   %.0617 = phi i32 [ 0, %bb.az ], [ 1, %bb.cn ]   ; 2 uses
-  %.1616 = phi i32 [ %.0436623, %bb.az ], [ %.3, %bb.cn ] ; 2 uses
+  %.1616 = phi i1 [ %.0436623, %bb.az ], [ %.3, %bb.cn ] ; 2 uses
   %.1441615 = phi double [ %.0440622, %bb.az ], [ %.2442, %bb.cn ] ; 2 uses
   %.1451614 = phi double [ %.0450620, %bb.az ], [ %i.ee, %bb.cn ] ; 2 uses
   %.1454613 = phi double [ %.0453619, %bb.az ], [ %i.ek, %bb.cn ]
@@ -478,8 +478,7 @@ bb.cc:                                            ; preds = %bb.ca
   br label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cc, %bb.cb
-  %.not518 = icmp eq i32 %.1616, 0
-  br i1 %.not518, label %bb.ce, label %bb.ck
+  br i1 %.1616, label %bb.ck, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd
   switch i32 %i.ao, label %bb.ch [
@@ -530,7 +529,7 @@ bb.cm:                                            ; preds = %bb.ck, %bb.cl
 
 bb.cn:                                            ; preds = %bb.bm, %bb.cm
   %.2446 = phi double [ %i.fp, %bb.cm ], [ %i.ep, %bb.bm ]
-  %.3 = phi i32 [ 1, %bb.cm ], [ %.1616, %bb.bm ] ; 2 uses
+  %.3 = phi i1 [ true, %bb.cm ], [ %.1616, %bb.bm ] ; 2 uses
   br i1 %i.dl, label %bb.ba, label %bb.co
 
 bb.co:                                            ; preds = %bb.cn

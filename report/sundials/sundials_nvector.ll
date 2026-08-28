@@ -203,11 +203,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.p, label %.preheader65.us.preheader, label %.preheader65
 
 .preheader65.us.preheader:                        ; preds = %.preheader65.lr.ph
-  %wide.trip.count80 = zext nneg i32 %1 to i64    ; 2 uses
-  %xtraiter = and i64 %wide.trip.count80, 1
   %6 = icmp eq i32 %1, 1
-  %unroll_iter = and i64 %wide.trip.count80, 2147483646
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %7 = and i32 %1, 2147483646
+  %unroll_iter = zext nneg i32 %7 to i64
+  %lcmp.mod.not = trunc i32 %1 to i1
   %lcmp.mod110 = trunc i32 %1 to i1
   br label %.preheader65.us
 
@@ -254,7 +253,7 @@ bb.e:                                             ; preds = %._crit_edge.us
   br i1 %exitcond86.not, label %._crit_edge68, label %.preheader65.us
 
 ._crit_edge.us.unr-lcssa:                         ; preds = %.preheader65.us.new
-  br i1 %lcmp.mod.not, label %._crit_edge.us, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge.us
 
 .epil.preheader:                                  ; preds = %._crit_edge.us.unr-lcssa, %.preheader65.us
   %indvars.iv77.epil.init = phi i64 [ 0, %.preheader65.us ], [ %indvars.iv.next78.1, %._crit_edge.us.unr-lcssa ] ; 4 uses
