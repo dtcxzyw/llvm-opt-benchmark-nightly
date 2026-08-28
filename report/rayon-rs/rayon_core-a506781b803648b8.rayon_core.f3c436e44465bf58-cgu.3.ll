@@ -202,8 +202,8 @@ _RNvMs8_NtCskVyUMSjkkSy_10rayon_core5latchNtB5_10CountLatch10with_count.exit: ; 
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0.i, ptr %i.h, align 8, !alias.scope !294
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 0, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !294
   %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store i64 0, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !294
   store i64 %.sroa.7.0.i, ptr %.sroa.7.0..sroa_idx.i, align 8, !alias.scope !294
   ret void
 }

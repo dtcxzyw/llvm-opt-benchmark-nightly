@@ -204,6 +204,10 @@ bb.a:
   %.not3.i.i = icmp eq ptr %.sroa.011.0.copyload.i, %.sroa.05.0.copyload.i
   br i1 %.not3.i.i, label %"_ZNK7cmRangeIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EEE4sizeEv.exit.thread", label %.lr.ph.i.i
 
+"_ZNK7cmRangeIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EEE4sizeEv.exit.thread": ; preds = %bb.a
+  %.not12 = icmp eq ptr %.8.val, %.0.val
+  br label %"_ZSt5equalIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EES9_EbT_SE_T0_.exit"
+
 .lr.ph.i.i:                                       ; preds = %bb.a, %"_ZN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EppEv.exit.i.i"
   %.05.i.i = phi i64 [ %i.g, %"_ZN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EppEv.exit.i.i" ], [ 0, %bb.a ]
   %.0.allc.04.i.i = phi ptr [ %.0.allc.2.i.i, %"_ZN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EppEv.exit.i.i" ], [ %.sroa.011.0.copyload.i, %bb.a ]
@@ -237,10 +241,6 @@ bb.b:                                             ; preds = %.lr.ph.i.i.i.i
   %i.l = icmp eq i64 %i.g, %i.k
   br i1 %i.l, label %.lr.ph.i.i.i.i7, label %"_ZSt5equalIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EES9_EbT_SE_T0_.exit"
 
-"_ZNK7cmRangeIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EEE4sizeEv.exit.thread": ; preds = %bb.a
-  %1 = icmp eq ptr %.8.val, %.0.val
-  br label %"_ZSt5equalIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EES9_EbT_SE_T0_.exit"
-
 .lr.ph.i.i.i.i7:                                  ; preds = %"_ZNK7cmRangeIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EEE4sizeEv.exit", %"_ZN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EppEv.exit.i.i.i.i"
   %.05.i.i.i.i = phi ptr [ %i.u, %"_ZN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EppEv.exit.i.i.i.i" ], [ %.0.val, %"_ZNK7cmRangeIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EEE4sizeEv.exit" ] ; 2 uses
   %.0.allc.04.i.i.i.i = phi ptr [ %.0.allc.2.i.i.i.i, %"_ZN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EppEv.exit.i.i.i.i" ], [ %.sroa.011.0.copyload.i, %"_ZNK7cmRangeIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EEE4sizeEv.exit" ] ; 2 uses
@@ -273,7 +273,7 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   br i1 %.not.i.i.i.i8, label %"_ZSt5equalIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EES9_EbT_SE_T0_.exit", label %.lr.ph.i.i.i.i7, !llvm.loop !36
 
 "_ZSt5equalIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EES9_EbT_SE_T0_.exit": ; preds = %"_ZN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EppEv.exit.i.i.i.i", %.lr.ph.i.i.i.i7, %"_ZNK7cmRangeIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EEE4sizeEv.exit.thread", %"_ZNK7cmRangeIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EEE4sizeEv.exit"
-  %i.v = phi i1 [ false, %"_ZNK7cmRangeIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EEE4sizeEv.exit" ], [ %1, %"_ZNK7cmRangeIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EEE4sizeEv.exit.thread" ], [ %i.o, %.lr.ph.i.i.i.i7 ], [ %i.o, %"_ZN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EppEv.exit.i.i.i.i" ]
+  %i.v = phi i1 [ false, %"_ZNK7cmRangeIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EEE4sizeEv.exit" ], [ %.not12, %"_ZNK7cmRangeIN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EEE4sizeEv.exit.thread" ], [ %i.o, %.lr.ph.i.i.i.i7 ], [ %i.o, %"_ZN14RangeIterators14FilterIteratorIN9__gnu_cxx17__normal_iteratorIPKiSt6vectorIiSaIiEEEEZ9testRangeiPPcE3$_3EppEv.exit.i.i.i.i" ]
   ret i1 %i.v
 }
 

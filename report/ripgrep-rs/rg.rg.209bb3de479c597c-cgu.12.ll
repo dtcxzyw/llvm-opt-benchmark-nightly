@@ -202,8 +202,8 @@ bb.az:                                            ; preds = %bb.ao
   br label %bb.ba, !dbg !800
 
 bb.ba:                                            ; preds = %bb.bd, %bb.az
-  %.sroa.455.0 = phi i64 [ %.sroa.5135.0.copyload, %bb.bd ], [ %.sroa.455.0.copyload, %bb.az ], !dbg !801
-  %.sroa.052.0 = phi i64 [ %i.je, %bb.bd ], [ %.sroa.052.0.copyload, %bb.az ], !dbg !801
+  %.sroa.455.0 = phi i64 [ %.sroa.455.0.copyload, %bb.az ], [ %.sroa.5135.0.copyload, %bb.bd ], !dbg !801
+  %.sroa.052.0 = phi i64 [ %.sroa.052.0.copyload, %bb.az ], [ %i.je, %bb.bd ], !dbg !801
   store i64 %.sroa.052.0, ptr %i.o, align 8, !dbg !802
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.443.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.3, i64 32, i1 false), !dbg !802
   store i64 %.sroa.455.0, ptr %.sroa.544.0..sroa_idx, align 8, !dbg !802

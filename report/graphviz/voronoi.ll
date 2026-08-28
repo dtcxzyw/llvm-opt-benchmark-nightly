@@ -130,13 +130,13 @@ bb.o:                                             ; preds = %bb.n
   %i.au = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.av = load double, ptr %i.au, align 8, !tbaa !11
   %i.aw = fcmp ogt double %i.at, %i.av            ; 3 uses
-  %.099 = zext i1 %i.aw to i8                     ; 2 uses
   %.097 = select i1 %i.aw, ptr %i.ae, ptr %i.af
+  %.096 = zext i1 %i.aw to i8                     ; 2 uses
   %.096.a = select i1 %i.aw, ptr %i.af, ptr %i.ae ; 3 uses
   %i.ax = call ptr @gvbisect(ptr noundef %.096.a, ptr noundef %.097, ptr noundef nonnull %2) #4 ; 2 uses
-  %i.ay = call ptr @HEcreate(ptr noundef nonnull %2, ptr noundef %i.ax, i8 noundef signext %.099) #4 ; 4 uses
+  %i.ay = call ptr @HEcreate(ptr noundef nonnull %2, ptr noundef %i.ax, i8 noundef signext %.096) #4 ; 4 uses
   call void @ELinsert(ptr noundef %i.ab, ptr noundef %i.ay) #4
-  %i.az = xor i8 %.099, 1
+  %i.az = xor i8 %.096, 1
   %i.ba = zext nneg i8 %i.az to i32
   call void @endpoint(ptr noundef %i.ax, i32 noundef %i.ba, ptr noundef %i.ah, ptr noundef nonnull %2) #4
   %i.bb = call ptr @hintersect(ptr noundef %i.ab, ptr noundef %i.ay, ptr noundef nonnull %2) #4 ; 3 uses

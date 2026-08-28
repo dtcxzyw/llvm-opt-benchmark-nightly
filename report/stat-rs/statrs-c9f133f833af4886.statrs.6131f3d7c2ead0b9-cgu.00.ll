@@ -205,36 +205,36 @@ _RNvMsn_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtNtB7_4node7Node
   br label %_RNvMsh_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtNtB7_4node6HandleINtB10_7NodeRefNtNtB10_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1y_4LeafENtB1y_4EdgeE7next_kvB1Y_.exit.i
 
 _RNvMsh_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtNtB7_4node6HandleINtB10_7NodeRefNtNtB10_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1y_4LeafENtB1y_4EdgeE7next_kvB1Y_.exit.i: ; preds = %._crit_edge.loopexit.i.i, %_RNvMsn_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1k_14LeafOrInternalE14last_leaf_edgeB1K_.exit.i
-  %.sroa.7.0.i.a = phi i64 [ %i.cz, %._crit_edge.loopexit.i.i ], [ %.sroa.5.0.copyload.i, %_RNvMsn_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1k_14LeafOrInternalE14last_leaf_edgeB1K_.exit.i ] ; 5 uses
-  %.sroa.528.0.i = phi i64 [ %i.ct, %._crit_edge.loopexit.i.i ], [ %.sroa.415.0.copyload.i, %_RNvMsn_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1k_14LeafOrInternalE14last_leaf_edgeB1K_.exit.i ] ; 5 uses
+  %.sroa.7.0.i.a = phi i64 [ %i.ct, %._crit_edge.loopexit.i.i ], [ %.sroa.415.0.copyload.i, %_RNvMsn_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1k_14LeafOrInternalE14last_leaf_edgeB1K_.exit.i ] ; 5 uses
+  %.sroa.528.0.i = phi i64 [ %i.cz, %._crit_edge.loopexit.i.i ], [ %.sroa.5.0.copyload.i, %_RNvMsn_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1k_14LeafOrInternalE14last_leaf_edgeB1K_.exit.i ] ; 5 uses
   %.sroa.027.0.i = phi ptr [ %i.cs, %._crit_edge.loopexit.i.i ], [ %.sroa.014.0.copyload.i, %_RNvMsn_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtNtB7_4node7NodeRefNtNtB10_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1k_14LeafOrInternalE14last_leaf_edgeB1K_.exit.i ] ; 4 uses
   %i.da = getelementptr inbounds nuw i8, ptr %.sroa.027.0.i, i64 8
-  %i.db = getelementptr inbounds nuw [8 x i8], ptr %i.da, i64 %.sroa.7.0.i.a ; 2 uses
+  %i.db = getelementptr inbounds nuw [8 x i8], ptr %i.da, i64 %.sroa.528.0.i ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %.sroa.027.0.i, i64 96
-  %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.dc, i64 %.sroa.7.0.i.a ; 2 uses
+  %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.dc, i64 %.sroa.528.0.i ; 2 uses
   %i.de = load double, ptr %i.db, align 8, !noalias !8, !noundef !4
   store double %i.ck, ptr %i.db, align 8, !noalias !8
   %i.df = load i64, ptr %i.dd, align 8, !noalias !8, !noundef !4
   store i64 %i.cm, ptr %i.dd, align 8, !noalias !8
-  %i.dg = icmp eq i64 %.sroa.528.0.i, 0
+  %i.dg = icmp eq i64 %.sroa.7.0.i.a, 0
   br i1 %i.dg, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %_RNvMsh_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtNtB7_4node6HandleINtB10_7NodeRefNtNtB10_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1y_4LeafENtB1y_4EdgeE7next_kvB1Y_.exit.i
-  %i.dh = add nuw nsw i64 %.sroa.7.0.i.a, 1
+  %i.dh = add nuw nsw i64 %.sroa.528.0.i, 1
   br label %_RINvMs0_NtNtNtCs1xwejQucwHj_5alloc11collections5btree6removeINtNtB8_4node6HandleINtBZ_7NodeRefNtNtBZ_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1w_8InternalENtB1w_2KVE18remove_internal_kvNCNvMs5_NtNtB8_3map5entryINtB3O_13OccupiedEntryB1M_yE9remove_kv0NtNtBc_5alloc6GlobalEB1V_.exit
 
 bb.e:                                             ; preds = %_RNvMsh_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtNtB7_4node6HandleINtB10_7NodeRefNtNtB10_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1y_4LeafENtB1y_4EdgeE7next_kvB1Y_.exit.i
-  %i.di = icmp samesign ult i64 %.sroa.7.0.i.a, 11
+  %i.di = icmp samesign ult i64 %.sroa.528.0.i, 11
   tail call void @llvm.assume(i1 %i.di)
   %i.dj = getelementptr i8, ptr %.sroa.027.0.i, i64 200
-  %i.dk = getelementptr [8 x i8], ptr %i.dj, i64 %.sroa.7.0.i.a ; 2 uses
-  %xtraiter37 = and i64 %.sroa.528.0.i, 7         ; 2 uses
+  %i.dk = getelementptr [8 x i8], ptr %i.dj, i64 %.sroa.528.0.i ; 2 uses
+  %xtraiter37 = and i64 %.sroa.7.0.i.a, 7         ; 2 uses
   %lcmp.mod38.not = icmp eq i64 %xtraiter37, 0
   br i1 %lcmp.mod38.not, label %.prol.loopexit, label %.prol.preheader
 
 .prol.preheader:                                  ; preds = %bb.e, %.prol.preheader
   %.sroa.017.0.in.i.i.prol = phi ptr [ %i.dl, %.prol.preheader ], [ %i.dk, %bb.e ]
-  %.sroa.019.0.in.i.i.prol = phi i64 [ %.sroa.019.0.i.i.prol, %.prol.preheader ], [ %.sroa.528.0.i, %bb.e ]
+  %.sroa.019.0.in.i.i.prol = phi i64 [ %.sroa.019.0.i.i.prol, %.prol.preheader ], [ %.sroa.7.0.i.a, %bb.e ]
   %prol.iter39 = phi i64 [ %prol.iter39.next, %.prol.preheader ], [ 0, %bb.e ]
   %.sroa.019.0.i.i.prol = add i64 %.sroa.019.0.in.i.i.prol, -1 ; 2 uses
   %.sroa.017.0.i.i.prol = load ptr, ptr %.sroa.017.0.in.i.i.prol, align 8, !noalias !24, !nonnull !4, !noundef !4 ; 2 uses
@@ -246,8 +246,8 @@ bb.e:                                             ; preds = %_RNvMsh_NtNtNtCs1xw
 .prol.loopexit:                                   ; preds = %.prol.preheader, %bb.e
   %.sroa.017.0.i.i.lcssa.unr = phi ptr [ poison, %bb.e ], [ %.sroa.017.0.i.i.prol, %.prol.preheader ]
   %.sroa.017.0.in.i.i.unr = phi ptr [ %i.dk, %bb.e ], [ %i.dl, %.prol.preheader ]
-  %.sroa.019.0.in.i.i.unr = phi i64 [ %.sroa.528.0.i, %bb.e ], [ %.sroa.019.0.i.i.prol, %.prol.preheader ]
-  %i.dm = icmp ult i64 %.sroa.528.0.i, 8
+  %.sroa.019.0.in.i.i.unr = phi i64 [ %.sroa.7.0.i.a, %bb.e ], [ %.sroa.019.0.i.i.prol, %.prol.preheader ]
+  %i.dm = icmp ult i64 %.sroa.7.0.i.a, 8
   br i1 %i.dm, label %_RINvMs0_NtNtNtCs1xwejQucwHj_5alloc11collections5btree6removeINtNtB8_4node6HandleINtBZ_7NodeRefNtNtBZ_6marker3MutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1w_8InternalENtB1w_2KVE18remove_internal_kvNCNvMs5_NtNtB8_3map5entryINtB3O_13OccupiedEntryB1M_yE9remove_kv0NtNtBc_5alloc6GlobalEB1V_.exit, label %.new
 
 .new:                                             ; preds = %.prol.loopexit, %.new

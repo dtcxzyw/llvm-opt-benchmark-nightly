@@ -206,12 +206,12 @@ bb.p:                                             ; preds = %bb.e
 
 bb.q:                                             ; preds = %bb.p, %copyPayload.exit
   %.0166 = phi ptr [ %i.bh, %copyPayload.exit ], [ %3, %bb.p ]
-  %.0155 = phi i32 [ %.1.i, %copyPayload.exit ], [ 0, %bb.p ] ; 2 uses
-  %.0138 = phi i32 [ %i.bi, %copyPayload.exit ], [ %2, %bb.p ] ; 4 uses
+  %.0155 = phi i32 [ %i.bi, %copyPayload.exit ], [ %2, %bb.p ] ; 4 uses
+  %.0138 = phi i32 [ %.1.i, %copyPayload.exit ], [ 0, %bb.p ] ; 2 uses
   %.0130 = phi i32 [ 0, %copyPayload.exit ], [ %i.bj, %bb.p ] ; 4 uses
-  %i.bk = icmp eq i32 %.0155, 0
-  %i.bl = icmp ne i32 %.0138, 0
-  %or.cond = and i1 %i.bk, %i.bl
+  %i.bk = icmp eq i32 %.0138, 0
+  %i.bl = icmp ne i32 %.0155, 0
+  %or.cond = and i1 %i.bl, %i.bk
   br i1 %or.cond, label %bb.r, label %bb.bk
 
 bb.r:                                             ; preds = %bb.q
@@ -346,7 +346,7 @@ bb.aa:                                            ; preds = %.lr.ph, %bb.z
   %indvars.iv = phi i64 [ %.0153, %.lr.ph ], [ %indvars.iv.next, %bb.z ] ; 2 uses
   %i.ec = phi i32 [ %i.dv, %.lr.ph ], [ %i.eb, %bb.z ] ; 6 uses
   %.2132242 = phi i32 [ %.1131, %.lr.ph ], [ %.7137, %bb.z ] ; 7 uses
-  %.1139241 = phi i32 [ %.0138, %.lr.ph ], [ %.3141, %bb.z ] ; 4 uses
+  %.1139241 = phi i32 [ %.0155, %.lr.ph ], [ %.7162, %bb.z ] ; 4 uses
   %.1167237 = phi ptr [ %.0166, %.lr.ph ], [ %.3169, %bb.z ] ; 5 uses
   %i.ed = load i32, ptr %i.dw, align 8, !tbaa !676
   %i.ee = icmp ugt i32 %i.ec, %i.ed
@@ -676,10 +676,10 @@ bb.bi:                                            ; preds = %bb.bh
 
 bb.bj:                                            ; preds = %bb.bi, %bb.ag
   %.3169 = phi ptr [ %.1167237, %bb.ag ], [ %i.jm, %bb.bi ]
-  %.7162 = phi i32 [ %.2157, %bb.ag ], [ %.5160, %bb.bi ] ; 2 uses
-  %.3141 = phi i32 [ %.1139241, %bb.ag ], [ %i.jj, %bb.bi ] ; 3 uses
+  %.7162 = phi i32 [ %.1139241, %bb.ag ], [ %i.jj, %bb.bi ] ; 3 uses
+  %.3141 = phi i32 [ %.2157, %bb.ag ], [ %.5160, %bb.bi ] ; 2 uses
   %.7137 = phi i32 [ %i.ek, %bb.ag ], [ %.5135, %bb.bi ]
-  %.not192 = icmp eq i32 %.7162, 0
+  %.not192 = icmp eq i32 %.3141, 0
   br i1 %.not192, label %bb.z, label %.critedge
 
 .critedge.thread:                                 ; preds = %bb.bh, %bb.ab, %sqlite3FaultSim.exit.thread, %sqlite3FaultSim.exit, %sqlite3PagerUnref.exit215
@@ -688,16 +688,16 @@ bb.bj:                                            ; preds = %bb.bi, %bb.ag
   br label %bb.bm
 
 .critedge:                                        ; preds = %bb.bj, %bb.z, %bb.y
-  %.9164 = phi i32 [ 0, %bb.y ], [ 0, %bb.z ], [ %.7162, %bb.bj ]
-  %.5143 = phi i32 [ %.0138, %bb.y ], [ %.3141, %bb.z ], [ %.3141, %bb.bj ]
+  %.9164 = phi i32 [ %.0155, %bb.y ], [ %.7162, %bb.z ], [ %.7162, %bb.bj ]
+  %.5143 = phi i32 [ 0, %bb.y ], [ %.3141, %bb.bj ], [ 0, %bb.z ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #58
   br label %bb.bk
 
 bb.bk:                                            ; preds = %.critedge, %bb.q
-  %.10165 = phi i32 [ %.9164, %.critedge ], [ %.0155, %bb.q ] ; 2 uses
-  %.6144 = phi i32 [ %.5143, %.critedge ], [ %.0138, %bb.q ]
-  %i.jn = icmp eq i32 %.10165, 0
-  %i.jo = icmp ne i32 %.6144, 0
+  %.10165 = phi i32 [ %.9164, %.critedge ], [ %.0155, %bb.q ]
+  %.6144 = phi i32 [ %.5143, %.critedge ], [ %.0138, %bb.q ] ; 2 uses
+  %i.jn = icmp eq i32 %.6144, 0
+  %i.jo = icmp ne i32 %.10165, 0
   %or.cond9 = select i1 %i.jn, i1 %i.jo, i1 false
   br i1 %or.cond9, label %bb.bl, label %bb.bm
 
@@ -706,7 +706,7 @@ bb.bl:                                            ; preds = %bb.bk
   br label %bb.bm
 
 bb.bm:                                            ; preds = %.critedge.thread, %bb.bk, %bb.bl, %bb.d, %bb.b
-  %.11 = phi i32 [ 11, %bb.b ], [ 11, %bb.d ], [ 11, %bb.bl ], [ %.10.ph, %.critedge.thread ], [ %.10165, %bb.bk ]
+  %.11 = phi i32 [ 11, %bb.b ], [ 11, %bb.d ], [ 11, %bb.bl ], [ %.10.ph, %.critedge.thread ], [ %.6144, %bb.bk ]
   ret i32 %.11
 }
 
