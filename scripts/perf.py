@@ -431,7 +431,7 @@ def main():
     pool = multiprocessing.Pool(processes=worker_count)
     try:
         results_iter = pool.imap_unordered(_run_perf_task, task_args, chunksize=1)
-        with tqdm(total=len(tasks), desc="perf record") as pbar:
+        with tqdm(total=len(tasks), desc="perf record", mininterval=10) as pbar:
             completed = 0
             while completed < len(tasks):
                 remaining = max(0.0, _remaining_time_seconds(deadline))

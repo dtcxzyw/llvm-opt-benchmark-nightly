@@ -1348,7 +1348,7 @@ def run_opt(
     pool = multiprocessing.Pool(processes=worker_count)
     try:
         results_iter = pool.imap_unordered(_run_opt_task, task_args, chunksize=1)
-        with tqdm(total=len(tasks), desc="run_opt") as pbar:
+        with tqdm(total=len(tasks), desc="run_opt", mininterval=10) as pbar:
             completed = 0
             while completed < len(tasks):
                 remaining = max(0.0, _remaining_time_seconds(deadline))

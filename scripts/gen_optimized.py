@@ -71,7 +71,13 @@ with ThreadPoolExecutor(max_workers=jobs) as executor:
     futures = {executor.submit(_run_opt, subtask): subtask for subtask in subtasks}
     iterator = as_completed(futures)
     if tqdm is not None:
-        iterator = tqdm(iterator, total=len(futures), desc="Optimizing", unit="file")
+        iterator = tqdm(
+            iterator,
+            total=len(futures),
+            desc="Optimizing",
+            unit="file",
+            mininterval=10,
+        )
     for future in iterator:
         subtask = futures[future]
         try:
