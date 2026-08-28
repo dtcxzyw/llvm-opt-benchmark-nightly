@@ -205,7 +205,7 @@ _ZNK12_GLOBAL__N_110DSAStackTy14hasExplicitDSAEPKN5clang9ValueDeclEN4llvm12funct
   br label %.thread
 
 .thread:                                          ; preds = %.thread.sink.split, %bb.b, %_ZNK12_GLOBAL__N_110DSAStackTy12isStackEmptyEv.exit.i.i, %bb.a, %_ZNK12_GLOBAL__N_110DSAStackTy20hasExplicitDirectiveEN4llvm12function_refIFbNS1_3omp9DirectiveEEEEj.exit, %_ZNK12_GLOBAL__N_110DSAStackTy14hasExplicitDSAEPKN5clang9ValueDeclEN4llvm12function_refIFbNS5_3omp6ClauseEbEEEjb.exit
-  %.sroa.0211.1240 = phi i64 [ %.sroa.0.0.copyload.i, %bb.b ], [ %.sroa.0211.0, %_ZNK12_GLOBAL__N_110DSAStackTy14hasExplicitDSAEPKN5clang9ValueDeclEN4llvm12function_refIFbNS5_3omp6ClauseEbEEEjb.exit ], [ %.sroa.0.0.copyload.i, %_ZNK12_GLOBAL__N_110DSAStackTy20hasExplicitDirectiveEN4llvm12function_refIFbNS1_3omp9DirectiveEEEEj.exit ], [ %.sroa.0.0.copyload.i, %bb.a ], [ %.sroa.0.0.copyload.i, %_ZNK12_GLOBAL__N_110DSAStackTy12isStackEmptyEv.exit.i.i ], [ %.sroa.0211.0, %.thread.sink.split ] ; 7 uses
+  %.sroa.0211.1240 = phi i64 [ %.sroa.0.0.copyload.i, %bb.b ], [ %.sroa.0.0.copyload.i, %_ZNK12_GLOBAL__N_110DSAStackTy12isStackEmptyEv.exit.i.i ], [ %.sroa.0.0.copyload.i, %bb.a ], [ %.sroa.0.0.copyload.i, %_ZNK12_GLOBAL__N_110DSAStackTy20hasExplicitDirectiveEN4llvm12function_refIFbNS1_3omp9DirectiveEEEEj.exit ], [ %.sroa.0211.0, %_ZNK12_GLOBAL__N_110DSAStackTy14hasExplicitDSAEPKN5clang9ValueDeclEN4llvm12function_refIFbNS5_3omp6ClauseEbEEEjb.exit ], [ %.sroa.0211.0, %.thread.sink.split ] ; 7 uses
   %i.gn = and i64 %.sroa.0211.1240, -16
   %i.go = inttoptr i64 %i.gn to ptr               ; 3 uses
   %i.gp = load ptr, ptr %i.go, align 16, !tbaa !159 ; 4 uses
@@ -608,7 +608,7 @@ _ZNK4llvm12DenseMapBaseINS_13SmallDenseMapIPKN5clang9ValueDeclESt4pairIjPNS2_7Va
   br i1 %.not, label %.critedge.thread, label %.critedge2
 
 .critedge.thread:                                 ; preds = %.critedge.i181, %bb.av, %_ZNK12_GLOBAL__N_110DSAStackTy14hasExplicitDSAEPKN5clang9ValueDeclEN4llvm12function_refIFbNS5_3omp6ClauseEbEEEjb.exit.thread, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIN5clang16CanonicalDeclPtrIKNS2_4DeclEEEN12_GLOBAL__N_110DSAStackTy22UsesAllocatorsDeclKindENS_12DenseMapInfoIS6_vEENS_6detail12DenseMapPairIS6_S9_EEEES6_S9_SB_SE_E4findERKS6_.exit.i, %_ZNK5clang4Decl7hasAttrINS_20OMPCaptureNoInitAttrEEEbv.exit.thread255, %bb.af, %_ZNK12_GLOBAL__N_110DSAStackTy14hasExplicitDSAEPKN5clang9ValueDeclEN4llvm12function_refIFbNS5_3omp6ClauseEbEEEjb.exit, %.critedge
-  %.sroa.0211.1241263 = phi i64 [ %.sroa.0211.1240, %.critedge ], [ %.sroa.0211.0, %_ZNK12_GLOBAL__N_110DSAStackTy14hasExplicitDSAEPKN5clang9ValueDeclEN4llvm12function_refIFbNS5_3omp6ClauseEbEEEjb.exit ], [ %.sroa.0211.1240, %bb.af ], [ %.sroa.0211.1240, %_ZNK5clang4Decl7hasAttrINS_20OMPCaptureNoInitAttrEEEbv.exit.thread255 ], [ %.sroa.0211.1240, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIN5clang16CanonicalDeclPtrIKNS2_4DeclEEEN12_GLOBAL__N_110DSAStackTy22UsesAllocatorsDeclKindENS_12DenseMapInfoIS6_vEENS_6detail12DenseMapPairIS6_S9_EEEES6_S9_SB_SE_E4findERKS6_.exit.i ], [ %.sroa.0211.0, %_ZNK12_GLOBAL__N_110DSAStackTy14hasExplicitDSAEPKN5clang9ValueDeclEN4llvm12function_refIFbNS5_3omp6ClauseEbEEEjb.exit.thread ], [ %.sroa.0211.1240, %bb.av ], [ %.sroa.0211.1240, %.critedge.i181 ] ; 2 uses
+  %.sroa.0211.1241263 = phi i64 [ %.sroa.0211.0, %_ZNK12_GLOBAL__N_110DSAStackTy14hasExplicitDSAEPKN5clang9ValueDeclEN4llvm12function_refIFbNS5_3omp6ClauseEbEEEjb.exit.thread ], [ %.sroa.0211.1240, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIN5clang16CanonicalDeclPtrIKNS2_4DeclEEEN12_GLOBAL__N_110DSAStackTy22UsesAllocatorsDeclKindENS_12DenseMapInfoIS6_vEENS_6detail12DenseMapPairIS6_S9_EEEES6_S9_SB_SE_E4findERKS6_.exit.i ], [ %.sroa.0211.1240, %_ZNK5clang4Decl7hasAttrINS_20OMPCaptureNoInitAttrEEEbv.exit.thread255 ], [ %.sroa.0211.1240, %bb.af ], [ %.sroa.0211.0, %_ZNK12_GLOBAL__N_110DSAStackTy14hasExplicitDSAEPKN5clang9ValueDeclEN4llvm12function_refIFbNS5_3omp6ClauseEbEEEjb.exit ], [ %.sroa.0211.1240, %.critedge ], [ %.sroa.0211.1240, %bb.av ], [ %.sroa.0211.1240, %.critedge.i181 ] ; 2 uses
   %i.vp = call i64 @_ZNK5clang10ASTContext18getTypeSizeInCharsENS_8QualTypeE(ptr noundef nonnull align 8 dereferenceable(23904) %i.d, i64 %.sroa.0211.1241263) #36
   %i.vq = call i64 @_ZNK5clang10ASTContext14getUIntPtrTypeEv(ptr noundef nonnull align 8 dereferenceable(23904) %i.d) #36
   %i.vr = call i64 @_ZNK5clang10ASTContext18getTypeSizeInCharsENS_8QualTypeE(ptr noundef nonnull align 8 dereferenceable(23904) %i.d, i64 %i.vq) #36
@@ -1011,7 +1011,7 @@ switch.lookup46:                                  ; preds = %bb.n
   br label %_ZNK5clang4Type12isScalarTypeEv.exit.thread14
 
 _ZNK5clang4Type12isScalarTypeEv.exit.thread14:    ; preds = %switch.lookup46, %bb.n, %switch.lookup, %bb.f, %_ZNK5clang8QualType19getNonReferenceTypeEv.exit27, %_ZNK5clang8QualType19getNonReferenceTypeEv.exit27, %_ZNK5clang4Type12isScalarTypeEv.exit63.thread, %_ZNK5clang4Type12isScalarTypeEv.exit63, %.split24, %_ZNK5clang4Type12isScalarTypeEv.exit, %.split
-  %.0.shrunk = phi i8 [ 1, %.split ], [ 2, %_ZNK5clang8QualType19getNonReferenceTypeEv.exit27 ], [ 2, %_ZNK5clang8QualType19getNonReferenceTypeEv.exit27 ], [ 1, %_ZNK5clang4Type12isScalarTypeEv.exit ], [ 1, %.split24 ], [ 0, %_ZNK5clang4Type12isScalarTypeEv.exit63.thread ], [ 1, %_ZNK5clang4Type12isScalarTypeEv.exit63 ], [ 1, %bb.f ], [ 1, %bb.n ], [ %switch.load, %switch.lookup ], [ %switch.load48, %switch.lookup46 ]
+  %.0.shrunk = phi i8 [ 1, %.split ], [ 2, %_ZNK5clang8QualType19getNonReferenceTypeEv.exit27 ], [ 1, %bb.n ], [ 1, %_ZNK5clang4Type12isScalarTypeEv.exit ], [ 2, %_ZNK5clang8QualType19getNonReferenceTypeEv.exit27 ], [ 0, %_ZNK5clang4Type12isScalarTypeEv.exit63.thread ], [ 1, %_ZNK5clang4Type12isScalarTypeEv.exit63 ], [ 1, %bb.f ], [ 1, %.split24 ], [ %switch.load, %switch.lookup ], [ %switch.load48, %switch.lookup46 ]
   %.0 = zext i8 %.0.shrunk to i32
   ret i32 %.0
 }
@@ -1414,11 +1414,13 @@ _ZNK12_GLOBAL__N_110DSAStackTy19getCurrentDirectiveEv.exit36: ; preds = %bb.e, %
 
 bb.h:                                             ; preds = %_ZNK12_GLOBAL__N_110DSAStackTy19getCurrentDirectiveEv.exit36, %_ZNK12_GLOBAL__N_110DSAStackTy19getCurrentDirectiveEv.exit
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %.sroa.0.0.copyload.i = load i64, ptr %i.ay, align 8, !tbaa !104
+  %.sroa.0.0.copyload.i = load i64, ptr %i.ay, align 8, !tbaa !104 ; 2 uses
   %i.az = and i64 %.sroa.0.0.copyload.i, -16
   %i.ba = inttoptr i64 %i.az to ptr
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
-  %i.bc = load i64, ptr %i.bb, align 8, !tbaa !104 ; 3 uses
+  %i.bc = load i64, ptr %i.bb, align 8, !tbaa !104 ; 2 uses
+  %3 = and i64 %.sroa.0.0.copyload.i, 7
+  %4 = or i64 %i.bc, %3                           ; 2 uses
   %i.bd = and i64 %i.bc, -16
   %i.be = inttoptr i64 %i.bd to ptr
   %i.bf = load ptr, ptr %i.be, align 16, !tbaa !159 ; 4 uses
@@ -1485,7 +1487,7 @@ _ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i: ; preds = %_ZNK5clang4Type6c
   br label %_ZNK5clang8QualType19getNonReferenceTypeEv.exit
 
 _ZNK5clang8QualType19getNonReferenceTypeEv.exit:  ; preds = %bb.i, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i
-  %.sroa.0.0.in.i.sroa.speculated = phi i64 [ %.sroa.0.0.in.i.sroa.speculate.load._ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i ], [ %i.bc, %bb.i ], [ %i.bc, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i ]
+  %.sroa.0.0.in.i.sroa.speculated = phi i64 [ %.sroa.0.0.in.i.sroa.speculate.load._ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i ], [ %4, %bb.i ], [ %4, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i ]
   %i.cg = and i64 %.sroa.0.0.in.i.sroa.speculated, -16
   %i.ch = inttoptr i64 %i.cg to ptr
   %i.ci = load ptr, ptr %i.ch, align 16, !tbaa !159
@@ -1888,7 +1890,7 @@ bb.ck:                                            ; preds = %"_ZN4llvm7find_ifIR
   br label %_ZNK5clang8QualType19getNonReferenceTypeEv.exit
 
 _ZNK5clang8QualType19getNonReferenceTypeEv.exit:  ; preds = %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i583, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i571, %bb.ch, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i, %bb.cc, %bb.ck, %bb.cj
-  %.sroa.0651.0 = phi i64 [ %.sroa.0.0.copyload.i350, %bb.ck ], [ %i.vp, %bb.cj ], [ %.sroa.0.0.copyload.i345, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i ], [ %.sroa.0.0.in.i.sroa.speculate.load._ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i ], [ %.sroa.0.0.copyload.i345, %bb.cc ], [ %.sroa.0.0.in.i569.sroa.speculate.load._ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i583, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i583 ], [ %storemerge, %bb.ch ], [ %storemerge, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i571 ] ; 4 uses
+  %.sroa.0651.0 = phi i64 [ %.sroa.0.0.copyload.i345, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i ], [ %.sroa.0.0.copyload.i350, %bb.ck ], [ %i.vp, %bb.cj ], [ %.sroa.0.0.in.i.sroa.speculate.load._ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i ], [ %.sroa.0.0.copyload.i345, %bb.cc ], [ %.sroa.0.0.in.i569.sroa.speculate.load._ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i583, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i583 ], [ %storemerge, %bb.ch ], [ %storemerge, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i571 ] ; 4 uses
   %i.vr = call i32 @_ZNK5clang4Expr10getExprLocEv(ptr noundef nonnull align 8 dereferenceable(16) %i.gc) #37 ; 2 uses
   %i.vs = call i64 @_ZNK5clang4Stmt14getSourceRangeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.gc) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %20)
@@ -2291,7 +2293,7 @@ _ZNK12_GLOBAL__N_110DSAStackTy11getCurScopeEv.exit618: ; preds = %bb.dq, %bb.dr,
   %i.abr = getelementptr inbounds nuw i8, ptr %i.abq, i64 8
   %i.abs = load i64, ptr %i.abr, align 8, !tbaa !104
   %i.abt = and i64 %.sroa.0651.0, 7
-  %i.abu = or i64 %i.abs, %i.abt
+  %i.abu = or i64 %i.abt, %i.abs
   %i.abv = call fastcc i64 @_ZL25buildUserDefinedMapperRefRN5clang4SemaEPNS_5ScopeERNS_12CXXScopeSpecERKNS_19DeclarationNameInfoENS_8QualTypeEPNS_4ExprE(ptr noundef nonnull align 8 dereferenceable(18640) %0, ptr noundef %i.abo, ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull align 8 dereferenceable(24) %6, i64 %i.abu, ptr noundef %.1234) ; 2 uses
   switch i64 %i.abv, label %.thread451 [
     i64 1, label %.thread447.jt3

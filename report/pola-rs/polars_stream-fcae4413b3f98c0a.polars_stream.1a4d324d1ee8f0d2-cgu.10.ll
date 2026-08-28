@@ -23,7 +23,7 @@ target triple = "x86_64-unknown-linux-gnu"
 @12 = private unnamed_addr constant [23 x i8] c"expected total ordering", align 1
 @13 = private unnamed_addr constant [32 x i8] c"crates/polars-utils/src/sort.rs\00", align 1
 @14 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @13, [16 x i8] c"\1F\00\00\00\00\00\00\00w\00\00\00-\00\00\00" }>, align 8
-@15 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
+@15 = private unnamed_addr constant [1 x i8] zeroinitializer, align 8
 @16 = private unnamed_addr constant ptr @_RNvYNCNKNvNtCsidoPH4Qgqxm_12polars_async8executor13TLS_THREAD_ID0s_0INtNtNtCscgRAwXFJnXP_4core3ops8function6FnOnceTINtNtB1b_6option6OptionQIB1Q_INtNtB1b_4cell4CelljEEEEE9call_onceCs2g09Ig8GZd6_13polars_stream, align 8
 @17 = private unnamed_addr constant [40 x i8] c"crates/polars-async/src/executor/mod.rs\00", align 1
 @18 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @17, [16 x i8] c"'\00\00\00\00\00\00\009\02\00\00/\00\00\00" }>, align 8
@@ -426,7 +426,7 @@ bb.j:                                             ; preds = %bb.g
   %i.q = icmp ult i32 %i.p, 1000000000, !dbg !99077
   tail call void @llvm.assume(i1 %i.q), !dbg !99077
   tail call void @_RNvCs9MrPpZx4smZ_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #35, !dbg !99086
-  %i.r = tail call noundef align 8 dereferenceable_or_null(40) ptr @_RNvCs9MrPpZx4smZ_7___rustc12___rust_alloc(i64 noundef range(i64 1, 729) 40, i64 noundef range(i64 1, 129) 8) #35, !dbg !99096 ; 7 uses
+  %i.r = tail call noundef align 8 dereferenceable_or_null(40) ptr @_RNvCs9MrPpZx4smZ_7___rustc12___rust_alloc(i64 noundef range(i64 1, 729) 40, i64 noundef range(i64 1, 129) 8) #35, !dbg !99096 ; 8 uses
   %i.s = icmp eq ptr %i.r, null, !dbg !99097
   br i1 %i.s, label %bb.k, label %bb.l, !dbg !99098, !prof !67
 
@@ -443,7 +443,9 @@ bb.l:                                             ; preds = %bb.j
   %.sroa.426.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 8, !dbg !99100
   store i64 1, ptr %.sroa.426.0..sroa_idx, align 8, !dbg !99100
   %.sroa.527.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 16, !dbg !99100
-  store i64 0, ptr %.sroa.527.0..sroa_idx, align 8, !dbg !99100
+  store i32 0, ptr %.sroa.527.0..sroa_idx, align 8, !dbg !99100
+  %.sroa.6.0..sroa_idx27 = getelementptr inbounds nuw i8, ptr %i.r, i64 20, !dbg !99100
+  store i8 0, ptr %.sroa.6.0..sroa_idx27, align 4, !dbg !99100
   %.sroa.6.0..sroa_idx28 = getelementptr inbounds nuw i8, ptr %i.r, i64 24, !dbg !99100
   store i64 %i.t, ptr %.sroa.6.0..sroa_idx28, align 8, !dbg !99100
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 32, !dbg !99100

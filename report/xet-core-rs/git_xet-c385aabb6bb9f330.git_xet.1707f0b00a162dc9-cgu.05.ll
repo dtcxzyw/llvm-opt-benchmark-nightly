@@ -202,7 +202,7 @@ bb.bt:                                            ; preds = %bb.f
 define void @_RNvMNtCs1YANDSn9Kib_7git_xet8git_repoNtB2_7GitRepo17open_from_cur_dir(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([56 x i8]) align 8 captures(none) dereferenceable(56) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
-  %i.b = alloca [32 x i8], align 8                ; 7 uses
+  %i.b = alloca [32 x i8], align 8                ; 8 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 9 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
@@ -276,7 +276,9 @@ bb.i:                                             ; preds = %bb.e
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 1, ptr %i.q, align 8, !noalias !104
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i64 0, ptr %i.r, align 8, !noalias !104
+  store i32 0, ptr %i.r, align 8, !noalias !104
+  %.sroa.013.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 20
+  store i8 0, ptr %.sroa.013.sroa.4.0..sroa_idx.i, align 4, !noalias !104
   %.sroa.514.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
   store ptr %i.p, ptr %.sroa.514.0..sroa_idx.i, align 8, !noalias !104
   call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #21, !noalias !112

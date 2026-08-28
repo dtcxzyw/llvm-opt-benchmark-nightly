@@ -78,6 +78,7 @@ $__clang_call_terminate = comdat any
 @.str.43 = private unnamed_addr constant [7 x i16] [i16 105, i16 109, i16 112, i16 111, i16 114, i16 116, i16 0], align 2
 @.str.44 = private unnamed_addr constant [42 x i8] c"expected language tag in [import langTag]\00", align 1
 @.str.45 = private unnamed_addr constant [5 x i8] c"root\00", align 1
+@__const._ZN6icu_7819CollationRuleParser12parseSettingER10UErrorCode.und = private unnamed_addr constant [4 x i8] c"und\00", align 1
 @.str.46 = private unnamed_addr constant [10 x i8] c"collation\00", align 1
 @.str.47 = private unnamed_addr constant [34 x i8] c"[import langTag] is not supported\00", align 1
 @.str.48 = private unnamed_addr constant [9 x i8] c"standard\00", align 1
@@ -480,7 +481,7 @@ bb.gr:                                            ; preds = %bb.gq
   %i.og = load i32, ptr %i.nu, align 8, !tbaa !54
   %i.oh = sext i32 %i.og to i64
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.of, ptr align 1 %i.oe, i64 %i.oh, i1 false)
-  store i24 6581877, ptr %i.oe, align 1
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.oe, ptr noundef nonnull align 1 dereferenceable(3) @__const._ZN6icu_7819CollationRuleParser12parseSettingER10UErrorCode.und, i64 3, i1 false)
   %i.oi = invoke noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEPKciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %46, ptr noundef %i.od, i32 noundef 3, ptr noundef nonnull align 4 dereferenceable(4) %1)
           to label %bb.gs unwind label %bb.gu     ; 0 uses
 
@@ -882,6 +883,9 @@ declare noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString2
 declare void @_Z25ulocimp_forLanguageTag_78PKciPiR10UErrorCode(ptr dead_on_unwind writable sret(%"class.icu_78::CharString") align 8, ptr noundef, i32 noundef, ptr noundef, ptr noundef nonnull align 4 dereferenceable(4)) local_unnamed_addr #6
 
 declare void @_Z22ulocimp_getBaseName_78St17basic_string_viewIcSt11char_traitsIcEER10UErrorCode(ptr dead_on_unwind writable sret(%"class.icu_78::CharString") align 8, i64, ptr, ptr noundef nonnull align 4 dereferenceable(4)) local_unnamed_addr #6
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #7
 
 declare noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString8copyFromENS_11StringPieceER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60), ptr, i32, ptr noundef nonnull align 4 dereferenceable(4)) local_unnamed_addr #6
 
