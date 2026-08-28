@@ -205,7 +205,7 @@ _ZN11ImGuiWindow5GetIDEPKcS1_.exit:               ; preds = %_ZN5ImGui11KeepAliv
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN5ImGui11OpenPopupExEji(i32 noundef %0, i32 noundef %1) local_unnamed_addr #10 {
 bb.a:
-  %.sroa.12 = alloca %struct.ImVec2, align 8      ; 5 uses
+  %.sroa.12.sroa.0 = alloca i64, align 8          ; 5 uses
   %i.a = load ptr, ptr @GImGui, align 8, !tbaa !49 ; 15 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 7656
   %i.c = load i32, ptr %i.b, align 8, !tbaa !614  ; 11 uses
@@ -220,7 +220,7 @@ bb.a:
 ._crit_edge:                                      ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 7184
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !208  ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.12)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.12.sroa.0)
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 7688
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !425  ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 7056
@@ -234,7 +234,7 @@ bb.a:
   %i.r = getelementptr i8, ptr %i.q, i64 -4
   %i.s = load i32, ptr %i.r, align 4, !tbaa !34   ; 2 uses
   %i.t = tail call fastcc <2 x float> @_ZN5ImGuiL22NavCalcPreferredRefPosEv() ; 2 uses
-  store <2 x float> %i.t, ptr %.sroa.12, align 8
+  store <2 x float> %i.t, ptr %.sroa.12.sroa.0, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 296 ; 2 uses
   %.sroa.0.0.copyload.i = load float, ptr %i.u, align 8, !tbaa !9
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 300
@@ -242,7 +242,7 @@ bb.a:
   %i.v = fcmp oge float %.sroa.0.0.copyload.i, -2.560000e+05
   %i.w = fcmp oge float %.sroa.4.0.copyload.i, -2.560000e+05
   %i.x = select i1 %i.v, i1 %i.w, i1 false
-  %i.y = select i1 %i.x, ptr %i.u, ptr %.sroa.12
+  %i.y = select i1 %i.x, ptr %i.u, ptr %.sroa.12.sroa.0
   %i.z = load i64, ptr %i.y, align 8              ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 7640 ; 10 uses
   %.not21 = icmp sgt i32 %.pre, %i.c
@@ -518,7 +518,7 @@ _ZN8ImVectorI14ImGuiPopupDataE9push_backERKS0_.exit35: ; preds = %_ZN5ImGui17Clo
   %.sroa.11.0..sroa_idx46 = getelementptr inbounds nuw i8, ptr %i.dv, i64 28
   store i32 %i.s, ptr %.sroa.11.0..sroa_idx46, align 4
   %.sroa.12.0..sroa_idx48 = getelementptr inbounds nuw i8, ptr %i.dv, i64 32
-  %.sroa.12.0..sroa.12.0.56 = load i64, ptr %.sroa.12, align 8
+  %.sroa.12.0..sroa.12.0.56 = load i64, ptr %.sroa.12.sroa.0, align 8
   store i64 %.sroa.12.0..sroa.12.0.56, ptr %.sroa.12.0..sroa_idx48, align 8
   %.sroa.14.0..sroa_idx49 = getelementptr inbounds nuw i8, ptr %i.dv, i64 40
   store i64 %i.z, ptr %.sroa.14.0..sroa_idx49, align 8
@@ -528,7 +528,7 @@ _ZN8ImVectorI14ImGuiPopupDataE9push_backERKS0_.exit35: ; preds = %_ZN5ImGui17Clo
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.k, %_ZN8ImVectorI14ImGuiPopupDataE9push_backERKS0_.exit35, %_ZN8ImVectorI14ImGuiPopupDataE9push_backERKS0_.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.12)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.12.sroa.0)
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.a, %bb.z

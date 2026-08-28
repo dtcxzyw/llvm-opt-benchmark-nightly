@@ -205,8 +205,8 @@ declare i64 @strtol(ptr noundef readonly, ptr noundef captures(none), i32 nounde
 define i64 @av_guess_sample_aspect_ratio(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr nofree noundef readonly captures(address_is_null) %2) local_unnamed_addr #0 {
 bb.a:
   %3 = alloca %struct.AVRational, align 8         ; 10 uses
-  %4 = alloca %struct.AVRational, align 8         ; 5 uses
-  %5 = alloca %struct.AVRational, align 8         ; 7 uses
+  %.sroa.0 = alloca i64, align 8                  ; 5 uses
+  %4 = alloca %struct.AVRational, align 8         ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   %.not = icmp eq ptr %1, null
   br i1 %.not, label %.critedge, label %bb.b
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.b = load i64, ptr %i.a, align 8              ; 4 uses
   store i64 %i.b, ptr %3, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !88   ; 2 uses
   %.not15 = icmp eq ptr %i.d, null
@@ -229,20 +229,20 @@ bb.c:                                             ; preds = %bb.b
 
 .critedge:                                        ; preds = %bb.a
   store i64 4294967296, ptr %3, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %.critedge, %bb.c
   %i.h = phi i64 [ %i.e, %bb.c ], [ 1, %.critedge ], [ %i.e, %bb.b ]
   %i.i = phi i64 [ %i.b, %bb.c ], [ 0, %.critedge ], [ %i.b, %bb.b ]
   %storemerge16 = phi i64 [ %i.g, %bb.c ], [ 4294967296, %.critedge ], [ 4294967296, %bb.b ]
-  store i64 %storemerge16, ptr %4, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
+  store i64 %storemerge16, ptr %.sroa.0, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   %.not17 = icmp eq ptr %2, null
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 124
-  %storemerge18.in = select i1 %.not17, ptr %4, ptr %i.j
+  %storemerge18.in = select i1 %.not17, ptr %.sroa.0, ptr %i.j
   %storemerge18 = load i64, ptr %storemerge18.in, align 4 ; 3 uses
-  store i64 %storemerge18, ptr %5, align 8
+  store i64 %storemerge18, ptr %4, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %sext = shl i64 %i.i, 32
   %i.l = ashr exact i64 %sext, 32
@@ -261,24 +261,24 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  %i.s = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 2 uses
   %sext24 = shl i64 %storemerge18, 32
   %i.t = ashr exact i64 %sext24, 32
   %i.u = ashr i64 %storemerge18, 32
-  %i.v = call i32 @av_reduce(ptr noundef nonnull %5, ptr noundef nonnull %i.s, i64 noundef %i.t, i64 noundef %i.u, i64 noundef 2147483647) #12 ; 0 uses
-  %i.w = load i32, ptr %5, align 8, !tbaa !149
+  %i.v = call i32 @av_reduce(ptr noundef nonnull %4, ptr noundef nonnull %i.s, i64 noundef %i.t, i64 noundef %i.u, i64 noundef 2147483647) #12 ; 0 uses
+  %i.w = load i32, ptr %4, align 8, !tbaa !149
   %i.x = icmp slt i32 %i.w, 1
   %i.y = load i32, ptr %i.s, align 4
   %i.z = icmp slt i32 %i.y, 1
   %or.cond5 = select i1 %i.x, i1 true, i1 %i.z
-  %.val.pre = load i64, ptr %5, align 8
+  %.val.pre = load i64, ptr %4, align 8
   %.val = select i1 %or.cond5, i64 4294967296, i64 %.val.pre
   %i.aa = load i32, ptr %3, align 8, !tbaa !149
   %.not19 = icmp eq i32 %i.aa, 0
   %.val20 = load i64, ptr %3, align 8
   %.sroa.0.0 = select i1 %.not19, i64 %.val, i64 %.val20
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   ret i64 %.sroa.0.0
 }
