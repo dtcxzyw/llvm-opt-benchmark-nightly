@@ -204,16 +204,16 @@ _ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit.thread.i: ; preds = %bb.e, %bb.
   unreachable
 
 _ZN2v88internal4wasm12WasmInitExpr12DefaultValueENS1_9ValueTypeE.exit: ; preds = %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit.i, %bb.e
-  %.sroa.09.sroa.0.0.a = phi i32 [ 0, %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit.i ], [ %4, %bb.e ]
-  %.sroa.710.0 = phi i32 [ %switch.ext, %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit.i ], [ 12, %bb.e ]
+  %.sroa.09.sroa.0.0.a = phi i32 [ %switch.ext, %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit.i ], [ 12, %bb.e ]
+  %.sroa.710.0 = phi i32 [ 0, %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit.i ], [ %4, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  store i32 %.sroa.09.sroa.0.0.a, ptr %7, align 8
+  store i32 %.sroa.710.0, ptr %7, align 8
   %.sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 4
   store i32 0, ptr %.sroa_idx, align 4
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i64 0, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.710.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 16
-  store i32 %.sroa.710.0, ptr %.sroa.710.0..sroa_idx, align 8
+  store i32 %.sroa.09.sroa.0.0.a, ptr %.sroa.710.0..sroa_idx, align 8
   %.sroa.1311.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 24
   store ptr null, ptr %.sroa.1311.0..sroa_idx, align 8
   %i.j = zext i1 %5 to i8

@@ -205,8 +205,8 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtB4_3ops12control_flow11Contr
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable
 define hidden void @_RNvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB2_12GenericShuntINtNtB2_3map3MapINtNtB2_7flatten7FlatMapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterNtNtCs4lawaffTVVK_9sqlparser3ast8MapEntryEIB1C_INtNtB1I_5boxed3BoxNtB2r_4ExprEENCNvMNtCsjHlmExTLNuX_14datafusion_sql4exprINtNtB3N_7planner8SqlToRelNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state22SessionContextProviderE20try_plan_map_literal0ENCB3I_s_0EINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEENtNtNtB4_6traits8iterator8Iterator9size_hintCs7p2uQeJxui2_9deltalake(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 24)) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(128) %1) unnamed_addr #14 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.4 = alloca i64, align 8                  ; 5 uses
-  %.sroa.7 = alloca i64, align 8                  ; 4 uses
+  %.sroa.4 = alloca [8 x i8], align 8             ; 5 uses
+  %.sroa.7 = alloca [8 x i8], align 8             ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 120
   %i.b = load ptr, ptr %i.a, align 8, !nonnull !12, !align !375, !noundef !12
   %i.c = load i64, ptr %i.b, align 8, !range !4314, !noundef !12
@@ -268,7 +268,7 @@ _RNvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB5_3MapINtNtB7_7flatten7Fl
   %.sink80.i.i.i.sroa.phi = phi ptr [ %.sroa.7, %bb.d ], [ %.sroa.4, %bb.c ]
   %.sink.i.i.i = phi i64 [ %i.u, %bb.d ], [ 0, %bb.c ]
   store i64 %.sink.i.i.i, ptr %.sink80.i.i.i.sroa.phi, align 8, !alias.scope !8586, !noalias !8585
-  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. = load i64, ptr %.sroa.4, align 8, !range !11, !noundef !12
+  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.8. = load i64, ptr %.sroa.4, align 8
   %.sroa.7.0..sroa.7.0..sroa.7.0..sroa.7.16. = load i64, ptr %.sroa.7, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)

@@ -204,14 +204,14 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCs1xwejQucwHj_5alloc3vec14spec_from_iterINtB4_3VecIBL_NtNtB6_6string6StringEEINtB2_12SpecFromIterBU_INtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB1N_7flatten7FlattenINtB2z_7FlatMapINtNtB4_9into_iter8IntoIterNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdEINtNtB1R_6result6ResultIBL_INtNtNtB1R_5array4iter8IntoIterBY_Kj2_EENtNtB3F_5error5ErrorENCNvNtCs7BtpbLEd5q3_9elfshaker4find3run0EENCINvNtB5T_5utils11print_tableB2w_B4O_BY_E0EE9from_iterB5T_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(160) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.i.i.i = alloca i64, align 8            ; 3 uses
-  %.sroa.7.i.i.i = alloca i64, align 8            ; 3 uses
+  %.sroa.5.i.i.i = alloca [8 x i8], align 8       ; 3 uses
+  %.sroa.7.i.i.i = alloca [8 x i8], align 8       ; 3 uses
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [160 x i8], align 8               ; 16 uses
-  %.sroa.5.i = alloca i64, align 8                ; 3 uses
-  %.sroa.7.i = alloca i64, align 8                ; 3 uses
+  %.sroa.5.i = alloca [8 x i8], align 8           ; 3 uses
+  %.sroa.7.i = alloca [8 x i8], align 8           ; 3 uses
   %i.e = alloca [24 x i8], align 8                ; 4 uses
   %i.f = alloca [24 x i8], align 8                ; 7 uses
   %i.g = alloca [24 x i8], align 8                ; 10 uses
@@ -614,14 +614,14 @@ _RNvXNtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedINtB4_3VecINtNtB6_5boxed
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCs1xwejQucwHj_5alloc3vec14spec_from_iterINtB4_3VecINtNtCs3oUPovFnLWP_4core6result6ResultIBL_NtNtB6_6string6StringENtNtNtCskuiImRAV2ip_9elfshaker4repo5error5ErrorEEINtB2_12SpecFromIterBU_INtNtNtNtBZ_4iter8adapters7flatten7FlattenINtNtB4_9into_iter8IntoIterBK_EEE9from_iterCs7BtpbLEd5q3_9elfshaker(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(96) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.i.i.i = alloca i64, align 8            ; 3 uses
-  %.sroa.7.i.i.i = alloca i64, align 8            ; 3 uses
+  %.sroa.5.i.i.i = alloca [8 x i8], align 8       ; 3 uses
+  %.sroa.7.i.i.i = alloca [8 x i8], align 8       ; 3 uses
   %i.a = alloca [56 x i8], align 8                ; 4 uses
   %i.b = alloca [56 x i8], align 8                ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [96 x i8], align 8                ; 15 uses
-  %.sroa.5.i = alloca i64, align 8                ; 3 uses
-  %.sroa.7.i = alloca i64, align 8                ; 3 uses
+  %.sroa.5.i = alloca [8 x i8], align 8           ; 3 uses
+  %.sroa.7.i = alloca [8 x i8], align 8           ; 3 uses
   %i.e = alloca [56 x i8], align 8                ; 4 uses
   %i.f = alloca [56 x i8], align 8                ; 7 uses
   %i.g = alloca [24 x i8], align 8                ; 10 uses
@@ -933,14 +933,14 @@ _RNvXNtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedINtB4_3VecINtNtCs3oUPovF
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCs1xwejQucwHj_5alloc3vec14spec_from_iterINtB4_3VecINtNtCs3oUPovFnLWP_4core6result6ResultNtNtCskuiImRAV2ip_9elfshaker7packidx9FileEntryNtNtNtBZ_2io5error5ErrorEEINtB2_12SpecFromIterBU_INtNtNtNtBZ_4iter8adapters7flatten7FlattenINtNtB4_9into_iter8IntoIterBK_EEE9from_iterCs7BtpbLEd5q3_9elfshaker(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(96) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.i.i.i = alloca i64, align 8            ; 3 uses
-  %.sroa.7.i.i.i = alloca i64, align 8            ; 3 uses
+  %.sroa.5.i.i.i = alloca [8 x i8], align 8       ; 3 uses
+  %.sroa.7.i.i.i = alloca [8 x i8], align 8       ; 3 uses
   %i.a = alloca [64 x i8], align 8                ; 4 uses
   %i.b = alloca [64 x i8], align 8                ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [96 x i8], align 8                ; 15 uses
-  %.sroa.5.i = alloca i64, align 8                ; 3 uses
-  %.sroa.7.i = alloca i64, align 8                ; 3 uses
+  %.sroa.5.i = alloca [8 x i8], align 8           ; 3 uses
+  %.sroa.7.i = alloca [8 x i8], align 8           ; 3 uses
   %i.e = alloca [64 x i8], align 8                ; 4 uses
   %i.f = alloca [64 x i8], align 8                ; 7 uses
   %i.g = alloca [24 x i8], align 8                ; 10 uses
@@ -1228,14 +1228,14 @@ _RNvXNtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedINtB4_3VecINtNtCs3oUPovF
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCs1xwejQucwHj_5alloc3vec14spec_from_iterINtB4_3VecINtNtCs3oUPovFnLWP_4core6result6ResultNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack12ExtractStatsNtNtB1A_5error5ErrorEEINtB2_12SpecFromIterBU_INtNtNtNtBZ_4iter8adapters7flatten7FlattenINtNtB4_9into_iter8IntoIterBK_EEE9from_iterCs7BtpbLEd5q3_9elfshaker(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(96) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.i.i.i = alloca i64, align 8            ; 3 uses
-  %.sroa.7.i.i.i = alloca i64, align 8            ; 3 uses
+  %.sroa.5.i.i.i = alloca [8 x i8], align 8       ; 3 uses
+  %.sroa.7.i.i.i = alloca [8 x i8], align 8       ; 3 uses
   %i.a = alloca [56 x i8], align 8                ; 5 uses
   %i.b = alloca [56 x i8], align 8                ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [96 x i8], align 8                ; 15 uses
-  %.sroa.5.i = alloca i64, align 8                ; 3 uses
-  %.sroa.7.i = alloca i64, align 8                ; 3 uses
+  %.sroa.5.i = alloca [8 x i8], align 8           ; 3 uses
+  %.sroa.7.i = alloca [8 x i8], align 8           ; 3 uses
   %i.e = alloca [56 x i8], align 8                ; 5 uses
   %i.f = alloca [56 x i8], align 8                ; 7 uses
   %i.g = alloca [24 x i8], align 8                ; 10 uses
@@ -1557,14 +1557,14 @@ _RNvXNtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedINtB4_3VecINtNtCs3oUPovF
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCs1xwejQucwHj_5alloc3vec14spec_from_iterINtB4_3VecINtNtCs3oUPovFnLWP_4core6result6ResultuNtNtNtCskuiImRAV2ip_9elfshaker4repo5error5ErrorEEINtB2_12SpecFromIterBU_INtNtNtNtBZ_4iter8adapters7flatten7FlattenINtNtB4_9into_iter8IntoIterBK_EEE9from_iterCs7BtpbLEd5q3_9elfshaker(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(96) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.i.i.i = alloca i64, align 8            ; 3 uses
-  %.sroa.7.i.i.i = alloca i64, align 8            ; 3 uses
+  %.sroa.5.i.i.i = alloca [8 x i8], align 8       ; 3 uses
+  %.sroa.7.i.i.i = alloca [8 x i8], align 8       ; 3 uses
   %i.a = alloca [56 x i8], align 8                ; 5 uses
   %i.b = alloca [56 x i8], align 8                ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [96 x i8], align 8                ; 15 uses
-  %.sroa.5.i = alloca i64, align 8                ; 3 uses
-  %.sroa.7.i = alloca i64, align 8                ; 3 uses
+  %.sroa.5.i = alloca [8 x i8], align 8           ; 3 uses
+  %.sroa.7.i = alloca [8 x i8], align 8           ; 3 uses
   %i.e = alloca [56 x i8], align 8                ; 5 uses
   %i.f = alloca [56 x i8], align 8                ; 7 uses
   %i.g = alloca [24 x i8], align 8                ; 10 uses

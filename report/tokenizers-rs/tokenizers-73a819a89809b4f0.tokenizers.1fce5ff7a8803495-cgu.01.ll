@@ -205,12 +205,12 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VeccEECs2Ji
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCscdodAO9FK5_5alloc3vec21spec_from_iter_nestedINtB4_3VechEINtB2_18SpecFromIterNestedhINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flatten7FlatMapINtNtB4_9into_iter8IntoIterNtNtB6_6string6StringEBQ_NCNvXs1_NtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers10byte_levelNtB3n_9ByteLevelNtNtB3r_9tokenizer7Decoder12decode_chain0EE9from_iterB3r_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(96) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.i.i = alloca i64, align 8              ; 3 uses
-  %.sroa.7.i.i = alloca i64, align 8              ; 3 uses
+  %.sroa.5.i.i = alloca [8 x i8], align 8         ; 3 uses
+  %.sroa.7.i.i = alloca [8 x i8], align 8         ; 3 uses
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [96 x i8], align 8                ; 15 uses
-  %.sroa.5 = alloca i64, align 8                  ; 3 uses
-  %.sroa.7 = alloca i64, align 8                  ; 3 uses
+  %.sroa.5 = alloca [8 x i8], align 8             ; 3 uses
+  %.sroa.7 = alloca [8 x i8], align 8             ; 3 uses
   %i.c = alloca [24 x i8], align 8                ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.d = invoke fastcc { i1, i8 } @_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterNtNtB1b_6string6StringEINtB19_3VechENCNvXs1_NtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers10byte_levelNtB2z_9ByteLevelNtNtB2D_9tokenizer7Decoder12decode_chain0ENtNtNtB9_6traits8iterator8Iterator4nextB2D_(ptr noalias noundef align 8 dereferenceable(96) %1)
@@ -478,12 +478,12 @@ bb.aa:                                            ; preds = %bb.i, %bb.b
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCscdodAO9FK5_5alloc3vec21spec_from_iter_nestedINtB4_3VechEINtB2_18SpecFromIterNestedhINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flatten7FlatMapINtNtB4_9into_iter8IntoIterTRNtNtB6_6string6StringRmEEBQ_NCNvXs3_NtNtCs2JiOgHzbbc7_10tokenizers6models9wordpieceNtB3s_9WordPieceNtNtB3w_9tokenizer5Model4saves_0EE9from_iterB3w_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(96) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.i.i = alloca i64, align 8              ; 3 uses
-  %.sroa.7.i.i = alloca i64, align 8              ; 3 uses
+  %.sroa.5.i.i = alloca [8 x i8], align 8         ; 3 uses
+  %.sroa.7.i.i = alloca [8 x i8], align 8         ; 3 uses
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [96 x i8], align 8                ; 15 uses
-  %.sroa.5 = alloca i64, align 8                  ; 3 uses
-  %.sroa.7 = alloca i64, align 8                  ; 3 uses
+  %.sroa.5 = alloca [8 x i8], align 8             ; 3 uses
+  %.sroa.7 = alloca [8 x i8], align 8             ; 3 uses
   %i.c = alloca [24 x i8], align 8                ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.d = invoke fastcc { i1, i8 } @_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTRNtNtB1b_6string6StringRmEEINtB19_3VechENCNvXs3_NtNtCs2JiOgHzbbc7_10tokenizers6models9wordpieceNtB2E_9WordPieceNtNtB2I_9tokenizer5Model4saves_0ENtNtNtB9_6traits8iterator8Iterator4nextB2I_(ptr noalias noundef align 8 dereferenceable(96) %1)
@@ -751,12 +751,12 @@ bb.aa:                                            ; preds = %bb.i, %bb.b
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCscdodAO9FK5_5alloc3vec21spec_from_iter_nestedINtB4_3VechEINtB2_18SpecFromIterNestedhINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flatten7FlatMapINtNtB4_9into_iter8IntoIterTRTmmERmEEBQ_NCNvXs6_NtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe5modelNtB3b_3BPENtNtB3h_9tokenizer5Model4saves0_0EE9from_iterB3h_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(104) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.i.i = alloca i64, align 8              ; 3 uses
-  %.sroa.7.i.i = alloca i64, align 8              ; 3 uses
+  %.sroa.5.i.i = alloca [8 x i8], align 8         ; 3 uses
+  %.sroa.7.i.i = alloca [8 x i8], align 8         ; 3 uses
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [104 x i8], align 8               ; 15 uses
-  %.sroa.5 = alloca i64, align 8                  ; 3 uses
-  %.sroa.7 = alloca i64, align 8                  ; 3 uses
+  %.sroa.5 = alloca [8 x i8], align 8             ; 3 uses
+  %.sroa.7 = alloca [8 x i8], align 8             ; 3 uses
   %i.c = alloca [24 x i8], align 8                ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.d = invoke fastcc { i1, i8 } @_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_7FlatMapINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTRTmmERmEEINtB19_3VechENCNvXs6_NtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe5modelNtB2m_3BPENtNtB2s_9tokenizer5Model4saves0_0ENtNtNtB9_6traits8iterator8Iterator4nextB2s_(ptr noalias noundef align 8 dereferenceable(104) %1)
