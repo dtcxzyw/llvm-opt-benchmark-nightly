@@ -205,9 +205,8 @@ bb.k:                                             ; preds = %bb.f
   %i.v = extractvalue { i64, i8 } %i.u, 1
   %i.w = tail call { i64, i8 } @_ZN4mlir3acc17GPUSharedMemoryOp32getDynamicSharedMemoryFixedBytesEv(ptr noundef nonnull align 8 dereferenceable(8) %0) #15
   %i.x = extractvalue { i64, i8 } %i.w, 1
-  %17 = xor i8 %i.x, %i.v
-  %18 = trunc i8 %17 to i1
-  br i1 %18, label %bb.l, label %bb.p
+  %.not33 = icmp eq i8 %i.v, %i.x
+  br i1 %.not33, label %bb.p, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15

@@ -205,8 +205,7 @@ bb.v:                                             ; preds = %.preheader857, %_Z2
 
 bb.w:                                             ; preds = %bb.v
   %i.awp = or i64 %indvars.iv894, %indvars.iv898
-  %4 = and i64 %i.awp, 4294967295
-  %.not = icmp eq i64 %4, 0
+  %.not = icmp eq i64 %i.awp, 0
   %i.awq = select i1 %.not, i32 128, i32 0
   br label %bb.y
 
@@ -609,8 +608,7 @@ bb.ay:                                            ; preds = %bb.aw, %bb.ax
   %i.aof = getelementptr inbounds nuw i8, ptr %i.anx, i64 %indvars.iv487
   %i.aog = load i8, ptr %i.aof, align 1, !tbaa !9 ; 2 uses
   %i.aoh = or i64 %indvars.iv487, %indvars.iv491
-  %3 = and i64 %i.aoh, 4294967295
-  %.not261 = icmp eq i64 %3, 0
+  %.not261 = icmp eq i64 %i.aoh, 0
   %i.aoi = sext i1 %.not261 to i32
   %i.aoj = add nsw i32 %i.lj, %i.aoi              ; 3 uses
   %notmask.i268 = shl nsw i32 -1, %i.aoj

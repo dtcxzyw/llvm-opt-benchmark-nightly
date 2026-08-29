@@ -205,9 +205,8 @@ bb.n:                                             ; preds = %.preheader192, %bb.
   br i1 %exitcond224.not, label %bb.m, label %bb.n, !llvm.loop !200
 
 bb.o:                                             ; preds = %.preheader191, %bb.v
-  %indvars.iv232 = phi i64 [ 0, %.preheader191 ], [ %indvars.iv.next233, %bb.v ] ; 11 uses
-  %indvars.iv232.masked = and i64 %indvars.iv232, 4294967295
-  %or.cond.not = icmp eq i64 %indvars.iv232.masked, 0
+  %indvars.iv232 = phi i64 [ 0, %.preheader191 ], [ %indvars.iv.next233, %bb.v ] ; 10 uses
+  %or.cond.not = icmp eq i64 %indvars.iv232, 0
   %.pre247 = load i32, ptr %i.bb, align 8, !tbaa !50 ; 5 uses
   %.pre248 = load i32, ptr %i.bc, align 8, !tbaa !49 ; 3 uses
   %.pre249 = load ptr, ptr %1, align 8, !tbaa !46 ; 3 uses
@@ -233,23 +232,21 @@ bb.q:                                             ; preds = %bb.p
   %i.ep = trunc i64 %indvars.iv232 to i32
   %i.eq = add i32 %i.ep, -1
   %i.er = sdiv i32 %i.eq, 3
-  %.cmp = icmp eq i64 %indvars.iv232, 0
   %i.es = add nuw i64 %indvars.iv232, 4294967295
   %i.et = zext nneg i32 %i.er to i64              ; 3 uses
-  %i.eu = and i64 %i.es, 4294967295
-  %2 = select i1 %.cmp, i64 2, i64 %i.eu          ; 3 uses
+  %i.eu = and i64 %i.es, 4294967295               ; 3 uses
   %i.ev = getelementptr inbounds nuw [3 x i8], ptr %i.di, i64 %i.et
-  %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 %2
+  %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 %i.eu
   %i.ex = load i8, ptr %i.ew, align 1, !tbaa !51
   %i.ey = getelementptr inbounds nuw i8, ptr %i.di, i64 %indvars.iv232
   store i8 %i.ex, ptr %i.ey, align 1, !tbaa !51
   %i.ez = getelementptr inbounds nuw [64 x i8], ptr %i.dj, i64 %indvars.iv232
   %i.fa = getelementptr inbounds nuw [192 x i8], ptr %i.dj, i64 %i.et
-  %i.fb = getelementptr inbounds nuw [64 x i8], ptr %i.fa, i64 %2
+  %i.fb = getelementptr inbounds nuw [64 x i8], ptr %i.fa, i64 %i.eu
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(64) %i.ez, ptr noundef nonnull align 2 dereferenceable(64) %i.fb, i64 64, i1 false)
   %i.fc = getelementptr inbounds nuw [128 x i8], ptr %i.dk, i64 %indvars.iv232
   %i.fd = getelementptr inbounds nuw [384 x i8], ptr %i.dk, i64 %i.et
-  %i.fe = getelementptr inbounds nuw [128 x i8], ptr %i.fd, i64 %2
+  %i.fe = getelementptr inbounds nuw [128 x i8], ptr %i.fd, i64 %i.eu
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(128) %i.fc, ptr noundef nonnull align 2 dereferenceable(128) %i.fe, i64 128, i1 false)
   br label %bb.v
 
