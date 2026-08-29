@@ -205,7 +205,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1574)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1577)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !alias.scope !1580, !noundef !4 ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !alias.scope !1580, !noundef !4 ; 4 uses
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %"_ZN4core3ptr106drop_in_place$LT$hashbrown..set..HashSet$LT$alloc..string..String$C$std..hash..random..RandomState$GT$$GT$17h4a355b1b9df0b638E.exit", label %bb.b
 
@@ -270,10 +270,12 @@ bb.e:                                             ; preds = %"_ZN9hashbrown3raw2
   br i1 %i.z, label %_ZN9hashbrown3raw13RawTableInner13drop_elements17h303606d4757e4c22E.exit.i.i.i.i.i, label %bb.d
 
 _ZN9hashbrown3raw13RawTableInner13drop_elements17h303606d4757e4c22E.exit.i.i.i.i.i: ; preds = %"_ZN4core3ptr61drop_in_place$LT$$LP$alloc..string..String$C$$LP$$RP$$RP$$GT$17h1989bb773cc3c534E.exit.i.i.i.i.i.i", %bb.b
+  %1 = icmp slt i64 %i.b, 768614336404564650
+  tail call void @llvm.assume(i1 %1)
   %i.aa = mul i64 %i.b, 24
   %i.ab = and i64 %i.aa, -16                      ; 2 uses
   %i.ac = add i64 %i.ab, 32                       ; 2 uses
-  %i.ad = add i64 %i.b, 17
+  %i.ad = add nsw i64 %i.b, 17
   %i.ae = add i64 %i.ad, %i.ac                    ; 4 uses
   %i.af = icmp uge i64 %i.ae, %i.ac
   %i.ag = icmp ult i64 %i.ae, 9223372036854775793
@@ -676,14 +678,13 @@ bb.k:                                             ; preds = %bb.h
 .lr.ph:                                           ; preds = %.preheader71.i, %bb.j
   %.sroa.03.0.i50 = phi ptr [ %i.v, %bb.j ], [ %.sroa.03.0.ph.i, %.preheader71.i ] ; 2 uses
   %.sroa.16.0.i49 = phi i64 [ %i.w, %bb.j ], [ %.sroa.16.0.ph.i, %.preheader71.i ]
-  %.sroa.019.0.i48 = phi i32 [ %i.ad, %bb.j ], [ 0, %.preheader71.i ]
+  %.sroa.019.0.i48 = phi i32 [ %i.ad, %bb.j ], [ 0, %.preheader71.i ] ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.03.0.i50, i64 1
   %i.w = add i64 %.sroa.16.0.i49, -1              ; 2 uses
-  %1 = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.sroa.019.0.i48, i32 10) ; 2 uses
-  %2 = extractvalue { i32, i1 } %1, 0             ; 2 uses
-  %3 = extractvalue { i32, i1 } %1, 1
+  %1 = mul nuw i32 %.sroa.019.0.i48, 10           ; 2 uses
+  %2 = icmp ugt i32 %.sroa.019.0.i48, 429496729
   %i.x = load i8, ptr %.sroa.03.0.i50, align 1, !alias.scope !1782, !noundef !4 ; 2 uses
-  br i1 %3, label %bb.m, label %bb.l, !prof !164
+  br i1 %2, label %bb.m, label %bb.l, !prof !164
 
 bb.l:                                             ; preds = %.lr.ph
   %i.y = zext i8 %i.x to i32
@@ -698,8 +699,8 @@ bb.m:                                             ; preds = %.lr.ph
   br label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit"
 
 bb.n:                                             ; preds = %bb.l
-  %i.ad = add i32 %i.z, %2                        ; 3 uses
-  %.not66.i = icmp ult i32 %i.ad, %2
+  %i.ad = add i32 %i.z, %1                        ; 3 uses
+  %.not66.i = icmp ult i32 %i.ad, %1
   br i1 %.not66.i, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h43ac169ab2bbf894E.exit.thread", label %bb.j
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.o
@@ -1102,7 +1103,7 @@ bb.jw:                                            ; preds = %bb.kc, %.body41.i, 
   call void @llvm.experimental.noalias.scope.decl(metadata !2885), !noalias !2499
   call void @llvm.experimental.noalias.scope.decl(metadata !2888), !noalias !2499
   %i.ajz = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
-  %i.aka = load i64, ptr %i.ajz, align 8, !alias.scope !2891, !noalias !2499, !noundef !4 ; 3 uses
+  %i.aka = load i64, ptr %i.ajz, align 8, !alias.scope !2891, !noalias !2499, !noundef !4 ; 4 uses
   %i.akb = icmp eq i64 %i.aka, 0
   br i1 %i.akb, label %common.resume, label %bb.jx
 
@@ -1167,10 +1168,12 @@ bb.ka:                                            ; preds = %"_ZN9hashbrown3raw2
   br i1 %i.aky, label %_ZN9hashbrown3raw13RawTableInner13drop_elements17h303606d4757e4c22E.exit.i.i.i.i.i.i, label %bb.jz
 
 _ZN9hashbrown3raw13RawTableInner13drop_elements17h303606d4757e4c22E.exit.i.i.i.i.i.i: ; preds = %"_ZN4core3ptr61drop_in_place$LT$$LP$alloc..string..String$C$$LP$$RP$$RP$$GT$17h1989bb773cc3c534E.exit.i.i.i.i.i.i.i", %bb.jx
+  %0 = icmp slt i64 %i.aka, 768614336404564650
+  call void @llvm.assume(i1 %0), !noalias !2499
   %i.akz = mul i64 %i.aka, 24
   %i.ala = and i64 %i.akz, -16                    ; 2 uses
   %i.alb = add i64 %i.ala, 32                     ; 2 uses
-  %i.alc = add i64 %i.aka, 17
+  %i.alc = add nsw i64 %i.aka, 17
   %i.ald = add i64 %i.alc, %i.alb                 ; 4 uses
   %i.ale = icmp uge i64 %i.ald, %i.alb
   %i.alf = icmp ult i64 %i.ald, 9223372036854775793
@@ -1200,7 +1203,7 @@ bb.kd:                                            ; preds = %"_ZN4core3ptr65drop
   call void @llvm.experimental.noalias.scope.decl(metadata !2922)
   call void @llvm.experimental.noalias.scope.decl(metadata !2925)
   %i.all = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
-  %i.alm = load i64, ptr %i.all, align 8, !alias.scope !2928, !noalias !2499, !noundef !4 ; 3 uses
+  %i.alm = load i64, ptr %i.all, align 8, !alias.scope !2928, !noalias !2499, !noundef !4 ; 4 uses
   %i.aln = icmp eq i64 %i.alm, 0
   br i1 %i.aln, label %_ZN5xtask13list_features17h9449f48e968bd1b7E.exit, label %bb.ke
 
@@ -1265,10 +1268,12 @@ bb.kh:                                            ; preds = %"_ZN9hashbrown3raw2
   br i1 %i.amk, label %_ZN9hashbrown3raw13RawTableInner13drop_elements17h303606d4757e4c22E.exit.i.i.i.i.i.i.i, label %bb.kg
 
 _ZN9hashbrown3raw13RawTableInner13drop_elements17h303606d4757e4c22E.exit.i.i.i.i.i.i.i: ; preds = %"_ZN4core3ptr61drop_in_place$LT$$LP$alloc..string..String$C$$LP$$RP$$RP$$GT$17h1989bb773cc3c534E.exit.i.i.i.i.i.i.i.i", %bb.ke
+  %1 = icmp slt i64 %i.alm, 768614336404564650
+  call void @llvm.assume(i1 %1)
   %i.aml = mul i64 %i.alm, 24
   %i.amm = and i64 %i.aml, -16                    ; 2 uses
   %i.amn = add i64 %i.amm, 32                     ; 2 uses
-  %i.amo = add i64 %i.alm, 17
+  %i.amo = add nsw i64 %i.alm, 17
   %i.amp = add i64 %i.amo, %i.amn                 ; 4 uses
   %i.amq = icmp uge i64 %i.amp, %i.amn
   %i.amr = icmp ult i64 %i.amp, 9223372036854775793
@@ -1670,9 +1675,6 @@ declare noundef zeroext i1 @"_ZN100_$LT$anyhow..context..Quoted$LT$$RF$mut$u20$c
 
 ; Function Attrs: nonlazybind uwtable
 declare noundef align 8 dereferenceable(16) ptr @_ZN4core3fmt8builders9DebugList5entry17h4d43d322b4eddbe6E(ptr noalias noundef align 8 dereferenceable(16), ptr noundef nonnull align 1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32)) unnamed_addr #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #16
 
 ; Function Attrs: nonlazybind uwtable
 declare void @"_ZN6anyhow5error65_$LT$impl$u20$core..ops..drop..Drop$u20$for$u20$anyhow..Error$GT$4drop17hf449d51980abb73cE"(ptr noalias noundef align 8 dereferenceable(8)) unnamed_addr #1

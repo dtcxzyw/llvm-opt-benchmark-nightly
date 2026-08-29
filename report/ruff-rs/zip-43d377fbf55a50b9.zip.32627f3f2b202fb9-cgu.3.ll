@@ -202,13 +202,14 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
 define hidden { i64, i64 } @_RNvMs9_NtCs4NRVxsYgnAr_4core3numj11checked_mulCs4kccKc3vGR1_3zip(i64 %0, i64 %1) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %0, i64 %1) ; 2 uses
-  %i.b = extractvalue { i64, i1 } %i.a, 1
-  %2 = extractvalue { i64, i1 } %i.a, 0
+  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %0, i64 %1)
+  %i.b = extractvalue { i64, i1 } %i.a, 1         ; 2 uses
+  %2 = mul nuw i64 %1, %0
+  %.sroa.3.0 = select i1 %i.b, i64 undef, i64 %2
   %not. = xor i1 %i.b, true
   %.sroa.0.0 = zext i1 %not. to i64
   %i.c = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
-  %i.d = insertvalue { i64, i64 } %i.c, i64 %2, 1
+  %i.d = insertvalue { i64, i64 } %i.c, i64 %.sroa.3.0, 1
   ret { i64, i64 } %i.d
 }
 
@@ -227,9 +228,9 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
 define hidden i64 @_RNvMs9_NtCs4NRVxsYgnAr_4core3numj14saturating_mulCs4kccKc3vGR1_3zip(i64 %0, i64 %1) unnamed_addr #1 {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %0, i64 %1) ; 2 uses
+  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %0, i64 %1)
   %i.b = extractvalue { i64, i1 } %i.a, 1
-  %2 = extractvalue { i64, i1 } %i.a, 0
+  %2 = mul nuw i64 %1, %0
   %.sroa.0.0 = select i1 %i.b, i64 -1, i64 %2
   ret i64 %.sroa.0.0
 }

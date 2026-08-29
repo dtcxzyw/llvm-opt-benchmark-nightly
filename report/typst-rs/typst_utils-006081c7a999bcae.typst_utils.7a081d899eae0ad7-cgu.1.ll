@@ -145,14 +145,15 @@ bb.a:
   %i.e = icmp ult i64 %i.d, 2305843009213693952
   %i.f = shl i64 %i.c, 3
   %.sroa.0.0.i1 = zext i1 %i.e to i64
-  %i.g = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i1, i64 %i.f)
-  %i.h = call i64 @llvm.umax.i64(i64 %i.b, i64 16)
-  %i.i = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.g, i64 range(i64 16, 0) %i.h) ; 2 uses
-  %i.j = extractvalue { i64, i1 } %i.i, 1
-  %1 = extractvalue { i64, i1 } %i.i, 0
+  %i.g = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i1, i64 %i.f) ; 2 uses
+  %i.h = call i64 @llvm.umax.i64(i64 %i.b, i64 16) ; 2 uses
+  %i.i = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.g, i64 range(i64 16, 0) %i.h)
+  %i.j = extractvalue { i64, i1 } %i.i, 1         ; 2 uses
+  %1 = add nsw i64 %i.g, %i.h
+  %.sroa.3.0.i = select i1 %i.j, i64 undef, i64 %1
   %not..i = xor i1 %i.j, true
   %.sroa.0.0.i2 = zext i1 %not..i to i64
-  %i.k = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i2, i64 %1)
+  %i.k = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i2, i64 %.sroa.3.0.i)
   ret i64 %i.k
 }
 
@@ -175,14 +176,15 @@ bb.a:
   %i.e = icmp ult i64 %i.d, 2305843009213693952
   %i.f = shl i64 %i.c, 3
   %.sroa.0.0.i1.i.i = zext i1 %i.e to i64
-  %i.g = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i1.i.i, i64 %i.f)
-  %i.h = call i64 @llvm.umax.i64(i64 %i.b, i64 16)
-  %i.i = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.g, i64 range(i64 16, 0) %i.h) ; 2 uses
-  %i.j = extractvalue { i64, i1 } %i.i, 1
-  %2 = extractvalue { i64, i1 } %i.i, 0
+  %i.g = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i1.i.i, i64 %i.f) ; 2 uses
+  %i.h = call i64 @llvm.umax.i64(i64 %i.b, i64 16) ; 2 uses
+  %i.i = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.g, i64 range(i64 16, 0) %i.h)
+  %i.j = extractvalue { i64, i1 } %i.i, 1         ; 2 uses
+  %2 = add nsw i64 %i.g, %i.h
+  %.sroa.3.0.i.i.i = select i1 %i.j, i64 undef, i64 %2
   %not..i.i.i = xor i1 %i.j, true
   %.sroa.0.0.i2.i.i = zext i1 %not..i.i.i to i64
-  %i.k = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i2.i.i, i64 %2)
+  %i.k = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i2.i.i, i64 %.sroa.3.0.i.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.l = call i64 @_RINvNtCs3oUPovFnLWP_4core3cmp3maxjECslnPB5LbcFkI_8thin_vec(i64 8, i64 8) #32
   %i.m = call { i64, i64 } @_RNvMNtNtCs3oUPovFnLWP_4core5alloc6layoutNtB2_6Layout25from_size_align_uncheckedCsatzsiS36G5T_11typst_utils(i64 %i.k, i64 %i.l, ptr nonnull align 8 @2) #32 ; 2 uses
@@ -217,14 +219,15 @@ bb.a:
   %i.e = icmp ult i64 %i.d, 2305843009213693952
   %i.f = shl i64 %i.c, 3
   %.sroa.0.0.i1.i = zext i1 %i.e to i64
-  %i.g = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i1.i, i64 %i.f)
-  %i.h = call i64 @llvm.umax.i64(i64 %i.b, i64 16)
-  %i.i = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.g, i64 range(i64 16, 0) %i.h) ; 2 uses
-  %i.j = extractvalue { i64, i1 } %i.i, 1
-  %1 = extractvalue { i64, i1 } %i.i, 0
+  %i.g = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i1.i, i64 %i.f) ; 2 uses
+  %i.h = call i64 @llvm.umax.i64(i64 %i.b, i64 16) ; 2 uses
+  %i.i = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.g, i64 range(i64 16, 0) %i.h)
+  %i.j = extractvalue { i64, i1 } %i.i, 1         ; 2 uses
+  %1 = add nsw i64 %i.g, %i.h
+  %.sroa.3.0.i.i = select i1 %i.j, i64 undef, i64 %1
   %not..i.i = xor i1 %i.j, true
   %.sroa.0.0.i2.i = zext i1 %not..i.i to i64
-  %i.k = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i2.i, i64 %1)
+  %i.k = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i2.i, i64 %.sroa.3.0.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.l = call i64 @_RINvNtCs3oUPovFnLWP_4core3cmp3maxjECslnPB5LbcFkI_8thin_vec(i64 8, i64 8) #32
   %i.m = call { i64, i64 } @_RNvMNtNtCs3oUPovFnLWP_4core5alloc6layoutNtB2_6Layout25from_size_align_uncheckedCsatzsiS36G5T_11typst_utils(i64 %i.k, i64 %i.l, ptr nonnull align 8 @2) #32
@@ -627,26 +630,28 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
 define hidden { i64, i64 } @_RNvMs1_NtCs3oUPovFnLWP_4core3numx11checked_addCsatzsiS36G5T_11typst_utils(i64 %0, i64 %1) unnamed_addr #4 {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %0, i64 %1) ; 2 uses
-  %i.b = extractvalue { i64, i1 } %i.a, 1
-  %2 = extractvalue { i64, i1 } %i.a, 0
+  %i.a = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %0, i64 %1)
+  %i.b = extractvalue { i64, i1 } %i.a, 1         ; 2 uses
+  %2 = add nsw i64 %1, %0
+  %.sroa.3.0 = select i1 %i.b, i64 undef, i64 %2
   %not. = xor i1 %i.b, true
   %.sroa.0.0 = zext i1 %not. to i64
   %i.c = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
-  %i.d = insertvalue { i64, i64 } %i.c, i64 %2, 1
+  %i.d = insertvalue { i64, i64 } %i.c, i64 %.sroa.3.0, 1
   ret { i64, i64 } %i.d
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
 define hidden { i64, i64 } @_RNvMs1_NtCs3oUPovFnLWP_4core3numx11checked_mulCsatzsiS36G5T_11typst_utils(i64 %0, i64 %1) unnamed_addr #4 {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %0, i64 %1) ; 2 uses
-  %i.b = extractvalue { i64, i1 } %i.a, 1
-  %2 = extractvalue { i64, i1 } %i.a, 0
+  %i.a = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %0, i64 %1)
+  %i.b = extractvalue { i64, i1 } %i.a, 1         ; 2 uses
+  %2 = mul nsw i64 %1, %0
+  %.sroa.3.0 = select i1 %i.b, i64 undef, i64 %2
   %not. = xor i1 %i.b, true
   %.sroa.0.0 = zext i1 %not. to i64
   %i.c = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
-  %i.d = insertvalue { i64, i64 } %i.c, i64 %2, 1
+  %i.d = insertvalue { i64, i64 } %i.c, i64 %.sroa.3.0, 1
   ret { i64, i64 } %i.d
 }
 
@@ -664,31 +669,31 @@ bb.a:
   ret { i64, i64 } %i.c
 
 .preheader52:                                     ; preds = %bb.a, %bb.e
-  %.sroa.034.0 = phi i64 [ %.sroa.034.1, %bb.e ], [ 1, %bb.a ] ; 2 uses
+  %.sroa.034.0 = phi i64 [ %.sroa.034.1, %bb.e ], [ 1, %bb.a ] ; 3 uses
   %.sroa.016.0 = phi i32 [ %i.j, %bb.e ], [ %1, %bb.a ] ; 3 uses
-  %.sroa.0.0 = phi i64 [ %3, %bb.e ], [ %0, %bb.a ] ; 3 uses
+  %.sroa.0.0 = phi i64 [ %3, %bb.e ], [ %0, %bb.a ] ; 6 uses
   %i.d = and i32 %.sroa.016.0, 1
   %.not = icmp eq i32 %i.d, 0
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %.preheader52
-  %i.e = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.034.0, i64 %.sroa.0.0) ; 2 uses
+  %i.e = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.034.0, i64 %.sroa.0.0)
   %i.f = extractvalue { i64, i1 } %i.e, 1
   br i1 %i.f, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = extractvalue { i64, i1 } %i.e, 0           ; 2 uses
+  %2 = mul nsw i64 %.sroa.0.0, %.sroa.034.0       ; 2 uses
   %i.g = icmp eq i32 %.sroa.016.0, 1
   br i1 %i.g, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.preheader52
   %.sroa.034.1 = phi i64 [ %2, %bb.c ], [ %.sroa.034.0, %.preheader52 ]
-  %i.h = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.0.0, i64 %.sroa.0.0) ; 2 uses
+  %i.h = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.0.0, i64 %.sroa.0.0)
   %i.i = extractvalue { i64, i1 } %i.h, 1
   br i1 %i.i, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %3 = extractvalue { i64, i1 } %i.h, 0
+  %3 = mul nsw i64 %.sroa.0.0, %.sroa.0.0
   %i.j = lshr i32 %.sroa.016.0, 1
   br label %.preheader52
 }
@@ -738,14 +743,15 @@ bb.c:                                             ; preds = %bb.a
   %i.j = icmp ult i64 %i.i, 2305843009213693952
   %i.k = shl i64 %i.h, 3
   %.sroa.0.0.i1.i.i = zext i1 %i.j to i64
-  %i.l = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i1.i.i, i64 %i.k)
-  %i.m = call i64 @llvm.umax.i64(i64 %i.g, i64 16)
-  %i.n = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.l, i64 range(i64 16, 0) %i.m) ; 2 uses
-  %i.o = extractvalue { i64, i1 } %i.n, 1
-  %2 = extractvalue { i64, i1 } %i.n, 0
+  %i.l = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i1.i.i, i64 %i.k) ; 2 uses
+  %i.m = call i64 @llvm.umax.i64(i64 %i.g, i64 16) ; 2 uses
+  %i.n = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.l, i64 range(i64 16, 0) %i.m)
+  %i.o = extractvalue { i64, i1 } %i.n, 1         ; 2 uses
+  %2 = add nsw i64 %i.l, %i.m
+  %.sroa.3.0.i.i.i = select i1 %i.o, i64 undef, i64 %2
   %not..i.i.i = xor i1 %i.o, true
   %.sroa.0.0.i2.i.i = zext i1 %not..i.i.i to i64
-  %i.p = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i2.i.i, i64 %2)
+  %i.p = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i2.i.i, i64 %.sroa.3.0.i.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.q = call i64 @_RINvNtCs3oUPovFnLWP_4core3cmp3maxjECslnPB5LbcFkI_8thin_vec(i64 8, i64 8) #32
   %i.r = call { i64, i64 } @_RNvMNtNtCs3oUPovFnLWP_4core5alloc6layoutNtB2_6Layout25from_size_align_uncheckedCsatzsiS36G5T_11typst_utils(i64 %i.p, i64 %i.q, ptr nonnull align 8 @2) #32 ; 2 uses
@@ -759,14 +765,15 @@ bb.c:                                             ; preds = %bb.a
   %i.x = icmp ult i64 %i.w, 2305843009213693952
   %i.y = shl i64 %i.v, 3
   %.sroa.0.0.i1.i = zext i1 %i.x to i64
-  %i.z = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i1.i, i64 %i.y)
-  %i.aa = call i64 @llvm.umax.i64(i64 %i.u, i64 16)
-  %i.ab = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.z, i64 range(i64 16, 0) %i.aa) ; 2 uses
-  %i.ac = extractvalue { i64, i1 } %i.ab, 1
-  %3 = extractvalue { i64, i1 } %i.ab, 0
+  %i.z = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i1.i, i64 %i.y) ; 2 uses
+  %i.aa = call i64 @llvm.umax.i64(i64 %i.u, i64 16) ; 2 uses
+  %i.ab = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.z, i64 range(i64 16, 0) %i.aa)
+  %i.ac = extractvalue { i64, i1 } %i.ab, 1       ; 2 uses
+  %3 = add nsw i64 %i.z, %i.aa
+  %.sroa.3.0.i.i = select i1 %i.ac, i64 undef, i64 %3
   %not..i.i = xor i1 %i.ac, true
   %.sroa.0.0.i2.i = zext i1 %not..i.i to i64
-  %i.ad = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i2.i, i64 %3)
+  %i.ad = call i64 @_RNvXCslnPB5LbcFkI_8thin_vecINtNtCs3oUPovFnLWP_4core6option6OptioniEINtB2_17UnwrapCapOverflowiE19unwrap_cap_overflowB2_(i64 %.sroa.0.0.i2.i, i64 %.sroa.3.0.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.ae = call noalias ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr %i.f, i64 %i.t, i64 %i.s, i64 %i.ad) #33 ; 3 uses
   %i.af = call zeroext i1 @_RNvMNtNtCs3oUPovFnLWP_4core3ptr7mut_ptrONtCslnPB5LbcFkI_8thin_vec6Header7is_nullBE_(ptr %i.ae) #32

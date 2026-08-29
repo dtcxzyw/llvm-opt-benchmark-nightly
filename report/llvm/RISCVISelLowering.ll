@@ -205,7 +205,7 @@ declare i64 @_ZN4llvm10RISCVVType11decodeVLMULENS0_5VLMULE(i8 noundef zeroext) l
 define dso_local { i64, i32 } @_ZNK4llvm19RISCVTargetLowering17getVRGatherVVCostENS_3MVTE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(518448) %0, i16 %1) local_unnamed_addr #1 align 2 {
 bb.a:
   %i.a = tail call { i64, i32 } @_ZNK4llvm19RISCVTargetLowering11getLMULCostENS_3MVTE(ptr noundef nonnull align 8 dereferenceable(518448) %0, i16 %1) ; 2 uses
-  %.fca.0.extract8 = extractvalue { i64, i32 } %i.a, 0 ; 6 uses
+  %.fca.0.extract8 = extractvalue { i64, i32 } %i.a, 0 ; 9 uses
   %.fca.1.extract9 = extractvalue { i64, i32 } %i.a, 1 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 518440
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !181, !nonnull !24, !align !182
@@ -225,18 +225,23 @@ bb.b:                                             ; preds = %bb.a
 .thread.i.i.a:                                    ; preds = %bb.b
   %i.j = shl nuw nsw i64 %i.i, 2
   %i.k = sub nsw i64 252, %i.j
-  %i.l = and i64 %i.k, 17179869180
-  %i.m = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.fca.0.extract8, i64 %i.l) ; 2 uses
+  %i.l = and i64 %i.k, 17179869180                ; 2 uses
+  %i.m = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.fca.0.extract8, i64 %i.l)
   %i.n = extractvalue { i64, i1 } %i.m, 1
-  %2 = extractvalue { i64, i1 } %i.m, 0
-  %3 = ashr exact i64 %2, 2
-  %4 = icmp sgt i64 %.fca.0.extract8, 0
-  %spec.select = select i1 %4, i64 9223372036854775807, i64 -9223372036854775808
-  %.0.i.i = select i1 %i.n, i64 %spec.select, i64 %3
+  br i1 %i.n, label %2, label %4
+
+2:                                                ; preds = %.thread.i.i.a
+  %3 = icmp sgt i64 %.fca.0.extract8, 0
+  %spec.select = select i1 %3, i64 9223372036854775807, i64 -9223372036854775808
+  br label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit25
+
+4:                                                ; preds = %.thread.i.i.a
+  %5 = mul nsw i64 %i.l, %.fca.0.extract8
+  %6 = ashr exact i64 %5, 2
   br label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit25
 
 .thread:                                          ; preds = %bb.b, %bb.a
-  %i.o = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.fca.0.extract8, i64 %.fca.0.extract8) ; 2 uses
+  %i.o = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.fca.0.extract8, i64 %.fca.0.extract8)
   %i.p = extractvalue { i64, i1 } %i.o, 1
   br i1 %i.p, label %bb.c, label %bb.d
 
@@ -246,13 +251,13 @@ bb.c:                                             ; preds = %.thread
   br label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit25
 
 bb.d:                                             ; preds = %.thread
-  %5 = extractvalue { i64, i1 } %i.o, 0
-  %6 = sdiv i64 %5, 4
+  %7 = mul nsw i64 %.fca.0.extract8, %.fca.0.extract8
+  %8 = lshr i64 %7, 2
   br label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit25
 
-_ZN4llvmmlERKNS_15InstructionCostES2_.exit25:     ; preds = %bb.d, %bb.c, %.thread.i.i.a
-  %.sroa.014.1 = phi i64 [ %.0.i.i, %.thread.i.i.a ], [ %6, %bb.d ], [ %spec.select37, %bb.c ]
-  %.sroa.3.1 = phi i32 [ 0, %.thread.i.i.a ], [ %.fca.1.extract9, %bb.d ], [ %.fca.1.extract9, %bb.c ]
+_ZN4llvmmlERKNS_15InstructionCostES2_.exit25:     ; preds = %bb.d, %bb.c, %4, %2
+  %.sroa.014.1 = phi i64 [ %spec.select, %2 ], [ %6, %4 ], [ %8, %bb.d ], [ %spec.select37, %bb.c ]
+  %.sroa.3.1 = phi i32 [ 0, %2 ], [ 0, %4 ], [ %.fca.1.extract9, %bb.d ], [ %.fca.1.extract9, %bb.c ]
   %.fca.0.insert = insertvalue { i64, i32 } poison, i64 %.sroa.014.1, 0
   %.fca.1.insert = insertvalue { i64, i32 } %.fca.0.insert, i32 %.sroa.3.1, 1
   ret { i64, i32 } %.fca.1.insert

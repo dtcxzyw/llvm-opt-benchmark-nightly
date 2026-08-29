@@ -202,7 +202,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 8, !dbg !7399
-  %i.h = load i64, ptr %i.g, align 8, !dbg !7399
+  %i.h = load i64, ptr %i.g, align 8, !dbg !7399  ; 2 uses
     #dbg_value(i64 %i.h, !7315, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7318)
     #dbg_value(i64 %i.h, !7316, !DIExpression(), !7401)
     #dbg_value(i64 %i.h, !7325, !DIExpression(), !7328)
@@ -212,13 +212,13 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !7431
   %i.j = load i32, ptr %i.i, align 8, !dbg !7431, !noundef !15
     #dbg_value(i32 %i.j, !7432, !DIExpression(), !7435)
-  %i.k = zext i32 %i.j to i64, !dbg !7437
+  %i.k = zext i32 %i.j to i64, !dbg !7437         ; 2 uses
     #dbg_value(i64 %i.k, !7326, !DIExpression(), !7438)
     #dbg_value(i64 %i.k, !7405, !DIExpression(), !7408)
     #dbg_value(i64 %i.k, !7413, !DIExpression(), !7417)
     #dbg_value(i64 %i.k, !7428, !DIExpression(), !7429)
-  %i.l = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.h, i64 %i.k), !dbg !7439 ; 2 uses
-  %1 = extractvalue { i64, i1 } %i.l, 0, !dbg !7439
+  %i.l = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.h, i64 %i.k), !dbg !7439
+  %1 = mul nuw i64 %i.h, %i.k, !dbg !7439
   %i.m = extractvalue { i64, i1 } %i.l, 1, !dbg !7439
     #dbg_value(i1 %i.m, !7416, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !7440)
     #dbg_value(i1 %i.m, !7441, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !7448)
@@ -272,9 +272,9 @@ bb.f:                                             ; preds = %bb.e
     #dbg_value(i32 %i.t, !7526, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !7533)
     #dbg_value(i32 %i.t, !7535, !DIExpression(DW_OP_LLVM_convert, 32, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !7539)
   %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 24, !dbg !7546
-  %i.v = load i64, ptr %i.u, align 8, !dbg !7546
+  %i.v = load i64, ptr %i.u, align 8, !dbg !7546  ; 2 uses
     #dbg_value(i64 %i.v, !7498, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7547)
-  %i.w = zext i32 %i.t to i64, !dbg !7550
+  %i.w = zext i32 %i.t to i64, !dbg !7550         ; 2 uses
     #dbg_value(i64 %i.w, !7479, !DIExpression(), !7525)
     #dbg_value(i64 %i.w, !7526, !DIExpression(), !7533)
     #dbg_value(i64 %i.w, !7535, !DIExpression(), !7539)
@@ -282,18 +282,19 @@ bb.f:                                             ; preds = %bb.e
     #dbg_value(i64 %i.v, !7485, !DIExpression(), !7551)
     #dbg_value(i64 %i.v, !7529, !DIExpression(), !7533)
     #dbg_value(i64 %i.v, !7538, !DIExpression(), !7539)
-  %i.x = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.v, i64 %i.w), !dbg !7552 ; 2 uses
-  %i.y = extractvalue { i64, i1 } %i.x, 1, !dbg !7552
+  %i.x = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.v, i64 %i.w), !dbg !7552
+  %i.y = extractvalue { i64, i1 } %i.x, 1, !dbg !7552 ; 2 uses
     #dbg_value(i1 %i.y, !7532, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !7553)
     #dbg_value(i1 %i.y, !7554, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !7557)
     #dbg_value(i64 poison, !7530, !DIExpression(), !7553)
-  %2 = extractvalue { i64, i1 } %i.x, 0
+  %2 = mul nuw i64 %i.v, %i.w
+  %spec.select.i = select i1 %i.y, i64 undef, i64 %2, !dbg !7559, !prof !890
   %not..i = xor i1 %i.y, true, !dbg !7559
   %spec.select21.i = zext i1 %not..i to i64, !dbg !7559
   br label %_RNCNvMso_NtCs3roNzt6HBWW_12regex_syntax3hirNtB7_10Properties10repetitions_0B9_.exit, !dbg !7559
 
 _RNCNvMso_NtCs3roNzt6HBWW_12regex_syntax3hirNtB7_10Properties10repetitions_0B9_.exit: ; preds = %bb.f, %bb.e, %bb.c
-  %.sroa.36.0 = phi i64 [ undef, %bb.c ], [ undef, %bb.e ], [ %2, %bb.f ], !dbg !7468
+  %.sroa.36.0 = phi i64 [ undef, %bb.c ], [ undef, %bb.e ], [ %spec.select.i, %bb.f ], !dbg !7468
   %.sroa.05.0 = phi i64 [ 0, %bb.c ], [ 0, %bb.e ], [ %spec.select21.i, %bb.f ], !dbg !7468
     #dbg_value(i64 %.sroa.05.0, !7297, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7560)
     #dbg_value(i64 %.sroa.36.0, !7297, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !7560)

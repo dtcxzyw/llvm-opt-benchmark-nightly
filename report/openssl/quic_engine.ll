@@ -123,13 +123,16 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !27
   %i.e = tail call i64 %.fr(ptr noundef %i.d) #9
-  %..i = tail call i64 @llvm.usub.sat.i64(i64 %1, i64 %i.e)
-  %i.f = tail call i64 @ossl_time_now() #9
-  %.sroa.03.0.i = tail call i64 @llvm.uadd.sat.i64(i64 %..i, i64 %i.f)
+  %..i = tail call i64 @llvm.usub.sat.i64(i64 %1, i64 %i.e) ; 2 uses
+  %i.f = tail call i64 @ossl_time_now() #9        ; 2 uses
+  %2 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %..i, i64 %i.f)
+  %3 = extractvalue { i64, i1 } %2, 1
+  %.0.i.i = add i64 %i.f, %..i
+  %..0.i.i = select i1 %3, i64 -1, i64 %.0.i.i
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sroa.07.0 = phi i64 [ %1, %bb.a ], [ %.sroa.03.0.i, %bb.b ]
+  %.sroa.07.0 = phi i64 [ %1, %bb.a ], [ %..0.i.i, %bb.b ]
   ret i64 %.sroa.07.0
 }
 
@@ -298,13 +301,13 @@ declare void @ossl_quic_port_subtick(ptr noundef, ptr noundef, i32 noundef) loca
 declare void @ossl_quic_reactor_cleanup(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.uadd.sat.i64(i64, i64) #8
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

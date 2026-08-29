@@ -202,8 +202,8 @@ bb.i:                                             ; preds = %bb.c
   %i.ay = udiv exact i64 %i.ax, 24
   %i.az = call i64 @llvm.umax.i64(i64 %i.ay, i64 3)
   %..i.i = add nuw nsw i64 %i.az, 1               ; 2 uses
-  %or.cond.not.i.i.i = icmp ugt i64 %i.ax, 9223372036854775776
-  br i1 %or.cond.not.i.i.i, label %bb.k, label %bb.j, !prof !79
+  %0 = icmp ult i64 %i.ax, 9223372036854775800
+  br i1 %0, label %bb.j, label %bb.k, !prof !79
 
 bb.j:                                             ; preds = %bb.i
   %i.ba = mul nuw nsw i64 %..i.i, 24              ; 2 uses
@@ -606,27 +606,27 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: cold nounwind nonlazybind uwtable
 define internal fastcc void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner11finish_growCslArWzHu5pnW_7trainer(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, i64 %.0.val, ptr %.8.val, i64 noundef %1, i64 noundef range(i64 8, 25) %2) unnamed_addr #6 {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %1) ; 2 uses
-  %3 = extractvalue { i64, i1 } %i.a, 0           ; 7 uses
+  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %1)
+  %3 = mul nuw i64 %2, %1                         ; 5 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
   %i.c = icmp ugt i64 %3, 9223372036854775800
-  %or.cond.not = or i1 %i.b, %i.c
-  br i1 %or.cond.not, label %bb.f, label %bb.b, !prof !79
+  %or.cond.not = select i1 %i.b, i1 true, i1 %i.c
+  br i1 %or.cond.not, label %bb.f, label %bb.b, !prof !313
 
 bb.b:                                             ; preds = %bb.a
   %i.d = icmp eq i64 %.0.val, 0
   br i1 %i.d, label %bb.c, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %i.e = mul nuw i64 %2, %.0.val                  ; 2 uses
+  %i.e = mul nuw i64 %2, %.0.val
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.f = icmp uge i64 %3, %i.e
+  %i.f = icmp uge i64 %1, %.0.val
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %i.e, i64 noundef 8, i64 noundef range(i64 0, 9223372036854775801) %3) #19
   br label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = icmp eq i64 %3, 0
+  %i.h = icmp eq i64 %1, 0
   br i1 %i.h, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -873,7 +873,7 @@ attributes #23 = { cold noreturn nounwind }
 !76 = distinct !{!76, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueSNtNtNtCsG258MDvU3F_3std3ffi6os_str8OsStringECslArWzHu5pnW_7trainer"}
 !77 = !{!71, !68, !65, !62, !59, !52}
 !78 = !{!75, !71, !68, !65, !62, !59, !52}
-!79 = !{!"branch_weights", i32 2002, i32 2000}
+!79 = !{!"branch_weights", i32 2000, i32 2002}
 !80 = !{!81, !52}
 !81 = distinct !{!81, !82, !"_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslArWzHu5pnW_7trainer: argument 0"}
 !82 = distinct !{!82, !"_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslArWzHu5pnW_7trainer"}
@@ -1107,4 +1107,5 @@ attributes #23 = { cold noreturn nounwind }
 !310 = !{!311}
 !311 = distinct !{!311, !312, !"_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner14grow_amortizedCslArWzHu5pnW_7trainer: argument 0"}
 !312 = distinct !{!312, !"_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner14grow_amortizedCslArWzHu5pnW_7trainer"}
+!313 = !{!"branch_weights", i32 2002, i32 2000}
 end_hunk_1

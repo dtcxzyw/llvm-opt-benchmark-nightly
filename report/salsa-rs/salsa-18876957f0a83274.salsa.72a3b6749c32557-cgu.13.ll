@@ -202,15 +202,17 @@ bb.a:
 define noundef range(i64 0, 9223372036854775793) i64 @_RNvMs_NtNtCsC8CapfvpQ1_5salsa11accumulator15accumulated_mapNtB4_14AccumulatedMap15allocation_size(ptr noalias noundef readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !noundef !3 ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !noundef !3 ; 4 uses
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %bb.b, label %_RNvMs1_NtCsgMW4BsFgQdt_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit
 
 _RNvMs1_NtCsgMW4BsFgQdt_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit: ; preds = %bb.a
+  %1 = icmp slt i64 %i.b, 768614336404564650
+  tail call void @llvm.assume(i1 %1)
   %i.d = mul i64 %i.b, 24
   %i.e = and i64 %i.d, -16
   %i.f = add i64 %i.e, 32                         ; 2 uses
-  %i.g = add i64 %i.b, 17
+  %i.g = add nsw i64 %i.b, 17
   %i.h = add i64 %i.g, %i.f                       ; 3 uses
   %i.i = icmp uge i64 %i.h, %i.f
   tail call void @llvm.assume(i1 %i.i)

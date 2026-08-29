@@ -204,7 +204,7 @@ define hidden void @_RNvXsf_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTabl
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9454)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !alias.scope !9454, !noundef !8 ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !alias.scope !9454, !noundef !8 ; 4 uses
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %_RINvMsa_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerNtB6_13RawTableInner16drop_inner_tableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtB1p_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProviderEL_EEENtNtNtB6_5alloc5inner6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit, label %bb.b
 
@@ -325,10 +325,12 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6St
   br i1 %i.ai, label %_RINvMsa_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtB1m_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProviderEL_EEEECs2VbMhdeEr66_16delta_benchmarks.exit.i, label %bb.d
 
 _RINvMsa_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtB1m_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProviderEL_EEEECs2VbMhdeEr66_16delta_benchmarks.exit.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtBL_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableProviderEL_EEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i, %bb.b
+  %1 = icmp slt i64 %i.b, 461168601842738790
+  tail call void @llvm.assume(i1 %1)
   %i.aj = mul i64 %i.b, 40
   %i.ak = and i64 %i.aj, -16                      ; 2 uses
   %i.al = add i64 %i.ak, 48                       ; 2 uses
-  %i.am = add i64 %i.b, 17
+  %i.am = add nsw i64 %i.b, 17
   %i.an = add i64 %i.am, %i.al                    ; 3 uses
   %i.ao = icmp uge i64 %i.an, %i.al
   tail call void @llvm.assume(i1 %i.ao)
@@ -348,7 +350,7 @@ define hidden void @_RNvXsf_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTabl
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9497)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !alias.scope !9497, !noundef !8 ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !alias.scope !9497, !noundef !8 ; 4 uses
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %_RINvMsa_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerNtB6_13RawTableInner16drop_inner_tableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtB1p_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_EEENtNtNtB6_5alloc5inner6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit, label %bb.b
 
@@ -469,10 +471,12 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6St
   br i1 %i.ai, label %_RINvMsa_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtB1m_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_EEEECs2VbMhdeEr66_16delta_benchmarks.exit.i, label %bb.d
 
 _RINvMsa_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtB1m_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_EEEECs2VbMhdeEr66_16delta_benchmarks.exit.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueINtNtBL_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog6schema14SchemaProviderEL_EEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i, %bb.b
+  %1 = icmp slt i64 %i.b, 461168601842738790
+  tail call void @llvm.assume(i1 %1)
   %i.aj = mul i64 %i.b, 40
   %i.ak = and i64 %i.aj, -16                      ; 2 uses
   %i.al = add i64 %i.ak, 48                       ; 2 uses
-  %i.am = add i64 %i.b, 17
+  %i.am = add nsw i64 %i.b, 17
   %i.an = add i64 %i.am, %i.al                    ; 3 uses
   %i.ao = icmp uge i64 %i.an, %i.al
   tail call void @llvm.assume(i1 %i.ao)

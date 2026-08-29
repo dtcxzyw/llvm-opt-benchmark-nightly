@@ -204,16 +204,15 @@ bb.e:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !331)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !334)
   %i.z = invoke noundef i64 @_RNvNtCs5OnaahQymqO_6base646decode10num_chunks(ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2)
-          to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
+          to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
 
 .noexc:                                           ; preds = %bb.e
-  %4 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.z, i64 6) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  br i1 %5, label %bb.eh, label %bb.f, !prof !79
+  %4 = icmp ugt i64 %i.z, 3074457345618258602
+  br i1 %4, label %bb.eh, label %bb.f, !prof !79
 
 bb.f:                                             ; preds = %.noexc
-  %6 = extractvalue { i64, i1 } %4, 0
-  invoke void @_RNvMs1_NtCscdodAO9FK5_5alloc3vecINtB5_3VechE6resizeCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.k, i64 noundef %6, i8 noundef 0)
+  %5 = mul nuw i64 %i.z, 6
+  invoke void @_RNvMs1_NtCscdodAO9FK5_5alloc3vecINtB5_3VechE6resizeCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.k, i64 noundef %5, i8 noundef 0)
           to label %switch.lookup unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 switch.lookup:                                    ; preds = %bb.f
@@ -616,16 +615,18 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr i8, ptr %1, i64 16
   %.val82 = load i64, ptr %i.g, align 8, !noundef !10 ; 2 uses
   %gepdiff = add nsw i64 %.idx, -24
-  %i.h = udiv exact i64 %gepdiff, 24
-  %i.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %i.h) ; 2 uses
+  %i.h = udiv exact i64 %gepdiff, 24              ; 2 uses
+  %i.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %i.h)
   %i.j = extractvalue { i64, i1 } %i.i, 1
-  %5 = extractvalue { i64, i1 } %i.i, 0           ; 2 uses
-  %6 = add i64 %.val82, %5                        ; 3 uses
-  %7 = icmp ult i64 %6, %5
-  %or.cond = or i1 %i.j, %7
-  br i1 %or.cond, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCscdodAO9FK5_5alloc6string6StringENtNtNtNtBa_4iter6traits8iterator8Iterator8try_foldjNCINvNtNtB1r_8adapters3map12map_try_foldRBJ_jjINtNtBa_6option6OptionjENCNCINvNtBN_3str17join_generic_copyehBJ_Es_00NvMs9_NtBa_3numj11checked_addE0B2U_ECs2JiOgHzbbc7_10tokenizers.exit, label %.preheader220.preheader, !prof !347
+  br i1 %i.j, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCscdodAO9FK5_5alloc6string6StringENtNtNtNtBa_4iter6traits8iterator8Iterator8try_foldjNCINvNtNtB1r_8adapters3map12map_try_foldRBJ_jjINtNtBa_6option6OptionjENCNCINvNtBN_3str17join_generic_copyehBJ_Es_00NvMs9_NtBa_3numj11checked_addE0B2U_ECs2JiOgHzbbc7_10tokenizers.exit, label %5, !prof !79
 
-.preheader220.preheader:                          ; preds = %bb.b
+5:                                                ; preds = %bb.b
+  %6 = mul nuw i64 %i.h, %4                       ; 2 uses
+  %7 = add i64 %.val82, %6                        ; 3 uses
+  %8 = icmp ult i64 %7, %6
+  br i1 %8, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCscdodAO9FK5_5alloc6string6StringENtNtNtNtBa_4iter6traits8iterator8Iterator8try_foldjNCINvNtNtB1r_8adapters3map12map_try_foldRBJ_jjINtNtBa_6option6OptionjENCNCINvNtBN_3str17join_generic_copyehBJ_Es_00NvMs9_NtBa_3numj11checked_addE0B2U_ECs2JiOgHzbbc7_10tokenizers.exit, label %.preheader220.preheader, !prof !79
+
+.preheader220.preheader:                          ; preds = %5
   %i.k = icmp eq i64 %2, 1
   br i1 %i.k, label %.preheader220._crit_edge, label %.lr.ph
 
@@ -635,7 +636,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %.preheader220._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader220.preheader, %.preheader220
-  %.sroa.01.0.i317 = phi i64 [ %i.p, %.preheader220 ], [ %6, %.preheader220.preheader ] ; 2 uses
+  %.sroa.01.0.i317 = phi i64 [ %i.p, %.preheader220 ], [ %7, %.preheader220.preheader ] ; 2 uses
   %i.n = phi ptr [ %i.l, %.preheader220 ], [ %i.e, %.preheader220.preheader ] ; 2 uses
   %i.o = getelementptr i8, ptr %i.n, i64 16
   %.val9.i = load i64, ptr %i.o, align 8, !noalias !437, !noundef !10
@@ -644,7 +645,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.q, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCscdodAO9FK5_5alloc6string6StringENtNtNtNtBa_4iter6traits8iterator8Iterator8try_foldjNCINvNtNtB1r_8adapters3map12map_try_foldRBJ_jjINtNtBa_6option6OptionjENCNCINvNtBN_3str17join_generic_copyehBJ_Es_00NvMs9_NtBa_3numj11checked_addE0B2U_ECs2JiOgHzbbc7_10tokenizers.exit, label %.preheader220
 
 .preheader220._crit_edge:                         ; preds = %.preheader220, %.preheader220.preheader
-  %.sroa.01.0.i.lcssa = phi i64 [ %6, %.preheader220.preheader ], [ %i.p, %.preheader220 ] ; 4 uses
+  %.sroa.01.0.i.lcssa = phi i64 [ %7, %.preheader220.preheader ], [ %i.p, %.preheader220 ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %.sroa.01.0.i.lcssa, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
@@ -674,7 +675,7 @@ _RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs2JiOg
   invoke void @_RNvXs2_NtNtCscdodAO9FK5_5alloc3vec11spec_extendINtB7_3VechEINtB5_10SpecExtendRhINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterhEE11spec_extendCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull %.val, ptr noundef nonnull %i.ab)
           to label %bb.d unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCscdodAO9FK5_5alloc6string6StringENtNtNtNtBa_4iter6traits8iterator8Iterator8try_foldjNCINvNtNtB1r_8adapters3map12map_try_foldRBJ_jjINtNtBa_6option6OptionjENCNCINvNtBN_3str17join_generic_copyehBJ_Es_00NvMs9_NtBa_3numj11checked_addE0B2U_ECs2JiOgHzbbc7_10tokenizers.exit: ; preds = %.lr.ph, %bb.b
+_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCscdodAO9FK5_5alloc6string6StringENtNtNtNtBa_4iter6traits8iterator8Iterator8try_foldjNCINvNtNtB1r_8adapters3map12map_try_foldRBJ_jjINtNtBa_6option6OptionjENCNCINvNtBN_3str17join_generic_copyehBJ_Es_00NvMs9_NtBa_3numj11checked_addE0B2U_ECs2JiOgHzbbc7_10tokenizers.exit: ; preds = %.lr.ph, %bb.b, %5
   tail call void @_RNvNtCs4NRVxsYgnAr_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @24, i64 noundef 53, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @25) #19
   unreachable
 

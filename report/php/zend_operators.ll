@@ -205,27 +205,36 @@ bb.a:
   %i.e = load i8, ptr %i.d, align 8, !tbaa !12
   %i.f = or i8 %i.c, %i.e
   switch i8 %i.f, label %mul_function_fast.exit [
-    i8 68, label %bb.b
+    i8 68, label %3
     i8 85, label %bb.c
     i8 69, label %bb.d
     i8 84, label %bb.e
   ], !prof !101
 
-bb.b:                                             ; preds = %bb.a
-  %3 = load i64, ptr %1, align 8, !tbaa !12       ; 2 uses
-  %4 = load i64, ptr %2, align 8, !tbaa !12       ; 2 uses
-  %5 = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %3, i64 %4) ; 2 uses
-  %6 = extractvalue { i64, i1 } %5, 1             ; 2 uses
-  %7 = extractvalue { i64, i1 } %5, 0
-  %8 = sitofp i64 %3 to double
+3:                                                ; preds = %bb.a
+  %4 = load i64, ptr %1, align 8, !tbaa !12       ; 3 uses
+  %5 = load i64, ptr %2, align 8, !tbaa !12       ; 3 uses
+  %6 = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %4, i64 %5)
+  %7 = extractvalue { i64, i1 } %6, 1
+  br i1 %7, label %8, label %13
+
+8:                                                ; preds = %3
   %9 = sitofp i64 %4 to double
-  %10 = fmul nnan double %8, %9
-  %11 = bitcast double %10 to i64
-  %12 = select i1 %6, i32 5, i32 4
-  %storemerge.i = select i1 %6, i64 %11, i64 %7
+  %10 = sitofp i64 %5 to double
+  %11 = fmul nnan double %9, %10
+  %12 = bitcast double %11 to i64
+  br label %bb.b
+
+13:                                               ; preds = %3
+  %14 = mul nsw i64 %5, %4
+  br label %bb.b
+
+bb.b:                                             ; preds = %13, %8
+  %15 = phi i32 [ 4, %13 ], [ 5, %8 ]
+  %storemerge.i = phi i64 [ %14, %13 ], [ %12, %8 ]
   store i64 %storemerge.i, ptr %0, align 8, !tbaa !12
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %12, ptr %i.g, align 8, !tbaa !12
+  store i32 %15, ptr %i.g, align 8, !tbaa !12
   br label %mul_function_fast.exit.thread
 
 bb.c:                                             ; preds = %bb.a
@@ -304,27 +313,36 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.o = getelementptr inbounds nuw i8, ptr %.0, i64 8 ; 2 uses
   %i.p = or i8 %i.n, %i.k
   switch i8 %i.p, label %mul_function_fast.exit40 [
-    i8 68, label %bb.f
+    i8 68, label %5
     i8 85, label %bb.g
     i8 69, label %bb.h
     i8 84, label %bb.i
   ], !prof !101
 
-bb.f:                                             ; preds = %bb.e
-  %5 = load i64, ptr %.030, align 8, !tbaa !12    ; 2 uses
-  %6 = load i64, ptr %.0, align 8, !tbaa !12      ; 2 uses
-  %7 = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %5, i64 %6) ; 2 uses
-  %8 = extractvalue { i64, i1 } %7, 1             ; 2 uses
-  %9 = extractvalue { i64, i1 } %7, 0
-  %10 = sitofp i64 %5 to double
+5:                                                ; preds = %bb.e
+  %6 = load i64, ptr %.030, align 8, !tbaa !12    ; 3 uses
+  %7 = load i64, ptr %.0, align 8, !tbaa !12      ; 3 uses
+  %8 = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %6, i64 %7)
+  %9 = extractvalue { i64, i1 } %8, 1
+  br i1 %9, label %10, label %15
+
+10:                                               ; preds = %5
   %11 = sitofp i64 %6 to double
-  %12 = fmul nnan double %10, %11
-  %13 = bitcast double %12 to i64
-  %14 = select i1 %8, i32 5, i32 4
-  %storemerge.i39 = select i1 %8, i64 %13, i64 %9
+  %12 = sitofp i64 %7 to double
+  %13 = fmul nnan double %11, %12
+  %14 = bitcast double %13 to i64
+  br label %bb.f
+
+15:                                               ; preds = %5
+  %16 = mul nsw i64 %7, %6
+  br label %bb.f
+
+bb.f:                                             ; preds = %15, %10
+  %17 = phi i32 [ 4, %15 ], [ 5, %10 ]
+  %storemerge.i39 = phi i64 [ %16, %15 ], [ %14, %10 ]
   store i64 %storemerge.i39, ptr %0, align 8, !tbaa !12
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %14, ptr %i.q, align 8, !tbaa !12
+  store i32 %17, ptr %i.q, align 8, !tbaa !12
   br label %mul_function_fast.exit40.thread
 
 bb.g:                                             ; preds = %bb.e
@@ -453,24 +471,33 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.bo = load i8, ptr %i.bn, align 8, !tbaa !12
   %i.bp = or i8 %i.bm, %i.bo
   switch i8 %i.bp, label %unreachable [
-    i8 68, label %bb.u
+    i8 68, label %18
     i8 85, label %bb.v
     i8 69, label %bb.w
     i8 84, label %bb.x
   ], !prof !101
 
-bb.u:                                             ; preds = %bb.t
-  %15 = load i64, ptr %3, align 8, !tbaa !12      ; 2 uses
-  %16 = load i64, ptr %4, align 8, !tbaa !12      ; 2 uses
-  %17 = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %15, i64 %16) ; 2 uses
-  %18 = extractvalue { i64, i1 } %17, 1           ; 2 uses
-  %19 = extractvalue { i64, i1 } %17, 0
-  %i.bq = sitofp i64 %15 to double
-  %i.br = sitofp i64 %16 to double
+18:                                               ; preds = %bb.t
+  %19 = load i64, ptr %3, align 8, !tbaa !12      ; 3 uses
+  %20 = load i64, ptr %4, align 8, !tbaa !12      ; 3 uses
+  %21 = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %19, i64 %20)
+  %22 = extractvalue { i64, i1 } %21, 1
+  br i1 %22, label %bb.u, label %23
+
+bb.u:                                             ; preds = %18
+  %i.bq = sitofp i64 %19 to double
+  %i.br = sitofp i64 %20 to double
   %i.bs = fmul nnan double %i.bq, %i.br
   %i.bt = bitcast double %i.bs to i64
-  %20 = select i1 %18, i32 5, i32 4
-  %storemerge.i = select i1 %18, i64 %i.bt, i64 %19
+  br label %25
+
+23:                                               ; preds = %18
+  %24 = mul nsw i64 %20, %19
+  br label %25
+
+25:                                               ; preds = %23, %bb.u
+  %26 = phi i32 [ 4, %23 ], [ 5, %bb.u ]
+  %storemerge.i = phi i64 [ %24, %23 ], [ %i.bt, %bb.u ]
   store i64 %storemerge.i, ptr %0, align 8, !tbaa !12
   br label %mul_function_fast.exit.sink.split
 
@@ -500,9 +527,9 @@ bb.x:                                             ; preds = %bb.t
 unreachable:                                      ; preds = %bb.t
   unreachable
 
-mul_function_fast.exit.sink.split:                ; preds = %bb.q, %bb.u, %bb.v, %bb.w, %bb.x
-  %.sink = phi i32 [ 5, %bb.x ], [ 5, %bb.w ], [ 5, %bb.v ], [ %20, %bb.u ], [ 0, %bb.q ]
-  %.031.ph = phi i32 [ 0, %bb.x ], [ 0, %bb.w ], [ 0, %bb.v ], [ 0, %bb.u ], [ -1, %bb.q ]
+mul_function_fast.exit.sink.split:                ; preds = %bb.q, %25, %bb.v, %bb.w, %bb.x
+  %.sink = phi i32 [ 5, %bb.x ], [ 5, %bb.w ], [ 5, %bb.v ], [ %26, %25 ], [ 0, %bb.q ]
+  %.031.ph = phi i32 [ 0, %bb.x ], [ 0, %bb.w ], [ 0, %bb.v ], [ 0, %25 ], [ -1, %bb.q ]
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %.sink, ptr %i.cf, align 8, !tbaa !12
   br label %mul_function_fast.exit
@@ -704,8 +731,8 @@ bb.f:                                             ; preds = %bb.e
   br label %.critedge91.sink.split
 
 .lr.ph:                                           ; preds = %bb.e, %bb.k
-  %.072102 = phi i64 [ %.375, %bb.k ], [ 1, %bb.e ] ; 4 uses
-  %.076101 = phi i64 [ %.379, %bb.k ], [ %i.j, %bb.e ] ; 6 uses
+  %.072102 = phi i64 [ %.375, %bb.k ], [ 1, %bb.e ] ; 5 uses
+  %.076101 = phi i64 [ %.379, %bb.k ], [ %i.j, %bb.e ] ; 9 uses
   %.080100 = phi i64 [ %.282, %bb.k ], [ %i.g, %bb.e ] ; 3 uses
   %i.l = and i64 %.080100, 1
   %.not = icmp eq i64 %i.l, 0
@@ -713,10 +740,13 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.lr.ph
   %i.m = add nsw i64 %.080100, -1                 ; 2 uses
-  %i.n = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.072102, i64 %.076101) ; 2 uses
+  %i.n = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.072102, i64 %.076101)
   %i.o = extractvalue { i64, i1 } %i.n, 1
-  %3 = extractvalue { i64, i1 } %i.n, 0
-  br i1 %i.o, label %bb.h, label %bb.k
+  br i1 %i.o, label %bb.h, label %3
+
+3:                                                ; preds = %bb.g
+  %4 = mul nsw i64 %.072102, %.076101
+  br label %bb.k
 
 bb.h:                                             ; preds = %bb.g
   %i.p = sitofp i64 %.072102 to double
@@ -730,9 +760,9 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %.lr.ph
   %i.v = lshr exact i64 %.080100, 1               ; 2 uses
-  %i.w = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.076101, i64 %.076101) ; 2 uses
+  %i.w = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.076101, i64 %.076101)
   %i.x = extractvalue { i64, i1 } %i.w, 1
-  %4 = extractvalue { i64, i1 } %i.w, 0
+  %5 = mul nsw i64 %.076101, %.076101
   br i1 %i.x, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
@@ -745,10 +775,10 @@ bb.j:                                             ; preds = %bb.i
   store double %i.ad, ptr %0, align 8, !tbaa !12
   br label %.critedge91.sink.split
 
-bb.k:                                             ; preds = %bb.g, %bb.i
-  %.282 = phi i64 [ %i.m, %bb.g ], [ %i.v, %bb.i ] ; 2 uses
-  %.379 = phi i64 [ %.076101, %bb.g ], [ %4, %bb.i ]
-  %.375 = phi i64 [ %3, %bb.g ], [ %.072102, %bb.i ] ; 2 uses
+bb.k:                                             ; preds = %3, %bb.i
+  %.282 = phi i64 [ %i.m, %3 ], [ %i.v, %bb.i ]   ; 2 uses
+  %.379 = phi i64 [ %.076101, %3 ], [ %5, %bb.i ]
+  %.375 = phi i64 [ %4, %3 ], [ %.072102, %bb.i ] ; 2 uses
   %i.ae = icmp sgt i64 %.282, 0
   br i1 %i.ae, label %.lr.ph, label %.critedge, !llvm.loop !104
 

@@ -205,7 +205,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 208 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 172
   %i.d = load i32, ptr %i.c, align 4, !tbaa !73
-  %i.e = icmp ugt i32 %i.d, 8                     ; 5 uses
+  %i.e = icmp ugt i32 %i.d, 8                     ; 6 uses
   %i.f = select i1 %i.e, i64 65536, i64 256       ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   %i.g = select i1 %i.e, i32 16, i32 8
@@ -267,14 +267,15 @@ _ZN7lodepngL11validateICCEPKNS_10LodePNGICCE.exit: ; preds = %bb.f, %bb.e, %bb.d
   %.0109 = phi i32 [ 0, %bb.a ], [ %i.s, %bb.c ], [ 0, %bb.e ], [ %..i, %bb.f ], [ 0, %bb.d ] ; 3 uses
   %i.aa = zext i32 %3 to i64
   %i.ab = zext i32 %4 to i64
-  %mul.i141 = mul nuw i64 %i.ab, %i.aa            ; 4 uses
+  %mul.i141 = mul nuw i64 %i.ab, %i.aa            ; 5 uses
   %i.ac = select i1 %i.e, i64 8, i64 4
-  %mul.i129 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %mul.i141, i64 range(i64 0, 4294967296) %i.ac) ; 2 uses
+  %mul.i129 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %mul.i141, i64 range(i64 0, 4294967296) %i.ac)
   %mul.ov.i131 = extractvalue { i64, i1 } %mul.i129, 1
   br i1 %mul.ov.i131, label %bb.n, label %bb.g
 
 bb.g:                                             ; preds = %_ZN7lodepngL11validateICCEPKNS_10LodePNGICCE.exit
-  %mul.val.i130 = extractvalue { i64, i1 } %mul.i129, 0
+  %8 = select i1 %i.e, i64 3, i64 2
+  %mul.val.i130 = shl nuw i64 %mul.i141, %8
   %i.ad = call noalias noundef ptr @malloc(i64 noundef %mul.val.i130) #32 ; 8 uses
   %i.ae = call noundef i32 @_Z15lodepng_convertPhPKhPK16LodePNGColorModeS4_jj(ptr noundef %i.ad, ptr noundef %2, ptr noundef nonnull %6, ptr noundef nonnull %i.a, i32 noundef %3, i32 noundef %4) ; 2 uses
   %.not124 = icmp eq i32 %i.ae, 0

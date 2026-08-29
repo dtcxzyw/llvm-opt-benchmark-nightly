@@ -204,23 +204,24 @@ _ZNK2v88internal8compiler4Node7InputAtEi.exit27:  ; preds = %_ZNK2v88internal8co
 
 bb.g:                                             ; preds = %_ZNK2v88internal8compiler4Node7InputAtEi.exit27
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.ao = load i64, ptr %i.an, align 8
+  %i.ao = load i64, ptr %i.an, align 8            ; 2 uses
   %i.ap = trunc i64 %i.ao to i32
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.ar = load i64, ptr %i.aq, align 8
+  %i.ar = load i64, ptr %i.aq, align 8            ; 2 uses
   %i.as = trunc i64 %i.ar to i32
-  %i.at = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.ap, i32 %i.as) ; 2 uses
+  %i.at = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.ap, i32 %i.as)
   %i.au = extractvalue { i32, i1 } %i.at, 1
   br i1 %i.au, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %15 = extractvalue { i32, i1 } %i.at, 0
+  %15 = add i64 %i.ar, %i.ao
   %i.av = load i64, ptr %3, align 8
   %i.aw = load i64, ptr %4, align 8
   %i.ax = add nsw i64 %i.aw, %i.av
   store i64 %i.ax, ptr %0, align 8
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %16 = sext i32 %15 to i64
+  %sext = shl i64 %15, 32
+  %16 = ashr exact i64 %sext, 32
   store i64 %16, ptr %i.ay, align 8
   br label %bb.i
 

@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %bb.ad, %_RINvMs3_Nt
     #dbg_value(ptr poison, !7233, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !7264)
     #dbg_value(ptr %i.b, !7214, !DIExpression(), !7266)
     #dbg_value(i8 1, !7267, !DIExpression(), !7274)
-  %i.ef = add nuw nsw i32 %i.ed, 1, !dbg !7223    ; 8 uses
+  %i.ef = add nuw nsw i32 %i.ed, 1, !dbg !7223    ; 9 uses
     #dbg_value(i32 %i.ef, !7215, !DIExpression(), !7276)
     #dbg_value(i8 %i.ec, !7273, !DIExpression(), !7274)
   %i.eg = icmp eq i8 %i.ec, 0, !dbg !7277
@@ -239,48 +239,49 @@ bb.aa:                                            ; preds = %bb.y
 
 .preheader.i.i.i:                                 ; preds = %bb.aa
   %.sroa.0.011.i.i.i = add nuw nsw i32 %i.ed, 2, !dbg !7319 ; 3 uses
-  %i.ej = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.ef, i32 %.sroa.0.011.i.i.i), !dbg !7320 ; 2 uses
+  %i.ej = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.ef, i32 %.sroa.0.011.i.i.i), !dbg !7320
   %i.ek = extractvalue { i32, i1 } %i.ej, 1, !dbg !7320
   br i1 %i.ek, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i48, !dbg !7354, !prof !7363
 
 .lr.ph.i.i.i48:                                   ; preds = %.preheader.i.i.i, %.lr.ph.i.i.i48
-  %8 = phi { i32, i1 } [ %i.el, %.lr.ph.i.i.i48 ], [ %i.ej, %.preheader.i.i.i ]
-  %.sroa.0.012.i.i.i = phi i32 [ %.sroa.0.0.i.i.i, %.lr.ph.i.i.i48 ], [ %.sroa.0.011.i.i.i, %.preheader.i.i.i ]
-  %9 = extractvalue { i32, i1 } %8, 0, !dbg !7320 ; 2 uses
-    #dbg_value(i32 %9, !7350, !DIExpression(), !7364)
-    #dbg_value(i32 %9, !7286, !DIExpression(), !7365)
-    #dbg_value(i32 %9, !7308, !DIExpression(), !7319)
-    #dbg_value(i32 %9, !7312, !DIExpression(), !7366)
-    #dbg_value(i32 %.sroa.0.012.i.i.i, !7310, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value), !7367)
-  %.sroa.0.0.i.i.i = add i32 %.sroa.0.012.i.i.i, 1, !dbg !7319 ; 3 uses
+  %.sroa.0.013.i.i.i = phi i32 [ %.sroa.0.0.i.i.i, %.lr.ph.i.i.i48 ], [ %.sroa.0.011.i.i.i, %.preheader.i.i.i ] ; 2 uses
+  %.sroa.0.012.i.i.i = phi i32 [ %8, %.lr.ph.i.i.i48 ], [ %i.ef, %.preheader.i.i.i ]
+    #dbg_value(i32 %.sroa.0.012.i.i.i, !7312, !DIExpression(), !7364)
+  %8 = mul nuw i32 %.sroa.0.012.i.i.i, %.sroa.0.013.i.i.i, !dbg !7320 ; 3 uses
+    #dbg_value(i32 %8, !7350, !DIExpression(), !7365)
+    #dbg_value(i32 %8, !7286, !DIExpression(), !7366)
+    #dbg_value(i32 %8, !7308, !DIExpression(), !7319)
+    #dbg_value(i32 %8, !7312, !DIExpression(), !7364)
+    #dbg_value(i32 %.sroa.0.013.i.i.i, !7310, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value), !7367)
+  %.sroa.0.0.i.i.i = add i32 %.sroa.0.013.i.i.i, 1, !dbg !7319 ; 3 uses
     #dbg_value(i32 %.sroa.0.0.i.i.i, !7310, !DIExpression(), !7367)
-    #dbg_value(i32 %9, !7348, !DIExpression(), !7368)
-    #dbg_value(i32 %9, !7330, !DIExpression(), !7369)
+    #dbg_value(i32 %8, !7348, !DIExpression(), !7368)
+    #dbg_value(i32 %8, !7330, !DIExpression(), !7369)
     #dbg_value(i32 %.sroa.0.0.i.i.i, !7349, !DIExpression(), !7368)
     #dbg_value(i32 %.sroa.0.0.i.i.i, !7331, !DIExpression(), !7369)
-  %i.el = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %9, i32 %.sroa.0.0.i.i.i), !dbg !7320 ; 2 uses
+  %i.el = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %8, i32 %.sroa.0.0.i.i.i), !dbg !7320
   %i.em = extractvalue { i32, i1 } %i.el, 1, !dbg !7320
-    #dbg_value(i32 poison, !7350, !DIExpression(), !7364)
-    #dbg_value(i1 %i.em, !7352, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !7364)
+    #dbg_value(i32 poison, !7350, !DIExpression(), !7365)
+    #dbg_value(i1 %i.em, !7352, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !7365)
     #dbg_value(i1 %i.em, !7361, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !7370)
   br i1 %i.em, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i48, !dbg !7354, !prof !7371
 
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i48, %.preheader.i.i.i
-  %.sroa.03.1.lcssa.i.i.i = phi i32 [ %i.ef, %.preheader.i.i.i ], [ %9, %.lr.ph.i.i.i48 ], !dbg !7316
+  %.sroa.03.1.lcssa.i.i.i = phi i32 [ %i.ef, %.preheader.i.i.i ], [ %8, %.lr.ph.i.i.i48 ], !dbg !7316
   %.sroa.0.0.lcssa.i.i.i = phi i32 [ %.sroa.0.011.i.i.i, %.preheader.i.i.i ], [ %.sroa.0.0.i.i.i, %.lr.ph.i.i.i48 ], !dbg !7319
   %i.en = sub i32 %.sroa.0.0.lcssa.i.i.i, %i.ef, !dbg !7372
   %i.eo = trunc i32 %i.en to i8, !dbg !7372
-    #dbg_value(i8 %i.eo, !7288, !DIExpression(), !7365)
+    #dbg_value(i8 %i.eo, !7288, !DIExpression(), !7366)
   %i.ep = add i8 %i.eo, -1, !dbg !7373
   br label %_RNCNvMNtNtCs5Qxcy9OyWl9_4rand3seq18increasing_uniformINtB4_17IncreasingUniformQNtNtNtB8_4rngs3std6StdRngE10next_index0CshovLROGBtMy_11quinn_proto.exit.i.i, !dbg !7374
 
 _RNCNvMNtNtCs5Qxcy9OyWl9_4rand3seq18increasing_uniformINtB4_17IncreasingUniformQNtNtNtB8_4rngs3std6StdRngE10next_index0CshovLROGBtMy_11quinn_proto.exit.i.i: ; preds = %._crit_edge.i.i.i, %bb.aa
   %.sroa.05.0.i.i.i = phi i8 [ %i.ep, %._crit_edge.i.i.i ], [ 10, %bb.aa ], !dbg !7302
   %.sroa.03.0.i.i.i = phi i32 [ %.sroa.03.1.lcssa.i.i.i, %._crit_edge.i.i.i ], [ 479001600, %bb.aa ], !dbg !7302
-    #dbg_value(i32 %.sroa.03.0.i.i.i, !7312, !DIExpression(), !7366)
+    #dbg_value(i32 %.sroa.03.0.i.i.i, !7312, !DIExpression(), !7364)
     #dbg_value(i32 %.sroa.03.0.i.i.i, !7308, !DIExpression(), !7319)
-    #dbg_value(i32 %.sroa.03.0.i.i.i, !7286, !DIExpression(), !7365)
-    #dbg_value(i8 %.sroa.05.0.i.i.i, !7288, !DIExpression(), !7365)
+    #dbg_value(i32 %.sroa.03.0.i.i.i, !7286, !DIExpression(), !7366)
+    #dbg_value(i8 %.sroa.05.0.i.i.i, !7288, !DIExpression(), !7366)
   %i.eq = call noundef i32 @_RINvYQNtNtNtCs5Qxcy9OyWl9_4rand4rngs3std6StdRngNtNtBa_3rng6RngExt12random_rangemINtNtNtCskKLDkoKarTP_4core3ops5range7RangeTomEECshovLROGBtMy_11quinn_proto(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b, i32 noundef %.sroa.03.0.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @17), !dbg !7375, !noalias !7376 ; 2 uses
   store i32 %i.eq, ptr %i.dz, align 4, !dbg !7379, !alias.scope !7380, !noalias !7383
     #dbg_value(i8 %.sroa.05.0.i.i.i, !7216, !DIExpression(), !7291)
@@ -683,9 +684,9 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !7361 = !DILocalVariable(name: "b", arg: 1, scope: !7355, file: !7356, line: 482, type: !2233)
 !7362 = distinct !DILocation(line: 1361, column: 16, scope: !7351, inlinedAt: !7353)
 !7363 = !{!"branch_weights", i32 1, i32 127}
-!7364 = !DILocation(line: 0, scope: !7351, inlinedAt: !7353)
-!7365 = !DILocation(line: 0, scope: !7287, inlinedAt: !7290)
-!7366 = !DILocation(line: 0, scope: !7313, inlinedAt: !7317)
+!7364 = !DILocation(line: 0, scope: !7313, inlinedAt: !7317)
+!7365 = !DILocation(line: 0, scope: !7351, inlinedAt: !7353)
+!7366 = !DILocation(line: 0, scope: !7287, inlinedAt: !7290)
 !7367 = !DILocation(line: 0, scope: !7311, inlinedAt: !7317)
 !7368 = !DILocation(line: 0, scope: !7333, inlinedAt: !7353)
 !7369 = !DILocation(line: 0, scope: !7321, inlinedAt: !7332)

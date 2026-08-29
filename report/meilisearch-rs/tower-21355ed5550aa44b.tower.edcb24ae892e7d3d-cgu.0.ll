@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
   %i.p = fcmp oeq float %4, 0.000000e+00
-  br i1 %i.p, label %bb.o, label %bb.l
+  br i1 %i.p, label %"_ZN4core3num23_$LT$impl$u20$isize$GT$14saturating_mul17h27e2917b201371c7E.exit", label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.q = fcmp ugt float %4, 1.000000e+00
@@ -214,16 +214,34 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.r = fdiv float 1.000000e+03, %4
   %i.s = call i64 @llvm.fptosi.sat.i64.f32(float %i.r)
-  br label %bb.o
+  br label %"_ZN4core3num23_$LT$impl$u20$isize$GT$14saturating_mul17h27e2917b201371c7E.exit"
 
 bb.n:                                             ; preds = %bb.l
   %i.t = fdiv float 1.000000e+00, %4
   %i.u = call i64 @llvm.fptosi.sat.i64.f32(float %i.t)
+  br label %"_ZN4core3num23_$LT$impl$u20$isize$GT$14saturating_mul17h27e2917b201371c7E.exit"
+
+"_ZN4core3num23_$LT$impl$u20$isize$GT$14saturating_mul17h27e2917b201371c7E.exit": ; preds = %bb.m, %bb.n, %bb.k
+  %.sroa.4.0 = phi i64 [ %i.s, %bb.m ], [ %i.u, %bb.n ], [ 1, %bb.k ] ; 4 uses
+  %.sroa.0.0 = phi i64 [ 1000, %bb.m ], [ 1, %bb.n ], [ 0, %bb.k ]
+  %5 = zext nneg i32 %3 to i64
+  %6 = mul nuw nsw i64 %i.h, %5                   ; 3 uses
+  %7 = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %6, i64 %.sroa.4.0)
+  %8 = extractvalue { i64, i1 } %7, 1
+  br i1 %8, label %11, label %9
+
+9:                                                ; preds = %"_ZN4core3num23_$LT$impl$u20$isize$GT$14saturating_mul17h27e2917b201371c7E.exit"
+  %10 = mul nsw i64 %.sroa.4.0, %6
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.m, %bb.n, %bb.k
-  %.sroa.4.0 = phi i64 [ %i.s, %bb.m ], [ %i.u, %bb.n ], [ 1, %bb.k ] ; 3 uses
-  %.sroa.0.0 = phi i64 [ 1000, %bb.m ], [ 1, %bb.n ], [ 0, %bb.k ]
+11:                                               ; preds = %"_ZN4core3num23_$LT$impl$u20$isize$GT$14saturating_mul17h27e2917b201371c7E.exit"
+  %12 = xor i64 %.sroa.4.0, %6
+  %13 = icmp sgt i64 %12, -1
+  %..i13 = select i1 %13, i64 9223372036854775807, i64 -9223372036854775808
+  br label %bb.o
+
+bb.o:                                             ; preds = %11, %9
+  %.sroa.0.0.i12 = phi i64 [ %10, %9 ], [ %..i13, %11 ]
   %i.v = call { i64, ptr } @"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hc660af04fd9c42f5E"(i64 10, i64 8, i64 8, ptr nonnull align 8 @29) ; 2 uses
   %i.w = extractvalue { i64, ptr } %i.v, 0        ; 2 uses
   %i.x = extractvalue { i64, ptr } %i.v, 1        ; 2 uses
@@ -279,16 +297,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %.noexc._crit_edge.i, %bb.p
   %.sroa.33.0.copyload.i = phi i64 [ %.sroa.33.0.copyload.pre.i, %.noexc._crit_edge.i ], [ %i.ad, %bb.p ]
   %i.ak = extractvalue { i64, i32 } %i.cv, 1
-  %5 = extractvalue { i64, i32 } %i.cv, 0
-  %6 = zext nneg i32 %3 to i64
-  %7 = mul nuw nsw i64 %i.h, %6                   ; 2 uses
-  %8 = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %7, i64 %.sroa.4.0) ; 2 uses
-  %9 = extractvalue { i64, i1 } %8, 1
-  %10 = xor i64 %.sroa.4.0, %7
-  %11 = icmp sgt i64 %10, -1
-  %..i12 = select i1 %11, i64 9223372036854775807, i64 -9223372036854775808
-  %i.al = extractvalue { i64, i1 } %8, 0
-  %.sroa.0.0.i13 = select i1 %9, i64 %..i12, i64 %i.al
+  %i.al = extractvalue { i64, i32 } %i.cv, 0
   %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.22.0.copyload.i = load ptr, ptr %.sroa.22.0..sroa_idx.i, align 8
   %i.am = load i64, ptr %i.d, align 8             ; 2 uses
@@ -314,11 +323,11 @@ bb.u:                                             ; preds = %.noexc._crit_edge.i
   %.sroa.319.sroa.1.0..sroa.319.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %.sroa.319.sroa.1.0..sroa.319.0..sroa_idx.sroa_idx, align 8
   %.sroa.319.sroa.2.0..sroa.319.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %5, ptr %.sroa.319.sroa.2.0..sroa.319.0..sroa_idx.sroa_idx, align 8
+  store i64 %i.al, ptr %.sroa.319.sroa.2.0..sroa.319.0..sroa_idx.sroa_idx, align 8
   %.sroa.319.sroa.3.0..sroa.319.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 %i.ak, ptr %.sroa.319.sroa.3.0..sroa.319.0..sroa_idx.sroa_idx, align 8
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i64 %.sroa.0.0.i13, ptr %i.bb, align 8
+  store i64 %.sroa.0.0.i12, ptr %i.bb, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %.sroa.22.0.copyload.i, ptr %i.bc, align 8
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 40

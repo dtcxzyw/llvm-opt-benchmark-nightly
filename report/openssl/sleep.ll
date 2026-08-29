@@ -11,9 +11,12 @@ target triple = "x86_64-pc-linux-gnu"
 define void @OSSL_sleep(i64 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.timespec, align 8           ; 5 uses
-  %i.a = tail call i64 @ossl_time_now() #4
-  %i.b = mul i64 %0, 1000000
-  %.sroa.03.0.i = tail call i64 @llvm.uadd.sat.i64(i64 %i.a, i64 %i.b) ; 2 uses
+  %i.a = tail call i64 @ossl_time_now() #4        ; 2 uses
+  %i.b = mul i64 %0, 1000000                      ; 2 uses
+  %2 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.a, i64 %i.b)
+  %3 = extractvalue { i64, i1 } %2, 1
+  %.0.i.i = add i64 %i.a, %i.b
+  %..0.i.i = select i1 %3, i64 -1, i64 %.0.i.i    ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   br label %bb.b
 
@@ -28,9 +31,9 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %i.g = call i32 @nanosleep(ptr noundef nonnull %1, ptr noundef null) #4 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #4
   %i.h = call i64 @ossl_time_now() #4             ; 2 uses
-  %..i = call i64 @llvm.usub.sat.i64(i64 %.sroa.03.0.i, i64 %i.h)
+  %..i = call i64 @llvm.usub.sat.i64(i64 %..0.i.i, i64 %i.h)
   %i.i = udiv i64 %..i, 1000000
-  %i.j = icmp ult i64 %i.h, %.sroa.03.0.i
+  %i.j = icmp ult i64 %i.h, %..0.i.i
   br i1 %i.j, label %bb.b, label %bb.c, !llvm.loop !12
 
 bb.c:                                             ; preds = %bb.b
@@ -45,10 +48,10 @@ declare i64 @ossl_time_now() local_unnamed_addr #2
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
-declare i32 @nanosleep(ptr noundef, ptr noundef) local_unnamed_addr #2
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.uadd.sat.i64(i64, i64) #3
+declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #3
+
+declare i32 @nanosleep(ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #3
