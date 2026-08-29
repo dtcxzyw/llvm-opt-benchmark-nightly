@@ -202,16 +202,16 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %.thre
 .preheader169:                                    ; preds = %.preheader169.lr.ph, %.loopexit393
   %indvars.iv249 = phi i64 [ 0, %.preheader169.lr.ph ], [ %indvars.iv.next250, %.loopexit393 ] ; 6 uses
   %.0200 = phi i32 [ 0, %.preheader169.lr.ph ], [ %spec.select159.lcssa, %.loopexit393 ] ; 2 uses
-  %3 = sub nsw i64 %wide.trip.count257, %indvars.iv249 ; 3 uses
-  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.ed, i64 %indvars.iv249
-  %5 = load ptr, ptr %4, align 8, !tbaa !26       ; 2 uses
-  %min.iters.check312 = icmp ult i64 %3, 4
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.ed, i64 %indvars.iv249
+  %4 = load ptr, ptr %3, align 8, !tbaa !26       ; 2 uses
+  %5 = sub nsw i64 %wide.trip.count257, %indvars.iv249 ; 3 uses
+  %min.iters.check312 = icmp ult i64 %5, 4
   br i1 %min.iters.check312, label %scalar.ph311.preheader, label %vector.ph313
 
 vector.ph313:                                     ; preds = %.preheader169
-  %n.vec314 = and i64 %3, -4                      ; 3 uses
+  %n.vec314 = and i64 %5, -4                      ; 3 uses
   %i.ee = add i64 %indvars.iv249, %n.vec314
-  %i.ef = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv249
+  %i.ef = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv249
   br label %vector.body315
 
 vector.body315:                                   ; preds = %vector.body315, %vector.ph313
@@ -238,7 +238,7 @@ middle.block322:                                  ; preds = %vector.body315
   %i.ep = bitcast <2 x i1> %bin.rdx323.fr to i2
   %.not395 = icmp eq i2 %i.ep, 0
   %rdx.select324 = select i1 %.not395, i32 %.0200, i32 1 ; 2 uses
-  %cmp.n325 = icmp eq i64 %3, %n.vec314
+  %cmp.n325 = icmp eq i64 %5, %n.vec314
   br i1 %cmp.n325, label %.loopexit393, label %scalar.ph311.preheader
 
 scalar.ph311.preheader:                           ; preds = %.preheader169, %middle.block322
@@ -249,7 +249,7 @@ scalar.ph311.preheader:                           ; preds = %.preheader169, %mid
 scalar.ph311:                                     ; preds = %scalar.ph311.preheader, %scalar.ph311
   %indvars.iv251 = phi i64 [ %indvars.iv.next252, %scalar.ph311 ], [ %indvars.iv251.ph, %scalar.ph311.preheader ] ; 2 uses
   %.1198 = phi i32 [ %spec.select159, %scalar.ph311 ], [ %.1198.ph, %scalar.ph311.preheader ]
-  %i.eq = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv251
+  %i.eq = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv251
   %i.er = load double, ptr %i.eq, align 8, !tbaa !22
   %i.es = tail call double @llvm.fabs.f64(double %i.er)
   %i.et = fcmp ogt double %i.es, f0x3D19000000000000
