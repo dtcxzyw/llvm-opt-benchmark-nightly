@@ -99,8 +99,8 @@ bb.a:
   %i.l = getelementptr [4 x i8], ptr %i.d, i64 %indvars.iv ; 2 uses
   %i.m = getelementptr i8, ptr %i.l, i64 -4
   %i.n = load i32, ptr %i.m, align 4, !tbaa !10
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.o = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
+  %i.o = shl nuw nsw i32 %indvars.iv.tr, 1
   %i.p = tail call i32 @Gia_ManHashAnd(ptr noundef %i.a, i32 noundef %i.n, i32 noundef %i.o) #27
   store i32 %i.p, ptr %i.l, align 4, !tbaa !10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -112,7 +112,7 @@ bb.a:
   %i.q = phi i32 [ %.promoted, %.lr.ph71 ], [ %i.t, %._crit_edge68 ]
   %i.r = trunc i64 %indvars.iv80 to i32
   %.tr = add i32 %i.i, %i.r
-  %i.s = shl i32 %.tr, 1
+  %i.s = shl nsw i32 %.tr, 1
   %i.t = tail call i32 @Gia_ManHashAnd(ptr noundef %i.a, i32 noundef %i.q, i32 noundef %i.s) #27 ; 2 uses
   store i32 %i.t, ptr %i.d, align 4, !tbaa !10
   %i.u = mul nuw nsw i64 %indvars.iv80, %i.k
@@ -125,8 +125,8 @@ bb.b:                                             ; preds = %.lr.ph67, %bb.b
   %i.x = getelementptr i8, ptr %i.w, i64 -4
   %i.y = load i32, ptr %i.x, align 4, !tbaa !10
   %i.z = add nuw nsw i64 %indvars.iv75, %i.u
-  %.tr87 = trunc i64 %i.z to i32
-  %i.aa = shl i32 %.tr87, 1
+  %.tr87 = trunc nuw i64 %i.z to i32
+  %i.aa = shl nuw i32 %.tr87, 1
   %i.ab = tail call i32 @Gia_ManHashAnd(ptr noundef %i.a, i32 noundef %i.y, i32 noundef %i.aa) #27
   %i.ac = load i32, ptr %i.w, align 4, !tbaa !10
   %i.ad = trunc i64 %indvars.iv75 to i32
@@ -496,8 +496,8 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.d
   %i.v = icmp samesign ult i64 %indvars.iv, 1073741823
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.w = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nsw i64 %indvars.iv to i32
+  %i.w = shl nsw i32 %indvars.iv.tr, 1
   %spec.select.i.i = select i1 %i.v, i32 %i.w, i32 2147483647 ; 4 uses
   %i.x = sext i32 %spec.select.i.i to i64
   %.not.i9.i.i = icmp samesign ult i64 %indvars.iv, %i.x
@@ -533,8 +533,8 @@ bb.l:                                             ; preds = %Vec_IntPush.exit.i
 
 bb.m:                                             ; preds = %bb.l
   %i.ah = icmp samesign ult i64 %indvars.iv, 1073741822
-  %.tr = trunc i64 %i.ac to i32
-  %i.ai = shl i32 %.tr, 1
+  %.tr = trunc nsw i64 %i.ac to i32
+  %i.ai = shl nsw i32 %.tr, 1
   %spec.select.i3.i = select i1 %i.ah, i32 %i.ai, i32 2147483647 ; 3 uses
   %i.aj = sext i32 %spec.select.i3.i to i64
   %.not.i9.i4.i = icmp samesign ult i64 %i.ac, %i.aj
@@ -609,8 +609,8 @@ bb.t:                                             ; preds = %bb.r
 
 bb.u:                                             ; preds = %bb.q
   %i.ba = icmp samesign ult i64 %indvars.iv76, 1073741823
-  %indvars.iv76.tr = trunc i64 %indvars.iv76 to i32
-  %i.bb = shl i32 %indvars.iv76.tr, 1
+  %indvars.iv76.tr = trunc nsw i64 %indvars.iv76 to i32
+  %i.bb = shl nsw i32 %indvars.iv76.tr, 1
   %spec.select.i.i38 = select i1 %i.ba, i32 %i.bb, i32 2147483647 ; 4 uses
   %i.bc = sext i32 %spec.select.i.i38 to i64
   %.not.i9.i.i39 = icmp samesign ult i64 %indvars.iv76, %i.bc
@@ -646,8 +646,8 @@ bb.y:                                             ; preds = %Vec_IntPush.exit.i3
 
 bb.z:                                             ; preds = %bb.y
   %i.bm = icmp samesign ult i64 %indvars.iv76, 1073741822
-  %.tr100 = trunc i64 %i.bh to i32
-  %i.bn = shl i32 %.tr100, 1
+  %.tr100 = trunc nsw i64 %i.bh to i32
+  %i.bn = shl nsw i32 %.tr100, 1
   %spec.select.i3.i32 = select i1 %i.bm, i32 %i.bn, i32 2147483647 ; 3 uses
   %i.bo = sext i32 %spec.select.i3.i32 to i64
   %.not.i9.i4.i33 = icmp samesign ult i64 %i.bh, %i.bo
@@ -1050,8 +1050,8 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.c
   %i.an = icmp samesign ult i64 %indvars.iv157, 1073741823
-  %indvars.iv157.tr = trunc i64 %indvars.iv157 to i32
-  %i.ao = shl i32 %indvars.iv157.tr, 1
+  %indvars.iv157.tr = trunc nsw i64 %indvars.iv157 to i32
+  %i.ao = shl nsw i32 %indvars.iv157.tr, 1
   %spec.select.i = select i1 %i.an, i32 %i.ao, i32 2147483647 ; 4 uses
   %i.ap = sext i32 %spec.select.i to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv157, %i.ap

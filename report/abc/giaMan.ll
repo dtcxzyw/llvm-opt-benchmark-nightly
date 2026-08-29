@@ -205,9 +205,9 @@ bb.ab:                                            ; preds = %bb.z
 bb.ac:                                            ; preds = %bb.y
   %i.dw = icmp samesign ult i64 %indvars.iv138, 1073741823
   %indvars.iv138.tr = trunc nuw nsw i64 %indvars.iv138 to i32
-  %i.dx = shl nuw i32 %indvars.iv138.tr, 1
+  %i.dx = shl nuw nsw i32 %indvars.iv138.tr, 1
   %spec.select.i83 = select i1 %i.dw, i32 %i.dx, i32 2147483647 ; 4 uses
-  %2 = sext i32 %spec.select.i83 to i64
+  %2 = zext nneg i32 %spec.select.i83 to i64
   %.not.i9.i84 = icmp samesign ult i64 %indvars.iv138, %2
   %.pre155 = load ptr, ptr %i.aj, align 8, !tbaa !34 ; 3 uses
   br i1 %.not.i9.i84, label %bb.ad, label %Vec_IntPush.exit90

@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %bb.c
   br i1 %.not11.i2.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph7.i.i
-  %indvars.iv.tr.i.i = trunc i64 %indvars.iv.i.i to i32
-  %i.am = shl i32 %indvars.iv.tr.i.i, 5
+  %indvars.iv.tr.i.i = trunc nuw i64 %indvars.iv.i.i to i32
+  %i.am = shl nuw i32 %indvars.iv.tr.i.i, 5
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiSt6vectorINS_14SIRegisterInfo10SpilledRegESaIS4_EENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS6_EEEEiS6_S8_SB_E10destroyAllEvENKUljE_clEj.exit.i.i, %.lr.ph.i.i
@@ -406,8 +406,8 @@ bb.p:                                             ; preds = %bb.m
   br i1 %.not11.i2.i.i42, label %._crit_edge.i.i49, label %.lr.ph.i.i43
 
 .lr.ph.i.i43:                                     ; preds = %.lr.ph7.i.i40
-  %indvars.iv.tr.i.i44 = trunc i64 %indvars.iv.i.i41 to i32
-  %i.ds = shl i32 %indvars.iv.tr.i.i44, 5
+  %indvars.iv.tr.i.i44 = trunc nuw i64 %indvars.iv.i.i41 to i32
+  %i.ds = shl nuw i32 %indvars.iv.tr.i.i44, 5
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiSt6vectorINS_14SIRegisterInfo10SpilledRegESaIS4_EENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS6_EEEEiS6_S8_SB_E10destroyAllEvENKUljE_clEj.exit.i.i47, %.lr.ph.i.i43
@@ -810,8 +810,8 @@ _ZN4llvm11SmallVectorItLj32EED2Ev.exit1:          ; preds = %_ZN4llvm11SmallVect
   br i1 %.not11.i2.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph7.i.i
-  %indvars.iv.tr.i.i = trunc i64 %indvars.iv.i.i to i32
-  %i.y = shl i32 %indvars.iv.tr.i.i, 5
+  %indvars.iv.tr.i.i = trunc nuw i64 %indvars.iv.i.i to i32
+  %i.y = shl nuw i32 %indvars.iv.tr.i.i, 5
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiNS_21SIMachineFunctionInfo15VGPRSpillToAGPRENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS3_EEEEiS3_S5_S8_E10destroyAllEvENKUljE_clEj.exit.i.i, %.lr.ph.i.i
@@ -981,8 +981,8 @@ _ZN4llvm11SmallVectorINS_8RegisterELj2EED2Ev.exit2: ; preds = %_ZN4llvm11SmallVe
   br i1 %.not11.i2.i.i6, label %._crit_edge.i.i11, label %.lr.ph.i.i7
 
 .lr.ph.i.i7:                                      ; preds = %.lr.ph7.i.i4
-  %indvars.iv.tr.i.i8 = trunc i64 %indvars.iv.i.i5 to i32
-  %i.cv = shl i32 %indvars.iv.tr.i.i8, 5
+  %indvars.iv.tr.i.i8 = trunc nuw i64 %indvars.iv.i.i5 to i32
+  %i.cv = shl nuw i32 %indvars.iv.tr.i.i8, 5
   br label %bb.p
 
 bb.p:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiSt6vectorINS_14SIRegisterInfo10SpilledRegESaIS4_EENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS6_EEEEiS6_S8_SB_E10destroyAllEvENKUljE_clEj.exit.i.i, %.lr.ph.i.i7
@@ -1056,8 +1056,8 @@ _ZN4llvm8DenseMapIiSt6vectorINS_14SIRegisterInfo10SpilledRegESaIS3_EENS_12DenseM
   br i1 %.not11.i2.i.i18, label %._crit_edge.i.i25, label %.lr.ph.i.i19
 
 .lr.ph.i.i19:                                     ; preds = %.lr.ph7.i.i16
-  %indvars.iv.tr.i.i20 = trunc i64 %indvars.iv.i.i17 to i32
-  %i.ed = shl i32 %indvars.iv.tr.i.i20, 5
+  %indvars.iv.tr.i.i20 = trunc nuw i64 %indvars.iv.i.i17 to i32
+  %i.ed = shl nuw i32 %indvars.iv.tr.i.i20, 5
   br label %bb.s
 
 bb.s:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiSt6vectorINS_14SIRegisterInfo10SpilledRegESaIS4_EENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS6_EEEEiS6_S8_SB_E10destroyAllEvENKUljE_clEj.exit.i.i23, %.lr.ph.i.i19
@@ -1460,8 +1460,8 @@ bb.a:
   br i1 %.not11.i4.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph9.i
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.s = shl i32 %indvars.iv.tr.i, 5
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.s = shl nuw i32 %indvars.iv.tr.i, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_13SmallDenseMapIiNS_24KernArgPreloadDescriptorELj4ENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EEEEiS2_S4_S7_E10destroyAllEvENKUljE_clEj.exit.i, %.lr.ph.i
@@ -1612,8 +1612,8 @@ _ZN4llvm13SmallDenseMapIiNS_24KernArgPreloadDescriptorELj4ENS_12DenseMapInfoIivE
   br i1 %.not.i.us, label %_ZN4llvm8densemap6detail11forEachUsedIZNS_12DenseMapBaseINS_13SmallDenseMapIiNS_24KernArgPreloadDescriptorELj4ENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS5_EEEEiS5_S7_SA_E8copyFromERKSB_EUljE_EEvPKjjT_.exit, label %.lr.ph21.split.us, !llvm.loop !894
 
 .lr.ph.us:                                        ; preds = %.lr.ph21.split.us
-  %indvars.iv24.tr = trunc i64 %indvars.iv24 to i32
-  %i.ci = shl i32 %indvars.iv24.tr, 5
+  %indvars.iv24.tr = trunc nuw i64 %indvars.iv24 to i32
+  %i.ci = shl nuw i32 %indvars.iv24.tr, 5
   br label %_ZZN4llvm12DenseMapBaseINS_13SmallDenseMapIiNS_24KernArgPreloadDescriptorELj4ENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EEEEiS2_S4_S7_E8copyFromERKS8_ENKUljE_clEj.exit.us.us
 
 _ZZN4llvm12DenseMapBaseINS_13SmallDenseMapIiNS_24KernArgPreloadDescriptorELj4ENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EEEEiS2_S4_S7_E8copyFromERKS8_ENKUljE_clEj.exit.us.us: ; preds = %_ZZN4llvm12DenseMapBaseINS_13SmallDenseMapIiNS_24KernArgPreloadDescriptorELj4ENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EEEEiS2_S4_S7_E8copyFromERKS8_ENKUljE_clEj.exit.us.us, %.lr.ph.us
@@ -1648,8 +1648,8 @@ _ZZN4llvm12DenseMapBaseINS_13SmallDenseMapIiNS_24KernArgPreloadDescriptorELj4ENS
   br i1 %.not11.i17, label %._crit_edge.split, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph21.split
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.cz = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.cz = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_13SmallDenseMapIiNS_24KernArgPreloadDescriptorELj4ENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EEEEiS2_S4_S7_E8copyFromERKS8_ENKUljE_clEj.exit
@@ -2052,8 +2052,8 @@ bb.a:
   br i1 %.not11.i4.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph9.i
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.s = shl i32 %indvars.iv.tr.i, 5
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.s = shl nuw i32 %indvars.iv.tr.i, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_13SmallDenseMapIiNS_24KernArgPreloadDescriptorELj4ENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EEEEiS2_S4_S7_E10destroyAllEvENKUljE_clEj.exit.i, %.lr.ph.i
@@ -2439,8 +2439,8 @@ bb.a:
   br i1 %.not11.i15, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph20
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapINS_8RegisterENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS2_vEENS3_12DenseSetPairIS2_EEEES2_S4_S6_S8_E8moveFromERS9_ENKUljE_clEj.exit
@@ -2843,8 +2843,8 @@ bb.a:
   br i1 %.not11.i2.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph7.i
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.l = shl i32 %indvars.iv.tr.i, 5
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.l = shl nuw i32 %indvars.iv.tr.i, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiSt6vectorINS_14SIRegisterInfo10SpilledRegESaIS4_EENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS6_EEEEiS6_S8_SB_E10destroyAllEvENKUljE_clEj.exit.i, %.lr.ph.i
@@ -2945,8 +2945,8 @@ bb.e:                                             ; preds = %_ZN4llvm8DenseMapIi
   br i1 %.not11.i15, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph20
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.bg = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.bg = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiSt6vectorINS_14SIRegisterInfo10SpilledRegESaIS4_EENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS6_EEEEiS6_S8_SB_E8copyFromERKSC_ENKUljE_clEj.exit
@@ -3222,8 +3222,8 @@ bb.a:
   br i1 %.not11.i2.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph7.i
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.l = shl i32 %indvars.iv.tr.i, 5
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.l = shl nuw i32 %indvars.iv.tr.i, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiNS_21SIMachineFunctionInfo15VGPRSpillToAGPRENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS3_EEEEiS3_S5_S8_E10destroyAllEvENKUljE_clEj.exit.i, %.lr.ph.i
@@ -3330,8 +3330,8 @@ bb.e:                                             ; preds = %_ZN4llvm8DenseMapIi
   br i1 %.not.i.us, label %_ZN4llvm8densemap6detail11forEachUsedIZNS_12DenseMapBaseINS_8DenseMapIiNS_21SIMachineFunctionInfo15VGPRSpillToAGPRENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS6_EEEEiS6_S8_SB_E8copyFromERKSC_EUljE_EEvPKjjT_.exit, label %.lr.ph19.split.us, !llvm.loop !969
 
 .lr.ph.us:                                        ; preds = %.lr.ph19.split.us
-  %indvars.iv23.tr = trunc i64 %indvars.iv23 to i32
-  %i.be = shl i32 %indvars.iv23.tr, 5
+  %indvars.iv23.tr = trunc nuw i64 %indvars.iv23 to i32
+  %i.be = shl nuw i32 %indvars.iv23.tr, 5
   br label %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiNS_21SIMachineFunctionInfo15VGPRSpillToAGPRENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS3_EEEEiS3_S5_S8_E8copyFromERKS9_ENKUljE_clEj.exit.us.us
 
 _ZZN4llvm12DenseMapBaseINS_8DenseMapIiNS_21SIMachineFunctionInfo15VGPRSpillToAGPRENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS3_EEEEiS3_S5_S8_E8copyFromERKS9_ENKUljE_clEj.exit.us.us: ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiNS_21SIMachineFunctionInfo15VGPRSpillToAGPRENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS3_EEEEiS3_S5_S8_E8copyFromERKS9_ENKUljE_clEj.exit.us.us, %.lr.ph.us
@@ -3367,8 +3367,8 @@ _ZZN4llvm12DenseMapBaseINS_8DenseMapIiNS_21SIMachineFunctionInfo15VGPRSpillToAGP
   br i1 %.not11.i14, label %._crit_edge.split, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph19.split
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.bw = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.bw = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiNS_21SIMachineFunctionInfo15VGPRSpillToAGPRENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS3_EEEEiS3_S5_S8_E8copyFromERKS9_ENKUljE_clEj.exit
@@ -3771,8 +3771,8 @@ bb.a:
   br i1 %.not11.i26, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph31
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.ae = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.ae = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_13SmallDenseMapIiNS_24KernArgPreloadDescriptorELj4ENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EEEEiS2_S4_S7_E8moveFromERS8_ENKUljE_clEj.exit
@@ -4175,8 +4175,8 @@ bb.a:
   br i1 %.not11.i15, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph20
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapINS_8RegisterEjNS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_jEEEES2_jS4_S7_E8moveFromERS8_ENKUljE_clEj.exit
@@ -4579,8 +4579,8 @@ bb.a:
   br i1 %.not11.i2.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph7.i.i
-  %indvars.iv.tr.i.i = trunc i64 %indvars.iv.i.i to i32
-  %i.ao = shl i32 %indvars.iv.tr.i.i, 5
+  %indvars.iv.tr.i.i = trunc nuw i64 %indvars.iv.i.i to i32
+  %i.ao = shl nuw i32 %indvars.iv.tr.i.i, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiSt6vectorINS_14SIRegisterInfo10SpilledRegESaIS4_EENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS6_EEEEiS6_S8_SB_E10destroyAllEvENKUljE_clEj.exit.i.i, %.lr.ph.i.i
@@ -4663,8 +4663,8 @@ bb.a:
   br i1 %.not11.i18, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph23
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiSt6vectorINS_14SIRegisterInfo10SpilledRegESaIS4_EENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS6_EEEEiS6_S8_SB_E8moveFromERSC_ENKUljE_clEj.exit
@@ -5067,8 +5067,8 @@ bb.a:
   br i1 %.not11.i2.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph7.i.i
-  %indvars.iv.tr.i.i = trunc i64 %indvars.iv.i.i to i32
-  %i.ao = shl i32 %indvars.iv.tr.i.i, 5
+  %indvars.iv.tr.i.i = trunc nuw i64 %indvars.iv.i.i to i32
+  %i.ao = shl nuw i32 %indvars.iv.tr.i.i, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiNS_21SIMachineFunctionInfo15VGPRSpillToAGPRENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS3_EEEEiS3_S5_S8_E10destroyAllEvENKUljE_clEj.exit.i.i, %.lr.ph.i.i
@@ -5147,8 +5147,8 @@ bb.a:
   br i1 %.not11.i19, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph24
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiNS_21SIMachineFunctionInfo15VGPRSpillToAGPRENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS3_EEEEiS3_S5_S8_E8moveFromERS9_ENKUljE_clEj.exit
@@ -5357,8 +5357,8 @@ _ZNK4llvm8DenseMapIiSt6vectorINS_14SIRegisterInfo10SpilledRegESaIS3_EENS_12Dense
   br i1 %.not11.i2.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph7.i
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.r = shl i32 %indvars.iv.tr.i, 5
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.r = shl nuw i32 %indvars.iv.tr.i, 5
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIiSt6vectorINS_14SIRegisterInfo10SpilledRegESaIS4_EENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS6_EEEEiS6_S8_SB_E10destroyAllEvENKUljE_clEj.exit.i, %.lr.ph.i

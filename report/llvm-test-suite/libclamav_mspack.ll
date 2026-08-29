@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.g
   store i32 0, ptr %i.cr, align 4, !tbaa !94
   %i.cs = icmp eq i32 %2, 21
   %i.ct = icmp eq i32 %2, 20
-  %.tr = trunc nuw i32 %2 to i8
+  %.tr = trunc nuw nsw i32 %2 to i8
   %i.cu = shl nuw nsw i8 %.tr, 1
   %i.cv = select i1 %i.ct, i8 42, i8 %i.cu
   %i.cw = select i1 %i.cs, i8 50, i8 %i.cv

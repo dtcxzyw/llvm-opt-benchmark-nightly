@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %bb.o
   store i32 %i.iu, ptr %i.f, align 4, !tbaa !12
   %i.iv = trunc i64 %i.hx to i32
   %.tr355 = add i32 %.val213, %i.iv
-  %i.iw = shl i32 %.tr355, 1
+  %i.iw = shl nsw i32 %.tr355, 1
   %i.ix = or disjoint i32 %i.io, %i.iw            ; 2 uses
   store i32 %i.ix, ptr %i.gy, align 4, !tbaa !12
   %i.iy = call i32 @sat_solver_addclause(ptr noundef %i.cu, ptr noundef nonnull %i.f, ptr noundef nonnull %i.gz) #20 ; 0 uses
@@ -243,7 +243,7 @@ bb.p:                                             ; preds = %bb.o
   store i32 %i.jx, ptr %i.e, align 4, !tbaa !12
   %i.jy = trunc i64 %i.hx to i32
   %.tr356 = add i32 %i.gu, %i.jy
-  %i.jz = shl i32 %.tr356, 1
+  %i.jz = shl nsw i32 %.tr356, 1
   %i.ka = or disjoint i32 %i.jr, %i.jz            ; 2 uses
   store i32 %i.ka, ptr %i.hb, align 4, !tbaa !12
   %i.kb = call i32 @sat_solver_addclause(ptr noundef %i.cu, ptr noundef nonnull %i.e, ptr noundef nonnull %i.hc) #20 ; 0 uses
@@ -300,7 +300,7 @@ bb.r:                                             ; preds = %bb.q
   store i32 %i.la, ptr %i.d, align 4, !tbaa !12
   %i.le = trunc i64 %i.hx to i32
   %.tr = add i32 %.val213, %i.le
-  %i.lf = shl i32 %.tr, 1
+  %i.lf = shl nsw i32 %.tr, 1
   %i.lg = or disjoint i32 %i.kx, %i.lf            ; 2 uses
   store i32 %i.lg, ptr %i.gr, align 4, !tbaa !12
   %i.lh = call i32 @sat_solver_addclause(ptr noundef %i.cu, ptr noundef nonnull %i.d, ptr noundef nonnull %i.gs) #20 ; 0 uses
@@ -338,7 +338,7 @@ bb.r:                                             ; preds = %bb.q
   store i32 %i.mc, ptr %i.c, align 4, !tbaa !12
   %i.mg = trunc i64 %i.hx to i32
   %.tr354 = add i32 %i.gu, %i.mg
-  %i.mh = shl i32 %.tr354, 1
+  %i.mh = shl nsw i32 %.tr354, 1
   %i.mi = or disjoint i32 %i.lz, %i.mh            ; 2 uses
   store i32 %i.mi, ptr %i.gv, align 4, !tbaa !12
   %i.mj = call i32 @sat_solver_addclause(ptr noundef %i.cu, ptr noundef nonnull %i.c, ptr noundef nonnull %i.gw) #20 ; 0 uses
@@ -741,8 +741,8 @@ bb.ai:                                            ; preds = %bb.ag
 
 bb.aj:                                            ; preds = %bb.af
   %i.nw = icmp samesign ult i64 %indvars.iv277, 1073741823
-  %indvars.iv277.tr = trunc i64 %indvars.iv277 to i32
-  %i.nx = shl i32 %indvars.iv277.tr, 1
+  %indvars.iv277.tr = trunc nsw i64 %indvars.iv277 to i32
+  %i.nx = shl nsw i32 %indvars.iv277.tr, 1
   %spec.select.i220 = select i1 %i.nw, i32 %i.nx, i32 2147483647 ; 4 uses
   %i.ny = sext i32 %spec.select.i220 to i64
   %.not.i9.i221 = icmp samesign ult i64 %indvars.iv277, %i.ny

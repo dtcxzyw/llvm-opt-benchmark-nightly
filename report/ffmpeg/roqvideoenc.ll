@@ -204,11 +204,11 @@ write_typecode.exit111.i.i:                       ; preds = %bb.bb, %bb.ba
 
 bb.bc:                                            ; preds = %write_typecode.exit114.i.i, %write_typecode.exit111.i.i
   %indvars.iv.i80.i = phi i64 [ 0, %write_typecode.exit111.i.i ], [ %indvars.iv.next.i82.i, %write_typecode.exit114.i.i ] ; 3 uses
-  %indvars.iv.tr.i.i = trunc i64 %indvars.iv.i80.i to i32 ; 2 uses
-  %i.dfp = shl i32 %indvars.iv.tr.i.i, 2
+  %indvars.iv.tr.i.i = trunc nuw nsw i64 %indvars.iv.i80.i to i32 ; 2 uses
+  %i.dfp = shl nuw nsw i32 %indvars.iv.tr.i.i, 2
   %i.dfq = and i32 %i.dfp, 4
   %i.dfr = add nsw i32 %i.dfq, %i.dat             ; 7 uses
-  %i.dfs = shl i32 %indvars.iv.tr.i.i, 1
+  %i.dfs = shl nuw nsw i32 %indvars.iv.tr.i.i, 1
   %i.dft = and i32 %i.dfs, 4
   %i.dfu = add nsw i32 %i.dft, %i.dav             ; 7 uses
   %i.dfv = getelementptr inbounds nuw [52 x i8], ptr %i.dfo, i64 %indvars.iv.i80.i ; 8 uses
@@ -611,8 +611,8 @@ index_mb.exit:                                    ; preds = %eval_sse.exit.i.i, 
   %i.gj = load i32, ptr %gep164, align 4, !tbaa !69 ; 2 uses
   %i.gk = getelementptr inbounds nuw [4 x i8], ptr %i.fv, i64 %indvars.iv
   store i32 %i.gj, ptr %i.gk, align 4, !tbaa !69
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.gl = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
+  %i.gl = shl nuw nsw i32 %indvars.iv.tr, 1
   %i.gm = and i32 %i.gl, 2
   %i.gn = add nsw i32 %i.gm, %1
   %i.go = trunc nuw nsw i64 %indvars.iv to i32
