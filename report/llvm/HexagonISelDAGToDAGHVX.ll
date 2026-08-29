@@ -205,7 +205,7 @@ vector.body:                                      ; preds = %pred.store.continue
 
 pred.store.if:                                    ; preds = %vector.body
   %i.n = extractelement <4 x i32> %wide.load, i64 0
-  %i.o = sub nsw i32 %i.n, %i.e
+  %i.o = sub nuw nsw i32 %i.n, %i.e
   store i32 %i.o, ptr %i.g, align 4, !tbaa !13
   br label %pred.store.continue
 
@@ -217,7 +217,7 @@ pred.store.if133:                                 ; preds = %pred.store.continue
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 4
   %i.s = extractelement <4 x i32> %wide.load, i64 1
-  %i.t = sub nsw i32 %i.s, %i.e
+  %i.t = sub nuw nsw i32 %i.s, %i.e
   store i32 %i.t, ptr %i.r, align 4, !tbaa !13
   br label %pred.store.continue134
 
@@ -229,7 +229,7 @@ pred.store.if135:                                 ; preds = %pred.store.continue
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   %i.x = extractelement <4 x i32> %wide.load, i64 2
-  %i.y = sub nsw i32 %i.x, %i.e
+  %i.y = sub nuw nsw i32 %i.x, %i.e
   store i32 %i.y, ptr %i.w, align 4, !tbaa !13
   br label %pred.store.continue136
 
@@ -241,7 +241,7 @@ pred.store.if137:                                 ; preds = %pred.store.continue
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 12
   %i.ac = extractelement <4 x i32> %wide.load, i64 3
-  %i.ad = sub nsw i32 %i.ac, %i.e
+  %i.ad = sub nuw nsw i32 %i.ac, %i.e
   store i32 %i.ad, ptr %i.ab, align 4, !tbaa !13
   br label %pred.store.continue138
 
@@ -253,7 +253,7 @@ pred.store.if139:                                 ; preds = %pred.store.continue
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   %i.ah = extractelement <4 x i32> %wide.load132, i64 0
-  %i.ai = sub nsw i32 %i.ah, %i.e
+  %i.ai = sub nuw nsw i32 %i.ah, %i.e
   store i32 %i.ai, ptr %i.ag, align 4, !tbaa !13
   br label %pred.store.continue140
 
@@ -265,7 +265,7 @@ pred.store.if141:                                 ; preds = %pred.store.continue
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 20
   %i.am = extractelement <4 x i32> %wide.load132, i64 1
-  %i.an = sub nsw i32 %i.am, %i.e
+  %i.an = sub nuw nsw i32 %i.am, %i.e
   store i32 %i.an, ptr %i.al, align 4, !tbaa !13
   br label %pred.store.continue142
 
@@ -277,7 +277,7 @@ pred.store.if143:                                 ; preds = %pred.store.continue
   %i.ap = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 24
   %i.ar = extractelement <4 x i32> %wide.load132, i64 2
-  %i.as = sub nsw i32 %i.ar, %i.e
+  %i.as = sub nuw nsw i32 %i.ar, %i.e
   store i32 %i.as, ptr %i.aq, align 4, !tbaa !13
   br label %pred.store.continue144
 
@@ -289,7 +289,7 @@ pred.store.if145:                                 ; preds = %pred.store.continue
   %i.au = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 28
   %i.aw = extractelement <4 x i32> %wide.load132, i64 3
-  %i.ax = sub nsw i32 %i.aw, %i.e
+  %i.ax = sub nuw nsw i32 %i.aw, %i.e
   store i32 %i.ax, ptr %i.av, align 4, !tbaa !13
   br label %pred.store.continue146
 
@@ -375,7 +375,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %or.cond109, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %scalar.ph
-  %i.bu = sub nsw i32 %i.bt, %i.e
+  %i.bu = sub nuw nsw i32 %i.bt, %i.e
   store i32 %i.bu, ptr %i.bs, align 4, !tbaa !13
   br label %bb.k
 
@@ -559,7 +559,7 @@ vector.body:                                      ; preds = %pred.store.continue
 
 pred.store.if:                                    ; preds = %vector.body
   %i.ar = extractelement <4 x i32> %wide.load, i64 0
-  %i.as = sub nsw i32 %i.ar, %i.aj
+  %i.as = sub nuw nsw i32 %i.ar, %i.aj
   store i32 %i.as, ptr %i.ak, align 4, !tbaa !13
   br label %pred.store.continue
 
@@ -571,7 +571,7 @@ pred.store.if200:                                 ; preds = %pred.store.continue
   %i.au = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 4
   %i.aw = extractelement <4 x i32> %wide.load, i64 1
-  %i.ax = sub nsw i32 %i.aw, %i.aj
+  %i.ax = sub nuw nsw i32 %i.aw, %i.aj
   store i32 %i.ax, ptr %i.av, align 4, !tbaa !13
   br label %pred.store.continue201
 
@@ -583,7 +583,7 @@ pred.store.if202:                                 ; preds = %pred.store.continue
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   %i.bb = extractelement <4 x i32> %wide.load, i64 2
-  %i.bc = sub nsw i32 %i.bb, %i.aj
+  %i.bc = sub nuw nsw i32 %i.bb, %i.aj
   store i32 %i.bc, ptr %i.ba, align 4, !tbaa !13
   br label %pred.store.continue203
 
@@ -595,7 +595,7 @@ pred.store.if204:                                 ; preds = %pred.store.continue
   %i.be = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 12
   %i.bg = extractelement <4 x i32> %wide.load, i64 3
-  %i.bh = sub nsw i32 %i.bg, %i.aj
+  %i.bh = sub nuw nsw i32 %i.bg, %i.aj
   store i32 %i.bh, ptr %i.bf, align 4, !tbaa !13
   br label %pred.store.continue205
 
@@ -607,7 +607,7 @@ pred.store.if206:                                 ; preds = %pred.store.continue
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 16
   %i.bl = extractelement <4 x i32> %wide.load199, i64 0
-  %i.bm = sub nsw i32 %i.bl, %i.aj
+  %i.bm = sub nuw nsw i32 %i.bl, %i.aj
   store i32 %i.bm, ptr %i.bk, align 4, !tbaa !13
   br label %pred.store.continue207
 
@@ -619,7 +619,7 @@ pred.store.if208:                                 ; preds = %pred.store.continue
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 20
   %i.bq = extractelement <4 x i32> %wide.load199, i64 1
-  %i.br = sub nsw i32 %i.bq, %i.aj
+  %i.br = sub nuw nsw i32 %i.bq, %i.aj
   store i32 %i.br, ptr %i.bp, align 4, !tbaa !13
   br label %pred.store.continue209
 
@@ -631,7 +631,7 @@ pred.store.if210:                                 ; preds = %pred.store.continue
   %i.bt = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 24
   %i.bv = extractelement <4 x i32> %wide.load199, i64 2
-  %i.bw = sub nsw i32 %i.bv, %i.aj
+  %i.bw = sub nuw nsw i32 %i.bv, %i.aj
   store i32 %i.bw, ptr %i.bu, align 4, !tbaa !13
   br label %pred.store.continue211
 
@@ -643,7 +643,7 @@ pred.store.if212:                                 ; preds = %pred.store.continue
   %i.by = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %index
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 28
   %i.ca = extractelement <4 x i32> %wide.load199, i64 3
-  %i.cb = sub nsw i32 %i.ca, %i.aj
+  %i.cb = sub nuw nsw i32 %i.ca, %i.aj
   store i32 %i.cb, ptr %i.bz, align 4, !tbaa !13
   br label %pred.store.continue213
 
@@ -701,7 +701,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %or.cond, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %scalar.ph
-  %i.cx = sub nsw i32 %i.cw, %i.aj
+  %i.cx = sub nuw nsw i32 %i.cw, %i.aj
   store i32 %i.cx, ptr %i.cv, align 4, !tbaa !13
   br label %bb.j
 
