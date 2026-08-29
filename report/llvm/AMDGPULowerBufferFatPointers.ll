@@ -204,11 +204,11 @@ _ZNK4llvm17AtomicCmpXchgInst17getMergedOrderingEv.exit: ; preds = %bb.f, %bb.g, 
 bb.i:                                             ; preds = %_ZNK4llvm17AtomicCmpXchgInst17getMergedOrderingEv.exit
   %i.bm = tail call noundef ptr @_ZNK4llvm5Value15getMetadataImplEj(ptr noundef nonnull align 8 dereferenceable(72) %1, i32 noundef 9) #23
   %i.bn = icmp eq ptr %i.bm, null
-  %9 = select i1 %i.bn, i32 0, i32 2
+  %9 = select i1 %i.bn, i64 0, i64 2
   br label %_ZNK4llvm11Instruction11getMetadataEj.exit
 
 _ZNK4llvm11Instruction11getMetadataEj.exit:       ; preds = %_ZNK4llvm17AtomicCmpXchgInst17getMergedOrderingEv.exit, %bb.i
-  %.0.i40 = phi i32 [ 0, %_ZNK4llvm17AtomicCmpXchgInst17getMergedOrderingEv.exit ], [ %9, %bb.i ] ; 2 uses
+  %.0.i40 = phi i64 [ 0, %_ZNK4llvm17AtomicCmpXchgInst17getMergedOrderingEv.exit ], [ %9, %bb.i ]
   %i.bo = tail call fastcc { ptr, ptr } @_ZN12_GLOBAL__N_115SplitPtrStructs11getPtrPartsEPN4llvm5ValueE(ptr noundef nonnull align 8 dereferenceable(704) %0, ptr noundef nonnull %i.h) ; 2 uses
   %i.bp = extractvalue { ptr, ptr } %i.bo, 0
   %i.bq = extractvalue { ptr, ptr } %i.bo, 1
@@ -237,9 +237,8 @@ bb.j:                                             ; preds = %_ZNK4llvm11Instruct
 
 _ZN12_GLOBAL__N_115SplitPtrStructs19insertPreMemOpFenceEN4llvm14AtomicOrderingEh.exit: ; preds = %_ZNK4llvm11Instruction11getMetadataEj.exit, %bb.j
   %i.cb = load i16, ptr %i.bb, align 2, !tbaa !420
-  %10 = trunc i16 %i.cb to i1
-  %11 = or disjoint i32 %.0.i40, -2147483648
-  %.1 = select i1 %10, i32 %11, i32 %.0.i40
+  %10 = zext i16 %i.cb to i64
+  %11 = shl nuw nsw i64 %10, 31
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #19
   %i.cc = load ptr, ptr %i.ax, align 8, !tbaa !193
   store ptr %i.cc, ptr %i.c, align 8, !tbaa !327
@@ -260,7 +259,8 @@ _ZN12_GLOBAL__N_115SplitPtrStructs19insertPreMemOpFenceEN4llvm14AtomicOrderingEh
   %i.cn = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   %i.co = load ptr, ptr %i.cj, align 8, !tbaa !1070, !nonnull !38, !align !39
   %i.cp = call noundef ptr @_ZN4llvm4Type10getInt32TyERNS_11LLVMContextE(ptr noundef nonnull align 8 dereferenceable(8) %i.co) #19
-  %12 = zext i32 %.1 to i64
+  %.masked = and i64 %11, 2147483648
+  %12 = or disjoint i64 %.masked, %.0.i40
   %i.cq = call noundef ptr @_ZN4llvm11ConstantInt3getEPNS_11IntegerTypeEmbb(ptr noundef %i.cp, i64 noundef %12, i1 noundef zeroext false, i1 noundef zeroext false) #19
   store ptr %i.cq, ptr %i.cn, align 8, !tbaa !327
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
