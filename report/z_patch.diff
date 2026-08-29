@@ -1,0 +1,244 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index e81d91c03c130..06ffa01b24cad 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -13550,13 +13550,89 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+     // Let End = max(RHS,Start).  We use the expression (End-Start)/Stride to
+     // describe the backedge count: if the backedge is taken at least once then
+     // End is RHS, and if not End is Start so we get a backedge count of zero.
++    //
++    // At this point, we know:
++    //
++    // 1. If IsSigned, Start <=s End; otherwise, Start <=u End
++    // 2. The index variable doesn't overflow.
++    //
++    // Therefore, we know N exists such that
++    // (Start + Stride * N) >= End, and computing "(Start + Stride * N)"
++    // doesn't overflow.
++    //
++    // Using this information, try to prove whether the addition in
++    // "(Start - End) + (Stride - 1)" has unsigned overflow.
++    //
++    // If the IV cannot overflow, RHS is at least Stride - 1 below the maximum
++    // value, so the distance End - Start is at most UMAX - (Stride - 1) and
++    // the (Stride - 1) addition below cannot overflow.
++    const SCEV *One = getOne(Stride->getType());
++    bool MayAddOverflow = IVMayOverflow && [&] {
++      if (isKnownToBeAPowerOfTwo(Stride)) {
++        // Suppose Stride is a power of two, and Start/End are unsigned
++        // integers.  Let UMAX be the largest representable unsigned
++        // integer.
++        //
++        // By the preconditions of this function, we know
++        // "(Start + Stride * N) >= End", and this doesn't overflow.
++        // As a formula:
++        //
++        //   End <= (Start + Stride * N) <= UMAX
++        //
++        // Subtracting Start from all the terms:
++        //
++        //   End - Start <= Stride * N <= UMAX - Start
++        //
++        // Since Start is unsigned, UMAX - Start <= UMAX.  Therefore:
++        //
++        //   End - Start <= Stride * N <= UMAX
++        //
++        // Stride * N is a multiple of Stride. Therefore,
++        //
++        //   End - Start <= Stride * N <= UMAX - (UMAX mod Stride)
++        //
++        // Since Stride is a power of two, UMAX + 1 is divisible by
++        // Stride. Therefore, UMAX mod Stride == Stride - 1.  So we can
++        // write:
++        //
++        //   End - Start <= Stride * N <= UMAX - Stride - 1
++        //
++        // Dropping the middle term:
++        //
++        //   End - Start <= UMAX - Stride - 1
++        //
++        // Adding Stride - 1 to both sides:
++        //
++        //   (End - Start) + (Stride - 1) <= UMAX
++        //
++        // In other words, the addition doesn't have unsigned overflow.
++        //
++        // A similar proof works if we treat Start/End as signed values.
++        // Just rewrite steps before "End - Start <= Stride * N <= UMAX"
++        // to use signed max instead of unsigned max. Note that we're
++        // trying to prove a lack of unsigned overflow in either case.
++        return false;
++      }
++      if (Start == Stride || Start == getMinusSCEV(Stride, One)) {
++        // If Start is equal to Stride, (End - Start) + (Stride - 1) == End
++        // - 1. If !IsSigned, 0 <u Stride == Start <=u End; so 0 <u End - 1
++        // <u End. If IsSigned, 0 <s Stride == Start <=s End; so 0 <s End -
++        // 1 <s End.
++        //
++        // If Start is equal to Stride - 1, (End - Start) + Stride - 1 ==
++        // End.
++        return false;
++      }
++      return true;
++    }();
++
+     auto *OrigStartMinusStride = getMinusSCEV(OrigStart, Stride);
+     assert(isAvailableAtLoopEntry(OrigStartMinusStride, L) && "Must be!");
+     assert(isAvailableAtLoopEntry(OrigStart, L) && "Must be!");
+     assert(isAvailableAtLoopEntry(OrigRHS, L) && "Must be!");
+     // Can we prove Start - Stride < RHS, and either Start - Stride < Start or
+-    // (via !IVMayOverflow) that RHS + Stride - 1 does not overflow?
+-    if ((!IVMayOverflow ||
++    // (via !MayAddOverflow) that RHS + Stride - 1 does not overflow?
++    if ((!MayAddOverflow ||
+          isLoopEntryGuardedByCond(L, Cond, OrigStartMinusStride, OrigStart)) &&
+         isLoopEntryGuardedByCond(L, Cond, OrigStartMinusStride, OrigRHS)) {
+       // In this case, we can use a refined formula for computing backedge
+@@ -13582,12 +13658,21 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+       //   "RHS - (Start - Stride) - 1" does not overflow, which is the
+       //   reassociated numerator.
+       //
+-      //   Otherwise !IVMayOverflow guarantees "RHS + (Stride - 1) <= MaxV",
+-      //   where MaxV is the maximum signed/unsigned value. Let MinV be the
+-      //   matching minimum value. "Start >= MinV" gives
+-      //   "RHS + (Stride - 1) - Start <= MaxV - MinV", and as "MaxV - MinV" is
+-      //   the largest unsigned value, the reassociated numerator does not
+-      //   overflow.
++      //   Otherwise we rely on !MayAddOverflow. It is true in three cases:
++			//	 - canIVOverflowOnLT proved: "RHS + (Stride - 1) <= MaxV", where MaxV
++      //     is the maximum signed/unsigned value. Let MinV be the matching
++      //     minimum value. "Start >= MinV" gives
++      //    "RHS + (Stride - 1) - Start <= MaxV - MinV", and as "MaxV - MinV"
++      //    is the largest unsigned value, the reassociated numerator does not
++      //    overflow.
++      //
++      //   - Stride is a power of two, so the largest multiple of Stride that
++      //     is representable is "UMAX - (Stride - 1)", and the IV not
++      //     overflowing bounds "RHS - Start" by such a multiple.
++      //
++      //   - "Start == Stride" or "Start == Stride - 1", for which
++      //     "(RHS - Start) + (Stride - 1)" is "RHS - 1" resp. "End", both of
++      //     which are trivially in range.
+       const SCEV *MinusOne = getMinusOne(Stride->getType());
+       const SCEV *Numerator =
+           getMinusSCEV(getAddExpr(RHS, MinusOne), getMinusSCEV(Start, Stride));
+@@ -13640,81 +13725,6 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+             getUDivCeilSCEV(getMinusSCEV(RHS, Start), Stride);
+       }
+ 
+-      // At this point, we know:
+-      //
+-      // 1. If IsSigned, Start <=s End; otherwise, Start <=u End
+-      // 2. The index variable doesn't overflow.
+-      //
+-      // Therefore, we know N exists such that
+-      // (Start + Stride * N) >= End, and computing "(Start + Stride * N)"
+-      // doesn't overflow.
+-      //
+-      // Using this information, try to prove whether the addition in
+-      // "(Start - End) + (Stride - 1)" has unsigned overflow.
+-      //
+-      // If the IV cannot overflow, RHS is at least Stride - 1 below the maximum
+-      // value, so the distance End - Start is at most UMAX - (Stride - 1) and
+-      // the (Stride - 1) addition below cannot overflow.
+-      const SCEV *One = getOne(Stride->getType());
+-      bool MayAddOverflow = IVMayOverflow && [&] {
+-        if (isKnownToBeAPowerOfTwo(Stride)) {
+-          // Suppose Stride is a power of two, and Start/End are unsigned
+-          // integers.  Let UMAX be the largest representable unsigned
+-          // integer.
+-          //
+-          // By the preconditions of this function, we know
+-          // "(Start + Stride * N) >= End", and this doesn't overflow.
+-          // As a formula:
+-          //
+-          //   End <= (Start + Stride * N) <= UMAX
+-          //
+-          // Subtracting Start from all the terms:
+-          //
+-          //   End - Start <= Stride * N <= UMAX - Start
+-          //
+-          // Since Start is unsigned, UMAX - Start <= UMAX.  Therefore:
+-          //
+-          //   End - Start <= Stride * N <= UMAX
+-          //
+-          // Stride * N is a multiple of Stride. Therefore,
+-          //
+-          //   End - Start <= Stride * N <= UMAX - (UMAX mod Stride)
+-          //
+-          // Since Stride is a power of two, UMAX + 1 is divisible by
+-          // Stride. Therefore, UMAX mod Stride == Stride - 1.  So we can
+-          // write:
+-          //
+-          //   End - Start <= Stride * N <= UMAX - Stride - 1
+-          //
+-          // Dropping the middle term:
+-          //
+-          //   End - Start <= UMAX - Stride - 1
+-          //
+-          // Adding Stride - 1 to both sides:
+-          //
+-          //   (End - Start) + (Stride - 1) <= UMAX
+-          //
+-          // In other words, the addition doesn't have unsigned overflow.
+-          //
+-          // A similar proof works if we treat Start/End as signed values.
+-          // Just rewrite steps before "End - Start <= Stride * N <= UMAX"
+-          // to use signed max instead of unsigned max. Note that we're
+-          // trying to prove a lack of unsigned overflow in either case.
+-          return false;
+-        }
+-        if (Start == Stride || Start == getMinusSCEV(Stride, One)) {
+-          // If Start is equal to Stride, (End - Start) + (Stride - 1) == End
+-          // - 1. If !IsSigned, 0 <u Stride == Start <=u End; so 0 <u End - 1
+-          // <u End. If IsSigned, 0 <s Stride == Start <=s End; so 0 <s End -
+-          // 1 <s End.
+-          //
+-          // If Start is equal to Stride - 1, (End - Start) + Stride - 1 ==
+-          // End.
+-          return false;
+-        }
+-        return true;
+-      }();
+-
+       const SCEV *Delta = getMinusSCEV(End, Start);
+       if (!MayAddOverflow) {
+         // floor((D + (S - 1)) / S)
+diff --git a/llvm/test/Analysis/ScalarEvolution/no-wrap-symbolic-becount.ll b/llvm/test/Analysis/ScalarEvolution/no-wrap-symbolic-becount.ll
+index 85c213c7ab090..a17ddd9e6d26c 100644
+--- a/llvm/test/Analysis/ScalarEvolution/no-wrap-symbolic-becount.ll
++++ b/llvm/test/Analysis/ScalarEvolution/no-wrap-symbolic-becount.ll
+@@ -126,13 +126,13 @@ define void @pointer_iv_nowrap_guard(ptr %startptr, ptr %endptr) local_unnamed_a
+ ; CHECK-NEXT:    %init = getelementptr inbounds i32, ptr %startptr, i64 2000
+ ; CHECK-NEXT:    --> (8000 + %startptr)<nuw> U: [8000,0) S: [8000,0)
+ ; CHECK-NEXT:    %iv = phi ptr [ %init, %entry ], [ %iv.next, %loop ]
+-; CHECK-NEXT:    --> {(8000 + %startptr)<nuw>,+,4}<nuw><%loop> U: [8000,0) S: [8000,0) Exits: (8000 + (4 * ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + ((8004 + (ptrtoaddr ptr %startptr to i64)) umax (ptrtoaddr ptr %endptr to i64))) /u 4))<nuw> + %startptr) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(8000 + %startptr)<nuw>,+,4}<nuw><%loop> U: [8000,0) S: [8000,0) Exits: (8000 + (4 * ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + (ptrtoaddr ptr %endptr to i64)) /u 4))<nuw> + %startptr) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = getelementptr inbounds i32, ptr %iv, i64 1
+-; CHECK-NEXT:    --> {(8004 + %startptr),+,4}<nuw><%loop> U: full-set S: full-set Exits: (8004 + (4 * ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + ((8004 + (ptrtoaddr ptr %startptr to i64)) umax (ptrtoaddr ptr %endptr to i64))) /u 4))<nuw> + %startptr) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {(8004 + %startptr),+,4}<nuw><%loop> U: full-set S: full-set Exits: (8004 + (4 * ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + (ptrtoaddr ptr %endptr to i64)) /u 4))<nuw> + %startptr) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @pointer_iv_nowrap_guard
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + ((8004 + (ptrtoaddr ptr %startptr to i64)) umax (ptrtoaddr ptr %endptr to i64))) /u 4)
++; CHECK-NEXT:  Loop %loop: backedge-taken count is ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + (ptrtoaddr ptr %endptr to i64)) /u 4)
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 4611686018427387903
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + ((8004 + (ptrtoaddr ptr %startptr to i64)) umax (ptrtoaddr ptr %endptr to i64))) /u 4)
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((-8001 + (-1 * (ptrtoaddr ptr %startptr to i64)) + (ptrtoaddr ptr %endptr to i64)) /u 4)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll b/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll
+index 1f08a620b2e15..ee5a02ef0250a 100644
+--- a/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll
++++ b/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll
+@@ -14,9 +14,9 @@ define void @foo1(ptr nocapture %A, i32 %n, i32 %s) mustprogress {
+ ;
+ ; CHECK-LABEL: 'foo1'
+ ; CHECK-NEXT:  Determining loop execution counts for: @foo1
+-; CHECK-NEXT:  Loop %for.body: backedge-taken count is ((-1 + (%n smax %s)) /u %s)
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is ((-1 + %n) /u %s)
+ ; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 -1
+-; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is ((-1 + (%n smax %s)) /u %s)
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is ((-1 + %n) /u %s)
+ ; CHECK-NEXT:  Loop %for.body: Trip multiple is 1
+ ;
+ entry:
