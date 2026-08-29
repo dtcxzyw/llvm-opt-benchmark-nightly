@@ -204,7 +204,7 @@ define dso_local range(i32 -14, 1) i32 @lsm_fill_user_ctx(ptr noundef %0, ptr no
 bb.a:
   %.0.i = tail call i64 @llvm.uadd.sat.i64(i64 %3, i64 32)
   %i.a = add i64 %.0.i, 7                         ; 2 uses
-  %i.b = and i64 %i.a, -8                         ; 6 uses
+  %i.b = and i64 %i.a, -8                         ; 5 uses
   %i.c = load i32, ptr %1, align 4
   %i.d = zext i32 %i.c to i64
   %i.e = icmp ugt i64 %i.b, %i.d
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.e, label %_kzalloc_noprof.exit
 
 _kzalloc_noprof.exit:                             ; preds = %bb.b
-  %i.f = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 0, 4294967296) %i.b, i32 noundef range(i32 256, 0) 3520) #9 ; 8 uses
+  %i.f = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 0, 4294967296) %i.b, i32 noundef range(i32 256, 0) 3520) #9 ; 9 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %bb.e, label %bb.c
 
@@ -230,27 +230,23 @@ bb.c:                                             ; preds = %_kzalloc_noprof.exi
   %i.k = getelementptr i8, ptr %i.f, i64 32
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.k, ptr align 1 %2, i64 %3, i1 false)
   %i.l = icmp samesign ugt i64 %i.a, 2147483647
-  br i1 %i.l, label %bb.d, label %check_copy_size.exit, !prof !11
+  br i1 %i.l, label %bb.d, label %copy_to_user.exit.a, !prof !11
 
 bb.d:                                             ; preds = %bb.c
   tail call void asm sideeffect "208: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 208b - ., 3; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 208) #10, !srcloc !12
   tail call void asm sideeffect "1:\09 ud2 \0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${0:c} - .\09# bug_entry::format\0A\09.long ${1:c} - .\09# bug_entry::file\0A\09.word ${2:c}\09# bug_entry::line\0A\09.word ${3:c}\09# bug_entry::flags\0A\09.org 2b + ${4:c}\0A.popsection\0A.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 1b - ., 8; .popsection", "i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.31, ptr nonnull @.str.508, i32 57, i32 2307, i64 16) #10, !srcloc !13
   tail call void asm sideeffect "209: nop\0A\09.pushsection .discard.annotate_insn, \22M\22, @progbits, 8; .long 209b - ., 4; .popsection", "i,~{dirflag},~{fpsr},~{flags}"(i32 209) #10, !srcloc !14
-  br label %copy_to_user.exit.a
+  br label %bb.e
 
-check_copy_size.exit:                             ; preds = %bb.c
+copy_to_user.exit.a:                              ; preds = %bb.c
   %6 = tail call i64 @_copy_to_user(ptr noundef nonnull %0, ptr noundef nonnull %i.f, i64 noundef range(i64 0, 4294967296) %i.b) #11
-  br label %copy_to_user.exit.a
-
-copy_to_user.exit.a:                              ; preds = %bb.d, %check_copy_size.exit
-  %.0.i32 = phi i64 [ %6, %check_copy_size.exit ], [ %i.b, %bb.d ]
-  %.not31 = icmp eq i64 %.0.i32, 0
+  %.not31 = icmp eq i64 %6, 0
   %spec.select = select i1 %.not31, i32 0, i32 -14
   br label %bb.e
 
-bb.e:                                             ; preds = %copy_to_user.exit.a, %_kzalloc_noprof.exit, %bb.a, %bb.b
-  %.028 = phi i32 [ 0, %bb.b ], [ -7, %bb.a ], [ -12, %_kzalloc_noprof.exit ], [ %spec.select, %copy_to_user.exit.a ]
-  %.0 = phi ptr [ null, %bb.b ], [ null, %bb.a ], [ null, %_kzalloc_noprof.exit ], [ %i.f, %copy_to_user.exit.a ]
+bb.e:                                             ; preds = %copy_to_user.exit.a, %bb.d, %_kzalloc_noprof.exit, %bb.a, %bb.b
+  %.028 = phi i32 [ 0, %bb.b ], [ -7, %bb.a ], [ -12, %_kzalloc_noprof.exit ], [ %spec.select, %copy_to_user.exit.a ], [ -14, %bb.d ]
+  %.0 = phi ptr [ null, %bb.b ], [ null, %bb.a ], [ null, %_kzalloc_noprof.exit ], [ %i.f, %copy_to_user.exit.a ], [ %i.f, %bb.d ]
   tail call void @kfree(ptr noundef %.0) #11
   %i.m = trunc i64 %i.b to i32
   store i32 %i.m, ptr %1, align 4

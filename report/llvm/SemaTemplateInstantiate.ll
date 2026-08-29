@@ -205,15 +205,12 @@ _ZNK5clang14DeclaratorDecl12getQualifierEv.exit.i: ; preds = %_ZN5clang30MultiLe
   %i.rz = and i64 %.sroa.0.0.copyload.i.i.i, 6
   %i.sa = icmp eq i64 %i.rz, 0
   %or.cond.i212 = and i1 %i.ry, %i.sa
-  br i1 %or.cond.i212, label %_ZNK5clang19NestedNameSpecifier7getKindEv.exit.thread.i, label %.critedge.i213
+  br i1 %or.cond.i212, label %bb.eg, label %.critedge.i213
 
-_ZNK5clang19NestedNameSpecifier7getKindEv.exit.thread.i: ; preds = %_ZNK5clang14DeclaratorDecl12getQualifierEv.exit.i
-  %23 = and i64 %.sroa.0.0.copyload.i.i.i, -8
-  br label %bb.eg
-
-bb.eg:                                            ; preds = %bb.eq, %_ZNK5clang19NestedNameSpecifier7getKindEv.exit.thread.i
-  %.081.in.i.a = phi i64 [ %23, %_ZNK5clang19NestedNameSpecifier7getKindEv.exit.thread.i ], [ %24, %bb.eq ]
-  %.081.i = inttoptr i64 %.081.in.i.a to ptr      ; 7 uses
+bb.eg:                                            ; preds = %_ZNK5clang14DeclaratorDecl12getQualifierEv.exit.i, %bb.eq
+  %.081.in.i.a = phi i64 [ %i.se, %bb.eq ], [ %.sroa.0.0.copyload.i.i.i, %_ZNK5clang14DeclaratorDecl12getQualifierEv.exit.i ]
+  %.081.in.i = and i64 %.081.in.i.a, -8
+  %.081.i = inttoptr i64 %.081.in.i to ptr        ; 7 uses
   %i.sb = getelementptr inbounds nuw i8, ptr %.081.i, i64 17
   %i.sc = load i16, ptr %i.sb, align 1
   %i.sd = and i16 %i.sc, 2
@@ -221,10 +218,11 @@ bb.eg:                                            ; preds = %bb.eq, %_ZNK5clang1
   br i1 %.not73.i216, label %.critedge.i213, label %_ZNK5clang19NestedNameSpecifier7getKindEv.exit46.thread.i
 
 _ZNK5clang19NestedNameSpecifier7getKindEv.exit46.thread.i: ; preds = %bb.eg
-  %i.se = call i64 @_ZNK5clang4Type9getPrefixEv(ptr noundef nonnull align 16 dereferenceable(24) %.081.i) #26 ; 2 uses
+  %i.se = call i64 @_ZNK5clang4Type9getPrefixEv(ptr noundef nonnull align 16 dereferenceable(24) %.081.i) #26 ; 3 uses
+  %23 = icmp ult i64 %i.se, 8
   %i.sf = and i64 %i.se, 6
   %i.sg = icmp ne i64 %i.sf, 0
-  %24 = and i64 %i.se, -8                         ; 2 uses
+  %or.cond79.not.i = or i1 %23, %i.sg
   %i.sh = getelementptr inbounds nuw i8, ptr %.081.i, i64 16
   %i.si = load i8, ptr %i.sh, align 16
   %.not75.i = icmp eq i8 %i.si, 50
@@ -354,9 +352,7 @@ _ZN5clang30MultiLevelTemplateArgumentList25addOuterTemplateArgumentsEPNS_4DeclEN
   br label %bb.eq
 
 bb.eq:                                            ; preds = %_ZN5clang30MultiLevelTemplateArgumentList25addOuterTemplateArgumentsEPNS_4DeclEN4llvm8ArrayRefINS_16TemplateArgumentEEEb.exit56.i, %_ZNK5clang19NestedNameSpecifier7getKindEv.exit46.thread.i
-  %.not88.i = icmp eq i64 %24, 0
-  %.not.i217 = or i1 %.not88.i, %i.sg
-  br i1 %.not.i217, label %.critedge.i213, label %bb.eg, !llvm.loop !822
+  br i1 %or.cond79.not.i, label %.critedge.i213, label %bb.eg, !llvm.loop !822
 
 .critedge.i213:                                   ; preds = %bb.eq, %bb.eg, %_ZNK5clang14DeclaratorDecl12getQualifierEv.exit.i, %_ZN5clang30MultiLevelTemplateArgumentList25addOuterTemplateArgumentsEPNS_4DeclEN4llvm8ArrayRefINS_16TemplateArgumentEEEb.exit.i209, %_ZNK5clang4Decl14getDeclContextEv.exit.i
   %.0.copyload.i.i.i.i.i.i.i.i57.i = load i64, ptr %i.qn, align 8 ; 3 uses

@@ -205,13 +205,10 @@ define hidden noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsg2Ce
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 6 uses
   %i.b = load ptr, ptr %0, align 8, !nonnull !7, !align !7948, !noundef !7
-  %.val = load i32, ptr %i.b, align 4, !noundef !7 ; 5 uses
+  %.val = load i32, ptr %i.b, align 4, !noundef !7 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8008)
   %i.c = icmp ugt i32 %.val, 3
-  %2 = and i32 %.val, 255
-  %.not1.i = icmp eq i32 %2, 255
-  %.not.i = or i1 %i.c, %.not1.i
-  br i1 %.not.i, label %bb.b, label %switch.lookup
+  br i1 %i.c, label %bb.b, label %switch.lookup
 
 switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i32 %.val to i64
@@ -614,13 +611,10 @@ define hidden noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsg2Ce
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 6 uses
   %i.b = load ptr, ptr %0, align 8, !nonnull !7, !align !7948, !noundef !7
-  %.val = load i32, ptr %i.b, align 4, !noundef !7 ; 5 uses
+  %.val = load i32, ptr %i.b, align 4, !noundef !7 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8048)
   %i.c = icmp ugt i32 %.val, 2
-  %2 = and i32 %.val, 255
-  %.not1.i = icmp eq i32 %2, 255
-  %.not.i = or i1 %i.c, %.not1.i
-  br i1 %.not.i, label %bb.b, label %switch.lookup
+  br i1 %i.c, label %bb.b, label %switch.lookup
 
 switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i32 %.val to i64
@@ -674,13 +668,10 @@ define hidden noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsg2Ce
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 6 uses
   %i.b = load ptr, ptr %0, align 8, !nonnull !7, !align !7948, !noundef !7
-  %.val = load i32, ptr %i.b, align 4, !noundef !7 ; 5 uses
+  %.val = load i32, ptr %i.b, align 4, !noundef !7 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8056)
   %i.c = icmp ugt i32 %.val, 6
-  %2 = and i32 %.val, 255
-  %.not1.i = icmp eq i32 %2, 255
-  %.not.i = or i1 %i.c, %.not1.i
-  br i1 %.not.i, label %bb.b, label %switch.lookup
+  br i1 %i.c, label %bb.b, label %switch.lookup
 
 switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i32 %.val to i64
@@ -892,13 +883,10 @@ define hidden noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsg2Ce
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 6 uses
   %i.b = load ptr, ptr %0, align 8, !nonnull !7, !align !7948, !noundef !7
-  %.val = load i32, ptr %i.b, align 4, !noundef !7 ; 5 uses
+  %.val = load i32, ptr %i.b, align 4, !noundef !7 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8080)
   %i.c = icmp ugt i32 %.val, 6
-  %2 = and i32 %.val, 255
-  %.not1.i = icmp eq i32 %2, 255
-  %.not.i = or i1 %i.c, %.not1.i
-  br i1 %.not.i, label %bb.b, label %switch.lookup
+  br i1 %i.c, label %bb.b, label %switch.lookup
 
 switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i32 %.val to i64
@@ -1245,13 +1233,10 @@ define hidden noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsg2Ce
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 6 uses
   %i.b = load ptr, ptr %0, align 8, !nonnull !7, !align !7948, !noundef !7
-  %.val = load i32, ptr %i.b, align 4, !noundef !7 ; 5 uses
+  %.val = load i32, ptr %i.b, align 4, !noundef !7 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8120)
   %i.c = icmp ugt i32 %.val, 13
-  %2 = and i32 %.val, 255
-  %.not1.i = icmp eq i32 %2, 255
-  %.not.i = or i1 %i.c, %.not1.i
-  br i1 %.not.i, label %bb.b, label %switch.lookup
+  br i1 %i.c, label %bb.b, label %switch.lookup
 
 switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i32 %.val to i64
@@ -1363,13 +1348,10 @@ define hidden noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRINtNtCsg2Ce
 bb.a:
   %i.a = alloca [4 x i8], align 4                 ; 6 uses
   %i.b = load ptr, ptr %0, align 8, !nonnull !7, !align !7948, !noundef !7
-  %.val = load i32, ptr %i.b, align 4, !noundef !7 ; 4 uses
+  %.val = load i32, ptr %i.b, align 4, !noundef !7 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8136)
   %i.c = icmp ugt i32 %.val, 3
-  %2 = and i32 %.val, 255
-  %.not1.i = icmp eq i32 %2, 255
-  %.not.i = or i1 %i.c, %.not1.i
-  br i1 %.not.i, label %bb.b, label %switch.lookup
+  br i1 %i.c, label %bb.b, label %switch.lookup
 
 switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i32 %.val to i64

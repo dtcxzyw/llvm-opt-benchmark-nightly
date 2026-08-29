@@ -202,7 +202,7 @@ bb.v:                                             ; preds = %.lr.ph, %folio_put.
   %.0170332 = phi ptr [ %.0.i, %.lr.ph ], [ %.0.i222, %folio_put.exit219 ] ; 5 uses
   %i.et = and i64 %.sroa.093.0334, 257            ; 2 uses
   %.not.i199 = icmp ne i64 %i.et, 0
-  %i.eu = and i64 %.sroa.093.0334, -354           ; 2 uses
+  %i.eu = and i64 %.sroa.093.0334, -354
   %.not.i.not.i = icmp eq i64 %i.eu, 0
   %or.cond.i200 = or i1 %.not.i199, %.not.i.not.i
   br i1 %or.cond.i200, label %softleaf_from_pte.exit.thread, label %softleaf_from_pte.exit
@@ -250,10 +250,8 @@ bb.y:                                             ; preds = %bb.x, %bb.w
 softleaf_from_pte.exit.thread:                    ; preds = %bb.v, %softleaf_from_pte.exit
   %.sroa.08.0.i250 = phi i64 [ %i.fa, %softleaf_from_pte.exit ], [ 0, %bb.v ]
   %.not.i.i205 = icmp eq i64 %i.et, 0
-  %.not.i.not.i.i = icmp ne i64 %i.eu, 0
-  %or.cond.i.not.i = and i1 %.not.i.i205, %.not.i.not.i.i
   %i.fi = icmp ugt i64 %.sroa.093.0334, -576460752303423490
-  %spec.select.i = and i1 %i.fi, %or.cond.i.not.i
+  %spec.select.i = and i1 %i.fi, %.not.i.i205
   br i1 %spec.select.i, label %bb.z, label %bb.ab, !prof !24
 
 bb.z:                                             ; preds = %softleaf_from_pte.exit.thread

@@ -206,12 +206,10 @@ define void @mi_free(ptr noundef %0) local_unnamed_addr #3 personality ptr @__gx
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = add i64 %i.a, -1                         ; 2 uses
-  %i.c = and i64 %i.b, -33554432                  ; 3 uses
+  %i.c = and i64 %i.b, -33554432                  ; 2 uses
   %i.d = inttoptr i64 %i.c to ptr                 ; 3 uses
   %i.e = icmp slt i64 %i.b, 33554432
-  %1 = icmp eq i64 %i.c, 0
-  %2 = or i1 %i.e, %1
-  br i1 %2, label %_ZL19mi_free_block_localP9mi_page_sP10mi_block_sbb.exit, label %bb.b, !prof !19
+  br i1 %i.e, label %_ZL19mi_free_block_localP9mi_page_sP10mi_block_sbb.exit, label %bb.b, !prof !19
 
 bb.b:                                             ; preds = %bb.a
   %i.f = tail call ptr @llvm.thread.pointer.p0()
@@ -614,13 +612,11 @@ define i64 @mi_usable_size(ptr noundef %0) local_unnamed_addr #7 personality ptr
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = add i64 %i.a, -1                         ; 2 uses
-  %1 = and i64 %i.b, -33554432                    ; 3 uses
   %i.c = icmp slt i64 %i.b, 33554432
-  %2 = icmp eq i64 %1, 0
-  %3 = or i1 %i.c, %2
-  br i1 %3, label %_ZL15_mi_usable_sizePKvPKc.exit, label %bb.b, !prof !19
+  br i1 %i.c, label %_ZL15_mi_usable_sizePKvPKc.exit, label %bb.b, !prof !19
 
 bb.b:                                             ; preds = %bb.a
+  %1 = and i64 %i.b, 9223372036821221376          ; 2 uses
   %i.d = inttoptr i64 %1 to ptr
   %i.e = sub i64 %i.a, %1
   %i.f = lshr i64 %i.e, 16
@@ -656,12 +652,10 @@ define void @mi_free_size(ptr noundef %0, i64 noundef %1) local_unnamed_addr #3 
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = add i64 %i.a, -1                         ; 2 uses
-  %i.c = and i64 %i.b, -33554432                  ; 3 uses
+  %i.c = and i64 %i.b, -33554432                  ; 2 uses
   %i.d = inttoptr i64 %i.c to ptr                 ; 3 uses
   %i.e = icmp slt i64 %i.b, 33554432
-  %2 = icmp eq i64 %i.c, 0
-  %3 = or i1 %i.e, %2
-  br i1 %3, label %mi_free.exit, label %bb.b, !prof !19
+  br i1 %i.e, label %mi_free.exit, label %bb.b, !prof !19
 
 bb.b:                                             ; preds = %bb.a
   %i.f = tail call ptr @llvm.thread.pointer.p0()
@@ -720,12 +714,10 @@ define void @mi_free_size_aligned(ptr noundef %0, i64 noundef %1, i64 noundef %2
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = add i64 %i.a, -1                         ; 2 uses
-  %i.c = and i64 %i.b, -33554432                  ; 3 uses
+  %i.c = and i64 %i.b, -33554432                  ; 2 uses
   %i.d = inttoptr i64 %i.c to ptr                 ; 3 uses
   %i.e = icmp slt i64 %i.b, 33554432
-  %3 = icmp eq i64 %i.c, 0
-  %4 = or i1 %i.e, %3
-  br i1 %4, label %mi_free_size.exit, label %bb.b, !prof !19
+  br i1 %i.e, label %mi_free_size.exit, label %bb.b, !prof !19
 
 bb.b:                                             ; preds = %bb.a
   %i.f = tail call ptr @llvm.thread.pointer.p0()
@@ -784,12 +776,10 @@ define void @mi_free_aligned(ptr noundef %0, i64 noundef %1) local_unnamed_addr 
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = add i64 %i.a, -1                         ; 2 uses
-  %i.c = and i64 %i.b, -33554432                  ; 3 uses
+  %i.c = and i64 %i.b, -33554432                  ; 2 uses
   %i.d = inttoptr i64 %i.c to ptr                 ; 3 uses
   %i.e = icmp slt i64 %i.b, 33554432
-  %2 = icmp eq i64 %i.c, 0
-  %3 = or i1 %i.e, %2
-  br i1 %3, label %mi_free.exit, label %bb.b, !prof !19
+  br i1 %i.e, label %mi_free.exit, label %bb.b, !prof !19
 
 bb.b:                                             ; preds = %bb.a
   %i.f = tail call ptr @llvm.thread.pointer.p0()
@@ -1192,13 +1182,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.c = add i64 %i.b, -1                         ; 2 uses
-  %2 = and i64 %i.c, -33554432                    ; 3 uses
   %i.d = icmp slt i64 %i.c, 33554432
-  %3 = icmp eq i64 %2, 0
-  %4 = or i1 %i.d, %3
-  br i1 %4, label %_ZL15_mi_usable_sizePKvPKc.exit, label %bb.c, !prof !19
+  br i1 %i.d, label %_ZL15_mi_usable_sizePKvPKc.exit, label %bb.c, !prof !19
 
 bb.c:                                             ; preds = %bb.b
+  %2 = and i64 %i.c, 9223372036821221376          ; 2 uses
   %i.e = inttoptr i64 %2 to ptr
   %i.f = sub i64 %i.b, %2
   %i.g = lshr i64 %i.f, 16
@@ -1239,18 +1227,16 @@ bb.f:                                             ; preds = %bb.a, %_ZL15_mi_usa
 define hidden noundef ptr @_Z21_mi_heap_realloc_zeroP9mi_heap_sPvmb(ptr noundef %0, ptr noundef %1, i64 noundef %2, i1 noundef zeroext %3) local_unnamed_addr #3 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = ptrtoint ptr %1 to i64                   ; 3 uses
-  %i.b = add i64 %i.a, -1                         ; 2 uses
-  %4 = and i64 %i.b, -33554432                    ; 5 uses
-  %i.c = icmp slt i64 %i.b, 33554432
-  %5 = icmp eq i64 %4, 0
-  %6 = or i1 %i.c, %5                             ; 2 uses
-  br i1 %6, label %_ZL15_mi_usable_sizePKvPKc.exit.thread, label %bb.b, !prof !19
+  %i.b = add i64 %i.a, -1                         ; 3 uses
+  %i.c = icmp slt i64 %i.b, 33554432              ; 2 uses
+  br i1 %i.c, label %_ZL15_mi_usable_sizePKvPKc.exit.thread, label %bb.b, !prof !19
 
 _ZL15_mi_usable_sizePKvPKc.exit.thread:           ; preds = %bb.a
   %.not50 = icmp ne i64 %2, 0
   br label %bb.e
 
 bb.b:                                             ; preds = %bb.a
+  %4 = and i64 %i.b, 9223372036821221376          ; 2 uses
   %i.d = inttoptr i64 %4 to ptr
   %i.e = sub i64 %i.a, %4
   %i.f = lshr i64 %i.e, 16
@@ -1345,15 +1331,16 @@ bb.k:                                             ; preds = %bb.i, %bb.j, %bb.h
 bb.l:                                             ; preds = %bb.k
   %i.am = tail call i64 @llvm.umin.i64(i64 %2, i64 %.1.i53)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.0.i.i.i41, ptr nonnull readonly align 1 %1, i64 %i.am, i1 false)
-  %i.an = inttoptr i64 %4 to ptr                  ; 3 uses
-  br i1 %6, label %mi_free.exit, label %bb.m, !prof !19
+  %5 = and i64 %i.b, -33554432                    ; 2 uses
+  %i.an = inttoptr i64 %5 to ptr                  ; 3 uses
+  br i1 %i.c, label %mi_free.exit, label %bb.m, !prof !19
 
 bb.m:                                             ; preds = %bb.l
   %i.ao = tail call ptr @llvm.thread.pointer.p0()
   %i.ap = ptrtoint ptr %i.ao to i64
   %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 280
   %i.ar = load atomic i64, ptr %i.aq monotonic, align 8
-  %i.as = sub i64 %i.a, %4
+  %i.as = sub i64 %i.a, %5
   %i.at = lshr i64 %i.as, 16
   %i.au = getelementptr inbounds nuw i8, ptr %i.an, i64 288
   %i.av = getelementptr inbounds nuw [96 x i8], ptr %i.au, i64 %i.at ; 2 uses
@@ -1442,12 +1429,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.e = add i64 %i.d, -1                         ; 2 uses
-  %i.f = and i64 %i.e, -33554432                  ; 3 uses
+  %i.f = and i64 %i.e, -33554432                  ; 2 uses
   %i.g = inttoptr i64 %i.f to ptr                 ; 3 uses
   %i.h = icmp slt i64 %i.e, 33554432
-  %3 = icmp eq i64 %i.f, 0
-  %4 = or i1 %i.h, %3
-  br i1 %4, label %mi_free.exit, label %bb.c, !prof !19
+  br i1 %i.h, label %mi_free.exit, label %bb.c, !prof !19
 
 bb.c:                                             ; preds = %bb.b
   %i.i = tail call ptr @llvm.thread.pointer.p0()
@@ -1850,13 +1835,11 @@ mi_is_in_heap_region.exit.thread2.loopexit:       ; preds = %bb.c
 
 mi_is_in_heap_region.exit.thread2:                ; preds = %mi_is_in_heap_region.exit.thread2.loopexit, %mi_is_in_heap_region.exit
   %.pre-phi8 = phi ptr [ %.pre7, %mi_is_in_heap_region.exit.thread2.loopexit ], [ %i.q, %mi_is_in_heap_region.exit ] ; 3 uses
-  %.pre-phi6 = phi i64 [ %.pre5, %mi_is_in_heap_region.exit.thread2.loopexit ], [ %i.p, %mi_is_in_heap_region.exit ] ; 2 uses
+  %.pre-phi6 = phi i64 [ %.pre5, %mi_is_in_heap_region.exit.thread2.loopexit ], [ %i.p, %mi_is_in_heap_region.exit ]
   %.pre-phi4 = phi i64 [ %.pre3, %mi_is_in_heap_region.exit.thread2.loopexit ], [ %i.o, %mi_is_in_heap_region.exit ]
   %.pre-phi = phi i64 [ %.pre, %mi_is_in_heap_region.exit.thread2.loopexit ], [ %i.n, %mi_is_in_heap_region.exit ]
   %i.ak = icmp slt i64 %.pre-phi4, 33554432
-  %1 = icmp eq i64 %.pre-phi6, 0
-  %2 = or i1 %i.ak, %1
-  br i1 %2, label %mi_free.exit, label %bb.f, !prof !19
+  br i1 %i.ak, label %mi_free.exit, label %bb.f, !prof !19
 
 bb.f:                                             ; preds = %mi_is_in_heap_region.exit.thread2
   %i.al = tail call ptr @llvm.thread.pointer.p0()
@@ -2259,14 +2242,12 @@ _Z22_mi_page_malloc_zeroedP9mi_heap_sP9mi_page_sm.exit.i: ; preds = %bb.g, %bb.f
 
 bb.l:                                             ; preds = %bb.c
   %i.ac = ptrtoint ptr %1 to i64                  ; 4 uses
-  %i.ad = add i64 %i.ac, -1                       ; 2 uses
-  %6 = and i64 %i.ad, -33554432                   ; 5 uses
-  %i.ae = icmp slt i64 %i.ad, 33554432
-  %7 = icmp eq i64 %6, 0
-  %8 = or i1 %i.ae, %7                            ; 2 uses
-  br i1 %8, label %mi_usable_size.exit, label %bb.m, !prof !19
+  %i.ad = add i64 %i.ac, -1                       ; 3 uses
+  %i.ae = icmp slt i64 %i.ad, 33554432            ; 2 uses
+  br i1 %i.ae, label %mi_usable_size.exit, label %bb.m, !prof !19
 
 bb.m:                                             ; preds = %bb.l
+  %6 = and i64 %i.ad, 9223372036821221376         ; 2 uses
   %i.af = inttoptr i64 %6 to ptr
   %i.ag = sub i64 %i.ac, %6
   %i.ah = lshr i64 %i.ag, 16
@@ -2371,15 +2352,16 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   call void @llvm.assume(i1 true) [ "align"(ptr %.3.i.i58, i64 8) ]
   call void @llvm.assume(i1 true) [ "align"(ptr %1, i64 8) ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.3.i.i58, ptr nonnull readonly align 8 %1, i64 %i.bv, i1 false)
-  %i.bw = inttoptr i64 %6 to ptr                  ; 3 uses
-  br i1 %8, label %_ZL30mi_heap_malloc_zero_aligned_atP9mi_heap_smmmb.exit, label %bb.y, !prof !19
+  %7 = and i64 %i.ad, -33554432                   ; 2 uses
+  %i.bw = inttoptr i64 %7 to ptr                  ; 3 uses
+  br i1 %i.ae, label %_ZL30mi_heap_malloc_zero_aligned_atP9mi_heap_smmmb.exit, label %bb.y, !prof !19
 
 bb.y:                                             ; preds = %bb.x
   %i.bx = tail call ptr @llvm.thread.pointer.p0()
   %i.by = ptrtoint ptr %i.bx to i64
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bw, i64 280
   %i.ca = load atomic i64, ptr %i.bz monotonic, align 8
-  %i.cb = sub i64 %i.ac, %6
+  %i.cb = sub i64 %i.ac, %7
   %i.cc = lshr i64 %i.cb, 16
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bw, i64 288
   %i.ce = getelementptr inbounds nuw [96 x i8], ptr %i.cd, i64 %i.cc ; 2 uses
@@ -2657,13 +2639,11 @@ define i64 @mi_malloc_size(ptr noundef %0) local_unnamed_addr #7 personality ptr
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = add i64 %i.a, -1                         ; 2 uses
-  %1 = and i64 %i.b, -33554432                    ; 3 uses
   %i.c = icmp slt i64 %i.b, 33554432
-  %2 = icmp eq i64 %1, 0
-  %3 = or i1 %i.c, %2
-  br i1 %3, label %mi_usable_size.exit, label %bb.b, !prof !19
+  br i1 %i.c, label %mi_usable_size.exit, label %bb.b, !prof !19
 
 bb.b:                                             ; preds = %bb.a
+  %1 = and i64 %i.b, 9223372036821221376          ; 2 uses
   %i.d = inttoptr i64 %1 to ptr
   %i.e = sub i64 %i.a, %1
   %i.f = lshr i64 %i.e, 16
@@ -2699,13 +2679,11 @@ define i64 @mi_malloc_usable_size(ptr noundef %0) local_unnamed_addr #7 personal
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.b = add i64 %i.a, -1                         ; 2 uses
-  %1 = and i64 %i.b, -33554432                    ; 3 uses
   %i.c = icmp slt i64 %i.b, 33554432
-  %2 = icmp eq i64 %1, 0
-  %3 = or i1 %i.c, %2
-  br i1 %3, label %mi_usable_size.exit, label %bb.b, !prof !19
+  br i1 %i.c, label %mi_usable_size.exit, label %bb.b, !prof !19
 
 bb.b:                                             ; preds = %bb.a
+  %1 = and i64 %i.b, 9223372036821221376          ; 2 uses
   %i.d = inttoptr i64 %1 to ptr
   %i.e = sub i64 %i.a, %1
   %i.f = lshr i64 %i.e, 16
@@ -3108,13 +3086,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.c = add i64 %i.b, -1                         ; 2 uses
-  %2 = and i64 %i.c, -33554432                    ; 3 uses
   %i.d = icmp slt i64 %i.c, 33554432
-  %3 = icmp eq i64 %2, 0
-  %4 = or i1 %i.d, %3
-  br i1 %4, label %_ZL15_mi_usable_sizePKvPKc.exit.i, label %bb.c, !prof !19
+  br i1 %i.d, label %_ZL15_mi_usable_sizePKvPKc.exit.i, label %bb.c, !prof !19
 
 bb.c:                                             ; preds = %bb.b
+  %2 = and i64 %i.c, 9223372036821221376          ; 2 uses
   %i.e = inttoptr i64 %2 to ptr
   %i.f = sub i64 %i.b, %2
   %i.g = lshr i64 %i.f, 16
@@ -3517,12 +3493,10 @@ bb.j:                                             ; preds = %bb.h
 bb.k:                                             ; preds = %bb.i, %bb.j, %bb.g
   %i.t = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.u = add i64 %i.t, -1                         ; 2 uses
-  %i.v = and i64 %i.u, -33554432                  ; 3 uses
+  %i.v = and i64 %i.u, -33554432                  ; 2 uses
   %i.w = inttoptr i64 %i.v to ptr                 ; 3 uses
   %i.x = icmp slt i64 %i.u, 33554432
-  %1 = icmp eq i64 %i.v, 0
-  %2 = or i1 %i.x, %1
-  br i1 %2, label %mi_free.exit, label %bb.l, !prof !19
+  br i1 %i.x, label %mi_free.exit, label %bb.l, !prof !19
 
 bb.l:                                             ; preds = %bb.k
   %i.y = tail call ptr @llvm.thread.pointer.p0()
@@ -3925,13 +3899,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = ptrtoint ptr %2 to i64                   ; 2 uses
   %i.e = add i64 %i.d, -1                         ; 2 uses
-  %3 = and i64 %i.e, -33554432                    ; 3 uses
   %i.f = icmp slt i64 %i.e, 33554432
-  %4 = icmp eq i64 %3, 0
-  %5 = or i1 %i.f, %4
-  br i1 %5, label %mi_usable_size.exit.thread, label %bb.c, !prof !19
+  br i1 %i.f, label %mi_usable_size.exit.thread, label %bb.c, !prof !19
 
 bb.c:                                             ; preds = %bb.b
+  %3 = and i64 %i.e, 9223372036821221376          ; 2 uses
   %i.g = inttoptr i64 %3 to ptr
   %i.h = sub i64 %i.d, %3
   %i.i = lshr i64 %i.h, 16
@@ -4334,13 +4306,11 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.aa = ptrtoint ptr %2 to i64                  ; 2 uses
   %i.ab = add i64 %i.aa, -1                       ; 2 uses
-  %3 = and i64 %i.ab, -33554432                   ; 3 uses
   %i.ac = icmp slt i64 %i.ab, 33554432
-  %4 = icmp eq i64 %3, 0
-  %5 = or i1 %i.ac, %4
-  br i1 %5, label %_Z27_mi_segment_huge_page_resetP12mi_segment_sP9mi_page_sP10mi_block_s.exit, label %bb.l, !prof !19
+  br i1 %i.ac, label %_Z27_mi_segment_huge_page_resetP12mi_segment_sP9mi_page_sP10mi_block_s.exit, label %bb.l, !prof !19
 
 bb.l:                                             ; preds = %bb.k
+  %3 = and i64 %i.ab, 9223372036821221376         ; 2 uses
   %i.ad = inttoptr i64 %3 to ptr
   %i.ae = sub i64 %i.aa, %3
   %i.af = lshr i64 %i.ae, 16
@@ -4743,13 +4713,11 @@ bb.k:                                             ; preds = %bb.j, %_ZL30mi_heap
 
 bb.l:                                             ; preds = %bb.k
   %i.bc = add i64 %i.ai, -1                       ; 2 uses
-  %5 = and i64 %i.bc, -33554432                   ; 3 uses
   %i.bd = icmp slt i64 %i.bc, 33554432
-  %6 = icmp eq i64 %5, 0
-  %7 = or i1 %i.bd, %6
-  br i1 %7, label %mi_usable_size.exit, label %bb.m, !prof !19
+  br i1 %i.bd, label %mi_usable_size.exit, label %bb.m, !prof !19
 
 bb.m:                                             ; preds = %bb.l
+  %5 = and i64 %i.bc, 9223372036821221376         ; 2 uses
   %i.be = inttoptr i64 %5 to ptr
   %i.bf = sub i64 %i.ai, %5
   %i.bg = lshr i64 %i.bf, 16

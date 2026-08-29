@@ -205,18 +205,13 @@ bb.az:                                            ; preds = %._crit_edge432
   %i.xg = load <2 x float>, ptr %i.wy, align 16, !tbaa !336 ; 3 uses
   %i.xh = load <2 x float>, ptr %i.wz, align 16, !tbaa !336 ; 3 uses
   %i.xi = trunc i64 %6 to i32                     ; 3 uses
-  %min.iters.check884.a = icmp ult i32 %i.xi, 4
-  br i1 %min.iters.check884.a, label %scalar.ph883.preheader, label %vector.scevcheck880
+  %min.iters.check884 = icmp ult i32 %i.xi, 4
+  %9 = add i64 %6, -536870913
+  %min.iters.check884.a = icmp ult i64 %9, -536870912
+  %or.cond942 = or i1 %min.iters.check884, %min.iters.check884.a
+  br i1 %or.cond942, label %scalar.ph883.preheader, label %vector.memcheck
 
-vector.scevcheck880:                              ; preds = %.lr.ph471
-  %9 = add i64 %6, -1                             ; 2 uses
-  %10 = and i64 %9, 4294967295
-  %11 = icmp eq i64 %10, 4294967295
-  %12 = icmp ugt i64 %9, 536870911
-  %13 = or i1 %11, %12
-  br i1 %13, label %scalar.ph883.preheader, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %vector.scevcheck880
+vector.memcheck:                                  ; preds = %.lr.ph471
   %i.xj = shl nuw nsw i64 %6, 5
   %scevgep = getelementptr i8, ptr %0, i64 %i.xj
   %i.xk = shl nuw nsw i64 %6, 3
@@ -279,8 +274,8 @@ middle.block923:                                  ; preds = %vector.body919
   %cmp.n924 = icmp eq i32 %n.vec886, %i.xi
   br i1 %cmp.n924, label %.loopexit373, label %scalar.ph883.preheader
 
-scalar.ph883.preheader:                           ; preds = %vector.memcheck, %vector.scevcheck880, %.lr.ph471, %middle.block923
-  %.0314470.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck880 ], [ 0, %.lr.ph471 ], [ %n.vec886, %middle.block923 ]
+scalar.ph883.preheader:                           ; preds = %vector.memcheck, %.lr.ph471, %middle.block923
+  %.0314470.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %.lr.ph471 ], [ %n.vec886, %middle.block923 ]
   %i.yu = shufflevector <2 x float> %i.xa, <2 x float> %i.xb, <4 x i32> <i32 0, i32 2, i32 poison, i32 poison>
   %i.yv = shufflevector <2 x float> %i.xc, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
   %i.yw = shufflevector <4 x float> %i.yu, <4 x float> %i.yv, <4 x i32> <i32 0, i32 1, i32 4, i32 poison>
