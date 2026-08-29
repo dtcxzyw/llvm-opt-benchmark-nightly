@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %.lr.ph34, %._crit_e
   br i1 %.not11.i29, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.m = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.m = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIN12_GLOBAL__N_123ObjectUnderConstructionENS2_17ConstructionPhaseENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S4_EEEES3_S4_S6_S9_E8moveFromERSA_ENKUljE_clEj.exit
@@ -609,8 +609,8 @@ bb.a:
   br i1 %.not11.i14, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph19
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPKN5clang13CXXRecordDeclENS2_9CharUnitsENS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_S6_EEEES5_S6_S8_SB_E8moveFromERSC_ENKUljE_clEj.exit
@@ -1013,8 +1013,8 @@ bb.a:
   br i1 %.not11.i15, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph20
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPKN5clang13CXXRecordDeclENS2_15ASTRecordLayout9VBaseInfoENS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_S7_EEEES5_S7_S9_SC_E8moveFromERSD_ENKUljE_clEj.exit
@@ -1417,8 +1417,8 @@ _ZN5clang7APValueD2Ev.exit1922:                   ; preds = %._crit_edge2832, %b
 .lr.ph2825:                                       ; preds = %.preheader2780, %_ZN5clang7APValueD2Ev.exit1935
   %indvars.iv3097 = phi i64 [ %indvars.iv.next3098, %_ZN5clang7APValueD2Ev.exit1935 ], [ 0, %.preheader2780 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %397) #24
-  %indvars.iv3097.tr = trunc i64 %indvars.iv3097 to i32
-  %i.hrw = shl i32 %indvars.iv3097.tr, 1
+  %indvars.iv3097.tr = trunc nuw i64 %indvars.iv3097 to i32
+  %i.hrw = shl nuw i32 %indvars.iv3097.tr, 1
   %i.hrx = add i32 %i.hrw, %.07172831             ; 2 uses
   %i.hry = load ptr, ptr %i.hri, align 8, !tbaa !1207
   %i.hrz = zext i32 %i.hrx to i64
@@ -1552,8 +1552,8 @@ _ZN5clang7APValueD2Ev.exit1935:                   ; preds = %_ZN4llvm23SmallVect
 .lr.ph2828:                                       ; preds = %_ZN5clang7APValueD2Ev.exit1935, %_ZN5clang7APValueD2Ev.exit1950
   %indvars.iv3100 = phi i64 [ %indvars.iv.next3101, %_ZN5clang7APValueD2Ev.exit1950 ], [ 0, %_ZN5clang7APValueD2Ev.exit1935 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %401) #24
-  %indvars.iv3100.tr = trunc i64 %indvars.iv3100 to i32
-  %i.htj = shl i32 %indvars.iv3100.tr, 1
+  %indvars.iv3100.tr = trunc nuw i64 %indvars.iv3100 to i32
+  %i.htj = shl nuw i32 %indvars.iv3100.tr, 1
   %i.htk = add i32 %i.htj, %.07172831             ; 2 uses
   %i.htl = load ptr, ptr %i.hrm, align 8, !tbaa !1207
   %i.htm = zext i32 %i.htk to i64
@@ -1956,8 +1956,8 @@ bb.ath:                                           ; preds = %_ZN4llvm5APIntC2ERK
   br label %_ZN4llvm5APIntC2ERKS0_.exit2069
 
 _ZN4llvm5APIntC2ERKS0_.exit2069:                  ; preds = %bb.atg, %bb.ath
-  %indvars.iv3080.tr = trunc i64 %indvars.iv3080 to i32
-  %i.its = shl i32 %indvars.iv3080.tr, 3          ; 2 uses
+  %indvars.iv3080.tr = trunc nuw nsw i64 %indvars.iv3080 to i32
+  %i.its = shl nuw nsw i32 %indvars.iv3080.tr, 3  ; 2 uses
   call void @_ZN4llvm5APInt10insertBitsERKS0_j(ptr noundef nonnull align 8 dereferenceable(12) %459, ptr noundef nonnull align 8 dereferenceable(12) %461, i32 noundef %i.its) #24
   call void @_ZN4llvm5APInt10insertBitsERKS0_j(ptr noundef nonnull align 8 dereferenceable(12) %460, ptr noundef nonnull align 8 dereferenceable(12) %462, i32 noundef %i.its) #24
   %i.itt = load i32, ptr %i.iso, align 8, !tbaa !454
@@ -2335,23 +2335,15 @@ _ZN5clang7APValueC2EN4llvm6APSIntE.exit2104:      ; preds = %_ZN5clang7APValueC2
   %i.izd = shufflevector <2 x i1> %i.iys, <2 x i1> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.ize = shufflevector <8 x i1> %i.izc, <8 x i1> %i.izd, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 6, i32 7>
   %i.izf = select <8 x i1> %i.ize, <8 x i16> zeroinitializer, <8 x i16> %i.iyy ; 2 uses
-  %i.izg = call i16 @llvm.vector.reduce.xor.v8i16(<8 x i16> %i.izf) ; 4 uses
-  %534 = extractelement <8 x i16> %i.izf, i64 7
-  %.not17.i = icmp samesign ult i16 %534, 16384
-  %535 = select i1 %.not17.i, i16 0, i16 18112
-  %536 = and i16 %i.izg, 8192
-  %.not17.1.i = icmp eq i16 %536, 0
-  %537 = select i1 %.not17.1.i, i16 0, i16 9056
-  %538 = and i16 %i.izg, 4096
-  %.not17.2.i = icmp eq i16 %538, 0
-  %539 = select i1 %.not17.2.i, i16 0, i16 4528
-  %540 = and i16 %i.izg, 2048
-  %.not17.3.i = icmp eq i16 %540, 0
-  %541 = select i1 %.not17.3.i, i16 0, i16 2264
-  %542 = xor i16 %537, %535
-  %543 = xor i16 %542, %539
-  %544 = xor i16 %543, %541
-  %.3.3.i = xor i16 %544, %i.izg                  ; 4 uses
+  %i.izg = call i16 @llvm.vector.reduce.xor.v8i16(<8 x i16> %i.izf) ; 2 uses
+  %534 = insertelement <4 x i16> poison, i16 %i.izg, i64 0
+  %535 = shufflevector <8 x i16> %i.izf, <8 x i16> poison, <4 x i32> <i32 poison, i32 7, i32 poison, i32 poison>
+  %536 = shufflevector <4 x i16> %534, <4 x i16> %535, <4 x i32> <i32 0, i32 5, i32 0, i32 0>
+  %537 = and <4 x i16> %536, <i16 8192, i16 -1, i16 4096, i16 2048>
+  %538 = icmp ult <4 x i16> %537, <i16 1, i16 16384, i16 1, i16 1>
+  %539 = select <4 x i1> %538, <4 x i16> zeroinitializer, <4 x i16> <i16 9056, i16 18112, i16 4528, i16 2264>
+  %540 = call i16 @llvm.vector.reduce.xor.v4i16(<4 x i16> %539)
+  %.3.3.i = xor i16 %540, %i.izg                  ; 4 uses
   %i.izh = and i16 %.3.3.i, 1024
   %.not17.4.i = icmp eq i16 %i.izh, 0
   %i.izi = select i1 %.not17.4.i, i16 0, i16 108

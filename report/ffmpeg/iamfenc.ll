@@ -202,13 +202,12 @@ bb.j:                                             ; preds = %.critedge113
   br label %bb.k
 
 bb.k:                                             ; preds = %.unr-lcssa, %.epil.preheader
-  %.lcssa214 = phi <2 x i32> [ %i.bi, %.unr-lcssa ], [ %i.ao, %.epil.preheader ] ; 2 uses
-  %1 = extractelement <2 x i32> %.lcssa214, i64 1
-  %2 = add nsw i32 %1, -3
-  %or.cond = icmp ult i32 %2, -2
-  %3 = extractelement <2 x i32> %.lcssa214, i64 0
-  %4 = icmp eq i32 %3, 0
-  %or.cond6 = select i1 %or.cond, i1 true, i1 %4
+  %.lcssa214 = phi <2 x i32> [ %i.bi, %.unr-lcssa ], [ %i.ao, %.epil.preheader ]
+  %1 = add nsw <2 x i32> %.lcssa214, <i32 0, i32 -3>
+  %2 = icmp ult <2 x i32> %1, <i32 1, i32 -2>     ; 2 uses
+  %3 = extractelement <2 x i1> %2, i64 0
+  %4 = extractelement <2 x i1> %2, i64 1
+  %or.cond6 = select i1 %4, i1 true, i1 %3
   br i1 %or.cond6, label %bb.m, label %.lr.ph150
 
 bb.l:                                             ; preds = %bb.l, %.preheader130

@@ -205,27 +205,19 @@ declare void @_ZNK5arrow15BasicDecimal25619GetWholeAndFractionEiPS0_S1_(ptr noun
 
 ; Function Attrs: mustprogress uwtable
 define internal fastcc noundef double @_ZN5arrow12_GLOBAL__N_124Decimal256RealConversion14ToRealPositiveIdEET_RKNS_10Decimal256Ei(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %1) unnamed_addr #0 align 2 {
-  %3 = alloca %"class.arrow::BasicDecimal256", align 16 ; 6 uses
-  %4 = alloca %"class.arrow::BasicDecimal256", align 8 ; 5 uses
-  %5 = load <4 x i64>, ptr %0, align 8            ; 4 uses
-  %6 = icmp slt i32 %1, 1
-  br i1 %6, label %bb.b, label %bb.a
+bb.a:
+  %2 = alloca %"class.arrow::BasicDecimal256", align 16 ; 6 uses
+  %3 = alloca %"class.arrow::BasicDecimal256", align 8 ; 5 uses
+  %4 = load <4 x i64>, ptr %0, align 8
+  %.fr = freeze <4 x i64> %4                      ; 2 uses
+  %5 = icmp slt i32 %1, 1
+  %6 = icmp ugt <4 x i64> %.fr, <i64 9007199254740990, i64 0, i64 0, i64 0>
+  %7 = bitcast <4 x i1> %6 to i4
+  %8 = icmp eq i4 %7, 0
+  %or.cond = or i1 %5, %8
+  br i1 %or.cond, label %bb.b, label %bb.e
 
-bb.a:                                             ; preds = %2
-  %7 = shufflevector <4 x i64> %5, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
-  %8 = icmp eq <2 x i64> %7, zeroinitializer      ; 2 uses
-  %9 = extractelement <2 x i1> %8, i64 0
-  %10 = extractelement <2 x i1> %8, i64 1
-  %or.cond = select i1 %10, i1 %9, i1 false
-  %11 = extractelement <4 x i64> %5, i64 1
-  %12 = icmp eq i64 %11, 0
-  %or.cond21 = select i1 %or.cond, i1 %12, i1 false
-  %13 = extractelement <4 x i64> %5, i64 0
-  %14 = icmp ult i64 %13, 9007199254740991
-  %or.cond22 = select i1 %or.cond21, i1 %14, i1 false
-  br i1 %or.cond22, label %bb.b, label %bb.e
-
-bb.b:                                             ; preds = %bb.a, %2
+bb.b:                                             ; preds = %bb.a
   %i.a = sub nsw i32 0, %1                        ; 2 uses
   %i.b = add i32 %1, 76
   %i.c = icmp ult i32 %i.b, 153
@@ -245,7 +237,7 @@ bb.d:                                             ; preds = %bb.b
 
 _ZN5arrow12_GLOBAL__N_124Decimal256RealConversion21ToRealPositiveNoSplitIdEET_RKNS_10Decimal256Ei.exit: ; preds = %bb.c, %bb.d
   %.0.i.i = phi double [ %i.g, %bb.c ], [ %i.i, %bb.d ]
-  %i.j = uitofp <4 x i64> %5 to <4 x double>      ; 2 uses
+  %i.j = uitofp <4 x i64> %.fr to <4 x double>    ; 2 uses
   %i.k = fmul nnan <4 x double> %i.j, <double poison, double f0x43F0000000000000, double f0x47F0000000000000, double f0x4BF0000000000000> ; 3 uses
   %i.l = extractelement <4 x double> %i.k, i64 2
   %i.m = extractelement <4 x double> %i.k, i64 3
@@ -258,26 +250,26 @@ _ZN5arrow12_GLOBAL__N_124Decimal256RealConversion21ToRealPositiveNoSplitIdEET_RK
   br label %bb.h
 
 bb.e:                                             ; preds = %bb.a
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, i8 0, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %3, i8 0, i64 32, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, i8 0, i64 32, i1 false)
-  call void @_ZNK5arrow15BasicDecimal25619GetWholeAndFractionEiPS0_S1_(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %1, ptr noundef nonnull %3, ptr noundef nonnull %4)
-  %.sroa.515.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, i8 0, i64 32, i1 false)
+  call void @_ZNK5arrow15BasicDecimal25619GetWholeAndFractionEiPS0_S1_(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %1, ptr noundef nonnull %2, ptr noundef nonnull %3)
+  %.sroa.515.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.t = load <2 x i64>, ptr %.sroa.515.0..sroa_idx, align 16
   %i.u = uitofp <2 x i64> %i.t to <2 x double>
   %i.v = fmul nnan <2 x double> %i.u, <double f0x47F0000000000000, double f0x4BF0000000000000> ; 2 uses
   %shift = shufflevector <2 x double> %i.v, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %i.v, %shift
   %i.w = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.x = load <2 x i64>, ptr %3, align 16
+  %i.x = load <2 x i64>, ptr %2, align 16
   %i.y = uitofp <2 x i64> %i.x to <2 x double>    ; 2 uses
   %i.z = extractelement <2 x double> %i.y, i64 1
   %i.aa = fmul nnan double %i.z, f0x43F0000000000000
   %i.ab = fadd double %i.aa, %i.w
   %i.ac = extractelement <2 x double> %i.y, i64 0
   %i.ad = fadd double %i.ab, %i.ac
-  %i.ae = load <4 x i64>, ptr %4, align 8
+  %i.ae = load <4 x i64>, ptr %3, align 8
   %i.af = sub nsw i32 0, %1                       ; 2 uses
   %i.ag = icmp samesign ult i32 %1, 77
   br i1 %i.ag, label %bb.f, label %bb.g, !prof !28
@@ -307,8 +299,8 @@ _ZN5arrow12_GLOBAL__N_124Decimal256RealConversion21ToRealPositiveNoSplitIdEET_RK
   %i.av = fadd double %i.at, %i.au
   %i.aw = fmul double %i.av, %.0.i.i11
   %i.ax = fadd double %i.ad, %i.aw
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #26
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #26
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN5arrow12_GLOBAL__N_124Decimal256RealConversion21ToRealPositiveNoSplitIdEET_RKNS_10Decimal256Ei.exit12, %_ZN5arrow12_GLOBAL__N_124Decimal256RealConversion21ToRealPositiveNoSplitIdEET_RKNS_10Decimal256Ei.exit
