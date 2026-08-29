@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %.critedge
   %i.af = load ptr, ptr %i.ad, align 8, !tbaa !10
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 48
   %i.ah = load ptr, ptr %i.ag, align 8
-  %i.ai = call noundef i32 %i.ah(ptr noundef nonnull align 8 dereferenceable(8) %i.ad, ptr noundef %i.ae, i32 noundef %i.ac) ; 3 uses
+  %i.ai = call noundef i32 %i.ah(ptr noundef nonnull align 8 dereferenceable(8) %i.ad, ptr noundef %i.ae, i32 noundef %i.ac) ; 5 uses
   %i.aj = icmp ugt i32 %i.ai, %i.ac
   br i1 %i.aj, label %.preheader.preheader, label %bb.h
 
@@ -223,14 +223,13 @@ bb.g:                                             ; preds = %.critedge
   %i.an = load ptr, ptr %i.o, align 8, !tbaa !12
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 %indvars.iv.prol
   store i8 0, ptr %i.ao, align 1, !tbaa !64
-  %indvars.iv.next.prol = add nuw nsw i64 %indvars.iv.prol, 1 ; 3 uses
+  %indvars.iv.next.prol = add nuw nsw i64 %indvars.iv.prol, 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.preheader.prol.loopexit, label %.preheader.prol, !llvm.loop !65
 
 .preheader.prol.loopexit:                         ; preds = %.preheader.prol, %.preheader.preheader
   %indvars.iv.unr = phi i64 [ %i.ak, %.preheader.preheader ], [ %indvars.iv.next.prol, %.preheader.prol ]
-  %indvars.iv.next.lcssa.unr = phi i64 [ poison, %.preheader.preheader ], [ %indvars.iv.next.prol, %.preheader.prol ]
   %i.ap = sub nsw i64 %i.ak, %i.al
   %i.aq = icmp ugt i64 %i.ap, -4
   br i1 %i.aq, label %.unr-lcssa, label %.preheader
@@ -252,24 +251,22 @@ bb.g:                                             ; preds = %.critedge
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 %indvars.iv
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 3
   store i8 0, ptr %i.bb, align 1, !tbaa !64
-  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 3 uses
-  %6 = icmp samesign ult i64 %indvars.iv.next.3, %i.al
-  br i1 %6, label %.preheader, label %.unr-lcssa, !llvm.loop !67
+  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
+  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %i.al
+  br i1 %exitcond.not.3, label %.unr-lcssa, label %.preheader, !llvm.loop !67
 
 .unr-lcssa:                                       ; preds = %.preheader, %.preheader.prol.loopexit
-  %indvars.iv.next.lcssa = phi i64 [ %indvars.iv.next.lcssa.unr, %.preheader.prol.loopexit ], [ %indvars.iv.next.3, %.preheader ]
-  %7 = trunc nuw i64 %indvars.iv.next.lcssa to i32 ; 2 uses
   %i.bc = load ptr, ptr %i.d, align 8, !tbaa !46  ; 2 uses
   %i.bd = load ptr, ptr %i.o, align 8, !tbaa !12
   %i.be = load ptr, ptr %i.bc, align 8, !tbaa !10
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 48
   %i.bg = load ptr, ptr %i.bf, align 8
-  %i.bh = call noundef i32 %i.bg(ptr noundef nonnull align 8 dereferenceable(8) %i.bc, ptr noundef %i.bd, i32 noundef %7)
+  %i.bh = call noundef i32 %i.bg(ptr noundef nonnull align 8 dereferenceable(8) %i.bc, ptr noundef %i.bd, i32 noundef %i.ai)
   br label %bb.h
 
 bb.h:                                             ; preds = %.unr-lcssa, %bb.g
   %.146 = phi i32 [ %i.bh, %.unr-lcssa ], [ %i.ai, %bb.g ] ; 7 uses
-  %.1 = phi i32 [ %7, %.unr-lcssa ], [ %i.ac, %bb.g ] ; 6 uses
+  %.1 = phi i32 [ %i.ai, %.unr-lcssa ], [ %i.ac, %bb.g ] ; 6 uses
   %i.bi = icmp eq i32 %.146, 0
   br i1 %i.bi, label %bb.i, label %bb.n
 

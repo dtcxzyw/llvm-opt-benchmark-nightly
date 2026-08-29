@@ -204,13 +204,13 @@ _ZNK4llvm9SetVectorIPNS_10BasicBlockENS_11SmallVectorIS2_Lj0EEENS_8DenseSetIS2_N
 define internal fastcc noundef ptr @_ZL18getCommonExitBlockRKN4llvm9SetVectorIPNS_10BasicBlockENS_11SmallVectorIS2_Lj0EEENS_8DenseSetIS2_NS_12DenseMapInfoIS2_vEEEELj0EEE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) unnamed_addr #8 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %.val = load ptr, ptr %i.a, align 8, !tbaa !21  ; 4 uses
+  %.val = load ptr, ptr %i.a, align 8, !tbaa !21  ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.val4 = load i32, ptr %i.b, align 8, !tbaa !64
   %i.c = zext i32 %.val4 to i64                   ; 3 uses
-  %.idx = shl nuw nsw i64 %i.c, 3                 ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx ; 5 uses
-  %i.d = lshr i64 %i.c, 2                         ; 3 uses
+  %1 = getelementptr inbounds nuw [8 x i8], ptr %.val, i64 %i.c ; 6 uses
+  %2 = ptrtoint ptr %1 to i64
+  %i.d = lshr i64 %i.c, 2                         ; 2 uses
   %.not.i = icmp eq i64 %i.d, 0
   br i1 %.not.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
@@ -222,8 +222,6 @@ bb.a:
   %i.i = load i32, ptr %i.f, align 4              ; 2 uses
   %i.j = icmp eq i32 %i.i, 0                      ; 4 uses
   %i.k = add i32 %i.i, -1                         ; 8 uses
-  %2 = shl nuw nsw i64 %i.d, 5                    ; 2 uses
-  %scevgep = getelementptr i8, ptr %.val, i64 %2
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit184.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i
@@ -581,20 +579,21 @@ select.unfold.i.i95.i.i.i.i.i.i:                  ; preds = %.lr.ph.i.i.i.i.i.i.
 
 .loopexit184.i.i.i.i.i.i:                         ; preds = %select.unfold.i.i95.i.i.i.i.i.i, %select.unfold.us.i.i104.i.i.i.i.i.i, %.loopexit188.i.i.i.i.i.i
   %.12 = phi ptr [ %.9, %.loopexit188.i.i.i.i.i.i ], [ %.31, %select.unfold.us.i.i104.i.i.i.i.i.i ], [ %.11, %select.unfold.i.i95.i.i.i.i.i.i ] ; 2 uses
-  %i.fg = getelementptr inbounds nuw i8, ptr %.029224.i.i.i.i.i.i, i64 32
+  %i.fg = getelementptr inbounds nuw i8, ptr %.029224.i.i.i.i.i.i, i64 32 ; 3 uses
   %i.fh = add nsw i64 %.0225.i.i.i.i.i.i, -1
   %i.fi = icmp sgt i64 %.0225.i.i.i.i.i.i, 1
   br i1 %i.fi, label %bb.b, label %._crit_edge.loopexit.i.i.i.i.i.i, !llvm.loop !467
 
 ._crit_edge.loopexit.i.i.i.i.i.i:                 ; preds = %.loopexit184.i.i.i.i.i.i
-  %gepdiff = sub nsw i64 %.idx, %2
+  %.pre.i.i.i.i.i.i = ptrtoint ptr %i.fg to i64
+  %gepdiff = sub i64 %2, %.pre.i.i.i.i.i.i
   %i.fj = ashr exact i64 %gepdiff, 3
   br label %._crit_edge.i.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %._crit_edge.loopexit.i.i.i.i.i.i, %bb.a
   %.13 = phi ptr [ null, %bb.a ], [ %.12, %._crit_edge.loopexit.i.i.i.i.i.i ] ; 7 uses
   %.pre-phi249.i.i.i.i.i.i = phi i64 [ %i.c, %bb.a ], [ %i.fj, %._crit_edge.loopexit.i.i.i.i.i.i ]
-  %.029.lcssa.i.i.i.i.i.i = phi ptr [ %.val, %bb.a ], [ %scevgep, %._crit_edge.loopexit.i.i.i.i.i.i ] ; 6 uses
+  %.029.lcssa.i.i.i.i.i.i = phi ptr [ %.val, %bb.a ], [ %i.fg, %._crit_edge.loopexit.i.i.i.i.i.i ] ; 6 uses
   switch i64 %.pre-phi249.i.i.i.i.i.i, label %"_ZN4llvm6any_ofIRKNS_9SetVectorIPNS_10BasicBlockENS_11SmallVectorIS3_Lj0EEENS_8DenseSetIS3_NS_12DenseMapInfoIS3_vEEEELj0EEEZL18getCommonExitBlockSC_E3$_0EEbOT_T0_.exit" [
     i64 3, label %bb.o
     i64 2, label %bb.s

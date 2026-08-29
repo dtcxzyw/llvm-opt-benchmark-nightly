@@ -204,25 +204,23 @@ bb.an:                                            ; preds = %bb.am
 .preheader.preheader:                             ; preds = %bb.an
   %i.jq = load ptr, ptr %i.s, align 8, !tbaa !54
   %i.jr = load ptr, ptr %i.jq, align 8, !tbaa !14
-  %i.js = sext i32 %.0289 to i64                  ; 7 uses
+  %i.js = sext i32 %.0289 to i64                  ; 6 uses
   %i.jt = zext nneg i32 %.0288 to i64
   %i.ju = sext i32 %i.jl to i64                   ; 2 uses
-  %1 = add nsw i64 %i.js, 1
-  %smax = tail call i64 @llvm.smax.i64(i64 %1, i64 %i.ju)
-  %i.jv = sub i64 %smax, %i.js                    ; 7 uses
+  %i.jv = sub nsw i64 %i.ju, %i.js                ; 7 uses
   %min.iters.check556 = icmp ugt i64 %i.jv, 3
   %ident.check.not = icmp eq i32 %.0288, 1
   %or.cond586 = select i1 %min.iters.check556, i1 %ident.check.not, i1 false
   %min.iters.check558 = icmp ult i64 %i.jv, 16
   %i.jw = and i64 %i.jv, 12
   %n.vec560 = and i64 %i.jv, -16                  ; 4 uses
-  %i.jx = add i64 %n.vec560, %i.js
+  %i.jx = add nsw i64 %n.vec560, %i.js
   %broadcast.splatinsert561 = insertelement <16 x i32> poison, i32 %.0287, i64 0
   %broadcast.splat562 = shufflevector <16 x i32> %broadcast.splatinsert561, <16 x i32> poison, <16 x i32> zeroinitializer
   %cmp.n568 = icmp eq i64 %i.jv, %n.vec560
   %min.epilog.iters.check574 = icmp eq i64 %i.jw, 0
   %n.vec576 = and i64 %i.jv, -4                   ; 3 uses
-  %i.jy = add i64 %n.vec576, %i.js
+  %i.jy = add nsw i64 %n.vec576, %i.js
   %broadcast.splatinsert577 = insertelement <4 x i32> poison, i32 %.0287, i64 0
   %broadcast.splat578 = shufflevector <4 x i32> %broadcast.splatinsert577, <4 x i32> poison, <4 x i32> zeroinitializer
   %cmp.n584 = icmp eq i64 %i.jv, %n.vec576
@@ -624,9 +622,6 @@ declare i32 @llvm.smax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #8
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

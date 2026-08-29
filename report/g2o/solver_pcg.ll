@@ -205,7 +205,7 @@ bb.a:
 
 .preheader63:                                     ; preds = %._crit_edge.us, %.preheader64.preheader, %bb.a
   %.056.lcssa = phi i64 [ 0, %bb.a ], [ 0, %.preheader64.preheader ], [ %.lcssa120, %._crit_edge.us ] ; 3 uses
-  %.055.lcssa = phi i64 [ 0, %bb.a ], [ %smax, %.preheader64.preheader ], [ %i.ax, %._crit_edge.us ] ; 6 uses
+  %.055.lcssa = phi i64 [ 0, %bb.a ], [ %smax, %.preheader64.preheader ], [ %i.ax, %._crit_edge.us ] ; 5 uses
   %i.az = icmp slt i64 %.055.lcssa, %i.g
   br i1 %i.az, label %.preheader62.lr.ph, label %.preheader61
 
@@ -223,10 +223,8 @@ bb.a:
   br label %.preheader62.us
 
 .preheader62.preheader:                           ; preds = %.preheader62.lr.ph
-  %7 = add i64 %.055.lcssa, 2
-  %smax95 = tail call i64 @llvm.smax.i64(i64 %i.g, i64 %7)
   %i.bd = xor i64 %.055.lcssa, -1
-  %i.be = add i64 %smax95, %i.bd
+  %i.be = add i64 %i.g, %i.bd
   %i.bf = and i64 %i.be, -2
   %i.bg = add i64 %.055.lcssa, %i.bf
   %i.bh = add i64 %i.bg, 2
@@ -594,8 +592,8 @@ bb.a:
   %i.cm = call double @llvm.fmuladd.f64(double %7, double %i.cl, double %i.ck)
   store double %i.cm, ptr %i.cj, align 8, !tbaa !90
   %i.cn = add nsw i64 %.0230789.us.us, 1          ; 2 uses
-  %13 = icmp slt i64 %i.cn, %4
-  br i1 %13, label %.lr.ph781.us.us, label %._crit_edge791.split.us.us, !llvm.loop !1021
+  %exitcond855.not = icmp eq i64 %i.cn, %4
+  br i1 %exitcond855.not, label %._crit_edge791.split.us.us, label %.lr.ph781.us.us, !llvm.loop !1021
 
 ._crit_edge791.split.us.us:                       ; preds = %._crit_edge782.us.us
   %i.co = add nuw nsw i64 %.0231792.us, 4         ; 2 uses
@@ -998,8 +996,8 @@ bb.f:                                             ; preds = %bb.f, %.preheader.p
   %i.yu = call double @llvm.fmuladd.f64(double %7, double 0.000000e+00, double %i.yt)
   store double %i.yu, ptr %gep811.prol, align 8, !tbaa !90
   %i.yv = add nsw i64 %.0226807.prol, 1           ; 2 uses
-  %14 = icmp slt i64 %i.yv, %4
-  br i1 %14, label %bb.f, label %._crit_edge809.split.prol, !llvm.loop !1080
+  %exitcond856.not.prol = icmp eq i64 %i.yv, %4
+  br i1 %exitcond856.not.prol, label %._crit_edge809.split.prol, label %bb.f, !llvm.loop !1080
 
 ._crit_edge809.split.prol:                        ; preds = %bb.f
   %i.yw = or disjoint i64 %i.d, 1
@@ -1100,8 +1098,8 @@ bb.g:                                             ; preds = %bb.g, %.epil.prehea
   %i.aam = call double @llvm.fmuladd.f64(double %7, double %.lcssa, double %i.aal)
   store double %i.aam, ptr %gep811.us.us, align 8, !tbaa !90
   %i.aan = add nsw i64 %.0226807.us.us, 1         ; 2 uses
-  %15 = icmp slt i64 %i.aan, %4
-  br i1 %15, label %.lr.ph800.us.us, label %._crit_edge809.split.us.us, !llvm.loop !1080
+  %exitcond859.not = icmp eq i64 %i.aan, %4
+  br i1 %exitcond859.not, label %._crit_edge809.split.us.us, label %.lr.ph800.us.us, !llvm.loop !1080
 
 ._crit_edge809.split.us.us:                       ; preds = %._crit_edge801.us.us
   %i.aao = add nsw i64 %.0227812.us, 1            ; 2 uses
@@ -1136,8 +1134,8 @@ bb.h:                                             ; preds = %.preheader663, %bb.
   %i.abe = call double @llvm.fmuladd.f64(double %7, double 0.000000e+00, double %i.abd)
   store double %i.abe, ptr %i.abc, align 8, !tbaa !90
   %i.abf = add nsw i64 %.0230789, 1               ; 2 uses
-  %16 = icmp slt i64 %i.abf, %4
-  br i1 %16, label %bb.h, label %._crit_edge791.split, !llvm.loop !1021
+  %exitcond853.not = icmp eq i64 %i.abf, %4
+  br i1 %exitcond853.not, label %._crit_edge791.split, label %bb.h, !llvm.loop !1021
 
 .preheader:                                       ; preds = %.preheader.prol.loopexit, %._crit_edge809.split.1
   %.0227812 = phi i64 [ %i.abn, %._crit_edge809.split.1 ], [ %.0227812.unr, %.preheader.prol.loopexit ] ; 3 uses
@@ -1161,8 +1159,8 @@ bb.i:                                             ; preds = %bb.i, %._crit_edge8
   %i.abl = call double @llvm.fmuladd.f64(double %7, double 0.000000e+00, double %i.abk)
   store double %i.abl, ptr %gep811.1, align 8, !tbaa !90
   %i.abm = add nsw i64 %.0226807.1, 1             ; 2 uses
-  %17 = icmp slt i64 %i.abm, %4
-  br i1 %17, label %bb.i, label %._crit_edge809.split.1, !llvm.loop !1080
+  %exitcond856.not.1 = icmp eq i64 %i.abm, %4
+  br i1 %exitcond856.not.1, label %._crit_edge809.split.1, label %bb.i, !llvm.loop !1080
 
 ._crit_edge809.split.1:                           ; preds = %bb.i
   %i.abn = add nsw i64 %.0227812, 2               ; 2 uses
@@ -1179,8 +1177,8 @@ bb.j:                                             ; preds = %.preheader, %bb.j
   %i.abq = call double @llvm.fmuladd.f64(double %7, double 0.000000e+00, double %i.abp)
   store double %i.abq, ptr %gep811, align 8, !tbaa !90
   %i.abr = add nsw i64 %.0226807, 1               ; 2 uses
-  %18 = icmp slt i64 %i.abr, %4
-  br i1 %18, label %bb.j, label %._crit_edge809.split, !llvm.loop !1080
+  %exitcond856.not = icmp eq i64 %i.abr, %4
+  br i1 %exitcond856.not, label %._crit_edge809.split, label %bb.j, !llvm.loop !1080
 
 .loopexit:                                        ; preds = %.preheader.prol.loopexit, %._crit_edge809.split.1, %._crit_edge809.split.us.us, %.preheader662, %._crit_edge773
   ret void

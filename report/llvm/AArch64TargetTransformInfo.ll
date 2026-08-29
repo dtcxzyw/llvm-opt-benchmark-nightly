@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 3 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !233  ; 13 uses
-  %i.g = udiv i32 %i.f, %3                        ; 10 uses
+  %i.g = udiv i32 %i.f, %3                        ; 12 uses
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !343
   %i.j = tail call noundef ptr @_ZN4llvm15FixedVectorType3getEPNS_4TypeEj(ptr noundef %i.i, i32 noundef %i.g) #30 ; 7 uses
@@ -608,16 +608,15 @@ _ZN4llvm5APInt7getZeroEj.exit:                    ; preds = %bb.v, %bb.w
 .lr.ph381.preheader:                              ; preds = %_ZN4llvm5APInt7getZeroEj.exit
   %.pre395 = load i32, ptr %i.fj, align 8, !tbaa !251
   %i.fm = icmp ult i32 %.pre395, 65
-  %umax = call i32 @llvm.umax.i32(i32 %i.g, i32 1) ; 3 uses
-  %xtraiter444 = and i32 %umax, 1
-  %22 = icmp ult i32 %i.g, 2
-  %unroll_iter = and i32 %umax, -2
+  %22 = add i32 %i.g, -1                          ; 2 uses
+  %xtraiter444 = and i32 %i.g, 1
+  %23 = icmp eq i32 %22, 0
+  %unroll_iter = and i32 %i.g, -2
   %lcmp.mod445.not = icmp eq i32 %xtraiter444, 0
-  %lcmp.mod446 = trunc i32 %umax to i1
-  %umax447 = call i32 @llvm.umax.i32(i32 %i.g, i32 1) ; 2 uses
-  %xtraiter448 = and i32 %umax447, 3              ; 3 uses
-  %i.fn = icmp ult i32 %i.g, 4
-  %unroll_iter452 = and i32 %umax447, -4
+  %lcmp.mod446 = trunc i32 %i.g to i1
+  %xtraiter448 = and i32 %i.g, 3                  ; 3 uses
+  %i.fn = icmp ult i32 %22, 3
+  %unroll_iter452 = and i32 %i.g, -4
   %lcmp.mod449.not = icmp eq i32 %xtraiter448, 0
   %lcmp.mod451 = icmp ne i32 %xtraiter448, 0
   br label %.lr.ph381
@@ -636,7 +635,7 @@ _ZN4llvm5APInt7getZeroEj.exit:                    ; preds = %bb.v, %bb.w
   br i1 %i.fm, label %.lr.ph381.split.us, label %_ZN4llvm5APInt6setBitEj.exit.preheader
 
 _ZN4llvm5APInt6setBitEj.exit.preheader:           ; preds = %.lr.ph381
-  br i1 %22, label %_ZN4llvm5APInt6setBitEj.exit.epil.preheader, label %_ZN4llvm5APInt6setBitEj.exit
+  br i1 %23, label %_ZN4llvm5APInt6setBitEj.exit.epil.preheader, label %_ZN4llvm5APInt6setBitEj.exit
 
 .lr.ph381.split.us:                               ; preds = %.lr.ph381
   %.promoted = load i64, ptr %20, align 8, !tbaa !99 ; 2 uses

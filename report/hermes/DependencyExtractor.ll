@@ -205,24 +205,19 @@ _ZN4llvh15SmallVectorImplIjE6appendIPKjvEEvT_S5_.exit: ; preds = %bb.c, %bb.d
 define linkonce_odr hidden noundef zeroext i8 @_ZNK6hermes5regex13MatchCharNode16matchConstraintsEv(ptr noundef nonnull align 8 dereferenceable(56) %0) unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !200  ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !200  ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load i32, ptr %i.c, align 8, !tbaa !261
   %i.e = zext i32 %i.d to i64                     ; 3 uses
-  %.idx = shl nuw nsw i64 %i.e, 2                 ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 %.idx ; 2 uses
-  %i.f = lshr i64 %i.e, 2                         ; 3 uses
+  %1 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.e ; 3 uses
+  %2 = ptrtoint ptr %1 to i64
+  %i.f = lshr i64 %i.e, 2                         ; 2 uses
   %.not = icmp eq i64 %i.f, 0
-  br i1 %.not, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i.preheader
+  br i1 %.not, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i
 
-.lr.ph.i.i.i.i.preheader:                         ; preds = %bb.a
-  %2 = shl nuw nsw i64 %i.f, 4                    ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.b, i64 %2
-  br label %.lr.ph.i.i.i.i
-
-.lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i.preheader, %bb.e
-  %.047.i.i.i.i = phi i64 [ %i.s, %bb.e ], [ %i.f, %.lr.ph.i.i.i.i.preheader ] ; 2 uses
-  %.02946.i.i.i.i = phi ptr [ %i.r, %bb.e ], [ %i.b, %.lr.ph.i.i.i.i.preheader ] ; 9 uses
+.lr.ph.i.i.i.i:                                   ; preds = %bb.a, %bb.e
+  %.047.i.i.i.i = phi i64 [ %i.s, %bb.e ], [ %i.f, %bb.a ] ; 2 uses
+  %.02946.i.i.i.i = phi ptr [ %i.r, %bb.e ], [ %i.b, %bb.a ] ; 9 uses
   %i.g = load i32, ptr %.02946.i.i.i.i, align 4, !tbaa !3
   %i.h = icmp ult i32 %i.g, 128
   br i1 %i.h, label %bb.b, label %_ZSt6all_ofIPKjPFbjEEbT_S4_T0_.exit
@@ -246,19 +241,20 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %_ZSt6all_ofIPKjPFbjEEbT_S4_T0_.exit.loopexit.split.loop.exit16
 
 bb.e:                                             ; preds = %bb.d
-  %i.r = getelementptr inbounds nuw i8, ptr %.02946.i.i.i.i, i64 16
+  %i.r = getelementptr inbounds nuw i8, ptr %.02946.i.i.i.i, i64 16 ; 3 uses
   %i.s = add nsw i64 %.047.i.i.i.i, -1
   %i.t = icmp sgt i64 %.047.i.i.i.i, 1
   br i1 %i.t, label %.lr.ph.i.i.i.i, label %._crit_edge.loopexit.i.i.i.i, !llvm.loop !344
 
 ._crit_edge.loopexit.i.i.i.i:                     ; preds = %bb.e
-  %gepdiff = sub nsw i64 %.idx, %2
+  %.pre.i.i.i.i = ptrtoint ptr %i.r to i64
+  %gepdiff = sub i64 %2, %.pre.i.i.i.i
   %i.u = ashr exact i64 %gepdiff, 2
   br label %._crit_edge.i.i.i.i
 
 ._crit_edge.i.i.i.i:                              ; preds = %._crit_edge.loopexit.i.i.i.i, %bb.a
   %.pre-phi53.i.i.i.i = phi i64 [ %i.u, %._crit_edge.loopexit.i.i.i.i ], [ %i.e, %bb.a ]
-  %.029.lcssa.i.i.i.i = phi ptr [ %scevgep, %._crit_edge.loopexit.i.i.i.i ], [ %i.b, %bb.a ] ; 5 uses
+  %.029.lcssa.i.i.i.i = phi ptr [ %i.r, %._crit_edge.loopexit.i.i.i.i ], [ %i.b, %bb.a ] ; 5 uses
   switch i64 %.pre-phi53.i.i.i.i, label %bb.k [
     i64 3, label %bb.f
     i64 2, label %bb.h
@@ -360,22 +356,17 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK4llvh8ArrayRefIjE10take_untilIPFbjEEES1_T_.exit
-  %.sroa.027.053 = phi ptr [ %i.bu, %_ZNK4llvh8ArrayRefIjE10take_untilIPFbjEEES1_T_.exit ], [ %i.f, %.lr.ph.preheader ] ; 7 uses
+  %.sroa.027.053 = phi ptr [ %i.bu, %_ZNK4llvh8ArrayRefIjE10take_untilIPFbjEEES1_T_.exit ], [ %i.f, %.lr.ph.preheader ] ; 6 uses
   %.sroa.9.052 = phi i64 [ %i.bt, %_ZNK4llvh8ArrayRefIjE10take_untilIPFbjEEES1_T_.exit ], [ %i.d, %.lr.ph.preheader ] ; 4 uses
-  %.idx = shl nuw nsw i64 %.sroa.9.052, 2         ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %.sroa.027.053, i64 %.idx
-  %i.g = lshr i64 %.sroa.9.052, 2                 ; 3 uses
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %.sroa.027.053, i64 %.sroa.9.052 ; 2 uses
+  %3 = ptrtoint ptr %2 to i64
+  %i.g = lshr i64 %.sroa.9.052, 2                 ; 2 uses
   %.not.i.i = icmp eq i64 %i.g, 0
-  br i1 %.not.i.i, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.preheader
+  br i1 %.not.i.i, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.preheader:                       ; preds = %.lr.ph
-  %3 = shl i64 %i.g, 4                            ; 2 uses
-  %scevgep = getelementptr i8, ptr %.sroa.027.053, i64 %3
-  br label %.lr.ph.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader, %bb.e
-  %.047.i.i.i.i.i = phi i64 [ %i.t, %bb.e ], [ %i.g, %.lr.ph.i.i.i.i.i.preheader ] ; 2 uses
-  %.02946.i.i.i.i.i = phi ptr [ %i.s, %bb.e ], [ %.sroa.027.053, %.lr.ph.i.i.i.i.i.preheader ] ; 9 uses
+.lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph, %bb.e
+  %.047.i.i.i.i.i = phi i64 [ %i.t, %bb.e ], [ %i.g, %.lr.ph ] ; 2 uses
+  %.02946.i.i.i.i.i = phi ptr [ %i.s, %bb.e ], [ %.sroa.027.053, %.lr.ph ] ; 9 uses
   %i.h = load i32, ptr %.02946.i.i.i.i.i, align 4, !tbaa !3
   %i.i = icmp ult i32 %i.h, 128
   br i1 %i.i, label %bb.b, label %_ZNK4llvh8ArrayRefIjE10take_whileIPFbjEEES1_T_.exit
@@ -399,19 +390,20 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.r, label %bb.e, label %_ZNK4llvh8ArrayRefIjE10take_whileIPFbjEEES1_T_.exit.loopexit.split.loop.exit68
 
 bb.e:                                             ; preds = %bb.d
-  %i.s = getelementptr inbounds nuw i8, ptr %.02946.i.i.i.i.i, i64 16
+  %i.s = getelementptr inbounds nuw i8, ptr %.02946.i.i.i.i.i, i64 16 ; 3 uses
   %i.t = add nsw i64 %.047.i.i.i.i.i, -1
   %i.u = icmp sgt i64 %.047.i.i.i.i.i, 1
   br i1 %i.u, label %.lr.ph.i.i.i.i.i, label %._crit_edge.loopexit.i.i.i.i.i, !llvm.loop !344
 
 ._crit_edge.loopexit.i.i.i.i.i:                   ; preds = %bb.e
-  %gepdiff = sub i64 %.idx, %3
+  %.pre.i.i.i.i.i = ptrtoint ptr %i.s to i64
+  %gepdiff = sub i64 %3, %.pre.i.i.i.i.i
   %i.v = ashr exact i64 %gepdiff, 2
   br label %._crit_edge.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i:                            ; preds = %._crit_edge.loopexit.i.i.i.i.i, %.lr.ph
   %.pre-phi53.i.i.i.i.i = phi i64 [ %i.v, %._crit_edge.loopexit.i.i.i.i.i ], [ %.sroa.9.052, %.lr.ph ]
-  %.029.lcssa.i.i.i.i.i = phi ptr [ %scevgep, %._crit_edge.loopexit.i.i.i.i.i ], [ %.sroa.027.053, %.lr.ph ] ; 5 uses
+  %.029.lcssa.i.i.i.i.i = phi ptr [ %i.s, %._crit_edge.loopexit.i.i.i.i.i ], [ %.sroa.027.053, %.lr.ph ] ; 5 uses
   switch i64 %.pre-phi53.i.i.i.i.i, label %bb.k [
     i64 3, label %bb.f
     i64 2, label %bb.h

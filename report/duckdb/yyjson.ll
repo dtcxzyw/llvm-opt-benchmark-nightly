@@ -204,7 +204,7 @@ bb.iw:                                            ; preds = %bb.iu
   %i.aji = lshr i64 %.0.i1205.ph, 52
   %i.ajj = trunc nuw nsw i64 %i.aji to i32
   %i.ajk = add nsw i32 %i.ajj, -1076
-  %.sroa.9.0.i386 = select i1 %.not679.i385, i32 -1075, i32 %i.ajk ; 5 uses
+  %.sroa.9.0.i386 = select i1 %.not679.i385, i32 -1075, i32 %i.ajk ; 4 uses
   %.sroa.022.0.i387 = select i1 %.not679.i385, i64 %.0.i1205.ph, i64 %i.ajh
   %i.ajl = shl nuw nsw i64 %.sroa.022.0.i387, 1
   %i.ajm = or disjoint i64 %i.ajl, 1
@@ -607,7 +607,7 @@ _ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit1218: ; preds = %bb.ji, 
 
 bb.jl:                                            ; preds = %_ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit1218
   %i.aqn = and i32 %.sroa.9.0.i386, 63            ; 3 uses
-  %i.aqo = lshr i32 %.sroa.9.0.i386, 6            ; 14 uses
+  %i.aqo = lshr i32 %.sroa.9.0.i386, 6            ; 15 uses
   %i.aqp = icmp eq i32 %i.aqn, 0
   br i1 %i.aqp, label %.preheader4208, label %bb.jm, !prof !7
 
@@ -737,12 +737,7 @@ scalar.ph10428:                                   ; preds = %scalar.ph10428.prol
 .lr.ph5135.preheader:                             ; preds = %scalar.ph10428.prol.loopexit, %scalar.ph10428, %middle.block10437, %.preheader4208
   %i.atc = add i32 %i.aql, %i.aqo                 ; 2 uses
   store i32 %i.atc, ptr %8, align 8, !tbaa !177
-  %15 = add nsw i32 %i.aqo, -1
-  %16 = zext i32 %15 to i64
-  %17 = shl nuw nsw i64 %16, 3
-  %18 = add nuw nsw i64 %17, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ajn, i8 0, i64 %18, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1254
+  br label %.lr.ph5110.preheader
 
 bb.jm:                                            ; preds = %bb.jl
   %i.atd = zext i32 %i.aql to i64                 ; 10 uses
@@ -896,19 +891,12 @@ scalar.ph10407:                                   ; preds = %scalar.ph10407.prol
   %i.awj = zext i1 %i.awi to i32
   %i.awk = add i32 %i.awe, %i.awj                 ; 2 uses
   %.not45.i12495124 = icmp eq i32 %i.aqo, 0
-  br i1 %.not45.i12495124, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1254, label %.lr.ph5127.preheader
-
-.lr.ph5127.preheader:                             ; preds = %._crit_edge5123
-  %19 = lshr i32 %.sroa.9.0.i386, 3
-  %20 = and i32 %19, 268435448
-  %21 = zext nneg i32 %20 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ajn, i8 0, i64 %21, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1254
+  br i1 %.not45.i12495124, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1254, label %.lr.ph5110.preheader
 
 bb.jn:                                            ; preds = %_ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit1218
-  %i.awl = sub nsw i32 0, %.sroa.9.0.i386         ; 4 uses
+  %i.awl = sub nsw i32 0, %.sroa.9.0.i386         ; 2 uses
   %i.awm = and i32 %i.awl, 63                     ; 3 uses
-  %i.awn = lshr i32 %i.awl, 6                     ; 14 uses
+  %i.awn = lshr i32 %i.awl, 6                     ; 16 uses
   %i.awo = load i32, ptr %7, align 8, !tbaa !177  ; 12 uses
   %i.awp = icmp eq i32 %i.awm, 0
   br i1 %i.awp, label %.preheader4211, label %bb.jo, !prof !7
@@ -1045,10 +1033,7 @@ scalar.ph10390:                                   ; preds = %scalar.ph10390.prol
 
 .lr.ph5118:                                       ; preds = %._crit_edge5114
   %i.aze = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %22 = lshr exact i32 %i.awl, 3
-  %23 = zext nneg i32 %22 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.aze, i8 0, i64 %23, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1254
+  br label %.lr.ph5110.preheader
 
 bb.jo:                                            ; preds = %bb.jn
   %i.azf = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 12 uses
@@ -1206,21 +1191,25 @@ scalar.ph10369:                                   ; preds = %scalar.ph10369.prol
   %.not45.i12585107 = icmp eq i32 %i.awn, 0
   br i1 %.not45.i12585107, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1254, label %.lr.ph5110.preheader
 
-.lr.ph5110.preheader:                             ; preds = %._crit_edge5106
-  %24 = lshr i32 %i.awl, 3
-  %25 = and i32 %24, 536870904
-  %i.bco = zext nneg i32 %25 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.azf, i8 0, i64 %i.bco, i1 false), !tbaa !91
+.lr.ph5110.preheader:                             ; preds = %._crit_edge5106, %._crit_edge5123, %.lr.ph5135.preheader, %.lr.ph5118
+  %.sink8513 = phi i32 [ %i.aqo, %._crit_edge5123 ], [ %i.awn, %.lr.ph5118 ], [ %i.aqo, %.lr.ph5135.preheader ], [ %i.awn, %._crit_edge5106 ]
+  %.sink8508 = phi ptr [ %i.ajn, %._crit_edge5123 ], [ %i.aze, %.lr.ph5118 ], [ %i.ajn, %.lr.ph5135.preheader ], [ %i.azf, %._crit_edge5106 ]
+  %.ph8507 = phi i32 [ %i.awk, %._crit_edge5123 ], [ %i.aql, %.lr.ph5118 ], [ %i.atc, %.lr.ph5135.preheader ], [ %i.aql, %._crit_edge5106 ]
+  %15 = add nsw i32 %.sink8513, -1
+  %i.bco = zext i32 %15 to i64
+  %16 = shl nuw nsw i64 %i.bco, 3
+  %17 = add nuw nsw i64 %16, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink8508, i8 0, i64 %17, i1 false), !tbaa !91
   br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1254
 
-_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1254: ; preds = %.lr.ph5110.preheader, %.lr.ph5118, %.lr.ph5127.preheader, %.lr.ph5135.preheader, %._crit_edge5106, %._crit_edge5114, %._crit_edge5123
-  %26 = phi i32 [ %i.awk, %._crit_edge5123 ], [ %i.aql, %.lr.ph5110.preheader ], [ %i.aql, %.lr.ph5118 ], [ %i.awk, %.lr.ph5127.preheader ], [ %i.atc, %.lr.ph5135.preheader ], [ %i.aql, %._crit_edge5106 ], [ %i.aql, %._crit_edge5114 ] ; 2 uses
+_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1254: ; preds = %.lr.ph5110.preheader, %._crit_edge5106, %._crit_edge5114, %._crit_edge5123
+  %18 = phi i32 [ %i.awk, %._crit_edge5123 ], [ %i.aql, %._crit_edge5106 ], [ %i.aql, %._crit_edge5114 ], [ %.ph8507, %.lr.ph5110.preheader ] ; 2 uses
   %i.bcp = load i32, ptr %7, align 8, !tbaa !177  ; 4 uses
-  %i.bcq = icmp ult i32 %i.bcp, %26
+  %i.bcq = icmp ult i32 %i.bcp, %18
   br i1 %i.bcq, label %_ZN13duckdb_yyjsonL10bigint_cmpEPNS_6bigintES1_.exit1312.thread, label %bb.jp
 
 bb.jp:                                            ; preds = %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1254
-  %i.bcr = icmp ugt i32 %i.bcp, %26
+  %i.bcr = icmp ugt i32 %i.bcp, %18
   br i1 %i.bcr, label %_ZN13duckdb_yyjsonL10bigint_cmpEPNS_6bigintES1_.exit1312.thread, label %.preheader4207
 
 .preheader4207:                                   ; preds = %bb.jp
@@ -1623,7 +1612,7 @@ bb.aex:                                           ; preds = %bb.aev
   %i.ewa = lshr i64 %.0.i1204.ph, 52
   %i.ewb = trunc nuw nsw i64 %i.ewa to i32
   %i.ewc = add nsw i32 %i.ewb, -1076
-  %.sroa.9.0.i491 = select i1 %.not679.i490, i32 -1075, i32 %i.ewc ; 5 uses
+  %.sroa.9.0.i491 = select i1 %.not679.i490, i32 -1075, i32 %i.ewc ; 4 uses
   %.sroa.022.0.i492 = select i1 %.not679.i490, i64 %.0.i1204.ph, i64 %i.evz
   %i.ewd = shl nuw nsw i64 %.sroa.022.0.i492, 1
   %i.ewe = or disjoint i64 %i.ewd, 1
@@ -2026,7 +2015,7 @@ _ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit: ; preds = %bb.afj, %bb
 
 bb.afm:                                           ; preds = %_ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit
   %i.fdf = and i32 %.sroa.9.0.i491, 63            ; 3 uses
-  %i.fdg = lshr i32 %.sroa.9.0.i491, 6            ; 14 uses
+  %i.fdg = lshr i32 %.sroa.9.0.i491, 6            ; 15 uses
   %i.fdh = icmp eq i32 %i.fdf, 0
   br i1 %i.fdh, label %.preheader4247, label %bb.afn, !prof !7
 
@@ -2156,12 +2145,7 @@ scalar.ph10352:                                   ; preds = %scalar.ph10352.prol
 .lr.ph4878.preheader:                             ; preds = %scalar.ph10352.prol.loopexit, %scalar.ph10352, %middle.block10361, %.preheader4247
   %i.ffu = add i32 %i.fdd, %i.fdg                 ; 2 uses
   store i32 %i.ffu, ptr %6, align 8, !tbaa !177
-  %27 = add nsw i32 %i.fdg, -1
-  %28 = zext i32 %27 to i64
-  %29 = shl nuw nsw i64 %28, 3
-  %30 = add nuw nsw i64 %29, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ewf, i8 0, i64 %30, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit
+  br label %.lr.ph4853.preheader
 
 bb.afn:                                           ; preds = %bb.afm
   %i.ffv = zext i32 %i.fdd to i64                 ; 10 uses
@@ -2315,19 +2299,12 @@ scalar.ph10331:                                   ; preds = %scalar.ph10331.prol
   %i.fjb = zext i1 %i.fja to i32
   %i.fjc = add i32 %i.fiw, %i.fjb                 ; 2 uses
   %.not45.i4867 = icmp eq i32 %i.fdg, 0
-  br i1 %.not45.i4867, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit, label %.lr.ph4870.preheader
-
-.lr.ph4870.preheader:                             ; preds = %._crit_edge4866
-  %31 = lshr i32 %.sroa.9.0.i491, 3
-  %32 = and i32 %31, 268435448
-  %33 = zext nneg i32 %32 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ewf, i8 0, i64 %33, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit
+  br i1 %.not45.i4867, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit, label %.lr.ph4853.preheader
 
 bb.afo:                                           ; preds = %_ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit
-  %i.fjd = sub nsw i32 0, %.sroa.9.0.i491         ; 4 uses
+  %i.fjd = sub nsw i32 0, %.sroa.9.0.i491         ; 2 uses
   %i.fje = and i32 %i.fjd, 63                     ; 3 uses
-  %i.fjf = lshr i32 %i.fjd, 6                     ; 14 uses
+  %i.fjf = lshr i32 %i.fjd, 6                     ; 16 uses
   %i.fjg = load i32, ptr %5, align 8, !tbaa !177  ; 12 uses
   %i.fjh = icmp eq i32 %i.fje, 0
   br i1 %i.fjh, label %.preheader4250, label %bb.afp, !prof !7
@@ -2464,10 +2441,7 @@ scalar.ph10314:                                   ; preds = %scalar.ph10314.prol
 
 .lr.ph4861:                                       ; preds = %._crit_edge4857
   %i.flw = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %34 = lshr exact i32 %i.fjd, 3
-  %35 = zext nneg i32 %34 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.flw, i8 0, i64 %35, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit
+  br label %.lr.ph4853.preheader
 
 bb.afp:                                           ; preds = %bb.afo
   %i.flx = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 12 uses
@@ -2625,21 +2599,25 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %.not45.i12404850 = icmp eq i32 %i.fjf, 0
   br i1 %.not45.i12404850, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit, label %.lr.ph4853.preheader
 
-.lr.ph4853.preheader:                             ; preds = %._crit_edge4849
-  %36 = lshr i32 %i.fjd, 3
-  %37 = and i32 %36, 536870904
-  %i.fpg = zext nneg i32 %37 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.flx, i8 0, i64 %i.fpg, i1 false), !tbaa !91
+.lr.ph4853.preheader:                             ; preds = %._crit_edge4849, %._crit_edge4866, %.lr.ph4878.preheader, %.lr.ph4861
+  %.sink8549 = phi i32 [ %i.fdg, %._crit_edge4866 ], [ %i.fjf, %.lr.ph4861 ], [ %i.fdg, %.lr.ph4878.preheader ], [ %i.fjf, %._crit_edge4849 ]
+  %.sink8544 = phi ptr [ %i.ewf, %._crit_edge4866 ], [ %i.flw, %.lr.ph4861 ], [ %i.ewf, %.lr.ph4878.preheader ], [ %i.flx, %._crit_edge4849 ]
+  %.ph8543 = phi i32 [ %i.fjc, %._crit_edge4866 ], [ %i.fdd, %.lr.ph4861 ], [ %i.ffu, %.lr.ph4878.preheader ], [ %i.fdd, %._crit_edge4849 ]
+  %19 = add nsw i32 %.sink8549, -1
+  %i.fpg = zext i32 %19 to i64
+  %20 = shl nuw nsw i64 %i.fpg, 3
+  %21 = add nuw nsw i64 %20, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink8544, i8 0, i64 %21, i1 false), !tbaa !91
   br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit
 
-_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit: ; preds = %.lr.ph4853.preheader, %.lr.ph4861, %.lr.ph4870.preheader, %.lr.ph4878.preheader, %._crit_edge4849, %._crit_edge4857, %._crit_edge4866
-  %38 = phi i32 [ %i.fjc, %._crit_edge4866 ], [ %i.fdd, %.lr.ph4853.preheader ], [ %i.fdd, %.lr.ph4861 ], [ %i.fjc, %.lr.ph4870.preheader ], [ %i.ffu, %.lr.ph4878.preheader ], [ %i.fdd, %._crit_edge4849 ], [ %i.fdd, %._crit_edge4857 ] ; 2 uses
+_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit: ; preds = %.lr.ph4853.preheader, %._crit_edge4849, %._crit_edge4857, %._crit_edge4866
+  %22 = phi i32 [ %i.fjc, %._crit_edge4866 ], [ %i.fdd, %._crit_edge4849 ], [ %i.fdd, %._crit_edge4857 ], [ %.ph8543, %.lr.ph4853.preheader ] ; 2 uses
   %i.fph = load i32, ptr %5, align 8, !tbaa !177  ; 4 uses
-  %i.fpi = icmp ult i32 %i.fph, %38
+  %i.fpi = icmp ult i32 %i.fph, %22
   br i1 %i.fpi, label %_ZN13duckdb_yyjsonL10bigint_cmpEPNS_6bigintES1_.exit.thread, label %bb.afq
 
 bb.afq:                                           ; preds = %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit
-  %i.fpj = icmp ugt i32 %i.fph, %38
+  %i.fpj = icmp ugt i32 %i.fph, %22
   br i1 %i.fpj, label %_ZN13duckdb_yyjsonL10bigint_cmpEPNS_6bigintES1_.exit.thread, label %.preheader4246
 
 .preheader4246:                                   ; preds = %bb.afq
@@ -3042,7 +3020,7 @@ bb.aqz:                                           ; preds = %bb.aqx
   %i.hdm = lshr i64 %.0.i1209.ph, 52
   %i.hdn = trunc nuw nsw i64 %i.hdm to i32
   %i.hdo = add nsw i32 %i.hdn, -1076
-  %.sroa.9.0.i = select i1 %.not679.i, i32 -1075, i32 %i.hdo ; 5 uses
+  %.sroa.9.0.i = select i1 %.not679.i, i32 -1075, i32 %i.hdo ; 4 uses
   %.sroa.022.0.i = select i1 %.not679.i, i64 %.0.i1209.ph, i64 %i.hdl
   %i.hdp = shl nuw nsw i64 %.sroa.022.0.i, 1
   %i.hdq = or disjoint i64 %i.hdp, 1
@@ -3445,7 +3423,7 @@ _ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit1230: ; preds = %bb.arl,
 
 bb.aro:                                           ; preds = %_ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit1230
   %i.hkr = and i32 %.sroa.9.0.i, 63               ; 3 uses
-  %i.hks = lshr i32 %.sroa.9.0.i, 6               ; 14 uses
+  %i.hks = lshr i32 %.sroa.9.0.i, 6               ; 15 uses
   %i.hkt = icmp eq i32 %i.hkr, 0
   br i1 %i.hkt, label %.preheader4115, label %bb.arp, !prof !7
 
@@ -3575,12 +3553,7 @@ scalar.ph10580:                                   ; preds = %scalar.ph10580.prol
 .lr.ph5724.preheader:                             ; preds = %scalar.ph10580.prol.loopexit, %scalar.ph10580, %middle.block10589, %.preheader4115
   %i.hng = add i32 %i.hkp, %i.hks                 ; 2 uses
   store i32 %i.hng, ptr %12, align 8, !tbaa !177
-  %39 = add nsw i32 %i.hks, -1
-  %40 = zext i32 %39 to i64
-  %41 = shl nuw nsw i64 %40, 3
-  %42 = add nuw nsw i64 %41, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hdr, i8 0, i64 %42, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1290
+  br label %.lr.ph5699.preheader
 
 bb.arp:                                           ; preds = %bb.aro
   %i.hnh = zext i32 %i.hkp to i64                 ; 10 uses
@@ -3734,19 +3707,12 @@ scalar.ph10559:                                   ; preds = %scalar.ph10559.prol
   %i.hqn = zext i1 %i.hqm to i32
   %i.hqo = add i32 %i.hqi, %i.hqn                 ; 2 uses
   %.not45.i12855713 = icmp eq i32 %i.hks, 0
-  br i1 %.not45.i12855713, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1290, label %.lr.ph5716.preheader
-
-.lr.ph5716.preheader:                             ; preds = %._crit_edge5712
-  %43 = lshr i32 %.sroa.9.0.i, 3
-  %44 = and i32 %43, 268435448
-  %45 = zext nneg i32 %44 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.hdr, i8 0, i64 %45, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1290
+  br i1 %.not45.i12855713, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1290, label %.lr.ph5699.preheader
 
 bb.arq:                                           ; preds = %_ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit1230
-  %i.hqp = sub nsw i32 0, %.sroa.9.0.i            ; 4 uses
+  %i.hqp = sub nsw i32 0, %.sroa.9.0.i            ; 2 uses
   %i.hqq = and i32 %i.hqp, 63                     ; 3 uses
-  %i.hqr = lshr i32 %i.hqp, 6                     ; 14 uses
+  %i.hqr = lshr i32 %i.hqp, 6                     ; 16 uses
   %i.hqs = load i32, ptr %11, align 8, !tbaa !177 ; 12 uses
   %i.hqt = icmp eq i32 %i.hqq, 0
   br i1 %i.hqt, label %.preheader4118, label %bb.arr, !prof !7
@@ -3883,10 +3849,7 @@ scalar.ph10542:                                   ; preds = %scalar.ph10542.prol
 
 .lr.ph5707:                                       ; preds = %._crit_edge5703
   %i.hti = getelementptr inbounds nuw i8, ptr %11, i64 8
-  %46 = lshr exact i32 %i.hqp, 3
-  %47 = zext nneg i32 %46 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.hti, i8 0, i64 %47, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1290
+  br label %.lr.ph5699.preheader
 
 bb.arr:                                           ; preds = %bb.arq
   %i.htj = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 12 uses
@@ -4044,21 +4007,25 @@ scalar.ph10521:                                   ; preds = %scalar.ph10521.prol
   %.not45.i12945696 = icmp eq i32 %i.hqr, 0
   br i1 %.not45.i12945696, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1290, label %.lr.ph5699.preheader
 
-.lr.ph5699.preheader:                             ; preds = %._crit_edge5695
-  %48 = lshr i32 %i.hqp, 3
-  %49 = and i32 %48, 536870904
-  %i.hws = zext nneg i32 %49 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.htj, i8 0, i64 %i.hws, i1 false), !tbaa !91
+.lr.ph5699.preheader:                             ; preds = %._crit_edge5695, %._crit_edge5712, %.lr.ph5724.preheader, %.lr.ph5707
+  %.sink8595 = phi i32 [ %i.hks, %._crit_edge5712 ], [ %i.hqr, %.lr.ph5707 ], [ %i.hks, %.lr.ph5724.preheader ], [ %i.hqr, %._crit_edge5695 ]
+  %.sink8590 = phi ptr [ %i.hdr, %._crit_edge5712 ], [ %i.hti, %.lr.ph5707 ], [ %i.hdr, %.lr.ph5724.preheader ], [ %i.htj, %._crit_edge5695 ]
+  %.ph8589 = phi i32 [ %i.hqo, %._crit_edge5712 ], [ %i.hkp, %.lr.ph5707 ], [ %i.hng, %.lr.ph5724.preheader ], [ %i.hkp, %._crit_edge5695 ]
+  %23 = add nsw i32 %.sink8595, -1
+  %i.hws = zext i32 %23 to i64
+  %24 = shl nuw nsw i64 %i.hws, 3
+  %25 = add nuw nsw i64 %24, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink8590, i8 0, i64 %25, i1 false), !tbaa !91
   br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1290
 
-_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1290: ; preds = %.lr.ph5699.preheader, %.lr.ph5707, %.lr.ph5716.preheader, %.lr.ph5724.preheader, %._crit_edge5695, %._crit_edge5703, %._crit_edge5712
-  %50 = phi i32 [ %i.hqo, %._crit_edge5712 ], [ %i.hkp, %.lr.ph5699.preheader ], [ %i.hkp, %.lr.ph5707 ], [ %i.hqo, %.lr.ph5716.preheader ], [ %i.hng, %.lr.ph5724.preheader ], [ %i.hkp, %._crit_edge5695 ], [ %i.hkp, %._crit_edge5703 ] ; 2 uses
+_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1290: ; preds = %.lr.ph5699.preheader, %._crit_edge5695, %._crit_edge5703, %._crit_edge5712
+  %26 = phi i32 [ %i.hqo, %._crit_edge5712 ], [ %i.hkp, %._crit_edge5695 ], [ %i.hkp, %._crit_edge5703 ], [ %.ph8589, %.lr.ph5699.preheader ] ; 2 uses
   %i.hwt = load i32, ptr %11, align 8, !tbaa !177 ; 4 uses
-  %i.hwu = icmp ult i32 %i.hwt, %50
+  %i.hwu = icmp ult i32 %i.hwt, %26
   br i1 %i.hwu, label %_ZN13duckdb_yyjsonL10bigint_cmpEPNS_6bigintES1_.exit1330.thread, label %bb.ars
 
 bb.ars:                                           ; preds = %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1290
-  %i.hwv = icmp ugt i32 %i.hwt, %50
+  %i.hwv = icmp ugt i32 %i.hwt, %26
   br i1 %i.hwv, label %_ZN13duckdb_yyjsonL10bigint_cmpEPNS_6bigintES1_.exit1330.thread, label %.preheader4114
 
 .preheader4114:                                   ; preds = %bb.ars
@@ -4461,7 +4428,7 @@ bb.bmf:                                           ; preds = %bb.bmd
   %i.lnv = lshr i64 %.0.i1207.ph, 52
   %i.lnw = trunc nuw nsw i64 %i.lnv to i32
   %i.lnx = add nsw i32 %i.lnw, -1076
-  %.sroa.9.0.i281 = select i1 %.not679.i280, i32 -1075, i32 %i.lnx ; 5 uses
+  %.sroa.9.0.i281 = select i1 %.not679.i280, i32 -1075, i32 %i.lnx ; 4 uses
   %.sroa.022.0.i282 = select i1 %.not679.i280, i64 %.0.i1207.ph, i64 %i.lnu
   %i.lny = shl nuw nsw i64 %.sroa.022.0.i282, 1
   %i.lnz = or disjoint i64 %i.lny, 1
@@ -4864,7 +4831,7 @@ _ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit1224: ; preds = %bb.bmr,
 
 bb.bmu:                                           ; preds = %_ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit1224
   %i.lva = and i32 %.sroa.9.0.i281, 63            ; 3 uses
-  %i.lvb = lshr i32 %.sroa.9.0.i281, 6            ; 14 uses
+  %i.lvb = lshr i32 %.sroa.9.0.i281, 6            ; 15 uses
   %i.lvc = icmp eq i32 %i.lva, 0
   br i1 %i.lvc, label %.preheader4154, label %bb.bmv, !prof !7
 
@@ -4994,12 +4961,7 @@ scalar.ph10504:                                   ; preds = %scalar.ph10504.prol
 .lr.ph5495.preheader:                             ; preds = %scalar.ph10504.prol.loopexit, %scalar.ph10504, %middle.block10513, %.preheader4154
   %i.lxp = add i32 %i.luy, %i.lvb                 ; 2 uses
   store i32 %i.lxp, ptr %10, align 8, !tbaa !177
-  %51 = add nsw i32 %i.lvb, -1
-  %52 = zext i32 %51 to i64
-  %53 = shl nuw nsw i64 %52, 3
-  %54 = add nuw nsw i64 %53, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.loa, i8 0, i64 %54, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1272
+  br label %.lr.ph5470.preheader
 
 bb.bmv:                                           ; preds = %bb.bmu
   %i.lxq = zext i32 %i.luy to i64                 ; 10 uses
@@ -5153,19 +5115,12 @@ scalar.ph10483:                                   ; preds = %scalar.ph10483.prol
   %i.maw = zext i1 %i.mav to i32
   %i.max = add i32 %i.mar, %i.maw                 ; 2 uses
   %.not45.i12675484 = icmp eq i32 %i.lvb, 0
-  br i1 %.not45.i12675484, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1272, label %.lr.ph5487.preheader
-
-.lr.ph5487.preheader:                             ; preds = %._crit_edge5483
-  %55 = lshr i32 %.sroa.9.0.i281, 3
-  %56 = and i32 %55, 268435448
-  %57 = zext nneg i32 %56 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.loa, i8 0, i64 %57, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1272
+  br i1 %.not45.i12675484, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1272, label %.lr.ph5470.preheader
 
 bb.bmw:                                           ; preds = %_ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit1224
-  %i.may = sub nsw i32 0, %.sroa.9.0.i281         ; 4 uses
+  %i.may = sub nsw i32 0, %.sroa.9.0.i281         ; 2 uses
   %i.maz = and i32 %i.may, 63                     ; 3 uses
-  %i.mba = lshr i32 %i.may, 6                     ; 14 uses
+  %i.mba = lshr i32 %i.may, 6                     ; 16 uses
   %i.mbb = load i32, ptr %9, align 8, !tbaa !177  ; 12 uses
   %i.mbc = icmp eq i32 %i.maz, 0
   br i1 %i.mbc, label %.preheader4157, label %bb.bmx, !prof !7
@@ -5302,10 +5257,7 @@ scalar.ph10466:                                   ; preds = %scalar.ph10466.prol
 
 .lr.ph5478:                                       ; preds = %._crit_edge5474
   %i.mdr = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %58 = lshr exact i32 %i.may, 3
-  %59 = zext nneg i32 %58 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.mdr, i8 0, i64 %59, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1272
+  br label %.lr.ph5470.preheader
 
 bb.bmx:                                           ; preds = %bb.bmw
   %i.mds = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 12 uses
@@ -5463,21 +5415,25 @@ scalar.ph10445:                                   ; preds = %scalar.ph10445.prol
   %.not45.i12765467 = icmp eq i32 %i.mba, 0
   br i1 %.not45.i12765467, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1272, label %.lr.ph5470.preheader
 
-.lr.ph5470.preheader:                             ; preds = %._crit_edge5466
-  %60 = lshr i32 %i.may, 3
-  %61 = and i32 %60, 536870904
-  %i.mhb = zext nneg i32 %61 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.mds, i8 0, i64 %i.mhb, i1 false), !tbaa !91
+.lr.ph5470.preheader:                             ; preds = %._crit_edge5466, %._crit_edge5483, %.lr.ph5495.preheader, %.lr.ph5478
+  %.sink8630 = phi i32 [ %i.lvb, %._crit_edge5483 ], [ %i.mba, %.lr.ph5478 ], [ %i.lvb, %.lr.ph5495.preheader ], [ %i.mba, %._crit_edge5466 ]
+  %.sink8625 = phi ptr [ %i.loa, %._crit_edge5483 ], [ %i.mdr, %.lr.ph5478 ], [ %i.loa, %.lr.ph5495.preheader ], [ %i.mds, %._crit_edge5466 ]
+  %.ph8624 = phi i32 [ %i.max, %._crit_edge5483 ], [ %i.luy, %.lr.ph5478 ], [ %i.lxp, %.lr.ph5495.preheader ], [ %i.luy, %._crit_edge5466 ]
+  %27 = add nsw i32 %.sink8630, -1
+  %i.mhb = zext i32 %27 to i64
+  %28 = shl nuw nsw i64 %i.mhb, 3
+  %29 = add nuw nsw i64 %28, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink8625, i8 0, i64 %29, i1 false), !tbaa !91
   br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1272
 
-_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1272: ; preds = %.lr.ph5470.preheader, %.lr.ph5478, %.lr.ph5487.preheader, %.lr.ph5495.preheader, %._crit_edge5466, %._crit_edge5474, %._crit_edge5483
-  %62 = phi i32 [ %i.max, %._crit_edge5483 ], [ %i.luy, %.lr.ph5470.preheader ], [ %i.luy, %.lr.ph5478 ], [ %i.max, %.lr.ph5487.preheader ], [ %i.lxp, %.lr.ph5495.preheader ], [ %i.luy, %._crit_edge5466 ], [ %i.luy, %._crit_edge5474 ] ; 2 uses
+_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1272: ; preds = %.lr.ph5470.preheader, %._crit_edge5466, %._crit_edge5474, %._crit_edge5483
+  %30 = phi i32 [ %i.max, %._crit_edge5483 ], [ %i.luy, %._crit_edge5466 ], [ %i.luy, %._crit_edge5474 ], [ %.ph8624, %.lr.ph5470.preheader ] ; 2 uses
   %i.mhc = load i32, ptr %9, align 8, !tbaa !177  ; 4 uses
-  %i.mhd = icmp ult i32 %i.mhc, %62
+  %i.mhd = icmp ult i32 %i.mhc, %30
   br i1 %i.mhd, label %_ZN13duckdb_yyjsonL10bigint_cmpEPNS_6bigintES1_.exit1321.thread, label %bb.bmy
 
 bb.bmy:                                           ; preds = %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit1272
-  %i.mhe = icmp ugt i32 %i.mhc, %62
+  %i.mhe = icmp ugt i32 %i.mhc, %30
   br i1 %i.mhe, label %_ZN13duckdb_yyjsonL10bigint_cmpEPNS_6bigintES1_.exit1321.thread, label %.preheader4153
 
 .preheader4153:                                   ; preds = %bb.bmy
@@ -5880,7 +5836,7 @@ bb.hx:                                            ; preds = %bb.hv
   %i.adi = lshr i64 %.0.i220.ph, 52
   %i.adj = trunc nuw nsw i64 %i.adi to i32
   %i.adk = add nsw i32 %i.adj, -1076
-  %.sroa.9.0.i = select i1 %.not679.i, i32 -1075, i32 %i.adk ; 5 uses
+  %.sroa.9.0.i = select i1 %.not679.i, i32 -1075, i32 %i.adk ; 4 uses
   %.sroa.022.0.i = select i1 %.not679.i, i64 %.0.i220.ph, i64 %i.adh
   %i.adl = shl nuw nsw i64 %.sroa.022.0.i, 1
   %i.adm = or disjoint i64 %i.adl, 1
@@ -6283,7 +6239,7 @@ _ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit: ; preds = %bb.ij, %bb.
 
 bb.im:                                            ; preds = %_ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit
   %i.akn = and i32 %.sroa.9.0.i, 63               ; 3 uses
-  %i.ako = lshr i32 %.sroa.9.0.i, 6               ; 14 uses
+  %i.ako = lshr i32 %.sroa.9.0.i, 6               ; 15 uses
   %i.akp = icmp eq i32 %i.akn, 0
   br i1 %i.akp, label %.preheader696, label %bb.in, !prof !7
 
@@ -6413,12 +6369,7 @@ scalar.ph1679:                                    ; preds = %scalar.ph1679.prol.
 .lr.ph854.preheader:                              ; preds = %scalar.ph1679.prol.loopexit, %scalar.ph1679, %middle.block1688, %.preheader696
   %i.anc = add i32 %i.akl, %i.ako                 ; 2 uses
   store i32 %i.anc, ptr %7, align 8, !tbaa !177
-  %8 = add nsw i32 %i.ako, -1
-  %9 = zext i32 %8 to i64
-  %10 = shl nuw nsw i64 %9, 3
-  %11 = add nuw nsw i64 %10, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.adn, i8 0, i64 %11, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit
+  br label %.lr.ph829.preheader
 
 bb.in:                                            ; preds = %bb.im
   %i.and = zext i32 %i.akl to i64                 ; 10 uses
@@ -6572,19 +6523,12 @@ scalar.ph1658:                                    ; preds = %scalar.ph1658.prol.
   %i.aqj = zext i1 %i.aqi to i32
   %i.aqk = add i32 %i.aqe, %i.aqj                 ; 2 uses
   %.not45.i843 = icmp eq i32 %i.ako, 0
-  br i1 %.not45.i843, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit, label %.lr.ph846.preheader
-
-.lr.ph846.preheader:                              ; preds = %._crit_edge842
-  %12 = lshr i32 %.sroa.9.0.i, 3
-  %13 = and i32 %12, 268435448
-  %14 = zext nneg i32 %13 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.adn, i8 0, i64 %14, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit
+  br i1 %.not45.i843, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit, label %.lr.ph829.preheader
 
 bb.io:                                            ; preds = %_ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit
-  %i.aql = sub nsw i32 0, %.sroa.9.0.i            ; 4 uses
+  %i.aql = sub nsw i32 0, %.sroa.9.0.i            ; 2 uses
   %i.aqm = and i32 %i.aql, 63                     ; 3 uses
-  %i.aqn = lshr i32 %i.aql, 6                     ; 14 uses
+  %i.aqn = lshr i32 %i.aql, 6                     ; 16 uses
   %i.aqo = load i32, ptr %6, align 8, !tbaa !177  ; 12 uses
   %i.aqp = icmp eq i32 %i.aqm, 0
   br i1 %i.aqp, label %.preheader699, label %bb.ip, !prof !7
@@ -6721,10 +6665,7 @@ scalar.ph1641:                                    ; preds = %scalar.ph1641.prol.
 
 .lr.ph837:                                        ; preds = %._crit_edge833
   %i.ate = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %15 = lshr exact i32 %i.aql, 3
-  %16 = zext nneg i32 %15 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ate, i8 0, i64 %16, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit
+  br label %.lr.ph829.preheader
 
 bb.ip:                                            ; preds = %bb.io
   %i.atf = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 12 uses
@@ -6882,21 +6823,25 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %.not45.i232826 = icmp eq i32 %i.aqn, 0
   br i1 %.not45.i232826, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit, label %.lr.ph829.preheader
 
-.lr.ph829.preheader:                              ; preds = %._crit_edge825
-  %17 = lshr i32 %i.aql, 3
-  %18 = and i32 %17, 536870904
-  %i.awo = zext nneg i32 %18 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.atf, i8 0, i64 %i.awo, i1 false), !tbaa !91
+.lr.ph829.preheader:                              ; preds = %._crit_edge825, %._crit_edge842, %.lr.ph854.preheader, %.lr.ph837
+  %.sink1402 = phi i32 [ %i.ako, %._crit_edge842 ], [ %i.aqn, %.lr.ph837 ], [ %i.ako, %.lr.ph854.preheader ], [ %i.aqn, %._crit_edge825 ]
+  %.sink1397 = phi ptr [ %i.adn, %._crit_edge842 ], [ %i.ate, %.lr.ph837 ], [ %i.adn, %.lr.ph854.preheader ], [ %i.atf, %._crit_edge825 ]
+  %.ph1396 = phi i32 [ %i.aqk, %._crit_edge842 ], [ %i.akl, %.lr.ph837 ], [ %i.anc, %.lr.ph854.preheader ], [ %i.akl, %._crit_edge825 ]
+  %8 = add nsw i32 %.sink1402, -1
+  %i.awo = zext i32 %8 to i64
+  %9 = shl nuw nsw i64 %i.awo, 3
+  %10 = add nuw nsw i64 %9, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink1397, i8 0, i64 %10, i1 false), !tbaa !91
   br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit
 
-_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit: ; preds = %.lr.ph829.preheader, %.lr.ph837, %.lr.ph846.preheader, %.lr.ph854.preheader, %._crit_edge825, %._crit_edge833, %._crit_edge842
-  %19 = phi i32 [ %i.aqk, %._crit_edge842 ], [ %i.akl, %.lr.ph829.preheader ], [ %i.akl, %.lr.ph837 ], [ %i.aqk, %.lr.ph846.preheader ], [ %i.anc, %.lr.ph854.preheader ], [ %i.akl, %._crit_edge825 ], [ %i.akl, %._crit_edge833 ] ; 2 uses
+_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit: ; preds = %.lr.ph829.preheader, %._crit_edge825, %._crit_edge833, %._crit_edge842
+  %11 = phi i32 [ %i.aqk, %._crit_edge842 ], [ %i.akl, %._crit_edge825 ], [ %i.akl, %._crit_edge833 ], [ %.ph1396, %.lr.ph829.preheader ] ; 2 uses
   %i.awp = load i32, ptr %6, align 8, !tbaa !177  ; 4 uses
-  %i.awq = icmp ult i32 %i.awp, %19
+  %i.awq = icmp ult i32 %i.awp, %11
   br i1 %i.awq, label %_ZN13duckdb_yyjsonL10bigint_cmpEPNS_6bigintES1_.exit.thread, label %bb.iq
 
 bb.iq:                                            ; preds = %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit
-  %i.awr = icmp ugt i32 %i.awp, %19
+  %i.awr = icmp ugt i32 %i.awp, %11
   br i1 %i.awr, label %_ZN13duckdb_yyjsonL10bigint_cmpEPNS_6bigintES1_.exit.thread, label %.preheader695
 
 .preheader695:                                    ; preds = %bb.iq
@@ -7299,7 +7244,7 @@ bb.ha:                                            ; preds = %bb.gy
   %i.acl = lshr i64 %.0.i32.ph, 52
   %i.acm = trunc nuw nsw i64 %i.acl to i32
   %i.acn = add nsw i32 %i.acm, -1076
-  %.sroa.9.0.i = select i1 %.not679.i, i32 -1075, i32 %i.acn ; 5 uses
+  %.sroa.9.0.i = select i1 %.not679.i, i32 -1075, i32 %i.acn ; 4 uses
   %.sroa.022.0.i = select i1 %.not679.i, i64 %.0.i32.ph, i64 %i.ack
   %i.aco = shl nuw nsw i64 %.sroa.022.0.i, 1
   %i.acp = or disjoint i64 %i.aco, 1
@@ -7702,7 +7647,7 @@ _ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit: ; preds = %bb.hm, %bb.
 
 bb.hp:                                            ; preds = %_ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit
   %i.ajq = and i32 %.sroa.9.0.i, 63               ; 3 uses
-  %i.ajr = lshr i32 %.sroa.9.0.i, 6               ; 14 uses
+  %i.ajr = lshr i32 %.sroa.9.0.i, 6               ; 15 uses
   %i.ajs = icmp eq i32 %i.ajq, 0
   br i1 %i.ajs, label %.preheader358, label %bb.hq, !prof !7
 
@@ -7831,12 +7776,7 @@ scalar.ph780:                                     ; preds = %scalar.ph780.prol.l
 
 .lr.ph479.preheader:                              ; preds = %scalar.ph780.prol.loopexit, %scalar.ph780, %middle.block789, %.preheader358
   %i.amf = add i32 %i.ajo, %i.ajr
-  %7 = add nsw i32 %i.ajr, -1
-  %8 = zext i32 %7 to i64
-  %9 = shl nuw nsw i64 %8, 3
-  %10 = add nuw nsw i64 %9, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.acq, i8 0, i64 %10, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit
+  br label %.lr.ph454.preheader
 
 bb.hq:                                            ; preds = %bb.hp
   %i.amg = zext i32 %i.ajo to i64                 ; 10 uses
@@ -7990,19 +7930,12 @@ scalar.ph759:                                     ; preds = %scalar.ph759.prol.l
   %i.apm = zext i1 %i.apl to i32
   %i.apn = add i32 %i.aph, %i.apm                 ; 2 uses
   %.not45.i468 = icmp eq i32 %i.ajr, 0
-  br i1 %.not45.i468, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit, label %.lr.ph471.preheader
-
-.lr.ph471.preheader:                              ; preds = %._crit_edge467
-  %11 = lshr i32 %.sroa.9.0.i, 3
-  %12 = and i32 %11, 268435448
-  %13 = zext nneg i32 %12 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.acq, i8 0, i64 %13, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit
+  br i1 %.not45.i468, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit, label %.lr.ph454.preheader
 
 bb.hr:                                            ; preds = %_ZN13duckdb_yyjsonL16bigint_mul_pow10EPNS_6bigintEi.exit
-  %i.apo = sub nsw i32 0, %.sroa.9.0.i            ; 4 uses
+  %i.apo = sub nsw i32 0, %.sroa.9.0.i            ; 2 uses
   %i.app = and i32 %i.apo, 63                     ; 3 uses
-  %i.apq = lshr i32 %i.apo, 6                     ; 14 uses
+  %i.apq = lshr i32 %i.apo, 6                     ; 16 uses
   %i.apr = load i32, ptr %5, align 8, !tbaa !177  ; 12 uses
   %i.aps = icmp eq i32 %i.app, 0
   br i1 %i.aps, label %.preheader361, label %bb.hs, !prof !7
@@ -8139,10 +8072,7 @@ scalar.ph742:                                     ; preds = %scalar.ph742.prol.l
 
 .lr.ph462:                                        ; preds = %._crit_edge458
   %i.ash = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %14 = lshr exact i32 %i.apo, 3
-  %15 = zext nneg i32 %14 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ash, i8 0, i64 %15, i1 false), !tbaa !91
-  br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit
+  br label %.lr.ph454.preheader
 
 bb.hs:                                            ; preds = %bb.hr
   %i.asi = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 12 uses
@@ -8300,21 +8230,25 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %.not45.i42451 = icmp eq i32 %i.apq, 0
   br i1 %.not45.i42451, label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit, label %.lr.ph454.preheader
 
-.lr.ph454.preheader:                              ; preds = %._crit_edge450
-  %16 = lshr i32 %i.apo, 3
-  %17 = and i32 %16, 536870904
-  %i.avr = zext nneg i32 %17 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.asi, i8 0, i64 %i.avr, i1 false), !tbaa !91
+.lr.ph454.preheader:                              ; preds = %._crit_edge450, %._crit_edge467, %.lr.ph479.preheader, %.lr.ph462
+  %.sink709 = phi i32 [ %i.ajr, %._crit_edge467 ], [ %i.apq, %.lr.ph462 ], [ %i.ajr, %.lr.ph479.preheader ], [ %i.apq, %._crit_edge450 ]
+  %.sink704 = phi ptr [ %i.acq, %._crit_edge467 ], [ %i.ash, %.lr.ph462 ], [ %i.acq, %.lr.ph479.preheader ], [ %i.asi, %._crit_edge450 ]
+  %.ph703 = phi i32 [ %i.apn, %._crit_edge467 ], [ %i.ajo, %.lr.ph462 ], [ %i.amf, %.lr.ph479.preheader ], [ %i.ajo, %._crit_edge450 ]
+  %7 = add nsw i32 %.sink709, -1
+  %i.avr = zext i32 %7 to i64
+  %8 = shl nuw nsw i64 %i.avr, 3
+  %9 = add nuw nsw i64 %8, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink704, i8 0, i64 %9, i1 false), !tbaa !91
   br label %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit
 
-_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit: ; preds = %.lr.ph454.preheader, %.lr.ph462, %.lr.ph471.preheader, %.lr.ph479.preheader, %._crit_edge450, %._crit_edge458, %._crit_edge467
-  %18 = phi i32 [ %i.apn, %._crit_edge467 ], [ %i.ajo, %.lr.ph454.preheader ], [ %i.ajo, %.lr.ph462 ], [ %i.apn, %.lr.ph471.preheader ], [ %i.amf, %.lr.ph479.preheader ], [ %i.ajo, %._crit_edge450 ], [ %i.ajo, %._crit_edge458 ] ; 2 uses
+_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit: ; preds = %.lr.ph454.preheader, %._crit_edge450, %._crit_edge458, %._crit_edge467
+  %10 = phi i32 [ %i.apn, %._crit_edge467 ], [ %i.ajo, %._crit_edge450 ], [ %i.ajo, %._crit_edge458 ], [ %.ph703, %.lr.ph454.preheader ] ; 2 uses
   %i.avs = load i32, ptr %5, align 8, !tbaa !177  ; 4 uses
-  %i.avt = icmp ult i32 %i.avs, %18
+  %i.avt = icmp ult i32 %i.avs, %10
   br i1 %i.avt, label %_ZN13duckdb_yyjsonL10bigint_cmpEPNS_6bigintES1_.exit.thread, label %bb.ht
 
 bb.ht:                                            ; preds = %_ZN13duckdb_yyjsonL15bigint_mul_pow2EPNS_6bigintEj.exit
-  %i.avu = icmp ugt i32 %i.avs, %18
+  %i.avu = icmp ugt i32 %i.avs, %10
   br i1 %i.avu, label %_ZN13duckdb_yyjsonL10bigint_cmpEPNS_6bigintES1_.exit.thread, label %.preheader357
 
 .preheader357:                                    ; preds = %bb.ht
@@ -8717,7 +8651,8 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #21
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define internal fastcc noundef zeroext i1 @_ZN13duckdb_yyjsonL16is_truncated_endEPhS0_S0_jj(ptr nofree noundef readnone captures(address) %0, ptr noundef %1, ptr noundef %2, i32 noundef range(i32 2, 12) %3, i32 noundef %4) unnamed_addr #22 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
+  %5 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64                  ; 3 uses
   %.not = icmp ult ptr %1, %2
   br i1 %.not, label %bb.b, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit121
 
@@ -8773,17 +8708,24 @@ _ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit126.thread: ; preds = %_ZN13
 bb.d:                                             ; preds = %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit126.thread
   %i.q = load i8, ptr %1, align 1, !tbaa !81
   %i.r = icmp eq i8 %i.q, 45
-  %spec.select.idx = zext i1 %i.r to i64
+  %spec.select.idx = zext i1 %i.r to i64          ; 3 uses
   %spec.select = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.idx ; 7 uses
   %i.s = getelementptr inbounds nuw i8, ptr %spec.select, i64 8
   %.not.i112 = icmp ugt ptr %i.s, %2
   %.not25.i113 = icmp ugt ptr %2, %spec.select    ; 2 uses
   %or.cond.i114 = and i1 %.not25.i113, %.not.i112
-  br i1 %or.cond.i114, label %.preheader164, label %.loopexit
+  br i1 %or.cond.i114, label %.preheader164.preheader, label %.loopexit
 
-.preheader164:                                    ; preds = %bb.d, %bb.e
-  %.019.i117167 = phi ptr [ %i.z, %bb.e ], [ @.str.75, %bb.d ] ; 2 uses
-  %.020.i116166 = phi ptr [ %i.y, %bb.e ], [ %spec.select, %bb.d ] ; 2 uses
+.preheader164.preheader:                          ; preds = %bb.d
+  %6 = add i64 %5, %spec.select.idx
+  %7 = xor i64 %6, -1
+  %8 = getelementptr i8, ptr @.str.75, i64 %7
+  %scevgep = getelementptr i8, ptr %8, i64 %i.a
+  br label %.preheader164
+
+.preheader164:                                    ; preds = %.preheader164.preheader, %bb.e
+  %.019.i117167 = phi ptr [ %i.z, %bb.e ], [ @.str.75, %.preheader164.preheader ] ; 3 uses
+  %.020.i116166 = phi ptr [ %i.y, %bb.e ], [ %spec.select, %.preheader164.preheader ] ; 2 uses
   %i.t = load i8, ptr %.020.i116166, align 1, !tbaa !81 ; 2 uses
   %i.u = load i8, ptr %.019.i117167, align 1, !tbaa !81 ; 2 uses
   %.not26.i118 = icmp eq i8 %i.t, %i.u
@@ -8795,20 +8737,27 @@ bb.d:                                             ; preds = %_ZN13duckdb_yyjsonL
   br i1 %or.cond30.i120, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.preheader164
-  %i.y = getelementptr inbounds nuw i8, ptr %.020.i116166, i64 1 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %.020.i116166, i64 1
   %i.z = getelementptr inbounds nuw i8, ptr %.019.i117167, i64 1
-  %5 = icmp ult ptr %i.y, %2
-  br i1 %5, label %.preheader164, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit121, !llvm.loop !371
+  %exitcond.not = icmp eq ptr %.019.i117167, %scevgep
+  br i1 %exitcond.not, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit121, label %.preheader164, !llvm.loop !371
 
 .loopexit:                                        ; preds = %.preheader164, %bb.d
   %i.aa = getelementptr inbounds nuw i8, ptr %spec.select, i64 3
   %.not.i102 = icmp ugt ptr %i.aa, %2
   %or.cond.i104 = and i1 %.not25.i113, %.not.i102
-  br i1 %or.cond.i104, label %.preheader162, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit111.thread
+  br i1 %or.cond.i104, label %.preheader162.preheader, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit111.thread
 
-.preheader162:                                    ; preds = %.loopexit, %bb.f
-  %.019.i107169 = phi ptr [ %i.ah, %bb.f ], [ @.str.76, %.loopexit ] ; 2 uses
-  %.020.i106168 = phi ptr [ %i.ag, %bb.f ], [ %spec.select, %.loopexit ] ; 2 uses
+.preheader162.preheader:                          ; preds = %.loopexit
+  %9 = add i64 %5, %spec.select.idx
+  %10 = xor i64 %9, -1
+  %11 = getelementptr i8, ptr @.str.76, i64 %10
+  %scevgep179 = getelementptr i8, ptr %11, i64 %i.a
+  br label %.preheader162
+
+.preheader162:                                    ; preds = %.preheader162.preheader, %bb.f
+  %.019.i107169 = phi ptr [ %i.ah, %bb.f ], [ @.str.76, %.preheader162.preheader ] ; 3 uses
+  %.020.i106168 = phi ptr [ %i.ag, %bb.f ], [ %spec.select, %.preheader162.preheader ] ; 2 uses
   %i.ab = load i8, ptr %.020.i106168, align 1, !tbaa !81 ; 2 uses
   %i.ac = load i8, ptr %.019.i107169, align 1, !tbaa !81 ; 2 uses
   %.not26.i108 = icmp eq i8 %i.ab, %i.ac
@@ -8820,10 +8769,10 @@ bb.e:                                             ; preds = %.preheader164
   br i1 %or.cond30.i110, label %bb.f, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit111.thread
 
 bb.f:                                             ; preds = %.preheader162
-  %i.ag = getelementptr inbounds nuw i8, ptr %.020.i106168, i64 1 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %.020.i106168, i64 1
   %i.ah = getelementptr inbounds nuw i8, ptr %.019.i107169, i64 1
-  %6 = icmp ult ptr %i.ag, %2
-  br i1 %6, label %.preheader162, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit121, !llvm.loop !371
+  %exitcond180.not = icmp eq ptr %.019.i107169, %scevgep179
+  br i1 %exitcond180.not, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit121, label %.preheader162, !llvm.loop !371
 
 _ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit111.thread: ; preds = %.preheader162, %.loopexit, %bb.b, %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit126.thread
   %.174 = phi ptr [ %1, %bb.b ], [ %1, %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit126.thread ], [ %spec.select, %.loopexit ], [ %spec.select, %.preheader162 ] ; 10 uses

@@ -204,13 +204,11 @@ bb.m:                                             ; preds = %.epil.preheader
   br i1 %i.bo, label %.lr.ph76, label %.thread67
 
 .lr.ph76:                                         ; preds = %._crit_edge72.split
-  %i.bp = lshr i32 %i.d, 1                        ; 4 uses
+  %i.bp = lshr i32 %i.d, 1                        ; 3 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.br = load <4 x i32>, ptr %2, align 4, !tbaa !15 ; 5 uses
   %i.bs = load <2 x i32>, ptr %i.bq, align 4, !tbaa !15 ; 3 uses
-  %3 = icmp ne i32 %i.bp, 0
-  %.neg = sext i1 %3 to i32
-  %i.bt = add nsw i32 %i.bp, %.neg                ; 2 uses
+  %i.bt = add nsw i32 %i.bp, -1                   ; 2 uses
   %i.bu = zext i32 %i.bt to i64
   %i.bv = add nuw nsw i64 %i.bu, 1                ; 2 uses
   %min.iters.check = icmp eq i32 %i.bt, 0

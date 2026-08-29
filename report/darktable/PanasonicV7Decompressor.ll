@@ -204,10 +204,9 @@ _ZNK8rawspeed10ByteStream12getSubStreamEjj.exit:  ; preds = %bb.a
 
 .lr.ph.preheader:                                 ; preds = %_ZNK8rawspeed10ByteStream12getSubStreamEjj.exit
   %i.aj = zext nneg i32 %i.h to i64
-  %wide.trip.count = zext nneg i32 %i.u to i64    ; 3 uses
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.u, i32 1)
-  %wide.trip.count69 = zext nneg i32 %umax to i64 ; 2 uses
-  %i.ak = add nsw i64 %wide.trip.count69, -1
+  %wide.trip.count = zext nneg i32 %i.u to i64    ; 5 uses
+  %wide.trip.count69 = zext nneg i32 %i.u to i64
+  %i.ak = add nsw i64 %wide.trip.count, -1
   %i.al = tail call i64 @llvm.umin.i64(i64 %wide.trip.count, i64 %i.ak) ; 2 uses
   %i.am = add nuw nsw i64 %i.al, 1                ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.al, 8
@@ -219,7 +218,8 @@ _ZNK8rawspeed10ByteStream12getSubStreamEjj.exit:  ; preds = %bb.a
   br label %.lr.ph
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
-  %i.an = tail call i64 @llvm.usub.sat.i64(i64 %wide.trip.count, i64 1) ; 2 uses
+  %2 = add nsw i64 %wide.trip.count, -1
+  %i.an = tail call i64 @llvm.umin.i64(i64 %wide.trip.count, i64 %2) ; 2 uses
   %i.ao = mul nuw nsw i64 %i.an, 18
   %i.ap = shl nuw nsw i64 %i.s, 1
   %i.aq = getelementptr i8, ptr %i.c, i64 %i.ao
@@ -622,13 +622,7 @@ bb.a:
 declare void @_ZNSt13runtime_errorD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16)) unnamed_addr #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #17
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshl.i32(i32, i32, i32) #17
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #17

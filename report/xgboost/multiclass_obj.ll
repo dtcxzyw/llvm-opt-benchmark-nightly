@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %_ZNSt10unique_ptrIN
 
 bb.m:                                             ; preds = %bb.l
   %i.af = getelementptr inbounds nuw i8, ptr %6, i64 56
-  %i.ag = load i64, ptr %i.af, align 8, !tbaa !410 ; 4 uses
+  %i.ag = load i64, ptr %i.af, align 8, !tbaa !410 ; 3 uses
   %i.ah = lshr i64 %i.ag, 2                       ; 2 uses
   %.not.i.i.i.i.i = icmp eq i64 %i.ah, 0
   br i1 %.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i
@@ -217,7 +217,6 @@ bb.m:                                             ; preds = %bb.l
   %i.al = getelementptr inbounds nuw i8, ptr %6, i64 48
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !411 ; 4 uses
   %i.an = sitofp i64 %2 to float                  ; 4 uses
-  %10 = and i64 %i.ag, -4
   %i.ao = load i64, ptr %i.e, align 8             ; 15 uses
   %i.ap = trunc i64 %i.ao to i32                  ; 14 uses
   %i.aq = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.ap)
@@ -461,13 +460,13 @@ _ZNK7xgboost6common18IndexTransformIterIZNS_6linalg6cbeginIKfLi2EEEDaRKNS2_10Ten
   br i1 %or.cond178.i.i.i.i.i, label %"_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelEPKS0_RKNS_8MetaInfoElE3$_0ZNS3_13ValidateLabelES5_S8_lE3$_2ZNS3_13ValidateLabelES5_S8_lE3$_1EEDcOT_OT0_OT1_.exit", label %bb.z
 
 bb.z:                                             ; preds = %_ZNK7xgboost6common18IndexTransformIterIZNS_6linalg6cbeginIKfLi2EEEDaRKNS2_10TensorViewIT_XT0_EEEEUlmE_EdeEv.exit.i78.i.i.i.i.i
-  %i.ec = add nuw i64 %.sroa.0149.0200.i.i.i.i.i, 4
+  %i.ec = add nuw i64 %.sroa.0149.0200.i.i.i.i.i, 4 ; 2 uses
   %i.ed = add nsw i64 %.0201.i.i.i.i.i, -1
   %i.ee = icmp sgt i64 %.0201.i.i.i.i.i, 1
   br i1 %i.ee, label %bb.n, label %._crit_edge.i.i.i.i.i, !llvm.loop !412
 
 ._crit_edge.i.i.i.i.i:                            ; preds = %bb.z, %bb.m
-  %.sroa.0149.0.lcssa.i.i.i.i.i = phi i64 [ 0, %bb.m ], [ %10, %bb.z ] ; 11 uses
+  %.sroa.0149.0.lcssa.i.i.i.i.i = phi i64 [ 0, %bb.m ], [ %i.ec, %bb.z ] ; 11 uses
   %i.ef = sub i64 %i.ag, %.sroa.0149.0.lcssa.i.i.i.i.i
   switch i64 %i.ef, label %"_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelEPKS0_RKNS_8MetaInfoElE3$_0ZNS3_13ValidateLabelES5_S8_lE3$_2ZNS3_13ValidateLabelES5_S8_lE3$_1EEDcOT_OT0_OT1_.exit.thread36" [
     i64 3, label %bb.aa
@@ -549,11 +548,11 @@ _ZNK7xgboost6common18IndexTransformIterIZNS_6linalg6cbeginIKfLi2EEEDaRKNS2_10Ten
   br i1 %or.cond180.i.i.i.i.i, label %"_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelEPKS0_RKNS_8MetaInfoElE3$_0ZNS3_13ValidateLabelES5_S8_lE3$_2ZNS3_13ValidateLabelES5_S8_lE3$_1EEDcOT_OT0_OT1_.exit", label %bb.ad
 
 bb.ad:                                            ; preds = %_ZNK7xgboost6common18IndexTransformIterIZNS_6linalg6cbeginIKfLi2EEEDaRKNS2_10TensorViewIT_XT0_EEEEUlmE_EdeEv.exit.i93.i.i.i.i.i
-  %11 = or disjoint i64 %.sroa.0149.0.lcssa.i.i.i.i.i, 1
+  %10 = add i64 %.sroa.0149.0.lcssa.i.i.i.i.i, 1
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %._crit_edge.i.i.i.i.i
-  %.sroa.0149.1.i.i.i.i.i = phi i64 [ %11, %bb.ad ], [ %.sroa.0149.0.lcssa.i.i.i.i.i, %._crit_edge.i.i.i.i.i ] ; 8 uses
+  %.sroa.0149.1.i.i.i.i.i = phi i64 [ %10, %bb.ad ], [ %.sroa.0149.0.lcssa.i.i.i.i.i, %._crit_edge.i.i.i.i.i ] ; 8 uses
   %i.fp = icmp ugt i64 %.sroa.0149.1.i.i.i.i.i, 4294967295
   br i1 %i.fp, label %bb.af, label %bb.ag
 
@@ -627,7 +626,7 @@ _ZNK7xgboost6common18IndexTransformIterIZNS_6linalg6cbeginIKfLi2EEEDaRKNS2_10Ten
   br i1 %or.cond182.i.i.i.i.i, label %"_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelEPKS0_RKNS_8MetaInfoElE3$_0ZNS3_13ValidateLabelES5_S8_lE3$_2ZNS3_13ValidateLabelES5_S8_lE3$_1EEDcOT_OT0_OT1_.exit", label %bb.ah
 
 bb.ah:                                            ; preds = %_ZNK7xgboost6common18IndexTransformIterIZNS_6linalg6cbeginIKfLi2EEEDaRKNS2_10TensorViewIT_XT0_EEEEUlmE_EdeEv.exit.i108.i.i.i.i.i
-  %i.gy = add nuw i64 %.sroa.0149.1.i.i.i.i.i, 1
+  %i.gy = add i64 %.sroa.0149.1.i.i.i.i.i, 1
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %._crit_edge.i.i.i.i.i

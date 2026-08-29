@@ -205,7 +205,6 @@ bb.h:                                             ; preds = %bb.f, %cgltf_buffer
 .lr.ph:                                           ; preds = %bb.h
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.j, i64 1)
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %bb.j
@@ -224,7 +223,7 @@ bb.j:                                             ; preds = %bb.i
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %.087130, i64 %.0.i
   %i.ar = load i64, ptr %i.ak, align 8
   %i.as = getelementptr inbounds nuw i8, ptr %.088129, i64 %i.ar
-  %exitcond.not = icmp eq i64 %i.ap, %umax
+  %exitcond.not = icmp eq i64 %i.ap, %i.j
   br i1 %exitcond.not, label %.loopexit, label %bb.i
 
 .loopexit:                                        ; preds = %bb.j, %bb.h, %bb.g, %bb.c
@@ -627,7 +626,7 @@ bb.bq:                                            ; preds = %bb.bp
   %.pre.pre.i.i.i = load i32, ptr %.pre, align 8
   %factor.op.mul.i.i.i = mul i32 %.pre.pre.i.i.i, %i.nj
   %xtraiter91 = and i64 %i.pg, 1
-  %6 = icmp ult i32 %i.og, 2
+  %6 = icmp eq i32 %i.og, 1
   %unroll_iter94 = and i64 %i.pg, 2147483646
   %lcmp.mod92.not = icmp eq i64 %xtraiter91, 0
   %lcmp.mod93 = trunc i32 %i.og to i1

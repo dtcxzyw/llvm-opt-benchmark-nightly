@@ -205,7 +205,7 @@ bb.a:
   %i.f = alloca [24 x i8], align 8                ; 7 uses
   %i.g = alloca [24 x i8], align 8                ; 7 uses
   %i.h = alloca [24 x i8], align 8                ; 7 uses
-  %i.i = lshr i64 %2, 2                           ; 15 uses
+  %i.i = lshr i64 %2, 2                           ; 16 uses
   %i.j = and i64 %2, 3                            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   %i.k = icmp ne i64 %i.j, 0
@@ -361,14 +361,12 @@ _RINvXs1_NtNtCsexYYUdYSQU6_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_e
   %i.bh = lshr i64 %i.bg, 2                       ; 2 uses
   %i.bi = add nuw i64 %2, 2
   %i.bj = lshr i64 %i.bi, 2                       ; 2 uses
-  %umax146 = tail call i64 @llvm.umax.i64(i64 %2, i64 2)
-  %i.bk = add nuw i64 %umax146, 1
-  %3 = lshr i64 %i.bk, 2                          ; 2 uses
-  %i.bl = lshr i64 %2, 2
+  %i.bk = add nuw i64 %2, 1
+  %i.bl = lshr i64 %i.bk, 2                       ; 2 uses
   %i.bm = add nsw i64 %i.i, -1
   %i.bn = tail call i64 @llvm.umin.i64(i64 %i.i, i64 %i.bh)
   %i.bo = tail call i64 @llvm.umin.i64(i64 %i.bn, i64 %i.bj)
-  %i.bp = tail call i64 @llvm.umin.i64(i64 %i.bo, i64 %3)
+  %i.bp = tail call i64 @llvm.umin.i64(i64 %i.bo, i64 %i.bl)
   %i.bq = tail call i64 @llvm.umin.i64(i64 %i.bp, i64 %i.al)
   %i.br = tail call i64 @llvm.umin.i64(i64 %i.bq, i64 %i.l)
   %i.bs = tail call i64 @llvm.umin.i64(i64 %i.br, i64 %i.y)
@@ -771,7 +769,7 @@ bb.z:                                             ; preds = %bb.y
   %i.oe = getelementptr inbounds nuw i8, ptr %i.ag, i64 %.sroa.01.092
   store i8 %i.od, ptr %i.oe, align 1
   %i.of = or disjoint i64 %i.mw, 2                ; 2 uses
-  %exitcond147.not.a = icmp eq i64 %.sroa.01.092, %3
+  %exitcond147.not.a = icmp eq i64 %.sroa.01.092, %i.bl
   br i1 %exitcond147.not.a, label %.invoke, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
@@ -784,7 +782,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.oj = getelementptr inbounds nuw i8, ptr %i.as, i64 %.sroa.01.092
   store i8 %i.oi, ptr %i.oj, align 1
   %i.ok = or disjoint i64 %i.mw, 3                ; 2 uses
-  %exitcond149.not = icmp eq i64 %.sroa.01.092, %i.bl
+  %exitcond149.not = icmp eq i64 %.sroa.01.092, %i.i
   br i1 %exitcond149.not, label %.invoke, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
@@ -1185,9 +1183,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #17
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.usub.sat.v4i32(<4 x i32>, <4 x i32>) #17

@@ -205,9 +205,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #24
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(18) %5, i8 0, i64 18, i1 false)
   %i.c = getelementptr i8, ptr %1, i64 36         ; 3 uses
-  %.val77 = load i64, ptr %i.c, align 4           ; 4 uses
+  %.val77 = load i64, ptr %i.c, align 4           ; 3 uses
   %i.d = trunc i64 %.val77 to i32                 ; 3 uses
-  %i.e = lshr i32 %i.d, 24                        ; 13 uses
+  %i.e = lshr i32 %i.d, 24                        ; 14 uses
   %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #25
   %.not = icmp eq i64 %i.f, 2
   br i1 %.not, label %bb.c, label %bb.b
@@ -297,9 +297,8 @@ iter.check:                                       ; preds = %.critedge
   %i.ai = and i64 %i.ah, 255
   %i.aj = getelementptr [4 x i8], ptr %i.t, i64 %i.ai
   %i.ak = getelementptr inbounds nuw i8, ptr %4, i64 2 ; 3 uses
-  %6 = lshr i64 %.val77, 24
-  %7 = and i64 %6, 255
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.aj, i8 1, i64 %7, i1 false), !tbaa !80
+  %6 = zext nneg i32 %i.e to i64
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.aj, i8 1, i64 %6, i1 false), !tbaa !80
   %wide.trip.count128 = zext nneg i32 %i.e to i64
   %min.iters.check = icmp ult i32 %i.d, 67108864
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check

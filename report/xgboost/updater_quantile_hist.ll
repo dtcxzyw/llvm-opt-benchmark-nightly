@@ -205,18 +205,14 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit: ; preds = %bb.c
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.k ; 7 uses
-  %.sink.i.i.i = select i1 %i.n, i64 0, i64 %i.g  ; 5 uses
+  %.sink.i.i.i = select i1 %i.n, i64 0, i64 %i.g  ; 4 uses
   %i.q = lshr i64 %.sink.i.i.i, 2                 ; 2 uses
   %.not.i.i.i.i = icmp eq i64 %i.q, 0
-  br i1 %.not.i.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i
+  br i1 %.not.i.i.i.i, label %._crit_edge.i.i.i.i, label %bb.e
 
-.lr.ph.i.i.i.i:                                   ; preds = %_ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit
-  %2 = and i64 %.sink.i.i.i, -4
-  br label %bb.e
-
-bb.e:                                             ; preds = %bb.i, %.lr.ph.i.i.i.i
-  %.071.i.i.i.i = phi i64 [ %i.q, %.lr.ph.i.i.i.i ], [ %i.ap, %bb.i ] ; 2 uses
-  %.sroa.046.070.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i ], [ %i.ao, %bb.i ] ; 6 uses
+bb.e:                                             ; preds = %_ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit, %bb.i
+  %.071.i.i.i.i = phi i64 [ %i.ap, %bb.i ], [ %i.q, %_ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit ] ; 2 uses
+  %.sroa.046.070.i.i.i.i = phi i64 [ %i.ao, %bb.i ], [ 0, %_ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit ] ; 6 uses
   %i.r = mul i64 %.sroa.046.070.i.i.i.i, %i.e
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.r
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 4
@@ -252,13 +248,13 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.an, label %_ZSt6all_ofIN7xgboost6common18IndexTransformIterIZNS0_6linalg6cbeginIKNS0_6detail20GradientPairInternalIfEELi1EEEDaRKNS3_10TensorViewIT_XT0_EEEEUlmE_EEZZNKS0_4tree20CommonRowPartitioner13LeafPartitionINSG_19MultiTargetTreeViewEEEvPKNS0_7ContextERKSA_NS9_IS8_Li2EEENS1_4SpanIiLm18446744073709551615EEEENKUlmE_clEmEUlRS8_E_EbSA_SA_T0_.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ao = add nuw i64 %.sroa.046.070.i.i.i.i, 4
+  %i.ao = add nuw i64 %.sroa.046.070.i.i.i.i, 4   ; 2 uses
   %i.ap = add nsw i64 %.071.i.i.i.i, -1
   %i.aq = icmp sgt i64 %.071.i.i.i.i, 1
   br i1 %i.aq, label %bb.e, label %._crit_edge.i.i.i.i, !llvm.loop !2899
 
 ._crit_edge.i.i.i.i:                              ; preds = %bb.i, %_ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit
-  %.sroa.046.0.lcssa.i.i.i.i = phi i64 [ 0, %_ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit ], [ %2, %bb.i ] ; 6 uses
+  %.sroa.046.0.lcssa.i.i.i.i = phi i64 [ 0, %_ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit ], [ %i.ao, %bb.i ] ; 6 uses
   %i.ar = sub i64 %.sink.i.i.i, %.sroa.046.0.lcssa.i.i.i.i
   switch i64 %i.ar, label %bb.m [
     i64 3, label %bb.j
@@ -275,11 +271,11 @@ bb.j:                                             ; preds = %._crit_edge.i.i.i.i
   br i1 %i.aw, label %_ZSt6all_ofIN7xgboost6common18IndexTransformIterIZNS0_6linalg6cbeginIKNS0_6detail20GradientPairInternalIfEELi1EEEDaRKNS3_10TensorViewIT_XT0_EEEEUlmE_EEZZNKS0_4tree20CommonRowPartitioner13LeafPartitionINSG_19MultiTargetTreeViewEEEvPKNS0_7ContextERKSA_NS9_IS8_Li2EEENS1_4SpanIiLm18446744073709551615EEEENKUlmE_clEmEUlRS8_E_EbSA_SA_T0_.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %3 = or disjoint i64 %.sroa.046.0.lcssa.i.i.i.i, 1
+  %2 = add i64 %.sroa.046.0.lcssa.i.i.i.i, 1
   br label %._crit_edge._crit_edge.i.i.i.i
 
 ._crit_edge._crit_edge.i.i.i.i:                   ; preds = %._crit_edge.i.i.i.i, %bb.k
-  %.sroa.046.1.i.i.i.i = phi i64 [ %3, %bb.k ], [ %.sroa.046.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.sroa.046.1.i.i.i.i = phi i64 [ %2, %bb.k ], [ %.sroa.046.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.ax = mul i64 %.sroa.046.1.i.i.i.i, %i.e
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.ax
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 4
@@ -288,7 +284,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.bb, label %_ZSt6all_ofIN7xgboost6common18IndexTransformIterIZNS0_6linalg6cbeginIKNS0_6detail20GradientPairInternalIfEELi1EEEDaRKNS3_10TensorViewIT_XT0_EEEEUlmE_EEZZNKS0_4tree20CommonRowPartitioner13LeafPartitionINSG_19MultiTargetTreeViewEEEvPKNS0_7ContextERKSA_NS9_IS8_Li2EEENS1_4SpanIiLm18446744073709551615EEEENKUlmE_clEmEUlRS8_E_EbSA_SA_T0_.exit, label %bb.l
 
 bb.l:                                             ; preds = %._crit_edge._crit_edge.i.i.i.i
-  %i.bc = add nuw i64 %.sroa.046.1.i.i.i.i, 1
+  %i.bc = add i64 %.sroa.046.1.i.i.i.i, 1
   br label %._crit_edge._crit_edge73.i.i.i.i
 
 ._crit_edge._crit_edge73.i.i.i.i:                 ; preds = %._crit_edge.i.i.i.i, %bb.l
@@ -691,18 +687,14 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit: ; preds = %bb.c
   %i.p = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.k ; 7 uses
-  %.sink.i.i.i = select i1 %i.n, i64 0, i64 %i.g  ; 5 uses
+  %.sink.i.i.i = select i1 %i.n, i64 0, i64 %i.g  ; 4 uses
   %i.q = lshr i64 %.sink.i.i.i, 2                 ; 2 uses
   %.not.i.i.i.i = icmp eq i64 %i.q, 0
-  br i1 %.not.i.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i
+  br i1 %.not.i.i.i.i, label %._crit_edge.i.i.i.i, label %bb.e
 
-.lr.ph.i.i.i.i:                                   ; preds = %_ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit
-  %2 = and i64 %.sink.i.i.i, -4
-  br label %bb.e
-
-bb.e:                                             ; preds = %bb.i, %.lr.ph.i.i.i.i
-  %.071.i.i.i.i = phi i64 [ %i.q, %.lr.ph.i.i.i.i ], [ %i.ap, %bb.i ] ; 2 uses
-  %.sroa.046.070.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i ], [ %i.ao, %bb.i ] ; 6 uses
+bb.e:                                             ; preds = %_ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit, %bb.i
+  %.071.i.i.i.i = phi i64 [ %i.ap, %bb.i ], [ %i.q, %_ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit ] ; 2 uses
+  %.sroa.046.070.i.i.i.i = phi i64 [ %i.ao, %bb.i ], [ 0, %_ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit ] ; 6 uses
   %i.r = mul i64 %.sroa.046.070.i.i.i.i, %i.e
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.r
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 4
@@ -738,13 +730,13 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.an, label %_ZSt6all_ofIN7xgboost6common18IndexTransformIterIZNS0_6linalg6cbeginIKNS0_6detail20GradientPairInternalIfEELi1EEEDaRKNS3_10TensorViewIT_XT0_EEEEUlmE_EEZZNKS0_4tree20CommonRowPartitioner13LeafPartitionINSG_14ScalarTreeViewEEEvPKNS0_7ContextERKSA_NS9_IS8_Li2EEENS1_4SpanIiLm18446744073709551615EEEENKUlmE_clEmEUlRS8_E_EbSA_SA_T0_.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ao = add nuw i64 %.sroa.046.070.i.i.i.i, 4
+  %i.ao = add nuw i64 %.sroa.046.070.i.i.i.i, 4   ; 2 uses
   %i.ap = add nsw i64 %.071.i.i.i.i, -1
   %i.aq = icmp sgt i64 %.071.i.i.i.i, 1
   br i1 %i.aq, label %bb.e, label %._crit_edge.i.i.i.i, !llvm.loop !4088
 
 ._crit_edge.i.i.i.i:                              ; preds = %bb.i, %_ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit
-  %.sroa.046.0.lcssa.i.i.i.i = phi i64 [ 0, %_ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit ], [ %2, %bb.i ] ; 6 uses
+  %.sroa.046.0.lcssa.i.i.i.i = phi i64 [ 0, %_ZNK7xgboost6linalg10TensorViewIKNS_6detail20GradientPairInternalIfEELi2EE5SliceIJRmNS0_6detail6AllTagEEEEDaDpOT_.exit ], [ %i.ao, %bb.i ] ; 6 uses
   %i.ar = sub i64 %.sink.i.i.i, %.sroa.046.0.lcssa.i.i.i.i
   switch i64 %i.ar, label %bb.m [
     i64 3, label %bb.j
@@ -761,11 +753,11 @@ bb.j:                                             ; preds = %._crit_edge.i.i.i.i
   br i1 %i.aw, label %_ZSt6all_ofIN7xgboost6common18IndexTransformIterIZNS0_6linalg6cbeginIKNS0_6detail20GradientPairInternalIfEELi1EEEDaRKNS3_10TensorViewIT_XT0_EEEEUlmE_EEZZNKS0_4tree20CommonRowPartitioner13LeafPartitionINSG_14ScalarTreeViewEEEvPKNS0_7ContextERKSA_NS9_IS8_Li2EEENS1_4SpanIiLm18446744073709551615EEEENKUlmE_clEmEUlRS8_E_EbSA_SA_T0_.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %3 = or disjoint i64 %.sroa.046.0.lcssa.i.i.i.i, 1
+  %2 = add i64 %.sroa.046.0.lcssa.i.i.i.i, 1
   br label %._crit_edge._crit_edge.i.i.i.i
 
 ._crit_edge._crit_edge.i.i.i.i:                   ; preds = %._crit_edge.i.i.i.i, %bb.k
-  %.sroa.046.1.i.i.i.i = phi i64 [ %3, %bb.k ], [ %.sroa.046.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
+  %.sroa.046.1.i.i.i.i = phi i64 [ %2, %bb.k ], [ %.sroa.046.0.lcssa.i.i.i.i, %._crit_edge.i.i.i.i ] ; 3 uses
   %i.ax = mul i64 %.sroa.046.1.i.i.i.i, %i.e
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.ax
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 4
@@ -774,7 +766,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.bb, label %_ZSt6all_ofIN7xgboost6common18IndexTransformIterIZNS0_6linalg6cbeginIKNS0_6detail20GradientPairInternalIfEELi1EEEDaRKNS3_10TensorViewIT_XT0_EEEEUlmE_EEZZNKS0_4tree20CommonRowPartitioner13LeafPartitionINSG_14ScalarTreeViewEEEvPKNS0_7ContextERKSA_NS9_IS8_Li2EEENS1_4SpanIiLm18446744073709551615EEEENKUlmE_clEmEUlRS8_E_EbSA_SA_T0_.exit, label %bb.l
 
 bb.l:                                             ; preds = %._crit_edge._crit_edge.i.i.i.i
-  %i.bc = add nuw i64 %.sroa.046.1.i.i.i.i, 1
+  %i.bc = add i64 %.sroa.046.1.i.i.i.i, 1
   br label %._crit_edge._crit_edge73.i.i.i.i
 
 ._crit_edge._crit_edge73.i.i.i.i:                 ; preds = %._crit_edge.i.i.i.i, %bb.l

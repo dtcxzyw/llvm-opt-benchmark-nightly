@@ -204,7 +204,6 @@ tailrecurse.backedge:                             ; preds = %_ZNK4llvm4User10get
   br i1 %i.ai, label %_ZNK4llvm5Value9hasOneUseEv.exit.thread, label %bb.b
 
 bb.n:                                             ; preds = %_ZL16getTypeSizeIndexjPN4llvm4TypeE.exit132
-  %5 = trunc nuw i64 %i.ae to i32
   %i.aj = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.ak = load i32, ptr %i.aj, align 8
   %i.al = and i32 %i.ak, 255
@@ -241,8 +240,7 @@ _ZNK4llvm8TypeSizecvmEv.exit134:                  ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.r
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32
-  %.not122 = icmp eq i32 %indvars, %5
+  %.not122 = icmp eq i64 %indvars.iv.next, %i.ae
   br i1 %.not122, label %_ZNK4llvm5Value9hasOneUseEv.exit.thread, label %.lr.ph225, !llvm.loop !727
 
 .lr.ph225:                                        ; preds = %_ZNK4llvm8TypeSizecvmEv.exit134, %bb.q

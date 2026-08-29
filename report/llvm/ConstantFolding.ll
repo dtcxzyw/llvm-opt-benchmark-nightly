@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.a, %bb.a, %bb.a,
   %i.ft = load i32, ptr %i.fs, align 8
   %i.fu = and i32 %i.ft, 255
   %.not47 = icmp eq i32 %i.fu, 19                 ; 2 uses
-  %i.fv = udiv i32 %i.fr, %i.fm                   ; 6 uses
+  %i.fv = udiv i32 %i.fr, %i.fm                   ; 5 uses
   %i.fw = tail call noundef ptr @_ZNK4llvm8Constant13getSplatValueEb(ptr noundef nonnull align 8 dereferenceable(24) %i.fn, i1 noundef zeroext false) #26 ; 2 uses
   %.not = icmp eq ptr %i.fw, null
   br i1 %.not, label %bb.aa, label %bb.x
@@ -360,7 +360,7 @@ _ZN4llvm15SmallVectorImplIPNS_8ConstantEE7reserveEm.exit.i.i..lr.ph.preheader.i.
 _ZN4llvm11SmallVectorIPNS_8ConstantELj8EEC2Em.exit: ; preds = %_ZN4llvm15SmallVectorImplIPNS_8ConstantEE7reserveEm.exit.i.i.i179, %.lr.ph.preheader.i.i.i176
   store i32 %i.fm, ptr %i.he, align 8, !tbaa !106
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #26
-  %i.hl = zext i32 %i.fv to i64                   ; 2 uses
+  %i.hl = zext i32 %i.fv to i64                   ; 3 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 4 uses
   store ptr %i.hm, ptr %16, align 8, !tbaa !21
   %i.hn = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 5 uses
@@ -430,8 +430,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.ih = getelementptr inbounds nuw [8 x i8], ptr %i.ig, i64 %indvars.iv
   store ptr %i.if, ptr %i.ih, align 8, !tbaa !131
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32
-  %.not121 = icmp eq i32 %i.fv, %indvars
+  %.not121 = icmp eq i64 %indvars.iv.next, %i.hl
   br i1 %.not121, label %._crit_edge, label %bb.ad, !llvm.loop !283
 
 ._crit_edge:                                      ; preds = %bb.ae
@@ -834,7 +833,7 @@ bb.e:                                             ; preds = %bb.d
   %..026 = select i1 %i.g, i1 true, i1 %.02652    ; 2 uses
   %not. = xor i1 %i.g, true
   %.025. = select i1 %not., i1 true, i1 %.02553   ; 2 uses
-  %i.h = add i32 %.054, 1                         ; 2 uses
+  %i.h = add nuw i32 %.054, 1                     ; 2 uses
   %.not40 = icmp eq i32 %i.h, %i.b
   br i1 %.not40, label %._crit_edge, label %bb.d, !llvm.loop !323
 
@@ -1030,7 +1029,7 @@ bb.c:                                             ; preds = %.thread, %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %_ZN4llvm14SmallBitVector9referenceaSEb.exit
-  %i.j = add i32 %.04888, 1                       ; 2 uses
+  %i.j = add nuw i32 %.04888, 1                   ; 2 uses
   %.not67 = icmp eq i32 %i.j, %i.c
   br i1 %.not67, label %.thread74, label %bb.e, !llvm.loop !338
 

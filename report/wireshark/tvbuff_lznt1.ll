@@ -33,11 +33,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store volatile i32 0, ptr %i.e, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
   call void @except_setup_try(ptr noundef nonnull %3, ptr noundef nonnull %4, ptr noundef nonnull @tvb_uncompress_lznt1.catch_spec, i64 noundef 1)
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 48
-  %i.j = call i32 @_setjmp(ptr noundef nonnull %i.i) #8
+  %i.j = call i32 @_setjmp(ptr noundef nonnull %i.i) #7
   %.not = icmp eq i32 %i.j, 0
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.sink = select i1 %.not, ptr null, ptr %i.k
@@ -94,21 +94,21 @@ bb.f:                                             ; preds = %bb.e
 .preheader.i:                                     ; preds = %.lr.ph.i, %.preheader.i
   %.043.i = phi i32 [ %i.ac, %.preheader.i ], [ 0, %.lr.ph.i ]
   %.142.i = phi i32 [ %i.ab, %.preheader.i ], [ %i.v, %.lr.ph.i ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   %i.y = add i32 %.142.i, %1
   %i.z = call zeroext i8 @tvb_get_uint8(ptr noundef nonnull %0, i32 noundef %i.y)
   store i8 %i.z, ptr %i.b, align 1
   %i.aa = call zeroext i1 @wmem_array_append(ptr noundef %i.h, ptr noundef nonnull %i.b, i32 noundef 1) ; 0 uses
   %i.ab = add i32 %.142.i, 1                      ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   %i.ac = add nuw nsw i32 %.043.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.ac, %i.x
   br i1 %exitcond.not.i, label %.loopexit33.i, label %.preheader.i, !llvm.loop !6
 
 bb.g:                                             ; preds = %.lr.ph.i
   %i.ad = add i32 %i.v, %1                        ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  %i.ae = call i32 @wmem_array_get_count(ptr noundef %i.h) ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  %i.ae = call i32 @wmem_array_get_count(ptr noundef %i.h) ; 2 uses
   br label %bb.h
 
 .loopexit85.i.i:                                  ; preds = %bb.i
@@ -176,55 +176,46 @@ bb.l:                                             ; preds = %bb.j
   %i.bd = add nuw nsw i32 %i.bc, 3                ; 5 uses
   %i.be = lshr i32 %i.av, %.1.i.i                 ; 4 uses
   %i.bf = add nuw nsw i32 %i.be, 1                ; 4 uses
-  %.neg.i.i = xor i32 %i.be, -1                   ; 2 uses
+  %.neg.i.i = xor i32 %i.be, -1
   %i.bg = add i32 %.172104.i.i, %i.ae
   %.not83.i.i = icmp ult i32 %i.be, %i.bg
   br i1 %.not83.i.i, label %bb.m, label %uncompress_chunk.exit.i
 
 bb.m:                                             ; preds = %.loopexit84.i.i
   %i.bh = call zeroext i1 @wmem_array_grow(ptr noundef %i.h, i32 noundef %i.bd)
-  br i1 %i.bh, label %.preheader.i.i, label %uncompress_chunk.exit.i
+  br i1 %i.bh, label %.lr.ph95.i.i.a, label %uncompress_chunk.exit.i
 
-.preheader.i.i:                                   ; preds = %bb.m
+.lr.ph95.i.i.a:                                   ; preds = %bb.m
+  %i.bi = udiv i32 %i.bd, %i.bf                   ; 2 uses
   %.not.not.i.i = icmp samesign ult i32 %i.be, %i.bd
-  br i1 %.not.not.i.i, label %.lr.ph95.i.i.a, label %.preheader.i..lr.ph101.i_crit_edge.i
-
-.preheader.i..lr.ph101.i_crit_edge.i:             ; preds = %.preheader.i.i
-  %.pre.i = add i32 %i.ae, %.neg.i.i
-  br label %.lr.ph101.i.i.a
-
-.lr.ph95.i.i.a:                                   ; preds = %.preheader.i.i
-  %i.bi = udiv i32 %i.bd, %i.bf
   %5 = add i32 %i.ae, %.neg.i.i                   ; 2 uses
-  %umax.i.i = call i32 @llvm.umax.i32(i32 %i.bi, i32 1) ; 2 uses
-  br label %bb.n
+  br i1 %.not.not.i.i, label %bb.n, label %.lr.ph101.i.i.a
 
-bb.n:                                             ; preds = %bb.n, %.lr.ph95.i.i.a
-  %.06894.i.i = phi i32 [ 0, %.lr.ph95.i.i.a ], [ %i.bn, %bb.n ]
-  %.293.i.i = phi i32 [ %.172104.i.i, %.lr.ph95.i.i.a ], [ %i.bm, %bb.n ] ; 2 uses
+bb.n:                                             ; preds = %.lr.ph95.i.i.a, %bb.n
+  %.06894.i.i = phi i32 [ %i.bn, %bb.n ], [ 0, %.lr.ph95.i.i.a ]
+  %.293.i.i = phi i32 [ %i.bm, %bb.n ], [ %.172104.i.i, %.lr.ph95.i.i.a ] ; 2 uses
   %i.bj = add i32 %.293.i.i, %5
   %i.bk = call ptr @wmem_array_index(ptr noundef %i.h, i32 noundef %i.bj)
   %i.bl = call zeroext i1 @wmem_array_append(ptr noundef %i.h, ptr noundef %i.bk, i32 noundef %i.bf) ; 0 uses
   %i.bm = add i32 %.293.i.i, %i.bf                ; 3 uses
   %i.bn = add nuw nsw i32 %.06894.i.i, 1          ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %i.bn, %umax.i.i
+  %exitcond.not.i.i = icmp eq i32 %i.bn, %i.bi
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %bb.n, !llvm.loop !11
 
 ._crit_edge.i.i:                                  ; preds = %bb.n
-  %i.bo = mul i32 %umax.i.i, %i.bf                ; 2 uses
+  %i.bo = mul i32 %i.bi, %i.bf                    ; 2 uses
   %i.bp = icmp ult i32 %i.bo, %i.bd
   br i1 %i.bp, label %.lr.ph101.i.i.a, label %.loopexit.i.i
 
-.lr.ph101.i.i.a:                                  ; preds = %._crit_edge.i.i, %.preheader.i..lr.ph101.i_crit_edge.i
-  %.pre-phi.i = phi i32 [ %.pre.i, %.preheader.i..lr.ph101.i_crit_edge.i ], [ %5, %._crit_edge.i.i ]
-  %.068.lcssa124.i.i = phi i32 [ 0, %.preheader.i..lr.ph101.i_crit_edge.i ], [ %i.bo, %._crit_edge.i.i ]
-  %.2.lcssa123.i.i = phi i32 [ %.172104.i.i, %.preheader.i..lr.ph101.i_crit_edge.i ], [ %i.bm, %._crit_edge.i.i ]
+.lr.ph101.i.i.a:                                  ; preds = %._crit_edge.i.i, %.lr.ph95.i.i.a
+  %.068.lcssa124.i.i = phi i32 [ 0, %.lr.ph95.i.i.a ], [ %i.bo, %._crit_edge.i.i ]
+  %.2.lcssa123.i.i = phi i32 [ %.172104.i.i, %.lr.ph95.i.i.a ], [ %i.bm, %._crit_edge.i.i ]
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.o, %.lr.ph101.i.i.a
-  %.16999.i.i = phi i32 [ %.068.lcssa124.i.i, %.lr.ph101.i.i.a ], [ %i.bu, %bb.o ]
-  %.398.i.i = phi i32 [ %.2.lcssa123.i.i, %.lr.ph101.i.i.a ], [ %i.bt, %bb.o ] ; 2 uses
-  %i.bq = add i32 %.398.i.i, %.pre-phi.i
+bb.o:                                             ; preds = %.lr.ph101.i.i.a, %bb.o
+  %.16999.i.i = phi i32 [ %i.bu, %bb.o ], [ %.068.lcssa124.i.i, %.lr.ph101.i.i.a ]
+  %.398.i.i = phi i32 [ %i.bt, %bb.o ], [ %.2.lcssa123.i.i, %.lr.ph101.i.i.a ] ; 2 uses
+  %i.bq = add i32 %.398.i.i, %5
   %i.br = call ptr @wmem_array_index(ptr noundef %i.h, i32 noundef %i.bq)
   %i.bs = call zeroext i1 @wmem_array_append(ptr noundef %i.h, ptr noundef %i.br, i32 noundef 1) ; 0 uses
   %i.bt = add i32 %.398.i.i, 1                    ; 2 uses
@@ -239,11 +230,11 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph101.i.
   br i1 %i.bv, label %.loopexit.i, label %bb.i
 
 uncompress_chunk.exit.i:                          ; preds = %bb.m, %.loopexit84.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   br label %do_uncompress.exit
 
 .loopexit.i:                                      ; preds = %.loopexit85.i.i, %.loopexit.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   %i.bw = add i32 %i.v, %i.x
   br label %.loopexit33.i
 
@@ -287,7 +278,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t
   %.0..0..0..0.15 = load volatile ptr, ptr %i.d, align 8
-  call void @except_rethrow(ptr noundef %.0..0..0..0.15) #9
+  call void @except_rethrow(ptr noundef %.0..0..0..0.15) #8
   unreachable
 
 bb.v:                                             ; preds = %bb.t, %bb.s
@@ -295,8 +286,8 @@ bb.v:                                             ; preds = %bb.t, %bb.s
   %i.cc = load volatile ptr, ptr %i.cb, align 8
   call void @except_free(ptr noundef %i.cc)
   %i.cd = call ptr @except_pop()                  ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %.0..0..0..0.23 = load volatile i8, ptr %i.c, align 1, !range !14, !noundef !15
@@ -306,9 +297,9 @@ bb.v:                                             ; preds = %bb.t, %bb.s
 bb.w:                                             ; preds = %bb.v
   %i.cf = call i32 @wmem_array_get_count(ptr noundef %i.h) ; 3 uses
   %i.cg = zext i32 %i.cf to i64                   ; 2 uses
-  %i.ch = call noalias ptr @g_malloc(i64 noundef %i.cg) #10 ; 2 uses
+  %i.ch = call noalias ptr @g_malloc(i64 noundef %i.cg) #9 ; 2 uses
   %i.ci = call ptr @wmem_array_get_raw(ptr noundef %i.h)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 %i.ch, ptr noundef align 1 %i.ci, i64 noundef range(i64 0, 4294967296) %i.cg, i1 noundef false) #7
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 %i.ch, ptr noundef align 1 %i.ci, i64 noundef range(i64 0, 4294967296) %i.cg, i1 noundef false) #6
   %i.cj = call ptr @tvb_new_real_data(ptr noundef %i.ch, i32 noundef %i.cf, i32 noundef %i.cf) ; 2 uses
   call void @tvb_set_free_cb(ptr noundef %i.cj, ptr noundef nonnull @g_free)
   br label %bb.x
@@ -401,9 +392,6 @@ declare zeroext i1 @wmem_array_grow(ptr noundef, i32 noundef) local_unnamed_addr
 ; Function Attrs: null_pointer_is_valid
 declare ptr @wmem_array_index(ptr noundef, i32 noundef) local_unnamed_addr #2
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #6
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
@@ -413,11 +401,10 @@ attributes #2 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protect
 attributes #3 = { nounwind null_pointer_is_valid returns_twice "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { noreturn null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { null_pointer_is_valid allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #7 = { nounwind }
-attributes #8 = { nounwind returns_twice }
-attributes #9 = { noreturn }
-attributes #10 = { allocsize(0) }
+attributes #6 = { nounwind }
+attributes #7 = { nounwind returns_twice }
+attributes #8 = { noreturn }
+attributes #9 = { allocsize(0) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

@@ -205,8 +205,7 @@ vec.epilog.middle.block2001:                      ; preds = %vec.epilog.vector.b
   br i1 %.not1993.i, label %._crit_edge1939.i, label %iter.check1956
 
 iter.check1956:                                   ; preds = %.preheader1847.i
-  %i.azl = zext i16 %i.axm to i64                 ; 4 uses
-  %umax = call i64 @llvm.umax.i64(i64 %i.azl, i64 1) ; 3 uses
+  %i.azl = zext i16 %i.axm to i64                 ; 6 uses
   %min.iters.check1939 = icmp ult i16 %i.axm, 4
   br i1 %min.iters.check1939, label %.lr.ph1938.i.preheader, label %vector.main.loop.iter.check1940
 
@@ -215,8 +214,8 @@ vector.main.loop.iter.check1940:                  ; preds = %iter.check1956
   br i1 %min.iters.check1941, label %vec.epilog.ph1960, label %vector.ph1942
 
 vector.ph1942:                                    ; preds = %vector.main.loop.iter.check1940
-  %i.azm = and i64 %umax, 12
-  %n.vec1943 = and i64 %umax, 65520               ; 4 uses
+  %i.azm = and i64 %i.azl, 12
+  %n.vec1943 = and i64 %i.azl, 65520              ; 4 uses
   br label %vector.body1944
 
 vector.body1944:                                  ; preds = %vector.body1944, %vector.ph1942
@@ -246,7 +245,7 @@ vec.epilog.iter.check1958:                        ; preds = %middle.block1951
 vec.epilog.ph1960:                                ; preds = %vector.main.loop.iter.check1940, %vec.epilog.iter.check1958
   %vec.epilog.resume.val1954 = phi i64 [ %n.vec1943, %vec.epilog.iter.check1958 ], [ 0, %vector.main.loop.iter.check1940 ]
   %bc.merge.rdx1955 = phi i16 [ %i.azs, %vec.epilog.iter.check1958 ], [ 0, %vector.main.loop.iter.check1940 ]
-  %n.vec1961 = and i64 %umax, 65532               ; 3 uses
+  %n.vec1961 = and i64 %i.azl, 65532              ; 3 uses
   %i.azt = insertelement <4 x i16> <i16 poison, i16 0, i16 0, i16 0>, i16 %bc.merge.rdx1955, i64 0
   br label %vec.epilog.vector.body1962
 
@@ -649,11 +648,10 @@ vec.epilog.scalar.ph2024.preheader:               ; preds = %iter.check2023, %ve
 .preheader1843.i:                                 ; preds = %vec.epilog.scalar.ph2024, %middle.block2018, %vec.epilog.middle.block2034, %.preheader1844.i
   %.11425.lcssa.i = phi i16 [ 0, %.preheader1844.i ], [ %i.biu, %vec.epilog.middle.block2034 ], [ %i.bip, %middle.block2018 ], [ %i.bjj, %vec.epilog.scalar.ph2024 ]
   %.not1997.i = icmp ugt i16 %i.bie, %.01426.lcssa.i229
-  %.pre2141.i = zext i16 %i.big to i64            ; 5 uses
+  %.pre2141.i = zext i16 %i.big to i64            ; 7 uses
   br i1 %.not1997.i, label %iter.check2090, label %iter.check2057
 
 iter.check2057:                                   ; preds = %.preheader1843.i
-  %umax2038 = call i64 @llvm.umax.i64(i64 %.pre2141.i, i64 1) ; 3 uses
   %min.iters.check2040.a = icmp ult i16 %i.big, 4
   br i1 %min.iters.check2040.a, label %.lr.ph1980.i.preheader, label %vector.main.loop.iter.check2041
 
@@ -662,8 +660,8 @@ vector.main.loop.iter.check2041:                  ; preds = %iter.check2057
   br i1 %min.iters.check2042, label %vec.epilog.ph2061, label %vector.ph2043
 
 vector.ph2043:                                    ; preds = %vector.main.loop.iter.check2041
-  %i.biv = and i64 %umax2038, 12
-  %n.vec2044 = and i64 %umax2038, 65520           ; 4 uses
+  %i.biv = and i64 %.pre2141.i, 12
+  %n.vec2044 = and i64 %.pre2141.i, 65520         ; 4 uses
   br label %vector.body2045
 
 vector.body2045:                                  ; preds = %vector.body2045, %vector.ph2043
@@ -693,7 +691,7 @@ vec.epilog.iter.check2059:                        ; preds = %middle.block2052
 vec.epilog.ph2061:                                ; preds = %vector.main.loop.iter.check2041, %vec.epilog.iter.check2059
   %vec.epilog.resume.val2055 = phi i64 [ %n.vec2044, %vec.epilog.iter.check2059 ], [ 0, %vector.main.loop.iter.check2041 ]
   %bc.merge.rdx2056 = phi i16 [ %i.bjb, %vec.epilog.iter.check2059 ], [ 0, %vector.main.loop.iter.check2041 ]
-  %n.vec2062 = and i64 %umax2038, 65532           ; 3 uses
+  %n.vec2062 = and i64 %.pre2141.i, 65532         ; 3 uses
   %i.bjc = insertelement <4 x i16> <i16 poison, i16 0, i16 0, i16 0>, i16 %bc.merge.rdx2056, i64 0
   br label %vec.epilog.vector.body2063
 
@@ -1096,8 +1094,7 @@ vec.epilog.middle.block2395:                      ; preds = %vec.epilog.vector.b
   br i1 %.not1895, label %._crit_edge1841, label %iter.check2351
 
 iter.check2351:                                   ; preds = %.preheader1751
-  %i.vn = zext i16 %i.tr to i64                   ; 4 uses
-  %umax = call i64 @llvm.umax.i64(i64 %i.vn, i64 1) ; 3 uses
+  %i.vn = zext i16 %i.tr to i64                   ; 6 uses
   %min.iters.check2334 = icmp ult i16 %i.tr, 4
   br i1 %min.iters.check2334, label %.lr.ph1840.preheader, label %vector.main.loop.iter.check2335
 
@@ -1106,8 +1103,8 @@ vector.main.loop.iter.check2335:                  ; preds = %iter.check2351
   br i1 %min.iters.check2336, label %vec.epilog.ph2355, label %vector.ph2337
 
 vector.ph2337:                                    ; preds = %vector.main.loop.iter.check2335
-  %i.vo = and i64 %umax, 12
-  %n.vec2338 = and i64 %umax, 65520               ; 4 uses
+  %i.vo = and i64 %i.vn, 12
+  %n.vec2338 = and i64 %i.vn, 65520               ; 4 uses
   br label %vector.body2339
 
 vector.body2339:                                  ; preds = %vector.body2339, %vector.ph2337
@@ -1137,7 +1134,7 @@ vec.epilog.iter.check2353:                        ; preds = %middle.block2346
 vec.epilog.ph2355:                                ; preds = %vector.main.loop.iter.check2335, %vec.epilog.iter.check2353
   %vec.epilog.resume.val2349 = phi i64 [ %n.vec2338, %vec.epilog.iter.check2353 ], [ 0, %vector.main.loop.iter.check2335 ]
   %bc.merge.rdx2350 = phi i16 [ %i.vu, %vec.epilog.iter.check2353 ], [ 0, %vector.main.loop.iter.check2335 ]
-  %n.vec2356 = and i64 %umax, 65532               ; 3 uses
+  %n.vec2356 = and i64 %i.vn, 65532               ; 3 uses
   %i.vv = insertelement <4 x i16> <i16 poison, i16 0, i16 0, i16 0>, i16 %bc.merge.rdx2350, i64 0
   br label %vec.epilog.vector.body2357
 
@@ -1540,11 +1537,10 @@ vec.epilog.scalar.ph2417.preheader:               ; preds = %iter.check2416, %ve
 .preheader1747:                                   ; preds = %vec.epilog.scalar.ph2417, %middle.block2411, %vec.epilog.middle.block2427, %.preheader1748
   %.11208.lcssa = phi i16 [ 0, %.preheader1748 ], [ %i.ael, %vec.epilog.middle.block2427 ], [ %i.aeg, %middle.block2411 ], [ %i.afa, %vec.epilog.scalar.ph2417 ]
   %.not1899 = icmp ugt i16 %i.adv, %.01209.lcssa
-  %.pre2032 = zext i16 %i.adx to i64              ; 5 uses
+  %.pre2032 = zext i16 %i.adx to i64              ; 7 uses
   br i1 %.not1899, label %iter.check2481, label %iter.check2449
 
 iter.check2449:                                   ; preds = %.preheader1747
-  %umax2431 = call i64 @llvm.umax.i64(i64 %.pre2032, i64 1) ; 3 uses
   %min.iters.check2432.a = icmp ult i16 %i.adx, 4
   br i1 %min.iters.check2432.a, label %.lr.ph1882.preheader, label %vector.main.loop.iter.check2433
 
@@ -1553,8 +1549,8 @@ vector.main.loop.iter.check2433:                  ; preds = %iter.check2449
   br i1 %min.iters.check2434, label %vec.epilog.ph2453, label %vector.ph2435
 
 vector.ph2435:                                    ; preds = %vector.main.loop.iter.check2433
-  %i.aem = and i64 %umax2431, 12
-  %n.vec2436 = and i64 %umax2431, 65520           ; 4 uses
+  %i.aem = and i64 %.pre2032, 12
+  %n.vec2436 = and i64 %.pre2032, 65520           ; 4 uses
   br label %vector.body2437
 
 vector.body2437:                                  ; preds = %vector.body2437, %vector.ph2435
@@ -1584,7 +1580,7 @@ vec.epilog.iter.check2451:                        ; preds = %middle.block2444
 vec.epilog.ph2453:                                ; preds = %vector.main.loop.iter.check2433, %vec.epilog.iter.check2451
   %vec.epilog.resume.val2447 = phi i64 [ %n.vec2436, %vec.epilog.iter.check2451 ], [ 0, %vector.main.loop.iter.check2433 ]
   %bc.merge.rdx2448 = phi i16 [ %i.aes, %vec.epilog.iter.check2451 ], [ 0, %vector.main.loop.iter.check2433 ]
-  %n.vec2454 = and i64 %umax2431, 65532           ; 3 uses
+  %n.vec2454 = and i64 %.pre2032, 65532           ; 3 uses
   %i.aet = insertelement <4 x i16> <i16 poison, i16 0, i16 0, i16 0>, i16 %bc.merge.rdx2448, i64 0
   br label %vec.epilog.vector.body2455
 

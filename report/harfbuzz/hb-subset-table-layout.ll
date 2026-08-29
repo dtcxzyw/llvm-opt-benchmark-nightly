@@ -205,7 +205,7 @@ _ZN19hb_priority_queue_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEEC2E
 
 .loopexit:                                        ; preds = %_ZN11hb_vector_tI9hb_pair_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEjELb0EE4pushIJS4_EEEPS4_DpOT_.exit, %.lr.ph851
   %.sroa.0535.1.lcssa = phi i32 [ %.sroa.0535.0846, %.lr.ph851 ], [ %.sroa.0535.2, %_ZN11hb_vector_tI9hb_pair_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEjELb0EE4pushIJS4_EEEPS4_DpOT_.exit ] ; 3 uses
-  %.sroa.10.1.lcssa = phi i32 [ %.sroa.10.0847, %.lr.ph851 ], [ %.sroa.10.2, %_ZN11hb_vector_tI9hb_pair_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEjELb0EE4pushIJS4_EEEPS4_DpOT_.exit ] ; 7 uses
+  %.sroa.10.1.lcssa = phi i32 [ %.sroa.10.0847, %.lr.ph851 ], [ %.sroa.10.2, %_ZN11hb_vector_tI9hb_pair_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEjELb0EE4pushIJS4_EEEPS4_DpOT_.exit ] ; 8 uses
   %.sroa.16.1.lcssa = phi ptr [ %.sroa.16.0848, %.lr.ph851 ], [ %.sroa.16.2, %_ZN11hb_vector_tI9hb_pair_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEjELb0EE4pushIJS4_EEEPS4_DpOT_.exit ] ; 10 uses
   %indvars.iv.next965 = add nuw nsw i64 %indvars.iv964, 1
   %exitcond974.not = icmp eq i64 %indvars.iv.next971, %i.sc
@@ -216,30 +216,28 @@ _ZN19hb_priority_queue_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEEC2E
   br i1 %.not13.i, label %_ZN19hb_priority_queue_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEEC2EO11hb_vector_tI9hb_pair_tIS2_jELb0EE.exit, label %.lr.ph12.i.preheader
 
 .lr.ph12.i.preheader:                             ; preds = %._crit_edge852
-  %8 = zext i32 %.sroa.10.1.lcssa to i64          ; 2 uses
-  %9 = lshr i64 %8, 1
+  %8 = lshr i32 %.sroa.10.1.lcssa, 1
+  %9 = zext nneg i32 %8 to i64
   br label %.lr.ph12.i
 
 .lr.ph12.i:                                       ; preds = %.lr.ph12.i.preheader, %_ZN19hb_priority_queue_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEE11bubble_downEj.exit.i
   %indvars.iv975 = phi i64 [ %9, %.lr.ph12.i.preheader ], [ %indvars.iv.next976, %_ZN19hb_priority_queue_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEE11bubble_downEj.exit.i ] ; 2 uses
-  %indvars.iv.next976 = add nsw i64 %indvars.iv975, -1 ; 4 uses
-  %10 = shl nuw nsw i64 %indvars.iv.next976, 1    ; 2 uses
-  %11 = or disjoint i64 %10, 1                    ; 2 uses
-  %i.sd = icmp samesign ult i64 %11, %8
+  %indvars.iv.next976 = add nsw i64 %indvars.iv975, -1 ; 3 uses
+  %10 = trunc nsw i64 %indvars.iv.next976 to i32  ; 2 uses
+  %11 = shl nuw i32 %10, 1                        ; 2 uses
+  %12 = or disjoint i32 %11, 1                    ; 2 uses
+  %i.sd = icmp ult i32 %12, %.sroa.10.1.lcssa
   br i1 %i.sd, label %.lr.ph.preheader.i, label %_ZN19hb_priority_queue_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEE11bubble_downEj.exit.i
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph12.i
   %.phi.trans.insert14.i = getelementptr inbounds nuw [16 x i8], ptr %.sroa.16.1.lcssa, i64 %indvars.iv.next976
   %.pre.i224 = load i64, ptr %.phi.trans.insert14.i, align 8, !tbaa !479 ; 3 uses
-  %12 = trunc nuw i64 %11 to i32
-  %13 = trunc nuw i64 %10 to i32
-  %14 = trunc nuw nsw i64 %indvars.iv.next976 to i32
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.bv, %.lr.ph.preheader.i
-  %.in.i = phi i32 [ %i.sx, %bb.bv ], [ %13, %.lr.ph.preheader.i ]
+  %.in.i = phi i32 [ %i.sx, %bb.bv ], [ %11, %.lr.ph.preheader.i ]
   %i.se = phi i32 [ %i.sy, %bb.bv ], [ %12, %.lr.ph.preheader.i ] ; 3 uses
-  %.020.i8.i = phi i32 [ %.0.i.i, %bb.bv ], [ %14, %.lr.ph.preheader.i ]
+  %.020.i8.i = phi i32 [ %.0.i.i, %bb.bv ], [ %10, %.lr.ph.preheader.i ]
   %i.sf = add nuw i32 %.in.i, 2                   ; 4 uses
   %i.sg = icmp ult i32 %i.sf, %.sroa.10.1.lcssa   ; 2 uses
   %i.sh = zext i32 %.020.i8.i to i64

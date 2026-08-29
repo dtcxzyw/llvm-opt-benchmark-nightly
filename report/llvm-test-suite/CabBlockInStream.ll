@@ -188,9 +188,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.loopexit
-  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %.loopexit ] ; 2 uses
   %i.i = phi i32 [ %.pre, %.lr.ph ], [ %i.p, %.loopexit ] ; 2 uses
-  %.041 = phi i32 [ %2, %.lr.ph ], [ %i.q, %.loopexit ] ; 3 uses
+  %.041 = phi i32 [ %2, %.lr.ph ], [ %i.q, %.loopexit ] ; 4 uses
   %.02740 = phi ptr [ %1, %.lr.ph ], [ %i.j, %.loopexit ] ; 7 uses
   %.02939 = phi i32 [ %i.a, %.lr.ph ], [ %.231, %.loopexit ] ; 5 uses
   %.not33 = icmp eq i32 %i.i, 0
@@ -229,7 +228,6 @@ bb.c:                                             ; preds = %bb.b
 .loopexit:                                        ; preds = %.preheader.preheader, %bb.c
   %.231 = phi i32 [ %.02939, %bb.c ], [ %i.ae, %.preheader.preheader ] ; 2 uses
   %.not = icmp eq i32 %i.q, 0
-  %indvar.next = add i64 %indvar, 1
   br i1 %.not, label %._crit_edge.thread, label %bb.b, !llvm.loop !26
 
 ._crit_edge.thread:                               ; preds = %.loopexit, %bb.a
@@ -238,22 +236,20 @@ bb.c:                                             ; preds = %bb.b
   br label %._crit_edge60
 
 .critedge:                                        ; preds = %bb.b
-  %i.af = lshr i32 %.041, 2                       ; 4 uses
+  %i.af = lshr i32 %.041, 2                       ; 5 uses
   %.not3448 = icmp eq i32 %i.af, 0
   br i1 %.not3448, label %._crit_edge, label %.lr.ph52.preheader
 
 .lr.ph52.preheader:                               ; preds = %.critedge
-  %i.ag = zext i32 %2 to i64
-  %3 = sub i64 %i.ag, %indvar                     ; 2 uses
-  %4 = lshr i64 %3, 2                             ; 2 uses
-  %min.iters.check = icmp ult i64 %3, 32
+  %i.ag = zext nneg i32 %i.af to i64              ; 2 uses
+  %min.iters.check = icmp ult i32 %.041, 32
   br i1 %min.iters.check, label %.lr.ph52.preheader87, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph52.preheader
-  %n.vec = and i64 %4, 4611686018427387896        ; 4 uses
-  %i.ah = trunc i64 %n.vec to i32
-  %i.ai = sub i32 %i.af, %i.ah
-  %i.aj = shl nuw i64 %n.vec, 2
+  %n.vec = and i64 %i.ag, 1073741816              ; 4 uses
+  %i.ah = trunc nuw nsw i64 %n.vec to i32
+  %i.ai = sub nsw i32 %i.af, %i.ah
+  %i.aj = shl nuw nsw i64 %n.vec, 2
   %i.ak = getelementptr i8, ptr %.02740, i64 %i.aj
   %i.al = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.02939, i64 0
   br label %vector.body
@@ -276,7 +272,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = xor <4 x i32> %i.ap, %i.ao
   %i.ar = tail call i32 @llvm.vector.reduce.xor.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %4, %n.vec
+  %cmp.n = icmp eq i64 %n.vec, %i.ag
   br i1 %cmp.n, label %._crit_edge.loopexit, label %.lr.ph52.preheader87
 
 .lr.ph52.preheader87:                             ; preds = %.lr.ph52.preheader, %middle.block
@@ -535,7 +531,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.co = load i32, ptr %i.cd, align 4, !tbaa !39 ; 2 uses
-  %i.cp = load i64, ptr %i.b, align 8, !tbaa !40  ; 3 uses
+  %i.cp = load i64, ptr %i.b, align 8, !tbaa !40  ; 2 uses
   %i.cq = trunc i64 %i.cp to i32                  ; 3 uses
   %i.cr = load i32, ptr %4, align 4, !tbaa !22    ; 2 uses
   %.not38.i = icmp eq i32 %i.cq, 0
@@ -555,11 +551,10 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %.loopexit.i, %.lr.ph.i
-  %indvar = phi i64 [ %indvar.next, %.loopexit.i ], [ 0, %.lr.ph.i ] ; 2 uses
-  %.pre64.i = phi i32 [ %i.dh, %.loopexit.i ], [ %.pre.i, %.lr.ph.i ] ; 2 uses
-  %.041.i = phi i32 [ %i.di, %.loopexit.i ], [ %i.cq, %.lr.ph.i ] ; 3 uses
-  %.02740.i = phi ptr [ %i.db, %.loopexit.i ], [ %i.cu, %.lr.ph.i ] ; 7 uses
-  %.02939.i = phi i32 [ %.231.i, %.loopexit.i ], [ %i.cr, %.lr.ph.i ] ; 5 uses
+  %.pre64.i = phi i32 [ %.pre.i, %.lr.ph.i ], [ %i.dh, %.loopexit.i ] ; 2 uses
+  %.041.i = phi i32 [ %i.cq, %.lr.ph.i ], [ %i.di, %.loopexit.i ] ; 4 uses
+  %.02740.i = phi ptr [ %i.cu, %.lr.ph.i ], [ %i.db, %.loopexit.i ] ; 7 uses
+  %.02939.i = phi i32 [ %i.cr, %.lr.ph.i ], [ %.231.i, %.loopexit.i ] ; 5 uses
   %.not33.i = icmp eq i32 %.pre64.i, 0
   br i1 %.not33.i, label %.critedge.i, label %bb.o
 
@@ -596,7 +591,6 @@ bb.o:                                             ; preds = %bb.n
 .loopexit.i:                                      ; preds = %.preheader.preheader.i, %bb.o
   %.231.i = phi i32 [ %.02939.i, %bb.o ], [ %i.dw, %.preheader.preheader.i ] ; 2 uses
   %.not.i = icmp eq i32 %i.di, 0
-  %indvar.next = add i64 %indvar, 1
   br i1 %.not.i, label %._crit_edge.thread.i, label %bb.n, !llvm.loop !26
 
 ._crit_edge.thread.i:                             ; preds = %.loopexit.i, %bb.m
@@ -605,22 +599,20 @@ bb.o:                                             ; preds = %bb.n
   br label %.loopexit
 
 .critedge.i:                                      ; preds = %bb.n
-  %i.dx = lshr i32 %.041.i, 2                     ; 4 uses
+  %i.dx = lshr i32 %.041.i, 2                     ; 5 uses
   %.not3448.i = icmp eq i32 %i.dx, 0
   br i1 %.not3448.i, label %._crit_edge.i, label %.lr.ph52.i.preheader
 
 .lr.ph52.i.preheader:                             ; preds = %.critedge.i
-  %5 = and i64 %i.cp, 4294967295
-  %6 = sub i64 %5, %indvar                        ; 2 uses
-  %7 = lshr i64 %6, 2                             ; 2 uses
-  %min.iters.check = icmp ult i64 %6, 32
+  %5 = zext nneg i32 %i.dx to i64                 ; 2 uses
+  %min.iters.check = icmp ult i32 %.041.i, 32
   br i1 %min.iters.check, label %.lr.ph52.i.preheader121, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph52.i.preheader
-  %n.vec = and i64 %7, 4611686018427387896        ; 4 uses
-  %i.dy = trunc i64 %n.vec to i32
-  %i.dz = sub i32 %i.dx, %i.dy
-  %i.ea = shl nuw i64 %n.vec, 2
+  %n.vec = and i64 %5, 1073741816                 ; 4 uses
+  %i.dy = trunc nuw nsw i64 %n.vec to i32
+  %i.dz = sub nsw i32 %i.dx, %i.dy
+  %i.ea = shl nuw nsw i64 %n.vec, 2
   %i.eb = getelementptr i8, ptr %.02740.i, i64 %i.ea
   %i.ec = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.02939.i, i64 0
   br label %vector.body
@@ -643,7 +635,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = xor <4 x i32> %i.eg, %i.ef
   %i.ei = call i32 @llvm.vector.reduce.xor.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %7, %n.vec
+  %cmp.n = icmp eq i64 %n.vec, %5
   br i1 %cmp.n, label %._crit_edge.loopexit.i, label %.lr.ph52.i.preheader121
 
 .lr.ph52.i.preheader121:                          ; preds = %.lr.ph52.i.preheader, %middle.block

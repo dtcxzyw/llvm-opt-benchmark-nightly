@@ -206,12 +206,11 @@ bb.am:                                            ; preds = %.loopexit, %sqlite3
   br i1 %.not133183, label %._crit_edge187, label %iter.check
 
 iter.check:                                       ; preds = %bb.am
-  %i.ho = zext nneg i32 %i.hm to i64              ; 3 uses
-  %i.hp = zext i32 %.0112181.lcssa to i64         ; 7 uses
-  %i.hq = add nuw nsw i64 %i.ho, %i.hp            ; 5 uses
+  %i.ho = zext nneg i32 %i.hm to i64              ; 2 uses
+  %i.hp = zext i32 %.0112181.lcssa to i64         ; 6 uses
+  %i.hq = add nuw nsw i64 %i.ho, %i.hp            ; 6 uses
   %i.hr = add nuw nsw i64 %wide.trip.count, 1
-  %6 = add nuw nsw i64 %i.ho, %i.hp
-  %i.hs = sub nsw i64 %i.hr, %6                   ; 7 uses
+  %i.hs = sub nsw i64 %i.hr, %i.hq                ; 7 uses
   %min.iters.check = icmp ult i64 %i.hs, 8
   br i1 %min.iters.check, label %.lr.ph186.preheader, label %vector.main.loop.iter.check
 
@@ -614,9 +613,9 @@ bb.be:                                            ; preds = %fts5ExprCountChar.e
   br i1 %.not83.i, label %.critedge.loopexit.i, label %bb.bf
 
 bb.bf:                                            ; preds = %.lr.ph95.i
-  %indvars.iv.next109.i = add nsw i64 %indvars.iv108.i, 1 ; 2 uses
-  %5 = icmp sgt i64 %i.hi, %indvars.iv.next109.i
-  br i1 %5, label %.lr.ph95.i, label %.critedge.loopexit.i, !llvm.loop !6389
+  %indvars.iv.next109.i = add i64 %indvars.iv108.i, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next109.i, %i.hi
+  br i1 %exitcond.not, label %.critedge.loopexit.i, label %.lr.ph95.i, !llvm.loop !6389
 
 .critedge.loopexit.i:                             ; preds = %bb.bf, %.lr.ph95.i
   %.3.ph.in.i = phi i64 [ %indvars.iv108.i, %.lr.ph95.i ], [ %i.hi, %bb.bf ]

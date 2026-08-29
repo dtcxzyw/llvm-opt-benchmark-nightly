@@ -204,8 +204,7 @@ _ZN4llvm5APIntC2Ejmbb.exit:                       ; preds = %bb.c, %bb.d
   %i.q = udiv i32 %i.p, %2
   %i.r = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %umax = call i32 @llvm.umax.i32(i32 %i.q, i32 1)
-  %wide.trip.count = zext nneg i32 %umax to i64
+  %wide.trip.count = zext nneg i32 %i.q to i64
   br label %bb.m
 
 ._crit_edge:                                      ; preds = %_ZN4llvm5APIntD2Ev.exit26, %_ZN4llvm5APIntC2Ejmbb.exit

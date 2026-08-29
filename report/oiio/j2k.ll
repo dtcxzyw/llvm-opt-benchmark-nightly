@@ -205,15 +205,10 @@ bb.m:                                             ; preds = %bb.l
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 188 ; 2 uses
   %i.ap = zext nneg i32 %i.t to i64               ; 2 uses
-  br i1 %i.al, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
-
-.lr.ph.split.preheader:                           ; preds = %.lr.ph
-  %umax = call i32 @llvm.umax.i32(i32 %i.w, i32 1)
-  br label %.lr.ph.split
+  br i1 %i.al, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %.pre = load i32, ptr %i.e, align 8, !tbaa !410
-  %umax83 = call i32 @llvm.umax.i32(i32 %i.w, i32 1)
   br label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %bb.n
@@ -245,12 +240,12 @@ bb.n:                                             ; preds = %.lr.ph.split.us
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #21
   %i.bc = add nuw nsw i32 %.05976.us, 1           ; 2 uses
-  %exitcond84.not = icmp eq i32 %i.bc, %umax83
+  %exitcond84.not = icmp eq i32 %i.bc, %i.w
   br i1 %exitcond84.not, label %.loopexit, label %.lr.ph.split.us, !llvm.loop !436
 
-.lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %bb.o
-  %.05976 = phi i32 [ %i.bs, %bb.o ], [ 0, %.lr.ph.split.preheader ]
-  %.06175 = phi ptr [ %i.bj, %bb.o ], [ %i.l, %.lr.ph.split.preheader ] ; 2 uses
+.lr.ph.split:                                     ; preds = %.lr.ph, %bb.o
+  %.05976 = phi i32 [ %i.bs, %bb.o ], [ 0, %.lr.ph ]
+  %.06175 = phi ptr [ %i.bj, %bb.o ], [ %i.l, %.lr.ph ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #21
   call void @opj_read_bytes_LE(ptr noundef nonnull %.06175, ptr noundef nonnull %i.c, i32 noundef %i.o) #21
@@ -287,7 +282,7 @@ bb.o:                                             ; preds = %.lr.ph.split
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #21
   %i.bs = add nuw nsw i32 %.05976, 1              ; 2 uses
-  %exitcond.not = icmp eq i32 %i.bs, %umax
+  %exitcond.not = icmp eq i32 %i.bs, %i.w
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph.split, !llvm.loop !436
 
 .loopexit:                                        ; preds = %bb.o, %bb.n, %.split.us, %bb.h, %bb.c, %bb.m, %bb.k, %bb.g, %bb.e, %bb.b

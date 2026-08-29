@@ -204,14 +204,14 @@ bb.h:                                             ; preds = %_ZNSt14_Optional_ba
   %i.ab = load i32, ptr %i.aa, align 4, !noalias !450
   %i.ac = and i32 %i.ab, 268435455                ; 2 uses
   %i.ad = call noundef i32 @_ZNK4llvm4Type19getScalarSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(24) %i.b) #21, !noalias !450 ; 4 uses
-  %i.ae = udiv i32 %3, %i.ad                      ; 5 uses
+  %i.ae = udiv i32 %3, %i.ad                      ; 4 uses
   %i.af = urem i32 %3, %i.ad
   %.not50.i = icmp eq i32 %i.af, 0
   br i1 %.not50.i, label %bb.i, label %_ZL20getSplatableConstantPKN4llvm8ConstantEj.exit.thread25
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #17, !noalias !450
-  %i.ag = zext i32 %i.ae to i64                   ; 3 uses
+  %i.ag = zext i32 %i.ae to i64                   ; 4 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 7 uses
   store ptr %i.ah, ptr %6, align 8, !tbaa !454, !noalias !450
   %i.ai = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
@@ -418,8 +418,7 @@ _ZNSt14_Optional_baseIN4llvm5APIntELb0ELb0EED2Ev.exit62.thread.i: ; preds = %bb.
 
 bb.w:                                             ; preds = %_ZNSt14_Optional_baseIN4llvm5APIntELb0ELb0EED2Ev.exit62.thread.i, %bb.r
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %indvars.i = trunc i64 %indvars.iv.next.i to i32
-  %.not48.i = icmp eq i32 %i.ae, %indvars.i
+  %.not48.i = icmp eq i64 %indvars.iv.next.i, %i.ag
   br i1 %.not48.i, label %.thread71.i, label %bb.r, !llvm.loop !467
 
 .thread71.i:                                      ; preds = %bb.w, %_ZN4llvm5APInt7getZeroEj.exit.i

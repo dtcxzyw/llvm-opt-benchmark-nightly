@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.i, %bb.j, %bb.k
   br label %js_bigint_new_si.exit
 
 bb.n:                                             ; preds = %bb.b, %bb.a
-  %i.bl = lshr i32 %2, 5                          ; 4 uses
+  %i.bl = lshr i32 %2, 5                          ; 5 uses
   %i.bm = and i32 %2, 31                          ; 6 uses
   %i.bn = add i32 %i.a, %i.bl                     ; 7 uses
   %i.bo = icmp sgt i32 %i.bn, 32768
@@ -301,10 +301,11 @@ js_bigint_new.exit:                               ; preds = %bb.v, %bb.u, %bb.t
 
 .lr.ph:                                           ; preds = %js_bigint_new.exit
   %i.de = getelementptr inbounds nuw i8, ptr %i.ce, i64 4
-  %3 = lshr i32 %2, 3
-  %4 = and i32 %3, 268435452
-  %5 = zext nneg i32 %4 to i64
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.de, i8 0, i64 %5, i1 false), !tbaa !8
+  %3 = add nsw i32 %i.bl, -1
+  %4 = zext nneg i32 %3 to i64
+  %5 = shl nuw nsw i64 %4, 2
+  %6 = add nuw nsw i64 %5, 4
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.de, i8 0, i64 %6, i1 false), !tbaa !8
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %js_bigint_new.exit
@@ -707,53 +708,51 @@ bc_put_leb128.exit227:                            ; preds = %bb.cx, %bb.cy
   %i.rk = zext nneg i16 %i.rj to i32              ; 2 uses
   %i.rl = lshr i32 %i.rk, 7                       ; 4 uses
   %.not9.i.i228 = icmp eq i32 %i.rl, 0
+  %.pre449 = load i64, ptr %i.j, align 8, !tbaa !457 ; 5 uses
   br i1 %.not9.i.i228, label %._crit_edge.i.i233, label %.lr.ph.i.i229
 
 .lr.ph.i.i229:                                    ; preds = %bc_put_leb128.exit227
   %i.rm = trunc i16 %i.rj to i8
   %i.rn = or i8 %i.rm, -128                       ; 2 uses
-  %i.ro = load i64, ptr %i.h, align 8, !tbaa !456 ; 2 uses
-  %2 = load i64, ptr %i.j, align 8, !tbaa !457    ; 3 uses
-  %i.rp = icmp eq i64 %i.ro, %2
+  %i.ro = load i64, ptr %i.h, align 8, !tbaa !456
+  %i.rp = icmp eq i64 %i.ro, %.pre449
   br i1 %i.rp, label %bb.cz, label %bb.dc, !prof !9
 
 bb.cz:                                            ; preds = %.lr.ph.i.i229
-  %.not569 = icmp eq i64 %i.ro, -1
+  %.not569 = icmp eq i64 %.pre449, -1
   br i1 %.not569, label %bb.db, label %bb.da, !prof !195
 
 bb.da:                                            ; preds = %bb.cz
   %i.rq = tail call fastcc i32 @dbuf_claim(ptr noundef nonnull %i.g, i64 noundef 1)
   %.not.i.i326 = icmp eq i32 %i.rq, 0
-  br i1 %.not.i.i326, label %._crit_edge.i327, label %._crit_edge.i.i233
+  %.pre448.pre454 = load i64, ptr %i.j, align 8, !tbaa !457 ; 2 uses
+  br i1 %.not.i.i326, label %bb.db, label %._crit_edge.i.i233
 
-._crit_edge.i327:                                 ; preds = %bb.da
-  %.pre.i328 = load i64, ptr %i.j, align 8, !tbaa !457
-  br label %bb.db
-
-bb.db:                                            ; preds = %._crit_edge.i327, %bb.cz
-  %i.rr = phi i64 [ %.pre.i328, %._crit_edge.i327 ], [ -1, %bb.cz ]
+bb.db:                                            ; preds = %bb.da, %bb.cz
+  %i.rr = phi i64 [ -1, %bb.cz ], [ %.pre448.pre454, %bb.da ]
   %i.rs = load ptr, ptr %i.g, align 8, !tbaa !458
   %i.rt = getelementptr inbounds nuw i8, ptr %i.rs, i64 %i.rr
   store i8 %i.rn, ptr %i.rt, align 1
   %i.ru = load i64, ptr %i.j, align 8, !tbaa !457
-  %i.rv = add i64 %i.ru, 1
+  %i.rv = add i64 %i.ru, 1                        ; 2 uses
   store i64 %i.rv, ptr %i.j, align 8, !tbaa !457
   br label %._crit_edge.i.i233
 
 bb.dc:                                            ; preds = %.lr.ph.i.i229
   %i.rw = load ptr, ptr %i.g, align 8, !tbaa !458
-  %i.rx = add i64 %2, 1
+  %i.rx = add i64 %.pre449, 1
   store i64 %i.rx, ptr %i.j, align 8, !tbaa !457
-  %i.ry = getelementptr inbounds nuw i8, ptr %i.rw, i64 %2
+  %i.ry = getelementptr inbounds nuw i8, ptr %i.rw, i64 %.pre449
   store i8 %i.rn, ptr %i.ry, align 1, !tbaa !35
+  %.pre448.pre = load i64, ptr %i.j, align 8, !tbaa !457
   br label %._crit_edge.i.i233
 
-._crit_edge.i.i233:                               ; preds = %bb.db, %bb.da, %bb.dc, %bc_put_leb128.exit227
-  %.0.lcssa.i.i234 = phi i32 [ %i.rk, %bc_put_leb128.exit227 ], [ %i.rl, %bb.dc ], [ %i.rl, %bb.da ], [ %i.rl, %bb.db ]
+._crit_edge.i.i233:                               ; preds = %bb.dc, %bb.da, %bb.db, %bc_put_leb128.exit227
+  %2 = phi i64 [ %.pre449, %bc_put_leb128.exit227 ], [ %i.rv, %bb.db ], [ %.pre448.pre454, %bb.da ], [ %.pre448.pre, %bb.dc ] ; 3 uses
+  %.0.lcssa.i.i234 = phi i32 [ %i.rk, %bc_put_leb128.exit227 ], [ %i.rl, %bb.db ], [ %i.rl, %bb.da ], [ %i.rl, %bb.dc ]
   %i.rz = trunc nuw i32 %.0.lcssa.i.i234 to i8    ; 2 uses
   %i.sa = load i64, ptr %i.h, align 8, !tbaa !456
-  %3 = load i64, ptr %i.j, align 8, !tbaa !457    ; 3 uses
-  %i.sb = icmp eq i64 %i.sa, %3
+  %i.sb = icmp eq i64 %i.sa, %2
   br i1 %i.sb, label %bb.dd, label %bb.de, !prof !9
 
 bb.dd:                                            ; preds = %._crit_edge.i.i233
@@ -762,9 +761,9 @@ bb.dd:                                            ; preds = %._crit_edge.i.i233
 
 bb.de:                                            ; preds = %._crit_edge.i.i233
   %i.sc = load ptr, ptr %i.g, align 8, !tbaa !458
-  %i.sd = add i64 %3, 1
+  %i.sd = add i64 %2, 1
   store i64 %i.sd, ptr %i.j, align 8, !tbaa !457
-  %i.se = getelementptr inbounds nuw i8, ptr %i.sc, i64 %3
+  %i.se = getelementptr inbounds nuw i8, ptr %i.sc, i64 %2
   store i8 %i.rz, ptr %i.se, align 1, !tbaa !35
   br label %bc_put_leb128.exit235
 
@@ -1167,8 +1166,8 @@ js_dup.exit132.1:                                 ; preds = %bb.ag, %js_dup.exit
   store i64 %i.gi, ptr %.sroa.43.0..sroa_idx.1, align 8, !tbaa !72
   %i.gp = add nsw i64 %.199211, 2                 ; 2 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %.2212, i64 32
-  %5 = icmp slt i64 %i.gp, %.pre
-  br i1 %5, label %.lr.ph214, label %JS_ToInt64Clamp.exit.thread184, !llvm.loop !2155
+  %exitcond245.not.1 = icmp eq i64 %i.gp, %.pre
+  br i1 %exitcond245.not.1, label %JS_ToInt64Clamp.exit.thread184, label %.lr.ph214, !llvm.loop !2155
 
 js_get_fast_array.exit.thread:                    ; preds = %bb.v, %bb.w, %bb.u, %bb.x
   %i.gr = icmp sgt i64 %.0157170, 0
@@ -1302,10 +1301,10 @@ js_dup.exit135.epil:                              ; preds = %bb.ak, %.lr.ph222.e
   br i1 %i.il, label %JS_ToInt64Clamp.exit, label %bb.al
 
 bb.al:                                            ; preds = %.lr.ph228
-  %i.im = add nsw i64 %.3101225, 1                ; 2 uses
+  %i.im = add i64 %.3101225, 1                    ; 2 uses
   %i.in = getelementptr inbounds nuw i8, ptr %.5226, i64 16
-  %6 = icmp slt i64 %i.im, %.pre
-  br i1 %6, label %.lr.ph228, label %JS_ToInt64Clamp.exit.thread184, !llvm.loop !2158
+  %exitcond248.not = icmp eq i64 %i.im, %.pre
+  br i1 %exitcond248.not, label %JS_ToInt64Clamp.exit.thread184, label %.lr.ph228, !llvm.loop !2158
 
 JS_ToInt64Clamp.exit.thread184:                   ; preds = %bb.i, %js_dup.exit.i, %js_dup.exit.i111, %bb.q, %.lr.ph214.prol.loopexit, %js_dup.exit132.1, %bb.al, %._crit_edge, %._crit_edge223, %bb.t, %bb.a, %bb.r
   %.ph183 = phi i64 [ %i.bg, %bb.t ], [ %i.bg, %._crit_edge223 ], [ %i.bg, %bb.al ], [ 0, %bb.a ], [ 0, %bb.r ], [ %i.bg, %._crit_edge ], [ 0, %js_dup.exit.i111 ], [ %i.bg, %.lr.ph214.prol.loopexit ], [ %i.bg, %js_dup.exit132.1 ], [ 0, %bb.q ], [ 0, %js_dup.exit.i ], [ 0, %bb.i ]

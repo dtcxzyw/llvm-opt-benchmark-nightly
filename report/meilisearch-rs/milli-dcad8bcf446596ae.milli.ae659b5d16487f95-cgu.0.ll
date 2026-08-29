@@ -206,7 +206,7 @@ bb.c:                                             ; preds = %bb.a
   unreachable
 
 bb.d:                                             ; preds = %bb.a
-  %i.f = udiv i64 %.sroa.4.0.copyload, %.sroa.59.0.copyload ; 4 uses
+  %i.f = udiv i64 %.sroa.4.0.copyload, %.sroa.59.0.copyload ; 6 uses
   %i.g = load i64, ptr %0, align 8, !range !180, !alias.scope !67764, !noalias !67767, !noundef !10
   %i.h = sub nsw i64 %i.g, %i.b
   %i.i = icmp ugt i64 %i.f, %i.h
@@ -232,13 +232,12 @@ bb.f:                                             ; preds = %.noexc4, %bb.d
   br i1 %i.m, label %.lr.ph.split.us.i.i.i.i.i.i.preheader, label %.lr.ph.split.i.i.i.i.i.i, !prof !119
 
 .lr.ph.split.us.i.i.i.i.i.i.preheader:            ; preds = %.lr.ph.i.i.i.i.i.i
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.f, i64 1) ; 3 uses
-  %xtraiter = and i64 %umax, 1
-  %2 = icmp ult i64 %i.f, 2
+  %xtraiter = and i64 %i.f, 1
+  %2 = icmp eq i64 %i.f, 1
   br i1 %2, label %.lr.ph.split.us.i.i.i.i.i.i.epil.preheader, label %.lr.ph.split.us.i.i.i.i.i.i.preheader.new
 
 .lr.ph.split.us.i.i.i.i.i.i.preheader.new:        ; preds = %.lr.ph.split.us.i.i.i.i.i.i.preheader
-  %unroll_iter = and i64 %umax, -2
+  %unroll_iter = and i64 %i.f, -2
   br label %.lr.ph.split.us.i.i.i.i.i.i
 
 .lr.ph.split.us.i.i.i.i.i.i:                      ; preds = %bb.i, %.lr.ph.split.us.i.i.i.i.i.i.preheader.new
@@ -309,7 +308,7 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph.split
   %.epil.init = phi i64 [ %i.j, %.lr.ph.split.us.i.i.i.i.i.i.preheader ], [ %i.ad, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
   %.epil.init14 = phi i64 [ %.sroa.4.0.copyload, %.lr.ph.split.us.i.i.i.i.i.i.preheader ], [ %i.aa, %.loopexit.loopexit.unr-lcssa ]
   %.epil.init16 = phi ptr [ %.sroa.07.0.copyload, %.lr.ph.split.us.i.i.i.i.i.i.preheader ], [ %i.z, %.loopexit.loopexit.unr-lcssa ]
-  %lcmp.mod18 = trunc i64 %umax to i1
+  %lcmp.mod18 = trunc i64 %i.f to i1
   tail call void @llvm.assume(i1 %lcmp.mod18)
   %i.ae = icmp uge i64 %.epil.init14, %.sroa.59.0.copyload ; 2 uses
   br i1 %i.ae, label %bb.j, label %.loopexit.loopexit.epilog-lcssa

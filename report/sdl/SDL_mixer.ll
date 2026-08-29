@@ -168,13 +168,12 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %.not156, label %.loopexit, label %.lr.ph202, !llvm.loop !15
 
 bb.c:                                             ; preds = %bb.b
-  %i.bb = lshr i32 %3, 1                          ; 5 uses
+  %i.bb = lshr i32 %3, 1                          ; 6 uses
   %.not154193 = icmp eq i32 %i.bb, 0
   br i1 %.not154193, label %.loopexit, label %.lr.ph197.preheader
 
 .lr.ph197.preheader:                              ; preds = %bb.c
-  %5 = lshr i32 %3, 1
-  %i.bc = zext nneg i32 %5 to i64                 ; 2 uses
+  %i.bc = zext nneg i32 %i.bb to i64              ; 2 uses
   %min.iters.check300 = icmp ult i32 %3, 16
   br i1 %min.iters.check300, label %.lr.ph197.preheader356, label %vector.memcheck293
 
@@ -247,13 +246,12 @@ middle.block312:                                  ; preds = %vector.body305
   br i1 %.not154, label %.loopexit, label %.lr.ph197, !llvm.loop !22
 
 bb.d:                                             ; preds = %bb.b
-  %i.cd = lshr i32 %3, 1                          ; 5 uses
+  %i.cd = lshr i32 %3, 1                          ; 6 uses
   %.not153189 = icmp eq i32 %i.cd, 0
   br i1 %.not153189, label %.loopexit, label %.lr.ph192.preheader
 
 .lr.ph192.preheader:                              ; preds = %bb.d
-  %6 = lshr i32 %3, 1
-  %i.ce = zext nneg i32 %6 to i64                 ; 2 uses
+  %i.ce = zext nneg i32 %i.cd to i64              ; 2 uses
   %min.iters.check276 = icmp ult i32 %3, 16
   br i1 %min.iters.check276, label %.lr.ph192.preheader358, label %vector.memcheck269
 
@@ -414,13 +412,12 @@ bb.j:                                             ; preds = %.lr.ph183, %bb.j
   br i1 %.not151, label %.loopexit, label %bb.j, !llvm.loop !31
 
 bb.k:                                             ; preds = %bb.b
-  %i.ew = lshr i32 %3, 2                          ; 5 uses
+  %i.ew = lshr i32 %3, 2                          ; 6 uses
   %.not150174 = icmp eq i32 %i.ew, 0
   br i1 %.not150174, label %.loopexit, label %.lr.ph178.preheader
 
 .lr.ph178.preheader:                              ; preds = %bb.k
-  %7 = lshr i32 %3, 2
-  %i.ex = zext nneg i32 %7 to i64                 ; 2 uses
+  %i.ex = zext nneg i32 %i.ew to i64              ; 2 uses
   %min.iters.check250 = icmp ult i32 %3, 32
   br i1 %min.iters.check250, label %.lr.ph178.preheader362, label %vector.memcheck243
 
@@ -506,13 +503,12 @@ middle.block264:                                  ; preds = %vector.body255
   br i1 %.not150, label %.loopexit, label %.lr.ph178, !llvm.loop !38
 
 bb.l:                                             ; preds = %bb.b
-  %i.gg = lshr i32 %3, 2                          ; 5 uses
+  %i.gg = lshr i32 %3, 2                          ; 6 uses
   %.not170 = icmp eq i32 %i.gg, 0
   br i1 %.not170, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.l
-  %8 = lshr i32 %3, 2
-  %i.gh = zext nneg i32 %8 to i64                 ; 2 uses
+  %i.gh = zext nneg i32 %i.gg to i64              ; 2 uses
   %min.iters.check = icmp ult i32 %3, 16
   br i1 %min.iters.check, label %.lr.ph.preheader364, label %vector.memcheck
 

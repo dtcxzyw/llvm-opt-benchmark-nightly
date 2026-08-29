@@ -182,20 +182,19 @@ bb.a:
   %i.a = alloca [32 x i32], align 16              ; 8 uses
   %i.b = getelementptr i8, ptr %1, i64 44
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 36 ; 3 uses
-  %i.d = load i64, ptr %i.c, align 4              ; 3 uses
+  %i.d = load i64, ptr %i.c, align 4              ; 2 uses
   %i.e = lshr i64 %i.d, 24
   %i.f = and i64 %i.e, 255                        ; 3 uses
   %i.g = getelementptr [4 x i8], ptr %i.b, i64 %i.f ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.h = trunc i64 %i.d to i32                    ; 2 uses
-  %i.i = lshr i32 %i.h, 24                        ; 2 uses
+  %i.i = lshr i32 %i.h, 24                        ; 3 uses
   %.not = icmp eq i32 %i.i, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %2 = lshr i64 %i.d, 24
-  %3 = and i64 %2, 255
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.g, i8 -100, i64 %3, i1 false), !tbaa !46
+  %2 = zext nneg i32 %i.i to i64
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.g, i8 -100, i64 %2, i1 false), !tbaa !46
   %wide.trip.count = zext nneg i32 %i.i to i64    ; 3 uses
   %min.iters.check = icmp ult i32 %i.h, 134217728
   br i1 %min.iters.check, label %.lr.ph.preheader77, label %vector.ph
@@ -544,18 +543,18 @@ bb.f:                                             ; preds = %.lr.ph34.epil.prehe
 define internal i32 @Abc_NtkRenodeEvalSop(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 36 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 4              ; 3 uses
+  %i.b = load i64, ptr %i.a, align 4              ; 2 uses
   %i.c = lshr i64 %i.b, 24
   %i.d = and i64 %i.c, 255                        ; 3 uses
-  %2 = and i64 %i.b, 4278190080
-  %.not = icmp eq i64 %2, 0
+  %2 = trunc i64 %i.b to i32
+  %3 = lshr i32 %2, 24                            ; 2 uses
+  %.not = icmp eq i32 %3, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.e = getelementptr i8, ptr %1, i64 44
   %i.f = getelementptr [4 x i8], ptr %i.e, i64 %i.d
-  %3 = lshr i64 %i.b, 24
-  %4 = and i64 %3, 255
+  %4 = zext nneg i32 %3 to i64
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.f, i8 1, i64 %4, i1 false), !tbaa !46
   br label %._crit_edge
 
@@ -796,18 +795,18 @@ bb.d:                                             ; preds = %If_CutTruth.exit, %
 define internal i32 @Abc_NtkRenodeEvalCnf(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 36 ; 10 uses
-  %i.b = load i64, ptr %i.a, align 4              ; 3 uses
+  %i.b = load i64, ptr %i.a, align 4              ; 2 uses
   %i.c = lshr i64 %i.b, 24
   %i.d = and i64 %i.c, 255                        ; 3 uses
-  %2 = and i64 %i.b, 4278190080
-  %.not = icmp eq i64 %2, 0
+  %2 = trunc i64 %i.b to i32
+  %3 = lshr i32 %2, 24                            ; 2 uses
+  %.not = icmp eq i32 %3, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.e = getelementptr i8, ptr %1, i64 44
   %i.f = getelementptr [4 x i8], ptr %i.e, i64 %i.d
-  %3 = lshr i64 %i.b, 24
-  %4 = and i64 %3, 255
+  %4 = zext nneg i32 %3 to i64
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.f, i8 1, i64 %4, i1 false), !tbaa !46
   br label %._crit_edge
 
@@ -1210,18 +1209,18 @@ bb.j:                                             ; preds = %Kit_TruthNot.exit14
 define internal range(i32 -2147483648, 4096) i32 @Abc_NtkRenodeEvalMv(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 36 ; 11 uses
-  %i.b = load i64, ptr %i.a, align 4              ; 3 uses
+  %i.b = load i64, ptr %i.a, align 4              ; 2 uses
   %i.c = lshr i64 %i.b, 24
   %i.d = and i64 %i.c, 255                        ; 3 uses
-  %2 = and i64 %i.b, 4278190080
-  %.not = icmp eq i64 %2, 0
+  %2 = trunc i64 %i.b to i32
+  %3 = lshr i32 %2, 24                            ; 2 uses
+  %.not = icmp eq i32 %3, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.e = getelementptr i8, ptr %1, i64 44
   %i.f = getelementptr [4 x i8], ptr %i.e, i64 %i.d
-  %3 = lshr i64 %i.b, 24
-  %4 = and i64 %3, 255
+  %4 = zext nneg i32 %3 to i64
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.f, i8 1, i64 %4, i1 false), !tbaa !46
   br label %._crit_edge
 
@@ -1624,14 +1623,14 @@ If_CutTruth.exit:                                 ; preds = %.lr.ph.i.i.i.prol.l
   br i1 %i.cp, label %.preheader, label %bb.c
 
 .preheader:                                       ; preds = %If_CutTruth.exit
-  %.val26 = load i64, ptr %i.b, align 4           ; 2 uses
-  %2 = and i64 %.val26, 4278190080
-  %.not38 = icmp eq i64 %2, 0
+  %.val26 = load i64, ptr %i.b, align 4
+  %2 = trunc i64 %.val26 to i32
+  %3 = lshr i32 %2, 24                            ; 2 uses
+  %.not38 = icmp eq i32 %3, 0
   br i1 %.not38, label %.loopexit, label %.lr.ph37.preheader
 
 .lr.ph37.preheader:                               ; preds = %.preheader
-  %3 = lshr i64 %.val26, 24
-  %4 = and i64 %3, 255
+  %4 = zext nneg i32 %3 to i64
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.f, i8 100, i64 %4, i1 false), !tbaa !46
   br label %.loopexit
 

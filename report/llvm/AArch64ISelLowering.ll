@@ -205,9 +205,10 @@ bb.am:                                            ; preds = %.critedge4, %_ZNK4l
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.fn = ptrtoaddr ptr %i.fm to i64
   %i.fo = ptrtoaddr ptr %i.fl to i64
-  %min.iters.check = icmp ult i32 %i.ef, 12
-  %35 = call i64 @llvm.usub.sat.i64(i64 %i.eg, i64 1)
-  %36 = trunc nuw i64 %35 to i32
+  %35 = add nsw i64 %i.eg, -1                     ; 2 uses
+  %min.iters.check = icmp ult i32 %i.ef, 8
+  %36 = trunc i64 %35 to i32
+  %37 = icmp ugt i64 %35, 4294967295
   %i.fp = sub i64 %i.fo, %i.fn
   %diff.check = icmp ugt i64 %i.fp, -32
   %n.vec = and i64 %i.eg, 4294967288              ; 4 uses
@@ -225,7 +226,8 @@ bb.am:                                            ; preds = %.critedge4, %_ZNK4l
 vector.scevcheck:                                 ; preds = %.preheader
   %i.fs = xor i32 %i.fr, -1
   %i.ft = icmp ult i32 %i.fs, %36
-  %or.cond = select i1 %i.ft, i1 true, i1 %diff.check
+  %38 = or i1 %i.ft, %37
+  %or.cond = select i1 %38, i1 true, i1 %diff.check
   br i1 %or.cond, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.scevcheck
@@ -628,7 +630,7 @@ bb.p:                                             ; preds = %.lr.ph.split.us
 _ZN4llvm23SmallVectorTemplateBaseIiLb1EE28reserveForParamAndGetAddressERim.exit.i.us: ; preds = %bb.p, %.lr.ph.split.us
   %.pre4.i.us = phi i32 [ %i.ci, %.lr.ph.split.us ], [ %.pre4.pre.i.us, %bb.p ] ; 3 uses
   store i32 %.pre4.i.us, ptr %i.bl, align 8, !tbaa !434
-  %i.cl = add i32 %.052.us, 1                     ; 2 uses
+  %i.cl = add nuw i32 %.052.us, 1                 ; 2 uses
   %.not198.us = icmp eq i32 %i.cl, %i.bu
   br i1 %.not198.us, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !2570
 
@@ -1030,9 +1032,6 @@ declare i32 @llvm.smin.i32(i32, i32) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #26
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #26
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

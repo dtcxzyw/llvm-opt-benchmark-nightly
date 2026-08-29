@@ -204,7 +204,7 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %.not319361, label %._crit_edge366, label %.lr.ph365
 
 .lr.ph365:                                        ; preds = %bb.aq, %._crit_edge359
-  %i.je = phi i8 [ %i.jl, %._crit_edge359 ], [ %i.jd, %bb.aq ] ; 3 uses
+  %i.je = phi i8 [ %i.jl, %._crit_edge359 ], [ %i.jd, %bb.aq ] ; 2 uses
   %.0257363 = phi ptr [ %i.jj, %._crit_edge359 ], [ %i.c, %bb.aq ] ; 3 uses
   %.0259362 = phi ptr [ %i.jk, %._crit_edge359 ], [ %i.jc, %bb.aq ]
   %i.jf = lshr i8 %i.je, 4                        ; 2 uses
@@ -214,13 +214,12 @@ bb.aq:                                            ; preds = %bb.ap
 
 .lr.ph358.preheader:                              ; preds = %.lr.ph365
   %i.jh = zext nneg i8 %i.jf to i64
-  %1 = lshr i8 %i.je, 4
-  %2 = zext nneg i8 %1 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %.0257363, i8 48, i64 %2, i1 false), !tbaa !12
+  %1 = add nuw nsw i64 %i.jh, 4294967295
+  %2 = and i64 %1, 4294967295                     ; 2 uses
+  %3 = add nuw nsw i64 %2, 1
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0257363, i8 48, i64 %3, i1 false), !tbaa !12
   %scevgep439 = getelementptr i8, ptr %.0257363, i64 1
-  %3 = add nuw nsw i64 %i.jh, 4294967295
-  %4 = and i64 %3, 4294967295
-  %scevgep440 = getelementptr i8, ptr %scevgep439, i64 %4
+  %scevgep440 = getelementptr i8, ptr %scevgep439, i64 %2
   br label %._crit_edge359
 
 ._crit_edge359:                                   ; preds = %.lr.ph358.preheader, %.lr.ph365
@@ -300,7 +299,7 @@ bb.aw:                                            ; preds = %bb.az, %bb.av
   br i1 %.not321380, label %._crit_edge384, label %.lr.ph383
 
 .lr.ph383:                                        ; preds = %.preheader339, %._crit_edge377
-  %i.kl = phi i8 [ %i.kr, %._crit_edge377 ], [ %i.kk, %.preheader339 ] ; 3 uses
+  %i.kl = phi i8 [ %i.kr, %._crit_edge377 ], [ %i.kk, %.preheader339 ] ; 2 uses
   %.0253382 = phi ptr [ %.0253, %._crit_edge377 ], [ %.0253379, %.preheader339 ]
   %.0252381 = phi ptr [ %i.kq, %._crit_edge377 ], [ %i.c, %.preheader339 ] ; 3 uses
   %i.km = lshr i8 %i.kl, 4                        ; 2 uses
@@ -310,13 +309,12 @@ bb.aw:                                            ; preds = %bb.az, %bb.av
 
 .lr.ph376.preheader:                              ; preds = %.lr.ph383
   %i.ko = zext nneg i8 %i.km to i64
-  %5 = lshr i8 %i.kl, 4
-  %6 = zext nneg i8 %5 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %.0252381, i8 48, i64 %6, i1 false), !tbaa !12
+  %4 = add nuw nsw i64 %i.ko, 4294967295
+  %5 = and i64 %4, 4294967295                     ; 2 uses
+  %6 = add nuw nsw i64 %5, 1
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0252381, i8 48, i64 %6, i1 false), !tbaa !12
   %scevgep441 = getelementptr i8, ptr %.0252381, i64 1
-  %7 = add nuw nsw i64 %i.ko, 4294967295
-  %8 = and i64 %7, 4294967295
-  %scevgep442 = getelementptr i8, ptr %scevgep441, i64 %8
+  %scevgep442 = getelementptr i8, ptr %scevgep441, i64 %5
   br label %._crit_edge377
 
 ._crit_edge377:                                   ; preds = %.lr.ph376.preheader, %.lr.ph383

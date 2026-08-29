@@ -202,11 +202,11 @@ _ZN5clang7APValueD2Ev.exit454:                    ; preds = %_ZNK5clang6interp7P
   %i.adf = getelementptr inbounds nuw i8, ptr %59, i64 20
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 8
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 16
+  %148 = zext i32 %i.abw to i64
   br label %bb.du
 
 bb.du:                                            ; preds = %.lr.ph1022, %bb.fv
   %indvars.iv1043 = phi i64 [ 0, %.lr.ph1022 ], [ %indvars.iv.next1044, %bb.fv ] ; 18 uses
-  %.02171021 = phi i32 [ 0, %.lr.ph1022 ], [ %148, %bb.fv ]
   %.02181020 = phi i1 [ true, %.lr.ph1022 ], [ %.1219, %bb.fv ] ; 17 uses
   %i.adg = load ptr, ptr %i.acg, align 8, !tbaa !697
   %i.adh = getelementptr inbounds nuw [56 x i8], ptr %i.adg, i64 %indvars.iv1043 ; 16 uses
@@ -609,9 +609,8 @@ _ZNKSt8functionIFbN5clang8QualTypeENS0_6interp7PtrViewERNS0_7APValueEEEclES1_S3_
 
 bb.fv:                                            ; preds = %bb.du, %_ZN5clang7APValueD2Ev.exit457, %_ZN5clang7APValueD2Ev.exit460, %_ZN5clang7APValueD2Ev.exit463, %_ZN5clang7APValueD2Ev.exit466, %_ZN5clang7APValueD2Ev.exit469, %_ZN5clang7APValueD2Ev.exit472, %_ZN5clang7APValueD2Ev.exit475, %_ZN5clang7APValueD2Ev.exit478, %_ZN5clang7APValueD2Ev.exit481, %_ZN5clang7APValueD2Ev.exit484, %_ZN5clang7APValueD2Ev.exit487, %_ZN5clang7APValueD2Ev.exit490, %_ZN5clang7APValueD2Ev.exit493, %_ZN5clang7APValueD2Ev.exit496, %_ZN5clang7APValueD2Ev.exit499, %_ZNKSt8functionIFbN5clang8QualTypeENS0_6interp7PtrViewERNS0_7APValueEEEclES1_S3_S5_.exit506
   %.1219 = phi i1 [ %.02181020, %bb.du ], [ %.02181020, %_ZN5clang7APValueD2Ev.exit457 ], [ %.02181020, %_ZN5clang7APValueD2Ev.exit460 ], [ %.02181020, %_ZN5clang7APValueD2Ev.exit463 ], [ %.02181020, %_ZN5clang7APValueD2Ev.exit466 ], [ %.02181020, %_ZN5clang7APValueD2Ev.exit469 ], [ %.02181020, %_ZN5clang7APValueD2Ev.exit472 ], [ %.02181020, %_ZN5clang7APValueD2Ev.exit475 ], [ %.02181020, %_ZN5clang7APValueD2Ev.exit478 ], [ %.02181020, %_ZN5clang7APValueD2Ev.exit481 ], [ %.02181020, %_ZN5clang7APValueD2Ev.exit484 ], [ %.02181020, %_ZN5clang7APValueD2Ev.exit487 ], [ %.02181020, %_ZN5clang7APValueD2Ev.exit490 ], [ %.02181020, %_ZN5clang7APValueD2Ev.exit493 ], [ %.02181020, %_ZN5clang7APValueD2Ev.exit496 ], [ %.02181020, %_ZN5clang7APValueD2Ev.exit499 ], [ %i.atg, %_ZNKSt8functionIFbN5clang8QualTypeENS0_6interp7PtrViewERNS0_7APValueEEEclES1_S3_S5_.exit506 ] ; 2 uses
-  %148 = add i32 %.02171021, 1                    ; 2 uses
-  %.not251 = icmp eq i32 %148, %i.abw
-  %indvars.iv.next1044 = add nuw nsw i64 %indvars.iv1043, 1
+  %indvars.iv.next1044 = add nuw nsw i64 %indvars.iv1043, 1 ; 2 uses
+  %.not251 = icmp eq i64 %indvars.iv.next1044, %148
   br i1 %.not251, label %_ZNK5clang6interp7PtrView6isLiveEv.exit.thread, label %bb.du, !llvm.loop !729
 
 .thread938:                                       ; preds = %_ZNK5clang4Type20getAsArrayTypeUnsafeEv.exit..thread938_crit_edge, %bb.dq

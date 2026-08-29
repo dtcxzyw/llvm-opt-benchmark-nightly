@@ -204,19 +204,18 @@ vec_uint_push_back.exit.i:                        ; preds = %vec_uint_reserve.ex
 
 bb.l:                                             ; preds = %heap_percolate_down.exit.i, %.lr.ph39.i
   %indvars.iv46.i = phi i64 [ %i.cj, %.lr.ph39.i ], [ %indvars.iv.next47.i, %heap_percolate_down.exit.i ] ; 2 uses
-  %indvars.iv.next47.i = add nsw i64 %indvars.iv46.i, -1 ; 6 uses
+  %indvars.iv.next47.i = add nsw i64 %indvars.iv46.i, -1 ; 4 uses
   %i.ck = getelementptr inbounds nuw [4 x i8], ptr %.val40.i.i, i64 %indvars.iv.next47.i
   %i.cl = load i32, ptr %i.ck, align 4, !tbaa !10 ; 3 uses
-  %1 = shl nuw nsw i64 %indvars.iv.next47.i, 1    ; 2 uses
-  %2 = or disjoint i64 %1, 1                      ; 2 uses
+  %1 = trunc nsw i64 %indvars.iv.next47.i to i32  ; 3 uses
+  %2 = shl nuw i32 %1, 1                          ; 2 uses
+  %3 = or disjoint i32 %2, 1                      ; 2 uses
   %.val3450.i.i = load i32, ptr %.phi.trans.insert.i, align 4, !tbaa !99 ; 2 uses
-  %3 = zext i32 %.val3450.i.i to i64
-  %i.cm = icmp samesign ult i64 %2, %3
+  %i.cm = icmp ult i32 %3, %.val3450.i.i
   br i1 %i.cm, label %.lr.ph.i.i, label %..thread_crit_edge.i.i
 
 ..thread_crit_edge.i.i:                           ; preds = %bb.l
   %.pre.i.i = zext i32 %i.cl to i64
-  %4 = trunc nuw nsw i64 %indvars.iv.next47.i to i32
   br label %heap_percolate_down.exit.i
 
 .lr.ph.i.i:                                       ; preds = %bb.l
@@ -226,16 +225,13 @@ bb.l:                                             ; preds = %heap_percolate_down
   %i.co = zext i32 %i.cl to i64                   ; 2 uses
   %i.cp = getelementptr inbounds nuw [8 x i8], ptr %.val45.val.i.i, i64 %i.co
   %i.cq = load i64, ptr %i.cp, align 8, !tbaa !119
-  %5 = trunc nuw i64 %2 to i32
-  %6 = trunc nuw i64 %1 to i32
-  %7 = trunc nuw nsw i64 %indvars.iv.next47.i to i32
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.q, %.lr.ph.i.i
   %.val3452.i.i = phi i32 [ %.val3450.i.i, %.lr.ph.i.i ], [ %.val34.i.i, %bb.q ]
-  %i.cr = phi i32 [ %5, %.lr.ph.i.i ], [ %i.do, %bb.q ] ; 4 uses
-  %i.cs = phi i32 [ %6, %.lr.ph.i.i ], [ %i.dn, %bb.q ]
-  %.03251.i.i = phi i32 [ %7, %.lr.ph.i.i ], [ %i.dj, %bb.q ] ; 3 uses
+  %i.cr = phi i32 [ %3, %.lr.ph.i.i ], [ %i.do, %bb.q ] ; 4 uses
+  %i.cs = phi i32 [ %2, %.lr.ph.i.i ], [ %i.dn, %bb.q ]
+  %.03251.i.i = phi i32 [ %1, %.lr.ph.i.i ], [ %i.dj, %bb.q ] ; 3 uses
   %i.ct = add nuw i32 %i.cs, 2                    ; 3 uses
   %i.cu = icmp ult i32 %i.ct, %.val3452.i.i
   br i1 %i.cu, label %bb.n, label %._crit_edge.i.i
@@ -296,7 +292,7 @@ bb.q:                                             ; preds = %bb.p
 heap_percolate_down.exit.i:                       ; preds = %.thread.loopexit.i.i, %..thread_crit_edge.i.i
   %.pre-phi64.i.i = phi i64 [ %.pre.i.i, %..thread_crit_edge.i.i ], [ %i.co, %.thread.loopexit.i.i ]
   %.pre-phi63.i.i = phi i64 [ %indvars.iv.next47.i, %..thread_crit_edge.i.i ], [ %.pre62.i.i, %.thread.loopexit.i.i ]
-  %.032.lcssa.i.i = phi i32 [ %4, %..thread_crit_edge.i.i ], [ %.032.lcssa.ph.i.i, %.thread.loopexit.i.i ]
+  %.032.lcssa.i.i = phi i32 [ %1, %..thread_crit_edge.i.i ], [ %.032.lcssa.ph.i.i, %.thread.loopexit.i.i ]
   %i.dq = getelementptr inbounds nuw [4 x i8], ptr %.val40.i.i, i64 %.pre-phi63.i.i
   store i32 %i.cl, ptr %i.dq, align 4, !tbaa !10
   %i.dr = getelementptr inbounds nuw [4 x i8], ptr %.val43.i.i, i64 %.pre-phi64.i.i

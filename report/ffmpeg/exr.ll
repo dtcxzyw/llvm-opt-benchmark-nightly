@@ -205,8 +205,8 @@ bb.ag:                                            ; preds = %get_vlc2.exit.i
   %i.it = load i32, ptr %i.is, align 1, !tbaa !60
   %i.iu = tail call i32 @llvm.bswap.i32(i32 %i.it)
   %i.iv = and i32 %i.in, 7
-  %i.iw = shl i32 %i.iu, %i.iv                    ; 4 uses
-  %i.ix = lshr i32 %i.iw, 24                      ; 2 uses
+  %i.iw = shl i32 %i.iu, %i.iv                    ; 3 uses
+  %i.ix = lshr i32 %i.iw, 24                      ; 3 uses
   %i.iy = add nuw i32 %i.in, 8
   %i.iz = tail call i32 @llvm.umin.i32(i32 %i.gd, i32 %i.iy) ; 4 uses
   %i.ja = icmp eq i32 %.0248.i, 0
@@ -224,8 +224,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %.not.i58, label %.loopexit.i, label %iter.check
 
 iter.check:                                       ; preds = %bb.ah
-  %5 = lshr i32 %i.iw, 24
-  %i.jh = zext nneg i32 %5 to i64                 ; 5 uses
+  %i.jh = zext nneg i32 %i.ix to i64              ; 5 uses
   %min.iters.check = icmp ult i32 %i.iw, 67108864
   br i1 %min.iters.check, label %.lr.ph.i59.preheader, label %vector.main.loop.iter.check
 

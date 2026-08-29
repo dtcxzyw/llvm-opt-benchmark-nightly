@@ -205,7 +205,7 @@ bb.im:                                            ; preds = %bb.ik
   %i.anq = lshr i64 %.0.i1505.ph, 52
   %i.anr = trunc nuw nsw i64 %i.anq to i32
   %i.ans = add nsw i32 %i.anr, -1076
-  %.sroa.9.0.i559 = select i1 %.not988.i558, i32 -1075, i32 %i.ans ; 5 uses
+  %.sroa.9.0.i559 = select i1 %.not988.i558, i32 -1075, i32 %i.ans ; 4 uses
   %.sroa.018.0.i560 = select i1 %.not988.i558, i64 %.0.i1505.ph, i64 %i.anp
   %i.ant = shl nuw nsw i64 %.sroa.018.0.i560, 1
   %i.anu = or disjoint i64 %i.ant, 1
@@ -608,7 +608,7 @@ bigint_mul_pow10.exit1518:                        ; preds = %bb.iy, %bb.ir, %big
 
 bb.jb:                                            ; preds = %bigint_mul_pow10.exit1518
   %i.auv = and i32 %.sroa.9.0.i559, 63            ; 3 uses
-  %i.auw = lshr i32 %.sroa.9.0.i559, 6            ; 14 uses
+  %i.auw = lshr i32 %.sroa.9.0.i559, 6            ; 15 uses
   %i.aux = icmp eq i32 %i.auv, 0
   br i1 %i.aux, label %.preheader5049, label %bb.jc, !prof !8
 
@@ -738,12 +738,7 @@ scalar.ph10089:                                   ; preds = %scalar.ph10089.prol
 .lr.ph5947.preheader:                             ; preds = %scalar.ph10089.prol.loopexit, %scalar.ph10089, %middle.block10098, %.preheader5049
   %i.axk = add i32 %i.aut, %i.auw                 ; 2 uses
   store i32 %i.axk, ptr %8, align 8, !tbaa !138
-  %15 = add nsw i32 %i.auw, -1
-  %16 = zext i32 %15 to i64
-  %17 = shl nuw nsw i64 %16, 3
-  %18 = add nuw nsw i64 %17, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.anv, i8 0, i64 %18, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit1556
+  br label %.lr.ph5922.preheader
 
 bb.jc:                                            ; preds = %bb.jb
   %i.axl = zext i32 %i.aut to i64                 ; 10 uses
@@ -897,19 +892,12 @@ scalar.ph10068:                                   ; preds = %scalar.ph10068.prol
   %i.bar = zext i1 %i.baq to i32
   %i.bas = add i32 %i.bam, %i.bar                 ; 2 uses
   %.not45.i15515936 = icmp eq i32 %i.auw, 0
-  br i1 %.not45.i15515936, label %bigint_mul_pow2.exit1556, label %.lr.ph5939.preheader
-
-.lr.ph5939.preheader:                             ; preds = %._crit_edge5935
-  %19 = lshr i32 %.sroa.9.0.i559, 3
-  %20 = and i32 %19, 268435448
-  %21 = zext nneg i32 %20 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.anv, i8 0, i64 %21, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit1556
+  br i1 %.not45.i15515936, label %bigint_mul_pow2.exit1556, label %.lr.ph5922.preheader
 
 bb.jd:                                            ; preds = %bigint_mul_pow10.exit1518
-  %i.bat = sub nsw i32 0, %.sroa.9.0.i559         ; 4 uses
+  %i.bat = sub nsw i32 0, %.sroa.9.0.i559         ; 2 uses
   %i.bau = and i32 %i.bat, 63                     ; 3 uses
-  %i.bav = lshr i32 %i.bat, 6                     ; 14 uses
+  %i.bav = lshr i32 %i.bat, 6                     ; 16 uses
   %i.baw = load i32, ptr %7, align 8, !tbaa !138  ; 12 uses
   %i.bax = icmp eq i32 %i.bau, 0
   br i1 %i.bax, label %.preheader5052, label %bb.je, !prof !8
@@ -1046,10 +1034,7 @@ scalar.ph10051:                                   ; preds = %scalar.ph10051.prol
 
 .lr.ph5930:                                       ; preds = %._crit_edge5926
   %i.bdm = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %22 = lshr exact i32 %i.bat, 3
-  %23 = zext nneg i32 %22 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.bdm, i8 0, i64 %23, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit1556
+  br label %.lr.ph5922.preheader
 
 bb.je:                                            ; preds = %bb.jd
   %i.bdn = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 12 uses
@@ -1207,21 +1192,25 @@ scalar.ph10030:                                   ; preds = %scalar.ph10030.prol
   %.not45.i15605919 = icmp eq i32 %i.bav, 0
   br i1 %.not45.i15605919, label %bigint_mul_pow2.exit1556, label %.lr.ph5922.preheader
 
-.lr.ph5922.preheader:                             ; preds = %._crit_edge5918
-  %24 = lshr i32 %i.bat, 3
-  %25 = and i32 %24, 536870904
-  %i.bgw = zext nneg i32 %25 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.bdn, i8 0, i64 %i.bgw, i1 false), !tbaa !91
+.lr.ph5922.preheader:                             ; preds = %._crit_edge5918, %._crit_edge5935, %.lr.ph5947.preheader, %.lr.ph5930
+  %.sink9041 = phi i32 [ %i.auw, %._crit_edge5935 ], [ %i.bav, %.lr.ph5930 ], [ %i.auw, %.lr.ph5947.preheader ], [ %i.bav, %._crit_edge5918 ]
+  %.sink9036 = phi ptr [ %i.anv, %._crit_edge5935 ], [ %i.bdm, %.lr.ph5930 ], [ %i.anv, %.lr.ph5947.preheader ], [ %i.bdn, %._crit_edge5918 ]
+  %.ph9035 = phi i32 [ %i.bas, %._crit_edge5935 ], [ %i.aut, %.lr.ph5930 ], [ %i.axk, %.lr.ph5947.preheader ], [ %i.aut, %._crit_edge5918 ]
+  %15 = add nsw i32 %.sink9041, -1
+  %i.bgw = zext i32 %15 to i64
+  %16 = shl nuw nsw i64 %i.bgw, 3
+  %17 = add nuw nsw i64 %16, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9036, i8 0, i64 %17, i1 false), !tbaa !91
   br label %bigint_mul_pow2.exit1556
 
-bigint_mul_pow2.exit1556:                         ; preds = %.lr.ph5922.preheader, %.lr.ph5930, %.lr.ph5939.preheader, %.lr.ph5947.preheader, %._crit_edge5918, %._crit_edge5926, %._crit_edge5935
-  %26 = phi i32 [ %i.bas, %._crit_edge5935 ], [ %i.aut, %.lr.ph5922.preheader ], [ %i.aut, %.lr.ph5930 ], [ %i.bas, %.lr.ph5939.preheader ], [ %i.axk, %.lr.ph5947.preheader ], [ %i.aut, %._crit_edge5918 ], [ %i.aut, %._crit_edge5926 ] ; 2 uses
+bigint_mul_pow2.exit1556:                         ; preds = %.lr.ph5922.preheader, %._crit_edge5918, %._crit_edge5926, %._crit_edge5935
+  %18 = phi i32 [ %i.bas, %._crit_edge5935 ], [ %i.aut, %._crit_edge5918 ], [ %i.aut, %._crit_edge5926 ], [ %.ph9035, %.lr.ph5922.preheader ] ; 2 uses
   %i.bgx = load i32, ptr %7, align 8, !tbaa !138  ; 4 uses
-  %i.bgy = icmp ult i32 %i.bgx, %26
+  %i.bgy = icmp ult i32 %i.bgx, %18
   br i1 %i.bgy, label %bigint_cmp.exit1613.thread, label %bb.jf
 
 bb.jf:                                            ; preds = %bigint_mul_pow2.exit1556
-  %i.bgz = icmp ugt i32 %i.bgx, %26
+  %i.bgz = icmp ugt i32 %i.bgx, %18
   br i1 %i.bgz, label %bigint_cmp.exit1613.thread, label %.preheader5048
 
 .preheader5048:                                   ; preds = %bb.jf
@@ -1624,7 +1613,7 @@ bb.afs:                                           ; preds = %bb.afq
   %i.fmq = lshr i64 %.0.i1504.ph, 52
   %i.fmr = trunc nuw nsw i64 %i.fmq to i32
   %i.fms = add nsw i32 %i.fmr, -1076
-  %.sroa.9.0.i690 = select i1 %.not988.i689, i32 -1075, i32 %i.fms ; 5 uses
+  %.sroa.9.0.i690 = select i1 %.not988.i689, i32 -1075, i32 %i.fms ; 4 uses
   %.sroa.018.0.i691 = select i1 %.not988.i689, i64 %.0.i1504.ph, i64 %i.fmp
   %i.fmt = shl nuw nsw i64 %.sroa.018.0.i691, 1
   %i.fmu = or disjoint i64 %i.fmt, 1
@@ -2027,7 +2016,7 @@ bigint_mul_pow10.exit:                            ; preds = %bb.age, %bb.afx, %b
 
 bb.agh:                                           ; preds = %bigint_mul_pow10.exit
   %i.ftv = and i32 %.sroa.9.0.i690, 63            ; 3 uses
-  %i.ftw = lshr i32 %.sroa.9.0.i690, 6            ; 14 uses
+  %i.ftw = lshr i32 %.sroa.9.0.i690, 6            ; 15 uses
   %i.ftx = icmp eq i32 %i.ftv, 0
   br i1 %i.ftx, label %.preheader5087, label %bb.agi, !prof !8
 
@@ -2157,12 +2146,7 @@ scalar.ph10013:                                   ; preds = %scalar.ph10013.prol
 .lr.ph5721.preheader:                             ; preds = %scalar.ph10013.prol.loopexit, %scalar.ph10013, %middle.block10022, %.preheader5087
   %i.fwk = add i32 %i.ftt, %i.ftw                 ; 2 uses
   store i32 %i.fwk, ptr %6, align 8, !tbaa !138
-  %27 = add nsw i32 %i.ftw, -1
-  %28 = zext i32 %27 to i64
-  %29 = shl nuw nsw i64 %28, 3
-  %30 = add nuw nsw i64 %29, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.fmv, i8 0, i64 %30, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit
+  br label %.lr.ph5696.preheader
 
 bb.agi:                                           ; preds = %bb.agh
   %i.fwl = zext i32 %i.ftt to i64                 ; 10 uses
@@ -2316,19 +2300,12 @@ scalar.ph9992:                                    ; preds = %scalar.ph9992.prol.
   %i.fzr = zext i1 %i.fzq to i32
   %i.fzs = add i32 %i.fzm, %i.fzr                 ; 2 uses
   %.not45.i15365710 = icmp eq i32 %i.ftw, 0
-  br i1 %.not45.i15365710, label %bigint_mul_pow2.exit, label %.lr.ph5713.preheader
-
-.lr.ph5713.preheader:                             ; preds = %._crit_edge5709
-  %31 = lshr i32 %.sroa.9.0.i690, 3
-  %32 = and i32 %31, 268435448
-  %33 = zext nneg i32 %32 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.fmv, i8 0, i64 %33, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit
+  br i1 %.not45.i15365710, label %bigint_mul_pow2.exit, label %.lr.ph5696.preheader
 
 bb.agj:                                           ; preds = %bigint_mul_pow10.exit
-  %i.fzt = sub nsw i32 0, %.sroa.9.0.i690         ; 4 uses
+  %i.fzt = sub nsw i32 0, %.sroa.9.0.i690         ; 2 uses
   %i.fzu = and i32 %i.fzt, 63                     ; 3 uses
-  %i.fzv = lshr i32 %i.fzt, 6                     ; 14 uses
+  %i.fzv = lshr i32 %i.fzt, 6                     ; 16 uses
   %i.fzw = load i32, ptr %5, align 8, !tbaa !138  ; 12 uses
   %i.fzx = icmp eq i32 %i.fzu, 0
   br i1 %i.fzx, label %.preheader5090, label %bb.agk, !prof !8
@@ -2465,10 +2442,7 @@ scalar.ph9975:                                    ; preds = %scalar.ph9975.prol.
 
 .lr.ph5704:                                       ; preds = %._crit_edge5700
   %i.gcm = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %34 = lshr exact i32 %i.fzt, 3
-  %35 = zext nneg i32 %34 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.gcm, i8 0, i64 %35, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit
+  br label %.lr.ph5696.preheader
 
 bb.agk:                                           ; preds = %bb.agj
   %i.gcn = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 12 uses
@@ -2626,21 +2600,25 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %.not45.i15425693 = icmp eq i32 %i.fzv, 0
   br i1 %.not45.i15425693, label %bigint_mul_pow2.exit, label %.lr.ph5696.preheader
 
-.lr.ph5696.preheader:                             ; preds = %._crit_edge5692
-  %36 = lshr i32 %i.fzt, 3
-  %37 = and i32 %36, 536870904
-  %i.gfw = zext nneg i32 %37 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.gcn, i8 0, i64 %i.gfw, i1 false), !tbaa !91
+.lr.ph5696.preheader:                             ; preds = %._crit_edge5692, %._crit_edge5709, %.lr.ph5721.preheader, %.lr.ph5704
+  %.sink9082 = phi i32 [ %i.ftw, %._crit_edge5709 ], [ %i.fzv, %.lr.ph5704 ], [ %i.ftw, %.lr.ph5721.preheader ], [ %i.fzv, %._crit_edge5692 ]
+  %.sink9077 = phi ptr [ %i.fmv, %._crit_edge5709 ], [ %i.gcm, %.lr.ph5704 ], [ %i.fmv, %.lr.ph5721.preheader ], [ %i.gcn, %._crit_edge5692 ]
+  %.ph9076 = phi i32 [ %i.fzs, %._crit_edge5709 ], [ %i.ftt, %.lr.ph5704 ], [ %i.fwk, %.lr.ph5721.preheader ], [ %i.ftt, %._crit_edge5692 ]
+  %19 = add nsw i32 %.sink9082, -1
+  %i.gfw = zext i32 %19 to i64
+  %20 = shl nuw nsw i64 %i.gfw, 3
+  %21 = add nuw nsw i64 %20, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9077, i8 0, i64 %21, i1 false), !tbaa !91
   br label %bigint_mul_pow2.exit
 
-bigint_mul_pow2.exit:                             ; preds = %.lr.ph5696.preheader, %.lr.ph5704, %.lr.ph5713.preheader, %.lr.ph5721.preheader, %._crit_edge5692, %._crit_edge5700, %._crit_edge5709
-  %38 = phi i32 [ %i.fzs, %._crit_edge5709 ], [ %i.ftt, %.lr.ph5696.preheader ], [ %i.ftt, %.lr.ph5704 ], [ %i.fzs, %.lr.ph5713.preheader ], [ %i.fwk, %.lr.ph5721.preheader ], [ %i.ftt, %._crit_edge5692 ], [ %i.ftt, %._crit_edge5700 ] ; 2 uses
+bigint_mul_pow2.exit:                             ; preds = %.lr.ph5696.preheader, %._crit_edge5692, %._crit_edge5700, %._crit_edge5709
+  %22 = phi i32 [ %i.fzs, %._crit_edge5709 ], [ %i.ftt, %._crit_edge5692 ], [ %i.ftt, %._crit_edge5700 ], [ %.ph9076, %.lr.ph5696.preheader ] ; 2 uses
   %i.gfx = load i32, ptr %5, align 8, !tbaa !138  ; 4 uses
-  %i.gfy = icmp ult i32 %i.gfx, %38
+  %i.gfy = icmp ult i32 %i.gfx, %22
   br i1 %i.gfy, label %bigint_cmp.exit.thread, label %bb.agl
 
 bb.agl:                                           ; preds = %bigint_mul_pow2.exit
-  %i.gfz = icmp ugt i32 %i.gfx, %38
+  %i.gfz = icmp ugt i32 %i.gfx, %22
   br i1 %i.gfz, label %bigint_cmp.exit.thread, label %.preheader5086
 
 .preheader5086:                                   ; preds = %bb.agl
@@ -3043,7 +3021,7 @@ bb.arb:                                           ; preds = %bb.aqz
   %i.ibb = lshr i64 %.0.i1509.ph, 52
   %i.ibc = trunc nuw nsw i64 %i.ibb to i32
   %i.ibd = add nsw i32 %i.ibc, -1076
-  %.sroa.9.0.i = select i1 %.not988.i, i32 -1075, i32 %i.ibd ; 5 uses
+  %.sroa.9.0.i = select i1 %.not988.i, i32 -1075, i32 %i.ibd ; 4 uses
   %.sroa.018.0.i = select i1 %.not988.i, i64 %.0.i1509.ph, i64 %i.iba
   %i.ibe = shl nuw nsw i64 %.sroa.018.0.i, 1
   %i.ibf = or disjoint i64 %i.ibe, 1
@@ -3446,7 +3424,7 @@ bigint_mul_pow10.exit1530:                        ; preds = %bb.arn, %bb.arg, %b
 
 bb.arq:                                           ; preds = %bigint_mul_pow10.exit1530
   %i.iig = and i32 %.sroa.9.0.i, 63               ; 3 uses
-  %i.iih = lshr i32 %.sroa.9.0.i, 6               ; 14 uses
+  %i.iih = lshr i32 %.sroa.9.0.i, 6               ; 15 uses
   %i.iii = icmp eq i32 %i.iig, 0
   br i1 %i.iii, label %.preheader4959, label %bb.arr, !prof !8
 
@@ -3576,12 +3554,7 @@ scalar.ph10241:                                   ; preds = %scalar.ph10241.prol
 .lr.ph6425.preheader:                             ; preds = %scalar.ph10241.prol.loopexit, %scalar.ph10241, %middle.block10250, %.preheader4959
   %i.ikv = add i32 %i.iie, %i.iih                 ; 2 uses
   store i32 %i.ikv, ptr %12, align 8, !tbaa !138
-  %39 = add nsw i32 %i.iih, -1
-  %40 = zext i32 %39 to i64
-  %41 = shl nuw nsw i64 %40, 3
-  %42 = add nuw nsw i64 %41, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ibg, i8 0, i64 %42, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit1592
+  br label %.lr.ph6400.preheader
 
 bb.arr:                                           ; preds = %bb.arq
   %i.ikw = zext i32 %i.iie to i64                 ; 10 uses
@@ -3735,19 +3708,12 @@ scalar.ph10220:                                   ; preds = %scalar.ph10220.prol
   %i.ioc = zext i1 %i.iob to i32
   %i.iod = add i32 %i.inx, %i.ioc                 ; 2 uses
   %.not45.i15876414 = icmp eq i32 %i.iih, 0
-  br i1 %.not45.i15876414, label %bigint_mul_pow2.exit1592, label %.lr.ph6417.preheader
-
-.lr.ph6417.preheader:                             ; preds = %._crit_edge6413
-  %43 = lshr i32 %.sroa.9.0.i, 3
-  %44 = and i32 %43, 268435448
-  %45 = zext nneg i32 %44 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ibg, i8 0, i64 %45, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit1592
+  br i1 %.not45.i15876414, label %bigint_mul_pow2.exit1592, label %.lr.ph6400.preheader
 
 bb.ars:                                           ; preds = %bigint_mul_pow10.exit1530
-  %i.ioe = sub nsw i32 0, %.sroa.9.0.i            ; 4 uses
+  %i.ioe = sub nsw i32 0, %.sroa.9.0.i            ; 2 uses
   %i.iof = and i32 %i.ioe, 63                     ; 3 uses
-  %i.iog = lshr i32 %i.ioe, 6                     ; 14 uses
+  %i.iog = lshr i32 %i.ioe, 6                     ; 16 uses
   %i.ioh = load i32, ptr %11, align 8, !tbaa !138 ; 12 uses
   %i.ioi = icmp eq i32 %i.iof, 0
   br i1 %i.ioi, label %.preheader4962, label %bb.art, !prof !8
@@ -3884,10 +3850,7 @@ scalar.ph10203:                                   ; preds = %scalar.ph10203.prol
 
 .lr.ph6408:                                       ; preds = %._crit_edge6404
   %i.iqx = getelementptr inbounds nuw i8, ptr %11, i64 8
-  %46 = lshr exact i32 %i.ioe, 3
-  %47 = zext nneg i32 %46 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.iqx, i8 0, i64 %47, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit1592
+  br label %.lr.ph6400.preheader
 
 bb.art:                                           ; preds = %bb.ars
   %i.iqy = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 12 uses
@@ -4045,21 +4008,25 @@ scalar.ph10182:                                   ; preds = %scalar.ph10182.prol
   %.not45.i15966397 = icmp eq i32 %i.iog, 0
   br i1 %.not45.i15966397, label %bigint_mul_pow2.exit1592, label %.lr.ph6400.preheader
 
-.lr.ph6400.preheader:                             ; preds = %._crit_edge6396
-  %48 = lshr i32 %i.ioe, 3
-  %49 = and i32 %48, 536870904
-  %i.iuh = zext nneg i32 %49 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.iqy, i8 0, i64 %i.iuh, i1 false), !tbaa !91
+.lr.ph6400.preheader:                             ; preds = %._crit_edge6396, %._crit_edge6413, %.lr.ph6425.preheader, %.lr.ph6408
+  %.sink9133 = phi i32 [ %i.iih, %._crit_edge6413 ], [ %i.iog, %.lr.ph6408 ], [ %i.iih, %.lr.ph6425.preheader ], [ %i.iog, %._crit_edge6396 ]
+  %.sink9128 = phi ptr [ %i.ibg, %._crit_edge6413 ], [ %i.iqx, %.lr.ph6408 ], [ %i.ibg, %.lr.ph6425.preheader ], [ %i.iqy, %._crit_edge6396 ]
+  %.ph9127 = phi i32 [ %i.iod, %._crit_edge6413 ], [ %i.iie, %.lr.ph6408 ], [ %i.ikv, %.lr.ph6425.preheader ], [ %i.iie, %._crit_edge6396 ]
+  %23 = add nsw i32 %.sink9133, -1
+  %i.iuh = zext i32 %23 to i64
+  %24 = shl nuw nsw i64 %i.iuh, 3
+  %25 = add nuw nsw i64 %24, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9128, i8 0, i64 %25, i1 false), !tbaa !91
   br label %bigint_mul_pow2.exit1592
 
-bigint_mul_pow2.exit1592:                         ; preds = %.lr.ph6400.preheader, %.lr.ph6408, %.lr.ph6417.preheader, %.lr.ph6425.preheader, %._crit_edge6396, %._crit_edge6404, %._crit_edge6413
-  %50 = phi i32 [ %i.iod, %._crit_edge6413 ], [ %i.iie, %.lr.ph6400.preheader ], [ %i.iie, %.lr.ph6408 ], [ %i.iod, %.lr.ph6417.preheader ], [ %i.ikv, %.lr.ph6425.preheader ], [ %i.iie, %._crit_edge6396 ], [ %i.iie, %._crit_edge6404 ] ; 2 uses
+bigint_mul_pow2.exit1592:                         ; preds = %.lr.ph6400.preheader, %._crit_edge6396, %._crit_edge6404, %._crit_edge6413
+  %26 = phi i32 [ %i.iod, %._crit_edge6413 ], [ %i.iie, %._crit_edge6396 ], [ %i.iie, %._crit_edge6404 ], [ %.ph9127, %.lr.ph6400.preheader ] ; 2 uses
   %i.iui = load i32, ptr %11, align 8, !tbaa !138 ; 4 uses
-  %i.iuj = icmp ult i32 %i.iui, %50
+  %i.iuj = icmp ult i32 %i.iui, %26
   br i1 %i.iuj, label %bigint_cmp.exit1631.thread, label %bb.aru
 
 bb.aru:                                           ; preds = %bigint_mul_pow2.exit1592
-  %i.iuk = icmp ugt i32 %i.iui, %50
+  %i.iuk = icmp ugt i32 %i.iui, %26
   br i1 %i.iuk, label %bigint_cmp.exit1631.thread, label %.preheader4958
 
 .preheader4958:                                   ; preds = %bb.aru
@@ -4462,7 +4429,7 @@ bb.bnm:                                           ; preds = %bb.bnk
   %i.mxs = lshr i64 %.0.i1507.ph, 52
   %i.mxt = trunc nuw nsw i64 %i.mxs to i32
   %i.mxu = add nsw i32 %i.mxt, -1076
-  %.sroa.9.0.i428 = select i1 %.not988.i427, i32 -1075, i32 %i.mxu ; 5 uses
+  %.sroa.9.0.i428 = select i1 %.not988.i427, i32 -1075, i32 %i.mxu ; 4 uses
   %.sroa.018.0.i429 = select i1 %.not988.i427, i64 %.0.i1507.ph, i64 %i.mxr
   %i.mxv = shl nuw nsw i64 %.sroa.018.0.i429, 1
   %i.mxw = or disjoint i64 %i.mxv, 1
@@ -4865,7 +4832,7 @@ bigint_mul_pow10.exit1524:                        ; preds = %bb.bny, %bb.bnr, %b
 
 bb.bob:                                           ; preds = %bigint_mul_pow10.exit1524
   %i.nex = and i32 %.sroa.9.0.i428, 63            ; 3 uses
-  %i.ney = lshr i32 %.sroa.9.0.i428, 6            ; 14 uses
+  %i.ney = lshr i32 %.sroa.9.0.i428, 6            ; 15 uses
   %i.nez = icmp eq i32 %i.nex, 0
   br i1 %i.nez, label %.preheader4997, label %bb.boc, !prof !8
 
@@ -4995,12 +4962,7 @@ scalar.ph10165:                                   ; preds = %scalar.ph10165.prol
 .lr.ph6227.preheader:                             ; preds = %scalar.ph10165.prol.loopexit, %scalar.ph10165, %middle.block10174, %.preheader4997
   %i.nhm = add i32 %i.nev, %i.ney                 ; 2 uses
   store i32 %i.nhm, ptr %10, align 8, !tbaa !138
-  %51 = add nsw i32 %i.ney, -1
-  %52 = zext i32 %51 to i64
-  %53 = shl nuw nsw i64 %52, 3
-  %54 = add nuw nsw i64 %53, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.mxx, i8 0, i64 %54, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit1574
+  br label %.lr.ph6202.preheader
 
 bb.boc:                                           ; preds = %bb.bob
   %i.nhn = zext i32 %i.nev to i64                 ; 10 uses
@@ -5154,19 +5116,12 @@ scalar.ph10144:                                   ; preds = %scalar.ph10144.prol
   %i.nkt = zext i1 %i.nks to i32
   %i.nku = add i32 %i.nko, %i.nkt                 ; 2 uses
   %.not45.i15696216 = icmp eq i32 %i.ney, 0
-  br i1 %.not45.i15696216, label %bigint_mul_pow2.exit1574, label %.lr.ph6219.preheader
-
-.lr.ph6219.preheader:                             ; preds = %._crit_edge6215
-  %55 = lshr i32 %.sroa.9.0.i428, 3
-  %56 = and i32 %55, 268435448
-  %57 = zext nneg i32 %56 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.mxx, i8 0, i64 %57, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit1574
+  br i1 %.not45.i15696216, label %bigint_mul_pow2.exit1574, label %.lr.ph6202.preheader
 
 bb.bod:                                           ; preds = %bigint_mul_pow10.exit1524
-  %i.nkv = sub nsw i32 0, %.sroa.9.0.i428         ; 4 uses
+  %i.nkv = sub nsw i32 0, %.sroa.9.0.i428         ; 2 uses
   %i.nkw = and i32 %i.nkv, 63                     ; 3 uses
-  %i.nkx = lshr i32 %i.nkv, 6                     ; 14 uses
+  %i.nkx = lshr i32 %i.nkv, 6                     ; 16 uses
   %i.nky = load i32, ptr %9, align 8, !tbaa !138  ; 12 uses
   %i.nkz = icmp eq i32 %i.nkw, 0
   br i1 %i.nkz, label %.preheader5000, label %bb.boe, !prof !8
@@ -5303,10 +5258,7 @@ scalar.ph10127:                                   ; preds = %scalar.ph10127.prol
 
 .lr.ph6210:                                       ; preds = %._crit_edge6206
   %i.nno = getelementptr inbounds nuw i8, ptr %9, i64 8
-  %58 = lshr exact i32 %i.nkv, 3
-  %59 = zext nneg i32 %58 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.nno, i8 0, i64 %59, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit1574
+  br label %.lr.ph6202.preheader
 
 bb.boe:                                           ; preds = %bb.bod
   %i.nnp = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 12 uses
@@ -5464,21 +5416,25 @@ scalar.ph10106:                                   ; preds = %scalar.ph10106.prol
   %.not45.i15786199 = icmp eq i32 %i.nkx, 0
   br i1 %.not45.i15786199, label %bigint_mul_pow2.exit1574, label %.lr.ph6202.preheader
 
-.lr.ph6202.preheader:                             ; preds = %._crit_edge6198
-  %60 = lshr i32 %i.nkv, 3
-  %61 = and i32 %60, 536870904
-  %i.nqy = zext nneg i32 %61 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.nnp, i8 0, i64 %i.nqy, i1 false), !tbaa !91
+.lr.ph6202.preheader:                             ; preds = %._crit_edge6198, %._crit_edge6215, %.lr.ph6227.preheader, %.lr.ph6210
+  %.sink9175 = phi i32 [ %i.ney, %._crit_edge6215 ], [ %i.nkx, %.lr.ph6210 ], [ %i.ney, %.lr.ph6227.preheader ], [ %i.nkx, %._crit_edge6198 ]
+  %.sink9170 = phi ptr [ %i.mxx, %._crit_edge6215 ], [ %i.nno, %.lr.ph6210 ], [ %i.mxx, %.lr.ph6227.preheader ], [ %i.nnp, %._crit_edge6198 ]
+  %.ph9169 = phi i32 [ %i.nku, %._crit_edge6215 ], [ %i.nev, %.lr.ph6210 ], [ %i.nhm, %.lr.ph6227.preheader ], [ %i.nev, %._crit_edge6198 ]
+  %27 = add nsw i32 %.sink9175, -1
+  %i.nqy = zext i32 %27 to i64
+  %28 = shl nuw nsw i64 %i.nqy, 3
+  %29 = add nuw nsw i64 %28, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink9170, i8 0, i64 %29, i1 false), !tbaa !91
   br label %bigint_mul_pow2.exit1574
 
-bigint_mul_pow2.exit1574:                         ; preds = %.lr.ph6202.preheader, %.lr.ph6210, %.lr.ph6219.preheader, %.lr.ph6227.preheader, %._crit_edge6198, %._crit_edge6206, %._crit_edge6215
-  %62 = phi i32 [ %i.nku, %._crit_edge6215 ], [ %i.nev, %.lr.ph6202.preheader ], [ %i.nev, %.lr.ph6210 ], [ %i.nku, %.lr.ph6219.preheader ], [ %i.nhm, %.lr.ph6227.preheader ], [ %i.nev, %._crit_edge6198 ], [ %i.nev, %._crit_edge6206 ] ; 2 uses
+bigint_mul_pow2.exit1574:                         ; preds = %.lr.ph6202.preheader, %._crit_edge6198, %._crit_edge6206, %._crit_edge6215
+  %30 = phi i32 [ %i.nku, %._crit_edge6215 ], [ %i.nev, %._crit_edge6198 ], [ %i.nev, %._crit_edge6206 ], [ %.ph9169, %.lr.ph6202.preheader ] ; 2 uses
   %i.nqz = load i32, ptr %9, align 8, !tbaa !138  ; 4 uses
-  %i.nra = icmp ult i32 %i.nqz, %62
+  %i.nra = icmp ult i32 %i.nqz, %30
   br i1 %i.nra, label %bigint_cmp.exit1622.thread, label %bb.bof
 
 bb.bof:                                           ; preds = %bigint_mul_pow2.exit1574
-  %i.nrb = icmp ugt i32 %i.nqz, %62
+  %i.nrb = icmp ugt i32 %i.nqz, %30
   br i1 %i.nrb, label %bigint_cmp.exit1622.thread, label %.preheader4996
 
 .preheader4996:                                   ; preds = %bb.bof
@@ -5881,7 +5837,7 @@ bb.hj:                                            ; preds = %bb.hh
   %i.agm = lshr i64 %.0.i254.ph, 52
   %i.agn = trunc nuw nsw i64 %i.agm to i32
   %i.ago = add nsw i32 %i.agn, -1076
-  %.sroa.9.0.i = select i1 %.not988.i, i32 -1075, i32 %i.ago ; 5 uses
+  %.sroa.9.0.i = select i1 %.not988.i, i32 -1075, i32 %i.ago ; 4 uses
   %.sroa.018.0.i = select i1 %.not988.i, i64 %.0.i254.ph, i64 %i.agl
   %i.agp = shl nuw nsw i64 %.sroa.018.0.i, 1
   %i.agq = or disjoint i64 %i.agp, 1
@@ -6284,7 +6240,7 @@ bigint_mul_pow10.exit:                            ; preds = %bb.hv, %bb.ho, %big
 
 bb.hy:                                            ; preds = %bigint_mul_pow10.exit
   %i.anr = and i32 %.sroa.9.0.i, 63               ; 3 uses
-  %i.ans = lshr i32 %.sroa.9.0.i, 6               ; 14 uses
+  %i.ans = lshr i32 %.sroa.9.0.i, 6               ; 15 uses
   %i.ant = icmp eq i32 %i.anr, 0
   br i1 %i.ant, label %.preheader726, label %bb.hz, !prof !8
 
@@ -6414,12 +6370,7 @@ scalar.ph1498:                                    ; preds = %scalar.ph1498.prol.
 .lr.ph907.preheader:                              ; preds = %scalar.ph1498.prol.loopexit, %scalar.ph1498, %middle.block1507, %.preheader726
   %i.aqg = add i32 %i.anp, %i.ans                 ; 2 uses
   store i32 %i.aqg, ptr %7, align 8, !tbaa !138
-  %8 = add nsw i32 %i.ans, -1
-  %9 = zext i32 %8 to i64
-  %10 = shl nuw nsw i64 %9, 3
-  %11 = add nuw nsw i64 %10, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.agr, i8 0, i64 %11, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit
+  br label %.lr.ph882.preheader
 
 bb.hz:                                            ; preds = %bb.hy
   %i.aqh = zext i32 %i.anp to i64                 ; 10 uses
@@ -6573,19 +6524,12 @@ scalar.ph1477:                                    ; preds = %scalar.ph1477.prol.
   %i.atn = zext i1 %i.atm to i32
   %i.ato = add i32 %i.ati, %i.atn                 ; 2 uses
   %.not45.i261896 = icmp eq i32 %i.ans, 0
-  br i1 %.not45.i261896, label %bigint_mul_pow2.exit, label %.lr.ph899.preheader
-
-.lr.ph899.preheader:                              ; preds = %._crit_edge895
-  %12 = lshr i32 %.sroa.9.0.i, 3
-  %13 = and i32 %12, 268435448
-  %14 = zext nneg i32 %13 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.agr, i8 0, i64 %14, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit
+  br i1 %.not45.i261896, label %bigint_mul_pow2.exit, label %.lr.ph882.preheader
 
 bb.ia:                                            ; preds = %bigint_mul_pow10.exit
-  %i.atp = sub nsw i32 0, %.sroa.9.0.i            ; 4 uses
+  %i.atp = sub nsw i32 0, %.sroa.9.0.i            ; 2 uses
   %i.atq = and i32 %i.atp, 63                     ; 3 uses
-  %i.atr = lshr i32 %i.atp, 6                     ; 14 uses
+  %i.atr = lshr i32 %i.atp, 6                     ; 16 uses
   %i.ats = load i32, ptr %6, align 8, !tbaa !138  ; 12 uses
   %i.att = icmp eq i32 %i.atq, 0
   br i1 %i.att, label %.preheader729, label %bb.ib, !prof !8
@@ -6722,10 +6666,7 @@ scalar.ph1460:                                    ; preds = %scalar.ph1460.prol.
 
 .lr.ph890:                                        ; preds = %._crit_edge886
   %i.awi = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %15 = lshr exact i32 %i.atp, 3
-  %16 = zext nneg i32 %15 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.awi, i8 0, i64 %16, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit
+  br label %.lr.ph882.preheader
 
 bb.ib:                                            ; preds = %bb.ia
   %i.awj = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 12 uses
@@ -6883,21 +6824,25 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %.not45.i267879 = icmp eq i32 %i.atr, 0
   br i1 %.not45.i267879, label %bigint_mul_pow2.exit, label %.lr.ph882.preheader
 
-.lr.ph882.preheader:                              ; preds = %._crit_edge878
-  %17 = lshr i32 %i.atp, 3
-  %18 = and i32 %17, 536870904
-  %i.azs = zext nneg i32 %18 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.awj, i8 0, i64 %i.azs, i1 false), !tbaa !91
+.lr.ph882.preheader:                              ; preds = %._crit_edge878, %._crit_edge895, %.lr.ph907.preheader, %.lr.ph890
+  %.sink1365 = phi i32 [ %i.ans, %._crit_edge895 ], [ %i.atr, %.lr.ph890 ], [ %i.ans, %.lr.ph907.preheader ], [ %i.atr, %._crit_edge878 ]
+  %.sink1360 = phi ptr [ %i.agr, %._crit_edge895 ], [ %i.awi, %.lr.ph890 ], [ %i.agr, %.lr.ph907.preheader ], [ %i.awj, %._crit_edge878 ]
+  %.ph1359 = phi i32 [ %i.ato, %._crit_edge895 ], [ %i.anp, %.lr.ph890 ], [ %i.aqg, %.lr.ph907.preheader ], [ %i.anp, %._crit_edge878 ]
+  %8 = add nsw i32 %.sink1365, -1
+  %i.azs = zext i32 %8 to i64
+  %9 = shl nuw nsw i64 %i.azs, 3
+  %10 = add nuw nsw i64 %9, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink1360, i8 0, i64 %10, i1 false), !tbaa !91
   br label %bigint_mul_pow2.exit
 
-bigint_mul_pow2.exit:                             ; preds = %.lr.ph882.preheader, %.lr.ph890, %.lr.ph899.preheader, %.lr.ph907.preheader, %._crit_edge878, %._crit_edge886, %._crit_edge895
-  %19 = phi i32 [ %i.ato, %._crit_edge895 ], [ %i.anp, %.lr.ph882.preheader ], [ %i.anp, %.lr.ph890 ], [ %i.ato, %.lr.ph899.preheader ], [ %i.aqg, %.lr.ph907.preheader ], [ %i.anp, %._crit_edge878 ], [ %i.anp, %._crit_edge886 ] ; 2 uses
+bigint_mul_pow2.exit:                             ; preds = %.lr.ph882.preheader, %._crit_edge878, %._crit_edge886, %._crit_edge895
+  %11 = phi i32 [ %i.ato, %._crit_edge895 ], [ %i.anp, %._crit_edge878 ], [ %i.anp, %._crit_edge886 ], [ %.ph1359, %.lr.ph882.preheader ] ; 2 uses
   %i.azt = load i32, ptr %6, align 8, !tbaa !138  ; 4 uses
-  %i.azu = icmp ult i32 %i.azt, %19
+  %i.azu = icmp ult i32 %i.azt, %11
   br i1 %i.azu, label %bigint_cmp.exit.thread, label %bb.ic
 
 bb.ic:                                            ; preds = %bigint_mul_pow2.exit
-  %i.azv = icmp ugt i32 %i.azt, %19
+  %i.azv = icmp ugt i32 %i.azt, %11
   br i1 %i.azv, label %bigint_cmp.exit.thread, label %.preheader725
 
 .preheader725:                                    ; preds = %bb.ic
@@ -7300,7 +7245,7 @@ bb.hk:                                            ; preds = %bb.hi
   %i.afz = lshr i64 %.0.i28.ph, 52
   %i.aga = trunc nuw nsw i64 %i.afz to i32
   %i.agb = add nsw i32 %i.aga, -1076
-  %.sroa.9.0.i = select i1 %.not988.i, i32 -1075, i32 %i.agb ; 5 uses
+  %.sroa.9.0.i = select i1 %.not988.i, i32 -1075, i32 %i.agb ; 4 uses
   %.sroa.018.0.i = select i1 %.not988.i, i64 %.0.i28.ph, i64 %i.afy
   %i.agc = shl nuw nsw i64 %.sroa.018.0.i, 1
   %i.agd = or disjoint i64 %i.agc, 1
@@ -7703,7 +7648,7 @@ bigint_mul_pow10.exit:                            ; preds = %bb.hw, %bb.hp, %big
 
 bb.hz:                                            ; preds = %bigint_mul_pow10.exit
   %i.ane = and i32 %.sroa.9.0.i, 63               ; 3 uses
-  %i.anf = lshr i32 %.sroa.9.0.i, 6               ; 14 uses
+  %i.anf = lshr i32 %.sroa.9.0.i, 6               ; 15 uses
   %i.ang = icmp eq i32 %i.ane, 0
   br i1 %i.ang, label %.preheader193, label %bb.ia, !prof !8
 
@@ -7832,12 +7777,7 @@ scalar.ph690:                                     ; preds = %scalar.ph690.prol.l
 
 .lr.ph341.preheader:                              ; preds = %scalar.ph690.prol.loopexit, %scalar.ph690, %middle.block699, %.preheader193
   %i.apt = add i32 %i.anc, %i.anf
-  %7 = add nsw i32 %i.anf, -1
-  %8 = zext i32 %7 to i64
-  %9 = shl nuw nsw i64 %8, 3
-  %10 = add nuw nsw i64 %9, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.age, i8 0, i64 %10, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit
+  br label %.lr.ph316.preheader
 
 bb.ia:                                            ; preds = %bb.hz
   %i.apu = zext i32 %i.anc to i64                 ; 10 uses
@@ -7991,19 +7931,12 @@ scalar.ph669:                                     ; preds = %scalar.ph669.prol.l
   %i.ata = zext i1 %i.asz to i32
   %i.atb = add i32 %i.asv, %i.ata                 ; 2 uses
   %.not45.i330 = icmp eq i32 %i.anf, 0
-  br i1 %.not45.i330, label %bigint_mul_pow2.exit, label %.lr.ph333.preheader
-
-.lr.ph333.preheader:                              ; preds = %._crit_edge329
-  %11 = lshr i32 %.sroa.9.0.i, 3
-  %12 = and i32 %11, 268435448
-  %13 = zext nneg i32 %12 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.age, i8 0, i64 %13, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit
+  br i1 %.not45.i330, label %bigint_mul_pow2.exit, label %.lr.ph316.preheader
 
 bb.ib:                                            ; preds = %bigint_mul_pow10.exit
-  %i.atc = sub nsw i32 0, %.sroa.9.0.i            ; 4 uses
+  %i.atc = sub nsw i32 0, %.sroa.9.0.i            ; 2 uses
   %i.atd = and i32 %i.atc, 63                     ; 3 uses
-  %i.ate = lshr i32 %i.atc, 6                     ; 14 uses
+  %i.ate = lshr i32 %i.atc, 6                     ; 16 uses
   %i.atf = load i32, ptr %5, align 8, !tbaa !138  ; 12 uses
   %i.atg = icmp eq i32 %i.atd, 0
   br i1 %i.atg, label %.preheader196, label %bb.ic, !prof !8
@@ -8140,10 +8073,7 @@ scalar.ph652:                                     ; preds = %scalar.ph652.prol.l
 
 .lr.ph324:                                        ; preds = %._crit_edge320
   %i.avv = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %14 = lshr exact i32 %i.atc, 3
-  %15 = zext nneg i32 %14 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.avv, i8 0, i64 %15, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit
+  br label %.lr.ph316.preheader
 
 bb.ic:                                            ; preds = %bb.ib
   %i.avw = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 12 uses
@@ -8301,21 +8231,25 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %.not45.i39313 = icmp eq i32 %i.ate, 0
   br i1 %.not45.i39313, label %bigint_mul_pow2.exit, label %.lr.ph316.preheader
 
-.lr.ph316.preheader:                              ; preds = %._crit_edge312
-  %16 = lshr i32 %i.atc, 3
-  %17 = and i32 %16, 536870904
-  %i.azf = zext nneg i32 %17 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.avw, i8 0, i64 %i.azf, i1 false), !tbaa !91
+.lr.ph316.preheader:                              ; preds = %._crit_edge312, %._crit_edge329, %.lr.ph341.preheader, %.lr.ph324
+  %.sink616 = phi i32 [ %i.anf, %._crit_edge329 ], [ %i.ate, %.lr.ph324 ], [ %i.anf, %.lr.ph341.preheader ], [ %i.ate, %._crit_edge312 ]
+  %.sink611 = phi ptr [ %i.age, %._crit_edge329 ], [ %i.avv, %.lr.ph324 ], [ %i.age, %.lr.ph341.preheader ], [ %i.avw, %._crit_edge312 ]
+  %.ph610 = phi i32 [ %i.atb, %._crit_edge329 ], [ %i.anc, %.lr.ph324 ], [ %i.apt, %.lr.ph341.preheader ], [ %i.anc, %._crit_edge312 ]
+  %7 = add nsw i32 %.sink616, -1
+  %i.azf = zext i32 %7 to i64
+  %8 = shl nuw nsw i64 %i.azf, 3
+  %9 = add nuw nsw i64 %8, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink611, i8 0, i64 %9, i1 false), !tbaa !91
   br label %bigint_mul_pow2.exit
 
-bigint_mul_pow2.exit:                             ; preds = %.lr.ph316.preheader, %.lr.ph324, %.lr.ph333.preheader, %.lr.ph341.preheader, %._crit_edge312, %._crit_edge320, %._crit_edge329
-  %18 = phi i32 [ %i.atb, %._crit_edge329 ], [ %i.anc, %.lr.ph316.preheader ], [ %i.anc, %.lr.ph324 ], [ %i.atb, %.lr.ph333.preheader ], [ %i.apt, %.lr.ph341.preheader ], [ %i.anc, %._crit_edge312 ], [ %i.anc, %._crit_edge320 ] ; 2 uses
+bigint_mul_pow2.exit:                             ; preds = %.lr.ph316.preheader, %._crit_edge312, %._crit_edge320, %._crit_edge329
+  %10 = phi i32 [ %i.atb, %._crit_edge329 ], [ %i.anc, %._crit_edge312 ], [ %i.anc, %._crit_edge320 ], [ %.ph610, %.lr.ph316.preheader ] ; 2 uses
   %i.azg = load i32, ptr %5, align 8, !tbaa !138  ; 4 uses
-  %i.azh = icmp ult i32 %i.azg, %18
+  %i.azh = icmp ult i32 %i.azg, %10
   br i1 %i.azh, label %bigint_cmp.exit.thread, label %bb.id
 
 bb.id:                                            ; preds = %bigint_mul_pow2.exit
-  %i.azi = icmp ugt i32 %i.azg, %18
+  %i.azi = icmp ugt i32 %i.azg, %10
   br i1 %i.azi, label %bigint_cmp.exit.thread, label %.preheader
 
 .preheader:                                       ; preds = %bb.id
@@ -8718,7 +8652,7 @@ bb.ic:                                            ; preds = %bb.ia
   %i.ajh = lshr i64 %.0.i1497.ph, 52
   %i.aji = trunc nuw nsw i64 %i.ajh to i32
   %i.ajj = add nsw i32 %i.aji, -1076
-  %.sroa.9.0.i1030 = select i1 %.not988.i1029, i32 -1075, i32 %i.ajj ; 5 uses
+  %.sroa.9.0.i1030 = select i1 %.not988.i1029, i32 -1075, i32 %i.ajj ; 4 uses
   %.sroa.018.0.i1031 = select i1 %.not988.i1029, i64 %.0.i1497.ph, i64 %i.ajg
   %i.ajk = shl nuw nsw i64 %.sroa.018.0.i1031, 1
   %i.ajl = or disjoint i64 %i.ajk, 1
@@ -9121,7 +9055,7 @@ bigint_mul_pow10.exit:                            ; preds = %bb.io, %bb.ih, %big
 
 bb.ir:                                            ; preds = %bigint_mul_pow10.exit
   %i.aqm = and i32 %.sroa.9.0.i1030, 63           ; 3 uses
-  %i.aqn = lshr i32 %.sroa.9.0.i1030, 6           ; 14 uses
+  %i.aqn = lshr i32 %.sroa.9.0.i1030, 6           ; 15 uses
   %i.aqo = icmp eq i32 %i.aqm, 0
   br i1 %i.aqo, label %.preheader3528, label %bb.is, !prof !8
 
@@ -9250,12 +9184,7 @@ scalar.ph6183:                                    ; preds = %scalar.ph6183.prol.
 
 .lr.ph4373.preheader:                             ; preds = %scalar.ph6183.prol.loopexit, %scalar.ph6183, %middle.block6192, %.preheader3528
   %i.atb = add i32 %i.aqk, %i.aqn
-  %10 = add nsw i32 %i.aqn, -1
-  %11 = zext i32 %10 to i64
-  %12 = shl nuw nsw i64 %11, 3
-  %13 = add nuw nsw i64 %12, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ajm, i8 0, i64 %13, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit
+  br label %.lr.ph4348.preheader
 
 bb.is:                                            ; preds = %bb.ir
   %i.atc = zext i32 %i.aqk to i64                 ; 10 uses
@@ -9409,19 +9338,12 @@ scalar.ph6162:                                    ; preds = %scalar.ph6162.prol.
   %i.awi = zext i1 %i.awh to i32
   %i.awj = add i32 %i.awd, %i.awi                 ; 2 uses
   %.not45.i15204362 = icmp eq i32 %i.aqn, 0
-  br i1 %.not45.i15204362, label %bigint_mul_pow2.exit, label %.lr.ph4365.preheader
-
-.lr.ph4365.preheader:                             ; preds = %._crit_edge4361
-  %14 = lshr i32 %.sroa.9.0.i1030, 3
-  %15 = and i32 %14, 268435448
-  %16 = zext nneg i32 %15 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ajm, i8 0, i64 %16, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit
+  br i1 %.not45.i15204362, label %bigint_mul_pow2.exit, label %.lr.ph4348.preheader
 
 bb.it:                                            ; preds = %bigint_mul_pow10.exit
-  %i.awk = sub nsw i32 0, %.sroa.9.0.i1030        ; 4 uses
+  %i.awk = sub nsw i32 0, %.sroa.9.0.i1030        ; 2 uses
   %i.awl = and i32 %i.awk, 63                     ; 3 uses
-  %i.awm = lshr i32 %i.awk, 6                     ; 14 uses
+  %i.awm = lshr i32 %i.awk, 6                     ; 16 uses
   %i.awn = load i32, ptr %3, align 8, !tbaa !138  ; 12 uses
   %i.awo = icmp eq i32 %i.awl, 0
   br i1 %i.awo, label %.preheader3531, label %bb.iu, !prof !8
@@ -9558,10 +9480,7 @@ scalar.ph6145:                                    ; preds = %scalar.ph6145.prol.
 
 .lr.ph4356:                                       ; preds = %._crit_edge4352
   %i.azd = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %17 = lshr exact i32 %i.awk, 3
-  %18 = zext nneg i32 %17 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.azd, i8 0, i64 %18, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit
+  br label %.lr.ph4348.preheader
 
 bb.iu:                                            ; preds = %bb.it
   %i.aze = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 12 uses
@@ -9719,21 +9638,25 @@ scalar.ph6124:                                    ; preds = %scalar.ph6124.prol.
   %.not45.i15264345 = icmp eq i32 %i.awm, 0
   br i1 %.not45.i15264345, label %bigint_mul_pow2.exit, label %.lr.ph4348.preheader
 
-.lr.ph4348.preheader:                             ; preds = %._crit_edge4344
-  %19 = lshr i32 %i.awk, 3
-  %20 = and i32 %19, 536870904
-  %i.bcn = zext nneg i32 %20 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.aze, i8 0, i64 %i.bcn, i1 false), !tbaa !91
+.lr.ph4348.preheader:                             ; preds = %._crit_edge4344, %._crit_edge4361, %.lr.ph4373.preheader, %.lr.ph4356
+  %.sink5677 = phi i32 [ %i.aqn, %._crit_edge4361 ], [ %i.awm, %.lr.ph4356 ], [ %i.aqn, %.lr.ph4373.preheader ], [ %i.awm, %._crit_edge4344 ]
+  %.sink5672 = phi ptr [ %i.ajm, %._crit_edge4361 ], [ %i.azd, %.lr.ph4356 ], [ %i.ajm, %.lr.ph4373.preheader ], [ %i.aze, %._crit_edge4344 ]
+  %.ph5671 = phi i32 [ %i.awj, %._crit_edge4361 ], [ %i.aqk, %.lr.ph4356 ], [ %i.atb, %.lr.ph4373.preheader ], [ %i.aqk, %._crit_edge4344 ]
+  %10 = add nsw i32 %.sink5677, -1
+  %i.bcn = zext i32 %10 to i64
+  %11 = shl nuw nsw i64 %i.bcn, 3
+  %12 = add nuw nsw i64 %11, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink5672, i8 0, i64 %12, i1 false), !tbaa !91
   br label %bigint_mul_pow2.exit
 
-bigint_mul_pow2.exit:                             ; preds = %.lr.ph4348.preheader, %.lr.ph4356, %.lr.ph4365.preheader, %.lr.ph4373.preheader, %._crit_edge4344, %._crit_edge4352, %._crit_edge4361
-  %21 = phi i32 [ %i.awj, %._crit_edge4361 ], [ %i.aqk, %.lr.ph4348.preheader ], [ %i.aqk, %.lr.ph4356 ], [ %i.awj, %.lr.ph4365.preheader ], [ %i.atb, %.lr.ph4373.preheader ], [ %i.aqk, %._crit_edge4344 ], [ %i.aqk, %._crit_edge4352 ] ; 2 uses
+bigint_mul_pow2.exit:                             ; preds = %.lr.ph4348.preheader, %._crit_edge4344, %._crit_edge4352, %._crit_edge4361
+  %13 = phi i32 [ %i.awj, %._crit_edge4361 ], [ %i.aqk, %._crit_edge4344 ], [ %i.aqk, %._crit_edge4352 ], [ %.ph5671, %.lr.ph4348.preheader ] ; 2 uses
   %i.bco = load i32, ptr %3, align 8, !tbaa !138  ; 4 uses
-  %i.bcp = icmp ult i32 %i.bco, %21
+  %i.bcp = icmp ult i32 %i.bco, %13
   br i1 %i.bcp, label %bigint_cmp.exit.thread, label %bb.iv
 
 bb.iv:                                            ; preds = %bigint_mul_pow2.exit
-  %i.bcq = icmp ugt i32 %i.bco, %21
+  %i.bcq = icmp ugt i32 %i.bco, %13
   br i1 %i.bcq, label %bigint_cmp.exit.thread, label %.preheader3527
 
 .preheader3527:                                   ; preds = %bb.iv
@@ -10136,7 +10059,7 @@ bb.vv:                                            ; preds = %bb.vt
   %i.dhh = lshr i64 %.0.i1498.ph, 52
   %i.dhi = trunc nuw nsw i64 %i.dhh to i32
   %i.dhj = add nsw i32 %i.dhi, -1076
-  %.sroa.9.0.i899 = select i1 %.not988.i898, i32 -1075, i32 %i.dhj ; 5 uses
+  %.sroa.9.0.i899 = select i1 %.not988.i898, i32 -1075, i32 %i.dhj ; 4 uses
   %.sroa.018.0.i900 = select i1 %.not988.i898, i64 %.0.i1498.ph, i64 %i.dhg
   %i.dhk = shl nuw nsw i64 %.sroa.018.0.i900, 1
   %i.dhl = or disjoint i64 %i.dhk, 1
@@ -10539,7 +10462,7 @@ bigint_mul_pow10.exit1509:                        ; preds = %bb.wh, %bb.wa, %big
 
 bb.wk:                                            ; preds = %bigint_mul_pow10.exit1509
   %i.dom = and i32 %.sroa.9.0.i899, 63            ; 3 uses
-  %i.don = lshr i32 %.sroa.9.0.i899, 6            ; 14 uses
+  %i.don = lshr i32 %.sroa.9.0.i899, 6            ; 15 uses
   %i.doo = icmp eq i32 %i.dom, 0
   br i1 %i.doo, label %.preheader3554, label %bb.wl, !prof !8
 
@@ -10669,12 +10592,7 @@ scalar.ph6107:                                    ; preds = %scalar.ph6107.prol.
 .lr.ph4174.preheader:                             ; preds = %scalar.ph6107.prol.loopexit, %scalar.ph6107, %middle.block6116, %.preheader3554
   %i.drb = add i32 %i.dok, %i.don                 ; 2 uses
   store i32 %i.drb, ptr %6, align 8, !tbaa !138
-  %22 = add nsw i32 %i.don, -1
-  %23 = zext i32 %22 to i64
-  %24 = shl nuw nsw i64 %23, 3
-  %25 = add nuw nsw i64 %24, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.dhm, i8 0, i64 %25, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit1540
+  br label %.lr.ph4149.preheader
 
 bb.wl:                                            ; preds = %bb.wk
   %i.drc = zext i32 %i.dok to i64                 ; 10 uses
@@ -10828,19 +10746,12 @@ scalar.ph6086:                                    ; preds = %scalar.ph6086.prol.
   %i.dui = zext i1 %i.duh to i32
   %i.duj = add i32 %i.dud, %i.dui                 ; 2 uses
   %.not45.i15354163 = icmp eq i32 %i.don, 0
-  br i1 %.not45.i15354163, label %bigint_mul_pow2.exit1540, label %.lr.ph4166.preheader
-
-.lr.ph4166.preheader:                             ; preds = %._crit_edge4162
-  %26 = lshr i32 %.sroa.9.0.i899, 3
-  %27 = and i32 %26, 268435448
-  %28 = zext nneg i32 %27 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.dhm, i8 0, i64 %28, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit1540
+  br i1 %.not45.i15354163, label %bigint_mul_pow2.exit1540, label %.lr.ph4149.preheader
 
 bb.wm:                                            ; preds = %bigint_mul_pow10.exit1509
-  %i.duk = sub nsw i32 0, %.sroa.9.0.i899         ; 4 uses
+  %i.duk = sub nsw i32 0, %.sroa.9.0.i899         ; 2 uses
   %i.dul = and i32 %i.duk, 63                     ; 3 uses
-  %i.dum = lshr i32 %i.duk, 6                     ; 14 uses
+  %i.dum = lshr i32 %i.duk, 6                     ; 16 uses
   %i.dun = load i32, ptr %5, align 8, !tbaa !138  ; 12 uses
   %i.duo = icmp eq i32 %i.dul, 0
   br i1 %i.duo, label %.preheader3557, label %bb.wn, !prof !8
@@ -10977,10 +10888,7 @@ scalar.ph6069:                                    ; preds = %scalar.ph6069.prol.
 
 .lr.ph4157:                                       ; preds = %._crit_edge4153
   %i.dxd = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %29 = lshr exact i32 %i.duk, 3
-  %30 = zext nneg i32 %29 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.dxd, i8 0, i64 %30, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit1540
+  br label %.lr.ph4149.preheader
 
 bb.wn:                                            ; preds = %bb.wm
   %i.dxe = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 12 uses
@@ -11138,21 +11046,25 @@ scalar.ph6048:                                    ; preds = %scalar.ph6048.prol.
   %.not45.i15444146 = icmp eq i32 %i.dum, 0
   br i1 %.not45.i15444146, label %bigint_mul_pow2.exit1540, label %.lr.ph4149.preheader
 
-.lr.ph4149.preheader:                             ; preds = %._crit_edge4145
-  %31 = lshr i32 %i.duk, 3
-  %32 = and i32 %31, 536870904
-  %i.ean = zext nneg i32 %32 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.dxe, i8 0, i64 %i.ean, i1 false), !tbaa !91
+.lr.ph4149.preheader:                             ; preds = %._crit_edge4145, %._crit_edge4162, %.lr.ph4174.preheader, %.lr.ph4157
+  %.sink5690 = phi i32 [ %i.don, %._crit_edge4162 ], [ %i.dum, %.lr.ph4157 ], [ %i.don, %.lr.ph4174.preheader ], [ %i.dum, %._crit_edge4145 ]
+  %.sink5685 = phi ptr [ %i.dhm, %._crit_edge4162 ], [ %i.dxd, %.lr.ph4157 ], [ %i.dhm, %.lr.ph4174.preheader ], [ %i.dxe, %._crit_edge4145 ]
+  %.ph5684 = phi i32 [ %i.duj, %._crit_edge4162 ], [ %i.dok, %.lr.ph4157 ], [ %i.drb, %.lr.ph4174.preheader ], [ %i.dok, %._crit_edge4145 ]
+  %14 = add nsw i32 %.sink5690, -1
+  %i.ean = zext i32 %14 to i64
+  %15 = shl nuw nsw i64 %i.ean, 3
+  %16 = add nuw nsw i64 %15, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink5685, i8 0, i64 %16, i1 false), !tbaa !91
   br label %bigint_mul_pow2.exit1540
 
-bigint_mul_pow2.exit1540:                         ; preds = %.lr.ph4149.preheader, %.lr.ph4157, %.lr.ph4166.preheader, %.lr.ph4174.preheader, %._crit_edge4145, %._crit_edge4153, %._crit_edge4162
-  %33 = phi i32 [ %i.duj, %._crit_edge4162 ], [ %i.dok, %.lr.ph4149.preheader ], [ %i.dok, %.lr.ph4157 ], [ %i.duj, %.lr.ph4166.preheader ], [ %i.drb, %.lr.ph4174.preheader ], [ %i.dok, %._crit_edge4145 ], [ %i.dok, %._crit_edge4153 ] ; 2 uses
+bigint_mul_pow2.exit1540:                         ; preds = %.lr.ph4149.preheader, %._crit_edge4145, %._crit_edge4153, %._crit_edge4162
+  %17 = phi i32 [ %i.duj, %._crit_edge4162 ], [ %i.dok, %._crit_edge4145 ], [ %i.dok, %._crit_edge4153 ], [ %.ph5684, %.lr.ph4149.preheader ] ; 2 uses
   %i.eao = load i32, ptr %5, align 8, !tbaa !138  ; 4 uses
-  %i.eap = icmp ult i32 %i.eao, %33
+  %i.eap = icmp ult i32 %i.eao, %17
   br i1 %i.eap, label %bigint_cmp.exit1579.thread, label %bb.wo
 
 bb.wo:                                            ; preds = %bigint_mul_pow2.exit1540
-  %i.eaq = icmp ugt i32 %i.eao, %33
+  %i.eaq = icmp ugt i32 %i.eao, %17
   br i1 %i.eaq, label %bigint_cmp.exit1579.thread, label %.preheader3553
 
 .preheader3553:                                   ; preds = %bb.wo
@@ -11555,7 +11467,7 @@ bb.arg:                                           ; preds = %bb.are
   %i.hyj = lshr i64 %.0.i1500.ph, 52
   %i.hyk = trunc nuw nsw i64 %i.hyj to i32
   %i.hyl = add nsw i32 %i.hyk, -1076
-  %.sroa.9.0.i = select i1 %.not988.i, i32 -1075, i32 %i.hyl ; 5 uses
+  %.sroa.9.0.i = select i1 %.not988.i, i32 -1075, i32 %i.hyl ; 4 uses
   %.sroa.018.0.i = select i1 %.not988.i, i64 %.0.i1500.ph, i64 %i.hyi
   %i.hym = shl nuw nsw i64 %.sroa.018.0.i, 1
   %i.hyn = or disjoint i64 %i.hym, 1
@@ -11958,7 +11870,7 @@ bigint_mul_pow10.exit1515:                        ; preds = %bb.ars, %bb.arl, %b
 
 bb.arv:                                           ; preds = %bigint_mul_pow10.exit1515
   %i.ifo = and i32 %.sroa.9.0.i, 63               ; 3 uses
-  %i.ifp = lshr i32 %.sroa.9.0.i, 6               ; 14 uses
+  %i.ifp = lshr i32 %.sroa.9.0.i, 6               ; 15 uses
   %i.ifq = icmp eq i32 %i.ifo, 0
   br i1 %i.ifq, label %.preheader3592, label %bb.arw, !prof !8
 
@@ -12088,12 +12000,7 @@ scalar.ph6031:                                    ; preds = %scalar.ph6031.prol.
 .lr.ph3960.preheader:                             ; preds = %scalar.ph6031.prol.loopexit, %scalar.ph6031, %middle.block6040, %.preheader3592
   %i.iid = add i32 %i.ifm, %i.ifp                 ; 2 uses
   store i32 %i.iid, ptr %8, align 8, !tbaa !138
-  %34 = add nsw i32 %i.ifp, -1
-  %35 = zext i32 %34 to i64
-  %36 = shl nuw nsw i64 %35, 3
-  %37 = add nuw nsw i64 %36, 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.hyo, i8 0, i64 %37, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit1558
+  br label %.lr.ph3935.preheader
 
 bb.arw:                                           ; preds = %bb.arv
   %i.iie = zext i32 %i.ifm to i64                 ; 10 uses
@@ -12247,19 +12154,12 @@ scalar.ph6010:                                    ; preds = %scalar.ph6010.prol.
   %i.ilk = zext i1 %i.ilj to i32
   %i.ill = add i32 %i.ilf, %i.ilk                 ; 2 uses
   %.not45.i15533949 = icmp eq i32 %i.ifp, 0
-  br i1 %.not45.i15533949, label %bigint_mul_pow2.exit1558, label %.lr.ph3952.preheader
-
-.lr.ph3952.preheader:                             ; preds = %._crit_edge3948
-  %38 = lshr i32 %.sroa.9.0.i, 3
-  %39 = and i32 %38, 268435448
-  %40 = zext nneg i32 %39 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.hyo, i8 0, i64 %40, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit1558
+  br i1 %.not45.i15533949, label %bigint_mul_pow2.exit1558, label %.lr.ph3935.preheader
 
 bb.arx:                                           ; preds = %bigint_mul_pow10.exit1515
-  %i.ilm = sub nsw i32 0, %.sroa.9.0.i            ; 4 uses
+  %i.ilm = sub nsw i32 0, %.sroa.9.0.i            ; 2 uses
   %i.iln = and i32 %i.ilm, 63                     ; 3 uses
-  %i.ilo = lshr i32 %i.ilm, 6                     ; 14 uses
+  %i.ilo = lshr i32 %i.ilm, 6                     ; 16 uses
   %i.ilp = load i32, ptr %7, align 8, !tbaa !138  ; 12 uses
   %i.ilq = icmp eq i32 %i.iln, 0
   br i1 %i.ilq, label %.preheader3595, label %bb.ary, !prof !8
@@ -12396,10 +12296,7 @@ scalar.ph5993:                                    ; preds = %scalar.ph5993.prol.
 
 .lr.ph3943:                                       ; preds = %._crit_edge3939
   %i.iof = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %41 = lshr exact i32 %i.ilm, 3
-  %42 = zext nneg i32 %41 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.iof, i8 0, i64 %42, i1 false), !tbaa !91
-  br label %bigint_mul_pow2.exit1558
+  br label %.lr.ph3935.preheader
 
 bb.ary:                                           ; preds = %bb.arx
   %i.iog = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 12 uses
@@ -12557,21 +12454,25 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %.not45.i15623932 = icmp eq i32 %i.ilo, 0
   br i1 %.not45.i15623932, label %bigint_mul_pow2.exit1558, label %.lr.ph3935.preheader
 
-.lr.ph3935.preheader:                             ; preds = %._crit_edge3931
-  %43 = lshr i32 %i.ilm, 3
-  %44 = and i32 %43, 536870904
-  %i.irp = zext nneg i32 %44 to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.iog, i8 0, i64 %i.irp, i1 false), !tbaa !91
+.lr.ph3935.preheader:                             ; preds = %._crit_edge3931, %._crit_edge3948, %.lr.ph3960.preheader, %.lr.ph3943
+  %.sink5741 = phi i32 [ %i.ifp, %._crit_edge3948 ], [ %i.ilo, %.lr.ph3943 ], [ %i.ifp, %.lr.ph3960.preheader ], [ %i.ilo, %._crit_edge3931 ]
+  %.sink5736 = phi ptr [ %i.hyo, %._crit_edge3948 ], [ %i.iof, %.lr.ph3943 ], [ %i.hyo, %.lr.ph3960.preheader ], [ %i.iog, %._crit_edge3931 ]
+  %.ph5735 = phi i32 [ %i.ill, %._crit_edge3948 ], [ %i.ifm, %.lr.ph3943 ], [ %i.iid, %.lr.ph3960.preheader ], [ %i.ifm, %._crit_edge3931 ]
+  %18 = add nsw i32 %.sink5741, -1
+  %i.irp = zext i32 %18 to i64
+  %19 = shl nuw nsw i64 %i.irp, 3
+  %20 = add nuw nsw i64 %19, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sink5736, i8 0, i64 %20, i1 false), !tbaa !91
   br label %bigint_mul_pow2.exit1558
 
-bigint_mul_pow2.exit1558:                         ; preds = %.lr.ph3935.preheader, %.lr.ph3943, %.lr.ph3952.preheader, %.lr.ph3960.preheader, %._crit_edge3931, %._crit_edge3939, %._crit_edge3948
-  %45 = phi i32 [ %i.ill, %._crit_edge3948 ], [ %i.ifm, %.lr.ph3935.preheader ], [ %i.ifm, %.lr.ph3943 ], [ %i.ill, %.lr.ph3952.preheader ], [ %i.iid, %.lr.ph3960.preheader ], [ %i.ifm, %._crit_edge3931 ], [ %i.ifm, %._crit_edge3939 ] ; 2 uses
+bigint_mul_pow2.exit1558:                         ; preds = %.lr.ph3935.preheader, %._crit_edge3931, %._crit_edge3939, %._crit_edge3948
+  %21 = phi i32 [ %i.ill, %._crit_edge3948 ], [ %i.ifm, %._crit_edge3931 ], [ %i.ifm, %._crit_edge3939 ], [ %.ph5735, %.lr.ph3935.preheader ] ; 2 uses
   %i.irq = load i32, ptr %7, align 8, !tbaa !138  ; 4 uses
-  %i.irr = icmp ult i32 %i.irq, %45
+  %i.irr = icmp ult i32 %i.irq, %21
   br i1 %i.irr, label %bigint_cmp.exit1588.thread, label %bb.arz
 
 bb.arz:                                           ; preds = %bigint_mul_pow2.exit1558
-  %i.irs = icmp ugt i32 %i.irq, %45
+  %i.irs = icmp ugt i32 %i.irq, %21
   br i1 %i.irs, label %bigint_cmp.exit1588.thread, label %.preheader3591
 
 .preheader3591:                                   ; preds = %bb.arz
