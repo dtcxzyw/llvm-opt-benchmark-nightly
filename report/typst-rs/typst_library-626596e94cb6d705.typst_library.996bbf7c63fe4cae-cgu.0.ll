@@ -206,7 +206,6 @@ bb.q:                                             ; preds = %bb.n
   unreachable
 
 bb.r:                                             ; preds = %bb.n
-  %2 = ptrtoint ptr %i.an to i64
   store i16 %.sroa.4.0.copyload, ptr %i.an, align 1, !noalias !29495
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !29496
   invoke void @_RNvNtNtCs3oUPovFnLWP_4core3str8converts9from_utf8(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.an, i64 noundef 2)
@@ -226,7 +225,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECsda
 
 bb.t:                                             ; preds = %bb.s
   store i64 2, ptr %i.c, align 8, !alias.scope !29487, !noalias !29490
-  store i64 %2, ptr %.sroa.5.0..sroa_idx105, align 8, !alias.scope !29487, !noalias !29490
+  store ptr %i.an, ptr %.sroa.5.0..sroa_idx105, align 8, !alias.scope !29487, !noalias !29490
   store i64 2, ptr %.sroa.511.sroa.5.0..sroa.511.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !29487, !noalias !29490
   br label %_RNCINvMs9_NtCsdE48SAkMLa6_9hayagriva3cslNtB8_12StyleContext13lookup_localeNCNvMsm_B8_INtB8_7ContextNtBa_5EntryE14ordinal_lookup0NtCs4g035V82HBz_12citationberg13OrdinalLookupEs_0CsdaEETE4DqmE_13typst_library.exit
 
@@ -629,7 +628,6 @@ bb.q:                                             ; preds = %bb.n
   unreachable
 
 bb.r:                                             ; preds = %bb.n
-  %2 = ptrtoint ptr %i.an to i64
   store i16 %.sroa.4.0.copyload, ptr %i.an, align 1, !noalias !29614
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !29615
   invoke void @_RNvNtNtCs3oUPovFnLWP_4core3str8converts9from_utf8(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.an, i64 noundef 2)
@@ -649,7 +647,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECsda
 
 bb.t:                                             ; preds = %bb.s
   store i64 2, ptr %i.c, align 8, !alias.scope !29606, !noalias !29609
-  store i64 %2, ptr %.sroa.5.0..sroa_idx125, align 8, !alias.scope !29606, !noalias !29609
+  store ptr %i.an, ptr %.sroa.5.0..sroa_idx125, align 8, !alias.scope !29606, !noalias !29609
   store i64 2, ptr %.sroa.511.sroa.5.0..sroa.511.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !29606, !noalias !29609
   br label %_RNCINvMs9_NtCsdE48SAkMLa6_9hayagriva3cslNtB8_12StyleContext13lookup_localeNCNvMsm_B8_INtB8_7ContextNtBa_5EntryE6gender0RNtCs4g035V82HBz_12citationberg13LocalizedTermEs_0CsdaEETE4DqmE_13typst_library.exit
 
@@ -1052,7 +1050,6 @@ bb.eh:                                            ; preds = %bb.ee
   unreachable
 
 bb.ei:                                            ; preds = %bb.ee
-  %2 = ptrtoint ptr %i.mv to i64
   store i16 %.sroa.4.0.copyload.i.i.i, ptr %i.mv, align 1, !noalias !93758
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bd), !noalias !93759
   invoke void @_RNvNtNtCs3oUPovFnLWP_4core3str8converts9from_utf8(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.bd, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.mv, i64 noundef 2)
@@ -1072,7 +1069,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECsda
 
 bb.ek:                                            ; preds = %bb.ej
   store i64 2, ptr %i.bf, align 8, !alias.scope !93748, !noalias !93757
-  store i64 %2, ptr %.sroa.5.0..sroa_idx133.i.i.i, align 8, !alias.scope !93748, !noalias !93757
+  store ptr %i.mv, ptr %.sroa.5.0..sroa_idx133.i.i.i, align 8, !alias.scope !93748, !noalias !93757
   store i64 2, ptr %.sroa.511.sroa.5.0..sroa.511.0..sroa_idx.sroa_idx.i.i.i.i, align 8, !alias.scope !93748, !noalias !93757
   br label %_RNCINvMs9_NtCsdE48SAkMLa6_9hayagriva3cslNtB8_12StyleContext13lookup_localeNCNvMsm_B8_INtB8_7ContextNtBa_5EntryE14localized_date0RNtCs4g035V82HBz_12citationberg4DateEs_0CsdaEETE4DqmE_13typst_library.exit.i.i.i
 
@@ -1475,7 +1472,6 @@ bb.hd:                                            ; preds = %bb.ha
   unreachable
 
 bb.he:                                            ; preds = %bb.ha
-  %3 = ptrtoint ptr %i.xe to i64
   store i16 %.sroa.4.0.copyload.i.i176.i, ptr %i.xe, align 1, !noalias !93941
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah), !noalias !93942
   invoke void @_RNvNtNtCs3oUPovFnLWP_4core3str8converts9from_utf8(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.ah, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.xe, i64 noundef 2)
@@ -1507,7 +1503,7 @@ bb.hh:                                            ; preds = %bb.hg, %bb.hc, %bb.
 
 .thread257.i.i:                                   ; preds = %bb.hf
   store i64 2, ptr %i.aj, align 8, !alias.scope !93931, !noalias !93940
-  store i64 %3, ptr %.sroa.5.0..sroa_idx120.i.i.i, align 8, !alias.scope !93931, !noalias !93940
+  store ptr %i.xe, ptr %.sroa.5.0..sroa_idx120.i.i.i, align 8, !alias.scope !93931, !noalias !93940
   store i64 2, ptr %.sroa.511.sroa.5.0..sroa.511.0..sroa_idx.sroa_idx.i.i.i169.i, align 8, !alias.scope !93931, !noalias !93940
   %i.xl = icmp eq i64 %i.ws, 0
   br i1 %i.xl, label %_RNCINvMs9_NtCsdE48SAkMLa6_9hayagriva3cslNtB8_12StyleContext13lookup_localeNCINvNtB8_9rendering16render_date_partNtBa_5EntryEs5_0bE0CsdaEETE4DqmE_13typst_library.exit104.thread.i.thread.i.i, label %.lr.ph.i.i.i.i177.i
@@ -1910,7 +1906,6 @@ bb.u:                                             ; preds = %bb.r
   unreachable
 
 bb.v:                                             ; preds = %bb.r
-  %4 = ptrtoint ptr %i.aw to i64
   store i16 %.sroa.4.0.copyload.i, ptr %i.aw, align 1, !noalias !172742
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !172743
   invoke void @_RNvNtNtCs3oUPovFnLWP_4core3str8converts9from_utf8(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.aw, i64 noundef 2)
@@ -1930,7 +1925,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECsda
 
 bb.x:                                             ; preds = %bb.w
   store i64 2, ptr %i.c, align 8, !alias.scope !172732, !noalias !172741
-  store i64 %4, ptr %.sroa.5.0..sroa_idx141.i, align 8, !alias.scope !172732, !noalias !172741
+  store ptr %i.aw, ptr %.sroa.5.0..sroa_idx141.i, align 8, !alias.scope !172732, !noalias !172741
   store i64 2, ptr %.sroa.511.sroa.5.0..sroa.511.0..sroa_idx.sroa_idx.i.i, align 8, !alias.scope !172732, !noalias !172741
   br label %_RNCINvMs9_NtCsdE48SAkMLa6_9hayagriva3cslNtB8_12StyleContext13lookup_localeNCNvMsm_B8_INtB8_7ContextNtBa_5EntryE4term0INtNtCs3oUPovFnLWP_4core6option6OptionReEEs_0CsdaEETE4DqmE_13typst_library.exit.i
 

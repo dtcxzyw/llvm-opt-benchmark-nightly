@@ -202,11 +202,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.l, align 8 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.m, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.l, align 8 ; 2 uses
+  %i.m = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.m, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit18visit_path_segmentBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(88) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -572,11 +571,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph7, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.t, align 8 ; 2 uses
-  %i.u = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.u, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.t, align 8 ; 2 uses
+  %i.u = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.u, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit9visit_patBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(184) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -804,11 +802,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.l, align 8 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.m, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.l, align 8 ; 2 uses
+  %i.m = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.m, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit19visit_generic_paramBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(464) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1155,11 +1152,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph7, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.v, align 8 ; 2 uses
-  %i.w = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.w, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.v, align 8 ; 2 uses
+  %i.w = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.w, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit10visit_exprBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(176) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1394,11 +1390,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph7, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.w, align 8 ; 2 uses
-  %i.x = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.x, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.w, align 8 ; 2 uses
+  %i.x = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.x, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit13visit_variantBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(288) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1615,11 +1610,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph7, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.t, align 8 ; 2 uses
-  %i.u = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.u, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.t, align 8 ; 2 uses
+  %i.u = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.u, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit9visit_patBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(184) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1681,11 +1675,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph7, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.t, align 8 ; 2 uses
-  %i.u = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.u, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.t, align 8 ; 2 uses
+  %i.u = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.u, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit9visit_patBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(184) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1744,11 +1737,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.d
-  %.sroa.0.0.copyload = load i64, ptr %i.q, align 8 ; 2 uses
-  %i.r = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.r, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.q, align 8 ; 2 uses
+  %i.r = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.r, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit12visit_fn_argBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1822,11 +1814,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.l, align 8 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.m, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.l, align 8 ; 2 uses
+  %i.m = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.m, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit14visit_use_treeBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(64) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1902,11 +1893,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.d
-  %.sroa.0.0.copyload = load i64, ptr %i.o, align 8 ; 2 uses
-  %i.p = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.p, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.o, align 8 ; 2 uses
+  %i.p = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.p, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit22visit_type_param_boundBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1968,11 +1958,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph7, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.t, align 8 ; 2 uses
-  %i.u = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.u, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.t, align 8 ; 2 uses
+  %i.u = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.u, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit10visit_exprBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(176) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -2375,11 +2364,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph7, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.t, align 8 ; 2 uses
-  %i.u = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.u, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.t, align 8 ; 2 uses
+  %i.u = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.u, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit10visit_exprBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(176) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -2616,11 +2604,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph10, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.w, align 8 ; 2 uses
-  %i.x = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.x, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.w, align 8 ; 2 uses
+  %i.x = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.x, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit22visit_type_param_boundBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -2760,11 +2747,10 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph8, %bb.d
-  %.sroa.0.0.copyload = load i64, ptr %i.w, align 8 ; 2 uses
-  %i.x = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.x, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.w, align 8 ; 2 uses
+  %i.x = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.x, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit15visit_field_patBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(64) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -2912,11 +2898,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph7, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.u, align 8 ; 2 uses
-  %i.v = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.v, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.u, align 8 ; 2 uses
+  %i.v = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.v, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit22visit_type_param_boundBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -2970,11 +2955,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.l, align 8 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.m, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.l, align 8 ; 2 uses
+  %i.m = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.m, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit10visit_typeBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(224) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -3258,11 +3242,10 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph8, %bb.d
-  %.sroa.0.0.copyload = load i64, ptr %i.w, align 8 ; 2 uses
-  %i.x = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.x, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.w, align 8 ; 2 uses
+  %i.x = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.x, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit17visit_field_valueBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(232) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -3475,11 +3458,10 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph7, %bb.d
-  %.sroa.0.0.copyload = load i64, ptr %i.v, align 8 ; 2 uses
-  %i.w = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.w, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.v, align 8 ; 2 uses
+  %i.w = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.w, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit9visit_patBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(184) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -3529,11 +3511,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.l, align 8 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.m, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.l, align 8 ; 2 uses
+  %i.m = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.m, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit11visit_fieldBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(312) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -3665,11 +3646,10 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.f
-  %.sroa.0.0.copyload = load i64, ptr %i.q, align 8 ; 2 uses
-  %i.r = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.r, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.q, align 8 ; 2 uses
+  %i.r = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.r, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit17visit_bare_fn_argBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(280) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -3726,11 +3706,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.l, align 8 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.m, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.l, align 8 ; 2 uses
+  %i.m = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.m, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit21visit_where_predicateBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(312) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4076,11 +4055,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.l, align 8 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.m, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.l, align 8 ; 2 uses
+  %i.m = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.m, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit11visit_fieldBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(312) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4174,11 +4152,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph7, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.u, align 8 ; 2 uses
-  %i.v = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.v, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.u, align 8 ; 2 uses
+  %i.v = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.v, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvXNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_genericsNtB2_7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit14visit_lifetime(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4263,11 +4240,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.d
-  %.sroa.0.0.copyload = load i64, ptr %i.n, align 8 ; 2 uses
-  %i.o = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.o, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.n, align 8 ; 2 uses
+  %i.o = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.o, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit22visit_type_param_boundBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4332,11 +4308,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.l, align 8 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.m, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.l, align 8 ; 2 uses
+  %i.m = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.m, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit19visit_generic_paramBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(464) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4464,11 +4439,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.l, align 8 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.m, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.l, align 8 ; 2 uses
+  %i.m = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.m, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit20visit_captured_paramBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4534,11 +4508,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph7, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.v, align 8 ; 2 uses
-  %i.w = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.w, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.v, align 8 ; 2 uses
+  %i.w = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.w, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit22visit_type_param_boundBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4593,11 +4566,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.l, align 8 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.m, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.l, align 8 ; 2 uses
+  %i.m = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.m, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit22visit_type_param_boundBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4694,11 +4666,10 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph7, %bb.d
-  %.sroa.0.0.copyload = load i64, ptr %i.y, align 8 ; 2 uses
-  %i.z = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.z, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.y, align 8 ; 2 uses
+  %i.z = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.z, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit10visit_exprBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(176) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4862,11 +4833,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph7, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.w, align 8 ; 2 uses
-  %i.x = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.x, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.w, align 8 ; 2 uses
+  %i.x = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.x, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit22visit_type_param_boundBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -4940,11 +4910,10 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph7, %bb.d
-  %.sroa.0.0.copyload = load i64, ptr %i.w, align 8 ; 2 uses
-  %i.x = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.02.0.sroa.speculated.in = select i1 %i.x, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.02.0.sroa.speculated = inttoptr i64 %.sroa.02.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.w, align 8 ; 2 uses
+  %i.x = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.02.0.sroa.speculated = select i1 %i.x, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit9visit_patBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(184) %.sroa.02.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5154,11 +5123,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.l, align 8 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.m, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.l, align 8 ; 2 uses
+  %i.m = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.m, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit22visit_type_param_boundBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(120) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5230,11 +5198,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.m, align 8 ; 2 uses
-  %i.n = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.n, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.m, align 8 ; 2 uses
+  %i.n = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.n, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvXNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_genericsNtB2_7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit14visit_lifetime(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5309,11 +5276,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.l, align 8 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.m, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.l, align 8 ; 2 uses
+  %i.m = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.m, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit10visit_typeBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(224) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -5360,11 +5326,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %.sroa.0.0.copyload = load i64, ptr %i.l, align 8 ; 2 uses
-  %i.m = icmp eq i64 %.sroa.0.0.copyload, 0
-  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.0.0.sroa.speculated.in = select i1 %i.m, i64 %.sroa.5.0.copyload, i64 %.sroa.0.0.copyload
-  %.sroa.0.0.sroa.speculated = inttoptr i64 %.sroa.0.0.sroa.speculated.in to ptr
+  %.sroa.0.0.copyload = load ptr, ptr %i.l, align 8 ; 2 uses
+  %i.m = icmp eq ptr %.sroa.0.0.copyload, null
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
+  %.sroa.0.0.sroa.speculated = select i1 %i.m, ptr %.sroa.5.0.copyload, ptr %.sroa.0.0.copyload
   call void @_RNvYNtNvNtNtCs8SLDEF1Cvau_13dsl_auto_type9auto_type19referenced_generics27extract_referenced_generics7VisitorNtNtNtCs91tTATF2stA_3syn3gen5visit5Visit22visit_generic_argumentBa_(ptr noalias noundef nonnull align 8 dereferenceable(56) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(312) %.sroa.0.0.sroa.speculated)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)

@@ -205,13 +205,12 @@ bb.c:                                             ; preds = %bb.b
 _ZN4rhai5types7dynamic7Dynamic15try_cast_result17h30d4cd334e8145e8E.exit: ; preds = %.noexc
   %.sroa.0.0.copyload = load i8, ptr %i.d, align 8, !alias.scope !34939
   %.sroa.525.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %.sroa.525.0.copyload = load i64, ptr %.sroa.525.0..sroa_idx, align 8, !alias.scope !34939
+  %.sroa.525.0.copyload = load ptr, ptr %.sroa.525.0..sroa_idx, align 8, !alias.scope !34939
   %.not = icmp eq i8 %.sroa.0.0.copyload, 12
-  %1 = inttoptr i64 %.sroa.525.0.copyload to ptr
   br i1 %.not, label %_ZN4rhai5types7dynamic7Dynamic15try_cast_result17h30d4cd334e8145e8E.exit.thread, label %bb.d
 
 _ZN4rhai5types7dynamic7Dynamic15try_cast_result17h30d4cd334e8145e8E.exit.thread: ; preds = %_ZN4rhai5types7dynamic7Dynamic15try_cast_result17h30d4cd334e8145e8E.exit, %.noexc
-  %.sink23.sroa.phi.sroa.speculated = phi ptr [ %.sink23.sroa.phi.sroa.speculate.load..noexc, %.noexc ], [ %1, %_ZN4rhai5types7dynamic7Dynamic15try_cast_result17h30d4cd334e8145e8E.exit ]
+  %.sink23.sroa.phi.sroa.speculated = phi ptr [ %.sink23.sroa.phi.sroa.speculate.load..noexc, %.noexc ], [ %.sroa.525.0.copyload, %_ZN4rhai5types7dynamic7Dynamic15try_cast_result17h30d4cd334e8145e8E.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   ret ptr %.sink23.sroa.phi.sroa.speculated
