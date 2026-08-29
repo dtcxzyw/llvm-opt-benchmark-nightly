@@ -205,7 +205,7 @@ bb.dc:                                            ; preds = %_ZN12_GLOBAL__N_17F
 
 .lr.ph111.i:                                      ; preds = %bb.dc, %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread.i
   %.055110.i = phi ptr [ %i.yj, %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread.i ], [ %i.tj, %bb.dc ] ; 2 uses
-  %i.tn = load i64, ptr %.055110.i, align 8, !tbaa !157 ; 12 uses
+  %i.tn = load i64, ptr %.055110.i, align 8, !tbaa !157 ; 13 uses
   store i64 %i.tn, ptr %i.cp, align 8, !tbaa !705
   %i.to = load i32, ptr %i.cm, align 8, !tbaa !50
   %i.tp = icmp ugt i32 %i.to, 1                   ; 4 uses
@@ -226,26 +226,24 @@ bb.dc:                                            ; preds = %_ZN12_GLOBAL__N_17F
   br i1 %.not27.i326, label %bb.de, label %bb.dd
 
 bb.dd:                                            ; preds = %.lr.ph111.i
-  %45 = xor i8 %.sroa.218.0.copyload.i.i, %.sroa.222.0.copyload.i
-  %46 = trunc i8 %45 to i1
-  %47 = xor i8 %.sroa.218.0.copyload.i.i, %.sroa.219.0.copyload.i
-  %48 = trunc i8 %47 to i1
-  %or.cond.i327 = select i1 %46, i1 true, i1 %48
-  br i1 %or.cond.i327, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread100.i, label %bb.de
+  %45 = icmp ne i8 %.sroa.218.0.copyload.i.i, %.sroa.222.0.copyload.i
+  %46 = icmp ne i8 %.sroa.218.0.copyload.i.i, %.sroa.219.0.copyload.i
+  %or.cond.i327 = select i1 %45, i1 true, i1 %46
+  br i1 %or.cond.i327, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread, label %bb.de
 
 bb.de:                                            ; preds = %bb.dd, %.lr.ph111.i
   %i.tu = add i64 %.sroa.017.0.copyload.i.i, %.sroa.021.0.copyload.i ; 10 uses
   %i.tv = icmp sgt i64 %i.tu, %.sroa.017.0.copyload.i.i
   %i.tw = icmp slt i64 %.sroa.021.0.copyload.i, 1
   %.not.i328 = xor i1 %i.tw, %i.tv
-  br i1 %.not.i328, label %bb.df, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread
+  br i1 %.not.i328, label %bb.df, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit348.thread
 
 bb.df:                                            ; preds = %bb.de
   %i.tx = add i64 %.sroa.017.0.copyload.i.i, %.sroa.018.0.copyload.i ; 9 uses
   %i.ty = icmp sgt i64 %i.tx, %.sroa.017.0.copyload.i.i
   %i.tz = icmp slt i64 %.sroa.018.0.copyload.i, 1
   %.not35.i330 = xor i1 %i.tz, %i.ty
-  br i1 %.not35.i330, label %bb.dg, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread
+  br i1 %.not35.i330, label %bb.dg, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit348.thread
 
 bb.dg:                                            ; preds = %bb.df
   switch i32 %i.ts, label %bb.dm [
@@ -260,11 +258,11 @@ bb.dg:                                            ; preds = %bb.df
   %spec.select.i.i343 = select i1 %i.ua, i64 0, i64 %i.tu
   %spec.select2.i.i344 = select i1 %i.ua, i64 %i.tu, i64 0
   %i.ub = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo21isLegalAddressingModeEPNS_4TypeEPNS_11GlobalValueElbljPNS_11InstructionEl(ptr noundef nonnull align 8 dereferenceable(8) %i.tr, ptr noundef %.sroa.091.0.copyload.i, ptr noundef %i.tt, i64 noundef %spec.select.i.i343, i1 noundef zeroext %i.tp, i64 noundef %i.tn, i32 noundef %.sroa.2.0.copyload92.i, ptr noundef null, i64 noundef %spec.select2.i.i344) #23
-  br i1 %i.ub, label %.split, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread
+  br i1 %i.ub, label %.split, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit348.thread
 
 bb.dh:                                            ; preds = %bb.dg
   %.not30.i.i336 = icmp eq ptr %i.tt, null
-  br i1 %.not30.i.i336, label %bb.di, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread
+  br i1 %.not30.i.i336, label %bb.di, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit348.thread
 
 bb.di:                                            ; preds = %bb.dh
   %i.uc = icmp ne i64 %i.tn, 0
@@ -276,12 +274,12 @@ bb.di:                                            ; preds = %bb.dh
   %i.ud = or i64 %i.tx, %i.tu
   %i.ue = icmp eq i64 %i.ud, 0
   %spec.select31.i = and i1 %or.cond3.i.i, %i.ue
-  br i1 %spec.select31.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread
+  br i1 %spec.select31.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit348.thread
 
 bb.dj:                                            ; preds = %bb.di
   %.old.i.i338 = add i64 %i.tn, -1
   %or.cond3.old.i.i = icmp ult i64 %.old.i.i338, -2
-  br i1 %or.cond3.old.i.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread, label %bb.dk
+  br i1 %or.cond3.old.i.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit348.thread, label %bb.dk
 
 bb.dk:                                            ; preds = %bb.dj
   %.not7.i.i339 = icmp eq i64 %i.tu, 0
@@ -306,7 +304,7 @@ bb.dl:                                            ; preds = %bb.dk
   %i.uk = or i64 %i.tx, %i.tu
   %i.ul = icmp eq i64 %i.uk, 0
   %spec.select.i333 = and i1 %or.cond31.i.i, %i.ul
-  br i1 %spec.select.i333, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread
+  br i1 %spec.select.i333, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit348.thread
 
 bb.dm:                                            ; preds = %bb.dg
   unreachable
@@ -317,14 +315,14 @@ _ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8Ki
   %i.uo = or i64 %i.un, %i.tx
   %i.up = icmp eq i64 %i.uo, 0
   %spec.select28.i335 = and i1 %i.um, %i.up
-  br i1 %spec.select28.i335, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread
+  br i1 %spec.select28.i335, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit348.thread
 
 .split:                                           ; preds = %.split.i342
   %i.uq = trunc nuw i8 %.sroa.219.0.copyload.i to i1 ; 2 uses
   %spec.select.i66.i345 = select i1 %i.uq, i64 0, i64 %i.tx
   %spec.select2.i67.i346 = select i1 %i.uq, i64 %i.tx, i64 0
   %i.ur = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo21isLegalAddressingModeEPNS_4TypeEPNS_11GlobalValueElbljPNS_11InstructionEl(ptr noundef nonnull align 8 dereferenceable(8) %i.tr, ptr noundef %.sroa.091.0.copyload.i, ptr noundef %i.tt, i64 noundef %spec.select.i66.i345, i1 noundef zeroext %i.tp, i64 noundef %i.tn, i32 noundef %.sroa.2.0.copyload92.i, ptr noundef null, i64 noundef %spec.select2.i67.i346) #23
-  br i1 %i.ur, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread
+  br i1 %i.ur, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit348.thread
 
 bb.dn:                                            ; preds = %.split21.i340, %bb.dk
   %.not7.i62.i341 = icmp eq i64 %i.tx, 0
@@ -341,19 +339,21 @@ _ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19Immediate
   %i.uv = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo20isLegalICmpImmediateEl(ptr noundef nonnull align 8 dereferenceable(8) %i.tr, i64 noundef %spec.select4.i63.i) #23
   br i1 %i.uv, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread100.i
 
-_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread: ; preds = %bb.dj, %.split.i342, %bb.dh, %bb.de, %bb.df, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueENS3_9ImmediateEblPNS_11InstructionE.exit.i334, %.split22.i331, %.split, %.split23.i
-  %i.uw = icmp eq i64 %i.tn, 1
-  br i1 %i.uw, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread100.i
+_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit348.thread: ; preds = %bb.dj, %.split.i342, %bb.dh, %bb.de, %bb.df, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueENS3_9ImmediateEblPNS_11InstructionE.exit.i334, %.split22.i331, %.split, %.split23.i
+  %47 = icmp eq i64 %i.tn, 1
+  br i1 %47, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread100.i
 
-_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i: ; preds = %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread
+_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread: ; preds = %bb.dd
+  %i.uw = icmp eq i64 %i.tn, 1
+  br i1 %i.uw, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i.thread, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread100.i
+
+_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i: ; preds = %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit348.thread
   br i1 %.not27.i326, label %bb.dp, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i.thread
 
-_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i.thread: ; preds = %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i
-  %.pre534 = xor i8 %.sroa.218.0.copyload.i.i, %.sroa.222.0.copyload.i
-  %.pre536 = trunc i8 %.pre534 to i1
-  %.pre538 = xor i8 %.sroa.218.0.copyload.i.i, %.sroa.219.0.copyload.i
-  %.pre540 = trunc i8 %.pre538 to i1
-  %.pre542 = select i1 %.pre536, i1 true, i1 %.pre540
+_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i.thread: ; preds = %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread
+  %48 = icmp ne i8 %.sroa.218.0.copyload.i.i, %.sroa.222.0.copyload.i
+  %49 = icmp ne i8 %.sroa.218.0.copyload.i.i, %.sroa.219.0.copyload.i
+  %.pre542 = select i1 %48, i1 true, i1 %49
   br i1 %.pre542, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread100.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i.thread._crit_edge
 
 _ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i.thread._crit_edge: ; preds = %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i.thread
@@ -443,44 +443,42 @@ _ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19Immediate
   %i.vq = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo21isLegalAddressingModeEPNS_4TypeEPNS_11GlobalValueElbljPNS_11InstructionEl(ptr noundef nonnull align 8 dereferenceable(8) %i.tr, ptr noundef %.sroa.091.0.copyload.i, ptr noundef %i.tt, i64 noundef %spec.select.i66.i, i1 noundef zeroext true, i64 noundef 0, i32 noundef %.sroa.2.0.copyload92.i, ptr noundef null, i64 noundef %spec.select2.i67.i) #23
   br i1 %i.vq, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread100.i
 
-_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread100.i: ; preds = %bb.dd, %bb.dl, %bb.do, %.split21.i340, %.split21.i, %.split.i324, %bb.dx, %bb.ds, %bb.dp, %bb.dq, %bb.du, %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i.thread, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueENS3_9ImmediateEblPNS_11InstructionE.exit.i, %.split367, %.split22.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread
+_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread100.i: ; preds = %bb.dl, %bb.do, %.split21.i340, %.split21.i, %.split.i324, %bb.dx, %bb.ds, %bb.dp, %bb.dq, %bb.du, %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i.thread, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347.thread, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit347, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueENS3_9ImmediateEblPNS_11InstructionE.exit.i, %.split367, %.split22.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit348.thread
   %i.vr = load i32, ptr %i.mu, align 8, !tbaa !812
   %i.vs = icmp eq i32 %i.vr, 0
   br i1 %i.vs, label %bb.dy, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread.i
 
 bb.dy:                                            ; preds = %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread100.i
-  %.sroa.015.0.copyload.i = load i64, ptr %i.ms, align 8 ; 2 uses
+  %.sroa.015.0.copyload.i = load i64, ptr %i.ms, align 8 ; 4 uses
   %.sroa.216.0.copyload.i = load i8, ptr %.sroa.222.0..sroa_idx.i, align 8 ; 2 uses
   %.sroa.0.0.copyload.i = load i64, ptr %i.mt, align 8 ; 4 uses
   %.sroa.2.0.copyload.i = load i8, ptr %.sroa.219.0..sroa_idx.i, align 8 ; 2 uses
   %i.vt = load ptr, ptr %43, align 8, !tbaa !807  ; 2 uses
-  %.sroa.017.0.copyload.i73.i = load i64, ptr %i.cr, align 8 ; 8 uses
+  %.sroa.017.0.copyload.i73.i = load i64, ptr %i.cr, align 8 ; 9 uses
   %.sroa.218.0.copyload.i75.i = load i8, ptr %.sroa.218.0..sroa_idx.i.i, align 8 ; 4 uses
-  %i.vu = load i64, ptr %i.cp, align 8, !tbaa !705 ; 2 uses
+  %i.vu = load i64, ptr %i.cp, align 8, !tbaa !705 ; 3 uses
   %.not27.i82.i = icmp eq i64 %.sroa.017.0.copyload.i73.i, 0 ; 2 uses
   br i1 %.not27.i82.i, label %bb.ea, label %bb.dz
 
 bb.dz:                                            ; preds = %bb.dy
-  %49 = xor i8 %.sroa.218.0.copyload.i75.i, %.sroa.216.0.copyload.i
-  %50 = trunc i8 %49 to i1
-  %51 = xor i8 %.sroa.218.0.copyload.i75.i, %.sroa.2.0.copyload.i
-  %52 = trunc i8 %51 to i1
-  %or.cond.i83.i = select i1 %50, i1 true, i1 %52
-  br i1 %or.cond.i83.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread.i, label %bb.ea
+  %50 = icmp ne i8 %.sroa.218.0.copyload.i75.i, %.sroa.216.0.copyload.i
+  %51 = icmp ne i8 %.sroa.218.0.copyload.i75.i, %.sroa.2.0.copyload.i
+  %or.cond.i83.i = select i1 %50, i1 true, i1 %51
+  br i1 %or.cond.i83.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i.a, label %bb.ea
 
 bb.ea:                                            ; preds = %bb.dz, %bb.dy
-  %i.vv = add i64 %.sroa.017.0.copyload.i73.i, %.sroa.015.0.copyload.i ; 5 uses
+  %i.vv = add i64 %.sroa.017.0.copyload.i73.i, %.sroa.015.0.copyload.i ; 3 uses
   %i.vw = icmp sgt i64 %i.vv, %.sroa.017.0.copyload.i73.i
-  %i.vx = icmp slt i64 %.sroa.015.0.copyload.i, 1 ; 3 uses
+  %i.vx = icmp slt i64 %.sroa.015.0.copyload.i, 1
   %.not.i84.i = xor i1 %i.vx, %i.vw
-  br i1 %.not.i84.i, label %bb.eb, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i.a
+  br i1 %.not.i84.i, label %bb.eb, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i
 
 bb.eb:                                            ; preds = %bb.ea
   %i.vy = add i64 %.sroa.017.0.copyload.i73.i, %.sroa.0.0.copyload.i ; 2 uses
   %i.vz = icmp sgt i64 %i.vy, %.sroa.017.0.copyload.i73.i
   %i.wa = icmp slt i64 %.sroa.0.0.copyload.i, 1
   %.not35.i86.i = xor i1 %i.wa, %i.vz
-  br i1 %.not35.i86.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i.a
+  br i1 %.not35.i86.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i
 
 _ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.i: ; preds = %bb.eb
   %.not.i.i87.i = icmp eq ptr %i.vt, null
@@ -490,32 +488,37 @@ _ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19Immediate
   %i.wc = or i64 %i.vy, %i.vv
   %i.wd = icmp eq i64 %i.wc, 0
   %spec.select.i88.i = and i1 %i.wd, %or.cond31.i.i.i
-  br i1 %spec.select.i88.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread102.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i.a
+  br i1 %spec.select.i88.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread102.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i
 
-_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i.a: ; preds = %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.i, %bb.eb, %bb.ea
+_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i: ; preds = %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.i, %bb.eb, %bb.ea
+  %52 = icmp eq i64 %i.vu, 1
+  br i1 %52, label %bb.ec, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread.i
+
+_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i.a: ; preds = %bb.dz
   %i.we = icmp eq i64 %i.vu, 1
-  br i1 %i.we, label %bb.ec, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread.i
+  br i1 %i.we, label %.thread104.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread.i
 
-bb.ec:                                            ; preds = %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i.a
+bb.ec:                                            ; preds = %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i
   br i1 %.not27.i82.i, label %.thread104._crit_edge.i.a, label %.thread104.i
 
-.thread104.i:                                     ; preds = %bb.ec
-  %.pre117.i = xor i8 %.sroa.218.0.copyload.i75.i, %.sroa.216.0.copyload.i
-  %.pre119.i = trunc i8 %.pre117.i to i1
-  %.pre121.i = xor i8 %.sroa.218.0.copyload.i75.i, %.sroa.2.0.copyload.i
-  %.pre123.i = trunc i8 %.pre121.i to i1
-  %.pre125.i = select i1 %.pre119.i, i1 true, i1 %.pre123.i
-  %53 = icmp sle i64 %i.vv, %.sroa.017.0.copyload.i73.i
-  %.not.i80.i.not = xor i1 %i.vx, %53
-  %or.cond.not = or i1 %.not.i80.i.not, %.pre125.i
-  br i1 %or.cond.not, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread.i, label %bb.ed
+.thread104.i:                                     ; preds = %bb.ec, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i.a
+  %53 = icmp ne i8 %.sroa.218.0.copyload.i75.i, %.sroa.216.0.copyload.i
+  %54 = icmp ne i8 %.sroa.218.0.copyload.i75.i, %.sroa.2.0.copyload.i
+  %.pre125.i = select i1 %53, i1 true, i1 %54
+  br i1 %.pre125.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread.i, label %.thread104._crit_edge.i
 
-.thread104._crit_edge.i.a:                        ; preds = %bb.ec
-  %.old = icmp sgt i64 %i.vv, 0
-  %.not.i80.i.old = xor i1 %i.vx, %.old
+.thread104._crit_edge.i:                          ; preds = %.thread104.i
+  %.pre115.i = add i64 %.sroa.017.0.copyload.i73.i, %.sroa.015.0.copyload.i
+  br label %.thread104._crit_edge.i.a
+
+.thread104._crit_edge.i.a:                        ; preds = %.thread104._crit_edge.i, %bb.ec
+  %.pre-phi116.i = phi i64 [ %.pre115.i, %.thread104._crit_edge.i ], [ %i.vv, %bb.ec ] ; 2 uses
+  %.old = icmp sgt i64 %.pre-phi116.i, %.sroa.017.0.copyload.i73.i
+  %55 = icmp slt i64 %.sroa.015.0.copyload.i, 1
+  %.not.i80.i.old = xor i1 %55, %.old
   br i1 %.not.i80.i.old, label %bb.ed, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread.i
 
-bb.ed:                                            ; preds = %.thread104.i, %.thread104._crit_edge.i.a
+bb.ed:                                            ; preds = %.thread104._crit_edge.i.a
   %i.wf = add i64 %.sroa.017.0.copyload.i73.i, %.sroa.0.0.copyload.i ; 2 uses
   %i.wg = icmp sgt i64 %i.wf, %.sroa.017.0.copyload.i73.i
   %i.wh = icmp slt i64 %.sroa.0.0.copyload.i, 1
@@ -524,7 +527,7 @@ bb.ed:                                            ; preds = %.thread104.i, %.thr
 
 _ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.i: ; preds = %bb.ed
   %.not.i.i81.i = icmp eq ptr %i.vt, null
-  %i.wi = or i64 %i.wf, %i.vv
+  %i.wi = or i64 %.pre-phi116.i, %i.wf
   %i.wj = icmp eq i64 %i.wi, 0
   %spec.select.i.i = and i1 %.not.i.i81.i, %i.wj
   br i1 %spec.select.i.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread102.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread.i
@@ -710,7 +713,7 @@ bb.es:                                            ; preds = %bb.ep, %bb.en
   %.not62.i = icmp eq i64 %i.yi, %i.ws
   br i1 %.not62.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread.i, label %.lr.ph.i181, !llvm.loop !817
 
-_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread.i: ; preds = %.critedge.i182, %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, %bb.ee, %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread102.i, %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.i, %bb.ed, %.thread104._crit_edge.i.a, %.thread104.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i.a, %bb.dz, %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread100.i
+_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread.i: ; preds = %.critedge.i182, %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, %bb.ee, %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.thread102.i, %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit76.i, %bb.ed, %.thread104._crit_edge.i.a, %.thread104.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i.a, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit89.thread.i, %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread100.i
   %i.yj = getelementptr inbounds nuw i8, ptr %.055110.i, i64 8 ; 2 uses
   %.not60.i = icmp eq ptr %i.yj, %i.tm
   br i1 %.not60.i, label %_ZN12_GLOBAL__N_111LSRInstance14GenerateScalesERNS_6LSRUseEjNS_7FormulaE.exit, label %.lr.ph111.i
@@ -1113,11 +1116,9 @@ _ZN12_GLOBAL__N_17FormulaC2ERKS0_.exit421.i:      ; preds = %.sink.split.i.i.i41
   br i1 %.not27.i.i, label %bb.kx, label %bb.kw
 
 bb.kw:                                            ; preds = %_ZN12_GLOBAL__N_17FormulaC2ERKS0_.exit421.i
-  %54 = xor i8 %.sroa.253.0.copyload.i, %i.bkk
-  %55 = trunc i8 %54 to i1
-  %56 = xor i8 %.sroa.250.0.copyload.i, %i.bkk
-  %57 = trunc i8 %56 to i1
-  %or.cond.i613.i = select i1 %55, i1 true, i1 %57
+  %56 = icmp ne i8 %i.bkk, %.sroa.253.0.copyload.i
+  %57 = icmp ne i8 %i.bkk, %.sroa.250.0.copyload.i
+  %or.cond.i613.i = select i1 %56, i1 true, i1 %57
   br i1 %or.cond.i613.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit.thread.i, label %bb.kx
 
 bb.kx:                                            ; preds = %bb.kw, %_ZN12_GLOBAL__N_17FormulaC2ERKS0_.exit421.i
@@ -1482,12 +1483,12 @@ bb.ly:                                            ; preds = %bb.lx
 
 bb.lz:                                            ; preds = %bb.ly
   %i.bql = trunc nuw i8 %.val245.i to i1
-  %i.bqm = add i64 %.val244.i, %.sroa.0682.0.copyload.i ; 9 uses
+  %i.bqm = add i64 %.val244.i, %.sroa.0682.0.copyload.i ; 10 uses
   %i.bqn = select i1 %i.bql, i8 1, i8 %.sroa.10.0.copyload.i207 ; 5 uses
   store i64 %i.bqm, ptr %i.ali, align 8
   store i8 %i.bqn, ptr %i.alj, align 8
   %i.bqo = load ptr, ptr %i.alm, align 8, !tbaa !580, !nonnull !19, !align !34 ; 8 uses
-  %.sroa.025.0.copyload.i = load i64, ptr %i.bit, align 8 ; 2 uses
+  %.sroa.025.0.copyload.i = load i64, ptr %i.bit, align 8 ; 4 uses
   %.sroa.226.0.copyload.i = load i8, ptr %.sroa.226.0..sroa_idx.i, align 8 ; 6 uses
   %.sroa.022.0.copyload.i = load i64, ptr %i.biu, align 8 ; 4 uses
   %.sroa.223.0.copyload.i = load i8, ptr %.sroa.223.0..sroa_idx.i, align 8 ; 6 uses
@@ -1497,31 +1498,29 @@ bb.lz:                                            ; preds = %bb.ly
   %i.bqq = load ptr, ptr %25, align 8, !tbaa !807 ; 10 uses
   %i.bqr = load i8, ptr %i.aln, align 8, !tbaa !700, !range !18, !noundef !19
   %i.bqs = trunc nuw i8 %i.bqr to i1              ; 3 uses
-  %i.bqt = load i64, ptr %i.alo, align 8, !tbaa !705 ; 10 uses
+  %i.bqt = load i64, ptr %i.alo, align 8, !tbaa !705 ; 11 uses
   %.not27.i644.i = icmp eq i64 %i.bqm, 0          ; 2 uses
   br i1 %.not27.i644.i, label %bb.mb, label %bb.ma
 
 bb.ma:                                            ; preds = %bb.lz
-  %58 = xor i8 %.sroa.226.0.copyload.i, %i.bqn
-  %59 = trunc i8 %58 to i1
-  %60 = xor i8 %.sroa.223.0.copyload.i, %i.bqn
-  %61 = trunc i8 %60 to i1
-  %or.cond.i645.i = select i1 %59, i1 true, i1 %61
-  br i1 %or.cond.i645.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i, label %bb.mb
+  %58 = icmp ne i8 %i.bqn, %.sroa.226.0.copyload.i
+  %59 = icmp ne i8 %i.bqn, %.sroa.223.0.copyload.i
+  %or.cond.i645.i = select i1 %58, i1 true, i1 %59
+  br i1 %or.cond.i645.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a, label %bb.mb
 
 bb.mb:                                            ; preds = %bb.ma, %bb.lz
-  %i.bqu = add i64 %.sroa.025.0.copyload.i, %i.bqm ; 17 uses
+  %i.bqu = add i64 %.sroa.025.0.copyload.i, %i.bqm ; 10 uses
   %i.bqv = icmp sgt i64 %i.bqu, %i.bqm
-  %i.bqw = icmp slt i64 %.sroa.025.0.copyload.i, 1 ; 3 uses
+  %i.bqw = icmp slt i64 %.sroa.025.0.copyload.i, 1
   %.not.i646.i = xor i1 %i.bqw, %i.bqv
-  br i1 %.not.i646.i, label %bb.mc, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a
+  br i1 %.not.i646.i, label %bb.mc, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i
 
 bb.mc:                                            ; preds = %bb.mb
   %i.bqx = add i64 %.sroa.022.0.copyload.i, %i.bqm ; 9 uses
   %i.bqy = icmp sgt i64 %i.bqx, %i.bqm
   %i.bqz = icmp slt i64 %.sroa.022.0.copyload.i, 1
   %.not35.i648.i = xor i1 %i.bqz, %i.bqy
-  br i1 %.not35.i648.i, label %bb.md, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a
+  br i1 %.not35.i648.i, label %bb.md, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i
 
 bb.md:                                            ; preds = %bb.mc
   switch i32 %i.bqp, label %bb.mj [
@@ -1536,11 +1535,11 @@ bb.md:                                            ; preds = %bb.mc
   %spec.select.i.i669.i = select i1 %i.bra, i64 0, i64 %i.bqu
   %spec.select2.i.i670.i = select i1 %i.bra, i64 %i.bqu, i64 0
   %i.brb = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo21isLegalAddressingModeEPNS_4TypeEPNS_11GlobalValueElbljPNS_11InstructionEl(ptr noundef nonnull align 8 dereferenceable(8) %i.bqo, ptr noundef %.sroa.0758.0.copyload.i, ptr noundef %i.bqq, i64 noundef %spec.select.i.i669.i, i1 noundef zeroext %i.bqs, i64 noundef %i.bqt, i32 noundef %.sroa.2759.0.copyload.i, ptr noundef null, i64 noundef %spec.select2.i.i670.i) #23
-  br i1 %i.brb, label %.split799.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a
+  br i1 %i.brb, label %.split799.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i
 
 bb.me:                                            ; preds = %bb.md
   %.not30.i.i656.i = icmp eq ptr %i.bqq, null
-  br i1 %.not30.i.i656.i, label %bb.mf, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a
+  br i1 %.not30.i.i656.i, label %bb.mf, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i
 
 bb.mf:                                            ; preds = %bb.me
   %i.brc = icmp ne i64 %i.bqt, 0
@@ -1552,12 +1551,12 @@ bb.mf:                                            ; preds = %bb.me
   %i.brd = or i64 %i.bqx, %i.bqu
   %i.bre = icmp eq i64 %i.brd, 0
   %spec.select31.i667.i = and i1 %i.bre, %or.cond3.i.i666.i
-  br i1 %spec.select31.i667.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread802.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a
+  br i1 %spec.select31.i667.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread802.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i
 
 bb.mg:                                            ; preds = %bb.mf
   %.old.i.i658.i = add i64 %i.bqt, -1
   %or.cond3.old.i.i659.i = icmp ult i64 %.old.i.i658.i, -2
-  br i1 %or.cond3.old.i.i659.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a, label %bb.mh
+  br i1 %or.cond3.old.i.i659.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i, label %bb.mh
 
 bb.mh:                                            ; preds = %bb.mg
   %.not7.i.i660.i = icmp eq i64 %i.bqu, 0
@@ -1582,7 +1581,7 @@ bb.mi:                                            ; preds = %bb.mh
   %i.brk = or i64 %i.bqx, %i.bqu
   %i.brl = icmp eq i64 %i.brk, 0
   %spec.select.i653.i = and i1 %i.brl, %or.cond31.i.i652.i
-  br i1 %spec.select.i653.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread802.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a
+  br i1 %spec.select.i653.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread802.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i
 
 bb.mj:                                            ; preds = %bb.md
   unreachable
@@ -1593,14 +1592,14 @@ _ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8Ki
   %i.bro = or i64 %i.brn, %i.bqt
   %i.brp = icmp eq i64 %i.bro, 0
   %spec.select28.i655.i = and i1 %i.brm, %i.brp
-  br i1 %spec.select28.i655.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread802.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a
+  br i1 %spec.select28.i655.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread802.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i
 
 .split799.i:                                      ; preds = %.split.i668.i
   %i.brq = trunc nuw i8 %.sroa.223.0.copyload.i to i1 ; 2 uses
   %spec.select.i66.i671.i = select i1 %i.brq, i64 0, i64 %i.bqx
   %spec.select2.i67.i672.i = select i1 %i.brq, i64 %i.bqx, i64 0
   %i.brr = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo21isLegalAddressingModeEPNS_4TypeEPNS_11GlobalValueElbljPNS_11InstructionEl(ptr noundef nonnull align 8 dereferenceable(8) %i.bqo, ptr noundef %.sroa.0758.0.copyload.i, ptr noundef %i.bqq, i64 noundef %spec.select.i66.i671.i, i1 noundef zeroext %i.bqs, i64 noundef %i.bqt, i32 noundef %.sroa.2759.0.copyload.i, ptr noundef null, i64 noundef %spec.select2.i67.i672.i) #23
-  br i1 %i.brr, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread802.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a
+  br i1 %i.brr, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread802.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i
 
 bb.mk:                                            ; preds = %.split21.i661.i, %bb.mh
   %.not7.i62.i663.i = icmp eq i64 %i.bqx, 0
@@ -1617,30 +1616,35 @@ _ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19Immediate
   %i.brv = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo20isLegalICmpImmediateEl(ptr noundef nonnull align 8 dereferenceable(8) %i.bqo, i64 noundef %spec.select4.i63.i664.i) #23
   br i1 %i.brv, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread802.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i
 
-_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a: ; preds = %.split799.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueENS3_9ImmediateEblPNS_11InstructionE.exit.i654.i, %.split22.i649.i, %bb.mg, %.split23.i665.i, %bb.me, %.split.i668.i, %bb.mc, %bb.mb
-  %i.brw = icmp eq i64 %i.bqt, 1
-  br i1 %i.brw, label %bb.mm, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i
+_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i: ; preds = %.split799.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueENS3_9ImmediateEblPNS_11InstructionE.exit.i654.i, %.split22.i649.i, %bb.mg, %.split23.i665.i, %bb.me, %.split.i668.i, %bb.mc, %bb.mb
+  %60 = icmp eq i64 %i.bqt, 1
+  br i1 %60, label %bb.mm, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i
 
-bb.mm:                                            ; preds = %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a
+_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a: ; preds = %bb.ma
+  %i.brw = icmp eq i64 %i.bqt, 1
+  br i1 %i.brw, label %.thread824.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i
+
+bb.mm:                                            ; preds = %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i
   br i1 %.not27.i644.i, label %.thread824._crit_edge.i.a, label %.thread824.i
 
-.thread824.i:                                     ; preds = %bb.mm
-  %.pre956.i = xor i8 %.sroa.226.0.copyload.i, %i.bqn
-  %.pre958.i = trunc i8 %.pre956.i to i1
-  %.pre960.i = xor i8 %.sroa.223.0.copyload.i, %i.bqn
-  %.pre962.i = trunc i8 %.pre960.i to i1
-  %.pre964.i = select i1 %.pre958.i, i1 true, i1 %.pre962.i
-  %62 = icmp sle i64 %i.bqu, %i.bqm
-  %.not.i623.i.not = xor i1 %i.bqw, %62
-  %or.cond379.not = or i1 %.not.i623.i.not, %.pre964.i
-  br i1 %or.cond379.not, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i, label %bb.mn
+.thread824.i:                                     ; preds = %bb.mm, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a
+  %61 = icmp ne i8 %i.bqn, %.sroa.226.0.copyload.i
+  %62 = icmp ne i8 %i.bqn, %.sroa.223.0.copyload.i
+  %.pre964.i = select i1 %61, i1 true, i1 %62
+  br i1 %.pre964.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i, label %.thread824._crit_edge.i
 
-.thread824._crit_edge.i.a:                        ; preds = %bb.mm
-  %.old378 = icmp sgt i64 %i.bqu, 0
-  %.not.i623.i.old = xor i1 %i.bqw, %.old378
+.thread824._crit_edge.i:                          ; preds = %.thread824.i
+  %.pre954.i = add i64 %.sroa.025.0.copyload.i, %i.bqm
+  br label %.thread824._crit_edge.i.a
+
+.thread824._crit_edge.i.a:                        ; preds = %.thread824._crit_edge.i, %bb.mm
+  %.pre-phi955.i = phi i64 [ %.pre954.i, %.thread824._crit_edge.i ], [ %i.bqu, %bb.mm ] ; 7 uses
+  %.old378 = icmp sgt i64 %.pre-phi955.i, %i.bqm
+  %63 = icmp slt i64 %.sroa.025.0.copyload.i, 1
+  %.not.i623.i.old = xor i1 %63, %.old378
   br i1 %.not.i623.i.old, label %bb.mn, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i
 
-bb.mn:                                            ; preds = %.thread824.i, %.thread824._crit_edge.i.a
+bb.mn:                                            ; preds = %.thread824._crit_edge.i.a
   %i.brx = add i64 %.sroa.022.0.copyload.i, %i.bqm ; 7 uses
   %i.bry = icmp sgt i64 %i.brx, %i.bqm
   %i.brz = icmp slt i64 %.sroa.022.0.copyload.i, 1
@@ -1657,8 +1661,8 @@ bb.mo:                                            ; preds = %bb.mn
 
 .split.i638.i:                                    ; preds = %bb.mo
   %i.bsa = trunc nuw i8 %.sroa.226.0.copyload.i to i1 ; 2 uses
-  %spec.select.i.i639.i = select i1 %i.bsa, i64 0, i64 %i.bqu
-  %spec.select2.i.i640.i = select i1 %i.bsa, i64 %i.bqu, i64 0
+  %spec.select.i.i639.i = select i1 %i.bsa, i64 0, i64 %.pre-phi955.i
+  %spec.select2.i.i640.i = select i1 %i.bsa, i64 %.pre-phi955.i, i64 0
   %i.bsb = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo21isLegalAddressingModeEPNS_4TypeEPNS_11GlobalValueElbljPNS_11InstructionEl(ptr noundef nonnull align 8 dereferenceable(8) %i.bqo, ptr noundef %.sroa.0758.0.copyload.i, ptr noundef %i.bqq, i64 noundef %spec.select.i.i639.i, i1 noundef zeroext true, i64 noundef 0, i32 noundef %.sroa.2759.0.copyload.i, ptr noundef null, i64 noundef %spec.select2.i.i640.i) #23
   br i1 %i.bsb, label %.split803.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i
 
@@ -1667,7 +1671,7 @@ bb.mp:                                            ; preds = %bb.mo
   br i1 %.not30.i.i632.i, label %bb.mq, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i
 
 bb.mq:                                            ; preds = %bb.mp
-  %.not7.i.i633.i = icmp eq i64 %i.bqu, 0
+  %.not7.i.i633.i = icmp eq i64 %.pre-phi955.i, 0
   br i1 %.not7.i.i633.i, label %bb.mt, label %bb.mr
 
 bb.mr:                                            ; preds = %bb.mq
@@ -1675,15 +1679,15 @@ bb.mr:                                            ; preds = %bb.mq
   br i1 %i.bsc, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i, label %.split21.i634.i
 
 .split21.i634.i:                                  ; preds = %bb.mr
-  %i.bsd = sub i64 0, %i.bqu
+  %i.bsd = sub i64 0, %.pre-phi955.i
   %i.bse = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo20isLegalICmpImmediateEl(ptr noundef nonnull align 8 dereferenceable(8) %i.bqo, i64 noundef %i.bsd) #23
   br i1 %i.bse, label %bb.mt, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i
 
 .split22.i626.i:                                  ; preds = %bb.mo
   %.not.i.i627.i = icmp eq ptr %i.bqq, null
-  %i.bsf = or i64 %i.brx, %i.bqu
+  %i.bsf = or i64 %.pre-phi955.i, %i.brx
   %i.bsg = icmp eq i64 %i.bsf, 0
-  %spec.select.i629.i = and i1 %i.bsg, %.not.i.i627.i
+  %spec.select.i629.i = and i1 %.not.i.i627.i, %i.bsg
   br i1 %spec.select.i629.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread802.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i
 
 bb.ms:                                            ; preds = %bb.mo
@@ -1691,9 +1695,9 @@ bb.ms:                                            ; preds = %bb.mo
 
 _ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueENS3_9ImmediateEblPNS_11InstructionE.exit.i630.i: ; preds = %bb.mo
   %i.bsh = icmp eq ptr %i.bqq, null
-  %i.bsi = or i64 %i.brx, %i.bqu
+  %i.bsi = or i64 %.pre-phi955.i, %i.brx
   %i.bsj = icmp eq i64 %i.bsi, 0
-  %spec.select28.i631.i = and i1 %i.bsj, %i.bsh
+  %spec.select28.i631.i = and i1 %i.bsh, %i.bsj
   br i1 %spec.select28.i631.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread802.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i
 
 .split803.i:                                      ; preds = %.split.i638.i
@@ -1716,7 +1720,7 @@ _ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6L
   %i.bso = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo20isLegalICmpImmediateEl(ptr noundef nonnull align 8 dereferenceable(8) %i.bqo, i64 noundef %i.bsn) #23
   br i1 %i.bso, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread802.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i
 
-_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i: ; preds = %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.i, %bb.mu, %.split803.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueENS3_9ImmediateEblPNS_11InstructionE.exit.i630.i, %.split22.i626.i, %.split21.i634.i, %bb.mr, %bb.mp, %.split.i638.i, %bb.mn, %.thread824._crit_edge.i.a, %.thread824.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.i, %bb.ml, %.split21.i661.i, %bb.mi, %bb.ma
+_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.thread.i: ; preds = %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit451.i, %bb.mu, %.split803.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueENS3_9ImmediateEblPNS_11InstructionE.exit.i630.i, %.split22.i626.i, %.split21.i634.i, %bb.mr, %bb.mp, %.split.i638.i, %bb.mn, %.thread824._crit_edge.i.a, %.thread824.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i.a, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.thread.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit673.i, %bb.ml, %.split21.i661.i, %bb.mi
   %i.bsp = load i32, ptr %i.alp, align 8, !tbaa !563
   %i.bsq = icmp eq i32 %i.bsp, 2
   br i1 %i.bsq, label %bb.mv, label %_ZL17mayUsePostIncModeRKN4llvm19TargetTransformInfoERN12_GLOBAL__N_16LSRUseEPKNS_4SCEVEPKNS_4LoopERNS_15ScalarEvolutionE.exit.thread.i
@@ -2119,7 +2123,7 @@ bb.en:                                            ; preds = %_ZL10isLegalUseRKN4
   %.val97.i28 = load ptr, ptr %i.uz, align 8, !tbaa !21
   %i.xi = getelementptr inbounds nuw [112 x i8], ptr %.val97.i28, i64 %.074220.i ; 18 uses
   %i.xj = load ptr, ptr %i.pu, align 8, !tbaa !580, !nonnull !19, !align !34 ; 8 uses
-  %.sroa.01.0.copyload.i = load i64, ptr %i.vy, align 8 ; 2 uses
+  %.sroa.01.0.copyload.i = load i64, ptr %i.vy, align 8 ; 4 uses
   %.sroa.22.0.copyload.i = load i8, ptr %.sroa.22.0..sroa_idx.i, align 8 ; 6 uses
   %.sroa.0.0.copyload.i = load i64, ptr %i.vz, align 8 ; 4 uses
   %.sroa.2.0.copyload.i = load i8, ptr %.sroa.2.0..sroa_idx.i, align 8 ; 6 uses
@@ -2128,38 +2132,36 @@ bb.en:                                            ; preds = %_ZL10isLegalUseRKN4
   %.sroa.2185.0.copyload.i = load i32, ptr %.sroa.2.0..sroa_idx.i.i.le.le, align 8, !tbaa !478 ; 4 uses
   %i.xl = load ptr, ptr %i.xi, align 8, !tbaa !807 ; 10 uses
   %i.xm = getelementptr inbounds nuw i8, ptr %i.xi, i64 8
-  %.sroa.017.0.copyload.i.i = load i64, ptr %i.xm, align 8 ; 8 uses
+  %.sroa.017.0.copyload.i.i = load i64, ptr %i.xm, align 8 ; 9 uses
   %.sroa.218.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.xi, i64 16
   %.sroa.218.0.copyload.i.i = load i8, ptr %.sroa.218.0..sroa_idx.i.i, align 8 ; 4 uses
   %i.xn = getelementptr inbounds nuw i8, ptr %i.xi, i64 24
   %i.xo = load i8, ptr %i.xn, align 8, !tbaa !700, !range !18, !noundef !19
   %i.xp = trunc nuw i8 %i.xo to i1                ; 3 uses
   %i.xq = getelementptr inbounds nuw i8, ptr %i.xi, i64 32
-  %i.xr = load i64, ptr %i.xq, align 8, !tbaa !705 ; 10 uses
+  %i.xr = load i64, ptr %i.xq, align 8, !tbaa !705 ; 11 uses
   %.not27.i125.i = icmp eq i64 %.sroa.017.0.copyload.i.i, 0 ; 2 uses
   br i1 %.not27.i125.i, label %bb.ep, label %bb.eo
 
 bb.eo:                                            ; preds = %bb.en
-  %24 = xor i8 %.sroa.218.0.copyload.i.i, %.sroa.22.0.copyload.i
-  %25 = trunc i8 %24 to i1
-  %26 = xor i8 %.sroa.218.0.copyload.i.i, %.sroa.2.0.copyload.i
-  %27 = trunc i8 %26 to i1
-  %or.cond.i126.i = select i1 %25, i1 true, i1 %27
-  br i1 %or.cond.i126.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, label %bb.ep
+  %24 = icmp ne i8 %.sroa.218.0.copyload.i.i, %.sroa.22.0.copyload.i
+  %25 = icmp ne i8 %.sroa.218.0.copyload.i.i, %.sroa.2.0.copyload.i
+  %or.cond.i126.i = select i1 %24, i1 true, i1 %25
+  br i1 %or.cond.i126.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a, label %bb.ep
 
 bb.ep:                                            ; preds = %bb.eo, %bb.en
-  %i.xs = add i64 %.sroa.017.0.copyload.i.i, %.sroa.01.0.copyload.i ; 17 uses
+  %i.xs = add i64 %.sroa.017.0.copyload.i.i, %.sroa.01.0.copyload.i ; 10 uses
   %i.xt = icmp sgt i64 %i.xs, %.sroa.017.0.copyload.i.i
-  %i.xu = icmp slt i64 %.sroa.01.0.copyload.i, 1  ; 3 uses
+  %i.xu = icmp slt i64 %.sroa.01.0.copyload.i, 1
   %.not.i127.i = xor i1 %i.xu, %i.xt
-  br i1 %.not.i127.i, label %bb.eq, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a
+  br i1 %.not.i127.i, label %bb.eq, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i
 
 bb.eq:                                            ; preds = %bb.ep
   %i.xv = add i64 %.sroa.017.0.copyload.i.i, %.sroa.0.0.copyload.i ; 9 uses
   %i.xw = icmp sgt i64 %i.xv, %.sroa.017.0.copyload.i.i
   %i.xx = icmp slt i64 %.sroa.0.0.copyload.i, 1
   %.not35.i129.i = xor i1 %i.xx, %i.xw
-  br i1 %.not35.i129.i, label %bb.er, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a
+  br i1 %.not35.i129.i, label %bb.er, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i
 
 bb.er:                                            ; preds = %bb.eq
   switch i32 %i.xk, label %bb.ex [
@@ -2174,11 +2176,11 @@ bb.er:                                            ; preds = %bb.eq
   %spec.select.i.i141.i = select i1 %i.xy, i64 0, i64 %i.xs
   %spec.select2.i.i142.i = select i1 %i.xy, i64 %i.xs, i64 0
   %i.xz = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo21isLegalAddressingModeEPNS_4TypeEPNS_11GlobalValueElbljPNS_11InstructionEl(ptr noundef nonnull align 8 dereferenceable(8) %i.xj, ptr noundef %.sroa.0184.0.copyload.i, ptr noundef %i.xl, i64 noundef %spec.select.i.i141.i, i1 noundef zeroext %i.xp, i64 noundef %i.xr, i32 noundef %.sroa.2185.0.copyload.i, ptr noundef null, i64 noundef %spec.select2.i.i142.i) #23
-  br i1 %i.xz, label %.split.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a
+  br i1 %i.xz, label %.split.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i
 
 bb.es:                                            ; preds = %bb.er
   %.not30.i.i135.i = icmp eq ptr %i.xl, null
-  br i1 %.not30.i.i135.i, label %bb.et, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a
+  br i1 %.not30.i.i135.i, label %bb.et, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i
 
 bb.et:                                            ; preds = %bb.es
   %i.ya = icmp ne i64 %i.xr, 0
@@ -2190,12 +2192,12 @@ bb.et:                                            ; preds = %bb.es
   %i.yb = or i64 %i.xv, %i.xs
   %i.yc = icmp eq i64 %i.yb, 0
   %spec.select31.i.i = and i1 %i.yc, %or.cond3.i.i.i
-  br i1 %spec.select31.i.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread195.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a
+  br i1 %spec.select31.i.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread195.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i
 
 bb.eu:                                            ; preds = %bb.et
   %.old.i.i.i = add i64 %i.xr, -1
   %or.cond3.old.i.i.i = icmp ult i64 %.old.i.i.i, -2
-  br i1 %or.cond3.old.i.i.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a, label %bb.ev
+  br i1 %or.cond3.old.i.i.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i, label %bb.ev
 
 bb.ev:                                            ; preds = %bb.eu
   %.not7.i.i137.i = icmp eq i64 %i.xs, 0
@@ -2220,7 +2222,7 @@ bb.ew:                                            ; preds = %bb.ev
   %i.yi = or i64 %i.xv, %i.xs
   %i.yj = icmp eq i64 %i.yi, 0
   %spec.select.i132.i = and i1 %i.yj, %or.cond31.i.i.i
-  br i1 %spec.select.i132.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread195.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a
+  br i1 %spec.select.i132.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread195.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i
 
 bb.ex:                                            ; preds = %bb.er
   unreachable
@@ -2231,14 +2233,14 @@ _ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8Ki
   %i.ym = or i64 %i.yl, %i.xr
   %i.yn = icmp eq i64 %i.ym, 0
   %spec.select28.i134.i = and i1 %i.yk, %i.yn
-  br i1 %spec.select28.i134.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread195.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a
+  br i1 %spec.select28.i134.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread195.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i
 
 .split.i:                                         ; preds = %.split.i140.i
   %i.yo = trunc nuw i8 %.sroa.2.0.copyload.i to i1 ; 2 uses
   %spec.select.i66.i143.i = select i1 %i.yo, i64 0, i64 %i.xv
   %spec.select2.i67.i144.i = select i1 %i.yo, i64 %i.xv, i64 0
   %i.yp = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo21isLegalAddressingModeEPNS_4TypeEPNS_11GlobalValueElbljPNS_11InstructionEl(ptr noundef nonnull align 8 dereferenceable(8) %i.xj, ptr noundef %.sroa.0184.0.copyload.i, ptr noundef %i.xl, i64 noundef %spec.select.i66.i143.i, i1 noundef zeroext %i.xp, i64 noundef %i.xr, i32 noundef %.sroa.2185.0.copyload.i, ptr noundef null, i64 noundef %spec.select2.i67.i144.i) #23
-  br i1 %i.yp, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread195.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a
+  br i1 %i.yp, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread195.i, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i
 
 bb.ey:                                            ; preds = %.split21.i138.i, %bb.ev
   %.not7.i62.i139.i = icmp eq i64 %i.xv, 0
@@ -2255,30 +2257,35 @@ _ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19Immediate
   %i.yt = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo20isLegalICmpImmediateEl(ptr noundef nonnull align 8 dereferenceable(8) %i.xj, i64 noundef %spec.select4.i63.i.i) #23
   br i1 %i.yt, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread195.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i
 
-_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a: ; preds = %.split.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueENS3_9ImmediateEblPNS_11InstructionE.exit.i133.i, %.split22.i130.i, %bb.eu, %.split23.i.i, %bb.es, %.split.i140.i, %bb.eq, %bb.ep
-  %i.yu = icmp eq i64 %i.xr, 1
-  br i1 %i.yu, label %bb.fa, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i
+_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i: ; preds = %.split.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueENS3_9ImmediateEblPNS_11InstructionE.exit.i133.i, %.split22.i130.i, %bb.eu, %.split23.i.i, %bb.es, %.split.i140.i, %bb.eq, %bb.ep
+  %26 = icmp eq i64 %i.xr, 1
+  br i1 %26, label %bb.fa, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i
 
-bb.fa:                                            ; preds = %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a
+_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a: ; preds = %bb.eo
+  %i.yu = icmp eq i64 %i.xr, 1
+  br i1 %i.yu, label %.thread204.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i
+
+bb.fa:                                            ; preds = %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i
   br i1 %.not27.i125.i, label %.thread204._crit_edge.i.a, label %.thread204.i
 
-.thread204.i:                                     ; preds = %bb.fa
-  %.pre254.i = xor i8 %.sroa.218.0.copyload.i.i, %.sroa.22.0.copyload.i
-  %.pre256.i = trunc i8 %.pre254.i to i1
-  %.pre258.i = xor i8 %.sroa.218.0.copyload.i.i, %.sroa.2.0.copyload.i
-  %.pre260.i = trunc i8 %.pre258.i to i1
-  %.pre262.i = select i1 %.pre256.i, i1 true, i1 %.pre260.i
-  %28 = icmp sle i64 %i.xs, %.sroa.017.0.copyload.i.i
-  %.not.i123.i.not = xor i1 %i.xu, %28
-  %or.cond.not = or i1 %.not.i123.i.not, %.pre262.i
-  br i1 %or.cond.not, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, label %bb.fb
+.thread204.i:                                     ; preds = %bb.fa, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a
+  %27 = icmp ne i8 %.sroa.218.0.copyload.i.i, %.sroa.22.0.copyload.i
+  %28 = icmp ne i8 %.sroa.218.0.copyload.i.i, %.sroa.2.0.copyload.i
+  %.pre262.i = select i1 %27, i1 true, i1 %28
+  br i1 %.pre262.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, label %.thread204._crit_edge.i
 
-.thread204._crit_edge.i.a:                        ; preds = %bb.fa
-  %.old = icmp sgt i64 %i.xs, 0
-  %.not.i123.i.old = xor i1 %i.xu, %.old
+.thread204._crit_edge.i:                          ; preds = %.thread204.i
+  %.pre252.i = add i64 %.sroa.017.0.copyload.i.i, %.sroa.01.0.copyload.i
+  br label %.thread204._crit_edge.i.a
+
+.thread204._crit_edge.i.a:                        ; preds = %.thread204._crit_edge.i, %bb.fa
+  %.pre-phi253.i = phi i64 [ %.pre252.i, %.thread204._crit_edge.i ], [ %i.xs, %bb.fa ] ; 7 uses
+  %.old = icmp sgt i64 %.pre-phi253.i, %.sroa.017.0.copyload.i.i
+  %29 = icmp slt i64 %.sroa.01.0.copyload.i, 1
+  %.not.i123.i.old = xor i1 %29, %.old
   br i1 %.not.i123.i.old, label %bb.fb, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i
 
-bb.fb:                                            ; preds = %.thread204.i, %.thread204._crit_edge.i.a
+bb.fb:                                            ; preds = %.thread204._crit_edge.i.a
   %i.yv = add i64 %.sroa.017.0.copyload.i.i, %.sroa.0.0.copyload.i ; 7 uses
   %i.yw = icmp sgt i64 %i.yv, %.sroa.017.0.copyload.i.i
   %i.yx = icmp slt i64 %.sroa.0.0.copyload.i, 1
@@ -2295,8 +2302,8 @@ bb.fc:                                            ; preds = %bb.fb
 
 .split.i.i:                                       ; preds = %bb.fc
   %i.yy = trunc nuw i8 %.sroa.22.0.copyload.i to i1 ; 2 uses
-  %spec.select.i.i.i = select i1 %i.yy, i64 0, i64 %i.xs
-  %spec.select2.i.i.i = select i1 %i.yy, i64 %i.xs, i64 0
+  %spec.select.i.i.i = select i1 %i.yy, i64 0, i64 %.pre-phi253.i
+  %spec.select2.i.i.i = select i1 %i.yy, i64 %.pre-phi253.i, i64 0
   %i.yz = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo21isLegalAddressingModeEPNS_4TypeEPNS_11GlobalValueElbljPNS_11InstructionEl(ptr noundef nonnull align 8 dereferenceable(8) %i.xj, ptr noundef %.sroa.0184.0.copyload.i, ptr noundef %i.xl, i64 noundef %spec.select.i.i.i, i1 noundef zeroext true, i64 noundef 0, i32 noundef %.sroa.2185.0.copyload.i, ptr noundef null, i64 noundef %spec.select2.i.i.i) #23
   br i1 %i.yz, label %.split196.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i
 
@@ -2305,7 +2312,7 @@ bb.fd:                                            ; preds = %bb.fc
   br i1 %.not30.i.i.i, label %bb.fe, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i
 
 bb.fe:                                            ; preds = %bb.fd
-  %.not7.i.i.i = icmp eq i64 %i.xs, 0
+  %.not7.i.i.i = icmp eq i64 %.pre-phi253.i, 0
   br i1 %.not7.i.i.i, label %bb.fh, label %bb.ff
 
 bb.ff:                                            ; preds = %bb.fe
@@ -2313,13 +2320,13 @@ bb.ff:                                            ; preds = %bb.fe
   br i1 %i.za, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i, label %.split21.i.i
 
 .split21.i.i:                                     ; preds = %bb.ff
-  %i.zb = sub i64 0, %i.xs
+  %i.zb = sub i64 0, %.pre-phi253.i
   %i.zc = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo20isLegalICmpImmediateEl(ptr noundef nonnull align 8 dereferenceable(8) %i.xj, i64 noundef %i.zb) #23
   br i1 %i.zc, label %bb.fh, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i
 
 .split22.i.i:                                     ; preds = %bb.fc
   %.not.i.i124.i = icmp eq ptr %i.xl, null
-  %i.zd = or i64 %i.yv, %i.xs
+  %i.zd = or i64 %.pre-phi253.i, %i.yv
   %i.ze = icmp eq i64 %i.zd, 0
   %spec.select.i.i = and i1 %.not.i.i124.i, %i.ze
   br i1 %spec.select.i.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread195.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i
@@ -2329,7 +2336,7 @@ bb.fg:                                            ; preds = %bb.fc
 
 _ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueENS3_9ImmediateEblPNS_11InstructionE.exit.i.i: ; preds = %bb.fc
   %i.zf = icmp eq ptr %i.xl, null
-  %i.zg = or i64 %i.yv, %i.xs
+  %i.zg = or i64 %.pre-phi253.i, %i.yv
   %i.zh = icmp eq i64 %i.zg, 0
   %spec.select28.i.i = and i1 %i.zf, %i.zh
   br i1 %spec.select28.i.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread195.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i
@@ -2354,7 +2361,7 @@ _ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6L
   %i.zm = call noundef zeroext i1 @_ZNK4llvm19TargetTransformInfo20isLegalICmpImmediateEl(ptr noundef nonnull align 8 dereferenceable(8) %i.xj, i64 noundef %i.zl) #23
   br i1 %i.zm, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread195.i, label %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i
 
-_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i: ; preds = %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i, %bb.fi, %.split196.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueENS3_9ImmediateEblPNS_11InstructionE.exit.i.i, %.split22.i.i, %.split21.i.i, %bb.ff, %bb.fd, %.split.i.i, %bb.fb, %.thread204._crit_edge.i.a, %.thread204.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.i, %bb.ez, %.split21.i138.i, %bb.ew, %bb.eo
+_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.thread.i: ; preds = %_ZL10isLegalUseRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyERKNS3_7FormulaE.exit.i, %bb.fi, %.split196.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueENS3_9ImmediateEblPNS_11InstructionE.exit.i.i, %.split22.i.i, %.split21.i.i, %bb.ff, %bb.fd, %.split.i.i, %bb.fb, %.thread204._crit_edge.i.a, %.thread204.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i.a, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.thread.i, %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_19ImmediateES4_NS3_6LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueES4_bl.exit145.i, %bb.ez, %.split21.i138.i, %bb.ew
   %.val4.i.i29 = load ptr, ptr %i.uz, align 8, !tbaa !21 ; 2 uses
   %.val5.i.i30 = load i32, ptr %i.va, align 8, !tbaa !50 ; 2 uses
   %i.zn = zext i32 %.val5.i.i30 to i64
@@ -2757,11 +2764,9 @@ bb.a:
   br i1 %.not27, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %9 = xor i8 %.8.val3, %2
-  %10 = trunc i8 %9 to i1
-  %11 = xor i8 %.8.val3, %4
-  %12 = trunc i8 %11 to i1
-  %or.cond = select i1 %10, i1 true, i1 %12
+  %9 = icmp ne i8 %.8.val3, %2
+  %10 = icmp ne i8 %.8.val3, %4
+  %or.cond = select i1 %9, i1 true, i1 %10
   br i1 %or.cond, label %_ZL20isAMCompletelyFoldedRKN4llvm19TargetTransformInfoEN12_GLOBAL__N_16LSRUse8KindTypeENS3_11MemAccessTyEPNS_11GlobalValueENS3_9ImmediateEblPNS_11InstructionE.exit68, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a

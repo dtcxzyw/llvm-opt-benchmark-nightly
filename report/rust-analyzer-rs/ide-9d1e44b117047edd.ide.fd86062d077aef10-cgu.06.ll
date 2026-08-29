@@ -205,7 +205,7 @@ _RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCslLuZgPVt6hg_3ide11annotations10Annota
   %.sroa.0.1.i.i4.i = phi i8 [ %i.bw, %_RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCslLuZgPVt6hg_3ide11annotations10Annotation11sort_by_keyTNtNtCsuAhG64lL82_9text_size4size8TextSizeB1x_bENCNvBA_11annotationss1_0E0BC_.exit.i ], [ %i.ca, %bb.h ], [ %i.bx, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !611
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !611
-  %.not.i = icmp eq i8 %.sroa.0.1.i.i4.i, %.sroa.0.1.i.i.i
+  %.not.i = icmp eq i8 %.sroa.0.1.i.i.i, %.sroa.0.1.i.i4.i
   br i1 %.not.i, label %bb.i, label %bb.m
 
 bb.i:                                             ; preds = %_RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCslLuZgPVt6hg_3ide11annotations10Annotation11sort_by_keyTNtNtCsuAhG64lL82_9text_size4size8TextSizeB1x_bENCNvBA_11annotationss1_0E0BC_.exit6.i
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.o, label %bb.h, label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %i.p = load i8, ptr %.sroa.5.0..sroa_idx, align 1, !range !334, !noundef !19
+  %i.p = load i8, ptr %.sroa.5.0..sroa_idx, align 1, !range !334, !noundef !19 ; 2 uses
   %i.q = trunc nuw i8 %i.p to i1
   br i1 %i.q, label %bb.an, label %bb.ao
 
@@ -828,9 +828,10 @@ bb.ag:                                            ; preds = %bb.ad
 
 .thread151:                                       ; preds = %bb.ag
   %.sroa.496.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 22
-  %spec.select179 = and i8 %.sroa.4.0.copyload.i, 1
+  %.not.i56 = icmp ne i8 %.sroa.4.0.copyload.i, 0
+  %spec.select160 = zext i1 %.not.i56 to i8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(21) %1, ptr noundef nonnull align 16 dereferenceable(21) @66, i64 21, i1 false)
-  store i8 %spec.select179, ptr %.sroa.5.0..sroa_idx, align 1
+  store i8 %spec.select160, ptr %.sroa.5.0..sroa_idx, align 1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.496.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(10) getelementptr inbounds nuw (i8, ptr @66, i64 22), i64 10, i1 false)
   br label %bb.ah
 
@@ -862,12 +863,13 @@ bb.ai:                                            ; preds = %_RNvMsc_NtCs6ZvMrL6
   unreachable
 
 _RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit76: ; preds = %bb.ac
-  %spec.select180 = and i8 %.sroa.4.0.copyload.i, 1
+  %.not.i77 = icmp ne i8 %.sroa.4.0.copyload.i, 0
+  %spec.select161 = zext i1 %.not.i77 to i8
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i8 20, ptr %i.bx, align 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(21) %0, ptr noundef nonnull align 16 dereferenceable(21) @78, i64 21, i1 false)
   %.sroa.4123.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 %spec.select180, ptr %.sroa.4123.0..sroa_idx, align 1
+  store i8 %spec.select161, ptr %.sroa.4123.0..sroa_idx, align 1
   %.sroa.5124.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 22
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.5124.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(10) getelementptr inbounds nuw (i8, ptr @78, i64 22), i64 10, i1 false)
   br label %bb.c
@@ -875,9 +877,10 @@ _RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9co
 .thread141:                                       ; preds = %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig4omsb.exit, %bb.z
   %.sroa.3.0.copyload = load i8, ptr %.sroa.5.0..sroa_idx, align 1
   %.sroa.490.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 22
-  %spec.select181 = and i8 %.sroa.3.0.copyload, 1
+  %.not.i81 = icmp ne i8 %.sroa.3.0.copyload, 0
+  %spec.select162 = zext i1 %.not.i81 to i8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(21) %1, ptr noundef nonnull align 16 dereferenceable(21) @66, i64 21, i1 false)
-  store i8 %spec.select181, ptr %.sroa.5.0..sroa_idx, align 1
+  store i8 %spec.select162, ptr %.sroa.5.0..sroa_idx, align 1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.490.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(10) getelementptr inbounds nuw (i8, ptr @66, i64 22), i64 10, i1 false)
   br label %bb.aj
 
@@ -934,25 +937,23 @@ bb.ao:                                            ; preds = %bb.f
   %switch = icmp eq i8 %i.ch, 2
   br i1 %switch, label %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88, label %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split
 
-_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split: ; preds = %bb.ao, %bb.an, %bb.an, %bb.an
-  %.sroa.5103.1.ph = phi i8 [ 1, %bb.an ], [ 1, %bb.an ], [ 1, %bb.an ], [ 0, %bb.ao ]
+_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split: ; preds = %bb.an, %bb.ao, %bb.an, %bb.an
   br label %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88
 
-_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88: ; preds = %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split, %bb.an, %bb.an, %bb.ao
-  %.sroa.034.0168 = phi i8 [ 16, %bb.an ], [ 16, %bb.an ], [ 16, %bb.ao ], [ 20, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ]
-  %.sroa.097.0166 = phi i128 [ 2047, %bb.an ], [ 2047, %bb.an ], [ 2047, %bb.ao ], [ 0, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ]
-  %.sroa.399.0164 = phi i32 [ 15, %bb.an ], [ 15, %bb.an ], [ 15, %bb.ao ], [ 16, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ]
-  %.sroa.4101.0162 = phi i8 [ 2, %bb.an ], [ 2, %bb.an ], [ 2, %bb.ao ], [ 0, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ]
-  %.sroa.5103.1 = phi i8 [ 1, %bb.an ], [ 1, %bb.an ], [ 0, %bb.ao ], [ %.sroa.5103.1.ph, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ]
+_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88: ; preds = %bb.an, %bb.ao, %bb.an, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split
+  %.sroa.034.0168 = phi i8 [ 0, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ], [ 2, %bb.an ], [ 2, %bb.ao ], [ 2, %bb.an ]
+  %.sroa.399.0164 = phi i32 [ 16, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ], [ 15, %bb.an ], [ 15, %bb.ao ], [ 15, %bb.an ]
+  %.sroa.0101.0 = phi i128 [ 0, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ], [ 2047, %bb.an ], [ 2047, %bb.ao ], [ 2047, %bb.an ]
+  %.sroa.5103.1 = phi i8 [ 20, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5HalfSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ], [ 16, %bb.an ], [ 16, %bb.ao ], [ 16, %bb.an ]
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i8 %.sroa.034.0168, ptr %i.ci, align 16
-  store i128 %.sroa.097.0166, ptr %0, align 16
+  store i8 %.sroa.5103.1, ptr %i.ci, align 16
+  store i128 %.sroa.0101.0, ptr %0, align 16
   %.sroa.4106.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 %.sroa.399.0164, ptr %.sroa.4106.0..sroa_idx, align 16
   %.sroa.5107.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i8 %.sroa.4101.0162, ptr %.sroa.5107.0..sroa_idx, align 4
+  store i8 %.sroa.034.0168, ptr %.sroa.5107.0..sroa_idx, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 %.sroa.5103.1, ptr %.sroa.6.0..sroa_idx, align 1
+  store i8 %i.p, ptr %.sroa.6.0..sroa_idx, align 1
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 22
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.7.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(10) getelementptr inbounds nuw (i8, ptr @78, i64 22), i64 10, i1 false)
   br label %bb.c
@@ -1015,7 +1016,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.o, label %bb.h, label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %i.p = load i8, ptr %.sroa.5.0..sroa_idx, align 1, !range !334, !noundef !19
+  %i.p = load i8, ptr %.sroa.5.0..sroa_idx, align 1, !range !334, !noundef !19 ; 2 uses
   %i.q = trunc nuw i8 %i.p to i1
   br i1 %i.q, label %bb.an, label %bb.ao
 
@@ -1235,9 +1236,10 @@ bb.ag:                                            ; preds = %bb.ad
 
 .thread151:                                       ; preds = %bb.ag
   %.sroa.496.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 22
-  %spec.select179 = and i8 %.sroa.4.0.copyload.i, 1
+  %.not.i56 = icmp ne i8 %.sroa.4.0.copyload.i, 0
+  %spec.select160 = zext i1 %.not.i56 to i8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(21) %1, ptr noundef nonnull align 16 dereferenceable(21) @93, i64 21, i1 false)
-  store i8 %spec.select179, ptr %.sroa.5.0..sroa_idx, align 1
+  store i8 %spec.select160, ptr %.sroa.5.0..sroa_idx, align 1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.496.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(10) getelementptr inbounds nuw (i8, ptr @93, i64 22), i64 10, i1 false)
   br label %bb.ah
 
@@ -1269,12 +1271,13 @@ bb.ai:                                            ; preds = %_RNvMsc_NtCs6ZvMrL6
   unreachable
 
 _RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit76: ; preds = %bb.ac
-  %spec.select180 = and i8 %.sroa.4.0.copyload.i, 1
+  %.not.i77 = icmp ne i8 %.sroa.4.0.copyload.i, 0
+  %spec.select161 = zext i1 %.not.i77 to i8
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i8 20, ptr %i.bx, align 16
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(21) %0, ptr noundef nonnull align 16 dereferenceable(21) @95, i64 21, i1 false)
   %.sroa.4123.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 %spec.select180, ptr %.sroa.4123.0..sroa_idx, align 1
+  store i8 %spec.select161, ptr %.sroa.4123.0..sroa_idx, align 1
   %.sroa.5124.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 22
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.5124.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(10) getelementptr inbounds nuw (i8, ptr @95, i64 22), i64 10, i1 false)
   br label %bb.c
@@ -1282,9 +1285,10 @@ _RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9co
 .thread141:                                       ; preds = %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig4omsb.exit, %bb.z
   %.sroa.3.0.copyload = load i8, ptr %.sroa.5.0..sroa_idx, align 1
   %.sroa.490.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 22
-  %spec.select181 = and i8 %.sroa.3.0.copyload, 1
+  %.not.i81 = icmp ne i8 %.sroa.3.0.copyload, 0
+  %spec.select162 = zext i1 %.not.i81 to i8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(21) %1, ptr noundef nonnull align 16 dereferenceable(21) @93, i64 21, i1 false)
-  store i8 %spec.select181, ptr %.sroa.5.0..sroa_idx, align 1
+  store i8 %spec.select162, ptr %.sroa.5.0..sroa_idx, align 1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.490.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(10) getelementptr inbounds nuw (i8, ptr @93, i64 22), i64 10, i1 false)
   br label %bb.aj
 
@@ -1341,25 +1345,23 @@ bb.ao:                                            ; preds = %bb.f
   %switch = icmp eq i8 %i.ch, 2
   br i1 %switch, label %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88, label %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split
 
-_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split: ; preds = %bb.ao, %bb.an, %bb.an, %bb.an
-  %.sroa.5103.1.ph = phi i8 [ 1, %bb.an ], [ 1, %bb.an ], [ 1, %bb.an ], [ 0, %bb.ao ]
+_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split: ; preds = %bb.an, %bb.ao, %bb.an, %bb.an
   br label %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88
 
-_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88: ; preds = %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split, %bb.an, %bb.an, %bb.ao
-  %.sroa.034.0168 = phi i8 [ 16, %bb.an ], [ 16, %bb.an ], [ 16, %bb.ao ], [ 20, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ]
-  %.sroa.097.0166 = phi i128 [ 10384593717069655257060992658440191, %bb.an ], [ 10384593717069655257060992658440191, %bb.an ], [ 10384593717069655257060992658440191, %bb.ao ], [ 0, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ]
-  %.sroa.399.0164 = phi i32 [ 16383, %bb.an ], [ 16383, %bb.an ], [ 16383, %bb.ao ], [ 16384, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ]
-  %.sroa.4101.0162 = phi i8 [ 2, %bb.an ], [ 2, %bb.an ], [ 2, %bb.ao ], [ 0, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ]
-  %.sroa.5103.1 = phi i8 [ 1, %bb.an ], [ 1, %bb.an ], [ 0, %bb.ao ], [ %.sroa.5103.1.ph, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ]
+_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88: ; preds = %bb.an, %bb.ao, %bb.an, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split
+  %.sroa.034.0168 = phi i8 [ 0, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ], [ 2, %bb.an ], [ 2, %bb.ao ], [ 2, %bb.an ]
+  %.sroa.399.0164 = phi i32 [ 16384, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ], [ 16383, %bb.an ], [ 16383, %bb.ao ], [ 16383, %bb.an ]
+  %.sroa.0101.0 = phi i128 [ 0, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ], [ 10384593717069655257060992658440191, %bb.an ], [ 10384593717069655257060992658440191, %bb.ao ], [ 10384593717069655257060992658440191, %bb.an ]
+  %.sroa.5103.1 = phi i8 [ 20, %_RNvYINtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee9IeeeFloatNtB5_5QuadSENtB7_5Float9copy_signCslLuZgPVt6hg_3ide.exit88.sink.split ], [ 16, %bb.an ], [ 16, %bb.ao ], [ 16, %bb.an ]
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i8 %.sroa.034.0168, ptr %i.ci, align 16
-  store i128 %.sroa.097.0166, ptr %0, align 16
+  store i8 %.sroa.5103.1, ptr %i.ci, align 16
+  store i128 %.sroa.0101.0, ptr %0, align 16
   %.sroa.4106.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 %.sroa.399.0164, ptr %.sroa.4106.0..sroa_idx, align 16
   %.sroa.5107.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i8 %.sroa.4101.0162, ptr %.sroa.5107.0..sroa_idx, align 4
+  store i8 %.sroa.034.0168, ptr %.sroa.5107.0..sroa_idx, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 21
-  store i8 %.sroa.5103.1, ptr %.sroa.6.0..sroa_idx, align 1
+  store i8 %i.p, ptr %.sroa.6.0..sroa_idx, align 1
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 22
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.7.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(10) getelementptr inbounds nuw (i8, ptr @95, i64 22), i64 10, i1 false)
   br label %bb.c

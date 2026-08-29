@@ -205,8 +205,7 @@ bb.m:                                             ; preds = %.lr.ph.us.us.i.i, %
   %indvars.iv.next104.i.i = add nsw i64 %indvars.iv103.i.i, 1 ; 2 uses
   %.not.us.us.i.i = icmp sge i64 %indvars.iv103.i.i, %i.de
   %i.dq = or i64 %indvars.iv.next104.i.i, %indvars.iv106.i.i
-  %3 = and i64 %i.dq, 4294967295
-  %or.cond.not.us.us.i.i = icmp eq i64 %3, 0
+  %or.cond.not.us.us.i.i = icmp eq i64 %i.dq, 0
   %or.cond.us.us.i.i = or i1 %.not.us.us.i.i, %or.cond.not.us.us.i.i
   br i1 %or.cond.us.us.i.i, label %._crit_edge.us.us.i.i, label %bb.m, !llvm.loop !39
 
@@ -609,8 +608,7 @@ bb.b:                                             ; preds = %.lr.ph.us.us.i, %bb
   %indvars.iv.next112.i = add nsw i64 %indvars.iv111.i, 1 ; 2 uses
   %.not.us.us.i = icmp sge i64 %indvars.iv111.i, %i.aq
   %i.az = or i64 %indvars.iv.next112.i, %indvars.iv114.i
-  %4 = and i64 %i.az, 4294967295
-  %or.cond.not.us.us.i = icmp eq i64 %4, 0
+  %or.cond.not.us.us.i = icmp eq i64 %i.az, 0
   %or.cond.us.us.i = or i1 %.not.us.us.i, %or.cond.not.us.us.i
   br i1 %or.cond.us.us.i, label %._crit_edge.us.us.i, label %bb.b, !llvm.loop !86
 
@@ -1013,8 +1011,7 @@ bb.b:                                             ; preds = %.preheader97.us124.
   %.179110.us.us.us = phi i32 [ %.078118.us.us.us, %.preheader97.us124.us.us ], [ %i.be, %bb.c ] ; 3 uses
   %.181109.us.us.us = phi ptr [ %.080117.us.us.us, %.preheader97.us124.us.us ], [ %i.ay, %bb.c ] ; 5 uses
   %i.ax = or i64 %indvars.iv164, %indvars.iv178
-  %6 = and i64 %i.ax, 4294967295
-  %or.cond.not.us.us.us = icmp eq i64 %6, 0
+  %or.cond.not.us.us.us = icmp eq i64 %i.ax, 0
   br i1 %or.cond.not.us.us.us, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -1417,8 +1414,7 @@ bb.b:                                             ; preds = %.preheader104.us131
   %.186117.us.us.us = phi i32 [ %.085125.us.us.us, %.preheader104.us131.us.us ], [ %i.bh, %bb.c ] ; 3 uses
   %.188116.us.us.us = phi ptr [ %.087124.us.us.us, %.preheader104.us131.us.us ], [ %i.bb, %bb.c ] ; 5 uses
   %i.ba = or i64 %indvars.iv173, %indvars.iv187
-  %7 = and i64 %i.ba, 4294967295
-  %or.cond.not.us.us.us = icmp eq i64 %7, 0
+  %or.cond.not.us.us.us = icmp eq i64 %i.ba, 0
   br i1 %or.cond.not.us.us.us, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b

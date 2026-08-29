@@ -202,9 +202,7 @@ bb.a:
   br i1 %or.cond, label %_ZNKRSt8optionalIdE5valueEv.exit8, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = xor i8 %.8.val3, %.8.val
-  %2 = trunc i8 %1 to i1
-  %3 = xor i1 %2, true
+  %.not = icmp eq i8 %.8.val, %.8.val3
   br label %_ZN5arrow12_GLOBAL__N_112DoubleEqualsERKdS2_RKNS_12EqualOptionsE.exit
 
 _ZNKRSt8optionalIdE5valueEv.exit8:                ; preds = %bb.a
@@ -336,7 +334,7 @@ bb.x:                                             ; preds = %bb.w
   br label %_ZN5arrow12_GLOBAL__N_112DoubleEqualsERKdS2_RKNS_12EqualOptionsE.exit
 
 _ZN5arrow12_GLOBAL__N_112DoubleEqualsERKdS2_RKNS_12EqualOptionsE.exit: ; preds = %bb.x, %bb.w, %bb.v, %bb.u, %bb.s, %bb.p, %bb.o, %bb.m, %bb.k, %bb.j, %bb.i, %bb.g, %bb.f, %bb.e, %bb.b
-  %.0 = phi i1 [ %3, %bb.b ], [ %i.al, %bb.p ], [ %i.q, %bb.g ], [ %i.z, %bb.k ], [ true, %bb.f ], [ true, %bb.e ], [ %i.u, %bb.i ], [ true, %bb.j ], [ %.0.i.i.i5.i.i.i.i, %bb.m ], [ %i.ai, %bb.o ], [ %or.cond.i.i2.i.i.i.i.i, %bb.v ], [ %.0.i.i.i.i5.i.i.i, %bb.s ], [ %i.as, %bb.u ], [ %.0.i.i.i4.i.i.i.i, %bb.x ], [ %i.am, %bb.w ]
+  %.0 = phi i1 [ %.not, %bb.b ], [ %i.al, %bb.p ], [ %i.q, %bb.g ], [ %i.z, %bb.k ], [ true, %bb.f ], [ true, %bb.e ], [ %i.u, %bb.i ], [ true, %bb.j ], [ %.0.i.i.i5.i.i.i.i, %bb.m ], [ %i.ai, %bb.o ], [ %or.cond.i.i2.i.i.i.i.i, %bb.v ], [ %.0.i.i.i.i5.i.i.i, %bb.s ], [ %i.as, %bb.u ], [ %.0.i.i.i4.i.i.i.i, %bb.x ], [ %i.am, %bb.w ]
   ret i1 %.0
 }
 
