@@ -204,8 +204,8 @@ _ZN4llvm19scc_member_iteratorIPNS_10sampleprof17ProfiledCallGraphENS_11GraphTrai
   br i1 %.not11.i2.i.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i35.i.i
 
 .lr.ph.i.i35.i.i:                                 ; preds = %.lr.ph7.i.i.i.i
-  %indvars.iv.tr.i.i.i.i = trunc i64 %indvars.iv.i.i.i.i to i32
-  %i.ajn = shl i32 %indvars.iv.tr.i.i.i.i, 5
+  %indvars.iv.tr.i.i.i.i = trunc nuw i64 %indvars.iv.i.i.i.i to i32
+  %i.ajn = shl nuw i32 %indvars.iv.tr.i.i.i.i, 5
   br label %bb.fc
 
 bb.fc:                                            ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPNS_10sampleprof21ProfiledCallGraphNodeENS_19scc_member_iteratorIPNS2_17ProfiledCallGraphENS_11GraphTraitsIS7_EEE8NodeInfoENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_SB_EEEES4_SB_SD_SG_E10destroyAllEvENKUljE_clEj.exit.i.i.i.i, %.lr.ph.i.i35.i.i
@@ -608,8 +608,8 @@ bb.a:
   br i1 %.not11.i14, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph19
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_10DILocationEPKNS_10sampleprof15FunctionSamplesENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S8_EEEES4_S8_SA_SD_E8moveFromERSE_ENKUljE_clEj.exit
@@ -1012,8 +1012,8 @@ bb.a:
   br i1 %.not11.i18, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph23
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapINS_10sampleprof10FunctionIdEmNS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_mEEEES3_mS5_S8_E8moveFromERS9_ENKUljE_clEj.exit
@@ -1416,8 +1416,8 @@ bb.a:
   br i1 %.not11.i14, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph19
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapImNS_6detail13DenseSetEmptyENS_12DenseMapInfoImvEENS2_12DenseSetPairImEEEEmS3_S5_S7_E8moveFromERS8_ENKUljE_clEj.exit
@@ -1820,8 +1820,8 @@ bb.a:
   br i1 %.not11.i15, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph20
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapImNS_21PseudoProbeDescriptorENS_12DenseMapInfoImvEENS_6detail12DenseMapPairImS2_EEEEmS2_S4_S7_E8moveFromERS8_ENKUljE_clEj.exit
@@ -2224,8 +2224,8 @@ bb.ab:                                            ; preds = %bb.y
   br i1 %.not11.i2.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph7.i.i
-  %indvars.iv.tr.i.i = trunc i64 %indvars.iv.i.i to i32
-  %i.dp = shl i32 %indvars.iv.tr.i.i, 5
+  %indvars.iv.tr.i.i = trunc nuw i64 %indvars.iv.i.i to i32
+  %i.dp = shl nuw i32 %indvars.iv.tr.i.i, 5
   br label %bb.ac
 
 bb.ac:                                            ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_10BasicBlockENS_11SmallVectorIS4_Lj8EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E10destroyAllEvENKUljE_clEj.exit.i.i, %.lr.ph.i.i
@@ -2314,8 +2314,8 @@ bb.ah:                                            ; preds = %bb.ae
   br i1 %.not11.i2.i.i11, label %._crit_edge.i.i17, label %.lr.ph.i.i12
 
 .lr.ph.i.i12:                                     ; preds = %.lr.ph7.i.i9
-  %indvars.iv.tr.i.i13 = trunc i64 %indvars.iv.i.i10 to i32
-  %i.ez = shl i32 %indvars.iv.tr.i.i13, 5
+  %indvars.iv.tr.i.i13 = trunc nuw i64 %indvars.iv.i.i10 to i32
+  %i.ez = shl nuw i32 %indvars.iv.tr.i.i13, 5
   br label %bb.ai
 
 bb.ai:                                            ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_10BasicBlockENS_11SmallVectorIS4_Lj8EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E10destroyAllEvENKUljE_clEj.exit.i.i15, %.lr.ph.i.i12
@@ -2404,8 +2404,8 @@ bb.an:                                            ; preds = %bb.ak
   br i1 %.not11.i2.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph7.i.i.i
-  %indvars.iv.tr.i.i.i = trunc i64 %indvars.iv.i.i.i to i32
-  %i.gj = shl i32 %indvars.iv.tr.i.i.i, 5
+  %indvars.iv.tr.i.i.i = trunc nuw i64 %indvars.iv.i.i.i to i32
+  %i.gj = shl nuw i32 %indvars.iv.tr.i.i.i, 5
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.ao, %.lr.ph.i.i.i
@@ -2808,8 +2808,8 @@ bb.a:
   br i1 %.not11.i15, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph20
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapImNS_9StringRefENS_12DenseMapInfoImvEENS_6detail12DenseMapPairImS2_EEEEmS2_S4_S7_E8moveFromERS8_ENKUljE_clEj.exit
@@ -3212,8 +3212,8 @@ bb.a:
   br i1 %.not11.i14, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph19
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapImPNS_8FunctionENS_12DenseMapInfoImvEENS_6detail12DenseMapPairImS3_EEEEmS3_S5_S8_E8moveFromERS9_ENKUljE_clEj.exit
@@ -3616,8 +3616,8 @@ bb.a:
   br i1 %.not11.i14, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph19
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapImPNS_10sampleprof21ProfiledCallGraphNodeENS_12DenseMapInfoImvEENS_6detail12DenseMapPairImS4_EEEEmS4_S6_S9_E8moveFromERSA_ENKUljE_clEj.exit
@@ -4020,8 +4020,8 @@ bb.a:
   br i1 %.not11.i13, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph18
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPNS_10sampleprof21ProfiledCallGraphNodeEjNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E8moveFromERSA_ENKUljE_clEj.exit
@@ -4274,8 +4274,8 @@ bb.e:                                             ; preds = %bb.b
   br i1 %.not11.i2.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph7.i
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.r = shl i32 %indvars.iv.tr.i, 5
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.r = shl nuw i32 %indvars.iv.tr.i, 5
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPNS_10sampleprof21ProfiledCallGraphNodeENS_19scc_member_iteratorIPNS2_17ProfiledCallGraphENS_11GraphTraitsIS7_EEE8NodeInfoENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_SB_EEEES4_SB_SD_SG_E10destroyAllEvENKUljE_clEj.exit.i, %.lr.ph.i
@@ -4375,8 +4375,8 @@ _ZNK4llvm8DenseMapIPNS_10sampleprof21ProfiledCallGraphNodeENS_19scc_member_itera
   br i1 %.not11.i2.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph7.i
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.r = shl i32 %indvars.iv.tr.i, 5
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.r = shl nuw i32 %indvars.iv.tr.i, 5
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPNS_10sampleprof21ProfiledCallGraphNodeENS_19scc_member_iteratorIPNS2_17ProfiledCallGraphENS_11GraphTraitsIS7_EEE8NodeInfoENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_SB_EEEES4_SB_SD_SG_E10destroyAllEvENKUljE_clEj.exit.i, %.lr.ph.i
@@ -4555,8 +4555,8 @@ bb.a:
   br i1 %.not11.i2.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph7.i.i
-  %indvars.iv.tr.i.i = trunc i64 %indvars.iv.i.i to i32
-  %i.ao = shl i32 %indvars.iv.tr.i.i, 5
+  %indvars.iv.tr.i.i = trunc nuw i64 %indvars.iv.i.i to i32
+  %i.ao = shl nuw i32 %indvars.iv.tr.i.i, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPNS_10sampleprof21ProfiledCallGraphNodeENS_19scc_member_iteratorIPNS2_17ProfiledCallGraphENS_11GraphTraitsIS7_EEE8NodeInfoENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_SB_EEEES4_SB_SD_SG_E10destroyAllEvENKUljE_clEj.exit.i.i, %.lr.ph.i.i
@@ -4642,8 +4642,8 @@ bb.a:
   br i1 %.not11.i16, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph21
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPNS_10sampleprof21ProfiledCallGraphNodeENS_19scc_member_iteratorIPNS2_17ProfiledCallGraphENS_11GraphTraitsIS7_EEE8NodeInfoENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_SB_EEEES4_SB_SD_SG_E8moveFromERSH_ENKUljE_clEj.exit
@@ -5046,8 +5046,8 @@ bb.a:
   br i1 %.not11.i14, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph19
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_10sampleprof21ProfiledCallGraphEdgeENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS5_vEENS6_12DenseSetPairIS5_EEEES5_S7_S9_SB_E8moveFromERSC_ENKUljE_clEj.exit
@@ -5450,8 +5450,8 @@ _ZNK4llvm8DenseMapIPKNS_10BasicBlockENS_11SmallVectorIS3_Lj8EEENS_12DenseMapInfo
   br i1 %.not11.i2.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph7.i
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.r = shl i32 %indvars.iv.tr.i, 5
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.r = shl nuw i32 %indvars.iv.tr.i, 5
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_10BasicBlockENS_11SmallVectorIS4_Lj8EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E10destroyAllEvENKUljE_clEj.exit.i, %.lr.ph.i
@@ -5598,8 +5598,8 @@ _ZNK4llvm8DenseMapIPKNS_10sampleprof15FunctionSamplesESt3mapINS1_12LineLocationE
   br i1 %.not11.i2.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph7.i
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.r = shl i32 %indvars.iv.tr.i, 5
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.r = shl nuw i32 %indvars.iv.tr.i, 5
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph.i
@@ -6002,8 +6002,8 @@ bb.a:
   br i1 %.not11.i14, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph19
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapImmNS_12DenseMapInfoImvEENS_6detail12DenseMapPairImmEEEEmmS3_S6_E8moveFromERS7_ENKUljE_clEj.exit
@@ -6406,8 +6406,8 @@ bb.a:
   br i1 %.not11.i13, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph18
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPNS_8CallBaseEjNS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEEEES3_jS5_S8_E8moveFromERS9_ENKUljE_clEj.exit
@@ -6810,8 +6810,8 @@ bb.a:
   br i1 %.not11.i20, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph25
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.k = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.k = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPNS_8FunctionEN12_GLOBAL__N_119SampleProfileLoader21NotInlinedProfileInfoENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S6_EEEES3_S6_S8_SB_E8moveFromERSC_ENKUljE_clEj.exit
@@ -7214,8 +7214,8 @@ bb.a:
   br i1 %.not11.i14, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph19
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_10BasicBlockEmNS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_mEEEES4_mS6_S9_E8moveFromERSA_ENKUljE_clEj.exit
@@ -7618,8 +7618,8 @@ bb.a:
   br i1 %.not11.i14, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph19
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_10BasicBlockES4_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S4_EEEES4_S4_S6_S9_E8moveFromERSA_ENKUljE_clEj.exit
@@ -8022,8 +8022,8 @@ bb.a:
   br i1 %.not11.i2.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph7.i.i
-  %indvars.iv.tr.i.i = trunc i64 %indvars.iv.i.i to i32
-  %i.ao = shl i32 %indvars.iv.tr.i.i, 5
+  %indvars.iv.tr.i.i = trunc nuw i64 %indvars.iv.i.i to i32
+  %i.ao = shl nuw i32 %indvars.iv.tr.i.i, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_10BasicBlockENS_11SmallVectorIS4_Lj8EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E10destroyAllEvENKUljE_clEj.exit.i.i, %.lr.ph.i.i
@@ -8102,8 +8102,8 @@ bb.a:
   br i1 %.not11.i15, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph20
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_10BasicBlockENS_11SmallVectorIS4_Lj8EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E8moveFromERSC_ENKUljE_clEj.exit
@@ -8506,8 +8506,8 @@ bb.a:
   br i1 %.not11.i16, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph21
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 5
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 5
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZZN4llvm12DenseMapBaseINS_8DenseMapISt4pairIPKNS_10BasicBlockES5_EmNS_12DenseMapInfoIS6_vEENS_6detail12DenseMapPairIS6_mEEEES6_mS8_SB_E8moveFromERSC_ENKUljE_clEj.exit
@@ -8910,8 +8910,8 @@ _ZNSt10unique_ptrIN4llvm10sampleprof19SampleProfileReaderESt14default_deleteIS2_
   br i1 %.not11.i2.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph7.i.i.i
-  %indvars.iv.tr.i.i.i = trunc i64 %indvars.iv.i.i.i to i32
-  %i.bl = shl i32 %indvars.iv.tr.i.i.i, 5
+  %indvars.iv.tr.i.i.i = trunc nuw i64 %indvars.iv.i.i.i to i32
+  %i.bl = shl nuw i32 %indvars.iv.tr.i.i.i, 5
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.g, %.lr.ph.i.i.i
@@ -8974,8 +8974,8 @@ _ZN4llvm14sampleprofutil21SampleCoverageTrackerD2Ev.exit: ; preds = %_ZNSt10uniq
   br i1 %.not11.i2.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph7.i.i
-  %indvars.iv.tr.i.i = trunc i64 %indvars.iv.i.i to i32
-  %i.cp = shl i32 %indvars.iv.tr.i.i, 5
+  %indvars.iv.tr.i.i = trunc nuw i64 %indvars.iv.i.i to i32
+  %i.cp = shl nuw i32 %indvars.iv.tr.i.i, 5
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_10BasicBlockENS_11SmallVectorIS4_Lj8EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E10destroyAllEvENKUljE_clEj.exit.i.i, %.lr.ph.i.i
@@ -9045,8 +9045,8 @@ _ZN4llvm8DenseMapIPKNS_10BasicBlockENS_11SmallVectorIS3_Lj8EEENS_12DenseMapInfoI
   br i1 %.not11.i2.i.i8, label %._crit_edge.i.i14, label %.lr.ph.i.i9
 
 .lr.ph.i.i9:                                      ; preds = %.lr.ph7.i.i6
-  %indvars.iv.tr.i.i10 = trunc i64 %indvars.iv.i.i7 to i32
-  %i.du = shl i32 %indvars.iv.tr.i.i10, 5
+  %indvars.iv.tr.i.i10 = trunc nuw i64 %indvars.iv.i.i7 to i32
+  %i.du = shl nuw i32 %indvars.iv.tr.i.i10, 5
   br label %bb.l
 
 bb.l:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_10BasicBlockENS_11SmallVectorIS4_Lj8EEENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S6_EEEES4_S6_S8_SB_E10destroyAllEvENKUljE_clEj.exit.i.i12, %.lr.ph.i.i9

@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %.lr.ph319.split
 bb.i:                                             ; preds = %bb.h, %.lr.ph319.split
   %i.dk = trunc nuw i64 %i.df to i32
   %.tr353 = add i32 %5, %i.dk
-  %i.dl = shl i32 %.tr353, 1
+  %i.dl = shl nsw i32 %.tr353, 1
   %i.dm = add i32 %i.dl, 18
   %i.dn = and i32 %i.dm, -4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -312,7 +312,7 @@ bb.y:                                             ; preds = %.lr.ph.split
 bb.z:                                             ; preds = %bb.y, %.lr.ph.split
   %i.ek = trunc i64 %indvars.iv.next to i32
   %.tr = add i32 %5, %i.ek
-  %i.el = shl i32 %.tr, 1
+  %i.el = shl nsw i32 %.tr, 1
   %i.em = add i32 %i.el, 18
   %i.en = and i32 %i.em, -4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)

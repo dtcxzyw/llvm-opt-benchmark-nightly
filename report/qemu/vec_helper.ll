@@ -205,20 +205,20 @@ bb.a:
   %.v.v.i = select i1 %i.f, i32 %i.e, i32 %i.c    ; 2 uses
   %.v.i = add nuw nsw i32 %.v.v.i, 8
   %i.g = zext nneg i32 %.v.i to i64               ; 3 uses
-  %i.h = lshr i32 %5, 10                          ; 2 uses
-  %i.i = and i32 %i.h, 1                          ; 2 uses
+  %i.h = lshr i32 %5, 10
+  %i.i = and i32 %i.h, 1                          ; 3 uses
   %i.j = zext nneg i32 %i.i to i64
-  %i.k = lshr i32 %5, 11                          ; 4 uses
+  %i.k = lshr i32 %5, 11                          ; 3 uses
+  %6 = and i32 %i.k, 1                            ; 2 uses
   %i.l = lshr i32 %5, 14                          ; 2 uses
   %i.m = and i32 %i.l, 1                          ; 2 uses
-  %i.n = xor i32 %i.h, %i.k
-  %6 = and i32 %i.n, 1                            ; 2 uses
+  %i.n = xor i32 %i.i, %6                         ; 2 uses
   %i.o = lshr exact i64 %i.g, 1                   ; 3 uses
   %i.p = tail call i64 @llvm.umin.i64(i64 %i.o, i64 8) ; 2 uses
   %i.q = xor i32 %i.m, -1                         ; 2 uses
-  %i.r = and i32 %6, %i.q
-  %i.s = and i32 %i.k, %i.q
-  %i.t = and i32 %6, %i.l
+  %i.r = and i32 %i.n, %i.q
+  %i.s = and i32 %6, %i.q
+  %i.t = and i32 %i.n, %i.l
   %.not = icmp eq i32 %i.t, 0
   %i.u = select i1 %.not, i32 0, i32 2            ; 2 uses
   %i.v = and i32 %i.m, %i.k
@@ -231,8 +231,8 @@ bb.a:
   %invariant.gep = getelementptr [2 x i8], ptr %1, i64 %i.j ; 2 uses
   %.tr = trunc nuw nsw i32 %i.r to i16
   %i.z = shl nuw i16 %.tr, 15                     ; 2 uses
-  %.tr86 = trunc i32 %i.s to i16
-  %i.aa = shl i16 %.tr86, 15                      ; 2 uses
+  %.tr86 = trunc nuw nsw i32 %i.s to i16
+  %i.aa = shl nuw i16 %.tr86, 15                  ; 2 uses
   br i1 %.not75, label %.split.us, label %.split
 
 .split.us:                                        ; preds = %bb.a, %.loopexit.us

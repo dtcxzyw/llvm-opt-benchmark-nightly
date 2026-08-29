@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.loopexit, %Abc_Clo
   br i1 %.not.us.i, label %bb.d, label %..thread_crit_edge.i.us.i
 
 ..thread_crit_edge.i.us.i:                        ; preds = %.lr.ph.split.us.i
-  %i.ai = trunc i64 %indvars.iv5.i to i32         ; 2 uses
+  %i.ai = trunc nuw i64 %indvars.iv5.i to i32     ; 2 uses
   %i.aj = shl nuw i32 1, %i.ai
   %i.ak = zext nneg i32 %i.aj to i64              ; 2 uses
   %i.al = lshr i64 %i.ag, %i.ak
@@ -221,7 +221,7 @@ bb.c:                                             ; preds = %.loopexit, %Abc_Clo
   %i.au = icmp ne i64 %i.at, 0
   %i.av = zext i1 %i.au to i32
   %i.aw = or disjoint i32 %i.aq, %i.av
-  %i.ax = shl i32 %i.ai, 1
+  %i.ax = shl nuw i32 %i.ai, 1
   %i.ay = shl i32 %i.aw, %i.ax
   %i.az = or i32 %i.ay, %.02.us.i
   br label %bb.d
@@ -252,11 +252,11 @@ bb.e:                                             ; preds = %.lr.ph.split.i
 
 .Dau_Dsd6FindSupportOne.exit.i_crit_edge:         ; preds = %bb.e
   %i.bj = sext i8 %i.bh to i32
-  %.pre = trunc i64 %indvars.iv.i to i32
+  %.pre = trunc nuw i64 %indvars.iv.i to i32
   br label %Dau_Dsd6FindSupportOne.exit.i
 
 .thread.i.i:                                      ; preds = %bb.e
-  %i.bk = trunc i64 %indvars.iv.i to i32          ; 2 uses
+  %i.bk = trunc nuw i64 %indvars.iv.i to i32      ; 2 uses
   %i.bl = shl nuw i32 1, %i.bk
   %i.bm = zext nneg i32 %i.bl to i64              ; 2 uses
   %i.bn = lshr i64 %i.ag, %i.bm
@@ -279,7 +279,7 @@ bb.e:                                             ; preds = %.lr.ph.split.i
 Dau_Dsd6FindSupportOne.exit.i:                    ; preds = %.Dau_Dsd6FindSupportOne.exit.i_crit_edge, %.thread.i.i
   %indvars.iv.tr.i.pre-phi = phi i32 [ %.pre, %.Dau_Dsd6FindSupportOne.exit.i_crit_edge ], [ %i.bk, %.thread.i.i ]
   %.0.i.i = phi i32 [ %i.bj, %.Dau_Dsd6FindSupportOne.exit.i_crit_edge ], [ %i.by, %.thread.i.i ]
-  %i.ca = shl i32 %indvars.iv.tr.i.pre-phi, 1
+  %i.ca = shl nuw i32 %indvars.iv.tr.i.pre-phi, 1
   %i.cb = shl i32 %.0.i.i, %i.ca
   %i.cc = or i32 %i.cb, %.02.i
   br label %bb.f
@@ -682,12 +682,12 @@ bb.f:                                             ; preds = %bb.e
 
 .Dau_DsdFindSupportOne.exit.i_crit_edge:          ; preds = %bb.f
   %i.bz = sext i8 %i.bx to i32
-  %.pre = trunc i64 %indvars.iv.i to i32
+  %.pre = trunc nuw i64 %indvars.iv.i to i32
   br label %Dau_DsdFindSupportOne.exit.i
 
 .thread.i.i:                                      ; preds = %bb.f, %bb.e
   %i.ca = icmp samesign ugt i64 %indvars.iv.i, %indvars.iv.next
-  %i.cb = trunc i64 %indvars.iv.i to i32          ; 16 uses
+  %i.cb = trunc nuw i64 %indvars.iv.i to i32      ; 16 uses
   br i1 %i.ca, label %bb.g, label %bb.ab
 
 bb.g:                                             ; preds = %.thread.i.i
@@ -1090,7 +1090,7 @@ bb.av:                                            ; preds = %bb.au
 Dau_DsdFindSupportOne.exit.i:                     ; preds = %.Dau_DsdFindSupportOne.exit.i_crit_edge, %bb.av, %bb.au
   %indvars.iv.tr.i.pre-phi = phi i32 [ %.pre, %.Dau_DsdFindSupportOne.exit.i_crit_edge ], [ %i.cb, %bb.av ], [ %i.cb, %bb.au ]
   %.1.i.i = phi i32 [ %i.bz, %.Dau_DsdFindSupportOne.exit.i_crit_edge ], [ %.0.i.i, %bb.av ], [ %.0.i.i, %bb.au ]
-  %i.kc = shl i32 %indvars.iv.tr.i.pre-phi, 1
+  %i.kc = shl nuw i32 %indvars.iv.tr.i.pre-phi, 1
   %i.kd = shl i32 %.1.i.i, %i.kc
   %i.ke = or i32 %i.kd, %.017.i
   br label %bb.aw

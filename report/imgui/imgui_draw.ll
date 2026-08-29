@@ -205,8 +205,8 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   store i32 %i.k, ptr %i.dp, align 4, !tbaa !241
   %i.dq = getelementptr inbounds nuw i8, ptr %i.do, i64 40
   store ptr %i.dq, ptr %i.bl, align 8, !tbaa !239
-  %indvars.iv150.tr = trunc i64 %indvars.iv150 to i32
-  %i.dr = shl i32 %indvars.iv150.tr, 1            ; 2 uses
+  %indvars.iv150.tr = trunc nuw i64 %indvars.iv150 to i32
+  %i.dr = shl nuw i32 %indvars.iv150.tr, 1        ; 2 uses
   %i.ds = add i32 %i.dr, %i.o
   %i.dt = trunc i32 %i.ds to i16                  ; 2 uses
   %i.du = load ptr, ptr %i.bm, align 8, !tbaa !105 ; 7 uses
@@ -609,8 +609,8 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   store i32 %i.o, ptr %i.dt, align 4, !tbaa !241
   %i.du = getelementptr inbounds nuw i8, ptr %i.ds, i64 40
   store ptr %i.du, ptr %i.bp, align 8, !tbaa !239
-  %indvars.iv144.tr = trunc i64 %indvars.iv144 to i32
-  %i.dv = shl i32 %indvars.iv144.tr, 1            ; 2 uses
+  %indvars.iv144.tr = trunc nuw i64 %indvars.iv144 to i32
+  %i.dv = shl nuw i32 %indvars.iv144.tr, 1        ; 2 uses
   %i.dw = add i32 %i.dv, %i.s
   %i.dx = trunc i32 %i.dw to i16                  ; 2 uses
   %i.dy = load ptr, ptr %i.bq, align 8, !tbaa !105 ; 7 uses
@@ -1013,8 +1013,8 @@ _ZL17stbtt__find_tablePhjPKc.exit354.thread.i.i:  ; preds = %bb.dw, %bb.dx, %_ZL
 bb.dy:                                            ; preds = %bb.ea, %.lr.ph.i.i
   %i.zf = phi i32 [ 0, %.lr.ph.i.i ], [ %i.zz, %bb.ea ] ; 2 uses
   %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.ea ] ; 2 uses
-  %indvars.iv.tr.i.i = trunc i64 %indvars.iv.i.i to i32
-  %i.zg = shl i32 %indvars.iv.tr.i.i, 3
+  %indvars.iv.tr.i.i = trunc nuw nsw i64 %indvars.iv.i.i to i32
+  %i.zg = shl nuw nsw i32 %indvars.iv.tr.i.i, 3
   %i.zh = add i32 %i.ze, %i.zg
   %i.zi = zext i32 %i.zh to i64
   %i.zj = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.zi ; 5 uses

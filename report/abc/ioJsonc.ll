@@ -204,7 +204,7 @@ bb.fu:                                            ; preds = %bb.fs
 
 bb.fv:                                            ; preds = %bb.fr
   %i.adh = icmp samesign ult i64 %indvars.iv1358.i, 1073741823
-  %i.adi = shl i32 %spec.select.sink.i8301183.i, 1
+  %i.adi = shl nsw i32 %spec.select.sink.i8301183.i, 1
   %spec.select.i826.i = select i1 %i.adh, i32 %i.adi, i32 2147483647 ; 4 uses
   %i.adj = sext i32 %spec.select.i826.i to i64
   %.not.i9.i827.i = icmp samesign ult i64 %indvars.iv1358.i, %i.adj
@@ -283,7 +283,7 @@ bb.gd:                                            ; preds = %bb.gb
 
 bb.ge:                                            ; preds = %bb.ga
   %i.ady = icmp samesign ult i64 %indvars.iv1367.i, 1073741823
-  %i.adz = shl i32 %spec.select.sink.i8371194.i, 1
+  %i.adz = shl nsw i32 %spec.select.sink.i8371194.i, 1
   %spec.select.i834.i = select i1 %i.ady, i32 %i.adz, i32 2147483647 ; 4 uses
   %i.aea = sext i32 %spec.select.i834.i to i64
   %.not.i9.i835.i = icmp samesign ult i64 %indvars.iv1367.i, %i.aea
@@ -363,7 +363,7 @@ bb.gn:                                            ; preds = %bb.gl
 
 bb.go:                                            ; preds = %bb.gk
   %i.aer = icmp samesign ult i64 %indvars.iv1371.i, 1073741823
-  %i.aes = shl i32 %spec.select.sink.i8431205.i, 1
+  %i.aes = shl nsw i32 %spec.select.sink.i8431205.i, 1
   %spec.select.i839.i = select i1 %i.aer, i32 %i.aes, i32 2147483647 ; 4 uses
   %i.aet = sext i32 %spec.select.i839.i to i64
   %.not.i9.i840.i = icmp samesign ult i64 %indvars.iv1371.i, %i.aet

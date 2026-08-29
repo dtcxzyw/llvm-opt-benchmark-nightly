@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %.loopexit
 
 bb.c:                                             ; preds = %.preheader331, %.loopexit
   %indvars.iv = phi i64 [ 0, %.preheader331 ], [ %indvars.iv.next, %.loopexit ] ; 4 uses
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.da = shl i32 %indvars.iv.tr, 3
+  %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
+  %i.da = shl nuw nsw i32 %indvars.iv.tr, 3
   %i.db = add i32 %i.cq, %i.da                    ; 15 uses
   %.pre445 = zext i32 %i.db to i64                ; 2 uses
   br i1 %.not119, label %._crit_edge441, label %bb.d
@@ -609,8 +609,8 @@ bb.b:                                             ; preds = %.loopexit
 bb.c:                                             ; preds = %.preheader331, %.loopexit
   %indvars.iv = phi i64 [ 0, %.preheader331 ], [ %indvars.iv.next, %.loopexit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.db = shl i32 %indvars.iv.tr, 3
+  %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
+  %i.db = shl nuw nsw i32 %indvars.iv.tr, 3
   %i.dc = add i32 %i.cr, %i.db
   br label %bb.e
 
@@ -1013,8 +1013,8 @@ bb.b:                                             ; preds = %.loopexit
 bb.c:                                             ; preds = %.preheader331, %.loopexit
   %indvars.iv = phi i64 [ 0, %.preheader331 ], [ %indvars.iv.next, %.loopexit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.db = shl i32 %indvars.iv.tr, 3
+  %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
+  %i.db = shl nuw nsw i32 %indvars.iv.tr, 3
   %i.dc = add i32 %i.cr, %i.db
   br label %bb.e
 
@@ -1417,8 +1417,8 @@ bb.b:                                             ; preds = %.loopexit
 bb.c:                                             ; preds = %.preheader331, %.loopexit
   %indvars.iv = phi i64 [ 0, %.preheader331 ], [ %indvars.iv.next, %.loopexit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.dc = shl i32 %indvars.iv.tr, 3
+  %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
+  %i.dc = shl nuw nsw i32 %indvars.iv.tr, 3
   %i.dd = add i32 %i.cs, %i.dc
   br label %bb.e
 
@@ -1821,8 +1821,8 @@ bb.b:                                             ; preds = %.loopexit
 bb.c:                                             ; preds = %.preheader331, %.loopexit
   %indvars.iv = phi i64 [ 0, %.preheader331 ], [ %indvars.iv.next, %.loopexit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.db = shl i32 %indvars.iv.tr, 3
+  %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
+  %i.db = shl nuw nsw i32 %indvars.iv.tr, 3
   %i.dc = add i32 %i.cr, %i.db
   br label %bb.e
 
@@ -2225,8 +2225,8 @@ bb.b:                                             ; preds = %.loopexit
 bb.c:                                             ; preds = %.preheader331, %.loopexit
   %indvars.iv = phi i64 [ 0, %.preheader331 ], [ %indvars.iv.next, %.loopexit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.db = shl i32 %indvars.iv.tr, 3
+  %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
+  %i.db = shl nuw nsw i32 %indvars.iv.tr, 3
   %i.dc = add i32 %i.cr, %i.db
   br label %bb.e
 
@@ -2629,8 +2629,8 @@ bb.b:                                             ; preds = %.loopexit
 bb.c:                                             ; preds = %.preheader369, %.loopexit
   %indvars.iv = phi i64 [ 0, %.preheader369 ], [ %indvars.iv.next, %.loopexit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.di = shl i32 %indvars.iv.tr, 3
+  %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
+  %i.di = shl nuw nsw i32 %indvars.iv.tr, 3
   %i.dj = add i32 %i.cy, %i.di
   br label %bb.e
 

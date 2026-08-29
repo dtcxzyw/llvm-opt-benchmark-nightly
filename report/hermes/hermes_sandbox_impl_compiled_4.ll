@@ -204,8 +204,8 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   %.val288 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.bl = getelementptr inbounds nuw i8, ptr %.val288, i64 %i.be
   store i32 0, ptr %i.bl, align 1
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.bm = shl i32 %indvars.iv.tr, 3
+  %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
+  %i.bm = shl nuw nsw i32 %indvars.iv.tr, 3
   %i.bn = add i32 %i.z, %i.bm
   %i.bo = zext i32 %i.bn to i64
   %.val304 = load ptr, ptr %i.d, align 8, !tbaa !7

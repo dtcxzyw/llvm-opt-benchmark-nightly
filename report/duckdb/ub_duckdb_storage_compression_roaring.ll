@@ -204,11 +204,11 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.i.7: ; preds = %
   %i.hm = phi i32 [ %i.hl, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.i.7 ], [ %i.gv, %.lr.ph.i31.7 ] ; 3 uses
   %i.hn = icmp ne i32 %i.hm, 0
   %i.ho = and i32 %i.hm, %.0.i2.i.7
-  %i.hp = xor i32 %.0.i2.i.7, -1
+  %i.hp = xor i32 %.0.i2.i.7, 1
   %i.hq = select i1 %.not127, i32 0, i32 %i.hp
   %i.hr = or i32 %i.ho, %i.hq
-  %.tr128 = trunc nsw i32 %i.hr to i8
-  %i.hs = shl i8 %.tr128, 7
+  %.tr128 = trunc nuw nsw i32 %i.hr to i8
+  %i.hs = shl nuw i8 %.tr128, 7
   %i.ht = or i8 %i.hb, %i.hs
   br label %.thread.i34
 
@@ -611,11 +611,11 @@ bb.at:                                            ; preds = %_ZNK6duckdb21Templa
   %i.mm = phi i32 [ %i.ml, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.thread.i.7 ], [ %i.lm, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i.7 ] ; 4 uses
   %i.mn = zext i1 %.not39.i.7 to i32              ; 2 uses
   %i.mo = and i32 %i.mm, %i.mn
-  %i.mp = xor i32 %i.mn, -1
+  %i.mp = xor i32 %i.mn, 1
   %i.mq = select i1 %i.lu, i32 %i.mp, i32 0
   %i.mr = or i32 %i.mq, %i.mo
-  %.tr125 = trunc nsw i32 %i.mr to i8
-  %i.ms = shl i8 %.tr125, 7
+  %.tr125 = trunc nuw nsw i32 %i.mr to i8
+  %i.ms = shl nuw i8 %.tr125, 7
   %i.mt = or i8 %i.lt, %i.ms                      ; 2 uses
   %i.mu = icmp ne i32 %i.mm, 0                    ; 5 uses
   br i1 %.not39.i.7, label %bb.av, label %bb.au

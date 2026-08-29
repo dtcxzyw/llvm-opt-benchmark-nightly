@@ -97,14 +97,13 @@ bb.i:                                             ; preds = %bb.h
   %i.aj = getelementptr inbounds nuw i8, ptr %.0103142, i64 2
   %i.ak = load i8, ptr %i.c, align 1, !tbaa !8
   %i.al = zext i8 %i.ak to i32                    ; 3 uses
-  %3 = or i32 %i.g, %i.al                         ; 2 uses
-  %4 = shl nuw nsw i32 %3, 6
-  %5 = and i32 %4, 65472                          ; 2 uses
-  %i.am = icmp samesign ugt i32 %5, 32767
+  %3 = and i32 %i.g, 960                          ; 2 uses
+  %4 = or i32 %3, %i.al                           ; 2 uses
+  %i.am = icmp samesign ugt i32 %3, 511
   br i1 %i.am, label %bb.j, label %bb.l
 
 bb.j:                                             ; preds = %bb.i
-  %i.an = lshr i32 %5, 13
+  %i.an = lshr i32 %4, 7
   %i.ao = zext i16 %.293 to i32
   %i.ap = shl nuw nsw i32 %i.ao, 3
   %i.aq = or disjoint i32 %i.an, %i.ap            ; 2 uses
@@ -129,7 +128,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %bb.i
   br i1 %i.ay, label %._crit_edge, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.az = shl nuw nsw i32 %3, 9
+  %i.az = shl nuw nsw i32 %4, 9
   %i.ba = and i32 %i.az, 65024                    ; 2 uses
   %i.bb = icmp samesign ugt i32 %i.ba, 32767
   br i1 %i.bb, label %bb.n, label %bb.p

@@ -205,8 +205,8 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.b
   %i.m = icmp samesign ult i64 %indvars.iv, 1073741823
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.n = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nsw i64 %indvars.iv to i32
+  %i.n = shl nsw i32 %indvars.iv.tr, 1
   %spec.select.i = select i1 %i.m, i32 %i.n, i32 2147483647 ; 4 uses
   %i.o = sext i32 %spec.select.i to i64
   %.not.i10.i = icmp samesign ult i64 %indvars.iv, %i.o
@@ -609,9 +609,9 @@ bb.p:                                             ; preds = %bb.n
 
 bb.q:                                             ; preds = %bb.m
   %i.cd = icmp samesign ult i64 %indvars.iv.i, 1073741823
-  %i.ce = shl i32 %spec.select.sink.i9.i, 1
+  %i.ce = shl nuw nsw i32 %spec.select.sink.i9.i, 1
   %spec.select.i.i = select i1 %i.cd, i32 %i.ce, i32 2147483647 ; 4 uses
-  %1 = sext i32 %spec.select.i.i to i64
+  %1 = zext nneg i32 %spec.select.i.i to i64
   %.not.i10.i.i = icmp samesign ult i64 %indvars.iv.i, %1
   br i1 %.not.i10.i.i, label %bb.r, label %Vec_FltPush.exit.i
 
@@ -783,9 +783,9 @@ bb.ah:                                            ; preds = %bb.af
 
 bb.ai:                                            ; preds = %bb.ae
   %i.el = icmp samesign ult i64 %indvars.iv.i114, 1073741823
-  %i.em = shl i32 %spec.select.sink.i9.i116, 1
+  %i.em = shl nuw nsw i32 %spec.select.sink.i9.i116, 1
   %spec.select.i.i125 = select i1 %i.el, i32 %i.em, i32 2147483647 ; 4 uses
-  %2 = sext i32 %spec.select.i.i125 to i64
+  %2 = zext nneg i32 %spec.select.i.i125 to i64
   %.not.i10.i.i126 = icmp samesign ult i64 %indvars.iv.i114, %2
   br i1 %.not.i10.i.i126, label %bb.aj, label %Vec_FltPush.exit.i118
 

@@ -205,7 +205,6 @@ bb.a:
   %.not1258.i = icmp eq i32 %10, 0                ; 6 uses
   %i.bc = sext i32 %5 to i64                      ; 4 uses
   %i.bd = mul i64 %i.k, %i.bc
-  %11 = icmp eq i32 %2, 0                         ; 5 uses
   %or.cond11.i = icmp ult i32 %2, 3               ; 4 uses
   %i.be = sext i32 %3 to i64                      ; 3 uses
   %i.bf = icmp sgt i32 %6, 7
@@ -222,8 +221,10 @@ bb.a:
   %.idx873.i = mul i64 %i.k, 24
   %.idx874.i = mul i64 %i.k, 28
   %.idx1267.i = shl i64 %i.k, 5                   ; 3 uses
-  %12 = add i32 %2, -1
-  %or.cond19.i = icmp ult i32 %12, 2              ; 2 uses
+  %11 = insertelement <2 x i32> poison, i32 %2, i64 0
+  %12 = shufflevector <2 x i32> %11, <2 x i32> poison, <2 x i32> zeroinitializer
+  %13 = add <2 x i32> %12, <i32 0, i32 -1>
+  %14 = icmp ult <2 x i32> %13, <i32 1, i32 2>    ; 3 uses
   %i.bm = and i32 %6, -8
   %i.bn = zext nneg i32 %.01190.lcssa.i to i64
   %i.bo = sext i32 %4 to i64
@@ -231,10 +232,10 @@ bb.a:
   %i.bq = select ninf nsz i1 %i.bj, <4 x float> %i.bl, <4 x float> splat (float 1.000000e+00) ; 2 uses
   %invariant.op1108.i = add nsw i64 %i.bo, -1
   %..idx869.i = select i1 %.not1258.i, i64 8, i64 %.idx869.i
-  %13 = insertelement <2 x i1> poison, i1 %11, i64 0
-  %14 = insertelement <2 x i1> %13, i1 %or.cond19.i, i64 1
   %15 = insertelement <2 x float> poison, float %9, i64 0
   %16 = shufflevector <2 x float> %15, <2 x float> poison, <2 x i32> zeroinitializer ; 3 uses
+  %17 = extractelement <2 x i1> %14, i64 0        ; 4 uses
+  %18 = extractelement <2 x i1> %14, i64 1
   %i.br = insertelement <2 x float> poison, float %8, i64 0
   %i.bs = shufflevector <2 x float> %i.br, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.bt = insertelement <2 x i1> poison, i1 %.not1258.i, i64 0
@@ -637,7 +638,7 @@ bb.cj:                                            ; preds = %bb.ci, %bb.ch
   br i1 %.not1259.i, label %.thread779.i, label %bb.ck
 
 bb.ck:                                            ; preds = %bb.cj
-  br i1 %11, label %.thread763.i, label %bb.cl
+  br i1 %17, label %.thread763.i, label %bb.cl
 
 .thread763.i:                                     ; preds = %bb.ck
   %i.we = load float, ptr %.20980.i, align 4, !tbaa !68
@@ -737,7 +738,7 @@ bb.cp:                                            ; preds = %bb.cn
   br i1 %.not1265.i, label %.thread798.i, label %bb.cq
 
 bb.cq:                                            ; preds = %.lr.ph942.i
-  br i1 %11, label %.thread785.i, label %bb.cr
+  br i1 %17, label %.thread785.i, label %bb.cr
 
 .thread785.i:                                     ; preds = %bb.cq
   %i.yc = fadd fast <4 x float> %i.xy, %.3636936.i
@@ -931,7 +932,7 @@ bb.de:                                            ; preds = %bb.dd, %bb.dc, %bb.
   br i1 %.not1263.i, label %.thread815.i, label %bb.df
 
 bb.df:                                            ; preds = %.lr.ph955.i
-  br i1 %11, label %.thread806.i, label %bb.dg
+  br i1 %17, label %.thread806.i, label %bb.dg
 
 .thread806.i:                                     ; preds = %bb.df
   %i.aaz = fadd fast <4 x float> %i.aax, %.6639949.i
@@ -1037,10 +1038,10 @@ bb.dp:                                            ; preds = %bb.do, %bb.dn, %bb.
 
 .lr.ph973.i:                                      ; preds = %.preheader882.i
   %i.acd = select <2 x i1> %14, <2 x float> %i.wx, <2 x float> zeroinitializer ; 2 uses
-  %i.ace = select ninf nsz i1 %or.cond19.i, float %.21227.i, float 0.000000e+00
-  %17 = shufflevector <2 x float> %i.acd, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %18 = insertelement <2 x float> %17, float %i.ace, i64 0
-  %i.acf = fadd reassoc nsz arcp contract afn <2 x float> %i.acd, %18
+  %i.ace = select ninf nsz i1 %18, float %.21227.i, float 0.000000e+00
+  %19 = insertelement <2 x float> poison, float %i.ace, i64 0
+  %20 = shufflevector <2 x float> %19, <2 x float> %i.acd, <2 x i32> <i32 0, i32 2>
+  %i.acf = fadd reassoc nsz arcp contract afn <2 x float> %i.acd, %20
   br label %bb.dw
 
 .lr.ph964.i:                                      ; preds = %.lr.ph964.i.preheader, %.thread834.i
@@ -1055,7 +1056,7 @@ bb.dp:                                            ; preds = %bb.do, %bb.dn, %bb.
   br i1 %.not1261.i, label %.thread834.i, label %bb.dq
 
 bb.dq:                                            ; preds = %.lr.ph964.i
-  br i1 %11, label %.thread821.i, label %bb.dr
+  br i1 %17, label %.thread821.i, label %bb.dr
 
 .thread821.i:                                     ; preds = %bb.dq
   %i.acj = fadd fast <4 x float> %i.aci, %i.aam

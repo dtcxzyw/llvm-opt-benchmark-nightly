@@ -204,7 +204,7 @@ bytestream2_get_byte.exit153.bytestream2_get_byte.exit153.thread_crit_edge.i: ; 
 
 bytestream2_get_byte.exit153.thread.i:            ; preds = %bytestream2_get_byte.exit153.bytestream2_get_byte.exit153.thread_crit_edge.i, %bb.aj
   %.pre-phi278.i = phi i64 [ %.pre277.i, %bytestream2_get_byte.exit153.bytestream2_get_byte.exit153.thread_crit_edge.i ], [ %i.q, %bb.aj ]
-  %i.gu = phi i32 [ %i.gt, %bytestream2_get_byte.exit153.bytestream2_get_byte.exit153.thread_crit_edge.i ], [ 1632, %bb.aj ] ; 5 uses
+  %i.gu = phi i32 [ %i.gt, %bytestream2_get_byte.exit153.bytestream2_get_byte.exit153.thread_crit_edge.i ], [ 1632, %bb.aj ]
   %.sroa.0.7193.i = phi ptr [ %i.gl, %bytestream2_get_byte.exit153.bytestream2_get_byte.exit153.thread_crit_edge.i ], [ %i.o, %bb.aj ] ; 2 uses
   %i.gv = sub i64 %i.q, %.pre-phi278.i
   %i.gw = icmp slt i64 %i.gv, 1
@@ -219,7 +219,7 @@ bb.ak:                                            ; preds = %bytestream2_get_byt
 bytestream2_get_byte.exit151.i:                   ; preds = %bb.ak, %bytestream2_get_byte.exit153.thread.i
   %.pre-phi.i = phi i64 [ %i.q, %bytestream2_get_byte.exit153.thread.i ], [ %.pre.i, %bb.ak ]
   %.sroa.0.6.i = phi ptr [ %i.o, %bytestream2_get_byte.exit153.thread.i ], [ %i.gx, %bb.ak ] ; 2 uses
-  %.0.i150.i = phi i8 [ 0, %bytestream2_get_byte.exit153.thread.i ], [ %i.gy, %bb.ak ] ; 5 uses
+  %.0.i150.i = phi i8 [ 0, %bytestream2_get_byte.exit153.thread.i ], [ %i.gy, %bb.ak ]
   %i.gz = sub i64 %i.q, %.pre-phi.i
   %i.ha = icmp slt i64 %i.gz, 1
   br i1 %i.ha, label %bytestream2_get_byte.exit149.i, label %bb.al
@@ -231,15 +231,15 @@ bb.al:                                            ; preds = %bytestream2_get_byt
 
 bytestream2_get_byte.exit149.i:                   ; preds = %bb.al, %bytestream2_get_byte.exit151.i
   %.sroa.0.5.i = phi ptr [ %i.hb, %bb.al ], [ %i.o, %bytestream2_get_byte.exit151.i ]
-  %.0.i148.i = phi i8 [ %i.hc, %bb.al ], [ 0, %bytestream2_get_byte.exit151.i ] ; 5 uses
+  %.0.i148.i = phi i8 [ %i.hc, %bb.al ], [ 0, %bytestream2_get_byte.exit151.i ]
   %i.hd = insertelement <4 x i32> poison, i32 %i.gu, i64 0
-  %i.he = shufflevector <4 x i32> %i.hd, <4 x i32> poison, <4 x i32> zeroinitializer ; 3 uses
+  %i.he = shufflevector <4 x i32> %i.hd, <4 x i32> poison, <4 x i32> zeroinitializer ; 4 uses
   %i.hf = and <4 x i32> %i.he, <i32 1, i32 2, i32 4, i32 8>
   %i.hg = icmp eq <4 x i32> %i.hf, zeroinitializer
   %i.hh = insertelement <4 x i8> poison, i8 %.0.i150.i, i64 0
-  %i.hi = shufflevector <4 x i8> %i.hh, <4 x i8> poison, <4 x i32> zeroinitializer ; 3 uses
+  %i.hi = shufflevector <4 x i8> %i.hh, <4 x i8> poison, <4 x i32> zeroinitializer ; 4 uses
   %i.hj = insertelement <4 x i8> poison, i8 %.0.i148.i, i64 0
-  %i.hk = shufflevector <4 x i8> %i.hj, <4 x i8> poison, <4 x i32> zeroinitializer ; 3 uses
+  %i.hk = shufflevector <4 x i8> %i.hj, <4 x i8> poison, <4 x i32> zeroinitializer ; 4 uses
   %i.hl = select <4 x i1> %i.hg, <4 x i8> %i.hi, <4 x i8> %i.hk
   store <4 x i8> %i.hl, ptr %.0134234.i, align 1, !tbaa !45
   %i.hm = and <4 x i32> %i.he, <i32 16, i32 32, i32 64, i32 128>
@@ -252,25 +252,11 @@ bytestream2_get_byte.exit149.i:                   ; preds = %bb.al, %bytestream2
   %i.hs = icmp eq <4 x i32> %i.hq, zeroinitializer
   %i.ht = select <4 x i1> %i.hs, <4 x i8> %i.hi, <4 x i8> %i.hk
   store <4 x i8> %i.ht, ptr %i.hr, align 1, !tbaa !45
-  %4 = and i32 %i.gu, 4096
-  %.not143.3263.i = icmp eq i32 %4, 0
-  %5 = select i1 %.not143.3263.i, i8 %.0.i150.i, i8 %.0.i148.i
-  %i.hu = getelementptr inbounds i8, ptr %.0134234.i, i64 %i.cg ; 4 uses
-  store i8 %5, ptr %i.hu, align 1, !tbaa !45
-  %6 = and i32 %i.gu, 8192
-  %.not143.1.3.i = icmp eq i32 %6, 0
-  %7 = select i1 %.not143.1.3.i, i8 %.0.i150.i, i8 %.0.i148.i
-  %8 = getelementptr i8, ptr %i.hu, i64 1
-  store i8 %7, ptr %8, align 1, !tbaa !45
-  %9 = and i32 %i.gu, 16384
-  %.not143.2.3.i = icmp eq i32 %9, 0
-  %10 = select i1 %.not143.2.3.i, i8 %.0.i150.i, i8 %.0.i148.i
-  %11 = getelementptr i8, ptr %i.hu, i64 2
-  store i8 %10, ptr %11, align 1, !tbaa !45
-  %.not143.3.3.i = icmp samesign ult i32 %i.gu, 32768
-  %12 = select i1 %.not143.3.3.i, i8 %.0.i150.i, i8 %.0.i148.i
-  %13 = getelementptr i8, ptr %i.hu, i64 3
-  store i8 %12, ptr %13, align 1, !tbaa !45
+  %i.hu = getelementptr inbounds i8, ptr %.0134234.i, i64 %i.cg
+  %4 = and <4 x i32> %i.he, <i32 4096, i32 8192, i32 16384, i32 -1>
+  %5 = icmp samesign ult <4 x i32> %4, <i32 1, i32 1, i32 1, i32 32768>
+  %6 = select <4 x i1> %5, <4 x i8> %i.hi, <4 x i8> %i.hk
+  store <4 x i8> %6, ptr %i.hu, align 1, !tbaa !45
   br label %.loopexit.i
 
 bb.am:                                            ; preds = %bytestream2_get_byte.exit153.i
