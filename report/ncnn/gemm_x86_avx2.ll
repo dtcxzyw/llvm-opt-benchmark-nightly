@@ -204,6 +204,7 @@ begin_hunk_0_@_ZN4ncnn33gemm_transB_packed_tile_int8_avx2ERKNS_3MatES2_RS0_iiiii
   %i.aew = shl nuw nsw i64 %n.vec1028, 1
   %i.aex = shl nuw nsw i64 %n.vec1028, 2
   %cmp.n1045 = icmp eq i64 %i.aeh, %n.vec1028
+  %9 = add i32 %8, -4
   %i.aey = add nsw i32 %8, -4                     ; 2 uses
   %i.aez = lshr i32 %i.aey, 2
   %narrow1051 = add nuw nsw i32 %i.aez, 1
@@ -606,16 +607,13 @@ vec.epilog.middle.block1044:                      ; preds = %vec.epilog.vector.b
   %.1774.lcssa.i = phi i32 [ %.0773.i, %bb.ai ], [ %.lcssa500, %.preheader.loopexit.i ]
   %.1771.lcssa.i = phi i32 [ %.0770.i, %bb.ai ], [ %.lcssa499, %.preheader.loopexit.i ]
   %.0767.lcssa.i = phi ptr [ %.31791.i, %bb.ai ], [ %indvars.iv2020.i, %.preheader.loopexit.i ] ; 4 uses
-  %.0765.lcssa.i = phi i32 [ 0, %bb.ai ], [ %i.adx, %.preheader.loopexit.i ] ; 6 uses
+  %.0765.lcssa.i = phi i32 [ 0, %bb.ai ], [ %i.adx, %.preheader.loopexit.i ] ; 5 uses
   %i.bhp = add nuw nsw i32 %.0765.lcssa.i, 3
   %i.bhq = icmp slt i32 %i.bhp, %8
   br i1 %i.bhq, label %.lr.ph1726.i.preheader, label %._crit_edge1727.i
 
 .lr.ph1726.i.preheader:                           ; preds = %.preheader.i
-  %9 = add i32 %.0765.lcssa.i, 7
-  %10 = tail call i32 @llvm.smax.i32(i32 %8, i32 %9)
-  %11 = add i32 %10, -4
-  %i.bhr = sub i32 %11, %.0765.lcssa.i            ; 2 uses
+  %i.bhr = sub i32 %9, %.0765.lcssa.i             ; 2 uses
   %i.bhs = lshr i32 %i.bhr, 2
   %narrow = add nuw nsw i32 %i.bhs, 1
   %i.bht = zext nneg i32 %narrow to i64           ; 2 uses

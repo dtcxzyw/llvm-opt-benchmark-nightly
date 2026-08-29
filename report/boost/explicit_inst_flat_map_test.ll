@@ -204,8 +204,8 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !1905, !noalias !10228 ; 2 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !1895, !noalias !10231 ; 4 uses
   %i.d = lshr i64 %i.b, 4
-  %.idx.i = and i64 %i.d, 1152921504606846968     ; 4 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx.i ; 3 uses
+  %.idx.i = and i64 %i.d, 1152921504606846968     ; 5 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx.i ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.c, null
   br i1 %.not.i.i.i, label %_ZN5boost9container10deque_implISt4pairINS0_4test24movable_and_copyable_intES4_ENS3_16simple_allocatorIS5_EELb0EvED2Ev.exit, label %_ZNK5boost9container10deque_baseINS0_4test16simple_allocatorISt4pairINS2_24movable_and_copyable_intES5_EEENS0_9deque_optILm0ELm0EmLb0EEELb0EE14prot_off_to_itEm.exit.i
 
@@ -216,9 +216,9 @@ _ZNK5boost9container10deque_baseINS0_4test16simple_allocatorISt4pairINS2_24movab
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx25.i ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.j = load i64, ptr %i.i, align 8, !tbaa !1907, !noalias !10234 ; 2 uses
-  %i.k = lshr i64 %i.j, 4
+  %i.k = lshr i64 %i.j, 4                         ; 2 uses
   %.idx17.i = and i64 %i.k, 1152921504606846968   ; 4 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx17.i ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx17.i ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !973, !noalias !10237 ; 2 uses
   %i.n = shl i64 %i.j, 3
   %.idx26.i = and i64 %i.n, 1016                  ; 2 uses
@@ -229,22 +229,17 @@ _ZNK5boost9container10deque_baseINS0_4test16simple_allocatorISt4pairINS2_24movab
   br i1 %i.q, label %.lr.ph.preheader.i.i, label %bb.b
 
 .lr.ph.preheader.i.i:                             ; preds = %_ZNK5boost9container10deque_baseINS0_4test16simple_allocatorISt4pairINS2_24movable_and_copyable_intES5_EEENS0_9deque_optILm0ELm0EmLb0EEELb0EE14prot_off_to_itEm.exit.i
-  %1 = ptrtoaddr ptr %i.l to i64
-  %2 = ptrtoaddr ptr %i.e to i64                  ; 2 uses
-  %3 = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i, -256
-  %4 = add i64 %2, 16
-  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %1, i64 %4)
-  %reass.sub.i = sub i64 %umax.i.i, %2
+  %reass.sub.i = sub nsw i64 %i.k, %.idx.i
   %i.r = trunc i64 %reass.sub.i to i32
   %i.s = shl i32 %i.r, 5
-  %5 = add i32 %i.s, -288
-  %6 = and i32 %5, -256
-  %7 = sub i32 %3, %6                             ; 2 uses
-  store i32 %7, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !809
+  %1 = and i32 %i.s, -256
+  %2 = sub i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i, %1
+  %3 = add i32 %2, 256                            ; 2 uses
+  store i32 %3, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !809
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.preheader.i.i, %_ZNK5boost9container10deque_baseINS0_4test16simple_allocatorISt4pairINS2_24movable_and_copyable_intES5_EEENS0_9deque_optILm0ELm0EmLb0EEELb0EE14prot_off_to_itEm.exit.i
-  %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i22.i.i = phi i32 [ %7, %.lr.ph.preheader.i.i ], [ %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i, %_ZNK5boost9container10deque_baseINS0_4test16simple_allocatorISt4pairINS2_24movable_and_copyable_intES5_EEENS0_9deque_optILm0ELm0EmLb0EEELb0EE14prot_off_to_itEm.exit.i ] ; 2 uses
+  %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i22.i.i = phi i32 [ %3, %.lr.ph.preheader.i.i ], [ %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i.i, %_ZNK5boost9container10deque_baseINS0_4test16simple_allocatorISt4pairINS2_24movable_and_copyable_intES5_EEENS0_9deque_optILm0ELm0EmLb0EEELb0EE14prot_off_to_itEm.exit.i ] ; 2 uses
   %.not12.i.i = icmp samesign eq i64 %.idx.i, %.idx17.i
   br i1 %.not12.i.i, label %bb.c, label %_ZN5boost9container10deque_implISt4pairINS0_4test24movable_and_copyable_intES4_ENS3_16simple_allocatorIS5_EELb0EvE18prot_destroy_rangeEPS5_S9_.exit.i.i
 
@@ -647,7 +642,7 @@ _ZN5boost9container15move_backward_nIPSt4pairINS0_4test24movable_and_copyable_in
 _ZN5boost9container10deque_implISt4pairINS0_4test24movable_and_copyable_intES4_ENS3_16simple_allocatorIS5_EELb0EvE30priv_segmented_move_backward_nENS0_14deque_iteratorIPS5_Lb0ELj0ELj0EmEEmSB_.exit: ; preds = %_ZN5boost9container15move_backward_nIPSt4pairINS0_4test24movable_and_copyable_intES4_ENS0_14deque_iteratorIS6_Lb0ELj0ELj0EmEEEENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_SC_E4typeESB_mSC_.exit29.i, %_ZN5boost9container15move_backward_nIPSt4pairINS0_4test24movable_and_copyable_intES4_ENS0_14deque_iteratorIS6_Lb0ELj0ELj0EmEEEENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_SC_E4typeESB_mSC_.exit.i
   %i.eu = phi ptr [ %.promoted40.i, %_ZN5boost9container15move_backward_nIPSt4pairINS0_4test24movable_and_copyable_intES4_ENS0_14deque_iteratorIS6_Lb0ELj0ELj0EmEEEENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_SC_E4typeESB_mSC_.exit.i ], [ %.lcssa, %_ZN5boost9container15move_backward_nIPSt4pairINS0_4test24movable_and_copyable_intES4_ENS0_14deque_iteratorIS6_Lb0ELj0ELj0EmEEEENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_SC_E4typeESB_mSC_.exit29.i ] ; 6 uses
   %i.ev = phi ptr [ %.promoted.i, %_ZN5boost9container15move_backward_nIPSt4pairINS0_4test24movable_and_copyable_intES4_ENS0_14deque_iteratorIS6_Lb0ELj0ELj0EmEEEENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_SC_E4typeESB_mSC_.exit.i ], [ %storemerge.i.i27.i.lcssa, %_ZN5boost9container15move_backward_nIPSt4pairINS0_4test24movable_and_copyable_intES4_ENS0_14deque_iteratorIS6_Lb0ELj0ELj0EmEEEENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_SC_E4typeESB_mSC_.exit29.i ] ; 3 uses
-  %i.ew = ptrtoaddr ptr %.sink.i15 to i64         ; 2 uses
+  %i.ew = ptrtoaddr ptr %.sink.i15 to i64
   %i.ex = ptrtoaddr ptr %i.eu to i64
   %.not.i17 = icmp eq ptr %.sink.i15, null
   br i1 %.not.i17, label %_ZN5boost9container10deque_implISt4pairINS0_4test24movable_and_copyable_intES4_ENS3_16simple_allocatorIS5_EELb0EvE18prot_destroy_rangeENS0_14deque_iteratorIPS5_Lb0ELj0ELj0EmEESB_.exit, label %.preheader.i
@@ -659,9 +654,7 @@ _ZN5boost9container10deque_implISt4pairINS0_4test24movable_and_copyable_intES4_E
   br i1 %i.ey, label %.lr.ph.preheader.i, label %bb.t
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
-  %4 = add i64 %i.ew, 16
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.ex, i64 %4)
-  %reass.sub121.neg = sub i64 %i.ew, %umax.i
+  %reass.sub121.neg = sub i64 %i.ew, %i.ex
   %.neg122 = trunc i64 %reass.sub121.neg to i32
   %.neg123 = shl i32 %.neg122, 5
   %i.ez = and i32 %.neg123, -256
@@ -990,7 +983,7 @@ _ZN5boost9container6move_nIPSt4pairINS0_4test24movable_and_copyable_intES4_ENS0_
 _ZN5boost9container10deque_implISt4pairINS0_4test24movable_and_copyable_intES4_ENS3_16simple_allocatorIS5_EELb0EvE21priv_segmented_move_nENS0_14deque_iteratorIPS5_Lb1ELj0ELj0EmEEmNS9_ISA_Lb0ELj0ELj0EmEE.exit: ; preds = %_ZN5boost9container6move_nIPSt4pairINS0_4test24movable_and_copyable_intES4_ENS0_14deque_iteratorIS6_Lb0ELj0ELj0EmEEEENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_SC_E4typeESB_mSC_.exit27.i, %_ZN5boost9container6move_nIPSt4pairINS0_4test24movable_and_copyable_intES4_ENS0_14deque_iteratorIS6_Lb0ELj0ELj0EmEEEENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_SC_E4typeESB_mSC_.exit.i
   %i.jw = phi ptr [ %.promoted41.i, %_ZN5boost9container6move_nIPSt4pairINS0_4test24movable_and_copyable_intES4_ENS0_14deque_iteratorIS6_Lb0ELj0ELj0EmEEEENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_SC_E4typeESB_mSC_.exit.i ], [ %.lcssa187, %_ZN5boost9container6move_nIPSt4pairINS0_4test24movable_and_copyable_intES4_ENS0_14deque_iteratorIS6_Lb0ELj0ELj0EmEEEENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_SC_E4typeESB_mSC_.exit27.i ] ; 7 uses
   %i.jx = phi ptr [ %.promoted.i36, %_ZN5boost9container6move_nIPSt4pairINS0_4test24movable_and_copyable_intES4_ENS0_14deque_iteratorIS6_Lb0ELj0ELj0EmEEEENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_SC_E4typeESB_mSC_.exit.i ], [ %.lcssa186, %_ZN5boost9container6move_nIPSt4pairINS0_4test24movable_and_copyable_intES4_ENS0_14deque_iteratorIS6_Lb0ELj0ELj0EmEEEENS0_3dtl38disable_if_memtransfer_copy_assignableIT_T0_SC_E4typeESB_mSC_.exit27.i ] ; 4 uses
-  %i.jy = ptrtoaddr ptr %i.jw to i64              ; 2 uses
+  %i.jy = ptrtoaddr ptr %i.jw to i64
   %i.jz = ptrtoaddr ptr %.sink.i27 to i64
   %.not.i40 = icmp eq ptr %i.jw, null
   br i1 %.not.i40, label %_ZN5boost9container10deque_implISt4pairINS0_4test24movable_and_copyable_intES4_ENS3_16simple_allocatorIS5_EELb0EvE18prot_destroy_rangeENS0_14deque_iteratorIPS5_Lb0ELj0ELj0EmEESB_.exit66, label %.preheader.i41
@@ -1002,14 +995,13 @@ _ZN5boost9container10deque_implISt4pairINS0_4test24movable_and_copyable_intES4_E
   br i1 %i.ka, label %.lr.ph.preheader.i64, label %bb.ad
 
 .lr.ph.preheader.i64:                             ; preds = %.preheader.i41
-  %i.kb = add i64 %i.jy, 16
-  %umax.i65 = tail call i64 @llvm.umax.i64(i64 %i.jz, i64 %i.kb)
-  %reass.sub.neg = sub i64 %i.jy, %umax.i65
+  %i.kb = add i64 %i.jz, 134217719
+  %reass.sub.neg = sub i64 %i.kb, %i.jy
   %.neg = trunc i64 %reass.sub.neg to i32
   %.neg120 = shl i32 %.neg, 5
   %i.kc = and i32 %.neg120, -256
-  %5 = add i32 %i.kc, 256
-  %i.kd = add i32 %5, %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i42 ; 2 uses
+  %4 = xor i32 %i.kc, -256
+  %i.kd = add i32 %4, %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i42 ; 2 uses
   store i32 %i.kd, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !809
   br label %bb.ad
 
@@ -1412,16 +1404,14 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.ab, label %.lr.ph.preheader.i, label %bb.f
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
-  %i.ac = ptrtoaddr ptr %.sroa.6.1.i15 to i64     ; 2 uses
+  %i.ac = ptrtoaddr ptr %.sroa.6.1.i15 to i64
   %i.ad = ptrtoaddr ptr %i.g to i64
   %i.ae = add i32 %_ZN5boost9container4test24movable_and_copyable_int5countE.promoted.i, -256
-  %i.af = add i64 %i.ac, 16
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.ad, i64 %i.af)
-  %reass.sub.a = sub i64 %umax.i, %i.ac
+  %i.af = add i64 %i.ad, 134217719
+  %reass.sub.a = sub i64 %i.af, %i.ac
   %i.ag = trunc i64 %reass.sub.a to i32
   %i.ah = shl i32 %i.ag, 5
-  %2 = add i32 %i.ah, -288
-  %i.ai = and i32 %2, -256
+  %i.ai = and i32 %i.ah, -256
   %i.aj = sub i32 %i.ae, %i.ai                    ; 2 uses
   store i32 %i.aj, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !809
   br label %bb.f

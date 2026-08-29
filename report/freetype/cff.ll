@@ -205,11 +205,9 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph.i.preheader:                               ; preds = %bb.m
   %i.bw = ptrtoaddr ptr %i.bu to i64
-  %i.bx = ptrtoaddr ptr %i.bt to i64              ; 2 uses
-  %1 = add i64 %i.bx, 8
-  %2 = call i64 @llvm.umax.i64(i64 %i.bw, i64 %1)
+  %i.bx = ptrtoaddr ptr %i.bt to i64
   %i.by = xor i64 %i.bx, -1
-  %i.bz = add i64 %2, %i.by                       ; 2 uses
+  %i.bz = add i64 %i.by, %i.bw                    ; 2 uses
   %i.ca = lshr i64 %i.bz, 3
   %i.cb = add nuw nsw i64 %i.ca, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bz, 24
@@ -611,9 +609,6 @@ declare i16 @llvm.umax.i16(i16, i16) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #15
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #17

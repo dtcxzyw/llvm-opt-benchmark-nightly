@@ -205,7 +205,8 @@ bb.s:                                             ; preds = %.lr.ph
 .lr.ph325:                                        ; preds = %._crit_edge
   %i.fk = xor i32 %i.dj, 1                        ; 4 uses
   %i.fl = ptrtoaddr ptr %i.ff to i64
-  %i.fm = add i64 %.idx, %i.fl
+  %1 = add i64 %.idx, %i.fl
+  %i.fm = add i64 %1, -9
   br label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph325, %_ZN6Gluco26Solver16uncheckedEnqueueENS_3LitEj.exit193
@@ -213,7 +214,7 @@ bb.t:                                             ; preds = %.lr.ph325, %_ZN6Glu
   %.0121321 = phi ptr [ %i.ff, %.lr.ph325 ], [ %.4125, %_ZN6Gluco26Solver16uncheckedEnqueueENS_3LitEj.exit193 ] ; 6 uses
   %.0126319 = phi ptr [ %i.ff, %.lr.ph325 ], [ %.4130, %_ZN6Gluco26Solver16uncheckedEnqueueENS_3LitEj.exit193 ] ; 9 uses
   %.0126319432 = ptrtoaddr ptr %.0126319 to i64
-  %.0121321433 = ptrtoaddr ptr %.0121321 to i64   ; 3 uses
+  %.0121321433 = ptrtoaddr ptr %.0121321 to i64   ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %.0121321, i64 4
   %.sroa.058.0.copyload = load i32, ptr %i.fn, align 4, !tbaa !57 ; 3 uses
   %i.fo = ashr i32 %.sroa.058.0.copyload, 1
@@ -503,10 +504,7 @@ bb.al:                                            ; preds = %.thread260
   br i1 %i.kk, label %.lr.ph315.preheader, label %_ZN6Gluco26Solver16uncheckedEnqueueENS_3LitEj.exit193
 
 .lr.ph315.preheader:                              ; preds = %bb.al
-  %1 = add i64 %.0121321433, 16
-  %2 = tail call i64 @llvm.umax.i64(i64 %i.fm, i64 %1)
-  %3 = add i64 %2, -9
-  %i.kl = sub i64 %3, %.0121321433                ; 2 uses
+  %i.kl = sub i64 %i.fm, %.0121321433             ; 2 uses
   %i.km = lshr i64 %i.kl, 3
   %i.kn = add nuw nsw i64 %i.km, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.kl, 24
@@ -908,9 +906,6 @@ declare i32 @llvm.smin.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #13
 
 attributes #0 = { nofree nounwind }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

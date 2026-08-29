@@ -205,14 +205,14 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph
 
 _ZN3smt10watch_list10end_clauseEv.exit:           ; preds = %.critedge101
   %i.cb = getelementptr inbounds i8, ptr %i.ca, i64 -12
-  %i.cc = load i32, ptr %i.cb, align 4, !tbaa !593 ; 2 uses
-  %i.cd = zext i32 %i.cc to i64                   ; 2 uses
+  %i.cc = load i32, ptr %i.cb, align 4, !tbaa !593 ; 3 uses
+  %i.cd = zext i32 %i.cc to i64
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ca, i64 %i.cd ; 3 uses
   %.not97141 = icmp eq i32 %i.cc, 0
   br i1 %.not97141, label %._crit_edge145.thread182, label %.lr.ph144
 
 .lr.ph144:                                        ; preds = %_ZN3smt10watch_list10end_clauseEv.exit, %bb.v
-  %indvar = phi i64 [ %indvar.next, %bb.v ], [ 0, %_ZN3smt10watch_list10end_clauseEv.exit ] ; 4 uses
+  %indvar = phi i64 [ %indvar.next, %bb.v ], [ 0, %_ZN3smt10watch_list10end_clauseEv.exit ] ; 3 uses
   %.084143 = phi ptr [ %i.ga, %bb.v ], [ %i.ca, %_ZN3smt10watch_list10end_clauseEv.exit ] ; 7 uses
   %.089142 = phi ptr [ %.594.ph, %bb.v ], [ %i.ca, %_ZN3smt10watch_list10end_clauseEv.exit ] ; 11 uses
   %i.cf = load ptr, ptr %.084143, align 8, !tbaa !875 ; 11 uses
@@ -316,21 +316,16 @@ bb.p:                                             ; preds = %.lr.ph140
   br i1 %i.ds, label %.preheader, label %bb.s
 
 .preheader:                                       ; preds = %._crit_edge
-  %i.dt = ptrtoaddr ptr %i.ca to i64              ; 4 uses
+  %i.dt = ptrtoaddr ptr %i.ca to i64
   %.089142208.le = ptrtoaddr ptr %.089142 to i64
   %i.du = icmp ult ptr %.084143, %i.ce
   br i1 %i.du, label %.lr.ph148.preheader, label %._crit_edge149
 
 .lr.ph148.preheader:                              ; preds = %.preheader
-  %1 = xor i64 %i.dt, -1
-  %2 = shl i64 %indvar, 3
-  %3 = sub i64 %1, %2
-  %4 = add i64 %i.dt, 8
+  %1 = zext i32 %i.cc to i64
   %i.dv = shl i64 %indvar, 3
-  %5 = add i64 %i.dv, %4
-  %6 = add i64 %i.dt, %i.cd
-  %7 = tail call i64 @llvm.umax.i64(i64 %5, i64 %6)
-  %i.dw = add i64 %7, %3                          ; 2 uses
+  %2 = xor i64 %i.dv, -1
+  %i.dw = add i64 %2, %1                          ; 2 uses
   %i.dx = lshr i64 %i.dw, 3
   %i.dy = add nuw nsw i64 %i.dx, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.dw, 216
@@ -732,9 +727,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #28
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #28
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

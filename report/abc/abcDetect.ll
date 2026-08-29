@@ -205,19 +205,17 @@ Vec_IntGrow.exit.i:                               ; preds = %bb.t, %bb.p
   %.036.lcssa.i.i = phi ptr [ %i.co, %Vec_IntGrow.exit.i ], [ %.137.i.i, %bb.y ] ; 5 uses
   %.033.lcssa.i.i = phi ptr [ %.val8.i, %Vec_IntGrow.exit.i ], [ %.134.i.i, %bb.y ] ; 5 uses
   %.0.lcssa.i.i = phi ptr [ %.val10.i, %Vec_IntGrow.exit.i ], [ %.1.i.i, %bb.y ] ; 5 uses
-  %.0.lcssa.i.i93 = ptrtoaddr ptr %.0.lcssa.i.i to i64 ; 3 uses
+  %.0.lcssa.i.i93 = ptrtoaddr ptr %.0.lcssa.i.i to i64 ; 2 uses
   %i.cw = icmp ult ptr %.033.lcssa.i.i, %i.cq
   br i1 %i.cw, label %.lr.ph13.i.i.preheader, label %.preheader.i.i
 
 .lr.ph13.i.i.preheader:                           ; preds = %.preheader5.i.i
-  %.033.lcssa.i.i99 = ptrtoaddr ptr %.033.lcssa.i.i to i64 ; 3 uses
+  %.033.lcssa.i.i99 = ptrtoaddr ptr %.033.lcssa.i.i to i64 ; 2 uses
   %.036.lcssa.i.i98 = ptrtoaddr ptr %.036.lcssa.i.i to i64
   %i.cx = ptrtoaddr ptr %.val8.i to i64
-  %5 = add i64 %.idx.i.i, %i.cx
-  %i.cy = add i64 %.033.lcssa.i.i99, 4
-  %6 = tail call i64 @llvm.umax.i64(i64 %5, i64 %i.cy)
+  %i.cy = add i64 %.idx.i.i, %i.cx
   %i.cz = xor i64 %.033.lcssa.i.i99, -1
-  %i.da = add i64 %6, %i.cz                       ; 2 uses
+  %i.da = add i64 %i.cy, %i.cz                    ; 2 uses
   %i.db = lshr i64 %i.da, 2
   %i.dc = add nuw nsw i64 %i.db, 1                ; 2 uses
   %min.iters.check102 = icmp ult i64 %i.da, 28
@@ -303,11 +301,9 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %bb.u
 .lr.ph17.i.i.preheader:                           ; preds = %.preheader.i.i
   %.238.lcssa.i.i92 = ptrtoaddr ptr %.238.lcssa.i.i to i64
   %i.dx = ptrtoaddr ptr %.val10.i to i64
-  %7 = add i64 %.idx19.i.i, %i.dx
-  %i.dy = add i64 %.0.lcssa.i.i93, 4
-  %8 = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.dy)
+  %i.dy = add i64 %.idx19.i.i, %i.dx
   %i.dz = xor i64 %.0.lcssa.i.i93, -1
-  %i.ea = add i64 %8, %i.dz                       ; 2 uses
+  %i.ea = add i64 %i.dy, %i.dz                    ; 2 uses
   %i.eb = lshr i64 %i.ea, 2
   %i.ec = add nuw nsw i64 %i.eb, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ea, 28
@@ -708,9 +704,6 @@ declare void @llvm.assume(i1 noundef) #31
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32, i32) #30
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #30

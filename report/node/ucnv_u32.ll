@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 48
-  tail call void @ucnv_fromUWriteBytes_78(ptr noundef nonnull %i.h, ptr noundef nonnull @_ZZL33T_UConverter_fromUnicode_UTF32_BEP25UConverterFromUnicodeArgsP10UErrorCodeE3bom, i32 noundef 4, ptr noundef nonnull %i.l, ptr noundef %i.f, ptr noundef nonnull %i.m, i32 noundef -1, ptr noundef %1) #7
+  tail call void @ucnv_fromUWriteBytes_78(ptr noundef nonnull %i.h, ptr noundef nonnull @_ZZL33T_UConverter_fromUnicode_UTF32_BEP25UConverterFromUnicodeArgsP10UErrorCodeE3bom, i32 noundef 4, ptr noundef nonnull %i.l, ptr noundef %i.f, ptr noundef nonnull %i.m, i32 noundef -1, ptr noundef %1) #6
   %i.n = load ptr, ptr %i.g, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 80
   store i32 0, ptr %i.o, align 8
@@ -439,7 +439,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 48
-  tail call void @ucnv_fromUWriteBytes_78(ptr noundef nonnull %i.h, ptr noundef nonnull @_ZZL46T_UConverter_fromUnicode_UTF32_BE_OFFSET_LOGICP25UConverterFromUnicodeArgsP10UErrorCodeE3bom, i32 noundef 4, ptr noundef nonnull %i.l, ptr noundef %i.f, ptr noundef nonnull %i.m, i32 noundef -1, ptr noundef %1) #7
+  tail call void @ucnv_fromUWriteBytes_78(ptr noundef nonnull %i.h, ptr noundef nonnull @_ZZL46T_UConverter_fromUnicode_UTF32_BE_OFFSET_LOGICP25UConverterFromUnicodeArgsP10UErrorCodeE3bom, i32 noundef 4, ptr noundef nonnull %i.l, ptr noundef %i.f, ptr noundef nonnull %i.m, i32 noundef -1, ptr noundef %1) #6
   %i.n = load ptr, ptr %i.g, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 80
   store i32 0, ptr %i.o, align 8
@@ -842,7 +842,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 48
-  tail call void @ucnv_fromUWriteBytes_78(ptr noundef nonnull %i.h, ptr noundef nonnull @_ZZL33T_UConverter_fromUnicode_UTF32_LEP25UConverterFromUnicodeArgsP10UErrorCodeE3bom, i32 noundef 4, ptr noundef nonnull %i.l, ptr noundef %i.f, ptr noundef nonnull %i.m, i32 noundef -1, ptr noundef %1) #7
+  tail call void @ucnv_fromUWriteBytes_78(ptr noundef nonnull %i.h, ptr noundef nonnull @_ZZL33T_UConverter_fromUnicode_UTF32_LEP25UConverterFromUnicodeArgsP10UErrorCodeE3bom, i32 noundef 4, ptr noundef nonnull %i.l, ptr noundef %i.f, ptr noundef nonnull %i.m, i32 noundef -1, ptr noundef %1) #6
   %i.n = load ptr, ptr %i.g, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 80
   store i32 0, ptr %i.o, align 8
@@ -1077,7 +1077,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 48
-  tail call void @ucnv_fromUWriteBytes_78(ptr noundef nonnull %i.h, ptr noundef nonnull @_ZZL46T_UConverter_fromUnicode_UTF32_LE_OFFSET_LOGICP25UConverterFromUnicodeArgsP10UErrorCodeE3bom, i32 noundef 4, ptr noundef nonnull %i.l, ptr noundef %i.f, ptr noundef nonnull %i.m, i32 noundef -1, ptr noundef %1) #7
+  tail call void @ucnv_fromUWriteBytes_78(ptr noundef nonnull %i.h, ptr noundef nonnull @_ZZL46T_UConverter_fromUnicode_UTF32_LE_OFFSET_LOGICP25UConverterFromUnicodeArgsP10UErrorCodeE3bom, i32 noundef 4, ptr noundef nonnull %i.l, ptr noundef %i.f, ptr noundef nonnull %i.m, i32 noundef -1, ptr noundef %1) #6
   %i.n = load ptr, ptr %i.g, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 80
   store i32 0, ptr %i.o, align 8
@@ -1480,11 +1480,9 @@ bb.n:                                             ; preds = %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.n
   %i.bn = ptrtoaddr ptr %i.bl to i64
-  %i.bo = ptrtoaddr ptr %i.h to i64               ; 2 uses
-  %2 = add i64 %i.bo, 4
-  %3 = tail call i64 @llvm.umax.i64(i64 %i.bn, i64 %2)
+  %i.bo = ptrtoaddr ptr %i.h to i64
   %i.bp = xor i64 %i.bo, -1
-  %i.bq = add i64 %3, %i.bp                       ; 2 uses
+  %i.bq = add i64 %i.bp, %i.bn                    ; 2 uses
   %i.br = lshr i64 %i.bq, 2
   %i.bs = add nuw nsw i64 %i.br, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.bq, 28
@@ -1712,17 +1710,13 @@ _ZL34T_UConverter_getNextUChar_UTF32_BEP23UConverterToUnicodeArgsP10UErrorCode.e
   ret i32 %.0
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #6
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #7 = { nounwind }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

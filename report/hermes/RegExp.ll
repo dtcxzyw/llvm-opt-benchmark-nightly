@@ -205,7 +205,7 @@ _ZN6hermes2vm12setLastIndexENS0_6HandleINS0_8JSObjectEEERNS0_7RuntimeEd.exit: ; 
 bb.u:                                             ; preds = %_ZN6hermes2vm12setLastIndexENS0_6HandleINS0_8JSObjectEEERNS0_7RuntimeEd.exit
   %i.db = call { ptr, i64 } @_ZN6hermes2vm15StringPrimitive16createStringViewERNS0_7RuntimeENS0_6HandleIS1_EE(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %.0.i.i.i.i.i.i33) #12 ; 2 uses
   %i.dc = extractvalue { ptr, i64 } %i.db, 0      ; 9 uses
-  %i.dd = ptrtoaddr ptr %i.dc to i64              ; 4 uses
+  %i.dd = ptrtoaddr ptr %i.dc to i64
   %i.de = extractvalue { ptr, i64 } %i.db, 1      ; 7 uses
   %.sroa.7.8.extract.trunc = trunc i64 %i.de to i32 ; 4 uses
   %i.df = icmp slt i32 %.sroa.7.8.extract.trunc, 0
@@ -602,7 +602,7 @@ _ZN6hermes2vm10StringView14const_iteratorppEi.exit.us: ; preds = %_ZNK6hermes2vm
 
 _ZNK6hermes2vm10StringView5beginEv.exit.split.split.us: ; preds = %bb.ac
   %i.ig = and i64 %i.de, 1073741823               ; 2 uses
-  %.idx = shl nuw nsw i64 %i.ig, 1                ; 6 uses
+  %.idx = shl nuw nsw i64 %i.ig, 1                ; 3 uses
   %.sroa.7.12.extract.shift = lshr i64 %i.de, 31  ; 2 uses
   %.idx237 = shl nuw nsw i64 %i.ig, 1
   %i.ih = add nuw nsw i64 %.idx237, %.sroa.7.12.extract.shift ; 3 uses
@@ -621,21 +621,14 @@ _ZN6hermes2vm10StringView14const_iteratorppEi.exit.us126.peel: ; preds = %_ZNK6h
   br i1 %.not218252, label %iter.check321, label %.split113.us
 
 iter.check321:                                    ; preds = %_ZN6hermes2vm10StringView14const_iteratorppEi.exit.us126.peel
-  %5 = add i64 %.sroa.7.12.extract.shift, %i.dd
-  %6 = add i64 %5, %.idx
-  %7 = add i64 %.idx, %i.dd
-  %8 = add i64 %7, 4
-  %umax296 = call i64 @llvm.umax.i64(i64 %6, i64 %8)
-  %9 = add i64 %umax296, -3
-  %i.io = add i64 %.idx, %i.dd
-  %10 = sub i64 %9, %i.io                         ; 3 uses
-  %i.ip = lshr i64 %10, 1
+  %i.io = add nsw i64 %.sroa.7.12.extract.shift, -4 ; 3 uses
+  %i.ip = lshr exact i64 %i.io, 1
   %i.iq = add nuw i64 %i.ip, 1                    ; 5 uses
-  %min.iters.check297 = icmp ult i64 %10, 6
+  %min.iters.check297 = icmp ult i64 %i.io, 6
   br i1 %min.iters.check297, label %_ZN6hermes2vm10StringView14const_iteratorppEi.exit.us126.preheader, label %vector.main.loop.iter.check298
 
 vector.main.loop.iter.check298:                   ; preds = %iter.check321
-  %min.iters.check299 = icmp ult i64 %10, 30
+  %min.iters.check299 = icmp ult i64 %i.io, 30
   br i1 %min.iters.check299, label %vec.epilog.ph325, label %vector.ph300
 
 vector.ph300:                                     ; preds = %vector.main.loop.iter.check298
@@ -749,8 +742,8 @@ _ZN6hermes2vm10StringView14const_iteratorppEi.exit.us126: ; preds = %_ZN6hermes2
 
 _ZNK6hermes2vm10StringView5beginEv.exit.split.split: ; preds = %bb.ai, %bb.ah, %bb.ag, %bb.ae
   %.0.i.sink.i4.i.ph = phi ptr [ %i.eg, %bb.ai ], [ %i.eb, %bb.ah ], [ %i.ea, %bb.ag ], [ %i.dz, %bb.ae ] ; 2 uses
-  %.0.i.sink.i4.i.ph272 = ptrtoaddr ptr %.0.i.sink.i4.i.ph to i64 ; 2 uses
-  %i.ka = and i64 %i.de, 1073741823               ; 5 uses
+  %.0.i.sink.i4.i.ph272 = ptrtoaddr ptr %.0.i.sink.i4.i.ph to i64
+  %i.ka = and i64 %i.de, 1073741823               ; 4 uses
   %i.kb = getelementptr inbounds nuw [2 x i8], ptr %.0.i.sink.i4.i.ph, i64 %i.ka ; 6 uses
   %.sroa.7.12.extract.shift227 = lshr i64 %i.de, 32 ; 4 uses
   %.sroa.0.0.copyload.i.i.i.i2.i39 = load i64, ptr %i.dc, align 8, !tbaa !17
@@ -812,15 +805,9 @@ _ZN6hermes2vm10StringView14const_iteratorppEi.exit.us148.peel: ; preds = %_ZNK6h
 
 iter.check:                                       ; preds = %_ZN6hermes2vm10StringView14const_iteratorppEi.exit.us148.peel
   %i.kz = shl nuw nsw i64 %.sroa.7.12.extract.shift227, 1
-  %11 = add nuw i64 %i.kz, %i.kt
-  %12 = shl nuw nsw i64 %i.ka, 1                  ; 3 uses
-  %13 = add nuw i64 %11, %12
-  %14 = add i64 %12, %.0.i.sink.i4.i.ph272
-  %15 = add i64 %14, 4
-  %umax = call i64 @llvm.umax.i64(i64 %13, i64 %15)
-  %i.la = add i64 %umax, -3
-  %i.lb = add i64 %12, %.0.i.sink.i4.i.ph272
-  %i.lc = sub i64 %i.la, %i.lb                    ; 3 uses
+  %i.la = add i64 %i.kz, %i.kt
+  %i.lb = add i64 %i.la, -3
+  %i.lc = sub i64 %i.lb, %.0.i.sink.i4.i.ph272    ; 3 uses
   %i.ld = lshr i64 %i.lc, 1
   %i.le = add nuw i64 %i.ld, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.lc, 6
@@ -1221,9 +1208,6 @@ declare void @llvm.assume(i1 noundef) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #6

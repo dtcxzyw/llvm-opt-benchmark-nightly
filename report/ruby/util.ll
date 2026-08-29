@@ -204,8 +204,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ad = zext nneg i32 %i.ac to i64
   %i.ae = shl nuw nsw i64 %i.ad, 2
   %i.af = add nuw nsw i64 %i.ae, 32
-  %i.ag = tail call noalias ptr @malloc(i64 noundef %i.af) #26 ; 8 uses
-  %2 = ptrtoaddr ptr %i.ag to i64                 ; 3 uses
+  %i.ag = tail call noalias ptr @malloc(i64 noundef %i.af) #26 ; 7 uses
   %.not.i83 = icmp eq ptr %i.ag, null
   br i1 %.not.i83, label %Balloc.exit.thread, label %bb.f
 
@@ -226,15 +225,7 @@ bb.f:                                             ; preds = %._crit_edge98
 
 .lr.ph.preheader:                                 ; preds = %bb.f
   %i.ap = shl nsw i64 %i.am, 2
-  %3 = add i64 %i.ap, %2
-  %4 = add i64 %3, 24
-  %5 = add i64 %2, 28
-  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 %5)
-  %6 = add i64 %umax, -25
-  %7 = sub i64 %6, %2
-  %8 = and i64 %7, -4
-  %9 = add i64 %8, 4
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.al, i8 0, i64 %9, i1 false), !tbaa !7
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.al, i8 0, i64 %i.ap, i1 false), !tbaa !7
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %bb.f
@@ -637,11 +628,11 @@ declare i32 @llvm.smax.i32(i32, i32) #9
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshl.i32(i32, i32, i32) #9
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #9
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1

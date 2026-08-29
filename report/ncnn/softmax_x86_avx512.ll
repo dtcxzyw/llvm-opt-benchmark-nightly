@@ -204,15 +204,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .preheader114:                                    ; preds = %.lr.ph240.preheader, %.preheader115
   %.174.lcssa = phi ptr [ %.073.lcssa, %.preheader115 ], [ %scevgep360, %.lr.ph240.preheader ] ; 3 uses
-  %.1.lcssa = phi i32 [ %.0.lcssa, %.preheader115 ], [ %i.bp, %.lr.ph240.preheader ] ; 5 uses
+  %.1.lcssa = phi i32 [ %.0.lcssa, %.preheader115 ], [ %i.bp, %.lr.ph240.preheader ] ; 4 uses
   %i.bq = or disjoint i32 %.1.lcssa, 3
   %i.br = icmp slt i32 %i.bq, %4
   br i1 %i.br, label %.lr.ph245.preheader, label %.preheader
 
 .lr.ph245.preheader:                              ; preds = %.preheader114
-  %7 = add i32 %.1.lcssa, 7
-  %smax = tail call i32 @llvm.smax.i32(i32 %4, i32 %7)
-  %i.bs = add i32 %smax, -4
+  %i.bs = add i32 %4, -4
   %i.bt = sub i32 %i.bs, %.1.lcssa                ; 2 uses
   %i.bu = lshr i32 %i.bt, 2
   %i.bv = zext nneg i32 %i.bu to i64
@@ -615,15 +613,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .preheader135:                                    ; preds = %.lr.ph210.preheader, %.preheader136
   %.174.lcssa = phi ptr [ %.073.lcssa, %.preheader136 ], [ %scevgep279, %.lr.ph210.preheader ] ; 3 uses
-  %.1.lcssa = phi i32 [ %.0.lcssa, %.preheader136 ], [ %i.bp, %.lr.ph210.preheader ] ; 5 uses
+  %.1.lcssa = phi i32 [ %.0.lcssa, %.preheader136 ], [ %i.bp, %.lr.ph210.preheader ] ; 4 uses
   %i.bq = or disjoint i32 %.1.lcssa, 3
   %i.br = icmp slt i32 %i.bq, %4
   br i1 %i.br, label %.lr.ph215.preheader, label %.preheader
 
 .lr.ph215.preheader:                              ; preds = %.preheader135
-  %7 = add i32 %.1.lcssa, 7
-  %smax = tail call i32 @llvm.smax.i32(i32 %4, i32 %7)
-  %i.bs = add i32 %smax, -4
+  %i.bs = add i32 %4, -4
   %i.bt = sub i32 %i.bs, %.1.lcssa                ; 2 uses
   %i.bu = lshr i32 %i.bt, 2
   %i.bv = zext nneg i32 %i.bu to i64
@@ -1024,9 +1020,6 @@ declare float @llvm.maxnum.f32(float, float) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #17
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x float> @llvm.maxnum.v16f32(<16 x float>, <16 x float>) #10
