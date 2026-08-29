@@ -205,9 +205,6 @@ begin_hunk_0
 %"struct.std::_Optional_payload.76" = type { %"struct.std::_Optional_payload_base.base.78", [3 x i8] }
 %"struct.std::_Optional_payload_base.base.78" = type <{ %"union.std::_Optional_payload_base<unsigned int>::_Storage", i8 }>
 %"union.std::_Optional_payload_base<unsigned int>::_Storage" = type { i32 }
-%"struct.std::_Optional_payload.706" = type { %"struct.std::_Optional_payload_base.base.708", [3 x i8] }
-%"struct.std::_Optional_payload_base.base.708" = type <{ %"union.std::_Optional_payload_base<int>::_Storage", i8 }>
-%"union.std::_Optional_payload_base<int>::_Storage" = type { i32 }
 %"struct.llvm::codeview::BinaryAnnotationIterator" = type { %"class.std::optional.716", %"class.llvm::ArrayRef.313", %"class.llvm::ArrayRef.313" }
 %"class.std::optional.716" = type { %"struct.std::_Optional_base.717" }
 %"struct.std::_Optional_base.717" = type { %"struct.std::_Optional_payload.719" }
@@ -610,8 +607,8 @@ bb.a:
   %19 = alloca %"class.llvm::Error", align 8      ; 3 uses
   %.sroa.0455 = alloca %"struct.std::_Optional_payload.76", align 8 ; 19 uses
   %.sroa.0 = alloca %"struct.std::_Optional_payload.76", align 8 ; 13 uses
-  %.sroa.0434 = alloca %"struct.std::_Optional_payload.706", align 8 ; 9 uses
-  %.sroa.0428 = alloca %"struct.std::_Optional_payload.706", align 8 ; 8 uses
+  %.sroa.0434.sroa.0 = alloca i64, align 8        ; 9 uses
+  %.sroa.0428.sroa.0 = alloca i64, align 8        ; 8 uses
   %20 = alloca %"struct.llvm::codeview::BinaryAnnotationIterator", align 8 ; 12 uses
   %21 = alloca %"struct.lldb_private::RangeData", align 4 ; 7 uses
   %22 = alloca %"class.lldb_private::Address", align 8 ; 3 uses
@@ -1005,11 +1002,11 @@ bb.aa:                                            ; preds = %_ZN4llvm8codeview17
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %.sroa.0.4..sroa_idx684 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   store i8 0, ptr %.sroa.0.4..sroa_idx684, align 4, !tbaa !1301
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0434)
-  %.sroa.0434.4..sroa_idx682 = getelementptr inbounds nuw i8, ptr %.sroa.0434, i64 4
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0434.sroa.0)
+  %.sroa.0434.4..sroa_idx682 = getelementptr inbounds nuw i8, ptr %.sroa.0434.sroa.0, i64 4
   store i8 0, ptr %.sroa.0434.4..sroa_idx682, align 4, !tbaa !1303
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0428)
-  %.sroa.0428.4..sroa_idx679 = getelementptr inbounds nuw i8, ptr %.sroa.0428, i64 4
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0428.sroa.0)
+  %.sroa.0428.4..sroa_idx679 = getelementptr inbounds nuw i8, ptr %.sroa.0428.sroa.0, i64 4
   store i8 0, ptr %.sroa.0428.4..sroa_idx679, align 4, !tbaa !1303
   %i.em = getelementptr inbounds nuw i8, ptr %13, i64 16
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !1305, !noalias !1306 ; 3 uses
@@ -1044,9 +1041,9 @@ bb.aa:                                            ; preds = %_ZN4llvm8codeview17
   %.sroa.0455.4..sroa_idx689 = getelementptr inbounds nuw i8, ptr %.sroa.0455, i64 4
   %.sroa.0455.4..sroa_idx690 = getelementptr inbounds nuw i8, ptr %.sroa.0455, i64 4
   %.sroa.0.4..sroa_idx686 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
-  %.sroa.0434.4..sroa_idx683 = getelementptr inbounds nuw i8, ptr %.sroa.0434, i64 4
-  %.sroa.0428.4..sroa_idx680 = getelementptr inbounds nuw i8, ptr %.sroa.0428, i64 4
-  %.sroa.0428.4..sroa_idx681 = getelementptr inbounds nuw i8, ptr %.sroa.0428, i64 4
+  %.sroa.0434.4..sroa_idx683 = getelementptr inbounds nuw i8, ptr %.sroa.0434.sroa.0, i64 4
+  %.sroa.0428.4..sroa_idx680 = getelementptr inbounds nuw i8, ptr %.sroa.0428.sroa.0, i64 4
+  %.sroa.0428.4..sroa_idx681 = getelementptr inbounds nuw i8, ptr %.sroa.0428.sroa.0, i64 4
   br label %bb.ad
 
 _ZNK4llvm20iterator_facade_baseINS_8codeview24BinaryAnnotationIteratorESt20forward_iterator_tagNS1_17DecodedAnnotationElPS4_RS4_EneERKS2_.exit: ; preds = %_ZNSt6vectorIN12lldb_private9LineTable5EntryESaIS2_EE9push_backERKS2_.exit, %_ZN4llvm8codeview24BinaryAnnotationIteratorppEv.exit, %bb.aa
@@ -1128,7 +1125,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.fw = trunc nuw i8 %.sroa.0455.4..sroa.0455.4..sroa.0455.4.468 to i1
   %i.fx = trunc nuw i8 %.sroa.0434.4..sroa.0434.4..sroa.0434.4.441 to i1
   %or.cond = select i1 %i.fw, i1 %i.fx, i1 false
-  %.sink.i91 = select i1 %or.cond, ptr %.sroa.0428, ptr %.sroa.0434
+  %.sink.i91 = select i1 %or.cond, ptr %.sroa.0428.sroa.0, ptr %.sroa.0434.sroa.0
   %.sroa.0.0.insert.ext.i92 = zext i32 %i.fv to i64
   %.sroa.0.0.insert.insert.i93 = or disjoint i64 %.sroa.0.0.insert.ext.i92, 4294967296
   store i64 %.sroa.0.0.insert.insert.i93, ptr %.sink.i91, align 8
@@ -1191,7 +1188,7 @@ bb.am:                                            ; preds = %bb.al
   %i.gk = add nsw i32 %i.gj, %.0495537            ; 2 uses
   %i.gl = trunc nuw i8 %.sroa.0434.4..sroa.0434.4..sroa.0434.4.441 to i1
   %or.cond519 = select i1 %.sroa.0455.4..sroa.0455.4..sroa.0455.4.476, i1 %i.gl, i1 false
-  %.sink.i106 = select i1 %or.cond519, ptr %.sroa.0428, ptr %.sroa.0434
+  %.sink.i106 = select i1 %or.cond519, ptr %.sroa.0428.sroa.0, ptr %.sroa.0434.sroa.0
   %.sroa.0.0.insert.ext.i107 = zext i32 %i.gk to i64
   %.sroa.0.0.insert.insert.i108 = or disjoint i64 %.sroa.0.0.insert.ext.i107, 4294967296
   store i64 %.sroa.0.0.insert.insert.i108, ptr %.sink.i106, align 8
@@ -1282,7 +1279,7 @@ bb.au:                                            ; preds = %"_ZZN12lldb_private
   %.sroa.0455.0..sroa.0455.0..sroa.0455.0..sroa.0455.0. = load i32, ptr %.sroa.0455, align 8, !tbaa !23 ; 2 uses
   %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0. = load i32, ptr %.sroa.0, align 8, !tbaa !23
   %i.hf = sub i32 %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0., %.sroa.0455.0..sroa.0455.0..sroa.0455.0..sroa.0455.0.
-  %.sroa.0434.0..sroa.0434.0..sroa.0434.0..sroa.0434.0. = load i32, ptr %.sroa.0434, align 8, !tbaa !23
+  %.sroa.0434.0..sroa.0434.0..sroa.0434.0..sroa.0434.0. = load i32, ptr %.sroa.0434.sroa.0, align 8, !tbaa !23
   %i.hg = add i32 %.sroa.0434.0..sroa.0434.0..sroa.0434.0..sroa.0434.0., %.0.copyload.i.i.i87
   store i32 %.sroa.0455.0..sroa.0455.0..sroa.0455.0..sroa.0455.0., ptr %21, align 4, !tbaa !1321
   store i32 %i.hf, ptr %i.fa, align 4, !tbaa !1323
@@ -1316,8 +1313,8 @@ _ZN12lldb_private15RangeDataVectorIjjiLj0ESt4lessIiEE6AppendERKNS_9RangeDataIjji
   br i1 %i.hq, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %_ZN12lldb_private15RangeDataVectorIjjiLj0ESt4lessIiEE6AppendERKNS_9RangeDataIjjiEE.exit
-  %.sroa.0428.0..sroa.0428.0..sroa.0428.0..sroa.0428.0. = load i64, ptr %.sroa.0428, align 8 ; 2 uses
-  store i64 %.sroa.0428.0..sroa.0428.0..sroa.0428.0..sroa.0428.0., ptr %.sroa.0434, align 8
+  %.sroa.0428.0..sroa.0428.0..sroa.0428.0..sroa.0428.0. = load i64, ptr %.sroa.0428.sroa.0, align 8 ; 2 uses
+  store i64 %.sroa.0428.0..sroa.0428.0..sroa.0428.0..sroa.0428.0., ptr %.sroa.0434.sroa.0, align 8
   store i8 0, ptr %.sroa.0428.4..sroa_idx681, align 4, !tbaa !1303
   %i.hr = lshr i64 %.sroa.0428.0..sroa.0428.0..sroa.0428.0..sroa.0428.0., 32
   %i.hs = trunc i64 %i.hr to i8
@@ -1349,7 +1346,7 @@ bb.ba:                                            ; preds = %bb.az
   %.sroa.0455.0..sroa.0455.0..sroa.0455.0..sroa.0455.0.457 = load i32, ptr %.sroa.0455, align 8, !tbaa !23
   %i.hx = zext i32 %.sroa.0455.0..sroa.0455.0..sroa.0455.0..sroa.0455.0.457 to i64
   %i.hy = add i64 %i.ak, %i.hx                    ; 4 uses
-  %.sroa.0434.0..sroa.0434.0..sroa.0434.0..sroa.0434.0.435 = load i32, ptr %.sroa.0434, align 8, !tbaa !23
+  %.sroa.0434.0..sroa.0434.0..sroa.0434.0..sroa.0434.0.435 = load i32, ptr %.sroa.0434.sroa.0, align 8, !tbaa !23
   %i.hz = add i32 %.sroa.0434.0..sroa.0434.0..sroa.0434.0..sroa.0434.0.435, %.0.copyload.i.i.i87
   %i.ia = trunc i32 %.3 to i16                    ; 4 uses
   %i.ib = and i32 %i.hz, 134217727                ; 2 uses
@@ -1752,8 +1749,8 @@ _ZNKSt14default_deleteIN12lldb_private11DeclarationEEclEPS1_.exit.i256: ; preds 
   br label %_ZNSt10unique_ptrIN12lldb_private11DeclarationESt14default_deleteIS1_EED2Ev.exit260
 
 _ZNSt10unique_ptrIN12lldb_private11DeclarationESt14default_deleteIS1_EED2Ev.exit260: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit254, %_ZNKSt14default_deleteIN12lldb_private11DeclarationEEclEPS1_.exit.i256
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0428)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0434)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0428.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0434.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0455)
   call void @_ZdlPvm(ptr noundef nonnull %i.ej, i64 noundef 32) #25

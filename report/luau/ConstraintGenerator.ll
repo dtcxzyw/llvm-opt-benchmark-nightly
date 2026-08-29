@@ -204,9 +204,7 @@ bb.a:
   %7 = alloca %"struct.Luau::Binding", align 8    ; 15 uses
   %8 = alloca %"struct.Luau::Symbol", align 8     ; 6 uses
   %9 = alloca %"class.std::unique_ptr.1057", align 8 ; 5 uses
-  %10 = alloca %"struct.Luau::Binding", align 8   ; 16 uses
-  %.sroa.0 = alloca %"struct.Luau::Position", align 8 ; 5 uses
-  %.sroa.5 = alloca %"struct.Luau::Position", align 8 ; 5 uses
+  %10 = alloca %"struct.Luau::Binding", align 8   ; 15 uses
   %11 = alloca %"struct.Luau::Symbol", align 8    ; 6 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !838    ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 2 uses
@@ -609,18 +607,18 @@ _ZNSt10unique_ptrIN4Luau7TypeFunESt14default_deleteIS1_EED2Ev.exit: ; preds = %_
   %i.hb = mul i64 %i.ha, 3
   %i.hc = lshr i64 %i.hb, 2
   %.not.i.i53 = icmp ult i64 %i.gy, %i.hc
-  br i1 %.not.i.i53, label %_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit.a, label %bb.aj
+  br i1 %.not.i.i53, label %_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit, label %bb.aj
 
 bb.aj:                                            ; preds = %_ZNSt10unique_ptrIN4Luau7TypeFunESt14default_deleteIS1_EED2Ev.exit
   %i.hd = tail call noundef ptr @_ZNK4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIS7_S8_IPNS_7TypeFunEmEES8_IKS7_SB_ENS0_16ItemInterfaceMapIS7_SB_EESt4hashIS7_ESt8equal_toIS7_EE4findERSD_(ptr noundef nonnull align 8 dereferenceable(64) %i.ds, ptr noundef nonnull align 8 dereferenceable(32) %3)
   %.not2.i.i54 = icmp eq ptr %i.hd, null
-  br i1 %.not2.i.i54, label %bb.ak, label %_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit.a
+  br i1 %.not2.i.i54, label %bb.ak, label %_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit
 
 bb.ak:                                            ; preds = %bb.aj
   tail call void @_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIS7_S8_IPNS_7TypeFunEmEES8_IKS7_SB_ENS0_16ItemInterfaceMapIS7_SB_EESt4hashIS7_ESt8equal_toIS7_EE6rehashEv(ptr noundef nonnull align 8 dereferenceable(64) %i.ds)
-  br label %_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit.a
+  br label %_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit
 
-_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit.a: ; preds = %_ZNSt10unique_ptrIN4Luau7TypeFunESt14default_deleteIS1_EED2Ev.exit, %bb.aj, %bb.ak
+_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit: ; preds = %_ZNSt10unique_ptrIN4Luau7TypeFunESt14default_deleteIS1_EED2Ev.exit, %bb.aj, %bb.ak
   %12 = tail call noundef ptr @_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIS7_S8_IPNS_7TypeFunEmEES8_IKS7_SB_ENS0_16ItemInterfaceMapIS7_SB_EESt4hashIS7_ESt8equal_toIS7_EE13insert_unsafeERSD_(ptr noundef nonnull align 8 dereferenceable(64) %i.ds, ptr noundef nonnull align 8 dereferenceable(32) %3) ; 2 uses
   %13 = getelementptr inbounds nuw i8, ptr %12, i64 32
   store ptr %i.gw, ptr %13, align 8, !tbaa !871
@@ -633,22 +631,19 @@ _ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pa
   %18 = load ptr, ptr %17, align 8, !tbaa !954
   store ptr %18, ptr %10, align 8, !tbaa !476
   %19 = getelementptr inbounds nuw i8, ptr %10, i64 8
-  %20 = getelementptr inbounds nuw i8, ptr %4, i64 56
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  store i64 0, ptr %.sroa.0, align 8
-  store i64 0, ptr %.sroa.5, align 8
-  %21 = getelementptr inbounds nuw i8, ptr %4, i64 72
-  %22 = load i8, ptr %21, align 8, !tbaa !679, !range !242, !noundef !243
-  %23 = trunc nuw i8 %22 to i1                    ; 2 uses
-  %spec.select.i = select i1 %23, ptr %20, ptr %.sroa.0
-  %.sroa.gep = getelementptr inbounds nuw i8, ptr %4, i64 64
-  %spec.select.i.sroa.sel = select i1 %23, ptr %.sroa.gep, ptr %.sroa.5
-  %.sroa.3.0.i = load i64, ptr %spec.select.i.sroa.sel, align 8
-  %.sroa.0.0.i = load i64, ptr %spec.select.i, align 8
-  store i64 %.sroa.0.0.i, ptr %19, align 8
-  %24 = getelementptr inbounds nuw i8, ptr %10, i64 16
-  store i64 %.sroa.3.0.i, ptr %24, align 8
+  %20 = getelementptr inbounds nuw i8, ptr %4, i64 72
+  %21 = load i8, ptr %20, align 8, !tbaa !679, !range !242, !noundef !243
+  %22 = trunc nuw i8 %21 to i1
+  br i1 %22, label %_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit.cont.then, label %_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit.a
+
+_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit.cont.then: ; preds = %_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit
+  %23 = getelementptr inbounds nuw i8, ptr %4, i64 56
+  %24 = load <2 x i64>, ptr %23, align 8
+  br label %_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit.a
+
+_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit.a: ; preds = %_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit, %_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit.cont.then
+  %25 = phi <2 x i64> [ %24, %_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit.cont.then ], [ zeroinitializer, %_ZN4Luau12DenseHashMapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIPNS_7TypeFunEmESt4hashIS6_ESt8equal_toIS6_EEixERKS6_.exit ]
+  store <2 x i64> %25, ptr %19, align 8
   %i.he = getelementptr inbounds nuw i8, ptr %10, i64 24
   store i8 0, ptr %i.he, align 8, !tbaa !478
   %i.hf = getelementptr inbounds nuw i8, ptr %10, i64 32 ; 6 uses
@@ -782,8 +777,6 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZN4Luau7BindingD2Ev.exit73
 
 _ZN4Luau7BindingD2Ev.exit73:                      ; preds = %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i68, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i69
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #31
   br label %_ZN4Luau3getINS_24TypeFunctionInstanceTypeEEEPKT_PKNS_4TypeE.exit44
 
@@ -799,8 +792,6 @@ bb.at:                                            ; preds = %_ZN4Luau12DenseHash
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #31
   call void @_ZN4Luau7BindingD2Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(104) %10) #31
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #31
   br label %common.resume
 
@@ -1203,7 +1194,7 @@ _ZNSt6vectorIPKN4Luau4TypeESaIS3_EED2Ev.exit:     ; preds = %_ZNSt6vectorIPKN4Lu
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef ptr @_ZN4Luau19ConstraintGenerator16resolveTableTypeERKSt10shared_ptrINS_5ScopeEEPNS_7AstTypeEPNS_12AstTypeTableEbb(ptr noundef nonnull align 8 dereferenceable(888) %0, ptr noundef nonnull align 8 captures(none) dereferenceable(16) %1, ptr nofree readnone captures(none) %2, ptr nofree noundef readonly captures(none) %3, i1 noundef zeroext %4, i1 zeroext %5) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %6 = alloca %"struct.Luau::Location", align 8   ; 5 uses
+  %6 = alloca %"struct.Luau::Location", align 16  ; 4 uses
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %7 = alloca %"class.std::map", align 8          ; 12 uses
@@ -1211,8 +1202,6 @@ bb.a:
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
-  %.sroa.0122 = alloca %"struct.Luau::Position", align 8 ; 5 uses
-  %.sroa.5 = alloca %"struct.Luau::Position", align 8 ; 5 uses
   %12 = alloca %"class.Luau::Variant.669", align 8 ; 7 uses
   %13 = alloca %"struct.Luau::GenericError", align 8 ; 13 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
@@ -1250,7 +1239,7 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %bb.y, %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 48
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !1498 ; 9 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !1498 ; 8 uses
   %.not65 = icmp eq ptr %i.s, null
   br i1 %.not65, label %_ZNSt8optionalIN4Luau12TableIndexerEEaSIS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES5_ISt6__and_IJSt9is_scalarIS1_ES6_IS1_NSt5decayIS9_E4typeEEEEESt16is_constructibleIS1_JS9_EESt13is_assignableIRS1_S9_EEERS2_E4typeEOS9_.exit, label %bb.z
 
@@ -1492,7 +1481,7 @@ bb.z:                                             ; preds = %._crit_edge
   %i.bs = load i32, ptr %i.br, align 8, !tbaa !1504 ; 2 uses
   switch i32 %i.bs, label %bb.ap [
     i32 1, label %bb.aa
-    i32 2, label %.noexc.i92
+    i32 2, label %17
     i32 3, label %bb.al
   ]
 
@@ -1522,20 +1511,19 @@ bb.ad:                                            ; preds = %bb.ab, %bb.aa
           cleanup
   br label %bb.ba
 
-.noexc.i92:                                       ; preds = %bb.z
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0122)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  store i64 0, ptr %.sroa.0122, align 8
-  store i64 0, ptr %.sroa.5, align 8
-  %17 = getelementptr inbounds nuw i8, ptr %i.s, i64 36
+17:                                               ; preds = %bb.z
   %18 = getelementptr inbounds nuw i8, ptr %i.s, i64 52
   %19 = load i8, ptr %18, align 4, !tbaa !679, !range !242, !noundef !243
-  %20 = trunc nuw i8 %19 to i1                    ; 2 uses
-  %spec.select.i = select i1 %20, ptr %17, ptr %.sroa.0122
-  %.sroa.gep = getelementptr inbounds nuw i8, ptr %i.s, i64 44
-  %spec.select.i.sroa.sel = select i1 %20, ptr %.sroa.gep, ptr %.sroa.5
-  %.sroa.3.0.i = load i64, ptr %spec.select.i.sroa.sel, align 4
-  %.sroa.0.0.i = load i64, ptr %spec.select.i, align 4
+  %20 = trunc nuw i8 %19 to i1
+  br i1 %20, label %.cont.then, label %.noexc.i92
+
+.cont.then:                                       ; preds = %17
+  %21 = getelementptr inbounds nuw i8, ptr %i.s, i64 36
+  %22 = load <2 x i64>, ptr %21, align 4
+  br label %.noexc.i92
+
+.noexc.i92:                                       ; preds = %17, %.cont.then
+  %23 = phi <2 x i64> [ %22, %.cont.then ], [ zeroinitializer, %17 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #31
   %i.bz = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 11 uses
   store ptr %i.bz, ptr %13, align 8, !tbaa !50
@@ -1586,9 +1574,7 @@ _ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9
   store i64 0, ptr %i.cc, align 8, !tbaa !56
   store i8 0, ptr %i.bz, align 8, !tbaa !38
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  store i64 %.sroa.0.0.i, ptr %6, align 8
-  %21 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store i64 %.sroa.3.0.i, ptr %21, align 8
+  store <2 x i64> %23, ptr %6, align 16
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 368
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !32
@@ -1638,8 +1624,6 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZN4Luau12GenericErrorD2Ev.exit:                  ; preds = %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExtern98, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i99
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #31
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0122)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   br label %_ZNSt8optionalIN4Luau12TableIndexerEEaSIS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES5_ISt6__and_IJSt9is_scalarIS1_ES6_IS1_NSt5decayIS9_E4typeEEEEESt16is_constructibleIS1_JS9_EESt13is_assignableIRS1_S9_EEERS2_E4typeEOS9_.exit
 
 bb.ai:                                            ; preds = %.noexc.i92
@@ -1678,8 +1662,6 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZN4Luau12GenericErrorD2Ev.exit104:               ; preds = %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExter101, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i102, %bb.ai
   %.pn67 = phi { ptr, i32 } [ %i.dj, %bb.ai ], [ %i.dk, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i102 ], [ %i.dk, %_ZN4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExter101 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #31
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0122)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   br label %bb.ba
 
 bb.al:                                            ; preds = %bb.z
@@ -1825,8 +1807,8 @@ bb.az:                                            ; preds = %.noexc112, %bb.av
           cleanup
   br label %bb.ba
 
-bb.ba:                                            ; preds = %bb.q, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit90, %bb.ax, %bb.ay, %bb.az, %bb.ad, %_ZN4Luau12GenericErrorD2Ev.exit104, %bb.ao, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit111, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit84
-  %.pn76.pn.pn.pn = phi { ptr, i32 } [ %.pn74, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit84 ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit111 ], [ %i.fe, %bb.ax ], [ %i.az, %bb.q ], [ %i.by, %bb.ad ], [ %.pn67, %_ZN4Luau12GenericErrorD2Ev.exit104 ], [ %i.ea, %bb.ao ], [ %i.fg, %bb.az ], [ %i.ff, %bb.ay ], [ %.pn76, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit90 ]
+bb.ba:                                            ; preds = %_ZN4Luau12GenericErrorD2Ev.exit104, %bb.q, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit90, %bb.ax, %bb.ay, %bb.az, %bb.ad, %bb.ao, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit111, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit84
+  %.pn76.pn.pn.pn = phi { ptr, i32 } [ %.pn74, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit84 ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit111 ], [ %i.fe, %bb.ax ], [ %.pn67, %_ZN4Luau12GenericErrorD2Ev.exit104 ], [ %i.by, %bb.ad ], [ %i.az, %bb.q ], [ %i.ea, %bb.ao ], [ %i.fg, %bb.az ], [ %i.ff, %bb.ay ], [ %.pn76, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit90 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #31
   call void @_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4Luau8PropertyESt4lessIS5_ESaISt4pairIKS5_S7_EEED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %7) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #31
