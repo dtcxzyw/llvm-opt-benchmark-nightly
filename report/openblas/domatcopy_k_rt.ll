@@ -14,7 +14,7 @@ bb.a:
   br i1 %or.cond, label %bb.t, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = lshr i64 %0, 2                           ; 8 uses
+  %i.c = lshr i64 %0, 2                           ; 7 uses
   %.not = icmp eq i64 %i.c, 0
   br i1 %.not, label %.loopexit330, label %.preheader329
 
@@ -75,11 +75,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.z, label %.loopexit330, label %.preheader329.split.us.split.us.split
 
 .preheader329.split.us.split.us.split.us.preheader: ; preds = %.preheader329.split.us.split.us
-  %7 = mul i64 %4, %i.c
-  %i.aa = shl i64 %7, 5
-  %scevgep = getelementptr i8, ptr %3, i64 %i.aa
-  %8 = shl i64 %i.c, 5
-  %scevgep373 = getelementptr i8, ptr %5, i64 %8
+  %i.aa = shl i64 %i.c, 5                         ; 2 uses
+  %7 = mul i64 %4, %i.aa
+  %scevgep = getelementptr i8, ptr %3, i64 %7
+  %scevgep373 = getelementptr i8, ptr %5, i64 %i.aa
   br label %.loopexit330
 
 .preheader329.split.us.split.us.split:            ; preds = %.preheader329.split.us.split.us.split.prol.loopexit, %.preheader329.split.us.split.us.split

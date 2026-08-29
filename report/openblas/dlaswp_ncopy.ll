@@ -1,6 +1,4 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dlaswp_ncopy?download=true
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -14,8 +12,8 @@ bb.a:
   br i1 %i.c, label %bb.ao, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = getelementptr inbounds i8, ptr %3, i64 -8 ; 5 uses
-  %i.e = lshr i64 %0, 1                           ; 6 uses
+  %i.d = getelementptr inbounds i8, ptr %3, i64 -8 ; 3 uses
+  %i.e = lshr i64 %0, 1                           ; 4 uses
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %.loopexit308, label %.preheader307
 
@@ -29,7 +27,7 @@ bb.b:                                             ; preds = %bb.a
   %i.l = icmp sgt i64 %i.k, 0
   %i.m = and i64 %i.j, 1
   %.not298 = icmp eq i64 %i.m, 0                  ; 2 uses
-  %.idx = shl nsw i64 %4, 4                       ; 4 uses
+  %.idx = shl nsw i64 %4, 4                       ; 2 uses
   br i1 %i.l, label %.preheader305.us, label %.preheader307.split
 
 .preheader305.us:                                 ; preds = %.preheader307, %bb.u
@@ -213,126 +211,57 @@ bb.u:                                             ; preds = %bb.t, %.loopexit306
   br i1 %.not298, label %.preheader307.split.split.us.preheader, label %.preheader307.split.split.preheader
 
 .preheader307.split.split.preheader:              ; preds = %.preheader307.split
-  %.idx326 = shl nsw i64 %i.a, 3                  ; 2 uses
-  %i.br = add nsw i64 %.idx326, 8                 ; 3 uses
-  %.idx327 = shl nsw i64 %i.g, 3                  ; 4 uses
-  %7 = icmp eq i64 %i.br, %.idx327                ; 3 uses
-  %8 = and i64 %0, 2
-  %lcmp.mod.not = icmp eq i64 %8, 0
-  br i1 %lcmp.mod.not, label %.preheader307.split.split.prol.loopexit, label %.preheader307.split.split.prol
-
-.preheader307.split.split.prol:                   ; preds = %.preheader307.split.split.preheader
-  %9 = getelementptr i8, ptr %3, i64 %.idx326     ; 2 uses
-  %10 = getelementptr inbounds [8 x i8], ptr %9, i64 %4
-  %11 = load double, ptr %9, align 8, !tbaa !9    ; 2 uses
-  %12 = load double, ptr %10, align 8, !tbaa !9   ; 2 uses
-  br i1 %7, label %19, label %13
-
-13:                                               ; preds = %.preheader307.split.split.prol
-  %14 = getelementptr inbounds i8, ptr %i.d, i64 %.idx327 ; 3 uses
-  %15 = getelementptr inbounds [8 x i8], ptr %14, i64 %4 ; 2 uses
-  %16 = load double, ptr %15, align 8, !tbaa !9
-  %17 = load double, ptr %14, align 8, !tbaa !9
-  store double %17, ptr %6, align 8, !tbaa !9
-  %18 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store double %16, ptr %18, align 8, !tbaa !9
-  store double %11, ptr %14, align 8, !tbaa !9
-  store double %12, ptr %15, align 8, !tbaa !9
-  br label %.preheader307.split.split.prol.loopexit.unr-lcssa
-
-19:                                               ; preds = %.preheader307.split.split.prol
-  store double %11, ptr %6, align 8, !tbaa !9
-  %20 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store double %12, ptr %20, align 8, !tbaa !9
-  br label %.preheader307.split.split.prol.loopexit.unr-lcssa
-
-.preheader307.split.split.prol.loopexit.unr-lcssa: ; preds = %19, %13
-  %21 = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
-  %22 = getelementptr inbounds i8, ptr %i.d, i64 %.idx ; 2 uses
-  %23 = add nsw i64 %i.e, -1
-  br label %.preheader307.split.split.prol.loopexit
-
-.preheader307.split.split.prol.loopexit:          ; preds = %.preheader307.split.split.prol.loopexit.unr-lcssa, %.preheader307.split.split.preheader
-  %.0285.unr = phi ptr [ %i.d, %.preheader307.split.split.preheader ], [ %22, %.preheader307.split.split.prol.loopexit.unr-lcssa ]
-  %.0280.unr = phi ptr [ %6, %.preheader307.split.split.preheader ], [ %21, %.preheader307.split.split.prol.loopexit.unr-lcssa ]
-  %.0277.unr = phi i64 [ %i.e, %.preheader307.split.split.preheader ], [ %23, %.preheader307.split.split.prol.loopexit.unr-lcssa ]
-  %.lcssa379.unr = phi ptr [ poison, %.preheader307.split.split.preheader ], [ %21, %.preheader307.split.split.prol.loopexit.unr-lcssa ]
-  %.lcssa378.unr = phi ptr [ poison, %.preheader307.split.split.preheader ], [ %22, %.preheader307.split.split.prol.loopexit.unr-lcssa ]
-  %24 = icmp eq i64 %i.e, 1
-  br i1 %24, label %.loopexit308, label %.preheader307.split.split
+  %.idx326 = shl nsw i64 %i.a, 3
+  %i.br = add nsw i64 %.idx326, 8                 ; 2 uses
+  %.idx327 = shl nsw i64 %i.g, 3                  ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %i.br, %.idx327
+  br label %.preheader307.split.split
 
 .preheader307.split.split.us.preheader:           ; preds = %.preheader307.split
-  %25 = mul i64 %4, %i.e
-  %26 = shl i64 %25, 4
-  %i.bs = getelementptr i8, ptr %3, i64 %26
+  %7 = shl i64 %i.e, 4
+  %8 = mul i64 %4, %7
+  %i.bs = getelementptr i8, ptr %3, i64 %8
   %scevgep = getelementptr i8, ptr %i.bs, i64 -8
   br label %.loopexit308
 
-.preheader307.split.split:                        ; preds = %.preheader307.split.split.prol.loopexit, %bb.x
-  %.0285 = phi ptr [ %i.ce, %bb.x ], [ %.0285.unr, %.preheader307.split.split.prol.loopexit ] ; 3 uses
-  %.0280 = phi ptr [ %i.cd, %bb.x ], [ %.0280.unr, %.preheader307.split.split.prol.loopexit ] ; 8 uses
-  %.0277 = phi i64 [ %i.cf, %bb.x ], [ %.0277.unr, %.preheader307.split.split.prol.loopexit ] ; 2 uses
+.preheader307.split.split:                        ; preds = %.preheader307.split.split.preheader, %bb.x
+  %.0285 = phi ptr [ %i.ce, %bb.x ], [ %i.d, %.preheader307.split.split.preheader ] ; 3 uses
+  %.0280 = phi ptr [ %i.cd, %bb.x ], [ %6, %.preheader307.split.split.preheader ] ; 5 uses
+  %.0277 = phi i64 [ %i.cf, %bb.x ], [ %i.e, %.preheader307.split.split.preheader ] ; 2 uses
   %i.bt = getelementptr inbounds i8, ptr %.0285, i64 %i.br ; 2 uses
   %i.bu = getelementptr inbounds [8 x i8], ptr %i.bt, i64 %4
   %i.bv = load double, ptr %i.bt, align 8, !tbaa !9 ; 2 uses
   %i.bw = load double, ptr %i.bu, align 8, !tbaa !9 ; 2 uses
-  br i1 %7, label %27, label %bb.v
-
-27:                                               ; preds = %.preheader307.split.split
-  store double %i.bv, ptr %.0280, align 8, !tbaa !9
-  %28 = getelementptr inbounds nuw i8, ptr %.0280, i64 8
-  store double %i.bw, ptr %28, align 8, !tbaa !9
-  br label %.preheader307.split.split.1
+  br i1 %lcmp.mod.not, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %.preheader307.split.split
-  %29 = getelementptr inbounds i8, ptr %.0285, i64 %.idx327 ; 3 uses
-  %30 = getelementptr inbounds [8 x i8], ptr %29, i64 %4 ; 2 uses
-  %31 = load double, ptr %30, align 8, !tbaa !9
-  %32 = load double, ptr %29, align 8, !tbaa !9
-  store double %32, ptr %.0280, align 8, !tbaa !9
+  store double %i.bv, ptr %.0280, align 8, !tbaa !9
   %i.bx = getelementptr inbounds nuw i8, ptr %.0280, i64 8
-  store double %31, ptr %i.bx, align 8, !tbaa !9
-  store double %i.bv, ptr %29, align 8, !tbaa !9
-  store double %i.bw, ptr %30, align 8, !tbaa !9
-  br label %.preheader307.split.split.1
+  store double %i.bw, ptr %i.bx, align 8, !tbaa !9
+  br label %bb.x
 
-.preheader307.split.split.1:                      ; preds = %bb.v, %27
-  %33 = getelementptr inbounds nuw i8, ptr %.0280, i64 16 ; 2 uses
-  %34 = getelementptr inbounds i8, ptr %.0285, i64 %.idx ; 3 uses
-  %35 = getelementptr inbounds i8, ptr %34, i64 %i.br ; 2 uses
-  %36 = getelementptr inbounds [8 x i8], ptr %35, i64 %4
-  %37 = load double, ptr %35, align 8, !tbaa !9   ; 2 uses
-  %38 = load double, ptr %36, align 8, !tbaa !9   ; 2 uses
-  br i1 %7, label %39, label %bb.w
-
-bb.w:                                             ; preds = %.preheader307.split.split.1
-  %i.by = getelementptr inbounds i8, ptr %34, i64 %.idx327 ; 3 uses
+bb.w:                                             ; preds = %.preheader307.split.split
+  %i.by = getelementptr inbounds i8, ptr %.0285, i64 %.idx327 ; 3 uses
   %i.bz = getelementptr inbounds [8 x i8], ptr %i.by, i64 %4 ; 2 uses
   %i.ca = load double, ptr %i.bz, align 8, !tbaa !9
   %i.cb = load double, ptr %i.by, align 8, !tbaa !9
-  store double %i.cb, ptr %33, align 8, !tbaa !9
-  %i.cc = getelementptr inbounds nuw i8, ptr %.0280, i64 24
+  store double %i.cb, ptr %.0280, align 8, !tbaa !9
+  %i.cc = getelementptr inbounds nuw i8, ptr %.0280, i64 8
   store double %i.ca, ptr %i.cc, align 8, !tbaa !9
-  store double %37, ptr %i.by, align 8, !tbaa !9
-  store double %38, ptr %i.bz, align 8, !tbaa !9
+  store double %i.bv, ptr %i.by, align 8, !tbaa !9
+  store double %i.bw, ptr %i.bz, align 8, !tbaa !9
   br label %bb.x
 
-39:                                               ; preds = %.preheader307.split.split.1
-  store double %37, ptr %33, align 8, !tbaa !9
-  %40 = getelementptr inbounds nuw i8, ptr %.0280, i64 24
-  store double %38, ptr %40, align 8, !tbaa !9
-  br label %bb.x
-
-bb.x:                                             ; preds = %39, %bb.w
-  %i.cd = getelementptr inbounds nuw i8, ptr %.0280, i64 32 ; 2 uses
-  %i.ce = getelementptr inbounds i8, ptr %34, i64 %.idx ; 2 uses
-  %i.cf = add nsw i64 %.0277, -2
-  %i.cg = icmp sgt i64 %.0277, 2
+bb.x:                                             ; preds = %bb.w, %bb.v
+  %i.cd = getelementptr inbounds nuw i8, ptr %.0280, i64 16 ; 2 uses
+  %i.ce = getelementptr inbounds i8, ptr %.0285, i64 %.idx ; 2 uses
+  %i.cf = add nsw i64 %.0277, -1
+  %i.cg = icmp sgt i64 %.0277, 1
   br i1 %i.cg, label %.preheader307.split.split, label %.loopexit308, !llvm.loop !13
 
-.loopexit308:                                     ; preds = %.preheader307.split.split.prol.loopexit, %bb.x, %bb.u, %.preheader307.split.split.us.preheader, %bb.b
-  %.1286 = phi ptr [ %i.d, %bb.b ], [ %scevgep, %.preheader307.split.split.us.preheader ], [ %i.bo, %bb.u ], [ %.lcssa378.unr, %.preheader307.split.split.prol.loopexit ], [ %i.ce, %bb.x ] ; 4 uses
-  %.4 = phi ptr [ %6, %bb.b ], [ %6, %.preheader307.split.split.us.preheader ], [ %.3283.us, %bb.u ], [ %.lcssa379.unr, %.preheader307.split.split.prol.loopexit ], [ %i.cd, %bb.x ] ; 2 uses
+.loopexit308:                                     ; preds = %bb.x, %bb.u, %.preheader307.split.split.us.preheader, %bb.b
+  %.1286 = phi ptr [ %i.d, %bb.b ], [ %scevgep, %.preheader307.split.split.us.preheader ], [ %i.bo, %bb.u ], [ %i.ce, %bb.x ] ; 4 uses
+  %.4 = phi ptr [ %6, %bb.b ], [ %6, %.preheader307.split.split.us.preheader ], [ %.3283.us, %bb.u ], [ %i.cd, %bb.x ] ; 2 uses
   %i.ch = and i64 %0, 1
   %.not299 = icmp eq i64 %i.ch, 0
   br i1 %.not299, label %bb.ao, label %bb.y

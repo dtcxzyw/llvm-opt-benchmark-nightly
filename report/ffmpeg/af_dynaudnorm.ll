@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/af_dynaudnorm?download=true
 inline.NumInlined: 92
 inline.NumDeleted: 34
-loop-unroll.NumRuntimeUnrolled: 12
-loop-unroll.NumUnrolled: 12
+loop-unroll.NumRuntimeUnrolled: 15
+loop-unroll.NumUnrolled: 15
 begin_hunk_0_@uninit:bb.a
 
 bb.b:                                             ; preds = %.lr.ph, %bb.j
@@ -204,10 +204,10 @@ bb.e:                                             ; preds = %.lr.ph, %cqueue_res
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %cqueue_resize.exit74 ] ; 4 uses
   %i.bs = load ptr, ptr %i.bp, align 8, !tbaa !40
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.bs, i64 %indvars.iv
-  %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !41 ; 6 uses
+  %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !41 ; 8 uses
   %i.bv = load i32, ptr %i.f, align 8, !tbaa !20  ; 5 uses
-  %i.bw = getelementptr inbounds nuw i8, ptr %i.bu, i64 16 ; 4 uses
-  %i.bx = load i32, ptr %i.bw, align 8, !tbaa !56 ; 4 uses
+  %i.bw = getelementptr inbounds nuw i8, ptr %i.bu, i64 16 ; 8 uses
+  %i.bx = load i32, ptr %i.bw, align 8, !tbaa !56 ; 5 uses
   %i.by = icmp sgt i32 %i.bv, %i.bx
   br i1 %i.by, label %bb.f, label %bb.g
 
@@ -272,39 +272,69 @@ bb.g:                                             ; preds = %bb.e
   %i.co = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   %i.cp = load i32, ptr %i.co, align 8, !tbaa !61
   %reass.sub.i = sub i32 %i.cp, %i.bv
-  %i.cq = add i32 %reass.sub.i, 1                 ; 2 uses
+  %i.cq = add i32 %reass.sub.i, 1                 ; 3 uses
   %i.cr = icmp sgt i32 %i.cq, 1
-  br i1 %i.cr, label %.lr.ph.preheader.i.a, label %cqueue_resize.exit
+  br i1 %i.cr, label %.lr.ph.preheader.i, label %cqueue_resize.exit
 
-.lr.ph.preheader.i.a:                             ; preds = %bb.g
-  %6 = lshr i32 %i.cq, 1
-  br label %.lr.ph.i47
+.lr.ph.preheader.i:                               ; preds = %bb.g
+  %6 = lshr i32 %i.cq, 1                          ; 3 uses
+  %7 = and i32 %i.cq, 2
+  %lcmp.mod135.not = icmp eq i32 %7, 0
+  br i1 %lcmp.mod135.not, label %.lr.ph.i47.prol.loopexit, label %.lr.ph.preheader.i.a
 
-.lr.ph.i47:                                       ; preds = %.lr.ph.i47, %.lr.ph.preheader.i.a
-  %i.cs = phi i32 [ %i.da, %.lr.ph.i47 ], [ %i.bx, %.lr.ph.preheader.i.a ]
-  %.027.i = phi i32 [ %i.ct, %.lr.ph.i47 ], [ %6, %.lr.ph.preheader.i.a ] ; 2 uses
-  %i.ct = add nsw i32 %.027.i, -1
+.lr.ph.preheader.i.a:                             ; preds = %.lr.ph.preheader.i
+  %8 = add nsw i32 %6, -1
+  %9 = load ptr, ptr %i.bu, align 8, !tbaa !58    ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %11 = add nsw i32 %i.bx, -1
+  %12 = sext i32 %11 to i64
+  %13 = shl nsw i64 %12, 3
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %9, ptr nonnull align 8 %10, i64 %13, i1 false)
+  %14 = load i32, ptr %i.bw, align 8, !tbaa !56
+  %15 = add nsw i32 %14, -1                       ; 2 uses
+  store i32 %15, ptr %i.bw, align 8, !tbaa !56
+  br label %.lr.ph.i47.prol.loopexit
+
+.lr.ph.i47.prol.loopexit:                         ; preds = %.lr.ph.preheader.i.a, %.lr.ph.preheader.i
+  %.unr = phi i32 [ %i.bx, %.lr.ph.preheader.i ], [ %15, %.lr.ph.preheader.i.a ]
+  %.027.i.unr = phi i32 [ %6, %.lr.ph.preheader.i ], [ %8, %.lr.ph.preheader.i.a ]
+  %16 = icmp eq i32 %6, 1
+  br i1 %16, label %cqueue_resize.exit, label %.lr.ph.i47
+
+.lr.ph.i47:                                       ; preds = %.lr.ph.i47.prol.loopexit, %.lr.ph.i47
+  %i.cs = phi i32 [ %i.da, %.lr.ph.i47 ], [ %.unr, %.lr.ph.i47.prol.loopexit ]
+  %.027.i = phi i32 [ %i.ct, %.lr.ph.i47 ], [ %.027.i.unr, %.lr.ph.i47.prol.loopexit ] ; 2 uses
+  %17 = load ptr, ptr %i.bu, align 8, !tbaa !58   ; 2 uses
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 8
+  %19 = add nsw i32 %i.cs, -1
+  %20 = sext i32 %19 to i64
+  %21 = shl nsw i64 %20, 3
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %17, ptr nonnull align 8 %18, i64 %21, i1 false)
+  %22 = load i32, ptr %i.bw, align 8, !tbaa !56   ; 2 uses
+  %23 = add nsw i32 %22, -1
+  store i32 %23, ptr %i.bw, align 8, !tbaa !56
+  %i.ct = add nsw i32 %.027.i, -2
   %i.cu = load ptr, ptr %i.bu, align 8, !tbaa !58 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
-  %i.cw = add nsw i32 %i.cs, -1
+  %i.cw = add nsw i32 %22, -2
   %i.cx = sext i32 %i.cw to i64
   %i.cy = shl nsw i64 %i.cx, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.cu, ptr nonnull align 8 %i.cv, i64 %i.cy, i1 false)
   %i.cz = load i32, ptr %i.bw, align 8, !tbaa !56
   %i.da = add nsw i32 %i.cz, -1                   ; 2 uses
   store i32 %i.da, ptr %i.bw, align 8, !tbaa !56
-  %7 = icmp samesign ugt i32 %.027.i, 1
-  br i1 %7, label %.lr.ph.i47, label %cqueue_resize.exit, !llvm.loop !62
+  %24 = icmp sgt i32 %.027.i, 2
+  br i1 %24, label %.lr.ph.i47, label %cqueue_resize.exit, !llvm.loop !62
 
-cqueue_resize.exit:                               ; preds = %.lr.ph.i47, %._crit_edge.i, %bb.g
+cqueue_resize.exit:                               ; preds = %.lr.ph.i47.prol.loopexit, %.lr.ph.i47, %._crit_edge.i, %bb.g
   %i.db = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   store i32 %i.bv, ptr %i.db, align 8, !tbaa !61
   %i.dc = load ptr, ptr %i.bq, align 8, !tbaa !42
   %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.dc, i64 %indvars.iv
-  %i.de = load ptr, ptr %i.dd, align 8, !tbaa !41 ; 6 uses
+  %i.de = load ptr, ptr %i.dd, align 8, !tbaa !41 ; 8 uses
   %i.df = load i32, ptr %i.f, align 8, !tbaa !20  ; 5 uses
-  %i.dg = getelementptr inbounds nuw i8, ptr %i.de, i64 16 ; 4 uses
-  %i.dh = load i32, ptr %i.dg, align 8, !tbaa !56 ; 4 uses
+  %i.dg = getelementptr inbounds nuw i8, ptr %i.de, i64 16 ; 8 uses
+  %i.dh = load i32, ptr %i.dg, align 8, !tbaa !56 ; 5 uses
   %i.di = icmp sgt i32 %i.df, %i.dh
   br i1 %i.di, label %bb.h, label %bb.i
 
@@ -369,39 +399,69 @@ bb.i:                                             ; preds = %cqueue_resize.exit
   %i.dy = getelementptr inbounds nuw i8, ptr %i.de, i64 8
   %i.dz = load i32, ptr %i.dy, align 8, !tbaa !61
   %reass.sub.i51 = sub i32 %i.dz, %i.df
-  %i.ea = add i32 %reass.sub.i51, 1               ; 2 uses
+  %i.ea = add i32 %reass.sub.i51, 1               ; 3 uses
   %i.eb = icmp sgt i32 %i.ea, 1
-  br i1 %i.eb, label %.lr.ph.preheader.i52.a, label %cqueue_resize.exit62
+  br i1 %i.eb, label %.lr.ph.preheader.i52, label %cqueue_resize.exit62
 
-.lr.ph.preheader.i52.a:                           ; preds = %bb.i
-  %8 = lshr i32 %i.ea, 1
-  br label %.lr.ph.i53
+.lr.ph.preheader.i52:                             ; preds = %bb.i
+  %25 = lshr i32 %i.ea, 1                         ; 3 uses
+  %26 = and i32 %i.ea, 2
+  %lcmp.mod137.not = icmp eq i32 %26, 0
+  br i1 %lcmp.mod137.not, label %.lr.ph.i53.prol.loopexit, label %.lr.ph.preheader.i52.a
 
-.lr.ph.i53:                                       ; preds = %.lr.ph.i53, %.lr.ph.preheader.i52.a
-  %i.ec = phi i32 [ %i.ek, %.lr.ph.i53 ], [ %i.dh, %.lr.ph.preheader.i52.a ]
-  %.027.i54 = phi i32 [ %i.ed, %.lr.ph.i53 ], [ %8, %.lr.ph.preheader.i52.a ] ; 2 uses
-  %i.ed = add nsw i32 %.027.i54, -1
+.lr.ph.preheader.i52.a:                           ; preds = %.lr.ph.preheader.i52
+  %27 = add nsw i32 %25, -1
+  %28 = load ptr, ptr %i.de, align 8, !tbaa !58   ; 2 uses
+  %29 = getelementptr inbounds nuw i8, ptr %28, i64 8
+  %30 = add nsw i32 %i.dh, -1
+  %31 = sext i32 %30 to i64
+  %32 = shl nsw i64 %31, 3
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %28, ptr nonnull align 8 %29, i64 %32, i1 false)
+  %33 = load i32, ptr %i.dg, align 8, !tbaa !56
+  %34 = add nsw i32 %33, -1                       ; 2 uses
+  store i32 %34, ptr %i.dg, align 8, !tbaa !56
+  br label %.lr.ph.i53.prol.loopexit
+
+.lr.ph.i53.prol.loopexit:                         ; preds = %.lr.ph.preheader.i52.a, %.lr.ph.preheader.i52
+  %.unr138 = phi i32 [ %i.dh, %.lr.ph.preheader.i52 ], [ %34, %.lr.ph.preheader.i52.a ]
+  %.027.i54.unr = phi i32 [ %25, %.lr.ph.preheader.i52 ], [ %27, %.lr.ph.preheader.i52.a ]
+  %35 = icmp eq i32 %25, 1
+  br i1 %35, label %cqueue_resize.exit62, label %.lr.ph.i53
+
+.lr.ph.i53:                                       ; preds = %.lr.ph.i53.prol.loopexit, %.lr.ph.i53
+  %i.ec = phi i32 [ %i.ek, %.lr.ph.i53 ], [ %.unr138, %.lr.ph.i53.prol.loopexit ]
+  %.027.i54 = phi i32 [ %i.ed, %.lr.ph.i53 ], [ %.027.i54.unr, %.lr.ph.i53.prol.loopexit ] ; 2 uses
+  %36 = load ptr, ptr %i.de, align 8, !tbaa !58   ; 2 uses
+  %37 = getelementptr inbounds nuw i8, ptr %36, i64 8
+  %38 = add nsw i32 %i.ec, -1
+  %39 = sext i32 %38 to i64
+  %40 = shl nsw i64 %39, 3
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %36, ptr nonnull align 8 %37, i64 %40, i1 false)
+  %41 = load i32, ptr %i.dg, align 8, !tbaa !56   ; 2 uses
+  %42 = add nsw i32 %41, -1
+  store i32 %42, ptr %i.dg, align 8, !tbaa !56
+  %i.ed = add nsw i32 %.027.i54, -2
   %i.ee = load ptr, ptr %i.de, align 8, !tbaa !58 ; 2 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ee, i64 8
-  %i.eg = add nsw i32 %i.ec, -1
+  %i.eg = add nsw i32 %41, -2
   %i.eh = sext i32 %i.eg to i64
   %i.ei = shl nsw i64 %i.eh, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.ee, ptr nonnull align 8 %i.ef, i64 %i.ei, i1 false)
   %i.ej = load i32, ptr %i.dg, align 8, !tbaa !56
   %i.ek = add nsw i32 %i.ej, -1                   ; 2 uses
   store i32 %i.ek, ptr %i.dg, align 8, !tbaa !56
-  %9 = icmp samesign ugt i32 %.027.i54, 1
-  br i1 %9, label %.lr.ph.i53, label %cqueue_resize.exit62, !llvm.loop !62
+  %43 = icmp sgt i32 %.027.i54, 2
+  br i1 %43, label %.lr.ph.i53, label %cqueue_resize.exit62, !llvm.loop !62
 
-cqueue_resize.exit62:                             ; preds = %.lr.ph.i53, %._crit_edge.i61, %bb.i
+cqueue_resize.exit62:                             ; preds = %.lr.ph.i53.prol.loopexit, %.lr.ph.i53, %._crit_edge.i61, %bb.i
   %i.el = getelementptr inbounds nuw i8, ptr %i.de, i64 8
   store i32 %i.df, ptr %i.el, align 8, !tbaa !61
   %i.em = load ptr, ptr %i.br, align 8, !tbaa !44
   %i.en = getelementptr inbounds nuw [8 x i8], ptr %i.em, i64 %indvars.iv
-  %i.eo = load ptr, ptr %i.en, align 8, !tbaa !41 ; 6 uses
+  %i.eo = load ptr, ptr %i.en, align 8, !tbaa !41 ; 8 uses
   %i.ep = load i32, ptr %i.f, align 8, !tbaa !20  ; 5 uses
-  %i.eq = getelementptr inbounds nuw i8, ptr %i.eo, i64 16 ; 4 uses
-  %i.er = load i32, ptr %i.eq, align 8, !tbaa !56 ; 4 uses
+  %i.eq = getelementptr inbounds nuw i8, ptr %i.eo, i64 16 ; 8 uses
+  %i.er = load i32, ptr %i.eq, align 8, !tbaa !56 ; 5 uses
   %i.es = icmp sgt i32 %i.ep, %i.er
   br i1 %i.es, label %bb.j, label %bb.k
 
@@ -466,31 +526,61 @@ bb.k:                                             ; preds = %cqueue_resize.exit6
   %i.fi = getelementptr inbounds nuw i8, ptr %i.eo, i64 8
   %i.fj = load i32, ptr %i.fi, align 8, !tbaa !61
   %reass.sub.i63 = sub i32 %i.fj, %i.ep
-  %i.fk = add i32 %reass.sub.i63, 1               ; 2 uses
+  %i.fk = add i32 %reass.sub.i63, 1               ; 3 uses
   %i.fl = icmp sgt i32 %i.fk, 1
-  br i1 %i.fl, label %.lr.ph.preheader.i64.a, label %cqueue_resize.exit74
+  br i1 %i.fl, label %.lr.ph.preheader.i64, label %cqueue_resize.exit74
 
-.lr.ph.preheader.i64.a:                           ; preds = %bb.k
-  %10 = lshr i32 %i.fk, 1
-  br label %.lr.ph.i65
+.lr.ph.preheader.i64:                             ; preds = %bb.k
+  %44 = lshr i32 %i.fk, 1                         ; 3 uses
+  %45 = and i32 %i.fk, 2
+  %lcmp.mod140.not = icmp eq i32 %45, 0
+  br i1 %lcmp.mod140.not, label %.lr.ph.i65.prol.loopexit, label %.lr.ph.preheader.i64.a
 
-.lr.ph.i65:                                       ; preds = %.lr.ph.i65, %.lr.ph.preheader.i64.a
-  %i.fm = phi i32 [ %i.fu, %.lr.ph.i65 ], [ %i.er, %.lr.ph.preheader.i64.a ]
-  %.027.i66 = phi i32 [ %i.fn, %.lr.ph.i65 ], [ %10, %.lr.ph.preheader.i64.a ] ; 2 uses
-  %i.fn = add nsw i32 %.027.i66, -1
+.lr.ph.preheader.i64.a:                           ; preds = %.lr.ph.preheader.i64
+  %46 = add nsw i32 %44, -1
+  %47 = load ptr, ptr %i.eo, align 8, !tbaa !58   ; 2 uses
+  %48 = getelementptr inbounds nuw i8, ptr %47, i64 8
+  %49 = add nsw i32 %i.er, -1
+  %50 = sext i32 %49 to i64
+  %51 = shl nsw i64 %50, 3
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %47, ptr nonnull align 8 %48, i64 %51, i1 false)
+  %52 = load i32, ptr %i.eq, align 8, !tbaa !56
+  %53 = add nsw i32 %52, -1                       ; 2 uses
+  store i32 %53, ptr %i.eq, align 8, !tbaa !56
+  br label %.lr.ph.i65.prol.loopexit
+
+.lr.ph.i65.prol.loopexit:                         ; preds = %.lr.ph.preheader.i64.a, %.lr.ph.preheader.i64
+  %.unr141 = phi i32 [ %i.er, %.lr.ph.preheader.i64 ], [ %53, %.lr.ph.preheader.i64.a ]
+  %.027.i66.unr = phi i32 [ %44, %.lr.ph.preheader.i64 ], [ %46, %.lr.ph.preheader.i64.a ]
+  %54 = icmp eq i32 %44, 1
+  br i1 %54, label %cqueue_resize.exit74, label %.lr.ph.i65
+
+.lr.ph.i65:                                       ; preds = %.lr.ph.i65.prol.loopexit, %.lr.ph.i65
+  %i.fm = phi i32 [ %i.fu, %.lr.ph.i65 ], [ %.unr141, %.lr.ph.i65.prol.loopexit ]
+  %.027.i66 = phi i32 [ %i.fn, %.lr.ph.i65 ], [ %.027.i66.unr, %.lr.ph.i65.prol.loopexit ] ; 2 uses
+  %55 = load ptr, ptr %i.eo, align 8, !tbaa !58   ; 2 uses
+  %56 = getelementptr inbounds nuw i8, ptr %55, i64 8
+  %57 = add nsw i32 %i.fm, -1
+  %58 = sext i32 %57 to i64
+  %59 = shl nsw i64 %58, 3
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %55, ptr nonnull align 8 %56, i64 %59, i1 false)
+  %60 = load i32, ptr %i.eq, align 8, !tbaa !56   ; 2 uses
+  %61 = add nsw i32 %60, -1
+  store i32 %61, ptr %i.eq, align 8, !tbaa !56
+  %i.fn = add nsw i32 %.027.i66, -2
   %i.fo = load ptr, ptr %i.eo, align 8, !tbaa !58 ; 2 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 8
-  %i.fq = add nsw i32 %i.fm, -1
+  %i.fq = add nsw i32 %60, -2
   %i.fr = sext i32 %i.fq to i64
   %i.fs = shl nsw i64 %i.fr, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.fo, ptr nonnull align 8 %i.fp, i64 %i.fs, i1 false)
   %i.ft = load i32, ptr %i.eq, align 8, !tbaa !56
   %i.fu = add nsw i32 %i.ft, -1                   ; 2 uses
   store i32 %i.fu, ptr %i.eq, align 8, !tbaa !56
-  %11 = icmp samesign ugt i32 %.027.i66, 1
-  br i1 %11, label %.lr.ph.i65, label %cqueue_resize.exit74, !llvm.loop !62
+  %62 = icmp sgt i32 %.027.i66, 2
+  br i1 %62, label %.lr.ph.i65, label %cqueue_resize.exit74, !llvm.loop !62
 
-cqueue_resize.exit74:                             ; preds = %.lr.ph.i65, %._crit_edge.i73, %bb.k
+cqueue_resize.exit74:                             ; preds = %.lr.ph.i65.prol.loopexit, %.lr.ph.i65, %._crit_edge.i73, %bb.k
   %i.fv = getelementptr inbounds nuw i8, ptr %i.eo, i64 8
   store i32 %i.ep, ptr %i.fv, align 8, !tbaa !61
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses

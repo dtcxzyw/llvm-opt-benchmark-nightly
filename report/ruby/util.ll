@@ -204,14 +204,12 @@ bb.b:                                             ; preds = %._crit_edge
   br i1 %.not66, label %._crit_edge64, label %.lr.ph63.preheader
 
 .lr.ph63.preheader:                               ; preds = %bb.b
-  %2 = lshr i32 %1, 3
-  %3 = and i32 %2, 268435452
-  %i.ad = zext nneg i32 %3 to i64
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ac, i8 0, i64 %i.ad, i1 false), !tbaa !7
-  %4 = add nsw i32 %i.g, -1
-  %5 = zext nneg i32 %4 to i64
-  %6 = shl nuw nsw i64 %5, 2
-  %i.ae = getelementptr i8, ptr %i.x, i64 %6
+  %2 = add nsw i32 %i.g, -1
+  %i.ad = zext nneg i32 %2 to i64
+  %3 = shl nuw nsw i64 %i.ad, 2                   ; 2 uses
+  %4 = add nuw nsw i64 %3, 4
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ac, i8 0, i64 %4, i1 false), !tbaa !7
+  %i.ae = getelementptr i8, ptr %i.x, i64 %3
   %scevgep = getelementptr i8, ptr %i.ae, i64 28
   br label %._crit_edge64
 

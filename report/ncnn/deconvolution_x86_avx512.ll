@@ -205,7 +205,7 @@ bb.a:
   %i.p = load i32, ptr %i.o, align 8, !tbaa !77   ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.r = load i32, ptr %i.q, align 8, !tbaa !79
-  %i.s = mul nsw i32 %i.r, %i.p                   ; 6 uses
+  %i.s = mul i32 %i.r, %i.p                       ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #9
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 5 uses
   %i.u = load i64, ptr %i.t, align 8, !tbaa !20
@@ -608,8 +608,8 @@ _ZN4ncnn3MatD2Ev.exit2167:                        ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 ._crit_edge7556:                                  ; preds = %._crit_edge7552
   %indvars.iv.next8093 = add nsw i64 %indvars.iv8092, 1 ; 2 uses
-  %13 = icmp slt i64 %indvars.iv.next8093, %i.dfz
-  br i1 %13, label %_ZN4ncnn3MatD2Ev.exit2167, label %._crit_edge7558.split, !llvm.loop !1461
+  %exitcond8096.not = icmp eq i64 %indvars.iv.next8093, %i.dfz
+  br i1 %exitcond8096.not, label %._crit_edge7558.split, label %_ZN4ncnn3MatD2Ev.exit2167, !llvm.loop !1461
 
 ._crit_edge7552:                                  ; preds = %_ZL13activation_ssfiRKN4ncnn3MatE.exit
   %exitcond8091.not = icmp eq i32 %.neg6338, %i.dey
@@ -1012,7 +1012,7 @@ bb.c:                                             ; preds = %bb.a
   %i.q = load i32, ptr %i.p, align 8, !tbaa !77   ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.s = load i32, ptr %i.r, align 8, !tbaa !79
-  %i.t = mul nsw i32 %i.s, %i.q                   ; 6 uses
+  %i.t = mul i32 %i.s, %i.q                       ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #9
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 5 uses
   %i.v = load i64, ptr %i.u, align 8, !tbaa !20
@@ -1415,8 +1415,8 @@ _ZN4ncnn3MatD2Ev.exit2221:                        ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 ._crit_edge8152:                                  ; preds = %._crit_edge8148
   %indvars.iv.next8689 = add nsw i64 %indvars.iv8688, 1 ; 2 uses
-  %13 = icmp slt i64 %indvars.iv.next8689, %i.ewh
-  br i1 %13, label %_ZN4ncnn3MatD2Ev.exit2221, label %._crit_edge8154.split, !llvm.loop !1859
+  %exitcond8692.not = icmp eq i64 %indvars.iv.next8689, %i.ewh
+  br i1 %exitcond8692.not, label %._crit_edge8154.split, label %_ZN4ncnn3MatD2Ev.exit2221, !llvm.loop !1859
 
 ._crit_edge8148:                                  ; preds = %_ZL13activation_ssfiRKN4ncnn3MatE.exit
   %exitcond8687.not = icmp eq i32 %.neg6934, %i.evg

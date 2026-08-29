@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.loopexit70.thread
   br i1 %i.bo, label %bb.d, label %.loopexit68
 
 bb.d:                                             ; preds = %bb.c
-  %i.bp = load i16, ptr %i.a, align 2, !tbaa !76
+  %i.bp = load i16, ptr %i.a, align 2, !tbaa !76  ; 2 uses
   %i.bq = tail call fastcc i32 @fill_buf(ptr noundef nonnull %0, i32 noundef 2) ; 0 uses
   %i.br = load i32, ptr %i.h, align 8, !tbaa !74
   %.not65 = icmp eq i32 %i.br, 0
@@ -219,23 +219,23 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.bv, label %.lr.ph78.preheader, label %.loopexit68
 
 .lr.ph78.preheader:                               ; preds = %.preheader67
-  %i.bw = add nsw i16 %i.bs, -1                   ; 2 uses
   %scevgep86 = getelementptr i8, ptr %scevgep, i64 %i.bm
+  %i.bw = add nsw i16 %i.bs, -1
+  %2 = zext nneg i16 %i.bw to i64
   %i.bx = sub i32 17, %.25580
-  %2 = zext i32 %i.bx to i64
-  %i.by = zext nneg i16 %i.bw to i64
+  %i.by = zext i32 %i.bx to i64
   %umin = tail call i64 @llvm.umin.i64(i64 %2, i64 %i.by)
   %i.bz = add nuw nsw i64 %umin, 1
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep86, i8 0, i64 %i.bz, i1 false), !tbaa !35
   %indvars.iv.next = add i32 %.25580, 2
-  %3 = icmp ne i16 %i.bw, 0
+  %3 = icmp slt i16 %i.bp, 0
   %i.ca = icmp slt i32 %.25580, 17
   %i.cb = and i1 %3, %i.ca
   br i1 %i.cb, label %.lr.ph78.1, label %.loopexit68
 
 .lr.ph78.1:                                       ; preds = %.lr.ph78.preheader
   %indvars.iv.next.1 = add i32 %.25580, 3
-  %4 = icmp ne i16 %i.bs, 2
+  %4 = icmp eq i16 %i.bs, 3
   %i.cc = icmp slt i32 %.25580, 16
   %i.cd = and i1 %4, %i.cc
   %indvars.iv.next.2 = add i32 %.25580, 4

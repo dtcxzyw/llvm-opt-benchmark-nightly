@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
   br label %chunkcopy_core_safe.exit
 
 bb.j:                                             ; preds = %bb.a
-  %i.t = add i32 %2, -1                           ; 3 uses
+  %i.t = add i32 %2, -1                           ; 2 uses
   %i.u = and i32 %i.t, 15
   %i.v = add nuw nsw i32 %i.u, 1
   %.val.i.i = load <2 x i64>, ptr %1, align 1
@@ -218,16 +218,15 @@ bb.j:                                             ; preds = %bb.a
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.j
   %i.z = getelementptr i8, ptr %1, i64 %i.w
-  %4 = and i32 %i.t, -16
-  %i.aa = zext i32 %4 to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.x, ptr align 1 %i.z, i64 %i.aa, i1 false)
-  %5 = add nsw i32 %i.y, -1
-  %6 = zext nneg i32 %5 to i64
-  %7 = shl nuw nsw i64 %6, 4
+  %4 = add nsw i32 %i.y, -1
+  %i.aa = zext nneg i32 %4 to i64
+  %5 = shl nuw nsw i64 %i.aa, 4                   ; 2 uses
+  %6 = add nuw nsw i64 %5, 16
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.x, ptr noundef nonnull align 1 dereferenceable(1) %i.z, i64 %6, i1 false)
   %i.ab = add i32 %2, 15
   %i.ac = and i32 %i.ab, 15
   %i.ad = zext nneg i32 %i.ac to i64
-  %i.ae = getelementptr i8, ptr %0, i64 %7
+  %i.ae = getelementptr i8, ptr %0, i64 %5
   %i.af = getelementptr i8, ptr %i.ae, i64 %i.ad
   %scevgep = getelementptr i8, ptr %i.af, i64 17
   br label %chunkcopy_core_safe.exit

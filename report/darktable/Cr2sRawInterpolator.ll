@@ -204,7 +204,7 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.y = and i32 %i.s, 3
   %i.z = icmp eq i32 %i.y, 0
   tail call void @llvm.assume(i1 %i.z)
-  %i.aa = lshr exact i32 %i.s, 2                  ; 2 uses
+  %i.aa = lshr exact i32 %i.s, 2
   %i.ab = icmp samesign ugt i32 %i.s, 4
   tail call void @llvm.assume(i1 %i.ab)
   %.sroa.050.0.copyload = load ptr, ptr %i.q, align 8, !tbaa !113 ; 3 uses
@@ -227,8 +227,7 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.aq = load <3 x i32>, ptr %i.ao, align 8, !tbaa !119 ; 5 uses
   %i.ar = shufflevector <3 x i32> %i.aq, <3 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
   %i.as = load i32, ptr %i.ap, align 4, !tbaa !119
-  %2 = zext nneg i32 %i.i to i64                  ; 2 uses
-  %i.at = zext nneg i32 %i.aa to i64
+  %i.at = zext nneg i32 %i.i to i64               ; 2 uses
   %wide.trip.count = zext i32 %i.ac to i64        ; 5 uses
   %min.iters.check = icmp ult i32 %i.s, 40
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -346,9 +345,7 @@ scalar.ph.preheader:                              ; preds = %vector.body, %vecto
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv = phi i64 [ %i.ee, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 4 uses
-  %3 = icmp samesign ult i64 %indvars.iv, %i.at
-  tail call void @llvm.assume(i1 %3)
+  %indvars.iv = phi i64 [ %i.ee, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 3 uses
   %i.dp = shl nuw nsw i64 %indvars.iv, 2          ; 3 uses
   %i.dq = getelementptr inbounds nuw [2 x i8], ptr %i.ag, i64 %i.dp
   %i.dr = load i16, ptr %i.dq, align 2, !tbaa !120, !noalias !153
@@ -383,7 +380,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.et = ashr i32 %i.es, 1                       ; 2 uses
   %i.eu = mul nuw nsw i64 %indvars.iv, 6          ; 2 uses
   %i.ev = add nuw nsw i64 %i.eu, 3                ; 2 uses
-  %i.ew = icmp samesign ule i64 %i.ev, %2
+  %i.ew = icmp samesign ule i64 %i.ev, %i.at
   tail call void @llvm.assume(i1 %i.ew)
   %i.ex = mul nsw i32 %i.em, -778
   %i.ey = shl nsw i32 %i.en, 11
@@ -463,7 +460,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.hj = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.hk = zext nneg i32 %i.hi to i64              ; 2 uses
   %i.hl = add nuw nsw i64 %i.hk, 3                ; 2 uses
-  %i.hm = icmp samesign ule i64 %i.hl, %2
+  %i.hm = icmp samesign ule i64 %i.hl, %i.at
   tail call void @llvm.assume(i1 %i.hm)
   %i.hn = getelementptr inbounds nuw [2 x i8], ptr %i.hh, i64 %i.hk
   %i.ho = getelementptr inbounds nuw [2 x i8], ptr %i.hh, i64 %i.hl
@@ -541,7 +538,7 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.y = and i32 %i.s, 3
   %i.z = icmp eq i32 %i.y, 0
   tail call void @llvm.assume(i1 %i.z)
-  %i.aa = lshr exact i32 %i.s, 2                  ; 2 uses
+  %i.aa = lshr exact i32 %i.s, 2
   %i.ab = icmp samesign ugt i32 %i.s, 4
   tail call void @llvm.assume(i1 %i.ab)
   %.sroa.054.0.copyload = load ptr, ptr %i.q, align 8, !tbaa !113 ; 3 uses
@@ -564,8 +561,7 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.aq = load <3 x i32>, ptr %i.ao, align 8, !tbaa !119 ; 5 uses
   %i.ar = shufflevector <3 x i32> %i.aq, <3 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
   %i.as = load i32, ptr %i.ap, align 4, !tbaa !119
-  %2 = zext nneg i32 %i.i to i64                  ; 2 uses
-  %i.at = zext nneg i32 %i.aa to i64
+  %i.at = zext nneg i32 %i.i to i64               ; 2 uses
   %wide.trip.count = zext i32 %i.ac to i64        ; 5 uses
   %min.iters.check = icmp ult i32 %i.s, 40
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -700,9 +696,7 @@ scalar.ph.preheader:                              ; preds = %vector.body, %vecto
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv = phi i64 [ %i.eo, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 4 uses
-  %3 = icmp samesign ult i64 %indvars.iv, %i.at
-  tail call void @llvm.assume(i1 %3)
+  %indvars.iv = phi i64 [ %i.eo, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 3 uses
   %i.eg = shl nuw nsw i64 %indvars.iv, 2          ; 3 uses
   %i.eh = getelementptr inbounds nuw [2 x i8], ptr %i.ag, i64 %i.eg
   %i.ei = getelementptr inbounds nuw [2 x i8], ptr %i.ag, i64 %i.eg
@@ -719,7 +713,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.es = zext <2 x i16> %i.er to <2 x i32>
   %i.et = mul nuw nsw i64 %indvars.iv, 6          ; 2 uses
   %i.eu = add nuw nsw i64 %i.et, 3                ; 2 uses
-  %i.ev = icmp samesign ule i64 %i.eu, %2
+  %i.ev = icmp samesign ule i64 %i.eu, %i.at
   tail call void @llvm.assume(i1 %i.ev)
   %i.ew = getelementptr inbounds nuw [2 x i8], ptr %i.an, i64 %i.et
   %i.ex = getelementptr inbounds nuw [2 x i8], ptr %i.an, i64 %i.eu
@@ -786,7 +780,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.gz = zext nneg i32 %i.gx to i64              ; 2 uses
   %i.ha = add nuw nsw i64 %i.gz, 3                ; 2 uses
-  %i.hb = icmp samesign ule i64 %i.ha, %2
+  %i.hb = icmp samesign ule i64 %i.ha, %i.at
   tail call void @llvm.assume(i1 %i.hb)
   %i.hc = getelementptr inbounds nuw [2 x i8], ptr %i.gw, i64 %i.gz
   %i.hd = getelementptr inbounds nuw [2 x i8], ptr %i.gw, i64 %i.ha
@@ -863,7 +857,7 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.y = and i32 %i.s, 3
   %i.z = icmp eq i32 %i.y, 0
   tail call void @llvm.assume(i1 %i.z)
-  %i.aa = lshr exact i32 %i.s, 2                  ; 2 uses
+  %i.aa = lshr exact i32 %i.s, 2
   %i.ab = icmp samesign ugt i32 %i.s, 4
   tail call void @llvm.assume(i1 %i.ab)
   %.sroa.050.0.copyload = load ptr, ptr %i.q, align 8, !tbaa !113 ; 3 uses
@@ -886,8 +880,7 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.aq = load <3 x i32>, ptr %i.ao, align 8, !tbaa !119 ; 5 uses
   %i.ar = shufflevector <3 x i32> %i.aq, <3 x i32> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
   %i.as = load i32, ptr %i.ap, align 4, !tbaa !119
-  %2 = zext nneg i32 %i.i to i64                  ; 2 uses
-  %i.at = zext nneg i32 %i.aa to i64
+  %i.at = zext nneg i32 %i.i to i64               ; 2 uses
   %wide.trip.count = zext i32 %i.ac to i64        ; 5 uses
   %min.iters.check = icmp ult i32 %i.s, 40
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -1003,9 +996,7 @@ scalar.ph.preheader:                              ; preds = %vector.body, %vecto
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
-  %indvars.iv = phi i64 [ %i.dy, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 4 uses
-  %3 = icmp samesign ult i64 %indvars.iv, %i.at
-  tail call void @llvm.assume(i1 %3)
+  %indvars.iv = phi i64 [ %i.dy, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 3 uses
   %i.dn = shl nuw nsw i64 %indvars.iv, 2          ; 3 uses
   %i.do = getelementptr inbounds nuw [2 x i8], ptr %i.ag, i64 %i.dn
   %i.dp = getelementptr inbounds nuw [2 x i8], ptr %i.ag, i64 %i.dn
@@ -1030,7 +1021,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.eh = add i32 %i.aj, %i.ef
   %i.ei = mul nuw nsw i64 %indvars.iv, 6          ; 2 uses
   %i.ej = add nuw nsw i64 %i.ei, 3                ; 2 uses
-  %i.ek = icmp samesign ule i64 %i.ej, %2
+  %i.ek = icmp samesign ule i64 %i.ej, %i.at
   tail call void @llvm.assume(i1 %i.ek)
   %i.el = getelementptr inbounds nuw [2 x i8], ptr %i.an, i64 %i.ei
   %i.em = getelementptr inbounds nuw [2 x i8], ptr %i.an, i64 %i.ej ; 2 uses
@@ -1111,7 +1102,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.gz = zext nneg i32 %i.gx to i64              ; 2 uses
   %i.ha = add nuw nsw i64 %i.gz, 3                ; 2 uses
-  %i.hb = icmp samesign ule i64 %i.ha, %2
+  %i.hb = icmp samesign ule i64 %i.ha, %i.at
   tail call void @llvm.assume(i1 %i.hb)
   %i.hc = getelementptr inbounds nuw [2 x i8], ptr %i.gw, i64 %i.gz
   %i.hd = getelementptr inbounds nuw [2 x i8], ptr %i.gw, i64 %i.ha
@@ -1185,7 +1176,7 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.w = load i32, ptr %i.v, align 8, !tbaa !112  ; 2 uses
   %i.x = icmp sge i32 %i.w, %i.s
   tail call void @llvm.assume(i1 %i.x)
-  %i.y = udiv i32 %i.s, 6                         ; 2 uses
+  %i.y = udiv i32 %i.s, 6
   %i.z = icmp samesign ugt i32 %i.s, 11
   tail call void @llvm.assume(i1 %i.z)
   %.sroa.0114.0.copyload = load ptr, ptr %i.q, align 8, !tbaa !113 ; 7 uses
@@ -1203,35 +1194,34 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.aj = load i32, ptr %i.ag, align 8, !tbaa !119
   %i.ak = zext nneg i32 %invariant.op to i64
   %i.al = sext i32 %1 to i64                      ; 3 uses
-  %2 = zext nneg i32 %i.u to i64
-  %i.am = zext i32 %i.w to i64                    ; 4 uses
-  %i.an = zext nneg i32 %i.i to i64               ; 2 uses
-  %i.ao = zext i32 %i.af to i64                   ; 3 uses
-  %i.ap = zext i32 %i.n to i64                    ; 4 uses
-  %i.aq = zext nneg i32 %i.k to i64
-  %i.ar = zext nneg i32 %i.y to i64
+  %i.am = zext nneg i32 %i.u to i64
+  %i.an = zext i32 %i.w to i64                    ; 4 uses
+  %i.ao = zext nneg i32 %i.i to i64               ; 2 uses
+  %i.ap = zext i32 %i.af to i64                   ; 3 uses
+  %i.aq = zext i32 %i.n to i64                    ; 4 uses
+  %i.ar = zext nneg i32 %i.k to i64
   %wide.trip.count = zext i32 %i.ab to i64        ; 4 uses
-  %i.as = mul nsw i64 %i.al, %i.am                ; 2 uses
+  %i.as = mul nuw nsw i64 %i.al, %i.an            ; 2 uses
   %i.at = getelementptr [2 x i8], ptr %.sroa.0114.0.copyload, i64 %i.as ; 20 uses
   %i.au = add nuw nsw i64 %i.al, 1                ; 3 uses
-  %i.av = icmp samesign ult i64 %i.au, %2
+  %i.av = icmp samesign ult i64 %i.au, %i.am
   tail call void @llvm.assume(i1 %i.av), !noalias !198
-  %i.aw = mul nuw nsw i64 %i.au, %i.am            ; 2 uses
+  %i.aw = mul nuw nsw i64 %i.au, %i.an            ; 2 uses
   %i.ax = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0114.0.copyload, i64 %i.aw ; 4 uses
   %i.ay = icmp ult i32 %i.af, %i.k
   tail call void @llvm.assume(i1 %i.ay)
-  %i.az = mul nuw i64 %i.ao, %i.ap                ; 2 uses
+  %i.az = mul nuw i64 %i.ap, %i.aq                ; 2 uses
   %i.ba = getelementptr [2 x i8], ptr %i.d, i64 %i.az ; 16 uses
-  %i.bb = or disjoint i64 %i.ao, 1                ; 3 uses
-  %i.bc = icmp samesign ult i64 %i.bb, %i.aq
+  %i.bb = or disjoint i64 %i.ap, 1                ; 3 uses
+  %i.bc = icmp samesign ult i64 %i.bb, %i.ar
   tail call void @llvm.assume(i1 %i.bc)
-  %i.bd = mul nuw i64 %i.bb, %i.ap                ; 2 uses
+  %i.bd = mul nuw i64 %i.bb, %i.aq                ; 2 uses
   %i.be = getelementptr [2 x i8], ptr %i.d, i64 %i.bd ; 16 uses
   %min.iters.check = icmp ult i32 %i.ab, 33
   br i1 %min.iters.check, label %.preheader215.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %i.bf = mul nuw i64 %i.ap, %i.ao
+  %i.bf = mul nuw i64 %i.aq, %i.ap
   %i.bg = shl i64 %i.bf, 1                        ; 8 uses
   %i.bh = mul nuw nsw i64 %wide.trip.count, 12    ; 8 uses
   %i.bi = add i64 %i.bg, %i.bh                    ; 2 uses
@@ -1258,7 +1248,7 @@ vector.memcheck:                                  ; preds = %.lr.ph
   %i.bu = getelementptr i8, ptr %i.d, i64 %i.bg
   %scevgep552 = getelementptr i8, ptr %i.bu, i64 10 ; 13 uses
   %scevgep553 = getelementptr i8, ptr %i.d, i64 %i.bs ; 13 uses
-  %i.bv = mul nuw i64 %i.bb, %i.ap
+  %i.bv = mul nuw i64 %i.bb, %i.aq
   %i.bw = shl i64 %i.bv, 1                        ; 8 uses
   %i.bx = add i64 %i.bw, %i.bh                    ; 2 uses
   %i.by = getelementptr i8, ptr %i.d, i64 %i.bx
@@ -1284,14 +1274,14 @@ vector.memcheck:                                  ; preds = %.lr.ph
   %i.cj = getelementptr i8, ptr %i.d, i64 %i.bw
   %scevgep563 = getelementptr i8, ptr %i.cj, i64 10 ; 13 uses
   %scevgep564 = getelementptr i8, ptr %i.d, i64 %i.ch ; 13 uses
-  %i.ck = mul i64 %i.au, %i.am
+  %i.ck = mul i64 %i.au, %i.an
   %i.cl = shl i64 %i.ck, 1                        ; 2 uses
   %i.cm = getelementptr i8, ptr %.sroa.0114.0.copyload, i64 %i.cl
   %scevgep565 = getelementptr i8, ptr %i.cm, i64 8 ; 12 uses
   %i.cn = getelementptr i8, ptr %.sroa.0114.0.copyload, i64 %i.cl
   %i.co = getelementptr i8, ptr %i.cn, i64 %i.bh
   %scevgep566 = getelementptr i8, ptr %i.co, i64 12 ; 12 uses
-  %i.cp = mul nsw i64 %i.al, %i.am
+  %i.cp = mul nsw i64 %i.al, %i.an
   %i.cq = shl i64 %i.cp, 1
   %i.cr = getelementptr i8, ptr %.sroa.0114.0.copyload, i64 %i.cq
   %i.cs = getelementptr i8, ptr %i.cr, i64 %i.bh
@@ -1694,9 +1684,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br label %.preheader215
 
 .preheader215:                                    ; preds = %.preheader215.preheader, %.preheader215
-  %indvars.iv = phi i64 [ %i.jj, %.preheader215 ], [ %indvars.iv.ph, %.preheader215.preheader ] ; 3 uses
-  %3 = icmp samesign ult i64 %indvars.iv, %i.ar
-  tail call void @llvm.assume(i1 %3)
+  %indvars.iv = phi i64 [ %i.jj, %.preheader215 ], [ %indvars.iv.ph, %.preheader215.preheader ] ; 2 uses
   %i.iz = mul nuw nsw i64 %indvars.iv, 6          ; 8 uses
   %i.ja = getelementptr inbounds nuw [2 x i8], ptr %i.at, i64 %i.iz
   %i.jb = getelementptr inbounds nuw [2 x i8], ptr %i.at, i64 %i.iz
@@ -1718,7 +1706,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.jq = getelementptr inbounds nuw [2 x i8], ptr %i.ax, i64 %i.jh
   %i.jr = getelementptr inbounds nuw [2 x i8], ptr %i.ax, i64 %i.jl
   %i.js = add nuw nsw i64 %i.iz, 3                ; 3 uses
-  %i.jt = icmp samesign ule i64 %i.js, %i.an
+  %i.jt = icmp samesign ule i64 %i.js, %i.ao
   tail call void @llvm.assume(i1 %i.jt)
   %i.ju = getelementptr inbounds nuw [2 x i8], ptr %i.ba, i64 %i.iz
   %i.jv = getelementptr inbounds nuw [2 x i8], ptr %i.ba, i64 %i.js
@@ -1849,7 +1837,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.og = add i32 %i.of, -16384
   %i.oh = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.oi = add nuw nsw i64 %i.nr, 3                ; 3 uses
-  %i.oj = icmp samesign ule i64 %i.oi, %i.an
+  %i.oj = icmp samesign ule i64 %i.oi, %i.ao
   %i.ok = getelementptr inbounds nuw [2 x i8], ptr %i.d, i64 %i.az ; 2 uses
   tail call void @llvm.assume(i1 %i.oj)
   %i.ol = getelementptr inbounds nuw [2 x i8], ptr %i.ok, i64 %i.nr
@@ -1965,7 +1953,7 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.w = load i32, ptr %i.v, align 8, !tbaa !112  ; 2 uses
   %i.x = icmp sge i32 %i.w, %i.s
   tail call void @llvm.assume(i1 %i.x)
-  %i.y = udiv i32 %i.s, 6                         ; 2 uses
+  %i.y = udiv i32 %i.s, 6
   %i.z = icmp samesign ugt i32 %i.s, 11
   tail call void @llvm.assume(i1 %i.z)
   %.sroa.0112.0.copyload = load ptr, ptr %i.q, align 8, !tbaa !113 ; 7 uses
@@ -1983,35 +1971,34 @@ define linkonce_odr hidden void @_ZN8rawspeed19Cr2sRawInterpolator19interpolate_
   %i.aj = load i32, ptr %i.ag, align 8, !tbaa !119
   %i.ak = zext nneg i32 %invariant.op to i64
   %i.al = sext i32 %1 to i64                      ; 3 uses
-  %2 = zext nneg i32 %i.u to i64
-  %i.am = zext i32 %i.w to i64                    ; 4 uses
-  %i.an = zext nneg i32 %i.i to i64               ; 2 uses
-  %i.ao = zext i32 %i.af to i64                   ; 3 uses
-  %i.ap = zext i32 %i.n to i64                    ; 4 uses
-  %i.aq = zext nneg i32 %i.k to i64
-  %i.ar = zext nneg i32 %i.y to i64
+  %i.am = zext nneg i32 %i.u to i64
+  %i.an = zext i32 %i.w to i64                    ; 4 uses
+  %i.ao = zext nneg i32 %i.i to i64               ; 2 uses
+  %i.ap = zext i32 %i.af to i64                   ; 3 uses
+  %i.aq = zext i32 %i.n to i64                    ; 4 uses
+  %i.ar = zext nneg i32 %i.k to i64
   %wide.trip.count = zext i32 %i.ab to i64        ; 4 uses
-  %i.as = mul nsw i64 %i.al, %i.am                ; 2 uses
+  %i.as = mul nuw nsw i64 %i.al, %i.an            ; 2 uses
   %i.at = getelementptr [2 x i8], ptr %.sroa.0112.0.copyload, i64 %i.as ; 20 uses
   %i.au = add nuw nsw i64 %i.al, 1                ; 3 uses
-  %i.av = icmp samesign ult i64 %i.au, %2
+  %i.av = icmp samesign ult i64 %i.au, %i.am
   tail call void @llvm.assume(i1 %i.av), !noalias !214
-  %i.aw = mul nuw nsw i64 %i.au, %i.am            ; 2 uses
+  %i.aw = mul nuw nsw i64 %i.au, %i.an            ; 2 uses
   %i.ax = getelementptr inbounds nuw [2 x i8], ptr %.sroa.0112.0.copyload, i64 %i.aw ; 4 uses
   %i.ay = icmp ult i32 %i.af, %i.k
   tail call void @llvm.assume(i1 %i.ay)
-  %i.az = mul nuw i64 %i.ao, %i.ap                ; 2 uses
+  %i.az = mul nuw i64 %i.ap, %i.aq                ; 2 uses
   %i.ba = getelementptr [2 x i8], ptr %i.d, i64 %i.az ; 16 uses
-  %i.bb = or disjoint i64 %i.ao, 1                ; 3 uses
-  %i.bc = icmp samesign ult i64 %i.bb, %i.aq
+  %i.bb = or disjoint i64 %i.ap, 1                ; 3 uses
+  %i.bc = icmp samesign ult i64 %i.bb, %i.ar
   tail call void @llvm.assume(i1 %i.bc)
-  %i.bd = mul nuw i64 %i.bb, %i.ap                ; 2 uses
+  %i.bd = mul nuw i64 %i.bb, %i.aq                ; 2 uses
   %i.be = getelementptr [2 x i8], ptr %i.d, i64 %i.bd ; 16 uses
   %min.iters.check = icmp ult i32 %i.ab, 33
   br i1 %min.iters.check, label %.preheader213.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph
-  %i.bf = mul nuw i64 %i.ap, %i.ao
+  %i.bf = mul nuw i64 %i.aq, %i.ap
   %i.bg = shl i64 %i.bf, 1                        ; 8 uses
   %i.bh = mul nuw nsw i64 %wide.trip.count, 12    ; 8 uses
   %i.bi = add i64 %i.bg, %i.bh                    ; 2 uses
@@ -2038,7 +2025,7 @@ vector.memcheck:                                  ; preds = %.lr.ph
   %i.bu = getelementptr i8, ptr %i.d, i64 %i.bg
   %scevgep546 = getelementptr i8, ptr %i.bu, i64 10 ; 13 uses
   %scevgep547 = getelementptr i8, ptr %i.d, i64 %i.bs ; 13 uses
-  %i.bv = mul nuw i64 %i.bb, %i.ap
+  %i.bv = mul nuw i64 %i.bb, %i.aq
   %i.bw = shl i64 %i.bv, 1                        ; 8 uses
   %i.bx = add i64 %i.bw, %i.bh                    ; 2 uses
   %i.by = getelementptr i8, ptr %i.d, i64 %i.bx
@@ -2064,14 +2051,14 @@ vector.memcheck:                                  ; preds = %.lr.ph
   %i.cj = getelementptr i8, ptr %i.d, i64 %i.bw
   %scevgep557 = getelementptr i8, ptr %i.cj, i64 10 ; 13 uses
   %scevgep558 = getelementptr i8, ptr %i.d, i64 %i.ch ; 13 uses
-  %i.ck = mul i64 %i.au, %i.am
+  %i.ck = mul i64 %i.au, %i.an
   %i.cl = shl i64 %i.ck, 1                        ; 2 uses
   %i.cm = getelementptr i8, ptr %.sroa.0112.0.copyload, i64 %i.cl
   %scevgep559 = getelementptr i8, ptr %i.cm, i64 8 ; 12 uses
   %i.cn = getelementptr i8, ptr %.sroa.0112.0.copyload, i64 %i.cl
   %i.co = getelementptr i8, ptr %i.cn, i64 %i.bh
   %scevgep560 = getelementptr i8, ptr %i.co, i64 12 ; 12 uses
-  %i.cp = mul nsw i64 %i.al, %i.am
+  %i.cp = mul nsw i64 %i.al, %i.an
   %i.cq = shl i64 %i.cp, 1
   %i.cr = getelementptr i8, ptr %.sroa.0112.0.copyload, i64 %i.cq
   %i.cs = getelementptr i8, ptr %i.cr, i64 %i.bh
@@ -2474,9 +2461,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br label %.preheader213
 
 .preheader213:                                    ; preds = %.preheader213.preheader, %.preheader213
-  %indvars.iv = phi i64 [ %i.ie, %.preheader213 ], [ %indvars.iv.ph, %.preheader213.preheader ] ; 3 uses
-  %3 = icmp samesign ult i64 %indvars.iv, %i.ar
-  tail call void @llvm.assume(i1 %3)
+  %indvars.iv = phi i64 [ %i.ie, %.preheader213 ], [ %indvars.iv.ph, %.preheader213.preheader ] ; 2 uses
   %i.hp = mul nuw nsw i64 %indvars.iv, 6          ; 8 uses
   %i.hq = getelementptr inbounds nuw [2 x i8], ptr %i.at, i64 %i.hp
   %i.hr = getelementptr inbounds nuw [2 x i8], ptr %i.at, i64 %i.hp
@@ -2522,7 +2507,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.je = add i32 %i.ae, %i.iw
   %i.jf = add i32 %i.ae, %i.iz
   %i.jg = add nuw nsw i64 %i.hp, 3                ; 3 uses
-  %i.jh = icmp samesign ule i64 %i.jg, %i.an
+  %i.jh = icmp samesign ule i64 %i.jg, %i.ao
   tail call void @llvm.assume(i1 %i.jh)
   %i.ji = getelementptr inbounds nuw [2 x i8], ptr %i.ba, i64 %i.hp
   %i.jj = getelementptr inbounds nuw [2 x i8], ptr %i.ba, i64 %i.jg
@@ -2647,7 +2632,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.no = add i32 %i.nm, %i.nj
   %i.np = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.nq = add nuw nsw i64 %i.mn, 3                ; 3 uses
-  %i.nr = icmp samesign ule i64 %i.nq, %i.an
+  %i.nr = icmp samesign ule i64 %i.nq, %i.ao
   %i.ns = getelementptr inbounds nuw [2 x i8], ptr %i.d, i64 %i.az ; 2 uses
   tail call void @llvm.assume(i1 %i.nr)
   %i.nt = getelementptr inbounds nuw [2 x i8], ptr %i.ns, i64 %i.mn

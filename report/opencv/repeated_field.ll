@@ -204,8 +204,8 @@ vec.epilog.scalar.ph55:                           ; preds = %vec.epilog.scalar.p
   %i.bg = getelementptr inbounds i8, ptr %i.ah, i64 %i.bd
   store i8 %i.bf, ptr %i.bg, align 1, !tbaa !17
   %indvars.iv.next27 = add nsw i64 %indvars.iv26, 1 ; 2 uses
-  %4 = icmp slt i64 %indvars.iv.next27, %i.ak
-  br i1 %4, label %vec.epilog.scalar.ph55, label %._crit_edge, !llvm.loop !33
+  %exitcond30.not = icmp eq i64 %indvars.iv.next27, %i.ak
+  br i1 %exitcond30.not, label %._crit_edge, label %vec.epilog.scalar.ph55, !llvm.loop !33
 
 _ZN6google8protobuf13RepeatedFieldIbE8TruncateEi.exit: ; preds = %bb.b, %._crit_edge, %.loopexit
   ret void
@@ -608,8 +608,8 @@ scalar.ph34:                                      ; preds = %scalar.ph34.prehead
   %i.aw = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %i.at
   store i64 %i.av, ptr %i.aw, align 8, !tbaa !80
   %indvars.iv.next27 = add nsw i64 %indvars.iv26, 1 ; 2 uses
-  %4 = icmp slt i64 %indvars.iv.next27, %i.ah
-  br i1 %4, label %scalar.ph34, label %._crit_edge, !llvm.loop !86
+  %exitcond30.not = icmp eq i64 %indvars.iv.next27, %i.ah
+  br i1 %exitcond30.not, label %._crit_edge, label %scalar.ph34, !llvm.loop !86
 
 _ZN6google8protobuf13RepeatedFieldIlE8TruncateEi.exit: ; preds = %bb.b, %._crit_edge, %.loopexit
   ret void
@@ -1012,8 +1012,8 @@ scalar.ph34:                                      ; preds = %scalar.ph34.prehead
   %i.aw = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %i.at
   store i64 %i.av, ptr %i.aw, align 8, !tbaa !80
   %indvars.iv.next27 = add nsw i64 %indvars.iv26, 1 ; 2 uses
-  %4 = icmp slt i64 %indvars.iv.next27, %i.ah
-  br i1 %4, label %scalar.ph34, label %._crit_edge, !llvm.loop !104
+  %exitcond30.not = icmp eq i64 %indvars.iv.next27, %i.ah
+  br i1 %exitcond30.not, label %._crit_edge, label %scalar.ph34, !llvm.loop !104
 
 _ZN6google8protobuf13RepeatedFieldImE8TruncateEi.exit: ; preds = %bb.b, %._crit_edge, %.loopexit
   ret void
@@ -1416,8 +1416,8 @@ scalar.ph34:                                      ; preds = %scalar.ph34.prehead
   %i.aw = getelementptr inbounds [4 x i8], ptr %i.ae, i64 %i.at
   store float %i.av, ptr %i.aw, align 4, !tbaa !117
   %indvars.iv.next27 = add nsw i64 %indvars.iv26, 1 ; 2 uses
-  %4 = icmp slt i64 %indvars.iv.next27, %i.ah
-  br i1 %4, label %scalar.ph34, label %._crit_edge, !llvm.loop !123
+  %exitcond30.not = icmp eq i64 %indvars.iv.next27, %i.ah
+  br i1 %exitcond30.not, label %._crit_edge, label %scalar.ph34, !llvm.loop !123
 
 _ZN6google8protobuf13RepeatedFieldIfE8TruncateEi.exit: ; preds = %bb.b, %._crit_edge, %.loopexit
   ret void
@@ -1820,8 +1820,8 @@ scalar.ph34:                                      ; preds = %scalar.ph34.prehead
   %i.aw = getelementptr inbounds [8 x i8], ptr %i.ae, i64 %i.at
   store double %i.av, ptr %i.aw, align 8, !tbaa !137
   %indvars.iv.next27 = add nsw i64 %indvars.iv26, 1 ; 2 uses
-  %4 = icmp slt i64 %indvars.iv.next27, %i.ah
-  br i1 %4, label %scalar.ph34, label %._crit_edge, !llvm.loop !143
+  %exitcond30.not = icmp eq i64 %indvars.iv.next27, %i.ah
+  br i1 %exitcond30.not, label %._crit_edge, label %scalar.ph34, !llvm.loop !143
 
 _ZN6google8protobuf13RepeatedFieldIdE8TruncateEi.exit: ; preds = %bb.b, %._crit_edge, %.loopexit
   ret void

@@ -204,7 +204,7 @@ bb.a:
   %2 = alloca %"class.std::allocator", align 1    ; 3 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %4 = alloca %"class.std::allocator", align 1    ; 3 uses
-  %i.a = load i32, ptr %0, align 8, !tbaa !63     ; 16 uses
+  %i.a = load i32, ptr %0, align 8, !tbaa !63     ; 17 uses
   %i.b = mul nsw i32 %i.a, 1000
   %i.c = icmp sgt i32 %i.a, 0
   br i1 %i.c, label %bb.g, label %bb.b
@@ -250,7 +250,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.f,
 bb.g:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.l = load ptr, ptr %i.k, align 8              ; 56 uses
-  %i.m = zext nneg i32 %i.a to i64                ; 5 uses
+  %i.m = zext nneg i32 %i.a to i64                ; 4 uses
   %wide.trip.count = zext nneg i32 %i.a to i64    ; 9 uses
   %i.n = add nsw i64 %wide.trip.count, -1         ; 3 uses
   %xtraiter = and i64 %wide.trip.count, 1
@@ -653,7 +653,6 @@ bb.ac:                                            ; preds = %.lr.ph846.prol
   %i.pg = sext i32 %.0566.lcssa to i64            ; 4 uses
   %i.ph = add i32 %.0566.lcssa, 3
   %sext985 = sext i32 %i.ch to i64
-  %wide.trip.count988 = zext nneg i32 %.0774876 to i64
   %i.pi = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.pg
   br label %bb.ag
 
@@ -859,7 +858,8 @@ bb.au:                                            ; preds = %._crit_edge1073, %b
   %i.te = tail call double @llvm.fmuladd.f64(double %.pre-phi, double %i.rw, double %i.td)
   store double %i.te, ptr %i.ss, align 8, !tbaa !77
   %indvars.iv.next969 = add nsw i64 %indvars.iv968, 1 ; 2 uses
-  %exitcond972.not = icmp eq i64 %indvars.iv.next969, %i.m
+  %lftr.wideiv971 = trunc i64 %indvars.iv.next969 to i32
+  %exitcond972.not = icmp eq i32 %i.a, %lftr.wideiv971
   br i1 %exitcond972.not, label %.preheader805, label %bb.as, !llvm.loop !353
 
 .lr.ph857:                                        ; preds = %bb.ax, %.preheader805
@@ -950,7 +950,8 @@ bb.ba:                                            ; preds = %._crit_edge1072, %b
   %i.up = phi <2 x double> [ %i.qy, %bb.am ], [ %i.un, %.thread778.loopexit ]
   %indvars.iv.next967 = add nsw i64 %indvars.iv966, 1 ; 2 uses
   %indvars.iv.next977 = add i32 %indvars.iv976, 1
-  %exitcond989.not = icmp eq i64 %indvars.iv.next967, %wide.trip.count988
+  %lftr.wideiv988 = trunc i64 %indvars.iv.next967 to i32
+  %exitcond989.not = icmp eq i32 %.0774876, %lftr.wideiv988
   %i.uq = extractelement <2 x double> %i.uo, i64 0
   %i.ur = extractelement <2 x double> %i.uo, i64 1
   br i1 %exitcond989.not, label %.thread787, label %bb.ag, !llvm.loop !356

@@ -204,12 +204,12 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not59.i, label %bb.n, label %cabd_sys_read_block.exit.thread
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %i.bn = load i8, ptr %i.t, align 1, !tbaa !76   ; 2 uses
+  %i.bn = load i8, ptr %i.t, align 1, !tbaa !76
   %i.bo = zext i8 %i.bn to i32
   %i.bp = shl nuw nsw i32 %i.bo, 8
-  %i.bq = load i8, ptr %i.s, align 4, !tbaa !76   ; 2 uses
+  %i.bq = load i8, ptr %i.s, align 4, !tbaa !76
   %i.br = zext i8 %i.bq to i32                    ; 2 uses
-  %i.bs = or disjoint i32 %i.bp, %i.br            ; 5 uses
+  %i.bs = or disjoint i32 %i.bp, %i.br            ; 6 uses
   %i.bt = load ptr, ptr %i.aa, align 8, !tbaa !95 ; 2 uses
   %i.bu = load ptr, ptr %i.ac, align 8, !tbaa !96
   %i.bv = ptrtoint ptr %i.bt to i64
@@ -244,21 +244,17 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not61.i, label %bb.x, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.cj = lshr i32 %i.bs, 2                       ; 4 uses
+  %i.cj = lshr i32 %i.bs, 2                       ; 5 uses
   %.not22.i.i = icmp eq i32 %i.cj, 0
   br i1 %.not22.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.r
-  %3 = zext i8 %i.bn to i64
-  %4 = shl nuw nsw i64 %3, 8
-  %i.ck = zext i8 %i.bq to i64
-  %5 = or disjoint i64 %4, %i.ck                  ; 2 uses
-  %6 = lshr i64 %5, 2                             ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %5, 32
+  %i.ck = zext nneg i32 %i.cj to i64              ; 2 uses
+  %min.iters.check = icmp samesign ult i32 %i.bs, 32
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader103, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i.preheader
-  %n.vec = and i64 %6, 16376                      ; 4 uses
+  %n.vec = and i64 %i.ck, 16376                   ; 4 uses
   %i.cl = trunc nuw nsw i64 %n.vec to i32
   %i.cm = sub nsw i32 %i.cj, %i.cl
   %i.cn = shl nuw nsw i64 %n.vec, 2
@@ -283,7 +279,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = xor <4 x i32> %i.cs, %i.cr
   %i.cu = call i32 @llvm.vector.reduce.xor.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i64 %6, %n.vec
+  %cmp.n = icmp eq i64 %n.vec, %i.ck
   br i1 %cmp.n, label %._crit_edge.loopexit.i.i, label %.lr.ph.i.i.preheader103
 
 .lr.ph.i.i.preheader103:                          ; preds = %.lr.ph.i.i.preheader, %middle.block

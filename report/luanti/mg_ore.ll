@@ -202,7 +202,7 @@ _ZSt4findIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEEtET_S7_S7_RKT0_.ex
   br i1 %.not66, label %._crit_edge, label %bb.j, !llvm.loop !129
 
 _ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit.thread: ; preds = %.lr.ph.i.i.i.i, %._crit_edge98, %_ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit, %bb.f, %..loopexit_crit_edge21.i.i.i.i, %bb.c
-  %i.eu = add i32 %.059102, 1                     ; 2 uses
+  %i.eu = add nuw i32 %.059102, 1                 ; 2 uses
   %.not = icmp eq i32 %i.eu, %i.w
   br i1 %.not, label %._crit_edge104, label %bb.b, !llvm.loop !130
 }
@@ -605,7 +605,7 @@ _ZSt4findIN9__gnu_cxx17__normal_iteratorIPtSt6vectorItSaItEEEEtET_S7_S7_RKT0_.ex
   br i1 %.not91, label %._crit_edge, label %bb.l, !llvm.loop !159
 
 _ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit.thread: ; preds = %.lr.ph.i.i.i.i, %._crit_edge128.split, %_ZNSt13unordered_setItSt4hashItESt8equal_toItESaItEE4findERKt.exit, %bb.h, %..loopexit_crit_edge21.i.i.i.i
-  %i.fs = add i32 %.084137, 1                     ; 2 uses
+  %i.fs = add nuw i32 %.084137, 1                 ; 2 uses
   %.not87 = icmp eq i32 %i.fs, %i.z
   br i1 %.not87, label %._crit_edge139, label %bb.f, !llvm.loop !160
 }

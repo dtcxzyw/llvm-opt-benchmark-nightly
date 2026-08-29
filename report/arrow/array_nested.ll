@@ -205,30 +205,23 @@ bb.ai:                                            ; preds = %bb.ai, %.lr.ph.i
 bb.aj:                                            ; preds = %._crit_edge.i, %bb.ag
   %.1 = phi i64 [ 0, %bb.ag ], [ %.0, %._crit_edge.i ] ; 9 uses
   %.038.i = phi ptr [ %i.ea, %bb.ag ], [ %i.ev, %._crit_edge.i ] ; 9 uses
-  %.1.i = phi i64 [ %i.dn, %bb.ag ], [ %.035.lcssa.i, %._crit_edge.i ] ; 6 uses
+  %.1.i = phi i64 [ %i.dn, %bb.ag ], [ %.035.lcssa.i, %._crit_edge.i ] ; 7 uses
   %i.ew = icmp sgt i64 %.1.i, 7
   br i1 %i.ew, label %iter.check, label %._crit_edge53.i
 
 iter.check:                                       ; preds = %bb.aj
   %i.ex = lshr i64 %.1.i, 3                       ; 9 uses
-  %12 = call i64 @llvm.umax.i64(i64 %i.ex, i64 1) ; 3 uses
   %min.iters.check = icmp ult i64 %.1.i, 32
   br i1 %min.iters.check, label %.preheader46.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %13 = icmp ne i64 %i.ex, 0                      ; 2 uses
-  %umin.neg = sext i1 %13 to i64
   %i.ey = getelementptr i8, ptr %.038.i, i64 %i.ex
-  %14 = getelementptr i8, ptr %i.ey, i64 1
-  %scevgep = getelementptr i8, ptr %14, i64 %umin.neg
   %scevgep115 = getelementptr i8, ptr %i.dk, i64 %.1
   %i.ez = and i64 %.1.i, 9223372036854775800
-  %15 = add i64 %.1, %i.ez                        ; 2 uses
-  %16 = add i64 %15, 8
-  %17 = select i1 %13, i64 %15, i64 %16
-  %scevgep116 = getelementptr i8, ptr %i.dk, i64 %17
+  %12 = getelementptr i8, ptr %i.dk, i64 %.1
+  %scevgep116 = getelementptr i8, ptr %12, i64 %i.ez
   %bound0 = icmp ult ptr %.038.i, %scevgep116
-  %bound1 = icmp ult ptr %scevgep115, %scevgep
+  %bound1 = icmp ult ptr %scevgep115, %i.ey
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %.preheader46.i.preheader, label %vector.main.loop.iter.check
 
@@ -237,11 +230,10 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
   br i1 %min.iters.check118, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %18 = and i64 %12, 12
-  %n.vec = and i64 %12, 1152921504606846960       ; 6 uses
+  %n.vec = and i64 %i.ex, 1152921504606846960     ; 5 uses
   %i.fa = shl nuw nsw i64 %n.vec, 3
   %i.fb = add i64 %.1, %i.fa                      ; 2 uses
-  %19 = sub nsw i64 %i.ex, %n.vec
+  %13 = and i64 %i.ex, 15
   %i.fc = getelementptr i8, ptr %.038.i, i64 %n.vec ; 2 uses
   %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %i.di, i64 0
   %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 8 uses
@@ -644,15 +636,16 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge53.i, label %vec.epilog.iter.check
 
 vec.epilog.iter.check:                            ; preds = %middle.block
-  %min.epilog.iters.check = icmp eq i64 %18, 0
+  %14 = and i64 %.1.i, 96
+  %min.epilog.iters.check = icmp eq i64 %14, 0
   br i1 %min.epilog.iters.check, label %.preheader46.i.preheader, label %vec.epilog.ph, !prof !949
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec121 = and i64 %12, 1152921504606846972    ; 5 uses
+  %n.vec121 = and i64 %i.ex, 1152921504606846972  ; 4 uses
   %i.vm = shl nuw nsw i64 %n.vec121, 3
   %i.vn = add i64 %.1, %i.vm                      ; 2 uses
-  %20 = sub nsw i64 %i.ex, %n.vec121
+  %15 = and i64 %i.ex, 3
   %i.vo = getelementptr i8, ptr %.038.i, i64 %n.vec121 ; 2 uses
   %broadcast.splatinsert122 = insertelement <4 x i8> poison, i8 %i.di, i64 0
   %broadcast.splat123 = shufflevector <4 x i8> %broadcast.splatinsert122, <4 x i8> poison, <4 x i32> zeroinitializer ; 8 uses
@@ -796,7 +789,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .preheader46.i.preheader:                         ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
   %.3.ph = phi i64 [ %.1, %iter.check ], [ %.1, %vector.memcheck ], [ %i.fb, %vec.epilog.iter.check ], [ %i.vn, %vec.epilog.middle.block ]
-  %.in.i.ph = phi i64 [ %i.ex, %iter.check ], [ %i.ex, %vector.memcheck ], [ %19, %vec.epilog.iter.check ], [ %20, %vec.epilog.middle.block ]
+  %.in.i.ph = phi i64 [ %i.ex, %iter.check ], [ %i.ex, %vector.memcheck ], [ %13, %vec.epilog.iter.check ], [ %15, %vec.epilog.middle.block ]
   %.13952.i.ph = phi ptr [ %.038.i, %iter.check ], [ %.038.i, %vector.memcheck ], [ %i.fc, %vec.epilog.iter.check ], [ %i.vo, %vec.epilog.middle.block ]
   %i.aak = insertelement <8 x i8> poison, i8 %i.di, i64 0
   %i.aal = shufflevector <8 x i8> %i.aak, <8 x i8> poison, <8 x i32> zeroinitializer

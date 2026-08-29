@@ -205,7 +205,7 @@ bb.by:                                            ; preds = %.noexc214
   %i.mf = load i32, ptr %i.fv, align 8, !tbaa !66 ; 2 uses
   store i32 %i.mf, ptr %i.e, align 4, !tbaa !67
   %i.mg = load i32, ptr %i.ga, align 8, !tbaa !68
-  %i.mh = mul nsw i32 %i.mg, %i.mf                ; 4 uses
+  %i.mh = mul i32 %i.mg, %i.mf                    ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #12
   %i.mi = mul nsw i32 %i.ij, %i.ii                ; 4 uses
   store i32 %i.mi, ptr %i.f, align 4, !tbaa !67
@@ -608,8 +608,8 @@ bb.cl:                                            ; preds = %bb.cl, %.epil.prehe
 
 ._crit_edge3520.i:                                ; preds = %._crit_edge3510.i, %.preheader2814.i
   %indvars.iv.next3882.i = add nsw i64 %indvars.iv3881.i, 1 ; 2 uses
-  %13 = icmp slt i64 %indvars.iv.next3882.i, %i.pe
-  br i1 %13, label %_ZN4ncnn3MatD2Ev.exit1373.i, label %._crit_edge3522.i, !llvm.loop !908
+  %exitcond.not = icmp eq i64 %indvars.iv.next3882.i, %i.pe
+  br i1 %exitcond.not, label %._crit_edge3522.i, label %_ZN4ncnn3MatD2Ev.exit1373.i, !llvm.loop !908
 
 .thread218:                                       ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit.i, %bb.bv, %bb.bx
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)

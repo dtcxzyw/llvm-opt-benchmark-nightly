@@ -204,8 +204,8 @@ bb.bbj:                                           ; preds = %bb.bbi, %.lr.ph.i
   %i.szc = load i16, ptr %i.szb, align 2, !tbaa !57
   %i.szd = sext i16 %i.szc to i32                 ; 2 uses
   %i.sze = getelementptr inbounds nuw i8, ptr %.01625.i, i64 1 ; 2 uses
-  %250 = icmp ult ptr %i.sze, %i.sxq
-  br i1 %250, label %bb.bbd, label %_ZN11V3LexerBase21yy_get_previous_stateEv.exit, !llvm.loop !192
+  %exitcond.not.i = icmp eq ptr %i.sze, %i.sxq
+  br i1 %exitcond.not.i, label %_ZN11V3LexerBase21yy_get_previous_stateEv.exit, label %bb.bbd, !llvm.loop !192
 
 _ZN11V3LexerBase21yy_get_previous_stateEv.exit:   ; preds = %._crit_edge.i, %bb.bbc
   %.017.lcssa.i = phi i32 [ %i.sxr, %bb.bbc ], [ %i.szd, %._crit_edge.i ] ; 5 uses
@@ -608,8 +608,8 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph
   %i.at = load i16, ptr %i.as, align 2, !tbaa !57
   %i.au = sext i16 %i.at to i32                   ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.01625, i64 1 ; 2 uses
-  %1 = icmp ult ptr %i.av, %i.j
-  br i1 %1, label %bb.b, label %._crit_edge28, !llvm.loop !192
+  %exitcond.not = icmp eq ptr %i.av, %i.j
+  br i1 %exitcond.not, label %._crit_edge28, label %bb.b, !llvm.loop !192
 
 ._crit_edge28:                                    ; preds = %._crit_edge, %bb.a
   %.017.lcssa = phi i32 [ %i.b, %bb.a ], [ %i.au, %._crit_edge ]

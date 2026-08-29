@@ -205,14 +205,13 @@ bb.ag:                                            ; preds = %.lr.ph267, %bb.ai
   %.0181265 = phi i32 [ %i.gf, %.lr.ph267 ], [ %i.jc, %bb.ai ]
   %.4264 = phi ptr [ %.0191, %.lr.ph267 ], [ %i.iy, %bb.ai ] ; 10 uses
   %.4206263 = phi ptr [ %.0202, %.lr.ph267 ], [ %i.jb, %bb.ai ] ; 11 uses
-  %i.gh = load i32, ptr %i.gg, align 4, !tbaa !33 ; 5 uses
-  %i.gi = lshr i32 %i.gh, 1                       ; 6 uses
+  %i.gh = load i32, ptr %i.gg, align 4, !tbaa !33 ; 4 uses
+  %i.gi = lshr i32 %i.gh, 1                       ; 7 uses
   %.not223254 = icmp eq i32 %i.gi, 0
   br i1 %.not223254, label %._crit_edge260, label %iter.check
 
 iter.check:                                       ; preds = %bb.ag
-  %4 = lshr i32 %i.gh, 1
-  %i.gj = zext nneg i32 %4 to i64                 ; 5 uses
+  %i.gj = zext nneg i32 %i.gi to i64              ; 5 uses
   %min.iters.check = icmp ult i32 %i.gh, 8
   br i1 %min.iters.check, label %.lr.ph259.preheader, label %vector.memcheck
 

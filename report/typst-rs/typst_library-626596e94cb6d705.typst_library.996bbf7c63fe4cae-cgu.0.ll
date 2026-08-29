@@ -206,7 +206,6 @@ bb.en:                                            ; preds = %_RNvMs_NtCsbxRVbv72
   %i.nt = getelementptr inbounds nuw i8, ptr %i.y, i64 2 ; 2 uses
   %i.nu = getelementptr inbounds nuw i8, ptr %i.x, i64 2 ; 2 uses
   %i.nv = getelementptr inbounds nuw i8, ptr %i.v, i64 2 ; 2 uses
-  %7 = add nuw i64 %6, 1
   br label %bb.er
 
 .invoke.i:                                        ; preds = %bb.ig, %bb.if, %bb.ie, %_RINvMs_NtCsbxRVbv72Bp5_10image_webp7huffmanNtB5_11HuffmanTree11read_symbolINtNtNtCs3oUPovFnLWP_4core2io4util4TakeQINtNtB1f_6cursor6CursorRNtNtNtCsdaEETE4DqmE_13typst_library11foundations5bytes5BytesEEEB2i_.exit623.thread.i, %bb.gj, %bb.fw, %_RNvMs_NtCsbxRVbv72Bp5_10image_webp8losslessNtB4_11HuffmanInfo14get_huff_index.exit568.i, %bb.hf, %scalar.ph1300, %_RNvMs_NtCsbxRVbv72Bp5_10image_webp8losslessNtB4_11HuffmanInfo14get_huff_index.exit.i
@@ -609,7 +608,7 @@ bb.gy:                                            ; preds = %_RNvMNtCsbxRVbv72Bp
   br i1 %i.xw, label %bb.gz, label %bb.ha
 
 bb.gz:                                            ; preds = %bb.gy
-  %i.xx = shl nuw nsw i64 %.sroa.0.0937.i, 2      ; 4 uses
+  %i.xx = shl nuw nsw i64 %.sroa.0.0937.i, 2      ; 2 uses
   %i.xy = add nsw i64 %i.xx, -4                   ; 4 uses
   %i.xz = icmp ugt i64 %i.xy, %6
   br i1 %i.xz, label %.invoke1384.i, label %bb.hb, !prof !37
@@ -621,21 +620,18 @@ bb.ha:                                            ; preds = %bb.gy
   br i1 %.not502.i, label %.lr.ph928.i, label %bb.he
 
 bb.hb:                                            ; preds = %bb.gz
-  %i.yc = sub nuw nsw i64 %6, %i.xy               ; 2 uses
+  %i.yc = sub nuw nsw i64 %6, %i.xy               ; 3 uses
   %i.yd = icmp samesign ugt i64 %i.yc, 3
   br i1 %i.yd, label %.lr.ph934.preheader.i, label %.invoke1384.i, !prof !211
 
 .lr.ph934.preheader.i:                            ; preds = %bb.hb
   %i.ye = getelementptr inbounds nuw i8, ptr %5, i64 %i.xy
   %.sroa.0385.0.copyload.i = load i32, ptr %i.ye, align 1, !alias.scope !133411, !noalias !133504 ; 2 uses
+  %7 = lshr i64 %i.yc, 2                          ; 2 uses
   %i.yf = sub nsw i64 %6, %i.xx
   %i.yg = lshr i64 %i.yf, 2                       ; 2 uses
   %i.yh = add i64 %.sroa.7650.0.ph.i.fr, -1
-  %8 = call i64 @llvm.umax.i64(i64 %i.xx, i64 %7)
-  %9 = add i64 %8, 3
-  %10 = sub i64 %9, %i.xx
-  %11 = lshr i64 %10, 2
-  %i.yi = call i64 @llvm.umin.i64(i64 %11, i64 %i.yg)
+  %i.yi = call i64 @llvm.umin.i64(i64 %7, i64 %i.yg)
   %i.yj = call i64 @llvm.umin.i64(i64 %i.yh, i64 %i.yi) ; 2 uses
   %min.iters.check1290 = icmp samesign ult i64 %i.yj, 8
   br i1 %min.iters.check1290, label %.lr.ph934.i.preheader, label %vector.ph1291
@@ -667,12 +663,12 @@ vector.body1295:                                  ; preds = %vector.body1295, %v
   br label %.lr.ph934.i
 
 .lr.ph934.i:                                      ; preds = %.lr.ph934.i.preheader, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsdaEETE4DqmE_13typst_library.exit524.i
-  %.sroa.0386.0932.i = phi i64 [ %i.yt, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsdaEETE4DqmE_13typst_library.exit524.i ], [ %.sroa.0386.0932.i.ph, %.lr.ph934.i.preheader ] ; 3 uses
+  %.sroa.0386.0932.i = phi i64 [ %i.yt, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsdaEETE4DqmE_13typst_library.exit524.i ], [ %.sroa.0386.0932.i.ph, %.lr.ph934.i.preheader ] ; 4 uses
   %i.yt = add nuw nsw i64 %.sroa.0386.0932.i, 1   ; 2 uses
   %i.yu = add i64 %.sroa.0386.0932.i, %.sroa.0.0937.i
-  %i.yv = shl i64 %i.yu, 2                        ; 4 uses
-  %12 = icmp ugt i64 %i.yv, %6
-  br i1 %12, label %.invoke1384.i, label %bb.hc, !prof !37
+  %i.yv = shl i64 %i.yu, 2                        ; 3 uses
+  %exitcond1117.i = icmp eq i64 %.sroa.0386.0932.i, %7
+  br i1 %exitcond1117.i, label %.invoke1384.i, label %bb.hc, !prof !37
 
 .loopexit.i:                                      ; preds = %_RNvMs0_NtCsbxRVbv72Bp5_10image_webp8losslessNtB5_10ColorCache6insert.exit549.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsdaEETE4DqmE_13typst_library.exit524.i, %.thread700.i
   %i.yw = add nuw nsw i64 %.sroa.7650.0.ph.i.fr, %.sroa.0.0937.i
@@ -1075,7 +1071,6 @@ bb.en:                                            ; preds = %_RNvMs_NtCsbxRVbv72
   %i.nt = getelementptr inbounds nuw i8, ptr %i.y, i64 2 ; 2 uses
   %i.nu = getelementptr inbounds nuw i8, ptr %i.x, i64 2 ; 2 uses
   %i.nv = getelementptr inbounds nuw i8, ptr %i.v, i64 2 ; 2 uses
-  %7 = add nuw i64 %6, 1
   br label %bb.er
 
 .invoke.i:                                        ; preds = %bb.ig, %bb.if, %bb.ie, %_RINvMs_NtCsbxRVbv72Bp5_10image_webp7huffmanNtB5_11HuffmanTree11read_symbolQINtNtNtCs3oUPovFnLWP_4core2io4util4TakeQINtNtB1g_6cursor6CursorRNtNtNtCsdaEETE4DqmE_13typst_library11foundations5bytes5BytesEEEB2j_.exit623.thread.i, %bb.gj, %bb.fw, %_RNvMs_NtCsbxRVbv72Bp5_10image_webp8losslessNtB4_11HuffmanInfo14get_huff_index.exit568.i, %bb.hf, %scalar.ph1300, %_RNvMs_NtCsbxRVbv72Bp5_10image_webp8losslessNtB4_11HuffmanInfo14get_huff_index.exit.i
@@ -1478,7 +1473,7 @@ bb.gy:                                            ; preds = %_RNvMNtCsbxRVbv72Bp
   br i1 %i.xw, label %bb.gz, label %bb.ha
 
 bb.gz:                                            ; preds = %bb.gy
-  %i.xx = shl nuw nsw i64 %.sroa.0.0937.i, 2      ; 4 uses
+  %i.xx = shl nuw nsw i64 %.sroa.0.0937.i, 2      ; 2 uses
   %i.xy = add nsw i64 %i.xx, -4                   ; 4 uses
   %i.xz = icmp ugt i64 %i.xy, %6
   br i1 %i.xz, label %.invoke1384.i, label %bb.hb, !prof !37
@@ -1490,21 +1485,18 @@ bb.ha:                                            ; preds = %bb.gy
   br i1 %.not502.i, label %.lr.ph928.i, label %bb.he
 
 bb.hb:                                            ; preds = %bb.gz
-  %i.yc = sub nuw nsw i64 %6, %i.xy               ; 2 uses
+  %i.yc = sub nuw nsw i64 %6, %i.xy               ; 3 uses
   %i.yd = icmp samesign ugt i64 %i.yc, 3
   br i1 %i.yd, label %.lr.ph934.preheader.i, label %.invoke1384.i, !prof !211
 
 .lr.ph934.preheader.i:                            ; preds = %bb.hb
   %i.ye = getelementptr inbounds nuw i8, ptr %5, i64 %i.xy
   %.sroa.0385.0.copyload.i = load i32, ptr %i.ye, align 1, !alias.scope !133804, !noalias !133897 ; 2 uses
+  %7 = lshr i64 %i.yc, 2                          ; 2 uses
   %i.yf = sub nsw i64 %6, %i.xx
   %i.yg = lshr i64 %i.yf, 2                       ; 2 uses
   %i.yh = add i64 %.sroa.7650.0.ph.i.fr, -1
-  %8 = call i64 @llvm.umax.i64(i64 %i.xx, i64 %7)
-  %9 = add i64 %8, 3
-  %10 = sub i64 %9, %i.xx
-  %11 = lshr i64 %10, 2
-  %i.yi = call i64 @llvm.umin.i64(i64 %11, i64 %i.yg)
+  %i.yi = call i64 @llvm.umin.i64(i64 %7, i64 %i.yg)
   %i.yj = call i64 @llvm.umin.i64(i64 %i.yh, i64 %i.yi) ; 2 uses
   %min.iters.check1290 = icmp samesign ult i64 %i.yj, 8
   br i1 %min.iters.check1290, label %.lr.ph934.i.preheader, label %vector.ph1291
@@ -1536,12 +1528,12 @@ vector.body1295:                                  ; preds = %vector.body1295, %v
   br label %.lr.ph934.i
 
 .lr.ph934.i:                                      ; preds = %.lr.ph934.i.preheader, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsdaEETE4DqmE_13typst_library.exit524.i
-  %.sroa.0386.0932.i = phi i64 [ %i.yt, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsdaEETE4DqmE_13typst_library.exit524.i ], [ %.sroa.0386.0932.i.ph, %.lr.ph934.i.preheader ] ; 3 uses
+  %.sroa.0386.0932.i = phi i64 [ %i.yt, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsdaEETE4DqmE_13typst_library.exit524.i ], [ %.sroa.0386.0932.i.ph, %.lr.ph934.i.preheader ] ; 4 uses
   %i.yt = add nuw nsw i64 %.sroa.0386.0932.i, 1   ; 2 uses
   %i.yu = add i64 %.sroa.0386.0932.i, %.sroa.0.0937.i
-  %i.yv = shl i64 %i.yu, 2                        ; 4 uses
-  %12 = icmp ugt i64 %i.yv, %6
-  br i1 %12, label %.invoke1384.i, label %bb.hc, !prof !37
+  %i.yv = shl i64 %i.yu, 2                        ; 3 uses
+  %exitcond1117.i = icmp eq i64 %.sroa.0386.0932.i, %7
+  br i1 %exitcond1117.i, label %.invoke1384.i, label %bb.hc, !prof !37
 
 .loopexit.i:                                      ; preds = %_RNvMs0_NtCsbxRVbv72Bp5_10image_webp8losslessNtB5_10ColorCache6insert.exit549.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsdaEETE4DqmE_13typst_library.exit524.i, %.thread700.i
   %i.yw = add nuw nsw i64 %.sroa.7650.0.ph.i.fr, %.sroa.0.0937.i

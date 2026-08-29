@@ -204,16 +204,15 @@ begin_hunk_0_@utrie2_freeze_78:bb.a
   br i1 %i.acz, label %bb.br, label %.loopexit152
 
 bb.br:                                            ; preds = %.preheader153
-  %i.ada = add nsw i32 %i.uo, -65536              ; 3 uses
-  %i.adb = lshr i32 %i.ada, 11                    ; 4 uses
+  %i.ada = add nsw i32 %i.uo, -65536              ; 2 uses
+  %i.adb = lshr i32 %i.ada, 11                    ; 5 uses
   %i.adc = add nuw nsw i32 %i.adb, 2112           ; 2 uses
   %.not = icmp eq i32 %i.adb, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.br
   %i.add = getelementptr inbounds nuw i8, ptr %i.f, i64 128 ; 3 uses
-  %3 = lshr i32 %i.ada, 11
-  %i.ade = zext nneg i32 %3 to i64                ; 2 uses
+  %i.ade = zext nneg i32 %i.adb to i64            ; 2 uses
   %min.iters.check1696 = icmp ult i32 %i.ada, 16384
   br i1 %min.iters.check1696, label %.lr.ph.preheader1747, label %vector.ph1697
 

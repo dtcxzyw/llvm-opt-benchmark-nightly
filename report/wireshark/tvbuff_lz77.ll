@@ -39,11 +39,11 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store volatile i32 0, ptr %i.d, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
   call void @except_setup_try(ptr noundef nonnull %3, ptr noundef nonnull %4, ptr noundef nonnull @tvb_uncompress_lz77.catch_spec, i64 noundef 1)
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 48
-  %i.j = call i32 @_setjmp(ptr noundef nonnull %i.i) #8
+  %i.j = call i32 @_setjmp(ptr noundef nonnull %i.i) #7
   %.not36 = icmp eq i32 %i.j, 0
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.sink = select i1 %.not36, ptr null, ptr %i.k
@@ -106,13 +106,13 @@ bb.g:                                             ; preds = %bb.f, %.preheader
   br i1 %i.x, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.y = add i32 %.187.i, %1
   %i.z = call zeroext i8 @tvb_get_uint8(ptr noundef nonnull %0, i32 noundef %i.y)
   store i8 %i.z, ptr %i.a, align 1
   %i.aa = call zeroext i1 @wmem_array_append(ptr noundef %i.h, ptr noundef nonnull %i.a, i32 noundef 1) ; 0 uses
   %i.ab = add i32 %.187.i, 1
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   br label %.preheader
 
 bb.i:                                             ; preds = %bb.g
@@ -203,34 +203,30 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 
 bb.s:                                             ; preds = %.thread.i
   %i.bm = call zeroext i1 @wmem_array_grow(ptr noundef %i.h, i32 noundef %i.bk)
-  br i1 %i.bm, label %.preheader.i, label %do_uncompress.exit
+  br i1 %i.bm, label %.lr.ph.preheader.i, label %do_uncompress.exit
 
-.preheader.i:                                     ; preds = %bb.s
+.lr.ph.preheader.i:                               ; preds = %bb.s
+  %i.bn = udiv i32 %i.bk, %i.aj                   ; 2 uses
   %.not113.not.i = icmp samesign ult i32 %i.ai, %i.bk
-  br i1 %.not113.not.i, label %.lr.ph.preheader.i, label %.lr.ph112.i.preheader
+  br i1 %.not113.not.i, label %.lr.ph.i, label %.lr.ph112.i.preheader
 
-.lr.ph.preheader.i:                               ; preds = %.preheader.i
-  %i.bn = udiv i32 %i.bk, %i.aj
-  %umax.i = call i32 @llvm.umax.i32(i32 %i.bn, i32 1) ; 2 uses
-  br label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
+.lr.ph.i:                                         ; preds = %.lr.ph.preheader.i, %.lr.ph.i
   %.079109.i = phi i32 [ %i.bs, %.lr.ph.i ], [ 0, %.lr.ph.preheader.i ]
   %i.bo = call i32 @wmem_array_get_count(ptr noundef %i.h)
   %i.bp = sub i32 %i.bo, %i.aj
   %i.bq = call ptr @wmem_array_index(ptr noundef %i.h, i32 noundef %i.bp)
   %i.br = call zeroext i1 @wmem_array_append(ptr noundef %i.h, ptr noundef %i.bq, i32 noundef %i.aj) ; 0 uses
   %i.bs = add nuw i32 %.079109.i, 1               ; 2 uses
-  %exitcond.not.i = icmp eq i32 %i.bs, %umax.i
+  %exitcond.not.i = icmp eq i32 %i.bs, %i.bn
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !6
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i
-  %i.bt = mul i32 %umax.i, %i.aj                  ; 2 uses
+  %i.bt = mul i32 %i.bn, %i.aj                    ; 2 uses
   %i.bu = icmp ult i32 %i.bt, %i.bk
   br i1 %i.bu, label %.lr.ph112.i.preheader, label %.preheader.outer.backedge
 
-.lr.ph112.i.preheader:                            ; preds = %.preheader.i, %._crit_edge.i
-  %.1110.i.ph = phi i32 [ 0, %.preheader.i ], [ %i.bt, %._crit_edge.i ]
+.lr.ph112.i.preheader:                            ; preds = %.lr.ph.preheader.i, %._crit_edge.i
+  %.1110.i.ph = phi i32 [ 0, %.lr.ph.preheader.i ], [ %i.bt, %._crit_edge.i ]
   br label %.lr.ph112.i
 
 .lr.ph112.i:                                      ; preds = %.lr.ph112.i.preheader, %.lr.ph112.i
@@ -278,7 +274,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %.0..0..0..0.16 = load volatile ptr, ptr %i.c, align 8
-  call void @except_rethrow(ptr noundef %.0..0..0..0.16) #9
+  call void @except_rethrow(ptr noundef %.0..0..0..0.16) #8
   unreachable
 
 bb.z:                                             ; preds = %bb.x, %bb.w
@@ -286,8 +282,8 @@ bb.z:                                             ; preds = %bb.x, %bb.w
   %i.cf = load volatile ptr, ptr %i.ce, align 8
   call void @except_free(ptr noundef %i.cf)
   %i.cg = call ptr @except_pop()                  ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %.0..0..0..0.24 = load volatile i8, ptr %i.b, align 1, !range !9, !noundef !10
@@ -297,9 +293,9 @@ bb.z:                                             ; preds = %bb.x, %bb.w
 bb.aa:                                            ; preds = %bb.z
   %i.ci = call i32 @wmem_array_get_count(ptr noundef %i.h) ; 3 uses
   %i.cj = zext i32 %i.ci to i64                   ; 2 uses
-  %i.ck = call noalias ptr @g_malloc(i64 noundef %i.cj) #10 ; 2 uses
+  %i.ck = call noalias ptr @g_malloc(i64 noundef %i.cj) #9 ; 2 uses
   %i.cl = call ptr @wmem_array_get_raw(ptr noundef %i.h)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 %i.ck, ptr noundef align 1 %i.cl, i64 noundef range(i64 0, 4294967296) %i.cj, i1 noundef false) #7
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 1 %i.ck, ptr noundef align 1 %i.cl, i64 noundef range(i64 0, 4294967296) %i.cj, i1 noundef false) #6
   %i.cm = call ptr @tvb_new_real_data(ptr noundef %i.ck, i32 noundef %i.ci, i32 noundef %i.ci) ; 2 uses
   call void @tvb_set_free_cb(ptr noundef %i.cm, ptr noundef nonnull @g_free)
   br label %bb.ab
@@ -399,9 +395,6 @@ declare zeroext i1 @wmem_array_grow(ptr noundef, i32 noundef) local_unnamed_addr
 ; Function Attrs: null_pointer_is_valid
 declare ptr @wmem_array_index(ptr noundef, i32 noundef) local_unnamed_addr #2
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #6
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
@@ -411,11 +404,10 @@ attributes #2 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protect
 attributes #3 = { nounwind null_pointer_is_valid returns_twice "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { noreturn null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { null_pointer_is_valid allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #7 = { nounwind }
-attributes #8 = { nounwind returns_twice }
-attributes #9 = { noreturn }
-attributes #10 = { allocsize(0) }
+attributes #6 = { nounwind }
+attributes #7 = { nounwind returns_twice }
+attributes #8 = { noreturn }
+attributes #9 = { allocsize(0) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

@@ -204,21 +204,21 @@ bb.g:                                             ; preds = %bb.f
   %.15291 = phi ptr [ %.253.lcssa, %._crit_edge ], [ %.05198, %.preheader ] ; 3 uses
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %.04692
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !13 ; 2 uses
+  %5 = udiv i64 %i.ap, %i.ad                      ; 3 uses
   %.not102 = icmp ugt i64 %i.ad, %i.ap
   br i1 %.not102, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph93
-  %5 = udiv i64 %i.ap, %i.ad                      ; 2 uses
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %.04692
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !13
   %i.as = getelementptr inbounds nuw i8, ptr %4, i64 %i.ar ; 2 uses
-  %umax = call i64 @llvm.umax.i64(i64 %5, i64 1)  ; 2 uses
-  %xtraiter = and i64 %umax, 7                    ; 3 uses
-  %i.at = icmp ult i64 %5, 8
+  %6 = add i64 %5, -1
+  %xtraiter = and i64 %5, 7                       ; 3 uses
+  %i.at = icmp ult i64 %6, 7
   br i1 %i.at, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %umax, -8
+  %unroll_iter = and i64 %5, -8
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new

@@ -205,10 +205,10 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !260  ; 37 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 19
-  %i.g = load i8, ptr %i.f, align 1, !tbaa !253   ; 12 uses
+  %i.g = load i8, ptr %i.f, align 1, !tbaa !253   ; 10 uses
   %i.h = zext i8 %i.g to i32
   %i.i = add nuw nsw i32 %i.h, 7
-  %i.j = lshr i32 %i.i, 3                         ; 25 uses
+  %i.j = lshr i32 %i.i, 3                         ; 27 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 560 ; 3 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !244  ; 89 uses
   %i.m = ptrtoaddr ptr %i.l to i64                ; 10 uses
@@ -611,9 +611,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not.i148, label %.preheader.i154, label %iter.check475
 
 iter.check475:                                    ; preds = %bb.p
-  %i.mf = zext i8 %i.g to i64
-  %2 = add nuw nsw i64 %i.mf, 7                   ; 2 uses
-  %3 = lshr i64 %2, 3                             ; 4 uses
+  %i.mf = zext nneg i32 %i.j to i64               ; 5 uses
   %min.iters.check455 = icmp ult i8 %i.g, 25
   br i1 %min.iters.check455, label %.lr.ph.i149.preheader, label %vector.memcheck450
 
@@ -630,7 +628,8 @@ vector.main.loop.iter.check456:                   ; preds = %vector.memcheck450
   br i1 %min.iters.check457, label %vec.epilog.ph479, label %vector.ph458
 
 vector.ph458:                                     ; preds = %vector.main.loop.iter.check456
-  %n.vec459 = and i64 %3, 48                      ; 7 uses
+  %2 = and i64 %i.mf, 12
+  %n.vec459 = and i64 %i.mf, 48                   ; 7 uses
   %i.mi = getelementptr i8, ptr %.02231.i, i64 %n.vec459 ; 2 uses
   %i.mj = getelementptr i8, ptr %.01830.i, i64 %n.vec459 ; 2 uses
   %i.mk = getelementptr i8, ptr %.02029.i, i64 %n.vec459 ; 2 uses
@@ -655,17 +654,16 @@ vector.body460.1:                                 ; preds = %vector.ph458
   br label %middle.block468
 
 middle.block468:                                  ; preds = %vector.body460.1, %vector.ph458
-  %cmp.n469 = icmp eq i64 %3, %n.vec459
+  %cmp.n469 = icmp eq i64 %n.vec459, %i.mf
   br i1 %cmp.n469, label %.preheader.i154, label %vec.epilog.iter.check477
 
 vec.epilog.iter.check477:                         ; preds = %middle.block468
-  %4 = and i64 %2, 96
-  %min.epilog.iters.check478 = icmp eq i64 %4, 0
+  %min.epilog.iters.check478 = icmp eq i64 %2, 0
   br i1 %min.epilog.iters.check478, label %.lr.ph.i149.preheader, label %vec.epilog.ph479, !prof !265
 
 vec.epilog.ph479:                                 ; preds = %vector.main.loop.iter.check456, %vec.epilog.iter.check477
   %vec.epilog.resume.val470 = phi i64 [ %n.vec459, %vec.epilog.iter.check477 ], [ 0, %vector.main.loop.iter.check456 ]
-  %n.vec480 = and i64 %3, 60                      ; 6 uses
+  %n.vec480 = and i64 %i.mf, 60                   ; 6 uses
   %i.mr = getelementptr i8, ptr %.02231.i, i64 %n.vec480 ; 2 uses
   %i.ms = getelementptr i8, ptr %.01830.i, i64 %n.vec480 ; 2 uses
   %i.mt = getelementptr i8, ptr %.02029.i, i64 %n.vec480 ; 2 uses
@@ -687,7 +685,7 @@ vec.epilog.vector.body481:                        ; preds = %vec.epilog.vector.b
   br i1 %i.mx, label %vec.epilog.middle.block489, label %vec.epilog.vector.body481, !llvm.loop !291
 
 vec.epilog.middle.block489:                       ; preds = %vec.epilog.vector.body481
-  %cmp.n490 = icmp eq i64 %3, %n.vec480
+  %cmp.n490 = icmp eq i64 %n.vec480, %i.mf
   br i1 %cmp.n490, label %.preheader.i154, label %.lr.ph.i149.preheader
 
 .lr.ph.i149.preheader:                            ; preds = %vector.memcheck450, %iter.check475, %vec.epilog.iter.check477, %vec.epilog.middle.block489
@@ -958,9 +956,7 @@ bb.q:                                             ; preds = %.thread197
   br i1 %.not.i158, label %.preheader.i164, label %.lr.ph.i159.preheader
 
 .lr.ph.i159.preheader:                            ; preds = %bb.q
-  %i.qn = zext i8 %i.g to i64
-  %5 = add nuw nsw i64 %i.qn, 7
-  %6 = lshr i64 %5, 3                             ; 2 uses
+  %i.qn = zext nneg i32 %i.j to i64               ; 2 uses
   %min.iters.check300 = icmp ult i8 %i.g, 41
   br i1 %min.iters.check300, label %.lr.ph.i159.preheader696, label %vector.memcheck296
 
@@ -973,7 +969,7 @@ vector.memcheck296:                               ; preds = %.lr.ph.i159.prehead
   br i1 %conflict.rdx, label %.lr.ph.i159.preheader696, label %vector.ph301
 
 vector.ph301:                                     ; preds = %vector.memcheck296
-  %n.vec302 = and i64 %6, 60                      ; 12 uses
+  %n.vec302 = and i64 %i.qn, 60                   ; 12 uses
   %i.qq = getelementptr i8, ptr %.03546.i, i64 %n.vec302 ; 2 uses
   %i.qr = getelementptr i8, ptr %.03145.i, i64 %n.vec302 ; 2 uses
   %i.qs = getelementptr i8, ptr %.03344.i, i64 %n.vec302 ; 2 uses
@@ -1232,7 +1228,7 @@ middle.block315:                                  ; preds = %vector.body303.7, %
   %.lcssa698 = phi <2 x i64> [ %i.rk, %vector.ph301 ], [ %i.sc, %vector.body303.1 ], [ %i.su, %vector.body303.2 ], [ %i.tm, %vector.body303.3 ], [ %i.ue, %vector.body303.4 ], [ %i.uw, %vector.body303.5 ], [ %i.vq, %vector.body303.6 ], [ %i.wk, %vector.body303.7 ]
   %bin.rdx316 = add <2 x i64> %.lcssa698, %.lcssa699
   %i.wl = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx316) ; 2 uses
-  %cmp.n317 = icmp eq i64 %6, %n.vec302
+  %cmp.n317 = icmp eq i64 %n.vec302, %i.qn
   br i1 %cmp.n317, label %.preheader.i164, label %.lr.ph.i159.preheader696
 
 .lr.ph.i159.preheader696:                         ; preds = %vector.memcheck296, %.lr.ph.i159.preheader, %middle.block315

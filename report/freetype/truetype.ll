@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.dz = load i64, ptr %i.g, align 8, !tbaa !317
   %i.ea = zext i8 %i.dy to i64
   %i.eb = getelementptr inbounds nuw i8, ptr @Pop_Push_Count, i64 %i.ea
-  %i.ec = load i8, ptr %i.eb, align 1, !tbaa !227 ; 3 uses
-  %i.ed = lshr i8 %i.ec, 4                        ; 2 uses
+  %i.ec = load i8, ptr %i.eb, align 1, !tbaa !227 ; 2 uses
+  %i.ed = lshr i8 %i.ec, 4                        ; 3 uses
   %i.ee = zext nneg i8 %i.ed to i64
   %i.ef = sub nsw i64 %i.dz, %i.ee                ; 3 uses
   store i64 %i.ef, ptr %i.h, align 8, !tbaa !318
@@ -224,10 +224,12 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph:                                           ; preds = %.preheader
   %i.ei = load ptr, ptr %i.j, align 8, !tbaa !215
-  %8 = lshr i8 %i.ec, 1
-  %9 = and i8 %8, 120
-  %10 = zext nneg i8 %9 to i64
-  call void @llvm.memset.p0.i64(ptr align 8 %i.ei, i8 0, i64 %10, i1 false), !tbaa !226
+  %8 = shl nuw nsw i8 %i.ed, 3
+  %9 = zext nneg i8 %8 to i64
+  %10 = add nuw nsw i64 %9, 524280
+  %11 = and i64 %10, 524280
+  %12 = add nuw nsw i64 %11, 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ei, i8 0, i64 %12, i1 false), !tbaa !226
   br label %.thread
 
 .thread:                                          ; preds = %.lr.ph, %.preheader

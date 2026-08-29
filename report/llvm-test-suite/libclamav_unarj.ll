@@ -205,23 +205,26 @@ bb.c:                                             ; preds = %.loopexit55.thread
   br i1 %.not68, label %.loopexit53, label %.lr.ph61.preheader
 
 .lr.ph61.preheader:                               ; preds = %bb.c
-  %2 = add nsw i16 %i.bo, -1                      ; 2 uses
   %i.bq = sub i32 17, %.24863
   %i.br = zext i32 %i.bq to i64
+  %2 = add nsw i16 %i.bo, -1
   %i.bs = zext nneg i16 %2 to i64
   %umin = tail call i64 @llvm.umin.i64(i64 %i.br, i64 %i.bs)
   %i.bt = add nuw nsw i64 %umin, 1
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep70, i8 0, i64 %i.bt, i1 false), !tbaa !20
-  %.not1 = icmp eq i16 %2, 0
-  br i1 %.not1, label %.loopexit53, label %.lr.ph61.1
+  switch i16 %i.bo, label %.lr.ph61.1 [
+    i16 1, label %.loopexit53
+    i16 3, label %.lr.ph61.2
+  ]
 
-.lr.ph61.1:                                       ; preds = %.lr.ph61.preheader
-  %.not2 = icmp eq i16 %i.bo, 2
-  %spec.select3 = select i1 %.not2, i32 %indvars.iv.next.1, i32 %indvars.iv.next.2
+.lr.ph61.2:                                       ; preds = %.lr.ph61.preheader
   br label %.loopexit53
 
-.loopexit53:                                      ; preds = %.lr.ph61.1, %.lr.ph61.preheader, %bb.c, %.loopexit55.thread
-  %.4 = phi i32 [ %i.bj, %.loopexit55.thread ], [ %1, %bb.c ], [ %indvars.iv.next, %.lr.ph61.preheader ], [ %spec.select3, %.lr.ph61.1 ] ; 5 uses
+.lr.ph61.1:                                       ; preds = %.lr.ph61.preheader
+  br label %.loopexit53
+
+.loopexit53:                                      ; preds = %.lr.ph61.2, %.lr.ph61.1, %.lr.ph61.preheader, %bb.c, %.loopexit55.thread
+  %.4 = phi i32 [ %i.bj, %.loopexit55.thread ], [ %1, %bb.c ], [ %indvars.iv.next, %.lr.ph61.preheader ], [ %indvars.iv.next.2, %.lr.ph61.2 ], [ %indvars.iv.next.1, %.lr.ph61.1 ] ; 5 uses
   %i.bu = icmp slt i32 %.4, %i.h
   br i1 %i.bu, label %bb.b, label %.preheader52, !llvm.loop !74
 

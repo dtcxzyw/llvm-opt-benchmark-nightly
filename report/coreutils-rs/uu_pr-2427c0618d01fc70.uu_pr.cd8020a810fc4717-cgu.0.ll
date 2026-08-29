@@ -205,7 +205,7 @@ bb.ad:                                            ; preds = %bb.ac
 
 .lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %_RNCINvNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map8map_foldjINtNtCs7tKScEop1B6_5alloc3vec3VecINtNtBa_6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEEuNCNvB1R_19to_table_short_file0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_BY_IBW_BV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB2n_EE0E0E0B1R_.exit.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.preheader13.i.i
   %i.fa = phi i64 [ %i.fb, %_RNCINvNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map8map_foldjINtNtCs7tKScEop1B6_5alloc3vec3VecINtNtBa_6option6OptionRNtCshDScVpnq8df_5uu_pr8FileLineEEuNCNvB1R_19to_table_short_file0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_BY_IBW_BV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB2n_EE0E0E0B1R_.exit.i.i.i.i.i.i.i.i ], [ 0, %.lr.ph.i.i.i.i.i.i.preheader13.i.i ] ; 5 uses
-  %i.fb = add i64 %i.fa, 1                        ; 2 uses
+  %i.fb = add nuw nsw i64 %i.fa, 1                ; 2 uses
   call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #30, !noalias !77
   %i.fc = call noundef align 8 ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.ey, i64 noundef range(i64 1, 9) 8) #30, !noalias !77 ; 5 uses
   %i.fd = icmp eq ptr %i.fc, null

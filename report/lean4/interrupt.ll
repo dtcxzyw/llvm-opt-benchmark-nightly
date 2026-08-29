@@ -202,9 +202,9 @@ bb.a:
   %2 = alloca %struct.timespec, align 8           ; 6 uses
   %3 = alloca %struct.timespec, align 8           ; 6 uses
   %spec.store.select = tail call i32 @llvm.umax.i32(i32 %1, i32 1) ; 5 uses
-  %4 = urem i32 %0, %spec.store.select            ; 3 uses
-  %5 = udiv i32 %0, %spec.store.select
-  %i.a = zext i32 %4 to i64
+  %4 = udiv i32 %0, %spec.store.select
+  %5 = urem i32 %0, %spec.store.select            ; 3 uses
+  %i.a = zext i32 %5 to i64
   %.not = icmp ugt i32 %spec.store.select, %0
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
@@ -217,15 +217,14 @@ bb.a:
   %i.e = mul nsw i64 %i.d, 1000000
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.g = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZN4leanL11g_cancel_tkE)
-  %umax = tail call i32 @llvm.umax.i32(i32 %5, i32 1)
   br label %bb.h
 
 ._crit_edge:                                      ; preds = %_ZN4lean17check_interruptedEv.exit12, %bb.a
-  %i.h = icmp eq i32 %4, 0
+  %i.h = icmp eq i32 %5, 0
   br i1 %i.h, label %_ZNSt11this_thread9sleep_forIlSt5ratioILl1ELl1000EEEEvRKNSt6chrono8durationIT_T0_EE.exit, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
-  %i.i = udiv i32 %4, 1000
+  %i.i = udiv i32 %5, 1000
   %.zext = zext nneg i32 %i.i to i64              ; 2 uses
   %.neg.i.i = mul nsw i64 %.zext, -1000
   %i.j = add nsw i64 %.neg.i.i, %i.a
@@ -324,7 +323,7 @@ bb.m:                                             ; preds = %bb.l
 
 _ZN4lean17check_interruptedEv.exit12:             ; preds = %_ZNSt11this_thread9sleep_forIlSt5ratioILl1ELl1000EEEEvRKNSt6chrono8durationIT_T0_EE.exit7, %bb.k, %bb.l
   %i.aj = add nuw i32 %.016, 1                    ; 2 uses
-  %exitcond.not = icmp eq i32 %i.aj, %umax
+  %exitcond.not = icmp eq i32 %i.aj, %4
   br i1 %exitcond.not, label %._crit_edge, label %bb.h, !llvm.loop !37
 }
 

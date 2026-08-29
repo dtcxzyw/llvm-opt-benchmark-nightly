@@ -203,14 +203,13 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.038.i = phi ptr [ %i.n, %bb.c ], [ %i.i, %bb.b ] ; 4 uses
   %.036.i = phi ptr [ %i.y, %bb.c ], [ %i.k, %bb.b ] ; 7 uses
-  %.1.i = phi i32 [ %i.z, %bb.c ], [ %.0.i15, %bb.b ] ; 5 uses
-  %i.aa = lshr i32 %.1.i, 1                       ; 2 uses
+  %.1.i = phi i32 [ %i.z, %bb.c ], [ %.0.i15, %bb.b ] ; 4 uses
+  %i.aa = lshr i32 %.1.i, 1                       ; 3 uses
   %.not = icmp eq i32 %i.aa, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.d
-  %5 = lshr i32 %.1.i, 1
-  %i.ab = zext nneg i32 %5 to i64                 ; 2 uses
+  %i.ab = zext nneg i32 %i.aa to i64              ; 2 uses
   %min.iters.check = icmp ult i32 %.1.i, 8
   br i1 %min.iters.check, label %.lr.ph.preheader29, label %vector.ph
 
@@ -396,14 +395,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.053.i = phi ptr [ %i.v, %bb.c ], [ %i.l, %bb.b ] ; 4 uses
   %.051.i = phi ptr [ %i.y, %bb.c ], [ %i.n, %bb.b ] ; 4 uses
   %.049.i = phi ptr [ %i.ab, %bb.c ], [ %i.p, %bb.b ] ; 4 uses
-  %.1.i = phi i32 [ %i.an, %bb.c ], [ %.0.i19, %bb.b ] ; 5 uses
-  %i.ao = lshr i32 %.1.i, 1                       ; 2 uses
+  %.1.i = phi i32 [ %i.an, %bb.c ], [ %.0.i19, %bb.b ] ; 4 uses
+  %i.ao = lshr i32 %.1.i, 1                       ; 3 uses
   %.not = icmp eq i32 %i.ao, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.d
-  %5 = lshr i32 %.1.i, 1
-  %i.ap = zext nneg i32 %5 to i64                 ; 2 uses
+  %i.ap = zext nneg i32 %i.ao to i64              ; 2 uses
   %min.iters.check = icmp ult i32 %.1.i, 8
   br i1 %min.iters.check, label %.lr.ph.preheader49, label %vector.ph
 

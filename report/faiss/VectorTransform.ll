@@ -204,37 +204,31 @@ _ZNSt6vectorIdSaIdEED2Ev.exit57:                  ; preds = %.loopexit, %bb.j
   br i1 %.not76, label %._crit_edge73, label %.lr.ph69.us.preheader
 
 .lr.ph69.us.preheader:                            ; preds = %_ZNSt6vectorIdSaIdEED2Ev.exit57
-  %umax = call i64 @llvm.umax.i64(i64 %0, i64 1)  ; 5 uses
-  %4 = add nuw i64 %i.ap, 2305843009213693951
-  %i.aq = mul i64 %0, %4
-  %i.ar = shl i64 %umax, 3
-  %5 = add i64 %i.aq, %umax
-  %i.as = shl i64 %5, 3
-  %scevgep = getelementptr i8, ptr %1, i64 %i.as
+  %i.aq = mul i64 %0, %i.ap
+  %i.ar = shl i64 %i.aq, 3
+  %scevgep = getelementptr i8, ptr %1, i64 %i.ar
+  %i.as = shl i64 %0, 3                           ; 2 uses
   %i.at = add i64 %0, 2305843009213693951
   %i.au = mul i64 %0, %i.at
   %i.av = shl i64 %i.au, 3
   %scevgep87 = getelementptr i8, ptr %1, i64 %i.av
-  %6 = sub i64 %0, %i.ap
-  %i.aw = shl i64 %6, 3
-  %7 = mul i64 %0, %i.aw
-  %8 = getelementptr i8, ptr %1, i64 %7
-  %scevgep88 = getelementptr i8, ptr %8, i64 %i.ar
+  %4 = add i64 %i.as, 8
+  %i.aw = shl i64 %i.ap, 3
+  %5 = sub i64 %4, %i.aw
+  %6 = mul i64 %0, %5
+  %scevgep88 = getelementptr i8, ptr %1, i64 %6
   %i.ax = mul i64 %0, -8
   %min.iters.check = icmp ult i64 %0, 6
   %bound0 = icmp ult ptr %1, %scevgep88
   %bound1 = icmp ult ptr %scevgep87, %scevgep
   %found.conflict = and i1 %bound0, %bound1
-  %.mask = and i64 %0, 1152921504606846976
-  %stride.check = icmp ne i64 %.mask, 0
-  %9 = or i1 %found.conflict, %stride.check
-  %stride.check89 = icmp slt i64 %i.ax, 0
-  %i.ay = or i1 %9, %stride.check89
-  %n.vec = and i64 %umax, -1152921504606846980    ; 3 uses
+  %7 = or i64 %i.ax, %i.as
+  %stride.check89 = icmp slt i64 %7, 0
+  %i.ay = or i1 %found.conflict, %stride.check89
+  %n.vec = and i64 %0, -4                         ; 3 uses
   %cmp.n = icmp eq i64 %0, %n.vec
-  %xtraiter = and i64 %umax, 1
+  %xtraiter = and i64 %0, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %invariant.op = sub nuw i64 %umax, 1
   br label %.lr.ph69.us
 
 .lr.ph69.us:                                      ; preds = %.lr.ph69.us.preheader, %._crit_edge70.us
@@ -277,6 +271,7 @@ middle.block:                                     ; preds = %vector.body
 
 scalar.ph.preheader:                              ; preds = %.lr.ph69.us, %middle.block
   %.067.us.ph = phi i64 [ %n.vec, %middle.block ], [ 0, %.lr.ph69.us ] ; 5 uses
+  %.neg = or disjoint i64 %.067.us.ph, 1
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
@@ -291,7 +286,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
 
 scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
   %.067.us.unr = phi i64 [ %.067.us.ph, %scalar.ph.preheader ], [ %i.bs, %scalar.ph.prol ]
-  %i.bt = icmp eq i64 %.067.us.ph, %invariant.op
+  %i.bt = icmp eq i64 %0, %.neg
   br i1 %i.bt, label %._crit_edge70.us, label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
@@ -310,7 +305,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store double %i.cc, ptr %i.bz, align 8, !tbaa !95
   store double %i.cb, ptr %i.ca, align 8, !tbaa !95
   %i.cd = add nuw i64 %.067.us, 2                 ; 2 uses
-  %exitcond79.not.1 = icmp eq i64 %0, %i.cd
+  %exitcond79.not.1 = icmp eq i64 %i.cd, %0
   br i1 %exitcond79.not.1, label %._crit_edge70.us, label %scalar.ph, !llvm.loop !308
 
 ._crit_edge70.us:                                 ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block

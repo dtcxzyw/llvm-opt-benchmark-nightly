@@ -205,9 +205,9 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   %.039 = phi i32 [ 0, %bb.h ], [ %i.ba, %bb.i ]  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #37
   store i32 0, ptr %3, align 8, !tbaa !197
-  %i.bb = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 7 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %i.bb, i8 0, i64 36, i1 false)
-  %i.bc = zext i32 %.fr215 to i64                 ; 5 uses
+  %i.bc = zext i32 %.fr215 to i64                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #37
   store ptr null, ptr %4, align 8, !tbaa !368
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -289,7 +289,7 @@ bb.p:                                             ; preds = %_ZNSt10unique_ptrIN
   %i.cf = load ptr, ptr %i.x, align 8, !tbaa !365, !noalias !481 ; 2 uses
   %i.cg = load ptr, ptr %i.g, align 8, !tbaa !360, !noalias !481 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 28 ; 5 uses
-  %i.ci = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
+  %i.ci = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
   %i.cj = shl nuw nsw i64 %i.bc, 4                ; 8 uses
   %i.ck = shl nuw nsw i64 %i.bc, 2                ; 8 uses
   %i.cl = add i32 %.fr215, -127                   ; 5 uses
@@ -308,13 +308,13 @@ bb.q:                                             ; preds = %.thread
   %i.cu = trunc i64 %i.ct to i32                  ; 2 uses
   store i32 %i.cu, ptr %3, align 8, !tbaa !197
   %i.cv = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.cj) #40
-          to label %_ZNSt10unique_ptrIA_N7rocksdb11Unsigned128ESt14default_deleteIS2_EE5resetIPS1_vEEvT_.exit.i.i.us unwind label %.loopexit140.split.us ; 2 uses
+          to label %_ZNSt10unique_ptrIA_N7rocksdb11Unsigned128ESt14default_deleteIS2_EE5resetIPS1_vEEvT_.exit.i.i.us unwind label %.loopexit140.split.us ; 3 uses
 
 _ZNSt10unique_ptrIA_N7rocksdb11Unsigned128ESt14default_deleteIS2_EE5resetIPS1_vEEvT_.exit.i.i.us: ; preds = %bb.q
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.cv, i8 0, i64 %i.cj, i1 false)
   store ptr %i.cv, ptr %i.bb, align 8, !tbaa !488
   %i.cw = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ck) #40
-          to label %_ZN7rocksdb6ribbon15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE5ResetEjj.exit.i.us unwind label %.loopexit140.split.us ; 2 uses
+          to label %_ZN7rocksdb6ribbon15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE5ResetEjj.exit.i.us unwind label %.loopexit140.split.us ; 3 uses
 
 _ZN7rocksdb6ribbon15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE5ResetEjj.exit.i.us: ; preds = %_ZNSt10unique_ptrIA_N7rocksdb11Unsigned128ESt14default_deleteIS2_EE5resetIPS1_vEEvT_.exit.i.i.us
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cw, i8 0, i64 %i.ck, i1 false)
@@ -385,8 +385,8 @@ _ZNSt10unique_ptrIA_jSt14default_deleteIS0_EE5resetIPjvEEvT_.exit.i.i.us195: ; p
   br label %_ZN7rocksdb6ribbon15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE5ResetEjj.exit.i.us196
 
 _ZN7rocksdb6ribbon15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE5ResetEjj.exit.i.us196: ; preds = %_ZNSt10unique_ptrIA_jSt14default_deleteIS0_EE5resetIPjvEEvT_.exit.i.i.us195, %.preheader.i.i.us187
-  %.val87.i.i.i.i.us = phi ptr [ %i.dh, %_ZNSt10unique_ptrIA_jSt14default_deleteIS0_EE5resetIPjvEEvT_.exit.i.i.us195 ], [ %.val87.i.i.i.i.us275, %.preheader.i.i.us187 ] ; 7 uses
-  %.val86.i.i.i.i.us = phi ptr [ %i.dg, %_ZNSt10unique_ptrIA_jSt14default_deleteIS0_EE5resetIPjvEEvT_.exit.i.i.us195 ], [ %.val86.i.i.i.i.us273, %.preheader.i.i.us187 ] ; 7 uses
+  %.val87.i.i.i.i.us = phi ptr [ %i.dh, %_ZNSt10unique_ptrIA_jSt14default_deleteIS0_EE5resetIPjvEEvT_.exit.i.i.us195 ], [ %.val87.i.i.i.i.us275, %.preheader.i.i.us187 ] ; 9 uses
+  %.val86.i.i.i.i.us = phi ptr [ %i.dg, %_ZNSt10unique_ptrIA_jSt14default_deleteIS0_EE5resetIPjvEEvT_.exit.i.i.us195 ], [ %.val86.i.i.i.i.us273, %.preheader.i.i.us187 ] ; 9 uses
   store i32 %i.cl, ptr %i.cm, align 8, !tbaa !504
   %.val79.i.i.i.i.us = load i64, ptr %i.ce, align 8, !tbaa !361
   %i.di = and i64 %i.dc, 4294967295               ; 2 uses
@@ -667,8 +667,8 @@ _ZNSt10unique_ptrIA_jSt14default_deleteIS0_EE5resetIPjvEEvT_.exit.i.i: ; preds =
   br label %_ZN7rocksdb6ribbon15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE5ResetEjj.exit.i
 
 _ZN7rocksdb6ribbon15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE5ResetEjj.exit.i: ; preds = %_ZNSt10unique_ptrIA_jSt14default_deleteIS0_EE5resetIPjvEEvT_.exit.i.i, %.preheader.i.i
-  %i.hs = phi ptr [ %i.hr, %_ZNSt10unique_ptrIA_jSt14default_deleteIS0_EE5resetIPjvEEvT_.exit.i.i ], [ %i.hg, %.preheader.i.i ] ; 3 uses
-  %i.ht = phi ptr [ %i.hq, %_ZNSt10unique_ptrIA_jSt14default_deleteIS0_EE5resetIPjvEEvT_.exit.i.i ], [ %i.hh, %.preheader.i.i ] ; 3 uses
+  %i.hs = phi ptr [ %i.hr, %_ZNSt10unique_ptrIA_jSt14default_deleteIS0_EE5resetIPjvEEvT_.exit.i.i ], [ %i.hg, %.preheader.i.i ] ; 4 uses
+  %i.ht = phi ptr [ %i.hq, %_ZNSt10unique_ptrIA_jSt14default_deleteIS0_EE5resetIPjvEEvT_.exit.i.i ], [ %i.hh, %.preheader.i.i ] ; 4 uses
   store i32 %i.cl, ptr %i.cm, align 8, !tbaa !504
   %i.hu = and i64 %i.hm, 4294967295
   br label %bb.ac
@@ -864,6 +864,8 @@ bb.aj:                                            ; preds = %bb.ai
   br label %.loopexit140
 
 .loopexit:                                        ; preds = %_ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.i.i.i, %_ZN7rocksdb6ribbon10BandingAddILb1ENS0_15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEEEZNS0_15BandingAddRangeIS7_S7_St15_Deque_iteratorImRmPmEEEbPT_RKT0_T1_SI_E20NoopBacktrackStorageEEbPSF_NSF_5IndexENSF_9ResultRowENSF_8CoeffRowEPSI_PSL_.exit116.i.i.i.i.us, %_ZN7rocksdb6ribbon15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE5ResetEjj.exit.i.us, %_ZN7rocksdb6ribbon10BandingAddILb1ENS0_15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEEEZNS0_15BandingAddRangeIS7_S7_St15_Deque_iteratorImRmPmEEEbPT_RKT0_T1_SI_E20NoopBacktrackStorageEEbPSF_NSF_5IndexENSF_9ResultRowENSF_8CoeffRowEPSI_PSL_.exit116.thread.i.i.i.i
+  %11 = phi ptr [ %.val87.i.i.i.i.us, %_ZN7rocksdb6ribbon10BandingAddILb1ENS0_15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEEEZNS0_15BandingAddRangeIS7_S7_St15_Deque_iteratorImRmPmEEEbPT_RKT0_T1_SI_E20NoopBacktrackStorageEEbPSF_NSF_5IndexENSF_9ResultRowENSF_8CoeffRowEPSI_PSL_.exit116.i.i.i.i.us ], [ %.val87.i.i.i.i.us, %_ZN7rocksdb6ribbon10BandingAddILb1ENS0_15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEEEZNS0_15BandingAddRangeIS7_S7_St15_Deque_iteratorImRmPmEEEbPT_RKT0_T1_SI_E20NoopBacktrackStorageEEbPSF_NSF_5IndexENSF_9ResultRowENSF_8CoeffRowEPSI_PSL_.exit116.thread.i.i.i.i ], [ %i.cw, %_ZN7rocksdb6ribbon15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE5ResetEjj.exit.i.us ], [ %i.hs, %_ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.i.i.i ]
+  %12 = phi ptr [ %.val86.i.i.i.i.us, %_ZN7rocksdb6ribbon10BandingAddILb1ENS0_15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEEEZNS0_15BandingAddRangeIS7_S7_St15_Deque_iteratorImRmPmEEEbPT_RKT0_T1_SI_E20NoopBacktrackStorageEEbPSF_NSF_5IndexENSF_9ResultRowENSF_8CoeffRowEPSI_PSL_.exit116.i.i.i.i.us ], [ %.val86.i.i.i.i.us, %_ZN7rocksdb6ribbon10BandingAddILb1ENS0_15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEEEZNS0_15BandingAddRangeIS7_S7_St15_Deque_iteratorImRmPmEEEbPT_RKT0_T1_SI_E20NoopBacktrackStorageEEbPSF_NSF_5IndexENSF_9ResultRowENSF_8CoeffRowEPSI_PSL_.exit116.thread.i.i.i.i ], [ %i.cv, %_ZN7rocksdb6ribbon15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE5ResetEjj.exit.i.us ], [ %i.ht, %_ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.i.i.i ]
   %i.lc = phi i32 [ %i.dd, %_ZN7rocksdb6ribbon10BandingAddILb1ENS0_15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEEEZNS0_15BandingAddRangeIS7_S7_St15_Deque_iteratorImRmPmEEEbPT_RKT0_T1_SI_E20NoopBacktrackStorageEEbPSF_NSF_5IndexENSF_9ResultRowENSF_8CoeffRowEPSI_PSL_.exit116.i.i.i.i.us ], [ %i.dd, %_ZN7rocksdb6ribbon10BandingAddILb1ENS0_15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEEEZNS0_15BandingAddRangeIS7_S7_St15_Deque_iteratorImRmPmEEEbPT_RKT0_T1_SI_E20NoopBacktrackStorageEEbPSF_NSF_5IndexENSF_9ResultRowENSF_8CoeffRowEPSI_PSL_.exit116.thread.i.i.i.i ], [ %i.cu, %_ZN7rocksdb6ribbon15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEE5ResetEjj.exit.i.us ], [ %i.hn, %_ZNSt15_Deque_iteratorImRmPmEppEv.exit.i.i.i.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #37
   invoke fastcc void @_ZN7rocksdb12_GLOBAL__N_122XXPH3FilterBitsBuilder30MaybeVerifyHashEntriesChecksumEv(ptr dead_on_unwind noalias writable align 8 %6, ptr noundef nonnull align 8 dereferenceable(312) %0)
@@ -963,7 +965,7 @@ bb.ax:                                            ; preds = %bb.au
 
 bb.ay:                                            ; preds = %_ZN7rocksdb6StatusD2Ev.exit74, %bb.at
   %i.mc = load ptr, ptr %7, align 8, !tbaa !304   ; 21 uses
-  %i.md = lshr i32 %.fr215, 7                     ; 9 uses
+  %i.md = lshr i32 %.fr215, 7                     ; 10 uses
   %i.me = lshr i64 %i.lt, 4
   %i.mf = trunc i64 %i.me to i32                  ; 3 uses
   %i.mg = icmp eq i32 %i.md, 0
@@ -1001,9 +1003,6 @@ _ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapte
   br i1 %i.ms, label %.lr.ph.i.i.preheader, label %.lr.ph95.i.i
 
 .lr.ph.i.i.preheader:                             ; preds = %.noexc80
-  %11 = load ptr, ptr %i.bb, align 8
-  %12 = load ptr, ptr %i.ci, align 8
-  %13 = lshr i64 %i.bc, 7
   %i.mt = add nsw i64 %i.mp, -1                   ; 2 uses
   %i.mu = shl nuw nsw i64 %i.mp, 4                ; 2 uses
   %scevgep = getelementptr i8, ptr %i.mr, i64 %i.mu
@@ -1021,37 +1020,31 @@ _ZN7rocksdb6ribbon31SerializableInterleavedSolutionINS0_23StandardRehasherAdapte
   br label %.lr.ph.i.i
 
 .loopexit84.i.i:                                  ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
-  %i.mx = icmp ugt i32 %i.my, %.val53131.i.i
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.mx = icmp ugt i32 %13, %.val53131.i.i
   br i1 %i.mx, label %.lr.ph.i.i, label %._crit_edge.i.i, !llvm.loop !506
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %.loopexit84.i.i
-  %indvars.iv = phi i64 [ %13, %.lr.ph.i.i.preheader ], [ %indvars.iv.next, %.loopexit84.i.i ] ; 2 uses
-  %.04687.i.i.a = phi i32 [ %.0.i.i132.i.i, %.lr.ph.i.i.preheader ], [ %i.oi, %.loopexit84.i.i ]
-  %14 = trunc nuw i64 %indvars.iv to i32
-  %i.my = add i32 %14, -1                         ; 2 uses
-  %15 = shl i32 %i.my, 7                          ; 3 uses
-  %.not83.i.i = icmp eq i32 %15, -128
-  br i1 %.not83.i.i, label %_ZN7rocksdb6ribbon14BackSubstBlockINS0_15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEEEEEvPNT_8CoeffRowENS8_5IndexERKS8_SB_.exit.i.i, label %.lr.ph.preheader.i.i.i
-
-.lr.ph.preheader.i.i.i:                           ; preds = %.lr.ph.i.i
-  %16 = add nuw i32 %15, 128
-  %17 = zext i32 %16 to i64
-  %18 = zext i32 %15 to i64
+  %.04687.i.i = phi i32 [ %i.oi, %.loopexit84.i.i ], [ %.0.i.i132.i.i, %.lr.ph.i.i.preheader ]
+  %.04687.i.i.a = phi i32 [ %13, %.loopexit84.i.i ], [ %i.md, %.lr.ph.i.i.preheader ]
+  %13 = add nsw i32 %.04687.i.i.a, -1             ; 3 uses
+  %14 = shl nuw i32 %13, 7                        ; 2 uses
+  %i.my = add nuw i32 %14, 128
+  %15 = zext i32 %i.my to i64
+  %16 = zext i32 %14 to i64
   br label %.lr.ph.i.i.i
 
 ..loopexit_crit_edge.i.i.i:                       ; preds = %scalar.ph425, %middle.block440
-  %.wide.i.i.i = icmp ugt i64 %i.mz, %18
+  %.wide.i.i.i = icmp ugt i64 %i.mz, %16
   br i1 %.wide.i.i.i, label %.lr.ph.i.i.i, label %_ZN7rocksdb6ribbon14BackSubstBlockINS0_15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEEEEEvPNT_8CoeffRowENS8_5IndexERKS8_SB_.exit.i.i, !llvm.loop !507
 
-.lr.ph.i.i.i:                                     ; preds = %..loopexit_crit_edge.i.i.i, %.lr.ph.preheader.i.i.i
-  %indvars.iv25.i.i.i = phi i64 [ %17, %.lr.ph.preheader.i.i.i ], [ %i.mz, %..loopexit_crit_edge.i.i.i ]
+.lr.ph.i.i.i:                                     ; preds = %..loopexit_crit_edge.i.i.i, %.lr.ph.i.i
+  %indvars.iv25.i.i.i = phi i64 [ %15, %.lr.ph.i.i ], [ %i.mz, %..loopexit_crit_edge.i.i.i ]
   %i.mz = add nsw i64 %indvars.iv25.i.i.i, -1     ; 4 uses
-  %i.na = getelementptr inbounds nuw [16 x i8], ptr %11, i64 %i.mz ; 2 uses
+  %i.na = getelementptr inbounds nuw [16 x i8], ptr %12, i64 %i.mz ; 2 uses
   %.sroa.020.0.copyload.i.i.i = load i64, ptr %i.na, align 8, !tbaa !361 ; 2 uses
   %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.na, i64 8
   %.sroa.5.0.copyload.i.i.i = load i64, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !tbaa !361 ; 2 uses
-  %i.nb = getelementptr inbounds nuw [4 x i8], ptr %12, i64 %i.mz
+  %i.nb = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %i.mz
   %i.nc = load i32, ptr %i.nb, align 4, !tbaa !129 ; 2 uses
   br i1 %min.iters.check426, label %scalar.ph425.preheader, label %vector.ph427
 
@@ -1122,8 +1115,8 @@ scalar.ph425:                                     ; preds = %scalar.ph425.prehea
   %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %i.mp
   br i1 %exitcond.not.i.i.i, label %..loopexit_crit_edge.i.i.i, label %scalar.ph425, !llvm.loop !514
 
-_ZN7rocksdb6ribbon14BackSubstBlockINS0_15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEEEEEvPNT_8CoeffRowENS8_5IndexERKS8_SB_.exit.i.i: ; preds = %..loopexit_crit_edge.i.i.i, %.lr.ph.i.i
-  %i.oi = sub i32 %.04687.i.i.a, %.val54.fr133.i.i ; 11 uses
+_ZN7rocksdb6ribbon14BackSubstBlockINS0_15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEEEEEvPNT_8CoeffRowENS8_5IndexERKS8_SB_.exit.i.i: ; preds = %..loopexit_crit_edge.i.i.i
+  %i.oi = sub i32 %.04687.i.i, %.val54.fr133.i.i  ; 11 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %_ZN7rocksdb6ribbon14BackSubstBlockINS0_15StandardBandingINS0_23StandardRehasherAdapterINS_12_GLOBAL__N_141Standard128RibbonRehasherTypesAndSettingsEEEEEEEvPNT_8CoeffRowENS8_5IndexERKS8_SB_.exit.i.i

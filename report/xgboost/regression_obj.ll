@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.b
 
 bb.h:                                             ; preds = %bb.g
   %i.n = getelementptr inbounds nuw i8, ptr %8, i64 56
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !381  ; 4 uses
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !381  ; 3 uses
   %i.p = lshr i64 %i.o, 2                         ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq i64 %i.p, 0
   br i1 %.not.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
@@ -217,7 +217,6 @@ bb.h:                                             ; preds = %bb.g
   %i.t = load i64, ptr %i.s, align 8, !tbaa !17   ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %8, i64 48
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !378  ; 4 uses
-  %13 = and i64 %i.o, -4
   %i.w = load i64, ptr %i.q, align 8              ; 15 uses
   %i.x = trunc i64 %i.w to i32                    ; 14 uses
   %i.y = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.x)
@@ -449,13 +448,13 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %.not2.i72.i.i.i.i.i.i, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_18LogisticRegressionEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.i, label %bb.u
 
 bb.u:                                             ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_18LogisticRegressionEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit77.i.i.i.i.i.i
-  %i.dc = add nuw i64 %.sroa.0130.0154.i.i.i.i.i.i, 4
+  %i.dc = add nuw i64 %.sroa.0130.0154.i.i.i.i.i.i, 4 ; 2 uses
   %i.dd = add nsw i64 %.0155.i.i.i.i.i.i, -1
   %i.de = icmp sgt i64 %.0155.i.i.i.i.i.i, 1
   br i1 %i.de, label %bb.i, label %._crit_edge.i.i.i.i.i.i, !llvm.loop !462
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %bb.u, %bb.h
-  %.sroa.0130.0.lcssa.i.i.i.i.i.i = phi i64 [ 0, %bb.h ], [ %13, %bb.u ] ; 11 uses
+  %.sroa.0130.0.lcssa.i.i.i.i.i.i = phi i64 [ 0, %bb.h ], [ %i.dc, %bb.u ] ; 11 uses
   %i.df = sub i64 %i.o, %.sroa.0130.0.lcssa.i.i.i.i.i.i
   switch i64 %i.df, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_18LogisticRegressionEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.thread27.i [
     i64 3, label %bb.v
@@ -535,11 +534,11 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %.not2.i86.i.i.i.i.i.i, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_18LogisticRegressionEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.i, label %bb.y
 
 bb.y:                                             ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_18LogisticRegressionEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit91.i.i.i.i.i.i
-  %14 = or disjoint i64 %.sroa.0130.0.lcssa.i.i.i.i.i.i, 1
+  %13 = add i64 %.sroa.0130.0.lcssa.i.i.i.i.i.i, 1
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %._crit_edge.i.i.i.i.i.i
-  %.sroa.0130.1.i.i.i.i.i.i = phi i64 [ %14, %bb.y ], [ %.sroa.0130.0.lcssa.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ] ; 8 uses
+  %.sroa.0130.1.i.i.i.i.i.i = phi i64 [ %13, %bb.y ], [ %.sroa.0130.0.lcssa.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ] ; 8 uses
   %i.eo = icmp ugt i64 %.sroa.0130.1.i.i.i.i.i.i, 4294967295
   br i1 %i.eo, label %bb.aa, label %bb.ab
 
@@ -611,7 +610,7 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %.not2.i100.i.i.i.i.i.i, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_18LogisticRegressionEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.i, label %bb.ac
 
 bb.ac:                                            ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_18LogisticRegressionEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit105.i.i.i.i.i.i
-  %i.fw = add nuw i64 %.sroa.0130.1.i.i.i.i.i.i, 1
+  %i.fw = add i64 %.sroa.0130.1.i.i.i.i.i.i, 1
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %._crit_edge.i.i.i.i.i.i
@@ -1014,7 +1013,7 @@ bb.t:                                             ; preds = %bb.p, %bb.n
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr { i64, ptr } @_ZSt9__find_ifIN7xgboost6common18IndexTransformIterIZNS0_6linalg6cbeginIfLi1EEEDaRKNS3_10TensorViewIT_XT0_EEEEUlmE_EEN9__gnu_cxx5__ops12_Iter_negateIZNKS0_3obj10RegLossObjINSF_18LogisticRegressionEE12ProbToMarginEPNS3_6TensorIfLi1EEEEUlfE0_EEES6_S6_S6_T0_St26random_access_iterator_tag(i64 %0, ptr %1, i64 %2, ptr %3) local_unnamed_addr #1 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = sub i64 %2, %0                           ; 2 uses
+  %i.a = sub i64 %2, %0
   %i.b = lshr i64 %i.a, 2                         ; 2 uses
   %.not = icmp eq i64 %i.b, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
@@ -1023,8 +1022,6 @@ bb.a:
   %i.c = load i64, ptr %1, align 8, !tbaa !17     ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !507  ; 4 uses
-  %4 = and i64 %i.a, -4
-  %5 = add i64 %0, %4
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.f
@@ -1069,13 +1066,13 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not2.i38, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.ac = add i64 %.sroa.052.076, 4
+  %i.ac = add i64 %.sroa.052.076, 4               ; 2 uses
   %i.ad = add nsw i64 %.077, -1
   %i.ae = icmp sgt i64 %.077, 1
   br i1 %i.ae, label %bb.b, label %._crit_edge, !llvm.loop !551
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.a
-  %.sroa.052.0.lcssa = phi i64 [ %0, %bb.a ], [ %5, %bb.f ] ; 6 uses
+  %.sroa.052.0.lcssa = phi i64 [ %0, %bb.a ], [ %i.ac, %bb.f ] ; 6 uses
   %i.af = sub i64 %2, %.sroa.052.0.lcssa
   switch i64 %i.af, label %bb.l [
     i64 3, label %bb.g
@@ -1478,7 +1475,7 @@ bb.g:                                             ; preds = %bb.b
 
 bb.h:                                             ; preds = %bb.g
   %i.n = getelementptr inbounds nuw i8, ptr %8, i64 56
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !381  ; 4 uses
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !381  ; 3 uses
   %i.p = lshr i64 %i.o, 2                         ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq i64 %i.p, 0
   br i1 %.not.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
@@ -1490,7 +1487,6 @@ bb.h:                                             ; preds = %bb.g
   %i.t = load i64, ptr %i.s, align 8, !tbaa !17   ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %8, i64 48
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !378  ; 4 uses
-  %13 = and i64 %i.o, -4
   %i.w = load i64, ptr %i.q, align 8              ; 15 uses
   %i.x = trunc i64 %i.w to i32                    ; 14 uses
   %i.y = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.x)
@@ -1722,13 +1718,13 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %.not2.i72.i.i.i.i.i.i, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_22LogisticClassificationEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.i, label %bb.u
 
 bb.u:                                             ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_22LogisticClassificationEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit77.i.i.i.i.i.i
-  %i.dc = add nuw i64 %.sroa.0130.0154.i.i.i.i.i.i, 4
+  %i.dc = add nuw i64 %.sroa.0130.0154.i.i.i.i.i.i, 4 ; 2 uses
   %i.dd = add nsw i64 %.0155.i.i.i.i.i.i, -1
   %i.de = icmp sgt i64 %.0155.i.i.i.i.i.i, 1
   br i1 %i.de, label %bb.i, label %._crit_edge.i.i.i.i.i.i, !llvm.loop !574
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %bb.u, %bb.h
-  %.sroa.0130.0.lcssa.i.i.i.i.i.i = phi i64 [ 0, %bb.h ], [ %13, %bb.u ] ; 11 uses
+  %.sroa.0130.0.lcssa.i.i.i.i.i.i = phi i64 [ 0, %bb.h ], [ %i.dc, %bb.u ] ; 11 uses
   %i.df = sub i64 %i.o, %.sroa.0130.0.lcssa.i.i.i.i.i.i
   switch i64 %i.df, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_22LogisticClassificationEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.thread27.i [
     i64 3, label %bb.v
@@ -1808,11 +1804,11 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %.not2.i86.i.i.i.i.i.i, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_22LogisticClassificationEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.i, label %bb.y
 
 bb.y:                                             ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_22LogisticClassificationEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit91.i.i.i.i.i.i
-  %14 = or disjoint i64 %.sroa.0130.0.lcssa.i.i.i.i.i.i, 1
+  %13 = add i64 %.sroa.0130.0.lcssa.i.i.i.i.i.i, 1
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %._crit_edge.i.i.i.i.i.i
-  %.sroa.0130.1.i.i.i.i.i.i = phi i64 [ %14, %bb.y ], [ %.sroa.0130.0.lcssa.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ] ; 8 uses
+  %.sroa.0130.1.i.i.i.i.i.i = phi i64 [ %13, %bb.y ], [ %.sroa.0130.0.lcssa.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ] ; 8 uses
   %i.eo = icmp ugt i64 %.sroa.0130.1.i.i.i.i.i.i, 4294967295
   br i1 %i.eo, label %bb.aa, label %bb.ab
 
@@ -1884,7 +1880,7 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %.not2.i100.i.i.i.i.i.i, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_22LogisticClassificationEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.i, label %bb.ac
 
 bb.ac:                                            ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_22LogisticClassificationEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit105.i.i.i.i.i.i
-  %i.fw = add nuw i64 %.sroa.0130.1.i.i.i.i.i.i, 1
+  %i.fw = add i64 %.sroa.0130.1.i.i.i.i.i.i, 1
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %._crit_edge.i.i.i.i.i.i
@@ -2287,7 +2283,7 @@ bb.t:                                             ; preds = %bb.p, %bb.n
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr { i64, ptr } @_ZSt9__find_ifIN7xgboost6common18IndexTransformIterIZNS0_6linalg6cbeginIfLi1EEEDaRKNS3_10TensorViewIT_XT0_EEEEUlmE_EEN9__gnu_cxx5__ops12_Iter_negateIZNKS0_3obj10RegLossObjINSF_22LogisticClassificationEE12ProbToMarginEPNS3_6TensorIfLi1EEEEUlfE0_EEES6_S6_S6_T0_St26random_access_iterator_tag(i64 %0, ptr %1, i64 %2, ptr %3) local_unnamed_addr #1 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = sub i64 %2, %0                           ; 2 uses
+  %i.a = sub i64 %2, %0
   %i.b = lshr i64 %i.a, 2                         ; 2 uses
   %.not = icmp eq i64 %i.b, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
@@ -2296,8 +2292,6 @@ bb.a:
   %i.c = load i64, ptr %1, align 8, !tbaa !17     ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !507  ; 4 uses
-  %4 = and i64 %i.a, -4
-  %5 = add i64 %0, %4
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.f
@@ -2342,13 +2336,13 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not2.i38, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.ac = add i64 %.sroa.052.076, 4
+  %i.ac = add i64 %.sroa.052.076, 4               ; 2 uses
   %i.ad = add nsw i64 %.077, -1
   %i.ae = icmp sgt i64 %.077, 1
   br i1 %i.ae, label %bb.b, label %._crit_edge, !llvm.loop !655
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.a
-  %.sroa.052.0.lcssa = phi i64 [ %0, %bb.a ], [ %5, %bb.f ] ; 6 uses
+  %.sroa.052.0.lcssa = phi i64 [ %0, %bb.a ], [ %i.ac, %bb.f ] ; 6 uses
   %i.af = sub i64 %2, %.sroa.052.0.lcssa
   switch i64 %i.af, label %bb.l [
     i64 3, label %bb.g
@@ -2751,7 +2745,7 @@ bb.g:                                             ; preds = %bb.b
 
 bb.h:                                             ; preds = %bb.g
   %i.n = getelementptr inbounds nuw i8, ptr %8, i64 56
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !381  ; 4 uses
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !381  ; 3 uses
   %i.p = lshr i64 %i.o, 2                         ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq i64 %i.p, 0
   br i1 %.not.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
@@ -2763,7 +2757,6 @@ bb.h:                                             ; preds = %bb.g
   %i.t = load i64, ptr %i.s, align 8, !tbaa !17   ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %8, i64 48
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !378  ; 4 uses
-  %13 = and i64 %i.o, -4
   %i.w = load i64, ptr %i.q, align 8              ; 15 uses
   %i.x = trunc i64 %i.w to i32                    ; 14 uses
   %i.y = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.x)
@@ -2995,13 +2988,13 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %.not2.i72.i.i.i.i.i.i, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_11LogisticRawEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.i, label %bb.u
 
 bb.u:                                             ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_11LogisticRawEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit77.i.i.i.i.i.i
-  %i.dc = add nuw i64 %.sroa.0130.0154.i.i.i.i.i.i, 4
+  %i.dc = add nuw i64 %.sroa.0130.0154.i.i.i.i.i.i, 4 ; 2 uses
   %i.dd = add nsw i64 %.0155.i.i.i.i.i.i, -1
   %i.de = icmp sgt i64 %.0155.i.i.i.i.i.i, 1
   br i1 %i.de, label %bb.i, label %._crit_edge.i.i.i.i.i.i, !llvm.loop !678
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %bb.u, %bb.h
-  %.sroa.0130.0.lcssa.i.i.i.i.i.i = phi i64 [ 0, %bb.h ], [ %13, %bb.u ] ; 11 uses
+  %.sroa.0130.0.lcssa.i.i.i.i.i.i = phi i64 [ 0, %bb.h ], [ %i.dc, %bb.u ] ; 11 uses
   %i.df = sub i64 %i.o, %.sroa.0130.0.lcssa.i.i.i.i.i.i
   switch i64 %i.df, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_11LogisticRawEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.thread27.i [
     i64 3, label %bb.v
@@ -3081,11 +3074,11 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %.not2.i86.i.i.i.i.i.i, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_11LogisticRawEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.i, label %bb.y
 
 bb.y:                                             ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_11LogisticRawEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit91.i.i.i.i.i.i
-  %14 = or disjoint i64 %.sroa.0130.0.lcssa.i.i.i.i.i.i, 1
+  %13 = add i64 %.sroa.0130.0.lcssa.i.i.i.i.i.i, 1
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %._crit_edge.i.i.i.i.i.i
-  %.sroa.0130.1.i.i.i.i.i.i = phi i64 [ %14, %bb.y ], [ %.sroa.0130.0.lcssa.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ] ; 8 uses
+  %.sroa.0130.1.i.i.i.i.i.i = phi i64 [ %13, %bb.y ], [ %.sroa.0130.0.lcssa.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ] ; 8 uses
   %i.eo = icmp ugt i64 %.sroa.0130.1.i.i.i.i.i.i, 4294967295
   br i1 %i.eo, label %bb.aa, label %bb.ab
 
@@ -3157,7 +3150,7 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %.not2.i100.i.i.i.i.i.i, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_11LogisticRawEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.i, label %bb.ac
 
 bb.ac:                                            ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_11LogisticRawEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit105.i.i.i.i.i.i
-  %i.fw = add nuw i64 %.sroa.0130.1.i.i.i.i.i.i, 1
+  %i.fw = add i64 %.sroa.0130.1.i.i.i.i.i.i, 1
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %._crit_edge.i.i.i.i.i.i
@@ -3560,7 +3553,7 @@ bb.g:                                             ; preds = %bb.b
 
 bb.h:                                             ; preds = %bb.g
   %i.n = getelementptr inbounds nuw i8, ptr %8, i64 56
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !381  ; 4 uses
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !381  ; 3 uses
   %i.p = lshr i64 %i.o, 2                         ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq i64 %i.p, 0
   br i1 %.not.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
@@ -3572,7 +3565,6 @@ bb.h:                                             ; preds = %bb.g
   %i.t = load i64, ptr %i.s, align 8, !tbaa !17   ; 13 uses
   %i.u = getelementptr inbounds nuw i8, ptr %8, i64 48
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !378  ; 13 uses
-  %13 = and i64 %i.o, -4
   %i.w = load i64, ptr %i.q, align 8              ; 15 uses
   %i.x = trunc i64 %i.w to i32                    ; 14 uses
   %i.y = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.x)
@@ -3811,13 +3803,13 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %i.fo, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_13GammaDevianceEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_13GammaDevianceEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit74.i.i.i.i.i.i
-  %i.fp = add nuw i64 %.sroa.0124.0148.i.i.i.i.i.i, 4
+  %i.fp = add nuw i64 %.sroa.0124.0148.i.i.i.i.i.i, 4 ; 2 uses
   %i.fq = add nsw i64 %.0149.i.i.i.i.i.i, -1
   %i.fr = icmp sgt i64 %.0149.i.i.i.i.i.i, 1
   br i1 %i.fr, label %bb.i, label %._crit_edge.i.i.i.i.i.i, !llvm.loop !779
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %bb.l, %bb.h
-  %.sroa.0124.0.lcssa.i.i.i.i.i.i = phi i64 [ 0, %bb.h ], [ %13, %bb.l ] ; 11 uses
+  %.sroa.0124.0.lcssa.i.i.i.i.i.i = phi i64 [ 0, %bb.h ], [ %i.fp, %bb.l ] ; 11 uses
   %i.fs = sub i64 %i.o, %.sroa.0124.0.lcssa.i.i.i.i.i.i
   switch i64 %i.fs, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_13GammaDevianceEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.thread44.i [
     i64 3, label %bb.m
@@ -3895,11 +3887,11 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %i.gz, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_13GammaDevianceEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.i, label %bb.p
 
 bb.p:                                             ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_13GammaDevianceEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit87.i.i.i.i.i.i
-  %14 = or disjoint i64 %.sroa.0124.0.lcssa.i.i.i.i.i.i, 1
+  %13 = add i64 %.sroa.0124.0.lcssa.i.i.i.i.i.i, 1
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %._crit_edge.i.i.i.i.i.i
-  %.sroa.0124.1.i.i.i.i.i.i = phi i64 [ %14, %bb.p ], [ %.sroa.0124.0.lcssa.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ] ; 8 uses
+  %.sroa.0124.1.i.i.i.i.i.i = phi i64 [ %13, %bb.p ], [ %.sroa.0124.0.lcssa.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ] ; 8 uses
   %i.ha = icmp ugt i64 %.sroa.0124.1.i.i.i.i.i.i, 4294967295
   br i1 %i.ha, label %bb.r, label %bb.s
 
@@ -3969,7 +3961,7 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %i.ig, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_13GammaDevianceEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.i, label %bb.t
 
 bb.t:                                             ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_13GammaDevianceEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit100.i.i.i.i.i.i
-  %i.ih = add nuw i64 %.sroa.0124.1.i.i.i.i.i.i, 1
+  %i.ih = add i64 %.sroa.0124.1.i.i.i.i.i.i, 1
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %._crit_edge.i.i.i.i.i.i
@@ -4372,7 +4364,7 @@ _ZN7xgboost6linalg10TensorViewIfLi1EEC2ImLi1EEENS_6common4SpanIfLm18446744073709
   br label %_ZN7xgboost6linalg6TensorIfLi1EE4ViewENS_9DeviceOrdE.exit.i
 
 _ZN7xgboost6linalg6TensorIfLi1EE4ViewENS_9DeviceOrdE.exit.i: ; preds = %_ZN7xgboost6linalg10TensorViewIfLi1EEC2ImLi1EEENS_6common4SpanIfLm18446744073709551615EEERAT0__KT_NS_9DeviceOrdENS0_5OrderE.exit12.i.i, %_ZN7xgboost6linalg10TensorViewIfLi1EEC2ImLi1EEENS_6common4SpanIfLm18446744073709551615EEERAT0__KT_NS_9DeviceOrdENS0_5OrderE.exit.i.i
-  %.sroa.23.0.i = phi i64 [ %.sink.i.i.i.i, %_ZN7xgboost6linalg10TensorViewIfLi1EEC2ImLi1EEENS_6common4SpanIfLm18446744073709551615EEERAT0__KT_NS_9DeviceOrdENS0_5OrderE.exit.i.i ], [ %.sink.i.i11.i.i, %_ZN7xgboost6linalg10TensorViewIfLi1EEC2ImLi1EEENS_6common4SpanIfLm18446744073709551615EEERAT0__KT_NS_9DeviceOrdENS0_5OrderE.exit12.i.i ] ; 7 uses
+  %.sroa.23.0.i = phi i64 [ %.sink.i.i.i.i, %_ZN7xgboost6linalg10TensorViewIfLi1EEC2ImLi1EEENS_6common4SpanIfLm18446744073709551615EEERAT0__KT_NS_9DeviceOrdENS0_5OrderE.exit.i.i ], [ %.sink.i.i11.i.i, %_ZN7xgboost6linalg10TensorViewIfLi1EEC2ImLi1EEENS_6common4SpanIfLm18446744073709551615EEERAT0__KT_NS_9DeviceOrdENS0_5OrderE.exit12.i.i ] ; 6 uses
   %.sroa.17.0.i = phi ptr [ %i.p, %_ZN7xgboost6linalg10TensorViewIfLi1EEC2ImLi1EEENS_6common4SpanIfLm18446744073709551615EEERAT0__KT_NS_9DeviceOrdENS0_5OrderE.exit.i.i ], [ %i.z, %_ZN7xgboost6linalg10TensorViewIfLi1EEC2ImLi1EEENS_6common4SpanIfLm18446744073709551615EEERAT0__KT_NS_9DeviceOrdENS0_5OrderE.exit12.i.i ] ; 11 uses
   %.sroa.13.0.i = phi i64 [ %i.s, %_ZN7xgboost6linalg10TensorViewIfLi1EEC2ImLi1EEENS_6common4SpanIfLm18446744073709551615EEERAT0__KT_NS_9DeviceOrdENS0_5OrderE.exit.i.i ], [ %i.aa, %_ZN7xgboost6linalg10TensorViewIfLi1EEC2ImLi1EEENS_6common4SpanIfLm18446744073709551615EEERAT0__KT_NS_9DeviceOrdENS0_5OrderE.exit12.i.i ] ; 2 uses
   %.sroa.11.0.i = phi i64 [ %i.l, %_ZN7xgboost6linalg10TensorViewIfLi1EEC2ImLi1EEENS_6common4SpanIfLm18446744073709551615EEERAT0__KT_NS_9DeviceOrdENS0_5OrderE.exit.i.i ], [ %i.y, %_ZN7xgboost6linalg10TensorViewIfLi1EEC2ImLi1EEENS_6common4SpanIfLm18446744073709551615EEERAT0__KT_NS_9DeviceOrdENS0_5OrderE.exit12.i.i ] ; 2 uses
@@ -4430,15 +4422,11 @@ bb.j:                                             ; preds = %_ZN7xgboost6linalg6
 bb.k:                                             ; preds = %bb.j
   %i.aj = lshr i64 %.sroa.23.0.i, 2               ; 2 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.aj, 0
-  br i1 %.not.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i
+  br i1 %.not.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i, label %bb.l
 
-.lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %bb.k
-  %14 = and i64 %.sroa.23.0.i, -4
-  br label %bb.l
-
-bb.l:                                             ; preds = %bb.p, %.lr.ph.i.i.i.i.i.i.i.i
-  %.071.i.i.i.i.i.i.i.i = phi i64 [ %i.aj, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.ba, %bb.p ] ; 2 uses
-  %.sroa.046.070.i.i.i.i.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.az, %bb.p ] ; 6 uses
+bb.l:                                             ; preds = %bb.k, %bb.p
+  %.071.i.i.i.i.i.i.i.i = phi i64 [ %i.ba, %bb.p ], [ %i.aj, %bb.k ] ; 2 uses
+  %.sroa.046.070.i.i.i.i.i.i.i.i = phi i64 [ %i.az, %bb.p ], [ 0, %bb.k ] ; 6 uses
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %.sroa.17.0.i, i64 %.sroa.046.070.i.i.i.i.i.i.i.i
   %i.al = load float, ptr %i.ak, align 4, !tbaa !81
   %i.am = fcmp ule float %i.al, 0.000000e+00
@@ -4466,13 +4454,13 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.ay, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_116ProbToMarginImplIZNKS2_10RegLossObjINS2_13GammaDevianceEE12ProbToMarginEPNS_6linalg6TensorIfLi1EEEEUlfE_ZNKS7_12ProbToMarginESB_EUlfE0_PFNS_10StringViewEvEEEvPKS0_SB_OT_T0_T1_EUlvE_ZNS4_ISC_SD_SG_EEvSI_SB_SK_SL_SM_EUlvE0_ZNS4_ISC_SD_SG_EEvSI_SB_SK_SL_SM_EUlvE1_EEDcSK_OSL_OSM_.exit.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.az = add nuw i64 %.sroa.046.070.i.i.i.i.i.i.i.i, 4
+  %i.az = add nuw i64 %.sroa.046.070.i.i.i.i.i.i.i.i, 4 ; 2 uses
   %i.ba = add nsw i64 %.071.i.i.i.i.i.i.i.i, -1
   %i.bb = icmp sgt i64 %.071.i.i.i.i.i.i.i.i, 1
   br i1 %i.bb, label %bb.l, label %._crit_edge.i.i.i.i.i.i.i.i, !llvm.loop !824
 
 ._crit_edge.i.i.i.i.i.i.i.i:                      ; preds = %bb.p, %bb.k
-  %.sroa.046.0.lcssa.i.i.i.i.i.i.i.i = phi i64 [ 0, %bb.k ], [ %14, %bb.p ] ; 6 uses
+  %.sroa.046.0.lcssa.i.i.i.i.i.i.i.i = phi i64 [ 0, %bb.k ], [ %i.az, %bb.p ] ; 6 uses
   %i.bc = sub i64 %.sroa.23.0.i, %.sroa.046.0.lcssa.i.i.i.i.i.i.i.i
   switch i64 %i.bc, label %bb.t [
     i64 3, label %bb.q
@@ -4487,18 +4475,18 @@ bb.q:                                             ; preds = %._crit_edge.i.i.i.i
   br i1 %i.bf, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_116ProbToMarginImplIZNKS2_10RegLossObjINS2_13GammaDevianceEE12ProbToMarginEPNS_6linalg6TensorIfLi1EEEEUlfE_ZNKS7_12ProbToMarginESB_EUlfE0_PFNS_10StringViewEvEEEvPKS0_SB_OT_T0_T1_EUlvE_ZNS4_ISC_SD_SG_EEvSI_SB_SK_SL_SM_EUlvE0_ZNS4_ISC_SD_SG_EEvSI_SB_SK_SL_SM_EUlvE1_EEDcSK_OSL_OSM_.exit.i, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %15 = or disjoint i64 %.sroa.046.0.lcssa.i.i.i.i.i.i.i.i, 1
+  %14 = add i64 %.sroa.046.0.lcssa.i.i.i.i.i.i.i.i, 1
   br label %._crit_edge._crit_edge.i.i.i.i.i.i.i.i
 
 ._crit_edge._crit_edge.i.i.i.i.i.i.i.i:           ; preds = %bb.r, %._crit_edge.i.i.i.i.i.i.i.i
-  %.sroa.046.1.i.i.i.i.i.i.i.i = phi i64 [ %15, %bb.r ], [ %.sroa.046.0.lcssa.i.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i.i.i ] ; 3 uses
+  %.sroa.046.1.i.i.i.i.i.i.i.i = phi i64 [ %14, %bb.r ], [ %.sroa.046.0.lcssa.i.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i.i.i ] ; 3 uses
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr %.sroa.17.0.i, i64 %.sroa.046.1.i.i.i.i.i.i.i.i
   %i.bh = load float, ptr %i.bg, align 4, !tbaa !81
   %i.bi = fcmp ule float %i.bh, 0.000000e+00
   br i1 %i.bi, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_116ProbToMarginImplIZNKS2_10RegLossObjINS2_13GammaDevianceEE12ProbToMarginEPNS_6linalg6TensorIfLi1EEEEUlfE_ZNKS7_12ProbToMarginESB_EUlfE0_PFNS_10StringViewEvEEEvPKS0_SB_OT_T0_T1_EUlvE_ZNS4_ISC_SD_SG_EEvSI_SB_SK_SL_SM_EUlvE0_ZNS4_ISC_SD_SG_EEvSI_SB_SK_SL_SM_EUlvE1_EEDcSK_OSL_OSM_.exit.i, label %bb.s
 
 bb.s:                                             ; preds = %._crit_edge._crit_edge.i.i.i.i.i.i.i.i
-  %i.bj = add nuw i64 %.sroa.046.1.i.i.i.i.i.i.i.i, 1
+  %i.bj = add i64 %.sroa.046.1.i.i.i.i.i.i.i.i, 1
   br label %._crit_edge._crit_edge73.i.i.i.i.i.i.i.i
 
 ._crit_edge._crit_edge73.i.i.i.i.i.i.i.i:         ; preds = %bb.s, %._crit_edge.i.i.i.i.i.i.i.i
@@ -4901,7 +4889,7 @@ bb.g:                                             ; preds = %bb.b
 
 bb.h:                                             ; preds = %bb.g
   %i.n = getelementptr inbounds nuw i8, ptr %8, i64 56
-  %i.o = load i64, ptr %i.n, align 8, !tbaa !381  ; 4 uses
+  %i.o = load i64, ptr %i.n, align 8, !tbaa !381  ; 3 uses
   %i.p = lshr i64 %i.o, 2                         ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq i64 %i.p, 0
   br i1 %.not.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
@@ -4913,7 +4901,6 @@ bb.h:                                             ; preds = %bb.g
   %i.t = load i64, ptr %i.s, align 8, !tbaa !17   ; 13 uses
   %i.u = getelementptr inbounds nuw i8, ptr %8, i64 48
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !378  ; 13 uses
-  %15 = and i64 %i.o, -4
   %i.w = load i64, ptr %i.q, align 8              ; 15 uses
   %i.x = trunc i64 %i.w to i32                    ; 14 uses
   %i.y = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.x)
@@ -5152,13 +5139,13 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %i.fo, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_15SquaredLogErrorEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_15SquaredLogErrorEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit74.i.i.i.i.i.i
-  %i.fp = add nuw i64 %.sroa.0124.0148.i.i.i.i.i.i, 4
+  %i.fp = add nuw i64 %.sroa.0124.0148.i.i.i.i.i.i, 4 ; 2 uses
   %i.fq = add nsw i64 %.0149.i.i.i.i.i.i, -1
   %i.fr = icmp sgt i64 %.0149.i.i.i.i.i.i, 1
   br i1 %i.fr, label %bb.i, label %._crit_edge.i.i.i.i.i.i, !llvm.loop !871
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %bb.l, %bb.h
-  %.sroa.0124.0.lcssa.i.i.i.i.i.i = phi i64 [ 0, %bb.h ], [ %15, %bb.l ] ; 11 uses
+  %.sroa.0124.0.lcssa.i.i.i.i.i.i = phi i64 [ 0, %bb.h ], [ %i.fp, %bb.l ] ; 11 uses
   %i.fs = sub i64 %i.o, %.sroa.0124.0.lcssa.i.i.i.i.i.i
   switch i64 %i.fs, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_15SquaredLogErrorEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.thread44.i [
     i64 3, label %bb.m
@@ -5236,11 +5223,11 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %i.gz, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_15SquaredLogErrorEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.i, label %bb.p
 
 bb.p:                                             ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_15SquaredLogErrorEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit87.i.i.i.i.i.i
-  %16 = or disjoint i64 %.sroa.0124.0.lcssa.i.i.i.i.i.i, 1
+  %15 = add i64 %.sroa.0124.0.lcssa.i.i.i.i.i.i, 1
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %._crit_edge.i.i.i.i.i.i
-  %.sroa.0124.1.i.i.i.i.i.i = phi i64 [ %16, %bb.p ], [ %.sroa.0124.0.lcssa.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ] ; 8 uses
+  %.sroa.0124.1.i.i.i.i.i.i = phi i64 [ %15, %bb.p ], [ %.sroa.0124.0.lcssa.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ] ; 8 uses
   %i.ha = icmp ugt i64 %.sroa.0124.1.i.i.i.i.i.i, 4294967295
   br i1 %i.ha, label %bb.r, label %bb.s
 
@@ -5310,7 +5297,7 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %i.ig, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_15SquaredLogErrorEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.i, label %bb.t
 
 bb.t:                                             ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_15SquaredLogErrorEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit100.i.i.i.i.i.i
-  %i.ih = add nuw i64 %.sroa.0124.1.i.i.i.i.i.i, 1
+  %i.ih = add i64 %.sroa.0124.1.i.i.i.i.i.i, 1
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %._crit_edge.i.i.i.i.i.i
@@ -5713,7 +5700,7 @@ bb.f:                                             ; preds = %bb.a
 
 bb.g:                                             ; preds = %bb.f
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 56
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !381  ; 4 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !381  ; 3 uses
   %i.m = lshr i64 %i.l, 2                         ; 2 uses
   %.not.i.i.i.i.i = icmp eq i64 %i.m, 0
   br i1 %.not.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i
@@ -5725,7 +5712,6 @@ bb.g:                                             ; preds = %bb.f
   %i.q = load i64, ptr %i.p, align 8, !tbaa !17   ; 13 uses
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 48
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !378  ; 13 uses
-  %9 = and i64 %i.l, -4
   %i.t = load i64, ptr %i.n, align 8              ; 15 uses
   %i.u = trunc i64 %i.t to i32                    ; 14 uses
   %i.v = call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %i.u)
@@ -5964,13 +5950,13 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %i.fl, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_12PoissonLabelEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit, label %bb.k
 
 bb.k:                                             ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_12PoissonLabelEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit74.i.i.i.i.i
-  %i.fm = add nuw i64 %.sroa.0124.0148.i.i.i.i.i, 4
+  %i.fm = add nuw i64 %.sroa.0124.0148.i.i.i.i.i, 4 ; 2 uses
   %i.fn = add nsw i64 %.0149.i.i.i.i.i, -1
   %i.fo = icmp sgt i64 %.0149.i.i.i.i.i, 1
   br i1 %i.fo, label %bb.h, label %._crit_edge.i.i.i.i.i, !llvm.loop !1386
 
 ._crit_edge.i.i.i.i.i:                            ; preds = %bb.k, %bb.g
-  %.sroa.0124.0.lcssa.i.i.i.i.i = phi i64 [ 0, %bb.g ], [ %9, %bb.k ] ; 11 uses
+  %.sroa.0124.0.lcssa.i.i.i.i.i = phi i64 [ 0, %bb.g ], [ %i.fm, %bb.k ] ; 11 uses
   %i.fp = sub i64 %i.l, %.sroa.0124.0.lcssa.i.i.i.i.i
   switch i64 %i.fp, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_12PoissonLabelEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit.thread44 [
     i64 3, label %bb.l
@@ -6048,11 +6034,11 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %i.gw, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_12PoissonLabelEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit, label %bb.o
 
 bb.o:                                             ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_12PoissonLabelEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit87.i.i.i.i.i
-  %10 = or disjoint i64 %.sroa.0124.0.lcssa.i.i.i.i.i, 1
+  %9 = add i64 %.sroa.0124.0.lcssa.i.i.i.i.i, 1
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %._crit_edge.i.i.i.i.i
-  %.sroa.0124.1.i.i.i.i.i = phi i64 [ %10, %bb.o ], [ %.sroa.0124.0.lcssa.i.i.i.i.i, %._crit_edge.i.i.i.i.i ] ; 8 uses
+  %.sroa.0124.1.i.i.i.i.i = phi i64 [ %9, %bb.o ], [ %.sroa.0124.0.lcssa.i.i.i.i.i, %._crit_edge.i.i.i.i.i ] ; 8 uses
   %i.gx = icmp ugt i64 %.sroa.0124.1.i.i.i.i.i, 4294967295
   br i1 %i.gx, label %bb.q, label %bb.r
 
@@ -6122,7 +6108,7 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelIN
   br i1 %i.id, label %_ZNK7xgboost7Context14DispatchDeviceIZNS_3obj12_GLOBAL__N_113ValidateLabelINS2_12PoissonLabelEEEvPKS0_RKNS_8MetaInfoEEUlvE_ZNS4_IS5_EEvS7_SA_EUlvE0_ZNS4_IS5_EEvS7_SA_EUlvE1_EEDcOT_OT0_OT1_.exit, label %bb.s
 
 bb.s:                                             ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZZN7xgboost3obj12_GLOBAL__N_113ValidateLabelINS3_12PoissonLabelEEEvPKNS2_7ContextERKNS2_8MetaInfoEENKUlvE_clEvEUlfE_EclINS2_6common18IndexTransformIterIZNS2_6linalg6cbeginIKfLi2EEEDaRKNSJ_10TensorViewIT_XT0_EEEEUlmE_EEEEbSN_.exit100.i.i.i.i.i
-  %i.ie = add nuw i64 %.sroa.0124.1.i.i.i.i.i, 1
+  %i.ie = add i64 %.sroa.0124.1.i.i.i.i.i, 1
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %._crit_edge.i.i.i.i.i

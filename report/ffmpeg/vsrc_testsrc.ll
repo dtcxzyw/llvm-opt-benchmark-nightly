@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 37
 inline.NumDeleted: 12
 loop-unroll.NumCompletelyUnrolled: 12
-loop-unroll.NumRuntimeUnrolled: 10
-loop-unroll.NumUnrolled: 26
+loop-unroll.NumRuntimeUnrolled: 11
+loop-unroll.NumUnrolled: 27
 begin_hunk_0_@haldclutsrc_fill_picture:bb.a
   %i.go = call i32 @llvm.smax.i32(i32 %i.gn, i32 0)
   %i.gp = call i32 @llvm.umin.i32(i32 %i.go, i32 1023)
@@ -205,7 +205,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.e = load i32, ptr %i.d, align 8, !tbaa !65   ; 17 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 108
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !66   ; 11 uses
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !66   ; 12 uses
   %i.h = icmp sgt i32 %i.g, 0
   br i1 %i.h, label %.lr.ph191, label %._crit_edge192.split
 
@@ -282,13 +282,13 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   br i1 %exitcond213.not, label %._crit_edge192.split, label %.lr.ph, !llvm.loop !81
 
 ._crit_edge192.split:                             ; preds = %._crit_edge, %.lr.ph191, %bb.a
-  %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 5 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 7 uses
   %i.as = load i32, ptr %i.ar, align 8, !tbaa !57
   %i.at = mul nsw i32 %i.g, 3
   %i.au = sdiv i32 %i.at, 4
   %i.av = mul nsw i32 %i.as, %i.au
   %i.aw = sext i32 %i.av to i64
-  %i.ax = getelementptr inbounds i8, ptr %i.c, i64 %i.aw ; 2 uses
+  %i.ax = getelementptr inbounds i8, ptr %i.c, i64 %i.aw ; 5 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.b, i64 28 ; 2 uses
   %i.ba = sdiv i32 1536, %i.e
@@ -390,27 +390,52 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   br i1 %i.cu, label %.lr.ph204, label %._crit_edge205
 
 .lr.ph204:                                        ; preds = %._crit_edge200
-  %i.cv = lshr i32 %i.g, 3
+  %i.cv = lshr i32 %i.g, 3                        ; 3 uses
   %i.cw = mul nsw i32 %i.e, 3
-  %i.cx = sext i32 %i.cw to i64
-  %.pre = load i32, ptr %i.ar, align 8, !tbaa !57
-  br label %bb.j
+  %i.cx = sext i32 %i.cw to i64                   ; 3 uses
+  %.pre = load i32, ptr %i.ar, align 8, !tbaa !57 ; 2 uses
+  %2 = and i32 %i.g, 8
+  %lcmp.mod.not = icmp eq i32 %2, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
-bb.j:                                             ; preds = %.lr.ph204, %bb.j
-  %i.cy = phi i32 [ %.pre, %.lr.ph204 ], [ %i.db, %bb.j ]
-  %.1156202 = phi i32 [ %i.cv, %.lr.ph204 ], [ %i.de, %bb.j ] ; 2 uses
-  %.2163201 = phi ptr [ %i.ax, %.lr.ph204 ], [ %i.dd, %bb.j ] ; 3 uses
-  %i.cz = sext i32 %i.cy to i64
-  %i.da = getelementptr inbounds i8, ptr %.2163201, i64 %i.cz
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.da, ptr align 1 %.2163201, i64 %i.cx, i1 false)
+.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph204
+  %3 = sext i32 %.pre to i64
+  %4 = getelementptr inbounds i8, ptr %i.ax, i64 %3
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %4, ptr align 1 %i.ax, i64 %i.cx, i1 false)
+  %5 = load i32, ptr %i.ar, align 8, !tbaa !57    ; 2 uses
+  %6 = sext i32 %5 to i64
+  %7 = getelementptr inbounds i8, ptr %i.ax, i64 %6
+  %8 = add nsw i32 %i.cv, -1
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph204
+  %.unr = phi i32 [ %.pre, %.lr.ph204 ], [ %5, %.prol.loopexit.unr-lcssa ]
+  %.1156202.unr = phi i32 [ %i.cv, %.lr.ph204 ], [ %8, %.prol.loopexit.unr-lcssa ]
+  %.2163201.unr = phi ptr [ %i.ax, %.lr.ph204 ], [ %7, %.prol.loopexit.unr-lcssa ]
+  %9 = icmp eq i32 %i.cv, 1
+  br i1 %9, label %._crit_edge205, label %bb.j
+
+bb.j:                                             ; preds = %.prol.loopexit, %bb.j
+  %i.cy = phi i32 [ %i.db, %bb.j ], [ %.unr, %.prol.loopexit ]
+  %.1156202 = phi i32 [ %i.de, %bb.j ], [ %.1156202.unr, %.prol.loopexit ] ; 2 uses
+  %.2163201 = phi ptr [ %i.dd, %bb.j ], [ %.2163201.unr, %.prol.loopexit ] ; 3 uses
+  %10 = sext i32 %i.cy to i64
+  %11 = getelementptr inbounds i8, ptr %.2163201, i64 %10
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %11, ptr align 1 %.2163201, i64 %i.cx, i1 false)
+  %12 = load i32, ptr %i.ar, align 8, !tbaa !57   ; 2 uses
+  %13 = sext i32 %12 to i64
+  %14 = getelementptr inbounds i8, ptr %.2163201, i64 %13 ; 3 uses
+  %i.cz = sext i32 %12 to i64
+  %i.da = getelementptr inbounds i8, ptr %14, i64 %i.cz
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.da, ptr align 1 %14, i64 %i.cx, i1 false)
   %i.db = load i32, ptr %i.ar, align 8, !tbaa !57 ; 2 uses
   %i.dc = sext i32 %i.db to i64
-  %i.dd = getelementptr inbounds i8, ptr %.2163201, i64 %i.dc
-  %i.de = add nsw i32 %.1156202, -1
-  %2 = icmp samesign ugt i32 %.1156202, 1
-  br i1 %2, label %bb.j, label %._crit_edge205, !llvm.loop !85
+  %i.dd = getelementptr inbounds i8, ptr %14, i64 %i.dc
+  %i.de = add nsw i32 %.1156202, -2
+  %15 = icmp sgt i32 %.1156202, 2
+  br i1 %15, label %bb.j, label %._crit_edge205, !llvm.loop !85
 
-._crit_edge205:                                   ; preds = %bb.j, %._crit_edge200
+._crit_edge205:                                   ; preds = %.prol.loopexit, %bb.j, %._crit_edge200
   %i.df = sdiv i32 %i.e, 80                       ; 14 uses
   %i.dg = icmp sgt i32 %i.e, 79
   br i1 %i.dg, label %bb.k, label %.critedge

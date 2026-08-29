@@ -10,7 +10,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @lexbor_dobject_create() local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @lexbor_calloc(i64 noundef 1, i64 noundef 32) #8
+  %i.a = tail call ptr @lexbor_calloc(i64 noundef 1, i64 noundef 32) #7
   ret ptr %i.a
 }
 
@@ -33,21 +33,21 @@ bb.c:                                             ; preds = %bb.b
   store i64 0, ptr %i.d, align 8, !tbaa !12
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store i64 %2, ptr %i.e, align 8, !tbaa !17
-  %i.f = tail call ptr @lexbor_mem_create() #8    ; 2 uses
+  %i.f = tail call ptr @lexbor_mem_create() #7    ; 2 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !18
   %i.g = load i64, ptr %i.e, align 8, !tbaa !17
   %i.h = mul i64 %i.g, %1
   %.biased.i = add i64 %i.h, 7
   %i.i = and i64 %.biased.i, -8
-  %i.j = tail call i32 @lexbor_mem_init(ptr noundef %i.f, i64 noundef %i.i) #8 ; 2 uses
+  %i.j = tail call i32 @lexbor_mem_init(ptr noundef %i.f, i64 noundef %i.i) #7 ; 2 uses
   %.not = icmp eq i32 %i.j, 0
   br i1 %.not, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = tail call ptr @lexbor_array_create() #8  ; 2 uses
+  %i.k = tail call ptr @lexbor_array_create() #7  ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.k, ptr %i.l, align 8, !tbaa !19
-  %i.m = tail call i32 @lexbor_array_init(ptr noundef %i.k, i64 noundef %1) #8
+  %i.m = tail call i32 @lexbor_array_init(ptr noundef %i.k, i64 noundef %1) #7
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a
@@ -73,10 +73,10 @@ bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %i.a, align 8, !tbaa !12
   %i.b = load ptr, ptr %0, align 8, !tbaa !18
-  tail call void @lexbor_mem_clean(ptr noundef %i.b) #8
+  tail call void @lexbor_mem_clean(ptr noundef %i.b) #7
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !19
-  tail call void @lexbor_array_clean(ptr noundef %i.d) #8
+  tail call void @lexbor_array_clean(ptr noundef %i.d) #7
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -95,16 +95,16 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr %0, align 8, !tbaa !18
-  %i.c = tail call ptr @lexbor_mem_destroy(ptr noundef %i.b, i1 noundef zeroext true) #8
+  %i.c = tail call ptr @lexbor_mem_destroy(ptr noundef %i.b, i1 noundef zeroext true) #7
   store ptr %i.c, ptr %0, align 8, !tbaa !18
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !19
-  %i.f = tail call ptr @lexbor_array_destroy(ptr noundef %i.e, i1 noundef zeroext true) #8
+  %i.f = tail call ptr @lexbor_array_destroy(ptr noundef %i.e, i1 noundef zeroext true) #7
   store ptr %i.f, ptr %i.d, align 8, !tbaa !19
   br i1 %1, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = tail call ptr @lexbor_free(ptr noundef nonnull %0) #8
+  %i.g = tail call ptr @lexbor_free(ptr noundef nonnull %0) #7
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
@@ -133,14 +133,14 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load i64, ptr %i.d, align 8, !tbaa !12
   %i.f = add i64 %i.e, 1
   store i64 %i.f, ptr %i.d, align 8, !tbaa !12
-  %i.g = tail call ptr @lexbor_array_pop(ptr noundef nonnull %i.b) #8
+  %i.g = tail call ptr @lexbor_array_pop(ptr noundef nonnull %i.b) #7
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %0, align 8, !tbaa !18
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.j = load i64, ptr %i.i, align 8, !tbaa !17
-  %i.k = tail call ptr @lexbor_mem_alloc(ptr noundef %i.h, i64 noundef %i.j) #8 ; 2 uses
+  %i.k = tail call ptr @lexbor_mem_alloc(ptr noundef %i.h, i64 noundef %i.j) #7 ; 2 uses
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %bb.e, label %bb.d
 
@@ -174,7 +174,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %0, align 8, !tbaa !18
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.f = load i64, ptr %i.e, align 8, !tbaa !17
-  %i.g = tail call ptr @lexbor_mem_alloc(ptr noundef %i.d, i64 noundef %i.f) #8 ; 2 uses
+  %i.g = tail call ptr @lexbor_mem_alloc(ptr noundef %i.d, i64 noundef %i.f) #7 ; 2 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %lexbor_dobject_alloc.exit.thread, label %lexbor_dobject_alloc.exit.thread8
 
@@ -190,7 +190,7 @@ lexbor_dobject_alloc.exit:                        ; preds = %bb.a
   %i.m = load i64, ptr %i.l, align 8, !tbaa !12
   %i.n = add i64 %i.m, 1
   store i64 %i.n, ptr %i.l, align 8, !tbaa !12
-  %i.o = tail call ptr @lexbor_array_pop(ptr noundef nonnull %i.b) #8 ; 2 uses
+  %i.o = tail call ptr @lexbor_array_pop(ptr noundef nonnull %i.b) #7 ; 2 uses
   %.not = icmp eq ptr %i.o, null
   br i1 %.not, label %lexbor_dobject_alloc.exit.thread, label %bb.c
 
@@ -218,7 +218,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !19
-  %i.d = tail call i32 @lexbor_array_push(ptr noundef %i.c, ptr noundef nonnull %1) #8
+  %i.d = tail call i32 @lexbor_array_push(ptr noundef %i.c, ptr noundef nonnull %1) #7
   %i.e = icmp eq i32 %i.d, 0
   br i1 %i.e, label %bb.c, label %bb.d
 
@@ -252,19 +252,19 @@ bb.b:                                             ; preds = %bb.a
   %i.g = mul i64 %i.f, %1                         ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.i = load i64, ptr %i.h, align 8, !tbaa !23   ; 2 uses
+  %2 = udiv i64 %i.g, %i.i                        ; 3 uses
   %.017 = load ptr, ptr %i.d, align 8, !tbaa !26  ; 3 uses
   %.not20 = icmp ugt i64 %i.i, %i.g
   br i1 %.not20, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.b
-  %2 = udiv i64 %i.g, %i.i                        ; 2 uses
-  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 1) ; 2 uses
-  %xtraiter = and i64 %umax, 7                    ; 3 uses
-  %i.j = icmp ult i64 %2, 8
+  %3 = add i64 %2, -1
+  %xtraiter = and i64 %2, 7                       ; 3 uses
+  %i.j = icmp ult i64 %3, 7
   br i1 %i.j, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %umax, -8
+  %unroll_iter = and i64 %2, -8
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
@@ -341,11 +341,8 @@ bb.a:
   ret i64 %.val.val
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #6
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #7
+declare void @llvm.assume(i1 noundef) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -353,9 +350,8 @@ attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 attributes #3 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #7 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #8 = { nounwind }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

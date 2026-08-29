@@ -204,21 +204,16 @@ bb.a:
   br i1 %or.cond.i, label %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.val = load ptr, ptr %0, align 8               ; 4 uses
-  %.idx = shl nuw nsw i64 %.val1, 1               ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %.val, i64 %.idx ; 3 uses
-  %i.c = lshr i64 %.val1, 2                       ; 3 uses
+  %.val = load ptr, ptr %0, align 8               ; 3 uses
+  %1 = getelementptr inbounds nuw [2 x i8], ptr %.val, i64 %.val1 ; 4 uses
+  %2 = ptrtoint ptr %1 to i64
+  %i.c = lshr i64 %.val1, 2                       ; 2 uses
   %.not.i.i = icmp eq i64 %i.c, 0
-  br i1 %.not.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
+  br i1 %.not.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %bb.b
-  %2 = shl nuw nsw i64 %i.c, 3                    ; 2 uses
-  %scevgep = getelementptr i8, ptr %.val, i64 %2
-  br label %.lr.ph.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader, %bb.f
-  %.052.i.i.i.i.i.i = phi i64 [ %i.aj, %bb.f ], [ %i.c, %.lr.ph.i.i.i.i.i.i.preheader ] ; 2 uses
-  %.sroa.032.051.i.i.i.i.i.i = phi ptr [ %i.ai, %bb.f ], [ %.val, %.lr.ph.i.i.i.i.i.i.preheader ] ; 9 uses
+.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.b, %bb.f
+  %.052.i.i.i.i.i.i = phi i64 [ %i.aj, %bb.f ], [ %i.c, %bb.b ] ; 2 uses
+  %.sroa.032.051.i.i.i.i.i.i = phi ptr [ %i.ai, %bb.f ], [ %.val, %bb.b ] ; 9 uses
   %i.d = load i16, ptr %.sroa.032.051.i.i.i.i.i.i, align 2, !tbaa !24 ; 2 uses
   %i.e = and i16 %i.d, -33
   %i.f = add i16 %i.e, -65
@@ -262,19 +257,20 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ah, label %bb.f, label %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i.loopexit.split.loop.exit16
 
 bb.f:                                             ; preds = %bb.e
-  %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i, i64 8
+  %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i, i64 8 ; 3 uses
   %i.aj = add nsw i64 %.052.i.i.i.i.i.i, -1
   %i.ak = icmp sgt i64 %.052.i.i.i.i.i.i, 1
   br i1 %i.ak, label %.lr.ph.i.i.i.i.i.i, label %._crit_edge.loopexit.i.i.i.i.i.i, !llvm.loop !30
 
 ._crit_edge.loopexit.i.i.i.i.i.i:                 ; preds = %bb.f
-  %gepdiff = sub nsw i64 %.idx, %2
+  %.pre.i.i.i.i.i.i = ptrtoint ptr %i.ai to i64
+  %gepdiff = sub i64 %2, %.pre.i.i.i.i.i.i
   %i.al = ashr exact i64 %gepdiff, 1
   br label %._crit_edge.i.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %._crit_edge.loopexit.i.i.i.i.i.i, %bb.b
   %.pre-phi58.i.i.i.i.i.i = phi i64 [ %i.al, %._crit_edge.loopexit.i.i.i.i.i.i ], [ %.val1, %bb.b ]
-  %.sroa.032.0.lcssa.i.i.i.i.i.i = phi ptr [ %scevgep, %._crit_edge.loopexit.i.i.i.i.i.i ], [ %.val, %bb.b ] ; 5 uses
+  %.sroa.032.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.ai, %._crit_edge.loopexit.i.i.i.i.i.i ], [ %.val, %bb.b ] ; 5 uses
   switch i64 %.pre-phi58.i.i.i.i.i.i, label %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i [
     i64 3, label %bb.g
     i64 2, label %bb.i
@@ -677,21 +673,16 @@ bb.d:                                             ; preds = %.lr.ph, %bb.c
   %.pn = phi ptr [ %i.j, %.lr.ph ], [ %i.cu, %bb.c ] ; 2 uses
   %.0840 = phi i1 [ false, %.lr.ph ], [ true, %bb.c ]
   %i.z = getelementptr inbounds i8, ptr %.pn, i64 -32 ; 2 uses
-  %.val41 = load ptr, ptr %i.z, align 8           ; 4 uses
-  %.idx.i = shl nuw nsw i64 %.val1042, 1          ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.val41, i64 %.idx.i ; 2 uses
-  %i.aa = lshr i64 %.val1042, 2                   ; 3 uses
+  %.val41 = load ptr, ptr %i.z, align 8           ; 3 uses
+  %3 = getelementptr inbounds nuw [2 x i8], ptr %.val41, i64 %.val1042 ; 3 uses
+  %4 = ptrtoint ptr %3 to i64
+  %i.aa = lshr i64 %.val1042, 2                   ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.aa, 0
-  br i1 %.not.i.i.i, label %._crit_edge.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.preheader.i
+  br i1 %.not.i.i.i, label %._crit_edge.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i.preheader.i:                   ; preds = %bb.d
-  %4 = shl nuw nsw i64 %i.aa, 3                   ; 2 uses
-  %scevgep.i = getelementptr i8, ptr %.val41, i64 %4
-  br label %.lr.ph.i.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i.i:                             ; preds = %bb.h, %.lr.ph.i.i.i.i.i.i.preheader.i
-  %.052.i.i.i.i.i.i.i = phi i64 [ %i.bh, %bb.h ], [ %i.aa, %.lr.ph.i.i.i.i.i.i.preheader.i ] ; 2 uses
-  %.sroa.032.051.i.i.i.i.i.i.i = phi ptr [ %i.bg, %bb.h ], [ %.val41, %.lr.ph.i.i.i.i.i.i.preheader.i ] ; 9 uses
+.lr.ph.i.i.i.i.i.i.i:                             ; preds = %bb.d, %bb.h
+  %.052.i.i.i.i.i.i.i = phi i64 [ %i.bh, %bb.h ], [ %i.aa, %bb.d ] ; 2 uses
+  %.sroa.032.051.i.i.i.i.i.i.i = phi ptr [ %i.bg, %bb.h ], [ %.val41, %bb.d ] ; 9 uses
   %i.ab = load i16, ptr %.sroa.032.051.i.i.i.i.i.i.i, align 2, !tbaa !24 ; 2 uses
   %i.ac = and i16 %i.ab, -33
   %i.ad = add i16 %i.ac, -65
@@ -735,19 +726,20 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.bf, label %bb.h, label %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i.i.loopexit.split.loop.exit92
 
 bb.h:                                             ; preds = %bb.g
-  %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i.i, i64 8
+  %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i.i, i64 8 ; 3 uses
   %i.bh = add nsw i64 %.052.i.i.i.i.i.i.i, -1
   %i.bi = icmp sgt i64 %.052.i.i.i.i.i.i.i, 1
   br i1 %i.bi, label %.lr.ph.i.i.i.i.i.i.i, label %._crit_edge.loopexit.i.i.i.i.i.i.i, !llvm.loop !30
 
 ._crit_edge.loopexit.i.i.i.i.i.i.i:               ; preds = %bb.h
-  %gepdiff.i = sub nsw i64 %.idx.i, %4
+  %.pre.i.i.i.i.i.i.i = ptrtoint ptr %i.bg to i64
+  %gepdiff.i = sub i64 %4, %.pre.i.i.i.i.i.i.i
   %i.bj = ashr exact i64 %gepdiff.i, 1
   br label %._crit_edge.i.i.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i.i.i:                        ; preds = %._crit_edge.loopexit.i.i.i.i.i.i.i, %bb.d
   %.pre-phi58.i.i.i.i.i.i.i = phi i64 [ %i.bj, %._crit_edge.loopexit.i.i.i.i.i.i.i ], [ %.val1042, %bb.d ]
-  %.sroa.032.0.lcssa.i.i.i.i.i.i.i = phi ptr [ %scevgep.i, %._crit_edge.loopexit.i.i.i.i.i.i.i ], [ %.val41, %bb.d ] ; 5 uses
+  %.sroa.032.0.lcssa.i.i.i.i.i.i.i = phi ptr [ %i.bg, %._crit_edge.loopexit.i.i.i.i.i.i.i ], [ %.val41, %bb.d ] ; 5 uses
   switch i64 %.pre-phi58.i.i.i.i.i.i.i, label %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i.i.thread [
     i64 3, label %bb.i
     i64 2, label %bb.k
@@ -1150,27 +1142,22 @@ _ZNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEC2ERKS4_.exit7: ; preds 
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal fastcc noundef zeroext i1 @_ZN6hermes13platform_intl12_GLOBAL__N_132isTransformedExtensionTValueItemERKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEE(ptr nofree readonly captures(address) %.0.val, i64 %.8.val) unnamed_addr #3 {
+define internal fastcc noundef zeroext i1 @_ZN6hermes13platform_intl12_GLOBAL__N_132isTransformedExtensionTValueItemERKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEE(ptr %.0.val, i64 %.8.val) unnamed_addr #3 {
 bb.a:
   %i.a = add i64 %.8.val, -9
   %or.cond.i = icmp ult i64 %i.a, -6
   br i1 %or.cond.i, label %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.idx = shl nuw nsw i64 %.8.val, 1              ; 2 uses
-  %0 = getelementptr inbounds nuw i8, ptr %.0.val, i64 %.idx ; 3 uses
-  %i.b = lshr i64 %.8.val, 2                      ; 3 uses
+  %0 = getelementptr inbounds nuw [2 x i8], ptr %.0.val, i64 %.8.val ; 4 uses
+  %1 = ptrtoint ptr %0 to i64
+  %i.b = lshr i64 %.8.val, 2                      ; 2 uses
   %.not.i.i = icmp eq i64 %i.b, 0
-  br i1 %.not.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
+  br i1 %.not.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %bb.b
-  %1 = shl nuw nsw i64 %i.b, 3                    ; 2 uses
-  %scevgep = getelementptr i8, ptr %.0.val, i64 %1
-  br label %.lr.ph.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader, %bb.f
-  %.052.i.i.i.i.i.i = phi i64 [ %i.ai, %bb.f ], [ %i.b, %.lr.ph.i.i.i.i.i.i.preheader ] ; 2 uses
-  %.sroa.032.051.i.i.i.i.i.i = phi ptr [ %i.ah, %bb.f ], [ %.0.val, %.lr.ph.i.i.i.i.i.i.preheader ] ; 9 uses
+.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.b, %bb.f
+  %.052.i.i.i.i.i.i = phi i64 [ %i.ai, %bb.f ], [ %i.b, %bb.b ] ; 2 uses
+  %.sroa.032.051.i.i.i.i.i.i = phi ptr [ %i.ah, %bb.f ], [ %.0.val, %bb.b ] ; 9 uses
   %i.c = load i16, ptr %.sroa.032.051.i.i.i.i.i.i, align 2, !tbaa !24 ; 2 uses
   %i.d = and i16 %i.c, -33
   %i.e = add i16 %i.d, -65
@@ -1214,19 +1201,20 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ag, label %bb.f, label %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i.loopexit.split.loop.exit15
 
 bb.f:                                             ; preds = %bb.e
-  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i, i64 8
+  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i, i64 8 ; 3 uses
   %i.ai = add nsw i64 %.052.i.i.i.i.i.i, -1
   %i.aj = icmp sgt i64 %.052.i.i.i.i.i.i, 1
   br i1 %i.aj, label %.lr.ph.i.i.i.i.i.i, label %._crit_edge.loopexit.i.i.i.i.i.i, !llvm.loop !30
 
 ._crit_edge.loopexit.i.i.i.i.i.i:                 ; preds = %bb.f
-  %gepdiff = sub nsw i64 %.idx, %1
+  %.pre.i.i.i.i.i.i = ptrtoint ptr %i.ah to i64
+  %gepdiff = sub i64 %1, %.pre.i.i.i.i.i.i
   %i.ak = ashr exact i64 %gepdiff, 1
   br label %._crit_edge.i.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %._crit_edge.loopexit.i.i.i.i.i.i, %bb.b
   %.pre-phi58.i.i.i.i.i.i = phi i64 [ %i.ak, %._crit_edge.loopexit.i.i.i.i.i.i ], [ %.8.val, %bb.b ]
-  %.sroa.032.0.lcssa.i.i.i.i.i.i = phi ptr [ %scevgep, %._crit_edge.loopexit.i.i.i.i.i.i ], [ %.0.val, %bb.b ] ; 5 uses
+  %.sroa.032.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.ah, %._crit_edge.loopexit.i.i.i.i.i.i ], [ %.0.val, %bb.b ] ; 5 uses
   switch i64 %.pre-phi58.i.i.i.i.i.i, label %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i [
     i64 3, label %bb.g
     i64 2, label %bb.i
@@ -1297,27 +1285,22 @@ _ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basi
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal fastcc noundef zeroext i1 @_ZN6hermes13platform_intl12_GLOBAL__N_121isPrivateUseExtensionERKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEE(ptr nofree readonly captures(address) %.0.val, i64 %.8.val) unnamed_addr #3 {
+define internal fastcc noundef zeroext i1 @_ZN6hermes13platform_intl12_GLOBAL__N_121isPrivateUseExtensionERKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEE(ptr %.0.val, i64 %.8.val) unnamed_addr #3 {
 bb.a:
   %i.a = add i64 %.8.val, -9
   %or.cond.i = icmp ult i64 %i.a, -8
   br i1 %or.cond.i, label %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.idx = shl nuw nsw i64 %.8.val, 1              ; 2 uses
-  %0 = getelementptr inbounds nuw i8, ptr %.0.val, i64 %.idx ; 3 uses
-  %i.b = lshr i64 %.8.val, 2                      ; 3 uses
+  %0 = getelementptr inbounds nuw [2 x i8], ptr %.0.val, i64 %.8.val ; 4 uses
+  %1 = ptrtoint ptr %0 to i64
+  %i.b = lshr i64 %.8.val, 2                      ; 2 uses
   %.not.i.i = icmp eq i64 %i.b, 0
-  br i1 %.not.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
+  br i1 %.not.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %bb.b
-  %1 = shl nuw nsw i64 %i.b, 3                    ; 2 uses
-  %scevgep = getelementptr i8, ptr %.0.val, i64 %1
-  br label %.lr.ph.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader, %bb.f
-  %.052.i.i.i.i.i.i = phi i64 [ %i.ai, %bb.f ], [ %i.b, %.lr.ph.i.i.i.i.i.i.preheader ] ; 2 uses
-  %.sroa.032.051.i.i.i.i.i.i = phi ptr [ %i.ah, %bb.f ], [ %.0.val, %.lr.ph.i.i.i.i.i.i.preheader ] ; 9 uses
+.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.b, %bb.f
+  %.052.i.i.i.i.i.i = phi i64 [ %i.ai, %bb.f ], [ %i.b, %bb.b ] ; 2 uses
+  %.sroa.032.051.i.i.i.i.i.i = phi ptr [ %i.ah, %bb.f ], [ %.0.val, %bb.b ] ; 9 uses
   %i.c = load i16, ptr %.sroa.032.051.i.i.i.i.i.i, align 2, !tbaa !24 ; 2 uses
   %i.d = and i16 %i.c, -33
   %i.e = add i16 %i.d, -65
@@ -1361,19 +1344,20 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ag, label %bb.f, label %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i.loopexit.split.loop.exit15
 
 bb.f:                                             ; preds = %bb.e
-  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i, i64 8
+  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i, i64 8 ; 3 uses
   %i.ai = add nsw i64 %.052.i.i.i.i.i.i, -1
   %i.aj = icmp sgt i64 %.052.i.i.i.i.i.i, 1
   br i1 %i.aj, label %.lr.ph.i.i.i.i.i.i, label %._crit_edge.loopexit.i.i.i.i.i.i, !llvm.loop !30
 
 ._crit_edge.loopexit.i.i.i.i.i.i:                 ; preds = %bb.f
-  %gepdiff = sub nsw i64 %.idx, %1
+  %.pre.i.i.i.i.i.i = ptrtoint ptr %i.ah to i64
+  %gepdiff = sub i64 %1, %.pre.i.i.i.i.i.i
   %i.ak = ashr exact i64 %gepdiff, 1
   br label %._crit_edge.i.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %._crit_edge.loopexit.i.i.i.i.i.i, %bb.b
   %.pre-phi58.i.i.i.i.i.i = phi i64 [ %i.ak, %._crit_edge.loopexit.i.i.i.i.i.i ], [ %.8.val, %bb.b ]
-  %.sroa.032.0.lcssa.i.i.i.i.i.i = phi ptr [ %scevgep, %._crit_edge.loopexit.i.i.i.i.i.i ], [ %.0.val, %bb.b ] ; 5 uses
+  %.sroa.032.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.ah, %._crit_edge.loopexit.i.i.i.i.i.i ], [ %.0.val, %bb.b ] ; 5 uses
   switch i64 %.pre-phi58.i.i.i.i.i.i, label %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i [
     i64 3, label %bb.g
     i64 2, label %bb.i
@@ -1444,27 +1428,22 @@ _ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basi
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal fastcc noundef zeroext i1 @_ZN6hermes13platform_intl12_GLOBAL__N_116isOtherExtensionERKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEE(ptr nofree readonly captures(address) %.0.val, i64 %.8.val) unnamed_addr #3 {
+define internal fastcc noundef zeroext i1 @_ZN6hermes13platform_intl12_GLOBAL__N_116isOtherExtensionERKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEE(ptr %.0.val, i64 %.8.val) unnamed_addr #3 {
 bb.a:
   %i.a = add i64 %.8.val, -9
   %or.cond.i = icmp ult i64 %i.a, -7
   br i1 %or.cond.i, label %_ZN6hermes13platform_intl12_GLOBAL__N_110isCharTypeIPFbDsEEEbRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEmmT_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.idx = shl nuw nsw i64 %.8.val, 1              ; 2 uses
-  %0 = getelementptr inbounds nuw i8, ptr %.0.val, i64 %.idx ; 3 uses
-  %i.b = lshr i64 %.8.val, 2                      ; 3 uses
+  %0 = getelementptr inbounds nuw [2 x i8], ptr %.0.val, i64 %.8.val ; 4 uses
+  %1 = ptrtoint ptr %0 to i64
+  %i.b = lshr i64 %.8.val, 2                      ; 2 uses
   %.not.i.i = icmp eq i64 %i.b, 0
-  br i1 %.not.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.preheader
+  br i1 %.not.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %bb.b
-  %1 = shl nuw nsw i64 %i.b, 3                    ; 2 uses
-  %scevgep = getelementptr i8, ptr %.0.val, i64 %1
-  br label %.lr.ph.i.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i.i:                               ; preds = %.lr.ph.i.i.i.i.i.i.preheader, %bb.f
-  %.052.i.i.i.i.i.i = phi i64 [ %i.ai, %bb.f ], [ %i.b, %.lr.ph.i.i.i.i.i.i.preheader ] ; 2 uses
-  %.sroa.032.051.i.i.i.i.i.i = phi ptr [ %i.ah, %bb.f ], [ %.0.val, %.lr.ph.i.i.i.i.i.i.preheader ] ; 9 uses
+.lr.ph.i.i.i.i.i.i:                               ; preds = %bb.b, %bb.f
+  %.052.i.i.i.i.i.i = phi i64 [ %i.ai, %bb.f ], [ %i.b, %bb.b ] ; 2 uses
+  %.sroa.032.051.i.i.i.i.i.i = phi ptr [ %i.ah, %bb.f ], [ %.0.val, %bb.b ] ; 9 uses
   %i.c = load i16, ptr %.sroa.032.051.i.i.i.i.i.i, align 2, !tbaa !24 ; 2 uses
   %i.d = and i16 %i.c, -33
   %i.e = add i16 %i.d, -65
@@ -1508,19 +1487,20 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ag, label %bb.f, label %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i.loopexit.split.loop.exit15
 
 bb.f:                                             ; preds = %bb.e
-  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i, i64 8
+  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.032.051.i.i.i.i.i.i, i64 8 ; 3 uses
   %i.ai = add nsw i64 %.052.i.i.i.i.i.i, -1
   %i.aj = icmp sgt i64 %.052.i.i.i.i.i.i, 1
   br i1 %i.aj, label %.lr.ph.i.i.i.i.i.i, label %._crit_edge.loopexit.i.i.i.i.i.i, !llvm.loop !30
 
 ._crit_edge.loopexit.i.i.i.i.i.i:                 ; preds = %bb.f
-  %gepdiff = sub nsw i64 %.idx, %1
+  %.pre.i.i.i.i.i.i = ptrtoint ptr %i.ah to i64
+  %gepdiff = sub i64 %1, %.pre.i.i.i.i.i.i
   %i.ak = ashr exact i64 %gepdiff, 1
   br label %._crit_edge.i.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %._crit_edge.loopexit.i.i.i.i.i.i, %bb.b
   %.pre-phi58.i.i.i.i.i.i = phi i64 [ %i.ak, %._crit_edge.loopexit.i.i.i.i.i.i ], [ %.8.val, %bb.b ]
-  %.sroa.032.0.lcssa.i.i.i.i.i.i = phi ptr [ %scevgep, %._crit_edge.loopexit.i.i.i.i.i.i ], [ %.0.val, %bb.b ] ; 5 uses
+  %.sroa.032.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.ah, %._crit_edge.loopexit.i.i.i.i.i.i ], [ %.0.val, %bb.b ] ; 5 uses
   switch i64 %.pre-phi58.i.i.i.i.i.i, label %_ZN4llvh6all_ofIRKNSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEEEPFbDsEEEbOT_T0_.exit.i [
     i64 3, label %bb.g
     i64 2, label %bb.i

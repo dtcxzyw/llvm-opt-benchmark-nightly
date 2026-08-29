@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/icu/original/ucnvlat1?download=true
 inline.NumInlined: 2
 inline.NumDeleted: 1
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -34,7 +34,7 @@ bb.a:
   %i.j = lshr exact i64 %i.i, 1
   %i.k = trunc i64 %i.j to i32                    ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !18   ; 3 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !18   ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !19
   %i.p = ptrtoint ptr %i.o to i64
@@ -49,12 +49,12 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.073 = phi i32 [ %i.k, %bb.b ], [ %i.s, %bb.a ] ; 4 uses
+  %.073 = phi i32 [ %i.k, %bb.b ], [ %i.s, %bb.a ] ; 5 uses
   %i.t = icmp sgt i32 %.073, 7
   br i1 %i.t, label %bb.d, label %.loopexit
 
 bb.d:                                             ; preds = %bb.c
-  %i.u = lshr i32 %.073, 3                        ; 2 uses
+  %i.u = lshr i32 %.073, 3                        ; 4 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %bb.d
@@ -99,40 +99,78 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   %i.ax = zext i8 %i.aw to i16
   %i.ay = getelementptr inbounds nuw i8, ptr %.079, i64 14
   store i16 %i.ax, ptr %i.ay, align 2, !tbaa !23
-  %i.az = getelementptr inbounds nuw i8, ptr %.079, i64 16 ; 4 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %.082, i64 8 ; 4 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %.079, i64 16 ; 5 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %.082, i64 8 ; 5 uses
   %i.bb = add nsw i32 %.067, -1
   %i.bc = icmp samesign ugt i32 %.067, 1
   br i1 %i.bc, label %bb.e, label %bb.f, !llvm.loop !25
 
 bb.f:                                             ; preds = %bb.e
-  %i.bd = and i32 %.073, 7                        ; 3 uses
+  %i.bd = and i32 %.073, 7                        ; 4 uses
   %.not89 = icmp eq ptr %i.m, null
-  br i1 %.not89, label %.loopexit.thread, label %.preheader91
+  br i1 %.not89, label %.loopexit.thread, label %.preheader91.preheader
 
-.preheader91:                                     ; preds = %bb.f, %.preheader91
-  %.069 = phi ptr [ %i.bk, %.preheader91 ], [ %i.m, %bb.f ] ; 3 uses
-  %.068 = phi i32 [ %i.bj, %.preheader91 ], [ 0, %bb.f ] ; 2 uses
-  %.0 = phi i32 [ %i.bl, %.preheader91 ], [ %i.u, %bb.f ] ; 2 uses
-  %i.be = insertelement <4 x i32> poison, i32 %.068, i64 0
+.preheader91.preheader:                           ; preds = %bb.f
+  %2 = icmp eq i32 %i.u, 1
+  br i1 %2, label %.preheader91.epil.preheader, label %.preheader91.preheader.new
+
+.preheader91.preheader.new:                       ; preds = %.preheader91.preheader
+  %unroll_iter = and i32 %i.u, 268435454
+  br label %.preheader91
+
+.preheader91:                                     ; preds = %.preheader91, %.preheader91.preheader.new
+  %.069 = phi ptr [ %i.m, %.preheader91.preheader.new ], [ %i.bk, %.preheader91 ] ; 5 uses
+  %.068 = phi i32 [ 0, %.preheader91.preheader.new ], [ %i.bj, %.preheader91 ] ; 3 uses
+  %.0 = phi i32 [ 0, %.preheader91.preheader.new ], [ %i.bl, %.preheader91 ]
+  %3 = insertelement <4 x i32> poison, i32 %.068, i64 0
+  %4 = shufflevector <4 x i32> %3, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %5 = or disjoint <4 x i32> %4, <i32 4, i32 5, i32 6, i32 7>
+  %6 = or disjoint <4 x i32> %4, <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i32> %6, ptr %.069, align 4, !tbaa !27
+  %7 = getelementptr inbounds nuw i8, ptr %.069, i64 16
+  %8 = or disjoint i32 %.068, 8
+  store <4 x i32> %5, ptr %7, align 4, !tbaa !27
+  %9 = getelementptr inbounds nuw i8, ptr %.069, i64 32
+  %i.be = insertelement <4 x i32> poison, i32 %8, i64 0
   %i.bf = shufflevector <4 x i32> %i.be, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.bg = or disjoint <4 x i32> %i.bf, <i32 4, i32 5, i32 6, i32 7>
   %i.bh = or disjoint <4 x i32> %i.bf, <i32 0, i32 1, i32 2, i32 3>
-  store <4 x i32> %i.bh, ptr %.069, align 4, !tbaa !27
-  %i.bi = getelementptr inbounds nuw i8, ptr %.069, i64 16
-  %i.bj = add nuw nsw i32 %.068, 8                ; 2 uses
+  store <4 x i32> %i.bh, ptr %9, align 4, !tbaa !27
+  %i.bi = getelementptr inbounds nuw i8, ptr %.069, i64 48
+  %i.bj = add nuw nsw i32 %.068, 16               ; 3 uses
   store <4 x i32> %i.bg, ptr %i.bi, align 4, !tbaa !27
-  %i.bk = getelementptr inbounds nuw i8, ptr %.069, i64 32 ; 2 uses
-  %i.bl = add nsw i32 %.0, -1
-  %2 = icmp samesign ugt i32 %.0, 1
-  br i1 %2, label %.preheader91, label %.loopexit, !llvm.loop !28
+  %i.bk = getelementptr inbounds nuw i8, ptr %.069, i64 64 ; 3 uses
+  %i.bl = add i32 %.0, 2                          ; 2 uses
+  %niter.ncmp.1.not = icmp eq i32 %i.bl, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %.loopexit.loopexit.unr-lcssa, label %.preheader91, !llvm.loop !28
 
-.loopexit:                                        ; preds = %.preheader91, %bb.c
-  %.183 = phi ptr [ %i.b, %bb.c ], [ %i.ba, %.preheader91 ] ; 2 uses
-  %.180 = phi ptr [ %i.d, %bb.c ], [ %i.az, %.preheader91 ] ; 2 uses
-  %.174 = phi i32 [ %.073, %bb.c ], [ %i.bd, %.preheader91 ] ; 2 uses
-  %.271 = phi ptr [ %i.m, %bb.c ], [ %i.bk, %.preheader91 ] ; 3 uses
-  %.2 = phi i32 [ 0, %bb.c ], [ %i.bj, %.preheader91 ]
+.loopexit.loopexit.unr-lcssa:                     ; preds = %.preheader91
+  %10 = and i32 %.073, 8
+  %lcmp.mod.not = icmp eq i32 %10, 0
+  br i1 %lcmp.mod.not, label %.loopexit, label %.preheader91.epil.preheader
+
+.preheader91.epil.preheader:                      ; preds = %.loopexit.loopexit.unr-lcssa, %.preheader91.preheader
+  %.069.epil.init = phi ptr [ %i.m, %.preheader91.preheader ], [ %i.bk, %.loopexit.loopexit.unr-lcssa ] ; 3 uses
+  %.068.epil.init = phi i32 [ 0, %.preheader91.preheader ], [ %i.bj, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod182 = trunc i32 %i.u to i1
+  tail call void @llvm.assume(i1 %lcmp.mod182)
+  %11 = insertelement <4 x i32> poison, i32 %.068.epil.init, i64 0
+  %12 = shufflevector <4 x i32> %11, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %13 = or disjoint <4 x i32> %12, <i32 4, i32 5, i32 6, i32 7>
+  %14 = or disjoint <4 x i32> %12, <i32 0, i32 1, i32 2, i32 3>
+  store <4 x i32> %14, ptr %.069.epil.init, align 4, !tbaa !27
+  %15 = getelementptr inbounds nuw i8, ptr %.069.epil.init, i64 16
+  %16 = add nuw nsw i32 %.068.epil.init, 8
+  store <4 x i32> %13, ptr %15, align 4, !tbaa !27
+  %17 = getelementptr inbounds nuw i8, ptr %.069.epil.init, i64 32
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.preheader91.epil.preheader, %.loopexit.loopexit.unr-lcssa, %bb.c
+  %.183 = phi ptr [ %i.b, %bb.c ], [ %i.ba, %.loopexit.loopexit.unr-lcssa ], [ %i.ba, %.preheader91.epil.preheader ] ; 2 uses
+  %.180 = phi ptr [ %i.d, %bb.c ], [ %i.az, %.loopexit.loopexit.unr-lcssa ], [ %i.az, %.preheader91.epil.preheader ] ; 2 uses
+  %.174 = phi i32 [ %.073, %bb.c ], [ %i.bd, %.loopexit.loopexit.unr-lcssa ], [ %i.bd, %.preheader91.epil.preheader ] ; 2 uses
+  %.271 = phi ptr [ %i.m, %bb.c ], [ %i.bk, %.loopexit.loopexit.unr-lcssa ], [ %17, %.preheader91.epil.preheader ] ; 3 uses
+  %.2 = phi i32 [ 0, %bb.c ], [ %i.bj, %.loopexit.loopexit.unr-lcssa ], [ %16, %.preheader91.epil.preheader ]
   %i.bm = icmp sgt i32 %.174, 0
   br i1 %i.bm, label %iter.check, label %._crit_edge.thread
 
@@ -535,11 +573,11 @@ bb.l:                                             ; preds = %bb.k, %bb.b
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #4
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.vector.reduce.or.v16i16(<16 x i16>) #4
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.vector.reduce.or.v16i16(<16 x i16>) #4
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

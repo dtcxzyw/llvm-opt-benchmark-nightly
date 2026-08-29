@@ -202,9 +202,9 @@ bb.l:                                             ; preds = %bb.k
   br i1 %isdigit.i, label %bb.m, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findERKS4_m.exit.thread
 
 bb.m:                                             ; preds = %.lr.ph.i
-  %i.as = add nuw i64 %.12.i, 1                   ; 2 uses
-  %6 = icmp ult i64 %i.as, %.0
-  br i1 %6, label %.lr.ph.i, label %_ZN7rocksdb12_GLOBAL__N_114MatchesIntegerERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmm.exit, !llvm.loop !19
+  %i.as = add i64 %.12.i, 1                       ; 2 uses
+  %exitcond.not.i = icmp eq i64 %i.as, %.0
+  br i1 %exitcond.not.i, label %_ZN7rocksdb12_GLOBAL__N_114MatchesIntegerERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmm.exit, label %.lr.ph.i, !llvm.loop !19
 
 bb.n:                                             ; preds = %bb.k
   %.val31 = load ptr, ptr %3, align 8, !tbaa !15  ; 2 uses
@@ -241,9 +241,9 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q, %bb.o
   %.116.i = phi i32 [ %i.bb, %bb.q ], [ %.0153.i, %bb.o ] ; 2 uses
   %.1.i = phi i1 [ %.0144.i, %bb.q ], [ true, %bb.o ]
-  %i.bc = add nuw i64 %.1202.i, 1                 ; 2 uses
-  %.not.not.i = icmp ult i64 %i.bc, %.0
-  br i1 %.not.not.i, label %.lr.ph.i33, label %_ZN7rocksdb12_GLOBAL__N_114MatchesDecimalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmm.exit, !llvm.loop !20
+  %i.bc = add i64 %.1202.i, 1                     ; 2 uses
+  %exitcond.not.i36 = icmp eq i64 %i.bc, %.0
+  br i1 %exitcond.not.i36, label %_ZN7rocksdb12_GLOBAL__N_114MatchesDecimalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmm.exit, label %.lr.ph.i33, !llvm.loop !20
 
 _ZN7rocksdb12_GLOBAL__N_114MatchesDecimalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmm.exit: ; preds = %bb.r
   %i.bd = icmp sgt i32 %.116.i, 0
@@ -297,9 +297,9 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.b, %bb.d
   %.116 = phi i32 [ %i.i, %bb.d ], [ %.0153, %bb.b ] ; 2 uses
   %.1 = phi i1 [ %.0144, %bb.d ], [ true, %bb.b ]
-  %i.j = add nuw i64 %.1202, 1                    ; 2 uses
-  %.not.not = icmp ult i64 %i.j, %1
-  br i1 %.not.not, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !20
+  %i.j = add i64 %.1202, 1                        ; 2 uses
+  %exitcond.not = icmp eq i64 %i.j, %1
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !20
 
 ._crit_edge.loopexit:                             ; preds = %bb.c, %bb.b, %bb.e
   %.015.lcssa.ph = phi i32 [ %.116, %bb.e ], [ %.0153, %bb.b ], [ %.0153, %bb.c ]
@@ -474,10 +474,10 @@ bb.r:                                             ; preds = %bb.q
   %i.bk = sext i8 %i.bj to i32
   %isdigittmp.i = add nsw i32 %i.bk, -48
   %isdigit.i = icmp ult i32 %isdigittmp.i, 10     ; 2 uses
-  %i.bl = add nuw i64 %.12.i, 1                   ; 2 uses
-  %5 = icmp ult i64 %i.bl, %4
-  %or.cond93 = select i1 %isdigit.i, i1 %5, i1 false
-  br i1 %or.cond93, label %.lr.ph.i, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit, !llvm.loop !19
+  %i.bl = add i64 %.12.i, 1                       ; 2 uses
+  %exitcond.not.i = icmp ne i64 %i.bl, %4
+  %or.cond92.not = and i1 %exitcond.not.i, %isdigit.i
+  br i1 %or.cond92.not, label %.lr.ph.i, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit, !llvm.loop !19
 
 bb.s:                                             ; preds = %bb.q
   %.val59 = load ptr, ptr %3, align 8, !tbaa !15

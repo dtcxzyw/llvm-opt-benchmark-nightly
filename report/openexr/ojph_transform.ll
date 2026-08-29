@@ -204,12 +204,12 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !13   ; 4 uses
   %i.f = zext i1 %5 to i32
-  %i.g = add i32 %4, %i.f                         ; 3 uses
-  %i.h = lshr i32 %i.g, 1                         ; 4 uses
+  %i.g = add i32 %4, %i.f                         ; 2 uses
+  %i.h = lshr i32 %i.g, 1                         ; 5 uses
   %not. = xor i1 %5, true                         ; 2 uses
   %i.i = zext i1 %not. to i32
-  %i.j = add i32 %4, %i.i                         ; 3 uses
-  %i.k = lshr i32 %i.j, 1                         ; 4 uses
+  %i.j = add i32 %4, %i.i                         ; 2 uses
+  %i.k = lshr i32 %i.j, 1                         ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.m = load float, ptr %i.l, align 4, !tbaa !326 ; 3 uses
   %i.n = fdiv float 1.000000e+00, %i.m            ; 2 uses
@@ -217,8 +217,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not98, label %.preheader, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.b
-  %6 = lshr i32 %i.g, 1
-  %i.o = zext nneg i32 %6 to i64                  ; 2 uses
+  %i.o = zext nneg i32 %i.h to i64                ; 2 uses
   %min.iters.check = icmp ult i32 %i.g, 16
   br i1 %min.iters.check, label %.lr.ph.preheader233, label %vector.ph
 
@@ -261,8 +260,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %.not95101, label %._crit_edge, label %.lr.ph104.preheader
 
 .lr.ph104.preheader:                              ; preds = %.preheader
-  %7 = lshr i32 %i.j, 1
-  %i.y = zext nneg i32 %7 to i64                  ; 2 uses
+  %i.y = zext nneg i32 %i.k to i64                ; 2 uses
   %min.iters.check149 = icmp ult i32 %i.j, 16
   br i1 %min.iters.check149, label %.lr.ph104.preheader232, label %vector.ph150
 

@@ -205,8 +205,8 @@ bb.aq:                                            ; preds = %bb.ap
   %i.acc = load i32, ptr %i.acb, align 1, !tbaa !32
   %i.acd = tail call i32 @llvm.bswap.i32(i32 %i.acc)
   %i.ace = and i32 %spec.select.i.i71.i, 7
-  %i.acf = shl i32 %i.acd, %i.ace                 ; 2 uses
-  %i.acg = lshr i32 %i.acf, 26                    ; 4 uses
+  %i.acf = shl i32 %i.acd, %i.ace
+  %i.acg = lshr i32 %i.acf, 26                    ; 5 uses
   %i.ach = add i32 %spec.select.i.i71.i, 6
   %i.aci = tail call i32 @llvm.umin.i32(i32 %i.abs, i32 %i.ach)
   store i32 %i.aci, ptr %i.aw, align 8, !tbaa !104
@@ -225,10 +225,11 @@ bb.aq:                                            ; preds = %bb.ap
   %i.acn = zext i16 %i.acm to i64
   %i.aco = shl nuw nsw i64 %i.acn, 2
   %scevgep55.i.i = getelementptr i8, ptr %i.abl, i64 %i.aco
-  %4 = lshr i32 %i.acf, 24
-  %5 = and i32 %4, 252
-  %6 = zext nneg i32 %5 to i64
-  tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep55.i.i, i8 0, i64 %6, i1 false), !tbaa !51
+  %4 = add nsw i32 %i.acg, -1
+  %5 = zext nneg i32 %4 to i64
+  %6 = shl nuw nsw i64 %5, 2
+  %7 = add nuw nsw i64 %6, 4
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep55.i.i, i8 0, i64 %7, i1 false), !tbaa !51
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.lr.ph.i74.i, %.preheader45.i.i

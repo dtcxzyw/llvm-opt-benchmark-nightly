@@ -202,9 +202,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.r, %.lr.ph.i
   %.02263.i = phi i32 [ 0, %.lr.ph.i ], [ %.2.i, %bb.r ]
   %.02362.i = phi ptr [ %i.e, %.lr.ph.i ], [ %i.dq, %bb.r ] ; 2 uses
-  %.sroa.045.060.i = phi ptr [ %i.e, %.lr.ph.i ], [ %.sroa.045.1.i, %bb.r ] ; 7 uses
+  %.sroa.045.060.i = phi ptr [ %i.e, %.lr.ph.i ], [ %.sroa.045.1.i, %bb.r ] ; 8 uses
   %i.o = ptrtoint ptr %.sroa.045.060.i to i64     ; 2 uses
-  %i.p = sub i64 %i.l, %i.o                       ; 2 uses
+  %i.p = sub i64 %i.l, %i.o                       ; 3 uses
   %i.q = icmp sgt i64 %i.p, 3
   br i1 %i.q, label %bb.d, label %bb.e
 
@@ -247,11 +247,12 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %.thread.i.i, %bb.d
   %.sink.i.i = phi i32 [ 4, %bb.d ], [ 3, %.thread.i.i ] ; 3 uses
   %i.ak = phi i64 [ 4, %bb.d ], [ 3, %.thread.i.i ]
-  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.045.060.i, i64 %i.ak ; 10 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.045.060.i, i64 %i.ak ; 11 uses
   %i.am = icmp ult ptr %i.al, %i.i
   br i1 %i.am, label %.lr.ph.i.preheader.i, label %.loopexit.i
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.f
+  %scevgep.i.i = getelementptr i8, ptr %.sroa.045.060.i, i64 %i.p
   %i.an = getelementptr i8, ptr %.sroa.045.060.i, i64 %i.k
   %scevgep.i = getelementptr i8, ptr %i.an, i64 %i.h
   %i.ao = sub i64 0, %i.o
@@ -259,7 +260,7 @@ bb.f:                                             ; preds = %.thread.i.i, %bb.d
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.i, %.lr.ph.i.preheader.i
-  %.sroa.045.2.i = phi ptr [ %i.bl, %bb.i ], [ %i.al, %.lr.ph.i.preheader.i ] ; 8 uses
+  %.sroa.045.2.i = phi ptr [ %i.al, %.lr.ph.i.preheader.i ], [ %i.bl, %bb.i ] ; 10 uses
   %i.ap = ptrtoint ptr %.sroa.045.2.i to i64
   %i.aq = sub i64 %i.l, %i.ap                     ; 2 uses
   %i.ar = icmp sgt i64 %i.aq, 3
@@ -303,12 +304,13 @@ bb.h:                                             ; preds = %.lr.ph.i.i
 
 bb.i:                                             ; preds = %.thread34.i.i, %bb.h
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.045.2.i, i64 1 ; 2 uses
-  %3 = icmp ult ptr %i.bl, %i.i
-  br i1 %3, label %.lr.ph.i.i, label %.loopexit.i, !llvm.loop !45
+  %exitcond.not.i.i = icmp eq ptr %i.bl, %i.i
+  br i1 %exitcond.not.i.i, label %.loopexit.i, label %.lr.ph.i.i, !llvm.loop !45
 
 .loopexit.i:                                      ; preds = %bb.i, %.thread34.i.i, %bb.g, %bb.f
-  %.sroa.045.1.i = phi ptr [ %i.al, %bb.f ], [ %.sroa.045.2.i, %bb.g ], [ %.sroa.045.2.i, %.thread34.i.i ], [ %scevgep65.i, %bb.i ] ; 3 uses
-  %i.bm = ptrtoint ptr %.sroa.045.1.i to i64
+  %.sroa.045.1.i = phi ptr [ %i.al, %bb.f ], [ %.sroa.045.2.i, %bb.g ], [ %.sroa.045.2.i, %.thread34.i.i ], [ %scevgep65.i, %bb.i ] ; 2 uses
+  %storemerge.lcssa.i.i = phi ptr [ %i.al, %bb.f ], [ %.sroa.045.2.i, %bb.g ], [ %.sroa.045.2.i, %.thread34.i.i ], [ %scevgep.i.i, %bb.i ]
+  %i.bm = ptrtoint ptr %storemerge.lcssa.i.i to i64
   %i.bn = ptrtoint ptr %i.al to i64
   %i.bo = sub i64 %i.bm, %i.bn
   %i.bp = trunc i64 %i.bo to i32                  ; 5 uses

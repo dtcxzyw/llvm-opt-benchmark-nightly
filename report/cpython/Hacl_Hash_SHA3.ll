@@ -204,8 +204,7 @@ bb.a:
   %i.aa = getelementptr i8, ptr %0, i64 112       ; 2 uses
   %i.ab = getelementptr i8, ptr %0, i64 152       ; 3 uses
   %i.ac = getelementptr i8, ptr %0, i64 192       ; 3 uses
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.d, i32 1)
-  %wide.trip.count = zext nneg i32 %umax to i64
+  %wide.trip.count = zext nneg i32 %i.d to i64
   %.200..sroa_idx628 = getelementptr inbounds nuw i8, ptr %i.b, i64 200
   br label %bb.b
 
@@ -503,9 +502,6 @@ bb.d:                                             ; preds = %bb.b, %bb.d
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.fshl.i64(i64, i64, i64) #16
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #3

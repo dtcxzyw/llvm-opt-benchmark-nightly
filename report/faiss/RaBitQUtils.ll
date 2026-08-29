@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = mul i64 %i.g, %3                         ; 5 uses
   %i.i = add i64 %2, -1
   %i.j = add i64 %i.i, %3                         ; 2 uses
-  %i.k = udiv i64 %i.j, %3                        ; 3 uses
+  %i.k = udiv i64 %i.j, %3                        ; 5 uses
   %i.l = icmp ult i64 %5, %6
   br i1 %i.l, label %bb.c, label %.lr.ph75
 
@@ -232,13 +232,12 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not76, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.e
-  %umax = call i64 @llvm.umax.i64(i64 %i.k, i64 1) ; 3 uses
-  %xtraiter = and i64 %umax, 1
-  %11 = icmp ult i64 %i.k, 2
+  %xtraiter = and i64 %i.k, 1
+  %11 = icmp eq i64 %i.k, 1
   br i1 %11, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %umax, -2
+  %unroll_iter = and i64 %i.k, -2
   br label %.lr.ph
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
@@ -247,7 +246,7 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %.05672.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %i.ap, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod97 = trunc i64 %umax to i1
+  %lcmp.mod97 = trunc i64 %i.k to i1
   call void @llvm.assume(i1 %lcmp.mod97)
   %i.t = load ptr, ptr %1, align 8, !tbaa !83
   %i.u = load ptr, ptr %9, align 8, !tbaa !83

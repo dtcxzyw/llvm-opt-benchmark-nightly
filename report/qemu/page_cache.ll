@@ -29,7 +29,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local noundef ptr @cache_init(i64 noundef %0, i64 noundef %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = udiv i64 %0, %1                          ; 6 uses
+  %i.a = udiv i64 %0, %1                          ; 7 uses
   %i.b = icmp ult i64 %0, %1
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -93,13 +93,13 @@ trace_migration_pagecache_init.exit:              ; preds = %bb.f, %bb.g, %bb.h,
   br i1 %.not37, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.a, i64 1) ; 2 uses
-  %xtraiter = and i64 %umax, 3                    ; 3 uses
-  %i.n = icmp ult i64 %i.a, 4
+  %3 = add i64 %i.a, -1
+  %xtraiter = and i64 %i.a, 3                     ; 3 uses
+  %i.n = icmp ult i64 %3, 3
   br i1 %i.n, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %umax, -4
+  %unroll_iter = and i64 %i.a, -4
   br label %.lr.ph
 
 bb.j:                                             ; preds = %trace_migration_pagecache_init.exit
@@ -419,9 +419,6 @@ declare i64 @llvm.ctpop.i64(i64) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6

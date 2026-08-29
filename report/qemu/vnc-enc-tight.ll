@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %send_rect_simple.ex
   %.1113.i = phi i32 [ %i.cq, %send_rect_simple.exit91 ], [ %.0112.i192, %bb.n ] ; 4 uses
   %.1109.i = phi i32 [ %i.cs, %send_rect_simple.exit91 ], [ %.0108.i194, %bb.n ] ; 5 uses
   %.1107.i = phi i32 [ %i.cr, %send_rect_simple.exit91 ], [ %.0106.i195, %bb.n ] ; 9 uses
-  %i.ct = add i32 %.1107.i, %.1109.i              ; 9 uses
+  %i.ct = add i32 %.1107.i, %.1109.i              ; 10 uses
   %i.cu = sub i32 %i.ct, %.0111.i193              ; 2 uses
   %i.cv = tail call i32 @llvm.smin.i32(i32 %i.cu, i32 16) ; 2 uses
   br i1 %i.j, label %.lr.ph, label %._crit_edge
@@ -518,12 +518,12 @@ bb.ag:                                            ; preds = %.preheader.us.prehe
 
 .loopexit134.i:                                   ; preds = %bb.ag, %bb.af
   %i.ge = tail call i32 @vnc_server_fb_stride(ptr noundef %.val63.i) #12 ; 0 uses
-  %i.gf = add nsw i32 %.1163.i, 1                 ; 3 uses
-  %6 = icmp slt i32 %i.gf, %i.ct
-  br i1 %6, label %.lr.ph164.i, label %.critedge2.i, !llvm.loop !15
+  %i.gf = add nsw i32 %.1163.i, 1                 ; 2 uses
+  %exitcond.not.i = icmp eq i32 %i.gf, %i.ct
+  br i1 %exitcond.not.i, label %.critedge2.i, label %.lr.ph164.i, !llvm.loop !15
 
 .critedge2.i:                                     ; preds = %.loopexit134.i, %.lr.ph164.i, %.preheader.us.preheader.i.i71.i, %.critedge.i
-  %.1146.i = phi i32 [ %.1163.i, %.preheader.us.preheader.i.i71.i ], [ %i.fx, %.critedge.i ], [ %i.gf, %.loopexit134.i ], [ %.1163.i, %.lr.ph164.i ] ; 4 uses
+  %.1146.i = phi i32 [ %.1163.i, %.preheader.us.preheader.i.i71.i ], [ %i.fx, %.critedge.i ], [ %i.ct, %.loopexit134.i ], [ %.1163.i, %.lr.ph164.i ] ; 4 uses
   %i.gg = sub i32 %.1146.i, %.0.in150.i           ; 8 uses
   %.059170.i = add i32 %.0110.i191, -1            ; 2 uses
   %.not61171.i = icmp slt i32 %.059170.i, %2
@@ -602,7 +602,7 @@ bb.ai:                                            ; preds = %.lr.ph183.i
   br i1 %exitcond8.not.i.i110.i, label %.loopexit.i, label %.preheader.us.i.i102.i, !llvm.loop !11
 
 .loopexit.i:                                      ; preds = %._crit_edge.us.i.i109.i, %bb.ai
-  %i.gz = add i32 %.160182.i, 1                   ; 2 uses
+  %i.gz = add nsw i32 %.160182.i, 1               ; 2 uses
   %exitcond.not = icmp eq i32 %i.gz, %i.i
   br i1 %exitcond.not, label %extend_solid_area.exit, label %.lr.ph183.i, !llvm.loop !17
 

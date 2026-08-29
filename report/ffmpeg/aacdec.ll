@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.bd = load i32, ptr %i.bc, align 1, !tbaa !30
   %i.be = tail call i32 @llvm.bswap.i32(i32 %i.bd)
   %i.bf = and i32 %i.az, 7
-  %i.bg = shl i32 %i.be, %i.bf                    ; 3 uses
-  %i.bh = lshr i32 %i.bg, 30                      ; 7 uses
+  %i.bg = shl i32 %i.be, %i.bf
+  %i.bh = lshr i32 %i.bg, 30                      ; 9 uses
   %i.bi = add i32 %i.az, 2
   %i.bj = tail call i32 @llvm.umin.i32(i32 %i.u, i32 %i.bi) ; 4 uses
   store i32 %i.bj, ptr %i.c, align 8, !tbaa !117
@@ -227,8 +227,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.bx = load i32, ptr %i.bw, align 1, !tbaa !30
   %i.by = tail call i32 @llvm.bswap.i32(i32 %i.bx)
   %i.bz = and i32 %i.bt, 7
-  %i.ca = shl i32 %i.by, %i.bz                    ; 3 uses
-  %i.cb = lshr i32 %i.ca, 28                      ; 7 uses
+  %i.ca = shl i32 %i.by, %i.bz
+  %i.cb = lshr i32 %i.ca, 28                      ; 9 uses
   %i.cc = add i32 %i.bt, 4
   %i.cd = tail call i32 @llvm.umin.i32(i32 %i.u, i32 %i.cc) ; 5 uses
   store i32 %i.cd, ptr %i.c, align 8, !tbaa !117
@@ -631,10 +631,11 @@ bb.l:                                             ; preds = %.lr.ph21, %bb.l
   %i.ob = zext i32 %.2.lcssa to i64
   %i.oc = mul nuw nsw i64 %i.ob, 3
   %scevgep = getelementptr i8, ptr %1, i64 %i.oc
-  %4 = lshr i32 %i.bg, 30
-  %narrow = mul nuw nsw i32 %4, 3
-  %5 = zext nneg i32 %narrow to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.oa, ptr align 1 %scevgep, i64 %5, i1 false)
+  %4 = add nsw i32 %i.bh, -1
+  %5 = zext nneg i32 %4 to i64
+  %6 = mul nuw nsw i64 %5, 3
+  %7 = add nuw nsw i64 %6, 3
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.oa, ptr noundef nonnull align 1 dereferenceable(1) %scevgep, i64 %7, i1 false)
   %i.od = add i32 %.2.lcssa, %i.bh
   br label %.preheader10
 
@@ -677,10 +678,11 @@ bb.m:                                             ; preds = %.lr.ph28, %bb.m
   %i.ox = zext nneg i32 %.3.lcssa to i64
   %i.oy = mul nuw nsw i64 %i.ox, 3
   %scevgep112 = getelementptr i8, ptr %1, i64 %i.oy
-  %6 = lshr i32 %i.ca, 28
-  %narrow185 = mul nuw nsw i32 %6, 3
-  %7 = zext nneg i32 %narrow185 to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.ow, ptr align 1 %scevgep112, i64 %7, i1 false)
+  %8 = add nsw i32 %i.cb, -1
+  %9 = zext nneg i32 %8 to i64
+  %10 = mul nuw nsw i64 %9, 3
+  %11 = add nuw nsw i64 %10, 3
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.ow, ptr noundef nonnull align 1 dereferenceable(1) %scevgep112, i64 %11, i1 false)
   %i.oz = add i32 %.3.lcssa, %i.cb
   br label %._crit_edge
 
@@ -707,12 +709,14 @@ bb.o:                                             ; preds = %._crit_edge
   %i.pg = getelementptr inbounds nuw i8, ptr %i.b, i64 144 ; 9 uses
   %i.ph = getelementptr inbounds nuw i8, ptr %i.b, i64 192
   %i.pi = getelementptr inbounds nuw i8, ptr %i.b, i64 240
-  %8 = lshr i32 %i.bg, 30
-  %narrow186 = mul nuw nsw i32 %8, 3
-  %9 = zext nneg i32 %narrow186 to i64
-  %10 = lshr i32 %i.ca, 28
-  %narrow187 = mul nuw nsw i32 %10, 3
-  %i.pj = zext nneg i32 %narrow187 to i64
+  %12 = add nsw i32 %i.bh, -1
+  %13 = zext i32 %12 to i64
+  %14 = mul nuw nsw i64 %13, 3
+  %15 = add nuw nsw i64 %14, 3
+  %16 = add nsw i32 %i.cb, -1
+  %i.pj = zext i32 %16 to i64
+  %17 = mul nuw nsw i64 %i.pj, 3
+  %18 = add nuw nsw i64 %17, 3
   br i1 %.not12.i, label %.preheader7, label %.lr.ph42.preheader
 
 .lr.ph42.preheader:                               ; preds = %.preheader9
@@ -906,7 +910,7 @@ bb.x:                                             ; preds = %.lr.ph50.epil.prehe
   %i.rk = sext i32 %.10.lcssa to i64
   %i.rl = mul nsw i64 %i.rk, 3
   %scevgep137 = getelementptr i8, ptr %1, i64 %i.rl
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %scevgep137, ptr nonnull align 16 %i.ph, i64 %9, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep137, ptr noundef nonnull align 16 dereferenceable(1) %i.ph, i64 %15, i1 false)
   %i.rm = add i32 %i.bh, %.10.lcssa
   br label %.preheader
 
@@ -958,7 +962,7 @@ bb.aa:                                            ; preds = %bb.z, %.lr.ph50.122
   %i.sb = sext i32 %.12.lcssa to i64
   %i.sc = mul nsw i64 %i.sb, 3
   %scevgep147 = getelementptr i8, ptr %1, i64 %i.sc
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %scevgep147, ptr nonnull align 16 %i.pi, i64 %i.pj, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep147, ptr noundef nonnull align 16 dereferenceable(1) %i.pi, i64 %18, i1 false)
   %i.sd = add i32 %i.cb, %.12.lcssa
   br label %.loopexit
 

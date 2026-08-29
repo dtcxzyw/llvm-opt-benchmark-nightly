@@ -205,18 +205,17 @@ bb.u:                                             ; preds = %.lr.ph302, %._crit_
   %i.cl = load i8, ptr %i.ck, align 1
   %i.cm = zext i8 %i.cl to i32                    ; 2 uses
   %i.cn = add i32 %i.au, %i.cm                    ; 2 uses
+  %4 = udiv i32 %i.cn, %2
   %.not261.not294.not = icmp ugt i32 %2, %i.cn
   br i1 %.not261.not294.not, label %._crit_edge298, label %.lr.ph297.preheader
 
 .lr.ph297.preheader:                              ; preds = %bb.u
-  %4 = udiv i32 %i.cn, %2
   %.pre = load i32, ptr %i.ax, align 4
-  %umax336 = tail call i32 @llvm.umax.i32(i32 %4, i32 1)
   br label %.lr.ph297
 
 bb.v:                                             ; preds = %bb.x
   %i.co = add nuw i32 %.0231295, 1                ; 2 uses
-  %exitcond337.not = icmp eq i32 %i.co, %umax336
+  %exitcond337.not = icmp eq i32 %i.co, %4
   br i1 %exitcond337.not, label %._crit_edge298.loopexit, label %.lr.ph297, !llvm.loop !89
 
 .lr.ph297:                                        ; preds = %.lr.ph297.preheader, %bb.v
@@ -287,8 +286,7 @@ bb.z:                                             ; preds = %bb.y
 
 .lr.ph289.preheader:                              ; preds = %.lr.ph291
   %wide.trip.count328 = zext i32 %i.dk to i64
-  %umax322 = tail call i32 @llvm.umax.i32(i32 %i.di, i32 1)
-  %wide.trip.count323 = zext i32 %umax322 to i64
+  %wide.trip.count323 = zext i32 %i.di to i64
   br label %.lr.ph289
 
 .lr.ph289:                                        ; preds = %.lr.ph289.preheader, %..critedge271_crit_edge
