@@ -204,8 +204,8 @@ _RNvYINtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive14PrimitiveArrayhENtB7_5
   br label %bb.bi, !dbg !229105
 
 bb.bs:                                            ; preds = %.noexc431
-  %i.ati = extractvalue { i1, i8 } %i.aqc, 1, !dbg !228910
-  %i.atj = uitofp i8 %i.ati to double, !dbg !229106 ; 4 uses
+  %i.ati = extractvalue { i1, i8 } %i.aqc, 1, !dbg !228910 ; 2 uses
+  %i.atj = uitofp i8 %i.ati to double, !dbg !229106 ; 3 uses
   %i.atk = invoke { i1, i8 } @_RNvXNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregateINtB6_12ChunkedArrayNtNtB8_9datatypes9UInt8TypeEINtB4_8ChunkAgghE3maxCsePnBjWcsLF5_10polars_ops(ptr noundef nonnull align 8 %i.aod)
           to label %.noexc437 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !229108 ; 2 uses
 
@@ -214,9 +214,9 @@ bb.bs:                                            ; preds = %.noexc431
   br i1 %i.atl, label %bb.bt, label %.invoke, !dbg !229110, !prof !7465
 
 bb.bt:                                            ; preds = %.noexc437
-  %i.atm = extractvalue { i1, i8 } %i.atk, 1, !dbg !229108
-  %i.atn = uitofp i8 %i.atm to double, !dbg !229112 ; 4 uses
-  %8 = fcmp oeq double %i.atj, %i.atn, !dbg !229114
+  %i.atm = extractvalue { i1, i8 } %i.atk, 1, !dbg !229108 ; 2 uses
+  %i.atn = uitofp i8 %i.atm to double, !dbg !229112 ; 3 uses
+  %8 = icmp eq i8 %i.ati, %i.atm, !dbg !229114
   %i.ato = uitofp i64 %.sroa.026.0.i.i to double, !dbg !229116 ; 2 uses
   br i1 %8, label %bb.bv, label %bb.bu, !dbg !229114
 
@@ -619,8 +619,8 @@ _RNvYINtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive14PrimitiveArraytENtB7_5
   br label %bb.kx, !dbg !231366
 
 bb.lh:                                            ; preds = %.noexc715
-  %i.bsz = extractvalue { i16, i16 } %i.bps, 1, !dbg !231175
-  %i.bta = uitofp i16 %i.bsz to double, !dbg !231367 ; 4 uses
+  %i.bsz = extractvalue { i16, i16 } %i.bps, 1, !dbg !231175 ; 2 uses
+  %i.bta = uitofp i16 %i.bsz to double, !dbg !231367 ; 3 uses
   %i.btb = invoke { i16, i16 } @_RNvXNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregateINtB6_12ChunkedArrayNtNtB8_9datatypes10UInt16TypeEINtB4_8ChunkAggtE3maxCsePnBjWcsLF5_10polars_ops(ptr noundef nonnull align 8 %i.aoe)
           to label %.noexc721 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !231369 ; 2 uses
 
@@ -630,9 +630,9 @@ bb.lh:                                            ; preds = %.noexc715
   br i1 %i.btd, label %bb.li, label %.invoke, !dbg !231371, !prof !7465
 
 bb.li:                                            ; preds = %.noexc721
-  %i.bte = extractvalue { i16, i16 } %i.btb, 1, !dbg !231369
-  %i.btf = uitofp i16 %i.bte to double, !dbg !231373 ; 4 uses
-  %9 = fcmp oeq double %i.bta, %i.btf, !dbg !231375
+  %i.bte = extractvalue { i16, i16 } %i.btb, 1, !dbg !231369 ; 2 uses
+  %i.btf = uitofp i16 %i.bte to double, !dbg !231373 ; 3 uses
+  %9 = icmp eq i16 %i.bsz, %i.bte, !dbg !231375
   %i.btg = uitofp i64 %.sroa.026.0.i.i676 to double, !dbg !231377 ; 2 uses
   br i1 %9, label %bb.lk, label %bb.lj, !dbg !231375
 
@@ -1035,8 +1035,8 @@ _RNvYINtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive14PrimitiveArraymENtB7_5
   br label %bb.ul, !dbg !233461
 
 bb.uv:                                            ; preds = %.noexc1016
-  %i.csp = extractvalue { i32, i32 } %i.cpi, 1, !dbg !233270
-  %i.csq = uitofp i32 %i.csp to double, !dbg !233462 ; 4 uses
+  %i.csp = extractvalue { i32, i32 } %i.cpi, 1, !dbg !233270 ; 2 uses
+  %i.csq = uitofp i32 %i.csp to double, !dbg !233462 ; 3 uses
   %i.csr = invoke { i32, i32 } @_RNvXNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregateINtB6_12ChunkedArrayNtNtB8_9datatypes10UInt32TypeEINtB4_8ChunkAggmE3maxCsePnBjWcsLF5_10polars_ops(ptr noundef nonnull align 8 %i.aof)
           to label %.noexc1022 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !233464 ; 2 uses
 
@@ -1046,9 +1046,9 @@ bb.uv:                                            ; preds = %.noexc1016
   br i1 %i.cst, label %bb.uw, label %.invoke, !dbg !233466, !prof !7465
 
 bb.uw:                                            ; preds = %.noexc1022
-  %i.csu = extractvalue { i32, i32 } %i.csr, 1, !dbg !233464
-  %i.csv = uitofp i32 %i.csu to double, !dbg !233468 ; 4 uses
-  %10 = fcmp oeq double %i.csq, %i.csv, !dbg !233470
+  %i.csu = extractvalue { i32, i32 } %i.csr, 1, !dbg !233464 ; 2 uses
+  %i.csv = uitofp i32 %i.csu to double, !dbg !233468 ; 3 uses
+  %10 = icmp eq i32 %i.csp, %i.csu, !dbg !233470
   %i.csw = uitofp i64 %.sroa.026.0.i.i977 to double, !dbg !233472 ; 2 uses
   br i1 %10, label %bb.uy, label %bb.ux, !dbg !233470
 
@@ -1451,8 +1451,8 @@ _RNvYINtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive14PrimitiveArrayaENtB7_5
   br label %bb.axb, !dbg !239768
 
 bb.axl:                                           ; preds = %.noexc1895.a
-  %i.frl = extractvalue { i1, i8 } %i.fof, 1, !dbg !239577
-  %i.frm = sitofp i8 %i.frl to double, !dbg !239769 ; 4 uses
+  %i.frl = extractvalue { i1, i8 } %i.fof, 1, !dbg !239577 ; 2 uses
+  %i.frm = sitofp i8 %i.frl to double, !dbg !239769 ; 3 uses
   %i.frn = invoke { i1, i8 } @_RNvXNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregateINtB6_12ChunkedArrayNtNtB8_9datatypes8Int8TypeEINtB4_8ChunkAggaE3maxCsePnBjWcsLF5_10polars_ops(ptr noundef nonnull align 8 %i.aoi)
           to label %.noexc1901 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !239771 ; 2 uses
 
@@ -1461,9 +1461,9 @@ bb.axl:                                           ; preds = %.noexc1895.a
   br i1 %i.fro, label %bb.axm, label %.invoke, !dbg !239773, !prof !7465
 
 bb.axm:                                           ; preds = %.noexc1901
-  %i.frp = extractvalue { i1, i8 } %i.frn, 1, !dbg !239771
-  %i.frq = sitofp i8 %i.frp to double, !dbg !239775 ; 4 uses
-  %11 = fcmp oeq double %i.frm, %i.frq, !dbg !239777
+  %i.frp = extractvalue { i1, i8 } %i.frn, 1, !dbg !239771 ; 2 uses
+  %i.frq = sitofp i8 %i.frp to double, !dbg !239775 ; 3 uses
+  %11 = icmp eq i8 %i.frl, %i.frp, !dbg !239777
   %i.frr = uitofp i64 %.sroa.026.0.i.i1856 to double, !dbg !239779 ; 2 uses
   br i1 %11, label %bb.axo, label %bb.axn, !dbg !239777
 
@@ -1866,8 +1866,8 @@ _RNvYINtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive14PrimitiveArraysENtB7_5
   br label %bb.bgp, !dbg !241862
 
 bb.bgz:                                           ; preds = %.noexc2199.a
-  %i.gqz = extractvalue { i16, i16 } %i.gns, 1, !dbg !241671
-  %i.gra = sitofp i16 %i.gqz to double, !dbg !241863 ; 4 uses
+  %i.gqz = extractvalue { i16, i16 } %i.gns, 1, !dbg !241671 ; 2 uses
+  %i.gra = sitofp i16 %i.gqz to double, !dbg !241863 ; 3 uses
   %i.grb = invoke { i16, i16 } @_RNvXNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregateINtB6_12ChunkedArrayNtNtB8_9datatypes9Int16TypeEINtB4_8ChunkAggsE3maxCsePnBjWcsLF5_10polars_ops(ptr noundef nonnull align 8 %i.aoj)
           to label %.noexc2205 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !241865 ; 2 uses
 
@@ -1877,9 +1877,9 @@ bb.bgz:                                           ; preds = %.noexc2199.a
   br i1 %i.grd, label %bb.bha, label %.invoke, !dbg !241867, !prof !7465
 
 bb.bha:                                           ; preds = %.noexc2205
-  %i.gre = extractvalue { i16, i16 } %i.grb, 1, !dbg !241865
-  %i.grf = sitofp i16 %i.gre to double, !dbg !241869 ; 4 uses
-  %12 = fcmp oeq double %i.gra, %i.grf, !dbg !241871
+  %i.gre = extractvalue { i16, i16 } %i.grb, 1, !dbg !241865 ; 2 uses
+  %i.grf = sitofp i16 %i.gre to double, !dbg !241869 ; 3 uses
+  %12 = icmp eq i16 %i.gqz, %i.gre, !dbg !241871
   %i.grg = uitofp i64 %.sroa.026.0.i.i2160 to double, !dbg !241873 ; 2 uses
   br i1 %12, label %bb.bhc, label %bb.bhb, !dbg !241871
 
@@ -2282,8 +2282,8 @@ _RNvYINtNtNtCs8774dFTUdNv_12polars_arrow5array9primitive14PrimitiveArraylENtB7_5
   br label %bb.bqd, !dbg !243964
 
 bb.bqn:                                           ; preds = %.noexc2503.a
-  %i.hqp = extractvalue { i32, i32 } %i.hni, 1, !dbg !243773
-  %i.hqq = sitofp i32 %i.hqp to double, !dbg !243965 ; 4 uses
+  %i.hqp = extractvalue { i32, i32 } %i.hni, 1, !dbg !243773 ; 2 uses
+  %i.hqq = sitofp i32 %i.hqp to double, !dbg !243965 ; 3 uses
   %i.hqr = invoke { i32, i32 } @_RNvXNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops9aggregateINtB6_12ChunkedArrayNtNtB8_9datatypes9Int32TypeEINtB4_8ChunkAgglE3maxCsePnBjWcsLF5_10polars_ops(ptr noundef nonnull align 8 %i.aok)
           to label %.noexc2509 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !243967 ; 2 uses
 
@@ -2293,9 +2293,9 @@ bb.bqn:                                           ; preds = %.noexc2503.a
   br i1 %i.hqt, label %bb.bqo, label %.invoke, !dbg !243969, !prof !7465
 
 bb.bqo:                                           ; preds = %.noexc2509
-  %i.hqu = extractvalue { i32, i32 } %i.hqr, 1, !dbg !243967
-  %i.hqv = sitofp i32 %i.hqu to double, !dbg !243971 ; 4 uses
-  %13 = fcmp oeq double %i.hqq, %i.hqv, !dbg !243973
+  %i.hqu = extractvalue { i32, i32 } %i.hqr, 1, !dbg !243967 ; 2 uses
+  %i.hqv = sitofp i32 %i.hqu to double, !dbg !243971 ; 3 uses
+  %13 = icmp eq i32 %i.hqp, %i.hqu, !dbg !243973
   %i.hqw = uitofp i64 %.sroa.026.0.i.i2464 to double, !dbg !243975 ; 2 uses
   br i1 %13, label %bb.bqq, label %bb.bqp, !dbg !243973
 

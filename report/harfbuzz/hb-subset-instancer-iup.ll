@@ -205,13 +205,13 @@ bb.j:                                             ; preds = %bb.i
   %i.bm = getelementptr inbounds nuw [12 x i8], ptr %i.bc, i64 %i.bl ; 2 uses
   %i.bn = getelementptr inbounds nuw [12 x i8], ptr %i.bc, i64 %indvars.iv ; 2 uses
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %i.bl
-  %i.bp = load i32, ptr %i.bo, align 4, !tbaa !38
+  %i.bp = load i32, ptr %i.bo, align 4, !tbaa !38 ; 2 uses
   %i.bq = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %indvars.iv
-  %i.br = load i32, ptr %i.bq, align 4, !tbaa !38
+  %i.br = load i32, ptr %i.bq, align 4, !tbaa !38 ; 2 uses
   %i.bs = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %i.bl
-  %i.bt = load i32, ptr %i.bs, align 4, !tbaa !38
+  %i.bt = load i32, ptr %i.bs, align 4, !tbaa !38 ; 2 uses
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %indvars.iv
-  %i.bv = load i32, ptr %i.bu, align 4, !tbaa !38
+  %i.bv = load i32, ptr %i.bu, align 4, !tbaa !38 ; 2 uses
   %i.bw = icmp slt i32 %.sroa.speculated.i.i.fr, 0
   br i1 %i.bw, label %.critedge, label %bb.k, !prof !12
 
@@ -377,8 +377,8 @@ bb.x:                                             ; preds = %.sink.split, %_ZN11
   %i.dl = getelementptr inbounds nuw i8, ptr %i.bm, i64 4
   %i.dm = getelementptr inbounds nuw i8, ptr %i.bn, i64 4
   %i.dn = shl nuw nsw i64 %.sroa.3.8.insert.ext.i.i, 3 ; 2 uses
-  %.090.us.i.i = sitofp i32 %i.br to double       ; 3 uses
-  %.091.us.i.i = sitofp i32 %i.bp to double       ; 5 uses
+  %.090.us.i.i = sitofp i32 %i.br to double       ; 2 uses
+  %.091.us.i.i = sitofp i32 %i.bp to double       ; 4 uses
   %.093.in.us.i.i = load float, ptr %i.bn, align 4, !tbaa !49 ; 3 uses
   %.093.us.i.i = fpext float %.093.in.us.i.i to double ; 2 uses
   %.095.in.us.i.i = load float, ptr %i.bm, align 4, !tbaa !49 ; 3 uses
@@ -439,7 +439,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.
   br i1 %i.ef, label %bb.aa, label %.critedge
 
 bb.af:                                            ; preds = %bb.x
-  %10 = fcmp oeq double %.091.us.i.i, %.090.us.i.i
+  %10 = icmp eq i32 %i.bp, %i.br
   br i1 %10, label %.lr.ph109.us.i.i.preheader, label %.lr.ph107.us.preheader.i.i
 
 .lr.ph109.us.i.i.preheader:                       ; preds = %bb.af
@@ -479,8 +479,8 @@ middle.block217:                                  ; preds = %vector.body214
   br i1 %exitcond176.not.i.i, label %.loopexit.us.i.i, label %.lr.ph109.us.i.i, !llvm.loop !148
 
 .loopexit.us.i.i:                                 ; preds = %bb.aa, %.lr.ph109.us.i.i, %middle.block217, %.lr.ph107.us.preheader.i.i
-  %.090.us.1.i.i = sitofp i32 %i.bv to double     ; 3 uses
-  %.091.us.1.i.i = sitofp i32 %i.bt to double     ; 5 uses
+  %.090.us.1.i.i = sitofp i32 %i.bv to double     ; 2 uses
+  %.091.us.1.i.i = sitofp i32 %i.bt to double     ; 4 uses
   %.093.in.us.1.i.i = load float, ptr %i.dm, align 4, !tbaa !49 ; 3 uses
   %.093.us.1.i.i = fpext float %.093.in.us.1.i.i to double ; 2 uses
   %.095.in.us.1.i.i = load float, ptr %i.dl, align 4, !tbaa !49 ; 3 uses
@@ -542,7 +542,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %exitcond.1.not.i.i, label %_ZL12_iup_segment10hb_array_tIK15contour_point_tES_IKiES4_RS1_S5_iiiidR11hb_vector_tIdLb0EES8_.exit.i.preheader, label %bb.ai, !llvm.loop !144
 
 bb.an:                                            ; preds = %.loopexit.us.i.i
-  %11 = fcmp oeq double %.091.us.1.i.i, %.090.us.1.i.i
+  %11 = icmp eq i32 %i.bt, %i.bv
   br i1 %11, label %.lr.ph109.us.1.i.i.preheader, label %.lr.ph107.us.preheader.1.i.i
 
 .lr.ph109.us.1.i.i.preheader:                     ; preds = %bb.an
@@ -945,7 +945,7 @@ attributes #8 = { nounwind }
 !136 = distinct !{!136, !137, !"_ZL9hb_memcpyPvPKvm: argument 0"}
 !137 = distinct !{!137, !"_ZL9hb_memcpyPvPKvm"}
 !138 = distinct !{!138, !137, !"_ZL9hb_memcpyPvPKvm: argument 1"}
-!139 = !{!"branch_weights", i32 0, i32 -2147483648}
+!139 = !{!"branch_weights", i32 1, i32 2147483647}
 !140 = !{!141, !143}
 !141 = distinct !{!141, !142, !"_ZL9hb_memcpyPvPKvm: argument 0"}
 !142 = distinct !{!142, !"_ZL9hb_memcpyPvPKvm"}

@@ -205,14 +205,14 @@ bb.c:                                             ; preds = %bb.b
   %i.r = getelementptr [40 x i8], ptr %i.o, i64 %i.q ; 2 uses
   %i.s = getelementptr i8, ptr %i.r, i64 -12
   %i.t = load float, ptr %i.s, align 4, !tbaa !649
-  %i.u = fptosi float %i.t to i32
-  %i.v = sitofp i32 %i.u to float                 ; 4 uses
+  %i.u = fptosi float %i.t to i32                 ; 2 uses
+  %i.v = sitofp i32 %i.u to float                 ; 3 uses
   %i.w = load float, ptr %0, align 4, !tbaa !176
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 3308
   %i.y = load float, ptr %i.x, align 4, !tbaa !412
   %i.z = fsub float %i.w, %i.y
-  %i.aa = fptosi float %i.z to i32
-  %i.ab = sitofp i32 %i.aa to float               ; 5 uses
+  %i.aa = fptosi float %i.z to i32                ; 2 uses
+  %i.ab = sitofp i32 %i.aa to float               ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.ad = load float, ptr %i.ac, align 4, !tbaa !181
   %i.ae = fptosi float %i.ad to i32
@@ -236,7 +236,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.aq = fcmp oge float %i.ao, %i.ap
   %i.ar = select i1 %i.aq, float %i.ao, float %i.ap
   store float %i.ar, ptr %i.an, align 4, !tbaa !634
-  %2 = fcmp ult float %i.v, %i.ab
+  %2 = icmp slt i32 %i.u, %i.aa
   br i1 %2, label %bb.f, label %bb.o
 
 bb.f:                                             ; preds = %bb.e

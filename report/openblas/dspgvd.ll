@@ -16,14 +16,14 @@ define void @dspgvd_(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca [1 x i8], align 1                 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
   %i.c = load i32, ptr %8, align 4, !tbaa !8      ; 3 uses
   %narrow = xor i32 %i.c, -1
   %i.d = sext i32 %narrow to i64
   %i.e = getelementptr inbounds [8 x i8], ptr %7, i64 %i.d ; 2 uses
-  %i.f = tail call i32 @lsame_(ptr noundef %1, ptr noundef nonnull @.str) #3 ; 3 uses
-  %i.g = tail call i32 @lsame_(ptr noundef %2, ptr noundef nonnull @.str.1) #3
+  %i.f = tail call i32 @lsame_(ptr noundef %1, ptr noundef nonnull @.str) #4 ; 3 uses
+  %i.g = tail call i32 @lsame_(ptr noundef %2, ptr noundef nonnull @.str.1) #4
   %i.h = load i32, ptr %10, align 4, !tbaa !8
   %i.i = icmp eq i32 %i.h, -1
   br i1 %i.i, label %bb.c, label %bb.b
@@ -46,7 +46,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = tail call i32 @lsame_(ptr noundef %1, ptr noundef nonnull @.str.2) #3
+  %i.o = tail call i32 @lsame_(ptr noundef %1, ptr noundef nonnull @.str.2) #4
   %.not139 = icmp eq i32 %i.o, 0
   br i1 %.not139, label %.thread160.sink.split, label %bb.f
 
@@ -55,7 +55,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %.not140, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.p = tail call i32 @lsame_(ptr noundef %2, ptr noundef nonnull @.str.3) #3
+  %i.p = tail call i32 @lsame_(ptr noundef %2, ptr noundef nonnull @.str.3) #4
   %.not141 = icmp eq i32 %i.p, 0
   br i1 %.not141, label %.thread160.sink.split, label %bb.h
 
@@ -129,7 +129,7 @@ bb.p:                                             ; preds = %bb.o
   %i.ah = phi i32 [ %.pr156.pr, %.thread ], [ %.pr, %bb.j ], [ %.sink, %.thread160.sink.split ]
   %i.ai = sub nsw i32 0, %i.ah
   store i32 %i.ai, ptr %i.a, align 4, !tbaa !8
-  %i.aj = call i32 @xerbla_(ptr noundef nonnull @.str.4, ptr noundef nonnull %i.a, i32 noundef 6) #3 ; 0 uses
+  %i.aj = call i32 @xerbla_(ptr noundef nonnull @.str.4, ptr noundef nonnull %i.a, i32 noundef 6) #4 ; 0 uses
   br label %bb.y
 
 bb.q:                                             ; preds = %.thread
@@ -141,7 +141,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.al, label %bb.y, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  tail call void @dpptrf_(ptr noundef %2, ptr noundef nonnull %3, ptr noundef %5, ptr noundef nonnull %13) #3
+  tail call void @dpptrf_(ptr noundef %2, ptr noundef nonnull %3, ptr noundef %5, ptr noundef nonnull %13) #4
   %i.am = load i32, ptr %13, align 4, !tbaa !8    ; 2 uses
   %.not144 = icmp eq i32 %i.am, 0
   br i1 %.not144, label %bb.u, label %bb.t
@@ -153,18 +153,14 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.y
 
 bb.u:                                             ; preds = %bb.s
-  tail call void @dspgst_(ptr noundef nonnull %0, ptr noundef %2, ptr noundef nonnull %3, ptr noundef %4, ptr noundef %5, ptr noundef nonnull %13) #3
-  tail call void @dspevd_(ptr noundef %1, ptr noundef %2, ptr noundef nonnull %3, ptr noundef %4, ptr noundef %6, ptr noundef %7, ptr noundef nonnull %8, ptr noundef nonnull %9, ptr noundef nonnull %10, ptr noundef nonnull %11, ptr noundef nonnull %12, ptr noundef nonnull %13) #3
+  tail call void @dspgst_(ptr noundef nonnull %0, ptr noundef %2, ptr noundef nonnull %3, ptr noundef %4, ptr noundef %5, ptr noundef nonnull %13) #4
+  tail call void @dspevd_(ptr noundef %1, ptr noundef %2, ptr noundef nonnull %3, ptr noundef %4, ptr noundef %6, ptr noundef %7, ptr noundef nonnull %8, ptr noundef nonnull %9, ptr noundef nonnull %10, ptr noundef nonnull %11, ptr noundef nonnull %12, ptr noundef nonnull %13) #4
   %i.ap = load double, ptr %9, align 8, !tbaa !9  ; 2 uses
   %.inv = fcmp ole double %i.ap, %i.ac
   %. = select i1 %.inv, double %i.ac, double %i.ap
   %i.aq = fptosi double %. to i32
-  %14 = uitofp nneg i32 %.0 to double             ; 2 uses
   %i.ar = load i32, ptr %11, align 4, !tbaa !8
-  %15 = sitofp i32 %i.ar to double                ; 2 uses
-  %16 = fcmp oge double %14, %15
-  %17 = select i1 %16, double %14, double %15
-  %18 = fptosi double %17 to i32
+  %.v = tail call i32 @llvm.smax.i32(i32 %.0, i32 %i.ar)
   %.not145 = icmp eq i32 %i.f, 0
   br i1 %.not145, label %.loopexit, label %bb.v
 
@@ -197,7 +193,7 @@ bb.w:                                             ; preds = %bb.v, %bb.v
   %i.az = mul nsw i64 %indvars.iv177, %i.ax
   %i.ba = getelementptr [8 x i8], ptr %i.e, i64 %i.az
   %i.bb = getelementptr i8, ptr %i.ba, i64 8
-  call void @dtpsv_(ptr noundef %2, ptr noundef nonnull %i.b, ptr noundef nonnull @.str.5, ptr noundef nonnull %3, ptr noundef %5, ptr noundef %i.bb, ptr noundef nonnull @c__1) #3
+  call void @dtpsv_(ptr noundef %2, ptr noundef nonnull %i.b, ptr noundef nonnull @.str.5, ptr noundef nonnull %3, ptr noundef %5, ptr noundef %i.bb, ptr noundef nonnull @c__1) #4
   %indvars.iv.next178 = add nuw nsw i64 %indvars.iv177, 1
   %.not150.not = icmp samesign ult i64 %indvars.iv177, %i.ay
   br i1 %.not150.not, label %.lr.ph174, label %.loopexit, !llvm.loop !12
@@ -218,7 +214,7 @@ bb.x:                                             ; preds = %bb.v
   %i.be = mul nsw i64 %indvars.iv, %i.bc
   %i.bf = getelementptr [8 x i8], ptr %i.e, i64 %i.be
   %i.bg = getelementptr i8, ptr %i.bf, i64 8
-  call void @dtpmv_(ptr noundef %2, ptr noundef nonnull %i.b, ptr noundef nonnull @.str.5, ptr noundef nonnull %3, ptr noundef %5, ptr noundef %i.bg, ptr noundef nonnull @c__1) #3
+  call void @dtpmv_(ptr noundef %2, ptr noundef nonnull %i.b, ptr noundef nonnull @.str.5, ptr noundef nonnull %3, ptr noundef %5, ptr noundef %i.bg, ptr noundef nonnull @c__1) #4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %.not147.not = icmp samesign ult i64 %indvars.iv, %i.bd
   br i1 %.not147.not, label %.lr.ph, label %.loopexit, !llvm.loop !14
@@ -226,12 +222,12 @@ bb.x:                                             ; preds = %bb.v
 .loopexit:                                        ; preds = %.lr.ph, %.lr.ph174, %bb.x, %bb.w, %bb.v, %bb.u
   %i.bh = sitofp i32 %i.aq to double
   store double %i.bh, ptr %9, align 8, !tbaa !9
-  store i32 %18, ptr %11, align 4, !tbaa !8
+  store i32 %.v, ptr %11, align 4, !tbaa !8
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.r, %bb.q, %.loopexit, %bb.t, %.thread160
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #3
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret void
 }
 
@@ -255,10 +251,14 @@ declare void @dtpmv_(ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr nou
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #3
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
-attributes #3 = { nounwind }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

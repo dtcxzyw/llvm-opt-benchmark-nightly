@@ -205,37 +205,36 @@ bb.ag:                                            ; preds = %bb.af
           to label %bb.ah unwind label %bb.ba
 
 bb.ah:                                            ; preds = %bb.ag
-  %202 = insertelement <2 x double> poison, double %i.ij, i64 0
-  %203 = insertelement <2 x double> %202, double %i.ii, i64 1
-  %204 = fptosi <2 x double> %203 to <2 x i32>
-  %205 = sitofp <2 x i32> %204 to <2 x double>    ; 5 uses
-  br i1 %i.fj, label %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE5clearEv.exit.i, label %217
+  %202 = fptosi double %i.ii to i32               ; 4 uses
+  %203 = fptosi double %i.ij to i32               ; 4 uses
+  br i1 %i.fj, label %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE5clearEv.exit.i, label %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE5clearEv.exit.i574
 
 _ZNSt6vectorIN2cv5Size_IiEESaIS2_EE5clearEv.exit.i: ; preds = %bb.ah
-  %206 = extractelement <2 x double> %205, i64 0  ; 2 uses
-  %207 = extractelement <2 x double> %205, i64 1  ; 2 uses
-  %208 = fcmp olt double %207, %206
-  %.sroa.speculated.i = select i1 %208, double %207, double %206 ; 2 uses
-  %209 = fcmp ult double %.sroa.speculated.i, 2.400000e+01
-  br i1 %209, label %_ZN12_GLOBAL__N_121calculate_half_scalesERKN2cv5Size_IiEERSt6vectorIdSaIdEERS5_IS2_SaIS2_EE.exit.thread, label %.lr.ph.i.preheader
+  %.sroa.speculated.v.i = call i32 @llvm.smin.i32(i32 %202, i32 %203) ; 2 uses
+  %204 = icmp slt i32 %.sroa.speculated.v.i, 24
+  br i1 %204, label %_ZN12_GLOBAL__N_121calculate_half_scalesERKN2cv5Size_IiEERSt6vectorIdSaIdEERS5_IS2_SaIS2_EE.exit.thread, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE5clearEv.exit.i
+  %.sroa.speculated.i = uitofp nneg i32 %.sroa.speculated.v.i to double
+  %205 = sitofp i32 %202 to double
+  %206 = sitofp i32 %203 to double
   %i.ik = insertelement <2 x double> <double poison, double 5.000000e-01>, double %.sroa.speculated.i, i64 0
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i
-  %.sroa.24.5 = phi ptr [ %.sroa.24.6, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ], [ null, %.lr.ph.i.preheader ] ; 5 uses
-  %.sroa.142326.1 = phi ptr [ %.sroa.142326.2, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ], [ null, %.lr.ph.i.preheader ] ; 3 uses
-  %.sroa.02318.5 = phi ptr [ %.sroa.02318.6, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ], [ null, %.lr.ph.i.preheader ] ; 7 uses
-  %.sroa.29.5 = phi ptr [ %.sroa.29.6, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ], [ null, %.lr.ph.i.preheader ] ; 8 uses
-  %.sroa.02335.5 = phi ptr [ %.sroa.02335.6, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ], [ null, %.lr.ph.i.preheader ] ; 11 uses
-  %i.il = phi ptr [ %.sroa.17.2, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ], [ null, %.lr.ph.i.preheader ] ; 3 uses
-  %.01334.i = phi i32 [ %i.ki, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ], [ 0, %.lr.ph.i.preheader ]
-  %i.im = phi <2 x double> [ %i.kh, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ], [ %i.ik, %.lr.ph.i.preheader ] ; 3 uses
-  %i.in = extractelement <2 x double> %i.im, i64 1 ; 2 uses
-  %210 = shufflevector <2 x double> %i.im, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %211 = fmul <2 x double> %210, %205
-  %212 = fptosi <2 x double> %211 to <2 x i32>    ; 4 uses
+.lr.ph.i:                                         ; preds = %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i, %.lr.ph.i.preheader
+  %.sroa.24.5 = phi ptr [ null, %.lr.ph.i.preheader ], [ %.sroa.24.6, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ] ; 5 uses
+  %.sroa.142326.1 = phi ptr [ null, %.lr.ph.i.preheader ], [ %.sroa.142326.2, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ] ; 3 uses
+  %.sroa.02318.5 = phi ptr [ null, %.lr.ph.i.preheader ], [ %.sroa.02318.6, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ] ; 7 uses
+  %.sroa.29.5 = phi ptr [ null, %.lr.ph.i.preheader ], [ %.sroa.29.6, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ] ; 8 uses
+  %.sroa.02335.5 = phi ptr [ null, %.lr.ph.i.preheader ], [ %.sroa.02335.6, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ] ; 11 uses
+  %i.il = phi ptr [ null, %.lr.ph.i.preheader ], [ %.sroa.17.2, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ] ; 3 uses
+  %.01334.i = phi i32 [ 0, %.lr.ph.i.preheader ], [ %i.ki, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ]
+  %i.im = phi <2 x double> [ %i.ik, %.lr.ph.i.preheader ], [ %i.kh, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i ] ; 2 uses
+  %i.in = extractelement <2 x double> %i.im, i64 1 ; 4 uses
+  %207 = fmul double %i.in, %205
+  %208 = fptosi double %207 to i32                ; 2 uses
+  %209 = fmul double %i.in, %206
+  %210 = fptosi double %209 to i32                ; 2 uses
   %.not.i.i = icmp eq ptr %.sroa.142326.1, %.sroa.24.5
   br i1 %.not.i.i, label %bb.aj, label %bb.ai
 
@@ -301,11 +300,9 @@ _ZNSt6vectorIdSaIdEE9push_backERKd.exit.i:        ; preds = %_ZNSt6vectorIdSaIdE
   br i1 %.not.i16.i, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %_ZNSt6vectorIdSaIdEE9push_backERKd.exit.i
-  %213 = extractelement <2 x i32> %212, i64 0
-  %.sroa.5.0.insert.ext.i = zext i32 %213 to i64
+  %.sroa.5.0.insert.ext.i = zext i32 %210 to i64
   %.sroa.5.0.insert.shift.i = shl nuw i64 %.sroa.5.0.insert.ext.i, 32
-  %214 = extractelement <2 x i32> %212, i64 1
-  %.sroa.0.0.insert.ext.i = zext i32 %214 to i64
+  %.sroa.0.0.insert.ext.i = zext i32 %208 to i64
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.5.0.insert.shift.i, %.sroa.0.0.insert.ext.i
   store i64 %.sroa.0.0.insert.insert.i, ptr %i.il, align 4
   br label %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i
@@ -339,11 +336,9 @@ _ZNKSt6vectorIN2cv5Size_IiEESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %b
 
 .noexc569:                                        ; preds = %_ZNKSt6vectorIN2cv5Size_IiEESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.jn = getelementptr inbounds nuw i8, ptr %i.jm, i64 %i.je
-  %215 = extractelement <2 x i32> %212, i64 0
-  %i.jo = zext i32 %215 to i64
+  %i.jo = zext i32 %210 to i64
   %.sroa.5.0.insert.shift25.i = shl nuw i64 %i.jo, 32
-  %216 = extractelement <2 x i32> %212, i64 1
-  %i.jp = zext i32 %216 to i64
+  %i.jp = zext i32 %208 to i64
   %.sroa.0.0.insert.insert22.i = or disjoint i64 %.sroa.5.0.insert.shift25.i, %i.jp
   store i64 %.sroa.0.0.insert.insert22.i, ptr %i.jn, align 4
   %.not10.i.i.i.i.i.i = icmp eq ptr %.sroa.02335.5, %.sroa.29.5
@@ -430,26 +425,16 @@ _ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i: ; preds = %_ZNSt6vec
   %i.kk = fcmp ult double %i.kj, 2.400000e+01
   br i1 %i.kk, label %_ZN12_GLOBAL__N_121calculate_half_scalesERKN2cv5Size_IiEERSt6vectorIdSaIdEERS5_IS2_SaIS2_EE.exit, label %.lr.ph.i, !llvm.loop !59
 
-217:                                              ; preds = %bb.ah
-  %218 = extractelement <2 x double> %205, i64 0  ; 7 uses
-  %219 = extractelement <2 x double> %205, i64 1  ; 7 uses
-  %220 = fcmp olt double %218, %219
-  %.sroa.speculated46.i = select i1 %220, double %218, double %219
-  %221 = fcmp ogt double %.sroa.speculated46.i, 1.000000e+03
-  br i1 %221, label %222, label %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE5clearEv.exit.i574
-
-222:                                              ; preds = %217
-  %223 = fcmp olt double %219, %218
-  %.sroa.speculated43.i = select i1 %223, double %219, double %218
-  %224 = fdiv double 1.000000e+03, %.sroa.speculated43.i ; 3 uses
-  %225 = fmul double %224, %219
-  %226 = fmul double %224, %218
-  br label %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE5clearEv.exit.i574
-
-_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE5clearEv.exit.i574: ; preds = %222, %217
-  %.052.i = phi double [ %226, %222 ], [ %218, %217 ] ; 2 uses
-  %.051.i = phi double [ %225, %222 ], [ %219, %217 ] ; 2 uses
-  %.018.i = phi double [ %224, %222 ], [ 1.000000e+00, %217 ]
+_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE5clearEv.exit.i574: ; preds = %bb.ah
+  %211 = sitofp i32 %203 to double                ; 2 uses
+  %212 = sitofp i32 %202 to double                ; 2 uses
+  %.sroa.speculated4653.i = call i32 @llvm.smin.i32(i32 %203, i32 %202) ; 2 uses
+  %213 = icmp sgt i32 %.sroa.speculated4653.i, 1000
+  %.sroa.speculated43.i = uitofp nneg i32 %.sroa.speculated4653.i to double
+  %214 = fdiv double 1.000000e+03, %.sroa.speculated43.i
+  %215 = select i1 %213, double %214, double 1.000000e+00 ; 3 uses
+  %.052.i = fmul double %215, %211                ; 2 uses
+  %.051.i = fmul double %215, %212                ; 2 uses
   %i.kl = fcmp olt double %.051.i, %.052.i
   %.sroa.speculated.i575 = select i1 %i.kl, double %.051.i, double %.052.i ; 2 uses
   %i.km = fcmp ult double %.sroa.speculated.i575, 1.200000e+01
@@ -466,10 +451,10 @@ _ZNSt6vectorIN2cv5Size_IiEESaIS2_EE5clearEv.exit.i574: ; preds = %222, %217
   %.01755.i = phi i32 [ %i.mn, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE9push_backERKS2_.exit.i583 ], [ 0, %_ZNSt6vectorIN2cv5Size_IiEESaIS2_EE5clearEv.exit.i574 ] ; 2 uses
   %i.ko = uitofp nneg i32 %.01755.i to double
   %i.kp = call noundef double @pow(double noundef 7.090000e-01, double noundef %i.ko) #35
-  %i.kq = fmul double %.018.i, %i.kp              ; 4 uses
-  %i.kr = fmul double %i.kq, %219
+  %i.kq = fmul double %215, %i.kp                 ; 4 uses
+  %i.kr = fmul double %i.kq, %212
   %i.ks = fptosi double %i.kr to i32              ; 2 uses
-  %i.kt = fmul double %i.kq, %218
+  %i.kt = fmul double %i.kq, %211
   %i.ku = fptosi double %i.kt to i32              ; 2 uses
   %.not.i.i577 = icmp eq ptr %.sroa.142326.4, %.sroa.24.8
   br i1 %.not.i.i577, label %bb.as, label %bb.ar
@@ -872,14 +857,14 @@ declare i64 @llvm.umax.i64(i64, i64) #27
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #27
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #27
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #33
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #27
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #27

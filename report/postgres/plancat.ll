@@ -204,10 +204,10 @@ bb.e:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 100
   %i.o = load float, ptr %i.n, align 4            ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.k, i64 104
-  %i.q = load i32, ptr %i.p, align 4              ; 2 uses
+  %i.q = load i32, ptr %i.p, align 4              ; 3 uses
   %.not = icmp ne i32 %i.m, 0
   %i.r = sext i1 %.not to i32
-  %.0 = add i32 %i.i, %i.r                        ; 2 uses
+  %.0 = add i32 %i.i, %i.r                        ; 3 uses
   %i.s = fcmp oge float %i.o, 0.000000e+00
   %i.t = icmp ugt i32 %i.m, 1
   %or.cond = and i1 %i.t, %i.s
@@ -230,7 +230,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.049 = phi double [ %i.w, %bb.f ], [ %i.ab, %bb.g ]
-  %i.ac = uitofp i32 %.0 to double                ; 3 uses
+  %i.ac = uitofp i32 %.0 to double                ; 2 uses
   %i.ad = fmul double %.049, %i.ac
   %i.ae = tail call double @llvm.rint.f64(double %i.ad)
   store double %i.ae, ptr %3, align 8
@@ -244,15 +244,15 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.n
 
 bb.j:                                             ; preds = %bb.h
-  %5 = uitofp i32 %i.q to double                  ; 2 uses
-  %6 = fcmp ult double %5, %i.ac
-  br i1 %6, label %bb.l, label %bb.k
+  %.not58 = icmp ult i32 %i.q, %.0
+  br i1 %.not58, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   store double 1.000000e+00, ptr %4, align 8
   br label %bb.n
 
 bb.l:                                             ; preds = %bb.j
+  %5 = uitofp i32 %i.q to double
   %i.ah = fdiv double %5, %i.ac
   store double %i.ah, ptr %4, align 8
   br label %bb.n

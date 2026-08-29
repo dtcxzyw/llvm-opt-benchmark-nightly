@@ -204,12 +204,10 @@ bb.cw:                                            ; preds = %bb.cv
   unreachable
 
 bb.cx:                                            ; preds = %bb.ct
-  %.sroa.speculated277 = call i32 @llvm.smax.i32(i32 %i.ji, i32 1)
-  %27 = uitofp nneg i32 %.sroa.speculated277 to double ; 2 uses
   %i.jr = add nsw i32 %i.cp, -1
-  %28 = uitofp nneg i32 %i.jr to double           ; 2 uses
-  %29 = fcmp olt double %27, %28
-  %.sroa.speculated275 = select i1 %29, double %27, double %28
+  %.sroa.speculated277 = call i32 @llvm.smax.i32(i32 %i.ji, i32 1)
+  %.sroa.speculated275.v = call i32 @llvm.umin.i32(i32 %.sroa.speculated277, i32 %i.jr)
+  %.sroa.speculated275 = uitofp nneg i32 %.sroa.speculated275.v to double
   %i.js = getelementptr inbounds nuw i8, ptr %24, i64 24
   store ptr %i.fh, ptr %i.jl, align 16, !tbaa !109
   %.sroa.5272.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jl, i64 8
@@ -610,6 +608,9 @@ declare i32 @llvm.smax.i32(i32, i32) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.mul.v4i32(<4 x i32>) #18

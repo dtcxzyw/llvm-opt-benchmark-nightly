@@ -205,8 +205,7 @@ _ZN2v88internal11IsSmiDoubleEd.exit.i.i.preheader: ; preds = %bb.h
   br label %_ZN2v88internal11IsSmiDoubleEd.exit.i.i
 
 _ZN2v88internal11IsSmiDoubleEd.exit.i.i:          ; preds = %_ZN2v88internal11IsSmiDoubleEd.exit.i.i.preheader, %_ZN2v88internal11HandleScopeD2Ev.exit140
-  %indvars.iv530 = phi i64 [ 0, %_ZN2v88internal11IsSmiDoubleEd.exit.i.i.preheader ], [ %indvars.iv.next531, %_ZN2v88internal11HandleScopeD2Ev.exit140 ] ; 5 uses
-  %8 = phi double [ 0.000000e+00, %_ZN2v88internal11IsSmiDoubleEd.exit.i.i.preheader ], [ %i.dm, %_ZN2v88internal11HandleScopeD2Ev.exit140 ] ; 2 uses
+  %indvars.iv530 = phi i64 [ 0, %_ZN2v88internal11IsSmiDoubleEd.exit.i.i.preheader ], [ %indvars.iv.next531, %_ZN2v88internal11HandleScopeD2Ev.exit140 ] ; 4 uses
   %i.bj = load ptr, ptr %0, align 8               ; 5 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 560 ; 3 uses
   %i.bl = load ptr, ptr %i.bk, align 8            ; 2 uses
@@ -216,51 +215,32 @@ _ZN2v88internal11IsSmiDoubleEd.exit.i.i:          ; preds = %_ZN2v88internal11Is
   %i.bp = load i32, ptr %i.bo, align 8
   %i.bq = add nsw i32 %i.bp, 1
   store i32 %i.bq, ptr %i.bo, align 8
-  %i.br = load ptr, ptr %0, align 8               ; 4 uses
-  %9 = trunc nuw nsw i64 %indvars.iv530 to i32
-  %10 = uitofp nneg i32 %9 to double
-  %11 = fcmp oeq double %8, %10
-  br i1 %11, label %_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i, label %18
+  %i.br = load ptr, ptr %0, align 8               ; 3 uses
+  %8 = shl nuw nsw i64 %indvars.iv530, 32
+  %9 = getelementptr inbounds nuw i8, ptr %i.br, i64 560 ; 2 uses
+  %10 = load ptr, ptr %9, align 8                 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.br, i64 568
+  %12 = load ptr, ptr %11, align 8
+  %13 = icmp eq ptr %10, %12
+  br i1 %13, label %bb.i, label %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i, !prof !5
 
-_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i:   ; preds = %_ZN2v88internal11IsSmiDoubleEd.exit.i.i
-  %12 = shl nuw nsw i64 %indvars.iv530, 32
-  %13 = getelementptr inbounds nuw i8, ptr %i.br, i64 560 ; 2 uses
-  %14 = load ptr, ptr %13, align 8                ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %i.br, i64 568
-  %16 = load ptr, ptr %15, align 8
-  %17 = icmp eq ptr %14, %16
-  br i1 %17, label %bb.i, label %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i, !prof !5
-
-bb.i:                                             ; preds = %_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i
+bb.i:                                             ; preds = %_ZN2v88internal11IsSmiDoubleEd.exit.i.i
   %i.bs = call noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef nonnull align 1 dereferenceable(1) %i.br) #18
   br label %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i
 
-_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i: ; preds = %bb.i, %_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i
-  %.0.i.i.i = phi ptr [ %i.bs, %bb.i ], [ %14, %_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i ] ; 3 uses
+_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i: ; preds = %bb.i, %_ZN2v88internal11IsSmiDoubleEd.exit.i.i
+  %.0.i.i.i = phi ptr [ %i.bs, %bb.i ], [ %10, %_ZN2v88internal11IsSmiDoubleEd.exit.i.i ] ; 3 uses
   %i.bt = ptrtoint ptr %.0.i.i.i to i64
   %i.bu = add i64 %i.bt, 8
   %i.bv = inttoptr i64 %i.bu to ptr
-  store ptr %i.bv, ptr %13, align 8
-  store i64 %12, ptr %.0.i.i.i, align 8
-  br label %_ZN2v88internal11FactoryBaseINS0_7FactoryEE9NewNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEd.exit
+  store ptr %i.bv, ptr %9, align 8
+  store i64 %8, ptr %.0.i.i.i, align 8
+  %14 = load ptr, ptr %0, align 8
+  %15 = call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE14NumberToStringENS0_12DirectHandleINS0_6ObjectEEENS0_15NumberCacheModeE(ptr noundef nonnull align 1 dereferenceable(1) %14, ptr nonnull %.0.i.i.i, i32 noundef 2) #18 ; 2 uses
+  %16 = icmp slt i64 %indvars.iv530, %i.bi
+  br i1 %16, label %bb.j, label %bb.m
 
-18:                                               ; preds = %_ZN2v88internal11IsSmiDoubleEd.exit.i.i
-  %19 = call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE13NewHeapNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_10HeapNumberEEEv(ptr noundef nonnull align 1 dereferenceable(1) %i.br) #18 ; 2 uses
-  %20 = load i64, ptr %19, align 8
-  %21 = add i64 %20, -1
-  %22 = inttoptr i64 %21 to ptr
-  %23 = getelementptr inbounds nuw i8, ptr %22, i64 8
-  store double %8, ptr %23, align 1
-  br label %_ZN2v88internal11FactoryBaseINS0_7FactoryEE9NewNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEd.exit
-
-_ZN2v88internal11FactoryBaseINS0_7FactoryEE9NewNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEd.exit: ; preds = %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i, %18
-  %.sroa.0.0.i = phi ptr [ %.0.i.i.i, %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i ], [ %19, %18 ]
-  %24 = load ptr, ptr %0, align 8
-  %25 = call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE14NumberToStringENS0_12DirectHandleINS0_6ObjectEEENS0_15NumberCacheModeE(ptr noundef nonnull align 1 dereferenceable(1) %24, ptr nonnull %.sroa.0.0.i, i32 noundef 2) #18 ; 2 uses
-  %26 = icmp slt i64 %indvars.iv530, %i.bi
-  br i1 %26, label %bb.j, label %bb.m
-
-bb.j:                                             ; preds = %_ZN2v88internal11FactoryBaseINS0_7FactoryEE9NewNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEd.exit
+bb.j:                                             ; preds = %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i
   %i.bw = load i64, ptr %3, align 8
   %i.bx = add i64 %i.bw, -1
   %i.by = inttoptr i64 %i.bx to ptr
@@ -312,11 +292,11 @@ _ZN2v88internal6HandleINS0_6ObjectEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit178: 
   %i.dc = inttoptr i64 %i.db to ptr
   store ptr %i.dc, ptr %i.cu, align 8
   store i64 %i.cs, ptr %.0.i.i177, align 8
-  %i.dd = call noundef zeroext i1 @_ZN2v88internal21JsonParseInternalizer15RecurseAndApplyILNS1_19WithOrWithoutSourceE1EEEbNS0_6HandleINS0_10JSReceiverEEENS4_INS0_6StringEEENS4_INS0_6ObjectEEESA_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr nonnull %i.m, ptr %25, ptr nonnull %.0.i.i176, ptr nonnull %.0.i.i177)
+  %i.dd = call noundef zeroext i1 @_ZN2v88internal21JsonParseInternalizer15RecurseAndApplyILNS1_19WithOrWithoutSourceE1EEEbNS0_6HandleINS0_10JSReceiverEEENS4_INS0_6StringEEENS4_INS0_6ObjectEEESA_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr nonnull %i.m, ptr %15, ptr nonnull %.0.i.i176, ptr nonnull %.0.i.i177)
   br i1 %i.dd, label %.critedge, label %bb.n
 
-bb.m:                                             ; preds = %_ZN2v88internal11FactoryBaseINS0_7FactoryEE9NewNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEd.exit
-  %i.de = call noundef zeroext i1 @_ZN2v88internal21JsonParseInternalizer15RecurseAndApplyILNS1_19WithOrWithoutSourceE0EEEbNS0_6HandleINS0_10JSReceiverEEENS4_INS0_6StringEEENS4_INS0_6ObjectEEESA_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr nonnull %i.m, ptr %25, ptr null, ptr null)
+bb.m:                                             ; preds = %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i
+  %i.de = call noundef zeroext i1 @_ZN2v88internal21JsonParseInternalizer15RecurseAndApplyILNS1_19WithOrWithoutSourceE0EEEbNS0_6HandleINS0_10JSReceiverEEENS4_INS0_6StringEEENS4_INS0_6ObjectEEESA_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr nonnull %i.m, ptr %15, ptr null, ptr null)
   br i1 %i.de, label %.critedge, label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %_ZN2v88internal6HandleINS0_6ObjectEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit178
@@ -350,13 +330,12 @@ bb.p:                                             ; preds = %.critedge
 _ZN2v88internal11HandleScopeD2Ev.exit140:         ; preds = %bb.p, %.critedge
   %indvars.iv.next531 = add nuw nsw i64 %indvars.iv530, 1 ; 2 uses
   %i.dl = trunc nuw i64 %indvars.iv.next531 to i32
-  %i.dm = uitofp nneg i32 %i.dl to double         ; 2 uses
+  %i.dm = uitofp nneg i32 %i.dl to double
   %i.dn = fcmp ule double %i.ay, %i.dm
   br i1 %i.dn, label %_ZNK2v88internal11MaybeHandleINS0_10FixedArrayEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit, label %_ZN2v88internal11IsSmiDoubleEd.exit.i.i, !llvm.loop !146
 
 _ZN2v88internal11IsSmiDoubleEd.exit.i.i193:       ; preds = %.preheader, %_ZN2v88internal11HandleScopeD2Ev.exit139
-  %indvars.iv527 = phi i64 [ %indvars.iv.next528, %_ZN2v88internal11HandleScopeD2Ev.exit139 ], [ 0, %.preheader ] ; 3 uses
-  %27 = phi double [ %i.ef, %_ZN2v88internal11HandleScopeD2Ev.exit139 ], [ 0.000000e+00, %.preheader ] ; 2 uses
+  %indvars.iv527 = phi i64 [ %indvars.iv.next528, %_ZN2v88internal11HandleScopeD2Ev.exit139 ], [ 0, %.preheader ] ; 2 uses
   %i.do = load ptr, ptr %0, align 8               ; 5 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 560 ; 2 uses
   %i.dq = load ptr, ptr %i.dp, align 8
@@ -366,45 +345,26 @@ _ZN2v88internal11IsSmiDoubleEd.exit.i.i193:       ; preds = %.preheader, %_ZN2v8
   %i.du = load i32, ptr %i.dt, align 8
   %i.dv = add nsw i32 %i.du, 1
   store i32 %i.dv, ptr %i.dt, align 8
-  %i.dw = load ptr, ptr %0, align 8               ; 4 uses
-  %28 = trunc nuw nsw i64 %indvars.iv527 to i32
-  %29 = uitofp nneg i32 %28 to double
-  %30 = fcmp oeq double %27, %29
-  br i1 %30, label %_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i194, label %bb.q
-
-_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i194: ; preds = %_ZN2v88internal11IsSmiDoubleEd.exit.i.i193
-  %31 = shl nuw nsw i64 %indvars.iv527, 32
-  %32 = getelementptr inbounds nuw i8, ptr %i.dw, i64 560 ; 2 uses
-  %33 = load ptr, ptr %32, align 8                ; 2 uses
-  %34 = getelementptr inbounds nuw i8, ptr %i.dw, i64 568
-  %35 = load ptr, ptr %34, align 8
-  %36 = icmp eq ptr %33, %35
-  br i1 %36, label %37, label %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i195, !prof !5
-
-37:                                               ; preds = %_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i194
-  %38 = call noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef nonnull align 1 dereferenceable(1) %i.dw) #18
-  br label %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i195
-
-_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i195: ; preds = %37, %_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i194
-  %.0.i.i.i196 = phi ptr [ %38, %37 ], [ %33, %_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i194 ] ; 3 uses
-  %39 = ptrtoint ptr %.0.i.i.i196 to i64
-  %40 = add i64 %39, 8
-  %41 = inttoptr i64 %40 to ptr
-  store ptr %41, ptr %32, align 8
-  store i64 %31, ptr %.0.i.i.i196, align 8
-  br label %_ZN2v88internal11FactoryBaseINS0_7FactoryEE9NewNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEd.exit197
+  %i.dw = load ptr, ptr %0, align 8               ; 3 uses
+  %17 = shl nuw nsw i64 %indvars.iv527, 32
+  %18 = getelementptr inbounds nuw i8, ptr %i.dw, i64 560 ; 2 uses
+  %19 = load ptr, ptr %18, align 8                ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %i.dw, i64 568
+  %21 = load ptr, ptr %20, align 8
+  %22 = icmp eq ptr %19, %21
+  br i1 %22, label %bb.q, label %_ZN2v88internal11FactoryBaseINS0_7FactoryEE9NewNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEd.exit197, !prof !5
 
 bb.q:                                             ; preds = %_ZN2v88internal11IsSmiDoubleEd.exit.i.i193
-  %i.dx = call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE13NewHeapNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_10HeapNumberEEEv(ptr noundef nonnull align 1 dereferenceable(1) %i.dw) #18 ; 2 uses
-  %42 = load i64, ptr %i.dx, align 8
-  %43 = add i64 %42, -1
-  %44 = inttoptr i64 %43 to ptr
-  %45 = getelementptr inbounds nuw i8, ptr %44, i64 8
-  store double %27, ptr %45, align 1
+  %i.dx = call noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef nonnull align 1 dereferenceable(1) %i.dw) #18
   br label %_ZN2v88internal11FactoryBaseINS0_7FactoryEE9NewNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEd.exit197
 
-_ZN2v88internal11FactoryBaseINS0_7FactoryEE9NewNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEd.exit197: ; preds = %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i195, %bb.q
-  %.sroa.0.0.i192 = phi ptr [ %.0.i.i.i196, %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i195 ], [ %i.dx, %bb.q ]
+_ZN2v88internal11FactoryBaseINS0_7FactoryEE9NewNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEd.exit197: ; preds = %bb.q, %_ZN2v88internal11IsSmiDoubleEd.exit.i.i193
+  %.sroa.0.0.i192 = phi ptr [ %i.dx, %bb.q ], [ %19, %_ZN2v88internal11IsSmiDoubleEd.exit.i.i193 ] ; 3 uses
+  %23 = ptrtoint ptr %.sroa.0.0.i192 to i64
+  %24 = add i64 %23, 8
+  %25 = inttoptr i64 %24 to ptr
+  store ptr %25, ptr %18, align 8
+  store i64 %17, ptr %.sroa.0.0.i192, align 8
   %i.dy = load ptr, ptr %0, align 8
   %i.dz = call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE14NumberToStringENS0_12DirectHandleINS0_6ObjectEEENS0_15NumberCacheModeE(ptr noundef nonnull align 1 dereferenceable(1) %i.dy, ptr nonnull %.sroa.0.0.i192, i32 noundef 2) #18
   %i.ea = call noundef zeroext i1 @_ZN2v88internal21JsonParseInternalizer15RecurseAndApplyILNS1_19WithOrWithoutSourceE0EEEbNS0_6HandleINS0_10JSReceiverEEENS4_INS0_6StringEEENS4_INS0_6ObjectEEESA_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr nonnull %i.m, ptr %i.dz, ptr null, ptr null)
@@ -435,7 +395,7 @@ bb.t:                                             ; preds = %.critedge123
 _ZN2v88internal11HandleScopeD2Ev.exit139:         ; preds = %bb.t, %.critedge123
   %indvars.iv.next528 = add nuw nsw i64 %indvars.iv527, 1 ; 2 uses
   %i.ee = trunc nuw i64 %indvars.iv.next528 to i32
-  %i.ef = uitofp nneg i32 %i.ee to double         ; 2 uses
+  %i.ef = uitofp nneg i32 %i.ee to double
   %i.eg = fcmp ule double %i.ay, %i.ef
   br i1 %i.eg, label %_ZNK2v88internal11MaybeHandleINS0_10FixedArrayEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit, label %_ZN2v88internal11IsSmiDoubleEd.exit.i.i193, !llvm.loop !147
 
@@ -838,8 +798,7 @@ _ZN2v88internal6Object11NumberValueENS0_6TaggedIS1_EE.exit: ; preds = %bb.f, %bb
   br i1 %i.aw, label %.critedge130, label %_ZN2v88internal11IsSmiDoubleEd.exit.i.i
 
 _ZN2v88internal11IsSmiDoubleEd.exit.i.i:          ; preds = %_ZN2v88internal6Object11NumberValueENS0_6TaggedIS1_EE.exit, %_ZN2v88internal11HandleScopeD2Ev.exit133
-  %indvars.iv339 = phi i64 [ %indvars.iv.next340, %_ZN2v88internal11HandleScopeD2Ev.exit133 ], [ 0, %_ZN2v88internal6Object11NumberValueENS0_6TaggedIS1_EE.exit ] ; 3 uses
-  %8 = phi double [ %i.bo, %_ZN2v88internal11HandleScopeD2Ev.exit133 ], [ 0.000000e+00, %_ZN2v88internal6Object11NumberValueENS0_6TaggedIS1_EE.exit ] ; 2 uses
+  %indvars.iv339 = phi i64 [ %indvars.iv.next340, %_ZN2v88internal11HandleScopeD2Ev.exit133 ], [ 0, %_ZN2v88internal6Object11NumberValueENS0_6TaggedIS1_EE.exit ] ; 2 uses
   %i.ax = load ptr, ptr %0, align 8               ; 5 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 560 ; 2 uses
   %i.az = load ptr, ptr %i.ay, align 8
@@ -849,45 +808,26 @@ _ZN2v88internal11IsSmiDoubleEd.exit.i.i:          ; preds = %_ZN2v88internal6Obj
   %i.bd = load i32, ptr %i.bc, align 8
   %i.be = add nsw i32 %i.bd, 1
   store i32 %i.be, ptr %i.bc, align 8
-  %i.bf = load ptr, ptr %0, align 8               ; 4 uses
-  %9 = trunc nuw nsw i64 %indvars.iv339 to i32
-  %10 = uitofp nneg i32 %9 to double
-  %11 = fcmp oeq double %8, %10
-  br i1 %11, label %_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i, label %bb.h
-
-_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i:   ; preds = %_ZN2v88internal11IsSmiDoubleEd.exit.i.i
-  %12 = shl nuw nsw i64 %indvars.iv339, 32
-  %13 = getelementptr inbounds nuw i8, ptr %i.bf, i64 560 ; 2 uses
-  %14 = load ptr, ptr %13, align 8                ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %i.bf, i64 568
-  %16 = load ptr, ptr %15, align 8
-  %17 = icmp eq ptr %14, %16
-  br i1 %17, label %18, label %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i, !prof !5
-
-18:                                               ; preds = %_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i
-  %19 = call noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef nonnull align 1 dereferenceable(1) %i.bf) #18
-  br label %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i
-
-_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i: ; preds = %18, %_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i
-  %.0.i.i.i = phi ptr [ %19, %18 ], [ %14, %_ZN2v88internal18DoubleToSmiIntegerEdPi.exit.i ] ; 3 uses
-  %20 = ptrtoint ptr %.0.i.i.i to i64
-  %21 = add i64 %20, 8
-  %22 = inttoptr i64 %21 to ptr
-  store ptr %22, ptr %13, align 8
-  store i64 %12, ptr %.0.i.i.i, align 8
-  br label %_ZN2v88internal11FactoryBaseINS0_7FactoryEE9NewNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEd.exit
+  %i.bf = load ptr, ptr %0, align 8               ; 3 uses
+  %8 = shl nuw nsw i64 %indvars.iv339, 32
+  %9 = getelementptr inbounds nuw i8, ptr %i.bf, i64 560 ; 2 uses
+  %10 = load ptr, ptr %9, align 8                 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.bf, i64 568
+  %12 = load ptr, ptr %11, align 8
+  %13 = icmp eq ptr %10, %12
+  br i1 %13, label %bb.h, label %_ZN2v88internal11FactoryBaseINS0_7FactoryEE9NewNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEd.exit, !prof !5
 
 bb.h:                                             ; preds = %_ZN2v88internal11IsSmiDoubleEd.exit.i.i
-  %i.bg = call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE13NewHeapNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_10HeapNumberEEEv(ptr noundef nonnull align 1 dereferenceable(1) %i.bf) #18 ; 2 uses
-  %23 = load i64, ptr %i.bg, align 8
-  %24 = add i64 %23, -1
-  %25 = inttoptr i64 %24 to ptr
-  %26 = getelementptr inbounds nuw i8, ptr %25, i64 8
-  store double %8, ptr %26, align 1
+  %i.bg = call noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef nonnull align 1 dereferenceable(1) %i.bf) #18
   br label %_ZN2v88internal11FactoryBaseINS0_7FactoryEE9NewNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEd.exit
 
-_ZN2v88internal11FactoryBaseINS0_7FactoryEE9NewNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEd.exit: ; preds = %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i, %bb.h
-  %.sroa.0.0.i = phi ptr [ %.0.i.i.i, %_ZN2v88internal6HandleINS0_3SmiEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit.i ], [ %i.bg, %bb.h ]
+_ZN2v88internal11FactoryBaseINS0_7FactoryEE9NewNumberILNS0_14AllocationTypeE0EEENS0_6HandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEEd.exit: ; preds = %bb.h, %_ZN2v88internal11IsSmiDoubleEd.exit.i.i
+  %.sroa.0.0.i = phi ptr [ %i.bg, %bb.h ], [ %10, %_ZN2v88internal11IsSmiDoubleEd.exit.i.i ] ; 3 uses
+  %14 = ptrtoint ptr %.sroa.0.0.i to i64
+  %15 = add i64 %14, 8
+  %16 = inttoptr i64 %15 to ptr
+  store ptr %16, ptr %9, align 8
+  store i64 %8, ptr %.sroa.0.0.i, align 8
   %i.bh = load ptr, ptr %0, align 8
   %i.bi = call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE14NumberToStringENS0_12DirectHandleINS0_6ObjectEEENS0_15NumberCacheModeE(ptr noundef nonnull align 1 dereferenceable(1) %i.bh, ptr nonnull %.sroa.0.0.i, i32 noundef 2) #18
   %i.bj = call noundef zeroext i1 @_ZN2v88internal21JsonParseInternalizer15RecurseAndApplyILNS1_19WithOrWithoutSourceE0EEEbNS0_6HandleINS0_10JSReceiverEEENS4_INS0_6StringEEENS4_INS0_6ObjectEEESA_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr nonnull %i.m, ptr %i.bi, ptr null, ptr null)
@@ -918,7 +858,7 @@ bb.j:                                             ; preds = %.critedge
 _ZN2v88internal11HandleScopeD2Ev.exit133:         ; preds = %bb.j, %.critedge
   %indvars.iv.next340 = add nuw nsw i64 %indvars.iv339, 1 ; 2 uses
   %i.bn = trunc nuw i64 %indvars.iv.next340 to i32
-  %i.bo = uitofp nneg i32 %i.bn to double         ; 2 uses
+  %i.bo = uitofp nneg i32 %i.bn to double
   %i.bp = fcmp ule double %i.av, %i.bo
   br i1 %i.bp, label %.critedge130, label %_ZN2v88internal11IsSmiDoubleEd.exit.i.i, !llvm.loop !156
 

@@ -205,8 +205,8 @@ bb.y:                                             ; preds = %bb.w
   %i.co = sext i32 %i.cn to i64
   %i.cp = getelementptr [2 x i8], ptr %i.x, i64 %i.co
   %i.cq = getelementptr i8, ptr %i.cp, i64 -2
-  %i.cr = load i16, ptr %i.cq, align 2, !tbaa !140
-  %i.cs = sitofp i16 %i.cr to double              ; 2 uses
+  %i.cr = load i16, ptr %i.cq, align 2, !tbaa !140 ; 2 uses
+  %i.cs = sitofp i16 %i.cr to double
   %i.ct = add i32 %i.ay, 1
   %i.cu = add i32 %i.ct, %.054.lcssa.i46
   %i.cv = mul nsw i32 %i.cu, %i.aa
@@ -214,8 +214,8 @@ bb.y:                                             ; preds = %bb.w
   %i.cx = sext i32 %i.cw to i64
   %i.cy = getelementptr [2 x i8], ptr %i.x, i64 %i.cx
   %i.cz = getelementptr i8, ptr %i.cy, i64 2
-  %i.da = load i16, ptr %i.cz, align 2, !tbaa !140
-  %i.db = sitofp i16 %i.da to double              ; 2 uses
+  %i.da = load i16, ptr %i.cz, align 2, !tbaa !140 ; 2 uses
+  %i.db = sitofp i16 %i.da to double
   %i.dc = add nsw i32 %.054.lcssa.i46, %i.ay
   %i.dd = mul nsw i32 %i.dc, %i.aa
   %i.de = add nsw i32 %i.dd, %.054.lcssa.i46
@@ -235,7 +235,7 @@ bb.z:                                             ; preds = %bb.y
   br label %_ZN2cv6stereo8Matching22symetricVInterpolationEPsiiii.exit
 
 bb.aa:                                            ; preds = %bb.y
-  %2 = fcmp ogt double %i.cs, %i.db
+  %2 = icmp sgt i16 %i.cr, %i.da
   br i1 %2, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
@@ -281,18 +281,19 @@ bb.af:                                            ; preds = %_ZN2cv6stereo8Match
   %i.eh = mul nsw i32 %i.aa, %i.ax
   %i.ei = add nsw i32 %.054.lcssa.i, %i.eh
   %i.ej = sext i32 %i.ei to i64
-  %i.ek = getelementptr [2 x i8], ptr %i.x, i64 %i.ej ; 2 uses
+  %i.ek = getelementptr [2 x i8], ptr %i.x, i64 %i.ej ; 3 uses
   %i.el = getelementptr i8, ptr %i.ek, i64 -2
-  %i.em = load i16, ptr %i.el, align 2, !tbaa !140
-  %i.en = sitofp i16 %i.em to double              ; 2 uses
+  %i.em = load i16, ptr %i.el, align 2, !tbaa !140 ; 2 uses
+  %i.en = sitofp i16 %i.em to double
   %i.eo = load <2 x i16>, ptr %i.ek, align 2, !tbaa !140
-  %i.ep = sitofp <2 x i16> %i.eo to <2 x double>  ; 2 uses
-  %i.eq = extractelement <2 x double> %i.ep, i64 0 ; 2 uses
+  %i.ep = sitofp <2 x i16> %i.eo to <2 x double>  ; 3 uses
+  %i.eq = extractelement <2 x double> %i.ep, i64 0
   %i.er = fsub double %i.en, %i.eq                ; 7 uses
-  %3 = extractelement <2 x double> %i.ep, i64 1   ; 2 uses
-  %4 = fsub double %3, %i.eq                      ; 7 uses
+  %shift = shufflevector <2 x double> %i.ep, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x double> %shift, %i.ep ; 5 uses
+  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 3 uses
   %i.es = fcmp oeq double %i.er, 0.000000e+00
-  %i.et = fcmp oeq double %4, 0.000000e+00
+  %i.et = fcmp oeq double %3, 0.000000e+00
   %or.cond.i68 = select i1 %i.es, i1 true, i1 %i.et
   br i1 %or.cond.i68, label %bb.ag, label %bb.ah
 
@@ -301,23 +302,27 @@ bb.ag:                                            ; preds = %bb.af
   br label %_ZN2cv6stereo8Matching22symetricVInterpolationEPsiiii.exit73
 
 bb.ah:                                            ; preds = %bb.af
-  %5 = fcmp olt double %3, %i.en
-  br i1 %5, label %bb.ai, label %bb.aj
+  %4 = getelementptr i8, ptr %i.ek, i64 2
+  %5 = load i16, ptr %4, align 2, !tbaa !140
+  %6 = icmp sgt i16 %i.em, %5
+  br i1 %6, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  %6 = fmul nnan double %4, %4
+  %foldExtExtBinop113 = fmul nnan <2 x double> %foldExtExtBinop, %foldExtExtBinop
+  %7 = extractelement <2 x double> %foldExtExtBinop113, i64 0
   %i.ev = fmul nnan double %i.er, %i.er
-  %i.ew = fdiv double %6, %i.ev
-  %i.ex = fdiv double %4, %i.er
+  %i.ew = fdiv double %7, %i.ev
+  %i.ex = fdiv double %3, %i.er
   %i.ey = fadd double %i.ex, %i.ew
   %i.ez = tail call double @llvm.fmuladd.f64(double %i.ey, double -2.500000e-01, double 5.000000e-01)
   br label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ah
   %i.fa = fmul nnan double %i.er, %i.er
-  %7 = fmul nnan double %4, %4
-  %i.fb = fdiv double %i.fa, %7
-  %i.fc = fdiv double %i.er, %4
+  %foldExtExtBinop115 = fmul nnan <2 x double> %foldExtExtBinop, %foldExtExtBinop
+  %8 = extractelement <2 x double> %foldExtExtBinop115, i64 0
+  %i.fb = fdiv double %i.fa, %8
+  %i.fc = fdiv double %i.er, %3
   %i.fd = fadd double %i.fc, %i.fb
   %i.fe = tail call double @llvm.fmuladd.f64(double %i.fd, double -2.500000e-01, double 5.000000e-01)
   %i.ff = fneg double %i.fe
@@ -360,16 +365,17 @@ bb.ao:                                            ; preds = %bb.am
   %i.fs = mul nsw i32 %i.aa, %i.ax
   %i.ft = add nsw i32 %.054.lcssa.i, %i.fs
   %i.fu = sext i32 %i.ft to i64
-  %i.fv = getelementptr [2 x i8], ptr %i.x, i64 %i.fu ; 2 uses
+  %i.fv = getelementptr [2 x i8], ptr %i.x, i64 %i.fu ; 3 uses
   %i.fw = getelementptr i8, ptr %i.fv, i64 -2
-  %i.fx = load i16, ptr %i.fw, align 2, !tbaa !140
-  %i.fy = sitofp i16 %i.fx to double              ; 2 uses
+  %i.fx = load i16, ptr %i.fw, align 2, !tbaa !140 ; 2 uses
+  %i.fy = sitofp i16 %i.fx to double
   %i.fz = load <2 x i16>, ptr %i.fv, align 2, !tbaa !140
-  %i.ga = sitofp <2 x i16> %i.fz to <2 x double>  ; 2 uses
-  %i.gb = extractelement <2 x double> %i.ga, i64 0 ; 2 uses
+  %i.ga = sitofp <2 x i16> %i.fz to <2 x double>  ; 3 uses
+  %i.gb = extractelement <2 x double> %i.ga, i64 0
   %i.gc = fsub double %i.fy, %i.gb                ; 7 uses
-  %8 = extractelement <2 x double> %i.ga, i64 1   ; 2 uses
-  %9 = fsub double %8, %i.gb                      ; 7 uses
+  %shift117 = shufflevector <2 x double> %i.ga, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop118 = fsub <2 x double> %shift117, %i.ga ; 5 uses
+  %9 = extractelement <2 x double> %foldExtExtBinop118, i64 0 ; 3 uses
   %i.gd = fcmp oeq double %i.gc, 0.000000e+00
   %i.ge = fcmp oeq double %9, 0.000000e+00
   %or.cond.i75 = select i1 %i.gd, i1 true, i1 %i.ge
@@ -380,13 +386,16 @@ bb.ap:                                            ; preds = %bb.ao
   br label %.sink.split.sink.split
 
 bb.aq:                                            ; preds = %bb.ao
-  %10 = fcmp olt double %8, %i.fy
-  br i1 %10, label %bb.ar, label %bb.as
+  %10 = getelementptr i8, ptr %i.fv, i64 2
+  %11 = load i16, ptr %10, align 2, !tbaa !140
+  %12 = icmp sgt i16 %i.fx, %11
+  br i1 %12, label %bb.ar, label %bb.as
 
 bb.ar:                                            ; preds = %bb.aq
-  %11 = fmul nnan double %9, %9
+  %foldExtExtBinop120 = fmul nnan <2 x double> %foldExtExtBinop118, %foldExtExtBinop118
+  %13 = extractelement <2 x double> %foldExtExtBinop120, i64 0
   %i.gg = fmul nnan double %i.gc, %i.gc
-  %i.gh = fdiv double %11, %i.gg
+  %i.gh = fdiv double %13, %i.gg
   %i.gi = fdiv double %9, %i.gc
   %i.gj = fadd double %i.gi, %i.gh
   %i.gk = tail call double @llvm.fmuladd.f64(double %i.gj, double -2.500000e-01, double 5.000000e-01)
@@ -394,8 +403,9 @@ bb.ar:                                            ; preds = %bb.aq
 
 bb.as:                                            ; preds = %bb.aq
   %i.gl = fmul nnan double %i.gc, %i.gc
-  %12 = fmul nnan double %9, %9
-  %i.gm = fdiv double %i.gl, %12
+  %foldExtExtBinop122 = fmul nnan <2 x double> %foldExtExtBinop118, %foldExtExtBinop118
+  %14 = extractelement <2 x double> %foldExtExtBinop122, i64 0
+  %i.gm = fdiv double %i.gl, %14
   %i.gn = fdiv double %i.gc, %9
   %i.go = fadd double %i.gn, %i.gm
   %i.gp = tail call double @llvm.fmuladd.f64(double %i.go, double -2.500000e-01, double 5.000000e-01)

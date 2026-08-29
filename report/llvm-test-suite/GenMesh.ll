@@ -202,14 +202,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.a,
 define dso_local void @_ZN7GenMesh8generateERSt6vectorI7double2SaIS1_EERS0_IiSaIiEES7_S7_S7_S7_S7_S7_S7_S7_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(88) %0, ptr noundef nonnull align 1 %1, ptr nofree noundef nonnull align 1 captures(none) %2, ptr nofree noundef nonnull align 1 captures(none) %3, ptr noundef nonnull align 1 %4, ptr nofree noundef nonnull align 1 captures(none) %5, ptr nofree noundef nonnull align 1 captures(none) %6, ptr nofree noundef nonnull align 1 captures(none) %7, ptr nofree noundef nonnull align 1 captures(none) %8, ptr nofree noundef nonnull align 1 captures(none) %9, ptr nofree noundef nonnull align 1 captures(none) %10) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %12 = load <2 x i32>, ptr %i.a, align 8, !tbaa !4
-  %13 = sitofp <2 x i32> %12 to <2 x double>      ; 2 uses
-  %14 = extractelement <2 x double> %13, i64 0    ; 3 uses
-  %15 = extractelement <2 x double> %13, i64 1    ; 3 uses
-  %16 = fcmp ogt double %14, %15                  ; 3 uses
-  %.037.i = select i1 %16, double %14, double %15 ; 2 uses
-  %.036.i = select i1 %16, double %15, double %14 ; 2 uses
+  %11 = load i32, ptr %i.a, align 8, !tbaa !25    ; 3 uses
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
+  %13 = load i32, ptr %12, align 4, !tbaa !27     ; 3 uses
+  %.03739.i = tail call i32 @llvm.smax.i32(i32 %11, i32 %13)
+  %.037.i = sitofp i32 %.03739.i to double        ; 2 uses
+  %.036.v.i = tail call i32 @llvm.smin.i32(i32 %11, i32 %13)
+  %.036.i = sitofp i32 %.036.v.i to double        ; 2 uses
   %i.b = load i32, ptr @_ZN8Parallel5numpeE, align 4, !tbaa !4 ; 6 uses
   %i.c = sitofp i32 %i.b to double
   %i.d = fmul nnan double %.036.i, %i.c
@@ -244,6 +243,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   br i1 %.not11.i, label %bb.e, label %bb.d, !llvm.loop !32
 
 bb.e:                                             ; preds = %bb.d
+  %14 = icmp sgt i32 %11, %13
   %i.s = insertelement <2 x i32> poison, i32 %.038.i, i64 0
   %i.t = insertelement <2 x i32> %i.s, i32 %.0.i, i64 1
   %i.u = sitofp <2 x i32> %i.t to <2 x double>
@@ -267,7 +267,7 @@ bb.e:                                             ; preds = %bb.d
   %i.al = sdiv i32 %i.b, %i.aj                    ; 4 uses
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
   store i32 %i.al, ptr %i.am, align 4, !tbaa !34
-  br i1 %16, label %bb.f, label %_ZN7GenMesh9calcNumPEEv.exit
+  br i1 %14, label %bb.f, label %_ZN7GenMesh9calcNumPEEv.exit
 
 bb.f:                                             ; preds = %bb.e
   store i32 %i.al, ptr %i.ak, align 8, !tbaa !4
@@ -295,7 +295,7 @@ _ZN7GenMesh9calcNumPEEv.exit:                     ; preds = %bb.e, %bb.f
   %i.bb = sub nsw i32 %i.ba, %i.aw
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i32 %i.bb, ptr %i.bc, align 8, !tbaa !38
-  %i.bd = load i32, ptr %11, align 4, !tbaa !27   ; 2 uses
+  %i.bd = load i32, ptr %12, align 4, !tbaa !27   ; 2 uses
   %i.be = mul nsw i32 %i.bd, %i.as
   %i.bf = sdiv i32 %i.be, %i.an                   ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 84
@@ -358,13 +358,13 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 define dso_local void @_ZN7GenMesh9calcNumPEEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(88) %0) local_unnamed_addr #7 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %1 = load <2 x i32>, ptr %i.a, align 8, !tbaa !4
-  %2 = sitofp <2 x i32> %1 to <2 x double>        ; 2 uses
-  %3 = extractelement <2 x double> %2, i64 0      ; 3 uses
-  %4 = extractelement <2 x double> %2, i64 1      ; 3 uses
-  %5 = fcmp ogt double %3, %4                     ; 3 uses
-  %.037 = select i1 %5, double %3, double %4      ; 2 uses
-  %.036 = select i1 %5, double %4, double %3      ; 2 uses
+  %1 = load i32, ptr %i.a, align 8, !tbaa !25     ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 36
+  %3 = load i32, ptr %2, align 4, !tbaa !27       ; 3 uses
+  %.03739 = tail call i32 @llvm.smax.i32(i32 %1, i32 %3)
+  %.037 = sitofp i32 %.03739 to double            ; 2 uses
+  %.036.v = tail call i32 @llvm.smin.i32(i32 %1, i32 %3)
+  %.036 = sitofp i32 %.036.v to double            ; 2 uses
   %i.b = load i32, ptr @_ZN8Parallel5numpeE, align 4, !tbaa !4 ; 6 uses
   %i.c = sitofp i32 %i.b to double
   %i.d = fmul nnan double %.036, %i.c
@@ -399,6 +399,7 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   br i1 %.not11, label %bb.e, label %bb.d, !llvm.loop !32
 
 bb.e:                                             ; preds = %bb.d
+  %4 = icmp sgt i32 %1, %3
   %i.s = insertelement <2 x i32> poison, i32 %.038, i64 0
   %i.t = insertelement <2 x i32> %i.s, i32 %.0, i64 1
   %i.u = sitofp <2 x i32> %i.t to <2 x double>
@@ -422,7 +423,7 @@ bb.e:                                             ; preds = %bb.d
   %i.al = sdiv i32 %i.b, %i.aj                    ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
   store i32 %i.al, ptr %i.am, align 4, !tbaa !34
-  br i1 %5, label %bb.f, label %bb.g
+  br i1 %4, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   store i32 %i.al, ptr %i.ak, align 8, !tbaa !4
@@ -823,6 +824,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #9

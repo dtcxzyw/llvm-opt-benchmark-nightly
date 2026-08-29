@@ -202,13 +202,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %.preheader184.us, %preserve_color.exit.thread.us
   %indvars.iv = phi i64 [ 0, %.preheader184.us ], [ %indvars.iv.next, %preserve_color.exit.thread.us ] ; 7 uses
   %i.de = getelementptr inbounds i8, ptr %.0155189.us, i64 %indvars.iv
-  %i.df = load i8, ptr %i.de, align 1, !tbaa !46  ; 2 uses
+  %i.df = load i8, ptr %i.de, align 1, !tbaa !46  ; 5 uses
   %i.dg = zext i8 %i.df to i32
   %i.dh = getelementptr inbounds i8, ptr %.0154190.us, i64 %indvars.iv
-  %i.di = load i8, ptr %i.dh, align 1, !tbaa !46  ; 2 uses
+  %i.di = load i8, ptr %i.dh, align 1, !tbaa !46  ; 5 uses
   %i.dj = zext i8 %i.di to i32
   %i.dk = getelementptr inbounds i8, ptr %.0153191.us, i64 %indvars.iv
-  %i.dl = load i8, ptr %i.dk, align 1, !tbaa !46  ; 2 uses
+  %i.dl = load i8, ptr %i.dk, align 1, !tbaa !46  ; 5 uses
   %i.dm = zext i8 %i.dl to i32
   %i.dn = load i32, ptr %i.ay, align 8, !tbaa !93
   %i.do = icmp eq i32 %i.dn, 32
@@ -224,19 +224,19 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ds = sub nsw i32 %i.dg, %i.cj
   %i.dt = sitofp nsz i32 %i.ds to float
   %i.du = tail call nsz float @llvm.fmuladd.f32(float %i.dt, float %i.cm, float %i.cx)
-  %i.dv = fptosi float %i.du to i32               ; 3 uses
+  %i.dv = fptosi float %i.du to i32               ; 6 uses
   %i.dw = insertelement <2 x i32> poison, i32 %i.dj, i64 0
   %i.dx = insertelement <2 x i32> %i.dw, i32 %i.dm, i64 1
   %i.dy = sub nsw <2 x i32> %i.dx, %i.ck
   %i.dz = sitofp <2 x i32> %i.dy to <2 x float>
   %i.ea = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dz, <2 x float> %i.co, <2 x float> %i.cy)
-  %i.eb = fptosi <2 x float> %i.ea to <2 x i32>   ; 3 uses
+  %i.eb = fptosi <2 x float> %i.ea to <2 x i32>   ; 5 uses
   %i.ec = load i32, ptr %i.cz, align 8, !tbaa !84
-  %i.ed = uitofp i8 %i.df to float                ; 6 uses
-  %i.ee = uitofp i8 %i.di to float                ; 6 uses
-  %i.ef = uitofp i8 %i.dl to float                ; 6 uses
-  %i.eg = sitofp nsz i32 %i.dv to float           ; 7 uses
-  %i.eh = sitofp <2 x i32> %i.eb to <2 x float>   ; 13 uses
+  %i.ed = uitofp i8 %i.df to float                ; 4 uses
+  %i.ee = uitofp i8 %i.di to float                ; 4 uses
+  %i.ef = uitofp i8 %i.dl to float                ; 4 uses
+  %i.eg = sitofp nsz i32 %i.dv to float           ; 5 uses
+  %i.eh = sitofp <2 x i32> %i.eb to <2 x float>   ; 11 uses
   switch i32 %i.ec, label %preserve_color.exit.thread.us [
     i32 1, label %bb.m
     i32 2, label %bb.l
@@ -311,31 +311,41 @@ bb.k:                                             ; preds = %bb.g
   br label %preserve_color.exit.us
 
 bb.l:                                             ; preds = %bb.g
-  %4 = insertelement <2 x float> poison, float %i.ed, i64 0
-  %5 = insertelement <2 x float> %4, float %i.eg, i64 1 ; 2 uses
-  %6 = shufflevector <2 x float> %i.eh, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %7 = insertelement <2 x float> %6, float %i.ee, i64 0 ; 2 uses
-  %8 = fcmp nsz ogt <2 x float> %5, %7
-  %9 = select <2 x i1> %8, <2 x float> %5, <2 x float> %7 ; 2 uses
-  %10 = insertelement <2 x float> %i.eh, float %i.ef, i64 0 ; 2 uses
-  %11 = fcmp nsz ogt <2 x float> %9, %10
-  %12 = select <2 x i1> %11, <2 x float> %9, <2 x float> %10
+  %4 = tail call i8 @llvm.umax.i8(i8 %i.df, i8 %i.di)
+  %.109.i184.us = tail call i8 @llvm.umax.i8(i8 %4, i8 %i.dl)
+  %.109.i.us = uitofp i8 %.109.i184.us to float
+  %5 = extractelement <2 x i32> %i.eb, i64 0
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.dv, i32 %5)
+  %7 = sitofp i32 %6 to float                     ; 2 uses
+  %8 = extractelement <2 x float> %i.eh, i64 1    ; 2 uses
+  %9 = fcmp nsz olt float %8, %7
+  %10 = select nsz i1 %9, float %7, float %8
+  %11 = insertelement <2 x float> poison, float %.109.i.us, i64 0
+  %12 = insertelement <2 x float> %11, float %10, i64 1
   br label %preserve_color.exit.us
 
 bb.m:                                             ; preds = %bb.g
-  %13 = insertelement <2 x float> poison, float %i.ed, i64 0
-  %14 = insertelement <2 x float> %13, float %i.eg, i64 1 ; 3 uses
-  %15 = shufflevector <2 x float> %i.eh, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %16 = insertelement <2 x float> %15, float %i.ee, i64 0 ; 3 uses
-  %17 = fcmp nsz ogt <2 x float> %14, %16         ; 2 uses
-  %18 = select <2 x i1> %17, <2 x float> %14, <2 x float> %16 ; 2 uses
-  %19 = insertelement <2 x float> %i.eh, float %i.ef, i64 0 ; 4 uses
-  %20 = fcmp nsz ogt <2 x float> %18, %19
-  %21 = select <2 x i1> %20, <2 x float> %18, <2 x float> %19
-  %22 = select <2 x i1> %17, <2 x float> %16, <2 x float> %14 ; 2 uses
-  %23 = fcmp nsz ogt <2 x float> %22, %19
-  %24 = select <2 x i1> %23, <2 x float> %19, <2 x float> %22
-  %i.gi = fadd nsz <2 x float> %21, %24
+  %13 = tail call i8 @llvm.umax.i8(i8 %i.df, i8 %i.di)
+  %..i185.us = tail call i8 @llvm.umax.i8(i8 %13, i8 %i.dl)
+  %..i.us = uitofp i8 %..i185.us to float
+  %14 = tail call i8 @llvm.umin.i8(i8 %i.df, i8 %i.di)
+  %15 = tail call i8 @llvm.umin.i8(i8 %14, i8 %i.dl)
+  %16 = uitofp i8 %15 to float
+  %17 = extractelement <2 x i32> %i.eb, i64 0     ; 2 uses
+  %18 = tail call i32 @llvm.smax.i32(i32 %i.dv, i32 %17)
+  %19 = sitofp i32 %18 to float                   ; 2 uses
+  %20 = extractelement <2 x float> %i.eh, i64 1   ; 4 uses
+  %21 = fcmp nsz olt float %20, %19
+  %22 = select nsz i1 %21, float %19, float %20
+  %23 = tail call i32 @llvm.smin.i32(i32 %i.dv, i32 %17)
+  %24 = sitofp i32 %23 to float                   ; 2 uses
+  %25 = fcmp nsz olt float %20, %24
+  %26 = select nsz i1 %25, float %20, float %24
+  %27 = insertelement <2 x float> poison, float %..i.us, i64 0
+  %28 = insertelement <2 x float> %27, float %22, i64 1
+  %29 = insertelement <2 x float> poison, float %16, i64 0
+  %30 = insertelement <2 x float> %29, float %26, i64 1
+  %i.gi = fadd nsz <2 x float> %28, %30
   br label %preserve_color.exit.us
 
 preserve_color.exit.us:                           ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
@@ -738,12 +748,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %.preheader184.us, %preserve_color.exit.thread.us
   %indvars.iv = phi i64 [ 0, %.preheader184.us ], [ %indvars.iv.next, %preserve_color.exit.thread.us ] ; 7 uses
   %i.ec = getelementptr inbounds [2 x i8], ptr %.0155189.us, i64 %indvars.iv
-  %i.ed = load i16, ptr %i.ec, align 2, !tbaa !63 ; 2 uses
+  %i.ed = load i16, ptr %i.ec, align 2, !tbaa !63 ; 5 uses
   %i.ee = zext i16 %i.ed to i32
   %i.ef = getelementptr inbounds [2 x i8], ptr %.0154190.us, i64 %indvars.iv
-  %i.eg = load i16, ptr %i.ef, align 2, !tbaa !63 ; 2 uses
+  %i.eg = load i16, ptr %i.ef, align 2, !tbaa !63 ; 5 uses
   %i.eh = getelementptr inbounds [2 x i8], ptr %.0153191.us, i64 %indvars.iv
-  %i.ei = load i16, ptr %i.eh, align 2, !tbaa !63 ; 2 uses
+  %i.ei = load i16, ptr %i.eh, align 2, !tbaa !63 ; 5 uses
   %i.ej = insertelement <2 x i16> poison, i16 %i.eg, i64 0
   %i.ek = insertelement <2 x i16> %i.ej, i16 %i.ei, i64 1
   %i.el = zext <2 x i16> %i.ek to <2 x i32>
@@ -759,16 +769,16 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ep = sub nsw i32 %i.ee, %i.cj
   %i.eq = sitofp nsz i32 %i.ep to float
   %i.er = tail call nsz float @llvm.fmuladd.f32(float %i.eq, float %i.cm, float %i.cx)
-  %i.es = fptosi float %i.er to i32               ; 3 uses
+  %i.es = fptosi float %i.er to i32               ; 6 uses
   %i.et = sub nsw <2 x i32> %i.el, %i.ck
   %i.eu = sitofp <2 x i32> %i.et to <2 x float>
   %i.ev = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.eu, <2 x float> %i.co, <2 x float> %i.cy)
-  %i.ew = fptosi <2 x float> %i.ev to <2 x i32>   ; 3 uses
-  %i.ex = uitofp i16 %i.ed to float               ; 6 uses
-  %i.ey = uitofp i16 %i.eg to float               ; 6 uses
-  %i.ez = uitofp i16 %i.ei to float               ; 6 uses
-  %i.fa = sitofp nsz i32 %i.es to float           ; 7 uses
-  %i.fb = sitofp <2 x i32> %i.ew to <2 x float>   ; 13 uses
+  %i.ew = fptosi <2 x float> %i.ev to <2 x i32>   ; 5 uses
+  %i.ex = uitofp i16 %i.ed to float               ; 4 uses
+  %i.ey = uitofp i16 %i.eg to float               ; 4 uses
+  %i.ez = uitofp i16 %i.ei to float               ; 4 uses
+  %i.fa = sitofp nsz i32 %i.es to float           ; 5 uses
+  %i.fb = sitofp <2 x i32> %i.ew to <2 x float>   ; 11 uses
   switch i32 %i.de, label %preserve_color.exit.thread.us [
     i32 1, label %bb.m
     i32 2, label %bb.l
@@ -843,31 +853,41 @@ bb.k:                                             ; preds = %bb.g
   br label %preserve_color.exit.us
 
 bb.l:                                             ; preds = %bb.g
-  %4 = insertelement <2 x float> poison, float %i.ex, i64 0
-  %5 = insertelement <2 x float> %4, float %i.fa, i64 1 ; 2 uses
-  %6 = shufflevector <2 x float> %i.fb, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %7 = insertelement <2 x float> %6, float %i.ey, i64 0 ; 2 uses
-  %8 = fcmp nsz ogt <2 x float> %5, %7
-  %9 = select <2 x i1> %8, <2 x float> %5, <2 x float> %7 ; 2 uses
-  %10 = insertelement <2 x float> %i.fb, float %i.ez, i64 0 ; 2 uses
-  %11 = fcmp nsz ogt <2 x float> %9, %10
-  %12 = select <2 x i1> %11, <2 x float> %9, <2 x float> %10
+  %4 = tail call i16 @llvm.umax.i16(i16 %i.ed, i16 %i.eg)
+  %.109.i184.us = tail call i16 @llvm.umax.i16(i16 %4, i16 %i.ei)
+  %.109.i.us = uitofp i16 %.109.i184.us to float
+  %5 = extractelement <2 x i32> %i.ew, i64 0
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.es, i32 %5)
+  %7 = sitofp i32 %6 to float                     ; 2 uses
+  %8 = extractelement <2 x float> %i.fb, i64 1    ; 2 uses
+  %9 = fcmp nsz olt float %8, %7
+  %10 = select nsz i1 %9, float %7, float %8
+  %11 = insertelement <2 x float> poison, float %.109.i.us, i64 0
+  %12 = insertelement <2 x float> %11, float %10, i64 1
   br label %preserve_color.exit.us
 
 bb.m:                                             ; preds = %bb.g
-  %13 = insertelement <2 x float> poison, float %i.ex, i64 0
-  %14 = insertelement <2 x float> %13, float %i.fa, i64 1 ; 3 uses
-  %15 = shufflevector <2 x float> %i.fb, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %16 = insertelement <2 x float> %15, float %i.ey, i64 0 ; 3 uses
-  %17 = fcmp nsz ogt <2 x float> %14, %16         ; 2 uses
-  %18 = select <2 x i1> %17, <2 x float> %14, <2 x float> %16 ; 2 uses
-  %19 = insertelement <2 x float> %i.fb, float %i.ez, i64 0 ; 4 uses
-  %20 = fcmp nsz ogt <2 x float> %18, %19
-  %21 = select <2 x i1> %20, <2 x float> %18, <2 x float> %19
-  %22 = select <2 x i1> %17, <2 x float> %16, <2 x float> %14 ; 2 uses
-  %23 = fcmp nsz ogt <2 x float> %22, %19
-  %24 = select <2 x i1> %23, <2 x float> %19, <2 x float> %22
-  %i.hc = fadd nsz <2 x float> %21, %24
+  %13 = tail call i16 @llvm.umax.i16(i16 %i.ed, i16 %i.eg)
+  %..i185.us = tail call i16 @llvm.umax.i16(i16 %13, i16 %i.ei)
+  %..i.us = uitofp i16 %..i185.us to float
+  %14 = tail call i16 @llvm.umin.i16(i16 %i.ed, i16 %i.eg)
+  %15 = tail call i16 @llvm.umin.i16(i16 %14, i16 %i.ei)
+  %16 = uitofp i16 %15 to float
+  %17 = extractelement <2 x i32> %i.ew, i64 0     ; 2 uses
+  %18 = tail call i32 @llvm.smax.i32(i32 %i.es, i32 %17)
+  %19 = sitofp i32 %18 to float                   ; 2 uses
+  %20 = extractelement <2 x float> %i.fb, i64 1   ; 4 uses
+  %21 = fcmp nsz olt float %20, %19
+  %22 = select nsz i1 %21, float %19, float %20
+  %23 = tail call i32 @llvm.smin.i32(i32 %i.es, i32 %17)
+  %24 = sitofp i32 %23 to float                   ; 2 uses
+  %25 = fcmp nsz olt float %20, %24
+  %26 = select nsz i1 %25, float %20, float %24
+  %27 = insertelement <2 x float> poison, float %..i.us, i64 0
+  %28 = insertelement <2 x float> %27, float %22, i64 1
+  %29 = insertelement <2 x float> poison, float %16, i64 0
+  %30 = insertelement <2 x float> %29, float %26, i64 1
+  %i.hc = fadd nsz <2 x float> %28, %30
   br label %preserve_color.exit.us
 
 preserve_color.exit.us:                           ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
@@ -1270,13 +1290,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %.preheader184.us, %preserve_color.exit.thread.us
   %indvars.iv = phi i64 [ 0, %.preheader184.us ], [ %indvars.iv.next, %preserve_color.exit.thread.us ] ; 7 uses
   %i.de = getelementptr inbounds i8, ptr %.0155189.us, i64 %indvars.iv
-  %i.df = load i8, ptr %i.de, align 1, !tbaa !46  ; 2 uses
+  %i.df = load i8, ptr %i.de, align 1, !tbaa !46  ; 5 uses
   %i.dg = zext i8 %i.df to i32
   %i.dh = getelementptr inbounds i8, ptr %.0154190.us, i64 %indvars.iv
-  %i.di = load i8, ptr %i.dh, align 1, !tbaa !46  ; 2 uses
+  %i.di = load i8, ptr %i.dh, align 1, !tbaa !46  ; 5 uses
   %i.dj = zext i8 %i.di to i32
   %i.dk = getelementptr inbounds i8, ptr %.0153191.us, i64 %indvars.iv
-  %i.dl = load i8, ptr %i.dk, align 1, !tbaa !46  ; 2 uses
+  %i.dl = load i8, ptr %i.dk, align 1, !tbaa !46  ; 5 uses
   %i.dm = zext i8 %i.dl to i32
   %i.dn = load i32, ptr %i.ay, align 8, !tbaa !93
   %i.do = icmp eq i32 %i.dn, 32
@@ -1292,19 +1312,19 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ds = sub nsw i32 %i.dg, %i.cj
   %i.dt = sitofp nsz i32 %i.ds to float
   %i.du = tail call nsz float @llvm.fmuladd.f32(float %i.dt, float %i.cm, float %i.cx)
-  %i.dv = fptosi float %i.du to i32               ; 3 uses
+  %i.dv = fptosi float %i.du to i32               ; 6 uses
   %i.dw = insertelement <2 x i32> poison, i32 %i.dj, i64 0
   %i.dx = insertelement <2 x i32> %i.dw, i32 %i.dm, i64 1
   %i.dy = sub nsw <2 x i32> %i.dx, %i.ck
   %i.dz = sitofp <2 x i32> %i.dy to <2 x float>
   %i.ea = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dz, <2 x float> %i.co, <2 x float> %i.cy)
-  %i.eb = fptosi <2 x float> %i.ea to <2 x i32>   ; 3 uses
+  %i.eb = fptosi <2 x float> %i.ea to <2 x i32>   ; 5 uses
   %i.ec = load i32, ptr %i.cz, align 8, !tbaa !84
-  %i.ed = uitofp i8 %i.df to float                ; 6 uses
-  %i.ee = uitofp i8 %i.di to float                ; 6 uses
-  %i.ef = uitofp i8 %i.dl to float                ; 6 uses
-  %i.eg = sitofp nsz i32 %i.dv to float           ; 7 uses
-  %i.eh = sitofp <2 x i32> %i.eb to <2 x float>   ; 13 uses
+  %i.ed = uitofp i8 %i.df to float                ; 4 uses
+  %i.ee = uitofp i8 %i.di to float                ; 4 uses
+  %i.ef = uitofp i8 %i.dl to float                ; 4 uses
+  %i.eg = sitofp nsz i32 %i.dv to float           ; 5 uses
+  %i.eh = sitofp <2 x i32> %i.eb to <2 x float>   ; 11 uses
   switch i32 %i.ec, label %preserve_color.exit.thread.us [
     i32 1, label %bb.m
     i32 2, label %bb.l
@@ -1379,31 +1399,41 @@ bb.k:                                             ; preds = %bb.g
   br label %preserve_color.exit.us
 
 bb.l:                                             ; preds = %bb.g
-  %4 = insertelement <2 x float> poison, float %i.ed, i64 0
-  %5 = insertelement <2 x float> %4, float %i.eg, i64 1 ; 2 uses
-  %6 = shufflevector <2 x float> %i.eh, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %7 = insertelement <2 x float> %6, float %i.ee, i64 0 ; 2 uses
-  %8 = fcmp nsz ogt <2 x float> %5, %7
-  %9 = select <2 x i1> %8, <2 x float> %5, <2 x float> %7 ; 2 uses
-  %10 = insertelement <2 x float> %i.eh, float %i.ef, i64 0 ; 2 uses
-  %11 = fcmp nsz ogt <2 x float> %9, %10
-  %12 = select <2 x i1> %11, <2 x float> %9, <2 x float> %10
+  %4 = tail call i8 @llvm.umax.i8(i8 %i.df, i8 %i.di)
+  %.109.i184.us = tail call i8 @llvm.umax.i8(i8 %4, i8 %i.dl)
+  %.109.i.us = uitofp i8 %.109.i184.us to float
+  %5 = extractelement <2 x i32> %i.eb, i64 0
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.dv, i32 %5)
+  %7 = sitofp i32 %6 to float                     ; 2 uses
+  %8 = extractelement <2 x float> %i.eh, i64 1    ; 2 uses
+  %9 = fcmp nsz olt float %8, %7
+  %10 = select nsz i1 %9, float %7, float %8
+  %11 = insertelement <2 x float> poison, float %.109.i.us, i64 0
+  %12 = insertelement <2 x float> %11, float %10, i64 1
   br label %preserve_color.exit.us
 
 bb.m:                                             ; preds = %bb.g
-  %13 = insertelement <2 x float> poison, float %i.ed, i64 0
-  %14 = insertelement <2 x float> %13, float %i.eg, i64 1 ; 3 uses
-  %15 = shufflevector <2 x float> %i.eh, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %16 = insertelement <2 x float> %15, float %i.ee, i64 0 ; 3 uses
-  %17 = fcmp nsz ogt <2 x float> %14, %16         ; 2 uses
-  %18 = select <2 x i1> %17, <2 x float> %14, <2 x float> %16 ; 2 uses
-  %19 = insertelement <2 x float> %i.eh, float %i.ef, i64 0 ; 4 uses
-  %20 = fcmp nsz ogt <2 x float> %18, %19
-  %21 = select <2 x i1> %20, <2 x float> %18, <2 x float> %19
-  %22 = select <2 x i1> %17, <2 x float> %16, <2 x float> %14 ; 2 uses
-  %23 = fcmp nsz ogt <2 x float> %22, %19
-  %24 = select <2 x i1> %23, <2 x float> %19, <2 x float> %22
-  %i.gi = fadd nsz <2 x float> %21, %24
+  %13 = tail call i8 @llvm.umax.i8(i8 %i.df, i8 %i.di)
+  %..i185.us = tail call i8 @llvm.umax.i8(i8 %13, i8 %i.dl)
+  %..i.us = uitofp i8 %..i185.us to float
+  %14 = tail call i8 @llvm.umin.i8(i8 %i.df, i8 %i.di)
+  %15 = tail call i8 @llvm.umin.i8(i8 %14, i8 %i.dl)
+  %16 = uitofp i8 %15 to float
+  %17 = extractelement <2 x i32> %i.eb, i64 0     ; 2 uses
+  %18 = tail call i32 @llvm.smax.i32(i32 %i.dv, i32 %17)
+  %19 = sitofp i32 %18 to float                   ; 2 uses
+  %20 = extractelement <2 x float> %i.eh, i64 1   ; 4 uses
+  %21 = fcmp nsz olt float %20, %19
+  %22 = select nsz i1 %21, float %19, float %20
+  %23 = tail call i32 @llvm.smin.i32(i32 %i.dv, i32 %17)
+  %24 = sitofp i32 %23 to float                   ; 2 uses
+  %25 = fcmp nsz olt float %20, %24
+  %26 = select nsz i1 %25, float %20, float %24
+  %27 = insertelement <2 x float> poison, float %..i.us, i64 0
+  %28 = insertelement <2 x float> %27, float %22, i64 1
+  %29 = insertelement <2 x float> poison, float %16, i64 0
+  %30 = insertelement <2 x float> %29, float %26, i64 1
+  %i.gi = fadd nsz <2 x float> %28, %30
   br label %preserve_color.exit.us
 
 preserve_color.exit.us:                           ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
@@ -1806,12 +1836,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %.preheader184.us, %preserve_color.exit.thread.us
   %indvars.iv = phi i64 [ 0, %.preheader184.us ], [ %indvars.iv.next, %preserve_color.exit.thread.us ] ; 7 uses
   %i.ec = getelementptr inbounds [2 x i8], ptr %.0155189.us, i64 %indvars.iv
-  %i.ed = load i16, ptr %i.ec, align 2, !tbaa !63 ; 2 uses
+  %i.ed = load i16, ptr %i.ec, align 2, !tbaa !63 ; 5 uses
   %i.ee = zext i16 %i.ed to i32
   %i.ef = getelementptr inbounds [2 x i8], ptr %.0154190.us, i64 %indvars.iv
-  %i.eg = load i16, ptr %i.ef, align 2, !tbaa !63 ; 2 uses
+  %i.eg = load i16, ptr %i.ef, align 2, !tbaa !63 ; 5 uses
   %i.eh = getelementptr inbounds [2 x i8], ptr %.0153191.us, i64 %indvars.iv
-  %i.ei = load i16, ptr %i.eh, align 2, !tbaa !63 ; 2 uses
+  %i.ei = load i16, ptr %i.eh, align 2, !tbaa !63 ; 5 uses
   %i.ej = insertelement <2 x i16> poison, i16 %i.eg, i64 0
   %i.ek = insertelement <2 x i16> %i.ej, i16 %i.ei, i64 1
   %i.el = zext <2 x i16> %i.ek to <2 x i32>
@@ -1827,16 +1857,16 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ep = sub nsw i32 %i.ee, %i.cj
   %i.eq = sitofp nsz i32 %i.ep to float
   %i.er = tail call nsz float @llvm.fmuladd.f32(float %i.eq, float %i.cm, float %i.cx)
-  %i.es = fptosi float %i.er to i32               ; 3 uses
+  %i.es = fptosi float %i.er to i32               ; 6 uses
   %i.et = sub nsw <2 x i32> %i.el, %i.ck
   %i.eu = sitofp <2 x i32> %i.et to <2 x float>
   %i.ev = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.eu, <2 x float> %i.co, <2 x float> %i.cy)
-  %i.ew = fptosi <2 x float> %i.ev to <2 x i32>   ; 3 uses
-  %i.ex = uitofp i16 %i.ed to float               ; 6 uses
-  %i.ey = uitofp i16 %i.eg to float               ; 6 uses
-  %i.ez = uitofp i16 %i.ei to float               ; 6 uses
-  %i.fa = sitofp nsz i32 %i.es to float           ; 7 uses
-  %i.fb = sitofp <2 x i32> %i.ew to <2 x float>   ; 13 uses
+  %i.ew = fptosi <2 x float> %i.ev to <2 x i32>   ; 5 uses
+  %i.ex = uitofp i16 %i.ed to float               ; 4 uses
+  %i.ey = uitofp i16 %i.eg to float               ; 4 uses
+  %i.ez = uitofp i16 %i.ei to float               ; 4 uses
+  %i.fa = sitofp nsz i32 %i.es to float           ; 5 uses
+  %i.fb = sitofp <2 x i32> %i.ew to <2 x float>   ; 11 uses
   switch i32 %i.de, label %preserve_color.exit.thread.us [
     i32 1, label %bb.m
     i32 2, label %bb.l
@@ -1911,31 +1941,41 @@ bb.k:                                             ; preds = %bb.g
   br label %preserve_color.exit.us
 
 bb.l:                                             ; preds = %bb.g
-  %4 = insertelement <2 x float> poison, float %i.ex, i64 0
-  %5 = insertelement <2 x float> %4, float %i.fa, i64 1 ; 2 uses
-  %6 = shufflevector <2 x float> %i.fb, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %7 = insertelement <2 x float> %6, float %i.ey, i64 0 ; 2 uses
-  %8 = fcmp nsz ogt <2 x float> %5, %7
-  %9 = select <2 x i1> %8, <2 x float> %5, <2 x float> %7 ; 2 uses
-  %10 = insertelement <2 x float> %i.fb, float %i.ez, i64 0 ; 2 uses
-  %11 = fcmp nsz ogt <2 x float> %9, %10
-  %12 = select <2 x i1> %11, <2 x float> %9, <2 x float> %10
+  %4 = tail call i16 @llvm.umax.i16(i16 %i.ed, i16 %i.eg)
+  %.109.i184.us = tail call i16 @llvm.umax.i16(i16 %4, i16 %i.ei)
+  %.109.i.us = uitofp i16 %.109.i184.us to float
+  %5 = extractelement <2 x i32> %i.ew, i64 0
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.es, i32 %5)
+  %7 = sitofp i32 %6 to float                     ; 2 uses
+  %8 = extractelement <2 x float> %i.fb, i64 1    ; 2 uses
+  %9 = fcmp nsz olt float %8, %7
+  %10 = select nsz i1 %9, float %7, float %8
+  %11 = insertelement <2 x float> poison, float %.109.i.us, i64 0
+  %12 = insertelement <2 x float> %11, float %10, i64 1
   br label %preserve_color.exit.us
 
 bb.m:                                             ; preds = %bb.g
-  %13 = insertelement <2 x float> poison, float %i.ex, i64 0
-  %14 = insertelement <2 x float> %13, float %i.fa, i64 1 ; 3 uses
-  %15 = shufflevector <2 x float> %i.fb, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %16 = insertelement <2 x float> %15, float %i.ey, i64 0 ; 3 uses
-  %17 = fcmp nsz ogt <2 x float> %14, %16         ; 2 uses
-  %18 = select <2 x i1> %17, <2 x float> %14, <2 x float> %16 ; 2 uses
-  %19 = insertelement <2 x float> %i.fb, float %i.ez, i64 0 ; 4 uses
-  %20 = fcmp nsz ogt <2 x float> %18, %19
-  %21 = select <2 x i1> %20, <2 x float> %18, <2 x float> %19
-  %22 = select <2 x i1> %17, <2 x float> %16, <2 x float> %14 ; 2 uses
-  %23 = fcmp nsz ogt <2 x float> %22, %19
-  %24 = select <2 x i1> %23, <2 x float> %19, <2 x float> %22
-  %i.hc = fadd nsz <2 x float> %21, %24
+  %13 = tail call i16 @llvm.umax.i16(i16 %i.ed, i16 %i.eg)
+  %..i185.us = tail call i16 @llvm.umax.i16(i16 %13, i16 %i.ei)
+  %..i.us = uitofp i16 %..i185.us to float
+  %14 = tail call i16 @llvm.umin.i16(i16 %i.ed, i16 %i.eg)
+  %15 = tail call i16 @llvm.umin.i16(i16 %14, i16 %i.ei)
+  %16 = uitofp i16 %15 to float
+  %17 = extractelement <2 x i32> %i.ew, i64 0     ; 2 uses
+  %18 = tail call i32 @llvm.smax.i32(i32 %i.es, i32 %17)
+  %19 = sitofp i32 %18 to float                   ; 2 uses
+  %20 = extractelement <2 x float> %i.fb, i64 1   ; 4 uses
+  %21 = fcmp nsz olt float %20, %19
+  %22 = select nsz i1 %21, float %19, float %20
+  %23 = tail call i32 @llvm.smin.i32(i32 %i.es, i32 %17)
+  %24 = sitofp i32 %23 to float                   ; 2 uses
+  %25 = fcmp nsz olt float %20, %24
+  %26 = select nsz i1 %25, float %20, float %24
+  %27 = insertelement <2 x float> poison, float %..i.us, i64 0
+  %28 = insertelement <2 x float> %27, float %22, i64 1
+  %29 = insertelement <2 x float> poison, float %16, i64 0
+  %30 = insertelement <2 x float> %29, float %26, i64 1
+  %i.hc = fadd nsz <2 x float> %28, %30
   br label %preserve_color.exit.us
 
 preserve_color.exit.us:                           ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
@@ -2338,12 +2378,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %.preheader184.us, %preserve_color.exit.thread.us
   %indvars.iv = phi i64 [ 0, %.preheader184.us ], [ %indvars.iv.next, %preserve_color.exit.thread.us ] ; 7 uses
   %i.ec = getelementptr inbounds [2 x i8], ptr %.0155189.us, i64 %indvars.iv
-  %i.ed = load i16, ptr %i.ec, align 2, !tbaa !63 ; 2 uses
+  %i.ed = load i16, ptr %i.ec, align 2, !tbaa !63 ; 5 uses
   %i.ee = zext i16 %i.ed to i32
   %i.ef = getelementptr inbounds [2 x i8], ptr %.0154190.us, i64 %indvars.iv
-  %i.eg = load i16, ptr %i.ef, align 2, !tbaa !63 ; 2 uses
+  %i.eg = load i16, ptr %i.ef, align 2, !tbaa !63 ; 5 uses
   %i.eh = getelementptr inbounds [2 x i8], ptr %.0153191.us, i64 %indvars.iv
-  %i.ei = load i16, ptr %i.eh, align 2, !tbaa !63 ; 2 uses
+  %i.ei = load i16, ptr %i.eh, align 2, !tbaa !63 ; 5 uses
   %i.ej = insertelement <2 x i16> poison, i16 %i.eg, i64 0
   %i.ek = insertelement <2 x i16> %i.ej, i16 %i.ei, i64 1
   %i.el = zext <2 x i16> %i.ek to <2 x i32>
@@ -2359,16 +2399,16 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ep = sub nsw i32 %i.ee, %i.cj
   %i.eq = sitofp nsz i32 %i.ep to float
   %i.er = tail call nsz float @llvm.fmuladd.f32(float %i.eq, float %i.cm, float %i.cx)
-  %i.es = fptosi float %i.er to i32               ; 3 uses
+  %i.es = fptosi float %i.er to i32               ; 6 uses
   %i.et = sub nsw <2 x i32> %i.el, %i.ck
   %i.eu = sitofp <2 x i32> %i.et to <2 x float>
   %i.ev = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.eu, <2 x float> %i.co, <2 x float> %i.cy)
-  %i.ew = fptosi <2 x float> %i.ev to <2 x i32>   ; 3 uses
-  %i.ex = uitofp i16 %i.ed to float               ; 6 uses
-  %i.ey = uitofp i16 %i.eg to float               ; 6 uses
-  %i.ez = uitofp i16 %i.ei to float               ; 6 uses
-  %i.fa = sitofp nsz i32 %i.es to float           ; 7 uses
-  %i.fb = sitofp <2 x i32> %i.ew to <2 x float>   ; 13 uses
+  %i.ew = fptosi <2 x float> %i.ev to <2 x i32>   ; 5 uses
+  %i.ex = uitofp i16 %i.ed to float               ; 4 uses
+  %i.ey = uitofp i16 %i.eg to float               ; 4 uses
+  %i.ez = uitofp i16 %i.ei to float               ; 4 uses
+  %i.fa = sitofp nsz i32 %i.es to float           ; 5 uses
+  %i.fb = sitofp <2 x i32> %i.ew to <2 x float>   ; 11 uses
   switch i32 %i.de, label %preserve_color.exit.thread.us [
     i32 1, label %bb.m
     i32 2, label %bb.l
@@ -2443,31 +2483,41 @@ bb.k:                                             ; preds = %bb.g
   br label %preserve_color.exit.us
 
 bb.l:                                             ; preds = %bb.g
-  %4 = insertelement <2 x float> poison, float %i.ex, i64 0
-  %5 = insertelement <2 x float> %4, float %i.fa, i64 1 ; 2 uses
-  %6 = shufflevector <2 x float> %i.fb, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %7 = insertelement <2 x float> %6, float %i.ey, i64 0 ; 2 uses
-  %8 = fcmp nsz ogt <2 x float> %5, %7
-  %9 = select <2 x i1> %8, <2 x float> %5, <2 x float> %7 ; 2 uses
-  %10 = insertelement <2 x float> %i.fb, float %i.ez, i64 0 ; 2 uses
-  %11 = fcmp nsz ogt <2 x float> %9, %10
-  %12 = select <2 x i1> %11, <2 x float> %9, <2 x float> %10
+  %4 = tail call i16 @llvm.umax.i16(i16 %i.ed, i16 %i.eg)
+  %.109.i184.us = tail call i16 @llvm.umax.i16(i16 %4, i16 %i.ei)
+  %.109.i.us = uitofp i16 %.109.i184.us to float
+  %5 = extractelement <2 x i32> %i.ew, i64 0
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.es, i32 %5)
+  %7 = sitofp i32 %6 to float                     ; 2 uses
+  %8 = extractelement <2 x float> %i.fb, i64 1    ; 2 uses
+  %9 = fcmp nsz olt float %8, %7
+  %10 = select nsz i1 %9, float %7, float %8
+  %11 = insertelement <2 x float> poison, float %.109.i.us, i64 0
+  %12 = insertelement <2 x float> %11, float %10, i64 1
   br label %preserve_color.exit.us
 
 bb.m:                                             ; preds = %bb.g
-  %13 = insertelement <2 x float> poison, float %i.ex, i64 0
-  %14 = insertelement <2 x float> %13, float %i.fa, i64 1 ; 3 uses
-  %15 = shufflevector <2 x float> %i.fb, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %16 = insertelement <2 x float> %15, float %i.ey, i64 0 ; 3 uses
-  %17 = fcmp nsz ogt <2 x float> %14, %16         ; 2 uses
-  %18 = select <2 x i1> %17, <2 x float> %14, <2 x float> %16 ; 2 uses
-  %19 = insertelement <2 x float> %i.fb, float %i.ez, i64 0 ; 4 uses
-  %20 = fcmp nsz ogt <2 x float> %18, %19
-  %21 = select <2 x i1> %20, <2 x float> %18, <2 x float> %19
-  %22 = select <2 x i1> %17, <2 x float> %16, <2 x float> %14 ; 2 uses
-  %23 = fcmp nsz ogt <2 x float> %22, %19
-  %24 = select <2 x i1> %23, <2 x float> %19, <2 x float> %22
-  %i.hc = fadd nsz <2 x float> %21, %24
+  %13 = tail call i16 @llvm.umax.i16(i16 %i.ed, i16 %i.eg)
+  %..i185.us = tail call i16 @llvm.umax.i16(i16 %13, i16 %i.ei)
+  %..i.us = uitofp i16 %..i185.us to float
+  %14 = tail call i16 @llvm.umin.i16(i16 %i.ed, i16 %i.eg)
+  %15 = tail call i16 @llvm.umin.i16(i16 %14, i16 %i.ei)
+  %16 = uitofp i16 %15 to float
+  %17 = extractelement <2 x i32> %i.ew, i64 0     ; 2 uses
+  %18 = tail call i32 @llvm.smax.i32(i32 %i.es, i32 %17)
+  %19 = sitofp i32 %18 to float                   ; 2 uses
+  %20 = extractelement <2 x float> %i.fb, i64 1   ; 4 uses
+  %21 = fcmp nsz olt float %20, %19
+  %22 = select nsz i1 %21, float %19, float %20
+  %23 = tail call i32 @llvm.smin.i32(i32 %i.es, i32 %17)
+  %24 = sitofp i32 %23 to float                   ; 2 uses
+  %25 = fcmp nsz olt float %20, %24
+  %26 = select nsz i1 %25, float %20, float %24
+  %27 = insertelement <2 x float> poison, float %..i.us, i64 0
+  %28 = insertelement <2 x float> %27, float %22, i64 1
+  %29 = insertelement <2 x float> poison, float %16, i64 0
+  %30 = insertelement <2 x float> %29, float %26, i64 1
+  %i.hc = fadd nsz <2 x float> %28, %30
   br label %preserve_color.exit.us
 
 preserve_color.exit.us:                           ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
@@ -2870,12 +2920,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %.preheader184.us, %preserve_color.exit.thread.us
   %indvars.iv = phi i64 [ 0, %.preheader184.us ], [ %indvars.iv.next, %preserve_color.exit.thread.us ] ; 7 uses
   %i.ec = getelementptr inbounds [2 x i8], ptr %.0155189.us, i64 %indvars.iv
-  %i.ed = load i16, ptr %i.ec, align 2, !tbaa !63 ; 2 uses
+  %i.ed = load i16, ptr %i.ec, align 2, !tbaa !63 ; 5 uses
   %i.ee = zext i16 %i.ed to i32
   %i.ef = getelementptr inbounds [2 x i8], ptr %.0154190.us, i64 %indvars.iv
-  %i.eg = load i16, ptr %i.ef, align 2, !tbaa !63 ; 2 uses
+  %i.eg = load i16, ptr %i.ef, align 2, !tbaa !63 ; 5 uses
   %i.eh = getelementptr inbounds [2 x i8], ptr %.0153191.us, i64 %indvars.iv
-  %i.ei = load i16, ptr %i.eh, align 2, !tbaa !63 ; 2 uses
+  %i.ei = load i16, ptr %i.eh, align 2, !tbaa !63 ; 5 uses
   %i.ej = insertelement <2 x i16> poison, i16 %i.eg, i64 0
   %i.ek = insertelement <2 x i16> %i.ej, i16 %i.ei, i64 1
   %i.el = zext <2 x i16> %i.ek to <2 x i32>
@@ -2891,16 +2941,16 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ep = sub nsw i32 %i.ee, %i.cj
   %i.eq = sitofp nsz i32 %i.ep to float
   %i.er = tail call nsz float @llvm.fmuladd.f32(float %i.eq, float %i.cm, float %i.cx)
-  %i.es = fptosi float %i.er to i32               ; 3 uses
+  %i.es = fptosi float %i.er to i32               ; 6 uses
   %i.et = sub nsw <2 x i32> %i.el, %i.ck
   %i.eu = sitofp <2 x i32> %i.et to <2 x float>
   %i.ev = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.eu, <2 x float> %i.co, <2 x float> %i.cy)
-  %i.ew = fptosi <2 x float> %i.ev to <2 x i32>   ; 3 uses
-  %i.ex = uitofp i16 %i.ed to float               ; 6 uses
-  %i.ey = uitofp i16 %i.eg to float               ; 6 uses
-  %i.ez = uitofp i16 %i.ei to float               ; 6 uses
-  %i.fa = sitofp nsz i32 %i.es to float           ; 7 uses
-  %i.fb = sitofp <2 x i32> %i.ew to <2 x float>   ; 13 uses
+  %i.ew = fptosi <2 x float> %i.ev to <2 x i32>   ; 5 uses
+  %i.ex = uitofp i16 %i.ed to float               ; 4 uses
+  %i.ey = uitofp i16 %i.eg to float               ; 4 uses
+  %i.ez = uitofp i16 %i.ei to float               ; 4 uses
+  %i.fa = sitofp nsz i32 %i.es to float           ; 5 uses
+  %i.fb = sitofp <2 x i32> %i.ew to <2 x float>   ; 11 uses
   switch i32 %i.de, label %preserve_color.exit.thread.us [
     i32 1, label %bb.m
     i32 2, label %bb.l
@@ -2975,31 +3025,41 @@ bb.k:                                             ; preds = %bb.g
   br label %preserve_color.exit.us
 
 bb.l:                                             ; preds = %bb.g
-  %4 = insertelement <2 x float> poison, float %i.ex, i64 0
-  %5 = insertelement <2 x float> %4, float %i.fa, i64 1 ; 2 uses
-  %6 = shufflevector <2 x float> %i.fb, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %7 = insertelement <2 x float> %6, float %i.ey, i64 0 ; 2 uses
-  %8 = fcmp nsz ogt <2 x float> %5, %7
-  %9 = select <2 x i1> %8, <2 x float> %5, <2 x float> %7 ; 2 uses
-  %10 = insertelement <2 x float> %i.fb, float %i.ez, i64 0 ; 2 uses
-  %11 = fcmp nsz ogt <2 x float> %9, %10
-  %12 = select <2 x i1> %11, <2 x float> %9, <2 x float> %10
+  %4 = tail call i16 @llvm.umax.i16(i16 %i.ed, i16 %i.eg)
+  %.109.i184.us = tail call i16 @llvm.umax.i16(i16 %4, i16 %i.ei)
+  %.109.i.us = uitofp i16 %.109.i184.us to float
+  %5 = extractelement <2 x i32> %i.ew, i64 0
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.es, i32 %5)
+  %7 = sitofp i32 %6 to float                     ; 2 uses
+  %8 = extractelement <2 x float> %i.fb, i64 1    ; 2 uses
+  %9 = fcmp nsz olt float %8, %7
+  %10 = select nsz i1 %9, float %7, float %8
+  %11 = insertelement <2 x float> poison, float %.109.i.us, i64 0
+  %12 = insertelement <2 x float> %11, float %10, i64 1
   br label %preserve_color.exit.us
 
 bb.m:                                             ; preds = %bb.g
-  %13 = insertelement <2 x float> poison, float %i.ex, i64 0
-  %14 = insertelement <2 x float> %13, float %i.fa, i64 1 ; 3 uses
-  %15 = shufflevector <2 x float> %i.fb, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %16 = insertelement <2 x float> %15, float %i.ey, i64 0 ; 3 uses
-  %17 = fcmp nsz ogt <2 x float> %14, %16         ; 2 uses
-  %18 = select <2 x i1> %17, <2 x float> %14, <2 x float> %16 ; 2 uses
-  %19 = insertelement <2 x float> %i.fb, float %i.ez, i64 0 ; 4 uses
-  %20 = fcmp nsz ogt <2 x float> %18, %19
-  %21 = select <2 x i1> %20, <2 x float> %18, <2 x float> %19
-  %22 = select <2 x i1> %17, <2 x float> %16, <2 x float> %14 ; 2 uses
-  %23 = fcmp nsz ogt <2 x float> %22, %19
-  %24 = select <2 x i1> %23, <2 x float> %19, <2 x float> %22
-  %i.hc = fadd nsz <2 x float> %21, %24
+  %13 = tail call i16 @llvm.umax.i16(i16 %i.ed, i16 %i.eg)
+  %..i185.us = tail call i16 @llvm.umax.i16(i16 %13, i16 %i.ei)
+  %..i.us = uitofp i16 %..i185.us to float
+  %14 = tail call i16 @llvm.umin.i16(i16 %i.ed, i16 %i.eg)
+  %15 = tail call i16 @llvm.umin.i16(i16 %14, i16 %i.ei)
+  %16 = uitofp i16 %15 to float
+  %17 = extractelement <2 x i32> %i.ew, i64 0     ; 2 uses
+  %18 = tail call i32 @llvm.smax.i32(i32 %i.es, i32 %17)
+  %19 = sitofp i32 %18 to float                   ; 2 uses
+  %20 = extractelement <2 x float> %i.fb, i64 1   ; 4 uses
+  %21 = fcmp nsz olt float %20, %19
+  %22 = select nsz i1 %21, float %19, float %20
+  %23 = tail call i32 @llvm.smin.i32(i32 %i.es, i32 %17)
+  %24 = sitofp i32 %23 to float                   ; 2 uses
+  %25 = fcmp nsz olt float %20, %24
+  %26 = select nsz i1 %25, float %20, float %24
+  %27 = insertelement <2 x float> poison, float %..i.us, i64 0
+  %28 = insertelement <2 x float> %27, float %22, i64 1
+  %29 = insertelement <2 x float> poison, float %16, i64 0
+  %30 = insertelement <2 x float> %29, float %26, i64 1
+  %i.hc = fadd nsz <2 x float> %28, %30
   br label %preserve_color.exit.us
 
 preserve_color.exit.us:                           ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
@@ -3402,12 +3462,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %.preheader184.us, %preserve_color.exit.thread.us
   %indvars.iv = phi i64 [ 0, %.preheader184.us ], [ %indvars.iv.next, %preserve_color.exit.thread.us ] ; 7 uses
   %i.ec = getelementptr inbounds [2 x i8], ptr %.0155189.us, i64 %indvars.iv
-  %i.ed = load i16, ptr %i.ec, align 2, !tbaa !63 ; 2 uses
+  %i.ed = load i16, ptr %i.ec, align 2, !tbaa !63 ; 5 uses
   %i.ee = zext i16 %i.ed to i32
   %i.ef = getelementptr inbounds [2 x i8], ptr %.0154190.us, i64 %indvars.iv
-  %i.eg = load i16, ptr %i.ef, align 2, !tbaa !63 ; 2 uses
+  %i.eg = load i16, ptr %i.ef, align 2, !tbaa !63 ; 5 uses
   %i.eh = getelementptr inbounds [2 x i8], ptr %.0153191.us, i64 %indvars.iv
-  %i.ei = load i16, ptr %i.eh, align 2, !tbaa !63 ; 2 uses
+  %i.ei = load i16, ptr %i.eh, align 2, !tbaa !63 ; 5 uses
   %i.ej = insertelement <2 x i16> poison, i16 %i.eg, i64 0
   %i.ek = insertelement <2 x i16> %i.ej, i16 %i.ei, i64 1
   %i.el = zext <2 x i16> %i.ek to <2 x i32>
@@ -3423,16 +3483,16 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ep = sub nsw i32 %i.ee, %i.cj
   %i.eq = sitofp nsz i32 %i.ep to float
   %i.er = tail call nsz float @llvm.fmuladd.f32(float %i.eq, float %i.cm, float %i.cx)
-  %i.es = fptosi float %i.er to i32               ; 3 uses
+  %i.es = fptosi float %i.er to i32               ; 6 uses
   %i.et = sub nsw <2 x i32> %i.el, %i.ck
   %i.eu = sitofp <2 x i32> %i.et to <2 x float>
   %i.ev = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.eu, <2 x float> %i.co, <2 x float> %i.cy)
-  %i.ew = fptosi <2 x float> %i.ev to <2 x i32>   ; 3 uses
-  %i.ex = uitofp i16 %i.ed to float               ; 6 uses
-  %i.ey = uitofp i16 %i.eg to float               ; 6 uses
-  %i.ez = uitofp i16 %i.ei to float               ; 6 uses
-  %i.fa = sitofp nsz i32 %i.es to float           ; 7 uses
-  %i.fb = sitofp <2 x i32> %i.ew to <2 x float>   ; 13 uses
+  %i.ew = fptosi <2 x float> %i.ev to <2 x i32>   ; 5 uses
+  %i.ex = uitofp i16 %i.ed to float               ; 4 uses
+  %i.ey = uitofp i16 %i.eg to float               ; 4 uses
+  %i.ez = uitofp i16 %i.ei to float               ; 4 uses
+  %i.fa = sitofp nsz i32 %i.es to float           ; 5 uses
+  %i.fb = sitofp <2 x i32> %i.ew to <2 x float>   ; 11 uses
   switch i32 %i.de, label %preserve_color.exit.thread.us [
     i32 1, label %bb.m
     i32 2, label %bb.l
@@ -3507,31 +3567,41 @@ bb.k:                                             ; preds = %bb.g
   br label %preserve_color.exit.us
 
 bb.l:                                             ; preds = %bb.g
-  %4 = insertelement <2 x float> poison, float %i.ex, i64 0
-  %5 = insertelement <2 x float> %4, float %i.fa, i64 1 ; 2 uses
-  %6 = shufflevector <2 x float> %i.fb, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %7 = insertelement <2 x float> %6, float %i.ey, i64 0 ; 2 uses
-  %8 = fcmp nsz ogt <2 x float> %5, %7
-  %9 = select <2 x i1> %8, <2 x float> %5, <2 x float> %7 ; 2 uses
-  %10 = insertelement <2 x float> %i.fb, float %i.ez, i64 0 ; 2 uses
-  %11 = fcmp nsz ogt <2 x float> %9, %10
-  %12 = select <2 x i1> %11, <2 x float> %9, <2 x float> %10
+  %4 = tail call i16 @llvm.umax.i16(i16 %i.ed, i16 %i.eg)
+  %.109.i184.us = tail call i16 @llvm.umax.i16(i16 %4, i16 %i.ei)
+  %.109.i.us = uitofp i16 %.109.i184.us to float
+  %5 = extractelement <2 x i32> %i.ew, i64 0
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.es, i32 %5)
+  %7 = sitofp i32 %6 to float                     ; 2 uses
+  %8 = extractelement <2 x float> %i.fb, i64 1    ; 2 uses
+  %9 = fcmp nsz olt float %8, %7
+  %10 = select nsz i1 %9, float %7, float %8
+  %11 = insertelement <2 x float> poison, float %.109.i.us, i64 0
+  %12 = insertelement <2 x float> %11, float %10, i64 1
   br label %preserve_color.exit.us
 
 bb.m:                                             ; preds = %bb.g
-  %13 = insertelement <2 x float> poison, float %i.ex, i64 0
-  %14 = insertelement <2 x float> %13, float %i.fa, i64 1 ; 3 uses
-  %15 = shufflevector <2 x float> %i.fb, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %16 = insertelement <2 x float> %15, float %i.ey, i64 0 ; 3 uses
-  %17 = fcmp nsz ogt <2 x float> %14, %16         ; 2 uses
-  %18 = select <2 x i1> %17, <2 x float> %14, <2 x float> %16 ; 2 uses
-  %19 = insertelement <2 x float> %i.fb, float %i.ez, i64 0 ; 4 uses
-  %20 = fcmp nsz ogt <2 x float> %18, %19
-  %21 = select <2 x i1> %20, <2 x float> %18, <2 x float> %19
-  %22 = select <2 x i1> %17, <2 x float> %16, <2 x float> %14 ; 2 uses
-  %23 = fcmp nsz ogt <2 x float> %22, %19
-  %24 = select <2 x i1> %23, <2 x float> %19, <2 x float> %22
-  %i.hc = fadd nsz <2 x float> %21, %24
+  %13 = tail call i16 @llvm.umax.i16(i16 %i.ed, i16 %i.eg)
+  %..i185.us = tail call i16 @llvm.umax.i16(i16 %13, i16 %i.ei)
+  %..i.us = uitofp i16 %..i185.us to float
+  %14 = tail call i16 @llvm.umin.i16(i16 %i.ed, i16 %i.eg)
+  %15 = tail call i16 @llvm.umin.i16(i16 %14, i16 %i.ei)
+  %16 = uitofp i16 %15 to float
+  %17 = extractelement <2 x i32> %i.ew, i64 0     ; 2 uses
+  %18 = tail call i32 @llvm.smax.i32(i32 %i.es, i32 %17)
+  %19 = sitofp i32 %18 to float                   ; 2 uses
+  %20 = extractelement <2 x float> %i.fb, i64 1   ; 4 uses
+  %21 = fcmp nsz olt float %20, %19
+  %22 = select nsz i1 %21, float %19, float %20
+  %23 = tail call i32 @llvm.smin.i32(i32 %i.es, i32 %17)
+  %24 = sitofp i32 %23 to float                   ; 2 uses
+  %25 = fcmp nsz olt float %20, %24
+  %26 = select nsz i1 %25, float %20, float %24
+  %27 = insertelement <2 x float> poison, float %..i.us, i64 0
+  %28 = insertelement <2 x float> %27, float %22, i64 1
+  %29 = insertelement <2 x float> poison, float %16, i64 0
+  %30 = insertelement <2 x float> %29, float %26, i64 1
+  %i.hc = fadd nsz <2 x float> %28, %30
   br label %preserve_color.exit.us
 
 preserve_color.exit.us:                           ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
@@ -3934,12 +4004,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %.preheader184.us, %preserve_color.exit.thread.us
   %indvars.iv = phi i64 [ 0, %.preheader184.us ], [ %indvars.iv.next, %preserve_color.exit.thread.us ] ; 7 uses
   %i.ec = getelementptr inbounds [2 x i8], ptr %.0155189.us, i64 %indvars.iv
-  %i.ed = load i16, ptr %i.ec, align 2, !tbaa !63 ; 2 uses
+  %i.ed = load i16, ptr %i.ec, align 2, !tbaa !63 ; 5 uses
   %i.ee = zext i16 %i.ed to i32
   %i.ef = getelementptr inbounds [2 x i8], ptr %.0154190.us, i64 %indvars.iv
-  %i.eg = load i16, ptr %i.ef, align 2, !tbaa !63 ; 2 uses
+  %i.eg = load i16, ptr %i.ef, align 2, !tbaa !63 ; 5 uses
   %i.eh = getelementptr inbounds [2 x i8], ptr %.0153191.us, i64 %indvars.iv
-  %i.ei = load i16, ptr %i.eh, align 2, !tbaa !63 ; 2 uses
+  %i.ei = load i16, ptr %i.eh, align 2, !tbaa !63 ; 5 uses
   %i.ej = insertelement <2 x i16> poison, i16 %i.eg, i64 0
   %i.ek = insertelement <2 x i16> %i.ej, i16 %i.ei, i64 1
   %i.el = zext <2 x i16> %i.ek to <2 x i32>
@@ -3955,16 +4025,16 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ep = sub nsw i32 %i.ee, %i.cj
   %i.eq = sitofp nsz i32 %i.ep to float
   %i.er = tail call nsz float @llvm.fmuladd.f32(float %i.eq, float %i.cm, float %i.cx)
-  %i.es = fptosi float %i.er to i32               ; 3 uses
+  %i.es = fptosi float %i.er to i32               ; 6 uses
   %i.et = sub nsw <2 x i32> %i.el, %i.ck
   %i.eu = sitofp <2 x i32> %i.et to <2 x float>
   %i.ev = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.eu, <2 x float> %i.co, <2 x float> %i.cy)
-  %i.ew = fptosi <2 x float> %i.ev to <2 x i32>   ; 3 uses
-  %i.ex = uitofp i16 %i.ed to float               ; 6 uses
-  %i.ey = uitofp i16 %i.eg to float               ; 6 uses
-  %i.ez = uitofp i16 %i.ei to float               ; 6 uses
-  %i.fa = sitofp nsz i32 %i.es to float           ; 7 uses
-  %i.fb = sitofp <2 x i32> %i.ew to <2 x float>   ; 13 uses
+  %i.ew = fptosi <2 x float> %i.ev to <2 x i32>   ; 5 uses
+  %i.ex = uitofp i16 %i.ed to float               ; 4 uses
+  %i.ey = uitofp i16 %i.eg to float               ; 4 uses
+  %i.ez = uitofp i16 %i.ei to float               ; 4 uses
+  %i.fa = sitofp nsz i32 %i.es to float           ; 5 uses
+  %i.fb = sitofp <2 x i32> %i.ew to <2 x float>   ; 11 uses
   switch i32 %i.de, label %preserve_color.exit.thread.us [
     i32 1, label %bb.m
     i32 2, label %bb.l
@@ -4039,31 +4109,41 @@ bb.k:                                             ; preds = %bb.g
   br label %preserve_color.exit.us
 
 bb.l:                                             ; preds = %bb.g
-  %4 = insertelement <2 x float> poison, float %i.ex, i64 0
-  %5 = insertelement <2 x float> %4, float %i.fa, i64 1 ; 2 uses
-  %6 = shufflevector <2 x float> %i.fb, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %7 = insertelement <2 x float> %6, float %i.ey, i64 0 ; 2 uses
-  %8 = fcmp nsz ogt <2 x float> %5, %7
-  %9 = select <2 x i1> %8, <2 x float> %5, <2 x float> %7 ; 2 uses
-  %10 = insertelement <2 x float> %i.fb, float %i.ez, i64 0 ; 2 uses
-  %11 = fcmp nsz ogt <2 x float> %9, %10
-  %12 = select <2 x i1> %11, <2 x float> %9, <2 x float> %10
+  %4 = tail call i16 @llvm.umax.i16(i16 %i.ed, i16 %i.eg)
+  %.109.i184.us = tail call i16 @llvm.umax.i16(i16 %4, i16 %i.ei)
+  %.109.i.us = uitofp i16 %.109.i184.us to float
+  %5 = extractelement <2 x i32> %i.ew, i64 0
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.es, i32 %5)
+  %7 = sitofp i32 %6 to float                     ; 2 uses
+  %8 = extractelement <2 x float> %i.fb, i64 1    ; 2 uses
+  %9 = fcmp nsz olt float %8, %7
+  %10 = select nsz i1 %9, float %7, float %8
+  %11 = insertelement <2 x float> poison, float %.109.i.us, i64 0
+  %12 = insertelement <2 x float> %11, float %10, i64 1
   br label %preserve_color.exit.us
 
 bb.m:                                             ; preds = %bb.g
-  %13 = insertelement <2 x float> poison, float %i.ex, i64 0
-  %14 = insertelement <2 x float> %13, float %i.fa, i64 1 ; 3 uses
-  %15 = shufflevector <2 x float> %i.fb, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %16 = insertelement <2 x float> %15, float %i.ey, i64 0 ; 3 uses
-  %17 = fcmp nsz ogt <2 x float> %14, %16         ; 2 uses
-  %18 = select <2 x i1> %17, <2 x float> %14, <2 x float> %16 ; 2 uses
-  %19 = insertelement <2 x float> %i.fb, float %i.ez, i64 0 ; 4 uses
-  %20 = fcmp nsz ogt <2 x float> %18, %19
-  %21 = select <2 x i1> %20, <2 x float> %18, <2 x float> %19
-  %22 = select <2 x i1> %17, <2 x float> %16, <2 x float> %14 ; 2 uses
-  %23 = fcmp nsz ogt <2 x float> %22, %19
-  %24 = select <2 x i1> %23, <2 x float> %19, <2 x float> %22
-  %i.hc = fadd nsz <2 x float> %21, %24
+  %13 = tail call i16 @llvm.umax.i16(i16 %i.ed, i16 %i.eg)
+  %..i185.us = tail call i16 @llvm.umax.i16(i16 %13, i16 %i.ei)
+  %..i.us = uitofp i16 %..i185.us to float
+  %14 = tail call i16 @llvm.umin.i16(i16 %i.ed, i16 %i.eg)
+  %15 = tail call i16 @llvm.umin.i16(i16 %14, i16 %i.ei)
+  %16 = uitofp i16 %15 to float
+  %17 = extractelement <2 x i32> %i.ew, i64 0     ; 2 uses
+  %18 = tail call i32 @llvm.smax.i32(i32 %i.es, i32 %17)
+  %19 = sitofp i32 %18 to float                   ; 2 uses
+  %20 = extractelement <2 x float> %i.fb, i64 1   ; 4 uses
+  %21 = fcmp nsz olt float %20, %19
+  %22 = select nsz i1 %21, float %19, float %20
+  %23 = tail call i32 @llvm.smin.i32(i32 %i.es, i32 %17)
+  %24 = sitofp i32 %23 to float                   ; 2 uses
+  %25 = fcmp nsz olt float %20, %24
+  %26 = select nsz i1 %25, float %20, float %24
+  %27 = insertelement <2 x float> poison, float %..i.us, i64 0
+  %28 = insertelement <2 x float> %27, float %22, i64 1
+  %29 = insertelement <2 x float> poison, float %16, i64 0
+  %30 = insertelement <2 x float> %29, float %26, i64 1
+  %i.hc = fadd nsz <2 x float> %28, %30
   br label %preserve_color.exit.us
 
 preserve_color.exit.us:                           ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h
@@ -4466,13 +4546,25 @@ declare float @cbrtf(float noundef) local_unnamed_addr #6
 declare ptr @av_default_item_name(ptr noundef) #0
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.umax.i16(i16, i16) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.umin.i16(i16, i16) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umax.i8(i8, i8) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umin.i8(i8, i8) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #3

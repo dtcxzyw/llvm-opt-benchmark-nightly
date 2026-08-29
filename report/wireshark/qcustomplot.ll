@@ -204,9 +204,9 @@ _ZN10QCPPainter6setPenERK4QPen.exit:              ; preds = %.noexc, %bb.d
   %.sroa.0.0.copyload.i29 = load i64, ptr %i.p, align 8 ; 2 uses
   %.sroa.063.0.extract.trunc = trunc i64 %.sroa.0.0.copyload.i29 to i32
   %.sroa.464.0.extract.shift = lshr i64 %.sroa.0.0.copyload.i29, 32
-  %.sroa.464.0.extract.trunc = trunc nuw i64 %.sroa.464.0.extract.shift to i32 ; 2 uses
+  %.sroa.464.0.extract.trunc = trunc nuw i64 %.sroa.464.0.extract.shift to i32 ; 3 uses
   %i.q = sitofp i32 %.sroa.063.0.extract.trunc to double ; 2 uses
-  %i.r = sitofp i32 %.sroa.464.0.extract.trunc to double ; 3 uses
+  %i.r = sitofp i32 %.sroa.464.0.extract.trunc to double
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #51
   call void @_ZNK8QPainter11fontMetricsEv(ptr dead_on_unwind nonnull writable sret(%class.QFontMetrics) align 8 %7, ptr noundef align 8 dereferenceable_or_null(8) %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #51
@@ -252,7 +252,6 @@ bb.f:                                             ; preds = %_ZNK13QCPPolarGraph
   %.sroa.8.12.extract.trunc = trunc nuw i64 %.sroa.8.12.extract.shift to i32
   %i.ah = add i32 %.sroa.8.12.extract.trunc, 1
   %i.ai = sub i32 %i.ah, %.sroa.055.4.extract.trunc
-  %14 = sitofp i32 %i.ai to double                ; 2 uses
   %i.aj = load ptr, ptr %8, align 16              ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.aj, null
   br i1 %.not.i.i.i, label %_ZN7QStringD2Ev.exit, label %_ZN17QArrayDataPointerIDsE5derefEv.exit.i.i
@@ -286,9 +285,7 @@ _ZN7QStringD2Ev.exit:                             ; preds = %bb.f, %_ZN17QArrayD
   store double %i.q, ptr %i.ar, align 8
   %i.as = getelementptr inbounds nuw i8, ptr %9, i64 24
   store double %i.r, ptr %i.as, align 8
-  %15 = fcmp olt double %14, %i.r
-  %.sroa.speculated = select i1 %15, double %i.r, double %14
-  %16 = fptosi double %.sroa.speculated to i32
+  %.sroa.speculated69 = call i32 @llvm.smax.i32(i32 %i.ai, i32 %.sroa.464.0.extract.trunc)
   %i.at = fadd double %i.q, %i.ao
   %i.au = load ptr, ptr %i.n, align 8
   %i.av = getelementptr i8, ptr %i.au, i64 320
@@ -324,7 +321,7 @@ _ZNK13QCPPolarGraph4nameEv.exit32:                ; preds = %_ZN7QStringD2Ev.exi
   %i.bl = add i32 %i.bk, %i.az
   store i32 %i.bl, ptr %i.bj, align 4
   %i.bm = getelementptr inbounds nuw i8, ptr %2, i64 12
-  %i.bn = add i32 %16, -1
+  %i.bn = add i32 %.sroa.speculated69, -1
   %i.bo = add i32 %i.bn, %.sroa.4.0.extract.trunc
   store i32 %i.bo, ptr %i.bm, align 4
   invoke void @_ZN8QPainter8drawTextERK5QRectiRK7QStringPS0_(ptr noundef align 8 dereferenceable_or_null(8) %1, ptr noundef nonnull align 4 dereferenceable(16) %2, i32 noundef 512, ptr noundef nonnull align 8 dereferenceable(24) %10, ptr noundef null)

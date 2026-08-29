@@ -202,14 +202,11 @@ _ZN2v88internal5IsNaNENS0_6TaggedINS0_6ObjectEEE.exit.thread: ; preds = %_ZNK2v8
 
 _ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit: ; preds = %_ZN2v88internal5IsNaNENS0_6TaggedINS0_6ObjectEEE.exit.thread
   %i.ae = lshr i64 %i.r, 32
-  %i.af = trunc nuw i64 %i.ae to i32
-  %7 = sitofp i32 %i.af to double                 ; 3 uses
-  %8 = sitofp i32 %2 to double
-  %9 = fcmp olt double %7, %8
-  %10 = sitofp i32 %3 to double
-  %11 = fcmp ogt double %7, %10
-  %or.cond = or i1 %9, %11
-  br i1 %or.cond, label %.critedge, label %_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit19
+  %i.af = trunc nuw i64 %i.ae to i32              ; 3 uses
+  %7 = icmp sgt i32 %2, %i.af
+  %8 = icmp slt i32 %3, %i.af
+  %or.cond = or i1 %7, %8
+  br i1 %or.cond, label %.critedge, label %9
 
 _ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit.thread: ; preds = %_ZN2v88internal5IsNaNENS0_6TaggedINS0_6ObjectEEE.exit.thread
   %i.ag = add nsw i64 %i.r, -1
@@ -232,12 +229,16 @@ _ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapN
   %i.ap = call i64 @_ZN2v88internal7Isolate5ThrowENS0_6TaggedINS0_6ObjectEEEPNS0_15MessageLocationE(ptr noundef nonnull align 8 dereferenceable(64320) %0, i64 %i.ao, ptr noundef null) #9 ; 0 uses
   br label %bb.d
 
+9:                                                ; preds = %_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit
+  %10 = sitofp i32 %i.af to double
+  br label %_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit19
+
 .thread65:                                        ; preds = %_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit.thread
   %i.aq = tail call double @llvm.floor.f64(double %.0.copyload.i.i.i.i.i)
   br label %_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit19
 
-_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit19: ; preds = %_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit, %.thread65
-  %i.ar = phi double [ %i.aq, %.thread65 ], [ %7, %_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit ]
+_ZN2v88internal6Object11NumberValueENS0_6TaggedINS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEEE.exit19: ; preds = %9, %.thread65
+  %i.ar = phi double [ %10, %9 ], [ %i.aq, %.thread65 ]
   %i.as = fptosi double %i.ar to i32
   %.sroa.21.0.insert.ext.i20 = zext i32 %i.as to i64
   %.sroa.21.0.insert.shift.i21 = shl nuw i64 %.sroa.21.0.insert.ext.i20, 32

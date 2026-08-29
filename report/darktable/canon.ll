@@ -204,33 +204,27 @@ bb.da:                                            ; preds = %bb.cw, %bb.cw, %bb.
   %i.afv = getelementptr inbounds nuw i8, ptr %0, i64 381730 ; 3 uses
   %i.afw = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
   store i16 %i.afw, ptr %i.afv, align 2, !tbaa !76
-  %5 = uitofp reassoc nsz arcp contract afn i16 %i.afw to float ; 2 uses
   %i.afx = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
   %i.afy = getelementptr inbounds nuw i8, ptr %0, i64 381732
   store i16 %i.afx, ptr %i.afy, align 4, !tbaa !76
-  %6 = uitofp reassoc nsz arcp contract afn i16 %i.afx to float ; 2 uses
-  %7 = fcmp reassoc nsz arcp contract afn olt float %5, %6
-  %spec.select.1 = select nsz i1 %7, float %6, float %5 ; 2 uses
+  %spec.select.1.v = tail call i16 @llvm.umax.i16(i16 %i.afw, i16 %i.afx)
   %i.afz = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
   %i.aga = getelementptr inbounds nuw i8, ptr %0, i64 381736 ; 2 uses
   store i16 %i.afz, ptr %i.aga, align 8, !tbaa !76
-  %8 = uitofp reassoc nsz arcp contract afn i16 %i.afz to float ; 2 uses
-  %9 = fcmp reassoc nsz arcp contract afn olt float %spec.select.1, %8
-  %spec.select.2 = select nsz i1 %9, float %8, float %spec.select.1 ; 2 uses
-  %10 = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
+  %spec.select.2.v = tail call i16 @llvm.umax.i16(i16 %spec.select.1.v, i16 %i.afz)
+  %5 = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
+  %spec.select.3736 = tail call i16 @llvm.umax.i16(i16 %spec.select.2.v, i16 %5)
+  %spec.select.3 = uitofp i16 %spec.select.3736 to float
+  %6 = fmul reassoc nnan nsz arcp contract afn float %spec.select.3, f0x3A800000
   %i.agb = load i16, ptr %i.aga, align 8, !tbaa !76
   %i.agc = load <2 x i16>, ptr %i.afv, align 2, !tbaa !76
   %i.agd = shufflevector <2 x i16> %i.agc, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.age = insertelement <4 x i16> %i.agd, i16 %10, i64 2
+  %i.age = insertelement <4 x i16> %i.agd, i16 %5, i64 2
   %i.agf = insertelement <4 x i16> %i.age, i16 %i.agb, i64 3
-  %i.agg = uitofp <4 x i16> %i.agf to <4 x float> ; 2 uses
-  %11 = extractelement <4 x float> %i.agg, i64 2  ; 2 uses
-  %12 = fcmp reassoc nsz arcp contract afn olt float %spec.select.2, %11
-  %spec.select.3 = select nsz i1 %12, float %11, float %spec.select.2
-  %13 = fmul reassoc nnan nsz arcp contract afn float %spec.select.3, f0x3A800000
-  %i.agh = insertelement <4 x float> poison, float %13, i64 0
+  %i.agg = uitofp <4 x i16> %i.agf to <4 x float>
+  %i.agh = insertelement <4 x float> poison, float %6, i64 0
   %i.agi = shufflevector <4 x float> %i.agh, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.agj = fmul reassoc nsz arcp contract afn <4 x float> %i.agi, %i.agg
+  %i.agj = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.agi, %i.agg
   %i.agk = fptoui <4 x float> %i.agj to <4 x i16>
   store <4 x i16> %i.agk, ptr %i.afv, align 2, !tbaa !76
   %i.agl = load ptr, ptr %i.rc, align 8, !tbaa !91 ; 2 uses
@@ -553,33 +547,27 @@ bb.di:                                            ; preds = %bb.cw, %bb.cw
   %i.aph = getelementptr inbounds nuw i8, ptr %0, i64 381730 ; 3 uses
   %i.api = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
   store i16 %i.api, ptr %i.aph, align 2, !tbaa !76
-  %14 = uitofp reassoc nsz arcp contract afn i16 %i.api to float ; 2 uses
   %i.apj = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
   %i.apk = getelementptr inbounds nuw i8, ptr %0, i64 381732
   store i16 %i.apj, ptr %i.apk, align 4, !tbaa !76
-  %15 = uitofp reassoc nsz arcp contract afn i16 %i.apj to float ; 2 uses
-  %16 = fcmp reassoc nsz arcp contract afn olt float %14, %15
-  %spec.select535.1 = select nsz i1 %16, float %15, float %14 ; 2 uses
+  %spec.select535.1.v = tail call i16 @llvm.umax.i16(i16 %i.api, i16 %i.apj)
   %i.apl = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
   %i.apm = getelementptr inbounds nuw i8, ptr %0, i64 381736 ; 2 uses
   store i16 %i.apl, ptr %i.apm, align 8, !tbaa !76
-  %17 = uitofp reassoc nsz arcp contract afn i16 %i.apl to float ; 2 uses
-  %18 = fcmp reassoc nsz arcp contract afn olt float %spec.select535.1, %17
-  %spec.select535.2 = select nsz i1 %18, float %17, float %spec.select535.1 ; 2 uses
-  %19 = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
+  %spec.select535.2.v = tail call i16 @llvm.umax.i16(i16 %spec.select535.1.v, i16 %i.apl)
+  %7 = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
+  %spec.select535.3734 = tail call i16 @llvm.umax.i16(i16 %spec.select535.2.v, i16 %7)
+  %spec.select535.3 = uitofp i16 %spec.select535.3734 to float
+  %8 = fmul reassoc nnan nsz arcp contract afn float %spec.select535.3, f0x3A800000
   %i.apn = load i16, ptr %i.apm, align 8, !tbaa !76
   %i.apo = load <2 x i16>, ptr %i.aph, align 2, !tbaa !76
   %i.app = shufflevector <2 x i16> %i.apo, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.apq = insertelement <4 x i16> %i.app, i16 %19, i64 2
+  %i.apq = insertelement <4 x i16> %i.app, i16 %7, i64 2
   %i.apr = insertelement <4 x i16> %i.apq, i16 %i.apn, i64 3
-  %i.aps = uitofp <4 x i16> %i.apr to <4 x float> ; 2 uses
-  %20 = extractelement <4 x float> %i.aps, i64 2  ; 2 uses
-  %21 = fcmp reassoc nsz arcp contract afn olt float %spec.select535.2, %20
-  %spec.select535.3 = select nsz i1 %21, float %20, float %spec.select535.2
-  %22 = fmul reassoc nnan nsz arcp contract afn float %spec.select535.3, f0x3A800000
-  %i.apt = insertelement <4 x float> poison, float %22, i64 0
+  %i.aps = uitofp <4 x i16> %i.apr to <4 x float>
+  %i.apt = insertelement <4 x float> poison, float %8, i64 0
   %i.apu = shufflevector <4 x float> %i.apt, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.apv = fmul reassoc nsz arcp contract afn <4 x float> %i.apu, %i.aps
+  %i.apv = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.apu, %i.aps
   %i.apw = fptoui <4 x float> %i.apv to <4 x i16>
   store <4 x i16> %i.apw, ptr %i.aph, align 2, !tbaa !76
   %i.apx = load ptr, ptr %i.rc, align 8, !tbaa !91 ; 2 uses
@@ -672,33 +660,27 @@ bb.dj:                                            ; preds = %bb.cw, %bb.cw, %bb.
   %i.asn = getelementptr inbounds nuw i8, ptr %0, i64 381730 ; 3 uses
   %i.aso = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
   store i16 %i.aso, ptr %i.asn, align 2, !tbaa !76
-  %23 = uitofp reassoc nsz arcp contract afn i16 %i.aso to float ; 2 uses
   %i.asp = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
   %i.asq = getelementptr inbounds nuw i8, ptr %0, i64 381732
   store i16 %i.asp, ptr %i.asq, align 4, !tbaa !76
-  %24 = uitofp reassoc nsz arcp contract afn i16 %i.asp to float ; 2 uses
-  %25 = fcmp reassoc nsz arcp contract afn olt float %23, %24
-  %spec.select536.1 = select nsz i1 %25, float %24, float %23 ; 2 uses
+  %spec.select536.1.v = tail call i16 @llvm.umax.i16(i16 %i.aso, i16 %i.asp)
   %i.asr = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
   %i.ass = getelementptr inbounds nuw i8, ptr %0, i64 381736 ; 2 uses
   store i16 %i.asr, ptr %i.ass, align 8, !tbaa !76
-  %26 = uitofp reassoc nsz arcp contract afn i16 %i.asr to float ; 2 uses
-  %27 = fcmp reassoc nsz arcp contract afn olt float %spec.select536.1, %26
-  %spec.select536.2 = select nsz i1 %27, float %26, float %spec.select536.1 ; 2 uses
-  %28 = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
+  %spec.select536.2.v = tail call i16 @llvm.umax.i16(i16 %spec.select536.1.v, i16 %i.asr)
+  %9 = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
+  %spec.select536.3732 = tail call i16 @llvm.umax.i16(i16 %spec.select536.2.v, i16 %9)
+  %spec.select536.3 = uitofp i16 %spec.select536.3732 to float
+  %10 = fmul reassoc nnan nsz arcp contract afn float %spec.select536.3, f0x3A800000
   %i.ast = load i16, ptr %i.ass, align 8, !tbaa !76
   %i.asu = load <2 x i16>, ptr %i.asn, align 2, !tbaa !76
   %i.asv = shufflevector <2 x i16> %i.asu, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.asw = insertelement <4 x i16> %i.asv, i16 %28, i64 2
+  %i.asw = insertelement <4 x i16> %i.asv, i16 %9, i64 2
   %i.asx = insertelement <4 x i16> %i.asw, i16 %i.ast, i64 3
-  %i.asy = uitofp <4 x i16> %i.asx to <4 x float> ; 2 uses
-  %29 = extractelement <4 x float> %i.asy, i64 2  ; 2 uses
-  %30 = fcmp reassoc nsz arcp contract afn olt float %spec.select536.2, %29
-  %spec.select536.3 = select nsz i1 %30, float %29, float %spec.select536.2
-  %31 = fmul reassoc nnan nsz arcp contract afn float %spec.select536.3, f0x3A800000
-  %i.asz = insertelement <4 x float> poison, float %31, i64 0
+  %i.asy = uitofp <4 x i16> %i.asx to <4 x float>
+  %i.asz = insertelement <4 x float> poison, float %10, i64 0
   %i.ata = shufflevector <4 x float> %i.asz, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.atb = fmul reassoc nsz arcp contract afn <4 x float> %i.ata, %i.asy
+  %i.atb = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.ata, %i.asy
   %i.atc = fptoui <4 x float> %i.atb to <4 x i16>
   store <4 x i16> %i.atc, ptr %i.asn, align 2, !tbaa !76
   %i.atd = load ptr, ptr %i.rc, align 8, !tbaa !91 ; 2 uses
@@ -803,33 +785,27 @@ bb.dm:                                            ; preds = %bb.cw, %bb.cw, %bb.
   %i.avw = getelementptr inbounds nuw i8, ptr %0, i64 381730 ; 3 uses
   %i.avx = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
   store i16 %i.avx, ptr %i.avw, align 2, !tbaa !76
-  %32 = uitofp reassoc nsz arcp contract afn i16 %i.avx to float ; 2 uses
   %i.avy = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
   %i.avz = getelementptr inbounds nuw i8, ptr %0, i64 381732
   store i16 %i.avy, ptr %i.avz, align 4, !tbaa !76
-  %33 = uitofp reassoc nsz arcp contract afn i16 %i.avy to float ; 2 uses
-  %34 = fcmp reassoc nsz arcp contract afn olt float %32, %33
-  %spec.select537.1 = select nsz i1 %34, float %33, float %32 ; 2 uses
+  %spec.select537.1.v = tail call i16 @llvm.umax.i16(i16 %i.avx, i16 %i.avy)
   %i.awa = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
   %i.awb = getelementptr inbounds nuw i8, ptr %0, i64 381736 ; 2 uses
   store i16 %i.awa, ptr %i.awb, align 8, !tbaa !76
-  %35 = uitofp reassoc nsz arcp contract afn i16 %i.awa to float ; 2 uses
-  %36 = fcmp reassoc nsz arcp contract afn olt float %spec.select537.1, %35
-  %spec.select537.2 = select nsz i1 %36, float %35, float %spec.select537.1 ; 2 uses
-  %37 = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
+  %spec.select537.2.v = tail call i16 @llvm.umax.i16(i16 %spec.select537.1.v, i16 %i.awa)
+  %11 = tail call noundef zeroext i16 @_ZN6LibRaw4get2Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0) ; 2 uses
+  %spec.select537.3730 = tail call i16 @llvm.umax.i16(i16 %spec.select537.2.v, i16 %11)
+  %spec.select537.3 = uitofp i16 %spec.select537.3730 to float
+  %12 = fmul reassoc nnan nsz arcp contract afn float %spec.select537.3, f0x3A800000
   %i.awc = load i16, ptr %i.awb, align 8, !tbaa !76
   %i.awd = load <2 x i16>, ptr %i.avw, align 2, !tbaa !76
   %i.awe = shufflevector <2 x i16> %i.awd, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.awf = insertelement <4 x i16> %i.awe, i16 %37, i64 2
+  %i.awf = insertelement <4 x i16> %i.awe, i16 %11, i64 2
   %i.awg = insertelement <4 x i16> %i.awf, i16 %i.awc, i64 3
-  %i.awh = uitofp <4 x i16> %i.awg to <4 x float> ; 2 uses
-  %38 = extractelement <4 x float> %i.awh, i64 2  ; 2 uses
-  %39 = fcmp reassoc nsz arcp contract afn olt float %spec.select537.2, %38
-  %spec.select537.3 = select nsz i1 %39, float %38, float %spec.select537.2
-  %40 = fmul reassoc nnan nsz arcp contract afn float %spec.select537.3, f0x3A800000
-  %i.awi = insertelement <4 x float> poison, float %40, i64 0
+  %i.awh = uitofp <4 x i16> %i.awg to <4 x float>
+  %i.awi = insertelement <4 x float> poison, float %12, i64 0
   %i.awj = shufflevector <4 x float> %i.awi, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.awk = fmul reassoc nsz arcp contract afn <4 x float> %i.awj, %i.awh
+  %i.awk = fmul reassoc nnan nsz arcp contract afn <4 x float> %i.awj, %i.awh
   %i.awl = fptoui <4 x float> %i.awk to <4 x i16>
   store <4 x i16> %i.awl, ptr %i.avw, align 2, !tbaa !76
   %i.awm = load ptr, ptr %i.rc, align 8, !tbaa !91 ; 2 uses
@@ -1231,6 +1207,9 @@ declare i16 @llvm.abs.i16(i16, i1 immarg) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.umax.i16(i16, i16) #7
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #1 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
