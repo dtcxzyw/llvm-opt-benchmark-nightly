@@ -205,7 +205,7 @@ bb.au:                                            ; preds = %bb.an
 define hidden noundef i32 @_ZN6google8protobuf8internal30CountVarintsAssumingLargeArrayEPKcS3_(ptr noundef %0, ptr noundef %1) local_unnamed_addr #3 {
 bb.a:
   %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
-  %i.b = ptrtoint ptr %0 to i64                   ; 4 uses
+  %i.b = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.c = sub i64 %i.a, %i.b
   %i.d = trunc i64 %i.c to i32                    ; 3 uses
   %i.e = getelementptr inbounds i8, ptr %1, i64 -8 ; 4 uses
@@ -213,14 +213,11 @@ bb.a:
   br i1 %i.f, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %2 = add i64 %i.a, -8
-  %i.g = add i64 %i.b, 8
-  %3 = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.g)
-  %4 = xor i64 %i.b, -1
-  %5 = add i64 %3, %4                             ; 2 uses
-  %i.h = lshr i64 %5, 3
+  %i.g = add i64 %i.a, -9
+  %2 = sub i64 %i.g, %i.b                         ; 2 uses
+  %i.h = lshr i64 %2, 3
   %i.i = add nuw nsw i64 %i.h, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %5, 24
+  %min.iters.check = icmp ult i64 %2, 24
   br i1 %min.iters.check, label %.lr.ph.preheader24, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -304,15 +301,12 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.c = ptrtoaddr ptr %1 to i64
-  %2 = add i64 %i.c, -8
-  %i.d = ptrtoaddr ptr %0 to i64                  ; 2 uses
-  %i.e = add i64 %i.d, 8
-  %3 = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.e)
-  %4 = xor i64 %i.d, -1
-  %5 = add i64 %3, %4                             ; 2 uses
-  %i.f = lshr i64 %5, 3
+  %i.d = ptrtoaddr ptr %0 to i64
+  %i.e = add i64 %i.c, -9
+  %2 = sub i64 %i.e, %i.d                         ; 2 uses
+  %i.f = lshr i64 %2, 3
   %i.g = add nuw nsw i64 %i.f, 1                  ; 2 uses
-  %min.iters.check = icmp ult i64 %5, 24
+  %min.iters.check = icmp ult i64 %2, 24
   br i1 %min.iters.check, label %.lr.ph.preheader18, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
@@ -713,9 +707,6 @@ declare i64 @llvm.umin.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i64> @llvm.ctpop.v2i64(<2 x i64>) #7

@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.d, %bb.c, %bb.g,
   %.sink = phi ptr [ %i.az, %bb.d ], [ %i.ax, %bb.c ], [ %i.bj, %bb.g ], [ %i.bf, %bb.f ]
   %i.bk = phi ptr [ %i.ay, %bb.d ], [ %i.au, %bb.c ], [ %i.bi, %bb.g ], [ %i.ba, %bb.f ] ; 97 uses
   %.02227 = phi ptr [ %i.at, %bb.d ], [ %i.at, %bb.c ], [ null, %bb.g ], [ null, %bb.f ] ; 49 uses
-  %.02226 = phi ptr [ %i.at, %bb.d ], [ %i.at, %bb.c ], [ %i.bh, %bb.g ], [ %i.bc, %bb.f ] ; 19 uses
+  %.02226 = phi ptr [ %i.at, %bb.d ], [ %i.at, %bb.c ], [ %i.bh, %bb.g ], [ %i.bc, %bb.f ] ; 18 uses
   store ptr %.sink, ptr %i.p, align 8, !tbaa !52
   %i.bl = getelementptr i8, ptr %0, i64 48
   %i.bm = load i32, ptr %i.bl, align 8, !tbaa !55 ; 2 uses
@@ -220,18 +220,12 @@ bb.h:                                             ; preds = %bb.d, %bb.c, %bb.g,
   br i1 %i.bv, label %.lr.ph.preheader, label %bb.i
 
 .lr.ph.preheader:                                 ; preds = %bb.h
-  %.022264494 = ptrtoaddr ptr %.02226 to i64      ; 3 uses
-  %6 = shl nsw i64 %i.bp, 3                       ; 2 uses
-  %7 = add i64 %6, %.022264494
-  %8 = add i64 %7, 16
   %i.bw = shl nsw i64 %i.aq, 3
-  %9 = add i64 %i.bw, %.022264494
-  %umax = call i64 @llvm.umax.i64(i64 %8, i64 %9)
-  %i.bx = xor i64 %.022264494, -1
-  %i.by = add i64 %umax, %i.bx
-  %10 = sub i64 %i.by, %6
-  %i.bz = and i64 %10, -16
-  %i.ca = add i64 %i.bz, 16
+  %6 = shl nsw i64 %i.bp, 3
+  %i.bx = xor i64 %6, -1
+  %i.by = add nsw i64 %i.bw, %i.bx
+  %i.bz = and i64 %i.by, -16
+  %i.ca = add nsw i64 %i.bz, 16
   call void @llvm.memset.p0.i64(ptr align 8 %i.bq, i8 -1, i64 %i.ca, i1 false), !tbaa !20
   br label %bb.i
 
@@ -633,9 +627,6 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write)
 declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr #20
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #17
 
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

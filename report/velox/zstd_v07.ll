@@ -205,7 +205,7 @@ ZSTDv07_checkContinuity.exit:                     ; preds = %bb.a, %bb.b
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc i64 @ZSTDv07_decompressBlock_internal(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4) unnamed_addr #14 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %5 = alloca %struct.seqState_t, align 8         ; 29 uses
   %i.b = icmp ugt i64 %4, 131071
   br i1 %i.b, label %ZSTDv07_decompressSequences.exit, label %bb.b
@@ -608,17 +608,18 @@ FSEv07_initDState.exit111.i:                      ; preds = %BITv07_reloadDStrea
   %i.op = getelementptr inbounds i8, ptr %i.fz, i64 -8 ; 5 uses
   %i.oq = ptrtoint ptr %i.fz to i64
   %i.or = ptrtoint ptr %i.ga to i64
-  %i.os = ptrtoint ptr %i.ge to i64               ; 13 uses
+  %i.os = ptrtoint ptr %i.ge to i64               ; 12 uses
   %i.ot = ptrtoint ptr %i.gg to i64
   %i.ou = getelementptr inbounds i8, ptr %i.fz, i64 -13
   %i.ov = ptrtoint ptr %i.op to i64
   %i.ow = add i64 %2, %i.a
-  %i.ox = add i64 %i.ow, -8                       ; 3 uses
+  %6 = add i64 %i.ow, -8                          ; 2 uses
+  %i.ox = add i64 %i.os, 8
   %i.oy = add i64 %i.os, 8
-  %i.oz = add i64 %i.os, 8
-  %i.pa = add i64 %i.os, 1
-  %invariant.op = add i64 %i.os, 16
-  %invariant.op279 = add i64 %i.os, 16
+  %i.oz = add i64 %i.os, 1
+  %i.pa = add i64 %i.os, 16
+  %invariant.op = add i64 %2, %i.a
+  %invariant.op279 = add i64 %invariant.op, -17
   br label %bb.bn
 
 bb.bn:                                            ; preds = %ZSTDv07_execSequence.exit.i, %FSEv07_initDState.exit111.i
@@ -1021,7 +1022,7 @@ iter.check209:                                    ; preds = %.preheader.i.i
   %i.wm = add i64 %i.wl, %i.uy
   %i.wn = add i64 %i.wm, %i.ro
   %i.wo = add i64 %i.wn, %i.sd
-  %i.wp = add i64 %i.pa, %i.rk
+  %i.wp = add i64 %i.oz, %i.rk
   %umax190 = tail call i64 @llvm.umax.i64(i64 %i.wo, i64 %i.wp)
   %i.wq = add i64 %i.rk, %i.os
   %i.wr = sub i64 %umax190, %i.wq                 ; 7 uses
@@ -1153,12 +1154,9 @@ bb.cm:                                            ; preds = %bb.cl
   br i1 %i.ye, label %.preheader180.i.preheader, label %bb.cn
 
 .preheader180.i.preheader:                        ; preds = %bb.cm
-  %i.yf = tail call i64 @llvm.umax.i64(i64 %i.rk, i64 %i.vz) ; 2 uses
-  %.reass280 = add i64 %i.yf, %invariant.op279
-  %6 = tail call i64 @llvm.umax.i64(i64 %i.ox, i64 %.reass280)
-  %7 = add i64 %6, -9
+  %i.yf = tail call i64 @llvm.umax.i64(i64 %i.rk, i64 %i.vz)
   %i.yg = add i64 %i.yf, %i.os
-  %i.yh = sub i64 %7, %i.yg                       ; 2 uses
+  %i.yh = sub i64 %invariant.op279, %i.yg         ; 2 uses
   %i.yi = lshr i64 %i.yh, 3
   %i.yj = add nuw nsw i64 %i.yi, 1                ; 2 uses
   %min.iters.check157 = icmp ult i64 %i.yh, 56
@@ -1231,16 +1229,16 @@ iter.check:                                       ; preds = %bb.cn
   %i.zc = add i64 %i.zb, %i.ro
   %i.zd = add i64 %i.zc, %i.sd
   %umax138 = tail call i64 @llvm.umax.i64(i64 %i.rk, i64 %i.vz)
-  %i.ze = add i64 %i.oz, %umax138
-  %umax139 = tail call i64 @llvm.umax.i64(i64 %i.ox, i64 %i.ze)
+  %i.ze = add i64 %i.oy, %umax138
+  %umax139 = tail call i64 @llvm.umax.i64(i64 %6, i64 %i.ze)
   %i.zf = sub i64 %i.zd, %umax139                 ; 7 uses
   %min.iters.check = icmp ult i64 %i.zf, 4
   br i1 %min.iters.check, label %.lr.ph122.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
   %umax = tail call i64 @llvm.umax.i64(i64 %i.rk, i64 %i.vz)
-  %i.zg = add i64 %i.oy, %umax
-  %umax136 = tail call i64 @llvm.umax.i64(i64 %i.ox, i64 %i.zg)
+  %i.zg = add i64 %i.ox, %umax
+  %umax136 = tail call i64 @llvm.umax.i64(i64 %6, i64 %i.zg)
   %i.zh = sub i64 %.4.i.i137, %umax136
   %diff.check = icmp ugt i64 %i.zh, -32
   br i1 %diff.check, label %.lr.ph122.i.i.preheader, label %vector.main.loop.iter.check
@@ -1323,7 +1321,7 @@ bb.co:                                            ; preds = %bb.cl
   %i.aaa = add i64 %i.zz, %i.zx
   %i.aab = add i64 %i.aaa, %i.ro
   %i.aac = sub i64 %i.aab, %i.rk
-  %.reass = add i64 %i.zx, %invariant.op
+  %.reass = add i64 %i.zx, %i.pa
   %i.aad = tail call i64 @llvm.umax.i64(i64 %i.aac, i64 %.reass)
   %i.aae = add i64 %i.aad, -9
   %i.aaf = add i64 %i.zx, %i.os

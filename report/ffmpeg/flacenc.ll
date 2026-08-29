@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %wide.trip.count.i.i = zext nneg i32 %i.by to i64
   %i.ce = shl nsw i64 %i.cc, 2
   %i.cf = add i64 %i.ce, %i.a
-  %i.cg = add i64 %i.cf, 1184
+  %i.cg = add i64 %i.cf, 1183
   %i.ch = shl nsw i64 %i.cc, 2
   br label %.lr.ph56.i.i
 
@@ -213,7 +213,7 @@ middle.block:                                     ; preds = %vector.body
   %wide.trip.count81.i.i = zext nneg i32 %i.by to i64
   %i.ci = shl nsw i64 %i.cc, 2
   %i.cj = add i64 %i.ci, %i.a
-  %i.ck = add i64 %i.cj, 1184
+  %i.ck = add i64 %i.cj, 1183
   %i.cl = shl nsw i64 %i.cc, 2
   br label %.preheader.us.us.i.i
 
@@ -227,14 +227,11 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph47.us.us.i.i.preheader:                     ; preds = %.preheader.us.us.i.i
   %i.cn = mul i64 %i.cl, %indvars.iv77.i.i
   %i.co = add i64 %i.ck, %i.cn
-  %i.cp = ptrtoaddr ptr %.03753.us.us.i.i to i64  ; 2 uses
-  %4 = add i64 %i.cp, 4
-  %5 = tail call i64 @llvm.umax.i64(i64 %i.co, i64 %4)
-  %6 = xor i64 %i.cp, -1
-  %7 = add i64 %5, %6                             ; 2 uses
-  %i.cq = lshr i64 %7, 2
+  %i.cp = ptrtoaddr ptr %.03753.us.us.i.i to i64
+  %4 = sub i64 %i.co, %i.cp                       ; 2 uses
+  %i.cq = lshr i64 %4, 2
   %i.cr = add nuw nsw i64 %i.cq, 1                ; 2 uses
-  %min.iters.check91 = icmp ult i64 %7, 12
+  %min.iters.check91 = icmp ult i64 %4, 12
   br i1 %min.iters.check91, label %.lr.ph47.us.us.i.i.preheader126, label %vector.ph92
 
 vector.ph92:                                      ; preds = %.lr.ph47.us.us.i.i.preheader
@@ -305,7 +302,7 @@ bb.e:                                             ; preds = %._crit_edge.i.i, %.
   %.03654.i.i = phi ptr [ %.03651.i.i, %.lr.ph56.i.i ], [ %.036.i.i, %._crit_edge.i.i ] ; 4 uses
   %.03753.i.i = phi ptr [ %i.ca, %.lr.ph56.i.i ], [ %.1.lcssa.i.i, %._crit_edge.i.i ] ; 6 uses
   %i.dl = ptrtoint ptr %.03654.i.i to i64
-  %i.dm = ptrtoint ptr %.03753.i.i to i64         ; 3 uses
+  %i.dm = ptrtoint ptr %.03753.i.i to i64         ; 2 uses
   %i.dn = sub i64 %i.dl, %i.dm
   %i.do = ashr exact i64 %i.dn, 2
   %i.dp = mul nsw i64 %i.do, %i.di                ; 3 uses
@@ -314,14 +311,11 @@ bb.e:                                             ; preds = %._crit_edge.i.i, %.
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.e
   %i.dr = mul i64 %i.ch, %indvars.iv.i.i
-  %8 = add i64 %i.cg, %i.dr
-  %i.ds = add i64 %i.dm, 4
-  %9 = tail call i64 @llvm.umax.i64(i64 %8, i64 %i.ds)
-  %10 = xor i64 %i.dm, -1
-  %11 = add i64 %9, %10                           ; 2 uses
-  %i.dt = lshr i64 %11, 2
+  %i.ds = add i64 %i.cg, %i.dr
+  %5 = sub i64 %i.ds, %i.dm                       ; 2 uses
+  %i.dt = lshr i64 %5, 2
   %i.du = add nuw nsw i64 %i.dt, 1                ; 2 uses
-  %min.iters.check78 = icmp ult i64 %11, 12
+  %min.iters.check78 = icmp ult i64 %5, 12
   br i1 %min.iters.check78, label %.lr.ph.i.i.preheader131, label %vector.ph79
 
 vector.ph79:                                      ; preds = %.lr.ph.i.i.preheader
@@ -723,9 +717,6 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.mul.v4i32(<4 x i32>) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #10
 
 attributes #0 = { cold nounwind optsize uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

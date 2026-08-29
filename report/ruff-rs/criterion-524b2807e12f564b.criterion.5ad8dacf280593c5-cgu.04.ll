@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 559
 inline.NumDeleted: 275
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort9quicksortINtNtBa_6option6OptionReENCINvMB8_SB17_16sort_unstable_byNCNvMs1_NtCs7NzLGBMhIGf_9criterion4htmlNtB2a_14BenchmarkGroup3news_0E0EB2c_:bb.a
 
 bb.l:                                             ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotINtNtBa_6option6OptionReENCINvMB8_SB15_16sort_unstable_byNCNvMs1_NtCs7NzLGBMhIGf_9criterion4htmlNtB28_14BenchmarkGroup3news_0E0EB2a_.exit
@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %.backedge
 .lr.ph166:                                        ; preds = %.lr.ph, %bb.b
   %.sroa.026.0102165 = phi i32 [ %i.h, %bb.b ], [ %3, %.lr.ph ]
   %.sroa.023.0103164 = phi ptr [ %.sroa.023.0.be, %bb.b ], [ %2, %.lr.ph ] ; 4 uses
-  %.sroa.15.0104163 = phi i64 [ %.sroa.15.0.be, %bb.b ], [ %1, %.lr.ph ] ; 13 uses
-  %.sroa.0.0105162 = phi ptr [ %.sroa.0.0.be, %bb.b ], [ %0, %.lr.ph ] ; 28 uses
+  %.sroa.15.0104163 = phi i64 [ %.sroa.15.0.be, %bb.b ], [ %1, %.lr.ph ] ; 15 uses
+  %.sroa.0.0105162 = phi ptr [ %.sroa.0.0.be, %bb.b ], [ %0, %.lr.ph ] ; 30 uses
   %i.h = add i32 %.sroa.026.0102165, -1           ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !435)
   %i.i = lshr i64 %.sroa.15.0104163, 3            ; 3 uses
@@ -333,7 +333,7 @@ bb.l:                                             ; preds = %._crit_edge167, %._
 bb.m:                                             ; preds = %.split, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotINtNtBa_6option6OptionReENvYB15_NtNtBa_3cmp10PartialOrd2ltECs7NzLGBMhIGf_9criterion.exit, %_RNvYNvYINtNtCs4NRVxsYgnAr_4core6option6OptionReENtNtBa_3cmp10PartialOrd2ltINtNtNtBa_3ops8function5FnMutTRB5_B1E_EE8call_mutCs7NzLGBMhIGf_9criterion.exit
   tail call void @llvm.experimental.noalias.scope.decl(metadata !462)
   tail call void @_RNvMNtCs4NRVxsYgnAr_4core5sliceSINtNtB4_6option6OptionReE14swap_uncheckedCs7NzLGBMhIGf_9criterion(ptr noalias noundef nonnull align 8 %.sroa.0.0105162, i64 noundef range(i64 33, 576460752303423488) %.sroa.15.0104163, i64 noundef 0, i64 noundef range(i64 0, 576460752303423487) %.sroa.0.0.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8)
-  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.0105162, i64 16 ; 12 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0.0105162, i64 16 ; 19 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !465)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !468)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !470
@@ -344,27 +344,55 @@ bb.m:                                             ; preds = %.split, %_RINvNtNtN
   store i64 %i.ao, ptr %i.e, align 8, !noalias !470
   %i.ap = getelementptr [16 x i8], ptr %.sroa.0.0105162, i64 %.sroa.15.0104163 ; 3 uses
   %i.aq = getelementptr i8, ptr %i.ap, i64 -16    ; 3 uses
-  %.sroa.13.051.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0105162, i64 32 ; 4 uses
+  %.sroa.13.051.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0105162, i64 32 ; 6 uses
   %i.ar = icmp ult ptr %.sroa.13.051.i.i, %i.aq
   %.val2.i.pre.i.i = load ptr, ptr %.sroa.0.0105162, align 8, !alias.scope !472, !noalias !465
   %.pre.i.i = freeze ptr %.val2.i.pre.i.i         ; 5 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.0.0105162, i64 8
   %.val3.i14.i.i = load i64, ptr %i.as, align 8, !alias.scope !472, !noalias !465 ; 6 uses
-  br i1 %i.ar, label %.lr.ph.i.i.a, label %.preheader.i.i
+  br i1 %i.ar, label %.lr.ph.i.i, label %.preheader.i.i
 
-.lr.ph.i.i.a:                                     ; preds = %bb.m
-  %.not2.i.i.i.i16.i.i.a = icmp eq ptr %.pre.i.i, null
-  br i1 %.not2.i.i.i.i16.i.i.a, label %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i, label %.lr.ph.split.split.i.i
+.lr.ph.i.i:                                       ; preds = %bb.m
+  %.not2.i.i.i.i16.i.i = icmp eq ptr %.pre.i.i, null
+  br i1 %.not2.i.i.i.i16.i.i, label %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i.preheader, label %.lr.ph.split.split.i.i
+
+_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i.preheader: ; preds = %.lr.ph.i.i
+  %5 = and i64 %.sroa.15.0104163, 2
+  %lcmp.mod.not.not = icmp eq i64 %5, 0
+  br i1 %lcmp.mod.not.not, label %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i.prol, label %.lr.ph.i.i.a
+
+_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i.prol: ; preds = %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i.preheader
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.al, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.13.051.i.i, i64 16, i1 false), !alias.scope !471, !noalias !473
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.0105162, i64 48 ; 3 uses
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.13.051.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.al, i64 16, i1 false), !alias.scope !471, !noalias !476
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.al, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !alias.scope !471, !noalias !476
+  %.sroa.13.0.us.i.i.prol = getelementptr inbounds nuw i8, ptr %.sroa.0.0105162, i64 64 ; 2 uses
+  br label %.lr.ph.i.i.a
+
+.lr.ph.i.i.a:                                     ; preds = %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i.prol, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i.preheader
+  %.sroa.13.054.us.i.i.unr = phi ptr [ %.sroa.13.051.i.i, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i.preheader ], [ %.sroa.13.0.us.i.i.prol, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i.prol ]
+  %.sroa.033.053.us.i.i.unr = phi ptr [ %i.al, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i.preheader ], [ %6, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i.prol ]
+  %.lcssa179.unr = phi ptr [ poison, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i.preheader ], [ %6, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i.prol ]
+  %.sroa.13.0.us.i.i.lcssa.unr = phi ptr [ poison, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i.preheader ], [ %.sroa.13.0.us.i.i.prol, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i.prol ]
+  %7 = and i64 %.sroa.15.0104163, 1152921504606846974
+  %.not2.i.i.i.i16.i.i.a = icmp eq i64 %7, 4
+  br i1 %.not2.i.i.i.i16.i.i.a, label %.preheader.split.us.preheader.i.i, label %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i
 
 _RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i: ; preds = %.lr.ph.i.i.a, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i
-  %.sroa.13.054.us.i.i = phi ptr [ %.sroa.13.0.us.i.i.a, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i ], [ %.sroa.13.051.i.i, %.lr.ph.i.i.a ] ; 2 uses
-  %.sroa.033.053.us.i.i = phi ptr [ %i.at, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i ], [ %i.al, %.lr.ph.i.i.a ] ; 3 uses
+  %.sroa.13.054.us.i.i = phi ptr [ %.sroa.13.0.us.i.i.a, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i ], [ %.sroa.13.054.us.i.i.unr, %.lr.ph.i.i.a ] ; 2 uses
+  %.sroa.033.053.us.i.i = phi ptr [ %i.at, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i ], [ %.sroa.033.053.us.i.i.unr, %.lr.ph.i.i.a ] ; 5 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.033.053.us.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.al, i64 16, i1 false), !alias.scope !471, !noalias !473
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.al, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.13.054.us.i.i, i64 16, i1 false), !alias.scope !471, !noalias !473
-  %i.at = getelementptr inbounds nuw i8, ptr %.sroa.033.053.us.i.i, i64 32 ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %.sroa.033.053.us.i.i, i64 32 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.13.054.us.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.al, i64 16, i1 false), !alias.scope !471, !noalias !476
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.al, ptr noundef nonnull align 8 dereferenceable(16) %8, i64 16, i1 false), !alias.scope !471, !noalias !476
+  %.sroa.13.0.us.i.i = getelementptr inbounds nuw i8, ptr %.sroa.033.053.us.i.i, i64 48 ; 2 uses
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 8 dereferenceable(16) %i.al, i64 16, i1 false), !alias.scope !471, !noalias !473
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.al, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.13.0.us.i.i, i64 16, i1 false), !alias.scope !471, !noalias !473
+  %i.at = getelementptr inbounds nuw i8, ptr %.sroa.033.053.us.i.i, i64 64 ; 3 uses
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.13.0.us.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.al, i64 16, i1 false), !alias.scope !471, !noalias !476
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.al, ptr noundef nonnull align 8 dereferenceable(16) %i.at, i64 16, i1 false), !alias.scope !471, !noalias !476
-  %.sroa.13.0.us.i.i.a = getelementptr inbounds nuw i8, ptr %.sroa.033.053.us.i.i, i64 48 ; 3 uses
+  %.sroa.13.0.us.i.i.a = getelementptr inbounds nuw i8, ptr %.sroa.033.053.us.i.i, i64 80 ; 3 uses
   %i.au = icmp ult ptr %.sroa.13.0.us.i.i.a, %i.aq
   br i1 %i.au, label %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i, label %.preheader.split.us.preheader.i.i
 
@@ -375,10 +403,10 @@ _RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomu
   %.not2.i.i.i.i.i.i = icmp eq ptr %.pre.i.i, null
   br i1 %.not2.i.i.i.i.i.i, label %.preheader.split.us.preheader.i.i, label %.preheader.split.i.i
 
-.preheader.split.us.preheader.i.i:                ; preds = %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i, %.preheader.i.i
-  %.sroa.13.0.lcssa100.i.i = phi ptr [ %.sroa.13.0.lcssa.i.i, %.preheader.i.i ], [ %.sroa.13.0.us.i.i.a, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i ]
-  %.sroa.033.0.lcssa99.i.i = phi ptr [ %.sroa.033.0.lcssa.i.i, %.preheader.i.i ], [ %i.at, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i ]
-  %.sroa.23.0.lcssa98.i.i = phi i64 [ %.sroa.23.0.lcssa.i.i, %.preheader.i.i ], [ 0, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i ] ; 2 uses
+.preheader.split.us.preheader.i.i:                ; preds = %.lr.ph.i.i.a, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i, %.preheader.i.i
+  %.sroa.13.0.lcssa100.i.i = phi ptr [ %.sroa.13.0.lcssa.i.i, %.preheader.i.i ], [ %.sroa.13.0.us.i.i.lcssa.unr, %.lr.ph.i.i.a ], [ %.sroa.13.0.us.i.i.a, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i ]
+  %.sroa.033.0.lcssa99.i.i = phi ptr [ %.sroa.033.0.lcssa.i.i, %.preheader.i.i ], [ %.lcssa179.unr, %.lr.ph.i.i.a ], [ %i.at, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i ]
+  %.sroa.23.0.lcssa98.i.i = phi i64 [ %.sroa.23.0.lcssa.i.i, %.preheader.i.i ], [ 0, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.us.i.i ], [ 0, %.lr.ph.i.i.a ] ; 2 uses
   %i.av = getelementptr inbounds nuw [16 x i8], ptr %i.al, i64 %.sroa.23.0.lcssa98.i.i ; 2 uses
   br label %.preheader.split.us.i.i
 
@@ -424,10 +452,10 @@ bb.o:                                             ; preds = %bb.n, %.preheader.s
   %.sroa.13.1.sroa.gep44.i.i = getelementptr inbounds nuw i8, ptr %.sroa.13.1.i.i, i64 16
   br i1 %i.ax, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBa_6option6OptionReENvYB1x_NtNtBa_3cmp10PartialOrd2ltECs7NzLGBMhIGf_9criterion.exit.i, label %.preheader.split.i.i
 
-.lr.ph.split.split.i.i:                           ; preds = %.lr.ph.i.i.a, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.i.i
-  %.sroa.13.054.i.i = phi ptr [ %.sroa.13.0.i.i, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.i.i ], [ %.sroa.13.051.i.i, %.lr.ph.i.i.a ] ; 3 uses
-  %.sroa.033.053.i.i = phi ptr [ %i.bl, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.i.i ], [ %i.al, %.lr.ph.i.i.a ] ; 5 uses
-  %.sroa.23.052.i.i = phi i64 [ %i.bs, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.i.i ], [ 0, %.lr.ph.i.i.a ] ; 2 uses
+.lr.ph.split.split.i.i:                           ; preds = %.lr.ph.i.i, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.i.i
+  %.sroa.13.054.i.i = phi ptr [ %.sroa.13.0.i.i, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.i.i ], [ %.sroa.13.051.i.i, %.lr.ph.i.i ] ; 3 uses
+  %.sroa.033.053.i.i = phi ptr [ %i.bl, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.i.i ], [ %i.al, %.lr.ph.i.i ] ; 5 uses
+  %.sroa.23.052.i.i = phi i64 [ %i.bs, %_RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicINtNtBc_6option6OptionReENvYB1z_NtNtBc_3cmp10PartialOrd2ltE0Cs7NzLGBMhIGf_9criterion.exit32.i.i ], [ 0, %.lr.ph.i.i ] ; 2 uses
   %.val.i11.i.i = load ptr, ptr %.sroa.13.054.i.i, align 8, !alias.scope !471, !noalias !473, !noundef !14 ; 2 uses
   %.not.i.i.i.i15.i.i = icmp eq ptr %.val.i11.i.i, null
   br i1 %.not.i.i.i.i15.i.i, label %bb.q, label %bb.p

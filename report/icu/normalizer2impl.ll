@@ -204,16 +204,14 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
   %.3143 = phi ptr [ %i.bx, %bb.p ], [ %.2142, %bb.o ], [ %.2142, %bb.n ] ; 8 uses
   %.0 = phi i16 [ %i.by, %bb.p ], [ %i.bt, %bb.o ], [ %i.bt, %bb.n ]
-  %.3143430 = ptrtoaddr ptr %.3143 to i64         ; 3 uses
+  %.3143430 = ptrtoaddr ptr %.3143 to i64         ; 2 uses
   store i16 %.0, ptr %.0132.ph485, align 2, !tbaa !30
   %i.bz = icmp ult ptr %.3143, %.0136.ph
   br i1 %i.bz, label %iter.check, label %.thread
 
 iter.check:                                       ; preds = %bb.q
-  %4 = add i64 %.3143430, 2
-  %umax433 = tail call i64 @llvm.umax.i64(i64 %.0136.ph432, i64 %4)
   %i.ca = xor i64 %.3143430, -1
-  %i.cb = add i64 %umax433, %i.ca                 ; 3 uses
+  %i.cb = add i64 %i.ca, %.0136.ph432             ; 3 uses
   %i.cc = lshr i64 %i.cb, 1
   %i.cd = add nuw i64 %i.cc, 1                    ; 5 uses
   %min.iters.check = icmp ult i64 %i.cb, 6
@@ -420,8 +418,8 @@ _ZN6icu_7815Normalizer2Impl7combineEPKti.exit.thread169.split.loop.exit207: ; pr
 _ZN6icu_7815Normalizer2Impl7combineEPKti.exit.thread169: ; preds = %bb.t, %_ZN6icu_7815Normalizer2Impl7combineEPKti.exit.thread169.split.loop.exit207
   %.1.i171 = phi i32 [ %i.es, %_ZN6icu_7815Normalizer2Impl7combineEPKti.exit.thread169.split.loop.exit207 ], [ %i.dp, %bb.t ] ; 7 uses
   %i.et = getelementptr inbounds nuw i8, ptr %i.at, i64 8
-  %.2142267271 = ptrtoaddr ptr %.2142 to i64      ; 4 uses
-  %.0132253272 = ptrtoaddr ptr %.0132.ph485 to i64 ; 2 uses
+  %.2142267271 = ptrtoaddr ptr %.2142 to i64      ; 3 uses
+  %.0132253272 = ptrtoaddr ptr %.0132.ph485 to i64
   %i.eu = lshr i32 %.1.i171, 1                    ; 8 uses
   %i.ev = icmp ult i32 %.1119, 65536
   %.neg = select i1 %i.ev, i64 -1, i64 -2         ; 2 uses
@@ -455,11 +453,9 @@ bb.ae:                                            ; preds = %bb.ac
 
 .lr.ph.preheader:                                 ; preds = %bb.ae
   %scevgep = getelementptr i8, ptr %.0132.ph485, i64 2
-  %5 = shl nsw i64 %.neg, 1
-  %6 = add i64 %5, %.2142267271
-  %i.fj = add i64 %.0132253272, 6
-  %umax = tail call i64 @llvm.umax.i64(i64 %6, i64 %i.fj)
-  %i.fk = add i64 %umax, -5
+  %i.fj = add i64 %.2142267271, -5
+  %4 = shl nsw i64 %.neg, 1
+  %i.fk = add i64 %i.fj, %4
   %i.fl = sub i64 %i.fk, %.0132253272
   %i.fm = and i64 %i.fl, -2
   %i.fn = add i64 %i.fm, 2
@@ -517,10 +513,8 @@ bb.ai:                                            ; preds = %._crit_edge227, %bb
   br i1 %i.ge, label %iter.check467, label %.thread
 
 iter.check467:                                    ; preds = %.preheader
-  %7 = add i64 %.2142267271, 2
-  %umax450 = tail call i64 @llvm.umax.i64(i64 %.0136.ph432, i64 %7)
   %i.gf = xor i64 %.2142267271, -1
-  %i.gg = add i64 %umax450, %i.gf                 ; 3 uses
+  %i.gg = add i64 %i.gf, %.0136.ph432             ; 3 uses
   %i.gh = lshr i64 %i.gg, 1
   %i.gi = add nuw i64 %i.gh, 1                    ; 5 uses
   %min.iters.check451.a = icmp ult i64 %i.gg, 6

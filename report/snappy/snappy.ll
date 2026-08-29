@@ -205,7 +205,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 bb.k:                                             ; preds = %._crit_edge.i, %.split94.us
   %.157.i = phi ptr [ %i.bm, %._crit_edge.i ], [ %i.ax, %.split94.us ] ; 16 uses
-  %.157.i222 = ptrtoaddr ptr %.157.i to i64       ; 4 uses
+  %.157.i222 = ptrtoaddr ptr %.157.i to i64       ; 2 uses
   %i.bs = add nsw i64 %i.aq, -15
   %.not68.i = icmp sgt i64 %spec.select57, %i.bs
   br i1 %.not68.i, label %bb.r, label %bb.l, !prof !25
@@ -268,13 +268,10 @@ bb.r:                                             ; preds = %bb.k
 
 .lr.ph90.i.preheader:                             ; preds = %bb.r
   %i.cm = add i64 %i.aq, %i.ba
-  %4 = add i64 %i.cm, -16
-  %i.cn = add i64 %.157.i222, 16
-  %5 = tail call i64 @llvm.umax.i64(i64 %4, i64 %i.cn)
-  %6 = xor i64 %.157.i222, -1
-  %7 = add i64 %5, %6                             ; 3 uses
-  %i.co = lshr i64 %7, 4
-  %min.iters.check227 = icmp ult i64 %7, 144
+  %i.cn = add i64 %i.cm, -17
+  %4 = sub i64 %i.cn, %.157.i222                  ; 3 uses
+  %i.co = lshr i64 %4, 4
+  %min.iters.check227 = icmp ult i64 %4, 80
   br i1 %min.iters.check227, label %.lr.ph90.i.preheader244, label %vector.memcheck221
 
 .lr.ph90.i.preheader244:                          ; preds = %vector.memcheck221, %.lr.ph90.i.preheader
@@ -282,12 +279,9 @@ bb.r:                                             ; preds = %bb.k
 
 vector.memcheck221:                               ; preds = %.lr.ph90.i.preheader
   %scevgep = getelementptr i8, ptr %.157.i, i64 16
-  %8 = xor i64 %.157.i222, -1
-  %9 = add i64 %i.ba, -16
-  %10 = add i64 %9, %i.aq
-  %i.cp = add i64 %.157.i222, 16
-  %umax = tail call i64 @llvm.umax.i64(i64 %10, i64 %i.cp)
-  %i.cq = add i64 %umax, %8
+  %i.cp = add i64 %i.ba, -17
+  %5 = sub i64 %i.cp, %.157.i222
+  %i.cq = add i64 %5, %i.aq
   %i.cr = and i64 %i.cq, -16                      ; 2 uses
   %scevgep223 = getelementptr i8, ptr %scevgep, i64 %i.cr
   %scevgep224 = getelementptr i8, ptr %i.av, i64 16
@@ -299,7 +293,7 @@ vector.memcheck221:                               ; preds = %.lr.ph90.i.preheade
   br i1 %found.conflict, label %.lr.ph90.i.preheader244, label %vector.ph228
 
 vector.ph228:                                     ; preds = %vector.memcheck221
-  %i.cs = and i64 %7, -16
+  %i.cs = and i64 %4, -16
   %i.ct = add i64 %i.cs, 16                       ; 2 uses
   %i.cu = getelementptr i8, ptr %i.aw, i64 %i.ct
   %i.cv = getelementptr i8, ptr %.157.i, i64 %i.ct
@@ -586,7 +580,7 @@ vec.epilog.middle.block172:                       ; preds = %vec.epilog.vector.b
 
 bb.d:                                             ; preds = %._crit_edge, %bb.a
   %.157 = phi ptr [ %i.h, %._crit_edge ], [ %1, %bb.a ] ; 16 uses
-  %.157110 = ptrtoaddr ptr %.157 to i64           ; 4 uses
+  %.157110 = ptrtoaddr ptr %.157 to i64           ; 2 uses
   %i.x = getelementptr inbounds i8, ptr %3, i64 -15
   %.not68 = icmp ugt ptr %2, %i.x
   br i1 %.not68, label %bb.k, label %bb.e, !prof !25
@@ -648,25 +642,19 @@ bb.k:                                             ; preds = %bb.d
   br i1 %i.aq, label %.lr.ph90.preheader, label %._crit_edge91
 
 .lr.ph90.preheader:                               ; preds = %bb.k
-  %4 = add i64 %i.b, -16
-  %i.ar = add i64 %.157110, 16
-  %5 = tail call i64 @llvm.umax.i64(i64 %4, i64 %i.ar)
-  %6 = xor i64 %.157110, -1
-  %7 = add i64 %5, %6                             ; 3 uses
-  %i.as = lshr i64 %7, 4
-  %min.iters.check = icmp ult i64 %7, 304
+  %i.ar = add i64 %i.b, -17
+  %4 = sub i64 %i.ar, %.157110                    ; 3 uses
+  %i.as = lshr i64 %4, 4
+  %min.iters.check = icmp ult i64 %4, 208
   br i1 %min.iters.check, label %.lr.ph90.preheader178, label %vector.memcheck
 
 .lr.ph90.preheader178:                            ; preds = %vector.memcheck, %.lr.ph90.preheader
   br label %.lr.ph90
 
 vector.memcheck:                                  ; preds = %.lr.ph90.preheader
-  %8 = add i64 %i.b, -16
-  %i.at = add i64 %.157110, 16
-  %umax = tail call i64 @llvm.umax.i64(i64 %8, i64 %i.at)
-  %9 = xor i64 %.157110, -1
-  %10 = add i64 %umax, %9
-  %i.au = and i64 %10, -16
+  %i.at = add i64 %i.b, -17
+  %5 = sub i64 %i.at, %.157110
+  %i.au = and i64 %5, -16
   %i.av = add i64 %i.au, 16                       ; 2 uses
   %scevgep = getelementptr i8, ptr %.157, i64 %i.av
   %scevgep111 = getelementptr i8, ptr %0, i64 %i.av
@@ -676,7 +664,7 @@ vector.memcheck:                                  ; preds = %.lr.ph90.preheader
   br i1 %found.conflict, label %.lr.ph90.preheader178, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %i.aw = and i64 %7, -16
+  %i.aw = and i64 %4, -16
   %i.ax = add i64 %i.aw, 16                       ; 2 uses
   %i.ay = getelementptr i8, ptr %0, i64 %i.ax
   %i.az = getelementptr i8, ptr %.157, i64 %i.ax

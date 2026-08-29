@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 8874
 inline.NumDeleted: 3985
 loop-unroll.NumCompletelyUnrolled: 24
-loop-unroll.NumRuntimeUnrolled: 94
-loop-unroll.NumUnrolled: 118
+loop-unroll.NumRuntimeUnrolled: 95
+loop-unroll.NumUnrolled: 119
 begin_hunk_0_@_RINvNtNtNtNtCscgRAwXFJnXP_4core5slice4sort8unstable9quicksort9quicksortTNtNtCs2mZqlW55729_12polars_utils7float164pf16dENCINvMB8_SB17_16sort_unstable_byNCNCINvNtNtNtCslFlrwjHoTci_14polars_compute7rolling8no_nulls8quantile31rolling_apply_weighted_quantileB18_FjjjETjjEEs_0s_0E0ECskY9G75ZWc4U_11polars_expr:bb.a
 
 bb.n:                                             ; preds = %bb.m, %.split.i.i.i.1.i.i, %bb.l, %bb.i
@@ -205,7 +205,7 @@ _RINvNtNtNtNtCscgRAwXFJnXP_4core5slice4sort6shared9smallsort18small_sort_general
 .lr.ph230:                                        ; preds = %.lr.ph, %bb.b
   %.sroa.026.0109229 = phi i32 [ %i.bx, %bb.b ], [ %3, %.lr.ph ]
   %.sroa.023.0110228 = phi ptr [ %.sroa.023.0.be, %bb.b ], [ %2, %.lr.ph ] ; 3 uses
-  %.sroa.15.0111227 = phi i64 [ %.sroa.15.0.be, %bb.b ], [ %1, %.lr.ph ] ; 13 uses
+  %.sroa.15.0111227 = phi i64 [ %.sroa.15.0.be, %bb.b ], [ %1, %.lr.ph ] ; 15 uses
   %.sroa.0.0112226 = phi ptr [ %.sroa.0.0.be, %bb.b ], [ %0, %.lr.ph ] ; 25 uses
   %i.bx = add nsw i32 %.sroa.026.0109229, -1, !dbg !61186 ; 3 uses
   %i.by = lshr i64 %.sroa.15.0111227, 3, !dbg !61187 ; 3 uses
@@ -608,7 +608,7 @@ bb.bm:                                            ; preds = %bb.bl
 bb.bn:                                            ; preds = %bb.bh, %bb.bk, %.split.i.i, %bb.bm
   tail call void @llvm.experimental.noalias.scope.decl(metadata !61492), !dbg !61495
   tail call void @_RNvMNtCscgRAwXFJnXP_4core5sliceSTNtNtCs2mZqlW55729_12polars_utils7float164pf16dE14swap_uncheckedCskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull align 8 %.sroa.0.0112226, i64 noundef range(i64 33, 576460752303423488) %.sroa.15.0111227, i64 noundef 0, i64 noundef range(i64 0, 576460752303423487) %.sroa.0.0.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @32), !dbg !61496
-  %i.fi = getelementptr inbounds nuw i8, ptr %.sroa.0.0112226, i64 16, !dbg !61500 ; 13 uses
+  %i.fi = getelementptr inbounds nuw i8, ptr %.sroa.0.0112226, i64 16, !dbg !61500 ; 16 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !61505), !dbg !61508
   tail call void @llvm.experimental.noalias.scope.decl(metadata !61511), !dbg !61508
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !61513, !noalias !61519
@@ -618,8 +618,8 @@ bb.bn:                                            ; preds = %bb.bh, %bb.bk, %.sp
   store i16 %i.fj, ptr %i.a, align 8, !dbg !61524, !noalias !61519
   store double %i.fl, ptr %i.e, align 8, !dbg !61524, !noalias !61519
   %i.fm = getelementptr [16 x i8], ptr %.sroa.0.0112226, i64 %.sroa.15.0111227, !dbg !61527 ; 4 uses
-  %i.fn = getelementptr i8, ptr %i.fm, i64 -16, !dbg !61527 ; 4 uses
-  %.sroa.13.046.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0112226, i64 32, !dbg !61533 ; 5 uses
+  %i.fn = getelementptr i8, ptr %i.fm, i64 -16, !dbg !61527 ; 3 uses
+  %.sroa.13.046.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0112226, i64 32, !dbg !61533 ; 6 uses
   %i.fo = icmp ult ptr %.sroa.13.046.i.i, %i.fn, !dbg !61534
   %.val2.i.pre.i.i48 = load i16, ptr %.sroa.0.0112226, align 8, !alias.scope !61536, !noalias !61505 ; 9 uses
   %i.fp = and i16 %.val2.i.pre.i.i48, 32767       ; 5 uses
@@ -627,23 +627,46 @@ bb.bn:                                            ; preds = %bb.bh, %bb.bk, %.sp
 
 .lr.ph.i.i69:                                     ; preds = %bb.bn
   %i.fq = icmp samesign ugt i16 %i.fp, 31744
-  br i1 %i.fq, label %.thread18.i.i.i.i15.us.i.i, label %.lr.ph.split.i.i
+  br i1 %i.fq, label %.thread18.i.i.i.i15.us.i.i.preheader, label %.lr.ph.split.i.i
 
-.thread18.i.i.i.i15.us.i.i:                       ; preds = %.lr.ph.i.i69, %.thread18.i.i.i.i15.us.i.i
-  %.sroa.13.049.us.i.i = phi ptr [ %.sroa.13.0.us.i.i73.a, %.thread18.i.i.i.i15.us.i.i ], [ %.sroa.13.046.i.i, %.lr.ph.i.i69 ] ; 2 uses
-  %.sroa.031.048.us.i.i = phi ptr [ %i.fs, %.thread18.i.i.i.i15.us.i.i ], [ %i.fi, %.lr.ph.i.i69 ] ; 3 uses
-  %.sroa.23.047.us.i.i.a = phi i64 [ %i.fu, %.thread18.i.i.i.i15.us.i.i ], [ 0, %.lr.ph.i.i69 ] ; 2 uses
-  %i.fr = getelementptr inbounds nuw [16 x i8], ptr %i.fi, i64 %.sroa.23.047.us.i.i.a, !dbg !61537 ; 3 uses
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.031.048.us.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.fr, i64 16, i1 false), !dbg !61543, !alias.scope !61523, !noalias !61547
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.fr, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.13.049.us.i.i, i64 16, i1 false), !dbg !61550, !alias.scope !61523, !noalias !61547
-  %i.fs = getelementptr inbounds nuw i8, ptr %.sroa.031.048.us.i.i, i64 32, !dbg !61553 ; 3 uses
-  %i.ft = getelementptr inbounds nuw i8, ptr %i.fr, i64 16, !dbg !61555 ; 2 uses
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.13.049.us.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.ft, i64 16, i1 false), !dbg !61558, !alias.scope !61523, !noalias !61560
+.thread18.i.i.i.i15.us.i.i.preheader:             ; preds = %.lr.ph.i.i69
+  %5 = shl i64 %.sroa.15.0111227, 4, !dbg !61534
+  %6 = add i64 %5, -64, !dbg !61534
+  %7 = lshr i64 %6, 5, !dbg !61534                ; 2 uses
+  %8 = add nuw nsw i64 %7, 1, !dbg !61534         ; 2 uses
+  %9 = icmp eq i64 %7, 0, !dbg !61534
+  br i1 %9, label %.thread18.i.i.i.i.us.i.i.preheader.a, label %.thread18.i.i.i.i15.us.i.i.preheader.new, !dbg !61534
+
+.thread18.i.i.i.i15.us.i.i.preheader.new:         ; preds = %.thread18.i.i.i.i15.us.i.i.preheader
+  %unroll_iter = and i64 %8, 1152921504606846974, !dbg !61534
+  br label %.thread18.i.i.i.i15.us.i.i, !dbg !61534
+
+.thread18.i.i.i.i15.us.i.i:                       ; preds = %.thread18.i.i.i.i15.us.i.i, %.thread18.i.i.i.i15.us.i.i.preheader.new
+  %.sroa.13.049.us.i.i = phi ptr [ %.sroa.13.046.i.i, %.thread18.i.i.i.i15.us.i.i.preheader.new ], [ %.sroa.13.0.us.i.i73.a, %.thread18.i.i.i.i15.us.i.i ] ; 2 uses
+  %.sroa.031.048.us.i.i = phi ptr [ %i.fi, %.thread18.i.i.i.i15.us.i.i.preheader.new ], [ %i.fs, %.thread18.i.i.i.i15.us.i.i ] ; 5 uses
+  %.sroa.23.047.us.i.i = phi i64 [ 0, %.thread18.i.i.i.i15.us.i.i.preheader.new ], [ %i.fu, %.thread18.i.i.i.i15.us.i.i ] ; 3 uses
+  %.sroa.23.047.us.i.i.a = phi i64 [ 0, %.thread18.i.i.i.i15.us.i.i.preheader.new ], [ %niter.next.1, %.thread18.i.i.i.i15.us.i.i ]
+  %10 = getelementptr inbounds nuw [16 x i8], ptr %i.fi, i64 %.sroa.23.047.us.i.i, !dbg !61537 ; 3 uses
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.031.048.us.i.i, ptr noundef nonnull align 8 dereferenceable(16) %10, i64 16, i1 false), !dbg !61543, !alias.scope !61523, !noalias !61547
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.13.049.us.i.i, i64 16, i1 false), !dbg !61550, !alias.scope !61523, !noalias !61547
+  %11 = getelementptr inbounds nuw i8, ptr %.sroa.031.048.us.i.i, i64 32, !dbg !61553 ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %10, i64 16, !dbg !61555 ; 2 uses
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.13.049.us.i.i, ptr noundef nonnull align 8 dereferenceable(16) %12, i64 16, i1 false), !dbg !61558, !alias.scope !61523, !noalias !61560
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %12, ptr noundef nonnull align 8 dereferenceable(16) %11, i64 16, i1 false), !dbg !61563, !alias.scope !61523, !noalias !61560
+  %.sroa.13.0.us.i.i73 = getelementptr inbounds nuw i8, ptr %.sroa.031.048.us.i.i, i64 48, !dbg !61533 ; 2 uses
+  %i.fr = getelementptr inbounds nuw [16 x i8], ptr %i.fi, i64 %.sroa.23.047.us.i.i, !dbg !61537 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %i.fr, i64 32, !dbg !61537 ; 2 uses
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %11, ptr noundef nonnull align 8 dereferenceable(16) %13, i64 16, i1 false), !dbg !61543, !alias.scope !61523, !noalias !61547
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %13, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.13.0.us.i.i73, i64 16, i1 false), !dbg !61550, !alias.scope !61523, !noalias !61547
+  %i.fs = getelementptr inbounds nuw i8, ptr %.sroa.031.048.us.i.i, i64 64, !dbg !61553 ; 4 uses
+  %i.ft = getelementptr inbounds nuw i8, ptr %i.fr, i64 48, !dbg !61555 ; 2 uses
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.13.0.us.i.i73, ptr noundef nonnull align 8 dereferenceable(16) %i.ft, i64 16, i1 false), !dbg !61558, !alias.scope !61523, !noalias !61560
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ft, ptr noundef nonnull align 8 dereferenceable(16) %i.fs, i64 16, i1 false), !dbg !61563, !alias.scope !61523, !noalias !61560
-  %i.fu = add nuw nsw i64 %.sroa.23.047.us.i.i.a, 2, !dbg !61565 ; 2 uses
-  %.sroa.13.0.us.i.i73.a = getelementptr inbounds nuw i8, ptr %.sroa.031.048.us.i.i, i64 48, !dbg !61533 ; 3 uses
-  %5 = icmp ult ptr %.sroa.13.0.us.i.i73.a, %i.fn, !dbg !61534
-  br i1 %5, label %.thread18.i.i.i.i15.us.i.i, label %.thread18.i.i.i.i.us.i.i.preheader.a, !dbg !61534
+  %i.fu = add nuw nsw i64 %.sroa.23.047.us.i.i, 4, !dbg !61565 ; 3 uses
+  %.sroa.13.0.us.i.i73.a = getelementptr inbounds nuw i8, ptr %.sroa.031.048.us.i.i, i64 80, !dbg !61533 ; 3 uses
+  %niter.next.1 = add i64 %.sroa.23.047.us.i.i.a, 2, !dbg !61534 ; 2 uses
+  %niter.ncmp.1.not = icmp eq i64 %niter.next.1, %unroll_iter, !dbg !61534
+  br i1 %niter.ncmp.1.not, label %.thread18.i.i.i.i.us.i.i.preheader.loopexit.unr-lcssa, label %.thread18.i.i.i.i15.us.i.i, !dbg !61534
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.i.i69
   %i.fv = icmp sgt i16 %.val2.i.pre.i.i48, -1
@@ -687,18 +710,40 @@ bb.bn:                                            ; preds = %bb.bh, %bb.bk, %.sp
   %.sroa.031.0.lcssa.i.i = phi ptr [ %i.fi, %bb.bn ], [ %i.hg, %_RNCINvNtNtNtNtCscgRAwXFJnXP_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicTNtNtCs2mZqlW55729_12polars_utils7float164pf16dENCINvB4_9quicksortB1z_NCINvMBa_SB1z_16sort_unstable_byNCNCINvNtNtNtCslFlrwjHoTci_14polars_compute7rolling8no_nulls8quantile31rolling_apply_weighted_quantileB1A_FjjjETjjEEs_0s_0E0E0E0CskY9G75ZWc4U_11polars_expr.exit30.i.i ], !dbg !61533 ; 3 uses
   %.sroa.13.0.lcssa.i.i51 = phi ptr [ %.sroa.13.046.i.i, %bb.bn ], [ %.sroa.13.0.i.i72, %_RNCINvNtNtNtNtCscgRAwXFJnXP_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicTNtNtCs2mZqlW55729_12polars_utils7float164pf16dENCINvB4_9quicksortB1z_NCINvMBa_SB1z_16sort_unstable_byNCNCINvNtNtNtCslFlrwjHoTci_14polars_compute7rolling8no_nulls8quantile31rolling_apply_weighted_quantileB1A_FjjjETjjEEs_0s_0E0E0E0CskY9G75ZWc4U_11polars_expr.exit30.i.i ], !dbg !61533 ; 3 uses
   %i.gi = icmp samesign ugt i16 %i.fp, 31744
-  br i1 %i.gi, label %.thread18.i.i.i.i.us.i.i.preheader.a, label %.preheader.split.i.i52
+  br i1 %i.gi, label %.thread18.i.i.i.i.us.i.i.preheader, label %.preheader.split.i.i52
 
-.thread18.i.i.i.i.us.i.i.preheader.a:             ; preds = %.thread18.i.i.i.i15.us.i.i, %.preheader.i.i49
-  %.sroa.23.1.us.i.i65.ph.a = phi i64 [ %.sroa.23.0.lcssa.i.i50, %.preheader.i.i49 ], [ %i.fu, %.thread18.i.i.i.i15.us.i.i ]
-  %.sroa.13.1.us.i.i66.ph = phi ptr [ %.sroa.13.0.lcssa.i.i51, %.preheader.i.i49 ], [ %.sroa.13.0.us.i.i73.a, %.thread18.i.i.i.i15.us.i.i ]
-  %.sroa.031.1.us.i.i.ph = phi ptr [ %.sroa.031.0.lcssa.i.i, %.preheader.i.i49 ], [ %i.fs, %.thread18.i.i.i.i15.us.i.i ]
+.thread18.i.i.i.i.us.i.i.preheader.loopexit.unr-lcssa: ; preds = %.thread18.i.i.i.i15.us.i.i
+  %14 = and i64 %.sroa.15.0111227, 2, !dbg !61534
+  %lcmp.mod.not.not = icmp eq i64 %14, 0, !dbg !61534
+  br i1 %lcmp.mod.not.not, label %.thread18.i.i.i.i.us.i.i.preheader.a, label %.thread18.i.i.i.i.us.i.i.preheader, !dbg !61534
+
+.thread18.i.i.i.i.us.i.i.preheader.a:             ; preds = %.thread18.i.i.i.i.us.i.i.preheader.loopexit.unr-lcssa, %.thread18.i.i.i.i15.us.i.i.preheader
+  %.sroa.13.049.us.i.i.epil.init = phi ptr [ %.sroa.13.046.i.i, %.thread18.i.i.i.i15.us.i.i.preheader ], [ %.sroa.13.0.us.i.i73.a, %.thread18.i.i.i.i.us.i.i.preheader.loopexit.unr-lcssa ] ; 2 uses
+  %.sroa.031.048.us.i.i.epil.init = phi ptr [ %i.fi, %.thread18.i.i.i.i15.us.i.i.preheader ], [ %i.fs, %.thread18.i.i.i.i.us.i.i.preheader.loopexit.unr-lcssa ] ; 3 uses
+  %.sroa.23.1.us.i.i65.ph.a = phi i64 [ 0, %.thread18.i.i.i.i15.us.i.i.preheader ], [ %i.fu, %.thread18.i.i.i.i.us.i.i.preheader.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod261 = trunc i64 %8 to i1, !dbg !61534
+  tail call void @llvm.assume(i1 %lcmp.mod261), !dbg !61534
+  %15 = getelementptr inbounds nuw [16 x i8], ptr %i.fi, i64 %.sroa.23.1.us.i.i65.ph.a, !dbg !61537 ; 3 uses
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.031.048.us.i.i.epil.init, ptr noundef nonnull align 8 dereferenceable(16) %15, i64 16, i1 false), !dbg !61543, !alias.scope !61523, !noalias !61547
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %15, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.13.049.us.i.i.epil.init, i64 16, i1 false), !dbg !61550, !alias.scope !61523, !noalias !61547
+  %16 = getelementptr inbounds nuw i8, ptr %.sroa.031.048.us.i.i.epil.init, i64 32, !dbg !61553 ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %15, i64 16, !dbg !61555 ; 2 uses
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.13.049.us.i.i.epil.init, ptr noundef nonnull align 8 dereferenceable(16) %17, i64 16, i1 false), !dbg !61558, !alias.scope !61523, !noalias !61560
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %17, ptr noundef nonnull align 8 dereferenceable(16) %16, i64 16, i1 false), !dbg !61563, !alias.scope !61523, !noalias !61560
+  %18 = add nuw nsw i64 %.sroa.23.1.us.i.i65.ph.a, 2, !dbg !61565
+  %.sroa.13.0.us.i.i73.epil = getelementptr inbounds nuw i8, ptr %.sroa.031.048.us.i.i.epil.init, i64 48, !dbg !61533
+  br label %.thread18.i.i.i.i.us.i.i.preheader, !dbg !61595
+
+.thread18.i.i.i.i.us.i.i.preheader:               ; preds = %.thread18.i.i.i.i.us.i.i.preheader.a, %.thread18.i.i.i.i.us.i.i.preheader.loopexit.unr-lcssa, %.preheader.i.i49
+  %.sroa.23.1.us.i.i65.ph = phi i64 [ %.sroa.23.0.lcssa.i.i50, %.preheader.i.i49 ], [ %i.fu, %.thread18.i.i.i.i.us.i.i.preheader.loopexit.unr-lcssa ], [ %18, %.thread18.i.i.i.i.us.i.i.preheader.a ]
+  %.sroa.13.1.us.i.i66.ph = phi ptr [ %.sroa.13.0.lcssa.i.i51, %.preheader.i.i49 ], [ %.sroa.13.0.us.i.i73.a, %.thread18.i.i.i.i.us.i.i.preheader.loopexit.unr-lcssa ], [ %.sroa.13.0.us.i.i73.epil, %.thread18.i.i.i.i.us.i.i.preheader.a ]
+  %.sroa.031.1.us.i.i.ph = phi ptr [ %.sroa.031.0.lcssa.i.i, %.preheader.i.i49 ], [ %i.fs, %.thread18.i.i.i.i.us.i.i.preheader.loopexit.unr-lcssa ], [ %16, %.thread18.i.i.i.i.us.i.i.preheader.a ]
   br label %.thread18.i.i.i.i.us.i.i, !dbg !61595
 
-.thread18.i.i.i.i.us.i.i:                         ; preds = %.thread18.i.i.i.i.us.i.i.preheader.a, %.thread18.i.i.i.i.us.i.i
-  %.sroa.23.1.us.i.i65 = phi i64 [ %i.gl, %.thread18.i.i.i.i.us.i.i ], [ %.sroa.23.1.us.i.i65.ph.a, %.thread18.i.i.i.i.us.i.i.preheader.a ], !dbg !61533 ; 2 uses
-  %.sroa.13.1.us.i.i66 = phi ptr [ %.sroa.13.1.sroa.gep.us.i.i68, %.thread18.i.i.i.i.us.i.i ], [ %.sroa.13.1.us.i.i66.ph, %.thread18.i.i.i.i.us.i.i.preheader.a ], !dbg !61533 ; 4 uses
-  %.sroa.031.1.us.i.i = phi ptr [ %.sroa.13.1.us.i.i66, %.thread18.i.i.i.i.us.i.i ], [ %.sroa.031.1.us.i.i.ph, %.thread18.i.i.i.i.us.i.i.preheader.a ], !dbg !61533
+.thread18.i.i.i.i.us.i.i:                         ; preds = %.thread18.i.i.i.i.us.i.i.preheader, %.thread18.i.i.i.i.us.i.i
+  %.sroa.23.1.us.i.i65 = phi i64 [ %i.gl, %.thread18.i.i.i.i.us.i.i ], [ %.sroa.23.1.us.i.i65.ph, %.thread18.i.i.i.i.us.i.i.preheader ], !dbg !61533 ; 2 uses
+  %.sroa.13.1.us.i.i66 = phi ptr [ %.sroa.13.1.sroa.gep.us.i.i68, %.thread18.i.i.i.i.us.i.i ], [ %.sroa.13.1.us.i.i66.ph, %.thread18.i.i.i.i.us.i.i.preheader ], !dbg !61533 ; 4 uses
+  %.sroa.031.1.us.i.i = phi ptr [ %.sroa.13.1.us.i.i66, %.thread18.i.i.i.i.us.i.i ], [ %.sroa.031.1.us.i.i.ph, %.thread18.i.i.i.i.us.i.i.preheader ], !dbg !61533
   %i.gj = icmp eq ptr %.sroa.13.1.us.i.i66, %i.fm, !dbg !61598 ; 2 uses
   %.sroa.01.0.us.i.i67 = select i1 %i.gj, ptr %i.a, ptr %.sroa.13.1.us.i.i66, !dbg !61599
   %i.gk = getelementptr inbounds nuw [16 x i8], ptr %i.fi, i64 %.sroa.23.1.us.i.i65, !dbg !61600 ; 2 uses

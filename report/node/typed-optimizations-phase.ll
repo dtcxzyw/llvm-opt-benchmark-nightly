@@ -205,14 +205,12 @@ _ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE14EnsureCapacityE
   br i1 %i.m, label %.lr.ph.preheader, label %.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft7OpIndexEE14EnsureCapacityEm.exit
-  %i.n = ptrtoaddr ptr %i.l to i64                ; 2 uses
+  %i.n = ptrtoaddr ptr %i.l to i64
   %i.o = ptrtoaddr ptr %i.i to i64
   %i.p = shl nuw nsw i64 %1, 2
-  %2 = add nuw i64 %i.p, %i.o
-  %i.q = add i64 %i.n, 4
-  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.q)
+  %i.q = add i64 %i.p, %i.o
   %i.r = xor i64 %i.n, -1
-  %i.s = add i64 %umax, %i.r
+  %i.s = add i64 %i.q, %i.r
   %i.t = and i64 %i.s, -4
   %i.u = add i64 %i.t, 4
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.l, i8 -1, i64 %i.u, i1 false)
@@ -317,14 +315,12 @@ _ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft10BlockIndexEE14EnsureCapac
   br i1 %i.m, label %.lr.ph.preheader, label %.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN2v88internal10ZoneVectorINS0_8compiler10turboshaft10BlockIndexEE14EnsureCapacityEm.exit
-  %i.n = ptrtoaddr ptr %i.l to i64                ; 2 uses
+  %i.n = ptrtoaddr ptr %i.l to i64
   %i.o = ptrtoaddr ptr %i.i to i64
   %i.p = shl nuw nsw i64 %1, 2
-  %2 = add nuw i64 %i.p, %i.o
-  %i.q = add i64 %i.n, 4
-  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.q)
+  %i.q = add i64 %i.p, %i.o
   %i.r = xor i64 %i.n, -1
-  %i.s = add i64 %umax, %i.r
+  %i.s = add i64 %i.q, %i.r
   %i.t = and i64 %i.s, -4
   %i.u = add i64 %i.t, 4
   tail call void @llvm.memset.p0.i64(ptr align 4 %i.l, i8 -1, i64 %i.u, i1 false)
@@ -727,14 +723,12 @@ _ZN2v88internal10ZoneVectorINS0_14SourcePositionEE14EnsureCapacityEm.exit: ; pre
   br i1 %i.m, label %.lr.ph.preheader, label %.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN2v88internal10ZoneVectorINS0_14SourcePositionEE14EnsureCapacityEm.exit
-  %i.n = ptrtoaddr ptr %i.l to i64                ; 2 uses
+  %i.n = ptrtoaddr ptr %i.l to i64
   %i.o = ptrtoaddr ptr %i.i to i64
   %i.p = shl nuw nsw i64 %1, 3
-  %2 = add nuw i64 %i.p, %i.o
-  %i.q = add i64 %i.n, 8
-  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.q)
+  %i.q = add i64 %i.p, %i.o
   %i.r = xor i64 %i.n, -1
-  %i.s = add i64 %umax, %i.r
+  %i.s = add i64 %i.q, %i.r
   %i.t = and i64 %i.s, -8
   %i.u = add i64 %i.t, 8
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.l, i8 0, i64 %i.u, i1 false)

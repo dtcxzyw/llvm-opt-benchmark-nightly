@@ -201,13 +201,11 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %i.cj, label %iter.check, label %bb.h
 
 iter.check:                                       ; preds = %.preheader
-  %.143.lcssa131 = ptrtoaddr ptr %.143.lcssa to i64 ; 3 uses
+  %.143.lcssa131 = ptrtoaddr ptr %.143.lcssa to i64 ; 2 uses
   %itemsetend.promoted130 = ptrtoaddr ptr %itemsetend.promoted to i64
   %i.ck = add i64 %.idx84, %i.a
-  %2 = add i64 %.143.lcssa131, 2
-  %umax133 = tail call i64 @llvm.umax.i64(i64 %i.ck, i64 %2)
   %i.cl = xor i64 %.143.lcssa131, -1
-  %i.cm = add i64 %umax133, %i.cl                 ; 3 uses
+  %i.cm = add i64 %i.ck, %i.cl                    ; 3 uses
   %i.cn = lshr i64 %i.cm, 1
   %i.co = add nuw i64 %i.cn, 1                    ; 5 uses
   %min.iters.check135.a = icmp ult i64 %i.cm, 6

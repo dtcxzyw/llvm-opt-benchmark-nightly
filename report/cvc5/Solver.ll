@@ -205,7 +205,8 @@ bb.g:                                             ; preds = %.lr.ph170, %_ZN4cvc
 .lr.ph163:                                        ; preds = %bb.g
   %i.by = xor i32 %i.bo, 1                        ; 3 uses
   %i.bz = ptrtoaddr ptr %i.bt to i64
-  %i.ca = add i64 %.idx, %i.bz
+  %2 = add i64 %.idx, %i.bz
+  %i.ca = add i64 %2, -9
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph163, %_ZN4cvc58internal7Minisat6Solver16uncheckedEnqueueENS1_3LitEj.exit
@@ -213,7 +214,7 @@ bb.h:                                             ; preds = %.lr.ph163, %_ZN4cvc
   %.068160 = phi ptr [ %i.bt, %.lr.ph163 ], [ %.472, %_ZN4cvc58internal7Minisat6Solver16uncheckedEnqueueENS1_3LitEj.exit ] ; 6 uses
   %.074159 = phi ptr [ %i.bt, %.lr.ph163 ], [ %.478, %_ZN4cvc58internal7Minisat6Solver16uncheckedEnqueueENS1_3LitEj.exit ] ; 8 uses
   %.074159215 = ptrtoaddr ptr %.074159 to i64
-  %.068160216 = ptrtoaddr ptr %.068160 to i64     ; 3 uses
+  %.068160216 = ptrtoaddr ptr %.068160 to i64     ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %.068160, i64 4
   %.sroa.031.0.copyload = load i32, ptr %i.cb, align 4, !tbaa !68 ; 3 uses
   %i.cc = ashr i32 %.sroa.031.0.copyload, 1
@@ -391,10 +392,7 @@ bb.t:                                             ; preds = %._crit_edge
   br i1 %i.fg, label %.lr.ph156.preheader, label %_ZN4cvc58internal7Minisat6Solver16uncheckedEnqueueENS1_3LitEj.exit
 
 .lr.ph156.preheader:                              ; preds = %bb.t
-  %2 = add i64 %.068160216, 16
-  %3 = call i64 @llvm.umax.i64(i64 %i.ca, i64 %2)
-  %4 = add i64 %3, -9
-  %i.fh = sub i64 %4, %.068160216                 ; 2 uses
+  %i.fh = sub i64 %i.ca, %.068160216              ; 2 uses
   %i.fi = lshr i64 %i.fh, 3
   %i.fj = add nuw nsw i64 %i.fi, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.fh, 24
