@@ -204,37 +204,40 @@ bb.bwn:                                           ; preds = %bb.bwk, %bb.bwl, %b
   %i.vpy = getelementptr [8 x i8], ptr %i.vpt, i64 %i.vpx
   %i.vpz = getelementptr i8, ptr %i.vpy, i64 80
   %i.vqa = call { i64, i64 } @_ZNK2v88internal8compiler27InstructionOperandConverter10ToConstantEPNS1_18InstructionOperandE(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef %i.vpz)
-  %i.vqb = extractvalue { i64, i64 } %i.vqa, 1
-  %69 = load ptr, ptr %i.hw, align 8              ; 2 uses
-  %70 = getelementptr inbounds nuw i8, ptr %69, i64 4
-  %71 = load i32, ptr %70, align 4
-  %72 = and i32 %71, 255
-  %73 = zext nneg i32 %72 to i64
-  %74 = getelementptr [8 x i8], ptr %69, i64 %73
-  %75 = getelementptr i8, ptr %74, i64 72
-  %76 = call { i64, i64 } @_ZNK2v88internal8compiler27InstructionOperandConverter10ToConstantEPNS1_18InstructionOperandE(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef %75)
-  %77 = extractvalue { i64, i64 } %76, 1
-  %78 = insertelement <2 x i64> poison, i64 %i.vqb, i64 0
-  %79 = insertelement <2 x i64> %78, i64 %77, i64 1 ; 5 uses
-  %80 = trunc <2 x i64> %79 to <2 x i32>          ; 4 uses
-  %81 = and <2 x i32> %80, splat (i32 240)
-  %82 = icmp eq <2 x i32> %81, zeroinitializer
-  %83 = and <2 x i64> %79, splat (i64 15)
-  %84 = select <2 x i1> %82, <2 x i64> splat (i64 128), <2 x i64> %83
-  %85 = and <2 x i32> %80, splat (i32 61440)
-  %86 = icmp eq <2 x i32> %85, zeroinitializer
-  %87 = and <2 x i64> %79, splat (i64 3840)
-  %88 = select <2 x i1> %86, <2 x i64> splat (i64 32768), <2 x i64> %87
-  %89 = or disjoint <2 x i64> %84, %88
-  %90 = and <2 x i32> %80, splat (i32 15728640)
-  %91 = icmp eq <2 x i32> %90, zeroinitializer
-  %92 = and <2 x i64> %79, splat (i64 983040)
-  %93 = select <2 x i1> %91, <2 x i64> splat (i64 8388608), <2 x i64> %92
-  %94 = or disjoint <2 x i64> %89, %93
-  %95 = icmp ult <2 x i32> %80, splat (i32 268435456)
-  %96 = and <2 x i64> %79, splat (i64 251658240)
-  %97 = select <2 x i1> %95, <2 x i64> splat (i64 2147483648), <2 x i64> %96
-  %98 = or disjoint <2 x i64> %94, %97            ; 2 uses
+  %i.vqb = extractvalue { i64, i64 } %i.vqa, 1    ; 2 uses
+  %69 = trunc i64 %i.vqb to i32
+  %70 = insertelement <4 x i32> poison, i32 %69, i64 0
+  %71 = shufflevector <4 x i32> %70, <4 x i32> poison, <4 x i32> zeroinitializer
+  %72 = and <4 x i32> %71, <i32 240, i32 61440, i32 15728640, i32 -1>
+  %73 = icmp ult <4 x i32> %72, <i32 1, i32 1, i32 1, i32 268435456>
+  %74 = trunc i64 %i.vqb to i32
+  %75 = insertelement <4 x i32> poison, i32 %74, i64 0
+  %76 = shufflevector <4 x i32> %75, <4 x i32> poison, <4 x i32> zeroinitializer
+  %77 = and <4 x i32> %76, <i32 15, i32 3840, i32 983040, i32 251658240>
+  %78 = select <4 x i1> %73, <4 x i32> <i32 128, i32 32768, i32 8388608, i32 -2147483648>, <4 x i32> %77
+  %79 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %78)
+  %80 = zext i32 %79 to i64
+  %.sroa.8.12.insert.shift = shl nuw i64 %80, 32
+  %81 = load ptr, ptr %i.hw, align 8              ; 2 uses
+  %82 = getelementptr inbounds nuw i8, ptr %81, i64 4
+  %83 = load i32, ptr %82, align 4
+  %84 = and i32 %83, 255
+  %85 = zext nneg i32 %84 to i64
+  %86 = getelementptr [8 x i8], ptr %81, i64 %85
+  %87 = getelementptr i8, ptr %86, i64 72
+  %88 = call { i64, i64 } @_ZNK2v88internal8compiler27InstructionOperandConverter10ToConstantEPNS1_18InstructionOperandE(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef %87)
+  %89 = extractvalue { i64, i64 } %88, 1          ; 2 uses
+  %90 = trunc i64 %89 to i32
+  %91 = insertelement <4 x i32> poison, i32 %90, i64 0
+  %92 = shufflevector <4 x i32> %91, <4 x i32> poison, <4 x i32> zeroinitializer
+  %93 = and <4 x i32> %92, <i32 240, i32 61440, i32 15728640, i32 -1>
+  %94 = icmp ult <4 x i32> %93, <i32 1, i32 1, i32 1, i32 268435456>
+  %95 = insertelement <4 x i64> poison, i64 %89, i64 0
+  %96 = shufflevector <4 x i64> %95, <4 x i64> poison, <4 x i32> zeroinitializer
+  %97 = and <4 x i64> %96, <i64 15, i64 3840, i64 983040, i64 251658240>
+  %98 = select <4 x i1> %94, <4 x i64> <i64 128, i64 32768, i64 8388608, i64 2147483648>, <4 x i64> %97
+  %99 = call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %98)
+  %op.rdx = or disjoint i64 %99, %.sroa.8.12.insert.shift
   %i.vqc = load ptr, ptr %i.hw, align 8           ; 2 uses
   %i.vqd = getelementptr inbounds nuw i8, ptr %i.vqc, i64 4
   %i.vqe = load i32, ptr %i.vqd, align 4
@@ -243,44 +246,41 @@ bb.bwn:                                           ; preds = %bb.bwk, %bb.bwl, %b
   %i.vqh = getelementptr [8 x i8], ptr %i.vqc, i64 %i.vqg
   %i.vqi = getelementptr i8, ptr %i.vqh, i64 64
   %i.vqj = call { i64, i64 } @_ZNK2v88internal8compiler27InstructionOperandConverter10ToConstantEPNS1_18InstructionOperandE(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef %i.vqi)
-  %i.vqk = extractvalue { i64, i64 } %i.vqj, 1
-  %99 = load ptr, ptr %i.hw, align 8              ; 2 uses
-  %100 = getelementptr inbounds nuw i8, ptr %99, i64 4
-  %101 = load i32, ptr %100, align 4
-  %102 = and i32 %101, 255
-  %103 = zext nneg i32 %102 to i64
-  %104 = getelementptr [8 x i8], ptr %99, i64 %103
-  %105 = getelementptr i8, ptr %104, i64 56
-  %106 = call { i64, i64 } @_ZNK2v88internal8compiler27InstructionOperandConverter10ToConstantEPNS1_18InstructionOperandE(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef %105)
-  %107 = extractvalue { i64, i64 } %106, 1
-  %108 = insertelement <2 x i64> poison, i64 %i.vqk, i64 0
-  %109 = insertelement <2 x i64> %108, i64 %107, i64 1 ; 5 uses
-  %110 = trunc <2 x i64> %109 to <2 x i32>        ; 4 uses
-  %111 = and <2 x i32> %110, splat (i32 240)
-  %112 = icmp eq <2 x i32> %111, zeroinitializer
-  %113 = and <2 x i64> %109, splat (i64 15)
-  %114 = select <2 x i1> %112, <2 x i64> splat (i64 128), <2 x i64> %113
-  %115 = and <2 x i32> %110, splat (i32 61440)
-  %116 = icmp eq <2 x i32> %115, zeroinitializer
-  %117 = and <2 x i64> %109, splat (i64 3840)
-  %118 = select <2 x i1> %116, <2 x i64> splat (i64 32768), <2 x i64> %117
-  %119 = or disjoint <2 x i64> %114, %118
-  %120 = and <2 x i32> %110, splat (i32 15728640)
-  %121 = icmp eq <2 x i32> %120, zeroinitializer
-  %122 = and <2 x i64> %109, splat (i64 983040)
-  %123 = select <2 x i1> %121, <2 x i64> splat (i64 8388608), <2 x i64> %122
-  %124 = or disjoint <2 x i64> %119, %123
-  %125 = icmp ult <2 x i32> %110, splat (i32 268435456)
-  %126 = and <2 x i64> %109, splat (i64 251658240)
-  %127 = select <2 x i1> %125, <2 x i64> splat (i64 2147483648), <2 x i64> %126
-  %128 = or disjoint <2 x i64> %124, %127         ; 2 uses
-  %129 = shufflevector <2 x i64> %98, <2 x i64> %128, <2 x i32> <i32 0, i32 2>
-  %130 = shl nuw <2 x i64> %129, splat (i64 32)
-  %131 = shufflevector <2 x i64> %98, <2 x i64> %128, <2 x i32> <i32 1, i32 3>
-  %132 = or disjoint <2 x i64> %130, %131         ; 2 uses
-  %133 = extractelement <2 x i64> %132, i64 0
-  %134 = extractelement <2 x i64> %132, i64 1
-  call void @_ZN2v88internal14MacroAssembler4MoveENS0_11XMMRegisterEmm(ptr noundef nonnull align 8 dereferenceable(436) %i.vnt, i8 %i.vjj, i64 noundef %133, i64 noundef %134) #18
+  %i.vqk = extractvalue { i64, i64 } %i.vqj, 1    ; 2 uses
+  %100 = trunc i64 %i.vqk to i32
+  %101 = insertelement <4 x i32> poison, i32 %100, i64 0
+  %102 = shufflevector <4 x i32> %101, <4 x i32> poison, <4 x i32> zeroinitializer
+  %103 = and <4 x i32> %102, <i32 240, i32 61440, i32 15728640, i32 -1>
+  %104 = icmp ult <4 x i32> %103, <i32 1, i32 1, i32 1, i32 268435456>
+  %105 = trunc i64 %i.vqk to i32
+  %106 = insertelement <4 x i32> poison, i32 %105, i64 0
+  %107 = shufflevector <4 x i32> %106, <4 x i32> poison, <4 x i32> zeroinitializer
+  %108 = and <4 x i32> %107, <i32 15, i32 3840, i32 983040, i32 251658240>
+  %109 = select <4 x i1> %104, <4 x i32> <i32 128, i32 32768, i32 8388608, i32 -2147483648>, <4 x i32> %108
+  %110 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %109)
+  %111 = zext i32 %110 to i64
+  %112 = load ptr, ptr %i.hw, align 8             ; 2 uses
+  %113 = getelementptr inbounds nuw i8, ptr %112, i64 4
+  %114 = load i32, ptr %113, align 4
+  %115 = and i32 %114, 255
+  %116 = zext nneg i32 %115 to i64
+  %117 = getelementptr [8 x i8], ptr %112, i64 %116
+  %118 = getelementptr i8, ptr %117, i64 56
+  %119 = call { i64, i64 } @_ZNK2v88internal8compiler27InstructionOperandConverter10ToConstantEPNS1_18InstructionOperandE(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef %118)
+  %120 = extractvalue { i64, i64 } %119, 1        ; 2 uses
+  %121 = trunc i64 %120 to i32
+  %122 = insertelement <4 x i32> poison, i32 %121, i64 0
+  %123 = shufflevector <4 x i32> %122, <4 x i32> poison, <4 x i32> zeroinitializer
+  %124 = and <4 x i32> %123, <i32 240, i32 61440, i32 15728640, i32 -1>
+  %125 = icmp ult <4 x i32> %124, <i32 1, i32 1, i32 1, i32 268435456>
+  %126 = insertelement <4 x i64> poison, i64 %120, i64 0
+  %127 = shufflevector <4 x i64> %126, <4 x i64> poison, <4 x i32> zeroinitializer
+  %128 = and <4 x i64> %127, <i64 15, i64 3840, i64 983040, i64 251658240>
+  %129 = select <4 x i1> %125, <4 x i64> <i64 128, i64 32768, i64 8388608, i64 2147483648>, <4 x i64> %128
+  %.sroa.0.sroa.6.0.insert.shift = shl nuw i64 %111, 32
+  %130 = call i64 @llvm.vector.reduce.or.v4i64(<4 x i64> %129)
+  %op.rdx9308 = or disjoint i64 %130, %.sroa.0.sroa.6.0.insert.shift
+  call void @_ZN2v88internal14MacroAssembler4MoveENS0_11XMMRegisterEmm(ptr noundef nonnull align 8 dereferenceable(436) %i.vnt, i8 %i.vjj, i64 noundef %op.rdx, i64 noundef %op.rdx9308) #18
   call void @_ZN2v88internal24SharedMacroAssemblerBase6PshufbINS0_11XMMRegisterEEEvS3_T_(ptr noundef nonnull align 8 dereferenceable(436) %i.vnt, i8 %i.viw, i8 %i.vjj)
   call void @_ZN2v88internal24SharedMacroAssemblerBase3PorINS0_11XMMRegisterES3_JEEEvT_T0_DpT1_(ptr noundef nonnull align 8 dereferenceable(436) %i.vnt, i8 %i.viw, i8 15)
   br label %bb.cld
@@ -681,6 +681,12 @@ declare i64 @llvm.umin.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.ctlz.i16(i16, i1 immarg) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.or.v4i64(<4 x i64>) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i16> @llvm.ctpop.v2i16(<2 x i16>) #17
