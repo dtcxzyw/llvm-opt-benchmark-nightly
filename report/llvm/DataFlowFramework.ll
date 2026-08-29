@@ -204,7 +204,7 @@ define dso_local void @_ZNK4mlir13LatticeAnchor5printERN4llvm11raw_ostreamE(ptr 
 bb.a:
   %2 = alloca %"class.mlir::Value", align 8       ; 5 uses
   %3 = alloca %"class.mlir::OpPrintingFlags", align 8 ; 4 uses
-  %.0.copyload.i.i = load i64, ptr %0, align 8    ; 3 uses
+  %.0.copyload.i.i = load i64, ptr %0, align 8    ; 4 uses
   %i.a = icmp ult i64 %.0.copyload.i.i, 8
   br i1 %i.a, label %bb.b, label %bb.e
 
@@ -233,11 +233,10 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.a
   %i.m = and i64 %.0.copyload.i.i, 6              ; 2 uses
   %.not12.a = icmp eq i64 %i.m, 0
-  %4 = and i64 %.0.copyload.i.i, -7               ; 2 uses
   br i1 %.not12.a, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.n = inttoptr i64 %4 to ptr                   ; 2 uses
+  %i.n = inttoptr i64 %.0.copyload.i.i to ptr     ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !8
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 24
   %i.q = load ptr, ptr %i.p, align 8
@@ -247,6 +246,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
   %i.r = icmp eq i64 %i.m, 4
+  %4 = and i64 %.0.copyload.i.i, -7
   %i.s = inttoptr i64 %4 to ptr                   ; 2 uses
   %.sroa.0.0.i.i.i = select i1 %i.r, ptr %i.s, ptr null ; 2 uses
   store ptr %.sroa.0.0.i.i.i, ptr %2, align 8

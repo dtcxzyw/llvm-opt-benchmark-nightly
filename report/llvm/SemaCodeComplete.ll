@@ -205,7 +205,7 @@ _ZNSt6vectorIN5clang9FixItHintESaIS1_EEaSEOS3_.exit: ; preds = %_ZSt8_DestroyIPN
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN12_GLOBAL__N_113ResultBuilder14ShadowMapEntry3AddEPKN5clang9NamedDeclEj(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(12) %0, ptr noundef %1, i32 noundef %2) unnamed_addr #0 align 2 {
 bb.a:
-  %.0.copyload.i.i = load i64, ptr %0, align 8    ; 3 uses
+  %.0.copyload.i.i = load i64, ptr %0, align 8    ; 4 uses
   %i.a = icmp ult i64 %.0.copyload.i.i, 8
   br i1 %i.a, label %bb.b, label %bb.c
 
@@ -219,11 +219,10 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.d = and i64 %.0.copyload.i.i, 4
   %.not = icmp eq i64 %i.d, 0
-  %3 = and i64 %.0.copyload.i.i, -5               ; 2 uses
   br i1 %.not, label %_ZN4llvm23SmallVectorTemplateBaseISt4pairIPKN5clang9NamedDeclEjELb1EE9push_backES6_.exit, label %bb.d
 
 _ZN4llvm23SmallVectorTemplateBaseISt4pairIPKN5clang9NamedDeclEjELb1EE9push_backES6_.exit: ; preds = %bb.c
-  %i.e = inttoptr i64 %3 to ptr
+  %i.e = inttoptr i64 %.0.copyload.i.i to ptr
   %i.f = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znwm(i64 noundef 80) #31 ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
   store ptr %i.g, ptr %i.f, align 8, !tbaa !33
@@ -236,14 +235,15 @@ _ZN4llvm23SmallVectorTemplateBaseISt4pairIPKN5clang9NamedDeclEjELb1EE9push_backE
   %.sroa.32.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   store i32 %i.k, ptr %.sroa.32.0..sroa_idx.i, align 8
   store i32 1, ptr %i.h, align 8, !tbaa !31
-  %i.l = ptrtoint ptr %i.f to i64                 ; 2 uses
-  %i.m = or i64 %i.l, 4
+  %i.l = ptrtoint ptr %i.f to i64
+  %i.m = or i64 %i.l, 4                           ; 2 uses
   store i64 %i.m, ptr %0, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN4llvm23SmallVectorTemplateBaseISt4pairIPKN5clang9NamedDeclEjELb1EE9push_backES6_.exit, %bb.c
-  %.pre-phi = phi i64 [ %i.l, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIPKN5clang9NamedDeclEjELb1EE9push_backES6_.exit ], [ %3, %bb.c ]
-  %i.n = inttoptr i64 %.pre-phi to ptr            ; 4 uses
+  %.pre-phi = phi i64 [ %i.m, %_ZN4llvm23SmallVectorTemplateBaseISt4pairIPKN5clang9NamedDeclEjELb1EE9push_backES6_.exit ], [ %.0.copyload.i.i, %bb.c ]
+  %3 = and i64 %.pre-phi, -5
+  %i.n = inttoptr i64 %3 to ptr                   ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 3 uses
   %i.p = load i32, ptr %i.o, align 8, !tbaa !31   ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 12
