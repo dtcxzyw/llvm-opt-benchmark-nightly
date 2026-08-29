@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %clear_selection.exi
   %i.bz = load i16, ptr %i.e, align 2
   %i.ca = load i32, ptr @fg_console, align 4
   %i.cb = tail call i32 @vt_do_kdgkbmode(i32 noundef %i.ca) #9
-  %i.cc = icmp eq i32 %i.cb, 3                    ; 9 uses
+  %i.cc = icmp eq i32 %i.cb, 3                    ; 10 uses
   switch i16 %i.bz, label %vc_selection.exit [
     i16 0, label %.loopexit.i.i
     i16 1, label %bb.k
@@ -605,15 +605,16 @@ bb.an:                                            ; preds = %clear_selection.exi
   %i.ij = sub i32 %.279.i.i, %i.ii
   %i.ik = sdiv i32 %i.ij, 2
   %i.il = add nsw i32 %i.ik, 1
-  %i.im = sext i32 %i.il to i64
+  %i.im = sext i32 %i.il to i64                   ; 2 uses
   %i.in = select i1 %i.cc, i64 4, i64 1
-  %i.io = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 -1073741823, 1073741825) %i.im, i64 range(i64 1, 5) %i.in) ; 2 uses
+  %i.io = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 -1073741823, 1073741825) %i.im, i64 range(i64 1, 5) %i.in)
   %i.ip = extractvalue { i64, i1 } %i.io, 1
   br i1 %i.ip, label %_kmalloc_array_noprof.exit.thread.i.i.i, label %_kmalloc_array_noprof.exit.i.i.i, !prof !11
 
 _kmalloc_array_noprof.exit.i.i.i:                 ; preds = %bb.an
-  %2 = extractvalue { i64, i1 } %i.io, 0
-  %i.iq = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 -4294967292, 4294967297) %2, i32 noundef 11456) #12 ; 7 uses
+  %2 = select i1 %i.cc, i64 2, i64 0
+  %3 = shl nuw nsw i64 %i.im, %2
+  %i.iq = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 -4294967292, 4294967297) %3, i32 noundef 11456) #12 ; 7 uses
   %.not.i115.i.i = icmp eq ptr %i.iq, null
   br i1 %.not.i115.i.i, label %_kmalloc_array_noprof.exit.thread.i.i.i, label %bb.ap
 

@@ -205,9 +205,6 @@ _ZN5folly6detail19to_ascii_with_tableILm10ENS_17to_ascii_alphabetILb0EEEEEvPcmm.
 
 declare void @_ZNK8facebook5velox10BaseVector8validateERKNS0_21VectorValidateOptionsE(ptr noundef nonnull align 8 dereferenceable(94), ptr noundef nonnull align 8 dereferenceable(40)) unnamed_addr #11
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #34
-
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN8facebook5velox13AlignedBufferD2Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %0) unnamed_addr #6 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
@@ -292,10 +289,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !1762 ; 2 uses
-  %4 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.e, i64 96) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  br i1 %5, label %bb.c, label %_ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit, !prof !63
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !1762 ; 3 uses
+  %4 = icmp ugt i64 %i.e, -97
+  br i1 %4, label %bb.c, label %_ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit, !prof !63
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
@@ -332,11 +328,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
   resume { ptr, i32 } %i.h
 
 _ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit: ; preds = %bb.b
-  %6 = extractvalue { i64, i1 } %4, 0
+  %5 = add nuw i64 %i.e, 96
   %i.n = load ptr, ptr %i.b, align 8, !tbaa !80
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 128
   %i.p = load ptr, ptr %i.o, align 8
-  %i.q = tail call noundef zeroext i1 %i.p(ptr noundef nonnull align 8 dereferenceable(264) %i.b, ptr noundef %1, ptr noundef nonnull %0, i64 noundef %6)
+  %i.q = tail call noundef zeroext i1 %i.p(ptr noundef nonnull align 8 dereferenceable(264) %i.b, ptr noundef %1, ptr noundef nonnull %0, i64 noundef %5)
   br i1 %i.q, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %_ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit
@@ -415,10 +411,9 @@ bb.a:
   %1 = alloca %"struct.fmt::v11::detail::format_arg_store.747", align 16 ; 6 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !1762 ; 2 uses
-  %3 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.b, i64 96) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 1
-  br i1 %4, label %bb.b, label %_ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit, !prof !63
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !1762 ; 3 uses
+  %3 = icmp ugt i64 %i.b, -97
+  br i1 %3, label %bb.b, label %_ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit, !prof !63
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
@@ -457,11 +452,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
 _ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit: ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !1576 ; 2 uses
-  %5 = extractvalue { i64, i1 } %3, 0
+  %4 = add nuw i64 %i.b, 96
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !80
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 120
   %i.o = load ptr, ptr %i.n, align 8
-  tail call void %i.o(ptr noundef nonnull align 8 dereferenceable(264) %i.l, ptr noundef nonnull %0, i64 noundef %5)
+  tail call void %i.o(ptr noundef nonnull align 8 dereferenceable(264) %i.l, ptr noundef nonnull %0, i64 noundef %4)
   ret void
 }
 
@@ -864,10 +859,9 @@ bb.a:
   br i1 %4, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = and i64 %1, -64                          ; 2 uses
-  %9 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.a, i64 160) ; 2 uses
-  %10 = extractvalue { i64, i1 } %9, 1
-  br i1 %10, label %bb.c, label %_ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit, !prof !63
+  %i.a = and i64 %1, -64                          ; 3 uses
+  %9 = icmp ugt i64 %i.a, -161
+  br i1 %9, label %bb.c, label %_ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit, !prof !63
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #30
@@ -908,13 +902,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
   br label %common.resume
 
 _ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit: ; preds = %bb.b
-  %11 = extractvalue { i64, i1 } %9, 0
+  %10 = add nuw i64 %i.a, 160
   br label %bb.j
 
 bb.f:                                             ; preds = %bb.a
-  %12 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %1, i64 96) ; 2 uses
-  %13 = extractvalue { i64, i1 } %12, 1
-  br i1 %13, label %bb.g, label %_ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit23, !prof !63
+  %11 = icmp ugt i64 %1, -97
+  br i1 %11, label %bb.g, label %_ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit23, !prof !63
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
@@ -951,15 +944,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i21: ; preds = %b
   br label %common.resume
 
 _ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit23: ; preds = %bb.f
-  %14 = extractvalue { i64, i1 } %12, 0
+  %12 = add nuw i64 %1, 96
   %i.r = load ptr, ptr %2, align 8, !tbaa !80
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 192
   %i.t = load ptr, ptr %i.s, align 8
-  %i.u = tail call noundef i64 %i.t(ptr noundef nonnull align 8 dereferenceable(264) %2, i64 noundef %14)
+  %i.u = tail call noundef i64 %i.t(ptr noundef nonnull align 8 dereferenceable(264) %2, i64 noundef %12)
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit23, %_ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit
-  %.0 = phi i64 [ %11, %_ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit ], [ %i.u, %_ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit23 ] ; 2 uses
+  %.0 = phi i64 [ %10, %_ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit ], [ %i.u, %_ZN8facebook5velox11checkedPlusImEET_S2_S2_PKc.exit23 ] ; 2 uses
   %i.v = load ptr, ptr %2, align 8, !tbaa !80
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 96
   %i.x = load ptr, ptr %i.w, align 8

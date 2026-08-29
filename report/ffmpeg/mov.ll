@@ -205,7 +205,7 @@ bb.a:
   %i.e = extractvalue { i64, i1 } %i.c, 0         ; 2 uses
   %i.f = icmp slt i64 %i.e, 0
   %i.g = select i1 %i.f, i64 9223372036854775807, i64 -9223372036854775808
-  %i.h = select i1 %i.d, i64 %i.g, i64 %i.e
+  %i.h = select i1 %i.d, i64 %i.g, i64 %i.e       ; 2 uses
   %i.i = tail call i32 @avio_r8(ptr noundef %1) #16
   %i.j = and i32 %i.i, 255                        ; 3 uses
   %i.k = icmp samesign ugt i32 %i.j, 1
@@ -284,10 +284,10 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %.0150 = phi i64 [ %i.ah, %bb.i ], [ %i.ak, %bb.j ]
-  %.0146 = phi i64 [ %i.aj, %bb.i ], [ %i.al, %bb.j ] ; 2 uses
-  %i.am = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.h, i64 %.0146) ; 2 uses
+  %.0146 = phi i64 [ %i.aj, %bb.i ], [ %i.al, %bb.j ] ; 3 uses
+  %i.am = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.h, i64 %.0146)
   %i.an = extractvalue { i64, i1 } %i.am, 1
-  %4 = extractvalue { i64, i1 } %i.am, 0
+  %4 = add nsw i64 %i.h, %.0146
   br i1 %i.an, label %.thread181, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -303,15 +303,15 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.u
-  %5 = extractvalue { i64, i1 } %i.bu, 0          ; 3 uses
+  %5 = add nsw i64 %.1151215, %i.bt               ; 3 uses
   %i.au = add nuw i32 %.1143216, 1                ; 2 uses
   %exitcond242.not = icmp eq i32 %i.au, %i.ap
   br i1 %exitcond242.not, label %bb.v, label %bb.n, !llvm.loop !488
 
 bb.n:                                             ; preds = %.preheader201, %bb.m
   %.1143216 = phi i32 [ 0, %.preheader201 ], [ %i.au, %bb.m ]
-  %.1151215 = phi i64 [ %.0150, %.preheader201 ], [ %5, %bb.m ] ; 2 uses
-  %.0153214 = phi i64 [ %4, %.preheader201 ], [ %6, %bb.m ] ; 2 uses
+  %.1151215 = phi i64 [ %.0150, %.preheader201 ], [ %5, %bb.m ] ; 3 uses
+  %.0153214 = phi i64 [ %4, %.preheader201 ], [ %6, %bb.m ] ; 3 uses
   %i.av = tail call i32 @avio_rb32(ptr noundef %1) #16 ; 2 uses
   %i.aw = tail call i32 @avio_rb32(ptr noundef %1) #16
   %.not173 = icmp sgt i32 %i.av, -1
@@ -368,15 +368,15 @@ get_frag_stream_info.exit:                        ; preds = %bb.t
   br label %get_frag_stream_info.exit.thread
 
 get_frag_stream_info.exit.thread:                 ; preds = %bb.s, %bb.r, %bb.p, %bb.q, %get_frag_stream_info.exit
-  %i.bq = zext nneg i32 %i.av to i64
-  %i.br = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %.0153214, i64 %i.bq) ; 2 uses
+  %i.bq = zext nneg i32 %i.av to i64              ; 2 uses
+  %i.br = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %.0153214, i64 %i.bq)
   %i.bs = extractvalue { i64, i1 } %i.br, 1
-  %6 = extractvalue { i64, i1 } %i.br, 0          ; 3 uses
+  %6 = add nsw i64 %.0153214, %i.bq               ; 3 uses
   br i1 %i.bs, label %.thread181, label %bb.u
 
 bb.u:                                             ; preds = %get_frag_stream_info.exit.thread
-  %i.bt = zext i32 %i.aw to i64
-  %i.bu = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %.1151215, i64 %i.bt) ; 2 uses
+  %i.bt = zext i32 %i.aw to i64                   ; 2 uses
+  %i.bu = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %.1151215, i64 %i.bt)
   %i.bv = extractvalue { i64, i1 } %i.bu, 1
   br i1 %i.bv, label %.thread181, label %bb.m
 
@@ -779,19 +779,16 @@ bb.d:                                             ; preds = %bb.a
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !9
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.l, i32 noundef 24, ptr noundef nonnull @.str.98) #16
   %i.m = add nuw nsw i64 %i.h, 2082844800
-  br label %bb.f
+  br label %bb.h
 
 bb.e:                                             ; preds = %bb.d, %bb.b
-  %.0 = phi i64 [ %i.b, %bb.b ], [ %i.h, %bb.d ]  ; 2 uses
+  %.0 = phi i64 [ %i.b, %bb.b ], [ %i.h, %bb.d ]  ; 3 uses
   %.not = icmp eq i64 %.0, 0
   br i1 %.not, label %bb.i, label %bb.f
 
-bb.f:                                             ; preds = %.thread, %bb.e
-  %.023 = phi i64 [ %i.m, %.thread ], [ %.0, %bb.e ]
-  %4 = add nsw i64 %.023, -2082844800
-  %mul = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %4, i64 1000000) ; 2 uses
-  %mul.ov = extractvalue { i64, i1 } %mul, 1
-  br i1 %mul.ov, label %bb.g, label %bb.h
+bb.f:                                             ; preds = %bb.e
+  %4 = icmp samesign ugt i64 %.0, 9225454881654
+  br i1 %4, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -799,8 +796,10 @@ bb.g:                                             ; preds = %bb.f
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.o, i32 noundef 48, ptr noundef nonnull @.str.99) #16
   br label %bb.i
 
-bb.h:                                             ; preds = %bb.f
-  %mul.val = extractvalue { i64, i1 } %mul, 0
+bb.h:                                             ; preds = %.thread, %bb.f
+  %.02327 = phi i64 [ %i.m, %.thread ], [ %.0, %bb.f ]
+  %5 = mul nuw i64 %.02327, 1000000
+  %mul.val = add i64 %5, -2082844800000000
   %i.p = tail call i32 @ff_dict_set_timestamp(ptr noundef %2, ptr noundef nonnull @.str.100, i64 noundef %mul.val) #16 ; 0 uses
   br label %bb.i
 
@@ -1202,9 +1201,6 @@ declare i32 @llvm.umax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.smul.with.overflow.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare ptr @strchr(ptr, i32) local_unnamed_addr #14

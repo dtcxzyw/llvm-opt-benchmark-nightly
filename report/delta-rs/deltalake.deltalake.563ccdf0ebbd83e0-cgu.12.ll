@@ -205,17 +205,13 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %bb.n
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bq, i64 8
-  %i.bv = load i64, ptr %i.bu, align 8, !noalias !763, !noundef !4
+  %i.bv = load i64, ptr %i.bu, align 8, !noalias !763, !noundef !4 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !763
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %i.u, ptr noundef nonnull align 8 dereferenceable(224) %i.x, i64 224, i1 false), !noalias !763
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !763
-  %2 = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %i.bv, i64 3600) ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 0             ; 2 uses
-  %4 = extractvalue { i64, i1 } %2, 1
-  %i.bw = add i64 %3, -9223372036854784
-  %or.cond.i = icmp ult i64 %i.bw, -18446744073709552
-  %or.cond185.i = or i1 %4, %or.cond.i
-  br i1 %or.cond185.i, label %bb.s, label %bb.r, !prof !764
+  %i.bw = add i64 %i.bv, -2562047788016
+  %or.cond.i = icmp ult i64 %i.bw, -5124095576031
+  br i1 %or.cond.i, label %bb.s, label %bb.r, !prof !764
 
 bb.q:                                             ; preds = %bb.u, %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !763
@@ -228,8 +224,9 @@ bb.q:                                             ; preds = %bb.u, %bb.n
           to label %bb.x unwind label %.thread159.i, !noalias !763
 
 bb.r:                                             ; preds = %bb.p
+  %2 = mul nsw i64 %i.bv, 3600
   %i.cb = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  store i64 %3, ptr %i.cb, align 8, !noalias !763
+  store i64 %2, ptr %i.cb, align 8, !noalias !763
   %i.cc = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   store i32 0, ptr %i.cc, align 8, !noalias !763
   br label %bb.s
@@ -632,13 +629,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 6 uses
   %gepdiff = add nsw i64 %.idx, -24
-  %i.f = udiv exact i64 %gepdiff, 24
-  %i.g = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %i.f) ; 2 uses
+  %i.f = udiv exact i64 %gepdiff, 24              ; 2 uses
+  %i.g = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %i.f)
   %i.h = extractvalue { i64, i1 } %i.g, 1
   br i1 %i.h, label %_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringENtNtNtNtBa_4iter6traits8iterator8Iterator8try_foldjNCINvNtNtB1s_8adapters3map12map_try_foldRBJ_jjINtNtBa_6option6OptionjENCNCINvNtBN_3str17join_generic_copyehBJ_E00NvMs9_NtBa_3numj11checked_addE0B2V_ECs7p2uQeJxui2_9deltalake.exit, label %.lr.ph, !prof !9
 
 .lr.ph:                                           ; preds = %bb.b
-  %5 = extractvalue { i64, i1 } %i.g, 0
+  %5 = mul nuw i64 %i.f, %4
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.d
@@ -1040,9 +1037,6 @@ declare hidden void @_RINvMs_NtNtCs14kWLkQVSKO_14deltalake_core10operations6upda
 
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvMNtCs14kWLkQVSKO_14deltalake_core10operationsNtNtB4_5table10DeltaTable6vacuum(ptr dead_on_unwind noalias noundef writable sret([224 x i8]) align 8 captures(address) dereferenceable(224), ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(120)) unnamed_addr #0
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.smul.with.overflow.i64(i64, i64) #30
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden { i64, i32 } @_RINvCshmPyUV8PP35_6chrono6expectNtNtB2_10time_delta9TimeDeltaECs7p2uQeJxui2_9deltalake(ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24), ptr noalias noundef nonnull readonly captures(address, read_provenance), i64 noundef) unnamed_addr #0

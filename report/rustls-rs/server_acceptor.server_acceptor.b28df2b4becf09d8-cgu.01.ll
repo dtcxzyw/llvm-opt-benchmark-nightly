@@ -202,10 +202,10 @@ bb.f:                                             ; preds = %_RNvMs2_NtCsf4CGCho
 bb.g:                                             ; preds = %bb.f
   %i.ak = udiv i64 %3, 86400
   %i.al = ashr i32 %.sroa.419.0.copyload, 10
-  %i.am = and i32 %.sroa.419.0.copyload, 511      ; 2 uses
-  %i.an = trunc nuw nsw i64 %i.ak to i32          ; 2 uses
-  %i.ao = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.am, i32 %i.an) ; 2 uses
-  %4 = extractvalue { i32, i1 } %i.ao, 0          ; 3 uses
+  %i.am = and i32 %.sroa.419.0.copyload, 511      ; 3 uses
+  %i.an = trunc nuw nsw i64 %i.ak to i32          ; 4 uses
+  %i.ao = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.am, i32 %i.an)
+  %4 = add nuw nsw i32 %i.am, %i.an               ; 2 uses
   %i.ap = extractvalue { i32, i1 } %i.ao, 1
   br i1 %i.ap, label %bb.j, label %bb.h, !prof !839
 
@@ -213,9 +213,8 @@ bb.h:                                             ; preds = %bb.g
   %i.aq = and i32 %.sroa.419.0.copyload, 512
   %.not.i.i = icmp eq i32 %i.aq, 0
   %..i.i = select i1 %.not.i.i, i32 365, i32 366
-  %5 = icmp sgt i32 %4, 0
-  %6 = icmp sle i32 %4, %..i.i
-  %or.cond.i.i = and i1 %5, %6
+  %5 = add nsw i32 %4, -1
+  %or.cond.i.i = icmp ult i32 %5, %..i.i
   br i1 %or.cond.i.i, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
@@ -234,19 +233,19 @@ bb.j:                                             ; preds = %bb.h, %bb.g
   %i.az = add nuw nsw i32 %i.am, -363521075
   %i.ba = add nsw i32 %i.az, %.neg.i.i
   %i.bb = add nsw i32 %i.ba, %i.ay
-  %i.bc = add nsw i32 %i.bb, %i.ax
-  %i.bd = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.bc, i32 %i.an) ; 2 uses
+  %i.bc = add nsw i32 %i.bb, %i.ax                ; 2 uses
+  %i.bd = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.bc, i32 %i.an)
   %i.be = extractvalue { i32, i1 } %i.bd, 1
   br i1 %i.be, label %_RNvMNtCsf4CGChoNMwa_4time4dateNtB2_4Date8next_day.exit.i.invoke, label %bb.k, !prof !839
 
 bb.k:                                             ; preds = %bb.j
-  %7 = extractvalue { i32, i1 } %i.bd, 0          ; 2 uses
-  %i.bf = add i32 %7, -5373485
+  %6 = add nsw i32 %i.bc, %i.an                   ; 2 uses
+  %i.bf = add nsw i32 %6, -5373485
   %or.cond.i.i.i = icmp ult i32 %i.bf, -7304484
   br i1 %or.cond.i.i.i, label %_RNvMNtCsf4CGChoNMwa_4time4dateNtB2_4Date8next_day.exit.i.invoke, label %bb.l, !prof !1216
 
 bb.l:                                             ; preds = %bb.k
-  %i.bg = add nsw i32 %7, 867409993               ; 2 uses
+  %i.bg = add nsw i32 %6, 867409993               ; 2 uses
   %i.bh = zext nneg i32 %i.bg to i64
   %i.bi = mul nuw nsw i64 %i.bh, 3853261555       ; 2 uses
   %i.bj = lshr i64 %i.bi, 15
@@ -289,10 +288,10 @@ bb.m:                                             ; preds = %_RNvMs2_NtCsf4CGCho
 bb.n:                                             ; preds = %bb.m
   %i.cn = udiv i64 %3, 86400
   %i.co = ashr i32 %.sroa.419.0.copyload, 10
-  %i.cp = and i32 %.sroa.419.0.copyload, 511      ; 2 uses
-  %i.cq = trunc nuw nsw i64 %i.cn to i32          ; 2 uses
-  %i.cr = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.cp, i32 %i.cq) ; 2 uses
-  %8 = extractvalue { i32, i1 } %i.cr, 0          ; 3 uses
+  %i.cp = and i32 %.sroa.419.0.copyload, 511      ; 3 uses
+  %i.cq = trunc nuw nsw i64 %i.cn to i32          ; 4 uses
+  %i.cr = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.cp, i32 %i.cq)
+  %7 = add nuw nsw i32 %i.cp, %i.cq               ; 2 uses
   %i.cs = extractvalue { i32, i1 } %i.cr, 1
   br i1 %i.cs, label %bb.q, label %bb.o, !prof !839
 
@@ -300,14 +299,13 @@ bb.o:                                             ; preds = %bb.n
   %i.ct = and i32 %.sroa.419.0.copyload, 512
   %.not.i15.i = icmp eq i32 %i.ct, 0
   %..i16.i = select i1 %.not.i15.i, i32 365, i32 366
-  %9 = icmp sgt i32 %8, 0
-  %10 = icmp sle i32 %8, %..i16.i
-  %or.cond.i17.i = and i1 %9, %10
+  %8 = add nsw i32 %7, -1
+  %or.cond.i17.i = icmp ult i32 %8, %..i16.i
   br i1 %or.cond.i17.i, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
   %i.cu = and i32 %.sroa.419.0.copyload, -512
-  %i.cv = or i32 %8, %i.cu
+  %i.cv = or i32 %7, %i.cu
   br label %_RNvMNtCsf4CGChoNMwa_4time4dateNtB2_4Date15checked_add_std.exit22.i
 
 bb.q:                                             ; preds = %bb.o, %bb.n
@@ -321,19 +319,19 @@ bb.q:                                             ; preds = %bb.o, %bb.n
   %i.dc = add nuw nsw i32 %i.cp, -363521075
   %i.dd = add nsw i32 %i.dc, %.neg.i18.i
   %i.de = add nsw i32 %i.dd, %i.db
-  %i.df = add nsw i32 %i.de, %i.da
-  %i.dg = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.df, i32 %i.cq) ; 2 uses
+  %i.df = add nsw i32 %i.de, %i.da                ; 2 uses
+  %i.dg = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.df, i32 %i.cq)
   %i.dh = extractvalue { i32, i1 } %i.dg, 1
   br i1 %i.dh, label %_RNvMNtCsf4CGChoNMwa_4time4dateNtB2_4Date8next_day.exit.i.invoke, label %bb.r, !prof !839
 
 bb.r:                                             ; preds = %bb.q
-  %11 = extractvalue { i32, i1 } %i.dg, 0         ; 2 uses
-  %i.di = add i32 %11, -5373485
+  %9 = add nsw i32 %i.df, %i.cq                   ; 2 uses
+  %i.di = add nsw i32 %9, -5373485
   %or.cond.i.i19.i = icmp ult i32 %i.di, -7304484
   br i1 %or.cond.i.i19.i, label %_RNvMNtCsf4CGChoNMwa_4time4dateNtB2_4Date8next_day.exit.i.invoke, label %bb.s, !prof !1216
 
 bb.s:                                             ; preds = %bb.r
-  %i.dj = add nsw i32 %11, 867409993              ; 2 uses
+  %i.dj = add nsw i32 %9, 867409993               ; 2 uses
   %i.dk = zext nneg i32 %i.dj to i64
   %i.dl = mul nuw nsw i64 %i.dk, 3853261555       ; 2 uses
   %i.dm = lshr i64 %i.dl, 15

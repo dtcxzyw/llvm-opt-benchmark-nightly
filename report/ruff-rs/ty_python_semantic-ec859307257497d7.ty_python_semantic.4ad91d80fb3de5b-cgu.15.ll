@@ -205,9 +205,8 @@ bb.j:                                             ; preds = %bb.c
   br label %bb.s
 
 bb.k:                                             ; preds = %bb.i
-  %7 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %6, i64 1) ; 2 uses
-  %8 = extractvalue { i64, i1 } %7, 1
-  br i1 %8, label %bb.r, label %bb.q, !prof !77
+  %7 = icmp eq i64 %6, 9223372036854775807
+  br i1 %7, label %bb.r, label %bb.q, !prof !77
 
 bb.l:                                             ; preds = %bb.i
   %i.n = icmp slt i64 %6, 1
@@ -233,8 +232,8 @@ bb.p:                                             ; preds = %bb.m
   br label %bb.s
 
 bb.q:                                             ; preds = %bb.k
-  %9 = extractvalue { i64, i1 } %7, 0
-  tail call void @_RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type11int_literal(ptr noalias noundef nonnull sret([16 x i8]) align 4 captures(none) dereferenceable(16) %0, i64 noundef %9)
+  %8 = add nsw i64 %6, 1
+  tail call void @_RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type11int_literal(ptr noalias noundef nonnull sret([16 x i8]) align 4 captures(none) dereferenceable(16) %0, i64 noundef %8)
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.k
@@ -636,9 +635,6 @@ declare i64 @llvm.ctlz.i64(i64, i1 immarg) #43
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type11int_literal(ptr dead_on_unwind noalias noundef writable sret([16 x i8]) align 4 captures(none) dereferenceable(16), i64 noundef) unnamed_addr #0
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.sadd.with.overflow.i64(i64, i64) #44
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef nonnull align 8 ptr @_RINvMs9_NvNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class15dynamic_literal1__NtB8_19DynamicClassLiteral6anchorDNtNtBe_2db2DbEL_EBe_(i32 noundef range(i32 1, 0), i32 noundef, ptr noundef nonnull, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272)) unnamed_addr #0

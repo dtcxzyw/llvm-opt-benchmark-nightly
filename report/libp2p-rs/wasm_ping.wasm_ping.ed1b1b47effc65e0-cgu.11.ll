@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %_RNvMsd_CsczYENlYh6
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc { i64, i64 } @_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecAINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBL_7sharded8RegistryEj10_E8try_growCskm6LeB9lWb4_9wasm_ping(ptr noalias nofree noundef nonnull align 8 dereferenceable(656) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 _RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecAINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBL_7sharded8RegistryEj10_E10triple_mutCskm6LeB9lWb4_9wasm_ping.exit:
-  %i.a = alloca [16 x i8], align 8                ; 4 uses
+  %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 648 ; 4 uses
   %i.c = load i64, ptr %i.b, align 8, !noundef !6 ; 6 uses
   %i.d = icmp ult i64 %i.c, 17                    ; 2 uses
@@ -236,17 +236,16 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.d, label %bb.l, label %bb.j
 
 bb.e:                                             ; preds = %bb.c
-  %i.k = mul i64 %1, 40                           ; 5 uses
-  %or.cond.not = icmp ugt i64 %1, 230584300921369395
-  br i1 %or.cond.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit, !prof !1457
+  %i.k = mul nuw nsw i64 %1, 40                   ; 4 uses
+  %or.cond = icmp ult i64 %1, 230584300921369396
+  br i1 %or.cond, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit, label %bb.l, !prof !1457
 
 _RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit: ; preds = %bb.e
   br i1 %i.d, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit
-  %2 = mul i64 %.sink.i, 40                       ; 2 uses
-  %or.cond65.not = icmp ugt i64 %i.c, 230584300921369395
-  br i1 %or.cond65.not, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit48, !prof !1457
+  %or.cond67 = icmp ult i64 %i.c, 230584300921369396
+  br i1 %or.cond67, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit48, label %bb.l, !prof !1457
 
 bb.g:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #26
@@ -255,6 +254,7 @@ bb.g:                                             ; preds = %_RINvCsczYENlYh6wI_
   br i1 %i.m, label %bb.l, label %bb.i
 
 _RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit48: ; preds = %bb.f
+  %2 = mul nuw nsw i64 %.sink.i, 40
   %i.n = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.sink12.i, i64 noundef %2, i64 noundef 8, i64 noundef %i.k) #26 ; 2 uses
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %bb.l, label %bb.h
@@ -278,24 +278,22 @@ bb.j:                                             ; preds = %bb.d
   %i.q = mul nuw nsw i64 %i.i, 40
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %.sink12.i, i64 %i.q, i1 false)
   store i64 %i.i, ptr %i.b, align 8
-  %3 = mul i64 %.sink.i, 40                       ; 2 uses
-  %or.cond.not.i = icmp ugt i64 %i.c, 230584300921369395
-  br i1 %or.cond.not.i, label %bb.k, label %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBE_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit, !prof !1457
+  %or.cond.i = icmp ult i64 %i.c, 230584300921369396
+  br i1 %or.cond.i, label %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBE_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit, label %bb.k, !prof !1457
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1458
   store i64 0, ptr %i.a, align 8, !noalias !1458
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 %3, ptr %4, align 8, !noalias !1458
   call void @_RNvNtCskKLDkoKarTP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @76, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @77, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #30, !noalias !1458
   unreachable
 
 _RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBE_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit: ; preds = %bb.j
+  %3 = mul nuw nsw i64 %.sink.i, 40
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.sink12.i, i64 noundef %3, i64 noundef 8) #26
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.f, %bb.e, %bb.d, %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit48, %bb.g, %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBE_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit, %bb.h, %bb.c
-  %.sroa.7.1 = phi i64 [ undef, %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBE_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit ], [ undef, %bb.c ], [ undef, %bb.h ], [ %i.k, %bb.g ], [ undef, %bb.d ], [ %i.k, %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit48 ], [ %2, %bb.f ], [ %i.k, %bb.e ]
+  %.sroa.7.1 = phi i64 [ undef, %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBE_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit ], [ undef, %bb.c ], [ undef, %bb.h ], [ %i.k, %bb.g ], [ undef, %bb.d ], [ %i.k, %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit48 ], [ undef, %bb.f ], [ undef, %bb.e ]
   %.sroa.0.1 = phi i64 [ -1, %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBE_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit ], [ -1, %bb.c ], [ -1, %bb.h ], [ 8, %bb.g ], [ -1, %bb.d ], [ 8, %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBG_7sharded8RegistryEECskm6LeB9lWb4_9wasm_ping.exit48 ], [ 0, %bb.f ], [ 0, %bb.e ]
   %i.r = insertvalue { i64, i64 } poison, i64 %.sroa.0.1, 0
   %i.s = insertvalue { i64, i64 } %i.r, i64 %.sroa.7.1, 1
@@ -698,7 +696,7 @@ begin_hunk_1_@llvm.umin.i64
 !1454 = distinct !{!1454, !1452, !"_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecAINtNtCshEYSjulKtIJ_18tracing_subscriber8registry7SpanRefNtNtBL_7sharded8RegistryEj10_E6tripleCskm6LeB9lWb4_9wasm_ping: argument 0"}
 !1455 = !{!"branch_weights", !"expected", i32 2146410, i32 2145337238}
 !1456 = !{!"branch_weights", i32 1, i32 4000, i32 1}
-!1457 = !{!"branch_weights", i32 2002, i32 2000}
+!1457 = !{!"branch_weights", i32 2000, i32 2002}
 !1458 = !{!1459}
 !1459 = distinct !{!1459, !1460, !"_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultNtNtNtB4_5alloc6layout6LayoutNtCsczYENlYh6wI_8smallvec18CollectionAllocErrE6unwrapCskm6LeB9lWb4_9wasm_ping: argument 0"}
 !1460 = distinct !{!1460, !"_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultNtNtNtB4_5alloc6layout6LayoutNtCsczYENlYh6wI_8smallvec18CollectionAllocErrE6unwrapCskm6LeB9lWb4_9wasm_ping"}

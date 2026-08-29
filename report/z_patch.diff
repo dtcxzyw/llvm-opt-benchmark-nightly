@@ -1,0 +1,39 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index b877f79a000cf..115dc15430b32 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -4622,6 +4622,34 @@ InstCombinerImpl::foldExtractOfOverflowIntrinsic(ExtractValueInst &EV) {
+     }
+   }
+ 
++  // If every use of the value component is only reachable when the operation
++  // did not overflow, the value is the exact mathematical result there, so a
++  // plain binop carrying the corresponding no-wrap flag is equivalent.
++  if (*EV.idx_begin() == 0 && !EV.use_empty()) {
++    for (User *U : WO->users()) {
++      if (!match(U, m_ExtractValue<1>(m_Value())))
++        continue;
++      for (User *BU : U->users()) {
++        auto *BI = dyn_cast<CondBrInst>(BU);
++        if (!BI || BI->getCondition() != U ||
++            BI->getSuccessor(0) == BI->getSuccessor(1))
++          continue;
++        // The overflow flag is false on the second successor's edge.
++        BasicBlockEdge NoOvfEdge(BI->getParent(), BI->getSuccessor(1));
++        if (!all_of(EV.uses(),
++                    [&](const Use &Use) { return DT.dominates(NoOvfEdge, Use); }))
++          continue;
++        auto *BO = BinaryOperator::Create(WO->getBinaryOp(), WO->getLHS(),
++                                          WO->getRHS());
++        if (WO->isSigned())
++          BO->setHasNoSignedWrap();
++        else
++          BO->setHasNoUnsignedWrap();
++        return BO;
++      }
++    }
++  }
++
+   // We're extracting from an overflow intrinsic. See if we're the only user.
+   // That allows us to simplify multiple result intrinsics to simpler things
+   // that just get one value.

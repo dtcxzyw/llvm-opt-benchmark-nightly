@@ -202,14 +202,13 @@ bb.c:                                             ; preds = %thread-pre-split.i.
 .preheader56.i.i.i.preheader:                     ; preds = %bb.c, %.preheader56.i.i.i
   %.sroa.0.1.i.i.i35 = phi ptr [ %i.i, %.preheader56.i.i.i ], [ %.sroa.0.0.i.i.i, %bb.c ] ; 2 uses
   %.sroa.15.1.i.i.i34 = phi i64 [ %i.j, %.preheader56.i.i.i ], [ %.sroa.15.0.i.i.i, %bb.c ]
-  %.sroa.042.0.i.i.i33 = phi i64 [ %i.r, %.preheader56.i.i.i ], [ 0, %bb.c ]
+  %.sroa.042.0.i.i.i33 = phi i64 [ %i.r, %.preheader56.i.i.i ], [ 0, %bb.c ] ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i35, i64 1
   %i.j = add i64 %.sroa.15.1.i.i.i34, -1          ; 2 uses
-  %2 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i.i33, i64 10) ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 0             ; 2 uses
-  %4 = extractvalue { i64, i1 } %2, 1
+  %2 = mul nuw i64 %.sroa.042.0.i.i.i33, 10       ; 2 uses
+  %3 = icmp ugt i64 %.sroa.042.0.i.i.i33, 1844674407370955161
   %i.k = load i8, ptr %.sroa.0.1.i.i.i35, align 1, !noalias !65 ; 2 uses
-  br i1 %4, label %bb.e, label %bb.d
+  br i1 %3, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.preheader56.i.i.i.preheader
   %i.l = zext i8 %i.k to i32
@@ -225,8 +224,8 @@ bb.e:                                             ; preds = %.preheader56.i.i.i.
 
 bb.f:                                             ; preds = %bb.d
   %i.q = zext nneg i32 %i.m to i64
-  %i.r = add i64 %3, %i.q                         ; 3 uses
-  %i.s = icmp ult i64 %i.r, %3
+  %i.r = add i64 %2, %i.q                         ; 3 uses
+  %i.s = icmp ult i64 %i.r, %2
   br i1 %i.s, label %.loopexit, label %.preheader56.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i, %bb.g
@@ -629,14 +628,11 @@ declare void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2(
 ; Function Attrs: nounwind nonlazybind allockind("alloc,uninitialized,aligned") allocsize(0) uwtable
 declare noalias ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64, i64 allocalign) unnamed_addr #18
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #19
-
 ; Function Attrs: inlinehint nonlazybind uwtable
 declare void @_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs1xwejQucwHj_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECsfr4kGEjnBfC_11proc_macro2(ptr sret([24 x i8]) align 8, ptr, i64, ptr align 8) unnamed_addr #0
 
 ; Function Attrs: cold minsize noreturn nonlazybind optsize uwtable
-declare void @_RNvNtCs1xwejQucwHj_5alloc5alloc18handle_alloc_error(i64, i64) unnamed_addr #20
+declare void @_RNvNtCs1xwejQucwHj_5alloc5alloc18handle_alloc_error(i64, i64) unnamed_addr #19
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden { ptr, ptr } @_RNvXs6_NtCscBrinq2mG3I_3syn10punctuatedQINtB5_10PunctuatedNtNtB7_3pat3PatNtNtB7_5token2OrENtNtNtNtCs3oUPovFnLWP_4core4iter6traits7collect12IntoIterator9into_iterCsaxs130FOtor_12tokio_macros(ptr align 8) unnamed_addr #1
@@ -723,7 +719,7 @@ declare void @_RNvNtCsaoeXog3N7id_5quote9___private9push_semi(ptr align 8) unnam
 declare i32 @_RNvXs2_Csfr4kGEjnBfC_11proc_macro2NtCsa5ERaWwhjCQ_10proc_macro11TokenStreamINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_11TokenStreamE4from(ptr align 8) unnamed_addr #1
 
 ; Function Attrs: cold noinline noreturn nounwind nonlazybind uwtable
-declare void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_nounwind_fmt(ptr, ptr, i1 zeroext, ptr align 8) unnamed_addr #21
+declare void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_nounwind_fmt(ptr, ptr, i1 zeroext, ptr align 8) unnamed_addr #20
 
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvXs1_NtCsaoeXog3N7id_5quote9to_tokensINtNtCs1xwejQucwHj_5alloc5boxed3BoxNtNtCscBrinq2mG3I_3syn2ty4TypeENtB5_8ToTokens9to_tokensB1e_(ptr align 8, ptr align 8) unnamed_addr #1
@@ -747,7 +743,7 @@ declare hidden void @_RNvXs4_NtNtCsa5ERaWwhjCQ_10proc_macro6bridge6clientNtB9_11
 declare i32 @_RNvNtCsaoeXog3N7id_5quote7spanned10join_spans(ptr align 8) unnamed_addr #1
 
 ; Function Attrs: nounwind nonlazybind allockind("free") uwtable
-declare void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr allocptr captures(address), i64, i64) unnamed_addr #22
+declare void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr allocptr captures(address), i64, i64) unnamed_addr #21
 
 ; Function Attrs: inlinehint nonlazybind uwtable
 declare hidden void @_RNvXNvNtCsa5ERaWwhjCQ_10proc_macro6bridges3_1__INtNtCs3oUPovFnLWP_4core6option6OptionReEINtNtB4_3rpc6EncodeuE6encodeCsaxs130FOtor_12tokio_macros(ptr, i64, ptr align 8, ptr) unnamed_addr #0
@@ -885,7 +881,7 @@ declare void @_RNvXNtCsaoeXog3N7id_5quote9to_tokensRNtNtCscBrinq2mG3I_3syn4attr9
 declare void @_RNvXNtCsaoeXog3N7id_5quote9to_tokensRNtNtCscBrinq2mG3I_3syn4expr4ExprNtB2_8ToTokens9to_tokensBD_(ptr align 8, ptr align 8) unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #19
+declare i64 @llvm.umax.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #13
@@ -903,7 +899,7 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #23
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #19
+declare i64 @llvm.usub.sat.i64(i64, i64) #22
 
 attributes #0 = { inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -924,10 +920,10 @@ attributes #15 = { cold minsize nonlazybind optsize uwtable "probe-stack"="inlin
 attributes #16 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #17 = { cold noinline noreturn nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #18 = { nounwind nonlazybind allockind("alloc,uninitialized,aligned") allocsize(0) uwtable "alloc-family"="__rust_alloc" "alloc-variant-zeroed"="_RNvCsjHpjAFo4bi0_7___rustc19___rust_alloc_zeroed" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #19 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #20 = { cold minsize noreturn nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #21 = { cold noinline noreturn nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #22 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #19 = { cold minsize noreturn nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #20 = { cold noinline noreturn nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #21 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #22 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #23 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #24 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #25 = { inlinehint }

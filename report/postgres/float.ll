@@ -202,7 +202,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i64 -2147483648, 2147483648) i64 @width_bucket_float8(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #4 {
+define dso_local range(i64 -2147483647, 2147483648) i64 @width_bucket_float8(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load double, ptr %i.a, align 8           ; 10 uses
@@ -213,7 +213,7 @@ bb.a:
   %.fr = freeze double %i.f                       ; 10 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.h = load i64, ptr %i.g, align 8
-  %i.i = trunc i64 %i.h to i32                    ; 7 uses
+  %i.i = trunc i64 %i.h to i32                    ; 9 uses
   %i.j = icmp slt i32 %i.i, 1
   br i1 %i.j, label %bb.b, label %bb.c
 
@@ -261,10 +261,9 @@ bb.h:                                             ; preds = %bb.g
   br i1 %or.cond63, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %1 = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 range(i32 1, -2147483648) %i.i, i32 1) ; 2 uses
-  %2 = extractvalue { i32, i1 } %1, 1
-  %3 = extractvalue { i32, i1 } %1, 0
-  br i1 %2, label %bb.j, label %bb.z
+  %1 = icmp eq i32 %i.i, 2147483647
+  %2 = add nuw nsw i32 %i.i, 1
+  br i1 %1, label %bb.j, label %bb.z
 
 bb.j:                                             ; preds = %bb.i
   %i.aa = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #18 ; 0 uses
@@ -322,10 +321,9 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.aw, label %bb.u, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %4 = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 range(i32 1, -2147483648) %i.i, i32 1) ; 2 uses
-  %5 = extractvalue { i32, i1 } %4, 1
-  %6 = extractvalue { i32, i1 } %4, 0
-  br i1 %5, label %bb.t, label %bb.z
+  %3 = icmp eq i32 %i.i, 2147483647
+  %4 = add nuw nsw i32 %i.i, 1
+  br i1 %3, label %bb.t, label %bb.z
 
 bb.t:                                             ; preds = %bb.s
   %i.ax = tail call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #18 ; 0 uses
@@ -372,15 +370,12 @@ bb.y:                                             ; preds = %bb.p
   unreachable
 
 bb.z:                                             ; preds = %bb.q, %bb.k, %bb.x, %bb.s, %bb.i, %bb.o
-  %.0 = phi i32 [ %6, %bb.s ], [ %i.as, %bb.o ], [ %3, %bb.i ], [ 0, %bb.k ], [ %i.bo, %bb.x ], [ 0, %bb.q ]
+  %.0 = phi i32 [ %4, %bb.s ], [ %i.as, %bb.o ], [ %2, %bb.i ], [ 0, %bb.k ], [ %i.bo, %bb.x ], [ 0, %bb.q ]
   %i.bs = sext i32 %.0 to i64
   ret i64 %i.bs
 }
 
 declare i32 @errmsg_internal(ptr noundef, ...) local_unnamed_addr #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.sadd.with.overflow.i32(i32, i32) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.rint.f32(float) #6

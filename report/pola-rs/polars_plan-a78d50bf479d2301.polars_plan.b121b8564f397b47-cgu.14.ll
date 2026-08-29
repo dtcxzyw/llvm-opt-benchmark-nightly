@@ -205,20 +205,19 @@ bb.e:                                             ; preds = %thread-pre-split.i.
 .preheader56.i.i.preheader:                       ; preds = %bb.e, %.preheader56.i.i
   %.sroa.0.1.i.i28 = phi ptr [ %i.m, %.preheader56.i.i ], [ %.sroa.0.0.i.i, %bb.e ] ; 2 uses
   %.sroa.15.1.i.i27 = phi i64 [ %i.n, %.preheader56.i.i ], [ %.sroa.15.0.i.i, %bb.e ]
-  %.sroa.042.0.i.i26 = phi i64 [ %i.t, %.preheader56.i.i ], [ 0, %bb.e ]
-  %2 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i26, i64 10), !dbg !116006 ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 1, !dbg !116006
-  br i1 %3, label %_RNvMsv_NtCscgRAwXFJnXP_4core3numj16from_ascii_radix.exit.i, label %bb.f, !dbg !116011, !prof !135
+  %.sroa.042.0.i.i26 = phi i64 [ %i.t, %.preheader56.i.i ], [ 0, %bb.e ] ; 2 uses
+  %2 = icmp ugt i64 %.sroa.042.0.i.i26, 1844674407370955161, !dbg !116006
+  br i1 %2, label %_RNvMsv_NtCscgRAwXFJnXP_4core3numj16from_ascii_radix.exit.i, label %bb.f, !dbg !116011, !prof !135
 
 bb.f:                                             ; preds = %.preheader56.i.i.preheader
-  %4 = extractvalue { i64, i1 } %2, 0, !dbg !116006 ; 2 uses
+  %3 = mul nuw i64 %.sroa.042.0.i.i26, 10, !dbg !116006 ; 2 uses
   %i.o = load i8, ptr %.sroa.0.1.i.i28, align 1, !dbg !116015, !alias.scope !115991, !noalias !115994, !noundef !11
   %i.p = zext i8 %i.o to i32, !dbg !116017
   %i.q = add nsw i32 %i.p, -48, !dbg !116018      ; 2 uses
   %i.r = icmp ugt i32 %i.q, 9, !dbg !116027
   %i.s = zext nneg i32 %i.q to i64
-  %i.t = add i64 %4, %i.s                         ; 3 uses
-  %i.u = icmp ult i64 %i.t, %4
+  %i.t = add i64 %3, %i.s                         ; 3 uses
+  %i.u = icmp ult i64 %i.t, %3
   %or.cond.i = select i1 %i.r, i1 true, i1 %i.u, !dbg !116029, !prof !116030
   br i1 %or.cond.i, label %_RNvMsv_NtCscgRAwXFJnXP_4core3numj16from_ascii_radix.exit.i, label %.preheader56.i.i, !dbg !116029, !prof !116030
 
@@ -620,9 +619,6 @@ declare noundef zeroext i1 @_RNvXsC_NtNtCscgRAwXFJnXP_4core3fmt3numyNtB7_8LowerH
 
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @_RNvXs2_NtNtNtCsfcROwRM8ZtH_11polars_plan5plans7visitor4exprNtB5_10AExprArenaNtNtCscgRAwXFJnXP_4core3cmp9PartialEq2eq(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16)) unnamed_addr #0
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #37
 
 ; Function Attrs: cold minsize noreturn nonlazybind optsize uwtable
 declare void @_RNvNtCsgZ49sUHp3tW_5alloc5alloc18handle_alloc_error(i64 noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #38

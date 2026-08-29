@@ -204,12 +204,12 @@ define void @_RNvCsaglNHct1YhZ_12fish_gettext23set_language_precedence(ptr noali
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   %i.b = alloca [24 x i8], align 8                ; 8 uses
-  %i.c = mul nuw i64 %1, 24                       ; 2 uses
+  %i.c = mul nuw i64 %1, 24                       ; 4 uses
   %or.cond.not.i.i.i = icmp samesign ugt i64 %1, 384307168202282325
   br i1 %or.cond.not.i.i.i, label %bb.c, label %bb.b, !prof !158
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = icmp eq i64 %1, 0
+  %i.d = icmp eq i64 %1, 0                        ; 2 uses
   br i1 %i.d, label %_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedINtB6_3VecTNtCslSwhfOFuxKz_17fish_localization8LanguageRINtNtCs5HGUHib7p01_3phf3map3MapReB2i_EEEINtB4_18SpecFromIterNestedB13_INtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtNtB34_5slice4iter4IterNtCsaglNHct1YhZ_12fish_gettext27GettextLocalizationLanguageENCNvB4c_23set_language_precedence0EE9from_iterB4c_.exit, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i: ; preds = %bb.b
@@ -219,8 +219,9 @@ _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Al
   br i1 %i.f, label %bb.c, label %.preheader.i.i.i
 
 bb.c:                                             ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i, %bb.a
+  %.sroa.10.0.ph.i.i = phi i64 [ %i.c, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i ], [ undef, %bb.a ]
   %.sroa.4.0.ph.i.i = phi i64 [ 8, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i ], [ 0, %bb.a ]
-  tail call void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i, i64 %i.c) #22, !noalias !164
+  tail call void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i, i64 %.sroa.10.0.ph.i.i) #22, !noalias !164
   unreachable
 
 .preheader.i.i.i:                                 ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i, %bb.e
@@ -268,15 +269,14 @@ bb.e:                                             ; preds = %.noexc.i.i.i.i.i.i
           cleanup
   br label %.body.i
 
-.body.i:                                          ; preds = %.loopexit.i.i.i.i.i.i, %.loopexit.split-lp.i.i.i.i.i.i
-  %lpad.phi.i.i.i.i.i.i = phi { ptr, i32 } [ %lpad.loopexit.i.i.i.i.i.i, %.loopexit.i.i.i.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i.i.i.i, %.loopexit.split-lp.i.i.i.i.i.i ]
-  %2 = mul nuw nsw i64 %1, 24
-  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.e, i64 noundef %2, i64 noundef range(i64 1, -9223372036854775807) 8) #25, !noalias !164
-  br label %common.resume
-
 common.resume:                                    ; preds = %.body, %bb.g, %.body.i
-  %common.resume.op = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %lpad.phi.i.i.i.i.i.i, %.body.i ], [ %eh.lpad-body, %bb.g ]
+  %common.resume.op = phi { ptr, i32 } [ %lpad.phi.i.i.i.i.i.i, %.body.i ], [ %eh.lpad-body, %bb.g ], [ %eh.lpad-body, %.body ]
   resume { ptr, i32 } %common.resume.op
+
+.body.i:                                          ; preds = %.loopexit.split-lp.i.i.i.i.i.i, %.loopexit.i.i.i.i.i.i
+  %lpad.phi.i.i.i.i.i.i = phi { ptr, i32 } [ %lpad.loopexit.i.i.i.i.i.i, %.loopexit.i.i.i.i.i.i ], [ %lpad.loopexit.split-lp.i.i.i.i.i.i, %.loopexit.split-lp.i.i.i.i.i.i ]
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.e, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #25, !noalias !164
+  br label %common.resume
 
 _RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedINtB6_3VecTNtCslSwhfOFuxKz_17fish_localization8LanguageRINtNtCs5HGUHib7p01_3phf3map3MapReB2i_EEEINtB4_18SpecFromIterNestedB13_INtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtNtB34_5slice4iter4IterNtCsaglNHct1YhZ_12fish_gettext27GettextLocalizationLanguageENCNvB4c_23set_language_precedence0EE9from_iterB4c_.exit: ; preds = %bb.e, %bb.b
   %i.r = phi ptr [ inttoptr (i64 8 to ptr), %bb.b ], [ %i.e, %bb.e ] ; 2 uses
@@ -291,12 +291,10 @@ bb.f:                                             ; preds = %_RNvXs_NtNtCs1xwejQ
 
 .body:                                            ; preds = %bb.j, %bb.f
   %eh.lpad-body = phi { ptr, i32 } [ %i.s, %bb.f ], [ %i.aa, %bb.j ] ; 2 uses
-  %3 = icmp eq i64 %1, 0
-  br i1 %3, label %common.resume, label %bb.g
+  br i1 %i.d, label %common.resume, label %bb.g
 
 bb.g:                                             ; preds = %.body
-  %4 = mul nuw nsw i64 %1, 24
-  call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.r, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) 8) #25
+  call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.r, i64 noundef %i.c, i64 noundef range(i64 1, -9223372036854775807) 8) #25
   br label %common.resume
 
 bb.h:                                             ; preds = %_RNvXs_NtNtCs1xwejQucwHj_5alloc3vec21spec_from_iter_nestedINtB6_3VecTNtCslSwhfOFuxKz_17fish_localization8LanguageRINtNtCs5HGUHib7p01_3phf3map3MapReB2i_EEEINtB4_18SpecFromIterNestedB13_INtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtNtB34_5slice4iter4IterNtCsaglNHct1YhZ_12fish_gettext27GettextLocalizationLanguageENCNvB4c_23set_language_precedence0EE9from_iterB4c_.exit

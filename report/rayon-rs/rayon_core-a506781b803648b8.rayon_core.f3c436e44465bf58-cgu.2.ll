@@ -204,20 +204,19 @@ bb.i:                                             ; preds = %thread-pre-split.i.
 .preheader56.i.i.preheader:                       ; preds = %bb.i, %.preheader56.i.i
   %.sroa.0.1.i.i124 = phi ptr [ %i.z, %.preheader56.i.i ], [ %.sroa.0.0.i.i, %bb.i ] ; 2 uses
   %.sroa.15.1.i.i123 = phi i64 [ %i.aa, %.preheader56.i.i ], [ %.sroa.15.0.i.i, %bb.i ]
-  %.sroa.042.0.i.i122 = phi i64 [ %i.ag, %.preheader56.i.i ], [ 0, %bb.i ]
-  %1 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i122, i64 10) ; 2 uses
-  %2 = extractvalue { i64, i1 } %1, 1
-  br i1 %2, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i, label %bb.j, !prof !11
+  %.sroa.042.0.i.i122 = phi i64 [ %i.ag, %.preheader56.i.i ], [ 0, %bb.i ] ; 2 uses
+  %1 = icmp ugt i64 %.sroa.042.0.i.i122, 1844674407370955161
+  br i1 %1, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i, label %bb.j, !prof !11
 
 bb.j:                                             ; preds = %.preheader56.i.i.preheader
-  %3 = extractvalue { i64, i1 } %1, 0             ; 2 uses
+  %2 = mul nuw i64 %.sroa.042.0.i.i122, 10        ; 2 uses
   %i.ab = load i8, ptr %.sroa.0.1.i.i124, align 1, !alias.scope !187, !noalias !190, !noundef !4
   %i.ac = zext i8 %i.ab to i32
   %i.ad = add nsw i32 %i.ac, -48                  ; 2 uses
   %i.ae = icmp ugt i32 %i.ad, 9
   %i.af = zext nneg i32 %i.ad to i64
-  %i.ag = add i64 %3, %i.af                       ; 3 uses
-  %i.ah = icmp ult i64 %i.ag, %3
+  %i.ag = add i64 %2, %i.af                       ; 3 uses
+  %i.ah = icmp ult i64 %i.ag, %2
   %or.cond.i = select i1 %i.ae, i1 true, i1 %i.ah, !prof !192
   br i1 %or.cond.i, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i, label %.preheader56.i.i, !prof !192
 
@@ -429,20 +428,19 @@ bb.ac:                                            ; preds = %thread-pre-split.i.
 .preheader56.i.i61.preheader:                     ; preds = %bb.ac, %.preheader56.i.i61
   %.sroa.0.1.i.i64127 = phi ptr [ %i.bw, %.preheader56.i.i61 ], [ %.sroa.0.0.i.i60, %bb.ac ] ; 2 uses
   %.sroa.15.1.i.i63126 = phi i64 [ %i.bx, %.preheader56.i.i61 ], [ %.sroa.15.0.i.i58, %bb.ac ]
-  %.sroa.042.0.i.i62125 = phi i64 [ %i.cd, %.preheader56.i.i61 ], [ 0, %bb.ac ]
-  %4 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i62125, i64 10) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  br i1 %5, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i46, label %bb.ad, !prof !11
+  %.sroa.042.0.i.i62125 = phi i64 [ %i.cd, %.preheader56.i.i61 ], [ 0, %bb.ac ] ; 2 uses
+  %3 = icmp ugt i64 %.sroa.042.0.i.i62125, 1844674407370955161
+  br i1 %3, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i46, label %bb.ad, !prof !11
 
 bb.ad:                                            ; preds = %.preheader56.i.i61.preheader
-  %6 = extractvalue { i64, i1 } %4, 0             ; 2 uses
+  %4 = mul nuw i64 %.sroa.042.0.i.i62125, 10      ; 2 uses
   %i.by = load i8, ptr %.sroa.0.1.i.i64127, align 1, !alias.scope !230, !noalias !233, !noundef !4
   %i.bz = zext i8 %i.by to i32
   %i.ca = add nsw i32 %i.bz, -48                  ; 2 uses
   %i.cb = icmp ugt i32 %i.ca, 9
   %i.cc = zext nneg i32 %i.ca to i64
-  %i.cd = add i64 %6, %i.cc                       ; 3 uses
-  %i.ce = icmp ult i64 %i.cd, %6
+  %i.cd = add i64 %4, %i.cc                       ; 3 uses
+  %i.ce = icmp ult i64 %i.cd, %4
   %or.cond.i66 = select i1 %i.cb, i1 true, i1 %i.ce, !prof !192
   br i1 %or.cond.i66, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i46, label %.preheader56.i.i61, !prof !192
 
@@ -822,8 +820,8 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: cold nounwind nonlazybind uwtable
 define internal fastcc void @_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner11finish_growCskVyUMSjkkSy_10rayon_core(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, i64 %.0.val, ptr %.8.val, i64 noundef %1, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 1, 0) %3) unnamed_addr #8 {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 %1) ; 2 uses
-  %4 = extractvalue { i64, i1 } %i.a, 0           ; 7 uses
+  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 %1)
+  %4 = mul nuw i64 %3, %1                         ; 5 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
   %i.c = sub nuw i64 -9223372036854775808, %2
   %.not = icmp ugt i64 %4, %i.c
@@ -835,15 +833,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %i.e = mul nuw i64 %3, %.0.val                  ; 2 uses
+  %i.e = mul nuw i64 %3, %.0.val
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.f = icmp uge i64 %4, %i.e
+  %i.f = icmp uge i64 %1, %.0.val
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %i.e, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 0, -9223372036854775808) %4) #34
   br label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = icmp eq i64 %4, 0
+  %i.h = icmp eq i64 %1, 0
   br i1 %i.h, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.thread, label %bb.d
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.thread: ; preds = %bb.c
@@ -884,8 +882,8 @@ bb.g:                                             ; preds = %bb.a, %bb.e, %bb.f
 ; Function Attrs: nounwind nonlazybind uwtable
 define hidden void @_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskVyUMSjkkSy_10rayon_core(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 16)) %0, i64 noundef %1, i1 noundef zeroext %2, i64 noundef range(i64 1, -9223372036854775807) %3, i64 noundef %4) unnamed_addr #6 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %1) ; 2 uses
-  %5 = extractvalue { i64, i1 } %i.a, 0           ; 5 uses
+  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %1)
+  %5 = mul nuw i64 %4, %1                         ; 5 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
   %i.c = sub nuw i64 -9223372036854775808, %3
   %.not = icmp ugt i64 %5, %i.c

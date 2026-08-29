@@ -205,13 +205,12 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = fmul double %0, f0x43F0000000000000
   %i.g = tail call { double, i32 } @_RNvNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp5frexp(double noundef %i.f) ; 2 uses
-  %i.h = extractvalue { double, i32 } %i.g, 1
-  %1 = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.h, i32 -64) ; 2 uses
-  %2 = extractvalue { i32, i1 } %1, 1
-  br i1 %2, label %bb.e, label %bb.d
+  %i.h = extractvalue { double, i32 } %i.g, 1     ; 2 uses
+  %1 = icmp slt i32 %i.h, -2147483584
+  br i1 %1, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %3 = extractvalue { i32, i1 } %1, 0
+  %2 = add nsw i32 %i.h, -64
   %i.i = extractvalue { double, i32 } %i.g, 0
   br label %bb.f
 
@@ -220,7 +219,7 @@ bb.e:                                             ; preds = %bb.c
   unreachable
 
 bb.f:                                             ; preds = %bb.a, %bb.b, %bb.g, %bb.d
-  %.sroa.5.0 = phi i32 [ %i.l, %bb.g ], [ 0, %bb.b ], [ %3, %bb.d ], [ 0, %bb.a ]
+  %.sroa.5.0 = phi i32 [ %i.l, %bb.g ], [ 0, %bb.b ], [ %2, %bb.d ], [ 0, %bb.a ]
   %.sroa.0.0 = phi double [ %i.o, %bb.g ], [ %0, %bb.b ], [ %i.i, %bb.d ], [ %0, %bb.a ]
   %i.j = insertvalue { double, i32 } poison, double %.sroa.0.0, 0
   %i.k = insertvalue { double, i32 } %i.j, i32 %.sroa.5.0, 1
@@ -623,14 +622,11 @@ declare noundef zeroext i1 @_RNvXsw_NtNtCs3oUPovFnLWP_4core3fmt3nummNtB7_8UpperH
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @_RNvXsu_NtNtCs3oUPovFnLWP_4core3fmt3nummNtB7_8LowerHex3fmt(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(4), ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #1
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.sadd.with.overflow.i32(i32, i32) #15
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #16
+declare void @llvm.experimental.noalias.scope.decl(metadata) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.ctpop.i32(i32) #15
+declare i32 @llvm.ctpop.i32(i32) #16
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -647,8 +643,8 @@ attributes #11 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "targ
 attributes #12 = { cold minsize noinline noreturn nounwind nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #13 = { cold nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #14 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #15 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #16 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #15 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #16 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #17 = { noinline }
 attributes #18 = { noinline noreturn }
 attributes #19 = { cold noreturn nounwind }

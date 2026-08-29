@@ -202,20 +202,19 @@ bb.k:                                             ; preds = %thread-pre-split.i.
 .preheader56.i.i.i.preheader:                     ; preds = %bb.k, %.preheader56.i.i.i
   %.sroa.0.1.i.i.i89 = phi ptr [ %i.af, %.preheader56.i.i.i ], [ %.sroa.0.0.i.i.i, %bb.k ] ; 2 uses
   %.sroa.15.1.i.i.i88 = phi i64 [ %i.ag, %.preheader56.i.i.i ], [ %.sroa.15.0.i.i.i, %bb.k ]
-  %.sroa.042.0.i.i.i87 = phi i64 [ %i.am, %.preheader56.i.i.i ], [ 0, %bb.k ]
-  %7 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i.i87, i64 10) ; 2 uses
-  %8 = extractvalue { i64, i1 } %7, 1
-  br i1 %8, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i, label %bb.l, !prof !149
+  %.sroa.042.0.i.i.i87 = phi i64 [ %i.am, %.preheader56.i.i.i ], [ 0, %bb.k ] ; 2 uses
+  %7 = icmp ugt i64 %.sroa.042.0.i.i.i87, 1844674407370955161
+  br i1 %7, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i, label %bb.l, !prof !149
 
 bb.l:                                             ; preds = %.preheader56.i.i.i.preheader
-  %9 = extractvalue { i64, i1 } %7, 0             ; 2 uses
+  %8 = mul nuw i64 %.sroa.042.0.i.i.i87, 10       ; 2 uses
   %i.ah = load i8, ptr %.sroa.0.1.i.i.i89, align 1, !alias.scope !606, !noalias !609, !noundef !8
   %i.ai = zext i8 %i.ah to i32
   %i.aj = add nsw i32 %i.ai, -48                  ; 2 uses
   %i.ak = icmp ugt i32 %i.aj, 9
   %i.al = zext nneg i32 %i.aj to i64
-  %i.am = add i64 %9, %i.al                       ; 3 uses
-  %i.an = icmp ult i64 %i.am, %9
+  %i.am = add i64 %8, %i.al                       ; 3 uses
+  %i.an = icmp ult i64 %i.am, %8
   %or.cond.i.i = select i1 %i.ak, i1 true, i1 %i.an, !prof !611
   br i1 %or.cond.i.i, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i, label %.preheader56.i.i.i, !prof !611
 
@@ -618,14 +617,13 @@ bb.e:                                             ; preds = %thread-pre-split.i,
 .preheader56.i.preheader:                         ; preds = %bb.e, %.preheader56.i
   %.sroa.0.1.i56 = phi ptr [ %i.t, %.preheader56.i ], [ %.sroa.0.0.i, %bb.e ] ; 2 uses
   %.sroa.15.1.i55 = phi i64 [ %i.u, %.preheader56.i ], [ %.sroa.15.0.i, %bb.e ]
-  %.sroa.042.0.i54 = phi i64 [ %i.ac, %.preheader56.i ], [ 0, %bb.e ]
+  %.sroa.042.0.i54 = phi i64 [ %i.ac, %.preheader56.i ], [ 0, %bb.e ] ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i56, i64 1
   %i.u = add nsw i64 %.sroa.15.1.i55, -1          ; 2 uses
-  %0 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i54, i64 10) ; 2 uses
-  %1 = extractvalue { i64, i1 } %0, 0             ; 2 uses
-  %2 = extractvalue { i64, i1 } %0, 1
+  %0 = mul nuw i64 %.sroa.042.0.i54, 10           ; 2 uses
+  %1 = icmp ugt i64 %.sroa.042.0.i54, 1844674407370955161
   %i.v = load i8, ptr %.sroa.0.1.i56, align 1, !alias.scope !988, !noalias !991, !noundef !8 ; 2 uses
-  br i1 %2, label %bb.g, label %bb.f, !prof !149
+  br i1 %1, label %bb.g, label %bb.f, !prof !149
 
 bb.f:                                             ; preds = %.preheader56.i.preheader
   %i.w = zext i8 %i.v to i32
@@ -641,8 +639,8 @@ bb.g:                                             ; preds = %.preheader56.i.preh
 
 bb.h:                                             ; preds = %bb.f
   %i.ab = zext nneg i32 %i.x to i64
-  %i.ac = add i64 %1, %i.ab                       ; 3 uses
-  %i.ad = icmp ult i64 %i.ac, %1
+  %i.ac = add i64 %0, %i.ab                       ; 3 uses
+  %i.ad = icmp ult i64 %i.ac, %0
   br i1 %i.ad, label %.loopexit, label %.preheader56.i, !prof !149
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.i
@@ -1044,9 +1042,6 @@ declare hidden noundef nonnull ptr @_RINvNtNtNtCslghKHtsL3a4_5tokio7runtime8bloc
 
 ; Function Attrs: noinline nonlazybind uwtable
 declare void @_RNvMs4_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecINtNtB7_4sync3ArcNtNtNtNtCslghKHtsL3a4_5tokio7runtime2io12scheduled_io11ScheduledIoEE8grow_oneB1b_(ptr noalias nofree noundef align 8 dereferenceable(16)) unnamed_addr #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #15
 
 ; Function Attrs: cold minsize noreturn nonlazybind optsize uwtable
 declare void @_RNvNtCs1xwejQucwHj_5alloc5alloc18handle_alloc_error(i64 noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #21

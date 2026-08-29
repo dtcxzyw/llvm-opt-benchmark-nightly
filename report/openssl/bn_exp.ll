@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.0131 = phi i64 [ %i.i, %bb.g ], [ %1, %bb.f ] ; 7 uses
+  %.0131 = phi i64 [ %i.i, %bb.g ], [ %1, %bb.f ] ; 8 uses
   %i.j = tail call i32 @BN_num_bits(ptr noundef %2) #7 ; 3 uses
   %i.k = icmp eq i32 %i.j, 0
   br i1 %i.k, label %bb.i, label %bb.l
@@ -264,11 +264,10 @@ bb.r:                                             ; preds = %bb.o, %bb.q
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.af
   %.0204 = phi ptr [ %.5, %bb.af ], [ %i.p, %.lr.ph.preheader ] ; 5 uses
   %.0108203 = phi ptr [ %.5113, %bb.af ], [ %i.o, %.lr.ph.preheader ] ; 9 uses
-  %.0116202 = phi i64 [ %.1117, %bb.af ], [ %.0131, %.lr.ph.preheader ] ; 4 uses
+  %.0116202 = phi i64 [ %.1117, %bb.af ], [ %.0131, %.lr.ph.preheader ] ; 5 uses
   %.0118201 = phi i32 [ %.5123, %bb.af ], [ 1, %.lr.ph.preheader ] ; 2 uses
   %.0127200 = phi i32 [ %i.ag, %bb.af ], [ %i.v, %.lr.ph.preheader ] ; 3 uses
-  %mul = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.0116202, i64 %.0116202) ; 2 uses
-  %mul.ov = extractvalue { i64, i1 } %mul, 1
+  %mul.ov = icmp ugt i64 %.0116202, 4294967295
   br i1 %mul.ov, label %bb.s, label %bb.x
 
 bb.s:                                             ; preds = %.lr.ph
@@ -296,7 +295,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %.not153, label %.loopexit, label %.thread
 
 bb.x:                                             ; preds = %.lr.ph
-  %mul.val = extractvalue { i64, i1 } %mul, 0     ; 2 uses
+  %mul.val = mul nuw i64 %.0116202, %.0116202     ; 2 uses
   %.not156 = icmp eq i32 %.0118201, 0
   br i1 %.not156, label %.thread, label %bb.y
 
@@ -312,15 +311,15 @@ bb.y:                                             ; preds = %.thread, %bb.x
   %.not156181 = phi i1 [ true, %.thread ], [ false, %bb.x ]
   %.2179 = phi ptr [ %.2180, %.thread ], [ %.0204, %bb.x ] ; 5 uses
   %.2110177 = phi ptr [ %.2110178, %.thread ], [ %.0108203, %bb.x ] ; 9 uses
-  %.0114175 = phi i64 [ %.0114176, %.thread ], [ %mul.val, %bb.x ] ; 4 uses
+  %.0114175 = phi i64 [ %.0114176, %.thread ], [ %mul.val, %bb.x ] ; 5 uses
   %.2120173 = phi i32 [ 0, %.thread ], [ 1, %bb.x ] ; 2 uses
   %i.ab = tail call i32 @BN_is_bit_set(ptr noundef %2, i32 noundef %.0127200) #7
   %.not158 = icmp eq i32 %i.ab, 0
   br i1 %.not158, label %bb.af, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %mul160 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.0131, i64 %.0114175) ; 2 uses
-  %mul.val161 = extractvalue { i64, i1 } %mul160, 0
+  %mul160 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.0131, i64 %.0114175)
+  %mul.val161 = mul nuw i64 %.0114175, %.0131
   %mul.ov162 = extractvalue { i64, i1 } %mul160, 1
   br i1 %mul.ov162, label %bb.aa, label %bb.af
 

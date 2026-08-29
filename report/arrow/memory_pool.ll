@@ -202,9 +202,8 @@ _ZN5arrow6StatusD2Ev.exit17.thread:               ; preds = %bb.e
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #30, !noalias !175
   tail call void @llvm.experimental.noalias.scope.decl(metadata !178)
-  %11 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 range(i64 1, -9223372036854775808) %3, i64 8) ; 2 uses
-  %12 = extractvalue { i64, i1 } %11, 1
-  br i1 %12, label %bb.g, label %.thread59.i, !prof !39
+  %11 = icmp samesign ugt i64 %3, 9223372036854775799
+  br i1 %11, label %bb.g, label %.thread59.i, !prof !39
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #30, !noalias !181
@@ -225,10 +224,10 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_15SystemAllocatorEE7RawSizeEl.exit.i
 
 .thread59.i:                                      ; preds = %bb.f
-  %13 = extractvalue { i64, i1 } %11, 0           ; 2 uses
+  %12 = add nuw nsw i64 %3, 8                     ; 2 uses
   store ptr null, ptr %8, align 8, !tbaa !20, !alias.scope !178, !noalias !175
   %i.k = getelementptr inbounds nuw i8, ptr %8, i64 8
-  store i64 %13, ptr %i.k, align 8, !tbaa !116, !alias.scope !178, !noalias !175
+  store i64 %12, ptr %i.k, align 8, !tbaa !116, !alias.scope !178, !noalias !175
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #30, !noalias !175
   br label %_ZN5arrow6StatusD2Ev.exit.i36.i
 
@@ -275,7 +274,7 @@ _ZN5arrow6StatusD2Ev.exit.thread.i:               ; preds = %bb.n
   br label %bb.p
 
 _ZN5arrow6StatusD2Ev.exit.i36.i:                  ; preds = %bb.n, %.thread59.i
-  %i.p = phi i64 [ %13, %.thread59.i ], [ %.pre.i, %bb.n ] ; 2 uses
+  %i.p = phi i64 [ %12, %.thread59.i ], [ %.pre.i, %bb.n ] ; 2 uses
   %i.q = add nsw i64 %2, 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30, !noalias !182
   store ptr null, ptr %i.a, align 8, !tbaa !104, !noalias !182
@@ -678,9 +677,8 @@ _ZN5arrow6StatusD2Ev.exit17.thread:               ; preds = %bb.e
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #30, !noalias !200
   tail call void @llvm.experimental.noalias.scope.decl(metadata !203)
-  %10 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 range(i64 1, -9223372036854775808) %3, i64 8) ; 2 uses
-  %11 = extractvalue { i64, i1 } %10, 1
-  br i1 %11, label %bb.g, label %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit.thread.i, !prof !39
+  %10 = icmp samesign ugt i64 %3, 9223372036854775799
+  br i1 %10, label %bb.g, label %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit.thread.i, !prof !39
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30, !noalias !206
@@ -701,10 +699,10 @@ bb.i:                                             ; preds = %bb.h
   br label %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit.i
 
 _ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit.thread.i: ; preds = %bb.f
-  %12 = extractvalue { i64, i1 } %10, 0           ; 2 uses
+  %11 = add nuw nsw i64 %3, 8                     ; 2 uses
   store ptr null, ptr %7, align 8, !tbaa !20, !alias.scope !203, !noalias !200
   %i.j = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store i64 %12, ptr %i.j, align 8, !tbaa !116, !alias.scope !203, !noalias !200
+  store i64 %11, ptr %i.j, align 8, !tbaa !116, !alias.scope !203, !noalias !200
   br label %bb.l
 
 _ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit.i: ; preds = %bb.i, %bb.h, %bb.g
@@ -729,7 +727,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.p
 
 bb.l:                                             ; preds = %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit._crit_edge.i, %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit.thread.i
-  %i.m = phi i64 [ %.pre.i, %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit._crit_edge.i ], [ %12, %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit.thread.i ]
+  %i.m = phi i64 [ %.pre.i, %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit._crit_edge.i ], [ %11, %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit.thread.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #30, !noalias !200
   invoke fastcc void @_ZN5arrow12_GLOBAL__N_117MimallocAllocator17ReallocateAlignedElllPPh(ptr dead_on_unwind noalias writable align 8 %8, i64 noundef %i.m, i64 noundef %4, ptr noundef nonnull %5)
           to label %_ZN5arrow6StatusD2Ev.exit.i unwind label %bb.m
@@ -1132,9 +1130,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #30
   tail call void @llvm.experimental.noalias.scope.decl(metadata !355)
-  %7 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 range(i64 1, -9223372036854775808) %1, i64 8) ; 2 uses
-  %8 = extractvalue { i64, i1 } %7, 1
-  br i1 %8, label %bb.d, label %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_15SystemAllocatorEE7RawSizeEl.exit.thread, !prof !39
+  %7 = icmp samesign ugt i64 %1, 9223372036854775799
+  br i1 %7, label %bb.d, label %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_15SystemAllocatorEE7RawSizeEl.exit.thread, !prof !39
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30, !noalias !355
@@ -1155,10 +1152,10 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_15SystemAllocatorEE7RawSizeEl.exit
 
 _ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_15SystemAllocatorEE7RawSizeEl.exit.thread: ; preds = %bb.c
-  %9 = extractvalue { i64, i1 } %7, 0             ; 2 uses
+  %8 = add nuw nsw i64 %1, 8                      ; 2 uses
   store ptr null, ptr %5, align 8, !tbaa !20, !alias.scope !355
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store i64 %9, ptr %i.f, align 8, !tbaa !116, !alias.scope !355
+  store i64 %8, ptr %i.f, align 8, !tbaa !116, !alias.scope !355
   br label %bb.i
 
 _ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_15SystemAllocatorEE7RawSizeEl.exit: ; preds = %bb.d, %bb.e, %bb.f
@@ -1183,7 +1180,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.m
 
 bb.i:                                             ; preds = %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_15SystemAllocatorEE7RawSizeEl.exit._crit_edge, %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_15SystemAllocatorEE7RawSizeEl.exit.thread
-  %i.i = phi i64 [ %.pre, %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_15SystemAllocatorEE7RawSizeEl.exit._crit_edge ], [ %9, %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_15SystemAllocatorEE7RawSizeEl.exit.thread ]
+  %i.i = phi i64 [ %.pre, %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_15SystemAllocatorEE7RawSizeEl.exit._crit_edge ], [ %8, %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_15SystemAllocatorEE7RawSizeEl.exit.thread ]
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
   invoke fastcc void @_ZN5arrow12_GLOBAL__N_115SystemAllocator15AllocateAlignedEllPPh(ptr dead_on_unwind noalias writable align 8 %6, i64 noundef %i.i, i64 noundef %2, ptr noundef %3)
           to label %_ZN5arrow6StatusD2Ev.exit unwind label %bb.j
@@ -1255,9 +1252,6 @@ bb.p:                                             ; preds = %_ZN5arrow6ResultIlE
 bb.q:                                             ; preds = %_ZN5arrow6ResultIlED2Ev.exit, %bb.p
   ret void
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.sadd.with.overflow.i64(i64, i64) #25
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN5arrow6Status8FromArgsIJRA33_KcEEES0_NS_10StatusCodeEDpOT_(ptr dead_on_unwind noalias writable sret(%"class.arrow::Status") align 8 %0, i8 noundef signext %1, ptr noundef nonnull align 1 dereferenceable(33) %2) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
@@ -1661,9 +1655,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #30
   tail call void @llvm.experimental.noalias.scope.decl(metadata !391)
-  %7 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 range(i64 1, -9223372036854775808) %1, i64 8) ; 2 uses
-  %8 = extractvalue { i64, i1 } %7, 1
-  br i1 %8, label %bb.d, label %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit.thread, !prof !39
+  %7 = icmp samesign ugt i64 %1, 9223372036854775799
+  br i1 %7, label %bb.d, label %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit.thread, !prof !39
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30, !noalias !391
@@ -1684,10 +1677,10 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit
 
 _ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit.thread: ; preds = %bb.c
-  %9 = extractvalue { i64, i1 } %7, 0             ; 2 uses
+  %8 = add nuw nsw i64 %1, 8                      ; 2 uses
   store ptr null, ptr %5, align 8, !tbaa !20, !alias.scope !391
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store i64 %9, ptr %i.f, align 8, !tbaa !116, !alias.scope !391
+  store i64 %8, ptr %i.f, align 8, !tbaa !116, !alias.scope !391
   br label %bb.i
 
 _ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit: ; preds = %bb.d, %bb.e, %bb.f
@@ -1712,7 +1705,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.m
 
 bb.i:                                             ; preds = %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit._crit_edge, %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit.thread
-  %i.i = phi i64 [ %.pre, %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit._crit_edge ], [ %9, %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit.thread ]
+  %i.i = phi i64 [ %.pre, %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit._crit_edge ], [ %8, %_ZN5arrow12_GLOBAL__N_114DebugAllocatorINS0_17MimallocAllocatorEE7RawSizeEl.exit.thread ]
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
   invoke fastcc void @_ZN5arrow12_GLOBAL__N_117MimallocAllocator15AllocateAlignedEllPPh(ptr dead_on_unwind noalias writable align 8 %6, i64 noundef %i.i, i64 noundef %2, ptr noundef %3)
           to label %_ZN5arrow6StatusD2Ev.exit unwind label %bb.j
@@ -1857,29 +1850,29 @@ bb.i:                                             ; preds = %_ZN5arrow6StatusD2E
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define internal void @_GLOBAL__sub_I_memory_pool.cc() #26 section ".text.startup" {
+define internal void @_GLOBAL__sub_I_memory_pool.cc() #25 section ".text.startup" {
 bb.a:
   %i.a = tail call i32 @__cxa_atexit(ptr nonnull @_ZN5arrow11GlobalStateD2Ev, ptr nonnull @_ZN5arrowL12global_stateE, ptr nonnull @__dso_handle) #30 ; 0 uses
   ret void
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #27
+declare void @llvm.assume(i1 noundef) #26
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #28
+declare void @llvm.experimental.noalias.scope.decl(metadata) #27
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #29
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #25
+declare i64 @llvm.umin.i64(i64, i64) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #25
+declare i64 @llvm.umax.i64(i64, i64) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #25
+declare i64 @llvm.smin.i64(i64, i64) #29
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
@@ -1906,11 +1899,11 @@ attributes #21 = { mustprogress noinline nounwind uwtable "min-legal-vector-widt
 attributes #22 = { cold "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
 attributes #23 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
 attributes #24 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
-attributes #25 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #26 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
-attributes #27 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #28 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #29 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #25 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
+attributes #26 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #27 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #28 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #29 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #30 = { nounwind }
 attributes #31 = { builtin allocsize(0) }
 attributes #32 = { builtin nounwind }

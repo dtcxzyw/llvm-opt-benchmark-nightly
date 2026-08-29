@@ -205,10 +205,9 @@ bb.a:
   %i.c = load ptr, ptr %2, align 8, !tbaa !1118   ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 88
   %i.e = load i64, ptr %i.d, align 8, !tbaa !49   ; 2 uses
-  %i.f = add i64 %i.e, -1
-  %3 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.f, i64 16) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 1
-  br i1 %4, label %_ZN5folly11checked_addImQsr3stdE13is_integral_vIT_EEEbPS1_S1_S1_.exit.i.i.i, label %_ZNK5folly5ArenaINS_12SysAllocatorIcEEE7roundUpEm.exit.i.i, !prof !42
+  %i.f = add i64 %i.e, 15                         ; 2 uses
+  %3 = icmp ult i64 %i.f, 16
+  br i1 %3, label %_ZN5folly11checked_addImQsr3stdE13is_integral_vIT_EEEbPS1_S1_S1_.exit.i.i.i, label %_ZNK5folly5ArenaINS_12SysAllocatorIcEEE7roundUpEm.exit.i.i, !prof !42
 
 _ZN5folly11checked_addImQsr3stdE13is_integral_vIT_EEEbPS1_S1_S1_.exit.i.i.i: ; preds = %.lr.ph
   invoke void @_ZN5folly6detail16throw_exception_ISt9bad_allocJEEEvDpT0_() #9
@@ -218,9 +217,8 @@ _ZN5folly11checked_addImQsr3stdE13is_integral_vIT_EEEbPS1_S1_S1_.exit.i.i.i: ; p
   unreachable
 
 _ZNK5folly5ArenaINS_12SysAllocatorIcEEE7roundUpEm.exit.i.i: ; preds = %.lr.ph
-  %5 = extractvalue { i64, i1 } %3, 0
   %i.g = sub i64 0, %i.e
-  %i.h = and i64 %5, %i.g
+  %i.h = and i64 %i.f, %i.g
   %i.i = load i64, ptr %i.c, align 8, !tbaa !1119
   %i.j = add i64 %i.i, %i.h                       ; 5 uses
   %i.k = icmp eq i64 %i.j, 0
@@ -442,9 +440,6 @@ declare noundef zeroext i1 @_ZNK5folly6detail24UsingTCMallocInitializerclEv(ptr 
 ; Function Attrs: nounwind
 declare extern_weak i64 @nallocx(i64 noundef, i32 noundef) local_unnamed_addr #8
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #28
-
 ; Function Attrs: cold mustprogress noinline noreturn optsize uwtable
 define linkonce_odr void @_ZN5folly6detail16throw_exception_ISt9bad_allocJEEEvDpT0_() local_unnamed_addr #6 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
@@ -478,7 +473,7 @@ bb.a:
 declare void @_ZNSt9bad_allocD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8)) unnamed_addr #8
 
 ; Function Attrs: noreturn nounwind
-declare void @_ZN5folly6detail18ScopeGuardImplBase9terminateEv() local_unnamed_addr #29
+declare void @_ZN5folly6detail18ScopeGuardImplBase9terminateEv() local_unnamed_addr #28
 
 ; Function Attrs: mustprogress uwtable
 declare void @_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE13unlock_sharedERNS_16SharedMutexTokenE(ptr noundef nonnull align 4 dereferenceable(4), ptr noundef nonnull align 2 dereferenceable(4)) local_unnamed_addr #0 align 2
@@ -488,19 +483,17 @@ define linkonce_odr void @_ZN5folly5ArenaINS_12SysAllocatorIcEEE5mergeEOS3_(ptr 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.b = load i64, ptr %i.a, align 8, !tbaa !49   ; 2 uses
-  %i.c = add i64 %i.b, -1
-  %2 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.c, i64 16) ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 1
-  br i1 %3, label %_ZN5folly11checked_addImQsr3stdE13is_integral_vIT_EEEbPS1_S1_S1_.exit.i.i, label %_ZNK5folly5ArenaINS_12SysAllocatorIcEEE7roundUpEm.exit.i, !prof !42
+  %i.c = add i64 %i.b, 15                         ; 2 uses
+  %2 = icmp ult i64 %i.c, 16
+  br i1 %2, label %_ZN5folly11checked_addImQsr3stdE13is_integral_vIT_EEEbPS1_S1_S1_.exit.i.i, label %_ZNK5folly5ArenaINS_12SysAllocatorIcEEE7roundUpEm.exit.i, !prof !42
 
 _ZN5folly11checked_addImQsr3stdE13is_integral_vIT_EEEbPS1_S1_S1_.exit.i.i: ; preds = %bb.a
   tail call void @_ZN5folly6detail16throw_exception_ISt9bad_allocJEEEvDpT0_() #9
   unreachable
 
 _ZNK5folly5ArenaINS_12SysAllocatorIcEEE7roundUpEm.exit.i: ; preds = %bb.a
-  %4 = extractvalue { i64, i1 } %2, 0
   %i.d = sub i64 0, %i.b
-  %i.e = and i64 %4, %i.d
+  %i.e = and i64 %i.c, %i.d
   %i.f = load i64, ptr %0, align 8, !tbaa !1119
   %i.g = add i64 %i.f, %i.e                       ; 5 uses
   %i.h = icmp eq i64 %i.g, 0
@@ -529,19 +522,17 @@ _ZN5folly5ArenaINS_12SysAllocatorIcEEE18blockGoodAllocSizeEv.exit: ; preds = %_Z
   %.0.i.i.i = phi i64 [ 0, %_ZNK5folly5ArenaINS_12SysAllocatorIcEEE7roundUpEm.exit.i ], [ %i.m, %bb.c ], [ %i.g, %_ZN5folly10canNallocxEv.exit.i.i.i ], [ %i.g, %.split.i.i.i ]
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.o = load i64, ptr %i.n, align 8, !tbaa !49   ; 2 uses
-  %i.p = add i64 %i.o, -1
-  %5 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.p, i64 16) ; 2 uses
-  %6 = extractvalue { i64, i1 } %5, 1
-  br i1 %6, label %_ZN5folly11checked_addImQsr3stdE13is_integral_vIT_EEEbPS1_S1_S1_.exit.i.i18, label %_ZNK5folly5ArenaINS_12SysAllocatorIcEEE7roundUpEm.exit.i12, !prof !42
+  %i.p = add i64 %i.o, 15                         ; 2 uses
+  %3 = icmp ult i64 %i.p, 16
+  br i1 %3, label %_ZN5folly11checked_addImQsr3stdE13is_integral_vIT_EEEbPS1_S1_S1_.exit.i.i18, label %_ZNK5folly5ArenaINS_12SysAllocatorIcEEE7roundUpEm.exit.i12, !prof !42
 
 _ZN5folly11checked_addImQsr3stdE13is_integral_vIT_EEEbPS1_S1_S1_.exit.i.i18: ; preds = %_ZN5folly5ArenaINS_12SysAllocatorIcEEE18blockGoodAllocSizeEv.exit
   tail call void @_ZN5folly6detail16throw_exception_ISt9bad_allocJEEEvDpT0_() #9
   unreachable
 
 _ZNK5folly5ArenaINS_12SysAllocatorIcEEE7roundUpEm.exit.i12: ; preds = %_ZN5folly5ArenaINS_12SysAllocatorIcEEE18blockGoodAllocSizeEv.exit
-  %7 = extractvalue { i64, i1 } %5, 0
   %i.q = sub i64 0, %i.o
-  %i.r = and i64 %7, %i.q
+  %i.r = and i64 %i.p, %i.q
   %i.s = load i64, ptr %1, align 8, !tbaa !1119
   %i.t = add i64 %i.s, %i.r                       ; 5 uses
   %i.u = icmp eq i64 %i.t, 0
@@ -733,7 +724,7 @@ _ZNSt11unique_lockIN5folly15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolic
 }
 
 ; Function Attrs: cold noreturn nounwind
-declare void @_ZN5folly6detail21safe_assert_terminateILb0EEEvPKNS0_15safe_assert_argEz(ptr noundef, ...) local_unnamed_addr #30
+declare void @_ZN5folly6detail21safe_assert_terminateILb0EEEvPKNS0_15safe_assert_argEz(ptr noundef, ...) local_unnamed_addr #29
 
 ; Function Attrs: mustprogress uwtable
 define noundef i64 @_ZNK5folly17ThreadCachedArena9totalSizeEv(ptr noundef nonnull align 8 dereferenceable(128) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
@@ -1136,7 +1127,7 @@ bb.l:                                             ; preds = %_ZNSt11shared_lockI
 declare void @_ZN5folly15SharedMutexImplILb1EvSt6atomicNS_24SharedMutexPolicyDefaultEE25wakeRegisteredWaitersImplERjj(ptr noundef nonnull align 4 dereferenceable(4), ptr noundef nonnull align 4 dereferenceable(4), i32 noundef) #0 align 2
 
 ; Function Attrs: nounwind uwtable
-define internal void @__cxx_global_var_init() #31 section ".text.startup" comdat($_ZN5folly18threadlocal_detail10StaticMetaINS_17ThreadCachedArena17ThreadLocalPtrTagEvE6uniqueE) {
+define internal void @__cxx_global_var_init() #30 section ".text.startup" comdat($_ZN5folly18threadlocal_detail10StaticMetaINS_17ThreadCachedArena17ThreadLocalPtrTagEvE6uniqueE) {
 bb.a:
   %i.a = load i8, ptr @_ZGVN5folly18threadlocal_detail10StaticMetaINS_17ThreadCachedArena17ThreadLocalPtrTagEvE6uniqueE, align 8
   %i.b = icmp eq i8 %i.a, 0
@@ -1163,16 +1154,16 @@ bb.a:
 declare void @_ZN5folly6detail14UniqueInstance7enforceERNS1_3ArgE(ptr noundef nonnull align 8 dereferenceable(56)) local_unnamed_addr #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.ctpop.i64(i64) #28
+declare i64 @llvm.ctpop.i64(i64) #31
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #32
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #28
+declare i64 @llvm.umin.i64(i64, i64) #31
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #28
+declare i32 @llvm.umin.i32(i32, i32) #31
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1202,10 +1193,10 @@ attributes #24 = { mustprogress nounwind willreturn allockind("free") memory(arg
 attributes #25 = { cold mustprogress noinline nounwind optsize uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #26 = { nofree nounwind }
 attributes #27 = { inlinehint mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #28 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #29 = { noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #30 = { cold noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #31 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #28 = { noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #29 = { cold noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #30 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #31 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #32 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #33 = { noreturn nounwind }
 attributes #34 = { builtin nounwind }

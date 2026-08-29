@@ -202,7 +202,7 @@ bb.a:
   %i.a = load ptr, ptr %3, align 8, !tbaa !22     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.c = getelementptr i8, ptr %3, i64 16         ; 5 uses
-  %.val.i.i = load i64, ptr %i.c, align 8, !tbaa !20 ; 3 uses
+  %.val.i.i = load i64, ptr %i.c, align 8, !tbaa !20 ; 4 uses
   %i.d = getelementptr i8, ptr %3, i64 24
   %.val2.i.i = load i64, ptr %i.d, align 8, !tbaa !21 ; 3 uses
   %i.e = icmp ult i64 %0, %.val2.i.i
@@ -215,24 +215,22 @@ safe_add_u64.exit.i:                              ; preds = %bb.a
   %i.h = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %0, i64 %2)
   %i.i = extractvalue { i64, i1 } %i.h, 1
   %i.j = add i64 %2, %0
-  %i.k = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.val.i.i, i64 %i.g) ; 2 uses
-  %i.l = extractvalue { i64, i1 } %i.k, 1         ; 2 uses
-  %4 = add i64 %i.f, %.val2.i.i
-  %5 = extractvalue { i64, i1 } %i.k, 0
-  %.0.i45.i = select i1 %i.l, i64 %4, i64 %5
+  %i.k = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.val.i.i, i64 %i.g)
+  %i.l = extractvalue { i64, i1 } %i.k, 1
+  %narrow.i = or i1 %i.i, %i.l
+  %.0.i45.i = add i64 %i.f, %.val2.i.i
   %i.m = icmp ugt i64 %i.j, %.0.i45.i
   br i1 %i.m, label %ring_buf_write_at.exit, label %bb.b
 
 bb.b:                                             ; preds = %safe_add_u64.exit.i
-  %i.n = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.val.i.i, i64 %2) ; 2 uses
+  %i.n = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.val.i.i, i64 %2)
   %i.o = extractvalue { i64, i1 } %i.n, 1
   br i1 %i.o, label %ring_buf_write_at.exit, label %safe_add_u64.exit48.i
 
 safe_add_u64.exit48.i:                            ; preds = %bb.b
-  %6 = extractvalue { i64, i1 } %i.n, 0
-  %i.p = icmp ugt i64 %6, 4611686018427387904
-  %7 = or i1 %i.i, %i.p
-  %or.cond.i = or i1 %7, %i.l
+  %.0.i47.i = add i64 %.val.i.i, %2
+  %i.p = icmp ugt i64 %.0.i47.i, 4611686018427387904
+  %or.cond.i = select i1 %i.p, i1 true, i1 %narrow.i
   br i1 %or.cond.i, label %ring_buf_write_at.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %safe_add_u64.exit48.i

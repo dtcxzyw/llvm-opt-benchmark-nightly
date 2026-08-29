@@ -205,7 +205,7 @@ bb.bo:                                            ; preds = %bb.bn, %._crit_edge
 
 .lr.ph.i41.i.i.i:                                 ; preds = %.lr.ph.i41.i.i.i.preheader, %.critedge.i42.i.i.i
   %.471.i.i.i = phi ptr [ %i.qu, %.critedge.i42.i.i.i ], [ %i.ph, %.lr.ph.i41.i.i.i.preheader ] ; 3 uses
-  %.9.i.i.i = phi i32 [ %.10.i.i.i.a, %.critedge.i42.i.i.i ], [ 0, %.lr.ph.i41.i.i.i.preheader ] ; 3 uses
+  %.9.i.i.i = phi i32 [ %.10.i.i.i, %.critedge.i42.i.i.i ], [ 0, %.lr.ph.i41.i.i.i.preheader ] ; 4 uses
   %.02238.i.i.i.i = phi i32 [ %i.qp, %.critedge.i42.i.i.i ], [ 32, %.lr.ph.i41.i.i.i.preheader ]
   %i.qm = load i8, ptr %.471.i.i.i, align 1, !tbaa !15
   %i.qn = add i8 %i.qm, -48                       ; 2 uses
@@ -220,30 +220,28 @@ bb.bp:                                            ; preds = %.lr.ph.i41.i.i.i
 
 bb.bq:                                            ; preds = %bb.bp
   %i.qr = mul i32 %.9.i.i.i, 10
-  %20 = add i32 %i.qr, %i.qo
   br label %.critedge.i42.i.i.i
 
 bb.br:                                            ; preds = %bb.bp
-  %21 = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.9.i.i.i, i32 10) ; 2 uses
-  %22 = extractvalue { i32, i1 } %21, 1
-  br i1 %22, label %_ZN7xgboost12_GLOBAL__N_18ParseIntENS_10StringViewE.exit.thread.i, label %.split.i.i.i.i, !prof !149
+  %20 = icmp ugt i32 %.9.i.i.i, 429496729
+  br i1 %20, label %_ZN7xgboost12_GLOBAL__N_18ParseIntENS_10StringViewE.exit.thread.i, label %.split.i.i.i.i, !prof !149
 
 .split.i.i.i.i:                                   ; preds = %bb.br
-  %23 = extractvalue { i32, i1 } %21, 0
-  %i.qs = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %23, i32 %i.qo) ; 2 uses
+  %21 = mul nuw i32 %.9.i.i.i, 10                 ; 2 uses
+  %i.qs = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %21, i32 %i.qo)
   %i.qt = extractvalue { i32, i1 } %i.qs, 1
-  %24 = extractvalue { i32, i1 } %i.qs, 0
   br i1 %i.qt, label %_ZN7xgboost12_GLOBAL__N_18ParseIntENS_10StringViewE.exit.thread.i, label %.critedge.i42.i.i.i, !prof !38
 
 .critedge.i42.i.i.i:                              ; preds = %.split.i.i.i.i, %bb.bq
-  %.10.i.i.i.a = phi i32 [ %20, %bb.bq ], [ %24, %.split.i.i.i.i ] ; 2 uses
+  %.10.i.i.i.a = phi i32 [ %i.qr, %bb.bq ], [ %21, %.split.i.i.i.i ]
+  %.10.i.i.i = add i32 %.10.i.i.i.a, %i.qo        ; 2 uses
   %i.qu = getelementptr inbounds nuw i8, ptr %.471.i.i.i, i64 1 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.qu, %i.lc
   br i1 %.not.i.i.i.i, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EjEEbRPKcS2_RT0_i.exit.i.i.i, label %.lr.ph.i41.i.i.i, !llvm.loop !150
 
 _ZNSt8__detail22__from_chars_pow2_baseILb1EjEEbRPKcS2_RT0_i.exit.i.i.i: ; preds = %.critedge.i42.i.i.i, %.lr.ph.i41.i.i.i
   %.168.i.i.i = phi ptr [ %.471.i.i.i, %.lr.ph.i41.i.i.i ], [ %i.lc, %.critedge.i42.i.i.i ]
-  %.0.i.i.i = phi i32 [ %.9.i.i.i, %.lr.ph.i41.i.i.i ], [ %.10.i.i.i.a, %.critedge.i42.i.i.i ] ; 3 uses
+  %.0.i.i.i = phi i32 [ %.9.i.i.i, %.lr.ph.i41.i.i.i ], [ %.10.i.i.i, %.critedge.i42.i.i.i ] ; 3 uses
   %.not23.i.i = icmp eq ptr %.168.i.i.i, %i.ph
   %i.qv = select i1 %i.pg, i32 -2147483648, i32 2147483647
   %i.qw = icmp ugt i32 %.0.i.i.i, %i.qv
@@ -646,18 +644,18 @@ bb.ak:                                            ; preds = %bb.af, %bb.ag, %bb.
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ao, %.lr.ph.i
-  %.014.i = phi i32 [ 0, %.lr.ph.i ], [ %7, %bb.ao ]
+  %.014.i = phi i32 [ 0, %.lr.ph.i ], [ %7, %bb.ao ] ; 2 uses
   %.sroa.08.013.i = phi ptr [ %i.ai, %.lr.ph.i ], [ %i.as, %bb.ao ] ; 2 uses
-  %4 = tail call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %.014.i, i32 10) ; 2 uses
-  %5 = extractvalue { i32, i1 } %4, 1
+  %4 = add i32 %.014.i, -214748365
+  %5 = icmp ult i32 %4, -429496729
   br i1 %5, label %bb.an, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %6 = extractvalue { i32, i1 } %4, 0
+  %6 = mul nsw i32 %.014.i, 10                    ; 2 uses
   %i.an = load i8, ptr %.sroa.08.013.i, align 1, !tbaa !15
   %i.ao = load ptr, ptr %i.am, align 8, !tbaa !420, !nonnull !124, !align !360
-  %i.ap = tail call noundef i32 @_ZNKSt7__cxx1112regex_traitsIcE5valueEci(ptr noundef nonnull align 8 dereferenceable(8) %i.ao, i8 noundef signext %i.an, i32 noundef 10)
-  %i.aq = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %6, i32 %i.ap) ; 2 uses
+  %i.ap = tail call noundef i32 @_ZNKSt7__cxx1112regex_traitsIcE5valueEci(ptr noundef nonnull align 8 dereferenceable(8) %i.ao, i8 noundef signext %i.an, i32 noundef 10) ; 2 uses
+  %i.aq = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %6, i32 %i.ap)
   %i.ar = extractvalue { i32, i1 } %i.aq, 1
   br i1 %i.ar, label %bb.an, label %bb.ao
 
@@ -666,7 +664,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   unreachable
 
 bb.ao:                                            ; preds = %bb.am
-  %7 = extractvalue { i32, i1 } %i.aq, 0          ; 2 uses
+  %7 = add nsw i32 %i.ap, %6                      ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.08.013.i, i64 1 ; 2 uses
   %.not.i = icmp eq ptr %i.as, %i.al
   br i1 %.not.i, label %_ZNSt8__detail9_CompilerINSt7__cxx1112regex_traitsIcEEE16_M_cur_int_valueEi.exit.loopexit, label %bb.al
@@ -1069,18 +1067,18 @@ _ZNSt8__detail9_CompilerINSt7__cxx1112regex_traitsIcEEE6_M_popEv.exit44: ; preds
   br label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ce, %.lr.ph.i
-  %.014.i = phi i32 [ 0, %.lr.ph.i ], [ %13, %bb.ce ]
+  %.014.i = phi i32 [ 0, %.lr.ph.i ], [ %13, %bb.ce ] ; 2 uses
   %.sroa.08.013.i = phi ptr [ %i.hm, %.lr.ph.i ], [ %i.hw, %bb.ce ] ; 2 uses
-  %10 = tail call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %.014.i, i32 10) ; 2 uses
-  %11 = extractvalue { i32, i1 } %10, 1
+  %10 = add i32 %.014.i, -214748365
+  %11 = icmp ult i32 %10, -429496729
   br i1 %11, label %bb.cd, label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cb
-  %12 = extractvalue { i32, i1 } %10, 0
+  %12 = mul nsw i32 %.014.i, 10                   ; 2 uses
   %i.hr = load i8, ptr %.sroa.08.013.i, align 1, !tbaa !15
   %i.hs = load ptr, ptr %i.hq, align 8, !tbaa !420, !nonnull !124, !align !360
-  %i.ht = tail call noundef i32 @_ZNKSt7__cxx1112regex_traitsIcE5valueEci(ptr noundef nonnull align 8 dereferenceable(8) %i.hs, i8 noundef signext %i.hr, i32 noundef 10)
-  %i.hu = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %12, i32 %i.ht) ; 2 uses
+  %i.ht = tail call noundef i32 @_ZNKSt7__cxx1112regex_traitsIcE5valueEci(ptr noundef nonnull align 8 dereferenceable(8) %i.hs, i8 noundef signext %i.hr, i32 noundef 10) ; 2 uses
+  %i.hu = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %12, i32 %i.ht)
   %i.hv = extractvalue { i32, i1 } %i.hu, 1
   br i1 %i.hv, label %bb.cd, label %bb.ce
 
@@ -1089,7 +1087,7 @@ bb.cd:                                            ; preds = %bb.cc, %bb.cb
   unreachable
 
 bb.ce:                                            ; preds = %bb.cc
-  %13 = extractvalue { i32, i1 } %i.hu, 0         ; 2 uses
+  %13 = add nsw i32 %i.ht, %12                    ; 2 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %.sroa.08.013.i, i64 1 ; 2 uses
   %.not.i = icmp eq ptr %i.hw, %i.hp
   br i1 %.not.i, label %_ZNSt8__detail9_CompilerINSt7__cxx1112regex_traitsIcEEE16_M_cur_int_valueEi.exit, label %bb.cb
@@ -1492,11 +1490,11 @@ bb.i:                                             ; preds = %bb.l, %.lr.ph.i
   br i1 %i.s, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.t = shl nsw i32 %.014.i, 3
+  %i.t = shl nsw i32 %.014.i, 3                   ; 2 uses
   %i.u = load i8, ptr %.sroa.08.013.i, align 1, !tbaa !15
   %i.v = load ptr, ptr %i.q, align 8, !tbaa !420, !nonnull !124, !align !360
-  %i.w = tail call noundef i32 @_ZNKSt7__cxx1112regex_traitsIcE5valueEci(ptr noundef nonnull align 8 dereferenceable(8) %i.v, i8 noundef signext %i.u, i32 noundef 8)
-  %i.x = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.t, i32 %i.w) ; 2 uses
+  %i.w = tail call noundef i32 @_ZNKSt7__cxx1112regex_traitsIcE5valueEci(ptr noundef nonnull align 8 dereferenceable(8) %i.v, i8 noundef signext %i.u, i32 noundef 8) ; 2 uses
+  %i.x = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.t, i32 %i.w)
   %i.y = extractvalue { i32, i1 } %i.x, 1
   br i1 %i.y, label %bb.k, label %bb.l
 
@@ -1505,7 +1503,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   unreachable
 
 bb.l:                                             ; preds = %bb.j
-  %1 = extractvalue { i32, i1 } %i.x, 0           ; 2 uses
+  %1 = add nsw i32 %i.w, %i.t                     ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.08.013.i, i64 1 ; 2 uses
   %.not.i = icmp eq ptr %i.z, %i.p
   br i1 %.not.i, label %_ZNSt8__detail9_CompilerINSt7__cxx1112regex_traitsIcEEE16_M_cur_int_valueEi.exit.loopexit, label %bb.i
@@ -1577,11 +1575,11 @@ bb.t:                                             ; preds = %bb.w, %.lr.ph.i3
   br i1 %i.as, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.at = shl nsw i32 %.014.i4, 4
+  %i.at = shl nsw i32 %.014.i4, 4                 ; 2 uses
   %i.au = load i8, ptr %.sroa.08.013.i5, align 1, !tbaa !15
   %i.av = load ptr, ptr %i.aq, align 8, !tbaa !420, !nonnull !124, !align !360
-  %i.aw = tail call noundef i32 @_ZNKSt7__cxx1112regex_traitsIcE5valueEci(ptr noundef nonnull align 8 dereferenceable(8) %i.av, i8 noundef signext %i.au, i32 noundef 16)
-  %i.ax = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.at, i32 %i.aw) ; 2 uses
+  %i.aw = tail call noundef i32 @_ZNKSt7__cxx1112regex_traitsIcE5valueEci(ptr noundef nonnull align 8 dereferenceable(8) %i.av, i8 noundef signext %i.au, i32 noundef 16) ; 2 uses
+  %i.ax = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.at, i32 %i.aw)
   %i.ay = extractvalue { i32, i1 } %i.ax, 1
   br i1 %i.ay, label %bb.v, label %bb.w
 
@@ -1590,7 +1588,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   unreachable
 
 bb.w:                                             ; preds = %bb.u
-  %2 = extractvalue { i32, i1 } %i.ax, 0          ; 2 uses
+  %2 = add nsw i32 %i.aw, %i.at                   ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.08.013.i5, i64 1 ; 2 uses
   %.not.i6 = icmp eq ptr %i.az, %i.ap
   br i1 %.not.i6, label %_ZNSt8__detail9_CompilerINSt7__cxx1112regex_traitsIcEEE16_M_cur_int_valueEi.exit8.loopexit, label %bb.t
@@ -1993,18 +1991,18 @@ bb.a:
   ret i32 %.0.lcssa
 
 bb.b:                                             ; preds = %.lr.ph, %bb.e
-  %.014 = phi i32 [ 0, %.lr.ph ], [ %3, %bb.e ]
+  %.014 = phi i32 [ 0, %.lr.ph ], [ %3, %bb.e ]   ; 2 uses
   %.sroa.08.013 = phi ptr [ %i.b, %.lr.ph ], [ %i.n, %bb.e ] ; 2 uses
-  %i.g = tail call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %.014, i32 %1) ; 2 uses
+  %i.g = tail call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %.014, i32 %1)
   %i.h = extractvalue { i32, i1 } %i.g, 1
   br i1 %i.h, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = extractvalue { i32, i1 } %i.g, 0
+  %2 = mul nsw i32 %.014, %1                      ; 2 uses
   %i.i = load i8, ptr %.sroa.08.013, align 1, !tbaa !15
   %i.j = load ptr, ptr %i.f, align 8, !tbaa !420, !nonnull !124, !align !360
-  %i.k = tail call noundef i32 @_ZNKSt7__cxx1112regex_traitsIcE5valueEci(ptr noundef nonnull align 8 dereferenceable(8) %i.j, i8 noundef signext %i.i, i32 noundef %1)
-  %i.l = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %2, i32 %i.k) ; 2 uses
+  %i.k = tail call noundef i32 @_ZNKSt7__cxx1112regex_traitsIcE5valueEci(ptr noundef nonnull align 8 dereferenceable(8) %i.j, i8 noundef signext %i.i, i32 noundef %1) ; 2 uses
+  %i.l = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %2, i32 %i.k)
   %i.m = extractvalue { i32, i1 } %i.l, 1
   br i1 %i.m, label %bb.d, label %bb.e
 
@@ -2013,7 +2011,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   unreachable
 
 bb.e:                                             ; preds = %bb.c
-  %3 = extractvalue { i32, i1 } %i.l, 0           ; 2 uses
+  %3 = add nsw i32 %i.k, %2                       ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.08.013, i64 1 ; 2 uses
   %.not = icmp eq ptr %i.n, %i.e
   br i1 %.not, label %._crit_edge, label %bb.b
@@ -2414,9 +2412,6 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %_ZNKSt7__cxx1113match_resultsIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEESaINS_9sub_matchISA_EEEEixEm.exit.thread55, %bb.c, %bb.e, %bb.i, %bb.h, %_ZNKSt7__cxx1113match_resultsIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEESaINS_9sub_matchISA_EEEEixEm.exit.thread, %_ZNKSt7__cxx1113match_resultsIN9__gnu_cxx17__normal_iteratorIPKcNS_12basic_stringIcSt11char_traitsIcESaIcEEEEESaINS_9sub_matchISA_EEEEixEm.exit
   ret ptr %0
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i32, i1 } @llvm.uadd.with.overflow.i32(i32, i32) #27

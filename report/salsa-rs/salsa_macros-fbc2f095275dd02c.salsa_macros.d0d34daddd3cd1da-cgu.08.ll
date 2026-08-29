@@ -202,16 +202,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.c = icmp ugt i64 %2, 2305843009213693951
-  br i1 %i.c, label %bb.m, label %3
-
-3:                                                ; preds = %bb.d
-  %4 = shl nuw i64 %2, 3
-  %5 = udiv i64 %4, 7
-  %6 = add nsw i64 %5, -1
-  %7 = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %6, i1 true)
-  %8 = lshr i64 -1, %7
-  %9 = add nuw nsw i64 %8, 1
-  br label %bb.f
+  br i1 %i.c, label %bb.m, label %bb.f
 
 bb.e:                                             ; preds = %bb.c
   %i.d = tail call i64 @_RNvYjNtNtCs4NRVxsYgnAr_4core3cmp3Ord3maxCsRujiHMkeh3_11proc_macro2(i64 3, i64 range(i64 1, 0) %2) ; 2 uses
@@ -219,19 +210,24 @@ bb.e:                                             ; preds = %bb.c
   %i.f = icmp ult i64 %i.d, 8
   %..i = select i1 %i.f, i64 8, i64 16
   %.sroa.04.0.i = select i1 %i.e, i64 4, i64 %..i
-  br label %bb.f
+  br label %bb.g
 
-bb.f:                                             ; preds = %bb.e, %3
-  %.sroa.4.0.i.ph = phi i64 [ %9, %3 ], [ %.sroa.04.0.i, %bb.e ] ; 3 uses
-  %10 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph, i64 24) ; 2 uses
-  %11 = extractvalue { i64, i1 } %10, 1
-  br i1 %11, label %bb.h, label %bb.g
+bb.f:                                             ; preds = %bb.d
+  %3 = shl nuw i64 %2, 3
+  %4 = udiv i64 %3, 7
+  %5 = add nsw i64 %4, -1
+  %6 = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %5, i1 true)
+  %7 = lshr i64 -1, %6                            ; 2 uses
+  %8 = add nuw nsw i64 %7, 1
+  %9 = icmp samesign ugt i64 %7, 768614336404564649
+  br i1 %9, label %bb.h, label %bb.g
 
-bb.g:                                             ; preds = %bb.f
-  %12 = extractvalue { i64, i1 } %10, 0
-  %i.g = add nuw i64 %12, 8
+bb.g:                                             ; preds = %bb.e, %bb.f
+  %.sroa.4.0.i.ph29 = phi i64 [ %.sroa.04.0.i, %bb.e ], [ %8, %bb.f ] ; 3 uses
+  %10 = mul nuw i64 %.sroa.4.0.i.ph29, 24
+  %i.g = add nuw i64 %10, 8
   %i.h = and i64 %i.g, -16                        ; 3 uses
-  %i.i = add nuw nsw i64 %.sroa.4.0.i.ph, 16
+  %i.i = add nuw nsw i64 %.sroa.4.0.i.ph29, 16
   %i.j = add i64 %i.i, %i.h                       ; 5 uses
   %i.k = icmp ult i64 %i.j, %i.h
   %i.l = icmp ugt i64 %i.j, 9223372036854775792
@@ -261,15 +257,15 @@ bb.k:                                             ; preds = %bb.j
   %i.s = add i64 %i.o, -16
   %i.t = udiv i64 %i.s, 25
   %i.u = tail call range(i64 4, 65) i64 @llvm.ctlz.i64(i64 %i.t, i1 false)
-  %i.v = and i64 %i.u, 63
-  %i.w = lshr exact i64 -9223372036854775808, %i.v ; 3 uses
-  %13 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.w, i64 24) ; 2 uses
-  %14 = extractvalue { i64, i1 } %13, 1
-  br i1 %14, label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCscdodAO9FK5_5alloc5alloc6GlobalECshVzvyy7iigg_12salsa_macros.exit, label %bb.l
+  %i.v = and i64 %i.u, 63                         ; 3 uses
+  %i.w = lshr exact i64 -9223372036854775808, %i.v ; 2 uses
+  %11 = icmp samesign ult i64 %i.v, 4
+  br i1 %11, label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCscdodAO9FK5_5alloc5alloc6GlobalECshVzvyy7iigg_12salsa_macros.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %15 = extractvalue { i64, i1 } %13, 0
-  %i.x = add nuw i64 %15, 8
+  %12 = xor i64 %i.v, 63
+  %13 = shl nuw i64 24, %12
+  %i.x = add nuw i64 %13, 8
   %i.y = and i64 %i.x, -16
   br label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCscdodAO9FK5_5alloc5alloc6GlobalECshVzvyy7iigg_12salsa_macros.exit
 
@@ -297,7 +293,7 @@ _RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNt
 
 _RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCscdodAO9FK5_5alloc5alloc6GlobalECshVzvyy7iigg_12salsa_macros.exit: ; preds = %bb.l, %bb.k, %bb.j
   %.sroa.014.0.i = phi i64 [ %i.h, %bb.j ], [ %i.y, %bb.l ], [ undef, %bb.k ]
-  %.sroa.0.0.i22 = phi i64 [ %.sroa.4.0.i.ph, %bb.j ], [ %i.w, %bb.l ], [ %i.w, %bb.k ] ; 3 uses
+  %.sroa.0.0.i22 = phi i64 [ %.sroa.4.0.i.ph29, %bb.j ], [ %i.w, %bb.l ], [ %i.w, %bb.k ] ; 3 uses
   %i.ag = add i64 %.sroa.0.0.i22, -1              ; 3 uses
   %i.ah = icmp samesign ult i64 %i.ag, 8
   %i.ai = lshr i64 %.sroa.0.0.i22, 3
@@ -700,16 +696,16 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %0, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.f = load i64, ptr %i.e, align 8
+  %i.f = load i64, ptr %i.e, align 8              ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.h = load i64, ptr %i.g, align 8              ; 4 uses
-  %i.i = add i64 %i.b, 1
-  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.f, i64 %i.i) ; 2 uses
+  %i.i = add i64 %i.b, 1                          ; 2 uses
+  %i.j = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.f, i64 %i.i)
   %i.k = extractvalue { i64, i1 } %i.j, 1
   br i1 %i.k, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshVzvyy7iigg_12salsa_macros.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = extractvalue { i64, i1 } %i.j, 0           ; 2 uses
+  %2 = mul nuw i64 %i.f, %i.i                     ; 2 uses
   %i.l = add i64 %i.h, -1
   %i.m = add i64 %i.l, %2                         ; 2 uses
   %i.n = icmp ult i64 %i.m, %2
@@ -1112,16 +1108,15 @@ _RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtCsRujiHMkeh3_11pro
 
 _RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtCsRujiHMkeh3_11proc_macro25IdentuEECshVzvyy7iigg_12salsa_macros.exit.i: ; preds = %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtCsRujiHMkeh3_11proc_macro25IdentuEE9next_implKb0_ECshVzvyy7iigg_12salsa_macros.exit.i.i, %bb.c, %bb.b
   %i.ag = load i64, ptr %i.f, align 8             ; 2 uses
-  %i.ah = add i64 %i.ag, 1
-  %1 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.ah, i64 24) ; 2 uses
-  %2 = extractvalue { i64, i1 } %1, 1
-  br i1 %2, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshVzvyy7iigg_12salsa_macros.exit.i, label %bb.d
+  %i.ah = add i64 %i.ag, 1                        ; 2 uses
+  %1 = icmp ugt i64 %i.ah, 768614336404564650
+  br i1 %1, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshVzvyy7iigg_12salsa_macros.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtCsRujiHMkeh3_11proc_macro25IdentuEECshVzvyy7iigg_12salsa_macros.exit.i
-  %3 = extractvalue { i64, i1 } %1, 0
-  %i.ai = add nuw i64 %3, 8
+  %2 = mul nuw i64 %i.ah, 24
+  %i.ai = add nuw i64 %2, 8
   %i.aj = and i64 %i.ai, -16                      ; 3 uses
-  %i.ak = add i64 %i.ag, 17
+  %i.ak = add nsw i64 %i.ag, 17
   %i.al = add i64 %i.ak, %i.aj                    ; 3 uses
   %i.am = icmp ult i64 %i.al, %i.aj
   br i1 %i.am, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshVzvyy7iigg_12salsa_macros.exit.i, label %bb.e
@@ -1230,16 +1225,15 @@ _RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtCscdodAO9FK5_5al
 
 _RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCscdodAO9FK5_5alloc6string6StringuEECshVzvyy7iigg_12salsa_macros.exit.i: ; preds = %_RINvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB6_12RawIterRangeTNtNtCscdodAO9FK5_5alloc6string6StringuEE9next_implKb0_ECshVzvyy7iigg_12salsa_macros.exit.i.i, %bb.c, %bb.b
   %i.ag = load i64, ptr %i.f, align 8             ; 2 uses
-  %i.ah = add i64 %i.ag, 1
-  %1 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.ah, i64 24) ; 2 uses
-  %2 = extractvalue { i64, i1 } %1, 1
-  br i1 %2, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshVzvyy7iigg_12salsa_macros.exit.i, label %bb.d
+  %i.ah = add i64 %i.ag, 1                        ; 2 uses
+  %1 = icmp ugt i64 %i.ah, 768614336404564650
+  br i1 %1, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshVzvyy7iigg_12salsa_macros.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCscdodAO9FK5_5alloc6string6StringuEECshVzvyy7iigg_12salsa_macros.exit.i
-  %3 = extractvalue { i64, i1 } %1, 0
-  %i.ai = add nuw i64 %3, 8
+  %2 = mul nuw i64 %i.ah, 24
+  %i.ai = add nuw i64 %2, 8
   %i.aj = and i64 %i.ai, -16                      ; 3 uses
-  %i.ak = add i64 %i.ag, 17
+  %i.ak = add nsw i64 %i.ag, 17
   %i.al = add i64 %i.ak, %i.aj                    ; 3 uses
   %i.am = icmp ult i64 %i.al, %i.aj
   br i1 %i.am, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshVzvyy7iigg_12salsa_macros.exit.i, label %bb.e

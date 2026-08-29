@@ -205,11 +205,11 @@ bb.vn:                                            ; preds = %.noexc466
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCse7JGOylGlDZ_3nix3sys8resource5UsageNtNtNtBN_5errno6consts5ErrnoE6unwrapCs4RW8js5ES7g_4fish.exit.i: ; preds = %.noexc466
   %i.awe = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
-  %.sroa.0.0.copyload.i = load i64, ptr %i.awe, align 8, !alias.scope !933
+  %.sroa.0.0.copyload.i = load i64, ptr %i.awe, align 8, !alias.scope !933 ; 2 uses
   %.sroa.4.0..sroa_idx134.i = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx134.i, align 8, !alias.scope !933
   %.sroa.5.0..sroa_idx135.i = getelementptr inbounds nuw i8, ptr %i.aj, i64 24
-  %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx135.i, align 8, !alias.scope !933
+  %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx135.i, align 8, !alias.scope !933 ; 2 uses
   %.sroa.6.0..sroa_idx.i452 = getelementptr inbounds nuw i8, ptr %i.aj, i64 32
   %.sroa.6.0.copyload.i = load i64, ptr %.sroa.6.0..sroa_idx.i452, align 8, !alias.scope !933
   %.sroa.7.0..sroa_idx136.i = getelementptr inbounds nuw i8, ptr %i.aj, i64 40
@@ -217,27 +217,27 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCse7JGOylGlDZ_3nix3sys8resou
   %.sroa.8138.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.aj, i64 128
   %.sroa.8138.0.copyload.i = load i64, ptr %.sroa.8138.0..sroa_idx.i, align 8, !alias.scope !933
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aj)
-  %0 = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.0.0.copyload.i, i64 1000) ; 2 uses
-  %1 = extractvalue { i64, i1 } %0, 1
+  %0 = add i64 %.sroa.0.0.copyload.i, -9223372036854776
+  %1 = icmp ult i64 %0, -18446744073709551
   br i1 %1, label %.invoke755, label %bb.vo
 
 bb.vo:                                            ; preds = %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCse7JGOylGlDZ_3nix3sys8resource5UsageNtNtNtBN_5errno6consts5ErrnoE6unwrapCs4RW8js5ES7g_4fish.exit.i
-  %2 = extractvalue { i64, i1 } %0, 0
-  %i.awf = sdiv i64 %.sroa.4.0.copyload.i, 1000
-  %i.awg = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %2, i64 %i.awf) ; 2 uses
-  %3 = extractvalue { i64, i1 } %i.awg, 0         ; 2 uses
+  %2 = mul nsw i64 %.sroa.0.0.copyload.i, 1000    ; 2 uses
+  %i.awf = sdiv i64 %.sroa.4.0.copyload.i, 1000   ; 2 uses
+  %i.awg = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %2, i64 %i.awf)
+  %3 = add nsw i64 %i.awf, %2                     ; 3 uses
   %i.awh = extractvalue { i64, i1 } %i.awg, 1
   br i1 %i.awh, label %.invoke, label %bb.vp
 
 bb.vp:                                            ; preds = %bb.vo
-  %4 = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.5.0.copyload.i, i64 1000) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
+  %4 = add i64 %.sroa.5.0.copyload.i, -9223372036854776
+  %5 = icmp ult i64 %4, -18446744073709551
   br i1 %5, label %.invoke755, label %bb.vq
 
 bb.vq:                                            ; preds = %bb.vp
-  %6 = extractvalue { i64, i1 } %4, 0
-  %i.awi = sdiv i64 %.sroa.6.0.copyload.i, 1000
-  %i.awj = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %6, i64 %i.awi) ; 2 uses
+  %6 = mul nsw i64 %.sroa.5.0.copyload.i, 1000    ; 2 uses
+  %i.awi = sdiv i64 %.sroa.6.0.copyload.i, 1000   ; 2 uses
+  %i.awj = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %6, i64 %i.awi)
   %i.awk = extractvalue { i64, i1 } %i.awj, 1
   br i1 %i.awk, label %.invoke, label %bb.vr
 
@@ -249,13 +249,13 @@ bb.vq:                                            ; preds = %bb.vp
   unreachable
 
 bb.vr:                                            ; preds = %bb.vq
-  %7 = extractvalue { i64, i1 } %i.awj, 0         ; 2 uses
-  %i.awl = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %3, i64 %7) ; 2 uses
+  %7 = add nsw i64 %i.awi, %6                     ; 3 uses
+  %i.awl = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %3, i64 %7)
   %i.awm = extractvalue { i64, i1 } %i.awl, 1
   br i1 %i.awm, label %.invoke, label %bb.vs
 
 bb.vs:                                            ; preds = %bb.vr
-  %8 = extractvalue { i64, i1 } %i.awl, 0
+  %8 = add nsw i64 %7, %3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ai)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah)
   store i64 0, ptr %i.ah, align 8
@@ -657,9 +657,6 @@ declare void @_RNvMs5_NtCs8frGy5WneL6_4fish6parserNtB5_6Parser13get_backtrace(pt
 
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvNtNtCse7JGOylGlDZ_3nix3sys8resource9getrusage(ptr dead_on_unwind noalias nofree noundef writable sret([152 x i8]) align 8 captures(none) dereferenceable(152), i32 noundef range(i32 -1, 2)) unnamed_addr #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.smul.with.overflow.i64(i64, i64) #10
 
 ; Function Attrs: cold noinline noreturn nonlazybind uwtable
 declare void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_mul_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #7

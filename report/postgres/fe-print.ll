@@ -202,12 +202,11 @@ bb.a:
   br i1 %.not, label %.preheader, label %bb.b
 
 .preheader:                                       ; preds = %bb.a
-  %i.c = sext i32 %6 to i64                       ; 3 uses
+  %i.c = sext i32 %6 to i64                       ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 5 uses
   %wide.trip.count = zext nneg i32 %2 to i64      ; 4 uses
   %i.e = load i32, ptr %3, align 4
   %i.f = sext i32 %i.e to i64
-  %8 = insertvalue { i64, i1 } { i64 poison, i1 false }, i64 %i.f, 0
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -215,12 +214,13 @@ bb.b:                                             ; preds = %bb.a
   br label %.thread131
 
 bb.c:                                             ; preds = %.preheader, %.backedge
-  %9 = phi { i64, i1 } [ %8, %.preheader ], [ %i.n, %.backedge ]
+  %8 = phi i64 [ %i.f, %.preheader ], [ %i.m, %.backedge ]
+  %.0125137190 = phi i64 [ 0, %.preheader ], [ %.0125137.be, %.backedge ]
   %indvars.iv189 = phi i64 [ 0, %.preheader ], [ %indvars.iv.be, %.backedge ] ; 2 uses
-  %10 = extractvalue { i64, i1 } %9, 0
-  %i.h = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %10, i64 range(i64 -2147483648, 2147483648) %i.c) ; 2 uses
+  %9 = add nuw i64 %.0125137190, %8               ; 2 uses
+  %i.h = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %9, i64 range(i64 -2147483648, 2147483648) %i.c)
   %i.i = extractvalue { i64, i1 } %i.h, 1
-  %11 = extractvalue { i64, i1 } %i.h, 0          ; 3 uses
+  %10 = add nuw i64 %9, %i.c                      ; 4 uses
   br i1 %i.i, label %.loopexit135, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -229,9 +229,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not106, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %12 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %11, i64 2) ; 2 uses
-  %13 = extractvalue { i64, i1 } %12, 1
-  br i1 %13, label %.loopexit135, label %.thread
+  %11 = icmp ugt i64 %10, -3
+  br i1 %11, label %.loopexit135, label %.thread
 
 bb.f:                                             ; preds = %bb.d
   %indvars.iv.next = add nuw nsw i64 %indvars.iv189, 1 ; 2 uses
@@ -240,47 +239,45 @@ bb.f:                                             ; preds = %bb.d
 
 .backedge:                                        ; preds = %bb.f, %.thread
   %indvars.iv.be = phi i64 [ %indvars.iv.next, %bb.f ], [ %indvars.iv.next174, %.thread ] ; 2 uses
-  %.0125137.be = phi i64 [ %11, %bb.f ], [ %14, %.thread ]
+  %.0125137.be = phi i64 [ %10, %bb.f ], [ %12, %.thread ] ; 2 uses
   %i.k = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv.be
   %i.l = load i32, ptr %i.k, align 4
-  %i.m = sext i32 %i.l to i64
-  %i.n = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.0125137.be, i64 range(i64 -2147483648, 2147483648) %i.m) ; 2 uses
+  %i.m = sext i32 %i.l to i64                     ; 2 uses
+  %i.n = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.0125137.be, i64 range(i64 -2147483648, 2147483648) %i.m)
   %i.o = extractvalue { i64, i1 } %i.n, 1
   br i1 %i.o, label %.loopexit135, label %bb.c, !llvm.loop !15
 
 .thread:                                          ; preds = %bb.e
-  %14 = extractvalue { i64, i1 } %12, 0           ; 2 uses
+  %12 = add nuw i64 %10, 2                        ; 3 uses
   %indvars.iv.next174 = add nuw nsw i64 %indvars.iv189, 1 ; 2 uses
   %exitcond.not175 = icmp eq i64 %indvars.iv.next174, %wide.trip.count
   br i1 %exitcond.not175, label %bb.g, label %.backedge
 
 bb.g:                                             ; preds = %.thread
-  %i.p = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %14, i64 range(i64 -2147483648, 2147483648) %i.c) ; 2 uses
+  %i.p = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %12, i64 range(i64 -2147483648, 2147483648) %i.c)
   %i.q = extractvalue { i64, i1 } %i.p, 1
   br i1 %i.q, label %.loopexit135, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %15 = extractvalue { i64, i1 } %i.p, 0
-  %i.r = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %15, i64 range(i64 -2147483648, 2147483648) %i.c) ; 2 uses
+  %13 = add nuw i64 %12, %i.c                     ; 2 uses
+  %i.r = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %13, i64 range(i64 -2147483648, 2147483648) %i.c)
   %i.s = extractvalue { i64, i1 } %i.r, 1
   br i1 %i.s, label %.loopexit135, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %16 = extractvalue { i64, i1 } %i.r, 0
-  %17 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %16, i64 2) ; 2 uses
-  %18 = extractvalue { i64, i1 } %17, 1
-  %19 = extractvalue { i64, i1 } %17, 0
-  br i1 %18, label %.loopexit135, label %.loopexit180
+  %14 = add nuw i64 %13, %i.c                     ; 2 uses
+  %15 = icmp ugt i64 %14, -3
+  %16 = add nuw i64 %14, 2
+  br i1 %15, label %.loopexit135, label %.loopexit180
 
 .loopexit180:                                     ; preds = %bb.f, %bb.i
-  %.2127 = phi i64 [ %19, %bb.i ], [ %11, %bb.f ]
-  %20 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.2127, i64 1) ; 2 uses
-  %21 = extractvalue { i64, i1 } %20, 1
-  br i1 %21, label %.loopexit135, label %bb.j
+  %.2127 = phi i64 [ %16, %bb.i ], [ %10, %bb.f ] ; 2 uses
+  %17 = icmp eq i64 %.2127, -1
+  br i1 %17, label %.loopexit135, label %bb.j
 
 bb.j:                                             ; preds = %.loopexit180
-  %22 = extractvalue { i64, i1 } %20, 0
-  %i.t = tail call noalias ptr @malloc(i64 noundef %22) #17 ; 7 uses
+  %18 = add nuw i64 %.2127, 1
+  %i.t = tail call noalias ptr @malloc(i64 noundef %18) #17 ; 7 uses
   %.not98 = icmp eq ptr %i.t, null
   br i1 %.not98, label %bb.q, label %bb.k
 

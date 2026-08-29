@@ -205,7 +205,7 @@ bb.bq:                                            ; preds = %bb.bo
   %.sroa.6.i.sroa.6.0.copyload.i = load i8, ptr %.sroa.6.i.sroa.6.0..sroa.410.0..sroa_idx.i.i.sroa_idx.i, align 2, !noalias !7240
   %.sroa.15.5.copyload.i.i = load ptr, ptr %.sroa.15.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 1, !noalias !7240
   %.sroa.22.5.copyload.i.i = load i8, ptr %.sroa.22.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 1, !noalias !7240
-  %.sroa.26.5.copyload.i.i = load i64, ptr %.sroa.26.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 4, !noalias !7240
+  %.sroa.26.5.copyload.i.i = load i64, ptr %.sroa.26.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 4, !noalias !7240 ; 2 uses
   %i.ds = load <2 x i64>, ptr %.sroa.24.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 4, !noalias !7240
   %.sroa.28.5.copyload.i.i = load i64, ptr %.sroa.28.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 4, !noalias !7240
   %i.dt = load <2 x i64>, ptr %.sroa.27.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 4, !noalias !7240
@@ -367,16 +367,15 @@ bb.cj:                                            ; preds = %bb.ci
           to label %"_ZN4core3ptr70drop_in_place$LT$core..option..Option$LT$zip..result..ZipError$GT$$GT$17h1667eb2c840c6250E.exit314" unwind label %bb.de
 
 _ZN3zip4spec22find_central_directory15try_read_eocd6417hf06aeddc76f0c633E.exit: ; preds = %bb.ca
-  %6 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.26.5.copyload.i.i, i64 46) ; 2 uses
-  %7 = extractvalue { i64, i1 } %6, 0
-  %8 = extractvalue { i64, i1 } %6, 1
-  br i1 %8, label %bb.ck, label %bb.cl, !prof !116
+  %6 = mul nuw i64 %.sroa.26.5.copyload.i.i, 46
+  %7 = icmp ugt i64 %.sroa.26.5.copyload.i.i, 401016175515425035
+  br i1 %7, label %bb.ck, label %bb.cl, !prof !116
 
 bb.ck:                                            ; preds = %_ZN3zip4spec22find_central_directory15try_read_eocd6417hf06aeddc76f0c633E.exit
   br label %bb.cl
 
 bb.cl:                                            ; preds = %_ZN3zip4spec22find_central_directory15try_read_eocd6417hf06aeddc76f0c633E.exit, %bb.ck
-  %.sroa.0189.0 = phi i64 [ -1, %bb.ck ], [ %7, %_ZN3zip4spec22find_central_directory15try_read_eocd6417hf06aeddc76f0c633E.exit ]
+  %.sroa.0189.0 = phi i64 [ -1, %bb.ck ], [ %6, %_ZN3zip4spec22find_central_directory15try_read_eocd6417hf06aeddc76f0c633E.exit ]
   %i.fa = call i64 @llvm.uadd.sat.i64(i64 %.sroa.0189.0, i64 %.sroa.28.5.copyload.i.i)
   %i.fb = icmp ult i64 %.sroa.5179.0.copyload, %i.fa
   br i1 %i.fb, label %bb.ct, label %bb.cm
@@ -779,7 +778,7 @@ bb.bq:                                            ; preds = %bb.bo
   %.sroa.6.i.sroa.6.0.copyload.i = load i8, ptr %.sroa.6.i.sroa.6.0..sroa.410.0..sroa_idx.i.i.sroa_idx.i, align 2, !noalias !7434
   %.sroa.15.5.copyload.i.i = load ptr, ptr %.sroa.15.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 1, !noalias !7434
   %.sroa.22.5.copyload.i.i = load i8, ptr %.sroa.22.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 1, !noalias !7434
-  %.sroa.26.5.copyload.i.i = load i64, ptr %.sroa.26.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 4, !noalias !7434
+  %.sroa.26.5.copyload.i.i = load i64, ptr %.sroa.26.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 4, !noalias !7434 ; 2 uses
   %i.ds = load <2 x i64>, ptr %.sroa.24.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 4, !noalias !7434
   %.sroa.28.5.copyload.i.i = load i64, ptr %.sroa.28.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 4, !noalias !7434
   %i.dt = load <2 x i64>, ptr %.sroa.27.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 4, !noalias !7434
@@ -941,16 +940,15 @@ bb.cj:                                            ; preds = %bb.ci
           to label %"_ZN4core3ptr70drop_in_place$LT$core..option..Option$LT$zip..result..ZipError$GT$$GT$17h1667eb2c840c6250E.exit314" unwind label %bb.de
 
 _ZN3zip4spec22find_central_directory15try_read_eocd6417h20a80cfa3eac08bcE.exit: ; preds = %bb.ca
-  %6 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.26.5.copyload.i.i, i64 46) ; 2 uses
-  %7 = extractvalue { i64, i1 } %6, 0
-  %8 = extractvalue { i64, i1 } %6, 1
-  br i1 %8, label %bb.ck, label %bb.cl, !prof !116
+  %6 = mul nuw i64 %.sroa.26.5.copyload.i.i, 46
+  %7 = icmp ugt i64 %.sroa.26.5.copyload.i.i, 401016175515425035
+  br i1 %7, label %bb.ck, label %bb.cl, !prof !116
 
 bb.ck:                                            ; preds = %_ZN3zip4spec22find_central_directory15try_read_eocd6417h20a80cfa3eac08bcE.exit
   br label %bb.cl
 
 bb.cl:                                            ; preds = %_ZN3zip4spec22find_central_directory15try_read_eocd6417h20a80cfa3eac08bcE.exit, %bb.ck
-  %.sroa.0189.0 = phi i64 [ -1, %bb.ck ], [ %7, %_ZN3zip4spec22find_central_directory15try_read_eocd6417h20a80cfa3eac08bcE.exit ]
+  %.sroa.0189.0 = phi i64 [ -1, %bb.ck ], [ %6, %_ZN3zip4spec22find_central_directory15try_read_eocd6417h20a80cfa3eac08bcE.exit ]
   %i.fa = call i64 @llvm.uadd.sat.i64(i64 %.sroa.0189.0, i64 %.sroa.28.5.copyload.i.i)
   %i.fb = icmp ult i64 %.sroa.5179.0.copyload, %i.fa
   br i1 %i.fb, label %bb.ct, label %bb.cm
@@ -1353,7 +1351,7 @@ bb.bq:                                            ; preds = %bb.bo
   %.sroa.6.i.sroa.6.0.copyload.i = load i8, ptr %.sroa.6.i.sroa.6.0..sroa.410.0..sroa_idx.i.i.sroa_idx.i, align 2, !noalias !7628
   %.sroa.15.5.copyload.i.i = load ptr, ptr %.sroa.15.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 1, !noalias !7628
   %.sroa.22.5.copyload.i.i = load i8, ptr %.sroa.22.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 1, !noalias !7628
-  %.sroa.26.5.copyload.i.i = load i64, ptr %.sroa.26.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 4, !noalias !7628
+  %.sroa.26.5.copyload.i.i = load i64, ptr %.sroa.26.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 4, !noalias !7628 ; 2 uses
   %i.ds = load <2 x i64>, ptr %.sroa.24.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 4, !noalias !7628
   %.sroa.28.5.copyload.i.i = load i64, ptr %.sroa.28.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 4, !noalias !7628
   %i.dt = load <2 x i64>, ptr %.sroa.27.5..sroa.410.0..sroa_idx.i.sroa_idx.i.i, align 4, !noalias !7628
@@ -1515,16 +1513,15 @@ bb.cj:                                            ; preds = %bb.ci
           to label %"_ZN4core3ptr70drop_in_place$LT$core..option..Option$LT$zip..result..ZipError$GT$$GT$17h1667eb2c840c6250E.exit314" unwind label %bb.de
 
 _ZN3zip4spec22find_central_directory15try_read_eocd6417h6488ef75316371f6E.exit: ; preds = %bb.ca
-  %6 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.26.5.copyload.i.i, i64 46) ; 2 uses
-  %7 = extractvalue { i64, i1 } %6, 0
-  %8 = extractvalue { i64, i1 } %6, 1
-  br i1 %8, label %bb.ck, label %bb.cl, !prof !116
+  %6 = mul nuw i64 %.sroa.26.5.copyload.i.i, 46
+  %7 = icmp ugt i64 %.sroa.26.5.copyload.i.i, 401016175515425035
+  br i1 %7, label %bb.ck, label %bb.cl, !prof !116
 
 bb.ck:                                            ; preds = %_ZN3zip4spec22find_central_directory15try_read_eocd6417h6488ef75316371f6E.exit
   br label %bb.cl
 
 bb.cl:                                            ; preds = %_ZN3zip4spec22find_central_directory15try_read_eocd6417h6488ef75316371f6E.exit, %bb.ck
-  %.sroa.0189.0 = phi i64 [ -1, %bb.ck ], [ %7, %_ZN3zip4spec22find_central_directory15try_read_eocd6417h6488ef75316371f6E.exit ]
+  %.sroa.0189.0 = phi i64 [ -1, %bb.ck ], [ %6, %_ZN3zip4spec22find_central_directory15try_read_eocd6417h6488ef75316371f6E.exit ]
   %i.fa = call i64 @llvm.uadd.sat.i64(i64 %.sroa.0189.0, i64 %.sroa.28.5.copyload.i.i)
   %i.fb = icmp ult i64 %.sroa.5179.0.copyload, %i.fa
   br i1 %i.fb, label %bb.ct, label %bb.cm
@@ -1926,9 +1923,6 @@ declare hidden void @"_ZN3zip4read12magic_finder38OptimisticMagicFinder$LT$Direc
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #18
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #18
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @"_ZN3zip4read12magic_finder20MagicFinder$LT$T$GT$4next17h1b033de7eb517bc6E"(ptr dead_on_unwind noalias noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24), ptr noalias noundef align 8 dereferenceable(120), ptr noalias noundef align 8 dereferenceable(32)) unnamed_addr #0

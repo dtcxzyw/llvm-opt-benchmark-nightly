@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %_ZNKSt17basic_strin
 
 .lr.ph.i36.i.i:                                   ; preds = %bb.p, %.critedge.i37.i.i
   %.364.i.i = phi ptr [ %i.bo, %.critedge.i37.i.i ], [ %i.ao, %bb.p ] ; 3 uses
-  %.9.i.i = phi i64 [ %.10.i.i, %.critedge.i37.i.i ], [ 0, %bb.p ] ; 3 uses
+  %.9.i.i = phi i64 [ %.10.i.i, %.critedge.i37.i.i ], [ 0, %bb.p ] ; 4 uses
   %.02237.i.i.i = phi i32 [ %i.bg, %.critedge.i37.i.i ], [ 64, %bb.p ]
   %i.be = load i8, ptr %.364.i.i, align 1, !tbaa !17
   %i.bf = add i8 %i.be, -48                       ; 3 uses
@@ -224,20 +224,19 @@ bb.r:                                             ; preds = %bb.q
   br label %.critedge.i37.i.i
 
 bb.s:                                             ; preds = %bb.q
-  %3 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.9.i.i, i64 10) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 1
-  br i1 %4, label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread, label %.split.i.i.i, !prof !201
+  %3 = icmp ugt i64 %.9.i.i, 1844674407370955161
+  br i1 %3, label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread, label %.split.i.i.i, !prof !201
 
 .split.i.i.i:                                     ; preds = %bb.s
-  %5 = extractvalue { i64, i1 } %3, 0
-  %i.bl = zext nneg i8 %i.bf to i64
-  %i.bm = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %5, i64 %i.bl) ; 2 uses
+  %4 = mul nuw i64 %.9.i.i, 10                    ; 2 uses
+  %i.bl = zext nneg i8 %i.bf to i64               ; 2 uses
+  %i.bm = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %4, i64 %i.bl)
   %i.bn = extractvalue { i64, i1 } %i.bm, 1
-  %6 = extractvalue { i64, i1 } %i.bm, 0
+  %5 = add nuw i64 %4, %i.bl
   br i1 %i.bn, label %_ZN4toml2v34impl10parse_pathESt17basic_string_viewIcSt11char_traitsIcEEPvPFbS6_S5_EPFbS6_mE.exit.thread, label %.critedge.i37.i.i, !prof !173
 
 .critedge.i37.i.i:                                ; preds = %.split.i.i.i, %bb.r
-  %.10.i.i = phi i64 [ %i.bk, %bb.r ], [ %6, %.split.i.i.i ] ; 2 uses
+  %.10.i.i = phi i64 [ %i.bk, %bb.r ], [ %5, %.split.i.i.i ] ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %.364.i.i, i64 1 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bo, %i.bd
   br i1 %.not.i.i.i, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.i.i, label %.lr.ph.i36.i.i, !llvm.loop !202
@@ -640,7 +639,7 @@ bb.i:                                             ; preds = %_ZNKSt17basic_strin
 
 .lr.ph.i36.i:                                     ; preds = %bb.i, %.critedge.i37.i
   %.364.i = phi ptr [ %i.an, %.critedge.i37.i ], [ %i.n, %bb.i ] ; 3 uses
-  %.9.i = phi i64 [ %.10.i, %.critedge.i37.i ], [ 0, %bb.i ] ; 3 uses
+  %.9.i = phi i64 [ %.10.i, %.critedge.i37.i ], [ 0, %bb.i ] ; 4 uses
   %.02237.i.i = phi i32 [ %i.af, %.critedge.i37.i ], [ 64, %bb.i ]
   %i.ad = load i8, ptr %.364.i, align 1, !tbaa !17
   %i.ae = add i8 %i.ad, -48                       ; 3 uses
@@ -659,20 +658,19 @@ bb.k:                                             ; preds = %bb.j
   br label %.critedge.i37.i
 
 bb.l:                                             ; preds = %bb.j
-  %5 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.9.i, i64 10) ; 2 uses
-  %6 = extractvalue { i64, i1 } %5, 1
-  br i1 %6, label %.thread204, label %.split.i.i, !prof !201
+  %5 = icmp ugt i64 %.9.i, 1844674407370955161
+  br i1 %5, label %.thread204, label %.split.i.i, !prof !201
 
 .split.i.i:                                       ; preds = %bb.l
-  %7 = extractvalue { i64, i1 } %5, 0
-  %i.ak = zext nneg i8 %i.ae to i64
-  %i.al = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %7, i64 %i.ak) ; 2 uses
+  %6 = mul nuw i64 %.9.i, 10                      ; 2 uses
+  %i.ak = zext nneg i8 %i.ae to i64               ; 2 uses
+  %i.al = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %6, i64 %i.ak)
   %i.am = extractvalue { i64, i1 } %i.al, 1
-  %8 = extractvalue { i64, i1 } %i.al, 0
+  %7 = add nuw i64 %6, %i.ak
   br i1 %i.am, label %.thread204, label %.critedge.i37.i, !prof !173
 
 .critedge.i37.i:                                  ; preds = %.split.i.i, %bb.k
-  %.10.i = phi i64 [ %i.aj, %bb.k ], [ %8, %.split.i.i ] ; 2 uses
+  %.10.i = phi i64 [ %i.aj, %bb.k ], [ %7, %.split.i.i ] ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.364.i, i64 1 ; 2 uses
   %.not.i.i = icmp eq ptr %i.an, %i.ac
   br i1 %.not.i.i, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.i, label %.lr.ph.i36.i, !llvm.loop !202
@@ -1075,7 +1073,7 @@ bb.k:                                             ; preds = %_ZNKSt17basic_strin
 
 .lr.ph.i36.i.i:                                   ; preds = %bb.k, %.critedge.i37.i.i
   %.364.i.i = phi ptr [ %i.bc, %.critedge.i37.i.i ], [ %i.ac, %bb.k ] ; 3 uses
-  %.9.i.i = phi i64 [ %.10.i.i, %.critedge.i37.i.i ], [ 0, %bb.k ] ; 3 uses
+  %.9.i.i = phi i64 [ %.10.i.i, %.critedge.i37.i.i ], [ 0, %bb.k ] ; 4 uses
   %.02237.i.i.i = phi i32 [ %i.au, %.critedge.i37.i.i ], [ 64, %bb.k ]
   %i.as = load i8, ptr %.364.i.i, align 1, !tbaa !17
   %i.at = add i8 %i.as, -48                       ; 3 uses
@@ -1094,20 +1092,19 @@ bb.m:                                             ; preds = %bb.l
   br label %.critedge.i37.i.i
 
 bb.n:                                             ; preds = %bb.l
-  %7 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.9.i.i, i64 10) ; 2 uses
-  %8 = extractvalue { i64, i1 } %7, 1
-  br i1 %8, label %.loopexit, label %.split.i.i.i, !prof !201
+  %7 = icmp ugt i64 %.9.i.i, 1844674407370955161
+  br i1 %7, label %.loopexit, label %.split.i.i.i, !prof !201
 
 .split.i.i.i:                                     ; preds = %bb.n
-  %9 = extractvalue { i64, i1 } %7, 0
-  %i.az = zext nneg i8 %i.at to i64
-  %i.ba = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %9, i64 %i.az) ; 2 uses
+  %8 = mul nuw i64 %.9.i.i, 10                    ; 2 uses
+  %i.az = zext nneg i8 %i.at to i64               ; 2 uses
+  %i.ba = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %8, i64 %i.az)
   %i.bb = extractvalue { i64, i1 } %i.ba, 1
-  %10 = extractvalue { i64, i1 } %i.ba, 0
+  %9 = add nuw i64 %8, %i.az
   br i1 %i.bb, label %.loopexit, label %.critedge.i37.i.i, !prof !173
 
 .critedge.i37.i.i:                                ; preds = %.split.i.i.i, %bb.m
-  %.10.i.i = phi i64 [ %i.ay, %bb.m ], [ %10, %.split.i.i.i ] ; 2 uses
+  %.10.i.i = phi i64 [ %i.ay, %bb.m ], [ %9, %.split.i.i.i ] ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.364.i.i, i64 1 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bc, %i.ar
   br i1 %.not.i.i.i, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.i.i, label %.lr.ph.i36.i.i, !llvm.loop !202
@@ -1508,9 +1505,6 @@ declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_
 declare noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32), i64 noundef, i64 noundef, ptr noundef, i64 noundef) local_unnamed_addr #1
 
 declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef nonnull align 8 dereferenceable(32)) local_unnamed_addr #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #43
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #43

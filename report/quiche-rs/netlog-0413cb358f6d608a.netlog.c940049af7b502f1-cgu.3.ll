@@ -204,7 +204,7 @@ bb.ax:                                            ; preds = %thread-pre-split.i,
 .preheader76.i.preheader:                         ; preds = %bb.ax, %.preheader76.i
   %.sroa.0.1.i754 = phi ptr [ %i.gn, %.preheader76.i ], [ %.sroa.0.0.i126, %bb.ax ] ; 2 uses
   %.sroa.15.1.i753 = phi i64 [ %i.go, %.preheader76.i ], [ %.sroa.15.0.i, %bb.ax ]
-  %.sroa.043.0.i752 = phi i16 [ %i.gw, %.preheader76.i ], [ 0, %bb.ax ]
+  %.sroa.043.0.i752 = phi i16 [ %i.gw, %.preheader76.i ], [ 0, %bb.ax ] ; 2 uses
     #dbg_value(ptr %.sroa.0.1.i754, !12105, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12168)
     #dbg_value(i64 %.sroa.15.1.i753, !12105, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !12168)
     #dbg_value(i16 %.sroa.043.0.i752, !12212, !DIExpression(), !12216)
@@ -215,17 +215,16 @@ bb.ax:                                            ; preds = %thread-pre-split.i,
     #dbg_value(i64 %i.go, !12130, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !12223)
     #dbg_value(i16 10, !12191, !DIExpression(), !12198)
     #dbg_value(i16 10, !12209, !DIExpression(), !12210)
-  %3 = call { i16, i1 } @llvm.umul.with.overflow.i16(i16 %.sroa.043.0.i752, i16 10), !dbg !12225 ; 2 uses
-  %4 = extractvalue { i16, i1 } %3, 0, !dbg !12225 ; 2 uses
-  %5 = extractvalue { i16, i1 } %3, 1, !dbg !12225
-    #dbg_value(i16 %4, !12192, !DIExpression(), !12226)
-    #dbg_value(i1 %5, !12194, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !12226)
-    #dbg_value(i1 %5, !12227, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !12234)
+  %3 = mul nuw i16 %.sroa.043.0.i752, 10, !dbg !12225 ; 2 uses
+  %4 = icmp ugt i16 %.sroa.043.0.i752, 6553, !dbg !12225
+    #dbg_value(i16 %3, !12192, !DIExpression(), !12226)
+    #dbg_value(i1 %4, !12194, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !12226)
+    #dbg_value(i1 %4, !12227, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !12234)
   %i.gp = load i8, ptr %.sroa.0.1.i754, align 1, !dbg !12236, !alias.scope !12181, !noundef !35 ; 2 uses
-  br i1 %5, label %bb.az, label %bb.ay, !dbg !12237, !prof !1803
+  br i1 %4, label %bb.az, label %bb.ay, !dbg !12237, !prof !1803
 
 bb.ay:                                            ; preds = %.preheader76.i.preheader
-    #dbg_value(i16 %4, !12131, !DIExpression(DW_OP_LLVM_fragment, 16, 16), !12238)
+    #dbg_value(i16 %3, !12131, !DIExpression(DW_OP_LLVM_fragment, 16, 16), !12238)
     #dbg_value(i16 1, !12131, !DIExpression(DW_OP_LLVM_fragment, 0, 16), !12238)
   %i.gq = zext i8 %i.gp to i32, !dbg !12239
     #dbg_value(i32 %i.gq, !12240, !DIExpression(), !12253)
@@ -255,13 +254,13 @@ bb.az:                                            ; preds = %.preheader76.i.preh
 bb.ba:                                            ; preds = %bb.ay
   %i.gv = trunc nuw nsw i32 %i.gr to i16, !dbg !12278
     #dbg_value(i16 %i.gv, !12145, !DIExpression(), !12279)
-    #dbg_value(i16 %4, !12111, !DIExpression(), !12184)
-    #dbg_value(i16 %4, !12185, !DIExpression(), !12198)
-    #dbg_value(i16 %4, !12200, !DIExpression(), !12210)
-    #dbg_value(i16 %4, !12212, !DIExpression(), !12216)
+    #dbg_value(i16 %3, !12111, !DIExpression(), !12184)
+    #dbg_value(i16 %3, !12185, !DIExpression(), !12198)
+    #dbg_value(i16 %3, !12200, !DIExpression(), !12210)
+    #dbg_value(i16 %3, !12212, !DIExpression(), !12216)
     #dbg_value(i16 %i.gv, !12215, !DIExpression(), !12216)
-  %i.gw = add i16 %4, %i.gv, !dbg !12280          ; 3 uses
-  %i.gx = icmp ult i16 %i.gw, %4, !dbg !12280
+  %i.gw = add i16 %3, %i.gv, !dbg !12280          ; 3 uses
+  %i.gx = icmp ult i16 %i.gw, %3, !dbg !12280
     #dbg_value(i1 %i.gx, !12227, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !12281)
   br i1 %i.gx, label %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit, label %.preheader76.i, !dbg !12283, !prof !1803
 
@@ -501,26 +500,25 @@ bb.bi:                                            ; preds = %thread-pre-split.i1
 .preheader77.i.preheader:                         ; preds = %bb.bi, %.preheader77.i
   %.sroa.0.1.i138757 = phi ptr [ %i.ic, %.preheader77.i ], [ %.sroa.0.0.i136, %bb.bi ] ; 3 uses
   %.sroa.15.1.i137756 = phi i64 [ %i.id, %.preheader77.i ], [ %.sroa.15.0.i134, %bb.bi ]
-  %.sroa.045.0.i755 = phi i32 [ %i.ik, %.preheader77.i ], [ 0, %bb.bi ]
+  %.sroa.045.0.i755 = phi i32 [ %i.ik, %.preheader77.i ], [ 0, %bb.bi ] ; 2 uses
     #dbg_value(ptr %.sroa.0.1.i138757, !12374, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12424)
     #dbg_value(i64 %.sroa.15.1.i137756, !12374, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !12424)
     #dbg_value(i32 %.sroa.045.0.i755, !12455, !DIExpression(), !12456)
     #dbg_value(ptr %.sroa.0.1.i138757, !12396, !DIExpression(), !12468)
     #dbg_value(ptr %.sroa.0.1.i138757, !12398, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !12468)
     #dbg_value(i64 %.sroa.15.1.i137756, !12398, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !12468)
-  %6 = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.sroa.045.0.i755, i32 10), !dbg !12472 ; 2 uses
-  %7 = extractvalue { i32, i1 } %6, 1, !dbg !12472
-    #dbg_value(i32 poison, !12438, !DIExpression(), !12473)
-    #dbg_value(i1 %7, !12440, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !12473)
-    #dbg_value(i1 %7, !12474, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !12477)
-  br i1 %7, label %bb.bk, label %bb.bj, !dbg !12479, !prof !1803
+  %5 = icmp ugt i32 %.sroa.045.0.i755, 429496729, !dbg !12472
+    #dbg_value(i32 %.sroa.045.0.i755, !12438, !DIExpression(DW_OP_constu, 10, DW_OP_mul, DW_OP_stack_value), !12473)
+    #dbg_value(i1 %5, !12440, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !12473)
+    #dbg_value(i1 %5, !12474, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !12477)
+  br i1 %5, label %bb.bk, label %bb.bj, !dbg !12479, !prof !1803
 
 bb.bj:                                            ; preds = %.preheader77.i.preheader
-  %8 = extractvalue { i32, i1 } %6, 0, !dbg !12472 ; 2 uses
-    #dbg_value(i32 %8, !12438, !DIExpression(), !12473)
+  %6 = mul nuw i32 %.sroa.045.0.i755, 10, !dbg !12472 ; 2 uses
+    #dbg_value(i32 %6, !12438, !DIExpression(), !12473)
     #dbg_value(i64 %.sroa.15.1.i137756, !12398, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !12468)
     #dbg_value(ptr %.sroa.0.1.i138757, !12398, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !12468)
-    #dbg_value(i32 %8, !12399, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !12480)
+    #dbg_value(i32 %6, !12399, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !12480)
     #dbg_value(i32 1, !12399, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !12480)
   %i.ig = load i8, ptr %.sroa.0.1.i138757, align 1, !dbg !12481, !alias.scope !12461, !noundef !35
   %i.ih = zext i8 %i.ig to i32, !dbg !12482
@@ -532,11 +530,11 @@ bb.bj:                                            ; preds = %.preheader77.i.preh
   %i.ii = add nsw i32 %i.ih, -48, !dbg !12489     ; 2 uses
     #dbg_value(i32 %i.ii, !12251, !DIExpression(), !12490)
   %i.ij = icmp ugt i32 %i.ii, 9, !dbg !12491
-    #dbg_value(i32 %8, !12380, !DIExpression(), !12464)
-    #dbg_value(i32 %8, !12437, !DIExpression(), !12444)
-    #dbg_value(i32 %8, !12455, !DIExpression(), !12456)
-  %i.ik = add i32 %i.ii, %8                       ; 3 uses
-  %i.il = icmp ult i32 %i.ik, %8
+    #dbg_value(i32 %6, !12380, !DIExpression(), !12464)
+    #dbg_value(i32 %6, !12437, !DIExpression(), !12444)
+    #dbg_value(i32 %6, !12455, !DIExpression(), !12456)
+  %i.ik = add i32 %i.ii, %6                       ; 3 uses
+  %i.il = icmp ult i32 %i.ik, %6
     #dbg_value(i1 %i.il, !12474, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !12492)
   %or.cond232 = select i1 %i.ij, i1 true, i1 %i.il, !dbg !12499, !prof !12500
   br i1 %or.cond232, label %_RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit.thread, label %.preheader77.i, !dbg !12499, !prof !12500
@@ -939,14 +937,8 @@ declare void @_RINvNtCskKLDkoKarTP_4core9panicking13assert_failedjjEB4_(i8 nound
 ; Function Attrs: cold noinline noreturn nonlazybind uwtable
 declare void @_RNvNtCskKLDkoKarTP_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef, i64 noundef, i64 noundef, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #9
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #12
-
 ; Function Attrs: noinline nonlazybind uwtable
 declare void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecINtNtB7_5boxed3BoxNtNtNtCseN4S6VTYCs1_14regex_automata4meta5regex5CacheEE8grow_oneCshhfsHpF03Qr_6netlog(ptr noalias nofree noundef align 8 dereferenceable(16)) unnamed_addr #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i16, i1 } @llvm.umul.with.overflow.i16(i16, i16) #12
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RINvNtCsixltGIj4kJ4_3log13___private_api3loguNtB2_12GlobalLoggerECshhfsHpF03Qr_6netlog(ptr noundef nonnull, ptr noundef nonnull, i64 noundef range(i64 1, 6), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40)) unnamed_addr #0

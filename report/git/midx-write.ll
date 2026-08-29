@@ -205,7 +205,7 @@ bb.ed:                                            ; preds = %.thread583
 
 bb.ee:                                            ; preds = %st_add.exit.i, %.lr.ph.i489
   %i.qi = phi i64 [ %i.qf, %.lr.ph.i489 ], [ %i.qs, %st_add.exit.i ]
-  %.0103.i = phi i64 [ 0, %.lr.ph.i489 ], [ %12, %st_add.exit.i ] ; 2 uses
+  %.0103.i = phi i64 [ 0, %.lr.ph.i489 ], [ %12, %st_add.exit.i ] ; 3 uses
   %.046102.i = phi i32 [ %i.ey, %.lr.ph.i489 ], [ %i.qr, %st_add.exit.i ]
   %i.qj = getelementptr inbounds nuw [40 x i8], ptr %i.qh, i64 %i.qi
   %i.qk = getelementptr inbounds nuw i8, ptr %i.qj, i64 16
@@ -213,8 +213,8 @@ bb.ee:                                            ; preds = %st_add.exit.i, %.lr
   %i.qm = getelementptr inbounds nuw i8, ptr %i.ql, i64 32
   %i.qn = load i32, ptr %i.qm, align 8, !tbaa !59
   %.fr212.i = freeze i32 %i.qn
-  %i.qo = zext i32 %.fr212.i to i64               ; 2 uses
-  %i.qp = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.0103.i, i64 %i.qo) ; 2 uses
+  %i.qo = zext i32 %.fr212.i to i64               ; 3 uses
+  %i.qp = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.0103.i, i64 range(i64 0, 4294967296) %i.qo)
   %i.qq = extractvalue { i64, i1 } %i.qp, 1
   br i1 %i.qq, label %bb.ef, label %st_add.exit.i
 
@@ -223,7 +223,7 @@ bb.ef:                                            ; preds = %bb.ee
   unreachable
 
 st_add.exit.i:                                    ; preds = %bb.ee
-  %12 = extractvalue { i64, i1 } %i.qp, 0         ; 3 uses
+  %12 = add i64 %.0103.i, %i.qo                   ; 3 uses
   %i.qr = add i32 %.046102.i, 1                   ; 2 uses
   %i.qs = zext i32 %i.qr to i64                   ; 2 uses
   %i.qt = icmp ugt i64 %i.qe, %i.qs
@@ -626,29 +626,28 @@ bb.fn:                                            ; preds = %bb.fm
   br i1 %.not56.i483, label %bb.fo, label %bb.fs
 
 bb.fo:                                            ; preds = %bb.fn, %bb.fm, %bb.fl
-  %i.xi = load i64, ptr %i.rc, align 8, !tbaa !111 ; 3 uses
-  %13 = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.xi, i64 1) ; 2 uses
-  %14 = extractvalue { i64, i1 } %13, 1
-  br i1 %14, label %bb.fp, label %st_add.exit64.i
+  %i.xi = load i64, ptr %i.rc, align 8, !tbaa !111 ; 4 uses
+  %13 = icmp eq i64 %i.xi, -1
+  br i1 %13, label %bb.fp, label %st_add.exit64.i
 
 bb.fp:                                            ; preds = %bb.fo
-  call void (ptr, ...) @die(ptr noundef nonnull @.str.71, i64 noundef %i.xi, i64 noundef 1) #21
+  call void (ptr, ...) @die(ptr noundef nonnull @.str.71, i64 noundef -1, i64 noundef 1) #21
   unreachable
 
 st_add.exit64.i:                                  ; preds = %bb.fo
-  %15 = extractvalue { i64, i1 } %13, 0           ; 2 uses
-  %16 = icmp ugt i64 %15, %.1122.i
-  br i1 %16, label %st_add.exit65.i, label %st_add.exit64._crit_edge.i
+  %.not85.i = icmp ult i64 %i.xi, %.1122.i
+  br i1 %.not85.i, label %st_add.exit64._crit_edge.i, label %st_add.exit65.i
 
 st_add.exit64._crit_edge.i:                       ; preds = %st_add.exit64.i
   %.pre.i486 = load ptr, ptr %i.rb, align 8, !tbaa !110
   br label %bb.fr
 
 st_add.exit65.i:                                  ; preds = %st_add.exit64.i
+  %14 = add nuw i64 %i.xi, 1
   %i.xj = mul nuw nsw i64 %.1122.i, 3
   %i.xk = add nuw nsw i64 %i.xj, 48
   %i.xl = lshr i64 %i.xk, 1
-  %spec.select.i = call i64 @llvm.umax.i64(i64 %i.xl, i64 %15) ; 4 uses
+  %spec.select.i = call i64 @llvm.umax.i64(i64 %i.xl, i64 %14) ; 4 uses
   %mul.ov.i68.i = icmp ugt i64 %spec.select.i, 288230376151711743
   br i1 %mul.ov.i68.i, label %bb.fq, label %st_mult.exit69.i
 

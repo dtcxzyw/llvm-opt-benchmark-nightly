@@ -204,11 +204,12 @@ declare ptr @proto_tree_add_ipv4(ptr noundef, i32 noundef, ptr noundef, i32 noun
 define internal fastcc range(i32 -1, 258) i32 @decode_mcast_vpn_nlri(ptr noundef %0, ptr noundef %1, i32 noundef %2, i16 noundef zeroext %3, ptr nofree noundef readonly captures(none) %4) unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq i16 %3, 1                        ; 4 uses
+  %5 = select i1 %i.a, i8 4, i8 16                ; 2 uses
   %i.b = tail call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %2) ; 2 uses
   %i.c = load i32, ptr @hf_bgp_mcast_vpn_nlri_route_type, align 4
   %i.d = tail call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.c, ptr noundef %1, i32 noundef %2, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.e = add i32 %2, 1                            ; 2 uses
-  %i.f = tail call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %i.e) ; 2 uses
+  %i.f = tail call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %i.e) ; 3 uses
   %i.g = load i32, ptr @hf_bgp_mcast_vpn_nlri_length, align 4
   %i.h = tail call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.g, ptr noundef %1, i32 noundef %i.e, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.i = add i32 %2, 2                            ; 14 uses
@@ -295,9 +296,8 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.r
 
 bb.k:                                             ; preds = %bb.b
-  %5 = select i1 %i.a, i32 4, i32 16
-  %6 = tail call { i32, i1 } @llvm.usub.with.overflow.i32(i32 %i.j, i32 %5) ; 2 uses
-  %7 = extractvalue { i32, i1 } %6, 1
+  %6 = zext nneg i8 %5 to i32                     ; 3 uses
+  %7 = icmp ult i8 %i.f, %5
   br i1 %7, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
@@ -305,7 +305,7 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 bb.m:                                             ; preds = %bb.k
-  %8 = extractvalue { i32, i1 } %6, 0             ; 4 uses
+  %8 = sub nuw nsw i32 %i.j, %6                   ; 4 uses
   %i.ay = load i32, ptr @hf_bgp_mcast_vpn_nlri_route_key, align 4
   %i.az = tail call ptr @proto_tree_add_item(ptr noundef %i.t, i32 noundef %i.ay, ptr noundef %1, i32 noundef %i.i, i32 noundef %8, i32 noundef 0)
   %i.ba = icmp eq i32 %8, 1
@@ -316,12 +316,12 @@ bb.m:                                             ; preds = %bb.k
 
 bb.n:                                             ; preds = %bb.m
   %i.bd = load i32, ptr @hf_bgp_mcast_vpn_nlri_origin_router_ipv4, align 4
-  %i.be = tail call ptr @proto_tree_add_item(ptr noundef %i.t, i32 noundef %i.bd, ptr noundef %1, i32 noundef %i.bc, i32 noundef 4, i32 noundef 0) ; 0 uses
+  %i.be = tail call ptr @proto_tree_add_item(ptr noundef %i.t, i32 noundef %i.bd, ptr noundef %1, i32 noundef %i.bc, i32 noundef %6, i32 noundef 0) ; 0 uses
   br label %bb.r
 
 bb.o:                                             ; preds = %bb.m
   %i.bf = load i32, ptr @hf_bgp_mcast_vpn_nlri_origin_router_ipv6, align 4
-  %i.bg = tail call ptr @proto_tree_add_item(ptr noundef %i.t, i32 noundef %i.bf, ptr noundef %1, i32 noundef %i.bc, i32 noundef 16, i32 noundef 0) ; 0 uses
+  %i.bg = tail call ptr @proto_tree_add_item(ptr noundef %i.t, i32 noundef %i.bf, ptr noundef %1, i32 noundef %i.bc, i32 noundef %6, i32 noundef 0) ; 0 uses
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.b
@@ -724,11 +724,8 @@ bb.g:                                             ; preds = %.sink.split51, %bb.
   ret i32 %.048
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.usub.with.overflow.i32(i32, i32) #4
-
 ; Function Attrs: noreturn null_pointer_is_valid
-declare void @except_throw(i64 noundef, i64 noundef, ptr noundef) local_unnamed_addr #5
+declare void @except_throw(i64 noundef, i64 noundef, ptr noundef) local_unnamed_addr #4
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define internal fastcc range(i32 -1, -2147483646) i32 @decode_fspec_match_prefix6(ptr noundef %0, ptr noundef %1, i32 noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef %5) unnamed_addr #0 {
@@ -1131,17 +1128,17 @@ declare void @col_set_str(ptr noundef, i32 noundef, ptr noundef) local_unnamed_a
 declare void @col_append_sep_str(ptr noundef, i32 noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.umin.i8(i8, i8) #4
+declare i8 @llvm.umin.i8(i8, i8) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #4
+declare i32 @llvm.umin.i32(i32, i32) #5
 
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { null_pointer_is_valid allocsize(1) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { noreturn null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { noreturn null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #6 = { nounwind }
 attributes #7 = { allocsize(1) }
 attributes #8 = { noreturn }

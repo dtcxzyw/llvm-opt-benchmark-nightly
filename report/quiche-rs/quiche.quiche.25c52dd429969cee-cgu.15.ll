@@ -204,18 +204,17 @@ bb.j:                                             ; preds = %bb.f
   br i1 %switch.i, label %bb.k, label %_RNvMs3_NtNtCs3f36owOmepS_6quiche8recovery9bandwidthNtB5_9Bandwidth13transfer_time.exit, !dbg !4387
 
 bb.k:                                             ; preds = %bb.j
-  %8 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %5, i64 8000000000), !dbg !4388 ; 2 uses
-  %9 = extractvalue { i64, i1 } %8, 1, !dbg !4388
+  %8 = icmp ugt i64 %5, 2305843009, !dbg !4388
     #dbg_value(i64 poison, !4370, !DIExpression(), !4389)
-    #dbg_value(i1 %9, !4372, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !4389)
-    #dbg_value(i1 %9, !4390, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !4397)
-  br i1 %9, label %bb.m, label %bb.l, !dbg !4399, !prof !1625
+    #dbg_value(i1 %8, !4372, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !4389)
+    #dbg_value(i1 %8, !4390, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !4397)
+  br i1 %8, label %bb.m, label %bb.l, !dbg !4399, !prof !1625
 
 bb.l:                                             ; preds = %bb.k
-  %10 = extractvalue { i64, i1 } %8, 0, !dbg !4388
-    #dbg_value(i64 %10, !4370, !DIExpression(), !4389)
-    #dbg_value(i64 %10, !4353, !DIExpression(), !4400)
-  %i.aj = udiv i64 %10, %.sroa.0.0.i, !dbg !4401  ; 2 uses
+  %9 = mul nuw i64 %5, 8000000000, !dbg !4388
+    #dbg_value(i64 %9, !4370, !DIExpression(), !4389)
+    #dbg_value(i64 %9, !4353, !DIExpression(), !4400)
+  %i.aj = udiv i64 %9, %.sroa.0.0.i, !dbg !4401   ; 2 uses
     #dbg_value(i64 %i.aj, !4402, !DIExpression(), !4409)
   %i.ak = udiv i64 %i.aj, 1000000000, !dbg !4411
   %i.al = urem i64 %i.aj, 1000000000, !dbg !4412
@@ -618,7 +617,7 @@ bb.c:                                             ; preds = %bb.a
   %i.c = zext i64 %1 to i128, !dbg !8384
   %i.d = mul nuw nsw i128 %i.c, 1000000000, !dbg !8384
   %i.e = zext nneg i32 %2 to i128, !dbg !8385
-  %i.f = add nuw nsw i128 %i.d, %i.e, !dbg !8384  ; 3 uses
+  %i.f = add nuw nsw i128 %i.d, %i.e, !dbg !8384  ; 4 uses
     #dbg_value(i128 %i.f, !8331, !DIExpression(), !8386)
     #dbg_value(i128 %i.f, !8387, !DIExpression(), !8411)
     #dbg_value(i128 %i.f, !8413, !DIExpression(), !8420)
@@ -632,11 +631,11 @@ bb.d:                                             ; preds = %bb.b, %bb.i, %bb.f
   ret i64 %.sroa.0.0, !dbg !8447
 
 bb.e:                                             ; preds = %bb.c
-  %i.h = trunc nuw i128 %i.f to i64, !dbg !8448
+  %i.h = trunc nuw i128 %i.f to i64, !dbg !8448   ; 2 uses
     #dbg_value(i64 %i.h, !8327, !DIExpression(), !8449)
     #dbg_value(i64 %i.h, !8361, !DIExpression(), !8365)
     #dbg_value(i64 %i.h, !8370, !DIExpression(), !8371)
-  %i.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %0, i64 %i.h), !dbg !8450 ; 2 uses
+  %i.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %0, i64 %i.h), !dbg !8450
   %i.j = extractvalue { i64, i1 } %i.i, 1, !dbg !8450
     #dbg_value(i64 poison, !8362, !DIExpression(), !8451)
     #dbg_value(i1 %i.j, !8364, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !8451)
@@ -644,7 +643,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.j, label %bb.g, label %bb.f, !dbg !8457, !prof !1625
 
 bb.f:                                             ; preds = %bb.e
-  %3 = extractvalue { i64, i1 } %i.i, 0, !dbg !8450
+  %3 = mul nuw i64 %0, %i.h, !dbg !8450
     #dbg_value(i64 %3, !8362, !DIExpression(), !8451)
     #dbg_value(i64 %3, !8329, !DIExpression(), !8458)
   %i.k = udiv i64 %3, 8000000000, !dbg !8459
@@ -652,12 +651,12 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e, %bb.c
     #dbg_value(ptr poison, !8376, !DIExpression(), !8462)
-  %i.l = zext i64 %0 to i128, !dbg !8464
+  %i.l = zext i64 %0 to i128, !dbg !8464          ; 2 uses
     #dbg_value(i128 %i.l, !8417, !DIExpression(), !8420)
     #dbg_value(i128 %i.l, !8427, !DIExpression(), !8431)
     #dbg_value(i128 %i.l, !8442, !DIExpression(), !8443)
-  %i.m = tail call { i128, i1 } @llvm.umul.with.overflow.i128(i128 %i.l, i128 %i.f), !dbg !8465 ; 2 uses
-  %4 = extractvalue { i128, i1 } %i.m, 0, !dbg !8465
+  %i.m = tail call { i128, i1 } @llvm.umul.with.overflow.i128(i128 %i.l, i128 %i.f), !dbg !8465
+  %4 = mul nuw i128 %i.f, %i.l, !dbg !8465
   %i.n = extractvalue { i128, i1 } %i.m, 1, !dbg !8465
     #dbg_value(i128 %4, !8333, !DIExpression(), !8466)
     #dbg_value(i128 %4, !8428, !DIExpression(), !8467)
@@ -1060,7 +1059,7 @@ bb.c:                                             ; preds = %bb.a
   %i.c = zext i64 %1 to i128, !dbg !13649
   %i.d = mul nuw nsw i128 %i.c, 1000000000, !dbg !13649
   %i.e = zext nneg i32 %2 to i128, !dbg !13650
-  %i.f = add nuw nsw i128 %i.d, %i.e, !dbg !13649 ; 3 uses
+  %i.f = add nuw nsw i128 %i.d, %i.e, !dbg !13649 ; 4 uses
     #dbg_value(i128 %i.f, !8331, !DIExpression(), !13651)
     #dbg_value(i128 %i.f, !8387, !DIExpression(), !13652)
     #dbg_value(i128 %i.f, !8413, !DIExpression(), !13654)
@@ -1070,11 +1069,11 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.g, label %bb.f, label %bb.d, !dbg !13660
 
 bb.d:                                             ; preds = %bb.c
-  %i.h = trunc nuw i128 %i.f to i64, !dbg !13661
+  %i.h = trunc nuw i128 %i.f to i64, !dbg !13661  ; 2 uses
     #dbg_value(i64 %i.h, !8327, !DIExpression(), !13662)
     #dbg_value(i64 %i.h, !8361, !DIExpression(), !13640)
     #dbg_value(i64 %i.h, !8370, !DIExpression(), !13642)
-  %i.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %0, i64 %i.h), !dbg !13663 ; 2 uses
+  %i.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %0, i64 %i.h), !dbg !13663
   %i.j = extractvalue { i64, i1 } %i.i, 1, !dbg !13663
     #dbg_value(i64 poison, !8362, !DIExpression(), !13664)
     #dbg_value(i1 %i.j, !8364, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13664)
@@ -1082,7 +1081,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.j, label %bb.f, label %bb.e, !dbg !13667, !prof !1625
 
 bb.e:                                             ; preds = %bb.d
-  %3 = extractvalue { i64, i1 } %i.i, 0, !dbg !13663
+  %3 = mul nuw i64 %0, %i.h, !dbg !13663
     #dbg_value(i64 %3, !8362, !DIExpression(), !13664)
     #dbg_value(i64 %3, !8329, !DIExpression(), !13668)
   %i.k = udiv i64 %3, 8000000000, !dbg !13669
@@ -1090,12 +1089,12 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d, %bb.c
     #dbg_value(ptr poison, !8376, !DIExpression(), !13671)
-  %i.l = zext i64 %0 to i128, !dbg !13673
+  %i.l = zext i64 %0 to i128, !dbg !13673         ; 2 uses
     #dbg_value(i128 %i.l, !8417, !DIExpression(), !13654)
     #dbg_value(i128 %i.l, !8427, !DIExpression(), !13656)
     #dbg_value(i128 %i.l, !8442, !DIExpression(), !13658)
-  %i.m = tail call { i128, i1 } @llvm.umul.with.overflow.i128(i128 %i.l, i128 %i.f), !dbg !13674 ; 2 uses
-  %4 = extractvalue { i128, i1 } %i.m, 0, !dbg !13674
+  %i.m = tail call { i128, i1 } @llvm.umul.with.overflow.i128(i128 %i.l, i128 %i.f), !dbg !13674
+  %4 = mul nuw i128 %i.f, %i.l, !dbg !13674
   %i.n = extractvalue { i128, i1 } %i.m, 1, !dbg !13674
     #dbg_value(i128 %4, !8333, !DIExpression(), !13675)
     #dbg_value(i128 %4, !8428, !DIExpression(), !13676)

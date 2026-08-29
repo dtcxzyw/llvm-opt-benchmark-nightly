@@ -202,20 +202,19 @@ bb.k:                                             ; preds = %thread-pre-split.i.
 .preheader56.i.i.i.preheader:                     ; preds = %bb.k, %.preheader56.i.i.i
   %.sroa.0.1.i.i.i90 = phi ptr [ %i.af, %.preheader56.i.i.i ], [ %.sroa.0.0.i.i.i, %bb.k ] ; 2 uses
   %.sroa.15.1.i.i.i89 = phi i64 [ %i.ag, %.preheader56.i.i.i ], [ %.sroa.15.0.i.i.i, %bb.k ]
-  %.sroa.042.0.i.i.i88 = phi i64 [ %i.am, %.preheader56.i.i.i ], [ 0, %bb.k ]
-  %7 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i.i88, i64 10), !dbg !752 ; 2 uses
-  %8 = extractvalue { i64, i1 } %7, 1, !dbg !752
-  br i1 %8, label %_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i, label %bb.l, !dbg !759, !prof !765
+  %.sroa.042.0.i.i.i88 = phi i64 [ %i.am, %.preheader56.i.i.i ], [ 0, %bb.k ] ; 2 uses
+  %7 = icmp ugt i64 %.sroa.042.0.i.i.i88, 1844674407370955161, !dbg !752
+  br i1 %7, label %_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i, label %bb.l, !dbg !759, !prof !765
 
 bb.l:                                             ; preds = %.preheader56.i.i.i.preheader
-  %9 = extractvalue { i64, i1 } %7, 0, !dbg !752  ; 2 uses
+  %8 = mul nuw i64 %.sroa.042.0.i.i.i88, 10, !dbg !752 ; 2 uses
   %i.ah = load i8, ptr %.sroa.0.1.i.i.i90, align 1, !dbg !766, !alias.scope !737, !noalias !740, !noundef !14
   %i.ai = zext i8 %i.ah to i32, !dbg !768
   %i.aj = add nsw i32 %i.ai, -48, !dbg !769       ; 2 uses
   %i.ak = icmp ugt i32 %i.aj, 9, !dbg !779
   %i.al = zext nneg i32 %i.aj to i64
-  %i.am = add i64 %9, %i.al                       ; 3 uses
-  %i.an = icmp ult i64 %i.am, %9
+  %i.am = add i64 %8, %i.al                       ; 3 uses
+  %i.an = icmp ult i64 %i.am, %8
   %or.cond.i.i = select i1 %i.ak, i1 true, i1 %i.an, !dbg !781, !prof !782
   br i1 %or.cond.i.i, label %_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i, label %.preheader56.i.i.i, !dbg !781, !prof !782
 
@@ -618,8 +617,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d, !dbg !1248
 
 bb.c:                                             ; preds = %bb.a
-  %i.f = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %3), !dbg !1249 ; 2 uses
-  %4 = extractvalue { i64, i1 } %i.f, 0, !dbg !1249 ; 5 uses
+  %i.f = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %3), !dbg !1249
+  %4 = mul nuw i64 %3, %2, !dbg !1249             ; 5 uses
   %i.g = extractvalue { i64, i1 } %i.f, 1, !dbg !1249
   br i1 %i.g, label %bb.g, label %bb.e, !dbg !1254, !prof !765
 

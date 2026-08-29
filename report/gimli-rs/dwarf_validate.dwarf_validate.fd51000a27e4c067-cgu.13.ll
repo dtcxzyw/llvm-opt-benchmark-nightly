@@ -204,45 +204,33 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load i64, ptr %0, align 8, !range !71, !noundef !5
   %i.h = shl nuw i64 %i.g, 1
   %i.i = add nuw i64 %.sroa.05.0, 1
-  %..i = tail call noundef i64 @llvm.umax.i64(i64 %i.i, i64 range(i64 0, -1) %i.h) ; 4 uses
+  %..i = tail call noundef i64 @llvm.umax.i64(i64 %i.i, i64 range(i64 0, -1) %i.h) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %2 = mul i64 %..i, 24                           ; 3 uses
   %or.cond.i = icmp ugt i64 %..i, 384307168202282325
-  br i1 %or.cond.i, label %bb.e, label %3, !prof !116
+  br i1 %or.cond.i, label %bb.e, label %bb.c, !prof !116
 
-3:                                                ; preds = %bb.b
-  %4 = icmp eq i64 %2, 0
-  br i1 %4, label %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslKoDbeUmNq5_14dwarf_validate.exit, label %bb.c
-
-bb.c:                                             ; preds = %3
+bb.c:                                             ; preds = %bb.b
+  %2 = mul nuw nsw i64 %..i, 24                   ; 2 uses
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #23, !noalias !117
   %i.j = tail call noundef align 8 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %2, i64 noundef range(i64 1, -9223372036854775807) 8) #23, !noalias !117 ; 2 uses
   %i.k = icmp eq ptr %i.j, null
-  br i1 %i.k, label %bb.e, label %5
-
-5:                                                ; preds = %bb.c
-  %6 = ptrtoint ptr %i.j to i64
-  br label %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslKoDbeUmNq5_14dwarf_validate.exit
+  br i1 %i.k, label %bb.e, label %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslKoDbeUmNq5_14dwarf_validate.exit
 
 bb.d:                                             ; preds = %bb.a
   tail call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @5, i64 noundef 17, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #27
   unreachable
 
 bb.e:                                             ; preds = %bb.b, %bb.c
+  %.sroa.10.0.ph = phi i64 [ %2, %bb.c ], [ undef, %bb.b ]
   %.sroa.4.0.ph = phi i64 [ 8, %bb.c ], [ 0, %bb.b ]
-  tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph, i64 %2) #24
+  tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph, i64 %.sroa.10.0.ph) #24
   unreachable
 
-_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslKoDbeUmNq5_14dwarf_validate.exit: ; preds = %5, %3
-  %.sroa.10.0 = phi i64 [ %6, %5 ], [ 8, %3 ]
-  %.sroa.4.0 = phi i64 [ %..i, %5 ], [ 0, %3 ]    ; 2 uses
-  %7 = inttoptr i64 %.sroa.10.0 to ptr
-  %8 = icmp samesign ule i64 %..i, %.sroa.4.0
-  tail call void @llvm.assume(i1 %8)
+_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslKoDbeUmNq5_14dwarf_validate.exit: ; preds = %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false)
-  store i64 %.sroa.4.0, ptr %0, align 8
+  store i64 %..i, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %7, ptr %.sroa.4.0..sroa_idx, align 8
+  store ptr %i.j, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %.sroa.5.0..sroa_idx, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -645,8 +633,8 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: cold nounwind nonlazybind uwtable
 define internal fastcc void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner11finish_growCslKoDbeUmNq5_14dwarf_validate(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, i64 %.0.val, ptr %.8.val, i64 noundef %1, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 1, 0) %3) unnamed_addr #6 {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 %1) ; 2 uses
-  %4 = extractvalue { i64, i1 } %i.a, 0           ; 7 uses
+  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 %1)
+  %4 = mul nuw i64 %3, %1                         ; 5 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
   %i.c = sub nuw i64 -9223372036854775808, %2
   %.not = icmp ugt i64 %4, %i.c
@@ -658,15 +646,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %i.e = mul nuw i64 %3, %.0.val                  ; 2 uses
+  %i.e = mul nuw i64 %3, %.0.val
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.f = icmp uge i64 %4, %i.e
+  %i.f = icmp uge i64 %1, %.0.val
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %i.e, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 0, -9223372036854775808) %4) #23
   br label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = icmp eq i64 %4, 0
+  %i.h = icmp eq i64 %1, 0
   br i1 %i.h, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.thread, label %bb.d
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.thread: ; preds = %bb.c
@@ -707,8 +695,8 @@ bb.g:                                             ; preds = %bb.a, %bb.e, %bb.f
 ; Function Attrs: nounwind nonlazybind uwtable
 define hidden void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslKoDbeUmNq5_14dwarf_validate(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 16)) %0, i64 noundef %1, i1 noundef zeroext %2, i64 noundef range(i64 1, -9223372036854775807) %3, i64 noundef %4) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %1) ; 2 uses
-  %5 = extractvalue { i64, i1 } %i.a, 0           ; 5 uses
+  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %1)
+  %5 = mul nuw i64 %4, %1                         ; 5 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
   %i.c = sub nuw i64 -9223372036854775808, %3
   %.not = icmp ugt i64 %5, %i.c

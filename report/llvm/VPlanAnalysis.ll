@@ -205,25 +205,34 @@ _ZN4llvmmlERKNS_15InstructionCostES2_.exit.a:     ; preds = %bb.d
   %.fca.0.extract5 = extractvalue { i64, i32 } %i.q, 0
   %.fca.1.extract6 = extractvalue { i64, i32 } %i.q, 1
   %i.r = icmp eq i32 %.fca.1.extract6, 1
-  %.0.i.i = tail call i64 @llvm.sadd.sat.i64(i64 %.fca.0.extract9, i64 %.fca.0.extract5) ; 2 uses
+  %.0.i.i = tail call i64 @llvm.sadd.sat.i64(i64 %.fca.0.extract9, i64 %.fca.0.extract5) ; 3 uses
   %i.s = zext i32 %i.m to i64
-  %i.t = shl nuw nsw i64 %i.s, 2
-  %i.u = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %i.t, i64 %.0.i.i) ; 2 uses
+  %i.t = shl nuw nsw i64 %i.s, 2                  ; 2 uses
+  %i.u = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %i.t, i64 %.0.i.i)
   %i.v = extractvalue { i64, i1 } %i.u, 1
-  %4 = extractvalue { i64, i1 } %i.u, 0
-  %5 = ashr exact i64 %4, 2
-  %6 = icmp sgt i64 %.0.i.i, 0
-  %spec.select64 = select i1 %6, i64 9223372036854775807, i64 -9223372036854775808
-  %.0.i.i42 = select i1 %i.v, i64 %spec.select64, i64 %5
-  %7 = icmp eq i32 %.fca.1.extract10, 1
-  %8 = select i1 %i.r, i1 true, i1 %7
-  %spec.select = select i1 %8, i32 1, i32 %.sroa.461.067
+  br i1 %i.v, label %4, label %6
+
+4:                                                ; preds = %_ZN4llvmmlERKNS_15InstructionCostES2_.exit.a
+  %5 = icmp sgt i64 %.0.i.i, 0
+  %spec.select64 = select i1 %5, i64 9223372036854775807, i64 -9223372036854775808
+  br label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit
+
+6:                                                ; preds = %_ZN4llvmmlERKNS_15InstructionCostES2_.exit.a
+  %7 = mul nsw i64 %.0.i.i, %i.t
+  %8 = ashr exact i64 %7, 2
+  br label %_ZN4llvmmlERKNS_15InstructionCostES2_.exit
+
+_ZN4llvmmlERKNS_15InstructionCostES2_.exit:       ; preds = %4, %6
+  %.0.i.i42 = phi i64 [ %8, %6 ], [ %spec.select64, %4 ]
+  %9 = icmp eq i32 %.fca.1.extract10, 1
+  %10 = select i1 %i.r, i1 true, i1 %9
+  %spec.select = select i1 %10, i32 1, i32 %.sroa.461.067
   %.0.i46 = tail call i64 @llvm.sadd.sat.i64(i64 %.sroa.059.066, i64 %.0.i.i42)
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZN4llvmmlERKNS_15InstructionCostES2_.exit.a, %bb.d
-  %.sroa.059.1 = phi i64 [ %.0.i46, %_ZN4llvmmlERKNS_15InstructionCostES2_.exit.a ], [ %.sroa.059.066, %bb.d ] ; 2 uses
-  %.sroa.461.1 = phi i32 [ %spec.select, %_ZN4llvmmlERKNS_15InstructionCostES2_.exit.a ], [ %.sroa.461.067, %bb.d ] ; 2 uses
+bb.e:                                             ; preds = %_ZN4llvmmlERKNS_15InstructionCostES2_.exit, %bb.d
+  %.sroa.059.1 = phi i64 [ %.0.i46, %_ZN4llvmmlERKNS_15InstructionCostES2_.exit ], [ %.sroa.059.066, %bb.d ] ; 2 uses
+  %.sroa.461.1 = phi i32 [ %spec.select, %_ZN4llvmmlERKNS_15InstructionCostES2_.exit ], [ %.sroa.461.067, %bb.d ] ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.068, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.w, %i.f
   br i1 %.not, label %._crit_edge, label %bb.b

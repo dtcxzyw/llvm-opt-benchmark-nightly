@@ -204,14 +204,14 @@ bb.a:
   %i.c = alloca [24 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !197
-  %spec.select.i.i.i.i.i.i = tail call i64 @llvm.usub.sat.i64(i64 %1, i64 %0) ; 4 uses
-  %i.d = mul i64 %spec.select.i.i.i.i.i.i, 40     ; 3 uses
+  %spec.select.i.i.i.i.i.i = tail call i64 @llvm.usub.sat.i64(i64 %1, i64 %0) ; 3 uses
+  %i.d = mul nuw i64 %spec.select.i.i.i.i.i.i, 40 ; 2 uses
   %or.cond.i.i.i.i.i.i = icmp ugt i64 %spec.select.i.i.i.i.i.i, 230584300921369395
   br i1 %or.cond.i.i.i.i.i.i, label %bb.d, label %bb.b, !prof !206
 
 bb.b:                                             ; preds = %bb.a
-  %2 = icmp eq i64 %i.d, 0
-  br i1 %2, label %_RINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecINtCse0v0U5LqnG1_12thread_local5EntryINtNtCseJvwusBHZQA_8lock_api6rwlock6RwLockNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtB8_11collections5btree3map8BTreeMapNtNtCsih3NV0yzdTo_15pingora_timeout5timer4TimeNtB3y_5TimerEEEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtNtB4V_3ops5range5RangejENCINvBJ_15allocate_bucketB1h_E0EEB3A_.exit.i.i.i.i.i, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i
+  %.not.i.i.i.i = icmp ugt i64 %1, %0
+  br i1 %.not.i.i.i.i, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i, label %_RINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecINtCse0v0U5LqnG1_12thread_local5EntryINtNtCseJvwusBHZQA_8lock_api6rwlock6RwLockNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtB8_11collections5btree3map8BTreeMapNtNtCsih3NV0yzdTo_15pingora_timeout5timer4TimeNtB3y_5TimerEEEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtNtB4V_3ops5range5RangejENCINvBJ_15allocate_bucketB1h_E0EEB3A_.exit.i.i.i.i.i
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i: ; preds = %bb.b
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #23, !noalias !207
@@ -224,17 +224,15 @@ bb.c:                                             ; preds = %_RNvXs1_NtCsexYYUdY
   br label %_RINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecINtCse0v0U5LqnG1_12thread_local5EntryINtNtCseJvwusBHZQA_8lock_api6rwlock6RwLockNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtB8_11collections5btree3map8BTreeMapNtNtCsih3NV0yzdTo_15pingora_timeout5timer4TimeNtB3y_5TimerEEEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtNtB4V_3ops5range5RangejENCINvBJ_15allocate_bucketB1h_E0EEB3A_.exit.i.i.i.i.i
 
 bb.d:                                             ; preds = %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i, %bb.a
+  %.sroa.10.0.ph.i.i.i.i.i = phi i64 [ %i.d, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i ], [ undef, %bb.a ]
   %.sroa.4.0.ph.i.i.i.i.i = phi i64 [ 8, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i.i ], [ 0, %bb.a ]
-  tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i.i.i.i, i64 %i.d) #24, !noalias !197
+  tail call void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph.i.i.i.i.i, i64 %.sroa.10.0.ph.i.i.i.i.i) #24, !noalias !197
   unreachable
 
 _RINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecINtCse0v0U5LqnG1_12thread_local5EntryINtNtCseJvwusBHZQA_8lock_api6rwlock6RwLockNtNtCs9VZ2FwlvA7t_11parking_lot10raw_rwlock9RawRwLockINtNtNtNtB8_11collections5btree3map8BTreeMapNtNtCsih3NV0yzdTo_15pingora_timeout5timer4TimeNtB3y_5TimerEEEE14extend_trustedINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtNtB4V_3ops5range5RangejENCINvBJ_15allocate_bucketB1h_E0EEB3A_.exit.i.i.i.i.i: ; preds = %bb.c, %bb.b
   %.sroa.10.0.i.i.i.i.i = phi i64 [ %i.g, %bb.c ], [ 8, %bb.b ]
-  %.sroa.4.0.i.i.i.i.i = phi i64 [ %spec.select.i.i.i.i.i.i, %bb.c ], [ 0, %bb.b ] ; 2 uses
   %i.h = inttoptr i64 %.sroa.10.0.i.i.i.i.i to ptr ; 2 uses
-  %3 = icmp samesign ule i64 %spec.select.i.i.i.i.i.i, %.sroa.4.0.i.i.i.i.i
-  tail call void @llvm.assume(i1 %3)
-  store i64 %.sroa.4.0.i.i.i.i.i, ptr %i.b, align 8, !noalias !197
+  store i64 %spec.select.i.i.i.i.i.i, ptr %i.b, align 8, !noalias !197
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.h, ptr %i.i, align 8, !noalias !197
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses

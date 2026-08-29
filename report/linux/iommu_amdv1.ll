@@ -205,13 +205,13 @@ bb.c:                                             ; preds = %.critedge
   br i1 %i.u, label %check_map_range.exit, label %bb.d, !prof !21
 
 bb.d:                                             ; preds = %bb.c
-  %i.v = add i64 %3, -1
-  %i.w = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %1, i64 %i.v) ; 2 uses
+  %i.v = add i64 %3, -1                           ; 2 uses
+  %i.w = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %1, i64 %i.v)
   %i.x = extractvalue { i64, i1 } %i.w, 1
   br i1 %i.x, label %check_map_range.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %11 = extractvalue { i64, i1 } %i.w, 0          ; 4 uses
+  %11 = add nuw i64 %i.v, %1                      ; 3 uses
   %i.y = load volatile i64, ptr %i.c, align 8, !noalias !49 ; 2 uses
   %i.z = and i64 %i.y, -8
   %i.aa = inttoptr i64 %i.z to ptr
@@ -258,9 +258,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.l
 
 fls64.exit35.i:                                   ; preds = %bb.g
-  %12 = sub i64 %11, %1
-  %13 = add i64 %12, 1                            ; 4 uses
-  %i.ak = call i32 asm "bsrq $1,${0:q}", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i64 %13, i32 -1) #14, !srcloc !56
+  %i.ak = call i32 asm "bsrq $1,${0:q}", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i64 %3, i32 -1) #14, !srcloc !56
   %i.al = zext nneg i32 %i.ak to i64
   %i.am = shl nuw i64 1, %i.al
   %i.an = or i64 %2, %i.am
@@ -306,11 +304,11 @@ bb.k:                                             ; preds = %__ffs64.exit.i66
   %.not22.i = xor i64 %1, -1
   %i.bj = and i64 %i.bg, %.not22.i
   %i.bk = add nuw i64 %i.bj, 1
-  %i.bl = call i64 @llvm.umin.i64(i64 %13, i64 %i.bk)
+  %i.bl = call i64 @llvm.umin.i64(i64 %3, i64 %i.bk)
   br label %pt_pgsz_count.exit
 
 pt_pgsz_count.exit:                               ; preds = %bb.j, %__ffs64.exit.i66, %bb.k
-  %.1.i67 = phi i64 [ %13, %bb.j ], [ %i.bl, %bb.k ], [ %13, %__ffs64.exit.i66 ]
+  %.1.i67 = phi i64 [ %3, %bb.j ], [ %i.bl, %bb.k ], [ %3, %__ffs64.exit.i66 ]
   %i.bm = zext nneg i32 %spec.select.i to i64
   %i.bn = lshr i64 %.1.i67, %i.bm
   br label %bb.l
@@ -713,13 +711,13 @@ bb.a:
   br i1 %i.f, label %.critedge, label %bb.b, !prof !21
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = add i64 %2, -1
-  %i.h = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %1, i64 %i.g) ; 2 uses
+  %i.g = add i64 %2, -1                           ; 2 uses
+  %i.h = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %1, i64 %i.g)
   %i.i = extractvalue { i64, i1 } %i.h, 1
   br i1 %i.i, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %6 = extractvalue { i64, i1 } %i.h, 0           ; 2 uses
+  %6 = add nuw i64 %i.g, %1                       ; 2 uses
   %i.j = load volatile i64, ptr %i.e, align 8, !noalias !73 ; 2 uses
   %i.k = and i64 %i.j, -8
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses

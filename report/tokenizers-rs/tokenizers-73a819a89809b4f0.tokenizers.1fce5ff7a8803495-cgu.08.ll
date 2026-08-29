@@ -205,19 +205,18 @@ thread-pre-split.i:                               ; preds = %bb.i, %bb.m
 .preheader60.i.preheader:                         ; preds = %thread-pre-split.i, %.preheader60.i
   %.sroa.0.1.i80 = phi ptr [ %i.w, %.preheader60.i ], [ %.sroa.0.0.i43, %thread-pre-split.i ] ; 3 uses
   %.sroa.15.1.i79 = phi i64 [ %i.x, %.preheader60.i ], [ %.sroa.15.0.i, %thread-pre-split.i ]
-  %.sroa.045.0.i78 = phi i32 [ %i.ae, %.preheader60.i ], [ 0, %thread-pre-split.i ]
-  %3 = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.sroa.045.0.i78, i32 10) ; 2 uses
-  %4 = extractvalue { i32, i1 } %3, 1
-  br i1 %4, label %bb.p, label %bb.o, !prof !23
+  %.sroa.045.0.i78 = phi i32 [ %i.ae, %.preheader60.i ], [ 0, %thread-pre-split.i ] ; 2 uses
+  %3 = icmp ugt i32 %.sroa.045.0.i78, 429496729
+  br i1 %3, label %bb.p, label %bb.o, !prof !23
 
 bb.o:                                             ; preds = %.preheader60.i.preheader
-  %5 = extractvalue { i32, i1 } %3, 0             ; 2 uses
+  %4 = mul nuw i32 %.sroa.045.0.i78, 10           ; 2 uses
   %i.aa = load i8, ptr %.sroa.0.1.i80, align 1, !alias.scope !1104, !noundef !4
   %i.ab = zext i8 %i.aa to i32
   %i.ac = add nsw i32 %i.ab, -48                  ; 2 uses
   %i.ad = icmp ugt i32 %i.ac, 9
-  %i.ae = add i32 %i.ac, %5                       ; 3 uses
-  %i.af = icmp ult i32 %i.ae, %5
+  %i.ae = add i32 %i.ac, %4                       ; 3 uses
+  %i.af = icmp ult i32 %i.ae, %4
   %or.cond = select i1 %i.ad, i1 true, i1 %i.af, !prof !1107
   br i1 %or.cond, label %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread, label %.preheader60.i, !prof !1107
 
@@ -620,19 +619,18 @@ bb.f:                                             ; preds = %thread-pre-split.i,
 .preheader60.i.preheader:                         ; preds = %bb.f, %.preheader60.i
   %.sroa.0.1.i142 = phi ptr [ %i.ad, %.preheader60.i ], [ %.sroa.0.0.i, %bb.f ] ; 3 uses
   %.sroa.15.1.i141 = phi i64 [ %i.ae, %.preheader60.i ], [ %.sroa.15.0.i, %bb.f ]
-  %.sroa.045.0.i140 = phi i32 [ %i.al, %.preheader60.i ], [ 0, %bb.f ]
-  %2 = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.sroa.045.0.i140, i32 10) ; 2 uses
-  %3 = extractvalue { i32, i1 } %2, 1
-  br i1 %3, label %bb.h, label %bb.g, !prof !23
+  %.sroa.045.0.i140 = phi i32 [ %i.al, %.preheader60.i ], [ 0, %bb.f ] ; 2 uses
+  %2 = icmp ugt i32 %.sroa.045.0.i140, 429496729
+  br i1 %2, label %bb.h, label %bb.g, !prof !23
 
 bb.g:                                             ; preds = %.preheader60.i.preheader
-  %4 = extractvalue { i32, i1 } %2, 0             ; 2 uses
+  %3 = mul nuw i32 %.sroa.045.0.i140, 10          ; 2 uses
   %i.ah = load i8, ptr %.sroa.0.1.i142, align 1, !alias.scope !1848, !noundef !4
   %i.ai = zext i8 %i.ah to i32
   %i.aj = add nsw i32 %i.ai, -48                  ; 2 uses
   %i.ak = icmp ugt i32 %i.aj, 9
-  %i.al = add i32 %i.aj, %4                       ; 3 uses
-  %i.am = icmp ult i32 %i.al, %4
+  %i.al = add i32 %i.aj, %3                       ; 3 uses
+  %i.am = icmp ult i32 %i.al, %3
   %or.cond = select i1 %i.ak, i1 true, i1 %i.am, !prof !1107
   br i1 %or.cond, label %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread, label %.preheader60.i, !prof !1107
 
@@ -1034,9 +1032,6 @@ declare noundef zeroext i1 @_RNvXs_NvXsf_NtNtCscdodAO9FK5_5alloc5boxed7convertIN
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden { ptr, ptr } @_RNvYNtNvXsf_NtNtCscdodAO9FK5_5alloc5boxed7convertINtBc_3BoxDNtNtCs4NRVxsYgnAr_4core5error5ErrorNtNtB10_6marker4SendNtB1x_4SyncEL_EINtNtB10_7convert4FromNtNtBe_6string6StringE4from11StringErrorBW_5causeCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #0
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #16
 
 ; Function Attrs: noinline nonlazybind uwtable
 declare void @_RNvMs3_NtCscdodAO9FK5_5alloc7raw_vecINtB5_6RawVecINtCs7oYvdc6j6uT_9daachorse6OutputmEE8grow_oneCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef align 8 dereferenceable(16)) unnamed_addr #21

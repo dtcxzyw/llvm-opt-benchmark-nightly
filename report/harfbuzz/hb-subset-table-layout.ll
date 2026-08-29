@@ -205,11 +205,10 @@ bb.f:                                             ; preds = %bb.e
   %i.ai = load i16, ptr %i.ah, align 1, !tbaa !131
   %i.aj = tail call noundef i16 @llvm.bswap.i16(i16 %i.ai)
   %i.ak = zext i16 %i.aj to i32
-  %i.al = mul nuw i32 %i.ak, %i.ag
-  %2 = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.al, i32 6) ; 2 uses
-  %3 = extractvalue { i32, i1 } %2, 0             ; 2 uses
-  %4 = extractvalue { i32, i1 } %2, 1
-  br i1 %4, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread13, label %bb.g, !prof !232
+  %i.al = mul nuw i32 %i.ak, %i.ag                ; 2 uses
+  %2 = mul nuw i32 %i.al, 6                       ; 2 uses
+  %3 = icmp ugt i32 %i.al, 715827882
+  br i1 %3, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread13, label %bb.g, !prof !232
 
 bb.g:                                             ; preds = %bb.f
   %i.am = load ptr, ptr %i.b, align 8, !tbaa !227
@@ -225,13 +224,13 @@ bb.h:                                             ; preds = %bb.g
   %i.as = ptrtoint ptr %i.ar to i64
   %i.at = sub i64 %i.as, %i.aa
   %i.au = trunc i64 %i.at to i32
-  %.not12.i.i.i.i.i.i.i = icmp ugt i32 %3, %i.au
+  %.not12.i.i.i.i.i.i.i = icmp ugt i32 %2, %i.au
   br i1 %.not12.i.i.i.i.i.i.i, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread13, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit, !prof !232
 
 _ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit: ; preds = %bb.h
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 2 uses
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !229
-  %i.ax = sub i32 %i.aw, %3                       ; 2 uses
+  %i.ax = sub i32 %i.aw, %2                       ; 2 uses
   store i32 %i.ax, ptr %i.av, align 4, !tbaa !229
   %i.ay = icmp sgt i32 %i.ax, 0
   br i1 %i.ay, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread13
@@ -384,14 +383,14 @@ bb.d:                                             ; preds = %_ZNK2OT7ArrayOfINS_
   %i.aj = zext nneg i16 %i.af to i32
   %i.ak = load i16, ptr %0, align 1, !tbaa !131
   %i.al = tail call noundef i16 @llvm.bswap.i16(i16 %i.ak)
-  %i.am = zext i16 %i.al to i32
+  %i.am = zext i16 %i.al to i32                   ; 2 uses
   %i.an = add nuw nsw i32 %i.aj, %i.ai
   %.mask.i.i = lshr i16 %i.ad, 7
   %.mask.i.lobit.i = and i16 %.mask.i.i, 1
   %i.ao = zext nneg i16 %.mask.i.lobit.i to i32
-  %i.ap = shl nuw nsw i32 %i.an, %i.ao
-  %i.aq = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.am, i32 %i.ap) ; 2 uses
-  %2 = extractvalue { i32, i1 } %i.aq, 0          ; 2 uses
+  %i.ap = shl nuw nsw i32 %i.an, %i.ao            ; 2 uses
+  %i.aq = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.am, i32 %i.ap)
+  %2 = mul nuw i32 %i.ap, %i.am                   ; 2 uses
   %i.ar = extractvalue { i32, i1 } %i.aq, 1
   br i1 %i.ar, label %_ZNK2OT7ArrayOfINS_7NumTypeILb1EtLj2EEES2_E8sanitizeIJEEEbP21hb_sanitize_context_tDpOT_.exit.thread, label %bb.e
 
@@ -794,12 +793,12 @@ bb.b:                                             ; preds = %bb.a
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #21, !srcloc !133
   %i.k = load i16, ptr %0, align 1, !tbaa !131
   %i.l = tail call noundef i16 @llvm.bswap.i16(i16 %i.k)
-  %i.m = zext i16 %i.l to i32
+  %i.m = zext i16 %i.l to i32                     ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   %i.o = load i64, ptr %i.n, align 8, !tbaa !4163
-  %i.p = trunc i64 %i.o to i32
-  %i.q = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.m, i32 %i.p) ; 2 uses
-  %3 = extractvalue { i32, i1 } %i.q, 0           ; 2 uses
+  %i.p = trunc i64 %i.o to i32                    ; 2 uses
+  %i.q = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.m, i32 %i.p)
+  %3 = mul nuw i32 %i.p, %i.m                     ; 2 uses
   %i.r = extractvalue { i32, i1 } %i.q, 1
   br i1 %i.r, label %_ZNK21hb_sanitize_context_t11check_rangeIN2OT6Layout9GPOS_impl15PairValueRecordINS2_10SmallTypesEEEEEbPKT_jj.exit.thread, label %bb.c
 
@@ -1202,7 +1201,7 @@ _ZNK2OT8OffsetToINS_8ClassDefENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_
   %i.hy = zext i8 %i.hx to i32
   %i.hz = add nuw nsw i32 %i.hk, %i.ht
   %i.ia = add nuw nsw i32 %i.hz, %i.hy
-  %i.ib = shl nuw nsw i32 %i.ia, 1                ; 3 uses
+  %i.ib = shl nuw nsw i32 %i.ia, 1                ; 4 uses
   %i.ic = load i16, ptr %i.el, align 1, !tbaa !131
   %i.id = tail call noundef i16 @llvm.bswap.i16(i16 %i.ic)
   %i.ie = zext i16 %i.id to i32
@@ -1210,9 +1209,9 @@ _ZNK2OT8OffsetToINS_8ClassDefENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_
   %i.ig = load i16, ptr %i.if, align 1, !tbaa !131
   %i.ih = tail call noundef i16 @llvm.bswap.i16(i16 %i.ig)
   %i.ii = zext i16 %i.ih to i32
-  %i.ij = mul nuw i32 %i.ii, %i.ie                ; 4 uses
-  %i.ik = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.ij, i32 %i.ib) ; 2 uses
-  %2 = extractvalue { i32, i1 } %i.ik, 0          ; 2 uses
+  %i.ij = mul nuw i32 %i.ii, %i.ie                ; 5 uses
+  %i.ik = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.ij, i32 %i.ib)
+  %2 = mul nuw i32 %i.ij, %i.ib                   ; 2 uses
   %i.il = extractvalue { i32, i1 } %i.ik, 1
   br i1 %i.il, label %_ZNK2OT8OffsetToINS_6Layout6Common8CoverageENS_7NumTypeILb1EtLj2EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread53, label %bb.ac
 

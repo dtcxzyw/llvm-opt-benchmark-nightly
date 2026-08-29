@@ -205,21 +205,20 @@ bb.m:                                             ; preds = %bb.j
 .lr.ph:                                           ; preds = %.preheader61.i.i.i.i.i, %bb.l
   %.sroa.0.0.i.i.i7.i.i45 = phi ptr [ %i.av, %bb.l ], [ %.sroa.0.0.ph.i.i.i.i.i, %.preheader61.i.i.i.i.i ] ; 2 uses
   %.sroa.16.0.i.i.i.i.i44 = phi i64 [ %i.aw, %bb.l ], [ %.sroa.16.0.ph.i.i.i.i.i, %.preheader61.i.i.i.i.i ]
-  %.sroa.040.0.i.i.i.i.i43 = phi i16 [ %i.bf, %bb.l ], [ 0, %.preheader61.i.i.i.i.i ]
-  %2 = tail call { i16, i1 } @llvm.umul.with.overflow.i16(i16 %.sroa.040.0.i.i.i.i.i43, i16 10) ; 2 uses
-  %3 = extractvalue { i16, i1 } %2, 1
+  %.sroa.040.0.i.i.i.i.i43 = phi i16 [ %i.bf, %bb.l ], [ 0, %.preheader61.i.i.i.i.i ] ; 2 uses
+  %2 = icmp ugt i16 %.sroa.040.0.i.i.i.i.i43, 6553
   %i.ba = load i8, ptr %.sroa.0.0.i.i.i7.i.i45, align 1, !alias.scope !1384, !noalias !1389, !noundef !3
   %i.bb = zext i8 %i.ba to i32
   %i.bc = add nsw i32 %i.bb, -48                  ; 2 uses
   %i.bd = icmp ugt i32 %i.bc, 9                   ; 2 uses
-  %brmerge.i.i.i.i.i = or i1 %3, %i.bd
+  %brmerge.i.i.i.i.i = or i1 %2, %i.bd
   br i1 %brmerge.i.i.i.i.i, label %.loopexit63.split.loop.exit66.i.i.i.i.i, label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph
-  %4 = extractvalue { i16, i1 } %2, 0             ; 2 uses
+  %3 = mul nuw i16 %.sroa.040.0.i.i.i.i.i43, 10   ; 2 uses
   %i.be = trunc nuw nsw i32 %i.bc to i16
-  %i.bf = add i16 %4, %i.be                       ; 3 uses
-  %.not56.i.i.i.i.i = icmp ult i16 %i.bf, %4
+  %i.bf = add i16 %3, %i.be                       ; 3 uses
+  %.not56.i.i.i.i.i = icmp ult i16 %i.bf, %3
   br i1 %.not56.i.i.i.i.i, label %"_ZN4core4iter8adapters10filter_map15filter_map_fold28_$u7b$$u7b$closure$u7d$$u7d$17h9cee9b6094cbd893E.exit.i.i", label %bb.l
 
 .lr.ph.i.i.i6.i.i:                                ; preds = %.lr.ph.i.i.i6.i.i.preheader, %bb.o
@@ -622,8 +621,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.f = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %3) ; 2 uses
-  %4 = extractvalue { i64, i1 } %i.f, 0           ; 5 uses
+  %i.f = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %3)
+  %4 = mul nuw i64 %3, %2                         ; 5 uses
   %i.g = extractvalue { i64, i1 } %i.f, 1
   br i1 %i.g, label %bb.g, label %bb.e, !prof !35
 
@@ -1024,9 +1023,6 @@ declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i32(i32, i32) #41
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef range(i8 -1, 2) i8 @"_ZN4core3ops8function5impls80_$LT$impl$u20$core..ops..function..FnOnce$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$9call_once17hdfc1162ac0fc39d4E"(ptr noalias noundef nonnull align 1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(8), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(8)) unnamed_addr #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i16, i1 } @llvm.umul.with.overflow.i16(i16, i16) #41
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #41

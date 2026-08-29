@@ -204,14 +204,13 @@ bb.bl:                                            ; preds = %thread-pre-split.i.
 .preheader60.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader: ; preds = %bb.bl, %.preheader60.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.0.1.i.i.i.i.i.i.i.i.i.i.i.i.i288 = phi ptr [ %i.ha, %.preheader60.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.bl ] ; 2 uses
   %.sroa.15.1.i.i.i.i.i.i.i.i.i.i.i.i.i287 = phi i64 [ %i.hb, %.preheader60.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.15.0.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.bl ]
-  %.sroa.045.0.i.i.i.i.i.i.i.i.i.i.i.i.i286 = phi i32 [ %i.hi, %.preheader60.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ 0, %bb.bl ]
+  %.sroa.045.0.i.i.i.i.i.i.i.i.i.i.i.i.i286 = phi i32 [ %i.hi, %.preheader60.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ 0, %bb.bl ] ; 2 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i.i.i.i.i.i.i.i.i.i288, i64 1, !dbg !13126
   %i.hb = add nsw i64 %.sroa.15.1.i.i.i.i.i.i.i.i.i.i.i.i.i287, -1, !dbg !13126 ; 2 uses
-  %9 = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.sroa.045.0.i.i.i.i.i.i.i.i.i.i.i.i.i286, i32 10), !dbg !13127 ; 2 uses
-  %10 = extractvalue { i32, i1 } %9, 0, !dbg !13127 ; 2 uses
-  %11 = extractvalue { i32, i1 } %9, 1, !dbg !13127
+  %9 = mul nuw i32 %.sroa.045.0.i.i.i.i.i.i.i.i.i.i.i.i.i286, 10, !dbg !13127 ; 2 uses
+  %10 = icmp ugt i32 %.sroa.045.0.i.i.i.i.i.i.i.i.i.i.i.i.i286, 429496729, !dbg !13127
   %i.hc = load i8, ptr %.sroa.0.1.i.i.i.i.i.i.i.i.i.i.i.i.i288, align 1, !dbg !13133, !alias.scope !13112, !noalias !13077, !noundef !15 ; 2 uses
-  br i1 %11, label %bb.bn, label %bb.bm, !dbg !13135, !prof !838
+  br i1 %10, label %bb.bn, label %bb.bm, !dbg !13135, !prof !838
 
 bb.bm:                                            ; preds = %.preheader60.i.i.i.i.i.i.i.i.i.i.i.i.i.preheader
   %i.hd = zext i8 %i.hc to i32, !dbg !13139
@@ -226,8 +225,8 @@ bb.bn:                                            ; preds = %.preheader60.i.i.i.
   br label %.loopexit.i.i.i.i.i.i.i.i.i.i.i, !dbg !13151
 
 bb.bo:                                            ; preds = %bb.bm
-  %i.hi = add i32 %i.he, %10, !dbg !13154         ; 3 uses
-  %i.hj = icmp ult i32 %i.hi, %10, !dbg !13154
+  %i.hi = add i32 %i.he, %9, !dbg !13154          ; 3 uses
+  %i.hj = icmp ult i32 %i.hi, %9, !dbg !13154
   br i1 %i.hj, label %.loopexit.i.i.i.i.i.i.i.i.i.i.i, label %.preheader60.i.i.i.i.i.i.i.i.i.i.i.i.i, !dbg !13158, !prof !838
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i:                 ; preds = %.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i
@@ -629,9 +628,6 @@ declare i64 @llvm.usub.sat.i64(i64, i64) #12
 
 ; Function Attrs: cold minsize noinline noreturn nonlazybind optsize uwtable
 declare void @_RINvNtCskKLDkoKarTP_4core9panicking13assert_failedjjEB4_(i8 noundef range(i8 0, 3), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8), ptr noundef, ptr, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #12
 
 ; Function Attrs: noinline nonlazybind uwtable
 declare void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecINtNtB7_5boxed3BoxINtNtB7_3vec3VecjEEE8grow_oneCsc0anycpf6TS_6ignore(ptr noalias nofree noundef align 8 dereferenceable(16)) unnamed_addr #10

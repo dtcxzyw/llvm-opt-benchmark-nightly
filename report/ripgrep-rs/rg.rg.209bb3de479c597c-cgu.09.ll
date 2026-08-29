@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d, !dbg !1690
 
 bb.c:                                             ; preds = %bb.a
-  %i.f = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %3), !dbg !1691 ; 2 uses
-  %4 = extractvalue { i64, i1 } %i.f, 0, !dbg !1691 ; 5 uses
+  %i.f = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %3), !dbg !1691
+  %4 = mul nuw i64 %3, %2, !dbg !1691             ; 5 uses
   %i.g = extractvalue { i64, i1 } %i.f, 1, !dbg !1691
   br i1 %i.g, label %bb.g, label %bb.e, !dbg !1698, !prof !337
 
@@ -606,14 +606,13 @@ bb.e:                                             ; preds = %thread-pre-split.i,
 .preheader56.i.preheader:                         ; preds = %bb.e, %.preheader56.i
   %.sroa.0.1.i45 = phi ptr [ %i.m, %.preheader56.i ], [ %.sroa.0.0.i, %bb.e ] ; 2 uses
   %.sroa.15.1.i44 = phi i64 [ %i.n, %.preheader56.i ], [ %.sroa.15.0.i, %bb.e ]
-  %.sroa.042.0.i43 = phi i64 [ %i.v, %.preheader56.i ], [ 0, %bb.e ]
+  %.sroa.042.0.i43 = phi i64 [ %i.v, %.preheader56.i ], [ 0, %bb.e ] ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i45, i64 1, !dbg !4446
   %i.n = add nsw i64 %.sroa.15.1.i44, -1, !dbg !4446 ; 2 uses
-  %2 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i43, i64 10), !dbg !4447 ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 0, !dbg !4447 ; 2 uses
-  %4 = extractvalue { i64, i1 } %2, 1, !dbg !4447
+  %2 = mul nuw i64 %.sroa.042.0.i43, 10, !dbg !4447 ; 2 uses
+  %3 = icmp ugt i64 %.sroa.042.0.i43, 1844674407370955161, !dbg !4447
   %i.o = load i8, ptr %.sroa.0.1.i45, align 1, !dbg !4453, !alias.scope !4432, !noalias !4435, !noundef !14 ; 2 uses
-  br i1 %4, label %bb.g, label %bb.f, !dbg !4455, !prof !337
+  br i1 %3, label %bb.g, label %bb.f, !dbg !4455, !prof !337
 
 bb.f:                                             ; preds = %.preheader56.i.preheader
   %i.p = zext i8 %i.o to i32, !dbg !4459
@@ -629,8 +628,8 @@ bb.g:                                             ; preds = %.preheader56.i.preh
 
 bb.h:                                             ; preds = %bb.f
   %i.u = zext nneg i32 %i.q to i64, !dbg !4474
-  %i.v = add i64 %3, %i.u, !dbg !4475             ; 3 uses
-  %i.w = icmp ult i64 %i.v, %3, !dbg !4475
+  %i.v = add i64 %2, %i.u, !dbg !4475             ; 3 uses
+  %i.w = icmp ult i64 %i.v, %2, !dbg !4475
   br i1 %i.w, label %.loopexit, label %.preheader56.i, !dbg !4479, !prof !337
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.i
@@ -733,14 +732,13 @@ bb.e:                                             ; preds = %thread-pre-split.i,
 .preheader56.i.preheader:                         ; preds = %bb.e, %.preheader56.i
   %.sroa.0.1.i45 = phi ptr [ %i.m, %.preheader56.i ], [ %.sroa.0.0.i, %bb.e ] ; 2 uses
   %.sroa.15.1.i44 = phi i64 [ %i.n, %.preheader56.i ], [ %.sroa.15.0.i, %bb.e ]
-  %.sroa.042.0.i43 = phi i64 [ %i.v, %.preheader56.i ], [ 0, %bb.e ]
+  %.sroa.042.0.i43 = phi i64 [ %i.v, %.preheader56.i ], [ 0, %bb.e ] ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i45, i64 1, !dbg !4552
   %i.n = add nsw i64 %.sroa.15.1.i44, -1, !dbg !4552 ; 2 uses
-  %2 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i43, i64 10), !dbg !4553 ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 0, !dbg !4553 ; 2 uses
-  %4 = extractvalue { i64, i1 } %2, 1, !dbg !4553
+  %2 = mul nuw i64 %.sroa.042.0.i43, 10, !dbg !4553 ; 2 uses
+  %3 = icmp ugt i64 %.sroa.042.0.i43, 1844674407370955161, !dbg !4553
   %i.o = load i8, ptr %.sroa.0.1.i45, align 1, !dbg !4558, !alias.scope !4538, !noalias !4541, !noundef !14 ; 2 uses
-  br i1 %4, label %bb.g, label %bb.f, !dbg !4560, !prof !337
+  br i1 %3, label %bb.g, label %bb.f, !dbg !4560, !prof !337
 
 bb.f:                                             ; preds = %.preheader56.i.preheader
   %i.p = zext i8 %i.o to i32, !dbg !4564
@@ -756,8 +754,8 @@ bb.g:                                             ; preds = %.preheader56.i.preh
 
 bb.h:                                             ; preds = %bb.f
   %i.u = zext nneg i32 %i.q to i64, !dbg !4572
-  %i.v = add i64 %3, %i.u, !dbg !4573             ; 3 uses
-  %i.w = icmp ult i64 %i.v, %3, !dbg !4573
+  %i.v = add i64 %2, %i.u, !dbg !4573             ; 3 uses
+  %i.w = icmp ult i64 %i.v, %2, !dbg !4573
   br i1 %i.w, label %.loopexit, label %.preheader56.i, !dbg !4577, !prof !337
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.i

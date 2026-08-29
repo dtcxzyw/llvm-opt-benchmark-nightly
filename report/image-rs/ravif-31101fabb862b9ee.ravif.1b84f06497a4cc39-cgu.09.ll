@@ -205,27 +205,25 @@ _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB4_3ZipINtNtNtBa_5slice4ite
   %.sroa.415.0.i.i.i.i = phi i64 [ %i.al, %bb.h ], [ undef, %bb.g ]
   %.sink.i.i.i.i.i.i = phi ptr [ %i.ak, %bb.h ], [ null, %bb.g ] ; 3 uses
   %i.ap = load i8, ptr %i.j, align 8, !range !46, !alias.scope !1450, !noalias !1455, !noundef !15
-  %i.aq = trunc nuw i8 %i.ap to i1                ; 2 uses
+  %i.aq = trunc nuw i8 %i.ap to i1
   %i.ar = load i64, ptr %i.ac, align 8, !alias.scope !1450, !noalias !1455
+  %.sroa.0.0.i.i.i.i.i.i = select i1 %i.aq, i64 0, i64 %i.ar ; 2 uses
   store i8 0, ptr %i.j, align 8, !alias.scope !1450, !noalias !1455
-  %i.as = load i64, ptr %i.f, align 8, !alias.scope !1456, !noalias !1455, !noundef !15 ; 5 uses
-  %i.at = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.ar, i64 %i.as) ; 2 uses
-  %2 = extractvalue { i64, i1 } %i.at, 0
-  %3 = select i1 %i.aq, i64 0, i64 %2             ; 3 uses
+  %i.as = load i64, ptr %i.f, align 8, !alias.scope !1456, !noalias !1455, !noundef !15 ; 6 uses
+  %i.at = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.0.0.i.i.i.i.i.i, i64 %i.as)
+  %2 = mul nuw i64 %i.as, %.sroa.0.0.i.i.i.i.i.i  ; 3 uses
   %i.au = extractvalue { i64, i1 } %i.at, 1
-  %not..i.i.i.i.i.i = xor i1 %i.aq, true
-  %4 = select i1 %not..i.i.i.i.i.i, i1 %i.au, i1 false
-  br i1 %4, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters7step_byINtB4_6StepByINtNtNtBa_5slice4iter11ChunksExactNtNtCsdEEMmLUVy6d_5rav1e2me7MEStatsEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.sink.split.i.i.i.i, label %bb.i, !prof !26
+  br i1 %i.au, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters7step_byINtB4_6StepByINtNtNtBa_5slice4iter11ChunksExactNtNtCsdEEMmLUVy6d_5rav1e2me7MEStatsEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.sink.split.i.i.i.i, label %bb.i, !prof !26
 
 bb.i:                                             ; preds = %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB4_3ZipINtNtNtBa_5slice4iter11ChunksExactmEIBW_fEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.i.i.i.i
   %i.av = load i64, ptr %i.h, align 8, !alias.scope !1456, !noalias !1455, !noundef !15 ; 2 uses
-  %i.aw = icmp ult i64 %3, %i.av
+  %i.aw = icmp ult i64 %2, %i.av
   br i1 %i.aw, label %bb.j, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters7step_byINtB4_6StepByINtNtNtBa_5slice4iter11ChunksExactNtNtCsdEEMmLUVy6d_5rav1e2me7MEStatsEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.sink.split.i.i.i.i
 
 bb.j:                                             ; preds = %bb.i
   %i.ax = load ptr, ptr %i.ab, align 8, !alias.scope !1456, !noalias !1455, !nonnull !15, !align !379, !noundef !15
-  %i.ay = sub nuw i64 %i.av, %3                   ; 3 uses
-  %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %3 ; 3 uses
+  %i.ay = sub nuw i64 %i.av, %2                   ; 3 uses
+  %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %2 ; 3 uses
   store ptr %i.az, ptr %i.ab, align 8, !alias.scope !1456, !noalias !1455, !captures !1459
   store i64 %i.ay, ptr %i.h, align 8, !alias.scope !1456, !noalias !1455
   %.not.i.i.i.i.i.i.i = icmp ugt i64 %i.as, %i.ay
@@ -412,27 +410,25 @@ _RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB4_3ZipINtNtNtBa_5slice4ite
   %.sroa.415.0.i.i.i.i = phi i64 [ %i.al, %bb.h ], [ undef, %bb.g ]
   %.sink.i.i.i.i.i.i = phi ptr [ %i.ak, %bb.h ], [ null, %bb.g ] ; 3 uses
   %i.ap = load i8, ptr %i.j, align 8, !range !46, !alias.scope !1518, !noalias !1523, !noundef !15
-  %i.aq = trunc nuw i8 %i.ap to i1                ; 2 uses
+  %i.aq = trunc nuw i8 %i.ap to i1
   %i.ar = load i64, ptr %i.ac, align 8, !alias.scope !1518, !noalias !1523
+  %.sroa.0.0.i.i.i.i.i.i = select i1 %i.aq, i64 0, i64 %i.ar ; 2 uses
   store i8 0, ptr %i.j, align 8, !alias.scope !1518, !noalias !1523
-  %i.as = load i64, ptr %i.f, align 8, !alias.scope !1524, !noalias !1523, !noundef !15 ; 5 uses
-  %i.at = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.ar, i64 %i.as) ; 2 uses
-  %2 = extractvalue { i64, i1 } %i.at, 0
-  %3 = select i1 %i.aq, i64 0, i64 %2             ; 3 uses
+  %i.as = load i64, ptr %i.f, align 8, !alias.scope !1524, !noalias !1523, !noundef !15 ; 6 uses
+  %i.at = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.0.0.i.i.i.i.i.i, i64 %i.as)
+  %2 = mul nuw i64 %i.as, %.sroa.0.0.i.i.i.i.i.i  ; 3 uses
   %i.au = extractvalue { i64, i1 } %i.at, 1
-  %not..i.i.i.i.i.i = xor i1 %i.aq, true
-  %4 = select i1 %not..i.i.i.i.i.i, i1 %i.au, i1 false
-  br i1 %4, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters7step_byINtB4_6StepByINtNtNtBa_5slice4iter11ChunksExactNtNtCsdEEMmLUVy6d_5rav1e2me7MEStatsEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.sink.split.i.i.i.i, label %bb.i, !prof !26
+  br i1 %i.au, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters7step_byINtB4_6StepByINtNtNtBa_5slice4iter11ChunksExactNtNtCsdEEMmLUVy6d_5rav1e2me7MEStatsEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.sink.split.i.i.i.i, label %bb.i, !prof !26
 
 bb.i:                                             ; preds = %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB4_3ZipINtNtNtBa_5slice4iter11ChunksExactmEIBW_fEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.i.i.i.i
   %i.av = load i64, ptr %i.h, align 8, !alias.scope !1524, !noalias !1523, !noundef !15 ; 2 uses
-  %i.aw = icmp ult i64 %3, %i.av
+  %i.aw = icmp ult i64 %2, %i.av
   br i1 %i.aw, label %bb.j, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters7step_byINtB4_6StepByINtNtNtBa_5slice4iter11ChunksExactNtNtCsdEEMmLUVy6d_5rav1e2me7MEStatsEENtNtNtB8_6traits8iterator8Iterator4nextCs2mu2Cb9JdUH_5ravif.exit.sink.split.i.i.i.i
 
 bb.j:                                             ; preds = %bb.i
   %i.ax = load ptr, ptr %i.ab, align 8, !alias.scope !1524, !noalias !1523, !nonnull !15, !align !379, !noundef !15
-  %i.ay = sub nuw i64 %i.av, %3                   ; 3 uses
-  %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %3 ; 3 uses
+  %i.ay = sub nuw i64 %i.av, %2                   ; 3 uses
+  %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %2 ; 3 uses
   store ptr %i.az, ptr %i.ab, align 8, !alias.scope !1524, !noalias !1523, !captures !1459
   store i64 %i.ay, ptr %i.h, align 8, !alias.scope !1524, !noalias !1523
   %.not.i.i.i.i.i.i.i = icmp ugt i64 %i.as, %i.ay

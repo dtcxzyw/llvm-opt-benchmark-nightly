@@ -202,7 +202,7 @@ define hidden void @_RNvXsg_NtCskt5MLIAl8nl_9hashbrown3rawINtB5_8RawTableTNtNtCs
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2504), !dbg !2507
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !2508
-  %i.b = load i64, ptr %i.a, align 8, !dbg !2508, !alias.scope !2504, !noundef !15 ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !dbg !2508, !alias.scope !2504, !noundef !15 ; 4 uses
   %i.c = icmp eq i64 %i.b, 0, !dbg !2508
   br i1 %i.c, label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs3oUPovFnLWP_4core3any6TypeIdNtNtCsim2LhUzKY4R_19foundations_metrics4info9InfoEntryENtNtCs1xwejQucwHj_5alloc5alloc6GlobalEB1P_.exit, label %bb.b, !dbg !2513
 
@@ -276,27 +276,29 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueTNtNtB4_3any6TypeIdNtNtCsim2LhUzKY4R_19f
   br i1 %i.z, label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs3oUPovFnLWP_4core3any6TypeIdNtNtCsim2LhUzKY4R_19foundations_metrics4info9InfoEntryEEB1M_.exit.i, label %bb.d, !dbg !2542
 
 _RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs3oUPovFnLWP_4core3any6TypeIdNtNtCsim2LhUzKY4R_19foundations_metrics4info9InfoEntryEEB1M_.exit.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueTNtNtB4_3any6TypeIdNtNtCsim2LhUzKY4R_19foundations_metrics4info9InfoEntryEEBY_.exit.i.i, %bb.b
+  %1 = icmp slt i64 %i.b, 256204778801521550, !dbg !2603
+  tail call void @llvm.assume(i1 %1), !dbg !2617
   %i.aa = mul i64 %i.b, 72, !dbg !2603
-  %i.ab = and i64 %i.aa, -16, !dbg !2617          ; 2 uses
-  %i.ac = add i64 %i.ab, 80, !dbg !2617           ; 2 uses
-  %i.ad = add i64 %i.b, 17, !dbg !2618
-  %i.ae = add i64 %i.ad, %i.ac, !dbg !2620        ; 4 uses
-  %i.af = icmp uge i64 %i.ae, %i.ac, !dbg !2620
+  %i.ab = and i64 %i.aa, -16, !dbg !2621          ; 2 uses
+  %i.ac = add i64 %i.ab, 80, !dbg !2621           ; 2 uses
+  %i.ad = add nsw i64 %i.b, 17, !dbg !2622
+  %i.ae = add i64 %i.ad, %i.ac, !dbg !2624        ; 4 uses
+  %i.af = icmp uge i64 %i.ae, %i.ac, !dbg !2624
   %i.ag = icmp ult i64 %i.ae, 9223372036854775793
-  tail call void @llvm.assume(i1 %i.af), !dbg !2623
-  tail call void @llvm.assume(i1 %i.ag), !dbg !2623
-  %i.ah = icmp eq i64 %i.ae, 0, !dbg !2627
-  br i1 %i.ah, label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs3oUPovFnLWP_4core3any6TypeIdNtNtCsim2LhUzKY4R_19foundations_metrics4info9InfoEntryENtNtCs1xwejQucwHj_5alloc5alloc6GlobalEB1P_.exit, label %bb.g, !dbg !2627
+  tail call void @llvm.assume(i1 %i.af), !dbg !2627
+  tail call void @llvm.assume(i1 %i.ag), !dbg !2627
+  %i.ah = icmp eq i64 %i.ae, 0, !dbg !2630
+  br i1 %i.ah, label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs3oUPovFnLWP_4core3any6TypeIdNtNtCsim2LhUzKY4R_19foundations_metrics4info9InfoEntryENtNtCs1xwejQucwHj_5alloc5alloc6GlobalEB1P_.exit, label %bb.g, !dbg !2630
 
 bb.g:                                             ; preds = %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs3oUPovFnLWP_4core3any6TypeIdNtNtCsim2LhUzKY4R_19foundations_metrics4info9InfoEntryEEB1M_.exit.i
-  %i.ai = load ptr, ptr %0, align 8, !dbg !2632, !alias.scope !2504, !nonnull !15, !noundef !15
-  %i.aj = sub i64 -80, %i.ab, !dbg !2634
-  %i.ak = getelementptr inbounds i8, ptr %i.ai, i64 %i.aj, !dbg !2637
-  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ak, i64 noundef %i.ae, i64 noundef range(i64 1, -9223372036854775807) 16) #28, !dbg !2638, !noalias !2504
-  br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs3oUPovFnLWP_4core3any6TypeIdNtNtCsim2LhUzKY4R_19foundations_metrics4info9InfoEntryENtNtCs1xwejQucwHj_5alloc5alloc6GlobalEB1P_.exit, !dbg !2640
+  %i.ai = load ptr, ptr %0, align 8, !dbg !2635, !alias.scope !2504, !nonnull !15, !noundef !15
+  %i.aj = sub i64 -80, %i.ab, !dbg !2637
+  %i.ak = getelementptr inbounds i8, ptr %i.ai, i64 %i.aj, !dbg !2640
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ak, i64 noundef %i.ae, i64 noundef range(i64 1, -9223372036854775807) 16) #28, !dbg !2641, !noalias !2504
+  br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs3oUPovFnLWP_4core3any6TypeIdNtNtCsim2LhUzKY4R_19foundations_metrics4info9InfoEntryENtNtCs1xwejQucwHj_5alloc5alloc6GlobalEB1P_.exit, !dbg !2643
 
 _RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs3oUPovFnLWP_4core3any6TypeIdNtNtCsim2LhUzKY4R_19foundations_metrics4info9InfoEntryENtNtCs1xwejQucwHj_5alloc5alloc6GlobalEB1P_.exit: ; preds = %bb.a, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs3oUPovFnLWP_4core3any6TypeIdNtNtCsim2LhUzKY4R_19foundations_metrics4info9InfoEntryEEB1M_.exit.i, %bb.g
-  ret void, !dbg !2641
+  ret void, !dbg !2644
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
@@ -699,29 +701,32 @@ begin_hunk_1_@llvm.umax.i64
 !2614 = distinct !DILocation(line: 3113, column: 38, scope: !2615, inlinedAt: !2616)
 !2615 = distinct !DISubprogram(name: "free_buckets<alloc::alloc::Global>", linkageName: "_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner12free_bucketsNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECsim2LhUzKY4R_19foundations_metrics", scope: !1148, file: !1147, line: 3106, type: !14, scopeLine: 3106, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !6, templateParams: !15)
 !2616 = distinct !DILocation(line: 2280, column: 22, scope: !2511, inlinedAt: !2512)
-!2617 = !DILocation(line: 222, column: 13, scope: !2609, inlinedAt: !2612)
-!2618 = !DILocation(line: 223, column: 43, scope: !2619, inlinedAt: !2612)
-!2619 = distinct !DILexicalBlock(scope: !2609, file: !1147, line: 221, column: 9)
-!2620 = !DILocation(line: 968, column: 37, scope: !2621, inlinedAt: !2622)
-!2621 = distinct !DISubprogram(name: "checked_add", linkageName: "_RNvMs9_NtCs3oUPovFnLWP_4core3numj11checked_add", scope: !2605, file: !61, line: 960, type: !14, scopeLine: 960, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !6, templateParams: !15)
-!2622 = distinct !DILocation(line: 223, column: 31, scope: !2619, inlinedAt: !2612)
-!2623 = !DILocation(line: 483, column: 8, scope: !2624, inlinedAt: !2625)
-!2624 = distinct !DISubprogram(name: "unlikely", linkageName: "_RNvNtCs3oUPovFnLWP_4core10intrinsics8unlikely", scope: !2151, file: !29, line: 482, type: !14, scopeLine: 482, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !6, templateParams: !15)
-!2625 = distinct !DILocation(line: 968, column: 16, scope: !2626, inlinedAt: !2622)
-!2626 = !DILexicalBlockFile(scope: !2621, file: !61, discriminator: 2)
-!2627 = !DILocation(line: 312, column: 12, scope: !1586, inlinedAt: !2628)
-!2628 = distinct !DILocation(line: 436, column: 9, scope: !1589, inlinedAt: !2629)
-!2629 = distinct !DILocation(line: 554, column: 23, scope: !1591, inlinedAt: !2630)
-!2630 = distinct !DILocation(line: 3114, column: 19, scope: !2631, inlinedAt: !2616)
-!2631 = distinct !DILexicalBlock(scope: !2615, file: !1147, line: 3113, column: 13)
-!2632 = !DILocation(line: 3150, column: 45, scope: !2633, inlinedAt: !2614)
-!2633 = distinct !DILexicalBlock(scope: !2613, file: !1147, line: 3144, column: 9)
-!2634 = !DILocation(line: 1054, column: 47, scope: !2635, inlinedAt: !2636)
-!2635 = distinct !DISubprogram(name: "sub<u8>", linkageName: "_RNvMNtNtCs3oUPovFnLWP_4core3ptr7mut_ptrOh3subCsim2LhUzKY4R_19foundations_metrics", scope: !557, file: !556, line: 1015, type: !14, scopeLine: 1015, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !6, templateParams: !15)
-!2636 = distinct !DILocation(line: 3150, column: 64, scope: !2633, inlinedAt: !2614)
-!2637 = !DILocation(line: 1054, column: 22, scope: !2635, inlinedAt: !2636)
-!2638 = !DILocation(line: 175, column: 14, scope: !1582, inlinedAt: !2639)
-!2639 = distinct !DILocation(line: 321, column: 22, scope: !1586, inlinedAt: !2628)
-!2640 = !DILocation(line: 312, column: 9, scope: !1586, inlinedAt: !2628)
-!2641 = !DILocation(line: 3498, column: 6, scope: !2502)
+!2617 = !DILocation(line: 483, column: 8, scope: !2618, inlinedAt: !2619)
+!2618 = distinct !DISubprogram(name: "unlikely", linkageName: "_RNvNtCs3oUPovFnLWP_4core10intrinsics8unlikely", scope: !2151, file: !29, line: 482, type: !14, scopeLine: 482, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !6, templateParams: !15)
+!2619 = distinct !DILocation(line: 1361, column: 16, scope: !2620, inlinedAt: !2608)
+!2620 = distinct !DILexicalBlock(scope: !2607, file: !61, line: 1360, column: 13)
+!2621 = !DILocation(line: 222, column: 13, scope: !2609, inlinedAt: !2612)
+!2622 = !DILocation(line: 223, column: 43, scope: !2623, inlinedAt: !2612)
+!2623 = distinct !DILexicalBlock(scope: !2609, file: !1147, line: 221, column: 9)
+!2624 = !DILocation(line: 968, column: 37, scope: !2625, inlinedAt: !2626)
+!2625 = distinct !DISubprogram(name: "checked_add", linkageName: "_RNvMs9_NtCs3oUPovFnLWP_4core3numj11checked_add", scope: !2605, file: !61, line: 960, type: !14, scopeLine: 960, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !6, templateParams: !15)
+!2626 = distinct !DILocation(line: 223, column: 31, scope: !2623, inlinedAt: !2612)
+!2627 = !DILocation(line: 483, column: 8, scope: !2618, inlinedAt: !2628)
+!2628 = distinct !DILocation(line: 968, column: 16, scope: !2629, inlinedAt: !2626)
+!2629 = !DILexicalBlockFile(scope: !2625, file: !61, discriminator: 2)
+!2630 = !DILocation(line: 312, column: 12, scope: !1586, inlinedAt: !2631)
+!2631 = distinct !DILocation(line: 436, column: 9, scope: !1589, inlinedAt: !2632)
+!2632 = distinct !DILocation(line: 554, column: 23, scope: !1591, inlinedAt: !2633)
+!2633 = distinct !DILocation(line: 3114, column: 19, scope: !2634, inlinedAt: !2616)
+!2634 = distinct !DILexicalBlock(scope: !2615, file: !1147, line: 3113, column: 13)
+!2635 = !DILocation(line: 3150, column: 45, scope: !2636, inlinedAt: !2614)
+!2636 = distinct !DILexicalBlock(scope: !2613, file: !1147, line: 3144, column: 9)
+!2637 = !DILocation(line: 1054, column: 47, scope: !2638, inlinedAt: !2639)
+!2638 = distinct !DISubprogram(name: "sub<u8>", linkageName: "_RNvMNtNtCs3oUPovFnLWP_4core3ptr7mut_ptrOh3subCsim2LhUzKY4R_19foundations_metrics", scope: !557, file: !556, line: 1015, type: !14, scopeLine: 1015, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !6, templateParams: !15)
+!2639 = distinct !DILocation(line: 3150, column: 64, scope: !2636, inlinedAt: !2614)
+!2640 = !DILocation(line: 1054, column: 22, scope: !2638, inlinedAt: !2639)
+!2641 = !DILocation(line: 175, column: 14, scope: !1582, inlinedAt: !2642)
+!2642 = distinct !DILocation(line: 321, column: 22, scope: !1586, inlinedAt: !2631)
+!2643 = !DILocation(line: 312, column: 9, scope: !1586, inlinedAt: !2631)
+!2644 = !DILocation(line: 3498, column: 6, scope: !2502)
 end_hunk_1

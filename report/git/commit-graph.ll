@@ -204,18 +204,17 @@ st_mult.exit179.i:                                ; preds = %bb.ey
   %i.tx = shl nuw i64 %i.tw, 2
   call void @add_chunk(ptr noundef %i.tb, i32 noundef 1112097880, i64 noundef %i.tx, ptr noundef nonnull @write_graph_chunk_bloom_indexes) #22
   %i.ty = getelementptr inbounds nuw i8, ptr %16, i64 200
-  %i.tz = load i64, ptr %i.ty, align 8, !tbaa !243 ; 2 uses
-  %20 = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.tz, i64 12) ; 2 uses
-  %21 = extractvalue { i64, i1 } %20, 1
-  br i1 %21, label %bb.fa, label %st_add.exit.i
+  %i.tz = load i64, ptr %i.ty, align 8, !tbaa !243 ; 3 uses
+  %20 = icmp ugt i64 %i.tz, -13
+  br i1 %20, label %bb.fa, label %st_add.exit.i
 
 bb.fa:                                            ; preds = %st_mult.exit179.i
   call void (ptr, ...) @die(ptr noundef nonnull @.str.81, i64 noundef 12, i64 noundef %i.tz) #23
   unreachable
 
 st_add.exit.i:                                    ; preds = %st_mult.exit179.i
-  %22 = extractvalue { i64, i1 } %20, 0
-  call void @add_chunk(ptr noundef %i.tb, i32 noundef 1111769428, i64 noundef %22, ptr noundef nonnull @write_graph_chunk_bloom_data) #22
+  %21 = add nuw i64 %i.tz, 12
+  call void @add_chunk(ptr noundef %i.tb, i32 noundef 1111769428, i64 noundef %21, ptr noundef nonnull @write_graph_chunk_bloom_data) #22
   br label %bb.fb
 
 bb.fb:                                            ; preds = %st_add.exit.i, %bb.ex
@@ -618,9 +617,9 @@ declare void @commit_stack_push(ptr noundef, ptr noundef) local_unnamed_addr #2
 declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) local_unnamed_addr #15
 
 ; Function Attrs: inlinehint nounwind uwtable
-define internal fastcc noundef i64 @st_add(i64 noundef %0, i64 noundef %1) unnamed_addr #6 {
+define internal fastcc i64 @st_add(i64 noundef %0, i64 noundef %1) unnamed_addr #6 {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %0, i64 %1) ; 2 uses
+  %i.a = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %0, i64 %1)
   %i.b = extractvalue { i64, i1 } %i.a, 1
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -629,7 +628,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %2 = extractvalue { i64, i1 } %i.a, 0
+  %2 = add nuw i64 %1, %0
   ret i64 %2
 }
 

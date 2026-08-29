@@ -205,7 +205,7 @@ bb.jm:                                            ; preds = %bb.jl
   unreachable
 
 bb.jn:                                            ; preds = %bb.js, %bb.jm
-  %.sroa.06.0.i = phi i64 [ %i.bln, %bb.jm ], [ %i.blt, %bb.js ] ; 2 uses
+  %.sroa.06.0.i = phi i64 [ %i.bln, %bb.jm ], [ %i.blt, %bb.js ] ; 3 uses
   %i.blp = invoke noundef i32 @_RINvMs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters8peekableINtB6_8PeekableNtNtNtBc_3str4iter5CharsE7next_ifNvMNtNtBc_4char7methodsc14is_ascii_digitECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.cq)
           to label %bb.jo unwind label %.loopexit.i1008, !noalias !15716 ; 2 uses
 
@@ -214,16 +214,15 @@ bb.jo:                                            ; preds = %bb.jn
   br i1 %.not35.i, label %.loopexit73.i, label %bb.jp
 
 bb.jp:                                            ; preds = %bb.jo
-  %7 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.06.0.i, i64 10) ; 2 uses
-  %8 = extractvalue { i64, i1 } %7, 0
-  %9 = extractvalue { i64, i1 } %7, 1
-  br i1 %9, label %bb.jq, label %bb.jr, !prof !643
+  %7 = mul nuw i64 %.sroa.06.0.i, 10
+  %8 = icmp ugt i64 %.sroa.06.0.i, 1844674407370955161
+  br i1 %8, label %bb.jq, label %bb.jr, !prof !643
 
 bb.jq:                                            ; preds = %bb.jp
   br label %bb.jr
 
 bb.jr:                                            ; preds = %bb.jq, %bb.jp
-  %.sroa.014.0.i = phi i64 [ -1, %bb.jq ], [ %8, %bb.jp ]
+  %.sroa.014.0.i = phi i64 [ -1, %bb.jq ], [ %7, %bb.jp ]
   %i.blq = add nsw i32 %i.blp, -48                ; 2 uses
   %i.blr = icmp ult i32 %i.blq, 10
   br i1 %i.blr, label %bb.js, label %.invoke97.i, !prof !555
@@ -624,9 +623,6 @@ declare hidden noundef range(i32 -1, 1114112) i32 @_RINvMs3_NtNtNtCs4NRVxsYgnAr_
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef range(i32 -1, 1114112) i32 @_RINvMs3_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters8peekableINtB6_8PeekableNtNtNtBc_3str4iter5CharsE7next_ifNvMNtNtBc_4char7methodsc14is_ascii_digitECsoTR8nlGN3X_18ty_python_semantic(ptr noalias noundef align 8 dereferenceable(24)) unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #50
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.uadd.sat.i64(i64, i64) #50

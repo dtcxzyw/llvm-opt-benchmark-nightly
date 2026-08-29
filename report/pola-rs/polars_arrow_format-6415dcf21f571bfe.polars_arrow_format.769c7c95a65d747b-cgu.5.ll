@@ -202,16 +202,15 @@ bb.c:                                             ; preds = %bb.a
   %i.i = load <2 x i64>, ptr %.sroa.033.sroa.5.0..sroa_idx, align 16, !dbg !623
   %.sroa.033.sroa.5.0.copyload = load i64, ptr %.sroa.033.sroa.5.0..sroa_idx, align 16, !dbg !623
   %.sroa.534.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32, !dbg !623
-  %.sroa.534.0.copyload = load i64, ptr %.sroa.534.0..sroa_idx, align 16, !dbg !623 ; 2 uses
+  %.sroa.534.0.copyload = load i64, ptr %.sroa.534.0..sroa_idx, align 16, !dbg !623 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !620
-  %3 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.534.0.copyload, i64 24), !dbg !624 ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 1, !dbg !624
-  br i1 %4, label %bb.e, label %bb.d, !dbg !630, !prof !438
+  %3 = icmp ugt i64 %.sroa.534.0.copyload, 768614336404564650, !dbg !624
+  br i1 %3, label %bb.e, label %bb.d, !dbg !630, !prof !438
 
 bb.d:                                             ; preds = %bb.c
-  %5 = extractvalue { i64, i1 } %3, 0, !dbg !624
+  %4 = mul nuw i64 %.sroa.534.0.copyload, 24, !dbg !624
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.033.sroa.0.0.copyload) ]
-  %.not = icmp ugt i64 %5, %.sroa.033.sroa.5.0.copyload, !dbg !634
+  %.not = icmp ugt i64 %4, %.sroa.033.sroa.5.0.copyload, !dbg !634
   br i1 %.not, label %bb.f, label %bb.g, !dbg !634
 
 bb.e:                                             ; preds = %bb.c
@@ -485,16 +484,12 @@ declare hidden noundef nonnull align 8 ptr @_RINvMs5_NtNtCscgRAwXFJnXP_4core3fmt
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvNtCsfyRUffk9zcp_6planus5impls17array_from_buffer(ptr dead_on_unwind noalias noundef writable sret([48 x i8]) align 16 captures(none) dereferenceable(48), ptr noalias noundef readonly align 8 captures(address) dead_on_return dereferenceable(24), i64 noundef) unnamed_addr #2
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #6
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #2 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #5 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

@@ -204,9 +204,14 @@ bb.wa:                                            ; preds = %.thread1881
   %i.btt = sub nuw nsw i64 %i.bao, %.sroa.0.0.i1819852621 ; 2 uses
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %5
-  %.sroa.0.0.i241988 = phi ptr [ %i.btu, %5 ], [ %i.bap, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.012.0.i1987 = phi i64 [ %6, %5 ], [ 0, %.lr.ph.preheader ]
+2:                                                ; preds = %bb.wc
+  %3 = add nsw i64 %7, %i.btx                     ; 3 uses
+  %4 = icmp eq ptr %i.btu, %i.bts
+  br i1 %4, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtB4_6result6ResultxNtNtBK_4util13ParseIntErrorEINtBK_12ErrorContextxB1y_E7contextNtNtNtBK_3fmt7strtime5ErrorE0EBM_.exit, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %2
+  %.sroa.0.0.i241988 = phi ptr [ %i.btu, %2 ], [ %i.bap, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.012.0.i1987 = phi i64 [ %3, %2 ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.btu = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i241988, i64 1 ; 2 uses
   %i.btv = load i8, ptr %.sroa.0.0.i241988, align 1, !alias.scope !2002, !noalias !2005, !noundef !5 ; 2 uses
   %i.btw = add i8 %i.btv, -48                     ; 2 uses
@@ -214,21 +219,16 @@ bb.wa:                                            ; preds = %.thread1881
   br i1 %or.cond.i25, label %bb.wb, label %bb.wd
 
 bb.wb:                                            ; preds = %.lr.ph
-  %2 = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.012.0.i1987, i64 10) ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 1
-  br i1 %3, label %bb.wd, label %bb.wc, !prof !240
+  %5 = add i64 %.sroa.012.0.i1987, -922337203685477581
+  %6 = icmp ult i64 %5, -1844674407370955161
+  br i1 %6, label %bb.wd, label %bb.wc, !prof !240
 
 bb.wc:                                            ; preds = %bb.wb
-  %4 = extractvalue { i64, i1 } %2, 0
-  %i.btx = zext nneg i8 %i.btw to i64
-  %i.bty = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %4, i64 %i.btx) ; 2 uses
+  %7 = mul nsw i64 %.sroa.012.0.i1987, 10         ; 2 uses
+  %i.btx = zext nneg i8 %i.btw to i64             ; 2 uses
+  %i.bty = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %7, i64 %i.btx)
   %i.btz = extractvalue { i64, i1 } %i.bty, 1
-  br i1 %i.btz, label %bb.wd, label %5, !prof !240
-
-5:                                                ; preds = %bb.wc
-  %6 = extractvalue { i64, i1 } %i.bty, 0         ; 3 uses
-  %7 = icmp eq ptr %i.btu, %i.bts
-  br i1 %7, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtB4_6result6ResultxNtNtBK_4util13ParseIntErrorEINtBK_12ErrorContextxB1y_E7contextNtNtNtBK_3fmt7strtime5ErrorE0EBM_.exit, label %.lr.ph
+  br i1 %i.btz, label %bb.wd, label %2, !prof !240
 
 bb.wd:                                            ; preds = %.lr.ph, %bb.wc, %bb.wb
   %.sroa.71728.1.ph = phi i8 [ 2, %bb.wb ], [ 2, %bb.wc ], [ 1, %.lr.ph ]
@@ -238,8 +238,8 @@ bb.wd:                                            ; preds = %.lr.ph, %bb.wc, %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.dm), !noalias !2007
   br label %bb.rp
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtB4_6result6ResultxNtNtBK_4util13ParseIntErrorEINtBK_12ErrorContextxB1y_E7contextNtNtNtBK_3fmt7strtime5ErrorE0EBM_.exit: ; preds = %5
-  %or.cond.i19 = icmp ugt i64 %6, 255
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtB4_6result6ResultxNtNtBK_4util13ParseIntErrorEINtBK_12ErrorContextxB1y_E7contextNtNtNtBK_3fmt7strtime5ErrorE0EBM_.exit: ; preds = %2
+  %or.cond.i19 = icmp ugt i64 %3, 255
   br i1 %or.cond.i19, label %bb.wh, label %bb.we
 
 bb.we:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtB4_6result6ResultxNtNtBK_4util13ParseIntErrorEINtBK_12ErrorContextxB1y_E7contextNtNtNtBK_3fmt7strtime5ErrorE0EBM_.exit
@@ -247,7 +247,7 @@ bb.we:                                            ; preds = %_RINvNtCs3oUPovFnLW
   br i1 %i.bub, label %bb.wg, label %bb.wf
 
 bb.wf:                                            ; preds = %bb.we
-  %i.buc = trunc nuw i64 %6 to i8
+  %i.buc = trunc nuw i64 %3 to i8
   br label %_RNvMs1_NtNtNtCsa9sSWSfjDbm_4jiff3fmt7strtime7printerINtB5_9FormatterNtB7_13DefaultCustomE1fBb_.exit678
 
 bb.wg:                                            ; preds = %bb.we
@@ -650,9 +650,14 @@ bb.o:                                             ; preds = %.thread
   %i.al = sub nuw i64 %.sroa.13.0.ph, %.sroa.0.0.i55149.fr ; 2 uses
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %4
-  %.sroa.0.0.i61161 = phi ptr [ %i.am, %4 ], [ %.sroa.890.0.ph, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.012.0.i160 = phi i64 [ %5, %4 ], [ 0, %.lr.ph.preheader ]
+1:                                                ; preds = %bb.q
+  %2 = add nsw i64 %6, %i.ap                      ; 3 uses
+  %3 = icmp eq ptr %i.am, %i.ak
+  br i1 %3, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtB4_6result6ResultxNtNtBK_4util13ParseIntErrorEINtBK_12ErrorContextxB1y_E7contextNtNtNtBK_3fmt7strtime5ErrorE0EBM_.exit, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %1
+  %.sroa.0.0.i61161 = phi ptr [ %i.am, %1 ], [ %.sroa.890.0.ph, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.012.0.i160 = phi i64 [ %2, %1 ], [ 0, %.lr.ph.preheader ] ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i61161, i64 1 ; 2 uses
   %i.an = load i8, ptr %.sroa.0.0.i61161, align 1, !alias.scope !2312, !noalias !2315, !noundef !5 ; 2 uses
   %i.ao = add i8 %i.an, -48                       ; 2 uses
@@ -660,21 +665,16 @@ bb.o:                                             ; preds = %.thread
   br i1 %or.cond.i62, label %bb.p, label %bb.r
 
 bb.p:                                             ; preds = %.lr.ph
-  %1 = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.012.0.i160, i64 10) ; 2 uses
-  %2 = extractvalue { i64, i1 } %1, 1
-  br i1 %2, label %bb.r, label %bb.q, !prof !240
+  %4 = add i64 %.sroa.012.0.i160, -922337203685477581
+  %5 = icmp ult i64 %4, -1844674407370955161
+  br i1 %5, label %bb.r, label %bb.q, !prof !240
 
 bb.q:                                             ; preds = %bb.p
-  %3 = extractvalue { i64, i1 } %1, 0
-  %i.ap = zext nneg i8 %i.ao to i64
-  %i.aq = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %3, i64 %i.ap) ; 2 uses
+  %6 = mul nsw i64 %.sroa.012.0.i160, 10          ; 2 uses
+  %i.ap = zext nneg i8 %i.ao to i64               ; 2 uses
+  %i.aq = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %6, i64 %i.ap)
   %i.ar = extractvalue { i64, i1 } %i.aq, 1
-  br i1 %i.ar, label %bb.r, label %4, !prof !240
-
-4:                                                ; preds = %bb.q
-  %5 = extractvalue { i64, i1 } %i.aq, 0          ; 3 uses
-  %6 = icmp eq ptr %i.am, %i.ak
-  br i1 %6, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtB4_6result6ResultxNtNtBK_4util13ParseIntErrorEINtBK_12ErrorContextxB1y_E7contextNtNtNtBK_3fmt7strtime5ErrorE0EBM_.exit, label %.lr.ph
+  br i1 %i.ar, label %bb.r, label %1, !prof !240
 
 bb.r:                                             ; preds = %.lr.ph, %bb.q, %bb.p
   %.sroa.799.1.ph = phi i8 [ 2, %bb.p ], [ 2, %bb.q ], [ 1, %.lr.ph ]
@@ -718,8 +718,8 @@ _RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultxNtN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2317
   br label %bb.ai
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtB4_6result6ResultxNtNtBK_4util13ParseIntErrorEINtBK_12ErrorContextxB1y_E7contextNtNtNtBK_3fmt7strtime5ErrorE0EBM_.exit: ; preds = %4
-  %or.cond.i56 = icmp ugt i64 %5, 255
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtB4_6result6ResultxNtNtBK_4util13ParseIntErrorEINtBK_12ErrorContextxB1y_E7contextNtNtNtBK_3fmt7strtime5ErrorE0EBM_.exit: ; preds = %1
+  %or.cond.i56 = icmp ugt i64 %2, 255
   br i1 %or.cond.i56, label %bb.z, label %bb.w
 
 bb.w:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtB4_6result6ResultxNtNtBK_4util13ParseIntErrorEINtBK_12ErrorContextxB1y_E7contextNtNtNtBK_3fmt7strtime5ErrorE0EBM_.exit
@@ -727,7 +727,7 @@ bb.w:                                             ; preds = %_RINvNtCs3oUPovFnLW
   br i1 %i.ba, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.bb = trunc nuw nsw i64 %5 to i32
+  %i.bb = trunc nuw nsw i64 %2 to i32
   %i.bc = shl nuw nsw i32 %i.bb, 8
   %i.bd = or disjoint i32 %i.bc, 1
   br label %.lr.ph164.preheader
@@ -1128,9 +1128,6 @@ declare hidden noundef i64 @_RINvNtCs1xwejQucwHj_5alloc4sync11data_offsetNtNtNtC
 
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @_RNvXs_NtNtNtCs3oUPovFnLWP_4core3fmt3num3impaNtB8_7Display3fmt(ptr noalias nofree noundef readonly captures(address, read_provenance) dereferenceable(1), ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.smul.with.overflow.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i64, i1 } @llvm.sadd.with.overflow.i64(i64, i64) #16

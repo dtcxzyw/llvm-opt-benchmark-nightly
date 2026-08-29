@@ -204,25 +204,24 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.o = icmp slt i32 %4, 0
   %i.p = sub i32 0, %i.k
-  %i.q = select i1 %i.o, i32 %i.p, i32 %i.k
-  %9 = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.q, i32 31) ; 2 uses
-  %10 = extractvalue { i32, i1 } %9, 1
-  br i1 %10, label %qemu_pixman_image_calc_size.exit.thread, label %qemu_pixman_stride.exit.i, !prof !10
+  %i.q = select i1 %i.o, i32 %i.p, i32 %i.k       ; 3 uses
+  %9 = icmp sgt i32 %i.q, 2147483616
+  br i1 %9, label %qemu_pixman_image_calc_size.exit.thread, label %qemu_pixman_stride.exit.i, !prof !10
 
 qemu_pixman_stride.exit.i:                        ; preds = %bb.g
-  %11 = extractvalue { i32, i1 } %9, 0            ; 2 uses
-  %i.r = sdiv i32 %11, 32
+  %10 = add nsw i32 %i.q, 31
+  %i.r = sdiv i32 %10, 32
   %i.s = shl nsw i32 %i.r, 2
-  %i.t = icmp slt i32 %11, -31
+  %i.t = icmp slt i32 %i.q, -62
   br i1 %i.t, label %qemu_pixman_image_calc_size.exit.thread, label %qemu_pixman_image_calc_size.exit
 
 qemu_pixman_image_calc_size.exit:                 ; preds = %bb.e, %qemu_pixman_stride.exit.i
   %.045 = phi i32 [ %i.s, %qemu_pixman_stride.exit.i ], [ %6, %bb.e ] ; 2 uses
-  %i.u = sext i32 %5 to i64
-  %i.v = sext i32 %.045 to i64
-  %i.w = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.u, i64 %i.v) ; 2 uses
+  %i.u = sext i32 %5 to i64                       ; 2 uses
+  %i.v = sext i32 %.045 to i64                    ; 2 uses
+  %i.w = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.u, i64 %i.v)
   %i.x = extractvalue { i64, i1 } %i.w, 1
-  %12 = extractvalue { i64, i1 } %i.w, 0          ; 2 uses
+  %11 = mul nuw nsw i64 %i.u, %i.v                ; 2 uses
   br i1 %i.x, label %qemu_pixman_image_calc_size.exit.thread, label %bb.h
 
 qemu_pixman_image_calc_size.exit.thread:          ; preds = %bb.f, %bb.g, %qemu_pixman_stride.exit.i, %qemu_pixman_image_calc_size.exit
@@ -230,7 +229,7 @@ qemu_pixman_image_calc_size.exit.thread:          ; preds = %bb.f, %bb.g, %qemu_
   br label %bb.l
 
 bb.h:                                             ; preds = %qemu_pixman_image_calc_size.exit
-  %i.y = call ptr @qemu_memfd_alloc(ptr noundef %2, i64 noundef %12, i32 noundef 0, ptr noundef nonnull %1, ptr noundef nonnull %spec.select) #10 ; 3 uses
+  %i.y = call ptr @qemu_memfd_alloc(ptr noundef %2, i64 noundef %11, i32 noundef 0, ptr noundef nonnull %1, ptr noundef nonnull %spec.select) #10 ; 3 uses
   %.not38 = icmp eq ptr %i.y, null
   br i1 %.not38, label %bb.l, label %bb.i
 
@@ -243,7 +242,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %spec.select, ptr noundef nonnull @.str, i32 noundef 342, ptr noundef nonnull @__func__.qemu_pixman_image_new_shareable, ptr noundef nonnull @.str.4) #10
   %i.aa = load i32, ptr %1, align 4
-  call void @qemu_memfd_free(ptr noundef nonnull %i.y, i64 noundef %12, i32 noundef %i.aa) #10
+  call void @qemu_memfd_free(ptr noundef nonnull %i.y, i64 noundef %11, i32 noundef %i.aa) #10
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.i
@@ -289,9 +288,6 @@ declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.sadd.with.overflow.i32(i32, i32) #7
 
 declare ptr @qemu_memfd_alloc(ptr noundef, i64 noundef, i32 noundef, ptr noundef, ptr noundef) local_unnamed_addr #5
 

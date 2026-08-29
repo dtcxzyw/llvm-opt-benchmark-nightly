@@ -204,28 +204,25 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.ac, %.lr.ph
   %i.cg = call ptr @strrchr(ptr noundef nonnull dereferenceable(1) %i.cf, i32 noundef 47) #18 ; 2 uses
-  %i.ch = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.cf) #18 ; 3 uses
-  %9 = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.ch, i64 16) ; 2 uses
-  %10 = extractvalue { i64, i1 } %9, 1
-  br i1 %10, label %bb.y, label %st_add.exit
+  %i.ch = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.cf) #18 ; 5 uses
+  %9 = icmp ugt i64 %i.ch, -17
+  br i1 %9, label %bb.y, label %st_add.exit
 
 bb.y:                                             ; preds = %bb.x
   call void (ptr, ...) @die(ptr noundef nonnull @.str.8, i64 noundef 16, i64 noundef %i.ch) #17
   unreachable
 
 st_add.exit:                                      ; preds = %bb.x
-  %11 = extractvalue { i64, i1 } %9, 0            ; 2 uses
-  %12 = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %11, i64 1) ; 2 uses
-  %13 = extractvalue { i64, i1 } %12, 1
-  br i1 %13, label %bb.z, label %st_add.exit117
+  %10 = icmp eq i64 %i.ch, -17
+  br i1 %10, label %bb.z, label %st_add.exit117
 
 bb.z:                                             ; preds = %st_add.exit
-  call void (ptr, ...) @die(ptr noundef nonnull @.str.8, i64 noundef %11, i64 noundef 1) #17
+  call void (ptr, ...) @die(ptr noundef nonnull @.str.8, i64 noundef -1, i64 noundef 1) #17
   unreachable
 
 st_add.exit117:                                   ; preds = %st_add.exit
-  %14 = extractvalue { i64, i1 } %12, 0
-  %i.ci = call ptr @xcalloc(i64 noundef 1, i64 noundef %14) #16 ; 6 uses
+  %11 = add nuw i64 %i.ch, 17
+  %i.ci = call ptr @xcalloc(i64 noundef 1, i64 noundef %11) #16 ; 6 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.cj, ptr nonnull align 1 %i.cf, i64 %i.ch, i1 false)
   %i.ck = call i32 @strhash(ptr noundef nonnull %i.cf) #16
@@ -627,9 +624,6 @@ declare i32 @repo_parse_commit_gently(ptr noundef, ptr noundef, i32 noundef) loc
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) local_unnamed_addr #11
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #14
 
 ; Function Attrs: noreturn
 declare void @BUG_fl(ptr noundef, i32 noundef, ptr noundef, ...) local_unnamed_addr #13

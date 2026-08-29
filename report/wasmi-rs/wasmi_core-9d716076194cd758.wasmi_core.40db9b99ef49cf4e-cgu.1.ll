@@ -204,15 +204,15 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   %i.t = and i8 %.val, 63
   %i.u = zext nneg i8 %i.t to i64
-  %i.v = lshr i64 %.val36, %i.u                   ; 5 uses
+  %i.v = lshr i64 %.val36, %i.u                   ; 6 uses
   store i64 %i.v, ptr %i.h, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  %i.w = and i8 %.val, 31
+  %i.w = and i8 %.val, 31                         ; 2 uses
   %i.x = zext nneg i8 %i.w to i32
   %i.y = shl nuw i32 1, %i.x
   %i.z = zext i32 %i.y to i64                     ; 6 uses
   store i64 %i.z, ptr %i.g, align 8
-  %i.aa = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.v, i64 %i.z) ; 2 uses
+  %i.aa = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.v, i64 %i.z)
   %i.ab = extractvalue { i64, i1 } %i.aa, 1
   br i1 %i.ab, label %bb.d, label %_RNvMNtCs5zeGauAcNNa_10wasmi_core6memoryNtB2_6Memory13size_in_bytes.exit, !prof !10
 
@@ -229,7 +229,8 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _RNvMNtCs5zeGauAcNNa_10wasmi_core6memoryNtB2_6Memory13size_in_bytes.exit: ; preds = %bb.c
-  %5 = extractvalue { i64, i1 } %i.aa, 0
+  %5 = zext nneg i8 %i.w to i64                   ; 4 uses
+  %6 = shl nuw i64 %i.v, %5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !136)
@@ -240,16 +241,16 @@ _RNvMNtCs5zeGauAcNNa_10wasmi_core6memoryNtB2_6Memory13size_in_bytes.exit: ; pred
 
 bb.e:                                             ; preds = %_RNvMNtCs5zeGauAcNNa_10wasmi_core6memoryNtB2_6Memory13size_in_bytes.exit
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ag = load i64, ptr %i.af, align 8, !alias.scope !136 ; 2 uses
+  %i.ag = load i64, ptr %i.af, align 8, !alias.scope !136 ; 3 uses
   store i64 %i.ag, ptr %i.e, align 8, !noalias !136
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !136
   store i64 %i.z, ptr %i.d, align 8, !noalias !136
-  %i.ah = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.ag, i64 %i.z) ; 2 uses
+  %i.ah = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.ag, i64 %i.z)
   %i.ai = extractvalue { i64, i1 } %i.ah, 1
   br i1 %i.ai, label %bb.g, label %bb.f, !prof !10
 
 bb.f:                                             ; preds = %bb.e
-  %6 = extractvalue { i64, i1 } %i.ah, 0
+  %7 = shl nuw i64 %i.ag, %5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !136
   br label %_RNvMNtCs5zeGauAcNNa_10wasmi_core6memoryNtB2_6Memory17max_size_in_bytes.exit
 
@@ -266,10 +267,10 @@ bb.g:                                             ; preds = %bb.e
   unreachable
 
 _RNvMNtCs5zeGauAcNNa_10wasmi_core6memoryNtB2_6Memory17max_size_in_bytes.exit: ; preds = %_RNvMNtCs5zeGauAcNNa_10wasmi_core6memoryNtB2_6Memory13size_in_bytes.exit, %bb.f
-  %.sroa.3.0 = phi i64 [ %6, %bb.f ], [ undef, %_RNvMNtCs5zeGauAcNNa_10wasmi_core6memoryNtB2_6Memory13size_in_bytes.exit ]
+  %.sroa.3.0 = phi i64 [ %7, %bb.f ], [ undef, %_RNvMNtCs5zeGauAcNNa_10wasmi_core6memoryNtB2_6Memory13size_in_bytes.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !136
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.al = add i64 %i.v, %2                        ; 4 uses
+  %i.al = add i64 %i.v, %2                        ; 5 uses
   %i.am = icmp ult i64 %i.al, %i.v
   br i1 %i.am, label %bb.j, label %bb.i, !prof !10
 
@@ -304,8 +305,8 @@ bb.l:                                             ; preds = %bb.i
   br label %bb.h
 
 bb.m:                                             ; preds = %bb.k
-  %i.ay = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.al, i64 %i.z) ; 2 uses
-  %7 = extractvalue { i64, i1 } %i.ay, 0          ; 2 uses
+  %i.ay = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.al, i64 %i.z)
+  %8 = shl nuw i64 %i.al, %5                      ; 2 uses
   %i.az = extractvalue { i64, i1 } %i.ay, 1
   br i1 %i.az, label %bb.p, label %bb.o, !prof !10
 
@@ -327,7 +328,7 @@ bb.q:                                             ; preds = %bb.o
   %i.bc = load ptr, ptr %i.bb, align 8, !nonnull !8, !align !139, !noundef !8
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 24
   %i.be = load ptr, ptr %i.bd, align 8, !invariant.load !8, !nonnull !8
-  %i.bf = tail call noundef i8 %i.be(ptr noundef nonnull %i.ba, i64 noundef %5, i64 noundef %7, i64 noundef %i.ad, i64 %.sroa.3.0) #17
+  %i.bf = tail call noundef i8 %i.be(ptr noundef nonnull %i.ba, i64 noundef %6, i64 noundef %8, i64 noundef %i.ad, i64 %.sroa.3.0) #17
   switch i8 %i.bf, label %bb.r [
     i8 2, label %bb.t
     i8 0, label %bb.s
@@ -346,18 +347,18 @@ bb.t:                                             ; preds = %bb.q, %bb.s
   br label %bb.h
 
 bb.u:                                             ; preds = %bb.r
-  %i.bg = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.z) ; 2 uses
+  %i.bg = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.z)
   %i.bh = extractvalue { i64, i1 } %i.bg, 1
   br i1 %i.bh, label %bb.z, label %bb.w, !prof !10
 
 bb.v:                                             ; preds = %bb.y, %bb.w, %bb.r
-  %i.bi = tail call { i64, i64 } @_RNvMs0_NtNtCs5zeGauAcNNa_10wasmi_core6memory6bufferNtB5_10ByteBuffer4grow(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ak, i64 noundef %7) ; 2 uses
+  %i.bi = tail call { i64, i64 } @_RNvMs0_NtNtCs5zeGauAcNNa_10wasmi_core6memory6bufferNtB5_10ByteBuffer4grow(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ak, i64 noundef %8) ; 2 uses
   %i.bj = extractvalue { i64, i64 } %i.bi, 0      ; 3 uses
   %.not35 = icmp eq i64 %i.bj, -1
   br i1 %.not35, label %bb.ai, label %bb.ae
 
 bb.w:                                             ; preds = %bb.u
-  %8 = extractvalue { i64, i1 } %i.bg, 0
+  %9 = shl nuw i64 %2, %5
   tail call void @llvm.experimental.noalias.scope.decl(metadata !140)
   %i.bk = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.bl = load i8, ptr %i.bk, align 8, !range !4, !alias.scope !140, !noundef !8
@@ -388,7 +389,7 @@ _RNvMs1_NtCs5zeGauAcNNa_10wasmi_core4fuelNtB5_17FuelCostsProvider21bytes_copied_
 _RNvMs1_NtCs5zeGauAcNNa_10wasmi_core4fuelNtB5_17FuelCostsProvider21bytes_copied_per_fuel.exit.thread.i.i.i.i: ; preds = %_RNvMs1_NtCs5zeGauAcNNa_10wasmi_core4fuelNtB5_17FuelCostsProvider21bytes_copied_per_fuel.exit.i.i.i.i, %bb.x
   %.sroa.0.0.i.i3.i.i.i.i = phi i32 [ %i.bw, %_RNvMs1_NtCs5zeGauAcNNa_10wasmi_core4fuelNtB5_17FuelCostsProvider21bytes_copied_per_fuel.exit.i.i.i.i ], [ 64, %bb.x ]
   %i.by = zext i32 %.sroa.0.0.i.i3.i.i.i.i to i64
-  %i.bz = udiv i64 %8, %i.by
+  %i.bz = udiv i64 %9, %i.by
   br label %_RNCNvMNtCs5zeGauAcNNa_10wasmi_core6memoryNtB4_6Memory4grows_0B6_.exit.i
 
 _RNCNvMNtCs5zeGauAcNNa_10wasmi_core6memoryNtB4_6Memory4grows_0B6_.exit.i: ; preds = %_RNvMs1_NtCs5zeGauAcNNa_10wasmi_core4fuelNtB5_17FuelCostsProvider21bytes_copied_per_fuel.exit.thread.i.i.i.i, %_RNvMs1_NtCs5zeGauAcNNa_10wasmi_core4fuelNtB5_17FuelCostsProvider21bytes_copied_per_fuel.exit.i.i.i.i
@@ -582,9 +583,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RNvMs1_NtCs5zeGauAcNNa_10wasmi_core4fuelNtB5_17FuelCostsProvider24fuel_per_bytes_validated.exit
 
 _RNvMs1_NtCs5zeGauAcNNa_10wasmi_core4fuelNtB5_17FuelCostsProvider24fuel_per_bytes_validated.exit: ; preds = %bb.a, %bb.b
-  %.sroa.0.0.i.i = phi i64 [ %i.j, %bb.b ], [ 2, %bb.a ]
-  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %1, i64 %.sroa.0.0.i.i) ; 2 uses
-  %2 = extractvalue { i64, i1 } %i.k, 0
+  %.sroa.0.0.i.i = phi i64 [ %i.j, %bb.b ], [ 2, %bb.a ] ; 2 uses
+  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %1, i64 %.sroa.0.0.i.i)
+  %2 = mul nuw i64 %.sroa.0.0.i.i, %1
   %i.l = extractvalue { i64, i1 } %i.k, 1
   br i1 %i.l, label %bb.c, label %bb.d, !prof !10
 
@@ -619,9 +620,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_RNvMs1_NtCs5zeGauAcNNa_10wasmi_core4fuelNtB5_17FuelCostsProvider25fuel_per_bytes_translated.exit
 
 _RNvMs1_NtCs5zeGauAcNNa_10wasmi_core4fuelNtB5_17FuelCostsProvider25fuel_per_bytes_translated.exit: ; preds = %bb.a, %bb.b
-  %.sroa.0.0.i.i = phi i64 [ %i.j, %bb.b ], [ 7, %bb.a ]
-  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %1, i64 %.sroa.0.0.i.i) ; 2 uses
-  %2 = extractvalue { i64, i1 } %i.k, 0
+  %.sroa.0.0.i.i = phi i64 [ %i.j, %bb.b ], [ 7, %bb.a ] ; 2 uses
+  %i.k = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %1, i64 %.sroa.0.0.i.i)
+  %2 = mul nuw i64 %.sroa.0.0.i.i, %1
   %i.l = extractvalue { i64, i1 } %i.k, 1
   br i1 %i.l, label %bb.c, label %bb.d, !prof !10
 

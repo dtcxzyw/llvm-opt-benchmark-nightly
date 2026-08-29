@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.f = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %3) ; 2 uses
-  %4 = extractvalue { i64, i1 } %i.f, 0           ; 5 uses
+  %i.f = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %3)
+  %4 = mul nuw i64 %3, %2                         ; 5 uses
   %i.g = extractvalue { i64, i1 } %i.f, 1
   br i1 %i.g, label %bb.g, label %bb.e, !prof !8
 
@@ -609,14 +609,13 @@ bb.e:                                             ; preds = %thread-pre-split.i,
 .preheader56.i.preheader:                         ; preds = %bb.e, %.preheader56.i
   %.sroa.0.1.i34 = phi ptr [ %i.h, %.preheader56.i ], [ %.sroa.0.0.i, %bb.e ] ; 2 uses
   %.sroa.15.1.i33 = phi i64 [ %i.i, %.preheader56.i ], [ %.sroa.15.0.i, %bb.e ]
-  %.sroa.042.0.i32 = phi i64 [ %i.q, %.preheader56.i ], [ 0, %bb.e ]
+  %.sroa.042.0.i32 = phi i64 [ %i.q, %.preheader56.i ], [ 0, %bb.e ] ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i34, i64 1
   %i.i = add nsw i64 %.sroa.15.1.i33, -1          ; 2 uses
-  %3 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i32, i64 10) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 0             ; 2 uses
-  %5 = extractvalue { i64, i1 } %3, 1
+  %3 = mul nuw i64 %.sroa.042.0.i32, 10           ; 2 uses
+  %4 = icmp ugt i64 %.sroa.042.0.i32, 1844674407370955161
   %i.j = load i8, ptr %.sroa.0.1.i34, align 1, !alias.scope !3311, !noalias !3308, !noundef !6 ; 2 uses
-  br i1 %5, label %bb.g, label %bb.f, !prof !8
+  br i1 %4, label %bb.g, label %bb.f, !prof !8
 
 bb.f:                                             ; preds = %.preheader56.i.preheader
   %i.k = zext i8 %i.j to i32
@@ -631,8 +630,8 @@ bb.g:                                             ; preds = %.preheader56.i.preh
 
 bb.h:                                             ; preds = %bb.f
   %i.p = zext nneg i32 %i.l to i64
-  %i.q = add i64 %4, %i.p                         ; 3 uses
-  %i.r = icmp ult i64 %i.q, %4
+  %i.q = add i64 %3, %i.p                         ; 3 uses
+  %i.r = icmp ult i64 %i.q, %3
   br i1 %i.r, label %bb.i, label %.preheader56.i, !prof !8
 
 .loopexit58.i:                                    ; preds = %bb.f, %bb.g

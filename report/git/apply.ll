@@ -205,9 +205,9 @@ bb.ew:                                            ; preds = %._crit_edge.i326.i
 st_sub.exit.i.i:                                  ; preds = %._crit_edge.i326.i, %._crit_edge.thread.i.i
   %i.aes = phi i64 [ %i.adz, %._crit_edge.thread.i.i ], [ %i.aeq, %._crit_edge.i326.i ]
   %.078.lcssa33.i.i = phi i64 [ 0, %._crit_edge.thread.i.i ], [ %i.aep, %._crit_edge.i326.i ] ; 3 uses
-  %i.aet = load i64, ptr %i.ax, align 8, !tbaa !185 ; 2 uses
-  %i.aeu = sub nuw i64 %i.aes, %.078.lcssa33.i.i  ; 2 uses
-  %i.aev = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.aeu, i64 %i.aet) ; 2 uses
+  %i.aet = load i64, ptr %i.ax, align 8, !tbaa !185 ; 3 uses
+  %i.aeu = sub nuw i64 %i.aes, %.078.lcssa33.i.i  ; 3 uses
+  %i.aev = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.aeu, i64 %i.aet)
   %i.aew = extractvalue { i64, i1 } %i.aev, 1
   br i1 %i.aew, label %bb.ex, label %st_add.exit.i.i
 
@@ -216,18 +216,17 @@ bb.ex:                                            ; preds = %st_sub.exit.i.i
   unreachable
 
 st_add.exit.i.i:                                  ; preds = %st_sub.exit.i.i
-  %10 = extractvalue { i64, i1 } %i.aev, 0        ; 2 uses
-  %11 = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %10, i64 1) ; 2 uses
-  %12 = extractvalue { i64, i1 } %11, 1
-  br i1 %12, label %bb.ey, label %st_add.exit88.i.i
+  %10 = add nuw i64 %i.aeu, %i.aet                ; 2 uses
+  %11 = icmp eq i64 %10, -1
+  br i1 %11, label %bb.ey, label %st_add.exit88.i.i
 
 bb.ey:                                            ; preds = %st_add.exit.i.i
-  call void (ptr, ...) @die(ptr noundef nonnull @.str.234, i64 noundef %10, i64 noundef 1) #25
+  call void (ptr, ...) @die(ptr noundef nonnull @.str.234, i64 noundef -1, i64 noundef 1) #25
   unreachable
 
 st_add.exit88.i.i:                                ; preds = %st_add.exit.i.i
-  %13 = extractvalue { i64, i1 } %11, 0           ; 2 uses
-  %i.aex = call ptr @xmalloc(i64 noundef %13) #21 ; 3 uses
+  %12 = add nuw i64 %10, 1                        ; 2 uses
+  %i.aex = call ptr @xmalloc(i64 noundef %12) #21 ; 3 uses
   %i.aey = load ptr, ptr %i.aq, align 8, !tbaa !184
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aex, ptr align 1 %i.aey, i64 %.077.lcssa.i.i, i1 false)
   %i.aez = getelementptr inbounds nuw i8, ptr %i.aex, i64 %.077.lcssa.i.i ; 2 uses
@@ -246,7 +245,7 @@ st_add.exit88.i.i:                                ; preds = %st_add.exit.i.i
   %i.afk = load i64, ptr %i.ap, align 8, !tbaa !185
   %i.afl = sub i64 %i.afj, %.078.lcssa33.i.i
   %i.afm = add i64 %i.afl, %i.afk
-  call void @strbuf_attach(ptr noundef nonnull %1, ptr noundef %i.aex, i64 noundef %i.afm, i64 noundef %13) #21
+  call void @strbuf_attach(ptr noundef nonnull %1, ptr noundef %i.aex, i64 noundef %i.afm, i64 noundef %12) #21
   %i.afn = load i64, ptr %i.al, align 8, !tbaa !187
   %i.afo = load i64, ptr %i.ad, align 8, !tbaa !187 ; 3 uses
   %sext84.i.i = shl i64 %spec.select.i313.i, 32

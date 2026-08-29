@@ -204,7 +204,7 @@ bb.a:
 define void @"_ZN4uuid2v728_$LT$impl$u20$uuid..Uuid$GT$6new_v717hdd476052c9767b28E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 1 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noalias noundef readonly align 16 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.b = load i64, ptr %i.a, align 16, !noundef !7
+  %i.b = load i64, ptr %i.a, align 16, !noundef !7 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.d = load i32, ptr %i.c, align 8, !noundef !7
   %i.e = load i128, ptr %1, align 16, !noundef !7 ; 5 uses
@@ -223,13 +223,12 @@ bb.c:                                             ; preds = %bb.a
 
 "_ZN4core6result19Result$LT$T$C$E$GT$6unwrap17h3233bc5980742a0cE.exit": ; preds = %bb.b, %bb.e, %bb.f, %bb.g
   %.sroa.01.0 = phi i128 [ %i.i, %bb.b ], [ %i.ap, %bb.e ], [ %i.br, %bb.g ], [ %i.ay, %bb.f ]
-  %2 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.b, i64 1000) ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 1
-  %4 = extractvalue { i64, i1 } %2, 0
+  %2 = icmp ugt i64 %i.b, 18446744073709551
+  %3 = mul nuw i64 %i.b, 1000
   %i.k = udiv i32 %i.d, 1000000
   %i.l = zext nneg i32 %i.k to i64
-  %i.m = tail call i64 @llvm.uadd.sat.i64(i64 %4, i64 %i.l)
-  %i.n = select i1 %3, i64 -1, i64 %i.m, !prof !8 ; 6 uses
+  %i.m = tail call i64 @llvm.uadd.sat.i64(i64 %3, i64 %i.l)
+  %i.n = select i1 %2, i64 -1, i64 %i.m, !prof !8 ; 6 uses
   %i.o = lshr i64 %i.n, 16
   %i.p = lshr i64 %i.n, 40
   %i.q = trunc i64 %i.p to i8
@@ -632,7 +631,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sroa.08.0 = phi i32 [ %i.l, %bb.b ], [ %3, %bb.a ] ; 4 uses
-  %.sroa.07.0 = phi i64 [ %i.j, %bb.b ], [ %2, %bb.a ] ; 3 uses
+  %.sroa.07.0 = phi i64 [ %i.j, %bb.b ], [ %2, %bb.a ] ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %.sroa.035.0.copyload = load i64, ptr %i.m, align 16 ; 2 uses
   %.sroa.536.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
@@ -640,13 +639,12 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %.sroa.737.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 68 ; 2 uses
   %.sroa.737.0.copyload = load i32, ptr %.sroa.737.0..sroa_idx, align 4
-  %4 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.07.0, i64 1000) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  %6 = extractvalue { i64, i1 } %4, 0
+  %4 = icmp ugt i64 %.sroa.07.0, 18446744073709551
+  %5 = mul nuw i64 %.sroa.07.0, 1000
   %i.n = udiv i32 %.sroa.08.0, 1000000
   %i.o = zext nneg i32 %i.n to i64
-  %i.p = tail call i64 @llvm.uadd.sat.i64(i64 %6, i64 %i.o)
-  %i.q = select i1 %5, i64 -1, i64 %i.p, !prof !8 ; 3 uses
+  %i.p = tail call i64 @llvm.uadd.sat.i64(i64 %5, i64 %i.o)
+  %i.q = select i1 %4, i64 -1, i64 %i.p, !prof !8 ; 3 uses
   %i.r = icmp ugt i64 %i.q, %.sroa.035.0.copyload
   br i1 %i.r, label %bb.e, label %bb.d
 
@@ -715,17 +713,16 @@ bb.l:                                             ; preds = %bb.i
   %i.ax = add nuw nsw i128 %i.aw, %i.av
   %.frozen = freeze i128 %i.ax                    ; 2 uses
   %i.ay = udiv i128 %.frozen, 1000000000          ; 2 uses
-  %i.az = trunc i128 %i.ay to i64                 ; 3 uses
-  %7 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.az, i64 1000) ; 2 uses
-  %8 = extractvalue { i64, i1 } %7, 1
-  %9 = extractvalue { i64, i1 } %7, 0
+  %i.az = trunc i128 %i.ay to i64                 ; 4 uses
+  %6 = icmp ugt i64 %i.az, 18446744073709551
+  %7 = mul nuw i64 %i.az, 1000
   %i.ba = mul i128 %i.ay, 1000000000
   %.decomposed67 = sub i128 %.frozen, %i.ba
   %i.bb = trunc nuw nsw i128 %.decomposed67 to i32 ; 3 uses
   %i.bc = udiv i32 %i.bb, 1000000
   %i.bd = zext nneg i32 %i.bc to i64
-  %i.be = tail call i64 @llvm.uadd.sat.i64(i64 %9, i64 %i.bd)
-  %i.bf = select i1 %8, i64 -1, i64 %i.be, !prof !8 ; 2 uses
+  %i.be = tail call i64 @llvm.uadd.sat.i64(i64 %7, i64 %i.bd)
+  %i.bf = select i1 %6, i64 -1, i64 %i.be, !prof !8 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !420)
   %i.bg = tail call noundef i64 @"_ZN57_$LT$uuid..rng..imp..RngImp$u20$as$u20$uuid..rng..Rng$GT$3u6417ha40d7f74ca0a8a51E"(), !noalias !420
   %i.bh = and i64 %i.bg, 2199023255551            ; 2 uses
@@ -807,32 +804,29 @@ declare void @_ZN4core9panicking16panic_in_cleanup17h5eff40bcc4481d72E() unnamed
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @_ZN4core3fmt5write17h80461e1e45e4fdd2E(ptr noundef nonnull align 1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48), ptr noalias noundef readonly align 8 captures(address) dead_on_return dereferenceable(48)) unnamed_addr #0
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #15
-
 ; Function Attrs: cold noinline nonlazybind uwtable
 declare noundef nonnull ptr @_ZN9getrandom8backends27linux_android_with_fallback4init17h788c862a68ad1cd4E() unnamed_addr #12
 
 ; Function Attrs: cold noinline noreturn nonlazybind uwtable
-declare void @_ZN4core9panicking9panic_fmt17h92c8e5abe71dd8d1E(ptr noalias noundef readonly align 8 captures(address) dead_on_return dereferenceable(48), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #16
+declare void @_ZN4core9panicking9panic_fmt17h92c8e5abe71dd8d1E(ptr noalias noundef readonly align 8 captures(address) dead_on_return dereferenceable(48), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #15
 
 ; Function Attrs: cold minsize noinline noreturn nonlazybind optsize uwtable
-declare void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef, i64 noundef, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #17
+declare void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef, i64 noundef, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #16
 
 ; Function Attrs: cold noinline noreturn nonlazybind uwtable
-declare void @_ZN4core6option13expect_failed17h1729d0bd73171c50E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance), i64 noundef, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #16
+declare void @_ZN4core6option13expect_failed17h1729d0bd73171c50E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance), i64 noundef, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #15
 
 ; Function Attrs: cold noinline noreturn nonlazybind uwtable
-declare void @_ZN4core9panicking11panic_const23panic_const_div_by_zero17hd4705242238fd5f4E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #16
+declare void @_ZN4core9panicking11panic_const23panic_const_div_by_zero17hd4705242238fd5f4E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #15
 
 ; Function Attrs: cold noinline noreturn nonlazybind uwtable
-declare void @_ZN4core6result13unwrap_failed17h0501379eaec3e720E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance), i64 noundef, ptr noundef nonnull align 1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #16
+declare void @_ZN4core6result13unwrap_failed17h0501379eaec3e720E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance), i64 noundef, ptr noundef nonnull align 1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i128 @llvm.bswap.i128(i128) #15
+declare i128 @llvm.bswap.i128(i128) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.uadd.sat.i64(i64, i64) #15
+declare i64 @llvm.uadd.sat.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #18
@@ -841,10 +835,10 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare void @_ZN4core3str8converts9from_utf817h61448895180b8340E(ptr dead_on_unwind noalias noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24), ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance), i64 noundef) unnamed_addr #0
 
 ; Function Attrs: cold noinline noreturn nonlazybind uwtable
-declare void @_ZN4core6option13unwrap_failed17h13b3e6f702cb1c04E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #16
+declare void @_ZN4core6option13unwrap_failed17h13b3e6f702cb1c04E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #15
 
 ; Function Attrs: cold noinline noreturn nonlazybind uwtable
-declare void @_ZN4core3str16slice_error_fail17h34415ed9969dc080E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance), i64 noundef, i64 noundef, i64 noundef, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #16
+declare void @_ZN4core3str16slice_error_fail17h34415ed9969dc080E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance), i64 noundef, i64 noundef, i64 noundef, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #15
 
 ; Function Attrs: nonlazybind uwtable
 declare { i64, i32 } @"_ZN91_$LT$std..time..SystemTime$u20$as$u20$core..ops..arith..Add$LT$core..time..Duration$GT$$GT$3add17h2da34e10fae85c2bE"(i64 noundef, i32 noundef range(i32 0, 1000000000), i64 noundef, i32 noundef range(i32 0, 1000000000)) unnamed_addr #0
@@ -853,7 +847,7 @@ declare { i64, i32 } @"_ZN91_$LT$std..time..SystemTime$u20$as$u20$core..ops..ari
 declare void @_ZN3std4time10SystemTime7elapsed17hb54201ce03b980a7E(ptr dead_on_unwind noalias noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16)) unnamed_addr #0
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i128 @llvm.uadd.sat.i128(i128, i128) #15
+declare i128 @llvm.uadd.sat.i128(i128, i128) #17
 
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @_ZN4core3fmt9Formatter9write_str17haacafd99ed76659fE(ptr noalias noundef align 8 dereferenceable(24), ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance), i64 noundef) unnamed_addr #0
@@ -913,16 +907,16 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #13
 declare void @llvm.experimental.noalias.scope.decl(metadata) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #15
+declare i32 @llvm.umax.i32(i32, i32) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.umin.i8(i8, i8) #15
+declare i8 @llvm.umin.i8(i8, i8) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #15
+declare i64 @llvm.umax.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #15
+declare i32 @llvm.bswap.i32(i32) #17
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -939,9 +933,9 @@ attributes #11 = { nocallback nofree nosync nounwind willreturn memory(inaccessi
 attributes #12 = { cold noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #13 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #14 = { cold minsize noinline noreturn nounwind nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #15 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #16 = { cold noinline noreturn nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #17 = { cold minsize noinline noreturn nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #15 = { cold noinline noreturn nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #16 = { cold minsize noinline noreturn nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #17 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #18 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #19 = { nounwind nonlazybind allockind("alloc,uninitialized,aligned") allocsize(0) uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #20 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }

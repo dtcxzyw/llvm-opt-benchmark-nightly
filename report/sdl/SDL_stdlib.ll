@@ -201,28 +201,27 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define hidden noalias ptr @SDL_aligned_alloc_REAL(i64 noundef %0, i64 noundef %1) local_unnamed_addr #6 {
 bb.a:
-  %spec.store.select = tail call i64 @llvm.umax.i64(i64 %0, i64 8) ; 5 uses
+  %spec.store.select = tail call i64 @llvm.umax.i64(i64 %0, i64 8) ; 6 uses
   %i.a = urem i64 %1, %spec.store.select
-  %i.b = sub nuw i64 %spec.store.select, %i.a     ; 2 uses
-  %i.c = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %1, i64 %spec.store.select) ; 2 uses
+  %i.b = sub nuw i64 %spec.store.select, %i.a     ; 3 uses
+  %i.c = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %1, i64 %spec.store.select)
   %i.d = extractvalue { i64, i1 } %i.c, 1
   br i1 %i.d, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = extractvalue { i64, i1 } %i.c, 0
-  %3 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %2, i64 8) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 1
-  br i1 %4, label %bb.f, label %bb.c
+  %2 = add nuw i64 %1, %spec.store.select         ; 2 uses
+  %3 = icmp ugt i64 %2, -9
+  br i1 %3, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %5 = extractvalue { i64, i1 } %3, 0
-  %i.e = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %5, i64 %i.b) ; 2 uses
+  %4 = add nuw i64 %2, 8                          ; 2 uses
+  %i.e = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %4, i64 %i.b)
   %i.f = extractvalue { i64, i1 } %i.e, 1
   br i1 %i.f, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %6 = extractvalue { i64, i1 } %i.e, 0
-  %i.g = tail call noalias ptr @SDL_malloc_REAL(i64 noundef %6) #10 ; 3 uses
+  %5 = add nuw i64 %4, %i.b
+  %i.g = tail call noalias ptr @SDL_malloc_REAL(i64 noundef %5) #10 ; 3 uses
   %.not = icmp eq ptr %i.g, null
   br i1 %.not, label %bb.f, label %bb.e
 

@@ -204,8 +204,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #22
   store i64 %1, ptr %i.b, align 8, !tbaa !22
-  %i.e = add i64 %3, 1                            ; 2 uses
-  %i.f = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %1, i64 %i.e) ; 2 uses
+  %i.e = add i64 %3, 1                            ; 3 uses
+  %i.f = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %1, i64 %i.e)
   %i.g = extractvalue { i64, i1 } %i.f, 1
   br i1 %i.g, label %bb.b, label %st_add.exit
 
@@ -214,7 +214,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 st_add.exit:                                      ; preds = %bb.a
-  %5 = extractvalue { i64, i1 } %i.f, 0
+  %5 = add nuw i64 %i.e, %1
   %i.h = tail call ptr @xmalloc(i64 noundef %5) #22 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 %3
   store ptr %i.i, ptr %i.c, align 8, !tbaa !15
@@ -241,7 +241,7 @@ bb.d:                                             ; preds = %bb.c
   %i.n = load ptr, ptr %i.c, align 8, !tbaa !15
   %i.o = ptrtoint ptr %i.n to i64
   %i.p = ptrtoint ptr %.02249 to i64
-  %i.q = sub i64 %i.o, %i.p                       ; 4 uses
+  %i.q = sub i64 %i.o, %i.p                       ; 5 uses
   %i.r = load i64, ptr %i.a, align 8, !tbaa !22   ; 3 uses
   %mul.ov.i = icmp slt i64 %i.r, 0
   br i1 %mul.ov.i, label %bb.e, label %st_mult.exit
@@ -251,8 +251,8 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 st_mult.exit:                                     ; preds = %bb.d
-  %i.s = shl nuw i64 %i.r, 1                      ; 2 uses
-  %i.t = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.q, i64 %i.s) ; 2 uses
+  %i.s = shl nuw i64 %i.r, 1                      ; 3 uses
+  %i.t = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.q, i64 %i.s)
   %i.u = extractvalue { i64, i1 } %i.t, 1
   br i1 %i.u, label %bb.f, label %st_add.exit29
 
@@ -261,10 +261,9 @@ bb.f:                                             ; preds = %st_mult.exit
   unreachable
 
 st_add.exit29:                                    ; preds = %st_mult.exit
-  %6 = extractvalue { i64, i1 } %i.t, 0           ; 2 uses
-  %7 = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %6, i64 32) ; 2 uses
-  %8 = extractvalue { i64, i1 } %7, 1
-  br i1 %8, label %bb.g, label %bb.i
+  %6 = add nuw i64 %i.s, %i.q                     ; 3 uses
+  %7 = icmp ugt i64 %6, -33
+  br i1 %7, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %st_add.exit29
   call void (ptr, ...) @die(ptr noundef nonnull @.str.24, i64 noundef %6, i64 noundef 32) #20
@@ -286,12 +285,12 @@ bb.h:                                             ; preds = %._crit_edge
   br label %bb.j
 
 bb.i:                                             ; preds = %st_add.exit29
-  %9 = extractvalue { i64, i1 } %7, 0             ; 2 uses
-  %i.aa = call ptr @xrealloc(ptr noundef %.02249, i64 noundef %9) #22 ; 3 uses
+  %8 = add nuw i64 %6, 32                         ; 2 uses
+  %i.aa = call ptr @xrealloc(ptr noundef %.02249, i64 noundef %8) #22 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.q
   store ptr %i.ab, ptr %i.c, align 8, !tbaa !15
   %i.ac = xor i64 %i.q, -1
-  %i.ad = add i64 %9, %i.ac
+  %i.ad = add i64 %8, %i.ac
   store i64 %i.ad, ptr %i.b, align 8, !tbaa !22
   %i.ae = call i64 @iconv(ptr noundef %2, ptr noundef nonnull %i.d, ptr noundef nonnull %i.a, ptr noundef nonnull %i.c, ptr noundef nonnull %i.b) #22
   %i.af = icmp eq i64 %i.ae, -1

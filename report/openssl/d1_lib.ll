@@ -202,11 +202,14 @@ dtls1_start_timer.exit:                           ; preds = %._crit_edge.i, %bb.
   %i.ag = phi i32 [ %i.ac, %bb.h ], [ 1000000, %bb.i ], [ %.pre.i, %._crit_edge.i ]
   %i.ah = phi ptr [ %i.ad, %bb.h ], [ %i.x, %bb.i ], [ %i.x, %._crit_edge.i ]
   %i.ai = zext i32 %i.ag to i64
-  %i.aj = mul nuw nsw i64 %i.ai, 1000
+  %i.aj = mul nuw nsw i64 %i.ai, 1000             ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 448
-  %i.al = tail call i64 @ossl_time_now() #8
-  %.sroa.03.0.i.i = tail call i64 @llvm.uadd.sat.i64(i64 %i.al, i64 range(i64 -1, 7200000000001) %i.aj)
-  store i64 %.sroa.03.0.i.i, ptr %i.ak, align 8, !tbaa !103
+  %i.al = tail call i64 @ossl_time_now() #8       ; 2 uses
+  %2 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.al, i64 range(i64 -1, 7200000000001) %i.aj)
+  %3 = extractvalue { i64, i1 } %2, 1
+  %.0.i.i.i = add i64 %i.aj, %i.al
+  %..0.i.i.i = select i1 %3, i64 -1, i64 %.0.i.i.i
+  store i64 %..0.i.i.i, ptr %i.ak, align 8, !tbaa !103
   %i.am = tail call ptr @SSL_get_rbio(ptr noundef nonnull %0) #8
   %i.an = load ptr, ptr %i.a, align 8, !tbaa !28
   %i.ao = getelementptr i8, ptr %i.an, i64 448
@@ -271,11 +274,14 @@ bb.e:                                             ; preds = %._crit_edge, %bb.c,
   %i.k = phi i32 [ %i.g, %bb.c ], [ 1000000, %bb.d ], [ %.pre, %._crit_edge ]
   %i.l = phi ptr [ %i.h, %bb.c ], [ %i.b, %bb.d ], [ %i.b, %._crit_edge ]
   %i.m = zext i32 %i.k to i64
-  %i.n = mul nuw nsw i64 %i.m, 1000
+  %i.n = mul nuw nsw i64 %i.m, 1000               ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 448
-  %i.p = tail call i64 @ossl_time_now() #8
-  %.sroa.03.0.i = tail call i64 @llvm.uadd.sat.i64(i64 %i.p, i64 range(i64 -1, 7200000000001) %i.n)
-  store i64 %.sroa.03.0.i, ptr %i.o, align 8, !tbaa !103
+  %i.p = tail call i64 @ossl_time_now() #8        ; 2 uses
+  %2 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.p, i64 range(i64 -1, 7200000000001) %i.n)
+  %3 = extractvalue { i64, i1 } %2, 1
+  %.0.i.i = add i64 %i.n, %i.p
+  %..0.i.i = select i1 %3, i64 -1, i64 %.0.i.i
+  store i64 %..0.i.i, ptr %i.o, align 8, !tbaa !103
   %i.q = tail call ptr @SSL_get_rbio(ptr noundef nonnull %0) #8
   %i.r = load ptr, ptr %i.a, align 8, !tbaa !28
   %i.s = getelementptr i8, ptr %i.r, i64 448
@@ -677,6 +683,9 @@ bb.c:                                             ; preds = %bb.b
 .thread:                                          ; preds = %bb.a, %bb.b, %bb.c
   ret void
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #7
 
 declare i32 @dtls1_do_write(ptr noundef, i8 noundef zeroext) local_unnamed_addr #0
 

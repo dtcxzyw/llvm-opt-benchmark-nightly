@@ -205,7 +205,7 @@ bb.a:
 
 .lr.ph.i36.i:                                     ; preds = %bb.a, %.critedge.i37.i
   %.364.i = phi ptr [ %i.l, %.critedge.i37.i ], [ %2, %bb.a ] ; 3 uses
-  %.9.i = phi i64 [ %.10.i, %.critedge.i37.i ], [ 0, %bb.a ] ; 3 uses
+  %.9.i = phi i64 [ %.10.i, %.critedge.i37.i ], [ 0, %bb.a ] ; 4 uses
   %.02237.i.i = phi i32 [ %i.d, %.critedge.i37.i ], [ 64, %bb.a ]
   %i.b = load i8, ptr %.364.i, align 1, !tbaa !12
   %i.c = add i8 %i.b, -48                         ; 3 uses
@@ -224,20 +224,19 @@ bb.c:                                             ; preds = %bb.b
   br label %.critedge.i37.i
 
 bb.d:                                             ; preds = %bb.b
-  %4 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.9.i, i64 10) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  br i1 %5, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.thread.i, label %.split.i.i, !prof !860
+  %4 = icmp ugt i64 %.9.i, 1844674407370955161
+  br i1 %4, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.thread.i, label %.split.i.i, !prof !860
 
 .split.i.i:                                       ; preds = %bb.d
-  %6 = extractvalue { i64, i1 } %4, 0
-  %i.i = zext nneg i8 %i.c to i64
-  %i.j = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %6, i64 %i.i) ; 2 uses
+  %5 = mul nuw i64 %.9.i, 10                      ; 2 uses
+  %i.i = zext nneg i8 %i.c to i64                 ; 2 uses
+  %i.j = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %5, i64 %i.i)
   %i.k = extractvalue { i64, i1 } %i.j, 1
-  %7 = extractvalue { i64, i1 } %i.j, 0
+  %6 = add nuw i64 %5, %i.i
   br i1 %i.k, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.thread.i, label %.critedge.i37.i, !prof !141
 
 .critedge.i37.i:                                  ; preds = %.split.i.i, %bb.c
-  %.10.i = phi i64 [ %i.h, %bb.c ], [ %7, %.split.i.i ] ; 2 uses
+  %.10.i = phi i64 [ %i.h, %bb.c ], [ %6, %.split.i.i ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.364.i, i64 1 ; 2 uses
   %.not.i.i = icmp eq ptr %i.l, %i.a
   br i1 %.not.i.i, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.i, label %.lr.ph.i36.i, !llvm.loop !861
@@ -592,7 +591,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i36.i.i:                                   ; preds = %bb.b, %.critedge.i37.i.i
   %.364.i.i = phi ptr [ %i.m, %.critedge.i37.i.i ], [ %4, %bb.b ] ; 3 uses
-  %.9.i.i = phi i64 [ %.10.i.i, %.critedge.i37.i.i ], [ 0, %bb.b ] ; 3 uses
+  %.9.i.i = phi i64 [ %.10.i.i, %.critedge.i37.i.i ], [ 0, %bb.b ] ; 4 uses
   %.02237.i.i.i = phi i32 [ %i.e, %.critedge.i37.i.i ], [ 64, %bb.b ]
   %i.c = load i8, ptr %.364.i.i, align 1, !tbaa !12
   %i.d = add i8 %i.c, -48                         ; 3 uses
@@ -611,20 +610,19 @@ bb.d:                                             ; preds = %bb.c
   br label %.critedge.i37.i.i
 
 bb.e:                                             ; preds = %bb.c
-  %7 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.9.i.i, i64 10) ; 2 uses
-  %8 = extractvalue { i64, i1 } %7, 1
-  br i1 %8, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.thread.i.i, label %.split.i.i.i, !prof !860
+  %7 = icmp ugt i64 %.9.i.i, 1844674407370955161
+  br i1 %7, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.thread.i.i, label %.split.i.i.i, !prof !860
 
 .split.i.i.i:                                     ; preds = %bb.e
-  %9 = extractvalue { i64, i1 } %7, 0
-  %i.j = zext nneg i8 %i.d to i64
-  %i.k = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %9, i64 %i.j) ; 2 uses
+  %8 = mul nuw i64 %.9.i.i, 10                    ; 2 uses
+  %i.j = zext nneg i8 %i.d to i64                 ; 2 uses
+  %i.k = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %8, i64 %i.j)
   %i.l = extractvalue { i64, i1 } %i.k, 1
-  %10 = extractvalue { i64, i1 } %i.k, 0
+  %9 = add nuw i64 %8, %i.j
   br i1 %i.l, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.thread.i.i, label %.critedge.i37.i.i, !prof !141
 
 .critedge.i37.i.i:                                ; preds = %.split.i.i.i, %bb.d
-  %.10.i.i = phi i64 [ %i.i, %bb.d ], [ %10, %.split.i.i.i ] ; 2 uses
+  %.10.i.i = phi i64 [ %i.i, %bb.d ], [ %9, %.split.i.i.i ] ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.364.i.i, i64 1 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.m, %i.b
   br i1 %.not.i.i.i, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.i.i, label %.lr.ph.i36.i.i, !llvm.loop !861
@@ -764,7 +762,7 @@ bb.o:                                             ; preds = %_ZNKSt17basic_strin
 
 .lr.ph.i36.i.i35:                                 ; preds = %bb.o, %.critedge.i37.i.i54
   %.364.i.i36 = phi ptr [ %i.bl, %.critedge.i37.i.i54 ], [ %4, %bb.o ] ; 3 uses
-  %.9.i.i37 = phi i64 [ %.10.i.i55, %.critedge.i37.i.i54 ], [ 0, %bb.o ] ; 3 uses
+  %.9.i.i37 = phi i64 [ %.10.i.i55, %.critedge.i37.i.i54 ], [ 0, %bb.o ] ; 4 uses
   %.02237.i.i.i38 = phi i32 [ %i.bd, %.critedge.i37.i.i54 ], [ 64, %bb.o ]
   %i.bb = load i8, ptr %.364.i.i36, align 1, !tbaa !12
   %i.bc = add i8 %i.bb, -48                       ; 3 uses
@@ -783,20 +781,19 @@ bb.q:                                             ; preds = %bb.p
   br label %.critedge.i37.i.i54
 
 bb.r:                                             ; preds = %bb.p
-  %11 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.9.i.i37, i64 10) ; 2 uses
-  %12 = extractvalue { i64, i1 } %11, 1
-  br i1 %12, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.thread.i.i45, label %.split.i.i.i53, !prof !860
+  %10 = icmp ugt i64 %.9.i.i37, 1844674407370955161
+  br i1 %10, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.thread.i.i45, label %.split.i.i.i53, !prof !860
 
 .split.i.i.i53:                                   ; preds = %bb.r
-  %13 = extractvalue { i64, i1 } %11, 0
-  %i.bi = zext nneg i8 %i.bc to i64
-  %i.bj = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %13, i64 %i.bi) ; 2 uses
+  %11 = mul nuw i64 %.9.i.i37, 10                 ; 2 uses
+  %i.bi = zext nneg i8 %i.bc to i64               ; 2 uses
+  %i.bj = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %11, i64 %i.bi)
   %i.bk = extractvalue { i64, i1 } %i.bj, 1
-  %14 = extractvalue { i64, i1 } %i.bj, 0
+  %12 = add nuw i64 %11, %i.bi
   br i1 %i.bk, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.thread.i.i45, label %.critedge.i37.i.i54, !prof !141
 
 .critedge.i37.i.i54:                              ; preds = %.split.i.i.i53, %bb.q
-  %.10.i.i55 = phi i64 [ %i.bh, %bb.q ], [ %14, %.split.i.i.i53 ] ; 2 uses
+  %.10.i.i55 = phi i64 [ %i.bh, %bb.q ], [ %12, %.split.i.i.i53 ] ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.364.i.i36, i64 1 ; 2 uses
   %.not.i.i.i56 = icmp eq ptr %i.bl, %i.ba
   br i1 %.not.i.i.i56, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.i.i40, label %.lr.ph.i36.i.i35, !llvm.loop !861
@@ -1042,7 +1039,7 @@ bb.aj:                                            ; preds = %bb.a, %bb.a, %bb.a,
 
 .lr.ph.i36.i.i78:                                 ; preds = %bb.aj, %.critedge.i37.i.i97
   %.364.i.i79 = phi ptr [ %i.er, %.critedge.i37.i.i97 ], [ %4, %bb.aj ] ; 3 uses
-  %.9.i.i80 = phi i64 [ %.10.i.i98, %.critedge.i37.i.i97 ], [ 0, %bb.aj ] ; 3 uses
+  %.9.i.i80 = phi i64 [ %.10.i.i98, %.critedge.i37.i.i97 ], [ 0, %bb.aj ] ; 4 uses
   %.02237.i.i.i81 = phi i32 [ %i.ej, %.critedge.i37.i.i97 ], [ 64, %bb.aj ]
   %i.eh = load i8, ptr %.364.i.i79, align 1, !tbaa !12
   %i.ei = add i8 %i.eh, -48                       ; 3 uses
@@ -1061,20 +1058,19 @@ bb.al:                                            ; preds = %bb.ak
   br label %.critedge.i37.i.i97
 
 bb.am:                                            ; preds = %bb.ak
-  %15 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.9.i.i80, i64 10) ; 2 uses
-  %16 = extractvalue { i64, i1 } %15, 1
-  br i1 %16, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.thread.i.i88, label %.split.i.i.i96, !prof !860
+  %13 = icmp ugt i64 %.9.i.i80, 1844674407370955161
+  br i1 %13, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.thread.i.i88, label %.split.i.i.i96, !prof !860
 
 .split.i.i.i96:                                   ; preds = %bb.am
-  %17 = extractvalue { i64, i1 } %15, 0
-  %i.eo = zext nneg i8 %i.ei to i64
-  %i.ep = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %17, i64 %i.eo) ; 2 uses
+  %14 = mul nuw i64 %.9.i.i80, 10                 ; 2 uses
+  %i.eo = zext nneg i8 %i.ei to i64               ; 2 uses
+  %i.ep = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %14, i64 %i.eo)
   %i.eq = extractvalue { i64, i1 } %i.ep, 1
-  %18 = extractvalue { i64, i1 } %i.ep, 0
+  %15 = add nuw i64 %14, %i.eo
   br i1 %i.eq, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.thread.i.i88, label %.critedge.i37.i.i97, !prof !141
 
 .critedge.i37.i.i97:                              ; preds = %.split.i.i.i96, %bb.al
-  %.10.i.i98 = phi i64 [ %i.en, %bb.al ], [ %18, %.split.i.i.i96 ] ; 2 uses
+  %.10.i.i98 = phi i64 [ %i.en, %bb.al ], [ %15, %.split.i.i.i96 ] ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %.364.i.i79, i64 1 ; 2 uses
   %.not.i.i.i99 = icmp eq ptr %i.er, %i.eg
   br i1 %.not.i.i.i99, label %_ZNSt8__detail22__from_chars_pow2_baseILb1EmEEbRPKcS2_RT0_i.exit.i.i83, label %.lr.ph.i36.i.i78, !llvm.loop !861
@@ -1475,9 +1471,6 @@ bb.b:                                             ; preds = %bb.a
 "_ZNSt14_Function_base13_Base_managerIZN5boost5redis6detail10writer_fsm6resumeERNS3_16connection_stateENS1_6system10error_codeEmNS1_4asio17cancellation_typeEE3$_0E10_M_managerERSt9_Any_dataRKSD_St18_Manager_operation.exit": ; preds = %"_ZNSt14_Function_base13_Base_managerIZN5boost5redis6detail10writer_fsm6resumeERNS3_16connection_stateENS1_6system10error_codeEmNS1_4asio17cancellation_typeEE3$_0E10_M_managerERSt9_Any_dataRKSD_St18_Manager_operation.exit.sink.split", %bb.a
   ret i1 false
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #46
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #46

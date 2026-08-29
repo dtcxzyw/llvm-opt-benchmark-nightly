@@ -205,11 +205,10 @@ bb.f:                                             ; preds = %bb.e
   %i.ai = load i16, ptr %i.ah, align 1, !tbaa !264
   %i.aj = tail call noundef i16 @llvm.bswap.i16(i16 %i.ai)
   %i.ak = zext i16 %i.aj to i32
-  %i.al = mul nuw i32 %i.ak, %i.ag
-  %2 = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.al, i32 6) ; 2 uses
-  %3 = extractvalue { i32, i1 } %2, 0             ; 2 uses
-  %4 = extractvalue { i32, i1 } %2, 1
-  br i1 %4, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread13, label %bb.g, !prof !268
+  %i.al = mul nuw i32 %i.ak, %i.ag                ; 2 uses
+  %2 = mul nuw i32 %i.al, 6                       ; 2 uses
+  %3 = icmp ugt i32 %i.al, 715827882
+  br i1 %3, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread13, label %bb.g, !prof !268
 
 bb.g:                                             ; preds = %bb.f
   %i.am = load ptr, ptr %i.b, align 8, !tbaa !259
@@ -225,13 +224,13 @@ bb.h:                                             ; preds = %bb.g
   %i.as = ptrtoint ptr %i.ar to i64
   %i.at = sub i64 %i.as, %i.aa
   %i.au = trunc i64 %i.at to i32
-  %.not12.i.i.i.i.i.i.i = icmp ugt i32 %3, %i.au
+  %.not12.i.i.i.i.i.i.i = icmp ugt i32 %2, %i.au
   br i1 %.not12.i.i.i.i.i.i.i, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread13, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit, !prof !268
 
 _ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit: ; preds = %bb.h
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 2 uses
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !261
-  %i.ax = sub i32 %i.aw, %3                       ; 2 uses
+  %i.ax = sub i32 %i.aw, %2                       ; 2 uses
   store i32 %i.ax, ptr %i.av, align 4, !tbaa !261
   %i.ay = icmp sgt i32 %i.ax, 0
   br i1 %i.ay, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread13
@@ -384,14 +383,14 @@ bb.d:                                             ; preds = %_ZNK2OT7ArrayOfINS_
   %i.aj = zext nneg i16 %i.af to i32
   %i.ak = load i16, ptr %0, align 1, !tbaa !264
   %i.al = tail call noundef i16 @llvm.bswap.i16(i16 %i.ak)
-  %i.am = zext i16 %i.al to i32
+  %i.am = zext i16 %i.al to i32                   ; 2 uses
   %i.an = add nuw nsw i32 %i.aj, %i.ai
   %.mask.i.i = lshr i16 %i.ad, 7
   %.mask.i.lobit.i = and i16 %.mask.i.i, 1
   %i.ao = zext nneg i16 %.mask.i.lobit.i to i32
-  %i.ap = shl nuw nsw i32 %i.an, %i.ao
-  %i.aq = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.am, i32 %i.ap) ; 2 uses
-  %2 = extractvalue { i32, i1 } %i.aq, 0          ; 2 uses
+  %i.ap = shl nuw nsw i32 %i.an, %i.ao            ; 2 uses
+  %i.aq = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.am, i32 %i.ap)
+  %2 = mul nuw i32 %i.ap, %i.am                   ; 2 uses
   %i.ar = extractvalue { i32, i1 } %i.aq, 1
   br i1 %i.ar, label %_ZNK2OT7ArrayOfINS_7NumTypeILb1EtLj2EEES2_E8sanitizeIJEEEbP21hb_sanitize_context_tDpOT_.exit.thread, label %bb.e
 
@@ -513,14 +512,14 @@ bb.g:                                             ; preds = %bb.f
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #18, !srcloc !263
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.at = load i32, ptr %i.as, align 1, !tbaa !266
-  %i.au = tail call noundef i32 @llvm.bswap.i32(i32 %i.at)
+  %i.au = tail call noundef i32 @llvm.bswap.i32(i32 %i.at) ; 2 uses
   %i.av = load i8, ptr %i.a, align 1, !tbaa !270
   %i.aw = lshr i8 %i.av, 4
   %i.ax = and i8 %i.aw, 3
   %narrow.i.i6 = add nuw nsw i8 %i.ax, 1
-  %i.ay = zext nneg i8 %narrow.i.i6 to i32
-  %i.az = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.au, i32 %i.ay) ; 2 uses
-  %2 = extractvalue { i32, i1 } %i.az, 0          ; 2 uses
+  %i.ay = zext nneg i8 %narrow.i.i6 to i32        ; 2 uses
+  %i.az = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.au, i32 %i.ay)
+  %2 = mul nuw i32 %i.au, %i.ay                   ; 2 uses
   %i.ba = extractvalue { i32, i1 } %i.az, 1
   br i1 %i.ba, label %_ZNK2OT24DeltaSetIndexMapFormat01INS_7NumTypeILb1EtLj2EEEE8sanitizeEP21hb_sanitize_context_t.exit, label %bb.h
 
@@ -923,7 +922,7 @@ _ZN9hb_iter_tI17hb_sorted_array_tIK9hb_pair_tIjjEERS3_EppEi.exit227: ; preds = %
 bb.ag:                                            ; preds = %.lr.ph527, %bb.az
   %.0179526 = phi ptr [ %.sroa.0335.0, %.lr.ph527 ], [ %i.iq, %bb.az ] ; 4 uses
   %.0180525 = phi i32 [ 0, %.lr.ph527 ], [ %.1181, %bb.az ]
-  %.0413524 = phi i32 [ 0, %.lr.ph527 ], [ %3, %bb.az ]
+  %.0413524 = phi i32 [ 0, %.lr.ph527 ], [ %3, %bb.az ] ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %.0179526, i64 4
   %i.fo = load i32, ptr %i.fn, align 4, !tbaa !386 ; 3 uses
   %i.fp = load i32, ptr %.0179526, align 4, !tbaa !462 ; 3 uses
@@ -1112,13 +1111,13 @@ bb.ay:                                            ; preds = %bb.ax
 _ZNK2OT9gvar_GVARINS_7NumTypeILb1EtLj2EEELj1735811442EE24get_glyph_var_data_bytesEP9hb_blob_tjj.exit245: ; preds = %bb.ay, %bb.ax, %_ZNK2OT9gvar_GVARINS_7NumTypeILb1EtLj2EEELj1735811442EE10get_offsetEjj.exit14.i235, %_ZN11hb_vector_tIS_IcLb0EELb0EEixEi.exit230
   %i.im = phi i32 [ %i.he, %_ZN11hb_vector_tIS_IcLb0EELb0EEixEi.exit230 ], [ 0, %_ZNK2OT9gvar_GVARINS_7NumTypeILb1EtLj2EEELj1735811442EE10get_offsetEjj.exit14.i235 ], [ 0, %bb.ay ], [ %.sroa.speculated.i.i.i238, %bb.ax ] ; 2 uses
   %i.in = and i32 %i.im, 1                        ; 2 uses
-  %.0178 = add i32 %i.in, %i.im
-  %i.io = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %.0413524, i32 %.0178) ; 2 uses
+  %.0178 = add i32 %i.in, %i.im                   ; 2 uses
+  %i.io = call { i32, i1 } @llvm.uadd.with.overflow.i32(i32 %.0413524, i32 %.0178)
   %i.ip = extractvalue { i32, i1 } %i.io, 1
   br i1 %i.ip, label %_ZN11hb_vector_tIS_IcLb0EELb0EE6resizeEi.exit.thread458, label %bb.az, !prof !21
 
 bb.az:                                            ; preds = %_ZNK2OT9gvar_GVARINS_7NumTypeILb1EtLj2EEELj1735811442EE24get_glyph_var_data_bytesEP9hb_blob_tjj.exit245
-  %3 = extractvalue { i32, i1 } %i.io, 0          ; 2 uses
+  %3 = add nuw i32 %.0178, %.0413524              ; 2 uses
   %.1181 = add i32 %i.in, %.0180525               ; 2 uses
   %i.iq = getelementptr inbounds nuw i8, ptr %.0179526, i64 8 ; 2 uses
   %.not192 = icmp eq ptr %i.iq, %i.ff

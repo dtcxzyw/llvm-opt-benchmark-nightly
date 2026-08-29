@@ -204,17 +204,16 @@ bb.l:                                             ; preds = %bb.k
   %i.ag = getelementptr i8, ptr %i.a, i64 540
   %i.ah = load i32, ptr %i.ag, align 4
   %i.ai = add i32 %.val, 1
-  %i.aj = tail call i32 @llvm.smax.i32(i32 %i.ai, i32 %i.ah) ; 4 uses
+  %i.aj = tail call i32 @llvm.smax.i32(i32 %i.ai, i32 %i.ah) ; 5 uses
   %i.ak = getelementptr i8, ptr %0, i64 56        ; 2 uses
-  %2 = sext i32 %i.aj to i64
-  %3 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 -2147483648, 2147483648) %2, i64 40) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 1
-  br i1 %4, label %.thread, label %_krealloc_array_noprof.exit, !prof !13
+  %2 = icmp slt i32 %i.aj, 0
+  br i1 %2, label %.thread, label %_krealloc_array_noprof.exit, !prof !13
 
 _krealloc_array_noprof.exit:                      ; preds = %bb.l
+  %3 = zext nneg i32 %i.aj to i64
   %i.al = load ptr, ptr %i.ak, align 8
-  %5 = extractvalue { i64, i1 } %3, 0
-  %i.am = tail call ptr @krealloc_node_align_noprof(ptr noundef %i.al, i64 noundef %5, i64 noundef 1, i32 noundef 3264, i32 noundef -1) #18 ; 3 uses
+  %4 = mul nuw nsw i64 %3, 40
+  %i.am = tail call ptr @krealloc_node_align_noprof(ptr noundef %i.al, i64 noundef %4, i64 noundef 1, i32 noundef 3264, i32 noundef -1) #18 ; 3 uses
   %.not97.not = icmp eq ptr %i.am, null
   br i1 %.not97.not, label %.thread, label %bb.m
 

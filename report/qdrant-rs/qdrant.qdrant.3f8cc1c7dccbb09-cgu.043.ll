@@ -204,7 +204,7 @@ bb.dn:                                            ; preds = %bb.dl
 bb.do:                                            ; preds = %bb.dl, %bb.dk, %bb.dg, %bb.df, %bb.de
   %.val100.i.i = load ptr, ptr %i.rc, align 8, !noalias !3214, !noundef !8
   %i.rx = getelementptr i8, ptr %.val100.i.i, i64 440
-  %.val101.i.i = load i64, ptr %i.rx, align 8, !noalias !3218, !noundef !8
+  %.val101.i.i = load i64, ptr %i.rx, align 8, !noalias !3218, !noundef !8 ; 2 uses
   %i.ry = getelementptr inbounds nuw i8, ptr %1, i64 4440 ; 2 uses
   %i.rz = load i64, ptr %i.ry, align 8, !noalias !3214, !noundef !8
   %i.sa = getelementptr inbounds nuw i8, ptr %1, i64 4448
@@ -218,23 +218,21 @@ bb.dp:                                            ; preds = %bb.do
   br label %.body.i.i132
 
 bb.dq:                                            ; preds = %bb.do
-  %i.sd = call noundef i64 @llvm.uadd.sat.i64(i64 %i.rz, i64 %i.sb)
-  %i.se = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.val101.i.i, i64 %i.sd) ; 2 uses
+  %i.sd = call noundef i64 @llvm.uadd.sat.i64(i64 %i.rz, i64 %i.sb) ; 2 uses
+  %i.se = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.val101.i.i, i64 %i.sd)
   %i.sf = extractvalue { i64, i1 } %i.se, 1
-  %3 = extractvalue { i64, i1 } %i.se, 0
+  %3 = mul nuw i64 %i.sd, %.val101.i.i
   %.sroa.0.0.i116.i.i = select i1 %i.sf, i64 -1, i64 %3, !prof !297
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bz), !noalias !3214
-  %i.sg = load i64, ptr %i.ry, align 8, !noalias !3214, !noundef !8
-  %4 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.sg, i64 10) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  %6 = extractvalue { i64, i1 } %4, 0
-  %i.sh = icmp ult i64 %6, %.sroa.0.0.i116.i.i
-  %not..i.i = xor i1 %5, true
-  %7 = and i1 %i.sh, %not..i.i
+  %i.sg = load i64, ptr %i.ry, align 8, !noalias !3214, !noundef !8 ; 2 uses
+  %4 = icmp ult i64 %i.sg, 1844674407370955162
+  %5 = mul nuw i64 %i.sg, 10
+  %i.sh = icmp ult i64 %5, %.sroa.0.0.i116.i.i
+  %6 = select i1 %4, i1 %i.sh, i1 false, !prof !296
   %i.si = getelementptr inbounds nuw i8, ptr %1, i64 4481
   %i.sj = load i8, ptr %i.si, align 1, !range !660, !noalias !3214, !noundef !8
   %i.sk = trunc nuw i8 %i.sj to i1
-  %brmerge.not.i.i = and i1 %7, %i.sk
+  %brmerge.not.i.i = and i1 %6, %i.sk
   br i1 %brmerge.not.i.i, label %bb.dz, label %bb.dr
 
 bb.dr:                                            ; preds = %bb.dq

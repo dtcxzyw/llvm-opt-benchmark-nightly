@@ -202,14 +202,14 @@ bb.a:
   %i.c = alloca [112 x i8], align 8               ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   tail call void @_RINvMsk_NtCsexYYUdYSQU6_5alloc3vecINtB6_3VecINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operands8StackPosEE14extend_trustedINtNtNtNtBL_4iter7sources8repeat_n7RepeatNBG_EEB1u_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.d, i64 noundef %1, i64 0)
+  %3 = icmp eq i8 %2, 4                           ; 2 uses
   %i.e = icmp ugt i64 %1, 65535
   br i1 %i.e, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = icmp eq i8 %2, 4
   %.sroa.04.0 = select i1 %3, i16 2, i16 1
-  %i.f = trunc nuw i64 %1 to i16
-  %i.g = tail call { i16, i1 } @llvm.umul.with.overflow.i16(i16 %i.f, i16 %.sroa.04.0) ; 2 uses
+  %i.f = trunc nuw i64 %1 to i16                  ; 2 uses
+  %i.g = tail call { i16, i1 } @llvm.umul.with.overflow.i16(i16 %i.f, i16 %.sroa.04.0)
   %i.h = extractvalue { i16, i1 } %i.g, 1
   br i1 %i.h, label %bb.g, label %bb.d, !prof !126
 
@@ -223,11 +223,12 @@ bb.c:                                             ; preds = %bb.a
   br label %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack16push_local_slots.exit
 
 bb.d:                                             ; preds = %bb.b
-  %4 = extractvalue { i16, i1 } %i.g, 0
+  %4 = zext i1 %3 to i16
+  %5 = shl nuw i16 %i.f, %4
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1140)
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.l = load i16, ptr %i.k, align 8, !alias.scope !1140, !noundef !12 ; 2 uses
-  %i.m = add i16 %i.l, %4                         ; 4 uses
+  %i.m = add i16 %i.l, %5                         ; 4 uses
   %i.n = icmp ult i16 %i.m, %i.l
   br i1 %i.n, label %bb.f, label %bb.e, !prof !126
 

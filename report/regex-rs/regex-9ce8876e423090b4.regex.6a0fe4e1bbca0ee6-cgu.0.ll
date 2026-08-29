@@ -202,7 +202,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !12999
     #dbg_value(ptr undef, !12037, !DIExpression(DW_OP_deref), !13000)
     #dbg_value(ptr undef, !12041, !DIExpression(DW_OP_deref), !13000)
-  %..i = tail call noundef i64 @llvm.umax.i64(i64 %1, i64 1), !dbg !13002 ; 3 uses
+  %..i = tail call i64 @llvm.umax.i64(i64 %1, i64 1), !dbg !13002 ; 3 uses
     #dbg_value(i64 %..i, !12961, !DIExpression(), !13003)
     #dbg_value(i64 %..i, !12953, !DIExpression(), !13004)
     #dbg_value(i64 %..i, !12969, !DIExpression(), !13005)
@@ -223,20 +223,17 @@ bb.a:
     #dbg_value(i64 64, !13112, !DIExpression(), !13113)
     #dbg_value(i64 64, !13063, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13064)
     #dbg_value(ptr poison, !13089, !DIExpression(), !13116)
-  %4 = shl i64 %..i, 6, !dbg !13117               ; 3 uses
-  %5 = icmp ugt i64 %1, 288230376151711743, !dbg !13117
-    #dbg_value(i1 %5, !13100, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13118)
-    #dbg_value(i1 %5, !13119, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13122)
-    #dbg_value(i64 %4, !13090, !DIExpression(), !13124)
-    #dbg_value(i64 %4, !13098, !DIExpression(), !13118)
-  %.not.i = icmp ugt i64 %4, 9223372036854775744
-  %or.cond.i = or i1 %5, %.not.i, !dbg !13125
-  br i1 %or.cond.i, label %bb.e, label %bb.d, !dbg !13125, !prof !13126
+    #dbg_value(i64 %1, !13100, !DIExpression(DW_OP_constu, 288230376151711743, DW_OP_gt, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13117)
+    #dbg_value(i64 %1, !13118, !DIExpression(DW_OP_constu, 288230376151711743, DW_OP_gt, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13121)
+    #dbg_value(i64 %..i, !13090, !DIExpression(DW_OP_constu, 6, DW_OP_shl, DW_OP_stack_value), !13123)
+    #dbg_value(i64 %..i, !13098, !DIExpression(DW_OP_constu, 6, DW_OP_shl, DW_OP_stack_value), !13117)
+  %.not.i = icmp ugt i64 %1, 144115188075855871
+  br i1 %.not.i, label %bb.e, label %bb.d, !dbg !13124, !prof !13125
 
 bb.b:                                             ; preds = %.body, %bb.c
   %.pn = phi { ptr, i32 } [ %i.c, %bb.c ], [ %i.p, %.body ]
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc5boxed3BoxDINtNtNtB4_3ops8function2FnuEp6OutputNtNtNtCs9GYDdpCSJ4S_14regex_automata4meta5regex5CacheNtNtNtB4_5panic11unwind_safe10UnwindSafeNtB2E_13RefUnwindSafeNtNtB4_6marker4SendNtB3D_4SyncEL_EECs96z5GJ9HwjO_5regex(ptr nonnull %2, ptr nonnull %3) #20
-          to label %bb.n unwind label %bb.l, !dbg !13127
+          to label %bb.n unwind label %bb.l, !dbg !13126
 
 bb.c:                                             ; preds = %bb.e
   %i.c = landingpad { ptr, i32 }
@@ -244,6 +241,9 @@ bb.c:                                             ; preds = %bb.e
   br label %bb.b
 
 bb.d:                                             ; preds = %bb.a
+  %4 = shl nuw nsw i64 %..i, 6, !dbg !13127       ; 2 uses
+    #dbg_value(i64 %4, !13090, !DIExpression(), !13123)
+    #dbg_value(i64 %4, !13098, !DIExpression(), !13117)
     #dbg_value(i64 64, !13031, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13128)
     #dbg_value(i64 %4, !13031, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13128)
     #dbg_value(i64 64, !3844, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13129)
@@ -273,9 +273,10 @@ bb.d:                                             ; preds = %bb.a
 
 bb.e:                                             ; preds = %bb.a, %bb.d
   %.sroa.4.0.ph = phi i64 [ 64, %bb.d ], [ 0, %bb.a ]
+  %.sroa.9.0.ph = phi i64 [ %4, %bb.d ], [ undef, %bb.a ]
     #dbg_value(i64 %.sroa.4.0.ph, !12982, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13169)
-    #dbg_value(i64 %4, !12982, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13169)
-  invoke void @_RNvNtCs4wP2HXfJTCR_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph, i64 %4) #24
+    #dbg_value(i64 %.sroa.9.0.ph, !12982, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13169)
+  invoke void @_RNvNtCs4wP2HXfJTCR_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph, i64 %.sroa.9.0.ph) #24
           to label %bb.m unwind label %bb.c, !dbg !13170
 
 _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs96z5GJ9HwjO_5regex.exit: ; preds = %bb.d
@@ -309,7 +310,7 @@ bb.f:                                             ; preds = %bb.k
   store i64 0, ptr %i.j, align 8, !dbg !13177
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 48, !dbg !13177
   store i64 -1, ptr %i.k, align 8, !dbg !13177
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !13127
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !13126
   ret void, !dbg !13178
 
 bb.g:                                             ; preds = %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs96z5GJ9HwjO_5regex.exit, %bb.k
@@ -360,7 +361,7 @@ bb.j:                                             ; preds = %bb.i
 
 .body:                                            ; preds = %bb.i
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecINtNtNtNtCs9GYDdpCSJ4S_14regex_automata4util4pool5inner9CacheLineINtNtNtNtCsaKJjC64KgbL_3std4sync6poison5mutex5MutexIBC_INtNtBG_5boxed3BoxNtNtNtB1h_4meta5regex5CacheEEEEEECs96z5GJ9HwjO_5regex(ptr noalias nofree noundef align 8 dereferenceable(24) %i.b) #20
-          to label %bb.b unwind label %bb.l, !dbg !13127
+          to label %bb.b unwind label %bb.l, !dbg !13126
 
 bb.k:                                             ; preds = %._crit_edge, %bb.g
   %i.r = phi ptr [ %.pre, %._crit_edge ], [ %i.l, %bb.g ], !dbg !13238 ; 2 uses
@@ -410,8 +411,8 @@ bb.a:
     #dbg_value(i64 %3, !13316, !DIExpression(), !13317)
     #dbg_value(i64 %2, !13293, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13294)
     #dbg_value(ptr poison, !13299, !DIExpression(), !13340)
-  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 %1), !dbg !13341 ; 2 uses
-  %4 = extractvalue { i64, i1 } %i.a, 0, !dbg !13341 ; 7 uses
+  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 %1), !dbg !13341
+  %4 = mul nuw i64 %3, %1, !dbg !13341            ; 5 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1, !dbg !13341
     #dbg_value(i1 %i.b, !13310, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13342)
     #dbg_value(i1 %i.b, !13343, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13346)
@@ -419,8 +420,8 @@ bb.a:
     #dbg_value(i64 %4, !13308, !DIExpression(), !13342)
   %i.c = sub nuw i64 -9223372036854775808, %2
   %.not = icmp ugt i64 %4, %i.c
-  %or.cond = select i1 %i.b, i1 true, i1 %.not, !dbg !13349, !prof !13126
-  br i1 %or.cond, label %bb.g, label %bb.b, !dbg !13349, !prof !13126
+  %or.cond = select i1 %i.b, i1 true, i1 %.not, !dbg !13349, !prof !13125
+  br i1 %or.cond, label %bb.g, label %bb.b, !dbg !13349, !prof !13125
 
 bb.b:                                             ; preds = %bb.a
     #dbg_value(i64 %2, !13278, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13350)
@@ -434,7 +435,7 @@ bb.b:                                             ; preds = %bb.a
 
 _RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
     #dbg_value(i64 %.0.val, !4094, !DIExpression(), !13353)
-  %i.e = mul nuw i64 %3, %.0.val, !dbg !13356     ; 2 uses
+  %i.e = mul nuw i64 %3, %.0.val, !dbg !13356
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
     #dbg_value(ptr %.8.val, !13286, !DIExpression(), !13357)
     #dbg_value(i64 %2, !13288, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13357)
@@ -466,7 +467,7 @@ _RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Al
     #dbg_value(ptr poison, !13391, !DIExpression(), !13422)
     #dbg_value(i64 %4, !13392, !DIExpression(), !13423)
     #dbg_value(i64 %4, !13418, !DIExpression(), !13419)
-  %i.f = icmp uge i64 %4, %i.e, !dbg !13424
+  %i.f = icmp uge i64 %1, %.0.val, !dbg !13424
     #dbg_value(i1 true, !13425, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13432)
   tail call void @llvm.assume(i1 %i.f), !dbg !13434
   %i.g = tail call noundef ptr @_RNvCshxk5dXoXnx9_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %i.e, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 0, -9223372036854775808) %4) #23, !dbg !13435
@@ -494,7 +495,7 @@ bb.c:                                             ; preds = %bb.b
     #dbg_value(i64 %4, !3851, !DIExpression(), !13465)
     #dbg_value(i64 %4, !13454, !DIExpression(), !13466)
     #dbg_value(i64 %4, !13462, !DIExpression(), !13468)
-  %i.h = icmp eq i64 %4, 0, !dbg !13471
+  %i.h = icmp eq i64 %1, 0, !dbg !13471
   br i1 %i.h, label %_RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Allocator8allocate.exit.thread, label %bb.d, !dbg !13471
 
 _RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Allocator8allocate.exit.thread: ; preds = %bb.c
@@ -569,17 +570,17 @@ bb.a:
     #dbg_value(i64 %3, !13063, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13494)
     #dbg_value(i64 %3, !13514, !DIExpression(), !13517)
     #dbg_value(ptr poison, !13089, !DIExpression(), !13518)
-  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %1), !dbg !13519 ; 2 uses
-  %5 = extractvalue { i64, i1 } %i.a, 0, !dbg !13519 ; 5 uses
+  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %1), !dbg !13519
+  %5 = mul nuw i64 %4, %1, !dbg !13519            ; 5 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1, !dbg !13519
     #dbg_value(i1 %i.b, !13100, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13520)
-    #dbg_value(i1 %i.b, !13119, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13521)
+    #dbg_value(i1 %i.b, !13118, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13521)
     #dbg_value(i64 %5, !13090, !DIExpression(), !13523)
     #dbg_value(i64 %5, !13098, !DIExpression(), !13520)
   %i.c = sub nuw i64 -9223372036854775808, %3
   %.not = icmp ugt i64 %5, %i.c
-  %or.cond = select i1 %i.b, i1 true, i1 %.not, !dbg !13524, !prof !13126
-  br i1 %or.cond, label %bb.c, label %bb.b, !dbg !13524, !prof !13126
+  %or.cond = select i1 %i.b, i1 true, i1 %.not, !dbg !13524, !prof !13125
+  br i1 %or.cond, label %bb.c, label %bb.b, !dbg !13524, !prof !13125
 
 bb.b:                                             ; preds = %bb.a
     #dbg_value(i64 %3, !13031, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13525)
@@ -982,17 +983,17 @@ begin_hunk_1_@llvm.umax.i64
 !13114 = distinct !DILocation(line: 1330, column: 31, scope: !13095, inlinedAt: !13102)
 !13115 = !DILocation(line: 450, column: 9, scope: !13008, inlinedAt: !13042)
 !13116 = !DILocation(line: 532, column: 32, scope: !13067, inlinedAt: !13093)
-!13117 = !DILocation(line: 3212, column: 26, scope: !13104, inlinedAt: !13114)
-!13118 = !DILocation(line: 0, scope: !13099, inlinedAt: !13102)
-!13119 = !DILocalVariable(name: "b", arg: 1, scope: !13120, file: !12017, line: 477, type: !403)
-!13120 = distinct !DISubprogram(name: "unlikely", linkageName: "_RNvNtCsj6eKBz9Db1c_4core10intrinsics8unlikely", scope: !12018, file: !12017, line: 477, type: !12019, scopeLine: 477, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !166, templateParams: !46, retainedNodes: !13121)
-!13121 = !{!13119}
-!13122 = !DILocation(line: 0, scope: !13120, inlinedAt: !13123)
-!13123 = distinct !DILocation(line: 1331, column: 16, scope: !13099, inlinedAt: !13102)
-!13124 = !DILocation(line: 0, scope: !13091, inlinedAt: !13093)
-!13125 = !DILocation(line: 478, column: 8, scope: !13120, inlinedAt: !13123)
-!13126 = !{!"branch_weights", i32 2002, i32 2000}
-!13127 = !DILocation(line: 565, column: 9, scope: !12888)
+!13117 = !DILocation(line: 0, scope: !13099, inlinedAt: !13102)
+!13118 = !DILocalVariable(name: "b", arg: 1, scope: !13119, file: !12017, line: 477, type: !403)
+!13119 = distinct !DISubprogram(name: "unlikely", linkageName: "_RNvNtCsj6eKBz9Db1c_4core10intrinsics8unlikely", scope: !12018, file: !12017, line: 477, type: !12019, scopeLine: 477, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !166, templateParams: !46, retainedNodes: !13120)
+!13120 = !{!13118}
+!13121 = !DILocation(line: 0, scope: !13119, inlinedAt: !13122)
+!13122 = distinct !DILocation(line: 1331, column: 16, scope: !13099, inlinedAt: !13102)
+!13123 = !DILocation(line: 0, scope: !13091, inlinedAt: !13093)
+!13124 = !DILocation(line: 478, column: 8, scope: !13119, inlinedAt: !13122)
+!13125 = !{!"branch_weights", i32 2002, i32 2000}
+!13126 = !DILocation(line: 565, column: 9, scope: !12888)
+!13127 = !DILocation(line: 3212, column: 26, scope: !13104, inlinedAt: !13114)
 !13128 = !DILocation(line: 0, scope: !13032, inlinedAt: !13042)
 !13129 = !DILocation(line: 0, scope: !3845, inlinedAt: !13130)
 !13130 = distinct !DILocation(line: 424, column: 9, scope: !13131, inlinedAt: !13136)
@@ -1386,10 +1387,10 @@ begin_hunk_1_@llvm.umax.i64
 !13518 = !DILocation(line: 532, column: 32, scope: !13067, inlinedAt: !13497)
 !13519 = !DILocation(line: 3212, column: 26, scope: !13104, inlinedAt: !13501)
 !13520 = !DILocation(line: 0, scope: !13099, inlinedAt: !13499)
-!13521 = !DILocation(line: 0, scope: !13120, inlinedAt: !13522)
+!13521 = !DILocation(line: 0, scope: !13119, inlinedAt: !13522)
 !13522 = !DILocation(line: 1331, column: 16, scope: !13099, inlinedAt: !13499)
 !13523 = !DILocation(line: 0, scope: !13091, inlinedAt: !13497)
-!13524 = !DILocation(line: 478, column: 8, scope: !13120, inlinedAt: !13522)
+!13524 = !DILocation(line: 478, column: 8, scope: !13119, inlinedAt: !13522)
 !13525 = !DILocation(line: 0, scope: !13032)
 !13526 = !DILocation(line: 461, column: 12, scope: !13032)
 !13527 = !DILocation(line: 457, column: 30, scope: !13008)

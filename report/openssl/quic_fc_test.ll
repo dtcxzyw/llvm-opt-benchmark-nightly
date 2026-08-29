@@ -202,10 +202,13 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.b
   %i.gr = getelementptr inbounds nuw i8, ptr %.064.i, i64 16
-  %i.gs = load i64, ptr %i.gr, align 8, !tbaa !17
-  %i.gt = load i64, ptr @cur_time.0, align 8
-  %.sroa.03.0.i.i = call i64 @llvm.uadd.sat.i64(i64 %i.gt, i64 %i.gs)
-  store i64 %.sroa.03.0.i.i, ptr @cur_time.0, align 8, !tbaa !12
+  %i.gs = load i64, ptr %i.gr, align 8, !tbaa !17 ; 2 uses
+  %i.gt = load i64, ptr @cur_time.0, align 8      ; 2 uses
+  %3 = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.gt, i64 %i.gs)
+  %4 = extractvalue { i64, i1 } %3, 1
+  %.0.i.i.i = add i64 %i.gt, %i.gs
+  %..0.i.i.i = select i1 %4, i64 -1, i64 %.0.i.i.i
+  store i64 %..0.i.i.i, ptr @cur_time.0, align 8, !tbaa !12
   br label %bb.ax
 
 bb.aw:                                            ; preds = %bb.b
@@ -293,7 +296,7 @@ declare i32 @ossl_quic_rxfc_get_error(ptr noundef, i32 noundef) local_unnamed_ad
 declare noundef i32 @fprintf(ptr noundef captures(none), ptr noundef readonly captures(none), ...) local_unnamed_addr #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.uadd.sat.i64(i64, i64) #6
+declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
