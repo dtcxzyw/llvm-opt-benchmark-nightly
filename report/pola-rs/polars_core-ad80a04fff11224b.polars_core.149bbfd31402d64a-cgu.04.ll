@@ -204,9 +204,9 @@ bb.a:
   %.sroa.4.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %1, i64 192, !dbg !40568
   %.sroa.4.0.copyload10 = load i64, ptr %.sroa.4.0..sroa_idx9, align 8, !dbg !40568, !alias.scope !40571 ; 3 uses
   %.sroa.5.0..sroa_idx11 = getelementptr inbounds nuw i8, ptr %1, i64 200, !dbg !40568
-  %.sroa.5.sroa.0.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx11, align 8, !dbg !40568, !alias.scope !40571
+  %.sroa.5.sroa.0.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx11, align 8, !dbg !40568, !alias.scope !40571
   %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx11.sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 208, !dbg !40568
-  %.sroa.5.sroa.4.0.copyload = load i64, ptr %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx11.sroa_idx, align 8, !dbg !40568, !alias.scope !40571
+  %.sroa.5.sroa.4.0.copyload = load ptr, ptr %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx11.sroa_idx, align 8, !dbg !40568, !alias.scope !40571
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !40575
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !40578
   call void @_RNvMs4_NtCsgZ49sUHp3tW_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs1LHh8CLbVkQ_11polars_core(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, i64 noundef %.sroa.4.0.copyload10, i1 noundef zeroext false, i64 noundef 4, i64 noundef 4), !dbg !40578
@@ -609,8 +609,7 @@ _RNvXsr_NtCs8774dFTUdNv_12polars_arrow11trusted_lenINtB5_13TrustMyLengthINtNtNtN
   ], !dbg !40991
 
 .sink.split.i.i.i:                                ; preds = %bb.u, %_RNvXsr_NtCs8774dFTUdNv_12polars_arrow11trusted_lenINtB5_13TrustMyLengthINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB1c_3map3MapINtNtNtB1g_5slice4iter4IterINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtB7_5array5ArrayEL_EENCNvMs_NtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops8downcastINtB3U_12ChunkedArrayNtNtB3W_9datatypes11BooleanTypeE13downcast_iter0EINtNtNtNtB7_6bitmap5utils12zip_validity11ZipValiditybNtNtB62_8iterator10BitmapIterB6O_ENCNvMNtB3U_8iteratorB4P_4iter0EINtNtB1g_6option6OptionbEENtNtNtB1e_6traits8iterator8Iterator4nextB3W_.exit.thread.i.i
-  %.8.val.sink1.i.in.i.sroa.speculated.in.i = phi i64 [ %.sroa.5.sroa.4.0.copyload, %bb.u ], [ %.sroa.5.sroa.0.0.copyload, %_RNvXsr_NtCs8774dFTUdNv_12polars_arrow11trusted_lenINtB5_13TrustMyLengthINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB1c_3map3MapINtNtNtB1g_5slice4iter4IterINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtB7_5array5ArrayEL_EENCNvMs_NtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops8downcastINtB3U_12ChunkedArrayNtNtB3W_9datatypes11BooleanTypeE13downcast_iter0EINtNtNtNtB7_6bitmap5utils12zip_validity11ZipValiditybNtNtB62_8iterator10BitmapIterB6O_ENCNvMNtB3U_8iteratorB4P_4iter0EINtNtB1g_6option6OptionbEENtNtNtB1e_6traits8iterator8Iterator4nextB3W_.exit.thread.i.i ]
-  %.8.val.sink1.i.in.i.sroa.speculated.i = inttoptr i64 %.8.val.sink1.i.in.i.sroa.speculated.in.i to ptr, !dbg !40999
+  %.8.val.sink1.i.in.i.sroa.speculated.i = phi ptr [ %.sroa.5.sroa.4.0.copyload, %bb.u ], [ %.sroa.5.sroa.0.0.copyload, %_RNvXsr_NtCs8774dFTUdNv_12polars_arrow11trusted_lenINtB5_13TrustMyLengthINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB1c_3map3MapINtNtNtB1g_5slice4iter4IterINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtB7_5array5ArrayEL_EENCNvMs_NtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops8downcastINtB3U_12ChunkedArrayNtNtB3W_9datatypes11BooleanTypeE13downcast_iter0EINtNtNtNtB7_6bitmap5utils12zip_validity11ZipValiditybNtNtB62_8iterator10BitmapIterB6O_ENCNvMNtB3U_8iteratorB4P_4iter0EINtNtB1g_6option6OptionbEENtNtNtB1e_6traits8iterator8Iterator4nextB3W_.exit.thread.i.i ]
   %i.eg = load i32, ptr %.8.val.sink1.i.in.i.sroa.speculated.i, align 4, !dbg !40999, !noalias !41000, !noundef !13
   br label %_RNvXsr_NtCs8774dFTUdNv_12polars_arrow11trusted_lenINtB5_13TrustMyLengthINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters7flatten7FlatMapINtNtB1c_3map3MapINtNtNtB1g_5slice4iter4IterINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtB7_5array5ArrayEL_EENCNvMs_NtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops8downcastINtB3U_12ChunkedArrayNtNtB3W_9datatypes11BooleanTypeE13downcast_iter0EINtNtNtNtB7_6bitmap5utils12zip_validity11ZipValiditybNtNtB62_8iterator10BitmapIterB6O_ENCNvMNtB3U_8iteratorB4P_4iter0EINtNtB1g_6option6OptionbEENtNtNtB1e_6traits8iterator8Iterator4nextB3W_.exit.thread.i.thread.i, !dbg !41001
 

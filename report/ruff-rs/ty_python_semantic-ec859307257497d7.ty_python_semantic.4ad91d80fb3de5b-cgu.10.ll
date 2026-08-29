@@ -205,7 +205,7 @@ bb.a:
   %.sroa.545.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.545.0.copyload = load ptr, ptr %.sroa.545.0..sroa_idx, align 8
   %.sroa.746.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %.sroa.746.0.copyload = load i64, ptr %.sroa.746.0..sroa_idx, align 8
+  %.sroa.746.0.copyload = load ptr, ptr %.sroa.746.0..sroa_idx, align 8
   %.sroa.847.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 48
   %.sroa.847.0.copyload = load i64, ptr %.sroa.847.0..sroa_idx, align 8
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 56
@@ -213,7 +213,7 @@ bb.a:
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 64
   %.sroa.11.0.copyload = load ptr, ptr %.sroa.11.0..sroa_idx, align 8 ; 2 uses
   %.sroa.1248.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %.sroa.1248.0.copyload = load i64, ptr %.sroa.1248.0..sroa_idx, align 8
+  %.sroa.1248.0.copyload = load ptr, ptr %.sroa.1248.0..sroa_idx, align 8
   %.sroa.1349.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 96
   %.sroa.1349.0.copyload = load i64, ptr %.sroa.1349.0..sroa_idx, align 8
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 104
@@ -255,10 +255,9 @@ _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB4_5ChainINtNtB6_3zip3Zip
   %.sroa.1349.1 = phi i64 [ %i.r, %bb.c ], [ %.sroa.1349.0, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_3zip3ZipINtNtNtB8_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEB1k_ETRB1K_B2D_ENvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB1O_.exit.i.i ]
   %.sroa.847.1 = phi i64 [ %.sroa.847.0, %bb.c ], [ %i.p, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_3zip3ZipINtNtNtB8_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEB1k_ETRB1K_B2D_ENvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB1O_.exit.i.i ]
   %.sroa.545.2 = phi ptr [ null, %bb.c ], [ %.sroa.545.0, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_3zip3ZipINtNtNtB8_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEB1k_ETRB1K_B2D_ENvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB1O_.exit.i.i ]
-  %.sink12.i.sroa.phi.sroa.speculated.in = phi i64 [ %.sroa.1248.0.copyload, %bb.c ], [ %.sroa.746.0.copyload, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_3zip3ZipINtNtNtB8_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEB1k_ETRB1K_B2D_ENvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB1O_.exit.i.i ]
+  %.sink12.i.sroa.phi.sroa.speculated = phi ptr [ %.sroa.1248.0.copyload, %bb.c ], [ %.sroa.746.0.copyload, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_3zip3ZipINtNtNtB8_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEB1k_ETRB1K_B2D_ENvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB1O_.exit.i.i ]
   %.sink.i = phi i64 [ %.sroa.1349.0, %bb.c ], [ %.sroa.847.0, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_3zip3ZipINtNtNtB8_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEB1k_ETRB1K_B2D_ENvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB1O_.exit.i.i ]
   %.pn5.i.i.i = phi ptr [ %i.s, %bb.c ], [ %i.q, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_3zip3ZipINtNtNtB8_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEB1k_ETRB1K_B2D_ENvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB1O_.exit.i.i ]
-  %.sink12.i.sroa.phi.sroa.speculated = inttoptr i64 %.sink12.i.sroa.phi.sroa.speculated.in to ptr
   %i.t = getelementptr inbounds nuw [16 x i8], ptr %.sink12.i.sroa.phi.sroa.speculated, i64 %.sink.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !5017
@@ -610,7 +609,7 @@ bb.a:
   %.sroa.545.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.545.0.copyload = load ptr, ptr %.sroa.545.0..sroa_idx, align 8
   %.sroa.746.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %.sroa.746.0.copyload = load i64, ptr %.sroa.746.0..sroa_idx, align 8
+  %.sroa.746.0.copyload = load ptr, ptr %.sroa.746.0..sroa_idx, align 8
   %.sroa.847.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 48
   %.sroa.847.0.copyload = load i64, ptr %.sroa.847.0..sroa_idx, align 8
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 56
@@ -618,7 +617,7 @@ bb.a:
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 64
   %.sroa.11.0.copyload = load ptr, ptr %.sroa.11.0..sroa_idx, align 8 ; 2 uses
   %.sroa.1248.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %.sroa.1248.0.copyload = load i64, ptr %.sroa.1248.0..sroa_idx, align 8
+  %.sroa.1248.0.copyload = load ptr, ptr %.sroa.1248.0..sroa_idx, align 8
   %.sroa.1349.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 96
   %.sroa.1349.0.copyload = load i64, ptr %.sroa.1349.0..sroa_idx, align 8
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 104
@@ -660,10 +659,9 @@ _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB4_5ChainINtNtB6_3zip3Zip
   %.sroa.1349.1 = phi i64 [ %i.r, %bb.c ], [ %.sroa.1349.0, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_3zip3ZipINtNtNtB8_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEB1k_ETRB1K_B2D_ENvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB1O_.exit.i.i ]
   %.sroa.847.1 = phi i64 [ %.sroa.847.0, %bb.c ], [ %i.p, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_3zip3ZipINtNtNtB8_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEB1k_ETRB1K_B2D_ENvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB1O_.exit.i.i ]
   %.sroa.545.2 = phi ptr [ null, %bb.c ], [ %.sroa.545.0, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_3zip3ZipINtNtNtB8_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEB1k_ETRB1K_B2D_ENvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB1O_.exit.i.i ]
-  %.sink12.i.sroa.phi.sroa.speculated.in = phi i64 [ %.sroa.1248.0.copyload, %bb.c ], [ %.sroa.746.0.copyload, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_3zip3ZipINtNtNtB8_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEB1k_ETRB1K_B2D_ENvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB1O_.exit.i.i ]
+  %.sink12.i.sroa.phi.sroa.speculated = phi ptr [ %.sroa.1248.0.copyload, %bb.c ], [ %.sroa.746.0.copyload, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_3zip3ZipINtNtNtB8_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEB1k_ETRB1K_B2D_ENvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB1O_.exit.i.i ]
   %.sink.i = phi i64 [ %.sroa.1349.0, %bb.c ], [ %.sroa.847.0, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_3zip3ZipINtNtNtB8_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEB1k_ETRB1K_B2D_ENvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB1O_.exit.i.i ]
   %.pn5.i.i.i = phi ptr [ %i.s, %bb.c ], [ %i.q, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_3zip3ZipINtNtNtB8_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEB1k_ETRB1K_B2D_ENvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB1O_.exit.i.i ]
-  %.sink12.i.sroa.phi.sroa.speculated = inttoptr i64 %.sink12.i.sroa.phi.sroa.speculated.in to ptr
   %i.t = getelementptr inbounds nuw [16 x i8], ptr %.sink12.i.sroa.phi.sroa.speculated, i64 %.sink.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !5063

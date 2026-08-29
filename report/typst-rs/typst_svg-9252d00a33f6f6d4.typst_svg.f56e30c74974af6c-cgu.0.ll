@@ -205,7 +205,7 @@ bb.eq:                                            ; preds = %bb.ep
   %i.nu = getelementptr inbounds nuw i8, ptr %i.d, i64 56 ; 5 uses
   store i8 0, ptr %i.nu, align 8, !noalias !6744
   store i64 0, ptr %i.d, align 8, !noalias !6749
-  store i64 1, ptr %.sink26.i.sroa.gep489.i, align 8, !noalias !6749
+  store ptr inttoptr (i64 1 to ptr), ptr %.sink26.i.sroa.gep489.i, align 8, !noalias !6749
   %.sroa.7491.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 6 uses
   %.sroa.8492.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 24 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7491.0..sroa_idx.i, i8 0, i64 16, i1 false), !noalias !6743

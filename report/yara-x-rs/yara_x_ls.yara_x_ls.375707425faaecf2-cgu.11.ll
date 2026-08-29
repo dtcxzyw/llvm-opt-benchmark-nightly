@@ -205,7 +205,7 @@ bb.hu:                                            ; preds = %bb.ht
           cleanup
   br label %.body.i
 
-.loopexit.split-lp117.loopexit.i:                 ; preds = %bb.je, %16, %bb.ir, %bb.ig, %bb.ie, %bb.id, %bb.hr, %bb.hp, %bb.ho, %._crit_edge.i.i, %.preheader.i.i, %bb.hi
+.loopexit.split-lp117.loopexit.i:                 ; preds = %bb.je, %bb.ja, %bb.ir, %bb.ig, %bb.ie, %bb.id, %bb.hr, %bb.hp, %bb.ho, %._crit_edge.i.i, %.preheader.i.i, %bb.hi
   %lpad.loopexit121.i = landingpad { ptr, i32 }
           cleanup
   br label %.body.i
@@ -222,8 +222,8 @@ _RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpaces
 
 _RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.thread.i: ; preds = %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.i, %.noexc.i189
   %i.qc = phi i16 [ %.pr.i, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.i ], [ %i.po, %.noexc.i189 ] ; 3 uses
-  %.sroa.588.0.copyload.i = load i64, ptr %.sroa.588.0..sroa_idx.i, align 8, !noalias !595 ; 8 uses
-  %.sroa.16.0.copyload.i = load i64, ptr %.sroa.16.0..sroa_idx.i, align 8, !noalias !595 ; 10 uses
+  %.sroa.588.0.copyload.i = load ptr, ptr %.sroa.588.0..sroa_idx.i, align 8, !noalias !595 ; 2 uses
+  %.sroa.16.0.copyload.i = load i64, ptr %.sroa.16.0..sroa_idx.i, align 8, !noalias !595 ; 4 uses
   switch i16 %i.qc, label %default.unreachable.i [
     i16 0, label %bb.ib
     i16 1, label %bb.ib
@@ -297,19 +297,19 @@ bb.ib:                                            ; preds = %bb.je, %bb.iw, %_RI
 bb.ic:                                            ; preds = %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.thread.i, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.thread.i, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.thread.i, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.thread.i, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.thread.i, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.thread.i, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.thread.i, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.thread.i
   switch i16 %i.qc, label %default.unreachable.i [
     i16 22, label %bb.jb
-    i16 21, label %bb.ja
-    i16 20, label %bb.iz
-    i16 19, label %bb.iy
-    i16 18, label %bb.ix
-    i16 17, label %9
-    i16 16, label %8
-    i16 15, label %16
-    i16 14, label %16
-    i16 9, label %4
-    i16 10, label %5
-    i16 11, label %6
-    i16 12, label %16
-    i16 13, label %16
+    i16 21, label %bb.jb
+    i16 20, label %bb.jb
+    i16 19, label %bb.jb
+    i16 18, label %bb.jb
+    i16 17, label %bb.jb
+    i16 16, label %bb.iz
+    i16 15, label %bb.ja
+    i16 14, label %bb.ja
+    i16 9, label %bb.ix
+    i16 10, label %bb.iy
+    i16 11, label %bb.jb
+    i16 12, label %bb.ja
+    i16 13, label %bb.ja
   ]
 
 bb.id:                                            ; preds = %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.thread.i
@@ -343,7 +343,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCs4KzxGwe94yc_9yara_x_ls.
   br label %bb.ib
 
 .loopexit124.i:                                   ; preds = %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCs4KzxGwe94yc_9yara_x_ls.exit84.i, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCs4KzxGwe94yc_9yara_x_ls.exit65.i, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCs4KzxGwe94yc_9yara_x_ls.exit.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecIBC_hEEECs4KzxGwe94yc_9yara_x_ls.exit.i
-  %.sroa.0.1.i = phi ptr [ %.sroa.0.2.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecIBC_hEEECs4KzxGwe94yc_9yara_x_ls.exit.i ], [ %i.qh, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCs4KzxGwe94yc_9yara_x_ls.exit65.i ], [ %i.qg, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCs4KzxGwe94yc_9yara_x_ls.exit.i ], [ %17, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCs4KzxGwe94yc_9yara_x_ls.exit84.i ]
+  %.sroa.0.1.i = phi ptr [ %.sroa.0.2.i, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecIBC_hEEECs4KzxGwe94yc_9yara_x_ls.exit.i ], [ %i.qh, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCs4KzxGwe94yc_9yara_x_ls.exit65.i ], [ %i.qg, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCs4KzxGwe94yc_9yara_x_ls.exit.i ], [ %4, %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCs4KzxGwe94yc_9yara_x_ls.exit84.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !595
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spaces20RemoveTrailingSpacesINtNtBG_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtB4_4iter6traits8iterator8Iteratorp4ItemNtNtBG_6tokens5TokenEL_EEEECs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef align 8 dereferenceable(104) %i.k)
           to label %bb.jg unwind label %bb.hx, !noalias !600
@@ -351,7 +351,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechE8push_mutCs4KzxGwe94yc_9yara_x_ls.
 bb.ih:                                            ; preds = %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.thread.i, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.thread.i, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.thread.i, %_RNvXs_NtCsbRBQYsxaRdD_10yara_x_fmt15trailing_spacesINtB4_20RemoveTrailingSpacesINtNtB6_11indentation14AddIndentationINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iteratorp4ItemNtNtB6_6tokens5TokenEL_EEEB2q_4nextCs4KzxGwe94yc_9yara_x_ls.exit.thread.i
   %.sroa.18.0.copyload.i = load i64, ptr %.sroa.18.0..sroa_idx.i, align 8, !noalias !595 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !595
-  store i64 %.sroa.588.0.copyload.i, ptr %i.i, align 8, !noalias !595
+  store ptr %.sroa.588.0.copyload.i, ptr %i.i, align 8, !noalias !595
   store i64 %.sroa.16.0.copyload.i, ptr %.sroa.16.8..sroa_idx96.i, align 8, !noalias !595
   store i64 %.sroa.18.0.copyload.i, ptr %.sroa.18.8..sroa_idx103.i, align 8, !noalias !595
   %i.qo = inttoptr i64 %.sroa.16.0.copyload.i to ptr ; 5 uses
@@ -491,51 +491,26 @@ bb.iw:                                            ; preds = %_RNvXs_NtNtCskKLDko
   store i64 0, ptr %i.pm, align 8, !noalias !595
   br label %bb.ib
 
-4:                                                ; preds = %bb.ic
-  br label %16
-
-5:                                                ; preds = %bb.ic
-  br label %16
-
-6:                                                ; preds = %bb.ic
-  %7 = inttoptr i64 %.sroa.588.0.copyload.i to ptr
-  br label %16
-
-8:                                                ; preds = %bb.ic
-  br label %16
-
-9:                                                ; preds = %bb.ic
-  %10 = inttoptr i64 %.sroa.588.0.copyload.i to ptr
-  br label %16
-
 bb.ix:                                            ; preds = %bb.ic
-  %11 = inttoptr i64 %.sroa.588.0.copyload.i to ptr
-  br label %16
+  br label %bb.ja
 
 bb.iy:                                            ; preds = %bb.ic
-  %12 = inttoptr i64 %.sroa.588.0.copyload.i to ptr
-  br label %16
+  br label %bb.ja
 
 bb.iz:                                            ; preds = %bb.ic
-  %13 = inttoptr i64 %.sroa.588.0.copyload.i to ptr
-  br label %16
+  br label %bb.ja
 
-bb.ja:                                            ; preds = %bb.ic
-  %14 = inttoptr i64 %.sroa.588.0.copyload.i to ptr
-  br label %16
-
-bb.jb:                                            ; preds = %bb.ic
-  %15 = inttoptr i64 %.sroa.588.0.copyload.i to ptr
-  br label %16
-
-16:                                               ; preds = %bb.jb, %bb.ja, %bb.iz, %bb.iy, %bb.ix, %9, %8, %6, %5, %4, %bb.ic, %bb.ic, %bb.ic, %bb.ic
-  %.sroa.6.0.i = phi i64 [ 1, %4 ], [ 1, %5 ], [ %.sroa.16.0.copyload.i, %6 ], [ 1, %8 ], [ %.sroa.16.0.copyload.i, %9 ], [ %.sroa.16.0.copyload.i, %bb.ix ], [ %.sroa.16.0.copyload.i, %bb.iy ], [ %.sroa.16.0.copyload.i, %bb.iz ], [ %.sroa.16.0.copyload.i, %bb.ja ], [ %.sroa.16.0.copyload.i, %bb.jb ], [ 0, %bb.ic ], [ 0, %bb.ic ], [ 0, %bb.ic ], [ 0, %bb.ic ]
-  %.sroa.010.0.i = phi ptr [ @57, %4 ], [ @56, %5 ], [ %7, %6 ], [ @30, %8 ], [ %10, %9 ], [ %11, %bb.ix ], [ %12, %bb.iy ], [ %13, %bb.iz ], [ %14, %bb.ja ], [ %15, %bb.jb ], [ inttoptr (i64 1 to ptr), %bb.ic ], [ inttoptr (i64 1 to ptr), %bb.ic ], [ inttoptr (i64 1 to ptr), %bb.ic ], [ inttoptr (i64 1 to ptr), %bb.ic ]
-  %17 = invoke noundef ptr @_RNvXs1_NtNtCsexYYUdYSQU6_5alloc2io6cursorINtNtB9_3vec3VechENtNtNtCskKLDkoKarTP_4core2io6cursor18WriteThroughCursor9write_allCs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.es, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.010.0.i, i64 noundef range(i64 0, -9223372036854775808) %.sroa.6.0.i)
+bb.ja:                                            ; preds = %bb.jb, %bb.iz, %bb.iy, %bb.ix, %bb.ic, %bb.ic, %bb.ic, %bb.ic
+  %.sroa.6.0.i = phi i64 [ 1, %bb.ix ], [ 1, %bb.iy ], [ %.sroa.16.0.copyload.i, %bb.jb ], [ 1, %bb.iz ], [ 0, %bb.ic ], [ 0, %bb.ic ], [ 0, %bb.ic ], [ 0, %bb.ic ]
+  %.sroa.010.0.i = phi ptr [ @57, %bb.ix ], [ @56, %bb.iy ], [ %.sroa.588.0.copyload.i, %bb.jb ], [ @30, %bb.iz ], [ inttoptr (i64 1 to ptr), %bb.ic ], [ inttoptr (i64 1 to ptr), %bb.ic ], [ inttoptr (i64 1 to ptr), %bb.ic ], [ inttoptr (i64 1 to ptr), %bb.ic ]
+  %4 = invoke noundef ptr @_RNvXs1_NtNtCsexYYUdYSQU6_5alloc2io6cursorINtNtB9_3vec3VechENtNtNtCskKLDkoKarTP_4core2io6cursor18WriteThroughCursor9write_allCs4KzxGwe94yc_9yara_x_ls(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.es, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.010.0.i, i64 noundef range(i64 0, -9223372036854775808) %.sroa.6.0.i)
           to label %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCs4KzxGwe94yc_9yara_x_ls.exit84.i unwind label %.loopexit.split-lp117.loopexit.i, !noalias !600 ; 2 uses
 
-_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCs4KzxGwe94yc_9yara_x_ls.exit84.i: ; preds = %16
-  %.not44.i = icmp eq ptr %17, null
+bb.jb:                                            ; preds = %bb.ic, %bb.ic, %bb.ic, %bb.ic, %bb.ic, %bb.ic, %bb.ic
+  br label %bb.ja
+
+_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCs4KzxGwe94yc_9yara_x_ls.exit84.i: ; preds = %bb.ja
+  %.not44.i = icmp eq ptr %4, null
   br i1 %.not44.i, label %bb.jc, label %.loopexit124.i
 
 bb.jc:                                            ; preds = %_RNvXs_NtNtCskKLDkoKarTP_4core2io5implsQINtNtB6_6cursor6CursorINtNtCsexYYUdYSQU6_5alloc3vec3VechEENtNtB6_5write5Write9write_allCs4KzxGwe94yc_9yara_x_ls.exit84.i
