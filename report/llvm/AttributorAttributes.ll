@@ -205,7 +205,7 @@ _ZN4llvm8SetStateINS_9StringRefEE15getIntersectionERKNS2_11SetContentsE.exit.i: 
   store i8 %.pre-phi.i.i.i, ptr %i.r, align 8, !tbaa !410
   %i.ad = load i32, ptr %i.t, align 8, !tbaa !1447 ; 2 uses
   %.not.i.i = icmp ne i32 %i.u, %i.ad
-  %i.ae = icmp ne i8 %.pre-phi.i.i.i, %i.s
+  %i.ae = icmp ne i8 %i.s, %.pre-phi.i.i.i
   %i.af = or i1 %i.ae, %.not.i.i
   %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !1517, !nonnull !21 ; 2 uses
@@ -608,7 +608,7 @@ _ZN4llvm8SetStateINS_9StringRefEE15getIntersectionERKNS2_11SetContentsE.exit: ; 
   store i8 %.pre-phi.i.i, ptr %i.w, align 8, !tbaa !410
   %i.ai = load i32, ptr %i.y, align 8, !tbaa !1447
   %.not.i = icmp eq i32 %i.z, %i.ai
-  %i.aj = icmp eq i8 %.pre-phi.i.i, %i.x
+  %i.aj = icmp eq i8 %i.x, %.pre-phi.i.i
   %.not8 = and i1 %i.aj, %.not.i
   %i.ak = zext i1 %.not8 to i32
   br label %bb.i

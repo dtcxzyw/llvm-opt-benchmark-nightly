@@ -205,7 +205,7 @@ bb.oy:                                            ; preds = %bb.ox
 .preheader444.preheader.i:                        ; preds = %bb.oy
   %i.lvx = trunc nuw nsw i64 %i.lvs to i32
   %i.lvy = or disjoint i64 %.1312475.lcssa.wide.i, %i.ksm
-  %i.lvz = trunc i64 %i.lvy to i32
+  %i.lvz = trunc nuw nsw i64 %i.lvy to i32
   %i.lwa = mul nsw i32 %i.koy, %i.lvz
   %i.lwb = add i32 %i.lwa, %i.lvx
   %i.lwc = shl nsw i32 %i.lwb, 4
@@ -318,7 +318,7 @@ bb.oy:                                            ; preds = %bb.ox
 
 bb.oz:                                            ; preds = %bb.ox
   %i.lzj = or disjoint i64 %.1312475.lcssa.wide.i, %i.ksm
-  %i.lzk = trunc i64 %i.lzj to i32
+  %i.lzk = trunc nuw nsw i64 %i.lzj to i32
   %i.lzl = mul nsw i32 %i.kpd, %i.lzk
   %i.lzm = sext i32 %i.lzl to i64
   %i.lzn = getelementptr inbounds [2 x i8], ptr %i.kni, i64 %i.lzm ; 2 uses

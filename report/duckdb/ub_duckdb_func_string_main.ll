@@ -205,7 +205,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   %.val = load i8, ptr %i.q, align 1, !tbaa !1068, !range !190, !noundef !122
   %i.r = getelementptr i8, ptr %1, i64 27
   %.val5 = load i8, ptr %i.r, align 1, !tbaa !1068, !range !190, !noundef !122
-  %.not = icmp eq i8 %.val5, %.val
+  %.not = icmp eq i8 %.val, %.val5
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread6
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread6: ; preds = %bb.b, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit, %bb.a
@@ -608,7 +608,7 @@ _ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit: ; preds = %bb.
   %.val.i = load i8, ptr %i.q, align 1, !tbaa !1068, !range !190, !noundef !122
   %i.r = getelementptr i8, ptr %1, i64 27
   %.val5.i = load i8, ptr %i.r, align 1, !tbaa !1068, !range !190, !noundef !122
-  %.not.i = icmp eq i8 %.val5.i, %.val.i
+  %.not.i = icmp eq i8 %.val.i, %.val5.i
   br i1 %.not.i, label %bb.d, label %_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit.thread
 
 bb.d:                                             ; preds = %_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit
@@ -976,7 +976,7 @@ _ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit: ; preds = %bb.
   %.val.i = load i8, ptr %i.q, align 1, !tbaa !1068, !range !190, !noundef !122
   %i.r = getelementptr i8, ptr %1, i64 27
   %.val5.i = load i8, ptr %i.r, align 1, !tbaa !1068, !range !190, !noundef !122
-  %.not.i = icmp eq i8 %.val5.i, %.val.i
+  %.not.i = icmp eq i8 %.val.i, %.val5.i
   br i1 %.not.i, label %bb.d, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
 
 bb.d:                                             ; preds = %_ZNK6duckdb18RegexpBaseBindData6EqualsERKNS_12FunctionDataE.exit
