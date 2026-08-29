@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.c
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %.thread1670
-  %i.hb = phi i16 [ %i.ct, %bb.i ], [ %i.gy, %.thread1670 ]
+  %i.hb = phi i16 [ %i.ct, %bb.i ], [ %i.gy, %.thread1670 ] ; 2 uses
   %i.hc = phi i16 [ %.pre1822, %bb.i ], [ %i.ex, %.thread1670 ] ; 16 uses
   %i.hd = phi i16 [ %.pre1820.a, %bb.i ], [ %i.eu, %.thread1670 ] ; 22 uses
   %gep1892 = getelementptr [8 x i8], ptr %invariant.gep1891, i64 %i.bk
@@ -577,8 +577,7 @@ bb.av:                                            ; preds = %bb.au
   br label %bb.aw
 
 bb.aw:                                            ; preds = %.thread1697, %bb.av, %bb.at, %bb.as, %bb.ak, %.thread1880.a
-  %i.oj = phi i16 [ %spec.select1758, %bb.av ], [ %i.hf, %.thread1880.a ], [ %i.hj, %bb.ak ], [ %i.hn, %bb.as ], [ %i.hr, %bb.at ], [ %spec.select1759, %.thread1697 ]
-  %1 = uitofp reassoc nsz arcp contract afn i16 %i.oj to float ; 3 uses
+  %i.oj = phi i16 [ %spec.select1758, %bb.av ], [ %i.hf, %.thread1880.a ], [ %i.hj, %bb.ak ], [ %i.hn, %bb.as ], [ %i.hr, %bb.at ], [ %spec.select1759, %.thread1697 ] ; 2 uses
   %.1594 = tail call i16 @llvm.umax.i16(i16 %i.ht, i16 %i.hv) ; 10 uses
   %i.ok = icmp ugt i16 %i.hc, %.1594              ; 4 uses
   %minmaxop1799 = tail call i16 @llvm.umax.i16(i16 %i.hc, i16 %.1594)
@@ -699,19 +698,14 @@ bb.bl:                                            ; preds = %bb.bk
   br label %.thread1888
 
 .thread1888:                                      ; preds = %.thread1887, %bb.bj, %.thread1729, %bb.bl, %.thread1886.a, %.thread1884.a
-  %i.ox = phi i16 [ %spec.select1790, %bb.bl ], [ %i.hf, %.thread1884.a ], [ %i.hj, %.thread1886.a ], [ %.mux1907, %bb.bj ], [ %spec.select1905, %.thread1887 ], [ %spec.select1791, %.thread1729 ]
-  %2 = uitofp reassoc nsz arcp contract afn i16 %i.ox to float ; 3 uses
-  %3 = fcmp reassoc nsz arcp contract afn olt float %2, %1 ; 2 uses
-  %4 = uitofp i16 %i.hb to float                  ; 2 uses
-  %.1916 = select i1 %3, float %1, float %2       ; 2 uses
-  %.1917 = select i1 %3, float %2, float %1       ; 2 uses
-  %5 = fcmp reassoc nsz arcp contract afn ogt float %.1916, %4
-  %.1660 = select reassoc nsz arcp contract afn i1 %5, float %4, float %.1916 ; 2 uses
-  %6 = fcmp reassoc nsz arcp contract afn olt float %.1660, %.1917
-  %spec.select1793 = select reassoc nsz arcp contract afn i1 %6, float %.1917, float %.1660
-  %7 = fptoui float %spec.select1793 to i16
+  %i.ox = phi i16 [ %spec.select1790, %bb.bl ], [ %i.hf, %.thread1884.a ], [ %i.hj, %.thread1886.a ], [ %.mux1907, %bb.bj ], [ %spec.select1905, %.thread1887 ], [ %spec.select1791, %.thread1729 ] ; 2 uses
+  %.1912 = tail call i16 @llvm.umax.i16(i16 %i.ox, i16 %i.oj)
+  %.1913 = tail call i16 @llvm.umin.i16(i16 %i.ox, i16 %i.oj) ; 2 uses
+  %1 = tail call i16 @llvm.umin.i16(i16 %i.hb, i16 %.1912)
+  %2 = icmp ult i16 %i.hb, %.1913
+  %spec.select1791.v = select i1 %2, i16 %.1913, i16 %1
   %i.oy = getelementptr inbounds nuw i8, ptr %i.aw, i64 2
-  store i16 %7, ptr %i.oy, align 2, !tbaa !76
+  store i16 %spec.select1791.v, ptr %i.oy, align 2, !tbaa !76
   %i.oz = add nuw nsw i32 %.015041811, 2          ; 2 uses
   %i.pa = icmp slt i32 %i.oz, %i.l
   br i1 %i.pa, label %bb.c, label %._crit_edge.loopexit, !llvm.loop !349

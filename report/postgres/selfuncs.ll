@@ -205,18 +205,17 @@ bb.f:                                             ; preds = %bb.e
   %i.q = zext i16 %.val65 to i32
   %i.r = shl nuw i32 %i.q, 16
   %i.s = zext i16 %.val66 to i32
-  %i.t = or disjoint i32 %i.r, %i.s
-  %i.u = uitofp i32 %i.t to double                ; 3 uses
+  %i.t = or disjoint i32 %i.r, %i.s               ; 2 uses
+  %i.u = uitofp i32 %i.t to double                ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.k, i64 200
   %i.w = load double, ptr %i.v, align 8           ; 3 uses
   %i.x = uitofp i32 %i.m to double
   %i.y = fadd double %i.x, -5.000000e-01          ; 2 uses
   %i.z = fdiv double %i.w, %i.y                   ; 2 uses
   %i.aa = add i32 %i.m, -1
-  %9 = uitofp i32 %i.aa to double
-  %10 = fcmp ult double %i.u, %9
+  %.not65 = icmp ult i32 %i.t, %i.aa
   %i.ab = fmul double %i.z, 5.000000e-01
-  %.055 = select i1 %10, double %i.z, double %i.ab ; 2 uses
+  %.055 = select i1 %.not65, double %i.z, double %i.ab ; 2 uses
   %i.ac = fcmp ogt double %.055, 0.000000e+00
   br i1 %i.ac, label %bb.g, label %bb.h
 
@@ -619,8 +618,8 @@ bb.a:
 get_quals_from_indexclauses.exit:                 ; preds = %.critedge26.i, %bb.a, %.lr.ph37.i
   %.0.lcssa.i = phi ptr [ null, %.lr.ph37.i ], [ null, %bb.a ], [ %.1.lcssa.i, %.critedge26.i ] ; 7 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.i, i64 24
-  %i.ak = load i32, ptr %i.aj, align 8            ; 2 uses
-  %i.al = uitofp i32 %i.ak to double              ; 7 uses
+  %i.ak = load i32, ptr %i.aj, align 8            ; 4 uses
+  %i.al = uitofp i32 %i.ak to double              ; 5 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.i, i64 32
   %i.an = load double, ptr %i.am, align 8         ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #12
@@ -638,7 +637,6 @@ bb.b:                                             ; preds = %get_quals_from_inde
   call void @ginGetStats(ptr noundef %i.at, ptr noundef nonnull %10) #12
   call void @index_close(ptr noundef %i.at, i32 noundef 0) #12
   %.pre = load i32, ptr %10, align 8
-  %11 = uitofp i32 %.pre to double
   br label %bb.d
 
 bb.c:                                             ; preds = %get_quals_from_indexclauses.exit
@@ -646,18 +644,19 @@ bb.c:                                             ; preds = %get_quals_from_inde
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %12 = phi double [ 0.000000e+00, %bb.c ], [ %11, %bb.b ] ; 2 uses
-  %13 = fcmp olt double %12, %i.al
-  %..a = select i1 %13, double %12, double 0.000000e+00 ; 3 uses
+  %11 = phi i32 [ 0, %bb.c ], [ %.pre, %bb.b ]    ; 2 uses
+  %12 = icmp ult i32 %11, %i.ak
+  %13 = uitofp i32 %11 to double
+  %..a = select i1 %12, double %13, double 0.000000e+00 ; 3 uses
   %.not = icmp eq i32 %i.ak, 0
   br i1 %.not, label %bb.h, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.au = getelementptr inbounds nuw i8, ptr %10, i64 4
-  %i.av = load i32, ptr %i.au, align 4
-  %i.aw = uitofp i32 %i.av to double              ; 3 uses
-  %14 = fcmp ugt double %i.aw, %i.al
-  br i1 %14, label %bb.h, label %bb.f
+  %i.av = load i32, ptr %i.au, align 4            ; 2 uses
+  %i.aw = uitofp i32 %i.av to double              ; 2 uses
+  %.not212 = icmp ugt i32 %i.av, %i.ak
+  br i1 %.not212, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.ax = fmul nnan double %i.al, 2.500000e-01

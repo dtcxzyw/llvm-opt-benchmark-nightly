@@ -204,7 +204,6 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit
   %i.dd = mul nuw nsw i32 %3, %3
-  %25 = uitofp nneg i32 %i.dd to double
   %i.de = trunc i64 %i.bt to i32
   br label %.preheader
 
@@ -247,12 +246,12 @@ bb.r:                                             ; preds = %.preheader, %bb.t
   %.0189 = phi i32 [ %i.dc, %.preheader ], [ %i.ea, %bb.t ] ; 5 uses
   %.1188 = phi i32 [ %.0107191, %.preheader ], [ %.2, %bb.t ] ; 3 uses
   %i.dq = mul nsw i32 %.0189, %.0189
-  %i.dr = add nuw nsw i32 %i.dq, %i.df
-  %26 = uitofp nneg i32 %i.dr to double           ; 2 uses
-  %27 = fcmp ogt double %26, %25
-  br i1 %27, label %bb.t, label %bb.s
+  %i.dr = add nuw nsw i32 %i.dq, %i.df            ; 2 uses
+  %25 = icmp samesign ugt i32 %i.dr, %i.dd
+  br i1 %25, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
+  %26 = uitofp nneg i32 %i.dr to double
   %i.ds = fmul double %i.au, %26
   %i.dt = call double @exp(double noundef %i.ds) #15
   %i.du = fptrunc double %i.dt to float
@@ -655,7 +654,6 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit
   %i.cd = mul nuw nsw i32 %3, %3
-  %22 = uitofp nneg i32 %i.cd to double
   %i.ce = trunc i64 %i.at to i32
   br label %.preheader
 
@@ -698,12 +696,12 @@ bb.p:                                             ; preds = %.preheader, %bb.r
   %.0165 = phi i32 [ %i.cc, %.preheader ], [ %i.da, %bb.r ] ; 5 uses
   %.1164 = phi i32 [ %.090167, %.preheader ], [ %.2, %bb.r ] ; 3 uses
   %i.cq = mul nsw i32 %.0165, %.0165
-  %i.cr = add nuw nsw i32 %i.cq, %i.cf
-  %23 = uitofp nneg i32 %i.cr to double           ; 2 uses
-  %24 = fcmp ogt double %23, %22
-  br i1 %24, label %bb.r, label %bb.q
+  %i.cr = add nuw nsw i32 %i.cq, %i.cf            ; 2 uses
+  %22 = icmp samesign ugt i32 %i.cr, %i.cd
+  br i1 %22, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
+  %23 = uitofp nneg i32 %i.cr to double
   %i.cs = fmul double %i.u, %23
   %i.ct = call double @exp(double noundef %i.cs) #15
   %i.cu = fptrunc double %i.ct to float

@@ -206,23 +206,21 @@ bb.w:                                             ; preds = %.preheader.us.us.i.
   %i.rw = load i32, ptr %i.rv, align 8, !tbaa !229
   %i.rx = getelementptr inbounds nuw [4 x i8], ptr %i.kp, i64 %indvars.iv.i167.i
   %i.ry = load i32, ptr %i.rx, align 8, !tbaa !229
-  %i.rz = tail call i32 @llvm.smax.i32(i32 %i.rw, i32 %i.ry)
-  %8 = sitofp i32 %i.rz to double                 ; 2 uses
+  %i.rz = tail call i32 @llvm.smax.i32(i32 %i.rw, i32 %i.ry) ; 2 uses
   %i.sa = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %indvars.iv.i167.i
   %i.sb = getelementptr inbounds nuw i8, ptr %i.sa, i64 12
   %i.sc = load i32, ptr %i.sb, align 4, !tbaa !229
-  %9 = sitofp i32 %i.sc to double                 ; 2 uses
   %i.sd = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv.i167.i
   %i.se = getelementptr inbounds nuw i8, ptr %i.sd, i64 12
   %i.sf = load i32, ptr %i.se, align 4, !tbaa !229
-  %10 = sitofp i32 %i.sf to double                ; 2 uses
-  %11 = fcmp olt double %9, %10
-  %.pre-phi.i.i = select i1 %11, double %9, double %10 ; 2 uses
-  %12 = fcmp olt double %.pre-phi.i.i, %8
-  br i1 %12, label %cellOverlap.exit.i, label %bb.x
+  %spec.select.i.i = tail call i32 @llvm.smin.i32(i32 %i.sc, i32 %i.sf) ; 2 uses
+  %8 = icmp slt i32 %spec.select.i.i, %i.rz
+  br i1 %8, label %cellOverlap.exit.i, label %bb.x
 
 bb.x:                                             ; preds = %.thread68.us.i.i
-  %i.sg = fsub nnan double %.pre-phi.i.i, %8
+  %9 = sitofp i32 %i.rz to double
+  %10 = sitofp i32 %spec.select.i.i to double
+  %i.sg = fsub nnan double %10, %9
   %i.sh = fmul double %.06277.us82.i.i, %i.sg     ; 2 uses
   %indvars.iv.next.i168.i = add nuw nsw i64 %indvars.iv.i167.i, 2 ; 2 uses
   %i.si = icmp samesign ult i64 %indvars.iv.next.i168.i, %i.lo

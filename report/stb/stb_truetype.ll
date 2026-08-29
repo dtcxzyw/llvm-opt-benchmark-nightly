@@ -204,19 +204,19 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.f
   %i.az = getelementptr i8, ptr %i.o, i64 -14
-  %i.ba = load <2 x i16>, ptr %i.az, align 2, !tbaa !59 ; 3 uses
+  %i.ba = load <2 x i16>, ptr %i.az, align 2, !tbaa !59 ; 4 uses
   %i.bb = extractelement <2 x i16> %i.ba, i64 1   ; 6 uses
   %i.bc = sext i16 %i.bb to i32
   %i.bd = getelementptr inbounds nuw i8, ptr %i.o, i64 4
-  %i.be = load <2 x i16>, ptr %i.bd, align 2, !tbaa !59 ; 3 uses
+  %i.be = load <2 x i16>, ptr %i.bd, align 2, !tbaa !59 ; 4 uses
   %i.bf = load <2 x i16>, ptr %i.o, align 2, !tbaa !59 ; 3 uses
-  %i.bg = extractelement <2 x i16> %i.bf, i64 1   ; 6 uses
-  %i.bh = extractelement <2 x i16> %i.be, i64 0
-  %i.bi = extractelement <2 x i16> %i.bf, i64 0   ; 2 uses
+  %i.bg = extractelement <2 x i16> %i.bf, i64 1   ; 7 uses
+  %i.bh = extractelement <2 x i16> %i.be, i64 0   ; 2 uses
+  %i.bi = extractelement <2 x i16> %i.bf, i64 0   ; 3 uses
   %i.bj = tail call i16 @llvm.smin.i16(i16 %i.bh, i16 %i.bi)
   %i.bk = extractelement <2 x i16> %i.ba, i64 0   ; 2 uses
   %. = tail call i16 @llvm.smin.i16(i16 %i.bj, i16 %i.bk)
-  %i.bl = extractelement <2 x i16> %i.be, i64 1   ; 2 uses
+  %i.bl = extractelement <2 x i16> %i.be, i64 1   ; 3 uses
   %i.bm = tail call i16 @llvm.smin.i16(i16 %i.bl, i16 %i.bg)
   %i.bn = tail call i16 @llvm.smin.i16(i16 %i.bb, i16 %i.bm)
   %i.bo = tail call i16 @llvm.smax.i16(i16 %i.bl, i16 %i.bg)
@@ -238,26 +238,20 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #29
   %i.bw = sitofp <2 x i16> %i.ba to <2 x float>   ; 3 uses
   store <2 x float> %i.bw, ptr %i.c, align 8, !tbaa !74
-  %i.bx = sitofp <2 x i16> %i.be to <2 x float>   ; 3 uses
+  %i.bx = sitofp <2 x i16> %i.be to <2 x float>
   store <2 x float> %i.bx, ptr %i.d, align 8, !tbaa !74
-  %i.by = sitofp <2 x i16> %i.bf to <2 x float>   ; 3 uses
+  %i.by = sitofp <2 x i16> %i.bf to <2 x float>
   store <2 x float> %i.by, ptr %i.e, align 8, !tbaa !74
-  %4 = extractelement <2 x float> %i.bw, i64 0    ; 2 uses
-  %5 = extractelement <2 x float> %i.bx, i64 0    ; 2 uses
-  %6 = fcmp une float %4, %5
-  %7 = extractelement <2 x float> %i.bw, i64 1    ; 2 uses
-  %8 = extractelement <2 x float> %i.bx, i64 1    ; 2 uses
-  %9 = fcmp une float %7, %8
-  %or.cond169 = or i1 %6, %9
-  br i1 %or.cond169, label %equal.exit.thread, label %bb.m
+  %.scalar = bitcast <2 x i16> %i.ba to i32
+  %.scalar179 = bitcast <2 x i16> %i.be to i32
+  %or.cond170 = icmp eq i32 %.scalar, %.scalar179
+  br i1 %or.cond170, label %bb.m, label %equal.exit.thread
 
 equal.exit.thread:                                ; preds = %bb.l
-  %10 = extractelement <2 x float> %i.by, i64 0
-  %11 = fcmp une float %5, %10
-  %12 = extractelement <2 x float> %i.by, i64 1
-  %13 = fcmp une float %8, %12
-  %or.cond170 = or i1 %11, %13
-  br i1 %or.cond170, label %equal.exit165.thread, label %bb.m
+  %4 = icmp eq i16 %i.bh, %i.bi
+  %.not169 = icmp eq i16 %i.bl, %i.bg
+  %or.cond171 = and i1 %4, %.not169
+  br i1 %or.cond171, label %bb.m, label %equal.exit165.thread
 
 bb.m:                                             ; preds = %equal.exit.thread, %bb.l
   %i.bz = sext i16 %i.bk to i32                   ; 2 uses
@@ -282,13 +276,15 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.cl, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.cm = fsub float %.0150, %7
+  %5 = extractelement <2 x float> %i.bw, i64 1
+  %i.cm = fsub float %.0150, %5
   %i.cn = sub nsw i32 %i.cb, %i.bc
   %i.co = sitofp i32 %i.cn to float
   %i.cp = fdiv float %i.cm, %i.co
   %i.cq = sub nsw i32 %i.ca, %i.bz
   %i.cr = sitofp i32 %i.cq to float
-  %i.cs = tail call float @llvm.fmuladd.f32(float %i.cp, float %i.cr, float %4)
+  %6 = extractelement <2 x float> %i.bw, i64 0
+  %i.cs = tail call float @llvm.fmuladd.f32(float %i.cp, float %i.cr, float %6)
   %i.ct = fcmp olt float %i.cs, %0
   %i.cu = select i1 %i.cc, i32 1, i32 -1
   %i.cv = select i1 %i.ct, i32 %i.cu, i32 0

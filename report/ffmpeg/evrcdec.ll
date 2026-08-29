@@ -191,7 +191,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !48   ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !9    ; 264 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !9    ; 245 uses
   %i.k = ptrtoaddr ptr %i.j to i64
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
   %i.m = load i32, ptr %i.l, align 8, !tbaa !50   ; 3 uses
@@ -594,11 +594,11 @@ bb.as:                                            ; preds = %bb.ar
   %i.abt = fptrunc nsz double %i.abs to float
   %i.abu = fsub nsz float %i.abt, %i.abh
   %i.abv = fmul nsz float %i.abu, f0x3C9A90E8     ; 3 uses
-  %i.abw = getelementptr inbounds nuw i8, ptr %i.j, i64 1764
+  %i.abw = getelementptr inbounds nuw i8, ptr %i.j, i64 1764 ; 2 uses
   %i.abx = fadd nsz float %i.abv, %i.abh
-  %i.aby = getelementptr inbounds nuw i8, ptr %i.j, i64 1768
-  %i.abz = getelementptr inbounds nuw i8, ptr %i.j, i64 1772
-  %i.aca = getelementptr inbounds nuw i8, ptr %i.j, i64 1776
+  %i.aby = getelementptr inbounds nuw i8, ptr %i.j, i64 1768 ; 3 uses
+  %i.abz = getelementptr inbounds nuw i8, ptr %i.j, i64 1772 ; 3 uses
+  %i.aca = getelementptr inbounds nuw i8, ptr %i.j, i64 1776 ; 3 uses
   %i.acb = insertelement <4 x float> poison, float %i.abv, i64 0
   %i.acc = shufflevector <4 x float> %i.acb, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.acd = insertelement <4 x float> poison, float %i.abh, i64 0
@@ -611,12 +611,12 @@ bb.as:                                            ; preds = %bb.ar
   tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.abz, float noundef %i.ach)
   %i.aci = extractelement <4 x float> %i.acf, i64 2
   tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.aca, float noundef %i.aci)
-  %i.acj = getelementptr inbounds nuw i8, ptr %i.j, i64 1780
+  %i.acj = getelementptr inbounds nuw i8, ptr %i.j, i64 1780 ; 3 uses
   %i.ack = extractelement <4 x float> %i.acf, i64 3
   tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acj, float noundef %i.ack)
-  %i.acl = getelementptr inbounds nuw i8, ptr %i.j, i64 1784
-  %i.acm = getelementptr inbounds nuw i8, ptr %i.j, i64 1788
-  %i.acn = getelementptr inbounds nuw i8, ptr %i.j, i64 1792
+  %i.acl = getelementptr inbounds nuw i8, ptr %i.j, i64 1784 ; 3 uses
+  %i.acm = getelementptr inbounds nuw i8, ptr %i.j, i64 1788 ; 3 uses
+  %i.acn = getelementptr inbounds nuw i8, ptr %i.j, i64 1792 ; 3 uses
   %i.aco = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.acc, <4 x float> <float 5.000000e+00, float 6.000000e+00, float 7.000000e+00, float 8.000000e+00>, <4 x float> %i.ace) ; 4 uses
   %i.acp = extractelement <4 x float> %i.aco, i64 0
   tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acl, float noundef %i.acp)
@@ -624,11 +624,11 @@ bb.as:                                            ; preds = %bb.ar
   tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acm, float noundef %i.acq)
   %i.acr = extractelement <4 x float> %i.aco, i64 2
   tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acn, float noundef %i.acr)
-  %i.acs = getelementptr inbounds nuw i8, ptr %i.j, i64 1796
+  %i.acs = getelementptr inbounds nuw i8, ptr %i.j, i64 1796 ; 3 uses
   %i.act = extractelement <4 x float> %i.aco, i64 3
   tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acs, float noundef %i.act)
   %i.acu = tail call nsz float @llvm.fmuladd.f32(float %i.abv, float 9.000000e+00, float %i.abh)
-  %i.acv = getelementptr inbounds nuw i8, ptr %i.j, i64 1800
+  %i.acv = getelementptr inbounds nuw i8, ptr %i.j, i64 1800 ; 3 uses
   tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acv, float noundef %i.acu)
   %i.acw = load <4 x float>, ptr %i.aaz, align 8, !tbaa !33
   %i.acx = insertelement <4 x float> poison, float %i.abi, i64 0
@@ -718,42 +718,32 @@ bb.as:                                            ; preds = %bb.ar
   %i.afe = fptrunc nsz double %i.afd to float
   %i.aff = fsub nsz float %i.afe, %i.aet
   %i.afg = fmul nsz float %i.aff, f0x3C9A90E8     ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.j, i64 1764
   %i.afh = fadd nsz float %i.afg, %i.aet
-  %5 = getelementptr inbounds nuw i8, ptr %i.j, i64 1768
-  %6 = getelementptr inbounds nuw i8, ptr %i.j, i64 1772
-  %7 = getelementptr inbounds nuw i8, ptr %i.j, i64 1776
   %i.afi = insertelement <4 x float> poison, float %i.afg, i64 0
   %i.afj = shufflevector <4 x float> %i.afi, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.afk = insertelement <4 x float> poison, float %i.aet, i64 0
   %i.afl = shufflevector <4 x float> %i.afk, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.afm = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.afj, <4 x float> <float 0.000000e+00, float 2.000000e+00, float 3.000000e+00, float 4.000000e+00>, <4 x float> %i.afl) ; 4 uses
   %i.afn = extractelement <4 x float> %i.afm, i64 0
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %4, float noundef %i.afn)
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %5, float noundef %i.afh)
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.abw, float noundef %i.afn)
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.aby, float noundef %i.afh)
   %i.afo = extractelement <4 x float> %i.afm, i64 1
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %6, float noundef %i.afo)
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.abz, float noundef %i.afo)
   %i.afp = extractelement <4 x float> %i.afm, i64 2
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %7, float noundef %i.afp)
-  %8 = getelementptr inbounds nuw i8, ptr %i.j, i64 1780
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.aca, float noundef %i.afp)
   %i.afq = extractelement <4 x float> %i.afm, i64 3
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %8, float noundef %i.afq)
-  %9 = getelementptr inbounds nuw i8, ptr %i.j, i64 1784
-  %10 = getelementptr inbounds nuw i8, ptr %i.j, i64 1788
-  %11 = getelementptr inbounds nuw i8, ptr %i.j, i64 1792
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acj, float noundef %i.afq)
   %i.afr = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.afj, <4 x float> <float 5.000000e+00, float 6.000000e+00, float 7.000000e+00, float 8.000000e+00>, <4 x float> %i.afl) ; 4 uses
   %i.afs = extractelement <4 x float> %i.afr, i64 0
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %9, float noundef %i.afs)
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acl, float noundef %i.afs)
   %i.aft = extractelement <4 x float> %i.afr, i64 1
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %10, float noundef %i.aft)
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acm, float noundef %i.aft)
   %i.afu = extractelement <4 x float> %i.afr, i64 2
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %11, float noundef %i.afu)
-  %12 = getelementptr inbounds nuw i8, ptr %i.j, i64 1796
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acn, float noundef %i.afu)
   %i.afv = extractelement <4 x float> %i.afr, i64 3
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %12, float noundef %i.afv)
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acs, float noundef %i.afv)
   %i.afw = tail call nsz float @llvm.fmuladd.f32(float %i.afg, float 9.000000e+00, float %i.aet)
-  %13 = getelementptr inbounds nuw i8, ptr %i.j, i64 1800
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %13, float noundef %i.afw)
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acv, float noundef %i.afw)
   %i.afx = load <4 x float>, ptr %i.aaz, align 8, !tbaa !33
   %i.afy = insertelement <4 x float> poison, float %i.aeu, i64 0
   %i.afz = shufflevector <4 x float> %i.afy, <4 x float> poison, <4 x i32> zeroinitializer ; 13 uses
@@ -829,38 +819,29 @@ bb.as:                                            ; preds = %bb.ar
 .lr.ph43.preheader.i.2:                           ; preds = %.lr.ph.i202.2
   %i.aht = fsub nsz float %i.ahl, %i.ahl
   %i.ahu = fmul nsz float %i.aht, f0x3C97B426     ; 3 uses
-  %14 = getelementptr inbounds nuw i8, ptr %i.j, i64 1768
   %i.ahv = fadd nsz float %i.ahu, %i.ahl
-  %15 = getelementptr inbounds nuw i8, ptr %i.j, i64 1772
-  %16 = getelementptr inbounds nuw i8, ptr %i.j, i64 1776
-  %17 = getelementptr inbounds nuw i8, ptr %i.j, i64 1780
   %i.ahw = insertelement <4 x float> poison, float %i.ahu, i64 0
   %i.ahx = shufflevector <4 x float> %i.ahw, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %i.ahy = shufflevector <2 x float> %i.ahi, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 2 uses
   %i.ahz = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ahx, <4 x float> <float 0.000000e+00, float 2.000000e+00, float 3.000000e+00, float 4.000000e+00>, <4 x float> %i.ahy) ; 4 uses
   %i.aia = extractelement <4 x float> %i.ahz, i64 0
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %14, float noundef %i.aia)
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %15, float noundef %i.ahv)
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.aby, float noundef %i.aia)
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.abz, float noundef %i.ahv)
   %i.aib = extractelement <4 x float> %i.ahz, i64 1
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %16, float noundef %i.aib)
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.aca, float noundef %i.aib)
   %i.aic = extractelement <4 x float> %i.ahz, i64 2
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %17, float noundef %i.aic)
-  %18 = getelementptr inbounds nuw i8, ptr %i.j, i64 1784
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acj, float noundef %i.aic)
   %i.aid = extractelement <4 x float> %i.ahz, i64 3
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %18, float noundef %i.aid)
-  %19 = getelementptr inbounds nuw i8, ptr %i.j, i64 1788
-  %20 = getelementptr inbounds nuw i8, ptr %i.j, i64 1792
-  %21 = getelementptr inbounds nuw i8, ptr %i.j, i64 1796
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acl, float noundef %i.aid)
   %i.aie = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ahx, <4 x float> <float 5.000000e+00, float 6.000000e+00, float 7.000000e+00, float 8.000000e+00>, <4 x float> %i.ahy) ; 4 uses
   %i.aif = extractelement <4 x float> %i.aie, i64 0
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %19, float noundef %i.aif)
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acm, float noundef %i.aif)
   %i.aig = extractelement <4 x float> %i.aie, i64 1
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %20, float noundef %i.aig)
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acn, float noundef %i.aig)
   %i.aih = extractelement <4 x float> %i.aie, i64 2
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %21, float noundef %i.aih)
-  %22 = getelementptr inbounds nuw i8, ptr %i.j, i64 1800
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acs, float noundef %i.aih)
   %i.aii = extractelement <4 x float> %i.aie, i64 3
-  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %22, float noundef %i.aii)
+  tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.acv, float noundef %i.aii)
   %i.aij = tail call nsz float @llvm.fmuladd.f32(float %i.ahu, float 9.000000e+00, float %i.ahl)
   %i.aik = getelementptr inbounds nuw i8, ptr %i.j, i64 1804
   tail call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %i.aik, float noundef %i.aij)
@@ -1082,7 +1063,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.ank = load <2 x float>, ptr %i.akj, align 8, !tbaa !33
   %i.anl = fadd nsz <2 x float> %i.ank, %i.anj
   store <2 x float> %i.anl, ptr %i.akj, align 8, !tbaa !33
-  %i.anm = uitofp i8 %i.aku to float              ; 5 uses
+  %i.anm = uitofp i8 %i.aku to float              ; 4 uses
   %i.ann = fdiv nsz float 1.000000e+00, %i.anm    ; 2 uses
   %i.ano = fsub nsz float %i.alz, %i.aly
   %i.anp = fmul nsz float %i.ann, %i.ano
@@ -1104,12 +1085,24 @@ bb.bc:                                            ; preds = %bb.bb
   %i.anw = fsub nsz float %.sroa.20.4, %i.alz
   %i.anx = fmul nsz float %i.ann, %i.anw
   %i.any = add nuw nsw i32 %i.akv, 10
-  %i.anz = uitofp nneg i32 %i.any to float        ; 2 uses
-  %23 = fcmp nsz olt float %i.anm, %i.anz
+  %i.anz = uitofp nneg i32 %i.any to float
   %i.aoa = zext i8 %i.aku to i64                  ; 9 uses
-  br i1 %23, label %.lr.ph41.i225, label %vector.ph400
+  br label %.lr.ph41.i216
 
-vector.ph400:                                     ; preds = %.lr.ph41.i225, %._crit_edge.i216
+.lr.ph41.i216:                                    ; preds = %.lr.ph41.i216, %._crit_edge.i216
+  %indvars.iv47.i217 = phi i64 [ %i.aoa, %._crit_edge.i216 ], [ %indvars.iv.next48.i218, %.lr.ph41.i216 ] ; 2 uses
+  %4 = phi float [ %i.anm, %._crit_edge.i216 ], [ %9, %.lr.ph41.i216 ]
+  %5 = fsub nsz float %4, %i.anm
+  %6 = call nsz float @llvm.fmuladd.f32(float %5, float %i.anx, float %i.alz)
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.akk, i64 %indvars.iv47.i217
+  call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %7, float noundef %6)
+  %indvars.iv.next48.i218 = add nuw nsw i64 %indvars.iv47.i217, 1 ; 2 uses
+  %8 = trunc nuw nsw i64 %indvars.iv.next48.i218 to i32
+  %9 = uitofp nneg i32 %8 to float                ; 2 uses
+  %10 = fcmp nsz olt float %9, %i.anz
+  br i1 %10, label %.lr.ph41.i216, label %vector.ph400, !llvm.loop !91
+
+vector.ph400:                                     ; preds = %.lr.ph41.i216
   %n.vec401 = and i64 %i.aoa, 248                 ; 3 uses
   %broadcast.splatinsert402 = insertelement <4 x float> poison, float %i.ang, i64 0
   %broadcast.splat403 = shufflevector <4 x float> %broadcast.splatinsert402, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -1127,24 +1120,11 @@ vector.body404:                                   ; preds = %vector.body404, %ve
   store <4 x float> %i.aoe, ptr %i.aoc, align 4, !tbaa !33
   %index.next408 = add nuw i64 %index405, 8       ; 2 uses
   %i.aof = icmp eq i64 %index.next408, %n.vec401
-  br i1 %i.aof, label %middle.block409, label %vector.body404, !llvm.loop !91
+  br i1 %i.aof, label %middle.block409, label %vector.body404, !llvm.loop !92
 
 middle.block409:                                  ; preds = %vector.body404
   %cmp.n410 = icmp eq i64 %n.vec401, %i.aoa
   br i1 %cmp.n410, label %acb_excitation.exit228, label %.lr.ph43.i220
-
-.lr.ph41.i225:                                    ; preds = %._crit_edge.i216, %.lr.ph41.i225
-  %indvars.iv47.i226 = phi i64 [ %indvars.iv.next48.i227, %.lr.ph41.i225 ], [ %i.aoa, %._crit_edge.i216 ] ; 2 uses
-  %24 = phi float [ %29, %.lr.ph41.i225 ], [ %i.anm, %._crit_edge.i216 ]
-  %25 = fsub nsz float %24, %i.anm
-  %26 = call nsz float @llvm.fmuladd.f32(float %25, float %i.anx, float %i.alz)
-  %27 = getelementptr inbounds nuw [4 x i8], ptr %i.akk, i64 %indvars.iv47.i226
-  call fastcc void @bl_intrp(ptr noundef nonnull readonly %i.j, ptr noundef nonnull %27, float noundef %26)
-  %indvars.iv.next48.i227 = add nuw nsw i64 %indvars.iv47.i226, 1 ; 2 uses
-  %28 = trunc nuw nsw i64 %indvars.iv.next48.i227 to i32
-  %29 = uitofp nneg i32 %28 to float              ; 2 uses
-  %30 = fcmp nsz olt float %29, %i.anz
-  br i1 %30, label %.lr.ph41.i225, label %vector.ph400, !llvm.loop !92
 
 .lr.ph43.i220:                                    ; preds = %middle.block409, %.lr.ph43.i220
   %indvars.iv50.i221 = phi i64 [ %indvars.iv.next51.i222, %.lr.ph43.i220 ], [ %n.vec401, %middle.block409 ] ; 2 uses
@@ -1548,7 +1528,7 @@ middle.block433:                                  ; preds = %vector.body430
 
 bb.cc:                                            ; preds = %bb.cb
   %i.bab = load float, ptr %i.axu, align 8, !tbaa !87 ; 2 uses
-  %i.bac = uitofp i8 %i.aye to float              ; 5 uses
+  %i.bac = uitofp i8 %i.aye to float              ; 4 uses
   %i.bad = fdiv nsz float 1.000000e+00, %i.bac    ; 2 uses
   %i.bae = fsub nsz float %i.azq, %i.azp
   %i.baf = fmul nsz float %i.bad, %i.bae
@@ -1689,38 +1669,13 @@ bb.cc:                                            ; preds = %bb.cb
   %i.beg = fsub nsz float %.sroa.15.2.i, %i.azq
   %i.beh = fmul nsz float %i.bad, %i.beg
   %i.bei = add nuw nsw i32 %i.ayf, 10
-  %i.bej = uitofp nneg i32 %i.bei to float        ; 2 uses
-  %31 = fcmp nsz olt float %i.bac, %i.bej
+  %i.bej = uitofp nneg i32 %i.bei to float
   %i.bek = zext i8 %i.aye to i64                  ; 13 uses
-  br i1 %31, label %.lr.ph41.i.i, label %vector.ph452
+  br label %.lr.ph41.i.i
 
-vector.ph452:                                     ; preds = %.lr.ph41.i.i, %._crit_edge.i.i
-  %n.vec453 = and i64 %i.bek, 248                 ; 3 uses
-  %broadcast.splatinsert454 = insertelement <4 x float> poison, float %i.bab, i64 0
-  %broadcast.splat455 = shufflevector <4 x float> %broadcast.splatinsert454, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
-  br label %vector.body456
-
-vector.body456:                                   ; preds = %vector.body456, %vector.ph452
-  %index457 = phi i64 [ 0, %vector.ph452 ], [ %index.next460, %vector.body456 ] ; 2 uses
-  %32 = getelementptr inbounds nuw [4 x i8], ptr %i.axv, i64 %index457 ; 3 uses
-  %33 = getelementptr inbounds nuw i8, ptr %32, i64 16 ; 2 uses
-  %wide.load458 = load <4 x float>, ptr %32, align 4, !tbaa !33
-  %wide.load459 = load <4 x float>, ptr %33, align 4, !tbaa !33
-  %34 = fmul nsz <4 x float> %broadcast.splat455, %wide.load458
-  %35 = fmul nsz <4 x float> %broadcast.splat455, %wide.load459
-  store <4 x float> %34, ptr %32, align 4, !tbaa !33
-  store <4 x float> %35, ptr %33, align 4, !tbaa !33
-  %index.next460 = add nuw i64 %index457, 8       ; 2 uses
-  %36 = icmp eq i64 %index.next460, %n.vec453
-  br i1 %36, label %middle.block461, label %vector.body456, !llvm.loop !107
-
-middle.block461:                                  ; preds = %vector.body456
-  %cmp.n462 = icmp eq i64 %n.vec453, %i.bek
-  br i1 %cmp.n462, label %acb_excitation.exit.i.preheader, label %.lr.ph43.i.i
-
-.lr.ph41.i.i:                                     ; preds = %._crit_edge.i.i, %.lr.ph41.i.i
-  %indvars.iv47.i.i = phi i64 [ %indvars.iv.next48.i.i, %.lr.ph41.i.i ], [ %i.bek, %._crit_edge.i.i ] ; 2 uses
-  %i.bel = phi float [ %i.bik, %.lr.ph41.i.i ], [ %i.bac, %._crit_edge.i.i ]
+.lr.ph41.i.i:                                     ; preds = %.lr.ph41.i.i, %._crit_edge.i.i
+  %indvars.iv47.i.i = phi i64 [ %i.bek, %._crit_edge.i.i ], [ %indvars.iv.next48.i.i, %.lr.ph41.i.i ] ; 2 uses
+  %i.bel = phi float [ %i.bac, %._crit_edge.i.i ], [ %i.bik, %.lr.ph41.i.i ]
   %i.bem = fsub nsz float %i.bel, %i.bac
   %i.ben = call nsz float @llvm.fmuladd.f32(float %i.bem, float %i.beh, float %i.azq) ; 2 uses
   %i.beo = getelementptr inbounds nuw [4 x i8], ptr %i.axv, i64 %indvars.iv47.i.i ; 19 uses
@@ -1848,10 +1803,34 @@ middle.block461:                                  ; preds = %vector.body456
   %i.bij = trunc nuw nsw i64 %indvars.iv.next48.i.i to i32
   %i.bik = uitofp nneg i32 %i.bij to float        ; 2 uses
   %i.bil = fcmp nsz olt float %i.bik, %i.bej
-  br i1 %i.bil, label %.lr.ph41.i.i, label %vector.ph452, !llvm.loop !92
+  br i1 %i.bil, label %.lr.ph41.i.i, label %vector.ph448, !llvm.loop !91
 
-.lr.ph43.i.i:                                     ; preds = %middle.block461, %.lr.ph43.i.i
-  %indvars.iv50.i.i = phi i64 [ %indvars.iv.next51.i.i, %.lr.ph43.i.i ], [ %n.vec453, %middle.block461 ] ; 2 uses
+vector.ph448:                                     ; preds = %.lr.ph41.i.i
+  %n.vec449 = and i64 %i.bek, 248                 ; 3 uses
+  %broadcast.splatinsert450 = insertelement <4 x float> poison, float %i.bab, i64 0
+  %broadcast.splat451 = shufflevector <4 x float> %broadcast.splatinsert450, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  br label %vector.body452
+
+vector.body452:                                   ; preds = %vector.body452, %vector.ph448
+  %index453 = phi i64 [ 0, %vector.ph448 ], [ %index.next456, %vector.body452 ] ; 2 uses
+  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.axv, i64 %index453 ; 3 uses
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 2 uses
+  %wide.load454 = load <4 x float>, ptr %11, align 4, !tbaa !33
+  %wide.load455 = load <4 x float>, ptr %12, align 4, !tbaa !33
+  %13 = fmul nsz <4 x float> %broadcast.splat451, %wide.load454
+  %14 = fmul nsz <4 x float> %broadcast.splat451, %wide.load455
+  store <4 x float> %13, ptr %11, align 4, !tbaa !33
+  store <4 x float> %14, ptr %12, align 4, !tbaa !33
+  %index.next456 = add nuw i64 %index453, 8       ; 2 uses
+  %15 = icmp eq i64 %index.next456, %n.vec449
+  br i1 %15, label %middle.block457, label %vector.body452, !llvm.loop !107
+
+middle.block457:                                  ; preds = %vector.body452
+  %cmp.n458 = icmp eq i64 %n.vec449, %i.bek
+  br i1 %cmp.n458, label %acb_excitation.exit.i.preheader, label %.lr.ph43.i.i
+
+.lr.ph43.i.i:                                     ; preds = %middle.block457, %.lr.ph43.i.i
+  %indvars.iv50.i.i = phi i64 [ %indvars.iv.next51.i.i, %.lr.ph43.i.i ], [ %n.vec449, %middle.block457 ] ; 2 uses
   %i.bim = getelementptr inbounds nuw [4 x i8], ptr %i.axv, i64 %indvars.iv50.i.i ; 2 uses
   %i.bin = load float, ptr %i.bim, align 4, !tbaa !33
   %i.bio = fmul nsz float %i.bab, %i.bin
@@ -1860,7 +1839,7 @@ middle.block461:                                  ; preds = %vector.body456
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next51.i.i, %i.bek
   br i1 %exitcond.not.i.i, label %acb_excitation.exit.i.preheader, label %.lr.ph43.i.i, !llvm.loop !108
 
-acb_excitation.exit.i.preheader:                  ; preds = %.lr.ph43.i.i, %middle.block461
+acb_excitation.exit.i.preheader:                  ; preds = %.lr.ph43.i.i, %middle.block457
   %xtraiter478 = and i64 %i.bek, 3                ; 3 uses
   %i.bip = add i8 %i.aye, -1
   %i.biq = icmp ult i8 %i.bip, 3
@@ -2263,8 +2242,8 @@ attributes #9 = { nounwind }
 !88 = distinct !{!88, !35}
 !89 = !{!40, !7, i64 48}
 !90 = distinct !{!90, !35, !36, !37}
-!91 = distinct !{!91, !35, !36, !37}
-!92 = distinct !{!92, !35}
+!91 = distinct !{!91, !35}
+!92 = distinct !{!92, !35, !36, !37}
 !93 = distinct !{!93, !35, !37, !36}
 !94 = !{!95}
 !95 = distinct !{!95, !96}
