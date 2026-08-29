@@ -1,0 +1,402 @@
+diff --git a/llvm/lib/Transforms/Scalar/SROA.cpp b/llvm/lib/Transforms/Scalar/SROA.cpp
+index e4770154e2998..ccdd5c3b280e8 100644
+--- a/llvm/lib/Transforms/Scalar/SROA.cpp
++++ b/llvm/lib/Transforms/Scalar/SROA.cpp
+@@ -1478,6 +1478,49 @@ LLVM_DUMP_METHOD void AllocaSlices::dump() const { print(dbgs()); }
+ 
+ #endif // !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
+ 
++static bool isSafePHIToSpeculate(PHINode &PN);
++
++/// Find the common load type used through a pointer PHI that SROA can
++/// speculate.
++static Type *findCommonTypeThroughPHI(PHINode &PN) {
++  if (!isSafePHIToSpeculate(PN))
++    return nullptr;
++  return cast<LoadInst>(PN.user_back())->getType();
++}
++
++/// Find a common load/store type used through a pointer select.
++///
++/// A select is an immediate user of each pointer operand, so looking only at
++/// the select itself loses the types of the memory operations that actually
++/// access the pointers. Look through a select when all of its users are loads
++/// or stores of one common type. This mirrors the uses that SROA can later
++/// rewrite when speculating the select.
++static Type *findCommonTypeThroughSelect(SelectInst &SI) {
++  Type *Ty = nullptr;
++
++  for (User *U : SI.users()) {
++    Value *Ptr = &SI;
++    if (auto *BC = dyn_cast<BitCastInst>(U); BC && BC->hasOneUse()) {
++      Ptr = BC;
++      U = *BC->user_begin();
++    }
++
++    Type *UserTy = nullptr;
++    if (auto *LI = dyn_cast<LoadInst>(U);
++        LI && LI->getPointerOperand() == Ptr) {
++      UserTy = LI->getType();
++    } else if (auto *Store = dyn_cast<StoreInst>(U);
++               Store && Store->getPointerOperand() == Ptr) {
++      UserTy = Store->getValueOperand()->getType();
++    }
++
++    if (!UserTy || (Ty && Ty != UserTy))
++      return nullptr;
++    Ty = UserTy;
++  }
++  return Ty;
++}
++
+ /// Walk the range of a partitioning looking for a common type to cover this
+ /// sequence of slices.
+ static std::pair<Type *, IntegerType *>
+@@ -1501,6 +1544,10 @@ findCommonType(AllocaSlices::const_iterator B, AllocaSlices::const_iterator E,
+       UserTy = LI->getType();
+     } else if (StoreInst *SI = dyn_cast<StoreInst>(U->getUser())) {
+       UserTy = SI->getValueOperand()->getType();
++    } else if (auto *SI = dyn_cast<SelectInst>(U->getUser())) {
++      UserTy = findCommonTypeThroughSelect(*SI);
++    } else if (auto *PN = dyn_cast<PHINode>(U->getUser())) {
++      UserTy = findCommonTypeThroughPHI(*PN);
+     }
+ 
+     if (IntegerType *UserITy = dyn_cast_or_null<IntegerType>(UserTy)) {
+@@ -2323,12 +2370,9 @@ static bool isIntegerWideningViableForSlice(const Slice &S,
+                                             uint64_t AllocBeginOffset,
+                                             Type *AllocaTy,
+                                             const DataLayout &DL,
+-                                            bool &WholeAllocaOp) {
++                                            bool &WholeAllocaOp,
++                                            bool AllowMemTransferWidening) {
+   uint64_t Size = DL.getTypeStoreSize(AllocaTy).getFixedValue();
+-
+-  uint64_t RelBegin = S.beginOffset() - AllocBeginOffset;
+-  uint64_t RelEnd = S.endOffset() - AllocBeginOffset;
+-
+   Use *U = S.getUse();
+ 
+   // Lifetime intrinsics operate over the whole alloca whose sizes are usually
+@@ -2340,6 +2384,21 @@ static bool isIntegerWideningViableForSlice(const Slice &S,
+       return true;
+   }
+ 
++  if (AllowMemTransferWidening) {
++    if (auto *MI = dyn_cast<MemIntrinsic>(U->getUser())) {
++      if (MI->isVolatile() || !isa<Constant>(MI->getLength()) ||
++          !S.isSplittable())
++        return false;
++      if (isa<MemTransferInst>(MI) && S.beginOffset() <= AllocBeginOffset &&
++          S.endOffset() >= AllocBeginOffset + Size)
++        WholeAllocaOp = true;
++      return true;
++    }
++  }
++
++  uint64_t RelBegin = S.beginOffset() - AllocBeginOffset;
++  uint64_t RelEnd = S.endOffset() - AllocBeginOffset;
++
+   // We can't reasonably handle cases where the load or store extends past
+   // the end of the alloca's type and into its padding.
+   if (RelEnd > Size)
+@@ -2415,7 +2474,8 @@ static bool isIntegerWideningViableForSlice(const Slice &S,
+ /// stores to a particular alloca into wider loads and stores and be able to
+ /// promote the resulting alloca.
+ static bool isIntegerWideningViable(Partition &P, Type *AllocaTy,
+-                                    const DataLayout &DL) {
++                                    const DataLayout &DL,
++                                    bool AllowMemTransferWidening = false) {
+   uint64_t SizeInBits = DL.getTypeSizeInBits(AllocaTy).getFixedValue();
+   // Don't create integer types larger than the maximum bitwidth.
+   if (SizeInBits > IntegerType::MAX_INT_BITS)
+@@ -2444,12 +2504,14 @@ static bool isIntegerWideningViable(Partition &P, Type *AllocaTy,
+ 
+   for (const Slice &S : P)
+     if (!isIntegerWideningViableForSlice(S, P.beginOffset(), AllocaTy, DL,
+-                                         WholeAllocaOp))
++                                         WholeAllocaOp,
++                                         AllowMemTransferWidening))
+       return false;
+ 
+   for (const Slice *S : P.splitSliceTails())
+     if (!isIntegerWideningViableForSlice(*S, P.beginOffset(), AllocaTy, DL,
+-                                         WholeAllocaOp))
++                                         WholeAllocaOp,
++                                         AllowMemTransferWidening))
+       return false;
+ 
+   return WholeAllocaOp;
+@@ -4804,6 +4866,56 @@ static Type *getTypePartition(const DataLayout &DL, Type *Ty, uint64_t Offset,
+   return SubTy;
+ }
+ 
++static bool containsNonIntegralPointer(Type *Ty, const DataLayout &DL) {
++  if (auto *PtrTy = dyn_cast<PointerType>(Ty))
++    return DL.isNonIntegralPointerType(PtrTy);
++  return llvm::any_of(Ty->subtypes(), [&](Type *SubTy) {
++    return containsNonIntegralPointer(SubTy, DL);
++  });
++}
++
++/// Return true if every non-ignorable use covers the whole partition and can
++/// be rewritten as a direct access to NewTy.
++static bool areAllUsesWholePartitionPromotable(Partition &P, Type *NewTy,
++                                                const DataLayout &DL) {
++  auto IsPromotable = [&](const Slice &S) {
++    if (S.isDead() || !S.getUse())
++      return true;
++
++    User *Usr = S.getUse()->getUser();
++    if (auto *II = dyn_cast<IntrinsicInst>(Usr);
++        II && (II->isLifetimeStartOrEnd() || II->isDroppable()))
++      return true;
++
++    if (S.beginOffset() > P.beginOffset() ||
++        S.endOffset() < P.endOffset())
++      return false;
++
++    bool IsExactPartition = S.beginOffset() == P.beginOffset() &&
++                            S.endOffset() == P.endOffset();
++    if (auto *LI = dyn_cast<LoadInst>(Usr)) {
++      if (LI->isVolatile())
++        return false;
++      return IsExactPartition ? canConvertValue(DL, NewTy, LI->getType())
++                              : S.isSplittable();
++    }
++    if (auto *SI = dyn_cast<StoreInst>(Usr)) {
++      if (SI->isVolatile())
++        return false;
++      return IsExactPartition
++                 ? canConvertValue(DL, SI->getValueOperand()->getType(), NewTy)
++                 : S.isSplittable();
++    }
++    if (auto *MI = dyn_cast<MemIntrinsic>(Usr))
++      return !MI->isVolatile() && S.isSplittable();
++    return false;
++  };
++
++  return llvm::all_of(P, IsPromotable) &&
++         llvm::all_of(P.splitSliceTails(),
++                      [&](const Slice *S) { return IsPromotable(*S); });
++}
++
+ /// Pre-split loads and stores to simplify rewriting.
+ ///
+ /// We want to break up the splittable load+store pairs as much as
+@@ -5458,13 +5570,22 @@ selectPartitionType(Partition &P, const DataLayout &DL, AllocaInst &AI,
+   // type?
+   if (Type *TypePartitionTy = getTypePartition(DL, AI.getAllocatedType(),
+                                                P.beginOffset(), P.size())) {
+-    // If the partition is an integer array that can be spanned by a legal
+-    // integer type, prefer to represent it as a legal integer type because
+-    // it's more likely to be promotable.
++    // Canonicalize arrays to a legal integer only when this is guaranteed to
++    // produce a promotable partition.
+     if (TypePartitionTy->isArrayTy() &&
+-        TypePartitionTy->getArrayElementType()->isIntegerTy() &&
+-        DL.isLegalInteger(P.size() * 8))
+-      TypePartitionTy = Type::getIntNTy(C, P.size() * 8);
++        !containsNonIntegralPointer(TypePartitionTy, DL) &&
++        DL.isLegalInteger(P.size() * 8)) {
++      Type *IntTy = Type::getIntNTy(C, P.size() * 8);
++      if (isIntegerWideningViable(P, IntTy, DL,
++                                  /*AllowMemTransferWidening=*/true)) {
++        LogSelection("array-int-widen", IntTy, nullptr, true);
++        return {IntTy, true, nullptr};
++      }
++      if (areAllUsesWholePartitionPromotable(P, IntTy, DL)) {
++        LogSelection("array-int-whole", IntTy, nullptr, false);
++        return {IntTy, false, nullptr};
++      }
++    }
+     // There was no common type used, so we prefer integer widening promotion.
+     if (isIntegerWideningViable(P, TypePartitionTy, DL)) {
+       LogSelection("type-partition-int-widen", TypePartitionTy, nullptr, true);
+diff --git a/llvm/test/Transforms/SROA/integer-widening-memtransfer.ll b/llvm/test/Transforms/SROA/integer-widening-memtransfer.ll
+new file mode 100644
+index 0000000000000..900644d2a4089
+--- /dev/null
++++ b/llvm/test/Transforms/SROA/integer-widening-memtransfer.ll
+@@ -0,0 +1,38 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 5
++; RUN: opt < %s -passes=sroa -S | FileCheck %s
++
++target datalayout = "e-p:64:64-i64:64-n8:16:32:64"
++
++declare void @llvm.memcpy.p0.p0.i64(ptr, ptr, i64, i1 immarg)
++
++define void @covering_memcpy_with_partial_memcpys(ptr %source, ptr %dest) {
++; CHECK-LABEL: define void @covering_memcpy_with_partial_memcpys(
++; CHECK-SAME: ptr [[SOURCE:%.*]], ptr [[DEST:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = load i32, ptr [[SOURCE]], align 1
++; CHECK-NEXT:    [[TMP1:%.*]] = zext i32 [[TMP0]] to i64
++; CHECK-NEXT:    [[TMP2:%.*]] = and i64 undef, -4294967296
++; CHECK-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], [[TMP1]]
++; CHECK-NEXT:    [[TMP4:%.*]] = load i32, ptr [[SOURCE]], align 1
++; CHECK-NEXT:    [[TMP5:%.*]] = zext i32 [[TMP4]] to i64
++; CHECK-NEXT:    [[TMP6:%.*]] = shl i64 [[TMP5]], 32
++; CHECK-NEXT:    [[TMP7:%.*]] = and i64 [[TMP3]], 4294967295
++; CHECK-NEXT:    [[TMP8:%.*]] = or i64 [[TMP7]], [[TMP6]]
++; CHECK-NEXT:    store i64 [[TMP8]], ptr [[DEST]], align 1
++; CHECK-NEXT:    [[TMP9:%.*]] = getelementptr inbounds i8, ptr [[DEST]], i64 8
++; CHECK-NEXT:    store i8 0, ptr [[TMP9]], align 1
++; CHECK-NEXT:    ret void
++;
++entry:
++  %temporary = alloca [9 x i8], align 1
++  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %temporary,
++                                  ptr align 1 %source, i64 4, i1 false)
++  %temporary.4 = getelementptr inbounds i8, ptr %temporary, i64 4
++  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %temporary.4,
++                                  ptr align 1 %source, i64 4, i1 false)
++  %temporary.8 = getelementptr inbounds i8, ptr %temporary, i64 8
++  store i8 0, ptr %temporary.8, align 1
++  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %dest,
++                                  ptr align 1 %temporary, i64 9, i1 false)
++  ret void
++}
+diff --git a/llvm/test/Transforms/SROA/phi-and-select.ll b/llvm/test/Transforms/SROA/phi-and-select.ll
+index 5d5a61082688f..6d079394ab084 100644
+--- a/llvm/test/Transforms/SROA/phi-and-select.ll
++++ b/llvm/test/Transforms/SROA/phi-and-select.ll
+@@ -350,7 +350,7 @@ define i32 @test9_asan(i32 %b, ptr %ptr) sanitize_address {
+ ;
+ ; CHECK-PRESERVE-CFG-LABEL: @test9_asan(
+ ; CHECK-PRESERVE-CFG-NEXT:  entry:
+-; CHECK-PRESERVE-CFG-NEXT:    [[F:%.*]] = alloca float, align 4
++; CHECK-PRESERVE-CFG-NEXT:    [[F:%.*]] = alloca i32, align 4
+ ; CHECK-PRESERVE-CFG-NEXT:    store i32 0, ptr [[PTR:%.*]], align 4
+ ; CHECK-PRESERVE-CFG-NEXT:    [[TEST:%.*]] = icmp ne i32 [[B:%.*]], 0
+ ; CHECK-PRESERVE-CFG-NEXT:    [[SELECT:%.*]] = select i1 [[TEST]], ptr [[F]], ptr [[PTR]]
+@@ -638,14 +638,14 @@ define float @PR16687(i64 %x, i1 %flag) {
+ ; CHECK-LABEL: @PR16687(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[A_SROA_0_0_EXTRACT_TRUNC:%.*]] = trunc i64 [[X:%.*]] to i32
++; CHECK-NEXT:    [[TMP0:%.*]] = bitcast i32 [[A_SROA_0_0_EXTRACT_TRUNC]] to float
+ ; CHECK-NEXT:    [[A_SROA_2_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[X]], 32
+ ; CHECK-NEXT:    [[A_SROA_2_0_EXTRACT_TRUNC:%.*]] = trunc i64 [[A_SROA_2_0_EXTRACT_SHIFT]] to i32
++; CHECK-NEXT:    [[TMP1:%.*]] = bitcast i32 [[A_SROA_2_0_EXTRACT_TRUNC]] to float
+ ; CHECK-NEXT:    br i1 [[FLAG:%.*]], label [[THEN:%.*]], label [[ELSE:%.*]]
+ ; CHECK:       then:
+-; CHECK-NEXT:    [[TMP0:%.*]] = bitcast i32 [[A_SROA_0_0_EXTRACT_TRUNC]] to float
+ ; CHECK-NEXT:    br label [[END:%.*]]
+ ; CHECK:       else:
+-; CHECK-NEXT:    [[TMP1:%.*]] = bitcast i32 [[A_SROA_2_0_EXTRACT_TRUNC]] to float
+ ; CHECK-NEXT:    br label [[END]]
+ ; CHECK:       end:
+ ; CHECK-NEXT:    [[A_PHI_F_SROA_SPECULATED:%.*]] = phi float [ [[TMP0]], [[THEN]] ], [ [[TMP1]], [[ELSE]] ]
+diff --git a/llvm/test/Transforms/SROA/phi-common-type.ll b/llvm/test/Transforms/SROA/phi-common-type.ll
+new file mode 100644
+index 0000000000000..02d1e5aa1d7c9
+--- /dev/null
++++ b/llvm/test/Transforms/SROA/phi-common-type.ll
+@@ -0,0 +1,32 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 5
++; RUN: opt < %s -passes='sroa<modify-cfg>' -S | FileCheck %s
++
++declare void @llvm.memcpy.p0.p0.i64(ptr, ptr, i64, i1 immarg)
++
++define i64 @load_same_type(i1 %cond, ptr %source, ptr %other) {
++; CHECK-LABEL: define i64 @load_same_type(
++; CHECK-SAME: i1 [[COND:%.*]], ptr [[SOURCE:%.*]], ptr [[OTHER:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[TEMPORARY_SROA_0_0_COPYLOAD:%.*]] = load i64, ptr [[SOURCE]], align 8
++; CHECK-NEXT:    br i1 [[COND]], label %[[THEN:.*]], label %[[CONT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[VALUE_THEN_VAL:%.*]] = load i64, ptr [[OTHER]], align 8
++; CHECK-NEXT:    br label %[[CONT]]
++; CHECK:       [[CONT]]:
++; CHECK-NEXT:    [[VALUE_SROA_SPECULATED:%.*]] = phi i64 [ [[VALUE_THEN_VAL]], %[[THEN]] ], [ [[TEMPORARY_SROA_0_0_COPYLOAD]], %[[ENTRY]] ]
++; CHECK-NEXT:    ret i64 [[VALUE_SROA_SPECULATED]]
++;
++entry:
++  %temporary = alloca [2 x i32], align 8
++  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %temporary, ptr align 8 %source,
++                                  i64 8, i1 false)
++  br i1 %cond, label %then, label %cont
++
++then:
++  br label %cont
++
++cont:
++  %address = phi ptr [ %other, %then ], [ %temporary, %entry ]
++  %value = load i64, ptr %address, align 8
++  ret i64 %value
++}
+diff --git a/llvm/test/Transforms/SROA/select-common-type.ll b/llvm/test/Transforms/SROA/select-common-type.ll
+new file mode 100644
+index 0000000000000..8be1f1695fa27
+--- /dev/null
++++ b/llvm/test/Transforms/SROA/select-common-type.ll
+@@ -0,0 +1,69 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 5
++; RUN: opt < %s -passes='sroa<modify-cfg>' -S | FileCheck %s
++
++%pair = type { i32, i32 }
++
++define i64 @load_same_type(i1 %cond, ptr %other) {
++; CHECK-LABEL: define i64 @load_same_type(
++; CHECK-SAME: i1 [[COND:%.*]], ptr [[OTHER:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br i1 [[COND]], label %[[ENTRY_THEN:.*]], label %[[ENTRY_CONT:.*]]
++; CHECK:       [[ENTRY_THEN]]:
++; CHECK-NEXT:    [[VALUE_THEN_VAL:%.*]] = load i64, ptr [[OTHER]], align 8
++; CHECK-NEXT:    br label %[[ENTRY_CONT]]
++; CHECK:       [[ENTRY_CONT]]:
++; CHECK-NEXT:    [[VALUE:%.*]] = phi i64 [ [[VALUE_THEN_VAL]], %[[ENTRY_THEN]] ], [ 0, %[[ENTRY]] ]
++; CHECK-NEXT:    ret i64 [[VALUE]]
++;
++entry:
++  %zero = alloca %pair, align 8
++  store i64 0, ptr %zero, align 8
++  %addr = select i1 %cond, ptr %other, ptr %zero
++  %value = load i64, ptr %addr, align 8
++  ret i64 %value
++}
++
++define i64 @store_same_type(i64 %initial, i64 %value, i1 %cond, ptr %other) {
++; CHECK-LABEL: define i64 @store_same_type(
++; CHECK-SAME: i64 [[INITIAL:%.*]], i64 [[VALUE:%.*]], i1 [[COND:%.*]], ptr [[OTHER:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br i1 [[COND]], label %[[ENTRY_THEN:.*]], label %[[ENTRY_ELSE:.*]]
++; CHECK:       [[ENTRY_THEN]]:
++; CHECK-NEXT:    br label %[[ENTRY_CONT:.*]]
++; CHECK:       [[ENTRY_ELSE]]:
++; CHECK-NEXT:    store i64 [[VALUE]], ptr [[OTHER]], align 8
++; CHECK-NEXT:    br label %[[ENTRY_CONT]]
++; CHECK:       [[ENTRY_CONT]]:
++; CHECK-NEXT:    [[TEMPORARY_SROA_0_0:%.*]] = phi i64 [ [[VALUE]], %[[ENTRY_THEN]] ], [ [[INITIAL]], %[[ENTRY_ELSE]] ]
++; CHECK-NEXT:    ret i64 [[TEMPORARY_SROA_0_0]]
++;
++entry:
++  %temporary = alloca %pair, align 8
++  store i64 %initial, ptr %temporary, align 8
++  %addr = select i1 %cond, ptr %temporary, ptr %other
++  store i64 %value, ptr %addr, align 8
++  %result = load i64, ptr %temporary, align 8
++  ret i64 %result
++}
++
++define i64 @mixed_types(i1 %cond, ptr %other) {
++; CHECK-LABEL: define i64 @mixed_types(
++; CHECK-SAME: i1 [[COND:%.*]], ptr [[OTHER:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[TEMPORARY:%.*]] = alloca [[PAIR:%.*]], align 8
++; CHECK-NEXT:    store i64 0, ptr [[TEMPORARY]], align 8
++; CHECK-NEXT:    [[ADDR:%.*]] = select i1 [[COND]], ptr [[TEMPORARY]], ptr [[OTHER]]
++; CHECK-NEXT:    [[LOW:%.*]] = load i32, ptr [[ADDR]], align 4
++; CHECK-NEXT:    store i32 [[LOW]], ptr [[ADDR]], align 4
++; CHECK-NEXT:    [[WHOLE:%.*]] = load i64, ptr [[ADDR]], align 8
++; CHECK-NEXT:    ret i64 [[WHOLE]]
++;
++entry:
++  %temporary = alloca %pair, align 8
++  store i64 0, ptr %temporary, align 8
++  %addr = select i1 %cond, ptr %temporary, ptr %other
++  %low = load i32, ptr %addr, align 4
++  store i32 %low, ptr %addr, align 4
++  %whole = load i64, ptr %addr, align 8
++  ret i64 %whole
++}
