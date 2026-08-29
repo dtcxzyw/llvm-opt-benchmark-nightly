@@ -203,10 +203,10 @@ bb.w:                                             ; preds = %bb.n, %bb.p
 .preheader104:                                    ; preds = %.preheader104.lr.ph, %.loopexit185
   %indvars.iv = phi i64 [ 0, %.preheader104.lr.ph ], [ %indvars.iv.next, %.loopexit185 ] ; 7 uses
   %.0109 = phi i32 [ 1, %.preheader104.lr.ph ], [ %spec.select.lcssa, %.loopexit185 ] ; 2 uses
-  %1 = add nuw i64 %indvars.iv, 1
-  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %indvars.iv
-  %3 = load ptr, ptr %2, align 8, !tbaa !189      ; 2 uses
-  %i.an = tail call i64 @llvm.umax.i64(i64 %1, i64 %wide.trip.count)
+  %1 = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %indvars.iv
+  %2 = load ptr, ptr %1, align 8, !tbaa !189      ; 2 uses
+  %3 = add nuw i64 %indvars.iv, 1
+  %i.an = tail call i64 @llvm.umax.i64(i64 %3, i64 %wide.trip.count)
   %i.ao = sub i64 %i.an, %indvars.iv              ; 3 uses
   %min.iters.check = icmp ult i64 %i.ao, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
@@ -214,7 +214,7 @@ bb.w:                                             ; preds = %bb.n, %bb.p
 vector.ph:                                        ; preds = %.preheader104
   %n.vec = and i64 %i.ao, -4                      ; 3 uses
   %i.ap = add i64 %indvars.iv, %n.vec
-  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv
+  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -252,7 +252,7 @@ scalar.ph.preheader:                              ; preds = %.preheader104, %mid
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv129 = phi i64 [ %indvars.iv.next130, %scalar.ph ], [ %indvars.iv129.ph, %scalar.ph.preheader ] ; 2 uses
   %.1107 = phi i32 [ %spec.select, %scalar.ph ], [ %.1107.ph, %scalar.ph.preheader ]
-  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv129
+  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv129
   %i.bc = load double, ptr %i.bb, align 8, !tbaa !108
   %i.bd = tail call double @llvm.fabs.f64(double %i.bc)
   %i.be = fcmp ogt double %i.bd, f0x3D19000000000000

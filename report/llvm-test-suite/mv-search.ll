@@ -205,7 +205,6 @@ middle.block:                                     ; preds = %vector.body
   %indvars.iv159 = phi i32 [ %indvars.iv.next160, %._crit_edge140 ], [ 2, %._crit_edge131 ] ; 3 uses
   %.0143 = phi i32 [ %i.hc, %._crit_edge140 ], [ 1, %._crit_edge131 ] ; 7 uses
   %.098142 = phi i64 [ %indvars.iv.next157, %._crit_edge140 ], [ 1, %._crit_edge131 ] ; 6 uses
-  %0 = shl nuw nsw i64 %indvar174, 1
   %i.dv = shl nuw nsw i64 %indvar174, 1
   %i.dw = add nuw i64 %i.dv, 2
   %i.dx = shl nuw nsw i64 %indvar174, 3
@@ -216,6 +215,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ec = shl i16 %i.eb, 1                        ; 2 uses
   %i.ed = trunc i32 %.0143 to i16                 ; 3 uses
   %i.ee = shl i16 %i.ed, 1                        ; 2 uses
+  %0 = shl nuw nsw i64 %indvar174, 1
   %min.iters.check267 = icmp ult i64 %indvar174, 6
   br i1 %min.iters.check267, label %scalar.ph266.preheader, label %vector.memcheck230
 
