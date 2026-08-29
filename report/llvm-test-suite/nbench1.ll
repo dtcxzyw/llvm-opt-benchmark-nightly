@@ -205,7 +205,7 @@ StrHeapSort.exit.loopexit:                        ; preds = %stradjust.exit49.i
   br i1 %exitcond43.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !56
 
 ._crit_edge:                                      ; preds = %StrHeapSort.exit.loopexit, %.lr.ph, %LoadStringArray.exit
-  %i.ht = phi i64 [ %i.di, %LoadStringArray.exit ], [ %i.dj, %.lr.ph ], [ %i.dj, %StrHeapSort.exit.loopexit ]
+  %i.ht = phi i64 [ %i.dj, %.lr.ph ], [ %i.di, %LoadStringArray.exit ], [ %i.dj, %StrHeapSort.exit.loopexit ]
   %i.hu = call i64 @StopStopwatch(i64 noundef %i.ht) #11
   call void @FreeMemory(ptr noundef %i.ba, ptr noundef nonnull %i.c) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11

@@ -205,7 +205,7 @@ bb.a:
   %.not = icmp eq ptr %1, null
   %i.e = ptrtoaddr ptr %1 to i64
   %i.f = ptrtoaddr ptr %0 to i64
-  %i.g = sub i64 %i.e, %i.f                       ; 4 uses
+  %i.g = sub i64 %i.e, %i.f                       ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   br i1 %.not, label %.split59.us, label %.split59
@@ -319,10 +319,10 @@ bb.f:                                             ; preds = %.lr.ph
   ]
 
 bb.g:                                             ; preds = %.lr.ph.i, %.lr.ph.i
-  %i.aj = add i64 %.01213.i, 1                    ; 2 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 %i.aj ; 2 uses
-  %5 = icmp ult ptr %i.ak, %1
-  br i1 %5, label %.lr.ph.i, label %.critedge.i, !llvm.loop !364
+  %i.aj = add i64 %.01213.i, 1                    ; 3 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 %i.aj
+  %exitcond.not = icmp eq i64 %i.aj, %i.g
+  br i1 %exitcond.not, label %.critedge.i, label %.lr.ph.i, !llvm.loop !364
 
 .critedge.i:                                      ; preds = %bb.g, %.lr.ph.i, %bb.f
   %.012.lcssa.i = phi i64 [ %.03269, %bb.f ], [ %i.g, %bb.g ], [ %.01213.i, %.lr.ph.i ] ; 2 uses
@@ -469,7 +469,7 @@ bb.a:
   %.not = icmp eq ptr %1, null
   %i.e = ptrtoaddr ptr %1 to i64
   %i.f = ptrtoaddr ptr %0 to i64
-  %i.g = sub i64 %i.e, %i.f                       ; 4 uses
+  %i.g = sub i64 %i.e, %i.f                       ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   br i1 %.not, label %.split81.us, label %.split81
@@ -583,10 +583,10 @@ bb.f:                                             ; preds = %.lr.ph
   ]
 
 bb.g:                                             ; preds = %.lr.ph.i, %.lr.ph.i
-  %i.ak = add i64 %.01213.i, 1                    ; 2 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %0, i64 %i.ak ; 2 uses
-  %5 = icmp ult ptr %i.al, %1
-  br i1 %5, label %.lr.ph.i, label %.critedge.i, !llvm.loop !364
+  %i.ak = add i64 %.01213.i, 1                    ; 3 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %0, i64 %i.ak
+  %exitcond.not = icmp eq i64 %i.ak, %i.g
+  br i1 %exitcond.not, label %.critedge.i, label %.lr.ph.i, !llvm.loop !364
 
 .critedge.i:                                      ; preds = %bb.g, %.lr.ph.i, %bb.f
   %.012.lcssa.i = phi i64 [ %.04593, %bb.f ], [ %i.g, %bb.g ], [ %.01213.i, %.lr.ph.i ] ; 2 uses

@@ -202,9 +202,9 @@ bb.ay:                                            ; preds = %._crit_edge505
   br i1 %i.lq, label %.lr.ph514, label %._crit_edge515
 
 bb.az:                                            ; preds = %.lr.ph514
-  %i.lr = add nsw i64 %.8512, 1                   ; 2 uses
-  %5 = icmp slt i64 %i.lr, %.1182
-  br i1 %5, label %.lr.ph514, label %._crit_edge515, !llvm.loop !60
+  %i.lr = add i64 %.8512, 1                       ; 2 uses
+  %exitcond.not = icmp eq i64 %i.lr, %.1182
+  br i1 %exitcond.not, label %._crit_edge515, label %.lr.ph514, !llvm.loop !60
 
 .lr.ph514:                                        ; preds = %bb.ay, %bb.az
   %.8512 = phi i64 [ %i.lr, %bb.az ], [ %i.lp, %bb.ay ] ; 2 uses

@@ -204,7 +204,7 @@ clause_GetLiteralAtom.exit62:                     ; preds = %bb.d, %bb.e
 
 .lr.ph84:                                         ; preds = %clause_GetLiteralAtom.exit62
   %i.x = getelementptr i8, ptr %.0.i.i59, i64 16
-  %sext = sext i32 %i.b to i64
+  %wide.trip.count = zext i32 %i.b to i64
   %.pre87 = load i32, ptr @fol_NOT, align 4
   br label %bb.f
 
@@ -253,8 +253,8 @@ bb.h:                                             ; preds = %clause_GetLiteralAt
 bb.i:                                             ; preds = %clause_GetLiteralAtom.exit69, %bb.h
   %i.al = phi i32 [ %.pre, %bb.h ], [ %i.y, %clause_GetLiteralAtom.exit69 ]
   %.140 = phi ptr [ %i.aj, %bb.h ], [ %.03982, %clause_GetLiteralAtom.exit69 ] ; 2 uses
-  %6 = icmp slt i64 %indvars.iv.next, %sext
-  br i1 %6, label %bb.f, label %._crit_edge, !llvm.loop !28
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !28
 
 ._crit_edge:                                      ; preds = %bb.i, %clause_GetLiteralAtom.exit62
   %.039.lcssa = phi ptr [ %i.v, %clause_GetLiteralAtom.exit62 ], [ %.140, %bb.i ] ; 5 uses
@@ -657,7 +657,7 @@ define dso_local ptr @inf_ForwardEmptySort(ptr noundef %0, ptr noundef %1, ptr n
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 64         ; 2 uses
   %.val75 = load i32, ptr %i.a, align 8           ; 3 uses
-  %i.b = add nsw i32 %.val75, -1                  ; 2 uses
+  %i.b = add i32 %.val75, -1                      ; 2 uses
   %.not109 = icmp sgt i32 %.val75, 0
   br i1 %.not109, label %.lr.ph111, label %list_Delete.exit106
 
@@ -791,7 +791,7 @@ clause_GetLiteralAtom.exit93:                     ; preds = %.critedge.thread, %
   br i1 %.not59.not115, label %.lr.ph118.preheader, label %._crit_edge
 
 .lr.ph118.preheader:                              ; preds = %clause_GetLiteralAtom.exit93
-  %sext = sext i32 %i.b to i64
+  %wide.trip.count = zext i32 %i.b to i64
   %.pre126 = load i32, ptr @fol_NOT, align 4
   br label %.lr.ph118
 
@@ -838,8 +838,8 @@ bb.h:                                             ; preds = %clause_GetLiteralAt
 bb.i:                                             ; preds = %bb.h, %clause_GetLiteralAtom.exit100
   %i.bc = phi i32 [ %.pre, %bb.h ], [ %i.ar, %clause_GetLiteralAtom.exit100 ]
   %.154 = phi ptr [ %i.ba, %bb.h ], [ %.053116, %clause_GetLiteralAtom.exit100 ] ; 2 uses
-  %6 = icmp slt i64 %indvars.iv.next124, %sext
-  br i1 %6, label %.lr.ph118, label %._crit_edge, !llvm.loop !36
+  %exitcond.not = icmp eq i64 %indvars.iv.next124, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph118, !llvm.loop !36
 
 ._crit_edge:                                      ; preds = %bb.i, %clause_GetLiteralAtom.exit93
   %.053.lcssa = phi ptr [ %i.ap, %clause_GetLiteralAtom.exit93 ], [ %.154, %bb.i ] ; 5 uses

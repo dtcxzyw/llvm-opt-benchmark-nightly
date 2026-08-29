@@ -204,16 +204,16 @@ _ZN4Luau12GenericErrorD2Ev.exit320:               ; preds = %_ZN4Luau7VariantIJN
   br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !1236
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph518
-  %.0115516.unr.a = phi i64 [ %.5127, %.lr.ph518 ], [ %i.kj, %.prol.preheader ]
-  %.6128515.unr.a = phi i64 [ %.5127, %.lr.ph518 ], [ %spec.select.prol, %.prol.preheader ]
-  %spec.select.lcssa.unr = phi i64 [ poison, %.lr.ph518 ], [ %spec.select.prol, %.prol.preheader ]
+  %.0115516.unr.a = phi i64 [ poison, %.lr.ph518 ], [ %spec.select.prol, %.prol.preheader ]
+  %.6128515.unr.a = phi i64 [ %.5127, %.lr.ph518 ], [ %i.kj, %.prol.preheader ]
+  %spec.select.lcssa.unr = phi i64 [ %.5127, %.lr.ph518 ], [ %spec.select.prol, %.prol.preheader ]
   %i.kk = sub i64 %spec.select245, %i.dk
   %i.kl = add i64 %i.kk, %.0122.lcssa638
   %i.km = icmp ugt i64 %i.kl, -4
   br i1 %i.km, label %.preheader, label %.lr.ph518.new
 
 .preheader:                                       ; preds = %.prol.loopexit, %.lr.ph518.new, %._crit_edge512.thread
-  %.6128.lcssa = phi i64 [ %.5127, %._crit_edge512.thread ], [ %spec.select.lcssa.unr, %.prol.loopexit ], [ %spec.select.3, %.lr.ph518.new ] ; 2 uses
+  %.6128.lcssa = phi i64 [ %.5127, %._crit_edge512.thread ], [ %.0115516.unr.a, %.prol.loopexit ], [ %spec.select.3, %.lr.ph518.new ] ; 2 uses
   %i.kn = icmp ult i64 %.5, %i.ds
   br i1 %i.kn, label %.lr.ph522, label %._crit_edge523
 
@@ -247,8 +247,8 @@ _ZN4Luau12GenericErrorD2Ev.exit320:               ; preds = %_ZN4Luau7VariantIJN
   br i1 %i.kw, label %._crit_edge523, label %.lr.ph522.new
 
 .lr.ph518.new:                                    ; preds = %.prol.loopexit, %.lr.ph518.new
-  %.0115516 = phi i64 [ %i.ln, %.lr.ph518.new ], [ %.0115516.unr.a, %.prol.loopexit ] ; 5 uses
-  %.6128515 = phi i64 [ %spec.select.3, %.lr.ph518.new ], [ %.6128515.unr.a, %.prol.loopexit ]
+  %.0115516 = phi i64 [ %i.ln, %.lr.ph518.new ], [ %.6128515.unr.a, %.prol.loopexit ] ; 5 uses
+  %.6128515 = phi i64 [ %spec.select.3, %.lr.ph518.new ], [ %spec.select.lcssa.unr, %.prol.loopexit ]
   %i.kx = getelementptr inbounds nuw [24 x i8], ptr %i.kc, i64 %.0115516
   %i.ky = getelementptr inbounds nuw i8, ptr %i.kx, i64 16
   %i.kz = load i8, ptr %i.ky, align 8, !tbaa !350, !range !99, !noundef !100
@@ -270,8 +270,8 @@ _ZN4Luau12GenericErrorD2Ev.exit320:               ; preds = %_ZN4Luau7VariantIJN
   %i.lm = zext nneg i8 %i.ll to i64
   %spec.select.3 = add i64 %spec.select.2, %i.lm  ; 2 uses
   %i.ln = add nuw i64 %.0115516, 4                ; 2 uses
-  %18 = icmp ult i64 %i.ln, %i.dk
-  br i1 %18, label %.lr.ph518.new, label %.preheader, !llvm.loop !1239
+  %exitcond.not.3 = icmp eq i64 %i.ln, %i.dk
+  br i1 %exitcond.not.3, label %.preheader, label %.lr.ph518.new, !llvm.loop !1239
 
 ._crit_edge523:                                   ; preds = %.prol.loopexit651, %.lr.ph522.new, %.preheader
   %.6.lcssa = phi i64 [ %.5, %.preheader ], [ %spec.select242.lcssa.unr, %.prol.loopexit651 ], [ %spec.select242.3, %.lr.ph522.new ] ; 3 uses

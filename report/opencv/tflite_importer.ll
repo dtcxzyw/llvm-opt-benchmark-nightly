@@ -205,10 +205,10 @@ declare i32 @llvm.smin.i32(i32, i32) #12
 declare void @llvm.experimental.noalias.scope.decl(metadata) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #12
+declare i64 @llvm.umax.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #12
+declare i64 @llvm.umin.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #12
