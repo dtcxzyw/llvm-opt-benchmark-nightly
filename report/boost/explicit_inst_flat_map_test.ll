@@ -204,7 +204,7 @@ bb.a:
   %i.d = sub i64 %i.b, %i.c                       ; 3 uses
   %i.e = ashr exact i64 %i.d, 1                   ; 3 uses
   %i.f = icmp ult i64 %i.e, 17
-  br i1 %i.f, label %bb.b, label %3
+  br i1 %i.f, label %bb.b, label %.lr.ph.split.i.preheader
 
 bb.b:                                             ; preds = %bb.a
   %.not.i = icmp eq ptr %0, %1
@@ -297,17 +297,13 @@ vec.epilog.middle.block108:                       ; preds = %vec.epilog.vector.b
   %.not22.i = icmp eq ptr %i.ab, %1
   br i1 %.not22.i, label %_ZN5boost7movelib33insertion_sort_uninitialized_copyINS_9container3dtl23flat_tree_value_compareISt4lessI5emptyESt4pairIS6_S6_ENS3_9select1stIS6_EEEEPS9_SD_EEvT0_SE_T1_T_.exit, label %.lr.ph.i, !llvm.loop !3196
 
-3:                                                ; preds = %bb.a
-  %.idx33 = and i64 %i.e, -2                      ; 6 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 %.idx33 ; 9 uses
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %.idx33 ; 7 uses
-  tail call void @_ZN5boost7movelib29merge_sort_uninitialized_copyIPSt4pairI5emptyS3_ES5_NS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES4_NS7_9select1stIS3_EEEEEEvT_SE_T0_T1_(ptr noundef %4, ptr noundef %1, ptr noundef %5)
-  tail call void @_ZN5boost7movelib15merge_sort_copyIPSt4pairI5emptyS3_ES5_NS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES4_NS7_9select1stIS3_EEEEEEvT_SE_T0_T1_(ptr noundef %0, ptr noundef %4, ptr noundef %4)
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 %i.d
-  %.not = icmp samesign eq i64 %.idx33, 0
-  br i1 %.not, label %_ZN5boost7movelib33insertion_sort_uninitialized_copyINS_9container3dtl23flat_tree_value_compareISt4lessI5emptyESt4pairIS6_S6_ENS3_9select1stIS6_EEEEPS9_SD_EEvT0_SE_T1_T_.exit, label %.lr.ph.split.i.preheader
-
-.lr.ph.split.i.preheader:                         ; preds = %3
+.lr.ph.split.i.preheader:                         ; preds = %bb.a
+  %.idx33 = and i64 %i.e, -2                      ; 5 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 %.idx33 ; 9 uses
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 %.idx33 ; 7 uses
+  tail call void @_ZN5boost7movelib29merge_sort_uninitialized_copyIPSt4pairI5emptyS3_ES5_NS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES4_NS7_9select1stIS3_EEEEEEvT_SE_T0_T1_(ptr noundef %3, ptr noundef %1, ptr noundef %4)
+  tail call void @_ZN5boost7movelib15merge_sort_copyIPSt4pairI5emptyS3_ES5_NS_9container3dtl23flat_tree_value_compareISt4lessIS3_ES4_NS7_9select1stIS3_EEEEEEvT_SE_T0_T1_(ptr noundef %0, ptr noundef %3, ptr noundef %3)
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %i.d
   %i.ac = add i64 %.idx33, %i.c
   %i.ad = sub i64 %i.b, %i.ac
   %i.ae = lshr i64 %i.ad, 1
@@ -330,14 +326,14 @@ vector.ph:                                        ; preds = %.lr.ph.split.i.preh
   %i.ao = select i1 %i.an, i64 16, i64 %i.am
   %n.vec = sub i64 %i.al, %i.ao                   ; 2 uses
   %i.ap = shl i64 %n.vec, 1                       ; 2 uses
-  %i.aq = getelementptr i8, ptr %5, i64 %i.ap
+  %i.aq = getelementptr i8, ptr %4, i64 %i.ap
   %i.ar = getelementptr i8, ptr %2, i64 %i.ap
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.as = shl i64 %index, 1                       ; 2 uses
-  %next.gep = getelementptr i8, ptr %5, i64 %i.as ; 2 uses
+  %next.gep = getelementptr i8, ptr %4, i64 %i.as ; 2 uses
   %next.gep51 = getelementptr i8, ptr %2, i64 %i.as ; 2 uses
   %i.at = getelementptr i8, ptr %next.gep, i64 16
   %wide.load = load <8 x i16>, ptr %next.gep, align 1
@@ -350,7 +346,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.av, label %scalar.ph, label %vector.body, !llvm.loop !3197
 
 scalar.ph:                                        ; preds = %vector.body, %.lr.ph.split.i.preheader
-  %bc.resume.val = phi ptr [ %5, %.lr.ph.split.i.preheader ], [ %i.aq, %vector.body ]
+  %bc.resume.val = phi ptr [ %4, %.lr.ph.split.i.preheader ], [ %i.aq, %vector.body ]
   %bc.resume.val53 = phi ptr [ %2, %.lr.ph.split.i.preheader ], [ %i.ar, %vector.body ] ; 2 uses
   %bc.resume.val5355 = ptrtoaddr ptr %bc.resume.val53 to i64 ; 2 uses
   br label %.lr.ph.split.i
@@ -359,11 +355,11 @@ scalar.ph:                                        ; preds = %vector.body, %.lr.p
   %indvar = phi i64 [ 0, %scalar.ph ], [ %indvar.next, %bb.d ] ; 3 uses
   %.02441.i = phi ptr [ %bc.resume.val, %scalar.ph ], [ %i.ca, %bb.d ] ; 3 uses
   %.03640.i = phi ptr [ %bc.resume.val53, %scalar.ph ], [ %i.cb, %bb.d ] ; 9 uses
-  %i.aw = icmp eq ptr %.02441.i, %6
+  %i.aw = icmp eq ptr %.02441.i, %5
   br i1 %i.aw, label %.preheader.i, label %bb.d
 
 .preheader.i:                                     ; preds = %.lr.ph.split.i
-  %.not42.i = icmp eq ptr %.03640.i, %5
+  %.not42.i = icmp eq ptr %.03640.i, %4
   br i1 %.not42.i, label %_ZN5boost7movelib33insertion_sort_uninitialized_copyINS_9container3dtl23flat_tree_value_compareISt4lessI5emptyESt4pairIS6_S6_ENS3_9select1stIS6_EEEEPS9_SD_EEvT0_SE_T1_T_.exit, label %iter.check
 
 iter.check:                                       ; preds = %.preheader.i
@@ -394,14 +390,14 @@ vector.ph60:                                      ; preds = %vector.main.loop.it
   %i.bj = and i64 %i.bd, 12
   %n.vec61 = and i64 %i.bd, -16                   ; 4 uses
   %i.bk = shl i64 %n.vec61, 1                     ; 2 uses
-  %i.bl = getelementptr i8, ptr %4, i64 %i.bk
+  %i.bl = getelementptr i8, ptr %3, i64 %i.bk
   %i.bm = getelementptr i8, ptr %.03640.i, i64 %i.bk
   br label %vector.body62
 
 vector.body62:                                    ; preds = %vector.body62, %vector.ph60
   %index63 = phi i64 [ 0, %vector.ph60 ], [ %index.next68, %vector.body62 ] ; 2 uses
   %i.bn = shl i64 %index63, 1                     ; 2 uses
-  %next.gep64 = getelementptr i8, ptr %4, i64 %i.bn ; 2 uses
+  %next.gep64 = getelementptr i8, ptr %3, i64 %i.bn ; 2 uses
   %next.gep65 = getelementptr i8, ptr %.03640.i, i64 %i.bn ; 2 uses
   %i.bo = getelementptr i8, ptr %next.gep64, i64 16
   %wide.load66 = load <8 x i16>, ptr %next.gep64, align 1
@@ -425,14 +421,14 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %vec.epilog.resume.val = phi i64 [ %n.vec61, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec72 = and i64 %i.bd, -4                    ; 3 uses
   %i.br = shl i64 %n.vec72, 1                     ; 2 uses
-  %i.bs = getelementptr i8, ptr %4, i64 %i.br
+  %i.bs = getelementptr i8, ptr %3, i64 %i.br
   %i.bt = getelementptr i8, ptr %.03640.i, i64 %i.br
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index73 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next77, %vec.epilog.vector.body ] ; 2 uses
   %i.bu = shl i64 %index73, 1                     ; 2 uses
-  %next.gep74 = getelementptr i8, ptr %4, i64 %i.bu
+  %next.gep74 = getelementptr i8, ptr %3, i64 %i.bu
   %next.gep75 = getelementptr i8, ptr %.03640.i, i64 %i.bu
   %wide.load76 = load <4 x i16>, ptr %next.gep74, align 1
   store <4 x i16> %wide.load76, ptr %next.gep75, align 1
@@ -445,7 +441,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n78, label %_ZN5boost7movelib33insertion_sort_uninitialized_copyINS_9container3dtl23flat_tree_value_compareISt4lessI5emptyESt4pairIS6_S6_ENS3_9select1stIS6_EEEEPS9_SD_EEvT0_SE_T1_T_.exit, label %.lr.ph45.i.preheader
 
 .lr.ph45.i.preheader:                             ; preds = %vector.memcheck54, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.144.i.ph = phi ptr [ %4, %iter.check ], [ %4, %vector.memcheck54 ], [ %i.bl, %vec.epilog.iter.check ], [ %i.bs, %vec.epilog.middle.block ]
+  %.144.i.ph = phi ptr [ %3, %iter.check ], [ %3, %vector.memcheck54 ], [ %i.bl, %vec.epilog.iter.check ], [ %i.bs, %vec.epilog.middle.block ]
   %.13743.i.ph = phi ptr [ %.03640.i, %iter.check ], [ %.03640.i, %vector.memcheck54 ], [ %i.bm, %vec.epilog.iter.check ], [ %i.bt, %vec.epilog.middle.block ]
   br label %.lr.ph45.i
 
@@ -456,7 +452,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   store i16 %i.bw, ptr %.13743.i, align 1
   %i.bx = getelementptr inbounds nuw i8, ptr %.13743.i, i64 2 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %.144.i, i64 2
-  %.not.i32 = icmp eq ptr %i.bx, %5
+  %.not.i32 = icmp eq ptr %i.bx, %4
   br i1 %.not.i32, label %_ZN5boost7movelib33insertion_sort_uninitialized_copyINS_9container3dtl23flat_tree_value_compareISt4lessI5emptyESt4pairIS6_S6_ENS3_9select1stIS6_EEEEPS9_SD_EEvT0_SE_T1_T_.exit, label %.lr.ph45.i, !llvm.loop !3200
 
 bb.d:                                             ; preds = %.lr.ph.split.i
@@ -464,11 +460,11 @@ bb.d:                                             ; preds = %.lr.ph.split.i
   store i16 %i.bz, ptr %.03640.i, align 1
   %i.ca = getelementptr inbounds nuw i8, ptr %.02441.i, i64 2
   %i.cb = getelementptr inbounds nuw i8, ptr %.03640.i, i64 2 ; 2 uses
-  %.not46.i = icmp eq ptr %i.cb, %5
+  %.not46.i = icmp eq ptr %i.cb, %4
   %indvar.next = add i64 %indvar, 1
   br i1 %.not46.i, label %_ZN5boost7movelib33insertion_sort_uninitialized_copyINS_9container3dtl23flat_tree_value_compareISt4lessI5emptyESt4pairIS6_S6_ENS3_9select1stIS6_EEEEPS9_SD_EEvT0_SE_T1_T_.exit, label %.lr.ph.split.i, !llvm.loop !3201
 
-_ZN5boost7movelib33insertion_sort_uninitialized_copyINS_9container3dtl23flat_tree_value_compareISt4lessI5emptyESt4pairIS6_S6_ENS3_9select1stIS6_EEEEPS9_SD_EEvT0_SE_T1_T_.exit: ; preds = %bb.d, %.lr.ph45.i, %.lr.ph.i, %middle.block69, %vec.epilog.middle.block, %middle.block91, %vec.epilog.middle.block108, %3, %.preheader.i, %bb.c, %bb.b
+_ZN5boost7movelib33insertion_sort_uninitialized_copyINS_9container3dtl23flat_tree_value_compareISt4lessI5emptyESt4pairIS6_S6_ENS3_9select1stIS6_EEEEPS9_SD_EEvT0_SE_T1_T_.exit: ; preds = %bb.d, %.lr.ph45.i, %.lr.ph.i, %middle.block69, %vec.epilog.middle.block, %middle.block91, %vec.epilog.middle.block108, %.preheader.i, %bb.c, %bb.b
   ret void
 }
 

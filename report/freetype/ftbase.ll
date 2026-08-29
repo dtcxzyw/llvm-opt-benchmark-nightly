@@ -205,13 +205,13 @@ bb.n:                                             ; preds = %bb.m
   %i.bn = add i32 %spec.select, 7                 ; 2 uses
   %i.bo = and i32 %i.bn, -8
   %i.bp = icmp ugt i32 %i.bn, 65535
-  %spec.store.select = select i1 %i.bp, i32 65535, i32 %i.bo ; 7 uses
+  %spec.store.select = select i1 %i.bp, i32 65535, i32 %i.bo ; 6 uses
   %i.bq = zext i32 %i.bb to i64                   ; 8 uses
   %i.br = zext i32 %spec.store.select to i64      ; 8 uses
-  %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
-  %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !121 ; 5 uses
+  %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
+  %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !121 ; 4 uses
   %i.bu = icmp eq i32 %spec.store.select, 0
-  br i1 %i.bu, label %bb.o, label %3
+  br i1 %i.bu, label %bb.o, label %bb.q
 
 bb.o:                                             ; preds = %bb.n
   %.not.i.i.i = icmp eq ptr %i.bt, null
@@ -223,15 +223,7 @@ bb.p:                                             ; preds = %bb.o
   tail call void %i.bw(ptr noundef %i.b, ptr noundef nonnull %i.bt) #30, !inline_history !132
   br label %bb.u
 
-3:                                                ; preds = %bb.n
-  %4 = icmp ugt i32 %spec.store.select, 134217727
-  br i1 %4, label %ft_mem_realloc.exit.thread118, label %bb.q
-
-ft_mem_realloc.exit.thread118:                    ; preds = %3
-  store ptr %i.bt, ptr %i.bs, align 8, !tbaa !121
-  br label %FT_GlyphLoader_Adjust_Points.exit.thread
-
-bb.q:                                             ; preds = %3
+bb.q:                                             ; preds = %bb.n
   %i.bx = icmp eq i32 %i.bb, 0                    ; 2 uses
   br i1 %i.bx, label %bb.r, label %bb.s
 
@@ -346,8 +338,8 @@ bb.z:                                             ; preds = %ft_mem_realloc.exit
 bb.aa:                                            ; preds = %bb.z
   %i.dg = shl nuw i32 %i.bb, 1
   %i.dh = zext i32 %i.dg to i64
-  %i.di = shl nuw nsw i32 %spec.store.select, 1
-  %i.dj = zext nneg i32 %i.di to i64
+  %i.di = shl i32 %spec.store.select, 1
+  %i.dj = zext i32 %i.di to i64
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %i.dl = load ptr, ptr %i.dk, align 8, !tbaa !112
   %i.dm = call ptr @ft_mem_realloc(ptr noundef %i.b, i64 noundef 16, i64 noundef %i.dh, i64 noundef %i.dj, ptr noundef %i.dl, ptr noundef nonnull %i.a) ; 3 uses
@@ -582,8 +574,8 @@ bb.az:                                            ; preds = %bb.ay
   store ptr %i.ho, ptr %i.hp, align 8, !tbaa !127
   br label %FT_GlyphLoader_Adjust_Points.exit
 
-FT_GlyphLoader_Adjust_Points.exit.thread:         ; preds = %bb.ap, %ft_mem_realloc.exit.i109, %bb.ag, %bb.m, %ft_mem_realloc.exit.i, %bb.d, %ft_mem_realloc.exit99, %ft_mem_realloc.exit, %bb.aa, %bb.aq, %ft_mem_realloc.exit.thread118
-  %5 = phi i32 [ 10, %bb.m ], [ 64, %ft_mem_realloc.exit.i ], [ 64, %ft_mem_realloc.exit.i109 ], [ 64, %ft_mem_realloc.exit99 ], [ 64, %ft_mem_realloc.exit ], [ %i.dn, %bb.aa ], [ %i.gi, %bb.aq ], [ 10, %ft_mem_realloc.exit.thread118 ], [ 10, %bb.d ], [ 10, %bb.ag ], [ 10, %bb.ap ]
+FT_GlyphLoader_Adjust_Points.exit.thread:         ; preds = %bb.ap, %ft_mem_realloc.exit.i109, %bb.ag, %bb.m, %ft_mem_realloc.exit.i, %bb.d, %ft_mem_realloc.exit99, %ft_mem_realloc.exit, %bb.aa, %bb.aq
+  %3 = phi i32 [ 10, %bb.m ], [ 64, %ft_mem_realloc.exit.i ], [ 64, %ft_mem_realloc.exit.i109 ], [ 64, %ft_mem_realloc.exit99 ], [ 64, %ft_mem_realloc.exit ], [ %i.dn, %bb.aa ], [ %i.gi, %bb.aq ], [ 10, %bb.d ], [ 10, %bb.ag ], [ 10, %bb.ap ]
   %i.hq = load ptr, ptr %0, align 8, !tbaa !90    ; 10 uses
   %i.hr = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.hs = load ptr, ptr %i.hr, align 8, !tbaa !107 ; 2 uses
@@ -668,7 +660,7 @@ FT_GlyphLoader_Reset.exit:                        ; preds = %ft_mem_free.exit26.
   br label %FT_GlyphLoader_Adjust_Points.exit
 
 FT_GlyphLoader_Adjust_Points.exit:                ; preds = %bb.ar, %bb.ay, %bb.az, %FT_GlyphLoader_Reset.exit
-  %i.ir = phi i32 [ %5, %FT_GlyphLoader_Reset.exit ], [ 0, %bb.az ], [ 0, %bb.ay ], [ 0, %bb.ar ]
+  %i.ir = phi i32 [ %3, %FT_GlyphLoader_Reset.exit ], [ 0, %bb.az ], [ 0, %bb.ay ], [ 0, %bb.ar ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
   ret i32 %i.ir
 }

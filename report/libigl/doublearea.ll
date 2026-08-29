@@ -205,25 +205,18 @@ bb.d:                                             ; preds = %._crit_edge
           to label %.preheader unwind label %common.resume
 
 .preheader:                                       ; preds = %bb.d
-  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 8 uses
+  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 7 uses
   %i.cq = icmp sgt i64 %i.cp, 0
   %.pre = load ptr, ptr %4, align 8, !tbaa !18    ; 7 uses
   br i1 %i.cq, label %.lr.ph, label %._crit_edge98
 
 .lr.ph:                                           ; preds = %.preheader
   %i.cr = load ptr, ptr %2, align 8, !tbaa !18    ; 4 uses
-  %min.iters.check289 = icmp ult i64 %i.cp, 20
-  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.scevcheck277
+  %5 = add nsw i64 %i.cp, -2147483649
+  %min.iters.check289 = icmp ult i64 %5, -2147483629
+  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.memcheck282
 
-vector.scevcheck277:                              ; preds = %.lr.ph
-  %5 = add nsw i64 %i.cp, -1                      ; 2 uses
-  %6 = and i64 %5, 4294967295
-  %7 = icmp eq i64 %6, 4294967295
-  %8 = icmp ugt i64 %5, 2147483647
-  %9 = or i1 %7, %8
-  br i1 %9, label %scalar.ph288.preheader, label %vector.memcheck282
-
-vector.memcheck282:                               ; preds = %vector.scevcheck277
+vector.memcheck282:                               ; preds = %.lr.ph
   %i.cs = shl nuw nsw i64 %i.cp, 3
   %scevgep283 = getelementptr i8, ptr %i.cr, i64 %i.cs
   %i.ct = shl nuw nsw i64 %i.cp, 4
@@ -266,8 +259,8 @@ middle.block299:                                  ; preds = %vector.body292
   %cmp.n300 = icmp eq i64 %i.cp, %n.vec291
   br i1 %cmp.n300, label %._crit_edge98, label %scalar.ph288.preheader
 
-scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %vector.scevcheck277, %.lr.ph, %middle.block299
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %vector.scevcheck277 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
+scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %.lr.ph, %middle.block299
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
   br label %scalar.ph288
 
 ._crit_edge98:                                    ; preds = %scalar.ph288, %middle.block299, %.preheader
@@ -670,25 +663,18 @@ bb.d:                                             ; preds = %._crit_edge
           to label %.preheader unwind label %common.resume
 
 .preheader:                                       ; preds = %bb.d
-  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 8 uses
+  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 7 uses
   %i.cq = icmp sgt i64 %i.cp, 0
   %.pre = load ptr, ptr %4, align 8, !tbaa !89    ; 7 uses
   br i1 %i.cq, label %.lr.ph, label %._crit_edge98
 
 .lr.ph:                                           ; preds = %.preheader
   %i.cr = load ptr, ptr %2, align 8, !tbaa !89    ; 4 uses
-  %min.iters.check289 = icmp ult i64 %i.cp, 20
-  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.scevcheck277
+  %5 = add nsw i64 %i.cp, -2147483649
+  %min.iters.check289 = icmp ult i64 %5, -2147483629
+  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.memcheck282
 
-vector.scevcheck277:                              ; preds = %.lr.ph
-  %5 = add nsw i64 %i.cp, -1                      ; 2 uses
-  %6 = and i64 %5, 4294967295
-  %7 = icmp eq i64 %6, 4294967295
-  %8 = icmp ugt i64 %5, 2147483647
-  %9 = or i1 %7, %8
-  br i1 %9, label %scalar.ph288.preheader, label %vector.memcheck282
-
-vector.memcheck282:                               ; preds = %vector.scevcheck277
+vector.memcheck282:                               ; preds = %.lr.ph
   %i.cs = shl nuw nsw i64 %i.cp, 2
   %scevgep283 = getelementptr i8, ptr %i.cr, i64 %i.cs
   %i.ct = shl nuw nsw i64 %i.cp, 3
@@ -731,8 +717,8 @@ middle.block299:                                  ; preds = %vector.body292
   %cmp.n300 = icmp eq i64 %i.cp, %n.vec291
   br i1 %cmp.n300, label %._crit_edge98, label %scalar.ph288.preheader
 
-scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %vector.scevcheck277, %.lr.ph, %middle.block299
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %vector.scevcheck277 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
+scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %.lr.ph, %middle.block299
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
   br label %scalar.ph288
 
 ._crit_edge98:                                    ; preds = %scalar.ph288, %middle.block299, %.preheader
@@ -1135,25 +1121,18 @@ bb.d:                                             ; preds = %._crit_edge
           to label %.preheader unwind label %common.resume
 
 .preheader:                                       ; preds = %bb.d
-  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 8 uses
+  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 7 uses
   %i.cq = icmp sgt i64 %i.cp, 0
   %.pre = load ptr, ptr %4, align 8, !tbaa !18    ; 7 uses
   br i1 %i.cq, label %.lr.ph, label %._crit_edge98
 
 .lr.ph:                                           ; preds = %.preheader
   %i.cr = load ptr, ptr %2, align 8, !tbaa !18    ; 4 uses
-  %min.iters.check289 = icmp ult i64 %i.cp, 20
-  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.scevcheck277
+  %5 = add nsw i64 %i.cp, -2147483649
+  %min.iters.check289 = icmp ult i64 %5, -2147483629
+  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.memcheck282
 
-vector.scevcheck277:                              ; preds = %.lr.ph
-  %5 = add nsw i64 %i.cp, -1                      ; 2 uses
-  %6 = and i64 %5, 4294967295
-  %7 = icmp eq i64 %6, 4294967295
-  %8 = icmp ugt i64 %5, 2147483647
-  %9 = or i1 %7, %8
-  br i1 %9, label %scalar.ph288.preheader, label %vector.memcheck282
-
-vector.memcheck282:                               ; preds = %vector.scevcheck277
+vector.memcheck282:                               ; preds = %.lr.ph
   %i.cs = shl nuw nsw i64 %i.cp, 3
   %scevgep283 = getelementptr i8, ptr %i.cr, i64 %i.cs
   %i.ct = shl nuw nsw i64 %i.cp, 4
@@ -1196,8 +1175,8 @@ middle.block299:                                  ; preds = %vector.body292
   %cmp.n300 = icmp eq i64 %i.cp, %n.vec291
   br i1 %cmp.n300, label %._crit_edge98, label %scalar.ph288.preheader
 
-scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %vector.scevcheck277, %.lr.ph, %middle.block299
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %vector.scevcheck277 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
+scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %.lr.ph, %middle.block299
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
   br label %scalar.ph288
 
 ._crit_edge98:                                    ; preds = %scalar.ph288, %middle.block299, %.preheader
@@ -1600,25 +1579,18 @@ bb.d:                                             ; preds = %._crit_edge
           to label %.preheader unwind label %common.resume
 
 .preheader:                                       ; preds = %bb.d
-  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 8 uses
+  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 7 uses
   %i.cq = icmp sgt i64 %i.cp, 0
   %.pre = load ptr, ptr %4, align 8, !tbaa !89    ; 7 uses
   br i1 %i.cq, label %.lr.ph, label %._crit_edge98
 
 .lr.ph:                                           ; preds = %.preheader
   %i.cr = load ptr, ptr %2, align 8, !tbaa !89    ; 4 uses
-  %min.iters.check289 = icmp ult i64 %i.cp, 20
-  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.scevcheck277
+  %5 = add nsw i64 %i.cp, -2147483649
+  %min.iters.check289 = icmp ult i64 %5, -2147483629
+  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.memcheck282
 
-vector.scevcheck277:                              ; preds = %.lr.ph
-  %5 = add nsw i64 %i.cp, -1                      ; 2 uses
-  %6 = and i64 %5, 4294967295
-  %7 = icmp eq i64 %6, 4294967295
-  %8 = icmp ugt i64 %5, 2147483647
-  %9 = or i1 %7, %8
-  br i1 %9, label %scalar.ph288.preheader, label %vector.memcheck282
-
-vector.memcheck282:                               ; preds = %vector.scevcheck277
+vector.memcheck282:                               ; preds = %.lr.ph
   %i.cs = shl nuw nsw i64 %i.cp, 2
   %scevgep283 = getelementptr i8, ptr %i.cr, i64 %i.cs
   %i.ct = shl nuw nsw i64 %i.cp, 3
@@ -1661,8 +1633,8 @@ middle.block299:                                  ; preds = %vector.body292
   %cmp.n300 = icmp eq i64 %i.cp, %n.vec291
   br i1 %cmp.n300, label %._crit_edge98, label %scalar.ph288.preheader
 
-scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %vector.scevcheck277, %.lr.ph, %middle.block299
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %vector.scevcheck277 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
+scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %.lr.ph, %middle.block299
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
   br label %scalar.ph288
 
 ._crit_edge98:                                    ; preds = %scalar.ph288, %middle.block299, %.preheader
@@ -2065,25 +2037,18 @@ bb.d:                                             ; preds = %._crit_edge
           to label %.preheader unwind label %common.resume
 
 .preheader:                                       ; preds = %bb.d
-  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 8 uses
+  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 7 uses
   %i.cq = icmp sgt i64 %i.cp, 0
   %.pre = load ptr, ptr %4, align 8, !tbaa !89    ; 7 uses
   br i1 %i.cq, label %.lr.ph, label %._crit_edge98
 
 .lr.ph:                                           ; preds = %.preheader
   %i.cr = load ptr, ptr %2, align 8, !tbaa !89    ; 4 uses
-  %min.iters.check289 = icmp ult i64 %i.cp, 20
-  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.scevcheck277
+  %5 = add nsw i64 %i.cp, -2147483649
+  %min.iters.check289 = icmp ult i64 %5, -2147483629
+  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.memcheck282
 
-vector.scevcheck277:                              ; preds = %.lr.ph
-  %5 = add nsw i64 %i.cp, -1                      ; 2 uses
-  %6 = and i64 %5, 4294967295
-  %7 = icmp eq i64 %6, 4294967295
-  %8 = icmp ugt i64 %5, 2147483647
-  %9 = or i1 %7, %8
-  br i1 %9, label %scalar.ph288.preheader, label %vector.memcheck282
-
-vector.memcheck282:                               ; preds = %vector.scevcheck277
+vector.memcheck282:                               ; preds = %.lr.ph
   %i.cs = shl nuw nsw i64 %i.cp, 2
   %scevgep283 = getelementptr i8, ptr %i.cr, i64 %i.cs
   %i.ct = shl nuw nsw i64 %i.cp, 3
@@ -2126,8 +2091,8 @@ middle.block299:                                  ; preds = %vector.body292
   %cmp.n300 = icmp eq i64 %i.cp, %n.vec291
   br i1 %cmp.n300, label %._crit_edge98, label %scalar.ph288.preheader
 
-scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %vector.scevcheck277, %.lr.ph, %middle.block299
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %vector.scevcheck277 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
+scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %.lr.ph, %middle.block299
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
   br label %scalar.ph288
 
 ._crit_edge98:                                    ; preds = %scalar.ph288, %middle.block299, %.preheader
@@ -2530,25 +2495,18 @@ bb.d:                                             ; preds = %._crit_edge
           to label %.preheader unwind label %common.resume
 
 .preheader:                                       ; preds = %bb.d
-  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 8 uses
+  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 7 uses
   %i.cq = icmp sgt i64 %i.cp, 0
   %.pre = load ptr, ptr %4, align 8, !tbaa !18    ; 7 uses
   br i1 %i.cq, label %.lr.ph, label %._crit_edge98
 
 .lr.ph:                                           ; preds = %.preheader
   %i.cr = load ptr, ptr %2, align 8, !tbaa !18    ; 4 uses
-  %min.iters.check289 = icmp ult i64 %i.cp, 20
-  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.scevcheck277
+  %5 = add nsw i64 %i.cp, -2147483649
+  %min.iters.check289 = icmp ult i64 %5, -2147483629
+  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.memcheck282
 
-vector.scevcheck277:                              ; preds = %.lr.ph
-  %5 = add nsw i64 %i.cp, -1                      ; 2 uses
-  %6 = and i64 %5, 4294967295
-  %7 = icmp eq i64 %6, 4294967295
-  %8 = icmp ugt i64 %5, 2147483647
-  %9 = or i1 %7, %8
-  br i1 %9, label %scalar.ph288.preheader, label %vector.memcheck282
-
-vector.memcheck282:                               ; preds = %vector.scevcheck277
+vector.memcheck282:                               ; preds = %.lr.ph
   %i.cs = shl nuw nsw i64 %i.cp, 3
   %scevgep283 = getelementptr i8, ptr %i.cr, i64 %i.cs
   %i.ct = shl nuw nsw i64 %i.cp, 4
@@ -2591,8 +2549,8 @@ middle.block299:                                  ; preds = %vector.body292
   %cmp.n300 = icmp eq i64 %i.cp, %n.vec291
   br i1 %cmp.n300, label %._crit_edge98, label %scalar.ph288.preheader
 
-scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %vector.scevcheck277, %.lr.ph, %middle.block299
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %vector.scevcheck277 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
+scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %.lr.ph, %middle.block299
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
   br label %scalar.ph288
 
 ._crit_edge98:                                    ; preds = %scalar.ph288, %middle.block299, %.preheader
@@ -2995,25 +2953,18 @@ bb.d:                                             ; preds = %._crit_edge
           to label %.preheader unwind label %common.resume
 
 .preheader:                                       ; preds = %bb.d
-  %i.cw = load i64, ptr %i.a, align 8, !tbaa !414 ; 8 uses
+  %i.cw = load i64, ptr %i.a, align 8, !tbaa !414 ; 7 uses
   %i.cx = icmp sgt i64 %i.cw, 0
   %.pre = load ptr, ptr %4, align 8, !tbaa !18    ; 7 uses
   br i1 %i.cx, label %.lr.ph, label %._crit_edge110
 
 .lr.ph:                                           ; preds = %.preheader
   %i.cy = load ptr, ptr %2, align 8, !tbaa !18    ; 4 uses
-  %min.iters.check226 = icmp ult i64 %i.cw, 20
-  br i1 %min.iters.check226, label %scalar.ph225.preheader, label %vector.scevcheck214
+  %5 = add nsw i64 %i.cw, -2147483649
+  %min.iters.check226 = icmp ult i64 %5, -2147483629
+  br i1 %min.iters.check226, label %scalar.ph225.preheader, label %vector.memcheck219
 
-vector.scevcheck214:                              ; preds = %.lr.ph
-  %5 = add nsw i64 %i.cw, -1                      ; 2 uses
-  %6 = and i64 %5, 4294967295
-  %7 = icmp eq i64 %6, 4294967295
-  %8 = icmp ugt i64 %5, 2147483647
-  %9 = or i1 %7, %8
-  br i1 %9, label %scalar.ph225.preheader, label %vector.memcheck219
-
-vector.memcheck219:                               ; preds = %vector.scevcheck214
+vector.memcheck219:                               ; preds = %.lr.ph
   %i.cz = shl nuw nsw i64 %i.cw, 3
   %scevgep220 = getelementptr i8, ptr %i.cy, i64 %i.cz
   %i.da = shl nuw nsw i64 %i.cw, 4
@@ -3056,8 +3007,8 @@ middle.block236:                                  ; preds = %vector.body229
   %cmp.n237 = icmp eq i64 %i.cw, %n.vec228
   br i1 %cmp.n237, label %._crit_edge110, label %scalar.ph225.preheader
 
-scalar.ph225.preheader:                           ; preds = %vector.memcheck219, %vector.scevcheck214, %.lr.ph, %middle.block236
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck219 ], [ 0, %vector.scevcheck214 ], [ 0, %.lr.ph ], [ %n.vec228, %middle.block236 ]
+scalar.ph225.preheader:                           ; preds = %vector.memcheck219, %.lr.ph, %middle.block236
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck219 ], [ 0, %.lr.ph ], [ %n.vec228, %middle.block236 ]
   br label %scalar.ph225
 
 ._crit_edge110:                                   ; preds = %scalar.ph225, %middle.block236, %.preheader
@@ -3460,25 +3411,18 @@ bb.d:                                             ; preds = %._crit_edge
           to label %.preheader unwind label %common.resume
 
 .preheader:                                       ; preds = %bb.d
-  %i.cw = load i64, ptr %i.a, align 8, !tbaa !414 ; 8 uses
+  %i.cw = load i64, ptr %i.a, align 8, !tbaa !414 ; 7 uses
   %i.cx = icmp sgt i64 %i.cw, 0
   %.pre = load ptr, ptr %4, align 8, !tbaa !18    ; 7 uses
   br i1 %i.cx, label %.lr.ph, label %._crit_edge110
 
 .lr.ph:                                           ; preds = %.preheader
   %i.cy = load ptr, ptr %2, align 8, !tbaa !18    ; 4 uses
-  %min.iters.check226 = icmp ult i64 %i.cw, 20
-  br i1 %min.iters.check226, label %scalar.ph225.preheader, label %vector.scevcheck214
+  %5 = add nsw i64 %i.cw, -2147483649
+  %min.iters.check226 = icmp ult i64 %5, -2147483629
+  br i1 %min.iters.check226, label %scalar.ph225.preheader, label %vector.memcheck219
 
-vector.scevcheck214:                              ; preds = %.lr.ph
-  %5 = add nsw i64 %i.cw, -1                      ; 2 uses
-  %6 = and i64 %5, 4294967295
-  %7 = icmp eq i64 %6, 4294967295
-  %8 = icmp ugt i64 %5, 2147483647
-  %9 = or i1 %7, %8
-  br i1 %9, label %scalar.ph225.preheader, label %vector.memcheck219
-
-vector.memcheck219:                               ; preds = %vector.scevcheck214
+vector.memcheck219:                               ; preds = %.lr.ph
   %i.cz = shl nuw nsw i64 %i.cw, 3
   %scevgep220 = getelementptr i8, ptr %i.cy, i64 %i.cz
   %i.da = shl nuw nsw i64 %i.cw, 4
@@ -3521,8 +3465,8 @@ middle.block236:                                  ; preds = %vector.body229
   %cmp.n237 = icmp eq i64 %i.cw, %n.vec228
   br i1 %cmp.n237, label %._crit_edge110, label %scalar.ph225.preheader
 
-scalar.ph225.preheader:                           ; preds = %vector.memcheck219, %vector.scevcheck214, %.lr.ph, %middle.block236
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck219 ], [ 0, %vector.scevcheck214 ], [ 0, %.lr.ph ], [ %n.vec228, %middle.block236 ]
+scalar.ph225.preheader:                           ; preds = %vector.memcheck219, %.lr.ph, %middle.block236
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck219 ], [ 0, %.lr.ph ], [ %n.vec228, %middle.block236 ]
   br label %scalar.ph225
 
 ._crit_edge110:                                   ; preds = %scalar.ph225, %middle.block236, %.preheader
@@ -3925,25 +3869,18 @@ bb.d:                                             ; preds = %._crit_edge
           to label %.preheader unwind label %common.resume
 
 .preheader:                                       ; preds = %bb.d
-  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 8 uses
+  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 7 uses
   %i.cq = icmp sgt i64 %i.cp, 0
   %.pre = load ptr, ptr %4, align 8, !tbaa !18    ; 7 uses
   br i1 %i.cq, label %.lr.ph, label %._crit_edge98
 
 .lr.ph:                                           ; preds = %.preheader
   %i.cr = load ptr, ptr %2, align 8, !tbaa !18    ; 4 uses
-  %min.iters.check289 = icmp ult i64 %i.cp, 20
-  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.scevcheck277
+  %5 = add nsw i64 %i.cp, -2147483649
+  %min.iters.check289 = icmp ult i64 %5, -2147483629
+  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.memcheck282
 
-vector.scevcheck277:                              ; preds = %.lr.ph
-  %5 = add nsw i64 %i.cp, -1                      ; 2 uses
-  %6 = and i64 %5, 4294967295
-  %7 = icmp eq i64 %6, 4294967295
-  %8 = icmp ugt i64 %5, 2147483647
-  %9 = or i1 %7, %8
-  br i1 %9, label %scalar.ph288.preheader, label %vector.memcheck282
-
-vector.memcheck282:                               ; preds = %vector.scevcheck277
+vector.memcheck282:                               ; preds = %.lr.ph
   %i.cs = shl nuw nsw i64 %i.cp, 3
   %scevgep283 = getelementptr i8, ptr %i.cr, i64 %i.cs
   %i.ct = shl nuw nsw i64 %i.cp, 4
@@ -3986,8 +3923,8 @@ middle.block299:                                  ; preds = %vector.body292
   %cmp.n300 = icmp eq i64 %i.cp, %n.vec291
   br i1 %cmp.n300, label %._crit_edge98, label %scalar.ph288.preheader
 
-scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %vector.scevcheck277, %.lr.ph, %middle.block299
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %vector.scevcheck277 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
+scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %.lr.ph, %middle.block299
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
   br label %scalar.ph288
 
 ._crit_edge98:                                    ; preds = %scalar.ph288, %middle.block299, %.preheader
@@ -4390,25 +4327,18 @@ bb.d:                                             ; preds = %._crit_edge
           to label %.preheader unwind label %common.resume
 
 .preheader:                                       ; preds = %bb.d
-  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 8 uses
+  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 7 uses
   %i.cq = icmp sgt i64 %i.cp, 0
   %.pre = load ptr, ptr %4, align 8, !tbaa !533   ; 7 uses
   br i1 %i.cq, label %.lr.ph, label %._crit_edge98
 
 .lr.ph:                                           ; preds = %.preheader
   %i.cr = load ptr, ptr %2, align 8, !tbaa !533   ; 4 uses
-  %min.iters.check289 = icmp ult i64 %i.cp, 24
-  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.scevcheck277
+  %5 = add nsw i64 %i.cp, -2147483649
+  %min.iters.check289 = icmp ult i64 %5, -2147483625
+  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.memcheck282
 
-vector.scevcheck277:                              ; preds = %.lr.ph
-  %5 = add nsw i64 %i.cp, -1                      ; 2 uses
-  %6 = and i64 %5, 4294967295
-  %7 = icmp eq i64 %6, 4294967295
-  %8 = icmp ugt i64 %5, 2147483647
-  %9 = or i1 %7, %8
-  br i1 %9, label %scalar.ph288.preheader, label %vector.memcheck282
-
-vector.memcheck282:                               ; preds = %vector.scevcheck277
+vector.memcheck282:                               ; preds = %.lr.ph
   %i.cs = shl nuw nsw i64 %i.cp, 2
   %scevgep283 = getelementptr i8, ptr %i.cr, i64 %i.cs
   %i.ct = shl nuw nsw i64 %i.cp, 3
@@ -4451,8 +4381,8 @@ middle.block299:                                  ; preds = %vector.body292
   %cmp.n300 = icmp eq i64 %i.cp, %n.vec291
   br i1 %cmp.n300, label %._crit_edge98, label %scalar.ph288.preheader
 
-scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %vector.scevcheck277, %.lr.ph, %middle.block299
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %vector.scevcheck277 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
+scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %.lr.ph, %middle.block299
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
   br label %scalar.ph288
 
 ._crit_edge98:                                    ; preds = %scalar.ph288, %middle.block299, %.preheader
@@ -4855,25 +4785,18 @@ _ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i: ; 
           to label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.preheader unwind label %common.resume
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.preheader: ; preds = %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i
-  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 8 uses
+  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 7 uses
   %i.cq = icmp sgt i64 %i.cp, 0
   %.pre = load ptr, ptr %4, align 8, !tbaa !18    ; 7 uses
   br i1 %i.cq, label %.lr.ph, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit._crit_edge
 
 .lr.ph:                                           ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.preheader
   %i.cr = load ptr, ptr %2, align 8, !tbaa !368   ; 4 uses
-  %min.iters.check288 = icmp ult i64 %i.cp, 20
-  br i1 %min.iters.check288, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.preheader329, label %vector.scevcheck276
+  %5 = add nsw i64 %i.cp, -2147483649
+  %min.iters.check288 = icmp ult i64 %5, -2147483629
+  br i1 %min.iters.check288, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.preheader329, label %vector.memcheck281
 
-vector.scevcheck276:                              ; preds = %.lr.ph
-  %5 = add nsw i64 %i.cp, -1                      ; 2 uses
-  %6 = and i64 %5, 4294967295
-  %7 = icmp eq i64 %6, 4294967295
-  %8 = icmp ugt i64 %5, 2147483647
-  %9 = or i1 %7, %8
-  br i1 %9, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.preheader329, label %vector.memcheck281
-
-vector.memcheck281:                               ; preds = %vector.scevcheck276
+vector.memcheck281:                               ; preds = %.lr.ph
   %i.cs = shl nuw nsw i64 %i.cp, 3
   %scevgep282 = getelementptr i8, ptr %i.cr, i64 %i.cs
   %i.ct = shl nuw nsw i64 %i.cp, 4
@@ -4916,8 +4839,8 @@ middle.block298:                                  ; preds = %vector.body291
   %cmp.n299 = icmp eq i64 %i.cp, %n.vec290
   br i1 %cmp.n299, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit._crit_edge, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.preheader329
 
-_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.preheader329: ; preds = %vector.memcheck281, %vector.scevcheck276, %.lr.ph, %middle.block298
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck281 ], [ 0, %vector.scevcheck276 ], [ 0, %.lr.ph ], [ %n.vec290, %middle.block298 ]
+_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.preheader329: ; preds = %vector.memcheck281, %.lr.ph, %middle.block298
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck281 ], [ 0, %.lr.ph ], [ %n.vec290, %middle.block298 ]
   br label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit._crit_edge: ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit, %middle.block298, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.preheader
@@ -5320,25 +5243,18 @@ bb.d:                                             ; preds = %._crit_edge
           to label %.preheader unwind label %common.resume
 
 .preheader:                                       ; preds = %bb.d
-  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 8 uses
+  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 7 uses
   %i.cq = icmp sgt i64 %i.cp, 0
   %.pre = load ptr, ptr %4, align 8, !tbaa !18    ; 7 uses
   br i1 %i.cq, label %.lr.ph, label %._crit_edge98
 
 .lr.ph:                                           ; preds = %.preheader
   %i.cr = load ptr, ptr %2, align 8, !tbaa !18    ; 4 uses
-  %min.iters.check289 = icmp ult i64 %i.cp, 20
-  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.scevcheck277
+  %5 = add nsw i64 %i.cp, -2147483649
+  %min.iters.check289 = icmp ult i64 %5, -2147483629
+  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.memcheck282
 
-vector.scevcheck277:                              ; preds = %.lr.ph
-  %5 = add nsw i64 %i.cp, -1                      ; 2 uses
-  %6 = and i64 %5, 4294967295
-  %7 = icmp eq i64 %6, 4294967295
-  %8 = icmp ugt i64 %5, 2147483647
-  %9 = or i1 %7, %8
-  br i1 %9, label %scalar.ph288.preheader, label %vector.memcheck282
-
-vector.memcheck282:                               ; preds = %vector.scevcheck277
+vector.memcheck282:                               ; preds = %.lr.ph
   %i.cs = shl nuw nsw i64 %i.cp, 3
   %scevgep283 = getelementptr i8, ptr %i.cr, i64 %i.cs
   %i.ct = shl nuw nsw i64 %i.cp, 4
@@ -5381,8 +5297,8 @@ middle.block299:                                  ; preds = %vector.body292
   %cmp.n300 = icmp eq i64 %i.cp, %n.vec291
   br i1 %cmp.n300, label %._crit_edge98, label %scalar.ph288.preheader
 
-scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %vector.scevcheck277, %.lr.ph, %middle.block299
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %vector.scevcheck277 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
+scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %.lr.ph, %middle.block299
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
   br label %scalar.ph288
 
 ._crit_edge98:                                    ; preds = %scalar.ph288, %middle.block299, %.preheader
@@ -5785,25 +5701,18 @@ bb.d:                                             ; preds = %._crit_edge
           to label %.preheader unwind label %common.resume
 
 .preheader:                                       ; preds = %bb.d
-  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 8 uses
+  %i.cp = load i64, ptr %i.a, align 8, !tbaa !14  ; 7 uses
   %i.cq = icmp sgt i64 %i.cp, 0
   %.pre = load ptr, ptr %4, align 8, !tbaa !18    ; 7 uses
   br i1 %i.cq, label %.lr.ph, label %._crit_edge98
 
 .lr.ph:                                           ; preds = %.preheader
   %i.cr = load ptr, ptr %2, align 8, !tbaa !18    ; 4 uses
-  %min.iters.check289 = icmp ult i64 %i.cp, 20
-  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.scevcheck277
+  %5 = add nsw i64 %i.cp, -2147483649
+  %min.iters.check289 = icmp ult i64 %5, -2147483629
+  br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.memcheck282
 
-vector.scevcheck277:                              ; preds = %.lr.ph
-  %5 = add nsw i64 %i.cp, -1                      ; 2 uses
-  %6 = and i64 %5, 4294967295
-  %7 = icmp eq i64 %6, 4294967295
-  %8 = icmp ugt i64 %5, 2147483647
-  %9 = or i1 %7, %8
-  br i1 %9, label %scalar.ph288.preheader, label %vector.memcheck282
-
-vector.memcheck282:                               ; preds = %vector.scevcheck277
+vector.memcheck282:                               ; preds = %.lr.ph
   %i.cs = shl nuw nsw i64 %i.cp, 3
   %scevgep283 = getelementptr i8, ptr %i.cr, i64 %i.cs
   %i.ct = shl nuw nsw i64 %i.cp, 4
@@ -5846,8 +5755,8 @@ middle.block299:                                  ; preds = %vector.body292
   %cmp.n300 = icmp eq i64 %i.cp, %n.vec291
   br i1 %cmp.n300, label %._crit_edge98, label %scalar.ph288.preheader
 
-scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %vector.scevcheck277, %.lr.ph, %middle.block299
-  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %vector.scevcheck277 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
+scalar.ph288.preheader:                           ; preds = %vector.memcheck282, %.lr.ph, %middle.block299
+  %indvars.iv.ph = phi i64 [ 0, %vector.memcheck282 ], [ 0, %.lr.ph ], [ %n.vec291, %middle.block299 ]
   br label %scalar.ph288
 
 ._crit_edge98:                                    ; preds = %scalar.ph288, %middle.block299, %.preheader

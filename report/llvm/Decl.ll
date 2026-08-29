@@ -205,38 +205,42 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88
   %.sroa.0.0.copyload.i.i.i.i.i.i.i = load i64, ptr %i.g, align 8 ; 3 uses
   %i.h = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, 4
-  %.not.i.i.i.i.i.i = icmp eq i64 %i.h, 0         ; 3 uses
-  %i.i = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, -5 ; 4 uses
+  %.not.i.i.i.i.i.i = icmp eq i64 %i.h, 0         ; 2 uses
+  %i.i = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, -5 ; 3 uses
   %.not12.not16.i.i.i = icmp eq i64 %i.i, 0
   %.not12.not.i.i.i = or i1 %.not.i.i.i.i.i.i, %.not12.not16.i.i.i
   br i1 %.not12.not.i.i.i, label %.split.i.i, label %_ZNK5clang7VarDecl7hasInitEv.exit.i.i
 
 .split.i.i:                                       ; preds = %bb.c
   %i.j = icmp ugt i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, 7
-  br i1 %i.j, label %bb.d, label %_ZNK5clang7VarDecl7getInitEv.exit.thread
+  br i1 %i.j, label %5, label %_ZNK5clang7VarDecl7getInitEv.exit.thread
 
 _ZNK5clang7VarDecl7hasInitEv.exit.i.i:            ; preds = %bb.c
   %i.k = inttoptr i64 %i.i to ptr                 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 2 uses
   %i.m = load i8, ptr %i.l, align 8, !tbaa !441
   %i.n = trunc i8 %i.m to i1
-  %i.o = load ptr, ptr %i.l, align 8
+  %i.o = load ptr, ptr %i.l, align 8              ; 2 uses
   %i.p = icmp ne ptr %i.o, null
   %i.q = select i1 %i.n, i1 true, i1 %i.p
+  %3 = ptrtoint ptr %i.o to i64
+  %4 = trunc i64 %3 to i8
   br i1 %i.q, label %.thread.i, label %_ZNK5clang7VarDecl7getInitEv.exit.thread
 
-bb.d:                                             ; preds = %.split.i.i
-  %.pre.i.i = inttoptr i64 %i.i to ptr            ; 2 uses
-  %.not.not9.i.i = icmp ne i64 %i.i, 0
-  %.not.not.not.i.i = and i1 %.not.not9.i.i, %.not.i.i.i.i.i.i
-  br i1 %.not.not.not.i.i, label %_ZNK5clang7VarDecl7getInitEv.exit, label %.thread.i
+5:                                                ; preds = %.split.i.i
+  %.pre.i.i = inttoptr i64 %i.i to ptr            ; 3 uses
+  br i1 %.not.i.i.i.i.i.i, label %_ZNK5clang7VarDecl7getInitEv.exit, label %bb.d
+
+bb.d:                                             ; preds = %5
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre.i.i, i64 8
+  %.pre = load i8, ptr %.phi.trans.insert, align 8, !tbaa !441
+  br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.d, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i
+  %6 = phi i8 [ %.pre, %bb.d ], [ %4, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
   %.pre-phi.i4.i = phi ptr [ %.pre.i.i, %bb.d ], [ %i.k, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
-  %.0.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, ptr null, ptr %.pre-phi.i4.i
-  %i.r = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i, i64 8 ; 4 uses
-  %3 = load i8, ptr %i.r, align 8, !tbaa !441
-  %i.s = trunc i8 %3 to i1
+  %i.r = getelementptr inbounds nuw i8, ptr %.pre-phi.i4.i, i64 8 ; 3 uses
+  %i.s = trunc i8 %6 to i1
   br i1 %i.s, label %bb.e, label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.thread.i
@@ -256,8 +260,8 @@ bb.e:                                             ; preds = %.thread.i
   store ptr %i.ab, ptr %i.r, align 8, !tbaa !866
   br label %_ZNK5clang7VarDecl7getInitEv.exit
 
-_ZNK5clang7VarDecl7getInitEv.exit:                ; preds = %bb.d, %._crit_edge.i.i.i, %bb.e
-  %.1.i.i = phi ptr [ %i.ab, %bb.e ], [ %.pre.i.i, %bb.d ], [ %.pre.i.i.i, %._crit_edge.i.i.i ] ; 2 uses
+_ZNK5clang7VarDecl7getInitEv.exit:                ; preds = %5, %._crit_edge.i.i.i, %bb.e
+  %.1.i.i = phi ptr [ %i.ab, %bb.e ], [ %.pre.i.i, %5 ], [ %.pre.i.i.i, %._crit_edge.i.i.i ] ; 2 uses
   %.not = icmp eq ptr %.1.i.i, null
   br i1 %.not, label %_ZNK5clang7VarDecl7getInitEv.exit.thread, label %bb.f
 
@@ -660,8 +664,8 @@ bb.b:                                             ; preds = %bb.a, %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   %.sroa.0.0.copyload.i.i.i.i.i.i = load i64, ptr %i.h, align 8 ; 3 uses
   %i.i = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i, 4
-  %.not.i.i.i.i.i = icmp eq i64 %i.i, 0           ; 3 uses
-  %i.j = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i, -5 ; 4 uses
+  %.not.i.i.i.i.i = icmp eq i64 %i.i, 0           ; 2 uses
+  %i.j = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i, -5 ; 3 uses
   %.not12.not16.i.i = icmp eq i64 %i.j, 0
   %.not12.not.i.i = or i1 %.not.i.i.i.i.i, %.not12.not16.i.i
   br i1 %.not12.not.i.i, label %.split.i, label %_ZNK5clang7VarDecl7hasInitEv.exit.i
@@ -682,14 +686,11 @@ _ZNK5clang7VarDecl7hasInitEv.exit.i:              ; preds = %bb.b
 
 bb.c:                                             ; preds = %.split.i
   %.pre.i = inttoptr i64 %i.j to ptr              ; 2 uses
-  %.not.not9.i = icmp ne i64 %i.j, 0
-  %.not.not.not.i = and i1 %.not.not9.i, %.not.i.i.i.i.i
-  br i1 %.not.not.not.i, label %_ZN5clang7VarDecl7getInitEv.exit.thread25, label %.thread
+  br i1 %.not.i.i.i.i.i, label %_ZN5clang7VarDecl7getInitEv.exit.thread25, label %.thread
 
 .thread:                                          ; preds = %_ZNK5clang7VarDecl7hasInitEv.exit.i, %bb.c
   %.pre-phi.i21 = phi ptr [ %.pre.i, %bb.c ], [ %i.l, %_ZNK5clang7VarDecl7hasInitEv.exit.i ]
-  %.0.i.i.i.i = select i1 %.not.i.i.i.i.i, ptr null, ptr %.pre-phi.i21
-  %i.s = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i, i64 8 ; 4 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %.pre-phi.i21, i64 8 ; 4 uses
   %i.t = load i8, ptr %i.s, align 8, !tbaa !441
   %i.u = trunc i8 %i.t to i1
   br i1 %i.u, label %bb.d, label %._crit_edge.i.i
@@ -1061,24 +1062,35 @@ _ZNK5clang7VarDecl19ensureEvaluatedStmtEv.exit:   ; preds = %_ZNK5clang7VarDecl7
   br i1 %.not, label %bb.g, label %bb.q
 
 bb.g:                                             ; preds = %_ZNK5clang7VarDecl19ensureEvaluatedStmtEv.exit
-  %i.ak = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, -5 ; 2 uses
+  %i.ak = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, -5 ; 3 uses
   %.not12.not16.i.i.i = icmp eq i64 %i.ak, 0
-  br i1 %.not12.not16.i.i.i, label %.split.i.i, label %.thread.i
+  br i1 %.not12.not16.i.i.i, label %.split.i.i, label %_ZNK5clang7VarDecl7hasInitEv.exit.i.i
 
 .split.i.i:                                       ; preds = %bb.g
   %i.al = icmp ugt i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, 7
   tail call void @llvm.assume(i1 %i.al)
+  %.pre.i.i = inttoptr i64 %i.ak to ptr           ; 2 uses
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre.i.i, i64 8
+  %.pre = load i8, ptr %.phi.trans.insert, align 8, !tbaa !441
   br label %.thread.i
 
-.thread.i:                                        ; preds = %bb.g, %.split.i.i
-  %.pre-phi.i4.i = inttoptr i64 %i.ak to ptr
-  %1 = getelementptr inbounds nuw i8, ptr %.pre-phi.i4.i, i64 8 ; 4 uses
-  %2 = load i8, ptr %1, align 8, !tbaa !441
-  %i.am = trunc i8 %2 to i1
+_ZNK5clang7VarDecl7hasInitEv.exit.i.i:            ; preds = %bb.g
+  %1 = inttoptr i64 %i.ak to ptr                  ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %3 = load ptr, ptr %2, align 8
+  %4 = ptrtoint ptr %3 to i64
+  %5 = trunc i64 %4 to i8
+  br label %.thread.i
+
+.thread.i:                                        ; preds = %.split.i.i, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i
+  %6 = phi i8 [ %.pre, %.split.i.i ], [ %5, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
+  %.pre-phi.i4.i = phi ptr [ %.pre.i.i, %.split.i.i ], [ %1, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
+  %7 = getelementptr inbounds nuw i8, ptr %.pre-phi.i4.i, i64 8 ; 3 uses
+  %i.am = trunc i8 %6 to i1
   br i1 %i.am, label %bb.h, label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.thread.i
-  %.pre.i.i.i = load ptr, ptr %1, align 8, !tbaa !866
+  %.pre.i.i.i = load ptr, ptr %7, align 8, !tbaa !866
   br label %_ZNK5clang7VarDecl7getInitEv.exit
 
 bb.h:                                             ; preds = %.thread.i
@@ -1088,10 +1100,10 @@ bb.h:                                             ; preds = %.thread.i
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !439
   %i.ar = getelementptr i8, ptr %i.aq, i64 40, !nosanitize !34
   %i.as = load ptr, ptr %i.ar, align 8, !nosanitize !34
-  %i.at = load i64, ptr %1, align 8, !tbaa !723
+  %i.at = load i64, ptr %7, align 8, !tbaa !723
   %i.au = lshr i64 %i.at, 1
   %i.av = tail call noundef ptr %i.as(ptr noundef nonnull align 8 dereferenceable(16) %i.ap, i64 noundef %i.au) #29, !inline_history !868 ; 2 uses
-  store ptr %i.av, ptr %1, align 8, !tbaa !866
+  store ptr %i.av, ptr %7, align 8, !tbaa !866
   br label %_ZNK5clang7VarDecl7getInitEv.exit
 
 _ZNK5clang7VarDecl7getInitEv.exit:                ; preds = %._crit_edge.i.i.i, %bb.h
@@ -1494,38 +1506,42 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88
   %.sroa.0.0.copyload.i.i.i.i.i.i.i = load i64, ptr %i.g, align 8 ; 3 uses
   %i.h = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, 4
-  %.not.i.i.i.i.i.i = icmp eq i64 %i.h, 0         ; 3 uses
-  %i.i = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, -5 ; 4 uses
+  %.not.i.i.i.i.i.i = icmp eq i64 %i.h, 0         ; 2 uses
+  %i.i = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, -5 ; 3 uses
   %.not12.not16.i.i.i = icmp eq i64 %i.i, 0
   %.not12.not.i.i.i = or i1 %.not.i.i.i.i.i.i, %.not12.not16.i.i.i
   br i1 %.not12.not.i.i.i, label %.split.i.i, label %_ZNK5clang7VarDecl7hasInitEv.exit.i.i
 
 .split.i.i:                                       ; preds = %bb.c
   %i.j = icmp ugt i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, 7
-  br i1 %i.j, label %bb.d, label %_ZNK5clang7VarDecl7getInitEv.exit
+  br i1 %i.j, label %4, label %_ZNK5clang7VarDecl7getInitEv.exit
 
 _ZNK5clang7VarDecl7hasInitEv.exit.i.i:            ; preds = %bb.c
   %i.k = inttoptr i64 %i.i to ptr                 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 2 uses
   %i.m = load i8, ptr %i.l, align 8, !tbaa !441
   %i.n = trunc i8 %i.m to i1
-  %i.o = load ptr, ptr %i.l, align 8
+  %i.o = load ptr, ptr %i.l, align 8              ; 2 uses
   %i.p = icmp ne ptr %i.o, null
   %i.q = select i1 %i.n, i1 true, i1 %i.p
+  %2 = ptrtoint ptr %i.o to i64
+  %3 = trunc i64 %2 to i8
   br i1 %i.q, label %.thread.i, label %_ZNK5clang7VarDecl7getInitEv.exit
 
-bb.d:                                             ; preds = %.split.i.i
-  %.pre.i.i = inttoptr i64 %i.i to ptr            ; 2 uses
-  %.not.not9.i.i = icmp ne i64 %i.i, 0
-  %.not.not.not.i.i = and i1 %.not.not9.i.i, %.not.i.i.i.i.i.i
-  br i1 %.not.not.not.i.i, label %_ZNK5clang7VarDecl7getInitEv.exit, label %.thread.i
+4:                                                ; preds = %.split.i.i
+  %.pre.i.i = inttoptr i64 %i.i to ptr            ; 3 uses
+  br i1 %.not.i.i.i.i.i.i, label %_ZNK5clang7VarDecl7getInitEv.exit, label %bb.d
+
+bb.d:                                             ; preds = %4
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre.i.i, i64 8
+  %.pre = load i8, ptr %.phi.trans.insert, align 8, !tbaa !441
+  br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.d, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i
+  %5 = phi i8 [ %.pre, %bb.d ], [ %3, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
   %.pre-phi.i4.i = phi ptr [ %.pre.i.i, %bb.d ], [ %i.k, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
-  %.0.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, ptr null, ptr %.pre-phi.i4.i
-  %i.r = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i, i64 8 ; 4 uses
-  %2 = load i8, ptr %i.r, align 8, !tbaa !441
-  %i.s = trunc i8 %2 to i1
+  %i.r = getelementptr inbounds nuw i8, ptr %.pre-phi.i4.i, i64 8 ; 3 uses
+  %i.s = trunc i8 %5 to i1
   br i1 %i.s, label %bb.e, label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.thread.i
@@ -1545,8 +1561,8 @@ bb.e:                                             ; preds = %.thread.i
   store ptr %i.ab, ptr %i.r, align 8, !tbaa !866
   br label %_ZNK5clang7VarDecl7getInitEv.exit
 
-_ZNK5clang7VarDecl7getInitEv.exit:                ; preds = %bb.b, %bb.b, %.split.i.i, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i, %bb.d, %._crit_edge.i.i.i, %bb.e
-  %.1.i.i = phi ptr [ null, %.split.i.i ], [ %.pre.i.i, %bb.d ], [ null, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ], [ %i.ab, %bb.e ], [ %.pre.i.i.i, %._crit_edge.i.i.i ], [ null, %bb.b ], [ null, %bb.b ]
+_ZNK5clang7VarDecl7getInitEv.exit:                ; preds = %bb.b, %bb.b, %.split.i.i, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i, %4, %._crit_edge.i.i.i, %bb.e
+  %.1.i.i = phi ptr [ null, %.split.i.i ], [ %.pre.i.i, %4 ], [ null, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ], [ %i.ab, %bb.e ], [ %.pre.i.i.i, %._crit_edge.i.i.i ], [ null, %bb.b ], [ null, %bb.b ]
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
   %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %i.ac, align 8 ; 2 uses
   %i.ad = and i64 %.sroa.0.0.copyload.i.i.i.i, 4
@@ -1699,38 +1715,42 @@ bb.e:                                             ; preds = %_ZNK5clang7VarDecl1
 
 bb.f:                                             ; preds = %bb.e, %_ZNK5clang7VarDecl19ensureEvaluatedStmtEv.exit
   %i.ac = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, 4
-  %.not.i.i.i.i.i.i = icmp eq i64 %i.ac, 0        ; 3 uses
-  %i.ad = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, -5 ; 4 uses
+  %.not.i.i.i.i.i.i = icmp eq i64 %i.ac, 0        ; 2 uses
+  %i.ad = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, -5 ; 3 uses
   %.not12.not16.i.i.i = icmp eq i64 %i.ad, 0
   %.not12.not.i.i.i = or i1 %.not.i.i.i.i.i.i, %.not12.not16.i.i.i
   br i1 %.not12.not.i.i.i, label %.split.i.i, label %_ZNK5clang7VarDecl7hasInitEv.exit.i.i
 
 .split.i.i:                                       ; preds = %bb.f
   %i.ae = icmp ugt i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, 7
-  br i1 %i.ae, label %bb.g, label %_ZNK5clang7VarDecl7getInitEv.exit
+  br i1 %i.ae, label %7, label %_ZNK5clang7VarDecl7getInitEv.exit
 
 _ZNK5clang7VarDecl7hasInitEv.exit.i.i:            ; preds = %bb.f
   %i.af = inttoptr i64 %i.ad to ptr               ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 8 ; 2 uses
   %i.ah = load i8, ptr %i.ag, align 8, !tbaa !441
   %i.ai = trunc i8 %i.ah to i1
-  %i.aj = load ptr, ptr %i.ag, align 8
+  %i.aj = load ptr, ptr %i.ag, align 8            ; 2 uses
   %i.ak = icmp ne ptr %i.aj, null
   %i.al = select i1 %i.ai, i1 true, i1 %i.ak
+  %5 = ptrtoint ptr %i.aj to i64
+  %6 = trunc i64 %5 to i8
   br i1 %i.al, label %.thread.i, label %_ZNK5clang7VarDecl7getInitEv.exit
 
-bb.g:                                             ; preds = %.split.i.i
-  %.pre.i.i = inttoptr i64 %i.ad to ptr           ; 2 uses
-  %.not.not9.i.i = icmp ne i64 %i.ad, 0
-  %.not.not.not.i.i = and i1 %.not.not9.i.i, %.not.i.i.i.i.i.i
-  br i1 %.not.not.not.i.i, label %_ZNK5clang7VarDecl7getInitEv.exit, label %.thread.i
+7:                                                ; preds = %.split.i.i
+  %.pre.i.i = inttoptr i64 %i.ad to ptr           ; 3 uses
+  br i1 %.not.i.i.i.i.i.i, label %_ZNK5clang7VarDecl7getInitEv.exit, label %bb.g
+
+bb.g:                                             ; preds = %7
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre.i.i, i64 8
+  %.pre = load i8, ptr %.phi.trans.insert, align 8, !tbaa !441
+  br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.g, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i
+  %8 = phi i8 [ %.pre, %bb.g ], [ %6, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
   %.pre-phi.i4.i = phi ptr [ %.pre.i.i, %bb.g ], [ %i.af, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
-  %.0.i.i.i.i.i32 = select i1 %.not.i.i.i.i.i.i, ptr null, ptr %.pre-phi.i4.i
-  %i.am = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i32, i64 8 ; 4 uses
-  %5 = load i8, ptr %i.am, align 8, !tbaa !441
-  %i.an = trunc i8 %5 to i1
+  %i.am = getelementptr inbounds nuw i8, ptr %.pre-phi.i4.i, i64 8 ; 3 uses
+  %i.an = trunc i8 %8 to i1
   br i1 %i.an, label %bb.h, label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.thread.i
@@ -1750,8 +1770,8 @@ bb.h:                                             ; preds = %.thread.i
   store ptr %i.aw, ptr %i.am, align 8, !tbaa !866
   br label %_ZNK5clang7VarDecl7getInitEv.exit
 
-_ZNK5clang7VarDecl7getInitEv.exit:                ; preds = %bb.e, %bb.e, %.split.i.i, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i, %bb.g, %._crit_edge.i.i.i, %bb.h
-  %.1.i.i = phi ptr [ null, %.split.i.i ], [ %.pre.i.i, %bb.g ], [ null, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ], [ %i.aw, %bb.h ], [ %.pre.i.i.i, %._crit_edge.i.i.i ], [ null, %bb.e ], [ null, %bb.e ]
+_ZNK5clang7VarDecl7getInitEv.exit:                ; preds = %bb.e, %bb.e, %.split.i.i, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i, %7, %._crit_edge.i.i.i, %bb.h
+  %.1.i.i = phi ptr [ null, %.split.i.i ], [ %.pre.i.i, %7 ], [ null, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ], [ %i.aw, %bb.h ], [ %.pre.i.i.i, %._crit_edge.i.i.i ], [ null, %bb.e ], [ null, %bb.e ]
   %i.ax = load i8, ptr %.0.i, align 8             ; 3 uses
   %i.ay = and i8 %i.ax, 1
   %.not = icmp eq i8 %i.ay, 0
@@ -2154,8 +2174,8 @@ bb.b:                                             ; preds = %select.unfold
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 88
   %.sroa.0.0.copyload.i.i.i.i.i.i.i = load i64, ptr %i.s, align 8 ; 3 uses
   %i.t = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, 4
-  %.not.i.i.i.i.i.i = icmp eq i64 %i.t, 0         ; 3 uses
-  %i.u = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, -5 ; 4 uses
+  %.not.i.i.i.i.i.i = icmp eq i64 %i.t, 0         ; 2 uses
+  %i.u = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, -5 ; 3 uses
   %.not12.not16.i.i.i = icmp eq i64 %i.u, 0
   %.not12.not.i.i.i = or i1 %.not.i.i.i.i.i.i, %.not12.not16.i.i.i
   br i1 %.not12.not.i.i.i, label %.split.i.i, label %_ZNK5clang7VarDecl7hasInitEv.exit.i.i
@@ -2163,21 +2183,27 @@ bb.b:                                             ; preds = %select.unfold
 .split.i.i:                                       ; preds = %bb.b
   %i.v = icmp ugt i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, 7
   tail call void @llvm.assume(i1 %i.v)
-  %.pre.i.i = inttoptr i64 %i.u to ptr            ; 2 uses
-  %.not.not9.i.i = icmp ne i64 %i.u, 0
-  %.not.not.not.i.i = and i1 %.not.not9.i.i, %.not.i.i.i.i.i.i
-  br i1 %.not.not.not.i.i, label %_ZNK5clang7VarDecl7getInitEv.exit, label %.thread.i
+  %.pre.i.i = inttoptr i64 %i.u to ptr            ; 3 uses
+  br i1 %.not.i.i.i.i.i.i, label %_ZNK5clang7VarDecl7getInitEv.exit, label %.split.i.i..thread.i_crit_edge
 
-_ZNK5clang7VarDecl7hasInitEv.exit.i.i:            ; preds = %bb.b
-  %i.w = inttoptr i64 %i.u to ptr
+.split.i.i..thread.i_crit_edge:                   ; preds = %.split.i.i
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre.i.i, i64 8
+  %.pre = load i8, ptr %.phi.trans.insert, align 8, !tbaa !441
   br label %.thread.i
 
-.thread.i:                                        ; preds = %_ZNK5clang7VarDecl7hasInitEv.exit.i.i, %.split.i.i
-  %.pre-phi.i4.i = phi ptr [ %.pre.i.i, %.split.i.i ], [ %i.w, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
-  %.0.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, ptr null, ptr %.pre-phi.i4.i
-  %i.x = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i, i64 8 ; 4 uses
-  %2 = load i8, ptr %i.x, align 8, !tbaa !441
-  %i.y = trunc i8 %2 to i1
+_ZNK5clang7VarDecl7hasInitEv.exit.i.i:            ; preds = %bb.b
+  %i.w = inttoptr i64 %i.u to ptr                 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.w, i64 8
+  %3 = load ptr, ptr %2, align 8
+  %4 = ptrtoint ptr %3 to i64
+  %5 = trunc i64 %4 to i8
+  br label %.thread.i
+
+.thread.i:                                        ; preds = %.split.i.i..thread.i_crit_edge, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i
+  %6 = phi i8 [ %.pre, %.split.i.i..thread.i_crit_edge ], [ %5, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
+  %.pre-phi.i4.i = phi ptr [ %.pre.i.i, %.split.i.i..thread.i_crit_edge ], [ %i.w, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
+  %i.x = getelementptr inbounds nuw i8, ptr %.pre-phi.i4.i, i64 8 ; 3 uses
+  %i.y = trunc i8 %6 to i1
   br i1 %i.y, label %bb.c, label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.thread.i
@@ -2310,8 +2336,8 @@ bb.b:                                             ; preds = %select.unfold
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 88
   %.sroa.0.0.copyload.i.i.i.i.i.i.i = load i64, ptr %i.s, align 8 ; 3 uses
   %i.t = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, 4
-  %.not.i.i.i.i.i.i = icmp eq i64 %i.t, 0         ; 3 uses
-  %i.u = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, -5 ; 4 uses
+  %.not.i.i.i.i.i.i = icmp eq i64 %i.t, 0         ; 2 uses
+  %i.u = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, -5 ; 3 uses
   %.not12.not16.i.i.i = icmp eq i64 %i.u, 0
   %.not12.not.i.i.i = or i1 %.not.i.i.i.i.i.i, %.not12.not16.i.i.i
   br i1 %.not12.not.i.i.i, label %.split.i.i, label %_ZNK5clang7VarDecl7hasInitEv.exit.i.i
@@ -2319,21 +2345,27 @@ bb.b:                                             ; preds = %select.unfold
 .split.i.i:                                       ; preds = %bb.b
   %i.v = icmp ugt i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, 7
   tail call void @llvm.assume(i1 %i.v)
-  %.pre.i.i = inttoptr i64 %i.u to ptr            ; 2 uses
-  %.not.not9.i.i = icmp ne i64 %i.u, 0
-  %.not.not.not.i.i = and i1 %.not.not9.i.i, %.not.i.i.i.i.i.i
-  br i1 %.not.not.not.i.i, label %_ZNK5clang7VarDecl7getInitEv.exit, label %.thread.i
+  %.pre.i.i = inttoptr i64 %i.u to ptr            ; 3 uses
+  br i1 %.not.i.i.i.i.i.i, label %_ZNK5clang7VarDecl7getInitEv.exit, label %.split.i.i..thread.i_crit_edge
 
-_ZNK5clang7VarDecl7hasInitEv.exit.i.i:            ; preds = %bb.b
-  %i.w = inttoptr i64 %i.u to ptr
+.split.i.i..thread.i_crit_edge:                   ; preds = %.split.i.i
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre.i.i, i64 8
+  %.pre = load i8, ptr %.phi.trans.insert, align 8, !tbaa !441
   br label %.thread.i
 
-.thread.i:                                        ; preds = %_ZNK5clang7VarDecl7hasInitEv.exit.i.i, %.split.i.i
-  %.pre-phi.i4.i = phi ptr [ %.pre.i.i, %.split.i.i ], [ %i.w, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
-  %.0.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, ptr null, ptr %.pre-phi.i4.i
-  %i.x = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i, i64 8 ; 4 uses
-  %2 = load i8, ptr %i.x, align 8, !tbaa !441
-  %i.y = trunc i8 %2 to i1
+_ZNK5clang7VarDecl7hasInitEv.exit.i.i:            ; preds = %bb.b
+  %i.w = inttoptr i64 %i.u to ptr                 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.w, i64 8
+  %3 = load ptr, ptr %2, align 8
+  %4 = ptrtoint ptr %3 to i64
+  %5 = trunc i64 %4 to i8
+  br label %.thread.i
+
+.thread.i:                                        ; preds = %.split.i.i..thread.i_crit_edge, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i
+  %6 = phi i8 [ %.pre, %.split.i.i..thread.i_crit_edge ], [ %5, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
+  %.pre-phi.i4.i = phi ptr [ %.pre.i.i, %.split.i.i..thread.i_crit_edge ], [ %i.w, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
+  %i.x = getelementptr inbounds nuw i8, ptr %.pre-phi.i4.i, i64 8 ; 3 uses
+  %i.y = trunc i8 %6 to i1
   br i1 %i.y, label %bb.c, label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.thread.i
@@ -2736,38 +2768,42 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 88
   %.sroa.0.0.copyload.i.i.i.i.i.i.i = load i64, ptr %i.l, align 8 ; 3 uses
   %i.m = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, 4
-  %.not.i.i.i.i.i.i = icmp eq i64 %i.m, 0         ; 3 uses
-  %i.n = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, -5 ; 4 uses
+  %.not.i.i.i.i.i.i = icmp eq i64 %i.m, 0         ; 2 uses
+  %i.n = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, -5 ; 3 uses
   %.not12.not16.i.i.i = icmp eq i64 %i.n, 0
   %.not12.not.i.i.i = or i1 %.not.i.i.i.i.i.i, %.not12.not16.i.i.i
   br i1 %.not12.not.i.i.i, label %.split.i.i, label %_ZNK5clang7VarDecl7hasInitEv.exit.i.i
 
 .split.i.i:                                       ; preds = %bb.e
   %i.o = icmp ugt i64 %.sroa.0.0.copyload.i.i.i.i.i.i.i, 7
-  br i1 %i.o, label %bb.f, label %_ZNK5clang7VarDecl7getInitEv.exit.thread
+  br i1 %i.o, label %3, label %_ZNK5clang7VarDecl7getInitEv.exit.thread
 
 _ZNK5clang7VarDecl7hasInitEv.exit.i.i:            ; preds = %bb.e
   %i.p = inttoptr i64 %i.n to ptr                 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8 ; 2 uses
   %i.r = load i8, ptr %i.q, align 8, !tbaa !441
   %i.s = trunc i8 %i.r to i1
-  %i.t = load ptr, ptr %i.q, align 8
+  %i.t = load ptr, ptr %i.q, align 8              ; 2 uses
   %i.u = icmp ne ptr %i.t, null
   %i.v = select i1 %i.s, i1 true, i1 %i.u
+  %1 = ptrtoint ptr %i.t to i64
+  %2 = trunc i64 %1 to i8
   br i1 %i.v, label %.thread.i, label %_ZNK5clang7VarDecl7getInitEv.exit.thread
 
-bb.f:                                             ; preds = %.split.i.i
-  %.pre.i.i = inttoptr i64 %i.n to ptr            ; 2 uses
-  %.not.not9.i.i = icmp ne i64 %i.n, 0
-  %.not.not.not.i.i = and i1 %.not.not9.i.i, %.not.i.i.i.i.i.i
-  br i1 %.not.not.not.i.i, label %_ZNK5clang7VarDecl7getInitEv.exit, label %.thread.i
+3:                                                ; preds = %.split.i.i
+  %.pre.i.i = inttoptr i64 %i.n to ptr            ; 3 uses
+  br i1 %.not.i.i.i.i.i.i, label %_ZNK5clang7VarDecl7getInitEv.exit, label %bb.f
+
+bb.f:                                             ; preds = %3
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre.i.i, i64 8
+  %.pre = load i8, ptr %.phi.trans.insert, align 8, !tbaa !441
+  br label %.thread.i
 
 .thread.i:                                        ; preds = %bb.f, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i
+  %4 = phi i8 [ %.pre, %bb.f ], [ %2, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
   %.pre-phi.i4.i = phi ptr [ %.pre.i.i, %bb.f ], [ %i.p, %_ZNK5clang7VarDecl7hasInitEv.exit.i.i ]
-  %.0.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i, ptr null, ptr %.pre-phi.i4.i
-  %i.w = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i, i64 8 ; 4 uses
-  %1 = load i8, ptr %i.w, align 8, !tbaa !441
-  %i.x = trunc i8 %1 to i1
+  %i.w = getelementptr inbounds nuw i8, ptr %.pre-phi.i4.i, i64 8 ; 3 uses
+  %i.x = trunc i8 %4 to i1
   br i1 %i.x, label %bb.g, label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.thread.i
@@ -2787,8 +2823,8 @@ bb.g:                                             ; preds = %.thread.i
   store ptr %i.ag, ptr %i.w, align 8, !tbaa !866
   br label %_ZNK5clang7VarDecl7getInitEv.exit
 
-_ZNK5clang7VarDecl7getInitEv.exit:                ; preds = %bb.f, %._crit_edge.i.i.i, %bb.g
-  %.1.i.i = phi ptr [ %i.ag, %bb.g ], [ %.pre.i.i, %bb.f ], [ %.pre.i.i.i, %._crit_edge.i.i.i ] ; 2 uses
+_ZNK5clang7VarDecl7getInitEv.exit:                ; preds = %3, %._crit_edge.i.i.i, %bb.g
+  %.1.i.i = phi ptr [ %i.ag, %bb.g ], [ %.pre.i.i, %3 ], [ %.pre.i.i.i, %._crit_edge.i.i.i ] ; 2 uses
   %.not.not = icmp eq ptr %.1.i.i, null
   br i1 %.not.not, label %_ZNK5clang7VarDecl7getInitEv.exit.thread, label %_ZNK5clang7VarDecl7getInitEv.exit.thread.sink.split
 
@@ -2918,8 +2954,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 88
   %.sroa.0.0.copyload.i.i.i.i.i.i = load i64, ptr %i.g, align 8 ; 3 uses
   %i.h = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i, 4
-  %.not.i.i.i.i.i = icmp eq i64 %i.h, 0           ; 3 uses
-  %i.i = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i, -5 ; 4 uses
+  %.not.i.i.i.i.i = icmp eq i64 %i.h, 0           ; 2 uses
+  %i.i = and i64 %.sroa.0.0.copyload.i.i.i.i.i.i, -5 ; 3 uses
   %.not12.not16.i.i = icmp eq i64 %i.i, 0
   %.not12.not.i.i = or i1 %.not.i.i.i.i.i, %.not12.not16.i.i
   br i1 %.not12.not.i.i, label %.split.i, label %_ZNK5clang7VarDecl7hasInitEv.exit.i
@@ -2940,14 +2976,11 @@ _ZNK5clang7VarDecl7hasInitEv.exit.i:              ; preds = %bb.c
 
 bb.d:                                             ; preds = %.split.i
   %.pre.i = inttoptr i64 %i.i to ptr              ; 2 uses
-  %.not.not9.i = icmp ne i64 %i.i, 0
-  %.not.not.not.i = and i1 %.not.not9.i, %.not.i.i.i.i.i
-  br i1 %.not.not.not.i, label %_ZN5clang7VarDecl7getInitEv.exit.thread15, label %.thread
+  br i1 %.not.i.i.i.i.i, label %_ZN5clang7VarDecl7getInitEv.exit.thread15, label %.thread
 
 .thread:                                          ; preds = %_ZNK5clang7VarDecl7hasInitEv.exit.i, %bb.d
   %.pre-phi.i11 = phi ptr [ %.pre.i, %bb.d ], [ %i.k, %_ZNK5clang7VarDecl7hasInitEv.exit.i ]
-  %.0.i.i.i.i = select i1 %.not.i.i.i.i.i, ptr null, ptr %.pre-phi.i11
-  %i.r = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i, i64 8 ; 4 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %.pre-phi.i11, i64 8 ; 4 uses
   %i.s = load i8, ptr %i.r, align 8, !tbaa !441
   %i.t = trunc i8 %i.s to i1
   br i1 %i.t, label %bb.e, label %._crit_edge.i.i

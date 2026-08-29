@@ -205,10 +205,10 @@ _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i.i.i.i.i.
 
 bb.i:                                             ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph52.i.i.i.i.i.i.i.i.i.i.i.i
   %.03451.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ 0, %.lr.ph52.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.fj, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i ] ; 4 uses
-  %.03550.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.em, %.lr.ph52.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.speculated.i.i.i.i.i.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i ] ; 8 uses
-  %i.en = sub nuw nsw i64 %i.al, %.03550.i.i.i.i.i.i.i.i.i.i.i.i ; 4 uses
+  %.03550.i.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.em, %.lr.ph52.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.speculated.i.i.i.i.i.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i.i.i.i.i.i.i ] ; 6 uses
+  %i.en = sub nuw nsw i64 %i.al, %.03550.i.i.i.i.i.i.i.i.i.i.i.i ; 5 uses
   %i.eo = and i64 %i.en, 9223372036854775806
-  %i.ep = add nuw nsw i64 %i.eo, %.03550.i.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
+  %i.ep = add nuw nsw i64 %i.eo, %.03550.i.i.i.i.i.i.i.i.i.i.i.i
   %i.eq = icmp sgt i64 %.03550.i.i.i.i.i.i.i.i.i.i.i.i, 0
   br i1 %i.eq, label %.preheader43.loopexit.i.i.i.i.i.i.i.i.i.i.i.i, label %.preheader43.i.i.i.i.i.i.i.i.i.i.i.i
 
@@ -227,14 +227,9 @@ bb.i:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ev = getelementptr [8 x i8], ptr %i.di, i64 %i.eu
   %i.ew = shl nuw nsw i64 %.03550.i.i.i.i.i.i.i.i.i.i.i.i, 3
   %scevgep.i = getelementptr i8, ptr %i.ev, i64 %i.ew
-  %22 = add nuw nsw i64 %.03550.i.i.i.i.i.i.i.i.i.i.i.i, 2
-  %smax.i = call i64 @llvm.smax.i64(i64 %i.ep, i64 %22)
-  %23 = xor i64 %.03550.i.i.i.i.i.i.i.i.i.i.i.i, -1
-  %24 = add nsw i64 %smax.i, %23
-  %i.ex = shl nuw nsw i64 %24, 3
-  %i.ey = and i64 %i.ex, 9223372036854775792
-  %25 = add nuw nsw i64 %i.ey, 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %scevgep.i, i8 0, i64 %25, i1 false), !tbaa !69
+  %i.ex = shl i64 %i.en, 3
+  %i.ey = and i64 %i.ex, -16
+  call void @llvm.memset.p0.i64(ptr align 16 %scevgep.i, i8 0, i64 %i.ey, i1 false), !tbaa !69
   br label %.preheader.i.i.i.i.i.i.i.i.i.i.i.i
 
 .preheader.i.i.i.i.i.i.i.i.i.i.i.i:               ; preds = %.lr.ph47.i.preheader.i.i.i.i.i.i.i.i.i.i.i, %.preheader43.i.i.i.i.i.i.i.i.i.i.i.i

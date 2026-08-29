@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.z, label %.critedge3469, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.aa = and i32 %5, 131070                      ; 5 uses
+  %i.aa = and i32 %5, 131070                      ; 4 uses
   %i.ab = add nsw i32 %7, -2
   %i.ac = sdiv i32 %i.ab, 6                       ; 115 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -509,7 +509,7 @@ bb.q:                                             ; preds = %switch.edge
   %i.gc = getelementptr inbounds nuw i8, ptr %i.g, i64 %3
   %i.gd = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.ge = icmp samesign ugt i32 %5, 1             ; 2 uses
-  %i.gf = icmp samesign ugt i32 %i.aa, 2          ; 3 uses
+  %i.gf = icmp samesign ugt i32 %i.aa, 2          ; 2 uses
   %i.gg = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.gh = sub i64 %i.fj, %i.fo
   %i.gi = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -912,11 +912,11 @@ bb.bp:                                            ; preds = %bb.bo
 
 bb.bq:                                            ; preds = %bb.bp, %bb.bo, %bb.bm
   %i.qb = icmp slt i32 %.128484241, 0
-  br i1 %i.qb, label %11, label %bb.br
+  br i1 %i.qb, label %.thread3584.a, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
   %.not3462 = icmp eq i32 %.128484241, 0
-  br i1 %.not3462, label %.thread3584.a, label %bb.bs
+  br i1 %.not3462, label %.thread3584.thread, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
   %i.qc = add nuw nsw i32 %.128484241, 1          ; 2 uses
@@ -927,37 +927,34 @@ bb.bs:                                            ; preds = %bb.br
   %.mux4512 = select i1 %i.qe, i32 %i.qc, i32 0
   br i1 %brmerge, label %.thread3592, label %.thread3596
 
-11:                                               ; preds = %bb.bq
-  br i1 %i.ge, label %.thread3596.thread, label %.thread3584.thread
+.thread3584.a:                                    ; preds = %bb.bq
+  br i1 %i.ge, label %.thread3596.thread, label %.thread3596.thread4440
 
-.thread3584.a:                                    ; preds = %bb.br
+.thread3584.thread:                               ; preds = %bb.br
   br i1 %i.gf, label %.thread3592, label %.thread3596
 
-.thread3584.thread:                               ; preds = %11
-  br i1 %i.gf, label %.thread3592, label %.thread3596.thread4440
-
-.thread3592:                                      ; preds = %bb.bs, %.thread3584.thread, %.thread3584.a
-  %12 = phi i32 [ %i.aa, %.thread3584.a ], [ %.mux, %bb.bs ], [ %i.aa, %.thread3584.thread ]
-  %.2284935873595 = phi i32 [ 0, %.thread3584.a ], [ %.mux4512, %bb.bs ], [ 0, %.thread3584.thread ]
-  %i.qf = add nsw i32 %12, -2
+.thread3592:                                      ; preds = %bb.bs, %.thread3584.thread
+  %11 = phi i32 [ %i.aa, %.thread3584.thread ], [ %.mux, %bb.bs ]
+  %.2284935873595 = phi i32 [ 0, %.thread3584.thread ], [ %.mux4512, %bb.bs ]
+  %i.qf = add nsw i32 %11, -2
   %i.qg = zext nneg i32 %i.qf to i64
   %i.qh = shl nuw nsw i64 %i.qg, 3
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.gg, ptr align 8 %4, i64 %i.qh, i1 false)
   br label %.thread3596.thread
 
-.thread3596:                                      ; preds = %bb.bs, %.thread3584.a
+.thread3596:                                      ; preds = %bb.bs, %.thread3584.thread
   br i1 %i.ge, label %.thread3596.thread, label %.thread3596.thread4440
 
-.thread3596.thread:                               ; preds = %.thread3592, %11, %.thread3596
-  %.22849358735944438 = phi i32 [ 0, %.thread3596 ], [ 1, %11 ], [ %.2284935873595, %.thread3592 ]
+.thread3596.thread:                               ; preds = %.thread3592, %.thread3584.a, %.thread3596
+  %.22849358735944438 = phi i32 [ 0, %.thread3596 ], [ 1, %.thread3584.a ], [ %.2284935873595, %.thread3592 ]
   store i64 %i.gh, ptr %4, align 8, !tbaa !102
   %i.qi = ptrtoint ptr %.129934237 to i64
   %i.qj = sub i64 %i.qi, %i.fo
   store i64 %i.qj, ptr %i.gi, align 8, !tbaa !102
   br label %.thread3596.thread4440
 
-.thread3596.thread4440:                           ; preds = %.thread3584.thread, %.thread3596.thread, %.thread3596
-  %.22849358735944437 = phi i32 [ %.22849358735944438, %.thread3596.thread ], [ 0, %.thread3596 ], [ 0, %.thread3584.thread ] ; 2 uses
+.thread3596.thread4440:                           ; preds = %.thread3584.a, %.thread3596.thread, %.thread3596
+  %.22849358735944437 = phi i32 [ %.22849358735944438, %.thread3596.thread ], [ 0, %.thread3596 ], [ 0, %.thread3584.a ] ; 2 uses
   %i.qk = load i32, ptr %i.fv, align 4, !tbaa !64
   %i.ql = and i32 %i.qk, 128
   %.not3463 = icmp eq i32 %i.ql, 0

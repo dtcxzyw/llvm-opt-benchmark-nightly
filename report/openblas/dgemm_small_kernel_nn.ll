@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
   br i1 %i.agr, label %.preheader3024, label %._crit_edge3268, !llvm.loop !91
 
 ._crit_edge3268:                                  ; preds = %._crit_edge3266, %.preheader3025
-  %.2.lcssa = phi i64 [ %.1.lcssa, %.preheader3025 ], [ %i.agq, %._crit_edge3266 ] ; 10 uses
+  %.2.lcssa = phi i64 [ %.1.lcssa, %.preheader3025 ], [ %i.agq, %._crit_edge3266 ] ; 9 uses
   %i.ags = sub nsw i64 %0, %.2.lcssa              ; 7 uses
   %i.agt = trunc i64 %i.ags to i32                ; 4 uses
   %.not = icmp eq i32 %i.agt, 0
@@ -605,15 +605,14 @@ bb.l:                                             ; preds = %bb.l, %.epil.prehea
   %i.asi = ashr exact i64 %sext, 29
   %i.asj = mul i64 %i.asi, %2
   %i.ask = tail call noalias ptr @malloc(i64 noundef %i.asj) #10 ; 27 uses
-  %11 = and i64 %2, 9223372036854775800           ; 9 uses
-  %i.asl = and i64 %2, 9223372036854775804
+  %i.asl = and i64 %i.ags, 4294967295
+  %notmask = shl nsw i64 -1, %i.asl
+  %11 = trunc i64 %notmask to i8
+  %12 = xor i8 %11, -1
+  %13 = and i64 %2, 9223372036854775804
   %invariant.gep3270 = getelementptr [8 x i8], ptr %i.ask, i64 %2
-  %12 = and i64 %i.ags, 4294967295
-  %notmask = shl nsw i64 -1, %12
-  %13 = trunc i64 %notmask to i8
-  %14 = xor i8 %13, -1
-  %i.asm = getelementptr [8 x i8], ptr %3, i64 %.2.lcssa ; 4 uses
-  %i.asn = bitcast i8 %14 to <8 x i1>
+  %i.asm = getelementptr [8 x i8], ptr %3, i64 %.2.lcssa ; 5 uses
+  %i.asn = bitcast i8 %12 to <8 x i1>
   %i.aso = shufflevector <8 x i1> %i.asn, <8 x i1> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3> ; 4 uses
   %.idx = mul nuw nsw i64 %2, 24
   %invariant.gep3276 = getelementptr inbounds nuw i8, ptr %i.ask, i64 %.idx
@@ -621,14 +620,12 @@ bb.l:                                             ; preds = %bb.l, %.epil.prehea
   %invariant.gep3278 = getelementptr inbounds nuw i8, ptr %i.ask, i64 %.idx2970
   br label %bb.m
 
-.preheader3018:                                   ; preds = %bb.r
+.preheader3017.lr.ph:                             ; preds = %bb.r
+  %14 = and i64 %2, 9223372036854775800           ; 9 uses
   %15 = icmp slt i64 %i.atq, %2
-  br i1 %15, label %.preheader3017.lr.ph, label %._crit_edge3284.split
-
-.preheader3017.lr.ph:                             ; preds = %.preheader3018
   %i.asp = icmp sgt i32 %i.agt, 0
-  %16 = getelementptr [8 x i8], ptr %3, i64 %.2.lcssa
-  br i1 %i.asp, label %.preheader3017.preheader, label %._crit_edge3284.split
+  %or.cond4052 = and i1 %15, %i.asp
+  br i1 %or.cond4052, label %.preheader3017.preheader, label %._crit_edge3284.split
 
 .preheader3017.preheader:                         ; preds = %.preheader3017.lr.ph
   %wide.trip.count = and i64 %i.ags, 2147483647
@@ -694,13 +691,13 @@ bb.q:                                             ; preds = %bb.p, %bb.m
 
 bb.r:                                             ; preds = %bb.q, %bb.m
   %i.atq = add nuw nsw i64 %.1227673272, 4        ; 4 uses
-  %i.atr = icmp samesign ult i64 %i.atq, %i.asl
-  br i1 %i.atr, label %bb.m, label %.preheader3018, !llvm.loop !109
+  %i.atr = icmp samesign ult i64 %i.atq, %13
+  br i1 %i.atr, label %bb.m, label %.preheader3017.lr.ph, !llvm.loop !109
 
 iter.check:                                       ; preds = %.preheader3017.preheader, %._crit_edge3282
   %.1327683283 = phi i64 [ %i.atz, %._crit_edge3282 ], [ %i.atq, %.preheader3017.preheader ] ; 3 uses
   %i.ats = mul nsw i64 %.1327683283, %4
-  %i.att = getelementptr [8 x i8], ptr %16, i64 %i.ats ; 9 uses
+  %i.att = getelementptr [8 x i8], ptr %i.asm, i64 %i.ats ; 9 uses
   %i.atu = getelementptr inbounds nuw [8 x i8], ptr %i.ask, i64 %.1327683283 ; 9 uses
   br i1 %i.asr, label %.epil.preheader4402, label %iter.check.new
 
@@ -727,8 +724,8 @@ bb.s:                                             ; preds = %bb.s, %.epil.prehea
 
 ._crit_edge3282:                                  ; preds = %bb.s, %._crit_edge3282.unr-lcssa
   %i.atz = add nuw nsw i64 %.1327683283, 1        ; 2 uses
-  %exitcond3704.not = icmp eq i64 %i.atz, %2
-  br i1 %exitcond3704.not, label %._crit_edge3284.split, label %iter.check, !llvm.loop !113
+  %16 = icmp slt i64 %i.atz, %2
+  br i1 %16, label %iter.check, label %._crit_edge3284.split, !llvm.loop !113
 
 iter.check.new:                                   ; preds = %iter.check, %iter.check.new
   %indvars.iv = phi i64 [ %indvars.iv.next.7, %iter.check.new ], [ 0, %iter.check ] ; 10 uses
@@ -785,7 +782,7 @@ iter.check.new:                                   ; preds = %iter.check, %iter.c
   %niter4408.ncmp.7 = icmp eq i64 %niter4408.next.7, %unroll_iter4407
   br i1 %niter4408.ncmp.7, label %._crit_edge3282.unr-lcssa, label %iter.check.new, !llvm.loop !114
 
-._crit_edge3284.split:                            ; preds = %._crit_edge3282, %.preheader3017.lr.ph, %.preheader3018
+._crit_edge3284.split:                            ; preds = %._crit_edge3282, %.preheader3017.lr.ph
   %i.avg = insertelement <4 x double> poison, double %5, i64 0
   %i.avh = shufflevector <4 x double> %i.avg, <4 x double> poison, <4 x i32> zeroinitializer ; 10 uses
   %i.avi = insertelement <4 x double> poison, double %8, i64 0
@@ -990,7 +987,7 @@ bb.t:                                             ; preds = %.lr.ph3302, %bb.t
   %i.azx = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.ayy, <8 x double> %i.azi, <8 x double> %.029223286) ; 3 uses
   %i.azy = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.aza, <8 x double> %i.azi, <8 x double> %.029243285) ; 3 uses
   %i.azz = add nuw nsw i64 %.1427693301, 8        ; 2 uses
-  %i.baa = icmp samesign ult i64 %i.azz, %11
+  %i.baa = icmp samesign ult i64 %i.azz, %14
   br i1 %i.baa, label %bb.t, label %._crit_edge3303, !llvm.loop !116
 
 ._crit_edge3303:                                  ; preds = %bb.t
@@ -1203,7 +1200,7 @@ bb.w:                                             ; preds = %.lr.ph3340, %bb.w
   %i.bfl = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.bey, <8 x double> %i.bfe, <8 x double> %.029383332) ; 3 uses
   %i.bfm = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.bfa, <8 x double> %i.bfe, <8 x double> %.029403331) ; 3 uses
   %i.bfn = add nuw nsw i64 %.1527703339, 8        ; 2 uses
-  %i.bfo = icmp samesign ult i64 %i.bfn, %11
+  %i.bfo = icmp samesign ult i64 %i.bfn, %14
   br i1 %i.bfo, label %bb.w, label %._crit_edge3341, !llvm.loop !122
 
 ._crit_edge3341:                                  ; preds = %bb.w
@@ -1314,7 +1311,7 @@ bb.z:                                             ; preds = %.lr.ph3362, %bb.z
   %i.bie = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.bhx, <8 x double> %i.bib, <8 x double> %.028883359) ; 3 uses
   %i.bif = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.bhz, <8 x double> %i.bib, <8 x double> %.028863360) ; 3 uses
   %i.big = add nuw nsw i64 %.1627713361, 8        ; 2 uses
-  %i.bih = icmp samesign ult i64 %i.big, %11
+  %i.bih = icmp samesign ult i64 %i.big, %14
   br i1 %i.bih, label %bb.z, label %._crit_edge3363, !llvm.loop !126
 
 ._crit_edge3363:                                  ; preds = %bb.z
@@ -1486,7 +1483,7 @@ bb.ac:                                            ; preds = %.lr.ph3386, %bb.ac
   %i.blv = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.ble, <8 x double> %i.blo, <8 x double> %.028633383) ; 3 uses
   %i.blw = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.blg, <8 x double> %i.blo, <8 x double> %.028613384) ; 3 uses
   %i.blx = add nuw nsw i64 %.1727723385, 8        ; 2 uses
-  %i.bly = icmp samesign ult i64 %i.blx, %11
+  %i.bly = icmp samesign ult i64 %i.blx, %14
   br i1 %i.bly, label %bb.ac, label %._crit_edge3387, !llvm.loop !130
 
 ._crit_edge3387:                                  ; preds = %bb.ac
@@ -1615,7 +1612,7 @@ bb.af:                                            ; preds = %.lr.ph3406, %bb.af
   %i.bpd = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.bou, <8 x double> %i.bpa, <8 x double> %.028263403) ; 3 uses
   %i.bpe = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.bow, <8 x double> %i.bpa, <8 x double> %.028243404) ; 3 uses
   %i.bpf = add nuw nsw i64 %.1827733405, 8        ; 2 uses
-  %i.bpg = icmp samesign ult i64 %i.bpf, %11
+  %i.bpg = icmp samesign ult i64 %i.bpf, %14
   br i1 %i.bpg, label %bb.af, label %._crit_edge3407, !llvm.loop !132
 
 ._crit_edge3407:                                  ; preds = %bb.af
@@ -1690,7 +1687,7 @@ bb.ai:                                            ; preds = %.lr.ph3422, %bb.ai
   %i.bqs = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.bqn, <8 x double> %i.bqr, <8 x double> %.028143419) ; 3 uses
   %i.bqt = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.bqp, <8 x double> %i.bqr, <8 x double> %.028123420) ; 3 uses
   %i.bqu = add nuw nsw i64 %.1927743421, 8        ; 2 uses
-  %i.bqv = icmp samesign ult i64 %i.bqu, %11
+  %i.bqv = icmp samesign ult i64 %i.bqu, %14
   br i1 %i.bqv, label %bb.ai, label %._crit_edge3423, !llvm.loop !134
 
 ._crit_edge3423:                                  ; preds = %bb.ai
@@ -1788,7 +1785,7 @@ bb.al:                                            ; preds = %.lr.ph3440, %bb.al
   %i.bsr = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.bsg, <8 x double> %i.bsm, <8 x double> %.028003437) ; 3 uses
   %i.bss = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.bsg, <8 x double> %i.bso, <8 x double> %.027983438) ; 3 uses
   %i.bst = add nuw nsw i64 %.2027753439, 8        ; 2 uses
-  %i.bsu = icmp samesign ult i64 %i.bst, %11
+  %i.bsu = icmp samesign ult i64 %i.bst, %14
   br i1 %i.bsu, label %bb.al, label %._crit_edge3441, !llvm.loop !137
 
 ._crit_edge3441:                                  ; preds = %bb.al
@@ -1879,7 +1876,7 @@ bb.ao:                                            ; preds = %.lr.ph3454, %bb.ao
   %i.buu = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.bup, <8 x double> %i.bur, <8 x double> %.027803451) ; 3 uses
   %i.buv = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.bup, <8 x double> %i.but, <8 x double> %.027783452) ; 3 uses
   %i.buw = add nuw nsw i64 %.213453, 8            ; 2 uses
-  %i.bux = icmp samesign ult i64 %i.buw, %11
+  %i.bux = icmp samesign ult i64 %i.buw, %14
   br i1 %i.bux, label %bb.ao, label %._crit_edge3455, !llvm.loop !139
 
 ._crit_edge3455:                                  ; preds = %bb.ao
@@ -1939,7 +1936,7 @@ bb.ar:                                            ; preds = %.lr.ph3467, %bb.ar
   %i.bvx = load <8 x double>, ptr %i.bvw, align 1, !tbaa !8
   %i.bvy = tail call <8 x double> @llvm.fma.v8f64(<8 x double> %i.bvv, <8 x double> %i.bvx, <8 x double> %.027763465) ; 3 uses
   %i.bvz = add nuw nsw i64 %.223466, 8            ; 2 uses
-  %i.bwa = icmp samesign ult i64 %i.bvz, %11
+  %i.bwa = icmp samesign ult i64 %i.bvz, %14
   br i1 %i.bwa, label %bb.ar, label %._crit_edge3468, !llvm.loop !141
 
 ._crit_edge3468:                                  ; preds = %bb.ar

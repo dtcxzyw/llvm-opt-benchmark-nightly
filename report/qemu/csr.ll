@@ -204,9 +204,9 @@ bb.a:
   br i1 %i.j, label %.lr.ph.preheader.i, label %read_hvipriox.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %wide.trip.count.i = and i64 %i.h, 2147483644
   store i32 0, ptr %i.a, align 4, !annotation !17
   store i32 0, ptr %i.b, align 4, !annotation !17
+  %wide.trip.count.i = and i64 %i.h, 2147483644
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.preheader.i
@@ -225,7 +225,7 @@ bb.b:                                             ; preds = %.lr.ph.i
   %i.r = getelementptr inbounds i8, ptr %i.c, i64 %i.q
   %i.s = load i8, ptr %i.r, align 1
   %i.t = zext i8 %i.s to i64
-  %i.u = shl nuw nsw i64 %indvars.iv.i, 3
+  %i.u = shl i64 %indvars.iv.i, 3
   %i.v = and i64 %i.u, 4294967288
   %i.w = shl i64 %i.t, %i.v
   %i.x = load i64, ptr %2, align 8
@@ -263,9 +263,9 @@ bb.a:
   br i1 %i.j, label %.lr.ph.preheader.i, label %write_hvipriox.exit
 
 .lr.ph.preheader.i:                               ; preds = %bb.a
-  %wide.trip.count.i = and i64 %i.h, 2147483644
   store i32 0, ptr %i.a, align 4, !annotation !17
   store i32 0, ptr %i.b, align 4, !annotation !17
+  %wide.trip.count.i = and i64 %i.h, 2147483644
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %.lr.ph.preheader.i
@@ -278,7 +278,7 @@ bb.a:
 .sink.split.i:                                    ; preds = %.lr.ph.i
   %i.m = load i32, ptr %i.b, align 4
   %.not15.i = icmp eq i32 %i.m, 0
-  %i.n = shl nuw nsw i64 %indvars.iv.i, 3
+  %i.n = shl i64 %indvars.iv.i, 3
   %i.o = and i64 %i.n, 4294967288
   %i.p = lshr i64 %2, %i.o
   %i.q = trunc i64 %i.p to i8
@@ -313,9 +313,8 @@ bb.a:
   %i.e = add i32 %.val.i, 4
   %i.f = zext nneg i32 %i.e to i64
   %i.g = shl nuw i64 1, %i.f
-  %i.h = lshr i64 %i.g, 3
-  %i.i = trunc i64 %i.h to i32                    ; 3 uses
-  %3 = and i32 %i.i, -4
+  %i.h = lshr i64 %i.g, 3                         ; 2 uses
+  %i.i = trunc i64 %i.h to i32                    ; 2 uses
   %i.j = add i32 %i.i, 12
   %i.k = and i32 %i.j, 8
   %.not.i = icmp eq i32 %i.k, 0
@@ -336,8 +335,7 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.preheader.i:                               ; preds = %bb.c
   store i32 0, ptr %i.a, align 4, !annotation !17
   store i32 0, ptr %i.b, align 4, !annotation !17
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %3, i32 1)
-  %wide.trip.count.i = zext nneg i32 %smax.i to i64
+  %wide.trip.count.i = and i64 %i.h, 2147483644
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.e, %.lr.ph.preheader.i
@@ -357,7 +355,7 @@ bb.d:                                             ; preds = %.lr.ph.i
   %i.y = getelementptr inbounds i8, ptr %i.c, i64 %i.x
   %i.z = load i8, ptr %i.y, align 1
   %i.aa = zext i8 %i.z to i64
-  %i.ab = shl nuw nsw i64 %indvars.iv.i, 3
+  %i.ab = shl i64 %indvars.iv.i, 3
   %i.ac = and i64 %i.ab, 4294967288
   %i.ad = shl i64 %i.aa, %i.ac
   %i.ae = load i64, ptr %2, align 8
@@ -390,9 +388,8 @@ bb.a:
   %i.e = add i32 %.val.i, 4
   %i.f = zext nneg i32 %i.e to i64
   %i.g = shl nuw i64 1, %i.f
-  %i.h = lshr i64 %i.g, 3
-  %i.i = trunc i64 %i.h to i32                    ; 3 uses
-  %4 = and i32 %i.i, -4
+  %i.h = lshr i64 %i.g, 3                         ; 2 uses
+  %i.i = trunc i64 %i.h to i32                    ; 2 uses
   %i.j = add i32 %i.i, 12
   %i.k = and i32 %i.j, 8
   %.not.i = icmp eq i32 %i.k, 0
@@ -405,8 +402,7 @@ bb.a:
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
   store i32 0, ptr %i.a, align 4, !annotation !17
   store i32 0, ptr %i.b, align 4, !annotation !17
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %4, i32 1)
-  %wide.trip.count.i = zext nneg i32 %smax.i to i64
+  %wide.trip.count.i = and i64 %i.h, 2147483644
   br label %.lr.ph.i
 
 bb.b:                                             ; preds = %bb.a
@@ -427,7 +423,7 @@ bb.b:                                             ; preds = %bb.a
 .sink.split.i:                                    ; preds = %.lr.ph.i
   %i.t = load i32, ptr %i.b, align 4
   %.not15.i = icmp eq i32 %i.t, 0
-  %i.u = shl nuw nsw i64 %indvars.iv.i, 3
+  %i.u = shl i64 %indvars.iv.i, 3
   %i.v = and i64 %i.u, 4294967288
   %i.w = lshr i64 %2, %i.v
   %i.x = trunc i64 %i.w to i8
@@ -502,7 +498,6 @@ bb.a:
   %i.g = shl nuw i64 1, %i.f
   %i.h = lshr i64 %i.g, 3                         ; 2 uses
   %i.i = trunc i64 %i.h to i32                    ; 2 uses
-  %wide.trip.count.i = and i64 %i.h, 4294967292
   %i.j = and i32 %i.i, 4
   %.not.i.not = icmp eq i32 %i.j, 0
   br i1 %.not.i.not, label %bb.b, label %bb.c
@@ -522,6 +517,7 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.preheader.i:                               ; preds = %bb.c
   store i32 0, ptr %i.a, align 4, !annotation !17
   store i32 0, ptr %i.b, align 4, !annotation !17
+  %wide.trip.count.i = and i64 %i.h, 2147483644
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.e, %.lr.ph.preheader.i
@@ -576,7 +572,6 @@ bb.a:
   %i.g = shl nuw i64 1, %i.f
   %i.h = lshr i64 %i.g, 3                         ; 2 uses
   %i.i = trunc i64 %i.h to i32                    ; 2 uses
-  %wide.trip.count.i = and i64 %i.h, 4294967292
   %i.j = and i32 %i.i, 4
   %.not.i.not = icmp eq i32 %i.j, 0
   br i1 %.not.i.not, label %bb.b, label %.preheader.i
@@ -588,6 +583,7 @@ bb.a:
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
   store i32 0, ptr %i.a, align 4, !annotation !17
   store i32 0, ptr %i.b, align 4, !annotation !17
+  %wide.trip.count.i = and i64 %i.h, 2147483644
   br label %.lr.ph.i
 
 bb.b:                                             ; preds = %bb.a
@@ -644,9 +640,8 @@ bb.a:
   %i.e = add i32 %.val.i, 4
   %i.f = zext nneg i32 %i.e to i64
   %i.g = shl nuw i64 1, %i.f
-  %i.h = lshr i64 %i.g, 3
-  %i.i = trunc i64 %i.h to i32                    ; 3 uses
-  %3 = and i32 %i.i, -4
+  %i.h = lshr i64 %i.g, 3                         ; 2 uses
+  %i.i = trunc i64 %i.h to i32                    ; 2 uses
   %i.j = add i32 %i.i, 12
   %i.k = and i32 %i.j, 12
   %.not.i = icmp eq i32 %i.k, 0
@@ -667,8 +662,7 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph.preheader.i:                               ; preds = %bb.c
   store i32 0, ptr %i.a, align 4, !annotation !17
   store i32 0, ptr %i.b, align 4, !annotation !17
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %3, i32 1)
-  %wide.trip.count.i = zext nneg i32 %smax.i to i64
+  %wide.trip.count.i = and i64 %i.h, 2147483644
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.e, %.lr.ph.preheader.i
@@ -688,7 +682,7 @@ bb.d:                                             ; preds = %.lr.ph.i
   %i.y = getelementptr inbounds i8, ptr %i.c, i64 %i.x
   %i.z = load i8, ptr %i.y, align 1
   %i.aa = zext i8 %i.z to i64
-  %i.ab = shl nuw nsw i64 %indvars.iv.i, 3
+  %i.ab = shl i64 %indvars.iv.i, 3
   %i.ac = and i64 %i.ab, 4294967288
   %i.ad = shl i64 %i.aa, %i.ac
   %i.ae = load i64, ptr %2, align 8
@@ -721,9 +715,8 @@ bb.a:
   %i.e = add i32 %.val.i, 4
   %i.f = zext nneg i32 %i.e to i64
   %i.g = shl nuw i64 1, %i.f
-  %i.h = lshr i64 %i.g, 3
-  %i.i = trunc i64 %i.h to i32                    ; 3 uses
-  %4 = and i32 %i.i, -4
+  %i.h = lshr i64 %i.g, 3                         ; 2 uses
+  %i.i = trunc i64 %i.h to i32                    ; 2 uses
   %i.j = add i32 %i.i, 12
   %i.k = and i32 %i.j, 12
   %.not.i = icmp eq i32 %i.k, 0
@@ -736,8 +729,7 @@ bb.a:
 .lr.ph.preheader.i:                               ; preds = %.preheader.i
   store i32 0, ptr %i.a, align 4, !annotation !17
   store i32 0, ptr %i.b, align 4, !annotation !17
-  %smax.i = tail call i32 @llvm.smax.i32(i32 %4, i32 1)
-  %wide.trip.count.i = zext nneg i32 %smax.i to i64
+  %wide.trip.count.i = and i64 %i.h, 2147483644
   br label %.lr.ph.i
 
 bb.b:                                             ; preds = %bb.a
@@ -758,7 +750,7 @@ bb.b:                                             ; preds = %bb.a
 .sink.split.i:                                    ; preds = %.lr.ph.i
   %i.t = load i32, ptr %i.b, align 4
   %.not15.i = icmp eq i32 %i.t, 0
-  %i.u = shl nuw nsw i64 %indvars.iv.i, 3
+  %i.u = shl i64 %indvars.iv.i, 3
   %i.v = and i64 %i.u, 4294967288
   %i.w = lshr i64 %2, %i.v
   %i.x = trunc i64 %i.w to i8
@@ -1159,9 +1151,6 @@ declare i32 @riscv_cpu_mirq_pending(ptr noundef) local_unnamed_addr #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #13
