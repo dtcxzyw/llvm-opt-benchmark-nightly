@@ -205,7 +205,7 @@ bb.a:
   %.sroa.6.i = alloca [16 x i8], align 8          ; 6 uses
   %i.f = alloca [24 x i8], align 8                ; 10 uses
   %i.g = alloca [24 x i8], align 8                ; 11 uses
-  %.sroa.0 = alloca i64, align 8                  ; 7 uses
+  %.sroa.0 = alloca [8 x i8], align 8             ; 7 uses
   %.sroa.9 = alloca [16 x i8], align 8            ; 6 uses
   %i.h = alloca [136 x i8], align 8               ; 19 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
@@ -608,8 +608,8 @@ bb.a:
   %i.ad = alloca [40 x i8], align 8               ; 8 uses
   %i.ae = alloca [32 x i8], align 8               ; 8 uses
   %i.af = alloca [56 x i8], align 8               ; 10 uses
-  %.sroa.72.i.i.i = alloca i64, align 8           ; 5 uses
-  %.sroa.14.i.i.i = alloca i64, align 8           ; 5 uses
+  %.sroa.72.i.i.i = alloca [8 x i8], align 8      ; 5 uses
+  %.sroa.14.i.i.i = alloca [8 x i8], align 8      ; 5 uses
   %i.ag = alloca [48 x i8], align 8               ; 5 uses
   %i.ah = alloca [48 x i8], align 8               ; 5 uses
   %i.ai = alloca [24 x i8], align 8               ; 4 uses
@@ -849,7 +849,7 @@ _ZN4core3ops8function5FnMut8call_mut17hfac2f395625c6291E.exit.i.i.i: ; preds = %
   %.sink.i.i.i.i.i = phi i64 [ -9223372036854775805, %bb.h ], [ %.sroa.743.0.copyload.i.i.i.i.i.i, %bb.i ]
   store i64 %.sink.i.i.i.i.i, ptr %.sink56.i.i.sroa.phi.i.i.i, align 8, !alias.scope !2225, !noalias !2226
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af), !noalias !2207
-  %.sroa.72.i.i.i.0..sroa.72.i.i.i.0..sroa.72.i.i.i.0..sroa.72.i.i.0..sroa.72.i.i.0..sroa.72.i.0..sroa.72.i.0..sroa.72.0..sroa.72.0..sroa.72.16..i.i.i = load i64, ptr %.sroa.72.i.i.i, align 8, !range !1418, !noalias !2229, !noundef !3 ; 2 uses
+  %.sroa.72.i.i.i.0..sroa.72.i.i.i.0..sroa.72.i.i.i.0..sroa.72.i.i.0..sroa.72.i.i.0..sroa.72.i.0..sroa.72.i.0..sroa.72.0..sroa.72.0..sroa.72.16..i.i.i = load i64, ptr %.sroa.72.i.i.i, align 8, !noalias !2229 ; 2 uses
   %i.ct = icmp eq i64 %.sroa.72.i.i.i.0..sroa.72.i.i.i.0..sroa.72.i.i.i.0..sroa.72.i.i.0..sroa.72.i.i.0..sroa.72.i.0..sroa.72.i.0..sroa.72.0..sroa.72.0..sroa.72.16..i.i.i, -9223372036854775805
   %.sroa.14.i.i.i.0..sroa.14.i.i.i.0..sroa.14.i.i.i.0..sroa.14.i.i.0..sroa.14.i.i.0..sroa.14.i.0..sroa.14.i.0..sroa.14.0..sroa.14.0..sroa.14.32..sroa.2.0.copyload.i.i.i = load i64, ptr %.sroa.14.i.i.i, align 8, !noalias !2229 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.72.i.i.i)
@@ -1123,8 +1123,9 @@ bb.ah:                                            ; preds = %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !2289
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w), !noalias !2256
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.dv) ]
+  %.sroa.13.0..sroa.6.i.i.sroa.0.0.copyload.cast.i.i.i.i.i = inttoptr i64 %.sroa.13.sroa.0.0.copyload35.i.i.i.i.i.i.i to ptr
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa), !noalias !2295
-  store i64 %.sroa.13.sroa.0.0.copyload35.i.i.i.i.i.i.i, ptr %i.aa, align 8, !noalias !2295
+  store ptr %.sroa.13.0..sroa.6.i.i.sroa.0.0.copyload.cast.i.i.i.i.i, ptr %i.aa, align 8, !noalias !2295
   store i64 %.sroa.13.sroa.7.0.copyload37.i.i.i.i.i.i.i, ptr %.sroa.4171.0..sroa_idx.i.i.i.i.i, align 8, !noalias !2295
   store i64 %.sroa.7.0.copyload.i11.i.i.i.i.i.i.i, ptr %.sroa.5172.0..sroa_idx.i.i.i.i.i, align 8, !noalias !2295
   call void @llvm.experimental.noalias.scope.decl(metadata !2306)
