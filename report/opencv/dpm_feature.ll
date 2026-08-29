@@ -205,16 +205,16 @@ bb.n:                                             ; preds = %bb.l, %.thread.i
   br label %_ZNK2cv8MatShapeclEv.exit
 
 _ZNK2cv8MatShapeclEv.exit:                        ; preds = %bb.m, %bb.n
-  %i.am = phi i32 [ %i.ah, %bb.m ], [ %i.aj, %bb.n ]
-  %i.an = phi i32 [ %i.ai, %bb.m ], [ %i.al, %bb.n ]
-  %i.ao = sitofp i32 %i.am to double              ; 3 uses
-  %i.ap = sitofp i32 %i.an to double              ; 3 uses
+  %i.am = phi i32 [ %i.ah, %bb.m ], [ %i.aj, %bb.n ] ; 2 uses
+  %i.an = phi i32 [ %i.ai, %bb.m ], [ %i.al, %bb.n ] ; 2 uses
+  %i.ao = sitofp i32 %i.am to double
+  %i.ap = sitofp i32 %i.an to double
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 16
   store double %i.ao, ptr %i.aq, align 8, !tbaa !25
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store double %i.ap, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !25
-  %7 = fcmp olt double %i.ap, %i.ao
-  %8 = select i1 %7, double %i.ap, double %i.ao
+  %7 = tail call i32 @llvm.smin.i32(i32 %i.an, i32 %i.am)
+  %8 = sitofp i32 %7 to double
   %i.ar = getelementptr inbounds nuw i8, ptr %i.n, i64 4
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !56
   %i.at = sitofp i32 %i.as to double

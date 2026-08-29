@@ -204,7 +204,7 @@ bb.a:
   %i.g = load float, ptr %i.f, align 4            ; 3 uses
   %i.h = fpext nnan float %i.g to double
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 104
-  %i.j = load i32, ptr %i.i, align 4              ; 2 uses
+  %i.j = load i32, ptr %i.i, align 4              ; 3 uses
   %i.k = icmp ult i32 %i.a, 10
   %i.l = fcmp olt float %i.g, 0.000000e+00
   %or.cond = select i1 %i.k, i1 %i.l, i1 false
@@ -230,7 +230,7 @@ bb.c:                                             ; preds = %select.unfold
   br label %bb.l
 
 bb.d:                                             ; preds = %.thread, %select.unfold
-  %.04251 = phi i32 [ 10, %.thread ], [ %i.a, %select.unfold ]
+  %.04251 = phi i32 [ 10, %.thread ], [ %i.a, %select.unfold ] ; 2 uses
   %i.q = fcmp oge float %i.g, 0.000000e+00
   %i.r = icmp ne i32 %i.e, 0
   %or.cond3 = select i1 %i.q, i1 %i.r, i1 false
@@ -268,7 +268,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.e
   %.0 = phi double [ %i.t, %bb.e ], [ %i.ai, %bb.h ]
-  %i.aj = uitofp i32 %.04251 to double            ; 3 uses
+  %i.aj = uitofp i32 %.04251 to double            ; 2 uses
   %i.ak = fmul double %.0, %i.aj
   %i.al = tail call double @llvm.rint.f64(double %i.ak)
   store double %i.al, ptr %3, align 8
@@ -276,11 +276,11 @@ bb.i:                                             ; preds = %bb.h, %bb.e
   br i1 %i.am, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %7 = uitofp i32 %i.j to double                  ; 2 uses
-  %8 = fcmp ult double %7, %i.aj
-  br i1 %8, label %bb.k, label %bb.l
+  %.not50 = icmp ult i32 %i.j, %.04251
+  br i1 %.not50, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
+  %7 = uitofp i32 %i.j to double
   %i.an = fdiv double %7, %i.aj
   br label %bb.l
 

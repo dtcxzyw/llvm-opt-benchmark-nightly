@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %bb.a
 
 bb.n:                                             ; preds = %bb.m
   %i.ag = load ptr, ptr @inums, align 8, !tbaa !17
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %i.ab
+  %i.ah = getelementptr inbounds [8 x i8], ptr %i.ag, i64 %i.ab
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !20
   br label %flocons.exit
 

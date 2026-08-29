@@ -205,7 +205,7 @@ bb.a:
   %i.z = tail call double @llvm.fmuladd.f64(double %i.y, double %i.u, double %i.v)
   %i.aa = fmul double %i.u, 4.000000e+00
   %foldExtExtBinop = fsub <2 x double> %i.o, %i.p
-  %i.ab = shufflevector <2 x double> %foldExtExtBinop, <2 x double> %i.o, <2 x i32> <i32 1, i32 3> ; 2 uses
+  %i.ab = shufflevector <2 x double> %i.o, <2 x double> %foldExtExtBinop, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.ac = fmul <2 x double> %i.ab, %i.ab
   %i.ad = insertelement <2 x double> poison, double %i.i, i64 0
   %i.ae = shufflevector <2 x double> %i.ad, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
@@ -221,21 +221,21 @@ bb.a:
   %i.ao = shufflevector <2 x double> %i.an, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ap = fmul <2 x double> %i.ao, %i.am
   %i.aq = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.al, <2 x double> %i.al, <2 x double> %i.ap) ; 2 uses
-  %i.ar = extractelement <2 x double> %i.aq, i64 1
+  %i.ar = extractelement <2 x double> %i.aq, i64 0
   %i.as = tail call double @sqrt(double noundef %i.ar) #63
-  %8 = fmul <2 x double> %i.ai, splat (double -2.000000e+00)
-  %9 = extractelement <2 x double> %i.aq, i64 0
-  %10 = tail call double @sqrt(double noundef %9) #63
-  %i.at = insertelement <2 x double> poison, double %10, i64 0
-  %i.au = insertelement <2 x double> %i.at, double %i.as, i64 1
+  %8 = extractelement <2 x double> %i.aq, i64 1
+  %9 = tail call double @sqrt(double noundef %8) #63
+  %10 = fmul <2 x double> %i.ai, splat (double -2.000000e+00)
+  %i.at = insertelement <2 x double> poison, double %i.as, i64 0
+  %i.au = insertelement <2 x double> %i.at, double %9, i64 1
   %i.av = fadd <2 x double> %i.au, %i.al
-  %i.aw = fdiv <2 x double> %8, %i.av
-  %11 = fptosi <2 x double> %i.aw to <2 x i32>
-  %12 = sitofp <2 x i32> %11 to <2 x double>      ; 2 uses
-  %i.ax = extractelement <2 x double> %12, i64 0  ; 2 uses
-  %13 = extractelement <2 x double> %12, i64 1    ; 2 uses
-  %14 = fcmp olt double %i.ax, %13
-  %.sroa.speculated.i = select i1 %14, double %i.ax, double %13
+  %i.aw = fdiv <2 x double> %10, %i.av            ; 2 uses
+  %11 = extractelement <2 x double> %i.aw, i64 0
+  %12 = fptosi double %11 to i32
+  %i.ax = extractelement <2 x double> %i.aw, i64 1
+  %13 = fptosi double %i.ax to i32
+  %.sroa.speculated.v.i = tail call i32 @llvm.smin.i32(i32 %13, i32 %12)
+  %.sroa.speculated.i = sitofp i32 %.sroa.speculated.v.i to double
   %i.ay = insertelement <2 x double> <double poison, double 1.000000e+00>, double %.sroa.speculated.i, i64 0
   %i.az = fsub <2 x double> %i.ae, %i.ay          ; 2 uses
   %i.ba = fdiv <2 x double> %i.az, %i.ae
@@ -638,13 +638,13 @@ declare i64 @llvm.smax.i64(i64, i64) #7
 declare i64 @llvm.smin.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare x86_fp80 @llvm.log.f80(x86_fp80) #7

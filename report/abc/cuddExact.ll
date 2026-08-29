@@ -163,7 +163,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 ._crit_edge:                                      ; preds = %bb.j, %bb.g
   %.0221.lcssa = phi i32 [ 0, %bb.g ], [ %.1222, %bb.j ]
-  %i.bw = sub nsw i32 %i.bb, %.0221.lcssa         ; 4 uses
+  %i.bw = sub nsw i32 %i.bb, %.0221.lcssa         ; 5 uses
   %or.cond.i = icmp ugt i32 %i.bw, 33
   br i1 %or.cond.i, label %.thread425, label %bb.k
 
@@ -173,20 +173,20 @@ bb.k:                                             ; preds = %._crit_edge
 
 bb.l:                                             ; preds = %bb.k
   %i.by = add nuw nsw i32 %i.bw, 3
-  %i.bz = lshr i32 %i.by, 1                       ; 2 uses
-  %3 = uitofp nneg i32 %i.bz to double            ; 2 uses
-  %4 = add nuw nsw i32 %i.bz, 1
-  %i.ca = uitofp nneg i32 %4 to double            ; 2 uses
-  %i.cb = uitofp nneg i32 %i.bw to double         ; 2 uses
-  %5 = fcmp ugt double %i.ca, %i.cb
-  br i1 %5, label %getMaxBinomial.exit, label %.lr.ph.i.preheader
+  %i.bz = lshr i32 %i.by, 1                       ; 3 uses
+  %i.ca = uitofp nneg i32 %i.bz to double         ; 2 uses
+  %i.cb = uitofp nneg i32 %i.bw to double
+  %.not.i = icmp samesign ult i32 %i.bz, %i.bw
+  br i1 %.not.i, label %.lr.ph.i.preheader, label %getMaxBinomial.exit
 
 .lr.ph.i.preheader:                               ; preds = %bb.l
-  %i.cc = insertelement <2 x double> <double poison, double 2.000000e+00>, double %i.ca, i64 0
+  %3 = add nuw nsw i32 %i.bz, 1
+  %4 = uitofp nneg i32 %3 to double
+  %i.cc = insertelement <2 x double> <double poison, double 2.000000e+00>, double %4, i64 0
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %.021.i = phi double [ %i.ch, %.lr.ph.i ], [ %3, %.lr.ph.i.preheader ]
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader
+  %.021.i = phi double [ %i.ch, %.lr.ph.i ], [ %i.ca, %.lr.ph.i.preheader ]
   %i.cd = phi <2 x double> [ %i.ci, %.lr.ph.i ], [ %i.cc, %.lr.ph.i.preheader ] ; 3 uses
   %i.ce = extractelement <2 x double> %i.cd, i64 0
   %i.cf = fmul double %.021.i, %i.ce
@@ -198,7 +198,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ck, label %getMaxBinomial.exit, label %.lr.ph.i, !llvm.loop !38
 
 getMaxBinomial.exit:                              ; preds = %.lr.ph.i, %bb.l
-  %.0.lcssa.i = phi double [ %3, %bb.l ], [ %i.ch, %.lr.ph.i ]
+  %.0.lcssa.i = phi double [ %i.ca, %bb.l ], [ %i.ch, %.lr.ph.i ]
   %i.cl = fptosi double %.0.lcssa.i to i32        ; 2 uses
   %i.cm = icmp eq i32 %i.cl, -1
   br i1 %i.cm, label %.thread425, label %getMaxBinomial.exit.thread338
