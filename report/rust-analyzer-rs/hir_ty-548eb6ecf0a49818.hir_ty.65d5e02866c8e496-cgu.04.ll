@@ -205,12 +205,11 @@ tailrecurse:                                      ; preds = %bb.j, %bb.a
 
 bb.b:                                             ; preds = %tailrecurse
   %.sroa.9.0..sroa_idx19.le = getelementptr inbounds nuw i8, ptr %.tr40, i64 16
-  %.sroa.9.sroa.0.0.copyload.le69 = load i64, ptr %.sroa.9.0..sroa_idx19.le, align 8
-  %3 = inttoptr i64 %.sroa.9.sroa.0.0.copyload.le69 to ptr
+  %.sroa.9.sroa.0.0.copyload.le69 = load ptr, ptr %.sroa.9.0..sroa_idx19.le, align 8
   br label %_RNvYNvNvMs9_NtNtCs8K4cjrcxBsw_6hir_ty3mir4evalNtBa_9Evaluator14coerce_unsized7for_ptrINtNtNtCshzWfHUSfYae_4core3ops8function2FnTINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind6TyKindNtNtNtBe_11next_solver8interner10DbInternerEEE4callBe_.exit
 
 _RNvYNvNvMs9_NtNtCs8K4cjrcxBsw_6hir_ty3mir4evalNtBa_9Evaluator14coerce_unsized7for_ptrINtNtNtCshzWfHUSfYae_4core3ops8function2FnTINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind6TyKindNtNtNtBe_11next_solver8interner10DbInternerEEE4callBe_.exit: ; preds = %tailrecurse, %bb.b
-  %.sroa.0.0.i.i = phi ptr [ %3, %bb.b ], [ %.sroa.715.0.copyload17, %tailrecurse ] ; 2 uses
+  %.sroa.0.0.i.i = phi ptr [ %.sroa.9.sroa.0.0.copyload.le69, %bb.b ], [ %.sroa.715.0.copyload17, %tailrecurse ] ; 2 uses
   %.not = icmp eq ptr %.sroa.0.0.i.i, null
   br i1 %.not, label %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCs8K4cjrcxBsw_6hir_ty5lower9FieldTypeEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldIBR_TINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtCsileJQcQObtj_7hir_def10signatures9FieldDataERB1c_EENCINvNvXs_NtNtB1Z_8adapters9enumerateINtB4g_9EnumeratepEB1T_4fold9enumerateRBQ_B2D_NCINvNtB4i_10filter_map15filter_map_foldTjB5j_EB2H_B2D_NCNvMNtB2L_3mapINtB6p_8ArenaMapB2I_B1c_E4iter0INvNvB1T_4last4someB2H_EE0E0EB1g_.exit.thread, label %bb.c
 
@@ -262,8 +261,9 @@ _RNvMsA_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver2tyNtB5_2Ty5store.exit: ; preds = 
 
 bb.i:                                             ; preds = %tailrecurse
   %.sroa.9.0..sroa_idx19.le72 = getelementptr inbounds nuw i8, ptr %.tr40, i64 16
-  %.sroa.9.sroa.0.0.copyload.le = load i64, ptr %.sroa.9.0..sroa_idx19.le72, align 8 ; 2 uses
-  %switch.idx.cast.i38 = and i64 %.sroa.9.sroa.0.0.copyload.le, 255
+  %.sroa.9.sroa.0.0.copyload.le = load ptr, ptr %.sroa.9.0..sroa_idx19.le72, align 8
+  %3 = ptrtoint ptr %.sroa.9.sroa.0.0.copyload.le to i64 ; 2 uses
+  %switch.idx.cast.i38 = and i64 %3, 255
   %i.n = icmp eq i64 %switch.idx.cast.i38, 0
   br i1 %i.n, label %bb.k, label %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterINtNtBb_6option6OptionNtNtCs8K4cjrcxBsw_6hir_ty5lower9FieldTypeEENtNtNtNtBb_4iter6traits8iterator8Iterator4foldIBR_TINtCsbq3eHDLgq0Z_8la_arena3IdxNtNtCsileJQcQObtj_7hir_def10signatures9FieldDataERB1c_EENCINvNvXs_NtNtB1Z_8adapters9enumerateINtB4g_9EnumeratepEB1T_4fold9enumerateRBQ_B2D_NCINvNtB4i_10filter_map15filter_map_foldTjB5j_EB2H_B2D_NCNvMNtB2L_3mapINtB6p_8ArenaMapB2I_B1c_E4iter0INvNvB1T_4last4someB2H_EE0E0EB1g_.exit.thread
 
@@ -274,7 +274,7 @@ bb.j:                                             ; preds = %tailrecurse
 bb.k:                                             ; preds = %bb.i
   %.sroa.9.sroa.7.0..sroa.9.0..sroa_idx19.sroa_idx.le = getelementptr inbounds nuw i8, ptr %.tr40, i64 24
   %.sroa.9.sroa.7.0.copyload.le = load i32, ptr %.sroa.9.sroa.7.0..sroa.9.0..sroa_idx19.sroa_idx.le, align 8
-  %.sroa.031.4.extract.shift = lshr i64 %.sroa.9.sroa.0.0.copyload.le, 32
+  %.sroa.031.4.extract.shift = lshr i64 %3, 32
   %.sroa.031.4.extract.trunc = trunc nuw i64 %.sroa.031.4.extract.shift to i32
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.715.0.copyload17) ]
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 544
