@@ -204,22 +204,22 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.3, %bb.c ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.3, %bb.c ]
   %i.l = or i64 %indvars.iv, %i.h
-  %i.m = trunc i64 %i.l to i32
+  %i.m = trunc nuw nsw i64 %i.l to i32
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv
   store i32 %i.m, ptr %i.n, align 4, !tbaa !10
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.o = or i64 %indvars.iv.next, %i.h
-  %i.p = trunc i64 %i.o to i32
+  %i.p = trunc nuw nsw i64 %i.o to i32
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.next
   store i32 %i.p, ptr %i.q, align 4, !tbaa !10
   %indvars.iv.next.1 = or disjoint i64 %indvars.iv, 2 ; 2 uses
   %i.r = or i64 %indvars.iv.next.1, %i.h
-  %i.s = trunc i64 %i.r to i32
+  %i.s = trunc nuw nsw i64 %i.r to i32
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.next.1
   store i32 %i.s, ptr %i.t, align 4, !tbaa !10
   %indvars.iv.next.2 = or disjoint i64 %indvars.iv, 3 ; 2 uses
   %i.u = or i64 %indvars.iv.next.2, %i.h
-  %i.v = trunc i64 %i.u to i32
+  %i.v = trunc nuw nsw i64 %i.u to i32
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.next.2
   store i32 %i.v, ptr %i.w, align 4, !tbaa !10
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
@@ -241,7 +241,7 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
   %indvars.iv.epil = phi i64 [ %indvars.iv.epil.init, %.epil.preheader ], [ %indvars.iv.next.epil, %bb.d ] ; 3 uses
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.d ]
   %i.x = or i64 %indvars.iv.epil, %i.h
-  %i.y = trunc i64 %i.x to i32
+  %i.y = trunc nuw nsw i64 %i.x to i32
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.epil
   store i32 %i.y, ptr %i.z, align 4, !tbaa !10
   %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.epil, 1
