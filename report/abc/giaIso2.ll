@@ -204,8 +204,8 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.ef = getelementptr inbounds nuw [16 x i8], ptr %i.ee, i64 %indvars.iv
   %i.eg = shl nsw i64 %indvars.iv, 4
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ef, i8 0, i64 %i.eg, i1 false)
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.eh = shl i32 %indvars.iv.tr, 1               ; 2 uses
+  %indvars.iv.tr = trunc nsw i64 %indvars.iv to i32
+  %i.eh = shl nsw i32 %indvars.iv.tr, 1           ; 2 uses
   store i32 %i.eh, ptr %i.ak, align 8, !tbaa !102
   br label %Vec_WecPushLevel.exit72
 
@@ -608,7 +608,7 @@ bb.an:                                            ; preds = %bb.al
 
 bb.ao:                                            ; preds = %bb.ak
   %i.ga = icmp samesign ult i64 %indvars.iv19.i, 1073741823
-  %i.gb = shl i32 %spec.select.sink.i15.i, 1
+  %i.gb = shl nsw i32 %spec.select.sink.i15.i, 1
   %spec.select.i.i97 = select i1 %i.ga, i32 %i.gb, i32 2147483647 ; 4 uses
   %i.gc = sext i32 %spec.select.i.i97 to i64
   %.not.i10.i.i = icmp samesign ult i64 %indvars.iv19.i, %i.gc

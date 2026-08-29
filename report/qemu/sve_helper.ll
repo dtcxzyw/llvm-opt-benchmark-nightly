@@ -205,21 +205,21 @@ bb.a:
   %.not71 = icmp eq i32 %i.h, 0
   %i.i = lshr i32 %6, 12
   %i.j = and i32 %i.i, 1                          ; 3 uses
-  %i.k = lshr i32 %6, 11                          ; 3 uses
-  %i.l = and i32 %i.k, 1
+  %i.k = lshr i32 %6, 11                          ; 2 uses
+  %i.l = and i32 %i.k, 1                          ; 2 uses
   %.lobit = lshr exact i32 %i.h, 10
   %i.m = xor i32 %i.l, %.lobit                    ; 2 uses
   %i.n = xor i32 %i.j, -1                         ; 2 uses
   %i.o = and i32 %i.m, %i.n
-  %i.p = and i32 %i.k, %i.n
+  %i.p = and i32 %i.l, %i.n
   %i.q = and i32 %i.m, %i.j
   %.not = icmp eq i32 %i.q, 0
   %i.r = select i1 %.not, i32 0, i32 2            ; 2 uses
   %i.s = and i32 %i.j, %i.k
   %.not66 = icmp eq i32 %i.s, 0
   %i.t = select i1 %.not66, i32 0, i32 2          ; 2 uses
-  %.tr = trunc i32 %i.p to i16
-  %i.u = shl i16 %.tr, 15                         ; 2 uses
+  %.tr = trunc nuw nsw i32 %i.p to i16
+  %i.u = shl nuw i16 %.tr, 15                     ; 2 uses
   %.tr83 = trunc nuw nsw i32 %i.o to i16
   %i.v = shl nuw i16 %.tr83, 15                   ; 2 uses
   br i1 %.not71, label %.split.us.us, label %.split

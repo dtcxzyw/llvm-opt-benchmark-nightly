@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %_ZNSt8__detail14__t
   br i1 %i.ba, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %._crit_edge.i.i.i
-  %.0.tr.i.i.i = trunc nuw i128 %.0.lcssa.i.i.i to i64
+  %.0.tr.i.i.i = trunc nuw nsw i128 %.0.lcssa.i.i.i to i64
   %i.bb = shl nuw nsw i64 %.0.tr.i.i.i, 1
   %i.bc = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implIoEEvPcjT_.__digits, i64 %i.bb ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 1
@@ -363,7 +363,7 @@ bb.aj:                                            ; preds = %_ZNSt8__detail14__t
   br i1 %i.dc, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %._crit_edge.i.i.i45
-  %.0.tr.i.i.i49 = trunc nuw i128 %.0.lcssa.i.i.i46 to i64
+  %.0.tr.i.i.i49 = trunc nuw nsw i128 %.0.lcssa.i.i.i46 to i64
   %i.dd = shl nuw nsw i64 %.0.tr.i.i.i49, 1
   %i.de = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implIoEEvPcjT_.__digits, i64 %i.dd ; 2 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 1

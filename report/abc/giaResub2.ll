@@ -205,8 +205,8 @@ bb.ab:                                            ; preds = %bb.z
 
 bb.ac:                                            ; preds = %bb.y
   %i.cd = icmp samesign ult i64 %indvars.iv156, 1073741823
-  %indvars.iv156.tr = trunc i64 %indvars.iv156 to i32
-  %i.ce = shl i32 %indvars.iv156.tr, 1
+  %indvars.iv156.tr = trunc nsw i64 %indvars.iv156 to i32
+  %i.ce = shl nsw i32 %indvars.iv156.tr, 1
   %spec.select.i = select i1 %i.cd, i32 %i.ce, i32 2147483647 ; 4 uses
   %i.cf = sext i32 %spec.select.i to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv156, %i.cf
@@ -460,7 +460,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %.val44, i64 %index ; 2 uses
-  %i.al = shl <4 x i32> %vec.ind, splat (i32 1)
+  %i.al = shl nuw <4 x i32> %vec.ind, splat (i32 1)
   %step.add = shl <4 x i32> %vec.ind, splat (i32 1)
   %i.am = add <4 x i32> %step.add, splat (i32 8)
   %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
@@ -492,8 +492,8 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 3 uses
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %.val44, i64 %indvars.iv
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.au = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.au = shl nuw i32 %indvars.iv.tr, 1
   store i32 %i.au, ptr %i.at, align 4, !tbaa !33
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -896,8 +896,8 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f
   %.not9.i10.i = icmp eq ptr %storemerge6466, null
   %i.m = shl nuw nsw i64 %indvars.iv, 3           ; 2 uses
-  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
-  %i.n = shl i32 %indvars.iv.tr, 1                ; 2 uses
+  %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
+  %i.n = shl nuw nsw i32 %indvars.iv.tr, 1        ; 2 uses
   br i1 %.not9.i10.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g

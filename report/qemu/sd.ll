@@ -204,21 +204,21 @@ bb.i:                                             ; preds = %.split.preheader.i
   %.pre-phi.i = phi i8 [ %i.ay, %bb.i ], [ 15, %.split.preheader.i ]
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 968 ; 2 uses
   %i.ba = load i8, ptr %i.az, align 8
-  %i.bb = lshr i32 %.sroa.5.0.extract.trunc, 4    ; 2 uses
+  %i.bb = lshr i32 %.sroa.5.0.extract.trunc, 4
   %i.bc = and i32 %i.bb, 15                       ; 2 uses
   %.not.1.i = icmp eq i32 %i.bc, 15
   br i1 %.not.1.i, label %.split.2.i, label %bb.j
 
 bb.j:                                             ; preds = %.split.1.i
-  %i.bd = trunc nuw nsw i32 %i.bc to i8
+  %i.bd = trunc nuw nsw i32 %i.bc to i8           ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 901
   store i8 %i.bd, ptr %i.be, align 1
+  %3 = shl nuw i8 %i.bd, 4
   br label %.split.2.i
 
-.split.2.i:                                       ; preds = %bb.j, %.split.1.i
-  %.tr.i = trunc i32 %i.bb to i8
-  %3 = shl i8 %.tr.i, 4
-  %i.bf = or i8 %.pre-phi.i, %3
+.split.2.i:                                       ; preds = %.split.1.i, %bb.j
+  %.tr.i.pre-phi = phi i8 [ %3, %bb.j ], [ -16, %.split.1.i ]
+  %i.bf = or i8 %.pre-phi.i, %.tr.i.pre-phi
   %i.bg = or i8 %i.bf, %i.ba
   store i8 %i.bg, ptr %i.az, align 8
   %i.bh = lshr i32 %.sroa.5.0.extract.trunc, 8

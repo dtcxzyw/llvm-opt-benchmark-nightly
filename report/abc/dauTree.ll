@@ -205,8 +205,8 @@ bb.y:                                             ; preds = %bb.w
 
 bb.z:                                             ; preds = %bb.v
   %i.cn = icmp samesign ult i64 %indvars.iv, 1073741823
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.co = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nsw i64 %indvars.iv to i32
+  %i.co = shl nsw i32 %indvars.iv.tr, 1
   %spec.select.i78 = select i1 %i.cn, i32 %i.co, i32 2147483647 ; 4 uses
   %i.cp = sext i32 %spec.select.i78 to i64
   %.not.i9.i79 = icmp samesign ult i64 %indvars.iv, %i.cp
@@ -609,7 +609,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %vec.ind, ptr %i.ac, align 16, !tbaa !28
   store <4 x i32> %step.add, ptr %i.ad, align 16, !tbaa !28
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %index ; 2 uses
-  %i.af = shl <4 x i32> %vec.ind120, splat (i32 1)
+  %i.af = shl nuw nsw <4 x i32> %vec.ind120, splat (i32 1)
   %step.add121 = shl <4 x i32> %vec.ind120, splat (i32 1)
   %i.ag = add <4 x i32> %step.add121, splat (i32 8)
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
@@ -636,8 +636,8 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.ak, ptr %i.aj, align 4, !tbaa !28
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.am = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
+  %i.am = shl nuw nsw i32 %indvars.iv.tr, 1
   store i32 %i.am, ptr %i.al, align 4, !tbaa !28
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !171
@@ -1040,8 +1040,8 @@ bb.b:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %indvars.iv.epil.init
   %i.t = load i32, ptr %i.s, align 4, !tbaa !28   ; 2 uses
   %i.u = and i32 %i.t, 1
-  %indvars.iv.tr.epil = trunc i64 %indvars.iv.epil.init to i32
-  %i.v = shl i32 %indvars.iv.tr.epil, 1
+  %indvars.iv.tr.epil = trunc nuw i64 %indvars.iv.epil.init to i32
+  %i.v = shl nuw i32 %indvars.iv.tr.epil, 1
   %i.w = or disjoint i32 %i.u, %i.v
   %i.x = ashr i32 %i.t, 1
   %i.y = sext i32 %i.x to i64
@@ -1065,8 +1065,8 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %indvars.iv
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !28 ; 2 uses
   %i.ag = and i32 %i.af, 1
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.ah = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.ah = shl nuw i32 %indvars.iv.tr, 1
   %i.ai = or disjoint i32 %i.ag, %i.ah
   %i.aj = ashr i32 %i.af, 1
   %i.ak = sext i32 %i.aj to i64
@@ -1076,8 +1076,8 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %i.am = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %indvars.iv.next
   %i.an = load i32, ptr %i.am, align 4, !tbaa !28 ; 2 uses
   %i.ao = and i32 %i.an, 1
-  %indvars.iv.tr.1 = trunc i64 %indvars.iv.next to i32
-  %i.ap = shl i32 %indvars.iv.tr.1, 1
+  %indvars.iv.tr.1 = trunc nuw i64 %indvars.iv.next to i32
+  %i.ap = shl nuw i32 %indvars.iv.tr.1, 1
   %i.aq = or disjoint i32 %i.ao, %i.ap
   %i.ar = ashr i32 %i.an, 1
   %i.as = sext i32 %i.ar to i64

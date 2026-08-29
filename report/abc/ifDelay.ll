@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %.lr.ph111, %If_LogC
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.h ], [ 0, %bb.b ] ; 4 uses
   %.1106 = phi i32 [ %.2, %bb.h ], [ %.0110, %bb.b ]
   %.097104 = phi i32 [ %.198, %bb.h ], [ 0, %bb.b ] ; 7 uses
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.l = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.l = shl nuw i32 %indvars.iv.tr, 1
   %i.m = ashr i32 %i.k, %i.l
   %i.n = and i32 %i.m, 3
   %i.o = add nsw i32 %i.n, -1
@@ -608,8 +608,8 @@ bb.b:                                             ; preds = %.lr.ph222, %If_LogC
   %.153216 = phi i32 [ %.2, %bb.am ], [ %.052221, %bb.b ]
   %.054215 = phi i32 [ %.155, %bb.am ], [ 0, %bb.b ] ; 3 uses
   %.0208213 = phi i32 [ %.1209, %bb.am ], [ 0, %bb.b ] ; 25 uses
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.n = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.n = shl nuw i32 %indvars.iv.tr, 1
   %i.o = ashr i32 %i.m, %i.n
   %i.p = and i32 %i.o, 3
   switch i32 %i.p, label %bb.am [
@@ -1012,7 +1012,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index ; 2 uses
-  %i.e = shl <4 x i32> %vec.ind, splat (i32 1)
+  %i.e = shl nuw <4 x i32> %vec.ind, splat (i32 1)
   %step.add = shl <4 x i32> %vec.ind, splat (i32 1)
   %i.f = add <4 x i32> %step.add, splat (i32 8)
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16
@@ -1038,8 +1038,8 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph:                                           ; preds = %.lr.ph.preheader30, %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader30 ] ; 3 uses
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.k = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.k = shl nuw i32 %indvars.iv.tr, 1
   store i32 %i.k, ptr %i.j, align 4, !tbaa !30
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -1442,8 +1442,8 @@ bb.d:                                             ; preds = %.lr.ph, %bb.h
   br i1 %i.bc, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %indvars.iv.tr86 = trunc i64 %indvars.iv to i32
-  %i.bd = shl i32 %indvars.iv.tr86, 1
+  %indvars.iv.tr86 = trunc nuw nsw i64 %indvars.iv to i32
+  %i.bd = shl nuw nsw i32 %indvars.iv.tr86, 1
   %i.be = shl nuw i32 1, %i.bd
   br label %bb.h
 
@@ -1453,8 +1453,8 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.bg = add nsw i32 %.04974, 1
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.bh = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw nsw i64 %indvars.iv to i32
+  %i.bh = shl nuw nsw i32 %indvars.iv.tr, 1
   %i.bi = shl nuw i32 1, %i.bh
   %i.bj = or i32 %.075, %i.bi
   br label %bb.h

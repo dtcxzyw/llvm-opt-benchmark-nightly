@@ -204,7 +204,7 @@ bb.bq:                                            ; preds = %._crit_edge526, %._
   br i1 %i.sg, label %.lr.ph529, label %._crit_edge530
 
 .lr.ph529:                                        ; preds = %bb.bq
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
   %i.sh = shl i32 %indvars.iv.tr, 4
   %i.si = trunc nuw nsw i64 %indvars.iv to i32
   br label %bb.br
@@ -607,7 +607,7 @@ bb.bb:                                            ; preds = %._crit_edge282
   br i1 %i.lr, label %.lr.ph281, label %._crit_edge282
 
 .lr.ph281:                                        ; preds = %.preheader
-  %indvars.iv302.tr = trunc i64 %indvars.iv302 to i32
+  %indvars.iv302.tr = trunc nuw i64 %indvars.iv302 to i32
   %i.ls = shl i32 %indvars.iv302.tr, 4
   %i.lt = trunc nuw nsw i64 %indvars.iv302 to i32
   br label %bb.bc
@@ -1010,7 +1010,7 @@ bb.o:                                             ; preds = %._crit_edge139.1, %
   br i1 %i.dj, label %.lr.ph.1, label %._crit_edge139.1
 
 .lr.ph.1:                                         ; preds = %bb.o
-  %indvars.iv153.1.tr = trunc i64 %indvars.iv153.1 to i32
+  %indvars.iv153.1.tr = trunc nuw i64 %indvars.iv153.1 to i32
   %i.dk = shl i32 %indvars.iv153.1.tr, 4
   br label %bb.p
 
