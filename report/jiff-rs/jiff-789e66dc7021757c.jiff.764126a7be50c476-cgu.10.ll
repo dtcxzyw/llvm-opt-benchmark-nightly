@@ -204,14 +204,14 @@ _RNvNtNtCsa9sSWSfjDbm_4jiff4util5parse3i64.exit:  ; preds = %bb.g
   %i.x = mul nuw nsw i64 %i.w, 10
   %i.y = zext nneg i8 %i.n to i64
   %i.z = add nuw nsw i64 %i.x, %i.y
-  %5 = mul nuw nsw i64 %i.z, 10
-  %6 = zext nneg i8 %i.p to i64
-  %i.aa = add nuw nsw i64 %5, %6                  ; 2 uses
+  %5 = zext nneg i8 %i.p to i64
+  %6 = mul nuw nsw i64 %i.z, 10
+  %i.aa = add nuw nsw i64 %6, %5                  ; 2 uses
   %i.ab = icmp samesign ugt i64 %i.aa, 9999
   br i1 %i.ab, label %bb.i, label %bb.j
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
-  %.lcssa = phi i8 [ %i.e, %bb.b ], [ %i.k, %bb.e ], [ %i.i, %bb.d ], [ %i.g, %bb.c ], [ %i.o, %bb.g ], [ %i.m, %bb.f ]
+  %.lcssa = phi i8 [ %i.e, %bb.b ], [ %i.i, %bb.d ], [ %i.k, %bb.e ], [ %i.g, %bb.c ], [ %i.m, %bb.f ], [ %i.o, %bb.g ]
   %i.ac = tail call noundef ptr @_RNvXs1_NtNtCsa9sSWSfjDbm_4jiff5error4utilNtB7_5ErrorINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_13ParseIntErrorE4from(i8 noundef 1, i8 %.lcssa) #19, !noalias !333
   br label %bb.m
 
@@ -614,7 +614,7 @@ bb.f:                                             ; preds = %bb.j
 
 .lr.ph:                                           ; preds = %bb.e, %bb.f
   %.sroa.0.0.i22451 = phi i64 [ %i.w, %bb.f ], [ 0, %bb.e ] ; 3 uses
-  %.sroa.019.0.i21450 = phi i64 [ %i.ad, %bb.f ], [ 0, %bb.e ] ; 2 uses
+  %.sroa.019.0.i21450 = phi i64 [ %i.ad, %bb.f ], [ 0, %bb.e ] ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 %.sroa.0.0.i22451
   %i.z = load i8, ptr %i.y, align 1, !alias.scope !387, !noalias !390, !noundef !11
   %i.aa = add i8 %i.z, -48                        ; 2 uses
@@ -622,9 +622,8 @@ bb.f:                                             ; preds = %bb.j
   br i1 %or.cond.i29, label %bb.g, label %._crit_edge
 
 bb.g:                                             ; preds = %.lr.ph
-  %4 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.019.0.i21450, i64 10) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  br i1 %5, label %bb.k, label %bb.j, !prof !18
+  %4 = icmp ugt i64 %.sroa.019.0.i21450, 1844674407370955161
+  br i1 %4, label %bb.k, label %bb.j, !prof !18
 
 bb.h:                                             ; preds = %._crit_edge
   %i.ab = icmp samesign ugt i64 %.sroa.0.0.i22.lcssa, %.sroa.6.0.i.i
@@ -635,10 +634,10 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 bb.j:                                             ; preds = %bb.g
-  %6 = extractvalue { i64, i1 } %4, 0             ; 2 uses
+  %5 = mul nuw i64 %.sroa.019.0.i21450, 10        ; 2 uses
   %i.ac = zext nneg i8 %i.aa to i64
-  %i.ad = add i64 %6, %i.ac                       ; 3 uses
-  %i.ae = icmp ult i64 %i.ad, %6
+  %i.ad = add i64 %5, %i.ac                       ; 3 uses
+  %i.ae = icmp ult i64 %i.ad, %5
   br i1 %i.ae, label %bb.k, label %bb.f, !prof !18
 
 bb.k:                                             ; preds = %bb.g, %bb.j
@@ -756,7 +755,7 @@ bb.w:                                             ; preds = %bb.aa
 
 .lr.ph460:                                        ; preds = %bb.v, %bb.w
   %.sroa.0.0.i19458 = phi i64 [ %i.az, %bb.w ], [ 0, %bb.v ] ; 3 uses
-  %.sroa.019.0.i457 = phi i64 [ %i.bg, %bb.w ], [ 0, %bb.v ] ; 2 uses
+  %.sroa.019.0.i457 = phi i64 [ %i.bg, %bb.w ], [ 0, %bb.v ] ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i29.i, i64 %.sroa.0.0.i19458
   %i.bc = load i8, ptr %i.bb, align 1, !alias.scope !416, !noalias !419, !noundef !11
   %i.bd = add i8 %i.bc, -48                       ; 2 uses
@@ -764,9 +763,8 @@ bb.w:                                             ; preds = %bb.aa
   br i1 %or.cond.i, label %bb.x, label %._crit_edge461
 
 bb.x:                                             ; preds = %.lr.ph460
-  %7 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.019.0.i457, i64 10) ; 2 uses
-  %8 = extractvalue { i64, i1 } %7, 1
-  br i1 %8, label %bb.ab, label %bb.aa, !prof !18
+  %6 = icmp ugt i64 %.sroa.019.0.i457, 1844674407370955161
+  br i1 %6, label %bb.ab, label %bb.aa, !prof !18
 
 bb.y:                                             ; preds = %._crit_edge461
   %i.be = icmp samesign ugt i64 %.sroa.0.0.i19.lcssa, %.sroa.8.0.i.i.fr
@@ -777,10 +775,10 @@ bb.z:                                             ; preds = %bb.y
   unreachable
 
 bb.aa:                                            ; preds = %bb.x
-  %9 = extractvalue { i64, i1 } %7, 0             ; 2 uses
+  %7 = mul nuw i64 %.sroa.019.0.i457, 10          ; 2 uses
   %i.bf = zext nneg i8 %i.bd to i64
-  %i.bg = add i64 %9, %i.bf                       ; 3 uses
-  %i.bh = icmp ult i64 %i.bg, %9
+  %i.bg = add i64 %7, %i.bf                       ; 3 uses
+  %i.bh = icmp ult i64 %i.bg, %7
   br i1 %i.bh, label %bb.ab, label %bb.w, !prof !18
 
 bb.ab:                                            ; preds = %bb.x, %bb.aa
@@ -1183,7 +1181,7 @@ bb.i:                                             ; preds = %bb.m
 
 .lr.ph:                                           ; preds = %bb.h, %bb.i
   %.sroa.0.0.i28287 = phi i64 [ %i.ac, %bb.i ], [ 0, %bb.h ] ; 3 uses
-  %.sroa.019.0.i286 = phi i64 [ %i.aj, %bb.i ], [ 0, %bb.h ] ; 2 uses
+  %.sroa.019.0.i286 = phi i64 [ %i.aj, %bb.i ], [ 0, %bb.h ] ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i24, i64 %.sroa.0.0.i28287
   %i.af = load i8, ptr %i.ae, align 1, !alias.scope !508, !noalias !511, !noundef !11
   %i.ag = add i8 %i.af, -48                       ; 2 uses
@@ -1191,9 +1189,8 @@ bb.i:                                             ; preds = %bb.m
   br i1 %or.cond.i30, label %bb.j, label %._crit_edge
 
 bb.j:                                             ; preds = %.lr.ph
-  %4 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.019.0.i286, i64 10) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  br i1 %5, label %bb.n, label %bb.m, !prof !18
+  %4 = icmp ugt i64 %.sroa.019.0.i286, 1844674407370955161
+  br i1 %4, label %bb.n, label %bb.m, !prof !18
 
 bb.k:                                             ; preds = %._crit_edge
   %i.ah = icmp samesign ugt i64 %.sroa.0.0.i28.lcssa, %.sroa.8.0.i.fr
@@ -1204,10 +1201,10 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 bb.m:                                             ; preds = %bb.j
-  %6 = extractvalue { i64, i1 } %4, 0             ; 2 uses
+  %5 = mul nuw i64 %.sroa.019.0.i286, 10          ; 2 uses
   %i.ai = zext nneg i8 %i.ag to i64
-  %i.aj = add i64 %6, %i.ai                       ; 3 uses
-  %i.ak = icmp ult i64 %i.aj, %6
+  %i.aj = add i64 %5, %i.ai                       ; 3 uses
+  %i.ak = icmp ult i64 %i.aj, %5
   br i1 %i.ak, label %bb.n, label %bb.i, !prof !18
 
 bb.n:                                             ; preds = %bb.j, %bb.m
@@ -1587,7 +1584,7 @@ bb.i:                                             ; preds = %bb.m
 
 .lr.ph:                                           ; preds = %bb.h, %bb.i
   %.sroa.0.0.i37298 = phi i64 [ %i.ae, %bb.i ], [ 0, %bb.h ] ; 3 uses
-  %.sroa.019.0.i297 = phi i64 [ %i.al, %bb.i ], [ 0, %bb.h ] ; 2 uses
+  %.sroa.019.0.i297 = phi i64 [ %i.al, %bb.i ], [ 0, %bb.h ] ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i33, i64 %.sroa.0.0.i37298
   %i.ah = load i8, ptr %i.ag, align 1, !alias.scope !577, !noalias !580, !noundef !11
   %i.ai = add i8 %i.ah, -48                       ; 2 uses
@@ -1595,9 +1592,8 @@ bb.i:                                             ; preds = %bb.m
   br i1 %or.cond.i39, label %bb.j, label %._crit_edge
 
 bb.j:                                             ; preds = %.lr.ph
-  %4 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.019.0.i297, i64 10) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  br i1 %5, label %bb.n, label %bb.m, !prof !18
+  %4 = icmp ugt i64 %.sroa.019.0.i297, 1844674407370955161
+  br i1 %4, label %bb.n, label %bb.m, !prof !18
 
 bb.k:                                             ; preds = %._crit_edge
   %i.aj = icmp samesign ugt i64 %.sroa.0.0.i37.lcssa, %.sroa.8.0.i.fr
@@ -1608,10 +1604,10 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 bb.m:                                             ; preds = %bb.j
-  %6 = extractvalue { i64, i1 } %4, 0             ; 2 uses
+  %5 = mul nuw i64 %.sroa.019.0.i297, 10          ; 2 uses
   %i.ak = zext nneg i8 %i.ai to i64
-  %i.al = add i64 %6, %i.ak                       ; 3 uses
-  %i.am = icmp ult i64 %i.al, %6
+  %i.al = add i64 %5, %i.ak                       ; 3 uses
+  %i.am = icmp ult i64 %i.al, %5
   br i1 %i.am, label %bb.n, label %bb.i, !prof !18
 
 bb.n:                                             ; preds = %bb.j, %bb.m
@@ -2013,9 +2009,6 @@ declare void @_RNvNvNtNtCsa9sSWSfjDbm_4jiff3fmt4util23parse_temporal_fraction3im
 
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvNtNtCs3oUPovFnLWP_4core3str8converts9from_utf8(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(none) dereferenceable(24), ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef range(i64 0, -9223372036854775808)) unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #16
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvXsV_NtCs3oUPovFnLWP_4core5arrayAyja_NtNtB7_7default7Default7defaultCsa9sSWSfjDbm_4jiff(ptr dead_on_unwind noalias nofree noundef writable sret([80 x i8]) align 8 captures(none) dereferenceable(80)) unnamed_addr #2

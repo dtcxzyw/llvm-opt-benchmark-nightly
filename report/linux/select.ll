@@ -202,9 +202,6 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   ret i64 %i.p
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #10
-
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc noundef i32 @do_compat_select(i32 noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
@@ -297,20 +294,19 @@ bb.b:                                             ; preds = %bb.a
   %i.j = sext i32 %spec.select to i64             ; 7 uses
   %i.k = add nsw i64 %i.j, 63
   %i.l = lshr i64 %i.k, 3                         ; 5 uses
-  %i.m = trunc i64 %i.l to i32
+  %i.m = trunc i64 %i.l to i32                    ; 2 uses
   %i.n = and i32 %i.m, -8                         ; 6 uses
   %i.o = sext i32 %i.n to i64                     ; 2 uses
   %i.p = icmp ugt i32 %i.n, 42
   br i1 %i.p, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %6 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 range(i64 -2147483648, 2147483648) %i.o, i64 6) ; 2 uses
-  %7 = extractvalue { i64, i1 } %6, 1
-  br i1 %7, label %_kmalloc_array_noprof.exit.thread, label %_kmalloc_array_noprof.exit, !prof !14
+  %6 = icmp slt i32 %i.m, 0
+  br i1 %6, label %_kmalloc_array_noprof.exit.thread, label %_kmalloc_array_noprof.exit, !prof !14
 
 _kmalloc_array_noprof.exit:                       ; preds = %bb.c
-  %8 = extractvalue { i64, i1 } %6, 0
-  %i.q = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 -12884901888, 34359738377) %8, i32 noundef 3264) #15 ; 2 uses
+  %7 = mul nuw nsw i64 %i.o, 6
+  %i.q = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 -12884901888, 34359738377) %7, i32 noundef 3264) #15 ; 2 uses
   %.not = icmp eq ptr %i.q, null
   br i1 %.not, label %_kmalloc_array_noprof.exit.thread, label %bb.d
 

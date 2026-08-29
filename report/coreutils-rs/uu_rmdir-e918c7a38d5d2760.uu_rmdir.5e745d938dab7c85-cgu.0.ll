@@ -204,22 +204,27 @@ bb.j:                                             ; preds = %bb.h
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.551.0.copyload53, i64 1 ; 2 uses
   %i.bd = add nsw i64 %.sroa.855.0.copyload57, -1 ; 3 uses
   %i.be = icmp samesign ult i64 %.sroa.855.0.copyload57, 17
-  br i1 %i.be, label %.preheader114.i.a, label %.lr.ph.i
+  br i1 %i.be, label %.preheader114.i, label %.lr.ph.i
 
-.preheader114.i.a:                                ; preds = %bb.j
-  %.not103137.i.a = icmp eq i64 %i.bd, 0
-  br i1 %.not103137.i.a, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit37, label %.lr.ph141.i24
+.preheader114.i:                                  ; preds = %bb.j
+  %.not103137.i = icmp eq i64 %i.bd, 0
+  br i1 %.not103137.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit37, label %.lr.ph141.i24
 
-.lr.ph.i:                                         ; preds = %bb.j, %7
-  %.sroa.0.1136.i = phi ptr [ %i.bf, %7 ], [ %i.bc, %bb.j ] ; 2 uses
-  %.sroa.26.1135.i = phi i64 [ %i.bg, %7 ], [ %i.bd, %bb.j ]
-  %.sroa.084.0134.i = phi i64 [ %8, %7 ], [ 0, %bb.j ]
+.preheader114.i.a:                                ; preds = %bb.l
+  %4 = sub nsw i64 %5, %i.bl                      ; 2 uses
+  %.not103137.i.a = icmp eq i64 %i.bg, 0
+  br i1 %.not103137.i.a, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit37, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.j, %.preheader114.i.a
+  %.sroa.0.1136.i = phi ptr [ %i.bf, %.preheader114.i.a ], [ %i.bc, %bb.j ] ; 2 uses
+  %.sroa.26.1135.i = phi i64 [ %i.bg, %.preheader114.i.a ], [ %i.bd, %bb.j ]
+  %.sroa.084.0134.i = phi i64 [ %4, %.preheader114.i.a ], [ 0, %bb.j ] ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.0.1136.i, i64 1
   %i.bg = add nsw i64 %.sroa.26.1135.i, -1        ; 2 uses
-  %4 = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.084.0134.i, i64 10) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 0
-  %6 = extractvalue { i64, i1 } %4, 1
-  br i1 %6, label %.loopexit, label %bb.k, !prof !204
+  %5 = mul nsw i64 %.sroa.084.0134.i, 10          ; 2 uses
+  %6 = add i64 %.sroa.084.0134.i, -922337203685477581
+  %7 = icmp ult i64 %6, -1844674407370955161
+  br i1 %7, label %.loopexit, label %bb.k, !prof !204
 
 bb.k:                                             ; preds = %.lr.ph.i
   %i.bh = load i8, ptr %.sroa.0.1136.i, align 1, !alias.scope !217, !noalias !220, !noundef !4
@@ -229,20 +234,15 @@ bb.k:                                             ; preds = %.lr.ph.i
   br i1 %i.bk, label %bb.l, label %.loopexit
 
 bb.l:                                             ; preds = %bb.k
-  %i.bl = zext nneg i32 %i.bj to i64
-  %i.bm = call { i64, i1 } @llvm.ssub.with.overflow.i64(i64 %5, i64 %i.bl) ; 2 uses
+  %i.bl = zext nneg i32 %i.bj to i64              ; 2 uses
+  %i.bm = call { i64, i1 } @llvm.ssub.with.overflow.i64(i64 %5, i64 %i.bl)
   %i.bn = extractvalue { i64, i1 } %i.bm, 1
-  br i1 %i.bn, label %.loopexit, label %7, !prof !204
+  br i1 %i.bn, label %.loopexit, label %.preheader114.i.a, !prof !204
 
-7:                                                ; preds = %bb.l
-  %8 = extractvalue { i64, i1 } %i.bm, 0          ; 2 uses
-  %.not102.i = icmp eq i64 %i.bg, 0
-  br i1 %.not102.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit37, label %.lr.ph.i
-
-.lr.ph141.i24:                                    ; preds = %.preheader114.i.a, %bb.m
-  %.sroa.0.2140.i25 = phi ptr [ %i.bu, %bb.m ], [ %i.bc, %.preheader114.i.a ] ; 2 uses
-  %.sroa.26.2139.i26 = phi i64 [ %i.bt, %bb.m ], [ %i.bd, %.preheader114.i.a ]
-  %.sroa.084.2138.i27 = phi i64 [ %i.bw, %bb.m ], [ 0, %.preheader114.i.a ]
+.lr.ph141.i24:                                    ; preds = %.preheader114.i, %bb.m
+  %.sroa.0.2140.i25 = phi ptr [ %i.bu, %bb.m ], [ %i.bc, %.preheader114.i ] ; 2 uses
+  %.sroa.26.2139.i26 = phi i64 [ %i.bt, %bb.m ], [ %i.bd, %.preheader114.i ]
+  %.sroa.084.2138.i27 = phi i64 [ %i.bw, %bb.m ], [ 0, %.preheader114.i ]
   %i.bo = load i8, ptr %.sroa.0.2140.i25, align 1, !alias.scope !217, !noalias !220, !noundef !4
   %i.bp = zext i8 %i.bo to i32
   %i.bq = add nsw i32 %i.bp, -48                  ; 2 uses
@@ -262,21 +262,26 @@ bb.n:                                             ; preds = %bb.i, %bb.h
   %.sroa.26.0.i29 = phi i64 [ %i.bb, %bb.i ], [ %.sroa.855.0.copyload57, %bb.h ] ; 4 uses
   %.sroa.0.0.i30 = phi ptr [ %i.ba, %bb.i ], [ %.sroa.551.0.copyload53, %bb.h ] ; 2 uses
   %i.bx = icmp samesign ult i64 %.sroa.26.0.i29, 16
-  br i1 %i.bx, label %.preheader.i.a, label %.preheader111.i
+  br i1 %i.bx, label %.preheader.i, label %.preheader111.i
 
-.preheader.i.a:                                   ; preds = %bb.n
-  %.not105146.i.a = icmp eq i64 %.sroa.26.0.i29, 0
-  br i1 %.not105146.i.a, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit37, label %.lr.ph150.i31
+.preheader.i:                                     ; preds = %bb.n
+  %.not105146.i = icmp eq i64 %.sroa.26.0.i29, 0
+  br i1 %.not105146.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit37, label %.lr.ph150.i31
 
-.preheader111.i:                                  ; preds = %bb.n, %12
-  %.sroa.0.3145.i = phi ptr [ %i.by, %12 ], [ %.sroa.0.0.i30, %bb.n ] ; 2 uses
-  %.sroa.26.3144.i = phi i64 [ %i.bz, %12 ], [ %.sroa.26.0.i29, %bb.n ]
-  %.sroa.084.3143.i = phi i64 [ %13, %12 ], [ 0, %bb.n ]
+.preheader.i.a:                                   ; preds = %bb.p
+  %8 = add nsw i64 %9, %i.ce                      ; 2 uses
+  %.not105146.i.a = icmp eq i64 %i.bz, 0
+  br i1 %.not105146.i.a, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit37, label %.preheader111.i
+
+.preheader111.i:                                  ; preds = %bb.n, %.preheader.i.a
+  %.sroa.0.3145.i = phi ptr [ %i.by, %.preheader.i.a ], [ %.sroa.0.0.i30, %bb.n ] ; 2 uses
+  %.sroa.26.3144.i = phi i64 [ %i.bz, %.preheader.i.a ], [ %.sroa.26.0.i29, %bb.n ]
+  %.sroa.084.3143.i = phi i64 [ %8, %.preheader.i.a ], [ 0, %bb.n ] ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %.sroa.0.3145.i, i64 1
   %i.bz = add nsw i64 %.sroa.26.3144.i, -1        ; 2 uses
-  %9 = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.084.3143.i, i64 10) ; 2 uses
-  %10 = extractvalue { i64, i1 } %9, 0
-  %11 = extractvalue { i64, i1 } %9, 1
+  %9 = mul nsw i64 %.sroa.084.3143.i, 10          ; 2 uses
+  %10 = add i64 %.sroa.084.3143.i, -922337203685477581
+  %11 = icmp ult i64 %10, -1844674407370955161
   br i1 %11, label %.loopexit, label %bb.o, !prof !204
 
 bb.o:                                             ; preds = %.preheader111.i
@@ -287,20 +292,15 @@ bb.o:                                             ; preds = %.preheader111.i
   br i1 %i.cd, label %bb.p, label %.loopexit
 
 bb.p:                                             ; preds = %bb.o
-  %i.ce = zext nneg i32 %i.cc to i64
-  %i.cf = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %10, i64 %i.ce) ; 2 uses
+  %i.ce = zext nneg i32 %i.cc to i64              ; 2 uses
+  %i.cf = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %9, i64 %i.ce)
   %i.cg = extractvalue { i64, i1 } %i.cf, 1
-  br i1 %i.cg, label %.loopexit, label %12, !prof !204
+  br i1 %i.cg, label %.loopexit, label %.preheader.i.a, !prof !204
 
-12:                                               ; preds = %bb.p
-  %13 = extractvalue { i64, i1 } %i.cf, 0         ; 2 uses
-  %.not104.i = icmp eq i64 %i.bz, 0
-  br i1 %.not104.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit37, label %.preheader111.i
-
-.lr.ph150.i31:                                    ; preds = %.preheader.i.a, %bb.q
-  %.sroa.0.4149.i32 = phi ptr [ %i.cn, %bb.q ], [ %.sroa.0.0.i30, %.preheader.i.a ] ; 2 uses
-  %.sroa.26.4148.i33 = phi i64 [ %i.cm, %bb.q ], [ %.sroa.26.0.i29, %.preheader.i.a ]
-  %.sroa.084.4147.i34 = phi i64 [ %i.cp, %bb.q ], [ 0, %.preheader.i.a ]
+.lr.ph150.i31:                                    ; preds = %.preheader.i, %bb.q
+  %.sroa.0.4149.i32 = phi ptr [ %i.cn, %bb.q ], [ %.sroa.0.0.i30, %.preheader.i ] ; 2 uses
+  %.sroa.26.4148.i33 = phi i64 [ %i.cm, %bb.q ], [ %.sroa.26.0.i29, %.preheader.i ]
+  %.sroa.084.4147.i34 = phi i64 [ %i.cp, %bb.q ], [ 0, %.preheader.i ]
   %i.ch = load i8, ptr %.sroa.0.4149.i32, align 1, !alias.scope !217, !noalias !220, !noundef !4
   %i.ci = zext i8 %i.ch to i32
   %i.cj = add nsw i32 %i.ci, -48                  ; 2 uses
@@ -342,8 +342,8 @@ bb.s:                                             ; preds = %.loopexit75
   %i.ct = trunc nuw i8 %i.cs to i1
   br i1 %i.ct, label %bb.u, label %bb.v
 
-_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit37: ; preds = %7, %bb.m, %12, %bb.q, %.preheader.i.a, %.preheader114.i.a
-  %.sroa.1561.0 = phi i64 [ %i.cp, %bb.q ], [ %i.bw, %bb.m ], [ %13, %12 ], [ 0, %.preheader.i.a ], [ 0, %.preheader114.i.a ], [ %8, %7 ]
+_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit37: ; preds = %.preheader114.i.a, %bb.m, %.preheader.i.a, %bb.q, %.preheader.i, %.preheader114.i
+  %.sroa.1561.0 = phi i64 [ %i.cp, %bb.q ], [ %i.bw, %bb.m ], [ %8, %.preheader.i.a ], [ 0, %.preheader.i ], [ 0, %.preheader114.i ], [ %4, %.preheader114.i.a ]
   call fastcc void @_RINvMNtCsiMbvvWBbXLn_13fluent_bundle4argsNtB3_10FluentArgs3setRexECs86MjTkXjVIv_8uu_rmdir(ptr noalias nofree noundef align 8 dereferenceable(24) %i.k, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @9, i64 noundef 4, i64 noundef %.sroa.1561.0) #19
   br label %bb.t
 
@@ -744,9 +744,6 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 
 ; Function Attrs: noinline nounwind nonlazybind uwtable
 declare void @_RNvMs4_NtCs7tKScEop1B6_5alloc7raw_vecINtB5_6RawVecTINtNtB7_6borrow3CoweENtNtCsiMbvvWBbXLn_13fluent_bundle5types11FluentValueEE8grow_oneCsh036I4OHgIr_6uucore(ptr noalias nofree noundef align 8 dereferenceable(16)) unnamed_addr #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.smul.with.overflow.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i64, i1 } @llvm.ssub.with.overflow.i64(i64, i64) #14

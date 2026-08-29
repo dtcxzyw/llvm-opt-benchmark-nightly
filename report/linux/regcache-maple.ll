@@ -204,14 +204,14 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.f = zext i32 %i.c to i64                     ; 2 uses
-  %i.g = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.f, i64 %i.b) ; 2 uses
+  %i.g = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.f, i64 %i.b)
   %i.h = extractvalue { i64, i1 } %i.g, 1
   br i1 %i.h, label %_kmalloc_array_noprof.exit.thread, label %_kmalloc_array_noprof.exit, !prof !16
 
 _kmalloc_array_noprof.exit:                       ; preds = %bb.c
   %i.i = getelementptr i8, ptr %0, i64 56
   %i.j = load i32, ptr %i.i, align 8
-  %5 = extractvalue { i64, i1 } %i.g, 0
+  %5 = mul i64 %i.b, %i.f                         ; 2 uses
   %i.k = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef %5, i32 noundef %i.j) #13 ; 4 uses
   %.not51 = icmp eq ptr %i.k, null
   br i1 %.not51, label %_kmalloc_array_noprof.exit.thread, label %bb.d
@@ -241,8 +241,7 @@ bb.e:                                             ; preds = %.lr.ph58, %bb.e
   br i1 %exitcond59.not, label %._crit_edge, label %bb.e, !llvm.loop !26
 
 ._crit_edge:                                      ; preds = %bb.e, %bb.d
-  %6 = mul i64 %i.b, %i.f
-  %i.x = tail call i32 @_regmap_raw_write(ptr noundef %0, i32 noundef %3, ptr noundef nonnull %i.k, i64 noundef %6, i1 noundef zeroext false) #11
+  %i.x = tail call i32 @_regmap_raw_write(ptr noundef %0, i32 noundef %3, ptr noundef nonnull %i.k, i64 noundef %5, i1 noundef zeroext false) #11
   tail call void @kfree(ptr noundef nonnull %i.k) #11
   br label %_kmalloc_array_noprof.exit.thread
 

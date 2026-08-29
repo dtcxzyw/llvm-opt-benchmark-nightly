@@ -202,23 +202,21 @@ pci_rom_header_valid.exit.i:                      ; preds = %bb.l
   %i.ar = getelementptr i8, ptr %.0.i28, i64 24
   %i.as = call i16 asm sideeffect "movw $1,$0", "=r,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i16) %i.ar) #6, !srcloc !11
   %i.at = zext i16 %i.as to i64
-  %i.au = getelementptr i8, ptr %.0.i28, i64 %i.at ; 6 uses
-  %i.av = ptrtoint ptr %i.au to i64               ; 2 uses
+  %i.au = getelementptr i8, ptr %.0.i28, i64 %i.at ; 7 uses
+  %i.av = ptrtoint ptr %i.au to i64               ; 3 uses
   %i.aw = and i64 %i.av, 3
   %i.ax = icmp eq i64 %i.aw, 0
   br i1 %i.ax, label %bb.n, label %pci_rom_header_valid.exit43.thread48.loopexit.i
 
 bb.n:                                             ; preds = %pci_rom_header_valid.exit.i
-  %i.ay = zext i64 %i.av to i65                   ; 2 uses
-  %3 = call { i65, i1 } @llvm.sadd.with.overflow.i65(i65 %i.ay, i65 11) ; 2 uses
-  %4 = extractvalue { i65, i1 } %3, 1
-  br i1 %4, label %pci_rom_header_valid.exit43.thread48.loopexit.i, label %bb.o
+  %i.ay = zext i64 %i.av to i65
+  %3 = icmp ugt ptr %i.au, inttoptr (i64 -12 to ptr)
+  br i1 %3, label %pci_rom_header_valid.exit43.thread48.loopexit.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %5 = extractvalue { i65, i1 } %3, 0
-  %6 = trunc nuw i65 %5 to i64
+  %4 = add i64 %i.av, 11
   %i.az = icmp ult ptr %i.au, %i.af
-  %i.ba = icmp ult i64 %.reass.i, %6
+  %i.ba = icmp ult i64 %.reass.i, %4
   %or.cond25.i.i = or i1 %i.az, %i.ba
   br i1 %or.cond25.i.i, label %pci_rom_header_valid.exit43.thread48.loopexit.i, label %bb.p
 

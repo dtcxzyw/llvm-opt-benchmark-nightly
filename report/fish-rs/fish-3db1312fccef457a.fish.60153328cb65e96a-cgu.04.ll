@@ -205,20 +205,19 @@ bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
   %i.b = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
-  %.sroa.0.0.copyload = load i64, ptr %i.c, align 8
-  %2 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %.sroa.0.0.copyload, i64 1) ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 1
-  br i1 %3, label %bb.b, label %_RNCNvMNtCs8frGy5WneL6_4fish15parse_executionNtB4_16ExecutionContext9run_1_job0B6_.exit
+  %.sroa.0.0.copyload = load i64, ptr %i.c, align 8 ; 2 uses
+  %2 = icmp eq i64 %.sroa.0.0.copyload, 9223372036854775807
+  br i1 %2, label %bb.b, label %_RNCNvMNtCs8frGy5WneL6_4fish15parse_executionNtB4_16ExecutionContext9run_1_job0B6_.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @41) #33, !noalias !150
   unreachable
 
 _RNCNvMNtCs8frGy5WneL6_4fish15parse_executionNtB4_16ExecutionContext9run_1_job0B6_.exit: ; preds = %bb.a
-  %4 = extractvalue { i64, i1 } %2, 0
+  %3 = add nsw i64 %.sroa.0.0.copyload, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 32, i1 false)
-  store i64 %4, ptr %i.c, align 8
+  store i64 %3, ptr %i.c, align 8
   %i.d = load i64, ptr %i.b, align 8, !noundef !4 ; 2 uses
   %i.e = icmp ne i64 %i.d, 0
   tail call void @llvm.assume(i1 %i.e)
@@ -620,9 +619,6 @@ declare noundef nonnull align 8 ptr @_RNvMNtCs8frGy5WneL6_4fish17operation_conte
 
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvMs5_NtCs8frGy5WneL6_4fish6parserNtB5_6Parser9pop_block(ptr noalias nofree noundef align 8 dereferenceable(432), i64 noundef) unnamed_addr #0
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.sadd.with.overflow.i64(i64, i64) #24
 
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvMs5_NtCs8frGy5WneL6_4fish6parserNtB5_6Parser17set_last_statuses(ptr noundef nonnull align 8, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(32)) unnamed_addr #0

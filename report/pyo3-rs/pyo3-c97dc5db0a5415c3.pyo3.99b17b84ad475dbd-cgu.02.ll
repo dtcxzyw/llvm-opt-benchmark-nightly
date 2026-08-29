@@ -202,20 +202,19 @@ bb.l:                                             ; preds = %.lr.ph.preheader.i
 .preheader57.i.preheader:                         ; preds = %bb.k, %.preheader57.i
   %.sroa.0.1.i151272 = phi ptr [ %i.bd, %.preheader57.i ], [ %.sroa.0.0.i150, %bb.k ] ; 2 uses
   %.sroa.15.1.i271 = phi i64 [ %i.be, %.preheader57.i ], [ %.sroa.15.0.i, %bb.k ]
-  %.sroa.043.0.i270 = phi i8 [ %i.bk, %.preheader57.i ], [ 0, %bb.k ]
-  %3 = tail call { i8, i1 } @llvm.umul.with.overflow.i8(i8 %.sroa.043.0.i270, i8 10) ; 2 uses
-  %4 = extractvalue { i8, i1 } %3, 1
-  br i1 %4, label %.loopexit, label %bb.m, !prof !47
+  %.sroa.043.0.i270 = phi i8 [ %i.bk, %.preheader57.i ], [ 0, %bb.k ] ; 2 uses
+  %3 = icmp ugt i8 %.sroa.043.0.i270, 25
+  br i1 %3, label %.loopexit, label %bb.m, !prof !47
 
 bb.m:                                             ; preds = %.preheader57.i.preheader
-  %5 = extractvalue { i8, i1 } %3, 0              ; 2 uses
+  %4 = mul nuw i8 %.sroa.043.0.i270, 10           ; 2 uses
   %i.bf = load i8, ptr %.sroa.0.1.i151272, align 1, !alias.scope !44, !noundef !6
   %i.bg = zext i8 %i.bf to i32
   %i.bh = add nsw i32 %i.bg, -48                  ; 2 uses
   %i.bi = icmp ugt i32 %i.bh, 9
   %i.bj = trunc nuw nsw i32 %i.bh to i8
-  %i.bk = add i8 %5, %i.bj                        ; 3 uses
-  %i.bl = icmp ult i8 %i.bk, %5
+  %i.bk = add i8 %4, %i.bj                        ; 3 uses
+  %i.bl = icmp ult i8 %i.bk, %4
   %or.cond = select i1 %i.bi, i1 true, i1 %i.bl, !prof !48
   br i1 %or.cond, label %.loopexit, label %.preheader57.i, !prof !48
 
@@ -618,14 +617,13 @@ bb.k:                                             ; preds = %.lr.ph.preheader.i
 .preheader57.i.preheader:                         ; preds = %bb.j, %.preheader57.i
   %.sroa.0.1.i116 = phi ptr [ %i.bj, %.preheader57.i ], [ %.sroa.0.0.i4, %bb.j ] ; 2 uses
   %.sroa.15.1.i115 = phi i64 [ %i.bk, %.preheader57.i ], [ %.sroa.15.0.i, %bb.j ]
-  %.sroa.043.0.i114 = phi i8 [ %i.bs, %.preheader57.i ], [ 0, %bb.j ]
+  %.sroa.043.0.i114 = phi i8 [ %i.bs, %.preheader57.i ], [ 0, %bb.j ] ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i116, i64 1
   %i.bk = add nsw i64 %.sroa.15.1.i115, -1        ; 2 uses
-  %3 = tail call { i8, i1 } @llvm.umul.with.overflow.i8(i8 %.sroa.043.0.i114, i8 10) ; 2 uses
-  %4 = extractvalue { i8, i1 } %3, 0              ; 2 uses
-  %5 = extractvalue { i8, i1 } %3, 1
+  %3 = mul nuw i8 %.sroa.043.0.i114, 10           ; 2 uses
+  %4 = icmp ugt i8 %.sroa.043.0.i114, 25
   %i.bl = load i8, ptr %.sroa.0.1.i116, align 1, !alias.scope !89, !noundef !6 ; 2 uses
-  br i1 %5, label %bb.m, label %bb.l, !prof !47
+  br i1 %4, label %bb.m, label %bb.l, !prof !47
 
 bb.l:                                             ; preds = %.preheader57.i.preheader
   %i.bm = zext i8 %i.bl to i32
@@ -641,8 +639,8 @@ bb.m:                                             ; preds = %.preheader57.i.preh
 
 bb.n:                                             ; preds = %bb.l
   %i.br = trunc nuw nsw i32 %i.bn to i8
-  %i.bs = add i8 %4, %i.br                        ; 3 uses
-  %i.bt = icmp ult i8 %i.bs, %4
+  %i.bs = add i8 %3, %i.br                        ; 3 uses
+  %i.bt = icmp ult i8 %i.bs, %3
   br i1 %i.bt, label %.loopexit, label %.preheader57.i, !prof !47
 
 .lr.ph.i:                                         ; preds = %bb.k
@@ -721,14 +719,13 @@ bb.q:                                             ; preds = %.lr.ph.preheader.i1
 .preheader57.i11.preheader:                       ; preds = %thread-pre-split.i24, %.preheader57.i11
   %.sroa.0.1.i14113 = phi ptr [ %i.cn, %.preheader57.i11 ], [ %.sroa.0.0.i10, %thread-pre-split.i24 ] ; 2 uses
   %.sroa.15.1.i13112 = phi i64 [ %i.co, %.preheader57.i11 ], [ %.sroa.15.0.i8, %thread-pre-split.i24 ]
-  %.sroa.043.0.i12111 = phi i8 [ %i.cw, %.preheader57.i11 ], [ 0, %thread-pre-split.i24 ]
+  %.sroa.043.0.i12111 = phi i8 [ %i.cw, %.preheader57.i11 ], [ 0, %thread-pre-split.i24 ] ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i14113, i64 1
   %i.co = add nsw i64 %.sroa.15.1.i13112, -1      ; 2 uses
-  %6 = tail call { i8, i1 } @llvm.umul.with.overflow.i8(i8 %.sroa.043.0.i12111, i8 10) ; 2 uses
-  %7 = extractvalue { i8, i1 } %6, 0              ; 2 uses
-  %8 = extractvalue { i8, i1 } %6, 1
+  %5 = mul nuw i8 %.sroa.043.0.i12111, 10         ; 2 uses
+  %6 = icmp ugt i8 %.sroa.043.0.i12111, 25
   %i.cp = load i8, ptr %.sroa.0.1.i14113, align 1, !alias.scope !96, !noundef !6 ; 2 uses
-  br i1 %8, label %bb.s, label %bb.r, !prof !47
+  br i1 %6, label %bb.s, label %bb.r, !prof !47
 
 bb.r:                                             ; preds = %.preheader57.i11.preheader
   %i.cq = zext i8 %i.cp to i32
@@ -744,8 +741,8 @@ bb.s:                                             ; preds = %.preheader57.i11.pr
 
 bb.t:                                             ; preds = %bb.r
   %i.cv = trunc nuw nsw i32 %i.cr to i8
-  %i.cw = add i8 %7, %i.cv                        ; 3 uses
-  %i.cx = icmp ult i8 %i.cw, %7
+  %i.cw = add i8 %5, %i.cv                        ; 3 uses
+  %i.cx = icmp ult i8 %i.cw, %5
   br i1 %i.cx, label %_RNvMNtCskKLDkoKarTP_4core3stre16split_at_checked.exit.thread37, label %.preheader57.i11, !prof !47
 
 .lr.ph.i20:                                       ; preds = %bb.q
@@ -1148,9 +1145,6 @@ declare void @_RNvNtCsdc6yCHiM2ZJ_4pyo38instance13panic_on_null(ptr noalias nofr
 ; Function Attrs: nounwind nonlazybind uwtable
 declare void @PyUnicode_InternInPlace(ptr noundef) unnamed_addr #5
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i8, i1 } @llvm.umul.with.overflow.i8(i8, i8) #16
-
 ; Function Attrs: cold minsize noreturn nonlazybind optsize uwtable
 declare void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #12
 
@@ -1170,7 +1164,7 @@ declare void @_RNvNvXsA_NtCsdc6yCHiM2ZJ_4pyo38instanceINtB7_2PypENtNtNtCskKLDkoK
 declare noundef zeroext i1 @_RNvXs1_NtNtCskKLDkoKarTP_4core3ffi5c_strNtB5_4CStrNtNtB9_3fmt5Debug3fmt(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef, ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #0
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #17
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #16
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RINvNvMsb_NtCsdc6yCHiM2ZJ_4pyo38instanceINtB8_8BorrowedpE4cast5innerNtNtNtBa_5types6string8PyStringEBa_(ptr dead_on_unwind noalias nofree noundef writable sret([16 x i8]) align 8 captures(none) dereferenceable(16), ptr noundef nonnull) unnamed_addr #0
@@ -1203,7 +1197,7 @@ declare noundef zeroext i1 @_RNvXNtNtCskKLDkoKarTP_4core3ffi5c_strNtB2_21FromByt
 declare noundef zeroext i1 @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef align 8 dereferenceable(24), ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef) unnamed_addr #0
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #16
+declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #17
 
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter26debug_struct_field1_finish(ptr noalias nofree noundef align 8 dereferenceable(24), ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef, ptr noundef nonnull, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32)) unnamed_addr #0
@@ -1227,8 +1221,8 @@ attributes #12 = { cold minsize noreturn nonlazybind optsize uwtable "probe-stac
 attributes #13 = { nounwind nonlazybind allockind("alloc,uninitialized,aligned") allocsize(0) uwtable "alloc-family"="__rust_alloc" "alloc-variant-zeroed"="_RNvCsbkii2mvYdKU_7___rustc19___rust_alloc_zeroed" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #14 = { noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #15 = { cold noreturn nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #16 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #17 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #16 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #17 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #18 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #19 = { nounwind }
 attributes #20 = { cold noreturn nounwind }

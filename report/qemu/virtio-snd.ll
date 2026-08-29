@@ -202,9 +202,9 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   br label %virtio_snd_handle_pcm_info.exit.i
 
 bb.ad:                                            ; preds = %bb.ab
-  %i.bi = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.ba, i32 %i.az) ; 2 uses
+  %i.bi = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.ba, i32 %i.az)
   %i.bj = extractvalue { i32, i1 } %i.bi, 1
-  %3 = extractvalue { i32, i1 } %i.bi, 0
+  %3 = mul i32 %i.ba, %i.az                       ; 2 uses
   %i.bk = icmp ugt i32 %3, -5
   %or.cond81.i.i = or i1 %i.bj, %i.bk
   %.pre111.i.i = load ptr, ptr %i.q, align 8      ; 3 uses
@@ -216,8 +216,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.bn = getelementptr inbounds nuw i8, ptr %.pre111.i.i, i64 16
   %i.bo = load i32, ptr %i.bn, align 8
   %i.bp = call i64 @iov_size(ptr noundef %i.bm, i32 noundef %i.bo) #10
-  %4 = mul i32 %i.ba, %i.az
-  %i.bq = zext i32 %4 to i64
+  %i.bq = zext i32 %3 to i64
   %i.br = add nuw nsw i64 %i.bq, 4
   %i.bs = icmp ult i64 %i.bp, %i.br
   br i1 %i.bs, label %._crit_edge.i.i, label %bb.ag

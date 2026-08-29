@@ -202,20 +202,19 @@ bb.t:                                             ; preds = %_RINvMs8_NtCskuiImR
 bb.u:                                             ; preds = %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %.sroa.018.0.copyload = load ptr, ptr %i.c, align 8, !nonnull !4, !noundef !4 ; 5 uses
-  %.sroa.419.0.copyload = load i64, ptr %i.r, align 8 ; 4 uses
+  %.sroa.419.0.copyload = load i64, ptr %i.r, align 8 ; 5 uses
   %.sroa.521.0.copyload = load i64, ptr %i.t, align 8
   %.val24.i.i.i = load <16 x i8>, ptr %.sroa.018.0.copyload, align 16, !noalias !670
   %i.gd = icmp eq i64 %.sroa.419.0.copyload, 0
   br i1 %i.gd, label %bb.v, label %_RNvMs1_NtCs4u2a9tqgjUw_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
 
 _RNvMs1_NtCs4u2a9tqgjUw_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %bb.u
-  %4 = mul i64 %.sroa.419.0.copyload, 12          ; 2 uses
-  %5 = add i64 %4, 12
-  %6 = icmp ult i64 %5, -15
-  call void @llvm.assume(i1 %6)
+  %or.cond.i.i.i.i = icmp slt i64 %.sroa.419.0.copyload, 1537228672809129300
+  call void @llvm.assume(i1 %or.cond.i.i.i.i)
+  %4 = mul i64 %.sroa.419.0.copyload, 12
   %i.ge = add i64 %4, 24
   %i.gf = and i64 %i.ge, -16                      ; 3 uses
-  %i.gg = add i64 %.sroa.419.0.copyload, 17
+  %i.gg = add nsw i64 %.sroa.419.0.copyload, 17
   %i.gh = add i64 %i.gg, %i.gf                    ; 3 uses
   %i.gi = icmp uge i64 %i.gh, %i.gf
   call void @llvm.assume(i1 %i.gi)

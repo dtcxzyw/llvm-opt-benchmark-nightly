@@ -204,26 +204,25 @@ thread-pre-split.i:                               ; preds = %bb.am, %bb.an
 .preheader81.split.us.i.preheader:                ; preds = %thread-pre-split.i, %.preheader81.split.us.i
   %.sroa.0.1.us.i133 = phi ptr [ %i.dc, %.preheader81.split.us.i ], [ %.sroa.0.0.i57, %thread-pre-split.i ] ; 3 uses
   %.sroa.15.1.us.i132 = phi i64 [ %i.dd, %.preheader81.split.us.i ], [ %.sroa.15.0.i, %thread-pre-split.i ]
-  %.sroa.045.0.us.i131 = phi i32 [ %i.di, %.preheader81.split.us.i ], [ 0, %thread-pre-split.i ]
+  %.sroa.045.0.us.i131 = phi i32 [ %i.di, %.preheader81.split.us.i ], [ 0, %thread-pre-split.i ] ; 2 uses
     #dbg_value(ptr %.sroa.0.1.us.i133, !13233, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14611)
     #dbg_value(i64 %.sroa.15.1.us.i132, !13233, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14611)
     #dbg_value(i32 %.sroa.045.0.us.i131, !13315, !DIExpression(), !14616)
     #dbg_value(ptr %.sroa.0.1.us.i133, !13256, !DIExpression(), !14627)
     #dbg_value(ptr %.sroa.0.1.us.i133, !13258, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !14627)
     #dbg_value(i64 %.sroa.15.1.us.i132, !13258, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !14627)
-  %2 = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.sroa.045.0.us.i131, i32 10), !dbg !14629 ; 2 uses
-  %3 = extractvalue { i32, i1 } %2, 1, !dbg !14629
-    #dbg_value(i32 poison, !13298, !DIExpression(), !14630)
-    #dbg_value(i1 %3, !13300, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !14630)
-    #dbg_value(i1 %3, !13339, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !14631)
-  br i1 %3, label %.split.us.i, label %bb.ao, !dbg !14633, !prof !1194
+  %2 = icmp ugt i32 %.sroa.045.0.us.i131, 429496729, !dbg !14629
+    #dbg_value(i32 %.sroa.045.0.us.i131, !13298, !DIExpression(DW_OP_constu, 10, DW_OP_mul, DW_OP_stack_value), !14630)
+    #dbg_value(i1 %2, !13300, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !14630)
+    #dbg_value(i1 %2, !13339, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !14631)
+  br i1 %2, label %.split.us.i, label %bb.ao, !dbg !14633, !prof !1194
 
 bb.ao:                                            ; preds = %.preheader81.split.us.i.preheader
-  %4 = extractvalue { i32, i1 } %2, 0, !dbg !14629 ; 2 uses
-    #dbg_value(i32 %4, !13298, !DIExpression(), !14630)
+  %3 = mul nuw i32 %.sroa.045.0.us.i131, 10, !dbg !14629 ; 2 uses
+    #dbg_value(i32 %3, !13298, !DIExpression(), !14630)
     #dbg_value(i64 %.sroa.15.1.us.i132, !13258, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !14627)
     #dbg_value(ptr %.sroa.0.1.us.i133, !13258, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !14627)
-    #dbg_value(i32 %4, !13259, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !14634)
+    #dbg_value(i32 %3, !13259, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !14634)
     #dbg_value(i32 1, !13259, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !14634)
   %i.de = load i8, ptr %.sroa.0.1.us.i133, align 1, !dbg !14635, !alias.scope !14621, !noundef !27
   %i.df = zext i8 %i.de to i32, !dbg !14636
@@ -232,11 +231,11 @@ bb.ao:                                            ; preds = %.preheader81.split.
   %i.dg = add nsw i32 %i.df, -48, !dbg !14639     ; 2 uses
     #dbg_value(i32 poison, !13353, !DIExpression(), !14640)
   %i.dh = icmp ugt i32 %i.dg, 9, !dbg !14641
-    #dbg_value(i32 %4, !13240, !DIExpression(), !14624)
-    #dbg_value(i32 %4, !13297, !DIExpression(), !14614)
-    #dbg_value(i32 %4, !13315, !DIExpression(), !14616)
-  %i.di = add i32 %i.dg, %4                       ; 3 uses
-  %i.dj = icmp ult i32 %i.di, %4
+    #dbg_value(i32 %3, !13240, !DIExpression(), !14624)
+    #dbg_value(i32 %3, !13297, !DIExpression(), !14614)
+    #dbg_value(i32 %3, !13315, !DIExpression(), !14616)
+  %i.di = add i32 %i.dg, %3                       ; 3 uses
+  %i.dj = icmp ult i32 %i.di, %3
     #dbg_value(i1 %i.dj, !13339, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !14642)
   %or.cond = select i1 %i.dh, i1 true, i1 %i.dj, !dbg !14645, !prof !14646
   br i1 %or.cond, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread, label %.preheader81.split.us.i, !dbg !14645, !prof !14646
@@ -639,7 +638,7 @@ bb.u:                                             ; preds = %thread-pre-split.i,
     #dbg_value(ptr %.sroa.0.1.i199, !13258, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !15179)
     #dbg_value(i64 %.sroa.15.1.i198, !13258, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !15179)
   %i.bc = icmp ugt i32 %.sroa.045.0.i197, 268435455, !dbg !15183
-    #dbg_value(i32 poison, !13298, !DIExpression(), !15184)
+    #dbg_value(i32 %.sroa.045.0.i197, !13298, !DIExpression(DW_OP_constu, 16, DW_OP_mul, DW_OP_stack_value), !15184)
     #dbg_value(i1 %i.bc, !13300, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !15184)
     #dbg_value(i1 %i.bc, !13339, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !15185)
   br i1 %i.bc, label %.split.us.i, label %bb.v, !dbg !15187, !prof !1194
@@ -1042,7 +1041,7 @@ bb.n:                                             ; preds = %thread-pre-split.i,
     #dbg_value(ptr %.sroa.0.1.i163, !13258, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !16713)
     #dbg_value(i64 %.sroa.15.1.i162, !13258, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !16713)
   %i.bm = icmp ugt i32 %.sroa.045.0.i161, 268435455, !dbg !16717
-    #dbg_value(i32 poison, !13298, !DIExpression(), !16718)
+    #dbg_value(i32 %.sroa.045.0.i161, !13298, !DIExpression(DW_OP_constu, 16, DW_OP_mul, DW_OP_stack_value), !16718)
     #dbg_value(i1 %i.bm, !13300, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !16718)
     #dbg_value(i1 %i.bm, !13339, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !16719)
   br i1 %i.bm, label %.split.us.i, label %bb.o, !dbg !16721, !prof !1194
@@ -1445,9 +1444,6 @@ declare i32 @memcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_a
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RINvNtNtCs3roNzt6HBWW_12regex_syntax3ast7visitor5visitINtNtB4_5parse11NestLimiterQNtBT_6ParserEEB6_(ptr dead_on_unwind noalias nofree noundef writable sret([128 x i8]) align 8 captures(address) dereferenceable(128), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(16), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24), i32 noundef) unnamed_addr #0
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #16
-
 ; Function Attrs: noinline nonlazybind uwtable
 declare void @_RNvMs4_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVecNtNtCs3roNzt6HBWW_12regex_syntax3ast3AstE8grow_oneBQ_(ptr noalias nofree noundef align 8 dereferenceable(16)) unnamed_addr #4
 
@@ -1482,10 +1478,10 @@ declare { i64, i64 } @_RNvNtNtCsj6eKBz9Db1c_4core5slice6memchr14memchr_aligned(i
 declare noundef i64 @_RNvNtNtCsj6eKBz9Db1c_4core3str5count23char_count_general_case(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef range(i64 0, -9223372036854775808)) unnamed_addr #0
 
 ; Function Attrs: nounwind nonlazybind allockind("free") uwtable
-declare void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr allocptr noundef nonnull captures(address), i64 noundef, i64 noundef range(i64 1, -9223372036854775807)) unnamed_addr #17
+declare void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr allocptr noundef nonnull captures(address), i64 noundef, i64 noundef range(i64 1, -9223372036854775807)) unnamed_addr #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #18
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #17
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef zeroext i1 @_RNvXs1g_NtCsj6eKBz9Db1c_4core3fmtRNtNtNtB8_3num5error12IntErrorKindNtB6_5Debug3fmtCs3roNzt6HBWW_12regex_syntax(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8), ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #0
@@ -1497,16 +1493,16 @@ declare noundef zeroext i1 @_RNvMsa_NtCsj6eKBz9Db1c_4core3fmtNtB5_9Formatter26de
 declare void @_RNvMsu_NtNtCsj6eKBz9Db1c_4core3str7patternNtB5_11StrSearcher3new(ptr dead_on_unwind noalias nofree noundef writable sret([104 x i8]) align 8 captures(none) dereferenceable(104), ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef) unnamed_addr #0
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #16
+declare i32 @llvm.fshl.i32(i32, i32, i32) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #16
+declare i64 @llvm.umin.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #16
+declare i64 @llvm.umax.i64(i64, i64) #18
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -1524,9 +1520,9 @@ attributes #12 = { cold noinline noreturn nonlazybind uwtable "probe-stack"="inl
 attributes #13 = { nounwind nonlazybind allockind("alloc,uninitialized,aligned") allocsize(0) uwtable "alloc-family"="__rust_alloc" "alloc-variant-zeroed"="_RNvCshxk5dXoXnx9_7___rustc19___rust_alloc_zeroed" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #14 = { cold minsize noreturn nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #15 = { mustprogress nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read) }
-attributes #16 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #17 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #18 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #16 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #17 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #18 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #19 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #20 = { noreturn }
 attributes #21 = { cold noreturn nounwind }

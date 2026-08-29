@@ -202,13 +202,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call void @_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCsexYYUdYSQU6_5alloc6string6StringB1a_EECs63vnYBEjbPn_12yara_x_proto(ptr nonnull align 8 %0)
   %i.d = load i64, ptr %i.a, align 8              ; 2 uses
-  %i.e = add i64 %i.d, 1
-  %i.f = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.e) ; 2 uses
+  %i.e = add i64 %i.d, 1                          ; 2 uses
+  %i.f = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.e)
   %i.g = extractvalue { i64, i1 } %i.f, 1
   br i1 %i.g, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCs63vnYBEjbPn_12yara_x_proto.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %4 = extractvalue { i64, i1 } %i.f, 0           ; 2 uses
+  %4 = mul nuw i64 %i.e, %2                       ; 2 uses
   %i.h = add i64 %3, -1
   %i.i = add i64 %i.h, %4                         ; 2 uses
   %i.j = icmp ult i64 %i.i, %4
@@ -611,16 +611,15 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call void @_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCsexYYUdYSQU6_5alloc6string6StringB1a_EECs63vnYBEjbPn_12yara_x_proto(ptr nonnull readonly align 8 %0)
   %i.e = load i64, ptr %i.b, align 8              ; 2 uses
-  %i.f = add i64 %i.e, 1
-  %1 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.f, i64 48) ; 2 uses
-  %2 = extractvalue { i64, i1 } %1, 1
-  br i1 %2, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCs63vnYBEjbPn_12yara_x_proto.exit.i, label %bb.c
+  %i.f = add i64 %i.e, 1                          ; 2 uses
+  %1 = icmp ugt i64 %i.f, 384307168202282325
+  br i1 %1, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCs63vnYBEjbPn_12yara_x_proto.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = extractvalue { i64, i1 } %1, 0             ; 3 uses
-  %i.g = add i64 %i.e, 17
-  %i.h = add i64 %i.g, %3                         ; 3 uses
-  %i.i = icmp ult i64 %i.h, %3
+  %2 = mul nuw i64 %i.f, 48                       ; 3 uses
+  %i.g = add nsw i64 %i.e, 17
+  %i.h = add i64 %i.g, %2                         ; 3 uses
+  %i.i = icmp ult i64 %i.h, %2
   br i1 %i.i, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCs63vnYBEjbPn_12yara_x_proto.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -631,7 +630,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCs63vnYBEjbPn_12yara_x_proto.exit.i
 
 _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCs63vnYBEjbPn_12yara_x_proto.exit.i: ; preds = %bb.e, %bb.d, %bb.c, %bb.b
-  %.sroa.8.0.i = phi i64 [ undef, %bb.c ], [ undef, %bb.b ], [ %3, %bb.d ], [ undef, %bb.e ]
+  %.sroa.8.0.i = phi i64 [ undef, %bb.c ], [ undef, %bb.b ], [ %2, %bb.d ], [ undef, %bb.e ]
   %.sroa.6.0.i = phi i64 [ undef, %bb.c ], [ undef, %bb.b ], [ %i.h, %bb.d ], [ undef, %bb.e ]
   %.sroa.0.0.i = phi i64 [ 0, %bb.c ], [ 0, %bb.b ], [ 16, %bb.d ], [ 0, %bb.e ]
   %i.k = load ptr, ptr %0, align 8

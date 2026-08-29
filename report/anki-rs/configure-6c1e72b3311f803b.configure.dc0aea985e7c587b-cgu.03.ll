@@ -202,14 +202,13 @@ bb.s:                                             ; preds = %bb.p
 .lr.ph104:                                        ; preds = %.preheader75.i.i, %bb.r
   %.sroa.0.0.i.i103 = phi ptr [ %i.cv, %bb.r ], [ %.sroa.0.0.ph.i.i, %.preheader75.i.i ] ; 2 uses
   %.sroa.16.0.i.i102 = phi i64 [ %i.cw, %bb.r ], [ %.sroa.16.0.ph.i.i, %.preheader75.i.i ]
-  %.sroa.054.0.i.i101 = phi i32 [ %i.dd, %bb.r ], [ 0, %.preheader75.i.i ]
+  %.sroa.054.0.i.i101 = phi i32 [ %i.dd, %bb.r ], [ 0, %.preheader75.i.i ] ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i103, i64 1
   %i.cw = add i64 %.sroa.16.0.i.i102, -1          ; 2 uses
-  %2 = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.sroa.054.0.i.i101, i32 10) ; 2 uses
-  %3 = extractvalue { i32, i1 } %2, 0             ; 2 uses
-  %4 = extractvalue { i32, i1 } %2, 1
+  %2 = mul nuw i32 %.sroa.054.0.i.i101, 10        ; 2 uses
+  %3 = icmp ugt i32 %.sroa.054.0.i.i101, 429496729
   %i.cx = load i8, ptr %.sroa.0.0.i.i103, align 1, !alias.scope !40, !noalias !27, !noundef !12 ; 2 uses
-  br i1 %4, label %bb.u, label %bb.t, !prof !43
+  br i1 %3, label %bb.u, label %bb.t, !prof !43
 
 bb.t:                                             ; preds = %.lr.ph104
   %i.cy = zext i8 %i.cx to i32
@@ -224,8 +223,8 @@ bb.u:                                             ; preds = %.lr.ph104
   br label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h6edf09ea7f013b81E.exit.i"
 
 bb.v:                                             ; preds = %bb.t
-  %i.dd = add i32 %i.cz, %3                       ; 3 uses
-  %.not70.i.i = icmp ult i32 %i.dd, %3
+  %i.dd = add i32 %i.cz, %2                       ; 3 uses
+  %.not70.i.i = icmp ult i32 %i.dd, %2
   br i1 %.not70.i.i, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h6edf09ea7f013b81E.exit.i", label %bb.r
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.preheader, %bb.w
@@ -447,14 +446,13 @@ bb.ag:                                            ; preds = %bb.ad
 .lr.ph:                                           ; preds = %.preheader75.i53.i, %bb.af
   %.sroa.0.0.i58.i99 = phi ptr [ %i.ga, %bb.af ], [ %.sroa.0.0.ph.i55.i, %.preheader75.i53.i ] ; 2 uses
   %.sroa.16.0.i57.i98 = phi i64 [ %i.gb, %bb.af ], [ %.sroa.16.0.ph.i54.i, %.preheader75.i53.i ]
-  %.sroa.054.0.i56.i97 = phi i32 [ %i.gi, %bb.af ], [ 0, %.preheader75.i53.i ]
+  %.sroa.054.0.i56.i97 = phi i32 [ %i.gi, %bb.af ], [ 0, %.preheader75.i53.i ] ; 2 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i58.i99, i64 1
   %i.gb = add nsw i64 %.sroa.16.0.i57.i98, -1     ; 2 uses
-  %5 = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.sroa.054.0.i56.i97, i32 10) ; 2 uses
-  %6 = extractvalue { i32, i1 } %5, 0             ; 2 uses
-  %7 = extractvalue { i32, i1 } %5, 1
+  %4 = mul nuw i32 %.sroa.054.0.i56.i97, 10       ; 2 uses
+  %5 = icmp ugt i32 %.sroa.054.0.i56.i97, 429496729
   %i.gc = load i8, ptr %.sroa.0.0.i58.i99, align 1, !alias.scope !58, !noalias !39, !noundef !12 ; 2 uses
-  br i1 %7, label %bb.ai, label %bb.ah, !prof !43
+  br i1 %5, label %bb.ai, label %bb.ah, !prof !43
 
 bb.ah:                                            ; preds = %.lr.ph
   %i.gd = zext i8 %i.gc to i32
@@ -469,8 +467,8 @@ bb.ai:                                            ; preds = %.lr.ph
   br label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h6edf09ea7f013b81E.exit64.i"
 
 bb.aj:                                            ; preds = %bb.ah
-  %i.gi = add i32 %i.ge, %6                       ; 3 uses
-  %.not70.i60.i = icmp ult i32 %i.gi, %6
+  %i.gi = add i32 %i.ge, %4                       ; 3 uses
+  %.not70.i60.i = icmp ult i32 %i.gi, %4
   br i1 %.not70.i60.i, label %"_ZN4core3num21_$LT$impl$u20$u32$GT$16from_ascii_radix17h6edf09ea7f013b81E.exit64.i", label %bb.af
 
 .lr.ph.i44.i:                                     ; preds = %.lr.ph.i44.i.preheader, %bb.ak
@@ -872,9 +870,6 @@ declare void @llvm.assume(i1 noundef) #9
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden { ptr, i64 } @"_ZN5alloc3vec9into_iter21IntoIter$LT$T$C$A$GT$8as_slice17he1330ca99a62f935E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32)) unnamed_addr #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #4
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17hb5ccb4ca33002fb2E"(ptr noalias noundef align 8 dereferenceable(8), ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(24)) unnamed_addr #1

@@ -205,29 +205,26 @@ bb.f:                                             ; preds = %bb.d
   %i.k = ptrtoint ptr %1 to i64
   %.neg = sub i64 %i.k, %i.j
   %i.l = trunc i64 %.neg to i32
-  %i.m = add i32 %2, %i.l
+  %i.m = add i32 %2, %i.l                         ; 3 uses
   %i.n = sext i32 %i.m to i64                     ; 3 uses
-  %5 = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 range(i64 -2147483648, 2147483648) %i.n, i64 112) ; 2 uses
-  %6 = extractvalue { i64, i1 } %5, 1
-  br i1 %6, label %bb.g, label %st_add.exit
+  %5 = icmp ugt i32 %i.m, -113
+  br i1 %5, label %bb.g, label %st_add.exit
 
 bb.g:                                             ; preds = %bb.f
   call void (ptr, ...) @die(ptr noundef nonnull @.str.77, i64 noundef 112, i64 noundef range(i64 -2147483648, 2147483648) %i.n) #21
   unreachable
 
 st_add.exit:                                      ; preds = %bb.f
-  %7 = extractvalue { i64, i1 } %5, 0             ; 2 uses
-  %8 = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %7, i64 1) ; 2 uses
-  %9 = extractvalue { i64, i1 } %8, 1
-  br i1 %9, label %bb.h, label %st_add.exit16
+  %6 = icmp eq i32 %i.m, -113
+  br i1 %6, label %bb.h, label %st_add.exit16
 
 bb.h:                                             ; preds = %st_add.exit
-  call void (ptr, ...) @die(ptr noundef nonnull @.str.77, i64 noundef %7, i64 noundef 1) #21
+  call void (ptr, ...) @die(ptr noundef nonnull @.str.77, i64 noundef -1, i64 noundef 1) #21
   unreachable
 
 st_add.exit16:                                    ; preds = %st_add.exit
-  %10 = extractvalue { i64, i1 } %8, 0
-  %i.o = call ptr @xcalloc(i64 noundef 1, i64 noundef %10) #20 ; 7 uses
+  %7 = add nuw nsw i64 %i.n, 113
+  %i.o = call ptr @xcalloc(i64 noundef 1, i64 noundef %7) #20 ; 7 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 112
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.p, ptr nonnull align 1 %i.h, i64 %i.n, i1 false)
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 40
@@ -250,9 +247,6 @@ st_add.exit16:                                    ; preds = %st_add.exit
 }
 
 declare i32 @parse_oid_hex(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #11
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare ptr @strstr(ptr noundef, ptr noundef captures(none)) local_unnamed_addr #8

@@ -206,20 +206,19 @@ bb.ar:                                            ; preds = %thread-pre-split.i.
 .preheader56.i.i.i.i.i.i.i.preheader:             ; preds = %bb.ar, %.preheader56.i.i.i.i.i.i.i
   %.sroa.0.1.i.i.i.i.i.i.i168 = phi ptr [ %i.fl, %.preheader56.i.i.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i.i.i, %bb.ar ] ; 2 uses
   %.sroa.15.1.i.i.i.i.i.i.i167 = phi i64 [ %i.fm, %.preheader56.i.i.i.i.i.i.i ], [ %.sroa.15.0.i.i.i.i.i.i.i, %bb.ar ]
-  %.sroa.042.0.i.i.i.i.i.i.i166 = phi i64 [ %i.fs, %.preheader56.i.i.i.i.i.i.i ], [ 0, %bb.ar ]
-  %6 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i.i.i.i.i.i166, i64 10) ; 2 uses
-  %7 = extractvalue { i64, i1 } %6, 1
-  br i1 %7, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i.i.i.i.i, label %bb.as, !prof !74
+  %.sroa.042.0.i.i.i.i.i.i.i166 = phi i64 [ %i.fs, %.preheader56.i.i.i.i.i.i.i ], [ 0, %bb.ar ] ; 2 uses
+  %6 = icmp ugt i64 %.sroa.042.0.i.i.i.i.i.i.i166, 1844674407370955161
+  br i1 %6, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i.i.i.i.i, label %bb.as, !prof !74
 
 bb.as:                                            ; preds = %.preheader56.i.i.i.i.i.i.i.preheader
-  %8 = extractvalue { i64, i1 } %6, 0             ; 2 uses
+  %7 = mul nuw i64 %.sroa.042.0.i.i.i.i.i.i.i166, 10 ; 2 uses
   %i.fn = load i8, ptr %.sroa.0.1.i.i.i.i.i.i.i168, align 1, !alias.scope !5502, !noalias !5505, !noundef !28
   %i.fo = zext i8 %i.fn to i32
   %i.fp = add nsw i32 %i.fo, -48                  ; 2 uses
   %i.fq = icmp ugt i32 %i.fp, 9
   %i.fr = zext nneg i32 %i.fp to i64
-  %i.fs = add i64 %8, %i.fr                       ; 3 uses
-  %i.ft = icmp ult i64 %i.fs, %8
+  %i.fs = add i64 %7, %i.fr                       ; 3 uses
+  %i.ft = icmp ult i64 %i.fs, %7
   %or.cond.i.i.i.i.i.i = select i1 %i.fq, i1 true, i1 %i.ft, !prof !215
   br i1 %or.cond.i.i.i.i.i.i, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i.i.i.i.i, label %.preheader56.i.i.i.i.i.i.i, !prof !215
 
@@ -622,20 +621,19 @@ bb.gs:                                            ; preds = %thread-pre-split.i.
 .preheader56.i.i.i.i.i.preheader:                 ; preds = %bb.gs, %.preheader56.i.i.i.i.i
   %.sroa.0.1.i.i.i.i.i171 = phi ptr [ %i.so, %.preheader56.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i38, %bb.gs ] ; 2 uses
   %.sroa.15.1.i.i.i.i.i170 = phi i64 [ %i.sp, %.preheader56.i.i.i.i.i ], [ %.sroa.15.0.i.i.i.i.i, %bb.gs ]
-  %.sroa.042.0.i.i.i.i.i169 = phi i64 [ %i.sv, %.preheader56.i.i.i.i.i ], [ 0, %bb.gs ]
-  %9 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i.i.i.i169, i64 10) ; 2 uses
-  %10 = extractvalue { i64, i1 } %9, 1
-  br i1 %10, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i.i.i, label %bb.gt, !prof !74
+  %.sroa.042.0.i.i.i.i.i169 = phi i64 [ %i.sv, %.preheader56.i.i.i.i.i ], [ 0, %bb.gs ] ; 2 uses
+  %8 = icmp ugt i64 %.sroa.042.0.i.i.i.i.i169, 1844674407370955161
+  br i1 %8, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i.i.i, label %bb.gt, !prof !74
 
 bb.gt:                                            ; preds = %.preheader56.i.i.i.i.i.preheader
-  %11 = extractvalue { i64, i1 } %9, 0            ; 2 uses
+  %9 = mul nuw i64 %.sroa.042.0.i.i.i.i.i169, 10  ; 2 uses
   %i.sq = load i8, ptr %.sroa.0.1.i.i.i.i.i171, align 1, !alias.scope !5710, !noalias !5713, !noundef !28
   %i.sr = zext i8 %i.sq to i32
   %i.ss = add nsw i32 %i.sr, -48                  ; 2 uses
   %i.st = icmp ugt i32 %i.ss, 9
   %i.su = zext nneg i32 %i.ss to i64
-  %i.sv = add i64 %11, %i.su                      ; 3 uses
-  %i.sw = icmp ult i64 %i.sv, %11
+  %i.sv = add i64 %9, %i.su                       ; 3 uses
+  %i.sw = icmp ult i64 %i.sv, %9
   %or.cond.i.i.i.i = select i1 %i.st, i1 true, i1 %i.sw, !prof !215
   br i1 %or.cond.i.i.i.i, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i.i.i, label %.preheader56.i.i.i.i.i, !prof !215
 
@@ -1038,8 +1036,8 @@ _RNvMs2_NtNtCs1xwejQucwHj_5alloc11collections9vec_dequeINtB5_8VecDequejE24handle
 ; Function Attrs: cold nounwind nonlazybind uwtable
 define internal fastcc void @_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner11finish_growCsc4241EHy6Do_9typst_kit(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, i64 %.0.val, ptr %.8.val, i64 noundef %1, i64 noundef range(i64 1, 9) %2, i64 noundef range(i64 1, 121) %3) unnamed_addr #13 {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 %1) ; 2 uses
-  %4 = extractvalue { i64, i1 } %i.a, 0           ; 7 uses
+  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 %1)
+  %4 = mul nuw i64 %3, %1                         ; 5 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
   %i.c = sub nuw i64 -9223372036854775808, %2
   %.not = icmp ugt i64 %4, %i.c
@@ -1051,15 +1049,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %i.e = mul nuw i64 %3, %.0.val                  ; 2 uses
+  %i.e = mul nuw i64 %3, %.0.val
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.f = icmp uge i64 %4, %i.e
+  %i.f = icmp uge i64 %1, %.0.val
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %i.e, i64 noundef range(i64 1, 9) %2, i64 noundef range(i64 0, -9223372036854775808) %4) #42
   br label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = icmp eq i64 %4, 0
+  %i.h = icmp eq i64 %1, 0
   br i1 %i.h, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.thread, label %bb.d
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.thread: ; preds = %bb.c
@@ -1462,20 +1460,19 @@ bb.et:                                            ; preds = %thread-pre-split.i.
 .preheader56.i.i.i.preheader:                     ; preds = %bb.et, %.preheader56.i.i.i
   %.sroa.0.1.i.i.i257 = phi ptr [ %i.aeq, %.preheader56.i.i.i ], [ %.sroa.0.0.i.i48.i, %bb.et ] ; 2 uses
   %.sroa.15.1.i.i.i256 = phi i64 [ %i.aer, %.preheader56.i.i.i ], [ %.sroa.15.0.i.i.i, %bb.et ]
-  %.sroa.042.0.i.i.i255 = phi i64 [ %i.aex, %.preheader56.i.i.i ], [ 0, %bb.et ]
-  %2 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i.i255, i64 10) ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 1
-  br i1 %3, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.thread.i.i, label %bb.eu, !prof !74
+  %.sroa.042.0.i.i.i255 = phi i64 [ %i.aex, %.preheader56.i.i.i ], [ 0, %bb.et ] ; 2 uses
+  %2 = icmp ugt i64 %.sroa.042.0.i.i.i255, 1844674407370955161
+  br i1 %2, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.thread.i.i, label %bb.eu, !prof !74
 
 bb.eu:                                            ; preds = %.preheader56.i.i.i.preheader
-  %4 = extractvalue { i64, i1 } %2, 0             ; 2 uses
+  %3 = mul nuw i64 %.sroa.042.0.i.i.i255, 10      ; 2 uses
   %i.aes = load i8, ptr %.sroa.0.1.i.i.i257, align 1, !alias.scope !8725, !noalias !8728, !noundef !28
   %i.aet = zext i8 %i.aes to i32
   %i.aeu = add nsw i32 %i.aet, -48                ; 2 uses
   %i.aev = icmp ugt i32 %i.aeu, 9
   %i.aew = zext nneg i32 %i.aeu to i64
-  %i.aex = add i64 %4, %i.aew                     ; 3 uses
-  %i.aey = icmp ult i64 %i.aex, %4
+  %i.aex = add i64 %3, %i.aew                     ; 3 uses
+  %i.aey = icmp ult i64 %i.aex, %3
   %or.cond.i.i = select i1 %i.aev, i1 true, i1 %i.aey, !prof !215
   br i1 %or.cond.i.i, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.thread.i.i, label %.preheader56.i.i.i, !prof !215
 
@@ -1878,20 +1875,19 @@ bb.lg:                                            ; preds = %thread-pre-split.i.
 .preheader56.i.i.i.i.i.i.preheader:               ; preds = %bb.lg, %.preheader56.i.i.i.i.i.i
   %.sroa.0.1.i.i.i.i.i.i264 = phi ptr [ %i.asj, %.preheader56.i.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i.i, %bb.lg ] ; 2 uses
   %.sroa.15.1.i.i.i.i.i.i263 = phi i64 [ %i.ask, %.preheader56.i.i.i.i.i.i ], [ %.sroa.15.0.i.i.i.i.i.i, %bb.lg ]
-  %.sroa.042.0.i.i.i.i.i.i262 = phi i64 [ %i.asq, %.preheader56.i.i.i.i.i.i ], [ 0, %bb.lg ]
-  %5 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i.i.i.i.i262, i64 10) ; 2 uses
-  %6 = extractvalue { i64, i1 } %5, 1
-  br i1 %6, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i.i.i.i, label %bb.lh, !prof !74
+  %.sroa.042.0.i.i.i.i.i.i262 = phi i64 [ %i.asq, %.preheader56.i.i.i.i.i.i ], [ 0, %bb.lg ] ; 2 uses
+  %4 = icmp ugt i64 %.sroa.042.0.i.i.i.i.i.i262, 1844674407370955161
+  br i1 %4, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i.i.i.i, label %bb.lh, !prof !74
 
 bb.lh:                                            ; preds = %.preheader56.i.i.i.i.i.i.preheader
-  %7 = extractvalue { i64, i1 } %5, 0             ; 2 uses
+  %5 = mul nuw i64 %.sroa.042.0.i.i.i.i.i.i262, 10 ; 2 uses
   %i.asl = load i8, ptr %.sroa.0.1.i.i.i.i.i.i264, align 1, !alias.scope !8982, !noalias !8985, !noundef !28
   %i.asm = zext i8 %i.asl to i32
   %i.asn = add nsw i32 %i.asm, -48                ; 2 uses
   %i.aso = icmp ugt i32 %i.asn, 9
   %i.asp = zext nneg i32 %i.asn to i64
-  %i.asq = add i64 %7, %i.asp                     ; 3 uses
-  %i.asr = icmp ult i64 %i.asq, %7
+  %i.asq = add i64 %5, %i.asp                     ; 3 uses
+  %i.asr = icmp ult i64 %i.asq, %5
   %or.cond.i.i.i.i.i = select i1 %i.aso, i1 true, i1 %i.asr, !prof !215
   br i1 %or.cond.i.i.i.i.i, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i.i.i.i, label %.preheader56.i.i.i.i.i.i, !prof !215
 
@@ -2294,14 +2290,13 @@ bb.dd:                                            ; preds = %thread-pre-split.i.
 .preheader60.i.i.i.preheader:                     ; preds = %bb.dd, %.preheader60.i.i.i
   %.sroa.0.1.i.i.i348 = phi ptr [ %i.nx, %.preheader60.i.i.i ], [ %.sroa.0.0.i118.i.i, %bb.dd ] ; 2 uses
   %.sroa.15.1.i.i.i347 = phi i64 [ %i.ny, %.preheader60.i.i.i ], [ %.sroa.15.0.i.i.i, %bb.dd ]
-  %.sroa.045.0.i.i.i346 = phi i32 [ %i.of, %.preheader60.i.i.i ], [ 0, %bb.dd ]
+  %.sroa.045.0.i.i.i346 = phi i32 [ %i.of, %.preheader60.i.i.i ], [ 0, %bb.dd ] ; 2 uses
   %i.nx = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i348, i64 1
   %i.ny = add nsw i64 %.sroa.15.1.i.i.i347, -1    ; 2 uses
-  %6 = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.sroa.045.0.i.i.i346, i32 10) ; 2 uses
-  %7 = extractvalue { i32, i1 } %6, 0             ; 2 uses
-  %8 = extractvalue { i32, i1 } %6, 1
+  %6 = mul nuw i32 %.sroa.045.0.i.i.i346, 10      ; 2 uses
+  %7 = icmp ugt i32 %.sroa.045.0.i.i.i346, 429496729
   %i.nz = load i8, ptr %.sroa.0.1.i.i.i348, align 1, !alias.scope !9642, !noalias !9606, !noundef !28 ; 2 uses
-  br i1 %8, label %bb.df, label %bb.de, !prof !74
+  br i1 %7, label %bb.df, label %bb.de, !prof !74
 
 bb.de:                                            ; preds = %.preheader60.i.i.i.preheader
   %i.oa = zext i8 %i.nz to i32
@@ -2316,8 +2311,8 @@ bb.df:                                            ; preds = %.preheader60.i.i.i.
   br label %_RNvMsB_NtCs3oUPovFnLWP_4core3numm27from_ascii_bytes_radix_impl.exit.i.i
 
 bb.dg:                                            ; preds = %bb.de
-  %i.of = add i32 %i.ob, %7                       ; 3 uses
-  %i.og = icmp ult i32 %i.of, %7
+  %i.of = add i32 %i.ob, %6                       ; 3 uses
+  %i.og = icmp ult i32 %i.of, %6
   br i1 %i.og, label %_RNvMsB_NtCs3oUPovFnLWP_4core3numm27from_ascii_bytes_radix_impl.exit.i.i, label %.preheader60.i.i.i, !prof !74
 
 .lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i
@@ -2720,20 +2715,19 @@ bb.fi:                                            ; preds = %thread-pre-split.i,
 .preheader56.i.preheader:                         ; preds = %bb.fi, %.preheader56.i
   %.sroa.0.1.i351 = phi ptr [ %i.tj, %.preheader56.i ], [ %.sroa.0.0.i126, %bb.fi ] ; 2 uses
   %.sroa.15.1.i350 = phi i64 [ %i.tk, %.preheader56.i ], [ %.sroa.15.0.i125, %bb.fi ]
-  %.sroa.042.0.i349 = phi i64 [ %i.tq, %.preheader56.i ], [ 0, %bb.fi ]
-  %9 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i349, i64 10) ; 2 uses
-  %10 = extractvalue { i64, i1 } %9, 1
-  br i1 %10, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit, label %bb.fj, !prof !74
+  %.sroa.042.0.i349 = phi i64 [ %i.tq, %.preheader56.i ], [ 0, %bb.fi ] ; 2 uses
+  %8 = icmp ugt i64 %.sroa.042.0.i349, 1844674407370955161
+  br i1 %8, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit, label %bb.fj, !prof !74
 
 bb.fj:                                            ; preds = %.preheader56.i.preheader
-  %11 = extractvalue { i64, i1 } %9, 0            ; 2 uses
+  %9 = mul nuw i64 %.sroa.042.0.i349, 10          ; 2 uses
   %i.tl = load i8, ptr %.sroa.0.1.i351, align 1, !alias.scope !9737, !noalias !9740, !noundef !28
   %i.tm = zext i8 %i.tl to i32
   %i.tn = add nsw i32 %i.tm, -48                  ; 2 uses
   %i.to = icmp ugt i32 %i.tn, 9
   %i.tp = zext nneg i32 %i.tn to i64
-  %i.tq = add i64 %11, %i.tp                      ; 3 uses
-  %i.tr = icmp ult i64 %i.tq, %11
+  %i.tq = add i64 %9, %i.tp                       ; 3 uses
+  %i.tr = icmp ult i64 %i.tq, %9
   %or.cond175 = select i1 %i.to, i1 true, i1 %i.tr, !prof !215
   br i1 %or.cond175, label %_RNvMsv_NtCs3oUPovFnLWP_4core3numj27from_ascii_bytes_radix_impl.exit, label %.preheader56.i, !prof !215
 
@@ -3136,7 +3130,7 @@ _RINvXs2_NtNtNtCs1xwejQucwHj_5alloc11collections9vec_deque4iterINtB6_4IterjENtNt
 bb.d:                                             ; preds = %_RINvXs2_NtNtNtCs1xwejQucwHj_5alloc11collections9vec_deque4iterINtB6_4IterjENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4foldjNCINvXsM_NtB1f_5accumjINtB2l_3SumRjE3sumBY_E0ECsc4241EHy6Do_9typst_kit.exit, %.loopexit
   %.sroa.01.0 = phi i64 [ %i.az, %.loopexit ], [ %spec.select, %_RINvXs2_NtNtNtCs1xwejQucwHj_5alloc11collections9vec_deque4iterINtB6_4IterjENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4foldjNCINvXsM_NtB1f_5accumjINtB2l_3SumRjE3sumBY_E0ECsc4241EHy6Do_9typst_kit.exit ] ; 4 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.bb = load i64, ptr %i.ba, align 8, !noundef !28 ; 2 uses
+  %i.bb = load i64, ptr %i.ba, align 8, !noundef !28 ; 3 uses
   %i.bc = zext i64 %i.bb to i128
   %i.bd = mul nuw nsw i128 %i.bc, 1000000000
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -3207,18 +3201,18 @@ bb.j:                                             ; preds = %bb.g
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.g
-  %.sroa.010.0 = phi i64 [ 0, %bb.g ], [ %i.ci, %bb.j ] ; 2 uses
-  %i.cj = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.bb, i64 %.sroa.010.0) ; 2 uses
+  %.sroa.010.0 = phi i64 [ 0, %bb.g ], [ %i.ci, %bb.j ] ; 3 uses
+  %i.cj = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.bb, i64 %.sroa.010.0)
   %i.ck = extractvalue { i64, i1 } %i.cj, 1
   br i1 %i.ck, label %select.unfold, label %bb.l, !prof !74
 
 bb.l:                                             ; preds = %bb.k
   %i.cl = zext nneg i32 %i.bf to i64
   %i.cm = mul nuw nsw i64 %.sroa.010.0, %i.cl     ; 2 uses
-  %2 = extractvalue { i64, i1 } %i.cj, 0          ; 2 uses
+  %2 = mul nuw i64 %.sroa.010.0, %i.bb            ; 2 uses
   %i.cn = udiv i64 %i.cm, 1000000000
   %i.co = urem i64 %i.cm, 1000000000
-  %i.cp = add i64 %2, %i.cn                       ; 2 uses
+  %i.cp = add i64 %i.cn, %2                       ; 2 uses
   %i.cq = icmp ult i64 %i.cp, %2
   br i1 %i.cq, label %select.unfold, label %bb.m, !prof !74
 
@@ -3620,9 +3614,6 @@ declare void @_RNvMs4_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecjE8grow_oneCs1S
 
 ; Function Attrs: cold nonlazybind uwtable
 declare void @_RNvMNtNtNtNtCsaL1QbXo9JQH_3std3sys4sync5mutex5futexNtB2_5Mutex14lock_contended(ptr noundef nonnull align 4) unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #38
 
 ; Function Attrs: nonlazybind uwtable
 declare { i64, i32 } @_RNvMNtCsaL1QbXo9JQH_3std4timeNtB2_7Instant25saturating_duration_since(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(16), i64 noundef, i32 noundef range(i32 0, 1000000000)) unnamed_addr #4

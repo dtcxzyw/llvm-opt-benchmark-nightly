@@ -205,9 +205,9 @@ _RNvMNtNtCshmPyUV8PP35_6chrono5naive4dateNtB2_9NaiveDate16num_days_from_ce.exit.
   %i.bf = mul nsw i64 %i.be, 86400
   %i.bg = add nsw i64 %i.bf, %i.az                ; 3 uses
   %.lobit.i.i.i = lshr i64 %i.bg, 63
-  %.sroa.01.0.i.i.i = add nsw i64 %.lobit.i.i.i, %i.bg
-  %5 = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %.sroa.01.0.i.i.i, i64 1000000000) ; 2 uses
-  %6 = extractvalue { i64, i1 } %5, 1
+  %.sroa.01.0.i.i.i = add nsw i64 %.lobit.i.i.i, %i.bg ; 2 uses
+  %5 = add nsw i64 %.sroa.01.0.i.i.i, -9223372037
+  %6 = icmp ult i64 %5, -18446744073
   br i1 %6, label %bb.e, label %bb.d, !prof !14
 
 bb.d:                                             ; preds = %_RNvMNtNtCshmPyUV8PP35_6chrono5naive4dateNtB2_9NaiveDate16num_days_from_ce.exit.i.i.i
@@ -215,11 +215,12 @@ bb.d:                                             ; preds = %_RNvMNtNtCshmPyUV8P
   %i.bi = load i32, ptr %i.x, align 8, !alias.scope !5782, !noalias !5780, !noundef !12
   %i.bj = zext i32 %i.bi to i64                   ; 2 uses
   %i.bk = add nsw i64 %i.bj, -1000000000
-  %.sroa.04.0.i.i.i = select i1 %i.bh, i64 %i.bk, i64 %i.bj
-  %7 = extractvalue { i64, i1 } %5, 0
-  %i.bl = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %7, i64 %.sroa.04.0.i.i.i) ; 2 uses
-  %i.bm = extractvalue { i64, i1 } %i.bl, 1
-  %8 = extractvalue { i64, i1 } %i.bl, 0
+  %.sroa.04.0.i.i.i = select i1 %i.bh, i64 %i.bk, i64 %i.bj ; 2 uses
+  %7 = mul nsw i64 %.sroa.01.0.i.i.i, 1000000000  ; 2 uses
+  %i.bl = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %7, i64 %.sroa.04.0.i.i.i)
+  %i.bm = extractvalue { i64, i1 } %i.bl, 1       ; 2 uses
+  %8 = add nsw i64 %.sroa.04.0.i.i.i, %7
+  %.sroa.4.0.i.i.i = select i1 %i.bm, i64 undef, i64 %8, !prof !14
   %not..i.i.i = xor i1 %i.bm, true
   br label %bb.e
 
@@ -239,7 +240,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collec
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapRexEECs7p2uQeJxui2_9deltalake.exit77.i.i
 
 bb.e:                                             ; preds = %bb.d, %_RNvMNtNtCshmPyUV8PP35_6chrono5naive4dateNtB2_9NaiveDate16num_days_from_ce.exit.i.i.i
-  %.sroa.4.1.i.i.i = phi i64 [ %8, %bb.d ], [ undef, %_RNvMNtNtCshmPyUV8PP35_6chrono5naive4dateNtB2_9NaiveDate16num_days_from_ce.exit.i.i.i ]
+  %.sroa.4.1.i.i.i = phi i64 [ %.sroa.4.0.i.i.i, %bb.d ], [ undef, %_RNvMNtNtCshmPyUV8PP35_6chrono5naive4dateNtB2_9NaiveDate16num_days_from_ce.exit.i.i.i ]
   %.sroa.0.1.i.i.i = phi i1 [ %not..i.i.i, %bb.d ], [ false, %_RNvMNtNtCshmPyUV8PP35_6chrono5naive4dateNtB2_9NaiveDate16num_days_from_ce.exit.i.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !5778
   call void @_RNvCs8mYq7K4qqSA_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #39, !noalias !5778
@@ -641,9 +642,6 @@ declare hidden noundef zeroext i1 @_RNvXs1i_NtCsbvkFyIu7lgC_4core3fmtReNtB6_7Dis
 
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvMs2_NtCs2y6mmZ7bjoM_12tracing_core10dispatcherNtB5_8Dispatch5enter(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(8)) unnamed_addr #0
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.smul.with.overflow.i64(i64, i64) #27
 
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvMNtNtCs7xHNgVo2C7m_12arrow_buffer6buffer7mutableNtB2_13MutableBuffer15from_len_zeroed(ptr dead_on_unwind noalias noundef writable sret([32 x i8]) align 8 captures(none) dereferenceable(32), i64 noundef) unnamed_addr #0

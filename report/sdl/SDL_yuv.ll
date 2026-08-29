@@ -34,7 +34,6 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define hidden zeroext i1 @SDL_CalculateYUVSize(i32 noundef %0, i32 noundef %1, i32 noundef %2, ptr nofree noundef writeonly captures(address_is_null) %3, ptr nofree noundef writeonly captures(address_is_null) %4) local_unnamed_addr #0 {
 bb.a:
-  %5 = sext i32 %1 to i64                         ; 3 uses
   switch i32 %0, label %IsPlanar2x2Format.exit [
     i32 1448433993, label %bb.b
     i32 842094169, label %bb.b
@@ -44,8 +43,9 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
-  %i.a = sext i32 %2 to i64                       ; 2 uses
-  %i.b = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %5, i64 range(i64 -2147483648, -9223372036854775808) %i.a) ; 2 uses
+  %5 = sext i32 %1 to i64                         ; 3 uses
+  %i.a = sext i32 %2 to i64                       ; 3 uses
+  %i.b = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %5, i64 range(i64 -2147483648, -9223372036854775808) %i.a)
   %i.c = extractvalue { i64, i1 } %i.b, 1
   br i1 %i.c, label %bb.c, label %bb.d
 
@@ -54,30 +54,27 @@ bb.c:                                             ; preds = %bb.b
   br label %.thread87
 
 bb.d:                                             ; preds = %bb.b
-  %6 = extractvalue { i64, i1 } %i.b, 0
-  %7 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %5, i64 1) ; 2 uses
-  %8 = extractvalue { i64, i1 } %7, 1
-  br i1 %8, label %bb.e, label %bb.f
+  %6 = icmp eq i32 %1, -1
+  br i1 %6, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.e = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.1) #6
   br label %.thread87
 
 bb.f:                                             ; preds = %bb.d
-  %9 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.a, i64 1) ; 2 uses
-  %10 = extractvalue { i64, i1 } %9, 1
-  br i1 %10, label %bb.g, label %bb.h
+  %7 = icmp eq i32 %2, -1
+  br i1 %7, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.f = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.2) #6
   br label %.thread87
 
 bb.h:                                             ; preds = %bb.f
-  %11 = extractvalue { i64, i1 } %9, 0
-  %12 = extractvalue { i64, i1 } %7, 0
-  %i.g = lshr i64 %12, 1
-  %i.h = lshr i64 %11, 1
-  %i.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.g, i64 range(i64 -2147483648, -9223372036854775808) %i.h) ; 2 uses
+  %8 = add nuw nsw i64 %i.a, 1
+  %9 = add nuw nsw i64 %5, 1
+  %i.g = lshr i64 %9, 1                           ; 2 uses
+  %i.h = lshr i64 %8, 1                           ; 2 uses
+  %i.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.g, i64 range(i64 -2147483648, -9223372036854775808) %i.h)
   %i.j = extractvalue { i64, i1 } %i.i, 1
   br i1 %i.j, label %bb.i, label %bb.j
 
@@ -86,30 +83,31 @@ bb.i:                                             ; preds = %bb.h
   br label %.thread87
 
 bb.j:                                             ; preds = %bb.h
-  %13 = extractvalue { i64, i1 } %i.i, 0
-  %sext110 = shl i64 %6, 32
+  %10 = shl nsw i64 %5, 32
+  %sext110 = mul i64 %10, %i.a
   %i.l = ashr exact i64 %sext110, 32
-  %sext111.a = shl i64 %13, 32
-  %i.m = ashr exact i64 %sext111.a, 32            ; 2 uses
+  %sext111.a = shl i64 %i.g, 32
+  %sext111 = mul i64 %sext111.a, %i.h
+  %i.m = ashr exact i64 %sext111, 32              ; 2 uses
   %i.n = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.l, i64 range(i64 -2147483648, 2147483648) %i.m)
   br label %bb.n
 
 IsPlanar2x2Format.exit:                           ; preds = %bb.a
-  %14 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %5, i64 1) ; 2 uses
-  %15 = extractvalue { i64, i1 } %14, 1
-  br i1 %15, label %bb.k, label %bb.l
+  %11 = icmp eq i32 %1, -1
+  br i1 %11, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %IsPlanar2x2Format.exit
   %i.o = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.1) #6
   br label %.thread87
 
 bb.l:                                             ; preds = %IsPlanar2x2Format.exit
-  %16 = extractvalue { i64, i1 } %14, 0
-  %i.p = lshr i64 %16, 1
-  %i.q = sext i32 %2 to i64
-  %i.r = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.p, i64 range(i64 -2147483648, -9223372036854775808) %i.q) ; 2 uses
+  %12 = sext i32 %1 to i64
+  %13 = add nuw nsw i64 %12, 1
+  %i.p = lshr i64 %13, 1                          ; 2 uses
+  %i.q = sext i32 %2 to i64                       ; 2 uses
+  %i.r = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.p, i64 range(i64 -2147483648, -9223372036854775808) %i.q)
   %i.s = extractvalue { i64, i1 } %i.r, 1
-  %17 = extractvalue { i64, i1 } %i.r, 0
+  %14 = mul nuw i64 %i.p, %i.q
   br i1 %i.s, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -118,8 +116,8 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.l, %bb.j
   %.148 = phi { i64, i1 } [ %i.n, %bb.j ], [ zeroinitializer, %bb.l ] ; 4 uses
-  %.146 = phi i64 [ %i.m, %bb.j ], [ 0, %bb.l ]   ; 2 uses
-  %.144 = phi i64 [ 0, %bb.j ], [ %17, %bb.l ]    ; 2 uses
+  %.146 = phi i64 [ %i.m, %bb.j ], [ 0, %bb.l ]   ; 4 uses
+  %.144 = phi i64 [ 0, %bb.j ], [ %14, %bb.l ]    ; 2 uses
   switch i32 %0, label %bb.al [
     i32 842094169, label %bb.o
     i32 1448433993, label %bb.o
@@ -152,8 +150,8 @@ bb.s:                                             ; preds = %bb.r
   br label %.thread87
 
 bb.t:                                             ; preds = %bb.r
-  %i.x = extractvalue { i64, i1 } %.148, 0
-  %i.y = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.x, i64 range(i64 -2147483648, 2147483648) %.146) ; 2 uses
+  %i.x = extractvalue { i64, i1 } %.148, 0        ; 2 uses
+  %i.y = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.x, i64 range(i64 -2147483648, 2147483648) %.146)
   %i.z = extractvalue { i64, i1 } %i.y, 1
   br i1 %i.z, label %bb.u, label %bb.v
 
@@ -162,29 +160,18 @@ bb.u:                                             ; preds = %bb.t
   br label %.thread87
 
 bb.v:                                             ; preds = %bb.t
-  %18 = extractvalue { i64, i1 } %i.y, 0
-  %sext69 = shl i64 %18, 32
+  %15 = add nuw i64 %i.x, %.146
+  %sext69 = shl i64 %15, 32
   %i.ab = ashr exact i64 %sext69, 32
   store i64 %i.ab, ptr %3, align 8
   br label %.thread87
 
 bb.w:                                             ; preds = %bb.n, %bb.n, %bb.n
   %.not63 = icmp eq ptr %4, null
-  br i1 %.not63, label %bb.aa, label %19
+  br i1 %.not63, label %bb.aa, label %bb.x
 
-19:                                               ; preds = %bb.w
-  %20 = sext i32 %1 to i64
-  %21 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %20, i64 1) ; 2 uses
-  %22 = extractvalue { i64, i1 } %21, 1
-  br i1 %22, label %23, label %bb.x
-
-23:                                               ; preds = %19
-  %24 = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.1) #6
-  br label %.thread87
-
-bb.x:                                             ; preds = %19
-  %25 = extractvalue { i64, i1 } %21, 0           ; 2 uses
-  %i.ac = icmp sgt i64 %25, -1
+bb.x:                                             ; preds = %bb.w
+  %i.ac = icmp sgt i32 %1, -2
   br i1 %i.ac, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
@@ -192,8 +179,10 @@ bb.y:                                             ; preds = %bb.x
   br label %.thread87
 
 bb.z:                                             ; preds = %bb.x
-  %i.ae = shl nuw nsw i64 %25, 1
-  %i.af = and i64 %i.ae, 9223372036854775804
+  %16 = zext nneg i32 %1 to i64
+  %i.ae = shl nuw nsw i64 %16, 1
+  %17 = add nuw nsw i64 %i.ae, 2
+  %i.af = and i64 %17, 8589934588
   store i64 %i.af, ptr %4, align 8
   br label %bb.aa
 
@@ -238,8 +227,8 @@ bb.ah:                                            ; preds = %bb.ag
   br label %.thread87
 
 bb.ai:                                            ; preds = %bb.ag
-  %i.am = extractvalue { i64, i1 } %.148, 0
-  %i.an = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.am, i64 range(i64 -2147483648, 2147483648) %.146) ; 2 uses
+  %i.am = extractvalue { i64, i1 } %.148, 0       ; 2 uses
+  %i.an = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.am, i64 range(i64 -2147483648, 2147483648) %.146)
   %i.ao = extractvalue { i64, i1 } %i.an, 1
   br i1 %i.ao, label %bb.aj, label %bb.ak
 
@@ -248,8 +237,8 @@ bb.aj:                                            ; preds = %bb.ai
   br label %.thread87
 
 bb.ak:                                            ; preds = %bb.ai
-  %26 = extractvalue { i64, i1 } %i.an, 0
-  %sext = shl i64 %26, 32
+  %18 = add nuw i64 %i.am, %.146
+  %sext = shl i64 %18, 32
   %i.aq = ashr exact i64 %sext, 32
   store i64 %i.aq, ptr %3, align 8
   br label %.thread87
@@ -258,8 +247,8 @@ bb.al:                                            ; preds = %bb.n
   %i.ar = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.7) #6
   br label %.thread87
 
-.thread87:                                        ; preds = %bb.ah, %bb.aj, %23, %bb.y, %bb.s, %bb.u, %bb.m, %bb.k, %bb.e, %bb.g, %bb.i, %bb.q, %bb.aa, %bb.af, %bb.v, %.thread104, %bb.ak, %bb.ac, %bb.c, %bb.al
-  %.9 = phi i1 [ %i.ar, %bb.al ], [ %i.k, %bb.i ], [ %i.o, %bb.k ], [ %i.ai, %bb.ac ], [ %i.aa, %bb.u ], [ %i.ad, %bb.y ], [ true, %bb.q ], [ %i.d, %bb.c ], [ true, %bb.ak ], [ true, %.thread104 ], [ true, %bb.v ], [ true, %bb.af ], [ true, %bb.aa ], [ %i.e, %bb.e ], [ %i.f, %bb.g ], [ %i.t, %bb.m ], [ %i.w, %bb.s ], [ %24, %23 ], [ %i.al, %bb.ah ], [ %i.ap, %bb.aj ]
+.thread87:                                        ; preds = %bb.ah, %bb.aj, %bb.y, %bb.s, %bb.u, %bb.m, %bb.k, %bb.e, %bb.g, %bb.i, %bb.q, %bb.aa, %bb.af, %bb.v, %.thread104, %bb.ak, %bb.ac, %bb.c, %bb.al
+  %.9 = phi i1 [ %i.ar, %bb.al ], [ %i.k, %bb.i ], [ %i.o, %bb.k ], [ %i.ai, %bb.ac ], [ %i.aa, %bb.u ], [ %i.ad, %bb.y ], [ true, %bb.q ], [ %i.d, %bb.c ], [ true, %bb.ak ], [ true, %.thread104 ], [ true, %bb.v ], [ true, %bb.af ], [ true, %bb.aa ], [ %i.e, %bb.e ], [ %i.f, %bb.g ], [ %i.t, %bb.m ], [ %i.w, %bb.s ], [ %i.ap, %bb.aj ], [ %i.al, %bb.ah ]
   ret i1 %.9
 }
 

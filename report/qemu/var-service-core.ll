@@ -202,16 +202,15 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 4 uses
-  %i.l = load i64, ptr %i.k, align 8              ; 3 uses
-  %2 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.l, i64 24) ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 1
-  %4 = extractvalue { i64, i1 } %2, 0             ; 4 uses
-  br i1 %3, label %bb.x, label %bb.g
+  %i.l = load i64, ptr %i.k, align 8              ; 4 uses
+  %2 = icmp ugt i64 %i.l, -25
+  %3 = add nuw i64 %i.l, 24                       ; 4 uses
+  br i1 %2, label %bb.x, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.m = load i32, ptr %i.e, align 4
   %i.n = zext i32 %i.m to i64
-  %i.o = icmp ugt i64 %4, %i.n
+  %i.o = icmp ugt i64 %3, %i.n
   br i1 %i.o, label %bb.x, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -237,13 +236,13 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %i.y = load ptr, ptr %i.c, align 16
-  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %4
+  %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %3
   %i.aa = load i32, ptr %i.e, align 4
   %i.ab = zext i32 %i.aa to i64
-  %i.ac = sub nsw i64 %i.ab, %4
+  %i.ac = sub nsw i64 %i.ab, %3
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 %i.z, i8 noundef 0, i64 noundef %i.ac, i1 noundef false) #8
   %i.ad = load ptr, ptr %i.c, align 16
-  tail call void @uefi_vars_pcap_request(ptr noundef nonnull %0, ptr noundef %i.ad, i64 noundef %4) #8
+  tail call void @uefi_vars_pcap_request(ptr noundef nonnull %0, ptr noundef %i.ad, i64 noundef %3) #8
   %i.ae = tail call i32 @qemu_uuid_is_equal(ptr noundef nonnull %i.d, ptr noundef nonnull @EfiSmmVariableProtocolGuid) #8
   %.not78 = icmp eq i32 %i.ae, 0
   br i1 %.not78, label %bb.m, label %bb.l
@@ -362,9 +361,6 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b,
 declare void @uefi_vars_pcap_reply(ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #1
 
 declare i32 @address_space_rw(ptr noundef, i64 noundef, i64, ptr noundef, i64 noundef, i1 noundef zeroext) local_unnamed_addr #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctpop.i32(i32) #4

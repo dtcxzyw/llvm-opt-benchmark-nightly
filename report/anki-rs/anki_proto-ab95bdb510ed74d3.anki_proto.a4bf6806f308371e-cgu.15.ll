@@ -202,16 +202,15 @@ bb.a:
   br i1 %i.d, label %_ZN9hashbrown3raw13RawTableInner16drop_inner_table17h1a98e44fe2a12850E.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = add i64 %i.c, 1
-  %1 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.e, i64 24) ; 2 uses
-  %2 = extractvalue { i64, i1 } %1, 1
-  br i1 %2, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h27a5b47c0e1eb747E.exit.i, label %bb.c
+  %i.e = add i64 %i.c, 1                          ; 2 uses
+  %1 = icmp ugt i64 %i.e, 768614336404564650
+  br i1 %1, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h27a5b47c0e1eb747E.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %3 = extractvalue { i64, i1 } %1, 0
-  %i.f = add nuw i64 %3, 8
+  %2 = mul nuw i64 %i.e, 24
+  %i.f = add nuw i64 %2, 8
   %i.g = and i64 %i.f, -16                        ; 3 uses
-  %i.h = add i64 %i.c, 17
+  %i.h = add nsw i64 %i.c, 17
   %i.i = add i64 %i.h, %i.g                       ; 3 uses
   %i.j = icmp ult i64 %i.i, %i.g
   br i1 %i.j, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h27a5b47c0e1eb747E.exit.i, label %bb.d
@@ -422,13 +421,13 @@ bb.a:
   br i1 %i.c, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = add i64 %i.b, 1
-  %i.e = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.d) ; 2 uses
+  %i.d = add i64 %i.b, 1                          ; 2 uses
+  %i.e = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.d)
   %i.f = extractvalue { i64, i1 } %i.e, 1
   br i1 %i.f, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h27a5b47c0e1eb747E.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %4 = extractvalue { i64, i1 } %i.e, 0           ; 2 uses
+  %4 = mul nuw i64 %i.d, %2                       ; 2 uses
   %i.g = add i64 %3, -1
   %i.h = add i64 %i.g, %4                         ; 2 uses
   %i.i = icmp ult i64 %i.h, %4
@@ -473,13 +472,13 @@ bb.a:
   br i1 %i.c, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = add i64 %i.b, 1
-  %i.e = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.d) ; 2 uses
+  %i.d = add i64 %i.b, 1                          ; 2 uses
+  %i.e = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.d)
   %i.f = extractvalue { i64, i1 } %i.e, 1
   br i1 %i.f, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h27a5b47c0e1eb747E.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %4 = extractvalue { i64, i1 } %i.e, 0           ; 2 uses
+  %4 = mul nuw i64 %i.d, %2                       ; 2 uses
   %i.g = add i64 %3, -1
   %i.h = add i64 %i.g, %4                         ; 2 uses
   %i.i = icmp ult i64 %i.h, %4
@@ -524,13 +523,13 @@ bb.a:
   br i1 %i.c, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = add i64 %i.b, 1
-  %i.e = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.d) ; 2 uses
+  %i.d = add i64 %i.b, 1                          ; 2 uses
+  %i.e = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.d)
   %i.f = extractvalue { i64, i1 } %i.e, 1
   br i1 %i.f, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h27a5b47c0e1eb747E.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %4 = extractvalue { i64, i1 } %i.e, 0           ; 2 uses
+  %4 = mul nuw i64 %i.d, %2                       ; 2 uses
   %i.g = add i64 %3, -1
   %i.h = add i64 %i.g, %4                         ; 2 uses
   %i.i = icmp ult i64 %i.h, %4
@@ -575,13 +574,13 @@ bb.a:
   br i1 %i.c, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = add i64 %i.b, 1
-  %i.e = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.d) ; 2 uses
+  %i.d = add i64 %i.b, 1                          ; 2 uses
+  %i.e = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 %i.d)
   %i.f = extractvalue { i64, i1 } %i.e, 1
   br i1 %i.f, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h27a5b47c0e1eb747E.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %4 = extractvalue { i64, i1 } %i.e, 0           ; 2 uses
+  %4 = mul nuw i64 %i.d, %2                       ; 2 uses
   %i.g = add i64 %3, -1
   %i.h = add i64 %i.g, %4                         ; 2 uses
   %i.i = icmp ult i64 %i.h, %4

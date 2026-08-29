@@ -176,8 +176,8 @@ bb.f:                                             ; preds = %bb.c
 ; Function Attrs: cold nounwind nonlazybind uwtable
 define internal fastcc void @_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner11finish_growCs1Rjy1FfFCsk_5rayon(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, i64 %.0.val, ptr %.8.val, i64 noundef %1, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 1, 0) %3) unnamed_addr #2 {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 %1) ; 2 uses
-  %4 = extractvalue { i64, i1 } %i.a, 0           ; 7 uses
+  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 %1)
+  %4 = mul nuw i64 %3, %1                         ; 5 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
   %i.c = sub nuw i64 -9223372036854775808, %2
   %.not = icmp ugt i64 %4, %i.c
@@ -189,15 +189,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %i.e = mul nuw i64 %3, %.0.val                  ; 2 uses
+  %i.e = mul nuw i64 %3, %.0.val
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.f = icmp uge i64 %4, %i.e
+  %i.f = icmp uge i64 %1, %.0.val
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsjHpjAFo4bi0_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %i.e, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef range(i64 0, -9223372036854775808) %4) #20
   br label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = icmp eq i64 %4, 0
+  %i.h = icmp eq i64 %1, 0
   br i1 %i.h, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.thread, label %bb.d
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.thread: ; preds = %bb.c
@@ -600,7 +600,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.d = load i16, ptr %i.c, align 1, !alias.scope !147 ; 2 uses
   %i.e = trunc i16 %i.d to i8                     ; 3 uses
-  %i.f = lshr i16 %i.d, 8
+  %i.f = lshr i16 %i.d, 8                         ; 2 uses
   %i.g = trunc nuw i16 %i.f to i8                 ; 4 uses
   %.not.i = icmp sgt i8 %i.e, %i.g
   %i.h = load i8, ptr %0, align 1, !range !37, !alias.scope !147
@@ -609,16 +609,15 @@ bb.a:
   br i1 %.not, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = tail call { i8, i1 } @llvm.sadd.with.overflow.i8(i8 %i.g, i8 1) ; 2 uses
-  %2 = extractvalue { i8, i1 } %1, 1
-  br i1 %2, label %bb.d, label %bb.c, !prof !30
+  %1 = icmp eq i16 %i.f, 127
+  br i1 %1, label %bb.d, label %bb.c, !prof !30
 
 bb.c:                                             ; preds = %bb.b
-  %3 = extractvalue { i8, i1 } %1, 0
+  %2 = add nsw i8 %i.g, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i8 %i.e, ptr %i.b, align 1
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  store i8 %3, ptr %i.j, align 1
+  store i8 %2, ptr %i.j, align 1
   %i.k = call { i64, i64 } @_RNvXsi_NtCs1Rjy1FfFCsk_5rayon5rangeaNtNtB5_7private12RangeInteger7opt_len(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(2) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.e
@@ -798,7 +797,7 @@ bb.a:
   %i.b = alloca [4 x i8], align 2                 ; 5 uses
   %i.c = load i32, ptr %0, align 2, !alias.scope !183 ; 2 uses
   %i.d = trunc i32 %i.c to i16                    ; 3 uses
-  %i.e = lshr i32 %i.c, 16
+  %i.e = lshr i32 %i.c, 16                        ; 2 uses
   %i.f = trunc nuw i32 %i.e to i16                ; 4 uses
   %.not.i = icmp sgt i16 %i.d, %i.f
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -808,16 +807,15 @@ bb.a:
   br i1 %.not, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = tail call { i16, i1 } @llvm.sadd.with.overflow.i16(i16 %i.f, i16 1) ; 2 uses
-  %2 = extractvalue { i16, i1 } %1, 1
-  br i1 %2, label %bb.d, label %bb.c, !prof !30
+  %1 = icmp eq i32 %i.e, 32767
+  br i1 %1, label %bb.d, label %bb.c, !prof !30
 
 bb.c:                                             ; preds = %bb.b
-  %3 = extractvalue { i16, i1 } %1, 0
+  %2 = add nsw i16 %i.f, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i16 %i.d, ptr %i.b, align 2
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  store i16 %3, ptr %i.j, align 2
+  store i16 %2, ptr %i.j, align 2
   %i.k = call { i64, i64 } @_RNvXsl_NtCs1Rjy1FfFCsk_5rayon5rangesNtNtB5_7private12RangeInteger7opt_len(ptr noalias nofree noundef nonnull readonly align 2 captures(address, read_provenance) dereferenceable(4) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.e
@@ -901,7 +899,7 @@ bb.a:
   %i.b = alloca [16 x i8], align 8                ; 5 uses
   %i.c = load i64, ptr %0, align 8, !alias.scope !191, !noalias !194, !noundef !4 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !alias.scope !191, !noalias !194, !noundef !4 ; 4 uses
+  %i.e = load i64, ptr %i.d, align 8, !alias.scope !191, !noalias !194, !noundef !4 ; 3 uses
   %.not.i = icmp sle i64 %i.c, %i.e
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = load i8, ptr %i.f, align 8, !range !37, !alias.scope !191, !noalias !194
@@ -910,23 +908,22 @@ bb.a:
   br i1 %or.cond.i, label %bb.b, label %_RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IteriE6boundsB4_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %1 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.e, i64 1) ; 2 uses
-  %2 = extractvalue { i64, i1 } %1, 1
-  br i1 %2, label %bb.d, label %bb.c, !prof !30
+  %1 = icmp eq i64 %i.e, 9223372036854775807
+  br i1 %1, label %bb.d, label %bb.c, !prof !30
 
 bb.c:                                             ; preds = %bb.b
-  %3 = extractvalue { i64, i1 } %1, 0
+  %2 = add nsw i64 %i.e, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %i.c, ptr %i.b, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store i64 %3, ptr %i.i, align 8
+  store i64 %2, ptr %i.i, align 8
   %i.j = call { i64, i64 } @_RNvXsr_NtCs1Rjy1FfFCsk_5rayon5rangeiNtNtB5_7private12RangeInteger7opt_len(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RINvYINtNtCs1Rjy1FfFCsk_5rayon5range4IteriENtNtB8_4iter16ParallelIterator5chainINtNtBH_4once4OnceiEEB8_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %i.c, i64 noundef %i.e, i64 noundef %i.e)
+  call void @_RINvYINtNtCs1Rjy1FfFCsk_5rayon5range4IteriENtNtB8_4iter16ParallelIterator5chainINtNtBH_4once4OnceiEEB8_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %i.c, i64 noundef 9223372036854775807, i64 noundef 9223372036854775807)
   %i.k = call { i64, i64 } @_RNvXs_NtNtCs1Rjy1FfFCsk_5rayon4iter5chainINtB4_5ChainINtNtB8_5range4IteriEINtNtB6_4once4OnceiEENtB6_16ParallelIterator7opt_lenB8_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.e
@@ -1002,7 +999,7 @@ bb.a:
   %i.b = alloca [8 x i8], align 4                 ; 5 uses
   %i.c = load i32, ptr %0, align 4, !alias.scope !201, !noalias !204, !noundef !4 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.e = load i32, ptr %i.d, align 4, !alias.scope !201, !noalias !204, !noundef !4 ; 4 uses
+  %i.e = load i32, ptr %i.d, align 4, !alias.scope !201, !noalias !204, !noundef !4 ; 3 uses
   %.not.i = icmp sle i32 %i.c, %i.e
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load i8, ptr %i.f, align 4, !range !37, !alias.scope !201, !noalias !204
@@ -1011,23 +1008,22 @@ bb.a:
   br i1 %or.cond.i, label %bb.b, label %_RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IterlE6boundsB4_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %1 = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.e, i32 1) ; 2 uses
-  %2 = extractvalue { i32, i1 } %1, 1
-  br i1 %2, label %bb.d, label %bb.c, !prof !30
+  %1 = icmp eq i32 %i.e, 2147483647
+  br i1 %1, label %bb.d, label %bb.c, !prof !30
 
 bb.c:                                             ; preds = %bb.b
-  %3 = extractvalue { i32, i1 } %1, 0
+  %2 = add nsw i32 %i.e, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i32 %i.c, ptr %i.b, align 4
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store i32 %3, ptr %i.i, align 4
+  store i32 %2, ptr %i.i, align 4
   %i.j = call { i64, i64 } @_RNvXso_NtCs1Rjy1FfFCsk_5rayon5rangelNtNtB5_7private12RangeInteger7opt_len(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(8) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RINvYINtNtCs1Rjy1FfFCsk_5rayon5range4IterlENtNtB8_4iter16ParallelIterator5chainINtNtBH_4once4OncelEEB8_(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.a, i32 noundef %i.c, i32 noundef %i.e, i32 noundef %i.e)
+  call void @_RINvYINtNtCs1Rjy1FfFCsk_5rayon5range4IterlENtNtB8_4iter16ParallelIterator5chainINtNtBH_4once4OncelEEB8_(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.a, i32 noundef %i.c, i32 noundef 2147483647, i32 noundef 2147483647)
   %i.k = call { i64, i64 } @_RNvXs_NtNtCs1Rjy1FfFCsk_5rayon4iter5chainINtB4_5ChainINtNtB8_5range4IterlEINtNtB6_4once4OncelEENtB6_16ParallelIterator7opt_lenB8_(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(12) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.e
@@ -1090,9 +1086,9 @@ _RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IteryE6boundsB4_.exit: ; pred
 define { i64, i64 } @_RNvXsj_NtCs1Rjy1FfFCsk_5rayon15range_inclusivexNtNtB5_7private12RangeInteger7opt_len(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
-  %i.b = load i64, ptr %0, align 8, !alias.scope !211, !noalias !214, !noundef !4 ; 4 uses
+  %i.b = load i64, ptr %0, align 8, !alias.scope !211, !noalias !214, !noundef !4 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i64, ptr %i.c, align 8, !alias.scope !211, !noalias !214, !noundef !4 ; 4 uses
+  %i.d = load i64, ptr %i.c, align 8, !alias.scope !211, !noalias !214, !noundef !4 ; 3 uses
   %.not.i = icmp sle i64 %i.b, %i.d
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = load i8, ptr %i.e, align 8, !range !37, !alias.scope !211, !noalias !214
@@ -1101,20 +1097,17 @@ bb.a:
   br i1 %or.cond.i, label %bb.b, label %_RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IterxE6boundsB4_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %1 = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.d, i64 1) ; 2 uses
-  %2 = extractvalue { i64, i1 } %1, 1
-  br i1 %2, label %bb.d, label %bb.c, !prof !30
+  %1 = icmp eq i64 %i.d, 9223372036854775807
+  br i1 %1, label %bb.d, label %bb.c, !prof !30
 
 bb.c:                                             ; preds = %bb.b
-  %3 = extractvalue { i64, i1 } %1, 0             ; 2 uses
-  %4 = icmp sgt i64 %3, %i.b
-  %i.h = sub i64 %3, %i.b
-  %.sroa.02.0 = select i1 %4, i64 %i.h, i64 0
+  %i.h = sub i64 %i.d, %i.b
+  %2 = add i64 %i.h, 1
   br label %_RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IterxE6boundsB4_.exit
 
 bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RINvYINtNtCs1Rjy1FfFCsk_5rayon5range4IterxENtNtB8_4iter16ParallelIterator5chainINtNtBH_4once4OncexEEB8_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %i.b, i64 noundef %i.d, i64 noundef %i.d)
+  call void @_RINvYINtNtCs1Rjy1FfFCsk_5rayon5range4IterxENtNtB8_4iter16ParallelIterator5chainINtNtBH_4once4OncexEEB8_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %i.b, i64 noundef 9223372036854775807, i64 noundef 9223372036854775807)
   %i.i = call { i64, i64 } @_RNvXs_NtNtCs1Rjy1FfFCsk_5rayon4iter5chainINtB4_5ChainINtNtB8_5range4IterxEINtNtB6_4once4OncexEENtB6_16ParallelIterator7opt_lenB8_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.a) ; 2 uses
   %i.j = extractvalue { i64, i64 } %i.i, 0
   %i.k = extractvalue { i64, i64 } %i.i, 1
@@ -1122,7 +1115,7 @@ bb.d:                                             ; preds = %bb.b
   br label %_RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IterxE6boundsB4_.exit
 
 _RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IterxE6boundsB4_.exit: ; preds = %bb.a, %bb.d, %bb.c
-  %.sroa.4.1 = phi i64 [ %.sroa.02.0, %bb.c ], [ %i.k, %bb.d ], [ 0, %bb.a ]
+  %.sroa.4.1 = phi i64 [ %2, %bb.c ], [ %i.k, %bb.d ], [ 0, %bb.a ]
   %.sroa.0.1 = phi i64 [ 1, %bb.c ], [ %i.j, %bb.d ], [ 1, %bb.a ]
   %i.l = insertvalue { i64, i64 } poison, i64 %.sroa.0.1, 0
   %i.m = insertvalue { i64, i64 } %i.l, i64 %.sroa.4.1, 1
@@ -1177,9 +1170,9 @@ _RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IteroE6boundsB4_.exit: ; pred
 define { i64, i64 } @_RNvXsl_NtCs1Rjy1FfFCsk_5rayon15range_inclusivenNtNtB5_7private12RangeInteger7opt_len(ptr noalias nofree noundef readonly align 16 captures(none) dereferenceable(48) %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [48 x i8], align 16               ; 4 uses
-  %i.b = load i128, ptr %0, align 16, !alias.scope !221, !noalias !224, !noundef !4 ; 4 uses
+  %i.b = load i128, ptr %0, align 16, !alias.scope !221, !noalias !224, !noundef !4 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load i128, ptr %i.c, align 16, !alias.scope !221, !noalias !224, !noundef !4 ; 4 uses
+  %i.d = load i128, ptr %i.c, align 16, !alias.scope !221, !noalias !224, !noundef !4 ; 3 uses
   %.not.i = icmp sle i128 %i.b, %i.d
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.f = load i8, ptr %i.e, align 16, !range !37, !alias.scope !221, !noalias !224
@@ -1188,24 +1181,21 @@ bb.a:
   br i1 %or.cond.i, label %bb.b, label %_RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IternE6boundsB4_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %1 = tail call { i128, i1 } @llvm.sadd.with.overflow.i128(i128 %i.d, i128 1) ; 2 uses
-  %2 = extractvalue { i128, i1 } %1, 1
-  br i1 %2, label %bb.d, label %bb.c, !prof !30
+  %1 = icmp eq i128 %i.d, 170141183460469231731687303715884105727
+  br i1 %1, label %bb.d, label %bb.c, !prof !30
 
 bb.c:                                             ; preds = %bb.b
-  %3 = extractvalue { i128, i1 } %1, 0            ; 2 uses
-  %4 = icmp sgt i128 %3, %i.b
-  %i.h = sub i128 %3, %i.b
-  %.sroa.02.0 = select i1 %4, i128 %i.h, i128 0   ; 2 uses
-  %i.i = icmp ult i128 %.sroa.02.0, 18446744073709551616 ; 2 uses
-  %i.j = trunc nuw i128 %.sroa.02.0 to i64
+  %i.h = sub i128 %i.d, %i.b
+  %2 = add i128 %i.h, 1                           ; 2 uses
+  %i.i = icmp ult i128 %2, 18446744073709551616   ; 2 uses
+  %i.j = trunc nuw i128 %2 to i64
   %spec.select = select i1 %i.i, i64 %i.j, i64 undef
   %spec.select5 = zext i1 %i.i to i64
   br label %_RNvMNtCs1Rjy1FfFCsk_5rayon15range_inclusiveINtB2_4IternE6boundsB4_.exit
 
 bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RINvYINtNtCs1Rjy1FfFCsk_5rayon5range4IternENtNtB8_4iter16ParallelIterator5chainINtNtBH_4once4OncenEEB8_(ptr noalias nofree noundef nonnull sret([48 x i8]) align 16 captures(none) dereferenceable(48) %i.a, i128 noundef %i.b, i128 noundef %i.d, i128 noundef %i.d)
+  call void @_RINvYINtNtCs1Rjy1FfFCsk_5rayon5range4IternENtNtB8_4iter16ParallelIterator5chainINtNtBH_4once4OncenEEB8_(ptr noalias nofree noundef nonnull sret([48 x i8]) align 16 captures(none) dereferenceable(48) %i.a, i128 noundef %i.b, i128 noundef 170141183460469231731687303715884105727, i128 noundef 170141183460469231731687303715884105727)
   %i.k = call { i64, i64 } @_RNvXs_NtNtCs1Rjy1FfFCsk_5rayon4iter5chainINtB4_5ChainINtNtB8_5range4IternEINtNtB6_4once4OncenEENtB6_16ParallelIterator7opt_lenB8_(ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(48) %i.a) ; 2 uses
   %i.l = extractvalue { i64, i64 } %i.k, 0
   %i.m = extractvalue { i64, i64 } %i.k, 1
@@ -1472,9 +1462,6 @@ declare hidden i48 @_RINvYINtNtCs1Rjy1FfFCsk_5rayon5range4ItertENtNtB8_4iter16Pa
 ; Function Attrs: nonlazybind uwtable
 declare hidden { i64, i64 } @_RNvXs_NtNtCs1Rjy1FfFCsk_5rayon4iter5chainINtB4_5ChainINtNtB8_5range4ItertEINtNtB6_4once4OncetEENtB6_16ParallelIterator7opt_lenB8_(ptr noalias nofree noundef readonly align 2 captures(address, read_provenance) dereferenceable(6)) unnamed_addr #0
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i8, i1 } @llvm.sadd.with.overflow.i8(i8, i8) #15
-
 ; Function Attrs: nonlazybind uwtable
 declare { i64, i64 } @_RNvXsi_NtCs1Rjy1FfFCsk_5rayon5rangeaNtNtB5_7private12RangeInteger7opt_len(ptr noalias nofree noundef readonly captures(address, read_provenance) dereferenceable(2)) unnamed_addr #0
 
@@ -1483,9 +1470,6 @@ declare hidden i24 @_RINvYINtNtCs1Rjy1FfFCsk_5rayon5range4IteraENtNtB8_4iter16Pa
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden { i64, i64 } @_RNvXs_NtNtCs1Rjy1FfFCsk_5rayon4iter5chainINtB4_5ChainINtNtB8_5range4IteraEINtNtB6_4once4OnceaEENtB6_16ParallelIterator7opt_lenB8_(ptr noalias nofree noundef readonly captures(address, read_provenance) dereferenceable(3)) unnamed_addr #0
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i16, i1 } @llvm.sadd.with.overflow.i16(i16, i16) #15
 
 ; Function Attrs: nonlazybind uwtable
 declare { i64, i64 } @_RNvXsl_NtCs1Rjy1FfFCsk_5rayon5rangesNtNtB5_7private12RangeInteger7opt_len(ptr noalias nofree noundef readonly align 2 captures(address, read_provenance) dereferenceable(4)) unnamed_addr #0
@@ -1508,9 +1492,6 @@ declare hidden void @_RINvYINtNtCs1Rjy1FfFCsk_5rayon5range4IterjENtNtB8_4iter16P
 ; Function Attrs: nonlazybind uwtable
 declare hidden { i64, i64 } @_RNvXs_NtNtCs1Rjy1FfFCsk_5rayon4iter5chainINtB4_5ChainINtNtB8_5range4IterjEINtNtB6_4once4OncejEENtB6_16ParallelIterator7opt_lenB8_(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #0
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.sadd.with.overflow.i64(i64, i64) #15
-
 ; Function Attrs: nonlazybind uwtable
 declare { i64, i64 } @_RNvXsr_NtCs1Rjy1FfFCsk_5rayon5rangeiNtNtB5_7private12RangeInteger7opt_len(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(16)) unnamed_addr #0
 
@@ -1528,9 +1509,6 @@ declare hidden void @_RINvYINtNtCs1Rjy1FfFCsk_5rayon5range4ItermENtNtB8_4iter16P
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden { i64, i64 } @_RNvXs_NtNtCs1Rjy1FfFCsk_5rayon4iter5chainINtB4_5ChainINtNtB8_5range4ItermEINtNtB6_4once4OncemEENtB6_16ParallelIterator7opt_lenB8_(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(12)) unnamed_addr #0
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.sadd.with.overflow.i32(i32, i32) #15
 
 ; Function Attrs: nonlazybind uwtable
 declare { i64, i64 } @_RNvXso_NtCs1Rjy1FfFCsk_5rayon5rangelNtNtB5_7private12RangeInteger7opt_len(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(8)) unnamed_addr #0
@@ -1558,9 +1536,6 @@ declare hidden void @_RINvYINtNtCs1Rjy1FfFCsk_5rayon5range4IteroENtNtB8_4iter16P
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden { i64, i64 } @_RNvXs_NtNtCs1Rjy1FfFCsk_5rayon4iter5chainINtB4_5ChainINtNtB8_5range4IteroEINtNtB6_4once4OnceoEENtB6_16ParallelIterator7opt_lenB8_(ptr noalias nofree noundef readonly align 16 captures(address, read_provenance) dereferenceable(48)) unnamed_addr #0
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i128, i1 } @llvm.sadd.with.overflow.i128(i128, i128) #15
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RINvYINtNtCs1Rjy1FfFCsk_5rayon5range4IternENtNtB8_4iter16ParallelIterator5chainINtNtBH_4once4OncenEEB8_(ptr dead_on_unwind noalias nofree noundef writable sret([48 x i8]) align 16 captures(none) dereferenceable(48), i128 noundef, i128 noundef, i128 noundef) unnamed_addr #0

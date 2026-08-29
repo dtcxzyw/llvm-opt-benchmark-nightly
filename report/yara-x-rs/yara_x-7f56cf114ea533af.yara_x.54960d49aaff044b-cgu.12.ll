@@ -205,7 +205,7 @@ bb.dq:                                            ; preds = %bb.dj
   %.sroa.9.i.sroa.6.0.copyload.i.i.i.i = load i8, ptr %.sroa.9.i.sroa.6.0..sroa.430.0..sroa_idx.i.i.sroa_idx.i.i.i.i, align 2, !noalias !18387
   %.sroa.19.5.copyload.i.i.i.i.i = load ptr, ptr %.sroa.19.5..sroa.430.0..sroa_idx.i.sroa_idx.i.i.i.i.i, align 1, !noalias !18387
   %.sroa.26.5.copyload.i.i.i.i.i = load i8, ptr %.sroa.26.5..sroa.430.0..sroa_idx.i.sroa_idx.i.i.i.i.i, align 1, !noalias !18387
-  %.sroa.30.5.copyload.i.i.i.i.i = load i64, ptr %.sroa.30.5..sroa.430.0..sroa_idx.i.sroa_idx.i.i.i.i.i, align 4, !noalias !18387
+  %.sroa.30.5.copyload.i.i.i.i.i = load i64, ptr %.sroa.30.5..sroa.430.0..sroa_idx.i.sroa_idx.i.i.i.i.i, align 4, !noalias !18387 ; 2 uses
   %i.pv = load <2 x i64>, ptr %.sroa.28.5..sroa.430.0..sroa_idx.i.sroa_idx.i.i.i.i.i, align 4, !noalias !18387
   %.sroa.32.5.copyload.i.i.i.i.i = load i64, ptr %.sroa.32.5..sroa.430.0..sroa_idx.i.sroa_idx.i.i.i.i.i, align 4, !noalias !18387
   %i.pw = load <2 x i64>, ptr %.sroa.31.5..sroa.430.0..sroa_idx.i.sroa_idx.i.i.i.i.i, align 4, !noalias !18387
@@ -448,16 +448,15 @@ bb.ep:                                            ; preds = %bb.eo
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgtXWG2OCnrB_3zip6result8ZipErrorEECs7gfv9tzbXmh_6yara_x.exit314.i.i.i unwind label %bb.ey, !noalias !18270
 
 _RINvNvNtCsgtXWG2OCnrB_3zip4spec22find_central_directory15try_read_eocd64INtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRShEECs7gfv9tzbXmh_6yara_x.exit.i.i.i: ; preds = %bb.ek
-  %2 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.30.5.copyload.i.i.i.i.i, i64 46) ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 0
-  %4 = extractvalue { i64, i1 } %2, 1
-  br i1 %4, label %bb.eq, label %bb.er, !prof !8
+  %2 = mul nuw i64 %.sroa.30.5.copyload.i.i.i.i.i, 46
+  %3 = icmp ugt i64 %.sroa.30.5.copyload.i.i.i.i.i, 401016175515425035
+  br i1 %3, label %bb.eq, label %bb.er, !prof !8
 
 bb.eq:                                            ; preds = %_RINvNvNtCsgtXWG2OCnrB_3zip4spec22find_central_directory15try_read_eocd64INtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRShEECs7gfv9tzbXmh_6yara_x.exit.i.i.i
   br label %bb.er
 
 bb.er:                                            ; preds = %bb.eq, %_RINvNvNtCsgtXWG2OCnrB_3zip4spec22find_central_directory15try_read_eocd64INtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRShEECs7gfv9tzbXmh_6yara_x.exit.i.i.i
-  %.sroa.0179.0.i.i.i = phi i64 [ -1, %bb.eq ], [ %3, %_RINvNvNtCsgtXWG2OCnrB_3zip4spec22find_central_directory15try_read_eocd64INtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRShEECs7gfv9tzbXmh_6yara_x.exit.i.i.i ]
+  %.sroa.0179.0.i.i.i = phi i64 [ -1, %bb.eq ], [ %2, %_RINvNvNtCsgtXWG2OCnrB_3zip4spec22find_central_directory15try_read_eocd64INtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRShEECs7gfv9tzbXmh_6yara_x.exit.i.i.i ]
   %i.rp = call i64 @llvm.uadd.sat.i64(i64 %.sroa.0179.0.i.i.i, i64 %.sroa.32.5.copyload.i.i.i.i.i)
   %i.rq = icmp ult i64 %i.om, %i.rp
   br i1 %i.rq, label %bb.eu, label %bb.es
@@ -860,16 +859,15 @@ bb.go:                                            ; preds = %bb.gn
   call void @llvm.experimental.noalias.scope.decl(metadata !18593)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !18596
   %i.vt = icmp ugt i64 %.sroa.5172.0.copyload.i.i, %.sroa.4171.0.copyload.i.i
-  %..i.i.i.i = select i1 %i.vt, i64 0, i64 %.sroa.5172.0.copyload.i.i ; 3 uses
+  %..i.i.i.i = select i1 %i.vt, i64 0, i64 %.sroa.5172.0.copyload.i.i ; 4 uses
   %.not.i.i44.i.i = icmp eq i32 %.sroa.6168.0.copyload.i.i, %.sroa.7169.0.copyload.i.i
   br i1 %.not.i.i44.i.i, label %bb.gp, label %.thread240.i.i
 
 bb.gp:                                            ; preds = %bb.go
-  %5 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %..i.i.i.i, i64 216) ; 2 uses
-  %6 = extractvalue { i64, i1 } %5, 0
-  %7 = extractvalue { i64, i1 } %5, 1
-  %i.vu = icmp slt i64 %6, 0
-  %or.cond.i.i.i.i = or i1 %7, %i.vu
+  %4 = mul nuw i64 %..i.i.i.i, 216
+  %5 = icmp ugt i64 %..i.i.i.i, 85401592933840516
+  %i.vu = icmp slt i64 %4, 0
+  %or.cond.i.i.i.i = select i1 %5, i1 true, i1 %i.vu, !prof !18599
   br i1 %or.cond.i.i.i.i, label %.thread240.i.i, label %bb.gq, !prof !18599
 
 bb.gq:                                            ; preds = %bb.gp
@@ -1271,9 +1269,6 @@ declare void @_RNvNtCsgtXWG2OCnrB_3zip4read17parse_extra_field(ptr dead_on_unwin
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #23
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #23
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvXsI_Cs6ObhOmryMwL_8smallvecINtB5_8IntoIterAhj4_ENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs7gfv9tzbXmh_6yara_x(ptr noalias nofree noundef align 8 dereferenceable(40)) unnamed_addr #0

@@ -203,20 +203,19 @@ bb.bc:                                            ; preds = %thread-pre-split.i.
 .preheader56.i.i.i.preheader:                     ; preds = %bb.bc, %.preheader56.i.i.i
   %.sroa.0.1.i.i.i220 = phi ptr [ %i.hu, %.preheader56.i.i.i ], [ %.sroa.0.0.i.i.i, %bb.bc ] ; 2 uses
   %.sroa.15.1.i.i.i219 = phi i64 [ %i.hv, %.preheader56.i.i.i ], [ %.sroa.15.0.i.i.i, %bb.bc ]
-  %.sroa.042.0.i.i.i218 = phi i64 [ %i.ib, %.preheader56.i.i.i ], [ 0, %bb.bc ]
-  %4 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i.i218, i64 10) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  br i1 %5, label %.loopexit, label %bb.bd, !prof !263
+  %.sroa.042.0.i.i.i218 = phi i64 [ %i.ib, %.preheader56.i.i.i ], [ 0, %bb.bc ] ; 2 uses
+  %4 = icmp ugt i64 %.sroa.042.0.i.i.i218, 1844674407370955161
+  br i1 %4, label %.loopexit, label %bb.bd, !prof !263
 
 bb.bd:                                            ; preds = %.preheader56.i.i.i.preheader
-  %6 = extractvalue { i64, i1 } %4, 0             ; 2 uses
+  %5 = mul nuw i64 %.sroa.042.0.i.i.i218, 10      ; 2 uses
   %i.hw = load i8, ptr %.sroa.0.1.i.i.i220, align 1, !alias.scope !710, !noalias !713, !noundef !5
   %i.hx = zext i8 %i.hw to i32
   %i.hy = add nsw i32 %i.hx, -48                  ; 2 uses
   %i.hz = icmp ugt i32 %i.hy, 9
   %i.ia = zext nneg i32 %i.hy to i64
-  %i.ib = add i64 %6, %i.ia                       ; 3 uses
-  %i.ic = icmp ult i64 %i.ib, %6
+  %i.ib = add i64 %5, %i.ia                       ; 3 uses
+  %i.ic = icmp ult i64 %i.ib, %5
   %or.cond.i.i = select i1 %i.hz, i1 true, i1 %i.ic, !prof !715
   br i1 %or.cond.i.i, label %.loopexit, label %.preheader56.i.i.i, !prof !715
 
@@ -619,9 +618,6 @@ declare void @_RNvNtCs1eA6bChxBZF_5bytes5bytes13static_to_mut(ptr dead_on_unwind
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvXs1_NtCsfsXztIhCltD_13pingora_error9immut_strNtB5_8ImmutStrINtNtCskKLDkoKarTP_4core7convert4FromNtNtCsexYYUdYSQU6_5alloc6string6StringE4from(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(none) dereferenceable(24), ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24)) unnamed_addr #0
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #17
-
 ; Function Attrs: cold minsize noreturn nonlazybind optsize uwtable
 declare void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #11
 
@@ -644,7 +640,7 @@ declare noundef zeroext i1 @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter25de
 declare hidden noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRNtCs1ll6eLl40nD_8httparse5ErrorNtB6_5Debug3fmtCset5b41vfmiv_13pingora_cache(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8), ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #0
 
 ; Function Attrs: nounwind nonlazybind allockind("free") uwtable
-declare void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr allocptr noundef nonnull captures(address), i64 noundef, i64 noundef range(i64 1, -9223372036854775807)) unnamed_addr #18
+declare void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr allocptr noundef nonnull captures(address), i64 noundef, i64 noundef range(i64 1, -9223372036854775807)) unnamed_addr #17
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden { ptr, ptr } @_RNvXse_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtB7_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtBW_6marker4SendNtB1t_4SyncEL_EINtNtBW_7convert4FromNtCs1ll6eLl40nD_8httparse5ErrorE4fromCset5b41vfmiv_13pingora_cache(i8 noundef range(i8 0, 7)) unnamed_addr #0
@@ -695,16 +691,16 @@ declare hidden noundef align 8 ptr @_RNvXsD_NtNtCs84JG9zk80ZV_4http6header3mapIN
 declare hidden noundef zeroext i1 @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtRReNtB6_5Debug3fmtCset5b41vfmiv_13pingora_cache(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8), ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #0
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #19
+declare void @llvm.experimental.noalias.scope.decl(metadata) #18
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #20
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #17
+declare i64 @llvm.umax.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #17
+declare i64 @llvm.umin.i64(i64, i64) #20
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -723,10 +719,10 @@ attributes #13 = { nounwind nonlazybind allockind("alloc,uninitialized,aligned")
 attributes #14 = { noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #15 = { cold noreturn nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #16 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #17 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #18 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #19 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #20 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #17 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #18 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #19 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #20 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #21 = { cold noreturn nounwind }
 attributes #22 = { cold }
 attributes #23 = { noinline }

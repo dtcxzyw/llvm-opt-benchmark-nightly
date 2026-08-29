@@ -202,20 +202,19 @@ bb.l:                                             ; preds = %thread-pre-split.i.
 .preheader56.i.i.i.preheader:                     ; preds = %bb.l, %.preheader56.i.i.i
   %.sroa.0.1.i.i.i91 = phi ptr [ %i.ab, %.preheader56.i.i.i ], [ %.sroa.0.0.i.i.i, %bb.l ] ; 2 uses
   %.sroa.15.1.i.i.i90 = phi i64 [ %i.ac, %.preheader56.i.i.i ], [ %.sroa.15.0.i.i.i, %bb.l ]
-  %.sroa.042.0.i.i.i89 = phi i64 [ %i.ai, %.preheader56.i.i.i ], [ 0, %bb.l ]
-  %6 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i.i89, i64 10) ; 2 uses
-  %7 = extractvalue { i64, i1 } %6, 1
-  br i1 %7, label %_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i, label %bb.m, !prof !11
+  %.sroa.042.0.i.i.i89 = phi i64 [ %i.ai, %.preheader56.i.i.i ], [ 0, %bb.l ] ; 2 uses
+  %6 = icmp ugt i64 %.sroa.042.0.i.i.i89, 1844674407370955161
+  br i1 %6, label %_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i, label %bb.m, !prof !11
 
 bb.m:                                             ; preds = %.preheader56.i.i.i.preheader
-  %8 = extractvalue { i64, i1 } %6, 0             ; 2 uses
+  %7 = mul nuw i64 %.sroa.042.0.i.i.i89, 10       ; 2 uses
   %i.ad = load i8, ptr %.sroa.0.1.i.i.i91, align 1, !alias.scope !197, !noalias !200, !noundef !4
   %i.ae = zext i8 %i.ad to i32
   %i.af = add nsw i32 %i.ae, -48                  ; 2 uses
   %i.ag = icmp ugt i32 %i.af, 9
   %i.ah = zext nneg i32 %i.af to i64
-  %i.ai = add i64 %8, %i.ah                       ; 3 uses
-  %i.aj = icmp ult i64 %i.ai, %8
+  %i.ai = add i64 %7, %i.ah                       ; 3 uses
+  %i.aj = icmp ult i64 %i.ai, %7
   %or.cond.i.i = select i1 %i.ag, i1 true, i1 %i.aj, !prof !202
   br i1 %or.cond.i.i, label %_RNvMsv_NtCskKLDkoKarTP_4core3numj27from_ascii_bytes_radix_impl.exit.i.i, label %.preheader56.i.i.i, !prof !202
 
@@ -618,8 +617,8 @@ bb.af:                                            ; preds = %.body
 ; Function Attrs: cold nounwind nonlazybind uwtable
 define internal fastcc void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner11finish_growCsbDLrNlwBX3H_4smol(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, i64 %.0.val, ptr %.8.val, i64 noundef %1, i64 noundef range(i64 4, 9) %2, i64 noundef range(i64 16, 29) %3) unnamed_addr #5 {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 %1) ; 2 uses
-  %4 = extractvalue { i64, i1 } %i.a, 0           ; 7 uses
+  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 %1)
+  %4 = mul nuw i64 %3, %1                         ; 5 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
   %i.c = sub nuw i64 -9223372036854775808, %2
   %.not = icmp ugt i64 %4, %i.c
@@ -631,15 +630,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %i.e = mul nuw i64 %3, %.0.val                  ; 2 uses
+  %i.e = mul nuw i64 %3, %.0.val
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.f = icmp uge i64 %4, %i.e
+  %i.f = icmp uge i64 %1, %.0.val
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %i.e, i64 noundef range(i64 4, 9) %2, i64 noundef range(i64 0, 9223372036854775805) %4) #28
   br label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = icmp eq i64 %4, 0
+  %i.h = icmp eq i64 %1, 0
   br i1 %i.h, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.thread, label %bb.d
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.thread: ; preds = %bb.c
@@ -680,8 +679,8 @@ bb.g:                                             ; preds = %bb.a, %bb.e, %bb.f
 ; Function Attrs: nounwind nonlazybind uwtable
 define hidden void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsbDLrNlwBX3H_4smol(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 16)) %0, i64 noundef %1, i1 noundef zeroext %2, i64 noundef range(i64 1, -9223372036854775807) %3, i64 noundef %4) unnamed_addr #6 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %1) ; 2 uses
-  %5 = extractvalue { i64, i1 } %i.a, 0           ; 5 uses
+  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %1)
+  %5 = mul nuw i64 %4, %1                         ; 5 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
   %i.c = sub nuw i64 -9223372036854775808, %3
   %.not = icmp ugt i64 %5, %i.c

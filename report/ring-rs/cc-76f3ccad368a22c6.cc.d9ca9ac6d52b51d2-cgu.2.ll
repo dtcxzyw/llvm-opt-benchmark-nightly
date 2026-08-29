@@ -202,18 +202,17 @@ bb.c:                                             ; preds = %thread-pre-split.i,
 .preheader58.i.preheader:                         ; preds = %bb.c, %.preheader58.i
   %.sroa.0.1.i29 = phi ptr [ %i.g, %.preheader58.i ], [ %.sroa.0.0.i, %bb.c ] ; 2 uses
   %.sroa.15.1.i28 = phi i64 [ %i.h, %.preheader58.i ], [ %.sroa.15.0.i, %bb.c ]
-  %.sroa.045.0.i27 = phi i32 [ %i.o, %.preheader58.i ], [ 0, %bb.c ]
+  %.sroa.045.0.i27 = phi i32 [ %i.o, %.preheader58.i ], [ 0, %bb.c ] ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i29, i64 1
   %i.h = add i64 %.sroa.15.1.i28, -1              ; 2 uses
-  %2 = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.sroa.045.0.i27, i32 10) ; 2 uses
-  %3 = extractvalue { i32, i1 } %2, 0             ; 2 uses
-  %4 = extractvalue { i32, i1 } %2, 1
+  %2 = mul nuw i32 %.sroa.045.0.i27, 10           ; 2 uses
+  %3 = icmp ugt i32 %.sroa.045.0.i27, 429496729
   %i.i = load i8, ptr %.sroa.0.1.i29, align 1
   %i.j = zext i8 %i.i to i32
   %i.k = tail call { i32, i32 } @_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc8to_digitCsiHivYpkJ4Hu_2cc(i32 %i.j, i32 10) #21 ; 2 uses
   %i.l = extractvalue { i32, i32 } %i.k, 0
   %i.m = trunc i32 %i.l to i1                     ; 2 uses
-  br i1 %4, label %bb.e, label %bb.d
+  br i1 %3, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.preheader58.i.preheader
   br i1 %i.m, label %bb.f, label %_RNvMsB_NtCs3oUPovFnLWP_4core3numm27from_ascii_bytes_radix_implCsiHivYpkJ4Hu_2cc.exit
@@ -224,8 +223,8 @@ bb.e:                                             ; preds = %.preheader58.i.preh
 
 bb.f:                                             ; preds = %bb.d
   %i.n = extractvalue { i32, i32 } %i.k, 1
-  %i.o = add i32 %i.n, %3                         ; 3 uses
-  %i.p = icmp ult i32 %i.o, %3
+  %i.o = add i32 %i.n, %2                         ; 3 uses
+  %i.p = icmp ult i32 %i.o, %2
   br i1 %i.p, label %_RNvMsB_NtCs3oUPovFnLWP_4core3numm27from_ascii_bytes_radix_implCsiHivYpkJ4Hu_2cc.exit, label %.preheader58.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.g
@@ -628,33 +627,38 @@ bb.e:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
   %i.f = add i64 %1, -1                           ; 3 uses
   %i.g = icmp ult i64 %1, 9
-  br i1 %i.g, label %.preheader114.i.a, label %.lr.ph.i
+  br i1 %i.g, label %.preheader114.i, label %.lr.ph.i
 
-.preheader114.i.a:                                ; preds = %bb.e
-  %.not106135.i.a = icmp eq i64 %i.f, 0
-  br i1 %.not106135.i.a, label %.loopexit.i, label %.lr.ph139.i
+.preheader114.i:                                  ; preds = %bb.e
+  %.not106135.i = icmp eq i64 %i.f, 0
+  br i1 %.not106135.i, label %.loopexit.i, label %.lr.ph139.i
 
-.loopexit.i:                                      ; preds = %5, %bb.i, %10, %bb.n, %.preheader.i.a, %.preheader114.i.a
-  %.sroa.087.1.i = phi i32 [ %i.ac, %bb.i ], [ %i.ax, %bb.n ], [ %11, %10 ], [ 0, %.preheader.i.a ], [ 0, %.preheader114.i.a ], [ %6, %5 ]
+.preheader114.i.a:                                ; preds = %bb.h
+  %2 = sub nsw i32 %3, %i.q                       ; 2 uses
+  %.not106135.i.a = icmp eq i64 %i.k, 0
+  br i1 %.not106135.i.a, label %.loopexit.i, label %.lr.ph.i
+
+.loopexit.i:                                      ; preds = %.preheader114.i.a, %bb.i, %.preheader.i.a, %bb.n, %.preheader.i, %.preheader114.i
+  %.sroa.087.1.i = phi i32 [ %i.ac, %bb.i ], [ %i.ax, %bb.n ], [ %6, %.preheader.i.a ], [ 0, %.preheader.i ], [ 0, %.preheader114.i ], [ %2, %.preheader114.i.a ]
   %i.h = zext i32 %.sroa.087.1.i to i64
   %i.i = shl nuw i64 %i.h, 32
   br label %_RNvMsp_NtCs3oUPovFnLWP_4core3numl27from_ascii_bytes_radix_implCsiHivYpkJ4Hu_2cc.exit
 
-.lr.ph.i:                                         ; preds = %bb.e, %5
-  %.sroa.0.1134.i = phi ptr [ %i.j, %5 ], [ %i.e, %bb.e ] ; 2 uses
-  %.sroa.26.1133.i = phi i64 [ %i.k, %5 ], [ %i.f, %bb.e ]
-  %.sroa.087.0132.i = phi i32 [ %6, %5 ], [ 0, %bb.e ]
+.lr.ph.i:                                         ; preds = %bb.e, %.preheader114.i.a
+  %.sroa.0.1134.i = phi ptr [ %i.j, %.preheader114.i.a ], [ %i.e, %bb.e ] ; 2 uses
+  %.sroa.26.1133.i = phi i64 [ %i.k, %.preheader114.i.a ], [ %i.f, %bb.e ]
+  %.sroa.087.0132.i = phi i32 [ %2, %.preheader114.i.a ], [ 0, %bb.e ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.sroa.0.1134.i, i64 1
   %i.k = add i64 %.sroa.26.1133.i, -1             ; 2 uses
-  %2 = tail call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %.sroa.087.0132.i, i32 10) ; 2 uses
-  %3 = extractvalue { i32, i1 } %2, 0
-  %4 = extractvalue { i32, i1 } %2, 1
+  %3 = mul nsw i32 %.sroa.087.0132.i, 10          ; 2 uses
+  %4 = add i32 %.sroa.087.0132.i, -214748365
+  %5 = icmp ult i32 %4, -429496729
   %i.l = load i8, ptr %.sroa.0.1134.i, align 1
   %i.m = zext i8 %i.l to i32
   %i.n = tail call { i32, i32 } @_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc8to_digitCsiHivYpkJ4Hu_2cc(i32 %i.m, i32 10) #21 ; 2 uses
   %i.o = extractvalue { i32, i32 } %i.n, 0
   %i.p = trunc i32 %i.o to i1                     ; 2 uses
-  br i1 %4, label %bb.g, label %bb.f
+  br i1 %5, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph.i
   br i1 %i.p, label %bb.h, label %_RNvMsp_NtCs3oUPovFnLWP_4core3numl27from_ascii_bytes_radix_implCsiHivYpkJ4Hu_2cc.exit
@@ -664,20 +668,15 @@ bb.g:                                             ; preds = %.lr.ph.i
   br label %_RNvMsp_NtCs3oUPovFnLWP_4core3numl27from_ascii_bytes_radix_implCsiHivYpkJ4Hu_2cc.exit
 
 bb.h:                                             ; preds = %bb.f
-  %i.q = extractvalue { i32, i32 } %i.n, 1
-  %i.r = tail call { i32, i1 } @llvm.ssub.with.overflow.i32(i32 %3, i32 %i.q) ; 2 uses
+  %i.q = extractvalue { i32, i32 } %i.n, 1        ; 2 uses
+  %i.r = tail call { i32, i1 } @llvm.ssub.with.overflow.i32(i32 %3, i32 %i.q)
   %i.s = extractvalue { i32, i1 } %i.r, 1
-  br i1 %i.s, label %_RNvMsp_NtCs3oUPovFnLWP_4core3numl27from_ascii_bytes_radix_implCsiHivYpkJ4Hu_2cc.exit, label %5
+  br i1 %i.s, label %_RNvMsp_NtCs3oUPovFnLWP_4core3numl27from_ascii_bytes_radix_implCsiHivYpkJ4Hu_2cc.exit, label %.preheader114.i.a
 
-5:                                                ; preds = %bb.h
-  %6 = extractvalue { i32, i1 } %i.r, 0           ; 2 uses
-  %.not105.i = icmp eq i64 %i.k, 0
-  br i1 %.not105.i, label %.loopexit.i, label %.lr.ph.i
-
-.lr.ph139.i:                                      ; preds = %.preheader114.i.a, %bb.i
-  %.sroa.0.2138.i = phi ptr [ %i.ab, %bb.i ], [ %i.e, %.preheader114.i.a ] ; 2 uses
-  %.sroa.26.2137.i = phi i64 [ %i.aa, %bb.i ], [ %i.f, %.preheader114.i.a ]
-  %.sroa.087.2136.i = phi i32 [ %i.ac, %bb.i ], [ 0, %.preheader114.i.a ]
+.lr.ph139.i:                                      ; preds = %.preheader114.i, %bb.i
+  %.sroa.0.2138.i = phi ptr [ %i.ab, %bb.i ], [ %i.e, %.preheader114.i ] ; 2 uses
+  %.sroa.26.2137.i = phi i64 [ %i.aa, %bb.i ], [ %i.f, %.preheader114.i ]
+  %.sroa.087.2136.i = phi i32 [ %i.ac, %bb.i ], [ 0, %.preheader114.i ]
   %i.t = load i8, ptr %.sroa.0.2138.i, align 1
   %i.u = zext i8 %i.t to i32
   %i.v = tail call { i32, i32 } @_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc8to_digitCsiHivYpkJ4Hu_2cc(i32 %i.u, i32 10) #21 ; 2 uses
@@ -698,21 +697,26 @@ bb.j:                                             ; preds = %bb.d, %bb.c
   %.sroa.26.0.i = phi i64 [ %i.d, %bb.d ], [ %1, %bb.c ] ; 4 uses
   %.sroa.0.0.i = phi ptr [ %i.c, %bb.d ], [ %0, %bb.c ] ; 2 uses
   %i.ad = icmp ult i64 %.sroa.26.0.i, 8
-  br i1 %i.ad, label %.preheader.i.a, label %.preheader111.i
+  br i1 %i.ad, label %.preheader.i, label %.preheader111.i
 
-.preheader.i.a:                                   ; preds = %bb.j
-  %.not108144.i.a = icmp eq i64 %.sroa.26.0.i, 0
-  br i1 %.not108144.i.a, label %.loopexit.i, label %.lr.ph148.i
+.preheader.i:                                     ; preds = %bb.j
+  %.not108144.i = icmp eq i64 %.sroa.26.0.i, 0
+  br i1 %.not108144.i, label %.loopexit.i, label %.lr.ph148.i
 
-.preheader111.i:                                  ; preds = %bb.j, %10
-  %.sroa.0.3143.i = phi ptr [ %i.ae, %10 ], [ %.sroa.0.0.i, %bb.j ] ; 2 uses
-  %.sroa.26.3142.i = phi i64 [ %i.af, %10 ], [ %.sroa.26.0.i, %bb.j ]
-  %.sroa.087.3141.i = phi i32 [ %11, %10 ], [ 0, %bb.j ]
+.preheader.i.a:                                   ; preds = %bb.m
+  %6 = add nsw i32 %i.al, %7                      ; 2 uses
+  %.not108144.i.a = icmp eq i64 %i.af, 0
+  br i1 %.not108144.i.a, label %.loopexit.i, label %.preheader111.i
+
+.preheader111.i:                                  ; preds = %bb.j, %.preheader.i.a
+  %.sroa.0.3143.i = phi ptr [ %i.ae, %.preheader.i.a ], [ %.sroa.0.0.i, %bb.j ] ; 2 uses
+  %.sroa.26.3142.i = phi i64 [ %i.af, %.preheader.i.a ], [ %.sroa.26.0.i, %bb.j ]
+  %.sroa.087.3141.i = phi i32 [ %6, %.preheader.i.a ], [ 0, %bb.j ] ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.0.3143.i, i64 1
   %i.af = add i64 %.sroa.26.3142.i, -1            ; 2 uses
-  %7 = tail call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %.sroa.087.3141.i, i32 10) ; 2 uses
-  %8 = extractvalue { i32, i1 } %7, 0
-  %9 = extractvalue { i32, i1 } %7, 1
+  %7 = mul nsw i32 %.sroa.087.3141.i, 10          ; 2 uses
+  %8 = add i32 %.sroa.087.3141.i, -214748365
+  %9 = icmp ult i32 %8, -429496729
   %i.ag = load i8, ptr %.sroa.0.3143.i, align 1
   %i.ah = zext i8 %i.ag to i32
   %i.ai = tail call { i32, i32 } @_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc8to_digitCsiHivYpkJ4Hu_2cc(i32 %i.ah, i32 10) #21 ; 2 uses
@@ -728,20 +732,15 @@ bb.l:                                             ; preds = %.preheader111.i
   br label %_RNvMsp_NtCs3oUPovFnLWP_4core3numl27from_ascii_bytes_radix_implCsiHivYpkJ4Hu_2cc.exit
 
 bb.m:                                             ; preds = %bb.k
-  %i.al = extractvalue { i32, i32 } %i.ai, 1
-  %i.am = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %8, i32 %i.al) ; 2 uses
+  %i.al = extractvalue { i32, i32 } %i.ai, 1      ; 2 uses
+  %i.am = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %7, i32 %i.al)
   %i.an = extractvalue { i32, i1 } %i.am, 1
-  br i1 %i.an, label %_RNvMsp_NtCs3oUPovFnLWP_4core3numl27from_ascii_bytes_radix_implCsiHivYpkJ4Hu_2cc.exit, label %10
+  br i1 %i.an, label %_RNvMsp_NtCs3oUPovFnLWP_4core3numl27from_ascii_bytes_radix_implCsiHivYpkJ4Hu_2cc.exit, label %.preheader.i.a
 
-10:                                               ; preds = %bb.m
-  %11 = extractvalue { i32, i1 } %i.am, 0         ; 2 uses
-  %.not107.i = icmp eq i64 %i.af, 0
-  br i1 %.not107.i, label %.loopexit.i, label %.preheader111.i
-
-.lr.ph148.i:                                      ; preds = %.preheader.i.a, %bb.n
-  %.sroa.0.4147.i = phi ptr [ %i.aw, %bb.n ], [ %.sroa.0.0.i, %.preheader.i.a ] ; 2 uses
-  %.sroa.26.4146.i = phi i64 [ %i.av, %bb.n ], [ %.sroa.26.0.i, %.preheader.i.a ]
-  %.sroa.087.4145.i = phi i32 [ %i.ax, %bb.n ], [ 0, %.preheader.i.a ]
+.lr.ph148.i:                                      ; preds = %.preheader.i, %bb.n
+  %.sroa.0.4147.i = phi ptr [ %i.aw, %bb.n ], [ %.sroa.0.0.i, %.preheader.i ] ; 2 uses
+  %.sroa.26.4146.i = phi i64 [ %i.av, %bb.n ], [ %.sroa.26.0.i, %.preheader.i ]
+  %.sroa.087.4145.i = phi i32 [ %i.ax, %bb.n ], [ 0, %.preheader.i ]
   %i.ao = load i8, ptr %.sroa.0.4147.i, align 1
   %i.ap = zext i8 %i.ao to i32
   %i.aq = tail call { i32, i32 } @_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc8to_digitCsiHivYpkJ4Hu_2cc(i32 %i.ap, i32 10) #21 ; 2 uses
@@ -1144,9 +1143,6 @@ declare hidden void @_RNvXs0_NtCs3oUPovFnLWP_4core5cloneeNtB5_13CloneToUninit15c
 ; Function Attrs: inlinehint nonlazybind uwtable
 declare align 8 ptr @_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionIBw_RNtNtCsaL1QbXo9JQH_3std4path4PathEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB1N_8PeekableINtNtB1P_5chain5ChainINtNtB1P_3map3MapINtNtNtB5_5slice4iter4IterNtCsiHivYpkJ4Hu_2cc6ObjectENCNvMs4_B3D_NtB3D_5Build8assemble0EIB2V_IB3c_INtNtCs1xwejQucwHj_5alloc4sync3ArcBN_EENvYB4L_NtNtNtB5_3ops5deref5Deref5derefEEE4peek0EB3D_(ptr align 8, ptr align 8) unnamed_addr #1
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #18
-
 ; Function Attrs: inlinehint nonlazybind uwtable
 declare hidden { i32, i32 } @_RNvMNtNtCs3oUPovFnLWP_4core4char7methodsc8to_digitCsiHivYpkJ4Hu_2cc(i32, i32) unnamed_addr #1
 
@@ -1164,9 +1160,6 @@ declare void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4
 
 ; Function Attrs: nonlazybind uwtable
 declare void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync4WeakeRNtNtBG_5alloc6GlobalEECsiHivYpkJ4Hu_2cc(ptr align 8) unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.smul.with.overflow.i32(i32, i32) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i32, i1 } @llvm.ssub.with.overflow.i32(i32, i32) #18

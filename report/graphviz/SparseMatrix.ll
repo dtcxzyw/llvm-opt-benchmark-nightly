@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %.lr.ph238, %._crit_
 
 .lr.ph234:                                        ; preds = %.lr.ph234.preheader, %bb.g
   %indvars.iv = phi i64 [ %i.am, %.lr.ph234.preheader ], [ %indvars.iv.next, %bb.g ] ; 2 uses
-  %.2212232 = phi i64 [ %.1211235, %.lr.ph234.preheader ], [ %.3213, %bb.g ] ; 2 uses
+  %.2212232 = phi i64 [ %.1211235, %.lr.ph234.preheader ], [ %.3213, %bb.g ] ; 3 uses
   %i.an = getelementptr inbounds [4 x i8], ptr %i.h, i64 %indvars.iv
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !23
   %i.ap = sext i32 %i.ao to i64
@@ -215,17 +215,16 @@ bb.d:                                             ; preds = %.lr.ph238, %._crit_
   br i1 %.not198, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph234
-  %2 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.2212232, i64 1) ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 1
-  br i1 %3, label %.sink.split, label %bb.f
+  %2 = icmp eq i64 %.2212232, -1
+  br i1 %2, label %.sink.split, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %4 = extractvalue { i64, i1 } %2, 0
+  %3 = add nuw i64 %.2212232, 1
   store i32 %i.ad, ptr %i.aq, align 4, !tbaa !23
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph234, %bb.f
-  %.3213 = phi i64 [ %.2212232, %.lr.ph234 ], [ %4, %bb.f ] ; 2 uses
+  %.3213 = phi i64 [ %.2212232, %.lr.ph234 ], [ %3, %bb.f ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
   %exitcond.not = icmp eq i32 %i.ak, %lftr.wideiv
@@ -628,7 +627,7 @@ bb.f:                                             ; preds = %.lr.ph176, %._crit_
 
 .lr.ph166:                                        ; preds = %.lr.ph166.preheader, %bb.i
   %indvars.iv = phi i64 [ %i.be, %.lr.ph166.preheader ], [ %indvars.iv.next, %bb.i ] ; 2 uses
-  %.3164 = phi i64 [ %.2154167, %.lr.ph166.preheader ], [ %.4, %bb.i ] ; 2 uses
+  %.3164 = phi i64 [ %.2154167, %.lr.ph166.preheader ], [ %.4, %bb.i ] ; 3 uses
   %i.bf = getelementptr inbounds [4 x i8], ptr %i.l, i64 %indvars.iv
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !23
   %i.bh = sext i32 %i.bg to i64
@@ -639,17 +638,16 @@ bb.f:                                             ; preds = %.lr.ph176, %._crit_
   br i1 %.not145, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph166
-  %3 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %.3164, i64 1) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 1
-  br i1 %4, label %.sink.split, label %bb.h
+  %3 = icmp eq i64 %.3164, -1
+  br i1 %3, label %.sink.split, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %5 = extractvalue { i64, i1 } %3, 0
+  %4 = add nuw i64 %.3164, 1
   store i32 %i.am, ptr %i.bi, align 4, !tbaa !23
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph166, %bb.h
-  %.4 = phi i64 [ %.3164, %.lr.ph166 ], [ %5, %bb.h ] ; 2 uses
+  %.4 = phi i64 [ %.3164, %.lr.ph166 ], [ %4, %bb.h ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next to i32
   %exitcond.not = icmp eq i32 %i.bc, %lftr.wideiv
@@ -1051,9 +1049,6 @@ bb.a:
 
 ; Function Attrs: nofree noreturn nounwind
 declare void @exit(i32 noundef) local_unnamed_addr #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #6
 
 ; Function Attrs: mustprogress nounwind willreturn allockind("realloc") allocsize(1) memory(argmem: readwrite, inaccessiblemem: readwrite, errnomem: write)
 declare noalias noundef ptr @realloc(ptr allocptr noundef captures(none), i64 noundef) local_unnamed_addr #13

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i.i:                                       ; preds = %.critedge.i.i, %bb.b
   %.09.i = phi ptr [ %0, %bb.b ], [ %i.r, %.critedge.i.i ] ; 3 uses
-  %.08.i = phi i16 [ 0, %bb.b ], [ %.1.i.a, %.critedge.i.i ] ; 4 uses
+  %.08.i = phi i16 [ 0, %bb.b ], [ %.1.i, %.critedge.i.i ] ; 4 uses
   %.02238.i.i = phi i32 [ 16, %bb.b ], [ %i.k, %.critedge.i.i ]
   %i.h = load i8, ptr %.09.i, align 1, !tbaa !72
   %i.i = add i8 %i.h, -48                         ; 2 uses
@@ -220,7 +220,6 @@ bb.c:                                             ; preds = %.lr.ph.i.i
 
 bb.d:                                             ; preds = %bb.c
   %i.m = mul i16 %.08.i, 10
-  %5 = add i16 %i.m, %i.j
   br label %.critedge.i.i
 
 bb.e:                                             ; preds = %bb.c
@@ -228,21 +227,21 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.n, label %_ZNSt8__format15__parse_integerIcEESt4pairItPKT_ES4_S4_.exit.thread, label %.split.i.i, !prof !846
 
 .split.i.i:                                       ; preds = %bb.e
-  %i.o = mul nuw i16 %.08.i, 10
-  %i.p = tail call { i16, i1 } @llvm.uadd.with.overflow.i16(i16 %i.o, i16 %i.j) ; 2 uses
+  %i.o = mul nuw i16 %.08.i, 10                   ; 2 uses
+  %i.p = tail call { i16, i1 } @llvm.uadd.with.overflow.i16(i16 %i.o, i16 %i.j)
   %i.q = extractvalue { i16, i1 } %i.p, 1
-  %6 = extractvalue { i16, i1 } %i.p, 0
   br i1 %i.q, label %_ZNSt8__format15__parse_integerIcEESt4pairItPKT_ES4_S4_.exit.thread, label %.critedge.i.i, !prof !341
 
 .critedge.i.i:                                    ; preds = %.split.i.i, %bb.d
-  %.1.i.a = phi i16 [ %5, %bb.d ], [ %6, %.split.i.i ] ; 2 uses
+  %.1.i.a = phi i16 [ %i.m, %bb.d ], [ %i.o, %.split.i.i ]
+  %.1.i = add i16 %.1.i.a, %i.j                   ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.09.i, i64 1 ; 2 uses
   %.not.i.i = icmp eq ptr %i.r, %1
   br i1 %.not.i.i, label %_ZNSt8__detail18__from_chars_alnumILb1EtEEbRPKcS2_RT0_i.exit.i, label %.lr.ph.i.i, !llvm.loop !847
 
 _ZNSt8__detail18__from_chars_alnumILb1EtEEbRPKcS2_RT0_i.exit.i: ; preds = %.critedge.i.i, %.lr.ph.i.i
   %.110.i = phi ptr [ %.09.i, %.lr.ph.i.i ], [ %scevgep.i, %.critedge.i.i ] ; 3 uses
-  %.3.i = phi i16 [ %.08.i, %.lr.ph.i.i ], [ %.1.i.a, %.critedge.i.i ]
+  %.3.i = phi i16 [ %.08.i, %.lr.ph.i.i ], [ %.1.i, %.critedge.i.i ]
   %.not.i = icmp eq ptr %.110.i, %0
   %.not32 = icmp eq ptr %.110.i, null
   %or.cond51 = or i1 %.not.i, %.not32
@@ -327,7 +326,7 @@ bb.q:                                             ; preds = %bb.p
 
 .lr.ph.i.i.i:                                     ; preds = %.critedge.i.i.i, %bb.q
   %.09.i.i = phi ptr [ %i.t, %bb.q ], [ %i.ay, %.critedge.i.i.i ] ; 3 uses
-  %.08.i.i = phi i16 [ 0, %bb.q ], [ %.1.i.i.a, %.critedge.i.i.i ] ; 4 uses
+  %.08.i.i = phi i16 [ 0, %bb.q ], [ %.1.i.i, %.critedge.i.i.i ] ; 4 uses
   %.02238.i.i.i = phi i32 [ 16, %bb.q ], [ %i.ar, %.critedge.i.i.i ]
   %i.ao = load i8, ptr %.09.i.i, align 1, !tbaa !72
   %i.ap = add i8 %i.ao, -48                       ; 2 uses
@@ -342,7 +341,6 @@ bb.r:                                             ; preds = %.lr.ph.i.i.i
 
 bb.s:                                             ; preds = %bb.r
   %i.at = mul i16 %.08.i.i, 10
-  %7 = add i16 %i.at, %i.aq
   br label %.critedge.i.i.i
 
 bb.t:                                             ; preds = %bb.r
@@ -350,21 +348,21 @@ bb.t:                                             ; preds = %bb.r
   br i1 %i.au, label %_ZNSt8__format14__parse_arg_idIcEESt4pairItPKT_ES4_S4_.exit.thread, label %.split.i.i.i, !prof !846
 
 .split.i.i.i:                                     ; preds = %bb.t
-  %i.av = mul nuw i16 %.08.i.i, 10
-  %i.aw = tail call { i16, i1 } @llvm.uadd.with.overflow.i16(i16 %i.av, i16 %i.aq) ; 2 uses
+  %i.av = mul nuw i16 %.08.i.i, 10                ; 2 uses
+  %i.aw = tail call { i16, i1 } @llvm.uadd.with.overflow.i16(i16 %i.av, i16 %i.aq)
   %i.ax = extractvalue { i16, i1 } %i.aw, 1
-  %8 = extractvalue { i16, i1 } %i.aw, 0
   br i1 %i.ax, label %_ZNSt8__format14__parse_arg_idIcEESt4pairItPKT_ES4_S4_.exit.thread, label %.critedge.i.i.i, !prof !341
 
 .critedge.i.i.i:                                  ; preds = %.split.i.i.i, %bb.s
-  %.1.i.i.a = phi i16 [ %7, %bb.s ], [ %8, %.split.i.i.i ] ; 2 uses
+  %.1.i.i.a = phi i16 [ %i.at, %bb.s ], [ %i.av, %.split.i.i.i ]
+  %.1.i.i = add i16 %.1.i.i.a, %i.aq              ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.09.i.i, i64 1 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.ay, %1
   br i1 %.not.i.i.i, label %_ZNSt8__detail18__from_chars_alnumILb1EtEEbRPKcS2_RT0_i.exit.i.i, label %.lr.ph.i.i.i, !llvm.loop !847
 
 _ZNSt8__detail18__from_chars_alnumILb1EtEEbRPKcS2_RT0_i.exit.i.i: ; preds = %.critedge.i.i.i, %.lr.ph.i.i.i
   %.110.i.i = phi ptr [ %.09.i.i, %.lr.ph.i.i.i ], [ %scevgep.i.i, %.critedge.i.i.i ] ; 2 uses
-  %.3.i.i = phi i16 [ %.08.i.i, %.lr.ph.i.i.i ], [ %.1.i.i.a, %.critedge.i.i.i ]
+  %.3.i.i = phi i16 [ %.08.i.i, %.lr.ph.i.i.i ], [ %.1.i.i, %.critedge.i.i.i ]
   %.not.i.i36 = icmp eq ptr %.110.i.i, %i.t
   br i1 %.not.i.i36, label %_ZNSt8__format14__parse_arg_idIcEESt4pairItPKT_ES4_S4_.exit.thread, label %_ZNSt8__format14__parse_arg_idIcEESt4pairItPKT_ES4_S4_.exit, !prof !850
 
@@ -767,7 +765,7 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph.i.i.i:                                     ; preds = %.critedge.i.i.i, %bb.k
   %.09.i.i = phi ptr [ %i.b, %bb.k ], [ %i.ap, %.critedge.i.i.i ] ; 3 uses
-  %.08.i.i = phi i16 [ 0, %bb.k ], [ %.1.i.i.a, %.critedge.i.i.i ] ; 4 uses
+  %.08.i.i = phi i16 [ 0, %bb.k ], [ %.1.i.i, %.critedge.i.i.i ] ; 4 uses
   %.02238.i.i.i = phi i32 [ 16, %bb.k ], [ %i.ai, %.critedge.i.i.i ]
   %i.af = load i8, ptr %.09.i.i, align 1, !tbaa !72
   %i.ag = add i8 %i.af, -48                       ; 2 uses
@@ -782,7 +780,6 @@ bb.l:                                             ; preds = %.lr.ph.i.i.i
 
 bb.m:                                             ; preds = %bb.l
   %i.ak = mul i16 %.08.i.i, 10
-  %1 = add i16 %i.ak, %i.ah
   br label %.critedge.i.i.i
 
 bb.n:                                             ; preds = %bb.l
@@ -790,21 +787,21 @@ bb.n:                                             ; preds = %bb.l
   br i1 %i.al, label %_ZNSt8__format14__parse_arg_idIcEESt4pairItPKT_ES4_S4_.exit.thread26, label %.split.i.i.i, !prof !846
 
 .split.i.i.i:                                     ; preds = %bb.n
-  %i.am = mul nuw i16 %.08.i.i, 10
-  %i.an = tail call { i16, i1 } @llvm.uadd.with.overflow.i16(i16 %i.am, i16 %i.ah) ; 2 uses
+  %i.am = mul nuw i16 %.08.i.i, 10                ; 2 uses
+  %i.an = tail call { i16, i1 } @llvm.uadd.with.overflow.i16(i16 %i.am, i16 %i.ah)
   %i.ao = extractvalue { i16, i1 } %i.an, 1
-  %2 = extractvalue { i16, i1 } %i.an, 0
   br i1 %i.ao, label %_ZNSt8__format14__parse_arg_idIcEESt4pairItPKT_ES4_S4_.exit.thread26, label %.critedge.i.i.i, !prof !341
 
 .critedge.i.i.i:                                  ; preds = %.split.i.i.i, %bb.m
-  %.1.i.i.a = phi i16 [ %1, %bb.m ], [ %2, %.split.i.i.i ] ; 2 uses
+  %.1.i.i.a = phi i16 [ %i.ak, %bb.m ], [ %i.am, %.split.i.i.i ]
+  %.1.i.i = add i16 %.1.i.i.a, %i.ah              ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %.09.i.i, i64 1 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.ap, %i.r
   br i1 %.not.i.i.i, label %_ZNSt8__detail18__from_chars_alnumILb1EtEEbRPKcS2_RT0_i.exit.i.i, label %.lr.ph.i.i.i, !llvm.loop !847
 
 _ZNSt8__detail18__from_chars_alnumILb1EtEEbRPKcS2_RT0_i.exit.i.i: ; preds = %.critedge.i.i.i, %.lr.ph.i.i.i
   %.110.i.i = phi ptr [ %.09.i.i, %.lr.ph.i.i.i ], [ %scevgep.i.i, %.critedge.i.i.i ] ; 3 uses
-  %.3.i.i = phi i16 [ %.08.i.i, %.lr.ph.i.i.i ], [ %.1.i.i.a, %.critedge.i.i.i ]
+  %.3.i.i = phi i16 [ %.08.i.i, %.lr.ph.i.i.i ], [ %.1.i.i, %.critedge.i.i.i ]
   %.not.i.i = icmp eq ptr %.110.i.i, %i.b
   %.not = icmp eq ptr %.110.i.i, null
   %or.cond = or i1 %.not.i.i, %.not

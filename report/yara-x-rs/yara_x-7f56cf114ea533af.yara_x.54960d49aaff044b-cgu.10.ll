@@ -204,17 +204,16 @@ bb.b:                                             ; preds = %.noexc.i
   %.val.i.i = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !3522, !noalias !3519, !noundef !17 ; 2 uses
   %i.v = icmp ult i64 %.val.i.i, 104811045873349726
   call void @llvm.assume(i1 %i.v)
-  %i.w = add nuw nsw i64 %.val.i.i, %i.s
-  %2 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.w, i64 88) ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 0
-  %4 = extractvalue { i64, i1 } %2, 1
-  br i1 %4, label %bb.c, label %_RNCNvMs1_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5alloc3vecINtB7_6TryVecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6linker10DefinitionE7reserve0Cs7gfv9tzbXmh_6yara_x.exit.i.i, !prof !19
+  %i.w = add nuw nsw i64 %.val.i.i, %i.s          ; 2 uses
+  %2 = mul nuw i64 %i.w, 88
+  %3 = icmp samesign ugt i64 %i.w, 209622091746699450
+  br i1 %3, label %bb.c, label %_RNCNvMs1_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5alloc3vecINtB7_6TryVecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6linker10DefinitionE7reserve0Cs7gfv9tzbXmh_6yara_x.exit.i.i, !prof !19
 
 bb.c:                                             ; preds = %bb.b
   br label %_RNCNvMs1_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5alloc3vecINtB7_6TryVecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6linker10DefinitionE7reserve0Cs7gfv9tzbXmh_6yara_x.exit.i.i
 
 _RNCNvMs1_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5alloc3vecINtB7_6TryVecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6linker10DefinitionE7reserve0Cs7gfv9tzbXmh_6yara_x.exit.i.i: ; preds = %bb.c, %bb.b
-  %.sroa.0.0.i.i.i = phi i64 [ -1, %bb.c ], [ %3, %bb.b ]
+  %.sroa.0.0.i.i.i = phi i64 [ -1, %bb.c ], [ %2, %bb.b ]
   %i.x = invoke noundef nonnull ptr @_RNvMsn_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5error5errorNtB5_13OomOrDynError11new_oom_ptr(i64 noundef %.sroa.0.0.i.i.i)
           to label %_RNvMs1_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5alloc3vecINtB5_6TryVecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime6linker10DefinitionE7reserveCs7gfv9tzbXmh_6yara_x.exit.i unwind label %bb.d, !noalias !3519
 
@@ -617,17 +616,16 @@ bb.b:                                             ; preds = %.noexc
   %.val.i = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !5487, !noundef !17 ; 2 uses
   %i.d = icmp ult i64 %.val.i, 88686269585142076
   call void @llvm.assume(i1 %i.d)
-  %i.e = call i64 @llvm.uadd.sat.i64(i64 %.val.i, i64 %1)
-  %2 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.e, i64 104) ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 0
-  %4 = extractvalue { i64, i1 } %2, 1
-  br i1 %4, label %bb.c, label %_RNCNvMs1_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5alloc3vecINtB7_6TryVecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime5types7ValTypeE7reserve0Cs7gfv9tzbXmh_6yara_x.exit.i, !prof !19
+  %i.e = call i64 @llvm.uadd.sat.i64(i64 %.val.i, i64 %1) ; 2 uses
+  %2 = mul nuw i64 %i.e, 104
+  %3 = icmp ugt i64 %i.e, 177372539170284150
+  br i1 %3, label %bb.c, label %_RNCNvMs1_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5alloc3vecINtB7_6TryVecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime5types7ValTypeE7reserve0Cs7gfv9tzbXmh_6yara_x.exit.i, !prof !19
 
 bb.c:                                             ; preds = %bb.b
   br label %_RNCNvMs1_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5alloc3vecINtB7_6TryVecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime5types7ValTypeE7reserve0Cs7gfv9tzbXmh_6yara_x.exit.i
 
 _RNCNvMs1_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5alloc3vecINtB7_6TryVecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime5types7ValTypeE7reserve0Cs7gfv9tzbXmh_6yara_x.exit.i: ; preds = %bb.c, %bb.b
-  %.sroa.0.0.i.i = phi i64 [ -1, %bb.c ], [ %3, %bb.b ]
+  %.sroa.0.0.i.i = phi i64 [ -1, %bb.c ], [ %2, %bb.b ]
   %i.f = invoke noundef nonnull ptr @_RNvMsn_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5error5errorNtB5_13OomOrDynError11new_oom_ptr(i64 noundef %.sroa.0.0.i.i)
           to label %_RNvMs1_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5alloc3vecINtB5_6TryVecNtNtNtCsiOkGTpNE17y_8wasmtime7runtime5types7ValTypeE7reserveCs7gfv9tzbXmh_6yara_x.exit unwind label %bb.d
 
@@ -1029,9 +1027,6 @@ declare void @_RINvNtCskKLDkoKarTP_4core9panicking13assert_failedjjEB4_(i8 nound
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef nonnull ptr @_RNvXs4_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5error5errorNtB5_5ErrorINtNtCskKLDkoKarTP_4core7convert4FromNtNtB7_3oom11OutOfMemoryE4fromCs7gfv9tzbXmh_6yara_x(ptr noundef nonnull) unnamed_addr #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #26
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RINvXs3n_NtNtCsaeRQ2XwCvzm_10serde_core2de5implsINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtCs2AhGS15tZfv_4bstr7bstring7BStringENtB9_11Deserialize11deserializeINtNtNtNtCslcwApyVHiOd_7bincode8features5serde11de_borrowed12SerdeDecoderINtNtNtB2B_2de7decoder11DecoderImplNtNtB3I_4read11SliceReaderNtNtB2B_6config13ConfigurationuEEECs7gfv9tzbXmh_6yara_x(ptr dead_on_unwind noalias nofree noundef writable sret([32 x i8]) align 8 captures(none) dereferenceable(32), ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #1

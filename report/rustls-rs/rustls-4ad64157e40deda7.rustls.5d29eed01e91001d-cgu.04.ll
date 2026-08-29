@@ -204,11 +204,10 @@ bb.al:                                            ; preds = %bb.ak
   %i.ew = getelementptr i8, ptr %.sroa.0265.0386, i64 24
   %.val207 = load i32, ptr %i.ew, align 8, !noundef !5
   %i.ex = call i64 @llvm.usub.sat.i64(i64 %i.eg, i64 %.sroa.4295.0.copyload)
-  %i.ey = trunc i64 %i.ex to i32
-  %9 = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.ey, i32 1000) ; 2 uses
-  %10 = extractvalue { i32, i1 } %9, 0
-  %11 = extractvalue { i32, i1 } %9, 1
-  br i1 %11, label %bb.am, label %bb.ap, !prof !26
+  %i.ey = trunc i64 %i.ex to i32                  ; 2 uses
+  %9 = mul nuw i32 %i.ey, 1000
+  %10 = icmp ugt i32 %i.ey, 4294967
+  br i1 %10, label %bb.am, label %bb.ap, !prof !26
 
 bb.am:                                            ; preds = %bb.al
   br label %bb.ap
@@ -225,7 +224,7 @@ bb.ao:                                            ; preds = %bb.ap, %bb.an
           to label %bb.aq unwind label %.loopexit
 
 bb.ap:                                            ; preds = %bb.am, %bb.al
-  %.sroa.01.0.i = phi i32 [ -1, %bb.am ], [ %10, %bb.al ] ; 3 uses
+  %.sroa.01.0.i = phi i32 [ -1, %bb.am ], [ %9, %bb.al ] ; 3 uses
   %i.fc = sub i32 %.val207, %.sroa.6297.0.copyload ; 3 uses
   %i.fd = icmp ult i32 %.sroa.01.0.i, %i.fc
   %i.fe = sub nuw i32 %i.fc, %.sroa.01.0.i
@@ -627,9 +626,6 @@ declare hidden void @_RINvMNtCs7ZUl82OSlxp_6rustls12common_stateNtB3_11CommonSta
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #14
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef zeroext i1 @_RNvNtNtCs7ZUl82OSlxp_6rustls6server2hs10can_resume(i64 noundef range(i64 0, 2), ptr noundef, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24), i1 noundef zeroext, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(144)) unnamed_addr #2

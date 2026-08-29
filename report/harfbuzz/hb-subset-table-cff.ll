@@ -205,14 +205,14 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.v = load i8, ptr %i.a, align 1, !tbaa !251   ; 3 uses
-  %2 = zext i8 %i.v to i32                        ; 2 uses
   %i.w = add i8 %i.v, -1
   %or.cond = icmp ult i8 %i.w, 4
   br i1 %or.cond, label %bb.f, label %_ZNK21hb_sanitize_context_t11check_arrayIN2OT7NumTypeILb1EhLj1EEEEEbPKT_jj.exit.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.x = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %2, i32 %i.n) ; 2 uses
-  %3 = extractvalue { i32, i1 } %i.x, 0           ; 2 uses
+  %2 = zext nneg i8 %i.v to i32                   ; 2 uses
+  %i.x = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %2, i32 %i.n)
+  %3 = mul i32 %i.n, %2                           ; 3 uses
   %i.y = extractvalue { i32, i1 } %i.x, 1
   br i1 %i.y, label %_ZNK21hb_sanitize_context_t11check_arrayIN2OT7NumTypeILb1EhLj1EEEEEbPKT_jj.exit.thread, label %bb.g
 
@@ -233,8 +233,7 @@ _ZNK21hb_sanitize_context_t11check_arrayIN2OT7NumTypeILb1EhLj1EEEEEbPKT_jj.exit:
   br i1 %i.ag, label %bb.h, label %_ZNK21hb_sanitize_context_t11check_arrayIN2OT7NumTypeILb1EhLj1EEEEEbPKT_jj.exit.thread
 
 bb.h:                                             ; preds = %_ZNK21hb_sanitize_context_t11check_arrayIN2OT7NumTypeILb1EhLj1EEEEEbPKT_jj.exit
-  %4 = mul i32 %i.n, %2
-  %i.ah = zext i32 %4 to i64
+  %i.ah = zext i32 %3 to i64
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.ah
   %i.aj = zext i32 %i.l to i64                    ; 4 uses
   switch i8 %i.v, label %default.unreachable [
@@ -373,11 +372,10 @@ bb.f:                                             ; preds = %bb.e
   %i.ai = load i16, ptr %i.ah, align 1, !tbaa !255
   %i.aj = tail call noundef i16 @llvm.bswap.i16(i16 %i.ai)
   %i.ak = zext i16 %i.aj to i32
-  %i.al = mul nuw i32 %i.ak, %i.ag
-  %2 = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.al, i32 6) ; 2 uses
-  %3 = extractvalue { i32, i1 } %2, 0             ; 2 uses
-  %4 = extractvalue { i32, i1 } %2, 1
-  br i1 %4, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread13, label %bb.g, !prof !261
+  %i.al = mul nuw i32 %i.ak, %i.ag                ; 2 uses
+  %2 = mul nuw i32 %i.al, 6                       ; 2 uses
+  %3 = icmp ugt i32 %i.al, 715827882
+  br i1 %3, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread13, label %bb.g, !prof !261
 
 bb.g:                                             ; preds = %bb.f
   %i.am = load ptr, ptr %i.b, align 8, !tbaa !247
@@ -393,13 +391,13 @@ bb.h:                                             ; preds = %bb.g
   %i.as = ptrtoint ptr %i.ar to i64
   %i.at = sub i64 %i.as, %i.aa
   %i.au = trunc i64 %i.at to i32
-  %.not12.i.i.i.i.i.i.i = icmp ugt i32 %3, %i.au
+  %.not12.i.i.i.i.i.i.i = icmp ugt i32 %2, %i.au
   br i1 %.not12.i.i.i.i.i.i.i, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread13, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit, !prof !261
 
 _ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit: ; preds = %bb.h
   %i.av = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 2 uses
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !249
-  %i.ax = sub i32 %i.aw, %3                       ; 2 uses
+  %i.ax = sub i32 %i.aw, %2                       ; 2 uses
   store i32 %i.ax, ptr %i.av, align 4, !tbaa !249
   %i.ay = icmp sgt i32 %i.ax, 0
   br i1 %i.ay, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread, label %_ZNK2OT8OffsetToINS_13VarRegionListENS_7NumTypeILb1EjLj4EEEvLb1EE8sanitizeIJEEEbP21hb_sanitize_context_tPKvDpOT_.exit.thread13
@@ -552,14 +550,14 @@ bb.d:                                             ; preds = %_ZNK2OT7ArrayOfINS_
   %i.aj = zext nneg i16 %i.af to i32
   %i.ak = load i16, ptr %0, align 1, !tbaa !255
   %i.al = tail call noundef i16 @llvm.bswap.i16(i16 %i.ak)
-  %i.am = zext i16 %i.al to i32
+  %i.am = zext i16 %i.al to i32                   ; 2 uses
   %i.an = add nuw nsw i32 %i.aj, %i.ai
   %.mask.i.i = lshr i16 %i.ad, 7
   %.mask.i.lobit.i = and i16 %.mask.i.i, 1
   %i.ao = zext nneg i16 %.mask.i.lobit.i to i32
-  %i.ap = shl nuw nsw i32 %i.an, %i.ao
-  %i.aq = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.am, i32 %i.ap) ; 2 uses
-  %2 = extractvalue { i32, i1 } %i.aq, 0          ; 2 uses
+  %i.ap = shl nuw nsw i32 %i.an, %i.ao            ; 2 uses
+  %i.aq = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.am, i32 %i.ap)
+  %2 = mul nuw i32 %i.ap, %i.am                   ; 2 uses
   %i.ar = extractvalue { i32, i1 } %i.aq, 1
   br i1 %i.ar, label %_ZNK2OT7ArrayOfINS_7NumTypeILb1EtLj2EEES2_E8sanitizeIJEEEbP21hb_sanitize_context_tDpOT_.exit.thread, label %bb.e
 
@@ -616,11 +614,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !254
   %i.k = load i32, ptr %0, align 1, !tbaa !258
-  %i.l = tail call noundef i32 @llvm.bswap.i32(i32 %i.k)
-  %3 = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %i.l, i32 6) ; 2 uses
-  %4 = extractvalue { i32, i1 } %3, 0             ; 2 uses
-  %5 = extractvalue { i32, i1 } %3, 1
-  br i1 %5, label %.critedge, label %bb.c, !prof !74
+  %i.l = tail call noundef i32 @llvm.bswap.i32(i32 %i.k) ; 2 uses
+  %3 = mul nuw i32 %i.l, 6                        ; 2 uses
+  %4 = icmp ugt i32 %i.l, 715827882
+  br i1 %4, label %.critedge, label %bb.c, !prof !74
 
 bb.c:                                             ; preds = %bb.b
   %i.m = load ptr, ptr %i.b, align 8, !tbaa !247
@@ -636,13 +633,13 @@ bb.d:                                             ; preds = %bb.c
   %i.s = ptrtoint ptr %i.r to i64
   %i.t = sub i64 %i.s, %i.d
   %i.u = trunc i64 %i.t to i32
-  %.not12.i.i.i = icmp ugt i32 %4, %i.u
+  %.not12.i.i.i = icmp ugt i32 %3, %i.u
   br i1 %.not12.i.i.i, label %.critedge, label %_ZNK2OT7ArrayOfIN3CFF17FDSelect3_4_RangeINS_7NumTypeILb1EjLj4EEENS3_ILb1EtLj2EEEEES4_E16sanitize_shallowEP21hb_sanitize_context_t.exit, !prof !261
 
 _ZNK2OT7ArrayOfIN3CFF17FDSelect3_4_RangeINS_7NumTypeILb1EjLj4EEENS3_ILb1EtLj2EEEEES4_E16sanitize_shallowEP21hb_sanitize_context_t.exit: ; preds = %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 2 uses
   %i.w = load i32, ptr %i.v, align 4, !tbaa !249
-  %i.x = sub i32 %i.w, %4                         ; 2 uses
+  %i.x = sub i32 %i.w, %3                         ; 2 uses
   store i32 %i.x, ptr %i.v, align 4, !tbaa !249
   %i.y = icmp sgt i32 %i.x, 0
   br i1 %i.y, label %bb.e, label %.critedge, !prof !163

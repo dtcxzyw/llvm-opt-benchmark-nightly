@@ -66,16 +66,15 @@ _RNvNtCsg7m2K3K1Fzf_11compact_str4repr11copy_medium.exit: ; preds = %bb.h, %bb.g
 define { ptr, i64 } @_RNvMNtNtCsg7m2K3K1Fzf_11compact_str4repr4heapNtB2_10HeapBuffer16alloc_copy_extra(ptr noalias noundef nonnull readonly captures(none) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call i64 @llvm.uadd.sat.i64(i64 %1, i64 %2)
-  %3 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %1, i64 3) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 0
-  %5 = extractvalue { i64, i1 } %3, 1
-  br i1 %5, label %bb.b, label %bb.c, !prof !3
+  %3 = mul nuw i64 %1, 3
+  %4 = icmp ugt i64 %1, 6148914691236517205
+  br i1 %4, label %bb.b, label %bb.c, !prof !3
 
 bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sroa.05.0 = phi i64 [ -1, %bb.b ], [ %4, %bb.a ]
+  %.sroa.05.0 = phi i64 [ -1, %bb.b ], [ %3, %bb.a ]
   %i.b = lshr i64 %.sroa.05.0, 1
   %.sroa.0.0.i = tail call noundef i64 @llvm.umax.i64(i64 %i.a, i64 %i.b) ; 2 uses
   %.sroa.0.0.i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.0.0.i, i64 32) ; 2 uses
@@ -270,9 +269,6 @@ declare void @llvm.assume(i1 noundef) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.uadd.sat.i64(i64, i64) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #6
 
 ; Function Attrs: nounwind nonlazybind allockind("realloc,aligned") allocsize(3) uwtable
 declare noalias noundef ptr @_RNvCs9wFQrvczXsK_7___rustc14___rust_realloc(ptr allocptr noundef nonnull, i64 noundef, i64 allocalign noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #7

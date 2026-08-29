@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
 ; Function Attrs: cold nonlazybind uwtable
 define hidden void @_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecAINtNtCs6b9j1MKPRPC_12libp2p_swarm7handler22ConnectionHandlerEventINtCscu2bAJ62uie_6either6EitherINtNtNtCsdTHTBGblh3Z_11libp2p_core7upgrade5ready12ReadyUpgradeNtNtBN_15stream_protocol14StreamProtocolEB2g_EuNtNtCsfY02lUNHLPc_15libp2p_identify7handler5EventEj4_E21reserve_one_uncheckedB45_(ptr noalias nofree noundef align 8 dereferenceable(2448) %0) unnamed_addr #4 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [16 x i8], align 8                ; 4 uses
+  %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 2440 ; 3 uses
   %i.c = load i64, ptr %i.b, align 8, !noalias !276, !noundef !5 ; 7 uses
   %i.d = icmp ugt i64 %i.c, 4                     ; 3 uses
@@ -256,15 +256,15 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.s = mul nuw nsw i64 %i.l, 608                ; 3 uses
-  %or.cond.not.i = icmp ugt i64 %.sroa.02.0, 15170019797458511
-  br i1 %or.cond.not.i, label %bb.n, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCs6b9j1MKPRPC_12libp2p_swarm7handler22ConnectionHandlerEventINtCscu2bAJ62uie_6either6EitherINtNtNtCsdTHTBGblh3Z_11libp2p_core7upgrade5ready12ReadyUpgradeNtNtBI_15stream_protocol14StreamProtocolEB2b_EuNtNtCsfY02lUNHLPc_15libp2p_identify7handler5EventEEB40_.exit.i, !prof !283
+  %or.cond.i = icmp ult i64 %.sroa.02.0, 15170019797458512
+  br i1 %or.cond.i, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCs6b9j1MKPRPC_12libp2p_swarm7handler22ConnectionHandlerEventINtCscu2bAJ62uie_6either6EitherINtNtNtCsdTHTBGblh3Z_11libp2p_core7upgrade5ready12ReadyUpgradeNtNtBI_15stream_protocol14StreamProtocolEB2b_EuNtNtCsfY02lUNHLPc_15libp2p_identify7handler5EventEEB40_.exit.i, label %bb.n, !prof !283
 
 _RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCs6b9j1MKPRPC_12libp2p_swarm7handler22ConnectionHandlerEventINtCscu2bAJ62uie_6either6EitherINtNtNtCsdTHTBGblh3Z_11libp2p_core7upgrade5ready12ReadyUpgradeNtNtBI_15stream_protocol14StreamProtocolEB2b_EuNtNtCsfY02lUNHLPc_15libp2p_identify7handler5EventEEB40_.exit.i: ; preds = %bb.f
   br i1 %i.m, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCs6b9j1MKPRPC_12libp2p_swarm7handler22ConnectionHandlerEventINtCscu2bAJ62uie_6either6EitherINtNtNtCsdTHTBGblh3Z_11libp2p_core7upgrade5ready12ReadyUpgradeNtNtBI_15stream_protocol14StreamProtocolEB2b_EuNtNtCsfY02lUNHLPc_15libp2p_identify7handler5EventEEB40_.exit.i
-  %or.cond65.not.i = icmp ugt i64 %i.c, 15170019797458512
-  br i1 %or.cond65.not.i, label %bb.n, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCs6b9j1MKPRPC_12libp2p_swarm7handler22ConnectionHandlerEventINtCscu2bAJ62uie_6either6EitherINtNtNtCsdTHTBGblh3Z_11libp2p_core7upgrade5ready12ReadyUpgradeNtNtBI_15stream_protocol14StreamProtocolEB2b_EuNtNtCsfY02lUNHLPc_15libp2p_identify7handler5EventEEB40_.exit48.i, !prof !283
+  %or.cond67.i = icmp ult i64 %i.c, 15170019797458513
+  br i1 %or.cond67.i, label %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCs6b9j1MKPRPC_12libp2p_swarm7handler22ConnectionHandlerEventINtCscu2bAJ62uie_6either6EitherINtNtNtCsdTHTBGblh3Z_11libp2p_core7upgrade5ready12ReadyUpgradeNtNtBI_15stream_protocol14StreamProtocolEB2b_EuNtNtCsfY02lUNHLPc_15libp2p_identify7handler5EventEEB40_.exit48.i, label %bb.n, !prof !283
 
 bb.h:                                             ; preds = %_RINvCsczYENlYh6wI_8smallvec12layout_arrayINtNtCs6b9j1MKPRPC_12libp2p_swarm7handler22ConnectionHandlerEventINtCscu2bAJ62uie_6either6EitherINtNtNtCsdTHTBGblh3Z_11libp2p_core7upgrade5ready12ReadyUpgradeNtNtBI_15stream_protocol14StreamProtocolEB2b_EuNtNtCsfY02lUNHLPc_15libp2p_identify7handler5EventEEB40_.exit.i
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #21, !noalias !280
@@ -297,19 +297,17 @@ bb.k:                                             ; preds = %bb.e
   %i.z = mul nuw nsw i64 %i.q, 608
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.n, ptr nonnull align 8 %.sink12.i.i, i64 %i.z, i1 false)
   store i64 %i.q, ptr %i.b, align 8, !alias.scope !280
-  %1 = mul i64 %.sink.i.i, 608                    ; 2 uses
-  %or.cond.not.i.i = icmp ugt i64 %i.c, 15170019797458512
-  br i1 %or.cond.not.i.i, label %bb.l, label %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCs6b9j1MKPRPC_12libp2p_swarm7handler22ConnectionHandlerEventINtCscu2bAJ62uie_6either6EitherINtNtNtCsdTHTBGblh3Z_11libp2p_core7upgrade5ready12ReadyUpgradeNtNtBG_15stream_protocol14StreamProtocolEB29_EuNtNtCsfY02lUNHLPc_15libp2p_identify7handler5EventEEB3Y_.exit.i, !prof !283
+  %or.cond.i.i = icmp ult i64 %i.c, 15170019797458513
+  br i1 %or.cond.i.i, label %_RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCs6b9j1MKPRPC_12libp2p_swarm7handler22ConnectionHandlerEventINtCscu2bAJ62uie_6either6EitherINtNtNtCsdTHTBGblh3Z_11libp2p_core7upgrade5ready12ReadyUpgradeNtNtBG_15stream_protocol14StreamProtocolEB29_EuNtNtCsfY02lUNHLPc_15libp2p_identify7handler5EventEEB3Y_.exit.i, label %bb.l, !prof !283
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !284
   store i64 0, ptr %i.a, align 8, !noalias !284
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i64 %1, ptr %2, align 8, !noalias !284
   call void @_RNvNtCskKLDkoKarTP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @9, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @8, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #26, !noalias !284
   unreachable
 
 _RINvCsczYENlYh6wI_8smallvec10deallocateINtNtCs6b9j1MKPRPC_12libp2p_swarm7handler22ConnectionHandlerEventINtCscu2bAJ62uie_6either6EitherINtNtNtCsdTHTBGblh3Z_11libp2p_core7upgrade5ready12ReadyUpgradeNtNtBG_15stream_protocol14StreamProtocolEB29_EuNtNtCsfY02lUNHLPc_15libp2p_identify7handler5EventEEB3Y_.exit.i: ; preds = %bb.k
+  %1 = mul nuw nsw i64 %.sink.i.i, 608
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.sink12.i.i, i64 noundef %1, i64 noundef 8) #21
   br label %_RINvCsczYENlYh6wI_8smallvec10infallibleuECsfY02lUNHLPc_15libp2p_identify.exit
 
@@ -712,7 +710,7 @@ begin_hunk_1_@llvm.umax.i64
 !280 = !{!281}
 !281 = distinct !{!281, !282, !"_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecAINtNtCs6b9j1MKPRPC_12libp2p_swarm7handler22ConnectionHandlerEventINtCscu2bAJ62uie_6either6EitherINtNtNtCsdTHTBGblh3Z_11libp2p_core7upgrade5ready12ReadyUpgradeNtNtBN_15stream_protocol14StreamProtocolEB2g_EuNtNtCsfY02lUNHLPc_15libp2p_identify7handler5EventEj4_E8try_growB45_: argument 0"}
 !282 = distinct !{!282, !"_RNvMsd_CsczYENlYh6wI_8smallvecINtB5_8SmallVecAINtNtCs6b9j1MKPRPC_12libp2p_swarm7handler22ConnectionHandlerEventINtCscu2bAJ62uie_6either6EitherINtNtNtCsdTHTBGblh3Z_11libp2p_core7upgrade5ready12ReadyUpgradeNtNtBN_15stream_protocol14StreamProtocolEB2g_EuNtNtCsfY02lUNHLPc_15libp2p_identify7handler5EventEj4_E8try_growB45_"}
-!283 = !{!"branch_weights", i32 2002, i32 2000}
+!283 = !{!"branch_weights", i32 2000, i32 2002}
 !284 = !{!285, !281}
 !285 = distinct !{!285, !286, !"_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultNtNtNtB4_5alloc6layout6LayoutNtCsczYENlYh6wI_8smallvec18CollectionAllocErrE6unwrapCsfY02lUNHLPc_15libp2p_identify: argument 0"}
 !286 = distinct !{!286, !"_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultNtNtNtB4_5alloc6layout6LayoutNtCsczYENlYh6wI_8smallvec18CollectionAllocErrE6unwrapCsfY02lUNHLPc_15libp2p_identify"}

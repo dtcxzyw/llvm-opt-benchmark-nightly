@@ -202,8 +202,8 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: cold nounwind nonlazybind uwtable
 define internal fastcc void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner11finish_growCs6et67aoV1xO_11proc_macro2(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, i64 %.0.val, ptr %.8.val, i64 noundef %1, i64 noundef range(i64 1, 9) %2, i64 noundef range(i64 1, 33) %3) unnamed_addr #7 {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 %1) ; 2 uses
-  %4 = extractvalue { i64, i1 } %i.a, 0           ; 7 uses
+  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 %1)
+  %4 = mul nuw i64 %3, %1                         ; 5 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
   %i.c = sub nuw i64 -9223372036854775808, %2
   %.not = icmp ugt i64 %4, %i.c
@@ -215,15 +215,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %_RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Allocator4grow.exit
 
 _RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Allocator4grow.exit: ; preds = %bb.b
-  %i.e = mul nuw i64 %3, %.0.val                  ; 2 uses
+  %i.e = mul nuw i64 %3, %.0.val
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  %i.f = icmp uge i64 %4, %i.e
+  %i.f = icmp uge i64 %1, %.0.val
   tail call void @llvm.assume(i1 %i.f)
   %i.g = tail call noundef ptr @_RNvCshxk5dXoXnx9_7___rustc14___rust_realloc(ptr noundef nonnull %.8.val, i64 noundef %i.e, i64 noundef range(i64 1, 9) %2, i64 noundef range(i64 0, -9223372036854775808) %4) #28
   br label %_RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Allocator8allocate.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = icmp eq i64 %4, 0
+  %i.h = icmp eq i64 %1, 0
   br i1 %i.h, label %_RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Allocator8allocate.exit.thread, label %bb.d
 
 _RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Allocator8allocate.exit.thread: ; preds = %bb.c
@@ -264,8 +264,8 @@ bb.g:                                             ; preds = %bb.a, %bb.e, %bb.f
 ; Function Attrs: nounwind nonlazybind uwtable
 define hidden void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs6et67aoV1xO_11proc_macro2(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 16)) %0, i64 noundef %1, i1 noundef zeroext %2, i64 noundef range(i64 1, -9223372036854775807) %3, i64 noundef %4) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %1) ; 2 uses
-  %5 = extractvalue { i64, i1 } %i.a, 0           ; 5 uses
+  %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %1)
+  %5 = mul nuw i64 %4, %1                         ; 5 uses
   %i.b = extractvalue { i64, i1 } %i.a, 1
   %i.c = sub nuw i64 -9223372036854775808, %3
   %.not = icmp ugt i64 %5, %i.c
@@ -668,14 +668,12 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvMs_NtCs6et67aoV1xO_11proc_macro25rcvecINtB4_12RcVecBuilderNtB6_9TokenTreeE13with_capacityB6_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, i64 noundef %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = shl i64 %1, 5                            ; 4 uses
-  %2 = icmp ugt i64 %1, 576460752303423487
-  %.not.i = icmp ugt i64 %i.a, 9223372036854775800
-  %or.cond.i = or i1 %2, %.not.i
-  br i1 %or.cond.i, label %bb.e, label %bb.b, !prof !224
+  %i.a = shl nuw i64 %1, 5                        ; 2 uses
+  %.not.i = icmp ugt i64 %1, 288230376151711743
+  br i1 %.not.i, label %bb.e, label %bb.b, !prof !224
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = icmp eq i64 %i.a, 0
+  %i.b = icmp eq i64 %1, 0
   br i1 %i.b, label %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs6et67aoV1xO_11proc_macro2.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -689,17 +687,15 @@ bb.d:                                             ; preds = %bb.c
   br label %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs6et67aoV1xO_11proc_macro2.exit
 
 bb.e:                                             ; preds = %bb.a, %bb.c
+  %.sroa.10.0.ph = phi i64 [ %i.a, %bb.c ], [ undef, %bb.a ]
   %.sroa.4.0.ph = phi i64 [ 8, %bb.c ], [ 0, %bb.a ]
-  tail call void @_RNvNtCs4wP2HXfJTCR_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph, i64 %i.a) #30
+  tail call void @_RNvNtCs4wP2HXfJTCR_5alloc7raw_vec12handle_error(i64 noundef %.sroa.4.0.ph, i64 %.sroa.10.0.ph) #30
   unreachable
 
 _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs6et67aoV1xO_11proc_macro2.exit: ; preds = %bb.d, %bb.b
   %.sroa.10.0 = phi i64 [ %i.e, %bb.d ], [ 8, %bb.b ]
-  %.sroa.4.0 = phi i64 [ %1, %bb.d ], [ 0, %bb.b ] ; 2 uses
   %i.f = inttoptr i64 %.sroa.10.0 to ptr
-  %3 = icmp samesign ule i64 %1, %.sroa.4.0
-  tail call void @llvm.assume(i1 %3)
-  store i64 %.sroa.4.0, ptr %0, align 8
+  store i64 %1, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.f, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16

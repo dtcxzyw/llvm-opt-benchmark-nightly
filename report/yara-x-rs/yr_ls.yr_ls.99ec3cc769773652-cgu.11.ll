@@ -204,20 +204,19 @@ bb.cd:                                            ; preds = %thread-pre-split.i.
 .preheader56.i.i.i.i.i.preheader:                 ; preds = %bb.cd, %.preheader56.i.i.i.i.i
   %.sroa.0.1.i.i.i.i.i203 = phi ptr [ %i.na, %.preheader56.i.i.i.i.i ], [ %.sroa.0.0.i.i.i.i.i, %bb.cd ] ; 2 uses
   %.sroa.15.1.i.i.i.i.i202 = phi i64 [ %i.nb, %.preheader56.i.i.i.i.i ], [ %.sroa.15.0.i.i.i.i.i, %bb.cd ]
-  %.sroa.042.0.i.i.i.i.i201 = phi i64 [ %i.nh, %.preheader56.i.i.i.i.i ], [ 0, %bb.cd ]
-  %3 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i.i.i.i201, i64 10) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 1
-  br i1 %4, label %.loopexit.i.i, label %bb.ce, !prof !13
+  %.sroa.042.0.i.i.i.i.i201 = phi i64 [ %i.nh, %.preheader56.i.i.i.i.i ], [ 0, %bb.cd ] ; 2 uses
+  %3 = icmp ugt i64 %.sroa.042.0.i.i.i.i.i201, 1844674407370955161
+  br i1 %3, label %.loopexit.i.i, label %bb.ce, !prof !13
 
 bb.ce:                                            ; preds = %.preheader56.i.i.i.i.i.preheader
-  %5 = extractvalue { i64, i1 } %3, 0             ; 2 uses
+  %4 = mul nuw i64 %.sroa.042.0.i.i.i.i.i201, 10  ; 2 uses
   %i.nc = load i8, ptr %.sroa.0.1.i.i.i.i.i203, align 1, !alias.scope !117, !noalias !124, !noundef !6
   %i.nd = zext i8 %i.nc to i32
   %i.ne = add nsw i32 %i.nd, -48                  ; 2 uses
   %i.nf = icmp ugt i32 %i.ne, 9
   %i.ng = zext nneg i32 %i.ne to i64
-  %i.nh = add i64 %5, %i.ng                       ; 3 uses
-  %i.ni = icmp ult i64 %i.nh, %5
+  %i.nh = add i64 %4, %i.ng                       ; 3 uses
+  %i.ni = icmp ult i64 %i.nh, %4
   %or.cond.i.i = select i1 %i.nf, i1 true, i1 %i.ni, !prof !128
   br i1 %or.cond.i.i, label %.loopexit.i.i, label %.preheader56.i.i.i.i.i, !prof !128
 
@@ -620,9 +619,6 @@ declare noundef range(i8 0, 3) i8 @_RNvMNtCs79CCFNTAO4F_12tracing_core8callsiteN
 ; Function Attrs: cold noinline noreturn nonlazybind uwtable
 declare void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #6
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #12
-
 ; Function Attrs: nonlazybind uwtable
 declare { i64, i64 } @_RNvNtNtCskKLDkoKarTP_4core5slice6memchr14memchr_aligned(i8 noundef, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef range(i64 0, -9223372036854775808)) unnamed_addr #0
 
@@ -657,10 +653,10 @@ declare void @_RNvMsu_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcher3new(
 declare void @_RNvNtCskKLDkoKarTP_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef, i64 noundef, i64 noundef, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #13
+declare void @llvm.experimental.noalias.scope.decl(metadata) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #12
+declare i64 @llvm.umax.i64(i64, i64) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #14
@@ -677,8 +673,8 @@ attributes #8 = { cold minsize noinline noreturn nounwind nonlazybind optsize uw
 attributes #9 = { noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #10 = { cold minsize noreturn nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #11 = { cold noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #13 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #14 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #15 = { cold noreturn nounwind }
 attributes #16 = { cold }

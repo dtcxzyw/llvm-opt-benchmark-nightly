@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.g = getelementptr i8, ptr %1, i64 48
-  %i.h = load i32, ptr %i.g, align 8              ; 3 uses
+  %i.h = load i32, ptr %i.g, align 8              ; 4 uses
   %i.i = getelementptr i8, ptr %1, i64 264
   %.val = load ptr, ptr %i.i, align 8
   %i.j = getelementptr i8, ptr %1, i64 280
@@ -256,23 +256,22 @@ bb.g:                                             ; preds = %.lr.ph.i
   br i1 %or.cond.not.i, label %.critedge, label %.lr.ph.i, !llvm.loop !6
 
 bb.h:                                             ; preds = %.lr.ph.i
-  %i.an = add i32 %i.q, 4                         ; 2 uses
-  %4 = tail call { i32, i1 } @llvm.usub.with.overflow.i32(i32 %i.h, i32 %i.an) ; 2 uses
-  %5 = extractvalue { i32, i1 } %4, 1
-  br i1 %5, label %.critedge, label %bb.i
+  %i.an = add i32 %i.q, 4                         ; 3 uses
+  %4 = icmp ult i32 %i.h, %i.an
+  br i1 %4, label %.critedge, label %bb.i
 
 .critedge:                                        ; preds = %bb.g, %bb.f, %bb.h
   store i32 -13, ptr %2, align 4
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.h
-  %6 = extractvalue { i32, i1 } %4, 0
+  %5 = sub nuw i32 %i.h, %i.an
   %i.ao = zext i32 %i.an to i64
   %i.ap = getelementptr i8, ptr %i.k, i64 %i.ao
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.e
-  %.2 = phi i32 [ %6, %bb.i ], [ %i.h, %bb.e ]
+  %.2 = phi i32 [ %5, %bb.i ], [ %i.h, %bb.e ]
   %.1 = phi ptr [ %i.ap, %bb.i ], [ %i.k, %bb.e ]
   %i.aq = zext i32 %.2 to i64
   %i.ar = tail call zeroext i1 @wtap_dump_file_write(ptr noundef %0, ptr noundef %.1, i64 noundef %i.aq, ptr noundef %2)
@@ -285,9 +284,6 @@ bb.k:                                             ; preds = %.critedge, %bb.j, %
 
 ; Function Attrs: null_pointer_is_valid
 declare ptr @wtap_unwritable_rec_type_err_string(ptr noundef) local_unnamed_addr #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.usub.with.overflow.i32(i32, i32) #2
 
 ; Function Attrs: null_pointer_is_valid
 declare zeroext i1 @wtap_dump_file_write(ptr noundef, ptr noundef, i64 noundef, ptr noundef) local_unnamed_addr #4

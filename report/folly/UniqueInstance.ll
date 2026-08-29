@@ -202,10 +202,9 @@ define linkonce_odr noundef ptr @_ZN5folly13fbstring_coreIcE10RefCounted6createE
 bb.a:
   %1 = alloca %"class.std::length_error", align 8 ; 5 uses
   %2 = alloca %"class.std::length_error", align 8 ; 5 uses
-  %i.a = load i64, ptr %0, align 8, !tbaa !64
-  %3 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.a, i64 1) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 1
-  br i1 %4, label %_ZN5folly11checked_addImQsr3stdE13is_integral_vIT_EEEbPS1_S1_S1_.exit, label %bb.d, !prof !12
+  %i.a = load i64, ptr %0, align 8, !tbaa !64     ; 3 uses
+  %3 = icmp eq i64 %i.a, -1
+  br i1 %3, label %_ZN5folly11checked_addImQsr3stdE13is_integral_vIT_EEEbPS1_S1_S1_.exit, label %bb.d, !prof !12
 
 _ZN5folly11checked_addImQsr3stdE13is_integral_vIT_EEEbPS1_S1_S1_.exit: ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
@@ -224,11 +223,9 @@ bb.c:                                             ; preds = %_ZN5folly11checked_
   br label %bb.k
 
 bb.d:                                             ; preds = %bb.a
-  %5 = extractvalue { i64, i1 } %3, 0
-  %6 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %5, i64 8) ; 2 uses
-  %7 = extractvalue { i64, i1 } %6, 1
-  %8 = extractvalue { i64, i1 } %6, 0             ; 5 uses
-  br i1 %7, label %bb.e, label %9
+  %4 = icmp ult i64 %i.a, -9
+  %5 = add nuw i64 %i.a, 9                        ; 4 uses
+  br i1 %4, label %bb.h, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
@@ -246,11 +243,7 @@ bb.g:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   br label %bb.k
 
-9:                                                ; preds = %bb.d
-  %10 = icmp eq i64 %8, 0
-  br i1 %10, label %_ZN5folly14goodMallocSizeEm.exit, label %bb.h
-
-bb.h:                                             ; preds = %9
+bb.h:                                             ; preds = %bb.d
   %i.d = load atomic i8, ptr @_ZN5folly6detail14FastStaticBoolIZNS0_23usingJEMallocOrTCMallocEvE11InitializerE5flag_E monotonic, align 1 ; 2 uses
   %.not.i.i.i.i = icmp eq i8 %i.d, 0
   br i1 %.not.i.i.i.i, label %_ZN5folly10canNallocxEv.exit.i, label %.split.i, !prof !12
@@ -264,13 +257,13 @@ _ZN5folly10canNallocxEv.exit.i:                   ; preds = %bb.h
   br i1 %i.f, label %bb.i, label %_ZN5folly14goodMallocSizeEm.exit
 
 bb.i:                                             ; preds = %_ZN5folly10canNallocxEv.exit.i, %.split.i
-  %i.g = tail call i64 @nallocx(i64 noundef %8, i32 noundef 0) #25 ; 2 uses
+  %i.g = tail call i64 @nallocx(i64 noundef %5, i32 noundef 0) #25 ; 2 uses
   %.not.i = icmp eq i64 %i.g, 0
-  %i.h = select i1 %.not.i, i64 %8, i64 %i.g
+  %i.h = select i1 %.not.i, i64 %5, i64 %i.g
   br label %_ZN5folly14goodMallocSizeEm.exit
 
-_ZN5folly14goodMallocSizeEm.exit:                 ; preds = %9, %.split.i, %_ZN5folly10canNallocxEv.exit.i, %bb.i
-  %.0.i10 = phi i64 [ 0, %9 ], [ %i.h, %bb.i ], [ %8, %_ZN5folly10canNallocxEv.exit.i ], [ %8, %.split.i ] ; 2 uses
+_ZN5folly14goodMallocSizeEm.exit:                 ; preds = %.split.i, %_ZN5folly10canNallocxEv.exit.i, %bb.i
+  %.0.i10 = phi i64 [ %5, %.split.i ], [ %i.h, %bb.i ], [ %5, %_ZN5folly10canNallocxEv.exit.i ] ; 2 uses
   %i.i = tail call noalias ptr @malloc(i64 noundef %.0.i10) #32 ; 3 uses
   %.not.i11 = icmp eq ptr %i.i, null
   br i1 %.not.i11, label %bb.j, label %_ZN5folly13checkedMallocEm.exit
@@ -304,9 +297,6 @@ declare void @_ZNSt12length_errorC1EPKc(ptr noundef nonnull align 8 dereferencea
 ; Function Attrs: nounwind
 declare void @_ZNSt12length_errorD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16)) unnamed_addr #8
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #22
-
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZNSt12length_errorC2EOS_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1) unnamed_addr #0 comdat align 2 {
 bb.a:
@@ -319,13 +309,13 @@ bb.a:
 declare void @_ZNSt11logic_errorC2EOS_(ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 8 dereferenceable(16)) unnamed_addr #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #23
+declare void @llvm.assume(i1 noundef) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.uadd.sat.i64(i64, i64) #22
+declare i64 @llvm.uadd.sat.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #22
+declare i64 @llvm.umin.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #24
@@ -352,8 +342,8 @@ attributes #18 = { mustprogress noinline uwtable "min-legal-vector-width"="0" "n
 attributes #19 = { cold mustprogress noinline nounwind optsize uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #20 = { nofree nounwind }
 attributes #21 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #22 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #23 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #22 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #23 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #24 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #25 = { nounwind }
 attributes #26 = { noreturn nounwind }

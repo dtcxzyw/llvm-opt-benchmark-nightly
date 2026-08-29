@@ -202,9 +202,8 @@ x86_is_long_mode.exit.i.i:                        ; preds = %bb.e
   br i1 %i.ae, label %cpu_mode.exit.i, label %bb.g
 
 cpu_mode.exit.i:                                  ; preds = %x86_is_long_mode.exit.i.i, %.split.i
-  %i.af = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %1, i64 %i.j) ; 2 uses
+  %i.af = call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %1, i64 %i.j)
   %i.ag = extractvalue { i64, i1 } %i.af, 1
-  %4 = extractvalue { i64, i1 } %i.af, 0
   br i1 %i.ag, label %bb.f, label %bb.n
 
 bb.f:                                             ; preds = %cpu_mode.exit.i
@@ -248,15 +247,11 @@ bb.k:                                             ; preds = %bb.j, %bb.g
   %.0.i = phi i32 [ %..i.i, %bb.j ], [ %.0.i24.i, %bb.g ] ; 2 uses
   %i.at = zext i32 %.0.i to i64
   %i.au = icmp samesign ugt i64 %i.ai, %i.at
-  br i1 %i.au, label %bb.l, label %5
+  br i1 %i.au, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
   call void (ptr, ...) @error_report(ptr noundef nonnull @.str.8, i32 noundef %.0.i) #7
   br label %bb.m
-
-5:                                                ; preds = %bb.k
-  %6 = add nuw nsw i64 %i.ai, %i.j
-  br label %bb.n
 
 bb.m:                                             ; preds = %bb.i, %bb.f, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
@@ -264,10 +259,11 @@ bb.m:                                             ; preds = %bb.i, %bb.f, %bb.l
   call void @abort() #9
   unreachable
 
-bb.n:                                             ; preds = %5, %cpu_mode.exit.i
-  %.0.a = phi i64 [ %6, %5 ], [ %4, %cpu_mode.exit.i ]
+bb.n:                                             ; preds = %bb.k, %cpu_mode.exit.i
+  %.0.a = phi i64 [ %1, %cpu_mode.exit.i ], [ %i.ai, %bb.k ]
+  %.0 = add nuw i64 %.0.a, %i.j
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
-  ret i64 %.0.a
+  ret i64 %.0
 }
 
 ; Function Attrs: nounwind sspstrong uwtable

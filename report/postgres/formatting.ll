@@ -205,8 +205,8 @@ bb.ke:                                            ; preds = %bb.kd
   br label %bb.kf
 
 bb.kf:                                            ; preds = %bb.ke, %bb.kd
-  %i.afw = phi i32 [ %i.afv, %bb.ke ], [ %i.afo, %bb.kd ] ; 5 uses
-  %i.afx = srem i32 %i.afm, 100                   ; 4 uses
+  %i.afw = phi i32 [ %i.afv, %bb.ke ], [ %i.afo, %bb.kd ] ; 7 uses
+  %i.afx = srem i32 %i.afm, 100                   ; 5 uses
   %i.afy = getelementptr inbounds nuw i8, ptr %4, i64 20 ; 4 uses
   store i32 %i.afx, ptr %i.afy, align 4
   %.not253 = icmp eq i32 %i.afx, 0
@@ -217,14 +217,13 @@ bb.kg:                                            ; preds = %bb.kf
   br i1 %i.afz, label %bb.kh, label %bb.kk
 
 bb.kh:                                            ; preds = %bb.kg
-  %11 = add nsw i32 %i.afw, -1
-  %12 = call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %11, i32 100) ; 2 uses
-  %13 = extractvalue { i32, i1 } %12, 1
-  br i1 %13, label %bb.kj, label %bb.ki
+  %11 = icmp samesign ugt i32 %i.afw, 21474837
+  br i1 %11, label %bb.kj, label %bb.ki
 
 bb.ki:                                            ; preds = %bb.kh
-  %14 = extractvalue { i32, i1 } %12, 0
-  %i.aga = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.afx, i32 %14) ; 2 uses
+  %12 = mul nuw i32 %i.afw, 100
+  %13 = add i32 %12, -100
+  %i.aga = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.afx, i32 %13) ; 2 uses
   %i.agb = extractvalue { i32, i1 } %i.aga, 1
   %i.agc = extractvalue { i32, i1 } %i.aga, 0
   store i32 %i.agc, ptr %i.afy, align 4
@@ -236,26 +235,23 @@ bb.kj:                                            ; preds = %bb.ki, %bb.kh
   br label %bb.ns
 
 bb.kk:                                            ; preds = %bb.kg
-  %15 = add nsw i32 %i.afw, 1
-  %16 = call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %15, i32 100) ; 2 uses
-  %17 = extractvalue { i32, i1 } %16, 1
-  br i1 %17, label %bb.kn, label %bb.kl
+  %14 = icmp samesign ult i32 %i.afw, -21474837
+  br i1 %14, label %bb.kn, label %bb.kl
 
 bb.kl:                                            ; preds = %bb.kk
-  %18 = extractvalue { i32, i1 } %16, 0
-  %i.age = call { i32, i1 } @llvm.ssub.with.overflow.i32(i32 %18, i32 %i.afx) ; 2 uses
+  %15 = mul i32 %i.afw, 100
+  %16 = add i32 %15, 100                          ; 2 uses
+  %i.age = call { i32, i1 } @llvm.ssub.with.overflow.i32(i32 %16, i32 %i.afx)
   %i.agf = extractvalue { i32, i1 } %i.age, 1
   br i1 %i.agf, label %bb.kn, label %bb.km
 
 bb.km:                                            ; preds = %bb.kl
-  %19 = extractvalue { i32, i1 } %i.age, 0
-  %20 = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %19, i32 1) ; 2 uses
-  %21 = extractvalue { i32, i1 } %20, 1
-  %22 = extractvalue { i32, i1 } %20, 0
-  store i32 %22, ptr %i.afy, align 4
-  br i1 %21, label %bb.kn, label %.thread284
+  %17 = sub nsw i32 %16, %i.afx
+  %18 = add nsw i32 %17, 1
+  store i32 %18, ptr %i.afy, align 4
+  br label %.thread284
 
-bb.kn:                                            ; preds = %bb.km, %bb.kl, %bb.kk
+bb.kn:                                            ; preds = %bb.kl, %bb.kk
   %i.agg = call ptr @text_to_cstring(ptr noundef %0) #16
   call void @DateTimeParseError(i32 noundef -2, ptr noundef null, ptr noundef %i.agg, ptr noundef nonnull @.str.231, ptr noundef %9) #16
   br label %bb.ns
@@ -342,7 +338,7 @@ bb.ky:                                            ; preds = %.thread284condstore
   store i32 %simplifycfg.merge, ptr %i.agj, align 4
   br label %.thread284
 
-.thread284:                                       ; preds = %bb.kt, %bb.kw, %bb.ky, %.thread284condstore.split, %bb.ki, %bb.km, %bb.ko, %bb.kp
+.thread284:                                       ; preds = %bb.km, %bb.kt, %bb.kw, %bb.ky, %.thread284condstore.split, %bb.ki, %bb.ko, %bb.kp
   %.0202 = phi i32 [ 0, %bb.kp ], [ 4, %bb.ko ], [ 4, %bb.kt ], [ 4, %bb.km ], [ 4, %bb.ki ], [ 4, %bb.kw ], [ 4, %.thread284condstore.split ], [ 4, %bb.ky ]
   %i.ahi = getelementptr inbounds nuw i8, ptr %10, i64 64
   %i.ahj = load i32, ptr %i.ahi, align 8          ; 2 uses
@@ -637,19 +633,19 @@ bb.mt:                                            ; preds = %bb.ms, %bb.mr
 bb.mu:                                            ; preds = %bb.lz, %bb.mt, %bb.lu, %bb.ls
   %.5 = phi i32 [ %i.ajn, %bb.lz ], [ %i.alb, %bb.mt ], [ %.4206, %bb.lu ], [ %.4206, %bb.ls ] ; 2 uses
   %i.alc = getelementptr inbounds nuw i8, ptr %10, i64 40
-  %i.ald = load i32, ptr %i.alc, align 8          ; 2 uses
+  %i.ald = load i32, ptr %i.alc, align 8          ; 3 uses
   %.not263 = icmp eq i32 %i.ald, 0
   br i1 %.not263, label %.thread286, label %bb.mv
 
 bb.mv:                                            ; preds = %bb.mu
-  %23 = call { i32, i1 } @llvm.smul.with.overflow.i32(i32 %i.ald, i32 1000) ; 2 uses
-  %24 = extractvalue { i32, i1 } %23, 1
-  br i1 %24, label %bb.mx, label %bb.mw
+  %19 = add i32 %i.ald, -2147484
+  %20 = icmp ult i32 %19, -4294967
+  br i1 %20, label %bb.mx, label %bb.mw
 
 bb.mw:                                            ; preds = %bb.mv
-  %25 = extractvalue { i32, i1 } %23, 0
+  %21 = mul nsw i32 %i.ald, 1000
   %i.ale = load i32, ptr %5, align 4
-  %i.alf = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.ale, i32 %25) ; 2 uses
+  %i.alf = call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.ale, i32 %21) ; 2 uses
   %i.alg = extractvalue { i32, i1 } %i.alf, 1
   %i.alh = extractvalue { i32, i1 } %i.alf, 0
   store i32 %i.alh, ptr %5, align 4

@@ -204,7 +204,6 @@ bb.az:                                            ; preds = %lean_dec_ref_known.
   unreachable
 
 bb.ba:                                            ; preds = %lean_dec_ref_known.exit.thread
-  %14 = lshr i64 %i.bs, 1                         ; 2 uses
   %i.bu = icmp ugt ptr %0, inttoptr (i64 4611686018427387903 to ptr)
   br i1 %i.bu, label %bb.bb, label %lean_usize_mul_checked.exit.i.i, !prof !21
 
@@ -213,18 +212,18 @@ bb.bb:                                            ; preds = %bb.ba
   unreachable
 
 lean_usize_mul_checked.exit.i.i:                  ; preds = %bb.ba
-  %15 = shl nuw i64 %14, 3
-  %16 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %15, i64 24) ; 2 uses
-  %17 = extractvalue { i64, i1 } %16, 1
-  br i1 %17, label %bb.bc, label %lean_mk_empty_array_with_capacity.exit, !prof !21
+  %14 = icmp ugt ptr %0, inttoptr (i64 4611686018427387897 to ptr)
+  br i1 %14, label %bb.bc, label %lean_mk_empty_array_with_capacity.exit, !prof !21
 
 bb.bc:                                            ; preds = %lean_usize_mul_checked.exit.i.i
   tail call void @lean_internal_panic_overflow() #9
   unreachable
 
 lean_mk_empty_array_with_capacity.exit:           ; preds = %lean_usize_mul_checked.exit.i.i
-  %18 = extractvalue { i64, i1 } %16, 0
-  %i.bv = tail call ptr @lean_alloc_object(i64 noundef %18) #8 ; 5 uses
+  %15 = lshr i64 %i.bs, 1                         ; 2 uses
+  %16 = shl nuw i64 %15, 3
+  %17 = add nuw i64 %16, 24
+  %i.bv = tail call ptr @lean_alloc_object(i64 noundef %17) #8 ; 5 uses
   store i32 1, ptr %i.bv, align 4, !tbaa !11
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 4 ; 2 uses
   %i.bx = load i32, ptr %i.bw, align 4
@@ -234,7 +233,7 @@ lean_mk_empty_array_with_capacity.exit:           ; preds = %lean_usize_mul_chec
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bv, i64 8
   store i64 0, ptr %i.ca, align 8, !tbaa !13
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bv, i64 16
-  store i64 %14, ptr %i.cb, align 8, !tbaa !13
+  store i64 %15, ptr %i.cb, align 8, !tbaa !13
   %i.cc = tail call ptr @lean_alloc_object(i64 noundef 64) #8 ; 11 uses
   store i32 1, ptr %i.cc, align 4, !tbaa !11
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 4 ; 2 uses
@@ -636,9 +635,6 @@ declare ptr @initialize_Init_Omega(i8 noundef zeroext) local_unnamed_addr #1
 declare void @lean_internal_panic_out_of_memory() local_unnamed_addr #6
 
 declare ptr @lean_alloc_object(i64 noundef) local_unnamed_addr #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #7
 
 ; Function Attrs: noreturn
 declare void @lean_internal_panic_overflow() local_unnamed_addr #6

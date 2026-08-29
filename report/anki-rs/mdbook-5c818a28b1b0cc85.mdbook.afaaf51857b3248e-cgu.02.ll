@@ -204,7 +204,7 @@ bb.aq:                                            ; preds = %bb.an
 .lr.ph:                                           ; preds = %.preheader58.i.i.i.i.i, %bb.ap
   %.sroa.0.0.i.i.i.i.i836 = phi ptr [ %i.hz, %bb.ap ], [ %.sroa.0.0.ph.i.i.i.i.i, %.preheader58.i.i.i.i.i ] ; 2 uses
   %.sroa.16.0.i.i.i.i.i835 = phi i64 [ %i.ia, %bb.ap ], [ %.sroa.16.0.ph.i.i.i.i.i, %.preheader58.i.i.i.i.i ]
-  %.sroa.039.0.i.i.i.i.i834 = phi i64 [ %i.ih, %bb.ap ], [ 0, %.preheader58.i.i.i.i.i ]
+  %.sroa.039.0.i.i.i.i.i834 = phi i64 [ %i.ih, %bb.ap ], [ 0, %.preheader58.i.i.i.i.i ] ; 2 uses
   %i.ic = load i8, ptr %.sroa.0.0.i.i.i.i.i836, align 1, !alias.scope !1028, !noalias !1031, !noundef !4
   %i.id = zext i8 %i.ic to i32
   %i.ie = add nsw i32 %i.id, -48                  ; 2 uses
@@ -212,13 +212,12 @@ bb.aq:                                            ; preds = %bb.an
   br i1 %i.if, label %bb.ar, label %.loopexit.i.i.i.i
 
 bb.ar:                                            ; preds = %.lr.ph
-  %4 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.039.0.i.i.i.i.i834, i64 10) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 0             ; 2 uses
-  %6 = extractvalue { i64, i1 } %4, 1
+  %4 = mul nuw i64 %.sroa.039.0.i.i.i.i.i834, 10  ; 2 uses
+  %5 = icmp ugt i64 %.sroa.039.0.i.i.i.i.i834, 1844674407370955161
   %i.ig = zext nneg i32 %i.ie to i64
-  %i.ih = add i64 %5, %i.ig                       ; 3 uses
-  %.not55.i.i.i.i.i = icmp ult i64 %i.ih, %5
-  %or.cond.i.i.i.i = select i1 %6, i1 true, i1 %.not55.i.i.i.i.i
+  %i.ih = add i64 %4, %i.ig                       ; 3 uses
+  %.not55.i.i.i.i.i = icmp ult i64 %i.ih, %4
+  %or.cond.i.i.i.i = select i1 %5, i1 true, i1 %.not55.i.i.i.i.i
   br i1 %or.cond.i.i.i.i, label %.loopexit.i.i.i.i, label %bb.ap
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.preheader, %bb.as
@@ -241,7 +240,7 @@ bb.as:                                            ; preds = %.lr.ph.i.i.i.i.i
   br i1 %.not56.i.i.i.i.i, label %"_ZN4core6result19Result$LT$T$C$E$GT$6expect17hf4aba104c9cb362eE.exit.i.i.i.i", label %.lr.ph.i.i.i.i.i
 
 .loopexit.i.i.i.i:                                ; preds = %bb.am, %bb.am, %.noexc134.i.i, %bb.ar, %.lr.ph, %.lr.ph.i.i.i.i.i
-  %.sroa.4.0.ph.i.i.i.i = phi i8 [ 2, %bb.ar ], [ 1, %.lr.ph.i.i.i.i.i ], [ 1, %.lr.ph ], [ 0, %.noexc134.i.i ], [ 1, %bb.am ], [ 1, %bb.am ]
+  %.sroa.4.0.ph.i.i.i.i = phi i8 [ 1, %.lr.ph ], [ 1, %.lr.ph.i.i.i.i.i ], [ 2, %bb.ar ], [ 0, %.noexc134.i.i ], [ 1, %bb.am ], [ 1, %bb.am ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dk), !noalias !1033
   store i8 %.sroa.4.0.ph.i.i.i.i, ptr %i.dk, align 1, !noalias !1033
   invoke void @_ZN4core6result13unwrap_failed17h8e46864fd8bf13c6E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @262, i64 noundef 49, ptr noundef nonnull align 1 %i.dk, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @103, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @263) #20
@@ -643,9 +642,6 @@ declare noundef zeroext i1 @"_ZN71_$LT$regex_automata..util..search..Span$u20$as
 
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @"_ZN4core3fmt3num3imp54_$LT$impl$u20$core..fmt..Display$u20$for$u20$usize$GT$3fmt17hb55abab394fd8017E"(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(8), ptr noalias noundef align 8 dereferenceable(24)) unnamed_addr #1
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #8
 
 ; Function Attrs: cold nonlazybind uwtable
 declare hidden noundef ptr @"_ZN3std3sys12thread_local6native4lazy20Storage$LT$T$C$D$GT$16get_or_init_slow17h2da80fa7a72f6a0bE"(ptr noundef nonnull align 8, ptr noalias noundef align 8 dereferenceable_or_null(24)) unnamed_addr #7

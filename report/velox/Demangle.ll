@@ -202,10 +202,9 @@ define linkonce_odr noundef ptr @_ZN5folly13fbstring_coreIcE10RefCounted6createE
 bb.a:
   %1 = alloca %"class.std::length_error", align 8 ; 5 uses
   %2 = alloca %"class.std::length_error", align 8 ; 5 uses
-  %i.a = load i64, ptr %0, align 8, !tbaa !13
-  %3 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %i.a, i64 1) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 1
-  br i1 %4, label %_ZN5folly11checked_addImvEEbPT_S1_S1_.exit, label %bb.d, !prof !20
+  %i.a = load i64, ptr %0, align 8, !tbaa !13     ; 3 uses
+  %3 = icmp eq i64 %i.a, -1
+  br i1 %3, label %_ZN5folly11checked_addImvEEbPT_S1_S1_.exit, label %bb.d, !prof !20
 
 _ZN5folly11checked_addImvEEbPT_S1_S1_.exit:       ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #18
@@ -224,11 +223,9 @@ bb.c:                                             ; preds = %_ZN5folly11checked_
   br label %bb.k
 
 bb.d:                                             ; preds = %bb.a
-  %5 = extractvalue { i64, i1 } %3, 0
-  %6 = tail call { i64, i1 } @llvm.uadd.with.overflow.i64(i64 %5, i64 8) ; 2 uses
-  %7 = extractvalue { i64, i1 } %6, 1
-  %8 = extractvalue { i64, i1 } %6, 0             ; 5 uses
-  br i1 %7, label %bb.e, label %9
+  %4 = icmp ult i64 %i.a, -9
+  %5 = add nuw i64 %i.a, 9                        ; 4 uses
+  br i1 %4, label %bb.h, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
@@ -246,11 +243,7 @@ bb.g:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   br label %bb.k
 
-9:                                                ; preds = %bb.d
-  %10 = icmp eq i64 %8, 0
-  br i1 %10, label %_ZN5folly14goodMallocSizeEm.exit, label %bb.h
-
-bb.h:                                             ; preds = %9
+bb.h:                                             ; preds = %bb.d
   %i.d = load atomic i8, ptr @_ZN5folly6detail14FastStaticBoolIZNS0_23usingJEMallocOrTCMallocEvE11InitializerE5flag_E monotonic, align 1 ; 2 uses
   %.not.i.i.i.i = icmp eq i8 %i.d, 0
   br i1 %.not.i.i.i.i, label %_ZN5folly10canNallocxEv.exit.i, label %.split.i, !prof !20
@@ -264,13 +257,13 @@ _ZN5folly10canNallocxEv.exit.i:                   ; preds = %bb.h
   br i1 %i.f, label %bb.i, label %_ZN5folly14goodMallocSizeEm.exit
 
 bb.i:                                             ; preds = %_ZN5folly10canNallocxEv.exit.i, %.split.i
-  %i.g = tail call i64 @nallocx(i64 noundef %8, i32 noundef 0) #18 ; 2 uses
+  %i.g = tail call i64 @nallocx(i64 noundef %5, i32 noundef 0) #18 ; 2 uses
   %.not.i = icmp eq i64 %i.g, 0
-  %i.h = select i1 %.not.i, i64 %8, i64 %i.g
+  %i.h = select i1 %.not.i, i64 %5, i64 %i.g
   br label %_ZN5folly14goodMallocSizeEm.exit
 
-_ZN5folly14goodMallocSizeEm.exit:                 ; preds = %9, %.split.i, %_ZN5folly10canNallocxEv.exit.i, %bb.i
-  %.0.i10 = phi i64 [ 0, %9 ], [ %i.h, %bb.i ], [ %8, %_ZN5folly10canNallocxEv.exit.i ], [ %8, %.split.i ] ; 2 uses
+_ZN5folly14goodMallocSizeEm.exit:                 ; preds = %.split.i, %_ZN5folly10canNallocxEv.exit.i, %bb.i
+  %.0.i10 = phi i64 [ %5, %.split.i ], [ %i.h, %bb.i ], [ %5, %_ZN5folly10canNallocxEv.exit.i ] ; 2 uses
   %i.i = tail call noalias ptr @malloc(i64 noundef %.0.i10) #22 ; 3 uses
   %.not.i11 = icmp eq ptr %i.i, null
   br i1 %.not.i11, label %bb.j, label %_ZN5folly13checkedMallocEm.exit
@@ -304,11 +297,8 @@ declare void @_ZNSt12length_errorC1EPKc(ptr noundef nonnull align 8 dereferencea
 ; Function Attrs: nounwind
 declare void @_ZNSt12length_errorD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16)) unnamed_addr #8
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.uadd.with.overflow.i64(i64, i64) #15
-
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZNSt12length_errorC2EOS_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1) unnamed_addr #16 comdat align 2 {
+define linkonce_odr void @_ZNSt12length_errorC2EOS_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1) unnamed_addr #15 comdat align 2 {
 bb.a:
   tail call void @_ZNSt11logic_errorC2EOS_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1) #18
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt12length_error, i64 16), ptr %0, align 8, !tbaa !26
@@ -319,7 +309,7 @@ bb.a:
 declare void @_ZNSt11logic_errorC2EOS_(ptr noundef nonnull align 8 dereferenceable(16), ptr noundef nonnull align 8 dereferenceable(16)) unnamed_addr #8
 
 ; Function Attrs: mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite)
-declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #17
+declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #16
 
 ; Function Attrs: mustprogress noinline uwtable
 define linkonce_odr noundef i64 @_ZN5folly14basic_fbstringIcSt11char_traitsIcESaIcENS_13fbstring_coreIcEEE12traitsLengthEPKc(ptr noundef %0) local_unnamed_addr #7 comdat align 2 {
@@ -404,7 +394,7 @@ bb.d:                                             ; preds = %bb.a
 declare noundef i64 @_ZN5folly7strlcpyEPcPKcm(ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #15
+declare i64 @llvm.umin.i64(i64, i64) #17
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
@@ -421,9 +411,9 @@ attributes #11 = { inlinehint mustprogress uwtable "min-legal-vector-width"="0" 
 attributes #12 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #13 = { cold mustprogress noinline noreturn optsize uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #14 = { cold noreturn }
-attributes #15 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #16 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #17 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #15 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #16 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #17 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #18 = { nounwind }
 attributes #19 = { noreturn nounwind }
 attributes #20 = { nounwind willreturn memory(read) }

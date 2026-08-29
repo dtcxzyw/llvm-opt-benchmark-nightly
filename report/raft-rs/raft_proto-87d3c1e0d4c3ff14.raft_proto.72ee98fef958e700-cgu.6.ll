@@ -26,7 +26,7 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.c, !prof !5
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call { i64, i64 } @_RINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_8RawTableTNtNtCsexYYUdYSQU6_5alloc6string6StringjEE14reserve_rehashNCINvNtB8_3map11make_hasherBQ_jNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE0ECslpwiOMB70Kp_8protobuf(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %2, i1 noundef zeroext true) #15 ; 0 uses
+  %i.d = tail call { i64, i64 } @_RINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_8RawTableTNtNtCsexYYUdYSQU6_5alloc6string6StringjEE14reserve_rehashNCINvNtB8_3map11make_hasherBQ_jNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE0ECslpwiOMB70Kp_8protobuf(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %2, i1 noundef zeroext true) #14 ; 0 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -42,7 +42,7 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.c, !prof !5
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call { i64, i64 } @_RINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_8RawTableTljEE14reserve_rehashNCINvNtB8_3map11make_hasherljNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE0ECslpwiOMB70Kp_8protobuf(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %2, i1 noundef zeroext true) #15 ; 0 uses
+  %i.d = tail call { i64, i64 } @_RINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_8RawTableTljEE14reserve_rehashNCINvNtB8_3map11make_hasherljNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE0ECslpwiOMB70Kp_8protobuf(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %1, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %2, i1 noundef zeroext true) #14 ; 0 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -68,7 +68,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15
   unreachable
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVecINtNtBG_3vec3VechEEECs9RMo4C3Dvu6_10raft_proto.exit: ; preds = %bb.b
@@ -94,7 +94,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15
   unreachable
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVecNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEEB1l_.exit: ; preds = %bb.b
@@ -120,7 +120,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15
   unreachable
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVecmEECs9RMo4C3Dvu6_10raft_proto.exit: ; preds = %bb.b
@@ -146,7 +146,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15
   unreachable
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVecyEECs9RMo4C3Dvu6_10raft_proto.exit: ; preds = %bb.b
@@ -266,7 +266,7 @@ bb.e:                                             ; preds = %_RINvMsa_NtCsjqcU1o
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !12, !nonnull !4, !noundef !4
   %i.ai = sub i64 -112, %i.aa
   %i.aj = getelementptr inbounds i8, ptr %i.ah, i64 %i.ai
-  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.aj, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #17, !noalias !12
+  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.aj, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #16, !noalias !12
   br label %_RNvXsg_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs9RMo4C3Dvu6_10raft_proto.exit
 
 _RNvXsg_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs9RMo4C3Dvu6_10raft_proto.exit: ; preds = %bb.a, %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesEECs9RMo4C3Dvu6_10raft_proto.exit.i.i, %bb.e
@@ -288,7 +288,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15
   unreachable
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVechEECs9RMo4C3Dvu6_10raft_proto.exit.i: ; preds = %bb.b
@@ -388,17 +388,17 @@ bb.f:                                             ; preds = %_RINvMsa_NtCsjqcU1o
   %i.ai = load ptr, ptr %.8.val, align 8, !alias.scope !38, !nonnull !4, !noundef !4
   %i.aj = sub i64 -112, %i.ab
   %i.ak = getelementptr inbounds i8, ptr %i.ai, i64 %i.aj
-  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ak, i64 noundef %i.ae, i64 noundef range(i64 1, -9223372036854775807) 16) #17, !noalias !38
+  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ak, i64 noundef %i.ae, i64 noundef range(i64 1, -9223372036854775807) 16) #16, !noalias !38
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesINtNtB4_4hash18BuildHasherDefaultNtNtNtB1j_4hash6random13DefaultHasherEEEECs9RMo4C3Dvu6_10raft_proto.exit.i.i
 
 bb.g:                                             ; preds = %_RINvMsi_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_12RawIterRangeTmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesEE9next_implKb0_ECs9RMo4C3Dvu6_10raft_proto.exit.i.i.i.i.i.i.i.i.i
   %i.al = landingpad { ptr, i32 }
           cleanup
-  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef 32, i64 noundef 8) #17
+  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef 32, i64 noundef 8) #16
   resume { ptr, i32 } %i.al
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesINtNtB4_4hash18BuildHasherDefaultNtNtNtB1j_4hash6random13DefaultHasherEEEECs9RMo4C3Dvu6_10raft_proto.exit.i.i: ; preds = %bb.f, %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesEECs9RMo4C3Dvu6_10raft_proto.exit.i.i.i.i.i.i.i.i, %bb.b
-  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef 32, i64 noundef 8) #17
+  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef 32, i64 noundef 8) #16
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownFieldsECs9RMo4C3Dvu6_10raft_proto.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownFieldsECs9RMo4C3Dvu6_10raft_proto.exit: ; preds = %bb.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesINtNtB4_4hash18BuildHasherDefaultNtNtNtB1j_4hash6random13DefaultHasherEEEECs9RMo4C3Dvu6_10raft_proto.exit.i.i
@@ -425,7 +425,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.c = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15
   unreachable
 
 bb.e:                                             ; preds = %bb.c
@@ -436,7 +436,7 @@ bb.e:                                             ; preds = %bb.c
 .body.i:                                          ; preds = %bb.e, %bb.b
   %eh.lpad-body.i = phi { ptr, i32 } [ %i.d, %bb.e ], [ %i.b, %bb.b ]
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.e) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.e) #17
           to label %.body4.i unwind label %bb.p
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecmEECs9RMo4C3Dvu6_10raft_proto.exit.i: ; preds = %bb.c
@@ -457,13 +457,13 @@ bb.g:                                             ; preds = %_RINvNtCskKLDkoKarT
 bb.h:                                             ; preds = %bb.f
   %i.h = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15
   unreachable
 
 .body4.i:                                         ; preds = %bb.i, %bb.f, %.body.i
   %.pn.i = phi { ptr, i32 } [ %eh.lpad-body.i, %.body.i ], [ %i.j, %bb.i ], [ %i.g, %bb.f ]
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 56
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.i) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.i) #17
           to label %.body7.i unwind label %bb.p
 
 bb.i:                                             ; preds = %bb.g
@@ -489,13 +489,13 @@ bb.k:                                             ; preds = %_RINvNtCskKLDkoKarT
 bb.l:                                             ; preds = %bb.j
   %i.m = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15
   unreachable
 
 .body7.i:                                         ; preds = %bb.m, %bb.j, %.body4.i
   %.pn2.i = phi { ptr, i32 } [ %.pn.i, %.body4.i ], [ %i.o, %bb.m ], [ %i.l, %bb.j ]
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 80
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecIBC_hEEECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.n) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecIBC_hEEECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.n) #17
           to label %common.resume.i unwind label %bb.p
 
 bb.m:                                             ; preds = %bb.k
@@ -517,7 +517,7 @@ bb.n:                                             ; preds = %_RINvNtCskKLDkoKarT
 bb.o:                                             ; preds = %bb.n
   %i.r = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15
   unreachable
 
 common.resume.i:                                  ; preds = %bb.n, %.body7.i
@@ -527,7 +527,7 @@ common.resume.i:                                  ; preds = %bb.n, %.body7.i
 bb.p:                                             ; preds = %.body7.i, %.body4.i, %.body.i
   %i.s = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15
   unreachable
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesECs9RMo4C3Dvu6_10raft_proto.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs9RMo4C3Dvu6_10raft_proto.exit9.i
@@ -657,7 +657,7 @@ bb.h:                                             ; preds = %.loopexit.i.i, %bb.
 
 .body:                                            ; preds = %.loopexit105, %.loopexit.split-lp, %bb.aa, %bb.ah
   %.pn = phi { ptr, i32 } [ %i.dd, %bb.aa ], [ %i.dm, %bb.ah ], [ %lpad.loopexit, %.loopexit105 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEEB1e_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.l) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEEB1e_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.l) #17
           to label %common.resume unwind label %bb.ai
 
 .loopexit105:                                     ; preds = %bb.h
@@ -819,14 +819,13 @@ bb.u:                                             ; preds = %thread-pre-split.i,
 .preheader56.i.preheader:                         ; preds = %bb.u, %.preheader56.i
   %.sroa.0.1.i166 = phi ptr [ %i.cf, %.preheader56.i ], [ %.sroa.0.0.i69, %bb.u ] ; 2 uses
   %.sroa.15.1.i165 = phi i64 [ %i.cg, %.preheader56.i ], [ %.sroa.15.0.i, %bb.u ]
-  %.sroa.042.0.i164 = phi i64 [ %i.co, %.preheader56.i ], [ 0, %bb.u ]
+  %.sroa.042.0.i164 = phi i64 [ %i.co, %.preheader56.i ], [ 0, %bb.u ] ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i166, i64 1
   %i.cg = add nsw i64 %.sroa.15.1.i165, -1        ; 2 uses
-  %3 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i164, i64 10) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 0             ; 2 uses
-  %5 = extractvalue { i64, i1 } %3, 1
+  %3 = mul nuw i64 %.sroa.042.0.i164, 10          ; 2 uses
+  %4 = icmp ugt i64 %.sroa.042.0.i164, 1844674407370955161
   %i.ch = load i8, ptr %.sroa.0.1.i166, align 1, !alias.scope !70, !noalias !73, !noundef !4 ; 2 uses
-  br i1 %5, label %bb.w, label %bb.v, !prof !5
+  br i1 %4, label %bb.w, label %bb.v, !prof !5
 
 bb.v:                                             ; preds = %.preheader56.i.preheader
   %i.ci = zext i8 %i.ch to i32
@@ -842,8 +841,8 @@ bb.w:                                             ; preds = %.preheader56.i.preh
 
 bb.x:                                             ; preds = %bb.v
   %i.cn = zext nneg i32 %i.cj to i64
-  %i.co = add i64 %4, %i.cn                       ; 3 uses
-  %i.cp = icmp ult i64 %i.co, %4
+  %i.co = add i64 %3, %i.cn                       ; 3 uses
+  %i.cp = icmp ult i64 %i.co, %3
   br i1 %i.cp, label %.loopexit, label %.preheader56.i, !prof !5
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.y
@@ -894,13 +893,13 @@ bb.z:                                             ; preds = %_RNvMsD_NtCskKLDkoK
 bb.aa:                                            ; preds = %bb.z
   %i.dd = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEBH_(ptr null) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEBH_(ptr null) #17
           to label %.body unwind label %bb.ab, !noalias !78
 
 bb.ab:                                            ; preds = %bb.aa
   %i.de = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16, !noalias !78
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15, !noalias !78
   unreachable
 
 bb.ac:                                            ; preds = %bb.z, %_RNvMsD_NtCskKLDkoKarTP_4core3numy27from_ascii_bytes_radix_impl.exit
@@ -953,7 +952,7 @@ bb.af:                                            ; preds = %bb.ae
 bb.ag:                                            ; preds = %bb.af
   %i.dl = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15
   unreachable
 
 common.resume:                                    ; preds = %.body, %bb.af
@@ -968,13 +967,13 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtC
 bb.ah:                                            ; preds = %bb.p, %.loopexit
   %i.dm = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEBH_(ptr null) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleEBH_(ptr null) #17
           to label %.body unwind label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %.body
   %i.dn = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15
   unreachable
 
 _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsexYYUdYSQU6_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs9RMo4C3Dvu6_10raft_proto.exit: ; preds = %bb.n
@@ -1061,7 +1060,7 @@ _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCs9RMo4C
 
 .loopexit:                                        ; preds = %.loopexit.loopexit, %.loopexit.loopexit.split-lp, %.loopexit.split-lp
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %lpad.loopexit40, %.loopexit.loopexit ], [ %lpad.loopexit.split-lp41, %.loopexit.loopexit.split-lp ]
-  invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c) #18
+  invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c) #17
           to label %bb.m unwind label %bb.l
 
 ._crit_edge:                                      ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCs9RMo4C3Dvu6_10raft_proto.exit, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCs9RMo4C3Dvu6_10raft_proto.exit.peel, %bb.a
@@ -1129,7 +1128,7 @@ bb.k:                                             ; preds = %_RNvMNtCsexYYUdYSQU
   br i1 %i.v, label %.loopexit43, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCs9RMo4C3Dvu6_10raft_proto.exit, !prof !5
 
 .loopexit43:                                      ; preds = %bb.k, %bb.f
-  invoke void @_RNvNtCskKLDkoKarTP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @7) #19
+  invoke void @_RNvNtCskKLDkoKarTP_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @7) #18
           to label %.noexc unwind label %.loopexit.split-lp
 
 .noexc:                                           ; preds = %.loopexit43
@@ -1143,7 +1142,7 @@ _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultuNtNtB4_3fmt5ErrorE6unwrapCs9RMo4C
 bb.l:                                             ; preds = %.loopexit
   %i.x = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15
   unreachable
 
 bb.m:                                             ; preds = %.loopexit
@@ -1281,16 +1280,15 @@ bb.a:
   br i1 %i.h, label %bb.t, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = add i64 %i.g, 1                          ; 2 uses
-  %2 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.i, i64 104) ; 2 uses
-  %3 = extractvalue { i64, i1 } %2, 1
-  br i1 %3, label %bb.d, label %bb.c, !prof !5
+  %i.i = add i64 %i.g, 1                          ; 3 uses
+  %2 = icmp ugt i64 %i.i, 177372539170284150
+  br i1 %2, label %bb.d, label %bb.c, !prof !5
 
 bb.c:                                             ; preds = %bb.b
-  %4 = extractvalue { i64, i1 } %2, 0
-  %i.j = add nuw i64 %4, 8
+  %3 = mul nuw i64 %i.i, 104
+  %i.j = add nuw i64 %3, 8
   %i.k = and i64 %i.j, -16                        ; 3 uses
-  %i.l = add i64 %i.g, 17                         ; 2 uses
+  %i.l = add nsw i64 %i.g, 17                     ; 2 uses
   %i.m = add i64 %i.l, %i.k                       ; 5 uses
   %i.n = icmp ult i64 %i.m, %i.k
   %i.o = icmp ugt i64 %i.m, 9223372036854775792
@@ -1302,8 +1300,8 @@ _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
   br i1 %i.p, label %bb.g, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i: ; preds = %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
-  tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #17, !noalias !98
-  %i.q = tail call noundef align 16 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef %i.m, i64 noundef range(i64 1, -9223372036854775807) 16) #17, !noalias !98 ; 2 uses
+  tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #16, !noalias !98
+  %i.q = tail call noundef align 16 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef %i.m, i64 noundef range(i64 1, -9223372036854775807) 16) #16, !noalias !98 ; 2 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %bb.e, label %bb.g
 
@@ -1371,7 +1369,7 @@ bb.h:                                             ; preds = %.loopexit.i.i
 
 .body.i.i:                                        ; preds = %bb.j, %bb.h
   %eh.lpad-body.i.i = phi { ptr, i32 } [ %i.ag, %bb.h ], [ %.pn.pn.i.i.i.i, %bb.j ]
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjqcU1oJFKXj_9hashbrown10scopeguard10ScopeGuardTjQINtNtBG_3raw8RawTableTmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesEEENCNvMse_B1y_B1v_15clone_from_impl0EECs9RMo4C3Dvu6_10raft_proto(i64 %.sroa.011.035.i.i, ptr nonnull align 8 dereferenceable(32) %i.e) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjqcU1oJFKXj_9hashbrown10scopeguard10ScopeGuardTjQINtNtBG_3raw8RawTableTmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesEEENCNvMse_B1y_B1v_15clone_from_impl0EECs9RMo4C3Dvu6_10raft_proto(i64 %.sroa.011.035.i.i, ptr nonnull align 8 dereferenceable(32) %i.e) #17
           to label %.body unwind label %bb.s, !noalias !113
 
 bb.i:                                             ; preds = %bb.r, %.lr.ph.i.i
@@ -1425,7 +1423,7 @@ bb.i:                                             ; preds = %bb.r, %.lr.ph.i.i
 
 bb.j:                                             ; preds = %bb.m, %bb.k
   %.pn.pn.i.i.i.i = phi { ptr, i32 } [ %.pn.i.i.i.i, %bb.m ], [ %i.ax, %bb.k ]
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecmEECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.d) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecmEECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.d) #17
           to label %.body.i.i unwind label %bb.q, !noalias !131
 
 bb.k:                                             ; preds = %.noexc.i.i
@@ -1441,7 +1439,7 @@ bb.l:                                             ; preds = %.noexc.i.i
 
 bb.m:                                             ; preds = %bb.p, %bb.n
   %.pn.i.i.i.i = phi { ptr, i32 } [ %i.bb, %bb.p ], [ %i.az, %bb.n ]
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.c) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.c) #17
           to label %bb.j unwind label %bb.q, !noalias !131
 
 bb.n:                                             ; preds = %bb.l
@@ -1458,13 +1456,13 @@ bb.o:                                             ; preds = %bb.l
 bb.p:                                             ; preds = %bb.o
   %i.bb = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.b) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecyEECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef align 8 dereferenceable(24) %i.b) #17
           to label %bb.m unwind label %bb.q, !noalias !131
 
 bb.q:                                             ; preds = %bb.p, %bb.m, %bb.j
   %i.bc = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16, !noalias !131
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15, !noalias !131
   unreachable
 
 bb.r:                                             ; preds = %bb.o
@@ -1502,7 +1500,7 @@ bb.r:                                             ; preds = %bb.o
 bb.s:                                             ; preds = %.body.i.i
   %i.bl = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16, !noalias !115
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15, !noalias !115
   unreachable
 
 bb.t:                                             ; preds = %bb.a
@@ -1510,7 +1508,7 @@ bb.t:                                             ; preds = %bb.a
   br label %bb.u
 
 .body:                                            ; preds = %.body.i.i
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjqcU1oJFKXj_9hashbrown3raw8RawTableTmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesEEECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef align 8 dereferenceable(32) %i.e) #18
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsjqcU1oJFKXj_9hashbrown3raw8RawTableTmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesEEECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef align 8 dereferenceable(32) %i.e) #17
           to label %bb.w unwind label %bb.v
 
 .loopexit:                                        ; preds = %bb.r, %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesEE17new_uninitializedCs9RMo4C3Dvu6_10raft_proto.exit
@@ -1528,7 +1526,7 @@ bb.u:                                             ; preds = %.loopexit, %bb.t
 bb.v:                                             ; preds = %.body
   %i.bo = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15
   unreachable
 
 bb.w:                                             ; preds = %.body
@@ -1599,7 +1597,7 @@ bb.e:                                             ; preds = %_RINvMsi_NtCsjqcU1o
 bb.f:                                             ; preds = %bb.e
   %i.v = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #16, !noalias !139
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #15, !noalias !139
   unreachable
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc7raw_vec6RawVechEECs9RMo4C3Dvu6_10raft_proto.exit.i.i.i.i.i: ; preds = %bb.e
@@ -1629,7 +1627,7 @@ bb.g:                                             ; preds = %_RINvMsa_NtCsjqcU1o
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !133, !nonnull !4, !noundef !4
   %i.ai = sub nuw nsw i64 -32, %i.aa
   %i.aj = getelementptr inbounds i8, ptr %i.ah, i64 %i.ai
-  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.aj, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #17, !noalias !133
+  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.aj, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #16, !noalias !133
   br label %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCsexYYUdYSQU6_5alloc6string6StringjENtNtB1h_5alloc6GlobalECs9RMo4C3Dvu6_10raft_proto.exit
 
 _RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCsexYYUdYSQU6_5alloc6string6StringjENtNtB1h_5alloc6GlobalECs9RMo4C3Dvu6_10raft_proto.exit: ; preds = %bb.a, %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCsexYYUdYSQU6_5alloc6string6StringjEECs9RMo4C3Dvu6_10raft_proto.exit.i, %bb.g
@@ -1661,7 +1659,7 @@ _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
 bb.b:                                             ; preds = %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
   %i.j = sub nuw nsw i64 -16, %i.c
   %i.k = getelementptr inbounds i8, ptr %.val, i64 %i.j
-  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.k, i64 noundef %i.f, i64 noundef range(i64 1, -9223372036854775807) 16) #17
+  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.k, i64 noundef %i.f, i64 noundef range(i64 1, -9223372036854775807) 16) #16
   br label %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTljENtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs9RMo4C3Dvu6_10raft_proto.exit
 
 _RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTljENtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs9RMo4C3Dvu6_10raft_proto.exit: ; preds = %bb.a, %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i, %bb.b
@@ -1746,7 +1744,7 @@ bb.e:                                             ; preds = %_RINvMsa_NtCsjqcU1o
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !146, !nonnull !4, !noundef !4
   %i.ai = sub i64 -112, %i.aa
   %i.aj = getelementptr inbounds i8, ptr %i.ah, i64 %i.ai
-  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.aj, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #17, !noalias !146
+  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.aj, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #16, !noalias !146
   br label %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesENtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs9RMo4C3Dvu6_10raft_proto.exit
 
 _RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesENtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs9RMo4C3Dvu6_10raft_proto.exit: ; preds = %bb.a, %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTmNtNtCslpwiOMB70Kp_8protobuf7unknown13UnknownValuesEECs9RMo4C3Dvu6_10raft_proto.exit.i, %bb.e
@@ -1778,7 +1776,7 @@ _RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.e
 bb.b:                                             ; preds = %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
   %i.j = sub nuw nsw i64 -16, %i.c
   %i.k = getelementptr inbounds i8, ptr %.val, i64 %i.j
-  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.k, i64 noundef %i.f, i64 noundef range(i64 1, -9223372036854775807) 16) #17
+  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %i.k, i64 noundef %i.f, i64 noundef range(i64 1, -9223372036854775807) 16) #16
   br label %_RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTmjENtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs9RMo4C3Dvu6_10raft_proto.exit
 
 _RINvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTmjENtNtCsexYYUdYSQU6_5alloc5alloc6GlobalECs9RMo4C3Dvu6_10raft_proto.exit: ; preds = %bb.a, %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i, %bb.b
@@ -1866,11 +1864,8 @@ declare void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2(
 ; Function Attrs: nounwind nonlazybind allockind("alloc,uninitialized,aligned") allocsize(0) uwtable
 declare noalias noundef ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef, i64 allocalign noundef range(i64 1, -9223372036854775807)) unnamed_addr #9
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #10
-
 ; Function Attrs: noinline nonlazybind uwtable
-declare void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleE8grow_oneBS_(ptr noalias nofree noundef align 8 dereferenceable(16)) unnamed_addr #11
+declare void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCs9RMo4C3Dvu6_10raft_proto6protos7eraftpb16ConfChangeSingleE8grow_oneBS_(ptr noalias nofree noundef align 8 dereferenceable(16)) unnamed_addr #10
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden { ptr, i64 } @_RINvMNtCskKLDkoKarTP_4core3stre12trim_matchesNvMNtNtB5_4char7methodsc13is_whitespaceECs9RMo4C3Dvu6_10raft_proto(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef) unnamed_addr #0
@@ -1891,7 +1886,7 @@ declare hidden noundef zeroext i1 @_RNvYNtNtCsexYYUdYSQU6_5alloc6string6StringNt
 declare noundef zeroext i1 @_RNvNtCskKLDkoKarTP_4core3fmt5write(ptr noundef nonnull, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48), ptr noundef nonnull, ptr noundef nonnull) unnamed_addr #0
 
 ; Function Attrs: nounwind nonlazybind allockind("free") uwtable
-declare void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr allocptr noundef nonnull captures(address), i64 noundef, i64 noundef range(i64 1, -9223372036854775807)) unnamed_addr #12
+declare void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr allocptr noundef nonnull captures(address), i64 noundef, i64 noundef range(i64 1, -9223372036854775807)) unnamed_addr #11
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecmENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs9RMo4C3Dvu6_10raft_proto(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #0
@@ -1906,10 +1901,10 @@ declare hidden void @_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecIBw_hEENtNtCskK
 declare noundef zeroext i1 @_RNvMsa_NtCskKLDkoKarTP_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef align 8 dereferenceable(24), ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef) unnamed_addr #0
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #13
+declare void @llvm.experimental.noalias.scope.decl(metadata) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #14
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #13
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -1921,16 +1916,15 @@ attributes #6 = { nocallback nofree nosync nounwind speculatable willreturn memo
 attributes #7 = { cold minsize noinline noreturn nounwind nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #8 = { cold noinline noreturn nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #9 = { nounwind nonlazybind allockind("alloc,uninitialized,aligned") allocsize(0) uwtable "alloc-family"="__rust_alloc" "alloc-variant-zeroed"="_RNvCsbkii2mvYdKU_7___rustc19___rust_alloc_zeroed" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #10 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #11 = { noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #12 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #14 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #15 = { noinline }
-attributes #16 = { cold noreturn nounwind }
-attributes #17 = { nounwind }
-attributes #18 = { cold }
-attributes #19 = { noinline noreturn }
+attributes #10 = { noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #11 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #13 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #14 = { noinline }
+attributes #15 = { cold noreturn nounwind }
+attributes #16 = { nounwind }
+attributes #17 = { cold }
+attributes #18 = { noinline noreturn }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

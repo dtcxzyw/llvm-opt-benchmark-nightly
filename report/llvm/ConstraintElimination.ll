@@ -204,8 +204,8 @@ bb.r:                                             ; preds = %.critedge.thread
   %i.bw = call noundef ptr @_ZNK4llvm5Value35stripPointerCastsSameRepresentationEv(ptr noundef nonnull align 8 dereferenceable(24) %.0175181200) #20
   %i.bx = load ptr, ptr %i.bu, align 8, !tbaa !542, !nonnull !21, !align !177
   call fastcc void @_ZL9decomposePN4llvm5ValueERNS_15SmallVectorImplIN12_GLOBAL__N_111ConditionTyEEEbRKNS_10DataLayoutE(ptr dead_on_unwind noalias writable align 8 %12, ptr noundef %i.bw, ptr noundef nonnull align 8 dereferenceable(16) %10, i1 noundef zeroext %i.bq, ptr noundef nonnull align 8 dereferenceable(912) %i.bx)
-  %i.by = load i64, ptr %11, align 8, !tbaa !668
-  %i.bz = load i64, ptr %12, align 8, !tbaa !668
+  %i.by = load i64, ptr %11, align 8, !tbaa !668  ; 2 uses
+  %i.bz = load i64, ptr %12, align 8, !tbaa !668  ; 2 uses
   %i.ca = sub nsw i64 0, %i.by
   %i.cb = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 3 uses
@@ -608,9 +608,9 @@ bb.as:                                            ; preds = %"_ZZNK12_GLOBAL__N_
   br label %bb.be
 
 .critedge86:                                      ; preds = %bb.ak, %._crit_edge
-  %i.lg = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.ca, i64 %i.bz) ; 2 uses
+  %i.lg = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.ca, i64 %i.bz)
   %i.lh = extractvalue { i64, i1 } %i.lg, 1
-  %16 = extractvalue { i64, i1 } %i.lg, 0         ; 2 uses
+  %16 = sub nsw i64 %i.bz, %i.by                  ; 3 uses
   br i1 %i.lh, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %.critedge86
@@ -638,10 +638,9 @@ bb.au:                                            ; preds = %.critedge86
   ]
 
 bb.av:                                            ; preds = %bb.au, %bb.au
-  %17 = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %16, i64 -1) ; 2 uses
-  %18 = extractvalue { i64, i1 } %17, 1
-  %19 = extractvalue { i64, i1 } %17, 0
-  br i1 %18, label %bb.aw, label %bb.ax
+  %17 = icmp eq i64 %16, -9223372036854775808
+  %18 = add nsw i64 %16, -1
+  br i1 %17, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %bb.av
   %i.lq = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -662,7 +661,7 @@ bb.aw:                                            ; preds = %bb.av
   br label %bb.be
 
 bb.ax:                                            ; preds = %bb.au, %bb.av
-  %.0173 = phi i64 [ %16, %bb.au ], [ %19, %bb.av ]
+  %.0173 = phi i64 [ %16, %bb.au ], [ %18, %bb.av ]
   %i.ly = load ptr, ptr %14, align 8, !tbaa !8
   store i64 %.0173, ptr %i.ly, align 8, !tbaa !111
   %i.lz = call fastcc noundef nonnull align 8 dereferenceable(16) ptr @_ZN4llvm15SmallVectorImplIN12_GLOBAL__N_111ConditionTyEEaSEOS3_(ptr noundef nonnull align 8 dereferenceable(64) %i.dk, ptr noundef nonnull align 8 dereferenceable(16) %10) ; 0 uses

@@ -204,17 +204,15 @@ bb.kj:                                            ; preds = %bb.kh
   %i.aot = add i64 %i.aor, %i.aop
   %i.aou = mul i64 %i.aot, %.val81.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !23509
-  %i.aov = load i64, ptr %i.aoo, align 8, !noalias !23509, !noundef !6
-  %3 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.aov, i64 10) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 1
-  %5 = extractvalue { i64, i1 } %3, 0
-  %i.aow = icmp ult i64 %5, %i.aou
-  %not..i.i.i.i.i = xor i1 %4, true
-  %6 = and i1 %i.aow, %not..i.i.i.i.i
+  %i.aov = load i64, ptr %i.aoo, align 8, !noalias !23509, !noundef !6 ; 2 uses
+  %3 = icmp ult i64 %i.aov, 1844674407370955162
+  %4 = mul nuw i64 %i.aov, 10
+  %i.aow = icmp ult i64 %4, %i.aou
+  %5 = select i1 %3, i1 %i.aow, i1 false, !prof !55
   %i.aox = getelementptr inbounds nuw i8, ptr %1, i64 3513
   %i.aoy = load i8, ptr %i.aox, align 1, !range !23, !noalias !23509, !noundef !6
   %i.aoz = trunc nuw i8 %i.aoy to i1
-  %brmerge.not.i.i.i.i.i = and i1 %6, %i.aoz
+  %brmerge.not.i.i.i.i.i = and i1 %5, %i.aoz
   br i1 %brmerge.not.i.i.i.i.i, label %bb.kl, label %bb.kk
 
 bb.kk:                                            ; preds = %bb.kj
@@ -617,7 +615,7 @@ bb.ao:                                            ; preds = %bb.am
 bb.ap:                                            ; preds = %bb.am, %bb.al, %bb.ah, %bb.ag, %bb.af
   %.val.i = load ptr, ptr %i.fx, align 8, !noalias !38637, !noundef !6
   %i.gs = getelementptr i8, ptr %.val.i, i64 440
-  %.val89.i = load i64, ptr %i.gs, align 8, !noalias !38641, !noundef !6
+  %.val89.i = load i64, ptr %i.gs, align 8, !noalias !38641, !noundef !6 ; 2 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %1, i64 1040 ; 2 uses
   %i.gu = load i64, ptr %i.gt, align 8, !noalias !38637, !noundef !6
   %i.gv = getelementptr inbounds nuw i8, ptr %1, i64 1048
@@ -631,23 +629,21 @@ bb.aq:                                            ; preds = %bb.ap
   br label %.body.i
 
 bb.ar:                                            ; preds = %bb.ap
-  %i.gy = call noundef i64 @llvm.uadd.sat.i64(i64 %i.gu, i64 %i.gw)
-  %i.gz = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.val89.i, i64 %i.gy) ; 2 uses
+  %i.gy = call noundef i64 @llvm.uadd.sat.i64(i64 %i.gu, i64 %i.gw) ; 2 uses
+  %i.gz = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.val89.i, i64 %i.gy)
   %i.ha = extractvalue { i64, i1 } %i.gz, 1
-  %3 = extractvalue { i64, i1 } %i.gz, 0
+  %3 = mul nuw i64 %i.gy, %.val89.i
   %.sroa.0.0.i116.i = select i1 %i.ha, i64 -1, i64 %3, !prof !56
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am), !noalias !38637
-  %i.hb = load i64, ptr %i.gt, align 8, !noalias !38637, !noundef !6
-  %4 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.hb, i64 10) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  %6 = extractvalue { i64, i1 } %4, 0
-  %i.hc = icmp ult i64 %6, %.sroa.0.0.i116.i
-  %not..i = xor i1 %5, true
-  %7 = and i1 %i.hc, %not..i
+  %i.hb = load i64, ptr %i.gt, align 8, !noalias !38637, !noundef !6 ; 2 uses
+  %4 = icmp ult i64 %i.hb, 1844674407370955162
+  %5 = mul nuw i64 %i.hb, 10
+  %i.hc = icmp ult i64 %5, %.sroa.0.0.i116.i
+  %6 = select i1 %4, i1 %i.hc, i1 false, !prof !55
   %i.hd = getelementptr inbounds nuw i8, ptr %1, i64 1081
   %i.he = load i8, ptr %i.hd, align 1, !range !23, !noalias !38637, !noundef !6
   %i.hf = trunc nuw i8 %i.he to i1
-  %brmerge.not.i = and i1 %7, %i.hf
+  %brmerge.not.i = and i1 %6, %i.hf
   br i1 %brmerge.not.i, label %bb.ba, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar

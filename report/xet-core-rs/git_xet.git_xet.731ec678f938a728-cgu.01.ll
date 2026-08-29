@@ -202,14 +202,13 @@ bb.e:                                             ; preds = %thread-pre-split.i.
 .preheader56.i.i.preheader:                       ; preds = %bb.e, %.preheader56.i.i
   %.sroa.0.1.i.i34 = phi ptr [ %i.h, %.preheader56.i.i ], [ %.sroa.0.0.i.i, %bb.e ] ; 2 uses
   %.sroa.15.1.i.i33 = phi i64 [ %i.i, %.preheader56.i.i ], [ %.sroa.15.0.i.i, %bb.e ]
-  %.sroa.042.0.i.i32 = phi i64 [ %i.q, %.preheader56.i.i ], [ 0, %bb.e ]
+  %.sroa.042.0.i.i32 = phi i64 [ %i.q, %.preheader56.i.i ], [ 0, %bb.e ] ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i34, i64 1
   %i.i = add nsw i64 %.sroa.15.1.i.i33, -1        ; 2 uses
-  %3 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.042.0.i.i32, i64 10) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 0             ; 2 uses
-  %5 = extractvalue { i64, i1 } %3, 1
+  %3 = mul nuw i64 %.sroa.042.0.i.i32, 10         ; 2 uses
+  %4 = icmp ugt i64 %.sroa.042.0.i.i32, 1844674407370955161
   %i.j = load i8, ptr %.sroa.0.1.i.i34, align 1, !alias.scope !16, !noalias !15, !noundef !17 ; 2 uses
-  br i1 %5, label %bb.g, label %bb.f, !prof !18
+  br i1 %4, label %bb.g, label %bb.f, !prof !18
 
 bb.f:                                             ; preds = %.preheader56.i.i.preheader
   %i.k = zext i8 %i.j to i32
@@ -224,8 +223,8 @@ bb.g:                                             ; preds = %.preheader56.i.i.pr
 
 bb.h:                                             ; preds = %bb.f
   %i.p = zext nneg i32 %i.l to i64
-  %i.q = add i64 %4, %i.p                         ; 3 uses
-  %i.r = icmp ult i64 %i.q, %4
+  %i.q = add i64 %3, %i.p                         ; 3 uses
+  %i.r = icmp ult i64 %i.q, %3
   br i1 %i.r, label %bb.i, label %.preheader56.i.i, !prof !18
 
 .loopexit58.i.i:                                  ; preds = %bb.f, %bb.g
@@ -628,9 +627,6 @@ declare void @_RNvNtNtCskKLDkoKarTP_4core3str8converts9from_utf8(ptr dead_on_unw
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvMNtCsjqcU1oJFKXj_9hashbrown11rustc_entryINtNtB4_3map7HashMapNtNtCsG258MDvU3F_3std4path7PathBufINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard18shard_file_manager16ShardFileManagerENtNtNtB13_4hash6random11RandomStateE11rustc_entryCs9SMuO7kbZ2K_7git_xet(ptr dead_on_unwind noalias nofree noundef writable sret([40 x i8]) align 8 captures(none) dereferenceable(40), ptr noalias nofree noundef align 8 dereferenceable(48), ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(24)) unnamed_addr #1
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #21
-
 ; Function Attrs: noinline nonlazybind uwtable
 declare void @_RNvMs4_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structs11MDBFileInfoE8grow_oneCsjHtSR7YjKD4_8xet_data(ptr noalias nofree noundef align 8 dereferenceable(16)) unnamed_addr #16
 
@@ -671,16 +667,16 @@ declare hidden void @_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsdCDTHl
 declare hidden void @_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCsdCDTHl3mYPb_4http6header3map10ExtraValueNtNtBK_5value11HeaderValueEENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCs9SMuO7kbZ2K_7git_xet(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24)) unnamed_addr #1
 
 ; Function Attrs: nounwind nonlazybind allockind("free") uwtable
-declare void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr allocptr noundef nonnull captures(address), i64 noundef, i64 noundef range(i64 1, -9223372036854775807)) unnamed_addr #22
+declare void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr allocptr noundef nonnull captures(address), i64 noundef, i64 noundef range(i64 1, -9223372036854775807)) unnamed_addr #21
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef nonnull ptr @_RNvXs14_NtCsexYYUdYSQU6_5alloc4syncINtB6_3ArcNtNtNtCsjHtSR7YjKD4_8xet_data10processing14configurations16TranslatorConfigEINtNtCskKLDkoKarTP_4core7convert4FromBH_E4fromCs9SMuO7kbZ2K_7git_xet(ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(208)) unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.bswap.i64(i64) #21
+declare i64 @llvm.bswap.i64(i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #21
+declare i32 @llvm.bswap.i32(i32) #22
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden { ptr, i64 } @_RNvXs1y_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_14ChunksExactMuthENtNtNtNtBa_4iter6traits8iterator8Iterator24___iterator_get_uncheckedCs9SMuO7kbZ2K_7git_xet(ptr noalias nofree noundef align 8 dereferenceable(40), i64 noundef) unnamed_addr #1
@@ -887,13 +883,13 @@ declare hidden void @_RINvNtNtNtCsiAynQAjgDuT_10xet_client10cas_client10simulati
 declare void @_RNvMs1_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structsNtB5_15FileMetadataExt3new(ptr dead_on_unwind noalias nofree noundef writable sret([48 x i8]) align 8 captures(none) dereferenceable(48), ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32)) unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #21
+declare i64 @llvm.usub.sat.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #21
+declare i64 @llvm.umin.i64(i64, i64) #22
 
 attributes #0 = { inlinehint nofree norecurse nosync nounwind nonlazybind memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -916,8 +912,8 @@ attributes #17 = { cold minsize noreturn nonlazybind optsize uwtable "probe-stac
 attributes #18 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #19 = { cold noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #20 = { nounwind nonlazybind allockind("alloc,uninitialized,aligned") allocsize(0) uwtable "alloc-family"="__rust_alloc" "alloc-variant-zeroed"="_RNvCsbkii2mvYdKU_7___rustc19___rust_alloc_zeroed" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #21 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #22 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #21 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #22 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #23 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #24 = { nounwind }
 attributes #25 = { cold noreturn nounwind }

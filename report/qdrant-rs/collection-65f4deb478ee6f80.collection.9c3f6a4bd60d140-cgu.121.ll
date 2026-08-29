@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.g
 bb.m:                                             ; preds = %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag)
   %i.ax = invoke noundef i64 @_RNvNtNtCs5QaNqjAn6vc_5shard10optimizers17segment_optimizer24max_num_indexing_threads(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(216) %i.ah)
-          to label %bb.n unwind label %.body.thread
+          to label %bb.n unwind label %.body.thread ; 2 uses
 
 .body.thread147:                                  ; preds = %bb.ai, %bb.aa, %bb.ca, %bb.ae
   %.pn52.pn.pn.ph = phi { ptr, i32 } [ %i.ci, %bb.aa ], [ %.pn.ph, %bb.ca ], [ %i.ck, %bb.ae ], [ %i.cq, %bb.ai ]
@@ -279,13 +279,12 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.x
 
 bb.w:                                             ; preds = %bb.u
-  %8 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.ax, i64 256000) ; 2 uses
-  %9 = extractvalue { i64, i1 } %8, 0
-  %10 = extractvalue { i64, i1 } %8, 1
-  br i1 %10, label %bb.z, label %bb.x, !prof !335
+  %8 = mul nuw i64 %i.ax, 256000
+  %9 = icmp ugt i64 %i.ax, 72057594037927
+  br i1 %9, label %bb.z, label %bb.x, !prof !335
 
 bb.x:                                             ; preds = %bb.w, %bb.z, %bb.v
-  %.sroa.030.0 = phi i64 [ %i.by, %bb.v ], [ -1, %bb.z ], [ %9, %bb.w ]
+  %.sroa.030.0 = phi i64 [ %i.by, %bb.v ], [ -1, %bb.z ], [ %8, %bb.w ]
   %i.bz = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 %.sroa.030.0, ptr %i.bz, align 8
   %i.ca = getelementptr inbounds nuw i8, ptr %i.b, i64 16

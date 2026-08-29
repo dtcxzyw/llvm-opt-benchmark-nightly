@@ -204,8 +204,8 @@ bb.l:                                             ; preds = %_ZNK14arrow_vendore
   %i.cg = add nsw i32 %i.cf, %i.bz
   %i.ch = sub nsw i32 %i.cg, %i.cb
   %i.ci = add nsw i32 %i.ch, %i.bo
-  %i.cj = sext i32 %i.ci to i64                   ; 2 uses
-  %i.ck = mul nsw i64 %i.cj, 86400                ; 4 uses
+  %i.cj = sext i32 %i.ci to i64                   ; 4 uses
+  %i.ck = mul nsw i64 %i.cj, 86400                ; 5 uses
   %i.cl = icmp eq i64 %2, 10
   br i1 %i.cl, label %bb.m, label %bb.n, !prof !441
 
@@ -221,15 +221,15 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread50
 
 .split.i.i:                                       ; preds = %bb.m
-  %15 = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %i.ck, i64 1000000) ; 2 uses
-  %16 = extractvalue { i64, i1 } %15, 1
-  %17 = extractvalue { i64, i1 } %15, 0
+  %15 = add nsw i64 %i.ck, -9223372036855
+  %16 = icmp ult i64 %15, -18446744073709
+  %17 = mul nsw i64 %i.cj, 86400000000
   br i1 %16, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread50, !prof !1420
 
 _ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeEl.exit.i.i: ; preds = %bb.m
-  %18 = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %i.ck, i64 1000000000) ; 2 uses
-  %19 = extractvalue { i64, i1 } %18, 1
-  %20 = extractvalue { i64, i1 } %18, 0
+  %18 = add nsw i64 %i.ck, -9223372037
+  %19 = icmp ult i64 %18, -18446744073
+  %20 = mul nsw i64 %i.cj, 86400000000000
   br i1 %19, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread50, !prof !1420
 
 bb.n:                                             ; preds = %bb.l
@@ -542,10 +542,10 @@ _ZN5arrow8internal6detailL13ParseHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1E
 bb.ap:                                            ; preds = %_ZN5arrow8internal6detailL13ParseHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1EEEEEEbPKcPT_.exit.i, %_ZN5arrow8internal6detailL10ParseHH_MMINSt6chrono8durationIlSt5ratioILl1ELl1EEEEEEbPKcPT_.exit.i, %_ZN5arrow8internal6detailL7ParseHHINSt6chrono8durationIlSt5ratioILl1ELl1EEEEEEbPKcPT_.exit84.i
   %.sroa.0113.0.i = phi i64 [ %i.fd, %_ZN5arrow8internal6detailL7ParseHHINSt6chrono8durationIlSt5ratioILl1ELl1EEEEEEbPKcPT_.exit84.i ], [ %i.ge, %_ZN5arrow8internal6detailL10ParseHH_MMINSt6chrono8durationIlSt5ratioILl1ELl1EEEEEEbPKcPT_.exit.i ], [ %i.ht, %_ZN5arrow8internal6detailL13ParseHH_MM_SSINSt6chrono8durationIlSt5ratioILl1ELl1EEEEEEbPKcPT_.exit.i ]
   %i.hu = load i64, ptr %7, align 8, !tbaa !270
-  %i.hv = add nsw i64 %i.hu, %.sroa.0113.0.i
-  %i.hw = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.hv, i64 %i.ck) ; 2 uses
+  %i.hv = add nsw i64 %i.hu, %.sroa.0113.0.i      ; 2 uses
+  %i.hw = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.hv, i64 %i.ck)
   %i.hx = extractvalue { i64, i1 } %i.hw, 1
-  %21 = extractvalue { i64, i1 } %i.hw, 0         ; 7 uses
+  %21 = add nsw i64 %i.hv, %i.ck                  ; 13 uses
   br i1 %i.hx, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread.sink.split, label %bb.aq, !prof !67
 
 bb.aq:                                            ; preds = %bb.ap
@@ -560,21 +560,21 @@ bb.ar:                                            ; preds = %bb.aq
   ]
 
 .split14.i100.i:                                  ; preds = %bb.ar
-  %22 = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %21, i64 1000) ; 2 uses
-  %23 = extractvalue { i64, i1 } %22, 1
-  %24 = extractvalue { i64, i1 } %22, 0
+  %22 = add i64 %21, -9223372036854776
+  %23 = icmp ult i64 %22, -18446744073709551
+  %24 = mul nsw i64 %21, 1000
   br i1 %23, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread.sink.split, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread59, !prof !1420
 
 .split.i96.i:                                     ; preds = %bb.ar
-  %25 = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %21, i64 1000000) ; 2 uses
-  %26 = extractvalue { i64, i1 } %25, 1
-  %27 = extractvalue { i64, i1 } %25, 0
+  %25 = add i64 %21, -9223372036855
+  %26 = icmp ult i64 %25, -18446744073709
+  %27 = mul nsw i64 %21, 1000000
   br i1 %26, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread.sink.split, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread59, !prof !1420
 
 _ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeEl.exit.i101.i: ; preds = %bb.ar
-  %28 = tail call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %21, i64 1000000000) ; 2 uses
-  %29 = extractvalue { i64, i1 } %28, 1
-  %30 = extractvalue { i64, i1 } %28, 0
+  %28 = add i64 %21, -9223372037
+  %29 = icmp ult i64 %28, -18446744073
+  %30 = mul nsw i64 %21, 1000000000
   br i1 %29, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread.sink.split, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread59, !prof !1420
 
 _ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread59: ; preds = %bb.ar, %.split14.i100.i, %.split.i96.i, %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeEl.exit.i101.i
@@ -652,19 +652,22 @@ bb.az:                                            ; preds = %_ZN5arrow8internal6
   ]
 
 .split14.i109.i:                                  ; preds = %bb.az
-  %31 = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %21, i64 1000) ; 2 uses
-  %32 = extractvalue { i64, i1 } %31, 1
+  %31 = add i64 %21, -9223372036854776
+  %32 = icmp ult i64 %31, -18446744073709551
+  %33 = mul nsw i64 %21, 1000
   br i1 %32, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread64, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit, !prof !1420
 
 .split.i105.i:                                    ; preds = %bb.az
-  %33 = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %21, i64 1000000) ; 2 uses
-  %34 = extractvalue { i64, i1 } %33, 1
-  br i1 %34, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread64, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit, !prof !1420
+  %34 = add i64 %21, -9223372036855
+  %35 = icmp ult i64 %34, -18446744073709
+  %36 = mul nsw i64 %21, 1000000
+  br i1 %35, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread64, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit, !prof !1420
 
 _ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeEl.exit.i110.i: ; preds = %bb.az
-  %35 = call { i64, i1 } @llvm.smul.with.overflow.i64(i64 %21, i64 1000000000) ; 2 uses
-  %36 = extractvalue { i64, i1 } %35, 1
-  br i1 %36, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread64, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit, !prof !1420
+  %37 = add i64 %21, -9223372037
+  %38 = icmp ult i64 %37, -18446744073
+  %39 = mul nsw i64 %21, 1000000000
+  br i1 %38, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread64, label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit, !prof !1420
 
 default.unreachable.i:                            ; preds = %bb.az
   unreachable
@@ -674,8 +677,7 @@ _ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.threa
   br label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread.sink.split
 
 _ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit: ; preds = %.split14.i109.i, %.split.i105.i, %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeEl.exit.i110.i
-  %.pn.i = phi { i64, i1 } [ %31, %.split14.i109.i ], [ %35, %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeEl.exit.i110.i ], [ %33, %.split.i105.i ]
-  %.pn25.i.i8.i107.i = extractvalue { i64, i1 } %.pn.i, 0
+  %.pn25.i.i8.i107.i = phi i64 [ %33, %.split14.i109.i ], [ %39, %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeEl.exit.i110.i ], [ %36, %.split.i105.i ]
   %i.il = load i32, ptr %i.b, align 4, !tbaa !3
   %i.im = zext i32 %i.il to i64
   %i.in = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %.pn25.i.i8.i107.i, i64 %i.im) ; 2 uses
@@ -690,9 +692,9 @@ _ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.threa
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #20
   br label %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread
 
-_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread: ; preds = %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread.sink.split, %_ZN5arrow8internal13ParseUnsignedEPKcmPt.exit.i.i, %bb.g, %bb.e, %bb.d, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.i.i, %bb.i, %bb.c, %bb.f, %bb.b, %bb.h, %.split.i.i, %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeEl.exit.i.i, %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i.i, %bb.n, %bb.a, %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit
-  %.248 = phi i8 [ 0, %bb.g ], [ %.1, %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit ], [ 0, %_ZN5arrow8internal13ParseUnsignedEPKcmPt.exit.i.i ], [ 0, %bb.a ], [ 0, %bb.n ], [ 0, %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i.i ], [ 0, %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeEl.exit.i.i ], [ 0, %.split.i.i ], [ 0, %bb.h ], [ 0, %bb.b ], [ 0, %bb.f ], [ 0, %bb.c ], [ 0, %bb.i ], [ 0, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.i.i ], [ 0, %bb.d ], [ 0, %bb.e ], [ %.248.ph, %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread.sink.split ]
-  %.24246 = phi i64 [ 0, %bb.g ], [ %i.ip, %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit ], [ 0, %_ZN5arrow8internal13ParseUnsignedEPKcmPt.exit.i.i ], [ 0, %bb.a ], [ 0, %bb.n ], [ 0, %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i.i ], [ 0, %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeEl.exit.i.i ], [ 0, %.split.i.i ], [ 0, %bb.h ], [ 0, %bb.b ], [ 0, %bb.f ], [ 0, %bb.c ], [ 0, %bb.i ], [ 0, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.i.i ], [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread.sink.split ]
+_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread: ; preds = %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread.sink.split, %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i.i, %_ZN5arrow8internal13ParseUnsignedEPKcmPt.exit.i.i, %bb.g, %bb.e, %bb.d, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.i.i, %bb.i, %bb.c, %bb.f, %bb.b, %bb.h, %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeEl.exit.i.i, %.split.i.i, %bb.n, %bb.a, %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit
+  %.248 = phi i8 [ 0, %_ZN5arrow8internal13ParseUnsignedEPKcmPt.exit.i.i ], [ %.1, %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit ], [ 0, %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i.i ], [ 0, %bb.a ], [ 0, %bb.n ], [ 0, %.split.i.i ], [ 0, %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeEl.exit.i.i ], [ 0, %bb.h ], [ 0, %bb.b ], [ 0, %bb.f ], [ 0, %bb.c ], [ 0, %bb.i ], [ 0, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.i.i ], [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %bb.g ], [ %.248.ph, %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread.sink.split ]
+  %.24246 = phi i64 [ 0, %_ZN5arrow8internal13ParseUnsignedEPKcmPt.exit.i.i ], [ %i.ip, %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit ], [ 0, %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.i.i ], [ 0, %bb.a ], [ 0, %bb.n ], [ 0, %.split.i.i ], [ 0, %_ZN5arrow4util17CastSecondsToUnitENS_8TimeUnit4typeEl.exit.i.i ], [ 0, %bb.h ], [ 0, %bb.b ], [ 0, %bb.f ], [ 0, %bb.c ], [ 0, %bb.i ], [ 0, %_ZNK14arrow_vendored4date14year_month_day2okEv.exit.i.i ], [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %bb.g ], [ 0, %_ZN5arrow8internalL21ParseTimestampISO8601EPKcmNS_8TimeUnit4typeEPlPb.exit.thread.sink.split ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #20
   %i.iq = load ptr, ptr %0, align 8, !tbaa !1418, !nonnull !152, !align !319 ; 2 uses
@@ -1045,9 +1047,6 @@ _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.thread: ; preds = %bb.d, %_ZN5arro
   %.0 = phi i1 [ true, %bb.e ], [ false, %bb.a ], [ false, %bb.c ], [ false, %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit11 ], [ false, %bb.b ], [ false, %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit ], [ false, %bb.d ]
   ret i1 %.0
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.smul.with.overflow.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i64, i1 } @llvm.sadd.with.overflow.i64(i64, i64) #16

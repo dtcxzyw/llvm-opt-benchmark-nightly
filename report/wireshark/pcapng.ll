@@ -204,10 +204,9 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   %i.ds = load ptr, ptr %i.ck, align 8
   %i.dt = getelementptr i8, ptr %i.ds, i64 16
   store i64 %i.dr, ptr %i.dt, align 8
-  %i.du = urem i64 %i.dq, %.sroa.8100.0.copyload  ; 4 uses
-  %10 = call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.du, i64 1000000000) ; 2 uses
-  %11 = extractvalue { i64, i1 } %10, 1
-  br i1 %11, label %bb.ac, label %bb.af
+  %i.du = urem i64 %i.dq, %.sroa.8100.0.copyload  ; 5 uses
+  %10 = icmp ugt i64 %i.du, 18446744073
+  br i1 %10, label %bb.ac, label %bb.af
 
 bb.ac:                                            ; preds = %bb.ab
   %.not251 = icmp eq i8 %.sroa.15.0.copyload, 0
@@ -231,8 +230,8 @@ bb.ae:                                            ; preds = %bb.ac
   br label %bb.ag
 
 bb.af:                                            ; preds = %bb.ab
-  %12 = extractvalue { i64, i1 } %10, 0
-  %i.eg = udiv i64 %12, %.sroa.8100.0.copyload
+  %11 = mul nuw i64 %i.du, 1000000000
+  %i.eg = udiv i64 %11, %.sroa.8100.0.copyload
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.ad, %bb.ae, %bb.af
@@ -635,9 +634,6 @@ declare void @wtap_setup_packet_rec(ptr noundef, i32 noundef) local_unnamed_addr
 ; Function Attrs: null_pointer_is_valid
 declare i32 @pcap_process_pseudo_header(ptr noundef, i1 noundef zeroext, i32 noundef, i32 noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #12
-
 ; Function Attrs: null_pointer_is_valid
 declare zeroext i1 @wtap_read_bytes_buffer(ptr noundef, ptr noundef, i32 noundef, ptr noundef, ptr noundef) local_unnamed_addr #1
 
@@ -973,7 +969,7 @@ declare void @pcap_read_post_process(i1 noundef zeroext, i32 noundef, ptr nounde
 declare ptr @g_byte_array_new_take(ptr noundef, i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: null_pointer_is_valid allocsize(1)
-declare ptr @g_memdup2(ptr noundef, i64 noundef) local_unnamed_addr #13
+declare ptr @g_memdup2(ptr noundef, i64 noundef) local_unnamed_addr #12
 
 ; Function Attrs: null_pointer_is_valid
 declare i32 @wtap_block_add_packet_hash_option(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #1
@@ -1376,16 +1372,16 @@ declare zeroext i1 @ws_strtou64(ptr noundef, ptr noundef, ptr noundef) local_unn
 declare void @wtap_setup_systemd_journal_export_rec(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.bswap.i16(i16) #12
+declare i16 @llvm.bswap.i16(i16) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #12
+declare i64 @llvm.umin.i64(i64, i64) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #12
+declare i32 @llvm.umin.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #15
@@ -1402,8 +1398,8 @@ attributes #8 = { nocallback nofree nosync nounwind null_pointer_is_valid memory
 attributes #9 = { mustprogress nofree norecurse nosync nounwind null_pointer_is_valid sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #10 = { nofree norecurse nosync nounwind null_pointer_is_valid sspstrong memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { noreturn null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #13 = { null_pointer_is_valid allocsize(1) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #12 = { null_pointer_is_valid allocsize(1) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #13 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #14 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #15 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #16 = { allocsize(0) }

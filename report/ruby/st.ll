@@ -204,22 +204,21 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.m = tail call noalias nonnull ptr @ruby_xmalloc(i64 noundef %i.l) #23 ; 2 uses
   %i.n = getelementptr i8, ptr %0, i64 48
   store ptr %i.m, ptr %i.n, align 8, !tbaa !27
-  %.val17 = load i8, ptr %1, align 8, !tbaa !19
-  %i.o = zext i8 %.val17 to i64                   ; 2 uses
-  %2 = shl nuw i64 1, %i.o                        ; 2 uses
-  %3 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %2, i64 range(i64 1, 25) 24) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 1
-  br i1 %4, label %bb.d, label %rbimpl_size_mul_or_raise.exit, !prof !54
+  %.val17 = load i8, ptr %1, align 8, !tbaa !19   ; 2 uses
+  %i.o = zext i8 %.val17 to i64                   ; 3 uses
+  %2 = icmp ugt i8 %.val17, 59
+  br i1 %2, label %bb.d, label %rbimpl_size_mul_or_raise.exit, !prof !54
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @ruby_malloc_size_overflow(i64 noundef 24, i64 noundef %2) #22
+  %3 = shl nuw i64 1, %i.o
+  tail call void @ruby_malloc_size_overflow(i64 noundef 24, i64 noundef %3) #22
   unreachable
 
 rbimpl_size_mul_or_raise.exit:                    ; preds = %bb.c
   %i.p = getelementptr i8, ptr %1, i64 48
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !27
-  %5 = extractvalue { i64, i1 } %3, 0
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.m, ptr noundef nonnull readonly align 1 %i.q, i64 noundef range(i64 1, 0) %5, i1 noundef false) #24
+  %4 = shl nuw i64 24, %i.o
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.m, ptr noundef nonnull readonly align 1 dereferenceable(1) %i.q, i64 noundef range(i64 1, 0) %4, i1 noundef false) #24
   %i.r = load ptr, ptr %i.a, align 8, !tbaa !26   ; 2 uses
   %.not = icmp eq ptr %i.r, null
   br i1 %.not, label %ruby_nonempty_memcpy.exit21, label %bb.e
@@ -622,15 +621,14 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !13
   %i.j = tail call noalias nonnull dereferenceable(56) ptr @ruby_xmalloc(i64 noundef 56) #23 ; 7 uses
   %i.k = tail call ptr @rb_st_init_existing_table_with_size(ptr noundef nonnull %i.j, ptr noundef %i.i, i64 noundef %i.e) ; 0 uses
-  %.val.i = load i8, ptr %i.b, align 8, !tbaa !19
-  %i.l = zext nneg i8 %.val.i to i64
-  %3 = shl nuw i64 1, %i.l                        ; 2 uses
-  %4 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 range(i64 1, 25) 24) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  br i1 %5, label %bb.c, label %rbimpl_size_mul_or_raise.exit.i, !prof !54
+  %.val.i = load i8, ptr %i.b, align 8, !tbaa !19 ; 2 uses
+  %i.l = zext nneg i8 %.val.i to i64              ; 2 uses
+  %3 = icmp ugt i8 %.val.i, 59
+  br i1 %3, label %bb.c, label %rbimpl_size_mul_or_raise.exit.i, !prof !54
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @ruby_malloc_size_overflow(i64 noundef 24, i64 noundef %3) #22
+  %4 = shl nuw i64 1, %i.l
+  tail call void @ruby_malloc_size_overflow(i64 noundef 24, i64 noundef %4) #22
   unreachable
 
 rbimpl_size_mul_or_raise.exit.i:                  ; preds = %bb.b
@@ -638,8 +636,8 @@ rbimpl_size_mul_or_raise.exit.i:                  ; preds = %bb.b
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !27
   %i.o = getelementptr inbounds nuw i8, ptr %i.j, i64 48
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !27   ; 2 uses
-  %6 = extractvalue { i64, i1 } %4, 0
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.p, ptr noundef nonnull readonly align 1 %i.n, i64 noundef range(i64 1, 0) %6, i1 noundef false) #24
+  %5 = shl nuw i64 24, %i.l
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.p, ptr noundef nonnull readonly align 1 dereferenceable(1) %i.n, i64 noundef range(i64 1, 0) %5, i1 noundef false) #24
   %.pre.i = load ptr, ptr %i.m, align 8, !tbaa !27
   tail call void @ruby_xfree(ptr noundef %.pre.i) #24
   %i.q = getelementptr i8, ptr %i.b, i64 24       ; 2 uses
@@ -1042,11 +1040,8 @@ declare void @ruby_malloc_size_overflow(i64 noundef, i64 noundef) local_unnamed_
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #18
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #19
-
 ; Function Attrs: allocsize(1)
-declare nonnull ptr @ruby_xrealloc(ptr noundef, i64 noundef) local_unnamed_addr #20
+declare nonnull ptr @ruby_xrealloc(ptr noundef, i64 noundef) local_unnamed_addr #19
 
 declare i64 @rb_obj_class(i64 noundef) local_unnamed_addr #5
 
@@ -1055,13 +1050,13 @@ declare i64 @rb_hash_key_str(i64 noundef) local_unnamed_addr #5
 declare void @rb_gc_writebarrier(i64 noundef, i64 noundef) local_unnamed_addr #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite)
-declare void @llvm.prefetch.p0(ptr readonly captures(none), i32 immarg range(i32 0, 2), i32 immarg range(i32 0, 4), i32 immarg range(i32 0, 2)) #21
+declare void @llvm.prefetch.p0(ptr readonly captures(none), i32 immarg range(i32 0, 2), i32 immarg range(i32 0, 4), i32 immarg range(i32 0, 2)) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #19
+declare i32 @llvm.umax.i32(i32, i32) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #19
+declare i64 @llvm.umax.i64(i64, i64) #21
 
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1082,9 +1077,9 @@ attributes #15 = { nofree norecurse nosync nounwind sspstrong memory(read, inacc
 attributes #16 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #17 = { nofree norecurse nosync nounwind sspstrong memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #18 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #19 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #20 = { allocsize(1) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #21 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) }
+attributes #19 = { allocsize(1) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #20 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) }
+attributes #21 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #22 = { noreturn nounwind }
 attributes #23 = { nounwind allocsize(0) }
 attributes #24 = { nounwind }

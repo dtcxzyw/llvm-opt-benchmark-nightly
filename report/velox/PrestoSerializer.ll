@@ -205,15 +205,14 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !467
   %i.e = ptrtoint ptr %i.d to i64
   %i.f = ptrtoint ptr %i.b to i64
-  %i.g = sub i64 %i.e, %i.f
+  %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = sdiv exact i64 %i.g, 336                 ; 2 uses
   %.not.i = icmp eq ptr %i.b, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN8facebook5velox10serializer6presto6detail12VectorStreamENS1_6memory12StlAllocatorIS5_EEE13_M_deallocateEPS5_m.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.h, i64 336) ; 2 uses
-  %4 = extractvalue { i64, i1 } %3, 1
-  br i1 %4, label %bb.c, label %_ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorINS1_10serializer6presto6detail12VectorStreamEEEE10deallocateERS8_PS7_m.exit.i, !prof !17
+  %3 = icmp ugt i64 %i.h, 54901024028897475
+  br i1 %3, label %bb.c, label %_ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorINS1_10serializer6presto6detail12VectorStreamEEEE10deallocateERS8_PS7_m.exit.i, !prof !17
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
@@ -254,11 +253,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i.i: ; preds 
 
 _ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorINS1_10serializer6presto6detail12VectorStreamEEEE10deallocateERS8_PS7_m.exit.i: ; preds = %bb.b
   %i.q = load ptr, ptr %0, align 8, !tbaa !474    ; 2 uses
-  %5 = extractvalue { i64, i1 } %3, 0
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !8
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 120
   %i.t = load ptr, ptr %i.s, align 8
-  invoke void %i.t(ptr noundef nonnull align 8 dereferenceable(264) %i.q, ptr noundef nonnull %i.b, i64 noundef %5)
+  invoke void %i.t(ptr noundef nonnull align 8 dereferenceable(264) %i.q, ptr noundef nonnull %i.b, i64 noundef %i.g)
           to label %_ZNSt12_Vector_baseIN8facebook5velox10serializer6presto6detail12VectorStreamENS1_6memory12StlAllocatorIS5_EEE13_M_deallocateEPS5_m.exit unwind label %bb.f, !inline_history !476
 
 _ZNSt12_Vector_baseIN8facebook5velox10serializer6presto6detail12VectorStreamENS1_6memory12StlAllocatorIS5_EEE13_M_deallocateEPS5_m.exit: ; preds = %bb.a, %_ZNSt16allocator_traitsIN8facebook5velox6memory12StlAllocatorINS1_10serializer6presto6detail12VectorStreamEEEE10deallocateERS8_PS7_m.exit.i
@@ -275,9 +273,6 @@ bb.f:                                             ; preds = %_ZNSt16allocator_tr
   call void @__clang_call_terminate(ptr %i.v) #29
   unreachable
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #22
 
 declare void @_ZN8facebook5velox6StatusC1ENS0_10StatusCodeENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(8), i8 noundef signext, ptr noundef align 8) unnamed_addr #1
 

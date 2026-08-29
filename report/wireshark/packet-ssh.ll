@@ -204,7 +204,7 @@ bb.ch:                                            ; preds = %bb.cg
   br label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch, %bb.cg, %bb.cf
-  %.0271.i = phi i32 [ %i.ms, %bb.cf ], [ %i.ni, %bb.ch ], [ %i.ms, %bb.cg ] ; 10 uses
+  %.0271.i = phi i32 [ %i.ms, %bb.cf ], [ %i.ni, %bb.ch ], [ %i.ms, %bb.cg ] ; 11 uses
   %i.nj = load i32, ptr @hf_ssh_padding_length, align 4
   %i.nk = call ptr @proto_tree_add_item_ret_uint(ptr noundef %4, i32 noundef %i.nj, ptr noundef %i.mh, i32 noundef 4, i32 noundef 1, i32 noundef 0, ptr noundef nonnull %i.d) ; 2 uses
   %i.nl = load i32, ptr %i.d, align 4             ; 3 uses
@@ -218,18 +218,17 @@ bb.cj:                                            ; preds = %bb.ci
 
 bb.ck:                                            ; preds = %bb.cj, %bb.ci
   %i.no = phi i32 [ %.pre.i, %bb.cj ], [ %i.nl, %bb.ci ] ; 2 uses
-  %i.np = add i32 %i.no, 1
-  %5 = call { i32, i1 } @llvm.usub.with.overflow.i32(i32 %.0271.i, i32 %i.np) ; 2 uses
-  %6 = extractvalue { i32, i1 } %5, 1
-  %7 = extractvalue { i32, i1 } %5, 0
-  br i1 %6, label %bb.cl, label %bb.cm
+  %i.np = add i32 %i.no, 1                        ; 2 uses
+  %5 = icmp ult i32 %.0271.i, %i.np
+  %6 = sub nuw i32 %.0271.i, %i.np
+  br i1 %5, label %bb.cl, label %bb.cm
 
 bb.cl:                                            ; preds = %bb.ck
   %i.nq = call ptr (ptr, ptr, ptr, ptr, ...) @expert_add_info_format(ptr noundef %1, ptr noundef %i.nk, ptr noundef nonnull @ei_ssh_padding_length, ptr noundef nonnull @.str.797, i32 noundef %i.no) ; 0 uses
   br label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl, %bb.ck
-  %.0.i38 = phi i32 [ 0, %bb.cl ], [ %7, %bb.ck ] ; 6 uses
+  %.0.i38 = phi i32 [ 0, %bb.cl ], [ %6, %bb.ck ] ; 6 uses
   %i.nr = call zeroext i8 @tvb_get_uint8(ptr noundef %i.mh, i32 noundef 5) ; 14 uses
   %i.ns = zext i8 %i.nr to i32                    ; 12 uses
   %i.nt = call ptr @tvb_new_subset_length(ptr noundef %i.mh, i32 noundef 5, i32 noundef %.0.i38) ; 79 uses
@@ -631,9 +630,6 @@ declare ptr @add_new_data_source(ptr noundef, ptr noundef, ptr noundef) local_un
 
 ; Function Attrs: null_pointer_is_valid
 declare i32 @tvb_ensure_captured_length_remaining(ptr noundef, i32 noundef) local_unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.usub.with.overflow.i32(i32, i32) #17
 
 ; Function Attrs: null_pointer_is_valid
 declare zeroext i8 @tvb_get_uint8(ptr noundef, i32 noundef) local_unnamed_addr #2
@@ -1037,10 +1033,10 @@ bb.i:                                             ; preds = %bb.e, %bb.f, %bb.g,
 declare ptr @wmem_map_new(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nofree nosync nounwind null_pointer_is_valid willreturn memory(none)
-declare i32 @g_direct_hash(ptr noundef) #18
+declare i32 @g_direct_hash(ptr noundef) #17
 
 ; Function Attrs: mustprogress nofree nosync nounwind null_pointer_is_valid willreturn memory(none)
-declare i32 @g_direct_equal(ptr noundef, ptr noundef) #18
+declare i32 @g_direct_equal(ptr noundef, ptr noundef) #17
 
 ; Function Attrs: null_pointer_is_valid
 declare ptr @wmem_map_insert(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
@@ -1130,7 +1126,7 @@ declare noundef i32 @fflush(ptr noundef captures(none)) local_unnamed_addr #13
 declare void @g_hash_table_destroy(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nofree nosync nounwind null_pointer_is_valid willreturn memory(none)
-declare ptr @gnutls_check_version(ptr noundef) local_unnamed_addr #18
+declare ptr @gnutls_check_version(ptr noundef) local_unnamed_addr #17
 
 ; Function Attrs: null_pointer_is_valid
 declare ptr @gcry_check_version(ptr noundef) local_unnamed_addr #2
@@ -1142,31 +1138,31 @@ declare i32 @tvb_strneql(ptr noundef, i32 noundef, ptr noundef, i64 noundef) loc
 declare void @conversation_set_dissector(ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #19
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #17
+declare i32 @llvm.umin.i32(i32, i32) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #17
+declare i32 @llvm.smax.i32(i32, i32) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #17
+declare i64 @llvm.umin.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #17
+declare i32 @llvm.umax.i32(i32, i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.xor.v4i32(<4 x i32>) #17
+declare i32 @llvm.vector.reduce.xor.v4i32(<4 x i32>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #17
+declare i32 @llvm.bswap.i32(i32) #19
 
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1185,9 +1181,9 @@ attributes #13 = { nofree nounwind null_pointer_is_valid "no-trapping-math"="tru
 attributes #14 = { nofree nounwind null_pointer_is_valid memory(read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #15 = { noreturn null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #16 = { null_pointer_is_valid allocsize(2) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #17 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #18 = { mustprogress nofree nosync nounwind null_pointer_is_valid willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #19 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #17 = { mustprogress nofree nosync nounwind null_pointer_is_valid willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #18 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #19 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #20 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #21 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #22 = { nounwind willreturn memory(read) }

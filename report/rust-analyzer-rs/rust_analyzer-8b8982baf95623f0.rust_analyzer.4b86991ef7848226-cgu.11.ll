@@ -205,19 +205,18 @@ bb.i:                                             ; preds = %thread-pre-split.i,
 .preheader60.i.preheader:                         ; preds = %bb.i, %.preheader60.i
   %.sroa.0.1.i42 = phi ptr [ %i.q, %.preheader60.i ], [ %.sroa.0.0.i, %bb.i ] ; 3 uses
   %.sroa.15.1.i41 = phi i64 [ %i.r, %.preheader60.i ], [ %.sroa.15.0.i, %bb.i ]
-  %.sroa.045.0.i40 = phi i32 [ %i.y, %.preheader60.i ], [ 0, %bb.i ]
-  %2 = tail call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.sroa.045.0.i40, i32 10) ; 2 uses
-  %3 = extractvalue { i32, i1 } %2, 1
-  br i1 %3, label %bb.k, label %bb.j, !prof !433
+  %.sroa.045.0.i40 = phi i32 [ %i.y, %.preheader60.i ], [ 0, %bb.i ] ; 2 uses
+  %2 = icmp ugt i32 %.sroa.045.0.i40, 429496729
+  br i1 %2, label %bb.k, label %bb.j, !prof !433
 
 bb.j:                                             ; preds = %.preheader60.i.preheader
-  %4 = extractvalue { i32, i1 } %2, 0             ; 2 uses
+  %3 = mul nuw i32 %.sroa.045.0.i40, 10           ; 2 uses
   %i.u = load i8, ptr %.sroa.0.1.i42, align 1, !alias.scope !5628, !noundef !10
   %i.v = zext i8 %i.u to i32
   %i.w = add nsw i32 %i.v, -48                    ; 2 uses
   %i.x = icmp ugt i32 %i.w, 9
-  %i.y = add i32 %i.w, %4                         ; 3 uses
-  %i.z = icmp ult i32 %i.y, %4
+  %i.y = add i32 %i.w, %3                         ; 3 uses
+  %i.z = icmp ult i32 %i.y, %3
   %or.cond = select i1 %i.x, i1 true, i1 %i.z, !prof !2887
   br i1 %or.cond, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread.thread, label %.preheader60.i, !prof !2887
 
@@ -619,9 +618,6 @@ declare { ptr, i64 } @_RNvMs_NtCsdcPuHeDsw6v_13project_model7sysrootNtB4_7Sysroo
 
 ; Function Attrs: nonlazybind uwtable
 declare i64 @_RNvMs1_CslLuZgPVt6hg_3ideNtB5_8Analysis10crate_root(ptr noundef nonnull align 8, i32 noundef range(i32 1, 0), i32 noundef) unnamed_addr #0
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #30
 
 ; Function Attrs: noinline nonlazybind uwtable
 declare void @_RNvMs4_NtCsbSS6DM8SDEO_5alloc7raw_vecINtB5_6RawVecNtNtCs6u1mgJOKDyY_13rust_analyzer8discover14DiscoverHandleE8grow_oneBQ_(ptr noalias nofree noundef align 8 dereferenceable(16)) unnamed_addr #35

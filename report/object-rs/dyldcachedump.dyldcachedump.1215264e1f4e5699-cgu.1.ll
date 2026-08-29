@@ -205,19 +205,18 @@ _RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef10read_sliceINtNtBc_5m
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
 define hidden { ptr, i64 } @_RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef13read_slice_atINtNtBc_5macho19DyldSubCacheEntryV1NtNtBc_6endian10EndiannessEECs1yfHPQhS7hZ_13dyldcachedump(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef range(i64 0, -9223372036854775808) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #2 {
 bb.a:
-  %4 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 24) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  br i1 %5, label %_RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef10read_sliceINtNtBc_5macho19DyldSubCacheEntryV1NtNtBc_6endian10EndiannessEECs1yfHPQhS7hZ_13dyldcachedump.exit, label %bb.b, !prof !70
+  %4 = icmp ugt i64 %3, 768614336404564650
+  br i1 %4, label %_RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef10read_sliceINtNtBc_5macho19DyldSubCacheEntryV1NtNtBc_6endian10EndiannessEECs1yfHPQhS7hZ_13dyldcachedump.exit, label %bb.b, !prof !70
 
 bb.b:                                             ; preds = %bb.a
-  %6 = extractvalue { i64, i1 } %4, 0             ; 2 uses
-  %i.a = icmp eq i64 %6, 0
+  %i.a = icmp eq i64 %3, 0
   br i1 %i.a, label %_RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef10read_sliceINtNtBc_5macho19DyldSubCacheEntryV1NtNtBc_6endian10EndiannessEECs1yfHPQhS7hZ_13dyldcachedump.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  %5 = mul nuw i64 %3, 24
   %i.b = icmp ult i64 %1, %2
   %i.c = sub nuw nsw i64 %1, %2
-  %.not.i.i.i = icmp ugt i64 %6, %i.c
+  %.not.i.i.i = icmp ugt i64 %5, %i.c
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %2
   %or.cond.i.i = select i1 %i.b, i1 true, i1 %.not.i.i.i
   %spec.select = select i1 %or.cond.i.i, ptr null, ptr %i.d
@@ -233,19 +232,18 @@ _RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef10read_sliceINtNtBc_5m
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
 define hidden { ptr, i64 } @_RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef13read_slice_atINtNtBc_5macho19DyldSubCacheEntryV2NtNtBc_6endian10EndiannessEECs1yfHPQhS7hZ_13dyldcachedump(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef range(i64 0, -9223372036854775808) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #2 {
 bb.a:
-  %4 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 56) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  br i1 %5, label %_RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef10read_sliceINtNtBc_5macho19DyldSubCacheEntryV2NtNtBc_6endian10EndiannessEECs1yfHPQhS7hZ_13dyldcachedump.exit, label %bb.b, !prof !70
+  %4 = icmp ugt i64 %3, 329406144173384850
+  br i1 %4, label %_RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef10read_sliceINtNtBc_5macho19DyldSubCacheEntryV2NtNtBc_6endian10EndiannessEECs1yfHPQhS7hZ_13dyldcachedump.exit, label %bb.b, !prof !70
 
 bb.b:                                             ; preds = %bb.a
-  %6 = extractvalue { i64, i1 } %4, 0             ; 2 uses
-  %i.a = icmp eq i64 %6, 0
+  %i.a = icmp eq i64 %3, 0
   br i1 %i.a, label %_RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef10read_sliceINtNtBc_5macho19DyldSubCacheEntryV2NtNtBc_6endian10EndiannessEECs1yfHPQhS7hZ_13dyldcachedump.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  %5 = mul nuw i64 %3, 56
   %i.b = icmp ult i64 %1, %2
   %i.c = sub nuw nsw i64 %1, %2
-  %.not.i.i.i = icmp ugt i64 %6, %i.c
+  %.not.i.i.i = icmp ugt i64 %5, %i.c
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %2
   %or.cond.i.i = select i1 %i.b, i1 true, i1 %.not.i.i.i
   %spec.select = select i1 %or.cond.i.i, ptr null, ptr %i.d
@@ -288,19 +286,18 @@ _RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef10read_sliceINtNtBc_5m
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
 define hidden { ptr, i64 } @_RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef13read_slice_atINtNtBc_5macho28DyldCacheMappingAndSlideInfoNtNtBc_6endian10EndiannessEECs1yfHPQhS7hZ_13dyldcachedump(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef range(i64 0, -9223372036854775808) %1, i64 noundef %2, i64 noundef %3) unnamed_addr #2 {
 bb.a:
-  %4 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %3, i64 56) ; 2 uses
-  %5 = extractvalue { i64, i1 } %4, 1
-  br i1 %5, label %_RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef10read_sliceINtNtBc_5macho28DyldCacheMappingAndSlideInfoNtNtBc_6endian10EndiannessEECs1yfHPQhS7hZ_13dyldcachedump.exit, label %bb.b, !prof !70
+  %4 = icmp ugt i64 %3, 329406144173384850
+  br i1 %4, label %_RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef10read_sliceINtNtBc_5macho28DyldCacheMappingAndSlideInfoNtNtBc_6endian10EndiannessEECs1yfHPQhS7hZ_13dyldcachedump.exit, label %bb.b, !prof !70
 
 bb.b:                                             ; preds = %bb.a
-  %6 = extractvalue { i64, i1 } %4, 0             ; 2 uses
-  %i.a = icmp eq i64 %6, 0
+  %i.a = icmp eq i64 %3, 0
   br i1 %i.a, label %_RINvYRShNtNtNtCseHTIzroA4w0_6object4read8read_ref7ReadRef10read_sliceINtNtBc_5macho28DyldCacheMappingAndSlideInfoNtNtBc_6endian10EndiannessEECs1yfHPQhS7hZ_13dyldcachedump.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  %5 = mul nuw i64 %3, 56
   %i.b = icmp ult i64 %1, %2
   %i.c = sub nuw nsw i64 %1, %2
-  %.not.i.i.i = icmp ugt i64 %6, %i.c
+  %.not.i.i.i = icmp ugt i64 %5, %i.c
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %2
   %or.cond.i.i = select i1 %i.b, i1 true, i1 %.not.i.i.i
   %spec.select = select i1 %or.cond.i.i, ptr null, ptr %i.d
@@ -703,11 +700,8 @@ declare void @_RNvMsj_NtCsG258MDvU3F_3std2fsNtB5_11OpenOptions5__open(ptr dead_o
 ; Function Attrs: nonlazybind uwtable
 declare noundef i64 @_RNvNtCsG258MDvU3F_3std2rt19lang_start_internal(ptr noundef nonnull, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48), i64 noundef, ptr noundef, i8 noundef) unnamed_addr #0
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #8
-
 ; Function Attrs: cold minsize noinline noreturn nounwind nonlazybind optsize uwtable
-declare void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() unnamed_addr #9
+declare void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() unnamed_addr #8
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvXs1_NtCsexYYUdYSQU6_5alloc7raw_vecINtB5_6RawVecNtCsgQ7e0lqRvgo_7memmap24MmapENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs1yfHPQhS7hZ_13dyldcachedump(ptr noalias nofree noundef align 8 dereferenceable(16)) unnamed_addr #0
@@ -728,7 +722,7 @@ declare void @_RNvXs_NtCsgQ7e0lqRvgo_7memmap22osNtB4_9MmapInnerNtNtNtCskKLDkoKar
 declare hidden void @_RNvMs0_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterNtNtB9_6string6StringE32forget_allocation_drop_remainingCs1yfHPQhS7hZ_13dyldcachedump(ptr noalias nofree noundef align 8 dereferenceable(32)) unnamed_addr #0
 
 ; Function Attrs: cold minsize noreturn nonlazybind optsize uwtable
-declare void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #10
+declare void @_RNvNtCsexYYUdYSQU6_5alloc5alloc18handle_alloc_error(i64 noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #9
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RINvXs4_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB6_8IntoIterNtNtBa_6string6StringENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropNtCsgQ7e0lqRvgo_7memmap24MmapENCINvNtNtB1p_8adapters3map12map_try_foldBX_INtNtB1r_6result6ResultB2X_uEB2n_INtNtNtB1r_3ops12control_flow11ControlFlowIB49_B2n_zEB2n_ENCNvCs1yfHPQhS7hZ_13dyldcachedump4main0NCINvXB3y_INtB3y_12GenericShuntINtB3w_3MapBI_B5B_EIB49_zuEEB1j_8try_foldB2n_NCINvNtB8_16in_place_collect24write_in_place_with_dropB2X_E0B5l_E0E0B4F_EB5F_(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24), ptr noalias nofree noundef align 8 dereferenceable(32), ptr noundef, ptr noundef, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(24)) unnamed_addr #0
@@ -743,25 +737,25 @@ declare void @_RNvMNtCsexYYUdYSQU6_5alloc6stringNtB2_6String15from_utf8_lossy(pt
 declare hidden void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs1yfHPQhS7hZ_13dyldcachedump(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(none) dereferenceable(24), i64 noundef, i1 noundef zeroext, i64 noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #0
 
 ; Function Attrs: cold minsize noreturn nonlazybind optsize uwtable
-declare void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef range(i64 0, -9223372036854775807), i64) unnamed_addr #10
+declare void @_RNvNtCsexYYUdYSQU6_5alloc7raw_vec12handle_error(i64 noundef range(i64 0, -9223372036854775807), i64) unnamed_addr #9
 
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvNvNtCsexYYUdYSQU6_5alloc3fmt6format12format_inner(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(none) dereferenceable(24), ptr noundef nonnull, ptr noundef nonnull) unnamed_addr #0
 
 ; Function Attrs: nounwind nonlazybind allockind("free") uwtable
-declare void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr allocptr noundef nonnull captures(address), i64 noundef, i64 noundef range(i64 1, -9223372036854775807)) unnamed_addr #11
+declare void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr allocptr noundef nonnull captures(address), i64 noundef, i64 noundef range(i64 1, -9223372036854775807)) unnamed_addr #10
 
 ; Function Attrs: nounwind nonlazybind allockind("realloc,aligned") allocsize(3) uwtable
-declare noalias noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr allocptr noundef nonnull, i64 noundef, i64 allocalign noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #12
+declare noalias noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr allocptr noundef nonnull, i64 noundef, i64 allocalign noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #11
 
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @_RNvXsi_NtCskKLDkoKarTP_4core3fmteNtB5_7Display3fmt(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef, ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #0
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #13
+declare void @llvm.experimental.noalias.scope.decl(metadata) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #8
+declare i64 @llvm.usub.sat.i64(i64, i64) #13
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -771,12 +765,12 @@ attributes #4 = { mustprogress nofree norecurse nosync nounwind nonlazybind will
 attributes #5 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #7 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { cold minsize noinline noreturn nounwind nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #10 = { cold minsize noreturn nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #11 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #12 = { nounwind nonlazybind allockind("realloc,aligned") allocsize(3) uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #8 = { cold minsize noinline noreturn nounwind nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #9 = { cold minsize noreturn nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #10 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #11 = { nounwind nonlazybind allockind("realloc,aligned") allocsize(3) uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #13 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #14 = { noinline }
 attributes #15 = { cold noreturn nounwind }
 attributes #16 = { nounwind }
