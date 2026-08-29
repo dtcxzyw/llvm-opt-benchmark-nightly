@@ -205,8 +205,8 @@ bb.am:                                            ; preds = %bb.ak
 
 bb.an:                                            ; preds = %bb.aj
   %i.jx = icmp samesign ult i64 %indvars.iv141, 1073741823
-  %indvars.iv141.tr = trunc i64 %indvars.iv141 to i32
-  %i.jy = shl i32 %indvars.iv141.tr, 1
+  %indvars.iv141.tr = trunc nsw i64 %indvars.iv141 to i32
+  %i.jy = shl nsw i32 %indvars.iv141.tr, 1
   %spec.select.i = select i1 %i.jx, i32 %i.jy, i32 2147483647 ; 4 uses
   %i.jz = sext i32 %spec.select.i to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv141, %i.jz
@@ -307,8 +307,8 @@ bb.av:                                            ; preds = %bb.at
 
 bb.aw:                                            ; preds = %bb.as
   %i.kz = icmp samesign ult i64 %indvars.iv148, 1073741823
-  %indvars.iv148.tr = trunc i64 %indvars.iv148 to i32
-  %i.la = shl i32 %indvars.iv148.tr, 1
+  %indvars.iv148.tr = trunc nsw i64 %indvars.iv148 to i32
+  %i.la = shl nsw i32 %indvars.iv148.tr, 1
   %spec.select.i71 = select i1 %i.kz, i32 %i.la, i32 2147483647 ; 4 uses
   %i.lb = sext i32 %spec.select.i71 to i64
   %.not.i9.i72 = icmp samesign ult i64 %indvars.iv148, %i.lb
@@ -711,9 +711,9 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.f
   %i.y = icmp samesign ult i64 %indvars.iv.i, 1073741823
-  %i.z = shl i32 %spec.select.sink.i10.i, 1
+  %i.z = shl nuw nsw i32 %spec.select.sink.i10.i, 1
   %spec.select.i.i = select i1 %i.y, i32 %i.z, i32 2147483647 ; 4 uses
-  %3 = sext i32 %spec.select.i.i to i64
+  %3 = zext nneg i32 %spec.select.i.i to i64
   %.not.i9.i.i = icmp samesign ult i64 %indvars.iv.i, %3
   br i1 %.not.i9.i.i, label %bb.k, label %Vec_IntPush.exit.i
 

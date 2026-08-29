@@ -108,7 +108,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.m = and i64 %i.c, 2147483647
   %.tr = trunc i64 %i.c to i32
-  %i.n = shl nuw i32 %.tr, 1
+  %i.n = shl nuw nsw i32 %.tr, 1
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %._crit_edge58

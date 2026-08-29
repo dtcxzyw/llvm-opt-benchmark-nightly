@@ -115,8 +115,8 @@ _ZNK4llvm17TargetLibraryInfo3hasENS_7LibFuncE.exit.i.i: ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 %i.aa
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !141
   %i.ad = zext i8 %i.ac to i32                    ; 2 uses
-  %indvars.iv.tr.i.i = trunc i64 %indvars.iv.i.i to i32 ; 2 uses
-  %i.ae = shl i32 %indvars.iv.tr.i.i, 1
+  %indvars.iv.tr.i.i = trunc nuw nsw i64 %indvars.iv.i.i to i32 ; 2 uses
+  %i.ae = shl nuw nsw i32 %indvars.iv.tr.i.i, 1
   %i.af = and i32 %i.ae, 6                        ; 2 uses
   %i.ag = shl nuw nsw i32 3, %i.af
   %i.ah = and i32 %i.ag, %i.ad
@@ -151,7 +151,7 @@ bb.e:                                             ; preds = %_ZNK4llvm17TargetLi
 
 bb.f:                                             ; preds = %bb.e
   %i.av = add i32 %i.at, -1                       ; 2 uses
-  %i.aw = mul i32 %indvars.iv.tr.i.i, 37
+  %i.aw = mul nuw nsw i32 %indvars.iv.tr.i.i, 37
   %.017.i.i.i.i.i.i = and i32 %i.av, %i.aw        ; 3 uses
   %i.ax = zext nneg i32 %.017.i.i.i.i.i.i to i64  ; 2 uses
   %i.ay = lshr i64 %i.ax, 5
@@ -298,8 +298,8 @@ _ZNSt6vectorIN4llvm7VecDescESaIS1_EED2Ev.exit2.i.i.i: ; preds = %bb.l, %_ZNSt6ve
   br i1 %.not11.i2.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph7.i.i.i.i.i
-  %indvars.iv.tr.i.i.i.i.i = trunc i64 %indvars.iv.i.i.i.i.i to i32
-  %i.dk = shl i32 %indvars.iv.tr.i.i.i.i.i, 5
+  %indvars.iv.tr.i.i.i.i.i = trunc nuw i64 %indvars.iv.i.i.i.i.i to i32
+  %i.dk = shl nuw i32 %indvars.iv.tr.i.i.i.i.i, 5
   br label %bb.m
 
 bb.m:                                             ; preds = %_ZZN4llvm12DenseMapBaseINS_8DenseMapIjNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjS7_EEEEjS7_S9_SC_E10destroyAllEvENKUljE_clEj.exit.i.i.i.i.i, %.lr.ph.i.i.i.i.i

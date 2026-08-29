@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.i
   %i.ed = icmp samesign ult i64 %indvars.iv315.i.i, 1073741823
-  %i.ee = shl i32 %spec.select.sink.i255.i.i, 1
+  %i.ee = shl nsw i32 %spec.select.sink.i255.i.i, 1
   %spec.select.i.i.i = select i1 %i.ed, i32 %i.ee, i32 2147483647 ; 4 uses
   %i.ef = sext i32 %spec.select.i.i.i to i64
   %.not.i10.i.i.i = icmp samesign ult i64 %indvars.iv315.i.i, %i.ef
@@ -269,7 +269,7 @@ bb.u:                                             ; preds = %bb.s
 
 bb.v:                                             ; preds = %bb.r
   %i.ew = icmp samesign ult i64 %indvars.iv320.i.i, 1073741823
-  %i.ex = shl i32 %spec.select.sink.i220268.i.i, 1
+  %i.ex = shl nsw i32 %spec.select.sink.i220268.i.i, 1
   %spec.select.i216.i.i = select i1 %i.ew, i32 %i.ex, i32 2147483647 ; 4 uses
   %i.ey = sext i32 %spec.select.i216.i.i to i64
   %.not.i10.i217.i.i = icmp samesign ult i64 %indvars.iv320.i.i, %i.ey
@@ -615,7 +615,7 @@ bb.au:                                            ; preds = %bb.as
 
 bb.av:                                            ; preds = %bb.ar
   %i.je = icmp samesign ult i64 %indvars.iv234.i.i.i.i, 1073741823
-  %i.jf = shl i32 %spec.select.sink.i202.i.i.i.i, 1
+  %i.jf = shl nsw i32 %spec.select.sink.i202.i.i.i.i, 1
   %spec.select.i.i62.i.i.i = select i1 %i.je, i32 %i.jf, i32 2147483647 ; 4 uses
   %i.jg = sext i32 %spec.select.i.i62.i.i.i to i64
   %.not.i10.i.i63.i.i.i = icmp samesign ult i64 %indvars.iv234.i.i.i.i, %i.jg
@@ -699,7 +699,7 @@ bb.be:                                            ; preds = %bb.bc
 
 bb.bf:                                            ; preds = %bb.bb
   %i.kh = icmp samesign ult i64 %indvars.iv227.i.i.i.i, 1073741823
-  %i.ki = shl i32 %spec.select.sink.i130191.i.i.i.i, 1
+  %i.ki = shl nsw i32 %spec.select.sink.i130191.i.i.i.i, 1
   %spec.select.i126.i.i.i.i = select i1 %i.kh, i32 %i.ki, i32 2147483647 ; 4 uses
   %i.kj = sext i32 %spec.select.i126.i.i.i.i to i64
   %.not.i10.i127.i.i.i.i = icmp samesign ult i64 %indvars.iv227.i.i.i.i, %i.kj

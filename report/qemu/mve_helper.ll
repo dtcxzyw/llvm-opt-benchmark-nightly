@@ -204,7 +204,7 @@ do_qdmullh.exit:
   %i.f = mul nsw i64 %i.e, %i.d                   ; 2 uses
   %i.g = icmp sgt i64 %i.f, 1073741823            ; 2 uses
   %.tr = trunc nsw i64 %i.f to i32
-  %i.h = shl i32 %.tr, 1
+  %i.h = shl nsw i32 %.tr, 1
   %.0.i.i = select i1 %i.g, i32 2147483647, i32 %i.h
   %i.i = and i16 %i.a, 255
   %i.j = zext nneg i16 %i.i to i64
@@ -230,7 +230,7 @@ do_qdmullh.exit:
   %i.ac = mul nsw i64 %i.ab, %i.aa                ; 2 uses
   %i.ad = icmp sgt i64 %i.ac, 1073741823          ; 2 uses
   %.tr.1 = trunc nsw i64 %i.ac to i32
-  %i.ae = shl i32 %.tr.1, 1
+  %i.ae = shl nsw i32 %.tr.1, 1
   %.0.i.i.1 = select i1 %i.ad, i32 2147483647, i32 %i.ae
   %i.af = and i16 %i.u, 255
   %i.ag = zext nneg i16 %i.af to i64
@@ -259,7 +259,7 @@ do_qdmullh.exit:
   %i.bc = mul nsw i64 %i.bb, %i.ba                ; 2 uses
   %i.bd = icmp sgt i64 %i.bc, 1073741823          ; 2 uses
   %.tr.2 = trunc nsw i64 %i.bc to i32
-  %i.be = shl i32 %.tr.2, 1
+  %i.be = shl nsw i32 %.tr.2, 1
   %.0.i.i.2 = select i1 %i.bd, i32 2147483647, i32 %i.be
   %i.bf = zext nneg i16 %i.au to i64
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr @expand_pred_b_data, i64 %i.bf
@@ -286,7 +286,7 @@ do_qdmullh.exit:
   %i.ca = mul nsw i64 %i.bz, %i.by                ; 2 uses
   %i.cb = icmp sgt i64 %i.ca, 1073741823          ; 2 uses
   %.tr.3 = trunc nsw i64 %i.ca to i32
-  %i.cc = shl i32 %.tr.3, 1
+  %i.cc = shl nsw i32 %.tr.3, 1
   %.0.i.i.3 = select i1 %i.cb, i32 2147483647, i32 %i.cc
   %i.cd = zext nneg i16 %i.bs to i64
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr @expand_pred_b_data, i64 %i.cd
@@ -509,7 +509,7 @@ do_qdmullh.exit:
   %i.g = sext i16 %i.e to i64
   %i.h = mul nsw i64 %i.g, %i.f                   ; 2 uses
   %.tr = trunc nsw i64 %i.h to i32
-  %i.i = shl i32 %.tr, 1
+  %i.i = shl nsw i32 %.tr, 1
   %i.j = and i16 %i.a, 255
   %i.k = zext nneg i16 %i.j to i64
   %i.l = getelementptr inbounds nuw [8 x i8], ptr @expand_pred_b_data, i64 %i.k
@@ -552,7 +552,7 @@ do_qdmullh.exit:
   %i.au = mul nsw i64 %i.at, %i.as                ; 2 uses
   %i.av = icmp sgt i64 %i.au, 1073741823          ; 2 uses
   %.tr.1 = trunc nsw i64 %i.au to i32
-  %i.aw = shl i32 %.tr.1, 1
+  %i.aw = shl nsw i32 %.tr.1, 1
   %.0.i.i.1 = select i1 %i.av, i32 2147483647, i32 %i.aw
   %i.ax = load i64, ptr %i.x, align 8
   %i.ay = trunc i64 %i.ax to i32                  ; 2 uses
@@ -568,7 +568,7 @@ do_qdmullh.exit:
   %i.bh = mul nsw i64 %i.bg, %i.bf                ; 2 uses
   %i.bi = icmp sgt i64 %i.bh, 1073741823          ; 2 uses
   %.tr.2 = trunc nsw i64 %i.bh to i32
-  %i.bj = shl i32 %.tr.2, 1
+  %i.bj = shl nsw i32 %.tr.2, 1
   %.0.i.i.2 = select i1 %i.bi, i32 2147483647, i32 %i.bj
   %i.bk = load i64, ptr %i.ae, align 8
   %i.bl = trunc i64 %i.bk to i32                  ; 2 uses
@@ -593,7 +593,7 @@ do_qdmullh.exit:
   %i.cd = insertelement <4 x i1> %i.cc, i1 %i.bv, i64 3
   %i.ce = and <4 x i1> %i.cd, %i.bz
   %.tr.3 = trunc nsw i64 %i.bu to i32
-  %i.cf = shl i32 %.tr.3, 1
+  %i.cf = shl nsw i32 %.tr.3, 1
   %.0.i.i.3 = select i1 %i.bv, i32 2147483647, i32 %i.cf
   %i.cg = load i64, ptr %i.al, align 8
   %i.ch = trunc i64 %i.cg to i32                  ; 2 uses
@@ -996,7 +996,7 @@ do_qdmullh.exit:
   %i.f = mul nsw i64 %i.c, %i.e                   ; 2 uses
   %i.g = icmp sgt i64 %i.f, 1073741823            ; 2 uses
   %.tr = trunc nsw i64 %i.f to i32
-  %i.h = shl i32 %.tr, 1
+  %i.h = shl nsw i32 %.tr, 1
   %.0.i.i = select i1 %i.g, i32 2147483647, i32 %i.h
   %i.i = and i16 %i.b, 255
   %i.j = zext nneg i16 %i.i to i64
@@ -1018,7 +1018,7 @@ do_qdmullh.exit:
   %i.y = mul nsw i64 %i.c, %i.x                   ; 2 uses
   %i.z = icmp sgt i64 %i.y, 1073741823            ; 2 uses
   %.tr.1 = trunc nsw i64 %i.y to i32
-  %i.aa = shl i32 %.tr.1, 1
+  %i.aa = shl nsw i32 %.tr.1, 1
   %.0.i.i.1 = select i1 %i.z, i32 2147483647, i32 %i.aa
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.ac = and i16 %i.u, 255
@@ -1044,7 +1044,7 @@ do_qdmullh.exit:
   %i.av = mul nsw i64 %i.c, %i.au                 ; 2 uses
   %i.aw = icmp sgt i64 %i.av, 1073741823          ; 2 uses
   %.tr.2 = trunc nsw i64 %i.av to i32
-  %i.ax = shl i32 %.tr.2, 1
+  %i.ax = shl nsw i32 %.tr.2, 1
   %.0.i.i.2 = select i1 %i.aw, i32 2147483647, i32 %i.ax
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.az = zext nneg i16 %i.ar to i64
@@ -1068,7 +1068,7 @@ do_qdmullh.exit:
   %i.bq = mul nsw i64 %i.c, %i.bp                 ; 2 uses
   %i.br = icmp sgt i64 %i.bq, 1073741823          ; 2 uses
   %.tr.3 = trunc nsw i64 %i.bq to i32
-  %i.bs = shl i32 %.tr.3, 1
+  %i.bs = shl nsw i32 %.tr.3, 1
   %.0.i.i.3 = select i1 %i.br, i32 2147483647, i32 %i.bs
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.bu = zext nneg i16 %i.bm to i64
@@ -1288,7 +1288,7 @@ do_qdmullh.exit:
   %i.f = sext i16 %i.e to i64
   %i.g = mul nsw i64 %i.c, %i.f                   ; 2 uses
   %.tr = trunc nsw i64 %i.g to i32
-  %i.h = shl i32 %.tr, 1
+  %i.h = shl nsw i32 %.tr, 1
   %i.i = and i16 %i.b, 255
   %i.j = zext nneg i16 %i.i to i64
   %i.k = getelementptr inbounds nuw [8 x i8], ptr @expand_pred_b_data, i64 %i.j
@@ -1326,7 +1326,7 @@ do_qdmullh.exit:
   %i.ao = mul nsw i64 %i.c, %i.an                 ; 2 uses
   %i.ap = icmp sgt i64 %i.ao, 1073741823          ; 2 uses
   %.tr.1 = trunc nsw i64 %i.ao to i32
-  %i.aq = shl i32 %.tr.1, 1
+  %i.aq = shl nsw i32 %.tr.1, 1
   %.0.i.i.1 = select i1 %i.ap, i32 2147483647, i32 %i.aq
   %i.ar = load i64, ptr %i.v, align 8
   %i.as = trunc i64 %i.ar to i32                  ; 2 uses
@@ -1340,7 +1340,7 @@ do_qdmullh.exit:
   %i.az = mul nsw i64 %i.c, %i.ay                 ; 2 uses
   %i.ba = icmp sgt i64 %i.az, 1073741823          ; 2 uses
   %.tr.2 = trunc nsw i64 %i.az to i32
-  %i.bb = shl i32 %.tr.2, 1
+  %i.bb = shl nsw i32 %.tr.2, 1
   %.0.i.i.2 = select i1 %i.ba, i32 2147483647, i32 %i.bb
   %i.bc = load i64, ptr %i.ab, align 8
   %i.bd = trunc i64 %i.bc to i32                  ; 2 uses
@@ -1363,7 +1363,7 @@ do_qdmullh.exit:
   %i.bt = insertelement <4 x i1> %i.bs, i1 %i.bl, i64 3
   %i.bu = and <4 x i1> %i.bt, %i.bp
   %.tr.3 = trunc nsw i64 %i.bk to i32
-  %i.bv = shl i32 %.tr.3, 1
+  %i.bv = shl nsw i32 %.tr.3, 1
   %.0.i.i.3 = select i1 %i.bl, i32 2147483647, i32 %i.bv
   %i.bw = load i64, ptr %i.ah, align 8
   %i.bx = trunc i64 %i.bw to i32                  ; 2 uses

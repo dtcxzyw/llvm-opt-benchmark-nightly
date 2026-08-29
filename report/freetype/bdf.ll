@@ -205,7 +205,8 @@ bb.a:
   %i.o = and i32 %i.n, 64
   %i.p = mul nuw nsw i32 %i.o, 9
   %i.q = lshr exact i32 %i.p, 6
-  %i.r = add nuw nsw i32 %i.q, %i.n               ; 2 uses
+  %i.r = add nuw nsw i32 %i.q, %i.n
+  %5 = and i32 %i.r, 15                           ; 2 uses
   %i.s = and i64 %.02531, 1
   %.not29 = icmp eq i64 %i.s, 0
   br i1 %.not29, label %bb.c, label %bb.b
@@ -213,14 +214,13 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.t = getelementptr inbounds nuw i8, ptr %.02630, i64 1
   %i.u = load i8, ptr %.02630, align 1, !tbaa !40
-  %i.v = trunc i32 %i.r to i8
-  %5 = and i8 %i.v, 15
-  %i.w = or i8 %i.u, %5
+  %i.v = trunc nuw nsw i32 %5 to i8
+  %i.w = or i8 %i.u, %i.v
   br label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph
-  %.tr = trunc i32 %i.r to i8
-  %i.x = shl i8 %.tr, 4
+  %.tr = trunc nuw nsw i32 %5 to i8
+  %i.x = shl nuw i8 %.tr, 4
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c

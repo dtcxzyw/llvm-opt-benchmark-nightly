@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y
   %i.ej = icmp samesign ult i64 %indvars.iv.i, 1073741823
-  %i.ek = shl i32 %spec.select.sink.i10310.i, 1
+  %i.ek = shl nsw i32 %spec.select.sink.i10310.i, 1
   %spec.select.i99.i = select i1 %i.ej, i32 %i.ek, i32 2147483647 ; 3 uses
   %i.el = sext i32 %spec.select.i99.i to i64
   %.not.i9.i100.i = icmp samesign ult i64 %indvars.iv.i, %i.el
@@ -250,7 +250,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ac
   %i.ev = icmp samesign ult i64 %indvars.iv30.i, 1073741823
-  %i.ew = shl i32 %spec.select.sink.i11120.i, 1
+  %i.ew = shl nsw i32 %spec.select.sink.i11120.i, 1
   %spec.select.i107.i = select i1 %i.ev, i32 %i.ew, i32 2147483647 ; 3 uses
   %i.ex = sext i32 %spec.select.i107.i to i64
   %.not.i9.i108.i = icmp samesign ult i64 %indvars.iv30.i, %i.ex
@@ -502,8 +502,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.aw = icmp samesign ult i64 %indvars.iv, 1073741823
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.ax = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nsw i64 %indvars.iv to i32
+  %i.ax = shl nsw i32 %indvars.iv.tr, 1
   %spec.select.i52 = select i1 %i.aw, i32 %i.ax, i32 2147483647 ; 3 uses
   %i.ay = sext i32 %spec.select.i52 to i64
   %.not.i9.i53 = icmp samesign ult i64 %indvars.iv, %i.ay
@@ -549,8 +549,8 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.bi = icmp samesign ult i64 %indvars.iv27, 1073741823
-  %indvars.iv27.tr = trunc i64 %indvars.iv27 to i32
-  %i.bj = shl i32 %indvars.iv27.tr, 1
+  %indvars.iv27.tr = trunc nsw i64 %indvars.iv27 to i32
+  %i.bj = shl nsw i32 %indvars.iv27.tr, 1
   %spec.select.i60 = select i1 %i.bi, i32 %i.bj, i32 2147483647 ; 3 uses
   %i.bk = sext i32 %spec.select.i60 to i64
   %.not.i9.i61 = icmp samesign ult i64 %indvars.iv27, %i.bk

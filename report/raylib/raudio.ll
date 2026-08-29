@@ -205,7 +205,7 @@ scalar.ph123:                                     ; preds = %scalar.ph123.prehea
   br i1 %i.ct, label %.lr.ph80.us.preheader.i.us.us, label %._crit_edge.us.i.us.us
 
 .lr.ph80.us.preheader.i.us.us:                    ; preds = %..preheader71_crit_edge.us.i.us.us
-  %i.cu = shl i32 %indvars95, 1
+  %i.cu = shl nuw i32 %indvars95, 1
   %i.cv = sext i32 %i.cu to i64
   %invariant.gep120.i.us.us = getelementptr [2 x i8], ptr %1, i64 %i.cv ; 2 uses
   %i.cw = shl i32 %i.q, 1                         ; 2 uses
@@ -298,7 +298,7 @@ compute_stereo_samples.exit.loopexit.us.us:       ; preds = %._crit_edge.us.i.us
   br i1 %i.ea, label %.lr.ph80.preheader.i.us, label %._crit_edge.i.us
 
 .lr.ph80.preheader.i.us:                          ; preds = %.preheader71.i.us
-  %i.eb = shl i32 %indvars81, 1
+  %i.eb = shl nuw i32 %indvars81, 1
   %i.ec = sext i32 %i.eb to i64
   %invariant.gep.i.us = getelementptr [2 x i8], ptr %1, i64 %i.ec ; 2 uses
   %smin = tail call i32 @llvm.smin.i32(i32 %5, i32 %i.dw)
@@ -390,7 +390,7 @@ compute_stereo_samples.exit.loopexit46.us:        ; preds = %._crit_edge.i.us
   br i1 %i.fh, label %.lr.ph80.preheader.i.us.1, label %._crit_edge.i.us.1
 
 .lr.ph80.preheader.i.us.1:                        ; preds = %.preheader71.i.us.1
-  %i.fi = shl i32 %indvars81.1, 1
+  %i.fi = shl nuw i32 %indvars81.1, 1
   %i.fj = sext i32 %i.fi to i64
   %invariant.gep.i.us.1 = getelementptr [2 x i8], ptr %1, i64 %i.fj ; 2 uses
   %smin.1 = tail call i32 @llvm.smin.i32(i32 %5, i32 %i.fd)
@@ -793,8 +793,8 @@ bb.gz:                                            ; preds = %.lr.ph1000, %bb.hf
   %i.afl = shl i32 %.0766998, 16
   %i.afm = ashr exact i32 %i.afl, 16
   %i.afn = select i1 %i.afk, i32 0, i32 %i.afm
-  %indvars.iv1044.tr = trunc i64 %indvars.iv1044 to i32
-  %i.afo = shl i32 %indvars.iv1044.tr, 1
+  %indvars.iv1044.tr = trunc nuw i64 %indvars.iv1044 to i32
+  %i.afo = shl nuw i32 %indvars.iv1044.tr, 1
   %i.afp = sext i32 %i.afo to i64
   %i.afq = add i64 %.37811010, %i.afp             ; 3 uses
   %i.afr = icmp ult i64 %i.afq, %2
@@ -942,8 +942,8 @@ bb.hm:                                            ; preds = %.lr.ph1008, %bb.hs
   %.07621006 = phi i32 [ 0, %.lr.ph1008 ], [ %i.ail, %bb.hs ]
   %sext881 = shl i32 %.07621006, 16
   %i.aht = ashr exact i32 %sext881, 16
-  %indvars.iv1054.tr = trunc i64 %indvars.iv1054 to i32
-  %i.ahu = shl i32 %indvars.iv1054.tr, 1
+  %indvars.iv1054.tr = trunc nuw i64 %indvars.iv1054 to i32
+  %i.ahu = shl nuw i32 %indvars.iv1054.tr, 1
   %i.ahv = sext i32 %i.ahu to i64
   %i.ahw = add i64 %.37811010, %i.ahv             ; 3 uses
   %i.ahx = icmp ult i64 %i.ahw, %2
@@ -1346,8 +1346,8 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph39.i
   %indvars.iv41.i = phi i64 [ 0, %.lr.ph39.i ], [ %indvars.iv.next42.i, %bb.o ] ; 3 uses
   %.13437.i = phi i32 [ 0, %.lr.ph39.i ], [ %i.dd, %bb.o ]
   %i.cr = or disjoint i64 %indvars.iv41.i, 1      ; 2 uses
-  %.tr.i = trunc i64 %i.cr to i32
-  %i.cs = shl i32 %.tr.i, 1
+  %.tr.i = trunc nuw nsw i64 %i.cr to i32
+  %i.cs = shl nuw nsw i32 %.tr.i, 1
   %i.ct = uitofp nneg i32 %i.cs to double
   %i.cu = fmul nnan double %i.ct, f0x400921FB54442D18
   %i.cv = fdiv double %i.cu, %i.bo                ; 2 uses

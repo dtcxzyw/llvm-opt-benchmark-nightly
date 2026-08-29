@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %_ZNSt8__detail14__t
   br i1 %i.bu, label %bb.p, label %._crit_edge.i.i.i.thread
 
 bb.p:                                             ; preds = %._crit_edge.i.i.i
-  %.0.tr.i.i.i = trunc nuw i128 %.0.lcssa.i.i.i to i64
+  %.0.tr.i.i.i = trunc nuw nsw i128 %.0.lcssa.i.i.i to i64
   %i.bv = shl nuw nsw i64 %.0.tr.i.i.i, 1
   %i.bw = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implIoEEvPcjT_.__digits, i64 %i.bv ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 1
@@ -608,7 +608,7 @@ bb.o:                                             ; preds = %_ZNSt8__detail14__t
   br i1 %i.bt, label %bb.p, label %._crit_edge.i.i.i.thread
 
 bb.p:                                             ; preds = %._crit_edge.i.i.i
-  %.0.tr.i.i.i = trunc nuw i128 %.0.lcssa.i.i.i to i64
+  %.0.tr.i.i.i = trunc nuw nsw i128 %.0.lcssa.i.i.i to i64
   %i.bu = shl nuw nsw i64 %.0.tr.i.i.i, 1
   %i.bv = getelementptr inbounds nuw i8, ptr @__const._ZNSt8__detail18__to_chars_10_implIoEEvPcjT_.__digits, i64 %i.bu ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 1

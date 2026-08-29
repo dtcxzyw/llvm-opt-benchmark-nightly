@@ -205,8 +205,8 @@ bb.a:
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.lr.ph.split.us
   %indvars.iv23 = phi i64 [ %indvars.iv.next24, %.lr.ph.split.us ], [ 0, %.lr.ph ] ; 5 uses
-  %indvars.iv23.tr = trunc i64 %indvars.iv23 to i32
-  %i.b = shl i32 %indvars.iv23.tr, 1
+  %indvars.iv23.tr = trunc nuw i64 %indvars.iv23 to i32
+  %i.b = shl nuw i32 %indvars.iv23.tr, 1
   %i.c = sext i32 %i.b to i64
   %i.d = getelementptr inbounds i8, ptr %0, i64 %i.c
   %i.e = load i8, ptr %i.d, align 1, !tbaa !90
@@ -233,8 +233,8 @@ bb.a:
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.split
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.split ], [ 0, %.lr.ph ] ; 6 uses
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.q = shl nuw i32 %indvars.iv.tr, 1
   %i.r = sext i32 %i.q to i64
   %i.s = getelementptr inbounds i8, ptr %0, i64 %i.r ; 2 uses
   %i.t = load i8, ptr %i.s, align 1, !tbaa !90
@@ -397,8 +397,8 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %.lr.ph ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.c = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.c = shl nuw i32 %indvars.iv.tr, 1
   %i.d = sext i32 %i.c to i64
   %i.e = getelementptr inbounds i8, ptr %0, i64 %i.d ; 2 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !90
@@ -413,8 +413,8 @@ bb.a:
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
   store i32 %i.n, ptr %i.o, align 4, !tbaa !13
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %indvars.iv.tr.1 = trunc i64 %indvars.iv.next to i32
-  %i.p = shl i32 %indvars.iv.tr.1, 1
+  %indvars.iv.tr.1 = trunc nuw i64 %indvars.iv.next to i32
+  %i.p = shl nuw i32 %indvars.iv.tr.1, 1
   %i.q = sext i32 %i.p to i64
   %i.r = getelementptr inbounds i8, ptr %0, i64 %i.q ; 2 uses
   %i.s = load i8, ptr %i.r, align 1, !tbaa !90
@@ -441,8 +441,8 @@ bb.a:
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod11 = trunc i32 %2 to i1
   tail call void @llvm.assume(i1 %lcmp.mod11)
-  %indvars.iv.tr.epil = trunc i64 %indvars.iv.epil.init to i32
-  %i.ac = shl i32 %indvars.iv.tr.epil, 1
+  %indvars.iv.tr.epil = trunc nuw i64 %indvars.iv.epil.init to i32
+  %i.ac = shl nuw i32 %indvars.iv.tr.epil, 1
   %i.ad = sext i32 %i.ac to i64
   %i.ae = getelementptr inbounds i8, ptr %0, i64 %i.ad ; 2 uses
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !90
@@ -481,8 +481,8 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %.lr.ph ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.1, %.lr.ph ]
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.c = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.c = shl nuw i32 %indvars.iv.tr, 1
   %i.d = sext i32 %i.c to i64
   %i.e = getelementptr inbounds i8, ptr %0, i64 %i.d ; 2 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !90
@@ -496,8 +496,8 @@ bb.a:
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
   store i32 %i.m, ptr %i.n, align 4, !tbaa !13
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %indvars.iv.tr.1 = trunc i64 %indvars.iv.next to i32
-  %i.o = shl i32 %indvars.iv.tr.1, 1
+  %indvars.iv.tr.1 = trunc nuw i64 %indvars.iv.next to i32
+  %i.o = shl nuw i32 %indvars.iv.tr.1, 1
   %i.p = sext i32 %i.o to i64
   %i.q = getelementptr inbounds i8, ptr %0, i64 %i.p ; 2 uses
   %i.r = load i8, ptr %i.q, align 1, !tbaa !90
@@ -523,8 +523,8 @@ bb.a:
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod11 = trunc i32 %2 to i1
   tail call void @llvm.assume(i1 %lcmp.mod11)
-  %indvars.iv.tr.epil = trunc i64 %indvars.iv.epil.init to i32
-  %i.aa = shl i32 %indvars.iv.tr.epil, 1
+  %indvars.iv.tr.epil = trunc nuw i64 %indvars.iv.epil.init to i32
+  %i.aa = shl nuw i32 %indvars.iv.tr.epil, 1
   %i.ab = sext i32 %i.aa to i64
   %i.ac = getelementptr inbounds i8, ptr %0, i64 %i.ab ; 2 uses
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !90
@@ -556,8 +556,8 @@ bb.a:
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
   %.01516 = phi ptr [ %1, %.lr.ph.preheader ], [ %i.x, %.lr.ph ] ; 4 uses
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.b = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.b = shl nuw i32 %indvars.iv.tr, 1
   %i.c = sext i32 %i.b to i64
   %i.d = getelementptr inbounds i8, ptr %0, i64 %i.c ; 3 uses
   %i.e = load i8, ptr %i.d, align 1, !tbaa !90

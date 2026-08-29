@@ -204,7 +204,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   %wide.load = load <4 x i32>, ptr %i.z, align 4, !tbaa !14
   %wide.load64 = load <4 x i32>, ptr %i.aa, align 4, !tbaa !14
-  %i.ab = shl <4 x i32> %vec.ind62, splat (i32 2)
+  %i.ab = shl nuw <4 x i32> %vec.ind62, splat (i32 2)
   %step.add63 = shl <4 x i32> %vec.ind62, splat (i32 2)
   %i.ac = add <4 x i32> %step.add63, splat (i32 16)
   %i.ad = add <4 x i32> %wide.load, %i.ab
@@ -264,8 +264,8 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store i32 %i.aw, ptr %i.av, align 4, !tbaa !14
   %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %indvars.iv
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !14
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.az = shl i32 %indvars.iv.tr, 2
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.az = shl nuw i32 %indvars.iv.tr, 2
   %i.ba = add i32 %i.ay, %i.az
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %indvars.iv
   store i32 %i.ba, ptr %i.bb, align 4, !tbaa !14
@@ -275,8 +275,8 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store i32 %i.bd, ptr %i.bc, align 4, !tbaa !14
   %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %indvars.iv.next
   %i.bf = load i32, ptr %i.be, align 4, !tbaa !14
-  %indvars.iv.tr.1 = trunc i64 %indvars.iv.next to i32
-  %i.bg = shl i32 %indvars.iv.tr.1, 2
+  %indvars.iv.tr.1 = trunc nuw i64 %indvars.iv.next to i32
+  %i.bg = shl nuw i32 %indvars.iv.tr.1, 2
   %i.bh = add i32 %i.bf, %i.bg
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %indvars.iv.next
   store i32 %i.bh, ptr %i.bi, align 4, !tbaa !14
@@ -304,8 +304,8 @@ bb.h:                                             ; preds = %bb.g
   %i.bq = sext i32 %i.bn to i64
   %i.br = getelementptr inbounds [4 x i8], ptr %i.n, i64 %i.bq
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !14
-  %indvars.iv55.tr = trunc i64 %indvars.iv55 to i32
-  %i.bt = shl i32 %indvars.iv55.tr, 2
+  %indvars.iv55.tr = trunc nuw i64 %indvars.iv55 to i32
+  %i.bt = shl nuw i32 %indvars.iv55.tr, 2
   %i.bu = sub i32 %i.bs, %i.bt
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.bk, i64 %indvars.iv55
   store i32 %i.bu, ptr %i.bv, align 4, !tbaa !14

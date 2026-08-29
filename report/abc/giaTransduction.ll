@@ -205,8 +205,8 @@ bb.m:                                             ; preds = %.lr.ph47, %bb.o
   br i1 %.not24, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %indvars.iv63.tr = trunc i64 %indvars.iv63 to i32
-  %i.cz = shl i32 %indvars.iv63.tr, 1
+  %indvars.iv63.tr = trunc nuw i64 %indvars.iv63 to i32
+  %i.cz = shl nuw i32 %indvars.iv63.tr, 1
   tail call void @_ZN6NewBdd3Man11SetMark_recEj(ptr noundef nonnull align 8 dereferenceable(384) %0, i32 noundef %i.cz)
   %.pre72 = load i32, ptr %i.ab, align 4, !tbaa !382
   br label %bb.o
@@ -331,8 +331,8 @@ bb.t:                                             ; preds = %.lr.ph57, %bb.v
   br i1 %.not22, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %indvars.iv69.tr = trunc i64 %indvars.iv69 to i32
-  %i.fk = shl i32 %indvars.iv69.tr, 1
+  %indvars.iv69.tr = trunc nuw i64 %indvars.iv69 to i32
+  %i.fk = shl nuw i32 %indvars.iv69.tr, 1
   tail call void @_ZN6NewBdd3Man13ResetMark_recEj(ptr noundef nonnull align 8 dereferenceable(384) %0, i32 noundef %i.fk)
   %.pre76 = load i32, ptr %i.ab, align 4, !tbaa !382
   br label %bb.v
@@ -735,8 +735,8 @@ bb.f:                                             ; preds = %.lr.ph, %bb.h
   br i1 %.not15, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.an = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.an = shl nuw i32 %indvars.iv.tr, 1
   tail call void @_ZN6NewBdd3Man14CountEdges_recEj(ptr noundef nonnull align 8 dereferenceable(384) %0, i32 noundef %i.an)
   %.pre = load i32, ptr %i.r, align 4, !tbaa !382
   br label %bb.h
@@ -787,8 +787,8 @@ bb.i:                                             ; preds = %.lr.ph25, %bb.k
   br i1 %.not14, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %indvars.iv30.tr = trunc i64 %indvars.iv30 to i32
-  %i.bd = shl i32 %indvars.iv30.tr, 1
+  %indvars.iv30.tr = trunc nuw i64 %indvars.iv30 to i32
+  %i.bd = shl nuw i32 %indvars.iv30.tr, 1
   tail call void @_ZN6NewBdd3Man13ResetMark_recEj(ptr noundef nonnull align 8 dereferenceable(384) %0, i32 noundef %i.bd)
   %.pre35 = load i32, ptr %i.r, align 4, !tbaa !382
   br label %bb.k
@@ -1191,8 +1191,8 @@ bb.c:                                             ; preds = %.lr.ph58, %bb.e
   br i1 %.not34, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %indvars.iv70.tr = trunc i64 %indvars.iv70 to i32
-  %i.bq = shl i32 %indvars.iv70.tr, 1
+  %indvars.iv70.tr = trunc nuw i64 %indvars.iv70 to i32
+  %i.bq = shl nuw i32 %indvars.iv70.tr, 1
   %i.br = tail call noundef i32 @_ZN6NewBdd3Man14CountNodes_recEj(ptr noundef nonnull align 8 dereferenceable(384) %0, i32 noundef %i.bq)
   %i.bs = add nsw i32 %i.br, %.356
   %.pre = load i32, ptr %i.al, align 4, !tbaa !382
@@ -1279,8 +1279,8 @@ bb.g:                                             ; preds = %.lr.ph66, %bb.i
   br i1 %.not33, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %indvars.iv74.tr = trunc i64 %indvars.iv74 to i32
-  %i.de = shl i32 %indvars.iv74.tr, 1
+  %indvars.iv74.tr = trunc nuw i64 %indvars.iv74 to i32
+  %i.de = shl nuw i32 %indvars.iv74.tr, 1
   tail call void @_ZN6NewBdd3Man13ResetMark_recEj(ptr noundef nonnull align 8 dereferenceable(384) %0, i32 noundef %i.de)
   %.pre78 = load i32, ptr %i.al, align 4, !tbaa !382
   br label %bb.i
@@ -1683,8 +1683,8 @@ bb.ab:                                            ; preds = %bb.ad, %.lr.ph.i72
   br i1 %.not15.i, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.fp = shl i32 %indvars.iv.tr.i, 1
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.fp = shl nuw i32 %indvars.iv.tr.i, 1
   tail call void @_ZN6NewBdd3Man14CountEdges_recEj(ptr noundef nonnull align 8 dereferenceable(384) %i.bq, i32 noundef %i.fp)
   %.pre.i = load i32, ptr %i.cb, align 4, !tbaa !382
   br label %bb.ad
@@ -1732,8 +1732,8 @@ bb.ae:                                            ; preds = %bb.ag, %.lr.ph25.i
   br i1 %.not14.i, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %indvars.iv30.tr.i = trunc i64 %indvars.iv30.i to i32
-  %i.gf = shl i32 %indvars.iv30.tr.i, 1
+  %indvars.iv30.tr.i = trunc nuw i64 %indvars.iv30.i to i32
+  %i.gf = shl nuw i32 %indvars.iv30.tr.i, 1
   tail call void @_ZN6NewBdd3Man13ResetMark_recEj(ptr noundef nonnull align 8 dereferenceable(384) %i.bq, i32 noundef %i.gf)
   %.pre35.i = load i32, ptr %i.cb, align 4, !tbaa !382
   br label %bb.ag
@@ -2136,8 +2136,8 @@ bb.al:                                            ; preds = %bb.an, %.lr.ph.i58
   br i1 %.not15.i, label %bb.an, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.ix = shl i32 %indvars.iv.tr.i, 1
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.ix = shl nuw i32 %indvars.iv.tr.i, 1
   call void @_ZN6NewBdd3Man14CountEdges_recEj(ptr noundef nonnull align 8 dereferenceable(384) %i.ey, i32 noundef %i.ix)
   %.pre.i = load i32, ptr %i.fj, align 4, !tbaa !382
   br label %bb.an
@@ -2185,8 +2185,8 @@ bb.ao:                                            ; preds = %bb.aq, %.lr.ph25.i
   br i1 %.not14.i, label %bb.aq, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
-  %indvars.iv30.tr.i = trunc i64 %indvars.iv30.i to i32
-  %i.jn = shl i32 %indvars.iv30.tr.i, 1
+  %indvars.iv30.tr.i = trunc nuw i64 %indvars.iv30.i to i32
+  %i.jn = shl nuw i32 %indvars.iv30.tr.i, 1
   call void @_ZN6NewBdd3Man13ResetMark_recEj(ptr noundef nonnull align 8 dereferenceable(384) %i.ey, i32 noundef %i.jn)
   %.pre35.i = load i32, ptr %i.fj, align 4, !tbaa !382
   br label %bb.aq
@@ -2589,8 +2589,8 @@ bb.ab:                                            ; preds = %bb.ad, %.lr.ph.i58
   br i1 %.not15.i, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.hy = shl i32 %indvars.iv.tr.i, 1
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.hy = shl nuw i32 %indvars.iv.tr.i, 1
   call void @_ZN6NewBdd3Man14CountEdges_recEj(ptr noundef nonnull align 8 dereferenceable(384) %i.dz, i32 noundef %i.hy)
   %.pre.i = load i32, ptr %i.ek, align 4, !tbaa !382
   br label %bb.ad
@@ -2638,8 +2638,8 @@ bb.ae:                                            ; preds = %bb.ag, %.lr.ph25.i
   br i1 %.not14.i, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %indvars.iv30.tr.i = trunc i64 %indvars.iv30.i to i32
-  %i.io = shl i32 %indvars.iv30.tr.i, 1
+  %indvars.iv30.tr.i = trunc nuw i64 %indvars.iv30.i to i32
+  %i.io = shl nuw i32 %indvars.iv30.tr.i, 1
   call void @_ZN6NewBdd3Man13ResetMark_recEj(ptr noundef nonnull align 8 dereferenceable(384) %i.dz, i32 noundef %i.io)
   %.pre35.i = load i32, ptr %i.ek, align 4, !tbaa !382
   br label %bb.ag
@@ -3042,8 +3042,8 @@ bb.ar:                                            ; preds = %bb.at, %.lr.ph.i60
   br i1 %.not15.i, label %bb.at, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.mv = shl i32 %indvars.iv.tr.i, 1
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.mv = shl nuw i32 %indvars.iv.tr.i, 1
   call void @_ZN6NewBdd3Man14CountEdges_recEj(ptr noundef nonnull align 8 dereferenceable(384) %i.jx, i32 noundef %i.mv)
   %.pre.i = load i32, ptr %i.ki, align 4, !tbaa !382
   br label %bb.at
@@ -3091,8 +3091,8 @@ bb.au:                                            ; preds = %bb.aw, %.lr.ph25.i
   br i1 %.not14.i, label %bb.aw, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  %indvars.iv30.tr.i = trunc i64 %indvars.iv30.i to i32
-  %i.nl = shl i32 %indvars.iv30.tr.i, 1
+  %indvars.iv30.tr.i = trunc nuw i64 %indvars.iv30.i to i32
+  %i.nl = shl nuw i32 %indvars.iv30.tr.i, 1
   call void @_ZN6NewBdd3Man13ResetMark_recEj(ptr noundef nonnull align 8 dereferenceable(384) %i.jx, i32 noundef %i.nl)
   %.pre35.i = load i32, ptr %i.ki, align 4, !tbaa !382
   br label %bb.aw
