@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkNtNtCsaL1QbXo9JQH_3std4path9ComponentNCNvNtNtCskuiImRAV2ip_9elfshaker4repo2fs29contains_parent_dir_component0E0B1U_.exit.thread.i, %.lr.ph.i
   %i.d = phi i8 [ %i.c, %.lr.ph.i ], [ %i.n, %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkNtNtCsaL1QbXo9JQH_3std4path9ComponentNCNvNtNtCskuiImRAV2ip_9elfshaker4repo2fs29contains_parent_dir_component0E0B1U_.exit.thread.i ] ; 2 uses
-  %.sroa.9.0.copyload.i = load i64, ptr %.sroa.9.0..sroa_idx.i, align 8, !noalias !910
+  %.sroa.9.0.copyload.i = load ptr, ptr %.sroa.9.0..sroa_idx.i, align 8, !noalias !910
   %.sroa.10.0.copyload.i = load i64, ptr %.sroa.10.0..sroa_idx.i, align 8, !noalias !910
   %i.e = icmp samesign ugt i8 %i.d, 5
   %i.f = zext nneg i8 %i.d to i64
@@ -223,18 +223,17 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %.sroa.710.0.copyload.i = load i64, ptr %.sroa.710.0..sroa_idx.i, align 8, !noalias !910
-  %.sroa.69.0.copyload.i = load i64, ptr %.sroa.69.0..sroa_idx.i, align 8, !noalias !910
+  %.sroa.69.0.copyload.i = load ptr, ptr %.sroa.69.0..sroa_idx.i, align 8, !noalias !910
   br label %_RNvMs4_NtCsaL1QbXo9JQH_3std4pathNtB5_9Component9as_os_str.exit.i.i.i
 
 _RNvMs4_NtCsaL1QbXo9JQH_3std4pathNtB5_9Component9as_os_str.exit.i.i.i: ; preds = %bb.d, %bb.b
-  %.sink7.i.sroa.phi.sroa.speculated.in.in.i.sroa.speculated.i = phi i64 [ %.sroa.69.0.copyload.i, %bb.d ], [ %.sroa.9.0.copyload.i, %bb.b ]
+  %.sink7.i.sroa.phi.sroa.speculated.in.i.sroa.speculated.i = phi ptr [ %.sroa.69.0.copyload.i, %bb.d ], [ %.sroa.9.0.copyload.i, %bb.b ]
   %.sink.i.sroa.phi.sroa.speculated.in.i.sroa.speculated.i = phi i64 [ %.sroa.710.0.copyload.i, %bb.d ], [ %.sroa.10.0.copyload.i, %bb.b ]
-  %.sink7.i.sroa.phi.sroa.speculated.i.i = inttoptr i64 %.sink7.i.sroa.phi.sroa.speculated.in.in.i.sroa.speculated.i to ptr
   %i.i = icmp eq i64 %.sink.i.sroa.phi.sroa.speculated.in.i.sroa.speculated.i, 2
   br i1 %i.i, label %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkNtNtCsaL1QbXo9JQH_3std4path9ComponentNCNvNtNtCskuiImRAV2ip_9elfshaker4repo2fs29contains_parent_dir_component0E0B1U_.exit.i, label %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkNtNtCsaL1QbXo9JQH_3std4path9ComponentNCNvNtNtCskuiImRAV2ip_9elfshaker4repo2fs29contains_parent_dir_component0E0B1U_.exit.thread.i
 
 _RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator3any5checkNtNtCsaL1QbXo9JQH_3std4path9ComponentNCNvNtNtCskuiImRAV2ip_9elfshaker4repo2fs29contains_parent_dir_component0E0B1U_.exit.i: ; preds = %_RNvMs4_NtCsaL1QbXo9JQH_3std4pathNtB5_9Component9as_os_str.exit.i.i.i, %bb.b
-  %.sroa.0.0.i6.i.i.i = phi ptr [ %.sink7.i.sroa.phi.sroa.speculated.i.i, %_RNvMs4_NtCsaL1QbXo9JQH_3std4pathNtB5_9Component9as_os_str.exit.i.i.i ], [ @11, %bb.b ]
+  %.sroa.0.0.i6.i.i.i = phi ptr [ %.sink7.i.sroa.phi.sroa.speculated.in.i.sroa.speculated.i, %_RNvMs4_NtCsaL1QbXo9JQH_3std4pathNtB5_9Component9as_os_str.exit.i.i.i ], [ @11, %bb.b ]
   %i.j = load i16, ptr %.sroa.0.0.i6.i.i.i, align 1
   %i.k = icmp ne i16 %i.j, 11822
   %i.l = zext i1 %i.k to i32

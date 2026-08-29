@@ -151,22 +151,21 @@ _RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noi
   %.sroa.51.0.copyload.i.i = load ptr, ptr %.sroa.51.0..sroa_idx.i.i, align 8, !noalias !29, !nonnull !14
   %.sroa.05.0.i.i = shl nuw nsw i8 %i.f, 1
   %i.k = ptrtoint ptr %.sroa.51.0.copyload.i.i to i64
-  %i.l = select i1 %i.j, i64 undef, i64 %i.k      ; 2 uses
+  %i.l = select i1 %i.j, i64 undef, i64 %i.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !29
   %.sroa.9.8.insert.ext = zext nneg i8 %.sroa.05.0.i.i to i64
   %i.m = zext i8 %.sroa.4.0.copyload.i.i to i64
   %i.n = shl nuw nsw i64 %i.m, 8
   %.sroa.9.9.insert.shift = select i1 %i.j, i64 %i.n, i64 0
   %.sroa.9.9.insert.insert = or disjoint i64 %.sroa.9.9.insert.shift, %.sroa.9.8.insert.ext
-  %.sroa.18.sroa.0.0.extract.trunc = trunc i64 %i.l to i8
   br label %bb.f
 
 _RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit84.thread.i: ; preds = %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit.thread.i
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.p = load i64, ptr %i.o, align 8, !noalias !35, !noundef !14 ; 8 uses
+  %i.p = load i64, ptr %i.o, align 8, !noalias !35, !noundef !14 ; 7 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !35
   %i.q = icmp ugt i64 %i.p, 64
-  br i1 %i.q, label %3, label %bb.b
+  br i1 %i.q, label %bb.f, label %bb.b
 
 _RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit84.i: ; preds = %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit.thread.i
   %i.r = trunc nuw i8 %i.i to i1                  ; 2 uses
@@ -176,14 +175,13 @@ _RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noi
   %.sroa.51.0.copyload.i77.i = load ptr, ptr %.sroa.51.0..sroa_idx.i76.i, align 8, !noalias !35, !nonnull !14
   %.sroa.05.0.i78.i = shl nuw nsw i8 %i.i, 1
   %i.s = ptrtoint ptr %.sroa.51.0.copyload.i77.i to i64
-  %i.t = select i1 %i.r, i64 undef, i64 %i.s      ; 2 uses
+  %i.t = select i1 %i.r, i64 undef, i64 %i.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !35
   %.sroa.9.8.insert.ext29 = zext nneg i8 %.sroa.05.0.i78.i to i64
   %i.u = zext i8 %.sroa.4.0.copyload.i75.i to i64
   %i.v = shl nuw nsw i64 %i.u, 8
   %.sroa.9.9.insert.shift40 = select i1 %i.r, i64 %i.v, i64 0
   %.sroa.9.9.insert.insert42 = or disjoint i64 %.sroa.9.9.insert.shift40, %.sroa.9.8.insert.ext29
-  %.sroa.18.sroa.0.0.extract.trunc45 = trunc i64 %i.t to i8
   br label %bb.f
 
 bb.b:                                             ; preds = %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit84.thread.i
@@ -209,36 +207,27 @@ bb.d:                                             ; preds = %_RNvMNtCskKLDkoKarT
   store i8 %i.aa, ptr %i.c, align 8, !alias.scope !43, !noalias !48
   br label %bb.g
 
-3:                                                ; preds = %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit84.thread.i
-  %.sroa.18.sroa.0.0.extract.trunc46 = trunc i64 %i.p to i8
-  br label %bb.f
-
 bb.e:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !25
   br label %bb.f
 
-bb.f:                                             ; preds = %3, %bb.e, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit84.i, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit.i
-  %.sroa.18.sroa.10.sroa.0.0.ph.in.in = phi i64 [ %i.l, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit.i ], [ %i.t, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit84.i ], [ ptrtoint (ptr @15 to i64), %bb.e ], [ %i.p, %3 ]
-  %.sroa.18.sroa.0.0.ph = phi i8 [ %.sroa.18.sroa.0.0.extract.trunc, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit.i ], [ %.sroa.18.sroa.0.0.extract.trunc45, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit84.i ], [ ptrtoint (ptr @15 to i8), %bb.e ], [ %.sroa.18.sroa.0.0.extract.trunc46, %3 ]
-  %.sroa.9.0.ph = phi i64 [ %.sroa.9.9.insert.insert, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit.i ], [ %.sroa.9.9.insert.insert42, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit84.i ], [ 0, %bb.e ], [ 1, %3 ]
-  %.sroa.18.sroa.10.sroa.0.0.ph.in = lshr i64 %.sroa.18.sroa.10.sroa.0.0.ph.in.in, 8
-  %.sroa.18.sroa.10.sroa.0.0.ph = trunc nuw i64 %.sroa.18.sroa.10.sroa.0.0.ph.in to i56
+bb.f:                                             ; preds = %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit.i, %bb.e, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit84.i, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit84.thread.i
+  %.sroa.18.sroa.10.sroa.0.0.ph.in.in = phi i64 [ %i.p, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit84.thread.i ], [ %i.t, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit84.i ], [ ptrtoint (ptr @15 to i64), %bb.e ], [ %i.l, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit.i ]
+  %.sroa.9.0.ph = phi i64 [ 1, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit84.thread.i ], [ %.sroa.9.9.insert.insert42, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit84.i ], [ 0, %bb.e ], [ %.sroa.9.9.insert.insert, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noise.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.9.0.ph, ptr %i.ab, align 8
   %.sroa.425.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sroa.18.sroa.0.0.ph, ptr %.sroa.425.0..sroa_idx, align 8
-  %.sroa.526.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 17
-  store i56 %.sroa.18.sroa.10.sroa.0.0.ph, ptr %.sroa.526.0..sroa_idx, align 1
+  store i64 %.sroa.18.sroa.10.sroa.0.0.ph.in.in, ptr %.sroa.425.0..sroa_idx, align 8
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.d, %bb.c
-  %4 = trunc nuw nsw i64 %i.p to i8
   %.sroa.18.sroa.10.sroa.0.0.copyload53 = load i56, ptr %i.c, align 8, !noalias !49
   %.sroa.28.17..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 7
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(57) %.sroa.28.sroa.0, ptr noundef nonnull align 1 dereferenceable(57) %.sroa.28.17..sroa_idx, i64 57, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !25
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
+  %.sroa.18.16.extract.trunc = trunc nuw nsw i64 %i.p to i8
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i56 %.sroa.18.sroa.10.sroa.0.0.copyload53, ptr %i.ac, align 8
   %.sroa.011.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 15
@@ -246,7 +235,7 @@ bb.g:                                             ; preds = %bb.d, %bb.c
   %.sroa.412.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i64 %i.h, ptr %.sroa.412.0..sroa_idx, align 8
   %.sroa.513.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
-  store i8 %4, ptr %.sroa.513.0..sroa_idx, align 8
+  store i8 %.sroa.18.16.extract.trunc, ptr %.sroa.513.0..sroa_idx, align 8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f

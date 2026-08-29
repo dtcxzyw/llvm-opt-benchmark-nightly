@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca [32 x i8], align 8                ; 7 uses
   %i.b = alloca [8 x i8], align 8                 ; 5 uses
   %i.c = alloca [8 x i8], align 8                 ; 5 uses
-  %.sroa.010.i.i.i.i.i = alloca i64, align 8      ; 11 uses
+  %.sroa.010.i.i.i.i.i = alloca [8 x i8], align 8 ; 11 uses
   %i.d = alloca [8 x i8], align 8                 ; 5 uses
   %i.e = alloca [32 x i8], align 8                ; 7 uses
   %i.f = alloca [8 x i8], align 8                 ; 5 uses
@@ -300,7 +300,7 @@ _RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8I
   %.sroa.7.sroa.0.0.i.peel.i.i.i.i = phi ptr [ undef, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_NtNtCs33K2ylI4knu_10hir_expand4name4NameEEECs8Xq8PKFYOms_3hir.exit.i.peel.i.i.i.i ], [ %.sroa.7.sroa.0.0.copyload.i.peel.i.i.i.i, %bb.i ] ; 5 uses
   %.sink.i.i.peel.i.i.i.i = phi ptr [ %.sroa.010.i.i.i.i.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_NtNtCs33K2ylI4knu_10hir_expand4name4NameEEECs8Xq8PKFYOms_3hir.exit.i.peel.i.i.i.i ], [ %1, %bb.i ]
   store i64 -1, ptr %.sink.i.i.peel.i.i.i.i, align 8, !alias.scope !828, !noalias !806
-  %.sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.0..sroa.010.i.i.i.i.0..sroa.010.i.i.i.0..sroa.010.i.i.i.0..sroa.010.i.i.0..sroa.010.i.i.0..sroa.010.i.0..sroa.010.i.0..sroa.010.0..sroa.010.0..sroa.010.0..i.peel.i.i.i.i = load i64, ptr %.sroa.010.i.i.i.i.i, align 8, !range !34, !noalias !826, !noundef !8 ; 2 uses
+  %.sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.0..sroa.010.i.i.i.i.0..sroa.010.i.i.i.0..sroa.010.i.i.i.0..sroa.010.i.i.0..sroa.010.i.i.0..sroa.010.i.0..sroa.010.i.0..sroa.010.0..sroa.010.0..sroa.010.0..i.peel.i.i.i.i = load i64, ptr %.sroa.010.i.i.i.i.i, align 8, !noalias !826 ; 2 uses
   %.not.i.peel.i.i.i.i = icmp eq i64 %.sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.0..sroa.010.i.i.i.i.0..sroa.010.i.i.i.0..sroa.010.i.i.i.0..sroa.010.i.i.0..sroa.010.i.i.0..sroa.010.i.0..sroa.010.i.0..sroa.010.0..sroa.010.0..sroa.010.0..i.peel.i.i.i.i, -1
   br i1 %.not.i.peel.i.i.i.i, label %.loopexit5.i.i.i.i, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterIBC_NtNtCs33K2ylI4knu_10hir_expand4name4NameEEEECs8Xq8PKFYOms_3hir.exit.i.peel.i.i.i.i
 
@@ -370,7 +370,7 @@ _RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtBb_6option8I
   %.sroa.7.sroa.0.0.i.i.i.i.i = phi ptr [ undef, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_NtNtCs33K2ylI4knu_10hir_expand4name4NameEEECs8Xq8PKFYOms_3hir.exit.i.i.i.i.i ], [ %.sroa.7.sroa.0.0.copyload.i.i.i.i.i, %bb.k ] ; 5 uses
   %.sink.i.i.i.i.i.i = phi ptr [ %.sroa.010.i.i.i.i.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_NtNtCs33K2ylI4knu_10hir_expand4name4NameEEECs8Xq8PKFYOms_3hir.exit.i.i.i.i.i ], [ %1, %bb.k ]
   store i64 -1, ptr %.sink.i.i.i.i.i.i, align 8, !alias.scope !842, !noalias !806
-  %.sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.0..sroa.010.i.i.i.i.0..sroa.010.i.i.i.0..sroa.010.i.i.i.0..sroa.010.i.i.0..sroa.010.i.i.0..sroa.010.i.0..sroa.010.i.0..sroa.010.0..sroa.010.0..sroa.010.0..i.i.i.i.i = load i64, ptr %.sroa.010.i.i.i.i.i, align 8, !range !34, !noalias !826, !noundef !8 ; 2 uses
+  %.sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.0..sroa.010.i.i.i.i.0..sroa.010.i.i.i.0..sroa.010.i.i.i.0..sroa.010.i.i.0..sroa.010.i.i.0..sroa.010.i.0..sroa.010.i.0..sroa.010.0..sroa.010.0..sroa.010.0..i.i.i.i.i = load i64, ptr %.sroa.010.i.i.i.i.i, align 8, !noalias !826 ; 2 uses
   %.not.i.i9.i.i.i = icmp eq i64 %.sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.i.0..sroa.010.i.i.i.i.0..sroa.010.i.i.i.i.0..sroa.010.i.i.i.0..sroa.010.i.i.i.0..sroa.010.i.i.0..sroa.010.i.i.0..sroa.010.i.0..sroa.010.i.0..sroa.010.0..sroa.010.0..sroa.010.0..i.i.i.i.i, -1
   br i1 %.not.i.i9.i.i.i, label %.loopexit5.i.i.i.i, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterIBC_NtNtCs33K2ylI4knu_10hir_expand4name4NameEEEECs8Xq8PKFYOms_3hir.exit.i.i.i.i.i
 
@@ -773,8 +773,8 @@ bb.a:
   %i.f = alloca [12 x i8], align 4                ; 6 uses
   %i.g = alloca [24 x i8], align 8                ; 4 uses
   %i.h = alloca [24 x i8], align 8                ; 5 uses
-  %.sroa.4 = alloca i64, align 8                  ; 5 uses
-  %.sroa.7 = alloca i64, align 8                  ; 4 uses
+  %.sroa.4 = alloca [8 x i8], align 8             ; 5 uses
+  %.sroa.7 = alloca [8 x i8], align 8             ; 4 uses
   %i.i = alloca [48 x i8], align 8                ; 9 uses
   %i.j = alloca [12 x i8], align 4                ; 4 uses
   %i.k = alloca [24 x i8], align 8                ; 4 uses
@@ -914,8 +914,7 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.41.0.copyload.i) ]
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.41.0.copyload.i, i64 16 ; 2 uses
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %i.as
-  %4 = ptrtoint ptr %i.at to i64
-  store i64 %4, ptr %.sroa.4, align 8, !alias.scope !1750, !noalias !1755
+  store ptr %i.at, ptr %.sroa.4, align 8, !alias.scope !1750, !noalias !1755
   br label %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type14type_arguments.exit
 
 _RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type14type_arguments.exit: ; preds = %bb.k, %.sink.split.i
@@ -1318,9 +1317,9 @@ define void @_RNvNtCs8Xq8PKFYOms_3hir5attrs20resolve_doc_path_on_(ptr dead_on_un
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
-  %.sroa.0.i.i = alloca i32, align 4              ; 4 uses
-  %.sroa.4.i.i = alloca i32, align 4              ; 5 uses
-  %.sroa.9.i.i = alloca i32, align 4              ; 4 uses
+  %.sroa.0.i.i = alloca [4 x i8], align 4         ; 4 uses
+  %.sroa.4.i.i = alloca [4 x i8], align 4         ; 5 uses
+  %.sroa.9.i.i = alloca [4 x i8], align 4         ; 4 uses
   %i.c = alloca [104 x i8], align 8               ; 7 uses
   %i.d = alloca [104 x i8], align 8               ; 7 uses
   %i.e = alloca [112 x i8], align 8               ; 11 uses
@@ -1351,12 +1350,12 @@ bb.a:
   %i.ad = alloca [16 x i8], align 4               ; 8 uses
   %i.ae = alloca [24 x i8], align 8               ; 10 uses
   %i.af = alloca [8 x i8], align 8                ; 12 uses
-  %.sroa.0.i = alloca i32, align 4                ; 7 uses
+  %.sroa.0.i = alloca [4 x i8], align 4           ; 7 uses
   %i.ag = alloca [152 x i8], align 8              ; 7 uses
   %i.ah = alloca [12 x i8], align 4               ; 10 uses
   %i.ai = alloca [128 x i8], align 8              ; 12 uses
   %i.aj = alloca [108 x i8], align 4              ; 38 uses
-  %.sroa.0 = alloca i32, align 4                  ; 6 uses
+  %.sroa.0 = alloca [4 x i8], align 4             ; 6 uses
   %i.ak = alloca [40 x i8], align 8               ; 4 uses
   %i.al = alloca [48 x i8], align 8               ; 9 uses
   %i.am = alloca [128 x i8], align 4              ; 28 uses
@@ -1759,7 +1758,7 @@ _RNCNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters5chainINtB6_5ChainIBQ_INtNtBc_6o
   %.sroa.8.0 = phi i8 [ undef, %bb.aw ], [ %.sroa.8.0.copyload109, %bb.ax ]
   %.sink.i.i = phi ptr [ %.sroa.0, %bb.aw ], [ %i.aj, %bb.ax ]
   store i32 -1, ptr %.sink.i.i, align 4, !alias.scope !1969, !noalias !1968
-  %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..pre = load i32, ptr %.sroa.0, align 4, !range !717
+  %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..pre = load i32, ptr %.sroa.0, align 4
   br label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionTNtNtCsileJQcQObtj_7hir_def10item_scope8ItemInNsIBw_NtBL_19ImportOrExternCrateEEE7or_elseNCNvXs_NtNtNtB5_4iter8adapters5chainINtB2g_5ChainIB2K_INtB3_8IntoIterBI_EB31_EB31_ENtNtNtB2k_6traits8iterator8Iterator4next0ECs8Xq8PKFYOms_3hir.exit
 
 _RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionTNtNtCsileJQcQObtj_7hir_def10item_scope8ItemInNsIBw_NtBL_19ImportOrExternCrateEEE7or_elseNCNvXs_NtNtNtB5_4iter8adapters5chainINtB2g_5ChainIB2K_INtB3_8IntoIterBI_EB31_EB31_ENtNtNtB2k_6traits8iterator8Iterator4next0ECs8Xq8PKFYOms_3hir.exit: ; preds = %_RNCNvXs_NtNtNtCshzWfHUSfYae_4core4iter8adapters5chainINtB6_5ChainIBQ_INtNtBc_6option8IntoIterTNtNtCsileJQcQObtj_7hir_def10item_scope8ItemInNsINtB18_6OptionNtB1w_19ImportOrExternCrateEEEB15_EB15_ENtNtNtBa_6traits8iterator8Iterator4next0Cs8Xq8PKFYOms_3hir.exit.i, %bb.av

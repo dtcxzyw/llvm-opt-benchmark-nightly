@@ -205,7 +205,7 @@ bb.aq:                                            ; preds = %_RINvMNtNtCsgNwXemy
   %i.gp = load i64, ptr %i.aj, align 8, !range !2049, !noalias !4983, !noundef !4
   %.not.i37.i = icmp eq i64 %i.gp, -1
   %i.gq = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
-  %i.gr = load i64, ptr %i.gq, align 8, !noalias !4983 ; 7 uses
+  %i.gr = load i64, ptr %i.gq, align 8, !noalias !4983 ; 5 uses
   %i.gs = getelementptr inbounds nuw i8, ptr %i.aj, i64 16 ; 2 uses
   br i1 %.not.i37.i, label %bb.ar, label %bb.ay
 
@@ -225,7 +225,6 @@ bb.at:                                            ; preds = %bb.ar
   br i1 %i.gw, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsgZlHlzpN0xi_7uu_tail4args6SignumNtNtNtNtCsh036I4OHgIr_6uucore8features6parser10parse_size14ParseSizeErrorEEB11_.exit.i, label %bb.au
 
 bb.au:                                            ; preds = %bb.aw, %bb.at
-  %.sroa.19.sroa.9.0.extract.shift.i = and i64 %i.gr, -256
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsgZlHlzpN0xi_7uu_tail4args6SignumNtNtNtNtCsh036I4OHgIr_6uucore8features6parser10parse_size14ParseSizeErrorEEB11_.exit.i
 
 bb.av:                                            ; preds = %bb.as
@@ -233,11 +232,7 @@ bb.av:                                            ; preds = %bb.as
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsgZlHlzpN0xi_7uu_tail4args6SignumNtNtNtNtCsh036I4OHgIr_6uucore8features6parser10parse_size14ParseSizeErrorEEB11_.exit.i
 
 bb.aw:                                            ; preds = %bb.as
-  br i1 %i.gu, label %2, label %bb.au
-
-2:                                                ; preds = %bb.aw
-  %.sroa.19.sroa.9.0.extract.shift133.i = and i64 %i.gr, -256
-  br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsgZlHlzpN0xi_7uu_tail4args6SignumNtNtNtNtCsh036I4OHgIr_6uucore8features6parser10parse_size14ParseSizeErrorEEB11_.exit.i
+  br i1 %i.gu, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsgZlHlzpN0xi_7uu_tail4args6SignumNtNtNtNtCsh036I4OHgIr_6uucore8features6parser10parse_size14ParseSizeErrorEEB11_.exit.i, label %bb.au
 
 bb.ax:                                            ; preds = %_RINvMNtNtCsgNwXemyrBWj_12clap_builder6parser5errorNtB3_12MatchesError6unwrapINtNtCs6JMX4GRUq9U_4core6option6OptionRNtNtCs7tKScEop1B6_5alloc6string6StringEECsgZlHlzpN0xi_7uu_tail.exit31.i
   %..i = select i1 %i.cy, i64 0, i64 10
@@ -432,11 +427,8 @@ bb.bm:                                            ; preds = %.lr.ph150.i76.i
   %.not105.i80.i = icmp eq i64 %i.iz, 0
   br i1 %.not105.i80.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit83.i, label %.lr.ph150.i76.i
 
-_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsgZlHlzpN0xi_7uu_tail4args6SignumNtNtNtNtCsh036I4OHgIr_6uucore8features6parser10parse_size14ParseSizeErrorEEB11_.exit.i: ; preds = %2, %bb.av, %bb.au, %bb.at
-  %.sroa.19.sroa.9.sroa.0.0.ph.i = phi i64 [ 0, %bb.at ], [ 0, %bb.av ], [ %.sroa.19.sroa.9.0.extract.shift133.i, %2 ], [ %.sroa.19.sroa.9.0.extract.shift.i, %bb.au ]
-  %.sroa.11.0.ph.i = phi i64 [ 3, %bb.at ], [ %spec.select193.i, %bb.av ], [ 1, %2 ], [ 0, %bb.au ]
-  %.sroa.19.sroa.0.0.insert.ext121.i = and i64 %i.gr, 255
-  %.sroa.19.sroa.0.0.insert.insert123.i = or disjoint i64 %.sroa.19.sroa.9.sroa.0.0.ph.i, %.sroa.19.sroa.0.0.insert.ext121.i
+_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsgZlHlzpN0xi_7uu_tail4args6SignumNtNtNtNtCsh036I4OHgIr_6uucore8features6parser10parse_size14ParseSizeErrorEEB11_.exit.i: ; preds = %bb.aw, %bb.av, %bb.au, %bb.at
+  %.sroa.11.0.ph.i = phi i64 [ 1, %bb.aw ], [ %spec.select193.i, %bb.av ], [ 3, %bb.at ], [ 0, %bb.au ]
   %.26.i = select i1 %i.cy, i64 0, i64 10
   br label %bb.bx
 
@@ -548,7 +540,7 @@ bb.bw:                                            ; preds = %_RINvNtCs6JMX4GRUq9
 
 bb.bx:                                            ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsgZlHlzpN0xi_7uu_tail4args6SignumNtNtNtNtCsh036I4OHgIr_6uucore8features6parser10parse_size14ParseSizeErrorEEB11_.exit.i, %bb.ax, %bb.u
   %.sroa.12.0 = phi i64 [ %.sroa.16.sroa.0.0.insert.insert94.i, %bb.u ], [ %.26.i, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsgZlHlzpN0xi_7uu_tail4args6SignumNtNtNtNtCsh036I4OHgIr_6uucore8features6parser10parse_size14ParseSizeErrorEEB11_.exit.i ], [ %..i, %bb.ax ]
-  %.sroa.7310.0 = phi i64 [ %.sroa.10.0.ph.i, %bb.u ], [ %.sroa.19.sroa.0.0.insert.insert123.i, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsgZlHlzpN0xi_7uu_tail4args6SignumNtNtNtNtCsh036I4OHgIr_6uucore8features6parser10parse_size14ParseSizeErrorEEB11_.exit.i ], [ 10, %bb.ax ]
+  %.sroa.7310.0 = phi i64 [ %.sroa.10.0.ph.i, %bb.u ], [ %i.gr, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsgZlHlzpN0xi_7uu_tail4args6SignumNtNtNtNtCsh036I4OHgIr_6uucore8features6parser10parse_size14ParseSizeErrorEEB11_.exit.i ], [ 10, %bb.ax ]
   %.sroa.0309.0 = phi i64 [ -1, %bb.u ], [ %.sroa.11.0.ph.i, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCsgZlHlzpN0xi_7uu_tail4args6SignumNtNtNtNtCsh036I4OHgIr_6uucore8features6parser10parse_size14ParseSizeErrorEEB11_.exit.i ], [ 0, %bb.ax ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.av)
