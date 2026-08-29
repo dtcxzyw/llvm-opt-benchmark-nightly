@@ -204,7 +204,7 @@ define dso_local noundef ptr @_ZNK5clang22ComparisonCategoryInfo15lookupValueInf
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca i8, align 1                       ; 2 uses
-  %i.c = alloca ptr, align 8                      ; 4 uses
+  %i.c = alloca ptr, align 8                      ; 5 uses
   store i8 %1, ptr %i.b, align 1, !tbaa !41
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %.val = load ptr, ptr %i.d, align 8, !tbaa !42  ; 5 uses
@@ -399,7 +399,7 @@ bb.p:                                             ; preds = %_ZN5clang15Identifi
   %i.bq = and i64 %i.bo, 4
   %.not.i.i.i.i.i = icmp eq i64 %i.bq, 0
   %i.br = and i64 %i.bo, -5
-  %i.bs = inttoptr i64 %i.br to ptr               ; 3 uses
+  %i.bs = inttoptr i64 %i.br to ptr               ; 4 uses
   br i1 %.not.i.i.i.i.i, label %_ZNK5clang23DeclContextLookupResult5frontEv.exit, label %_ZNK5clang23DeclContextLookupResult5frontEv.exit.thread
 
 _ZNK5clang23DeclContextLookupResult5frontEv.exit: ; preds = %bb.p
@@ -408,20 +408,28 @@ _ZNK5clang23DeclContextLookupResult5frontEv.exit: ; preds = %bb.p
   %i.bv = and i32 %i.bu, 127
   %i.bw = add nsw i32 %i.bv, -41
   %i.bx = icmp ult i32 %i.bw, 7
-  br i1 %i.bx, label %_ZNK5clang23DeclContextLookupResult5frontEv.exit19, label %.critedge
+  br i1 %i.bx, label %2, label %.critedge
 
 _ZNK5clang23DeclContextLookupResult5frontEv.exit.thread: ; preds = %bb.p
-  %i.by = load ptr, ptr %i.bs, align 8, !tbaa !475 ; 2 uses
+  %i.by = load ptr, ptr %i.bs, align 8, !tbaa !475
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 28
   %i.ca = load i32, ptr %i.bz, align 4
   %i.cb = and i32 %i.ca, 127
   %i.cc = add nsw i32 %i.cb, -41
   %i.cd = icmp ult i32 %i.cc, 7
-  br i1 %i.cd, label %_ZNK5clang23DeclContextLookupResult5frontEv.exit19, label %.critedge
+  br i1 %i.cd, label %3, label %.critedge
 
-_ZNK5clang23DeclContextLookupResult5frontEv.exit19: ; preds = %_ZNK5clang23DeclContextLookupResult5frontEv.exit.thread, %_ZNK5clang23DeclContextLookupResult5frontEv.exit
-  %i.ce = phi ptr [ %i.bs, %_ZNK5clang23DeclContextLookupResult5frontEv.exit ], [ %i.by, %_ZNK5clang23DeclContextLookupResult5frontEv.exit.thread ] ; 3 uses
+2:                                                ; preds = %_ZNK5clang23DeclContextLookupResult5frontEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
+  br label %_ZNK5clang23DeclContextLookupResult5frontEv.exit19
+
+3:                                                ; preds = %_ZNK5clang23DeclContextLookupResult5frontEv.exit.thread
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
+  %4 = load ptr, ptr %i.bs, align 8, !tbaa !475
+  br label %_ZNK5clang23DeclContextLookupResult5frontEv.exit19
+
+_ZNK5clang23DeclContextLookupResult5frontEv.exit19: ; preds = %2, %3
+  %i.ce = phi ptr [ %4, %3 ], [ %i.bs, %2 ]       ; 3 uses
   store ptr %i.ce, ptr %i.c, align 8, !tbaa !483
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 48
   %.sroa.0.0.copyload.i = load i64, ptr %i.cf, align 8, !tbaa !15
@@ -511,7 +519,7 @@ _ZNK5clang4Type18getAsCXXRecordDeclEv.exit.thread: ; preds = %_ZNK5clang23DeclCo
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
   br label %.critedge
 
-.critedge:                                        ; preds = %_ZNK5clang4Type18getAsCXXRecordDeclEv.exit.thread, %_ZNK5clang23DeclContextLookupResult5frontEv.exit, %_ZN5clang15IdentifierTable3getEN4llvm9StringRefE.exit, %_ZNK5clang23DeclContextLookupResult5frontEv.exit.thread, %"_ZN4llvm7find_ifIRNS_11SmallVectorIN5clang22ComparisonCategoryInfo9ValueInfoELj5EEEZNKS3_15lookupValueInfoENS2_24ComparisonCategoryResultEE3$_0EEDaOT_T0_.exit"
+.critedge:                                        ; preds = %_ZNK5clang23DeclContextLookupResult5frontEv.exit.thread, %_ZNK5clang4Type18getAsCXXRecordDeclEv.exit.thread, %_ZNK5clang23DeclContextLookupResult5frontEv.exit, %_ZN5clang15IdentifierTable3getEN4llvm9StringRefE.exit, %"_ZN4llvm7find_ifIRNS_11SmallVectorIN5clang22ComparisonCategoryInfo9ValueInfoELj5EEEZNKS3_15lookupValueInfoENS2_24ComparisonCategoryResultEE3$_0EEDaOT_T0_.exit"
   %.2 = phi ptr [ %.028.i.i.i.i, %"_ZN4llvm7find_ifIRNS_11SmallVectorIN5clang22ComparisonCategoryInfo9ValueInfoELj5EEEZNKS3_15lookupValueInfoENS2_24ComparisonCategoryResultEE3$_0EEDaOT_T0_.exit" ], [ %.0, %_ZNK5clang4Type18getAsCXXRecordDeclEv.exit.thread ], [ null, %_ZNK5clang23DeclContextLookupResult5frontEv.exit ], [ null, %_ZN5clang15IdentifierTable3getEN4llvm9StringRefE.exit ], [ null, %_ZNK5clang23DeclContextLookupResult5frontEv.exit.thread ]
   ret ptr %.2
 }
