@@ -204,15 +204,15 @@ bb.af:                                            ; preds = %bb.k, %_RNvXs8_NtCs
   br label %bb.ah
 
 bb.ag:                                            ; preds = %.thread138, %.thread135
-  %.sroa.24.sroa.23.sroa.0.0.in.in = phi i64 [ %.sroa.24.sroa.23.sroa.0.4.in.in, %.thread138 ], [ %.sroa.24.sroa.23.sroa.0.3.in.in, %.thread135 ] ; 3 uses
+  %.sroa.24.sroa.23.sroa.0.0.in.in = phi i64 [ %.sroa.24.sroa.23.sroa.0.4.in.in, %.thread138 ], [ %.sroa.24.sroa.23.sroa.0.3.in.in, %.thread135 ]
   %.sroa.49.0 = phi i64 [ %.sroa.49.3, %.thread138 ], [ %.sroa.49.2, %.thread135 ]
-  %.sroa.41.0 = phi i64 [ %.sroa.41.4, %.thread138 ], [ %.sroa.41.3, %.thread135 ]
+  %.sroa.41.0 = phi i64 [ %.sroa.41.4, %.thread138 ], [ %.sroa.41.3, %.thread135 ] ; 2 uses
   %.sroa.0.0 = phi i64 [ %.sroa.0.4, %.thread138 ], [ %.sroa.0.3, %.thread135 ] ; 2 uses
   %i.dd = icmp eq i64 %.sroa.0.0, -1
   br i1 %i.dd, label %._crit_edge, label %.thread, !prof !1073
 
 ._crit_edge:                                      ; preds = %bb.ag
-  %i.de = inttoptr i64 %.sroa.24.sroa.23.sroa.0.0.in.in to ptr
+  %i.de = inttoptr i64 %.sroa.41.0 to ptr
   br label %bb.cn
 
 bb.ah:                                            ; preds = %bb.co, %bb.cc, %bb.ay, %bb.aq, %bb.ak, %bb.aj, %bb.ai, %bb.af
@@ -274,7 +274,7 @@ bb.ao:                                            ; preds = %bb.am
 
 _RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.i19: ; preds = %bb.ao, %bb.an
   %i.dm = phi i64 [ %.sroa.5.sroa.5.0.copyload9.i.i28311, %bb.an ], [ %.sroa.4.0.copyload, %bb.ao ]
-  %.sroa.5.sroa.0.0.i.i21 = phi i64 [ %.sroa.5.sroa.0.0.copyload8.i.i26, %bb.an ], [ 2, %bb.ao ] ; 2 uses
+  %.sroa.5.sroa.0.0.i.i21 = phi i64 [ %.sroa.5.sroa.0.0.copyload8.i.i26, %bb.an ], [ 2, %bb.ao ]
   %.sroa.0.0.i.i22 = phi i64 [ -9223372036854775808, %bb.an ], [ -9223372036854775806, %bb.ao ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !1074
   br label %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit30
@@ -284,9 +284,8 @@ bb.ap:                                            ; preds = %bb.al
   br label %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit30
 
 _RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit30: ; preds = %bb.al, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.i19, %bb.ap
-  %.sroa.24.sroa.23.sroa.0.1 = phi i64 [ %.sroa.5.sroa.0.0.i.i21, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.i19 ], [ 0, %bb.ap ], [ 0, %bb.al ]
+  %.sroa.24.sroa.23.sroa.0.1 = phi i64 [ %i.dm, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.i19 ], [ %.sroa.4.0.copyload, %bb.ap ], [ %.sroa.4.0.copyload, %bb.al ]
   %.sroa.24.sroa.0.1 = phi i64 [ %.sroa.5.sroa.0.0.i.i21, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.i19 ], [ %.lobit.i.i14, %bb.ap ], [ 0, %bb.al ]
-  %.sroa.41.1 = phi i64 [ %i.dm, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.i19 ], [ %.sroa.4.0.copyload, %bb.ap ], [ %.sroa.4.0.copyload, %bb.al ]
   %.sroa.0.1 = phi i64 [ %.sroa.0.0.i.i22, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.i19 ], [ -9223372036854775806, %bb.ap ], [ -9223372036854775806, %bb.al ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai), !noalias !961
   br label %.thread
@@ -358,8 +357,8 @@ _RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10s
   br label %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit
 
 _RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit: ; preds = %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.sink.split, %bb.ax, %bb.au
-  %.sroa.24.sroa.23.sroa.0.2.in.in = phi i64 [ %i.ea, %bb.ax ], [ %i.ds, %bb.au ], [ %.sroa.24.sroa.23.sroa.0.2.in.in.ph, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.sink.split ] ; 2 uses
   %.sroa.41.2.in = phi ptr [ %i.ed, %bb.ax ], [ %i.dv, %bb.au ], [ %.sink, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.sink.split ]
+  %.sroa.24.2 = phi i64 [ %i.ea, %bb.ax ], [ %i.ds, %bb.au ], [ %.sroa.24.sroa.23.sroa.0.2.in.in.ph, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.sink.split ]
   %.sroa.41.2 = ptrtoint ptr %.sroa.41.2.in to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag), !noalias !961
   br label %.thread
@@ -762,9 +761,9 @@ bb.ca:                                            ; preds = %bb.ci, %bb.by
   unreachable
 
 .thread135:                                       ; preds = %.thread210, %.thread208, %bb.bz, %bb.cb
-  %.sroa.24.sroa.23.sroa.0.3.in.in = phi i64 [ %i.gz, %bb.cb ], [ %i.gv, %bb.bz ], [ %i.gu, %.thread210 ], [ %.sroa.24.0.copyload245, %.thread208 ]
-  %.sroa.49.2 = phi i64 [ undef, %bb.cb ], [ undef, %bb.bz ], [ undef, %.thread210 ], [ %.sroa.49.0.copyload253, %.thread208 ]
-  %.sroa.41.3 = phi i64 [ undef, %bb.cb ], [ undef, %bb.bz ], [ undef, %.thread210 ], [ %.sroa.41.0.copyload249, %.thread208 ]
+  %.sroa.24.sroa.23.sroa.0.3.in.in = phi i64 [ undef, %bb.cb ], [ undef, %bb.bz ], [ undef, %.thread210 ], [ %.sroa.49.0.copyload253, %.thread208 ]
+  %.sroa.49.2 = phi i64 [ undef, %bb.cb ], [ undef, %bb.bz ], [ undef, %.thread210 ], [ %.sroa.41.0.copyload249, %.thread208 ]
+  %.sroa.41.3 = phi i64 [ %i.gz, %bb.cb ], [ %i.gv, %bb.bz ], [ %i.gu, %.thread210 ], [ %.sroa.24.0.copyload245, %.thread208 ]
   %.sroa.0.3 = phi i64 [ -1, %bb.cb ], [ -1, %bb.bz ], [ -1, %.thread210 ], [ %i.gq, %.thread208 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae), !noalias !961
   br label %bb.ag
@@ -912,9 +911,9 @@ bb.cj:                                            ; preds = %_RNvMs3_NtCsbbTh99n
   br label %.thread138
 
 .thread138:                                       ; preds = %.thread213, %.thread211, %bb.cj, %bb.ck
-  %.sroa.24.sroa.23.sroa.0.4.in.in = phi i64 [ %i.ic, %bb.ck ], [ %i.hz, %bb.cj ], [ %i.hy, %.thread213 ], [ %.sroa.24.0.copyload247, %.thread211 ]
-  %.sroa.49.3 = phi i64 [ undef, %bb.ck ], [ undef, %bb.cj ], [ undef, %.thread213 ], [ %.sroa.49.0.copyload255, %.thread211 ]
-  %.sroa.41.4 = phi i64 [ undef, %bb.ck ], [ undef, %bb.cj ], [ undef, %.thread213 ], [ %.sroa.41.0.copyload251, %.thread211 ]
+  %.sroa.24.sroa.23.sroa.0.4.in.in = phi i64 [ undef, %bb.ck ], [ undef, %bb.cj ], [ undef, %.thread213 ], [ %.sroa.49.0.copyload255, %.thread211 ]
+  %.sroa.49.3 = phi i64 [ undef, %bb.ck ], [ undef, %bb.cj ], [ undef, %.thread213 ], [ %.sroa.41.0.copyload251, %.thread211 ]
+  %.sroa.41.4 = phi i64 [ %i.ic, %bb.ck ], [ %i.hz, %bb.cj ], [ %i.hy, %.thread213 ], [ %.sroa.24.0.copyload247, %.thread211 ]
   %.sroa.0.4 = phi i64 [ -1, %bb.ck ], [ -1, %bb.cj ], [ -1, %.thread213 ], [ %.sroa.0.0.copyload243, %.thread211 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa), !noalias !961
   br label %bb.ag
@@ -988,7 +987,7 @@ bb.cs:                                            ; preds = %bb.cq
 
 _RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.i: ; preds = %bb.cs, %bb.cr
   %i.ip = phi i64 [ %.sroa.5.sroa.5.0.copyload9.i.i312, %bb.cr ], [ %.sroa.465.0.copyload, %bb.cs ]
-  %.sroa.5.sroa.0.0.i.i = phi i64 [ %.sroa.5.sroa.0.0.copyload8.i.i, %bb.cr ], [ 2, %bb.cs ] ; 2 uses
+  %.sroa.5.sroa.0.0.i.i = phi i64 [ %.sroa.5.sroa.0.0.copyload8.i.i, %bb.cr ], [ 2, %bb.cs ]
   %.sroa.0.0.i.i = phi i64 [ -9223372036854775808, %bb.cr ], [ -9223372036854775806, %bb.cs ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !1241
   br label %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit
@@ -998,29 +997,24 @@ bb.ct:                                            ; preds = %bb.cp
   br label %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit
 
 _RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit: ; preds = %bb.cp, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.i, %bb.ct
-  %.sroa.24.sroa.23.sroa.0.5 = phi i64 [ %.sroa.5.sroa.0.0.i.i, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.i ], [ 0, %bb.ct ], [ 0, %bb.cp ]
+  %.sroa.24.sroa.23.sroa.0.5 = phi i64 [ %i.ip, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.i ], [ %.sroa.465.0.copyload, %bb.ct ], [ %.sroa.465.0.copyload, %bb.cp ]
   %.sroa.24.sroa.0.5 = phi i64 [ %.sroa.5.sroa.0.0.i.i, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.i ], [ %.lobit.i.i, %bb.ct ], [ 0, %bb.cp ]
-  %.sroa.41.5 = phi i64 [ %i.ip, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.i ], [ %.sroa.465.0.copyload, %bb.ct ], [ %.sroa.465.0.copyload, %bb.cp ]
   %.sroa.0.5 = phi i64 [ %.sroa.0.0.i.i, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit.i ], [ -9223372036854775806, %bb.ct ], [ -9223372036854775806, %bb.cp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah), !noalias !961
   br label %.thread
 
 .thread:                                          ; preds = %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit30, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit, %bb.z, %bb.q, %bb.j, %bb.ag
-  %.sroa.24.sroa.23.sroa.0.6 = phi i64 [ %.sroa.24.sroa.23.sroa.0.0.in.in, %bb.ag ], [ 0, %bb.q ], [ 0, %bb.z ], [ 0, %bb.j ], [ %.sroa.24.sroa.23.sroa.0.2.in.in, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit ], [ %.sroa.24.sroa.23.sroa.0.1, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit30 ], [ %.sroa.24.sroa.23.sroa.0.5, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit ]
-  %.sroa.24.sroa.0.6 = phi i64 [ %.sroa.24.sroa.23.sroa.0.0.in.in, %bb.ag ], [ 1, %bb.q ], [ 0, %bb.z ], [ 0, %bb.j ], [ %.sroa.24.sroa.23.sroa.0.2.in.in, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit ], [ %.sroa.24.sroa.0.1, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit30 ], [ %.sroa.24.sroa.0.5, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit ]
-  %.sroa.49.4 = phi i64 [ %.sroa.49.0, %bb.ag ], [ undef, %bb.q ], [ undef, %bb.z ], [ undef, %bb.j ], [ %.sroa.4.0.copyload.i, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit ], [ undef, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit30 ], [ undef, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit ]
-  %.sroa.41.6 = phi i64 [ %.sroa.41.0, %bb.ag ], [ undef, %bb.q ], [ undef, %bb.z ], [ undef, %bb.j ], [ %.sroa.41.2, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit ], [ %.sroa.41.1, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit30 ], [ %.sroa.41.5, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit ]
+  %.sroa.24.sroa.0.6 = phi i64 [ %.sroa.24.sroa.23.sroa.0.0.in.in, %bb.ag ], [ undef, %bb.q ], [ undef, %bb.z ], [ undef, %bb.j ], [ %.sroa.4.0.copyload.i, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit ], [ undef, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit30 ], [ undef, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit ]
+  %.sroa.49.4 = phi i64 [ %.sroa.49.0, %bb.ag ], [ undef, %bb.q ], [ undef, %bb.z ], [ undef, %bb.j ], [ %.sroa.41.2, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit ], [ %.sroa.24.sroa.23.sroa.0.1, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit30 ], [ %.sroa.24.sroa.23.sroa.0.5, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit ]
+  %.sroa.41.6 = phi i64 [ %.sroa.41.0, %bb.ag ], [ 1, %bb.q ], [ 0, %bb.z ], [ undef, %bb.j ], [ %.sroa.24.2, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit ], [ %.sroa.24.sroa.0.1, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit30 ], [ %.sroa.24.sroa.0.5, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit ]
   %.sroa.0.6 = phi i64 [ %.sroa.0.0, %bb.ag ], [ -9223372036854775807, %bb.q ], [ -9223372036854775807, %bb.z ], [ -9223372036854775808, %bb.j ], [ -9223372036854775805, %_RINvXNvXNtNtCsbbTh99npV2h_10serde_json5value2deNtB8_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_strNtNtBa_5error5ErrorECskIqAKC4t9Ft_2yr.exit ], [ %.sroa.0.1, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit30 ], [ %.sroa.0.5, %_RINvMs2_NtCsbbTh99npV2h_10serde_json2deNtB6_12ParserNumber5visitNtNvXNtNtB8_5value2deNtB17_5ValueNtNtCsaeRQ2XwCvzm_10serde_core2de11Deserialize11deserialize12ValueVisitorECskIqAKC4t9Ft_2yr.exit ]
   store i64 %.sroa.0.6, ptr %0, align 8, !noalias !940
   %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.24.sroa.23.0.insert.ext = and i64 %.sroa.24.sroa.23.sroa.0.6, -256
-  %.sroa.24.sroa.0.0.insert.ext = and i64 %.sroa.24.sroa.0.6, 255
-  %.sroa.24.sroa.0.0.insert.insert = or disjoint i64 %.sroa.24.sroa.0.0.insert.ext, %.sroa.24.sroa.23.0.insert.ext
-  store i64 %.sroa.24.sroa.0.0.insert.insert, ptr %.sroa.24.0..sroa_idx, align 8, !noalias !940
+  store i64 %.sroa.41.6, ptr %.sroa.24.0..sroa_idx, align 8, !noalias !940
   %.sroa.41.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.41.6, ptr %.sroa.41.0..sroa_idx, align 8, !noalias !940
+  store i64 %.sroa.49.4, ptr %.sroa.41.0..sroa_idx, align 8, !noalias !940
   %.sroa.49.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 %.sroa.49.4, ptr %.sroa.49.0..sroa_idx, align 8, !noalias !940
+  store i64 %.sroa.24.sroa.0.6, ptr %.sroa.49.0..sroa_idx, align 8, !noalias !940
   %.sroa.51.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.51.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.51, i64 40, i1 false), !noalias !940
   br label %bb.cu
@@ -1423,8 +1417,8 @@ bb.e:                                             ; preds = %bb.b
 define hidden void @_RINvXs5_NtCsexYYUdYSQU6_5alloc6stringNtB6_6StringINtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12FromIteratorcE9from_iterINtNtNtBS_8adapters5chain5ChainINtNtB22_3map3MapINtNtB22_7flatten7FlatMapINtNtB22_4take4TakeINtNtNtBU_5slice4iter4IterhEENtNtBU_5ascii13EscapeDefaultNCNCNCNvNtNtNtCskIqAKC4t9Ft_2yr8commands4scan14output_handler16patterns_to_json000ENCB4o_s_0EIB2K_INtNtBU_6option4IterBz_ENtNtNtBU_3str4iter5CharsNCB4o_s0_0EEEB4A_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(96) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [96 x i8], align 8                ; 20 uses
-  %.sroa.750.i = alloca i64, align 8              ; 4 uses
-  %.sroa.1151.i = alloca i64, align 8             ; 4 uses
+  %.sroa.750.i = alloca [8 x i8], align 8         ; 4 uses
+  %.sroa.1151.i = alloca [8 x i8], align 8        ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 0, ptr %i.b, align 8
@@ -1672,8 +1666,8 @@ bb.m:                                             ; preds = %bb.j
 define hidden void @_RINvXs5_NtCsexYYUdYSQU6_5alloc6stringNtB6_6StringINtNtNtNtCskKLDkoKarTP_4core4iter6traits7collect12FromIteratorcE9from_iterINtNtNtBS_8adapters5chain5ChainINtNtB22_3map3MapINtNtB22_7flatten7FlatMapINtNtB22_4take4TakeINtNtNtBU_5slice4iter4IterhEENtNtBU_5ascii13EscapeDefaultNCNCNCNvNtNtNtCskIqAKC4t9Ft_2yr8commands4scan14output_handler24patterns_to_string_jsons000ENCB4o_s_0EIB2K_INtNtBU_6option4IterBz_ENtNtNtBU_3str4iter5CharsNCB4o_s0_0EEEB4A_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(96) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [96 x i8], align 8                ; 20 uses
-  %.sroa.750.i = alloca i64, align 8              ; 4 uses
-  %.sroa.1151.i = alloca i64, align 8             ; 4 uses
+  %.sroa.750.i = alloca [8 x i8], align 8         ; 4 uses
+  %.sroa.1151.i = alloca [8 x i8], align 8        ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 0, ptr %i.b, align 8

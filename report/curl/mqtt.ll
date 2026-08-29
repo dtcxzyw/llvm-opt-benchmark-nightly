@@ -204,14 +204,14 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 7 uses
   %i.b = alloca ptr, align 8                      ; 6 uses
   %i.c = alloca i64, align 8                      ; 8 uses
-  %.sroa.0 = alloca i32, align 4                  ; 7 uses
+  %1 = alloca [4 x i8], align 1                   ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 480
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !102  ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
   store ptr null, ptr %i.b, align 8, !tbaa !103
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 496
   %i.g = load i64, ptr %i.f, align 8, !tbaa !104  ; 2 uses
   %.not = icmp eq ptr %i.e, null
@@ -267,7 +267,7 @@ mqtt_get_topic.exit:                              ; preds = %bb.g
   %.not.i45 = icmp eq i64 %i.x, 0
   %masksel.i = select i1 %.not.i45, i8 0, i8 -128
   %.0.i46 = or disjoint i8 %masksel.i, %i.w
-  store i8 %.0.i46, ptr %.sroa.0, align 4, !tbaa !81
+  store i8 %.0.i46, ptr %1, align 1, !tbaa !81
   %.not57 = icmp eq i64 %i.x, 0
   br i1 %.not57, label %mqtt_encode_len.exit, label %.lr.ph.i.1
 
@@ -278,7 +278,7 @@ mqtt_get_topic.exit:                              ; preds = %bb.g
   %.not.i45.1 = icmp eq i64 %i.aa, 0
   %masksel.i.1 = select i1 %.not.i45.1, i8 0, i8 -128
   %.0.i46.1 = or disjoint i8 %masksel.i.1, %i.z
-  %.sroa.0.1..sroa_idx54 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1
+  %.sroa.0.1..sroa_idx54 = getelementptr inbounds nuw i8, ptr %1, i64 1
   store i8 %.0.i46.1, ptr %.sroa.0.1..sroa_idx54, align 1, !tbaa !81
   %.not58 = icmp eq i64 %i.aa, 0
   br i1 %.not58, label %mqtt_encode_len.exit, label %.lr.ph.i.2
@@ -290,8 +290,8 @@ mqtt_get_topic.exit:                              ; preds = %bb.g
   %.not.i45.2 = icmp eq i64 %i.ad, 0
   %masksel.i.2 = select i1 %.not.i45.2, i8 0, i8 -128
   %.0.i46.2 = or disjoint i8 %masksel.i.2, %i.ac
-  %.sroa.0.2..sroa_idx55 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
-  store i8 %.0.i46.2, ptr %.sroa.0.2..sroa_idx55, align 2, !tbaa !81
+  %.sroa.0.2..sroa_idx55 = getelementptr inbounds nuw i8, ptr %1, i64 2
+  store i8 %.0.i46.2, ptr %.sroa.0.2..sroa_idx55, align 1, !tbaa !81
   %.not59 = icmp eq i64 %i.ad, 0
   br i1 %.not59, label %mqtt_encode_len.exit, label %.lr.ph.i.3
 
@@ -301,7 +301,7 @@ mqtt_get_topic.exit:                              ; preds = %bb.g
   %.not.i45.3 = icmp ult i64 %i.u, 268435456
   %masksel.i.3 = select i1 %.not.i45.3, i8 0, i8 -128
   %.0.i46.3 = or disjoint i8 %masksel.i.3, %i.af
-  %.sroa.0.3..sroa_idx56 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 3
+  %.sroa.0.3..sroa_idx56 = getelementptr inbounds nuw i8, ptr %1, i64 3
   store i8 %.0.i46.3, ptr %.sroa.0.3..sroa_idx56, align 1, !tbaa !81
   br label %mqtt_encode_len.exit
 
@@ -322,7 +322,7 @@ bb.h:                                             ; preds = %mqtt_encode_len.exi
 bb.i:                                             ; preds = %bb.h
   store i8 48, ptr %i.al, align 1, !tbaa !81
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.am, ptr nonnull align 4 %.sroa.0, i64 %.010.lcssa.i, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.am, ptr nonnull align 1 %1, i64 %.010.lcssa.i, i1 false)
   %i.an = load i64, ptr %i.c, align 8, !tbaa !13
   %i.ao = lshr i64 %i.an, 8
   %i.ap = trunc i64 %i.ao to i8
@@ -360,7 +360,7 @@ mqtt_get_topic.exit.thread:                       ; preds = %.sink.split.i, %bb.
 
 bb.j:                                             ; preds = %bb.c, %bb.a, %mqtt_get_topic.exit.thread
   %.038 = phi i32 [ %.037, %mqtt_get_topic.exit.thread ], [ 43, %bb.a ], [ 43, %bb.c ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
@@ -372,11 +372,11 @@ define internal fastcc i32 @mqtt_subscribe(ptr noundef %0) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 8 uses
-  %.sroa.0 = alloca i32, align 4                  ; 6 uses
+  %1 = alloca [4 x i8], align 1                   ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store ptr null, ptr %i.a, align 8, !tbaa !103
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !86
   %i.e = tail call ptr @Curl_conn_meta_get(ptr noundef %i.d, ptr noundef nonnull @.str) #6 ; 2 uses
@@ -418,7 +418,7 @@ bb.d:                                             ; preds = %bb.c
   %.not.i40 = icmp eq i64 %i.t, 0
   %masksel.i = select i1 %.not.i40, i8 0, i8 -128
   %.0.i41 = or disjoint i8 %masksel.i, %i.s
-  store i8 %.0.i41, ptr %.sroa.0, align 4, !tbaa !81
+  store i8 %.0.i41, ptr %1, align 1, !tbaa !81
   %.not52 = icmp eq i64 %i.t, 0
   br i1 %.not52, label %mqtt_encode_len.exit, label %.lr.ph.i.1
 
@@ -429,15 +429,15 @@ bb.d:                                             ; preds = %bb.c
   %.not.i40.1 = icmp eq i64 %i.w, 0
   %masksel.i.1 = select i1 %.not.i40.1, i8 0, i8 -128
   %.0.i41.1 = or disjoint i8 %masksel.i.1, %i.v
-  %.sroa.0.1..sroa_idx49 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1
+  %.sroa.0.1..sroa_idx49 = getelementptr inbounds nuw i8, ptr %1, i64 1
   store i8 %.0.i41.1, ptr %.sroa.0.1..sroa_idx49, align 1, !tbaa !81
   %.not53 = icmp eq i64 %i.w, 0
   br i1 %.not53, label %mqtt_encode_len.exit, label %.lr.ph.i.2
 
 .lr.ph.i.2:                                       ; preds = %.lr.ph.i.1
   %i.x = trunc nuw i64 %i.w to i8
-  %.sroa.0.2..sroa_idx50 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
-  store i8 %i.x, ptr %.sroa.0.2..sroa_idx50, align 2, !tbaa !81
+  %.sroa.0.2..sroa_idx50 = getelementptr inbounds nuw i8, ptr %1, i64 2
+  store i8 %i.x, ptr %.sroa.0.2..sroa_idx50, align 1, !tbaa !81
   br label %mqtt_encode_len.exit
 
 mqtt_encode_len.exit:                             ; preds = %.lr.ph.i.2, %.lr.ph.i.1, %.lr.ph.i.preheader
@@ -452,7 +452,7 @@ mqtt_encode_len.exit:                             ; preds = %.lr.ph.i.2, %.lr.ph
 bb.e:                                             ; preds = %mqtt_encode_len.exit
   store i8 -126, ptr %i.aa, align 1, !tbaa !81
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ab, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.0, i64 %indvars.iv.next.i.lcssa, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ab, ptr noundef nonnull align 1 dereferenceable(1) %1, i64 %indvars.iv.next.i.lcssa, i1 false)
   %i.ac = load i32, ptr %i.n, align 4, !tbaa !98
   %i.ad = lshr i32 %i.ac, 8
   %i.ae = trunc i32 %i.ad to i8
@@ -494,7 +494,7 @@ mqtt_get_topic.exit.thread:                       ; preds = %.sink.split.i, %bb.
 
 bb.f:                                             ; preds = %bb.a, %mqtt_get_topic.exit.thread
   %.034 = phi i32 [ %.033, %mqtt_get_topic.exit.thread ], [ 2, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 %.034

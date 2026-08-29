@@ -205,9 +205,9 @@ bb.bq:                                            ; preds = %bb.bp
 
 _ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayIhLm4EEED2Ev.exit.i: ; preds = %.noexc120, %bb.bi, %bb.bq, %bb.bp
   %.sroa.0185.3 = phi ptr [ %i.if, %bb.bq ], [ %i.if, %bb.bp ], [ %.sroa.0185.0.copyload191, %bb.bi ], [ undef, %.noexc120 ]
-  %.sroa.17.3 = phi i64 [ %i.io, %bb.bq ], [ %i.io, %bb.bp ], [ %.sroa.17.0.copyload193, %bb.bi ], [ undef, %.noexc120 ]
   %.sroa.29.1 = phi i8 [ 1, %bb.bq ], [ %.pr.i, %bb.bp ], [ 0, %bb.bi ], [ %i.hw, %.noexc120 ]
   %.sroa.23.1 = phi ptr [ %i.ig, %bb.bq ], [ %i.ig, %bb.bp ], [ undef, %bb.bi ], [ undef, %.noexc120 ]
+  %.sroa.17.3 = phi i64 [ %i.io, %bb.bq ], [ %i.io, %bb.bp ], [ %.sroa.17.0.copyload193, %bb.bi ], [ undef, %.noexc120 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #30, !noalias !287
   br label %"_ZZN5scene19CGLTFMeshFileLoader13MeshExtractor12addPrimitiveERKN10tiniergltf13MeshPrimitiveESt8optionalImEPNS_11SkinnedMesh6SJointEENK3$_0clEv.exit"
 
@@ -337,9 +337,9 @@ bb.cc:                                            ; preds = %bb.cb
 
 _ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayItLm4EEED2Ev.exit.i: ; preds = %.noexc121, %bb.bu, %bb.cc, %bb.cb
   %.sroa.0185.1 = phi ptr [ %i.jh, %bb.cc ], [ %i.jh, %bb.cb ], [ %.sroa.0185.0.copyload, %bb.bu ], [ undef, %.noexc121 ]
-  %.sroa.17.1 = phi i64 [ %i.jq, %bb.cc ], [ %i.jq, %bb.cb ], [ %.sroa.17.0.copyload, %bb.bu ], [ undef, %.noexc121 ]
   %.sroa.29.0 = phi i8 [ 1, %bb.cc ], [ %.pr16.i, %bb.cb ], [ 0, %bb.bu ], [ %i.iy, %.noexc121 ]
   %.sroa.23.0 = phi ptr [ %i.ji, %bb.cc ], [ %i.ji, %bb.cb ], [ undef, %bb.bu ], [ undef, %.noexc121 ]
+  %.sroa.17.1 = phi i64 [ %i.jq, %bb.cc ], [ %i.jq, %bb.cb ], [ %.sroa.17.0.copyload, %bb.bu ], [ undef, %.noexc121 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #30, !noalias !287
   br label %"_ZZN5scene19CGLTFMeshFileLoader13MeshExtractor12addPrimitiveERKN10tiniergltf13MeshPrimitiveESt8optionalImEPNS_11SkinnedMesh6SJointEENK3$_0clEv.exit"
 
@@ -380,10 +380,10 @@ bb.ch:                                            ; preds = %bb.cf
 
 "_ZZN5scene19CGLTFMeshFileLoader13MeshExtractor12addPrimitiveERKN10tiniergltf13MeshPrimitiveESt8optionalImEPNS_11SkinnedMesh6SJointEENK3$_0clEv.exit": ; preds = %_ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayItLm4EEED2Ev.exit.i, %_ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayIhLm4EEED2Ev.exit.i
   %.sroa.0185.4 = phi ptr [ %.sroa.0185.3, %_ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayIhLm4EEED2Ev.exit.i ], [ %.sroa.0185.1, %_ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayItLm4EEED2Ev.exit.i ] ; 10 uses
-  %.sroa.17.4 = phi i64 [ %.sroa.17.3, %_ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayIhLm4EEED2Ev.exit.i ], [ %.sroa.17.1, %_ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayItLm4EEED2Ev.exit.i ] ; 2 uses
   %i.kc = phi i1 [ true, %_ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayIhLm4EEED2Ev.exit.i ], [ false, %_ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayItLm4EEED2Ev.exit.i ]
   %.sroa.29.2 = phi i8 [ %.sroa.29.1, %_ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayIhLm4EEED2Ev.exit.i ], [ %.sroa.29.0, %_ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayItLm4EEED2Ev.exit.i ] ; 4 uses
   %.sroa.23.2 = phi ptr [ %.sroa.23.1, %_ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayIhLm4EEED2Ev.exit.i ], [ %.sroa.23.0, %_ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayItLm4EEED2Ev.exit.i ] ; 2 uses
+  %.sroa.17.4 = phi i64 [ %.sroa.17.3, %_ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayIhLm4EEED2Ev.exit.i ], [ %.sroa.17.1, %_ZN5scene19CGLTFMeshFileLoader8AccessorISt5arrayItLm4EEED2Ev.exit.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #30
   %i.kd = load ptr, ptr %i.gy, align 8, !tbaa !286
   %i.ke = load ptr, ptr %i.gn, align 8, !tbaa !185 ; 2 uses
@@ -786,9 +786,9 @@ bb.n:                                             ; preds = %bb.m
 
 _ZN5scene19CGLTFMeshFileLoader8AccessorIhED2Ev.exit.i: ; preds = %bb.n, %bb.m, %.thread.i
   %.sroa.5797.2 = phi i64 [ %i.ai, %.thread.i ], [ %i.am, %bb.m ], [ %i.am, %bb.n ]
-  %.sroa.23.5 = phi i64 [ %.sroa.23.4, %.thread.i ], [ %i.ak, %bb.m ], [ %i.ak, %bb.n ]
   %.sroa.40.2 = phi i8 [ %i.o, %.thread.i ], [ %.pr.i, %bb.m ], [ 1, %bb.n ]
   %.sroa.32.2 = phi ptr [ undef, %.thread.i ], [ %i.z, %bb.m ], [ %i.z, %bb.n ]
+  %.sroa.23.5 = phi i64 [ %.sroa.23.4, %.thread.i ], [ %i.ak, %bb.m ], [ %i.ak, %bb.n ]
   %.sroa.072.5 = phi ptr [ %.sroa.072.4, %.thread.i ], [ %i.y, %bb.m ], [ %i.y, %bb.n ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #30, !noalias !345
   br label %"_ZSt5visitIZNK5scene19CGLTFMeshFileLoader13MeshExtractor10getIndicesERKN10tiniergltf13MeshPrimitiveEE3$_0JRKSt7variantIJNS1_8AccessorIhEENS9_ItEENS9_IjEEEEEENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalISJ_EEEEE4typeEE4typeEOSS_EEEE4typeEOSH_DpOSJ_.exit"
@@ -921,9 +921,9 @@ bb.z:                                             ; preds = %bb.y
 
 _ZN5scene19CGLTFMeshFileLoader8AccessorItED2Ev.exit.i: ; preds = %bb.z, %bb.y, %.thread3.i
   %.sroa.5797.1 = phi i64 [ %i.bt, %.thread3.i ], [ %i.bx, %bb.y ], [ %i.bx, %bb.z ]
-  %.sroa.23.3 = phi i64 [ %.sroa.23.2, %.thread3.i ], [ %i.bv, %bb.y ], [ %i.bv, %bb.z ]
   %.sroa.40.1 = phi i8 [ %i.az, %.thread3.i ], [ %.pr1.i, %bb.y ], [ 1, %bb.z ]
   %.sroa.32.1 = phi ptr [ undef, %.thread3.i ], [ %i.bk, %bb.y ], [ %i.bk, %bb.z ]
+  %.sroa.23.3 = phi i64 [ %.sroa.23.2, %.thread3.i ], [ %i.bv, %bb.y ], [ %i.bv, %bb.z ]
   %.sroa.072.3 = phi ptr [ %.sroa.072.2, %.thread3.i ], [ %i.bj, %bb.y ], [ %i.bj, %bb.z ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30, !noalias !345
   br label %"_ZSt5visitIZNK5scene19CGLTFMeshFileLoader13MeshExtractor10getIndicesERKN10tiniergltf13MeshPrimitiveEE3$_0JRKSt7variantIJNS1_8AccessorIhEENS9_ItEENS9_IjEEEEEENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalISJ_EEEEE4typeEE4typeEOSS_EEEE4typeEOSH_DpOSJ_.exit"
@@ -1056,9 +1056,9 @@ bb.al:                                            ; preds = %bb.ak
 
 _ZN5scene19CGLTFMeshFileLoader8AccessorIjED2Ev.exit.i: ; preds = %bb.al, %bb.ak, %.thread6.i
   %.sroa.5797.0 = phi i64 [ %i.de, %.thread6.i ], [ %i.di, %bb.ak ], [ %i.di, %bb.al ]
-  %.sroa.23.1 = phi i64 [ %.sroa.23.0, %.thread6.i ], [ %i.dg, %bb.ak ], [ %i.dg, %bb.al ]
   %.sroa.40.0 = phi i8 [ %i.ck, %.thread6.i ], [ %.pr4.i, %bb.ak ], [ 1, %bb.al ]
   %.sroa.32.0 = phi ptr [ undef, %.thread6.i ], [ %i.cv, %bb.ak ], [ %i.cv, %bb.al ]
+  %.sroa.23.1 = phi i64 [ %.sroa.23.0, %.thread6.i ], [ %i.dg, %bb.ak ], [ %i.dg, %bb.al ]
   %.sroa.072.1 = phi ptr [ %.sroa.072.0, %.thread6.i ], [ %i.cu, %bb.ak ], [ %i.cu, %bb.al ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #30, !noalias !345
   br label %"_ZSt5visitIZNK5scene19CGLTFMeshFileLoader13MeshExtractor10getIndicesERKN10tiniergltf13MeshPrimitiveEE3$_0JRKSt7variantIJNS1_8AccessorIhEENS9_ItEENS9_IjEEEEEENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalISJ_EEEEE4typeEE4typeEOSS_EEEE4typeEOSH_DpOSJ_.exit"
@@ -1101,11 +1101,11 @@ common.resume:                                    ; preds = %_ZNSt8__detail9__va
   resume { ptr, i32 } %common.resume.op
 
 "_ZSt5visitIZNK5scene19CGLTFMeshFileLoader13MeshExtractor10getIndicesERKN10tiniergltf13MeshPrimitiveEE3$_0JRKSt7variantIJNS1_8AccessorIhEENS9_ItEENS9_IjEEEEEENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalISJ_EEEEE4typeEE4typeEOSS_EEEE4typeEOSH_DpOSJ_.exit": ; preds = %_ZN5scene19CGLTFMeshFileLoader8AccessorIhED2Ev.exit.i, %_ZN5scene19CGLTFMeshFileLoader8AccessorItED2Ev.exit.i, %_ZN5scene19CGLTFMeshFileLoader8AccessorIjED2Ev.exit.i
-  %.sroa.64.3 = phi i8 [ 0, %_ZN5scene19CGLTFMeshFileLoader8AccessorIhED2Ev.exit.i ], [ 1, %_ZN5scene19CGLTFMeshFileLoader8AccessorItED2Ev.exit.i ], [ 2, %_ZN5scene19CGLTFMeshFileLoader8AccessorIjED2Ev.exit.i ]
   %.sroa.5797.3 = phi i64 [ %.sroa.5797.2, %_ZN5scene19CGLTFMeshFileLoader8AccessorIhED2Ev.exit.i ], [ %.sroa.5797.1, %_ZN5scene19CGLTFMeshFileLoader8AccessorItED2Ev.exit.i ], [ %.sroa.5797.0, %_ZN5scene19CGLTFMeshFileLoader8AccessorIjED2Ev.exit.i ] ; 3 uses
-  %.sroa.23.6 = phi i64 [ %.sroa.23.5, %_ZN5scene19CGLTFMeshFileLoader8AccessorIhED2Ev.exit.i ], [ %.sroa.23.3, %_ZN5scene19CGLTFMeshFileLoader8AccessorItED2Ev.exit.i ], [ %.sroa.23.1, %_ZN5scene19CGLTFMeshFileLoader8AccessorIjED2Ev.exit.i ] ; 3 uses
+  %.sroa.64.3 = phi i8 [ 0, %_ZN5scene19CGLTFMeshFileLoader8AccessorIhED2Ev.exit.i ], [ 1, %_ZN5scene19CGLTFMeshFileLoader8AccessorItED2Ev.exit.i ], [ 2, %_ZN5scene19CGLTFMeshFileLoader8AccessorIjED2Ev.exit.i ]
   %.sroa.40.3 = phi i8 [ %.sroa.40.2, %_ZN5scene19CGLTFMeshFileLoader8AccessorIhED2Ev.exit.i ], [ %.sroa.40.1, %_ZN5scene19CGLTFMeshFileLoader8AccessorItED2Ev.exit.i ], [ %.sroa.40.0, %_ZN5scene19CGLTFMeshFileLoader8AccessorIjED2Ev.exit.i ] ; 5 uses
   %.sroa.32.3 = phi ptr [ %.sroa.32.2, %_ZN5scene19CGLTFMeshFileLoader8AccessorIhED2Ev.exit.i ], [ %.sroa.32.1, %_ZN5scene19CGLTFMeshFileLoader8AccessorItED2Ev.exit.i ], [ %.sroa.32.0, %_ZN5scene19CGLTFMeshFileLoader8AccessorIjED2Ev.exit.i ] ; 2 uses
+  %.sroa.23.6 = phi i64 [ %.sroa.23.5, %_ZN5scene19CGLTFMeshFileLoader8AccessorIhED2Ev.exit.i ], [ %.sroa.23.3, %_ZN5scene19CGLTFMeshFileLoader8AccessorItED2Ev.exit.i ], [ %.sroa.23.1, %_ZN5scene19CGLTFMeshFileLoader8AccessorIjED2Ev.exit.i ] ; 3 uses
   %.sroa.072.6 = phi ptr [ %.sroa.072.5, %_ZN5scene19CGLTFMeshFileLoader8AccessorIhED2Ev.exit.i ], [ %.sroa.072.3, %_ZN5scene19CGLTFMeshFileLoader8AccessorItED2Ev.exit.i ], [ %.sroa.072.1, %_ZN5scene19CGLTFMeshFileLoader8AccessorIjED2Ev.exit.i ] ; 11 uses
   %.not153 = icmp eq i64 %.sroa.5797.3, 0
   br i1 %.not153, label %._crit_edge, label %.lr.ph

@@ -202,26 +202,26 @@ bb.a:
   %i.c = alloca [32 x i8], align 8                ; 4 uses
   %i.d = alloca [32 x i8], align 8                ; 8 uses
   %i.e = alloca [24 x i8], align 8                ; 11 uses
-  %i.f = alloca [32 x i8], align 8                ; 10 uses
+  %i.f = alloca [32 x i8], align 8                ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @_RINvNtNtCsg7jhnslYu1x_5rayon4iter6extend12fast_collectINtNtB4_3map3MapINtNtB4_10par_bridge10IterBridgeINtNtCs6Wt4yPw39th_9itertools11unique_impl6UniqueINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map4IterRNtNtB3m_4path4PathINtNtB2y_6option6OptionNtNtCsEhZmuQNqkz_11ruff_linter7package11PackageRootEENCNvMs2_NtCs8EvorvD8vmS_4ruff5cacheNtB5K_15PackageCacheMap4init0EEENCB5E_s_0ETB45_NtB5K_5CacheEEB5M_(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.f, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(96) %1)
   %i.g = load i64, ptr %i.f, align 8, !range !77, !noundef !11 ; 3 uses
   %i.h = trunc nuw i64 %i.g to i1                 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 24
-  %3 = load i64, ptr %2, align 8, !noundef !11    ; 8 uses
   br i1 %i.h, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %4 = icmp eq i64 %3, 0
-  %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %5 = load ptr, ptr %i.i, align 8                ; 3 uses
-  %.not.i.i45 = icmp eq ptr %5, null
-  %or.cond = select i1 %4, i1 true, i1 %.not.i.i45
+  %2 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
+  %3 = load ptr, ptr %2, align 8, !noundef !11    ; 3 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %4 = load i64, ptr %i.i, align 8, !noundef !11  ; 6 uses
+  %5 = icmp eq i64 %4, 0
+  %.not.i.i45 = icmp eq ptr %3, null
+  %or.cond = or i1 %5, %.not.i.i45
   br i1 %or.cond, label %_RINvYINtNtNtCscdodAO9FK5_5alloc11collections11linked_list4IterINtNtBa_3vec3VecTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldjNCINvNtNtB2u_8adapters3map8map_foldRBY_jjNvMs_B11_BY_3lenNCINvXsK_NtB2s_5accumjNtB4t_3Sum3sumINtB3u_3MapB3_B44_EE0E0EB1Q_.exit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.b
-  %i.j = add i64 %3, -1                           ; 2 uses
-  %i.k = getelementptr i8, ptr %5, i64 16
+  %i.j = add i64 %4, -1                           ; 2 uses
+  %i.k = getelementptr i8, ptr %3, i64 16
   %.val.i113 = load i64, ptr %i.k, align 8, !noalias !1424, !noundef !11 ; 3 uses
   %i.l = icmp ult i64 %.val.i113, 67818912035696881
   tail call void @llvm.assume(i1 %i.l)
@@ -231,7 +231,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.ithread-pre-split:                         ; preds = %.lr.ph.preheader, %.lr.ph
   %i.n = phi i64 [ %i.u, %.lr.ph ], [ %.val.i113, %.lr.ph.preheader ] ; 2 uses
   %i.o = phi i64 [ %i.r, %.lr.ph ], [ %i.j, %.lr.ph.preheader ]
-  %i.p = phi ptr [ %.pr, %.lr.ph ], [ %5, %.lr.ph.preheader ]
+  %i.p = phi ptr [ %.pr, %.lr.ph ], [ %3, %.lr.ph.preheader ]
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 24
   %.pr = load ptr, ptr %i.q, align 1              ; 3 uses
   %.not.i.i = icmp eq ptr %.pr, null
@@ -248,12 +248,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.v, label %_RINvYINtNtNtCscdodAO9FK5_5alloc11collections11linked_list4IterINtNtBa_3vec3VecTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldjNCINvNtNtB2u_8adapters3map8map_foldRBY_jjNvMs_B11_BY_3lenNCINvXsK_NtB2s_5accumjNtB4t_3Sum3sumINtB3u_3MapB3_B44_EE0E0EB1Q_.exit, label %.lr.ph.ithread-pre-split
 
 bb.c:                                             ; preds = %bb.a
-  %i.w = icmp ult i64 %3, 67818912035696881
+  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %7 = load i64, ptr %6, align 8, !noundef !11    ; 3 uses
+  %i.w = icmp ult i64 %7, 67818912035696881
   tail call void @llvm.assume(i1 %i.w)
   br label %_RINvYINtNtNtCscdodAO9FK5_5alloc11collections11linked_list4IterINtNtBa_3vec3VecTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldjNCINvNtNtB2u_8adapters3map8map_foldRBY_jjNvMs_B11_BY_3lenNCINvXsK_NtB2s_5accumjNtB4t_3Sum3sumINtB3u_3MapB3_B44_EE0E0EB1Q_.exit
 
 _RINvYINtNtNtCscdodAO9FK5_5alloc11collections11linked_list4IterINtNtBa_3vec3VecTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldjNCINvNtNtB2u_8adapters3map8map_foldRBY_jjNvMs_B11_BY_3lenNCINvXsK_NtB2s_5accumjNtB4t_3Sum3sumINtB3u_3MapB3_B44_EE0E0EB1Q_.exit: ; preds = %.lr.ph, %.lr.ph.ithread-pre-split, %.lr.ph.preheader, %bb.b, %bb.c
-  %.sroa.0.0 = phi i64 [ %3, %bb.c ], [ 0, %bb.b ], [ %.val.i113, %.lr.ph.preheader ], [ %i.n, %.lr.ph.ithread-pre-split ], [ %i.u, %.lr.ph ]
+  %.sroa.5.0.copyload = phi i64 [ %7, %bb.c ], [ %4, %bb.b ], [ %4, %.lr.ph.preheader ], [ %4, %.lr.ph.ithread-pre-split ], [ %4, %.lr.ph ] ; 4 uses
+  %.sroa.0.0 = phi i64 [ %7, %bb.c ], [ 0, %bb.b ], [ %.val.i113, %.lr.ph.preheader ], [ %i.u, %.lr.ph ], [ %i.n, %.lr.ph.ithread-pre-split ]
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   invoke void @_RINvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB6_8RawTableTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEE7reserveNCINvNtB8_3map11make_hasherBQ_B1n_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE0EB1r_(ptr noalias noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %.sroa.0.0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.x)
           to label %bb.d unwind label %.body
@@ -297,9 +300,9 @@ bb.f:                                             ; preds = %bb.d
   %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !nonnull !11, !noundef !11 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1432)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !1435
-  %i.ai = icmp ult i64 %3, 67818912035696881
+  %i.ai = icmp ult i64 %.sroa.5.0.copyload, 67818912035696881
   tail call void @llvm.assume(i1 %i.ai)
-  %i.aj = getelementptr inbounds nuw [136 x i8], ptr %.sroa.4.0.copyload, i64 %3
+  %i.aj = getelementptr inbounds nuw [136 x i8], ptr %.sroa.4.0.copyload, i64 %.sroa.5.0.copyload
   store ptr %.sroa.4.0.copyload, ptr %i.d, align 8, !alias.scope !1437, !noalias !1440
   %i.ak = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store i64 %.sroa.0.0.copyload, ptr %i.ak, align 8, !alias.scope !1437, !noalias !1440
@@ -310,9 +313,9 @@ bb.f:                                             ; preds = %bb.d
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ao = load i64, ptr %i.an, align 8, !alias.scope !1432, !noalias !1442, !noundef !11
   %i.ap = icmp eq i64 %i.ao, 0
-  %i.aq = lshr i64 %3, 1
+  %i.aq = lshr i64 %.sroa.5.0.copyload, 1
   %.sroa.0.1.i = select i1 %i.ap, i64 0, i64 %i.aq
-  %.sroa.0.0.i = sub nsw i64 %3, %.sroa.0.1.i
+  %.sroa.0.0.i = sub nsw i64 %.sroa.5.0.copyload, %.sroa.0.1.i
   invoke void @_RINvMs6_NtCsgQfI1edjipl_9hashbrown3rawINtB6_8RawTableTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEE7reserveNCINvNtB8_3map11make_hasherBQ_B1n_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE0EB1r_(ptr noalias noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %.sroa.0.0.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.x)
           to label %_RINvYINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTRNtNtCs2AWtUsOyxgP_3std4path4PathNtNtCs8EvorvD8vmS_4ruff5cache5CacheEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator8for_eachNCINvXs1i_NtCsgQfI1edjipl_9hashbrown3mapINtB3d_7HashMapBR_B1o_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherEINtNtB23_7collect6ExtendBQ_E6extendINtB8_3VecBQ_EE0EB1s_.exit.i unwind label %bb.g, !noalias !1442
 

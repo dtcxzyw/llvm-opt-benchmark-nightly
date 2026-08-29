@@ -205,10 +205,10 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtB7_4sync3ArcNtNtNtCs31YAwBA1AlL
   br label %bb.ap
 
 bb.al:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterINtNtBI_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileEEECsQbU2fm3lSD_3xet.exit194.i, %bb.af
-  %.sroa.22.1.a = phi i64 [ %i.ev, %bb.af ], [ %.sroa.22.0.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterINtNtBI_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileEEECsQbU2fm3lSD_3xet.exit194.i ]
-  %.sroa.27.1 = phi i64 [ %.sroa.27.24.copyload, %bb.af ], [ %.sroa.27.0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterINtNtBI_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileEEECsQbU2fm3lSD_3xet.exit194.i ]
-  %.sroa.30.1 = phi i64 [ %.sroa.30.24.copyload, %bb.af ], [ %.sroa.30.0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterINtNtBI_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileEEECsQbU2fm3lSD_3xet.exit194.i ]
+  %.sroa.22.1.a = phi i64 [ %.sroa.30.24.copyload, %bb.af ], [ %.sroa.22.0.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterINtNtBI_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileEEECsQbU2fm3lSD_3xet.exit194.i ]
   %.sroa.29.1 = phi ptr [ %.sroa.29.24.copyload, %bb.af ], [ %.sroa.29.0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterINtNtBI_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileEEECsQbU2fm3lSD_3xet.exit194.i ]
+  %.sroa.30.1 = phi i64 [ %.sroa.27.24.copyload, %bb.af ], [ %.sroa.30.0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterINtNtBI_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileEEECsQbU2fm3lSD_3xet.exit194.i ]
+  %.sroa.22.1 = phi i64 [ %i.ev, %bb.af ], [ %.sroa.22.0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterINtNtBI_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileEEECsQbU2fm3lSD_3xet.exit194.i ]
   %.sroa.13.1 = phi i64 [ %i.es, %bb.af ], [ %.sroa.13.0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterINtNtBI_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileEEECsQbU2fm3lSD_3xet.exit194.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.an), !noalias !1288
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtB7_4sync3ArcNtNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17shard_file_handle12MDBShardFileEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsQbU2fm3lSD_3xet(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ao)
@@ -611,10 +611,10 @@ _RNCINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_director
   br label %bb.cd
 
 .loopexit154:                                     ; preds = %bb.bs, %bb.dt, %bb.dj, %bb.cd
-  %.sroa.22.0.a = phi i64 [ %.sroa.22.8.copyload46, %bb.cd ], [ %i.kl, %bb.dj ], [ %i.ld, %bb.dt ], [ 7, %bb.bs ]
-  %.sroa.27.0 = phi i64 [ %.sroa.27.8.copyload50, %bb.cd ], [ %.sroa.27.24.copyload52, %bb.dj ], [ %.sroa.532.i.sroa.8.0.copyload120, %bb.dt ], [ undef, %bb.bs ]
-  %.sroa.30.0 = phi i64 [ %.sroa.30.8.copyload60, %bb.cd ], [ %.sroa.30.24.copyload62, %bb.dj ], [ %.sroa.532.i.sroa.10.0.copyload128, %bb.dt ], [ undef, %bb.bs ]
+  %.sroa.22.0.a = phi i64 [ %.sroa.30.8.copyload60, %bb.cd ], [ %.sroa.30.24.copyload62, %bb.dj ], [ %.sroa.532.i.sroa.10.0.copyload128, %bb.dt ], [ undef, %bb.bs ]
   %.sroa.29.0 = phi ptr [ %.sroa.29.8.copyload55, %bb.cd ], [ %.sroa.29.24.copyload57, %bb.dj ], [ %.sroa.532.i.sroa.9.0.copyload124, %bb.dt ], [ undef, %bb.bs ]
+  %.sroa.30.0 = phi i64 [ %.sroa.27.8.copyload50, %bb.cd ], [ %.sroa.27.24.copyload52, %bb.dj ], [ %.sroa.532.i.sroa.8.0.copyload120, %bb.dt ], [ undef, %bb.bs ]
+  %.sroa.22.0 = phi i64 [ %.sroa.22.8.copyload46, %bb.cd ], [ %i.kl, %bb.dj ], [ %i.ld, %bb.dt ], [ 7, %bb.bs ]
   %.sroa.13.0 = phi i64 [ %.sroa.13.8.copyload42, %bb.cd ], [ %i.kj, %bb.dj ], [ %i.lc, %bb.dt ], [ 18, %bb.bs ]
   call void @llvm.experimental.noalias.scope.decl(metadata !1336)
   call void @llvm.experimental.noalias.scope.decl(metadata !1339)
@@ -1017,13 +1017,13 @@ common.resume:                                    ; preds = %.body, %bb.fr, %bb.
   resume { ptr, i32 } %common.resume.op
 
 _RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit222.i, %bb.ep, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit169.i
-  %.sroa.22.3.a = phi i64 [ %.sroa.5132.0.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit169.i ], [ 0, %bb.ep ], [ %.sroa.22.1.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit222.i ] ; 2 uses
-  %.sroa.27.3.a = phi i64 [ %.sroa.6133.24.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit169.i ], [ 0, %bb.ep ], [ %.sroa.27.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit222.i ] ; 3 uses
-  %.sroa.30.3 = phi i64 [ %.sroa.9.24.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit169.i ], [ 0, %bb.ep ], [ %.sroa.30.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit222.i ] ; 5 uses
-  %.sroa.32.1 = phi i64 [ %.sroa.10135.48.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit169.i ], [ 0, %bb.ep ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit222.i ]
-  %.sroa.34.1 = phi i64 [ %.sroa.13136.48.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit169.i ], [ 0, %bb.ep ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit222.i ]
+  %.sroa.22.3.a = phi i64 [ %.sroa.9.24.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit169.i ], [ 0, %bb.ep ], [ %.sroa.22.1.a, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit222.i ] ; 5 uses
+  %.sroa.27.3.a = phi i64 [ %.sroa.13136.48.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit169.i ], [ 0, %bb.ep ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit222.i ]
   %.sroa.33.1 = phi ptr [ %.sroa.12.48.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit169.i ], [ inttoptr (i64 8 to ptr), %bb.ep ], [ inttoptr (i64 8 to ptr), %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit222.i ]
+  %.sroa.32.1 = phi i64 [ %.sroa.10135.48.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit169.i ], [ 0, %bb.ep ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit222.i ]
   %.sroa.29.3 = phi ptr [ %.sroa.8134.24.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit169.i ], [ inttoptr (i64 8 to ptr), %bb.ep ], [ %.sroa.29.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit222.i ] ; 7 uses
+  %.sroa.27.3 = phi i64 [ %.sroa.6133.24.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit169.i ], [ 0, %bb.ep ], [ %.sroa.30.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit222.i ] ; 3 uses
+  %.sroa.22.3 = phi i64 [ %.sroa.5132.0.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit169.i ], [ 0, %bb.ep ], [ %.sroa.22.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit222.i ] ; 2 uses
   %.sroa.13.3 = phi i64 [ %.sroa.4131.0.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit169.i ], [ 8, %bb.ep ], [ %.sroa.13.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit222.i ] ; 2 uses
   %.sroa.040.3 = phi i64 [ %.sroa.0130.0.copyload, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit169.i ], [ 0, %bb.ep ], [ -1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsQbU2fm3lSD_3xet.exit222.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.au), !noalias !1288
@@ -1034,19 +1034,19 @@ _RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory1
 
 bb.et:                                            ; preds = %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit.thread, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit
   %.sroa.13.3150 = phi i64 [ %i.bc, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit.thread ], [ %.sroa.13.3, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit ]
-  %.sroa.29.3149 = phi ptr [ %.sroa.6.i.sroa.8.0.copyload108, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit.thread ], [ %.sroa.29.3, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit ]
-  %.sroa.30.3148 = phi i64 [ %.sroa.561.0.copyload.i, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit.thread ], [ %.sroa.30.3, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit ]
-  %.sroa.27.3147 = phi i64 [ %.sroa.6.i.sroa.7.0.copyload104, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit.thread ], [ %.sroa.27.3.a, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit ]
-  %.sroa.22.3146 = phi i64 [ %.sroa.6.i.sroa.0.0.copyload101, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit.thread ], [ %.sroa.22.3.a, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit ]
+  %.sroa.22.3147 = phi i64 [ %.sroa.6.i.sroa.0.0.copyload101, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit.thread ], [ %.sroa.22.3, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit ]
+  %.sroa.30.3148 = phi i64 [ %.sroa.6.i.sroa.7.0.copyload104, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit.thread ], [ %.sroa.27.3, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit ]
+  %.sroa.29.3145 = phi ptr [ %.sroa.6.i.sroa.8.0.copyload108, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit.thread ], [ %.sroa.29.3, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit ]
+  %.sroa.22.3146 = phi i64 [ %.sroa.561.0.copyload.i, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit.thread ], [ %.sroa.22.3.a, %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit ]
   store i64 %.sroa.13.3150, ptr %0, align 8
   %.sroa.494.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.22.3146, ptr %.sroa.494.0..sroa_idx, align 8
+  store i64 %.sroa.22.3147, ptr %.sroa.494.0..sroa_idx, align 8
   %.sroa.595.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.27.3147, ptr %.sroa.595.0..sroa_idx, align 8
+  store i64 %.sroa.30.3148, ptr %.sroa.595.0..sroa_idx, align 8
   %.sroa.696.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %.sroa.29.3149, ptr %.sroa.696.0..sroa_idx, align 8
+  store ptr %.sroa.29.3145, ptr %.sroa.696.0..sroa_idx, align 8
   %.sroa.797.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i64 %.sroa.30.3148, ptr %.sroa.797.0..sroa_idx, align 8
+  store i64 %.sroa.22.3146, ptr %.sroa.797.0..sroa_idx, align 8
   br label %bb.fd
 
 bb.eu:                                            ; preds = %_RINvNtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard17session_directory12merge_shardsRNtNtCsG258MDvU3F_3std4path4PathB1s_ECsQbU2fm3lSD_3xet.exit
@@ -1054,32 +1054,32 @@ bb.eu:                                            ; preds = %_RINvNtNtCs31YAwBA1
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
   store i64 %.sroa.13.3, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 16
-  store i64 %.sroa.22.3.a, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx, align 8
+  store i64 %.sroa.22.3, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 24
-  store i64 %.sroa.27.3.a, ptr %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx, align 8
+  store i64 %.sroa.27.3, ptr %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.4.sroa.6.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 32
   store ptr %.sroa.29.3, ptr %.sroa.4.sroa.6.0..sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 40
-  store i64 %.sroa.30.3, ptr %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx, align 8
+  store i64 %.sroa.22.3.a, ptr %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 48 ; 9 uses
   store i64 %.sroa.32.1, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 56
   store ptr %.sroa.33.1, ptr %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx, align 8
   %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 64
-  store i64 %.sroa.34.1, ptr %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx, align 8
-  %i.ly = icmp ult i64 %.sroa.30.3, 1152921504606846976
+  store i64 %.sroa.27.3.a, ptr %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx, align 8
+  %i.ly = icmp ult i64 %.sroa.22.3.a, 1152921504606846976
   call void @llvm.assume(i1 %i.ly)
-  %.idx = shl nuw nsw i64 %.sroa.30.3, 3
+  %.idx = shl nuw nsw i64 %.sroa.22.3.a, 3
   %i.lz = getelementptr inbounds nuw i8, ptr %.sroa.29.3, i64 %.idx
   call void @llvm.lifetime.start.p0(ptr nonnull %i.az)
   store ptr %.sroa.29.3, ptr %i.az, align 8
   %.sroa.56.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.az, i64 8 ; 5 uses
   store ptr %.sroa.29.3, ptr %.sroa.56.0..sroa_idx, align 8
   %.sroa.67.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.az, i64 16
-  store i64 %.sroa.27.3.a, ptr %.sroa.67.0..sroa_idx, align 8
+  store i64 %.sroa.27.3, ptr %.sroa.67.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.az, i64 24 ; 3 uses
   store ptr %i.lz, ptr %.sroa.7.0..sroa_idx, align 8
-  %i.ma = icmp eq i64 %.sroa.30.3, 0
+  %i.ma = icmp eq i64 %.sroa.22.3.a, 0
   br i1 %i.ma, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.eu

@@ -205,12 +205,12 @@ default.unreachable:                              ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %5 = load <2 x i32>, ptr %i.e, align 4, !alias.scope !1143, !noalias !1146
+  %5 = load i64, ptr %i.e, align 4, !alias.scope !1143, !noalias !1146
   br label %_RNvYINtNtNtCsiRgJJXJ4lb7_6brotli3enc9interface7CommandNtB5_11SliceOffsetENtNtCskKLDkoKarTP_4core5clone5Clone10clone_fromCskeugdADtBsi_12pingora_core.exit
 
 bb.d:                                             ; preds = %.lr.ph
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %.sroa.0.0.copyload.i.i17 = load <2 x i32>, ptr %i.f, align 4, !alias.scope !1143, !noalias !1146
+  %.sroa.0.0.copyload.i.i = load i64, ptr %i.f, align 4, !alias.scope !1143, !noalias !1146
   br label %_RNvYINtNtNtCsiRgJJXJ4lb7_6brotli3enc9interface7CommandNtB5_11SliceOffsetENtNtCskKLDkoKarTP_4core5clone5Clone10clone_fromCskeugdADtBsi_12pingora_core.exit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -222,7 +222,8 @@ bb.e:                                             ; preds = %.lr.ph
   %.val8.i.i = load i32, ptr %i.h, align 8, !alias.scope !1143, !noalias !1146, !noundef !8
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.j = load i8, ptr %i.i, align 8, !range !231, !alias.scope !1143, !noalias !1146, !noundef !8
-  %.sroa.81.i.sroa.0.4.vec.insert16 = insertelement <2 x i32> <i32 undef, i32 poison>, i32 %.val7.i.i12, i64 1
+  %.sroa.81.i.sroa.0.4.insert.ext16 = zext i32 %.val7.i.i12 to i64
+  %.sroa.81.i.sroa.0.4.insert.shift17 = shl nuw i64 %.sroa.81.i.sroa.0.4.insert.ext16, 32
   br label %_RNvYINtNtNtCsiRgJJXJ4lb7_6brotli3enc9interface7CommandNtB5_11SliceOffsetENtNtCskKLDkoKarTP_4core5clone5Clone10clone_fromCskeugdADtBsi_12pingora_core.exit
 
 bb.f:                                             ; preds = %.lr.ph
@@ -253,14 +254,15 @@ bb.i:                                             ; preds = %.lr.ph
   %.val.i.i = load i64, ptr %i.u, align 8, !alias.scope !1143, !noalias !1146, !noundef !8 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %.val4.i.i = load i32, ptr %i.v, align 8, !alias.scope !1143, !noalias !1146, !noundef !8
-  %.sroa.81.i.sroa.0.4.vec.insert = insertelement <2 x i32> <i32 undef, i32 poison>, i32 %.val5.i.i10, i64 1
+  %.sroa.81.i.sroa.0.4.insert.ext = zext i32 %.val5.i.i10 to i64
+  %.sroa.81.i.sroa.0.4.insert.shift = shl nuw i64 %.sroa.81.i.sroa.0.4.insert.ext, 32
   %.sroa.154.sroa.0.0.extract.trunc.i = trunc i64 %.val.i.i to i8
   %.sroa.154.sroa.5.0.extract.shift.i = and i64 %.val.i.i, -256
   br label %_RNvYINtNtNtCsiRgJJXJ4lb7_6brotli3enc9interface7CommandNtB5_11SliceOffsetENtNtCskKLDkoKarTP_4core5clone5Clone10clone_fromCskeugdADtBsi_12pingora_core.exit
 
 _RNvYINtNtNtCsiRgJJXJ4lb7_6brotli3enc9interface7CommandNtB5_11SliceOffsetENtNtCskKLDkoKarTP_4core5clone5Clone10clone_fromCskeugdADtBsi_12pingora_core.exit: ; preds = %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i
   %.sroa.81.i.sroa.7.0 = phi i32 [ undef, %bb.c ], [ undef, %bb.d ], [ %.val7.i.i14, %bb.e ], [ undef, %bb.f ], [ undef, %bb.g ], [ undef, %bb.h ], [ %.val5.i.i11, %bb.i ]
-  %.sroa.81.i.sroa.0.0 = phi <2 x i32> [ %5, %bb.c ], [ %.sroa.0.0.copyload.i.i17, %bb.d ], [ %.sroa.81.i.sroa.0.4.vec.insert16, %bb.e ], [ undef, %bb.f ], [ undef, %bb.g ], [ undef, %bb.h ], [ %.sroa.81.i.sroa.0.4.vec.insert, %bb.i ]
+  %.sroa.81.i.sroa.0.0 = phi i64 [ %5, %bb.c ], [ %.sroa.0.0.copyload.i.i, %bb.d ], [ %.sroa.81.i.sroa.0.4.insert.shift17, %bb.e ], [ undef, %bb.f ], [ undef, %bb.g ], [ undef, %bb.h ], [ %.sroa.81.i.sroa.0.4.insert.shift, %bb.i ]
   %.sroa.154.sroa.5.sroa.0.0.i = phi i64 [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.g ], [ 0, %bb.h ], [ %.sroa.154.sroa.5.0.extract.shift.i, %bb.i ]
   %.sroa.154.sroa.0.0.i = phi i8 [ undef, %bb.c ], [ undef, %bb.d ], [ %i.j, %bb.e ], [ undef, %bb.f ], [ undef, %bb.g ], [ undef, %bb.h ], [ %.sroa.154.sroa.0.0.extract.trunc.i, %bb.i ]
   %.sroa.17.0.i = phi i32 [ undef, %bb.c ], [ undef, %bb.d ], [ undef, %bb.e ], [ undef, %bb.f ], [ undef, %bb.g ], [ undef, %bb.h ], [ %.val4.i.i, %bb.i ]
@@ -273,7 +275,7 @@ _RNvYINtNtNtCsiRgJJXJ4lb7_6brotli3enc9interface7CommandNtB5_11SliceOffsetENtNtCs
   %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 2
   store i8 %.sroa.7.0.i, ptr %.sroa.7.0..sroa_idx.i, align 2, !alias.scope !1138, !noalias !1141
   %.sroa.81.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store <2 x i32> %.sroa.81.i.sroa.0.0, ptr %.sroa.81.0..sroa_idx.i, align 4, !noalias !1141
+  store i64 %.sroa.81.i.sroa.0.0, ptr %.sroa.81.0..sroa_idx.i, align 4, !noalias !1141
   %.sroa.81.i.sroa.7.0..sroa.81.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   store i32 %.sroa.81.i.sroa.7.0, ptr %.sroa.81.i.sroa.7.0..sroa.81.0..sroa_idx.i.sroa_idx, align 4, !noalias !1141
   %.sroa.13.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16

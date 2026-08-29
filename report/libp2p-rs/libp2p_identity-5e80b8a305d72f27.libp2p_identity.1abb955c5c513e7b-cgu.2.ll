@@ -204,7 +204,7 @@ define hidden void @_RNvMs_NtCsgW4lhAJgVdS_9multihash9multihashINtB4_9MultihashK
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 8 uses
   %i.b = alloca [16 x i8], align 8                ; 8 uses
-  %i.c = alloca [64 x i8], align 8                ; 10 uses
+  %i.c = alloca [64 x i8], align 8                ; 9 uses
   %i.d = alloca [8 x i8], align 8                 ; 7 uses
   %.sroa.439 = alloca [48 x i8], align 8          ; 2 uses
   %i.e = alloca [16 x i8], align 8                ; 3 uses
@@ -237,22 +237,21 @@ _RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_i
   %.sroa.51.0.copyload.i.i.i = load ptr, ptr %.sroa.51.0..sroa_idx.i.i.i, align 8, !noalias !96, !nonnull !9
   %.sroa.05.0.i.i.i = shl nuw nsw i8 %i.g, 1
   %i.l = ptrtoint ptr %.sroa.51.0.copyload.i.i.i to i64
-  %i.m = select i1 %i.k, i64 undef, i64 %i.l      ; 2 uses
+  %i.m = select i1 %i.k, i64 undef, i64 %i.l
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !96
   %.sroa.9.8.insert.ext.i = zext nneg i8 %.sroa.05.0.i.i.i to i64
   %i.n = zext i8 %.sroa.4.0.copyload.i.i.i to i64
   %i.o = shl nuw nsw i64 %i.n, 8
   %.sroa.9.9.insert.shift.i = select i1 %i.k, i64 %i.o, i64 0
   %.sroa.9.9.insert.insert.i = or disjoint i64 %.sroa.9.9.insert.shift.i, %.sroa.9.8.insert.ext.i
-  %.sroa.18.sroa.0.0.extract.trunc.i = trunc i64 %i.m to i8
   br label %bb.f
 
 _RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit84.thread.i.i: ; preds = %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit.thread.i.i
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.q = load i64, ptr %i.p, align 8, !noalias !102, !noundef !9 ; 10 uses
+  %i.q = load i64, ptr %i.p, align 8, !noalias !102, !noundef !9 ; 9 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !102
   %i.r = icmp ugt i64 %i.q, 64
-  br i1 %i.r, label %3, label %bb.b
+  br i1 %i.r, label %bb.f, label %bb.b
 
 _RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit84.i.i: ; preds = %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit.thread.i.i
   %i.s = trunc nuw i8 %i.j to i1                  ; 2 uses
@@ -262,14 +261,13 @@ _RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_i
   %.sroa.51.0.copyload.i77.i.i = load ptr, ptr %.sroa.51.0..sroa_idx.i76.i.i, align 8, !noalias !102, !nonnull !9
   %.sroa.05.0.i78.i.i = shl nuw nsw i8 %i.j, 1
   %i.t = ptrtoint ptr %.sroa.51.0.copyload.i77.i.i to i64
-  %i.u = select i1 %i.s, i64 undef, i64 %i.t      ; 2 uses
+  %i.u = select i1 %i.s, i64 undef, i64 %i.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !102
   %.sroa.9.8.insert.ext29.i = zext nneg i8 %.sroa.05.0.i78.i.i to i64
   %i.v = zext i8 %.sroa.4.0.copyload.i75.i.i to i64
   %i.w = shl nuw nsw i64 %i.v, 8
   %.sroa.9.9.insert.shift40.i = select i1 %i.s, i64 %i.w, i64 0
   %.sroa.9.9.insert.insert42.i = or disjoint i64 %.sroa.9.9.insert.shift40.i, %.sroa.9.8.insert.ext29.i
-  %.sroa.18.sroa.0.0.extract.trunc45.i = trunc i64 %i.u to i8
   br label %bb.f
 
 bb.b:                                             ; preds = %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit84.thread.i.i
@@ -294,19 +292,13 @@ _RNvMNtCskKLDkoKarTP_4core5sliceSh8split_atCs2iisHxfqoT7_15libp2p_identity.exit.
 bb.c:                                             ; preds = %_RNvMNtCskKLDkoKarTP_4core5sliceSh8split_atCs2iisHxfqoT7_15libp2p_identity.exit.i.i.i.i
   call void @_RINvNtCskKLDkoKarTP_4core5slice20copy_from_slice_implhECs2iisHxfqoT7_15libp2p_identity(ptr noalias nofree noundef nonnull %i.c, i64 noundef range(i64 0, 65) %i.q, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.aa, i64 noundef range(i64 0, 65) %i.q, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @23), !noalias !116
   %.sroa.28.i.sroa.4.0..sroa.28.17..sroa_idx.i.sroa_idx.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %.sroa.28.i.sroa.4.0.copyload.pre = load i8, ptr %.sroa.28.i.sroa.4.0..sroa.28.17..sroa_idx.i.sroa_idx.phi.trans.insert, align 8, !noalias !88
-  %.sroa.28.i.sroa.5.0..sroa.28.17..sroa_idx.i.sroa_idx.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.c, i64 9
-  %.sroa.28.i.sroa.5.0.copyload.pre = load i56, ptr %.sroa.28.i.sroa.5.0..sroa.28.17..sroa_idx.i.sroa_idx.phi.trans.insert, align 1, !noalias !88
+  %.sroa.28.i.sroa.4.0.copyload.pre = load i64, ptr %.sroa.28.i.sroa.4.0..sroa.28.17..sroa_idx.i.sroa_idx.phi.trans.insert, align 8, !noalias !88
   br label %bb.g
 
 bb.d:                                             ; preds = %_RNvMNtCskKLDkoKarTP_4core5sliceSh8split_atCs2iisHxfqoT7_15libp2p_identity.exit.i.i.i.i
   %i.ae = load i8, ptr %i.aa, align 1, !noalias !117, !noundef !9
   store i8 %i.ae, ptr %i.c, align 8, !alias.scope !118, !noalias !119
   br label %bb.g
-
-3:                                                ; preds = %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit84.thread.i.i
-  %.sroa.18.sroa.0.0.extract.trunc46.i = trunc i64 %i.q to i8
-  br label %bb.f
 
 bb.e:                                             ; preds = %bb.b
   %i.af = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.y
@@ -315,24 +307,18 @@ bb.e:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !92
   br label %bb.f
 
-bb.f:                                             ; preds = %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit.i.i, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit84.i.i, %3, %bb.e
-  %.sroa.18.sroa.10.sroa.0.0.ph.in.in.i = phi i64 [ %i.m, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit.i.i ], [ %i.u, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit84.i.i ], [ ptrtoint (ptr @25 to i64), %bb.e ], [ %i.q, %3 ]
-  %.sroa.18.sroa.0.0.ph.i = phi i8 [ %.sroa.18.sroa.0.0.extract.trunc.i, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit.i.i ], [ %.sroa.18.sroa.0.0.extract.trunc45.i, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit84.i.i ], [ ptrtoint (ptr @25 to i8), %bb.e ], [ %.sroa.18.sroa.0.0.extract.trunc46.i, %3 ]
-  %.sroa.9.0.ph.i = phi i64 [ %.sroa.9.9.insert.insert.i, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit.i.i ], [ %.sroa.9.9.insert.insert42.i, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit84.i.i ], [ 0, %bb.e ], [ 1, %3 ]
-  %.sroa.18.sroa.10.sroa.0.0.ph.in.i = lshr i64 %.sroa.18.sroa.10.sroa.0.0.ph.in.in.i, 8
-  %.sroa.18.sroa.10.sroa.0.0.ph.i = trunc nuw i64 %.sroa.18.sroa.10.sroa.0.0.ph.in.i to i56
+bb.f:                                             ; preds = %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit.i.i, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit84.thread.i.i, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit84.i.i, %bb.e
+  %.sroa.18.sroa.10.sroa.0.0.ph.in.in.i = phi i64 [ %i.q, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit84.thread.i.i ], [ %i.u, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit84.i.i ], [ ptrtoint (ptr @25 to i64), %bb.e ], [ %i.m, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit.i.i ]
+  %.sroa.9.0.ph.i = phi i64 [ 1, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit84.thread.i.i ], [ %.sroa.9.9.insert.insert42.i, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit84.i.i ], [ 0, %bb.e ], [ %.sroa.9.9.insert.insert.i, %_RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QQRShECs2iisHxfqoT7_15libp2p_identity.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !88
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.9.0.ph.i, ptr %i.ag, align 8
   %.sroa.450.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sroa.18.sroa.0.0.ph.i, ptr %.sroa.450.0..sroa_idx, align 8
-  %.sroa.551.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 17
-  store i56 %.sroa.18.sroa.10.sroa.0.0.ph.i, ptr %.sroa.551.0..sroa_idx, align 1
+  store i64 %.sroa.18.sroa.10.sroa.0.0.ph.in.in.i, ptr %.sroa.450.0..sroa_idx, align 8
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.d, %bb.c
-  %.sroa.28.i.sroa.5.0.copyload = phi i56 [ 0, %bb.d ], [ %.sroa.28.i.sroa.5.0.copyload.pre, %bb.c ]
-  %.sroa.28.i.sroa.4.0.copyload = phi i8 [ 0, %bb.d ], [ %.sroa.28.i.sroa.4.0.copyload.pre, %bb.c ]
+  %.sroa.28.i.sroa.4.0.copyload = phi i64 [ 0, %bb.d ], [ %.sroa.28.i.sroa.4.0.copyload.pre, %bb.c ]
   store ptr %i.ab, ptr %.val.i.i, align 8, !alias.scope !110, !noalias !115
   store i64 %i.ac, ptr %i.x, align 8, !alias.scope !110, !noalias !115
   %.sroa.18.sroa.10.sroa.0.0.copyload53.i = load i64, ptr %i.c, align 8, !noalias !88
@@ -356,9 +342,7 @@ bb.h:                                             ; preds = %bb.g
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.18.sroa.10.sroa.0.0.copyload53.i, ptr %i.al, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %.sroa.28.i.sroa.4.0.copyload, ptr %.sroa.2.0..sroa_idx, align 8
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 17
-  store i56 %.sroa.28.i.sroa.5.0.copyload, ptr %.sroa.3.0..sroa_idx, align 1
+  store i64 %.sroa.28.i.sroa.4.0.copyload, ptr %.sroa.2.0..sroa_idx, align 8
   %.sroa.439.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.439.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.439, i64 48, i1 false)
   %.sroa.540.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72

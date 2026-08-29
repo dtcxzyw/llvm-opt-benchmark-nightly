@@ -205,8 +205,8 @@ _RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapIBO_INtNtNtBc_5sli
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapIBO_IBO_INtNtNtBc_5slice4iter4IterTRINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set15ShardReplicaSetEINtNtBc_6option6OptionRNtNtCs607s0NAIaWN_7segment5types8ShardKeyEEENCNCNvMNtNtB2b_10collection5queryNtB4q_10Collection31batch_query_shards_concurrently0s_0ENvYINtNtNtCsiHzErX7aQFk_12futures_util6future10try_future7AndThenNCNvMNtB27_8read_opsB25_11query_batch0NCNCNCB4j_s_000NCB7r_0ENtB5O_12TryFutureExt11into_futureENcNtINtNtB5Q_14try_maybe_done12TryMaybeDoneINtNtB5O_11into_future10IntoFutureB5L_EE6Future0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvNvB9M_8for_each4callB8m_NCINvMsk_NtB1C_3vecINtBb2_3VecBaP_E14extend_trustedBN_E0E0EB2b_(ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(64) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.44.i.i.i.i.i = alloca i64, align 8       ; 5 uses
-  %.sroa.65.i.i.i.i.i = alloca i64, align 8       ; 4 uses
+  %.sroa.44.i.i.i.i.i = alloca [8 x i8], align 8  ; 5 uses
+  %.sroa.65.i.i.i.i.i = alloca [8 x i8], align 8  ; 4 uses
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %.sroa.14.i.i.i.i = alloca [23 x i8], align 1   ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2514)
@@ -302,8 +302,7 @@ bb.i:                                             ; preds = %bb.h
 
 _RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsPYQCUnoTxQ_10collection.exit.i.i.i.i.i.i: ; preds = %bb.f, %bb.h, %bb.g
   %.sroa.06.0.i.i.i.i.i.i = phi ptr [ %.val.i.i.i.i.i.i, %bb.h ], [ inttoptr (i64 16 to ptr), %bb.g ], [ %.val.i.i.i.i.i.i, %bb.f ]
-  %2 = ptrtoint ptr %.sroa.06.0.i.i.i.i.i.i to i64
-  store i64 %2, ptr %.sroa.44.i.i.i.i.i, align 8, !alias.scope !2529, !noalias !2541
+  store ptr %.sroa.06.0.i.i.i.i.i.i, ptr %.sroa.44.i.i.i.i.i, align 8, !alias.scope !2529, !noalias !2541
   br label %_RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i.i.i
 
 _RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i.i.i: ; preds = %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsPYQCUnoTxQ_10collection.exit.i.i.i.i.i.i, %bb.e
@@ -706,8 +705,8 @@ define hidden void @_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3M
 bb.a:
   %i.a = alloca [1584 x i8], align 8              ; 20 uses
   %i.b = alloca [1640 x i8], align 8              ; 23 uses
-  %.sroa.44.i.i.i.i = alloca i64, align 8         ; 5 uses
-  %.sroa.65.i.i.i.i = alloca i64, align 8         ; 4 uses
+  %.sroa.44.i.i.i.i = alloca [8 x i8], align 8    ; 5 uses
+  %.sroa.65.i.i.i.i = alloca [8 x i8], align 8    ; 4 uses
   %i.c = alloca [16 x i8], align 8                ; 4 uses
   %.sroa.14.i.i.i = alloca [23 x i8], align 1     ; 5 uses
   %i.d = alloca [64 x i8], align 8                ; 4 uses
@@ -843,8 +842,7 @@ bb.j:                                             ; preds = %bb.i
 
 _RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsPYQCUnoTxQ_10collection.exit.i.i.i.i.i: ; preds = %bb.g, %bb.i, %bb.h
   %.sroa.06.0.i.i.i.i.i = phi ptr [ %.val.i.i.i.i.i, %bb.i ], [ inttoptr (i64 16 to ptr), %bb.h ], [ %.val.i.i.i.i.i, %bb.g ]
-  %3 = ptrtoint ptr %.sroa.06.0.i.i.i.i.i to i64
-  store i64 %3, ptr %.sroa.44.i.i.i.i, align 8, !alias.scope !2981, !noalias !2991
+  store ptr %.sroa.06.0.i.i.i.i.i, ptr %.sroa.44.i.i.i.i, align 8, !alias.scope !2981, !noalias !2991
   br label %_RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i.i
 
 _RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i.i: ; preds = %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsPYQCUnoTxQ_10collection.exit.i.i.i.i.i, %bb.f

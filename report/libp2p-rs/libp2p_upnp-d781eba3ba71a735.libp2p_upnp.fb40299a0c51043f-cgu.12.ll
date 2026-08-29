@@ -202,6 +202,7 @@ bb.ac:                                            ; preds = %bb.n, %bb.cc, %bb.a
 bb.ad:                                            ; preds = %bb.h
   %i.bm = getelementptr inbounds nuw i8, ptr %i.t, i64 1
   %i.bn = load i8, ptr %i.bm, align 1, !range !1107, !noundef !9
+  %.sroa.7.8.insert.ext = zext nneg i8 %i.bn to i64
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCslzoSl9yxMOF_11libp2p_upnp(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.s)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECslzoSl9yxMOF_11libp2p_upnp.exit.i59 unwind label %bb.ae
 
@@ -407,10 +408,8 @@ bb.az:                                            ; preds = %_RINvNtCskKLDkoKarT
   br label %bb.ba
 
 bb.ba:                                            ; preds = %bb.bi, %bb.az
-  %.sroa.7.sroa.7.sroa.0.1.in.in = phi i64 [ %.sroa.3.sroa.0.0.copyload, %bb.az ], [ %i.cy, %bb.bi ] ; 2 uses
   %.sroa.15.1 = phi i8 [ %.sroa.3.sroa.5.0.copyload, %bb.az ], [ 9, %bb.bi ]
-  %.sroa.7.sroa.0.1 = trunc i64 %.sroa.7.sroa.7.sroa.0.1.in.in to i8
-  %.sroa.7.sroa.7.sroa.0.1.in = and i64 %.sroa.7.sroa.7.sroa.0.1.in.in, -256
+  %.sroa.7.1 = phi i64 [ %.sroa.3.sroa.0.0.copyload, %bb.az ], [ %i.cy, %bb.bi ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs5IbPN03UQpS_10hyper_util6client6legacy6client6ClientNtNtNtBG_7connect4http13HttpConnectorINtNtCskeGg2ZMtKzB_14http_body_util5empty5EmptyNtNtCs1eA6bChxBZF_5bytes5bytes5BytesEEECslzoSl9yxMOF_11libp2p_upnp(ptr noalias nofree noundef align 8 dereferenceable(288) %1)
           to label %bb.cd unwind label %bb.cc
@@ -633,8 +632,8 @@ bb.bw:                                            ; preds = %.noexc.i
   br label %bb.bx
 
 bb.bx:                                            ; preds = %.loopexit23.i, %bb.bw
-  %.sroa.7.sroa.7.sroa.0.3.in.in = phi i64 [ undef, %.loopexit23.i ], [ %i.ek, %bb.bw ]
   %.sroa.15.3 = phi i8 [ 4, %.loopexit23.i ], [ %.sroa.15.16.copyload, %bb.bw ]
+  %.sroa.7.3 = phi i64 [ undef, %.loopexit23.i ], [ %i.ek, %bb.bw ]
   %.sroa.0116.3 = phi i64 [ 1, %.loopexit23.i ], [ 0, %bb.bw ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1466
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCscL6eteTR0ts_7xmltree7ElementECslzoSl9yxMOF_11libp2p_upnp(ptr noalias nofree noundef align 8 dereferenceable(176) %i.d)
@@ -652,8 +651,8 @@ bb.bz:                                            ; preds = %bb.bx, %bb.bo
   br label %.body73
 
 bb.ca:                                            ; preds = %bb.bp, %bb.bx
-  %.sroa.7.sroa.7.sroa.0.4.in.in = phi i64 [ %.sroa.6.i.sroa.0.0.copyload147, %bb.bp ], [ %.sroa.7.sroa.7.sroa.0.3.in.in, %bb.bx ] ; 2 uses
   %.sroa.15.4 = phi i8 [ 8, %bb.bp ], [ %.sroa.15.3, %bb.bx ]
+  %.sroa.7.4 = phi i64 [ %.sroa.6.i.sroa.0.0.copyload147, %bb.bp ], [ %.sroa.7.3, %bb.bx ]
   %.sroa.0116.4 = phi i64 [ 1, %bb.bp ], [ %.sroa.0116.3, %bb.bx ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !1466
   call void @llvm.experimental.noalias.scope.decl(metadata !1484)
@@ -681,8 +680,6 @@ bb.cb:                                            ; preds = %bb.ca
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECslzoSl9yxMOF_11libp2p_upnp.exit77
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECslzoSl9yxMOF_11libp2p_upnp.exit: ; preds = %bb.ca
-  %.sroa.7.sroa.7.sroa.0.4.in = and i64 %.sroa.7.sroa.7.sroa.0.4.in.in, -256
-  %.sroa.7.sroa.0.4 = trunc i64 %.sroa.7.sroa.7.sroa.0.4.in.in to i8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCs5IbPN03UQpS_10hyper_util6client6legacy6client6ClientNtNtNtBG_7connect4http13HttpConnectorINtNtCskeGg2ZMtKzB_14http_body_util5empty5EmptyNtNtCs1eA6bChxBZF_5bytes5bytes5BytesEEECslzoSl9yxMOF_11libp2p_upnp(ptr noalias nofree noundef align 8 dereferenceable(288) %1)
           to label %bb.cd unwind label %bb.cc
@@ -693,21 +690,18 @@ bb.cc:                                            ; preds = %_RINvNtCskKLDkoKarT
   br label %bb.ac
 
 bb.cd:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECslzoSl9yxMOF_11libp2p_upnp.exit, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECslzoSl9yxMOF_11libp2p_upnp.exit63, %bb.ba
-  %.sroa.7.sroa.7.sroa.0.2 = phi i64 [ %.sroa.7.sroa.7.sroa.0.1.in, %bb.ba ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECslzoSl9yxMOF_11libp2p_upnp.exit63 ], [ %.sroa.7.sroa.7.sroa.0.4.in, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECslzoSl9yxMOF_11libp2p_upnp.exit ]
-  %.sroa.7.sroa.0.2 = phi i8 [ %.sroa.7.sroa.0.1, %bb.ba ], [ %i.bn, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECslzoSl9yxMOF_11libp2p_upnp.exit63 ], [ %.sroa.7.sroa.0.4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECslzoSl9yxMOF_11libp2p_upnp.exit ]
-  %.sroa.15.2 = phi i8 [ %.sroa.15.1, %bb.ba ], [ 11, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECslzoSl9yxMOF_11libp2p_upnp.exit63 ], [ %.sroa.15.4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECslzoSl9yxMOF_11libp2p_upnp.exit ]
+  %.sroa.7.sroa.0.2 = phi i8 [ %.sroa.15.1, %bb.ba ], [ 11, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECslzoSl9yxMOF_11libp2p_upnp.exit63 ], [ %.sroa.15.4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECslzoSl9yxMOF_11libp2p_upnp.exit ]
+  %.sroa.7.2 = phi i64 [ %.sroa.7.1, %bb.ba ], [ %.sroa.7.8.insert.ext, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECslzoSl9yxMOF_11libp2p_upnp.exit63 ], [ %.sroa.7.4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECslzoSl9yxMOF_11libp2p_upnp.exit ]
   %.sroa.0116.2 = phi i64 [ 1, %bb.ba ], [ 1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECslzoSl9yxMOF_11libp2p_upnp.exit63 ], [ %.sroa.0116.4, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1eA6bChxBZF_5bytes5bytes5BytesECslzoSl9yxMOF_11libp2p_upnp.exit ]
   %i.fa = getelementptr inbounds nuw i8, ptr %1, i64 424
   store i8 0, ptr %i.fa, align 8
   store i64 %.sroa.0116.2, ptr %0, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.7.sroa.0.0.insert.ext = zext i8 %.sroa.7.sroa.0.2 to i64
-  %.sroa.7.sroa.0.0.insert.insert = or disjoint i64 %.sroa.7.sroa.7.sroa.0.2, %.sroa.7.sroa.0.0.insert.ext
-  store i64 %.sroa.7.sroa.0.0.insert.insert, ptr %.sroa.7.0..sroa_idx, align 8
+  store i64 %.sroa.7.2, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.14119.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(33) %.sroa.14119.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(33) %.sroa.14119, i64 33, i1 false)
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 49
-  store i8 %.sroa.15.2, ptr %.sroa.15.0..sroa_idx, align 1
+  store i8 %.sroa.7.sroa.0.2, ptr %.sroa.15.0..sroa_idx, align 1
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 50
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(14) %.sroa.18.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(14) %.sroa.18, i64 14, i1 false)
   br label %common.ret

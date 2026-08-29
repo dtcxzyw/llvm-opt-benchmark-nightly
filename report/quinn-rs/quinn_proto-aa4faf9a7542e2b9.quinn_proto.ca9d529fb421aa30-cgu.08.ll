@@ -204,14 +204,14 @@ define hidden { ptr, i64 } @_RINvXsb_NtNtCsexYYUdYSQU6_5alloc5boxed4iterINtB8_3B
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 8 uses
-  %.sroa.6.i.i.i.i.i.i = alloca i64, align 8      ; 7 uses
-  %.sroa.11.i.i.i.i.i.i = alloca i64, align 8     ; 7 uses
+  %.sroa.6.i.i.i.i.i.i = alloca [8 x i8], align 8 ; 7 uses
+  %.sroa.11.i.i.i.i.i.i = alloca [8 x i8], align 8 ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
     #dbg_value(ptr poison, !13779, !DIExpression(), !13809)
     #dbg_value(ptr poison, !13789, !DIExpression(), !13883)
     #dbg_value(ptr poison, !13788, !DIExpression(), !13884)
-  %.sroa.6.i.i.i.i = alloca i64, align 8          ; 7 uses
-  %.sroa.11.i.i.i.i = alloca i64, align 8         ; 7 uses
+  %.sroa.6.i.i.i.i = alloca [8 x i8], align 8     ; 7 uses
+  %.sroa.11.i.i.i.i = alloca [8 x i8], align 8    ; 7 uses
   %i.d = alloca [24 x i8], align 8                ; 8 uses
   %i.e = alloca [24 x i8], align 8                ; 8 uses
     #dbg_declare(ptr %0, !13776, !DIExpression(), !13885)
@@ -342,12 +342,12 @@ _RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters5chainINtB4_5ChainINtNtB6_3map3Map
   %.sink34.i.sroa.phi.i.i.i.i = phi ptr [ %.sroa.11.i.i.i.i, %bb.f ], [ %.sroa.11.i.i.i.i, %bb.g ], [ %.sroa.11.i.i.i.i, %bb.e ], [ %.sroa.6.i.i.i.i, %bb.d ]
   %.sink.i.i.i.i.i = phi i64 [ %i.j, %bb.f ], [ %i.i, %bb.g ], [ 0, %bb.e ], [ 1, %bb.d ]
   store i64 %.sink.i.i.i.i.i, ptr %.sink34.i.sroa.phi.i.i.i.i, align 8, !dbg !13910, !alias.scope !14016, !noalias !14012
-  %.sroa.6.i.i.i.i.0..sroa.6.i.i.i.i.0..sroa.6.i.i.i.i.0..sroa.6.i.i.i.0..sroa.6.i.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..i.i.i.i = load i64, ptr %.sroa.6.i.i.i.i, align 8, !dbg !13944, !range !3100, !noalias !13931, !noundef !23
+  %.sroa.6.i.i.i.i.0..sroa.6.i.i.i.i.0..sroa.6.i.i.i.i.0..sroa.6.i.i.i.0..sroa.6.i.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..i.i.i.i = load i64, ptr %.sroa.6.i.i.i.i, align 8, !dbg !13944, !noalias !13931
   %i.k = trunc nuw i64 %.sroa.6.i.i.i.i.0..sroa.6.i.i.i.i.0..sroa.6.i.i.i.i.0..sroa.6.i.i.i.0..sroa.6.i.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..i.i.i.i to i1, !dbg !14069
   br i1 %i.k, label %bb.h, label %bb.s, !dbg !14069, !prof !5637
 
 bb.h:                                             ; preds = %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters5chainINtB4_5ChainINtNtB6_3map3MapINtNtNtBa_5slice4iter7IterMutINtCs9JJQt12aL8S_8lru_slab4SlotNtNtCshovLROGBtMy_11quinn_proto18token_memory_cache10CacheEntryEENCNvMB1L_INtB1L_7LruSlabB2d_E6insert0EIB10_INtNtNtBa_3ops5range5RangemENCB3i_s_0EENtNtNtB8_6traits8iterator8Iterator9size_hintB2h_.exit.i.i.i.i
-  %.sroa.11.i.i.i.i.0..sroa.11.i.i.i.i.0..sroa.11.i.i.i.i.0..sroa.11.i.i.i.0..sroa.11.i.i.i.0..sroa.11.i.i.0..sroa.11.i.i.0..sroa.11.i.0..sroa.11.i.0..sroa.11.0..sroa.11.0..sroa.11.16..i.i.i.i = load i64, ptr %.sroa.11.i.i.i.i, align 8, !dbg !14070, !noalias !13931, !noundef !23 ; 2 uses
+  %.sroa.11.i.i.i.i.0..sroa.11.i.i.i.i.0..sroa.11.i.i.i.i.0..sroa.11.i.i.i.0..sroa.11.i.i.i.0..sroa.11.i.i.0..sroa.11.i.i.0..sroa.11.i.0..sroa.11.i.0..sroa.11.0..sroa.11.0..sroa.11.16..i.i.i.i = load i64, ptr %.sroa.11.i.i.i.i, align 8, !dbg !14070, !noalias !13931 ; 2 uses
     #dbg_value(i64 %.sroa.11.i.i.i.i.0..sroa.11.i.i.i.i.0..sroa.11.i.i.i.i.0..sroa.11.i.i.i.0..sroa.11.i.i.i.0..sroa.11.i.i.0..sroa.11.i.i.0..sroa.11.i.0..sroa.11.i.0..sroa.11.0..sroa.11.0..sroa.11.16..i.i.i.i, !13857, !DIExpression(), !14071)
     #dbg_value(i64 %.sroa.11.i.i.i.i.0..sroa.11.i.i.i.i.0..sroa.11.i.i.i.i.0..sroa.11.i.i.i.0..sroa.11.i.i.i.0..sroa.11.i.i.0..sroa.11.i.i.0..sroa.11.i.0..sroa.11.i.0..sroa.11.0..sroa.11.0..sroa.11.16..i.i.i.i, !13922, !DIExpression(), !14072)
     #dbg_value(i64 %.sroa.11.i.i.i.i.0..sroa.11.i.i.i.i.0..sroa.11.i.i.i.i.0..sroa.11.i.i.i.0..sroa.11.i.i.i.0..sroa.11.i.i.0..sroa.11.i.i.0..sroa.11.i.0..sroa.11.i.0..sroa.11.0..sroa.11.0..sroa.11.16..i.i.i.i, !13917, !DIExpression(), !14073)
@@ -490,7 +490,7 @@ _RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters5chainINtB4_5ChainINtNtB6_3map3Map
   %.sink.i.i.i.i.i.i.i = phi i64 [ %i.z, %bb.n ], [ %i.y, %bb.o ], [ 0, %bb.m ], [ 1, %bb.l ]
   store i64 %.sink.i.i.i.i.i.i.i, ptr %.sink34.i.sroa.phi.i.i.i.i.i.i, align 8, !dbg !13884, !alias.scope !14140, !noalias !14134
     #dbg_value(i64 poison, !13820, !DIExpression(), !14189)
-  %.sroa.6.i.i.i.i.i.i.0..sroa.6.i.i.i.i.i.i.0..sroa.6.i.i.i.i.i.i.0..sroa.6.i.i.i.i.i.0..sroa.6.i.i.i.i.i.0..sroa.6.i.i.i.i.0..sroa.6.i.i.i.i.0..sroa.6.i.i.i.0..sroa.6.i.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..i.i.i.i.i.i = load i64, ptr %.sroa.6.i.i.i.i.i.i, align 8, !dbg !14190, !range !3100, !noalias !14191, !noundef !23
+  %.sroa.6.i.i.i.i.i.i.0..sroa.6.i.i.i.i.i.i.0..sroa.6.i.i.i.i.i.i.0..sroa.6.i.i.i.i.i.0..sroa.6.i.i.i.i.i.0..sroa.6.i.i.i.i.0..sroa.6.i.i.i.i.0..sroa.6.i.i.i.0..sroa.6.i.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..i.i.i.i.i.i = load i64, ptr %.sroa.6.i.i.i.i.i.i, align 8, !dbg !14190, !noalias !14191
   %.sroa.11.i.i.i.i.i.i.0..sroa.11.i.i.i.i.i.i.0..sroa.11.i.i.i.i.i.i.0..sroa.11.i.i.i.i.i.0..sroa.11.i.i.i.i.i.0..sroa.11.i.i.i.i.0..sroa.11.i.i.i.i.0..sroa.11.i.i.i.0..sroa.11.i.i.i.0..sroa.11.i.i.0..sroa.11.i.i.0..sroa.11.i.0..sroa.11.i.0..sroa.11.0..sroa.11.0..sroa.11.16..i.i.i.i.i.i = load i64, ptr %.sroa.11.i.i.i.i.i.i, align 8, !dbg !14190, !noalias !14191 ; 2 uses
     #dbg_value(i64 %.sroa.6.i.i.i.i.i.i.0..sroa.6.i.i.i.i.i.i.0..sroa.6.i.i.i.i.i.i.0..sroa.6.i.i.i.i.i.0..sroa.6.i.i.i.i.i.0..sroa.6.i.i.i.i.0..sroa.6.i.i.i.i.0..sroa.6.i.i.i.0..sroa.6.i.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..i.i.i.i.i.i, !13822, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14189)
     #dbg_value(i64 %.sroa.11.i.i.i.i.i.i.0..sroa.11.i.i.i.i.i.i.0..sroa.11.i.i.i.i.i.i.0..sroa.11.i.i.i.i.i.0..sroa.11.i.i.i.i.i.0..sroa.11.i.i.i.i.0..sroa.11.i.i.i.i.0..sroa.11.i.i.i.0..sroa.11.i.i.i.0..sroa.11.i.i.0..sroa.11.i.i.0..sroa.11.i.0..sroa.11.i.0..sroa.11.0..sroa.11.0..sroa.11.16..i.i.i.i.i.i, !13822, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !14189)

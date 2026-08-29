@@ -205,8 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 21 uses
-  %.sroa.6.sroa.0.0.extract.trunc = trunc i64 %.sroa.6.0.copyload to i32 ; 8 uses
+  %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 28 uses
   %.sroa.27.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 10 uses
   %.sroa.2731.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.sroa.2731.0.copyload = load i64, ptr %.sroa.2731.0..sroa_idx, align 8 ; 4 uses
@@ -405,6 +404,7 @@ bb.s:                                             ; preds = %bb.b
           to label %bb.bu unwind label %bb.bt
 
 switch.lookup491:                                 ; preds = %bb.b
+  %.sroa.6.8.extract.trunc6 = trunc i64 %.sroa.6.0.copyload to i32
   %.sroa.6.sroa.25.0.extract.shift = lshr i64 %.sroa.6.0.copyload, 32
   %.sroa.6.sroa.25.0.extract.trunc = trunc nuw i64 %.sroa.6.sroa.25.0.extract.shift to i32
   %switch = icmp ult i64 %.sroa.6.0.copyload, 25769803776
@@ -419,7 +419,7 @@ switch.lookup491:                                 ; preds = %bb.b
   %switch.masked495 = trunc i48 %switch.downshift494 to i8
   store i64 -9223372036854775797, ptr %i.aa, align 8
   %.sroa.4131.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  store i32 %.sroa.6.sroa.0.0.extract.trunc, ptr %.sroa.4131.0..sroa_idx, align 8
+  store i32 %.sroa.6.8.extract.trunc6, ptr %.sroa.4131.0..sroa_idx, align 8
   %.sroa.5132.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 12
   store i8 %switch.masked495, ptr %.sroa.5132.0..sroa_idx, align 4
   %.sroa.6133.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 13
@@ -427,9 +427,10 @@ switch.lookup491:                                 ; preds = %bb.b
   br label %bb.dp
 
 bb.t:                                             ; preds = %bb.b
+  %.sroa.6.8.extract.trunc8 = trunc i64 %.sroa.6.0.copyload to i32
   store i64 -9223372036854775806, ptr %i.aa, align 8
   %.sroa.4138.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  store i32 %.sroa.6.sroa.0.0.extract.trunc, ptr %.sroa.4138.0..sroa_idx, align 8
+  store i32 %.sroa.6.8.extract.trunc8, ptr %.sroa.4138.0..sroa_idx, align 8
   br label %bb.dp
 
 bb.u:                                             ; preds = %bb.b
@@ -443,6 +444,7 @@ bb.v:                                             ; preds = %bb.u
   unreachable
 
 "_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17h4d11a3cc5f708623E.exit": ; preds = %bb.u
+  %.sroa.6.8.extract.trunc10 = trunc i64 %.sroa.6.0.copyload to i32
   store i16 15676, ptr %i.bx, align 1, !noalias !10134
   store i64 2, ptr %i.aa, align 8
   %.sroa.0146.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
@@ -452,11 +454,12 @@ bb.v:                                             ; preds = %bb.u
   %.sroa.4147.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
   store i64 -9223372036854775808, ptr %.sroa.4147.0..sroa_idx, align 8
   %.sroa.5148.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 32
-  store i32 %.sroa.6.sroa.0.0.extract.trunc, ptr %.sroa.5148.0..sroa_idx, align 8
+  store i32 %.sroa.6.8.extract.trunc10, ptr %.sroa.5148.0..sroa_idx, align 8
   br label %bb.dp
 
 bb.w:                                             ; preds = %bb.b
-  switch i32 %.sroa.6.sroa.0.0.extract.trunc, label %.thread461 [
+  %.sroa.6.8.extract.trunc12 = trunc i64 %.sroa.6.0.copyload to i32
+  switch i32 %.sroa.6.8.extract.trunc12, label %.thread461 [
     i32 0, label %bb.cc
     i32 8, label %bb.cl
     i32 2, label %bb.cf
@@ -468,7 +471,8 @@ bb.w:                                             ; preds = %bb.b
   ]
 
 .thread478:                                       ; preds = %bb.b
-  %i.bz = icmp ult i32 %.sroa.6.sroa.0.0.extract.trunc, 6
+  %.sroa.6.8.extract.trunc14 = trunc i64 %.sroa.6.0.copyload to i32
+  %i.bz = icmp ult i32 %.sroa.6.8.extract.trunc14, 6
   %i.ca = trunc i64 %.sroa.6.0.copyload to i48
   %switch.cast497 = shl i48 %i.ca, 3
   %switch.shiftamt498 = and i48 %switch.cast497, 34359738360
@@ -493,9 +497,10 @@ bb.x:                                             ; preds = %bb.b
   br label %bb.dp
 
 bb.y:                                             ; preds = %bb.b
+  %.sroa.6.8.extract.trunc16 = trunc i64 %.sroa.6.0.copyload to i32
   store i64 -9223372036854775805, ptr %i.aa, align 8
   %.sroa.4158.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  store i32 %.sroa.6.sroa.0.0.extract.trunc, ptr %.sroa.4158.0..sroa_idx, align 8
+  store i32 %.sroa.6.8.extract.trunc16, ptr %.sroa.4158.0..sroa_idx, align 8
   br label %bb.dp
 
 bb.z:                                             ; preds = %bb.b
@@ -522,6 +527,7 @@ bb.ab:                                            ; preds = %bb.aa
   unreachable
 
 "_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17h4d11a3cc5f708623E.exit366": ; preds = %bb.aa
+  %.sroa.6.8.extract.trunc18 = trunc i64 %.sroa.6.0.copyload to i32
   store i8 61, ptr %i.cf, align 1, !noalias !10142
   store i64 1, ptr %i.aa, align 8
   %.sroa.0153.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
@@ -531,7 +537,7 @@ bb.ab:                                            ; preds = %bb.aa
   %.sroa.4154.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
   store i64 -9223372036854775808, ptr %.sroa.4154.0..sroa_idx, align 8
   %.sroa.5155.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 32
-  store i32 %.sroa.6.sroa.0.0.extract.trunc, ptr %.sroa.5155.0..sroa_idx, align 8
+  store i32 %.sroa.6.8.extract.trunc18, ptr %.sroa.5155.0..sroa_idx, align 8
   br label %bb.dp
 
 bb.ac:                                            ; preds = %bb.b
@@ -561,9 +567,10 @@ bb.ad:                                            ; preds = %bb.b
           to label %bb.cz unwind label %bb.cy
 
 bb.ae:                                            ; preds = %bb.b
+  %.sroa.6.8.extract.trunc20 = trunc i64 %.sroa.6.0.copyload to i32
   store i64 -9223372036854775800, ptr %i.aa, align 8
   %.sroa.4141.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  store i32 %.sroa.6.sroa.0.0.extract.trunc, ptr %.sroa.4141.0..sroa_idx, align 8
+  store i32 %.sroa.6.8.extract.trunc20, ptr %.sroa.4141.0..sroa_idx, align 8
   br label %bb.dp
 
 bb.af:                                            ; preds = %bb.b

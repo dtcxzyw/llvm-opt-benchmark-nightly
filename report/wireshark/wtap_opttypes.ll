@@ -204,7 +204,7 @@ wtap_block_get_option.exit.i:                     ; preds = %bb.g
 wtap_block_get_option_common.exit:                ; preds = %wtap_block_get_option.exit.i
   %.sroa.0.0.copyload = load i32, ptr %i.v, align 8
   %.sroa.413.0..sroa_idx = getelementptr i8, ptr %i.s, i64 16
-  %.sroa.413.0.copyload = load i64, ptr %.sroa.413.0..sroa_idx, align 8
+  %.sroa.413.0.copyload = load ptr, ptr %.sroa.413.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr i8, ptr %i.s, i64 24
   %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.523)
@@ -255,7 +255,6 @@ if_filter_dup.exit:                               ; preds = %wtap_block_get_opti
   store ptr %.sroa.9.0..sroa.9.0.copyload, ptr %.sroa.9.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.523)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9)
-  %3 = inttoptr i64 %.sroa.413.0.copyload to ptr
   switch i32 %.sroa.0.0.copyload, label %if_filter_free.exit [
     i32 0, label %.sink.split.i7
     i32 1, label %bb.j
@@ -265,7 +264,7 @@ bb.j:                                             ; preds = %if_filter_dup.exit
   br label %.sink.split.i7
 
 .sink.split.i7:                                   ; preds = %bb.j, %if_filter_dup.exit
-  %.sink.i8.sroa.phi.sroa.speculated = phi ptr [ %.sroa.5.0.copyload, %bb.j ], [ %3, %if_filter_dup.exit ]
+  %.sink.i8.sroa.phi.sroa.speculated = phi ptr [ %.sroa.5.0.copyload, %bb.j ], [ %.sroa.413.0.copyload, %if_filter_dup.exit ]
   tail call void @g_free(ptr noundef %.sink.i8.sroa.phi.sroa.speculated)
   br label %if_filter_free.exit
 

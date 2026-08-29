@@ -204,7 +204,7 @@ _RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP
   store i64 %.sink2.i.i.i, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !noalias !3249
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.013.090.i, i64 24
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3258)
-  %i.az = load i64, ptr %i.ay, align 8, !range !1329, !alias.scope !3261, !noalias !3262, !noundef !10 ; 4 uses
+  %i.az = load i64, ptr %i.ay, align 8, !range !1329, !alias.scope !3261, !noalias !3262, !noundef !10 ; 3 uses
   %i.ba = add nsw i64 %i.az, -4
   %.inv.i.i.i = icmp samesign ult i64 %i.az, 4
   %i.bb = select i1 %.inv.i.i.i, i64 4, i64 %i.ba
@@ -222,26 +222,23 @@ bb.j:                                             ; preds = %_RNvXsM_NtCskSsi02D
 bb.k:                                             ; preds = %_RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.013.090.i, i64 32
   %i.bd = load i8, ptr %i.bc, align 8, !range !843, !alias.scope !3261, !noalias !3262, !noundef !10
+  %.sroa.8.8.insert.ext.i.i = zext nneg i8 %i.bd to i64
   br label %bb.ao
 
 bb.l:                                             ; preds = %_RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.013.090.i, i64 32
-  %i.bf = load i64, ptr %i.be, align 8, !alias.scope !3261, !noalias !3262, !noundef !10 ; 2 uses
-  %.sroa.8.sroa.0.0.extract.trunc11.i.i = trunc i64 %i.bf to i8
-  %.sroa.8.sroa.8.0.extract.shift16.i.i = and i64 %i.bf, -256
+  %i.bf = load i64, ptr %i.be, align 8, !alias.scope !3261, !noalias !3262, !noundef !10
   br label %bb.ao
 
 bb.m:                                             ; preds = %_RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.013.090.i, i64 32
-  %i.bh = load i64, ptr %i.bg, align 8, !alias.scope !3261, !noalias !3262, !noundef !10 ; 2 uses
-  %.sroa.8.sroa.0.0.extract.trunc.i.i = trunc i64 %i.bh to i8
-  %.sroa.8.sroa.8.0.extract.shift.i.i = and i64 %i.bh, -256
+  %i.bh = load i64, ptr %i.bg, align 8, !alias.scope !3261, !noalias !3262, !noundef !10
   br label %bb.ao
 
 bb.n:                                             ; preds = %_RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.013.090.i, i64 32
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3264)
-  %i.bj = load i64, ptr %i.bi, align 8, !range !306, !alias.scope !3267, !noalias !3268, !noundef !10 ; 2 uses
+  %i.bj = load i64, ptr %i.bi, align 8, !range !306, !alias.scope !3267, !noalias !3268, !noundef !10
   %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.013.090.i, i64 40 ; 3 uses
   switch i64 %i.bj, label %default.unreachable [
     i64 0, label %bb.o
@@ -256,13 +253,13 @@ bb.o:                                             ; preds = %bb.n
 .noexc.i.i:                                       ; preds = %bb.o
   %i.bm = extractvalue { ptr, i64 } %i.bl, 0
   %i.bn = extractvalue { ptr, i64 } %i.bl, 1
-  br label %_RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i
+  br label %bb.ao
 
 bb.p:                                             ; preds = %bb.n
   %i.bo = load ptr, ptr %i.bk, align 8, !alias.scope !3267, !noalias !3268, !nonnull !10, !noundef !10
   %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.013.090.i, i64 48
   %i.bq = load i64, ptr %i.bp, align 8, !alias.scope !3267, !noalias !3268, !noundef !10
-  br label %_RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i
+  br label %bb.ao
 
 bb.q:                                             ; preds = %bb.n
   %i.br = load ptr, ptr %i.bk, align 8, !alias.scope !3267, !noalias !3268, !nonnull !10, !noundef !10 ; 2 uses
@@ -273,24 +270,18 @@ bb.q:                                             ; preds = %bb.n
 bb.r:                                             ; preds = %bb.q
   %i.bu = getelementptr inbounds nuw i8, ptr %.sroa.013.090.i, i64 48
   %i.bv = load i64, ptr %i.bu, align 8, !alias.scope !3267, !noalias !3268, !noundef !10
-  br label %_RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i
+  br label %bb.ao
 
 bb.s:                                             ; preds = %bb.q
   tail call void @llvm.trap()
   unreachable
-
-_RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i: ; preds = %bb.r, %bb.p, %.noexc.i.i
-  %.sink4.i.i.i.i = phi ptr [ %i.br, %bb.r ], [ %i.bo, %bb.p ], [ %i.bm, %.noexc.i.i ]
-  %.sink2.i.i.i.i = phi i64 [ %i.bv, %bb.r ], [ %i.bq, %bb.p ], [ %i.bn, %.noexc.i.i ]
-  %.sroa.8.sroa.0.0.extract.trunc10.i.i = trunc nuw nsw i64 %i.bj to i8
-  br label %bb.ao
 
 bb.t:                                             ; preds = %_RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3272)
   %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.013.090.i, i64 40
   %.val.i.i.i.i = load ptr, ptr %i.bw, align 8, !alias.scope !3275, !noalias !3276, !nonnull !10, !noundef !10 ; 5 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.013.090.i, i64 48
-  %.val1.i.i.i.i = load i64, ptr %i.bx, align 8, !alias.scope !3275, !noalias !3276, !noundef !10 ; 16 uses
+  %.val1.i.i.i.i = load i64, ptr %i.bx, align 8, !alias.scope !3275, !noalias !3276, !noundef !10 ; 19 uses
   switch i64 %i.az, label %default.unreachable29.i.i.i.i [
     i64 0, label %bb.u
     i64 1, label %bb.x
@@ -322,11 +313,11 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZO
   tail call void @llvm.assume(i1 %i.cd)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !3278
   %.not.i.i.i.i.i.i = icmp eq i64 %.val1.i.i.i.i, 0
-  br i1 %.not.i.i.i.i.i.i, label %_RNvXsP_NtCskSsi02DWvps_13opentelemetry6commonNtB5_5ArrayNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i, label %bb.w
+  br i1 %.not.i.i.i.i.i.i, label %bb.ao, label %bb.w
 
 bb.w:                                             ; preds = %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cc, ptr nonnull readonly align 1 %.val.i.i.i.i, i64 range(i64 0, -9223372036854775808) %.val1.i.i.i.i, i1 false), !noalias !3284
-  br label %_RNvXsP_NtCskSsi02DWvps_13opentelemetry6commonNtB5_5ArrayNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i
+  br label %bb.ao
 
 bb.x:                                             ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !3285
@@ -349,12 +340,12 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZO
   tail call void @llvm.assume(i1 %i.cj)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !3285
   %.not.i.i9.i.i.i.i = icmp eq i64 %.val1.i.i.i.i, 0
-  br i1 %.not.i.i9.i.i.i.i, label %_RNvXsP_NtCskSsi02DWvps_13opentelemetry6commonNtB5_5ArrayNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i, label %bb.z
+  br i1 %.not.i.i9.i.i.i.i, label %bb.ao, label %bb.z
 
 bb.z:                                             ; preds = %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i8.i.i.i.i
   %i.ck = shl nuw nsw i64 %.val1.i.i.i.i, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ci, ptr nonnull readonly align 8 %.val.i.i.i.i, i64 %i.ck, i1 false), !noalias !3291
-  br label %_RNvXsP_NtCskSsi02DWvps_13opentelemetry6commonNtB5_5ArrayNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i
+  br label %bb.ao
 
 bb.aa:                                            ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !3292
@@ -377,12 +368,12 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZO
   tail call void @llvm.assume(i1 %i.cq)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !3292
   %.not.i.i11.i.i.i.i = icmp eq i64 %.val1.i.i.i.i, 0
-  br i1 %.not.i.i11.i.i.i.i, label %_RNvXsP_NtCskSsi02DWvps_13opentelemetry6commonNtB5_5ArrayNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i, label %bb.ac
+  br i1 %.not.i.i11.i.i.i.i, label %bb.ao, label %bb.ac
 
 bb.ac:                                            ; preds = %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i10.i.i.i.i
   %i.cr = shl nuw nsw i64 %.val1.i.i.i.i, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.cp, ptr nonnull readonly align 8 %.val.i.i.i.i, i64 %i.cr, i1 false), !noalias !3298
-  br label %_RNvXsP_NtCskSsi02DWvps_13opentelemetry6commonNtB5_5ArrayNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i
+  br label %bb.ao
 
 bb.ad:                                            ; preds = %bb.t
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3299)
@@ -500,13 +491,6 @@ bb.am:                                            ; preds = %bb.ag
 
 _RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCskSsi02DWvps_13opentelemetry6common11StringValueENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i: ; preds = %_RNvXs11_NtCskSsi02DWvps_13opentelemetry6commonNtB6_11StringValueNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i12.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !3302
-  br label %_RNvXsP_NtCskSsi02DWvps_13opentelemetry6commonNtB5_5ArrayNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i
-
-_RNvXsP_NtCskSsi02DWvps_13opentelemetry6commonNtB5_5ArrayNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i: ; preds = %_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCskSsi02DWvps_13opentelemetry6common11StringValueENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i, %bb.ac, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i10.i.i.i.i, %bb.z, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i8.i.i.i.i, %bb.w, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i.i.i
-  %.sroa.11.0.i.i.i = phi ptr [ %i.cy, %_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCskSsi02DWvps_13opentelemetry6common11StringValueENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i ], [ %i.cc, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i.i.i ], [ %i.ci, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i8.i.i.i.i ], [ %i.cc, %bb.w ], [ %i.ci, %bb.z ], [ %i.cp, %bb.ac ], [ %i.cp, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i10.i.i.i.i ]
-  %.sroa.7.0.i.i.i = phi i64 [ %i.cu, %_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCskSsi02DWvps_13opentelemetry6common11StringValueENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i ], [ %i.ca, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i.i.i ], [ %i.cg, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i8.i.i.i.i ], [ %i.ca, %bb.w ], [ %i.cg, %bb.z ], [ %i.cn, %bb.ac ], [ %i.cn, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i10.i.i.i.i ] ; 2 uses
-  %.sroa.8.sroa.0.0.extract.trunc9.i.i = trunc i64 %.sroa.7.0.i.i.i to i8
-  %.sroa.8.sroa.8.0.extract.shift12.i.i = and i64 %.sroa.7.0.i.i.i, -256
   br label %bb.ao
 
 .loopexit41.i:                                    ; preds = %bb.ad, %bb.aa, %bb.x, %bb.u, %bb.o
@@ -530,23 +514,20 @@ bb.an:                                            ; preds = %.body.i.i
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #26, !noalias !3270
   unreachable
 
-bb.ao:                                            ; preds = %_RNvXsP_NtCskSsi02DWvps_13opentelemetry6commonNtB5_5ArrayNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i, %_RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i, %bb.m, %bb.l, %bb.k
-  %.sroa.8.sroa.8.sroa.0.0.i.i = phi i64 [ 0, %bb.k ], [ %.sroa.8.sroa.8.0.extract.shift16.i.i, %bb.l ], [ %.sroa.8.sroa.8.0.extract.shift.i.i, %bb.m ], [ 0, %_RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ], [ %.sroa.8.sroa.8.0.extract.shift12.i.i, %_RNvXsP_NtCskSsi02DWvps_13opentelemetry6commonNtB5_5ArrayNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ]
-  %.sroa.8.sroa.0.0.i.i = phi i8 [ %i.bd, %bb.k ], [ %.sroa.8.sroa.0.0.extract.trunc11.i.i, %bb.l ], [ %.sroa.8.sroa.0.0.extract.trunc.i.i, %bb.m ], [ %.sroa.8.sroa.0.0.extract.trunc10.i.i, %_RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ], [ %.sroa.8.sroa.0.0.extract.trunc9.i.i, %_RNvXsP_NtCskSsi02DWvps_13opentelemetry6commonNtB5_5ArrayNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ]
-  %.sroa.15.0.i.i = phi i64 [ undef, %bb.k ], [ undef, %bb.l ], [ undef, %bb.m ], [ %.sink2.i.i.i.i, %_RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ], [ %.val1.i.i.i.i, %_RNvXsP_NtCskSsi02DWvps_13opentelemetry6commonNtB5_5ArrayNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ]
-  %.sroa.13.0.i.i = phi ptr [ undef, %bb.k ], [ undef, %bb.l ], [ undef, %bb.m ], [ %.sink4.i.i.i.i, %_RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ], [ %.sroa.11.0.i.i.i, %_RNvXsP_NtCskSsi02DWvps_13opentelemetry6commonNtB5_5ArrayNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ]
-  %.sroa.0.0.i12.i = phi i64 [ 4, %bb.k ], [ 5, %bb.l ], [ 6, %bb.m ], [ 7, %_RNvXsM_NtCskSsi02DWvps_13opentelemetry6commonNtB5_10OtelStringNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ], [ %i.az, %_RNvXsP_NtCskSsi02DWvps_13opentelemetry6commonNtB5_5ArrayNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i.i ]
+bb.ao:                                            ; preds = %_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCskSsi02DWvps_13opentelemetry6common11StringValueENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i, %bb.ac, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i10.i.i.i.i, %bb.z, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i8.i.i.i.i, %bb.w, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i.i.i, %bb.r, %bb.p, %.noexc.i.i, %bb.m, %bb.l, %bb.k
+  %.sroa.15.0.i.i = phi i64 [ undef, %bb.k ], [ undef, %bb.l ], [ undef, %bb.m ], [ %i.bn, %.noexc.i.i ], [ %i.bv, %bb.r ], [ %i.bq, %bb.p ], [ %.val1.i.i.i.i, %_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCskSsi02DWvps_13opentelemetry6common11StringValueENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i ], [ 0, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i.i.i ], [ 0, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i8.i.i.i.i ], [ %.val1.i.i.i.i, %bb.w ], [ %.val1.i.i.i.i, %bb.z ], [ %.val1.i.i.i.i, %bb.ac ], [ 0, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i10.i.i.i.i ]
+  %.sroa.13.0.i.i = phi ptr [ undef, %bb.k ], [ undef, %bb.l ], [ undef, %bb.m ], [ %i.bm, %.noexc.i.i ], [ %i.br, %bb.r ], [ %i.bo, %bb.p ], [ %i.cy, %_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCskSsi02DWvps_13opentelemetry6common11StringValueENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i ], [ %i.cc, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i.i.i ], [ %i.ci, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i8.i.i.i.i ], [ %i.cc, %bb.w ], [ %i.ci, %bb.z ], [ %i.cp, %bb.ac ], [ %i.cp, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i10.i.i.i.i ]
+  %.sroa.8.0.i.i = phi i64 [ %.sroa.8.8.insert.ext.i.i, %bb.k ], [ %i.bf, %bb.l ], [ %i.bh, %bb.m ], [ 0, %.noexc.i.i ], [ 2, %bb.r ], [ 1, %bb.p ], [ %i.cu, %_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCskSsi02DWvps_13opentelemetry6common11StringValueENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i ], [ %i.ca, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i.i.i ], [ %i.cg, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i8.i.i.i.i ], [ %i.ca, %bb.w ], [ %i.cg, %bb.z ], [ %i.cn, %bb.ac ], [ %i.cn, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i10.i.i.i.i ]
+  %.sroa.0.0.i12.i = phi i64 [ 4, %bb.k ], [ 5, %bb.l ], [ 6, %bb.m ], [ 7, %.noexc.i.i ], [ 7, %bb.r ], [ 7, %bb.p ], [ 3, %_RNvXsb_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCskSsi02DWvps_13opentelemetry6common11StringValueENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i ], [ 0, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i.i.i.i.i ], [ 1, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i8.i.i.i.i ], [ 0, %bb.w ], [ 1, %bb.z ], [ 2, %bb.ac ], [ 2, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsiLZOIpitoQl_15metrics_example.exit.i.i10.i.i.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.028.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.028.i, ptr noundef nonnull align 8 dereferenceable(24) %i.f, i64 24, i1 false), !noalias !3243
-  %.sroa.8.sroa.0.0.insert.ext.i.i = zext i8 %.sroa.8.sroa.0.0.i.i to i64
-  %.sroa.8.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.8.sroa.8.sroa.0.0.i.i, %.sroa.8.sroa.0.0.insert.ext.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !3249
   %i.dy = getelementptr inbounds nuw [56 x i8], ptr %i.s, i64 %.sroa.7.086.i ; 5 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dy, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.028.i, i64 24, i1 false), !noalias !3245
   %.sroa.429.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.dy, i64 24
   store i64 %.sroa.0.0.i12.i, ptr %.sroa.429.0..sroa_idx.i, align 8, !noalias !3245
   %.sroa.530.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.dy, i64 32
-  store i64 %.sroa.8.sroa.0.0.insert.insert.i.i, ptr %.sroa.530.0..sroa_idx.i, align 8, !noalias !3245
+  store i64 %.sroa.8.0.i.i, ptr %.sroa.530.0..sroa_idx.i, align 8, !noalias !3245
   %.sroa.631.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.dy, i64 40
   store ptr %.sroa.13.0.i.i, ptr %.sroa.631.0..sroa_idx.i, align 8, !noalias !3245
   %.sroa.732.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.dy, i64 48

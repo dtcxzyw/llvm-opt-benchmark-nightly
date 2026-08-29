@@ -202,22 +202,22 @@ bb.a:
   %i.n = alloca [24 x i8], align 8                ; 6 uses
   %i.o = alloca [24 x i8], align 8                ; 6 uses
   %i.p = alloca [24 x i8], align 8                ; 6 uses
-  %i.q = alloca [24 x i8], align 8                ; 9 uses
+  %i.q = alloca [24 x i8], align 8                ; 8 uses
   %i.r = alloca [24 x i8], align 8                ; 6 uses
-  %i.s = alloca [24 x i8], align 8                ; 9 uses
+  %i.s = alloca [24 x i8], align 8                ; 8 uses
   %i.t = alloca [24 x i8], align 8                ; 6 uses
   %i.u = alloca [16 x i8], align 8                ; 7 uses
-  %i.v = alloca [24 x i8], align 8                ; 9 uses
+  %i.v = alloca [24 x i8], align 8                ; 8 uses
   %i.w = alloca [24 x i8], align 8                ; 6 uses
-  %i.x = alloca [24 x i8], align 8                ; 8 uses
+  %i.x = alloca [24 x i8], align 8                ; 7 uses
   %i.y = alloca [24 x i8], align 8                ; 7 uses
   %i.z = alloca [16 x i8], align 8                ; 7 uses
-  %i.aa = alloca [24 x i8], align 8               ; 8 uses
+  %i.aa = alloca [24 x i8], align 8               ; 7 uses
   %i.ab = alloca [24 x i8], align 8               ; 7 uses
-  %i.ac = alloca [24 x i8], align 8               ; 8 uses
+  %i.ac = alloca [24 x i8], align 8               ; 7 uses
   %i.ad = alloca [24 x i8], align 8               ; 7 uses
   %i.ae = alloca [16 x i8], align 8               ; 7 uses
-  %i.af = alloca [24 x i8], align 8               ; 8 uses
+  %i.af = alloca [24 x i8], align 8               ; 7 uses
   %i.ag = alloca [24 x i8], align 8               ; 7 uses
   %i.ah = alloca [24 x i8], align 8               ; 6 uses
   %i.ai = alloca [16 x i8], align 8               ; 7 uses
@@ -228,7 +228,7 @@ bb.a:
   %i.an = alloca [24 x i8], align 8               ; 6 uses
   %i.ao = alloca [32 x i8], align 16              ; 8 uses
   %i.ap = alloca [32 x i8], align 16              ; 6 uses
-  %i.aq = alloca [16 x i8], align 8               ; 11 uses
+  %i.aq = alloca [16 x i8], align 8               ; 10 uses
   %i.ar = alloca [32 x i8], align 16              ; 4 uses
   %i.as = alloca [32 x i8], align 16              ; 9 uses
   %i.at = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -631,8 +631,10 @@ bb.bh:                                            ; preds = %bb.cy, %bb.cs, %bb.
   %.sroa.47.sroa.44.0.i = phi i64 [ 0, %bb.bf ], [ %.sroa.47.sroa.44.0.extract.shift85.i, %bb.bm ], [ 0, %bb.g ], [ 0, %bb.h ], [ 0, %bb.i ], [ %.sroa.47.sroa.44.0.extract.shift45.i, %bb.j ], [ 0, %bb.k ], [ %.sroa.47.sroa.44.0.extract.shift47.i, %bb.l ], [ %.sroa.47.sroa.44.0.extract.shift49.i, %bb.m ], [ %.sroa.47.sroa.44.0.extract.shift87.i, %bb.br ], [ %.sroa.47.sroa.44.0.extract.shift63.i, %bb.be ], [ 0, %bb.o ], [ 0, %bb.ca ], [ %.sroa.47.sroa.44.0.extract.shift65.i, %bb.cc ], [ 0, %bb.cd ], [ %.sroa.47.sroa.44.0.extract.shift51.i, %bb.ac ], [ 0, %bb.ad ], [ %.sroa.47.sroa.44.0.extract.shift67.i, %bb.ce ], [ %.sroa.47.sroa.44.0.extract.shift69.i, %bb.ch ], [ %.sroa.47.sroa.44.0.extract.shift53.i, %bb.ag ], [ %.sroa.47.sroa.44.0.extract.shift55.i, %bb.ah ], [ %.sroa.47.sroa.44.0.extract.shift71.i, %bb.ci ], [ %.sroa.47.sroa.44.0.extract.shift73.i, %bb.cl ], [ %.sroa.47.sroa.44.0.extract.shift57.i, %bb.ak ], [ %.sroa.47.sroa.44.0.extract.shift75.i, %bb.cm ], [ %.sroa.47.sroa.44.0.extract.shift59.i, %bb.am ], [ %.sroa.47.sroa.44.0.extract.shift77.i, %bb.cq ], [ %.sroa.47.sroa.44.0.extract.shift79.i, %bb.cs ], [ %.sroa.47.sroa.44.0.extract.shift.i, %bb.cy ], [ 0, %bb.ap ], [ 0, %bb.aq ], [ 0, %bb.ar ], [ 0, %bb.as ], [ 0, %bb.at ], [ 0, %bb.au ], [ 0, %bb.av ], [ %.sroa.47.sroa.44.0.extract.shift61.i, %bb.aw ], [ 0, %bb.ax ], [ 0, %bb.ay ], [ 0, %bb.az ], [ 0, %bb.ba ], [ 0, %bb.bd ], [ 0, %bb.bb ]
   %.sroa.03.0.i = phi i64 [ -9223372036854775808, %bb.bf ], [ -9223372036854775807, %bb.bm ], [ -9223372036854775806, %bb.g ], [ -9223372036854775805, %bb.h ], [ -9223372036854775804, %bb.i ], [ -9223372036854775803, %bb.j ], [ -9223372036854775802, %bb.k ], [ -9223372036854775801, %bb.l ], [ -9223372036854775800, %bb.m ], [ -9223372036854775798, %bb.br ], [ -9223372036854775800, %bb.be ], [ %.630.i, %bb.o ], [ -9223372036854775808, %bb.ca ], [ -9223372036854775795, %bb.cc ], [ -9223372036854775794, %bb.cd ], [ -9223372036854775793, %bb.ac ], [ -9223372036854775792, %bb.ad ], [ -9223372036854775791, %bb.ce ], [ -9223372036854775791, %bb.ch ], [ -9223372036854775790, %bb.ag ], [ -9223372036854775789, %bb.ah ], [ -9223372036854775788, %bb.ci ], [ -9223372036854775788, %bb.cl ], [ -9223372036854775787, %bb.ak ], [ -9223372036854775786, %bb.cm ], [ -9223372036854775785, %bb.am ], [ -9223372036854775786, %bb.cq ], [ -9223372036854775784, %bb.cs ], [ %i.kx, %bb.cy ], [ -9223372036854775782, %bb.ap ], [ -9223372036854775781, %bb.aq ], [ -9223372036854775780, %bb.ar ], [ -9223372036854775779, %bb.as ], [ -9223372036854775778, %bb.at ], [ -9223372036854775777, %bb.au ], [ -9223372036854775776, %bb.av ], [ -9223372036854775775, %bb.aw ], [ -9223372036854775774, %bb.ax ], [ -9223372036854775773, %bb.ay ], [ -9223372036854775772, %bb.az ], [ -9223372036854775771, %bb.ba ], [ -9223372036854775770, %bb.bd ], [ -9223372036854775770, %bb.bb ]
   %.sroa.47.sroa.0.sroa.0.sroa.44.0.insert.ext.i = shl i16 %.sroa.47.sroa.0.sroa.0.sroa.44.0.i, 8
+  %.sroa.47.sroa.0.sroa.0.sroa.0.0.insert.ext.i = zext i8 %.sroa.47.sroa.0.sroa.0.sroa.0.0.i to i16
+  %.sroa.47.sroa.0.sroa.0.sroa.0.0.insert.insert.i = or disjoint i16 %.sroa.47.sroa.0.sroa.0.sroa.44.0.insert.ext.i, %.sroa.47.sroa.0.sroa.0.sroa.0.0.insert.ext.i
   %.sroa.47.sroa.0.sroa.44.0.insert.ext.i = shl i32 %.sroa.47.sroa.0.sroa.44.0.i, 16
-  %.sroa.47.sroa.0.sroa.0.0.insert.ext.i = zext i16 %.sroa.47.sroa.0.sroa.0.sroa.44.0.insert.ext.i to i32
+  %.sroa.47.sroa.0.sroa.0.0.insert.ext.i = zext i16 %.sroa.47.sroa.0.sroa.0.sroa.0.0.insert.insert.i to i32
   %.sroa.47.sroa.0.sroa.0.0.insert.insert.i = or disjoint i32 %.sroa.47.sroa.0.sroa.44.0.insert.ext.i, %.sroa.47.sroa.0.sroa.0.0.insert.ext.i
   %.sroa.47.sroa.0.0.insert.ext.i = zext i32 %.sroa.47.sroa.0.sroa.0.0.insert.insert.i to i64
   %.sroa.47.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.47.sroa.44.0.i, %.sroa.47.sroa.0.0.insert.ext.i
@@ -687,11 +689,11 @@ bb.bn:                                            ; preds = %_RINvNtCskKLDkoKarT
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !349
   %i.is = load i64, ptr %i.aj, align 8, !range !25, !noalias !260, !noundef !5 ; 5 uses
   %i.it = icmp eq i64 %i.is, -1
-  %.sroa.0493.0.copyload.i51 = load i64, ptr %i.cv, align 8 ; 2 uses
+  %.sroa.0493.0.copyload.i51 = load i64, ptr %i.cv, align 8
   %.sroa.0493.0.copyload.i53 = load i64, ptr %.sroa_idx52, align 8
   %.sroa.0493.0.copyload.i = load i128, ptr %i.cv, align 8, !noalias !260 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aj), !noalias !260
-  br i1 %i.it, label %6, label %bb.br
+  br i1 %i.it, label %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239, label %bb.br
 
 bb.bo:                                            ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.am), !noalias !260
@@ -717,12 +719,6 @@ bb.bq:                                            ; preds = %bb.bp
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !260
   invoke void @_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsjhlb6SMKfKY_14simple_convert(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.o, i64 noundef %.sroa.6684.0.copyload.i, i1 noundef zeroext false, i64 noundef 1, i64 noundef 1)
           to label %bb.bt unwind label %.loopexit270.a, !noalias !265
-
-6:                                                ; preds = %bb.bn
-  %.sroa.29.sroa.0.0.extract.trunc125 = trunc i64 %.sroa.0493.0.copyload.i51 to i8
-  %.sroa.29.sroa.29.0.extract.shift142 = lshr i64 %.sroa.0493.0.copyload.i51, 8
-  %.sroa.29.sroa.29.0.extract.trunc143 = trunc nuw i64 %.sroa.29.sroa.29.0.extract.shift142 to i56
-  br label %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239
 
 bb.br:                                            ; preds = %bb.bn
   %.sroa.47.sroa.0.sroa.0.sroa.0.0.extract.trunc192.i = trunc i64 %i.is to i8
@@ -790,8 +786,12 @@ common.resume:                                    ; preds = %bb.df, %bb.bs
 bb.by:                                            ; preds = %bb.p
   %.sroa.4499.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ai, i64 1
   %.sroa.29.sroa.29.sroa.0.0.copyload166 = load i56, ptr %.sroa.4499.0..sroa_idx.i, align 1, !noalias !359
+  %.sroa.29.9.insert.ext117 = zext i56 %.sroa.29.sroa.29.sroa.0.0.copyload166 to i64
+  %.sroa.29.9.insert.shift118 = shl nuw i64 %.sroa.29.9.insert.ext117, 8
   %.sroa.5500.0.copyload.i = load i64, ptr %i.co, align 8, !noalias !260
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai), !noalias !260
+  %.sroa.29.8.insert.ext76 = zext nneg i8 %i.dv to i64
+  %.sroa.29.8.insert.insert78 = or disjoint i64 %.sroa.29.9.insert.shift118, %.sroa.29.8.insert.ext76
   br label %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239
 
 bb.bz:                                            ; preds = %bb.p
@@ -841,12 +841,9 @@ bb.cd:                                            ; preds = %.lr.ph.i.i.i
   br label %bb.bh
 
 .loopexit267:                                     ; preds = %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE21convert_location_listCsjhlb6SMKfKY_14simple_convert.exit36, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE21convert_location_listCsjhlb6SMKfKY_14simple_convert.exit36.thread
-  %.sroa.6368.i.sroa.0.0.copyload188 = load i64, ptr %i.cj, align 8, !noalias !260 ; 2 uses
+  %.sroa.6368.i.sroa.0.0.copyload188 = load i64, ptr %i.cj, align 8, !noalias !260
   %.sroa.6368.i.sroa.7.0.copyload191 = load i64, ptr %.sroa.6368.i.sroa.7.0..sroa_idx, align 8, !noalias !260
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag), !noalias !260
-  %.sroa.29.sroa.0.0.extract.trunc135 = trunc i64 %.sroa.6368.i.sroa.0.0.copyload188 to i8
-  %.sroa.29.sroa.29.0.extract.shift160 = lshr i64 %.sroa.6368.i.sroa.0.0.copyload188, 8
-  %.sroa.29.sroa.29.0.extract.trunc161 = trunc nuw i64 %.sroa.29.sroa.29.0.extract.shift160 to i56
   br label %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239
 
 bb.ce:                                            ; preds = %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE21convert_location_listCsjhlb6SMKfKY_14simple_convert.exit36
@@ -868,8 +865,12 @@ bb.ce:                                            ; preds = %_RNvMs5_NtNtNtCsi68
 bb.cf:                                            ; preds = %bb.af
   %.sroa.4521.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 1
   %.sroa.29.sroa.29.sroa.0.0.copyload164 = load i56, ptr %.sroa.4521.0..sroa_idx.i, align 1, !noalias !359
+  %.sroa.29.9.insert.ext105 = zext i56 %.sroa.29.sroa.29.sroa.0.0.copyload164 to i64
+  %.sroa.29.9.insert.shift106 = shl nuw i64 %.sroa.29.9.insert.ext105, 8
   %.sroa.5522.0.copyload.i = load i64, ptr %i.cd, align 8, !noalias !260
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae), !noalias !260
+  %.sroa.29.8.insert.ext65 = zext nneg i8 %i.gw to i64
+  %.sroa.29.8.insert.insert67 = or disjoint i64 %.sroa.29.9.insert.shift106, %.sroa.29.8.insert.ext65
   br label %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239
 
 bb.cg:                                            ; preds = %bb.af
@@ -911,12 +912,9 @@ _RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtB
   br i1 %i.js, label %.loopexit266, label %bb.ch
 
 .loopexit266:                                     ; preds = %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE21convert_location_listCsjhlb6SMKfKY_14simple_convert.exit, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE21convert_location_listCsjhlb6SMKfKY_14simple_convert.exit.thread
-  %.sroa.6382.i.sroa.0.0.copyload193 = load i64, ptr %i.cg, align 8, !noalias !260 ; 2 uses
+  %.sroa.6382.i.sroa.0.0.copyload193 = load i64, ptr %i.cg, align 8, !noalias !260
   %.sroa.6382.i.sroa.7.0.copyload196 = load i64, ptr %.sroa.6382.i.sroa.7.0..sroa_idx, align 8, !noalias !260
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !260
-  %.sroa.29.sroa.0.0.extract.trunc134 = trunc i64 %.sroa.6382.i.sroa.0.0.copyload193 to i8
-  %.sroa.29.sroa.29.0.extract.shift158 = lshr i64 %.sroa.6382.i.sroa.0.0.copyload193, 8
-  %.sroa.29.sroa.29.0.extract.trunc159 = trunc nuw i64 %.sroa.29.sroa.29.0.extract.shift158 to i56
   br label %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239
 
 bb.ch:                                            ; preds = %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE21convert_location_listCsjhlb6SMKfKY_14simple_convert.exit
@@ -936,12 +934,9 @@ bb.ch:                                            ; preds = %_RNvMs5_NtNtNtCsi68
   br label %bb.bh
 
 .loopexit265:                                     ; preds = %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE18convert_range_listCsjhlb6SMKfKY_14simple_convert.exit31, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE18convert_range_listCsjhlb6SMKfKY_14simple_convert.exit31.thread
-  %.sroa.6386.i.sroa.0.0.copyload198 = load i64, ptr %i.cc, align 8, !noalias !260 ; 2 uses
+  %.sroa.6386.i.sroa.0.0.copyload198 = load i64, ptr %i.cc, align 8, !noalias !260
   %.sroa.6386.i.sroa.7.0.copyload201 = load i64, ptr %.sroa.6386.i.sroa.7.0..sroa_idx, align 8, !noalias !260
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !260
-  %.sroa.29.sroa.0.0.extract.trunc133 = trunc i64 %.sroa.6386.i.sroa.0.0.copyload198 to i8
-  %.sroa.29.sroa.29.0.extract.shift156 = lshr i64 %.sroa.6386.i.sroa.0.0.copyload198, 8
-  %.sroa.29.sroa.29.0.extract.trunc157 = trunc nuw i64 %.sroa.29.sroa.29.0.extract.shift156 to i56
   br label %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239
 
 bb.ci:                                            ; preds = %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE18convert_range_listCsjhlb6SMKfKY_14simple_convert.exit31
@@ -963,8 +958,12 @@ bb.ci:                                            ; preds = %_RNvMs5_NtNtNtCsi68
 bb.cj:                                            ; preds = %bb.aj
   %.sroa.4531.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.z, i64 1
   %.sroa.29.sroa.29.sroa.0.0.copyload163 = load i56, ptr %.sroa.4531.0..sroa_idx.i, align 1, !noalias !359
+  %.sroa.29.9.insert.ext99 = zext i56 %.sroa.29.sroa.29.sroa.0.0.copyload163 to i64
+  %.sroa.29.9.insert.shift100 = shl nuw i64 %.sroa.29.9.insert.ext99, 8
   %.sroa.5532.0.copyload.i = load i64, ptr %i.bv, align 8, !noalias !260
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !noalias !260
+  %.sroa.29.8.insert.ext61 = zext nneg i8 %i.hf to i64
+  %.sroa.29.8.insert.insert63 = or disjoint i64 %.sroa.29.9.insert.shift100, %.sroa.29.8.insert.ext61
   br label %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239
 
 bb.ck:                                            ; preds = %bb.aj
@@ -1003,12 +1002,9 @@ _RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtB
   br i1 %i.ke, label %.loopexit264, label %bb.cl
 
 .loopexit264:                                     ; preds = %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE18convert_range_listCsjhlb6SMKfKY_14simple_convert.exit, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE18convert_range_listCsjhlb6SMKfKY_14simple_convert.exit.thread
-  %.sroa.6400.i.sroa.0.0.copyload203 = load i64, ptr %i.bz, align 8, !noalias !260 ; 2 uses
+  %.sroa.6400.i.sroa.0.0.copyload203 = load i64, ptr %i.bz, align 8, !noalias !260
   %.sroa.6400.i.sroa.7.0.copyload206 = load i64, ptr %.sroa.6400.i.sroa.7.0..sroa_idx, align 8, !noalias !260
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !noalias !260
-  %.sroa.29.sroa.0.0.extract.trunc132 = trunc i64 %.sroa.6400.i.sroa.0.0.copyload203 to i8
-  %.sroa.29.sroa.29.0.extract.shift154 = lshr i64 %.sroa.6400.i.sroa.0.0.copyload203, 8
-  %.sroa.29.sroa.29.0.extract.trunc155 = trunc nuw i64 %.sroa.29.sroa.29.0.extract.shift154 to i56
   br label %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239
 
 bb.cl:                                            ; preds = %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE18convert_range_listCsjhlb6SMKfKY_14simple_convert.exit
@@ -1042,17 +1038,18 @@ bb.cm:                                            ; preds = %bb.al
   br label %bb.bh
 
 bb.cn:                                            ; preds = %bb.al
-  %i.kl = ptrtoint ptr %.sroa.0804.0.copyload.i to i64 ; 2 uses
-  %.sroa.29.sroa.0.0.extract.trunc123 = trunc i64 %i.kl to i8
-  %.sroa.29.sroa.29.0.extract.shift138 = lshr i64 %i.kl, 8
-  %.sroa.29.sroa.29.0.extract.trunc139 = trunc nuw i64 %.sroa.29.sroa.29.0.extract.shift138 to i56
+  %i.kl = ptrtoint ptr %.sroa.0804.0.copyload.i to i64
   br label %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239
 
 bb.co:                                            ; preds = %bb.an
   %.sroa.4544.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.u, i64 1
   %.sroa.29.sroa.29.sroa.0.0.copyload = load i56, ptr %.sroa.4544.0..sroa_idx.i, align 1, !noalias !359
+  %.sroa.29.9.insert.ext = zext i56 %.sroa.29.sroa.29.sroa.0.0.copyload to i64
+  %.sroa.29.9.insert.shift = shl nuw i64 %.sroa.29.9.insert.ext, 8
   %.sroa.5545.0.copyload.i = load i64, ptr %i.bq, align 8, !noalias !260
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !260
+  %.sroa.29.8.insert.ext = zext nneg i8 %i.ho to i64
+  %.sroa.29.8.insert.insert = or disjoint i64 %.sroa.29.9.insert.shift, %.sroa.29.8.insert.ext
   br label %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239
 
 bb.cp:                                            ; preds = %bb.an
@@ -1082,10 +1079,7 @@ bb.cq:                                            ; preds = %bb.cp
   br label %bb.bh
 
 bb.cr:                                            ; preds = %bb.cp
-  %i.kr = ptrtoint ptr %.sroa.0833.0.copyload.i to i64 ; 2 uses
-  %.sroa.29.sroa.0.0.extract.trunc122 = trunc i64 %i.kr to i8
-  %.sroa.29.sroa.29.0.extract.shift136 = lshr i64 %i.kr, 8
-  %.sroa.29.sroa.29.0.extract.trunc137 = trunc nuw i64 %.sroa.29.sroa.29.0.extract.shift136 to i56
+  %i.kr = ptrtoint ptr %.sroa.0833.0.copyload.i to i64
   br label %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239
 
 bb.cs:                                            ; preds = %bb.ao
@@ -1103,10 +1097,7 @@ bb.cs:                                            ; preds = %bb.ao
   br label %bb.bh
 
 bb.ct:                                            ; preds = %bb.ao
-  %i.ku = ptrtoint ptr %.sroa.0856.0.copyload.i to i64 ; 2 uses
-  %.sroa.29.sroa.0.0.extract.trunc = trunc i64 %i.ku to i8
-  %.sroa.29.sroa.29.0.extract.shift = lshr i64 %i.ku, 8
-  %.sroa.29.sroa.29.0.extract.trunc = trunc nuw i64 %.sroa.29.sroa.29.0.extract.shift to i56
+  %i.ku = ptrtoint ptr %.sroa.0856.0.copyload.i to i64
   br label %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239
 
 bb.cu:                                            ; preds = %bb.d
@@ -1147,28 +1138,18 @@ bb.cy:                                            ; preds = %bb.cx, %bb.cw
   br label %bb.bh
 
 bb.cz:                                            ; preds = %bb.e
-  %i.lc = load i64, ptr %i.cy, align 8, !noalias !260, !noundef !5 ; 2 uses
+  %i.lc = load i64, ptr %i.cy, align 8, !noalias !260, !noundef !5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ap), !noalias !260
-  %.sroa.29.sroa.0.0.extract.trunc127 = trunc i64 %i.lc to i8
   br label %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread
 
 _RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread230: ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ap), !noalias !260
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.v)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.aa)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ac)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.af)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.aq)
   br label %bb.da
 
 _RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread: ; preds = %bb.cz, %bb.bh
-  %.sroa.29.sroa.29.sroa.0.1.ph.in.in = phi i64 [ %.sroa.47.sroa.0.0.insert.insert.i, %bb.bh ], [ %i.lc, %bb.cz ]
-  %.sroa.29.sroa.0.1.ph = phi i8 [ %.sroa.47.sroa.0.sroa.0.sroa.0.0.i, %bb.bh ], [ %.sroa.29.sroa.0.0.extract.trunc127, %bb.cz ]
-  %.sroa.60.1.ph.off0 = phi i64 [ %.sroa.86.sroa.0.0.i, %bb.bh ], [ undef, %bb.cz ]
-  %.sroa.60.1.ph.off64 = phi i64 [ %.sroa.86.sroa.14.0.i, %bb.bh ], [ 0, %bb.cz ]
+  %.sroa.29.sroa.29.sroa.0.1.ph.in.in = phi i64 [ %.sroa.86.sroa.0.0.i, %bb.bh ], [ undef, %bb.cz ]
+  %.sroa.60.1.ph.off0 = phi i64 [ %.sroa.86.sroa.14.0.i, %bb.bh ], [ 0, %bb.cz ]
+  %.sroa.60.1.ph.off64 = phi i64 [ %.sroa.47.sroa.0.0.insert.insert.i, %bb.bh ], [ %i.lc, %bb.cz ]
   %.sroa.055.1.ph = phi i64 [ %.sroa.03.0.i, %bb.bh ], [ -9223372036854775799, %bb.cz ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
@@ -1180,29 +1161,15 @@ _RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtB
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq)
   br label %bb.db
 
-_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239: ; preds = %bb.q, %bb.ad, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.bc, %select.unfold.i46, %bb.bg, %6, %bb.cb, %bb.by, %.loopexit, %.loopexit267, %.loopexit266, %bb.cf, %.loopexit265, %.loopexit264, %bb.cj, %bb.cn, %bb.cr, %bb.co, %bb.ct
-  %.sroa.29.sroa.29.sroa.0.0.ph = phi i56 [ 0, %.loopexit ], [ undef, %bb.bg ], [ %.sroa.29.sroa.29.sroa.0.0.copyload166, %bb.by ], [ undef, %bb.cb ], [ %.sroa.29.sroa.29.0.extract.trunc, %bb.ct ], [ %.sroa.29.sroa.29.sroa.0.0.copyload, %bb.co ], [ %.sroa.29.sroa.29.0.extract.trunc137, %bb.cr ], [ undef, %select.unfold.i46 ], [ %.sroa.29.sroa.29.0.extract.trunc139, %bb.cn ], [ %.sroa.29.sroa.29.sroa.0.0.copyload163, %bb.cj ], [ %.sroa.29.sroa.29.0.extract.trunc155, %.loopexit264 ], [ %.sroa.29.sroa.29.0.extract.trunc157, %.loopexit265 ], [ %.sroa.29.sroa.29.sroa.0.0.copyload164, %bb.cf ], [ %.sroa.29.sroa.29.0.extract.trunc159, %.loopexit266 ], [ %.sroa.29.sroa.29.0.extract.trunc161, %.loopexit267 ], [ %.sroa.29.sroa.29.0.extract.trunc143, %6 ], [ 0, %bb.bc ], [ 0, %bb.d ], [ 0, %bb.d ], [ 0, %bb.d ], [ 0, %bb.d ], [ 0, %bb.d ], [ 0, %bb.ad ], [ 0, %bb.q ]
-  %.sroa.29.sroa.0.0.ph = phi i8 [ 92, %.loopexit ], [ 81, %bb.bg ], [ %i.dv, %bb.by ], [ 81, %bb.cb ], [ %.sroa.29.sroa.0.0.extract.trunc, %bb.ct ], [ %i.ho, %bb.co ], [ %.sroa.29.sroa.0.0.extract.trunc122, %bb.cr ], [ 91, %select.unfold.i46 ], [ %.sroa.29.sroa.0.0.extract.trunc123, %bb.cn ], [ %i.hf, %bb.cj ], [ %.sroa.29.sroa.0.0.extract.trunc132, %.loopexit264 ], [ %.sroa.29.sroa.0.0.extract.trunc133, %.loopexit265 ], [ %i.gw, %bb.cf ], [ %.sroa.29.sroa.0.0.extract.trunc134, %.loopexit266 ], [ %.sroa.29.sroa.0.0.extract.trunc135, %.loopexit267 ], [ %.sroa.29.sroa.0.0.extract.trunc125, %6 ], [ 91, %bb.q ], [ 90, %bb.ad ], [ 79, %bb.d ], [ 79, %bb.d ], [ 79, %bb.d ], [ 79, %bb.d ], [ 79, %bb.d ], [ 87, %bb.bc ]
-  %.sroa.60.0.ph.off0.a = phi i64 [ 0, %.loopexit ], [ undef, %bb.bg ], [ %.sroa.5500.0.copyload.i, %bb.by ], [ undef, %bb.cb ], [ %.sroa.4857.0.copyload.i, %bb.ct ], [ %.sroa.5545.0.copyload.i, %bb.co ], [ %.sroa.4834.0.copyload.i, %bb.cr ], [ 0, %select.unfold.i46 ], [ %.sroa.4805.0.copyload.i, %bb.cn ], [ %.sroa.5532.0.copyload.i, %bb.cj ], [ %.sroa.6400.i.sroa.7.0.copyload206, %.loopexit264 ], [ %.sroa.6386.i.sroa.7.0.copyload201, %.loopexit265 ], [ %.sroa.5522.0.copyload.i, %bb.cf ], [ %.sroa.6382.i.sroa.7.0.copyload196, %.loopexit266 ], [ %.sroa.6368.i.sroa.7.0.copyload191, %.loopexit267 ], [ %.sroa.0493.0.copyload.i53, %6 ], [ 0, %bb.bc ], [ 0, %bb.d ], [ 0, %bb.d ], [ 0, %bb.d ], [ 0, %bb.d ], [ 0, %bb.d ], [ 0, %bb.ad ], [ 0, %bb.q ]
+_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239: ; preds = %bb.q, %bb.bn, %bb.ad, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.bc, %select.unfold.i46, %bb.bg, %bb.cb, %bb.by, %.loopexit, %.loopexit267, %.loopexit266, %bb.cf, %.loopexit265, %.loopexit264, %bb.cj, %bb.cn, %bb.cr, %bb.co, %bb.ct
+  %.sroa.60.0.ph.off0 = phi i64 [ 0, %select.unfold.i46 ], [ 0, %.loopexit ], [ undef, %bb.bg ], [ %.sroa.5500.0.copyload.i, %bb.by ], [ %.sroa.4857.0.copyload.i, %bb.ct ], [ %.sroa.5545.0.copyload.i, %bb.co ], [ %.sroa.4834.0.copyload.i, %bb.cr ], [ undef, %bb.cb ], [ %.sroa.4805.0.copyload.i, %bb.cn ], [ %.sroa.5532.0.copyload.i, %bb.cj ], [ %.sroa.6400.i.sroa.7.0.copyload206, %.loopexit264 ], [ %.sroa.6386.i.sroa.7.0.copyload201, %.loopexit265 ], [ %.sroa.5522.0.copyload.i, %bb.cf ], [ %.sroa.6382.i.sroa.7.0.copyload196, %.loopexit266 ], [ %.sroa.6368.i.sroa.7.0.copyload191, %.loopexit267 ], [ 0, %bb.q ], [ undef, %bb.ad ], [ %.sroa.0493.0.copyload.i53, %bb.bn ], [ undef, %bb.d ], [ undef, %bb.d ], [ undef, %bb.d ], [ undef, %bb.d ], [ undef, %bb.d ], [ undef, %bb.bc ]
+  %.sroa.60.0.ph.off0.a = phi i64 [ 91, %select.unfold.i46 ], [ 92, %.loopexit ], [ 81, %bb.bg ], [ %.sroa.29.8.insert.insert78, %bb.by ], [ %i.ku, %bb.ct ], [ %.sroa.29.8.insert.insert, %bb.co ], [ %i.kr, %bb.cr ], [ 81, %bb.cb ], [ %i.kl, %bb.cn ], [ %.sroa.29.8.insert.insert63, %bb.cj ], [ %.sroa.6400.i.sroa.0.0.copyload203, %.loopexit264 ], [ %.sroa.6386.i.sroa.0.0.copyload198, %.loopexit265 ], [ %.sroa.29.8.insert.insert67, %bb.cf ], [ %.sroa.6382.i.sroa.0.0.copyload193, %.loopexit266 ], [ %.sroa.6368.i.sroa.0.0.copyload188, %.loopexit267 ], [ 91, %bb.q ], [ 90, %bb.ad ], [ %.sroa.0493.0.copyload.i51, %bb.bn ], [ 79, %bb.d ], [ 79, %bb.d ], [ 79, %bb.d ], [ 79, %bb.d ], [ 79, %bb.d ], [ 87, %bb.bc ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ao), !noalias !260
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.v)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.aa)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ac)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.af)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.aq)
-  %7 = zext i56 %.sroa.29.sroa.29.sroa.0.0.ph to i64
-  %8 = shl nuw i64 %7, 8
-  %9 = zext i8 %.sroa.29.sroa.0.0.ph to i64
-  %10 = or disjoint i64 %8, %9
   br label %bb.da
 
 _RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit: ; preds = %bb.bv
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak), !noalias !260
-  %.sroa.29.8.copyload = load i64, ptr %i.al, align 8, !noalias !359 ; 2 uses
-  %.sroa.29.sroa.0.0.extract.trunc128 = trunc i64 %.sroa.29.8.copyload to i8
+  %.sroa.29.8.copyload = load i64, ptr %i.al, align 8, !noalias !359
   %.sroa.60.8.copyload = load i128, ptr %.sroa.60.8..sroa_idx, align 8, !noalias !359 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al), !noalias !260
   call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc6borrow3CowShEECsjhlb6SMKfKY_14simple_convert(ptr noalias nofree noundef align 8 dereferenceable(24) %i.am), !noalias !265
@@ -1222,27 +1189,31 @@ _RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtB
   br label %bb.db
 
 bb.da:                                            ; preds = %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread230
-  %.sroa.60.1237.off0 = phi i64 [ undef, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread230 ], [ %.sroa.60.0.ph.off0.a, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239 ]
-  %.sroa.29.sroa.0.0.insert.insert = phi i64 [ 79, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread230 ], [ %10, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239 ]
-  store i64 %.sroa.29.sroa.0.0.insert.insert, ptr %0, align 8
+  %.sroa.60.1237.off0 = phi i64 [ 79, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread230 ], [ %.sroa.60.0.ph.off0.a, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239 ]
+  %.sroa.29.sroa.0.0.insert.insert = phi i64 [ undef, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread230 ], [ %.sroa.60.0.ph.off0, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread239 ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.v)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.aa)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ac)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.af)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.aq)
+  store i64 %.sroa.60.1237.off0, ptr %0, align 8
   %.sroa.4179.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.60.1237.off0, ptr %.sroa.4179.0..sroa_idx, align 8
+  store i64 %.sroa.29.sroa.0.0.insert.insert, ptr %.sroa.4179.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as)
   br label %bb.dh
 
 bb.db:                                            ; preds = %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread
   %.sroa.055.1229 = phi i64 [ %.sroa.055.1.ph, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread ], [ -9223372036854775798, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit ]
-  %.sroa.60.1228.off0 = phi i64 [ %.sroa.60.1.ph.off0, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread ], [ %extract.t257, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit ]
-  %.sroa.60.1228.off64 = phi i64 [ %.sroa.60.1.ph.off64, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread ], [ %extract.t260, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit ]
-  %.sroa.29.sroa.0.1227 = phi i8 [ %.sroa.29.sroa.0.1.ph, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread ], [ %.sroa.29.sroa.0.0.extract.trunc128, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit ]
-  %.sroa.29.sroa.29.sroa.0.1226.in.in = phi i64 [ %.sroa.29.sroa.29.sroa.0.1.ph.in.in, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread ], [ %.sroa.29.8.copyload, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit ]
-  %.sroa.29.sroa.29.sroa.0.1226.in = and i64 %.sroa.29.sroa.29.sroa.0.1226.in.in, -256
-  %.sroa.29.sroa.0.0.insert.ext129 = zext i8 %.sroa.29.sroa.0.1227 to i64
-  %.sroa.29.sroa.0.0.insert.insert131 = or disjoint i64 %.sroa.29.sroa.29.sroa.0.1226.in, %.sroa.29.sroa.0.0.insert.ext129
+  %.sroa.60.1228.off0 = phi i64 [ %.sroa.60.1.ph.off64, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread ], [ %.sroa.29.8.copyload, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit ]
+  %.sroa.60.1228.off64 = phi i64 [ %.sroa.29.sroa.29.sroa.0.1.ph.in.in, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread ], [ %extract.t257, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit ]
+  %.sroa.29.sroa.29.sroa.0.1226.in.in = phi i64 [ %.sroa.60.1.ph.off0, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit.thread ], [ %extract.t260, %_RNvMs5_NtNtNtCsi68uqYEhoRA_5gimli5write4unit7convertINtB5_11ConvertUnitINtNtNtBb_4read12endian_slice11EndianSliceNtNtBb_9endianity13RunTimeEndianEE23convert_attribute_valueCsjhlb6SMKfKY_14simple_convert.exit ]
   store i64 %.sroa.055.1229, ptr %i.as, align 16
-  store i64 %.sroa.29.sroa.0.0.insert.insert131, ptr %.sroa.4.0..sroa_idx, align 8
-  store i64 %.sroa.60.1228.off0, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx, align 16
-  store i64 %.sroa.60.1228.off64, ptr %.sroa.5.0..sroa_idx, align 8
+  store i64 %.sroa.60.1228.off0, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.60.1228.off64, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx, align 16
+  store i64 %.sroa.29.sroa.29.sroa.0.1226.in.in, ptr %.sroa.5.0..sroa_idx, align 8
   %i.ld = load ptr, ptr %i.ca, align 8, !nonnull !5, !align !146, !noundef !5 ; 2 uses
   %i.le = getelementptr i8, ptr %i.ld, i64 408
   %.val20 = load i64, ptr %i.le, align 8, !noundef !5 ; 2 uses

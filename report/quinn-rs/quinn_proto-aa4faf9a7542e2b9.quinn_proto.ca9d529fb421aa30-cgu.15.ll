@@ -204,7 +204,7 @@ bb.a:
     #dbg_declare(ptr poison, !14121, !DIExpression(DW_OP_LLVM_fragment, 32, 96), !14133)
   %i.d = alloca [16 x i8], align 4                ; 9 uses
   %i.e = alloca [4 x i8], align 4                 ; 5 uses
-  %.sroa.032.i = alloca i64, align 8              ; 7 uses
+  %.sroa.032.i = alloca [8 x i8], align 4         ; 7 uses
     #dbg_declare(ptr %.sroa.032.i, !14246, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !14283)
   %i.f = alloca [24 x i8], align 8                ; 6 uses
     #dbg_declare(ptr poison, !14285, !DIExpression(DW_OP_LLVM_fragment, 96, 32), !14309)
@@ -607,7 +607,7 @@ _RINvNtCshovLROGBtMy_11quinn_proto5token9decode_ipRShEB4_.exit.i: ; preds = %.no
     #dbg_value(i16 poison, !14282, !DIExpression(DW_OP_LLVM_fragment, 96, 16), !15242)
     #dbg_value(i32 %.sroa.1217.sroa.5.1.i, !14282, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !15242)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.032.i), !dbg !15598
-  store i8 %i.be, ptr %.sroa.032.i, align 8, !dbg !15598, !noalias !14691
+  store i8 %i.be, ptr %.sroa.032.i, align 4, !dbg !15598, !noalias !14691
   %.sroa.032.i.1.i.1.i.1..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.032.i, i64 1, !dbg !15598
   store i32 %.sroa.1016.1.i, ptr %.sroa.032.i.1.i.1.i.1..sroa_idx, align 1, !dbg !15598, !noalias !14691
   %.sroa.032.5..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.032.i, i64 5, !dbg !15598
@@ -616,7 +616,7 @@ _RINvNtCshovLROGBtMy_11quinn_proto5token9decode_ipRShEB4_.exit.i: ; preds = %.no
     #dbg_value(i16 poison, !14246, !DIExpression(DW_OP_LLVM_fragment, 96, 16), !15599)
     #dbg_value(i16 poison, !14246, !DIExpression(DW_OP_LLVM_fragment, 112, 16), !15599)
     #dbg_value(i8 %.sroa.1217.sroa.8.1.i, !14246, !DIExpression(DW_OP_LLVM_fragment, 128, 8), !15599)
-  %.sroa.032.i.0..sroa.032.i.0..sroa.032.i.0..sroa.032.0..sroa.032.0..sroa.032.0..sroa.032.0..sroa.026.0.copyload.i = load i32, ptr %.sroa.032.i, align 8, !dbg !15600, !noalias !14691
+  %.sroa.032.i.0..sroa.032.i.0..sroa.032.i.0..sroa.032.0..sroa.032.0..sroa.032.0..sroa.032.0..sroa.026.0.copyload.i = load i32, ptr %.sroa.032.i, align 4, !dbg !15600, !noalias !14691
   %.sroa.032.i.4.i.4.i.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.032.i, i64 4, !dbg !15600
   %.sroa.032.i.4..sroa.032.i.4..sroa.032.i.4..sroa.032.4..sroa.032.4..sroa.032.4..sroa.032.4..sroa.527.0.copyload.i = load i32, ptr %.sroa.032.i.4.i.4.i.4..sroa_idx, align 4, !dbg !15600, !noalias !14691
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.032.i), !dbg !15601

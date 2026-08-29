@@ -205,24 +205,24 @@ declare ptr @CRYPTO_strdup(ptr noundef, ptr noundef, i32 noundef) local_unnamed_
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal range(i64 0, 4294967296) i64 @ssl_session_hash(ptr nofree noundef readonly captures(none) %0) #11 {
 bb.a:
-  %.sroa.0 = alloca i32, align 4                  ; 5 uses
+  %1 = alloca [4 x i8], align 4                   ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 600 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 592
   %i.c = load i64, ptr %i.b, align 8, !tbaa !266  ; 2 uses
   %i.d = icmp ult i64 %i.c, 4
   br i1 %i.d, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store i32 0, ptr %.sroa.0, align 4
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0, ptr nonnull align 8 %i.a, i64 %i.c, i1 false)
+  store i32 0, ptr %1, align 4
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %1, ptr nonnull align 8 %i.a, i64 %i.c, i1 false)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0 = phi ptr [ %.sroa.0, %bb.b ], [ %i.a, %bb.a ]
+  %.0 = phi ptr [ %1, %bb.b ], [ %i.a, %bb.a ]
   %i.e = load i32, ptr %.0, align 1
   %i.f = zext i32 %i.e to i64
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   ret i64 %i.f
 }
 

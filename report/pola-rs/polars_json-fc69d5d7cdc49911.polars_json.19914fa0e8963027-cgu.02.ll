@@ -205,8 +205,8 @@ define hidden void @_RINvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB6_3M
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
   %i.b = alloca [72 x i8], align 8                ; 7 uses
-  %.sroa.4.i = alloca i64, align 8                ; 5 uses
-  %.sroa.73.i = alloca i64, align 8               ; 4 uses
+  %.sroa.4.i = alloca [8 x i8], align 8           ; 5 uses
+  %.sroa.73.i = alloca [8 x i8], align 8          ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13294), !dbg !13297
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13298), !dbg !13297
   %i.c = load ptr, ptr %1, align 8, !dbg !13300, !alias.scope !13307, !noalias !13294, !nonnull !12, !noundef !12 ; 5 uses
@@ -354,8 +354,7 @@ bb.i:                                             ; preds = %bb.h
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEECs2c5WrizoNH7_11polars_json.exit.i.i.i unwind label %bb.k, !dbg !13597, !noalias !13599
 
 bb.j:                                             ; preds = %_RNCINvNtNtCs2c5WrizoNH7_11polars_json4json11deserialize18deserialize_structNtNtNtCshSReUCO0YaO_9simd_json5value8borrowed5ValueEs0_0B8_.exit.i.i
-  %4 = ptrtoint ptr %.sroa.4.0.copyload.i.i to i64, !dbg !13600
-  store i64 %4, ptr %.sroa.4.i, align 8, !dbg !13600, !alias.scope !13606, !noalias !13607
+  store ptr %.sroa.4.0.copyload.i.i, ptr %.sroa.4.i, align 8, !dbg !13600, !alias.scope !13606, !noalias !13607
   br label %bb.l, !dbg !13608
 
 bb.k:                                             ; preds = %bb.i
@@ -385,16 +384,14 @@ bb.l:                                             ; preds = %_RINvNtCscgRAwXFJnX
   %.sink.i.i.i = phi ptr [ %.sroa.5.0.copyload.i.i, %bb.j ], [ null, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEECs2c5WrizoNH7_11polars_json.exit.i.i.i ]
   store ptr %.sink.i.i.i, ptr %.sink23.i.i.sroa.phi.i, align 8, !dbg !13612, !alias.scope !13606, !noalias !13607
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !13613, !noalias !13328
-  %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i = load i64, ptr %.sroa.4.i, align 8, !dbg !13614, !alias.scope !13618, !noalias !13621, !noundef !12
-  %5 = inttoptr i64 %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i to ptr, !dbg !13614
-  %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i = load i64, ptr %.sroa.73.i, align 8, !dbg !13614, !alias.scope !13618, !noalias !13621
-  %6 = inttoptr i64 %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i to ptr, !dbg !13614
+  %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i = load ptr, ptr %.sroa.4.i, align 8, !dbg !13614, !alias.scope !13618, !noalias !13621
+  %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i = load ptr, ptr %.sroa.73.i, align 8, !dbg !13614, !alias.scope !13618, !noalias !13621
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i), !dbg !13623
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.73.i), !dbg !13623
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !13624
-  store ptr %5, ptr %i.bk, align 8, !dbg !13624, !alias.scope !13630, !noalias !13298
+  store ptr %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i, ptr %i.bk, align 8, !dbg !13624, !alias.scope !13630, !noalias !13298
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !13624
-  store ptr %6, ptr %i.bl, align 8, !dbg !13624, !alias.scope !13630, !noalias !13298
+  store ptr %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i, ptr %i.bl, align 8, !dbg !13624, !alias.scope !13630, !noalias !13298
   br label %_RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1K_8adapters3map12map_try_foldRBJ_INtNtBa_6result6ResultINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtBP_5array5ArrayEL_ENtCsgjwxzEoLG5s_12polars_error11PolarsErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB5e_B3x_EENCINvNtNtCs2c5WrizoNH7_11polars_json4json11deserialize18deserialize_structNtNtNtCshSReUCO0YaO_9simd_json5value8borrowed5ValueEs0_0NCINvXB2A_INtB2A_12GenericShuntINtB2y_3MapB3_B63_EIB3c_NtNtBa_7convert10InfallibleB4u_EEB1E_8try_folduNCINvNvB1E_12try_for_each4callB3x_B5S_NcNtB5S_5Break0E0B5S_E0E0B5d_EB6c_.exit, !dbg !13633
 
 _RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1K_8adapters3map12map_try_foldRBJ_INtNtBa_6result6ResultINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtBP_5array5ArrayEL_ENtCsgjwxzEoLG5s_12polars_error11PolarsErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB5e_B3x_EENCINvNtNtCs2c5WrizoNH7_11polars_json4json11deserialize18deserialize_structNtNtNtCshSReUCO0YaO_9simd_json5value8borrowed5ValueEs0_0NCINvXB2A_INtB2A_12GenericShuntINtB2y_3MapB3_B63_EIB3c_NtNtBa_7convert10InfallibleB4u_EEB1E_8try_folduNCINvNvB1E_12try_for_each4callB3x_B5S_NcNtB5S_5Break0E0B5S_E0E0B5d_EB6c_.exit: ; preds = %bb.a, %bb.l
@@ -499,8 +496,8 @@ define hidden void @_RINvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB6_3M
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
   %i.b = alloca [72 x i8], align 8                ; 7 uses
-  %.sroa.4.i = alloca i64, align 8                ; 5 uses
-  %.sroa.73.i = alloca i64, align 8               ; 4 uses
+  %.sroa.4.i = alloca [8 x i8], align 8           ; 5 uses
+  %.sroa.73.i = alloca [8 x i8], align 8          ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13742), !dbg !13745
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13746), !dbg !13745
   %i.c = load ptr, ptr %1, align 8, !dbg !13748, !alias.scope !13754, !noalias !13742, !nonnull !12, !noundef !12 ; 5 uses
@@ -648,8 +645,7 @@ bb.i:                                             ; preds = %bb.h
           to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEECs2c5WrizoNH7_11polars_json.exit.i.i.i unwind label %bb.k, !dbg !13954, !noalias !13956
 
 bb.j:                                             ; preds = %_RNCINvNtNtCs2c5WrizoNH7_11polars_json4json11deserialize18deserialize_structRNtNtNtCshSReUCO0YaO_9simd_json5value8borrowed5ValueEs0_0B8_.exit.i.i
-  %4 = ptrtoint ptr %.sroa.4.0.copyload.i.i to i64, !dbg !13957
-  store i64 %4, ptr %.sroa.4.i, align 8, !dbg !13957, !alias.scope !13962, !noalias !13963
+  store ptr %.sroa.4.0.copyload.i.i, ptr %.sroa.4.i, align 8, !dbg !13957, !alias.scope !13962, !noalias !13963
   br label %bb.l, !dbg !13964
 
 bb.k:                                             ; preds = %bb.i
@@ -679,16 +675,14 @@ bb.l:                                             ; preds = %_RINvNtCscgRAwXFJnX
   %.sink.i.i.i = phi ptr [ %.sroa.5.0.copyload.i.i, %bb.j ], [ null, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtB4_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEEECs2c5WrizoNH7_11polars_json.exit.i.i.i ]
   store ptr %.sink.i.i.i, ptr %.sink23.i.i.sroa.phi.i, align 8, !dbg !13968, !alias.scope !13962, !noalias !13963
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !13969, !noalias !13771
-  %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i = load i64, ptr %.sroa.4.i, align 8, !dbg !13970, !alias.scope !13972, !noalias !13975, !noundef !12
-  %5 = inttoptr i64 %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i to ptr, !dbg !13970
-  %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i = load i64, ptr %.sroa.73.i, align 8, !dbg !13970, !alias.scope !13972, !noalias !13975
-  %6 = inttoptr i64 %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i to ptr, !dbg !13970
+  %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i = load ptr, ptr %.sroa.4.i, align 8, !dbg !13970, !alias.scope !13972, !noalias !13975
+  %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i = load ptr, ptr %.sroa.73.i, align 8, !dbg !13970, !alias.scope !13972, !noalias !13975
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i), !dbg !13977
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.73.i), !dbg !13977
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !13978
-  store ptr %5, ptr %i.bk, align 8, !dbg !13978, !alias.scope !13982, !noalias !13746
+  store ptr %.sroa.4.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i, ptr %i.bk, align 8, !dbg !13978, !alias.scope !13982, !noalias !13746
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !13978
-  store ptr %6, ptr %i.bl, align 8, !dbg !13978, !alias.scope !13982, !noalias !13746
+  store ptr %.sroa.73.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i, ptr %i.bl, align 8, !dbg !13978, !alias.scope !13982, !noalias !13746
   br label %_RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1K_8adapters3map12map_try_foldRBJ_INtNtBa_6result6ResultINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtBP_5array5ArrayEL_ENtCsgjwxzEoLG5s_12polars_error11PolarsErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB5e_B3x_EENCINvNtNtCs2c5WrizoNH7_11polars_json4json11deserialize18deserialize_structRNtNtNtCshSReUCO0YaO_9simd_json5value8borrowed5ValueEs0_0NCINvXB2A_INtB2A_12GenericShuntINtB2y_3MapB3_B63_EIB3c_NtNtBa_7convert10InfallibleB4u_EEB1E_8try_folduNCINvNvB1E_12try_for_each4callB3x_B5S_NcNtB5S_5Break0E0B5S_E0E0B5d_EB6c_.exit, !dbg !13985
 
 _RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter4IterNtNtNtCs8774dFTUdNv_12polars_arrow9datatypes5field5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1K_8adapters3map12map_try_foldRBJ_INtNtBa_6result6ResultINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtBP_5array5ArrayEL_ENtCsgjwxzEoLG5s_12polars_error11PolarsErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB5e_B3x_EENCINvNtNtCs2c5WrizoNH7_11polars_json4json11deserialize18deserialize_structRNtNtNtCshSReUCO0YaO_9simd_json5value8borrowed5ValueEs0_0NCINvXB2A_INtB2A_12GenericShuntINtB2y_3MapB3_B63_EIB3c_NtNtBa_7convert10InfallibleB4u_EEB1E_8try_folduNCINvNvB1E_12try_for_each4callB3x_B5S_NcNtB5S_5Break0E0B5S_E0E0B5d_EB6c_.exit: ; preds = %bb.a, %bb.l

@@ -205,7 +205,7 @@ bb.a:
   %i.e = alloca [32 x i8], align 8                ; 8 uses
   %i.f = alloca [32 x i8], align 8                ; 8 uses
   %i.g = alloca [32 x i8], align 8                ; 6 uses
-  %.sroa.011.i.i.i = alloca i64, align 8          ; 6 uses
+  %.sroa.011.i.i.i = alloca [8 x i8], align 8     ; 6 uses
   %i.h = alloca [24 x i8], align 8                ; 10 uses
   %i.i = alloca [32 x i8], align 8                ; 5 uses
   %i.j = alloca [32 x i8], align 8                ; 15 uses
@@ -608,8 +608,7 @@ bb.lu:                                            ; preds = %bb.lt
   %i.bec = load ptr, ptr %i.beb, align 8, !noalias !10875, !noundef !10
   %i.bed = getelementptr inbounds nuw i8, ptr %i.i, i64 24
   %i.bee = load i64, ptr %i.bed, align 8, !noalias !10875, !noundef !10 ; 4 uses
-  %2 = ptrtoint ptr %i.bec to i64
-  store i64 %2, ptr %.sroa.011.i.i.i, align 8, !noalias !10875
+  store ptr %i.bec, ptr %.sroa.011.i.i.i, align 8, !noalias !10875
   %i.bef = icmp eq i64 %i.bee, 0
   br i1 %i.bef, label %_RINvYINtNtNtCs1xwejQucwHj_5alloc11collections11linked_list4IterINtNtBa_3vec3VecTNtNtNtCsdaEETE4DqmE_13typst_library13introspection8location8LocationNtNtCsakL8LGkl72C_4ecow6string9EcoStringEEENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4foldjNCINvNtNtB39_8adapters3map8map_foldRBZ_jjNvMs_B12_BZ_3lenNCINvXsK_NtB37_5accumjNtB58_3Sum3sumINtB49_3MapB3_B4J_EE0E0ECsgpMJJHpo27b_12typst_bundle.exit.thread.i.i.i, label %.lr.ph.i.i.i.i141.preheader
 
@@ -1012,26 +1011,26 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %.loopexit.i.i.i.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i.i.i
   %.sroa.5.04055.i.i.i.i.i.i.i.i = phi ptr [ %.sroa.07.0.i.i.i.i.i.i.i.i.i.i.i, %.loopexit.i.i.i.i.i.i.i.i ], [ null, %.lr.ph.preheader.i.i.i.i.i.i.i.i ] ; 2 uses
-  %.sroa.14.054.i.i.i.i.i.i.i.i = phi i64 [ %.sroa.78.0.i.i.i.i.i.i.i.i.i.i.i, %.loopexit.i.i.i.i.i.i.i.i ], [ %i.bh, %.lr.ph.preheader.i.i.i.i.i.i.i.i ] ; 6 uses
-  %.sroa.22.053.i.i.i.i.i.i.i.i = phi i64 [ %i.bj, %.loopexit.i.i.i.i.i.i.i.i ], [ %i.bd, %.lr.ph.preheader.i.i.i.i.i.i.i.i ]
-  %.sroa.9.052.i.i.i.i.i.i.i.i = phi i64 [ 0, %.loopexit.i.i.i.i.i.i.i.i ], [ %i.bi, %.lr.ph.preheader.i.i.i.i.i.i.i.i ] ; 2 uses
-  %i.bj = add i64 %.sroa.22.053.i.i.i.i.i.i.i.i, -1 ; 2 uses
+  %.sroa.14.054.i.i.i.i.i.i.i.i = phi i64 [ 0, %.loopexit.i.i.i.i.i.i.i.i ], [ %i.bi, %.lr.ph.preheader.i.i.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.22.053.i.i.i.i.i.i.i.i = phi i64 [ %.sroa.78.0.i.i.i.i.i.i.i.i.i.i.i, %.loopexit.i.i.i.i.i.i.i.i ], [ %i.bh, %.lr.ph.preheader.i.i.i.i.i.i.i.i ] ; 6 uses
+  %.sroa.9.052.i.i.i.i.i.i.i.i = phi i64 [ %i.bj, %.loopexit.i.i.i.i.i.i.i.i ], [ %i.bd, %.lr.ph.preheader.i.i.i.i.i.i.i.i ]
+  %i.bj = add i64 %.sroa.9.052.i.i.i.i.i.i.i.i, -1 ; 2 uses
   %.not.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %.sroa.5.04055.i.i.i.i.i.i.i.i, null
   br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %bb.g, label %_RNvMsc_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutNtNtBb_6string6StringINtNtBb_3vec3VecjEE10init_frontCsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.i.i.i.i
 
 bb.g:                                             ; preds = %bb.f
-  %i.bk = inttoptr i64 %.sroa.9.052.i.i.i.i.i.i.i.i to ptr ; 3 uses
-  %i.bl = icmp eq i64 %.sroa.14.054.i.i.i.i.i.i.i.i, 0
+  %i.bk = inttoptr i64 %.sroa.14.054.i.i.i.i.i.i.i.i to ptr ; 3 uses
+  %i.bl = icmp eq i64 %.sroa.22.053.i.i.i.i.i.i.i.i, 0
   br i1 %i.bl, label %_RNvMsc_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutNtNtBb_6string6StringINtNtBb_3vec3VecjEE10init_frontCsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.preheader:             ; preds = %bb.g
-  %xtraiter = and i64 %.sroa.14.054.i.i.i.i.i.i.i.i, 7 ; 2 uses
+  %xtraiter = and i64 %.sroa.22.053.i.i.i.i.i.i.i.i, 7 ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.prol:                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol
   %.sroa.013.017.i.i.i.i.i.i.i.i.i.i.prol = phi ptr [ %.sroa.013.0.i.i.i.i.i.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol ], [ %i.bk, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ]
-  %.sroa.011.016.i.i.i.i.i.i.i.i.i.i.prol = phi i64 [ %i.bn, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol ], [ %.sroa.14.054.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ]
+  %.sroa.011.016.i.i.i.i.i.i.i.i.i.i.prol = phi i64 [ %i.bn, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol ], [ %.sroa.22.053.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol ], [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ]
   %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.013.017.i.i.i.i.i.i.i.i.i.i.prol, i64 544
   %i.bn = add i64 %.sroa.011.016.i.i.i.i.i.i.i.i.i.i.prol, -1 ; 2 uses
@@ -1043,8 +1042,8 @@ bb.g:                                             ; preds = %bb.f
 .lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit:         ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader
   %.sroa.013.0.i.i.i.i.i.i.i.i.i.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.013.0.i.i.i.i.i.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol ]
   %.sroa.013.017.i.i.i.i.i.i.i.i.i.i.unr = phi ptr [ %i.bk, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %.sroa.013.0.i.i.i.i.i.i.i.i.i.i.prol, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol ]
-  %.sroa.011.016.i.i.i.i.i.i.i.i.i.i.unr = phi i64 [ %.sroa.14.054.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.bn, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol ]
-  %i.bo = icmp ult i64 %.sroa.14.054.i.i.i.i.i.i.i.i, 8
+  %.sroa.011.016.i.i.i.i.i.i.i.i.i.i.unr = phi i64 [ %.sroa.22.053.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader ], [ %i.bn, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol ]
+  %i.bo = icmp ult i64 %.sroa.22.053.i.i.i.i.i.i.i.i, 8
   br i1 %i.bo, label %_RNvMsc_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutNtNtBb_6string6StringINtNtBb_3vec3VecjEE10init_frontCsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i
@@ -1071,8 +1070,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.by, label %_RNvMsc_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutNtNtBb_6string6StringINtNtBb_3vec3VecjEE10init_frontCsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
 _RNvMsc_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutNtNtBb_6string6StringINtNtBb_3vec3VecjEE10init_frontCsgpMJJHpo27b_12typst_bundle.exit.i.i.i.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i, %bb.g, %bb.f
-  %.sroa.59.0.copyload.i.i.i.i.i.i.i.i.i.i = phi i64 [ %.sroa.14.054.i.i.i.i.i.i.i.i, %bb.f ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i ], [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit ] ; 2 uses
-  %.sroa.48.0.copyload.i.i.i.i.i.i.i.i.i.i = phi i64 [ %.sroa.9.052.i.i.i.i.i.i.i.i, %bb.f ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i ], [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit ] ; 2 uses
+  %.sroa.59.0.copyload.i.i.i.i.i.i.i.i.i.i = phi i64 [ %.sroa.22.053.i.i.i.i.i.i.i.i, %bb.f ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i ], [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit ] ; 2 uses
+  %.sroa.48.0.copyload.i.i.i.i.i.i.i.i.i.i = phi i64 [ %.sroa.14.054.i.i.i.i.i.i.i.i, %bb.f ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i ], [ 0, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit ] ; 2 uses
   %.sroa.07.0.copyload.i.i.i.i.i.i.i.i.i.i = phi ptr [ %.sroa.5.04055.i.i.i.i.i.i.i.i, %bb.f ], [ %i.bk, %bb.g ], [ %.sroa.013.0.i.i.i.i.i.i.i.i.i.i.lcssa.unr, %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit ], [ %.sroa.013.0.i.i.i.i.i.i.i.i.i.i.7, %.lr.ph.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.07.0.copyload.i.i.i.i.i.i.i.i.i.i, i64 538
   %i.ca = load i16, ptr %i.bz, align 2, !noalias !17112, !noundef !10
