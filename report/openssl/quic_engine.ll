@@ -1,0 +1,375 @@
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openssl/original/quic_engine?download=true
+inline.NumInlined: 25
+inline.NumDeleted: 17
+begin_hunk_0
+target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-pc-linux-gnu"
+
+%struct.quic_port_args_st = type { ptr, ptr, ptr, ptr, i32, i32 }
+%struct.quic_tick_result_st = type { %struct.OSSL_TIME, i8, i8, i8 }
+%struct.OSSL_TIME = type { i64 }
+
+@.str = private unnamed_addr constant [23 x i8] c"ssl/quic/quic_engine.c\00", align 1
+
+; Function Attrs: nounwind uwtable
+define ptr @ossl_quic_engine_new(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+bb.a:
+  %i.a = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 168, ptr noundef nonnull @.str, i32 noundef 30) #9 ; 7 uses
+  %i.b = icmp eq ptr %i.a, null
+  br i1 %i.b, label %bb.d, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %i.c = load <2 x ptr>, ptr %0, align 8, !tbaa !8
+  store <2 x ptr> %i.c, ptr %i.a, align 8, !tbaa !8
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !10   ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store ptr %i.e, ptr %i.f, align 8, !tbaa !16
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !25
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 40
+  %i.j = tail call i32 @ossl_quic_reactor_init(ptr noundef nonnull %i.i, ptr noundef nonnull @qeng_tick, ptr noundef nonnull %i.a, ptr noundef %i.e, i64 0, i64 noundef %i.h) #9
+  %.not = icmp eq i32 %i.j, 0
+  br i1 %.not, label %bb.c, label %bb.d
+
+bb.c:                                             ; preds = %bb.b
+  tail call void @CRYPTO_free(ptr noundef nonnull %i.a, ptr noundef nonnull @.str, i32 noundef 38) #9
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
+  %.0 = phi ptr [ null, %bb.c ], [ null, %bb.a ], [ %i.a, %bb.b ]
+  ret ptr %.0
+}
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
+
+declare noalias ptr @CRYPTO_zalloc(i64 noundef, ptr noundef, i32 noundef) local_unnamed_addr #2
+
+declare void @CRYPTO_free(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #2
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
+
+; Function Attrs: nounwind uwtable
+define void @ossl_quic_engine_free(ptr noundef %0) local_unnamed_addr #0 {
+bb.a:
+  %i.a = icmp eq ptr %0, null
+  br i1 %i.a, label %bb.c, label %bb.b
+
+bb.b:                                             ; preds = %bb.a
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
+  tail call void @ossl_quic_reactor_cleanup(ptr noundef nonnull %i.b) #9
+  tail call void @CRYPTO_free(ptr noundef nonnull %0, ptr noundef nonnull @.str, i32 noundef 51) #9
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.a, %bb.b
+  ret void
+}
+
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
+define nonnull ptr @ossl_quic_engine_get0_reactor(ptr nofree noundef readnone captures(ret: address, provenance) %0) local_unnamed_addr #3 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
+  ret ptr %i.a
+}
+
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
+define ptr @ossl_quic_engine_get0_mutex(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #4 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !16
+  ret ptr %i.b
+}
+
+; Function Attrs: nounwind uwtable
+define i64 @ossl_quic_engine_get_time(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #0 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !26   ; 2 uses
+  %i.c = icmp eq ptr %i.b, null
+  br i1 %i.c, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  %i.d = tail call i64 @ossl_time_now() #9
+  br label %bb.d
+
+bb.c:                                             ; preds = %bb.a
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !27
+  %i.g = tail call i64 %i.b(ptr noundef %i.f) #9
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.sroa.0.0 = phi i64 [ %i.d, %bb.b ], [ %i.g, %bb.c ]
+  ret i64 %.sroa.0.0
+}
+
+declare i64 @ossl_time_now() local_unnamed_addr #2
+
+; Function Attrs: nounwind uwtable
+define i64 @ossl_quic_engine_make_real_time(ptr nofree noundef readonly captures(none) %0, i64 %1) local_unnamed_addr #0 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !26
+  %.fr = freeze ptr %i.b                          ; 2 uses
+  %.not = icmp ne ptr %.fr, null
+  %.off = add i64 %1, -1
+  %switch = icmp ult i64 %.off, -2
+  %or.cond = select i1 %.not, i1 %switch, i1 false
+  br i1 %or.cond, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !27
+  %i.e = tail call i64 %.fr(ptr noundef %i.d) #9
+  %..i = tail call i64 @llvm.usub.sat.i64(i64 %1, i64 %i.e)
+  %i.f = tail call i64 @ossl_time_now() #9
+  %.sroa.03.0.i = tail call i64 @llvm.uadd.sat.i64(i64 %..i, i64 %i.f)
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.sroa.07.0 = phi i64 [ %1, %bb.a ], [ %.sroa.03.0.i, %bb.b ]
+  ret i64 %.sroa.07.0
+}
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
+
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
+define void @ossl_quic_engine_set_time_cb(ptr nofree noundef writeonly captures(none) initializes((24, 40)) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #5 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store ptr %1, ptr %i.a, align 8, !tbaa !26
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
+  store ptr %2, ptr %i.b, align 8, !tbaa !27
+  ret void
+}
+
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
+define void @ossl_quic_engine_set_inhibit_tick(ptr nofree noundef captures(none) %0, i32 noundef %1) local_unnamed_addr #6 {
+bb.a:
+  %i.a = icmp ne i32 %1, 0
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
+  %i.c = zext i1 %i.a to i8
+  %i.d = load i8, ptr %i.b, align 8
+  %i.e = and i8 %i.d, -2
+  %i.f = or disjoint i8 %i.e, %i.c
+  store i8 %i.f, ptr %i.b, align 8
+  ret void
+}
+
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
+define ptr @ossl_quic_engine_get0_libctx(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #4 {
+bb.a:
+  %i.a = load ptr, ptr %0, align 8, !tbaa !28
+  ret ptr %i.a
+}
+
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
+define ptr @ossl_quic_engine_get0_propq(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #4 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !29
+  ret ptr %i.b
+}
+
+; Function Attrs: nounwind uwtable
+define void @ossl_quic_engine_update_poll_descriptors(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #0 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 136
+  %.04 = load ptr, ptr %i.a, align 8, !tbaa !30   ; 2 uses
+  %.not5 = icmp eq ptr %.04, null
+  br i1 %.not5, label %._crit_edge, label %.lr.ph
+
+.lr.ph:                                           ; preds = %bb.a, %.lr.ph
+  %.06 = phi ptr [ %.0, %.lr.ph ], [ %.04, %bb.a ] ; 2 uses
+  %i.b = tail call i32 @ossl_quic_port_update_poll_descriptors(ptr noundef nonnull %.06, i32 noundef %1) #9 ; 0 uses
+  %i.c = getelementptr i8, ptr %.06, i64 8
+  %.0 = load ptr, ptr %i.c, align 8, !tbaa !30    ; 2 uses
+  %.not = icmp eq ptr %.0, null
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !31
+
+._crit_edge:                                      ; preds = %.lr.ph, %bb.a
+  ret void
+}
+
+declare i32 @ossl_quic_port_update_poll_descriptors(ptr noundef, i32 noundef) local_unnamed_addr #2
+
+; Function Attrs: nounwind uwtable
+define ptr @ossl_quic_engine_create_port(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 {
+bb.a:
+  %2 = alloca %struct.quic_port_args_st, align 8  ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull align 8 dereferenceable(40) %1, i64 40, i1 false), !tbaa.struct !33
+  %i.a = getelementptr i8, ptr %0, i64 152
+  %.val = load i64, ptr %i.a, align 8, !tbaa !41
+  %.not = icmp eq i64 %.val, 0
+  %i.b = load ptr, ptr %2, align 8
+  %.not4 = icmp eq ptr %i.b, null
+  %or.cond = select i1 %.not, i1 %.not4, i1 false
+  br i1 %or.cond, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %bb.a
+  store ptr %0, ptr %2, align 8, !tbaa !42
+  %i.c = call ptr @ossl_quic_port_new(ptr noundef nonnull %2) #9
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.0 = phi ptr [ %i.c, %bb.b ], [ null, %bb.a ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
+  ret ptr %.0
+}
+
+declare ptr @ossl_quic_port_new(ptr noundef) local_unnamed_addr #2
+
+declare i32 @ossl_quic_reactor_init(ptr noundef, ptr noundef, ptr noundef, ptr noundef, i64, i64 noundef) local_unnamed_addr #2
+
+; Function Attrs: nounwind uwtable
+define internal void @qeng_tick(ptr nofree noundef captures(none) initializes((0, 11)) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) #0 {
+bb.a:
+  %3 = alloca %struct.quic_tick_result_st, align 8 ; 7 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  store i8 0, ptr %i.a, align 8, !tbaa !44
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 9 ; 3 uses
+  store i8 0, ptr %i.b, align 1, !tbaa !46
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 2 uses
+  store i8 0, ptr %i.c, align 2, !tbaa !47
+  store i64 -1, ptr %0, align 8, !tbaa !48
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 160
+  %i.e = load i8, ptr %i.d, align 8
+  %i.f = and i8 %i.e, 1
+  %.not = icmp eq i8 %i.f, 0
+  br i1 %.not, label %bb.b, label %.loopexit
+
+bb.b:                                             ; preds = %bb.a
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 136
+  %.014 = load ptr, ptr %i.g, align 8, !tbaa !30  ; 2 uses
+  %.not1115 = icmp eq ptr %.014, null
+  br i1 %.not1115, label %.loopexit, label %ossl_quic_tick_result_merge_into.exit.lr.ph
+
+ossl_quic_tick_result_merge_into.exit.lr.ph:      ; preds = %bb.b
+  %i.h = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 9
+  br label %ossl_quic_tick_result_merge_into.exit
+
+ossl_quic_tick_result_merge_into.exit:            ; preds = %ossl_quic_tick_result_merge_into.exit.lr.ph, %ossl_quic_tick_result_merge_into.exit
+  %.016 = phi ptr [ %.014, %ossl_quic_tick_result_merge_into.exit.lr.ph ], [ %.0, %ossl_quic_tick_result_merge_into.exit ] ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  call void @ossl_quic_port_subtick(ptr noundef nonnull %.016, ptr noundef nonnull %3, i32 noundef %2) #9
+  %i.j = load i8, ptr %i.a, align 8, !tbaa !44
+  %.not.i = icmp ne i8 %i.j, 0
+  %i.k = load i8, ptr %i.h, align 8
+  %i.l = icmp ne i8 %i.k, 0
+  %narrow = select i1 %.not.i, i1 true, i1 %i.l
+  %i.m = zext i1 %narrow to i8
+  store i8 %i.m, ptr %i.a, align 8, !tbaa !44
+  %i.n = load <2 x i8>, ptr %i.b, align 1, !tbaa !49
+  %i.o = icmp ne <2 x i8> %i.n, zeroinitializer
+  %i.p = load <2 x i8>, ptr %i.i, align 1
+  %i.q = icmp ne <2 x i8> %i.p, zeroinitializer
+  %i.r = select <2 x i1> %i.o, <2 x i1> splat (i1 true), <2 x i1> %i.q ; 2 uses
+  %i.s = extractelement <2 x i1> %i.r, i64 0
+  %i.t = zext i1 %i.s to i8
+  store i8 %i.t, ptr %i.b, align 1, !tbaa !46
+  %i.u = extractelement <2 x i1> %i.r, i64 1
+  %i.v = zext i1 %i.u to i8
+  store i8 %i.v, ptr %i.c, align 2, !tbaa !47
+  %i.w = load i64, ptr %0, align 8
+  %i.x = load i64, ptr %3, align 8
+  %..i.i = call i64 @llvm.umin.i64(i64 %i.w, i64 %i.x)
+  store i64 %..i.i, ptr %0, align 8, !tbaa !48
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
+  %i.y = getelementptr i8, ptr %.016, i64 8
+  %.0 = load ptr, ptr %i.y, align 8, !tbaa !30    ; 2 uses
+  %.not11 = icmp eq ptr %.0, null
+  br i1 %.not11, label %.loopexit, label %ossl_quic_tick_result_merge_into.exit, !llvm.loop !50
+
+.loopexit:                                        ; preds = %ossl_quic_tick_result_merge_into.exit, %bb.b, %bb.a
+  ret void
+}
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
+
+declare void @ossl_quic_port_subtick(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #2
+
+declare void @ossl_quic_reactor_cleanup(ptr noundef) local_unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umin.i64(i64, i64) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.usub.sat.i64(i64, i64) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.uadd.sat.i64(i64, i64) #8
+
+attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #9 = { nounwind }
+
+!llvm.module.flags = !{!0, !1}
+!llvm.ident = !{!2}
+!llvm.errno.tbaa = !{!3}
+
+!0 = !{i32 8, !"PIC Level", i32 2}
+!1 = !{i32 7, !"uwtable", i32 2}
+!2 = !{!"Ubuntu clang version 24.0.0 (++20260804081852+44c6aed9bd9b-1~exp1~20260804202019.1766)"}
+!3 = !{!4, !5, i64 0}
+!4 = !{!"__libc_errno", !5, i64 0}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C/C++ TBAA"}
+!8 = !{!9, !9, i64 0}
+!9 = !{!"any pointer", !6, i64 0}
+!10 = !{!11, !14, i64 16}
+!11 = !{!"quic_engine_args_st", !12, i64 0, !13, i64 8, !14, i64 16, !15, i64 24}
+!12 = !{!"p1 _ZTS15ossl_lib_ctx_st", !9, i64 0}
+!13 = !{!"p1 omnipotent char", !9, i64 0}
+!14 = !{!"p1 _ZTS15crypto_mutex_st", !9, i64 0}
+!15 = !{!"long", !6, i64 0}
+!16 = !{!17, !14, i64 16}
+!17 = !{!"quic_engine_st", !12, i64 0, !13, i64 8, !14, i64 16, !9, i64 24, !9, i64 32, !18, i64 40, !23, i64 136, !5, i64 160}
+!18 = !{!"quic_reactor_st", !19, i64 0, !19, i64 16, !20, i64 32, !9, i64 40, !9, i64 48, !14, i64 56, !21, i64 64, !22, i64 72, !15, i64 80, !5, i64 88, !5, i64 88, !5, i64 88, !5, i64 88, !5, i64 88, !5, i64 88}
+!19 = !{!"bio_poll_descriptor_st", !5, i64 0, !6, i64 8}
+!20 = !{!"", !15, i64 0}
+!21 = !{!"rio_notifier_st", !5, i64 0, !5, i64 4}
+!22 = !{!"p1 _ZTS17crypto_condvar_st", !9, i64 0}
+!23 = !{!"ossl_list_st_port", !24, i64 0, !24, i64 8, !15, i64 16}
+!24 = !{!"p1 _ZTS12quic_port_st", !9, i64 0}
+!25 = !{!11, !15, i64 24}
+!26 = !{!17, !9, i64 24}
+!27 = !{!17, !9, i64 32}
+!28 = !{!17, !12, i64 0}
+!29 = !{!17, !13, i64 8}
+!30 = !{!24, !24, i64 0}
+!31 = distinct !{!31, !32}
+!32 = !{!"llvm.loop.mustprogress"}
+!33 = !{i64 0, i64 8, !34, i64 8, i64 8, !8, i64 16, i64 8, !36, i64 24, i64 8, !38, i64 32, i64 4, !40, i64 36, i64 4, !40}
+!34 = !{!35, !35, i64 0}
+!35 = !{!"p1 _ZTS14quic_engine_st", !9, i64 0}
+!36 = !{!37, !37, i64 0}
+!37 = !{!"p1 _ZTS16quic_listener_st", !9, i64 0}
+!38 = !{!39, !39, i64 0}
+!39 = !{!"p1 _ZTS10ssl_ctx_st", !9, i64 0}
+!40 = !{!5, !5, i64 0}
+!41 = !{!23, !15, i64 16}
+!42 = !{!43, !35, i64 0}
+!43 = !{!"quic_port_args_st", !35, i64 0, !9, i64 8, !37, i64 16, !39, i64 24, !5, i64 32, !5, i64 36}
+!44 = !{!45, !6, i64 8}
+!45 = !{!"quic_tick_result_st", !20, i64 0, !6, i64 8, !6, i64 9, !6, i64 10}
+!46 = !{!45, !6, i64 9}
+!47 = !{!45, !6, i64 10}
+!48 = !{!15, !15, i64 0}
+!49 = !{!6, !6, i64 0}
+!50 = distinct !{!50, !32}
+end_hunk_0
