@@ -1,0 +1,130 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+index 2db6396b9d661..d66e226e73723 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+@@ -1235,9 +1235,20 @@ Instruction *InstCombinerImpl::visitTrunc(TruncInst &Trunc) {
+       // FoldShiftByConstant and is the extend in reg pattern.
+       APInt Threshold = APInt(C->getType()->getScalarSizeInBits(), DestWidth);
+       if (match(C, m_SpecificInt_ICMP(ICmpInst::ICMP_ULT, Threshold))) {
+-        Value *NewTrunc = Builder.CreateTrunc(A, DestTy, A->getName() + ".tr");
+-        return BinaryOperator::Create(Instruction::Shl, NewTrunc,
+-                                      ConstantExpr::getTrunc(C, DestTy));
++        // If neither the wide shift nor the truncate wrap, propagate the wrap
++        // flags on the new truncate.
++        auto *WideShl = cast<OverflowingBinaryOperator>(Src);
++        bool NUW = Trunc.hasNoUnsignedWrap() && WideShl->hasNoUnsignedWrap();
++        bool NSW = Trunc.hasNoSignedWrap() && WideShl->hasNoSignedWrap();
++        Value *NewTrunc = Builder.CreateTrunc(A, DestTy, A->getName() + ".tr",
++                                              /*IsNUW=*/NUW, /*IsNSW=*/NSW);
++        // The original flags from the truncate can be propagated directly to
++        // the shift.
++        auto *NewShl = BinaryOperator::Create(
++            Instruction::Shl, NewTrunc, ConstantExpr::getTrunc(C, DestTy));
++        NewShl->setHasNoUnsignedWrap(Trunc.hasNoUnsignedWrap());
++        NewShl->setHasNoSignedWrap(Trunc.hasNoSignedWrap());
++        return NewShl;
+       }
+     }
+   }
+diff --git a/llvm/test/Transforms/InstCombine/trunc.ll b/llvm/test/Transforms/InstCombine/trunc.ll
+index 507a4678a7a1f..59c0f83b0e60c 100644
+--- a/llvm/test/Transforms/InstCombine/trunc.ll
++++ b/llvm/test/Transforms/InstCombine/trunc.ll
+@@ -617,6 +617,97 @@ define i32 @trunc_shl_nsw_nuw_31_i32_i64(i64 %val) {
+   ret i32 %trunc
+ }
+ 
++define i32 @trunc_nuw_shl_nuw_3_i32_i64(i64 %val) {
++; CHECK-LABEL: @trunc_nuw_shl_nuw_3_i32_i64(
++; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc nuw i64 [[VAL:%.*]] to i32
++; CHECK-NEXT:    [[TRUNC:%.*]] = shl nuw i32 [[VAL_TR]], 3
++; CHECK-NEXT:    ret i32 [[TRUNC]]
++;
++  %shl = shl nuw i64 %val, 3
++  %trunc = trunc nuw i64 %shl to i32
++  ret i32 %trunc
++}
++
++define i32 @trunc_nsw_shl_nsw_3_i32_i64(i64 %val) {
++; CHECK-LABEL: @trunc_nsw_shl_nsw_3_i32_i64(
++; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc nsw i64 [[VAL:%.*]] to i32
++; CHECK-NEXT:    [[TRUNC:%.*]] = shl nsw i32 [[VAL_TR]], 3
++; CHECK-NEXT:    ret i32 [[TRUNC]]
++;
++  %shl = shl nsw i64 %val, 3
++  %trunc = trunc nsw i64 %shl to i32
++  ret i32 %trunc
++}
++
++define i32 @trunc_nuw_nsw_shl_nuw_nsw_3_i32_i64(i64 %val) {
++; CHECK-LABEL: @trunc_nuw_nsw_shl_nuw_nsw_3_i32_i64(
++; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc nuw nsw i64 [[VAL:%.*]] to i32
++; CHECK-NEXT:    [[TRUNC:%.*]] = shl nuw nsw i32 [[VAL_TR]], 3
++; CHECK-NEXT:    ret i32 [[TRUNC]]
++;
++  %shl = shl nuw nsw i64 %val, 3
++  %trunc = trunc nuw nsw i64 %shl to i32
++  ret i32 %trunc
++}
++
++define i32 @trunc_nuw_shl_nuw_nsw_3_i32_i64(i64 %val) {
++; CHECK-LABEL: @trunc_nuw_shl_nuw_nsw_3_i32_i64(
++; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc nuw i64 [[VAL:%.*]] to i32
++; CHECK-NEXT:    [[TRUNC:%.*]] = shl nuw i32 [[VAL_TR]], 3
++; CHECK-NEXT:    ret i32 [[TRUNC]]
++;
++  %shl = shl nuw nsw i64 %val, 3
++  %trunc = trunc nuw i64 %shl to i32
++  ret i32 %trunc
++}
++
++define i32 @trunc_nuw_nsw_shl_nsw_3_i32_i64(i64 %val) {
++; CHECK-LABEL: @trunc_nuw_nsw_shl_nsw_3_i32_i64(
++; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc nsw i64 [[VAL:%.*]] to i32
++; CHECK-NEXT:    [[TRUNC:%.*]] = shl nuw nsw i32 [[VAL_TR]], 3
++; CHECK-NEXT:    ret i32 [[TRUNC]]
++;
++  %shl = shl nsw i64 %val, 3
++  %trunc = trunc nuw nsw i64 %shl to i32
++  ret i32 %trunc
++}
++
++; Missing flags on shl.
++define i32 @trunc_nuw_shl_3_i32_i64(i64 %val) {
++; CHECK-LABEL: @trunc_nuw_shl_3_i32_i64(
++; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc i64 [[VAL:%.*]] to i32
++; CHECK-NEXT:    [[TRUNC:%.*]] = shl nuw i32 [[VAL_TR]], 3
++; CHECK-NEXT:    ret i32 [[TRUNC]]
++;
++  %shl = shl i64 %val, 3
++  %trunc = trunc nuw i64 %shl to i32
++  ret i32 %trunc
++}
++
++; Missing flags on shl.
++define i32 @trunc_shl_nuw_nsw_3_i32_i64(i64 %val) {
++; CHECK-LABEL: @trunc_shl_nuw_nsw_3_i32_i64(
++; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc i64 [[VAL:%.*]] to i32
++; CHECK-NEXT:    [[TRUNC:%.*]] = shl i32 [[VAL_TR]], 3
++; CHECK-NEXT:    ret i32 [[TRUNC]]
++;
++  %shl = shl nuw nsw i64 %val, 3
++  %trunc = trunc i64 %shl to i32
++  ret i32 %trunc
++}
++
++; Mismatched flags on shl/trunc.
++define i32 @trunc_nuw_shl_nsw_3_i32_i64(i64 %val) {
++; CHECK-LABEL: @trunc_nuw_shl_nsw_3_i32_i64(
++; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc i64 [[VAL:%.*]] to i32
++; CHECK-NEXT:    [[TRUNC:%.*]] = shl nuw i32 [[VAL_TR]], 3
++; CHECK-NEXT:    ret i32 [[TRUNC]]
++;
++  %shl = shl nsw i64 %val, 3
++  %trunc = trunc nuw i64 %shl to i32
++  ret i32 %trunc
++}
++
+ define i16 @trunc_shl_15_i16_i64(i64 %val) {
+ ; CHECK-LABEL: @trunc_shl_15_i16_i64(
+ ; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc i64 [[VAL:%.*]] to i16
