@@ -204,13 +204,12 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %.thread, %bb.s, %bb.r
-  %i.cr = phi i32 [ %.sroa.1.0.extract.trunc, %.thread ], [ %.pre, %bb.s ], [ %i.cp, %bb.r ] ; 4 uses
+  %i.cr = phi i32 [ %.sroa.1.0.extract.trunc, %.thread ], [ %.pre, %bb.s ], [ %i.cp, %bb.r ] ; 3 uses
   %i.cs = and i32 %i.cr, 448
-  %i.ct = icmp eq i32 %i.cs, 448                  ; 2 uses
+  %i.ct = icmp eq i32 %i.cs, 448
   %i.cu = or i32 %i.cr, 448
-  %.038 = select i1 %i.ct, i32 %i.cr, i32 %i.cu
   %.037 = select i1 %i.ct, i32 0, i32 %i.cr
-  %i.cv = call noundef zeroext i1 @_ZN12cmFileCopier14SetPermissionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEj(ptr noundef nonnull align 8 dereferenceable(244) %0, ptr noundef nonnull align 8 dereferenceable(32) %2, i32 noundef %.038)
+  %i.cv = call noundef zeroext i1 @_ZN12cmFileCopier14SetPermissionsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEj(ptr noundef nonnull align 8 dereferenceable(244) %0, ptr noundef nonnull align 8 dereferenceable(32) %2, i32 noundef %i.cu)
   br i1 %i.cv, label %bb.u, label %bb.aj
 
 bb.u:                                             ; preds = %bb.t
