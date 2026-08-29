@@ -202,7 +202,9 @@ define hidden void @_ZN2cv8tracking4impl3tld11TLDDetector16generateScanGridEiiNS
 bb.a:
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %6 = alloca %"class.std::allocator.35", align 1 ; 3 uses
-  %7 = bitcast i64 %2 to <2 x i32>
+  %.sroa.0.0.extract.trunc = trunc i64 %2 to i32  ; 2 uses
+  %.sroa.4.0.extract.shift = lshr i64 %2, 32
+  %.sroa.4.0.extract.trunc = trunc nuw i64 %.sroa.4.0.extract.shift to i32 ; 2 uses
   %i.a = load ptr, ptr %3, align 8, !tbaa !71     ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !74   ; 2 uses
@@ -215,21 +217,22 @@ _ZSt8_DestroyIPN2cv5Rect_IdEES2_EvT_S4_RSaIT0_E.exit.i.i: ; preds = %bb.a
 
 _ZNSt6vectorIN2cv5Rect_IdEESaIS2_EE5clearEv.exit: ; preds = %bb.a, %_ZSt8_DestroyIPN2cv5Rect_IdEES2_EvT_S4_RSaIT0_E.exit.i.i
   %i.d = phi ptr [ %i.c, %bb.a ], [ %i.a, %_ZSt8_DestroyIPN2cv5Rect_IdEES2_EvT_S4_RSaIT0_E.exit.i.i ]
-  %8 = sitofp <2 x i32> %7 to <2 x double>        ; 4 uses
-  %9 = extractelement <2 x double> %8, i64 1      ; 4 uses
-  %10 = extractelement <2 x double> %8, i64 0     ; 3 uses
-  %i.e = sitofp i32 %1 to double                  ; 4 uses
-  %i.f = sitofp i32 %0 to double                  ; 4 uses
-  %11 = fcmp olt double %9, %i.e
-  %12 = fcmp olt double %10, %i.f
-  %i.g = select i1 %11, i1 %12, i1 false
+  %7 = sitofp i32 %.sroa.4.0.extract.trunc to double ; 4 uses
+  %i.e = sitofp i32 %1 to double                  ; 3 uses
+  %i.f = sitofp i32 %0 to double                  ; 3 uses
+  %8 = icmp sgt i32 %1, %.sroa.4.0.extract.trunc
+  %9 = icmp sgt i32 %0, %.sroa.0.0.extract.trunc
+  %i.g = select i1 %8, i1 %9, i1 false
   br i1 %i.g, label %.preheader61.lr.ph, label %._crit_edge69
 
 .preheader61.lr.ph:                               ; preds = %_ZNSt6vectorIN2cv5Rect_IdEESaIS2_EE5clearEv.exit
+  %10 = sitofp i32 %.sroa.0.0.extract.trunc to double ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
-  %i.i = fmul nnan <2 x double> %8, splat (double 1.200000e+00) ; 3 uses
+  %11 = insertelement <2 x double> poison, double %10, i64 0
+  %12 = insertelement <2 x double> %11, double %7, i64 1 ; 2 uses
+  %i.i = fmul nnan <2 x double> %12, splat (double 1.200000e+00) ; 3 uses
   %i.j = extractelement <2 x double> %i.i, i64 1
-  %i.k = fcmp ogt double %i.j, %9
+  %i.k = fcmp ogt double %i.j, %7
   %i.l = extractelement <2 x double> %i.i, i64 0
   %i.m = fcmp ogt double %i.l, %10
   br label %.preheader61
@@ -238,8 +241,8 @@ _ZNSt6vectorIN2cv5Rect_IdEESaIS2_EE5clearEv.exit: ; preds = %bb.a, %_ZSt8_Destro
   %i.n = phi ptr [ %i.a, %.preheader61.lr.ph ], [ %i.y, %bb.m ] ; 3 uses
   %i.o = phi ptr [ %i.d, %.preheader61.lr.ph ], [ %i.z, %bb.m ] ; 3 uses
   %.04067 = phi double [ %10, %.preheader61.lr.ph ], [ %i.cb, %bb.m ] ; 5 uses
-  %.04165 = phi double [ %9, %.preheader61.lr.ph ], [ %i.ca, %bb.m ] ; 6 uses
-  %i.p = phi <2 x double> [ %8, %.preheader61.lr.ph ], [ %i.bz, %bb.m ] ; 2 uses
+  %.04165 = phi double [ %7, %.preheader61.lr.ph ], [ %i.ca, %bb.m ] ; 6 uses
+  %i.p = phi <2 x double> [ %12, %.preheader61.lr.ph ], [ %i.bz, %bb.m ] ; 2 uses
   %i.q = fadd double %.04067, 0.000000e+00
   %i.r = fadd double %i.q, 1.000000e+00
   %i.s = fcmp ugt double %i.r, %i.e
@@ -369,7 +372,7 @@ _ZNSt6vectorIN2cv5Rect_IdEESaIS2_EE9push_backEOS2_.exit: ; preds = %bb.c, %_ZNSt
   br i1 %i.bh, label %._crit_edge, label %bb.b, !llvm.loop !85
 
 bb.g:                                             ; preds = %._crit_edge64
-  %i.bi = fcmp ugt double %.04165, %9
+  %i.bi = fcmp ugt double %.04165, %7
   br i1 %i.bi, label %bb.l, label %bb.h
 
 bb.h:                                             ; preds = %bb.g

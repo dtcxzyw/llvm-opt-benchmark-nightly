@@ -202,14 +202,14 @@ vector.ph:                                        ; preds = %.preheader
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.0127142, i64 %index ; 2 uses
-  %wide.load = load <4 x i8>, ptr %i.cj, align 1, !tbaa !58, !alias.scope !59, !noalias !61
-  %i.ck = uitofp <4 x i8> %wide.load to <4 x float> ; 6 uses
+  %wide.load = load <4 x i8>, ptr %i.cj, align 1, !tbaa !58, !alias.scope !59, !noalias !61 ; 3 uses
+  %i.ck = uitofp <4 x i8> %wide.load to <4 x float> ; 3 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %.0126143, i64 %index ; 2 uses
-  %wide.load184 = load <4 x i8>, ptr %i.cl, align 1, !tbaa !58, !alias.scope !64, !noalias !65
-  %i.cm = uitofp <4 x i8> %wide.load184 to <4 x float> ; 7 uses
+  %wide.load184 = load <4 x i8>, ptr %i.cl, align 1, !tbaa !58, !alias.scope !64, !noalias !65 ; 3 uses
+  %i.cm = uitofp <4 x i8> %wide.load184 to <4 x float> ; 3 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %.0125144, i64 %index ; 2 uses
-  %wide.load185 = load <4 x i8>, ptr %i.cn, align 1, !tbaa !58, !alias.scope !66, !noalias !55
-  %i.co = uitofp <4 x i8> %wide.load185 to <4 x float> ; 6 uses
+  %wide.load185 = load <4 x i8>, ptr %i.cn, align 1, !tbaa !58, !alias.scope !66, !noalias !55 ; 3 uses
+  %i.co = uitofp <4 x i8> %wide.load185 to <4 x float> ; 3 uses
   %i.cp = fmul nsz <4 x float> %broadcast.splat187, %i.co
   %i.cq = fmul nsz <4 x float> %broadcast.splat189, %i.ck
   %i.cr = fmul nsz <4 x float> %broadcast.splat191, %i.cm
@@ -219,14 +219,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cv = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cu, <4 x float> %broadcast.splat, <4 x float> %i.ck) ; 6 uses
   %i.cw = fsub nsz <4 x float> %i.cr, %i.cm
   %i.cx = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cw, <4 x float> %broadcast.splat, <4 x float> %i.cm) ; 7 uses
-  %4 = fcmp nsz ogt <4 x float> %i.co, %i.ck      ; 2 uses
-  %5 = select nsz <4 x i1> %4, <4 x float> %i.co, <4 x float> %i.ck ; 2 uses
-  %6 = fcmp nsz ogt <4 x float> %5, %i.cm
-  %7 = select nsz <4 x i1> %6, <4 x float> %5, <4 x float> %i.cm
-  %8 = select nsz <4 x i1> %4, <4 x float> %i.ck, <4 x float> %i.co ; 2 uses
-  %9 = fcmp nsz ogt <4 x float> %8, %i.cm
-  %10 = select nsz <4 x i1> %9, <4 x float> %i.cm, <4 x float> %8
-  %i.cy = fadd nsz <4 x float> %7, %10
+  %4 = tail call <4 x i8> @llvm.umax.v4i8(<4 x i8> %wide.load185, <4 x i8> %wide.load)
+  %5 = tail call <4 x i8> @llvm.umax.v4i8(<4 x i8> %4, <4 x i8> %wide.load184)
+  %6 = uitofp <4 x i8> %5 to <4 x float>
+  %7 = tail call <4 x i8> @llvm.umin.v4i8(<4 x i8> %wide.load185, <4 x i8> %wide.load)
+  %8 = tail call <4 x i8> @llvm.umin.v4i8(<4 x i8> %7, <4 x i8> %wide.load184)
+  %9 = uitofp <4 x i8> %8 to <4 x float>
+  %i.cy = fadd nsz <4 x float> %6, %9
   %i.cz = fadd nsz <4 x float> %i.cy, splat (float f0x34000000)
   %i.da = fcmp nsz ogt <4 x float> %i.ct, %i.cv   ; 2 uses
   %i.db = select nsz <4 x i1> %i.da, <4 x float> %i.ct, <4 x float> %i.cv ; 2 uses
@@ -293,33 +292,30 @@ scalar.ph.preheader:                              ; preds = %.preheader, %middle
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 4 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %.0127142, i64 %indvars.iv ; 2 uses
-  %i.er = load i8, ptr %i.eq, align 1, !tbaa !58
+  %i.er = load i8, ptr %i.eq, align 1, !tbaa !58  ; 3 uses
   %i.es = getelementptr inbounds nuw i8, ptr %.0126143, i64 %indvars.iv ; 2 uses
-  %i.et = load i8, ptr %i.es, align 1, !tbaa !58
-  %i.eu = uitofp nsz i8 %i.et to float            ; 7 uses
+  %i.et = load i8, ptr %i.es, align 1, !tbaa !58  ; 3 uses
+  %i.eu = uitofp nsz i8 %i.et to float            ; 3 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %.0125144, i64 %indvars.iv ; 2 uses
-  %i.ew = load i8, ptr %i.ev, align 1, !tbaa !58
+  %i.ew = load i8, ptr %i.ev, align 1, !tbaa !58  ; 3 uses
   %i.ex = load float, ptr %i.ai, align 4, !tbaa !32
   %i.ey = fmul nsz float %i.ex, %i.eu
   %i.ez = insertelement <2 x i8> poison, i8 %i.ew, i64 0
   %i.fa = insertelement <2 x i8> %i.ez, i8 %i.er, i64 1
-  %i.fb = uitofp <2 x i8> %i.fa to <2 x float>    ; 5 uses
+  %i.fb = uitofp <2 x i8> %i.fa to <2 x float>    ; 3 uses
   %i.fc = load <2 x float>, ptr %i.k, align 4, !tbaa !32
   %i.fd = fmul nsz <2 x float> %i.fc, %i.fb
   %i.fe = fsub nsz <2 x float> %i.fd, %i.fb
   %i.ff = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.fe, <2 x float> %i.cd, <2 x float> %i.fb) ; 3 uses
   %i.fg = fsub nsz float %i.ey, %i.eu
   %i.fh = tail call nsz noundef float @llvm.fmuladd.f32(float %i.fg, float %i.h, float %i.eu) ; 5 uses
-  %11 = extractelement <2 x float> %i.fb, i64 0   ; 3 uses
-  %12 = extractelement <2 x float> %i.fb, i64 1   ; 3 uses
-  %13 = fcmp nsz ogt float %11, %12               ; 2 uses
-  %14 = select nsz i1 %13, float %11, float %12   ; 2 uses
-  %15 = fcmp nsz ogt float %14, %i.eu
-  %. = select nsz i1 %15, float %14, float %i.eu
-  %16 = select nsz i1 %13, float %12, float %11   ; 2 uses
-  %17 = fcmp nsz ogt float %16, %i.eu
-  %18 = select nsz i1 %17, float %i.eu, float %16
-  %i.fi = fadd nsz float %., %18
+  %10 = tail call i8 @llvm.umax.i8(i8 %i.ew, i8 %i.er)
+  %11 = tail call i8 @llvm.umax.i8(i8 %10, i8 %i.et)
+  %12 = uitofp i8 %11 to float
+  %13 = tail call i8 @llvm.umin.i8(i8 %i.ew, i8 %i.er)
+  %14 = tail call i8 @llvm.umin.i8(i8 %13, i8 %i.et)
+  %15 = uitofp i8 %14 to float
+  %i.fi = fadd nsz float %12, %15
   %i.fj = fadd nsz float %i.fi, f0x34000000
   %i.fk = extractelement <2 x float> %i.ff, i64 0 ; 6 uses
   %i.fl = extractelement <2 x float> %i.ff, i64 1 ; 3 uses
@@ -506,14 +502,14 @@ bb.a:
 vector.body:                                      ; preds = %.preheader, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.preheader ] ; 4 uses
   %i.ce = getelementptr inbounds nuw [2 x i8], ptr %.0131148, i64 %index ; 2 uses
-  %wide.load = load <8 x i16>, ptr %i.ce, align 2, !tbaa !73, !alias.scope !75, !noalias !78
-  %i.cf = uitofp <8 x i16> %wide.load to <8 x float> ; 6 uses
+  %wide.load = load <8 x i16>, ptr %i.ce, align 2, !tbaa !73, !alias.scope !75, !noalias !78 ; 3 uses
+  %i.cf = uitofp <8 x i16> %wide.load to <8 x float> ; 3 uses
   %i.cg = getelementptr inbounds nuw [2 x i8], ptr %.0130149, i64 %index ; 2 uses
-  %wide.load184 = load <8 x i16>, ptr %i.cg, align 2, !tbaa !73, !alias.scope !81, !noalias !82
-  %i.ch = uitofp <8 x i16> %wide.load184 to <8 x float> ; 7 uses
+  %wide.load184 = load <8 x i16>, ptr %i.cg, align 2, !tbaa !73, !alias.scope !81, !noalias !82 ; 3 uses
+  %i.ch = uitofp <8 x i16> %wide.load184 to <8 x float> ; 3 uses
   %i.ci = getelementptr inbounds nuw [2 x i8], ptr %.0129150, i64 %index ; 2 uses
-  %wide.load185 = load <8 x i16>, ptr %i.ci, align 2, !tbaa !73, !alias.scope !82
-  %i.cj = uitofp <8 x i16> %wide.load185 to <8 x float> ; 6 uses
+  %wide.load185 = load <8 x i16>, ptr %i.ci, align 2, !tbaa !73, !alias.scope !82 ; 3 uses
+  %i.cj = uitofp <8 x i16> %wide.load185 to <8 x float> ; 3 uses
   %i.ck = fmul nsz <8 x float> %broadcast.splat, %i.cj
   %i.cl = fmul nsz <8 x float> %broadcast.splat173, %i.cf
   %i.cm = fmul nsz <8 x float> %broadcast.splat175, %i.ch
@@ -523,14 +519,13 @@ vector.body:                                      ; preds = %.preheader, %vector
   %i.cq = tail call nsz <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.cp, <8 x float> %broadcast.splat177, <8 x float> %i.cf) ; 6 uses
   %i.cr = fsub nsz <8 x float> %i.cm, %i.ch
   %i.cs = tail call nsz <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.cr, <8 x float> %broadcast.splat177, <8 x float> %i.ch) ; 7 uses
-  %4 = fcmp nsz ogt <8 x float> %i.cj, %i.cf      ; 2 uses
-  %5 = select nsz <8 x i1> %4, <8 x float> %i.cj, <8 x float> %i.cf ; 2 uses
-  %6 = fcmp nsz ogt <8 x float> %5, %i.ch
-  %7 = select nsz <8 x i1> %6, <8 x float> %5, <8 x float> %i.ch
-  %8 = select nsz <8 x i1> %4, <8 x float> %i.cf, <8 x float> %i.cj ; 2 uses
-  %9 = fcmp nsz ogt <8 x float> %8, %i.ch
-  %10 = select nsz <8 x i1> %9, <8 x float> %i.ch, <8 x float> %8
-  %i.ct = fadd nsz <8 x float> %7, %10
+  %4 = tail call <8 x i16> @llvm.umax.v8i16(<8 x i16> %wide.load185, <8 x i16> %wide.load)
+  %5 = tail call <8 x i16> @llvm.umax.v8i16(<8 x i16> %4, <8 x i16> %wide.load184)
+  %6 = uitofp <8 x i16> %5 to <8 x float>
+  %7 = tail call <8 x i16> @llvm.umin.v8i16(<8 x i16> %wide.load185, <8 x i16> %wide.load)
+  %8 = tail call <8 x i16> @llvm.umin.v8i16(<8 x i16> %7, <8 x i16> %wide.load184)
+  %9 = uitofp <8 x i16> %8 to <8 x float>
+  %i.ct = fadd nsz <8 x float> %6, %9
   %i.cu = fadd nsz <8 x float> %i.ct, splat (float f0x34000000)
   %i.cv = fcmp nsz ogt <8 x float> %i.co, %i.cq   ; 2 uses
   %i.cw = select nsz <8 x i1> %i.cv, <8 x float> %i.co, <8 x float> %i.cq ; 2 uses
@@ -600,31 +595,28 @@ scalar.ph.preheader:                              ; preds = %.preheader, %middle
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 4 uses
   %i.eo = getelementptr inbounds nuw [2 x i8], ptr %.0131148, i64 %indvars.iv ; 2 uses
-  %i.ep = load i16, ptr %i.eo, align 2, !tbaa !73
+  %i.ep = load i16, ptr %i.eo, align 2, !tbaa !73 ; 3 uses
   %i.eq = getelementptr inbounds nuw [2 x i8], ptr %.0130149, i64 %indvars.iv ; 2 uses
-  %i.er = load i16, ptr %i.eq, align 2, !tbaa !73
-  %i.es = uitofp nsz i16 %i.er to float           ; 7 uses
+  %i.er = load i16, ptr %i.eq, align 2, !tbaa !73 ; 3 uses
+  %i.es = uitofp nsz i16 %i.er to float           ; 3 uses
   %i.et = getelementptr inbounds nuw [2 x i8], ptr %.0129150, i64 %indvars.iv ; 2 uses
-  %i.eu = load i16, ptr %i.et, align 2, !tbaa !73
+  %i.eu = load i16, ptr %i.et, align 2, !tbaa !73 ; 3 uses
   %i.ev = fmul nsz float %i.bb, %i.es
   %i.ew = insertelement <2 x i16> poison, i16 %i.eu, i64 0
   %i.ex = insertelement <2 x i16> %i.ew, i16 %i.ep, i64 1
-  %i.ey = uitofp <2 x i16> %i.ex to <2 x float>   ; 5 uses
+  %i.ey = uitofp <2 x i16> %i.ex to <2 x float>   ; 3 uses
   %i.ez = fmul nsz <2 x float> %i.ba, %i.ey
   %i.fa = fsub nsz <2 x float> %i.ez, %i.ey
   %i.fb = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.fa, <2 x float> %i.bz, <2 x float> %i.ey) ; 3 uses
   %i.fc = fsub nsz float %i.ev, %i.es
   %i.fd = tail call nsz noundef float @llvm.fmuladd.f32(float %i.fc, float %i.j, float %i.es) ; 5 uses
-  %11 = extractelement <2 x float> %i.ey, i64 0   ; 3 uses
-  %12 = extractelement <2 x float> %i.ey, i64 1   ; 3 uses
-  %13 = fcmp nsz ogt float %11, %12               ; 2 uses
-  %14 = select nsz i1 %13, float %11, float %12   ; 2 uses
-  %15 = fcmp nsz ogt float %14, %i.es
-  %. = select nsz i1 %15, float %14, float %i.es
-  %16 = select nsz i1 %13, float %12, float %11   ; 2 uses
-  %17 = fcmp nsz ogt float %16, %i.es
-  %18 = select nsz i1 %17, float %i.es, float %16
-  %i.fe = fadd nsz float %., %18
+  %10 = tail call i16 @llvm.umax.i16(i16 %i.eu, i16 %i.ep)
+  %11 = tail call i16 @llvm.umax.i16(i16 %10, i16 %i.er)
+  %12 = uitofp i16 %11 to float
+  %13 = tail call i16 @llvm.umin.i16(i16 %i.eu, i16 %i.ep)
+  %14 = tail call i16 @llvm.umin.i16(i16 %13, i16 %i.er)
+  %15 = uitofp i16 %14 to float
+  %i.fe = fadd nsz float %12, %15
   %i.ff = fadd nsz float %i.fe, f0x34000000
   %i.fg = extractelement <2 x float> %i.fb, i64 0 ; 6 uses
   %i.fh = extractelement <2 x float> %i.fb, i64 1 ; 3 uses
@@ -817,14 +809,14 @@ vector.ph:                                        ; preds = %.preheader
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
   %i.bo = getelementptr i8, ptr %invariant.gep, i64 %index ; 2 uses
-  %wide.load = load <4 x i8>, ptr %i.bo, align 1, !tbaa !58, !alias.scope !90, !noalias !92
-  %i.bp = uitofp <4 x i8> %wide.load to <4 x float> ; 6 uses
+  %wide.load = load <4 x i8>, ptr %i.bo, align 1, !tbaa !58, !alias.scope !90, !noalias !92 ; 3 uses
+  %i.bp = uitofp <4 x i8> %wide.load to <4 x float> ; 3 uses
   %i.bq = getelementptr i8, ptr %invariant.gep152, i64 %index ; 2 uses
-  %wide.load190 = load <4 x i8>, ptr %i.bq, align 1, !tbaa !58, !alias.scope !95, !noalias !96
-  %i.br = uitofp <4 x i8> %wide.load190 to <4 x float> ; 7 uses
+  %wide.load190 = load <4 x i8>, ptr %i.bq, align 1, !tbaa !58, !alias.scope !95, !noalias !96 ; 3 uses
+  %i.br = uitofp <4 x i8> %wide.load190 to <4 x float> ; 3 uses
   %i.bs = getelementptr i8, ptr %invariant.gep154, i64 %index ; 2 uses
-  %wide.load191 = load <4 x i8>, ptr %i.bs, align 1, !tbaa !58, !alias.scope !97, !noalias !87
-  %i.bt = uitofp <4 x i8> %wide.load191 to <4 x float> ; 6 uses
+  %wide.load191 = load <4 x i8>, ptr %i.bs, align 1, !tbaa !58, !alias.scope !97, !noalias !87 ; 3 uses
+  %i.bt = uitofp <4 x i8> %wide.load191 to <4 x float> ; 3 uses
   %i.bu = fmul nsz <4 x float> %broadcast.splat193, %i.bt
   %i.bv = fmul nsz <4 x float> %broadcast.splat195, %i.bp
   %i.bw = fmul nsz <4 x float> %broadcast.splat197, %i.br
@@ -834,14 +826,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ca = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.bz, <4 x float> %broadcast.splat, <4 x float> %i.bp) ; 6 uses
   %i.cb = fsub nsz <4 x float> %i.bw, %i.br
   %i.cc = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cb, <4 x float> %broadcast.splat, <4 x float> %i.br) ; 7 uses
-  %4 = fcmp nsz ogt <4 x float> %i.bt, %i.bp      ; 2 uses
-  %5 = select nsz <4 x i1> %4, <4 x float> %i.bt, <4 x float> %i.bp ; 2 uses
-  %6 = fcmp nsz ogt <4 x float> %5, %i.br
-  %7 = select nsz <4 x i1> %6, <4 x float> %5, <4 x float> %i.br
-  %8 = select nsz <4 x i1> %4, <4 x float> %i.bp, <4 x float> %i.bt ; 2 uses
-  %9 = fcmp nsz ogt <4 x float> %8, %i.br
-  %10 = select nsz <4 x i1> %9, <4 x float> %i.br, <4 x float> %8
-  %i.cd = fadd nsz <4 x float> %7, %10
+  %4 = tail call <4 x i8> @llvm.umax.v4i8(<4 x i8> %wide.load191, <4 x i8> %wide.load)
+  %5 = tail call <4 x i8> @llvm.umax.v4i8(<4 x i8> %4, <4 x i8> %wide.load190)
+  %6 = uitofp <4 x i8> %5 to <4 x float>
+  %7 = tail call <4 x i8> @llvm.umin.v4i8(<4 x i8> %wide.load191, <4 x i8> %wide.load)
+  %8 = tail call <4 x i8> @llvm.umin.v4i8(<4 x i8> %7, <4 x i8> %wide.load190)
+  %9 = uitofp <4 x i8> %8 to <4 x float>
+  %i.cd = fadd nsz <4 x float> %6, %9
   %i.ce = fadd nsz <4 x float> %i.cd, splat (float f0x34000000)
   %i.cf = fcmp nsz ogt <4 x float> %i.by, %i.ca   ; 2 uses
   %i.cg = select nsz <4 x i1> %i.cf, <4 x float> %i.by, <4 x float> %i.ca ; 2 uses
@@ -907,33 +898,30 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
   %i.dt = mul nsw i64 %indvars.iv, %i.ap          ; 3 uses
   %gep = getelementptr i8, ptr %invariant.gep, i64 %i.dt ; 2 uses
-  %i.du = load i8, ptr %gep, align 1, !tbaa !58
+  %i.du = load i8, ptr %gep, align 1, !tbaa !58   ; 3 uses
   %gep153 = getelementptr i8, ptr %invariant.gep152, i64 %i.dt ; 2 uses
-  %i.dv = load i8, ptr %gep153, align 1, !tbaa !58
-  %i.dw = uitofp nsz i8 %i.dv to float            ; 7 uses
+  %i.dv = load i8, ptr %gep153, align 1, !tbaa !58 ; 3 uses
+  %i.dw = uitofp nsz i8 %i.dv to float            ; 3 uses
   %gep155 = getelementptr i8, ptr %invariant.gep154, i64 %i.dt ; 2 uses
-  %i.dx = load i8, ptr %gep155, align 1, !tbaa !58
+  %i.dx = load i8, ptr %gep155, align 1, !tbaa !58 ; 3 uses
   %i.dy = load float, ptr %i.ae, align 4, !tbaa !32
   %i.dz = fmul nsz float %i.dy, %i.dw
   %i.ea = insertelement <2 x i8> poison, i8 %i.dx, i64 0
   %i.eb = insertelement <2 x i8> %i.ea, i8 %i.du, i64 1
-  %i.ec = uitofp <2 x i8> %i.eb to <2 x float>    ; 5 uses
+  %i.ec = uitofp <2 x i8> %i.eb to <2 x float>    ; 3 uses
   %i.ed = load <2 x float>, ptr %i.m, align 4, !tbaa !32
   %i.ee = fmul nsz <2 x float> %i.ed, %i.ec
   %i.ef = fsub nsz <2 x float> %i.ee, %i.ec
   %i.eg = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ef, <2 x float> %i.bi, <2 x float> %i.ec) ; 3 uses
   %i.eh = fsub nsz float %i.dz, %i.dw
   %i.ei = tail call nsz noundef float @llvm.fmuladd.f32(float %i.eh, float %i.j, float %i.dw) ; 5 uses
-  %11 = extractelement <2 x float> %i.ec, i64 0   ; 3 uses
-  %12 = extractelement <2 x float> %i.ec, i64 1   ; 3 uses
-  %13 = fcmp nsz ogt float %11, %12               ; 2 uses
-  %14 = select nsz i1 %13, float %11, float %12   ; 2 uses
-  %15 = fcmp nsz ogt float %14, %i.dw
-  %. = select nsz i1 %15, float %14, float %i.dw
-  %16 = select nsz i1 %13, float %12, float %11   ; 2 uses
-  %17 = fcmp nsz ogt float %16, %i.dw
-  %18 = select nsz i1 %17, float %i.dw, float %16
-  %i.ej = fadd nsz float %., %18
+  %10 = tail call i8 @llvm.umax.i8(i8 %i.dx, i8 %i.du)
+  %11 = tail call i8 @llvm.umax.i8(i8 %10, i8 %i.dv)
+  %12 = uitofp i8 %11 to float
+  %13 = tail call i8 @llvm.umin.i8(i8 %i.dx, i8 %i.du)
+  %14 = tail call i8 @llvm.umin.i8(i8 %13, i8 %i.dv)
+  %15 = uitofp i8 %14 to float
+  %i.ej = fadd nsz float %12, %15
   %i.ek = fadd nsz float %i.ej, f0x34000000
   %i.el = extractelement <2 x float> %i.eg, i64 0 ; 6 uses
   %i.em = extractelement <2 x float> %i.eg, i64 1 ; 3 uses
@@ -1124,14 +1112,14 @@ bb.a:
 vector.body:                                      ; preds = %.preheader, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %.preheader ] ; 4 uses
   %i.ca = getelementptr [2 x i8], ptr %invariant.gep, i64 %index ; 2 uses
-  %wide.load = load <8 x i16>, ptr %i.ca, align 2, !tbaa !73, !alias.scope !101, !noalias !104
-  %i.cb = uitofp <8 x i16> %wide.load to <8 x float> ; 6 uses
+  %wide.load = load <8 x i16>, ptr %i.ca, align 2, !tbaa !73, !alias.scope !101, !noalias !104 ; 3 uses
+  %i.cb = uitofp <8 x i16> %wide.load to <8 x float> ; 3 uses
   %i.cc = getelementptr [2 x i8], ptr %invariant.gep158, i64 %index ; 2 uses
-  %wide.load191 = load <8 x i16>, ptr %i.cc, align 2, !tbaa !73, !alias.scope !107, !noalias !108
-  %i.cd = uitofp <8 x i16> %wide.load191 to <8 x float> ; 7 uses
+  %wide.load191 = load <8 x i16>, ptr %i.cc, align 2, !tbaa !73, !alias.scope !107, !noalias !108 ; 3 uses
+  %i.cd = uitofp <8 x i16> %wide.load191 to <8 x float> ; 3 uses
   %i.ce = getelementptr [2 x i8], ptr %invariant.gep160, i64 %index ; 2 uses
-  %wide.load192 = load <8 x i16>, ptr %i.ce, align 2, !tbaa !73, !alias.scope !108
-  %i.cf = uitofp <8 x i16> %wide.load192 to <8 x float> ; 6 uses
+  %wide.load192 = load <8 x i16>, ptr %i.ce, align 2, !tbaa !73, !alias.scope !108 ; 3 uses
+  %i.cf = uitofp <8 x i16> %wide.load192 to <8 x float> ; 3 uses
   %i.cg = fmul nsz <8 x float> %broadcast.splat, %i.cf
   %i.ch = fmul nsz <8 x float> %broadcast.splat180, %i.cb
   %i.ci = fmul nsz <8 x float> %broadcast.splat182, %i.cd
@@ -1141,14 +1129,13 @@ vector.body:                                      ; preds = %.preheader, %vector
   %i.cm = tail call nsz <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.cl, <8 x float> %broadcast.splat184, <8 x float> %i.cb) ; 6 uses
   %i.cn = fsub nsz <8 x float> %i.ci, %i.cd
   %i.co = tail call nsz <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.cn, <8 x float> %broadcast.splat184, <8 x float> %i.cd) ; 7 uses
-  %4 = fcmp nsz ogt <8 x float> %i.cf, %i.cb      ; 2 uses
-  %5 = select nsz <8 x i1> %4, <8 x float> %i.cf, <8 x float> %i.cb ; 2 uses
-  %6 = fcmp nsz ogt <8 x float> %5, %i.cd
-  %7 = select nsz <8 x i1> %6, <8 x float> %5, <8 x float> %i.cd
-  %8 = select nsz <8 x i1> %4, <8 x float> %i.cb, <8 x float> %i.cf ; 2 uses
-  %9 = fcmp nsz ogt <8 x float> %8, %i.cd
-  %10 = select nsz <8 x i1> %9, <8 x float> %i.cd, <8 x float> %8
-  %i.cp = fadd nsz <8 x float> %7, %10
+  %4 = tail call <8 x i16> @llvm.umax.v8i16(<8 x i16> %wide.load192, <8 x i16> %wide.load)
+  %5 = tail call <8 x i16> @llvm.umax.v8i16(<8 x i16> %4, <8 x i16> %wide.load191)
+  %6 = uitofp <8 x i16> %5 to <8 x float>
+  %7 = tail call <8 x i16> @llvm.umin.v8i16(<8 x i16> %wide.load192, <8 x i16> %wide.load)
+  %8 = tail call <8 x i16> @llvm.umin.v8i16(<8 x i16> %7, <8 x i16> %wide.load191)
+  %9 = uitofp <8 x i16> %8 to <8 x float>
+  %i.cp = fadd nsz <8 x float> %6, %9
   %i.cq = fadd nsz <8 x float> %i.cp, splat (float f0x34000000)
   %i.cr = fcmp nsz ogt <8 x float> %i.ck, %i.cm   ; 2 uses
   %i.cs = select nsz <8 x i1> %i.cr, <8 x float> %i.ck, <8 x float> %i.cm ; 2 uses
@@ -1217,31 +1204,28 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
   %i.ei = mul nsw i64 %indvars.iv, %i.au          ; 3 uses
   %gep = getelementptr [2 x i8], ptr %invariant.gep, i64 %i.ei ; 2 uses
-  %i.ej = load i16, ptr %gep, align 2, !tbaa !73
+  %i.ej = load i16, ptr %gep, align 2, !tbaa !73  ; 3 uses
   %gep159 = getelementptr [2 x i8], ptr %invariant.gep158, i64 %i.ei ; 2 uses
-  %i.ek = load i16, ptr %gep159, align 2, !tbaa !73
-  %i.el = uitofp nsz i16 %i.ek to float           ; 7 uses
+  %i.ek = load i16, ptr %gep159, align 2, !tbaa !73 ; 3 uses
+  %i.el = uitofp nsz i16 %i.ek to float           ; 3 uses
   %gep161 = getelementptr [2 x i8], ptr %invariant.gep160, i64 %i.ei ; 2 uses
-  %i.em = load i16, ptr %gep161, align 2, !tbaa !73
+  %i.em = load i16, ptr %gep161, align 2, !tbaa !73 ; 3 uses
   %i.en = fmul nsz float %i.at, %i.el
   %i.eo = insertelement <2 x i16> poison, i16 %i.em, i64 0
   %i.ep = insertelement <2 x i16> %i.eo, i16 %i.ej, i64 1
-  %i.eq = uitofp <2 x i16> %i.ep to <2 x float>   ; 5 uses
+  %i.eq = uitofp <2 x i16> %i.ep to <2 x float>   ; 3 uses
   %i.er = fmul nsz <2 x float> %i.as, %i.eq
   %i.es = fsub nsz <2 x float> %i.er, %i.eq
   %i.et = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.es, <2 x float> %i.bv, <2 x float> %i.eq) ; 3 uses
   %i.eu = fsub nsz float %i.en, %i.el
   %i.ev = tail call nsz noundef float @llvm.fmuladd.f32(float %i.eu, float %i.l, float %i.el) ; 5 uses
-  %11 = extractelement <2 x float> %i.eq, i64 0   ; 3 uses
-  %12 = extractelement <2 x float> %i.eq, i64 1   ; 3 uses
-  %13 = fcmp nsz ogt float %11, %12               ; 2 uses
-  %14 = select nsz i1 %13, float %11, float %12   ; 2 uses
-  %15 = fcmp nsz ogt float %14, %i.el
-  %. = select nsz i1 %15, float %14, float %i.el
-  %16 = select nsz i1 %13, float %12, float %11   ; 2 uses
-  %17 = fcmp nsz ogt float %16, %i.el
-  %18 = select nsz i1 %17, float %i.el, float %16
-  %i.ew = fadd nsz float %., %18
+  %10 = tail call i16 @llvm.umax.i16(i16 %i.em, i16 %i.ej)
+  %11 = tail call i16 @llvm.umax.i16(i16 %10, i16 %i.ek)
+  %12 = uitofp i16 %11 to float
+  %13 = tail call i16 @llvm.umin.i16(i16 %i.em, i16 %i.ej)
+  %14 = tail call i16 @llvm.umin.i16(i16 %13, i16 %i.ek)
+  %15 = uitofp i16 %14 to float
+  %i.ew = fadd nsz float %12, %15
   %i.ex = fadd nsz float %i.ew, f0x34000000
   %i.ey = extractelement <2 x float> %i.et, i64 0 ; 6 uses
   %i.ez = extractelement <2 x float> %i.et, i64 1 ; 3 uses
@@ -1571,16 +1555,40 @@ declare i32 @ff_fill_rgba_map(ptr noundef, i32 noundef) local_unnamed_addr #0
 declare ptr @av_default_item_name(ptr noundef) #0
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umax.i8(i8, i8) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umin.i8(i8, i8) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.umax.i16(i16, i16) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.umin.i16(i16, i16) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i8> @llvm.umax.v4i8(<4 x i8>, <4 x i8>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i8> @llvm.umin.v4i8(<4 x i8>, <4 x i8>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fmuladd.v8f32(<8 x float>, <8 x float>, <8 x float>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i16> @llvm.umax.v8i16(<8 x i16>, <8 x i16>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i16> @llvm.umin.v8i16(<8 x i16>, <8 x i16>) #4
 
 attributes #0 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

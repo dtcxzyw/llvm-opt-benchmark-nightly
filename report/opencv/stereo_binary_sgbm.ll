@@ -205,39 +205,44 @@ bb.bw:                                            ; preds = %bb.bv
 
 bb.bx:                                            ; preds = %bb.bw
   %i.asc = zext nneg i32 %.4470.i to i64
-  %i.asd = getelementptr [2 x i8], ptr %i.aoq, i64 %i.asc ; 2 uses
+  %i.asd = getelementptr [2 x i8], ptr %i.aoq, i64 %i.asc ; 3 uses
   %i.ase = getelementptr i8, ptr %i.asd, i64 -2
-  %i.asf = load i16, ptr %i.ase, align 2, !tbaa !96
-  %i.asg = sitofp i16 %i.asf to double            ; 2 uses
+  %i.asf = load i16, ptr %i.ase, align 2, !tbaa !96 ; 2 uses
+  %i.asg = sitofp i16 %i.asf to double
   %i.ash = load <2 x i16>, ptr %i.asd, align 2, !tbaa !96
-  %i.asi = sitofp <2 x i16> %i.ash to <2 x double> ; 2 uses
-  %i.asj = extractelement <2 x double> %i.asi, i64 0 ; 2 uses
+  %i.asi = sitofp <2 x i16> %i.ash to <2 x double> ; 3 uses
+  %i.asj = extractelement <2 x double> %i.asi, i64 0
   %i.ask = fsub double %i.asg, %i.asj             ; 7 uses
-  %29 = extractelement <2 x double> %i.asi, i64 1 ; 2 uses
-  %30 = fsub double %29, %i.asj                   ; 7 uses
+  %shift = shufflevector <2 x double> %i.asi, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x double> %shift, %i.asi ; 5 uses
+  %29 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 3 uses
   %i.asl = fcmp oeq double %i.ask, 0.000000e+00
-  %i.asm = fcmp oeq double %30, 0.000000e+00
+  %i.asm = fcmp oeq double %29, 0.000000e+00
   %or.cond3.i = select i1 %i.asl, i1 true, i1 %i.asm
   br i1 %or.cond3.i, label %bb.cd, label %bb.by
 
 bb.by:                                            ; preds = %bb.bx
-  %31 = fcmp olt double %29, %i.asg
-  br i1 %31, label %bb.bz, label %bb.ca
+  %30 = getelementptr inbounds nuw i8, ptr %i.asd, i64 2
+  %31 = load i16, ptr %30, align 2, !tbaa !96
+  %32 = icmp sgt i16 %i.asf, %31
+  br i1 %32, label %bb.bz, label %bb.ca
 
 bb.bz:                                            ; preds = %bb.by
-  %32 = fmul nnan double %30, %30
+  %foldExtExtBinop830 = fmul nnan <2 x double> %foldExtExtBinop, %foldExtExtBinop
+  %33 = extractelement <2 x double> %foldExtExtBinop830, i64 0
   %i.asn = fmul nnan double %i.ask, %i.ask
-  %i.aso = fdiv double %32, %i.asn
-  %i.asp = fdiv double %30, %i.ask
+  %i.aso = fdiv double %33, %i.asn
+  %i.asp = fdiv double %29, %i.ask
   %i.asq = fadd double %i.asp, %i.aso
   %i.asr = call double @llvm.fmuladd.f64(double %i.asq, double -2.500000e-01, double 5.000000e-01)
   br label %bb.cb
 
 bb.ca:                                            ; preds = %bb.by
   %i.ass = fmul nnan double %i.ask, %i.ask
-  %33 = fmul nnan double %30, %30
-  %i.ast = fdiv double %i.ass, %33
-  %i.asu = fdiv double %i.ask, %30
+  %foldExtExtBinop832 = fmul nnan <2 x double> %foldExtExtBinop, %foldExtExtBinop
+  %34 = extractelement <2 x double> %foldExtExtBinop832, i64 0
+  %i.ast = fdiv double %i.ass, %34
+  %i.asu = fdiv double %i.ask, %29
   %i.asv = fadd double %i.asu, %i.ast
   %i.asw = call double @llvm.fmuladd.f64(double %i.asv, double -2.500000e-01, double 5.000000e-01)
   %i.asx = fneg double %i.asw
