@@ -205,8 +205,7 @@ _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i172: ; preds = %.noexc175, %
 bb.p:                                             ; preds = %.preheader, %_ZNSolsEf.exit83
   %indvars.iv274 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next275, %_ZNSolsEf.exit83 ] ; 3 uses
   %i.fa = or i64 %indvars.iv274, %indvars.iv279
-  %9 = and i64 %i.fa, 4294967295
-  %or.cond.not = icmp eq i64 %9, 0
+  %or.cond.not = icmp eq i64 %i.fa, 0
   br i1 %or.cond.not, label %_ZNSolsEPFRSoS_E.exit79, label %bb.q
 
 bb.q:                                             ; preds = %bb.p

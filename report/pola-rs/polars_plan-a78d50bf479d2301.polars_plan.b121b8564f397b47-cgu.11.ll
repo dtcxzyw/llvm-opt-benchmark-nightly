@@ -205,11 +205,10 @@ bb.fn:                                            ; preds = %._crit_edge360
 bb.fo:                                            ; preds = %bb.fn
   %i.yo = getelementptr inbounds nuw i8, ptr %i.xr, i64 40, !dbg !98942
   %i.yp = load i8, ptr %i.yo, align 8, !dbg !98942, !range !620, !noundef !11 ; 2 uses
-  %.not135 = icmp ne i8 %i.yp, 2, !dbg !98943
-  %1 = xor i8 %i.yp, %i.yn
-  %2 = trunc i8 %1 to i1
-  %or.cond.not = and i1 %.not135, %2, !dbg !98946
-  br i1 %or.cond.not, label %bb.fm, label %.loopexit283, !dbg !98946
+  %.not135 = icmp eq i8 %i.yp, 2, !dbg !98943
+  %.not277 = icmp eq i8 %i.yp, %i.yn
+  %or.cond = or i1 %.not135, %.not277, !dbg !98946
+  br i1 %or.cond, label %.loopexit283, label %bb.fm, !dbg !98946
 
 bb.fp:                                            ; preds = %bb.fm
   %i.yq = getelementptr inbounds nuw i8, ptr %i.xr, i64 40, !dbg !98947

@@ -204,7 +204,7 @@ _RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFiel
   %.sroa.0.1.i.i18 = phi i8 [ %i.ah, %_RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdx11sort_by_keyTINtNtCshzWfHUSfYae_4core3cmp7ReverseyEoyENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2l_16LayoutCalculatorRNtB2n_16TargetDataLayoutE17univariant_biasedBy_NtBA_19RustcEnumVariantIdxRRINtB2n_10LayoutDataBy_B49_EEs3_0E0BC_.exit ], [ %i.aq, %bb.g ], [ %i.ak, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  %.not29 = icmp eq i8 %.sroa.0.1.i.i18, %.sroa.0.1.i.i
+  %.not29 = icmp eq i8 %.sroa.0.1.i.i, %.sroa.0.1.i.i18
   br i1 %.not29, label %bb.h, label %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared5pivot7median3NtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdxNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSBZ_11sort_by_keyTINtNtBa_3cmp7ReverseyEoyENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB38_16LayoutCalculatorRNtB3a_16TargetDataLayoutE17univariant_biasedBZ_NtB11_19RustcEnumVariantIdxRRINtB3a_10LayoutDataBZ_B4W_EEs3_0E0EB13_.exit
 
 bb.h:                                             ; preds = %_RNCINvMNtCsbSS6DM8SDEO_5alloc5sliceSNtNtCs8K4cjrcxBsw_6hir_ty6layout13RustcFieldIdx11sort_by_keyTINtNtCshzWfHUSfYae_4core3cmp7ReverseyEoyENCINvMs0_NtCskVLyBV5N46_15ra_ap_rustc_abi6layoutINtB2l_16LayoutCalculatorRNtB2n_16TargetDataLayoutE17univariant_biasedBy_NtBA_19RustcEnumVariantIdxRRINtB2n_10LayoutDataBy_B49_EEs3_0E0BC_.exit21

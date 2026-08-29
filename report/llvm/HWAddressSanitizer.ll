@@ -204,7 +204,6 @@ bb.iy:                                            ; preds = %bb.iu
 bb.iz:                                            ; preds = %bb.iy
   %.val6.i.i = load i64, ptr %i.ez, align 8
   %i.cqn = and i64 %.val6.i.i, %indvars.iv.i
-  %199 = trunc i64 %i.cqn to i32
   br label %_ZN12_GLOBAL__N_118HWAddressSanitizer9retagMaskEj.exit.i.i
 
 bb.ja:                                            ; preds = %bb.iy
@@ -213,12 +212,12 @@ bb.ja:                                            ; preds = %bb.iy
   %.zext.i.i.i = zext nneg i32 %i.cqp to i64
   %i.cqq = getelementptr inbounds nuw [4 x i8], ptr @_ZZN12_GLOBAL__N_118HWAddressSanitizer9retagMaskEjE9FastMasks, i64 %.zext.i.i.i
   %i.cqr = load i32, ptr %i.cqq, align 4, !tbaa !405
+  %199 = zext i32 %i.cqr to i64
   br label %_ZN12_GLOBAL__N_118HWAddressSanitizer9retagMaskEj.exit.i.i
 
 _ZN12_GLOBAL__N_118HWAddressSanitizer9retagMaskEj.exit.i.i: ; preds = %bb.ja, %bb.iz
-  %.0.i.i.i82 = phi i32 [ %199, %bb.iz ], [ %i.cqr, %bb.ja ]
-  %200 = zext i32 %.0.i.i.i82 to i64
-  %i.cqs = call noundef ptr @_ZN4llvm11ConstantInt3getEPNS_4TypeEmbb(ptr noundef %i.cql, i64 noundef %200, i1 noundef zeroext false, i1 noundef zeroext false) #24 ; 2 uses
+  %.0.i.i.i82 = phi i64 [ %i.cqn, %bb.iz ], [ %199, %bb.ja ]
+  %i.cqs = call noundef ptr @_ZN4llvm11ConstantInt3getEPNS_4TypeEmbb(ptr noundef %i.cql, i64 noundef %.0.i.i.i82, i1 noundef zeroext false, i1 noundef zeroext false) #24 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %79) #24
   store i16 257, ptr %i.apo, align 8
   %i.cqt = load ptr, ptr %i.ape, align 8, !tbaa !590, !nonnull !26, !align !193 ; 2 uses
@@ -614,7 +613,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit68.i: ; preds = %_
 bb.ju:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit68.i
   %.val47.i = load i64, ptr %i.ez, align 8
   %i.cwb = and i64 %.val47.i, %indvars.iv.i
-  %i.cwc = trunc i64 %i.cwb to i32
+  %i.cwc = trunc nuw i64 %i.cwb to i32
   br label %_ZN12_GLOBAL__N_118HWAddressSanitizer9retagMaskEj.exit.i
 
 bb.jv:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit68.i
