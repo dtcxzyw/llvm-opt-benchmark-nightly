@@ -205,8 +205,8 @@ bb.cr:                                            ; preds = %bb.cq, %_ZNK5clang4
   %i.qn = add i32 %i.qm, %.0204.neg               ; 2 uses
   %i.qo = getelementptr inbounds nuw i8, ptr %.1.i275, i64 16 ; 2 uses
   %i.qp = load i64, ptr %i.qo, align 16
-  %i.qq = lshr i64 %i.qp, 48                      ; 2 uses
-  %i.qr = trunc nuw nsw i64 %i.qq to i32
+  %i.qq = lshr i64 %i.qp, 48
+  %i.qr = trunc nuw nsw i64 %i.qq to i32          ; 2 uses
   %i.qs = icmp ult i32 %i.qn, %i.qr
   br i1 %i.qs, label %.lr.ph392, label %._crit_edge393
 
@@ -331,8 +331,9 @@ bb.cv:                                            ; preds = %bb.ct
 
 _ZN4llvm23SmallVectorTemplateBaseIN5clang8QualTypeELb1EE9push_backES2_.exit: ; preds = %bb.cu, %bb.cv
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %48 = icmp samesign ult i64 %indvars.iv.next, %i.qq
-  br i1 %48, label %bb.ct, label %._crit_edge393.loopexit, !llvm.loop !2052
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond.not = icmp eq i32 %lftr.wideiv, %i.qr
+  br i1 %exitcond.not, label %._crit_edge393.loopexit, label %bb.ct, !llvm.loop !2052
 
 ._crit_edge397:                                   ; preds = %_ZN4llvm23SmallVectorTemplateBaseISt4pairIN5clang14DeclAccessPairEPNS2_12FunctionDeclEELb1EE9push_backES6_.exit, %_ZN4llvm11SmallVectorIN5clang8QualTypeELj6EED2Ev.exit
   %i.tl = load ptr, ptr %i.ia, align 8, !tbaa !811, !nonnull !697, !align !698

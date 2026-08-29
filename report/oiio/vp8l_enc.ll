@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %._crit_edge.i
 .preheader.preheader.i:                           ; preds = %.preheader.preheader.i.sink.split, %.loopexit.3.i, %bb.v, %._crit_edge.i
   %.2197 = phi i32 [ 1, %._crit_edge.i ], [ 1, %bb.v ], [ 4, %.loopexit.3.i ], [ %.2197.ph, %.preheader.preheader.i.sink.split ] ; 6 uses
   %.2155.i = phi i32 [ 0, %._crit_edge.i ], [ 1, %bb.v ], [ 1, %.loopexit.3.i ], [ 1, %.preheader.preheader.i.sink.split ] ; 7 uses
-  %i.nv = zext i32 %.2197 to i64                  ; 5 uses
+  %i.nv = zext i32 %.2197 to i64                  ; 3 uses
   br i1 %.not.i125, label %.preheader.i.us.preheader, label %.preheader.i.preheader
 
 .preheader.i.preheader:                           ; preds = %.preheader.preheader.i
@@ -218,7 +218,7 @@ bb.v:                                             ; preds = %._crit_edge.i
   br label %.preheader.i
 
 .preheader.i.us.preheader:                        ; preds = %.preheader.preheader.i.thread, %.preheader.preheader.i
-  %i.nx = phi i64 [ 1, %.preheader.preheader.i.thread ], [ %i.nv, %.preheader.preheader.i ] ; 5 uses
+  %i.nx = phi i64 [ 1, %.preheader.preheader.i.thread ], [ %i.nv, %.preheader.preheader.i ] ; 3 uses
   %.2155.i270 = phi i32 [ 0, %.preheader.preheader.i.thread ], [ %.2155.i, %.preheader.preheader.i ] ; 5 uses
   %.2269 = phi i32 [ 0, %.preheader.preheader.i.thread ], [ %.1193, %.preheader.preheader.i ] ; 2 uses
   %.2197267 = phi i32 [ 1, %.preheader.preheader.i.thread ], [ %.2197, %.preheader.preheader.i ] ; 2 uses
@@ -344,7 +344,6 @@ EncoderAnalyze.exit.loopexit298.unr-lcssa:        ; preds = %.preheader.i
   br label %EncoderAnalyze.exit
 
 EncoderAnalyze.exit:                              ; preds = %.preheader.i.epil.preheader, %EncoderAnalyze.exit.loopexit298.unr-lcssa, %EncoderAnalyze.exit.loopexit.unr-lcssa, %.preheader.i.us.epil
-  %11 = phi i64 [ %i.nx, %EncoderAnalyze.exit.loopexit.unr-lcssa ], [ %i.nx, %.preheader.i.us.epil ], [ %i.nv, %EncoderAnalyze.exit.loopexit298.unr-lcssa ], [ %i.nv, %.preheader.i.epil.preheader ]
   %.2268 = phi i32 [ %.2269, %EncoderAnalyze.exit.loopexit.unr-lcssa ], [ %.2269, %.preheader.i.us.epil ], [ %.1193, %EncoderAnalyze.exit.loopexit298.unr-lcssa ], [ %.1193, %.preheader.i.epil.preheader ] ; 2 uses
   %.2197266 = phi i32 [ %.2197267, %EncoderAnalyze.exit.loopexit.unr-lcssa ], [ %.2197267, %.preheader.i.us.epil ], [ %.2197, %EncoderAnalyze.exit.loopexit298.unr-lcssa ], [ %.2197, %.preheader.i.epil.preheader ] ; 3 uses
   %i.pm = load ptr, ptr %i.e, align 8, !tbaa !15  ; 2 uses
@@ -380,7 +379,7 @@ bb.w:                                             ; preds = %EncoderAnalyze.exit
   br i1 %i.qe, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  %i.qf = lshr i32 %.2197266, 1                   ; 4 uses
+  %i.qf = lshr i32 %.2197266, 1                   ; 5 uses
   %.not230 = icmp eq i32 %i.qf, 0
   br i1 %.not230, label %._crit_edge, label %.lr.ph
 
@@ -390,9 +389,11 @@ bb.x:                                             ; preds = %bb.w
   %narrow = mul nsw i32 %i.qh, 28
   %i.qi = sext i32 %narrow to i64
   %scevgep = getelementptr i8, ptr %3, i64 %i.qi
-  %12 = lshr i64 %11, 1
+  %11 = add nsw i32 %i.qf, -1
+  %12 = zext nneg i32 %11 to i64
   %i.qj = mul nuw nsw i64 %12, 28
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.qg, ptr align 4 %scevgep, i64 %i.qj, i1 false)
+  %13 = add nuw nsw i64 %i.qj, 28
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.qg, ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i64 %13, i1 false)
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.x

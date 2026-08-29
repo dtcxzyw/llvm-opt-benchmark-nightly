@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.ad = load ptr, ptr %i.v, align 8, !tbaa !50  ; 3 uses
-  %i.ae = lshr i32 %i.x, 1                        ; 5 uses
+  %i.ae = lshr i32 %i.x, 1                        ; 6 uses
   %i.af = load ptr, ptr @Extra_UtilMMoutOfMemory, align 8, !tbaa !51
   %i.ag = zext nneg i32 %i.ae to i64
   %i.ah = shl nuw nsw i64 %i.ag, 3
@@ -224,20 +224,22 @@ bb.e:                                             ; preds = %bb.d
   %i.ao = getelementptr inbounds nuw i8, ptr %i.v, i64 20
   store i32 %i.an, ptr %i.ao, align 4, !tbaa !53
   %.not102 = icmp eq i32 %i.ae, 0
-  %.pre111 = zext i32 %i.x to i64                 ; 2 uses
   br i1 %.not102, label %.preheader.preheader, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.e
-  %i.ap = shl nuw nsw i64 %.pre111, 2
-  %1 = and i64 %i.ap, 17179869176
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ai, i8 0, i64 %1, i1 false), !tbaa !31
+  %1 = add nsw i32 %i.ae, -1
+  %2 = zext nneg i32 %1 to i64
+  %i.ap = shl nuw nsw i64 %2, 3
+  %3 = add nuw nsw i64 %i.ap, 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ai, i8 0, i64 %3, i1 false), !tbaa !31
   br label %.preheader.preheader
 
-.preheader.preheader:                             ; preds = %bb.e, %.lr.ph.preheader
+.preheader.preheader:                             ; preds = %.lr.ph.preheader, %bb.e
+  %wide.trip.count = zext i32 %i.x to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
-  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ 0, %.preheader.preheader ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %indvars.iv
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !31 ; 2 uses
   %.not8995 = icmp eq ptr %i.ar, null
@@ -299,7 +301,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
 
 ._crit_edge:                                      ; preds = %bb.i, %.preheader
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %.pre111
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %bb.j, label %.preheader, !llvm.loop !58
 
 bb.j:                                             ; preds = %._crit_edge

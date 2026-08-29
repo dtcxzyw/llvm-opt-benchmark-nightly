@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.a, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = lshr i32 %1, 6                           ; 5 uses
+  %i.b = lshr i32 %1, 6                           ; 6 uses
   %i.c = icmp ugt i32 %1, 255
   br i1 %i.c, label %.loopexit.sink.split, label %.lr.ph
 
@@ -263,9 +263,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %.loopexit, label %.lr.ph41.preheader
 
 .lr.ph41.preheader:                               ; preds = %.lr.ph.split.1, %.preheader
-  %2 = lshr i32 %1, 3
-  %3 = and i32 %2, 24
-  %4 = zext nneg i32 %3 to i64
+  %2 = add nsw i32 %i.b, -1
+  %3 = zext nneg i32 %2 to i64
+  %4 = shl nuw nsw i64 %3, 3
+  %5 = add nuw nsw i64 %4, 8
   br label %.loopexit.sink.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader
@@ -310,8 +311,8 @@ bb.b:                                             ; preds = %bb.a
   br label %.preheader
 
 .loopexit.sink.split:                             ; preds = %bb.b, %.lr.ph41.preheader
-  %.sink = phi i64 [ %4, %.lr.ph41.preheader ], [ 32, %bb.b ]
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %0, i8 0, i64 %.sink, i1 false)
+  %.sink = phi i64 [ %5, %.lr.ph41.preheader ], [ 32, %bb.b ]
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %0, i8 0, i64 %.sink, i1 false)
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.sink.split, %.preheader, %bb.a

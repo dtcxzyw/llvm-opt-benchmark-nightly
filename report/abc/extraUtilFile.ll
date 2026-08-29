@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/extraUtilFile?download=true
 inline.NumInlined: 14
 inline.NumDeleted: 3
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@Extra_ReadHex:bb.a
   %or.cond33 = icmp ult i8 %i.i, 6
   br i1 %or.cond33, label %bb.d, label %bb.e
@@ -204,18 +204,62 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 .critedge31:                                      ; preds = %bb.a
-  %i.e = shl nuw i32 1, %2                        ; 2 uses
+  %i.e = shl nuw i32 1, %2                        ; 3 uses
   %i.f = icmp sgt i32 %i.e, 3
-  br i1 %i.f, label %.lr.ph.preheader.a, label %._crit_edge
+  br i1 %i.f, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph.preheader.a:                               ; preds = %.critedge31
-  %i.g = lshr i32 %i.e, 2
-  br label %.lr.ph
+.lr.ph.preheader:                                 ; preds = %.critedge31
+  %3 = lshr i32 %i.e, 2                           ; 3 uses
+  %4 = and i32 %i.e, 4
+  %lcmp.mod.not = icmp eq i32 %4, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.preheader.a
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader.a, %.lr.ph
-  %.0.in33 = phi i32 [ %.0.a, %.lr.ph ], [ %i.g, %.lr.ph.preheader.a ] ; 2 uses
-  %.02432 = phi ptr [ %.1.a, %.lr.ph ], [ %0, %.lr.ph.preheader.a ] ; 2 uses
-  %.0.a = add nsw i32 %.0.in33, -1                ; 3 uses
+.lr.ph.preheader.a:                               ; preds = %.lr.ph.preheader
+  %.0.prol = add nsw i32 %3, -1                   ; 3 uses
+  %5 = lshr i32 %.0.prol, 3
+  %6 = zext nneg i32 %5 to i64
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %6
+  %8 = load i32, ptr %7, align 4, !tbaa !26
+  %9 = shl nuw nsw i32 %.0.prol, 2
+  %10 = and i32 %9, 24
+  %i.g = lshr i32 %8, %10
+  %11 = and i32 %i.g, 15                          ; 2 uses
+  %12 = icmp samesign ult i32 %11, 10
+  %13 = trunc nuw nsw i32 %11 to i8               ; 2 uses
+  %14 = add nuw nsw i8 %13, 87
+  %15 = or disjoint i8 %13, 48
+  %storemerge.prol = select i1 %12, i8 %15, i8 %14
+  %.1.prol = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
+  store i8 %storemerge.prol, ptr %0, align 1, !tbaa !8
+  br label %.lr.ph.prol.loopexit
+
+.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.preheader.a, %.lr.ph.preheader
+  %.0.in33.unr = phi i32 [ %3, %.lr.ph.preheader ], [ %.0.prol, %.lr.ph.preheader.a ]
+  %.02432.unr = phi ptr [ %0, %.lr.ph.preheader ], [ %.1.prol, %.lr.ph.preheader.a ]
+  %.1.lcssa.unr = phi ptr [ poison, %.lr.ph.preheader ], [ %.1.prol, %.lr.ph.preheader.a ]
+  %16 = icmp eq i32 %3, 1
+  br i1 %16, label %._crit_edge, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
+  %.0.in33 = phi i32 [ %.0.a, %.lr.ph ], [ %.0.in33.unr, %.lr.ph.prol.loopexit ] ; 3 uses
+  %.02432 = phi ptr [ %.1.a, %.lr.ph ], [ %.02432.unr, %.lr.ph.prol.loopexit ] ; 3 uses
+  %.0 = add nsw i32 %.0.in33, -1                  ; 2 uses
+  %17 = lshr i32 %.0, 3
+  %18 = zext nneg i32 %17 to i64
+  %19 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %18
+  %20 = load i32, ptr %19, align 4, !tbaa !26
+  %21 = shl i32 %.0, 2
+  %22 = and i32 %21, 28
+  %23 = lshr i32 %20, %22
+  %24 = and i32 %23, 15                           ; 2 uses
+  %25 = icmp samesign ult i32 %24, 10
+  %26 = trunc nuw nsw i32 %24 to i8               ; 2 uses
+  %27 = add nuw nsw i8 %26, 87
+  %28 = or disjoint i8 %26, 48
+  %storemerge = select i1 %25, i8 %28, i8 %27
+  %.1 = getelementptr inbounds nuw i8, ptr %.02432, i64 1
+  store i8 %storemerge, ptr %.02432, align 1, !tbaa !8
+  %.0.a = add nsw i32 %.0.in33, -2                ; 3 uses
   %i.h = lshr i32 %.0.a, 3
   %i.i = zext nneg i32 %i.h to i64
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.i
@@ -229,13 +273,13 @@ bb.g:                                             ; preds = %bb.e
   %i.r = add nuw nsw i8 %i.q, 87
   %i.s = or disjoint i8 %i.q, 48
   %storemerge.a = select i1 %i.p, i8 %i.s, i8 %i.r
-  %.1.a = getelementptr inbounds nuw i8, ptr %.02432, i64 1 ; 2 uses
-  store i8 %storemerge.a, ptr %.02432, align 1, !tbaa !8
-  %3 = icmp samesign ugt i32 %.0.in33, 1
-  br i1 %3, label %.lr.ph, label %._crit_edge, !llvm.loop !31
+  %.1.a = getelementptr inbounds nuw i8, ptr %.02432, i64 2 ; 2 uses
+  store i8 %storemerge.a, ptr %.1, align 1, !tbaa !8
+  %29 = icmp sgt i32 %.0.in33, 2
+  br i1 %29, label %.lr.ph, label %._crit_edge, !llvm.loop !31
 
-._crit_edge:                                      ; preds = %.lr.ph, %.critedge31
-  %.024.lcssa = phi ptr [ %0, %.critedge31 ], [ %.1.a, %.lr.ph ]
+._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %.critedge31
+  %.024.lcssa = phi ptr [ %0, %.critedge31 ], [ %.1.lcssa.unr, %.lr.ph.prol.loopexit ], [ %.1.a, %.lr.ph ]
   store i8 0, ptr %.024.lcssa, align 1, !tbaa !8
   br label %bb.h
 

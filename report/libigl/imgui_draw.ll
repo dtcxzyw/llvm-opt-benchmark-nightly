@@ -205,9 +205,9 @@ _ZL36ImFontAtlasBuildRenderDefaultTexDataP11ImFontAtlas.exit: ; preds = %iter.ch
   %i.czv = getelementptr inbounds nuw i8, ptr %i.czs, i64 6 ; 4 uses
   %i.czw = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.czx = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.czy = load i16, ptr %i.czs, align 8, !tbaa !534 ; 5 uses
+  %i.czy = load i16, ptr %i.czs, align 8, !tbaa !534 ; 3 uses
   %i.czz = zext i16 %i.czy to i32                 ; 2 uses
-  %i.daa = lshr i32 %i.czz, 1                     ; 6 uses
+  %i.daa = lshr i32 %i.czz, 1                     ; 8 uses
   %i.dab = sub nsw i32 %i.czz, %i.daa             ; 2 uses
   %i.dac = load ptr, ptr %i.czt, align 8, !tbaa !204 ; 2 uses
   %.not82.peel.i = icmp eq ptr %i.dac, null
@@ -227,8 +227,7 @@ bb.f:                                             ; preds = %.peel.begin.i
   br i1 %.not115.peel.i, label %.preheader98.peel.i, label %.lr.ph.preheader.peel.i
 
 .lr.ph.preheader.peel.i:                          ; preds = %bb.f
-  %1 = lshr i16 %i.czy, 1
-  %i.dam = zext nneg i16 %1 to i64
+  %i.dam = zext nneg i32 %i.daa to i64
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.dal, i8 0, i64 %i.dam, i1 false), !tbaa !22
   br label %.preheader98.peel.i
 
@@ -259,10 +258,11 @@ bb.g:                                             ; preds = %.peel.begin.i
   br i1 %.not118.peel.i, label %.preheader.peel.i, label %.lr.ph108.preheader.peel.i
 
 .lr.ph108.preheader.peel.i:                       ; preds = %bb.g
-  %2 = lshr i16 %i.czy, 1
-  %i.dba = zext nneg i16 %2 to i64
+  %1 = add nsw i32 %i.daa, -1
+  %i.dba = zext nneg i32 %1 to i64
   %i.dbb = shl nuw nsw i64 %i.dba, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.daz, i8 0, i64 %i.dbb, i1 false), !tbaa !138
+  %2 = add nuw nsw i64 %i.dbb, 4
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.daz, i8 0, i64 %2, i1 false), !tbaa !138
   br label %.preheader.peel.i
 
 .preheader.peel.i:                                ; preds = %.lr.ph108.preheader.peel.i, %bb.g
@@ -317,7 +317,7 @@ bb.h:                                             ; preds = %.loopexit.i, %.peel
   %i.dcc = zext i16 %i.dcb to i32                 ; 4 uses
   %i.dcd = trunc nuw nsw i64 %indvar.i to i32     ; 5 uses
   %i.dce = sub i32 %i.dcc, %i.dcd
-  %i.dcf = lshr i32 %i.dce, 1                     ; 6 uses
+  %i.dcf = lshr i32 %i.dce, 1                     ; 7 uses
   %i.dcg = add i32 %i.dcf, %i.dcd                 ; 3 uses
   %i.dch = sub i32 %i.dcc, %i.dcg                 ; 2 uses
   %i.dci = load ptr, ptr %i.czt, align 8, !tbaa !204 ; 2 uses
@@ -368,14 +368,16 @@ bb.j:                                             ; preds = %bb.h
   br i1 %.not118.i, label %.preheader.i, label %.lr.ph108.preheader.i
 
 .lr.ph108.preheader.i:                            ; preds = %bb.j
-  %i.dde = zext nneg i32 %i.dcf to i64            ; 2 uses
+  %3 = add nsw i32 %i.dcf, -1
+  %i.dde = zext nneg i32 %3 to i64
   %i.ddf = shl nuw nsw i64 %i.dde, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ddd, i8 0, i64 %i.ddf, i1 false), !tbaa !138
+  %4 = add nuw nsw i64 %i.ddf, 4
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ddd, i8 0, i64 %4, i1 false), !tbaa !138
   br label %.preheader.i
 
-.preheader.i:                                     ; preds = %bb.j, %.lr.ph108.preheader.i
-  %.pre-phi = phi i64 [ %i.dde, %.lr.ph108.preheader.i ], [ 0, %bb.j ]
-  %i.ddg = getelementptr inbounds nuw [4 x i8], ptr %i.ddd, i64 %.pre-phi ; 2 uses
+.preheader.i:                                     ; preds = %.lr.ph108.preheader.i, %bb.j
+  %5 = zext nneg i32 %i.dcf to i64
+  %i.ddg = getelementptr inbounds nuw [4 x i8], ptr %i.ddd, i64 %5 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ddg, i8 -1, i64 %i.dca, i1 false), !tbaa !138
   %.not120.i = icmp eq i32 %i.dcg, %i.dcc
   br i1 %.not120.i, label %.loopexit.i, label %.lr.ph112.i

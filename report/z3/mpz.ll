@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.ac
 
 bb.e:                                             ; preds = %bb.c
-  %i.k = lshr i32 %2, 5                           ; 3 uses
+  %i.k = lshr i32 %2, 5                           ; 4 uses
   %i.l = add nuw nsw i32 %i.k, 1                  ; 2 uses
   %i.m = and i32 %2, 31
   %spec.store.select.i = tail call i32 @llvm.umax.i32(i32 %i.l, i32 6) ; 3 uses
@@ -271,10 +271,11 @@ _ZN11mpz_managerILb1EE18allocate_if_neededER3mpzj.exit: ; preds = %_ZN11mpz_mana
 
 .lr.ph:                                           ; preds = %_ZN11mpz_managerILb1EE18allocate_if_neededER3mpzj.exit
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
-  %5 = lshr i32 %2, 3
-  %6 = and i32 %5, 536870908
-  %7 = zext nneg i32 %6 to i64
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.aj, i8 0, i64 %7, i1 false), !tbaa !27
+  %5 = add nsw i32 %i.k, -1
+  %6 = zext nneg i32 %5 to i64
+  %7 = shl nuw nsw i64 %6, 2
+  %8 = add nuw nsw i64 %7, 4
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.aj, i8 0, i64 %8, i1 false), !tbaa !27
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %_ZN11mpz_managerILb1EE18allocate_if_neededER3mpzj.exit
@@ -677,7 +678,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.ac
 
 bb.e:                                             ; preds = %bb.c
-  %i.k = lshr i32 %2, 5                           ; 3 uses
+  %i.k = lshr i32 %2, 5                           ; 4 uses
   %i.l = add nuw nsw i32 %i.k, 1                  ; 2 uses
   %i.m = and i32 %2, 31
   %spec.store.select.i = tail call i32 @llvm.umax.i32(i32 %i.l, i32 6) ; 3 uses
@@ -746,10 +747,11 @@ _ZN11mpz_managerILb0EE18allocate_if_neededER3mpzj.exit: ; preds = %_ZN11mpz_mana
 
 .lr.ph:                                           ; preds = %_ZN11mpz_managerILb0EE18allocate_if_neededER3mpzj.exit
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 8
-  %5 = lshr i32 %2, 3
-  %6 = and i32 %5, 536870908
-  %7 = zext nneg i32 %6 to i64
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.am, i8 0, i64 %7, i1 false), !tbaa !27
+  %5 = add nsw i32 %i.k, -1
+  %6 = zext nneg i32 %5 to i64
+  %7 = shl nuw nsw i64 %6, 2
+  %8 = add nuw nsw i64 %7, 4
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.am, i8 0, i64 %8, i1 false), !tbaa !27
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %_ZN11mpz_managerILb0EE18allocate_if_neededER3mpzj.exit

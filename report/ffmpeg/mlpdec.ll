@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %i.aa = tail call i32 @llvm.bswap.i32(i32 %i.z)
   %i.ab = and i32 %i.s, 7
   %i.ac = shl i32 %i.aa, %i.ab
-  %i.ad = lshr i32 %i.ac, 28                      ; 5 uses
+  %i.ad = lshr i32 %i.ac, 28                      ; 6 uses
   %i.ae = add i32 %i.s, 4
   %i.af = tail call i32 @llvm.umin.i32(i32 %i.u, i32 %i.ae) ; 4 uses
   store i32 %i.af, ptr %i.r, align 8, !tbaa !48
@@ -282,7 +282,7 @@ bb.h:                                             ; preds = %bb.f
 
 .preheader:                                       ; preds = %bb.h
   %i.bz = sub nuw nsw i32 32, %i.bg
-  %wide.trip.count = zext nneg i32 %i.ad to i64   ; 3 uses
+  %wide.trip.count = zext nneg i32 %i.ad to i64   ; 2 uses
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.h
@@ -370,8 +370,11 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not74, label %.split.us.preheader, label %.split
 
 .split.us.preheader:                              ; preds = %bb.m
-  %i.eb = shl nuw nsw i64 %wide.trip.count, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.dz, i8 0, i64 %i.eb, i1 false), !tbaa !37
+  %5 = add nsw i32 %i.ad, -1
+  %6 = zext nneg i32 %5 to i64
+  %i.eb = shl nuw nsw i64 %6, 2
+  %7 = add nuw nsw i64 %i.eb, 4
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.dz, i8 0, i64 %7, i1 false), !tbaa !37
   br label %.critedge
 
 .split:                                           ; preds = %bb.m, %.split

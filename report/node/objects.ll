@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 13178
 inline.NumDeleted: 2935
 loop-unroll.NumCompletelyUnrolled: 51
-loop-unroll.NumRuntimeUnrolled: 17
-loop-unroll.NumUnrolled: 68
+loop-unroll.NumRuntimeUnrolled: 19
+loop-unroll.NumUnrolled: 70
 begin_hunk_0_@_ZSt13__adjust_heapIN2v88internal10AtomicSlotEimN9__gnu_cxx5__ops15_Iter_comp_iterINS1_19EnumIndexComparatorINS1_14NameDictionaryEEEEEEvT_T0_SB_T1_T2_:bb.a
   %.0.lcssa.i = phi i32 [ %.1, %bb.e ], [ %.022.i, %bb.f ], [ %.0923.i, %bb.g ]
   %i.cm = sext i32 %.0.lcssa.i to i64
@@ -205,14 +205,14 @@ bb.a:
   br i1 %.not32, label %.loopexit, label %.lr.ph36
 
 .lr.ph36:                                         ; preds = %.preheader
-  %i.b = inttoptr i64 %0 to ptr                   ; 3 uses
+  %i.b = inttoptr i64 %0 to ptr                   ; 4 uses
   %i.c = add i64 %2, -1
   %i.d = inttoptr i64 %i.c to ptr
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 5 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph36, %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit
-  %.sroa.010.034 = phi i64 [ %.sroa.010.031, %.lr.ph36 ], [ %.sroa.010.0, %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit ] ; 6 uses
+  %.sroa.010.034 = phi i64 [ %.sroa.010.031, %.lr.ph36 ], [ %.sroa.010.0, %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit ] ; 7 uses
   %.sroa.010.0.in33 = phi i64 [ %0, %.lr.ph36 ], [ %.sroa.010.034, %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit ] ; 3 uses
   %i.f = inttoptr i64 %.sroa.010.034 to ptr       ; 3 uses
   %i.g = load atomic volatile i64, ptr %i.f monotonic, align 8
@@ -241,28 +241,73 @@ bb.b:                                             ; preds = %.lr.ph36, %_ZSt13mo
 
 bb.c:                                             ; preds = %bb.b
   %i.y = sub i64 %.sroa.010.034, %0
-  %i.z = trunc i64 %i.y to i32                    ; 2 uses
+  %.fr39 = freeze i64 %i.y
+  %i.z = trunc i64 %.fr39 to i32                  ; 2 uses
   %i.aa = icmp sgt i32 %i.z, 7
   br i1 %i.aa, label %.lr.ph.preheader.i.i.i.i.i, label %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %bb.c
-  %i.ab = add i64 %.sroa.010.0.in33, 16
-  %i.ac = lshr i32 %i.z, 3
-  br label %.lr.ph.i.i.i.i.i
+  %i.ab = add i64 %.sroa.010.0.in33, 16           ; 2 uses
+  %i.ac = lshr i32 %i.z, 3                        ; 4 uses
+  %3 = add nsw i32 %i.ac, -1
+  %xtraiter = and i32 %i.ac, 3                    ; 2 uses
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.prol
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i
-  %.013.i.i.i.i.i = phi i32 [ %i.ai, %.lr.ph.i.i.i.i.i ], [ %i.ac, %.lr.ph.preheader.i.i.i.i.i ] ; 2 uses
-  %.sroa.09.012.i.i.i.i.i = phi i64 [ %i.ad, %.lr.ph.i.i.i.i.i ], [ %.sroa.010.034, %.lr.ph.preheader.i.i.i.i.i ]
-  %.sroa.06.011.i.i.i.i.i = phi i64 [ %i.af, %.lr.ph.i.i.i.i.i ], [ %i.ab, %.lr.ph.preheader.i.i.i.i.i ]
-  %i.ad = add i64 %.sroa.09.012.i.i.i.i.i, -8     ; 2 uses
+.lr.ph.i.i.i.i.i.prol:                            ; preds = %.lr.ph.preheader.i.i.i.i.i, %.lr.ph.i.i.i.i.i.prol
+  %.013.i.i.i.i.i.prol = phi i32 [ %9, %.lr.ph.i.i.i.i.i.prol ], [ %i.ac, %.lr.ph.preheader.i.i.i.i.i ]
+  %.sroa.09.012.i.i.i.i.i.prol = phi i64 [ %4, %.lr.ph.i.i.i.i.i.prol ], [ %.sroa.010.034, %.lr.ph.preheader.i.i.i.i.i ]
+  %.sroa.06.011.i.i.i.i.i.prol = phi i64 [ %6, %.lr.ph.i.i.i.i.i.prol ], [ %i.ab, %.lr.ph.preheader.i.i.i.i.i ]
+  %prol.iter = phi i32 [ %prol.iter.next, %.lr.ph.i.i.i.i.i.prol ], [ 0, %.lr.ph.preheader.i.i.i.i.i ]
+  %4 = add i64 %.sroa.09.012.i.i.i.i.i.prol, -8   ; 3 uses
+  %5 = inttoptr i64 %4 to ptr
+  %6 = add i64 %.sroa.06.011.i.i.i.i.i.prol, -8   ; 3 uses
+  %7 = inttoptr i64 %6 to ptr
+  %8 = load atomic volatile i64, ptr %5 monotonic, align 8
+  store atomic volatile i64 %8, ptr %7 monotonic, align 8
+  %9 = add nsw i32 %.013.i.i.i.i.i.prol, -1       ; 2 uses
+  %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.prol, !llvm.loop !390
+
+.lr.ph.i.i.i.i.i.prol.loopexit:                   ; preds = %.lr.ph.i.i.i.i.i.prol, %.lr.ph.preheader.i.i.i.i.i
+  %.013.i.i.i.i.i.unr = phi i32 [ %i.ac, %.lr.ph.preheader.i.i.i.i.i ], [ %9, %.lr.ph.i.i.i.i.i.prol ]
+  %.sroa.09.012.i.i.i.i.i.unr = phi i64 [ %.sroa.010.034, %.lr.ph.preheader.i.i.i.i.i ], [ %4, %.lr.ph.i.i.i.i.i.prol ]
+  %.sroa.06.011.i.i.i.i.i.unr = phi i64 [ %i.ab, %.lr.ph.preheader.i.i.i.i.i ], [ %6, %.lr.ph.i.i.i.i.i.prol ]
+  %10 = icmp ult i32 %3, 3
+  br i1 %10, label %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit, label %.lr.ph.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i
+  %.013.i.i.i.i.i = phi i32 [ %i.ai, %.lr.ph.i.i.i.i.i ], [ %.013.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 2 uses
+  %.sroa.09.012.i.i.i.i.i = phi i64 [ %i.ad, %.lr.ph.i.i.i.i.i ], [ %.sroa.09.012.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 4 uses
+  %.sroa.06.011.i.i.i.i.i = phi i64 [ %i.af, %.lr.ph.i.i.i.i.i ], [ %.sroa.06.011.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 4 uses
+  %11 = add i64 %.sroa.09.012.i.i.i.i.i, -8
+  %12 = inttoptr i64 %11 to ptr
+  %13 = add i64 %.sroa.06.011.i.i.i.i.i, -8
+  %14 = inttoptr i64 %13 to ptr
+  %15 = load atomic volatile i64, ptr %12 monotonic, align 8
+  store atomic volatile i64 %15, ptr %14 monotonic, align 8
+  %16 = add i64 %.sroa.09.012.i.i.i.i.i, -16
+  %17 = inttoptr i64 %16 to ptr
+  %18 = add i64 %.sroa.06.011.i.i.i.i.i, -16
+  %19 = inttoptr i64 %18 to ptr
+  %20 = load atomic volatile i64, ptr %17 monotonic, align 8
+  store atomic volatile i64 %20, ptr %19 monotonic, align 8
+  %21 = add i64 %.sroa.09.012.i.i.i.i.i, -24
+  %22 = inttoptr i64 %21 to ptr
+  %23 = add i64 %.sroa.06.011.i.i.i.i.i, -24
+  %24 = inttoptr i64 %23 to ptr
+  %25 = load atomic volatile i64, ptr %22 monotonic, align 8
+  store atomic volatile i64 %25, ptr %24 monotonic, align 8
+  %i.ad = add i64 %.sroa.09.012.i.i.i.i.i, -32    ; 2 uses
   %i.ae = inttoptr i64 %i.ad to ptr
-  %i.af = add i64 %.sroa.06.011.i.i.i.i.i, -8     ; 2 uses
+  %i.af = add i64 %.sroa.06.011.i.i.i.i.i, -32    ; 2 uses
   %i.ag = inttoptr i64 %i.af to ptr
   %i.ah = load atomic volatile i64, ptr %i.ae monotonic, align 8
   store atomic volatile i64 %i.ah, ptr %i.ag monotonic, align 8
-  %i.ai = add nsw i32 %.013.i.i.i.i.i, -1
-  %3 = icmp samesign ugt i32 %.013.i.i.i.i.i, 1
-  br i1 %3, label %.lr.ph.i.i.i.i.i, label %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit, !llvm.loop !390
+  %i.ai = add nsw i32 %.013.i.i.i.i.i, -4
+  %26 = icmp sgt i32 %.013.i.i.i.i.i, 4
+  br i1 %26, label %.lr.ph.i.i.i.i.i, label %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit, !llvm.loop !391
 
 bb.d:                                             ; preds = %bb.b
   %i.aj = ashr i64 %i.x, 32
@@ -318,12 +363,12 @@ _ZSt25__unguarded_linear_insertIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops14_Va
   %.pre = inttoptr i64 %.sroa.03.0.i30 to ptr
   br label %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit
 
-_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit: ; preds = %.lr.ph.i.i.i.i.i, %bb.d, %_ZSt25__unguarded_linear_insertIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops14_Val_comp_iterINS1_19EnumIndexComparatorINS1_14NameDictionaryEEEEEEvT_T0_.exit.loopexit, %bb.c
-  %.sink = phi ptr [ %i.b, %bb.c ], [ %i.f, %bb.d ], [ %.pre, %_ZSt25__unguarded_linear_insertIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops14_Val_comp_iterINS1_19EnumIndexComparatorINS1_14NameDictionaryEEEEEEvT_T0_.exit.loopexit ], [ %i.b, %.lr.ph.i.i.i.i.i ]
+_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit: ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i, %bb.d, %_ZSt25__unguarded_linear_insertIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops14_Val_comp_iterINS1_19EnumIndexComparatorINS1_14NameDictionaryEEEEEEvT_T0_.exit.loopexit, %bb.c
+  %.sink = phi ptr [ %i.b, %bb.c ], [ %i.f, %bb.d ], [ %.pre, %_ZSt25__unguarded_linear_insertIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops14_Val_comp_iterINS1_19EnumIndexComparatorINS1_14NameDictionaryEEEEEEvT_T0_.exit.loopexit ], [ %i.b, %.lr.ph.i.i.i.i.i ], [ %i.b, %.lr.ph.i.i.i.i.i.prol.loopexit ]
   store atomic volatile i64 %i.x, ptr %.sink monotonic, align 8
   %.sroa.010.0 = add i64 %.sroa.010.034, 8        ; 2 uses
   %.not = icmp eq i64 %.sroa.010.0, %1
-  br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !391
+  br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !392
 
 .loopexit:                                        ; preds = %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit, %.preheader, %bb.a
   ret void
@@ -348,7 +393,7 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZSt27__unguarded_partition_pivotIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops15_Iter_comp_iterINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEET_SA_SA_T0_.exit
   %i.j = icmp eq i32 %i.bt, 0
-  br i1 %i.j, label %.lr.ph.i.i, label %.lr.ph46, !llvm.loop !392
+  br i1 %i.j, label %.lr.ph.i.i, label %.lr.ph46, !llvm.loop !393
 
 .lr.ph.i.i:                                       ; preds = %bb.b, %.lr.ph
   %.sroa.018.031.lcssa = phi i64 [ %1, %.lr.ph ], [ %.sroa.019.1.i.i, %bb.b ] ; 3 uses
@@ -367,7 +412,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.i
   %i.q = sdiv i32 %i.p, 8
   tail call void @_ZSt13__adjust_heapIN2v88internal10AtomicSlotEimN9__gnu_cxx5__ops15_Iter_comp_iterINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEEvT_T0_SB_T1_T2_(i64 %0, i32 noundef 0, i32 noundef %i.q, i64 noundef %i.m, i64 %3)
   %i.r = icmp sgt i32 %i.p, 15
-  br i1 %i.r, label %bb.c, label %_ZSt14__partial_sortIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops15_Iter_comp_iterINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEEvT_SA_SA_T0_.exit, !llvm.loop !393
+  br i1 %i.r, label %bb.c, label %_ZSt14__partial_sortIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops15_Iter_comp_iterINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEEvT_SA_SA_T0_.exit, !llvm.loop !394
 
 .lr.ph46:                                         ; preds = %.lr.ph, %bb.b
   %.03045 = phi i32 [ %i.bt, %bb.b ], [ %2, %.lr.ph ]
@@ -414,7 +459,7 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   %i.ar = and i32 %i.aq, 8388607
   %i.as = icmp samesign ult i32 %i.ap, %i.ar
   %i.at = add i64 %.sroa.019.1.i.i, 8             ; 2 uses
-  br i1 %i.as, label %bb.e, label %.preheader.i.i, !llvm.loop !394
+  br i1 %i.as, label %bb.e, label %.preheader.i.i, !llvm.loop !395
 
 .preheader.i.i:                                   ; preds = %bb.e, %.preheader.i.i
   %.sroa.014.1.in.i.i = phi i64 [ %.sroa.014.1.i.i, %.preheader.i.i ], [ %.sroa.014.0.i.i, %bb.e ]
@@ -445,7 +490,7 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   %i.bn = trunc nuw nsw i64 %sum.shift8.i.i12.i.i to i32
   %i.bo = and i32 %i.bn, 8388607
   %i.bp = icmp samesign ult i32 %i.bm, %i.bo
-  br i1 %i.bp, label %.preheader.i.i, label %bb.f, !llvm.loop !395
+  br i1 %i.bp, label %.preheader.i.i, label %bb.f, !llvm.loop !396
 
 bb.f:                                             ; preds = %.preheader.i.i
   %i.bq = icmp ult i64 %.sroa.019.1.i.i, %.sroa.014.1.i.i
@@ -456,7 +501,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bs = load atomic volatile i64, ptr %i.av monotonic, align 8
   store atomic volatile i64 %i.bs, ptr %i.x monotonic, align 8
   store atomic volatile i64 %i.br, ptr %i.av monotonic, align 8
-  br label %bb.d, !llvm.loop !396
+  br label %bb.d, !llvm.loop !397
 
 _ZSt27__unguarded_partition_pivotIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops15_Iter_comp_iterINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEET_SA_SA_T0_.exit: ; preds = %bb.f
   %i.bt = add nsw i32 %.03045, -1                 ; 3 uses
@@ -464,7 +509,7 @@ _ZSt27__unguarded_partition_pivotIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops15_
   %i.bu = sub i64 %.sroa.019.1.i.i, %0            ; 2 uses
   %i.bv = trunc i64 %i.bu to i32
   %i.bw = icmp sgt i32 %i.bv, 135
-  br i1 %i.bw, label %bb.b, label %_ZSt14__partial_sortIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops15_Iter_comp_iterINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEEvT_SA_SA_T0_.exit, !llvm.loop !392
+  br i1 %i.bw, label %bb.b, label %_ZSt14__partial_sortIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops15_Iter_comp_iterINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEEvT_SA_SA_T0_.exit, !llvm.loop !393
 
 _ZSt14__partial_sortIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops15_Iter_comp_iterINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEEvT_SA_SA_T0_.exit: ; preds = %_ZSt27__unguarded_partition_pivotIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops15_Iter_comp_iterINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEET_SA_SA_T0_.exit, %bb.c, %bb.a
   ret void
@@ -495,7 +540,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   tail call void @_ZSt13__adjust_heapIN2v88internal10AtomicSlotEimN9__gnu_cxx5__ops15_Iter_comp_iterINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEEvT_T0_SB_T1_T2_(i64 %0, i32 noundef %i.l, i32 noundef %i.c, i64 noundef %i.k, i64 %3)
   %i.m = icmp eq i64 %indvars.iv.i, 0
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
-  br i1 %i.m, label %_ZSt11__make_heapIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops15_Iter_comp_iterINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEEvT_SA_RT0_.exit, label %bb.c, !llvm.loop !397
+  br i1 %i.m, label %_ZSt11__make_heapIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops15_Iter_comp_iterINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEEvT_SA_RT0_.exit, label %bb.c, !llvm.loop !398
 
 _ZSt11__make_heapIN2v88internal10AtomicSlotEN9__gnu_cxx5__ops15_Iter_comp_iterINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEEvT_SA_RT0_.exit: ; preds = %bb.c, %bb.a
   %i.n = icmp ult i64 %1, %2
@@ -551,7 +596,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d, %bb.e
   %i.aq = add i64 %.sroa.0.020, 8                 ; 2 uses
   %i.ar = icmp ult i64 %i.aq, %2
-  br i1 %i.ar, label %bb.d, label %._crit_edge, !llvm.loop !398
+  br i1 %i.ar, label %bb.d, label %._crit_edge, !llvm.loop !399
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -618,7 +663,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.au = load atomic volatile i64, ptr %i.ap monotonic, align 8
   store atomic volatile i64 %i.au, ptr %i.at monotonic, align 8
   %i.av = icmp slt i32 %spec.select, %i.b
-  br i1 %i.av, label %bb.b, label %._crit_edge, !llvm.loop !399
+  br i1 %i.av, label %bb.b, label %._crit_edge, !llvm.loop !400
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   %.0.lcssa = phi i32 [ %1, %bb.a ], [ %spec.select, %bb.b ] ; 5 uses
@@ -700,7 +745,7 @@ bb.g:                                             ; preds = %bb.f
   %i.cs = load atomic volatile i64, ptr %i.bw monotonic, align 8
   store atomic volatile i64 %i.cs, ptr %i.cr monotonic, align 8
   %i.ct = icmp sgt i32 %.0923.i, %1
-  br i1 %i.ct, label %bb.f, label %_ZSt11__push_heapIN2v88internal10AtomicSlotEimN9__gnu_cxx5__ops14_Iter_comp_valINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEEvT_T0_SB_T1_RT2_.exit, !llvm.loop !400
+  br i1 %i.ct, label %bb.f, label %_ZSt11__push_heapIN2v88internal10AtomicSlotEimN9__gnu_cxx5__ops14_Iter_comp_valINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEEvT_T0_SB_T1_RT2_.exit, !llvm.loop !401
 
 _ZSt11__push_heapIN2v88internal10AtomicSlotEimN9__gnu_cxx5__ops14_Iter_comp_valINS1_19EnumIndexComparatorINS1_16GlobalDictionaryEEEEEEvT_T0_SB_T1_RT2_.exit: ; preds = %bb.f, %bb.g, %bb.e
   %.0.lcssa.i = phi i32 [ %.1, %bb.e ], [ %.022.i, %bb.f ], [ %.0923.i, %bb.g ]
@@ -920,14 +965,14 @@ bb.a:
   br i1 %.not27, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
-  %i.b = inttoptr i64 %0 to ptr                   ; 3 uses
+  %i.b = inttoptr i64 %0 to ptr                   ; 4 uses
   %i.c = add i64 %2, -1
   %i.d = inttoptr i64 %i.c to ptr
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 4 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit
-  %.sroa.010.029 = phi i64 [ %.sroa.010.026, %.lr.ph ], [ %.sroa.010.0, %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit ] ; 6 uses
+  %.sroa.010.029 = phi i64 [ %.sroa.010.026, %.lr.ph ], [ %.sroa.010.0, %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit ] ; 7 uses
   %.sroa.010.0.in28 = phi i64 [ %0, %.lr.ph ], [ %.sroa.010.029, %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit ]
   %i.f = inttoptr i64 %.sroa.010.029 to ptr       ; 2 uses
   %i.g = load atomic volatile i64, ptr %i.f monotonic, align 8
@@ -960,28 +1005,73 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt13move
 
 bb.c:                                             ; preds = %bb.b
   %i.ac = sub i64 %.sroa.010.029, %0
-  %i.ad = trunc i64 %i.ac to i32                  ; 2 uses
+  %.fr33 = freeze i64 %i.ac
+  %i.ad = trunc i64 %.fr33 to i32                 ; 2 uses
   %i.ae = icmp sgt i32 %i.ad, 7
   br i1 %i.ae, label %.lr.ph.preheader.i.i.i.i.i, label %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %bb.c
-  %i.af = add i64 %.sroa.010.0.in28, 16
-  %i.ag = lshr i32 %i.ad, 3
-  br label %.lr.ph.i.i.i.i.i
+  %i.af = add i64 %.sroa.010.0.in28, 16           ; 2 uses
+  %i.ag = lshr i32 %i.ad, 3                       ; 4 uses
+  %3 = add nsw i32 %i.ag, -1
+  %xtraiter = and i32 %i.ag, 3                    ; 2 uses
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.prol
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i
-  %.013.i.i.i.i.i = phi i32 [ %i.am, %.lr.ph.i.i.i.i.i ], [ %i.ag, %.lr.ph.preheader.i.i.i.i.i ] ; 2 uses
-  %.sroa.09.012.i.i.i.i.i = phi i64 [ %i.ah, %.lr.ph.i.i.i.i.i ], [ %.sroa.010.029, %.lr.ph.preheader.i.i.i.i.i ]
-  %.sroa.06.011.i.i.i.i.i = phi i64 [ %i.aj, %.lr.ph.i.i.i.i.i ], [ %i.af, %.lr.ph.preheader.i.i.i.i.i ]
-  %i.ah = add i64 %.sroa.09.012.i.i.i.i.i, -8     ; 2 uses
+.lr.ph.i.i.i.i.i.prol:                            ; preds = %.lr.ph.preheader.i.i.i.i.i, %.lr.ph.i.i.i.i.i.prol
+  %.013.i.i.i.i.i.prol = phi i32 [ %9, %.lr.ph.i.i.i.i.i.prol ], [ %i.ag, %.lr.ph.preheader.i.i.i.i.i ]
+  %.sroa.09.012.i.i.i.i.i.prol = phi i64 [ %4, %.lr.ph.i.i.i.i.i.prol ], [ %.sroa.010.029, %.lr.ph.preheader.i.i.i.i.i ]
+  %.sroa.06.011.i.i.i.i.i.prol = phi i64 [ %6, %.lr.ph.i.i.i.i.i.prol ], [ %i.af, %.lr.ph.preheader.i.i.i.i.i ]
+  %prol.iter = phi i32 [ %prol.iter.next, %.lr.ph.i.i.i.i.i.prol ], [ 0, %.lr.ph.preheader.i.i.i.i.i ]
+  %4 = add i64 %.sroa.09.012.i.i.i.i.i.prol, -8   ; 3 uses
+  %5 = inttoptr i64 %4 to ptr
+  %6 = add i64 %.sroa.06.011.i.i.i.i.i.prol, -8   ; 3 uses
+  %7 = inttoptr i64 %6 to ptr
+  %8 = load atomic volatile i64, ptr %5 monotonic, align 8
+  store atomic volatile i64 %8, ptr %7 monotonic, align 8
+  %9 = add nsw i32 %.013.i.i.i.i.i.prol, -1       ; 2 uses
+  %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.prol, !llvm.loop !402
+
+.lr.ph.i.i.i.i.i.prol.loopexit:                   ; preds = %.lr.ph.i.i.i.i.i.prol, %.lr.ph.preheader.i.i.i.i.i
+  %.013.i.i.i.i.i.unr = phi i32 [ %i.ag, %.lr.ph.preheader.i.i.i.i.i ], [ %9, %.lr.ph.i.i.i.i.i.prol ]
+  %.sroa.09.012.i.i.i.i.i.unr = phi i64 [ %.sroa.010.029, %.lr.ph.preheader.i.i.i.i.i ], [ %4, %.lr.ph.i.i.i.i.i.prol ]
+  %.sroa.06.011.i.i.i.i.i.unr = phi i64 [ %i.af, %.lr.ph.preheader.i.i.i.i.i ], [ %6, %.lr.ph.i.i.i.i.i.prol ]
+  %10 = icmp ult i32 %3, 3
+  br i1 %10, label %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit, label %.lr.ph.i.i.i.i.i
+
+.lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i
+  %.013.i.i.i.i.i = phi i32 [ %i.am, %.lr.ph.i.i.i.i.i ], [ %.013.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 2 uses
+  %.sroa.09.012.i.i.i.i.i = phi i64 [ %i.ah, %.lr.ph.i.i.i.i.i ], [ %.sroa.09.012.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 4 uses
+  %.sroa.06.011.i.i.i.i.i = phi i64 [ %i.aj, %.lr.ph.i.i.i.i.i ], [ %.sroa.06.011.i.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 4 uses
+  %11 = add i64 %.sroa.09.012.i.i.i.i.i, -8
+  %12 = inttoptr i64 %11 to ptr
+  %13 = add i64 %.sroa.06.011.i.i.i.i.i, -8
+  %14 = inttoptr i64 %13 to ptr
+  %15 = load atomic volatile i64, ptr %12 monotonic, align 8
+  store atomic volatile i64 %15, ptr %14 monotonic, align 8
+  %16 = add i64 %.sroa.09.012.i.i.i.i.i, -16
+  %17 = inttoptr i64 %16 to ptr
+  %18 = add i64 %.sroa.06.011.i.i.i.i.i, -16
+  %19 = inttoptr i64 %18 to ptr
+  %20 = load atomic volatile i64, ptr %17 monotonic, align 8
+  store atomic volatile i64 %20, ptr %19 monotonic, align 8
+  %21 = add i64 %.sroa.09.012.i.i.i.i.i, -24
+  %22 = inttoptr i64 %21 to ptr
+  %23 = add i64 %.sroa.06.011.i.i.i.i.i, -24
+  %24 = inttoptr i64 %23 to ptr
+  %25 = load atomic volatile i64, ptr %22 monotonic, align 8
+  store atomic volatile i64 %25, ptr %24 monotonic, align 8
+  %i.ah = add i64 %.sroa.09.012.i.i.i.i.i, -32    ; 2 uses
   %i.ai = inttoptr i64 %i.ah to ptr
-  %i.aj = add i64 %.sroa.06.011.i.i.i.i.i, -8     ; 2 uses
+  %i.aj = add i64 %.sroa.06.011.i.i.i.i.i, -32    ; 2 uses
   %i.ak = inttoptr i64 %i.aj to ptr
   %i.al = load atomic volatile i64, ptr %i.ai monotonic, align 8
   store atomic volatile i64 %i.al, ptr %i.ak monotonic, align 8
-  %i.am = add nsw i32 %.013.i.i.i.i.i, -1
-  %3 = icmp samesign ugt i32 %.013.i.i.i.i.i, 1
-  br i1 %3, label %.lr.ph.i.i.i.i.i, label %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit, !llvm.loop !390
+  %i.am = add nsw i32 %.013.i.i.i.i.i, -4
+  %26 = icmp sgt i32 %.013.i.i.i.i.i, 4
+  br i1 %26, label %.lr.ph.i.i.i.i.i, label %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit, !llvm.loop !391
 
 bb.d:                                             ; preds = %bb.b
   %i.an = and i64 %i.ab, -4294967296
@@ -1022,12 +1112,12 @@ bb.f:                                             ; preds = %bb.e
   store atomic volatile i64 %i.bj, ptr %i.bi monotonic, align 8
   br label %bb.e, !llvm.loop !248
 
-_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit: ; preds = %bb.e, %.lr.ph.i.i.i.i.i, %bb.c
-  %.sink = phi ptr [ %i.b, %.lr.ph.i.i.i.i.i ], [ %i.b, %bb.c ], [ %i.bi, %bb.e ]
+_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit: ; preds = %bb.e, %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i, %bb.c
+  %.sink = phi ptr [ %i.b, %.lr.ph.i.i.i.i.i.prol.loopexit ], [ %i.b, %bb.c ], [ %i.b, %.lr.ph.i.i.i.i.i ], [ %i.bi, %bb.e ]
   store atomic volatile i64 %i.ab, ptr %.sink monotonic, align 8
   %.sroa.010.0 = add i64 %.sroa.010.029, 8        ; 2 uses
   %.not = icmp eq i64 %.sroa.010.0, %1
-  br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !401
+  br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !403
 
 .loopexit:                                        ; preds = %_ZSt13move_backwardIN2v88internal10AtomicSlotES2_ET0_T_S4_S3_.exit, %.preheader, %bb.a
   ret void
@@ -1430,9 +1520,9 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 64
-  tail call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.g) #28, !inline_history !402
-  tail call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dereferenceable(264) %i.e) #28, !inline_history !402
-  tail call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(80) %i.d, i64 noundef 344) #31, !inline_history !403
+  tail call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.g) #28, !inline_history !404
+  tail call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dereferenceable(264) %i.e) #28, !inline_history !404
+  tail call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(80) %i.d, i64 noundef 344) #31, !inline_history !405
   ret void
 }
 
@@ -1455,7 +1545,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %i.b, align 8
-  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #28, !inline_history !404
+  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #28, !inline_history !406
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %i.e = load i8, ptr @__libc_single_threaded, align 1
   %.not.i = icmp eq i8 %i.e, 0
@@ -1480,7 +1570,7 @@ bb.d:                                             ; preds = %_ZN9__gnu_cxx27__ex
   %i.j = load ptr, ptr %0, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #28, !inline_history !404
+  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #28, !inline_history !406
   br label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit: ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i, %bb.d
@@ -1554,7 +1644,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i, label %_ZN2v88internal12StdoutStreamD1Ev.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @_ZN2v84base14RecursiveMutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.x) #28, !inline_history !405
+  call void @_ZN2v84base14RecursiveMutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.x) #28, !inline_history !407
   br label %_ZN2v88internal12StdoutStreamD1Ev.exit
 
 _ZN2v88internal12StdoutStreamD1Ev.exit:           ; preds = %bb.b, %bb.c
@@ -1563,8 +1653,8 @@ _ZN2v88internal12StdoutStreamD1Ev.exit:           ; preds = %bb.b, %bb.c
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.y, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 64
-  call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.z) #28, !inline_history !405
-  call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dereferenceable(264) %i.d) #28, !inline_history !405
+  call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.z) #28, !inline_history !407
+  call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dereferenceable(264) %i.d) #28, !inline_history !407
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28
   br label %bb.d
 
@@ -1742,7 +1832,7 @@ bb.a:
   br i1 %.not.i.i.i, label %_ZN2v88internal12StdoutStreamD1Ev.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_ZN2v84base14RecursiveMutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.c) #28, !inline_history !405
+  tail call void @_ZN2v84base14RecursiveMutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.c) #28, !inline_history !407
   br label %_ZN2v88internal12StdoutStreamD1Ev.exit
 
 _ZN2v88internal12StdoutStreamD1Ev.exit:           ; preds = %bb.a, %bb.b
@@ -1751,8 +1841,8 @@ _ZN2v88internal12StdoutStreamD1Ev.exit:           ; preds = %bb.a, %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.d, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64
-  tail call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.e) #28, !inline_history !405
-  tail call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dereferenceable(264) %i.a) #28, !inline_history !405
+  tail call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.e) #28, !inline_history !407
+  tail call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dereferenceable(264) %i.a) #28, !inline_history !407
   tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 352) #31
   ret void
 }
@@ -1773,7 +1863,7 @@ bb.a:
   br i1 %.not.i.i.i, label %_ZN2v88internal12StdoutStreamD1Ev.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_ZN2v84base14RecursiveMutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.g) #28, !inline_history !405
+  tail call void @_ZN2v84base14RecursiveMutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.g) #28, !inline_history !407
   br label %_ZN2v88internal12StdoutStreamD1Ev.exit
 
 _ZN2v88internal12StdoutStreamD1Ev.exit:           ; preds = %bb.a, %bb.b
@@ -1782,8 +1872,8 @@ _ZN2v88internal12StdoutStreamD1Ev.exit:           ; preds = %bb.a, %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.h, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 64
-  tail call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.i) #28, !inline_history !405
-  tail call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dereferenceable(264) %i.e) #28, !inline_history !405
+  tail call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.i) #28, !inline_history !407
+  tail call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dereferenceable(264) %i.e) #28, !inline_history !407
   ret void
 }
 
@@ -1803,7 +1893,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %_ZN2v88internal12StdoutStreamD0Ev.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_ZN2v84base14RecursiveMutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.g) #28, !inline_history !406
+  tail call void @_ZN2v84base14RecursiveMutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.g) #28, !inline_history !408
   br label %_ZN2v88internal12StdoutStreamD0Ev.exit
 
 _ZN2v88internal12StdoutStreamD0Ev.exit:           ; preds = %bb.a, %bb.b
@@ -1812,9 +1902,9 @@ _ZN2v88internal12StdoutStreamD0Ev.exit:           ; preds = %bb.a, %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.h, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 64
-  tail call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.i) #28, !inline_history !406
-  tail call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dereferenceable(264) %i.e) #28, !inline_history !406
-  tail call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(88) %i.d, i64 noundef 352) #31, !inline_history !407
+  tail call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.i) #28, !inline_history !408
+  tail call void @_ZNSt8ios_baseD2Ev(ptr noundef nonnull align 8 dereferenceable(264) %i.e) #28, !inline_history !408
+  tail call void @_ZdlPvm(ptr noundef nonnull align 8 dereferenceable(88) %i.d, i64 noundef 352) #31, !inline_history !409
   ret void
 }
 
@@ -2217,7 +2307,7 @@ begin_hunk_2_@llvm.smin.i32
 !387 = distinct !{!387, !7}
 !388 = distinct !{!388, !7}
 !389 = distinct !{!389, !7}
-!390 = distinct !{!390, !7}
+!390 = distinct !{!390, !153}
 !391 = distinct !{!391, !7}
 !392 = distinct !{!392, !7}
 !393 = distinct !{!393, !7}
@@ -2229,10 +2319,12 @@ begin_hunk_2_@llvm.smin.i32
 !399 = distinct !{!399, !7}
 !400 = distinct !{!400, !7}
 !401 = distinct !{!401, !7}
-!402 = !{ptr @_ZN2v88internal8OFStreamD0Ev, ptr @_ZN2v88internal8OFStreamD1Ev}
-!403 = !{ptr @_ZN2v88internal8OFStreamD0Ev}
-!404 = distinct !{null}
-!405 = !{ptr @_ZN2v88internal12StdoutStreamD1Ev}
-!406 = !{ptr @_ZN2v88internal12StdoutStreamD0Ev, ptr @_ZN2v88internal12StdoutStreamD1Ev}
-!407 = !{ptr @_ZN2v88internal12StdoutStreamD0Ev}
+!402 = distinct !{!402, !153}
+!403 = distinct !{!403, !7}
+!404 = !{ptr @_ZN2v88internal8OFStreamD0Ev, ptr @_ZN2v88internal8OFStreamD1Ev}
+!405 = !{ptr @_ZN2v88internal8OFStreamD0Ev}
+!406 = distinct !{null}
+!407 = !{ptr @_ZN2v88internal12StdoutStreamD1Ev}
+!408 = !{ptr @_ZN2v88internal12StdoutStreamD0Ev, ptr @_ZN2v88internal12StdoutStreamD1Ev}
+!409 = !{ptr @_ZN2v88internal12StdoutStreamD0Ev}
 end_hunk_2

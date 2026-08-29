@@ -205,7 +205,7 @@ bb.fh:                                            ; preds = %bb.ff
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit842
 
 bb.fi:                                            ; preds = %.lr.ph2147, %_ZNSt6vectorIhSaIhEED2Ev.exit827
-  %indvars.iv2443 = phi i64 [ %i.apa, %.lr.ph2147 ], [ %indvars.iv.next2444, %_ZNSt6vectorIhSaIhEED2Ev.exit827 ] ; 3 uses
+  %indvars.iv2443 = phi i64 [ %i.apa, %.lr.ph2147 ], [ %indvars.iv.next2444, %_ZNSt6vectorIhSaIhEED2Ev.exit827 ] ; 2 uses
   %.02932145 = phi i32 [ 0, %.lr.ph2147 ], [ %i.asx, %_ZNSt6vectorIhSaIhEED2Ev.exit827 ] ; 2 uses
   br i1 %.not.i.i.i.i778, label %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit782, label %bb.fj
 
@@ -448,9 +448,10 @@ bb.fy:                                            ; preds = %.loopexit
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit827
 
 _ZNSt6vectorIhSaIhEED2Ev.exit827:                 ; preds = %.loopexit, %bb.fy
-  %indvars.iv.next2444 = add nsw i64 %indvars.iv2443, -1
-  %30 = icmp sgt i64 %indvars.iv2443, 0
-  br i1 %30, label %bb.fi, label %._crit_edge2148, !llvm.loop !213
+  %indvars.iv.next2444 = add nsw i64 %indvars.iv2443, -1 ; 2 uses
+  %30 = and i64 %indvars.iv.next2444, 2147483648
+  %31 = icmp eq i64 %30, 0
+  br i1 %31, label %bb.fi, label %._crit_edge2148, !llvm.loop !213
 
 bb.fz:                                            ; preds = %._crit_edge2148
   %i.ata = zext i32 %.0293.lcssa to i64           ; 2 uses

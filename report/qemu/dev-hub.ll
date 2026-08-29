@@ -204,45 +204,47 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.au, %bb.at
   %i.ff = load i32, ptr %i.eu, align 8            ; 2 uses
-  %i.fg = add i32 %i.ff, 8                        ; 3 uses
-  %i.fh = lshr i32 %i.fg, 3                       ; 5 uses
-  %i.fi = add nuw nsw i32 %i.fh, 7
+  %i.fg = add i32 %i.ff, 8
+  %i.fh = lshr i32 %i.fg, 3                       ; 6 uses
+  %i.fi = add nuw nsw i32 %i.fh, 7                ; 2 uses
   %.not179 = icmp eq i32 %i.fh, 0
   br i1 %.not179, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.av
   %scevgep = getelementptr i8, ptr %6, i64 7
-  %7 = lshr i32 %i.fg, 3
-  %i.fj = zext nneg i32 %7 to i64
+  %i.fj = zext nneg i32 %i.fh to i64
   tail call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 %i.fj, i1 false)
-  %narrow = add nuw nsw i32 %i.fh, 7
   %.pre = load i32, ptr %i.eu, align 8
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %bb.av
   %i.fk = phi i32 [ %i.ff, %bb.av ], [ %.pre, %.lr.ph.preheader ]
-  %.0117.lcssa.a = phi i32 [ 7, %bb.av ], [ %narrow, %.lr.ph.preheader ]
+  %.0117.lcssa = phi i32 [ 7, %bb.av ], [ %i.fi, %.lr.ph.preheader ] ; 4 uses
+  %.0117.lcssa.a = phi i32 [ 0, %bb.av ], [ %i.fh, %.lr.ph.preheader ] ; 2 uses
   %i.fl = add i32 %i.fk, 7
   %i.fm = lshr i32 %i.fl, 3                       ; 3 uses
   %i.fn = add nuw nsw i32 %i.fm, %i.fi
-  %i.fo = icmp samesign ult i32 %.0117.lcssa.a, %i.fn
+  %i.fo = icmp samesign ult i32 %.0117.lcssa, %i.fn
   br i1 %i.fo, label %.lr.ph176.preheader, label %._crit_edge177
 
 .lr.ph176.preheader:                              ; preds = %._crit_edge
-  %8 = lshr i32 %i.fg, 3
-  %i.fp = zext nneg i32 %8 to i64
+  %i.fp = zext nneg i32 %.0117.lcssa to i64
   %i.fq = getelementptr i8, ptr %6, i64 %i.fp
-  %scevgep183 = getelementptr i8, ptr %i.fq, i64 7
-  %i.fr = add nsw i32 %i.fm, -1
-  %i.fs = zext i32 %i.fr to i64
+  %7 = add nuw nsw i32 %i.fh, %i.fm
+  %i.fr = add nuw nsw i32 %7, 6
+  %8 = sub nsw i32 %i.fr, %.0117.lcssa
+  %i.fs = zext i32 %8 to i64
   %i.ft = add nuw nsw i64 %i.fs, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep183, i8 -1, i64 %i.ft, i1 false)
-  %i.fu = add nuw nsw i32 %i.fh, %i.fm
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.fq, i8 -1, i64 %i.ft, i1 false)
+  %9 = add nuw nsw i32 %.0117.lcssa.a, %i.fh
+  %10 = add nuw nsw i32 %9, %i.fm
+  %i.fu = add nuw nsw i32 %10, 7
+  %11 = sub nsw i32 %i.fu, %.0117.lcssa
   br label %._crit_edge177
 
 ._crit_edge177:                                   ; preds = %.lr.ph176.preheader, %._crit_edge
-  %.1.lcssa = phi i32 [ %i.fh, %._crit_edge ], [ %i.fu, %.lr.ph176.preheader ]
-  %i.fv = add nuw nsw i32 %.1.lcssa, 7            ; 2 uses
+  %.1.lcssa = phi i32 [ %.0117.lcssa.a, %._crit_edge ], [ %11, %.lr.ph176.preheader ]
+  %i.fv = add nsw i32 %.1.lcssa, 7                ; 2 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %1, i64 88
   store i32 %i.fv, ptr %i.fw, align 8
   %i.fx = trunc i32 %i.fv to i8

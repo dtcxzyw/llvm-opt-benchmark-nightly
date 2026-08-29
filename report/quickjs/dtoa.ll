@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 95
 inline.NumDeleted: 32
 loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumRuntimeUnrolled: 9
-loop-unroll.NumUnrolled: 12
+loop-unroll.NumRuntimeUnrolled: 13
+loop-unroll.NumUnrolled: 16
 begin_hunk_0_@u64toa:bb.a
 bb.d:                                             ; preds = %bb.a
   %i.n = udiv i64 %1, 1000000000                  ; 2 uses
@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.c
   %i.k = trunc nsw i32 %reass.sub to i8
   %.lhs.trunc = add nsw i8 %i.k, 63               ; 2 uses
   %.rhs.trunc = trunc nuw nsw i32 %i.g to i8      ; 2 uses
-  %i.l = udiv i8 %.lhs.trunc, %.rhs.trunc         ; 2 uses
-  %i.m = lshr i32 2147483647, %i.f
+  %i.l = udiv i8 %.lhs.trunc, %.rhs.trunc         ; 3 uses
+  %i.m = lshr i32 2147483647, %i.f                ; 3 uses
   %.not46 = icmp samesign ult i8 %.lhs.trunc, %.rhs.trunc
   br i1 %.not46, label %.split35.u64toa_bin_len.exit45_crit_edge, label %.lr.ph.i
 
@@ -215,17 +215,50 @@ bb.d:                                             ; preds = %bb.c
   br label %u64toa_bin_len.exit
 
 .lr.ph.i:                                         ; preds = %.split35
-  %i.n = zext nneg i32 %i.g to i64
-  %i.o = zext nneg i8 %i.l to i64                 ; 2 uses
-  br label %bb.e
+  %i.n = zext nneg i32 %i.g to i64                ; 3 uses
+  %i.o = zext i8 %i.l to i64                      ; 5 uses
+  %xtraiter = and i64 %i.o, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
-bb.e:                                             ; preds = %bb.e, %.lr.ph.i
-  %indvars.iv.i41 = phi i64 [ %i.o, %.lr.ph.i ], [ %indvars.iv.next.i43, %bb.e ] ; 2 uses
-  %.01416.i42 = phi i64 [ %1, %.lr.ph.i ], [ %i.r, %bb.e ] ; 2 uses
-  %indvars.iv.next.i43 = add nsw i64 %indvars.iv.i41, -1 ; 2 uses
-  %i.p = trunc i64 %.01416.i42 to i32
+.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph.i
+  %indvars.iv.next.i43.prol = add nsw i64 %i.o, -1 ; 2 uses
+  %3 = trunc i64 %1 to i32
+  %4 = and i32 %i.m, %3                           ; 3 uses
+  %5 = lshr i64 %1, %i.n
+  %6 = icmp samesign ult i32 %4, 10
+  %7 = or disjoint i32 %4, 48
+  %8 = add nuw nsw i32 %4, 87
+  %.013.i44.prol = select i1 %6, i32 %7, i32 %8
+  %9 = trunc i32 %.013.i44.prol to i8
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.next.i43.prol
+  store i8 %9, ptr %10, align 1, !tbaa !8
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph.i
+  %indvars.iv.i41.unr = phi i64 [ %i.o, %.lr.ph.i ], [ %indvars.iv.next.i43.prol, %.prol.loopexit.unr-lcssa ]
+  %.01416.i42.unr = phi i64 [ %1, %.lr.ph.i ], [ %5, %.prol.loopexit.unr-lcssa ]
+  %11 = icmp eq i8 %i.l, 1
+  br i1 %11, label %u64toa_bin_len.exit, label %bb.e
+
+bb.e:                                             ; preds = %.prol.loopexit, %bb.e
+  %indvars.iv.i41 = phi i64 [ %indvars.iv.next.i43, %bb.e ], [ %indvars.iv.i41.unr, %.prol.loopexit ] ; 3 uses
+  %.01416.i42 = phi i64 [ %i.r, %bb.e ], [ %.01416.i42.unr, %.prol.loopexit ] ; 2 uses
+  %12 = trunc i64 %.01416.i42 to i32
+  %13 = and i32 %i.m, %12                         ; 3 uses
+  %14 = lshr i64 %.01416.i42, %i.n                ; 2 uses
+  %15 = icmp samesign ult i32 %13, 10
+  %16 = or disjoint i32 %13, 48
+  %17 = add nuw nsw i32 %13, 87
+  %.013.i44 = select i1 %15, i32 %16, i32 %17
+  %18 = trunc i32 %.013.i44 to i8
+  %19 = getelementptr i8, ptr %0, i64 %indvars.iv.i41
+  %20 = getelementptr i8, ptr %19, i64 -1
+  store i8 %18, ptr %20, align 1, !tbaa !8
+  %indvars.iv.next.i43 = add nsw i64 %indvars.iv.i41, -2 ; 2 uses
+  %i.p = trunc i64 %14 to i32
   %i.q = and i32 %i.m, %i.p                       ; 3 uses
-  %i.r = lshr i64 %.01416.i42, %i.n
+  %i.r = lshr i64 %14, %i.n
   %i.s = icmp samesign ult i32 %i.q, 10
   %i.t = or disjoint i32 %i.q, 48
   %i.u = add nuw nsw i32 %i.q, 87
@@ -233,8 +266,8 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   %i.v = trunc i32 %.013.i44.a to i8
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.next.i43
   store i8 %i.v, ptr %i.w, align 1, !tbaa !8
-  %3 = icmp samesign ugt i64 %indvars.iv.i41, 1
-  br i1 %3, label %bb.e, label %u64toa_bin_len.exit, !llvm.loop !12
+  %21 = icmp sgt i64 %indvars.iv.i41, 2
+  br i1 %21, label %bb.e, label %u64toa_bin_len.exit, !llvm.loop !12
 
 bb.f:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
@@ -265,8 +298,8 @@ bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   br label %u64toa_bin_len.exit
 
-u64toa_bin_len.exit:                              ; preds = %bb.e, %.split35.u64toa_bin_len.exit45_crit_edge, %.split, %bb.h, %bb.b
-  %.032 = phi i64 [ %i.c, %bb.b ], [ %i.ah, %bb.h ], [ 1, %.split ], [ %.pre, %.split35.u64toa_bin_len.exit45_crit_edge ], [ %i.o, %bb.e ]
+u64toa_bin_len.exit:                              ; preds = %.prol.loopexit, %bb.e, %.split35.u64toa_bin_len.exit45_crit_edge, %.split, %bb.h, %bb.b
+  %.032 = phi i64 [ %i.c, %bb.b ], [ %i.ah, %bb.h ], [ 1, %.split ], [ %.pre, %.split35.u64toa_bin_len.exit45_crit_edge ], [ %i.o, %bb.e ], [ %i.o, %.prol.loopexit ]
   ret i64 %.032
 }
 
@@ -308,8 +341,8 @@ bb.e:                                             ; preds = %bb.d
   %i.m = trunc nsw i32 %reass.sub.i to i8
   %.lhs.trunc.i = add nsw i8 %i.m, 63             ; 2 uses
   %.rhs.trunc.i = trunc nuw nsw i32 %i.i to i8    ; 2 uses
-  %i.n = udiv i8 %.lhs.trunc.i, %.rhs.trunc.i     ; 2 uses
-  %i.o = lshr i32 2147483647, %i.h
+  %i.n = udiv i8 %.lhs.trunc.i, %.rhs.trunc.i     ; 3 uses
+  %i.o = lshr i32 2147483647, %i.h                ; 3 uses
   %.not46.i = icmp samesign ult i8 %.lhs.trunc.i, %.rhs.trunc.i
   br i1 %.not46.i, label %.split35.u64toa_bin_len.exit45_crit_edge.i, label %.lr.ph.i.i
 
@@ -318,17 +351,50 @@ bb.e:                                             ; preds = %bb.d
   br label %u64toa_radix.exit
 
 .lr.ph.i.i:                                       ; preds = %.split35.i
-  %i.p = zext nneg i32 %i.i to i64
-  %i.q = zext nneg i8 %i.n to i64                 ; 2 uses
-  br label %bb.f
+  %i.p = zext nneg i32 %i.i to i64                ; 3 uses
+  %i.q = zext i8 %i.n to i64                      ; 5 uses
+  %xtraiter38 = and i64 %i.q, 1
+  %lcmp.mod39.not = icmp eq i64 %xtraiter38, 0
+  br i1 %lcmp.mod39.not, label %.prol.loopexit37, label %.prol.loopexit37.unr-lcssa
 
-bb.f:                                             ; preds = %bb.f, %.lr.ph.i.i
-  %indvars.iv.i41.i = phi i64 [ %i.q, %.lr.ph.i.i ], [ %indvars.iv.next.i43.i, %bb.f ] ; 2 uses
-  %.01416.i42.i = phi i64 [ %1, %.lr.ph.i.i ], [ %i.t, %bb.f ] ; 2 uses
-  %indvars.iv.next.i43.i = add nsw i64 %indvars.iv.i41.i, -1 ; 2 uses
-  %i.r = trunc i64 %.01416.i42.i to i32
+.prol.loopexit37.unr-lcssa:                       ; preds = %.lr.ph.i.i
+  %indvars.iv.next.i43.i.prol = add nsw i64 %i.q, -1 ; 2 uses
+  %3 = trunc i64 %1 to i32
+  %4 = and i32 %i.o, %3                           ; 3 uses
+  %5 = lshr i64 %1, %i.p
+  %6 = icmp samesign ult i32 %4, 10
+  %7 = or disjoint i32 %4, 48
+  %8 = add nuw nsw i32 %4, 87
+  %.013.i44.i.prol = select i1 %6, i32 %7, i32 %8
+  %9 = trunc i32 %.013.i44.i.prol to i8
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.next.i43.i.prol
+  store i8 %9, ptr %10, align 1, !tbaa !8
+  br label %.prol.loopexit37
+
+.prol.loopexit37:                                 ; preds = %.prol.loopexit37.unr-lcssa, %.lr.ph.i.i
+  %indvars.iv.i41.i.unr = phi i64 [ %i.q, %.lr.ph.i.i ], [ %indvars.iv.next.i43.i.prol, %.prol.loopexit37.unr-lcssa ]
+  %.01416.i42.i.unr = phi i64 [ %1, %.lr.ph.i.i ], [ %5, %.prol.loopexit37.unr-lcssa ]
+  %11 = icmp eq i8 %i.n, 1
+  br i1 %11, label %u64toa_radix.exit, label %bb.f
+
+bb.f:                                             ; preds = %.prol.loopexit37, %bb.f
+  %indvars.iv.i41.i = phi i64 [ %indvars.iv.next.i43.i, %bb.f ], [ %indvars.iv.i41.i.unr, %.prol.loopexit37 ] ; 3 uses
+  %.01416.i42.i = phi i64 [ %i.t, %bb.f ], [ %.01416.i42.i.unr, %.prol.loopexit37 ] ; 2 uses
+  %12 = trunc i64 %.01416.i42.i to i32
+  %13 = and i32 %i.o, %12                         ; 3 uses
+  %14 = lshr i64 %.01416.i42.i, %i.p              ; 2 uses
+  %15 = icmp samesign ult i32 %13, 10
+  %16 = or disjoint i32 %13, 48
+  %17 = add nuw nsw i32 %13, 87
+  %.013.i44.i = select i1 %15, i32 %16, i32 %17
+  %18 = trunc i32 %.013.i44.i to i8
+  %19 = getelementptr i8, ptr %0, i64 %indvars.iv.i41.i
+  %20 = getelementptr i8, ptr %19, i64 -1
+  store i8 %18, ptr %20, align 1, !tbaa !8
+  %indvars.iv.next.i43.i = add nsw i64 %indvars.iv.i41.i, -2 ; 2 uses
+  %i.r = trunc i64 %14 to i32
   %i.s = and i32 %i.o, %i.r                       ; 3 uses
-  %i.t = lshr i64 %.01416.i42.i, %i.p
+  %i.t = lshr i64 %14, %i.p
   %i.u = icmp samesign ult i32 %i.s, 10
   %i.v = or disjoint i32 %i.s, 48
   %i.w = add nuw nsw i32 %i.s, 87
@@ -336,8 +402,8 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i.i
   %i.x = trunc i32 %.013.i44.i.a to i8
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.next.i43.i
   store i8 %i.x, ptr %i.y, align 1, !tbaa !8
-  %3 = icmp samesign ugt i64 %indvars.iv.i41.i, 1
-  br i1 %3, label %bb.f, label %u64toa_radix.exit, !llvm.loop !12
+  %21 = icmp sgt i64 %indvars.iv.i41.i, 2
+  br i1 %21, label %bb.f, label %u64toa_radix.exit, !llvm.loop !12
 
 bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
@@ -371,7 +437,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.a
   store i8 45, ptr %0, align 1, !tbaa !8
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
-  %i.al = sub i64 0, %1                           ; 4 uses
+  %i.al = sub i64 0, %1                           ; 6 uses
   %i.am = icmp eq i32 %2, 10
   br i1 %i.am, label %bb.k, label %bb.l, !prof !11
 
@@ -393,8 +459,8 @@ bb.l:                                             ; preds = %bb.j
   %i.au = trunc nsw i32 %reass.sub.i16 to i8
   %.lhs.trunc.i17 = add nsw i8 %i.au, 63          ; 2 uses
   %.rhs.trunc.i18 = trunc nuw nsw i32 %i.ar to i8 ; 2 uses
-  %i.av = udiv i8 %.lhs.trunc.i17, %.rhs.trunc.i18 ; 2 uses
-  %i.aw = lshr i32 2147483647, %i.aq
+  %i.av = udiv i8 %.lhs.trunc.i17, %.rhs.trunc.i18 ; 3 uses
+  %i.aw = lshr i32 2147483647, %i.aq              ; 3 uses
   %.not46.i19 = icmp samesign ult i8 %.lhs.trunc.i17, %.rhs.trunc.i18
   br i1 %.not46.i19, label %.split35.u64toa_bin_len.exit45_crit_edge.i25, label %.lr.ph.i.i20
 
@@ -403,26 +469,59 @@ bb.l:                                             ; preds = %bb.j
   br label %u64toa_radix.exit28
 
 .lr.ph.i.i20:                                     ; preds = %.split35.i15
-  %i.ax = zext nneg i32 %i.ar to i64
-  %i.ay = zext nneg i8 %i.av to i64               ; 2 uses
-  br label %bb.m
+  %i.ax = zext nneg i32 %i.ar to i64              ; 3 uses
+  %i.ay = zext i8 %i.av to i64                    ; 6 uses
+  %xtraiter = and i64 %i.ay, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
-bb.m:                                             ; preds = %bb.m, %.lr.ph.i.i20
-  %indvars.iv.i41.i21 = phi i64 [ %i.ay, %.lr.ph.i.i20 ], [ %indvars.iv.next.i43.i23, %bb.m ] ; 3 uses
-  %.01416.i42.i22 = phi i64 [ %i.al, %.lr.ph.i.i20 ], [ %i.bb, %bb.m ] ; 2 uses
-  %indvars.iv.next.i43.i23 = add nsw i64 %indvars.iv.i41.i21, -1
-  %i.az = trunc i64 %.01416.i42.i22 to i32
+.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph.i.i20
+  %indvars.iv.next.i43.i23.prol = add nsw i64 %i.ay, -1
+  %22 = trunc i64 %i.al to i32
+  %23 = and i32 %i.aw, %22                        ; 3 uses
+  %24 = lshr i64 %i.al, %i.ax
+  %25 = icmp samesign ult i32 %23, 10
+  %26 = or disjoint i32 %23, 48
+  %27 = add nuw nsw i32 %23, 87
+  %.013.i44.i24.prol = select i1 %25, i32 %26, i32 %27
+  %28 = trunc i32 %.013.i44.i24.prol to i8
+  %29 = getelementptr i8, ptr %0, i64 %i.ay
+  store i8 %28, ptr %29, align 1, !tbaa !8
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph.i.i20
+  %indvars.iv.i41.i21.unr = phi i64 [ %i.ay, %.lr.ph.i.i20 ], [ %indvars.iv.next.i43.i23.prol, %.prol.loopexit.unr-lcssa ]
+  %.01416.i42.i22.unr = phi i64 [ %i.al, %.lr.ph.i.i20 ], [ %24, %.prol.loopexit.unr-lcssa ]
+  %30 = icmp eq i8 %i.av, 1
+  br i1 %30, label %u64toa_radix.exit28, label %bb.m
+
+bb.m:                                             ; preds = %.prol.loopexit, %bb.m
+  %indvars.iv.i41.i21 = phi i64 [ %indvars.iv.next.i43.i23, %bb.m ], [ %indvars.iv.i41.i21.unr, %.prol.loopexit ] ; 4 uses
+  %.01416.i42.i22 = phi i64 [ %i.bb, %bb.m ], [ %.01416.i42.i22.unr, %.prol.loopexit ] ; 2 uses
+  %31 = trunc i64 %.01416.i42.i22 to i32
+  %32 = and i32 %i.aw, %31                        ; 3 uses
+  %33 = lshr i64 %.01416.i42.i22, %i.ax           ; 2 uses
+  %34 = icmp samesign ult i32 %32, 10
+  %35 = or disjoint i32 %32, 48
+  %36 = add nuw nsw i32 %32, 87
+  %.013.i44.i24 = select i1 %34, i32 %35, i32 %36
+  %37 = trunc i32 %.013.i44.i24 to i8
+  %38 = getelementptr i8, ptr %0, i64 %indvars.iv.i41.i21
+  store i8 %37, ptr %38, align 1, !tbaa !8
+  %indvars.iv.next.i43.i23 = add nsw i64 %indvars.iv.i41.i21, -2
+  %i.az = trunc i64 %33 to i32
   %i.ba = and i32 %i.aw, %i.az                    ; 3 uses
-  %i.bb = lshr i64 %.01416.i42.i22, %i.ax
+  %i.bb = lshr i64 %33, %i.ax
   %i.bc = icmp samesign ult i32 %i.ba, 10
   %i.bd = or disjoint i32 %i.ba, 48
   %i.be = add nuw nsw i32 %i.ba, 87
   %.013.i44.i24.a = select i1 %i.bc, i32 %i.bd, i32 %i.be
   %i.bf = trunc i32 %.013.i44.i24.a to i8
-  %i.bg = getelementptr i8, ptr %0, i64 %indvars.iv.i41.i21
+  %39 = getelementptr i8, ptr %0, i64 %indvars.iv.i41.i21
+  %i.bg = getelementptr i8, ptr %39, i64 -1
   store i8 %i.bf, ptr %i.bg, align 1, !tbaa !8
-  %4 = icmp samesign ugt i64 %indvars.iv.i41.i21, 1
-  br i1 %4, label %bb.m, label %u64toa_radix.exit28, !llvm.loop !12
+  %40 = icmp sgt i64 %indvars.iv.i41.i21, 2
+  br i1 %40, label %bb.m, label %u64toa_radix.exit28, !llvm.loop !12
 
 bb.n:                                             ; preds = %bb.l
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
@@ -453,13 +552,13 @@ bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   br label %u64toa_radix.exit28
 
-u64toa_radix.exit28:                              ; preds = %bb.m, %bb.k, %.split35.u64toa_bin_len.exit45_crit_edge.i25, %bb.p
-  %.032.i14 = phi i64 [ %i.an, %bb.k ], [ %i.br, %bb.p ], [ %.pre.i26, %.split35.u64toa_bin_len.exit45_crit_edge.i25 ], [ %i.ay, %bb.m ]
+u64toa_radix.exit28:                              ; preds = %.prol.loopexit, %bb.m, %bb.k, %.split35.u64toa_bin_len.exit45_crit_edge.i25, %bb.p
+  %.032.i14 = phi i64 [ %i.an, %bb.k ], [ %i.br, %bb.p ], [ %.pre.i26, %.split35.u64toa_bin_len.exit45_crit_edge.i25 ], [ %i.ay, %bb.m ], [ %i.ay, %.prol.loopexit ]
   %i.bs = add i64 %.032.i14, 1
   br label %u64toa_radix.exit
 
-u64toa_radix.exit:                                ; preds = %bb.f, %bb.i, %.split35.u64toa_bin_len.exit45_crit_edge.i, %.split.i, %bb.c, %u64toa_radix.exit28
-  %.0 = phi i64 [ %i.bs, %u64toa_radix.exit28 ], [ %i.e, %bb.c ], [ %i.aj, %bb.i ], [ 1, %.split.i ], [ %.pre.i, %.split35.u64toa_bin_len.exit45_crit_edge.i ], [ %i.q, %bb.f ]
+u64toa_radix.exit:                                ; preds = %.prol.loopexit37, %bb.f, %bb.i, %.split35.u64toa_bin_len.exit45_crit_edge.i, %.split.i, %bb.c, %u64toa_radix.exit28
+  %.0 = phi i64 [ %i.bs, %u64toa_radix.exit28 ], [ %i.e, %bb.c ], [ %i.aj, %bb.i ], [ 1, %.split.i ], [ %.pre.i, %.split35.u64toa_bin_len.exit45_crit_edge.i ], [ %i.q, %bb.f ], [ %i.q, %.prol.loopexit37 ]
   ret i64 %.0
 }
 
@@ -700,7 +799,7 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  %.1210 = phi ptr [ %i.ab, %bb.p ], [ %0, %bb.o ] ; 13 uses
+  %.1210 = phi ptr [ %i.ab, %bb.p ], [ %0, %bb.o ] ; 15 uses
   %i.ac = add nsw i32 %.0223, -1022
   %i.ad = icmp eq i32 %i.c, 0                     ; 2 uses
   %i.ae = add nsw i32 %.0223, -1023               ; 3 uses
@@ -721,7 +820,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %or.cond240, label %bb.aa, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.am = lshr i64 %.0224, %i.ah                  ; 5 uses
+  %i.am = lshr i64 %.0224, %i.ah                  ; 7 uses
   %i.an = icmp eq i32 %2, 10
   br i1 %i.an, label %bb.t, label %bb.u, !prof !11
 
@@ -751,8 +850,8 @@ bb.v:                                             ; preds = %bb.u
   %i.aw = trunc nsw i32 %reass.sub.i to i8
   %.lhs.trunc.i = add nsw i8 %i.aw, 63            ; 2 uses
   %.rhs.trunc.i = trunc nuw nsw i32 %i.as to i8   ; 2 uses
-  %i.ax = udiv i8 %.lhs.trunc.i, %.rhs.trunc.i    ; 2 uses
-  %i.ay = lshr i32 2147483647, %i.ar
+  %i.ax = udiv i8 %.lhs.trunc.i, %.rhs.trunc.i    ; 3 uses
+  %i.ay = lshr i32 2147483647, %i.ar              ; 3 uses
   %.not46.i = icmp samesign ult i8 %.lhs.trunc.i, %.rhs.trunc.i
   br i1 %.not46.i, label %.split35.u64toa_bin_len.exit45_crit_edge.i, label %.lr.ph.i.i
 
@@ -761,17 +860,50 @@ bb.v:                                             ; preds = %bb.u
   br label %u64toa_radix.exit
 
 .lr.ph.i.i:                                       ; preds = %.split35.i
-  %i.az = zext nneg i32 %i.as to i64
-  %i.ba = zext nneg i8 %i.ax to i64               ; 2 uses
-  br label %bb.w
+  %i.az = zext nneg i32 %i.as to i64              ; 3 uses
+  %i.ba = zext i8 %i.ax to i64                    ; 5 uses
+  %xtraiter = and i64 %i.ba, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
-bb.w:                                             ; preds = %bb.w, %.lr.ph.i.i
-  %indvars.iv.i41.i = phi i64 [ %i.ba, %.lr.ph.i.i ], [ %indvars.iv.next.i43.i, %bb.w ] ; 2 uses
-  %.01416.i42.i = phi i64 [ %i.am, %.lr.ph.i.i ], [ %i.bd, %bb.w ] ; 2 uses
-  %indvars.iv.next.i43.i = add nsw i64 %indvars.iv.i41.i, -1 ; 2 uses
-  %i.bb = trunc i64 %.01416.i42.i to i32
+.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph.i.i
+  %indvars.iv.next.i43.i.prol = add nsw i64 %i.ba, -1 ; 2 uses
+  %6 = trunc i64 %i.am to i32
+  %7 = and i32 %i.ay, %6                          ; 3 uses
+  %8 = lshr i64 %i.am, %i.az
+  %9 = icmp samesign ult i32 %7, 10
+  %10 = or disjoint i32 %7, 48
+  %11 = add nuw nsw i32 %7, 87
+  %.013.i44.i.prol = select i1 %9, i32 %10, i32 %11
+  %12 = trunc i32 %.013.i44.i.prol to i8
+  %13 = getelementptr inbounds nuw i8, ptr %.1210, i64 %indvars.iv.next.i43.i.prol
+  store i8 %12, ptr %13, align 1, !tbaa !8
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph.i.i
+  %indvars.iv.i41.i.unr = phi i64 [ %i.ba, %.lr.ph.i.i ], [ %indvars.iv.next.i43.i.prol, %.prol.loopexit.unr-lcssa ]
+  %.01416.i42.i.unr = phi i64 [ %i.am, %.lr.ph.i.i ], [ %8, %.prol.loopexit.unr-lcssa ]
+  %14 = icmp eq i8 %i.ax, 1
+  br i1 %14, label %u64toa_radix.exit, label %bb.w
+
+bb.w:                                             ; preds = %.prol.loopexit, %bb.w
+  %indvars.iv.i41.i = phi i64 [ %indvars.iv.next.i43.i, %bb.w ], [ %indvars.iv.i41.i.unr, %.prol.loopexit ] ; 3 uses
+  %.01416.i42.i = phi i64 [ %i.bd, %bb.w ], [ %.01416.i42.i.unr, %.prol.loopexit ] ; 2 uses
+  %15 = trunc i64 %.01416.i42.i to i32
+  %16 = and i32 %i.ay, %15                        ; 3 uses
+  %17 = lshr i64 %.01416.i42.i, %i.az             ; 2 uses
+  %18 = icmp samesign ult i32 %16, 10
+  %19 = or disjoint i32 %16, 48
+  %20 = add nuw nsw i32 %16, 87
+  %.013.i44.i = select i1 %18, i32 %19, i32 %20
+  %21 = trunc i32 %.013.i44.i to i8
+  %22 = getelementptr i8, ptr %.1210, i64 %indvars.iv.i41.i
+  %23 = getelementptr i8, ptr %22, i64 -1
+  store i8 %21, ptr %23, align 1, !tbaa !8
+  %indvars.iv.next.i43.i = add nsw i64 %indvars.iv.i41.i, -2 ; 2 uses
+  %i.bb = trunc i64 %17 to i32
   %i.bc = and i32 %i.ay, %i.bb                    ; 3 uses
-  %i.bd = lshr i64 %.01416.i42.i, %i.az
+  %i.bd = lshr i64 %17, %i.az
   %i.be = icmp samesign ult i32 %i.bc, 10
   %i.bf = or disjoint i32 %i.bc, 48
   %i.bg = add nuw nsw i32 %i.bc, 87
@@ -779,8 +911,8 @@ bb.w:                                             ; preds = %bb.w, %.lr.ph.i.i
   %i.bh = trunc i32 %.013.i44.i.a to i8
   %i.bi = getelementptr inbounds nuw i8, ptr %.1210, i64 %indvars.iv.next.i43.i
   store i8 %i.bh, ptr %i.bi, align 1, !tbaa !8
-  %6 = icmp samesign ugt i64 %indvars.iv.i41.i, 1
-  br i1 %6, label %bb.w, label %u64toa_radix.exit, !llvm.loop !12
+  %24 = icmp sgt i64 %indvars.iv.i41.i, 2
+  br i1 %24, label %bb.w, label %u64toa_radix.exit, !llvm.loop !12
 
 bb.x:                                             ; preds = %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
@@ -811,8 +943,8 @@ bb.z:                                             ; preds = %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   br label %u64toa_radix.exit
 
-u64toa_radix.exit:                                ; preds = %bb.w, %bb.t, %.split.i, %.split35.u64toa_bin_len.exit45_crit_edge.i, %bb.z
-  %.032.i = phi i64 [ %i.ao, %bb.t ], [ %i.bt, %bb.z ], [ 1, %.split.i ], [ %.pre.i, %.split35.u64toa_bin_len.exit45_crit_edge.i ], [ %i.ba, %bb.w ]
+u64toa_radix.exit:                                ; preds = %.prol.loopexit, %bb.w, %bb.t, %.split.i, %.split35.u64toa_bin_len.exit45_crit_edge.i, %bb.z
+  %.032.i = phi i64 [ %i.ao, %bb.t ], [ %i.bt, %bb.z ], [ 1, %.split.i ], [ %.pre.i, %.split35.u64toa_bin_len.exit45_crit_edge.i ], [ %i.ba, %bb.w ], [ %i.ba, %.prol.loopexit ]
   %i.bu = getelementptr inbounds nuw i8, ptr %.1210, i64 %.032.i
   br label %.loopexit
 
