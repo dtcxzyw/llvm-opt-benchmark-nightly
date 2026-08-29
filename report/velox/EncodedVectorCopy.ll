@@ -205,8 +205,7 @@ bb.gz:                                            ; preds = %bb.gy
   br i1 %i.akq, label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.i22.i.i.i.i.i.i, label %.split3.i19.i.i.i.i.i.i
 
 .split3.i19.i.i.i.i.i.i:                          ; preds = %bb.gz
-  %139 = and i64 %i.anj, 4294967295
-  %i.ann = getelementptr inbounds nuw [4 x i8], ptr %i.akr, i64 %139
+  %i.ann = getelementptr inbounds nuw [4 x i8], ptr %i.akr, i64 %i.anj
   %i.ano = load i32, ptr %i.ann, align 4, !tbaa !61, !noalias !203
   %i.anp = zext i32 %i.ano to i64                 ; 2 uses
   %i.anq = lshr i64 %i.anp, 6
@@ -225,8 +224,7 @@ _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.i22.i.i.i.i.i.i: ; preds = %b
   br i1 %.not.i6.i.i23.i.i.i.i.i.i, label %"_ZZN8facebook5velox12_GLOBAL__N_112toBaseRangesERKNS0_13DecodedVectorERKN5folly5RangeIPKNS0_10BaseVector9CopyRangeEEES4_PiENK3$_0clIiEEDaT_.exit.i58.i.i.i.i.i", label %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i21.i.i.i.i.i.i
 
 _ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.thread.i21.i.i.i.i.i.i: ; preds = %_ZNK8facebook5velox13DecodedVector8isNullAtEi.exit.i22.i.i.i.i.i.i, %.split3.i19.i.i.i.i.i.i, %.split.i24.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i
-  %140 = and i64 %i.anj, 4294967295
-  %i.any = getelementptr inbounds nuw [4 x i8], ptr %i.ahg, i64 %140
+  %i.any = getelementptr inbounds nuw [4 x i8], ptr %i.ahg, i64 %i.anj
   %i.anz = load i32, ptr %i.any, align 4, !tbaa !61, !noalias !203
   %i.aoa = sext i32 %i.anz to i64                 ; 2 uses
   %i.aob = and i64 %i.aoa, 7
@@ -629,9 +627,8 @@ _ZN8facebook5velox4bits12findFirstBitEPKmii.exit.thread.i.i.i.i.i.i.i: ; preds =
   %.01519.i.i.i.i.i.i.i = phi i64 [ %i.bfr, %"_ZZN8facebook5velox12_GLOBAL__N_112toBaseRangesERKNS0_13DecodedVectorERKN5folly5RangeIPKNS0_10BaseVector9CopyRangeEEES4_PiENK3$_1clEv.exit67.i.i.i.i.i.i" ], [ %i.ayp, %bb.ht ] ; 3 uses
   %i.bce = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01519.i.i.i.i.i.i.i, i1 true)
   %i.bcf = or disjoint i64 %i.bce, %indvars.iv78.i.i.i.i.i.i ; 2 uses
-  %i.bcg = trunc i64 %i.bcf to i32                ; 2 uses
-  %141 = and i64 %i.bcf, 4294967295
-  %i.bch = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.i.i.i, i64 %141
+  %i.bcg = trunc nuw nsw i64 %i.bcf to i32        ; 2 uses
+  %i.bch = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.i.i.i, i64 %i.bcf
   store i32 %.5.i.i.i, ptr %i.bch, align 4, !tbaa !61, !noalias !217
   %i.bci = icmp eq ptr %.sroa.0108.13.i.i, %i.bcd
   br i1 %i.bci, label %bb.in, label %bb.ik
@@ -1034,9 +1031,8 @@ _ZNSt6vectorIN8facebook5velox10BaseVector9CopyRangeESaIS3_EE12emplace_backIJEEER
   %.01519.i.i.i.i.i = phi i64 [ %i.ip, %"_ZZN8facebook5velox12_GLOBAL__N_116toBaseRangesImplIZNS1_12toBaseRangesERKNS0_13DecodedVectorERKN5folly5RangeIPKNS0_10BaseVector9CopyRangeEEEiPiE3$_0EESt6vectorIS9_SaIS9_EES5_SE_SF_OT_ENKUlSK_E_clIiEEDaSK_.exit.i.i.i.i" ], [ %i.ep, %bb.h ] ; 3 uses
   %i.gw = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.01519.i.i.i.i.i, i1 true)
   %i.gx = or disjoint i64 %i.gw, %indvars.iv50.i.i.i.i ; 2 uses
-  %i.gy = trunc i64 %i.gx to i32                  ; 2 uses
-  %5 = and i64 %i.gx, 4294967295
-  %i.gz = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.i, i64 %5
+  %i.gy = trunc nuw nsw i64 %i.gx to i32          ; 2 uses
+  %i.gz = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0.i, i64 %i.gx
   store i32 %.5.i, ptr %i.gz, align 4, !tbaa !61, !noalias !677
   %i.ha = icmp eq ptr %i.gs, %i.gv
   br i1 %i.ha, label %bb.u, label %bb.r
