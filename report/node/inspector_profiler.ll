@@ -204,13 +204,13 @@ bb.at:                                            ; preds = %bb.as
 .loopexit642:                                     ; preds = %.split, %.split494
   %i.nf = load ptr, ptr %2, align 8, !noalias !74 ; 9 uses
   %i.ng = getelementptr inbounds nuw i8, ptr %i.nf, i64 8 ; 8 uses
-  %i.nh = load ptr, ptr %i.ng, align 8, !noalias !74 ; 8 uses
+  %i.nh = load ptr, ptr %i.ng, align 8, !noalias !74 ; 9 uses
   %i.ni = load ptr, ptr %i.d, align 8, !noalias !74
   %i.nj = icmp ugt ptr %i.nh, %i.ni
   tail call void @llvm.assume(i1 %i.nj), !noalias !74
   %i.nk = getelementptr inbounds nuw i8, ptr %i.nf, i64 36 ; 8 uses
-  %i.nl = load i32, ptr %i.nk, align 4, !noalias !74 ; 5 uses
-  %i.nm = load i32, ptr %i.dc, align 8, !noalias !74 ; 11 uses
+  %i.nl = load i32, ptr %i.nk, align 4, !noalias !74 ; 4 uses
+  %i.nm = load i32, ptr %i.dc, align 8, !noalias !74 ; 10 uses
   %i.nn = add nuw nsw i32 %i.nm, 1
   %i.no = icmp eq i32 %i.nl, %i.nn
   tail call void @llvm.assume(i1 %i.no), !noalias !74
@@ -229,7 +229,7 @@ bb.at:                                            ; preds = %bb.as
 bb.au:                                            ; preds = %.loopexit642
   %i.nw = getelementptr inbounds nuw i8, ptr %i.nh, i64 4
   store ptr %i.nw, ptr %i.ng, align 8, !noalias !77
-  %i.nx = getelementptr inbounds nuw i8, ptr %i.nh, i64 4 ; 2 uses
+  %i.nx = getelementptr inbounds nuw i8, ptr %i.nh, i64 4 ; 5 uses
   %i.ny = load i32, ptr %i.nx, align 4, !noalias !77
   %i.nz = zext i32 %i.ny to i64
   %i.oa = getelementptr inbounds nuw i8, ptr %i.nr, i64 %i.nz
@@ -239,9 +239,14 @@ bb.au:                                            ; preds = %.loopexit642
 
 _ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread.thread: ; preds = %bb.au
   %i.od = load i32, ptr %i.nh, align 4, !noalias !80
-  %i.oe = zext i32 %i.od to i64                   ; 2 uses
+  %3 = zext i32 %i.od to i64                      ; 5 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.nr, i64 %3 ; 4 uses
+  %5 = load i32, ptr %i.nx, align 4, !noalias !80
+  %i.oe = zext i32 %5 to i64
   %i.of = getelementptr inbounds nuw i8, ptr %i.nr, i64 %i.oe
-  br label %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit
+  %6 = load i8, ptr %i.of, align 1, !noalias !80
+  %7 = icmp eq i8 %6, 34
+  br i1 %7, label %bb.av, label %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread
 
 _ZN8simdjson15simdjson_resultINS_8fallback8ondemand6objectEE3getIS3_EENS_10error_codeERT_.exit: ; preds = %.critedge81.i, %_ZNO8simdjson8internal20simdjson_result_baseIbE3tieERbRNS_10error_codeE.exit87.i, %bb.ad, %.loopexit642, %bb.ae, %._crit_edge585, %bb.c, %bb.s, %._crit_edge579, %._crit_edge, %.critedge, %bb.q
   %i.og = load ptr, ptr @stderr, align 8
@@ -253,32 +258,20 @@ _ZN8simdjson15simdjson_resultINS_8fallback8ondemand6objectEE3getIS3_EENS_10error
   br label %bb.bi
 
 _ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread: ; preds = %bb.au
-  %i.om = getelementptr inbounds nuw i8, ptr %i.nh, i64 8 ; 3 uses
+  %i.om = getelementptr inbounds nuw i8, ptr %i.nh, i64 8 ; 2 uses
   store ptr %i.om, ptr %i.ng, align 8, !noalias !77
   %or.cond.i.i65 = icmp samesign ult i32 %i.nm, 2147483646
   tail call void @llvm.assume(i1 %or.cond.i.i65), !noalias !77
   store i32 %i.nm, ptr %i.nk, align 4, !noalias !77
   %i.on = load i32, ptr %i.nh, align 4, !noalias !80
-  %i.oo = zext i32 %i.on to i64                   ; 3 uses
-  %i.op = getelementptr inbounds nuw i8, ptr %i.nr, i64 %i.oo ; 2 uses
-  %3 = icmp eq i32 %i.nl, %i.nm
-  br i1 %3, label %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit, label %.loopexit
+  %i.oo = zext i32 %i.on to i64                   ; 2 uses
+  %i.op = getelementptr inbounds nuw i8, ptr %i.nr, i64 %i.oo
+  br label %.loopexit
 
-_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit: ; preds = %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread.thread, %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread
-  %4 = phi ptr [ %i.of, %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread.thread ], [ %i.op, %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread ] ; 4 uses
-  %5 = phi i64 [ %i.oe, %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread.thread ], [ %i.oo, %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread ] ; 4 uses
-  %6 = phi ptr [ %i.nx, %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread.thread ], [ %i.om, %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread ] ; 6 uses
-  %7 = load i32, ptr %6, align 4, !noalias !80
-  %8 = zext i32 %7 to i64
-  %9 = getelementptr inbounds nuw i8, ptr %i.nr, i64 %8
-  %10 = load i8, ptr %9, align 1, !noalias !80
-  %11 = icmp eq i8 %10, 34
-  br i1 %11, label %bb.av, label %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread
-
-bb.av:                                            ; preds = %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit
-  %i.oq = getelementptr inbounds nuw i8, ptr %6, i64 4 ; 3 uses
+bb.av:                                            ; preds = %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread.thread
+  %i.oq = getelementptr inbounds nuw i8, ptr %i.nh, i64 8 ; 2 uses
   store ptr %i.oq, ptr %i.ng, align 8, !noalias !80
-  %i.or = load i32, ptr %6, align 4, !noalias !80
+  %i.or = load i32, ptr %i.nx, align 4, !noalias !80
   %i.os = zext i32 %i.or to i64
   %i.ot = getelementptr inbounds nuw i8, ptr %i.nr, i64 %i.os
   %i.ou = load i8, ptr %i.ot, align 1, !noalias !80
@@ -293,9 +286,7 @@ bb.aw:                                            ; preds = %bb.av
   br label %_ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_traitsIcEEE3tieERS5_RNS_10error_codeE.exit
 
 bb.ax:                                            ; preds = %bb.av
-  %12 = icmp ugt ptr %i.oq, %i.nh
-  tail call void @llvm.assume(i1 %12), !noalias !80
-  %i.ox = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  %i.ox = getelementptr inbounds nuw i8, ptr %i.nh, i64 12 ; 2 uses
   store ptr %i.ox, ptr %i.ng, align 8, !noalias !80
   %i.oy = load i32, ptr %i.oq, align 4, !noalias !80
   %i.oz = zext i32 %i.oy to i64
@@ -318,13 +309,13 @@ _ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread.thread: 
   store i32 %i.pe, ptr %i.nk, align 4, !noalias !80
   br label %bb.az
 
-_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread: ; preds = %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit
+_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread: ; preds = %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread.thread
   %.not.i13.i = icmp samesign ugt i32 %i.nl, %i.nm
   br i1 %.not.i13.i, label %bb.az, label %.loopexit
 
 bb.az:                                            ; preds = %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread.thread, %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread
   %i.pf = phi i32 [ %i.pe, %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread.thread ], [ %i.nl, %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread ] ; 7 uses
-  %i.pg = phi ptr [ %i.ox, %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread.thread ], [ %6, %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread ] ; 3 uses
+  %i.pg = phi ptr [ %i.ox, %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread.thread ], [ %i.nx, %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread ] ; 3 uses
   %i.ph = getelementptr inbounds nuw i8, ptr %i.pg, i64 4 ; 10 uses
   store ptr %i.ph, ptr %i.ng, align 8, !noalias !80
   %i.pi = load i32, ptr %i.pg, align 4, !noalias !80
@@ -438,9 +429,9 @@ _ZNO8simdjson8internal20simdjson_result_baseISt17basic_string_viewIcSt11char_tra
   br label %bb.bi
 
 .loopexit:                                        ; preds = %bb.bg, %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread, %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread, %bb.ba, %bb.bd
-  %i.rf = phi i64 [ %i.oo, %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread ], [ %5, %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread ], [ %5, %bb.ba ], [ %5, %bb.bd ], [ %5, %bb.bg ]
+  %i.rf = phi i64 [ %i.oo, %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread ], [ %3, %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread ], [ %3, %bb.ba ], [ %3, %bb.bd ], [ %3, %bb.bg ]
   %i.rg = phi ptr [ %i.op, %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread ], [ %4, %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread ], [ %4, %bb.ba ], [ %4, %bb.bd ], [ %4, %bb.bg ]
-  %i.rh = phi ptr [ %i.om, %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread ], [ %6, %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread ], [ %i.ph, %bb.ba ], [ %i.ph, %bb.bd ], [ %i.qi, %bb.bg ]
+  %i.rh = phi ptr [ %i.om, %_ZN8simdjson15simdjson_resultINS_8fallback8ondemand5valueEE10get_objectEv.exit.thread ], [ %i.nx, %_ZNK8simdjson8fallback8ondemand14value_iterator9is_at_keyEv.exit.thread ], [ %i.ph, %bb.ba ], [ %i.ph, %bb.bd ], [ %i.qi, %bb.bg ]
   %i.ri = load i32, ptr %i.rh, align 4, !noalias !80
   %i.rj = zext i32 %i.ri to i64
   %gepdiff = sub nsw i64 %i.rj, %i.rf
