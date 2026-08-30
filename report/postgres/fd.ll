@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.i, label %bb.d, label %AllocateVfd.exit
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = load i64, ptr @SizeVfdCache, align 8     ; 4 uses
+  %i.j = load i64, ptr @SizeVfdCache, align 8     ; 3 uses
   %i.k = shl i64 %i.j, 1
   %spec.store.select.i = tail call i64 @llvm.umax.i64(i64 %i.k, i64 32) ; 5 uses
   %i.l = mul i64 %spec.store.select.i, 56
@@ -221,12 +221,13 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   store ptr %i.m, ptr @VfdCache, align 8
-  %i.r = trunc nuw i64 %i.j to i32                ; 3 uses
-  %i.s = icmp ugt i64 %spec.store.select.i, %i.j
+  %i.r = trunc i64 %i.j to i32                    ; 3 uses
+  %3 = and i64 %i.j, 4294967295                   ; 2 uses
+  %i.s = icmp ugt i64 %spec.store.select.i, %3
   br i1 %i.s, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.f, %.loopexit.i
-  %i.t = phi i64 [ %i.ab, %.loopexit.i ], [ %i.j, %bb.f ]
+  %i.t = phi i64 [ %i.ab, %.loopexit.i ], [ %3, %bb.f ]
   %.03034.i = phi i32 [ %i.z, %.loopexit.i ], [ %i.r, %bb.f ]
   %i.u = getelementptr inbounds nuw [56 x i8], ptr %i.m, i64 %i.t ; 5 uses
   %i.v = ptrtoint ptr %i.u to i64

@@ -205,7 +205,8 @@ bb.nb:                                            ; preds = %bb.na, %bb.my
   %.1.i403.i = phi ptr [ %i.azl, %bb.my ], [ %i.azp, %bb.na ] ; 36 uses
   %i.azw = icmp ugt i64 %.sroa.12539.0.i.i, 4294967295
   %i.azx = icmp slt i64 %.sroa.12.1.i.i, 0
-  %i.azy = zext nneg i32 %.0275.lcssa1013.i to i64 ; 3 uses
+  %5 = and i32 %.0275.lcssa1013.i, 255
+  %i.azy = zext nneg i32 %5 to i64                ; 3 uses
   %i.azz = getelementptr inbounds nuw i8, ptr @desigidx, i64 %i.azy
   %i.baa = getelementptr inbounds nuw [8 x i8], ptr @utoffs, i64 %i.azy
   %i.bab = getelementptr inbounds nuw i8, ptr @isdsts, i64 %i.azy
@@ -608,7 +609,7 @@ bb.p:                                             ; preds = %is_alpha.exit, %bb.
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 -2147483648, 256) i32 @addtype(i64 noundef %0, ptr noundef %1, i1 noundef zeroext %2, i1 noundef zeroext %3, i1 noundef zeroext %4) unnamed_addr #0 {
+define internal fastcc range(i32 -2147483648, 2147483647) i32 @addtype(i64 noundef %0, ptr noundef %1, i1 noundef zeroext %2, i1 noundef zeroext %3, i1 noundef zeroext %4) unnamed_addr #0 {
 bb.a:
   %i.a = zext i1 %2 to i8
   %i.b = add i64 %0, 2147483648
@@ -867,7 +868,7 @@ bb.p:                                             ; preds = %.loopexit
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc void @addtt(i64 noundef %0, i32 noundef range(i32 -2147483648, 256) %1) unnamed_addr #0 {
+define internal fastcc void @addtt(i64 noundef %0, i32 noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = load ptr, ptr @attypes, align 8          ; 2 uses
   %i.b = load i64, ptr @timecnt, align 8          ; 3 uses
