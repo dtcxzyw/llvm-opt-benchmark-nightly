@@ -204,14 +204,14 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.aa = zext nneg i32 %i.x to i64               ; 9 uses
-  %i.ab = zext nneg i32 %i.w to i64               ; 16 uses
+  %i.ab = zext nneg i32 %i.w to i64               ; 17 uses
   %i.ac = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.ab, ptr noundef nonnull @.str, i32 noundef 76) #8 ; 13 uses
   %i.ad = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.aa, ptr noundef nonnull @.str, i32 noundef 77) #8 ; 18 uses
   %i.ae = add nuw nsw i64 %i.ab, 1
   %i.af = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.ae, ptr noundef nonnull @.str, i32 noundef 78) #8 ; 17 uses
   %i.ag = add i64 %i.p, -1
   %i.ah = add i64 %i.ag, %i.ab                    ; 3 uses
-  %i.ai = urem i64 %i.ah, %i.ab                   ; 2 uses
+  %i.ai = urem i64 %i.ah, %i.ab
   %i.aj = sub i64 %i.ah, %i.ai                    ; 5 uses
   %.not.i = icmp eq i64 %i.m, 0
   br i1 %.not.i, label %bb.k, label %bb.j
@@ -240,7 +240,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 .preheader157.i:                                  ; preds = %bb.k
   %i.aw = trunc i32 %i.r to i8
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.ac, i8 %i.aw, i64 %i.ab, i1 false), !tbaa !21
-  %.not184.i = icmp eq i64 %i.ah, %i.ai
+  %.not184.i = icmp ult i64 %i.ah, %i.ab
   br i1 %.not184.i, label %.preheader155.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.preheader157.i

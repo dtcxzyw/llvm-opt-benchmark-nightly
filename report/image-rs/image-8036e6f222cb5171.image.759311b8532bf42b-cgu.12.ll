@@ -205,10 +205,10 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj3_NtNtB4_5array17TryFromSlice
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !806
   call void @_RINvMsm_NtCsj6eKBz9Db1c_4core5arrayARSAhj1_j3_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtNtB8_5slice4iter4IterBA_EEENCINvMBT_BQ_10wrap_mut_1By_NCINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKBF_KBC_E0E0EB3f_(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.c, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.e), !noalias !810
-  %i.h = urem i64 %1, 3                           ; 2 uses
+  %i.h = urem i64 %1, 3
   %.idx = sub nuw nsw i64 %1, %i.h
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
-  %5 = icmp eq i64 %1, %i.h
+  %5 = icmp samesign ult i64 %1, 3
   br i1 %5, label %_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj3_Kj1_EB4_.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj3_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit
@@ -310,10 +310,10 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj3_NtNtB4_5array17TryFromSlice
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !825
   call void @_RINvMsm_NtCsj6eKBz9Db1c_4core5arrayARSAhj2_j3_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtNtB8_5slice4iter4IterBA_EEENCINvMBT_BQ_10wrap_mut_1By_NCINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKBF_KBC_E0E0EB3f_(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.f), !noalias !829
-  %i.i = urem i64 %1, 6                           ; 2 uses
+  %i.i = urem i64 %1, 6
   %.idx = sub nuw nsw i64 %1, %i.i
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
-  %5 = icmp eq i64 %1, %i.i
+  %5 = icmp samesign ult i64 %1, 6
   br i1 %5, label %_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj3_Kj2_EB4_.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj3_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit
@@ -420,10 +420,10 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj3_NtNtB4_5array17TryFromSlice
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !844
   call void @_RINvMsm_NtCsj6eKBz9Db1c_4core5arrayARSAhj4_j3_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtNtB8_5slice4iter4IterBA_EEENCINvMBT_BQ_10wrap_mut_1By_NCINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKBF_KBC_E0E0EB3f_(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(address) dereferenceable(48) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.f), !noalias !848
-  %i.i = urem i64 %1, 12                          ; 2 uses
+  %i.i = urem i64 %1, 12
   %.idx = sub nuw nsw i64 %1, %i.i
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %.idx
-  %5 = icmp eq i64 %1, %i.i
+  %5 = icmp samesign ult i64 %1, 12
   br i1 %5, label %_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj3_Kj4_EB4_.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj3_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit

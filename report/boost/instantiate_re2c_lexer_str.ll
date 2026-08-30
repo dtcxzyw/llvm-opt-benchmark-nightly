@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.r, label %.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.a
-  %.115 = phi i64 [ %.0.i22, %bb.c ], [ %.0.i, %bb.a ] ; 6 uses
+  %.115 = phi i64 [ %.0.i22, %bb.c ], [ %.0.i, %bb.a ] ; 7 uses
   %.113 = phi i64 [ %i.p, %bb.c ], [ %i.g, %bb.a ] ; 3 uses
   %.1 = phi ptr [ %i.q, %bb.c ], [ %i.h, %bb.a ]  ; 7 uses
   %i.s = sub i64 0, %.115                         ; 2 uses
@@ -248,11 +248,11 @@ bb.h:                                             ; preds = %.sink.split, %bb.f
   %i.ah = load ptr, ptr %0, align 8, !tbaa !135
   %reass.sub = sub i64 %.113, %.115
   %i.ai = add i64 %reass.sub, -16                 ; 3 uses
-  %i.aj = urem i64 %i.ai, %.115                   ; 2 uses
+  %i.aj = urem i64 %i.ai, %.115
   %i.ak = sub nuw i64 %i.ai, %i.aj                ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.1, i64 %i.ak ; 4 uses
   store ptr %i.ah, ptr %i.al, align 8, !tbaa !136
-  %1 = icmp eq i64 %i.ai, %i.aj
+  %1 = icmp ult i64 %i.ai, %.115
   br i1 %1, label %_ZN5boost25simple_segregated_storageImE9add_blockEPvmm.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h

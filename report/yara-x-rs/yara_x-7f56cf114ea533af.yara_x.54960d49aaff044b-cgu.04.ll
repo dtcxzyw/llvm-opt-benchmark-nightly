@@ -205,10 +205,10 @@ bb.d:                                             ; preds = %bb.c
   %..i = tail call noundef i64 @llvm.umin.i64(i64 %i.g, i64 %i.e)
   %i.h = sub nuw i64 %..i, %1                     ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 %1 ; 2 uses
-  %i.j = urem i64 %i.h, 6                         ; 2 uses
+  %i.j = urem i64 %i.h, 6
   %.idx.i = sub nuw nsw i64 %i.h, %i.j            ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 %.idx.i
-  %3 = icmp eq i64 %i.h, %i.j
+  %3 = icmp samesign ult i64 %i.h, 6
   br i1 %3, label %_RNvNtNtCs7gfv9tzbXmh_6yara_x7modules4math14monte_carlo_pi.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.i
@@ -290,10 +290,10 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.c = extractvalue { ptr, i64 } %i.a, 0        ; 2 uses
   %i.d = extractvalue { ptr, i64 } %i.a, 1        ; 3 uses
-  %i.e = urem i64 %i.d, 6                         ; 2 uses
+  %i.e = urem i64 %i.d, 6
   %.idx.i = sub nuw nsw i64 %i.d, %i.e            ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 %.idx.i
-  %2 = icmp eq i64 %i.d, %i.e
+  %2 = icmp samesign ult i64 %i.d, 6
   br i1 %2, label %bb.e, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.i

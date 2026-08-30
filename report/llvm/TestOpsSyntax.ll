@@ -206,9 +206,9 @@ bb.a:
   %i.g = shl i64 %i.f, 2
   tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %i.g, i8 noundef signext 0) #28
   %i.h = load i64, ptr %i.c, align 8, !tbaa !83   ; 4 uses
-  %i.i = urem i64 %i.h, 3                         ; 2 uses
+  %i.i = urem i64 %i.h, 3
   %i.j = sub nuw i64 %i.h, %i.i
-  %.not = icmp eq i64 %i.h, %i.i
+  %.not = icmp ult i64 %i.h, 3
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
