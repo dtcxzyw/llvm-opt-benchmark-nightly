@@ -202,14 +202,12 @@ bb.a:
   %.zext30 = zext nneg i8 %i.i to i32
   %i.j = tail call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %2, i32 noundef %i.f, ptr noundef %0, i32 noundef 2, i32 noundef 1, i32 noundef %i.g, ptr noundef nonnull @.str.907, i32 noundef %.zext, i32 noundef %.zext30) ; 0 uses
   %i.k = tail call i32 @tvb_captured_length(ptr noundef %0)
-  %i.l = add i32 %i.k, -3                         ; 2 uses
-  %3 = icmp eq i32 %i.l, 0
-  %spec.store.select = tail call i32 @llvm.umin.i32(i32 %i.l, i32 20)
-  %.027 = select i1 %3, i32 1, i32 %spec.store.select ; 2 uses
-  %.not31 = icmp eq i32 %.027, 0
-  br i1 %.not31, label %._crit_edge, label %.lr.ph
+  %i.l = add i32 %i.k, -3
+  %spec.store.select = tail call i32 @llvm.umax.i32(i32 %i.l, i32 1)
+  %3 = tail call i32 @llvm.umin.i32(i32 %spec.store.select, i32 20)
+  br label %.lr.ph
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.a
+._crit_edge:                                      ; preds = %.lr.ph
   ret void
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
@@ -227,7 +225,7 @@ bb.a:
   %.zext35 = zext nneg i16 %i.s to i32
   %i.t = tail call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format(ptr noundef %2, i32 noundef %i.q, ptr noundef %0, i32 noundef %i.m, i32 noundef 1, i32 noundef %i.o, ptr noundef nonnull @.str.908, i32 noundef %.032, i32 noundef %.zext33, i32 noundef %.zext35, i32 noundef %i.o) ; 0 uses
   %i.u = add nuw nsw i32 %.032, 1
-  %exitcond = icmp eq i32 %.032, %.027
+  %exitcond = icmp eq i32 %.032, %3
   br i1 %exitcond, label %._crit_edge, label %.lr.ph, !llvm.loop !6
 }
 

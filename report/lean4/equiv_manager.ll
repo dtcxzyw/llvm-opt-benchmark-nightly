@@ -76,7 +76,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.l, label %bb.d, label %_ZNKSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #18
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #17
   unreachable
 
 _ZNKSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.c
@@ -84,11 +84,9 @@ _ZNKSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ;
   %i.m = add nsw i64 %.sroa.speculated.i.i.i, %i.g ; 2 uses
   %i.n = icmp ult i64 %i.m, %i.g
   %i.o = tail call i64 @llvm.umin.i64(i64 %i.m, i64 1152921504606846975)
-  %i.p = select i1 %i.n, i64 1152921504606846975, i64 %i.o ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.p, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i)
+  %i.p = select i1 %i.n, i64 1152921504606846975, i64 %i.o ; 2 uses
   %i.q = shl nuw nsw i64 %i.p, 3
-  %i.r = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #19 ; 4 uses
+  %i.r = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #18 ; 4 uses
   %i.s = getelementptr inbounds i8, ptr %i.r, i64 %i.f ; 2 uses
   %.sroa.0.0.insert.ext3 = and i64 %i.g, 4294967295
   store i64 %.sroa.0.0.insert.ext3, ptr %i.s, align 4
@@ -108,7 +106,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIN4lean
   %i.v = load ptr, ptr %i.h, align 8, !tbaa !13
   %i.w = ptrtoint ptr %i.v to i64
   %i.x = sub i64 %i.w, %i.e
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %i.x) #20
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %i.x) #19
   br label %_ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.f, %_ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
@@ -317,7 +315,7 @@ bb.j:                                             ; preds = %_ZNSt13unordered_ma
   br i1 %i.av, label %bb.k, label %_ZNKSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.k:                                             ; preds = %bb.j
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #18
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #17
   unreachable
 
 _ZNKSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.j
@@ -325,11 +323,9 @@ _ZNKSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i:
   %i.aw = add nsw i64 %.sroa.speculated.i.i.i.i, %i.aq ; 2 uses
   %i.ax = icmp ult i64 %i.aw, %i.aq
   %i.ay = tail call i64 @llvm.umin.i64(i64 %i.aw, i64 1152921504606846975)
-  %i.az = select i1 %i.ax, i64 1152921504606846975, i64 %i.ay ; 3 uses
-  %.not.i.i.i.i5 = icmp ne i64 %i.az, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i5)
+  %i.az = select i1 %i.ax, i64 1152921504606846975, i64 %i.ay ; 2 uses
   %i.ba = shl nuw nsw i64 %i.az, 3
-  %i.bb = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ba) #19 ; 4 uses
+  %i.bb = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ba) #18 ; 4 uses
   %i.bc = getelementptr inbounds i8, ptr %i.bb, i64 %i.ap ; 2 uses
   %.sroa.0.0.insert.ext3.i = and i64 %i.aq, 4294967295
   store i64 %.sroa.0.0.insert.ext3.i, ptr %i.bc, align 4
@@ -349,7 +345,7 @@ bb.m:                                             ; preds = %_ZNSt6vectorIN4lean
   %i.bf = load ptr, ptr %i.ar, align 8, !tbaa !13
   %i.bg = ptrtoint ptr %i.bf to i64
   %i.bh = sub i64 %i.bg, %i.ao
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.am, i64 noundef %i.bh) #20
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.am, i64 noundef %i.bh) #19
   br label %_ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %bb.m, %_ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
@@ -361,7 +357,7 @@ _ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9
 
 _ZN4lean13equiv_manager7mk_nodeEv.exit:           ; preds = %bb.i, %_ZNSt6vectorIN4lean13equiv_manager4nodeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
   %i.bj = trunc i64 %i.aq to i32                  ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   tail call void @llvm.experimental.noalias.scope.decl(metadata !41)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !44)
   %i.bk = load ptr, ptr %1, align 8, !tbaa !29, !noalias !47 ; 5 uses
@@ -424,18 +420,18 @@ bb.v:                                             ; preds = %bb.u
   %i.by = landingpad { ptr, i32 }
           catch ptr null
   %i.bz = extractvalue { ptr, i32 } %i.by, 0
-  call void @__clang_call_terminate(ptr %i.bz) #22
+  call void @__clang_call_terminate(ptr %i.bz) #21
   unreachable
 
 _ZNSt4pairIN4lean4exprEjED2Ev.exit:               ; preds = %_ZNSt13unordered_mapIN4lean4exprEjNS0_9expr_hashESt8equal_toIS1_E16mi_stl_allocatorISt4pairIKS1_jEEE6insertIS6_IS1_jEEENSt9enable_ifIXsr16is_constructibleIS8_OT_EE5valueES6_INSt8__detail14_Node_iteratorIS8_Lb0ELb1EEEbEE4typeESF_.exit, %bb.s, %bb.t, %bb.u
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   br label %bb.x
 
 bb.w:                                             ; preds = %_ZN4lean7mk_pairINS_4exprEjEESt4pairIT_T0_ERKS3_RKS4_.exit
   %i.ca = landingpad { ptr, i32 }
           cleanup
-  call void @_ZNSt4pairIN4lean4exprEjED2Ev(ptr noundef nonnull align 8 dead_on_return(12) dereferenceable(12) %2) #21
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
+  call void @_ZNSt4pairIN4lean4exprEjED2Ev(ptr noundef nonnull align 8 dead_on_return(12) dereferenceable(12) %2) #20
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   resume { ptr, i32 } %i.ca
 
 bb.x:                                             ; preds = %_ZNSt4pairIN4lean4exprEjED2Ev.exit, %_ZNSt13unordered_mapIN4lean4exprEjNS0_9expr_hashESt8equal_toIS1_E16mi_stl_allocatorISt4pairIKS1_jEEE4findERS7_.exit.thread11
@@ -476,7 +472,7 @@ bb.f:                                             ; preds = %bb.e
   %i.g = landingpad { ptr, i32 }
           catch ptr null
   %i.h = extractvalue { ptr, i32 } %i.g, 0
-  tail call void @__clang_call_terminate(ptr %i.h) #22
+  tail call void @__clang_call_terminate(ptr %i.h) #21
   unreachable
 
 _ZN4lean10object_refD2Ev.exit:                    ; preds = %bb.a, %bb.c, %bb.d, %bb.e
@@ -613,7 +609,7 @@ bb.k:                                             ; preds = %bb.j
   ]
 
 bb.l:                                             ; preds = %bb.k
-  %i.bb = tail call ptr @__cxa_allocate_exception(i64 40) #21 ; 5 uses
+  %i.bb = tail call ptr @__cxa_allocate_exception(i64 40) #20 ; 5 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 24 ; 2 uses
   store ptr %i.bd, ptr %i.bc, align 8, !tbaa !63
@@ -621,7 +617,7 @@ bb.l:                                             ; preds = %bb.k
   store i64 0, ptr %i.be, align 8, !tbaa !66
   store i8 0, ptr %i.bd, align 8, !tbaa !68
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4lean19unreachable_reachedE, i64 16), ptr %i.bb, align 8, !tbaa !69
-  tail call void @__cxa_throw(ptr nonnull %i.bb, ptr nonnull @_ZTIN4lean19unreachable_reachedE, ptr nonnull @_ZN4lean9throwableD2Ev) #18
+  tail call void @__cxa_throw(ptr nonnull %i.bb, ptr nonnull @_ZTIN4lean19unreachable_reachedE, ptr nonnull @_ZN4lean9throwableD2Ev) #17
   unreachable
 
 bb.m:                                             ; preds = %bb.k
@@ -959,8 +955,8 @@ declare void @_ZSt20__throw_length_errorPKc(ptr noundef) local_unnamed_addr #8
 ; Function Attrs: noinline noreturn nounwind uwtable
 define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #9 comdat {
 bb.a:
-  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #21 ; 0 uses
-  tail call void @_ZSt9terminatev() #22
+  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #20 ; 0 uses
+  tail call void @_ZSt9terminatev() #21
   unreachable
 }
 
@@ -985,8 +981,8 @@ declare zeroext i1 @lean_nat_big_eq(ptr noundef, ptr noundef) local_unnamed_addr
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4lean19unreachable_reachedD0Ev(ptr noundef nonnull align 8 dereferenceable(40) %0) unnamed_addr #13 comdat align 2 {
 bb.a:
-  tail call void @_ZN4lean9throwableD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %0) #21
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 40) #20
+  tail call void @_ZN4lean9throwableD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %0) #20
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 40) #19
   ret void
 }
 
@@ -1005,7 +1001,7 @@ define linkonce_odr hidden { ptr, i8 } @_ZNSt10_HashtableIN4lean4exprESt4pairIKS
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %2 = alloca %"struct.std::_Hashtable<lean::expr, std::pair<const lean::expr, unsigned int>, mi_stl_allocator<std::pair<const lean::expr, unsigned int>>, std::__detail::_Select1st, std::equal_to<lean::expr>, lean::expr_hash, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<true, false, true>>::_Scoped_node", align 8 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   store ptr %0, ptr %2, align 8, !tbaa !80
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.c = tail call noalias noundef ptr @mi_new_n(i64 noundef 1, i64 noundef 32) ; 12 uses
@@ -1122,7 +1118,7 @@ bb.j:                                             ; preds = %_ZNKSt8__detail15_H
   br label %bb.w
 
 .critedge27:                                      ; preds = %_ZNKSt8__detail15_Hashtable_baseIN4lean4exprESt4pairIKS2_jENS_10_Select1stESt8equal_toIS2_ENS1_9expr_hashENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS4_mRKNS_16_Hash_node_valueIS5_Lb1EEE.exit.thread.i.i, %bb.i, %bb.f, %_ZNKSt10_HashtableIN4lean4exprESt4pairIKS1_jE16mi_stl_allocatorIS4_ENSt8__detail10_Select1stESt8equal_toIS1_ENS0_9expr_hashENS7_18_Mod_range_hashingENS7_20_Default_ranged_hashENS7_20_Prime_rehash_policyENS7_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_find_nodeEmRS3_m.exit, %.loopexit
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.at = load i64, ptr %i.as, align 8, !tbaa !87
@@ -1189,7 +1185,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.bp = load i64, ptr %i.i, align 8, !tbaa !17
   %i.bq = add i64 %i.bp, 1
   store i64 %i.bq, ptr %i.i, align 8, !tbaa !17
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
   br label %_ZNSt10_HashtableIN4lean4exprESt4pairIKS1_jE16mi_stl_allocatorIS4_ENSt8__detail10_Select1stESt8equal_toIS1_ENS0_9expr_hashENS7_18_Mod_range_hashingENS7_20_Default_ranged_hashENS7_20_Prime_rehash_policyENS7_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit
 
 bb.q:                                             ; preds = %bb.k, %.critedge27
@@ -1227,25 +1223,25 @@ bb.v:                                             ; preds = %bb.u
   %i.by = landingpad { ptr, i32 }
           catch ptr null
   %i.bz = extractvalue { ptr, i32 } %i.by, 0
-  tail call void @__clang_call_terminate(ptr %i.bz) #22
+  tail call void @__clang_call_terminate(ptr %i.bz) #21
   unreachable
 
 _ZNSt8__detail16_Hashtable_allocI16mi_stl_allocatorINS_10_Hash_nodeISt4pairIKN4lean4exprEjELb1EEEEE18_M_deallocate_nodeEPS8_.exit.i: ; preds = %bb.u, %bb.t, %bb.s, %.loopexit48
-  tail call void @mi_free(ptr noundef nonnull %i.c) #21
+  tail call void @mi_free(ptr noundef nonnull %i.c) #20
   br label %_ZNSt10_HashtableIN4lean4exprESt4pairIKS1_jE16mi_stl_allocatorIS4_ENSt8__detail10_Select1stESt8equal_toIS1_ENS0_9expr_hashENS7_18_Mod_range_hashingENS7_20_Default_ranged_hashENS7_20_Prime_rehash_policyENS7_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit
 
 _ZNSt10_HashtableIN4lean4exprESt4pairIKS1_jE16mi_stl_allocatorIS4_ENSt8__detail10_Select1stESt8equal_toIS1_ENS0_9expr_hashENS7_18_Mod_range_hashingENS7_20_Default_ranged_hashENS7_20_Prime_rehash_policyENS7_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit: ; preds = %.thread, %_ZNSt8__detail16_Hashtable_allocI16mi_stl_allocatorINS_10_Hash_nodeISt4pairIKN4lean4exprEjELb1EEEEE18_M_deallocate_nodeEPS8_.exit.i
   %.sroa.4.047 = phi i8 [ 1, %.thread ], [ 0, %_ZNSt8__detail16_Hashtable_allocI16mi_stl_allocatorINS_10_Hash_nodeISt4pairIKN4lean4exprEjELb1EEEEE18_M_deallocate_nodeEPS8_.exit.i ]
   %.sroa.040.046 = phi ptr [ %i.c, %.thread ], [ %.sroa.040.0.ph, %_ZNSt8__detail16_Hashtable_allocI16mi_stl_allocatorINS_10_Hash_nodeISt4pairIKN4lean4exprEjELb1EEEEE18_M_deallocate_nodeEPS8_.exit.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   %.fca.0.insert = insertvalue { ptr, i8 } poison, ptr %.sroa.040.046, 0
   %.fca.1.insert = insertvalue { ptr, i8 } %.fca.0.insert, i8 %.sroa.4.047, 1
   ret { ptr, i8 } %.fca.1.insert
 
 bb.w:                                             ; preds = %bb.q, %bb.j, %bb.e
   %.pn.pn.pn = phi { ptr, i32 } [ %i.o, %bb.e ], [ %i.aq, %bb.j ], [ %i.br, %bb.q ]
-  call void @_ZNSt10_HashtableIN4lean4exprESt4pairIKS1_jE16mi_stl_allocatorIS4_ENSt8__detail10_Select1stESt8equal_toIS1_ENS0_9expr_hashENS7_18_Mod_range_hashingENS7_20_Default_ranged_hashENS7_20_Prime_rehash_policyENS7_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %2) #21
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
+  call void @_ZNSt10_HashtableIN4lean4exprESt4pairIKS1_jE16mi_stl_allocatorIS4_ENSt8__detail10_Select1stESt8equal_toIS1_ENS0_9expr_hashENS7_18_Mod_range_hashingENS7_20_Default_ranged_hashENS7_20_Prime_rehash_policyENS7_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %2) #20
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   resume { ptr, i32 } %.pn.pn.pn
 }
 
@@ -1287,11 +1283,11 @@ bb.g:                                             ; preds = %bb.f
   %i.j = landingpad { ptr, i32 }
           catch ptr null
   %i.k = extractvalue { ptr, i32 } %i.j, 0
-  tail call void @__clang_call_terminate(ptr %i.k) #22
+  tail call void @__clang_call_terminate(ptr %i.k) #21
   unreachable
 
 _ZNSt8__detail16_Hashtable_allocI16mi_stl_allocatorINS_10_Hash_nodeISt4pairIKN4lean4exprEjELb1EEEEE18_M_deallocate_nodeEPS8_.exit: ; preds = %bb.b, %bb.d, %bb.e, %bb.f
-  tail call void @mi_free(ptr noundef nonnull %i.b) #21
+  tail call void @mi_free(ptr noundef nonnull %i.b) #20
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt8__detail16_Hashtable_allocI16mi_stl_allocatorINS_10_Hash_nodeISt4pairIKN4lean4exprEjELb1EEEEE18_M_deallocate_nodeEPS8_.exit, %bb.a
@@ -1382,18 +1378,18 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   br i1 %i.t, label %bb.k, label %bb.h
 
 bb.h:                                             ; preds = %._crit_edge.i
-  tail call void @mi_free(ptr noundef %i.r) #21
+  tail call void @mi_free(ptr noundef %i.r) #20
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.c
   %i.u = landingpad { ptr, i32 }
           catch ptr null
   %i.v = extractvalue { ptr, i32 } %i.u, 0
-  %i.w = tail call ptr @__cxa_begin_catch(ptr %i.v) #21 ; 0 uses
+  %i.w = tail call ptr @__cxa_begin_catch(ptr %i.v) #20 ; 0 uses
   %i.x = load i64, ptr %2, align 8, !tbaa !31
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i64 %i.x, ptr %i.y, align 8, !tbaa !87
-  invoke void @__cxa_rethrow() #18
+  invoke void @__cxa_rethrow() #17
           to label %bb.n unwind label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -1415,7 +1411,7 @@ bb.m:                                             ; preds = %bb.j
   %i.ab = landingpad { ptr, i32 }
           catch ptr null
   %i.ac = extractvalue { ptr, i32 } %i.ab, 0
-  tail call void @__clang_call_terminate(ptr %i.ac) #22
+  tail call void @__clang_call_terminate(ptr %i.ac) #21
   unreachable
 
 bb.n:                                             ; preds = %bb.i
@@ -1431,11 +1427,8 @@ declare i64 @llvm.umax.i64(i64, i64) #15
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #15
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #16
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #17
+declare void @llvm.experimental.noalias.scope.decl(metadata) #16
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1453,13 +1446,12 @@ attributes #12 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector
 attributes #13 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #14 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #15 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #16 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #17 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #18 = { noreturn }
-attributes #19 = { builtin allocsize(0) }
-attributes #20 = { builtin nounwind }
-attributes #21 = { nounwind }
-attributes #22 = { noreturn nounwind }
+attributes #16 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #17 = { noreturn }
+attributes #18 = { builtin allocsize(0) }
+attributes #19 = { builtin nounwind }
+attributes #20 = { nounwind }
+attributes #21 = { noreturn nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

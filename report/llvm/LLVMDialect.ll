@@ -205,9 +205,7 @@ _ZNKSt6vectorISt10unique_ptrIN4mlir14RewritePatternESt14default_deleteIS2_EESaIS
   %i.z = add nsw i64 %.sroa.speculated.i.i.i.i.i, %i.y ; 2 uses
   %i.aa = icmp ult i64 %i.z, %i.y
   %i.ab = call i64 @llvm.umin.i64(i64 %i.z, i64 1152921504606846975)
-  %i.ac = select i1 %i.aa, i64 1152921504606846975, i64 %i.ab ; 3 uses
-  %.not.i.i.i4.i.i = icmp ne i64 %i.ac, 0
-  call void @llvm.assume(i1 %.not.i.i.i4.i.i)
+  %i.ac = select i1 %i.aa, i64 1152921504606846975, i64 %i.ab ; 2 uses
   %i.ad = shl nuw nsw i64 %i.ac, 3
   %i.ae = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ad) #30 ; 10 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.w

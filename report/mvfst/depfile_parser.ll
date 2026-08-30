@@ -202,7 +202,7 @@ bb.az:                                            ; preds = %bb.ay
   %.1184274 = phi i1 [ true, %bb.az ], [ %.0183361, %bb.ay ]
   %.0185272 = phi i32 [ %i.eh, %bb.az ], [ %i.ea, %bb.ay ]
   %.1204271 = phi i1 [ false, %bb.az ], [ %.0203358, %bb.ay ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
   %i.ei = zext nneg i32 %.0185272 to i64
   store ptr %.0178362, ptr %3, align 8, !tbaa !22
   store i64 %i.ei, ptr %i.e, align 8, !tbaa !24
@@ -240,7 +240,7 @@ bb.be:                                            ; preds = %bb.bc
   br i1 %i.ev, label %bb.bf, label %_ZNKSt6vectorI11StringPieceSaIS0_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.bf:                                            ; preds = %bb.be
-  call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #12
+  call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #11
   unreachable
 
 _ZNKSt6vectorI11StringPieceSaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.be
@@ -249,11 +249,9 @@ _ZNKSt6vectorI11StringPieceSaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.b
   %i.ex = add nsw i64 %.sroa.speculated.i.i.i, %i.ew ; 2 uses
   %i.ey = icmp ult i64 %i.ex, %i.ew
   %i.ez = call i64 @llvm.umin.i64(i64 %i.ex, i64 576460752303423487)
-  %i.fa = select i1 %i.ey, i64 576460752303423487, i64 %i.ez ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.fa, 0
-  call void @llvm.assume(i1 %.not.i.i.i)
+  %i.fa = select i1 %i.ey, i64 576460752303423487, i64 %i.ez ; 2 uses
   %i.fb = shl nuw nsw i64 %i.fa, 4
-  %i.fc = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fb) #13 ; 5 uses
+  %i.fc = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fb) #12 ; 5 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 %i.eu
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.fd, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !29
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.er, %i.el
@@ -275,7 +273,7 @@ _ZNSt6vectorI11StringPieceSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit22.i.i: ; pre
   br i1 %.not.i23.i.i, label %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i, label %bb.bg
 
 bb.bg:                                            ; preds = %_ZNSt6vectorI11StringPieceSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit22.i.i
-  call void @_ZdlPv(ptr noundef nonnull %i.er) #14
+  call void @_ZdlPv(ptr noundef nonnull %i.er) #13
   br label %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i
 
 _ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i: ; preds = %bb.bg, %_ZNSt6vectorI11StringPieceSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit22.i.i
@@ -314,7 +312,7 @@ bb.bk:                                            ; preds = %bb.bi
   br i1 %i.fu, label %bb.bl, label %_ZNKSt6vectorI11StringPieceSaIS0_EE12_M_check_lenEmPKc.exit.i.i243
 
 bb.bl:                                            ; preds = %bb.bk
-  call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #12
+  call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #11
   unreachable
 
 _ZNKSt6vectorI11StringPieceSaIS0_EE12_M_check_lenEmPKc.exit.i.i243: ; preds = %bb.bk
@@ -323,11 +321,9 @@ _ZNKSt6vectorI11StringPieceSaIS0_EE12_M_check_lenEmPKc.exit.i.i243: ; preds = %b
   %i.fw = add nsw i64 %.sroa.speculated.i.i.i244, %i.fv ; 2 uses
   %i.fx = icmp ult i64 %i.fw, %i.fv
   %i.fy = call i64 @llvm.umin.i64(i64 %i.fw, i64 576460752303423487)
-  %i.fz = select i1 %i.fx, i64 576460752303423487, i64 %i.fy ; 3 uses
-  %.not.i.i.i245 = icmp ne i64 %i.fz, 0
-  call void @llvm.assume(i1 %.not.i.i.i245)
+  %i.fz = select i1 %i.fx, i64 576460752303423487, i64 %i.fy ; 2 uses
   %i.ga = shl nuw nsw i64 %i.fz, 4
-  %i.gb = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ga) #13 ; 5 uses
+  %i.gb = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ga) #12 ; 5 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 %i.ft
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gc, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !29
   %.not10.i.i.i.i.i.i246 = icmp eq ptr %i.fq, %i.fk
@@ -349,7 +345,7 @@ _ZNSt6vectorI11StringPieceSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit22.i.i251: ; 
   br i1 %.not.i23.i.i253, label %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i254, label %bb.bm
 
 bb.bm:                                            ; preds = %_ZNSt6vectorI11StringPieceSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit22.i.i251
-  call void @_ZdlPv(ptr noundef nonnull %i.fq) #14
+  call void @_ZdlPv(ptr noundef nonnull %i.fq) #13
   br label %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i254
 
 _ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i254: ; preds = %bb.bm, %_ZNSt6vectorI11StringPieceSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit22.i.i251
@@ -365,14 +361,14 @@ bb.bn:                                            ; preds = %.thread266
 
 _ZNSt6vectorI11StringPieceSaIS0_EE9push_backERKS0_.exit.thread: ; preds = %bb.bh, %bb.bn, %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i, %bb.bd, %bb.bj, %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i254
   %.2199.ph = phi i1 [ %.0197359, %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i254 ], [ %.0197359, %bb.bj ], [ false, %bb.bd ], [ %.0197359, %bb.bh ], [ false, %_ZNSt6vectorI11StringPieceSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i ], [ %spec.select239, %bb.bn ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #10
   br label %.thread275
 
 _ZNSt6vectorI11StringPieceSaIS0_EE9push_backERKS0_.exit: ; preds = %bb.bb
   %i.gh = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.gi = load i64, ptr %i.gh, align 8, !tbaa !18
-  %i.gj = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef %i.gi, ptr noundef nonnull @.str, i64 noundef 31) #11 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
+  %i.gj = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef %i.gi, ptr noundef nonnull @.str, i64 noundef 31) #10 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #10
   br label %.critedge
 
 .thread275:                                       ; preds = %.loopexit287, %_ZNSt6vectorI11StringPieceSaIS0_EE9push_backERKS0_.exit.thread, %bb.az
@@ -393,7 +389,7 @@ _ZNSt6vectorI11StringPieceSaIS0_EE9push_backERKS0_.exit: ; preds = %bb.bb
 bb.bo:                                            ; preds = %._crit_edge
   %i.gm = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.gn = load i64, ptr %i.gm, align 8, !tbaa !18
-  %i.go = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef %i.gn, ptr noundef nonnull @.str.1, i64 noundef 23) #11 ; 0 uses
+  %i.go = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %2, i64 noundef 0, i64 noundef %i.gn, ptr noundef nonnull @.str.1, i64 noundef 23) #10 ; 0 uses
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.a, %_ZNSt6vectorI11StringPieceSaIS0_EE9push_backERKS0_.exit, %._crit_edge, %bb.bo
@@ -614,9 +610,6 @@ declare i64 @llvm.umax.i64(i64, i64) #9
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #9
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #10
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -627,11 +620,10 @@ attributes #6 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protec
 attributes #7 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
 attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #11 = { nounwind }
-attributes #12 = { noreturn nounwind }
-attributes #13 = { builtin nounwind allocsize(0) }
-attributes #14 = { builtin nounwind }
+attributes #10 = { nounwind }
+attributes #11 = { noreturn nounwind }
+attributes #12 = { builtin nounwind allocsize(0) }
+attributes #13 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

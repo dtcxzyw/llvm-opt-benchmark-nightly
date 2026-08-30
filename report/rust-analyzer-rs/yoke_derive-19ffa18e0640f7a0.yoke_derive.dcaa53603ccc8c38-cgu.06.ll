@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %_RINvMsa_NtCsfjX3T6
   %i.ak = add nuw i64 %i.aj, 8
   %i.al = and i64 %i.ak, -16                      ; 3 uses
   %i.am = add i64 %i.af, 17
-  %i.an = add i64 %i.am, %i.al                    ; 4 uses
+  %i.an = add i64 %i.am, %i.al                    ; 3 uses
   %i.ao = icmp ult i64 %i.an, %i.al
   %i.ap = icmp ugt i64 %i.an, 9223372036854775792
   %or.cond.i.i.i.i.i = or i1 %i.ao, %i.ap
@@ -217,8 +217,7 @@ _RNvMs1_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCs
   %i.as = load ptr, ptr %0, align 8
   %i.at = sub nsw i64 0, %i.al
   %i.au = getelementptr inbounds i8, ptr %i.as, i64 %i.at
-  %1 = icmp eq i64 %i.an, 0
-  br i1 %1, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsfjX3T6UU9IB_9hashbrown3set7HashSetNtCs1K5DUQUZc67_11proc_macro25IdentNtNtNtCscAsMj0W7j8b_3std4hash6random11RandomStateEECsiWAYywJt434_11yoke_derive.exit, label %bb.e
+  br label %bb.e
 
 bb.e:                                             ; preds = %_RNvMs1_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCsiWAYywJt434_11yoke_derive.exit.i.i.i.i.i, %_RNvMs1_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCsiWAYywJt434_11yoke_derive.exit.thread.i.i.i.i.i
   %i.av = phi ptr [ %i.ar, %_RNvMs1_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCsiWAYywJt434_11yoke_derive.exit.thread.i.i.i.i.i ], [ %i.au, %_RNvMs1_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCsiWAYywJt434_11yoke_derive.exit.i.i.i.i.i ]
@@ -227,7 +226,7 @@ bb.e:                                             ; preds = %_RNvMs1_NtCsfjX3T6U
   call void @_RNvCsiZ68L5R9VjM_7___rustc14___rust_dealloc(ptr %i.av, i64 %.sroa.5.04.i.i.i.i.i, i64 %.sroa.0.05.i.i.i.i.i) #21
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsfjX3T6UU9IB_9hashbrown3set7HashSetNtCs1K5DUQUZc67_11proc_macro25IdentNtNtNtCscAsMj0W7j8b_3std4hash6random11RandomStateEECsiWAYywJt434_11yoke_derive.exit
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsfjX3T6UU9IB_9hashbrown3set7HashSetNtCs1K5DUQUZc67_11proc_macro25IdentNtNtNtCscAsMj0W7j8b_3std4hash6random11RandomStateEECsiWAYywJt434_11yoke_derive.exit: ; preds = %bb.a, %_RNvMs1_NtCsfjX3T6UU9IB_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCsiWAYywJt434_11yoke_derive.exit.i.i.i.i.i, %bb.e
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsfjX3T6UU9IB_9hashbrown3set7HashSetNtCs1K5DUQUZc67_11proc_macro25IdentNtNtNtCscAsMj0W7j8b_3std4hash6random11RandomStateEECsiWAYywJt434_11yoke_derive.exit: ; preds = %bb.a, %bb.e
   ret void
 }
 

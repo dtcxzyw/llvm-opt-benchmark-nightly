@@ -204,17 +204,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = shl nuw i64 %i.d, 4                      ; 3 uses
   %i.g = add nsw i64 %i.b, 17                     ; 2 uses
-  %i.h = add i64 %i.f, %i.g                       ; 5 uses
+  %i.h = add i64 %i.f, %i.g                       ; 4 uses
   %i.i = icmp ult i64 %i.h, %i.f
   %i.j = icmp ugt i64 %i.h, 9223372036854775792
   %or.cond.i.i.i = or i1 %i.i, %i.j
-  br i1 %or.cond.i.i.i, label %bb.d, label %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i, !prof !7918
+  br i1 %or.cond.i.i.i, label %bb.d, label %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i.i, !prof !7918
 
-_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %bb.c
-  %2 = icmp eq i64 %i.h, 0
-  br i1 %2, label %_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTINtNtCscdodAO9FK5_5alloc4sync3ArcDNtNtCs3bxdDoT6cu5_31datafusion_physical_expr_common13physical_expr12PhysicalExprEL_EuEE17new_uninitializedCs43kcu4yvms7_24influxdb3_query_executor.exit.i, label %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i.i
-
-_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i.i: ; preds = %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
+_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i.i: ; preds = %bb.c
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #34, !noalias !7919
   %i.k = tail call noundef align 16 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %i.h, i64 noundef range(i64 1, -9223372036854775807) 16) #34, !noalias !7919 ; 2 uses
   %i.l = icmp eq ptr %i.k, null
@@ -228,9 +224,8 @@ bb.e:                                             ; preds = %_RNvXs_NtNtNtCsawk7
   tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 16, i64 noundef %i.h) #35, !noalias !7919
   unreachable
 
-_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTINtNtCscdodAO9FK5_5alloc4sync3ArcDNtNtCs3bxdDoT6cu5_31datafusion_physical_expr_common13physical_expr12PhysicalExprEL_EuEE17new_uninitializedCs43kcu4yvms7_24influxdb3_query_executor.exit.i: ; preds = %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i.i, %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
-  %.sroa.0.0.i.i7.i.i.i = phi ptr [ %i.k, %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ]
-  %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i7.i.i.i, i64 %i.f ; 3 uses
+_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTINtNtCscdodAO9FK5_5alloc4sync3ArcDNtNtCs3bxdDoT6cu5_31datafusion_physical_expr_common13physical_expr12PhysicalExprEL_EuEE17new_uninitializedCs43kcu4yvms7_24influxdb3_query_executor.exit.i: ; preds = %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i.i
+  %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.f ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7924)
   %i.n = load ptr, ptr %1, align 8, !alias.scope !7927, !noalias !7928, !nonnull !11, !noundef !11 ; 5 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.m, ptr nonnull align 1 %i.n, i64 %i.g, i1 false), !noalias !7930
@@ -350,17 +345,13 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.j = extractvalue { i64, i1 } %i.h, 0         ; 3 uses
   %i.k = add i64 %i.e, 17                         ; 2 uses
-  %i.l = add i64 %i.j, %i.k                       ; 5 uses
+  %i.l = add i64 %i.j, %i.k                       ; 4 uses
   %i.m = icmp ult i64 %i.l, %i.j
   %i.n = icmp ugt i64 %i.l, 9223372036854775792
   %or.cond.i.i.i = or i1 %i.m, %i.n
-  br i1 %or.cond.i.i.i, label %bb.e, label %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i, !prof !7918
+  br i1 %or.cond.i.i.i, label %bb.e, label %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i.i, !prof !7918
 
-_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %bb.d
-  %2 = icmp eq i64 %i.l, 0
-  br i1 %2, label %_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringNtNtCs7fnekraeopg_15datafusion_expr4expr4ExprEE17new_uninitializedCs43kcu4yvms7_24influxdb3_query_executor.exit.i, label %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i.i
-
-_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i.i: ; preds = %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
+_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i.i: ; preds = %bb.d
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #34, !noalias !7947
   %i.o = tail call noundef align 16 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %i.l, i64 noundef range(i64 1, -9223372036854775807) 16) #34, !noalias !7947 ; 2 uses
   %i.p = icmp eq ptr %i.o, null
@@ -374,9 +365,8 @@ bb.f:                                             ; preds = %_RNvXs_NtNtNtCsawk7
   tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 16, i64 noundef %i.l) #35, !noalias !7947
   unreachable
 
-_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringNtNtCs7fnekraeopg_15datafusion_expr4expr4ExprEE17new_uninitializedCs43kcu4yvms7_24influxdb3_query_executor.exit.i: ; preds = %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i.i, %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
-  %.sroa.0.0.i.i7.i.i.i = phi ptr [ %i.o, %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ]
-  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i7.i.i.i, i64 %i.j ; 3 uses
+_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringNtNtCs7fnekraeopg_15datafusion_expr4expr4ExprEE17new_uninitializedCs43kcu4yvms7_24influxdb3_query_executor.exit.i: ; preds = %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i.i
+  %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.j ; 3 uses
   %i.r = icmp ult i64 %i.e, 8
   %i.s = lshr i64 %i.g, 3
   %i.t = mul nuw nsw i64 %i.s, 7

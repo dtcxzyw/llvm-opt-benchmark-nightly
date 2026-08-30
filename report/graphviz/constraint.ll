@@ -56,7 +56,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.p, label %bb.d, label %_ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.6) #9
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.6) #8
   unreachable
 
 _ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.c
@@ -65,11 +65,9 @@ _ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb
   %i.r = add nsw i64 %.sroa.speculated.i.i.i.i, %i.q ; 2 uses
   %i.s = icmp ult i64 %i.r, %i.q
   %i.t = tail call i64 @llvm.umin.i64(i64 %i.r, i64 1152921504606846975)
-  %i.u = select i1 %i.s, i64 1152921504606846975, i64 %i.t ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.u, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.u = select i1 %i.s, i64 1152921504606846975, i64 %i.t ; 2 uses
   %i.v = shl nuw nsw i64 %i.u, 3
-  %i.w = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #10 ; 4 uses
+  %i.w = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.v) #9 ; 4 uses
   %i.x = getelementptr inbounds i8, ptr %i.w, i64 %i.o ; 2 uses
   store ptr %0, ptr %i.x, align 8, !tbaa !25
   %i.y = icmp sgt i64 %i.o, 0
@@ -88,7 +86,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIP10Con
   %i.aa = load ptr, ptr %i.i, align 8, !tbaa !24
   %i.ab = ptrtoint ptr %i.aa to i64
   %i.ac = sub i64 %i.ab, %i.n
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %i.ac) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %i.ac) #10
   br label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i: ; preds = %bb.f, %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
@@ -124,7 +122,7 @@ bb.h:                                             ; preds = %_ZNSt6vectorIP10Con
   br i1 %i.ap, label %bb.i, label %_ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i5
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.6) #9
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.6) #8
   unreachable
 
 _ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i5: ; preds = %bb.h
@@ -133,11 +131,9 @@ _ZNKSt6vectorIP10ConstraintSaIS1_EE12_M_check_lenEmPKc.exit.i.i.i5: ; preds = %b
   %i.ar = add nsw i64 %.sroa.speculated.i.i.i.i6, %i.aq ; 2 uses
   %i.as = icmp ult i64 %i.ar, %i.aq
   %i.at = tail call i64 @llvm.umin.i64(i64 %i.ar, i64 1152921504606846975)
-  %i.au = select i1 %i.as, i64 1152921504606846975, i64 %i.at ; 3 uses
-  %.not.i.i.i.i7 = icmp ne i64 %i.au, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i7)
+  %i.au = select i1 %i.as, i64 1152921504606846975, i64 %i.at ; 2 uses
   %i.av = shl nuw nsw i64 %i.au, 3
-  %i.aw = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.av) #10 ; 4 uses
+  %i.aw = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.av) #9 ; 4 uses
   %i.ax = getelementptr inbounds i8, ptr %i.aw, i64 %i.ao ; 2 uses
   store ptr %0, ptr %i.ax, align 8, !tbaa !25
   %i.ay = icmp sgt i64 %i.ao, 0
@@ -156,7 +152,7 @@ bb.k:                                             ; preds = %_ZNSt6vectorIP10Con
   %i.ba = load ptr, ptr %i.ai, align 8, !tbaa !24
   %i.bb = ptrtoint ptr %i.ba to i64
   %i.bc = sub i64 %i.bb, %i.an
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.al, i64 noundef %i.bc) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.al, i64 noundef %i.bc) #10
   br label %_ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i10
 
 _ZNSt6vectorIP10ConstraintSaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i10: ; preds = %bb.k, %_ZNSt6vectorIP10ConstraintSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i8
@@ -355,9 +351,6 @@ declare i64 @llvm.umax.i64(i64, i64) #7
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #7
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #8
-
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -366,10 +359,9 @@ attributes #4 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protec
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #6 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #9 = { noreturn }
-attributes #10 = { builtin allocsize(0) }
-attributes #11 = { builtin nounwind }
+attributes #8 = { noreturn }
+attributes #9 = { builtin allocsize(0) }
+attributes #10 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

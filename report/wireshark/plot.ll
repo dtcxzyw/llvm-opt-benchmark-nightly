@@ -202,34 +202,26 @@ _ZNKSt6vectorI12_plot_item_tSaIS0_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.k
   %i.ac = add nsw i64 %.sroa.speculated.i.i, %i.ab ; 2 uses
   %i.ad = icmp ult i64 %i.ac, %i.ab
   %i.ae = tail call i64 @llvm.umin.i64(i64 %i.ac, i64 288230376151711743)
-  %i.af = select i1 %i.ad, i64 288230376151711743, i64 %i.ae ; 3 uses
-  %.not.i.i = icmp eq i64 %i.af, 0
-  br i1 %.not.i.i, label %_ZNSt12_Vector_baseI12_plot_item_tSaIS0_EE11_M_allocateEm.exit.i, label %3
+  %i.af = select i1 %i.ad, i64 288230376151711743, i64 %i.ae ; 2 uses
+  %3 = shl nuw nsw i64 %i.af, 5
+  %4 = tail call noalias noundef ptr @_Znwm(i64 noundef %3) #22 ; 4 uses
+  %5 = getelementptr i8, ptr %4, i64 %i.d         ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(32) %5, ptr noundef align 8 dereferenceable(32) %2, i64 32, i1 false)
+  %6 = icmp sgt i64 %i.d, 0
+  br i1 %6, label %bb.m, label %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i
 
-3:                                                ; preds = %_ZNKSt6vectorI12_plot_item_tSaIS0_EE12_M_check_lenEmPKc.exit.i
-  %4 = shl nuw nsw i64 %i.af, 5
-  %5 = tail call noalias noundef ptr @_Znwm(i64 noundef %4) #22
-  br label %_ZNSt12_Vector_baseI12_plot_item_tSaIS0_EE11_M_allocateEm.exit.i
-
-_ZNSt12_Vector_baseI12_plot_item_tSaIS0_EE11_M_allocateEm.exit.i: ; preds = %3, %_ZNKSt6vectorI12_plot_item_tSaIS0_EE12_M_check_lenEmPKc.exit.i
-  %6 = phi ptr [ %5, %3 ], [ null, %_ZNKSt6vectorI12_plot_item_tSaIS0_EE12_M_check_lenEmPKc.exit.i ] ; 4 uses
-  %7 = getelementptr i8, ptr %6, i64 %i.d         ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(32) %7, ptr noundef align 8 dereferenceable(32) %2, i64 32, i1 false)
-  %8 = icmp sgt i64 %i.d, 0
-  br i1 %8, label %bb.m, label %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i
-
-bb.m:                                             ; preds = %_ZNSt12_Vector_baseI12_plot_item_tSaIS0_EE11_M_allocateEm.exit.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %6, ptr align 8 %i.a, i64 %i.d, i1 false)
+bb.m:                                             ; preds = %_ZNKSt6vectorI12_plot_item_tSaIS0_EE12_M_check_lenEmPKc.exit.i
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %4, ptr align 8 %i.a, i64 %i.d, i1 false)
   br label %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i
 
-_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i: ; preds = %bb.m, %_ZNSt12_Vector_baseI12_plot_item_tSaIS0_EE11_M_allocateEm.exit.i
-  %i.ag = getelementptr i8, ptr %7, i64 32        ; 2 uses
+_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i: ; preds = %bb.m, %_ZNKSt6vectorI12_plot_item_tSaIS0_EE12_M_check_lenEmPKc.exit.i
+  %i.ag = getelementptr i8, ptr %5, i64 32        ; 2 uses
   %i.ah = sub i64 %i.y, %i.b                      ; 3 uses
   %i.ai = icmp sgt i64 %i.ah, 0
   br i1 %i.ai, label %bb.n, label %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i
 
 bb.n:                                             ; preds = %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.ag, ptr align 8 %i.x, i64 %i.ah, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.ag, ptr align 8 %i.x, i64 %i.ah, i1 false)
   br label %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i
 
 _ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i: ; preds = %bb.n, %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit.i
@@ -245,9 +237,9 @@ bb.o:                                             ; preds = %_ZNSt6vectorI12_plo
 
 _ZNSt6vectorI12_plot_item_tSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit: ; preds = %_ZNSt6vectorI12_plot_item_tSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i, %bb.o
   %i.am = getelementptr i8, ptr %i.ag, i64 %i.ah
-  store ptr %6, ptr %0, align 8
+  store ptr %4, ptr %0, align 8
   store ptr %i.am, ptr %i.e, align 8
-  %i.an = getelementptr [32 x i8], ptr %6, i64 %i.af
+  %i.an = getelementptr [32 x i8], ptr %4, i64 %i.af
   store ptr %i.an, ptr %i.g, align 8
   br label %bb.p
 

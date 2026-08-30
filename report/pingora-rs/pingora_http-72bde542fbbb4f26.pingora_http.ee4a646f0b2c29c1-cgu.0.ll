@@ -205,17 +205,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.h = shl nuw i64 %i.f, 5                      ; 3 uses
   %i.i = add nsw i64 %i.d, 17                     ; 2 uses
-  %i.j = add i64 %i.h, %i.i                       ; 5 uses
+  %i.j = add i64 %i.h, %i.i                       ; 4 uses
   %i.k = icmp ult i64 %i.j, %i.h
   %i.l = icmp ugt i64 %i.j, 9223372036854775792
   %or.cond.i.i.i = or i1 %i.k, %i.l
-  br i1 %or.cond.i.i.i, label %bb.d, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i, !prof !269
+  br i1 %or.cond.i.i.i, label %bb.d, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i.i, !prof !269
 
-_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i: ; preds = %bb.c
-  %2 = icmp eq i64 %i.j, 0
-  br i1 %2, label %bb.g, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i.i
-
-_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i.i: ; preds = %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
+_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i.i: ; preds = %bb.c
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #22, !noalias !338
   %i.m = tail call noundef align 16 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef %i.j, i64 noundef range(i64 1, -9223372036854775807) 16) #22, !noalias !338 ; 2 uses
   %i.n = icmp eq ptr %i.m, null
@@ -230,26 +226,25 @@ bb.e:                                             ; preds = %_RNvXs1_NtCsexYYUdY
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.pn.i.i = phi { i64, i64 } [ %i.p, %bb.e ], [ %i.o, %bb.d ] ; 2 uses
-  %.sroa.7.0.ph.i.i = extractvalue { i64, i64 } %.pn.i.i, 0 ; 2 uses
-  %.sroa.12.0.ph.i.i = extractvalue { i64, i64 } %.pn.i.i, 1
-  %.pre.i = add i64 %.sroa.7.0.ph.i.i, 17
+  %.pn.i.i = phi { i64, i64 } [ %i.o, %bb.d ], [ %i.p, %bb.e ] ; 2 uses
+  %.sroa.12.020.i.i = extractvalue { i64, i64 } %.pn.i.i, 1
+  %.sroa.7.021.i.i = extractvalue { i64, i64 } %.pn.i.i, 0 ; 2 uses
+  %.pre.i = add i64 %.sroa.7.021.i.i, 17
   br label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCskKLDkoKarTP_4core3any6TypeIdINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCs84JG9zk80ZV_4http10extensions8AnyCloneNtNtBT_6marker4SendNtB2H_4SyncEL_EEE17new_uninitializedCskspKcFIsYcD_12pingora_http.exit.i
 
-bb.g:                                             ; preds = %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i.i, %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i
-  %.sroa.0.0.i.i9.i.i.i = phi ptr [ %i.m, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ]
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i.i, i64 %i.h
+bb.g:                                             ; preds = %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i.i
   %i.q = icmp ult i64 %i.d, 8
   %i.r = lshr i64 %i.f, 3
   %i.s = mul nuw nsw i64 %i.r, 7
   %.sroa.07.0.i.i.i = select i1 %i.q, i64 %i.d, i64 %i.s
+  %2 = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.h
   br label %_RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCskKLDkoKarTP_4core3any6TypeIdINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCs84JG9zk80ZV_4http10extensions8AnyCloneNtNtBT_6marker4SendNtB2H_4SyncEL_EEE17new_uninitializedCskspKcFIsYcD_12pingora_http.exit.i
 
 _RNvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB5_8RawTableTNtNtCskKLDkoKarTP_4core3any6TypeIdINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtCs84JG9zk80ZV_4http10extensions8AnyCloneNtNtBT_6marker4SendNtB2H_4SyncEL_EEE17new_uninitializedCskspKcFIsYcD_12pingora_http.exit.i: ; preds = %bb.g, %bb.f
   %.pre-phi.i = phi i64 [ %.pre.i, %bb.f ], [ %i.i, %bb.g ]
-  %.sroa.7.0.i = phi i64 [ %.sroa.12.0.ph.i.i, %bb.f ], [ %.sroa.07.0.i.i.i, %bb.g ]
-  %.sroa.5.0.i = phi i64 [ %.sroa.7.0.ph.i.i, %bb.f ], [ %i.d, %bb.g ]
-  %.sroa.0.0.i = phi ptr [ null, %bb.f ], [ %3, %bb.g ] ; 3 uses
+  %.sroa.7.0.i = phi i64 [ %.sroa.12.020.i.i, %bb.f ], [ %.sroa.07.0.i.i.i, %bb.g ]
+  %.sroa.5.0.i = phi i64 [ %.sroa.7.021.i.i, %bb.f ], [ %i.d, %bb.g ]
+  %.sroa.0.0.i = phi ptr [ null, %bb.f ], [ %2, %bb.g ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !343
   store ptr %.sroa.0.0.i, ptr %i.a, align 8, !noalias !343
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8

@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %.val = load ptr, ptr %0, align 8               ; 2 uses
   %i.d = icmp eq i64 %i.b, -1
-  br i1 %i.d, label %7, label %bb.c
+  br i1 %i.d, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.e = add i64 %3, -1                           ; 2 uses
@@ -228,39 +228,35 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.n = add nuw i64 %i.b, 17
-  %i.o = add i64 %i.n, %i.l                       ; 4 uses
+  %i.o = add i64 %i.n, %i.l                       ; 3 uses
   %i.p = icmp uge i64 %i.o, %i.l
   tail call void @llvm.assume(i1 %i.p)
   %i.q = icmp slt i64 %i.e, 0
-  br i1 %i.q, label %bb.h, label %_RNvMs1_NtCs25YkazkrsH5_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
+  br i1 %i.q, label %_RNvMs1_NtCs25YkazkrsH5_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i, label %bb.i
 
 bb.g:                                             ; preds = %bb.d
   tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @15) #23, !noalias !66
   unreachable
 
 _RNvMs1_NtCs25YkazkrsH5_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.f
+  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_sub_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @16) #23, !noalias !66
+  unreachable
+
+bb.h:                                             ; preds = %bb.b
+  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8) #23
+  unreachable
+
+bb.i:                                             ; preds = %bb.f
   %4 = sub nuw i64 -9223372036854775808, %3
   %5 = icmp ule i64 %i.o, %4
   tail call void @llvm.assume(i1 %5)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  %6 = icmp eq i64 %i.o, 0
-  br i1 %6, label %_RINvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB6_13RawTableInner12free_bucketsNtNtNtNtCshZ5T49Ks0oD_14allocator_api26stable5alloc6global6GlobalECs4RW8js5ES7g_4fish.exit, label %bb.i
-
-bb.h:                                             ; preds = %bb.f
-  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_sub_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @16) #23, !noalias !66
-  unreachable
-
-bb.i:                                             ; preds = %_RNvMs1_NtCs25YkazkrsH5_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
   %i.r = sub nsw i64 0, %i.l
   %i.s = getelementptr inbounds i8, ptr %.val, i64 %i.r
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.s, i64 noundef %i.o, i64 noundef range(i64 1, -9223372036854775807) %3) #24
   br label %_RINvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB6_13RawTableInner12free_bucketsNtNtNtNtCshZ5T49Ks0oD_14allocator_api26stable5alloc6global6GlobalECs4RW8js5ES7g_4fish.exit
 
-7:                                                ; preds = %bb.b
-  tail call void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_add_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8) #23
-  unreachable
-
-_RINvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB6_13RawTableInner12free_bucketsNtNtNtNtCshZ5T49Ks0oD_14allocator_api26stable5alloc6global6GlobalECs4RW8js5ES7g_4fish.exit: ; preds = %bb.i, %_RNvMs1_NtCs25YkazkrsH5_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i, %bb.a
+_RINvMsa_NtCs25YkazkrsH5_9hashbrown3rawNtB6_13RawTableInner12free_bucketsNtNtNtNtCshZ5T49Ks0oD_14allocator_api26stable5alloc6global6GlobalECs4RW8js5ES7g_4fish.exit: ; preds = %bb.i, %bb.a
   ret void
 }
 

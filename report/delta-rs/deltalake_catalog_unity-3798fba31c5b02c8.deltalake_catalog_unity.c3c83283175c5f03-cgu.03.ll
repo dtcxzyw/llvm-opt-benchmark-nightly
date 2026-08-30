@@ -205,17 +205,13 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.i = extractvalue { i64, i1 } %i.g, 0         ; 3 uses
   %i.j = add i64 %i.d, 17                         ; 2 uses
-  %i.k = add i64 %i.j, %i.i                       ; 5 uses
+  %i.k = add i64 %i.j, %i.i                       ; 4 uses
   %i.l = icmp ult i64 %i.k, %i.i
   %i.m = icmp ugt i64 %i.k, 9223372036854775792
   %or.cond.i.i = or i1 %i.l, %i.m
-  br i1 %or.cond.i.i, label %bb.e, label %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i, !prof !2745
+  br i1 %or.cond.i.i, label %bb.e, label %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, !prof !2745
 
-_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.d
-  %2 = icmp eq i64 %i.k, 0
-  br i1 %2, label %bb.h, label %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i
-
-_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i: ; preds = %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
+_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i: ; preds = %bb.d
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #26, !noalias !2867
   %i.n = tail call noundef align 16 ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef %i.k, i64 noundef range(i64 1, -9223372036854775807) 16) #26, !noalias !2867 ; 2 uses
   %i.o = icmp eq ptr %i.n, null
@@ -230,26 +226,25 @@ bb.f:                                             ; preds = %_RNvXs_NtCs6Po7BT7N
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %.pn.i = phi { i64, i64 } [ %i.q, %bb.f ], [ %i.p, %bb.e ] ; 2 uses
-  %.sroa.7.0.ph.i = extractvalue { i64, i64 } %.pn.i, 0 ; 2 uses
-  %.sroa.12.0.ph.i = extractvalue { i64, i64 } %.pn.i, 1
-  %.pre = add i64 %.sroa.7.0.ph.i, 17
+  %.pn.i = phi { i64, i64 } [ %i.p, %bb.e ], [ %i.q, %bb.f ] ; 2 uses
+  %.sroa.12.023.i = extractvalue { i64, i64 } %.pn.i, 1
+  %.sroa.7.024.i = extractvalue { i64, i64 } %.pn.i, 0 ; 2 uses
+  %.pre = add i64 %.sroa.7.024.i, 17
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringBP_EE17new_uninitializedCsgO8S5jLFugx_23deltalake_catalog_unity.exit
 
-bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
-  %.sroa.0.0.i.i9.i.i = phi ptr [ %i.n, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
-  %3 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.i
+bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i
   %i.r = icmp ult i64 %i.d, 8
   %i.s = lshr i64 %i.f, 3
   %i.t = mul nuw nsw i64 %i.s, 7
   %.sroa.07.0.i.i = select i1 %i.r, i64 %i.d, i64 %i.t
+  %2 = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.i
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringBP_EE17new_uninitializedCsgO8S5jLFugx_23deltalake_catalog_unity.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringBP_EE17new_uninitializedCsgO8S5jLFugx_23deltalake_catalog_unity.exit: ; preds = %bb.g, %bb.h
   %.pre-phi = phi i64 [ %.pre, %bb.g ], [ %i.j, %bb.h ]
-  %.sroa.7.0 = phi i64 [ %.sroa.12.0.ph.i, %bb.g ], [ %.sroa.07.0.i.i, %bb.h ]
-  %.sroa.5.0 = phi i64 [ %.sroa.7.0.ph.i, %bb.g ], [ %i.d, %bb.h ]
-  %.sroa.0.0 = phi ptr [ null, %bb.g ], [ %3, %bb.h ] ; 3 uses
+  %.sroa.7.0 = phi i64 [ %.sroa.12.023.i, %bb.g ], [ %.sroa.07.0.i.i, %bb.h ]
+  %.sroa.5.0 = phi i64 [ %.sroa.7.024.i, %bb.g ], [ %i.d, %bb.h ]
+  %.sroa.0.0 = phi ptr [ null, %bb.g ], [ %2, %bb.h ] ; 3 uses
   store ptr %.sroa.0.0, ptr %i.b, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 %.sroa.5.0, ptr %.sroa.4.0..sroa_idx, align 8

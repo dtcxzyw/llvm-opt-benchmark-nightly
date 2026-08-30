@@ -206,12 +206,11 @@ bb.h:                                             ; preds = %bb.d
 
 sqlite3_free.exit:                                ; preds = %bb.h, %bb.g, %sqlite3_mutex_enter.exit.i, %bb.c, %bb.b
   %i.au = and i32 %2, -8                          ; 2 uses
-  %i.av = icmp slt i32 %i.au, 9
+  %i.av = icmp slt i32 %i.au, 9                   ; 3 uses
   %i.aw = tail call i32 @llvm.umin.i32(i32 %i.au, i32 65528) ; 5 uses
-  %spec.store.select2 = select i1 %i.av, i32 0, i32 %i.aw ; 6 uses
+  %spec.store.select2 = select i1 %i.av, i32 0, i32 %i.aw ; 5 uses
   %spec.store.select1 = tail call i32 @llvm.smax.i32(i32 %3, i32 0) ; 2 uses
-  %.not101 = icmp eq i32 %spec.store.select2, 0   ; 2 uses
-  br i1 %.not101, label %bb.j, label %bb.i
+  br i1 %i.av, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %sqlite3_free.exit
   %i.ax = udiv i32 2147418112, %i.aw              ; 2 uses
@@ -305,7 +304,7 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.v
 
 bb.t:                                             ; preds = %bb.r
-  br i1 %.not101, label %bb.v, label %bb.u
+  br i1 %i.av, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.ch = sdiv i64 %.090, %i.az

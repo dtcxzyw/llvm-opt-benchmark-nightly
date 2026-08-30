@@ -205,8 +205,7 @@ bb.a:
   %spec.store.select.i = tail call i64 @llvm.umin.i64(i64 %i.i, i64 12)
   %i.o = icmp eq i64 %i.i, 0
   %spec.store.select1.i = select i1 %i.o, i64 1, i64 %spec.store.select.i ; 9 uses
-  %spec.store.select2.i.i = tail call i64 @llvm.umax.i64(i64 %spec.store.select1.i, i64 1)
-  %i.p = getelementptr [4 x i8], ptr @__const._ZL13days_in_monthmm.month_table, i64 %spec.store.select2.i.i
+  %i.p = getelementptr [4 x i8], ptr @__const._ZL13days_in_monthmm.month_table, i64 %spec.store.select1.i
   %i.q = getelementptr i8, ptr %i.p, i64 -4
   %i.r = load i32, ptr %i.q, align 4, !tbaa !79   ; 2 uses
   %i.s = and i64 %i.c, 3
@@ -516,9 +515,6 @@ declare i64 @llvm.umin.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #10

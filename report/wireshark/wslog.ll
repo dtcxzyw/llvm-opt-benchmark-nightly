@@ -202,7 +202,7 @@ bb.z:                                             ; preds = %ws_log_set_domain_f
   %i.cl = icmp eq i32 %i.ck, 0
   br i1 %i.cl, label %ws_log_set_domain_filter.exit.backedge, label %bb.ac
 
-ws_log_set_domain_filter.exit.backedge:           ; preds = %.split, %ws_log_set_level_str.exit, %ws_log_set_fatal_level_str.exit, %bb.aa, %bb.y, %bb.x, %free_log_filter.exit.i63, %bb.u, %bb.t, %free_log_filter.exit.i59, %bb.q, %bb.p, %free_log_filter.exit.i55, %ws_log_set_fatal_count_str.exit.thread, %bb.f, %bb.e, %free_log_filter.exit.i, %bb.h, %ws_log_add_custom_file.exit, %ws_log_set_domain_filter.exit, %ws_log_set_level.exit, %bb.ab, %bb.m, %ws_log_set_fatal_level_str.exit.thread, %ws_log_set_level_str.exit.thread
+ws_log_set_domain_filter.exit.backedge:           ; preds = %.split, %ws_log_set_fatal_level_str.exit, %bb.aa, %bb.y, %bb.x, %free_log_filter.exit.i63, %bb.u, %bb.t, %free_log_filter.exit.i59, %bb.q, %bb.p, %free_log_filter.exit.i55, %ws_log_set_fatal_count_str.exit.thread, %bb.f, %bb.e, %free_log_filter.exit.i, %ws_log_set_level_str.exit, %bb.h, %ws_log_add_custom_file.exit, %ws_log_set_domain_filter.exit, %ws_log_set_level.exit, %bb.ab, %bb.m, %ws_log_set_fatal_level_str.exit.thread, %ws_log_set_level_str.exit.thread
   br label %ws_log_set_domain_filter.exit, !llvm.loop !11
 
 bb.aa:                                            ; preds = %bb.z

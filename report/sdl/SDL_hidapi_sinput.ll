@@ -204,7 +204,7 @@ bb.bt:                                            ; preds = %bb.a, %bb.bs
 define internal noundef zeroext i1 @HIDAPI_DriverSInput_OpenJoystick(ptr nofree noundef readonly captures(none) %0, ptr noundef initializes((68, 72), (112, 116)) %1) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.b = load ptr, ptr %i.a, align 8              ; 13 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 12 uses
   tail call void @SDL_AssertJoysticksLocked() #8
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 109
   %i.d = load i8, ptr %i.c, align 1
@@ -267,28 +267,23 @@ bb.h:                                             ; preds = %bb.g
   %i.ah = load i8, ptr %i.ag, align 2             ; 2 uses
   %i.ai = icmp eq i8 %i.ah, 0
   %spec.select = tail call i8 @llvm.umin.i8(i8 %i.ah, i8 2)
-  %i.aj = select i1 %i.ai, i8 1, i8 %spec.select  ; 3 uses
+  %i.aj = select i1 %i.ai, i8 1, i8 %spec.select  ; 2 uses
   store i8 %i.aj, ptr %i.ag, align 2
   %i.ak = icmp samesign ugt i8 %i.aj, 1
-  br i1 %i.ak, label %.thread.a, label %3
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 27 ; 2 uses
+  br i1 %i.ak, label %._crit_edge, label %.thread.a
 
 .thread.a:                                        ; preds = %bb.h
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 27
+  %.pre = load i8, ptr %2, align 1
+  %3 = zext i8 %.pre to i32
+  br label %bb.i
+
+._crit_edge:                                      ; preds = %bb.h
   store i8 1, ptr %2, align 1
   br label %bb.i
 
-3:                                                ; preds = %bb.h
-  %.not = icmp eq i8 %i.aj, 0
-  br i1 %.not, label %.thread28, label %._crit_edge
-
-._crit_edge:                                      ; preds = %3
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.b, i64 27
-  %.pre = load i8, ptr %.phi.trans.insert, align 1
-  %4 = zext i8 %.pre to i32
-  br label %bb.i
-
-bb.i:                                             ; preds = %._crit_edge, %.thread.a
-  %i.al = phi i32 [ %4, %._crit_edge ], [ 1, %.thread.a ]
+bb.i:                                             ; preds = %.thread.a, %._crit_edge
+  %i.al = phi i32 [ %3, %.thread.a ], [ 1, %._crit_edge ]
   tail call void @SDL_PrivateJoystickAddTouchpad(ptr noundef nonnull %1, i32 noundef %i.al) #8
   %.pr = load i8, ptr %i.ag, align 2
   %i.am = icmp ugt i8 %.pr, 1
@@ -301,7 +296,7 @@ bb.j:                                             ; preds = %bb.i
   tail call void @SDL_PrivateJoystickAddTouchpad(ptr noundef nonnull %1, i32 noundef %i.ap) #8
   br label %.thread28
 
-.thread28:                                        ; preds = %3, %bb.i, %bb.j, %bb.g
+.thread28:                                        ; preds = %bb.i, %bb.j, %bb.g
   ret i1 true
 }
 

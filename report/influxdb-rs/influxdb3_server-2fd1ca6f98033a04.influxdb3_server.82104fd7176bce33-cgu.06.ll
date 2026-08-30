@@ -204,17 +204,13 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.i = extractvalue { i64, i1 } %i.g, 0         ; 3 uses
   %i.j = add i64 %i.d, 17                         ; 2 uses
-  %i.k = add i64 %i.j, %i.i                       ; 5 uses
+  %i.k = add i64 %i.j, %i.i                       ; 4 uses
   %i.l = icmp ult i64 %i.k, %i.i
   %i.m = icmp ugt i64 %i.k, 9223372036854775792
   %or.cond.i.i = or i1 %i.l, %i.m
-  br i1 %or.cond.i.i, label %bb.e, label %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i, !prof !9792
+  br i1 %or.cond.i.i, label %bb.e, label %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i, !prof !9792
 
-_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.d
-  %2 = icmp eq i64 %i.k, 0
-  br i1 %2, label %_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE17new_uninitializedCsbakdBCgU4AF_16influxdb3_server.exit, label %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i
-
-_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i: ; preds = %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i
+_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i: ; preds = %bb.d
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #34, !noalias !10069
   %i.n = tail call noundef align 16 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %i.k, i64 noundef range(i64 1, -9223372036854775807) 16) #34, !noalias !10069 ; 2 uses
   %i.o = icmp eq ptr %i.n, null
@@ -228,9 +224,8 @@ bb.f:                                             ; preds = %_RNvXs_NtNtNtCsawk7
   tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 16, i64 noundef %i.k) #31, !noalias !10069
   unreachable
 
-_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE17new_uninitializedCsbakdBCgU4AF_16influxdb3_server.exit: ; preds = %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i, %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i
-  %.sroa.0.0.i.i7.i.i = phi ptr [ %i.n, %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
-  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i7.i.i, i64 %i.i ; 3 uses
+_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE17new_uninitializedCsbakdBCgU4AF_16influxdb3_server.exit: ; preds = %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i
+  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.i ; 3 uses
   %i.q = icmp ult i64 %i.d, 8
   %i.r = lshr i64 %i.f, 3
   %i.s = mul nuw nsw i64 %i.r, 7

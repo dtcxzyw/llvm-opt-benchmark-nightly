@@ -205,9 +205,7 @@ _ZNKSt6vectorISt10unique_ptrIN6spdlog7details14flag_formatterESt14default_delete
   %i.af = add nsw i64 %.sroa.speculated.i.i.i.i, %i.ae ; 2 uses
   %i.ag = icmp ult i64 %i.af, %i.ae
   %i.ah = tail call i64 @llvm.umin.i64(i64 %i.af, i64 1152921504606846975)
-  %i.ai = select i1 %i.ag, i64 1152921504606846975, i64 %i.ah ; 3 uses
-  %.not.i.i.i.i17 = icmp ne i64 %i.ai, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i17)
+  %i.ai = select i1 %i.ag, i64 1152921504606846975, i64 %i.ah ; 2 uses
   %i.aj = shl nuw nsw i64 %i.ai, 3
   %i.ak = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aj) #45
           to label %.noexc18 unwind label %_ZNSt10unique_ptrIN6spdlog7details14flag_formatterESt14default_deleteIS2_EED2Ev.exit21.loopexit ; 10 uses
@@ -584,9 +582,7 @@ _ZNKSt6vectorISt10unique_ptrIN6spdlog7details14flag_formatterESt14default_delete
   %i.ed = add nsw i64 %.sroa.speculated.i.i.i.i29, %i.ec ; 2 uses
   %i.ee = icmp ult i64 %i.ed, %i.ec
   %i.ef = tail call i64 @llvm.umin.i64(i64 %i.ed, i64 1152921504606846975)
-  %i.eg = select i1 %i.ee, i64 1152921504606846975, i64 %i.ef ; 3 uses
-  %.not.i.i.i.i30 = icmp ne i64 %i.eg, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i30)
+  %i.eg = select i1 %i.ee, i64 1152921504606846975, i64 %i.ef ; 2 uses
   %i.eh = shl nuw nsw i64 %i.eg, 3
   %i.ei = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.eh) #45
           to label %.noexc41 unwind label %_ZNSt10unique_ptrIN6spdlog7details14flag_formatterESt14default_deleteIS2_EED2Ev.exit48 ; 10 uses
@@ -919,9 +915,7 @@ _ZNKSt6vectorISt10unique_ptrIN6spdlog7details14flag_formatterESt14default_delete
   %i.ay = add nsw i64 %.sroa.speculated.i.i.i.i, %i.ax ; 2 uses
   %i.az = icmp ult i64 %i.ay, %i.ax
   %i.ba = tail call i64 @llvm.umin.i64(i64 %i.ay, i64 1152921504606846975)
-  %i.bb = select i1 %i.az, i64 1152921504606846975, i64 %i.ba ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.bb, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.bb = select i1 %i.az, i64 1152921504606846975, i64 %i.ba ; 2 uses
   %i.bc = shl nuw nsw i64 %i.bb, 3
   %i.bd = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bc) #45
           to label %.noexc9 unwind label %_ZNSt10unique_ptrIN6spdlog7details14flag_formatterESt14default_deleteIS2_EED2Ev.exit13 ; 10 uses
@@ -1100,9 +1094,7 @@ _ZNKSt6vectorISt10unique_ptrIN6spdlog7details14flag_formatterESt14default_delete
   %i.m = add nsw i64 %.sroa.speculated.i.i.i, %i.l ; 2 uses
   %i.n = icmp ult i64 %i.m, %i.l
   %i.o = tail call i64 @llvm.umin.i64(i64 %i.m, i64 1152921504606846975)
-  %i.p = select i1 %i.n, i64 1152921504606846975, i64 %i.o ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.p, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i)
+  %i.p = select i1 %i.n, i64 1152921504606846975, i64 %i.o ; 2 uses
   %i.q = shl nuw nsw i64 %i.p, 3
   %i.r = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #45 ; 10 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.j
@@ -1505,9 +1497,7 @@ _ZNKSt6vectorISt10unique_ptrIN6spdlog7details14flag_formatterESt14default_delete
   %i.at = add nsw i64 %.sroa.speculated.i.i.i.i, %i.as ; 2 uses
   %i.au = icmp ult i64 %i.at, %i.as
   %i.av = call i64 @llvm.umin.i64(i64 %i.at, i64 1152921504606846975)
-  %i.aw = select i1 %i.au, i64 1152921504606846975, i64 %i.av ; 3 uses
-  %.not.i.i.i.i11 = icmp ne i64 %i.aw, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i11)
+  %i.aw = select i1 %i.au, i64 1152921504606846975, i64 %i.av ; 2 uses
   %i.ax = shl nuw nsw i64 %i.aw, 3
   %i.ay = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ax) #45
           to label %.noexc12 unwind label %_ZNSt10unique_ptrIN6spdlog7details14flag_formatterESt14default_deleteIS2_EED2Ev.exit16 ; 10 uses
@@ -1910,9 +1900,7 @@ _ZNKSt6vectorISt10unique_ptrIN6spdlog7details14flag_formatterESt14default_delete
   %i.gq = add nsw i64 %.sroa.speculated.i.i.i.i126, %i.gp ; 2 uses
   %i.gr = icmp ult i64 %i.gq, %i.gp
   %i.gs = tail call i64 @llvm.umin.i64(i64 %i.gq, i64 1152921504606846975)
-  %i.gt = select i1 %i.gr, i64 1152921504606846975, i64 %i.gs ; 3 uses
-  %.not.i.i.i.i127 = icmp ne i64 %i.gt, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i127)
+  %i.gt = select i1 %i.gr, i64 1152921504606846975, i64 %i.gs ; 2 uses
   %i.gu = shl nuw nsw i64 %i.gt, 3
   %i.gv = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gu) #45
           to label %.noexc138 unwind label %_ZNSt10unique_ptrIN6spdlog7details11b_formatterINS1_13scoped_padderEEESt14default_deleteIS4_EED2Ev.exit149 ; 10 uses
@@ -2263,9 +2251,7 @@ _ZNKSt6vectorISt10unique_ptrIN6spdlog7details14flag_formatterESt14default_delete
   %i.kn = add nsw i64 %.sroa.speculated.i.i.i.i212, %i.km ; 2 uses
   %i.ko = icmp ult i64 %i.kn, %i.km
   %i.kp = tail call i64 @llvm.umin.i64(i64 %i.kn, i64 1152921504606846975)
-  %i.kq = select i1 %i.ko, i64 1152921504606846975, i64 %i.kp ; 3 uses
-  %.not.i.i.i.i213 = icmp ne i64 %i.kq, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i213)
+  %i.kq = select i1 %i.ko, i64 1152921504606846975, i64 %i.kp ; 2 uses
   %i.kr = shl nuw nsw i64 %i.kq, 3
   %i.ks = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.kr) #45
           to label %.noexc224 unwind label %_ZNSt10unique_ptrIN6spdlog7details11D_formatterINS1_13scoped_padderEEESt14default_deleteIS4_EED2Ev.exit235 ; 10 uses
@@ -2668,9 +2654,7 @@ _ZNKSt6vectorISt10unique_ptrIN6spdlog7details14flag_formatterESt14default_delete
   %i.st = add nsw i64 %.sroa.speculated.i.i.i.i424, %i.ss ; 2 uses
   %i.su = icmp ult i64 %i.st, %i.ss
   %i.sv = tail call i64 @llvm.umin.i64(i64 %i.st, i64 1152921504606846975)
-  %i.sw = select i1 %i.su, i64 1152921504606846975, i64 %i.sv ; 3 uses
-  %.not.i.i.i.i425 = icmp ne i64 %i.sw, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i425)
+  %i.sw = select i1 %i.su, i64 1152921504606846975, i64 %i.sv ; 2 uses
   %i.sx = shl nuw nsw i64 %i.sw, 3
   %i.sy = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.sx) #45
           to label %.noexc436 unwind label %_ZNSt10unique_ptrIN6spdlog7details11T_formatterINS1_13scoped_padderEEESt14default_deleteIS4_EED2Ev.exit447 ; 10 uses
@@ -3073,9 +3057,7 @@ _ZNKSt6vectorISt10unique_ptrIN6spdlog7details14flag_formatterESt14default_delete
   %i.at = add nsw i64 %.sroa.speculated.i.i.i.i, %i.as ; 2 uses
   %i.au = icmp ult i64 %i.at, %i.as
   %i.av = call i64 @llvm.umin.i64(i64 %i.at, i64 1152921504606846975)
-  %i.aw = select i1 %i.au, i64 1152921504606846975, i64 %i.av ; 3 uses
-  %.not.i.i.i.i11 = icmp ne i64 %i.aw, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i11)
+  %i.aw = select i1 %i.au, i64 1152921504606846975, i64 %i.av ; 2 uses
   %i.ax = shl nuw nsw i64 %i.aw, 3
   %i.ay = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ax) #45
           to label %.noexc12 unwind label %_ZNSt10unique_ptrIN6spdlog7details14flag_formatterESt14default_deleteIS2_EED2Ev.exit16 ; 10 uses
@@ -3478,9 +3460,7 @@ _ZNKSt6vectorISt10unique_ptrIN6spdlog7details14flag_formatterESt14default_delete
   %i.gq = add nsw i64 %.sroa.speculated.i.i.i.i126, %i.gp ; 2 uses
   %i.gr = icmp ult i64 %i.gq, %i.gp
   %i.gs = tail call i64 @llvm.umin.i64(i64 %i.gq, i64 1152921504606846975)
-  %i.gt = select i1 %i.gr, i64 1152921504606846975, i64 %i.gs ; 3 uses
-  %.not.i.i.i.i127 = icmp ne i64 %i.gt, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i127)
+  %i.gt = select i1 %i.gr, i64 1152921504606846975, i64 %i.gs ; 2 uses
   %i.gu = shl nuw nsw i64 %i.gt, 3
   %i.gv = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gu) #45
           to label %.noexc138 unwind label %_ZNSt10unique_ptrIN6spdlog7details11b_formatterINS1_18null_scoped_padderEEESt14default_deleteIS4_EED2Ev.exit149 ; 10 uses
@@ -3831,9 +3811,7 @@ _ZNKSt6vectorISt10unique_ptrIN6spdlog7details14flag_formatterESt14default_delete
   %i.kn = add nsw i64 %.sroa.speculated.i.i.i.i212, %i.km ; 2 uses
   %i.ko = icmp ult i64 %i.kn, %i.km
   %i.kp = tail call i64 @llvm.umin.i64(i64 %i.kn, i64 1152921504606846975)
-  %i.kq = select i1 %i.ko, i64 1152921504606846975, i64 %i.kp ; 3 uses
-  %.not.i.i.i.i213 = icmp ne i64 %i.kq, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i213)
+  %i.kq = select i1 %i.ko, i64 1152921504606846975, i64 %i.kp ; 2 uses
   %i.kr = shl nuw nsw i64 %i.kq, 3
   %i.ks = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.kr) #45
           to label %.noexc224 unwind label %_ZNSt10unique_ptrIN6spdlog7details11D_formatterINS1_18null_scoped_padderEEESt14default_deleteIS4_EED2Ev.exit235 ; 10 uses
@@ -4236,9 +4214,7 @@ _ZNKSt6vectorISt10unique_ptrIN6spdlog7details14flag_formatterESt14default_delete
   %i.st = add nsw i64 %.sroa.speculated.i.i.i.i424, %i.ss ; 2 uses
   %i.su = icmp ult i64 %i.st, %i.ss
   %i.sv = tail call i64 @llvm.umin.i64(i64 %i.st, i64 1152921504606846975)
-  %i.sw = select i1 %i.su, i64 1152921504606846975, i64 %i.sv ; 3 uses
-  %.not.i.i.i.i425 = icmp ne i64 %i.sw, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i425)
+  %i.sw = select i1 %i.su, i64 1152921504606846975, i64 %i.sv ; 2 uses
   %i.sx = shl nuw nsw i64 %i.sw, 3
   %i.sy = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.sx) #45
           to label %.noexc436 unwind label %_ZNSt10unique_ptrIN6spdlog7details11T_formatterINS1_18null_scoped_padderEEESt14default_deleteIS4_EED2Ev.exit447 ; 10 uses

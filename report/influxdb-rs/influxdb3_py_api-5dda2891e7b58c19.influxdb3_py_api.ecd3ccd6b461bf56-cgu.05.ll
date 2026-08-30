@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/influxdb-rs/original/influxdb3_py_api-5dda2891e7b58c19.influxdb3_py_api.ecd3ccd6b461bf56-cgu.05?download=true
-inline.NumInlined: 193
+inline.NumInlined: 194
 inline.NumDeleted: 92
 loop-unroll.NumRuntimeUnrolled: 3
 loop-unroll.NumUnrolled: 3
@@ -204,17 +204,13 @@ bb.i:                                             ; preds = %bb.h
   %i.o = add nuw i64 %i.m, 15
   %i.p = and i64 %i.o, -16                        ; 3 uses
   %i.q = add nuw nsw i64 %.sroa.4.0.i.ph, 16      ; 2 uses
-  %i.r = add i64 %i.q, %i.p                       ; 6 uses
+  %i.r = add i64 %i.q, %i.p                       ; 5 uses
   %i.s = icmp ult i64 %i.r, %i.p
   %i.t = icmp ugt i64 %i.r, 9223372036854775792
   %or.cond.i = or i1 %i.s, %i.t
-  br i1 %or.cond.i, label %bb.j, label %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i, !prof !282
+  br i1 %or.cond.i, label %bb.j, label %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i, !prof !282
 
-_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i: ; preds = %bb.i
-  %4 = icmp eq i64 %i.r, 0
-  br i1 %4, label %bb.r, label %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i
-
-_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i: ; preds = %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i
+_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i: ; preds = %bb.i
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #20, !noalias !283
   %i.u = tail call noundef align 16 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %i.r, i64 noundef range(i64 1, -9223372036854775807) 16) #20, !noalias !283 ; 2 uses
   %i.v = icmp eq ptr %i.u, null
@@ -245,24 +241,23 @@ bb.p:                                             ; preds = %bb.n
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   br label %bb.s
 
-bb.q:                                             ; preds = %bb.j, %bb.l
-  %.sroa.11.0.ph = phi i64 [ %i.r, %bb.l ], [ undef, %bb.j ]
-  %.sroa.7.0.ph = phi i64 [ 16, %bb.l ], [ 0, %bb.j ]
+bb.q:                                             ; preds = %bb.l, %bb.j
+  %.sroa.11.0.ph = phi i64 [ 0, %bb.j ], [ 16, %bb.l ]
+  %.sroa.7.0.ph = phi i64 [ undef, %bb.j ], [ %i.r, %bb.l ]
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.7.0.ph, ptr %i.w, align 8
+  store i64 %.sroa.11.0.ph, ptr %i.w, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.11.0.ph, ptr %i.x, align 8
+  store i64 %.sroa.7.0.ph, ptr %i.x, align 8
   store ptr null, ptr %0, align 8
   br label %bb.s
 
-bb.r:                                             ; preds = %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i, %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i
-  %.sroa.0.0.i.i7.i = phi ptr [ %i.u, %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i ]
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i7.i, i64 %i.p ; 2 uses
+bb.r:                                             ; preds = %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i
+  %4 = icmp samesign ult i64 %.sroa.4.0.i.ph, 9
   %i.y = add nsw i64 %.sroa.4.0.i.ph, -1          ; 2 uses
-  %6 = icmp samesign ult i64 %.sroa.4.0.i.ph, 9
   %i.z = lshr i64 %.sroa.4.0.i.ph, 3
   %i.aa = mul nuw nsw i64 %i.z, 7
-  %.sroa.02.0.i = select i1 %6, i64 %i.y, i64 %i.aa
+  %.sroa.02.0.i = select i1 %4, i64 %i.y, i64 %i.aa
+  %5 = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.p ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %5, i8 -1, i64 %i.q, i1 false)
   store ptr %5, ptr %0, align 8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -665,8 +660,85 @@ _RNCINvNtCsc96bKABWO34_9hashbrown3map11make_hasherNtNtCskkCPRT7oCWw_16influxdb3_
 
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE16with_capacity_inCskkCPRT7oCWw_16influxdb3_py_api(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, i64 noundef %1) unnamed_addr #1 personality ptr @rust_eh_personality {
-bb.a:
-  tail call fastcc void @_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner22fallible_with_capacityNtNtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6global6GlobalECskkCPRT7oCWw_16influxdb3_py_api(ptr noalias noundef align 8 captures(none) dereferenceable(32) %0, i64 noundef 48, i64 noundef %1, i1 noundef zeroext true)
+  %3 = icmp eq i64 %1, 0
+  br i1 %3, label %bb.a, label %4
+
+4:                                                ; preds = %2
+  %5 = icmp ult i64 %1, 8
+  br i1 %5, label %8, label %6
+
+6:                                                ; preds = %4
+  %7 = icmp ugt i64 %1, 2305843009213693951
+  br i1 %7, label %30, label %10, !prof !10
+
+8:                                                ; preds = %4
+  %9 = and i64 %1, 4
+  %..i.i = add nuw nsw i64 %9, 4
+  br label %17
+
+10:                                               ; preds = %6
+  %11 = shl nuw i64 %1, 3
+  %12 = udiv i64 %11, 7
+  %13 = add nsw i64 %12, -1
+  %14 = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %13, i1 true)
+  %15 = lshr i64 -1, %14
+  %16 = add nuw nsw i64 %15, 1
+  br label %17
+
+17:                                               ; preds = %10, %8
+  %.sroa.4.0.i.ph.i = phi i64 [ %16, %10 ], [ %..i.i, %8 ] ; 5 uses
+  %18 = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.4.0.i.ph.i, i64 range(i64 48, 121) 48) ; 2 uses
+  %19 = extractvalue { i64, i1 } %18, 1
+  br i1 %19, label %28, label %20, !prof !10
+
+20:                                               ; preds = %17
+  %21 = extractvalue { i64, i1 } %18, 0           ; 3 uses
+  %22 = add nuw nsw i64 %.sroa.4.0.i.ph.i, 16     ; 2 uses
+  %23 = add i64 %21, %22                          ; 4 uses
+  %24 = icmp ult i64 %23, %21
+  %25 = icmp ugt i64 %23, 9223372036854775792
+  %or.cond.i.i = or i1 %24, %25
+  br i1 %or.cond.i.i, label %28, label %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i, !prof !282
+
+_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i: ; preds = %20
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #20, !noalias !478
+  %26 = tail call noundef align 16 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %23, i64 noundef range(i64 1, -9223372036854775807) 16) #20, !noalias !478 ; 2 uses
+  %27 = icmp eq ptr %26, null
+  br i1 %27, label %29, label %_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner17new_uninitializedNtNtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6global6GlobalECskkCPRT7oCWw_16influxdb3_py_api.exit.i
+
+28:                                               ; preds = %20, %17
+  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking9panic_fmt(ptr noundef nonnull @0, ptr noundef nonnull inttoptr (i64 57 to ptr), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #21, !noalias !478
+  unreachable
+
+29:                                               ; preds = %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i
+  tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 16, i64 noundef %23) #21, !noalias !478
+  unreachable
+
+30:                                               ; preds = %6
+  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking9panic_fmt(ptr noundef nonnull @0, ptr noundef nonnull inttoptr (i64 57 to ptr), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #21, !noalias !483
+  unreachable
+
+_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner17new_uninitializedNtNtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6global6GlobalECskkCPRT7oCWw_16influxdb3_py_api.exit.i: ; preds = %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i
+  %31 = icmp samesign ult i64 %.sroa.4.0.i.ph.i, 9
+  %32 = add nsw i64 %.sroa.4.0.i.ph.i, -1         ; 2 uses
+  %33 = lshr i64 %.sroa.4.0.i.ph.i, 3
+  %34 = mul nuw nsw i64 %33, 7
+  %.sroa.02.0.i.i = select i1 %31, i64 %32, i64 %34
+  %35 = getelementptr inbounds nuw i8, ptr %26, i64 %21 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %35, i8 -1, i64 %22, i1 false), !noalias !483
+  br label %bb.a
+
+bb.a:                                             ; preds = %2, %_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner17new_uninitializedNtNtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6global6GlobalECskkCPRT7oCWw_16influxdb3_py_api.exit.i
+  %.sroa.6.0 = phi i64 [ %.sroa.02.0.i.i, %_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner17new_uninitializedNtNtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6global6GlobalECskkCPRT7oCWw_16influxdb3_py_api.exit.i ], [ 0, %2 ]
+  %.sroa.5.0 = phi i64 [ %32, %_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner17new_uninitializedNtNtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6global6GlobalECskkCPRT7oCWw_16influxdb3_py_api.exit.i ], [ 0, %2 ]
+  %.sroa.0.0 = phi ptr [ %35, %_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner17new_uninitializedNtNtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6global6GlobalECskkCPRT7oCWw_16influxdb3_py_api.exit.i ], [ @3, %2 ]
+  store ptr %.sroa.0.0, ptr %0, align 8
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %.sroa.5.0, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.56.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 %.sroa.6.0, ptr %.sroa.56.0..sroa_idx, align 8
+  %.sroa.67.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store i64 0, ptr %.sroa.67.0..sroa_idx, align 8
   ret void
 }
 
@@ -694,33 +766,28 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.i = extractvalue { i64, i1 } %i.g, 0         ; 3 uses
   %i.j = add i64 %i.d, 17                         ; 2 uses
-  %i.k = add i64 %i.j, %i.i                       ; 5 uses
+  %i.k = add i64 %i.j, %i.i                       ; 4 uses
   %i.l = icmp ult i64 %i.k, %i.i
   %i.m = icmp ugt i64 %i.k, 9223372036854775792
   %or.cond.i.i = or i1 %i.l, %i.m
-  br i1 %or.cond.i.i, label %bb.e, label %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i, !prof !282
+  br i1 %or.cond.i.i, label %bb.e, label %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i, !prof !282
 
-_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.d
-  %2 = icmp eq i64 %i.k, 0
-  br i1 %2, label %_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE17new_uninitializedCskkCPRT7oCWw_16influxdb3_py_api.exit, label %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i
-
-_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i: ; preds = %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i
-  tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #20, !noalias !478
-  %i.n = tail call noundef align 16 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %i.k, i64 noundef range(i64 1, -9223372036854775807) 16) #20, !noalias !478 ; 2 uses
+_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i: ; preds = %bb.d
+  tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #20, !noalias !484
+  %i.n = tail call noundef align 16 ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef %i.k, i64 noundef range(i64 1, -9223372036854775807) 16) #20, !noalias !484 ; 2 uses
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %bb.f, label %_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE17new_uninitializedCskkCPRT7oCWw_16influxdb3_py_api.exit
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking9panic_fmt(ptr noundef nonnull @0, ptr noundef nonnull inttoptr (i64 57 to ptr), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #21, !noalias !478
+  tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking9panic_fmt(ptr noundef nonnull @0, ptr noundef nonnull inttoptr (i64 57 to ptr), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #21, !noalias !484
   unreachable
 
 bb.f:                                             ; preds = %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i
-  tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 16, i64 noundef %i.k) #21, !noalias !478
+  tail call void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef 16, i64 noundef %i.k) #21, !noalias !484
   unreachable
 
-_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE17new_uninitializedCskkCPRT7oCWw_16influxdb3_py_api.exit: ; preds = %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i, %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i
-  %.sroa.0.0.i.i7.i.i = phi ptr [ %i.n, %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
-  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i7.i.i, i64 %i.i ; 3 uses
+_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE17new_uninitializedCskkCPRT7oCWw_16influxdb3_py_api.exit: ; preds = %_RNvXs_NtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i
+  %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.i ; 3 uses
   %i.q = icmp ult i64 %i.d, 8
   %i.r = lshr i64 %i.f, 3
   %i.s = mul nuw nsw i64 %i.r, 7
@@ -732,18 +799,18 @@ _RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5
   store i64 %.sroa.02.0.i.i, ptr %.sroa.53.0..sroa_idx, align 8
   %.sroa.64.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
   store i64 0, ptr %.sroa.64.0..sroa_idx, align 8
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !483)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !486)
-  %i.t = load ptr, ptr %1, align 8, !alias.scope !486, !noalias !483, !nonnull !9, !noundef !9 ; 5 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.p, ptr nonnull align 1 %i.t, i64 %i.j, i1 false), !noalias !488
   tail call void @llvm.experimental.noalias.scope.decl(metadata !489)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !492)
+  %i.t = load ptr, ptr %1, align 8, !alias.scope !492, !noalias !489, !nonnull !9, !noundef !9 ; 5 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.p, ptr nonnull align 1 %i.t, i64 %i.j, i1 false), !noalias !494
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !495)
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.v = load i64, ptr %i.u, align 8, !alias.scope !492, !noalias !493, !noundef !9 ; 3 uses
+  %i.v = load i64, ptr %i.u, align 8, !alias.scope !498, !noalias !499, !noundef !9 ; 3 uses
   %i.w = icmp eq i64 %i.v, 0
   br i1 %i.w, label %.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE17new_uninitializedCskkCPRT7oCWw_16influxdb3_py_api.exit
-  %.val4.i.i = load <16 x i8>, ptr %i.t, align 16, !noalias !495
+  %.val4.i.i = load <16 x i8>, ptr %i.t, align 16, !noalias !501
   %i.x = icmp sgt <16 x i8> %.val4.i.i, splat (i8 -1)
   %i.y = bitcast <16 x i1> %i.x to i16
   %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 16
@@ -759,7 +826,7 @@ bb.g:                                             ; preds = %.loopexit.i
 .body.i:                                          ; preds = %bb.i, %bb.g
   %eh.lpad-body.i = phi { ptr, i32 } [ %i.ac, %bb.g ], [ %i.ar, %bb.i ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsc96bKABWO34_9hashbrown10scopeguard10ScopeGuardTjQINtNtNtBG_3raw5inner8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringB1Z_EEENCNvMsd_B1y_B1v_15clone_from_impl0EECskkCPRT7oCWw_16influxdb3_py_api(i64 %.sroa.0.023.i, ptr nonnull align 8 dereferenceable(32) %i.b) #18
-          to label %.body unwind label %bb.k, !noalias !486
+          to label %.body unwind label %bb.k, !noalias !492
 
 bb.h:                                             ; preds = %_RNvYTNtNtCscdodAO9FK5_5alloc6string6StringB3_ENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCskkCPRT7oCWw_16influxdb3_py_api.exit.i, %.lr.ph.i
   %.sroa.0.023.i = phi i64 [ 0, %.lr.ph.i ], [ %i.az, %_RNvYTNtNtCscdodAO9FK5_5alloc6string6StringB3_ENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCskkCPRT7oCWw_16influxdb3_py_api.exit.i ]
@@ -773,7 +840,7 @@ bb.h:                                             ; preds = %_RNvYTNtNtCscdodAO9
 .lr.ph.i.i:                                       ; preds = %bb.h, %.lr.ph.i.i
   %i.ad = phi ptr [ %i.ah, %.lr.ph.i.i ], [ %.sroa.6.020.i, %bb.h ] ; 2 uses
   %i.ae = phi ptr [ %i.ag, %.lr.ph.i.i ], [ %.sroa.013.019.i, %bb.h ]
-  %.val9.i.i = load <16 x i8>, ptr %i.ad, align 16, !noalias !496
+  %.val9.i.i = load <16 x i8>, ptr %i.ad, align 16, !noalias !502
   %i.af = icmp sgt <16 x i8> %.val9.i.i, splat (i8 -1)
   %i.ag = getelementptr inbounds i8, ptr %i.ae, i64 -768 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 2 uses
@@ -792,26 +859,26 @@ bb.h:                                             ; preds = %_RNvYTNtNtCscdodAO9
   %i.am = sub nsw i64 0, %i.ak
   %i.an = getelementptr inbounds [48 x i8], ptr %.sroa.013.1.i, i64 %i.am ; 3 uses
   %i.ao = add i64 %.sroa.14.022.i, -1             ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !488
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !494
   %i.ap = getelementptr inbounds i8, ptr %i.an, i64 -48
   invoke void @_RNvXs4_NtCscdodAO9FK5_5alloc6stringNtB5_6StringNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(48) %i.a, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.ap)
-          to label %.noexc.i unwind label %bb.g, !noalias !488
+          to label %.noexc.i unwind label %bb.g, !noalias !494
 
 .noexc.i:                                         ; preds = %.loopexit.i
   %i.aq = getelementptr inbounds i8, ptr %i.an, i64 -24
   invoke void @_RNvXs4_NtCscdodAO9FK5_5alloc6stringNtB5_6StringNtNtCs4NRVxsYgnAr_4core5clone5Clone5clone(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.aa, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.aq)
-          to label %_RNvYTNtNtCscdodAO9FK5_5alloc6string6StringB3_ENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCskkCPRT7oCWw_16influxdb3_py_api.exit.i unwind label %bb.i, !noalias !488
+          to label %_RNvYTNtNtCscdodAO9FK5_5alloc6string6StringB3_ENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCskkCPRT7oCWw_16influxdb3_py_api.exit.i unwind label %bb.i, !noalias !494
 
 bb.i:                                             ; preds = %.noexc.i
   %i.ar = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECskkCPRT7oCWw_16influxdb3_py_api(ptr noalias noundef nonnull align 8 dereferenceable(48) %i.a) #18
-          to label %.body.i unwind label %bb.j, !noalias !488
+          to label %.body.i unwind label %bb.j, !noalias !494
 
 bb.j:                                             ; preds = %bb.i
   %i.as = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #19, !noalias !488
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #19, !noalias !494
   unreachable
 
 _RNvYTNtNtCscdodAO9FK5_5alloc6string6StringB3_ENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCskkCPRT7oCWw_16influxdb3_py_api.exit.i: ; preds = %.noexc.i
@@ -821,8 +888,8 @@ _RNvYTNtNtCscdodAO9FK5_5alloc6string6StringB3_ENtNtCs4NRVxsYgnAr_4core5clone5Clo
   %i.aw = sub nsw i64 0, %i.av
   %i.ax = getelementptr inbounds [48 x i8], ptr %i.p, i64 %i.aw
   %i.ay = getelementptr inbounds i8, ptr %i.ax, i64 -48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.ay, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false), !noalias !488
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !488
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.ay, ptr noundef nonnull align 8 dereferenceable(48) %i.a, i64 48, i1 false), !noalias !494
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !494
   %i.az = add nsw i64 %i.av, 1
   %i.ba = icmp eq i64 %i.ao, 0
   br i1 %i.ba, label %.loopexit, label %bb.h
@@ -830,7 +897,7 @@ _RNvYTNtNtCscdodAO9FK5_5alloc6string6StringB3_ENtNtCs4NRVxsYgnAr_4core5clone5Clo
 bb.k:                                             ; preds = %.body.i
   %i.bb = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #19, !noalias !488
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #19, !noalias !494
   unreachable
 
 bb.l:                                             ; preds = %.loopexit, %bb.b
@@ -841,10 +908,10 @@ bb.l:                                             ; preds = %.loopexit, %bb.b
           to label %bb.n unwind label %bb.m
 
 .loopexit:                                        ; preds = %_RNvYTNtNtCscdodAO9FK5_5alloc6string6StringB3_ENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCskkCPRT7oCWw_16influxdb3_py_api.exit.i, %_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE17new_uninitializedCskkCPRT7oCWw_16influxdb3_py_api.exit
-  store i64 %i.v, ptr %.sroa.64.0..sroa_idx, align 8, !alias.scope !483, !noalias !486
+  store i64 %i.v, ptr %.sroa.64.0..sroa_idx, align 8, !alias.scope !489, !noalias !492
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.bd = load i64, ptr %i.bc, align 8, !alias.scope !486, !noalias !483, !noundef !9
-  store i64 %i.bd, ptr %.sroa.53.0..sroa_idx, align 8, !alias.scope !483, !noalias !486
+  %i.bd = load i64, ptr %i.bc, align 8, !alias.scope !492, !noalias !489, !noundef !9
+  store i64 %i.bd, ptr %.sroa.53.0..sroa_idx, align 8, !alias.scope !489, !noalias !492
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.b, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.l
@@ -1247,22 +1314,28 @@ begin_hunk_2_@llvm.umax.i64
 !478 = !{!479, !481}
 !479 = distinct !{!479, !480, !"_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner17new_uninitializedNtNtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6global6GlobalECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
 !480 = distinct !{!480, !"_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner17new_uninitializedNtNtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6global6GlobalECskkCPRT7oCWw_16influxdb3_py_api"}
-!481 = distinct !{!481, !482, !"_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE17new_uninitializedCskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!482 = distinct !{!482, !"_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE17new_uninitializedCskkCPRT7oCWw_16influxdb3_py_api"}
-!483 = !{!484}
-!484 = distinct !{!484, !485, !"_RNvMsd_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE15clone_from_implCskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!485 = distinct !{!485, !"_RNvMsd_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE15clone_from_implCskkCPRT7oCWw_16influxdb3_py_api"}
-!486 = !{!487}
-!487 = distinct !{!487, !485, !"_RNvMsd_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE15clone_from_implCskkCPRT7oCWw_16influxdb3_py_api: argument 1"}
-!488 = !{!484, !487}
+!481 = distinct !{!481, !482, !"_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner22fallible_with_capacityNtNtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6global6GlobalECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
+!482 = distinct !{!482, !"_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner22fallible_with_capacityNtNtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6global6GlobalECskkCPRT7oCWw_16influxdb3_py_api"}
+!483 = !{!481}
+!484 = !{!485, !487}
+!485 = distinct !{!485, !486, !"_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner17new_uninitializedNtNtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6global6GlobalECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
+!486 = distinct !{!486, !"_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner17new_uninitializedNtNtNtNtCsawk7LDN2ZMF_14allocator_api26stable5alloc6global6GlobalECskkCPRT7oCWw_16influxdb3_py_api"}
+!487 = distinct !{!487, !488, !"_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE17new_uninitializedCskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
+!488 = distinct !{!488, !"_RNvMs6_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE17new_uninitializedCskkCPRT7oCWw_16influxdb3_py_api"}
 !489 = !{!490}
-!490 = distinct !{!490, !491, !"_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner4iterTNtNtCscdodAO9FK5_5alloc6string6StringB18_EECskkCPRT7oCWw_16influxdb3_py_api: argument 1"}
-!491 = distinct !{!491, !"_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner4iterTNtNtCscdodAO9FK5_5alloc6string6StringB18_EECskkCPRT7oCWw_16influxdb3_py_api"}
-!492 = !{!490, !487}
-!493 = !{!494, !484}
-!494 = distinct !{!494, !491, !"_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner4iterTNtNtCscdodAO9FK5_5alloc6string6StringB18_EECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!495 = !{!494, !490, !484, !487}
-!496 = !{!497, !484, !487}
-!497 = distinct !{!497, !498, !"_RINvMsh_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB6_12RawIterRangeTNtNtCscdodAO9FK5_5alloc6string6StringB13_EE9next_implKb0_ECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
-!498 = distinct !{!498, !"_RINvMsh_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB6_12RawIterRangeTNtNtCscdodAO9FK5_5alloc6string6StringB13_EE9next_implKb0_ECskkCPRT7oCWw_16influxdb3_py_api"}
+!490 = distinct !{!490, !491, !"_RNvMsd_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE15clone_from_implCskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
+!491 = distinct !{!491, !"_RNvMsd_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE15clone_from_implCskkCPRT7oCWw_16influxdb3_py_api"}
+!492 = !{!493}
+!493 = distinct !{!493, !491, !"_RNvMsd_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB5_8RawTableTNtNtCscdodAO9FK5_5alloc6string6StringBX_EE15clone_from_implCskkCPRT7oCWw_16influxdb3_py_api: argument 1"}
+!494 = !{!490, !493}
+!495 = !{!496}
+!496 = distinct !{!496, !497, !"_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner4iterTNtNtCscdodAO9FK5_5alloc6string6StringB18_EECskkCPRT7oCWw_16influxdb3_py_api: argument 1"}
+!497 = distinct !{!497, !"_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner4iterTNtNtCscdodAO9FK5_5alloc6string6StringB18_EECskkCPRT7oCWw_16influxdb3_py_api"}
+!498 = !{!496, !493}
+!499 = !{!500, !490}
+!500 = distinct !{!500, !497, !"_RINvMsa_NtNtCsc96bKABWO34_9hashbrown3raw5innerNtB6_13RawTableInner4iterTNtNtCscdodAO9FK5_5alloc6string6StringB18_EECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
+!501 = !{!500, !496, !490, !493}
+!502 = !{!503, !490, !493}
+!503 = distinct !{!503, !504, !"_RINvMsh_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB6_12RawIterRangeTNtNtCscdodAO9FK5_5alloc6string6StringB13_EE9next_implKb0_ECskkCPRT7oCWw_16influxdb3_py_api: argument 0"}
+!504 = distinct !{!504, !"_RINvMsh_NtNtCsc96bKABWO34_9hashbrown3raw5innerINtB6_12RawIterRangeTNtNtCscdodAO9FK5_5alloc6string6StringB13_EE9next_implKb0_ECskkCPRT7oCWw_16influxdb3_py_api"}
 end_hunk_2
