@@ -206,11 +206,12 @@ bb.co:                                            ; preds = %.noexc255.i.i
   %i.oj = and i8 %i.oi, 2
   %i.ok = icmp eq i8 %i.oj, 0
   %i.ol = load i8, ptr %.sroa.7356.0..sroa_idx.i.i, align 4, !range !2936, !alias.scope !78735, !noalias !78736, !noundef !12
-  %i.om = trunc nuw i8 %i.ol to i1
+  %i.om = trunc nuw i8 %i.ol to i1                ; 2 uses
   %i.on = getelementptr inbounds nuw i8, ptr %i.ar, i64 68 ; 2 uses
   %.sroa.096.0.copyload.i.i.i = load i8, ptr %i.on, align 4, !alias.scope !78735, !noalias !78736
   %.sroa.398.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.ar, i64 69 ; 2 uses
   %.sroa.398.0.copyload.i.i.i = load i32, ptr %.sroa.398.0..sroa_idx.i.i.i, align 1, !alias.scope !78735, !noalias !78736
+  %.sroa.096.0.i.i.i = select i1 %i.om, i8 %.sroa.096.0.copyload.i.i.i, i8 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !78742
   invoke fastcc void @_RINvNtCsbxRVbv72Bp5_10image_webp7decoder17read_chunk_headerQINtNtNtCs3oUPovFnLWP_4core2io6cursor6CursorRNtNtNtCsdaEETE4DqmE_13typst_library11foundations5bytes5BytesEEB1K_(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.u, ptr noalias nofree noundef align 8 dereferenceable(16) %i.li)
           to label %.noexc256.i.i unwind label %bb.bv, !noalias !78565
@@ -613,11 +614,11 @@ bb.ev:                                            ; preds = %bb.eu
   %i.th = load i32, ptr %i.tg, align 4, !alias.scope !78735, !noalias !78736, !noundef !12
   %i.ti = getelementptr inbounds nuw i8, ptr %i.ar, i64 48 ; 2 uses
   %i.tj = load i32, ptr %i.ti, align 8, !alias.scope !78735, !noalias !78736, !noundef !12
-  %i.tk = zext i8 %.sroa.096.0.copyload.i.i.i to i40
+  %i.tk = zext i8 %.sroa.096.0.i.i.i to i40
   %i.tl = zext i32 %.sroa.398.0.copyload.i.i.i to i40
   %i.tm = shl nuw i40 %i.tl, 8
-  %2 = or disjoint i40 %i.tm, %i.tk
-  %.sroa.0344.1.insert.insert.i.i.i = select i1 %i.om, i40 %2, i40 0
+  %.sroa.0344.1.insert.shift.i.i.i = select i1 %i.om, i40 %i.tm, i40 0
+  %.sroa.0344.1.insert.insert.i.i.i = or disjoint i40 %.sroa.0344.1.insert.shift.i.i.i, %i.tk
   invoke void @_RNvNtCsbxRVbv72Bp5_10image_webp8extended15composite_frame(ptr noalias nofree noundef nonnull %i.sz, i64 noundef %i.ta, i32 noundef %i.tb, i32 noundef %i.tc, i40 %.sroa.0344.1.insert.insert.i.i.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.4483.0.i.i.i, i64 noundef %.sroa.5488.0.i.i.i, i32 noundef %i.ne, i32 noundef %i.ni, i32 noundef %i.nm, i32 noundef %i.nq, i1 noundef zeroext %.sroa.0328.0.i.i.i, i1 noundef zeroext %i.ok, i32 noundef %i.td, i32 noundef %i.tf, i32 noundef %i.th, i32 noundef %i.tj)
           to label %bb.ex unwind label %bb.eo, !noalias !78790
 
@@ -1020,10 +1021,10 @@ bb.cg:                                            ; preds = %bb.cd
   %i.mv = load i8, ptr %i.lt, align 4, !range !2936, !alias.scope !103082, !noalias !103087, !noundef !12
   %i.mw = trunc nuw i8 %i.mv to i1
   %i.mx = load i8, ptr %i.mk, align 1, !alias.scope !103082, !noalias !103087
-  %2 = zext i8 %i.mx to i64
-  %.sroa.031.0.i.i.i = select i1 %i.mw, i64 %2, i64 0
+  %narrow.i.i.i = select i1 %i.mw, i8 %i.mx, i8 0
+  %.sroa.031.0.i.i.i = zext i8 %narrow.i.i.i to i64
   %i.my = udiv i64 %i.mu, 3
-  %.not64.i.i.i = icmp samesign ult i64 %.sroa.031.0.i.i.i, %i.my
+  %.not64.i.i.i = icmp samesign ugt i64 %i.my, %.sroa.031.0.i.i.i
   br i1 %.not64.i.i.i, label %_RINvMs0_NtCsbohjDqD9uES_3gif6readerNtB6_13DecodeOptions9read_infoINtNtNtCs3oUPovFnLWP_4core2io6cursor6CursorRNtNtNtCsdaEETE4DqmE_13typst_library11foundations5bytes5BytesEEB1P_.exit.i, label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg
@@ -1426,9 +1427,9 @@ bb.f:                                             ; preds = %bb.b
 
 _RINvMso_NtCsdaEETE4DqmE_13typst_library4diagNtB6_9LoadError4textINtNtNtCs3oUPovFnLWP_4core3ops5range5RangejEReB1I_EB8_.exit: ; preds = %bb.c
   %i.q = trunc nuw i8 %i.h to i1
-  %2 = zext i8 %i.j to i64
-  %.sroa.0.0 = select i1 %i.q, i64 %2, i64 0
-  %i.r = add i64 %.sroa.0.0, %i.f                 ; 2 uses
+  %narrow = select i1 %i.q, i8 %i.j, i8 0
+  %.sroa.0.0 = zext i8 %narrow to i64
+  %i.r = add i64 %i.f, %.sroa.0.0                 ; 2 uses
   %.not5.i.i.i = icmp ult i64 %i.r, 4294967296
   %i.s = trunc nuw i64 %i.r to i32
   %.sroa.02.0.i.i.i = select i1 %.not5.i.i.i, i32 %i.s, i32 -1
