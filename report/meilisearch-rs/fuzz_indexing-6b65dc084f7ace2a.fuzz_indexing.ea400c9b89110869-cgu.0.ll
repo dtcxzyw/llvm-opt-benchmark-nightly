@@ -205,17 +205,13 @@ bb.i:                                             ; preds = %bb.h
   %i.r = add nuw i64 %i.p, 15
   %i.s = and i64 %i.r, -16                        ; 3 uses
   %i.t = add nuw nsw i64 %.sroa.4.0.i.ph, 16      ; 2 uses
-  %i.u = add i64 %i.t, %i.s                       ; 5 uses
+  %i.u = add i64 %i.t, %i.s                       ; 4 uses
   %i.v = icmp ult i64 %i.u, %i.s
   %i.w = icmp ugt i64 %i.u, 9223372036854775792
   %or.cond.i = or i1 %i.v, %i.w
-  br i1 %or.cond.i, label %bb.j, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h15fde8bd5ea39ae7E.exit.i, !prof !4065
+  br i1 %or.cond.i, label %bb.j, label %_ZN14allocator_api26stable5alloc6global6Global10alloc_impl17h76ab45197bb7bf87E.exit.i, !prof !4065
 
-_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h15fde8bd5ea39ae7E.exit.i: ; preds = %bb.i
-  %3 = icmp eq i64 %i.u, 0
-  br i1 %3, label %bb.m, label %_ZN14allocator_api26stable5alloc6global6Global10alloc_impl17h76ab45197bb7bf87E.exit.i
-
-_ZN14allocator_api26stable5alloc6global6Global10alloc_impl17h76ab45197bb7bf87E.exit.i: ; preds = %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h15fde8bd5ea39ae7E.exit.i
+_ZN14allocator_api26stable5alloc6global6Global10alloc_impl17h76ab45197bb7bf87E.exit.i: ; preds = %bb.i
   tail call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #65, !noalias !52564
   %i.x = tail call noundef align 16 ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef %i.u, i64 noundef range(i64 1, -9223372036854775807) 16) #65, !noalias !52564 ; 2 uses
   %i.y = icmp eq ptr %i.x, null
@@ -253,9 +249,8 @@ bb.l:                                             ; preds = %bb.d
   call void @_ZN4core9panicking9panic_fmt17h92c8e5abe71dd8d1E(ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(48) %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3141) #66
   unreachable
 
-bb.m:                                             ; preds = %_ZN14allocator_api26stable5alloc6global6Global10alloc_impl17h76ab45197bb7bf87E.exit.i, %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h15fde8bd5ea39ae7E.exit.i
-  %.sroa.0.0.i7.i = phi ptr [ %i.x, %_ZN14allocator_api26stable5alloc6global6Global10alloc_impl17h76ab45197bb7bf87E.exit.i ], [ inttoptr (i64 16 to ptr), %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17h15fde8bd5ea39ae7E.exit.i ]
-  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i7.i, i64 %i.s ; 2 uses
+bb.m:                                             ; preds = %_ZN14allocator_api26stable5alloc6global6Global10alloc_impl17h76ab45197bb7bf87E.exit.i
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.s ; 2 uses
   %i.ai = add nsw i64 %.sroa.4.0.i.ph, -1         ; 2 uses
   %i.aj = icmp samesign ult i64 %.sroa.4.0.i.ph, 9
   %i.ak = lshr i64 %.sroa.4.0.i.ph, 3

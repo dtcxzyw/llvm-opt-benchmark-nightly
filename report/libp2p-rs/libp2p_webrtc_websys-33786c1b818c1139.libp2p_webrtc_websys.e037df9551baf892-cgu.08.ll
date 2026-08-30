@@ -204,17 +204,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.g = extractvalue { i64, i1 } %i.e, 0         ; 3 uses
   %i.h = add i64 %i.b, 17                         ; 2 uses
-  %i.i = add i64 %i.h, %i.g                       ; 5 uses
+  %i.i = add i64 %i.h, %i.g                       ; 4 uses
   %i.j = icmp ult i64 %i.i, %i.g
   %i.k = icmp ugt i64 %i.i, 9223372036854775792
   %or.cond.i.i = or i1 %i.j, %i.k
-  br i1 %or.cond.i.i, label %bb.d, label %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i, !prof !295
+  br i1 %or.cond.i.i, label %bb.d, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i, !prof !295
 
-_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i: ; preds = %bb.c
-  %2 = icmp eq i64 %i.i, 0
-  br i1 %2, label %bb.g, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i
-
-_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i: ; preds = %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
+_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i: ; preds = %bb.c
   tail call void @_RNvCsbkii2mvYdKU_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #22, !noalias !296
   %i.l = tail call noundef align 16 ptr @_RNvCsbkii2mvYdKU_7___rustc12___rust_alloc(i64 noundef %i.i, i64 noundef range(i64 1, -9223372036854775807) 16) #22, !noalias !296 ; 2 uses
   %i.m = icmp eq ptr %i.l, null
@@ -229,14 +225,13 @@ bb.e:                                             ; preds = %_RNvXs1_NtCsexYYUdY
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.pn.i = phi { i64, i64 } [ %i.o, %bb.e ], [ %i.n, %bb.d ]
+  %.pn.i = phi { i64, i64 } [ %i.n, %bb.d ], [ %i.o, %bb.e ]
   %.sroa.7.0.ph.i = extractvalue { i64, i64 } %.pn.i, 0 ; 2 uses
   %.pre = add i64 %.sroa.7.0.ph.i, 17
   br label %bb.i
 
-bb.g:                                             ; preds = %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
-  %.sroa.0.0.i.i9.i.i = phi ptr [ %i.l, %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
-  %i.p = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.g
+bb.g:                                             ; preds = %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator8allocate.exit.i.i
+  %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 %i.g
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.a

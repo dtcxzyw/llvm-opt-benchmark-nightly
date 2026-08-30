@@ -114,7 +114,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ad, label %bb.d, label %_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #10
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #9
   unreachable
 
 _ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.c
@@ -123,11 +123,9 @@ _ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.c
   %i.af = add nsw i64 %.sroa.speculated.i.i.i, %i.ae ; 2 uses
   %i.ag = icmp ult i64 %i.af, %i.ae
   %i.ah = tail call i64 @llvm.umin.i64(i64 %i.af, i64 2305843009213693951)
-  %i.ai = select i1 %i.ag, i64 2305843009213693951, i64 %i.ah ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.ai, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i)
+  %i.ai = select i1 %i.ag, i64 2305843009213693951, i64 %i.ah ; 2 uses
   %i.aj = shl nuw nsw i64 %i.ai, 2
-  %i.ak = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aj) #11 ; 4 uses
+  %i.ak = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aj) #10 ; 4 uses
   %i.al = getelementptr inbounds i8, ptr %i.ak, i64 %i.ac ; 2 uses
   store i32 %i.k, ptr %i.al, align 4, !tbaa !33
   %i.am = icmp sgt i64 %i.ac, 0
@@ -146,7 +144,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIjSaIjE
   %i.ao = load ptr, ptr %i.v, align 8, !tbaa !32
   %i.ap = ptrtoint ptr %i.ao to i64
   %i.aq = sub i64 %i.ap, %i.ab
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.z, i64 noundef %i.aq) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.z, i64 noundef %i.aq) #11
   br label %_ZNSt6vectorIjSaIjEE9push_backERKj.exit
 
 _ZNSt6vectorIjSaIjEE9push_backERKj.exit:          ; preds = %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i, %bb.f
@@ -192,7 +190,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bc = landingpad { ptr, i32 }
           catch ptr null
   %i.bd = extractvalue { ptr, i32 } %i.bc, 0
-  tail call void @__clang_call_terminate(ptr %i.bd) #13
+  tail call void @__clang_call_terminate(ptr %i.bd) #12
   unreachable
 
 _ZN4lean10object_refD2Ev.exit.i:                  ; preds = %_ZNSt6vectorIjSaIjEE9push_backERKj.exit.thread17, %bb.k, %bb.j, %bb.i, %bb.g, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit
@@ -352,12 +350,12 @@ bb.h:                                             ; preds = %bb.g
   %i.u = landingpad { ptr, i32 }
           catch ptr null
   %i.v = extractvalue { ptr, i32 } %i.u, 0
-  call void @__clang_call_terminate(ptr %i.v) #13
+  call void @__clang_call_terminate(ptr %i.v) #12
   unreachable
 
 _ZN4lean8optionalINS_4exprEED2Ev.exit:            ; preds = %bb.g, %bb.f, %bb.e, %bb.c, %bb.b
   store i8 0, ptr %i.k, align 8, !tbaa !26
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #13
   call void @_ZN4lean4exprC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %1)
   %i.w = load ptr, ptr %i.f, align 8, !tbaa !25
   %i.x = getelementptr inbounds nuw [24 x i8], ptr %i.w, i64 %i.i
@@ -390,13 +388,13 @@ bb.m:                                             ; preds = %bb.l
   %i.af = landingpad { ptr, i32 }
           catch ptr null
   %i.ag = extractvalue { ptr, i32 } %i.af, 0
-  call void @__clang_call_terminate(ptr %i.ag) #13
+  call void @__clang_call_terminate(ptr %i.ag) #12
   unreachable
 
 _ZN4lean10object_refD2Ev.exit:                    ; preds = %bb.l, %bb.k, %bb.j, %_ZN4lean8optionalINS_4exprEED2Ev.exit
   %i.ah = load ptr, ptr %1, align 8, !tbaa !8
   store ptr %i.ah, ptr %i.y, align 8, !tbaa !8
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #13
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.013.016, i64 4 ; 2 uses
   %i.aj = icmp eq ptr %i.ai, %i.d
   br i1 %i.aj, label %._crit_edge, label %bb.b
@@ -412,8 +410,8 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: noinline noreturn nounwind uwtable
 define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #4 comdat {
 bb.a:
-  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #14 ; 0 uses
-  tail call void @_ZSt9terminatev() #13
+  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #13 ; 0 uses
+  tail call void @_ZSt9terminatev() #12
   unreachable
 }
 
@@ -439,9 +437,6 @@ declare i64 @llvm.umax.i64(i64, i64) #8
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #9
-
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -451,12 +446,11 @@ attributes #5 = { cold nofree noreturn }
 attributes #6 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #10 = { noreturn }
-attributes #11 = { builtin allocsize(0) }
-attributes #12 = { builtin nounwind }
-attributes #13 = { noreturn nounwind }
-attributes #14 = { nounwind }
+attributes #9 = { noreturn }
+attributes #10 = { builtin allocsize(0) }
+attributes #11 = { builtin nounwind }
+attributes #12 = { noreturn nounwind }
+attributes #13 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

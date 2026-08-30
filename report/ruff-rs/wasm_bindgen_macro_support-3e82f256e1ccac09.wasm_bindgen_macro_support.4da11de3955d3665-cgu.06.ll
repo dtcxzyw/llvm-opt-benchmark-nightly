@@ -202,38 +202,26 @@ bb.i:                                             ; preds = %bb.h
   %i.t = sub i64 0, %3
   %i.u = and i64 %i.r, %i.t                       ; 3 uses
   %i.v = add nuw nsw i64 %.sroa.4.0.i.ph, 16      ; 2 uses
-  %i.w = add i64 %i.v, %i.u                       ; 5 uses
+  %i.w = add i64 %i.v, %i.u                       ; 4 uses
   %i.x = icmp ult i64 %i.w, %i.u
   %i.y = sub i64 -9223372036854775808, %3
   %i.z = icmp ugt i64 %i.w, %i.y
   %.not.i = icmp eq i64 %3, 0
   %i.aa = or i1 %.not.i, %i.z
   %or.cond30.i = select i1 %i.x, i1 true, i1 %i.aa
-  br i1 %or.cond30.i, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCs6FdAT97jJ0T_26wasm_bindgen_macro_support.exit.thread.i, label %6
+  br i1 %or.cond30.i, label %_RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCs6FdAT97jJ0T_26wasm_bindgen_macro_support.exit.thread.i, label %bb.j
 
-6:                                                ; preds = %bb.i
-  %7 = icmp eq i64 %i.w, 0
-  br i1 %7, label %8, label %bb.j
-
-8:                                                ; preds = %6
-  %9 = inttoptr i64 %3 to ptr
-  br label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocateCs6FdAT97jJ0T_26wasm_bindgen_macro_support.exit.i
-
-bb.j:                                             ; preds = %6
+bb.j:                                             ; preds = %bb.i
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #26
-  %i.ab = tail call ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 %i.w, i64 %3) #26
-  br label %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocateCs6FdAT97jJ0T_26wasm_bindgen_macro_support.exit.i
-
-_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocateCs6FdAT97jJ0T_26wasm_bindgen_macro_support.exit.i: ; preds = %bb.j, %8
-  %.sroa.0.0.i.i.i = phi ptr [ %9, %8 ], [ %i.ab, %bb.j ] ; 2 uses
-  %10 = icmp eq ptr %.sroa.0.0.i.i.i, null
-  br i1 %10, label %bb.k, label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCscdodAO9FK5_5alloc5alloc6GlobalECs6FdAT97jJ0T_26wasm_bindgen_macro_support.exit
+  %i.ab = tail call ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 %i.w, i64 %3) #26 ; 2 uses
+  %6 = icmp eq ptr %i.ab, null
+  br i1 %6, label %bb.k, label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCscdodAO9FK5_5alloc5alloc6GlobalECs6FdAT97jJ0T_26wasm_bindgen_macro_support.exit
 
 _RNvMs1_NtCsgQfI1edjipl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCs6FdAT97jJ0T_26wasm_bindgen_macro_support.exit.thread.i: ; preds = %bb.i, %bb.h, %bb.g
   %i.ac = tail call { i64, i64 } @_RNvMNtCsgQfI1edjipl_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 zeroext %5)
   br label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCscdodAO9FK5_5alloc5alloc6GlobalECs6FdAT97jJ0T_26wasm_bindgen_macro_support.exit.thread
 
-bb.k:                                             ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocateCs6FdAT97jJ0T_26wasm_bindgen_macro_support.exit.i
+bb.k:                                             ; preds = %bb.j
   %i.ad = tail call { i64, i64 } @_RNvMNtCsgQfI1edjipl_9hashbrown3rawNtB2_11Fallibility9alloc_err(i1 zeroext %5, i64 %3, i64 %i.w)
   br label %_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCscdodAO9FK5_5alloc5alloc6GlobalECs6FdAT97jJ0T_26wasm_bindgen_macro_support.exit.thread
 
@@ -259,13 +247,13 @@ _RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNt
   store ptr null, ptr %0, align 8
   br label %bb.m
 
-_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCscdodAO9FK5_5alloc5alloc6GlobalECs6FdAT97jJ0T_26wasm_bindgen_macro_support.exit: ; preds = %_RNvXs_NtCscdodAO9FK5_5alloc5allocNtB4_6GlobalNtNtCs4NRVxsYgnAr_4core5alloc9Allocator8allocateCs6FdAT97jJ0T_26wasm_bindgen_macro_support.exit.i
+_RINvMsa_NtCsgQfI1edjipl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCscdodAO9FK5_5alloc5alloc6GlobalECs6FdAT97jJ0T_26wasm_bindgen_macro_support.exit: ; preds = %bb.j
   %i.al = icmp samesign ult i64 %.sroa.4.0.i.ph, 9
   %i.am = add nsw i64 %.sroa.4.0.i.ph, -1         ; 2 uses
   %i.an = lshr i64 %.sroa.4.0.i.ph, 3
   %i.ao = mul nuw nsw i64 %i.an, 7
   %.sroa.07.0.i = select i1 %i.al, i64 %i.am, i64 %i.ao
-  %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i, i64 %i.u ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.u ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ap, i8 -1, i64 %i.v, i1 false)
   store ptr %i.ap, ptr %0, align 8
   %.sroa.317.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8

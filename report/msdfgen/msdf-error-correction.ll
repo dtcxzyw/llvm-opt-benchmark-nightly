@@ -52,14 +52,14 @@ bb.c:                                             ; preds = %bb.b
   %i.i = load i32, ptr %i.h, align 4, !tbaa !23
   %i.j = mul nsw i32 %i.i, %i.g
   %i.k = sext i32 %i.j to i64
-  %i.l = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.k) #9
+  %i.l = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.k) #8
   %.pre = load ptr, ptr %i.d, align 8, !tbaa !18
   br label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit
 
 _ZN7msdfgen6BitmapIhLi1EED2Ev.exit:               ; preds = %bb.c, %bb.b
   %i.m = phi ptr [ %i.e, %bb.b ], [ %.pre, %bb.c ] ; 2 uses
   %.sroa.040.0 = phi ptr [ null, %bb.b ], [ %i.l, %bb.c ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.p = load <2 x i32>, ptr %i.n, align 8, !tbaa !24
@@ -72,7 +72,7 @@ _ZN7msdfgen6BitmapIhLi1EED2Ev.exit:               ; preds = %bb.c, %bb.b
   %.not33 = icmp eq ptr %i.m, null
   %spec.select = select i1 %.not33, ptr %.sroa.040.0, ptr %i.m
   store ptr %spec.select, ptr %4, align 8, !tbaa !28
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
   invoke void @_ZN7msdfgen19MSDFErrorCorrectionC1ERKNS_13BitmapSectionIhLi1EEERKNS_17SDFTransformationE(ptr noundef nonnull align 8 dereferenceable(88) %5, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(48) %2)
           to label %bb.d unwind label %bb.g
 
@@ -105,7 +105,7 @@ bb.h:                                             ; preds = %bb.f
           to label %bb.i unwind label %bb.g
 
 bb.i:                                             ; preds = %bb.h
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   call void @llvm.experimental.noalias.scope.decl(metadata !31)
   %i.z = load ptr, ptr %0, align 8, !tbaa !34, !noalias !31
   store ptr %i.z, ptr %6, align 8, !tbaa !35, !alias.scope !31
@@ -116,13 +116,13 @@ bb.i:                                             ; preds = %bb.h
           to label %bb.j unwind label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   br label %bb.m
 
 bb.k:                                             ; preds = %bb.i
   %i.ac = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   br label %bb.y
 
 bb.l:                                             ; preds = %bb.f
@@ -143,7 +143,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not34, label %.thread, label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #9
   call void @llvm.experimental.noalias.scope.decl(metadata !39)
   %i.ag = load ptr, ptr %0, align 8, !tbaa !34, !noalias !39
   store ptr %i.ag, ptr %7, align 8, !tbaa !35, !alias.scope !39
@@ -154,7 +154,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
           to label %bb.p unwind label %bb.r
 
 bb.p:                                             ; preds = %bb.o
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #9
   %i.aj = load i32, ptr %i.ad, align 4, !tbaa !38 ; 2 uses
   %i.ak = icmp eq i32 %i.aj, 1
   br i1 %i.ak, label %bb.q, label %bb.s
@@ -170,7 +170,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.o
   %i.al = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #9
   br label %bb.y
 
 bb.s:                                             ; preds = %._crit_edge, %bb.m, %bb.p
@@ -209,13 +209,13 @@ bb.v:                                             ; preds = %bb.s, %bb.t, %bb.u
           to label %bb.w unwind label %bb.g
 
 bb.w:                                             ; preds = %bb.v
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   %i.av = icmp eq ptr %.sroa.040.0, null
   br i1 %i.av, label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit37, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  call void @_ZdaPv(ptr noundef nonnull %.sroa.040.0) #11
+  call void @_ZdaPv(ptr noundef nonnull %.sroa.040.0) #10
   br label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit37
 
 _ZN7msdfgen6BitmapIhLi1EED2Ev.exit37:             ; preds = %bb.x, %bb.w, %bb.a
@@ -223,13 +223,13 @@ _ZN7msdfgen6BitmapIhLi1EED2Ev.exit37:             ; preds = %bb.x, %bb.w, %bb.a
 
 bb.y:                                             ; preds = %bb.g, %bb.k, %bb.r
   %.pn = phi { ptr, i32 } [ %i.y, %bb.g ], [ %i.al, %bb.r ], [ %i.ac, %bb.k ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   %i.aw = icmp eq ptr %.sroa.040.0, null
   br i1 %i.aw, label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit38, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  call void @_ZdaPv(ptr noundef nonnull %.sroa.040.0) #11
+  call void @_ZdaPv(ptr noundef nonnull %.sroa.040.0) #10
   br label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit38
 
 _ZN7msdfgen6BitmapIhLi1EED2Ev.exit38:             ; preds = %bb.y, %bb.z
@@ -270,14 +270,14 @@ bb.c:                                             ; preds = %bb.b
   %i.i = load i32, ptr %i.h, align 4, !tbaa !53
   %i.j = mul nsw i32 %i.i, %i.g
   %i.k = sext i32 %i.j to i64
-  %i.l = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.k) #9
+  %i.l = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.k) #8
   %.pre = load ptr, ptr %i.d, align 8, !tbaa !18
   br label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit
 
 _ZN7msdfgen6BitmapIhLi1EED2Ev.exit:               ; preds = %bb.c, %bb.b
   %i.m = phi ptr [ %i.e, %bb.b ], [ %.pre, %bb.c ] ; 2 uses
   %.sroa.040.0 = phi ptr [ null, %bb.b ], [ %i.l, %bb.c ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.p = load <2 x i32>, ptr %i.n, align 8, !tbaa !24
@@ -290,7 +290,7 @@ _ZN7msdfgen6BitmapIhLi1EED2Ev.exit:               ; preds = %bb.c, %bb.b
   %.not33 = icmp eq ptr %i.m, null
   %spec.select = select i1 %.not33, ptr %.sroa.040.0, ptr %i.m
   store ptr %spec.select, ptr %4, align 8, !tbaa !28
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
   invoke void @_ZN7msdfgen19MSDFErrorCorrectionC1ERKNS_13BitmapSectionIhLi1EEERKNS_17SDFTransformationE(ptr noundef nonnull align 8 dereferenceable(88) %5, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(48) %2)
           to label %bb.d unwind label %bb.g
 
@@ -323,7 +323,7 @@ bb.h:                                             ; preds = %bb.f
           to label %bb.i unwind label %bb.g
 
 bb.i:                                             ; preds = %bb.h
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   call void @llvm.experimental.noalias.scope.decl(metadata !54)
   %i.z = load ptr, ptr %0, align 8, !tbaa !57, !noalias !54
   store ptr %i.z, ptr %6, align 8, !tbaa !58, !alias.scope !54
@@ -334,13 +334,13 @@ bb.i:                                             ; preds = %bb.h
           to label %bb.j unwind label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   br label %bb.m
 
 bb.k:                                             ; preds = %bb.i
   %i.ac = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   br label %bb.y
 
 bb.l:                                             ; preds = %bb.f
@@ -361,7 +361,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %.not34, label %.thread, label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #9
   call void @llvm.experimental.noalias.scope.decl(metadata !60)
   %i.ag = load ptr, ptr %0, align 8, !tbaa !57, !noalias !60
   store ptr %i.ag, ptr %7, align 8, !tbaa !58, !alias.scope !60
@@ -372,7 +372,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
           to label %bb.p unwind label %bb.r
 
 bb.p:                                             ; preds = %bb.o
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #9
   %i.aj = load i32, ptr %i.ad, align 4, !tbaa !38 ; 2 uses
   %i.ak = icmp eq i32 %i.aj, 1
   br i1 %i.ak, label %bb.q, label %bb.s
@@ -388,7 +388,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.o
   %i.al = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #9
   br label %bb.y
 
 bb.s:                                             ; preds = %._crit_edge, %bb.m, %bb.p
@@ -427,13 +427,13 @@ bb.v:                                             ; preds = %bb.s, %bb.t, %bb.u
           to label %bb.w unwind label %bb.g
 
 bb.w:                                             ; preds = %bb.v
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   %i.av = icmp eq ptr %.sroa.040.0, null
   br i1 %i.av, label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit37, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  call void @_ZdaPv(ptr noundef nonnull %.sroa.040.0) #11
+  call void @_ZdaPv(ptr noundef nonnull %.sroa.040.0) #10
   br label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit37
 
 _ZN7msdfgen6BitmapIhLi1EED2Ev.exit37:             ; preds = %bb.x, %bb.w, %bb.a
@@ -441,13 +441,13 @@ _ZN7msdfgen6BitmapIhLi1EED2Ev.exit37:             ; preds = %bb.x, %bb.w, %bb.a
 
 bb.y:                                             ; preds = %bb.g, %bb.k, %bb.r
   %.pn = phi { ptr, i32 } [ %i.y, %bb.g ], [ %i.al, %bb.r ], [ %i.ac, %bb.k ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   %i.aw = icmp eq ptr %.sroa.040.0, null
   br i1 %i.aw, label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit38, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  call void @_ZdaPv(ptr noundef nonnull %.sroa.040.0) #11
+  call void @_ZdaPv(ptr noundef nonnull %.sroa.040.0) #10
   br label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit38
 
 _ZN7msdfgen6BitmapIhLi1EED2Ev.exit38:             ; preds = %bb.y, %bb.z
@@ -459,15 +459,15 @@ define void @_ZN7msdfgen19msdfErrorCorrectionERKNS_13BitmapSectionIfLi3EEERKNS_5
 bb.a:
   %6 = alloca %"class.msdfgen::SDFTransformation", align 8 ; 5 uses
   %7 = alloca %"class.msdfgen::DistanceMapping", align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #9
   call void @_ZN7msdfgen15DistanceMappingC1ENS_5RangeE(ptr noundef nonnull align 8 dereferenceable(16) %7, double %3, double %4)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false), !tbaa.struct !69
   %i.a = getelementptr inbounds nuw i8, ptr %6, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !71
   call fastcc void @_ZN7msdfgenL24msdfErrorCorrectionInnerILi3EEEvRKNS_13BitmapSectionIfXT_EEERKNS_5ShapeERKNS_17SDFTransformationERKNS_19MSDFGeneratorConfigE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(25) %1, ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull align 8 dereferenceable(40) %5)
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   ret void
 }
 
@@ -487,15 +487,15 @@ define void @_ZN7msdfgen19msdfErrorCorrectionERKNS_13BitmapSectionIfLi4EEERKNS_5
 bb.a:
   %6 = alloca %"class.msdfgen::SDFTransformation", align 8 ; 5 uses
   %7 = alloca %"class.msdfgen::DistanceMapping", align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #9
   call void @_ZN7msdfgen15DistanceMappingC1ENS_5RangeE(ptr noundef nonnull align 8 dereferenceable(16) %7, double %3, double %4)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false), !tbaa.struct !69
   %i.a = getelementptr inbounds nuw i8, ptr %6, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !71
   call fastcc void @_ZN7msdfgenL24msdfErrorCorrectionInnerILi4EEEvRKNS_13BitmapSectionIfXT_EEERKNS_5ShapeERKNS_17SDFTransformationERKNS_19MSDFGeneratorConfigE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(25) %1, ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull align 8 dereferenceable(40) %5)
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   ret void
 }
 
@@ -518,9 +518,9 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 4, !tbaa !23   ; 2 uses
   %i.e = mul nsw i32 %i.d, %i.b
   %i.f = sext i32 %i.e to i64
-  %i.g = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.f) #9 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
+  %i.g = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.f) #8 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
   store ptr %i.g, ptr %5, align 8, !tbaa !28, !alias.scope !72
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i32 %i.b, ptr %i.h, align 8, !tbaa !75, !alias.scope !72
@@ -534,7 +534,7 @@ bb.a:
           to label %bb.b unwind label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   invoke void @_ZN7msdfgen19MSDFErrorCorrection20setMinDeviationRatioEd(ptr noundef nonnull align 8 dereferenceable(88) %4, double noundef %2)
           to label %bb.c unwind label %bb.f
 
@@ -548,7 +548,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.a
   %i.l = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   br label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit10
 
 bb.f:                                             ; preds = %bb.h, %bb.d, %bb.b
@@ -557,7 +557,7 @@ bb.f:                                             ; preds = %bb.h, %bb.d, %bb.b
   br label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit10
 
 bb.g:                                             ; preds = %bb.c, %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   call void @llvm.experimental.noalias.scope.decl(metadata !77)
   %i.n = load ptr, ptr %0, align 8, !tbaa !34, !noalias !77
   store ptr %i.n, ptr %6, align 8, !tbaa !35, !alias.scope !77
@@ -568,25 +568,25 @@ bb.g:                                             ; preds = %bb.c, %bb.d
           to label %bb.h unwind label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   invoke void @_ZNK7msdfgen19MSDFErrorCorrection5applyILi3EEEvNS_13BitmapSectionIfXT_EEE(ptr noundef nonnull align 8 dereferenceable(88) %4, ptr noundef nonnull byval(%"struct.msdfgen::BitmapSection") align 8 %0)
           to label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit unwind label %bb.f
 
 _ZN7msdfgen6BitmapIhLi1EED2Ev.exit:               ; preds = %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
-  call void @_ZdaPv(ptr noundef nonnull %i.g) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
+  call void @_ZdaPv(ptr noundef nonnull %i.g) #10
   ret void
 
 bb.i:                                             ; preds = %bb.g
   %i.q = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   br label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit10
 
 _ZN7msdfgen6BitmapIhLi1EED2Ev.exit10:             ; preds = %bb.i, %bb.f, %bb.e
   %.pn = phi { ptr, i32 } [ %i.m, %bb.f ], [ %i.q, %bb.i ], [ %i.l, %bb.e ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
-  call void @_ZdaPv(ptr noundef nonnull %i.g) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
+  call void @_ZdaPv(ptr noundef nonnull %i.g) #10
   resume { ptr, i32 } %.pn
 }
 
@@ -609,9 +609,9 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 4, !tbaa !53   ; 2 uses
   %i.e = mul nsw i32 %i.d, %i.b
   %i.f = sext i32 %i.e to i64
-  %i.g = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.f) #9 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
+  %i.g = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.f) #8 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
   store ptr %i.g, ptr %5, align 8, !tbaa !28, !alias.scope !80
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i32 %i.b, ptr %i.h, align 8, !tbaa !75, !alias.scope !80
@@ -625,7 +625,7 @@ bb.a:
           to label %bb.b unwind label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   invoke void @_ZN7msdfgen19MSDFErrorCorrection20setMinDeviationRatioEd(ptr noundef nonnull align 8 dereferenceable(88) %4, double noundef %2)
           to label %bb.c unwind label %bb.f
 
@@ -639,7 +639,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.a
   %i.l = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   br label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit10
 
 bb.f:                                             ; preds = %bb.h, %bb.d, %bb.b
@@ -648,7 +648,7 @@ bb.f:                                             ; preds = %bb.h, %bb.d, %bb.b
   br label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit10
 
 bb.g:                                             ; preds = %bb.c, %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   call void @llvm.experimental.noalias.scope.decl(metadata !83)
   %i.n = load ptr, ptr %0, align 8, !tbaa !57, !noalias !83
   store ptr %i.n, ptr %6, align 8, !tbaa !58, !alias.scope !83
@@ -659,25 +659,25 @@ bb.g:                                             ; preds = %bb.c, %bb.d
           to label %bb.h unwind label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   invoke void @_ZNK7msdfgen19MSDFErrorCorrection5applyILi4EEEvNS_13BitmapSectionIfXT_EEE(ptr noundef nonnull align 8 dereferenceable(88) %4, ptr noundef nonnull byval(%"struct.msdfgen::BitmapSection.0") align 8 %0)
           to label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit unwind label %bb.f
 
 _ZN7msdfgen6BitmapIhLi1EED2Ev.exit:               ; preds = %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
-  call void @_ZdaPv(ptr noundef nonnull %i.g) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
+  call void @_ZdaPv(ptr noundef nonnull %i.g) #10
   ret void
 
 bb.i:                                             ; preds = %bb.g
   %i.q = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   br label %_ZN7msdfgen6BitmapIhLi1EED2Ev.exit10
 
 _ZN7msdfgen6BitmapIhLi1EED2Ev.exit10:             ; preds = %bb.i, %bb.f, %bb.e
   %.pn = phi { ptr, i32 } [ %i.m, %bb.f ], [ %i.q, %bb.i ], [ %i.l, %bb.e ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
-  call void @_ZdaPv(ptr noundef nonnull %i.g) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
+  call void @_ZdaPv(ptr noundef nonnull %i.g) #10
   resume { ptr, i32 } %.pn
 }
 
@@ -686,15 +686,15 @@ define void @_ZN7msdfgen31msdfFastDistanceErrorCorrectionERKNS_13BitmapSectionIf
 bb.a:
   %5 = alloca %"class.msdfgen::SDFTransformation", align 8 ; 5 uses
   %6 = alloca %"class.msdfgen::DistanceMapping", align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   call void @_ZN7msdfgen15DistanceMappingC1ENS_5RangeE(ptr noundef nonnull align 8 dereferenceable(16) %6, double %2, double %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false), !tbaa.struct !69
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !71
   call fastcc void @_ZN7msdfgenL28msdfErrorCorrectionShapelessILi3EEEvRKNS_13BitmapSectionIfXT_EEERKNS_17SDFTransformationEdb(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(48) %5, double noundef %4, i1 noundef zeroext false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   ret void
 }
 
@@ -703,15 +703,15 @@ define void @_ZN7msdfgen31msdfFastDistanceErrorCorrectionERKNS_13BitmapSectionIf
 bb.a:
   %5 = alloca %"class.msdfgen::SDFTransformation", align 8 ; 5 uses
   %6 = alloca %"class.msdfgen::DistanceMapping", align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   call void @_ZN7msdfgen15DistanceMappingC1ENS_5RangeE(ptr noundef nonnull align 8 dereferenceable(16) %6, double %2, double %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false), !tbaa.struct !69
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !71
   call fastcc void @_ZN7msdfgenL28msdfErrorCorrectionShapelessILi4EEEvRKNS_13BitmapSectionIfXT_EEERKNS_17SDFTransformationEdb(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(48) %5, double noundef %4, i1 noundef zeroext false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   ret void
 }
 
@@ -721,18 +721,18 @@ bb.a:
   %4 = alloca %"class.msdfgen::SDFTransformation", align 8 ; 5 uses
   %5 = alloca %"class.msdfgen::Projection", align 8 ; 4 uses
   %6 = alloca %"class.msdfgen::DistanceMapping", align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
   call void @_ZN7msdfgen10ProjectionC1Ev(ptr noundef nonnull align 8 dereferenceable(32) %5)
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   call void @_ZN7msdfgen15DistanceMappingC1ENS_5RangeE(ptr noundef nonnull align 8 dereferenceable(16) %6, double %1, double %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %4, ptr noundef nonnull align 8 dereferenceable(32) %5, i64 32, i1 false), !tbaa.struct !69
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !71
   call fastcc void @_ZN7msdfgenL28msdfErrorCorrectionShapelessILi3EEEvRKNS_13BitmapSectionIfXT_EEERKNS_17SDFTransformationEdb(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(48) %4, double noundef %3, i1 noundef zeroext false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   ret void
 }
 
@@ -744,18 +744,18 @@ bb.a:
   %4 = alloca %"class.msdfgen::SDFTransformation", align 8 ; 5 uses
   %5 = alloca %"class.msdfgen::Projection", align 8 ; 4 uses
   %6 = alloca %"class.msdfgen::DistanceMapping", align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
   call void @_ZN7msdfgen10ProjectionC1Ev(ptr noundef nonnull align 8 dereferenceable(32) %5)
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   call void @_ZN7msdfgen15DistanceMappingC1ENS_5RangeE(ptr noundef nonnull align 8 dereferenceable(16) %6, double %1, double %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %4, ptr noundef nonnull align 8 dereferenceable(32) %5, i64 32, i1 false), !tbaa.struct !69
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !71
   call fastcc void @_ZN7msdfgenL28msdfErrorCorrectionShapelessILi4EEEvRKNS_13BitmapSectionIfXT_EEERKNS_17SDFTransformationEdb(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(48) %4, double noundef %3, i1 noundef zeroext false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   ret void
 }
 
@@ -778,15 +778,15 @@ define void @_ZN7msdfgen27msdfFastEdgeErrorCorrectionERKNS_13BitmapSectionIfLi3E
 bb.a:
   %5 = alloca %"class.msdfgen::SDFTransformation", align 8 ; 5 uses
   %6 = alloca %"class.msdfgen::DistanceMapping", align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   call void @_ZN7msdfgen15DistanceMappingC1ENS_5RangeE(ptr noundef nonnull align 8 dereferenceable(16) %6, double %2, double %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false), !tbaa.struct !69
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !71
   call fastcc void @_ZN7msdfgenL28msdfErrorCorrectionShapelessILi3EEEvRKNS_13BitmapSectionIfXT_EEERKNS_17SDFTransformationEdb(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(48) %5, double noundef %4, i1 noundef zeroext true)
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   ret void
 }
 
@@ -795,15 +795,15 @@ define void @_ZN7msdfgen27msdfFastEdgeErrorCorrectionERKNS_13BitmapSectionIfLi4E
 bb.a:
   %5 = alloca %"class.msdfgen::SDFTransformation", align 8 ; 5 uses
   %6 = alloca %"class.msdfgen::DistanceMapping", align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   call void @_ZN7msdfgen15DistanceMappingC1ENS_5RangeE(ptr noundef nonnull align 8 dereferenceable(16) %6, double %2, double %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false), !tbaa.struct !69
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !71
   call fastcc void @_ZN7msdfgenL28msdfErrorCorrectionShapelessILi4EEEvRKNS_13BitmapSectionIfXT_EEERKNS_17SDFTransformationEdb(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(48) %5, double noundef %4, i1 noundef zeroext true)
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   ret void
 }
 
@@ -813,18 +813,18 @@ bb.a:
   %4 = alloca %"class.msdfgen::SDFTransformation", align 8 ; 5 uses
   %5 = alloca %"class.msdfgen::Projection", align 8 ; 4 uses
   %6 = alloca %"class.msdfgen::DistanceMapping", align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
   call void @_ZN7msdfgen10ProjectionC1Ev(ptr noundef nonnull align 8 dereferenceable(32) %5)
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   call void @_ZN7msdfgen15DistanceMappingC1ENS_5RangeE(ptr noundef nonnull align 8 dereferenceable(16) %6, double %1, double %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %4, ptr noundef nonnull align 8 dereferenceable(32) %5, i64 32, i1 false), !tbaa.struct !69
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !71
   call fastcc void @_ZN7msdfgenL28msdfErrorCorrectionShapelessILi3EEEvRKNS_13BitmapSectionIfXT_EEERKNS_17SDFTransformationEdb(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(48) %4, double noundef %3, i1 noundef zeroext true)
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   ret void
 }
 
@@ -834,18 +834,18 @@ bb.a:
   %4 = alloca %"class.msdfgen::SDFTransformation", align 8 ; 5 uses
   %5 = alloca %"class.msdfgen::Projection", align 8 ; 4 uses
   %6 = alloca %"class.msdfgen::DistanceMapping", align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
   call void @_ZN7msdfgen10ProjectionC1Ev(ptr noundef nonnull align 8 dereferenceable(32) %5)
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   call void @_ZN7msdfgen15DistanceMappingC1ENS_5RangeE(ptr noundef nonnull align 8 dereferenceable(16) %6, double %1, double %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %4, ptr noundef nonnull align 8 dereferenceable(32) %5, i64 32, i1 false), !tbaa.struct !69
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !71
   call fastcc void @_ZN7msdfgenL28msdfErrorCorrectionShapelessILi4EEEvRKNS_13BitmapSectionIfXT_EEERKNS_17SDFTransformationEdb(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(48) %4, double noundef %3, i1 noundef zeroext true)
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   ret void
 }
 
@@ -1245,11 +1245,9 @@ _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i.us.i: ; preds = 
   %i.go = add nsw i64 %.sroa.speculated.i.i.i.i.us.i, %i.gn ; 2 uses
   %i.gp = icmp ult i64 %i.go, %i.gn
   %i.gq = tail call i64 @llvm.umin.i64(i64 %i.go, i64 1152921504606846975)
-  %i.gr = select i1 %i.gp, i64 1152921504606846975, i64 %i.gq ; 3 uses
-  %.not.i.i.i.i.us.i = icmp ne i64 %i.gr, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i.us.i)
+  %i.gr = select i1 %i.gp, i64 1152921504606846975, i64 %i.gq ; 2 uses
   %i.gs = shl nuw nsw i64 %i.gr, 3
-  %i.gt = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gs) #9
+  %i.gt = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gs) #8
           to label %.noexc120.us.i unwind label %.loopexit280.split.us.i ; 8 uses
 
 .noexc120.us.i:                                   ; preds = %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i.us.i
@@ -1322,7 +1320,7 @@ _ZNSt6vectorISt4pairIiiESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i.us.i: 
   br i1 %.not.i23.i.i.i.us.i, label %_ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i.us.i, label %bb.ah
 
 bb.ah:                                            ; preds = %_ZNSt6vectorISt4pairIiiESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i.us.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.1316.us.i, i64 noundef %i.gl) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.1316.us.i, i64 noundef %i.gl) #10
   br label %_ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i.us.i
 
 _ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i.us.i: ; preds = %bb.ah, %_ZNSt6vectorISt4pairIiiESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i.us.i
@@ -1360,7 +1358,7 @@ _ZNSt6vectorISt4pairIiiESaIS1_EE9push_backEOS1_.exit.us.i: ; preds = %_ZNSt6vect
   br label %bb.bp
 
 .split.us.i:                                      ; preds = %bb.ag
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #12
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #11
           to label %.noexc.i unwind label %.loopexit.split-lp281.i
 
 .noexc.i:                                         ; preds = %.split.us.i
@@ -1763,11 +1761,9 @@ _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i175.us.i: ; preds
   %i.pk = add nsw i64 %.sroa.speculated.i.i.i.i176.us.i, %i.pj ; 2 uses
   %i.pl = icmp ult i64 %i.pk, %i.pj
   %i.pm = tail call i64 @llvm.umin.i64(i64 %i.pk, i64 1152921504606846975)
-  %i.pn = select i1 %i.pl, i64 1152921504606846975, i64 %i.pm ; 3 uses
-  %.not.i.i.i.i177.us.i = icmp ne i64 %i.pn, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i177.us.i)
+  %i.pn = select i1 %i.pl, i64 1152921504606846975, i64 %i.pm ; 2 uses
   %i.po = shl nuw nsw i64 %i.pn, 3
-  %i.pp = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.po) #9
+  %i.pp = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.po) #8
           to label %.noexc188.us.i unwind label %.loopexit.split.us.i ; 8 uses
 
 .noexc188.us.i:                                   ; preds = %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i175.us.i
@@ -1840,7 +1836,7 @@ _ZNSt6vectorISt4pairIiiESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i183.us.
   br i1 %.not.i23.i.i.i185.us.i, label %_ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i186.us.i, label %bb.bo
 
 bb.bo:                                            ; preds = %_ZNSt6vectorISt4pairIiiESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i183.us.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.4339.us.i, i64 noundef %i.ph) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.4339.us.i, i64 noundef %i.ph) #10
   br label %_ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i186.us.i
 
 _ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i186.us.i: ; preds = %bb.bo, %_ZNSt6vectorISt4pairIiiESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i183.us.i
@@ -1905,7 +1901,7 @@ bb.bp:                                            ; preds = %bb.bp, %.lr.ph.i
   br label %bb.br
 
 .split.us354.i:                                   ; preds = %bb.bn
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #12
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #11
           to label %.noexc187.i unwind label %.loopexit.split-lp.i
 
 .noexc187.i:                                      ; preds = %.split.us354.i
@@ -1924,7 +1920,7 @@ bb.bq:                                            ; preds = %._crit_edge.i
   %i.ri = ptrtoint ptr %.sroa.25.5.us.i to i64
   %i.rj = ptrtoint ptr %.sroa.0244.5.us.i to i64
   %i.rk = sub i64 %i.ri, %i.rj
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.5.us.i, i64 noundef %i.rk) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.5.us.i, i64 noundef %i.rk) #10
   br label %_ZN7msdfgenL31msdfErrorCorrectionInner_legacyILi3EEEvRKNS_13BitmapSectionIfXT_EEERKNS_7Vector2E.exit
 
 bb.br:                                            ; preds = %bb.br, %.lr.ph364.i
@@ -1969,7 +1965,7 @@ bb.bs:                                            ; preds = %.loopexit.split-lp.
   %i.si = ptrtoint ptr %.sroa.25.6.i to i64
   %i.sj = ptrtoint ptr %.sroa.0244.6.i to i64
   %i.sk = sub i64 %i.si, %i.sj
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.6.i, i64 noundef %i.sk) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.6.i, i64 noundef %i.sk) #10
   br label %_ZNSt6vectorISt4pairIiiESaIS1_EED2Ev.exit191.i
 
 _ZNSt6vectorISt4pairIiiESaIS1_EED2Ev.exit191.i:   ; preds = %.thread.i, %bb.bs
@@ -2372,11 +2368,9 @@ _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i.us.i: ; preds = 
   %i.gq = add nsw i64 %.sroa.speculated.i.i.i.i.us.i, %i.gp ; 2 uses
   %i.gr = icmp ult i64 %i.gq, %i.gp
   %i.gs = tail call i64 @llvm.umin.i64(i64 %i.gq, i64 1152921504606846975)
-  %i.gt = select i1 %i.gr, i64 1152921504606846975, i64 %i.gs ; 3 uses
-  %.not.i.i.i.i.us.i = icmp ne i64 %i.gt, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i.us.i)
+  %i.gt = select i1 %i.gr, i64 1152921504606846975, i64 %i.gs ; 2 uses
   %i.gu = shl nuw nsw i64 %i.gt, 3
-  %i.gv = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gu) #9
+  %i.gv = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gu) #8
           to label %.noexc120.us.i unwind label %.loopexit280.split.us.i ; 8 uses
 
 .noexc120.us.i:                                   ; preds = %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i.us.i
@@ -2449,7 +2443,7 @@ _ZNSt6vectorISt4pairIiiESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i.us.i: 
   br i1 %.not.i23.i.i.i.us.i, label %_ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i.us.i, label %bb.ah
 
 bb.ah:                                            ; preds = %_ZNSt6vectorISt4pairIiiESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i.us.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.1316.us.i, i64 noundef %i.gn) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.1316.us.i, i64 noundef %i.gn) #10
   br label %_ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i.us.i
 
 _ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i.us.i: ; preds = %bb.ah, %_ZNSt6vectorISt4pairIiiESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i.us.i
@@ -2487,7 +2481,7 @@ _ZNSt6vectorISt4pairIiiESaIS1_EE9push_backEOS1_.exit.us.i: ; preds = %_ZNSt6vect
   br label %bb.bp
 
 .split.us.i:                                      ; preds = %bb.ag
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #12
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #11
           to label %.noexc.i unwind label %.loopexit.split-lp281.i
 
 .noexc.i:                                         ; preds = %.split.us.i
@@ -2890,11 +2884,9 @@ _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i175.us.i: ; preds
   %i.pq = add nsw i64 %.sroa.speculated.i.i.i.i176.us.i, %i.pp ; 2 uses
   %i.pr = icmp ult i64 %i.pq, %i.pp
   %i.ps = tail call i64 @llvm.umin.i64(i64 %i.pq, i64 1152921504606846975)
-  %i.pt = select i1 %i.pr, i64 1152921504606846975, i64 %i.ps ; 3 uses
-  %.not.i.i.i.i177.us.i = icmp ne i64 %i.pt, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i177.us.i)
+  %i.pt = select i1 %i.pr, i64 1152921504606846975, i64 %i.ps ; 2 uses
   %i.pu = shl nuw nsw i64 %i.pt, 3
-  %i.pv = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.pu) #9
+  %i.pv = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.pu) #8
           to label %.noexc188.us.i unwind label %.loopexit.split.us.i ; 8 uses
 
 .noexc188.us.i:                                   ; preds = %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i175.us.i
@@ -2967,7 +2959,7 @@ _ZNSt6vectorISt4pairIiiESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i183.us.
   br i1 %.not.i23.i.i.i185.us.i, label %_ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i186.us.i, label %bb.bo
 
 bb.bo:                                            ; preds = %_ZNSt6vectorISt4pairIiiESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i183.us.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.4339.us.i, i64 noundef %i.pn) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.4339.us.i, i64 noundef %i.pn) #10
   br label %_ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i186.us.i
 
 _ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i186.us.i: ; preds = %bb.bo, %_ZNSt6vectorISt4pairIiiESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i183.us.i
@@ -3032,7 +3024,7 @@ bb.bp:                                            ; preds = %bb.bp, %.lr.ph.i
   br label %bb.br
 
 .split.us354.i:                                   ; preds = %bb.bn
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #12
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #11
           to label %.noexc187.i unwind label %.loopexit.split-lp.i
 
 .noexc187.i:                                      ; preds = %.split.us354.i
@@ -3051,7 +3043,7 @@ bb.bq:                                            ; preds = %._crit_edge.i
   %i.ro = ptrtoint ptr %.sroa.25.5.us.i to i64
   %i.rp = ptrtoint ptr %.sroa.0244.5.us.i to i64
   %i.rq = sub i64 %i.ro, %i.rp
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.5.us.i, i64 noundef %i.rq) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.5.us.i, i64 noundef %i.rq) #10
   br label %_ZN7msdfgenL31msdfErrorCorrectionInner_legacyILi4EEEvRKNS_13BitmapSectionIfXT_EEERKNS_7Vector2E.exit
 
 bb.br:                                            ; preds = %bb.br, %.lr.ph364.i
@@ -3096,7 +3088,7 @@ bb.bs:                                            ; preds = %.loopexit.split-lp.
   %i.so = ptrtoint ptr %.sroa.25.6.i to i64
   %i.sp = ptrtoint ptr %.sroa.0244.6.i to i64
   %i.sq = sub i64 %i.so, %i.sp
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.6.i, i64 noundef %i.sq) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0244.6.i, i64 noundef %i.sq) #10
   br label %_ZNSt6vectorISt4pairIiiESaIS1_EED2Ev.exit191.i
 
 _ZNSt6vectorISt4pairIiiESaIS1_EED2Ev.exit191.i:   ; preds = %.thread.i, %bb.bs
@@ -3165,9 +3157,6 @@ declare i64 @llvm.umax.i64(i64, i64) #5
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #5
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #8
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #5
 
@@ -3179,11 +3168,10 @@ attributes #4 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-
 attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #6 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #9 = { builtin allocsize(0) }
-attributes #10 = { nounwind }
-attributes #11 = { builtin nounwind }
-attributes #12 = { noreturn }
+attributes #8 = { builtin allocsize(0) }
+attributes #9 = { nounwind }
+attributes #10 = { builtin nounwind }
+attributes #11 = { noreturn }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

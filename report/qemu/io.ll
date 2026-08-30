@@ -202,7 +202,7 @@ bb.a:
   %i.f = load i32, ptr %i.e, align 8              ; 2 uses
   %i.g = icmp eq i32 %i.f, 0
   %. = tail call i32 @llvm.umin.i32(i32 %i.f, i32 2147483136)
-  %i.h = select i1 %i.g, i32 2147483136, i32 %.   ; 3 uses
+  %i.h = select i1 %i.g, i32 2147483136, i32 %.   ; 2 uses
   %i.i = tail call i32 @bdrv_check_qiov_request(i64 noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4, ptr noundef nonnull @error_abort) ; 0 uses
   %.not = icmp eq ptr %i.d, null
   br i1 %.not, label %bb.aj, label %bb.b
@@ -402,17 +402,13 @@ bb.s:                                             ; preds = %.thread175.peel, %b
   %i.bx = sub i64 %i.bu, %i.y
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   %.not147.peel = icmp eq i64 %i.bw, 0
-  br i1 %.not147.peel, label %.loopexit, label %.lr.ph.preheader.peel.newph
+  br i1 %.not147.peel, label %.loopexit, label %.lr.ph
 
-.lr.ph.preheader.peel.newph:                      ; preds = %bb.s
-  %8 = icmp eq i32 %i.h, 0
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader.peel.newph, %bb.ai
-  %.0125272 = phi ptr [ %.3, %bb.ai ], [ %.3.peel, %.lr.ph.preheader.peel.newph ] ; 6 uses
-  %.0135268 = phi i64 [ %i.do, %bb.ai ], [ %i.bx, %.lr.ph.preheader.peel.newph ] ; 7 uses
-  %.0170266 = phi i64 [ %i.dn, %bb.ai ], [ %i.bw, %.lr.ph.preheader.peel.newph ] ; 3 uses
-  %.0172264 = phi i64 [ %i.dm, %bb.ai ], [ %i.bv, %.lr.ph.preheader.peel.newph ] ; 5 uses
+.lr.ph:                                           ; preds = %bb.s, %bb.ai
+  %.0125272 = phi ptr [ %.3, %bb.ai ], [ %.3.peel, %bb.s ] ; 6 uses
+  %.0135268 = phi i64 [ %i.do, %bb.ai ], [ %i.bx, %bb.s ] ; 7 uses
+  %.0170266 = phi i64 [ %i.dn, %bb.ai ], [ %i.bw, %bb.s ] ; 3 uses
+  %.0172264 = phi i64 [ %i.dm, %bb.ai ], [ %i.bv, %bb.s ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   store i64 0, ptr %i.a, align 8, !annotation !31
   %i.by = call i64 @llvm.smin.i64(i64 %.0170266, i64 %i.ad) ; 5 uses
@@ -477,7 +473,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not150, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  %i.ci = call i64 @bdrv_opt_mem_align(ptr noundef nonnull %i.b) #14 ; 3 uses
+  %i.ci = call i64 @bdrv_opt_mem_align(ptr noundef nonnull %i.b) #14 ; 2 uses
   %.not.i156 = icmp eq i64 %i.ci, 0
   br i1 %.not.i156, label %.loopexit286, label %qemu_try_blockalign.exit
 
@@ -489,8 +485,7 @@ qemu_try_blockalign.exit:                         ; preds = %bb.z
   %i.cj = sub i64 %.0170266, %i.ch
   %i.ck = call i64 @llvm.smax.i64(i64 %i.ch, i64 %i.cj)
   %i.cl = call i64 @llvm.smin.i64(i64 %i.ck, i64 %i.ag)
-  %spec.select.i = select i1 %8, i64 %i.ci, i64 %i.cl
-  %i.cm = call ptr @qemu_try_memalign(i64 noundef %i.ci, i64 noundef %spec.select.i) #14 ; 2 uses
+  %i.cm = call ptr @qemu_try_memalign(i64 noundef %i.ci, i64 noundef %i.cl) #14 ; 2 uses
   %.not151.not = icmp eq ptr %i.cm, null
   br i1 %.not151.not, label %.loopexit.sink.split.sink.split, label %qemu_try_blockalign.exit._crit_edge
 

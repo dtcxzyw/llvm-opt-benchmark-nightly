@@ -205,17 +205,13 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.l = extractvalue { i64, i1 } %i.j, 0         ; 3 uses
   %i.m = add i64 %i.g, 17                         ; 2 uses
-  %i.n = add i64 %i.m, %i.l                       ; 5 uses
+  %i.n = add i64 %i.m, %i.l                       ; 4 uses
   %i.o = icmp ult i64 %i.n, %i.l
   %i.p = icmp ugt i64 %i.n, 9223372036854775792
   %or.cond.i.i = or i1 %i.o, %i.p
-  br i1 %or.cond.i.i, label %bb.e, label %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i, !prof !130
+  br i1 %or.cond.i.i, label %bb.e, label %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i", !prof !130
 
-_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i: ; preds = %bb.d
-  %2 = icmp eq i64 %i.n, 0
-  br i1 %2, label %bb.h, label %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i"
-
-"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i": ; preds = %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i
+"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i": ; preds = %bb.d
   tail call void @_RNvCskdKJRKLKjqM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #59, !noalias !16131
   %i.q = tail call noundef align 16 ptr @_RNvCskdKJRKLKjqM_7___rustc12___rust_alloc(i64 noundef %i.n, i64 noundef range(i64 1, -9223372036854775807) 16) #59, !noalias !16131 ; 2 uses
   %i.r = icmp eq ptr %i.q, null
@@ -236,9 +232,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.pre = add i64 %.sroa.7.0.ph.i, 17
   br label %bb.j
 
-bb.h:                                             ; preds = %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i", %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i
-  %.sroa.07.0.i.i6.i.i = phi ptr [ %i.q, %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i" ], [ inttoptr (i64 16 to ptr), %_ZN9hashbrown3raw11TableLayout20calculate_layout_for17hb76643e6316511fcE.exit.i.i ]
-  %i.u = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i.i6.i.i, i64 %i.l
+bb.h:                                             ; preds = %"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$8allocate17h2c5e185936086779E.exit.i.i"
+  %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.l
   %i.v = icmp ult i64 %i.g, 8
   %i.w = lshr i64 %i.i, 3
   %i.x = mul nuw nsw i64 %i.w, 7
