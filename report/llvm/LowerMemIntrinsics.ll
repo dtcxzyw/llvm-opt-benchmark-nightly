@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   store i64 %i.ao, ptr %18, align 8, !tbaa !76
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !35 ; 9 uses
-  %i.ar = zext i32 %3 to i64                      ; 6 uses
+  %i.ar = zext i32 %3 to i64                      ; 7 uses
   %i.as = call noundef ptr @_ZN4llvm11ConstantInt3getEPNS_11IntegerTypeEmbb(ptr noundef %i.aq, i64 noundef %i.ar, i1 noundef zeroext false, i1 noundef zeroext false) #14 ; 2 uses
   %i.at = call noundef ptr @_ZN4llvm11ConstantInt3getEPNS_11IntegerTypeEmbb(ptr noundef %i.aq, i64 noundef 0, i1 noundef zeroext false, i1 noundef zeroext false) #14 ; 7 uses
   %.not201 = icmp eq i32 %3, 1
@@ -282,11 +282,11 @@ bb.j:                                             ; preds = %bb.d
   %i.bt = load ptr, ptr %i.bp, align 8
   %spec.select.i.i209 = select i1 %i.bs, ptr %i.bp, ptr %i.bt
   %.0.i.i = load i64, ptr %spec.select.i.i209, align 8, !tbaa !38 ; 3 uses
-  %i.bu = urem i64 %.0.i.i, %i.ar                 ; 4 uses
+  %i.bu = urem i64 %.0.i.i, %i.ar                 ; 3 uses
   %i.bv = sub nuw i64 %.0.i.i, %i.bu
   %i.bw = call noundef ptr @_ZN4llvm11ConstantInt3getEPNS_4TypeEmbb(ptr noundef %i.aq, i64 noundef %i.bv, i1 noundef zeroext false, i1 noundef zeroext false) #14 ; 2 uses
   %i.bx = call noundef ptr @_ZN4llvm11ConstantInt3getEPNS_4TypeEmbb(ptr noundef %i.aq, i64 noundef %i.bu, i1 noundef zeroext false, i1 noundef zeroext false) #14 ; 2 uses
-  %.not42 = icmp eq i64 %.0.i.i, %i.bu
+  %.not42 = icmp ult i64 %.0.i.i, %i.ar
   %i.by = icmp ne i64 %i.bu, 0                    ; 4 uses
   br i1 %.not42, label %bb.af, label %.thread20
 
@@ -689,7 +689,7 @@ bb.l:                                             ; preds = %bb.k
   %.fca.0.extract.i.i.i = extractvalue { i64, i8 } %i.do, 0
   %.fca.1.extract.i.i.i = extractvalue { i64, i8 } %i.do, 1
   %i.dp = add i64 %.fca.0.extract.i.i.i, 7
-  %i.dq = lshr i64 %i.dp, 3                       ; 4 uses
+  %i.dq = lshr i64 %i.dp, 3                       ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #14
   %i.dr = call noundef ptr @_ZN4llvm4Type9getInt8TyERNS_11LLVMContextE(ptr noundef nonnull align 8 dereferenceable(8) %i.de) #14
   store ptr %i.dr, ptr %i.n, align 8, !tbaa !98
@@ -700,7 +700,7 @@ bb.l:                                             ; preds = %bb.k
   %i.dw = load ptr, ptr %i.ds, align 8
   %spec.select.i.i.i88 = select i1 %i.dv, ptr %i.ds, ptr %i.dw
   %.0.i.i.i = load i64, ptr %spec.select.i.i.i88, align 8, !tbaa !38 ; 4 uses
-  %i.dx = urem i64 %.0.i.i.i, %i.dq               ; 5 uses
+  %i.dx = urem i64 %.0.i.i.i, %i.dq               ; 4 uses
   %i.dy = sub i64 %.0.i.i.i, %i.dx                ; 3 uses
   %i.dz = call noundef ptr @_ZN4llvm11ConstantInt3getEPNS_11IntegerTypeEmbb(ptr noundef %i.cz, i64 noundef 0, i1 noundef zeroext false, i1 noundef zeroext false) #14 ; 5 uses
   %i.ea = call noundef ptr @_ZN4llvm11ConstantInt3getEPNS_11IntegerTypeEmbb(ptr noundef %i.cz, i64 noundef %i.dy, i1 noundef zeroext false, i1 noundef zeroext false) #14 ; 5 uses
@@ -948,11 +948,11 @@ bb.r:                                             ; preds = %bb.p, %._crit_edge.
   call void @_ZN4llvm15IRBuilderFolderD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.gp) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %92) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #14
-  %.not185.i = icmp eq i64 %.0.i.i.i, %i.dx
+  %.not185.i = icmp ult i64 %.0.i.i.i, %i.dq
   br i1 %.not185.i, label %.critedge.i, label %bb.s
 
 .thread.i:                                        ; preds = %_ZNK4llvm8TypeSizecvmEv.exit192.i
-  %.not185292.i = icmp eq i64 %.0.i.i.i, 0
+  %.not185292.i = icmp ult i64 %.0.i.i.i, %i.dq
   br i1 %.not185292.i, label %.critedge.thread.i, label %.thread293.i
 
 bb.s:                                             ; preds = %bb.r

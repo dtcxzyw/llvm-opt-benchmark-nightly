@@ -204,10 +204,10 @@ _ZN4llvm5ErrorD2Ev.exit36:                        ; preds = %_ZN4llvmneENS_9Stri
 
 bb.h:                                             ; preds = %_ZN4llvm5ErrorD2Ev.exit36
   %i.bm = load ptr, ptr %7, align 8, !tbaa !224   ; 2 uses
-  %i.bn = urem i64 %.fr, 12                       ; 2 uses
+  %i.bn = urem i64 %.fr, 12
   %.idx = sub nuw i64 %.fr, %i.bn
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 %.idx
-  %.not55 = icmp eq i64 %.fr, %i.bn
+  %.not55 = icmp ult i64 %.fr, 12
   br i1 %.not55, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.h, %.lr.ph
@@ -215,7 +215,7 @@ bb.h:                                             ; preds = %_ZN4llvm5ErrorD2Ev.
   %.02656 = phi i64 [ %i.bs, %.lr.ph ], [ 0, %bb.h ] ; 2 uses
   %i.bp = load ptr, ptr %1, align 8, !tbaa !38, !nonnull !13, !align !14
   %i.bq = call noundef ptr @_ZNK4llvm6object14COFFObjectFile14getCOFFSectionERKNS0_10SectionRefE(ptr noundef nonnull align 8 dereferenceable(232) %i.bp, ptr noundef nonnull align 8 dereferenceable(16) %5) #17
-  %i.br = mul i64 %.02656, 12
+  %i.br = mul nuw i64 %.02656, 12
   call void @_ZN4llvm7Win64EH6Dumper20printRuntimeFunctionERKNS1_7ContextEPKNS_6object12coff_sectionEmRKNS0_15RuntimeFunctionE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef %i.bq, i64 noundef %i.br, ptr noundef nonnull align 1 dereferenceable(12) %.057)
   %i.bs = add nuw nsw i64 %.02656, 1
   %i.bt = getelementptr inbounds nuw i8, ptr %.057, i64 12 ; 2 uses

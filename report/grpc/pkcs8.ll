@@ -113,7 +113,7 @@ _ZL22pkcs12_encode_passwordPKcmPPhPm.exit:        ; preds = %bb.h
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZL22pkcs12_encode_passwordPKcmPPhPm.exit, %bb.c
-  %i.q = call i64 @EVP_MD_block_size(ptr noundef %8) #6 ; 12 uses
+  %i.q = call i64 @EVP_MD_block_size(ptr noundef %8) #6 ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #6
   %i.r = icmp eq i64 %i.q, 0
   br i1 %i.r, label %_ZL14OPENSSL_memsetPvim.exit, label %bb.j
@@ -141,9 +141,9 @@ bb.l:                                             ; preds = %bb.k, %_ZL14OPENSSL
   br label %.loopexit
 
 bb.m:                                             ; preds = %bb.k
-  %i.z = urem i64 %i.t, %i.q                      ; 2 uses
+  %i.z = urem i64 %i.t, %i.q
   %i.aa = sub nuw i64 %i.t, %i.z                  ; 7 uses
-  %i.ab = urem i64 %i.x, %i.q                     ; 2 uses
+  %i.ab = urem i64 %i.x, %i.q
   %i.ac = sub nuw i64 %i.x, %i.ab                 ; 5 uses
   %i.ad = add i64 %i.ac, %i.aa                    ; 6 uses
   %i.ae = icmp ult i64 %i.ad, %i.aa
@@ -161,7 +161,7 @@ bb.o:                                             ; preds = %bb.m
   br i1 %or.cond, label %.loopexit, label %.preheader146
 
 .preheader146:                                    ; preds = %bb.o
-  %.not165 = icmp eq i64 %i.t, %i.z
+  %.not165 = icmp ult i64 %i.t, %i.q
   br i1 %.not165, label %.preheader145, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader146
@@ -190,7 +190,7 @@ bb.o:                                             ; preds = %bb.m
 
 .preheader145:                                    ; preds = %.lr.ph.epil.preheader, %.preheader145.loopexit.unr-lcssa, %.preheader146
   %invariant.gep = getelementptr i8, ptr %i.af, i64 %i.aa ; 3 uses
-  %.not166 = icmp eq i64 %i.x, %i.ab
+  %.not166 = icmp ult i64 %i.x, %i.q
   br i1 %.not166, label %.preheader143, label %.lr.ph149.preheader
 
 .lr.ph149.preheader:                              ; preds = %.preheader145

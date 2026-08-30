@@ -205,9 +205,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -610,9 +610,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -1015,9 +1015,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -1420,9 +1420,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -1825,9 +1825,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -2230,9 +2230,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -2635,9 +2635,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -3040,9 +3040,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -3445,9 +3445,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -3850,9 +3850,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -4255,9 +4255,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -4660,9 +4660,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -5065,9 +5065,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -5470,9 +5470,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -5875,9 +5875,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -6280,9 +6280,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -6685,9 +6685,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -7090,9 +7090,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -7495,9 +7495,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -7900,9 +7900,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -8305,9 +8305,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -8710,9 +8710,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -9115,9 +9115,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480:         ; preds = %.noexc479, %_ZNSt6v
   %.sroa.0582.0825 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lc, %.noexc479 ] ; 9 uses
   %.sroa.0574.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.le, %.noexc479 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i461 ], [ %i.lg, %.noexc479 ] ; 2 uses
-  %i.lh = urem i64 %0, 3                          ; 2 uses
+  %i.lh = urem i64 %0, 3
   %i.li = sub nuw i64 %0, %i.lh
-  %.not1067 = icmp eq i64 %0, %i.lh
+  %.not1067 = icmp ult i64 %0, 3
   br i1 %.not1067, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit480
@@ -9520,9 +9520,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit493:         ; preds = %.noexc492, %_ZNSt6v
   %.sroa.0595.0803 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i474 ], [ %i.kk, %.noexc492 ] ; 9 uses
   %.sroa.0587.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i474 ], [ %i.km, %.noexc492 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i474 ], [ %i.ko, %.noexc492 ] ; 2 uses
-  %i.kp = urem i64 %0, 3                          ; 2 uses
+  %i.kp = urem i64 %0, 3
   %i.kq = sub nuw i64 %0, %i.kp
-  %.not1045 = icmp eq i64 %0, %i.kp
+  %.not1045 = icmp ult i64 %0, 3
   br i1 %.not1045, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit493
@@ -9925,9 +9925,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit493:         ; preds = %.noexc492, %_ZNSt6v
   %.sroa.0595.0803 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i474 ], [ %i.kk, %.noexc492 ] ; 9 uses
   %.sroa.0587.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i474 ], [ %i.km, %.noexc492 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i474 ], [ %i.ko, %.noexc492 ] ; 2 uses
-  %i.kp = urem i64 %0, 3                          ; 2 uses
+  %i.kp = urem i64 %0, 3
   %i.kq = sub nuw i64 %0, %i.kp
-  %.not1045 = icmp eq i64 %0, %i.kp
+  %.not1045 = icmp ult i64 %0, 3
   br i1 %.not1045, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit493
@@ -10330,9 +10330,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit559:         ; preds = %.noexc558, %_ZNSt12
   %.sroa.0661.0 = phi ptr [ null, %_ZNSt12_Vector_baseIfSaIfEEC2EmRKS0_.exit.thread.i556 ], [ %i.aaa, %.noexc558 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt12_Vector_baseIfSaIfEEC2EmRKS0_.exit.thread.i556 ], [ %i.aac, %.noexc558 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #22
-  %i.aad = urem i64 %0, 3                         ; 2 uses
+  %i.aad = urem i64 %0, 3
   %i.aae = sub nuw i64 %0, %i.aad
-  %.not1177 = icmp eq i64 %0, %i.aad
+  %.not1177 = icmp ult i64 %0, 3
   br i1 %.not1177, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit559
@@ -10735,9 +10735,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit570:         ; preds = %.noexc569, %_ZNSt12
   %.sroa.0672.0 = phi ptr [ null, %_ZNSt12_Vector_baseIfSaIfEEC2EmRKS0_.exit.thread.i567 ], [ %i.zi, %.noexc569 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt12_Vector_baseIfSaIfEEC2EmRKS0_.exit.thread.i567 ], [ %i.zk, %.noexc569 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #22
-  %i.zl = urem i64 %0, 3                          ; 2 uses
+  %i.zl = urem i64 %0, 3
   %i.zm = sub nuw i64 %0, %i.zl
-  %.not1153 = icmp eq i64 %0, %i.zl
+  %.not1153 = icmp ult i64 %0, 3
   br i1 %.not1153, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit570
@@ -11140,9 +11140,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit551:         ; preds = %.noexc550, %_ZNSt6v
   %.sroa.0659.0916 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i532 ], [ %i.qw, %.noexc550 ] ; 9 uses
   %.sroa.0649.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i532 ], [ %i.qy, %.noexc550 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i532 ], [ %i.ra, %.noexc550 ] ; 2 uses
-  %i.rb = urem i64 %0, 3                          ; 2 uses
+  %i.rb = urem i64 %0, 3
   %i.rc = sub nuw i64 %0, %i.rb
-  %.not1163 = icmp eq i64 %0, %i.rb
+  %.not1163 = icmp ult i64 %0, 3
   br i1 %.not1163, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit551
@@ -11545,9 +11545,9 @@ _ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit561:         ; preds = %.noexc560, %_ZNSt6v
   %.sroa.0669.0891 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i542 ], [ %i.qe, %.noexc560 ] ; 9 uses
   %.sroa.0659.0 = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i542 ], [ %i.qg, %.noexc560 ] ; 10 uses
   %.sroa.12.0 = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i542 ], [ %i.qi, %.noexc560 ] ; 2 uses
-  %i.qj = urem i64 %0, 3                          ; 2 uses
+  %i.qj = urem i64 %0, 3
   %i.qk = sub nuw i64 %0, %i.qj
-  %.not1138 = icmp eq i64 %0, %i.qj
+  %.not1138 = icmp ult i64 %0, 3
   br i1 %.not1138, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKfRKS0_.exit561
