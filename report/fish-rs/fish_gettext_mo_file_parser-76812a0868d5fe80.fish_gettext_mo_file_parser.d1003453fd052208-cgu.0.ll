@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fish-rs/original/fish_gettext_mo_file_parser-76812a0868d5fe80.fish_gettext_mo_file_parser.d1003453fd052208-cgu.0?download=true
-inline.NumInlined: 229
+inline.NumInlined: 230
 inline.NumDeleted: 54
 loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 2
@@ -147,7 +147,6 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: cold noinline nonlazybind uwtable
 define { i64, i64 } @_RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTRShBQ_EE14reserve_rehashNCINvNtB8_3map11make_hasherBQ_BQ_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE0ECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nofree align 8 captures(none) %0, i64 %1, ptr nofree readonly align 8 captures(none) %2, i1 zeroext %3) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
-  %4 = alloca [32 x i8], align 8                  ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.b = load i64, ptr %i.a, align 8              ; 2 uses
   %i.c = add i64 %i.b, %1                         ; 3 uses
@@ -164,7 +163,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.02.0.i = select i1 %i.g, i64 %i.f, i64 %i.j ; 2 uses
   %i.k = lshr i64 %.sroa.02.0.i, 1
   %.not.i = icmp ugt i64 %i.c, %i.k
-  br i1 %.not.i, label %bb.d, label %bb.j
+  br i1 %.not.i, label %4, label %bb.j
 
 bb.c:                                             ; preds = %bb.a
   %i.l = tail call { i64, i64 } @_RNvMNtCskt5MLIAl8nl_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 zeroext %3) ; 2 uses
@@ -172,33 +171,91 @@ bb.c:                                             ; preds = %bb.a
   %i.n = extractvalue { i64, i64 } %i.l, 1
   br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
-bb.d:                                             ; preds = %bb.b
+4:                                                ; preds = %bb.b
   %5 = add nuw i64 %.sroa.02.0.i, 1
-  %.sroa.0.0.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %5, i64 %i.c)
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull sret([32 x i8]) align 8 %4, ptr nonnull poison, i64 32, i64 16, i64 %.sroa.0.0.sroa.speculated.i, i1 zeroext %3) #35
-  %6 = load ptr, ptr %4, align 8                  ; 9 uses
-  %7 = icmp eq ptr %6, null
-  %8 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %9 = load i64, ptr %8, align 8                  ; 6 uses
-  %10 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %11 = load i64, ptr %10, align 8                ; 2 uses
-  br i1 %7, label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner12resize_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i, label %bb.e
+  %.sroa.0.0.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %5, i64 %i.c) ; 5 uses
+  %6 = icmp ult i64 %.sroa.0.0.sroa.speculated.i, 15
+  br i1 %6, label %.thread, label %7
 
-bb.e:                                             ; preds = %bb.d
+7:                                                ; preds = %4
+  %8 = icmp ugt i64 %.sroa.0.0.sroa.speculated.i, 2305843009213693951
+  br i1 %8, label %29, label %11
+
+.thread:                                          ; preds = %4
+  %9 = icmp samesign ult i64 %.sroa.0.0.sroa.speculated.i, 4
+  %10 = and i64 %.sroa.0.0.sroa.speculated.i, 8
+  %.16.i.i = add nuw nsw i64 %10, 8
+  %.sroa.04.0.i.i = select i1 %9, i64 4, i64 %.16.i.i
+  br label %bb.d
+
+11:                                               ; preds = %7
+  %12 = shl nuw i64 %.sroa.0.0.sroa.speculated.i, 3
+  %13 = udiv i64 %12, 7
+  %14 = add nsw i64 %13, -1
+  %15 = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %14, i1 true)
+  %16 = lshr i64 -1, %15                          ; 2 uses
+  %17 = add nuw nsw i64 %16, 1
+  %18 = icmp ugt i64 %16, 576460752303423486
+  br i1 %18, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i, label %bb.d
+
+bb.d:                                             ; preds = %.thread, %11
+  %.sroa.4.0.i.ph.i100 = phi i64 [ %.sroa.04.0.i.i, %.thread ], [ %17, %11 ] ; 5 uses
+  %19 = shl nuw i64 %.sroa.4.0.i.ph.i100, 5       ; 3 uses
+  %20 = add nuw nsw i64 %.sroa.4.0.i.ph.i100, 16  ; 2 uses
+  %21 = add i64 %20, %19                          ; 4 uses
+  %22 = icmp ult i64 %21, %19
+  %23 = icmp ugt i64 %21, 9223372036854775792
+  %or.cond29.i.i = or i1 %22, %23
+  br i1 %or.cond29.i.i, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i
+
+_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i: ; preds = %bb.d
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #35
+  %24 = tail call align 16 ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 %21, i64 16) #35 ; 2 uses
+  %25 = icmp eq ptr %24, null
+  br i1 %25, label %27, label %bb.e
+
+_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i: ; preds = %bb.d, %11
+  %26 = tail call { i64, i64 } @_RNvMNtCskt5MLIAl8nl_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 zeroext %3)
+  br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i
+
+27:                                               ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i
+  %28 = tail call { i64, i64 } @_RNvMNtCskt5MLIAl8nl_9hashbrown3rawNtB2_11Fallibility9alloc_err(i1 zeroext %3, i64 16, i64 %21)
+  br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i
+
+29:                                               ; preds = %7
+  %30 = tail call { i64, i64 } @_RNvMNtCskt5MLIAl8nl_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 zeroext %3) ; 2 uses
+  %31 = extractvalue { i64, i64 } %30, 0
+  %32 = extractvalue { i64, i64 } %30, 1
+  br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
+
+_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i: ; preds = %27, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i
+  %.pn.i = phi { i64, i64 } [ %26, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i ], [ %28, %27 ] ; 2 uses
+  %.sroa.9.030.i = extractvalue { i64, i64 } %.pn.i, 1
+  %.sroa.4.031.i = extractvalue { i64, i64 } %.pn.i, 0
+  br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
+
+bb.e:                                             ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i
+  %33 = icmp samesign ult i64 %.sroa.4.0.i.ph.i100, 9
+  %34 = add nsw i64 %.sroa.4.0.i.ph.i100, -1      ; 6 uses
+  %35 = lshr i64 %.sroa.4.0.i.ph.i100, 3
+  %36 = mul nuw nsw i64 %35, 7
+  %.sroa.07.0.i.i = select i1 %33, i64 %34, i64 %36
+  %37 = getelementptr inbounds nuw i8, ptr %24, i64 %19 ; 9 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %37, i8 -1, i64 %20, i1 false)
   %i.o = load i64, ptr %i.a, align 8              ; 2 uses
   %i.p = icmp eq i64 %i.o, 0
+  %.sroa.079.0.copyload.pre = load ptr, ptr %0, align 8 ; 4 uses
   br i1 %i.p, label %._crit_edge46, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %bb.e
-  %12 = load ptr, ptr %0, align 8                 ; 2 uses
-  %.val323 = load <16 x i8>, ptr %12, align 16
+  %.val323 = load <16 x i8>, ptr %.sroa.079.0.copyload.pre, align 16
   %i.q = icmp sgt <16 x i8> %.val323, splat (i8 -1)
   %i.r = bitcast <16 x i1> %i.q to i16
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner17find_insert_indexCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
-  %.sroa.013.045 = phi ptr [ %12, %.preheader.lr.ph ], [ %.sroa.013.1.lcssa, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner17find_insert_indexCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ] ; 2 uses
+  %38 = phi ptr [ %.sroa.079.0.copyload.pre, %.preheader.lr.ph ], [ %i.bv, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner17find_insert_indexCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ]
+  %.sroa.013.045 = phi ptr [ %.sroa.079.0.copyload.pre, %.preheader.lr.ph ], [ %.sroa.013.1.lcssa, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner17find_insert_indexCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ] ; 2 uses
   %.sroa.5.044 = phi i64 [ 0, %.preheader.lr.ph ], [ %.sroa.5.1.lcssa, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner17find_insert_indexCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ] ; 2 uses
   %.sroa.9.043 = phi i64 [ %i.o, %.preheader.lr.ph ], [ %i.aq, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner17find_insert_indexCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ]
   %.sroa.13.042 = phi i16 [ %i.r, %.preheader.lr.ph ], [ %i.ao, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner17find_insert_indexCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ] ; 2 uses
@@ -221,17 +278,17 @@ bb.e:                                             ; preds = %bb.d
   br label %._crit_edge46
 
 ._crit_edge46:                                    ; preds = %._crit_edge46.loopexit, %bb.e
+  %.sroa.079.0.copyload = phi ptr [ %i.bv, %._crit_edge46.loopexit ], [ %.sroa.079.0.copyload.pre, %bb.e ] ; 2 uses
   %i.w = phi i64 [ %.pre, %._crit_edge46.loopexit ], [ 0, %bb.e ] ; 2 uses
-  %i.x = sub i64 %11, %i.w
-  %.sroa.071.0.copyload = load ptr, ptr %0, align 8 ; 2 uses
+  %i.x = sub i64 %.sroa.07.0.i.i, %i.w
   %.sroa.472.0.copyload = load i64, ptr %i.e, align 8 ; 3 uses
   %.sroa.573.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %6, ptr %0, align 8
-  store i64 %9, ptr %i.e, align 8
+  store ptr %37, ptr %0, align 8
+  store i64 %34, ptr %i.e, align 8
   store i64 %i.x, ptr %.sroa.573.0..sroa_idx, align 8
   store i64 %i.w, ptr %i.a, align 8
   %i.y = icmp eq i64 %.sroa.472.0.copyload, 0
-  br i1 %i.y, label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner12resize_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i, label %bb.f
+  br i1 %i.y, label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge46
   %i.z = add i64 %.sroa.472.0.copyload, 1         ; 2 uses
@@ -248,21 +305,21 @@ bb.g:                                             ; preds = %bb.f
   br i1 %or.cond.i.i.i, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i.i, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i.i: ; preds = %bb.g, %bb.f
-  %i.ag = getelementptr inbounds i8, ptr %.sroa.071.0.copyload, i64 undef
+  %i.ag = getelementptr inbounds i8, ptr %.sroa.079.0.copyload, i64 undef
   br label %bb.h
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i: ; preds = %bb.g
   %i.ah = sub nsw i64 0, %i.ab
-  %i.ai = getelementptr inbounds i8, ptr %.sroa.071.0.copyload, i64 %i.ah
+  %i.ai = getelementptr inbounds i8, ptr %.sroa.079.0.copyload, i64 %i.ah
   %i.aj = icmp eq i64 %i.ad, 0
-  br i1 %i.aj, label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner12resize_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i, label %bb.h
+  br i1 %i.aj, label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit, label %bb.h
 
 bb.h:                                             ; preds = %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i.i
   %i.ak = phi ptr [ %i.ag, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i.i ], [ %i.ai, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i ]
   %.sroa.0.05.i.i.i = phi i64 [ 0, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i.i ], [ 16, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i ]
   %.sroa.6.04.i.i.i = phi i64 [ undef, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i.i ], [ %i.ad, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i ]
-  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.ak, i64 %.sroa.6.04.i.i.i, i64 %.sroa.0.05.i.i.i) #36
-  br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner12resize_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.ak, i64 %.sroa.6.04.i.i.i, i64 %.sroa.0.05.i.i.i) #35
+  br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 ._crit_edge:                                      ; preds = %.noexc2, %.preheader
   %.sroa.13.1.lcssa = phi i16 [ %.sroa.13.042, %.preheader ], [ %i.u, %.noexc2 ] ; 3 uses
@@ -274,13 +331,12 @@ bb.h:                                             ; preds = %_RNvMs1_NtCskt5MLIA
   %i.ao = and i16 %i.an, %.sroa.13.1.lcssa
   %i.ap = add i64 %.sroa.5.1.lcssa, %i.am         ; 2 uses
   %i.aq = add i64 %.sroa.9.043, -1                ; 2 uses
-  %13 = load ptr, ptr %0, align 8
   %i.ar = sub nsw i64 0, %i.ap
-  %i.as = getelementptr inbounds [32 x i8], ptr %13, i64 %i.ar
+  %i.as = getelementptr inbounds [32 x i8], ptr %38, i64 %i.ar
   %i.at = getelementptr inbounds i8, ptr %i.as, i64 -32
   %i.au = tail call i64 @_RINvYNtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateNtNtCs3oUPovFnLWP_4core4hash11BuildHasher8hash_oneRRShECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %2, ptr nonnull readonly align 8 %i.at) ; 2 uses
-  %.sroa.0.016.i = and i64 %9, %i.au              ; 3 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %6, i64 %.sroa.0.016.i
+  %.sroa.0.016.i = and i64 %34, %i.au             ; 3 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %37, i64 %.sroa.0.016.i
   %.sroa.0.0.copyload.i1417.i = load <16 x i8>, ptr %i.av, align 1, !noalias !5
   %i.aw = icmp slt <16 x i8> %.sroa.0.0.copyload.i1417.i, zeroinitializer
   %i.ax = bitcast <16 x i1> %i.aw to i16          ; 2 uses
@@ -292,15 +348,15 @@ bb.h:                                             ; preds = %_RNvMs1_NtCskt5MLIA
   %.lcssa.i = phi i16 [ %i.ax, %._crit_edge ], [ %i.bn, %.lr.ph.i ]
   %i.ay = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i, i1 true)
   %i.az = zext nneg i16 %i.ay to i64
-  %i.ba = add i64 %.sroa.0.0.lcssa.i, %i.az
-  %i.bb = and i64 %i.ba, %9                       ; 2 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %6, i64 %i.bb
+  %i.ba = add nuw nsw i64 %.sroa.0.0.lcssa.i, %i.az
+  %i.bb = and i64 %i.ba, %34                      ; 2 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %37, i64 %i.bb
   %i.bd = load i8, ptr %i.bc, align 1
   %i.be = icmp sgt i8 %i.bd, -1
   br i1 %i.be, label %bb.i, label %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner17find_insert_indexCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 bb.i:                                             ; preds = %._crit_edge.i
-  %.val2.i.i = load <16 x i8>, ptr %6, align 16
+  %.val2.i.i = load <16 x i8>, ptr %37, align 16
   %i.bf = icmp slt <16 x i8> %.val2.i.i, zeroinitializer
   %i.bg = bitcast <16 x i1> %i.bf to i16          ; 2 uses
   %.not.i5.i = icmp eq i16 %i.bg, 0
@@ -314,8 +370,8 @@ bb.i:                                             ; preds = %._crit_edge.i
   %.sroa.5.019.i = phi i64 [ %i.bj, %.lr.ph.i ], [ 0, %._crit_edge ]
   %i.bj = add i64 %.sroa.5.019.i, 16              ; 2 uses
   %i.bk = add i64 %i.bj, %.sroa.0.020.i
-  %.sroa.0.0.i7 = and i64 %i.bk, %9               ; 3 uses
-  %i.bl = getelementptr inbounds nuw i8, ptr %6, i64 %.sroa.0.0.i7
+  %.sroa.0.0.i7 = and i64 %i.bk, %34              ; 3 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %37, i64 %.sroa.0.0.i7
   %.sroa.0.0.copyload.i14.i = load <16 x i8>, ptr %i.bl, align 1, !noalias !5
   %i.bm = icmp slt <16 x i8> %.sroa.0.0.copyload.i14.i, zeroinitializer
   %i.bn = bitcast <16 x i1> %i.bm to i16          ; 2 uses
@@ -324,31 +380,25 @@ bb.i:                                             ; preds = %._crit_edge.i
 
 _RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner17find_insert_indexCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.i, %._crit_edge.i
   %.sroa.0.0.i4.i = phi i64 [ %.sroa.3.0.i6.i, %bb.i ], [ %i.bb, %._crit_edge.i ] ; 3 uses
-  %i.bo = getelementptr inbounds nuw i8, ptr %6, i64 %.sroa.0.0.i4.i
+  %i.bo = getelementptr inbounds nuw i8, ptr %37, i64 %.sroa.0.0.i4.i
   %i.bp = lshr i64 %i.au, 57
   %i.bq = trunc nuw nsw i64 %i.bp to i8           ; 2 uses
   %i.br = add i64 %.sroa.0.0.i4.i, -16
-  %i.bs = and i64 %i.br, %9
+  %i.bs = and i64 %i.br, %34
   store i8 %i.bq, ptr %i.bo, align 1
-  %i.bt = getelementptr i8, ptr %6, i64 %i.bs
+  %i.bt = getelementptr i8, ptr %37, i64 %i.bs
   %i.bu = getelementptr i8, ptr %i.bt, i64 16
   store i8 %i.bq, ptr %i.bu, align 1
-  %i.bv = load ptr, ptr %0, align 8
+  %i.bv = load ptr, ptr %0, align 8               ; 3 uses
   %i.bw = shl i64 %i.ap, 5
   %i.bx = sub nuw nsw i64 -32, %i.bw
   %i.by = getelementptr inbounds i8, ptr %i.bv, i64 %i.bx
   %i.bz = shl i64 %.sroa.0.0.i4.i, 5
   %i.ca = sub nuw nsw i64 -32, %i.bz
-  %i.cb = getelementptr inbounds i8, ptr %6, i64 %i.ca
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.cb, ptr noundef nonnull align 1 dereferenceable(32) %i.by, i64 32, i1 false)
+  %i.cb = getelementptr inbounds i8, ptr %37, i64 %i.ca
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.cb, ptr noundef nonnull align 1 dereferenceable(32) %i.by, i64 32, i1 false)
   %i.cc = icmp eq i64 %i.aq, 0
   br i1 %i.cc, label %._crit_edge46.loopexit, label %.preheader
-
-_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner12resize_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i: ; preds = %bb.d, %bb.h, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i, %._crit_edge46
-  %.sroa.3.0.i.i = phi i64 [ undef, %bb.h ], [ undef, %._crit_edge46 ], [ undef, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i ], [ %11, %bb.d ]
-  %.sroa.0.0.i.i = phi i64 [ -1, %bb.h ], [ -1, %._crit_edge46 ], [ -1, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i ], [ %9, %bb.d ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 bb.j:                                             ; preds = %bb.b
   %.not11.i.i = icmp eq i64 %i.h, 0
@@ -752,9 +802,9 @@ _RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_placeCshWv
   store i64 %i.ku, ptr %i.kt, align 8
   br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
-_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.c, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner12resize_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_placeCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread
-  %.sroa.4.0.i = phi i64 [ %i.n, %bb.c ], [ undef, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_placeCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread ], [ %.sroa.3.0.i.i, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner12resize_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i ]
-  %.sroa.0.0.i = phi i64 [ %i.m, %bb.c ], [ -1, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_placeCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread ], [ %.sroa.0.0.i.i, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner12resize_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i ]
+_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %._crit_edge46, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i, %bb.h, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i, %29, %bb.c, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_placeCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread
+  %.sroa.4.0.i = phi i64 [ %i.n, %bb.c ], [ undef, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_placeCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread ], [ %.sroa.9.030.i, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i ], [ undef, %bb.h ], [ undef, %._crit_edge46 ], [ undef, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i ], [ %32, %29 ]
+  %.sroa.0.0.i = phi i64 [ %i.m, %bb.c ], [ -1, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_placeCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread ], [ %.sroa.4.031.i, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i ], [ -1, %bb.h ], [ -1, %._crit_edge46 ], [ -1, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i ], [ %31, %29 ]
   %i.kv = insertvalue { i64, i64 } poison, i64 %.sroa.0.0.i, 0
   %i.kw = insertvalue { i64, i64 } %i.kv, i64 %.sroa.4.0.i, 1
   ret { i64, i64 } %i.kw
@@ -769,7 +819,7 @@ bb.a:
   br i1 %i.c, label %bb.b, label %_RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTRShBQ_EE7reserveNCINvNtB8_3map11make_hasherBQ_BQ_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE0ECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call { i64, i64 } @_RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTRShBQ_EE14reserve_rehashNCINvNtB8_3map11make_hasherBQ_BQ_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE0ECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %0, i64 1, ptr readonly align 8 %3, i1 zeroext true) #37 ; 0 uses
+  %i.d = tail call { i64, i64 } @_RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTRShBQ_EE14reserve_rehashNCINvNtB8_3map11make_hasherBQ_BQ_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE0ECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %0, i64 1, ptr readonly align 8 %3, i1 zeroext true) #36 ; 0 uses
   br label %_RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTRShBQ_EE7reserveNCINvNtB8_3map11make_hasherBQ_BQ_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE0ECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 _RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTRShBQ_EE7reserveNCINvNtB8_3map11make_hasherBQ_BQ_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE0ECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.a, %bb.b
@@ -896,7 +946,7 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call { i64, i64 } @_RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTRShBQ_EE14reserve_rehashNCINvNtB8_3map11make_hasherBQ_BQ_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE0ECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %0, i64 %1, ptr align 8 %2, i1 zeroext true) #37 ; 0 uses
+  %i.d = tail call { i64, i64 } @_RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTRShBQ_EE14reserve_rehashNCINvNtB8_3map11make_hasherBQ_BQ_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE0ECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %0, i64 %1, ptr align 8 %2, i1 zeroext true) #36 ; 0 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -957,7 +1007,7 @@ bb.e:                                             ; preds = %_RNvMs1_NtCskt5MLIA
   %i.x = phi ptr [ %i.s, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread ], [ %i.v, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ]
   %.sroa.0.05 = phi i64 [ 0, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread ], [ %3, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ]
   %.sroa.6.04 = phi i64 [ undef, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread ], [ %i.n, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ]
-  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.x, i64 %.sroa.6.04, i64 %.sroa.0.05) #36
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.x, i64 %.sroa.6.04, i64 %.sroa.0.05) #35
   br label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.e, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit, %bb.a
@@ -1000,8 +1050,8 @@ bb.e:                                             ; preds = %bb.d
   br label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 bb.f:                                             ; preds = %bb.d
-  tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #36
-  %i.q = tail call ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 %i.j, i64 %3) #36
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #35
+  %i.q = tail call ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 %i.j, i64 %3) #35
   br label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.e, %bb.f
@@ -1107,38 +1157,26 @@ bb.i:                                             ; preds = %bb.h
   %i.t = sub i64 0, %3
   %i.u = and i64 %i.r, %i.t                       ; 3 uses
   %i.v = add nuw nsw i64 %.sroa.4.0.i.ph, 16      ; 2 uses
-  %i.w = add i64 %i.v, %i.u                       ; 5 uses
+  %i.w = add i64 %i.v, %i.u                       ; 4 uses
   %i.x = icmp ult i64 %i.w, %i.u
   %i.y = sub i64 -9223372036854775808, %3
   %i.z = icmp ugt i64 %i.w, %i.y
   %.not.i = icmp eq i64 %3, 0
   %i.aa = or i1 %.not.i, %i.z
   %or.cond29.i = select i1 %i.x, i1 true, i1 %i.aa
-  br i1 %or.cond29.i, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i, label %6
+  br i1 %or.cond29.i, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i, label %bb.j
 
-6:                                                ; preds = %bb.i
-  %7 = icmp eq i64 %i.w, 0
-  br i1 %7, label %8, label %bb.j
-
-8:                                                ; preds = %6
-  %9 = inttoptr i64 %3 to ptr
-  br label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i
-
-bb.j:                                             ; preds = %6
-  tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #36
-  %i.ab = tail call ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 %i.w, i64 %3) #36
-  br label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i
-
-_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i: ; preds = %bb.j, %8
-  %.sroa.0.0.i.i.i = phi ptr [ %9, %8 ], [ %i.ab, %bb.j ] ; 2 uses
-  %10 = icmp eq ptr %.sroa.0.0.i.i.i, null
-  br i1 %10, label %bb.k, label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
+bb.j:                                             ; preds = %bb.i
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #35
+  %i.ab = tail call ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 %i.w, i64 %3) #35 ; 2 uses
+  %6 = icmp eq ptr %i.ab, null
+  br i1 %6, label %bb.k, label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 _RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i: ; preds = %bb.i, %bb.h, %bb.g
   %i.ac = tail call { i64, i64 } @_RNvMNtCskt5MLIAl8nl_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 zeroext %5)
   br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread
 
-bb.k:                                             ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i
+bb.k:                                             ; preds = %bb.j
   %i.ad = tail call { i64, i64 } @_RNvMNtCskt5MLIAl8nl_9hashbrown3rawNtB2_11Fallibility9alloc_err(i1 zeroext %5, i64 %3, i64 %i.w)
   br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread
 
@@ -1164,13 +1202,13 @@ _RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNt
   store ptr null, ptr %0, align 8
   br label %bb.m
 
-_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i
+_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.j
   %i.al = icmp samesign ult i64 %.sroa.4.0.i.ph, 9
   %i.am = add nsw i64 %.sroa.4.0.i.ph, -1         ; 2 uses
   %i.an = lshr i64 %.sroa.4.0.i.ph, 3
   %i.ao = mul nuw nsw i64 %i.an, 7
   %.sroa.07.0.i = select i1 %i.al, i64 %i.am, i64 %i.ao
-  %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i, i64 %i.u ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.u ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ap, i8 -1, i64 %i.v, i1 false)
   store ptr %i.ap, ptr %0, align 8
   %.sroa.317.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1364,7 +1402,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i.i.i, label %bb.e, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 bb.e:                                             ; preds = %bb.d
-  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #38
+  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #37
   unreachable
 
 bb.f:                                             ; preds = %bb.c
@@ -1447,7 +1485,7 @@ bb.e:                                             ; preds = %_RNvMs1_NtCskt5MLIA
   %i.ac = phi ptr [ %i.x, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i ], [ %i.aa, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i ]
   %.sroa.0.05.i.i = phi i64 [ 0, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i ], [ %i.h, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i ]
   %.sroa.6.04.i.i = phi i64 [ undef, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i ], [ %i.s, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i ]
-  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.ac, i64 %.sroa.6.04.i.i, i64 %.sroa.0.05.i.i) #36
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.ac, i64 %.sroa.6.04.i.i, i64 %.sroa.0.05.i.i) #35
   br label %_RNvXs1_NtCskt5MLIAl8nl_9hashbrown10scopeguardINtB5_10ScopeGuardNtNtB7_3raw13RawTableInnerNCINvMsa_B11_BZ_14prepare_resizeNtNtCs1xwejQucwHj_5alloc5alloc6GlobalE0ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 _RNvXs1_NtCskt5MLIAl8nl_9hashbrown10scopeguardINtB5_10ScopeGuardNtNtB7_3raw13RawTableInnerNCINvMsa_B11_BZ_14prepare_resizeNtNtCs1xwejQucwHj_5alloc5alloc6GlobalE0ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.a, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i, %bb.e
@@ -1575,7 +1613,7 @@ bb.d:                                             ; preds = %_RNvMs1_NtCskt5MLIA
   %i.q = phi ptr [ %i.l, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i.i ], [ %i.o, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i ]
   %.sroa.0.05.i.i.i = phi i64 [ 0, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i.i ], [ 16, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i ]
   %.sroa.6.04.i.i.i = phi i64 [ undef, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i.i ], [ %i.h, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i ]
-  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.q, i64 %.sroa.6.04.i.i.i, i64 %.sroa.0.05.i.i.i) #36
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.q, i64 %.sroa.6.04.i.i.i, i64 %.sroa.0.05.i.i.i) #35
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCskt5MLIAl8nl_9hashbrown3raw8RawTableTRShB1i_EEECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCskt5MLIAl8nl_9hashbrown3raw8RawTableTRShB1i_EEECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.a, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i, %bb.d
@@ -1620,7 +1658,7 @@ bb.d:                                             ; preds = %_RNvMs1_NtCskt5MLIA
   %i.q = phi ptr [ %i.l, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i ], [ %i.o, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i ]
   %.sroa.0.05.i.i = phi i64 [ 0, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i ], [ 16, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i ]
   %.sroa.6.04.i.i = phi i64 [ undef, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i ], [ %i.h, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i ]
-  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.q, i64 %.sroa.6.04.i.i, i64 %.sroa.0.05.i.i) #36
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.q, i64 %.sroa.6.04.i.i, i64 %.sroa.0.05.i.i) #35
   br label %_RNvXsg_NtCskt5MLIAl8nl_9hashbrown3rawINtB5_8RawTableTRShBP_EENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 _RNvXsg_NtCskt5MLIAl8nl_9hashbrown3rawINtB5_8RawTableTRShBP_EENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.a, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i, %bb.d
@@ -1681,7 +1719,7 @@ bb.d:                                             ; preds = %_RNvMs1_NtCskt5MLIA
   %i.q = phi ptr [ %i.l, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i.i.i ], [ %i.o, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i.i ]
   %.sroa.0.05.i.i.i.i = phi i64 [ 0, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i.i.i ], [ 16, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i.i ]
   %.sroa.6.04.i.i.i.i = phi i64 [ undef, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i.i.i ], [ %i.h, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i.i ]
-  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.q, i64 %.sroa.6.04.i.i.i.i, i64 %.sroa.0.05.i.i.i.i) #36
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.q, i64 %.sroa.6.04.i.i.i.i, i64 %.sroa.0.05.i.i.i.i) #35
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCskt5MLIAl8nl_9hashbrown3map7HashMapRShB1g_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateEECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCskt5MLIAl8nl_9hashbrown3map7HashMapRShB1g_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateEECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.a, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i.i.i, %bb.d
@@ -1719,7 +1757,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i.i.i, label %bb.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i
 
 bb.d:                                             ; preds = %bb.c
-  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #38
+  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #37
   unreachable
 
 bb.e:                                             ; preds = %bb.b
@@ -1771,7 +1809,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.i, label %bb.c, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtB4_2io5error4repr4ReprECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 bb.c:                                             ; preds = %bb.b
-  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #38
+  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #37
   unreachable
 
 bb.d:                                             ; preds = %bb.a
@@ -1813,7 +1851,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %bb.c, label %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core2io5error4reprNtB5_4ReprNtNtNtBb_3ops4drop4Drop4dropCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 bb.c:                                             ; preds = %bb.b
-  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #38
+  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #37
   unreachable
 
 bb.d:                                             ; preds = %bb.a
@@ -1843,7 +1881,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.j, %bb.a
   %i.e = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNvNtNtB4_2io5write17default_write_fmt7AdapterNtNtNtNtCsaL1QbXo9JQH_3std3sys5stdio4unix6StderrEECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %i.b) #39
+  invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNvNtNtB4_2io5write17default_write_fmt7AdapterNtNtNtNtCsaL1QbXo9JQH_3std3sys5stdio4unix6StderrEECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %i.b) #38
           to label %bb.m unwind label %bb.l
 
 bb.c:                                             ; preds = %bb.a
@@ -1879,7 +1917,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not.i.i.i.i.i, label %bb.h, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i
 
 bb.h:                                             ; preds = %bb.g
-  call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #38
+  call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #37
   unreachable
 
 bb.i:                                             ; preds = %bb.f
@@ -1899,7 +1937,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtNtB4_2io5erro
   ret ptr %.sroa.0.0
 
 bb.j:                                             ; preds = %bb.d
-  invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking9panic_fmt(ptr nonnull @5, ptr nonnull inttoptr (i64 173 to ptr), ptr nonnull align 8 @7) #40
+  invoke void @_RNvNtCs3oUPovFnLWP_4core9panicking9panic_fmt(ptr nonnull @5, ptr nonnull inttoptr (i64 173 to ptr), ptr nonnull align 8 @7) #39
           to label %bb.k unwind label %bb.b
 
 bb.k:                                             ; preds = %bb.j
@@ -1908,7 +1946,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.b
   %i.m = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #41
+  call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #40
   unreachable
 
 bb.m:                                             ; preds = %bb.b
@@ -1962,7 +2000,7 @@ bb.f:                                             ; preds = %bb.c
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.c
-  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #38
+  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #37
   unreachable
 
 bb.h:                                             ; preds = %bb.b, %bb.d, %bb.f, %bb.e
@@ -2018,7 +2056,7 @@ bb.f:                                             ; preds = %bb.c
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.c
-  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #38
+  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #37
   unreachable
 
 bb.h:                                             ; preds = %bb.b, %bb.d, %bb.f, %bb.e
@@ -2129,9 +2167,9 @@ bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %1, ptr %i.a, align 8
-  call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %2, ptr nonnull readonly %i.a, i64 8) #35
+  call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %2, ptr nonnull readonly %i.a, i64 8) #41
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  tail call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %2, ptr readonly %0, i64 %1) #35
+  tail call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %2, ptr readonly %0, i64 %1) #41
   ret void
 }
 
@@ -2145,9 +2183,9 @@ bb.a:
   %i.e = load i64, ptr %i.d, align 8              ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %i.e, ptr %i.a, align 8
-  call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %1, ptr nonnull readonly %i.a, i64 8) #35
+  call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %1, ptr nonnull readonly %i.a, i64 8) #41
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  tail call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %1, ptr readonly %i.c, i64 %i.e) #35
+  tail call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %1, ptr readonly %i.c, i64 %i.e) #41
   ret void
 }
 
@@ -2160,16 +2198,16 @@ bb.a:
   %i.d = load i64, ptr %i.c, align 8              ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %i.d, ptr %i.a, align 8
-  call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %1, ptr nonnull readonly %i.a, i64 8) #35
+  call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %1, ptr nonnull readonly %i.a, i64 8) #41
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  tail call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %1, ptr readonly %i.b, i64 %i.d) #35
+  tail call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %1, ptr readonly %i.b, i64 %i.d) #41
   ret void
 }
 
 ; Function Attrs: inlinehint nofree norecurse nosync nounwind nonlazybind memory(argmem: readwrite) uwtable
 define void @_RINvXs7_NtNtCs3oUPovFnLWP_4core4hash5implshNtB8_4Hash10hash_sliceNtNtNtCsaL1QbXo9JQH_3std4hash6random13DefaultHasherECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nofree readonly captures(none) %0, i64 %1, ptr nofree align 8 captures(none) %2) unnamed_addr #7 {
 bb.a:
-  tail call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %2, ptr readonly %0, i64 %1) #35
+  tail call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %2, ptr readonly %0, i64 %1) #41
   ret void
 }
 
@@ -2197,9 +2235,9 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8              ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %i.j, ptr %i.a, align 8
-  call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %i.b, ptr nonnull readonly %i.a, i64 8) #35
+  call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %i.b, ptr nonnull readonly %i.a, i64 8) #41
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %i.b, ptr readonly %i.h, i64 %i.j) #35
+  call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %i.b, ptr readonly %i.h, i64 %i.j) #41
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.b, align 16
   %.sroa.8.0.copyload.i.i = load i64, ptr %.sroa.28.0..sroa_idx.i, align 8
   %.sroa.15.0.copyload.i.i = load i64, ptr %.sroa.39.0..sroa_idx.i, align 16 ; 3 uses
@@ -2365,7 +2403,7 @@ bb.e:                                             ; preds = %_RNvMs1_NtCskt5MLIA
   %i.ab = phi ptr [ %i.w, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread ], [ %i.z, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ]
   %.sroa.0.05 = phi i64 [ 0, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread ], [ %i.g, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ]
   %.sroa.6.04 = phi i64 [ undef, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread ], [ %i.r, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ]
-  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.ab, i64 %.sroa.6.04, i64 %.sroa.0.05) #36
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.ab, i64 %.sroa.6.04, i64 %.sroa.0.05) #35
   br label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 _RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.e, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit, %bb.a
@@ -2614,14 +2652,14 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.y, label %_RNCNvCshWvooqPLMQS_27fish_gettext_mo_file_parser13parse_mo_file0B3_.exit, label %bb.j
 
 bb.i:                                             ; preds = %bb.a
-  %i.z = tail call ptr @_RINvMNtNtCs1xwejQucwHj_5alloc2io5errorNtNtNtCs3oUPovFnLWP_4core2io5error5Error3newReECsaL1QbXo9JQH_3std(i8 21, ptr nonnull @18, i64 33) #37
+  %i.z = tail call ptr @_RINvMNtNtCs1xwejQucwHj_5alloc2io5errorNtNtNtCs3oUPovFnLWP_4core2io5error5Error3newReECsaL1QbXo9JQH_3std(i8 21, ptr nonnull @18, i64 33) #36
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.z, ptr %i.aa, align 8
   store ptr null, ptr %0, align 8
   br label %bb.u
 
 bb.j:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
-  %i.ab = tail call ptr @_RINvMNtNtCs1xwejQucwHj_5alloc2io5errorNtNtNtCs3oUPovFnLWP_4core2io5error5Error3newReECsaL1QbXo9JQH_3std(i8 21, ptr nonnull @22, i64 97) #37
+  %i.ab = tail call ptr @_RINvMNtNtCs1xwejQucwHj_5alloc2io5errorNtNtNtCs3oUPovFnLWP_4core2io5error5Error3newReECsaL1QbXo9JQH_3std(i8 21, ptr nonnull @22, i64 97) #36
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ab, ptr %i.ac, align 8
   store ptr null, ptr %0, align 8
@@ -2636,7 +2674,7 @@ _RNCNvCshWvooqPLMQS_27fish_gettext_mo_file_parser13parse_mo_file0B3_.exit: ; pre
   br i1 %switch.i, label %_RNCNvCshWvooqPLMQS_27fish_gettext_mo_file_parser13parse_mo_file0B3_.exit14, label %_RNvCshWvooqPLMQS_27fish_gettext_mo_file_parser30check_if_revision_is_supported.exit
 
 _RNvCshWvooqPLMQS_27fish_gettext_mo_file_parser30check_if_revision_is_supported.exit: ; preds = %_RNCNvCshWvooqPLMQS_27fish_gettext_mo_file_parser13parse_mo_file0B3_.exit
-  %i.ag = tail call ptr @_RINvMNtNtCs1xwejQucwHj_5alloc2io5errorNtNtNtCs3oUPovFnLWP_4core2io5error5Error3newReECsaL1QbXo9JQH_3std(i8 21, ptr nonnull @21, i64 29) #37 ; 2 uses
+  %i.ag = tail call ptr @_RINvMNtNtCs1xwejQucwHj_5alloc2io5errorNtNtNtCs3oUPovFnLWP_4core2io5error5Error3newReECsaL1QbXo9JQH_3std(i8 21, ptr nonnull @21, i64 29) #36 ; 2 uses
   %.not = icmp eq ptr %i.ag, null
   br i1 %.not, label %_RNCNvCshWvooqPLMQS_27fish_gettext_mo_file_parser13parse_mo_file0B3_.exit14, label %bb.k
 
@@ -2740,7 +2778,7 @@ _RNvYNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtBb_11RandomState3new4KEYS0s_0I
   %i.bn = phi i64 [ %.pre.i, %._RNvYNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtBb_11RandomState3new4KEYS0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1l_6option6OptionQIB20_INtNtB1l_4cell4CellTyyEEEEEE9call_onceCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit_crit_edge.i ], [ %i.bj, %.noexc ] ; 2 uses
   %i.bo = add i64 %i.bn, 1
   store i64 %i.bo, ptr %i.be, align 8
-  invoke void @_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull sret([32 x i8]) align 8 %.sroa.0.i, ptr nonnull poison, i64 32, i64 16, i64 %i.al, i1 zeroext true) #35
+  invoke void @_RNvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB5_8RawTableTRShBP_EE16with_capacity_inCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull sret([32 x i8]) align 8 %.sroa.0.i, i64 %i.al)
           to label %bb.t unwind label %bb.r
 
 bb.q:                                             ; preds = %bb.s, %bb.r
@@ -2765,7 +2803,7 @@ bb.r:                                             ; preds = %_RNvYNCNKNvNvMNtNtC
 
 bb.s:                                             ; preds = %.loopexit.split-lp, %.loopexit
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
-  call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3map7HashMapRShB1w_EECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %i.a) #39
+  call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std11collections4hash3map7HashMapRShB1w_EECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %i.a) #38
   br label %bb.q
 
 bb.t:                                             ; preds = %_RNvYNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtBb_11RandomState3new4KEYS0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1l_6option6OptionQIB20_INtNtB1l_4cell4CellTyyEEEEEE9call_onceCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i
@@ -2832,7 +2870,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.q, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecRShEECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit22
   %i.ci = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #41
+  call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #40
   unreachable
 
 bb.y:                                             ; preds = %bb.o
@@ -2892,12 +2930,12 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   %i.n = load i64, ptr %i.m, align 8
-  call void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 %i.l, i64 %i.n) #40
+  call void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 %i.l, i64 %i.n) #39
   unreachable
 
 bb.j:                                             ; preds = %bb.f
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35)
-  %i.o = tail call ptr @_RINvMNtNtCs1xwejQucwHj_5alloc2io5errorNtNtNtCs3oUPovFnLWP_4core2io5error5Error3newReECsaL1QbXo9JQH_3std(i8 21, ptr nonnull @11, i64 21) #37, !noalias !35
+  %i.o = tail call ptr @_RINvMNtNtCs1xwejQucwHj_5alloc2io5errorNtNtNtCs3oUPovFnLWP_4core2io5error5Error3newReECsaL1QbXo9JQH_3std(i8 21, ptr nonnull @11, i64 21) #36, !noalias !35
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.o, ptr %i.p, align 8, !alias.scope !35
   store i64 -1, ptr %0, align 8, !alias.scope !35
@@ -2992,7 +3030,7 @@ _RNvMNtCs3oUPovFnLWP_4core6optionINtB2_6OptionjE6unwrapCshWvooqPLMQS_27fish_gett
   br i1 %i.ak, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %_RNvMNtCs3oUPovFnLWP_4core6optionINtB2_6OptionjE6unwrapCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
-  %i.al = invoke ptr @_RINvMNtNtCs1xwejQucwHj_5alloc2io5errorNtNtNtCs3oUPovFnLWP_4core2io5error5Error3newReECsaL1QbXo9JQH_3std(i8 21, ptr nonnull @11, i64 21) #37
+  %i.al = invoke ptr @_RINvMNtNtCs1xwejQucwHj_5alloc2io5errorNtNtNtCs3oUPovFnLWP_4core2io5error5Error3newReECsaL1QbXo9JQH_3std(i8 21, ptr nonnull @11, i64 21) #36
           to label %bb.r unwind label %.loopexit.split-lp
 
 bb.p:                                             ; preds = %_RNvMNtCs3oUPovFnLWP_4core6optionINtB2_6OptionjE6unwrapCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
@@ -3003,7 +3041,7 @@ bb.p:                                             ; preds = %_RNvMNtCs3oUPovFnLW
   br i1 %i.ap, label %bb.q, label %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRShE4pushCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 bb.q:                                             ; preds = %bb.p
-  invoke void @_RNvMs4_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecRShE8grow_oneCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %i.b) #37
+  invoke void @_RNvMs4_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecRShE8grow_oneCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %i.b) #36
           to label %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRShE4pushCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit unwind label %.loopexit
 
 _RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRShE4pushCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.q, %bb.p
@@ -3027,7 +3065,7 @@ bb.r:                                             ; preds = %bb.o
 bb.s:                                             ; preds = %bb.k
   %i.av = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #41
+  call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #40
   unreachable
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecRShEECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.k
@@ -3049,7 +3087,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = load i64, ptr %i.f, align 8
-  call void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 %i.e, i64 %i.g) #40
+  call void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 %i.e, i64 %i.g) #39
   unreachable
 
 _RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.a
@@ -3071,7 +3109,7 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %1) #38
+  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %1) #37
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -3138,7 +3176,7 @@ _RNvYNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtBb_11RandomState3new4KEYS0s_0I
   %i.j = phi i64 [ %.pre, %._RNvYNCNKNvNvMNtNtCsaL1QbXo9JQH_3std4hash6randomNtBb_11RandomState3new4KEYS0s_0INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtB1l_6option6OptionQIB20_INtNtB1l_4cell4CellTyyEEEEEE9call_onceCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit_crit_edge ], [ %i.f, %_RINvMs0_NtNtNtNtCsaL1QbXo9JQH_3std3sys12thread_local6native4lazyINtB6_7StorageINtNtCs3oUPovFnLWP_4core4cell4CellTyyEEzE16get_or_init_slowNvNvNvMNtNtBe_4hash6randomNtB2i_11RandomState3new4KEYS27___rust_std_internal_init_fnECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit ] ; 2 uses
   %i.k = add i64 %i.j, 1
   store i64 %i.k, ptr %i.a, align 8
-  call void @_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull sret([32 x i8]) align 8 %.sroa.0, ptr nonnull poison, i64 32, i64 16, i64 %1, i1 zeroext true) #35
+  call void @_RNvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB5_8RawTableTRShBP_EE16with_capacity_inCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull sret([32 x i8]) align 8 %.sroa.0, i64 %1)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0, i64 32, i1 false)
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %i.j, ptr %.sroa.2.0..sroa_idx, align 8
@@ -3185,7 +3223,7 @@ bb.a:
   br i1 %i.g, label %bb.b, label %_RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTRShBQ_EE7reserveNCINvNtB8_3map11make_hasherBQ_BQ_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE0ECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = tail call { i64, i64 } @_RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTRShBQ_EE14reserve_rehashNCINvNtB8_3map11make_hasherBQ_BQ_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE0ECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %0, i64 1, ptr nonnull readonly align 8 %i.c, i1 zeroext true) #37 ; 0 uses
+  %i.h = tail call { i64, i64 } @_RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTRShBQ_EE14reserve_rehashNCINvNtB8_3map11make_hasherBQ_BQ_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE0ECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %0, i64 1, ptr nonnull readonly align 8 %i.c, i1 zeroext true) #36 ; 0 uses
   br label %_RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTRShBQ_EE7reserveNCINvNtB8_3map11make_hasherBQ_BQ_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE0ECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i
 
 _RINvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB6_8RawTableTRShBQ_EE7reserveNCINvNtB8_3map11make_hasherBQ_BQ_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE0ECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i: ; preds = %bb.b, %bb.a
@@ -3354,7 +3392,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = extractvalue { i64, i64 } %i.b, 1
-  tail call void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 %i.c, i64 %i.d) #40
+  tail call void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 %i.c, i64 %i.d) #39
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -3375,7 +3413,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = load i64, ptr %i.f, align 8
-  call void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 %i.e, i64 %i.g) #40
+  call void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 %i.e, i64 %i.g) #39
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -3387,10 +3425,91 @@ bb.c:                                             ; preds = %bb.a
 
 ; Function Attrs: nonlazybind uwtable
 define void @_RNvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB5_8RawTableTRShBP_EE16with_capacity_inCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) initializes((0, 32)) %0, i64 %1) unnamed_addr #2 personality ptr @rust_eh_personality {
-bb.a:
-  %2 = alloca [32 x i8], align 8                  ; 2 uses
-  call void @_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull sret([32 x i8]) align 8 %2, ptr nonnull poison, i64 32, i64 16, i64 %1, i1 zeroext true) #35
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false)
+  %3 = icmp eq i64 %1, 0
+  br i1 %3, label %bb.a, label %4
+
+4:                                                ; preds = %2
+  %5 = icmp ult i64 %1, 15
+  br i1 %5, label %.thread, label %6
+
+6:                                                ; preds = %4
+  %7 = icmp ugt i64 %1, 2305843009213693951
+  br i1 %7, label %29, label %10
+
+.thread:                                          ; preds = %4
+  %8 = icmp samesign ult i64 %1, 4
+  %9 = and i64 %1, 8
+  %.16.i.i = add nuw nsw i64 %9, 8
+  %.sroa.04.0.i.i = select i1 %8, i64 4, i64 %.16.i.i
+  br label %18
+
+10:                                               ; preds = %6
+  %11 = shl nuw i64 %1, 3
+  %12 = udiv i64 %11, 7
+  %13 = add nsw i64 %12, -1
+  %14 = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %13, i1 true)
+  %15 = lshr i64 -1, %14                          ; 2 uses
+  %16 = add nuw nsw i64 %15, 1
+  %17 = icmp ugt i64 %15, 576460752303423486
+  br i1 %17, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i, label %18
+
+18:                                               ; preds = %.thread, %10
+  %.sroa.4.0.i.ph.i10 = phi i64 [ %.sroa.04.0.i.i, %.thread ], [ %16, %10 ] ; 5 uses
+  %19 = shl nuw i64 %.sroa.4.0.i.ph.i10, 5        ; 3 uses
+  %20 = add nuw nsw i64 %.sroa.4.0.i.ph.i10, 16   ; 2 uses
+  %21 = add i64 %20, %19                          ; 4 uses
+  %22 = icmp ult i64 %21, %19
+  %23 = icmp ugt i64 %21, 9223372036854775792
+  %or.cond29.i.i = or i1 %22, %23
+  br i1 %or.cond29.i.i, label %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i, label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i
+
+_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i: ; preds = %18
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #35
+  %24 = tail call align 16 ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 %21, i64 16) #35 ; 2 uses
+  %25 = icmp eq ptr %24, null
+  br i1 %25, label %27, label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i
+
+_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i: ; preds = %18, %10
+  %26 = tail call { i64, i64 } @_RNvMNtCskt5MLIAl8nl_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 zeroext true)
+  br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i
+
+27:                                               ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i
+  %28 = tail call { i64, i64 } @_RNvMNtCskt5MLIAl8nl_9hashbrown3rawNtB2_11Fallibility9alloc_err(i1 zeroext true, i64 16, i64 %21)
+  br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i
+
+29:                                               ; preds = %6
+  %30 = tail call { i64, i64 } @_RNvMNtCskt5MLIAl8nl_9hashbrown3rawNtB2_11Fallibility17capacity_overflow(i1 zeroext true) ; 2 uses
+  %31 = extractvalue { i64, i64 } %30, 0
+  %32 = extractvalue { i64, i64 } %30, 1
+  br label %bb.a
+
+_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i: ; preds = %27, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i
+  %.pn.i = phi { i64, i64 } [ %26, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i.i ], [ %28, %27 ] ; 2 uses
+  %.sroa.9.030.i = extractvalue { i64, i64 } %.pn.i, 1
+  %.sroa.4.031.i = extractvalue { i64, i64 } %.pn.i, 0
+  br label %bb.a
+
+_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i: ; preds = %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocateCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i
+  %33 = icmp samesign ult i64 %.sroa.4.0.i.ph.i10, 9
+  %34 = add nsw i64 %.sroa.4.0.i.ph.i10, -1       ; 2 uses
+  %35 = lshr i64 %.sroa.4.0.i.ph.i10, 3
+  %36 = mul nuw nsw i64 %35, 7
+  %.sroa.07.0.i.i = select i1 %33, i64 %34, i64 %36
+  %37 = getelementptr inbounds nuw i8, ptr %24, i64 %19 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %37, i8 -1, i64 %20, i1 false)
+  br label %bb.a
+
+bb.a:                                             ; preds = %2, %29, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i
+  %.sroa.8.0 = phi i64 [ %32, %29 ], [ %.sroa.9.030.i, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i ], [ %.sroa.07.0.i.i, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i ], [ 0, %2 ]
+  %.sroa.5.0 = phi i64 [ %31, %29 ], [ %.sroa.4.031.i, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i ], [ %34, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i ], [ 0, %2 ]
+  %.sroa.0.0 = phi ptr [ null, %29 ], [ null, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i ], [ %37, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner17new_uninitializedNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i ], [ @2, %2 ]
+  store ptr %.sroa.0.0, ptr %0, align 8
+  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %.sroa.5.0, ptr %.sroa.2.0..sroa_idx, align 8
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 %.sroa.8.0, ptr %.sroa.3.0..sroa_idx, align 8
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store i64 0, ptr %.sroa.4.0..sroa_idx, align 8
   ret void
 }
 
@@ -3437,7 +3556,7 @@ bb.a:
   br i1 %i.d, label %bb.b, label %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRShE8push_mutCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_RNvMs4_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecRShE8grow_oneCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %0) #37
+  tail call void @_RNvMs4_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecRShE8grow_oneCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %0) #36
   br label %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRShE8push_mutCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 _RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecRShE8push_mutCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.a, %bb.b
@@ -3462,7 +3581,7 @@ bb.a:
   br i1 %i.d, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_RNvMs4_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecRShE8grow_oneCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %0) #37
+  tail call void @_RNvMs4_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecRShE8grow_oneCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %0) #36
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -3481,7 +3600,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define void @_RNvMs_NtCskt5MLIAl8nl_9hashbrown3mapINtB4_7HashMapRShBM_NtNtNtCsaL1QbXo9JQH_3std4hash6random11RandomStateE24with_capacity_and_hasherCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, i64 %1, i64 %2, i64 %3) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 2 uses
-  call void @_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull sret([32 x i8]) align 8 %i.a, ptr nonnull poison, i64 32, i64 16, i64 %1, i1 zeroext true) #35
+  call void @_RNvMs6_NtCskt5MLIAl8nl_9hashbrown3rawINtB5_8RawTableTRShBP_EE16with_capacity_inCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull sret([32 x i8]) align 8 %i.a, i64 %1)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %2, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -3595,7 +3714,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i.i.i.i, label %bb.e, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i
 
 bb.e:                                             ; preds = %bb.d
-  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #38
+  tail call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #37
   unreachable
 
 bb.f:                                             ; preds = %bb.c
@@ -3699,7 +3818,7 @@ bb.e:                                             ; preds = %_RNvMs1_NtCskt5MLIA
   %i.ac = phi ptr [ %i.x, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i ], [ %i.aa, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i ]
   %.sroa.0.05.i = phi i64 [ 0, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i ], [ %i.h, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i ]
   %.sroa.6.04.i = phi i64 [ undef, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i ], [ %i.s, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i ]
-  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.ac, i64 %.sroa.6.04.i, i64 %.sroa.0.05.i) #36
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.ac, i64 %.sroa.6.04.i, i64 %.sroa.0.05.i) #35
   br label %_RNCINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB8_13RawTableInner14prepare_resizeNtNtCs1xwejQucwHj_5alloc5alloc6GlobalE0CshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 _RNCINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB8_13RawTableInner14prepare_resizeNtNtCs1xwejQucwHj_5alloc5alloc6GlobalE0CshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.a, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i, %bb.e
@@ -4102,7 +4221,7 @@ bb.d:                                             ; preds = %_RNvMs1_NtCskt5MLIA
   %i.q = phi ptr [ %i.l, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i ], [ %i.o, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i ]
   %.sroa.0.05.i = phi i64 [ 0, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i ], [ 16, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i ]
   %.sroa.6.04.i = phi i64 [ undef, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.thread.i ], [ %i.h, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i ]
-  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.q, i64 %.sroa.6.04.i, i64 %.sroa.0.05.i) #36
+  tail call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr %i.q, i64 %.sroa.6.04.i, i64 %.sroa.0.05.i) #35
   br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTRShB1d_ENtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 _RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTRShB1d_ENtNtCs1xwejQucwHj_5alloc5alloc6GlobalECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit: ; preds = %bb.a, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_forCshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i, %bb.d
@@ -4258,7 +4377,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not.i.i.i.i.i.i, label %bb.k, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit.i.i
 
 bb.k:                                             ; preds = %bb.j
-  call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #38
+  call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #37
   unreachable
 
 bb.l:                                             ; preds = %bb.i
@@ -4299,7 +4418,7 @@ define void @_RNvYNtNtNtCsaL1QbXo9JQH_3std4hash6random13DefaultHasherNtNtCs3oUPo
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 2 uses
   store i64 %1, ptr %i.a, align 8
-  call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %0, ptr nonnull readonly %i.a, i64 8) #35
+  call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %0, ptr nonnull readonly %i.a, i64 8) #41
   ret void
 }
 
@@ -4309,7 +4428,7 @@ bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 %1, ptr %i.a, align 8
-  call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %0, ptr nonnull readonly %i.a, i64 8) #35
+  call void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr align 8 %0, ptr nonnull readonly %i.a, i64 8) #41
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret void
 }
@@ -4360,7 +4479,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %bb.e, label %.split21
 
 bb.e:                                             ; preds = %bb.d
-  call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #38
+  call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #37
   unreachable
 
 bb.f:                                             ; preds = %bb.c
@@ -4400,7 +4519,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ab, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  call void @_RNvNtNtCs3oUPovFnLWP_4core5slice5index16slice_index_fail(i64 %i.j, i64 %.sroa.6.035, i64 %.sroa.6.035, ptr nonnull align 8 @30) #40
+  call void @_RNvNtNtCs3oUPovFnLWP_4core5slice5index16slice_index_fail(i64 %i.j, i64 %.sroa.6.035, i64 %.sroa.6.035, ptr nonnull align 8 @30) #39
   unreachable
 
 bb.j:                                             ; preds = %bb.h
@@ -4428,7 +4547,7 @@ bb.k:                                             ; preds = %.split21
   br i1 %.not.i.i.i.i, label %bb.l, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshWvooqPLMQS_27fish_gettext_mo_file_parser.exit
 
 bb.l:                                             ; preds = %bb.k
-  call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #38
+  call fastcc void @_RNvNvNtCs3oUPovFnLWP_4core4hint21unreachable_unchecked18precondition_checkCshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 @9) #37
   unreachable
 
 bb.m:                                             ; preds = %.split
@@ -4452,7 +4571,7 @@ bb.n:                                             ; preds = %bb.j, %_RINvNtCs3oU
 bb.o:                                             ; preds = %.noexc, %bb.f
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %i.d) #39
+  invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECshWvooqPLMQS_27fish_gettext_mo_file_parser(ptr nonnull align 8 %i.d) #38
           to label %bb.p unwind label %bb.q
 
 bb.p:                                             ; preds = %bb.o
@@ -4461,7 +4580,7 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.o
   %i.ai = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #41
+  call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #40
   unreachable
 }
 
@@ -4650,13 +4769,13 @@ attributes #31 = { nocallback nofree nosync nounwind nonlazybind willreturn memo
 attributes #32 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #33 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #34 = { noinline noreturn }
-attributes #35 = { inlinehint }
-attributes #36 = { nounwind }
-attributes #37 = { noinline }
-attributes #38 = { inlinehint nounwind }
-attributes #39 = { cold }
-attributes #40 = { noreturn }
-attributes #41 = { cold noreturn nounwind }
+attributes #35 = { nounwind }
+attributes #36 = { noinline }
+attributes #37 = { inlinehint nounwind }
+attributes #38 = { cold }
+attributes #39 = { noreturn }
+attributes #40 = { cold noreturn nounwind }
+attributes #41 = { inlinehint }
 attributes #42 = { noinline noreturn nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
