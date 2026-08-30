@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jemalloc/original/buf_writer?download=true
+inline.NumInlined: 32
+inline.NumDeleted: 16
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@je_buf_writer_init:bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #7
   call void @je_rtree_ctx_data_init(ptr noundef nonnull %8) #7
@@ -200,7 +204,7 @@ je_buf_writer_flush.exit:                         ; preds = %bb.f, %bb.e, %bb.d
   %i.s = phi ptr [ %.pre32, %bb.f ], [ null, %bb.e ], [ %.pre33, %bb.d ]
   %i.t = phi i64 [ 0, %bb.f ], [ %i.k, %bb.e ], [ %i.k, %bb.d ] ; 2 uses
   %i.u = phi i64 [ %.pre31, %bb.f ], [ %i.k, %bb.e ], [ %i.l, %bb.d ]
-  %i.v = sub i64 %i.g, %.030
+  %i.v = sub nuw i64 %i.g, %.030
   %i.w = sub i64 %i.u, %i.t
   %i.x = tail call i64 @llvm.umin.i64(i64 %i.v, i64 %i.w) ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.t

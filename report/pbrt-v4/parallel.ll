@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/parallel?download=true
+inline.NumInlined: 1169
+inline.NumDeleted: 335
 begin_hunk_0_@_ZNK4pbrt12AtomicDouble8ToStringB5cxx11Ev:bb.a
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.b, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   resume { ptr, i32 } %i.e
@@ -200,7 +202,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.f = add nsw i32 %1, -2
   br label %bb.b
 
@@ -269,8 +271,8 @@ _ZNSt6vectorISt6threadSaIS0_EE9push_backEOS0_.exit.thread: ; preds = %bb.e
 bb.f:                                             ; preds = %bb.e
   %i.w = load ptr, ptr %0, align 8, !tbaa !70     ; 12 uses
   %i.x = ptrtoint ptr %i.s to i64                 ; 3 uses
-  %i.y = ptrtoint ptr %i.w to i64                 ; 3 uses
-  %i.z = sub i64 %i.x, %i.y                       ; 4 uses
+  %i.y = ptrtoint ptr %i.w to i64                 ; 4 uses
+  %i.z = sub i64 %i.x, %i.y                       ; 3 uses
   %i.aa = icmp eq i64 %i.z, 9223372036854775800
   br i1 %i.aa, label %bb.g, label %_ZNKSt6vectorISt6threadSaIS0_EE12_M_check_lenEmPKc.exit.i
 
@@ -423,7 +425,10 @@ _ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit22.i: ; preds = %
   br i1 %.not.i23.i, label %_ZNSt6vectorISt6threadSaIS0_EE9push_backEOS0_.exit, label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit22.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.w, i64 noundef %i.z) #24
+  %4 = load ptr, ptr %i.e, align 8, !tbaa !68
+  %5 = ptrtoint ptr %4 to i64
+  %6 = sub i64 %5, %i.y
+  call void @_ZdlPvm(ptr noundef nonnull %i.w, i64 noundef %6) #24
   br label %_ZNSt6vectorISt6threadSaIS0_EE9push_backEOS0_.exit
 
 _ZNSt6vectorISt6threadSaIS0_EE9push_backEOS0_.exit: ; preds = %_ZNSt6vectorISt6threadSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit22.i, %bb.h

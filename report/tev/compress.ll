@@ -1,4 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/compress?download=true
+inline.NumInlined: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -72,7 +73,7 @@ bb.h:                                             ; preds = %bb.g
   %i.s = call i64 @llvm.umin.i64(i64 %.030, i64 4294967295) ; 2 uses
   %i.t = trunc nuw i64 %i.s to i32
   store i32 %i.t, ptr %i.k, align 8, !tbaa !18
-  %i.u = sub i64 %.030, %i.s
+  %i.u = sub nuw i64 %.030, %i.s
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g

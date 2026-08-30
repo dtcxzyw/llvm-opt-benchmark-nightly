@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/egl_context?download=true
+inline.NumInlined: 28
+inline.NumDeleted: 2
 begin_hunk_0_@_glfwCreateContextEGL:bb.a
   %.sink168 = select i1 %switch.selectcmp, ptr %.val, ptr %.val181
   %i.dn = call ptr %.sink168(ptr noundef %i.dl, ptr noundef %i.bz, ptr noundef %i.dj, ptr noundef nonnull %i.a) #4 ; 2 uses
@@ -200,11 +202,11 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %.lr.ph, %bb.v
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.v ] ; 2 uses
-  %.05674 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.v ] ; 7 uses
-  %.05873 = phi i32 [ 0, %.lr.ph ], [ %.159, %bb.v ] ; 5 uses
+  %.05674 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.v ] ; 5 uses
+  %.05873 = phi i32 [ 0, %.lr.ph ], [ %.159, %bb.v ] ; 7 uses
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %indvars.iv
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !183 ; 12 uses
-  %i.ao = sext i32 %.05674 to i64
+  %i.ao = sext i32 %.05873 to i64
   %i.ap = getelementptr inbounds [72 x i8], ptr %i.ag, i64 %i.ao ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #4
   %i.aq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 133592), align 8, !tbaa !99
@@ -366,7 +368,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
   %i.dl = ptrtoint ptr %i.an to i64
   %i.dm = getelementptr inbounds nuw i8, ptr %i.ap, i64 64
   store i64 %i.dl, ptr %i.dm, align 8, !tbaa !214
-  %i.dn = add nsw i32 %.05674, 1
+  %i.dn = add nsw i32 %.05873, 1
   br label %bb.v
 
 .critedge:                                        ; preds = %bb.k
@@ -374,8 +376,8 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.t, %bb.q, %.critedge, %bb.i, %bb.h, %bb.u
-  %.159 = phi i32 [ %.05873, %bb.h ], [ %.05873, %bb.u ], [ 1, %bb.q ], [ %.05873, %.critedge ], [ %.05873, %bb.t ], [ %.05873, %bb.i ] ; 2 uses
-  %.1 = phi i32 [ %.05674, %bb.h ], [ %i.dn, %bb.u ], [ %.05674, %bb.q ], [ %.05674, %.critedge ], [ %.05674, %bb.t ], [ %.05674, %bb.i ] ; 2 uses
+  %.159 = phi i32 [ %.05873, %bb.h ], [ %i.dn, %bb.u ], [ %.05873, %bb.q ], [ %.05873, %.critedge ], [ %.05873, %bb.t ], [ %.05873, %bb.i ] ; 2 uses
+  %.1 = phi i32 [ %.05674, %bb.h ], [ %.05674, %bb.u ], [ 1, %bb.q ], [ %.05674, %.critedge ], [ %.05674, %bb.t ], [ %.05674, %bb.i ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.do = load i32, ptr %i.l, align 4, !tbaa !178
   %i.dp = sext i32 %i.do to i64
@@ -383,7 +385,7 @@ bb.v:                                             ; preds = %bb.t, %bb.q, %.crit
   br i1 %i.dq, label %bb.h, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.v
-  %i.dr = call ptr @_glfwChooseFBConfig(ptr noundef %1, ptr noundef %i.ag, i32 noundef %.1) #4 ; 2 uses
+  %i.dr = call ptr @_glfwChooseFBConfig(ptr noundef %1, ptr noundef %i.ag, i32 noundef %.159) #4 ; 2 uses
   %.not86 = icmp eq ptr %i.dr, null
   br i1 %.not86, label %bb.x, label %bb.w
 
@@ -401,7 +403,7 @@ bb.w:                                             ; preds = %._crit_edge.thread,
   br label %bb.ad
 
 bb.x:                                             ; preds = %._crit_edge
-  %i.dx = icmp eq i32 %.159, 0
+  %i.dx = icmp eq i32 %.1, 0
   br i1 %i.dx, label %.thread, label %bb.y
 
 bb.y:                                             ; preds = %bb.x

@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mold/original/market?download=true
+inline.NumInlined: 229
+inline.NumDeleted: 124
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 10
 begin_hunk_0_@_ZN3tbb6detail2r16market29unregister_and_destroy_clientERNS1_9pm_clientE:bb.a
 _ZN3tbb6detail2d124adaptive_wait_on_addressIZNS1_8rw_mutex4lockEvEUlvE_EEvPvT_m.exit.i.i: ; preds = %_ZN3tbb6detail2d013machine_pauseEi.exit.i.i.i.i, %_ZN3tbb6detail2d013machine_pauseEi.exit.i.i.i.i.1, %_ZN3tbb6detail2d013machine_pauseEi.exit.i.i.i.i.2, %_ZN3tbb6detail2d013machine_pauseEi.exit.i.i.i.i.3, %bb.e, %_ZN3tbb6detail2d021timed_spin_wait_untilIZNS0_2d18rw_mutex4lockEvEUlvE_EEbT_.exit.i.i.i, %_ZN3tbb6detail2d013machine_pauseEi.exit.i.i.i.i.4, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
@@ -200,9 +205,9 @@ bb.a:
   br i1 %.not44, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.s, %bb.a
-  %.133.lcssa = phi i32 [ 3, %bb.a ], [ %.335, %bb.s ] ; 2 uses
+  %.133.lcssa = phi i32 [ 0, %bb.a ], [ %.335, %bb.s ] ; 2 uses
   %.130.lcssa = phi i32 [ 0, %bb.a ], [ %.3.a, %bb.s ] ; 2 uses
-  %.1.lcssa = phi i32 [ 0, %bb.a ], [ %.2, %bb.s ] ; 2 uses
+  %.1.lcssa = phi i32 [ 3, %bb.a ], [ %.2, %bb.s ] ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %i.r = load i32, ptr %i.q, align 4, !tbaa !105
   %..i39.1 = tail call noundef i32 @llvm.smin.i32(i32 %i.r, i32 %i.m) ; 2 uses
@@ -227,8 +232,8 @@ bb.a:
   br i1 %i.ab, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.1
-  %i.ac = icmp eq i32 %.13346.1, 3
-  %spec.select.1 = select i1 %i.ac, i32 1, i32 %.13346.1 ; 2 uses
+  %i.ac = icmp eq i32 %.148.1, 3
+  %spec.select.1 = select i1 %i.ac, i32 1, i32 %.148.1 ; 2 uses
   %i.ad = load i32, ptr %i.d, align 8, !tbaa !20
   %i.ae = icmp eq i32 %i.ad, 0
   br i1 %i.ae, label %bb.d, label %bb.c
@@ -245,7 +250,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ak = getelementptr inbounds nuw i8, ptr %i.y, i64 16
   %i.al = load i32, ptr %i.ak, align 8, !tbaa !26
   %i.am = icmp sgt i32 %i.al, 0
-  %i.an = icmp slt i32 %.148.1, %..i
+  %i.an = icmp slt i32 %.13346.1, %..i
   %i.ao = select i1 %i.am, i1 %i.an, i1 false
   %i.ap = zext i1 %i.ao to i32
   br label %bb.e
@@ -259,7 +264,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.as = icmp eq i32 %spec.select.1, 1
   %i.at = load ptr, ptr %i.aq, align 8, !tbaa !41, !nonnull !42, !align !43
   tail call void @_ZN3tbb6detail2r15arena16set_top_priorityEb(ptr noundef nonnull align 128 dereferenceable(768) %i.at, i1 noundef zeroext %i.as)
-  %i.au = add nsw i32 %.028.1, %.148.1
+  %i.au = add nsw i32 %.028.1, %.13346.1
   br label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph.1
@@ -269,9 +274,9 @@ bb.f:                                             ; preds = %.lr.ph.1
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %.335.1 = phi i32 [ %.13346.1, %bb.f ], [ %spec.select.1, %bb.e ] ; 2 uses
+  %.335.1 = phi i32 [ %.13346.1, %bb.f ], [ %i.au, %bb.e ] ; 2 uses
   %.3.1.a = phi i32 [ %.13047.1, %bb.f ], [ %.231.1, %bb.e ] ; 2 uses
-  %.2.1 = phi i32 [ %.148.1, %bb.f ], [ %i.au, %bb.e ] ; 2 uses
+  %.2.1 = phi i32 [ %.148.1, %bb.f ], [ %spec.select.1, %bb.e ] ; 2 uses
   %i.ax = load ptr, ptr %i.t, align 8, !tbaa !101, !noalias !109
   %.not.1 = icmp eq ptr %i.x, %i.ax
   br i1 %.not.1, label %._crit_edge.1, label %.lr.ph.1, !llvm.loop !112
@@ -303,8 +308,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.bi, label %bb.l, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph.2
-  %i.bj = icmp eq i32 %.13346.2, 3
-  %spec.select.2 = select i1 %i.bj, i32 2, i32 %.13346.2 ; 2 uses
+  %i.bj = icmp eq i32 %.148.2, 3
+  %spec.select.2 = select i1 %i.bj, i32 2, i32 %.148.2 ; 2 uses
   %i.bk = load i32, ptr %i.d, align 8, !tbaa !20
   %i.bl = icmp eq i32 %i.bk, 0
   br i1 %i.bl, label %bb.j, label %bb.i
@@ -321,7 +326,7 @@ bb.j:                                             ; preds = %bb.h
   %i.br = getelementptr inbounds nuw i8, ptr %i.bf, i64 16
   %i.bs = load i32, ptr %i.br, align 8, !tbaa !26
   %i.bt = icmp sgt i32 %i.bs, 0
-  %i.bu = icmp slt i32 %.148.2, %..i
+  %i.bu = icmp slt i32 %.13346.2, %..i
   %i.bv = select i1 %i.bt, i1 %i.bu, i1 false
   %i.bw = zext i1 %i.bv to i32
   br label %bb.k
@@ -335,7 +340,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.bz = icmp eq i32 %spec.select.2, 2
   %i.ca = load ptr, ptr %i.bx, align 8, !tbaa !41, !nonnull !42, !align !43
   tail call void @_ZN3tbb6detail2r15arena16set_top_priorityEb(ptr noundef nonnull align 128 dereferenceable(768) %i.ca, i1 noundef zeroext %i.bz)
-  %i.cb = add nsw i32 %.028.2, %.148.2
+  %i.cb = add nsw i32 %.028.2, %.13346.2
   br label %bb.m
 
 bb.l:                                             ; preds = %.lr.ph.2
@@ -345,9 +350,9 @@ bb.l:                                             ; preds = %.lr.ph.2
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %.335.2 = phi i32 [ %.13346.2, %bb.l ], [ %spec.select.2, %bb.k ]
+  %.335.2 = phi i32 [ %.13346.2, %bb.l ], [ %i.cb, %bb.k ]
   %.3.2.a = phi i32 [ %.13047.2, %bb.l ], [ %.231.2, %bb.k ]
-  %.2.2 = phi i32 [ %.148.2, %bb.l ], [ %i.cb, %bb.k ]
+  %.2.2 = phi i32 [ %.148.2, %bb.l ], [ %spec.select.2, %bb.k ]
   %i.ce = load ptr, ptr %i.ba, align 8, !tbaa !101, !noalias !109
   %.not.2 = icmp eq ptr %i.be, %i.ce
   br i1 %.not.2, label %._crit_edge.2, label %.lr.ph.2, !llvm.loop !112
@@ -356,9 +361,9 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   ret void
 
 .lr.ph:                                           ; preds = %bb.a, %bb.s
-  %.148 = phi i32 [ %.2, %bb.s ], [ 0, %bb.a ]    ; 3 uses
+  %.148 = phi i32 [ %.2, %bb.s ], [ 3, %bb.a ]    ; 3 uses
   %.13047 = phi i32 [ %.3.a, %bb.s ], [ 0, %bb.a ] ; 3 uses
-  %.13346 = phi i32 [ %.335, %bb.s ], [ 3, %bb.a ] ; 3 uses
+  %.13346 = phi i32 [ %.335, %bb.s ], [ 0, %bb.a ] ; 3 uses
   %.sroa.040.045 = phi ptr [ %i.cf, %bb.s ], [ %i.o, %bb.a ]
   %i.cf = getelementptr inbounds i8, ptr %.sroa.040.045, i64 -8 ; 3 uses
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !88 ; 4 uses
@@ -374,8 +379,8 @@ bb.n:                                             ; preds = %.lr.ph
   br label %bb.s
 
 bb.o:                                             ; preds = %.lr.ph
-  %i.cm = icmp eq i32 %.13346, 3
-  %spec.select = select i1 %i.cm, i32 0, i32 %.13346 ; 2 uses
+  %i.cm = icmp eq i32 %.148, 3
+  %spec.select = select i1 %i.cm, i32 0, i32 %.148 ; 2 uses
   %i.cn = load i32, ptr %i.d, align 8, !tbaa !20
   %i.co = icmp eq i32 %i.cn, 0
   br i1 %i.co, label %bb.p, label %bb.q
@@ -384,7 +389,7 @@ bb.p:                                             ; preds = %bb.o
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
   %i.cq = load i32, ptr %i.cp, align 8, !tbaa !26
   %i.cr = icmp sgt i32 %i.cq, 0
-  %i.cs = icmp slt i32 %.148, %..i
+  %i.cs = icmp slt i32 %.13346, %..i
   %i.ct = select i1 %i.cr, i1 %i.cs, i1 false
   %i.cu = zext i1 %i.ct to i32
   br label %bb.r
@@ -406,13 +411,13 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %i.dc = icmp eq i32 %spec.select, 0
   %i.dd = load ptr, ptr %i.da, align 8, !tbaa !41, !nonnull !42, !align !43
   tail call void @_ZN3tbb6detail2r15arena16set_top_priorityEb(ptr noundef nonnull align 128 dereferenceable(768) %i.dd, i1 noundef zeroext %i.dc)
-  %i.de = add nsw i32 %.028, %.148
+  %i.de = add nsw i32 %.028, %.13346
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.n
-  %.335 = phi i32 [ %.13346, %bb.n ], [ %spec.select, %bb.r ] ; 2 uses
+  %.335 = phi i32 [ %.13346, %bb.n ], [ %i.de, %bb.r ] ; 2 uses
   %.3.a = phi i32 [ %.13047, %bb.n ], [ %.231, %bb.r ] ; 2 uses
-  %.2 = phi i32 [ %.148, %bb.n ], [ %i.de, %bb.r ] ; 2 uses
+  %.2 = phi i32 [ %.148, %bb.n ], [ %spec.select, %bb.r ] ; 2 uses
   %i.df = load ptr, ptr %i.k, align 8, !tbaa !101, !noalias !109
   %.not = icmp eq ptr %i.cf, %i.df
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !112

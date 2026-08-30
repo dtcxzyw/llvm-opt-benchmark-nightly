@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nghttp2/original/nghttp2_buf?download=true
+inline.NumInlined: 25
+inline.NumDeleted: 5
 begin_hunk_0_@nghttp2_bufs_wrap_init:bb.a
   ret i32 %.0
 }
@@ -200,7 +202,7 @@ bb.b:                                             ; preds = %.outer.split
   %i.n = tail call ptr @nghttp2_cpymem(ptr noundef %i.f, ptr noundef %.0.ph52, i64 noundef %i.m) #10
   store ptr %i.n, ptr %i.i, align 8, !tbaa !13
   %i.o = getelementptr inbounds nuw i8, ptr %.0.ph52, i64 %i.m
-  %i.p = sub i64 %.019.ph51, %i.m                 ; 2 uses
+  %i.p = sub nuw i64 %.019.ph51, %i.m             ; 2 uses
   %.not = icmp eq i64 %i.p, 0
   br i1 %.not, label %.split, label %.outer.split.preheader, !llvm.loop !43
 

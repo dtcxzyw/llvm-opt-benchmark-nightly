@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tinyrenderer/original/main?download=true
+inline.NumInlined: 255
+inline.NumDeleted: 138
+loop-unroll.NumCompletelyUnrolled: 32
+loop-unroll.NumUnrolled: 32
 begin_hunk_0_@_ZNK11PhongShader8fragmentE3vecILi3EE:bb.a
   %i.ct = fmul <2 x double> %i.bp, %i.cs
   %i.cu = fadd <2 x double> %i.cr, %i.ct
@@ -200,7 +204,7 @@ define linkonce_odr dso_local void @_ZNK3matILi4ELi4EE16invert_transposeEv(ptr d
 bb.a:
   %2 = alloca %struct.mat, align 16               ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %2, i8 0, i64 128, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %2, i8 0, i64 128, i1 false)
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.a, %.preheader

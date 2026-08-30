@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mold/original/filetype.cc.X86_64?download=true
+inline.NumInlined: 299
+inline.NumDeleted: 145
 begin_hunk_0_@_ZN4mold13get_file_typeINS_6X86_64EEENS_8FileTypeERNS_7ContextIT_EEPNS_10MappedFileE:bb.a
   %i.le = add nuw nsw i64 %.028.i136, 1           ; 2 uses
   %exitcond.not.i147 = icmp eq i64 %i.le, %i.kw
@@ -200,10 +202,10 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.j, label %._crit_edge70, label %.lr.ph69
 
 .lr.ph69:                                         ; preds = %bb.c, %bb.e
-  %.sroa.8.067 = phi ptr [ %.sroa.8.1, %bb.e ], [ undef, %bb.c ]
+  %.sroa.8.067 = phi ptr [ %i.r, %bb.e ], [ %i.g, %bb.c ] ; 2 uses
   %.sroa.047.066 = phi i64 [ %.sroa.047.1, %bb.e ], [ undef, %bb.c ]
-  %.sroa.044.065 = phi ptr [ %i.r, %bb.e ], [ %i.g, %bb.c ] ; 2 uses
-  %i.k = load ptr, ptr %.sroa.044.065, align 8, !tbaa !37 ; 2 uses
+  %.sroa.044.065 = phi ptr [ %.sroa.8.1, %bb.e ], [ undef, %bb.c ]
+  %i.k = load ptr, ptr %.sroa.8.067, align 8, !tbaa !37 ; 2 uses
   %i.l = call noundef i32 @_ZN4mold13get_file_typeINS_6X86_64EEENS_8FileTypeERNS_7ContextIT_EEPNS_10MappedFileE(ptr noundef nonnull align 8 dereferenceable(14448) %0, ptr noundef %i.k) ; 2 uses
   switch i32 %i.l, label %bb.e [
     i32 7, label %bb.d
@@ -222,24 +224,24 @@ bb.d:                                             ; preds = %.lr.ph69, %.lr.ph69
   ]
 
 bb.e:                                             ; preds = %.lr.ph69, %bb.d
+  %.sroa.8.1 = phi ptr [ %.sroa.044.065, %.lr.ph69 ], [ %i.q, %bb.d ] ; 2 uses
   %.sroa.047.1 = phi i64 [ %.sroa.047.066, %.lr.ph69 ], [ %i.p, %bb.d ] ; 2 uses
-  %.sroa.8.1 = phi ptr [ %.sroa.8.067, %.lr.ph69 ], [ %i.q, %bb.d ] ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %.sroa.044.065, i64 8 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %.sroa.8.067, i64 8 ; 2 uses
   %i.s = icmp eq ptr %i.r, %i.i
   br i1 %i.s, label %._crit_edge70.loopexit, label %.lr.ph69
 
 ._crit_edge70.loopexit:                           ; preds = %bb.d, %bb.d, %bb.e
   %.lcssa.ph = phi i1 [ true, %bb.e ], [ false, %bb.d ], [ false, %bb.d ]
-  %.sroa.047.2.ph = phi i64 [ %.sroa.047.1, %bb.e ], [ %i.p, %bb.d ], [ %i.p, %bb.d ]
   %.sroa.8.2.ph = phi ptr [ %.sroa.8.1, %bb.e ], [ %i.q, %bb.d ], [ %i.q, %bb.d ]
+  %.sroa.047.2.ph = phi i64 [ %.sroa.047.1, %bb.e ], [ %i.p, %bb.d ], [ %i.p, %bb.d ]
   %.pre82 = load ptr, ptr %3, align 8, !tbaa !38
   br label %._crit_edge70
 
 ._crit_edge70:                                    ; preds = %._crit_edge70.loopexit, %bb.c
   %i.t = phi ptr [ %i.g, %bb.c ], [ %.pre82, %._crit_edge70.loopexit ] ; 3 uses
   %.lcssa = phi i1 [ true, %bb.c ], [ %.lcssa.ph, %._crit_edge70.loopexit ] ; 2 uses
-  %.sroa.047.2 = phi i64 [ undef, %bb.c ], [ %.sroa.047.2.ph, %._crit_edge70.loopexit ]
   %.sroa.8.2 = phi ptr [ undef, %bb.c ], [ %.sroa.8.2.ph, %._crit_edge70.loopexit ]
+  %.sroa.047.2 = phi i64 [ undef, %bb.c ], [ %.sroa.047.2.ph, %._crit_edge70.loopexit ]
   %.not.i.i.i = icmp eq ptr %i.t, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIPN4mold10MappedFileESaIS2_EED2Ev.exit, label %bb.f
 
@@ -254,8 +256,8 @@ bb.f:                                             ; preds = %._crit_edge70
 
 _ZNSt6vectorIPN4mold10MappedFileESaIS2_EED2Ev.exit: ; preds = %._crit_edge70, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
-  %spec.select = select i1 %.lcssa, i64 0, i64 %.sroa.047.2
-  %spec.select48 = select i1 %.lcssa, ptr @.str.6, ptr %.sroa.8.2
+  %spec.select = select i1 %.lcssa, ptr @.str.6, ptr %.sroa.8.2
+  %spec.select48 = select i1 %.lcssa, i64 0, i64 %.sroa.047.2
   br label %bb.m
 
 bb.g:                                             ; preds = %bb.a
@@ -268,10 +270,10 @@ bb.g:                                             ; preds = %bb.a
   br i1 %i.ac, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.g, %bb.i
-  %.sroa.8.354 = phi ptr [ %.sroa.8.4, %bb.i ], [ undef, %bb.g ]
-  %.sroa.040.053 = phi ptr [ %i.ak, %bb.i ], [ %i.z, %bb.g ] ; 2 uses
-  %.sroa.047.352 = phi i64 [ %.sroa.047.4, %bb.i ], [ undef, %bb.g ]
-  %i.ad = load ptr, ptr %.sroa.040.053, align 8, !tbaa !37 ; 2 uses
+  %.sroa.8.354 = phi ptr [ %i.ak, %bb.i ], [ %i.z, %bb.g ] ; 2 uses
+  %.sroa.047.353 = phi i64 [ %.sroa.047.4, %bb.i ], [ undef, %bb.g ]
+  %.sroa.8.352 = phi ptr [ %.sroa.8.4, %bb.i ], [ undef, %bb.g ]
+  %i.ad = load ptr, ptr %.sroa.8.354, align 8, !tbaa !37 ; 2 uses
   %i.ae = call noundef i32 @_ZN4mold13get_file_typeINS_6X86_64EEENS_8FileTypeERNS_7ContextIT_EEPNS_10MappedFileE(ptr noundef nonnull align 8 dereferenceable(14448) %0, ptr noundef %i.ad) ; 2 uses
   switch i32 %i.ae, label %bb.i [
     i32 7, label %bb.h
@@ -290,24 +292,24 @@ bb.h:                                             ; preds = %.lr.ph, %.lr.ph
   ]
 
 bb.i:                                             ; preds = %.lr.ph, %bb.h
-  %.sroa.047.4 = phi i64 [ %.sroa.047.352, %.lr.ph ], [ %i.ai, %bb.h ] ; 2 uses
-  %.sroa.8.4 = phi ptr [ %.sroa.8.354, %.lr.ph ], [ %i.aj, %bb.h ] ; 2 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.040.053, i64 8 ; 2 uses
+  %.sroa.8.4 = phi ptr [ %.sroa.8.352, %.lr.ph ], [ %i.aj, %bb.h ] ; 2 uses
+  %.sroa.047.4 = phi i64 [ %.sroa.047.353, %.lr.ph ], [ %i.ai, %bb.h ] ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.8.354, i64 8 ; 2 uses
   %i.al = icmp eq ptr %i.ak, %i.ab
   br i1 %i.al, label %._crit_edge.loopexit, label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %bb.h, %bb.h, %bb.i
   %.lcssa51.ph = phi i1 [ true, %bb.i ], [ false, %bb.h ], [ false, %bb.h ]
-  %.sroa.047.5.ph = phi i64 [ %.sroa.047.4, %bb.i ], [ %i.ai, %bb.h ], [ %i.ai, %bb.h ]
   %.sroa.8.5.ph = phi ptr [ %.sroa.8.4, %bb.i ], [ %i.aj, %bb.h ], [ %i.aj, %bb.h ]
+  %.sroa.047.5.ph = phi i64 [ %.sroa.047.4, %bb.i ], [ %i.ai, %bb.h ], [ %i.ai, %bb.h ]
   %.pre = load ptr, ptr %4, align 8, !tbaa !38
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.g
   %i.am = phi ptr [ %i.z, %bb.g ], [ %.pre, %._crit_edge.loopexit ] ; 3 uses
   %.lcssa51 = phi i1 [ true, %bb.g ], [ %.lcssa51.ph, %._crit_edge.loopexit ] ; 2 uses
-  %.sroa.047.5 = phi i64 [ undef, %bb.g ], [ %.sroa.047.5.ph, %._crit_edge.loopexit ]
   %.sroa.8.5 = phi ptr [ undef, %bb.g ], [ %.sroa.8.5.ph, %._crit_edge.loopexit ]
+  %.sroa.047.5 = phi i64 [ undef, %bb.g ], [ %.sroa.047.5.ph, %._crit_edge.loopexit ]
   %.not.i.i.i38 = icmp eq ptr %i.am, null
   br i1 %.not.i.i.i38, label %_ZNSt6vectorIPN4mold10MappedFileESaIS2_EED2Ev.exit39, label %bb.j
 
@@ -322,8 +324,8 @@ bb.j:                                             ; preds = %._crit_edge
 
 _ZNSt6vectorIPN4mold10MappedFileESaIS2_EED2Ev.exit39: ; preds = %._crit_edge, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
-  %spec.select49 = select i1 %.lcssa51, i64 0, i64 %.sroa.047.5
-  %spec.select50 = select i1 %.lcssa51, ptr @.str.6, ptr %.sroa.8.5
+  %spec.select49 = select i1 %.lcssa51, ptr @.str.6, ptr %.sroa.8.5
+  %spec.select50 = select i1 %.lcssa51, i64 0, i64 %.sroa.047.5
   br label %bb.m
 
 bb.k:                                             ; preds = %bb.a
@@ -358,8 +360,8 @@ _ZN4mold6ScriptINS_6X86_64EED2Ev.exit:            ; preds = %bb.k, %bb.l
   br label %bb.m
 
 bb.m:                                             ; preds = %_ZNSt6vectorIPN4mold10MappedFileESaIS2_EED2Ev.exit39, %_ZNSt6vectorIPN4mold10MappedFileESaIS2_EED2Ev.exit, %bb.a, %_ZN4mold6ScriptINS_6X86_64EED2Ev.exit, %bb.b
-  %.sroa.047.6 = phi i64 [ %spec.select49, %_ZNSt6vectorIPN4mold10MappedFileESaIS2_EED2Ev.exit39 ], [ %i.e, %bb.b ], [ %i.ax, %_ZN4mold6ScriptINS_6X86_64EED2Ev.exit ], [ 0, %bb.a ], [ %spec.select, %_ZNSt6vectorIPN4mold10MappedFileESaIS2_EED2Ev.exit ]
-  %.sroa.8.6 = phi ptr [ %spec.select50, %_ZNSt6vectorIPN4mold10MappedFileESaIS2_EED2Ev.exit39 ], [ %i.f, %bb.b ], [ %i.ay, %_ZN4mold6ScriptINS_6X86_64EED2Ev.exit ], [ @.str.6, %bb.a ], [ %spec.select48, %_ZNSt6vectorIPN4mold10MappedFileESaIS2_EED2Ev.exit ]
+  %.sroa.8.6 = phi ptr [ %spec.select49, %_ZNSt6vectorIPN4mold10MappedFileESaIS2_EED2Ev.exit39 ], [ %i.f, %bb.b ], [ %i.ay, %_ZN4mold6ScriptINS_6X86_64EED2Ev.exit ], [ @.str.6, %bb.a ], [ %spec.select, %_ZNSt6vectorIPN4mold10MappedFileESaIS2_EED2Ev.exit ]
+  %.sroa.047.6 = phi i64 [ %spec.select50, %_ZNSt6vectorIPN4mold10MappedFileESaIS2_EED2Ev.exit39 ], [ %i.e, %bb.b ], [ %i.ax, %_ZN4mold6ScriptINS_6X86_64EED2Ev.exit ], [ 0, %bb.a ], [ %spec.select48, %_ZNSt6vectorIPN4mold10MappedFileESaIS2_EED2Ev.exit ]
   %.fca.0.insert = insertvalue { i64, ptr } poison, i64 %.sroa.047.6, 0
   %.fca.1.insert = insertvalue { i64, ptr } %.fca.0.insert, ptr %.sroa.8.6, 1
   ret { i64, ptr } %.fca.1.insert

@@ -1,4 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libpng/original/pngtrans?download=true
+inline.NumInlined: 1
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@png_set_add_alpha:bb.a
   br i1 %.not.i, label %bb.d, label %bb.c
 
@@ -200,18 +203,18 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n64, label %.loopexit, label %.lr.ph45.preheader
 
 .lr.ph45.preheader:                               ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.044.ph = phi ptr [ %1, %iter.check ], [ %i.f, %vec.epilog.iter.check ], [ %i.k, %vec.epilog.middle.block ]
-  %.03243.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec59, %vec.epilog.middle.block ]
+  %.03344.ph = phi i64 [ 0, %iter.check ], [ %n.vec, %vec.epilog.iter.check ], [ %n.vec59, %vec.epilog.middle.block ]
+  %.03443.ph = phi ptr [ %1, %iter.check ], [ %i.f, %vec.epilog.iter.check ], [ %i.k, %vec.epilog.middle.block ]
   br label %.lr.ph45
 
 .lr.ph45:                                         ; preds = %.lr.ph45.preheader, %.lr.ph45
-  %.044 = phi ptr [ %i.p, %.lr.ph45 ], [ %.044.ph, %.lr.ph45.preheader ] ; 3 uses
-  %.03243 = phi i64 [ %i.q, %.lr.ph45 ], [ %.03243.ph, %.lr.ph45.preheader ]
-  %i.n = load i8, ptr %.044, align 1, !tbaa !34
+  %.03344 = phi i64 [ %i.q, %.lr.ph45 ], [ %.03344.ph, %.lr.ph45.preheader ]
+  %.03443 = phi ptr [ %i.p, %.lr.ph45 ], [ %.03443.ph, %.lr.ph45.preheader ] ; 3 uses
+  %i.n = load i8, ptr %.03443, align 1, !tbaa !34
   %i.o = xor i8 %i.n, -1
-  store i8 %i.o, ptr %.044, align 1, !tbaa !34
-  %i.p = getelementptr inbounds nuw i8, ptr %.044, i64 1
-  %i.q = add nuw i64 %.03243, 1                   ; 2 uses
+  store i8 %i.o, ptr %.03443, align 1, !tbaa !34
+  %i.p = getelementptr inbounds nuw i8, ptr %.03443, i64 1
+  %i.q = add nuw i64 %.03344, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.q, %i.d
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph45, !llvm.loop !52
 
@@ -500,18 +503,18 @@ bb.c:                                             ; preds = %bb.b
   %.not87 = icmp eq i32 %2, 0                     ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %.074 = select i1 %.not87, ptr %i.h, ptr %1     ; 2 uses
-  %.0 = select i1 %.not87, ptr %i.i, ptr %i.h     ; 2 uses
-  %i.j = icmp ult ptr %.0, %i.c
+  %.074 = select i1 %.not87, ptr %i.i, ptr %i.h   ; 2 uses
+  %.0 = select i1 %.not87, ptr %i.h, ptr %1       ; 2 uses
+  %i.j = icmp ult ptr %.074, %i.c
   br i1 %i.j, label %.lr.ph105, label %._crit_edge106
 
 .lr.ph105:                                        ; preds = %bb.c, %.lr.ph105
-  %.1103 = phi ptr [ %i.m, %.lr.ph105 ], [ %.0, %bb.c ] ; 2 uses
-  %.175102 = phi ptr [ %i.l, %.lr.ph105 ], [ %.074, %bb.c ] ; 2 uses
-  %i.k = load i8, ptr %.1103, align 1, !tbaa !34
-  %i.l = getelementptr inbounds nuw i8, ptr %.175102, i64 1 ; 2 uses
-  store i8 %i.k, ptr %.175102, align 1, !tbaa !34
-  %i.m = getelementptr inbounds nuw i8, ptr %.1103, i64 2 ; 2 uses
+  %.1103 = phi ptr [ %i.l, %.lr.ph105 ], [ %.0, %bb.c ] ; 2 uses
+  %.175102 = phi ptr [ %i.m, %.lr.ph105 ], [ %.074, %bb.c ] ; 2 uses
+  %i.k = load i8, ptr %.175102, align 1, !tbaa !34
+  %i.l = getelementptr inbounds nuw i8, ptr %.1103, i64 1 ; 2 uses
+  store i8 %i.k, ptr %.1103, align 1, !tbaa !34
+  %i.m = getelementptr inbounds nuw i8, ptr %.175102, i64 2 ; 2 uses
   %i.n = icmp ult ptr %i.m, %i.c
   br i1 %i.n, label %.lr.ph105, label %._crit_edge106, !llvm.loop !63
 
@@ -519,27 +522,27 @@ bb.d:                                             ; preds = %bb.b
   %.not86 = icmp eq i32 %2, 0                     ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %.276 = select i1 %.not86, ptr %i.o, ptr %1     ; 2 uses
-  %.2 = select i1 %.not86, ptr %i.p, ptr %i.o     ; 2 uses
-  %i.q = icmp ult ptr %.2, %i.c
+  %.276 = select i1 %.not86, ptr %i.p, ptr %i.o   ; 2 uses
+  %.2 = select i1 %.not86, ptr %i.o, ptr %1       ; 2 uses
+  %i.q = icmp ult ptr %.276, %i.c
   br i1 %i.q, label %.lr.ph99, label %._crit_edge106
 
 .lr.ph99:                                         ; preds = %bb.d, %.lr.ph99
-  %.397 = phi ptr [ %i.w, %.lr.ph99 ], [ %.2, %bb.d ] ; 3 uses
-  %.37796 = phi ptr [ %i.v, %.lr.ph99 ], [ %.276, %bb.d ] ; 3 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %.397, i64 1
-  %i.s = load i8, ptr %.397, align 1, !tbaa !34
-  %i.t = getelementptr inbounds nuw i8, ptr %.37796, i64 1
-  store i8 %i.s, ptr %.37796, align 1, !tbaa !34
+  %.397 = phi ptr [ %i.v, %.lr.ph99 ], [ %.2, %bb.d ] ; 3 uses
+  %.37796 = phi ptr [ %i.w, %.lr.ph99 ], [ %.276, %bb.d ] ; 3 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %.37796, i64 1
+  %i.s = load i8, ptr %.37796, align 1, !tbaa !34
+  %i.t = getelementptr inbounds nuw i8, ptr %.397, i64 1
+  store i8 %i.s, ptr %.397, align 1, !tbaa !34
   %i.u = load i8, ptr %i.r, align 1, !tbaa !34
-  %i.v = getelementptr inbounds nuw i8, ptr %.37796, i64 2 ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %.397, i64 2 ; 2 uses
   store i8 %i.u, ptr %i.t, align 1, !tbaa !34
-  %i.w = getelementptr inbounds nuw i8, ptr %.397, i64 4 ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %.37796, i64 4 ; 2 uses
   %i.x = icmp ult ptr %i.w, %i.c
   br i1 %i.x, label %.lr.ph99, label %._crit_edge106, !llvm.loop !64
 
 ._crit_edge106:                                   ; preds = %.lr.ph99, %.lr.ph105, %bb.d, %bb.c
-  %.478.a = phi ptr [ %.074, %bb.c ], [ %.276, %bb.d ], [ %i.l, %.lr.ph105 ], [ %i.v, %.lr.ph99 ] ; 2 uses
+  %.478.a = phi ptr [ %.0, %bb.c ], [ %.2, %bb.d ], [ %i.l, %.lr.ph105 ], [ %i.v, %.lr.ph99 ] ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 19
   store i8 %i.g, ptr %i.y, align 1, !tbaa !65
   store i8 1, ptr %i.d, align 2, !tbaa !59
@@ -562,79 +565,79 @@ bb.f:                                             ; preds = %bb.a
 
 bb.g:                                             ; preds = %bb.f
   %.not85 = icmp eq i32 %2, 0                     ; 2 uses
-  %.579.idx = select i1 %.not85, i64 3, i64 0
-  %.579 = getelementptr inbounds nuw i8, ptr %1, i64 %.579.idx ; 2 uses
-  %.4.v = select i1 %.not85, i64 4, i64 1         ; 2 uses
-  %i.ae = icmp samesign ult i64 %.4.v, %i.b
+  %.579.idx = select i1 %.not85, i64 4, i64 1     ; 2 uses
+  %.5.idx = select i1 %.not85, i64 3, i64 0
+  %.5 = getelementptr inbounds nuw i8, ptr %1, i64 %.5.idx ; 2 uses
+  %i.ae = icmp samesign ult i64 %.579.idx, %i.b
   br i1 %i.ae, label %.lr.ph93.preheader, label %._crit_edge94
 
 .lr.ph93.preheader:                               ; preds = %bb.g
-  %.4 = getelementptr inbounds nuw i8, ptr %1, i64 %.4.v
+  %.4 = getelementptr inbounds nuw i8, ptr %1, i64 %.579.idx
   br label %.lr.ph93
 
 .lr.ph93:                                         ; preds = %.lr.ph93.preheader, %.lr.ph93
-  %.591 = phi ptr [ %i.an, %.lr.ph93 ], [ %.4, %.lr.ph93.preheader ] ; 4 uses
-  %.68090 = phi ptr [ %i.am, %.lr.ph93 ], [ %.579, %.lr.ph93.preheader ] ; 4 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %.591, i64 1
-  %i.ag = load i8, ptr %.591, align 1, !tbaa !34
-  %i.ah = getelementptr inbounds nuw i8, ptr %.68090, i64 1
-  store i8 %i.ag, ptr %.68090, align 1, !tbaa !34
-  %i.ai = getelementptr inbounds nuw i8, ptr %.591, i64 2
+  %.591 = phi ptr [ %i.am, %.lr.ph93 ], [ %.5, %.lr.ph93.preheader ] ; 4 uses
+  %.68090 = phi ptr [ %i.an, %.lr.ph93 ], [ %.4, %.lr.ph93.preheader ] ; 4 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %.68090, i64 1
+  %i.ag = load i8, ptr %.68090, align 1, !tbaa !34
+  %i.ah = getelementptr inbounds nuw i8, ptr %.591, i64 1
+  store i8 %i.ag, ptr %.591, align 1, !tbaa !34
+  %i.ai = getelementptr inbounds nuw i8, ptr %.68090, i64 2
   %i.aj = load i8, ptr %i.af, align 1, !tbaa !34
-  %i.ak = getelementptr inbounds nuw i8, ptr %.68090, i64 2
+  %i.ak = getelementptr inbounds nuw i8, ptr %.591, i64 2
   store i8 %i.aj, ptr %i.ah, align 1, !tbaa !34
   %i.al = load i8, ptr %i.ai, align 1, !tbaa !34
-  %i.am = getelementptr inbounds nuw i8, ptr %.68090, i64 3 ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %.591, i64 3 ; 2 uses
   store i8 %i.al, ptr %i.ak, align 1, !tbaa !34
-  %i.an = getelementptr inbounds nuw i8, ptr %.591, i64 4 ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %.68090, i64 4 ; 2 uses
   %i.ao = icmp ult ptr %i.an, %i.c
   br i1 %i.ao, label %.lr.ph93, label %._crit_edge94, !llvm.loop !66
 
 bb.h:                                             ; preds = %bb.f
   %.not = icmp eq i32 %2, 0                       ; 2 uses
-  %.781.idx = select i1 %.not, i64 6, i64 0
-  %.781 = getelementptr inbounds nuw i8, ptr %1, i64 %.781.idx ; 2 uses
-  %.6.v = select i1 %.not, i64 8, i64 2           ; 2 uses
-  %i.ap = icmp samesign ult i64 %.6.v, %i.b
+  %.781.idx = select i1 %.not, i64 8, i64 2       ; 2 uses
+  %.7.idx = select i1 %.not, i64 6, i64 0
+  %.7 = getelementptr inbounds nuw i8, ptr %1, i64 %.7.idx ; 2 uses
+  %i.ap = icmp samesign ult i64 %.781.idx, %i.b
   br i1 %i.ap, label %.lr.ph.preheader, label %._crit_edge94
 
 .lr.ph.preheader:                                 ; preds = %bb.h
-  %.6 = getelementptr inbounds nuw i8, ptr %1, i64 %.6.v
+  %.6 = getelementptr inbounds nuw i8, ptr %1, i64 %.781.idx
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.789 = phi ptr [ %i.bh, %.lr.ph ], [ %.6, %.lr.ph.preheader ] ; 7 uses
-  %.888 = phi ptr [ %i.bg, %.lr.ph ], [ %.781, %.lr.ph.preheader ] ; 7 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %.789, i64 1
-  %i.ar = load i8, ptr %.789, align 1, !tbaa !34
-  %i.as = getelementptr inbounds nuw i8, ptr %.888, i64 1
-  store i8 %i.ar, ptr %.888, align 1, !tbaa !34
-  %i.at = getelementptr inbounds nuw i8, ptr %.789, i64 2
+  %.789 = phi ptr [ %i.bg, %.lr.ph ], [ %.7, %.lr.ph.preheader ] ; 7 uses
+  %.888 = phi ptr [ %i.bh, %.lr.ph ], [ %.6, %.lr.ph.preheader ] ; 7 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %.888, i64 1
+  %i.ar = load i8, ptr %.888, align 1, !tbaa !34
+  %i.as = getelementptr inbounds nuw i8, ptr %.789, i64 1
+  store i8 %i.ar, ptr %.789, align 1, !tbaa !34
+  %i.at = getelementptr inbounds nuw i8, ptr %.888, i64 2
   %i.au = load i8, ptr %i.aq, align 1, !tbaa !34
-  %i.av = getelementptr inbounds nuw i8, ptr %.888, i64 2
+  %i.av = getelementptr inbounds nuw i8, ptr %.789, i64 2
   store i8 %i.au, ptr %i.as, align 1, !tbaa !34
-  %i.aw = getelementptr inbounds nuw i8, ptr %.789, i64 3
+  %i.aw = getelementptr inbounds nuw i8, ptr %.888, i64 3
   %i.ax = load i8, ptr %i.at, align 1, !tbaa !34
-  %i.ay = getelementptr inbounds nuw i8, ptr %.888, i64 3
+  %i.ay = getelementptr inbounds nuw i8, ptr %.789, i64 3
   store i8 %i.ax, ptr %i.av, align 1, !tbaa !34
-  %i.az = getelementptr inbounds nuw i8, ptr %.789, i64 4
+  %i.az = getelementptr inbounds nuw i8, ptr %.888, i64 4
   %i.ba = load i8, ptr %i.aw, align 1, !tbaa !34
-  %i.bb = getelementptr inbounds nuw i8, ptr %.888, i64 4
+  %i.bb = getelementptr inbounds nuw i8, ptr %.789, i64 4
   store i8 %i.ba, ptr %i.ay, align 1, !tbaa !34
-  %i.bc = getelementptr inbounds nuw i8, ptr %.789, i64 5
+  %i.bc = getelementptr inbounds nuw i8, ptr %.888, i64 5
   %i.bd = load i8, ptr %i.az, align 1, !tbaa !34
-  %i.be = getelementptr inbounds nuw i8, ptr %.888, i64 5
+  %i.be = getelementptr inbounds nuw i8, ptr %.789, i64 5
   store i8 %i.bd, ptr %i.bb, align 1, !tbaa !34
   %i.bf = load i8, ptr %i.bc, align 1, !tbaa !34
-  %i.bg = getelementptr inbounds nuw i8, ptr %.888, i64 6 ; 2 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %.789, i64 6 ; 2 uses
   store i8 %i.bf, ptr %i.be, align 1, !tbaa !34
-  %i.bh = getelementptr inbounds nuw i8, ptr %.789, i64 8 ; 2 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %.888, i64 8 ; 2 uses
   %i.bi = icmp ult ptr %i.bh, %i.c
   br i1 %i.bi, label %.lr.ph, label %._crit_edge94, !llvm.loop !67
 
 ._crit_edge94:                                    ; preds = %.lr.ph, %.lr.ph93, %bb.h, %bb.g
   %.sink116 = phi i8 [ 24, %bb.g ], [ 48, %bb.h ], [ 24, %.lr.ph93 ], [ 48, %.lr.ph ]
-  %.9 = phi ptr [ %.579, %bb.g ], [ %.781, %bb.h ], [ %i.am, %.lr.ph93 ], [ %i.bg, %.lr.ph ] ; 2 uses
+  %.9 = phi ptr [ %.5, %bb.g ], [ %.7, %bb.h ], [ %i.am, %.lr.ph93 ], [ %i.bg, %.lr.ph ] ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 19
   store i8 %.sink116, ptr %i.bj, align 1, !tbaa !65
   store i8 3, ptr %i.d, align 2, !tbaa !59

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openvdb/original/Grid?download=true
+inline.NumInlined: 1076
+inline.NumDeleted: 364
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_PFSt10shared_ptrIN7openvdb5v13_08GridBaseEEvEESt10_Select1stISF_ESt4lessIS5_ESaISF_EE11equal_rangeERS7_:bb.a
   %.0811.i = phi ptr [ %.19.i, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i ], [ %.068, %bb.c ]
   %i.x = getelementptr inbounds nuw i8, ptr %.012.i, i64 40
@@ -200,7 +204,7 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZNK7openvdb5v13_013TypedMetadataINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE4copyEv(ptr dead_on_unwind noalias writable sret(%"class.std::shared_ptr.32") align 8 %0, ptr noundef nonnull align 8 dereferenceable(40) %1) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #28 ; 9 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #28 ; 10 uses
   store ptr getelementptr inbounds nuw inrange(-16, 80) (i8, ptr @_ZTVN7openvdb5v13_013TypedMetadataINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE, i64 16), ptr %i.a, align 8, !tbaa !30
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
@@ -255,7 +259,10 @@ _ZNSt10shared_ptrIN7openvdb5v13_08MetadataEEC2INS1_13TypedMetadataINSt7__cxx1112
   %i.r = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   store ptr %i.a, ptr %i.r, align 8, !tbaa !167
   store ptr %i.f, ptr %i.e, align 8, !tbaa !63
-  invoke void @_ZN7openvdb5v13_013TypedMetadataINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE4copyERKNS0_8MetadataE(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %1)
+  %2 = load ptr, ptr %i.a, align 8, !tbaa !30
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %4 = load ptr, ptr %3, align 8
+  invoke void %4(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %1)
           to label %bb.g unwind label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt10shared_ptrIN7openvdb5v13_08MetadataEEC2INS1_13TypedMetadataINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvEEPT_.exit
@@ -582,7 +589,7 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZNK7openvdb5v13_013TypedMetadataIbE4copyEv(ptr dead_on_unwind noalias writable sret(%"class.std::shared_ptr.32") align 8 %0, ptr noundef nonnull align 8 dereferenceable(9) %1) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #28 ; 7 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #28 ; 8 uses
   store ptr getelementptr inbounds nuw inrange(-16, 80) (i8, ptr @_ZTVN7openvdb5v13_013TypedMetadataIbEE, i64 16), ptr %i.a, align 8, !tbaa !30
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i8 0, ptr %i.b, align 8, !tbaa !120
@@ -633,7 +640,10 @@ _ZNSt10shared_ptrIN7openvdb5v13_08MetadataEEC2INS1_13TypedMetadataIbEEvEEPT_.exi
   %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.a, ptr %i.p, align 8, !tbaa !173
   store ptr %i.d, ptr %i.c, align 8, !tbaa !63
-  invoke void @_ZN7openvdb5v13_013TypedMetadataIbE4copyERKNS0_8MetadataE(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %1)
+  %2 = load ptr, ptr %i.a, align 8, !tbaa !30
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %4 = load ptr, ptr %3, align 8
+  invoke void %4(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %1)
           to label %bb.g unwind label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt10shared_ptrIN7openvdb5v13_08MetadataEEC2INS1_13TypedMetadataIbEEvEEPT_.exit
@@ -880,7 +890,7 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZNK7openvdb5v13_013TypedMetadataINS0_4math4Vec3IiEEE4copyEv(ptr dead_on_unwind noalias writable sret(%"class.std::shared_ptr.32") align 8 %0, ptr noundef nonnull align 8 dereferenceable(20) %1) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #28 ; 7 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #28 ; 8 uses
   store ptr getelementptr inbounds nuw inrange(-16, 80) (i8, ptr @_ZTVN7openvdb5v13_013TypedMetadataINS0_4math4Vec3IiEEEE, i64 16), ptr %i.a, align 8, !tbaa !30
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.b, i8 0, i64 12, i1 false)
@@ -931,7 +941,10 @@ _ZNSt10shared_ptrIN7openvdb5v13_08MetadataEEC2INS1_13TypedMetadataINS1_4math4Vec
   %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.a, ptr %i.p, align 8, !tbaa !183
   store ptr %i.d, ptr %i.c, align 8, !tbaa !63
-  invoke void @_ZN7openvdb5v13_013TypedMetadataINS0_4math4Vec3IiEEE4copyERKNS0_8MetadataE(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %1)
+  %2 = load ptr, ptr %i.a, align 8, !tbaa !30
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %4 = load ptr, ptr %3, align 8
+  invoke void %4(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %1)
           to label %bb.g unwind label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt10shared_ptrIN7openvdb5v13_08MetadataEEC2INS1_13TypedMetadataINS1_4math4Vec3IiEEEEvEEPT_.exit
@@ -1334,7 +1347,7 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZNK7openvdb5v13_013TypedMetadataIlE4copyEv(ptr dead_on_unwind noalias writable sret(%"class.std::shared_ptr.32") align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %1) unnamed_addr #7 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #28 ; 7 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #28 ; 8 uses
   store ptr getelementptr inbounds nuw inrange(-16, 80) (i8, ptr @_ZTVN7openvdb5v13_013TypedMetadataIlEE, i64 16), ptr %i.a, align 8, !tbaa !30
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 0, ptr %i.b, align 8, !tbaa !124
@@ -1385,7 +1398,10 @@ _ZNSt10shared_ptrIN7openvdb5v13_08MetadataEEC2INS1_13TypedMetadataIlEEvEEPT_.exi
   %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.a, ptr %i.p, align 8, !tbaa !209
   store ptr %i.d, ptr %i.c, align 8, !tbaa !63
-  invoke void @_ZN7openvdb5v13_013TypedMetadataIlE4copyERKNS0_8MetadataE(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %1)
+  %2 = load ptr, ptr %i.a, align 8, !tbaa !30
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %4 = load ptr, ptr %3, align 8
+  invoke void %4(ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %1)
           to label %bb.g unwind label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt10shared_ptrIN7openvdb5v13_08MetadataEEC2INS1_13TypedMetadataIlEEvEEPT_.exit

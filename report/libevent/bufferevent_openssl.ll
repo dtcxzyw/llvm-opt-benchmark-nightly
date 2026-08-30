@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libevent/original/bufferevent_openssl?download=true
+inline.NumInlined: 46
+inline.NumDeleted: 13
 begin_hunk_0_@bufferevent_get_openssl_error:bb.a
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 692 ; 2 uses
@@ -200,9 +202,9 @@ bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @SSL_get_shutdown(ptr noundef %i.b) #7
   %i.d = and i32 %i.c, 2                          ; 2 uses
   %.not = icmp eq i32 %i.d, 0
+  %. = select i1 %.not, i32 32, i32 16
   %.lobit = lshr exact i32 %i.d, 1
-  %. = xor i32 %.lobit, 1
-  %.32 = select i1 %.not, i32 32, i32 16
+  %.32 = xor i32 %.lobit, 1
   br label %put_error.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -295,8 +297,8 @@ bb.m:                                             ; preds = %bb.a
   br label %put_error.exit
 
 put_error.exit:                                   ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %bb.f, %bb.e, %bb.b, %bb.m
-  %.2.a = phi i32 [ 0, %bb.m ], [ %., %bb.b ], [ %.124.a, %bb.j ], [ %.023.a, %bb.f ], [ %.023.a, %bb.e ], [ %.124.a, %bb.i ], [ 0, %bb.k ], [ 0, %bb.l ]
-  %.0 = phi i32 [ 32, %bb.m ], [ %.32, %bb.b ], [ 32, %bb.j ], [ 32, %bb.f ], [ 32, %bb.e ], [ 32, %bb.i ], [ 32, %bb.k ], [ 32, %bb.l ]
+  %.2.a = phi i32 [ 32, %bb.m ], [ %., %bb.b ], [ 32, %bb.j ], [ 32, %bb.f ], [ 32, %bb.e ], [ 32, %bb.i ], [ 32, %bb.k ], [ 32, %bb.l ]
+  %.0 = phi i32 [ 0, %bb.m ], [ %.32, %bb.b ], [ %.124.a, %bb.j ], [ %.023.a, %bb.f ], [ %.023.a, %bb.e ], [ %.124.a, %bb.i ], [ 0, %bb.k ], [ 0, %bb.l ]
   %i.aw = tail call i64 @ERR_get_error() #7       ; 2 uses
   %.not2940 = icmp eq i64 %i.aw, 0
   br i1 %.not2940, label %._crit_edge, label %.lr.ph
@@ -376,11 +378,11 @@ bb.u:                                             ; preds = %bb.s
   br label %stop_writing.exit
 
 stop_writing.exit:                                ; preds = %stop_reading.exit, %bb.t, %bb.u
-  %.not30 = icmp eq i32 %.2.a, 0
+  %.not30 = icmp eq i32 %.0, 0
   %i.by = and i16 %.pre, 4
   %.not31 = icmp eq i16 %i.by, 0
   %i.bz = or i1 %.not30, %.not31
-  %.1 = select i1 %i.bz, i32 %.0, i32 16
+  %.1 = select i1 %i.bz, i32 %.2.a, i32 16
   %i.ca = or disjoint i32 %.1, %1
   %i.cb = trunc nuw nsw i32 %i.ca to i16
   tail call void @bufferevent_run_eventcb_(ptr noundef nonnull %0, i16 noundef signext %i.cb, i32 noundef 0) #7

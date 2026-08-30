@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openvdb/original/Compression?download=true
+inline.NumInlined: 344
+inline.NumDeleted: 141
 begin_hunk_0_@_ZN7openvdb5v13_02io11zipToStreamERSoPKcm:bb.a
   call void @llvm.assume(i1 %i.ay)
   switch i64 %i.as, label %bb.p [
@@ -200,7 +202,7 @@ declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr nou
 ; Function Attrs: mustprogress uwtable
 define void @_ZN7openvdb5v13_02io15unzipFromStreamERSiPcm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 10 uses
+  %i.a = alloca i64, align 8                      ; 11 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %4 = alloca %"class.std::__cxx11::basic_ostringstream", align 8 ; 8 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
@@ -319,7 +321,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53: ; preds = %bb.
   br label %bb.bm
 
 bb.l:                                             ; preds = %bb.a
-  %i.ad = load i64, ptr %i.a, align 8, !tbaa !17  ; 5 uses
+  %i.ad = load i64, ptr %i.a, align 8, !tbaa !17  ; 4 uses
   %i.ae = icmp slt i64 %i.ad, 1
   br i1 %i.ae, label %bb.m, label %bb.aa
 
@@ -460,7 +462,8 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.aa
   %i.bk = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ad) #19 ; 4 uses
-  %i.bl = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.bk, i64 noundef %i.ad)
+  %15 = load i64, ptr %i.a, align 8, !tbaa !17
+  %i.bl = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.bk, i64 noundef %15)
           to label %bb.ad unwind label %bb.ai     ; 0 uses
 
 bb.ad:                                            ; preds = %bb.ac
@@ -863,7 +866,7 @@ declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef no
 ; Function Attrs: mustprogress uwtable
 define void @_ZN7openvdb5v13_02io15bloscFromStreamERSiPcm(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 7 uses
+  %i.a = alloca i64, align 8                      ; 8 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %4 = alloca %"class.std::__cxx11::basic_ostringstream", align 8 ; 8 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
@@ -978,7 +981,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit44: ; preds = %bb.
   br label %bb.at
 
 bb.l:                                             ; preds = %bb.a
-  %i.ac = load i64, ptr %i.a, align 8, !tbaa !17  ; 5 uses
+  %i.ac = load i64, ptr %i.a, align 8, !tbaa !17  ; 4 uses
   %i.ad = icmp slt i64 %i.ac, 1
   br i1 %i.ad, label %bb.m, label %bb.aa
 
@@ -1119,7 +1122,8 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.aa
   %i.bj = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ac) #19 ; 4 uses
-  %i.bk = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.bj, i64 noundef %i.ac)
+  %12 = load i64, ptr %i.a, align 8, !tbaa !17
+  %i.bk = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.bj, i64 noundef %12)
           to label %bb.ad unwind label %bb.af     ; 0 uses
 
 bb.ad:                                            ; preds = %bb.ac

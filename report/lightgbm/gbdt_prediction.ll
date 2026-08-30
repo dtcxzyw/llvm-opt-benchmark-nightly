@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lightgbm/original/gbdt_prediction?download=true
+inline.NumInlined: 145
+inline.NumDeleted: 76
 begin_hunk_0_@_ZNK8LightGBM4GBDT10PredictRawEPKdPdPKNS_27PredictionEarlyStopInstanceE:bb.a
 bb.c:                                             ; preds = %bb.b
   br i1 %i.ae, label %bb.d, label %bb.r
@@ -200,9 +202,9 @@ bb.r:                                             ; preds = %_ZNK8LightGBM4Tree7
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.t, %.lr.ph.i
-  %.02135.i = phi double [ %i.do, %.lr.ph.i ], [ %i.el, %bb.t ]
-  %.02734.i = phi i64 [ 0, %.lr.ph.i ], [ %i.em, %bb.t ] ; 3 uses
-  %i.ea = getelementptr inbounds nuw [4 x i8], ptr %i.du, i64 %.02734.i
+  %.02235.i = phi i64 [ 0, %.lr.ph.i ], [ %i.em, %bb.t ] ; 3 uses
+  %.02534.i = phi double [ %i.do, %.lr.ph.i ], [ %i.el, %bb.t ]
+  %i.ea = getelementptr inbounds nuw [4 x i8], ptr %i.du, i64 %.02235.i
   %i.eb = load i32, ptr %i.ea, align 4, !tbaa !156
   %i.ec = sext i32 %i.eb to i64
   %i.ed = getelementptr inbounds [8 x i8], ptr %1, i64 %i.ec
@@ -214,10 +216,10 @@ bb.t:                                             ; preds = %bb.s
   %i.eg = load ptr, ptr %i.dz, align 8, !tbaa !165
   %i.eh = getelementptr inbounds nuw [24 x i8], ptr %i.eg, i64 %i.dk
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !162
-  %i.ej = getelementptr inbounds nuw [8 x i8], ptr %i.ei, i64 %.02734.i
+  %i.ej = getelementptr inbounds nuw [8 x i8], ptr %i.ei, i64 %.02235.i
   %i.ek = load double, ptr %i.ej, align 8, !tbaa !157
-  %i.el = call double @llvm.fmuladd.f64(double %i.ek, double %i.ee, double %.02135.i) ; 2 uses
-  %i.em = add nuw i64 %.02734.i, 1                ; 2 uses
+  %i.el = call double @llvm.fmuladd.f64(double %i.ek, double %i.ee, double %.02534.i) ; 2 uses
+  %i.em = add nuw i64 %.02235.i, 1                ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.em, %i.dy
   br i1 %exitcond.not.i, label %_ZNK8LightGBM4Tree7PredictEPKd.exit, label %bb.s, !llvm.loop !166
 
@@ -620,9 +622,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %.not.not.i.i.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %.thread.us.i
-  %.02364.us.i = phi double [ %.342.us.i, %.thread.us.i ], [ %i.as, %.lr.ph.i ] ; 2 uses
-  %.02763.us.i = phi i64 [ %i.bq, %.thread.us.i ], [ 0, %.lr.ph.i ] ; 3 uses
-  %i.bf = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %.02763.us.i
+  %.02564.us.i = phi i64 [ %i.bq, %.thread.us.i ], [ 0, %.lr.ph.i ] ; 3 uses
+  %.02863.us.i = phi double [ %.342.us.i, %.thread.us.i ], [ %i.as, %.lr.ph.i ] ; 2 uses
+  %i.bf = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %.02564.us.i
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !156
   br label %bb.e
 
@@ -642,14 +644,14 @@ bb.g:                                             ; preds = %_ZNKSt13unordered_m
   %i.bk = load ptr, ptr %i.be, align 8, !tbaa !165
   %i.bl = getelementptr inbounds nuw [24 x i8], ptr %i.bk, i64 %i.ao
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !162
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %.02763.us.i
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.bm, i64 %.02564.us.i
   %i.bo = load double, ptr %i.bn, align 8, !tbaa !157
-  %i.bp = call double @llvm.fmuladd.f64(double %i.bo, double %i.bs, double %.02364.us.i)
+  %i.bp = call double @llvm.fmuladd.f64(double %i.bo, double %i.bs, double %.02863.us.i)
   br label %.thread.us.i
 
 .thread.us.i:                                     ; preds = %bb.e, %bb.g
-  %.342.us.i = phi double [ %i.bp, %bb.g ], [ %.02364.us.i, %bb.e ] ; 2 uses
-  %i.bq = add nuw i64 %.02763.us.i, 1             ; 2 uses
+  %.342.us.i = phi double [ %i.bp, %bb.g ], [ %.02863.us.i, %bb.e ] ; 2 uses
+  %i.bq = add nuw i64 %.02564.us.i, 1             ; 2 uses
   %exitcond71.not.i = icmp eq i64 %i.bq, %i.bc
   br i1 %exitcond71.not.i, label %_ZNK8LightGBM4Tree12PredictByMapERKSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEE.exit, label %.lr.ph.split.us.i, !llvm.loop !182
 
@@ -665,9 +667,9 @@ _ZNKSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEE4findERS5_.exit
   br label %bb.h
 
 bb.h:                                             ; preds = %.thread.i, %.lr.ph.split.i
-  %.02364.i = phi double [ %i.as, %.lr.ph.split.i ], [ %.342.i, %.thread.i ] ; 4 uses
-  %.02763.i = phi i64 [ 0, %.lr.ph.split.i ], [ %i.cv, %.thread.i ] ; 3 uses
-  %i.bw = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %.02763.i
+  %.02564.i = phi i64 [ 0, %.lr.ph.split.i ], [ %i.cv, %.thread.i ] ; 3 uses
+  %.02863.i = phi double [ %i.as, %.lr.ph.split.i ], [ %.342.i, %.thread.i ] ; 4 uses
+  %i.bw = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %.02564.i
   %i.bx = load i32, ptr %i.bw, align 4, !tbaa !156 ; 3 uses
   %i.by = sext i32 %i.bx to i64
   %i.bz = urem i64 %i.by, %i.bu                   ; 2 uses
@@ -715,14 +717,14 @@ bb.l:                                             ; preds = %_ZNKSt13unordered_m
   %i.cp = load ptr, ptr %i.be, align 8, !tbaa !165
   %i.cq = getelementptr inbounds nuw [24 x i8], ptr %i.cp, i64 %i.ao
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !162
-  %i.cs = getelementptr inbounds nuw [8 x i8], ptr %i.cr, i64 %.02763.i
+  %i.cs = getelementptr inbounds nuw [8 x i8], ptr %i.cr, i64 %.02564.i
   %i.ct = load double, ptr %i.cs, align 8, !tbaa !157
-  %i.cu = call double @llvm.fmuladd.f64(double %i.ct, double %i.cn, double %.02364.i)
+  %i.cu = call double @llvm.fmuladd.f64(double %i.ct, double %i.cn, double %.02863.i)
   br label %.thread.i
 
 .thread.i:                                        ; preds = %.lr.ph.i.i.i.i.i, %bb.l, %..loopexit_crit_edge21.i.i.i.i.i, %bb.h
-  %.342.i = phi double [ %.02364.i, %bb.h ], [ %i.cu, %bb.l ], [ %.02364.i, %..loopexit_crit_edge21.i.i.i.i.i ], [ %.02364.i, %.lr.ph.i.i.i.i.i ] ; 2 uses
-  %i.cv = add nuw i64 %.02763.i, 1                ; 2 uses
+  %.342.i = phi double [ %.02863.i, %bb.h ], [ %i.cu, %bb.l ], [ %.02863.i, %..loopexit_crit_edge21.i.i.i.i.i ], [ %.02863.i, %.lr.ph.i.i.i.i.i ] ; 2 uses
+  %i.cv = add nuw i64 %.02564.i, 1                ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.cv, %i.bc
   br i1 %exitcond.not.i, label %_ZNK8LightGBM4Tree12PredictByMapERKSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEE.exit, label %bb.h, !llvm.loop !182
 

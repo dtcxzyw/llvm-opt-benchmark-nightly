@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wolfssl/original/sha?download=true
+inline.NumInlined: 244
+inline.NumDeleted: 8
+loop-unroll.NumCompletelyUnrolled: 13
+loop-unroll.NumUnrolled: 13
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -120,8 +124,8 @@ bb.g:                                             ; preds = %AddLength.exit
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %.lr.ph57.i.preheader, %AddLength.exit
+  %.053 = phi ptr [ %i.aa, %.lr.ph57.i.preheader ], [ %i.aa, %bb.g ], [ %1, %AddLength.exit ] ; 2 uses
   %.051 = phi i32 [ %i.ab, %.lr.ph57.i.preheader ], [ %i.ab, %bb.g ], [ %2, %AddLength.exit ] ; 3 uses
-  %.050 = phi ptr [ %i.aa, %.lr.ph57.i.preheader ], [ %i.aa, %bb.g ], [ %1, %AddLength.exit ] ; 2 uses
   %i.ao = icmp ugt i32 %.051, 63
   br i1 %i.ao, label %.lr.ph, label %._crit_edge
 
@@ -132,9 +136,9 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph57.i.p
   br label %.lr.ph57.i75.preheader.us
 
 .lr.ph57.i75.preheader.us:                        ; preds = %.lr.ph, %.lr.ph57.i75.preheader.us
-  %.183.us = phi ptr [ %i.ba, %.lr.ph57.i75.preheader.us ], [ %.050, %.lr.ph ] ; 2 uses
-  %.15282.us = phi i32 [ %i.bb, %.lr.ph57.i75.preheader.us ], [ %.051, %.lr.ph ]
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.o, ptr noundef nonnull align 1 dereferenceable(64) %.183.us, i64 64, i1 false)
+  %.15283.us = phi i32 [ %i.bb, %.lr.ph57.i75.preheader.us ], [ %.051, %.lr.ph ]
+  %.15482.us = phi ptr [ %i.ba, %.lr.ph57.i75.preheader.us ], [ %.053, %.lr.ph ] ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.o, ptr noundef nonnull align 1 dereferenceable(64) %.15482.us, i64 64, i1 false)
   %i.as = load <4 x i32>, ptr %i.o, align 4, !tbaa !11
   %i.at = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %i.as)
   store <4 x i32> %i.at, ptr %i.o, align 4, !tbaa !11
@@ -147,21 +151,21 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph57.i.p
   %i.ay = load <4 x i32>, ptr %i.ar, align 4, !tbaa !11
   %i.az = tail call <4 x i32> @llvm.bswap.v4i32(<4 x i32> %i.ay)
   store <4 x i32> %i.az, ptr %i.ar, align 4, !tbaa !11
-  %i.ba = getelementptr inbounds nuw i8, ptr %.183.us, i64 64 ; 2 uses
-  %i.bb = add i32 %.15282.us, -64                 ; 3 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %.15482.us, i64 64 ; 2 uses
+  %i.bb = add i32 %.15283.us, -64                 ; 3 uses
   tail call fastcc void @Transform(ptr noundef %0, ptr noundef %i.o)
   %i.bc = icmp ugt i32 %i.bb, 63
   br i1 %i.bc, label %.lr.ph57.i75.preheader.us, label %._crit_edge, !llvm.loop !15
 
 ._crit_edge:                                      ; preds = %.lr.ph57.i75.preheader.us, %bb.h
+  %.154.lcssa = phi ptr [ %.053, %bb.h ], [ %i.ba, %.lr.ph57.i75.preheader.us ]
   %.152.lcssa = phi i32 [ %.051, %bb.h ], [ %i.bb, %.lr.ph57.i75.preheader.us ] ; 3 uses
-  %.1.lcssa = phi ptr [ %.050, %bb.h ], [ %i.ba, %.lr.ph57.i75.preheader.us ]
   %.not59 = icmp eq i32 %.152.lcssa, 0
   br i1 %.not59, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge
   %i.bd = zext nneg i32 %.152.lcssa to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.o, ptr align 1 %.1.lcssa, i64 %i.bd, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.o, ptr align 1 %.154.lcssa, i64 %i.bd, i1 false)
   store i32 %.152.lcssa, ptr %0, align 8, !tbaa !12
   br label %bb.j
 

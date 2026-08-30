@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/brotli/original/utf8_util?download=true
+inline.NumInlined: 1
+inline.NumDeleted: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -10,12 +12,12 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %BrotliParseAsUTF8.exit
-  %.021 = phi i64 [ %spec.select, %BrotliParseAsUTF8.exit ], [ 0, %bb.a ]
-  %.01420 = phi i64 [ %i.br, %BrotliParseAsUTF8.exit ], [ 0, %bb.a ] ; 3 uses
-  %i.a = add i64 %.01420, %1
+  %.021 = phi i64 [ %i.br, %BrotliParseAsUTF8.exit ], [ 0, %bb.a ] ; 3 uses
+  %.01420 = phi i64 [ %spec.select, %BrotliParseAsUTF8.exit ], [ 0, %bb.a ]
+  %i.a = add i64 %.021, %1
   %i.b = and i64 %i.a, %2
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %i.b ; 7 uses
-  %i.d = sub nuw i64 %3, %.01420                  ; 3 uses
+  %i.d = sub nuw i64 %3, %.021                    ; 3 uses
   %i.e = load i8, ptr %i.c, align 1, !tbaa !8     ; 2 uses
   %i.f = zext i8 %i.e to i32                      ; 8 uses
   %or.cond = icmp slt i8 %i.e, 1
@@ -135,10 +137,10 @@ bb.l:                                             ; preds = %bb.k
 BrotliParseAsUTF8.exit:                           ; preds = %.lr.ph, %bb.d, %bb.h, %bb.l, %.thread35.i
   %.017 = phi i32 [ %i.r, %bb.d ], [ %i.bq, %.thread35.i ], [ %i.al, %bb.h ], [ %i.bo, %bb.l ], [ %i.f, %.lr.ph ]
   %.0.i = phi i64 [ 2, %bb.d ], [ 1, %.thread35.i ], [ 3, %bb.h ], [ 4, %bb.l ], [ 1, %.lr.ph ] ; 2 uses
-  %i.br = add i64 %.0.i, %.01420                  ; 2 uses
+  %i.br = add i64 %.0.i, %.021                    ; 2 uses
   %i.bs = icmp samesign ult i32 %.017, 1114112
   %i.bt = select i1 %i.bs, i64 %.0.i, i64 0
-  %spec.select = add i64 %i.bt, %.021             ; 2 uses
+  %spec.select = add i64 %i.bt, %.01420           ; 2 uses
   %i.bu = icmp ult i64 %i.br, %3
   br i1 %i.bu, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !9
 

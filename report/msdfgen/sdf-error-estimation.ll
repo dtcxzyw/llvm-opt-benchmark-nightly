@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/msdfgen/original/sdf-error-estimation?download=true
+inline.NumInlined: 166
+inline.NumDeleted: 49
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN7msdfgen12scanlineMSDFILi4EEEvRNS_8ScanlineERKNS_18BitmapConstSectionIfXT_EEERKNS_10ProjectionEdNS_16YAxisOrientationE:bb.a
   %.not.i.i.i130 = icmp ne i64 %i.kd, 0
   tail call void @llvm.assume(i1 %.not.i.i.i130)
@@ -200,15 +204,15 @@ bb.c:                                             ; preds = %bb.b
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
-  %.03758.us = phi double [ %i.ad, %._crit_edge.us ], [ 0.000000e+00, %.preheader.us.preheader ]
-  %.03957.us = phi i32 [ %i.af, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 2 uses
-  %i.t = uitofp nneg i32 %.03957.us to double
+  %.03758.us = phi i32 [ %i.af, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 2 uses
+  %.04057.us = phi double [ %i.ad, %._crit_edge.us ], [ 0.000000e+00, %.preheader.us.preheader ]
+  %i.t = uitofp nneg i32 %.03758.us to double
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader.us, %bb.i
-  %.156.us = phi double [ %.03758.us, %.preheader.us ], [ %i.ad, %bb.i ]
-  %.03855.us = phi i32 [ 0, %.preheader.us ], [ %i.ae, %bb.i ] ; 2 uses
-  %i.u = uitofp nneg i32 %.03855.us to double
+  %.056.us = phi i32 [ 0, %.preheader.us ], [ %i.ae, %bb.i ] ; 2 uses
+  %.155.us = phi double [ %.04057.us, %.preheader.us ], [ %i.ad, %bb.i ]
+  %i.u = uitofp nneg i32 %.056.us to double
   %i.v = fadd nnan double %i.u, 5.000000e-01
   %i.w = fmul double %i.i, %i.v
   %i.x = fadd double %i.w, %i.t
@@ -234,13 +238,13 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.ac = call double @llvm.fmuladd.f64(double %i.s, double %i.ab, double 1.000000e+00)
-  %i.ad = fadd double %.156.us, %i.ac             ; 3 uses
-  %i.ae = add nuw nsw i32 %.03855.us, 1           ; 2 uses
+  %i.ad = fadd double %.155.us, %i.ac             ; 3 uses
+  %i.ae = add nuw nsw i32 %.056.us, 1             ; 2 uses
   %exitcond.not = icmp eq i32 %i.ae, %3
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.d, !llvm.loop !47
 
 ._crit_edge.us:                                   ; preds = %bb.i
-  %i.af = add nuw nsw i32 %.03957.us, 1           ; 2 uses
+  %i.af = add nuw nsw i32 %.03758.us, 1           ; 2 uses
   %i.ag = load i32, ptr %i.d, align 4, !tbaa !13
   %i.ah = add nsw i32 %i.ag, -1                   ; 2 uses
   %i.ai = icmp slt i32 %i.af, %i.ah
@@ -381,15 +385,15 @@ bb.c:                                             ; preds = %bb.b
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
-  %.03758.us = phi double [ %i.ad, %._crit_edge.us ], [ 0.000000e+00, %.preheader.us.preheader ]
-  %.03957.us = phi i32 [ %i.af, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 2 uses
-  %i.t = uitofp nneg i32 %.03957.us to double
+  %.03758.us = phi i32 [ %i.af, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 2 uses
+  %.04057.us = phi double [ %i.ad, %._crit_edge.us ], [ 0.000000e+00, %.preheader.us.preheader ]
+  %i.t = uitofp nneg i32 %.03758.us to double
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader.us, %bb.h
-  %.156.us = phi double [ %.03758.us, %.preheader.us ], [ %i.ad, %bb.h ]
-  %.03855.us = phi i32 [ 0, %.preheader.us ], [ %i.ae, %bb.h ] ; 2 uses
-  %i.u = uitofp nneg i32 %.03855.us to double
+  %.056.us = phi i32 [ 0, %.preheader.us ], [ %i.ae, %bb.h ] ; 2 uses
+  %.155.us = phi double [ %.04057.us, %.preheader.us ], [ %i.ad, %bb.h ]
+  %i.u = uitofp nneg i32 %.056.us to double
   %i.v = fadd nnan double %i.u, 5.000000e-01
   %i.w = fmul double %i.i, %i.v
   %i.x = fadd double %i.w, %i.t
@@ -415,13 +419,13 @@ _ZN7msdfgen11scanlineSDFERNS_8ScanlineERKNS_18BitmapConstSectionIfLi3EEERKNS_10P
 
 bb.h:                                             ; preds = %_ZN7msdfgen11scanlineSDFERNS_8ScanlineERKNS_18BitmapConstSectionIfLi3EEERKNS_10ProjectionEdNS_16YAxisOrientationE.exit.us
   %i.ac = call double @llvm.fmuladd.f64(double %i.s, double %i.ab, double 1.000000e+00)
-  %i.ad = fadd double %.156.us, %i.ac             ; 3 uses
-  %i.ae = add nuw nsw i32 %.03855.us, 1           ; 2 uses
+  %i.ad = fadd double %.155.us, %i.ac             ; 3 uses
+  %i.ae = add nuw nsw i32 %.056.us, 1             ; 2 uses
   %exitcond.not = icmp eq i32 %i.ae, %3
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.d, !llvm.loop !49
 
 ._crit_edge.us:                                   ; preds = %bb.h
-  %i.af = add nuw nsw i32 %.03957.us, 1           ; 2 uses
+  %i.af = add nuw nsw i32 %.03758.us, 1           ; 2 uses
   %i.ag = load i32, ptr %i.d, align 4, !tbaa !31
   %i.ah = add nsw i32 %i.ag, -1                   ; 2 uses
   %i.ai = icmp slt i32 %i.af, %i.ah
@@ -562,15 +566,15 @@ bb.c:                                             ; preds = %bb.b
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
-  %.03758.us = phi double [ %i.ad, %._crit_edge.us ], [ 0.000000e+00, %.preheader.us.preheader ]
-  %.03957.us = phi i32 [ %i.af, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 2 uses
-  %i.t = uitofp nneg i32 %.03957.us to double
+  %.03758.us = phi i32 [ %i.af, %._crit_edge.us ], [ 0, %.preheader.us.preheader ] ; 2 uses
+  %.04057.us = phi double [ %i.ad, %._crit_edge.us ], [ 0.000000e+00, %.preheader.us.preheader ]
+  %i.t = uitofp nneg i32 %.03758.us to double
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader.us, %bb.h
-  %.156.us = phi double [ %.03758.us, %.preheader.us ], [ %i.ad, %bb.h ]
-  %.03855.us = phi i32 [ 0, %.preheader.us ], [ %i.ae, %bb.h ] ; 2 uses
-  %i.u = uitofp nneg i32 %.03855.us to double
+  %.056.us = phi i32 [ 0, %.preheader.us ], [ %i.ae, %bb.h ] ; 2 uses
+  %.155.us = phi double [ %.04057.us, %.preheader.us ], [ %i.ad, %bb.h ]
+  %i.u = uitofp nneg i32 %.056.us to double
   %i.v = fadd nnan double %i.u, 5.000000e-01
   %i.w = fmul double %i.i, %i.v
   %i.x = fadd double %i.w, %i.t
@@ -596,13 +600,13 @@ _ZN7msdfgen11scanlineSDFERNS_8ScanlineERKNS_18BitmapConstSectionIfLi4EEERKNS_10P
 
 bb.h:                                             ; preds = %_ZN7msdfgen11scanlineSDFERNS_8ScanlineERKNS_18BitmapConstSectionIfLi4EEERKNS_10ProjectionEdNS_16YAxisOrientationE.exit.us
   %i.ac = call double @llvm.fmuladd.f64(double %i.s, double %i.ab, double 1.000000e+00)
-  %i.ad = fadd double %.156.us, %i.ac             ; 3 uses
-  %i.ae = add nuw nsw i32 %.03855.us, 1           ; 2 uses
+  %i.ad = fadd double %.155.us, %i.ac             ; 3 uses
+  %i.ae = add nuw nsw i32 %.056.us, 1             ; 2 uses
   %exitcond.not = icmp eq i32 %i.ae, %3
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.d, !llvm.loop !51
 
 ._crit_edge.us:                                   ; preds = %bb.h
-  %i.af = add nuw nsw i32 %.03957.us, 1           ; 2 uses
+  %i.af = add nuw nsw i32 %.03758.us, 1           ; 2 uses
   %i.ag = load i32, ptr %i.d, align 4, !tbaa !42
   %i.ah = add nsw i32 %i.ag, -1                   ; 2 uses
   %i.ai = icmp slt i32 %i.af, %i.ah

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mold/original/init?download=true
+inline.NumInlined: 106
+inline.NumDeleted: 25
 begin_hunk_0_@mi_subproc_new:bb.a
 mi_lock_acquire.exit:                             ; preds = %bb.d, %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %i.h, i64 8
@@ -200,8 +202,9 @@ bb.r:                                             ; preds = %bb.q
 
 .critedge:                                        ; preds = %bb.q
   tail call void @_mi_thread_locals_done() #13
-  tail call void @_mi_arenas_unsafe_destroy_all(ptr noundef nonnull @subproc_main) #13
-  %i.ag = tail call i32 @pthread_mutex_destroy(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @subproc_main, i64 1320)) #13 ; 0 uses
+  tail call void @_mi_arenas_unsafe_destroy_all(ptr noundef nonnull %0) #13
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1320
+  %i.ag = tail call i32 @pthread_mutex_destroy(ptr noundef nonnull %2) #13 ; 0 uses
   %i.ah = tail call i32 @pthread_mutex_destroy(ptr noundef nonnull %i.i) #13 ; 0 uses
   tail call void @_mi_page_map_unsafe_destroy() #13
   br label %bb.s
@@ -448,31 +451,31 @@ bb.o:                                             ; preds = %bb.n
   br label %_mi_thread_init_theap_default.exit
 
 mi_heap_main_init.exit.i:                         ; preds = %bb.n, %mi_heap_check_for_existing_theap.exit.i, %mi_tld_main_init.exit.i.i, %bb.c
-  %.124.i = phi ptr [ %i.be, %bb.n ], [ %.013.i.i, %mi_heap_check_for_existing_theap.exit.i ], [ @mi_theap_main, %bb.c ], [ @mi_theap_main, %mi_tld_main_init.exit.i.i ] ; 6 uses
-  %.121.i = phi ptr [ %.020.i, %bb.n ], [ %.020.i, %mi_heap_check_for_existing_theap.exit.i ], [ @mi_process_heap_main, %bb.c ], [ @mi_process_heap_main, %mi_tld_main_init.exit.i.i ] ; 3 uses
-  store ptr %.124.i, ptr %i.b, align 8, !tbaa !23
-  %i.bg = getelementptr inbounds nuw i8, ptr %.124.i, i64 8
+  %.124.i = phi ptr [ %.020.i, %bb.n ], [ %.020.i, %mi_heap_check_for_existing_theap.exit.i ], [ @mi_process_heap_main, %bb.c ], [ @mi_process_heap_main, %mi_tld_main_init.exit.i.i ] ; 3 uses
+  %.121.i = phi ptr [ %i.be, %bb.n ], [ %.013.i.i, %mi_heap_check_for_existing_theap.exit.i ], [ @mi_theap_main, %bb.c ], [ @mi_theap_main, %mi_tld_main_init.exit.i.i ] ; 6 uses
+  store ptr %.121.i, ptr %i.b, align 8, !tbaa !23
+  %i.bg = getelementptr inbounds nuw i8, ptr %.121.i, i64 8
   %i.bh = load atomic ptr, ptr %i.bg monotonic, align 8
   %.not.i33.i = icmp eq ptr %i.bh, null
   br i1 %.not.i33.i, label %_mi_theap_default_set.exit.i, label %bb.p
 
 bb.p:                                             ; preds = %mi_heap_main_init.exit.i
-  call void @_mi_prim_thread_associate_default_theap(ptr noundef nonnull %.124.i) #13
+  call void @_mi_prim_thread_associate_default_theap(ptr noundef nonnull %.121.i) #13
   br label %_mi_theap_default_set.exit.i
 
 _mi_theap_default_set.exit.i:                     ; preds = %bb.p, %mi_heap_main_init.exit.i
-  %i.bi = call zeroext i1 @_mi_heap_theap_set(ptr noundef %.121.i, ptr noundef nonnull %.124.i) #13 ; 0 uses
-  %i.bj = icmp eq ptr %.121.i, null
+  %i.bi = call zeroext i1 @_mi_heap_theap_set(ptr noundef %.124.i, ptr noundef nonnull %.121.i) #13 ; 0 uses
+  %i.bj = icmp eq ptr %.124.i, null
   br i1 %i.bj, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %_mi_theap_default_set.exit.i
-  %i.bk = getelementptr inbounds nuw i8, ptr %.121.i, i64 32
+  %i.bk = getelementptr inbounds nuw i8, ptr %.124.i, i64 32
   %i.bl = load i64, ptr %i.bk, align 8, !tbaa !36
   %i.bm = call ptr @_mi_thread_local_get(i64 noundef %i.bl) #13 ; 0 uses
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %mi_theap_is_initialized.exit.i, %_mi_theap_default_set.exit.i
-  %.1.i.ph = phi ptr [ %.124.i, %_mi_theap_default_set.exit.i ], [ %i.c, %mi_theap_is_initialized.exit.i ], [ %.124.i, %bb.q ] ; 2 uses
+  %.1.i.ph = phi ptr [ %.121.i, %_mi_theap_default_set.exit.i ], [ %i.c, %mi_theap_is_initialized.exit.i ], [ %.121.i, %bb.q ] ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.1.i.ph, i64 16
   %i.bo = load atomic ptr, ptr %i.bn monotonic, align 8
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 1640

@@ -1,4 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wolfssl/original/test_asn?download=true
+inline.NumInlined: 12
 begin_hunk_0
 @.str.118 = private unnamed_addr constant [50 x i8] c"dnsWildPermitted(\22*.example.com.\22, \22example.com\22)\00", align 1
 @.str.119 = private unnamed_addr constant [13 x i8] c"example.com.\00", align 1
@@ -200,7 +201,7 @@ bb.a:
   %i.d = alloca i32, align 4                      ; 5 uses
   %i.e = alloca i32, align 4                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.a, i8 0, i64 7, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(7) %i.a, i8 0, i64 7, i1 false)
   %i.f = call fastcc i32 @test_GetSetShortInt_once(i32 noundef 0, ptr noundef %i.a, i32 noundef 1)
   store i8 0, ptr %i.a, align 4, !tbaa !9
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 12 uses

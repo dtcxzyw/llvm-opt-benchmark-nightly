@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lightgbm/original/array?download=true
+inline.NumInlined: 80
+inline.NumDeleted: 28
+loop-unroll.NumCompletelyUnrolled: 11
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 12
 begin_hunk_0_@ArrowArrayInitFromArrayView:bb.a
 bb.h:                                             ; preds = %bb.i
   %i.ab = add nuw nsw i64 %.065, 1                ; 2 uses
@@ -200,8 +205,8 @@ bb.e:                                             ; preds = %bb.d
   store i8 %i.v, ptr %i.w, align 1, !tbaa !49
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %i.x = load i8, ptr %i.t, align 1, !tbaa !49
-  switch i8 %i.x, label %.split.us.i.i [
-    i8 0, label %.split.us.loopexit39.split.loop.exit.i.i
+  switch i8 %i.x, label %.split.us.loopexit39.split.loop.exit.i.i [
+    i8 0, label %.split.us.i.i
     i8 44, label %bb.f
   ]
 
@@ -212,20 +217,18 @@ bb.f:                                             ; preds = %.lr.ph.split.i.i
   %i.ab = icmp eq ptr %i.aa, %i.y
   %i.ac = icmp ugt i64 %i.z, 127
   %or.cond3.i.i = select i1 %i.ab, i1 true, i1 %i.ac
-  br i1 %or.cond3.i.i, label %.split.us.i.i, label %.lr.ph.split.i.i
+  br i1 %or.cond3.i.i, label %.split.us.loopexit39.split.loop.exit.i.i, label %.lr.ph.split.i.i
 
-.split.us.loopexit39.split.loop.exit.i.i:         ; preds = %.lr.ph.split.i.i
-  %sext.i = shl i64 %indvars.iv.next.i.i, 32
-  %4 = ashr exact i64 %sext.i, 32
+.split.us.loopexit39.split.loop.exit.i.i:         ; preds = %.lr.ph.split.i.i, %bb.f
   br label %.split.us.i.i
 
-.split.us.i.i:                                    ; preds = %bb.f, %.lr.ph.split.i.i, %.split.us.loopexit39.split.loop.exit.i.i, %bb.e
-  %.0.i.i = phi i64 [ -1, %bb.e ], [ %4, %.split.us.loopexit39.split.loop.exit.i.i ], [ -1, %.lr.ph.split.i.i ], [ -1, %bb.f ]
+.split.us.i.i:                                    ; preds = %.lr.ph.split.i.i, %.split.us.loopexit39.split.loop.exit.i.i, %bb.e
+  %.017.i.i = phi i64 [ -1, %bb.e ], [ -1, %.split.us.loopexit39.split.loop.exit.i.i ], [ %indvars.iv.next.i.i, %.lr.ph.split.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   br label %_ArrowParseUnionTypeIds.exit.i
 
 _ArrowParseUnionTypeIds.exit.i:                   ; preds = %.split.us.i.i, %bb.d
-  %.1.i.i = phi i64 [ %.0.i.i, %.split.us.i.i ], [ 0, %bb.d ]
+  %.1.i.i = phi i64 [ %.017.i.i, %.split.us.i.i ], [ 0, %bb.d ]
   %.not.i.i = icmp eq i64 %.1.i.i, %i.m
   br i1 %.not.i.i, label %.preheader.i.i, label %_ArrowUnionTypeIdsWillEqualChildIndices.exit
 
@@ -628,9 +631,9 @@ ArrowArrayViewGetIntUnsafe.exit:                  ; preds = %bb.af, %bb.ag, %bb.
   br i1 %.not213317.not, label %.thread288, label %.lr.ph320
 
 .lr.ph320:                                        ; preds = %ArrowArrayViewGetIntUnsafe.exit, %bb.be
-  %.0189319 = phi i64 [ %.0.i235, %bb.be ], [ %.0.i234, %ArrowArrayViewGetIntUnsafe.exit ] ; 2 uses
-  %.0191318 = phi i64 [ %i.lg, %bb.be ], [ 1, %ArrowArrayViewGetIntUnsafe.exit ] ; 4 uses
-  %i.ir = add nsw i64 %i.ga, %.0191318            ; 13 uses
+  %.0189319 = phi i64 [ %i.lg, %bb.be ], [ 1, %ArrowArrayViewGetIntUnsafe.exit ] ; 4 uses
+  %.0191318 = phi i64 [ %.0.i235, %bb.be ], [ %.0.i234, %ArrowArrayViewGetIntUnsafe.exit ] ; 2 uses
+  %i.ir = add nsw i64 %i.ga, %.0189319            ; 13 uses
   switch i32 %i.gc, label %ArrowArrayViewGetIntUnsafe.exit237 [
     i32 10, label %bb.as
     i32 9, label %bb.at
@@ -752,17 +755,17 @@ bb.bd:                                            ; preds = %.lr.ph320
 
 ArrowArrayViewGetIntUnsafe.exit237:               ; preds = %.lr.ph320, %bb.as, %bb.at, %bb.au, %bb.av, %bb.aw, %bb.ax, %bb.ay, %bb.az, %bb.ba, %bb.bb, %bb.bc, %bb.bd
   %.0.i235 = phi i64 [ %i.lf, %bb.bd ], [ %i.iu, %bb.as ], [ %i.ix, %bb.at ], [ %i.jb, %bb.au ], [ %i.jf, %bb.av ], [ %i.jj, %bb.aw ], [ %i.jn, %bb.ax ], [ %i.jr, %bb.ay ], [ %i.jv, %bb.az ], [ %i.jz, %bb.ba ], [ %i.kd, %bb.bb ], [ %i.kw, %bb.bc ], [ 9223372036854775807, %.lr.ph320 ] ; 3 uses
-  %.not212 = icmp sgt i64 %.0.i235, %.0189319
+  %.not212 = icmp sgt i64 %.0.i235, %.0191318
   br i1 %.not212, label %bb.be, label %.thread281
 
 bb.be:                                            ; preds = %ArrowArrayViewGetIntUnsafe.exit237
-  %i.lg = add nuw nsw i64 %.0191318, 1            ; 2 uses
+  %i.lg = add nuw nsw i64 %.0189319, 1            ; 2 uses
   %exitcond390.not = icmp eq i64 %i.lg, %i.fw
   br i1 %exitcond390.not, label %.thread273, label %.lr.ph320
 
 .thread281:                                       ; preds = %ArrowArrayViewGetIntUnsafe.exit237
-  %i.lh = add nsw i64 %.0191318, -1
-  %i.li = tail call i32 (ptr, ptr, ...) @ArrowErrorSet(ptr noundef %1, ptr noundef nonnull @.str.80, i64 noundef %.0191318, i64 noundef %.0.i235, i64 noundef %i.lh, i64 noundef %.0189319) #16 ; 0 uses
+  %i.lh = add nsw i64 %.0189319, -1
+  %i.li = tail call i32 (ptr, ptr, ...) @ArrowErrorSet(ptr noundef %1, ptr noundef nonnull @.str.80, i64 noundef %.0189319, i64 noundef %.0.i235, i64 noundef %i.lh, i64 noundef %.0191318) #16 ; 0 uses
   br label %.thread
 
 .thread273:                                       ; preds = %bb.be, %ArrowAssertRangeInt8.exit.thread, %.thread256

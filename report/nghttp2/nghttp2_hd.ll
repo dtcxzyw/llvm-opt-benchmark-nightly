@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nghttp2/original/nghttp2_hd?download=true
+inline.NumInlined: 158
+inline.NumDeleted: 39
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@nghttp2_hd_deflate_new
 define range(i32 -901, 1) i32 @nghttp2_hd_deflate_new(ptr nofree noundef writeonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
@@ -200,6 +205,8 @@ bb.c:                                             ; preds = %bb.b
   %i.o = load i64, ptr %i.n, align 8, !tbaa !17
   %i.p = getelementptr inbounds nuw i8, ptr %6, i64 20
   %i.q = load i8, ptr %i.p, align 4, !tbaa !18
+  %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 33
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6.0..sroa_idx.i.i, i8 0, i64 7, i1 false)
   store ptr %i.g, ptr %1, align 8, !tbaa !19
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   store ptr %i.k, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !19
@@ -209,8 +216,6 @@ bb.c:                                             ; preds = %bb.b
   store i64 %i.o, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !20
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   store i8 %i.q, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !21
-  %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 33
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6.0..sroa_idx.i.i, i8 0, i64 7, i1 false)
   br label %nghttp2_hd_inflate_hd2.exit
 
 nghttp2_hd_inflate_hd2.exit:                      ; preds = %bb.a, %bb.b, %bb.c
@@ -247,6 +252,8 @@ bb.c:                                             ; preds = %bb.b
   %i.o = load i64, ptr %i.n, align 8, !tbaa !17
   %i.p = getelementptr inbounds nuw i8, ptr %6, i64 20
   %i.q = load i8, ptr %i.p, align 4, !tbaa !18
+  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 33
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6.0..sroa_idx.i, i8 0, i64 7, i1 false)
   store ptr %i.g, ptr %1, align 8, !tbaa !19
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   store ptr %i.k, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !19
@@ -256,8 +263,6 @@ bb.c:                                             ; preds = %bb.b
   store i64 %i.o, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !20
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   store i8 %i.q, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !21
-  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 33
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6.0..sroa_idx.i, i8 0, i64 7, i1 false)
   br label %nghttp2_hd_inflate_hd3.exit
 
 nghttp2_hd_inflate_hd3.exit:                      ; preds = %bb.a, %bb.b, %bb.c
@@ -294,6 +299,8 @@ bb.c:                                             ; preds = %bb.b
   %i.o = load i64, ptr %i.n, align 8, !tbaa !17
   %i.p = getelementptr inbounds nuw i8, ptr %6, i64 20
   %i.q = load i8, ptr %i.p, align 4, !tbaa !18
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 33
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6.0..sroa_idx, i8 0, i64 7, i1 false)
   store ptr %i.g, ptr %1, align 8, !tbaa !19
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   store ptr %i.k, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !19
@@ -303,8 +310,6 @@ bb.c:                                             ; preds = %bb.b
   store i64 %i.o, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !20
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 32
   store i8 %i.q, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !21
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 33
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.6.0..sroa_idx, i8 0, i64 7, i1 false)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a

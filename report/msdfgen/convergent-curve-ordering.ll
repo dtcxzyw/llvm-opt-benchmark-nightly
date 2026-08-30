@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/msdfgen/original/convergent-curve-ordering?download=true
+inline.NumInlined: 71
+inline.NumDeleted: 11
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN7msdfgen23convergentCurveOrderingEPKNS_7Vector2Eii:bb.a
   %i.bs = extractelement <2 x double> %i.bl, i64 1 ; 2 uses
   %i.bt = extractelement <2 x double> %i.bm, i64 1 ; 2 uses
@@ -200,6 +204,9 @@ bb.ab:                                            ; preds = %bb.z
 
 bb.ac:                                            ; preds = %bb.s
   %i.gj = fmul double %.sroa.16279.2, %.sroa.16279.2
+  %3 = tail call double @llvm.fmuladd.f64(double %.sroa.0277.2, double %.sroa.0277.2, double %i.gj)
+  %sqrt.i254 = tail call noundef double @llvm.sqrt.f64(double %3)
+  %sqrt309 = tail call double @llvm.sqrt.f64(double %sqrt.i254)
   %i.gk = extractelement <2 x double> %i.en, i64 0
   %i.gl = fneg double %i.gk                       ; 2 uses
   %i.gm = fmul double %.sroa.16279.2, %i.gl
@@ -212,17 +219,12 @@ bb.ac:                                            ; preds = %bb.s
   %i.gt = fmul <2 x double> %i.gr, %i.gs
   %i.gu = insertelement <2 x double> %i.em, double %.sroa.0275.1, i64 1
   %i.gv = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.gu, <2 x double> %i.em, <2 x double> %i.gt) ; 2 uses
-  %3 = tail call double @llvm.fmuladd.f64(double %.sroa.0277.2, double %.sroa.0277.2, double %i.gj)
-  %4 = shufflevector <2 x double> %i.gv, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
-  %5 = insertelement <2 x double> %4, double %3, i64 0
-  %6 = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %5) ; 2 uses
-  %i.gw = extractelement <2 x double> %6, i64 0
-  %sqrt309.a = tail call double @llvm.sqrt.f64(double %i.gw)
-  %7 = extractelement <2 x double> %6, i64 1
-  %sqrt = tail call double @llvm.sqrt.f64(double %7)
+  %i.gw = extractelement <2 x double> %i.gv, i64 0
+  %sqrt309.a = tail call noundef double @llvm.sqrt.f64(double %i.gw)
+  %sqrt = tail call double @llvm.sqrt.f64(double %sqrt309.a)
   %i.gx = extractelement <2 x double> %i.gv, i64 1
   %i.gy = fmul double %i.gx, %sqrt
-  %i.gz = tail call double @llvm.fmuladd.f64(double %sqrt309.a, double %i.go, double %i.gy) ; 3 uses
+  %i.gz = tail call double @llvm.fmuladd.f64(double %sqrt309, double %i.go, double %i.gy) ; 3 uses
   %i.ha = fcmp oeq double %i.gz, 0.000000e+00
   br i1 %i.ha, label %bb.ae, label %bb.ad
 

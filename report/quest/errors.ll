@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quest/original/errors?download=true
+inline.NumInlined: 808
+inline.NumDeleted: 62
 begin_hunk_0_@_Z28assert_quregIsGpuAccelerated5Qureg:bb.a
   store i8 0, ptr %i.h, align 1, !tbaa !16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
@@ -200,35 +202,35 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit27: ; preds = %_
   br i1 %i.x, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit27, %bb.f
-  %.02230.i.i = phi i32 [ %i.ae, %bb.f ], [ %i.w, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit27 ] ; 5 uses
-  %.02329.i.i = phi i32 [ %i.af, %bb.f ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit27 ] ; 4 uses
-  %i.y = icmp ult i32 %.02230.i.i, 100
+  %.02230.i.i = phi i32 [ %i.af, %bb.f ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit27 ] ; 4 uses
+  %.02329.i.i = phi i32 [ %i.ae, %bb.f ], [ %i.w, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit27 ] ; 5 uses
+  %i.y = icmp ult i32 %.02329.i.i, 100
   br i1 %i.y, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %.lr.ph.i.i
-  %i.z = add i32 %.02329.i.i, 1
+  %i.z = add i32 %.02230.i.i, 1
   br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
 
 bb.b:                                             ; preds = %.lr.ph.i.i
-  %i.aa = icmp ult i32 %.02230.i.i, 1000
+  %i.aa = icmp ult i32 %.02329.i.i, 1000
   br i1 %i.aa, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.ab = add i32 %.02329.i.i, 2
+  %i.ab = add i32 %.02230.i.i, 2
   br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
 
 bb.d:                                             ; preds = %bb.b
-  %i.ac = icmp ult i32 %.02230.i.i, 10000
+  %i.ac = icmp ult i32 %.02329.i.i, 10000
   br i1 %i.ac, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.ad = add i32 %.02329.i.i, 3
+  %i.ad = add i32 %.02230.i.i, 3
   br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
 
 bb.f:                                             ; preds = %bb.d
-  %i.ae = udiv i32 %.02230.i.i, 10000
-  %i.af = add i32 %.02329.i.i, 4                  ; 2 uses
-  %i.ag = icmp ult i32 %.02230.i.i, 100000
+  %i.ae = udiv i32 %.02329.i.i, 10000
+  %i.af = add i32 %.02230.i.i, 4                  ; 2 uses
+  %i.ag = icmp ult i32 %.02329.i.i, 100000
   br i1 %i.ag, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %.lr.ph.i.i, !llvm.loop !121
 
 _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i:    ; preds = %bb.f, %bb.e, %bb.c, %bb.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit27

@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openvdb/original/VectorTransformer?download=true
+inline.NumInlined: 3364
+inline.NumDeleted: 1699
+loop-unroll.NumCompletelyUnrolled: 10
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 23
 begin_hunk_0_@_ZN7openvdb5v13_04tree21TreeValueIteratorBaseINS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeINS0_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSD_9ValueIterISD_St17_Rb_tree_iteratorISt4pairIKNS7_5CoordENSD_10NodeStructEEENSD_12ValueAllPredES9_EEE7advanceEb:bb.a
   br i1 %.not344, label %_ZNK7openvdb5v13_04tree12IterListItemINS1_21TreeValueIteratorBaseINS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS6_INS1_8LeafNodeINS0_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSE_9ValueIterISE_St17_Rb_tree_iteratorISt4pairIKNS8_5CoordENSE_10NodeStructEEENSE_12ValueAllPredESA_EEE13PrevValueItemENS0_8TypeListIJSB_SC_SD_SE_EEELm4ELj0EE3posEj.exit92.thread.backedge, label %bb.bo
 
@@ -200,7 +205,7 @@ bb.ck:                                            ; preds = %bb.cj
 .critedge.thread.i.i.i.i.i.i.i237:                ; preds = %bb.cg, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit710, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit707, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit
   %.0712.i.i.i.i.i.i.i235.lcssa = phi i32 [ %i.na, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit710 ], [ %i.mz, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit707 ], [ %i.my, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit ], [ %.0712.i.i.i.i.i.i.i235, %bb.cg ]
   %.lcssa619 = phi i64 [ %i.mr, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit710 ], [ %i.mt, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit707 ], [ %i.mv, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit ], [ %i.mp, %bb.cg ]
-  %i.nb = shl i32 %.0712.i.i.i.i.i.i.i235.lcssa, 6
+  %i.nb = shl nuw nsw i32 %.0712.i.i.i.i.i.i.i235.lcssa, 6
   %i.nc = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.lcssa619, i1 true)
   %i.nd = trunc nuw nsw i64 %i.nc to i32
   %i.ne = or disjoint i32 %i.nb, %i.nd
@@ -337,13 +342,13 @@ _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i: 
   br label %_ZN7openvdb5v13_04tree10IterTraitsINS1_8LeafNodeINS0_4math4Vec3IfEELj3EEENS7_9ValueIterINS0_4util17DenseMaskIteratorINS9_8NodeMaskILj3EEEEES7_KS6_NS7_8ValueAllEEEE5beginERS7_.exit.i
 
 _ZN7openvdb5v13_04tree10IterTraitsINS1_8LeafNodeINS0_4math4Vec3IfEELj3EEENS7_9ValueIterINS0_4util17DenseMaskIteratorINS9_8NodeMaskILj3EEEEES7_KS6_NS7_8ValueAllEEEE5beginERS7_.exit.i: ; preds = %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IfEELj3EE10loadValuesEv.exit.i.i.i.i.i.i, %bb.cm
-  %.sroa.87.0.i.a = phi ptr [ null, %bb.cm ], [ %i.nm, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IfEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ], [ %i.nm, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ]
-  %.sroa.11.0.i = phi ptr [ undef, %bb.cm ], [ %i.np, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IfEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ], [ %i.oi, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ]
-  %.sroa.5.0.i = phi i32 [ 512, %bb.cm ], [ 0, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IfEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ], [ 0, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ]
+  %.sroa.87.0.i.a = phi ptr [ undef, %bb.cm ], [ %i.oi, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ], [ %i.np, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IfEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ]
+  %.sroa.11.0.i = phi ptr [ null, %bb.cm ], [ %i.nm, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ], [ %i.nm, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IfEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ]
+  %.sroa.5.0.i = phi i32 [ 512, %bb.cm ], [ 0, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ], [ 0, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IfEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ]
   store ptr %i.nk, ptr %i.b, align 8, !tbaa !360
   store i32 %.sroa.5.0.i, ptr %i.j, align 8, !tbaa !299
-  store ptr %.sroa.87.0.i.a, ptr %i.w, align 8, !tbaa !320
-  store ptr %.sroa.11.0.i, ptr %i.x, align 8, !tbaa !361
+  store ptr %.sroa.11.0.i, ptr %i.w, align 8, !tbaa !320
+  store ptr %.sroa.87.0.i.a, ptr %i.x, align 8, !tbaa !361
   br label %_ZN7openvdb5v13_04tree12IterListItemINS1_21TreeValueIteratorBaseINS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS6_INS1_8LeafNodeINS0_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEENSE_9ValueIterISE_St17_Rb_tree_iteratorISt4pairIKNS8_5CoordENSE_10NodeStructEEENSE_12ValueAllPredESA_EEE13PrevValueItemENS0_8TypeListIJSB_SC_SD_SE_EEELm4ELj0EE9initLevelINS2_INSQ_13PrevChildItemEST_Lm4ELj0EEEEEvjRT_.exitthread-pre-split
 
 bb.cu:                                            ; preds = %bb.cl
@@ -419,7 +424,7 @@ bb.dd:                                            ; preds = %bb.dc
 .critedge.thread.i.i.i.i.i.i.i:                   ; preds = %bb.cz, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit722, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit719, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit
   %.0712.i.i.i.i.i.i.i.lcssa = phi i32 [ %i.pb, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit722 ], [ %i.pa, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit719 ], [ %i.oz, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit ], [ %.0712.i.i.i.i.i.i.i, %bb.cz ]
   %.lcssa622 = phi i64 [ %i.os, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit722 ], [ %i.ou, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit719 ], [ %i.ow, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit ], [ %i.oq, %bb.cz ]
-  %i.pc = shl i32 %.0712.i.i.i.i.i.i.i.lcssa, 6
+  %i.pc = shl nuw nsw i32 %.0712.i.i.i.i.i.i.i.lcssa, 6
   %i.pd = xor i64 %.lcssa622, -1
   %i.pe = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.pd, i1 true)
   %i.pf = trunc nuw nsw i64 %i.pe to i32
@@ -822,7 +827,7 @@ declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #1
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IfEELj3EE6doLoadEv(ptr noundef nonnull align 8 dereferenceable(13) %0) local_unnamed_addr #5 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"class.std::unique_ptr", align 8   ; 11 uses
+  %1 = alloca %"class.std::unique_ptr", align 8   ; 12 uses
   %2 = alloca %"class.std::shared_ptr.75", align 8 ; 7 uses
   %3 = alloca %"class.std::basic_istream", align 8 ; 23 uses
   %4 = alloca %"class.openvdb::v13_0::util::NodeMask.64", align 8 ; 6 uses
@@ -900,7 +905,7 @@ _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEEC2ERS3_.exit: ; preds = 
 
 bb.e:                                             ; preds = %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEEC2ERS3_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
-  %i.q = load ptr, ptr %0, align 8, !tbaa !260    ; 3 uses
+  %i.q = load ptr, ptr %0, align 8, !tbaa !260
   store ptr %i.q, ptr %1, align 8, !tbaa !382
   store ptr null, ptr %0, align 8, !tbaa !260
   %i.r = invoke noalias noundef nonnull dereferenceable(6144) ptr @_Znam(i64 noundef 6144) #27
@@ -909,7 +914,8 @@ bb.e:                                             ; preds = %_ZN3tbb6detail2d118
 bb.f:                                             ; preds = %bb.e
   store ptr %i.r, ptr %0, align 8, !tbaa !260
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
-  %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 16
+  %5 = load ptr, ptr %1, align 8, !tbaa !382
+  %i.s = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !384
   invoke void @_ZNK7openvdb5v13_02io10MappedFile12createBufferEv(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.75") align 8 %2, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
           to label %bb.g unwind label %bb.w
@@ -1109,17 +1115,16 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 bb.aa:                                            ; preds = %.body, %bb.w
   %.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn, %.body ], [ %i.bw, %bb.w ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
-  %.pr = load ptr, ptr %1, align 8, !tbaa !382
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %bb.v
-  %5 = phi ptr [ %.pr, %bb.aa ], [ %i.q, %bb.v ]  ; 2 uses
   %.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn.pn, %bb.aa ], [ %i.bv, %bb.v ]
-  %.not.i20 = icmp eq ptr %5, null
+  %6 = load ptr, ptr %1, align 8, !tbaa !382      ; 2 uses
+  %.not.i20 = icmp eq ptr %6, null
   br i1 %.not.i20, label %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit23, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  call void @_ZNKSt14default_deleteIN7openvdb5v13_04tree10LeafBufferINS1_4math4Vec3IfEELj3EE8FileInfoEEclEPS8_(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %5)
+  call void @_ZNKSt14default_deleteIN7openvdb5v13_04tree10LeafBufferINS1_4math4Vec3IfEELj3EE8FileInfoEEclEPS8_(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %6)
   br label %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit23
 
 _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit23: ; preds = %bb.ab, %bb.ac
@@ -1522,7 +1527,7 @@ bb.ck:                                            ; preds = %bb.cj
 .critedge.thread.i.i.i.i.i.i.i237:                ; preds = %bb.cg, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit710, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit707, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit
   %.0712.i.i.i.i.i.i.i235.lcssa = phi i32 [ %i.na, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit710 ], [ %i.mz, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit707 ], [ %i.my, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit ], [ %.0712.i.i.i.i.i.i.i235, %bb.cg ]
   %.lcssa619 = phi i64 [ %i.mr, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit710 ], [ %i.mt, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit707 ], [ %i.mv, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit ], [ %i.mp, %bb.cg ]
-  %i.nb = shl i32 %.0712.i.i.i.i.i.i.i235.lcssa, 6
+  %i.nb = shl nuw nsw i32 %.0712.i.i.i.i.i.i.i235.lcssa, 6
   %i.nc = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.lcssa619, i1 true)
   %i.nd = trunc nuw nsw i64 %i.nc to i32
   %i.ne = or disjoint i32 %i.nb, %i.nd
@@ -1659,13 +1664,13 @@ _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i: 
   br label %_ZN7openvdb5v13_04tree10IterTraitsINS1_8LeafNodeINS0_4math4Vec3IdEELj3EEENS7_9ValueIterINS0_4util17DenseMaskIteratorINS9_8NodeMaskILj3EEEEES7_KS6_NS7_8ValueAllEEEE5beginERS7_.exit.i
 
 _ZN7openvdb5v13_04tree10IterTraitsINS1_8LeafNodeINS0_4math4Vec3IdEELj3EEENS7_9ValueIterINS0_4util17DenseMaskIteratorINS9_8NodeMaskILj3EEEEES7_KS6_NS7_8ValueAllEEEE5beginERS7_.exit.i: ; preds = %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IdEELj3EE10loadValuesEv.exit.i.i.i.i.i.i, %bb.cm
-  %.sroa.87.0.i.a = phi ptr [ null, %bb.cm ], [ %i.nm, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IdEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ], [ %i.nm, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ]
-  %.sroa.11.0.i = phi ptr [ undef, %bb.cm ], [ %i.np, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IdEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ], [ %i.oi, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ]
-  %.sroa.5.0.i = phi i32 [ 512, %bb.cm ], [ 0, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IdEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ], [ 0, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ]
+  %.sroa.87.0.i.a = phi ptr [ undef, %bb.cm ], [ %i.oi, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ], [ %i.np, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IdEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ]
+  %.sroa.11.0.i = phi ptr [ null, %bb.cm ], [ %i.nm, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ], [ %i.nm, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IdEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ]
+  %.sroa.5.0.i = phi i32 [ 512, %bb.cm ], [ 0, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ], [ 0, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IdEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ]
   store ptr %i.nk, ptr %i.b, align 8, !tbaa !582
   store i32 %.sroa.5.0.i, ptr %i.j, align 8, !tbaa !299
-  store ptr %.sroa.87.0.i.a, ptr %i.w, align 8, !tbaa !320
-  store ptr %.sroa.11.0.i, ptr %i.x, align 8, !tbaa !583
+  store ptr %.sroa.11.0.i, ptr %i.w, align 8, !tbaa !320
+  store ptr %.sroa.87.0.i.a, ptr %i.x, align 8, !tbaa !583
   br label %_ZN7openvdb5v13_04tree12IterListItemINS1_21TreeValueIteratorBaseINS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS6_INS1_8LeafNodeINS0_4math4Vec3IdEELj3EEELj4EEELj5EEEEEEENSE_9ValueIterISE_St17_Rb_tree_iteratorISt4pairIKNS8_5CoordENSE_10NodeStructEEENSE_12ValueAllPredESA_EEE13PrevValueItemENS0_8TypeListIJSB_SC_SD_SE_EEELm4ELj0EE9initLevelINS2_INSQ_13PrevChildItemEST_Lm4ELj0EEEEEvjRT_.exitthread-pre-split
 
 bb.cu:                                            ; preds = %bb.cl
@@ -1741,7 +1746,7 @@ bb.dd:                                            ; preds = %bb.dc
 .critedge.thread.i.i.i.i.i.i.i:                   ; preds = %bb.cz, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit722, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit719, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit
   %.0712.i.i.i.i.i.i.i.lcssa = phi i32 [ %i.pb, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit722 ], [ %i.pa, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit719 ], [ %i.oz, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit ], [ %.0712.i.i.i.i.i.i.i, %bb.cz ]
   %.lcssa622 = phi i64 [ %i.os, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit722 ], [ %i.ou, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit719 ], [ %i.ow, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit ], [ %i.oq, %bb.cz ]
-  %i.pc = shl i32 %.0712.i.i.i.i.i.i.i.lcssa, 6
+  %i.pc = shl nuw nsw i32 %.0712.i.i.i.i.i.i.i.lcssa, 6
   %i.pd = xor i64 %.lcssa622, -1
   %i.pe = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.pd, i1 true)
   %i.pf = trunc nuw nsw i64 %i.pe to i32
@@ -2144,7 +2149,7 @@ bb.m:                                             ; preds = %bb.j
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IdEELj3EE6doLoadEv(ptr noundef nonnull align 8 dereferenceable(13) %0) local_unnamed_addr #5 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"class.std::unique_ptr.210", align 8 ; 11 uses
+  %1 = alloca %"class.std::unique_ptr.210", align 8 ; 12 uses
   %2 = alloca %"class.std::shared_ptr.75", align 8 ; 7 uses
   %3 = alloca %"class.std::basic_istream", align 8 ; 23 uses
   %4 = alloca %"class.openvdb::v13_0::util::NodeMask.64", align 8 ; 6 uses
@@ -2222,7 +2227,7 @@ _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEEC2ERS3_.exit: ; preds = 
 
 bb.e:                                             ; preds = %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEEC2ERS3_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
-  %i.q = load ptr, ptr %0, align 8, !tbaa !260    ; 3 uses
+  %i.q = load ptr, ptr %0, align 8, !tbaa !260
   store ptr %i.q, ptr %1, align 8, !tbaa !601
   store ptr null, ptr %0, align 8, !tbaa !260
   %i.r = invoke noalias noundef nonnull dereferenceable(12288) ptr @_Znam(i64 noundef 12288) #27
@@ -2231,7 +2236,8 @@ bb.e:                                             ; preds = %_ZN3tbb6detail2d118
 bb.f:                                             ; preds = %bb.e
   store ptr %i.r, ptr %0, align 8, !tbaa !260
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
-  %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 16
+  %5 = load ptr, ptr %1, align 8, !tbaa !601
+  %i.s = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !384
   invoke void @_ZNK7openvdb5v13_02io10MappedFile12createBufferEv(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.75") align 8 %2, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
           to label %bb.g unwind label %bb.w
@@ -2431,17 +2437,16 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 bb.aa:                                            ; preds = %.body, %bb.w
   %.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn, %.body ], [ %i.bw, %bb.w ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
-  %.pr = load ptr, ptr %1, align 8, !tbaa !601
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %bb.v
-  %5 = phi ptr [ %.pr, %bb.aa ], [ %i.q, %bb.v ]  ; 2 uses
   %.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn.pn, %bb.aa ], [ %i.bv, %bb.v ]
-  %.not.i20 = icmp eq ptr %5, null
+  %6 = load ptr, ptr %1, align 8, !tbaa !601      ; 2 uses
+  %.not.i20 = icmp eq ptr %6, null
   br i1 %.not.i20, label %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit23, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  call void @_ZNKSt14default_deleteIN7openvdb5v13_04tree10LeafBufferINS1_4math4Vec3IdEELj3EE8FileInfoEEclEPS8_(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %5)
+  call void @_ZNKSt14default_deleteIN7openvdb5v13_04tree10LeafBufferINS1_4math4Vec3IdEELj3EE8FileInfoEEclEPS8_(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %6)
   br label %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit23
 
 _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit23: ; preds = %bb.ab, %bb.ac
@@ -2844,7 +2849,7 @@ bb.ck:                                            ; preds = %bb.cj
 .critedge.thread.i.i.i.i.i.i.i237:                ; preds = %bb.cg, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit710, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit707, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit
   %.0712.i.i.i.i.i.i.i235.lcssa = phi i32 [ %i.na, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit710 ], [ %i.mz, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit707 ], [ %i.my, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit ], [ %.0712.i.i.i.i.i.i.i235, %bb.cg ]
   %.lcssa619 = phi i64 [ %i.mr, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit710 ], [ %i.mt, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit707 ], [ %i.mv, %.critedge.thread.i.i.i.i.i.i.i237.split.loop.exit ], [ %i.mp, %bb.cg ]
-  %i.nb = shl i32 %.0712.i.i.i.i.i.i.i235.lcssa, 6
+  %i.nb = shl nuw nsw i32 %.0712.i.i.i.i.i.i.i235.lcssa, 6
   %i.nc = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.lcssa619, i1 true)
   %i.nd = trunc nuw nsw i64 %i.nc to i32
   %i.ne = or disjoint i32 %i.nb, %i.nd
@@ -2981,13 +2986,13 @@ _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i: 
   br label %_ZN7openvdb5v13_04tree10IterTraitsINS1_8LeafNodeINS0_4math4Vec3IiEELj3EEENS7_9ValueIterINS0_4util17DenseMaskIteratorINS9_8NodeMaskILj3EEEEES7_KS6_NS7_8ValueAllEEEE5beginERS7_.exit.i
 
 _ZN7openvdb5v13_04tree10IterTraitsINS1_8LeafNodeINS0_4math4Vec3IiEELj3EEENS7_9ValueIterINS0_4util17DenseMaskIteratorINS9_8NodeMaskILj3EEEEES7_KS6_NS7_8ValueAllEEEE5beginERS7_.exit.i: ; preds = %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IiEELj3EE10loadValuesEv.exit.i.i.i.i.i.i, %bb.cm
-  %.sroa.87.0.i.a = phi ptr [ null, %bb.cm ], [ %i.nm, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IiEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ], [ %i.nm, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ]
-  %.sroa.11.0.i = phi ptr [ undef, %bb.cm ], [ %i.np, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IiEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ], [ %i.oi, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ]
-  %.sroa.5.0.i = phi i32 [ 512, %bb.cm ], [ 0, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IiEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ], [ 0, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ]
+  %.sroa.87.0.i.a = phi ptr [ undef, %bb.cm ], [ %i.oi, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ], [ %i.np, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IiEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ]
+  %.sroa.11.0.i = phi ptr [ null, %bb.cm ], [ %i.nm, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ], [ %i.nm, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IiEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ]
+  %.sroa.5.0.i = phi i32 [ 512, %bb.cm ], [ 0, %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit4.i.i.i.i.i.i ], [ 0, %_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IiEELj3EE10loadValuesEv.exit.i.i.i.i.i.i ]
   store ptr %i.nk, ptr %i.b, align 8, !tbaa !710
   store i32 %.sroa.5.0.i, ptr %i.j, align 8, !tbaa !299
-  store ptr %.sroa.87.0.i.a, ptr %i.w, align 8, !tbaa !320
-  store ptr %.sroa.11.0.i, ptr %i.x, align 8, !tbaa !711
+  store ptr %.sroa.11.0.i, ptr %i.w, align 8, !tbaa !320
+  store ptr %.sroa.87.0.i.a, ptr %i.x, align 8, !tbaa !711
   br label %_ZN7openvdb5v13_04tree12IterListItemINS1_21TreeValueIteratorBaseINS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS6_INS1_8LeafNodeINS0_4math4Vec3IiEELj3EEELj4EEELj5EEEEEEENSE_9ValueIterISE_St17_Rb_tree_iteratorISt4pairIKNS8_5CoordENSE_10NodeStructEEENSE_12ValueAllPredESA_EEE13PrevValueItemENS0_8TypeListIJSB_SC_SD_SE_EEELm4ELj0EE9initLevelINS2_INSQ_13PrevChildItemEST_Lm4ELj0EEEEEvjRT_.exitthread-pre-split
 
 bb.cu:                                            ; preds = %bb.cl
@@ -3063,7 +3068,7 @@ bb.dd:                                            ; preds = %bb.dc
 .critedge.thread.i.i.i.i.i.i.i:                   ; preds = %bb.cz, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit722, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit719, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit
   %.0712.i.i.i.i.i.i.i.lcssa = phi i32 [ %i.pb, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit722 ], [ %i.pa, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit719 ], [ %i.oz, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit ], [ %.0712.i.i.i.i.i.i.i, %bb.cz ]
   %.lcssa622 = phi i64 [ %i.os, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit722 ], [ %i.ou, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit719 ], [ %i.ow, %.critedge.thread.i.i.i.i.i.i.i.split.loop.exit ], [ %i.oq, %bb.cz ]
-  %i.pc = shl i32 %.0712.i.i.i.i.i.i.i.lcssa, 6
+  %i.pc = shl nuw nsw i32 %.0712.i.i.i.i.i.i.i.lcssa, 6
   %i.pd = xor i64 %.lcssa622, -1
   %i.pe = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.pd, i1 true)
   %i.pf = trunc nuw nsw i64 %i.pe to i32
@@ -3466,7 +3471,7 @@ bb.m:                                             ; preds = %bb.j
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZNK7openvdb5v13_04tree10LeafBufferINS0_4math4Vec3IiEELj3EE6doLoadEv(ptr noundef nonnull align 8 dereferenceable(13) %0) local_unnamed_addr #5 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"class.std::unique_ptr.303", align 8 ; 11 uses
+  %1 = alloca %"class.std::unique_ptr.303", align 8 ; 12 uses
   %2 = alloca %"class.std::shared_ptr.75", align 8 ; 7 uses
   %3 = alloca %"class.std::basic_istream", align 8 ; 23 uses
   %4 = alloca %"class.openvdb::v13_0::util::NodeMask.64", align 8 ; 6 uses
@@ -3544,7 +3549,7 @@ _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEEC2ERS3_.exit: ; preds = 
 
 bb.e:                                             ; preds = %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEEC2ERS3_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
-  %i.q = load ptr, ptr %0, align 8, !tbaa !260    ; 3 uses
+  %i.q = load ptr, ptr %0, align 8, !tbaa !260
   store ptr %i.q, ptr %1, align 8, !tbaa !729
   store ptr null, ptr %0, align 8, !tbaa !260
   %i.r = invoke noalias noundef nonnull dereferenceable(6144) ptr @_Znam(i64 noundef 6144) #27
@@ -3553,7 +3558,8 @@ bb.e:                                             ; preds = %_ZN3tbb6detail2d118
 bb.f:                                             ; preds = %bb.e
   store ptr %i.r, ptr %0, align 8, !tbaa !260
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
-  %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 16
+  %5 = load ptr, ptr %1, align 8, !tbaa !729
+  %i.s = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !384
   invoke void @_ZNK7openvdb5v13_02io10MappedFile12createBufferEv(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.75") align 8 %2, ptr noundef nonnull align 8 dereferenceable(8) %i.t)
           to label %bb.g unwind label %bb.w
@@ -3753,17 +3759,16 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 bb.aa:                                            ; preds = %.body, %bb.w
   %.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn, %.body ], [ %i.bw, %bb.w ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
-  %.pr = load ptr, ptr %1, align 8, !tbaa !729
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %bb.v
-  %5 = phi ptr [ %.pr, %bb.aa ], [ %i.q, %bb.v ]  ; 2 uses
   %.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn.pn, %bb.aa ], [ %i.bv, %bb.v ]
-  %.not.i20 = icmp eq ptr %5, null
+  %6 = load ptr, ptr %1, align 8, !tbaa !729      ; 2 uses
+  %.not.i20 = icmp eq ptr %6, null
   br i1 %.not.i20, label %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit23, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  call void @_ZNKSt14default_deleteIN7openvdb5v13_04tree10LeafBufferINS1_4math4Vec3IiEELj3EE8FileInfoEEclEPS8_(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %5)
+  call void @_ZNKSt14default_deleteIN7openvdb5v13_04tree10LeafBufferINS1_4math4Vec3IiEELj3EE8FileInfoEEclEPS8_(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %6)
   br label %_ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit23
 
 _ZN3tbb6detail2d118unique_scoped_lockINS1_10spin_mutexEED2Ev.exit23: ; preds = %bb.ab, %bb.ac

@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/brotli/original/compound_dictionary?download=true
+inline.NumInlined: 1
+inline.NumDeleted: 1
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -28,29 +33,27 @@ bb.a:
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.3, %.lr.ph, %.lr.ph.1, %.lr.ph.2, %bb.a
-  %.014.lcssa = phi i32 [ 7, %bb.a ], [ 8, %.lr.ph ], [ 9, %.lr.ph.1 ], [ 10, %.lr.ph.2 ], [ %spec.select55, %.lr.ph.3 ] ; 5 uses
-  %.013.lcssa = phi i32 [ 17, %bb.a ], [ 18, %.lr.ph ], [ 19, %.lr.ph.1 ], [ 20, %.lr.ph.2 ], [ %spec.select, %.lr.ph.3 ] ; 6 uses
-  %i.f = shl nuw i32 1, %.014.lcssa               ; 2 uses
-  %i.g = sub nuw nsw i32 64, %.013.lcssa
+  %.014.lcssa = phi i32 [ 17, %bb.a ], [ 18, %.lr.ph ], [ 19, %.lr.ph.1 ], [ 20, %.lr.ph.2 ], [ %spec.select, %.lr.ph.3 ] ; 5 uses
+  %.013.lcssa = phi i32 [ 7, %bb.a ], [ 8, %.lr.ph ], [ 9, %.lr.ph.1 ], [ 10, %.lr.ph.2 ], [ %spec.select55, %.lr.ph.3 ] ; 4 uses
+  %i.f = shl nuw i32 1, %.013.lcssa               ; 2 uses
+  %i.g = sub nuw nsw i32 64, %.014.lcssa
   %i.h = add i32 %i.f, -1
-  %i.i = zext nneg i32 %.014.lcssa to i64         ; 2 uses
+  %i.i = zext nneg i32 %.013.lcssa to i64         ; 2 uses
   %i.j = shl i64 4, %i.i
-  %i.k = zext nneg i32 %.013.lcssa to i64         ; 2 uses
+  %i.k = zext nneg i32 %.014.lcssa to i64         ; 2 uses
   %i.l = shl nuw nsw i64 2, %i.k                  ; 2 uses
-  %3 = icmp ugt i32 %.014.lcssa, %.013.lcssa
-  %i.m = sub nuw nsw i32 %.013.lcssa, %.014.lcssa
+  %i.m = sub nuw nsw i32 %.014.lcssa, %.013.lcssa
   %i.n = icmp samesign ugt i32 %i.m, 15
-  %or.cond198.i = select i1 %3, i1 true, i1 %i.n
-  br i1 %or.cond198.i, label %CreatePreparedDictionaryWithParams.exit, label %bb.b
+  br i1 %i.n, label %CreatePreparedDictionaryWithParams.exit, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
-  %i.o = shl nuw nsw i32 1, %.013.lcssa
+  %i.o = shl nuw nsw i32 1, %.014.lcssa
   %i.p = shl nuw nsw i64 8, %i.i
   %i.q = shl nuw nsw i64 4, %i.k
   %i.r = shl i64 %2, 2
-  %i.s = add i64 %i.p, %i.r
-  %i.t = add i64 %i.s, %i.l
-  %i.u = add i64 %i.t, %i.q                       ; 2 uses
+  %i.s = add i64 %i.l, %i.r
+  %i.t = add i64 %i.s, %i.q
+  %i.u = add i64 %i.t, %i.p                       ; 2 uses
   %.not.i = icmp ne i64 %i.u, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.v = tail call ptr @BrotliAllocate(ptr noundef %0, i64 noundef %i.u) #6 ; 6 uses
@@ -151,8 +154,8 @@ bb.h:                                             ; preds = %bb.f
 .new:                                             ; preds = %._crit_edge.i
   %i.bk = zext i32 %i.bj to i64                   ; 2 uses
   %i.bl = shl nuw nsw i64 %i.bk, 2
-  %i.bm = add nuw nsw i64 %i.j, 32
-  %i.bn = add nuw i64 %i.bm, %i.l
+  %i.bm = add nuw i64 %i.l, 32
+  %i.bn = add i64 %i.bm, %i.j
   %i.bo = add i64 %i.bn, %i.bl                    ; 2 uses
   %.not193.i = icmp ne i64 %i.bo, 0
   tail call void @llvm.assume(i1 %.not193.i)
@@ -170,9 +173,9 @@ bb.h:                                             ; preds = %bb.f
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bp, i64 12
   store i32 40, ptr %i.bx, align 4, !tbaa !19
   %i.by = getelementptr inbounds nuw i8, ptr %i.bp, i64 16
-  store i32 %.013.lcssa, ptr %i.by, align 4, !tbaa !20
+  store i32 %.014.lcssa, ptr %i.by, align 4, !tbaa !20
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bp, i64 20
-  store i32 %.014.lcssa, ptr %i.bz, align 4, !tbaa !21
+  store i32 %.013.lcssa, ptr %i.bz, align 4, !tbaa !21
   store ptr %1, ptr %i.bt, align 1
   %xtraiter = and i64 %i.w, 1
   %unroll_iter = and i64 %i.w, 4294967294

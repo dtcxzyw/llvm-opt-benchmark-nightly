@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/msdfgen/original/Shape?download=true
+inline.NumInlined: 510
+inline.NumDeleted: 232
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZNK7msdfgen5Shape8scanlineERNS_8ScanlineEd:bb.a
 .preheader:                                       ; preds = %bb.c
   %i.ab = icmp sgt i32 %i.aa, 0
@@ -200,13 +204,13 @@ define void @_ZN7msdfgen5Shape14orientContoursEv(ptr nofree noundef nonnull read
 bb.a:
   %i.a = alloca [3 x double], align 16            ; 5 uses
   %i.b = alloca [3 x i32], align 4                ; 5 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !8    ; 3 uses
-  %i.e = load ptr, ptr %0, align 8, !tbaa !17     ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !8    ; 2 uses
+  %i.e = load ptr, ptr %0, align 8, !tbaa !17     ; 2 uses
   %i.f = ptrtoint ptr %i.d to i64
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = sub i64 %i.f, %i.g
-  %i.i = sdiv exact i64 %i.h, 24                  ; 6 uses
+  %i.i = sdiv exact i64 %i.h, 24                  ; 4 uses
   %i.j = icmp ugt i64 %i.i, 2305843009213693951
   br i1 %i.j, label %.noexc, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
 
@@ -216,40 +220,49 @@ bb.a:
 
 _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.a
   %.not.i.i.i.i = icmp eq ptr %i.d, %i.e
-  br i1 %.not.i.i.i.i, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %.noexc92
+  br i1 %.not.i.i.i.i, label %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit, label %.noexc92
 
 .noexc92:                                         ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
   %i.k = shl nuw nsw i64 %i.i, 2
-  %i.l = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.k) #20 ; 7 uses
+  %i.l = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.k) #20 ; 5 uses
+  %1 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.i ; 2 uses
   store i32 0, ptr %i.l, align 4, !tbaa !41
   %i.m = add nsw i64 %i.i, -1                     ; 2 uses
   %i.n = icmp eq i64 %i.m, 0
-  br i1 %i.n, label %.lr.ph225.preheader, label %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit
+  br i1 %i.n, label %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit, label %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i
 
-_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %.noexc92
-  %1 = getelementptr i8, ptr %i.l, i64 4
+_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc92
+  %2 = getelementptr i8, ptr %i.l, i64 4
   %.idx.i.i.i.i.i.i.i = shl nuw nsw i64 %i.m, 2
-  tail call void @llvm.memset.p0.i64(ptr align 4 %1, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !41
-  %i.o = trunc i64 %i.i to i32
-  %i.p = icmp sgt i32 %i.o, 0
-  br i1 %i.p, label %.lr.ph225.preheader, label %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit.a
+  tail call void @llvm.memset.p0.i64(ptr align 4 %2, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !41
+  br label %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit
 
-.lr.ph225.preheader:                              ; preds = %.noexc92, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit
-  br label %.lr.ph225
+_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i, %.noexc92, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i
+  %.sroa.12.0 = phi ptr [ %1, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %1, %.noexc92 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ] ; 2 uses
+  %.sroa.0126.0 = phi ptr [ %i.l, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i ], [ %i.l, %.noexc92 ], [ null, %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i ] ; 9 uses
+  %3 = load ptr, ptr %i.c, align 8, !tbaa !8      ; 2 uses
+  %4 = load ptr, ptr %0, align 8, !tbaa !17       ; 2 uses
+  %5 = ptrtoint ptr %3 to i64
+  %6 = ptrtoint ptr %4 to i64
+  %7 = sub i64 %5, %6
+  %8 = sdiv exact i64 %7, 24
+  %i.o = trunc i64 %8 to i32
+  %i.p = icmp sgt i32 %i.o, 0
+  br i1 %i.p, label %.lr.ph225, label %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit
 
 .preheader:                                       ; preds = %bb.ac
   %i.q = trunc i64 %i.gf to i32
   %i.r = icmp sgt i32 %i.q, 0
   br i1 %i.r, label %.lr.ph229, label %._crit_edge230
 
-.lr.ph225:                                        ; preds = %.lr.ph225.preheader, %bb.ac
-  %i.s = phi ptr [ %i.ga, %bb.ac ], [ %i.e, %.lr.ph225.preheader ] ; 3 uses
-  %i.t = phi ptr [ %i.gb, %bb.ac ], [ %i.d, %.lr.ph225.preheader ] ; 2 uses
-  %indvars.iv272 = phi i64 [ %indvars.iv.next273, %bb.ac ], [ 0, %.lr.ph225.preheader ] ; 6 uses
-  %.sroa.0121.0223 = phi ptr [ %.sroa.0121.6, %bb.ac ], [ null, %.lr.ph225.preheader ] ; 7 uses
-  %.sroa.21.0222 = phi ptr [ %.sroa.21.5, %bb.ac ], [ null, %.lr.ph225.preheader ] ; 4 uses
-  %.sroa.31.0221 = phi ptr [ %.sroa.31.6, %bb.ac ], [ null, %.lr.ph225.preheader ] ; 7 uses
-  %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv272
+.lr.ph225:                                        ; preds = %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit, %bb.ac
+  %i.s = phi ptr [ %i.ga, %bb.ac ], [ %4, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit ] ; 3 uses
+  %i.t = phi ptr [ %i.gb, %bb.ac ], [ %3, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit ] ; 2 uses
+  %indvars.iv272 = phi i64 [ %indvars.iv.next273, %bb.ac ], [ 0, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit ] ; 6 uses
+  %.sroa.0121.0223 = phi ptr [ %.sroa.0121.6, %bb.ac ], [ null, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit ] ; 7 uses
+  %.sroa.21.0222 = phi ptr [ %.sroa.21.5, %bb.ac ], [ null, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit ] ; 4 uses
+  %.sroa.31.0221 = phi ptr [ %.sroa.31.6, %bb.ac ], [ null, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit ] ; 7 uses
+  %i.u = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0126.0, i64 %indvars.iv272
   %i.v = load i32, ptr %i.u, align 4, !tbaa !41
   %.not = icmp eq i32 %i.v, 0
   br i1 %.not, label %bb.b, label %bb.ac
@@ -425,11 +438,11 @@ bb.l:                                             ; preds = %bb.j, %.lr.ph183
   br i1 %i.da, label %.lr.ph211, label %._crit_edge212, !llvm.loop !51
 
 .lr.ph201:                                        ; preds = %.lr.ph201.preheader, %._crit_edge191
-  %.sroa.0121.2199.a = phi ptr [ %.sroa.0121.3.lcssa, %._crit_edge191 ], [ %.sroa.0121.1208, %.lr.ph201.preheader ] ; 3 uses
-  %.sroa.21.2198.a = phi ptr [ %.sroa.21.3.lcssa, %._crit_edge191 ], [ %.sroa.21.1207, %.lr.ph201.preheader ] ; 2 uses
-  %.sroa.0108.0197 = phi ptr [ %i.dh, %._crit_edge191 ], [ %i.co, %.lr.ph201.preheader ] ; 2 uses
+  %.sroa.0121.2199.a = phi ptr [ %i.dh, %._crit_edge191 ], [ %i.co, %.lr.ph201.preheader ] ; 2 uses
+  %.sroa.21.2198.a = phi ptr [ %.sroa.0121.3.lcssa, %._crit_edge191 ], [ %.sroa.0121.1208, %.lr.ph201.preheader ] ; 3 uses
+  %.sroa.0108.0197 = phi ptr [ %.sroa.21.3.lcssa, %._crit_edge191 ], [ %.sroa.21.1207, %.lr.ph201.preheader ] ; 2 uses
   %.sroa.31.2196 = phi ptr [ %.sroa.31.3.lcssa, %._crit_edge191 ], [ %.sroa.31.1206, %.lr.ph201.preheader ] ; 3 uses
-  %i.db = invoke noundef ptr @_ZNK7msdfgen10EdgeHolderptEv(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.0108.0197)
+  %i.db = invoke noundef ptr @_ZNK7msdfgen10EdgeHolderptEv(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.0121.2199.a)
           to label %bb.m unwind label %bb.n       ; 2 uses
 
 bb.m:                                             ; preds = %.lr.ph201
@@ -449,9 +462,9 @@ bb.m:                                             ; preds = %.lr.ph201
 
 ._crit_edge191:                                   ; preds = %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit, %.preheader132
   %.sroa.31.3.lcssa = phi ptr [ %.sroa.31.2196, %.preheader132 ], [ %.sroa.31.8, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 2 uses
-  %.sroa.21.3.lcssa = phi ptr [ %.sroa.21.2198.a, %.preheader132 ], [ %.sroa.21.6, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 2 uses
-  %.sroa.0121.3.lcssa = phi ptr [ %.sroa.0121.2199.a, %.preheader132 ], [ %.sroa.0121.8, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 2 uses
-  %i.dh = getelementptr inbounds nuw i8, ptr %.sroa.0108.0197, i64 8 ; 2 uses
+  %.sroa.21.3.lcssa = phi ptr [ %.sroa.0108.0197, %.preheader132 ], [ %.sroa.21.6, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 2 uses
+  %.sroa.0121.3.lcssa = phi ptr [ %.sroa.21.2198.a, %.preheader132 ], [ %.sroa.0121.8, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 2 uses
+  %i.dh = getelementptr inbounds nuw i8, ptr %.sroa.0121.2199.a, i64 8 ; 2 uses
   %i.di = load ptr, ptr %0, align 8, !tbaa !17    ; 2 uses
   %i.dj = getelementptr inbounds nuw [24 x i8], ptr %i.di, i64 %indvars.iv259
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
@@ -466,8 +479,8 @@ bb.n:                                             ; preds = %bb.m, %.lr.ph201
 
 .lr.ph190:                                        ; preds = %.lr.ph190.preheader, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph190.preheader ], [ %indvars.iv.next, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 3 uses
-  %.sroa.0121.3188 = phi ptr [ %.sroa.0121.2199.a, %.lr.ph190.preheader ], [ %.sroa.0121.8, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 8 uses
-  %.sroa.21.3187 = phi ptr [ %.sroa.21.2198.a, %.lr.ph190.preheader ], [ %.sroa.21.6, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 9 uses
+  %.sroa.0121.3188 = phi ptr [ %.sroa.21.2198.a, %.lr.ph190.preheader ], [ %.sroa.0121.8, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 8 uses
+  %.sroa.21.3187 = phi ptr [ %.sroa.0108.0197, %.lr.ph190.preheader ], [ %.sroa.21.6, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 9 uses
   %.sroa.31.3186 = phi ptr [ %.sroa.31.2196, %.lr.ph190.preheader ], [ %.sroa.31.8, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE9push_backERKS2_.exit ] ; 2 uses
   %i.dn = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
   %i.do = load double, ptr %i.dn, align 8, !tbaa !33 ; 2 uses
@@ -672,7 +685,7 @@ bb.z:                                             ; preds = %.lr.ph220
   %i.fu = getelementptr inbounds nuw i8, ptr %i.fk, i64 12
   %i.fv = load i32, ptr %i.fu, align 4, !tbaa !58
   %i.fw = sext i32 %i.fv to i64
-  %i.fx = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.fw ; 2 uses
+  %i.fx = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0126.0, i64 %i.fw ; 2 uses
   %i.fy = load i32, ptr %i.fx, align 4, !tbaa !41
   %i.fz = add nsw i32 %i.ft, %i.fy
   store i32 %i.fz, ptr %i.fx, align 4, !tbaa !41
@@ -693,7 +706,7 @@ _ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EE5clearEv.e
 
 bb.ab:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.n, %bb.v
   %.sroa.31.5 = phi ptr [ %.sroa.31.1.lcssa, %bb.v ], [ %.sroa.31.2196, %bb.n ], [ %.sroa.21.3187, %.loopexit ], [ %.sroa.21.3187, %.loopexit.split-lp ]
-  %.sroa.0121.5 = phi ptr [ %.sroa.0121.1.lcssa, %bb.v ], [ %.sroa.0121.2199.a, %bb.n ], [ %.sroa.0121.3188, %.loopexit ], [ %.sroa.0121.3188, %.loopexit.split-lp ]
+  %.sroa.0121.5 = phi ptr [ %.sroa.0121.1.lcssa, %bb.v ], [ %.sroa.21.2198.a, %bb.n ], [ %.sroa.0121.3188, %.loopexit ], [ %.sroa.0121.3188, %.loopexit.split-lp ]
   %.pn.pn = phi { ptr, i32 } [ %i.ew, %bb.v ], [ %i.dm, %bb.n ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
@@ -717,28 +730,34 @@ bb.ac:                                            ; preds = %.lr.ph225, %bb.b, %
 
 ._crit_edge230:                                   ; preds = %bb.ag, %.preheader
   %.not.i.i.i95 = icmp eq ptr %.sroa.0121.6, null
-  br i1 %.not.i.i.i95, label %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit.a, label %bb.ad
+  br i1 %.not.i.i.i95, label %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit, label %bb.ad
 
 bb.ad:                                            ; preds = %._crit_edge230
   %i.gi = ptrtoint ptr %.sroa.31.6 to i64
   %i.gj = ptrtoint ptr %.sroa.0121.6 to i64
   %i.gk = sub i64 %i.gi, %i.gj
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0121.6, i64 noundef %i.gk) #18
-  br label %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit.a
+  br label %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit
 
-_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit.a: ; preds = %bb.ad, %._crit_edge230, %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit
-  %.idx375 = shl nuw nsw i64 %i.i, 2
-  call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %.idx375) #18
+_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit: ; preds = %_ZNSt6vectorIiSaIiEEC2EmRKS0_.exit, %._crit_edge230, %bb.ad
+  %.not.i.i.i96 = icmp eq ptr %.sroa.0126.0, null
+  br i1 %.not.i.i.i96, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit.a
+
+_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit.a: ; preds = %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit
+  %9 = ptrtoint ptr %.sroa.12.0 to i64
+  %10 = ptrtoint ptr %.sroa.0126.0 to i64
+  %11 = sub i64 %9, %10
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0126.0, i64 noundef %11) #18
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit
 
-_ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit.a
+_ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit.a
   ret void
 
 .lr.ph229:                                        ; preds = %.preheader, %bb.ag
   %i.gl = phi ptr [ %i.gs, %bb.ag ], [ %i.ga, %.preheader ] ; 2 uses
   %i.gm = phi ptr [ %i.gt, %bb.ag ], [ %i.gb, %.preheader ]
   %indvars.iv275 = phi i64 [ %indvars.iv.next276, %bb.ag ], [ 0, %.preheader ] ; 3 uses
-  %i.gn = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv275
+  %i.gn = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0126.0, i64 %indvars.iv275
   %i.go = load i32, ptr %i.gn, align 4, !tbaa !41
   %i.gp = icmp slt i32 %i.go, 0
   br i1 %i.gp, label %bb.ae, label %bb.ag
@@ -776,18 +795,27 @@ bb.ah:                                            ; preds = %bb.f, %bb.ab, %bb.l
   %.sroa.0121.7 = phi ptr [ %.sroa.0121.0223, %bb.i ], [ %.sroa.0121.0223, %bb.l ], [ %.sroa.0121.5, %bb.ab ], [ %.sroa.0121.0223, %bb.f ], [ %.sroa.0121.6, %bb.af ] ; 3 uses
   %.pn68.pn.pn = phi { ptr, i32 } [ %i.bk, %bb.i ], [ %i.cj, %bb.l ], [ %.pn.pn, %bb.ab ], [ %i.av, %bb.f ], [ %i.gr, %bb.af ]
   %.not.i.i.i97 = icmp eq ptr %.sroa.0121.7, null
-  br i1 %.not.i.i.i97, label %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit98.a, label %bb.ai
+  br i1 %.not.i.i.i97, label %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit98, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
   %i.ha = ptrtoint ptr %.sroa.31.7 to i64
   %i.hb = ptrtoint ptr %.sroa.0121.7 to i64
   %i.hc = sub i64 %i.ha, %i.hb
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.0121.7, i64 noundef %i.hc) #18
-  br label %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit98.a
+  br label %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit98
 
-_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit98.a: ; preds = %bb.ai, %bb.ah
-  %.idx = shl nuw nsw i64 %i.i, 2
-  call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %.idx) #18
+_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit98: ; preds = %bb.ah, %bb.ai
+  %.not.i.i.i99 = icmp eq ptr %.sroa.0126.0, null
+  br i1 %.not.i.i.i99, label %_ZNSt6vectorIiSaIiEED2Ev.exit100, label %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit98.a
+
+_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit98.a: ; preds = %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit98
+  %12 = ptrtoint ptr %.sroa.12.0 to i64
+  %13 = ptrtoint ptr %.sroa.0126.0 to i64
+  %14 = sub i64 %12, %13
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0126.0, i64 noundef %14) #18
+  br label %_ZNSt6vectorIiSaIiEED2Ev.exit100
+
+_ZNSt6vectorIiSaIiEED2Ev.exit100:                 ; preds = %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit98.a, %_ZNSt6vectorIZN7msdfgen5Shape14orientContoursEvE12IntersectionSaIS2_EED2Ev.exit98
   resume { ptr, i32 } %.pn68.pn.pn
 }
 

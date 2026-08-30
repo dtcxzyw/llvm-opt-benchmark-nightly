@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jemalloc/original/pac?download=true
+inline.NumInlined: 84
+inline.NumDeleted: 50
 begin_hunk_0_@je_pac_retain_grow_limit_get_set:bb.a
   %i.n = and i32 %i.m, 3
   %i.o = shl nuw nsw i32 %i.g, 2
@@ -200,9 +202,9 @@ ehooks_dalloc_will_fail.exit.i:                   ; preds = %bb.h
 
 .lr.ph.split.us.preheader.i:                      ; preds = %.lr.ph.i, %edata_list_inactive_remove.exit.us.i
   %i.ar = phi ptr [ %.sroa.0.3, %edata_list_inactive_remove.exit.us.i ], [ %.sroa.0.128, %.lr.ph.i ] ; 6 uses
-  %.06.us.i = phi i64 [ %i.bl, %edata_list_inactive_remove.exit.us.i ], [ 0, %.lr.ph.i ]
+  %.06.us.i = phi i64 [ %i.bm, %edata_list_inactive_remove.exit.us.i ], [ 0, %.lr.ph.i ]
   %.0535.us.i = phi i64 [ %i.bn, %edata_list_inactive_remove.exit.us.i ], [ 0, %.lr.ph.i ]
-  %.0564.us.i = phi i64 [ %i.bm, %edata_list_inactive_remove.exit.us.i ], [ 0, %.lr.ph.i ]
+  %.0564.us.i = phi i64 [ %i.bl, %edata_list_inactive_remove.exit.us.i ], [ 0, %.lr.ph.i ]
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 64 ; 3 uses
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !65 ; 3 uses
   %i.au = icmp eq ptr %i.at, %i.ar
@@ -237,8 +239,8 @@ edata_list_inactive_remove.exit.us.i:             ; preds = %.lr.ph.split.us.pre
   %i.bj = getelementptr i8, ptr %i.ar, i64 16
   %.054.val.us.i = load i64, ptr %i.bj, align 8, !tbaa !65
   %i.bk = lshr i64 %.054.val.us.i, 12             ; 2 uses
-  %i.bl = add i64 %.06.us.i, 1                    ; 2 uses
-  %i.bm = add i64 %i.bk, %.0564.us.i              ; 2 uses
+  %i.bl = add i64 %.0564.us.i, 1                  ; 2 uses
+  %i.bm = add i64 %i.bk, %.06.us.i                ; 2 uses
   tail call void @je_extent_dalloc_wrapper(ptr noundef %0, ptr noundef %1, ptr noundef %i.ac, ptr noundef nonnull %i.ar) #9
   %i.bn = add i64 %i.bk, %.0535.us.i              ; 2 uses
   %.not.us.i = icmp eq ptr %.sroa.0.3, null
@@ -246,9 +248,9 @@ edata_list_inactive_remove.exit.us.i:             ; preds = %.lr.ph.split.us.pre
 
 .lr.ph.split.preheader.i:                         ; preds = %.lr.ph.i, %bb.l
   %i.bo = phi ptr [ %.sroa.0.2, %bb.l ], [ %.sroa.0.128, %.lr.ph.i ] ; 8 uses
-  %.06.i = phi i64 [ %i.ci, %bb.l ], [ 0, %.lr.ph.i ]
+  %.06.i = phi i64 [ %i.cj, %bb.l ], [ 0, %.lr.ph.i ]
   %.0535.i = phi i64 [ %.1.i, %bb.l ], [ 0, %.lr.ph.i ] ; 2 uses
-  %.0564.i = phi i64 [ %i.cj, %bb.l ], [ 0, %.lr.ph.i ]
+  %.0564.i = phi i64 [ %i.ci, %bb.l ], [ 0, %.lr.ph.i ]
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 64 ; 3 uses
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !65 ; 3 uses
   %i.br = icmp eq ptr %i.bq, %i.bo
@@ -283,8 +285,8 @@ edata_list_inactive_remove.exit.i:                ; preds = %.lr.ph.split.prehea
   %i.cg = getelementptr i8, ptr %i.bo, i64 16
   %.054.val.i = load i64, ptr %i.cg, align 8, !tbaa !65 ; 2 uses
   %i.ch = lshr i64 %.054.val.i, 12                ; 2 uses
-  %i.ci = add i64 %.06.i, 1                       ; 2 uses
-  %i.cj = add i64 %i.ch, %.0564.i                 ; 2 uses
+  %i.ci = add i64 %.0564.i, 1                     ; 2 uses
+  %i.cj = add i64 %i.ch, %.06.i                   ; 2 uses
   %i.ck = load i32, ptr %i.ap, align 8, !tbaa !66
   %.not12.i = icmp eq i32 %i.ck, 1
   br i1 %.not12.i, label %bb.i, label %bb.k
@@ -309,14 +311,14 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %.not.i, label %pac_decay_stashed.exit, label %.lr.ph.split.preheader.i, !llvm.loop !67
 
 pac_decay_stashed.exit:                           ; preds = %bb.l, %edata_list_inactive_remove.exit.us.i, %.critedge.i
-  %.056.lcssa.i = phi i64 [ 0, %.critedge.i ], [ %i.bm, %edata_list_inactive_remove.exit.us.i ], [ %i.cj, %bb.l ]
+  %.056.lcssa.i = phi i64 [ 0, %.critedge.i ], [ %i.bl, %edata_list_inactive_remove.exit.us.i ], [ %i.ci, %bb.l ]
   %.053.lcssa.i = phi i64 [ 0, %.critedge.i ], [ %i.bn, %edata_list_inactive_remove.exit.us.i ], [ %.1.i, %bb.l ]
-  %.0.lcssa.i = phi i64 [ 0, %.critedge.i ], [ %i.bl, %edata_list_inactive_remove.exit.us.i ], [ %i.ci, %bb.l ]
+  %.0.lcssa.i = phi i64 [ 0, %.critedge.i ], [ %i.bm, %edata_list_inactive_remove.exit.us.i ], [ %i.cj, %bb.l ]
   %i.co = atomicrmw add ptr %3, i64 1 monotonic, align 8 ; 0 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.cq = atomicrmw add ptr %i.cp, i64 %.0.lcssa.i monotonic, align 8 ; 0 uses
+  %i.cq = atomicrmw add ptr %i.cp, i64 %.056.lcssa.i monotonic, align 8 ; 0 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.cs = atomicrmw add ptr %i.cr, i64 %.056.lcssa.i monotonic, align 8 ; 0 uses
+  %i.cs = atomicrmw add ptr %i.cr, i64 %.0.lcssa.i monotonic, align 8 ; 0 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 62208
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !39
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 56
@@ -618,8 +620,8 @@ bb.k:                                             ; preds = %bb.i, %bb.j, %bb.g,
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.d
+  %.167 = phi i64 [ %spec.select, %bb.k ], [ 0, %bb.d ] ; 2 uses
   %.3 = phi ptr [ %.268.a, %bb.k ], [ %.066, %bb.d ] ; 2 uses
-  %.1 = phi i64 [ %spec.select, %bb.k ], [ 0, %bb.d ] ; 2 uses
   %i.ah = icmp eq ptr %.3, null
   br i1 %i.ah, label %bb.m, label %bb.n
 
@@ -627,20 +629,20 @@ bb.m:                                             ; preds = %bb.l
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 38920
   %i.aj = tail call ptr @je_ecache_alloc_grow(ptr noundef %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef nonnull %i.ai, ptr noundef null, i64 noundef %3, i64 noundef %4, i1 noundef zeroext %5, i1 noundef zeroext %6) #9 ; 2 uses
   %.not79 = icmp eq ptr %i.aj, null
-  %spec.select82 = select i1 %.not79, i64 %.1, i64 %3
+  %spec.select82 = select i1 %.not79, i64 %.167, i64 %3
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
+  %.268 = phi i64 [ %.167, %bb.l ], [ %spec.select82, %bb.m ] ; 2 uses
   %.4 = phi ptr [ %.3, %bb.l ], [ %i.aj, %bb.m ]  ; 2 uses
-  %.2 = phi i64 [ %.1, %bb.l ], [ %spec.select82, %bb.m ] ; 2 uses
-  %.not80 = icmp eq i64 %.2, 0
+  %.not80 = icmp eq i64 %.268, 0
   br i1 %.not80, label %.thread88, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 62208
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !39
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 56
-  %i.an = atomicrmw add ptr %i.am, i64 %.2 monotonic, align 8 ; 0 uses
+  %i.an = atomicrmw add ptr %i.am, i64 %.268 monotonic, align 8 ; 0 uses
   br label %.thread88
 
 .thread88:                                        ; preds = %bb.a, %bb.o, %bb.n

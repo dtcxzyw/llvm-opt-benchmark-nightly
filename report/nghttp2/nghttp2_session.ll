@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nghttp2/original/nghttp2_session?download=true
+inline.NumInlined: 534
+inline.NumDeleted: 92
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@nghttp2_session_mem_send_internal:bb.a
 
 bb.dl:                                            ; preds = %bb.dk
@@ -200,13 +204,13 @@ bb.ed:                                            ; preds = %.thread
   br label %bb.ee
 
 bb.ee:                                            ; preds = %bb.eb, %bb.ec, %bb.ed
-  %.0163 = phi i32 [ 7, %bb.eb ], [ %i.pm, %bb.ec ], [ 2, %bb.ed ]
-  %.0162 = phi i32 [ %i.pi, %bb.eb ], [ %i.pi, %bb.ec ], [ %i.po, %bb.ed ] ; 2 uses
-  %.not195 = icmp eq i32 %.0162, 0
+  %.0163 = phi i32 [ %i.pi, %bb.eb ], [ %i.pi, %bb.ec ], [ %i.po, %bb.ed ] ; 2 uses
+  %.0162 = phi i32 [ 7, %bb.eb ], [ %i.pm, %bb.ec ], [ 2, %bb.ed ]
+  %.not195 = icmp eq i32 %.0163, 0
   br i1 %.not195, label %.thread257, label %bb.ef
 
 bb.ef:                                            ; preds = %bb.ee
-  %i.pp = tail call i32 @nghttp2_session_close_stream(ptr noundef nonnull %0, i32 noundef %.0162, i32 noundef %.0163)
+  %i.pp = tail call i32 @nghttp2_session_close_stream(ptr noundef nonnull %0, i32 noundef %.0163, i32 noundef %.0162)
   br label %.thread257
 
 .thread257:                                       ; preds = %bb.dx, %session_prep_frame.exit.thread.thread, %bb.ea, %.thread, %bb.ef, %bb.ee
@@ -609,7 +613,7 @@ nghttp2_session_want_read.exit:                   ; preds = %bb.e
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.preheader, %.thread1189
-  %.1835 = phi ptr [ %.9843, %.thread1189 ], [ %.0834, %.critedge.preheader ] ; 50 uses
+  %.1835 = phi ptr [ %.9862, %.thread1189 ], [ %.0834, %.critedge.preheader ] ; 50 uses
   %i.bz = load i32, ptr %i.s, align 8, !tbaa !90
   switch i32 %i.bz, label %.thread1189 [
     i32 0, label %bb.f
@@ -643,7 +647,7 @@ bb.f:                                             ; preds = %.critedge
   br i1 %.not1035, label %bb.g, label %nghttp2_session_want_read.exit.thread
 
 bb.g:                                             ; preds = %bb.f
-  %i.ce = sub i64 %i.ca, %i.cb
+  %i.ce = sub nuw i64 %i.ca, %i.cb
   store i64 %i.ce, ptr %i.t, align 8, !tbaa !91
   %i.cf = getelementptr inbounds nuw i8, ptr %.1835, i64 %i.cb ; 2 uses
   %.not1331 = icmp ugt i64 %i.ca, %2
@@ -1046,7 +1050,7 @@ bb.ha:                                            ; preds = %.critedge, %.crited
   %i.pv = ptrtoint ptr %.1835 to i64
   %i.pw = sub i64 %i.u, %i.pv
   %i.px = call noundef i64 @llvm.umin.i64(i64 %i.pw, i64 %.val1057) ; 9 uses
-  %i.py = sub i64 %.val1057, %i.px                ; 2 uses
+  %i.py = sub nuw i64 %.val1057, %i.px            ; 2 uses
   %i.pz = load i64, ptr %i.am, align 8, !tbaa !242
   %i.qa = call i64 @nghttp2_frame_trail_padlen(ptr noundef nonnull %i.c, i64 noundef %i.pz) #15 ; 2 uses
   %i.qb = icmp ugt i64 %i.qa, %i.py
@@ -1449,7 +1453,7 @@ bb.lg:                                            ; preds = %.critedge
   %i.ada = ptrtoint ptr %.1835 to i64
   %i.adb = sub i64 %i.u, %i.ada                   ; 2 uses
   %i.adc = call noundef i64 @llvm.umin.i64(i64 %i.adb, i64 %.val1056) ; 2 uses
-  %i.add = sub i64 %.val1056, %i.adc
+  %i.add = sub nuw i64 %.val1056, %i.adc
   store i64 %i.add, ptr %i.t, align 8, !tbaa !91
   %i.ade = getelementptr inbounds nuw i8, ptr %.1835, i64 %i.adc ; 2 uses
   %.not963.not = icmp ugt i64 %.val1056, %i.adb
@@ -1852,7 +1856,7 @@ nghttp2_session_get_stream.exit1129:              ; preds = %bb.of
   %i.amn = ptrtoint ptr %.1835 to i64
   %i.amo = sub i64 %i.u, %i.amn
   %i.amp = call noundef i64 @llvm.umin.i64(i64 %i.amo, i64 %.val1054) ; 9 uses
-  %i.amq = sub i64 %.val1054, %i.amp              ; 2 uses
+  %i.amq = sub nuw i64 %.val1054, %i.amp          ; 2 uses
   store i64 %i.amq, ptr %i.t, align 8, !tbaa !91
   %i.amr = getelementptr inbounds nuw i8, ptr %.1835, i64 %i.amp ; 4 uses
   %.not926 = icmp eq i64 %i.amp, 0
@@ -2055,7 +2059,7 @@ bb.pp:                                            ; preds = %.critedge
   %i.apk = ptrtoint ptr %.1835 to i64
   %i.apl = sub i64 %i.u, %i.apk
   %i.apm = call noundef i64 @llvm.umin.i64(i64 %i.apl, i64 %.val1053) ; 5 uses
-  %i.apn = sub i64 %.val1053, %i.apm              ; 2 uses
+  %i.apn = sub nuw i64 %.val1053, %i.apm          ; 2 uses
   store i64 %i.apn, ptr %i.t, align 8, !tbaa !91
   %i.apo = getelementptr inbounds nuw i8, ptr %.1835, i64 %i.apm ; 2 uses
   %.not920 = icmp eq i64 %i.apm, 0
@@ -2115,7 +2119,7 @@ bb.pz:                                            ; preds = %.critedge
   %i.aqe = ptrtoint ptr %.1835 to i64
   %i.aqf = sub i64 %i.u, %i.aqe
   %i.aqg = call noundef i64 @llvm.umin.i64(i64 %i.aqf, i64 %.val1052) ; 4 uses
-  %i.aqh = sub i64 %.val1052, %i.aqg              ; 3 uses
+  %i.aqh = sub nuw i64 %.val1052, %i.aqg          ; 3 uses
   store i64 %i.aqh, ptr %i.t, align 8, !tbaa !91
   %i.aqi = getelementptr inbounds nuw i8, ptr %.1835, i64 %i.aqg ; 3 uses
   %.not915 = icmp eq i64 %i.aqg, 0
@@ -2332,10 +2336,10 @@ bb.rb:                                            ; preds = %session_process_ori
   br label %.thread1189
 
 .thread1189:                                      ; preds = %bb.my, %session_after_header_block_received.exit.thread.thread1328, %bb.ji, %bb.jh, %bb.je, %bb.eo, %bb.ch, %bb.ce, %bb.cb, %bb.bp, %bb.bk, %bb.be, %bb.an, %bb.aa, %bb.eg, %bb.eb, %bb.dx, %bb.di, %bb.dp, %bb.dc, %bb.da, %bb.cv, %bb.el, %bb.cp, %bb.pj, %bb.jc, %session_handle_invalid_stream2.exit1089.thread, %bb.jb, %.thread1209, %session_handle_invalid_stream2.exit.thread, %bb.bb, %bb.bc, %bb.em, %bb.em, %bb.em, %bb.em, %bb.em, %bb.qw, %bb.qn, %thread-pre-split1304, %bb.px, %bb.pk, %bb.nb, %bb.na, %bb.mk, %bb.lo, %bb.lg, %bb.ey, %bb.ez, %session_handle_invalid_stream2.exit1077.thread, %bb.fk, %bb.fl, %bb.fm, %bb.fq, %bb.fv, %session_handle_invalid_stream2.exit1082.thread, %bb.gc, %bb.gd, %bb.gh, %bb.go, %bb.gq, %bb.gu, %bb.gy, %bb.gz, %bb.g, %bb.h, %bb.rb, %bb.qs, %bb.qj, %bb.qd, %bb.py, %bb.po, %select.unfold1279, %bb.oc, %bb.mp, %bb.mg, %bb.ly, %bb.lj, %.critedge
-  %.11862 = phi i32 [ 0, %.critedge ], [ 0, %bb.h ], [ 0, %bb.g ], [ 0, %bb.rb ], [ 0, %bb.gz ], [ 1, %bb.ey ], [ 0, %bb.ez ], [ 1, %session_handle_invalid_stream2.exit1077.thread ], [ 1, %bb.fk ], [ 1, %bb.fl ], [ 0, %bb.fm ], [ 0, %bb.fq ], [ 0, %session_after_header_block_received.exit.thread.thread1328 ], [ 0, %bb.fv ], [ 1, %session_handle_invalid_stream2.exit1082.thread ], [ 1, %bb.gc ], [ 1, %bb.gd ], [ 0, %bb.gh ], [ 1, %.thread1209 ], [ 0, %bb.go ], [ 1, %bb.gq ], [ 1, %bb.gu ], [ 0, %bb.gy ], [ %.2853.ph1195, %bb.eo ], [ 0, %bb.lg ], [ 0, %bb.lj ], [ 0, %bb.lo ], [ 0, %bb.ly ], [ 0, %bb.mg ], [ 0, %bb.mk ], [ 0, %bb.mp ], [ 1, %bb.na ], [ 1, %bb.nb ], [ 1, %bb.oc ], [ 0, %bb.pk ], [ 0, %bb.po ], [ 1, %bb.pj ], [ 1, %select.unfold1279 ], [ 0, %bb.px ], [ 0, %bb.py ], [ 1, %bb.qd ], [ 0, %thread-pre-split1304 ], [ 0, %bb.qj ], [ 0, %bb.qn ], [ 0, %bb.qs ], [ 0, %bb.qw ], [ 1, %bb.ch ], [ %.2853.ph.ph, %bb.em ], [ %.2853.ph.ph, %bb.em ], [ %.2853.ph.ph, %bb.em ], [ %.2853.ph.ph, %bb.em ], [ %.2853.ph.ph, %bb.em ], [ 1, %bb.bb ], [ 1, %bb.bc ], [ 1, %session_handle_invalid_stream2.exit.thread ], [ 0, %bb.jb ], [ 1, %bb.jc ], [ 1, %session_handle_invalid_stream2.exit1089.thread ], [ 1, %bb.cp ], [ 1, %bb.el ], [ 1, %bb.cv ], [ 1, %bb.da ], [ 1, %bb.dc ], [ 1, %bb.dp ], [ 1, %bb.di ], [ 1, %bb.dx ], [ 1, %bb.eb ], [ 1, %bb.eg ], [ 1, %bb.aa ], [ 1, %bb.an ], [ 1, %bb.be ], [ 1, %bb.bk ], [ 1, %bb.bp ], [ 1, %bb.cb ], [ 1, %bb.ce ], [ 0, %bb.je ], [ 0, %bb.jh ], [ 0, %bb.ji ], [ 1, %bb.my ]
-  %.9843 = phi ptr [ %.1835, %.critedge ], [ %i.cf, %bb.h ], [ %i.cf, %bb.g ], [ %.8842, %bb.rb ], [ %i.lp, %bb.gz ], [ %i.lp, %bb.ey ], [ %i.lp, %bb.ez ], [ %i.lp, %session_handle_invalid_stream2.exit1077.thread ], [ %i.lp, %bb.fk ], [ %i.lp, %bb.fl ], [ %i.lp, %bb.fm ], [ %i.lp, %bb.fq ], [ %.4838, %session_after_header_block_received.exit.thread.thread1328 ], [ %i.lp, %bb.fv ], [ %i.lp, %session_handle_invalid_stream2.exit1082.thread ], [ %i.lp, %bb.gc ], [ %i.lp, %bb.gd ], [ %i.lp, %bb.gh ], [ %i.lp, %.thread1209 ], [ %i.lp, %bb.go ], [ %i.lp, %bb.gq ], [ %i.lp, %bb.gu ], [ %i.lp, %bb.gy ], [ %i.dp, %bb.eo ], [ %i.ade, %bb.lg ], [ %i.ade, %bb.lj ], [ %i.adw, %bb.lo ], [ %i.adw, %bb.ly ], [ %i.adw, %bb.mg ], [ %.6840, %bb.mk ], [ %.6840, %bb.mp ], [ %i.ahh, %bb.na ], [ %i.ahh, %bb.nb ], [ %i.aiy, %bb.oc ], [ %i.amr, %bb.pk ], [ %i.amr, %bb.po ], [ %i.amr, %bb.pj ], [ %.1835, %select.unfold1279 ], [ %i.apo, %bb.px ], [ %i.apo, %bb.py ], [ %i.aqi, %bb.qd ], [ %i.aqi, %thread-pre-split1304 ], [ %i.aqi, %bb.qj ], [ %.7841, %bb.qn ], [ %.7841, %bb.qs ], [ %.8842, %bb.qw ], [ %i.dp, %bb.ch ], [ %i.dp, %bb.em ], [ %i.dp, %bb.em ], [ %i.dp, %bb.em ], [ %i.dp, %bb.em ], [ %i.dp, %bb.em ], [ %i.dp, %bb.bb ], [ %i.dp, %bb.bc ], [ %i.dp, %session_handle_invalid_stream2.exit.thread ], [ %i.yq, %bb.jb ], [ %i.yq, %bb.jc ], [ %i.yp, %session_handle_invalid_stream2.exit1089.thread ], [ %i.dp, %bb.cp ], [ %i.dp, %bb.el ], [ %i.dp, %bb.cv ], [ %i.dp, %bb.da ], [ %i.dp, %bb.dc ], [ %i.dp, %bb.dp ], [ %i.dp, %bb.di ], [ %i.dp, %bb.dx ], [ %i.dp, %bb.eb ], [ %i.dp, %bb.eg ], [ %i.dp, %bb.aa ], [ %i.dp, %bb.an ], [ %i.dp, %bb.be ], [ %i.dp, %bb.bk ], [ %i.dp, %bb.bp ], [ %i.dp, %bb.cb ], [ %i.dp, %bb.ce ], [ %.4838, %bb.je ], [ %.4838, %bb.jh ], [ %.4838, %bb.ji ], [ %i.ahh, %bb.my ] ; 2 uses
-  %.not1036 = icmp eq i32 %.11862, 0
-  %i.ast = icmp eq ptr %.9843, %i.f
+  %.9862 = phi ptr [ %.1835, %.critedge ], [ %i.cf, %bb.h ], [ %i.cf, %bb.g ], [ %.8842, %bb.rb ], [ %i.lp, %bb.gz ], [ %i.lp, %bb.ey ], [ %i.lp, %bb.ez ], [ %i.lp, %session_handle_invalid_stream2.exit1077.thread ], [ %i.lp, %bb.fk ], [ %i.lp, %bb.fl ], [ %i.lp, %bb.fm ], [ %i.lp, %bb.fq ], [ %i.dp, %bb.ch ], [ %i.lp, %bb.fv ], [ %i.lp, %session_handle_invalid_stream2.exit1082.thread ], [ %i.lp, %bb.gc ], [ %i.lp, %bb.gd ], [ %i.lp, %bb.gh ], [ %i.lp, %.thread1209 ], [ %i.lp, %bb.go ], [ %i.lp, %bb.gq ], [ %i.lp, %bb.gu ], [ %i.lp, %bb.gy ], [ %i.dp, %bb.eo ], [ %i.ade, %bb.lg ], [ %i.ade, %bb.lj ], [ %i.adw, %bb.lo ], [ %i.adw, %bb.ly ], [ %i.adw, %bb.mg ], [ %.6840, %bb.mk ], [ %.6840, %bb.mp ], [ %i.ahh, %bb.na ], [ %i.ahh, %bb.nb ], [ %i.aiy, %bb.oc ], [ %i.amr, %bb.pk ], [ %i.amr, %bb.po ], [ %i.amr, %bb.pj ], [ %.1835, %select.unfold1279 ], [ %i.apo, %bb.px ], [ %i.apo, %bb.py ], [ %i.aqi, %bb.qd ], [ %i.aqi, %thread-pre-split1304 ], [ %i.aqi, %bb.qj ], [ %.7841, %bb.qn ], [ %.7841, %bb.qs ], [ %.8842, %bb.qw ], [ %i.dp, %bb.em ], [ %i.dp, %bb.em ], [ %i.dp, %bb.em ], [ %i.dp, %bb.em ], [ %i.dp, %bb.em ], [ %i.dp, %bb.bc ], [ %i.dp, %bb.bb ], [ %i.dp, %session_handle_invalid_stream2.exit.thread ], [ %.4838, %session_after_header_block_received.exit.thread.thread1328 ], [ %i.yq, %bb.jc ], [ %i.yq, %bb.jb ], [ %i.yp, %session_handle_invalid_stream2.exit1089.thread ], [ %i.dp, %bb.cp ], [ %i.dp, %bb.el ], [ %i.dp, %bb.cv ], [ %i.dp, %bb.da ], [ %i.dp, %bb.dc ], [ %i.dp, %bb.dp ], [ %i.dp, %bb.di ], [ %i.dp, %bb.dx ], [ %i.dp, %bb.eb ], [ %i.dp, %bb.eg ], [ %i.dp, %bb.aa ], [ %i.dp, %bb.an ], [ %i.dp, %bb.be ], [ %i.dp, %bb.bk ], [ %i.dp, %bb.bp ], [ %i.dp, %bb.cb ], [ %i.dp, %bb.ce ], [ %.4838, %bb.je ], [ %.4838, %bb.jh ], [ %.4838, %bb.ji ], [ %i.ahh, %bb.my ] ; 2 uses
+  %.11852 = phi i32 [ 0, %.critedge ], [ 0, %bb.h ], [ 0, %bb.g ], [ 0, %bb.rb ], [ 0, %bb.gz ], [ 1, %bb.ey ], [ 0, %bb.ez ], [ 1, %session_handle_invalid_stream2.exit1077.thread ], [ 1, %bb.fk ], [ 1, %bb.fl ], [ 0, %bb.fm ], [ 0, %bb.fq ], [ 1, %bb.ch ], [ 0, %bb.fv ], [ 1, %session_handle_invalid_stream2.exit1082.thread ], [ 1, %bb.gc ], [ 1, %bb.gd ], [ 0, %bb.gh ], [ 1, %.thread1209 ], [ 0, %bb.go ], [ 1, %bb.gq ], [ 1, %bb.gu ], [ 0, %bb.gy ], [ %.2853.ph1195, %bb.eo ], [ 0, %bb.lg ], [ 0, %bb.lj ], [ 0, %bb.lo ], [ 0, %bb.ly ], [ 0, %bb.mg ], [ 0, %bb.mk ], [ 0, %bb.mp ], [ 1, %bb.na ], [ 1, %bb.nb ], [ 1, %bb.oc ], [ 0, %bb.pk ], [ 0, %bb.po ], [ 1, %bb.pj ], [ 1, %select.unfold1279 ], [ 0, %bb.px ], [ 0, %bb.py ], [ 1, %bb.qd ], [ 0, %thread-pre-split1304 ], [ 0, %bb.qj ], [ 0, %bb.qn ], [ 0, %bb.qs ], [ 0, %bb.qw ], [ %.2853.ph.ph, %bb.em ], [ %.2853.ph.ph, %bb.em ], [ %.2853.ph.ph, %bb.em ], [ %.2853.ph.ph, %bb.em ], [ %.2853.ph.ph, %bb.em ], [ 1, %bb.bc ], [ 1, %bb.bb ], [ 1, %session_handle_invalid_stream2.exit.thread ], [ 0, %session_after_header_block_received.exit.thread.thread1328 ], [ 1, %bb.jc ], [ 0, %bb.jb ], [ 1, %session_handle_invalid_stream2.exit1089.thread ], [ 1, %bb.cp ], [ 1, %bb.el ], [ 1, %bb.cv ], [ 1, %bb.da ], [ 1, %bb.dc ], [ 1, %bb.dp ], [ 1, %bb.di ], [ 1, %bb.dx ], [ 1, %bb.eb ], [ 1, %bb.eg ], [ 1, %bb.aa ], [ 1, %bb.an ], [ 1, %bb.be ], [ 1, %bb.bk ], [ 1, %bb.bp ], [ 1, %bb.cb ], [ 1, %bb.ce ], [ 0, %bb.je ], [ 0, %bb.jh ], [ 0, %bb.ji ], [ 1, %bb.my ]
+  %.not1036 = icmp eq i32 %.11852, 0
+  %i.ast = icmp eq ptr %.9862, %i.f
   %or.cond1038 = select i1 %.not1036, i1 %i.ast, i1 false
   br i1 %or.cond1038, label %nghttp2_session_want_read.exit.thread, label %.critedge
 

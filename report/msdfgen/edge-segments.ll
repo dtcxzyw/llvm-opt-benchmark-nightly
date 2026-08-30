@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/msdfgen/original/edge-segments?download=true
+inline.NumInlined: 310
+inline.NumDeleted: 20
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZNK7msdfgen12CubicSegment15directionChangeEd:bb.a
   %i.t = fmul <2 x double> %i.s, %i.n
   %i.u = fadd <2 x double> %i.q, %i.t             ; 2 uses
@@ -200,10 +204,10 @@ _ZNK7msdfgen7Vector214getOrthonormalEbb.exit:     ; preds = %bb.a
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZNK7msdfgen7Vector214getOrthonormalEbb.exit, %.critedge
-  %.sroa.062.0.a = phi double [ %i.br, %.critedge ], [ %i.ar, %_ZNK7msdfgen7Vector214getOrthonormalEbb.exit ]
-  %.sroa.3.0 = phi double [ %i.bt, %.critedge ], [ 0.000000e+00, %_ZNK7msdfgen7Vector214getOrthonormalEbb.exit ]
-  %.fca.0.insert = insertvalue { double, double } poison, double %.sroa.062.0.a, 0
-  %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %.sroa.3.0, 1
+  %.sroa.062.0.a = phi double [ %i.bt, %.critedge ], [ 0.000000e+00, %_ZNK7msdfgen7Vector214getOrthonormalEbb.exit ]
+  %.sroa.3.0 = phi double [ %i.br, %.critedge ], [ %i.ar, %_ZNK7msdfgen7Vector214getOrthonormalEbb.exit ]
+  %.fca.0.insert = insertvalue { double, double } poison, double %.sroa.3.0, 0
+  %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %.sroa.062.0.a, 1
   ret { double, double } %.fca.1.insert
 }
 

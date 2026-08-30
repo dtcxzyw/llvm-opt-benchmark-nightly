@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jemalloc/original/hpa?download=true
+inline.NumInlined: 206
+inline.NumDeleted: 94
 begin_hunk_0_@je_hpa_shard_disable:bb.a
   %i.n = add i64 %i.m, 1
   store i64 %i.n, ptr %i.l, align 8, !tbaa !63
@@ -200,15 +202,15 @@ bb.d:                                             ; preds = %bb.c
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.p, %.lr.ph.preheader.i
-  %.sroa.8.081.i = phi i64 [ %i.bz, %bb.p ], [ 0, %.lr.ph.preheader.i ] ; 5 uses
-  %.sroa.16.080.i = phi i64 [ %i.cy, %bb.p ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
-  %.sroa.20.079.i = phi i64 [ %i.cv, %bb.p ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
-  %.sroa.28.178.i = phi i64 [ %i.db, %bb.p ], [ %.sroa.28.0.i48, %.lr.ph.preheader.i ] ; 4 uses
-  %i.ao = icmp eq i64 %.sroa.8.081.i, 16
+  %.sroa.8.081.i = phi i64 [ %i.cv, %bb.p ], [ 0, %.lr.ph.preheader.i ] ; 3 uses
+  %.sroa.16.080.i = phi i64 [ %i.db, %bb.p ], [ %.sroa.28.0.i48, %.lr.ph.preheader.i ] ; 4 uses
+  %.sroa.20.079.i = phi i64 [ %i.cy, %bb.p ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
+  %.sroa.28.178.i = phi i64 [ %i.bz, %bb.p ], [ 0, %.lr.ph.preheader.i ] ; 5 uses
+  %i.ao = icmp eq i64 %.sroa.28.178.i, 16
   br i1 %i.ao, label %.critedge.thread.i, label %hpa_batch_full.exit.i
 
 hpa_batch_full.exit.i:                            ; preds = %.lr.ph.i
-  %.not.i = icmp ult i64 %.sroa.16.080.i, %i.t
+  %.not.i = icmp ult i64 %.sroa.20.079.i, %i.t
   br i1 %.not.i, label %bb.e, label %.critedge.i
 
 bb.e:                                             ; preds = %hpa_batch_full.exit.i
@@ -304,8 +306,8 @@ bb.n:                                             ; preds = %hpa_should_purge.ex
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bs, i64 17
   store i8 0, ptr %i.bx, align 1, !tbaa !96
   call void @je_psset_update_end(ptr noundef nonnull %i.u, ptr noundef nonnull %i.bs) #7
-  %i.by = getelementptr inbounds nuw [104 x i8], ptr %6, i64 %.sroa.8.081.i ; 5 uses
-  %i.bz = add nuw nsw i64 %.sroa.8.081.i, 1       ; 3 uses
+  %i.by = getelementptr inbounds nuw [104 x i8], ptr %6, i64 %.sroa.28.178.i ; 5 uses
+  %i.bz = add nuw nsw i64 %.sroa.28.178.i, 1      ; 3 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.by, i64 88
   store ptr %i.bs, ptr %i.ca, align 8, !tbaa !97
   %i.cb = load i32, ptr %i.aa, align 8, !tbaa !65
@@ -365,34 +367,34 @@ hpa_purge_start_hp.exit.i:                        ; preds = %bb.o, %hpa_needs_de
   store i8 %i.cs, ptr %i.ct, align 8, !tbaa !104
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.cu = call i64 @je_hpdata_purge_begin(ptr noundef nonnull %i.bs, ptr noundef nonnull %i.by, ptr noundef nonnull %i.a) #7 ; 3 uses
-  %i.cv = add i64 %i.cu, %.sroa.20.079.i          ; 3 uses
+  %i.cv = add i64 %i.cu, %.sroa.8.081.i           ; 3 uses
   %i.cw = load i64, ptr %i.a, align 8, !tbaa !44
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   %i.cx = icmp eq i64 %i.cu, 0
   br i1 %i.cx, label %.critedge.thread.i, label %bb.p
 
 bb.p:                                             ; preds = %hpa_purge_start_hp.exit.i
-  %i.cy = add i64 %i.cw, %.sroa.16.080.i
+  %i.cy = add i64 %i.cw, %.sroa.20.079.i
   %i.cz = load i64, ptr %i.w, align 8, !tbaa !47
   %i.da = add i64 %i.cz, %i.cu
   store i64 %i.da, ptr %i.w, align 8, !tbaa !47
-  %i.db = add i64 %.sroa.28.178.i, 1              ; 2 uses
+  %i.db = add i64 %.sroa.16.080.i, 1              ; 2 uses
   %i.dc = icmp eq i64 %i.db, %.029.a
   br i1 %i.dc, label %.critedge.thread.i, label %.lr.ph.i
 
 .critedge.i:                                      ; preds = %hpa_should_purge.exit.thread55.i, %hpa_should_purge.exit.i, %bb.j, %hpa_ndirty_max.exit.thread.i.i, %bb.e, %hpa_batch_full.exit.i
-  %i.dd = icmp eq i64 %.sroa.8.081.i, 0
+  %i.dd = icmp eq i64 %.sroa.28.178.i, 0
   br i1 %i.dd, label %hpa_purge.exit, label %.critedge.thread.i
 
 .critedge.thread.i:                               ; preds = %bb.p, %hpa_purge_start_hp.exit.i, %.lr.ph.i, %.critedge.i
-  %.sroa.28.177.i = phi i64 [ %.sroa.28.178.i, %.critedge.i ], [ %i.an, %.lr.ph.i ], [ %.sroa.28.178.i, %hpa_purge_start_hp.exit.i ], [ %.029.a, %bb.p ] ; 2 uses
-  %.sroa.8.174.i = phi i64 [ %.sroa.8.081.i, %.critedge.i ], [ 16, %.lr.ph.i ], [ %i.bz, %hpa_purge_start_hp.exit.i ], [ %i.bz, %bb.p ] ; 2 uses
-  %.sroa.20.173.i = phi i64 [ %.sroa.20.079.i, %.critedge.i ], [ %.sroa.20.079.i, %.lr.ph.i ], [ %i.cv, %hpa_purge_start_hp.exit.i ], [ %i.cv, %bb.p ] ; 2 uses
+  %.sroa.28.177.i = phi i64 [ %.sroa.16.080.i, %.critedge.i ], [ %i.an, %.lr.ph.i ], [ %.sroa.16.080.i, %hpa_purge_start_hp.exit.i ], [ %.029.a, %bb.p ] ; 2 uses
+  %.sroa.8.174.i = phi i64 [ %.sroa.8.081.i, %.critedge.i ], [ %.sroa.8.081.i, %.lr.ph.i ], [ %i.cv, %hpa_purge_start_hp.exit.i ], [ %i.cv, %bb.p ] ; 2 uses
+  %.sroa.20.173.i = phi i64 [ %.sroa.28.178.i, %.critedge.i ], [ 16, %.lr.ph.i ], [ %i.bz, %hpa_purge_start_hp.exit.i ], [ %i.bz, %bb.p ] ; 2 uses
   %i.de = load ptr, ptr %i.f, align 8, !tbaa !12
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 136
   store atomic i8 0, ptr %i.ac monotonic, align 8
   %i.dg = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.ad) #7 ; 0 uses
-  call void @je_hpa_purge_batch(ptr noundef nonnull %i.df, ptr noundef nonnull %6, i64 noundef %.sroa.8.174.i) #7
+  call void @je_hpa_purge_batch(ptr noundef nonnull %i.df, ptr noundef nonnull %6, i64 noundef %.sroa.20.173.i) #7
   %i.dh = call i32 @pthread_mutex_trylock(ptr noundef nonnull %i.ad) #7
   %.not.i31.i = icmp eq i32 %i.dh, 0
   br i1 %.not.i31.i, label %malloc_mutex_trylock_final.exit.i.i, label %bb.q
@@ -422,10 +424,10 @@ bb.s:                                             ; preds = %bb.r
 
 malloc_mutex_lock.exit.i:                         ; preds = %bb.s, %bb.r
   %i.dn = load i64, ptr %i.w, align 8, !tbaa !47
-  %i.do = sub i64 %i.dn, %.sroa.20.173.i
+  %i.do = sub i64 %i.dn, %.sroa.8.174.i
   store i64 %i.do, ptr %i.w, align 8, !tbaa !47
   %i.dp = load i64, ptr %i.ah, align 8, !tbaa !105
-  %i.dq = add i64 %i.dp, %.sroa.20.173.i
+  %i.dq = add i64 %i.dp, %.sroa.8.174.i
   store i64 %i.dq, ptr %i.ah, align 8, !tbaa !105
   %i.dr = load ptr, ptr %i.f, align 8, !tbaa !12
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dr, i64 176
@@ -632,11 +634,11 @@ hpa_update_purge_hugify_eligibility.exit.i:       ; preds = %.sink.split.i.i, %h
   %i.gh = load ptr, ptr %i.ea, align 8, !tbaa !97
   call void @je_psset_update_end(ptr noundef nonnull %i.u, ptr noundef %i.gh) #7
   %i.gi = add nuw i64 %.0107.i, 1                 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.gi, %.sroa.8.174.i
+  %exitcond.not.i = icmp eq i64 %i.gi, %.sroa.20.173.i
   br i1 %exitcond.not.i, label %.loopexit.loopexit.i, label %bb.t, !llvm.loop !91
 
 hpa_purge.exit:                                   ; preds = %.critedge.i, %.loopexit.loopexit.i, %bb.d
-  %.sroa.28.1.lcssa128.i = phi i64 [ %.029.a, %bb.d ], [ %.029.a, %.loopexit.loopexit.i ], [ %.sroa.28.178.i, %.critedge.i ]
+  %.sroa.28.1.lcssa128.i = phi i64 [ %.029.a, %bb.d ], [ %.029.a, %.loopexit.loopexit.i ], [ %.sroa.16.080.i, %.critedge.i ]
   %i.gj = getelementptr inbounds nuw i8, ptr %1, i64 5808 ; 2 uses
   %i.gk = load i64, ptr %i.gj, align 16, !tbaa !77
   %i.gl = add i64 %i.gk, 1

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/brotli/original/literal_cost?download=true
+inline.NumInlined: 7
+inline.NumDeleted: 3
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@BrotliEstimateBitCostsForLiterals:bb.a
   %i.fh = load i64, ptr %i.fg, align 8, !tbaa !9
   %i.fi = add i64 %i.fh, -1
@@ -200,13 +204,13 @@ bb.ah:                                            ; preds = %bb.a
   br i1 %niter.ncmp.1, label %.lr.ph70.unr-lcssa, label %.lr.ph, !llvm.loop !20
 
 bb.ai:                                            ; preds = %.lr.ph70, %FastLog2.exit
-  %.05769 = phi i64 [ %i.ie, %.lr.ph70 ], [ %.2, %FastLog2.exit ] ; 2 uses
-  %.15968 = phi i64 [ 0, %.lr.ph70 ], [ %i.lb, %FastLog2.exit ] ; 7 uses
-  %i.ji = icmp ugt i64 %.15968, 1999
+  %.05769 = phi i64 [ 0, %.lr.ph70 ], [ %i.lb, %FastLog2.exit ] ; 7 uses
+  %.15968 = phi i64 [ %i.ie, %.lr.ph70 ], [ %.2, %FastLog2.exit ] ; 2 uses
+  %i.ji = icmp ugt i64 %.05769, 1999
   br i1 %i.ji, label %bb.aj, label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.jj = add i64 %i.io, %.15968
+  %i.jj = add i64 %i.io, %.05769
   %i.jk = and i64 %i.jj, %2
   %i.jl = getelementptr inbounds nuw i8, ptr %3, i64 %i.jk
   %i.jm = load i8, ptr %i.jl, align 1, !tbaa !8
@@ -215,17 +219,17 @@ bb.aj:                                            ; preds = %bb.ai
   %i.jp = load i64, ptr %i.jo, align 8, !tbaa !9
   %i.jq = add i64 %i.jp, -1
   store i64 %i.jq, ptr %i.jo, align 8, !tbaa !9
-  %i.jr = add i64 %.05769, -1
+  %i.jr = add i64 %.15968, -1
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
-  %.1 = phi i64 [ %i.jr, %bb.aj ], [ %.05769, %bb.ai ] ; 2 uses
-  %i.js = add i64 %.15968, 2000
+  %.1 = phi i64 [ %i.jr, %bb.aj ], [ %.15968, %bb.ai ] ; 2 uses
+  %i.js = add i64 %.05769, 2000
   %i.jt = icmp ult i64 %i.js, %1
   br i1 %i.jt, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
-  %i.ju = add i64 %i.ip, %.15968
+  %i.ju = add i64 %i.ip, %.05769
   %i.jv = and i64 %i.ju, %2
   %i.jw = getelementptr inbounds nuw i8, ptr %3, i64 %i.jv
   %i.jx = load i8, ptr %i.jw, align 1, !tbaa !8
@@ -239,7 +243,7 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
   %.2 = phi i64 [ %i.kc, %bb.al ], [ %.1, %bb.ak ] ; 4 uses
-  %i.kd = add i64 %.15968, %0
+  %i.kd = add i64 %.05769, %0
   %i.ke = and i64 %i.kd, %2
   %i.kf = getelementptr inbounds nuw i8, ptr %3, i64 %i.ke
   %i.kg = load i8, ptr %i.kf, align 1, !tbaa !8
@@ -284,9 +288,9 @@ FastLog2.exit:                                    ; preds = %bb.ap, %bb.aq
   %i.ky = fadd double %i.kx, 5.000000e-01
   %.0 = select i1 %i.kw, double %i.ky, double %i.kv
   %i.kz = fptrunc double %.0 to float
-  %i.la = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.15968
+  %i.la = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %.05769
   store float %i.kz, ptr %i.la, align 4, !tbaa !15
-  %i.lb = add nuw i64 %.15968, 1                  ; 2 uses
+  %i.lb = add nuw i64 %.05769, 1                  ; 2 uses
   %exitcond74.not = icmp eq i64 %i.lb, %1
   br i1 %exitcond74.not, label %.loopexit, label %bb.ai, !llvm.loop !21
 

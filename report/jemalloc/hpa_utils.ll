@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jemalloc/original/hpa_utils?download=true
+inline.NumInlined: 8
+inline.NumDeleted: 7
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -26,7 +28,7 @@ bb.a:
   br label %bb.e
 
 ._crit_edge35:                                    ; preds = %._crit_edge
-  %.not.i = icmp eq i64 %.sroa.5.1.lcssa, 0
+  %.not.i = icmp eq i64 %.sroa.11.1.lcssa.a, 0
   br i1 %.not.i, label %hpa_range_accum_finish.exit, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge35
@@ -37,7 +39,7 @@ bb.b:                                             ; preds = %._crit_edge35
 bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !14
-  %i.l = call zeroext i1 %i.k(ptr noundef nonnull %3, i64 noundef %.sroa.5.1.lcssa, i64 noundef %.sroa.11.1.lcssa.a) #3, !inline_history !17
+  %i.l = call zeroext i1 %i.k(ptr noundef nonnull %3, i64 noundef %.sroa.11.1.lcssa.a, i64 noundef %.sroa.5.1.lcssa) #3, !inline_history !17
   br i1 %i.l, label %.lr.ph.i.i.i, label %hpa_range_accum_finish.exit
 
 .lr.ph.i.i.i:                                     ; preds = %bb.c, %bb.b
@@ -53,7 +55,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.i.i
   %i.r = load i64, ptr %i.q, align 8, !tbaa !21
   call void %i.n(ptr noundef %i.p, i64 noundef %i.r) #3, !inline_history !17
   %i.s = add nuw i64 %.012.i.i.i, 1               ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i64 %i.s, %.sroa.5.1.lcssa
+  %exitcond.not.i.i.i = icmp eq i64 %i.s, %.sroa.11.1.lcssa.a
   br i1 %exitcond.not.i.i.i, label %hpa_range_accum_finish.exit, label %bb.d, !llvm.loop !22
 
 hpa_range_accum_finish.exit:                      ; preds = %bb.d, %bb.a, %bb.c, %._crit_edge35
@@ -86,16 +88,16 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.ac, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.g, %hpa_range_accum_add.exit
-  %.sroa.5.128 = phi i64 [ %.sroa.5.2, %hpa_range_accum_add.exit ], [ %.sroa.5.031, %bb.g ] ; 3 uses
-  %.sroa.11.127 = phi i64 [ %.sroa.11.2.a, %hpa_range_accum_add.exit ], [ %.sroa.11.030, %bb.g ]
+  %.sroa.5.128 = phi i64 [ %.sroa.5.2, %hpa_range_accum_add.exit ], [ %.sroa.5.031, %bb.g ]
+  %.sroa.11.127 = phi i64 [ %.sroa.11.2.a, %hpa_range_accum_add.exit ], [ %.sroa.11.030, %bb.g ] ; 3 uses
   %i.ad = load i64, ptr %i.b, align 8, !tbaa !12  ; 2 uses
   %i.ae = load ptr, ptr %i.a, align 8, !tbaa !37
-  %i.af = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %.sroa.5.128 ; 2 uses
+  %i.af = getelementptr inbounds nuw [16 x i8], ptr %3, i64 %.sroa.11.127 ; 2 uses
   store ptr %i.ae, ptr %i.af, align 16, !tbaa !19
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   store i64 %i.ad, ptr %i.ag, align 8, !tbaa !21
-  %i.ah = add i64 %i.ad, %.sroa.11.127            ; 2 uses
-  %i.ai = add i64 %.sroa.5.128, 1                 ; 2 uses
+  %i.ah = add i64 %i.ad, %.sroa.5.128             ; 2 uses
+  %i.ai = add i64 %.sroa.11.127, 1                ; 2 uses
   %i.aj = icmp eq i64 %i.ai, %i.e
   br i1 %i.aj, label %bb.h, label %hpa_range_accum_add.exit
 
@@ -121,19 +123,19 @@ bb.i:                                             ; preds = %bb.h
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !21
   call void %i.an(ptr noundef %i.ap, i64 noundef %i.ar) #3, !inline_history !38
   %i.as = add nuw i64 %.012.i.i.i21, 1
-  %exitcond.not.i.i.i22 = icmp eq i64 %.012.i.i.i21, %.sroa.5.128
+  %exitcond.not.i.i.i22 = icmp eq i64 %.012.i.i.i21, %.sroa.11.127
   br i1 %exitcond.not.i.i.i22, label %hpa_range_accum_add.exit, label %.lr.ph.i.i.i20, !llvm.loop !22
 
 hpa_range_accum_add.exit:                         ; preds = %.lr.ph.i.i.i20, %bb.i, %.lr.ph
-  %.sroa.11.2.a = phi i64 [ %i.ah, %.lr.ph ], [ 0, %bb.i ], [ 0, %.lr.ph.i.i.i20 ] ; 2 uses
-  %.sroa.5.2 = phi i64 [ %i.ai, %.lr.ph ], [ 0, %bb.i ], [ 0, %.lr.ph.i.i.i20 ] ; 2 uses
+  %.sroa.11.2.a = phi i64 [ %i.ai, %.lr.ph ], [ 0, %bb.i ], [ 0, %.lr.ph.i.i.i20 ] ; 2 uses
+  %.sroa.5.2 = phi i64 [ %i.ah, %.lr.ph ], [ 0, %bb.i ], [ 0, %.lr.ph.i.i.i20 ] ; 2 uses
   %i.at = load ptr, ptr %i.aa, align 8, !tbaa !32
   %i.au = call zeroext i1 @je_hpdata_purge_next(ptr noundef %i.at, ptr noundef nonnull %i.t, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #3
   br i1 %i.au, label %.lr.ph, label %._crit_edge, !llvm.loop !39
 
 ._crit_edge:                                      ; preds = %hpa_range_accum_add.exit, %bb.g
-  %.sroa.11.1.lcssa.a = phi i64 [ %.sroa.11.030, %bb.g ], [ %.sroa.11.2.a, %hpa_range_accum_add.exit ] ; 2 uses
-  %.sroa.5.1.lcssa = phi i64 [ %.sroa.5.031, %bb.g ], [ %.sroa.5.2, %hpa_range_accum_add.exit ] ; 4 uses
+  %.sroa.11.1.lcssa.a = phi i64 [ %.sroa.11.030, %bb.g ], [ %.sroa.11.2.a, %hpa_range_accum_add.exit ] ; 4 uses
+  %.sroa.5.1.lcssa = phi i64 [ %.sroa.5.031, %bb.g ], [ %.sroa.5.2, %hpa_range_accum_add.exit ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
   %i.av = add nuw i64 %.01732, 1                  ; 2 uses

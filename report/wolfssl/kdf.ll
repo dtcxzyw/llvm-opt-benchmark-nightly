@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wolfssl/original/kdf?download=true
+inline.NumInlined: 12
+inline.NumDeleted: 5
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -7,8 +9,8 @@ target triple = "x86_64-pc-linux-gnu"
 %union.wc_Hashes = type { %struct.wc_Sha3 }
 %struct.wc_Sha3 = type { [25 x i64], [200 x i8], i8, ptr }
 
-@switch.table.wc_PRF = private unnamed_addr constant [5 x i8] [i8 20, i8 poison, i8 32, i8 48, i8 64], align 4
-@switch.table.wc_PRF.1 = private unnamed_addr constant [5 x i8] [i8 4, i8 poison, i8 6, i8 7, i8 8], align 4
+@switch.table.wc_PRF = private unnamed_addr constant [5 x i8] [i8 4, i8 poison, i8 6, i8 7, i8 8], align 4
+@switch.table.wc_PRF.1 = private unnamed_addr constant [5 x i8] [i8 20, i8 poison, i8 32, i8 48, i8 64], align 4
 
 ; Function Attrs: nounwind uwtable
 define i32 @wc_PRF(ptr noundef %0, i32 noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4, i32 noundef %5, i32 noundef %6, ptr noundef %7, i32 noundef %8) local_unnamed_addr #0 {
@@ -30,13 +32,13 @@ switch.lookup:                                    ; preds = %bb.a
   %i.d = zext nneg i32 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.wc_PRF, i64 %i.d
   %switch.load = load i8, ptr %switch.gep, align 1
-  %switch.ext = zext i8 %switch.load to i32       ; 8 uses
+  %switch.ext = zext i8 %switch.load to i32
   %i.e = zext nneg i32 %switch.tableidx to i64
   %switch.gep122 = getelementptr inbounds nuw i8, ptr @switch.table.wc_PRF.1, i64 %i.e
   %switch.load123 = load i8, ptr %switch.gep122, align 1
-  %switch.ext124 = zext i8 %switch.load123 to i32
-  %i.f = udiv i32 %1, %switch.ext
-  %i.g = urem i32 %1, %switch.ext                 ; 2 uses
+  %switch.ext124 = zext i8 %switch.load123 to i32 ; 8 uses
+  %i.f = udiv i32 %1, %switch.ext124
+  %i.g = urem i32 %1, %switch.ext124              ; 2 uses
   %i.h = icmp ne i32 %i.g, 0                      ; 2 uses
   %i.i = zext i1 %i.h to i32
   %spec.select = add nuw nsw i32 %i.f, %i.i       ; 4 uses
@@ -50,7 +52,7 @@ bb.b:                                             ; preds = %switch.lookup
   br i1 %i.m, label %bb.c, label %.lr.ph25.preheader.i
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = call i32 @wc_HmacSetKey(ptr noundef nonnull %9, i32 noundef %switch.ext124, ptr noundef %2, i32 noundef %3) #6 ; 2 uses
+  %i.n = call i32 @wc_HmacSetKey(ptr noundef nonnull %9, i32 noundef %switch.ext, ptr noundef %2, i32 noundef %3) #6 ; 2 uses
   %i.o = icmp eq i32 %i.n, 0
   br i1 %i.o, label %bb.d, label %.thread86
 
@@ -70,7 +72,7 @@ bb.e:                                             ; preds = %bb.d
 .preheader.split.us:                              ; preds = %.preheader, %bb.j
   %.097.us = phi i32 [ %i.aa, %bb.j ], [ 0, %.preheader ] ; 2 uses
   %.04596.us = phi i32 [ %i.ab, %bb.j ], [ 0, %.preheader ]
-  %i.t = call i32 @wc_HmacUpdate(ptr noundef nonnull %9, ptr noundef nonnull %i.b, i32 noundef %switch.ext) #6 ; 2 uses
+  %i.t = call i32 @wc_HmacUpdate(ptr noundef nonnull %9, ptr noundef nonnull %i.b, i32 noundef %switch.ext124) #6 ; 2 uses
   %.not.us = icmp eq i32 %i.t, 0
   br i1 %.not.us, label %bb.f, label %.thread86
 
@@ -87,7 +89,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not64.us, label %bb.h, label %.thread86
 
 bb.h:                                             ; preds = %bb.g
-  %i.y = call i32 @wc_HmacUpdate(ptr noundef nonnull %9, ptr noundef nonnull %i.b, i32 noundef %switch.ext) #6 ; 2 uses
+  %i.y = call i32 @wc_HmacUpdate(ptr noundef nonnull %9, ptr noundef nonnull %i.b, i32 noundef %switch.ext124) #6 ; 2 uses
   %.not65.us = icmp eq i32 %i.y, 0
   br i1 %.not65.us, label %bb.i, label %.thread86
 
@@ -97,7 +99,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not66.us, label %bb.j, label %.thread86
 
 bb.j:                                             ; preds = %bb.i
-  %i.aa = add i32 %.097.us, %switch.ext
+  %i.aa = add i32 %.097.us, %switch.ext124
   %i.ab = add nuw nsw i32 %.04596.us, 1           ; 2 uses
   %exitcond.not = icmp eq i32 %i.ab, %spec.select
   br i1 %exitcond.not, label %.thread86, label %.preheader.split.us, !llvm.loop !8
@@ -105,7 +107,7 @@ bb.j:                                             ; preds = %bb.i
 .preheader.split:                                 ; preds = %.preheader, %bb.r
   %.097 = phi i32 [ %.1, %bb.r ], [ 0, %.preheader ] ; 4 uses
   %.04596 = phi i32 [ %i.at, %bb.r ], [ 0, %.preheader ] ; 2 uses
-  %i.ac = call i32 @wc_HmacUpdate(ptr noundef nonnull %9, ptr noundef nonnull %i.b, i32 noundef %switch.ext) #6 ; 2 uses
+  %i.ac = call i32 @wc_HmacUpdate(ptr noundef nonnull %9, ptr noundef nonnull %i.b, i32 noundef %switch.ext124) #6 ; 2 uses
   %.not = icmp eq i32 %i.ac, 0
   br i1 %.not, label %bb.k, label %.thread86
 
@@ -126,12 +128,12 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not64, label %bb.n, label %.thread86
 
 bb.n:                                             ; preds = %bb.m
-  %i.ai = call i32 @wc_HmacUpdate(ptr noundef nonnull %9, ptr noundef nonnull %i.b, i32 noundef %switch.ext) #6 ; 2 uses
+  %i.ai = call i32 @wc_HmacUpdate(ptr noundef nonnull %9, ptr noundef nonnull %i.b, i32 noundef %switch.ext124) #6 ; 2 uses
   %.not65 = icmp eq i32 %i.ai, 0
   br i1 %.not65, label %bb.o, label %.thread86
 
 bb.o:                                             ; preds = %bb.n
-  %i.aj = add i32 %.097, %switch.ext
+  %i.aj = add i32 %.097, %switch.ext124
   %i.ak = call i32 @wc_HmacFinal(ptr noundef nonnull %9, ptr noundef nonnull %i.b) #6 ; 2 uses
   %.not66 = icmp eq i32 %i.ak, 0
   br i1 %.not66, label %bb.r, label %.thread86

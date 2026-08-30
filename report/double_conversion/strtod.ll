@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/double_conversion/original/strtod?download=true
+inline.NumInlined: 164
+inline.NumDeleted: 58
 begin_hunk_0_@llvm.lifetime.start.p0
 ; Function Attrs: mustprogress uwtable
 define internal fastcc noundef zeroext i1 @_ZN17double_conversionL12ComputeGuessENS_6VectorIKcEEiPd(ptr nofree readonly captures(none) %0, i32 %1, i32 noundef %2, ptr nofree noundef nonnull writeonly captures(none) %3) unnamed_addr #0 {
@@ -200,31 +202,31 @@ _ZN17double_conversionL9ReadDiyFpENS_6VectorIKcEEPNS_5DiyFpEPi.exit.thread.i: ; 
   br i1 %i.cg, label %.lr.ph.i.i15, label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.lr.ph.i.i15, %_ZN17double_conversionL9ReadDiyFpENS_6VectorIKcEEPNS_5DiyFpEPi.exit.thread.i
-  %.08.lcssa.i.i = phi i32 [ 0, %_ZN17double_conversionL9ReadDiyFpENS_6VectorIKcEEPNS_5DiyFpEPi.exit.thread.i ], [ %i.cj, %.lr.ph.i.i15 ] ; 2 uses
-  %.0.lcssa.i.i13 = phi i64 [ %spec.select.sink.i102.i, %_ZN17double_conversionL9ReadDiyFpENS_6VectorIKcEEPNS_5DiyFpEPi.exit.thread.i ], [ %i.ci, %.lr.ph.i.i15 ] ; 3 uses
-  %i.ch = icmp sgt i64 %.0.lcssa.i.i13, -1
+  %.08.lcssa.i.i = phi i64 [ %spec.select.sink.i102.i, %_ZN17double_conversionL9ReadDiyFpENS_6VectorIKcEEPNS_5DiyFpEPi.exit.thread.i ], [ %i.ci, %.lr.ph.i.i15 ] ; 3 uses
+  %.0.lcssa.i.i13 = phi i32 [ 0, %_ZN17double_conversionL9ReadDiyFpENS_6VectorIKcEEPNS_5DiyFpEPi.exit.thread.i ], [ %i.cj, %.lr.ph.i.i15 ] ; 2 uses
+  %i.ch = icmp sgt i64 %.08.lcssa.i.i, -1
   br i1 %i.ch, label %.lr.ph15.i.i, label %_ZN17double_conversion5DiyFp9NormalizeEv.exit.i
 
 .lr.ph.i.i15:                                     ; preds = %_ZN17double_conversionL9ReadDiyFpENS_6VectorIKcEEPNS_5DiyFpEPi.exit.thread.i, %.lr.ph.i.i15
-  %.011.i.i = phi i64 [ %i.ci, %.lr.ph.i.i15 ], [ %spec.select.sink.i102.i, %_ZN17double_conversionL9ReadDiyFpENS_6VectorIKcEEPNS_5DiyFpEPi.exit.thread.i ] ; 2 uses
-  %.0810.i.i = phi i32 [ %i.cj, %.lr.ph.i.i15 ], [ 0, %_ZN17double_conversionL9ReadDiyFpENS_6VectorIKcEEPNS_5DiyFpEPi.exit.thread.i ]
-  %i.ci = shl nuw i64 %.011.i.i, 10               ; 2 uses
-  %i.cj = add nsw i32 %.0810.i.i, -10             ; 2 uses
-  %i.ck = icmp ult i64 %.011.i.i, 17592186044416
+  %.011.i.i = phi i32 [ %i.cj, %.lr.ph.i.i15 ], [ 0, %_ZN17double_conversionL9ReadDiyFpENS_6VectorIKcEEPNS_5DiyFpEPi.exit.thread.i ]
+  %.0810.i.i = phi i64 [ %i.ci, %.lr.ph.i.i15 ], [ %spec.select.sink.i102.i, %_ZN17double_conversionL9ReadDiyFpENS_6VectorIKcEEPNS_5DiyFpEPi.exit.thread.i ] ; 2 uses
+  %i.ci = shl nuw i64 %.0810.i.i, 10              ; 2 uses
+  %i.cj = add nsw i32 %.011.i.i, -10              ; 2 uses
+  %i.ck = icmp ult i64 %.0810.i.i, 17592186044416
   br i1 %i.ck, label %.lr.ph.i.i15, label %.preheader.i.i, !llvm.loop !13
 
 .lr.ph15.i.i:                                     ; preds = %.preheader.i.i, %.lr.ph15.i.i
-  %.114.i.i = phi i64 [ %i.cl, %.lr.ph15.i.i ], [ %.0.lcssa.i.i13, %.preheader.i.i ]
-  %.1913.i.i = phi i32 [ %i.cm, %.lr.ph15.i.i ], [ %.08.lcssa.i.i, %.preheader.i.i ]
-  %i.cl = shl nuw i64 %.114.i.i, 1                ; 3 uses
-  %i.cm = add nsw i32 %.1913.i.i, -1              ; 2 uses
+  %.114.i.i = phi i32 [ %i.cm, %.lr.ph15.i.i ], [ %.0.lcssa.i.i13, %.preheader.i.i ]
+  %.1913.i.i = phi i64 [ %i.cl, %.lr.ph15.i.i ], [ %.08.lcssa.i.i, %.preheader.i.i ]
+  %i.cl = shl nuw i64 %.1913.i.i, 1               ; 3 uses
+  %i.cm = add nsw i32 %.114.i.i, -1               ; 2 uses
   %i.cn = icmp sgt i64 %i.cl, -1
   br i1 %i.cn, label %.lr.ph15.i.i, label %_ZN17double_conversion5DiyFp9NormalizeEv.exit.i, !llvm.loop !14
 
 _ZN17double_conversion5DiyFp9NormalizeEv.exit.i:  ; preds = %.lr.ph15.i.i, %.preheader.i.i
-  %.19.lcssa.i.i = phi i32 [ %.08.lcssa.i.i, %.preheader.i.i ], [ %i.cm, %.lr.ph15.i.i ] ; 3 uses
-  %.1.lcssa.i.i = phi i64 [ %.0.lcssa.i.i13, %.preheader.i.i ], [ %i.cl, %.lr.ph15.i.i ] ; 3 uses
-  %i.co = sub nsw i32 0, %.19.lcssa.i.i
+  %.19.lcssa.i.i = phi i64 [ %.08.lcssa.i.i, %.preheader.i.i ], [ %i.cl, %.lr.ph15.i.i ] ; 3 uses
+  %.1.lcssa.i.i = phi i32 [ %.0.lcssa.i.i13, %.preheader.i.i ], [ %i.cm, %.lr.ph15.i.i ] ; 3 uses
+  %i.co = sub nsw i32 0, %.1.lcssa.i.i
   %i.cp = zext nneg i32 %i.co to i64
   %i.cq = shl i64 %i.cf, %i.cp                    ; 3 uses
   %i.cr = icmp slt i32 %i.ce, -348
@@ -260,13 +262,13 @@ switch.lookup:                                    ; preds = %bb.n
   %switch.gep96 = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN17double_conversionL12ComputeGuessENS_6VectorIKcEEiPd.1, i64 %i.cx
   %switch.load97 = load i32, ptr %switch.gep96, align 4
   %switch.ext98 = zext i32 %switch.load97 to i64  ; 2 uses
-  %i.cy = lshr i64 %.1.lcssa.i.i, 32
-  %i.cz = and i64 %.1.lcssa.i.i, 4294967295
+  %i.cy = lshr i64 %.19.lcssa.i.i, 32
+  %i.cz = and i64 %.19.lcssa.i.i, 4294967295
   %i.da = mul nuw i64 %i.cy, %switch.ext98
   %i.db = mul nuw i64 %i.cz, %switch.ext98        ; 2 uses
   %i.dc = and i64 %i.db, 2147483648
   %i.dd = add nuw nsw i64 %i.dc, 2147483648
-  %i.de = add nsw i32 %.19.lcssa.i.i, %switch.ext
+  %i.de = add nsw i32 %.1.lcssa.i.i, %switch.ext
   %i.df = lshr i64 %i.db, 32
   %i.dg = add nuw i64 %i.df, %i.da
   %i.dh = lshr i64 %i.dd, 32
@@ -278,8 +280,8 @@ switch.lookup:                                    ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %switch.lookup, %bb.m
-  %.sroa.080.0.i = phi i64 [ %.1.lcssa.i.i, %bb.m ], [ %i.di, %switch.lookup ] ; 2 uses
-  %.sroa.16.0.i = phi i32 [ %.19.lcssa.i.i, %bb.m ], [ %i.de, %switch.lookup ]
+  %.sroa.080.0.i = phi i64 [ %.19.lcssa.i.i, %bb.m ], [ %i.di, %switch.lookup ] ; 2 uses
+  %.sroa.16.0.i = phi i32 [ %.1.lcssa.i.i, %bb.m ], [ %i.de, %switch.lookup ]
   %.153.i = phi i64 [ %i.cq, %bb.m ], [ %spec.select.i, %switch.lookup ] ; 2 uses
   %i.dl = lshr i64 %.sroa.080.0.i, 32             ; 2 uses
   %i.dm = and i64 %.sroa.080.0.i, 4294967295      ; 2 uses
@@ -312,35 +314,35 @@ bb.p:                                             ; preds = %switch.lookup, %bb.
   br i1 %i.el, label %.lr.ph.i70.i, label %.preheader.i62.i
 
 .preheader.i62.i:                                 ; preds = %.lr.ph.i70.i, %bb.p
-  %.08.lcssa.i63.i = phi i32 [ %i.ec, %bb.p ], [ %i.eo, %.lr.ph.i70.i ] ; 2 uses
-  %.0.lcssa.i64.i = phi i64 [ %i.ei, %bb.p ], [ %i.en, %.lr.ph.i70.i ] ; 3 uses
-  %i.em = icmp sgt i64 %.0.lcssa.i64.i, -1
+  %.08.lcssa.i63.i = phi i64 [ %i.ei, %bb.p ], [ %i.en, %.lr.ph.i70.i ] ; 3 uses
+  %.0.lcssa.i64.i = phi i32 [ %i.ec, %bb.p ], [ %i.eo, %.lr.ph.i70.i ] ; 2 uses
+  %i.em = icmp sgt i64 %.08.lcssa.i63.i, -1
   br i1 %i.em, label %.lr.ph15.i67.i, label %_ZN17double_conversion5DiyFp9NormalizeEv.exit73.i
 
 .lr.ph.i70.i:                                     ; preds = %bb.p, %.lr.ph.i70.i
-  %.011.i71.i = phi i64 [ %i.en, %.lr.ph.i70.i ], [ %i.ei, %bb.p ] ; 2 uses
-  %.0810.i72.i = phi i32 [ %i.eo, %.lr.ph.i70.i ], [ %i.ec, %bb.p ]
-  %i.en = shl nuw i64 %.011.i71.i, 10             ; 2 uses
-  %i.eo = add nsw i32 %.0810.i72.i, -10           ; 2 uses
-  %i.ep = icmp ult i64 %.011.i71.i, 17592186044416
+  %.011.i71.i = phi i32 [ %i.eo, %.lr.ph.i70.i ], [ %i.ec, %bb.p ]
+  %.0810.i72.i = phi i64 [ %i.en, %.lr.ph.i70.i ], [ %i.ei, %bb.p ] ; 2 uses
+  %i.en = shl nuw i64 %.0810.i72.i, 10            ; 2 uses
+  %i.eo = add nsw i32 %.011.i71.i, -10            ; 2 uses
+  %i.ep = icmp ult i64 %.0810.i72.i, 17592186044416
   br i1 %i.ep, label %.lr.ph.i70.i, label %.preheader.i62.i, !llvm.loop !13
 
 .lr.ph15.i67.i:                                   ; preds = %.preheader.i62.i, %.lr.ph15.i67.i
-  %.114.i68.i = phi i64 [ %i.eq, %.lr.ph15.i67.i ], [ %.0.lcssa.i64.i, %.preheader.i62.i ]
-  %.1913.i69.i = phi i32 [ %i.er, %.lr.ph15.i67.i ], [ %.08.lcssa.i63.i, %.preheader.i62.i ]
-  %i.eq = shl nuw i64 %.114.i68.i, 1              ; 3 uses
-  %i.er = add nsw i32 %.1913.i69.i, -1            ; 2 uses
+  %.114.i68.i = phi i32 [ %i.er, %.lr.ph15.i67.i ], [ %.0.lcssa.i64.i, %.preheader.i62.i ]
+  %.1913.i69.i = phi i64 [ %i.eq, %.lr.ph15.i67.i ], [ %.08.lcssa.i63.i, %.preheader.i62.i ]
+  %i.eq = shl nuw i64 %.1913.i69.i, 1             ; 3 uses
+  %i.er = add nsw i32 %.114.i68.i, -1             ; 2 uses
   %i.es = icmp sgt i64 %i.eq, -1
   br i1 %i.es, label %.lr.ph15.i67.i, label %_ZN17double_conversion5DiyFp9NormalizeEv.exit73.i, !llvm.loop !14
 
 _ZN17double_conversion5DiyFp9NormalizeEv.exit73.i: ; preds = %.lr.ph15.i67.i, %.preheader.i62.i
-  %.19.lcssa.i65.i = phi i32 [ %.08.lcssa.i63.i, %.preheader.i62.i ], [ %i.er, %.lr.ph15.i67.i ] ; 5 uses
-  %.1.lcssa.i66.i = phi i64 [ %.0.lcssa.i64.i, %.preheader.i62.i ], [ %i.eq, %.lr.ph15.i67.i ] ; 2 uses
-  %i.et = sub nsw i32 %i.ec, %.19.lcssa.i65.i
+  %.19.lcssa.i65.i = phi i64 [ %.08.lcssa.i63.i, %.preheader.i62.i ], [ %i.eq, %.lr.ph15.i67.i ] ; 2 uses
+  %.1.lcssa.i66.i = phi i32 [ %.0.lcssa.i64.i, %.preheader.i62.i ], [ %i.er, %.lr.ph15.i67.i ] ; 5 uses
+  %i.et = sub nsw i32 %i.ec, %.1.lcssa.i66.i
   %i.eu = zext nneg i32 %i.et to i64
   %i.ev = shl i64 %i.ek, %i.eu                    ; 2 uses
-  %i.ew = add nsw i32 %.19.lcssa.i65.i, 64
-  %i.ex = icmp sgt i32 %.19.lcssa.i65.i, -1086
+  %i.ew = add nsw i32 %.1.lcssa.i66.i, 64
+  %i.ex = icmp sgt i32 %.1.lcssa.i66.i, -1086
   %spec.select.i74.i = call i32 @llvm.usub.sat.i32(i32 %i.ew, i32 -1074)
   %.0.i.i = select i1 %i.ex, i32 53, i32 %spec.select.i74.i ; 3 uses
   %i.ey = sub nsw i32 64, %.0.i.i
@@ -350,27 +352,27 @@ _ZN17double_conversion5DiyFp9NormalizeEv.exit73.i: ; preds = %.lr.ph15.i67.i, %.
 bb.q:                                             ; preds = %_ZN17double_conversion5DiyFp9NormalizeEv.exit73.i
   %i.fa = sub nuw nsw i32 4, %.0.i.i              ; 2 uses
   %i.fb = zext nneg i32 %i.fa to i64              ; 2 uses
-  %i.fc = lshr i64 %.1.lcssa.i66.i, %i.fb
-  %i.fd = add nsw i32 %i.fa, %.19.lcssa.i65.i
+  %i.fc = lshr i64 %.19.lcssa.i65.i, %i.fb
+  %i.fd = add nsw i32 %i.fa, %.1.lcssa.i66.i
   %i.fe = lshr i64 %i.ev, %i.fb
   %i.ff = add nuw i64 %i.fe, 9
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %_ZN17double_conversion5DiyFp9NormalizeEv.exit73.i
-  %.sroa.080.1.i = phi i64 [ %i.fc, %bb.q ], [ %.1.lcssa.i66.i, %_ZN17double_conversion5DiyFp9NormalizeEv.exit73.i ] ; 2 uses
-  %.sroa.16.1.i = phi i32 [ %i.fd, %bb.q ], [ %.19.lcssa.i65.i, %_ZN17double_conversion5DiyFp9NormalizeEv.exit73.i ]
-  %.054.i = phi i32 [ 60, %bb.q ], [ %i.ey, %_ZN17double_conversion5DiyFp9NormalizeEv.exit73.i ] ; 3 uses
+  %.sroa.080.1.i = phi i64 [ %i.fc, %bb.q ], [ %.19.lcssa.i65.i, %_ZN17double_conversion5DiyFp9NormalizeEv.exit73.i ] ; 2 uses
+  %.sroa.16.1.i = phi i32 [ %i.fd, %bb.q ], [ %.1.lcssa.i66.i, %_ZN17double_conversion5DiyFp9NormalizeEv.exit73.i ]
   %.2.i14 = phi i64 [ %i.ff, %bb.q ], [ %i.ev, %_ZN17double_conversion5DiyFp9NormalizeEv.exit73.i ] ; 2 uses
-  %i.fg = zext i32 %.054.i to i64                 ; 2 uses
+  %.052.i = phi i32 [ 60, %bb.q ], [ %i.ey, %_ZN17double_conversion5DiyFp9NormalizeEv.exit73.i ] ; 3 uses
+  %i.fg = zext i32 %.052.i to i64                 ; 2 uses
   %notmask.i = shl nsw i64 -1, %i.fg
   %i.fh = xor i64 %notmask.i, -1
   %i.fi = and i64 %.sroa.080.1.i, %i.fh
-  %i.fj = add nsw i32 %.054.i, -1
+  %i.fj = add nsw i32 %.052.i, -1
   %i.fk = zext nneg i32 %i.fj to i64
   %i.fl = shl i64 %i.fi, 3                        ; 2 uses
   %i.fm = shl i64 8, %i.fk                        ; 2 uses
   %i.fn = lshr i64 %.sroa.080.1.i, %i.fg
-  %i.fo = add nsw i32 %.054.i, %.sroa.16.1.i      ; 2 uses
+  %i.fo = add nsw i32 %.052.i, %.sroa.16.1.i      ; 2 uses
   %i.fp = add i64 %i.fm, %.2.i14
   %.not61.i = icmp uge i64 %i.fl, %i.fp           ; 2 uses
   %i.fq = zext i1 %.not61.i to i64
@@ -532,7 +534,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.i.i
   %i.g = trunc nuw nsw i64 %indvars.iv.i.i to i32
-  %i.h = sub nsw i32 %1, %i.g
+  %i.h = sub nuw nsw i32 %1, %i.g
   br label %_ZN17double_conversionL16TrimLeadingZerosENS_6VectorIKcEE.exit.i
 
 _ZN17double_conversionL16TrimLeadingZerosENS_6VectorIKcEE.exit.i: ; preds = %bb.b, %bb.c, %bb.a
@@ -686,7 +688,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i
 bb.c:                                             ; preds = %.lr.ph.i.i
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv.i.i
   %i.f = trunc nuw nsw i64 %indvars.iv.i.i to i32
-  %i.g = sub nsw i32 %1, %i.f
+  %i.g = sub nuw nsw i32 %1, %i.f
   br label %_ZN17double_conversionL16TrimLeadingZerosENS_6VectorIKcEE.exit.i
 
 _ZN17double_conversionL16TrimLeadingZerosENS_6VectorIKcEE.exit.i: ; preds = %bb.b, %bb.c, %bb.a
@@ -891,8 +893,8 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.r, %bb.s
-  %.sroa.064.0 = phi i64 [ %i.aq, %bb.s ], [ 4503599627370496, %bb.r ]
   %.sroa.6.0 = phi i32 [ %i.au, %bb.s ], [ -202, %bb.r ]
+  %.sroa.064.0 = phi i64 [ %i.aq, %bb.s ], [ 4503599627370496, %bb.r ]
   %i.av = tail call fastcc noundef i32 @_ZN17double_conversionL22CompareBufferWithDiyFpENS_6VectorIKcEEiNS_5DiyFpE(ptr %0, i32 %1, i32 noundef %2, i64 %.sroa.064.0, i32 %.sroa.6.0) ; 2 uses
   %i.aw = icmp slt i32 %i.av, 0
   br i1 %i.aw, label %bb.w, label %bb.u

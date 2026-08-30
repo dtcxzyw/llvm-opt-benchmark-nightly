@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mimalloc/original/alloc?download=true
+inline.NumInlined: 300
+inline.NumDeleted: 73
 begin_hunk_0_@mi_mallocn:bb.a
   br i1 %.not.i, label %bb.c, label %bb.b
 
@@ -200,7 +202,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_mi_page_usable_size.exit
 
 _mi_page_usable_size.exit:                        ; preds = %bb.e, %bb.d
-  %.053.i.a = phi i64 [ %.val.i, %bb.d ], [ %i.o, %bb.e ] ; 4 uses
+  %.053.i.a = phi i64 [ %i.o, %bb.e ], [ %.val.i, %bb.d ] ; 4 uses
   %i.p = lshr i64 %.053.i.a, 1
   %.not69.i = icmp uge i64 %2, %i.p
   %i.q = add i64 %2, -1

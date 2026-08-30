@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/double_conversion/original/fixed-dtoa?download=true
+inline.NumInlined: 53
+inline.NumDeleted: 19
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumUnrolled: 6
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -152,8 +156,8 @@ _ZN17double_conversionL12FillDigits32EjNS_6VectorIcEEPi.exit: ; preds = %._crit_
   %i.bw = getelementptr i8, ptr %i.bv, i64 9
   %i.bx = urem i64 %.094, 10000000
   %i.by = urem i64 %i.br, 10000000
-  %i.bz = trunc nuw nsw i64 %i.bx to i32          ; 3 uses
-  %i.ca = trunc nuw nsw i64 %i.by to i32          ; 5 uses
+  %i.bz = trunc nuw nsw i64 %i.bx to i32          ; 5 uses
+  %i.ca = trunc nuw nsw i64 %i.by to i32          ; 7 uses
   %i.cb = urem i32 %i.ca, 10
   %i.cc = trunc nuw nsw i32 %i.cb to i8
   %i.cd = or disjoint i8 %i.cc, 48
@@ -168,7 +172,7 @@ _ZN17double_conversionL12FillDigits32EjNS_6VectorIcEEPi.exit: ; preds = %._crit_
   %i.cl = getelementptr i8, ptr %i.ck, i64 5
   store i8 %i.ch, ptr %i.cl, align 1, !tbaa !9
   %i.cm = insertelement <4 x i32> poison, i32 %i.ca, i64 0
-  %i.cn = insertelement <4 x i32> %i.cm, i32 %i.bz, i64 1 ; 2 uses
+  %i.cn = insertelement <4 x i32> %i.cm, i32 %i.bz, i64 1
   %i.co = shufflevector <4 x i32> %i.cn, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
   %i.cp = udiv <4 x i32> %i.co, <i32 100, i32 1, i32 10, i32 100>
   %i.cq = urem <4 x i32> %i.cp, splat (i32 10)
@@ -180,10 +184,19 @@ _ZN17double_conversionL12FillDigits32EjNS_6VectorIcEEPi.exit: ; preds = %._crit_
   %i.cw = getelementptr i8, ptr %2, i64 %i.cv
   %i.cx = getelementptr i8, ptr %i.cw, i64 4
   store i8 %i.ct, ptr %i.cx, align 1, !tbaa !9
-  %6 = shufflevector <4 x i32> %i.cn, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %7 = udiv <4 x i32> %6, <i32 1000, i32 1000, i32 10000, i32 10000>
-  %8 = trunc nuw nsw <4 x i32> %7 to <4 x i16>
-  %i.cy = urem <4 x i16> %8, splat (i16 10)
+  %6 = udiv i32 %i.bz, 10000
+  %7 = udiv i32 %i.bz, 1000
+  %8 = udiv i32 %i.ca, 10000
+  %9 = udiv i32 %i.ca, 1000
+  %.lhs.trunc38.i = trunc nuw nsw i32 %6 to i16
+  %.lhs.trunc36.i = trunc nuw nsw i32 %7 to i16
+  %.lhs.trunc32.i = trunc nuw nsw i32 %8 to i16
+  %.lhs.trunc30.i = trunc nuw nsw i32 %9 to i16
+  %10 = insertelement <4 x i16> poison, i16 %.lhs.trunc30.i, i64 0
+  %11 = insertelement <4 x i16> %10, i16 %.lhs.trunc36.i, i64 1
+  %12 = insertelement <4 x i16> %11, i16 %.lhs.trunc32.i, i64 2
+  %13 = insertelement <4 x i16> %12, i16 %.lhs.trunc38.i, i64 3
+  %i.cy = urem <4 x i16> %13, splat (i16 10)
   %i.cz = trunc nuw nsw <4 x i16> %i.cy to <4 x i8> ; 4 uses
   %i.da = extractelement <4 x i8> %i.cz, i64 0
   %i.db = or disjoint i8 %i.da, 48

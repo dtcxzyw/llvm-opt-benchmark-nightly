@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/progressreporter?download=true
+inline.NumInlined: 575
+inline.NumDeleted: 241
 begin_hunk_0_@_ZN4pbrt16ProgressReporterD2Ev:bb.a
 bb.d:                                             ; preds = %_ZNK4pbrt16ProgressReporter14ElapsedSecondsEv.exit.i
   %i.u = load i64, ptr %0, align 8, !tbaa !22
@@ -200,9 +202,9 @@ _ZN4pbrtL13TerminalWidthEv.exit:                  ; preds = %bb.b, %bb.c, %bb.d
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN4pbrtL13TerminalWidthEv.exit, %bb.w
-  %.080 = phi i32 [ 0, %_ZN4pbrtL13TerminalWidthEv.exit ], [ %.1.lcssa, %bb.w ] ; 3 uses
-  %.03279 = phi ptr [ %i.x, %_ZN4pbrtL13TerminalWidthEv.exit ], [ %.133.lcssa, %bb.w ] ; 3 uses
-  %.03777 = phi i32 [ 0, %_ZN4pbrtL13TerminalWidthEv.exit ], [ %i.ba, %bb.w ]
+  %.080 = phi i32 [ 0, %_ZN4pbrtL13TerminalWidthEv.exit ], [ %i.ba, %bb.w ]
+  %.03279 = phi ptr [ %i.x, %_ZN4pbrtL13TerminalWidthEv.exit ], [ %.140.lcssa, %bb.w ] ; 3 uses
+  %.03777 = phi i32 [ 0, %_ZN4pbrtL13TerminalWidthEv.exit ], [ %.142.lcssa, %bb.w ] ; 3 uses
   %.sroa.0.076 = phi i64 [ 250, %_ZN4pbrtL13TerminalWidthEv.exit ], [ %.sroa.0.1, %bb.w ] ; 7 uses
   %i.ao = load atomic i8, ptr %i.ah seq_cst, align 8, !range !48, !noundef !49
   %i.ap = trunc nuw i8 %i.ao to i1                ; 2 uses
@@ -244,7 +246,7 @@ bb.i:                                             ; preds = %bb.g
   br label %_ZNSt10unique_ptrIA_cSt14default_deleteIS0_EED2Ev.exit51
 
 _ZNSt11this_thread9sleep_forIlSt5ratioILl1ELl1000EEEEvRKNSt6chrono8durationIT_T0_EE.exit: ; preds = %.critedge.i, %bb.e
-  %i.ba = add nuw nsw i32 %.03777, 1              ; 2 uses
+  %i.ba = add nuw nsw i32 %.080, 1                ; 2 uses
   switch i32 %i.ba, label %bb.m [
     i32 10, label %bb.j
     i32 70, label %bb.k
@@ -273,11 +275,11 @@ bb.m:                                             ; preds = %_ZNSt11this_thread9
   %i.bj = fmul float %i.bi, %i.ak
   %i.bk = call noundef float @llvm.round.f32(float %i.bj)
   %i.bl = fptosi float %i.bk to i32               ; 3 uses
-  %i.bm = icmp slt i32 %.080, %i.bl
+  %i.bm = icmp slt i32 %.03777, %i.bl
   br i1 %i.bm, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.m
-  %i.bn = xor i32 %.080, -1
+  %i.bn = xor i32 %.03777, -1
   %i.bo = add i32 %i.bn, %i.bl
   %i.bp = zext i32 %i.bo to i64                   ; 2 uses
   %i.bq = add nuw nsw i64 %i.bp, 1
@@ -287,8 +289,8 @@ bb.m:                                             ; preds = %_ZNSt11this_thread9
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %bb.m
-  %.133.lcssa = phi ptr [ %.03279, %bb.m ], [ %scevgep85, %.lr.ph.preheader ]
-  %.1.lcssa = phi i32 [ %.080, %bb.m ], [ %i.bl, %.lr.ph.preheader ]
+  %.142.lcssa = phi i32 [ %.03777, %bb.m ], [ %i.bl, %.lr.ph.preheader ]
+  %.140.lcssa = phi ptr [ %.03279, %bb.m ], [ %scevgep85, %.lr.ph.preheader ]
   %i.br = load ptr, ptr @stdout, align 8, !tbaa !53
   %i.bs = call i32 @fputs(ptr noundef nonnull %i.t, ptr noundef %i.br) ; 0 uses
   %i.bt = load i8, ptr %i.al, align 4, !tbaa !37, !range !48, !noundef !49

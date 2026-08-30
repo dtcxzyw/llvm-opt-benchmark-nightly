@@ -8,13 +8,13 @@ define void @nghttp2_priority_spec_init(ptr nofree noundef writeonly captures(no
 bb.a:
   %i.a = icmp ne i32 %3, 0
   %i.b = zext i1 %i.a to i8
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.4.0..sroa_idx, i8 0, i64 3, i1 false)
   store i32 %1, ptr %0, align 4, !tbaa !8
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %2, ptr %.sroa.2.0..sroa_idx, align 4, !tbaa !8
-  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %i.b, ptr %.sroa.3.0..sroa_idx.a, align 4, !tbaa !9
-  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 9
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.4.0..sroa_idx.a, i8 0, i64 3, i1 false)
+  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 %2, ptr %.sroa.3.0..sroa_idx.a, align 4, !tbaa !8
+  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 %i.b, ptr %.sroa.4.0..sroa_idx.a, align 4, !tbaa !9
   ret void
 }
 
@@ -24,11 +24,13 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @nghttp2_priority_spec_default_init(ptr nofree noundef writeonly captures(none) initializes((0, 12)) %0) local_unnamed_addr #0 {
 bb.a:
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.4.0..sroa_idx, i8 0, i64 3, i1 false)
   store i32 0, ptr %0, align 4, !tbaa !8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 16, ptr %.sroa.2.0..sroa_idx, align 4, !tbaa !8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 0, ptr %.sroa.3.0..sroa_idx, align 4
+  store i8 0, ptr %.sroa.3.0..sroa_idx, align 4, !tbaa !9
   ret void
 }
 

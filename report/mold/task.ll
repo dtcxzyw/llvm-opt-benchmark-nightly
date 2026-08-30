@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mold/original/task?download=true
+inline.NumInlined: 425
+inline.NumDeleted: 264
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@_ZN3tbb6detail2r111task_streamILNS1_25task_stream_accessor_typeE1EE4pushINS1_20random_lane_selectorEEEvPNS0_2d14taskERKT_:bb.a
   %i.o = zext nneg i32 %i.m to i64                ; 3 uses
   %i.p = getelementptr inbounds nuw [128 x i8], ptr %i.n, i64 %i.o
@@ -200,18 +205,18 @@ bb.f:                                             ; preds = %bb.e
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.af, i8 0, i64 24, i1 false)
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 48
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 128 dereferenceable(136) %i.ac, i8 0, i64 20, i1 false)
-  store i8 1, ptr %i.ag, align 1, !tbaa !163
+  store i8 1, ptr %i.ag, align 16, !tbaa !163
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ac, i64 49
   store i8 1, ptr %i.ah, align 1, !tbaa !164
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ac, i64 50
-  store i8 1, ptr %i.ai, align 1, !tbaa !165
+  store i8 1, ptr %i.ai, align 2, !tbaa !165
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ac, i64 56
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ac, i64 72
   %i.al = getelementptr inbounds nuw i8, ptr %i.ac, i64 120
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, i8 0, i64 16, i1 false)
   store ptr %i.al, ptr %i.ak, align 8, !tbaa !166
   %i.am = getelementptr inbounds nuw i8, ptr %i.ac, i64 80
-  store i64 1, ptr %i.am, align 8, !tbaa !167
+  store i64 1, ptr %i.am, align 16, !tbaa !167
   %i.an = getelementptr inbounds nuw i8, ptr %i.ac, i64 88
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ac, i64 104
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.an, i8 0, i64 16, i1 false)
@@ -614,10 +619,10 @@ _ZNSt10_HashtableIPN3tbb6detail2d126wait_tree_vertex_interfaceESt4pairIKS4_PNS1_
   br i1 %.not29.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZNSt10_HashtableIPN3tbb6detail2d126wait_tree_vertex_interfaceESt4pairIKS4_PNS1_2r123thread_reference_vertexEENS2_13tbb_allocatorISA_EENSt8__detail10_Select1stESt8equal_toIS4_ESt4hashIS4_ENSD_18_Mod_range_hashingENSD_20_Default_ranged_hashENSD_20_Prime_rehash_policyENSD_17_Hashtable_traitsILb0ELb0ELb1EEEE19_M_allocate_bucketsEm.exit.i, %bb.g
-  %.031.i = phi ptr [ %i.g, %bb.g ], [ %i.f, %_ZNSt10_HashtableIPN3tbb6detail2d126wait_tree_vertex_interfaceESt4pairIKS4_PNS1_2r123thread_reference_vertexEENS2_13tbb_allocatorISA_EENSt8__detail10_Select1stESt8equal_toIS4_ESt4hashIS4_ENSD_18_Mod_range_hashingENSD_20_Default_ranged_hashENSD_20_Prime_rehash_policyENSD_17_Hashtable_traitsILb0ELb0ELb1EEEE19_M_allocate_bucketsEm.exit.i ] ; 8 uses
-  %.02530.i = phi i64 [ %.1.i, %bb.g ], [ 0, %_ZNSt10_HashtableIPN3tbb6detail2d126wait_tree_vertex_interfaceESt4pairIKS4_PNS1_2r123thread_reference_vertexEENS2_13tbb_allocatorISA_EENSt8__detail10_Select1stESt8equal_toIS4_ESt4hashIS4_ENSD_18_Mod_range_hashingENSD_20_Default_ranged_hashENSD_20_Prime_rehash_policyENSD_17_Hashtable_traitsILb0ELb0ELb1EEEE19_M_allocate_bucketsEm.exit.i ] ; 2 uses
-  %i.g = load ptr, ptr %.031.i, align 8, !tbaa !202 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %.031.i, i64 8
+  %.031.i = phi i64 [ %.1.i, %bb.g ], [ 0, %_ZNSt10_HashtableIPN3tbb6detail2d126wait_tree_vertex_interfaceESt4pairIKS4_PNS1_2r123thread_reference_vertexEENS2_13tbb_allocatorISA_EENSt8__detail10_Select1stESt8equal_toIS4_ESt4hashIS4_ENSD_18_Mod_range_hashingENSD_20_Default_ranged_hashENSD_20_Prime_rehash_policyENSD_17_Hashtable_traitsILb0ELb0ELb1EEEE19_M_allocate_bucketsEm.exit.i ] ; 2 uses
+  %.02530.i = phi ptr [ %i.g, %bb.g ], [ %i.f, %_ZNSt10_HashtableIPN3tbb6detail2d126wait_tree_vertex_interfaceESt4pairIKS4_PNS1_2r123thread_reference_vertexEENS2_13tbb_allocatorISA_EENSt8__detail10_Select1stESt8equal_toIS4_ESt4hashIS4_ENSD_18_Mod_range_hashingENSD_20_Default_ranged_hashENSD_20_Prime_rehash_policyENSD_17_Hashtable_traitsILb0ELb0ELb1EEEE19_M_allocate_bucketsEm.exit.i ] ; 8 uses
+  %i.g = load ptr, ptr %.02530.i, align 8, !tbaa !202 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %.02530.i, i64 8
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !199
   %i.j = ptrtoint ptr %i.i to i64
   %i.k = urem i64 %i.j, %1                        ; 3 uses
@@ -628,27 +633,27 @@ _ZNSt10_HashtableIPN3tbb6detail2d126wait_tree_vertex_interfaceESt4pairIKS4_PNS1_
 
 bb.d:                                             ; preds = %.lr.ph.i
   %i.n = load ptr, ptr %i.e, align 8, !tbaa !209
-  store ptr %i.n, ptr %.031.i, align 8, !tbaa !202
-  store ptr %.031.i, ptr %i.e, align 8, !tbaa !209
+  store ptr %i.n, ptr %.02530.i, align 8, !tbaa !202
+  store ptr %.02530.i, ptr %i.e, align 8, !tbaa !209
   store ptr %i.e, ptr %i.l, align 8, !tbaa !204
-  %i.o = load ptr, ptr %.031.i, align 8, !tbaa !202
+  %i.o = load ptr, ptr %.02530.i, align 8, !tbaa !202
   %.not28.i = icmp eq ptr %i.o, null
   br i1 %.not28.i, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.p = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %.02530.i
-  store ptr %.031.i, ptr %i.p, align 8, !tbaa !204
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %.031.i
+  store ptr %.02530.i, ptr %i.p, align 8, !tbaa !204
   br label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph.i
   %i.q = load ptr, ptr %i.m, align 8, !tbaa !202
-  store ptr %i.q, ptr %.031.i, align 8, !tbaa !202
+  store ptr %i.q, ptr %.02530.i, align 8, !tbaa !202
   %i.r = load ptr, ptr %i.l, align 8, !tbaa !204
-  store ptr %.031.i, ptr %i.r, align 8, !tbaa !202
+  store ptr %.02530.i, ptr %i.r, align 8, !tbaa !202
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
-  %.1.i = phi i64 [ %.02530.i, %bb.f ], [ %i.k, %bb.e ], [ %i.k, %bb.d ]
+  %.1.i = phi i64 [ %.031.i, %bb.f ], [ %i.k, %bb.e ], [ %i.k, %bb.d ]
   %.not.i = icmp eq ptr %i.g, null
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !243
 

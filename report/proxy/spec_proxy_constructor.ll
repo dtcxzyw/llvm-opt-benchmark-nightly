@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/proxy/original/spec_proxy_constructor?download=true
+inline.NumInlined: 366
+inline.NumDeleted: 249
 begin_hunk_0_@_ZZN3pro2v46detail9conv_metaINS0_23proxy_indirect_accessorI14BasicContainerEE7MemSizeKDoFmvREEC1ISt10shared_ptrISt5dequeIdSaIdEEEEESt15in_place_type_tIT_EENUlRKS5_E_8__invokeESJ_:bb.a
   %i.k = sub i64 %i.i, %i.j
   %i.l = ashr exact i64 %i.k, 3
@@ -200,13 +202,14 @@ _ZNSt11_Deque_baseIdSaIdEE15_M_allocate_mapEm.exit:
   %i.a = lshr i64 %1, 6                           ; 2 uses
   %i.b = add nuw nsw i64 %i.a, 1                  ; 2 uses
   %i.c = tail call i64 @llvm.umax.i64(i64 %i.a, i64 5)
-  %.sroa.speculated = add nuw nsw i64 %i.c, 3     ; 3 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %.sroa.speculated = add nuw nsw i64 %i.c, 3     ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   store i64 %.sroa.speculated, ptr %i.d, align 8, !tbaa !84
   %i.e = shl nuw nsw i64 %.sroa.speculated, 3
   %i.f = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.e) #16 ; 2 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !83
-  %i.g = sub nsw i64 %.sroa.speculated, %i.b
+  %2 = load i64, ptr %i.d, align 8, !tbaa !84
+  %i.g = sub i64 %2, %i.b
   %i.h = lshr i64 %i.g, 1
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.h ; 6 uses
   %.idx = shl nuw nsw i64 %i.b, 3

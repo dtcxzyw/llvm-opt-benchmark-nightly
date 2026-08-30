@@ -1,4 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libpng/original/pngerror?download=true
+inline.NumInlined: 22
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@png_warning_parameter_unsigned:bb.a
   ret void
 }
@@ -200,24 +203,24 @@ bb.a:
   br i1 %.not40.not, label %.split.us, label %.split
 
 .split.us:                                        ; preds = %bb.a, %.thread.us.3
-  %.03055.us = phi ptr [ %i.o, %.thread.us.3 ], [ %2, %bb.a ] ; 5 uses
-  %.03354.us = phi i64 [ %i.p, %.thread.us.3 ], [ 0, %bb.a ] ; 7 uses
-  %i.b = load i8, ptr %.03055.us, align 1, !tbaa !27 ; 2 uses
+  %.03255.us = phi i64 [ %i.p, %.thread.us.3 ], [ 0, %bb.a ] ; 7 uses
+  %.03354.us = phi ptr [ %i.o, %.thread.us.3 ], [ %2, %bb.a ] ; 5 uses
+  %i.b = load i8, ptr %.03354.us, align 1, !tbaa !27 ; 2 uses
   %.not.us = icmp eq i8 %i.b, 0
   br i1 %.not.us, label %.critedge, label %.thread.us
 
 .thread.us:                                       ; preds = %.split.us
-  %i.c = getelementptr inbounds nuw i8, ptr %.03055.us, i64 1
-  %i.d = or disjoint i64 %.03354.us, 1            ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 %.03354.us
+  %i.c = getelementptr inbounds nuw i8, ptr %.03354.us, i64 1
+  %i.d = or disjoint i64 %.03255.us, 1            ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 %.03255.us
   store i8 %i.b, ptr %i.e, align 4, !tbaa !27
   %i.f = load i8, ptr %i.c, align 1, !tbaa !27    ; 2 uses
   %.not.us.1 = icmp eq i8 %i.f, 0
   br i1 %.not.us.1, label %.critedge, label %.thread.us.1
 
 .thread.us.1:                                     ; preds = %.thread.us
-  %i.g = getelementptr inbounds nuw i8, ptr %.03055.us, i64 2
-  %i.h = or disjoint i64 %.03354.us, 2            ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.03354.us, i64 2
+  %i.h = or disjoint i64 %.03255.us, 2            ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.d
   store i8 %i.f, ptr %i.i, align 1, !tbaa !27
   %i.j = load i8, ptr %i.g, align 1, !tbaa !27    ; 2 uses
@@ -225,36 +228,36 @@ bb.a:
   br i1 %.not.us.2, label %.critedge, label %.thread.us.2
 
 .thread.us.2:                                     ; preds = %.thread.us.1
-  %i.k = or disjoint i64 %.03354.us, 3            ; 2 uses
+  %i.k = or disjoint i64 %.03255.us, 3            ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.h
   store i8 %i.j, ptr %i.l, align 2, !tbaa !27
-  %exitcond59.not.2 = icmp eq i64 %.03354.us, 188
+  %exitcond59.not.2 = icmp eq i64 %.03255.us, 188
   br i1 %exitcond59.not.2, label %.critedge, label %.split.us.3
 
 .split.us.3:                                      ; preds = %.thread.us.2
-  %i.m = getelementptr inbounds nuw i8, ptr %.03055.us, i64 3
+  %i.m = getelementptr inbounds nuw i8, ptr %.03354.us, i64 3
   %i.n = load i8, ptr %i.m, align 1, !tbaa !27    ; 2 uses
   %.not.us.3 = icmp eq i8 %i.n, 0
   br i1 %.not.us.3, label %.critedge, label %.thread.us.3
 
 .thread.us.3:                                     ; preds = %.split.us.3
-  %i.o = getelementptr inbounds nuw i8, ptr %.03055.us, i64 4
-  %i.p = add nuw nsw i64 %.03354.us, 4
+  %i.o = getelementptr inbounds nuw i8, ptr %.03354.us, i64 4
+  %i.p = add nuw nsw i64 %.03255.us, 4
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.k
   store i8 %i.n, ptr %i.q, align 1, !tbaa !27
   br label %.split.us
 
 .split:                                           ; preds = %bb.a, %.backedge
-  %.03055 = phi ptr [ %.030.be, %.backedge ], [ %2, %bb.a ] ; 5 uses
-  %.03354 = phi i64 [ %.033.be, %.backedge ], [ 0, %bb.a ] ; 5 uses
-  %i.r = load i8, ptr %.03055, align 1, !tbaa !27 ; 2 uses
+  %.03255 = phi i64 [ %.032.be, %.backedge ], [ 0, %bb.a ] ; 5 uses
+  %.03354 = phi ptr [ %.033.be, %.backedge ], [ %2, %bb.a ] ; 5 uses
+  %i.r = load i8, ptr %.03354, align 1, !tbaa !27 ; 2 uses
   switch i8 %i.r, label %.thread [
     i8 0, label %.critedge
     i8 64, label %bb.b
   ]
 
 bb.b:                                             ; preds = %.split
-  %i.s = getelementptr inbounds nuw i8, ptr %.03055, i64 1 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %.03354, i64 1 ; 2 uses
   %i.t = load i8, ptr %i.s, align 1, !tbaa !27    ; 3 uses
   %.not41 = icmp eq i8 %i.t, 0
   br i1 %.not41, label %.thread, label %.preheader
@@ -275,12 +278,12 @@ bb.b:                                             ; preds = %.split
 
 .lr.ph.preheader:                                 ; preds = %.critedge2
   %i.x = getelementptr inbounds nuw [32 x i8], ptr %1, i64 %indvars.iv
-  %i.y = sub nuw nsw i64 191, %.03354
+  %i.y = sub nuw nsw i64 191, %.03255
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
   %.031.idx51 = phi i64 [ %.031.add, %bb.c ], [ 0, %.lr.ph.preheader ] ; 3 uses
-  %.13450 = phi i64 [ %i.ab, %bb.c ], [ %.03354, %.lr.ph.preheader ] ; 3 uses
+  %.13450 = phi i64 [ %i.ab, %bb.c ], [ %.03255, %.lr.ph.preheader ] ; 3 uses
   %.031.ptr = getelementptr inbounds nuw i8, ptr %i.x, i64 %.031.idx51
   %i.z = load i8, ptr %.031.ptr, align 1, !tbaa !27 ; 2 uses
   %.not44 = icmp ne i8 %i.z, 0
@@ -298,26 +301,26 @@ bb.c:                                             ; preds = %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.c
   %.134.lcssa.ph = phi i64 [ %.13450, %.lr.ph ], [ 191, %bb.c ]
-  %i.ad = getelementptr inbounds nuw i8, ptr %.03055, i64 2
+  %i.ad = getelementptr inbounds nuw i8, ptr %.03354, i64 2
   br label %.backedge
 
 .thread:                                          ; preds = %.critedge2, %.split, %bb.b
   %i.ae = phi i8 [ %i.r, %.split ], [ 64, %bb.b ], [ %i.t, %.critedge2 ]
-  %.2 = phi ptr [ %.03055, %.split ], [ %.03055, %bb.b ], [ %i.s, %.critedge2 ]
+  %.2 = phi ptr [ %.03354, %.split ], [ %.03354, %bb.b ], [ %i.s, %.critedge2 ]
   %i.af = getelementptr inbounds nuw i8, ptr %.2, i64 1
-  %i.ag = add nuw nsw i64 %.03354, 1
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 %.03354
+  %i.ag = add nuw nsw i64 %.03255, 1
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 %.03255
   store i8 %i.ae, ptr %i.ah, align 1, !tbaa !27
   br label %.backedge
 
 .backedge:                                        ; preds = %.thread, %._crit_edge
-  %.033.be = phi i64 [ %i.ag, %.thread ], [ %.134.lcssa.ph, %._crit_edge ] ; 3 uses
-  %.030.be = phi ptr [ %i.af, %.thread ], [ %i.ad, %._crit_edge ]
-  %i.ai = icmp ult i64 %.033.be, 191
+  %.033.be = phi ptr [ %i.af, %.thread ], [ %i.ad, %._crit_edge ]
+  %.032.be = phi i64 [ %i.ag, %.thread ], [ %.134.lcssa.ph, %._crit_edge ] ; 3 uses
+  %i.ai = icmp ult i64 %.032.be, 191
   br i1 %i.ai, label %.split, label %.critedge, !llvm.loop !34
 
 .critedge:                                        ; preds = %.backedge, %.split, %.split.us, %.thread.us, %.thread.us.1, %.thread.us.2, %.split.us.3
-  %.us-phi = phi i64 [ %i.h, %.thread.us.1 ], [ 191, %.thread.us.2 ], [ %.03354.us, %.split.us ], [ %i.d, %.thread.us ], [ %i.k, %.split.us.3 ], [ %.033.be, %.backedge ], [ %.03354, %.split ]
+  %.us-phi = phi i64 [ %i.h, %.thread.us.1 ], [ 191, %.thread.us.2 ], [ %.03255.us, %.split.us ], [ %i.d, %.thread.us ], [ %i.k, %.split.us.3 ], [ %.032.be, %.backedge ], [ %.03255, %.split ]
   %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 %.us-phi
   store i8 0, ptr %i.aj, align 1, !tbaa !27
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35)

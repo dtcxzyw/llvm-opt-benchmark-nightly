@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jemalloc/original/sec?download=true
+inline.NumInlined: 89
+inline.NumDeleted: 35
 begin_hunk_0_@je_sec_init:bb.a
   %i.ac = zext i32 %i.ab to i64                   ; 2 uses
   %.not = icmp ugt i64 %i.w, %i.ac
@@ -200,11 +202,11 @@ sec_shard_pick.exit.i:                            ; preds = %bb.l
   br label %bb.m
 
 bb.m:                                             ; preds = %malloc_mutex_trylock.exit.i, %.lr.ph.i
-  %.03863.i = phi i8 [ %.0.i.i47, %.lr.ph.i ], [ %spec.store.select.i, %malloc_mutex_trylock.exit.i ] ; 2 uses
-  %.04162.i = phi i64 [ 0, %.lr.ph.i ], [ %i.dx, %malloc_mutex_trylock.exit.i ]
+  %.03863.i = phi i64 [ 0, %.lr.ph.i ], [ %i.dx, %malloc_mutex_trylock.exit.i ]
+  %.03962.i = phi i8 [ %.0.i.i47, %.lr.ph.i ], [ %spec.store.select.i, %malloc_mutex_trylock.exit.i ] ; 2 uses
   %.val45.i = load ptr, ptr %i.bx, align 8, !tbaa !19
   %.val46.i = load i32, ptr %i.by, align 8, !tbaa !25
-  %i.bz = zext i8 %.03863.i to i64
+  %i.bz = zext i8 %.03962.i to i64
   %i.ca = zext i32 %.val46.i to i64
   %i.cb = mul nuw nsw i64 %i.ca, %i.bz
   %i.cc = getelementptr inbounds nuw [168 x i8], ptr %.val45.i, i64 %i.cb
@@ -297,12 +299,12 @@ bb.r:                                             ; preds = %bb.q
   br label %sec_size_supported.exit.thread.sink.split
 
 malloc_mutex_trylock.exit.i:                      ; preds = %sec_bin_alloc_locked.exit.thread.i, %bb.m
-  %i.dt = add i8 %.03863.i, 1                     ; 2 uses
+  %i.dt = add i8 %.03962.i, 1                     ; 2 uses
   %i.du = zext i8 %i.dt to i64
   %i.dv = load i64, ptr %1, align 8, !tbaa !26    ; 2 uses
   %i.dw = icmp eq i64 %i.dv, %i.du
   %spec.store.select.i = select i1 %i.dw, i8 0, i8 %i.dt ; 2 uses
-  %i.dx = add nuw i64 %.04162.i, 1                ; 2 uses
+  %i.dx = add nuw i64 %.03863.i, 1                ; 2 uses
   %.not43.i = icmp ult i64 %i.dx, %i.dv
   br i1 %.not43.i, label %bb.m, label %._crit_edge.i, !llvm.loop !45
 
@@ -705,7 +707,7 @@ bb.e:                                             ; preds = %edata_list_active_p
   %i.av = add i64 %i.au, 1
   store i64 %i.av, ptr %i.at, align 8, !tbaa !49
   %i.aw = lshr i64 %i.ap, 2
-  %i.ax = sub i64 %i.ap, %i.aw                    ; 2 uses
+  %i.ax = sub nuw i64 %i.ap, %i.aw                ; 2 uses
   %i.ay = icmp ugt i64 %i.an, %i.ax
   br i1 %i.ay, label %.lr.ph, label %.critedge
 

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/gdcmEquipmentManufacturer?download=true
+inline.NumInlined: 834
+inline.NumDeleted: 285
+loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_ZNSt3__1rsB8ne180100IcNS_11char_traitsIcEEEERNS_13basic_istreamIT_T0_EES7_RS4_:bb.a
   %i.aa = load i64, ptr %i.z, align 8
   %i.ab = getelementptr inbounds i8, ptr %0, i64 %i.aa
@@ -200,7 +204,7 @@ bb.o:                                             ; preds = %bb.l
   br label %select.unfold.thread
 
 select.unfold.thread:                             ; preds = %bb.j, %bb.h, %select.unfold, %bb.o
-  %.4 = phi i32 [ 1, %bb.o ], [ %spec.select, %select.unfold ], [ 0, %bb.h ], [ 4, %bb.j ]
+  %.4 = phi i32 [ 1, %bb.o ], [ %spec.select, %select.unfold ], [ 4, %bb.j ], [ 0, %bb.h ]
   %i.bb = load ptr, ptr %0, align 8, !tbaa !39
   %i.bc = getelementptr i8, ptr %i.bb, i64 -24
   %i.bd = load i64, ptr %i.bc, align 8

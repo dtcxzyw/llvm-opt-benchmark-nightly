@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jemalloc/original/extent?download=true
+inline.NumInlined: 294
+inline.NumDeleted: 93
 begin_hunk_0_@extent_commit_impl:tsdn_witness_tsdp_get.exit
 ; Function Attrs: nounwind uwtable
 define hidden noundef zeroext i1 @je_extent_boot() local_unnamed_addr #1 {
@@ -200,7 +202,7 @@ bb.a:
   br label %.outer
 
 .outer:                                           ; preds = %.loopexit, %bb.a
-  %.055.ph = phi ptr [ %.358.ph, %.loopexit ], [ %4, %bb.a ] ; 9 uses
+  %.055.ph = phi ptr [ %.364.ph, %.loopexit ], [ %4, %bb.a ] ; 9 uses
   %i.e = getelementptr i8, ptr %.055.ph, i64 16   ; 2 uses
   br label %.backedge
 
@@ -299,12 +301,12 @@ extent_coalesce.exit78:                           ; preds = %bb.g
   br i1 %i.ai, label %.sink.split, label %.loopexit
 
 .loopexit:                                        ; preds = %bb.e, %extent_coalesce.exit78
-  %.364.ph = phi i1 [ true, %extent_coalesce.exit78 ], [ %.061, %bb.e ]
-  %.358.ph = phi ptr [ %i.w, %extent_coalesce.exit78 ], [ %.055.ph, %bb.e ] ; 2 uses
-  br i1 %.364.ph, label %.outer, label %.loopexit88, !llvm.loop !90
+  %.364.ph = phi ptr [ %i.w, %extent_coalesce.exit78 ], [ %.055.ph, %bb.e ] ; 2 uses
+  %.3.ph = phi i1 [ true, %extent_coalesce.exit78 ], [ %.061, %bb.e ]
+  br i1 %.3.ph, label %.outer, label %.loopexit88, !llvm.loop !90
 
 .loopexit88:                                      ; preds = %.loopexit, %.split, %extent_coalesce.exit78.thread
-  %.358.ph86 = phi ptr [ %.055.ph, %.split ], [ %.055.ph, %extent_coalesce.exit78.thread ], [ %.358.ph, %.loopexit ] ; 2 uses
+  %.358.ph86 = phi ptr [ %.055.ph, %.split ], [ %.055.ph, %extent_coalesce.exit78.thread ], [ %.364.ph, %.loopexit ] ; 2 uses
   %i.aj = load i8, ptr %i.d, align 8, !tbaa !42, !range !43, !noundef !44
   %i.ak = trunc nuw i8 %i.aj to i1
   br i1 %i.ak, label %.sink.split, label %bb.h

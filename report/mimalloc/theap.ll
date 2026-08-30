@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mimalloc/original/theap?download=true
+inline.NumInlined: 66
+inline.NumDeleted: 35
 begin_hunk_0_@_mi_theap_init:bb.a
   %i.bh = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.ba) #10 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
@@ -200,12 +202,12 @@ mi_lock_acquire.exit:                             ; preds = %bb.c, %bb.b
   br i1 %.not32, label %.critedge.critedge, label %.lr.ph.outer
 
 .lr.ph.outer:                                     ; preds = %mi_lock_acquire.exit, %.thread
-  %.134.ph = phi i1 [ false, %.thread ], [ true, %mi_lock_acquire.exit ]
-  %.02533.ph = phi ptr [ %i.f, %.thread ], [ %i.d, %mi_lock_acquire.exit ]
+  %.034.ph = phi ptr [ %i.f, %.thread ], [ %i.d, %mi_lock_acquire.exit ]
+  %.133.ph = phi i1 [ false, %.thread ], [ true, %mi_lock_acquire.exit ]
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.outer, %bb.j
-  %.02533 = phi ptr [ %i.f, %bb.j ], [ %.02533.ph, %.lr.ph.outer ] ; 4 uses
+  %.02533 = phi ptr [ %i.f, %bb.j ], [ %.034.ph, %.lr.ph.outer ] ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.02533, i64 1280
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !66   ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.02533, i64 1032 ; 3 uses
@@ -267,7 +269,7 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.j
   %i.t = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.a) #10 ; 0 uses
-  br i1 %.134.ph, label %.critedge, label %bb.k
+  br i1 %.133.ph, label %.critedge, label %bb.k
 
 bb.k:                                             ; preds = %._crit_edge.thread, %._crit_edge
   %i.u = load ptr, ptr %0, align 8, !tbaa !45
@@ -474,14 +476,14 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not110.not136.not, label %.critedge, label %.lr.ph139
 
 .lr.ph139:                                        ; preds = %.preheader, %bb.f
-  %.0101138 = phi ptr [ %i.s, %bb.f ], [ %i.j, %.preheader ] ; 2 uses
-  %.0102137 = phi i64 [ %i.t, %bb.f ], [ 0, %.preheader ]
-  %i.r = tail call zeroext i1 %2(ptr noundef %.val116, ptr noundef nonnull %0, ptr noundef %.0101138, i64 noundef %.val.i, ptr noundef %3) #10 ; 3 uses
+  %.0102139 = phi i64 [ %i.t, %bb.f ], [ 0, %.preheader ]
+  %.0103138 = phi ptr [ %i.s, %bb.f ], [ %i.j, %.preheader ] ; 2 uses
+  %i.r = tail call zeroext i1 %2(ptr noundef %.val116, ptr noundef nonnull %0, ptr noundef %.0103138, i64 noundef %.val.i, ptr noundef %3) #10 ; 3 uses
   br i1 %i.r, label %bb.f, label %.critedge
 
 bb.f:                                             ; preds = %.lr.ph139
-  %i.s = getelementptr inbounds nuw i8, ptr %.0101138, i64 %.val.i
-  %i.t = add nuw nsw i64 %.0102137, 1             ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %.0103138, i64 %.val.i
+  %i.t = add nuw nsw i64 %.0102139, 1             ; 2 uses
   %i.u = load i16, ptr %i.l, align 8, !tbaa !80
   %i.v = zext i16 %i.u to i64
   %.not110.not = icmp samesign ult i64 %i.t, %i.v

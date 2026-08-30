@@ -1,4 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/brotli/original/bit_cost?download=true
+inline.NumInlined: 3
+loop-unroll.NumCompletelyUnrolled: 15
+loop-unroll.NumUnrolled: 18
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -14,17 +17,17 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a, %FastLog2.exit31
-  %.026 = phi i64 [ %i.r, %FastLog2.exit31 ], [ 0, %bb.a ] ; 5 uses
-  %.024 = phi double [ %i.y, %FastLog2.exit31 ], [ 0.000000e+00, %bb.a ] ; 3 uses
-  %.0 = phi ptr [ %i.o, %FastLog2.exit31 ], [ %0, %bb.a ] ; 3 uses
-  %i.c = icmp ult ptr %.0, %i.a
+  %.026 = phi ptr [ %i.o, %FastLog2.exit31 ], [ %0, %bb.a ] ; 3 uses
+  %.024 = phi i64 [ %i.r, %FastLog2.exit31 ], [ 0, %bb.a ] ; 5 uses
+  %.0 = phi double [ %i.y, %FastLog2.exit31 ], [ 0.000000e+00, %bb.a ] ; 3 uses
+  %i.c = icmp ult ptr %.026, %i.a
   br i1 %i.c, label %bb.c, label %bb.i
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = getelementptr inbounds nuw i8, ptr %.0, i64 4
-  %i.e = load i32, ptr %.0, align 4, !tbaa !8     ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %.026, i64 4
+  %i.e = load i32, ptr %.026, align 4, !tbaa !8   ; 3 uses
   %i.f = zext i32 %i.e to i64                     ; 2 uses
-  %i.g = add i64 %.026, %i.f
+  %i.g = add i64 %.024, %i.f
   %i.h = uitofp i32 %i.e to double                ; 2 uses
   %i.i = icmp ult i32 %i.e, 256
   br i1 %i.i, label %bb.d, label %bb.e
@@ -41,15 +44,15 @@ bb.e:                                             ; preds = %bb.c
 FastLog2.exit33:                                  ; preds = %bb.d, %bb.e
   %.0.i32 = phi double [ %i.k, %bb.d ], [ %i.l, %bb.e ]
   %i.m = fneg double %i.h
-  %i.n = tail call double @llvm.fmuladd.f64(double %i.m, double %.0.i32, double %.024)
+  %i.n = tail call double @llvm.fmuladd.f64(double %i.m, double %.0.i32, double %.0)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.a, %FastLog2.exit33
+  %.127 = phi ptr [ %0, %bb.a ], [ %i.d, %FastLog2.exit33 ] ; 2 uses
   %.127.a = phi i64 [ 0, %bb.a ], [ %i.g, %FastLog2.exit33 ]
   %.125 = phi double [ 0.000000e+00, %bb.a ], [ %i.n, %FastLog2.exit33 ]
-  %.1 = phi ptr [ %0, %bb.a ], [ %i.d, %FastLog2.exit33 ] ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %.1, i64 4
-  %i.p = load i32, ptr %.1, align 4, !tbaa !8     ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %.127, i64 4
+  %i.p = load i32, ptr %.127, align 4, !tbaa !8   ; 3 uses
   %i.q = zext i32 %i.p to i64                     ; 2 uses
   %i.r = add i64 %.127.a, %i.q
   %i.s = uitofp i32 %i.p to double                ; 2 uses
@@ -72,16 +75,16 @@ FastLog2.exit31:                                  ; preds = %bb.g, %bb.h
   br label %bb.b, !llvm.loop !11
 
 bb.i:                                             ; preds = %bb.b
-  %.not29 = icmp eq i64 %.026, 0
+  %.not29 = icmp eq i64 %.024, 0
   br i1 %.not29, label %._crit_edge, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.z = uitofp i64 %.026 to double               ; 3 uses
-  %i.aa = icmp ult i64 %.026, 256
+  %i.z = uitofp i64 %.024 to double               ; 3 uses
+  %i.aa = icmp ult i64 %.024, 256
   br i1 %i.aa, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.ab = getelementptr inbounds nuw [8 x i8], ptr @kBrotliLog2Table, i64 %.026
+  %i.ab = getelementptr inbounds nuw [8 x i8], ptr @kBrotliLog2Table, i64 %.024
   %i.ac = load double, ptr %i.ab, align 8, !tbaa !9
   br label %FastLog2.exit
 
@@ -91,12 +94,12 @@ bb.l:                                             ; preds = %bb.j
 
 FastLog2.exit:                                    ; preds = %bb.k, %bb.l
   %.0.i = phi double [ %i.ac, %bb.k ], [ %i.ad, %bb.l ]
-  %i.ae = tail call double @llvm.fmuladd.f64(double %i.z, double %.0.i, double %.024)
+  %i.ae = tail call double @llvm.fmuladd.f64(double %i.z, double %.0.i, double %.0)
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.i, %FastLog2.exit
   %.pre-phi = phi double [ %i.z, %FastLog2.exit ], [ 0.000000e+00, %bb.i ] ; 2 uses
-  %.2 = phi double [ %i.ae, %FastLog2.exit ], [ %.024, %bb.i ] ; 2 uses
+  %.2 = phi double [ %i.ae, %FastLog2.exit ], [ %.0, %bb.i ] ; 2 uses
   %i.af = fcmp olt double %.2, %.pre-phi
   %.3 = select i1 %i.af, double %.pre-phi, double %.2
   ret double %.3

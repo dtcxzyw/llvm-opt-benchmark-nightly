@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wolfssl/original/test_session?download=true
+inline.NumInlined: 5
+inline.NumDeleted: 4
 begin_hunk_0_@test_wolfSSL_SESSION:bb.a
   call fastcc void @tcp_connect(ptr noundef %i.a, i16 noundef zeroext %i.bf)
   %i.bg = load i32, ptr %i.a, align 4, !tbaa !23
@@ -200,8 +202,8 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.thread520, %bb.z, %bb.y
-  %.1462 = phi ptr [ null, %bb.z ], [ %i.el, %.thread520 ], [ %i.em, %bb.y ] ; 2 uses
   %2 = phi i1 [ false, %bb.z ], [ false, %.thread520 ], [ true, %bb.y ]
+  %.1438 = phi ptr [ null, %bb.z ], [ %i.el, %.thread520 ], [ %i.em, %bb.y ] ; 2 uses
   %i.ey = call i32 @wolfSSL_shutdown(ptr noundef %.0458513) #16 ; 0 uses
   call void @wolfSSL_free(ptr noundef %.0458513) #16
   %i.ez = load i32, ptr %i.a, align 4, !tbaa !23
@@ -254,7 +256,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %.thread527.sink.split
 
 bb.ag:                                            ; preds = %bb.ae
-  %i.fu = call i32 @wolfSSL_set_session(ptr noundef nonnull %i.fm, ptr noundef %.1462) #16 ; 2 uses
+  %i.fu = call i32 @wolfSSL_set_session(ptr noundef nonnull %i.fm, ptr noundef %.1438) #16 ; 2 uses
   %i.fv = icmp eq i32 %i.fu, 1
   br i1 %i.fv, label %.thread527, label %bb.ah
 
@@ -280,7 +282,7 @@ bb.ah:                                            ; preds = %bb.ag
   %.1459529 = phi ptr [ %i.fm, %bb.ag ], [ null, %FreeTcpReady.exit ], [ %.1459529.ph, %.thread527.sink.split ]
   %.23 = phi i32 [ 1, %bb.ag ], [ 0, %FreeTcpReady.exit ], [ 0, %.thread527.sink.split ]
   call void @wolfSSL_free(ptr noundef %.1459529) #16
-  call void @wolfSSL_SESSION_free(ptr noundef %.1462) #16
+  call void @wolfSSL_SESSION_free(ptr noundef %.1438) #16
   call void @wolfSSL_CTX_free(ptr noundef %i.e) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #16

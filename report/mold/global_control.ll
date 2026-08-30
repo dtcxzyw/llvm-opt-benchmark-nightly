@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mold/original/global_control?download=true
+inline.NumInlined: 175
+inline.NumDeleted: 103
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 10
+loop-unroll.NumUnrolled: 13
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -141,9 +146,9 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 128 dereferenceable(128) %i.a, i8 0, i64 128, i1 false)
   store ptr %i.b, ptr %i.c, align 8, !tbaa !11
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  store ptr %i.b, ptr %i.d, align 8, !tbaa !18
+  store ptr %i.b, ptr %i.d, align 16, !tbaa !18
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  store i8 0, ptr %i.e, align 8, !tbaa !19
+  store i8 0, ptr %i.e, align 64, !tbaa !19
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN3tbb6detail2r127allowed_parallelism_controlE, i64 16), ptr %i.a, align 128, !tbaa !22
   store ptr %i.a, ptr @_ZN3tbb6detail2r1L8controlsE, align 16, !tbaa !24
   %i.f = tail call noundef ptr @_ZN3tbb6detail2r122cache_aligned_allocateEm(i64 noundef 128) ; 7 uses
@@ -152,9 +157,9 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 128 dereferenceable(128) %i.f, i8 0, i64 128, i1 false)
   store ptr %i.g, ptr %i.h, align 8, !tbaa !11
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 48
-  store ptr %i.g, ptr %i.i, align 8, !tbaa !18
+  store ptr %i.g, ptr %i.i, align 16, !tbaa !18
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 64
-  store i8 0, ptr %i.j, align 8, !tbaa !19
+  store i8 0, ptr %i.j, align 64, !tbaa !19
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN3tbb6detail2r118stack_size_controlE, i64 16), ptr %i.f, align 128, !tbaa !22
   store ptr %i.f, ptr getelementptr inbounds nuw (i8, ptr @_ZN3tbb6detail2r1L8controlsE, i64 8), align 8, !tbaa !24
   %i.k = tail call noundef ptr @_ZN3tbb6detail2r122cache_aligned_allocateEm(i64 noundef 128) ; 7 uses
@@ -163,9 +168,9 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 128 dereferenceable(128) %i.k, i8 0, i64 128, i1 false)
   store ptr %i.l, ptr %i.m, align 8, !tbaa !11
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 48
-  store ptr %i.l, ptr %i.n, align 8, !tbaa !18
+  store ptr %i.l, ptr %i.n, align 16, !tbaa !18
   %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 64
-  store i8 0, ptr %i.o, align 8, !tbaa !19
+  store i8 0, ptr %i.o, align 64, !tbaa !19
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN3tbb6detail2r130terminate_on_exception_controlE, i64 16), ptr %i.k, align 128, !tbaa !22
   store ptr %i.k, ptr getelementptr inbounds nuw (i8, ptr @_ZN3tbb6detail2r1L8controlsE, i64 16), align 16, !tbaa !24
   %i.p = tail call noundef ptr @_ZN3tbb6detail2r122cache_aligned_allocateEm(i64 noundef 128) ; 7 uses
@@ -174,9 +179,9 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 128 dereferenceable(128) %i.p, i8 0, i64 128, i1 false)
   store ptr %i.q, ptr %i.r, align 8, !tbaa !11
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 48
-  store ptr %i.q, ptr %i.s, align 8, !tbaa !18
+  store ptr %i.q, ptr %i.s, align 16, !tbaa !18
   %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 64
-  store i8 0, ptr %i.t, align 8, !tbaa !19
+  store i8 0, ptr %i.t, align 64, !tbaa !19
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN3tbb6detail2r116lifetime_controlE, i64 16), ptr %i.p, align 128, !tbaa !22
   store ptr %i.p, ptr getelementptr inbounds nuw (i8, ptr @_ZN3tbb6detail2r1L8controlsE, i64 24), align 8, !tbaa !24
   %i.u = tail call noundef ptr @_ZN3tbb6detail2r122cache_aligned_allocateEm(i64 noundef 128) ; 7 uses
@@ -185,9 +190,9 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 128 dereferenceable(128) %i.u, i8 0, i64 128, i1 false)
   store ptr %i.v, ptr %i.w, align 8, !tbaa !11
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 48
-  store ptr %i.v, ptr %i.x, align 8, !tbaa !18
+  store ptr %i.v, ptr %i.x, align 16, !tbaa !18
   %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 64
-  store i8 0, ptr %i.y, align 8, !tbaa !19
+  store i8 0, ptr %i.y, align 64, !tbaa !19
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN3tbb6detail2r120leave_policy_controlE, i64 16), ptr %i.u, align 128, !tbaa !22
   store ptr %i.u, ptr getelementptr inbounds nuw (i8, ptr @_ZN3tbb6detail2r1L8controlsE, i64 32), align 16, !tbaa !24
   ret void

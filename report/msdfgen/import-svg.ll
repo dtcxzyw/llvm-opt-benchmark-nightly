@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/msdfgen/original/import-svg?download=true
+inline.NumInlined: 174
+inline.NumDeleted: 62
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -84,8 +86,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %bb.a
-  %.sroa.28.0 = phi double [ 0.000000e+00, %bb.a ], [ %i.tl, %.backedge ]
-  %.sroa.0314.0 = phi double [ 0.000000e+00, %bb.a ], [ %i.tk, %.backedge ]
+  %.sroa.28.0 = phi double [ 0.000000e+00, %bb.a ], [ %i.tk, %.backedge ]
+  %.sroa.0314.0 = phi double [ 0.000000e+00, %bb.a ], [ %i.tl, %.backedge ]
   %.0358 = phi i8 [ 0, %bb.a ], [ %.2360577, %.backedge ]
   %.0 = phi ptr [ %1, %bb.a ], [ %.2536, %.backedge ] ; 2 uses
   %.0152 = phi i1 [ false, %bb.a ], [ %.1153, %.backedge ]
@@ -134,8 +136,8 @@ _ZN7msdfgenL12readNodeTypeERcRPKc.exit:           ; preds = %bb.c
   %.0155751 = phi i1 [ %i.ta, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ], [ true, %.critedge ] ; 3 uses
   %.2750 = phi ptr [ %.65, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ], [ %.1, %.critedge ] ; 11 uses
   %.2360749 = phi i8 [ %.5363, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ], [ %.1359, %.critedge ] ; 24 uses
-  %.sroa.0289.0748 = phi double [ %i.tg, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ], [ 0.000000e+00, %.critedge ]
-  %.sroa.43.0747 = phi double [ %i.tf, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ], [ 0.000000e+00, %.critedge ]
+  %.sroa.0289.0748 = phi double [ %i.tf, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ], [ 0.000000e+00, %.critedge ]
+  %.sroa.43.0747 = phi double [ %i.tg, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ], [ 0.000000e+00, %.critedge ]
   %i.am = phi <2 x double> [ %i.su, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ], [ %i.ad, %.critedge ] ; 34 uses
   %i.an = phi <2 x double> [ %i.sv, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ], [ zeroinitializer, %.critedge ] ; 13 uses
   %i.ao = phi <2 x double> [ %i.sw, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ], [ zeroinitializer, %.critedge ] ; 9 uses
@@ -236,8 +238,8 @@ _ZN7msdfgenL14skipExtraCharsERPKc.exit.i6.i:      ; preds = %.preheader1393.a
 
 bb.e:                                             ; preds = %_ZN7msdfgenL14skipExtraCharsERPKc.exit.i6.i
   %i.bb = icmp eq i8 %.2360749, 109
-  %i.bc = insertelement <2 x double> poison, double %i.ay, i64 0
-  %i.bd = insertelement <2 x double> %i.bc, double %i.at, i64 1 ; 2 uses
+  %i.bc = insertelement <2 x double> poison, double %i.at, i64 0
+  %i.bd = insertelement <2 x double> %i.bc, double %i.ay, i64 1 ; 2 uses
   %i.be = fadd <2 x double> %i.am, %i.bd
   %i.bf = insertelement <2 x i1> poison, i1 %i.bb, i64 0
   %i.bg = shufflevector <2 x i1> %i.bf, <2 x i1> poison, <2 x i32> zeroinitializer
@@ -301,8 +303,8 @@ _ZN7msdfgenL14skipExtraCharsERPKc.exit.i6.i171:   ; preds = %.preheader1394.a
 
 bb.h:                                             ; preds = %_ZN7msdfgenL14skipExtraCharsERPKc.exit.i6.i171
   %i.bv = icmp eq i8 %.2360749, 108
-  %i.bw = insertelement <2 x double> poison, double %i.bs, i64 0
-  %i.bx = insertelement <2 x double> %i.bw, double %i.bn, i64 1 ; 2 uses
+  %i.bw = insertelement <2 x double> poison, double %i.bn, i64 0
+  %i.bx = insertelement <2 x double> %i.bw, double %i.bs, i64 1 ; 2 uses
   %i.by = fadd <2 x double> %i.am, %i.bx
   %i.bz = insertelement <2 x i1> poison, i1 %i.bv, i64 0
   %i.ca = shufflevector <2 x i1> %i.bz, <2 x i1> poison, <2 x i32> zeroinitializer
@@ -312,7 +314,7 @@ bb.h:                                             ; preds = %_ZN7msdfgenL14skipE
   %i.cd = extractelement <2 x double> %i.am, i64 1
   %i.ce = extractelement <2 x double> %i.cb, i64 0
   %i.cf = extractelement <2 x double> %i.cb, i64 1
-  %i.cg = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_NS_9EdgeColorE(double %i.cd, double %i.cc, double %i.cf, double %i.ce, i32 noundef 7)
+  %i.cg = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_NS_9EdgeColorE(double %i.cc, double %i.cd, double %i.ce, double %i.cf, i32 noundef 7)
   store ptr %i.cg, ptr %5, align 8, !tbaa !14
   invoke void @_ZN7msdfgen7Contour7addEdgeEONS_10EdgeHolderE(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, ptr noundef nonnull align 8 dereferenceable(8) %5)
           to label %bb.i unwind label %bb.j
@@ -356,11 +358,11 @@ _ZN7msdfgenL14skipExtraCharsERPKc.exit.i176:      ; preds = %bb.k
 
 bb.l:                                             ; preds = %_ZN7msdfgenL14skipExtraCharsERPKc.exit.i176
   %i.cn = icmp eq i8 %.2360749, 104
-  %i.co = extractelement <2 x double> %i.am, i64 1 ; 2 uses
+  %i.co = extractelement <2 x double> %i.am, i64 0 ; 2 uses
   %i.cp = fadd double %i.co, %i.ck
   %.sroa.0289.3 = select i1 %i.cn, double %i.cp, double %i.ck ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
-  %i.cq = extractelement <2 x double> %i.am, i64 0
+  %i.cq = extractelement <2 x double> %i.am, i64 1
   %i.cr = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_NS_9EdgeColorE(double %i.co, double %i.cq, double %.sroa.0289.3, double %.sroa.43.0747, i32 noundef 7)
   store ptr %i.cr, ptr %6, align 8, !tbaa !14
   invoke void @_ZN7msdfgen7Contour7addEdgeEONS_10EdgeHolderE(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, ptr noundef nonnull align 8 dereferenceable(8) %6)
@@ -369,7 +371,7 @@ bb.l:                                             ; preds = %_ZN7msdfgenL14skipE
 bb.m:                                             ; preds = %bb.l
   call void @_ZN7msdfgen10EdgeHolderD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %6) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
-  %i.cs = insertelement <2 x double> %i.ap, double %.sroa.0289.3, i64 1
+  %i.cs = insertelement <2 x double> %i.ap, double %.sroa.0289.3, i64 0
   br label %_ZN7msdfgenL17addArcApproximateERNS_7ContourENS_7Vector2ES2_S2_dbb.exit
 
 bb.n:                                             ; preds = %bb.l
@@ -406,11 +408,11 @@ _ZN7msdfgenL14skipExtraCharsERPKc.exit.i179:      ; preds = %bb.o
 
 bb.p:                                             ; preds = %_ZN7msdfgenL14skipExtraCharsERPKc.exit.i179
   %i.cz = icmp eq i8 %.2360749, 118
-  %i.da = extractelement <2 x double> %i.am, i64 0 ; 2 uses
+  %i.da = extractelement <2 x double> %i.am, i64 1 ; 2 uses
   %i.db = fadd double %i.da, %i.cw
   %.sroa.43.3 = select i1 %i.cz, double %i.db, double %i.cw ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #12
-  %i.dc = extractelement <2 x double> %i.am, i64 1
+  %i.dc = extractelement <2 x double> %i.am, i64 0
   %i.dd = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_NS_9EdgeColorE(double %i.dc, double %i.da, double %.sroa.0289.0748, double %.sroa.43.3, i32 noundef 7)
   store ptr %i.dd, ptr %7, align 8, !tbaa !14
   invoke void @_ZN7msdfgen7Contour7addEdgeEONS_10EdgeHolderE(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, ptr noundef nonnull align 8 dereferenceable(8) %7)
@@ -419,7 +421,7 @@ bb.p:                                             ; preds = %_ZN7msdfgenL14skipE
 bb.q:                                             ; preds = %bb.p
   call void @_ZN7msdfgen10EdgeHolderD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %7) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
-  %i.de = insertelement <2 x double> %i.ap, double %.sroa.43.3, i64 0
+  %i.de = insertelement <2 x double> %i.ap, double %.sroa.43.3, i64 1
   br label %_ZN7msdfgenL17addArcApproximateERNS_7ContourENS_7Vector2ES2_S2_dbb.exit
 
 bb.r:                                             ; preds = %bb.p
@@ -528,10 +530,10 @@ _ZN7msdfgenL14skipExtraCharsERPKc.exit.i6.i194:   ; preds = %.preheader1395.a
 
 bb.t:                                             ; preds = %_ZN7msdfgenL14skipExtraCharsERPKc.exit.i6.i194
   %i.ea = icmp eq i8 %.2360749, 113               ; 2 uses
-  %i.eb = insertelement <2 x double> poison, double %i.dx, i64 0
-  %i.ec = insertelement <2 x double> %i.eb, double %i.ds, i64 1 ; 2 uses
-  %i.ed = insertelement <2 x double> poison, double %i.dn, i64 0
-  %i.ee = insertelement <2 x double> %i.ed, double %i.di, i64 1 ; 2 uses
+  %i.eb = insertelement <2 x double> poison, double %i.ds, i64 0
+  %i.ec = insertelement <2 x double> %i.eb, double %i.dx, i64 1 ; 2 uses
+  %i.ed = insertelement <2 x double> poison, double %i.di, i64 0
+  %i.ee = insertelement <2 x double> %i.ed, double %i.dn, i64 1 ; 2 uses
   %i.ef = fadd <2 x double> %i.am, %i.ee
   %i.eg = fadd <2 x double> %i.am, %i.ec
   %i.eh = select i1 %i.ea, <2 x double> %i.eg, <2 x double> %i.ec ; 3 uses
@@ -543,7 +545,7 @@ bb.t:                                             ; preds = %_ZN7msdfgenL14skipE
   %i.em = extractelement <2 x double> %i.eh, i64 1
   %i.en = extractelement <2 x double> %i.ei, i64 0
   %i.eo = extractelement <2 x double> %i.ei, i64 1
-  %i.ep = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_S1_NS_9EdgeColorE(double %i.ek, double %i.ej, double %i.eo, double %i.en, double %i.em, double %i.el, i32 noundef 7)
+  %i.ep = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_S1_NS_9EdgeColorE(double %i.ej, double %i.ek, double %i.en, double %i.eo, double %i.el, double %i.em, i32 noundef 7)
   store ptr %i.ep, ptr %8, align 8, !tbaa !14
   invoke void @_ZN7msdfgen7Contour7addEdgeEONS_10EdgeHolderE(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, ptr noundef nonnull align 8 dereferenceable(8) %8)
           to label %bb.u unwind label %bb.v
@@ -628,8 +630,8 @@ _ZN7msdfgenL14skipExtraCharsERPKc.exit.i6.i204:   ; preds = %.preheader1398.a
 
 bb.aa:                                            ; preds = %_ZN7msdfgenL14skipExtraCharsERPKc.exit.i6.i204
   %i.fe = icmp eq i8 %.2360749, 116
-  %i.ff = insertelement <2 x double> poison, double %i.fb, i64 0
-  %i.fg = insertelement <2 x double> %i.ff, double %i.ew, i64 1 ; 2 uses
+  %i.ff = insertelement <2 x double> poison, double %i.ew, i64 0
+  %i.fg = insertelement <2 x double> %i.ff, double %i.fb, i64 1 ; 2 uses
   %i.fh = fadd <2 x double> %i.am, %i.fg
   %i.fi = insertelement <2 x i1> poison, i1 %i.fe, i64 0
   %i.fj = shufflevector <2 x i1> %i.fi, <2 x i1> poison, <2 x i32> zeroinitializer
@@ -641,7 +643,7 @@ bb.aa:                                            ; preds = %_ZN7msdfgenL14skipE
   %i.fo = extractelement <2 x double> %i.fk, i64 1
   %i.fp = extractelement <2 x double> %i.et, i64 0
   %i.fq = extractelement <2 x double> %i.et, i64 1
-  %i.fr = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_S1_NS_9EdgeColorE(double %i.fm, double %i.fl, double %i.fq, double %i.fp, double %i.fo, double %i.fn, i32 noundef 7)
+  %i.fr = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_S1_NS_9EdgeColorE(double %i.fl, double %i.fm, double %i.fp, double %i.fq, double %i.fn, double %i.fo, i32 noundef 7)
   store ptr %i.fr, ptr %9, align 8, !tbaa !14
   invoke void @_ZN7msdfgen7Contour7addEdgeEONS_10EdgeHolderE(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, ptr noundef nonnull align 8 dereferenceable(8) %9)
           to label %bb.ab unwind label %bb.ac
@@ -805,12 +807,12 @@ _ZN7msdfgenL14skipExtraCharsERPKc.exit.i6.i228:   ; preds = %.preheader1399.a
 
 bb.ae:                                            ; preds = %_ZN7msdfgenL14skipExtraCharsERPKc.exit.i6.i228
   %i.gx = icmp eq i8 %.2360749, 99                ; 3 uses
-  %i.gy = insertelement <2 x double> poison, double %i.gu, i64 0
-  %i.gz = insertelement <2 x double> %i.gy, double %i.gp, i64 1 ; 2 uses
-  %i.ha = insertelement <2 x double> poison, double %i.ga, i64 0
-  %i.hb = insertelement <2 x double> %i.ha, double %i.fv, i64 1 ; 2 uses
-  %i.hc = insertelement <2 x double> poison, double %i.gk, i64 0
-  %i.hd = insertelement <2 x double> %i.hc, double %i.gf, i64 1 ; 2 uses
+  %i.gy = insertelement <2 x double> poison, double %i.gp, i64 0
+  %i.gz = insertelement <2 x double> %i.gy, double %i.gu, i64 1 ; 2 uses
+  %i.ha = insertelement <2 x double> poison, double %i.fv, i64 0
+  %i.hb = insertelement <2 x double> %i.ha, double %i.ga, i64 1 ; 2 uses
+  %i.hc = insertelement <2 x double> poison, double %i.gf, i64 0
+  %i.hd = insertelement <2 x double> %i.hc, double %i.gk, i64 1 ; 2 uses
   %i.he = fadd <2 x double> %i.am, %i.hb
   %i.hf = fadd <2 x double> %i.am, %i.hd
   %i.hg = fadd <2 x double> %i.am, %i.gz
@@ -826,7 +828,7 @@ bb.ae:                                            ; preds = %_ZN7msdfgenL14skipE
   %i.hp = extractelement <2 x double> %i.hj, i64 1
   %i.hq = extractelement <2 x double> %i.hi, i64 0
   %i.hr = extractelement <2 x double> %i.hi, i64 1
-  %i.hs = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_S1_S1_NS_9EdgeColorE(double %i.hl, double %i.hk, double %i.hr, double %i.hq, double %i.hp, double %i.ho, double %i.hn, double %i.hm, i32 noundef 7)
+  %i.hs = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_S1_S1_NS_9EdgeColorE(double %i.hk, double %i.hl, double %i.hq, double %i.hr, double %i.ho, double %i.hp, double %i.hm, double %i.hn, i32 noundef 7)
   store ptr %i.hs, ptr %10, align 8, !tbaa !14
   invoke void @_ZN7msdfgen7Contour7addEdgeEONS_10EdgeHolderE(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, ptr noundef nonnull align 8 dereferenceable(8) %10)
           to label %bb.af unwind label %bb.ag
@@ -953,10 +955,10 @@ _ZN7msdfgenL14skipExtraCharsERPKc.exit.i6.i248:   ; preds = %.preheader1404.a
 
 bb.aj:                                            ; preds = %_ZN7msdfgenL14skipExtraCharsERPKc.exit.i6.i248
   %i.iv = icmp eq i8 %.2360749, 115               ; 2 uses
-  %i.iw = insertelement <2 x double> poison, double %i.is, i64 0
-  %i.ix = insertelement <2 x double> %i.iw, double %i.in, i64 1 ; 2 uses
-  %i.iy = insertelement <2 x double> poison, double %i.ii, i64 0
-  %i.iz = insertelement <2 x double> %i.iy, double %i.id, i64 1 ; 2 uses
+  %i.iw = insertelement <2 x double> poison, double %i.in, i64 0
+  %i.ix = insertelement <2 x double> %i.iw, double %i.is, i64 1 ; 2 uses
+  %i.iy = insertelement <2 x double> poison, double %i.id, i64 0
+  %i.iz = insertelement <2 x double> %i.iy, double %i.ii, i64 1 ; 2 uses
   %i.ja = fadd <2 x double> %i.am, %i.iz
   %i.jb = fadd <2 x double> %i.am, %i.ix
   %i.jc = select i1 %i.iv, <2 x double> %i.jb, <2 x double> %i.ix ; 3 uses
@@ -970,7 +972,7 @@ bb.aj:                                            ; preds = %_ZN7msdfgenL14skipE
   %i.jj = extractelement <2 x double> %i.ia, i64 1
   %i.jk = extractelement <2 x double> %i.jd, i64 0
   %i.jl = extractelement <2 x double> %i.jd, i64 1
-  %i.jm = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_S1_S1_NS_9EdgeColorE(double %i.jf, double %i.je, double %i.jj, double %i.ji, double %i.jl, double %i.jk, double %i.jh, double %i.jg, i32 noundef 7)
+  %i.jm = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_S1_S1_NS_9EdgeColorE(double %i.je, double %i.jf, double %i.ji, double %i.jj, double %i.jk, double %i.jl, double %i.jg, double %i.jh, i32 noundef 7)
   store ptr %i.jm, ptr %11, align 8, !tbaa !14
   invoke void @_ZN7msdfgen7Contour7addEdgeEONS_10EdgeHolderE(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, ptr noundef nonnull align 8 dereferenceable(8) %11)
           to label %bb.ak unwind label %bb.al
@@ -1160,18 +1162,18 @@ _ZN7msdfgenL14skipExtraCharsERPKc.exit.i6.i275:   ; preds = %.preheader1407
 
 .critedge163:                                     ; preds = %_ZN7msdfgenL14skipExtraCharsERPKc.exit.i6.i275
   %i.kz = icmp eq i8 %.2360749, 97
-  %i.la = insertelement <2 x double> poison, double %i.kw, i64 0
-  %i.lb = insertelement <2 x double> %i.la, double %i.kr, i64 1 ; 2 uses
+  %i.la = insertelement <2 x double> poison, double %i.kr, i64 0
+  %i.lb = insertelement <2 x double> %i.la, double %i.kw, i64 1 ; 2 uses
   %i.lc = fadd <2 x double> %i.am, %i.lb
   %i.ld = insertelement <2 x i1> poison, i1 %i.kz, i64 0
   %i.le = shufflevector <2 x i1> %i.ld, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.lf = select <2 x i1> %i.le, <2 x double> %i.lc, <2 x double> %i.lb ; 9 uses
   %i.lg = fmul double %i.ka, f0x3F91DF46A2529D39  ; 2 uses
-  %i.lh = extractelement <2 x double> %i.am, i64 1 ; 2 uses
-  %i.li = extractelement <2 x double> %i.lf, i64 1 ; 2 uses
+  %i.lh = extractelement <2 x double> %i.am, i64 0 ; 2 uses
+  %i.li = extractelement <2 x double> %i.lf, i64 0 ; 2 uses
   %i.lj = fcmp oeq double %i.li, %i.lh
-  %i.lk = extractelement <2 x double> %i.am, i64 0 ; 2 uses
-  %i.ll = extractelement <2 x double> %i.lf, i64 0 ; 2 uses
+  %i.lk = extractelement <2 x double> %i.am, i64 1 ; 2 uses
+  %i.ll = extractelement <2 x double> %i.lf, i64 1 ; 2 uses
   %i.lm = fcmp oeq double %i.ll, %i.lk
   %i.ln = select i1 %i.lj, i1 %i.lm, i1 false
   br i1 %i.ln, label %_ZN7msdfgenL17addArcApproximateERNS_7ContourENS_7Vector2ES2_S2_dbb.exit, label %bb.an
@@ -1204,21 +1206,21 @@ bb.aq:                                            ; preds = %bb.ao
 bb.ar:                                            ; preds = %bb.an
   %i.ls = call double @llvm.fabs.f64(double %i.jq) ; 2 uses
   %i.lt = call double @llvm.fabs.f64(double %i.jv) ; 2 uses
-  %i.lu = call double @cos(double noundef %i.lg) #12
-  %i.lv = call double @sin(double noundef %i.lg) #12 ; 2 uses
+  %i.lu = call double @cos(double noundef %i.lg) #12 ; 2 uses
+  %i.lv = call double @sin(double noundef %i.lg) #12 ; 3 uses
   %i.lw = fsub <2 x double> %i.am, %i.lf
   %i.lx = fmul <2 x double> %i.lw, splat (double 5.000000e-01) ; 2 uses
   %i.ly = fneg double %i.lv
   %i.lz = insertelement <2 x double> poison, double %i.jv, i64 0
   %i.ma = insertelement <2 x double> %i.lz, double %i.jq, i64 1 ; 2 uses
   %i.mb = fmul <2 x double> %i.ma, %i.ma          ; 3 uses
-  %13 = shufflevector <2 x double> %i.lx, <2 x double> poison, <2 x i32> zeroinitializer
+  %13 = shufflevector <2 x double> %i.lx, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.mc = insertelement <2 x double> poison, double %i.lu, i64 0
-  %i.md = insertelement <2 x double> %i.mc, double %i.lv, i64 1 ; 6 uses
+  %i.md = insertelement <2 x double> %i.mc, double %i.lv, i64 1 ; 4 uses
   %i.me = fmul <2 x double> %13, %i.md
-  %i.mf = shufflevector <2 x double> %i.md, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 5 uses
+  %i.mf = shufflevector <2 x double> %i.md, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 3 uses
   %i.mg = insertelement <2 x double> %i.mf, double %i.ly, i64 0
-  %14 = shufflevector <2 x double> %i.lx, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %14 = shufflevector <2 x double> %i.lx, <2 x double> poison, <2 x i32> zeroinitializer
   %i.mh = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.mg, <2 x double> %14, <2 x double> %i.me) ; 8 uses
   %i.mi = fmul <2 x double> %i.mh, %i.mh          ; 3 uses
   %i.mj = fdiv <2 x double> %i.mi, %i.mb          ; 2 uses
@@ -1264,16 +1266,19 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   %i.nk = fmul double %.sroa.14.0.i, %i.nj
   %i.nl = extractelement <2 x double> %i.mh, i64 1
   %i.nm = fmul double %i.nl, %i.nk
-  %i.nn = fdiv double %i.nm, %.sroa.0260.0.i      ; 2 uses
+  %i.nn = fdiv double %i.nm, %.sroa.0260.0.i      ; 3 uses
   %i.no = fadd <2 x double> %i.am, %i.lf
   %i.np = fneg double %i.nn
   %i.nq = fmul <2 x double> %i.no, splat (double 5.000000e-01)
-  %i.nr = insertelement <2 x double> poison, double %i.nn, i64 0 ; 2 uses
-  %i.ns = insertelement <2 x double> %i.nr, double %i.np, i64 1
-  %i.nt = fmul <2 x double> %i.md, %i.ns
+  %15 = insertelement <2 x double> poison, double %i.lv, i64 0
+  %16 = insertelement <2 x double> %15, double %i.lu, i64 1 ; 3 uses
+  %i.nr = insertelement <2 x double> poison, double %i.np, i64 0
+  %i.ns = insertelement <2 x double> %i.nr, double %i.nn, i64 1
+  %i.nt = fmul <2 x double> %16, %i.ns
+  %17 = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.nu = insertelement <2 x double> poison, double %i.ni, i64 0
   %i.nv = shufflevector <2 x double> %i.nu, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.nw = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.mf, <2 x double> %i.nv, <2 x double> %i.nt)
+  %i.nw = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %17, <2 x double> %i.nv, <2 x double> %i.nt)
   %i.nx = fadd <2 x double> %i.nq, %i.nw          ; 3 uses
   %i.ny = fneg <2 x double> %i.mh
   %i.nz = shufflevector <2 x double> %i.mh, <2 x double> %i.ny, <2 x i32> <i32 1, i32 3>
@@ -1285,7 +1290,8 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   %i.of = fmul double %i.oe, 0.000000e+00
   %i.og = fneg <2 x double> %i.mh
   %i.oh = shufflevector <2 x double> %i.mh, <2 x double> %i.og, <2 x i32> <i32 0, i32 2>
-  %i.oi = shufflevector <2 x double> %i.nr, <2 x double> poison, <2 x i32> zeroinitializer
+  %18 = insertelement <2 x double> poison, double %i.nn, i64 0
+  %i.oi = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
   %i.oj = fsub <2 x double> %i.oh, %i.oi
   %i.ok = insertelement <2 x double> poison, double %.sroa.14.0.i, i64 0
   %i.ol = shufflevector <2 x double> %i.ok, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -1396,13 +1402,15 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av, %bb.
   %i.rn = shufflevector <2 x double> %i.rm, <2 x double> %i.rl, <2 x i32> <i32 2, i32 0>
   %i.ro = fmul <2 x double> %i.md, %i.rn
   %i.rp = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.mf, <2 x double> %i.ra, <2 x double> %i.ro)
-  %i.rq = fadd <2 x double> %i.nx, %i.rp          ; 2 uses
+  %19 = shufflevector <2 x double> %i.rp, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %i.rq = fadd <2 x double> %i.nx, %19            ; 2 uses
   %i.rr = shufflevector <2 x double> %i.rm, <2 x double> %i.rl, <2 x i32> <i32 3, i32 1>
   %i.rs = fmul <2 x double> %i.md, %i.rr
   %i.rt = insertelement <2 x double> poison, double %i.rj, i64 0
   %i.ru = shufflevector <2 x double> %i.rt, <2 x double> poison, <2 x i32> zeroinitializer
   %i.rv = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.mf, <2 x double> %i.ru, <2 x double> %i.rs)
-  %i.rw = fadd <2 x double> %i.nx, %i.rv          ; 2 uses
+  %20 = shufflevector <2 x double> %i.rv, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %i.rw = fadd <2 x double> %i.nx, %20            ; 2 uses
   %i.rx = icmp eq i32 %.0187266.i, %i.ql
   br i1 %i.rx, label %bb.az, label %bb.ay
 
@@ -1410,12 +1418,12 @@ bb.ay:                                            ; preds = %.preheader.i
   %i.ry = fmul double %.sroa.0260.0.i, %i.rc
   %i.rz = fmul double %.sroa.14.0.i, %i.rd        ; 2 uses
   %i.sa = fneg double %i.rz
-  %i.sb = insertelement <2 x double> poison, double %i.rz, i64 0
-  %i.sc = insertelement <2 x double> %i.sb, double %i.sa, i64 1
-  %i.sd = fmul <2 x double> %i.md, %i.sc
+  %i.sb = insertelement <2 x double> poison, double %i.sa, i64 0
+  %i.sc = insertelement <2 x double> %i.sb, double %i.rz, i64 1
+  %i.sd = fmul <2 x double> %16, %i.sc
   %i.se = insertelement <2 x double> poison, double %i.ry, i64 0
   %i.sf = shufflevector <2 x double> %i.se, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.sg = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.mf, <2 x double> %i.sf, <2 x double> %i.sd)
+  %i.sg = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %17, <2 x double> %i.sf, <2 x double> %i.sd)
   %i.sh = fadd <2 x double> %i.nx, %i.sg
   br label %bb.az
 
@@ -1430,7 +1438,7 @@ bb.az:                                            ; preds = %bb.ay, %.preheader.
   %i.so = extractelement <2 x double> %i.rq, i64 1
   %i.sp = extractelement <2 x double> %i.rw, i64 0
   %i.sq = extractelement <2 x double> %i.rw, i64 1
-  %i.sr = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_S1_S1_NS_9EdgeColorE(double %i.sm, double %i.sl, double %i.so, double %i.sn, double %i.sq, double %i.sp, double %i.sk, double %i.sj, i32 noundef 7)
+  %i.sr = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_S1_S1_NS_9EdgeColorE(double %i.sl, double %i.sm, double %i.sn, double %i.so, double %i.sp, double %i.sq, double %i.sj, double %i.sk, i32 noundef 7)
   store ptr %i.sr, ptr %4, align 8, !tbaa !14
   invoke void @_ZN7msdfgen7Contour7addEdgeEONS_10EdgeHolderE(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, ptr noundef nonnull align 8 dereferenceable(8) %4)
           to label %bb.ba unwind label %bb.bb
@@ -1508,8 +1516,8 @@ _ZN7msdfgenL12readNodeTypeERcRPKc.exit283:        ; preds = %bb.bc, %bb.bc, %bb.
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.loopexit.split.loop.exit, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283, %.critedge, %bb.f
-  %.sroa.28.1741 = phi double [ %i.bj, %bb.f ], [ %.sroa.28.0, %.critedge ], [ %i.th, %.loopexit.loopexit.split.loop.exit ], [ %i.tf, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ] ; 2 uses
-  %.sroa.0314.1700 = phi double [ %i.bk, %bb.f ], [ %.sroa.0314.0, %.critedge ], [ %i.ti, %.loopexit.loopexit.split.loop.exit ], [ %i.tg, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ] ; 2 uses
+  %.sroa.28.1741 = phi double [ %i.bk, %bb.f ], [ %.sroa.28.0, %.critedge ], [ %i.ti, %.loopexit.loopexit.split.loop.exit ], [ %i.tg, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ] ; 2 uses
+  %.sroa.0314.1700 = phi double [ %i.bj, %bb.f ], [ %.sroa.0314.0, %.critedge ], [ %i.th, %.loopexit.loopexit.split.loop.exit ], [ %i.tf, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ] ; 2 uses
   %.2360577 = phi i8 [ %.2360749, %bb.f ], [ %.1359, %.critedge ], [ %.2360749, %.loopexit.loopexit.split.loop.exit ], [ %.5363, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ]
   %.2536 = phi ptr [ %.2750, %bb.f ], [ %.1, %.critedge ], [ %.2750, %.loopexit.loopexit.split.loop.exit ], [ %.65, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ]
   %.1153 = phi i1 [ false, %bb.f ], [ false, %.critedge ], [ true, %.loopexit.loopexit.split.loop.exit ], [ false, %_ZN7msdfgenL12readNodeTypeERcRPKc.exit283 ]
@@ -1523,8 +1531,8 @@ _ZN7msdfgenL12readNodeTypeERcRPKc.exit283:        ; preds = %bb.bc, %bb.bc, %bb.
   br i1 %i.tp, label %.backedge, label %bb.be
 
 bb.be:                                            ; preds = %.loopexit
-  %i.tq = fcmp une double %.sroa.0314.1700, %i.tk
-  %i.tr = fcmp une double %.sroa.28.1741, %i.tl
+  %i.tq = fcmp une double %.sroa.0314.1700, %i.tl
+  %i.tr = fcmp une double %.sroa.28.1741, %i.tk
   %i.ts = select i1 %i.tq, i1 true, i1 %i.tr
   br i1 %i.ts, label %bb.bf, label %.backedge
 
@@ -1576,7 +1584,7 @@ bb.bg:                                            ; preds = %bb.bf
 
 bb.bh:                                            ; preds = %bb.bf
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #12
-  %i.vc = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_NS_9EdgeColorE(double %.sroa.0314.1700, double %.sroa.28.1741, double %i.tk, double %i.tl, i32 noundef 7)
+  %i.vc = call noundef ptr @_ZN7msdfgen11EdgeSegment6createENS_7Vector2ES1_NS_9EdgeColorE(double %.sroa.0314.1700, double %.sroa.28.1741, double %i.tl, double %i.tk, i32 noundef 7)
   store ptr %i.vc, ptr %12, align 8, !tbaa !14
   invoke void @_ZN7msdfgen7Contour7addEdgeEONS_10EdgeHolderE(ptr noundef nonnull align 8 dereferenceable(24) %i.aj, ptr noundef nonnull align 8 dereferenceable(8) %12)
           to label %bb.bi unwind label %bb.bj

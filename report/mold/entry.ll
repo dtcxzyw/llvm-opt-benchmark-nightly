@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mold/original/entry?download=true
+inline.NumInlined: 45
+inline.NumDeleted: 37
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -121,11 +123,12 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nounwind
 define internal void @_GLOBAL__sub_I_entry.cc() #0 section ".text.startup" {
 bb.a:
+  store ptr getelementptr inbounds nuw (i8, ptr @_ZN4mold12mold_versionB5cxx11E, i64 16), ptr @_ZN4mold12mold_versionB5cxx11E, align 8, !tbaa !20
   %i.a = tail call noalias noundef nonnull dereferenceable(79) ptr @_Znwm(i64 noundef 79) #11 ; 3 uses
   store ptr %i.a, ptr @_ZN4mold12mold_versionB5cxx11E, align 8, !tbaa !14
   store i64 78, ptr getelementptr inbounds nuw (i8, ptr @_ZN4mold12mold_versionB5cxx11E, i64 16), align 8, !tbaa !19
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(78) %i.a, ptr noundef nonnull align 1 dereferenceable(78) @.str, i64 78, i1 false)
-  store i64 78, ptr getelementptr inbounds nuw (i8, ptr @_ZN4mold12mold_versionB5cxx11E, i64 8), align 8, !tbaa !20
+  store i64 78, ptr getelementptr inbounds nuw (i8, ptr @_ZN4mold12mold_versionB5cxx11E, i64 8), align 8, !tbaa !21
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 78
   store i8 0, ptr %i.b, align 1, !tbaa !19
   %i.c = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev, ptr nonnull @_ZN4mold12mold_versionB5cxx11E, ptr nonnull @__dso_handle) #9 ; 0 uses
@@ -169,5 +172,6 @@ attributes #11 = { builtin nounwind allocsize(0) }
 !17 = !{!"p1 omnipotent char", !12, i64 0}
 !18 = !{!"long", !6, i64 0}
 !19 = !{!6, !6, i64 0}
-!20 = !{!15, !18, i64 8}
+!20 = !{!16, !17, i64 0}
+!21 = !{!15, !18, i64 8}
 end_hunk_0

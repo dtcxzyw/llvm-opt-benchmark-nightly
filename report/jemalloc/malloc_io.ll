@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jemalloc/original/malloc_io?download=true
+inline.NumInlined: 18
+inline.NumDeleted: 7
 begin_hunk_0_@je_malloc_vsnprintf:bb.a
 
 bb.q:                                             ; preds = %bb.p
@@ -200,17 +202,17 @@ bb.ax:                                            ; preds = %bb.av, %bb.ar, %bb.
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i, %bb.ax
-  %.030.i.i = phi i32 [ %i.dq, %.preheader.i.i ], [ 64, %bb.ax ] ; 2 uses
-  %.0.i.i = phi i64 [ %i.dw, %.preheader.i.i ], [ %spec.select.i, %bb.ax ] ; 3 uses
-  %i.dq = add i32 %.030.i.i, -1                   ; 2 uses
-  %i.dr = urem i64 %.0.i.i, 10
+  %.030.i.i = phi i64 [ %i.dw, %.preheader.i.i ], [ %spec.select.i, %bb.ax ] ; 3 uses
+  %.0.i.i = phi i32 [ %i.dq, %.preheader.i.i ], [ 64, %bb.ax ] ; 2 uses
+  %i.dq = add i32 %.0.i.i, -1                     ; 2 uses
+  %i.dr = urem i64 %.030.i.i, 10
   %i.ds = getelementptr inbounds nuw i8, ptr @.str, i64 %i.dr
   %i.dt = load i8, ptr %i.ds, align 1, !tbaa !16
   %i.du = zext i32 %i.dq to i64                   ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.du
   store i8 %i.dt, ptr %i.dv, align 1, !tbaa !16
-  %i.dw = udiv i64 %.0.i.i, 10
-  %.not33.i.i = icmp samesign ult i64 %.0.i.i, 10
+  %i.dw = udiv i64 %.030.i.i, 10
+  %.not33.i.i = icmp samesign ult i64 %.030.i.i, 10
   br i1 %.not33.i.i, label %u2s.exit.i, label %.preheader.i.i, !llvm.loop !23
 
 u2s.exit.i:                                       ; preds = %.preheader.i.i
@@ -218,7 +220,7 @@ u2s.exit.i:                                       ; preds = %.preheader.i.i
   %i.dy = select i1 %.0392.ph902, i8 32, i8 45
   %i.dz = select i1 %.0395.ph, i8 43, i8 %i.dy
   %i.ea = icmp slt i64 %.0408.a, 0                ; 2 uses
-  %i.eb = sub i32 65, %.030.i.i
+  %i.eb = sub i32 65, %.0.i.i
   %i.ec = zext i32 %i.eb to i64                   ; 2 uses
   %.012.i.a = select i1 %i.ea, i8 45, i8 %i.dz    ; 2 uses
   %i.ed = icmp ne i8 %.012.i.a, 45
@@ -621,22 +623,22 @@ bb.dg:                                            ; preds = %bb.de, %bb.da, %bb.
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i, %bb.dg
-  %.030.i = phi i32 [ %i.jw, %.preheader.i ], [ 64, %bb.dg ] ; 2 uses
-  %.0.i485 = phi i64 [ %i.kc, %.preheader.i ], [ %.0411, %bb.dg ] ; 3 uses
-  %i.jw = add i32 %.030.i, -1                     ; 2 uses
-  %i.jx = urem i64 %.0.i485, 10
+  %.030.i = phi i64 [ %i.kc, %.preheader.i ], [ %.0411, %bb.dg ] ; 3 uses
+  %.0.i485 = phi i32 [ %i.jw, %.preheader.i ], [ 64, %bb.dg ] ; 2 uses
+  %i.jw = add i32 %.0.i485, -1                    ; 2 uses
+  %i.jx = urem i64 %.030.i, 10
   %i.jy = getelementptr inbounds nuw i8, ptr @.str, i64 %i.jx
   %i.jz = load i8, ptr %i.jy, align 1, !tbaa !16
   %i.ka = zext i32 %i.jw to i64                   ; 2 uses
   %i.kb = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.ka
   store i8 %i.jz, ptr %i.kb, align 1, !tbaa !16
-  %i.kc = udiv i64 %.0.i485, 10
-  %.not33.i = icmp ult i64 %.0.i485, 10
+  %i.kc = udiv i64 %.030.i, 10
+  %.not33.i = icmp ult i64 %.030.i, 10
   br i1 %.not33.i, label %u2s.exit, label %.preheader.i, !llvm.loop !23
 
 u2s.exit:                                         ; preds = %.preheader.i
   %i.kd = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.ka
-  %i.ke = sub i32 65, %.030.i
+  %i.ke = sub i32 65, %.0.i485
   %i.kf = zext i32 %i.ke to i64                   ; 4 uses
   %i.kg = icmp eq i32 %.0400, -1
   br i1 %i.kg, label %.thread519, label %bb.dh

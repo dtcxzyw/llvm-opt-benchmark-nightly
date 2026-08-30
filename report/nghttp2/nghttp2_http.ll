@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nghttp2/original/nghttp2_http?download=true
+inline.NumInlined: 26
+inline.NumDeleted: 12
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@nghttp2_http_on_request_headers:bb.a
   %i.c = and i32 %i.b, 32768
   %i.d = and i32 %i.b, 32896
@@ -200,14 +204,14 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %.sink = phi i64 [ 32, %bb.b ], [ 48, %bb.a ]
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %.sink34
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %.sink
-  %.0 = load ptr, ptr %i.c, align 8, !tbaa !22
-  %.024 = load i64, ptr %i.d, align 8, !tbaa !22  ; 2 uses
-  %.not = icmp eq i64 %.024, 0
+  %.023 = load i64, ptr %i.d, align 8, !tbaa !22  ; 2 uses
+  %.024 = load ptr, ptr %i.c, align 8, !tbaa !22
+  %.not = icmp eq i64 %.023, 0
   br i1 %.not, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %bb.i
   %.02330 = phi i64 [ %i.ap, %bb.i ], [ 0, %bb.c ] ; 2 uses
-  %i.e = getelementptr inbounds nuw [40 x i8], ptr %.0, i64 %.02330 ; 5 uses
+  %i.e = getelementptr inbounds nuw [40 x i8], ptr %.024, i64 %.02330 ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.g = load i64, ptr %i.f, align 8, !tbaa !61
   %i.h = icmp eq i64 %i.g, 7
@@ -266,7 +270,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.e, %bb.d, %.lr.ph
   %i.ap = add nuw i64 %.02330, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ap, %.024
+  %exitcond.not = icmp eq i64 %i.ap, %.023
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !66
 
 .critedge.sink.split:                             ; preds = %bb.h, %bb.g

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libevent/original/event?download=true
+inline.NumInlined: 216
+inline.NumDeleted: 66
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@evthread_make_base_notifiable:bb.a
   %.not10 = icmp eq ptr %i.b, null
   br i1 %.not10, label %bb.d, label %bb.c
@@ -200,18 +204,18 @@ event_del.exit105:                                ; preds = %bb.q, %bb.r
   br i1 %.not98147, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %event_del.exit105, %bb.w
-  %.2149 = phi i32 [ %.3, %bb.w ], [ %.173150, %event_del.exit105 ] ; 2 uses
-  %.074148 = phi ptr [ %i.bh, %bb.w ], [ %i.bf, %event_del.exit105 ] ; 4 uses
-  %i.bg = getelementptr inbounds nuw i8, ptr %.074148, i64 40
+  %.071149 = phi ptr [ %i.bh, %bb.w ], [ %i.bf, %event_del.exit105 ] ; 4 uses
+  %.2148 = phi i32 [ %.3, %bb.w ], [ %.173150, %event_del.exit105 ] ; 2 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %.071149, i64 40
   %i.bh = load ptr, ptr %i.bg, align 8            ; 2 uses
-  %i.bi = getelementptr inbounds nuw i8, ptr %.074148, i64 16
+  %i.bi = getelementptr inbounds nuw i8, ptr %.071149, i64 16
   %i.bj = load i16, ptr %i.bi, align 8
   %i.bk = and i16 %i.bj, 16
   %.not99 = icmp eq i16 %i.bk, 0
   br i1 %.not99, label %bb.s, label %bb.w
 
 bb.s:                                             ; preds = %.lr.ph
-  %i.bl = getelementptr inbounds nuw i8, ptr %.074148, i64 64
+  %i.bl = getelementptr inbounds nuw i8, ptr %.071149, i64 64
   %i.bm = load ptr, ptr %i.bl, align 8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 432 ; 2 uses
   %i.bo = load ptr, ptr %i.bn, align 8            ; 2 uses
@@ -224,7 +228,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  %i.br = tail call i32 @event_del_nolock_(ptr noundef nonnull %.074148, i32 noundef 2) ; 0 uses
+  %i.br = tail call i32 @event_del_nolock_(ptr noundef nonnull %.071149, i32 noundef 2) ; 0 uses
   %i.bs = load ptr, ptr %i.bn, align 8            ; 2 uses
   %.not8.i.i107 = icmp eq ptr %i.bs, null
   br i1 %.not8.i.i107, label %event_del.exit108, label %bb.v
@@ -235,11 +239,11 @@ bb.v:                                             ; preds = %bb.u
   br label %event_del.exit108
 
 event_del.exit108:                                ; preds = %bb.u, %bb.v
-  %i.bv = add nsw i32 %.2149, 1
+  %i.bv = add nsw i32 %.2148, 1
   br label %bb.w
 
 bb.w:                                             ; preds = %event_del.exit108, %.lr.ph
-  %.3 = phi i32 [ %.2149, %.lr.ph ], [ %i.bv, %event_del.exit108 ] ; 2 uses
+  %.3 = phi i32 [ %.2148, %.lr.ph ], [ %i.bv, %event_del.exit108 ] ; 2 uses
   %.not98 = icmp eq ptr %i.bh, null
   br i1 %.not98, label %._crit_edge, label %.lr.ph, !llvm.loop !30
 
@@ -476,10 +480,10 @@ event_del_.exit.i23.us.i:                         ; preds = %event_del_.exit.sin
   br i1 %.not2039.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph47.i, %event_base_cancel_single_callback_.exit.i
-  %.143.i = phi i32 [ %i.ho, %event_base_cancel_single_callback_.exit.i ], [ %.045.i, %.lr.ph47.i ]
-  %.01840.i = phi ptr [ %i.ew, %event_base_cancel_single_callback_.exit.i ], [ %i.ev, %.lr.ph47.i ] ; 21 uses
-  %i.ew = load ptr, ptr %.01840.i, align 8        ; 2 uses
-  %i.ex = getelementptr inbounds nuw i8, ptr %.01840.i, i64 16 ; 7 uses
+  %.041.i = phi ptr [ %i.ew, %event_base_cancel_single_callback_.exit.i ], [ %i.ev, %.lr.ph47.i ] ; 21 uses
+  %.140.i = phi i32 [ %i.ho, %event_base_cancel_single_callback_.exit.i ], [ %.045.i, %.lr.ph47.i ]
+  %i.ew = load ptr, ptr %.041.i, align 8          ; 2 uses
+  %i.ex = getelementptr inbounds nuw i8, ptr %.041.i, i64 16 ; 7 uses
   %i.ey = load i16, ptr %i.ex, align 8            ; 3 uses
   %i.ez = and i16 %i.ey, 128
   %.not.i.i113 = icmp eq i16 %i.ez, 0
@@ -491,7 +495,7 @@ bb.ar:                                            ; preds = %.lr.ph.i
   br i1 %.not26.i.i, label %bb.as, label %event_del_.exit.i.i
 
 bb.as:                                            ; preds = %bb.ar
-  %i.fb = getelementptr inbounds nuw i8, ptr %.01840.i, i64 64
+  %i.fb = getelementptr inbounds nuw i8, ptr %.041.i, i64 64
   %i.fc = load ptr, ptr %i.fb, align 8
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 432 ; 2 uses
   %i.fe = load ptr, ptr %i.fd, align 8            ; 2 uses
@@ -504,7 +508,7 @@ bb.at:                                            ; preds = %bb.as
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.as
-  %i.fh = tail call i32 @event_del_nolock_(ptr noundef nonnull %.01840.i, i32 noundef 3) ; 0 uses
+  %i.fh = tail call i32 @event_del_nolock_(ptr noundef nonnull %.041.i, i32 noundef 3) ; 0 uses
   %i.fi = load ptr, ptr %i.fd, align 8            ; 2 uses
   %.not8.i.i.i = icmp eq ptr %i.fi, null
   br i1 %.not8.i.i.i, label %event_del_.exit.i.i, label %event_del_.exit.sink.split.i.i
@@ -527,7 +531,7 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
   br i1 %.not.i35.i, label %bb.az, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  %i.fo = tail call i32 @event_del_nolock_(ptr noundef nonnull %.01840.i, i32 noundef 3) ; 0 uses
+  %i.fo = tail call i32 @event_del_nolock_(ptr noundef nonnull %.041.i, i32 noundef 3) ; 0 uses
   br label %event_callback_cancel_nolock_.exit.i
 
 bb.az:                                            ; preds = %bb.ax
@@ -557,15 +561,15 @@ bb.ba:                                            ; preds = %bb.az
   %i.fx = load i32, ptr %i.ch, align 8
   %i.fy = add nsw i32 %i.fx, -1
   store i32 %i.fy, ptr %i.ch, align 8
-  %i.fz = load ptr, ptr %.01840.i, align 8        ; 2 uses
+  %i.fz = load ptr, ptr %.041.i, align 8          ; 2 uses
   %.not.i.i36.i = icmp eq ptr %i.fz, null
-  %i.ga = getelementptr inbounds nuw i8, ptr %.01840.i, i64 8
+  %i.ga = getelementptr inbounds nuw i8, ptr %.041.i, i64 8
   %i.gb = load ptr, ptr %i.ga, align 8            ; 2 uses
   br i1 %.not.i.i36.i, label %bb.bb, label %event_queue_remove_active.exit.i.i
 
 bb.bb:                                            ; preds = %bb.ba
   %i.gc = load ptr, ptr %i.ce, align 8
-  %i.gd = getelementptr inbounds nuw i8, ptr %.01840.i, i64 18
+  %i.gd = getelementptr inbounds nuw i8, ptr %.041.i, i64 18
   %i.ge = load i8, ptr %i.gd, align 2
   %i.gf = zext i8 %i.ge to i64
   %i.gg = getelementptr inbounds nuw [16 x i8], ptr %i.gc, i64 %i.gf
@@ -575,7 +579,7 @@ event_queue_remove_active.exit.i.i:               ; preds = %bb.bb, %bb.ba
   %.sink14.i.i.i = phi ptr [ %i.gg, %bb.bb ], [ %i.fz, %bb.ba ]
   %i.gh = getelementptr inbounds nuw i8, ptr %.sink14.i.i.i, i64 8
   store ptr %i.gb, ptr %i.gh, align 8
-  %i.gi = load ptr, ptr %.01840.i, align 8
+  %i.gi = load ptr, ptr %.041.i, align 8
   store ptr %i.gi, ptr %i.gb, align 8
   br label %event_callback_cancel_nolock_.exit.i
 
@@ -593,9 +597,9 @@ bb.bc:                                            ; preds = %bb.az
   %i.gp = load i32, ptr %i.ch, align 8
   %i.gq = add nsw i32 %i.gp, -1
   store i32 %i.gq, ptr %i.ch, align 8
-  %i.gr = load ptr, ptr %.01840.i, align 8        ; 2 uses
+  %i.gr = load ptr, ptr %.041.i, align 8          ; 2 uses
   %.not.i13.i.i = icmp eq ptr %i.gr, null
-  %i.gs = getelementptr inbounds nuw i8, ptr %.01840.i, i64 8
+  %i.gs = getelementptr inbounds nuw i8, ptr %.041.i, i64 8
   %i.gt = load ptr, ptr %i.gs, align 8            ; 3 uses
   br i1 %.not.i13.i.i, label %bb.be, label %bb.bd
 
@@ -609,7 +613,7 @@ bb.be:                                            ; preds = %bb.bc
   br label %event_queue_remove_active_later.exit.i.i
 
 event_queue_remove_active_later.exit.i.i:         ; preds = %bb.be, %bb.bd
-  %i.gv = load ptr, ptr %.01840.i, align 8
+  %i.gv = load ptr, ptr %.041.i, align 8
   store ptr %i.gv, ptr %i.gt, align 8
   br label %event_callback_cancel_nolock_.exit.i
 
@@ -635,7 +639,7 @@ bb.bf:                                            ; preds = %event_del_.exit.i.i
   br i1 %.not28.i.i, label %event_base_cancel_single_callback_.exit.i, label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf
-  %i.hb = getelementptr inbounds nuw i8, ptr %.01840.i, i64 19 ; 2 uses
+  %i.hb = getelementptr inbounds nuw i8, ptr %.041.i, i64 19 ; 2 uses
   %i.hc = load i8, ptr %i.hb, align 1
   switch i8 %i.hc, label %event_base_cancel_single_callback_.exit.i [
     i8 5, label %bb.bh
@@ -644,11 +648,11 @@ bb.bg:                                            ; preds = %bb.bf
   ]
 
 bb.bh:                                            ; preds = %bb.bg, %bb.bg
-  %i.hd = getelementptr inbounds nuw i8, ptr %.01840.i, i64 24
+  %i.hd = getelementptr inbounds nuw i8, ptr %.041.i, i64 24
   %i.he = load ptr, ptr %i.hd, align 8
-  %i.hf = getelementptr inbounds nuw i8, ptr %.01840.i, i64 32
+  %i.hf = getelementptr inbounds nuw i8, ptr %.041.i, i64 32
   %i.hg = load ptr, ptr %i.hf, align 8
-  tail call void %i.he(ptr noundef nonnull %.01840.i, ptr noundef %i.hg) #25, !inline_history !33
+  tail call void %i.he(ptr noundef nonnull %.041.i, ptr noundef %i.hg) #25, !inline_history !33
   %i.hh = load i8, ptr %i.hb, align 1
   %i.hi = icmp eq i8 %i.hh, 6
   br i1 %i.hi, label %bb.bi, label %event_base_cancel_single_callback_.exit.i
@@ -659,23 +663,23 @@ bb.bi:                                            ; preds = %bb.bh
   br i1 %.not.i29.i.i, label %bb.bk, label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
-  tail call void %i.hj(ptr noundef nonnull %.01840.i) #25, !inline_history !35
+  tail call void %i.hj(ptr noundef nonnull %.041.i) #25, !inline_history !35
   br label %event_base_cancel_single_callback_.exit.i
 
 bb.bk:                                            ; preds = %bb.bi
-  tail call void @free(ptr noundef nonnull %.01840.i) #25
+  tail call void @free(ptr noundef nonnull %.041.i) #25
   br label %event_base_cancel_single_callback_.exit.i
 
 bb.bl:                                            ; preds = %bb.bg
-  %i.hk = getelementptr inbounds nuw i8, ptr %.01840.i, i64 24
+  %i.hk = getelementptr inbounds nuw i8, ptr %.041.i, i64 24
   %i.hl = load ptr, ptr %i.hk, align 8
-  %i.hm = getelementptr inbounds nuw i8, ptr %.01840.i, i64 32
+  %i.hm = getelementptr inbounds nuw i8, ptr %.041.i, i64 32
   %i.hn = load ptr, ptr %i.hm, align 8
-  tail call void %i.hl(ptr noundef nonnull %.01840.i, ptr noundef %i.hn) #25, !inline_history !33
+  tail call void %i.hl(ptr noundef nonnull %.041.i, ptr noundef %i.hn) #25, !inline_history !33
   br label %event_base_cancel_single_callback_.exit.i
 
 event_base_cancel_single_callback_.exit.i:        ; preds = %bb.bl, %bb.bk, %bb.bj, %bb.bh, %bb.bg, %bb.bf, %event_del_.exit.i.i
-  %i.ho = add nsw i32 %.1.i.i, %.143.i            ; 2 uses
+  %i.ho = add nsw i32 %.1.i.i, %.140.i            ; 2 uses
   %.not20.i = icmp eq ptr %i.ew, null
   br i1 %.not20.i, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !36
 
@@ -1078,13 +1082,13 @@ bb.z:                                             ; preds = %bb.y, %bb.w
   %i.cz = or i16 %i.cy, 2
   store i16 %i.cz, ptr %i.aq, align 8
   %i.da = icmp eq i32 %.0113181, 1                ; 2 uses
-  %spec.select = zext i1 %i.da to i32
-  %spec.select150 = select i1 %i.da, i32 0, i32 %.0113181
+  %spec.select = select i1 %i.da, i32 0, i32 %.0113181
+  %spec.select150 = zext i1 %i.da to i32
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.thread, %bb.u, %bb.t
-  %.0114 = phi i32 [ 0, %bb.u ], [ 0, %bb.t ], [ %spec.select, %.thread ] ; 7 uses
-  %.1 = phi i32 [ 0, %bb.u ], [ 0, %bb.t ], [ %spec.select150, %.thread ] ; 6 uses
+  %.0114 = phi i32 [ 0, %bb.u ], [ 0, %bb.t ], [ %spec.select, %.thread ] ; 6 uses
+  %.1 = phi i32 [ 0, %bb.u ], [ 0, %bb.t ], [ %spec.select150, %.thread ] ; 7 uses
   br i1 %i.at, label %bb.ab, label %bb.cc
 
 bb.ab:                                            ; preds = %bb.aa
@@ -1487,12 +1491,12 @@ bb.cb:                                            ; preds = %bb.ca, %bb.bz
   br label %min_heap_top_.exit.thread
 
 min_heap_top_.exit.thread:                        ; preds = %bb.bx, %bb.cb, %bb.ca, %bb.bz, %min_heap_top_.exit, %bb.bw, %bb.bu, %bb.bv
-  %.2 = phi i32 [ %.0114, %bb.bu ], [ %.0114, %bb.bv ], [ %.0114, %min_heap_top_.exit ], [ 1, %bb.cb ], [ %.0114, %bb.bz ], [ %.0114, %bb.ca ], [ 1, %bb.bw ], [ %.0114, %bb.bx ]
+  %.2 = phi i32 [ %.1, %bb.bu ], [ %.1, %bb.bv ], [ %.1, %min_heap_top_.exit ], [ 1, %bb.cb ], [ %.1, %bb.bz ], [ %.1, %bb.ca ], [ 1, %bb.bw ], [ %.1, %bb.bx ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   br label %bb.cc
 
 bb.cc:                                            ; preds = %min_heap_top_.exit.thread, %bb.aa
-  %.3 = phi i32 [ %.2, %min_heap_top_.exit.thread ], [ %.0114, %bb.aa ]
+  %.3 = phi i32 [ %.2, %min_heap_top_.exit.thread ], [ %.1, %bb.aa ]
   %i.kx = icmp ne i32 %.3, 0
   %i.ky = load ptr, ptr @evthread_id_fn_, align 8 ; 2 uses
   %i.kz = icmp ne ptr %i.ky, null
@@ -1530,7 +1534,7 @@ bb.ch:                                            ; preds = %bb.cg
   br label %evthread_notify_base.exit
 
 evthread_notify_base.exit:                        ; preds = %bb.z, %bb.ch, %bb.cg, %bb.cf, %bb.ce, %bb.cd, %bb.cc
-  %.1186201 = phi i32 [ %.1, %bb.ch ], [ %.1, %bb.cc ], [ %.1, %bb.ce ], [ %.1, %bb.cd ], [ %.1, %bb.cf ], [ %.1, %bb.cg ], [ -1, %bb.z ]
+  %.1186201 = phi i32 [ %.0114, %bb.ch ], [ %.0114, %bb.cc ], [ %.0114, %bb.ce ], [ %.0114, %bb.cd ], [ %.0114, %bb.cf ], [ %.0114, %bb.cg ], [ -1, %bb.z ]
   %i.lk = load i32, ptr @event_debug_mode_on_, align 4
   %.not.i169 = icmp eq i32 %i.lk, 0
   br i1 %.not.i169, label %event_debug_note_add_.exit, label %bb.ci

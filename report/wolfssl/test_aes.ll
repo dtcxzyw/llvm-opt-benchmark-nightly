@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wolfssl/original/test_aes?download=true
+inline.NumInlined: 4
+inline.NumDeleted: 4
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@test_wc_AesGcmSetKey:bb.a
   %i.ct = call i64 @fwrite(ptr nonnull @.str.8, i64 2, i64 1, ptr %i.cs) ; 0 uses
   %i.cu = load ptr, ptr @stdout, align 8, !tbaa !9
@@ -200,14 +204,14 @@ bb.f:                                             ; preds = %.critedge454
 
 .preheader:                                       ; preds = %.critedge452, %.critedge460
   %indvars.iv471 = phi i64 [ %indvars.iv.next472, %.critedge460 ], [ 0, %.critedge452 ] ; 2 uses
-  %.15469 = phi i32 [ %.23, %.critedge460 ], [ %.14, %.critedge452 ]
-  %.1431468 = phi i32 [ %i.em, %.critedge460 ], [ 16, %.critedge452 ] ; 5 uses
+  %.15469 = phi i32 [ %i.em, %.critedge460 ], [ 16, %.critedge452 ] ; 5 uses
+  %.1431468 = phi i32 [ %.23, %.critedge460 ], [ %.14, %.critedge452 ]
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.h, i8 0, i64 256, i1 false)
-  %i.cl = icmp eq i32 %.15469, 1
+  %i.cl = icmp eq i32 %.1431468, 1
   br i1 %i.cl, label %bb.g, label %.critedge456.thread
 
 bb.g:                                             ; preds = %.preheader
-  %i.cm = call i32 @wc_AesGcmEncrypt(ptr noundef nonnull %0, ptr noundef nonnull %i.h, ptr noundef nonnull %i.g, i32 noundef %.1431468, ptr noundef nonnull %i.f, i32 noundef 12, ptr noundef nonnull %i.e, i32 noundef 16, ptr noundef null, i32 noundef 0) #10 ; 2 uses
+  %i.cm = call i32 @wc_AesGcmEncrypt(ptr noundef nonnull %0, ptr noundef nonnull %i.h, ptr noundef nonnull %i.g, i32 noundef %.15469, ptr noundef nonnull %i.f, i32 noundef 12, ptr noundef nonnull %i.e, i32 noundef 16, ptr noundef null, i32 noundef 0) #10 ; 2 uses
   %i.cn = icmp eq i32 %i.cm, 0
   br i1 %i.cn, label %.critedge458, label %bb.h
 
@@ -253,7 +257,7 @@ bb.i:                                             ; preds = %.critedge458
 
 bb.j:                                             ; preds = %.critedge458
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.i, i8 -1, i64 256, i1 false)
-  %i.dm = call i32 @wc_AesGcmDecrypt(ptr noundef nonnull %0, ptr noundef nonnull %i.i, ptr noundef nonnull %i.h, i32 noundef %.1431468, ptr noundef nonnull %i.f, i32 noundef 12, ptr noundef nonnull %i.e, i32 noundef 16, ptr noundef null, i32 noundef 0) #10 ; 2 uses
+  %i.dm = call i32 @wc_AesGcmDecrypt(ptr noundef nonnull %0, ptr noundef nonnull %i.i, ptr noundef nonnull %i.h, i32 noundef %.15469, ptr noundef nonnull %i.f, i32 noundef 12, ptr noundef nonnull %i.e, i32 noundef 16, ptr noundef null, i32 noundef 0) #10 ; 2 uses
   %i.dn = icmp eq i32 %i.dm, 0
   br i1 %i.dn, label %.critedge462, label %bb.k
 
@@ -272,7 +276,7 @@ bb.k:                                             ; preds = %bb.j
   br label %.critedge460
 
 .critedge462:                                     ; preds = %bb.j
-  %i.dz = zext nneg i32 %.1431468 to i64
+  %i.dz = zext nneg i32 %.15469 to i64
   %bcmp439 = call i32 @bcmp(ptr noundef nonnull dereferenceable(1) %i.i, ptr noundef nonnull dereferenceable(1) %i.g, i64 %i.dz)
   %i.ea = icmp eq i32 %bcmp439, 0
   br i1 %i.ea, label %.critedge460, label %bb.l
@@ -284,7 +288,7 @@ bb.l:                                             ; preds = %.critedge462
   %i.ee = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.20, ptr noundef nonnull @.str.45, ptr noundef nonnull @.str.27, ptr noundef nonnull @.str.40) ; 0 uses
   %i.ef = load ptr, ptr @stdout, align 8, !tbaa !9
   %i.eg = call i64 @fwrite(ptr nonnull @.str.6, i64 15, i64 1, ptr %i.ef) ; 0 uses
-  %i.eh = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.24, ptr noundef nonnull %i.i, ptr noundef nonnull %i.g, i32 noundef %.1431468) ; 0 uses
+  %i.eh = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.24, ptr noundef nonnull %i.i, ptr noundef nonnull %i.g, i32 noundef %.15469) ; 0 uses
   %i.ei = load ptr, ptr @stdout, align 8, !tbaa !9
   %i.ej = call i64 @fwrite(ptr nonnull @.str.8, i64 2, i64 1, ptr %i.ei) ; 0 uses
   %i.ek = load ptr, ptr @stdout, align 8, !tbaa !9
@@ -294,7 +298,7 @@ bb.l:                                             ; preds = %.critedge462
 .critedge460:                                     ; preds = %.critedge456.thread, %bb.k, %.critedge462, %bb.l
   %.23 = phi i32 [ 1, %.critedge462 ], [ 0, %bb.k ], [ 0, %bb.l ], [ 0, %.critedge456.thread ] ; 2 uses
   %indvars.iv.next472 = add nuw nsw i64 %indvars.iv471, 1 ; 2 uses
-  %i.em = shl nuw nsw i32 %.1431468, 1
+  %i.em = shl nuw nsw i32 %.15469, 1
   %exitcond474.not = icmp eq i64 %indvars.iv.next472, 5
   br i1 %exitcond474.not, label %bb.m, label %.preheader, !llvm.loop !21
 

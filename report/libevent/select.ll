@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libevent/original/select?download=true
+inline.NumInlined: 4
+inline.NumDeleted: 2
 begin_hunk_0_@select_add:bb.a
 bb.g:                                             ; preds = %.critedge, %bb.a
   %i.ah = and i16 %3, 2
@@ -200,10 +202,10 @@ bb.m:                                             ; preds = %bb.k, %bb.l
   br i1 %.not6570, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.m, %bb.o
-  %.05272 = phi i32 [ %spec.store.select, %bb.o ], [ %i.ar, %bb.m ] ; 2 uses
-  %.05371 = phi i32 [ %i.bi, %bb.o ], [ 0, %bb.m ] ; 2 uses
-  %i.as = add nsw i32 %.05272, 1
-  %.not66 = icmp slt i32 %.05272, %i.aa
+  %.05272 = phi i32 [ %i.bi, %bb.o ], [ 0, %bb.m ] ; 2 uses
+  %.05371 = phi i32 [ %spec.store.select, %bb.o ], [ %i.ar, %bb.m ] ; 2 uses
+  %i.as = add nsw i32 %.05371, 1
+  %.not66 = icmp slt i32 %.05371, %i.aa
   %spec.store.select = select i1 %.not66, i32 %i.as, i32 0 ; 4 uses
   %i.at = load ptr, ptr %i.n, align 8
   %i.au = sdiv i32 %spec.store.select, 64
@@ -231,8 +233,8 @@ bb.n:                                             ; preds = %.lr.ph
   br label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph, %bb.n
-  %i.bi = add nuw i32 %.05371, 1
-  %exitcond.not = icmp eq i32 %.05371, %i.aa
+  %i.bi = add nuw i32 %.05272, 1
+  %exitcond.not = icmp eq i32 %.05272, %i.aa
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !5
 
 .loopexit:                                        ; preds = %bb.o, %bb.m, %bb.i, %bb.b, %bb.c, %bb.j

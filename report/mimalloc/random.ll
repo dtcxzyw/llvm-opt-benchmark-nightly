@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mimalloc/original/random?download=true
+inline.NumInlined: 30
+inline.NumDeleted: 12
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -87,7 +91,7 @@ bb.g:                                             ; preds = %_mi_memzero.exit.i
   br label %chacha_split.exit
 
 bb.h:                                             ; preds = %_mi_memzero.exit.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %1, ptr noundef nonnull align 1 dereferenceable(64) %0, i64 48, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %1, ptr noundef nonnull align 4 dereferenceable(64) %0, i64 48, i1 false)
   br label %chacha_split.exit
 
 chacha_split.exit:                                ; preds = %bb.g, %bb.h
@@ -384,7 +388,7 @@ bb.f:                                             ; preds = %bb.e
   br label %chacha_init.exit
 
 bb.g:                                             ; preds = %bb.e
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %i.do, i8 0, i64 range(i64 32, 137) 64, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.do, i8 0, i64 range(i64 32, 137) 64, i1 false)
   br label %chacha_init.exit
 
 chacha_init.exit:                                 ; preds = %bb.f, %bb.g

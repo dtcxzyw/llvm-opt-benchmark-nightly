@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/brotli/original/entropy_encode?download=true
+inline.NumInlined: 9
+inline.NumDeleted: 5
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@BrotliOptimizeHuffmanCountsForRle:bb.a
   %spec.select = add i64 %.0139184, %i.m          ; 2 uses
   %i.n = add nuw i64 %.0137185, 1                 ; 2 uses
@@ -200,7 +205,6 @@ bb.p:                                             ; preds = %bb.o, %bb.v
   %.0128202 = phi i64 [ 0, %bb.o ], [ %.1, %bb.v ] ; 5 uses
   %.0129200 = phi i32 [ %i.bm, %bb.o ], [ %.1130, %bb.v ] ; 5 uses
   %.3197 = phi i64 [ 0, %bb.o ], [ %i.by, %bb.v ] ; 6 uses
-  %scevgep = getelementptr i8, ptr %2, i64 %.3197
   %i.bn = icmp eq i64 %.3197, %.0131187           ; 2 uses
   br i1 %i.bn, label %bb.r, label %bb.q
 
@@ -223,8 +227,9 @@ bb.s:                                             ; preds = %bb.r
   br i1 %or.cond210, label %.lr.ph196, label %.loopexit179
 
 .lr.ph196:                                        ; preds = %bb.r, %bb.s
+  %3 = getelementptr i8, ptr %2, i64 %.3197
   %i.bu = sub i64 0, %.0128202
-  %scevgep218 = getelementptr i8, ptr %scevgep, i64 %i.bu
+  %scevgep218 = getelementptr i8, ptr %3, i64 %i.bu
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep218, i8 1, i64 %.0128202, i1 false), !tbaa !13
   br label %.loopexit179
 
@@ -457,19 +462,19 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond87, label %DecideOverRleUse.exit, label %.lr.ph54.i
 
 .lr.ph54.i:                                       ; preds = %._crit_edge, %.critedge.i
-  %.03553.i = phi i64 [ %.1.i.a, %.critedge.i ], [ 0, %._crit_edge ]
-  %.03652.i = phi i64 [ %.pre-phi.i, %.critedge.i ], [ 0, %._crit_edge ] ; 4 uses
-  %.03751.i = phi i64 [ %.138.i, %.critedge.i ], [ 1, %._crit_edge ]
-  %.03950.i = phi i64 [ %.140.i.a, %.critedge.i ], [ 1, %._crit_edge ]
-  %.04149.i = phi i64 [ %.142.i, %.critedge.i ], [ 0, %._crit_edge ]
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 %.03652.i
+  %.03553.i = phi i64 [ %.pre-phi.i, %.critedge.i ], [ 0, %._crit_edge ] ; 4 uses
+  %.03652.i = phi i64 [ %.138.i, %.critedge.i ], [ 1, %._crit_edge ]
+  %.03751.i = phi i64 [ %.1.i.a, %.critedge.i ], [ 1, %._crit_edge ]
+  %.03950.i = phi i64 [ %.142.i, %.critedge.i ], [ 0, %._crit_edge ]
+  %.04149.i = phi i64 [ %.140.i.a, %.critedge.i ], [ 0, %._crit_edge ]
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 %.03553.i
   %i.j = load i8, ptr %i.i, align 1, !tbaa !13    ; 3 uses
-  %.044.i = add nuw i64 %.03652.i, 1              ; 3 uses
+  %.044.i = add nuw i64 %.03553.i, 1              ; 3 uses
   %i.k = icmp ult i64 %.044.i, %.04494
   br i1 %i.k, label %.lr.ph.preheader.i, label %.critedge.i
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph54.i
-  %i.l = sub i64 %.04494, %.03652.i
+  %i.l = sub nuw i64 %.04494, %.03553.i
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.preheader.i
@@ -488,7 +493,7 @@ bb.d:                                             ; preds = %.lr.ph.i
 
 .critedge.loopexit.i:                             ; preds = %bb.d, %.lr.ph.i
   %.034.lcssa.ph.i = phi i64 [ %.03445.i, %.lr.ph.i ], [ %i.l, %bb.d ] ; 2 uses
-  %.pre.i = add i64 %.034.lcssa.ph.i, %.03652.i
+  %.pre.i = add i64 %.034.lcssa.ph.i, %.03553.i
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %.critedge.loopexit.i, %.lr.ph54.i
@@ -497,25 +502,25 @@ bb.d:                                             ; preds = %.lr.ph.i
   %i.q = icmp ugt i64 %.034.lcssa.i, 2
   %i.r = icmp eq i8 %i.j, 0
   %or.cond.i = select i1 %i.q, i1 %i.r, i1 false  ; 2 uses
-  %5 = zext i1 %or.cond.i to i64
-  %.140.i.a = add i64 %.03950.i, %5               ; 2 uses
-  %6 = select i1 %or.cond.i, i64 %.034.lcssa.i, i64 0
-  %.1.i.a = add i64 %6, %.03553.i                 ; 2 uses
+  %5 = select i1 %or.cond.i, i64 %.034.lcssa.i, i64 0
+  %.140.i.a = add i64 %5, %.04149.i               ; 2 uses
+  %6 = zext i1 %or.cond.i to i64
+  %.1.i.a = add i64 %.03751.i, %6                 ; 2 uses
   %i.s = icmp ugt i64 %.034.lcssa.i, 3
   %i.t = icmp ne i8 %i.j, 0
   %or.cond5.i = select i1 %i.s, i1 %i.t, i1 false ; 2 uses
   %i.u = select i1 %or.cond5.i, i64 %.034.lcssa.i, i64 0
-  %.142.i = add i64 %i.u, %.04149.i               ; 2 uses
+  %.142.i = add i64 %i.u, %.03950.i               ; 2 uses
   %i.v = zext i1 %or.cond5.i to i64
-  %.138.i = add i64 %.03751.i, %i.v               ; 2 uses
+  %.138.i = add i64 %.03652.i, %i.v               ; 2 uses
   %i.w = icmp ult i64 %.pre-phi.i, %.04494
   br i1 %i.w, label %.lr.ph54.i, label %._crit_edge.loopexit.i, !llvm.loop !39
 
 ._crit_edge.loopexit.i:                           ; preds = %.critedge.i
   %i.x = shl i64 %.138.i, 1
   %i.y = icmp ugt i64 %.142.i, %i.x
-  %i.z = shl i64 %.140.i.a, 1
-  %i.aa = icmp ugt i64 %.1.i.a, %i.z
+  %i.z = shl i64 %.1.i.a, 1
+  %i.aa = icmp ugt i64 %.140.i.a, %i.z
   br i1 %.not.i, label %._crit_edge108, label %.lr.ph107.preheader
 
 DecideOverRleUse.exit:                            ; preds = %._crit_edge
@@ -527,9 +532,9 @@ DecideOverRleUse.exit:                            ; preds = %._crit_edge
   br label %.lr.ph107
 
 .lr.ph107:                                        ; preds = %.lr.ph107.preheader, %BrotliWriteHuffmanTreeRepetitionsZeros.exit
-  %.042106 = phi i8 [ %.143, %BrotliWriteHuffmanTreeRepetitionsZeros.exit ], [ 8, %.lr.ph107.preheader ] ; 6 uses
-  %.146104 = phi i64 [ %i.en, %BrotliWriteHuffmanTreeRepetitionsZeros.exit ], [ 0, %.lr.ph107.preheader ] ; 4 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 %.146104
+  %.144105 = phi i64 [ %i.en, %BrotliWriteHuffmanTreeRepetitionsZeros.exit ], [ 0, %.lr.ph107.preheader ] ; 4 uses
+  %.045104 = phi i8 [ %.143, %BrotliWriteHuffmanTreeRepetitionsZeros.exit ], [ 8, %.lr.ph107.preheader ] ; 6 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 %.144105
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !13  ; 13 uses
   %i.ad = icmp ne i8 %i.ac, 0
   %or.cond = select i1 %i.ad, i1 %.072136, i1 false
@@ -539,12 +544,12 @@ DecideOverRleUse.exit:                            ; preds = %._crit_edge
   br i1 %or.cond88, label %.preheader, label %.critedge.thread
 
 .preheader:                                       ; preds = %.lr.ph107
-  %.097 = add nuw i64 %.146104, 1                 ; 2 uses
+  %.097 = add nuw i64 %.144105, 1                 ; 2 uses
   %i.af = icmp ult i64 %.097, %.04494
   br i1 %i.af, label %.lr.ph100.preheader, label %.critedge.thread138
 
 .lr.ph100.preheader:                              ; preds = %.preheader
-  %i.ag = sub i64 %.04494, %.146104
+  %i.ag = sub i64 %.04494, %.144105
   br label %.lr.ph100
 
 .lr.ph100:                                        ; preds = %.lr.ph100.preheader, %bb.e
@@ -702,7 +707,7 @@ Reverse.exit.i:                                   ; preds = %Reverse.exit.loopex
 
 bb.k:                                             ; preds = %.critedge.thread138, %.critedge.thread, %.critedge
   %.175 = phi i64 [ 1, %.critedge.thread ], [ %.041.lcssa, %.critedge ], [ 1, %.critedge.thread138 ] ; 7 uses
-  %.not.i54 = icmp eq i8 %.042106, %i.ac
+  %.not.i54 = icmp eq i8 %.045104, %i.ac
   br i1 %.not.i54, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -857,8 +862,8 @@ BrotliWriteHuffmanTreeRepetitionsZeros.exit.loopexit160.unr-lcssa: ; preds = %.l
 
 BrotliWriteHuffmanTreeRepetitionsZeros.exit:      ; preds = %.lr.ph.i67, %.lr.ph.i67.1, %.lr.ph.i45.i, %.lr.ph.i52.epil.preheader, %BrotliWriteHuffmanTreeRepetitionsZeros.exit.loopexit160.unr-lcssa, %.lr.ph.i36.i, %Reverse.exit.i57, %.preheader.i64, %Reverse.exit.i, %.preheader.i
   %.174 = phi i64 [ %.176808386, %.lr.ph.i52.epil.preheader ], [ 0, %.preheader.i ], [ %.17679, %.lr.ph.i36.i ], [ %.17679, %Reverse.exit.i ], [ %.175, %.preheader.i64 ], [ %.175, %.lr.ph.i45.i ], [ %.175, %Reverse.exit.i57 ], [ %.176808386, %BrotliWriteHuffmanTreeRepetitionsZeros.exit.loopexit160.unr-lcssa ], [ %.175, %.lr.ph.i67.1 ], [ %.175, %.lr.ph.i67 ]
-  %.143 = phi i8 [ %.042106, %.lr.ph.i52.epil.preheader ], [ %.042106, %.preheader.i ], [ %.042106, %.lr.ph.i36.i ], [ %.042106, %Reverse.exit.i ], [ %i.ac, %.preheader.i64 ], [ %i.ac, %.lr.ph.i45.i ], [ %i.ac, %Reverse.exit.i57 ], [ %.042106, %BrotliWriteHuffmanTreeRepetitionsZeros.exit.loopexit160.unr-lcssa ], [ %i.ac, %.lr.ph.i67.1 ], [ %i.ac, %.lr.ph.i67 ]
-  %i.en = add i64 %.174, %.146104                 ; 2 uses
+  %.143 = phi i8 [ %.045104, %.lr.ph.i52.epil.preheader ], [ %.045104, %.preheader.i ], [ %.045104, %.lr.ph.i36.i ], [ %.045104, %Reverse.exit.i ], [ %i.ac, %.preheader.i64 ], [ %i.ac, %.lr.ph.i45.i ], [ %i.ac, %Reverse.exit.i57 ], [ %.045104, %BrotliWriteHuffmanTreeRepetitionsZeros.exit.loopexit160.unr-lcssa ], [ %i.ac, %.lr.ph.i67.1 ], [ %i.ac, %.lr.ph.i67 ]
+  %i.en = add i64 %.174, %.144105                 ; 2 uses
   %i.eo = icmp ult i64 %i.en, %.04494
   br i1 %i.eo, label %.lr.ph107, label %._crit_edge108, !llvm.loop !43
 
@@ -1077,18 +1082,19 @@ bb.b:                                             ; preds = %.lr.ph28
 
 .lr.ph.i.preheader:                               ; preds = %bb.b
   %i.db = add nsw i64 %i.cs, -5                   ; 2 uses
-  %i.dc = lshr i64 %i.db, 2                       ; 2 uses
+  %i.dc = lshr i64 %i.db, 2
   %i.dd = add nuw nsw i64 %i.dc, 1                ; 2 uses
-  %3 = icmp eq i64 %i.dc, 0
-  br i1 %3, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
+  %xtraiter77 = and i64 %i.dd, 3                  ; 3 uses
+  %3 = icmp ult i64 %i.db, 12
+  br i1 %3, label %BrotliReverseBits.exit.loopexit.unr-lcssa.a, label %.lr.ph.i.preheader.new
 
 .lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
-  %unroll_iter82 = and i64 %i.dd, 9223372036854775806
+  %unroll_iter82 = and i64 %i.dd, 9223372036854775804
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader.new
   %.01115.i = phi i64 [ %i.cz, %.lr.ph.i.preheader.new ], [ %i.dr, %.lr.ph.i ]
-  %.01214.i = phi i16 [ %i.cu, %.lr.ph.i.preheader.new ], [ %i.dm, %.lr.ph.i ] ; 2 uses
+  %.01214.i = phi i16 [ %i.cu, %.lr.ph.i.preheader.new ], [ 0, %.lr.ph.i ] ; 3 uses
   %niter83 = phi i64 [ 0, %.lr.ph.i.preheader.new ], [ %niter83.next.1, %.lr.ph.i ]
   %i.de = lshr i16 %.01214.i, 4
   %i.df = and i16 %i.de, 15
@@ -1098,37 +1104,51 @@ bb.b:                                             ; preds = %.lr.ph28
   %i.dj = shl i64 %.01115.i, 8
   %i.dk = shl i64 %i.di, 4
   %i.dl = or i64 %i.dj, %i.dk
-  %i.dm = lshr i16 %.01214.i, 8                   ; 3 uses
+  %i.dm = lshr i16 %.01214.i, 8
   %i.dn = and i16 %i.dm, 15
-  %i.do = zext nneg i16 %i.dn to i64
+  %4 = zext nneg i16 %i.dn to i64
+  %5 = getelementptr inbounds nuw [8 x i8], ptr @BrotliReverseBits.kLut, i64 %4
+  %6 = load i64, ptr %5, align 8, !tbaa !20
+  %7 = or i64 %6, %i.dl
+  %8 = lshr i16 %.01214.i, 12
+  %i.do = zext nneg i16 %8 to i64
   %i.dp = getelementptr inbounds nuw [8 x i8], ptr @BrotliReverseBits.kLut, i64 %i.do
   %i.dq = load i64, ptr %i.dp, align 8, !tbaa !20
-  %i.dr = or i64 %i.dq, %i.dl                     ; 3 uses
-  %niter83.next.1 = add i64 %niter83, 2           ; 2 uses
+  %9 = shl i64 %7, 8
+  %10 = shl i64 %i.dq, 4
+  %i.dr = or i64 %9, %10                          ; 3 uses
+  %niter83.next.1 = add nuw i64 %niter83, 4       ; 2 uses
   %niter83.ncmp.1.not = icmp eq i64 %niter83.next.1, %unroll_iter82
-  br i1 %niter83.ncmp.1.not, label %BrotliReverseBits.exit.loopexit.unr-lcssa.a, label %.lr.ph.i, !llvm.loop !48
+  br i1 %niter83.ncmp.1.not, label %BrotliReverseBits.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !48
 
-BrotliReverseBits.exit.loopexit.unr-lcssa.a:      ; preds = %.lr.ph.i
-  %4 = and i64 %i.db, 4
-  %lcmp.mod79.not.not = icmp eq i64 %4, 0
-  br i1 %lcmp.mod79.not.not, label %.lr.ph.i.epil.preheader, label %BrotliReverseBits.exit
+BrotliReverseBits.exit.loopexit.unr-lcssa:        ; preds = %.lr.ph.i
+  %lcmp.mod79.not = icmp eq i64 %xtraiter77, 0
+  br i1 %lcmp.mod79.not, label %BrotliReverseBits.exit, label %BrotliReverseBits.exit.loopexit.unr-lcssa.a
 
-.lr.ph.i.epil.preheader:                          ; preds = %BrotliReverseBits.exit.loopexit.unr-lcssa.a, %.lr.ph.i.preheader
-  %.01115.i.epil.init.a = phi i64 [ %i.cz, %.lr.ph.i.preheader ], [ %i.dr, %BrotliReverseBits.exit.loopexit.unr-lcssa.a ]
-  %.01214.i.epil.init.a = phi i16 [ %i.cu, %.lr.ph.i.preheader ], [ %i.dm, %BrotliReverseBits.exit.loopexit.unr-lcssa.a ]
-  %lcmp.mod81 = trunc i64 %i.dd to i1
+BrotliReverseBits.exit.loopexit.unr-lcssa.a:      ; preds = %BrotliReverseBits.exit.loopexit.unr-lcssa, %.lr.ph.i.preheader
+  %.01115.i.epil.init = phi i64 [ %i.cz, %.lr.ph.i.preheader ], [ %i.dr, %BrotliReverseBits.exit.loopexit.unr-lcssa ]
+  %.01214.i.epil.init = phi i16 [ %i.cu, %.lr.ph.i.preheader ], [ 0, %BrotliReverseBits.exit.loopexit.unr-lcssa ]
+  %lcmp.mod81 = icmp ne i64 %xtraiter77, 0
   tail call void @llvm.assume(i1 %lcmp.mod81)
+  br label %.lr.ph.i.epil.preheader
+
+.lr.ph.i.epil.preheader:                          ; preds = %.lr.ph.i.epil.preheader, %BrotliReverseBits.exit.loopexit.unr-lcssa.a
+  %.01115.i.epil.init.a = phi i64 [ %i.dy, %.lr.ph.i.epil.preheader ], [ %.01115.i.epil.init, %BrotliReverseBits.exit.loopexit.unr-lcssa.a ]
+  %.01214.i.epil.init.a = phi i16 [ %i.dt, %.lr.ph.i.epil.preheader ], [ %.01214.i.epil.init, %BrotliReverseBits.exit.loopexit.unr-lcssa.a ]
+  %epil.iter78 = phi i64 [ %epil.iter78.next, %.lr.ph.i.epil.preheader ], [ 0, %BrotliReverseBits.exit.loopexit.unr-lcssa.a ]
   %i.ds = shl i64 %.01115.i.epil.init.a, 4
-  %i.dt = lshr i16 %.01214.i.epil.init.a, 4
+  %i.dt = lshr i16 %.01214.i.epil.init.a, 4       ; 2 uses
   %i.du = and i16 %i.dt, 15
   %i.dv = zext nneg i16 %i.du to i64
   %i.dw = getelementptr inbounds nuw [8 x i8], ptr @BrotliReverseBits.kLut, i64 %i.dv
   %i.dx = load i64, ptr %i.dw, align 8, !tbaa !20
-  %i.dy = or i64 %i.dx, %i.ds
-  br label %BrotliReverseBits.exit
+  %i.dy = or i64 %i.dx, %i.ds                     ; 2 uses
+  %epil.iter78.next = add i64 %epil.iter78, 1     ; 2 uses
+  %epil.iter78.cmp.not = icmp eq i64 %epil.iter78.next, %xtraiter77
+  br i1 %epil.iter78.cmp.not, label %BrotliReverseBits.exit, label %.lr.ph.i.epil.preheader, !llvm.loop !49
 
-BrotliReverseBits.exit:                           ; preds = %.lr.ph.i.epil.preheader, %BrotliReverseBits.exit.loopexit.unr-lcssa.a, %bb.b
-  %.011.lcssa.i = phi i64 [ %i.cz, %bb.b ], [ %i.dr, %BrotliReverseBits.exit.loopexit.unr-lcssa.a ], [ %i.dy, %.lr.ph.i.epil.preheader ]
+BrotliReverseBits.exit:                           ; preds = %BrotliReverseBits.exit.loopexit.unr-lcssa, %.lr.ph.i.epil.preheader, %bb.b
+  %.011.lcssa.i = phi i64 [ %i.cz, %bb.b ], [ %i.dr, %BrotliReverseBits.exit.loopexit.unr-lcssa ], [ %i.dy, %.lr.ph.i.epil.preheader ]
   %i.dz = sub nsw i64 0, %i.cs
   %i.ea = and i64 %i.dz, 3
   %i.eb = lshr i64 %.011.lcssa.i, %i.ea
@@ -1140,7 +1160,7 @@ BrotliReverseBits.exit:                           ; preds = %.lr.ph.i.epil.prehe
 bb.c:                                             ; preds = %.lr.ph28, %BrotliReverseBits.exit
   %i.ee = add nuw i64 %.227, 1                    ; 2 uses
   %exitcond33.not = icmp eq i64 %i.ee, %1
-  br i1 %exitcond33.not, label %._crit_edge29, label %.lr.ph28, !llvm.loop !49
+  br i1 %exitcond33.not, label %._crit_edge29, label %.lr.ph28, !llvm.loop !50
 
 ._crit_edge29:                                    ; preds = %bb.c, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
@@ -1220,5 +1240,6 @@ attributes #5 = { nounwind }
 !46 = distinct !{!46, !47}
 !47 = !{!"llvm.loop.unroll.disable"}
 !48 = distinct !{!48, !15}
-!49 = distinct !{!49, !15}
+!49 = distinct !{!49, !47}
+!50 = distinct !{!50, !15}
 end_hunk_0

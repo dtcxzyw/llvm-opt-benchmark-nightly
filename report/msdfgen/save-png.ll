@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/msdfgen/original/save-png?download=true
+inline.NumInlined: 85
+inline.NumDeleted: 66
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN7msdfgenL7pngSaveEPKhiiiiPKc:bb.a
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv.next.1
   store ptr %i.ad, ptr %i.ae, align 8, !tbaa !24
@@ -200,7 +204,7 @@ _ZN7msdfgen18BitmapConstSectionIfLi1EE8reorientENS_16YAxisOrientationE.exit: ; p
 ; Function Attrs: mustprogress uwtable
 define internal fastcc noundef zeroext i1 @_ZN7msdfgenL7pngSaveEPKfiiiiiPKc(ptr nofree noundef readonly captures(address) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef range(i32 1, 5) %4, i32 noundef range(i32 0, 7) %5, ptr nofree noundef readonly captures(none) %6) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 4 uses
   %i.b = icmp ne ptr %0, null
   %i.c = icmp ne i32 %1, 0
   %or.cond = and i1 %i.b, %i.c
@@ -238,15 +242,16 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit:               ; preds = %bb.c, %_ZNSt6vector
 .lr.ph58:                                         ; preds = %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit
   %i.n = sext i32 %i.e to i64
   %i.o = sext i32 %3 to i64                       ; 5 uses
-  %.idx = shl nsw i64 %i.n, 2                     ; 2 uses
+  %.idx = shl nsw i64 %i.n, 2                     ; 3 uses
   %i.p = icmp sgt i32 %i.e, 0
-  %i.q = add i64 %.idx, %i.a                      ; 2 uses
+  %i.q = add i64 %.idx, %i.a
   %i.r = shl nsw i64 %i.o, 2
   %i.s = add i64 %i.a, 4                          ; 2 uses
   %i.t = xor i64 %i.a, -1                         ; 2 uses
+  %7 = mul nsw i64 %i.o, -4
   %i.u = mul nsw i64 %i.o, -4
   %i.v = shl nsw i64 %i.o, 2
-  %7 = mul nsw i64 %i.o, -4
+  %8 = add i64 %.idx, %i.a
   br label %bb.d
 
 ._crit_edge59:                                    ; preds = %._crit_edge, %_ZNSt6vectorIhSaIhEEC2EmRKS0_.exit
@@ -258,20 +263,11 @@ bb.d:                                             ; preds = %.lr.ph58, %._crit_e
   %.03357 = phi i32 [ 0, %.lr.ph58 ], [ %i.ax, %._crit_edge ]
   %.03456 = phi ptr [ %0, %.lr.ph58 ], [ %i.aw, %._crit_edge ] ; 7 uses
   %.03555 = phi ptr [ %i.i, %.lr.ph58 ], [ %.1.lcssa, %._crit_edge ] ; 7 uses
-  %8 = mul i64 %i.v, %indvar                      ; 2 uses
-  %9 = add i64 %i.q, %8
-  %10 = add i64 %i.s, %8
-  %umax69 = tail call i64 @llvm.umax.i64(i64 %9, i64 %10)
-  %11 = mul i64 %7, %indvar
-  %12 = add i64 %11, %i.t
-  %13 = add i64 %umax69, %12                      ; 2 uses
-  %14 = lshr i64 %13, 2
-  %15 = add nuw nsw i64 %14, 1                    ; 2 uses
   %i.x = mul i64 %i.r, %indvar                    ; 3 uses
   %i.y = add i64 %i.q, %i.x
   %i.z = add i64 %i.s, %i.x
   %umax = tail call i64 @llvm.umax.i64(i64 %i.y, i64 %i.z)
-  %i.aa = mul i64 %i.u, %indvar
+  %i.aa = mul i64 %7, %indvar
   %i.ab = add i64 %i.aa, %i.t
   %i.ac = add i64 %umax, %i.ab                    ; 2 uses
   %i.ad = lshr i64 %i.ac, 2
@@ -283,7 +279,16 @@ bb.d:                                             ; preds = %.lr.ph58, %._crit_e
   br i1 %i.p, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.d
-  %min.iters.check = icmp ult i64 %13, 12
+  %9 = mul i64 %i.v, %indvar                      ; 2 uses
+  %10 = add i64 %8, %9
+  %11 = add i64 %i.s, %9
+  %12 = mul i64 %i.u, %indvar
+  %13 = add i64 %12, %i.t
+  %14 = tail call i64 @llvm.umax.i64(i64 %10, i64 %11)
+  %15 = add i64 %14, %13                          ; 2 uses
+  %16 = lshr i64 %15, 2
+  %17 = add nuw nsw i64 %16, 1                    ; 2 uses
+  %min.iters.check = icmp ult i64 %15, 12
   br i1 %min.iters.check, label %.lr.ph.preheader72, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
@@ -295,7 +300,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   br i1 %found.conflict, label %.lr.ph.preheader72, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %15, 9223372036854775804       ; 4 uses
+  %n.vec = and i64 %17, 9223372036854775804       ; 4 uses
   %i.ah = shl i64 %n.vec, 2
   %i.ai = getelementptr i8, ptr %.03456, i64 %i.ah
   %i.aj = getelementptr i8, ptr %.03555, i64 %n.vec ; 2 uses
@@ -323,7 +328,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.av, label %middle.block, label %vector.body, !llvm.loop !56
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %15, %n.vec
+  %cmp.n = icmp eq i64 %17, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader72
 
 .lr.ph.preheader72:                               ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block

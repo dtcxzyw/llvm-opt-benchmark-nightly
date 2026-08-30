@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/PtexFilters?download=true
+inline.NumInlined: 85
+inline.NumDeleted: 26
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN4Ptex4v2_416PtexWidth4Filter15buildKernelAxisERaRiS3_Pfffi:bb.a
   %i.fy = trunc nuw nsw i64 %indvars.iv185 to i32
   %i.fz = uitofp nneg i32 %i.fy to float
@@ -200,8 +204,8 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
-  %i.al = sub nsw i32 %i.r, %i.aa
-  %i.am = sub nsw i32 %i.r, %i.x
+  %i.al = sub nuw nsw i32 %i.r, %i.aa
+  %i.am = sub nuw nsw i32 %i.r, %i.x
   %i.an = load ptr, ptr %i.ah, align 8, !tbaa !9
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 168
   %i.ap = load ptr, ptr %i.ao, align 8
