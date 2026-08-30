@@ -205,6 +205,16 @@ bb.e:                                             ; preds = %bb.d
   call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.val53, i64 noundef %.val52, i64 noundef range(i64 1, -9223372036854775807) 1) #36
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECs5yxAJGbRKSL_4ring.exit
 
+._crit_edge:                                      ; preds = %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechE8push_mutCs5yxAJGbRKSL_4ring.exit, %.thread
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false)
+  store i64 0, ptr %0, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
+  br label %4
+
+4:                                                ; preds = %bb.v, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECs5yxAJGbRKSL_4ring.exit76, %._crit_edge
+  ret void
+
 bb.f:                                             ; preds = %.lr.ph, %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechE8push_mutCs5yxAJGbRKSL_4ring.exit
   %.sroa.0.0103 = phi ptr [ %1, %.lr.ph ], [ %i.w, %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechE8push_mutCs5yxAJGbRKSL_4ring.exit ] ; 3 uses
   %.sroa.6.0102 = phi i64 [ %2, %.lr.ph ], [ %i.x, %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechE8push_mutCs5yxAJGbRKSL_4ring.exit ] ; 3 uses
@@ -215,16 +225,6 @@ bb.f:                                             ; preds = %.lr.ph, %_RNvMsG_Nt
   %i.y = load i8, ptr %.sroa.0.0103, align 1, !noundef !18 ; 8 uses
   %.not.i.i = icmp ult i8 %i.y, 48
   br i1 %.not.i.i, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivehEINtB6_11RangeBoundshE8containshECs5yxAJGbRKSL_4ring.exit.thread.2.i, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivehEINtB6_11RangeBoundshE8containshECs5yxAJGbRKSL_4ring.exit.i
-
-._crit_edge:                                      ; preds = %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechE8push_mutCs5yxAJGbRKSL_4ring.exit, %.thread
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false)
-  store i64 0, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
-  br label %4
-
-4:                                                ; preds = %bb.v, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VechEECs5yxAJGbRKSL_4ring.exit76, %._crit_edge
-  ret void
 
 _RINvYINtNtNtCs3oUPovFnLWP_4core3ops5range14RangeInclusivehEINtB6_11RangeBoundshE8containshECs5yxAJGbRKSL_4ring.exit.i: ; preds = %bb.f
   %.not.i = icmp ugt i8 %i.y, 57
