@@ -205,8 +205,8 @@ bb.at:                                            ; preds = %_ZN4heap4base17Unsa
 
 "_ZNK2v84base10RingBufferIdLh10EE6ReduceIZNKS_8internal8GCTracer20AverageSurvivalRatioEvE3$_0EEdT_RKd.exit.i": ; preds = %"_ZNK2v84base10RingBufferIdLh10EE6ReduceIZNKS_8internal8GCTracer20AverageSurvivalRatioEvE3$_0EEdT_RKd.exit.i.loopexit.unr-lcssa", %.lr.ph6.i.i.epil, %._crit_edge.i.i
   %.014.i.i = phi double [ %.013.lcssa.i.i, %._crit_edge.i.i ], [ %i.jy, %"_ZNK2v84base10RingBufferIdLh10EE6ReduceIZNKS_8internal8GCTracer20AverageSurvivalRatioEvE3$_0EEdT_RKd.exit.i.loopexit.unr-lcssa" ], [ %i.kd, %.lr.ph6.i.i.epil ]
-  %8 = uitofp i8 %i.hx to double
-  %9 = select i1 %i.hv, double 1.000000e+01, double %8
+  %8 = select i1 %i.hv, i8 10, i8 %i.hx
+  %9 = uitofp i8 %8 to double
   %i.ke = fdiv double %.014.i.i, %9
   br label %_ZN4heap4base17UnsafeJsonEmitter1pIdEERS1_PKcT_.exit30
 
@@ -609,8 +609,8 @@ bb.b:                                             ; preds = %bb.a
 
 "_ZNK2v84base10RingBufferIdLh10EE6ReduceIZNKS_8internal8GCTracer20AverageSurvivalRatioEvE3$_0EEdT_RKd.exit": ; preds = %"_ZNK2v84base10RingBufferIdLh10EE6ReduceIZNKS_8internal8GCTracer20AverageSurvivalRatioEvE3$_0EEdT_RKd.exit.loopexit.unr-lcssa", %.lr.ph6.i.epil, %._crit_edge.i
   %.014.i = phi double [ %.013.lcssa.i, %._crit_edge.i ], [ %i.bg, %"_ZNK2v84base10RingBufferIdLh10EE6ReduceIZNKS_8internal8GCTracer20AverageSurvivalRatioEvE3$_0EEdT_RKd.exit.loopexit.unr-lcssa" ], [ %i.bl, %.lr.ph6.i.epil ]
-  %1 = uitofp i8 %i.f to double
-  %2 = select i1 %i.d, double 1.000000e+01, double %1
+  %1 = select i1 %i.d, i8 10, i8 %i.f
+  %2 = uitofp i8 %1 to double
   %i.bm = fdiv double %.014.i, %2
   br label %bb.c
 

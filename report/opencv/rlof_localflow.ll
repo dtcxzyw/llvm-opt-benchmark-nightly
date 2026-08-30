@@ -205,6 +205,7 @@ bb.a:
   %i.b = load i8, ptr %i.a, align 4, !tbaa !187, !range !24, !noundef !25 ; 2 uses
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = shl nuw nsw i8 %i.b, 1
+  %2 = select i1 %i.c, i64 3, i64 1
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !184  ; 5 uses
   %i.g = add nsw i32 %i.f, -1
@@ -256,7 +257,6 @@ _ZNSt6vectorIiSaIiEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPimiET_
   %i.aa = getelementptr inbounds nuw i8, ptr %i.v, i64 128
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ac = zext nneg i8 %i.d to i64
-  %2 = select i1 %i.c, i64 3, i64 1
   %i.ad = sext i32 %i.h to i64                    ; 2 uses
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0104.0, i64 %i.ad ; 2 uses
   %.not116 = icmp samesign ult i32 %i.f, 3

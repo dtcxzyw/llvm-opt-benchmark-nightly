@@ -202,18 +202,18 @@ bb.ab:                                            ; preds = %bb.x
   %i.ee = load i8, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !558, !range !18, !noundef !19
   %i.ef = trunc nuw i8 %i.ee to i1
   %i.eg = and i8 %i.dm, 112
+  %narrow = select i1 %i.ef, i8 %i.eg, i8 0
   %i.eh = and i8 %i.dm, 1
   %i.ei = select i1 %i.dl, i8 1, i8 %i.eh
   store i8 %i.dg, ptr %.sroa.gep51, align 1, !tbaa !363
   store i8 %i.dd, ptr %.sroa.gep49, align 2, !tbaa !364
   %i.ej = and i8 %i.cq, -128
-  %7 = select i1 %i.dv, i8 2, i8 0
-  %i.ek = select i1 %i.ed, i8 8, i8 0
-  %i.el = select i1 %i.ef, i8 %i.eg, i8 0
+  %i.ek = select i1 %i.dv, i8 2, i8 0
+  %i.el = select i1 %i.ed, i8 8, i8 0
   %i.em = or disjoint i8 %i.ei, %i.ej
-  %i.en = or disjoint i8 %i.em, %7
-  %i.eo = or disjoint i8 %i.en, %i.ek
-  %i.ep = or disjoint i8 %i.eo, %i.el
+  %i.en = or disjoint i8 %i.em, %i.ek
+  %i.eo = or disjoint i8 %i.en, %i.el
+  %i.ep = or disjoint i8 %i.eo, %narrow
   store i8 %i.ep, ptr %i.cp, align 1
   br label %bb.ac
 

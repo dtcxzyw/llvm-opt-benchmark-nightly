@@ -204,10 +204,10 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12Ma
   %i.p = and i32 %i.h, 31
   %i.q = lshr i32 %i.o, %i.p
   %i.r = trunc i32 %i.q to i1
+  %spec.select.neg = select i1 %i.r, i64 -2831, i64 0
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !21
-  %.neg = select i1 %i.r, i64 -2831, i64 0
-  %i.u = getelementptr inbounds [32 x i8], ptr %i.t, i64 %.neg
+  %i.u = getelementptr inbounds [32 x i8], ptr %i.t, i64 %spec.select.neg
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !27   ; 5 uses
   %i.x = tail call noundef ptr @_ZN4llvm15MachineFunction18CreateMachineInstrERKNS_11MCInstrDescENS_8DebugLocEb(ptr noundef nonnull align 8 dereferenceable(1065) %i.w, ptr noundef nonnull align 8 dereferenceable(32) %i.u, ptr %.sroa.021.0, i1 noundef zeroext false) #16 ; 10 uses
@@ -294,14 +294,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.p = and i32 %i.h, 31
   %i.q = lshr i32 %i.o, %i.p
   %i.r = trunc i32 %i.q to i1
+  %spec.select.neg = select i1 %i.r, i64 -2016, i64 0
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #16
   store ptr %.sroa.017.0, ptr %10, align 8, !tbaa !18
   %i.s = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.s, i8 0, i64 24, i1 false)
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !21
-  %.neg = select i1 %i.r, i64 -2016, i64 0
-  %i.v = getelementptr inbounds [32 x i8], ptr %i.u, i64 %.neg
+  %i.v = getelementptr inbounds [32 x i8], ptr %i.u, i64 %spec.select.neg
   %i.w = call { ptr, ptr } @_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE(ptr noundef nonnull align 8 dereferenceable(360) %1, ptr %2, ptr noundef nonnull align 8 dereferenceable(32) %10, ptr noundef nonnull align 8 dereferenceable(32) %i.v, i32 %3) ; 2 uses
   %i.x = extractvalue { ptr, ptr } %i.w, 0        ; 3 uses
   %i.y = extractvalue { ptr, ptr } %i.w, 1        ; 3 uses

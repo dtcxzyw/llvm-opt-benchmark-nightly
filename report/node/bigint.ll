@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.v = load atomic i32, ptr %i.d monotonic, align 4
   %i.w = trunc i32 %i.v to i1
-  %.neg = mul nsw i64 %.0.copyload.i.i.i.i, -4294967296
-  %2 = shl nuw nsw i64 %.0.copyload.i.i.i.i, 32
-  %3 = select i1 %i.w, i64 %.neg, i64 %2
+  %2 = sub nsw i64 0, %.0.copyload.i.i.i.i
+  %spec.select = select i1 %i.w, i64 %2, i64 %.0.copyload.i.i.i.i
+  %sext = shl nsw i64 %spec.select, 32
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 560 ; 2 uses
   %i.y = load ptr, ptr %i.x, align 8              ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 568
@@ -224,7 +224,7 @@ _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %bb.f
   %i.ae = add i64 %i.ad, 8
   %i.af = inttoptr i64 %i.ae to ptr
   store ptr %i.af, ptr %i.x, align 8
-  store i64 %3, ptr %.0.i, align 8
+  store i64 %sext, ptr %.0.i, align 8
   br label %bb.h
 
 .critedge:                                        ; preds = %bb.d, %bb.e

@@ -205,9 +205,9 @@ switch.lookup:
   %.val4.i.i = load i8, ptr %i.k, align 1, !alias.scope !1410, !noalias !1413
   %i.l = trunc nuw i8 %.val3.i.i to i1
   %..i.i.i = or i8 %.val4.i.i, 2
-  %4 = zext nneg i8 %..i.i.i to i64
-  %5 = select i1 %i.l, i64 0, i64 %4
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCsa5QsYiPB8Gl_5image6codecs3bmp7decoder10BmpDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEENtNtNtBb_2io7decoder12ImageDecoder11total_bytesBb_, i64 %5
+  %.sroa.0.0.i.i.i = select i1 %i.l, i8 0, i8 %..i.i.i
+  %4 = zext nneg i8 %.sroa.0.0.i.i.i to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCsa5QsYiPB8Gl_5image6codecs3bmp7decoder10BmpDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEENtNtNtBb_2io7decoder12ImageDecoder11total_bytesBb_, i64 %4
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.m = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.i, i64 %switch.ext) ; 2 uses
@@ -610,9 +610,9 @@ switch.lookup:
   %.val4 = load i8, ptr %i.g, align 1
   %i.h = trunc nuw i8 %.val3 to i1
   %..i = or i8 %.val4, 2
-  %1 = zext nneg i8 %..i to i64
-  %2 = select i1 %i.h, i64 0, i64 %1
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCsa5QsYiPB8Gl_5image6codecs3bmp7decoder10BmpDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEENtNtNtBb_2io7decoder12ImageDecoder11total_bytesBb_, i64 %2
+  %.sroa.0.0.i = select i1 %i.h, i8 0, i8 %..i
+  %1 = zext nneg i8 %.sroa.0.0.i to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RNvYINtNtNtNtCsa5QsYiPB8Gl_5image6codecs3bmp7decoder10BmpDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEENtNtNtBb_2io7decoder12ImageDecoder11total_bytesBb_, i64 %1
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
   %i.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %i.e, i64 %switch.ext) ; 2 uses
@@ -637,12 +637,12 @@ switch.lookup:
   %.val1 = load i8, ptr %i.b, align 1
   %i.c = trunc nuw i8 %.val to i1
   %..i = or i8 %.val1, 2
-  %i.d = zext i8 %..i to i32
+  %.sroa.0.0.i = select i1 %i.c, i8 0, i8 %..i
+  %i.d = zext i8 %.sroa.0.0.i to i32
   %i.e = shl nuw nsw i32 %i.d, 3
   %i.f = lshr i32 286261262, %i.e
   %i.g = trunc i32 %i.f to i8
-  %switch.masked = select i1 %i.c, i8 14, i8 %i.g
-  %i.h = insertvalue { i8, i8 } poison, i8 %switch.masked, 0
+  %i.h = insertvalue { i8, i8 } poison, i8 %i.g, 0
   %i.i = insertvalue { i8, i8 } %i.h, i8 undef, 1
   ret { i8, i8 } %i.i
 }

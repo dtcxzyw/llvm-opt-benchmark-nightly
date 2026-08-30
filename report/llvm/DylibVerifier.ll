@@ -204,6 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %.crit
   %i.du = trunc nuw i8 %i.dt to i1
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dr, i64 106
   %i.dw = load i8, ptr %i.dv, align 2, !range !85
+  %13 = select i1 %i.du, i8 1, i8 %i.dw
   %i.dx = load ptr, ptr %5, align 8, !tbaa !372   ; 2 uses
   %.not.i.i.i80 = icmp eq ptr %i.dx, null
   br i1 %.not.i.i.i80, label %_ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i, label %_ZNK5clang17DiagnosticBuilderlsIbvEERKS0_OT_.exit83
@@ -216,8 +217,7 @@ _ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i: ; preds = %_ZNSt7__cxx
 
 _ZNK5clang17DiagnosticBuilderlsIbvEERKS0_OT_.exit83: ; preds = %_ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.ea = phi ptr [ %i.dz, %_ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i ], [ %i.dx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
-  %i.eb = zext nneg i8 %i.dw to i64
-  %13 = select i1 %i.du, i64 1, i64 %i.eb
+  %i.eb = zext nneg i8 %13 to i64
   %i.ec = getelementptr inbounds nuw i8, ptr %i.ea, i64 1
   %i.ed = load i8, ptr %i.ea, align 8, !tbaa !390
   %i.ee = zext i8 %i.ed to i64
@@ -230,15 +230,15 @@ _ZNK5clang17DiagnosticBuilderlsIbvEERKS0_OT_.exit83: ; preds = %_ZNK5clang19Stre
   store i8 %i.ej, ptr %i.eg, align 8, !tbaa !390
   %i.ek = zext i8 %i.ei to i64
   %i.el = getelementptr inbounds nuw [8 x i8], ptr %i.eh, i64 %i.ek
-  store i64 %13, ptr %i.el, align 8, !tbaa !25
+  store i64 %i.eb, ptr %i.el, align 8, !tbaa !25
   %i.em = load ptr, ptr %.sroa.0120.0208, align 8, !tbaa !379 ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 104
   %i.eo = load i8, ptr %i.en, align 8, !tbaa !246, !range !85, !noundef !86
   %i.ep = trunc nuw i8 %i.eo to i1
   %i.eq = getelementptr inbounds nuw i8, ptr %i.em, i64 106
   %i.er = load i8, ptr %i.eq, align 2, !range !85
-  %14 = zext nneg i8 %i.er to i64
-  %15 = select i1 %i.ep, i64 1, i64 %14
+  %14 = select i1 %i.ep, i8 1, i8 %i.er
+  %15 = zext nneg i8 %14 to i64
   %i.es = getelementptr inbounds nuw i8, ptr %i.eg, i64 1
   %i.et = zext i8 %i.ej to i64
   %i.eu = getelementptr inbounds nuw i8, ptr %i.es, i64 %i.et

@@ -205,18 +205,18 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bf
 _ZN4llvm9isZIPMaskENS_8ArrayRefIiEEjRjS2_.exit:   ; preds = %._crit_edge.i
   %i.li = trunc nuw i8 %.053.lcssa.i to i1        ; 2 uses
   %i.lj = xor i8 %.043.lcssa.i, 1
-  %64 = zext nneg i8 %i.lj to i32
-  %65 = select i1 %i.li, i32 0, i32 %64           ; 2 uses
+  %64 = select i1 %i.li, i8 0, i8 %i.lj           ; 2 uses
+  %65 = zext nneg i8 %64 to i32
   store i32 %65, ptr %i.c, align 4, !tbaa !310
   %i.lk = xor i8 %.048.lcssa.i, 1
-  %66 = zext nneg i8 %i.lk to i32
-  %67 = select i1 %i.li, i32 0, i32 %66           ; 2 uses
+  %66 = select i1 %i.li, i8 0, i8 %i.lk           ; 2 uses
+  %67 = zext nneg i8 %66 to i32
   store i32 %67, ptr %i.d, align 4, !tbaa !310
-  %i.ll = icmp eq i32 %65, 0
+  %i.ll = icmp eq i8 %64, 0
   br i1 %i.ll, label %bb.bi, label %_ZN4llvm9isZIPMaskENS_8ArrayRefIiEEjRjS2_.exit.thread
 
 bb.bi:                                            ; preds = %_ZN4llvm9isZIPMaskENS_8ArrayRefIiEEjRjS2_.exit
-  %i.lm = icmp eq i32 %67, 0                      ; 2 uses
+  %i.lm = icmp eq i8 %66, 0                       ; 2 uses
   %. = select i1 %i.lm, ptr %50, ptr %51
   %i.ln = select i1 %i.lm, ptr %51, ptr %50
   %i.lo = call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %3, i32 noundef 892, ptr noundef nonnull align 8 dereferenceable(12) %49, i16 %switch.ext, ptr null, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %., ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %i.ln) #35 ; 2 uses
@@ -619,12 +619,12 @@ bb.f:                                             ; preds = %bb.d, %bb.e
 bb.g:                                             ; preds = %._crit_edge
   %i.w = trunc nuw i8 %.053.lcssa to i1           ; 2 uses
   %i.x = xor i8 %.043.lcssa, 1
-  %5 = zext nneg i8 %i.x to i32
-  %6 = select i1 %i.w, i32 0, i32 %5
+  %5 = select i1 %i.w, i8 0, i8 %i.x
+  %6 = zext nneg i8 %5 to i32
   store i32 %6, ptr %3, align 4, !tbaa !310
   %i.y = xor i8 %.048.lcssa, 1
-  %7 = zext nneg i8 %i.y to i32
-  %8 = select i1 %i.w, i32 0, i32 %7
+  %7 = select i1 %i.w, i8 0, i8 %i.y
+  %8 = zext nneg i8 %7 to i32
   store i32 %8, ptr %4, align 4, !tbaa !310
   br label %bb.h
 
@@ -785,12 +785,12 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 bb.f:                                             ; preds = %._crit_edge
   %i.r = trunc nuw i8 %.049.lcssa to i1           ; 2 uses
   %i.s = xor i8 %.039.lcssa, 1
-  %5 = zext nneg i8 %i.s to i32
-  %6 = select i1 %i.r, i32 0, i32 %5
+  %5 = select i1 %i.r, i8 0, i8 %i.s
+  %6 = zext nneg i8 %5 to i32
   store i32 %6, ptr %3, align 4, !tbaa !310
   %i.t = xor i8 %.044.lcssa, 1
-  %7 = zext nneg i8 %i.t to i32
-  %8 = select i1 %i.r, i32 0, i32 %7
+  %7 = select i1 %i.r, i8 0, i8 %i.t
+  %8 = zext nneg i8 %7 to i32
   store i32 %8, ptr %4, align 4, !tbaa !310
   br label %bb.g
 

@@ -206,8 +206,8 @@ bb.m:                                             ; preds = %bb.k
   %i.t = lshr i48 %.sroa.035.0.copyload, 16
   %i.u = and i48 %i.t, 4294901760
   %i.v = or disjoint i48 %i.u, 1
-  %6 = zext nneg i48 %i.v to i64
-  %7 = select i1 %i.s, i64 %6, i64 1
+  %6 = select i1 %i.s, i48 %i.v, i48 1
+  %7 = zext nneg i48 %6 to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -330,8 +330,8 @@ bb.m:                                             ; preds = %bb.k
   %i.t = lshr i48 %.sroa.035.0.copyload, 16
   %i.u = and i48 %i.t, 4294901760
   %i.v = or disjoint i48 %i.u, 1
-  %6 = zext nneg i48 %i.v to i64
-  %7 = select i1 %i.s, i64 %6, i64 1
+  %6 = select i1 %i.s, i48 %i.v, i48 1
+  %7 = zext nneg i48 %6 to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -454,8 +454,8 @@ bb.m:                                             ; preds = %bb.k
   %i.t = lshr i48 %.sroa.035.0.copyload, 16
   %i.u = and i48 %i.t, 4294901760
   %i.v = or disjoint i48 %i.u, 1
-  %6 = zext nneg i48 %i.v to i64
-  %7 = select i1 %i.s, i64 %6, i64 1
+  %6 = select i1 %i.s, i48 %i.v, i48 1
+  %7 = zext nneg i48 %6 to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l

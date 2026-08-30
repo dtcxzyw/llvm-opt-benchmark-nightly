@@ -202,12 +202,12 @@ bb.u:                                             ; preds = %bb.t
   br i1 %or.cond173.not, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u, %bb.s, %bb.t, %._crit_edge
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 332 ; 2 uses
-  %4 = select i1 %i.be, i16 3, i16 12
-  %i.cv = load i16, ptr %3, align 4
+  %3 = select i1 %i.be, i16 3, i16 12
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 332 ; 2 uses
+  %i.cv = load i16, ptr %4, align 4
   %i.cw = and i16 %i.cv, -16
-  %i.cx = or disjoint i16 %i.cw, %4
-  store i16 %i.cx, ptr %3, align 4
+  %i.cx = or disjoint i16 %i.cw, %3
+  store i16 %i.cx, ptr %4, align 4
   br label %.thread
 
 bb.w:                                             ; preds = %bb.u

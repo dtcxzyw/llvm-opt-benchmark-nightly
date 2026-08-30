@@ -204,10 +204,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.b = load i8, ptr %i.a, align 8, !range !33, !noundef !34
   %i.c = trunc nuw i8 %i.b to i1
+  %narrow.i = select i1 %i.c, i8 %1, i8 0
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.e = zext i8 %1 to i64
-  %6 = select i1 %i.c, i64 %i.e, i64 0
-  %i.f = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %6
+  %i.e = zext i8 %narrow.i to i64
+  %i.f = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %i.e
   %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
   %i.h = load i64, ptr %2, align 8
   store ptr null, ptr %2, align 8
@@ -244,10 +244,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.b = load i8, ptr %i.a, align 8, !range !33, !noundef !34
   %i.c = trunc nuw i8 %i.b to i1
+  %narrow.i = select i1 %i.c, i8 %1, i8 0
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.e = zext i8 %1 to i64
-  %7 = select i1 %i.c, i64 %i.e, i64 0
-  %i.f = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %7
+  %i.e = zext i8 %narrow.i to i64
+  %i.f = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %i.e
   %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
   %i.h = load i64, ptr %2, align 8
   store ptr null, ptr %2, align 8

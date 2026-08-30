@@ -12,9 +12,9 @@ bb.a:
   %i.a = load i8, ptr @opal_built_with_rocm_support, align 1, !tbaa !8, !range !10, !noundef !11
   %i.b = trunc nuw i8 %i.a to i1
   %i.c = load i8, ptr @opal_rocm_runtime_initialized, align 1, !range !10
-  %0 = zext nneg i8 %i.c to i32
-  %1 = select i1 %i.b, i32 %0, i32 0
-  ret i32 %1
+  %narrow = select i1 %i.b, i8 %i.c, i8 0
+  %0 = zext nneg i8 %narrow to i32
+  ret i32 %0
 }
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

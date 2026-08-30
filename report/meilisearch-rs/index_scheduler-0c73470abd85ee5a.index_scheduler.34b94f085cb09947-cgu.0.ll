@@ -206,8 +206,8 @@ bb.v:                                             ; preds = %"_ZN5alloc5boxed12B
   %i.bm = trunc nuw i32 %i.bl to i1
   %i.bn = getelementptr inbounds nuw i8, ptr %2, i64 148
   %i.bo = load i32, ptr %i.bn, align 4, !alias.scope !46278, !noalias !46286
-  %4 = zext i32 %i.bo to i64
-  %.sroa.018.0.i = select i1 %i.bm, i64 %4, i64 4294967295 ; 3 uses
+  %narrow.i = select i1 %i.bm, i32 %i.bo, i32 -1  ; 2 uses
+  %.sroa.018.0.i = zext i32 %narrow.i to i64      ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !46294)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !46297
   store i64 152, ptr %i.m, align 8, !noalias !46297
@@ -215,7 +215,7 @@ bb.v:                                             ; preds = %"_ZN5alloc5boxed12B
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8.i.i.i.i.i.i.i.i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i)
   call void @llvm.experimental.noalias.scope.decl(metadata !46326), !noalias !46329
-  %i.bp = icmp eq i64 %.sroa.018.0.i, 0
+  %i.bp = icmp eq i32 %narrow.i, 0
   br i1 %i.bp, label %._crit_edge.i.i.i.i.i.i.i.i.i, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
@@ -425,7 +425,7 @@ bb.an:                                            ; preds = %"_ZN5alloc3vec16Vec
 bb.ao:                                            ; preds = %.noexc9.i.i.i.i.i.i.i.i.i.i
   %i.dj = extractvalue { i32, i32 } %i.dg, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i)
-  %i.dk = add nsw i64 %.sroa.11.019.i.i.i.i.i.i.i.i.i.i, -1 ; 3 uses
+  %i.dk = add i64 %.sroa.11.019.i.i.i.i.i.i.i.i.i.i, -1 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !46404
   invoke fastcc void @_ZN15index_scheduler5queue5tasks9TaskQueue8get_task17h27ec9948e8e7a7e8E(ptr noalias noundef align 8 captures(address) dereferenceable(784) %i.g, i64 %.val.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i32 %.val4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.w, i32 noundef %i.dj)
           to label %.noexc10.i.i.i.i.i.i.i.i.i.i unwind label %bb.au, !noalias !46425
@@ -828,8 +828,8 @@ bb.v:                                             ; preds = %"_ZN5alloc5boxed12B
   %i.bj = trunc nuw i32 %i.bi to i1
   %i.bk = getelementptr inbounds nuw i8, ptr %2, i64 148
   %i.bl = load i32, ptr %i.bk, align 4, !alias.scope !46714, !noalias !46722
-  %4 = zext i32 %i.bl to i64
-  %.sroa.018.0.i = select i1 %i.bj, i64 %4, i64 4294967295
+  %narrow.i = select i1 %i.bj, i32 %i.bl, i32 -1
+  %.sroa.018.0.i = zext i32 %narrow.i to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !46730
   store i64 152, ptr %i.j, align 8, !noalias !46730
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !46746
@@ -1232,8 +1232,8 @@ _ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.i.i.i: ; preds = 
 
 _ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread32.i.i.i: ; preds = %bb.z
   %i.cr = trunc nuw i64 %.sroa.01.069.i.i.i to i1
-  %1 = inttoptr i64 %.sroa.7.068.i.i.i to ptr
-  %2 = select i1 %i.cr, ptr %1, ptr null
+  %.sroa.7.0..i.i.i = select i1 %i.cr, i64 %.sroa.7.068.i.i.i, i64 0
+  %1 = inttoptr i64 %.sroa.7.0..i.i.i to ptr
   br label %"_ZN218_$LT$meilisearch_types..tasks..network.._..$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$meilisearch_types..tasks..network..NetworkTopologyStats$GT$..deserialize..__Visitor$u20$as$u20$serde_core..de..Visitor$GT$9visit_map17h670382ad07a37a63E.exit.i.i"
 
 bb.ad:                                            ; preds = %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.i.i.i, %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread36.i.i.i
@@ -1372,7 +1372,7 @@ bb.ap:                                            ; preds = %_ZN10serde_core2de9
   br i1 %i.dx, label %._crit_edge.i.i.i, label %bb.z
 
 "_ZN218_$LT$meilisearch_types..tasks..network.._..$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$meilisearch_types..tasks..network..NetworkTopologyStats$GT$..deserialize..__Visitor$u20$as$u20$serde_core..de..Visitor$GT$9visit_map17h670382ad07a37a63E.exit.i.i": ; preds = %_ZN10serde_core2de9MapAccess10next_value17h669552e78393dcf5E.exit.i.i.i, %_ZN10serde_core2de9MapAccess10next_value17h8862486ea2380915E.exit.i.i.i, %bb.ai, %bb.ag, %.loopexit.i.i.i.i.i.i, %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread32.i.i.i, %bb.ac, %._crit_edge.i.i.i
-  %.sroa.6.1.i.i.i = phi ptr [ %2, %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread32.i.i.i ], [ %i.db, %bb.ag ], [ %i.bx, %._crit_edge.i.i.i ], [ %i.de, %bb.ai ], [ %i.ci, %bb.ac ], [ %i.da, %.loopexit.i.i.i.i.i.i ], [ %i.dt, %_ZN10serde_core2de9MapAccess10next_value17h669552e78393dcf5E.exit.i.i.i ], [ %i.dd, %_ZN10serde_core2de9MapAccess10next_value17h8862486ea2380915E.exit.i.i.i ] ; 4 uses
+  %.sroa.6.1.i.i.i = phi ptr [ %1, %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread32.i.i.i ], [ %i.db, %bb.ag ], [ %i.bx, %._crit_edge.i.i.i ], [ %i.de, %bb.ai ], [ %i.ci, %bb.ac ], [ %i.da, %.loopexit.i.i.i.i.i.i ], [ %i.dt, %_ZN10serde_core2de9MapAccess10next_value17h669552e78393dcf5E.exit.i.i.i ], [ %i.dd, %_ZN10serde_core2de9MapAccess10next_value17h8862486ea2380915E.exit.i.i.i ] ; 4 uses
   %.sroa.0.1.i.i.i = phi i64 [ 0, %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread32.i.i.i ], [ 1, %bb.ag ], [ 1, %._crit_edge.i.i.i ], [ 1, %bb.ai ], [ 1, %bb.ac ], [ 1, %.loopexit.i.i.i.i.i.i ], [ 1, %_ZN10serde_core2de9MapAccess10next_value17h8862486ea2380915E.exit.i.i.i ], [ 1, %_ZN10serde_core2de9MapAccess10next_value17h669552e78393dcf5E.exit.i.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !208178
   %i.dy = load i8, ptr %i.ac, align 8, !range !1313, !alias.scope !208178, !noundef !14

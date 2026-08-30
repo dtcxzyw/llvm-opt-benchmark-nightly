@@ -205,8 +205,8 @@ bb.e:                                             ; preds = %bb.d
 "_ZN4core3ptr40drop_in_place$LT$console..term..Term$GT$17h1c0e978d1be0e426E.exit31": ; preds = %bb.d, %bb.e
   %i.l = trunc i48 %i.d to i1
   %.sroa.029.4.extract.shift = lshr i48 %i.d, 32
-  %.sroa.029.4.extract.trunc = zext nneg i48 %.sroa.029.4.extract.shift to i64
-  %.sroa.026.0 = select i1 %i.l, i64 %.sroa.029.4.extract.trunc, i64 80
+  %narrow = select i1 %i.l, i48 %.sroa.029.4.extract.shift, i48 80
+  %.sroa.026.0 = zext nneg i48 %narrow to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   ret i64 %.sroa.026.0
 

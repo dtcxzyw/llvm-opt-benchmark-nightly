@@ -205,9 +205,9 @@ _ZL20tryARM64PackedUnwindPN4llvm5WinEH9FrameInfoEji.exit.i: ; preds = %bb.cw
   %i.acg = select i1 %.0229.lcssa.i.i, i32 4194304, i32 %i.acf
   %i.ach = shl nuw i32 %i.abw, 19
   %i.aci = or disjoint i32 %i.acc, %i.acg
-  %i.acj = or disjoint i32 %i.acd, %i.aci
-  %i.ack = or i32 %i.ach, %.4207.i.i
-  %i.acl = or i32 %i.ack, %i.acj
+  %i.acj = or i32 %i.aci, %i.ach
+  %i.ack = or i32 %i.acj, %i.acd
+  %i.acl = or i32 %i.ack, %.4207.i.i
   %i.acm = or i32 %i.acl, %i.acb
   %i.acn = or i32 %i.acm, 1
   store i32 %i.acn, ptr %i.pk, align 8, !tbaa !266

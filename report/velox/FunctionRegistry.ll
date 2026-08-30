@@ -205,13 +205,13 @@ bb.e:                                             ; preds = %.critedge
 .critedge12:                                      ; preds = %bb.e, %.preheader
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 1
   %i.w = load i8, ptr %i.v, align 1, !range !83
-  %3 = zext nneg i8 %i.w to i16
+  %or.cond25 = select i1 %i.h, i8 %i.w, i8 1
+  %3 = zext nneg i8 %or.cond25 to i16
   %4 = or disjoint i16 %3, 256
-  %5 = select i1 %i.h, i16 %4, i16 257
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.critedge, %.critedge12, %bb.b
-  %.sroa.4.0 = phi i16 [ %5, %.critedge12 ], [ 0, %bb.b ], [ 256, %.critedge ]
+  %.sroa.4.0 = phi i16 [ %4, %.critedge12 ], [ 0, %bb.b ], [ 256, %.critedge ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
   %.not.i.i.i13 = icmp eq ptr %i.b, null
   br i1 %.not.i.i.i13, label %_ZNSt6vectorISt4pairIN8facebook5velox4exec22VectorFunctionMetadataEPKNS3_17FunctionSignatureEESaIS8_EED2Ev.exit14, label %bb.f
@@ -297,13 +297,13 @@ bb.e:                                             ; preds = %.critedge
 .critedge12:                                      ; preds = %bb.e, %.preheader
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 2
   %i.w = load i8, ptr %i.v, align 2, !range !83
-  %3 = zext nneg i8 %i.w to i16
+  %or.cond25 = select i1 %i.h, i8 %i.w, i8 1
+  %3 = zext nneg i8 %or.cond25 to i16
   %4 = or disjoint i16 %3, 256
-  %5 = select i1 %i.h, i16 %4, i16 257
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.critedge, %.critedge12, %bb.b
-  %.sroa.4.0 = phi i16 [ %5, %.critedge12 ], [ 0, %bb.b ], [ 256, %.critedge ]
+  %.sroa.4.0 = phi i16 [ %4, %.critedge12 ], [ 0, %bb.b ], [ 256, %.critedge ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
   %.not.i.i.i13 = icmp eq ptr %i.b, null
   br i1 %.not.i.i.i13, label %_ZNSt6vectorISt4pairIN8facebook5velox4exec22VectorFunctionMetadataEPKNS3_17FunctionSignatureEESaIS8_EED2Ev.exit14, label %bb.f
