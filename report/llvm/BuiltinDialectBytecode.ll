@@ -204,15 +204,14 @@ _ZN4llvm15SmallVectorImplIbE7reserveEm.exit.i:    ; preds = %.loopexit22
   %i.ax = load ptr, ptr %i.aw, align 8
   %i.ay = call i8 %i.ax(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 1 dereferenceable(1) %i.a) #17, !inline_history !275 ; 2 uses
   %i.az = trunc nuw i8 %i.ay to i1                ; 2 uses
-  %i.ba = load i8, ptr %i.a, align 1, !range !82
+  %i.ba = load i8, ptr %i.a, align 1, !range !82  ; 2 uses
+  %spec.select1.i.i = select i1 %i.az, i8 %i.ba, i8 undef
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   %.sroa.2.0.insert.ext.i.i = zext nneg i8 %i.ay to i16
   %.sroa.2.0.insert.shift.i.i = shl nuw nsw i16 %.sroa.2.0.insert.ext.i.i, 8
-  %i.bb = zext nneg i8 %i.ba to i16
-  %.sroa.0.0.insert.ext.i.i = select i1 %i.az, i16 %i.bb, i16 0 ; 2 uses
-  %.sroa.0.0.insert.insert.i.i = or disjoint i16 %.sroa.0.0.insert.ext.i.i, %.sroa.2.0.insert.shift.i.i
+  %i.bb = zext i8 %spec.select1.i.i to i16
+  %.sroa.0.0.insert.insert.i.i = or disjoint i16 %.sroa.2.0.insert.shift.i.i, %i.bb
   store i16 %.sroa.0.0.insert.insert.i.i, ptr %2, align 2
-  %7 = trunc nuw nsw i16 %.sroa.0.0.insert.ext.i.i to i8
   br i1 %i.az, label %bb.k, label %"_ZN4mlir21DialectBytecodeReader21readListWithKnownSizeIbRZN12_GLOBAL__N_118readIntegerSetAttrEPNS_11MLIRContextERS0_E3$_1EEN4llvm13LogicalResultERNS8_15SmallVectorImplIT_EEmOT0_.exit"
 
 bb.k:                                             ; preds = %.lr.ph.i
@@ -228,7 +227,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.k
   %i.bf = load ptr, ptr %6, align 8, !tbaa !57
   %i.bg = getelementptr inbounds i8, ptr %i.bf, i64 %i.bc
-  store i8 %7, ptr %i.bg, align 1, !tbaa !80
+  store i8 %i.ba, ptr %i.bg, align 1, !tbaa !80
   %i.bh = add nuw i64 %i.bc, 1
   store i64 %i.bh, ptr %i.i, align 8, !tbaa !59
   br label %bb.n
@@ -631,15 +630,14 @@ _ZN4llvm15SmallVectorImplIbE7reserveEm.exit.i.i:  ; preds = %bb.b
   %i.u = load ptr, ptr %i.t, align 8
   %i.v = call i8 %i.u(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 1 dereferenceable(1) %i.c) #17, !inline_history !353 ; 2 uses
   %i.w = trunc nuw i8 %i.v to i1                  ; 2 uses
-  %i.x = load i8, ptr %i.c, align 1, !range !82
+  %i.x = load i8, ptr %i.c, align 1, !range !82   ; 2 uses
+  %spec.select1.i.i.i = select i1 %i.w, i8 %i.x, i8 undef
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #17
   %.sroa.2.0.insert.ext.i.i.i = zext nneg i8 %i.v to i16
   %.sroa.2.0.insert.shift.i.i.i = shl nuw nsw i16 %.sroa.2.0.insert.ext.i.i.i, 8
-  %i.y = zext nneg i8 %i.x to i16
-  %.sroa.0.0.insert.ext.i.i.i = select i1 %i.w, i16 %i.y, i16 0 ; 2 uses
-  %.sroa.0.0.insert.insert.i.i.i = or disjoint i16 %.sroa.0.0.insert.ext.i.i.i, %.sroa.2.0.insert.shift.i.i.i
+  %i.y = zext i8 %spec.select1.i.i.i to i16
+  %.sroa.0.0.insert.insert.i.i.i = or disjoint i16 %.sroa.2.0.insert.shift.i.i.i, %i.y
   store i16 %.sroa.0.0.insert.insert.i.i.i, ptr %3, align 2
-  %8 = trunc nuw nsw i16 %.sroa.0.0.insert.ext.i.i.i to i8
   br i1 %i.w, label %bb.c, label %bb.g
 
 bb.c:                                             ; preds = %.lr.ph.i.i
@@ -655,7 +653,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.ac = load ptr, ptr %4, align 8, !tbaa !57
   %i.ad = getelementptr inbounds i8, ptr %i.ac, i64 %i.z
-  store i8 %8, ptr %i.ad, align 1, !tbaa !80
+  store i8 %i.x, ptr %i.ad, align 1, !tbaa !80
   %i.ae = add nuw i64 %i.z, 1
   store i64 %i.ae, ptr %i.f, align 8, !tbaa !59
   br label %bb.f
