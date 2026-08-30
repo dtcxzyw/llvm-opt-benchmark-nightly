@@ -206,13 +206,13 @@ _RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11Zip
   br label %bb.f, !dbg !96972
 
 bb.f:                                             ; preds = %bb.m, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit
-  %i.u = phi ptr [ %.sroa.6.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %8, %bb.m ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.13.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %7, %bb.m ] ; 5 uses
-  %.pre.i.i.i23.i = phi i64 [ %.sroa.10.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %.pre.i.i.i2140.i, %bb.m ] ; 3 uses
-  %i.w = phi i64 [ %.sroa.11.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %6, %bb.m ] ; 3 uses
-  %i.x = phi ptr [ %.sroa.3.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %5, %bb.m ] ; 3 uses
-  %i.y = phi ptr [ %.sroa.3.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %4, %bb.m ] ; 5 uses
-  %i.z = phi ptr [ %.sroa.0.03, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %3, %bb.m ] ; 5 uses
+  %i.u = phi ptr [ %.sroa.6.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %1, %bb.m ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.13.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %2, %bb.m ] ; 5 uses
+  %.pre.i.i.i23.i = phi i64 [ %.sroa.10.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %.pre.i.i.i21.i, %bb.m ] ; 3 uses
+  %i.w = phi i64 [ %.sroa.11.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %3, %bb.m ] ; 3 uses
+  %i.x = phi ptr [ %.sroa.3.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %4, %bb.m ] ; 3 uses
+  %i.y = phi ptr [ %.sroa.3.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %5, %bb.m ] ; 5 uses
+  %i.z = phi ptr [ %.sroa.0.03, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %6, %bb.m ] ; 5 uses
   %.sroa.0.0.i = phi i64 [ 0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericShE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %i.ax, %bb.m ], !dbg !96983 ; 3 uses
   %.not.i.i = icmp eq ptr %i.z, null, !dbg !96984
   br i1 %.not.i.i, label %bb.k, label %bb.g, !dbg !96988
@@ -270,7 +270,7 @@ _RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIter
 
 bb.j:                                             ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
   %i.au = extractvalue { i8, i32 } %i.as, 1, !dbg !97051
-  br label %1, !dbg !97055
+  br label %bb.m, !dbg !97055
 
 bb.k:                                             ; preds = %bb.f
   %i.av = icmp eq ptr %i.y, %i.u, !dbg !97062
@@ -279,30 +279,19 @@ bb.k:                                             ; preds = %bb.f
 bb.l:                                             ; preds = %bb.k
   %i.aw = getelementptr inbounds nuw i8, ptr %i.y, i64 16, !dbg !97068 ; 2 uses
   %.val.i.i.i = load i32, ptr %i.y, align 4, !dbg !97070, !noalias !97073, !noundef !11
-  br label %1, !dbg !97076
+  br label %bb.m, !dbg !97076
 
-1:                                                ; preds = %bb.l, %bb.j
-  %.ph31.i = phi ptr [ %i.ap, %bb.j ], [ %i.u, %bb.l ]
-  %.ph32.i = phi i64 [ %i.aq, %bb.j ], [ %i.v, %bb.l ]
-  %.pre.i.i.i21.ph.i = phi i64 [ %.pre.i.i.i22.i, %bb.j ], [ %.pre.i.i.i23.i, %bb.l ]
-  %.ph33.i = phi i64 [ %i.ar, %bb.j ], [ %i.w, %bb.l ]
-  %.ph34.i = phi ptr [ %i.x, %bb.j ], [ %i.aw, %bb.l ]
-  %.ph35.i = phi ptr [ %i.y, %bb.j ], [ %i.aw, %bb.l ]
-  %.ph36.i = phi ptr [ %i.ac, %bb.j ], [ null, %bb.l ]
-  %.sroa.3.0.i.pn.i.ph.ph.i = phi i32 [ %i.au, %bb.j ], [ %.val.i.i.i, %bb.l ]
-  %2 = zext i32 %.sroa.3.0.i.pn.i.ph.ph.i to i64, !dbg !97079
-  br label %bb.m, !dbg !97079
-
-bb.m:                                             ; preds = %1, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %3 = phi ptr [ %.ph36.i, %1 ], [ %i.ac, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
-  %4 = phi ptr [ %.ph35.i, %1 ], [ %i.y, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
-  %5 = phi ptr [ %.ph34.i, %1 ], [ %i.x, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
-  %6 = phi i64 [ %.ph33.i, %1 ], [ %i.ar, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
-  %.pre.i.i.i2140.i = phi i64 [ %.pre.i.i.i21.ph.i, %1 ], [ %.pre.i.i.i22.i, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
-  %7 = phi i64 [ %.ph32.i, %1 ], [ %i.aq, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
-  %8 = phi ptr [ %.ph31.i, %1 ], [ %i.ap, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
-  %9 = phi i64 [ %2, %1 ], [ 0, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ], !dbg !97079
-  %i.ax = add i64 %9, %.sroa.0.0.i, !dbg !97088
+bb.m:                                             ; preds = %bb.l, %bb.j, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
+  %1 = phi ptr [ %i.u, %bb.l ], [ %i.ap, %bb.j ], [ %i.ap, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %2 = phi i64 [ %i.v, %bb.l ], [ %i.aq, %bb.j ], [ %i.aq, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %.pre.i.i.i21.i = phi i64 [ %.pre.i.i.i23.i, %bb.l ], [ %.pre.i.i.i22.i, %bb.j ], [ %.pre.i.i.i22.i, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %3 = phi i64 [ %i.w, %bb.l ], [ %i.ar, %bb.j ], [ %i.ar, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %4 = phi ptr [ %i.aw, %bb.l ], [ %i.x, %bb.j ], [ %i.x, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %5 = phi ptr [ %i.aw, %bb.l ], [ %i.y, %bb.j ], [ %i.y, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %6 = phi ptr [ null, %bb.l ], [ %i.ac, %bb.j ], [ %i.ac, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %.sroa.0.0.i.pn.i.ph.i = phi i32 [ %.val.i.i.i, %bb.l ], [ %i.au, %bb.j ], [ 0, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %.sroa.02.0.i.i.i = zext i32 %.sroa.0.0.i.pn.i.ph.i to i64, !dbg !97079
+  %i.ax = add i64 %.sroa.0.0.i, %.sroa.02.0.i.i.i, !dbg !97088
   br label %bb.f, !dbg !96972
 
 _RINvYINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1s_5slice4iter4IterNtNtNtNtBc_5array7binview4view4ViewENCNvMs4_B2C_INtB2C_22BinaryViewArrayGenericShE8len_iter0ENtNtB8_8iterator10BitmapIterENtNtNtB1q_6traits8iterator8Iterator4foldjNCINvB1m_8map_foldINtNtB1s_6option6OptionmEjjNCNvB3c_15total_bytes_len0NCINvXsK_NtB4A_5accumjNtB6t_3Sum3sumIB1k_B3_B5U_EE0E0ECseeLknQCOKOd_13polars_python.exit: ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i, %bb.k
@@ -705,13 +694,13 @@ _RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11Zip
   br label %bb.f, !dbg !97390
 
 bb.f:                                             ; preds = %bb.m, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit
-  %i.u = phi ptr [ %.sroa.6.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %8, %bb.m ] ; 6 uses
-  %i.v = phi i64 [ %.sroa.13.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %7, %bb.m ] ; 5 uses
-  %.pre.i.i.i23.i = phi i64 [ %.sroa.10.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %.pre.i.i.i2140.i, %bb.m ] ; 3 uses
-  %i.w = phi i64 [ %.sroa.11.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %6, %bb.m ] ; 3 uses
-  %i.x = phi ptr [ %.sroa.3.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %5, %bb.m ] ; 3 uses
-  %i.y = phi ptr [ %.sroa.3.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %4, %bb.m ] ; 5 uses
-  %i.z = phi ptr [ %.sroa.0.03, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %3, %bb.m ] ; 5 uses
+  %i.u = phi ptr [ %.sroa.6.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %1, %bb.m ] ; 6 uses
+  %i.v = phi i64 [ %.sroa.13.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %2, %bb.m ] ; 5 uses
+  %.pre.i.i.i23.i = phi i64 [ %.sroa.10.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %.pre.i.i.i21.i, %bb.m ] ; 3 uses
+  %i.w = phi i64 [ %.sroa.11.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %3, %bb.m ] ; 3 uses
+  %i.x = phi ptr [ %.sroa.3.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %4, %bb.m ] ; 3 uses
+  %i.y = phi ptr [ %.sroa.3.0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %5, %bb.m ] ; 5 uses
+  %i.z = phi ptr [ %.sroa.0.03, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %6, %bb.m ] ; 5 uses
   %.sroa.0.0.i = phi i64 [ 0, %_RNvMs4_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validityINtB5_11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1x_5slice4iter4IterNtNtNtNtBb_5array7binview4view4ViewENCNvMs4_B2H_INtB2H_22BinaryViewArrayGenericeE8len_iter0ENtNtB7_8iterator10BitmapIterE17new_with_validityCseeLknQCOKOd_13polars_python.exit ], [ %i.ax, %bb.m ], !dbg !97400 ; 3 uses
   %.not.i.i = icmp eq ptr %i.z, null, !dbg !97401
   br i1 %.not.i.i, label %bb.k, label %bb.g, !dbg !97405
@@ -769,7 +758,7 @@ _RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIter
 
 bb.j:                                             ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
   %i.au = extractvalue { i8, i32 } %i.as, 1, !dbg !97463
-  br label %1, !dbg !97467
+  br label %bb.m, !dbg !97467
 
 bb.k:                                             ; preds = %bb.f
   %i.av = icmp eq ptr %i.y, %i.u, !dbg !97474
@@ -778,30 +767,19 @@ bb.k:                                             ; preds = %bb.f
 bb.l:                                             ; preds = %bb.k
   %i.aw = getelementptr inbounds nuw i8, ptr %i.y, i64 16, !dbg !97480 ; 2 uses
   %.val.i.i.i = load i32, ptr %i.y, align 4, !dbg !97482, !noalias !97485, !noundef !11
-  br label %1, !dbg !97488
+  br label %bb.m, !dbg !97488
 
-1:                                                ; preds = %bb.l, %bb.j
-  %.ph31.i = phi ptr [ %i.ap, %bb.j ], [ %i.u, %bb.l ]
-  %.ph32.i = phi i64 [ %i.aq, %bb.j ], [ %i.v, %bb.l ]
-  %.pre.i.i.i21.ph.i = phi i64 [ %.pre.i.i.i22.i, %bb.j ], [ %.pre.i.i.i23.i, %bb.l ]
-  %.ph33.i = phi i64 [ %i.ar, %bb.j ], [ %i.w, %bb.l ]
-  %.ph34.i = phi ptr [ %i.x, %bb.j ], [ %i.aw, %bb.l ]
-  %.ph35.i = phi ptr [ %i.y, %bb.j ], [ %i.aw, %bb.l ]
-  %.ph36.i = phi ptr [ %i.ac, %bb.j ], [ null, %bb.l ]
-  %.sroa.3.0.i.pn.i.ph.ph.i = phi i32 [ %i.au, %bb.j ], [ %.val.i.i.i, %bb.l ]
-  %2 = zext i32 %.sroa.3.0.i.pn.i.ph.ph.i to i64, !dbg !97491
-  br label %bb.m, !dbg !97491
-
-bb.m:                                             ; preds = %1, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
-  %3 = phi ptr [ %.ph36.i, %1 ], [ %i.ac, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
-  %4 = phi ptr [ %.ph35.i, %1 ], [ %i.y, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
-  %5 = phi ptr [ %.ph34.i, %1 ], [ %i.x, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
-  %6 = phi i64 [ %.ph33.i, %1 ], [ %i.ar, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
-  %.pre.i.i.i2140.i = phi i64 [ %.pre.i.i.i21.ph.i, %1 ], [ %.pre.i.i.i22.i, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
-  %7 = phi i64 [ %.ph32.i, %1 ], [ %i.aq, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
-  %8 = phi ptr [ %.ph31.i, %1 ], [ %i.ap, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
-  %9 = phi i64 [ %2, %1 ], [ 0, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ], !dbg !97491
-  %i.ax = add i64 %9, %.sroa.0.0.i, !dbg !97498
+bb.m:                                             ; preds = %bb.l, %bb.j, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i
+  %1 = phi ptr [ %i.u, %bb.l ], [ %i.ap, %bb.j ], [ %i.ap, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %2 = phi i64 [ %i.v, %bb.l ], [ %i.aq, %bb.j ], [ %i.aq, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %.pre.i.i.i21.i = phi i64 [ %.pre.i.i.i23.i, %bb.l ], [ %.pre.i.i.i22.i, %bb.j ], [ %.pre.i.i.i22.i, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %3 = phi i64 [ %i.w, %bb.l ], [ %i.ar, %bb.j ], [ %i.ar, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %4 = phi ptr [ %i.aw, %bb.l ], [ %i.x, %bb.j ], [ %i.x, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %5 = phi ptr [ %i.aw, %bb.l ], [ %i.y, %bb.j ], [ %i.y, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %6 = phi ptr [ null, %bb.l ], [ %i.ac, %bb.j ], [ %i.ac, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %.sroa.0.0.i.pn.i.ph.i = phi i32 [ %.val.i.i.i, %bb.l ], [ %i.au, %bb.j ], [ 0, %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i ]
+  %.sroa.02.0.i.i.i = zext i32 %.sroa.0.0.i.pn.i.ph.i to i64, !dbg !97491
+  %i.ax = add i64 %.sroa.0.0.i, %.sroa.02.0.i.i.i, !dbg !97498
   br label %bb.f, !dbg !97390
 
 _RINvYINtNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils12zip_validity11ZipValiditymINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1s_5slice4iter4IterNtNtNtNtBc_5array7binview4view4ViewENCNvMs4_B2C_INtB2C_22BinaryViewArrayGenericeE8len_iter0ENtNtB8_8iterator10BitmapIterENtNtNtB1q_6traits8iterator8Iterator4foldjNCINvB1m_8map_foldINtNtB1s_6option6OptionmEjjNCNvB3c_15total_bytes_len0NCINvXsK_NtB4z_5accumjNtB6s_3Sum3sumIB1k_B3_B5T_EE0E0ECseeLknQCOKOd_13polars_python.exit: ; preds = %_RNvXs_NtNtNtCs8774dFTUdNv_12polars_arrow6bitmap5utils8iteratorNtB4_10BitmapIterNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator4next.exit.i.i.i, %bb.k

@@ -205,7 +205,7 @@ bb.ap:                                            ; preds = %_ZN9Stockfish12_GLO
   %i.iq = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 52 ; 4 uses
   %i.ir = load i8, ptr %i.iq, align 4, !tbaa !208, !range !206, !noundef !207 ; 2 uses
   %i.is = trunc nuw i8 %i.ir to i1                ; 9 uses
-  %i.it = select i1 %i.is, i8 3, i8 0             ; 3 uses
+  %i.it = select i1 %i.is, i8 3, i8 0             ; 4 uses
   %i.iu = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 55 ; 2 uses
   %i.iv = load i8, ptr %i.iu, align 1
   %i.iw = icmp ne i8 %i.iv, 0
@@ -213,8 +213,8 @@ bb.ap:                                            ; preds = %_ZN9Stockfish12_GLO
   %i.iy = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 56 ; 13 uses
   %i.iz = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 48 ; 2 uses
   %i.ja = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 53 ; 2 uses
-  %i.jb = add nuw nsw i8 %i.it, 1                 ; 11 uses
-  %wide.trip.count181.i.i.i = zext nneg i8 %i.jb to i64 ; 2 uses
+  %i.jb = add nuw nsw i8 %i.it, 1                 ; 5 uses
+  %wide.trip.count181.i.i.i = zext nneg i8 %i.jb to i64
   %i.jc = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 256
   %i.jd = add i64 %.0.val.i.i280, 184
   br label %.preheader131.i.i.i
@@ -617,22 +617,23 @@ _ZN9Stockfish12_GLOBAL__N_110set_groupsINS0_7TBTableILNS0_6TBTypeE1EEEEEvRT_PNS0
   br i1 %exitcond182.i.i.i, label %bb.aq, label %.preheader131.i.i.i, !llvm.loop !296
 
 .preheader127.i.i.i:                              ; preds = %.preheader127.i.i.i, %bb.aq
-  %indvars.iv183.i.i.i = phi i64 [ 0, %bb.aq ], [ %indvars.iv.next184.i.i.i, %.preheader127.i.i.i ] ; 2 uses
-  %.2156.i.i.i = phi ptr [ %i.jo, %bb.aq ], [ %i.rk, %.preheader127.i.i.i ]
+  %.2162.i.i.i = phi ptr [ %i.jo, %bb.aq ], [ %i.rk, %.preheader127.i.i.i ]
+  %.0117161.i.i.i = phi i8 [ 0, %bb.aq ], [ %18, %.preheader127.i.i.i ] ; 3 uses
   %i.rh = load i8, ptr %i.iq, align 4, !tbaa !208, !range !206, !noundef !207
   %i.ri = trunc nuw i8 %i.rh to i1
-  %17 = select i1 %i.ri, i64 %indvars.iv183.i.i.i, i64 0
+  %narrow122.i.i.i = select i1 %i.ri, i8 %.0117161.i.i.i, i8 0
+  %17 = zext nneg i8 %narrow122.i.i.i to i64
   %i.rj = getelementptr inbounds nuw [240 x i8], ptr %i.iy, i64 %17
-  %i.rk = call fastcc noundef ptr @_ZN9Stockfish12_GLOBAL__N_19set_sizesEPNS0_9PairsDataEPh(ptr noundef %i.rj, ptr noundef %.2156.i.i.i) ; 18 uses
-  %indvars.iv.next184.i.i.i = add nuw nsw i64 %indvars.iv183.i.i.i, 1 ; 2 uses
-  %exitcond187.i.i.i = icmp eq i64 %indvars.iv.next184.i.i.i, %wide.trip.count181.i.i.i
+  %i.rk = call fastcc noundef ptr @_ZN9Stockfish12_GLOBAL__N_19set_sizesEPNS0_9PairsDataEPh(ptr noundef %i.rj, ptr noundef %.2162.i.i.i) ; 18 uses
+  %18 = add nuw nsw i8 %.0117161.i.i.i, 1
+  %exitcond187.i.i.i = icmp eq i8 %.0117161.i.i.i, %i.it
   br i1 %exitcond187.i.i.i, label %bb.bj, label %.preheader127.i.i.i, !llvm.loop !297
 
 bb.bj:                                            ; preds = %.preheader127.i.i.i
   %i.rl = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 16
   store ptr %i.rk, ptr %i.rl, align 8, !tbaa !298
-  %i.rm = load i8, ptr %i.iq, align 4, !tbaa !208, !range !206, !noundef !207 ; 3 uses
-  %i.rn = trunc nuw i8 %i.rm to i1                ; 6 uses
+  %i.rm = load i8, ptr %i.iq, align 4, !tbaa !208, !range !206, !noundef !207 ; 5 uses
+  %i.rn = trunc nuw i8 %i.rm to i1                ; 4 uses
   %i.ro = ptrtoint ptr %i.rk to i64               ; 75 uses
   %i.rp = load i8, ptr @_ZN9StockfishL14IsLittleEndianE, align 1, !range !206
   %.fr74.i.i.i.i = freeze i8 %i.rp
@@ -711,7 +712,7 @@ bb.bk:                                            ; preds = %.split41.us.i.i.i.i
   %i.tf = zext i8 %i.te to i32                    ; 2 uses
   %i.tg = and i32 %i.tf, 2
   %.not28.us.i.i.i.i.1 = icmp eq i32 %i.tg, 0
-  br i1 %.not28.us.i.i.i.i.1, label %.loopexit.us.i.i.i.i.1, label %bb.bl
+  br i1 %.not28.us.i.i.i.i.1, label %.split41.us.i.i.i.i.2, label %bb.bl
 
 bb.bl:                                            ; preds = %.split41.us.i.i.i.i.1
   %i.th = and i32 %i.tf, 16
@@ -774,7 +775,7 @@ bb.bl:                                            ; preds = %.split41.us.i.i.i.i
   %i.uw = shl nuw nsw i64 %i.uv, 1
   %i.ux = getelementptr inbounds nuw i8, ptr %i.uo, i64 %i.uw
   %i.uy = getelementptr inbounds nuw i8, ptr %i.ux, i64 2
-  br label %.loopexit.us.i.i.i.i.1
+  br label %.split41.us.i.i.i.i.2
 
 .preheader.us.i.i.i.i.1:                          ; preds = %bb.bl
   %i.uz = getelementptr inbounds nuw i8, ptr %i.td, i64 232
@@ -817,21 +818,18 @@ bb.bl:                                            ; preds = %.split41.us.i.i.i.i
   %i.wg = zext i8 %i.wf to i64
   %i.wh = getelementptr inbounds nuw i8, ptr %i.vz, i64 %i.wg
   %i.wi = getelementptr inbounds nuw i8, ptr %i.wh, i64 1
-  br label %.loopexit.us.i.i.i.i.1
+  br label %.split41.us.i.i.i.i.2
 
-.loopexit.us.i.i.i.i.1:                           ; preds = %.preheader.us.i.i.i.i.1, %.split.us.us.i.i.i.i.1, %.split41.us.i.i.i.i.1
-  %.3.us.i.i.i.i.1 = phi ptr [ %.3.us.i.i.i.i, %.split41.us.i.i.i.i.1 ], [ %i.wi, %.preheader.us.i.i.i.i.1 ], [ %i.uy, %.split.us.us.i.i.i.i.1 ] ; 7 uses
-  %exitcond108.i.i.i.i.1 = icmp eq i8 %i.jb, 2
-  br i1 %exitcond108.i.i.i.i.1, label %_ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4FileE.exit.i.i.i, label %.split41.us.i.i.i.i.2
-
-.split41.us.i.i.i.i.2:                            ; preds = %.loopexit.us.i.i.i.i.1
-  %18 = select i1 %i.rn, i64 2, i64 0
-  %i.wj = getelementptr inbounds nuw [240 x i8], ptr %i.iy, i64 %18 ; 9 uses
+.split41.us.i.i.i.i.2:                            ; preds = %.split41.us.i.i.i.i.1, %.split.us.us.i.i.i.i.1, %.preheader.us.i.i.i.i.1
+  %.3.us.i.i.i.i.1 = phi ptr [ %.3.us.i.i.i.i, %.split41.us.i.i.i.i.1 ], [ %i.wi, %.preheader.us.i.i.i.i.1 ], [ %i.uy, %.split.us.us.i.i.i.i.1 ] ; 6 uses
+  %narrow.us.i.i.i.i.2 = shl nuw nsw i8 %i.rm, 1
+  %19 = zext nneg i8 %narrow.us.i.i.i.i.2 to i64
+  %i.wj = getelementptr inbounds nuw [240 x i8], ptr %i.iy, i64 %19 ; 9 uses
   %i.wk = load i8, ptr %i.wj, align 8, !tbaa !299
   %i.wl = zext i8 %i.wk to i32                    ; 2 uses
   %i.wm = and i32 %i.wl, 2
   %.not28.us.i.i.i.i.2 = icmp eq i32 %i.wm, 0
-  br i1 %.not28.us.i.i.i.i.2, label %.loopexit.us.i.i.i.i.2, label %bb.bm
+  br i1 %.not28.us.i.i.i.i.2, label %.split41.us.i.i.i.i.3, label %bb.bm
 
 bb.bm:                                            ; preds = %.split41.us.i.i.i.i.2
   %i.wn = and i32 %i.wl, 16
@@ -894,7 +892,7 @@ bb.bm:                                            ; preds = %.split41.us.i.i.i.i
   %i.yc = shl nuw nsw i64 %i.yb, 1
   %i.yd = getelementptr inbounds nuw i8, ptr %i.xu, i64 %i.yc
   %i.ye = getelementptr inbounds nuw i8, ptr %i.yd, i64 2
-  br label %.loopexit.us.i.i.i.i.2
+  br label %.split41.us.i.i.i.i.3
 
 .preheader.us.i.i.i.i.2:                          ; preds = %bb.bm
   %i.yf = getelementptr inbounds nuw i8, ptr %i.wj, i64 232
@@ -937,14 +935,10 @@ bb.bm:                                            ; preds = %.split41.us.i.i.i.i
   %i.zm = zext i8 %i.zl to i64
   %i.zn = getelementptr inbounds nuw i8, ptr %i.zf, i64 %i.zm
   %i.zo = getelementptr inbounds nuw i8, ptr %i.zn, i64 1
-  br label %.loopexit.us.i.i.i.i.2
+  br label %.split41.us.i.i.i.i.3
 
-.loopexit.us.i.i.i.i.2:                           ; preds = %.preheader.us.i.i.i.i.2, %.split.us.us.i.i.i.i.2, %.split41.us.i.i.i.i.2
-  %.3.us.i.i.i.i.2 = phi ptr [ %.3.us.i.i.i.i.1, %.split41.us.i.i.i.i.2 ], [ %i.zo, %.preheader.us.i.i.i.i.2 ], [ %i.ye, %.split.us.us.i.i.i.i.2 ] ; 7 uses
-  %exitcond108.i.i.i.i.2 = icmp eq i8 %i.jb, 3
-  br i1 %exitcond108.i.i.i.i.2, label %_ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4FileE.exit.i.i.i, label %.split41.us.i.i.i.i.3
-
-.split41.us.i.i.i.i.3:                            ; preds = %.loopexit.us.i.i.i.i.2
+.split41.us.i.i.i.i.3:                            ; preds = %.split41.us.i.i.i.i.2, %.split.us.us.i.i.i.i.2, %.preheader.us.i.i.i.i.2
+  %.3.us.i.i.i.i.2 = phi ptr [ %.3.us.i.i.i.i.1, %.split41.us.i.i.i.i.2 ], [ %i.zo, %.preheader.us.i.i.i.i.2 ], [ %i.ye, %.split.us.us.i.i.i.i.2 ] ; 6 uses
   %i.zp = select i1 %i.rn, i64 3, i64 0
   %i.zq = getelementptr inbounds nuw [240 x i8], ptr %i.iy, i64 %i.zp ; 9 uses
   %i.zr = load i8, ptr %i.zq, align 8, !tbaa !299
@@ -1347,8 +1341,8 @@ _ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4Fi
   %i.bax = and i64 %i.baw, 1
   br label %.preheader122.i.split.i.i
 
-_ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4FileE.exit.i.i.i: ; preds = %.loopexit.us53.i.i.i.i, %.loopexit.us53.i.i.i.i.1, %.loopexit.us53.i.i.i.i.2, %.preheader.us52.i.i.i.i.3, %.split.us.i.i.i.i.3, %.split41.split.us.i.i.i.i.3, %.loopexit.us.i.i.i.i, %.loopexit.us.i.i.i.i.1, %.loopexit.us.i.i.i.i.2, %.preheader.us.i.i.i.i.3, %.split.us.us.i.i.i.i.3, %.split41.us.i.i.i.i.3
-  %.us-phi44.i.i.i.i = phi ptr [ %i.abl, %.split.us.us.i.i.i.i.3 ], [ %.3.us.i.i.i.i, %.loopexit.us.i.i.i.i ], [ %.3.us.i.i.i.i.1, %.loopexit.us.i.i.i.i.1 ], [ %.3.us.i.i.i.i.2, %.loopexit.us.i.i.i.i.2 ], [ %.3.us.i.i.i.i.2, %.split41.us.i.i.i.i.3 ], [ %i.acv, %.preheader.us.i.i.i.i.3 ], [ %.3.us50.i.i.i.i, %.loopexit.us53.i.i.i.i ], [ %.3.us50.i.i.i.i.1, %.loopexit.us53.i.i.i.i.1 ], [ %.3.us50.i.i.i.i.2, %.loopexit.us53.i.i.i.i.2 ], [ %.3.us50.i.i.i.i.2, %.split41.split.us.i.i.i.i.3 ], [ %i.apc, %.preheader.us52.i.i.i.i.3 ], [ %i.ans, %.split.us.i.i.i.i.3 ] ; 3 uses
+_ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4FileE.exit.i.i.i: ; preds = %.loopexit.us53.i.i.i.i, %.loopexit.us53.i.i.i.i.1, %.loopexit.us53.i.i.i.i.2, %.preheader.us52.i.i.i.i.3, %.split.us.i.i.i.i.3, %.split41.split.us.i.i.i.i.3, %.loopexit.us.i.i.i.i, %.preheader.us.i.i.i.i.3, %.split.us.us.i.i.i.i.3, %.split41.us.i.i.i.i.3
+  %.us-phi44.i.i.i.i = phi ptr [ %i.abl, %.split.us.us.i.i.i.i.3 ], [ %.3.us.i.i.i.i, %.loopexit.us.i.i.i.i ], [ %.3.us.i.i.i.i.2, %.split41.us.i.i.i.i.3 ], [ %i.acv, %.preheader.us.i.i.i.i.3 ], [ %.3.us50.i.i.i.i, %.loopexit.us53.i.i.i.i ], [ %.3.us50.i.i.i.i.1, %.loopexit.us53.i.i.i.i.1 ], [ %.3.us50.i.i.i.i.2, %.loopexit.us53.i.i.i.i.2 ], [ %.3.us50.i.i.i.i.2, %.split41.split.us.i.i.i.i.3 ], [ %i.apc, %.preheader.us52.i.i.i.i.3 ], [ %i.ans, %.split.us.i.i.i.i.3 ] ; 3 uses
   %i.bay = ptrtoint ptr %.us-phi44.i.i.i.i to i64
   %i.baz = and i64 %i.bay, 1                      ; 2 uses
   br i1 %i.rn, label %.preheader123.us.i.i.i, label %.preheader122.i.split.i.i
@@ -1401,38 +1395,30 @@ _ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4Fi
   %i.bbz = shl nuw nsw i64 %i.bby, 1
   %i.bca = getelementptr inbounds nuw i8, ptr %.lcssa495, i64 %i.bbz ; 3 uses
   store ptr %.lcssa495, ptr %i.bbv, align 8, !tbaa !312
-  br i1 %i.is, label %.preheader121.i.us.i.i.1, label %_ZN9Stockfish12_GLOBAL__N_13setINS0_7TBTableILNS0_6TBTypeE1EEEEEvRT_Ph.exit.i.i.loopexit.critedge
+  br i1 %i.is, label %.preheader121.i.us.i.i.2, label %_ZN9Stockfish12_GLOBAL__N_13setINS0_7TBTableILNS0_6TBTypeE1EEEEEvRT_Ph.exit.i.i.loopexit.critedge
 
-.preheader121.i.us.i.i.1:                         ; preds = %.preheader121.i.us.i.i
-  %19 = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 336
-  %20 = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 344
-  %21 = load i32, ptr %20, align 8, !tbaa !311
-  %22 = zext i32 %21 to i64
-  %23 = shl nuw nsw i64 %22, 1
-  %24 = getelementptr inbounds nuw i8, ptr %i.bca, i64 %23 ; 3 uses
-  store ptr %i.bca, ptr %19, align 8, !tbaa !312
-  %exitcond198.i.us.i.i.1 = icmp eq i8 %i.jb, 2
-  br i1 %exitcond198.i.us.i.i.1, label %.preheader.i.i.i, label %.preheader121.i.us.i.i.2
-
-.preheader121.i.us.i.i.2:                         ; preds = %.preheader121.i.us.i.i.1
+.preheader121.i.us.i.i.2:                         ; preds = %.preheader121.i.us.i.i
+  %20 = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 336
+  %21 = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 344
+  %22 = load i32, ptr %21, align 8, !tbaa !311
+  store ptr %i.bca, ptr %20, align 8, !tbaa !312
+  %23 = zext i32 %22 to i64
+  %24 = shl nuw nsw i64 %23, 1
+  %25 = getelementptr inbounds nuw i8, ptr %i.bca, i64 %24 ; 2 uses
   %i.bcb = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 576
   %i.bcc = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 584
   %i.bcd = load i32, ptr %i.bcc, align 8, !tbaa !311
+  store ptr %25, ptr %i.bcb, align 8, !tbaa !312
   %i.bce = zext i32 %i.bcd to i64
   %i.bcf = shl nuw nsw i64 %i.bce, 1
-  %i.bcg = getelementptr inbounds nuw i8, ptr %24, i64 %i.bcf ; 3 uses
-  store ptr %24, ptr %i.bcb, align 8, !tbaa !312
-  %exitcond198.i.us.i.i.2 = icmp eq i8 %i.jb, 3
-  br i1 %exitcond198.i.us.i.i.2, label %.preheader.i.i.i, label %.preheader121.i.us.i.i.3
-
-.preheader121.i.us.i.i.3:                         ; preds = %.preheader121.i.us.i.i.2
-  %25 = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 816
-  %26 = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 824
-  %27 = load i32, ptr %26, align 8, !tbaa !311
-  %28 = zext i32 %27 to i64
-  %29 = shl nuw nsw i64 %28, 1
-  %30 = getelementptr inbounds nuw i8, ptr %i.bcg, i64 %29
-  store ptr %i.bcg, ptr %25, align 8, !tbaa !312
+  %26 = getelementptr inbounds nuw i8, ptr %25, i64 %i.bcf ; 2 uses
+  %27 = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 816
+  %i.bcg = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 824
+  %28 = load i32, ptr %i.bcg, align 8, !tbaa !311
+  %29 = zext i32 %28 to i64
+  %30 = shl nuw nsw i64 %29, 1
+  %31 = getelementptr inbounds nuw i8, ptr %26, i64 %30
+  store ptr %26, ptr %27, align 8, !tbaa !312
   br label %.preheader.i.i.i
 
 .preheader122.i.split.i.i:                        ; preds = %_ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4FileE.exit.i.i.i, %_ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4FileE.exit.thread.i.i.i
@@ -1465,14 +1451,14 @@ _ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4Fi
   store ptr %scevgep.i.i, ptr %i.bcu, align 8, !tbaa !312
   br label %.preheader.i.i.i
 
-.preheader.i.i.i:                                 ; preds = %.preheader122.i.split.i.i, %.preheader121.i.us.i.i.3, %.preheader121.i.us.i.i.2, %.preheader121.i.us.i.i.1
-  %.8166.i.i.i.ph = phi ptr [ %scevgep97.i.i, %.preheader122.i.split.i.i ], [ %30, %.preheader121.i.us.i.i.3 ], [ %24, %.preheader121.i.us.i.i.1 ], [ %i.bcg, %.preheader121.i.us.i.i.2 ]
+.preheader.i.i.i:                                 ; preds = %.preheader122.i.split.i.i, %.preheader121.i.us.i.i.2
+  %.8172.i.i.i.ph = phi ptr [ %scevgep97.i.i, %.preheader122.i.split.i.i ], [ %31, %.preheader121.i.us.i.i.2 ]
   %i.bda = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 128
   %i.bdb = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 60
   %i.bdc = load i32, ptr %i.bdb, align 4, !tbaa !313
   %i.bdd = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 64
   %i.bde = load i64, ptr %i.bdd, align 8, !tbaa !314
-  %i.bdf = ptrtoint ptr %.8166.i.i.i.ph to i64
+  %i.bdf = ptrtoint ptr %.8172.i.i.i.ph to i64
   %i.bdg = add i64 %i.bdf, 63
   %i.bdh = and i64 %i.bdg, -64
   %i.bdi = inttoptr i64 %i.bdh to ptr             ; 2 uses
@@ -1484,47 +1470,40 @@ _ZN9Stockfish12_GLOBAL__N_111set_dtz_mapERNS0_7TBTableILNS0_6TBTypeE1EEEPhNS_4Fi
   %i.bdk = mul i64 %i.bde, %i.bdj
   %i.bdl = getelementptr inbounds nuw i8, ptr %i.bdi, i64 %i.bdk
   %i.bdm = zext nneg i8 %i.rm to i64
-  %i.bdn = getelementptr inbounds nuw [240 x i8], ptr %i.iy, i64 %i.bdm ; 3 uses
+  %32 = getelementptr inbounds nuw [240 x i8], ptr %i.iy, i64 %i.bdm ; 3 uses
+  %33 = getelementptr inbounds nuw i8, ptr %32, i64 72
+  %34 = getelementptr inbounds nuw i8, ptr %32, i64 4
+  %35 = load i32, ptr %34, align 4, !tbaa !313
+  %36 = getelementptr inbounds nuw i8, ptr %32, i64 8
+  %37 = load i64, ptr %36, align 8, !tbaa !314
+  %38 = ptrtoint ptr %i.bdl to i64
+  %39 = add i64 %38, 63
+  %40 = and i64 %39, -64
+  %41 = inttoptr i64 %40 to ptr                   ; 2 uses
+  store ptr %41, ptr %33, align 8, !tbaa !315
+  %42 = zext i32 %35 to i64
+  %43 = mul i64 %37, %42
+  %44 = getelementptr inbounds nuw i8, ptr %41, i64 %43
+  %narrow125.i.i.i.2 = shl nuw nsw i8 %i.rm, 1
+  %45 = zext nneg i8 %narrow125.i.i.i.2 to i64
+  %i.bdn = getelementptr inbounds nuw [240 x i8], ptr %i.iy, i64 %45 ; 3 uses
   %i.bdo = getelementptr inbounds nuw i8, ptr %i.bdn, i64 72
   %i.bdp = getelementptr inbounds nuw i8, ptr %i.bdn, i64 4
   %i.bdq = load i32, ptr %i.bdp, align 4, !tbaa !313
   %i.bdr = getelementptr inbounds nuw i8, ptr %i.bdn, i64 8
   %i.bds = load i64, ptr %i.bdr, align 8, !tbaa !314
-  %i.bdt = ptrtoint ptr %i.bdl to i64
+  %i.bdt = ptrtoint ptr %44 to i64
   %i.bdu = add i64 %i.bdt, 63
   %i.bdv = and i64 %i.bdu, -64
   %i.bdw = inttoptr i64 %i.bdv to ptr             ; 2 uses
   store ptr %i.bdw, ptr %i.bdo, align 8, !tbaa !315
-  %exitcond203.i.i.i.1 = icmp eq i8 %i.jb, 2
-  br i1 %exitcond203.i.i.i.1, label %_ZN9Stockfish12_GLOBAL__N_13setINS0_7TBTableILNS0_6TBTypeE1EEEEEvRT_Ph.exit.i.i, label %.preheader.i.i.i.2
-
-.preheader.i.i.i.2:                               ; preds = %.preheader.i.i.i.1
-  %31 = zext i32 %i.bdq to i64
-  %32 = mul i64 %i.bds, %31
-  %33 = getelementptr inbounds nuw i8, ptr %i.bdw, i64 %32
-  %34 = select i1 %i.rn, i64 2, i64 0
-  %35 = getelementptr inbounds nuw [240 x i8], ptr %i.iy, i64 %34 ; 3 uses
-  %36 = getelementptr inbounds nuw i8, ptr %35, i64 72
-  %37 = getelementptr inbounds nuw i8, ptr %35, i64 4
-  %38 = load i32, ptr %37, align 4, !tbaa !313
-  %39 = getelementptr inbounds nuw i8, ptr %35, i64 8
-  %40 = load i64, ptr %39, align 8, !tbaa !314
-  %41 = ptrtoint ptr %33 to i64
-  %42 = add i64 %41, 63
-  %43 = and i64 %42, -64
-  %44 = inttoptr i64 %43 to ptr                   ; 2 uses
-  store ptr %44, ptr %36, align 8, !tbaa !315
-  %exitcond203.i.i.i.2 = icmp eq i8 %i.jb, 3
-  br i1 %exitcond203.i.i.i.2, label %_ZN9Stockfish12_GLOBAL__N_13setINS0_7TBTableILNS0_6TBTypeE1EEEEEvRT_Ph.exit.i.i, label %.preheader.i.i.i.3
-
-.preheader.i.i.i.3:                               ; preds = %.preheader.i.i.i.2
-  %45 = zext i32 %38 to i64
-  %46 = mul i64 %40, %45
-  %47 = getelementptr inbounds nuw i8, ptr %44, i64 %46
-  %48 = select i1 %i.rn, i64 3, i64 0
-  %49 = getelementptr inbounds nuw [240 x i8], ptr %i.iy, i64 %48
+  %46 = zext i32 %i.bdq to i64
+  %47 = mul i64 %i.bds, %46
+  %48 = getelementptr inbounds nuw i8, ptr %i.bdw, i64 %47
+  %narrow125.i.i.i.3 = select i1 %i.rn, i64 3, i64 0
+  %49 = getelementptr inbounds nuw [240 x i8], ptr %i.iy, i64 %narrow125.i.i.i.3
   %50 = getelementptr inbounds nuw i8, ptr %49, i64 72
-  %51 = ptrtoint ptr %47 to i64
+  %51 = ptrtoint ptr %48 to i64
   %52 = add i64 %51, 63
   %53 = and i64 %52, -64
   %54 = inttoptr i64 %53 to ptr
@@ -1544,7 +1523,7 @@ _ZN9Stockfish12_GLOBAL__N_13setINS0_7TBTableILNS0_6TBTypeE1EEEEEvRT_Ph.exit.i.i.
   store ptr %i.bef, ptr %i.bdx, align 8, !tbaa !315
   br label %_ZN9Stockfish12_GLOBAL__N_13setINS0_7TBTableILNS0_6TBTypeE1EEEEEvRT_Ph.exit.i.i
 
-_ZN9Stockfish12_GLOBAL__N_13setINS0_7TBTableILNS0_6TBTypeE1EEEEEvRT_Ph.exit.i.i: ; preds = %.preheader.i.i.i, %.preheader.i.i.i.1, %.preheader.i.i.i.2, %.preheader.i.i.i.3, %_ZN9Stockfish12_GLOBAL__N_13setINS0_7TBTableILNS0_6TBTypeE1EEEEEvRT_Ph.exit.i.i.loopexit.critedge, %_ZN9Stockfish12_GLOBAL__N_16TBFileD1Ev.exit.i.i
+_ZN9Stockfish12_GLOBAL__N_13setINS0_7TBTableILNS0_6TBTypeE1EEEEEvRT_Ph.exit.i.i: ; preds = %.preheader.i.i.i, %.preheader.i.i.i.1, %_ZN9Stockfish12_GLOBAL__N_13setINS0_7TBTableILNS0_6TBTypeE1EEEEEvRT_Ph.exit.i.i.loopexit.critedge, %_ZN9Stockfish12_GLOBAL__N_16TBFileD1Ev.exit.i.i
   store atomic i8 1, ptr %.0.val.i.i release, align 8
   %i.beg = load ptr, ptr %i.ia, align 8, !tbaa !199
   %i.beh = load ptr, ptr %4, align 8, !tbaa !175  ; 2 uses
@@ -1947,17 +1926,18 @@ bb.af:                                            ; preds = %_ZN9Stockfish12_GLO
   %i.hn = getelementptr inbounds nuw i8, ptr %i.d, i64 12
   %i.ho = getelementptr inbounds nuw i8, ptr %.0.val.i, i64 48 ; 3 uses
   %i.hp = getelementptr inbounds nuw i8, ptr %.0.val.i, i64 53
-  %i.hq = select i1 %i.hf, i8 4, i8 1             ; 9 uses
-  %wide.trip.count190.i.i = zext nneg i8 %i.hq to i64 ; 7 uses
+  %i.hq = select i1 %i.hf, i8 4, i8 1             ; 11 uses
+  %wide.trip.count190.i.i = zext nneg i8 %i.hq to i64 ; 5 uses
   %wide.trip.count185.i.i = zext nneg i32 %i.hc to i64
   %i.hr = add i64 %.0.val.i24, 184
   %scevgep = getelementptr i8, ptr %.0.val.i, i64 1144
   br label %.preheader134.i.i.a
 
 .preheader134.i.i.a:                              ; preds = %bb.ao, %bb.af
-  %indvars.iv187.i.i = phi i64 [ 0, %bb.af ], [ %indvars.iv.next188.i.i, %bb.ao ] ; 5 uses
+  %indvars.iv187.i.i = phi i64 [ 0, %bb.af ], [ %indvars.iv.next188.i.i, %bb.ao ] ; 3 uses
   %.087143.i.i = phi ptr [ %i.gy, %bb.af ], [ %.1.lcssa.i.i, %bb.ao ] ; 7 uses
   %.087143.i.i25 = ptrtoaddr ptr %.087143.i.i to i64
+  %12 = and i64 %indvars.iv187.i.i, 255           ; 3 uses
   br label %bb.ai
 
 bb.ag:                                            ; preds = %bb.ao
@@ -1981,7 +1961,7 @@ bb.ai:                                            ; preds = %_ZN9Stockfish12_GLO
   %i.ia = getelementptr inbounds nuw [960 x i8], ptr %i.hk, i64 %i.hz
   %i.ib = load i8, ptr %i.hd, align 4, !tbaa !205, !range !206, !noundef !207
   %i.ic = trunc nuw i8 %i.ib to i1
-  %i.id = select i1 %i.ic, i64 %indvars.iv187.i.i, i64 0
+  %i.id = select i1 %i.ic, i64 %12, i64 0
   %i.ie = getelementptr inbounds nuw [240 x i8], ptr %i.ia, i64 %i.id ; 6 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.ie, i8 0, i64 80, i1 false)
   %i.if = getelementptr inbounds nuw i8, ptr %i.ie, i64 80 ; 2 uses
@@ -2062,7 +2042,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   %wide.trip.count.i.i = zext nneg i32 %i.jl to i64 ; 18 uses
   %i.jn = load i8, ptr %i.hd, align 4, !tbaa !205, !range !206, !noundef !207 ; 9 uses
   %i.jo = trunc nuw i8 %i.jn to i1
-  %i.jp = select i1 %i.jo, i64 %indvars.iv187.i.i, i64 0 ; 4 uses
+  %i.jp = select i1 %i.jo, i64 %12, i64 0         ; 4 uses
   %i.jq = getelementptr [240 x i8], ptr %i.hk, i64 %i.jp
   %i.jr = getelementptr i8, ptr %i.jq, i64 128    ; 23 uses
   %i.js = getelementptr inbounds nuw [240 x i8], ptr %.0.val.i, i64 %i.jp
@@ -2074,7 +2054,7 @@ iter.check55:                                     ; preds = %.preheader132.lr.ph
   br i1 %min.iters.check41, label %.loopexit.i.i.preheader, label %vector.memcheck38
 
 vector.memcheck38:                                ; preds = %iter.check55
-  %i.ju = mul i64 %i.jp, 240
+  %i.ju = mul nuw nsw i64 %i.jp, 240
   %i.jv = getelementptr i8, ptr %scevgep, i64 %i.ju
   %scevgep39 = getelementptr i8, ptr %i.jv, i64 %wide.trip.count.i.i
   %i.jw = getelementptr i8, ptr %.087143.i.i, i64 %i.ji
@@ -2178,7 +2158,7 @@ iter.check:                                       ; preds = %.preheader132.lr.ph
   br i1 %min.iters.check, label %.preheader132.lr.ph.i.split.us.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.kt = mul i64 %i.jp, 240
+  %i.kt = mul nuw nsw i64 %i.jp, 240
   %i.ku = add i64 %i.hr, %i.kt
   %i.kv = add i64 %i.ji, %.087143.i.i25
   %i.kw = sub i64 %i.kv, %i.ku
@@ -2337,7 +2317,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ni = phi i8 [ %.pre.i60.i, %..preheader133_crit_edge.i.i ], [ %i.jn, %middle.block ], [ %i.jn, %middle.block52 ], [ %i.jn, %vec.epilog.middle.block ], [ %i.jn, %.preheader132.lr.ph.i.split.us.i.prol.loopexit ], [ %i.jn, %vec.epilog.middle.block67 ], [ %i.jn, %.preheader132.lr.ph.i.split.us.i ], [ %i.jn, %.loopexit.i.i ], [ %i.jn, %.loopexit.i.i.prol.loopexit ]
   %.1.lcssa.i.i = phi ptr [ %i.jk, %..preheader133_crit_edge.i.i ], [ %i.ky, %middle.block ], [ %i.jy, %middle.block52 ], [ %i.ll, %vec.epilog.middle.block ], [ %i.nh, %.preheader132.lr.ph.i.split.us.i ], [ %i.ke, %vec.epilog.middle.block67 ], [ %.lcssa282.unr, %.preheader132.lr.ph.i.split.us.i.prol.loopexit ], [ %.lcssa281.unr, %.loopexit.i.i.prol.loopexit ], [ %i.po, %.loopexit.i.i ] ; 3 uses
   %i.nj = trunc nuw i8 %i.ni to i1                ; 3 uses
-  %i.nk = select i1 %i.nj, i64 %indvars.iv187.i.i, i64 0
+  %i.nk = select i1 %i.nj, i64 %12, i64 0
   %invariant.gep.i.i = getelementptr inbounds nuw [240 x i8], ptr %i.hk, i64 %i.nk
   %invariant.gep140.i.i = getelementptr [4 x i8], ptr @_ZN9Stockfish12_GLOBAL__N_113LeadPawnsSizeE, i64 %indvars.iv187.i.i
   br label %bb.ap
@@ -2669,8 +2649,8 @@ _ZN9Stockfish12_GLOBAL__N_110set_groupsINS0_7TBTableILNS0_6TBTypeE0EEEEEvRT_PNS0
   br i1 %exitcond186.not.i.i, label %bb.ao, label %bb.ap, !llvm.loop !445
 
 .preheader130.i.i:                                ; preds = %bb.bk, %bb.ag
-  %indvars.iv193.i.i = phi i64 [ 0, %bb.ag ], [ %indvars.iv.next194.i.i, %bb.bk ] ; 2 uses
-  %.2147.i.i = phi ptr [ %i.hu, %bb.ag ], [ %i.ub, %bb.bk ]
+  %.2154.i.i = phi ptr [ %i.hu, %bb.ag ], [ %i.ub, %bb.bk ]
+  %.0123153.i.i = phi i8 [ 0, %bb.ag ], [ %13, %bb.bk ] ; 2 uses
   br label %bb.bl
 
 .preheader129.i.i:                                ; preds = %bb.bk
@@ -2749,20 +2729,21 @@ bb.bj:                                            ; preds = %bb.bj, %.preheader1
   br i1 %niter316.ncmp.1, label %.preheader127.i.i.loopexit.unr-lcssa, label %.preheader128.us.i.i, !llvm.loop !447
 
 bb.bk:                                            ; preds = %bb.bl
-  %indvars.iv.next194.i.i = add nuw nsw i64 %indvars.iv193.i.i, 1 ; 2 uses
-  %exitcond197.i.i = icmp eq i64 %indvars.iv.next194.i.i, %wide.trip.count190.i.i
+  %13 = add nuw nsw i8 %.0123153.i.i, 1           ; 2 uses
+  %exitcond197.i.i = icmp eq i8 %13, %i.hq
   br i1 %exitcond197.i.i, label %.preheader129.i.i, label %.preheader130.i.i, !llvm.loop !448
 
 bb.bl:                                            ; preds = %bb.bl, %.preheader130.i.i
   %.082145.i.i = phi i32 [ 0, %.preheader130.i.i ], [ %i.uc, %bb.bl ] ; 2 uses
-  %.3144.i.i = phi ptr [ %.2147.i.i, %.preheader130.i.i ], [ %i.ub, %bb.bl ]
+  %.3144.i.i = phi ptr [ %.2154.i.i, %.preheader130.i.i ], [ %i.ub, %bb.bl ]
   %i.tv = and i32 %.082145.i.i, 1
   %i.tw = zext nneg i32 %i.tv to i64
   %i.tx = getelementptr inbounds nuw [960 x i8], ptr %i.hk, i64 %i.tw
   %i.ty = load i8, ptr %i.hd, align 4, !tbaa !205, !range !206, !noundef !207
   %i.tz = trunc nuw i8 %i.ty to i1
-  %12 = select i1 %i.tz, i64 %indvars.iv193.i.i, i64 0
-  %i.ua = getelementptr inbounds nuw [240 x i8], ptr %i.tx, i64 %12
+  %narrow128.i.i = select i1 %i.tz, i8 %.0123153.i.i, i8 0
+  %14 = zext nneg i8 %narrow128.i.i to i64
+  %i.ua = getelementptr inbounds nuw [240 x i8], ptr %i.tx, i64 %14
   %i.ub = call fastcc noundef ptr @_ZN9Stockfish12_GLOBAL__N_19set_sizesEPNS0_9PairsDataEPh(ptr noundef %i.ua, ptr noundef %.3144.i.i) ; 6 uses
   %i.uc = add nuw nsw i32 %.082145.i.i, 1         ; 2 uses
   %exitcond192.not.i.i = icmp eq i32 %i.uc, %i.hc
@@ -3061,15 +3042,16 @@ bb.bt:                                            ; preds = %bb.bt, %.preheader1
   br i1 %niter334.ncmp.1, label %.preheader.i.i.preheader.loopexit273.unr-lcssa, label %.preheader126.i.i, !llvm.loop !452
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %.epilog-lcssa358
-  %indvars.iv215.i.i = phi i64 [ %indvars.iv.next216.i.i, %.epilog-lcssa358 ], [ 0, %.preheader.i.i.preheader ] ; 2 uses
-  %.8168.i.i = phi ptr [ %i.xz, %.epilog-lcssa358 ], [ %.8168.i.i.ph, %.preheader.i.i.preheader ]
-  %13 = select i1 %i.td, i64 %indvars.iv215.i.i, i64 0
-  %invariant.gep163.i.i = getelementptr inbounds nuw [240 x i8], ptr %i.hk, i64 %13
+  %.8175.i.i = phi ptr [ %i.xz, %.epilog-lcssa358 ], [ %.8168.i.i.ph, %.preheader.i.i.preheader ]
+  %.0120174.i.i = phi i8 [ %16, %.epilog-lcssa358 ], [ 0, %.preheader.i.i.preheader ] ; 2 uses
+  %narrow131.i.i = select i1 %i.td, i8 %.0120174.i.i, i8 0
+  %15 = zext nneg i8 %narrow131.i.i to i64
+  %invariant.gep163.i.i = getelementptr inbounds nuw [240 x i8], ptr %i.hk, i64 %15
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bu, %.preheader.i.i
   %.0166.i.i.epil = phi i32 [ 0, %.preheader.i.i ], [ %i.ya, %bb.bu ] ; 2 uses
-  %.9165.i.i.epil = phi ptr [ %.8168.i.i, %.preheader.i.i ], [ %i.xz, %bb.bu ]
+  %.9165.i.i.epil = phi ptr [ %.8175.i.i, %.preheader.i.i ], [ %i.xz, %bb.bu ]
   %epil.iter356 = phi i32 [ 0, %.preheader.i.i ], [ %epil.iter356.next, %bb.bu ]
   %i.xm = ptrtoint ptr %.9165.i.i.epil to i64
   %i.xn = add i64 %i.xm, 63
@@ -3093,8 +3075,8 @@ bb.bu:                                            ; preds = %bb.bu, %.preheader.
   br i1 %epil.iter356.cmp.not, label %.epilog-lcssa358, label %bb.bu, !llvm.loop !454
 
 .epilog-lcssa358:                                 ; preds = %bb.bu
-  %indvars.iv.next216.i.i = add nuw nsw i64 %indvars.iv215.i.i, 1 ; 2 uses
-  %exitcond219.i.i = icmp eq i64 %indvars.iv.next216.i.i, %wide.trip.count190.i.i
+  %16 = add nuw nsw i8 %.0120174.i.i, 1           ; 2 uses
+  %exitcond219.i.i = icmp eq i8 %16, %i.hq
   br i1 %exitcond219.i.i, label %_ZN9Stockfish12_GLOBAL__N_13setINS0_7TBTableILNS0_6TBTypeE0EEEEEvRT_Ph.exit.i, label %.preheader.i.i, !llvm.loop !455
 
 _ZN9Stockfish12_GLOBAL__N_13setINS0_7TBTableILNS0_6TBTypeE0EEEEEvRT_Ph.exit.i: ; preds = %.epilog-lcssa358, %_ZN9Stockfish12_GLOBAL__N_16TBFileD1Ev.exit.i
