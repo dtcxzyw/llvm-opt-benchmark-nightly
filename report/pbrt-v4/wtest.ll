@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/wtest?download=true
+inline.NumInlined: 90
+inline.NumDeleted: 46
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@main:bb.a
   store ptr %i.f, ptr %2, align 8, !tbaa !11
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -200,7 +204,7 @@ bb.n:                                             ; preds = %.preheader190.prehe
 .preheader.lr.ph:                                 ; preds = %bb.n
   %.not199 = icmp eq i8 %i.db, 31
   %i.di = add nsw i32 %i.dd, -1
-  %i.dj = uitofp nneg i32 %i.di to float          ; 8 uses
+  %i.dj = uitofp nneg i32 %i.di to float          ; 7 uses
   %i.dk = add nsw i32 %i.dh, -1
   %i.dl = uitofp nneg i32 %i.dk to float
   br i1 %.not199, label %._crit_edge195.split, label %.preheader.preheader
@@ -213,9 +217,6 @@ bb.n:                                             ; preds = %.preheader190.prehe
   %n.vec = zext nneg i32 %i.dm to i64
   %broadcast.splatinsert229 = insertelement <8 x float> poison, float %i.dj, i64 0
   %broadcast.splat230 = shufflevector <8 x float> %broadcast.splatinsert229, <8 x float> poison, <8 x i32> zeroinitializer
-  %4 = fdiv ninf float 0.000000e+00, %i.dj
-  %5 = call float @llvm.fabs.f32(float %4)
-  %6 = fptoui float %5 to i16
   %exitcond.not = icmp slt i32 %i.dd, 2
   %i.dn = fdiv nnan float 1.000000e+00, %i.dj
   %i.do = fmul nnan float %i.dn, 6.553500e+04
@@ -286,7 +287,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 scalar.ph:                                        ; preds = %.preheader
   %.idx = mul nsw i64 %i.ek, 6
   %i.ez = getelementptr inbounds i8, ptr %i.bm, i64 %.idx ; 3 uses
-  store i16 %6, ptr %i.ez, align 2, !tbaa !54
+  store i16 0, ptr %i.ez, align 2, !tbaa !54
   %i.fa = getelementptr i8, ptr %i.ez, i64 2
   store i16 %i.ej, ptr %i.fa, align 2, !tbaa !54
   %i.fb = trunc i32 %.0118194 to i1
@@ -688,9 +689,6 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #15
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.fabs.f32(float) #15
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
