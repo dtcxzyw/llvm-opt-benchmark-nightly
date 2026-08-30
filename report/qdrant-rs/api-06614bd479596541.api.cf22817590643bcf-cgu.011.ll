@@ -202,8 +202,8 @@ bb.q:                                             ; preds = %_RINvMNtCskKLDkoKar
   %.sroa.515.0.i.i = select i1 %i.aw, double %.sroa.7.sroa.9.0.copyload, double undef
   %i.ax = trunc nuw i64 %.sroa.7.sroa.10.0.copyload to i1
   %.sroa.517.0.i.i = select i1 %i.ax, double %.sroa.7.sroa.11.0.copyload, double undef
-  %2 = inttoptr i64 %.sroa.7.sroa.0.0.copyload283 to ptr
-  %3 = select i1 %i.au, ptr %2, ptr undef
+  %2 = select i1 %i.au, i64 %.sroa.7.sroa.0.0.copyload283, i64 undef
+  %3 = inttoptr i64 %2 to ptr
   br label %bb.o
 
 bb.r:                                             ; preds = %bb.o

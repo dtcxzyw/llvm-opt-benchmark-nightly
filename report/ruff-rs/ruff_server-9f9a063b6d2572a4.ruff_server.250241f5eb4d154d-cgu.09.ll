@@ -205,13 +205,13 @@ bb.a:
   %i.a = getelementptr i8, ptr %.val.i, i64 4
   %.val1.i.i = load i32, ptr %i.a, align 4, !noalias !3784
   %i.b = trunc nuw i32 %.val.i.i to i1
-  %2 = zext i32 %.val1.i.i to i64
-  %3 = select i1 %i.b, i64 %2, i64 1
+  %.sroa.0.0.i.i.i = select i1 %i.b, i32 %.val1.i.i, i32 1
+  %2 = zext i32 %.sroa.0.0.i.i.i to i64
   store i8 2, ptr %0, align 8, !alias.scope !3785
   %.sroa.4.sroa.3.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %.sroa.4.sroa.3.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i, align 8, !alias.scope !3785
   %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %3, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i, align 8, !alias.scope !3785
+  store i64 %2, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i, align 8, !alias.scope !3785
   ret void
 }
 

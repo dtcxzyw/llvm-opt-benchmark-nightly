@@ -205,12 +205,12 @@ _ZN4mlir9AsmParser12parseIntegerIbEEN4llvm11ParseResultERT_.exit: ; preds = %bb.
   %.sroa.03.0.i = phi i8 [ %i.m, %_ZN4mlir18InFlightDiagnosticD2Ev.exit.i ], [ %.sroa.0.0.extract.trunc.i, %bb.a ] ; 2 uses
   %i.s = trunc nuw i8 %.sroa.03.0.i to i1
   %i.t = load i8, ptr %i.a, align 1, !range !89
+  %spec.select2 = select i1 %i.s, i8 %i.t, i8 undef
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #32
   %.sroa.2.0.insert.ext = zext nneg i8 %.sroa.03.0.i to i16
   %.sroa.2.0.insert.shift = shl nuw nsw i16 %.sroa.2.0.insert.ext, 8
-  %i.u = zext nneg i8 %i.t to i16
-  %.sroa.01.0.insert.ext = select i1 %i.s, i16 %i.u, i16 0
-  %.sroa.01.0.insert.insert = or disjoint i16 %.sroa.01.0.insert.ext, %.sroa.2.0.insert.shift
+  %i.u = zext i8 %spec.select2 to i16
+  %.sroa.01.0.insert.insert = or disjoint i16 %.sroa.2.0.insert.shift, %i.u
   ret i16 %.sroa.01.0.insert.insert
 }
 

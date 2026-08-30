@@ -202,16 +202,16 @@ bb.pd:                                            ; preds = %_ZN12_GLOBAL__N_110
   %i.bmu = load i8, ptr %i.bmt, align 1, !tbaa !266, !range !225, !noundef !18
   %i.bmv = trunc nuw i8 %i.bmu to i1
   %i.bmw = load i8, ptr %i.bms, align 1
-  %23 = zext i8 %i.bmw to i32
-  %24 = select i1 %i.bmv, i32 %23, i32 5          ; 4 uses
+  %.0.i209 = select i1 %i.bmv, i8 %i.bmw, i8 5    ; 2 uses
+  %23 = zext i8 %.0.i209 to i32                   ; 3 uses
   %i.bmx = load i64, ptr %i.ar, align 8, !tbaa !51
   %i.bmy = call noundef i32 @_ZN4llvm14getULEB128SizeEm(i64 noundef %i.bmx) #8
-  %.not316 = icmp ugt i32 %i.bmy, %24             ; 2 uses
+  %.not316 = icmp ugt i32 %i.bmy, %23             ; 2 uses
   br i1 %.not316, label %_ZN4llvmplERKNS_5TwineES2_.exit, label %bb.pe
 
 _ZN4llvmplERKNS_5TwineES2_.exit:                  ; preds = %bb.pd
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #8
-  %.sroa.0.0.insert.ext = zext nneg i32 %24 to i64
+  %.sroa.0.0.insert.ext = zext i8 %.0.i209 to i64
   %i.bmz = inttoptr i64 %.sroa.0.0.insert.ext to ptr
   store ptr @.str.3, ptr %20, align 8, !alias.scope !267
   store ptr %i.bmz, ptr %i.eb, align 8, !alias.scope !267
@@ -235,7 +235,7 @@ bb.pf:                                            ; preds = %_ZN4llvm11raw_ostre
   %i.bne = add nuw nsw i32 %.018.i212, 1          ; 4 uses
   %.not.i213 = icmp ne i64 %i.bnd, 0              ; 2 uses
   %i.bnf = trunc i64 %.019.i211 to i8             ; 2 uses
-  %i.bng = icmp samesign ult i32 %i.bne, %24      ; 2 uses
+  %i.bng = icmp samesign ult i32 %i.bne, %23      ; 2 uses
   %or.cond.i = select i1 %.not.i213, i1 true, i1 %i.bng
   %i.bnh = or i8 %i.bnf, -128
   %.0.i214 = select i1 %or.cond.i, i8 %i.bnh, i8 %i.bnf ; 2 uses
@@ -261,7 +261,7 @@ bb.pi:                                            ; preds = %_ZN4llvm11raw_ostre
   br i1 %i.bng, label %.preheader.i, label %_ZN4llvm13encodeULEB128EmRNS_11raw_ostreamEj.exit219
 
 .preheader.i:                                     ; preds = %bb.pi
-  %i.bnm = add nsw i32 %24, -1                    ; 2 uses
+  %i.bnm = add nsw i32 %23, -1                    ; 2 uses
   %i.bnn = icmp ult i32 %i.bne, %i.bnm
   br i1 %i.bnn, label %.lr.ph.i218, label %._crit_edge.i217
 
