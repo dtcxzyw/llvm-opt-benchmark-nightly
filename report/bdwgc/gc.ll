@@ -205,9 +205,9 @@ GC_add_ext_descriptor.exit:                       ; preds = %._crit_edge.i, %bb.
 
 bb.aj:                                            ; preds = %GC_add_ext_descriptor.exit
   %i.dm = load i32, ptr @GC_typed_mark_proc_index, align 4
-  %2 = zext nneg i32 %i.dm to i64
+  %2 = sext i32 %i.dm to i64
   %i.dn = shl i64 %.lcssa.i, 8
-  %i.do = shl nuw nsw i64 %2, 2
+  %i.do = shl nsw i64 %2, 2
   %i.dp = or i64 %i.dn, %i.do
   %i.dq = or disjoint i64 %i.dp, 2
   br label %.critedge.thread
@@ -318,8 +318,8 @@ bb.g:                                             ; preds = %GC_new_free_list_in
 
 GC_new_kind_inner.exit7:                          ; preds = %GC_new_free_list_inner.exit6
   %i.af = load i32, ptr @GC_array_mark_proc_index, align 4
-  %0 = zext nneg i32 %i.af to i64
-  %i.ag = shl nuw nsw i64 %0, 2
+  %0 = sext i32 %i.af to i64
+  %i.ag = shl nsw i64 %0, 2
   %i.ah = or disjoint i64 %i.ag, 2
   %i.ai = add nuw nsw i32 %i.ac, 1
   store i32 %i.ai, ptr @GC_n_kinds, align 4
@@ -491,8 +491,8 @@ GC_lock.exit:                                     ; preds = %bb.j, %bb.i, %bb.f,
   %i.o = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 5608), i64 %i.g
   %i.p = load i64, ptr %i.o, align 8              ; 4 uses
   %i.q = load i32, ptr @GC_explicit_kind, align 4 ; 2 uses
-  %2 = zext nneg i32 %i.q to i64
-  %i.r = getelementptr inbounds nuw [48 x i8], ptr @GC_obj_kinds, i64 %2
+  %2 = sext i32 %i.q to i64
+  %i.r = getelementptr inbounds [48 x i8], ptr @GC_obj_kinds, i64 %2
   %i.s = load ptr, ptr %i.r, align 16
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.p ; 2 uses
   %i.u = load ptr, ptr %i.t, align 8              ; 5 uses
@@ -895,7 +895,7 @@ bb.m:                                             ; preds = %GC_signal_mark_stac
   %i.ag = shl i64 %3, 6
   %i.ah = add i64 %i.ag, 64
   %i.ai = load i32, ptr @GC_typed_mark_proc_index, align 4
-  %5 = zext nneg i32 %i.ai to i64
+  %5 = sext i32 %i.ai to i64
   %i.aj = or i64 %i.ah, %5
   %i.ak = shl i64 %i.aj, 2
   %i.al = or disjoint i64 %i.ak, 2
