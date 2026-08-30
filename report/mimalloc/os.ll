@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mimalloc/original/os?download=true
+inline.NumInlined: 93
+inline.NumDeleted: 27
 begin_hunk_0_@_mi_os_get_aligned_hint:bb.a
 bb.a:
   %i.a = load i64, ptr getelementptr inbounds nuw (i8, ptr @mi_os_mem_config, i64 16), align 8, !tbaa !20
@@ -200,16 +202,16 @@ bb.l:                                             ; preds = %_mi_os_good_alloc_s
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %_mi_os_good_alloc_size.exit
+  %.2 = phi i64 [ %spec.select, %bb.l ], [ %.0.a, %_mi_os_good_alloc_size.exit ] ; 5 uses
   %.121 = phi i64 [ %.020, %bb.l ], [ %i.v, %_mi_os_good_alloc_size.exit ]
   %.019 = phi ptr [ %i.w, %bb.l ], [ %1, %_mi_os_good_alloc_size.exit ] ; 5 uses
-  %.2 = phi i64 [ %spec.select, %bb.l ], [ %.0.a, %_mi_os_good_alloc_size.exit ] ; 5 uses
   %i.ac = icmp eq i32 %i.b, 4
   br i1 %i.ac, label %bb.n, label %bb.q
 
 bb.n:                                             ; preds = %bb.m
   %i.ad = icmp ne ptr %.019, null
   %i.ae = icmp ugt i64 %.2, 1073741823
-  %or.cond13.i = and i1 %i.ad, %i.ae
+  %or.cond13.i = and i1 %i.ae, %i.ad
   br i1 %or.cond13.i, label %.lr.ph.i, label %mi_os_free_huge_os_pages.exit
 
 .lr.ph.i:                                         ; preds = %bb.n
@@ -612,9 +614,9 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   br label %mi_os_prim_free.exit116.i
 
 mi_os_prim_free.exit116.i:                        ; preds = %bb.ap, %bb.ak, %bb.aj, %bb.aa, %_mi_align_up_ptr.exit.i, %_mi_is_aligned.exit.i, %bb.p
-  %.289.i = phi ptr [ %i.am, %_mi_is_aligned.exit.i ], [ %i.bo, %bb.aa ], [ %i.bx, %bb.ap ], [ %i.bx, %bb.aj ], [ %i.bo, %_mi_align_up_ptr.exit.i ], [ %i.bx, %bb.ak ], [ %i.am, %bb.p ]
+  %.289.i = phi ptr [ %i.am, %_mi_is_aligned.exit.i ], [ %.pr.i, %bb.aa ], [ %i.bx, %bb.ap ], [ %i.bx, %bb.aj ], [ %.pr.i, %_mi_align_up_ptr.exit.i ], [ %i.bx, %bb.ak ], [ %i.am, %bb.p ]
   %.285.i = phi i64 [ %.0.i.i, %_mi_is_aligned.exit.i ], [ %i.ay, %bb.aa ], [ %.0.i109.i, %bb.ap ], [ %.0.i109.i, %bb.aj ], [ %i.ay, %_mi_align_up_ptr.exit.i ], [ %.0.i109.i, %bb.ak ], [ %.0.i.i, %bb.p ]
-  %.282.i = phi ptr [ %i.am, %_mi_is_aligned.exit.i ], [ %.pr.i, %bb.aa ], [ %i.bx, %bb.ap ], [ %i.bx, %bb.aj ], [ %.pr.i, %_mi_align_up_ptr.exit.i ], [ %i.bx, %bb.ak ], [ %i.am, %bb.p ]
+  %.282.i = phi ptr [ %i.am, %_mi_is_aligned.exit.i ], [ %i.bo, %bb.aa ], [ %i.bx, %bb.ap ], [ %i.bx, %bb.aj ], [ %i.bo, %_mi_align_up_ptr.exit.i ], [ %i.bx, %bb.ak ], [ %i.am, %bb.p ]
   %i.cu = load i8, ptr %i.c, align 1, !tbaa !29, !range !12, !noundef !13
   %i.cv = load i8, ptr %i.b, align 1, !tbaa !29, !range !12, !noundef !13
   %.sroa.5.21.insert.insert.i = select i1 %3, i64 1099511627779, i64 3
@@ -624,7 +626,7 @@ mi_os_prim_free.exit116.i:                        ; preds = %bb.ap, %bb.ak, %bb.
   %.sroa.5.20.insert.ext.i = zext nneg i8 %i.cv to i64
   %.sroa.5.20.insert.shift.i = shl nuw nsw i64 %.sroa.5.20.insert.ext.i, 32
   %.sroa.5.20.insert.insert.i = or disjoint i64 %.sroa.5.22.insert.insert.i, %.sroa.5.20.insert.shift.i
-  store ptr %.282.i, ptr %5, align 8
+  store ptr %.289.i, ptr %5, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 %.285.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !26
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 16
@@ -632,7 +634,7 @@ mi_os_prim_free.exit116.i:                        ; preds = %bb.ap, %bb.ak, %bb.
   br label %.critedge105.i
 
 .critedge105.i:                                   ; preds = %mi_os_prim_free.exit116.i, %bb.ac, %bb.ab, %mi_os_prim_alloc.exit.i, %mi_os_prim_alloc.exit.thread118.i, %bb.w, %bb.u
-  %.1.i = phi ptr [ %.289.i, %mi_os_prim_free.exit116.i ], [ null, %bb.u ], [ null, %bb.ab ], [ null, %bb.ac ], [ null, %mi_os_prim_alloc.exit.i ], [ null, %mi_os_prim_alloc.exit.thread118.i ], [ null, %bb.w ]
+  %.1.i = phi ptr [ %.282.i, %mi_os_prim_free.exit116.i ], [ null, %bb.u ], [ null, %bb.ab ], [ null, %bb.ac ], [ null, %mi_os_prim_alloc.exit.i ], [ null, %mi_os_prim_alloc.exit.thread118.i ], [ null, %bb.w ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   br label %mi_os_prim_alloc_aligned.exit
@@ -1035,18 +1037,18 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.w, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %mi_os_prim_free.exit.us
-  %.057105.us = phi i64 [ %i.ae, %mi_os_prim_free.exit.us ], [ 0, %.lr.ph ] ; 4 uses
-  %.059104.us = phi i8 [ %spec.select.us, %mi_os_prim_free.exit.us ], [ 1, %.lr.ph ]
+  %.054105.us = phi i8 [ %spec.select.us, %mi_os_prim_free.exit.us ], [ 1, %.lr.ph ]
+  %.056104.us = phi i64 [ %i.ae, %mi_os_prim_free.exit.us ], [ 0, %.lr.ph ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   store i8 0, ptr %i.a, align 1, !tbaa !29
-  %i.y = shl i64 %.057105.us, 30
+  %i.y = shl nuw i64 %.056104.us, 30
   %i.z = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.y ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   store ptr null, ptr %i.b, align 8, !tbaa !30
   %i.aa = call i32 @_mi_prim_alloc_huge_os_pages(ptr noundef nonnull %i.z, i64 noundef 1073741824, i32 noundef %2, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #9 ; 2 uses
   %i.ab = load i8, ptr %i.a, align 1, !tbaa !29, !range !12, !noundef !13
   %i.ac = trunc nuw i8 %i.ab to i1
-  %spec.select.us = select i1 %i.ac, i8 %.059104.us, i8 0 ; 5 uses
+  %spec.select.us = select i1 %i.ac, i8 %.054105.us, i8 0 ; 5 uses
   %.not74.us = icmp eq i32 %i.aa, 0
   br i1 %.not74.us, label %bb.l, label %.split.us
 
@@ -1056,7 +1058,7 @@ bb.l:                                             ; preds = %.lr.ph.split.us
   br i1 %.not75.us, label %bb.m, label %.split111.us
 
 bb.m:                                             ; preds = %bb.l
-  %i.ae = add nuw i64 %.057105.us, 1              ; 5 uses
+  %i.ae = add nuw i64 %.056104.us, 1              ; 5 uses
   call void @__mi_stat_increase_mt(ptr noundef nonnull %i.u, i64 noundef 1073741824) #9
   call void @__mi_stat_increase_mt(ptr noundef nonnull %i.v, i64 noundef 1073741824) #9
   %i.af = call i64 @_mi_clock_end(i64 noundef %i.t) #9 ; 2 uses
@@ -1074,18 +1076,18 @@ mi_os_prim_free.exit.us:                          ; preds = %bb.m
   br i1 %exitcond155.not, label %.loopexit, label %.lr.ph.split.us
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %mi_os_prim_free.exit
-  %.057105 = phi i64 [ %i.as, %mi_os_prim_free.exit ], [ 0, %.lr.ph ] ; 4 uses
-  %.059104 = phi i8 [ %spec.select, %mi_os_prim_free.exit ], [ 1, %.lr.ph ]
+  %.054105 = phi i8 [ %spec.select, %mi_os_prim_free.exit ], [ 1, %.lr.ph ]
+  %.056104 = phi i64 [ %i.as, %mi_os_prim_free.exit ], [ 0, %.lr.ph ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   store i8 0, ptr %i.a, align 1, !tbaa !29
-  %i.aj = shl i64 %.057105, 30
+  %i.aj = shl nuw i64 %.056104, 30
   %i.ak = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.aj ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   store ptr null, ptr %i.b, align 8, !tbaa !30
   %i.al = call i32 @_mi_prim_alloc_huge_os_pages(ptr noundef nonnull %i.ak, i64 noundef 1073741824, i32 noundef %2, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #9 ; 2 uses
   %i.am = load i8, ptr %i.a, align 1, !tbaa !29, !range !12, !noundef !13
   %i.an = trunc nuw i8 %i.am to i1
-  %spec.select = select i1 %i.an, i8 %.059104, i8 0 ; 4 uses
+  %spec.select = select i1 %i.an, i8 %.054105, i8 0 ; 4 uses
   %.not74 = icmp eq i32 %i.al, 0
   br i1 %.not74, label %bb.n, label %.split.us
 
@@ -1093,7 +1095,7 @@ mi_os_prim_free.exit.us:                          ; preds = %bb.m
   %.us-phi = phi ptr [ %i.z, %.lr.ph.split.us ], [ %i.ak, %.lr.ph.split ]
   %.us-phi107 = phi i32 [ %i.aa, %.lr.ph.split.us ], [ %i.al, %.lr.ph.split ] ; 2 uses
   %.us-phi108 = phi i8 [ %spec.select.us, %.lr.ph.split.us ], [ %spec.select, %.lr.ph.split ]
-  %.us-phi109 = phi i64 [ %.057105.us, %.lr.ph.split.us ], [ %.057105, %.lr.ph.split ]
+  %.us-phi109 = phi i64 [ %.056104.us, %.lr.ph.split.us ], [ %.056104, %.lr.ph.split ]
   call void (ptr, ...) @_mi_warning_message(ptr noundef nonnull @.str.3, i32 noundef %.us-phi107, i32 noundef %.us-phi107, ptr noundef nonnull %.us-phi, i64 noundef 1073741824) #9
   br label %mi_os_prim_free.exit.thread
 
@@ -1106,7 +1108,7 @@ bb.n:                                             ; preds = %.lr.ph.split
   %.us-phi112 = phi ptr [ %i.ad, %bb.l ], [ %i.ao, %bb.n ]
   %.us-phi113 = phi ptr [ %i.z, %bb.l ], [ %i.ak, %bb.n ]
   %.us-phi114 = phi i8 [ %spec.select.us, %bb.l ], [ %spec.select, %bb.n ] ; 3 uses
-  %.us-phi115 = phi i64 [ %.057105.us, %bb.l ], [ %.057105, %bb.n ] ; 4 uses
+  %.us-phi115 = phi i64 [ %.056104.us, %bb.l ], [ %.056104, %bb.n ] ; 4 uses
   %.not78 = icmp eq ptr %.us-phi112, null
   br i1 %.not78, label %mi_os_prim_free.exit.thread, label %bb.o
 
@@ -1131,7 +1133,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br label %mi_os_prim_free.exit.thread
 
 mi_os_prim_free.exit:                             ; preds = %bb.n
-  %i.as = add nuw i64 %.057105, 1                 ; 2 uses
+  %i.as = add nuw i64 %.056104, 1                 ; 2 uses
   call void @__mi_stat_increase_mt(ptr noundef nonnull %i.u, i64 noundef 1073741824) #9
   call void @__mi_stat_increase_mt(ptr noundef nonnull %i.v, i64 noundef 1073741824) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
@@ -1151,13 +1153,13 @@ mi_os_prim_free.exit.thread:                      ; preds = %.split.us, %.thread
   br label %.loopexit
 
 .loopexit:                                        ; preds = %mi_os_prim_free.exit, %mi_os_prim_free.exit.us, %bb.k, %mi_os_prim_free.exit.thread
-  %.261 = phi i8 [ %spec.select95, %mi_os_prim_free.exit.thread ], [ 1, %bb.k ], [ %spec.select.us, %mi_os_prim_free.exit.us ], [ %spec.select, %mi_os_prim_free.exit ]
-  %.2 = phi i64 [ %.158.ph, %mi_os_prim_free.exit.thread ], [ 0, %bb.k ], [ %1, %mi_os_prim_free.exit.us ], [ %1, %mi_os_prim_free.exit ] ; 3 uses
-  %i.at = shl i64 %.2, 30                         ; 2 uses
+  %.258 = phi i64 [ %.158.ph, %mi_os_prim_free.exit.thread ], [ 0, %bb.k ], [ %1, %mi_os_prim_free.exit.us ], [ %1, %mi_os_prim_free.exit ] ; 3 uses
+  %.2 = phi i8 [ %spec.select95, %mi_os_prim_free.exit.thread ], [ 1, %bb.k ], [ %spec.select.us, %mi_os_prim_free.exit.us ], [ %spec.select, %mi_os_prim_free.exit ]
+  %i.at = shl i64 %.258, 30                       ; 2 uses
   br i1 %.not73, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %.loopexit
-  store i64 %.2, ptr %4, align 8, !tbaa !32
+  store i64 %.258, ptr %4, align 8, !tbaa !32
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %.loopexit
@@ -1168,11 +1170,11 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  %.not79 = icmp eq i64 %.2, 0
+  %.not79 = icmp eq i64 %.258, 0
   br i1 %.not79, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %.sroa.5.22.insert.ext = zext nneg i8 %.261 to i64
+  %.sroa.5.22.insert.ext = zext nneg i8 %.2 to i64
   %.sroa.5.22.insert.shift = shl nuw nsw i64 %.sroa.5.22.insert.ext, 48
   %.sroa.5.20.insert.insert = or disjoint i64 %.sroa.5.22.insert.shift, 1103806595075
   store ptr %i.s, ptr %6, align 8

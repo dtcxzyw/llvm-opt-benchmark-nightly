@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/msdfgen/original/msdfgen?download=true
+inline.NumInlined: 555
+inline.NumDeleted: 149
 begin_hunk_0
 %"struct.msdfgen::ErrorCorrectionConfig" = type { i32, i32, double, double, ptr }
 %struct.anon = type { %"class.msdfgen::SignedDistance", ptr, double }
@@ -200,19 +202,19 @@ _ZN7msdfgen19ShapeDistanceFinderINS_26OverlappingContourCombinerINS_20TrueDistan
 .lr.ph39.split:                                   ; preds = %.lr.ph39, %._crit_edge
   %i.ay = phi i32 [ %i.bi, %._crit_edge ], [ %i.w, %.lr.ph39 ]
   %i.az = phi i32 [ %i.bj, %._crit_edge ], [ %i.ac, %.lr.ph39 ] ; 3 uses
-  %.038 = phi i32 [ %i.bk, %._crit_edge ], [ 1, %.lr.ph39 ] ; 3 uses
-  %.02237 = phi i32 [ %i.bl, %._crit_edge ], [ 0, %.lr.ph39 ] ; 3 uses
+  %.038 = phi i32 [ %i.bl, %._crit_edge ], [ 0, %.lr.ph39 ] ; 3 uses
+  %.02237 = phi i32 [ %i.bk, %._crit_edge ], [ 1, %.lr.ph39 ] ; 3 uses
   %i.ba = icmp sgt i32 %i.az, 0
   br i1 %i.ba, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph39.split
-  %i.bb = icmp slt i32 %.038, 0
+  %i.bb = icmp slt i32 %.02237, 0
   %i.bc = add nsw i32 %i.az, -1
   %i.bd = select i1 %i.bb, i32 %i.bc, i32 0
-  %i.be = uitofp nneg i32 %.02237 to double
+  %i.be = uitofp nneg i32 %.038 to double
   %i.bf = fadd double %i.be, 5.000000e-01
   %i.bg = zext nneg i32 %i.bd to i64
-  %i.bh = sext i32 %.038 to i64
+  %i.bh = sext i32 %.02237 to i64
   br label %bb.j
 
 ._crit_edge.loopexit:                             ; preds = %bb.m
@@ -222,8 +224,8 @@ _ZN7msdfgen19ShapeDistanceFinderINS_26OverlappingContourCombinerINS_20TrueDistan
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph39.split
   %i.bi = phi i32 [ %.pre, %._crit_edge.loopexit ], [ %i.ay, %.lr.ph39.split ] ; 2 uses
   %i.bj = phi i32 [ %i.dp, %._crit_edge.loopexit ], [ %i.az, %.lr.ph39.split ]
-  %i.bk = sub nsw i32 0, %.038
-  %i.bl = add nuw nsw i32 %.02237, 1              ; 2 uses
+  %i.bk = sub nsw i32 0, %.02237
+  %i.bl = add nuw nsw i32 %.038, 1                ; 2 uses
   %i.bm = icmp slt i32 %i.bl, %i.bi
   br i1 %i.bm, label %.lr.ph39.split, label %._crit_edge40, !llvm.loop !38
 
@@ -344,7 +346,7 @@ _ZN7msdfgen19ShapeDistanceFinderINS_26OverlappingContourCombinerINS_20TrueDistan
           to label %bb.m unwind label %.loopexit.split-lp.loopexit.split-lp
 
 bb.m:                                             ; preds = %_ZN7msdfgen19ShapeDistanceFinderINS_26OverlappingContourCombinerINS_20TrueDistanceSelectorEEEE8distanceERKNS_7Vector2E.exit
-  %i.dj = mul nsw i32 %i.dh, %.02237
+  %i.dj = mul nsw i32 %i.dh, %.038
   %i.dk = sext i32 %i.dj to i64
   %i.dl = getelementptr inbounds [4 x i8], ptr %i.dg, i64 %i.dk
   %i.dm = getelementptr inbounds [4 x i8], ptr %i.dl, i64 %indvars.iv
@@ -476,19 +478,19 @@ _ZN7msdfgen19ShapeDistanceFinderINS_21SimpleContourCombinerINS_20TrueDistanceSel
 .lr.ph41.split:                                   ; preds = %.lr.ph41, %._crit_edge
   %i.ai = phi i32 [ %i.as, %._crit_edge ], [ %i.p, %.lr.ph41 ]
   %i.aj = phi i32 [ %i.at, %._crit_edge ], [ %i.aa, %.lr.ph41 ] ; 3 uses
-  %.040 = phi i32 [ %i.au, %._crit_edge ], [ 1, %.lr.ph41 ] ; 3 uses
-  %.02239 = phi i32 [ %i.av, %._crit_edge ], [ 0, %.lr.ph41 ] ; 3 uses
+  %.040 = phi i32 [ %i.av, %._crit_edge ], [ 0, %.lr.ph41 ] ; 3 uses
+  %.02239 = phi i32 [ %i.au, %._crit_edge ], [ 1, %.lr.ph41 ] ; 3 uses
   %i.ak = icmp sgt i32 %i.aj, 0
   br i1 %i.ak, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph41.split
-  %i.al = icmp slt i32 %.040, 0
+  %i.al = icmp slt i32 %.02239, 0
   %i.am = add nsw i32 %i.aj, -1
   %i.an = select i1 %i.al, i32 %i.am, i32 0
-  %i.ao = uitofp nneg i32 %.02239 to double
+  %i.ao = uitofp nneg i32 %.040 to double
   %i.ap = fadd double %i.ao, 5.000000e-01
   %i.aq = zext nneg i32 %i.an to i64
-  %i.ar = sext i32 %.040 to i64
+  %i.ar = sext i32 %.02239 to i64
   br label %bb.d
 
 ._crit_edge.loopexit:                             ; preds = %bb.g
@@ -498,8 +500,8 @@ _ZN7msdfgen19ShapeDistanceFinderINS_21SimpleContourCombinerINS_20TrueDistanceSel
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph41.split
   %i.as = phi i32 [ %.pre45, %._crit_edge.loopexit ], [ %i.ai, %.lr.ph41.split ] ; 2 uses
   %i.at = phi i32 [ %i.cz, %._crit_edge.loopexit ], [ %i.aj, %.lr.ph41.split ]
-  %i.au = sub nsw i32 0, %.040
-  %i.av = add nuw nsw i32 %.02239, 1              ; 2 uses
+  %i.au = sub nsw i32 0, %.02239
+  %i.av = add nuw nsw i32 %.040, 1                ; 2 uses
   %i.aw = icmp slt i32 %i.av, %i.as
   br i1 %i.aw, label %.lr.ph41.split, label %._crit_edge42, !llvm.loop !69
 
@@ -620,7 +622,7 @@ _ZN7msdfgen19ShapeDistanceFinderINS_21SimpleContourCombinerINS_20TrueDistanceSel
           to label %bb.g unwind label %.loopexit.split-lp.loopexit.split-lp
 
 bb.g:                                             ; preds = %_ZN7msdfgen19ShapeDistanceFinderINS_21SimpleContourCombinerINS_20TrueDistanceSelectorEEEE8distanceERKNS_7Vector2E.exit
-  %i.ct = mul nsw i32 %i.cr, %.02239
+  %i.ct = mul nsw i32 %i.cr, %.040
   %i.cu = sext i32 %i.ct to i64
   %i.cv = getelementptr inbounds [4 x i8], ptr %i.cq, i64 %i.cu
   %i.cw = getelementptr inbounds [4 x i8], ptr %i.cv, i64 %indvars.iv
@@ -832,19 +834,19 @@ _ZN7msdfgen19ShapeDistanceFinderINS_26OverlappingContourCombinerINS_29Perpendicu
 .lr.ph39.split:                                   ; preds = %.lr.ph39, %._crit_edge
   %i.ay = phi i32 [ %i.bi, %._crit_edge ], [ %i.w, %.lr.ph39 ]
   %i.az = phi i32 [ %i.bj, %._crit_edge ], [ %i.ac, %.lr.ph39 ] ; 3 uses
-  %.038 = phi i32 [ %i.bk, %._crit_edge ], [ 1, %.lr.ph39 ] ; 3 uses
-  %.02237 = phi i32 [ %i.bl, %._crit_edge ], [ 0, %.lr.ph39 ] ; 3 uses
+  %.038 = phi i32 [ %i.bl, %._crit_edge ], [ 0, %.lr.ph39 ] ; 3 uses
+  %.02237 = phi i32 [ %i.bk, %._crit_edge ], [ 1, %.lr.ph39 ] ; 3 uses
   %i.ba = icmp sgt i32 %i.az, 0
   br i1 %i.ba, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph39.split
-  %i.bb = icmp slt i32 %.038, 0
+  %i.bb = icmp slt i32 %.02237, 0
   %i.bc = add nsw i32 %i.az, -1
   %i.bd = select i1 %i.bb, i32 %i.bc, i32 0
-  %i.be = uitofp nneg i32 %.02237 to double
+  %i.be = uitofp nneg i32 %.038 to double
   %i.bf = fadd double %i.be, 5.000000e-01
   %i.bg = zext nneg i32 %i.bd to i64
-  %i.bh = sext i32 %.038 to i64
+  %i.bh = sext i32 %.02237 to i64
   br label %bb.j
 
 ._crit_edge.loopexit:                             ; preds = %bb.m
@@ -854,8 +856,8 @@ _ZN7msdfgen19ShapeDistanceFinderINS_26OverlappingContourCombinerINS_29Perpendicu
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph39.split
   %i.bi = phi i32 [ %.pre, %._crit_edge.loopexit ], [ %i.ay, %.lr.ph39.split ] ; 2 uses
   %i.bj = phi i32 [ %i.dp, %._crit_edge.loopexit ], [ %i.az, %.lr.ph39.split ]
-  %i.bk = sub nsw i32 0, %.038
-  %i.bl = add nuw nsw i32 %.02237, 1              ; 2 uses
+  %i.bk = sub nsw i32 0, %.02237
+  %i.bl = add nuw nsw i32 %.038, 1                ; 2 uses
   %i.bm = icmp slt i32 %i.bl, %i.bi
   br i1 %i.bm, label %.lr.ph39.split, label %._crit_edge40, !llvm.loop !86
 
@@ -976,7 +978,7 @@ _ZN7msdfgen19ShapeDistanceFinderINS_26OverlappingContourCombinerINS_29Perpendicu
           to label %bb.m unwind label %.loopexit.split-lp.loopexit.split-lp
 
 bb.m:                                             ; preds = %_ZN7msdfgen19ShapeDistanceFinderINS_26OverlappingContourCombinerINS_29PerpendicularDistanceSelectorEEEE8distanceERKNS_7Vector2E.exit
-  %i.dj = mul nsw i32 %i.dh, %.02237
+  %i.dj = mul nsw i32 %i.dh, %.038
   %i.dk = sext i32 %i.dj to i64
   %i.dl = getelementptr inbounds [4 x i8], ptr %i.dg, i64 %i.dk
   %i.dm = getelementptr inbounds [4 x i8], ptr %i.dl, i64 %indvars.iv
@@ -1105,19 +1107,19 @@ _ZN7msdfgen19ShapeDistanceFinderINS_21SimpleContourCombinerINS_29PerpendicularDi
 .lr.ph41.split:                                   ; preds = %.lr.ph41, %._crit_edge
   %i.ai = phi i32 [ %i.as, %._crit_edge ], [ %i.p, %.lr.ph41 ]
   %i.aj = phi i32 [ %i.at, %._crit_edge ], [ %i.aa, %.lr.ph41 ] ; 3 uses
-  %.040 = phi i32 [ %i.au, %._crit_edge ], [ 1, %.lr.ph41 ] ; 3 uses
-  %.02239 = phi i32 [ %i.av, %._crit_edge ], [ 0, %.lr.ph41 ] ; 3 uses
+  %.040 = phi i32 [ %i.av, %._crit_edge ], [ 0, %.lr.ph41 ] ; 3 uses
+  %.02239 = phi i32 [ %i.au, %._crit_edge ], [ 1, %.lr.ph41 ] ; 3 uses
   %i.ak = icmp sgt i32 %i.aj, 0
   br i1 %i.ak, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph41.split
-  %i.al = icmp slt i32 %.040, 0
+  %i.al = icmp slt i32 %.02239, 0
   %i.am = add nsw i32 %i.aj, -1
   %i.an = select i1 %i.al, i32 %i.am, i32 0
-  %i.ao = uitofp nneg i32 %.02239 to double
+  %i.ao = uitofp nneg i32 %.040 to double
   %i.ap = fadd double %i.ao, 5.000000e-01
   %i.aq = zext nneg i32 %i.an to i64
-  %i.ar = sext i32 %.040 to i64
+  %i.ar = sext i32 %.02239 to i64
   br label %bb.d
 
 ._crit_edge.loopexit:                             ; preds = %bb.g
@@ -1127,8 +1129,8 @@ _ZN7msdfgen19ShapeDistanceFinderINS_21SimpleContourCombinerINS_29PerpendicularDi
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.lr.ph41.split
   %i.as = phi i32 [ %.pre45, %._crit_edge.loopexit ], [ %i.ai, %.lr.ph41.split ] ; 2 uses
   %i.at = phi i32 [ %i.cz, %._crit_edge.loopexit ], [ %i.aj, %.lr.ph41.split ]
-  %i.au = sub nsw i32 0, %.040
-  %i.av = add nuw nsw i32 %.02239, 1              ; 2 uses
+  %i.au = sub nsw i32 0, %.02239
+  %i.av = add nuw nsw i32 %.040, 1                ; 2 uses
   %i.aw = icmp slt i32 %i.av, %i.as
   br i1 %i.aw, label %.lr.ph41.split, label %._crit_edge42, !llvm.loop !99
 
@@ -1249,7 +1251,7 @@ _ZN7msdfgen19ShapeDistanceFinderINS_21SimpleContourCombinerINS_29PerpendicularDi
           to label %bb.g unwind label %.loopexit.split-lp.loopexit.split-lp
 
 bb.g:                                             ; preds = %_ZN7msdfgen19ShapeDistanceFinderINS_21SimpleContourCombinerINS_29PerpendicularDistanceSelectorEEEE8distanceERKNS_7Vector2E.exit
-  %i.ct = mul nsw i32 %i.cr, %.02239
+  %i.ct = mul nsw i32 %i.cr, %.040
   %i.cu = sext i32 %i.ct to i64
   %i.cv = getelementptr inbounds [4 x i8], ptr %i.cq, i64 %i.cu
   %i.cw = getelementptr inbounds [4 x i8], ptr %i.cv, i64 %indvars.iv

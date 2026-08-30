@@ -1,4 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/JXRGlue?download=true
+inline.NumInlined: 21
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -148,7 +151,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = urem i64 %i.e, %2
-  %i.g = sub i64 %2, %i.f                         ; 2 uses
+  %i.g = sub nuw i64 %2, %i.f                     ; 2 uses
   %i.h = icmp ult i64 %i.g, 8
   %i.i = select i1 %i.h, i64 %2, i64 0
   %i.j = getelementptr i8, ptr %i.c, i64 %i.g

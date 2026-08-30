@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mimalloc/original/libc?download=true
+inline.NumInlined: 33
+inline.NumDeleted: 9
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_mi_atomic_once_release:bb.a
   store atomic i64 1, ptr %0 release, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -200,46 +205,46 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.i, %bb.k
-  %.0224 = phi i8 [ %i.x, %bb.k ], [ 0, %bb.i ]   ; 7 uses
+  %.1231 = phi ptr [ %i.ac, %bb.k ], [ %i.z, %bb.i ] ; 3 uses
   %.0214.a = phi i8 [ %i.aa, %bb.k ], [ %i.x, %bb.i ] ; 2 uses
-  %.1212 = phi ptr [ %i.ac, %bb.k ], [ %i.z, %bb.i ] ; 3 uses
+  %.0214 = phi i8 [ %i.x, %bb.k ], [ 0, %bb.i ]   ; 7 uses
   %.not269 = icmp eq i8 %.0214.a, 45              ; 3 uses
   br i1 %.not269, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
-  %i.ad = load i8, ptr %.1212, align 1, !tbaa !8  ; 2 uses
+  %i.ad = load i8, ptr %.1231, align 1, !tbaa !8  ; 2 uses
   %i.ae = icmp eq i8 %i.ad, 0
   br i1 %i.ae, label %mi_out_alignright.exit.thread365, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.af = getelementptr inbounds nuw i8, ptr %.1212, i64 1
+  %i.af = getelementptr inbounds nuw i8, ptr %.1231, i64 1
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.l
-  %.1215 = phi i8 [ %i.ad, %bb.n ], [ %.0214.a, %bb.l ] ; 2 uses
-  %.2 = phi ptr [ %i.af, %bb.n ], [ %.1212, %bb.l ] ; 3 uses
-  %i.ag = icmp eq i8 %.1215, 48
+  %.2232 = phi ptr [ %i.af, %bb.n ], [ %.1231, %bb.l ] ; 3 uses
+  %.1224 = phi i8 [ %i.ad, %bb.n ], [ %.0214.a, %bb.l ] ; 2 uses
+  %i.ag = icmp eq i8 %.1224, 48
   br i1 %i.ag, label %bb.p, label %bb.r
 
 bb.p:                                             ; preds = %bb.o
-  %i.ah = load i8, ptr %.2, align 1, !tbaa !8     ; 2 uses
+  %i.ah = load i8, ptr %.2232, align 1, !tbaa !8  ; 2 uses
   %i.ai = icmp eq i8 %i.ah, 0
   br i1 %i.ai, label %mi_out_alignright.exit.thread365, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.aj = getelementptr inbounds nuw i8, ptr %.2, i64 1
+  %i.aj = getelementptr inbounds nuw i8, ptr %.2232, i64 1
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.o
-  %.0234 = phi i8 [ 48, %bb.q ], [ 32, %bb.o ]    ; 13 uses
-  %.2216 = phi i8 [ %i.ah, %bb.q ], [ %.1215, %bb.o ] ; 3 uses
-  %.3 = phi ptr [ %i.aj, %bb.q ], [ %.2, %bb.o ]  ; 3 uses
+  %.3233 = phi ptr [ %i.aj, %bb.q ], [ %.2232, %bb.o ] ; 3 uses
+  %.2216 = phi i8 [ %i.ah, %bb.q ], [ %.1224, %bb.o ] ; 3 uses
+  %.0218 = phi i8 [ 48, %bb.q ], [ 32, %bb.o ]    ; 13 uses
   %i.ak = add i8 %.2216, -49
   %or.cond24 = icmp ult i8 %i.ak, 9
   br i1 %or.cond24, label %bb.s, label %.loopexit
 
 bb.s:                                             ; preds = %bb.r
-  %i.al = load i8, ptr %.3, align 1, !tbaa !8     ; 2 uses
+  %i.al = load i8, ptr %.3233, align 1, !tbaa !8  ; 2 uses
   %i.am = icmp eq i8 %i.al, 0
   br i1 %i.am, label %mi_out_alignright.exit.thread365, label %bb.t
 
@@ -249,28 +254,28 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.v, %bb.t
-  %.0226 = phi i64 [ %i.ao, %bb.t ], [ %.1227, %bb.v ] ; 4 uses
+  %.3233.pn = phi ptr [ %.3233, %bb.t ], [ %.4.a, %bb.v ]
   %.3217 = phi i8 [ %i.al, %bb.t ], [ %i.av, %bb.v ] ; 2 uses
-  %.3.pn = phi ptr [ %.3, %bb.t ], [ %.4.a, %bb.v ]
-  %.4.a = getelementptr inbounds nuw i8, ptr %.3.pn, i64 1 ; 3 uses
+  %.0216 = phi i64 [ %i.ao, %bb.t ], [ %.1227, %bb.v ] ; 4 uses
+  %.4.a = getelementptr inbounds nuw i8, ptr %.3233.pn, i64 1 ; 3 uses
   %i.ap = add i8 %.3217, -48                      ; 2 uses
   %i.aq = icmp ult i8 %i.ap, 10
   br i1 %i.aq, label %bb.v, label %.loopexit
 
 bb.v:                                             ; preds = %bb.u
-  %i.ar = icmp ult i64 %.0226, 18014398509481983
-  %i.as = mul nuw nsw i64 %.0226, 10
+  %i.ar = icmp ult i64 %.0216, 18014398509481983
+  %i.as = mul nuw nsw i64 %.0216, 10
   %i.at = zext nneg i8 %i.ap to i64
   %i.au = add nuw nsw i64 %i.as, %i.at
-  %.1227 = select i1 %i.ar, i64 %i.au, i64 %.0226
+  %.1227 = select i1 %i.ar, i64 %i.au, i64 %.0216
   %i.av = load i8, ptr %.4.a, align 1, !tbaa !8   ; 2 uses
   %i.aw = icmp eq i8 %i.av, 0
   br i1 %i.aw, label %mi_out_alignright.exit.thread365, label %bb.u, !llvm.loop !24
 
 .loopexit:                                        ; preds = %bb.u, %bb.r
-  %.3229 = phi i64 [ 0, %bb.r ], [ %.0226, %bb.u ] ; 16 uses
+  %.5235 = phi ptr [ %.3233, %bb.r ], [ %.4.a, %bb.u ] ; 6 uses
   %.5219 = phi i8 [ %.2216, %bb.r ], [ %.3217, %bb.u ] ; 4 uses
-  %.5 = phi ptr [ %.3, %bb.r ], [ %.4.a, %bb.u ]  ; 6 uses
+  %.3 = phi i64 [ 0, %bb.r ], [ %.0216, %bb.u ]   ; 16 uses
   %i.ax = add i8 %.5219, -76                      ; 2 uses
   %i.ay = tail call i8 @llvm.fshl.i8(i8 %i.ax, i8 %i.ax, i8 7)
   switch i8 %i.ay, label %bb.ac [
@@ -281,21 +286,21 @@ bb.v:                                             ; preds = %bb.u
   ]
 
 bb.w:                                             ; preds = %.loopexit, %.loopexit, %.loopexit
-  %i.az = load i8, ptr %.5, align 1, !tbaa !8     ; 2 uses
+  %i.az = load i8, ptr %.5235, align 1, !tbaa !8  ; 2 uses
   %i.ba = icmp eq i8 %i.az, 0
   br i1 %i.ba, label %mi_out_alignright.exit.thread365, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.bb = getelementptr inbounds nuw i8, ptr %.5, i64 1
+  %i.bb = getelementptr inbounds nuw i8, ptr %.5235, i64 1
   br label %bb.ac
 
 bb.y:                                             ; preds = %.loopexit
-  %i.bc = load i8, ptr %.5, align 1, !tbaa !8     ; 3 uses
+  %i.bc = load i8, ptr %.5235, align 1, !tbaa !8  ; 3 uses
   %i.bd = icmp eq i8 %i.bc, 0
   br i1 %i.bd, label %mi_out_alignright.exit.thread365, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.be = getelementptr inbounds nuw i8, ptr %.5, i64 1 ; 2 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %.5235, i64 1 ; 2 uses
   %i.bf = icmp eq i8 %i.bc, 108
   br i1 %i.bf, label %bb.aa, label %bb.ac
 
@@ -305,13 +310,13 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.bh, label %mi_out_alignright.exit.thread365, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.bi = getelementptr inbounds nuw i8, ptr %.5, i64 2
+  %i.bi = getelementptr inbounds nuw i8, ptr %.5235, i64 2
   br label %bb.ac
 
 bb.ac:                                            ; preds = %.loopexit, %bb.ab, %bb.z, %bb.x
-  %.0225 = phi i8 [ %.5219, %bb.x ], [ 76, %bb.ab ], [ %.5219, %bb.z ], [ 100, %.loopexit ] ; 2 uses
+  %.6236 = phi ptr [ %i.bb, %bb.x ], [ %i.bi, %bb.ab ], [ %i.be, %bb.z ], [ %.5235, %.loopexit ] ; 4 uses
   %.6220 = phi i8 [ %i.az, %bb.x ], [ %i.bg, %bb.ab ], [ %i.bc, %bb.z ], [ %.5219, %.loopexit ] ; 7 uses
-  %.6 = phi ptr [ %i.bb, %bb.x ], [ %i.bi, %bb.ab ], [ %i.be, %bb.z ], [ %.5, %.loopexit ] ; 4 uses
+  %.0215 = phi i8 [ %.5219, %bb.x ], [ 76, %bb.ab ], [ %.5219, %bb.z ], [ 100, %.loopexit ] ; 2 uses
   switch i8 %.6220, label %bb.ai [
     i8 37, label %mi_outc.exit286
     i8 115, label %bb.ad
@@ -377,7 +382,7 @@ bb.ai:                                            ; preds = %bb.ac
   ]
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ai
-  %i.cf = add i8 %.0225, -76                      ; 2 uses
+  %i.cf = add i8 %.0215, -76                      ; 2 uses
   %i.cg = tail call i8 @llvm.fshl.i8(i8 %i.cf, i8 %i.cf, i8 7)
   %i.ch = load i32, ptr %3, align 8               ; 11 uses
   %i.ci = icmp ult i32 %i.ch, 41                  ; 5 uses
@@ -534,12 +539,12 @@ bb.bg:                                            ; preds = %bb.be
 mi_outs.exit292:                                  ; preds = %.lr.ph.i289.1, %.lr.ph.i289
   %.lcssa466 = phi ptr [ %i.ei, %.lr.ph.i289 ], [ %i.ek, %.lr.ph.i289.1 ]
   %i.el = ptrtoint ptr %i.eh to i64
-  %i.em = tail call i64 @llvm.usub.sat.i64(i64 %.3229, i64 2)
+  %i.em = tail call i64 @llvm.usub.sat.i64(i64 %.3, i64 2)
   br label %bb.bh
 
 bb.bh:                                            ; preds = %mi_outs.exit292, %bb.an, %bb.av, %bb.bd, %bb.az, %bb.ar
   %.1343 = phi ptr [ %.0342378, %bb.bd ], [ %.0342378, %bb.an ], [ %.0342378, %bb.ar ], [ %.0342378, %bb.av ], [ %.0342378, %bb.az ], [ %.lcssa466, %mi_outs.exit292 ] ; 12 uses
-  %.4230 = phi i64 [ %.3229, %bb.bd ], [ %.3229, %bb.an ], [ %.3229, %bb.ar ], [ %.3229, %bb.av ], [ %.3229, %bb.az ], [ %i.em, %mi_outs.exit292 ] ; 2 uses
+  %.4230 = phi i64 [ %.3, %bb.bd ], [ %.3, %bb.an ], [ %.3, %bb.ar ], [ %.3, %bb.av ], [ %.3, %bb.az ], [ %i.em, %mi_outs.exit292 ] ; 2 uses
   %.0213 = phi i64 [ %i.dx, %bb.bd ], [ %i.cq, %bb.an ], [ %i.cy, %bb.ar ], [ %i.dg, %bb.av ], [ %i.do, %bb.az ], [ %i.el, %mi_outs.exit292 ] ; 4 uses
   %i.en = icmp eq i64 %.4230, 0
   br i1 %i.en, label %bb.bi, label %bb.bk
@@ -556,11 +561,11 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bi
   %i.eq = select i1 %i.ep, i64 12, i64 16
   %i.er = select i1 %i.eo, i64 8, i64 %i.eq
   %spec.store.select = select i1 %i.cd, i64 %i.er, i64 2
-  %spec.select274 = select i1 %.not269, i8 %.0234, i8 48
+  %spec.select274 = select i1 %.not269, i8 %.0218, i8 48
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj, %bb.bi, %bb.bh
-  %.1235 = phi i8 [ %.0234, %bb.bh ], [ %spec.select274, %bb.bj ], [ %.0234, %bb.bi ] ; 3 uses
+  %.1235 = phi i8 [ %.0218, %bb.bh ], [ %spec.select274, %bb.bj ], [ %.0218, %bb.bi ] ; 3 uses
   %.6232 = phi i64 [ %.4230, %bb.bh ], [ %spec.store.select, %bb.bj ], [ 0, %bb.bi ] ; 3 uses
   %i.es = or i1 %i.ce, %i.cd
   %i.et = select i1 %i.es, i64 16, i64 10         ; 3 uses
@@ -568,13 +573,13 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi, %bb.
   br i1 %i.eu, label %bb.bl, label %bb.bo
 
 bb.bl:                                            ; preds = %bb.bk
-  %.not35.i = icmp ne i8 %.0224, 0
+  %.not35.i = icmp ne i8 %.0214, 0
   %.not.i.i = icmp ult ptr %.1343, %i.g
   %or.cond.i = select i1 %.not35.i, i1 %.not.i.i, i1 false
   br i1 %or.cond.i, label %bb.bm, label %mi_outc.exit.i
 
 bb.bm:                                            ; preds = %bb.bl
-  store i8 %.0224, ptr %.1343, align 1, !tbaa !8
+  store i8 %.0214, ptr %.1343, align 1, !tbaa !8
   %i.ev = getelementptr inbounds nuw i8, ptr %.1343, i64 1
   br label %mi_outc.exit.i
 
@@ -617,13 +622,13 @@ bb.bq:                                            ; preds = %bb.bp
   br i1 %i.fi, label %.loopexit.i, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
-  %.not.i293 = icmp ne i8 %.0224, 0
+  %.not.i293 = icmp ne i8 %.0214, 0
   %.not.i38.i = icmp ult ptr %.1343, %i.g
   %or.cond59.i = select i1 %.not.i293, i1 %.not.i38.i, i1 false
   br i1 %or.cond59.i, label %bb.bs, label %mi_outc.exit39.i
 
 bb.bs:                                            ; preds = %bb.br
-  store i8 %.0224, ptr %.1343, align 1, !tbaa !8
+  store i8 %.0214, ptr %.1343, align 1, !tbaa !8
   %i.fj = getelementptr inbounds nuw i8, ptr %.1343, i64 1
   br label %mi_outc.exit39.i
 
@@ -737,7 +742,7 @@ mi_outc.exit41.i.3:                               ; preds = %bb.bx, %mi_outc.exi
   br label %mi_outs.exit
 
 bb.by:                                            ; preds = %bb.ai, %bb.ai
-  %i.gm = add i8 %.0225, -76                      ; 2 uses
+  %i.gm = add i8 %.0215, -76                      ; 2 uses
   %i.gn = tail call i8 @llvm.fshl.i8(i8 %i.gm, i8 %i.gm, i8 7)
   %i.go = load i32, ptr %3, align 8               ; 11 uses
   %i.gp = icmp ult i32 %i.go, 41                  ; 5 uses
@@ -873,11 +878,11 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %i.ih, label %bb.cv, label %bb.cy
 
 bb.cv:                                            ; preds = %bb.cu
-  %.not35.i310.not = icmp eq i8 %.0224, 0
+  %.not35.i310.not = icmp eq i8 %.0214, 0
   br i1 %.not35.i310.not, label %mi_outc.exit.i314, label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv
-  store i8 %.0224, ptr %.0342378, align 1, !tbaa !8
+  store i8 %.0214, ptr %.0342378, align 1, !tbaa !8
   %i.ii = getelementptr inbounds nuw i8, ptr %.0342378, i64 1
   br label %mi_outc.exit.i314
 
@@ -892,7 +897,7 @@ bb.cx:                                            ; preds = %mi_outc.exit.i314
   br label %mi_outs.exit
 
 bb.cy:                                            ; preds = %.thread353, %bb.cu
-  %.0209357 = phi i8 [ 45, %.thread353 ], [ %.0224, %bb.cu ] ; 2 uses
+  %.0209357 = phi i8 [ 45, %.thread353 ], [ %.0214, %bb.cu ] ; 2 uses
   %.1356 = phi i64 [ %i.ig, %.thread353 ], [ %.0210, %bb.cu ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   br label %bb.cz
@@ -1054,8 +1059,8 @@ bb.dj:                                            ; preds = %mi_outc.exit318
 
 mi_outs.exit:                                     ; preds = %.lr.ph.i, %bb.dj, %mi_outc.exit318, %.loopexit.i304, %bb.cx, %mi_outc.exit.i314, %.loopexit.i, %bb.bn, %mi_outc.exit.i, %bb.ag, %bb.ah, %bb.di, %mi_outc.exit286
   %.2344 = phi ptr [ %.21, %.loopexit.i304 ], [ %.0342378, %bb.di ], [ %i.jx, %mi_outc.exit318 ], [ %.15, %.loopexit.i ], [ %i.bj, %mi_outc.exit286 ], [ %.0342378, %bb.ag ], [ %.0342378, %bb.ah ], [ %i.ew, %bb.bn ], [ %.18, %mi_outc.exit.i ], [ %i.ij, %bb.cx ], [ %.24, %mi_outc.exit.i314 ], [ %i.jy, %bb.dj ], [ %i.by, %.lr.ph.i ]
-  %.2236 = phi i8 [ %.0234, %.loopexit.i304 ], [ %.0234, %bb.di ], [ %.0234, %mi_outc.exit318 ], [ %.1235, %.loopexit.i ], [ %.0234, %mi_outc.exit286 ], [ %.0234, %bb.ag ], [ %.0234, %bb.ah ], [ %.1235, %bb.bn ], [ %.1235, %mi_outc.exit.i ], [ %.0234, %bb.cx ], [ %.0234, %mi_outc.exit.i314 ], [ %.0234, %bb.dj ], [ %.0234, %.lr.ph.i ] ; 2 uses
-  %.7233 = phi i64 [ %.3229, %.loopexit.i304 ], [ %.3229, %bb.di ], [ %.3229, %mi_outc.exit318 ], [ %.6232, %.loopexit.i ], [ %.3229, %mi_outc.exit286 ], [ %.3229, %bb.ag ], [ %.3229, %bb.ah ], [ %.6232, %bb.bn ], [ %.6232, %mi_outc.exit.i ], [ %.3229, %bb.cx ], [ %.3229, %mi_outc.exit.i314 ], [ %.3229, %bb.dj ], [ %.3229, %.lr.ph.i ] ; 7 uses
+  %.2236 = phi i8 [ %.0218, %.loopexit.i304 ], [ %.0218, %bb.di ], [ %.0218, %mi_outc.exit318 ], [ %.1235, %.loopexit.i ], [ %.0218, %mi_outc.exit286 ], [ %.0218, %bb.ag ], [ %.0218, %bb.ah ], [ %.1235, %bb.bn ], [ %.1235, %mi_outc.exit.i ], [ %.0218, %bb.cx ], [ %.0218, %mi_outc.exit.i314 ], [ %.0218, %bb.dj ], [ %.0218, %.lr.ph.i ] ; 2 uses
+  %.7233 = phi i64 [ %.3, %.loopexit.i304 ], [ %.3, %bb.di ], [ %.3, %mi_outc.exit318 ], [ %.6232, %.loopexit.i ], [ %.3, %mi_outc.exit286 ], [ %.3, %bb.ag ], [ %.3, %bb.ah ], [ %.6232, %bb.bn ], [ %.6232, %mi_outc.exit.i ], [ %.3, %bb.cx ], [ %.3, %mi_outc.exit.i314 ], [ %.3, %bb.dj ], [ %.3, %.lr.ph.i ] ; 7 uses
   %.1222 = phi ptr [ %.0342378, %.loopexit.i304 ], [ %.0342378, %bb.di ], [ %.0342378, %mi_outc.exit318 ], [ %.1343, %.loopexit.i ], [ %.0342378, %mi_outc.exit286 ], [ %.0342378, %bb.ag ], [ %.0342378, %bb.ah ], [ %.1343, %bb.bn ], [ %.1343, %mi_outc.exit.i ], [ %.0342378, %bb.cx ], [ %.0342378, %mi_outc.exit.i314 ], [ %.0342378, %bb.dj ], [ %.0342378, %.lr.ph.i ] ; 10 uses
   %.fr.i = freeze ptr %.2344                      ; 7 uses
   %i.jz = ptrtoint ptr %.fr.i to i64              ; 3 uses
@@ -1186,7 +1191,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 mi_out_alignright.exit:                           ; preds = %mi_out_fill.exit, %mi_outs.exit, %bb.dl, %.preheader.preheader.i, %mi_outc.exit284, %mi_outc.exit, %mi_outc.exit276, %mi_outc.exit278, %mi_outc.exit280, %mi_outc.exit282, %bb.f, %switch.early.test
   %.4346 = phi ptr [ %.09.lcssa.i, %mi_out_fill.exit ], [ %i.w, %mi_outc.exit284 ], [ %.0342378, %switch.early.test ], [ %.09.lcssa.i, %.preheader.preheader.i ], [ %i.u, %mi_outc.exit282 ], [ %.fr.i, %mi_outs.exit ], [ %.0342378, %bb.f ], [ %i.q, %mi_outc.exit ], [ %i.r, %mi_outc.exit276 ], [ %i.s, %mi_outc.exit278 ], [ %i.t, %mi_outc.exit280 ], [ %.09.lcssa.i, %bb.dl ] ; 3 uses
-  %.9 = phi ptr [ %.6, %mi_out_fill.exit ], [ %i.m, %mi_outc.exit284 ], [ %i.m, %switch.early.test ], [ %.6, %.preheader.preheader.i ], [ %i.p, %mi_outc.exit282 ], [ %.6, %mi_outs.exit ], [ %i.p, %bb.f ], [ %i.p, %mi_outc.exit ], [ %i.p, %mi_outc.exit276 ], [ %i.p, %mi_outc.exit278 ], [ %i.p, %mi_outc.exit280 ], [ %.6, %bb.dl ]
+  %.9 = phi ptr [ %.6236, %mi_out_fill.exit ], [ %i.m, %mi_outc.exit284 ], [ %i.m, %switch.early.test ], [ %.6236, %.preheader.preheader.i ], [ %i.p, %mi_outc.exit282 ], [ %.6236, %mi_outs.exit ], [ %i.p, %bb.f ], [ %i.p, %mi_outc.exit ], [ %i.p, %mi_outc.exit276 ], [ %i.p, %mi_outc.exit278 ], [ %i.p, %mi_outc.exit280 ], [ %.6236, %bb.dl ]
   %.not = icmp ult ptr %.4346, %i.g
   br i1 %.not, label %bb.c, label %mi_out_alignright.exit.thread365
 

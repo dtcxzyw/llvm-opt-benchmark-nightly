@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lightgbm/original/main?download=true
+inline.NumInlined: 22
+inline.NumDeleted: 15
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -151,11 +153,11 @@ bb.g:                                             ; preds = %.noexc19, %bb.e, %b
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.pn = phi { ptr, i32 } [ %i.d, %bb.g ], [ %i.c, %bb.f ] ; 2 uses
+  %.0 = extractvalue { ptr, i32 } %.pn, 1         ; 2 uses
   %.011 = extractvalue { ptr, i32 } %.pn, 0       ; 2 uses
-  %.012 = extractvalue { ptr, i32 } %.pn, 1       ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
   %i.e = call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #10
-  %i.f = icmp eq i32 %.012, %i.e
+  %i.f = icmp eq i32 %.0, %i.e
   br i1 %i.f, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h
@@ -186,7 +188,7 @@ _ZNSolsEPFRSoS_E.exit31:                          ; preds = %bb.j, %_ZStlsISt11c
 
 bb.k:                                             ; preds = %bb.h
   %i.p = call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE) #10
-  %i.q = icmp eq i32 %.012, %i.p
+  %i.q = icmp eq i32 %.0, %i.p
   %i.r = call ptr @__cxa_begin_catch(ptr %.011) #10 ; 2 uses
   br i1 %i.q, label %bb.l, label %bb.m
 

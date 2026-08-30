@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/file?download=true
+inline.NumInlined: 2099
+inline.NumDeleted: 447
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_ZN4pbrt15ResolveFilenameENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:bb.a
   call void @_ZdlPvm(ptr noundef %i.cr, i64 noundef %i.cv) #28
   br label %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i19
@@ -200,8 +205,8 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.e
   store i32 %i.g, ptr %0, align 8, !tbaa !30
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !13   ; 3 uses
   %i.o = load ptr, ptr %i.l, align 8, !tbaa !9    ; 3 uses
   %i.p = ptrtoint ptr %i.n to i64
@@ -220,9 +225,13 @@ bb.j:                                             ; preds = %bb.i
 
 _ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i: ; preds = %bb.j
   %i.t = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.r) #32
+  %.pre = load ptr, ptr %i.l, align 8, !tbaa !31
+  %.pre16 = load ptr, ptr %i.m, align 8, !tbaa !31
   br label %bb.k
 
 bb.k:                                             ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i, %bb.i
+  %3 = phi ptr [ %i.n, %bb.i ], [ %.pre16, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i ]
+  %4 = phi ptr [ %i.o, %bb.i ], [ %.pre, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i ]
   %i.u = phi ptr [ null, %bb.i ], [ %i.t, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i ] ; 6 uses
   store ptr %i.u, ptr %i.k, align 8, !tbaa !9
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
@@ -230,7 +239,7 @@ bb.k:                                             ; preds = %_ZNSt15__new_alloca
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.r
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   store ptr %i.w, ptr %i.x, align 8, !tbaa !22
-  %i.y = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr %i.o, ptr %i.n, ptr noundef %i.u)
+  %i.y = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr %4, ptr %3, ptr noundef %i.u)
           to label %_ZN10filesystem4pathC2ERKS0_.exit unwind label %bb.l
 
 bb.l:                                             ; preds = %bb.k

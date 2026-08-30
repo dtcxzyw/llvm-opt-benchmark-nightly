@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jemalloc/original/background_thread?download=true
+inline.NumInlined: 93
+inline.NumDeleted: 26
 begin_hunk_0_@background_thread0_work:bb.a
 .lr.ph.preheader.i.us:                            ; preds = %bb.h
   %i.br = getelementptr inbounds nuw i8, ptr %i.bh, i64 120
@@ -200,27 +202,27 @@ bb.a:
   br i1 %i.e, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.c
-  %.02227.us = phi i64 [ %.2.us, %bb.c ], [ -1, %.lr.ph ] ; 3 uses
-  %.02326.us = phi i32 [ %i.n, %bb.c ], [ %2, %.lr.ph ] ; 2 uses
-  %i.f = zext i32 %.02326.us to i64
+  %.02227.us = phi i32 [ %i.n, %bb.c ], [ %2, %.lr.ph ] ; 2 uses
+  %.02326.us = phi i64 [ %.2.us, %bb.c ], [ -1, %.lr.ph ] ; 3 uses
+  %i.f = zext i32 %.02227.us to i64
   %i.g = getelementptr inbounds nuw [8 x i8], ptr @je_arenas, i64 %i.f
   %i.h = load atomic ptr, ptr %i.g acquire, align 8 ; 2 uses
   %.not.us = icmp eq ptr %i.h, null
-  %i.i = icmp ult i64 %.02227.us, 100000001
+  %i.i = icmp ult i64 %.02326.us, 100000001
   %or.cond = select i1 %.not.us, i1 true, i1 %i.i
   br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.split.us
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 12288
   %i.k = tail call i64 @je_pa_shard_time_until_deferred_work(ptr noundef %0, ptr noundef nonnull %i.j) #12
-  %spec.select.us = tail call i64 @llvm.umin.i64(i64 %i.k, i64 %.02227.us)
+  %spec.select.us = tail call i64 @llvm.umin.i64(i64 %i.k, i64 %.02326.us)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph.split.us
-  %.2.us = phi i64 [ %.02227.us, %.lr.ph.split.us ], [ %spec.select.us, %bb.b ] ; 2 uses
+  %.2.us = phi i64 [ %.02326.us, %.lr.ph.split.us ], [ %spec.select.us, %bb.b ] ; 2 uses
   %i.l = load i64, ptr @je_max_background_threads, align 8, !tbaa !22
   %i.m = trunc i64 %i.l to i32
-  %i.n = add i32 %.02326.us, %i.m                 ; 2 uses
+  %i.n = add i32 %.02227.us, %i.m                 ; 2 uses
   %i.o = icmp ult i32 %i.n, %i.a
   br i1 %i.o, label %.lr.ph.split.us, label %._crit_edge, !llvm.loop !78
 
@@ -310,9 +312,9 @@ background_thread_sleep.exit:                     ; preds = %bb.f, %bb.g
   ret void
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.j
-  %.02227 = phi i64 [ %.2, %bb.j ], [ -1, %.lr.ph ] ; 4 uses
-  %.02326 = phi i32 [ %i.bf, %bb.j ], [ %2, %.lr.ph ] ; 2 uses
-  %i.ax = zext i32 %.02326 to i64
+  %.02227 = phi i32 [ %i.bf, %bb.j ], [ %2, %.lr.ph ] ; 2 uses
+  %.02326 = phi i64 [ %.2, %bb.j ], [ -1, %.lr.ph ] ; 4 uses
+  %i.ax = zext i32 %.02227 to i64
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr @je_arenas, i64 %i.ax
   %i.az = load atomic ptr, ptr %i.ay acquire, align 8 ; 3 uses
   %.not = icmp eq ptr %i.az, null
@@ -320,20 +322,20 @@ background_thread_sleep.exit:                     ; preds = %bb.f, %bb.g
 
 bb.h:                                             ; preds = %.lr.ph.split
   tail call void @je_arena_do_deferred_work(ptr noundef %0, ptr noundef nonnull %i.az) #12
-  %i.ba = icmp ult i64 %.02227, 100000001
+  %i.ba = icmp ult i64 %.02326, 100000001
   br i1 %i.ba, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 12288
   %i.bc = tail call i64 @je_pa_shard_time_until_deferred_work(ptr noundef %0, ptr noundef nonnull %i.bb) #12
-  %spec.select = tail call i64 @llvm.umin.i64(i64 %i.bc, i64 %.02227)
+  %spec.select = tail call i64 @llvm.umin.i64(i64 %i.bc, i64 %.02326)
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %.lr.ph.split, %bb.i
-  %.2 = phi i64 [ %.02227, %.lr.ph.split ], [ %spec.select, %bb.i ], [ %.02227, %bb.h ] ; 2 uses
+  %.2 = phi i64 [ %.02326, %.lr.ph.split ], [ %spec.select, %bb.i ], [ %.02326, %bb.h ] ; 2 uses
   %i.bd = load i64, ptr @je_max_background_threads, align 8, !tbaa !22
   %i.be = trunc i64 %i.bd to i32
-  %i.bf = add i32 %.02326, %i.be                  ; 2 uses
+  %i.bf = add i32 %.02227, %i.be                  ; 2 uses
   %i.bg = icmp ult i32 %i.bf, %i.a
   br i1 %i.bg, label %.lr.ph.split, label %._crit_edge, !llvm.loop !78
 }

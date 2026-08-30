@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lightgbm/original/utils?download=true
+inline.NumInlined: 18
+inline.NumDeleted: 11
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@ArrowDecimalAppendDigitsToBuffer:bb.a
   br label %bb.x
 
@@ -200,19 +204,19 @@ bb.m:                                             ; preds = %.lr.ph186
   br label %.critedge.outer
 
 .critedge.outer:                                  ; preds = %bb.p, %bb.m
-  %.0107.ph = phi ptr [ %i.di, %bb.p ], [ %i.cq, %bb.m ] ; 4 uses
-  %.0106.ph = phi i32 [ %i.dh, %bb.p ], [ 0, %bb.m ] ; 2 uses
-  %i.cr = sext i32 %.0106.ph to i64
+  %.0104.ph = phi i32 [ %i.dh, %bb.p ], [ 0, %bb.m ] ; 2 uses
+  %.0103.ph = phi ptr [ %i.di, %bb.p ], [ %i.cq, %bb.m ] ; 4 uses
+  %i.cr = sext i32 %.0104.ph to i64
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.outer, %bb.o
-  %indvars.iv159 = phi i32 [ %.0106.ph, %.critedge.outer ], [ %indvars.iv.next160, %bb.o ] ; 2 uses
+  %indvars.iv159 = phi i32 [ %.0104.ph, %.critedge.outer ], [ %indvars.iv.next160, %bb.o ] ; 2 uses
   %indvars.iv156 = phi i64 [ %i.cr, %.critedge.outer ], [ %indvars.iv.next157, %bb.o ] ; 3 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.n, %.critedge
   %.0109 = phi i64 [ 0, %.critedge ], [ %i.da, %bb.n ]
-  %.0108 = phi ptr [ %.0107.ph, %.critedge ], [ %i.dd, %bb.n ] ; 4 uses
+  %.0108 = phi ptr [ %.0103.ph, %.critedge ], [ %i.dd, %bb.n ] ; 4 uses
   %i.cs = load i64, ptr %.0108, align 8, !tbaa !9 ; 2 uses
   %i.ct = call i64 @llvm.fshl.i64(i64 %.0109, i64 %i.cs, i64 32) ; 2 uses
   %i.cu = udiv i64 %i.ct, 1000000000
@@ -234,15 +238,15 @@ bb.o:                                             ; preds = %bb.n
   %indvars.iv.next157 = add nsw i64 %indvars.iv156, 1 ; 3 uses
   %i.df = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv156
   store i32 %i.de, ptr %i.df, align 4, !tbaa !8
-  %i.dg = load i64, ptr %.0107.ph, align 8, !tbaa !9
+  %i.dg = load i64, ptr %.0103.ph, align 8, !tbaa !9
   %.not117 = icmp eq i64 %i.dg, 0
   %indvars.iv.next160 = add i32 %indvars.iv159, 1
   br i1 %.not117, label %bb.p, label %.critedge
 
 bb.p:                                             ; preds = %bb.o
   %i.dh = trunc nsw i64 %indvars.iv.next157 to i32
-  %i.di = getelementptr inbounds i8, ptr %.0107.ph, i64 -8
-  %.not118 = icmp eq ptr %.0107.ph, %i.a
+  %i.di = getelementptr inbounds i8, ptr %.0103.ph, i64 -8
+  %.not118 = icmp eq ptr %.0103.ph, %i.a
   br i1 %.not118, label %bb.q, label %.critedge.outer
 
 bb.q:                                             ; preds = %bb.p

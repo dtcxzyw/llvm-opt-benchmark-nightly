@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wolfssl/original/test_certman?download=true
+inline.NumInlined: 31
+inline.NumDeleted: 6
 begin_hunk_0_@test_wolfSSL_CertManagerAPI:bb.a
   %i.lz = call i32 @fflush(ptr noundef %i.ly)     ; 0 uses
   br label %.critedge1335
@@ -200,9 +202,9 @@ bb.d:                                             ; preds = %.critedge1336
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.critedge1335, %.critedge1336
-  %.11229 = phi ptr [ null, %bb.d ], [ null, %.critedge1335 ], [ %i.qn, %.critedge1336 ]
   %.69 = phi i32 [ 0, %bb.d ], [ 0, %.critedge1335 ], [ 1, %.critedge1336 ]
-  call void @wolfSSL_CertManagerFree(ptr noundef %.11229) #13
+  %.1 = phi ptr [ null, %bb.d ], [ null, %.critedge1335 ], [ %i.qn, %.critedge1336 ]
+  call void @wolfSSL_CertManagerFree(ptr noundef %.1) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   ret i32 %.69
 }

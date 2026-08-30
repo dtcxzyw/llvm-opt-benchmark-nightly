@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/noise?download=true
+inline.NumInlined: 88
+inline.NumDeleted: 30
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -33,8 +37,8 @@ bb.a:
   %i.w = and i32 %i.i, 255
   %i.x = load <2 x i32>, ptr %i.r, align 4, !tbaa !9
   %i.y = shufflevector <2 x i32> %i.x, <2 x i32> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
-  %3 = insertelement <2 x i32> poison, i32 %i.v, i64 0
-  %i.z = shufflevector <2 x i32> %3, <2 x i32> poison, <4 x i32> zeroinitializer
+  %3 = insertelement <4 x i32> poison, i32 %i.v, i64 0
+  %i.z = shufflevector <4 x i32> %3, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.aa = add nuw nsw <4 x i32> %i.z, <i32 1, i32 1, i32 0, i32 0>
   %i.ab = add nsw <4 x i32> %i.y, %i.aa
   %i.ac = sext <4 x i32> %i.ab to <4 x i64>

@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/brotli/original/brotli_bit_stream?download=true
+inline.NumInlined: 36
+inline.NumDeleted: 20
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumUnrolled: 14
 begin_hunk_0_@BrotliStoreHuffmanTree:bb.a
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader
@@ -200,9 +205,9 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %bb.e
   %.0179263 = phi i64 [ %.1180, %bb.e ], [ 0, %bb.a ] ; 4 uses
-  %.0184262 = phi i64 [ %i.i, %bb.e ], [ 0, %bb.a ] ; 10 uses
-  %.0196261 = phi i64 [ %.1197.a, %bb.e ], [ %2, %bb.a ] ; 2 uses
-  %i.b = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.0184262
+  %.0184262 = phi i64 [ %.1197.a, %bb.e ], [ %2, %bb.a ] ; 2 uses
+  %.0196261 = phi i64 [ %i.i, %bb.e ], [ 0, %bb.a ] ; 10 uses
+  %i.b = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.0196261
   %i.c = load i32, ptr %i.b, align 4, !tbaa !11   ; 2 uses
   %.not214 = icmp eq i32 %i.c, 0
   br i1 %.not214, label %bb.e, label %bb.b
@@ -213,19 +218,19 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %.0179263
-  store i64 %.0184262, ptr %i.e, align 8, !tbaa !8
+  store i64 %.0196261, ptr %i.e, align 8, !tbaa !8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.f = add i64 %.0179263, 1
   %i.g = zext i32 %i.c to i64
-  %i.h = sub i64 %.0196261, %i.g
+  %i.h = sub i64 %.0184262, %i.g
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.lr.ph
-  %.1197.a = phi i64 [ %i.h, %bb.d ], [ %.0196261, %.lr.ph ] ; 2 uses
+  %.1197.a = phi i64 [ %i.h, %bb.d ], [ %.0184262, %.lr.ph ] ; 2 uses
   %.1180 = phi i64 [ %i.f, %bb.d ], [ %.0179263, %.lr.ph ] ; 13 uses
-  %i.i = add i64 %.0184262, 1                     ; 8 uses
+  %i.i = add i64 %.0196261, 1                     ; 8 uses
   %.not = icmp eq i64 %.1197.a, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !45
 
@@ -270,14 +275,14 @@ bb.f:                                             ; preds = %._crit_edge
   tail call void @llvm.memset.p0.i64(ptr align 1 %4, i8 0, i64 %i.i, i1 false)
   %.not206265 = icmp eq i64 %i.i, 0               ; 2 uses
   %i.ae = ptrtoint ptr %0 to i64                  ; 2 uses
-  %i.af = and i64 %.0184262, 1
+  %i.af = and i64 %.0196261, 1
   %lcmp.mod.not.not = icmp eq i64 %i.af, 0
-  %i.ag = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.0184262
-  %.sink.prol = trunc i64 %.0184262 to i16
+  %i.ag = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.0196261
+  %.sink.prol = trunc i64 %.0196261 to i16
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 6
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.ak = icmp eq i64 %.0184262, 0
+  %i.ak = icmp eq i64 %.0196261, 0
   br label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge291, %bb.f
@@ -308,7 +313,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 .lr.ph269.prol.loopexit:                          ; preds = %.lr.ph269.prol, %bb.j, %.lr.ph269.preheader
   %.1200.lcssa.unr = phi ptr [ poison, %.lr.ph269.preheader ], [ %i.aj, %bb.j ], [ %0, %.lr.ph269.prol ]
-  %.0198267.unr = phi i64 [ %i.i, %.lr.ph269.preheader ], [ %.0184262, %bb.j ], [ %.0184262, %.lr.ph269.prol ]
+  %.0198267.unr = phi i64 [ %i.i, %.lr.ph269.preheader ], [ %.0196261, %bb.j ], [ %.0196261, %.lr.ph269.prol ]
   %.0199266.unr = phi ptr [ %0, %.lr.ph269.preheader ], [ %i.aj, %bb.j ], [ %0, %.lr.ph269.prol ]
   br i1 %i.ak, label %._crit_edge270.loopexit, label %.lr.ph269
 
@@ -711,7 +716,7 @@ bb.aj:                                            ; preds = %bb.x
 bb.ak:                                            ; preds = %.lr.ph296
   %i.kd = add i64 %.0178293, 1
   %.0 = add i64 %.0294, 1
-  %exitcond317.not = icmp eq i64 %.0294, %.0184262
+  %exitcond317.not = icmp eq i64 %.0294, %.0196261
   br i1 %exitcond317.not, label %.critedge.loopexit, label %.lr.ph296, !llvm.loop !134
 
 .critedge.loopexit:                               ; preds = %bb.ak, %.lr.ph296

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/yoga/original/Cache?download=true
+inline.NumInlined: 22
+inline.NumDeleted: 7
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -42,7 +44,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %or.cond.i = fcmp ord float %i.p, %i.q
-  br i1 %or.cond.i, label %bb.g, label %13
+  br i1 %or.cond.i, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.u = fsub float %i.p, %i.q
@@ -50,22 +52,20 @@ bb.g:                                             ; preds = %bb.f
   %i.w = fcmp olt float %i.v, f0x38D1B717
   br label %_ZN8facebook4yoga13inexactEqualsEff.exit
 
-13:                                               ; preds = %bb.f
-  %14 = fcmp uno float %i.p, 0.000000e+00
-  br i1 %14, label %bb.h, label %_ZN8facebook4yoga13inexactEqualsEff.exit
-
-bb.h:                                             ; preds = %13
+bb.h:                                             ; preds = %bb.f
+  %13 = fcmp uno float %i.p, 0.000000e+00
   %i.x = fcmp uno float %i.q, 0.000000e+00
+  %spec.select.i = and i1 %13, %i.x
   br label %_ZN8facebook4yoga13inexactEqualsEff.exit
 
-_ZN8facebook4yoga13inexactEqualsEff.exit:         ; preds = %bb.h, %13, %bb.g, %bb.e
-  %15 = phi i1 [ false, %bb.e ], [ %i.w, %bb.g ], [ false, %13 ], [ %i.x, %bb.h ]
+_ZN8facebook4yoga13inexactEqualsEff.exit:         ; preds = %bb.h, %bb.g, %bb.e
+  %14 = phi i1 [ false, %bb.e ], [ %i.w, %bb.g ], [ %spec.select.i, %bb.h ]
   %i.y = icmp eq i32 %6, %2
   br i1 %i.y, label %bb.i, label %_ZN8facebook4yoga13inexactEqualsEff.exit71
 
 bb.i:                                             ; preds = %_ZN8facebook4yoga13inexactEqualsEff.exit
   %or.cond.i69 = fcmp ord float %i.s, %i.r
-  br i1 %or.cond.i69, label %bb.j, label %16
+  br i1 %or.cond.i69, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.z = fsub float %i.s, %i.r
@@ -73,17 +73,15 @@ bb.j:                                             ; preds = %bb.i
   %i.ab = fcmp olt float %i.aa, f0x38D1B717
   br label %_ZN8facebook4yoga13inexactEqualsEff.exit71
 
-16:                                               ; preds = %bb.i
-  %17 = fcmp uno float %i.s, 0.000000e+00
-  br i1 %17, label %bb.k, label %_ZN8facebook4yoga13inexactEqualsEff.exit71
-
-bb.k:                                             ; preds = %16
+bb.k:                                             ; preds = %bb.i
+  %15 = fcmp uno float %i.s, 0.000000e+00
   %i.ac = fcmp uno float %i.r, 0.000000e+00
+  %spec.select.i70 = and i1 %i.ac, %15
   br label %_ZN8facebook4yoga13inexactEqualsEff.exit71
 
-_ZN8facebook4yoga13inexactEqualsEff.exit71:       ; preds = %bb.k, %16, %bb.j, %_ZN8facebook4yoga13inexactEqualsEff.exit
-  %18 = phi i1 [ false, %_ZN8facebook4yoga13inexactEqualsEff.exit ], [ %i.ab, %bb.j ], [ false, %16 ], [ %i.ac, %bb.k ]
-  br i1 %15, label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit, label %bb.l
+_ZN8facebook4yoga13inexactEqualsEff.exit71:       ; preds = %bb.k, %bb.j, %_ZN8facebook4yoga13inexactEqualsEff.exit
+  %16 = phi i1 [ false, %_ZN8facebook4yoga13inexactEqualsEff.exit ], [ %i.ab, %bb.j ], [ %spec.select.i70, %bb.k ]
+  br i1 %14, label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit, label %bb.l
 
 bb.l:                                             ; preds = %_ZN8facebook4yoga13inexactEqualsEff.exit71
   %i.ad = fsub float %1, %10                      ; 11 uses
@@ -118,15 +116,13 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %or.cond.i.i73 = fcmp ord float %i.ad, %8
-  br i1 %or.cond.i.i73, label %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit, label %19
+  br i1 %or.cond.i.i73, label %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit, label %.split93
 
-19:                                               ; preds = %bb.q
-  %20 = fcmp uno float %i.ad, 0.000000e+00
-  br i1 %20, label %.split93, label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit
-
-.split93:                                         ; preds = %19
+.split93:                                         ; preds = %bb.q
+  %17 = fcmp uno float %i.ad, 0.000000e+00
   %i.an = fcmp uno float %8, 0.000000e+00
-  br i1 %i.an, label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit, label %.thread90.thread
+  %spec.select.i.i75 = and i1 %i.an, %17
+  br i1 %spec.select.i.i75, label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit, label %.thread90.thread
 
 _ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit: ; preds = %bb.q
   %i.ao = fsub float %i.ad, %8
@@ -159,9 +155,9 @@ bb.t:                                             ; preds = %bb.s
   %i.aw = fcmp olt float %i.av, f0x38D1B717
   br label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit
 
-_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit: ; preds = %.thread90.thread, %bb.n, %19, %bb.p, %bb.t, %bb.s, %bb.r, %.thread90, %.split93, %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit, %_ZN8facebook4yogaL36sizeIsExactAndMatchesOldMeasuredSizeENS0_10SizingModeEff.exit, %_ZN8facebook4yoga13inexactEqualsEff.exit71
-  %21 = phi i1 [ true, %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit ], [ true, %_ZN8facebook4yogaL36sizeIsExactAndMatchesOldMeasuredSizeENS0_10SizingModeEff.exit ], [ true, %_ZN8facebook4yoga13inexactEqualsEff.exit71 ], [ true, %.split93 ], [ true, %bb.n ], [ true, %bb.p ], [ true, %bb.r ], [ false, %19 ], [ %i.aw, %bb.t ], [ false, %.thread90 ], [ false, %bb.s ], [ false, %.thread90.thread ] ; 8 uses
-  br i1 %18, label %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit80.thread110, label %bb.u
+_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit: ; preds = %.thread90.thread, %bb.p, %bb.t, %bb.s, %bb.r, %.thread90, %.split93, %bb.n, %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit, %_ZN8facebook4yogaL36sizeIsExactAndMatchesOldMeasuredSizeENS0_10SizingModeEff.exit, %_ZN8facebook4yoga13inexactEqualsEff.exit71
+  %18 = phi i1 [ true, %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit ], [ true, %_ZN8facebook4yogaL36sizeIsExactAndMatchesOldMeasuredSizeENS0_10SizingModeEff.exit ], [ true, %_ZN8facebook4yoga13inexactEqualsEff.exit71 ], [ true, %.split93 ], [ true, %bb.n ], [ false, %.thread90.thread ], [ true, %bb.r ], [ true, %bb.p ], [ %i.aw, %bb.t ], [ false, %.thread90 ], [ false, %bb.s ] ; 8 uses
+  br i1 %16, label %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit80.thread110, label %bb.u
 
 bb.u:                                             ; preds = %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit
   %i.ax = fsub float %3, %11                      ; 11 uses
@@ -230,15 +226,15 @@ bb.ad:                                            ; preds = %bb.ac
   %i.bp = fsub float %i.ax, %9
   %i.bq = tail call noundef float @llvm.fabs.f32(float %i.bp)
   %i.br = fcmp olt float %i.bq, f0x38D1B717
-  %i.bs = and i1 %i.br, %21
+  %i.bs = and i1 %i.br, %18
   br label %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit85
 
 _ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit85: ; preds = %_ZN8facebook4yogaL36sizeIsExactAndMatchesOldMeasuredSizeENS0_10SizingModeEff.exit77, %bb.w, %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit80, %bb.aa, %.thread107, %bb.ab, %bb.ac, %bb.ad
-  %i.bt = phi i1 [ %21, %bb.ab ], [ false, %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit80 ], [ %i.bs, %bb.ad ], [ false, %.thread107 ], [ false, %bb.ac ], [ false, %bb.aa ], [ false, %bb.w ], [ false, %_ZN8facebook4yogaL36sizeIsExactAndMatchesOldMeasuredSizeENS0_10SizingModeEff.exit77 ]
+  %i.bt = phi i1 [ %18, %bb.ab ], [ false, %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit80 ], [ %i.bs, %bb.ad ], [ false, %.thread107 ], [ false, %bb.ac ], [ false, %bb.aa ], [ false, %bb.w ], [ false, %_ZN8facebook4yogaL36sizeIsExactAndMatchesOldMeasuredSizeENS0_10SizingModeEff.exit77 ]
   br label %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit80.thread110
 
-_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit80.thread110: ; preds = %bb.w, %bb.aa, %bb.y, %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit, %_ZN8facebook4yogaL36sizeIsExactAndMatchesOldMeasuredSizeENS0_10SizingModeEff.exit77, %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit80, %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit85, %bb.a, %bb.b
-  %.0 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ %21, %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit80 ], [ %21, %_ZN8facebook4yogaL36sizeIsExactAndMatchesOldMeasuredSizeENS0_10SizingModeEff.exit77 ], [ %21, %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit ], [ %i.bt, %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit85 ], [ %21, %bb.w ], [ %21, %bb.aa ], [ %21, %bb.y ]
+_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit80.thread110: ; preds = %bb.y, %bb.aa, %bb.w, %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit, %_ZN8facebook4yogaL36sizeIsExactAndMatchesOldMeasuredSizeENS0_10SizingModeEff.exit77, %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit80, %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit85, %bb.a, %bb.b
+  %.0 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ %18, %_ZN8facebook4yogaL31oldSizeIsMaxContentAndStillFitsENS0_10SizingModeEfS1_f.exit80 ], [ %18, %_ZN8facebook4yogaL36sizeIsExactAndMatchesOldMeasuredSizeENS0_10SizingModeEff.exit77 ], [ %18, %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit ], [ %i.bt, %_ZN8facebook4yogaL30newSizeIsStricterAndStillValidENS0_10SizingModeEfS1_ff.exit85 ], [ %18, %bb.w ], [ %18, %bb.aa ], [ %18, %bb.y ]
   ret i1 %.0
 }
 

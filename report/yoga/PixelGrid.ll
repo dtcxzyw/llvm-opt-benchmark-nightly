@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/yoga/original/PixelGrid?download=true
+inline.NumInlined: 51
+inline.NumDeleted: 25
 begin_hunk_0_@_ZN8facebook4yoga21roundValueToPixelGridEddbb:bb.a
 
 bb.c:                                             ; preds = %_ZN8facebook4yoga13inexactEqualsEdd.exit29
@@ -200,7 +202,7 @@ _ZN8facebook4yoga21roundValueToPixelGridEddbb.exit66: ; preds = %bb.h, %bb.i, %_
   %i.bu = fmul double %i.q, %i.t                  ; 4 uses
   %i.bv = tail call double @llvm.round.f64(double %i.bu) ; 3 uses
   %or.cond.i = fcmp ord double %i.bv, %i.bu
-  br i1 %or.cond.i, label %bb.m, label %3
+  br i1 %or.cond.i, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %_ZN8facebook4yoga21roundValueToPixelGridEddbb.exit66
   %i.bw = fsub double %i.bv, %i.bu
@@ -208,21 +210,19 @@ bb.m:                                             ; preds = %_ZN8facebook4yoga21
   %i.by = fcmp olt double %i.bx, 1.000000e-04
   br label %_ZN8facebook4yoga13inexactEqualsEdd.exit
 
-3:                                                ; preds = %_ZN8facebook4yoga21roundValueToPixelGridEddbb.exit66
-  %4 = fcmp uno double %i.bv, 0.000000e+00
-  br i1 %4, label %bb.n, label %_ZN8facebook4yoga13inexactEqualsEdd.exit
-
-bb.n:                                             ; preds = %3
+bb.n:                                             ; preds = %_ZN8facebook4yoga21roundValueToPixelGridEddbb.exit66
+  %3 = fcmp uno double %i.bv, 0.000000e+00
   %i.bz = fcmp uno double %i.bu, 0.000000e+00
+  %spec.select.i = and i1 %i.bz, %3
   br label %_ZN8facebook4yoga13inexactEqualsEdd.exit
 
-_ZN8facebook4yoga13inexactEqualsEdd.exit:         ; preds = %bb.m, %3, %bb.n
-  %.0.i67 = phi i1 [ %i.by, %bb.m ], [ false, %3 ], [ %i.bz, %bb.n ] ; 2 uses
+_ZN8facebook4yoga13inexactEqualsEdd.exit:         ; preds = %bb.m, %bb.n
+  %.0.i67 = phi i1 [ %i.by, %bb.m ], [ %spec.select.i, %bb.n ] ; 2 uses
   %i.ca = xor i1 %.0.i67, true
   %i.cb = fmul double %i.q, %i.r                  ; 4 uses
   %i.cc = tail call double @llvm.round.f64(double %i.cb) ; 3 uses
   %or.cond.i68 = fcmp ord double %i.cc, %i.cb
-  br i1 %or.cond.i68, label %bb.o, label %5
+  br i1 %or.cond.i68, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %_ZN8facebook4yoga13inexactEqualsEdd.exit
   %i.cd = fsub double %i.cc, %i.cb
@@ -230,17 +230,15 @@ bb.o:                                             ; preds = %_ZN8facebook4yoga13
   %i.cf = fcmp olt double %i.ce, 1.000000e-04
   br label %_ZN8facebook4yoga13inexactEqualsEdd.exit70
 
-5:                                                ; preds = %_ZN8facebook4yoga13inexactEqualsEdd.exit
-  %6 = fcmp uno double %i.cc, 0.000000e+00
-  br i1 %6, label %bb.p, label %_ZN8facebook4yoga13inexactEqualsEdd.exit70
-
-bb.p:                                             ; preds = %5
+bb.p:                                             ; preds = %_ZN8facebook4yoga13inexactEqualsEdd.exit
+  %4 = fcmp uno double %i.cc, 0.000000e+00
   %i.cg = fcmp uno double %i.cb, 0.000000e+00
+  %spec.select.i69 = and i1 %i.cg, %4
   br label %_ZN8facebook4yoga13inexactEqualsEdd.exit70
 
-_ZN8facebook4yoga13inexactEqualsEdd.exit70:       ; preds = %bb.o, %5, %bb.p
-  %.0.i69 = phi i1 [ %i.cf, %bb.o ], [ false, %5 ], [ %i.cg, %bb.p ] ; 2 uses
-  %i.ch = xor i1 %.0.i69, true
+_ZN8facebook4yoga13inexactEqualsEdd.exit70:       ; preds = %bb.o, %bb.p
+  %.0.i70 = phi i1 [ %i.cf, %bb.o ], [ %spec.select.i69, %bb.p ] ; 2 uses
+  %i.ch = xor i1 %.0.i70, true
   %i.ci = and i1 %i.x, %i.ca
   %i.cj = and i1 %i.x, %.0.i67
   %i.ck = fmul double %i.u, %i.q                  ; 4 uses
@@ -369,7 +367,7 @@ _ZN8facebook4yoga21roundValueToPixelGridEddbb.exit88: ; preds = %bb.x, %bb.y, %_
   %i.eh = fsub float %i.di, %i.eg
   store float %i.eh, ptr %i.j, align 8, !tbaa !66
   %i.ei = and i1 %i.x, %i.ch
-  %i.ej = and i1 %i.x, %.0.i69
+  %i.ej = and i1 %i.x, %.0.i70
   %i.ek = fmul double %i.s, %i.q                  ; 4 uses
   %i.el = tail call double @fmod(double noundef %i.ek, double noundef 1.000000e+00) #5 ; 3 uses
   %i.em = fcmp olt double %i.el, 0.000000e+00

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/spdlog/original/file_sinks?download=true
+inline.NumInlined: 840
+inline.NumDeleted: 351
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN3fmt3v126detail19parse_format_stringIcNS1_21format_string_checkerIcLi3ELi0ELb0EEEEEvNS0_17basic_string_viewIT_EEOT0_:bb.a
   %i.ag = load i32, ptr %i.c, align 4, !tbaa !112
   %.not.i.i32 = icmp slt i32 %i.ad, %i.ag
@@ -200,8 +204,8 @@ bb.d:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.c, %bb.d
   %i.p = phi ptr [ %i.o, %bb.d ], [ %i.j, %bb.c ] ; 4 uses
   %i.q = phi i32 [ %i.n, %bb.d ], [ %i.i, %bb.c ] ; 4 uses
-  %.027.i43 = phi i32 [ %i.q, %bb.d ], [ 0, %bb.c ]
-  %.028.i42 = phi ptr [ %i.p, %bb.d ], [ %0, %bb.c ]
+  %.0.i43 = phi ptr [ %i.p, %bb.d ], [ %0, %bb.c ]
+  %.027.i42 = phi i32 [ %i.q, %bb.d ], [ 0, %bb.c ]
   %i.r = load i8, ptr %i.p, align 1, !tbaa !26    ; 2 uses
   %i.s = add i8 %i.r, -48
   %or.cond.i = icmp ult i8 %i.s, 10
@@ -211,9 +215,9 @@ bb.d:                                             ; preds = %.lr.ph
   br label %.critedge.i, !llvm.loop !187
 
 .critedge.i:                                      ; preds = %bb.d, %..critedge.i_crit_edge, %bb.c
-  %.027.i.lcssa = phi i32 [ %.027.i43, %..critedge.i_crit_edge ], [ 0, %bb.c ], [ %i.q, %bb.d ]
+  %.027.i.lcssa = phi i32 [ %.027.i42, %..critedge.i_crit_edge ], [ 0, %bb.c ], [ %i.q, %bb.d ]
   %.lcssa = phi i32 [ %i.q, %..critedge.i_crit_edge ], [ %i.i, %bb.c ], [ %i.n, %bb.d ] ; 2 uses
-  %.028.lcssa.i = phi ptr [ %.028.i42, %..critedge.i_crit_edge ], [ %scevgep.i, %bb.c ], [ %scevgep.i, %bb.d ]
+  %.028.lcssa.i = phi ptr [ %.0.i43, %..critedge.i_crit_edge ], [ %scevgep.i, %bb.c ], [ %scevgep.i, %bb.d ]
   %.lcssa.i = phi ptr [ %i.p, %..critedge.i_crit_edge ], [ %scevgep37.i, %bb.c ], [ %scevgep37.i, %bb.d ] ; 4 uses
   %i.t = ptrtoint ptr %.lcssa.i to i64
   %i.u = ptrtoint ptr %0 to i64
@@ -616,8 +620,8 @@ bb.c:                                             ; preds = %.lr.ph
 .lr.ph:                                           ; preds = %bb.b, %bb.c
   %i.q = phi ptr [ %i.p, %bb.c ], [ %i.k, %bb.b ] ; 4 uses
   %i.r = phi i32 [ %i.o, %bb.c ], [ %i.j, %bb.b ] ; 4 uses
-  %.027.i37 = phi i32 [ %i.r, %bb.c ], [ 0, %bb.b ]
-  %.028.i36 = phi ptr [ %i.q, %bb.c ], [ %0, %bb.b ]
+  %.0.i37 = phi ptr [ %i.q, %bb.c ], [ %0, %bb.b ]
+  %.027.i36 = phi i32 [ %i.r, %bb.c ], [ 0, %bb.b ]
   %i.s = load i8, ptr %i.q, align 1, !tbaa !26    ; 2 uses
   %i.t = add i8 %i.s, -48
   %or.cond.i = icmp ult i8 %i.t, 10
@@ -627,9 +631,9 @@ bb.c:                                             ; preds = %.lr.ph
   br label %.critedge.i, !llvm.loop !187
 
 .critedge.i:                                      ; preds = %bb.c, %..critedge.i_crit_edge, %bb.b
-  %.027.i.lcssa = phi i32 [ %.027.i37, %..critedge.i_crit_edge ], [ 0, %bb.b ], [ %i.r, %bb.c ]
+  %.027.i.lcssa = phi i32 [ %.027.i36, %..critedge.i_crit_edge ], [ 0, %bb.b ], [ %i.r, %bb.c ]
   %.lcssa = phi i32 [ %i.r, %..critedge.i_crit_edge ], [ %i.j, %bb.b ], [ %i.o, %bb.c ] ; 3 uses
-  %.028.lcssa.i = phi ptr [ %.028.i36, %..critedge.i_crit_edge ], [ %scevgep.i, %bb.b ], [ %scevgep.i, %bb.c ]
+  %.028.lcssa.i = phi ptr [ %.0.i37, %..critedge.i_crit_edge ], [ %scevgep.i, %bb.b ], [ %scevgep.i, %bb.c ]
   %.lcssa.i = phi ptr [ %i.q, %..critedge.i_crit_edge ], [ %scevgep37.i, %bb.b ], [ %scevgep37.i, %bb.c ] ; 2 uses
   %i.u = ptrtoint ptr %.lcssa.i to i64
   %i.v = ptrtoint ptr %0 to i64
@@ -776,8 +780,8 @@ bb.d:                                             ; preds = %.lr.ph50
 .lr.ph50:                                         ; preds = %bb.c, %bb.d
   %i.p = phi ptr [ %i.o, %bb.d ], [ %i.j, %bb.c ] ; 4 uses
   %i.q = phi i32 [ %i.n, %bb.d ], [ %i.i, %bb.c ] ; 4 uses
-  %.027.i49 = phi i32 [ %i.q, %bb.d ], [ 0, %bb.c ]
-  %.028.i48 = phi ptr [ %i.p, %bb.d ], [ %0, %bb.c ]
+  %.0.i49 = phi ptr [ %i.p, %bb.d ], [ %0, %bb.c ]
+  %.027.i48 = phi i32 [ %i.q, %bb.d ], [ 0, %bb.c ]
   %i.r = load i8, ptr %i.p, align 1, !tbaa !26    ; 2 uses
   %i.s = add i8 %i.r, -48
   %or.cond.i = icmp ult i8 %i.s, 10
@@ -787,9 +791,9 @@ bb.d:                                             ; preds = %.lr.ph50
   br label %.critedge.i, !llvm.loop !187
 
 .critedge.i:                                      ; preds = %bb.d, %..critedge.i_crit_edge, %bb.c
-  %.027.i.lcssa = phi i32 [ %.027.i49, %..critedge.i_crit_edge ], [ 0, %bb.c ], [ %i.q, %bb.d ]
+  %.027.i.lcssa = phi i32 [ %.027.i48, %..critedge.i_crit_edge ], [ 0, %bb.c ], [ %i.q, %bb.d ]
   %.lcssa = phi i32 [ %i.q, %..critedge.i_crit_edge ], [ %i.i, %bb.c ], [ %i.n, %bb.d ] ; 2 uses
-  %.028.lcssa.i = phi ptr [ %.028.i48, %..critedge.i_crit_edge ], [ %scevgep.i, %bb.c ], [ %scevgep.i, %bb.d ]
+  %.028.lcssa.i = phi ptr [ %.0.i49, %..critedge.i_crit_edge ], [ %scevgep.i, %bb.c ], [ %scevgep.i, %bb.d ]
   %.lcssa.i = phi ptr [ %i.p, %..critedge.i_crit_edge ], [ %scevgep37.i, %bb.c ], [ %scevgep37.i, %bb.d ] ; 4 uses
   %i.t = ptrtoint ptr %.lcssa.i to i64
   %i.u = ptrtoint ptr %0 to i64

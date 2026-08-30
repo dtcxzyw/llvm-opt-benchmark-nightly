@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libpng/original/pngwrite?download=true
+inline.NumInlined: 18
+inline.NumDeleted: 5
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@png_write_row:bb.a
 
 bb.z:                                             ; preds = %bb.y
@@ -200,28 +205,28 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   br i1 %.not63.i, label %png_do_write_intrapixel.exitthread-pre-split, label %.lr.ph.i.lver.orig
 
 .lr.ph.i.lver.orig:                               ; preds = %bb.aw, %.lr.ph.i.lver.orig
-  %.05059.i.lver.orig = phi ptr [ %i.et, %.lr.ph.i.lver.orig ], [ %i.cr, %bb.aw ] ; 8 uses
-  %.05158.i.lver.orig = phi i32 [ %i.es, %.lr.ph.i.lver.orig ], [ 0, %bb.aw ]
-  %i.dn = load i8, ptr %.05059.i.lver.orig, align 1, !tbaa !48
+  %.05059.i.lver.orig = phi i32 [ %i.es, %.lr.ph.i.lver.orig ], [ 0, %bb.aw ]
+  %.05158.i.lver.orig = phi ptr [ %i.et, %.lr.ph.i.lver.orig ], [ %i.cr, %bb.aw ] ; 8 uses
+  %i.dn = load i8, ptr %.05158.i.lver.orig, align 1, !tbaa !48
   %i.do = zext i8 %i.dn to i32
   %i.dp = shl nuw nsw i32 %i.do, 8
-  %i.dq = getelementptr inbounds nuw i8, ptr %.05059.i.lver.orig, i64 1 ; 2 uses
+  %i.dq = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 1 ; 2 uses
   %i.dr = load i8, ptr %i.dq, align 1, !tbaa !48
   %i.ds = zext i8 %i.dr to i32
   %i.dt = or disjoint i32 %i.dp, %i.ds
-  %i.du = getelementptr inbounds nuw i8, ptr %.05059.i.lver.orig, i64 2
+  %i.du = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 2
   %i.dv = load i8, ptr %i.du, align 1, !tbaa !48
   %i.dw = zext i8 %i.dv to i32
   %i.dx = shl nuw nsw i32 %i.dw, 8
-  %i.dy = getelementptr inbounds nuw i8, ptr %.05059.i.lver.orig, i64 3
+  %i.dy = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 3
   %i.dz = load i8, ptr %i.dy, align 1, !tbaa !48
   %i.ea = zext i8 %i.dz to i32
   %i.eb = or disjoint i32 %i.dx, %i.ea            ; 2 uses
-  %i.ec = getelementptr inbounds nuw i8, ptr %.05059.i.lver.orig, i64 4 ; 2 uses
+  %i.ec = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 4 ; 2 uses
   %i.ed = load i8, ptr %i.ec, align 1, !tbaa !48
   %i.ee = zext i8 %i.ed to i32
   %i.ef = shl nuw nsw i32 %i.ee, 8
-  %i.eg = getelementptr inbounds nuw i8, ptr %.05059.i.lver.orig, i64 5 ; 2 uses
+  %i.eg = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 5 ; 2 uses
   %i.eh = load i8, ptr %i.eg, align 1, !tbaa !48
   %i.ei = zext i8 %i.eh to i32
   %i.ej = or disjoint i32 %i.ef, %i.ei
@@ -229,7 +234,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   %i.el = sub nsw i32 %i.ej, %i.eb                ; 2 uses
   %i.em = lshr i32 %i.ek, 8
   %i.en = trunc i32 %i.em to i8
-  store i8 %i.en, ptr %.05059.i.lver.orig, align 1, !tbaa !48
+  store i8 %i.en, ptr %.05158.i.lver.orig, align 1, !tbaa !48
   %i.eo = trunc i32 %i.ek to i8
   store i8 %i.eo, ptr %i.dq, align 1, !tbaa !48
   %i.ep = lshr i32 %i.el, 8
@@ -237,8 +242,8 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   store i8 %i.eq, ptr %i.ec, align 1, !tbaa !48
   %i.er = trunc i32 %i.el to i8
   store i8 %i.er, ptr %i.eg, align 1, !tbaa !48
-  %i.es = add nuw i32 %.05158.i.lver.orig, 1      ; 2 uses
-  %i.et = getelementptr inbounds nuw i8, ptr %.05059.i.lver.orig, i64 %.1.i
+  %i.es = add nuw i32 %.05059.i.lver.orig, 1      ; 2 uses
+  %i.et = getelementptr inbounds nuw i8, ptr %.05158.i.lver.orig, i64 %.1.i
   %exitcond.not.i.lver.orig = icmp eq i32 %i.es, %i.cu
   br i1 %exitcond.not.i.lver.orig, label %png_do_write_intrapixel.exitthread-pre-split, label %.lr.ph.i.lver.orig, !llvm.loop !169
 
@@ -641,16 +646,16 @@ bb.b:                                             ; preds = %bb.a
   %i.m = and i32 %i.f, 32
   %.not67 = icmp eq i32 %i.m, 0                   ; 2 uses
   %i.n = zext nneg i32 %i.i to i64
-  %.063 = select i1 %.not67, i64 %i.n, i64 -1     ; 2 uses
-  %.057.idx = select i1 %.not67, i64 0, i64 2     ; 2 uses
-  %.057 = getelementptr inbounds nuw i8, ptr %i.l, i64 %.057.idx ; 2 uses
+  %.063 = select i1 %.not67, i64 0, i64 2         ; 2 uses
+  %.061 = getelementptr inbounds nuw i8, ptr %i.l, i64 %.063 ; 2 uses
+  %.060 = select i1 %.not67, i64 %i.n, i64 -1     ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   %i.p = load i32, ptr %i.o, align 4, !tbaa !222
   %i.q = add nuw nsw i32 %i.g, 2
   %i.r = mul i32 %i.p, %i.q                       ; 2 uses
   %i.s = zext i32 %i.r to i64
   %.idx = shl nuw nsw i64 %i.s, 1
-  %i.t = getelementptr inbounds nuw i8, ptr %.057, i64 %.idx
+  %i.t = getelementptr inbounds nuw i8, ptr %.061, i64 %.idx
   %.not6875 = icmp eq i32 %i.k, 0
   br i1 %.not6875, label %._crit_edge78, label %.preheader.lr.ph
 
@@ -662,23 +667,23 @@ bb.b:                                             ; preds = %bb.a
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !232
-  %.0 = getelementptr inbounds nuw i8, ptr %i.w, i64 %.057.idx
+  %.0 = getelementptr inbounds nuw i8, ptr %i.w, i64 %.063
   %.not105.a = icmp eq i32 %i.g, 0
   %.not106 = icmp eq i32 %i.g, 0
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
-  %.177.us = phi ptr [ %i.bo, %._crit_edge.us ], [ %.0, %.preheader.us.preheader ] ; 2 uses
-  %.06276.us = phi i32 [ %i.bp, %._crit_edge.us ], [ %i.k, %.preheader.us.preheader ]
+  %.05977.us = phi i32 [ %i.bp, %._crit_edge.us ], [ %i.k, %.preheader.us.preheader ]
+  %.16376.us = phi ptr [ %i.bo, %._crit_edge.us ], [ %.0, %.preheader.us.preheader ] ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader.us, %.split71.us84
-  %.05874.us = phi ptr [ %.057, %.preheader.us ], [ %i.bc, %.split71.us84 ] ; 9 uses
-  %.06073.us = phi ptr [ %.177.us, %.preheader.us ], [ %i.bb, %.split71.us84 ] ; 9 uses
-  %i.x = getelementptr inbounds [2 x i8], ptr %.06073.us, i64 %.063
+  %.05874.us = phi ptr [ %.061, %.preheader.us ], [ %i.bc, %.split71.us84 ] ; 9 uses
+  %.06073.us = phi ptr [ %.16376.us, %.preheader.us ], [ %i.bb, %.split71.us84 ] ; 9 uses
+  %i.x = getelementptr inbounds [2 x i8], ptr %.06073.us, i64 %.060
   %i.y = load i16, ptr %i.x, align 2, !tbaa !230
   %.fr = freeze i16 %i.y                          ; 7 uses
-  %i.z = getelementptr inbounds [2 x i8], ptr %.05874.us, i64 %.063
+  %i.z = getelementptr inbounds [2 x i8], ptr %.05874.us, i64 %.060
   store i16 %.fr, ptr %i.z, align 2, !tbaa !230
   %i.aa = add i16 %.fr, -1
   %or.cond.us = icmp ult i16 %i.aa, -2
@@ -792,8 +797,8 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %.spli
   tail call void @png_write_row(ptr noundef %i.c, ptr noundef %i.bl)
   %i.bm = load i64, ptr %i.u, align 8, !tbaa !233
   %i.bn = sdiv i64 %i.bm, 2
-  %i.bo = getelementptr inbounds [2 x i8], ptr %.177.us, i64 %i.bn
-  %i.bp = add i32 %.06276.us, -1                  ; 2 uses
+  %i.bo = getelementptr inbounds [2 x i8], ptr %.16376.us, i64 %i.bn
+  %i.bp = add i32 %.05977.us, -1                  ; 2 uses
   %.not68.us = icmp eq i32 %i.bp, 0
   br i1 %.not68.us, label %._crit_edge78, label %.preheader.us, !llvm.loop !243
 
@@ -837,10 +842,10 @@ bb.b:                                             ; preds = %bb.a
   %i.o = and i32 %i.k, 32                         ; 2 uses
   %.not76.not = icmp eq i32 %i.o, 0               ; 2 uses
   %i.p = zext nneg i32 %i.m to i64
-  %.070 = select i1 %.not76.not, i64 %i.p, i64 -1 ; 2 uses
   %.lobit = lshr exact i32 %i.o, 5
   %.065.idx = zext nneg i32 %.lobit to i64
   %.065 = getelementptr inbounds nuw i8, ptr %i.g, i64 %.065.idx ; 2 uses
+  %.069 = select i1 %.not76.not, i64 %i.p, i64 -1 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   %i.r = load i32, ptr %i.q, align 4, !tbaa !222
   %i.s = add nuw nsw i32 %i.l, 2
@@ -868,14 +873,14 @@ bb.b:                                             ; preds = %bb.a
   br label %.preheader78.us
 
 .preheader78.us:                                  ; preds = %.preheader78.us.preheader, %._crit_edge.us
-  %.187.us = phi ptr [ %i.di, %._crit_edge.us ], [ %.0, %.preheader78.us.preheader ] ; 2 uses
-  %.06886.us = phi i32 [ %i.dj, %._crit_edge.us ], [ %i.i, %.preheader78.us.preheader ]
+  %.07087.us = phi i32 [ %i.dj, %._crit_edge.us ], [ %i.i, %.preheader78.us.preheader ]
+  %.17486.us = phi ptr [ %i.di, %._crit_edge.us ], [ %.0, %.preheader78.us.preheader ] ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader78.us, %.split81.us92
   %.07184.us = phi ptr [ %.065, %.preheader78.us ], [ %i.dd, %.split81.us92 ] ; 7 uses
-  %.07383.us = phi ptr [ %.187.us, %.preheader78.us ], [ %i.dc, %.split81.us92 ] ; 6 uses
-  %i.ac = getelementptr inbounds [2 x i8], ptr %.07383.us, i64 %.070
+  %.07383.us = phi ptr [ %.17486.us, %.preheader78.us ], [ %i.dc, %.split81.us92 ] ; 6 uses
+  %i.ac = getelementptr inbounds [2 x i8], ptr %.07383.us, i64 %.069
   %i.ad = load i16, ptr %i.ac, align 2, !tbaa !230
   %.fr = freeze i16 %i.ad                         ; 6 uses
   %i.ae = zext i16 %.fr to i32                    ; 3 uses
@@ -883,7 +888,7 @@ bb.c:                                             ; preds = %.preheader78.us, %.
   %i.ag = add nuw nsw i32 %i.af, 32895
   %i.ah = lshr i32 %i.ag, 16                      ; 2 uses
   %i.ai = trunc nuw i32 %i.ah to i8
-  %i.aj = getelementptr inbounds i8, ptr %.07184.us, i64 %.070
+  %i.aj = getelementptr inbounds i8, ptr %.07184.us, i64 %.069
   store i8 %i.ai, ptr %i.aj, align 1, !tbaa !48
   %i.ak = icmp ne i32 %i.ah, 0
   %i.al = icmp ult i16 %.fr, -129                 ; 4 uses
@@ -1032,8 +1037,8 @@ png_unpremultiply.exit.us91.2:                    ; preds = %bb.k, %bb.j, %png_u
   tail call void @png_write_row(ptr noundef %i.c, ptr noundef %i.df)
   %i.dg = load i64, ptr %i.w, align 8, !tbaa !233
   %i.dh = sdiv i64 %i.dg, 2
-  %i.di = getelementptr inbounds [2 x i8], ptr %.187.us, i64 %i.dh
-  %i.dj = add i32 %.06886.us, -1                  ; 2 uses
+  %i.di = getelementptr inbounds [2 x i8], ptr %.17486.us, i64 %i.dh
+  %i.dj = add i32 %.07087.us, -1                  ; 2 uses
   %.not77.us = icmp eq i32 %i.dj, 0
   br i1 %.not77.us, label %.loopexit, label %.preheader78.us, !llvm.loop !245
 
@@ -1060,13 +1065,13 @@ bb.l:                                             ; preds = %bb.a
   br i1 %.not104, label %.preheader, label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.lr.ph, %._crit_edge.us101
-  %.2100.us = phi ptr [ %i.eo, %._crit_edge.us101 ], [ %i.e, %.preheader.lr.ph ] ; 2 uses
-  %.16999.us = phi i32 [ %i.ep, %._crit_edge.us101 ], [ %i.i, %.preheader.lr.ph ]
+  %.171100.us = phi i32 [ %i.ep, %._crit_edge.us101 ], [ %i.i, %.preheader.lr.ph ]
+  %.299.us = phi ptr [ %i.eo, %._crit_edge.us101 ], [ %i.e, %.preheader.lr.ph ] ; 2 uses
   br label %bb.m
 
 bb.m:                                             ; preds = %.preheader.us, %bb.m
   %.06397.us = phi ptr [ %i.g, %.preheader.us ], [ %i.ek, %bb.m ] ; 2 uses
-  %.06496.us = phi ptr [ %.2100.us, %.preheader.us ], [ %i.ds, %bb.m ] ; 2 uses
+  %.06496.us = phi ptr [ %.299.us, %.preheader.us ], [ %i.ds, %bb.m ] ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %.06496.us, i64 2
   %i.dt = load i16, ptr %.06496.us, align 2, !tbaa !230
   %i.du = zext i16 %i.dt to i32
@@ -1094,8 +1099,8 @@ bb.m:                                             ; preds = %.preheader.us, %bb.
   tail call void @png_write_row(ptr noundef %i.c, ptr noundef %i.g)
   %i.em = load i64, ptr %i.dr, align 8, !tbaa !233
   %i.en = sdiv i64 %i.em, 2
-  %i.eo = getelementptr inbounds [2 x i8], ptr %.2100.us, i64 %i.en
-  %i.ep = add i32 %.16999.us, -1                  ; 2 uses
+  %i.eo = getelementptr inbounds [2 x i8], ptr %.299.us, i64 %i.en
+  %i.ep = add i32 %.171100.us, -1                 ; 2 uses
   %.not75.us = icmp eq i32 %i.ep, 0
   br i1 %.not75.us, label %.loopexit, label %.preheader.us, !llvm.loop !247
 

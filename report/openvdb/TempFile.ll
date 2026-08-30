@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openvdb/original/TempFile?download=true
+inline.NumInlined: 691
+inline.NumDeleted: 315
 begin_hunk_0_@_ZN7openvdb5v13_09ExceptionC2EPKcPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:bb.a
           catch ptr null
   br label %bb.i
@@ -200,8 +202,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %sext17 = shl i64 %i.a, 32
   %i.c = ashr exact i64 %sext17, 32               ; 4 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !73   ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !73
   %.not.i18 = icmp eq i64 %i.e, %i.c
   br i1 %.not.i18, label %bb.d, label %bb.b
 
@@ -215,6 +217,7 @@ bb.b:                                             ; preds = %.thread
 
 _ZN5boost9iostreams6detail12basic_bufferIcSaIcEEC2El.exit.i19: ; preds = %bb.b
   %i.g = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #27
+  %5 = load i64, ptr %i.d, align 8, !tbaa !90
   store i64 %i.c, ptr %i.d, align 8, !tbaa !90
   %i.h = load ptr, ptr %i.b, align 8, !tbaa !110  ; 2 uses
   store ptr %i.g, ptr %i.b, align 8, !tbaa !110
@@ -222,7 +225,7 @@ _ZN5boost9iostreams6detail12basic_bufferIcSaIcEEC2El.exit.i19: ; preds = %bb.b
   br i1 %.not.i.i20, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %_ZN5boost9iostreams6detail12basic_bufferIcSaIcEEC2El.exit.i19
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef %i.e) #28
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef %5) #28
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %.thread, %_ZN5boost9iostreams6detail12basic_bufferIcSaIcEEC2El.exit.i19, %bb.c

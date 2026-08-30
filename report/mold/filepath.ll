@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mold/original/filepath?download=true
+inline.NumInlined: 75
+inline.NumDeleted: 64
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -94,7 +96,7 @@ bb.a:
   call void @_ZNSt10filesystem12read_symlinkERKNS_7__cxx114pathE(ptr dead_on_unwind nonnull writable sret(%"class.std::filesystem::__cxx11::path") align 8 %1, ptr noundef nonnull align 8 dereferenceable(40) %2) #11
   call void @llvm.experimental.noalias.scope.decl(metadata !14)
   call void @llvm.experimental.noalias.scope.decl(metadata !17)
-  %i.a = load ptr, ptr %1, align 8, !tbaa !20, !noalias !25 ; 4 uses
+  %i.a = load ptr, ptr %1, align 8, !tbaa !20, !noalias !25 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !26, !noalias !25 ; 9 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -163,11 +165,10 @@ _ZNKSt10filesystem7__cxx114path6stringEv.exit:    ; preds = %._crit_edge.i.i.i.i
 
 bb.j:                                             ; preds = %_ZNKSt10filesystem7__cxx114path6stringEv.exit
   call void @_ZNKSt10filesystem7__cxx114path5_List13_Impl_deleterclEPNS2_5_ImplE(ptr noundef nonnull align 8 dereferenceable(8) %i.p, ptr noundef nonnull %i.q) #11
-  %.pre = load ptr, ptr %1, align 8, !tbaa !20
   br label %_ZNSt10filesystem7__cxx114path5_ListD2Ev.exit.i
 
 _ZNSt10filesystem7__cxx114path5_ListD2Ev.exit.i:  ; preds = %bb.j, %_ZNKSt10filesystem7__cxx114path6stringEv.exit
-  %3 = phi ptr [ %.pre, %bb.j ], [ %i.a, %_ZNKSt10filesystem7__cxx114path6stringEv.exit ] ; 2 uses
+  %3 = load ptr, ptr %1, align 8, !tbaa !20       ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.s = icmp eq ptr %3, %i.r
   br i1 %i.s, label %_ZNSt10filesystem7__cxx114pathD2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i

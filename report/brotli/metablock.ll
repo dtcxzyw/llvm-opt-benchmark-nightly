@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/brotli/original/metablock?download=true
+inline.NumInlined: 13
+inline.NumDeleted: 8
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 31
 begin_hunk_0_@BrotliInitDistanceParams:bb.a
   br i1 %i.k, label %BrotliCalculateDistanceCodeLimit.exit, label %bb.c
 
@@ -200,9 +205,9 @@ bb.e:                                             ; preds = %BrotliInitDistanceP
 
 .lr.ph.split.us.i:                                ; preds = %.critedge.us.i, %.lr.ph.split.us.preheader.i
   %i.bf = phi i64 [ %i.di, %.critedge.us.i ], [ 0, %.lr.ph.split.us.preheader.i ] ; 3 uses
-  %.03144.us.i = phi i64 [ %i.dj, %.critedge.us.i ], [ 0, %.lr.ph.split.us.preheader.i ] ; 2 uses
-  %.03243.us.i = phi double [ %.234.us.i, %.critedge.us.i ], [ 0.000000e+00, %.lr.ph.split.us.preheader.i ] ; 3 uses
-  %i.bg = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %.03144.us.i ; 4 uses
+  %.02944.us.i = phi double [ %.234.us.i, %.critedge.us.i ], [ 0.000000e+00, %.lr.ph.split.us.preheader.i ] ; 3 uses
+  %.03243.us.i = phi i64 [ %i.dj, %.critedge.us.i ], [ 0, %.lr.ph.split.us.preheader.i ] ; 2 uses
+  %i.bg = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %.03243.us.i ; 4 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 4
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !36
   %i.bj = and i32 %i.bi, 33554431
@@ -286,21 +291,21 @@ PrefixEncodeCopyDistance.exit.us.i:               ; preds = %bb.k, %bb.j
   store i64 %i.de, ptr %i.e, align 8, !tbaa !42
   %i.df = lshr i16 %.0.us.i, 10
   %i.dg = uitofp nneg i16 %i.df to double
-  %i.dh = fadd double %.03243.us.i, %i.dg
+  %i.dh = fadd double %.02944.us.i, %i.dg
   br label %.critedge.us.i
 
 .critedge.us.i:                                   ; preds = %PrefixEncodeCopyDistance.exit.us.i, %bb.f, %.lr.ph.split.us.i
   %i.di = phi i64 [ %i.bf, %.lr.ph.split.us.i ], [ %i.bf, %bb.f ], [ %i.de, %PrefixEncodeCopyDistance.exit.us.i ]
-  %.234.us.i = phi double [ %.03243.us.i, %.lr.ph.split.us.i ], [ %.03243.us.i, %bb.f ], [ %i.dh, %PrefixEncodeCopyDistance.exit.us.i ] ; 2 uses
-  %i.dj = add nuw i64 %.03144.us.i, 1             ; 2 uses
+  %.234.us.i = phi double [ %.02944.us.i, %.lr.ph.split.us.i ], [ %.02944.us.i, %bb.f ], [ %i.dh, %PrefixEncodeCopyDistance.exit.us.i ] ; 2 uses
+  %i.dj = add nuw i64 %.03243.us.i, 1             ; 2 uses
   %exitcond47.not.i = icmp eq i64 %i.dj, %8
   br i1 %exitcond47.not.i, label %.loopexit276, label %.lr.ph.split.us.i, !llvm.loop !43
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %.critedge.i
   %i.dk = phi i64 [ %i.ed, %.critedge.i ], [ 0, %.lr.ph.i ] ; 3 uses
-  %.03144.i = phi i64 [ %i.ee, %.critedge.i ], [ 0, %.lr.ph.i ] ; 2 uses
-  %.03243.i = phi double [ %.234.i, %.critedge.i ], [ 0.000000e+00, %.lr.ph.i ] ; 3 uses
-  %i.dl = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %.03144.i ; 3 uses
+  %.02944.i = phi double [ %.234.i, %.critedge.i ], [ 0.000000e+00, %.lr.ph.i ] ; 3 uses
+  %.03243.i = phi i64 [ %i.ee, %.critedge.i ], [ 0, %.lr.ph.i ] ; 2 uses
+  %i.dl = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %.03243.i ; 3 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 4
   %i.dn = load i32, ptr %i.dm, align 4, !tbaa !36
   %i.do = and i32 %i.dn, 33554431
@@ -326,13 +331,13 @@ PrefixEncodeCopyDistance.exit.i:                  ; preds = %bb.l
   store i64 %i.dz, ptr %i.e, align 8, !tbaa !42
   %i.ea = lshr i16 %i.dt, 10
   %i.eb = uitofp nneg i16 %i.ea to double
-  %i.ec = fadd double %.03243.i, %i.eb
+  %i.ec = fadd double %.02944.i, %i.eb
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %PrefixEncodeCopyDistance.exit.i, %bb.l, %.lr.ph.split.i
   %i.ed = phi i64 [ %i.dk, %.lr.ph.split.i ], [ %i.dk, %bb.l ], [ %i.dz, %PrefixEncodeCopyDistance.exit.i ]
-  %.234.i = phi double [ %.03243.i, %.lr.ph.split.i ], [ %.03243.i, %bb.l ], [ %i.ec, %PrefixEncodeCopyDistance.exit.i ] ; 2 uses
-  %i.ee = add nuw i64 %.03144.i, 1                ; 2 uses
+  %.234.i = phi double [ %.02944.i, %.lr.ph.split.i ], [ %.02944.i, %bb.l ], [ %i.ec, %PrefixEncodeCopyDistance.exit.i ] ; 2 uses
+  %i.ee = add nuw i64 %.03243.i, 1                ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ee, %8
   br i1 %exitcond.not.i, label %.loopexit276, label %.lr.ph.split.i, !llvm.loop !43
 
@@ -387,9 +392,9 @@ bb.p:                                             ; preds = %bb.o
 
 .lr.ph.split.i208:                                ; preds = %bb.p, %.critedge.i212
   %i.eo = phi i64 [ %i.fh, %.critedge.i212 ], [ 0, %bb.p ] ; 3 uses
-  %.03144.i209 = phi i64 [ %i.fi, %.critedge.i212 ], [ 0, %bb.p ] ; 2 uses
-  %.03243.i210 = phi double [ %.234.i213, %.critedge.i212 ], [ 0.000000e+00, %bb.p ] ; 3 uses
-  %i.ep = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %.03144.i209 ; 3 uses
+  %.02944.i209 = phi double [ %.234.i213, %.critedge.i212 ], [ 0.000000e+00, %bb.p ] ; 3 uses
+  %.03243.i210 = phi i64 [ %i.fi, %.critedge.i212 ], [ 0, %bb.p ] ; 2 uses
+  %i.ep = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %.03243.i210 ; 3 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 4
   %i.er = load i32, ptr %i.eq, align 4, !tbaa !36
   %i.es = and i32 %i.er, 33554431
@@ -415,13 +420,13 @@ PrefixEncodeCopyDistance.exit.i215:               ; preds = %bb.q
   store i64 %i.fd, ptr %i.e, align 8, !tbaa !42
   %i.fe = lshr i16 %i.ex, 10
   %i.ff = uitofp nneg i16 %i.fe to double
-  %i.fg = fadd double %.03243.i210, %i.ff
+  %i.fg = fadd double %.02944.i209, %i.ff
   br label %.critedge.i212
 
 .critedge.i212:                                   ; preds = %PrefixEncodeCopyDistance.exit.i215, %bb.q, %.lr.ph.split.i208
   %i.fh = phi i64 [ %i.eo, %.lr.ph.split.i208 ], [ %i.eo, %bb.q ], [ %i.fd, %PrefixEncodeCopyDistance.exit.i215 ]
-  %.234.i213 = phi double [ %.03243.i210, %.lr.ph.split.i208 ], [ %.03243.i210, %bb.q ], [ %i.fg, %PrefixEncodeCopyDistance.exit.i215 ] ; 2 uses
-  %i.fi = add nuw i64 %.03144.i209, 1             ; 2 uses
+  %.234.i213 = phi double [ %.02944.i209, %.lr.ph.split.i208 ], [ %.02944.i209, %bb.q ], [ %i.fg, %PrefixEncodeCopyDistance.exit.i215 ] ; 2 uses
+  %i.fi = add nuw i64 %.03243.i210, 1             ; 2 uses
   %exitcond.not.i214 = icmp eq i64 %i.fi, %8
   br i1 %exitcond.not.i214, label %ComputeDistanceCost.exit216, label %.lr.ph.split.i208, !llvm.loop !43
 
@@ -824,10 +829,10 @@ bb.v:                                             ; preds = %bb.v, %.epil.prehea
 
 bb.w:                                             ; preds = %.lr.ph78, %BlockSplitterAddSymbolDistance.exit47
   %.0.i76 = phi i64 [ %2, %.lr.ph78 ], [ %i.jb, %BlockSplitterAddSymbolDistance.exit47 ] ; 2 uses
-  %.076.i75 = phi i8 [ %4, %.lr.ph78 ], [ %.2.i, %BlockSplitterAddSymbolDistance.exit47 ] ; 2 uses
-  %.180.i74 = phi i64 [ 0, %.lr.ph78 ], [ %i.ka, %BlockSplitterAddSymbolDistance.exit47 ] ; 2 uses
+  %.178.i75 = phi i64 [ 0, %.lr.ph78 ], [ %i.ka, %BlockSplitterAddSymbolDistance.exit47 ] ; 2 uses
+  %.080.i74 = phi i8 [ %4, %.lr.ph78 ], [ %.2.i, %BlockSplitterAddSymbolDistance.exit47 ] ; 2 uses
   %.082.i73 = phi i8 [ %5, %.lr.ph78 ], [ %.284.i, %BlockSplitterAddSymbolDistance.exit47 ] ; 2 uses
-  %i.he = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %.180.i74 ; 4 uses
+  %i.he = getelementptr inbounds nuw [16 x i8], ptr %9, i64 %.178.i75 ; 4 uses
   %.sroa.0.0.copyload = load i32, ptr %i.he, align 4, !tbaa !15 ; 2 uses
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.he, i64 4
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 4, !tbaa !15
@@ -868,13 +873,13 @@ BlockSplitterAddSymbolCommand.exit45:             ; preds = %bb.w, %bb.x
 
 .lr.ph68:                                         ; preds = %.lr.ph68.preheader, %ContextBlockSplitterAddSymbol.exit
   %.1.i67 = phi i64 [ %i.ix, %ContextBlockSplitterAddSymbol.exit ], [ %.0.i76, %.lr.ph68.preheader ] ; 2 uses
-  %.177.i66 = phi i8 [ %i.hw, %ContextBlockSplitterAddSymbol.exit ], [ %.076.i75, %.lr.ph68.preheader ] ; 3 uses
-  %.078.i65 = phi i64 [ %i.iy, %ContextBlockSplitterAddSymbol.exit ], [ %i.ht, %.lr.ph68.preheader ]
-  %.183.i64 = phi i8 [ %.177.i66, %ContextBlockSplitterAddSymbol.exit ], [ %.082.i73, %.lr.ph68.preheader ]
+  %.076.i66 = phi i64 [ %i.iy, %ContextBlockSplitterAddSymbol.exit ], [ %i.ht, %.lr.ph68.preheader ]
+  %.181.i65 = phi i8 [ %i.hw, %ContextBlockSplitterAddSymbol.exit ], [ %.080.i74, %.lr.ph68.preheader ] ; 3 uses
+  %.183.i64 = phi i8 [ %.181.i65, %ContextBlockSplitterAddSymbol.exit ], [ %.082.i73, %.lr.ph68.preheader ]
   %i.hu = and i64 %.1.i67, %3
   %i.hv = getelementptr inbounds nuw i8, ptr %1, i64 %i.hu
   %i.hw = load i8, ptr %i.hv, align 1, !tbaa !96  ; 3 uses
-  %i.hx = zext i8 %.177.i66 to i64
+  %i.hx = zext i8 %.181.i65 to i64
   %i.hy = getelementptr inbounds nuw i8, ptr %6, i64 %i.hx
   %i.hz = load i8, ptr %i.hy, align 1, !tbaa !96
   %i.ia = zext i8 %.183.i64 to i64
@@ -911,13 +916,13 @@ bb.y:                                             ; preds = %.lr.ph68
 
 ContextBlockSplitterAddSymbol.exit:               ; preds = %bb.y, %.lr.ph68
   %i.ix = add i64 %.1.i67, 1                      ; 2 uses
-  %i.iy = add nsw i64 %.078.i65, -1               ; 2 uses
+  %i.iy = add nsw i64 %.076.i66, -1               ; 2 uses
   %.not.i = icmp eq i64 %i.iy, 0
   br i1 %.not.i, label %._crit_edge69, label %.lr.ph68, !llvm.loop !103
 
 ._crit_edge69:                                    ; preds = %ContextBlockSplitterAddSymbol.exit, %BlockSplitterAddSymbolCommand.exit45
-  %.183.i.lcssa = phi i8 [ %.082.i73, %BlockSplitterAddSymbolCommand.exit45 ], [ %.177.i66, %ContextBlockSplitterAddSymbol.exit ]
-  %.177.i.lcssa = phi i8 [ %.076.i75, %BlockSplitterAddSymbolCommand.exit45 ], [ %i.hw, %ContextBlockSplitterAddSymbol.exit ]
+  %.183.i.lcssa = phi i8 [ %.082.i73, %BlockSplitterAddSymbolCommand.exit45 ], [ %.181.i65, %ContextBlockSplitterAddSymbol.exit ]
+  %.177.i.lcssa = phi i8 [ %.080.i74, %BlockSplitterAddSymbolCommand.exit45 ], [ %i.hw, %ContextBlockSplitterAddSymbol.exit ]
   %.1.i.lcssa = phi i64 [ %.0.i76, %BlockSplitterAddSymbolCommand.exit45 ], [ %i.ix, %ContextBlockSplitterAddSymbol.exit ]
   %i.iz = and i32 %.sroa.4.0.copyload, 33554431   ; 2 uses
   %i.ja = zext nneg i32 %i.iz to i64
@@ -965,7 +970,7 @@ bb.ab:                                            ; preds = %bb.aa
 BlockSplitterAddSymbolDistance.exit47:            ; preds = %bb.ab, %bb.aa, %bb.z, %._crit_edge69
   %.284.i = phi i8 [ %.183.i.lcssa, %._crit_edge69 ], [ %i.jf, %bb.z ], [ %i.jf, %bb.aa ], [ %i.jf, %bb.ab ]
   %.2.i = phi i8 [ %.177.i.lcssa, %._crit_edge69 ], [ %i.jj, %bb.z ], [ %i.jj, %bb.aa ], [ %i.jj, %bb.ab ]
-  %i.ka = add nuw i64 %.180.i74, 1                ; 2 uses
+  %i.ka = add nuw i64 %.178.i75, 1                ; 2 uses
   %exitcond102.not = icmp eq i64 %i.ka, %10
   br i1 %exitcond102.not, label %._crit_edge79, label %bb.w, !llvm.loop !109
 

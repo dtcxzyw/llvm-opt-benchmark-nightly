@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libevent/original/buffer?download=true
+inline.NumInlined: 79
+inline.NumDeleted: 28
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@evbuffer_expand_singlechain:bb.a
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bu, i64 40
   store ptr %i.by, ptr %i.bz, align 8
@@ -200,7 +204,7 @@ bb.h:                                             ; preds = %.lr.ph.split._crit_
   %i.bc = phi i64 [ %i.az, %bb.g ], [ %.pre63, %.lr.ph.split._crit_edge ]
   %i.bd = phi i64 [ %i.ax, %bb.g ], [ %.pre, %.lr.ph.split._crit_edge ]
   %i.be = phi i64 [ %i.bb, %bb.g ], [ 0, %.lr.ph.split._crit_edge ]
-  %i.bf = sub nsw i64 %1, %.04253
+  %i.bf = sub nuw nsw i64 %1, %.04253
   %i.bg = tail call i64 @llvm.umin.i64(i64 %i.be, i64 %i.bf) ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.04455, i64 40
   %i.bi = load ptr, ptr %i.bh, align 8
@@ -210,7 +214,7 @@ bb.h:                                             ; preds = %.lr.ph.split._crit_
   store ptr %i.bk, ptr %i.bl, align 8
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 8
   store i64 %i.bg, ptr %i.bm, align 8
-  %i.bn = add i64 %i.bg, %.04253                  ; 2 uses
+  %i.bn = add nuw i64 %i.bg, %.04253              ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %.044 = load ptr, ptr %.04455, align 8
   %i.bo = icmp samesign ult i64 %indvars.iv.next, %i.s
@@ -503,25 +507,25 @@ bb.a:
   %i.g = icmp ugt ptr %i.b, %i.d
   %i.h = and i1 %i.f, %i.g
   %or.cond72 = select i1 %i.e, i1 %i.h, i1 false  ; 2 uses
-  %.061.a = select i1 %or.cond72, ptr %i.b, ptr %i.d ; 2 uses
-  %.060 = select i1 %or.cond72, ptr %i.d, ptr %i.b ; 2 uses
-  %.not = icmp eq ptr %.060, null
+  %.061.a = select i1 %or.cond72, ptr %i.d, ptr %i.b ; 2 uses
+  %.060 = select i1 %or.cond72, ptr %i.b, ptr %i.d ; 2 uses
+  %.not = icmp eq ptr %.061.a, null
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @evthread_lock_fns_, i64 24), align 8
-  %i.j = tail call i32 %i.i(i32 noundef 0, ptr noundef nonnull %.060) #16 ; 0 uses
+  %i.j = tail call i32 %i.i(i32 noundef 0, ptr noundef nonnull %.061.a) #16 ; 0 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.k = icmp ne ptr %i.b, %i.d
-  %i.l = icmp ne ptr %.061.a, null
+  %i.l = icmp ne ptr %.060, null
   %or.cond5 = and i1 %i.k, %i.l
   br i1 %or.cond5, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.m = load ptr, ptr getelementptr inbounds nuw (i8, ptr @evthread_lock_fns_, i64 24), align 8
-  %i.n = tail call i32 %i.m(i32 noundef 0, ptr noundef nonnull %.061.a) #16 ; 0 uses
+  %i.n = tail call i32 %i.m(i32 noundef 0, ptr noundef nonnull %.060) #16 ; 0 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -613,7 +617,7 @@ bb.l:                                             ; preds = %.loopexit.i.i
   %i.bc = load i64, ptr %i.bb, align 8
   %i.bd = getelementptr inbounds i8, ptr %i.ba, i64 %i.bc
   %i.be = load i64, ptr %i.al, align 8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.aw, ptr align 1 %i.bd, i64 %i.be, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aw, ptr align 1 %i.bd, i64 %i.be, i1 false)
   %i.bf = load i64, ptr %i.al, align 8
   %i.bg = getelementptr inbounds nuw i8, ptr %i.as, i64 24
   store i64 %i.bf, ptr %i.bg, align 8
@@ -1016,25 +1020,25 @@ bb.a:
   %i.g = icmp ugt ptr %i.b, %i.d
   %i.h = and i1 %i.f, %i.g
   %or.cond73 = select i1 %i.e, i1 %i.h, i1 false  ; 2 uses
-  %.061.a = select i1 %or.cond73, ptr %i.b, ptr %i.d ; 2 uses
-  %.060 = select i1 %or.cond73, ptr %i.d, ptr %i.b ; 2 uses
-  %.not = icmp eq ptr %.060, null
+  %.061.a = select i1 %or.cond73, ptr %i.d, ptr %i.b ; 2 uses
+  %.060 = select i1 %or.cond73, ptr %i.b, ptr %i.d ; 2 uses
+  %.not = icmp eq ptr %.061.a, null
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @evthread_lock_fns_, i64 24), align 8
-  %i.j = tail call i32 %i.i(i32 noundef 0, ptr noundef nonnull %.060) #16 ; 0 uses
+  %i.j = tail call i32 %i.i(i32 noundef 0, ptr noundef nonnull %.061.a) #16 ; 0 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.k = icmp ne ptr %i.b, %i.d
-  %i.l = icmp ne ptr %.061.a, null
+  %i.l = icmp ne ptr %.060, null
   %or.cond5 = and i1 %i.k, %i.l
   br i1 %or.cond5, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.m = load ptr, ptr getelementptr inbounds nuw (i8, ptr @evthread_lock_fns_, i64 24), align 8
-  %i.n = tail call i32 %i.m(i32 noundef 0, ptr noundef nonnull %.061.a) #16 ; 0 uses
+  %i.n = tail call i32 %i.m(i32 noundef 0, ptr noundef nonnull %.060) #16 ; 0 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -1126,7 +1130,7 @@ bb.l:                                             ; preds = %.loopexit.i.i
   %i.bb = load i64, ptr %i.ba, align 8
   %i.bc = getelementptr inbounds i8, ptr %i.az, i64 %i.bb
   %i.bd = load i64, ptr %i.ak, align 8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.av, ptr align 1 %i.bc, i64 %i.bd, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.av, ptr align 1 %i.bc, i64 %i.bd, i1 false)
   %i.be = load i64, ptr %i.ak, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ar, i64 24
   store i64 %i.be, ptr %i.bf, align 8
@@ -1339,7 +1343,7 @@ HAS_PINNED_R.exit.thread:                         ; preds = %bb.f, %HAS_PINNED_R
 
 bb.g:                                             ; preds = %HAS_PINNED_R.exit, %bb.e
   %spec.select = tail call i64 @llvm.umin.i64(i64 %1, i64 %i.f) ; 5 uses
-  %i.r = sub i64 %i.f, %spec.select
+  %i.r = sub nuw i64 %i.f, %spec.select
   store i64 %i.r, ptr %i.e, align 8
   %i.s = load ptr, ptr %0, align 8                ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 24
@@ -1742,72 +1746,72 @@ bb.s:                                             ; preds = %.thread, %bb.p
 
 .lr.ph177.preheader:                              ; preds = %.thread197, %bb.s
   %i.bh = phi ptr [ %i.be, %.thread197 ], [ %i.bg, %bb.s ] ; 4 uses
-  %.2208 = phi i64 [ %.0108, %.thread197 ], [ %i.t, %bb.s ]
-  %.1116207 = phi ptr [ %i.bc, %.thread197 ], [ %i.bf, %bb.s ]
+  %.1114208 = phi ptr [ %i.bc, %.thread197 ], [ %i.bf, %bb.s ]
+  %.1116207 = phi ptr [ %i.az, %.thread197 ], [ %i.e, %bb.s ] ; 2 uses
   %.1120206 = phi ptr [ %i.e, %.thread197 ], [ %.0122165, %bb.s ]
-  %.2124203 = phi ptr [ %i.az, %.thread197 ], [ %i.e, %bb.s ] ; 2 uses
+  %.2123203 = phi i64 [ %.0108, %.thread197 ], [ %i.t, %bb.s ]
   %.in = load ptr, ptr %i.bh, align 8
   %i.bi = load ptr, ptr %.in, align 8
   br label %.lr.ph177
 
 .lr.ph177:                                        ; preds = %.lr.ph177.preheader, %bb.v
-  %.3175 = phi i64 [ %.4, %bb.v ], [ %.2208, %.lr.ph177.preheader ] ; 6 uses
-  %.0109174 = phi i32 [ %.1110, %bb.v ], [ 0, %.lr.ph177.preheader ] ; 2 uses
-  %.0111173 = phi i32 [ %spec.select, %bb.v ], [ 0, %.lr.ph177.preheader ] ; 2 uses
-  %.2117172 = phi ptr [ %.3118, %bb.v ], [ %.1116207, %.lr.ph177.preheader ] ; 4 uses
-  %.2121171 = phi ptr [ %i.bl, %bb.v ], [ %.1120206, %.lr.ph177.preheader ] ; 10 uses
-  %i.bj = getelementptr inbounds nuw i8, ptr %.2121171, i64 24 ; 4 uses
+  %.0108175 = phi i32 [ %.1110, %bb.v ], [ 0, %.lr.ph177.preheader ] ; 2 uses
+  %.0109174 = phi i32 [ %spec.select, %bb.v ], [ 0, %.lr.ph177.preheader ] ; 2 uses
+  %.2173 = phi ptr [ %.3, %bb.v ], [ %.1114208, %.lr.ph177.preheader ] ; 4 uses
+  %.2117172 = phi ptr [ %i.bl, %bb.v ], [ %.1120206, %.lr.ph177.preheader ] ; 10 uses
+  %.3124171 = phi i64 [ %.4, %bb.v ], [ %.2123203, %.lr.ph177.preheader ] ; 6 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %.2117172, i64 24 ; 4 uses
   %i.bk = load i64, ptr %i.bj, align 8            ; 2 uses
-  %.not142 = icmp ult i64 %.3175, %i.bk
+  %.not142 = icmp ult i64 %.3124171, %i.bk
   br i1 %.not142, label %.critedge, label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph177
-  %i.bl = load ptr, ptr %.2121171, align 8        ; 2 uses
-  %i.bm = getelementptr inbounds nuw i8, ptr %.2121171, i64 40
+  %i.bl = load ptr, ptr %.2117172, align 8        ; 2 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %.2117172, i64 40
   %i.bn = load ptr, ptr %i.bm, align 8            ; 2 uses
   %.not147 = icmp eq ptr %i.bn, null
   br i1 %.not147, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.bo = getelementptr inbounds nuw i8, ptr %.2121171, i64 16
+  %i.bo = getelementptr inbounds nuw i8, ptr %.2117172, i64 16
   %i.bp = load i64, ptr %i.bo, align 8
   %i.bq = getelementptr inbounds i8, ptr %i.bn, i64 %i.bp
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.2117172, ptr nonnull align 1 %i.bq, i64 %i.bk, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.2173, ptr nonnull align 1 %i.bq, i64 %i.bk, i1 false)
   %i.br = load i64, ptr %i.bj, align 8            ; 2 uses
-  %i.bs = sub i64 %.3175, %i.br
-  %i.bt = getelementptr inbounds nuw i8, ptr %.2117172, i64 %i.br
+  %i.bs = sub i64 %.3124171, %i.br
+  %i.bt = getelementptr inbounds nuw i8, ptr %.2173, i64 %i.br
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  %.3118 = phi ptr [ %i.bt, %bb.u ], [ %.2117172, %bb.t ]
-  %.4 = phi i64 [ %i.bs, %bb.u ], [ %.3175, %bb.t ]
-  %i.bu = icmp eq ptr %.2121171, %i.bi
-  %spec.select = select i1 %i.bu, i32 1, i32 %.0111173 ; 2 uses
+  %.4 = phi i64 [ %i.bs, %bb.u ], [ %.3124171, %bb.t ]
+  %.3 = phi ptr [ %i.bt, %bb.u ], [ %.2173, %bb.t ]
+  %i.bu = icmp eq ptr %.2117172, %i.bi
+  %spec.select = select i1 %i.bu, i32 1, i32 %.0109174 ; 2 uses
   %i.bv = load ptr, ptr %i.bh, align 8
-  %i.bw = icmp eq ptr %.2121171, %i.bv
-  %.1110 = select i1 %i.bw, i32 1, i32 %.0109174  ; 2 uses
-  tail call fastcc void @evbuffer_chain_free(ptr noundef nonnull %.2121171)
+  %i.bw = icmp eq ptr %.2117172, %i.bv
+  %.1110 = select i1 %i.bw, i32 1, i32 %.0108175  ; 2 uses
+  tail call fastcc void @evbuffer_chain_free(ptr noundef nonnull %.2117172)
   %.not141 = icmp eq ptr %i.bl, null
   br i1 %.not141, label %.critedge149, label %.lr.ph177, !llvm.loop !33
 
 .critedge:                                        ; preds = %.lr.ph177
-  %i.bx = getelementptr inbounds nuw i8, ptr %.2121171, i64 40
+  %i.bx = getelementptr inbounds nuw i8, ptr %.2117172, i64 40
   %i.by = load ptr, ptr %i.bx, align 8
-  %i.bz = getelementptr inbounds nuw i8, ptr %.2121171, i64 16 ; 3 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr %.2117172, i64 16 ; 3 uses
   %i.ca = load i64, ptr %i.bz, align 8
   %i.cb = getelementptr inbounds i8, ptr %i.by, i64 %i.ca
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.2117172, ptr align 1 %i.cb, i64 %.3175, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.2173, ptr align 1 %i.cb, i64 %.3124171, i1 false)
   %i.cc = load i64, ptr %i.bz, align 8
-  %i.cd = add nsw i64 %i.cc, %.3175
+  %i.cd = add nsw i64 %i.cc, %.3124171
   store i64 %i.cd, ptr %i.bz, align 8
   %i.ce = load i64, ptr %i.bj, align 8
-  %i.cf = sub i64 %i.ce, %.3175
+  %i.cf = sub i64 %i.ce, %.3124171
   store i64 %i.cf, ptr %i.bj, align 8
   br label %bb.w
 
 .critedge149:                                     ; preds = %bb.v, %bb.s
   %i.cg = phi ptr [ %i.bg, %bb.s ], [ %i.bh, %bb.v ]
-  %.2124204 = phi ptr [ %i.e, %bb.s ], [ %.2124203, %bb.v ] ; 2 uses
+  %.2124204 = phi ptr [ %i.e, %bb.s ], [ %.1116207, %bb.v ] ; 2 uses
   %.0111.lcssa = phi i32 [ 0, %bb.s ], [ %spec.select, %bb.v ]
   %.0109.lcssa = phi i32 [ 0, %bb.s ], [ %.1110, %bb.v ]
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1816,10 +1820,10 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 
 bb.w:                                             ; preds = %.critedge149, %.critedge
   %i.ci = phi ptr [ %i.cg, %.critedge149 ], [ %i.bh, %.critedge ]
-  %.2124205 = phi ptr [ %.2124204, %.critedge149 ], [ %.2124203, %.critedge ] ; 3 uses
-  %.2121164 = phi ptr [ null, %.critedge149 ], [ %.2121171, %.critedge ]
-  %.0111161 = phi i32 [ %.0111.lcssa, %.critedge149 ], [ %.0111173, %.critedge ]
-  %.0109159 = phi i32 [ %.0109.lcssa, %.critedge149 ], [ %.0109174, %.critedge ]
+  %.2124205 = phi ptr [ %.2124204, %.critedge149 ], [ %.1116207, %.critedge ] ; 3 uses
+  %.2121164 = phi ptr [ null, %.critedge149 ], [ %.2117172, %.critedge ]
+  %.0111161 = phi i32 [ %.0111.lcssa, %.critedge149 ], [ %.0109174, %.critedge ]
+  %.0109159 = phi i32 [ %.0109.lcssa, %.critedge149 ], [ %.0108175, %.critedge ]
   store ptr %.2121164, ptr %.2124205, align 8
   %.not143 = icmp eq i32 %.0111161, 0
   br i1 %.not143, label %bb.x, label %.sink.split
@@ -2222,8 +2226,8 @@ evbuffer_find_eol_char.exit.thread.loopexit130:   ; preds = %.lr.ph
   br label %evbuffer_find_eol_char.exit.thread
 
 evbuffer_find_eol_char.exit.thread:               ; preds = %evbuffer_find_eol_char.exit.thread.loopexit130, %evbuffer_find_eol_char.exit.thread.loopexit129, %evbuffer_find_eol_char.exit.thread.loopexit128, %evbuffer_find_eol_char.exit.thread.loopexit, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.r, %bb.q, %bb.j, %evbuffer_strchr.exit, %bb.i, %evbuffer_strchr.exit78, %evbuffer_strchr.exit59, %bb.p, %evbuffer_find_eol_char.exit, %evbuffer_strspn.exit
-  %.not30 = phi i1 [ true, %bb.i ], [ true, %evbuffer_find_eol_char.exit ], [ false, %evbuffer_strspn.exit ], [ true, %bb.p ], [ true, %evbuffer_find_eol_char.exit.thread.loopexit128 ], [ true, %evbuffer_strchr.exit59 ], [ true, %evbuffer_strchr.exit78 ], [ true, %evbuffer_find_eol_char.exit.thread.loopexit129 ], [ true, %evbuffer_strchr.exit ], [ true, %evbuffer_find_eol_char.exit.thread.loopexit ], [ true, %bb.j ], [ true, %bb.q ], [ true, %bb.r ], [ true, %bb.aa ], [ true, %bb.ab ], [ true, %bb.ac ], [ true, %bb.ad ], [ true, %evbuffer_find_eol_char.exit.thread.loopexit130 ]
   %.3 = phi i64 [ 0, %bb.i ], [ 0, %evbuffer_find_eol_char.exit ], [ %.2, %evbuffer_strspn.exit ], [ 0, %bb.p ], [ 0, %evbuffer_find_eol_char.exit.thread.loopexit128 ], [ 0, %evbuffer_strchr.exit59 ], [ 0, %evbuffer_strchr.exit78 ], [ 0, %evbuffer_find_eol_char.exit.thread.loopexit129 ], [ 0, %evbuffer_strchr.exit ], [ 0, %evbuffer_find_eol_char.exit.thread.loopexit ], [ 0, %bb.j ], [ 0, %bb.q ], [ 0, %bb.r ], [ 0, %bb.aa ], [ 0, %bb.ab ], [ 0, %bb.ac ], [ 0, %bb.ad ], [ 0, %evbuffer_find_eol_char.exit.thread.loopexit130 ]
+  %.not30 = phi i1 [ true, %bb.i ], [ true, %evbuffer_find_eol_char.exit ], [ false, %evbuffer_strspn.exit ], [ true, %bb.p ], [ true, %evbuffer_find_eol_char.exit.thread.loopexit128 ], [ true, %evbuffer_strchr.exit59 ], [ true, %evbuffer_strchr.exit78 ], [ true, %evbuffer_find_eol_char.exit.thread.loopexit129 ], [ true, %evbuffer_strchr.exit ], [ true, %evbuffer_find_eol_char.exit.thread.loopexit ], [ true, %bb.j ], [ true, %bb.q ], [ true, %bb.r ], [ true, %bb.aa ], [ true, %bb.ab ], [ true, %bb.ac ], [ true, %bb.ad ], [ true, %evbuffer_find_eol_char.exit.thread.loopexit130 ]
   %i.hb = load ptr, ptr %i.e, align 8             ; 2 uses
   %.not29 = icmp eq ptr %i.hb, null
   br i1 %.not29, label %bb.af, label %bb.ae
@@ -2626,7 +2630,7 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.split
   %i.bl = phi i64 [ %i.bi, %bb.k ], [ %.pre63.i.1, %.lr.ph.split._crit_edge.i.1 ]
   %i.bm = phi i64 [ %i.bg, %bb.k ], [ %.pre.i.1, %.lr.ph.split._crit_edge.i.1 ]
   %i.bn = phi i64 [ %i.bk, %bb.k ], [ 0, %.lr.ph.split._crit_edge.i.1 ]
-  %i.bo = sub nsw i64 %i.n, %i.at
+  %i.bo = sub nuw nsw i64 %i.n, %i.at
   %i.bp = call i64 @llvm.umin.i64(i64 %i.bn, i64 %i.bo) ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %.04455.i.1, i64 40
   %i.br = load ptr, ptr %i.bq, align 8
@@ -2636,7 +2640,7 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.split
   store ptr %i.bt, ptr %i.bu, align 16
   %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 24
   store i64 %i.bp, ptr %i.bv, align 8
-  %i.bw = add i64 %i.bp, %i.at                    ; 3 uses
+  %i.bw = add nuw nsw i64 %i.bp, %i.at            ; 3 uses
   %i.bx = icmp ult i64 %i.bw, %i.n
   br i1 %i.bx, label %.lr.ph.split.i.2, label %evbuffer_read_setup_vecs_.exit
 
@@ -2670,7 +2674,7 @@ bb.n:                                             ; preds = %bb.m, %.lr.ph.split
   %i.cj = phi i64 [ %i.cg, %bb.m ], [ %.pre63.i.2, %.lr.ph.split._crit_edge.i.2 ]
   %i.ck = phi i64 [ %i.ce, %bb.m ], [ %.pre.i.2, %.lr.ph.split._crit_edge.i.2 ]
   %i.cl = phi i64 [ %i.ci, %bb.m ], [ 0, %.lr.ph.split._crit_edge.i.2 ]
-  %i.cm = sub nsw i64 %i.n, %i.bw
+  %i.cm = sub nuw nsw i64 %i.n, %i.bw
   %i.cn = call i64 @llvm.umin.i64(i64 %i.cl, i64 %i.cm) ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %.04455.i.2, i64 40
   %i.cp = load ptr, ptr %i.co, align 8
@@ -2680,7 +2684,7 @@ bb.n:                                             ; preds = %bb.m, %.lr.ph.split
   store ptr %i.cr, ptr %i.cs, align 16
   %i.ct = getelementptr inbounds nuw i8, ptr %3, i64 40
   store i64 %i.cn, ptr %i.ct, align 8
-  %i.cu = add i64 %i.cn, %i.bw                    ; 2 uses
+  %i.cu = add nuw nsw i64 %i.cn, %i.bw            ; 2 uses
   %i.cv = icmp ult i64 %i.cu, %i.n
   br i1 %i.cv, label %.lr.ph.split.i.3, label %evbuffer_read_setup_vecs_.exit
 
@@ -2714,7 +2718,7 @@ bb.p:                                             ; preds = %bb.o, %.lr.ph.split
   %i.dh = phi i64 [ %i.de, %bb.o ], [ %.pre63.i.3, %.lr.ph.split._crit_edge.i.3 ]
   %i.di = phi i64 [ %i.dc, %bb.o ], [ %.pre.i.3, %.lr.ph.split._crit_edge.i.3 ]
   %i.dj = phi i64 [ %i.dg, %bb.o ], [ 0, %.lr.ph.split._crit_edge.i.3 ]
-  %i.dk = sub nsw i64 %i.n, %i.cu
+  %i.dk = sub nuw nsw i64 %i.n, %i.cu
   %i.dl = call i64 @llvm.umin.i64(i64 %i.dj, i64 %i.dk)
   %i.dm = getelementptr inbounds nuw i8, ptr %.04455.i.3, i64 40
   %i.dn = load ptr, ptr %i.dm, align 8
@@ -3117,10 +3121,10 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.c
-  %.166 = phi i64 [ %i.m, %bb.e ], [ 0, %bb.c ]   ; 2 uses
-  %.164 = phi i64 [ %i.n, %bb.e ], [ 0, %bb.c ]
-  %i.o = add nsw i64 %.166, %i.d
-  %i.p = tail call ptr @mmap(ptr noundef null, i64 noundef %i.o, i32 noundef 1, i32 noundef 2, i32 noundef %i.b, i64 noundef %.164) #16 ; 3 uses
+  %.166 = phi i64 [ %i.n, %bb.e ], [ 0, %bb.c ]
+  %.164 = phi i64 [ %i.m, %bb.e ], [ 0, %bb.c ]   ; 2 uses
+  %i.o = add nsw i64 %.164, %i.d
+  %i.p = tail call ptr @mmap(ptr noundef null, i64 noundef %i.o, i32 noundef 1, i32 noundef 2, i32 noundef %i.b, i64 noundef %.166) #16 ; 3 uses
   %i.q = icmp eq ptr %i.p, inttoptr (i64 -1 to ptr)
   br i1 %i.q, label %.thread85, label %.thread87
 
@@ -3132,7 +3136,7 @@ bb.f:                                             ; preds = %bb.e, %bb.c
 .thread87:                                        ; preds = %bb.f
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.p, ptr %i.s, align 8
-  %i.t = getelementptr inbounds i8, ptr %i.p, i64 %.166
+  %i.t = getelementptr inbounds i8, ptr %i.p, i64 %.164
   store ptr %i.t, ptr %i.g, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i64 0, ptr %i.u, align 8

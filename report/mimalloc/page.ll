@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mimalloc/original/page?download=true
+inline.NumInlined: 156
+inline.NumDeleted: 67
 begin_hunk_0_@mi_good_size:bb.a
 bb.g:                                             ; preds = %bb.f
   %i.z = sub i64 0, %i.u
@@ -200,9 +202,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.m, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !37
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.c
-  %.020.lcssa.i = phi ptr [ %i.b, %bb.c ], [ %i.i, %.lr.ph.i ]
-  %.0.lcssa.i = phi i64 [ 1, %bb.c ], [ %i.j, %.lr.ph.i ] ; 3 uses
-  %i.n = icmp samesign ugt i64 %.0.lcssa.i, %i.e
+  %.020.lcssa.i = phi i64 [ 1, %bb.c ], [ %i.j, %.lr.ph.i ] ; 3 uses
+  %.0.lcssa.i = phi ptr [ %i.b, %bb.c ], [ %i.i, %.lr.ph.i ]
+  %i.n = icmp samesign ugt i64 %.020.lcssa.i, %i.e
   br i1 %i.n, label %bb.d, label %bb.e, !prof !9
 
 bb.d:                                             ; preds = %._crit_edge.i
@@ -212,7 +214,7 @@ bb.d:                                             ; preds = %._crit_edge.i
 bb.e:                                             ; preds = %._crit_edge.i
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.p = load i64, ptr %i.o, align 8, !tbaa !38   ; 2 uses
-  %i.q = icmp ugt i64 %.0.lcssa.i, %i.p
+  %i.q = icmp ugt i64 %.020.lcssa.i, %i.p
   br i1 %i.q, label %bb.f, label %bb.g, !prof !9
 
 bb.f:                                             ; preds = %bb.e
@@ -223,9 +225,9 @@ bb.g:                                             ; preds = %bb.e
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !30
   %i.t = ptrtoint ptr %i.s to i64
-  store i64 %i.t, ptr %.020.lcssa.i, align 8, !tbaa !32
+  store i64 %i.t, ptr %.0.lcssa.i, align 8, !tbaa !32
   store ptr %i.b, ptr %i.r, align 8, !tbaa !30
-  %i.u = sub nuw i64 %i.p, %.0.lcssa.i
+  %i.u = sub nuw i64 %i.p, %.020.lcssa.i
   store i64 %i.u, ptr %i.o, align 8, !tbaa !38
   br label %mi_page_thread_collect_to_local.exit
 
@@ -324,9 +326,9 @@ bb.a:
   br i1 %i.k, label %.lr.ph, label %._crit_edge, !llvm.loop !37
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
-  %.020.lcssa = phi ptr [ %1, %bb.a ], [ %i.g, %.lr.ph ]
-  %.0.lcssa = phi i64 [ 1, %bb.a ], [ %i.h, %.lr.ph ] ; 3 uses
-  %i.l = icmp samesign ugt i64 %.0.lcssa, %i.c
+  %.020.lcssa = phi i64 [ 1, %bb.a ], [ %i.h, %.lr.ph ] ; 3 uses
+  %.0.lcssa = phi ptr [ %1, %bb.a ], [ %i.g, %.lr.ph ]
+  %i.l = icmp samesign ugt i64 %.020.lcssa, %i.c
   br i1 %i.l, label %bb.b, label %bb.c, !prof !9
 
 bb.b:                                             ; preds = %._crit_edge
@@ -336,7 +338,7 @@ bb.b:                                             ; preds = %._crit_edge
 bb.c:                                             ; preds = %._crit_edge
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.n = load i64, ptr %i.m, align 8, !tbaa !38   ; 2 uses
-  %i.o = icmp ugt i64 %.0.lcssa, %i.n
+  %i.o = icmp ugt i64 %.020.lcssa, %i.n
   br i1 %i.o, label %bb.d, label %bb.e, !prof !9
 
 bb.d:                                             ; preds = %bb.c
@@ -347,9 +349,9 @@ bb.e:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !30
   %i.r = ptrtoint ptr %i.q to i64
-  store i64 %i.r, ptr %.020.lcssa, align 8, !tbaa !32
+  store i64 %i.r, ptr %.0.lcssa, align 8, !tbaa !32
   store ptr %1, ptr %i.p, align 8, !tbaa !30
-  %i.s = sub nuw i64 %i.n, %.0.lcssa
+  %i.s = sub nuw i64 %i.n, %.020.lcssa
   store i64 %i.s, ptr %i.m, align 8, !tbaa !38
   br label %bb.f
 
@@ -752,22 +754,22 @@ bb.c:                                             ; preds = %tailrecurse, %bb.b
   br i1 %.not113, label %mi_page_to_full.exit.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %mi_page_to_full.exit
-  %.056118 = phi i64 [ %i.l, %mi_page_to_full.exit ], [ 0, %bb.c ]
-  %.057117 = phi ptr [ %i.k, %mi_page_to_full.exit ], [ %i.i, %bb.c ] ; 20 uses
-  %.059116 = phi ptr [ %.362, %mi_page_to_full.exit ], [ null, %bb.c ] ; 14 uses
-  %.064115 = phi i64 [ %.266, %mi_page_to_full.exit ], [ %i.h, %bb.c ] ; 3 uses
-  %.067114 = phi i64 [ %.370, %mi_page_to_full.exit ], [ 0, %bb.c ]
-  %i.j = getelementptr inbounds nuw i8, ptr %.057117, i64 88
+  %.056118 = phi ptr [ %i.k, %mi_page_to_full.exit ], [ %i.i, %bb.c ] ; 20 uses
+  %.057117 = phi ptr [ %.362, %mi_page_to_full.exit ], [ null, %bb.c ] ; 14 uses
+  %.062116 = phi i64 [ %.266, %mi_page_to_full.exit ], [ %i.h, %bb.c ] ; 3 uses
+  %.064115 = phi i64 [ %.370, %mi_page_to_full.exit ], [ 0, %bb.c ]
+  %.067114 = phi i64 [ %i.l, %mi_page_to_full.exit ], [ 0, %bb.c ]
+  %i.j = getelementptr inbounds nuw i8, ptr %.056118, i64 88
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !56   ; 2 uses
-  %i.l = add i64 %.056118, 1                      ; 3 uses
-  %i.m = add nsw i64 %.067114, -1                 ; 9 uses
-  %i.n = getelementptr i8, ptr %.057117, i64 16   ; 5 uses
+  %i.l = add i64 %.067114, 1                      ; 3 uses
+  %i.m = add nsw i64 %.064115, -1                 ; 9 uses
+  %i.n = getelementptr i8, ptr %.056118, i64 16   ; 5 uses
   %.057.val80 = load ptr, ptr %i.n, align 8, !tbaa !31
   %.not102 = icmp eq ptr %.057.val80, null
   br i1 %.not102, label %bb.d, label %.thread
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.o = getelementptr inbounds nuw i8, ptr %.057117, i64 64 ; 4 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %.056118, i64 64 ; 4 uses
   %i.p = load atomic i64, ptr %i.o monotonic, align 8
   br label %bb.e
 
@@ -786,11 +788,11 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.w = inttoptr i64 %i.q to ptr
-  tail call fastcc void @mi_page_thread_collect_to_local(ptr noundef nonnull %.057117, ptr noundef %i.w) #12
+  tail call fastcc void @mi_page_thread_collect_to_local(ptr noundef nonnull %.056118, ptr noundef %i.w) #12
   br label %mi_page_thread_free_collect.exit.i
 
 mi_page_thread_free_collect.exit.i:               ; preds = %bb.e, %bb.g
-  %i.x = getelementptr inbounds nuw i8, ptr %.057117, i64 32 ; 4 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %.056118, i64 32 ; 4 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !30   ; 2 uses
   %.not.i = icmp eq ptr %i.y, null
   %.057.val.pr = load ptr, ptr %i.n, align 8, !tbaa !31
@@ -803,7 +805,7 @@ bb.h:                                             ; preds = %mi_page_thread_free
 .sink.split.i:                                    ; preds = %bb.h
   store ptr %i.y, ptr %i.n, align 8, !tbaa !31
   store ptr null, ptr %i.x, align 8, !tbaa !30
-  %i.z = getelementptr inbounds nuw i8, ptr %.057117, i64 63
+  %i.z = getelementptr inbounds nuw i8, ptr %.056118, i64 63
   store i8 0, ptr %i.z, align 1, !tbaa !35
   br label %.thread
 
@@ -811,20 +813,20 @@ bb.i:                                             ; preds = %mi_page_thread_free
   br i1 %.not103, label %bb.j, label %.thread
 
 bb.j:                                             ; preds = %bb.i
-  %i.aa = getelementptr i8, ptr %.057117, i64 56
+  %i.aa = getelementptr i8, ptr %.056118, i64 56
   %.057.val81 = load i16, ptr %i.aa, align 8, !tbaa !36
-  %i.ab = getelementptr i8, ptr %.057117, i64 58
+  %i.ab = getelementptr i8, ptr %.056118, i64 58
   %.057.val82 = load i16, ptr %i.ab, align 2, !tbaa !18
   %i.ac = icmp ult i16 %.057.val81, %.057.val82
   br i1 %i.ac, label %.thread, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ad = add nsw i64 %.064115, -1                ; 6 uses
-  %i.ae = icmp slt i64 %.064115, 1
+  %i.ad = add nsw i64 %.062116, -1                ; 6 uses
+  %i.ae = icmp slt i64 %.062116, 1
   br i1 %i.ae, label %bb.l, label %mi_page_to_full.exit
 
 bb.l:                                             ; preds = %bb.k
-  %i.af = getelementptr i8, ptr %.057117, i64 72
+  %i.af = getelementptr i8, ptr %.056118, i64 72
   %.val9.i = load ptr, ptr %i.af, align 8, !tbaa !39 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %.val9.i, i64 1305
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !70, !range !71, !noundef !72
@@ -832,18 +834,18 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ai, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  tail call void @_mi_page_abandon(ptr noundef nonnull %.057117, ptr noundef nonnull %1) #12
+  tail call void @_mi_page_abandon(ptr noundef nonnull %.056118, ptr noundef nonnull %1) #12
   br label %mi_page_to_full.exit
 
 bb.n:                                             ; preds = %bb.l
-  %i.aj = getelementptr inbounds nuw i8, ptr %.057117, i64 8
+  %i.aj = getelementptr inbounds nuw i8, ptr %.056118, i64 8
   %i.ak = load atomic i64, ptr %i.aj monotonic, align 8
   %i.al = trunc i64 %i.ak to i1
   br i1 %i.al, label %mi_page_to_full.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.am = getelementptr inbounds nuw i8, ptr %.val9.i, i64 3680
-  tail call fastcc void @mi_page_queue_enqueue_from_ex(ptr noundef nonnull %i.am, ptr noundef nonnull %1, ptr noundef nonnull %.057117) #12
+  tail call fastcc void @mi_page_queue_enqueue_from_ex(ptr noundef nonnull %i.am, ptr noundef nonnull %1, ptr noundef nonnull %.056118) #12
   %i.an = load atomic i64, ptr %i.o monotonic, align 8
   br label %bb.p
 
@@ -862,7 +864,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.au = inttoptr i64 %i.ao to ptr
-  tail call fastcc void @mi_page_thread_collect_to_local(ptr noundef nonnull %.057117, ptr noundef %i.au) #12
+  tail call fastcc void @mi_page_thread_collect_to_local(ptr noundef nonnull %.056118, ptr noundef %i.au) #12
   br label %mi_page_thread_free_collect.exit.i.i
 
 mi_page_thread_free_collect.exit.i.i:             ; preds = %bb.p, %bb.r
@@ -878,13 +880,13 @@ bb.s:                                             ; preds = %mi_page_thread_free
 .sink.split.i.i:                                  ; preds = %bb.s
   store ptr %i.av, ptr %i.n, align 8, !tbaa !31
   store ptr null, ptr %i.x, align 8, !tbaa !30
-  %i.ay = getelementptr inbounds nuw i8, ptr %.057117, i64 63
+  %i.ay = getelementptr inbounds nuw i8, ptr %.056118, i64 63
   store i8 0, ptr %i.ay, align 1, !tbaa !35
   br label %mi_page_to_full.exit
 
 .thread:                                          ; preds = %bb.h, %.sink.split.i, %.lr.ph, %bb.j, %bb.i
   %.055.in88 = phi i1 [ true, %.lr.ph ], [ false, %bb.j ], [ true, %bb.i ], [ true, %.sink.split.i ], [ true, %bb.h ]
-  %i.az = icmp eq ptr %.059116, null
+  %i.az = icmp eq ptr %.057117, null
   br i1 %i.az, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %.thread
@@ -892,16 +894,16 @@ bb.t:                                             ; preds = %.thread
   br label %bb.z
 
 bb.u:                                             ; preds = %.thread
-  %i.bb = getelementptr i8, ptr %.059116, i64 24
+  %i.bb = getelementptr i8, ptr %.057117, i64 24
   %.059.val = load i64, ptr %i.bb, align 8, !tbaa !38 ; 2 uses
   %i.bc = icmp eq i64 %.059.val, 0
   br i1 %i.bc, label %bb.v, label %bb.x
 
 bb.v:                                             ; preds = %bb.u
-  %i.bd = getelementptr inbounds nuw i8, ptr %.059116, i64 8 ; 3 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %.057117, i64 8 ; 3 uses
   %i.be = atomicrmw and ptr %i.bd, i64 -3 monotonic, align 8 ; 0 uses
-  tail call fastcc void @mi_page_queue_remove(ptr noundef nonnull %1, ptr noundef nonnull %.059116) #12
-  %i.bf = getelementptr i8, ptr %.059116, i64 72  ; 2 uses
+  tail call fastcc void @mi_page_queue_remove(ptr noundef nonnull %1, ptr noundef nonnull %.057117) #12
+  %i.bf = getelementptr i8, ptr %.057117, i64 72  ; 2 uses
   %.val.i = load ptr, ptr %i.bf, align 8, !tbaa !39
   store ptr null, ptr %i.bf, align 8, !tbaa !39
   %i.bg = load atomic i64, ptr %i.bd monotonic, align 8
@@ -916,48 +918,48 @@ bb.w:                                             ; preds = %bb.w, %bb.v
   br i1 %i.bj, label %_mi_page_free.exit, label %bb.w, !llvm.loop !52
 
 _mi_page_free.exit:                               ; preds = %bb.w
-  tail call void @_mi_arenas_page_free(ptr noundef nonnull %.059116, ptr noundef %.val.i) #11
+  tail call void @_mi_arenas_page_free(ptr noundef nonnull %.057117, ptr noundef %.val.i) #11
   br label %bb.z
 
 bb.x:                                             ; preds = %bb.u
-  %i.bl = getelementptr inbounds nuw i8, ptr %.057117, i64 24
+  %i.bl = getelementptr inbounds nuw i8, ptr %.056118, i64 24
   %i.bm = load i64, ptr %i.bl, align 8, !tbaa !38 ; 2 uses
   %.not73 = icmp ult i64 %i.bm, %.059.val
   br i1 %.not73, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.bn = getelementptr i8, ptr %.057117, i64 58
+  %i.bn = getelementptr i8, ptr %.056118, i64 58
   %.057.val84 = load i16, ptr %i.bn, align 2, !tbaa !18 ; 2 uses
   %i.bo = zext i16 %.057.val84 to i64
   %i.bp = sub i64 %i.bo, %i.bm
   %i.bq = lshr i16 %.057.val84, 3
   %i.br = zext nneg i16 %i.bq to i64
   %.not104 = icmp ugt i64 %i.bp, %i.br
-  %spec.select = select i1 %.not104, ptr %.057117, ptr %.059116
+  %spec.select = select i1 %.not104, ptr %.056118, ptr %.057117
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %_mi_page_free.exit, %bb.x, %bb.t
   %.168 = phi i64 [ %i.ba, %bb.t ], [ %i.m, %_mi_page_free.exit ], [ %i.m, %bb.y ], [ %i.m, %bb.x ] ; 2 uses
-  %.160 = phi ptr [ %.057117, %bb.t ], [ %.057117, %_mi_page_free.exit ], [ %spec.select, %bb.y ], [ %.059116, %bb.x ] ; 2 uses
+  %.160 = phi ptr [ %.056118, %bb.t ], [ %.056118, %_mi_page_free.exit ], [ %spec.select, %bb.y ], [ %.057117, %bb.x ] ; 2 uses
   %i.bs = icmp slt i64 %.168, 1
   %or.cond = select i1 %.055.in88, i1 true, i1 %i.bs
   br i1 %or.cond, label %mi_page_to_full.exit.thread, label %mi_page_to_full.exit
 
 mi_page_to_full.exit:                             ; preds = %bb.z, %.sink.split.i.i, %bb.s, %mi_page_thread_free_collect.exit.i.i, %bb.n, %bb.m, %bb.k
   %.370 = phi i64 [ %.168, %bb.z ], [ %i.m, %bb.k ], [ %i.m, %bb.m ], [ %i.m, %bb.n ], [ %i.m, %mi_page_thread_free_collect.exit.i.i ], [ %i.m, %bb.s ], [ %i.m, %.sink.split.i.i ]
-  %.266 = phi i64 [ %.064115, %bb.z ], [ %i.ad, %bb.k ], [ %i.ad, %bb.m ], [ %i.ad, %bb.n ], [ %i.ad, %mi_page_thread_free_collect.exit.i.i ], [ %i.ad, %bb.s ], [ %i.ad, %.sink.split.i.i ]
-  %.362 = phi ptr [ %.160, %bb.z ], [ %.059116, %bb.k ], [ %.059116, %bb.m ], [ %.059116, %bb.n ], [ %.059116, %mi_page_thread_free_collect.exit.i.i ], [ %.059116, %bb.s ], [ %.059116, %.sink.split.i.i ] ; 2 uses
+  %.266 = phi i64 [ %.062116, %bb.z ], [ %i.ad, %bb.k ], [ %i.ad, %bb.m ], [ %i.ad, %bb.n ], [ %i.ad, %mi_page_thread_free_collect.exit.i.i ], [ %i.ad, %bb.s ], [ %i.ad, %.sink.split.i.i ]
+  %.362 = phi ptr [ %.160, %bb.z ], [ %.057117, %bb.k ], [ %.057117, %bb.m ], [ %.057117, %bb.n ], [ %.057117, %mi_page_thread_free_collect.exit.i.i ], [ %.057117, %bb.s ], [ %.057117, %.sink.split.i.i ] ; 2 uses
   %.not = icmp eq ptr %i.k, null
   br i1 %.not, label %mi_page_to_full.exit.thread, label %.lr.ph
 
 mi_page_to_full.exit.thread:                      ; preds = %mi_page_to_full.exit, %bb.z, %bb.c
-  %.463 = phi ptr [ null, %bb.c ], [ %.160, %bb.z ], [ %.362, %mi_page_to_full.exit ] ; 2 uses
-  %.2.a = phi ptr [ null, %bb.c ], [ %.057117, %bb.z ], [ null, %mi_page_to_full.exit ]
-  %.1 = phi i64 [ 0, %bb.c ], [ %i.l, %bb.z ], [ %i.l, %mi_page_to_full.exit ]
-  tail call void @__mi_stat_counter_increase(ptr noundef nonnull %i.c, i64 noundef %.1) #11
+  %.170 = phi i64 [ 0, %bb.c ], [ %i.l, %bb.z ], [ %i.l, %mi_page_to_full.exit ]
+  %.2.a = phi ptr [ null, %bb.c ], [ %.362, %mi_page_to_full.exit ], [ %.160, %bb.z ] ; 2 uses
+  %.2 = phi ptr [ null, %bb.c ], [ null, %mi_page_to_full.exit ], [ %.056118, %bb.z ]
+  tail call void @__mi_stat_counter_increase(ptr noundef nonnull %i.c, i64 noundef %.170) #11
   tail call void @__mi_stat_counter_increase(ptr noundef nonnull %i.d, i64 noundef 1) #11
-  %.not74 = icmp eq ptr %.463, null
-  %spec.select76 = select i1 %.not74, ptr %.2.a, ptr %.463 ; 8 uses
+  %.not74 = icmp eq ptr %.2.a, null
+  %spec.select76 = select i1 %.not74, ptr %.2, ptr %.2.a ; 8 uses
   %.not75 = icmp eq ptr %spec.select76, null
   br i1 %.not75, label %bb.ac, label %bb.aa
 

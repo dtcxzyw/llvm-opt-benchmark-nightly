@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wolfssl/original/hmac?download=true
+inline.NumInlined: 15
+inline.NumDeleted: 5
 begin_hunk_0_@wc_HmacSetKey_ex:bb.a
     i8 5, label %bb.m
     i8 6, label %bb.q
@@ -200,7 +202,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.av, %bb.
 .thread.sink.split:                               ; preds = %bb.ax, %bb.at, %bb.ap, %bb.al, %bb.ah, %bb.ad, %bb.z, %bb.v, %bb.r, %bb.n, %bb.j
   %.0206316.ph = phi i32 [ 144, %bb.al ], [ 136, %bb.ap ], [ 64, %bb.j ], [ 64, %bb.n ], [ 64, %bb.r ], [ 128, %bb.v ], [ 104, %bb.at ], [ 128, %bb.z ], [ 128, %bb.ad ], [ 128, %bb.ah ], [ 72, %bb.ax ]
   %i.ax = zext nneg i32 %3 to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.m, ptr nonnull align 1 %2, i64 %i.ax, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.m, ptr nonnull align 1 %2, i64 %i.ax, i1 false)
   br label %.thread
 
 .thread:                                          ; preds = %.thread.sink.split, %bb.ap, %bb.al, %bb.ah, %bb.at, %bb.ad, %bb.z, %bb.ax, %bb.v, %bb.r, %bb.n, %bb.j, %bb.ba
@@ -360,7 +362,7 @@ bb.m:                                             ; preds = %bb.b
   fence seq_cst
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.a, %.preheader.i.thread
+bb.n:                                             ; preds = %.preheader.i.thread, %bb.a
   ret void
 }
 
@@ -763,7 +765,7 @@ bb.c:                                             ; preds = %switch.lookup
   fence seq_cst
   br label %wc_HmacSizeByType.exit
 
-wc_HmacSizeByType.exit:                           ; preds = %bb.b, %bb.a, %.lr.ph25.preheader.i
+wc_HmacSizeByType.exit:                           ; preds = %bb.b, %.lr.ph25.preheader.i, %bb.a
   %.021 = phi i32 [ %.0, %.lr.ph25.preheader.i ], [ -173, %bb.a ], [ -173, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 %.021

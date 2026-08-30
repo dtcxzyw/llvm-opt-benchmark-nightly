@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openvdb/original/Transform?download=true
+inline.NumInlined: 2287
+inline.NumDeleted: 431
+loop-unroll.NumCompletelyUnrolled: 35
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 36
 begin_hunk_0_@_ZNK7openvdb5v13_04math8ScaleMap12preTranslateERKNS1_4Vec3IdEE:bb.a
   %i.v = extractvalue { ptr, i32 } %i.u, 0
   call void @__clang_call_terminate(ptr %i.v) #27
@@ -200,7 +205,7 @@ bb.a:
   %i.b = load double, ptr %i.a, align 8, !tbaa !8 ; 5 uses
   %i.c = tail call noalias noundef nonnull dereferenceable(152) ptr @_Znwm(i64 noundef 152) #25 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false)
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.e = load double, ptr %i.d, align 16, !tbaa !8, !alias.scope !37
   %i.f = fmul double %i.b, %i.e
@@ -603,7 +608,7 @@ bb.q:                                             ; preds = %bb.p
   %i.as = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.au = load <2 x ptr>, ptr %6, align 16, !tbaa !66
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %6, i8 0, i64 16, i1 false)
   %i.av = load ptr, ptr %i.at, align 8, !tbaa !16 ; 8 uses
   store <2 x ptr> %i.au, ptr %0, align 8, !tbaa !66
   %.not.i.i.i.i = icmp eq ptr %i.av, null
@@ -1006,7 +1011,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load <2 x ptr>, ptr %3, align 16, !tbaa !66
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   %i.h = load ptr, ptr %i.f, align 8, !tbaa !16   ; 8 uses
   store <2 x ptr> %i.g, ptr %0, align 8, !tbaa !66
   %.not.i.i.i.i = icmp eq ptr %i.h, null
@@ -1123,7 +1128,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load <2 x ptr>, ptr %2, align 16, !tbaa !66
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.h = load ptr, ptr %i.f, align 8, !tbaa !16   ; 8 uses
   store <2 x ptr> %i.g, ptr %0, align 8, !tbaa !66
   %.not.i.i.i.i = icmp eq ptr %i.h, null
@@ -1240,7 +1245,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load <2 x ptr>, ptr %2, align 16, !tbaa !66
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.h = load ptr, ptr %i.f, align 8, !tbaa !16   ; 8 uses
   store <2 x ptr> %i.g, ptr %0, align 8, !tbaa !66
   %.not.i.i.i.i = icmp eq ptr %i.h, null
@@ -1364,7 +1369,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.i = load <2 x ptr>, ptr %3, align 16, !tbaa !66
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   %i.j = load ptr, ptr %i.h, align 8, !tbaa !16   ; 8 uses
   store <2 x ptr> %i.i, ptr %0, align 8, !tbaa !66
   %.not.i.i.i.i = icmp eq ptr %i.j, null
@@ -1482,7 +1487,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load <2 x ptr>, ptr %4, align 16, !tbaa !66
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.h = load ptr, ptr %i.f, align 8, !tbaa !16   ; 8 uses
   store <2 x ptr> %i.g, ptr %0, align 8, !tbaa !66
   %.not.i.i.i.i = icmp eq ptr %i.h, null
@@ -1681,7 +1686,7 @@ bb.h:                                             ; preds = %_ZN9__gnu_cxx27__ex
 _ZNSt12__shared_ptrIN7openvdb5v13_04math9AffineMapELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.b, %bb.d, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %3, ptr noundef nonnull align 8 dereferenceable(128) %1, i64 128, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %3, ptr noundef nonnull align 8 dereferenceable(128) %1, i64 128, i1 false)
   %i.ak = load <2 x double>, ptr %3, align 16
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.al = load <2 x double>, ptr %.sroa.4.0..sroa_idx.i, align 8
@@ -1843,7 +1848,7 @@ bb.q:                                             ; preds = %_ZNSt10shared_ptrIN
   %i.dl = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.dn = load <2 x ptr>, ptr %5, align 16, !tbaa !66
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false)
   %i.do = load ptr, ptr %i.dm, align 8, !tbaa !16 ; 8 uses
   store <2 x ptr> %i.dn, ptr %0, align 8, !tbaa !66
   %.not.i.i.i.i21 = icmp eq ptr %i.do, null
@@ -2135,7 +2140,7 @@ bb.ax:                                            ; preds = %bb.at, %bb.av, %bb.
   %i.gv = load <2 x double>, ptr %.sroa.44.0..sroa_idx, align 8 ; 4 uses
   %i.gw = load <2 x double>, ptr %.sroa.60.0..sroa_idx, align 8 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %8, ptr noundef nonnull align 8 dereferenceable(128) %1, i64 128, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %8, ptr noundef nonnull align 8 dereferenceable(128) %1, i64 128, i1 false)
   %i.gx = load <2 x double>, ptr %8, align 16
   %i.gy = load <2 x double>, ptr %.sroa.4.0..sroa_idx.i64, align 8
   %i.gz = load <2 x double>, ptr %.sroa.5.0..sroa_idx.i66, align 16
@@ -2538,7 +2543,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load <2 x ptr>, ptr %3, align 16, !tbaa !66
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   %i.h = load ptr, ptr %i.f, align 8, !tbaa !16   ; 8 uses
   store <2 x ptr> %i.g, ptr %0, align 8, !tbaa !66
   %.not.i.i.i.i = icmp eq ptr %i.h, null
@@ -2655,7 +2660,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load <2 x ptr>, ptr %2, align 16, !tbaa !66
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.h = load ptr, ptr %i.f, align 8, !tbaa !16   ; 8 uses
   store <2 x ptr> %i.g, ptr %0, align 8, !tbaa !66
   %.not.i.i.i.i = icmp eq ptr %i.h, null
@@ -2772,7 +2777,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load <2 x ptr>, ptr %2, align 16, !tbaa !66
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.h = load ptr, ptr %i.f, align 8, !tbaa !16   ; 8 uses
   store <2 x ptr> %i.g, ptr %0, align 8, !tbaa !66
   %.not.i.i.i.i = icmp eq ptr %i.h, null
@@ -2896,7 +2901,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.i = load <2 x ptr>, ptr %3, align 16, !tbaa !66
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   %i.j = load ptr, ptr %i.h, align 8, !tbaa !16   ; 8 uses
   store <2 x ptr> %i.i, ptr %0, align 8, !tbaa !66
   %.not.i.i.i.i = icmp eq ptr %i.j, null
@@ -3014,7 +3019,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load <2 x ptr>, ptr %4, align 16, !tbaa !66
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.h = load ptr, ptr %i.f, align 8, !tbaa !16   ; 8 uses
   store <2 x ptr> %i.g, ptr %0, align 8, !tbaa !66
   %.not.i.i.i.i = icmp eq ptr %i.h, null
@@ -3417,13 +3422,13 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.e = load double, ptr %i.d, align 8, !tbaa !8
   %i.f = fmul double %i.c, %i.e
-  %4 = tail call noalias noundef nonnull dereferenceable(152) ptr @_Znwm(i64 noundef 152) #25 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.h = load <2 x double>, ptr %2, align 8, !tbaa !8
   %i.i = load <2 x double>, ptr %i.a, align 8, !tbaa !8
   %i.j = fmul <2 x double> %i.h, %i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false)
+  %4 = tail call noalias noundef nonnull dereferenceable(152) ptr @_Znwm(i64 noundef 152) #25 ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false)
   %i.k = load <2 x double>, ptr %3, align 16, !tbaa !8, !alias.scope !427
   %i.l = fadd <2 x double> %i.j, %i.k
   store <2 x double> %i.l, ptr %3, align 16, !tbaa !8, !alias.scope !427
@@ -3826,7 +3831,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !430)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   %i.c = load <2 x double>, ptr %2, align 8, !tbaa !8, !noalias !430
   %i.d = load <2 x double>, ptr %3, align 16, !tbaa !8, !alias.scope !430
   %i.e = fadd <2 x double> %i.c, %i.d
@@ -4229,7 +4234,7 @@ bb.a:
   %i.f = insertelement <2 x double> poison, double %i.b, i64 0
   %i.g = shufflevector <2 x double> %i.f, <2 x double> poison, <2 x i32> zeroinitializer
   %i.h = fmul <2 x double> %i.g, %i.e
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   %i.i = load <2 x double>, ptr %4, align 16, !tbaa !8, !alias.scope !489
   %i.j = fadd <2 x double> %i.h, %i.i
   store <2 x double> %i.j, ptr %4, align 16, !tbaa !8, !alias.scope !489
@@ -4316,7 +4321,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !492)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
   %i.e = load <2 x double>, ptr %2, align 8, !tbaa !8, !noalias !492
   %i.f = load <2 x double>, ptr %4, align 16, !tbaa !8, !alias.scope !492
   %i.g = fadd <2 x double> %i.e, %i.f
@@ -4409,7 +4414,7 @@ bb.a:
   %i.d = load double, ptr %i.a, align 8, !tbaa !8 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   %i.e = fneg double %i.d                         ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.g = load double, ptr %i.f, align 16, !tbaa !8, !alias.scope !495
   %i.h = fmul double %i.g, %i.e
@@ -4774,17 +4779,17 @@ bb.a:
   %6 = alloca %"class.openvdb::v13_0::math::Mat3", align 8 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #24
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(128) %i.a, i64 24, i1 false), !tbaa !8
-  %scevgep.1.i = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %scevgep11.1.i = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %scevgep.1.i, ptr noundef nonnull align 8 dereferenceable(24) %scevgep11.1.i, i64 24, i1 false), !tbaa !8
-  %scevgep.2.i = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
-  %scevgep11.2.i = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %scevgep.2.i, ptr noundef nonnull align 8 dereferenceable(24) %scevgep11.2.i, i64 24, i1 false), !tbaa !8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(128) %i.a, i64 24, i1 false), !tbaa !8
+  %scevgep.1.i = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %scevgep11.1.i = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %scevgep11.1.i, ptr noundef nonnull align 8 dereferenceable(24) %scevgep.1.i, i64 24, i1 false), !tbaa !8
+  %scevgep.2.i = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
+  %scevgep11.2.i = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %scevgep11.2.i, ptr noundef nonnull align 8 dereferenceable(24) %scevgep.2.i, i64 24, i1 false), !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %i.d = load double, ptr %scevgep.2.i, align 16, !tbaa !8 ; 2 uses
-  %i.e = load double, ptr %scevgep.1.i, align 8, !tbaa !8 ; 2 uses
+  %i.d = load double, ptr %scevgep11.2.i, align 16, !tbaa !8 ; 2 uses
+  %i.e = load double, ptr %scevgep11.1.i, align 8, !tbaa !8 ; 2 uses
   %i.f = load <2 x double>, ptr %i.b, align 16, !tbaa !8 ; 3 uses
   %i.g = load <2 x double>, ptr %i.c, align 8, !tbaa !8 ; 3 uses
   %i.h = fneg <2 x double> %i.g
@@ -4957,7 +4962,7 @@ bb.l:                                             ; preds = %bb.a
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.bv = load <4 x double>, ptr %i.br, align 8, !tbaa !8
   %i.bw = load <2 x double>, ptr %i.bs, align 8, !tbaa !8
-  %i.bx = load <2 x double>, ptr %scevgep11.2.i, align 8, !tbaa !8
+  %i.bx = load <2 x double>, ptr %scevgep.2.i, align 8, !tbaa !8
   %i.by = load <2 x double>, ptr %i.bt, align 8, !tbaa !8
   %i.bz = load <2 x double>, ptr %i.bu, align 8, !tbaa !8
   %i.ca = shufflevector <2 x double> %i.bz, <2 x double> %i.by, <12 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 2, i32 3, i32 0, i32 1>
@@ -5026,7 +5031,7 @@ _ZN7openvdb5v13_04math10isIdentityINS1_4Mat4IdEEEEbRKT_.exit: ; preds = %bb.l, %
   %i.ds = getelementptr inbounds nuw i8, ptr %0, i64 369
   %i.dt = zext i1 %i.dr to i8
   store i8 %i.dt, ptr %i.ds, align 1, !tbaa !119
-  %i.du = load double, ptr %scevgep11.2.i, align 8, !tbaa !8, !noalias !507 ; 3 uses
+  %i.du = load double, ptr %scevgep.2.i, align 8, !tbaa !8, !noalias !507 ; 3 uses
   %i.dv = load double, ptr %i.do, align 8, !tbaa !8, !noalias !507 ; 3 uses
   %i.dw = load double, ptr %i.dp, align 8, !tbaa !8, !noalias !507 ; 3 uses
   %i.dx = load double, ptr %i.bu, align 8, !tbaa !8, !noalias !507 ; 3 uses
@@ -5036,7 +5041,7 @@ _ZN7openvdb5v13_04math10isIdentityINS1_4Mat4IdEEEEbRKT_.exit: ; preds = %bb.l, %
   %i.eb = load double, ptr %i.dn, align 8, !tbaa !8, !noalias !507 ; 3 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %0, i64 344
   %i.ed = load <2 x double>, ptr %i.a, align 8, !tbaa !8, !noalias !507 ; 3 uses
-  %i.ee = load <2 x double>, ptr %scevgep11.1.i, align 8, !tbaa !8, !noalias !507 ; 2 uses
+  %i.ee = load <2 x double>, ptr %scevgep.1.i, align 8, !tbaa !8, !noalias !507 ; 2 uses
   %i.ef = fmul <2 x double> %i.ee, zeroinitializer ; 2 uses
   %i.eg = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ed, <2 x double> zeroinitializer, <2 x double> %i.ef) ; 2 uses
   %i.eh = extractelement <2 x double> %i.eg, i64 0 ; 2 uses
@@ -5305,12 +5310,12 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #24
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(128) %i.a, i64 24, i1 false), !tbaa !8
-  %scevgep.1.i = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %scevgep11.1.i = getelementptr inbounds nuw i8, ptr %0, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %scevgep.1.i, ptr noundef nonnull align 8 dereferenceable(24) %scevgep11.1.i, i64 24, i1 false), !tbaa !8
-  %scevgep.2.i = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %scevgep11.2.i = getelementptr inbounds nuw i8, ptr %0, i64 72
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %scevgep.2.i, ptr noundef nonnull align 8 dereferenceable(24) %scevgep11.2.i, i64 24, i1 false), !tbaa !8
+  %scevgep.1.i = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %scevgep11.1.i = getelementptr inbounds nuw i8, ptr %1, i64 24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %scevgep11.1.i, ptr noundef nonnull align 8 dereferenceable(24) %scevgep.1.i, i64 24, i1 false), !tbaa !8
+  %scevgep.2.i = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %scevgep11.2.i = getelementptr inbounds nuw i8, ptr %1, i64 48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %scevgep11.2.i, ptr noundef nonnull align 8 dereferenceable(24) %scevgep.2.i, i64 24, i1 false), !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %i.d = load double, ptr %i.c, align 8, !tbaa !8 ; 3 uses
@@ -5713,13 +5718,10 @@ bb.p:                                             ; preds = %bb.o
   %i.dd = fsub double %i.db, %i.dc
   %i.de = tail call noundef double @llvm.fabs.f64(double %i.dd)
   %i.df = fcmp ule double %i.de, %2
-  br i1 %i.df, label %3, label %bb.q
-
-3:                                                ; preds = %bb.p
   br label %bb.q
 
-bb.q:                                             ; preds = %3, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.lcssa = phi i1 [ false, %bb.a ], [ true, %3 ], [ false, %bb.b ], [ false, %bb.p ], [ false, %bb.c ], [ false, %bb.k ], [ false, %bb.d ], [ false, %bb.o ], [ false, %bb.e ], [ false, %bb.j ], [ false, %bb.f ], [ false, %bb.n ], [ false, %bb.g ], [ false, %bb.l ], [ false, %bb.h ], [ false, %bb.m ], [ false, %bb.i ]
+bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %.lcssa = phi i1 [ false, %bb.a ], [ false, %bb.i ], [ false, %bb.b ], [ %i.df, %bb.p ], [ false, %bb.c ], [ false, %bb.k ], [ false, %bb.d ], [ false, %bb.o ], [ false, %bb.e ], [ false, %bb.j ], [ false, %bb.f ], [ false, %bb.n ], [ false, %bb.g ], [ false, %bb.l ], [ false, %bb.h ], [ false, %bb.m ]
   ret i1 %.lcssa
 }
 
@@ -6122,9 +6124,9 @@ _ZN7openvdb5v13_04math4Mat3IdE4zeroEv.exit106:    ; preds = %_ZN7openvdb5v13_04m
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 368
   %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 400
   %i.ce = load double, ptr %i.cd, align 8, !tbaa !8 ; 2 uses
-  %8 = fneg double %i.ce                          ; 2 uses
   %i.cf = load <2 x double>, ptr %i.bj, align 8, !tbaa !8
   %i.cg = shufflevector <2 x double> %i.by, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
+  %8 = fneg double %i.ce                          ; 2 uses
   %i.ch = insertelement <2 x double> %i.cg, double %8, i64 0
   %i.ci = fmul <2 x double> %i.bv, %i.ch
   %i.cj = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cb, <2 x double> %i.cf, <2 x double> %i.ci)

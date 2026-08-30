@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openvdb/original/MetaMap?download=true
+inline.NumInlined: 597
+inline.NumDeleted: 249
 begin_hunk_0_@_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN7openvdb5v13_08MetadataEESt4lessIS5_ESaISt4pairIKS5_SA_EEEixERSE_:bb.a
   %.not.i.i.i.i.i.i = icmp eq i32 %i.l, 0
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i.i, label %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i.i
@@ -200,13 +202,13 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
-  %.sroa.011.024 = phi ptr [ %i.ab, %bb.f ], [ %i.f, %.lr.ph.preheader ] ; 4 uses
-  %.sroa.06.023 = phi ptr [ %i.ac, %bb.f ], [ %i.i, %.lr.ph.preheader ] ; 4 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %.sroa.011.024, i64 32
-  %i.k = getelementptr inbounds nuw i8, ptr %.sroa.06.023, i64 32
-  %i.l = getelementptr inbounds nuw i8, ptr %.sroa.011.024, i64 40
+  %.sroa.011.024 = phi ptr [ %i.ac, %bb.f ], [ %i.i, %.lr.ph.preheader ] ; 4 uses
+  %.sroa.06.023 = phi ptr [ %i.ab, %bb.f ], [ %i.f, %.lr.ph.preheader ] ; 4 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %.sroa.06.023, i64 32
+  %i.k = getelementptr inbounds nuw i8, ptr %.sroa.011.024, i64 32
+  %i.l = getelementptr inbounds nuw i8, ptr %.sroa.06.023, i64 40
   %i.m = load i64, ptr %i.l, align 8, !tbaa !43   ; 3 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %.sroa.06.023, i64 40
+  %i.n = getelementptr inbounds nuw i8, ptr %.sroa.011.024, i64 40
   %i.o = load i64, ptr %i.n, align 8, !tbaa !43
   %i.p = icmp eq i64 %i.m, %i.o
   br i1 %i.p, label %bb.c, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread
@@ -223,10 +225,10 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit:
   br i1 %.not21, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread17, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread
 
 _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread17: ; preds = %bb.c, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
-  %i.t = getelementptr inbounds nuw i8, ptr %.sroa.011.024, i64 64
+  %i.t = getelementptr inbounds nuw i8, ptr %.sroa.06.023, i64 64
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !21   ; 2 uses
   %i.v = icmp ne ptr %i.u, null                   ; 2 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %.sroa.06.023, i64 64
+  %i.w = getelementptr inbounds nuw i8, ptr %.sroa.011.024, i64 64
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !21   ; 2 uses
   %i.y = icmp ne ptr %i.x, null                   ; 2 uses
   %i.z = xor i1 %i.v, %i.y
@@ -241,8 +243,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.aa, label %bb.f, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  %i.ab = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.011.024) #20 ; 2 uses
-  %i.ac = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.06.023) #20
+  %i.ab = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.06.023) #20 ; 2 uses
+  %i.ac = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.011.024) #20
   %.not20 = icmp eq ptr %i.ab, %i.g
   br i1 %.not20, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, label %.lr.ph, !llvm.loop !70
 

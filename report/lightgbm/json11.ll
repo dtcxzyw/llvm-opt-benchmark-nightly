@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lightgbm/original/json11?download=true
+inline.NumInlined: 1422
+inline.NumDeleted: 542
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN24json11_internal_lightgbm4JsonC2EONSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:bb.a
   store i8 0, ptr %i.g, align 8, !tbaa !41, !noalias !109
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN24json11_internal_lightgbm10JsonStringE, i64 16), ptr %i.o, align 8, !tbaa !22, !noalias !109
@@ -200,7 +204,7 @@ _ZNSt12__shared_ptrIN24json11_internal_lightgbm9JsonArrayELN9__gnu_cxx12_Lock_po
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EEC2IN24json11_internal_lightgbm9JsonArrayESaIvEJRKSt6vectorINS4_4JsonESaIS8_EEEEERPT_St20_Sp_alloc_shared_tagIT0_EDpOT1_(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr %2, ptr noundef nonnull align 8 dereferenceable(24) %3) unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 _ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN24json11_internal_lightgbm9JsonArrayESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERS9_.exit:
-  %i.a = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #32 ; 11 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #32 ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i32 1, ptr %i.b, align 8, !tbaa !37
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12
@@ -208,24 +212,16 @@ _ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN24json11_internal_light
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN24json11_internal_lightgbm9JsonArrayESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.a, align 8, !tbaa !22
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN24json11_internal_lightgbm5ValueILNS_4Json4TypeE4ESt6vectorIS1_SaIS1_EEEE, i64 16), ptr %i.d, align 8, !tbaa !22
-  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !12   ; 3 uses
   %i.h = load ptr, ptr %3, align 8, !tbaa !16     ; 3 uses
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = ptrtoint ptr %i.h to i64
-  %i.k = sub i64 %i.i, %i.j                       ; 4 uses
+  %i.k = sub i64 %i.i, %i.j                       ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.g, %i.h
-  br i1 %.not.i.i.i.i.i.i.i.i, label %.noexc3.i.i.i.i.thread, label %bb.a
-
-.noexc3.i.i.i.i.thread:                           ; preds = %_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN24json11_internal_lightgbm9JsonArrayESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERS9_.exit
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %5 = getelementptr inbounds nuw i8, ptr null, i64 %i.k
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
-  store ptr %5, ptr %6, align 8, !tbaa !45
-  br label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN24json11_internal_lightgbm9JsonArrayESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit
+  br i1 %.not.i.i.i.i.i.i.i.i, label %.noexc3.i.i.i.i, label %bb.a
 
 bb.a:                                             ; preds = %_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN24json11_internal_lightgbm9JsonArrayESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERS9_.exit
   %i.l = icmp ugt i64 %i.k, 9223372036854775792
@@ -240,20 +236,29 @@ bb.a:                                             ; preds = %_ZSt18__allocate_gu
 
 _ZNSt15__new_allocatorIN24json11_internal_lightgbm4JsonEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i: ; preds = %bb.a
   %i.m = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.k) #32
-          to label %.noexc3.i.i.i.i unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN24json11_internal_lightgbm9JsonArrayESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit11 ; 4 uses
+          to label %_ZNSt15__new_allocatorIN24json11_internal_lightgbm4JsonEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i..noexc3.i.i.i.i_crit_edge unwind label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN24json11_internal_lightgbm9JsonArrayESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit11
 
-.noexc3.i.i.i.i:                                  ; preds = %_ZNSt15__new_allocatorIN24json11_internal_lightgbm4JsonEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i
-  store ptr %i.m, ptr %i.e, align 8, !tbaa !16
+_ZNSt15__new_allocatorIN24json11_internal_lightgbm4JsonEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i..noexc3.i.i.i.i_crit_edge: ; preds = %_ZNSt15__new_allocatorIN24json11_internal_lightgbm4JsonEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i
+  %.pre = load ptr, ptr %3, align 8, !tbaa !27
+  %.pre14 = load ptr, ptr %i.f, align 8, !tbaa !27
+  br label %.noexc3.i.i.i.i
+
+.noexc3.i.i.i.i:                                  ; preds = %_ZNSt15__new_allocatorIN24json11_internal_lightgbm4JsonEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i..noexc3.i.i.i.i_crit_edge, %_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN24json11_internal_lightgbm9JsonArrayESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERS9_.exit
+  %4 = phi ptr [ %i.g, %_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN24json11_internal_lightgbm9JsonArrayESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERS9_.exit ], [ %.pre14, %_ZNSt15__new_allocatorIN24json11_internal_lightgbm4JsonEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i..noexc3.i.i.i.i_crit_edge ] ; 2 uses
+  %5 = phi ptr [ %i.h, %_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN24json11_internal_lightgbm9JsonArrayESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERS9_.exit ], [ %.pre, %_ZNSt15__new_allocatorIN24json11_internal_lightgbm4JsonEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i..noexc3.i.i.i.i_crit_edge ] ; 2 uses
+  %6 = phi ptr [ null, %_ZSt18__allocate_guardedISaISt23_Sp_counted_ptr_inplaceIN24json11_internal_lightgbm9JsonArrayESaIvELN9__gnu_cxx12_Lock_policyE2EEEESt15__allocated_ptrIT_ERS9_.exit ], [ %i.m, %_ZNSt15__new_allocatorIN24json11_internal_lightgbm4JsonEE8allocateEmPKv.exit.i.i.i.i.i.i.i.i..noexc3.i.i.i.i_crit_edge ] ; 5 uses
+  store ptr %6, ptr %i.e, align 8, !tbaa !16
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 2 uses
-  store ptr %i.m, ptr %i.n, align 8, !tbaa !12
-  %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.k
+  store ptr %6, ptr %i.n, align 8, !tbaa !12
+  %i.o = getelementptr inbounds nuw i8, ptr %6, i64 %i.k
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store ptr %i.o, ptr %i.p, align 8, !tbaa !45
-  br label %.lr.ph.i.i.i.i.i.i.i.i.i
+  %.not7.i.i.i.i.i.i.i.i.i = icmp eq ptr %5, %4
+  br i1 %.not7.i.i.i.i.i.i.i.i.i, label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN24json11_internal_lightgbm9JsonArrayESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %.noexc3.i.i.i.i, %_ZSt10_ConstructIN24json11_internal_lightgbm4JsonEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i.i.i
-  %.09.i.i.i.i.i.i.i.i.i = phi ptr [ %i.z, %_ZSt10_ConstructIN24json11_internal_lightgbm4JsonEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i.i.i ], [ %i.m, %.noexc3.i.i.i.i ] ; 2 uses
-  %.sroa.04.08.i.i.i.i.i.i.i.i.i = phi ptr [ %i.y, %_ZSt10_ConstructIN24json11_internal_lightgbm4JsonEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i.i.i ], [ %i.h, %.noexc3.i.i.i.i ] ; 3 uses
+  %.09.i.i.i.i.i.i.i.i.i = phi ptr [ %i.z, %_ZSt10_ConstructIN24json11_internal_lightgbm4JsonEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i.i.i ], [ %6, %.noexc3.i.i.i.i ] ; 2 uses
+  %.sroa.04.08.i.i.i.i.i.i.i.i.i = phi ptr [ %i.y, %_ZSt10_ConstructIN24json11_internal_lightgbm4JsonEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i.i.i ], [ %5, %.noexc3.i.i.i.i ] ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i.i.i.i, i64 8
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !36   ; 2 uses
   %i.s = load <2 x ptr>, ptr %.sroa.04.08.i.i.i.i.i.i.i.i.i, align 8, !tbaa !62
@@ -280,13 +285,12 @@ bb.d:                                             ; preds = %bb.b
 _ZSt10_ConstructIN24json11_internal_lightgbm4JsonEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i.i.i: ; preds = %bb.d, %bb.c, %.lr.ph.i.i.i.i.i.i.i.i.i
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i.i.i.i.i.i, i64 16 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.09.i.i.i.i.i.i.i.i.i, i64 16 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.y, %i.g
+  %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.y, %4
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN24json11_internal_lightgbm9JsonArrayESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i, !llvm.loop !122
 
-_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN24json11_internal_lightgbm9JsonArrayESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit: ; preds = %_ZSt10_ConstructIN24json11_internal_lightgbm4JsonEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i.i.i, %.noexc3.i.i.i.i.thread
-  %7 = phi ptr [ %4, %.noexc3.i.i.i.i.thread ], [ %i.n, %_ZSt10_ConstructIN24json11_internal_lightgbm4JsonEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i.i.i ]
-  %.0.lcssa.i.i.i.i.i.i.i.i.i = phi ptr [ null, %.noexc3.i.i.i.i.thread ], [ %i.z, %_ZSt10_ConstructIN24json11_internal_lightgbm4JsonEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i.i.i ]
-  store ptr %.0.lcssa.i.i.i.i.i.i.i.i.i, ptr %7, align 8, !tbaa !12
+_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN24json11_internal_lightgbm9JsonArrayESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit: ; preds = %_ZSt10_ConstructIN24json11_internal_lightgbm4JsonEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i.i.i, %.noexc3.i.i.i.i
+  %.0.lcssa.i.i.i.i.i.i.i.i.i = phi ptr [ %6, %.noexc3.i.i.i.i ], [ %i.z, %_ZSt10_ConstructIN24json11_internal_lightgbm4JsonEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i.i.i ]
+  store ptr %.0.lcssa.i.i.i.i.i.i.i.i.i, ptr %i.n, align 8, !tbaa !12
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVN24json11_internal_lightgbm9JsonArrayE, i64 16), ptr %i.d, align 8, !tbaa !22
   store ptr %i.a, ptr %0, align 8, !tbaa !36
   store ptr %i.d, ptr %1, align 8, !tbaa !123

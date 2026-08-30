@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/spdlog/original/cfg?download=true
+inline.NumInlined: 442
+inline.NumDeleted: 235
 begin_hunk_0_@_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE21_M_insert_unique_nodeEmmPNSA_10_Hash_nodeIS8_Lb1EEEm:bb.a
   br label %bb.l
 
@@ -200,10 +202,10 @@ _ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS
   br i1 %.not29, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit, %bb.h
-  %.031 = phi ptr [ %i.i, %bb.h ], [ %i.h, %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 8 uses
-  %.02530 = phi i64 [ %.1, %bb.h ], [ 0, %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 2 uses
-  %i.i = load ptr, ptr %.031, align 8, !tbaa !38  ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %.031, i64 72
+  %.031 = phi i64 [ %.1, %bb.h ], [ 0, %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 2 uses
+  %.02530 = phi ptr [ %i.i, %bb.h ], [ %i.h, %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S5_ESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 8 uses
+  %i.i = load ptr, ptr %.02530, align 8, !tbaa !38 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %.02530, i64 72
   %i.k = load i64, ptr %i.j, align 8, !tbaa !45
   %i.l = urem i64 %i.k, %1                        ; 3 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %i.l ; 3 uses
@@ -213,27 +215,27 @@ _ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS
 
 bb.e:                                             ; preds = %.lr.ph
   %i.o = load ptr, ptr %i.g, align 8, !tbaa !27
-  store ptr %i.o, ptr %.031, align 8, !tbaa !38
-  store ptr %.031, ptr %i.g, align 8, !tbaa !27
+  store ptr %i.o, ptr %.02530, align 8, !tbaa !38
+  store ptr %.02530, ptr %i.g, align 8, !tbaa !27
   store ptr %i.g, ptr %i.m, align 8, !tbaa !47
-  %i.p = load ptr, ptr %.031, align 8, !tbaa !38
+  %i.p = load ptr, ptr %.02530, align 8, !tbaa !38
   %.not28 = icmp eq ptr %i.p, null
   br i1 %.not28, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %.02530
-  store ptr %.031, ptr %i.q, align 8, !tbaa !47
+  %i.q = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %.031
+  store ptr %.02530, ptr %i.q, align 8, !tbaa !47
   br label %bb.h
 
 bb.g:                                             ; preds = %.lr.ph
   %i.r = load ptr, ptr %i.n, align 8, !tbaa !38
-  store ptr %i.r, ptr %.031, align 8, !tbaa !38
+  store ptr %i.r, ptr %.02530, align 8, !tbaa !38
   %i.s = load ptr, ptr %i.m, align 8, !tbaa !47
-  store ptr %.031, ptr %i.s, align 8, !tbaa !38
+  store ptr %.02530, ptr %i.s, align 8, !tbaa !38
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.e, %bb.f, %bb.g
-  %.1 = phi i64 [ %.02530, %bb.g ], [ %i.l, %bb.f ], [ %i.l, %bb.e ]
+  %.1 = phi i64 [ %.031, %bb.g ], [ %i.l, %bb.f ], [ %i.l, %bb.e ]
   %.not = icmp eq ptr %i.i, null
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !85
 
@@ -636,10 +638,10 @@ _ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS
   br i1 %.not29, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N6spdlog5level10level_enumEESaISB_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSD_18_Mod_range_hashingENSD_20_Default_ranged_hashENSD_20_Prime_rehash_policyENSD_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit, %bb.h
-  %.031 = phi ptr [ %i.i, %bb.h ], [ %i.h, %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N6spdlog5level10level_enumEESaISB_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSD_18_Mod_range_hashingENSD_20_Default_ranged_hashENSD_20_Prime_rehash_policyENSD_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 8 uses
-  %.02530 = phi i64 [ %.1, %bb.h ], [ 0, %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N6spdlog5level10level_enumEESaISB_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSD_18_Mod_range_hashingENSD_20_Default_ranged_hashENSD_20_Prime_rehash_policyENSD_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 2 uses
-  %i.i = load ptr, ptr %.031, align 8, !tbaa !38  ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %.031, i64 48
+  %.031 = phi i64 [ %.1, %bb.h ], [ 0, %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N6spdlog5level10level_enumEESaISB_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSD_18_Mod_range_hashingENSD_20_Default_ranged_hashENSD_20_Prime_rehash_policyENSD_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 2 uses
+  %.02530 = phi ptr [ %i.i, %bb.h ], [ %i.h, %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N6spdlog5level10level_enumEESaISB_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSD_18_Mod_range_hashingENSD_20_Default_ranged_hashENSD_20_Prime_rehash_policyENSD_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 8 uses
+  %i.i = load ptr, ptr %.02530, align 8, !tbaa !38 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %.02530, i64 48
   %i.k = load i64, ptr %i.j, align 8, !tbaa !45
   %i.l = urem i64 %i.k, %1                        ; 3 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %i.l ; 3 uses
@@ -649,27 +651,27 @@ _ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS
 
 bb.e:                                             ; preds = %.lr.ph
   %i.o = load ptr, ptr %i.g, align 8, !tbaa !39
-  store ptr %i.o, ptr %.031, align 8, !tbaa !38
-  store ptr %.031, ptr %i.g, align 8, !tbaa !39
+  store ptr %i.o, ptr %.02530, align 8, !tbaa !38
+  store ptr %.02530, ptr %i.g, align 8, !tbaa !39
   store ptr %i.g, ptr %i.m, align 8, !tbaa !47
-  %i.p = load ptr, ptr %.031, align 8, !tbaa !38
+  %i.p = load ptr, ptr %.02530, align 8, !tbaa !38
   %.not28 = icmp eq ptr %i.p, null
   br i1 %.not28, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %.02530
-  store ptr %.031, ptr %i.q, align 8, !tbaa !47
+  %i.q = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %.031
+  store ptr %.02530, ptr %i.q, align 8, !tbaa !47
   br label %bb.h
 
 bb.g:                                             ; preds = %.lr.ph
   %i.r = load ptr, ptr %i.n, align 8, !tbaa !38
-  store ptr %i.r, ptr %.031, align 8, !tbaa !38
+  store ptr %i.r, ptr %.02530, align 8, !tbaa !38
   %i.s = load ptr, ptr %i.m, align 8, !tbaa !47
-  store ptr %.031, ptr %i.s, align 8, !tbaa !38
+  store ptr %.02530, ptr %i.s, align 8, !tbaa !38
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.e, %bb.f, %bb.g
-  %.1 = phi i64 [ %.02530, %bb.g ], [ %i.l, %bb.f ], [ %i.l, %bb.e ]
+  %.1 = phi i64 [ %.031, %bb.g ], [ %i.l, %bb.f ], [ %i.l, %bb.e ]
   %.not = icmp eq ptr %i.i, null
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !94
 

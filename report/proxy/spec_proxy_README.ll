@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/proxy/original/spec_proxy_README?download=true
+inline.NumInlined: 386
+inline.NumDeleted: 247
 begin_hunk_0
 $_ZZN3pro2v46detail9conv_metaINS0_23proxy_indirect_accessorI10DictionaryEE5MemAtFNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiEEC1IPSt3mapIiSC_St4lessIiESaISt4pairIKiSC_EEEEESt15in_place_type_tIT_EENUlRS5_iE_8__invokeB5cxx11ESS_i = comdat any
 
@@ -200,10 +202,10 @@ _ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i: ; preds = %_ZNSt4pairIK
   store ptr %i.o, ptr %i.n, align 8, !tbaa !40, !alias.scope !29
   store ptr %i.r, ptr %5, align 8, !tbaa !43, !alias.scope !29
   %i.s = invoke noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #21
-          to label %_ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i15 unwind label %bb.u ; 4 uses
+          to label %_ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i15 unwind label %bb.u ; 6 uses
 
 _ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i15: ; preds = %_ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i
-  %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 32 ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 32 ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.o, i64 24 ; 2 uses
   store ptr @.str.1, ptr %i.s, align 8, !tbaa !45
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 8 ; 2 uses
@@ -214,11 +216,16 @@ _ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i15: ; preds = %_ZNKSt6vec
           to label %_ZNSt6vectorIPKcSaIS1_EE9push_backEOS1_.exit23 unwind label %bb.v ; 4 uses
 
 _ZNSt6vectorIPKcSaIS1_EE9push_backEOS1_.exit23:   ; preds = %_ZNKSt6vectorIPKcSaIS1_EE12_M_check_lenEmS1_.exit.i.i.i15
+  %8 = ptrtoint ptr %i.s to i64
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   store ptr @.str.2, ptr %i.x, align 8, !tbaa !45
-  store i64 ptrtoint (ptr @.str.1 to i64), ptr %i.w, align 8
+  %9 = load i64, ptr %i.s, align 8
+  store i64 %9, ptr %i.w, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 16 ; 2 uses
-  call void @_ZdlPvm(ptr noundef nonnull %i.s, i64 noundef 8) #20
+  %10 = load ptr, ptr %i.t, align 8, !tbaa !51
+  %11 = ptrtoint ptr %10 to i64
+  %12 = sub i64 %11, %8
+  call void @_ZdlPvm(ptr noundef nonnull %i.s, i64 noundef %12) #20
   store ptr %i.w, ptr %i.r, align 8, !tbaa !46
   store ptr %i.y, ptr %i.u, align 8, !tbaa !50
   store ptr %i.y, ptr %i.t, align 8, !tbaa !51

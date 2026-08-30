@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/double_conversion/original/fast-dtoa?download=true
+inline.NumInlined: 153
+inline.NumDeleted: 41
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -61,33 +63,33 @@ bb.c:                                             ; preds = %_ZNK17double_conver
   br i1 %i.u, label %.lr.ph15.i.i.i.i, label %_ZNK17double_conversion6Double20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i, %bb.c
-  %.011.i.i.i.i = phi i64 [ %i.v, %.lr.ph.i.i.i.i ], [ %i.s, %bb.c ] ; 2 uses
-  %.0810.i.i.i.i = phi i32 [ %i.w, %.lr.ph.i.i.i.i ], [ %i.t, %bb.c ]
-  %i.v = shl nuw i64 %.011.i.i.i.i, 10            ; 4 uses
-  %i.w = add nsw i32 %.0810.i.i.i.i, -10          ; 3 uses
-  %i.x = icmp ult i64 %.011.i.i.i.i, 17592186044416
+  %.011.i.i.i.i = phi i32 [ %i.w, %.lr.ph.i.i.i.i ], [ %i.t, %bb.c ]
+  %.0810.i.i.i.i = phi i64 [ %i.v, %.lr.ph.i.i.i.i ], [ %i.s, %bb.c ] ; 2 uses
+  %i.v = shl nuw i64 %.0810.i.i.i.i, 10           ; 4 uses
+  %i.w = add nsw i32 %.011.i.i.i.i, -10           ; 3 uses
+  %i.x = icmp ult i64 %.0810.i.i.i.i, 17592186044416
   br i1 %i.x, label %.lr.ph.i.i.i.i, label %.preheader.i.i.i.i, !llvm.loop !10
 
 .lr.ph15.i.i.i.i:                                 ; preds = %.preheader.i.i.i.i, %.lr.ph15.i.i.i.i
-  %.114.i.i.i.i = phi i64 [ %i.y, %.lr.ph15.i.i.i.i ], [ %i.v, %.preheader.i.i.i.i ]
-  %.1913.i.i.i.i = phi i32 [ %i.z, %.lr.ph15.i.i.i.i ], [ %i.w, %.preheader.i.i.i.i ]
-  %i.y = shl nuw i64 %.114.i.i.i.i, 1             ; 3 uses
-  %i.z = add nsw i32 %.1913.i.i.i.i, -1           ; 2 uses
+  %.114.i.i.i.i = phi i32 [ %i.z, %.lr.ph15.i.i.i.i ], [ %i.w, %.preheader.i.i.i.i ]
+  %.1913.i.i.i.i = phi i64 [ %i.y, %.lr.ph15.i.i.i.i ], [ %i.v, %.preheader.i.i.i.i ]
+  %i.y = shl nuw i64 %.1913.i.i.i.i, 1            ; 3 uses
+  %i.z = add nsw i32 %.114.i.i.i.i, -1            ; 2 uses
   %i.aa = icmp sgt i64 %i.y, -1
   br i1 %i.aa, label %.lr.ph15.i.i.i.i, label %_ZNK17double_conversion6Double20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i, !llvm.loop !11
 
 _ZNK17double_conversion6Double20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i: ; preds = %.lr.ph15.i.i.i.i, %.preheader.i.i.i.i
-  %.19.lcssa.i.i.i.i = phi i32 [ %i.w, %.preheader.i.i.i.i ], [ %i.z, %.lr.ph15.i.i.i.i ]
-  %.1.lcssa.i.i.i.i = phi i64 [ %i.v, %.preheader.i.i.i.i ], [ %i.y, %.lr.ph15.i.i.i.i ]
+  %.19.lcssa.i.i.i.i = phi i64 [ %i.v, %.preheader.i.i.i.i ], [ %i.y, %.lr.ph15.i.i.i.i ]
+  %.1.lcssa.i.i.i.i = phi i32 [ %i.w, %.preheader.i.i.i.i ], [ %i.z, %.lr.ph15.i.i.i.i ]
   %i.ab = icmp eq i64 %i.d, 0
   %i.ac = and i64 %i.c, 9214364837600034816
   %i.ad = icmp ne i64 %i.ac, 0
   %i.ae = and i1 %i.ab, %i.ad                     ; 2 uses
   %i.af = shl nuw nsw i64 %.0.i.i.i.i, 2
   %i.ag = add nsw i32 %.0.i1.i.i.i, -2
-  %.sroa.012.0.v.i.i = select i1 %i.ae, i64 %i.af, i64 %i.r
   %.sroa.8.0.i.i = select i1 %i.ae, i32 %i.ag, i32 %i.t
-  %i.ah = sub nsw i32 %.sroa.8.0.i.i, %.19.lcssa.i.i.i.i
+  %.sroa.012.0.v.i.i = select i1 %i.ae, i64 %i.af, i64 %i.r
+  %i.ah = sub nsw i32 %.sroa.8.0.i.i, %.1.lcssa.i.i.i.i
   br label %bb.e
 
 bb.d:                                             ; preds = %_ZNK17double_conversion6Double17AsNormalizedDiyFpEv.exit.i
@@ -113,39 +115,39 @@ bb.d:                                             ; preds = %_ZNK17double_conver
   br i1 %i.av, label %.lr.ph15.i.i.i53.i, label %_ZNK17double_conversion6Single20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i
 
 .lr.ph.i.i.i42.i:                                 ; preds = %.lr.ph.i.i.i42.i, %bb.d
-  %.011.i.i.i43.i = phi i64 [ %i.aw, %.lr.ph.i.i.i42.i ], [ %i.at, %bb.d ] ; 2 uses
-  %.0810.i.i.i44.i = phi i32 [ %i.ax, %.lr.ph.i.i.i42.i ], [ %i.au, %bb.d ]
-  %i.aw = shl nuw i64 %.011.i.i.i43.i, 10         ; 4 uses
-  %i.ax = add nsw i32 %.0810.i.i.i44.i, -10       ; 3 uses
-  %i.ay = icmp ult i64 %.011.i.i.i43.i, 17592186044416
+  %.011.i.i.i43.i = phi i32 [ %i.ax, %.lr.ph.i.i.i42.i ], [ %i.au, %bb.d ]
+  %.0810.i.i.i44.i = phi i64 [ %i.aw, %.lr.ph.i.i.i42.i ], [ %i.at, %bb.d ] ; 2 uses
+  %i.aw = shl nuw i64 %.0810.i.i.i44.i, 10        ; 4 uses
+  %i.ax = add nsw i32 %.011.i.i.i43.i, -10        ; 3 uses
+  %i.ay = icmp ult i64 %.0810.i.i.i44.i, 17592186044416
   br i1 %i.ay, label %.lr.ph.i.i.i42.i, label %.preheader.i.i.i45.i, !llvm.loop !10
 
 .lr.ph15.i.i.i53.i:                               ; preds = %.preheader.i.i.i45.i, %.lr.ph15.i.i.i53.i
-  %.114.i.i.i54.i = phi i64 [ %i.az, %.lr.ph15.i.i.i53.i ], [ %i.aw, %.preheader.i.i.i45.i ]
-  %.1913.i.i.i55.i = phi i32 [ %i.ba, %.lr.ph15.i.i.i53.i ], [ %i.ax, %.preheader.i.i.i45.i ]
-  %i.az = shl nuw i64 %.114.i.i.i54.i, 1          ; 3 uses
-  %i.ba = add nsw i32 %.1913.i.i.i55.i, -1        ; 2 uses
+  %.114.i.i.i54.i = phi i32 [ %i.ba, %.lr.ph15.i.i.i53.i ], [ %i.ax, %.preheader.i.i.i45.i ]
+  %.1913.i.i.i55.i = phi i64 [ %i.az, %.lr.ph15.i.i.i53.i ], [ %i.aw, %.preheader.i.i.i45.i ]
+  %i.az = shl nuw i64 %.1913.i.i.i55.i, 1         ; 3 uses
+  %i.ba = add nsw i32 %.114.i.i.i54.i, -1         ; 2 uses
   %i.bb = icmp sgt i64 %i.az, -1
   br i1 %i.bb, label %.lr.ph15.i.i.i53.i, label %_ZNK17double_conversion6Single20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i, !llvm.loop !11
 
 _ZNK17double_conversion6Single20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i: ; preds = %.lr.ph15.i.i.i53.i, %.preheader.i.i.i45.i
-  %.19.lcssa.i.i.i46.i = phi i32 [ %i.ax, %.preheader.i.i.i45.i ], [ %i.ba, %.lr.ph15.i.i.i53.i ]
-  %.1.lcssa.i.i.i47.i = phi i64 [ %i.aw, %.preheader.i.i.i45.i ], [ %i.az, %.lr.ph15.i.i.i53.i ]
+  %.19.lcssa.i.i.i46.i = phi i64 [ %i.aw, %.preheader.i.i.i45.i ], [ %i.az, %.lr.ph15.i.i.i53.i ]
+  %.1.lcssa.i.i.i47.i = phi i32 [ %i.ax, %.preheader.i.i.i45.i ], [ %i.ba, %.lr.ph15.i.i.i53.i ]
   %i.bc = icmp eq i32 %i.ak, 0
   %i.bd = and i32 %i.aj, 2130706432
   %i.be = icmp ne i32 %i.bd, 0
   %i.bf = and i1 %i.bc, %i.be                     ; 2 uses
   %i.bg = shl nuw nsw i64 %i.ao, 2
   %i.bh = add nsw i32 %.0.i1.i.i41.i, -2
-  %.sroa.012.0.v.i48.i = select i1 %i.bf, i64 %i.bg, i64 %i.as
-  %.sroa.8.0.i50.i = select i1 %i.bf, i32 %i.bh, i32 %i.au
-  %i.bi = sub nsw i32 %.sroa.8.0.i50.i, %.19.lcssa.i.i.i46.i
+  %.sroa.8.0.i48.i = select i1 %i.bf, i32 %i.bh, i32 %i.au
+  %.sroa.012.0.v.i49.i = select i1 %i.bf, i64 %i.bg, i64 %i.as
+  %i.bi = sub nsw i32 %.sroa.8.0.i48.i, %.1.lcssa.i.i.i47.i
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNK17double_conversion6Single20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i, %_ZNK17double_conversion6Double20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i
   %.sink159.i = phi i32 [ %i.bi, %_ZNK17double_conversion6Single20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i ], [ %i.ah, %_ZNK17double_conversion6Double20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i ]
-  %.sroa.012.0.i49.sink.in.i = phi i64 [ %.sroa.012.0.v.i48.i, %_ZNK17double_conversion6Single20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i ], [ %.sroa.012.0.v.i.i, %_ZNK17double_conversion6Double20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i ]
-  %.sroa.073.0.i = phi i64 [ %.1.lcssa.i.i.i47.i, %_ZNK17double_conversion6Single20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i ], [ %.1.lcssa.i.i.i.i, %_ZNK17double_conversion6Double20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i ] ; 2 uses
+  %.sroa.012.0.i49.sink.in.i = phi i64 [ %.sroa.012.0.v.i49.i, %_ZNK17double_conversion6Single20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i ], [ %.sroa.012.0.v.i.i, %_ZNK17double_conversion6Double20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i ]
+  %.sroa.073.0.i = phi i64 [ %.19.lcssa.i.i.i46.i, %_ZNK17double_conversion6Single20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i ], [ %.19.lcssa.i.i.i.i, %_ZNK17double_conversion6Double20NormalizedBoundariesEPNS_5DiyFpES2_.exit.i ] ; 2 uses
   %.sroa.012.0.i49.sink.i = add nsw i64 %.sroa.012.0.i49.sink.in.i, -1
   %i.bj = zext nneg i32 %.sink159.i to i64
   %i.bk = shl i64 %.sroa.012.0.i49.sink.i, %i.bj  ; 2 uses
@@ -301,7 +303,7 @@ bb.h:                                             ; preds = %.critedge2.i.i.i, %
   br i1 %i.fs, label %.critedge2.i.i.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ft = sub i64 %i.es, %.04052.i.i.i
+  %i.ft = sub nuw i64 %i.es, %.04052.i.i.i
   %i.fu = sub nuw i64 %i.fr, %i.es
   %.not46.i.i.i = icmp ult i64 %i.ft, %i.fu
   br i1 %.not46.i.i.i, label %.critedge.i.i.i, label %.critedge2.i.i.i
@@ -329,7 +331,7 @@ bb.j:                                             ; preds = %.critedge.i.i.i
   br i1 %i.gb, label %_ZN17double_conversionL9RoundWeedENS_6VectorIcEEimmmmm.exit.i.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.gc = sub i64 %i.et, %.040.lcssa.i.i.i
+  %i.gc = sub nuw i64 %i.et, %.040.lcssa.i.i.i
   %i.gd = sub nuw i64 %i.ga, %i.et
   %i.ge = icmp ugt i64 %i.gc, %i.gd
   br i1 %i.ge, label %_ZN17double_conversionL9RoundWeedENS_6VectorIcEEimmmmm.exit.i.i, label %bb.l
@@ -396,7 +398,7 @@ bb.o:                                             ; preds = %.critedge2.i70.i.i,
   br i1 %i.he, label %.critedge2.i70.i.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.hf = sub i64 %i.gw, %.04052.i68.i.i
+  %i.hf = sub nuw i64 %i.gw, %.04052.i68.i.i
   %i.hg = sub nuw i64 %i.hd, %i.gw
   %.not46.i69.i.i = icmp ult i64 %i.hf, %i.hg
   br i1 %.not46.i69.i.i, label %.critedge.i73.i.i, label %.critedge2.i70.i.i
@@ -424,7 +426,7 @@ bb.q:                                             ; preds = %.critedge.i73.i.i
   br i1 %i.hn, label %_ZN17double_conversionL9RoundWeedENS_6VectorIcEEimmmmm.exit79.i.i, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.ho = sub i64 %i.gx, %.040.lcssa.i74.i.i
+  %i.ho = sub nuw i64 %i.gx, %.040.lcssa.i74.i.i
   %i.hp = sub nuw i64 %i.hm, %i.gx
   %i.hq = icmp ugt i64 %i.ho, %i.hp
   br i1 %i.hq, label %_ZN17double_conversionL9RoundWeedENS_6VectorIcEEimmmmm.exit79.i.i, label %bb.s

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libevent/original/bufferevent_ratelim?download=true
+inline.NumInlined: 30
+inline.NumDeleted: 5
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@bufferevent_decrement_read_buckets_:bb.a
   %.not35 = icmp eq ptr %i.ad, null
   br i1 %.not35, label %bb.l, label %bb.k
@@ -200,9 +204,9 @@ bev_group_random_element_.exit:                   ; preds = %.lr.ph.i.prol.loope
   br i1 %i.ae, label %.lr.ph43, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bev_group_random_element_.exit, %bb.d
-  %.039 = phi i8 [ %.1.a, %bb.d ], [ 0, %bev_group_random_element_.exit ] ; 2 uses
-  %.01938 = phi ptr [ %i.aq, %bb.d ], [ %.08.i, %bev_group_random_element_.exit ] ; 3 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %.01938, i64 464 ; 2 uses
+  %.039 = phi ptr [ %i.aq, %bb.d ], [ %.08.i, %bev_group_random_element_.exit ] ; 3 uses
+  %.01938 = phi i8 [ %.1.a, %bb.d ], [ 0, %bev_group_random_element_.exit ] ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %.039, i64 464 ; 2 uses
   %i.ag = load ptr, ptr %i.af, align 8            ; 2 uses
   %i.ah = icmp ne ptr %i.ag, null
   %i.ai = load ptr, ptr getelementptr inbounds nuw (i8, ptr @evthread_lock_fns_, i64 24), align 8 ; 2 uses
@@ -216,7 +220,7 @@ EVLOCK_TRY_LOCK_.exit:                            ; preds = %.lr.ph
   br i1 %.not.i28.not, label %EVLOCK_TRY_LOCK_.exit.thread, label %bb.d
 
 EVLOCK_TRY_LOCK_.exit.thread:                     ; preds = %.lr.ph, %EVLOCK_TRY_LOCK_.exit
-  tail call void @bufferevent_unsuspend_read_(ptr noundef nonnull %.01938, i16 noundef zeroext 4) #9
+  tail call void @bufferevent_unsuspend_read_(ptr noundef nonnull %.039, i16 noundef zeroext 4) #9
   %i.al = load ptr, ptr %i.af, align 8            ; 2 uses
   %.not26 = icmp eq ptr %i.al, null
   br i1 %.not26, label %bb.d, label %bb.c
@@ -227,8 +231,8 @@ bb.c:                                             ; preds = %EVLOCK_TRY_LOCK_.ex
   br label %bb.d
 
 bb.d:                                             ; preds = %EVLOCK_TRY_LOCK_.exit, %bb.c, %EVLOCK_TRY_LOCK_.exit.thread
-  %.1.a = phi i8 [ %.039, %bb.c ], [ %.039, %EVLOCK_TRY_LOCK_.exit.thread ], [ 1, %EVLOCK_TRY_LOCK_.exit ] ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %.01938, i64 488
+  %.1.a = phi i8 [ %.01938, %bb.c ], [ %.01938, %EVLOCK_TRY_LOCK_.exit.thread ], [ 1, %EVLOCK_TRY_LOCK_.exit ] ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %.039, i64 488
   %i.ap = load ptr, ptr %i.ao, align 8
   %i.aq = load ptr, ptr %i.ap, align 8            ; 2 uses
   %.not = icmp eq ptr %i.aq, null
@@ -547,9 +551,9 @@ bev_group_random_element_.exit:                   ; preds = %.lr.ph.i.prol.loope
   br i1 %i.ae, label %.lr.ph43, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bev_group_random_element_.exit, %bb.d
-  %.039 = phi i8 [ %.1.a, %bb.d ], [ 0, %bev_group_random_element_.exit ] ; 2 uses
-  %.01938 = phi ptr [ %i.aq, %bb.d ], [ %.08.i, %bev_group_random_element_.exit ] ; 3 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %.01938, i64 464 ; 2 uses
+  %.039 = phi ptr [ %i.aq, %bb.d ], [ %.08.i, %bev_group_random_element_.exit ] ; 3 uses
+  %.01938 = phi i8 [ %.1.a, %bb.d ], [ 0, %bev_group_random_element_.exit ] ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %.039, i64 464 ; 2 uses
   %i.ag = load ptr, ptr %i.af, align 8            ; 2 uses
   %i.ah = icmp ne ptr %i.ag, null
   %i.ai = load ptr, ptr getelementptr inbounds nuw (i8, ptr @evthread_lock_fns_, i64 24), align 8 ; 2 uses
@@ -563,7 +567,7 @@ EVLOCK_TRY_LOCK_.exit:                            ; preds = %.lr.ph
   br i1 %.not.i28.not, label %EVLOCK_TRY_LOCK_.exit.thread, label %bb.d
 
 EVLOCK_TRY_LOCK_.exit.thread:                     ; preds = %.lr.ph, %EVLOCK_TRY_LOCK_.exit
-  tail call void @bufferevent_unsuspend_write_(ptr noundef nonnull %.01938, i16 noundef zeroext 4) #9
+  tail call void @bufferevent_unsuspend_write_(ptr noundef nonnull %.039, i16 noundef zeroext 4) #9
   %i.al = load ptr, ptr %i.af, align 8            ; 2 uses
   %.not26 = icmp eq ptr %i.al, null
   br i1 %.not26, label %bb.d, label %bb.c
@@ -574,8 +578,8 @@ bb.c:                                             ; preds = %EVLOCK_TRY_LOCK_.ex
   br label %bb.d
 
 bb.d:                                             ; preds = %EVLOCK_TRY_LOCK_.exit, %bb.c, %EVLOCK_TRY_LOCK_.exit.thread
-  %.1.a = phi i8 [ %.039, %bb.c ], [ %.039, %EVLOCK_TRY_LOCK_.exit.thread ], [ 1, %EVLOCK_TRY_LOCK_.exit ] ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %.01938, i64 488
+  %.1.a = phi i8 [ %.01938, %bb.c ], [ %.01938, %EVLOCK_TRY_LOCK_.exit.thread ], [ 1, %EVLOCK_TRY_LOCK_.exit ] ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %.039, i64 488
   %i.ap = load ptr, ptr %i.ao, align 8
   %i.aq = load ptr, ptr %i.ap, align 8            ; 2 uses
   %.not = icmp eq ptr %i.aq, null

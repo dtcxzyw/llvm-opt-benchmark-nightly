@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jemalloc/original/psset?download=true
+inline.NumInlined: 99
+inline.NumDeleted: 48
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@psset_alloc_container_insert:bb.a
   store ptr %1, ptr %i.d, align 8, !tbaa !40
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 4 uses
@@ -200,12 +204,12 @@ psset_enumerate_search.exit.thread:               ; preds = %bb.d, %psset_enumer
   br i1 %i.az, label %.lr.ph.i, label %fb_ffs.exit, !llvm.loop !51
 
 fb_ffs.exit:                                      ; preds = %.lr.ph, %psset_enumerate_search.exit.thread
-  %.141.i.lcssa.i = phi i64 [ %.040.i.i, %psset_enumerate_search.exit.thread ], [ %i.ay, %.lr.ph ]
-  %.039.i.lcssa.i = phi i64 [ %i.aq, %psset_enumerate_search.exit.thread ], [ %i.aw, %.lr.ph ]
-  %i.ba = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.141.i.lcssa.i, i1 true)
-  %i.bb = shl i64 %.039.i.lcssa.i, 6
+  %.141.i.lcssa.i = phi i64 [ %i.aq, %psset_enumerate_search.exit.thread ], [ %i.aw, %.lr.ph ]
+  %.039.i.lcssa.i = phi i64 [ %.040.i.i, %psset_enumerate_search.exit.thread ], [ %i.ay, %.lr.ph ]
+  %i.ba = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.039.i.lcssa.i, i1 true)
+  %i.bb = shl i64 %.141.i.lcssa.i, 6
   %.masked = and i64 %i.bb, 4294967232
-  %i.bc = or disjoint i64 %.masked, %i.ba         ; 2 uses
+  %i.bc = or disjoint i64 %i.ba, %.masked         ; 2 uses
   %i.bd = icmp eq i64 %i.bc, 64
   br i1 %i.bd, label %fb_ffs.exit.thread, label %bb.h
 
@@ -250,10 +254,10 @@ bb.a:
   br i1 %i.h, label %fb_fls.exit.thread, label %fb_fls.exit.us
 
 fb_fls.exit.us:                                   ; preds = %.lr.ph.i.us.preheader, %.split.us
-  %.141.i.lcssa.i.us = phi i64 [ %i.e, %.split.us ], [ %i.g, %.lr.ph.i.us.preheader ]
-  %.039.i.lcssa.i.us = phi i64 [ 64, %.split.us ], [ 0, %.lr.ph.i.us.preheader ]
-  %i.i = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %.141.i.lcssa.i.us, i1 true)
-  %i.j = or disjoint i64 %.039.i.lcssa.i.us, %i.i
+  %.141.i.lcssa.i.us = phi i64 [ 64, %.split.us ], [ 0, %.lr.ph.i.us.preheader ]
+  %.039.i.lcssa.i.us = phi i64 [ %i.e, %.split.us ], [ %i.g, %.lr.ph.i.us.preheader ]
+  %i.i = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %.039.i.lcssa.i.us, i1 true)
+  %i.j = or disjoint i64 %i.i, %.141.i.lcssa.i.us
   %i.k = xor i64 %i.j, 63
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.k
   %.val.us = load ptr, ptr %i.l, align 8, !tbaa !37
@@ -288,11 +292,11 @@ fb_fls.exit.us:                                   ; preds = %.lr.ph.i.us.prehead
   br i1 %i.y, label %.lr.ph.i, label %fb_fls.exit, !llvm.loop !51
 
 fb_fls.exit:                                      ; preds = %.lr.ph, %.split
-  %.141.i.lcssa.i = phi i64 [ %.040.i.i, %.split ], [ %i.x, %.lr.ph ]
-  %.039.i.lcssa.i = phi i64 [ %i.m, %.split ], [ %i.v, %.lr.ph ]
-  %i.z = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %.141.i.lcssa.i, i1 true)
-  %i.aa = shl nuw nsw i64 %.039.i.lcssa.i, 6
-  %i.ab = or disjoint i64 %i.aa, %i.z             ; 2 uses
+  %.141.i.lcssa.i = phi i64 [ %i.m, %.split ], [ %i.v, %.lr.ph ]
+  %.039.i.lcssa.i = phi i64 [ %.040.i.i, %.split ], [ %i.x, %.lr.ph ]
+  %i.z = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 range(i64 1, 0) %.039.i.lcssa.i, i1 true)
+  %i.aa = shl nuw nsw i64 %.141.i.lcssa.i, 6
+  %i.ab = or disjoint i64 %i.z, %i.aa             ; 2 uses
   %i.ac = xor i64 %i.ab, 63                       ; 2 uses
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.ac
   %.val = load ptr, ptr %i.ad, align 8, !tbaa !37 ; 2 uses

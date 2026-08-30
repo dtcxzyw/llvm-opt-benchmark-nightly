@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/brotli/original/histogram?download=true
+inline.NumInlined: 6
+inline.NumDeleted: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -57,23 +59,23 @@ InitBlockSplitIterator.exit59:                    ; preds = %InitBlockSplitItera
 bb.e:                                             ; preds = %.lr.ph101, %bb.l
   %.0100 = phi i8 [ %8, %.lr.ph101 ], [ %.2, %bb.l ] ; 3 uses
   %.04599 = phi i8 [ %9, %.lr.ph101 ], [ %.247, %bb.l ] ; 2 uses
-  %.05098 = phi i64 [ %6, %.lr.ph101 ], [ %i.dh, %bb.l ] ; 3 uses
-  %.05297 = phi i64 [ 0, %.lr.ph101 ], [ %i.ex, %bb.l ] ; 2 uses
-  %.sroa.467.096 = phi i64 [ 0, %.lr.ph101 ], [ %.sroa.467.1.lcssa, %bb.l ] ; 3 uses
-  %.sroa.7.095 = phi i64 [ 0, %.lr.ph101 ], [ %.sroa.7.1, %bb.l ] ; 3 uses
-  %.sroa.9.094 = phi i64 [ %i.o, %.lr.ph101 ], [ %.sroa.9.1, %bb.l ] ; 4 uses
-  %.sroa.4.093 = phi i64 [ 0, %.lr.ph101 ], [ %.sroa.4.1, %bb.l ] ; 4 uses
-  %.sroa.969.092 = phi i64 [ %i.e, %.lr.ph101 ], [ %.sroa.969.1.lcssa, %bb.l ] ; 3 uses
-  %.sroa.764.091 = phi i64 [ 0, %.lr.ph101 ], [ %.sroa.764.1, %bb.l ]
-  %.sroa.965.090 = phi i64 [ %i.j, %.lr.ph101 ], [ %i.ad, %bb.l ] ; 2 uses
-  %.sroa.463.089 = phi i64 [ 0, %.lr.ph101 ], [ %.sroa.463.1, %bb.l ] ; 2 uses
+  %.05098 = phi i64 [ 0, %.lr.ph101 ], [ %i.ex, %bb.l ] ; 2 uses
+  %.05297 = phi i64 [ %6, %.lr.ph101 ], [ %i.dh, %bb.l ] ; 3 uses
+  %.sroa.467.096 = phi i64 [ 0, %.lr.ph101 ], [ %.sroa.7.1, %bb.l ] ; 3 uses
+  %.sroa.7.095 = phi i64 [ %i.o, %.lr.ph101 ], [ %.sroa.9.1, %bb.l ] ; 4 uses
+  %.sroa.9.094 = phi i64 [ 0, %.lr.ph101 ], [ %.sroa.4.1, %bb.l ] ; 4 uses
+  %.sroa.4.093 = phi i64 [ 0, %.lr.ph101 ], [ %.sroa.764.1, %bb.l ]
+  %.sroa.969.092 = phi i64 [ %i.j, %.lr.ph101 ], [ %i.ad, %bb.l ] ; 2 uses
+  %.sroa.764.091 = phi i64 [ 0, %.lr.ph101 ], [ %.sroa.463.1, %bb.l ] ; 2 uses
+  %.sroa.965.090 = phi i64 [ 0, %.lr.ph101 ], [ %.sroa.467.1.lcssa, %bb.l ] ; 3 uses
+  %.sroa.463.089 = phi i64 [ %i.e, %.lr.ph101 ], [ %.sroa.969.1.lcssa, %bb.l ] ; 3 uses
   %.sroa.768.088 = phi i64 [ 0, %.lr.ph101 ], [ %.sroa.768.1.lcssa.a, %bb.l ] ; 3 uses
-  %i.s = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.05297 ; 4 uses
-  %i.t = icmp eq i64 %.sroa.965.090, 0
+  %i.s = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.05098 ; 4 uses
+  %i.t = icmp eq i64 %.sroa.969.092, 0
   br i1 %i.t, label %bb.f, label %BlockSplitIteratorNext.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.u = add i64 %.sroa.463.089, 1                ; 3 uses
+  %i.u = add i64 %.sroa.764.091, 1                ; 3 uses
   %i.v = load ptr, ptr %i.p, align 8, !tbaa !15
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.u
   %i.x = load i8, ptr %i.w, align 1, !tbaa !16
@@ -84,9 +86,9 @@ bb.f:                                             ; preds = %bb.e
   br label %BlockSplitIteratorNext.exit
 
 BlockSplitIteratorNext.exit:                      ; preds = %bb.e, %bb.f
-  %.sroa.463.1 = phi i64 [ %i.u, %bb.f ], [ %.sroa.463.089, %bb.e ]
-  %.sroa.764.1 = phi i64 [ %i.y, %bb.f ], [ %.sroa.764.091, %bb.e ] ; 2 uses
-  %i.ac = phi i64 [ %i.ab, %bb.f ], [ %.sroa.965.090, %bb.e ]
+  %.sroa.463.1 = phi i64 [ %i.u, %bb.f ], [ %.sroa.764.091, %bb.e ]
+  %.sroa.764.1 = phi i64 [ %i.y, %bb.f ], [ %.sroa.4.093, %bb.e ] ; 2 uses
+  %i.ac = phi i64 [ %i.ab, %bb.f ], [ %.sroa.969.092, %bb.e ]
   %i.ad = add i64 %i.ac, -1
   %i.ae = getelementptr inbounds nuw [2832 x i8], ptr %12, i64 %.sroa.764.1 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.s, i64 12
@@ -111,15 +113,15 @@ BlockSplitIteratorNext.exit:                      ; preds = %bb.e, %bb.f
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %BlockSplitIteratorNext.exit60.us
   %.177.us = phi i8 [ %i.bm, %BlockSplitIteratorNext.exit60.us ], [ %.0100, %.lr.ph ]
   %.04975.us = phi i64 [ %i.bo, %BlockSplitIteratorNext.exit60.us ], [ %i.ap, %.lr.ph ]
-  %.15174.us = phi i64 [ %i.bn, %BlockSplitIteratorNext.exit60.us ], [ %.05098, %.lr.ph ] ; 2 uses
-  %.sroa.467.173.us = phi i64 [ %.sroa.467.2.us, %BlockSplitIteratorNext.exit60.us ], [ %.sroa.467.096, %.lr.ph ] ; 2 uses
-  %.sroa.969.172.us = phi i64 [ %i.ba, %BlockSplitIteratorNext.exit60.us ], [ %.sroa.969.092, %.lr.ph ] ; 2 uses
-  %.sroa.768.171.us = phi i64 [ %.sroa.768.2.us.a, %BlockSplitIteratorNext.exit60.us ], [ %.sroa.768.088, %.lr.ph ]
+  %.15174.us = phi i64 [ %i.bn, %BlockSplitIteratorNext.exit60.us ], [ %.05297, %.lr.ph ] ; 2 uses
+  %.sroa.467.173.us = phi i64 [ %.sroa.467.2.us, %BlockSplitIteratorNext.exit60.us ], [ %.sroa.965.090, %.lr.ph ]
+  %.sroa.969.172.us = phi i64 [ %i.ba, %BlockSplitIteratorNext.exit60.us ], [ %.sroa.463.089, %.lr.ph ] ; 2 uses
+  %.sroa.768.171.us = phi i64 [ %.sroa.768.2.us.a, %BlockSplitIteratorNext.exit60.us ], [ %.sroa.768.088, %.lr.ph ] ; 2 uses
   %i.aq = icmp eq i64 %.sroa.969.172.us, 0
   br i1 %i.aq, label %bb.g, label %BlockSplitIteratorNext.exit60.us
 
 bb.g:                                             ; preds = %.lr.ph.split.us
-  %i.ar = add i64 %.sroa.467.173.us, 1            ; 3 uses
+  %i.ar = add i64 %.sroa.768.171.us, 1            ; 3 uses
   %i.as = load ptr, ptr %i.q, align 8, !tbaa !15
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.ar
   %i.au = load i8, ptr %i.at, align 1, !tbaa !16
@@ -130,11 +132,11 @@ bb.g:                                             ; preds = %.lr.ph.split.us
   br label %BlockSplitIteratorNext.exit60.us
 
 BlockSplitIteratorNext.exit60.us:                 ; preds = %bb.g, %.lr.ph.split.us
-  %.sroa.768.2.us.a = phi i64 [ %i.av, %bb.g ], [ %.sroa.768.171.us, %.lr.ph.split.us ] ; 3 uses
-  %.sroa.467.2.us = phi i64 [ %i.ar, %bb.g ], [ %.sroa.467.173.us, %.lr.ph.split.us ] ; 2 uses
+  %.sroa.768.2.us.a = phi i64 [ %i.ar, %bb.g ], [ %.sroa.768.171.us, %.lr.ph.split.us ] ; 2 uses
+  %.sroa.467.2.us = phi i64 [ %i.av, %bb.g ], [ %.sroa.467.173.us, %.lr.ph.split.us ] ; 3 uses
   %i.az = phi i64 [ %i.ay, %bb.g ], [ %.sroa.969.172.us, %.lr.ph.split.us ]
   %i.ba = add i64 %i.az, -1                       ; 2 uses
-  %i.bb = getelementptr inbounds nuw [1040 x i8], ptr %11, i64 %.sroa.768.2.us.a ; 2 uses
+  %i.bb = getelementptr inbounds nuw [1040 x i8], ptr %11, i64 %.sroa.467.2.us ; 2 uses
   %i.bc = and i64 %.15174.us, %7
   %i.bd = getelementptr inbounds nuw i8, ptr %5, i64 %i.bc ; 2 uses
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !16
@@ -157,15 +159,15 @@ BlockSplitIteratorNext.exit60.us:                 ; preds = %bb.g, %.lr.ph.split
   %.177 = phi i8 [ %i.da, %BlockSplitIteratorNext.exit60 ], [ %.0100, %.lr.ph ] ; 3 uses
   %.14676 = phi i8 [ %.177, %BlockSplitIteratorNext.exit60 ], [ %.04599, %.lr.ph ]
   %.04975 = phi i64 [ %i.dc, %BlockSplitIteratorNext.exit60 ], [ %i.ap, %.lr.ph ]
-  %.15174 = phi i64 [ %i.db, %BlockSplitIteratorNext.exit60 ], [ %.05098, %.lr.ph ] ; 2 uses
-  %.sroa.467.173 = phi i64 [ %.sroa.467.2, %BlockSplitIteratorNext.exit60 ], [ %.sroa.467.096, %.lr.ph ] ; 2 uses
-  %.sroa.969.172 = phi i64 [ %i.bz, %BlockSplitIteratorNext.exit60 ], [ %.sroa.969.092, %.lr.ph ] ; 2 uses
-  %.sroa.768.171 = phi i64 [ %.sroa.768.2.a, %BlockSplitIteratorNext.exit60 ], [ %.sroa.768.088, %.lr.ph ]
+  %.15174 = phi i64 [ %i.db, %BlockSplitIteratorNext.exit60 ], [ %.05297, %.lr.ph ] ; 2 uses
+  %.sroa.467.173 = phi i64 [ %.sroa.467.2, %BlockSplitIteratorNext.exit60 ], [ %.sroa.965.090, %.lr.ph ]
+  %.sroa.969.172 = phi i64 [ %i.bz, %BlockSplitIteratorNext.exit60 ], [ %.sroa.463.089, %.lr.ph ] ; 2 uses
+  %.sroa.768.171 = phi i64 [ %.sroa.768.2.a, %BlockSplitIteratorNext.exit60 ], [ %.sroa.768.088, %.lr.ph ] ; 2 uses
   %i.bp = icmp eq i64 %.sroa.969.172, 0
   br i1 %i.bp, label %bb.h, label %BlockSplitIteratorNext.exit60
 
 bb.h:                                             ; preds = %.lr.ph.split
-  %i.bq = add i64 %.sroa.467.173, 1               ; 3 uses
+  %i.bq = add i64 %.sroa.768.171, 1               ; 3 uses
   %i.br = load ptr, ptr %i.q, align 8, !tbaa !15
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.bq
   %i.bt = load i8, ptr %i.bs, align 1, !tbaa !16
@@ -176,11 +178,11 @@ bb.h:                                             ; preds = %.lr.ph.split
   br label %BlockSplitIteratorNext.exit60
 
 BlockSplitIteratorNext.exit60:                    ; preds = %.lr.ph.split, %bb.h
-  %.sroa.768.2.a = phi i64 [ %i.bu, %bb.h ], [ %.sroa.768.171, %.lr.ph.split ] ; 4 uses
-  %.sroa.467.2 = phi i64 [ %i.bq, %bb.h ], [ %.sroa.467.173, %.lr.ph.split ] ; 2 uses
+  %.sroa.768.2.a = phi i64 [ %i.bq, %bb.h ], [ %.sroa.768.171, %.lr.ph.split ] ; 2 uses
+  %.sroa.467.2 = phi i64 [ %i.bu, %bb.h ], [ %.sroa.467.173, %.lr.ph.split ] ; 4 uses
   %i.by = phi i64 [ %i.bx, %bb.h ], [ %.sroa.969.172, %.lr.ph.split ]
   %i.bz = add i64 %i.by, -1                       ; 2 uses
-  %i.ca = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %.sroa.768.2.a
+  %i.ca = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %.sroa.467.2
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !14
   %i.cc = shl i32 %i.cb, 9
   %i.cd = zext i32 %i.cc to i64
@@ -194,7 +196,7 @@ BlockSplitIteratorNext.exit60:                    ; preds = %.lr.ph.split, %bb.h
   %i.cl = load i8, ptr %i.ck, align 1, !tbaa !16
   %i.cm = or i8 %i.cl, %i.ch
   %i.cn = zext i8 %i.cm to i64
-  %.idx104 = mul nuw nsw i64 %.sroa.768.2.a, 66560
+  %.idx104 = mul nuw nsw i64 %.sroa.467.2, 66560
   %i.co = getelementptr i8, ptr %11, i64 %.idx104
   %i.cp = getelementptr [1040 x i8], ptr %i.co, i64 %i.cn ; 2 uses
   %i.cq = and i64 %.15174, %7
@@ -217,9 +219,9 @@ BlockSplitIteratorNext.exit60:                    ; preds = %.lr.ph.split, %bb.h
 
 ._crit_edge:                                      ; preds = %BlockSplitIteratorNext.exit60, %BlockSplitIteratorNext.exit60.us, %BlockSplitIteratorNext.exit
   %.sroa.768.1.lcssa.a = phi i64 [ %.sroa.768.088, %BlockSplitIteratorNext.exit ], [ %.sroa.768.2.us.a, %BlockSplitIteratorNext.exit60.us ], [ %.sroa.768.2.a, %BlockSplitIteratorNext.exit60 ]
-  %.sroa.969.1.lcssa = phi i64 [ %.sroa.969.092, %BlockSplitIteratorNext.exit ], [ %i.ba, %BlockSplitIteratorNext.exit60.us ], [ %i.bz, %BlockSplitIteratorNext.exit60 ]
-  %.sroa.467.1.lcssa = phi i64 [ %.sroa.467.096, %BlockSplitIteratorNext.exit ], [ %.sroa.467.2.us, %BlockSplitIteratorNext.exit60.us ], [ %.sroa.467.2, %BlockSplitIteratorNext.exit60 ]
-  %.151.lcssa = phi i64 [ %.05098, %BlockSplitIteratorNext.exit ], [ %i.bn, %BlockSplitIteratorNext.exit60.us ], [ %i.db, %BlockSplitIteratorNext.exit60 ]
+  %.sroa.969.1.lcssa = phi i64 [ %.sroa.463.089, %BlockSplitIteratorNext.exit ], [ %i.ba, %BlockSplitIteratorNext.exit60.us ], [ %i.bz, %BlockSplitIteratorNext.exit60 ]
+  %.sroa.467.1.lcssa = phi i64 [ %.sroa.965.090, %BlockSplitIteratorNext.exit ], [ %.sroa.467.2.us, %BlockSplitIteratorNext.exit60.us ], [ %.sroa.467.2, %BlockSplitIteratorNext.exit60 ]
+  %.151.lcssa = phi i64 [ %.05297, %BlockSplitIteratorNext.exit ], [ %i.bn, %BlockSplitIteratorNext.exit60.us ], [ %i.db, %BlockSplitIteratorNext.exit60 ]
   %.146.lcssa = phi i8 [ %.04599, %BlockSplitIteratorNext.exit ], [ %.177.us, %BlockSplitIteratorNext.exit60.us ], [ %.177, %BlockSplitIteratorNext.exit60 ]
   %.1.lcssa = phi i8 [ %.0100, %BlockSplitIteratorNext.exit ], [ %i.bm, %BlockSplitIteratorNext.exit60.us ], [ %i.da, %BlockSplitIteratorNext.exit60 ]
   %i.dd = getelementptr inbounds nuw i8, ptr %i.s, i64 4
@@ -243,11 +245,11 @@ bb.i:                                             ; preds = %._crit_edge
   br i1 %i.dq, label %bb.j, label %bb.l
 
 bb.j:                                             ; preds = %bb.i
-  %i.dr = icmp eq i64 %.sroa.9.094, 0
+  %i.dr = icmp eq i64 %.sroa.7.095, 0
   br i1 %i.dr, label %bb.k, label %BlockSplitIteratorNext.exit61
 
 bb.k:                                             ; preds = %bb.j
-  %i.ds = add i64 %.sroa.4.093, 1                 ; 3 uses
+  %i.ds = add i64 %.sroa.9.094, 1                 ; 3 uses
   %i.dt = load ptr, ptr %i.r, align 8, !tbaa !15
   %i.du = getelementptr inbounds nuw i8, ptr %i.dt, i64 %i.ds
   %i.dv = load i8, ptr %i.du, align 1, !tbaa !16
@@ -258,9 +260,9 @@ bb.k:                                             ; preds = %bb.j
   br label %BlockSplitIteratorNext.exit61
 
 BlockSplitIteratorNext.exit61:                    ; preds = %bb.j, %bb.k
-  %.sroa.4.2 = phi i64 [ %i.ds, %bb.k ], [ %.sroa.4.093, %bb.j ]
-  %.sroa.7.2 = phi i64 [ %i.dw, %bb.k ], [ %.sroa.7.095, %bb.j ] ; 2 uses
-  %i.ea = phi i64 [ %i.dz, %bb.k ], [ %.sroa.9.094, %bb.j ]
+  %.sroa.4.2 = phi i64 [ %i.ds, %bb.k ], [ %.sroa.9.094, %bb.j ]
+  %.sroa.7.2 = phi i64 [ %i.dw, %bb.k ], [ %.sroa.467.096, %bb.j ] ; 2 uses
+  %i.ea = phi i64 [ %i.dz, %bb.k ], [ %.sroa.7.095, %bb.j ]
   %i.eb = add i64 %i.ea, -1
   %i.ec = zext i16 %i.ag to i32                   ; 3 uses
   %i.ed = lshr i32 %i.ec, 6                       ; 2 uses
@@ -292,12 +294,12 @@ BlockSplitIteratorNext.exit61:                    ; preds = %bb.j, %bb.k
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.i, %BlockSplitIteratorNext.exit61, %._crit_edge
-  %.sroa.4.1 = phi i64 [ %.sroa.4.093, %._crit_edge ], [ %.sroa.4.2, %BlockSplitIteratorNext.exit61 ], [ %.sroa.4.093, %bb.i ]
-  %.sroa.9.1 = phi i64 [ %.sroa.9.094, %._crit_edge ], [ %i.eb, %BlockSplitIteratorNext.exit61 ], [ %.sroa.9.094, %bb.i ]
-  %.sroa.7.1 = phi i64 [ %.sroa.7.095, %._crit_edge ], [ %.sroa.7.2, %BlockSplitIteratorNext.exit61 ], [ %.sroa.7.095, %bb.i ]
+  %.sroa.4.1 = phi i64 [ %.sroa.9.094, %._crit_edge ], [ %.sroa.4.2, %BlockSplitIteratorNext.exit61 ], [ %.sroa.9.094, %bb.i ]
+  %.sroa.9.1 = phi i64 [ %.sroa.7.095, %._crit_edge ], [ %i.eb, %BlockSplitIteratorNext.exit61 ], [ %.sroa.7.095, %bb.i ]
+  %.sroa.7.1 = phi i64 [ %.sroa.467.096, %._crit_edge ], [ %.sroa.7.2, %BlockSplitIteratorNext.exit61 ], [ %.sroa.467.096, %bb.i ]
   %.247 = phi i8 [ %.146.lcssa, %._crit_edge ], [ %i.dl, %BlockSplitIteratorNext.exit61 ], [ %i.dl, %bb.i ]
   %.2 = phi i8 [ %.1.lcssa, %._crit_edge ], [ %i.dp, %BlockSplitIteratorNext.exit61 ], [ %i.dp, %bb.i ]
-  %i.ex = add nuw i64 %.05297, 1                  ; 2 uses
+  %i.ex = add nuw i64 %.05098, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.ex, %1
   br i1 %exitcond.not, label %._crit_edge102, label %bb.e, !llvm.loop !32
 

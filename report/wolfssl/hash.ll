@@ -1,4 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wolfssl/original/hash?download=true
+inline.NumInlined: 14
 begin_hunk_0_@wc_Sha512_224Hash_ex:bb.a
 bb.c:                                             ; preds = %bb.b
   %i.c = call i32 @wc_Sha512_224Final(ptr noundef nonnull %5, ptr noundef %2) #4
@@ -200,17 +201,17 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
-  %.012 = phi ptr [ %i.a, %bb.b ], [ null, %bb.c ], [ null, %bb.a ]
-  %.0 = phi i32 [ 0, %bb.b ], [ %i.c, %bb.c ], [ -125, %bb.a ]
+  %.012 = phi i32 [ 0, %bb.b ], [ %i.c, %bb.c ], [ -125, %bb.a ]
+  %.0 = phi ptr [ %i.a, %bb.b ], [ null, %bb.c ], [ null, %bb.a ]
   %.not17 = icmp eq ptr %3, null
   br i1 %.not17, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  store i32 %.0, ptr %3, align 4, !tbaa !8
+  store i32 %.012, ptr %3, align 4, !tbaa !8
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  ret ptr %.012
+  ret ptr %.0
 }
 
 declare ptr @wolfSSL_Malloc(i64 noundef) local_unnamed_addr #3

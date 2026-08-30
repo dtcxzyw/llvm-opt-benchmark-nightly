@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jemalloc/original/ctl?download=true
+inline.NumInlined: 915
+inline.NumDeleted: 48
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@ctl_init:bb.a
   br i1 %i.k, label %arenas_i_impl.exit.thread34, label %bb.g
 
@@ -200,19 +205,19 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %.not122, label %.loopexit101, label %.lr.ph121
 
 .lr.ph121:                                        ; preds = %.preheader100, %bb.n
-  %.065120 = phi ptr [ %i.ak, %bb.n ], [ %2, %.preheader100 ] ; 2 uses
-  %.066119 = phi ptr [ %.5, %bb.n ], [ %1, %.preheader100 ] ; 3 uses
-  %.072118 = phi i64 [ %i.aq, %bb.n ], [ 0, %.preheader100 ] ; 4 uses
-  %.073117 = phi i64 [ %i.ap, %bb.n ], [ %i.e, %.preheader100 ] ; 2 uses
-  %.074116 = phi ptr [ %i.am, %bb.n ], [ %i.b, %.preheader100 ] ; 2 uses
-  %i.h = getelementptr i8, ptr %.066119, i64 24   ; 2 uses
+  %.065120 = phi ptr [ %.5, %bb.n ], [ %1, %.preheader100 ] ; 3 uses
+  %.065119 = phi i64 [ %i.aq, %bb.n ], [ 0, %.preheader100 ] ; 4 uses
+  %.072118 = phi i64 [ %i.ap, %bb.n ], [ %i.e, %.preheader100 ] ; 2 uses
+  %.067117 = phi ptr [ %i.am, %bb.n ], [ %i.b, %.preheader100 ] ; 2 uses
+  %.074116 = phi ptr [ %i.ak, %bb.n ], [ %2, %.preheader100 ] ; 2 uses
+  %i.h = getelementptr i8, ptr %.065120, i64 24   ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !51   ; 2 uses
   %i.j = load i8, ptr %i.i, align 1, !tbaa !52, !range !53, !noundef !54
   %i.k = trunc nuw i8 %i.j to i1
   br i1 %i.k, label %.preheader, label %bb.f
 
 .preheader:                                       ; preds = %.lr.ph121
-  %i.l = getelementptr inbounds nuw i8, ptr %.066119, i64 16
+  %i.l = getelementptr inbounds nuw i8, ptr %.065120, i64 16
   %i.m = load i64, ptr %i.l, align 8, !tbaa !55   ; 2 uses
   %.not123 = icmp eq i64 %i.m, 0
   br i1 %.not123, label %.thread93, label %.lr.ph
@@ -223,11 +228,11 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !56   ; 2 uses
   %i.q = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.p) #16
-  %i.r = icmp eq i64 %i.q, %.073117
+  %i.r = icmp eq i64 %i.q, %.072118
   br i1 %i.r, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.s = tail call i32 @strncmp(ptr noundef nonnull %.065120, ptr noundef nonnull %i.p, i64 noundef %.073117) #16
+  %i.s = tail call i32 @strncmp(ptr noundef nonnull %.074116, ptr noundef nonnull %i.p, i64 noundef %.072118) #16
   %i.t = icmp eq i32 %i.s, 0
   br i1 %i.t, label %.loopexit, label %bb.e
 
@@ -237,13 +242,13 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
   br i1 %exitcond.not, label %.thread93, label %.lr.ph, !llvm.loop !57
 
 .loopexit:                                        ; preds = %bb.d
-  %i.v = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.072118
+  %i.v = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.065119
   store i64 %.071115, ptr %i.v, align 8, !tbaa !12
-  %.not99 = icmp eq ptr %i.n, %.066119
+  %.not99 = icmp eq ptr %i.n, %.065120
   br i1 %.not99, label %.thread93, label %bb.i
 
 bb.f:                                             ; preds = %.lr.ph121
-  %i.w = tail call i64 @je_malloc_strtoumax(ptr noundef nonnull %.065120, ptr noundef null, i32 noundef 10) #15 ; 3 uses
+  %i.w = tail call i64 @je_malloc_strtoumax(ptr noundef nonnull %.074116, ptr noundef null, i32 noundef 10) #15 ; 3 uses
   %i.x = icmp eq i64 %i.w, -1
   br i1 %i.x, label %.thread93, label %bb.g
 
@@ -257,7 +262,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ad, label %.thread93, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.072118
+  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.065119
   store i64 %i.w, ptr %i.ae, align 8, !tbaa !12
   br label %bb.i
 
@@ -266,7 +271,7 @@ bb.i:                                             ; preds = %bb.h, %.loopexit
   %i.af = getelementptr inbounds nuw i8, ptr %.5, i64 32
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !17
   %.not83 = icmp eq ptr %i.ag, null
-  %i.ah = load i8, ptr %.074116, align 1, !tbaa !60
+  %i.ah = load i8, ptr %.067117, align 1, !tbaa !60
   %i.ai = icmp eq i8 %i.ah, 0                     ; 2 uses
   br i1 %.not83, label %bb.j, label %bb.k
 
@@ -277,12 +282,12 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.ai, label %.thread96, label %.thread93
 
 .thread96:                                        ; preds = %bb.j, %bb.k
-  %i.aj = add i64 %.072118, 1
+  %i.aj = add i64 %.065119, 1
   store i64 %i.aj, ptr %5, align 8, !tbaa !12
   br label %.loopexit101
 
 bb.l:                                             ; preds = %bb.j
-  %i.ak = getelementptr inbounds nuw i8, ptr %.074116, i64 1 ; 5 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %.067117, i64 1 ; 5 uses
   %i.al = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.ak, i32 noundef 46) #16 ; 2 uses
   %.not84 = icmp eq ptr %i.al, null
   br i1 %.not84, label %bb.m, label %bb.n
@@ -297,7 +302,7 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   %i.an = ptrtoint ptr %i.am to i64
   %i.ao = ptrtoint ptr %i.ak to i64
   %i.ap = sub i64 %i.an, %i.ao
-  %i.aq = add nuw i64 %.072118, 1                 ; 2 uses
+  %i.aq = add nuw i64 %.065119, 1                 ; 2 uses
   %i.ar = load i64, ptr %5, align 8, !tbaa !12
   %i.as = icmp ult i64 %i.aq, %i.ar
   br i1 %i.as, label %.lr.ph121, label %.loopexit101, !llvm.loop !61

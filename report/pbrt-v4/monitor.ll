@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/monitor?download=true
+inline.NumInlined: 8
+inline.NumDeleted: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -176,8 +178,8 @@ bb.i:                                             ; preds = %bb.h
   store i32 %i.an, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 1928), align 8, !tbaa !11
   %i.ao = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   %i.ap = zext nneg i32 %i.an to i64
-  %i.aq = sub nsw i64 %i.ap, %indvars.iv
-  %i.ar = shl nsw i64 %i.aq, 3
+  %i.aq = sub nuw nsw i64 %i.ap, %indvars.iv
+  %i.ar = shl nuw nsw i64 %i.aq, 3
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.am, ptr nonnull align 8 %i.ao, i64 %i.ar, i1 false)
   br label %.loopexit
 

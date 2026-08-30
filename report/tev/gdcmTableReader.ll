@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/gdcmTableReader?download=true
+inline.NumInlined: 1538
+inline.NumDeleted: 792
 begin_hunk_0_@_ZNSt3__13mapIN4gdcm3TagENS1_11ModuleEntryENS_4lessIS2_EENS_9allocatorINS_4pairIKS2_S3_EEEEE6insertB8ne180100INS_20__map_const_iteratorINS_21__tree_const_iteratorINS_12__value_typeIS2_S3_EEPNS_11__tree_nodeISG_PvEElEEEEEEvT_SN_:bb.a
   br i1 %.not.i.i.i.i, label %_ZNSt3__110unique_ptrINS_11__tree_nodeINS_12__value_typeIN4gdcm3TagENS3_11ModuleEntryEEEPvEENS_22__tree_node_destructorINS_9allocatorIS8_EEEEED2B8ne180100Ev.exit.i.i.i, label %bb.d
 
@@ -200,7 +202,7 @@ bb.p:                                             ; preds = %_ZNKSt3__119__map_v
   %i.bc = icmp ult i16 %i.az, %i.bb
   br i1 %i.bc, label %.lr.ph.i.i.i, label %_ZNKSt3__119__map_value_compareIN4gdcm3TagENS_12__value_typeIS2_NS1_11ModuleEntryEEENS_4lessIS2_EELb1EEclB8ne180100ERKS5_RKS2_.exit29
 
-.lr.ph.i.i.i:                                     ; preds = %_ZNKSt3__119__map_value_compareIN4gdcm3TagENS_12__value_typeIS2_NS1_11ModuleEntryEEENS_4lessIS2_EELb1EEclB8ne180100ERKS2_RKS5_.exit, %bb.p
+.lr.ph.i.i.i:                                     ; preds = %bb.p, %_ZNKSt3__119__map_value_compareIN4gdcm3TagENS_12__value_typeIS2_NS1_11ModuleEntryEEENS_4lessIS2_EELb1EEclB8ne180100ERKS2_RKS5_.exit
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !138 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.be, null       ; 2 uses

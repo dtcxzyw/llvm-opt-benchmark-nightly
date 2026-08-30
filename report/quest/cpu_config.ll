@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quest/original/cpu_config?download=true
+inline.NumInlined: 15
+inline.NumDeleted: 3
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_Z24cpu_getCurrentNumThreadsv:bb.a
 bb.a:
   %i.a = tail call i32 @omp_get_num_threads()
@@ -200,9 +204,9 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %.lr.ph, %bb.s
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.s ] ; 2 uses
-  %.03749 = phi i64 [ %i.ai, %.lr.ph ], [ %i.at, %bb.s ] ; 2 uses
-  %.03947 = phi i32 [ %i.ac, %.lr.ph ], [ %.140, %bb.s ]
-  %i.ak = sub i32 %.03947, %i.aj                  ; 2 uses
+  %.050 = phi i32 [ %i.ac, %.lr.ph ], [ %.140, %bb.s ]
+  %.03848 = phi i64 [ %i.ai, %.lr.ph ], [ %i.at, %bb.s ] ; 2 uses
+  %i.ak = sub i32 %.050, %i.aj                    ; 2 uses
   %i.al = icmp slt i32 %i.ak, 1                   ; 2 uses
   %i.am = zext i1 %i.al to i64
   %i.an = add nsw i64 %i.af, %i.am
@@ -210,7 +214,7 @@ bb.q:                                             ; preds = %.lr.ph, %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.ap = shl nuw i64 1, %indvars.iv
   store i64 %i.ap, ptr %i.a, align 8, !tbaa !12
-  %i.aq = inttoptr i64 %.03749 to ptr
+  %i.aq = inttoptr i64 %.03848 to ptr
   %i.ar = call i64 @mbind(ptr noundef %i.aq, i64 noundef %i.ao, i32 noundef 2, ptr noundef nonnull %i.a, i64 noundef 64, i32 noundef 0)
   %i.as = icmp eq i64 %i.ar, -1
   br i1 %i.as, label %bb.r, label %bb.s
@@ -220,7 +224,7 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  %i.at = add i64 %i.ao, %.03749
+  %i.at = add i64 %i.ao, %.03848
   %i.au = load i32, ptr @_ZZ18cpu_allocNumaArrayxE8numNodes, align 4 ; 2 uses
   %i.av = select i1 %i.al, i32 %i.au, i32 0
   %.140 = add nsw i32 %i.av, %i.ak

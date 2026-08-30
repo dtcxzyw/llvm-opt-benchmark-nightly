@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openvdb/original/Metadata?download=true
+inline.NumInlined: 636
+inline.NumDeleted: 291
 begin_hunk_0_@_ZN7openvdb5v13_09ExceptionC2EPKcPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:bb.a
   %i.s = icmp ult i64 %i.r, %i.i
   br i1 %i.s, label %.invoke.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i10.i.i
@@ -200,12 +202,12 @@ bb.b:                                             ; preds = %bb.a
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 11 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !87
-  %i.i = load ptr, ptr %0, align 8, !tbaa !84     ; 7 uses
+  %i.i = load ptr, ptr %0, align 8, !tbaa !84     ; 5 uses
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64                 ; 2 uses
-  %i.l = sub i64 %i.j, %i.k                       ; 2 uses
+  %i.l = sub i64 %i.j, %i.k
   %i.m = icmp ugt i64 %i.f, %i.l
   br i1 %i.m, label %bb.c, label %bb.h
 
@@ -232,11 +234,16 @@ bb.f:                                             ; preds = %_ZNSt12_Vector_base
   br label %_ZNSt6vectorIhSaIhEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKhS1_EEEEPhmT_S9_.exit
 
 _ZNSt6vectorIhSaIhEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKhS1_EEEEPhmT_S9_.exit: ; preds = %bb.e, %bb.f
-  %.not.i = icmp eq ptr %i.i, null
+  %2 = load ptr, ptr %0, align 8, !tbaa !84       ; 3 uses
+  %.not.i = icmp eq ptr %2, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorIhSaIhEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKhS1_EEEEPhmT_S9_.exit
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %i.l) #24
+  %3 = load ptr, ptr %i.g, align 8, !tbaa !87
+  %4 = ptrtoint ptr %3 to i64
+  %5 = ptrtoint ptr %2 to i64
+  %6 = sub i64 %4, %5
+  tail call void @_ZdlPvm(ptr noundef nonnull %2, i64 noundef %6) #24
   br label %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit
 
 _ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit: ; preds = %_ZNSt6vectorIhSaIhEE20_M_allocate_and_copyIN9__gnu_cxx17__normal_iteratorIPKhS1_EEEEPhmT_S9_.exit, %bb.g

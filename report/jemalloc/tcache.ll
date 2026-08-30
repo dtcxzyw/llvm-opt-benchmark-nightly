@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jemalloc/original/tcache?download=true
+inline.NumInlined: 196
+inline.NumDeleted: 79
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@je_arena_dalloc_small
 declare void @je_arena_dalloc_small(ptr noundef, ptr noundef) local_unnamed_addr #4
 
@@ -200,7 +204,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.cb = trunc nuw i16 %i.bt to i8
-  %i.cc = sub i8 %i.by, %i.cb
+  %i.cc = sub nuw i8 %i.by, %i.cb
   store i8 %i.cc, ptr %i.bx, align 1, !tbaa !28
   br label %tcache_gc_small.exit
 
@@ -356,9 +360,9 @@ bb.x:                                             ; preds = %tcache_gc_small_nre
 
 .lr.ph.i71.i:                                     ; preds = %bb.x, %bb.ab
   %.0455.i.i = phi ptr [ %.1.i.i, %bb.ab ], [ null, %bb.x ] ; 6 uses
-  %.0474.i.i = phi i16 [ %.148.i.i, %bb.ab ], [ 0, %bb.x ] ; 2 uses
-  %.0493.i.i = phi ptr [ %i.fd, %bb.ab ], [ %.val61.i, %bb.x ] ; 4 uses
-  %i.eu = load ptr, ptr %.0493.i.i, align 8, !tbaa !47 ; 2 uses
+  %.0474.i.i = phi ptr [ %i.fd, %bb.ab ], [ %.val61.i, %bb.x ] ; 4 uses
+  %.0483.i.i = phi i16 [ %.148.i.i, %bb.ab ], [ 0, %bb.x ] ; 2 uses
+  %i.eu = load ptr, ptr %.0474.i.i, align 8, !tbaa !47 ; 2 uses
   %i.ev = ptrtoint ptr %i.eu to i64               ; 2 uses
   %i.ew = icmp ugt i64 %..i.i, %i.ev
   %i.ex = icmp ule i64 %.38.i.i, %i.ev
@@ -366,26 +370,26 @@ bb.x:                                             ; preds = %tcache_gc_small_nre
   br i1 %i.ey, label %bb.aa, label %bb.y
 
 bb.y:                                             ; preds = %.lr.ph.i71.i
-  %i.ez = add i16 %.0474.i.i, 1                   ; 2 uses
+  %i.ez = add i16 %.0483.i.i, 1                   ; 2 uses
   %.not.i72.i = icmp eq ptr %.0455.i.i, null
   br i1 %.not.i72.i, label %bb.ab, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.fa = load ptr, ptr %.0455.i.i, align 8, !tbaa !47
-  store ptr %i.fa, ptr %.0493.i.i, align 8, !tbaa !47
+  store ptr %i.fa, ptr %.0474.i.i, align 8, !tbaa !47
   store ptr %i.eu, ptr %.0455.i.i, align 8, !tbaa !47
   %i.fb = getelementptr inbounds nuw i8, ptr %.0455.i.i, i64 8
   br label %bb.ab
 
 bb.aa:                                            ; preds = %.lr.ph.i71.i
   %i.fc = icmp eq ptr %.0455.i.i, null
-  %spec.select.i73.i = select i1 %i.fc, ptr %.0493.i.i, ptr %.0455.i.i
+  %spec.select.i73.i = select i1 %i.fc, ptr %.0474.i.i, ptr %.0455.i.i
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.y
-  %.148.i.i = phi i16 [ %i.ez, %bb.y ], [ %.0474.i.i, %bb.aa ], [ %i.ez, %bb.z ] ; 2 uses
+  %.148.i.i = phi i16 [ %i.ez, %bb.y ], [ %.0483.i.i, %bb.aa ], [ %i.ez, %bb.z ] ; 2 uses
   %.1.i.i = phi ptr [ null, %bb.y ], [ %spec.select.i73.i, %bb.aa ], [ %i.fb, %bb.z ]
-  %i.fd = getelementptr inbounds nuw i8, ptr %.0493.i.i, i64 8 ; 2 uses
+  %i.fd = getelementptr inbounds nuw i8, ptr %.0474.i.i, i64 8 ; 2 uses
   %i.fe = icmp ult ptr %i.fd, %i.er
   br i1 %i.fe, label %.lr.ph.i71.i, label %.preheader1.i.i, !llvm.loop !170
 

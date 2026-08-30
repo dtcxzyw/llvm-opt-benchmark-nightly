@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/proxy/original/timers?download=true
+inline.NumInlined: 51
+inline.NumDeleted: 41
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -134,11 +136,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.j = call i64 @__isoc23_strtol(ptr noundef nonnull %i.c, ptr noundef null, i32 noundef 10) #15 ; 2 uses
   %i.k = icmp slt i64 %i.j, 0
-  %spec.select = select i1 %i.k, i32 45, i32 43
-  %spec.select14 = call i64 @llvm.abs.i64(i64 %i.j, i1 true) ; 2 uses
-  %i.l = udiv i64 %spec.select14, 100
-  %i.m = urem i64 %spec.select14, 100
-  %i.n = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.c, i64 noundef 41, ptr noundef nonnull @.str.3, i32 noundef %spec.select, i64 noundef %i.l, i64 noundef %i.m) #15 ; 0 uses
+  %spec.select = call i64 @llvm.abs.i64(i64 %i.j, i1 true) ; 2 uses
+  %spec.select14 = select i1 %i.k, i32 45, i32 43
+  %i.l = udiv i64 %spec.select, 100
+  %i.m = urem i64 %spec.select, 100
+  %i.n = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.c, i64 noundef 41, ptr noundef nonnull @.str.3, i32 noundef %spec.select14, i64 noundef %i.l, i64 noundef %i.m) #15 ; 0 uses
   %i.o = load atomic i8, ptr @_ZGVZN9benchmark8internal18GetNullLogInstanceEvE8null_log acquire, align 8
   %i.p = icmp eq i8 %i.o, 0
   br i1 %i.p, label %bb.c, label %_ZN9benchmark8internal18GetNullLogInstanceEv.exit, !prof !14

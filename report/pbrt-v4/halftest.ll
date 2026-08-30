@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/halftest?download=true
+inline.NumInlined: 78
+inline.NumDeleted: 10
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_Z15overflowtestallv:bb.a
   %.0.i = phi i32 [ 1, %bb.d ], [ 0, %_Z3f2hf.exit.i ]
   %i.j = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZN4Ptex4v2_48PtexHalf8f2hTableE, i64 796), align 4, !tbaa !10 ; 2 uses
@@ -200,13 +204,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %index ; 2 uses
   %i.e = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load)
   %i.f = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %wide.load30)
-  %0 = fcmp ueq <4 x float> %i.e, splat (float +inf)
-  %1 = fcmp ueq <4 x float> %i.f, splat (float +inf)
-  %i.g = select <4 x i1> %0, <4 x float> splat (float 1.000000e+00), <4 x float> %wide.load
-  %i.h = select <4 x i1> %1, <4 x float> splat (float 1.000000e+00), <4 x float> %wide.load30
+  %0 = fcmp one <4 x float> %i.e, splat (float +inf)
+  %1 = fcmp one <4 x float> %i.f, splat (float +inf)
+  %i.g = select <4 x i1> %0, <4 x float> %wide.load, <4 x float> splat (float 1.000000e+00)
+  %i.h = select <4 x i1> %1, <4 x float> %wide.load30, <4 x float> splat (float 1.000000e+00)
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store <4 x float> %i.g, ptr %i.d, align 16, !tbaa !18
-  store <4 x float> %i.h, ptr %i.i, align 16, !tbaa !18
+  store <4 x float> %i.g, ptr %i.d, align 16
+  store <4 x float> %i.h, ptr %i.i, align 16
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.j = icmp eq i64 %index.next, 65536
   br i1 %i.j, label %.preheader, label %vector.body, !llvm.loop !23

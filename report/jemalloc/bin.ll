@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jemalloc/original/bin?download=true
+inline.NumInlined: 55
+inline.NumDeleted: 28
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@je_bin_update_shard_size:bb.a
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block, %sz_size2index_compute.exit19, %bb.a
@@ -200,15 +205,15 @@ bb.a:
 .lr.ph46.prol.loopexit:                           ; preds = %.lr.ph46.prol, %.lr.ph46.preheader
   %.lcssa73.unr = phi i64 [ poison, %.lr.ph46.preheader ], [ %i.v, %.lr.ph46.prol ]
   %.lcssa72.unr = phi i32 [ poison, %.lr.ph46.preheader ], [ %i.ac, %.lr.ph46.prol ]
-  %.12844.unr = phi i32 [ %.02751, %.lr.ph46.preheader ], [ %i.ac, %.lr.ph46.prol ]
-  %.13043.unr = phi i64 [ %.029, %.lr.ph46.preheader ], [ %i.s, %.lr.ph46.prol ]
+  %.12844.unr = phi i64 [ %.029, %.lr.ph46.preheader ], [ %i.s, %.lr.ph46.prol ]
+  %.13043.unr = phi i32 [ %.02751, %.lr.ph46.preheader ], [ %i.ac, %.lr.ph46.prol ]
   %.242.unr = phi i64 [ %.138.lcssa, %.lr.ph46.preheader ], [ %i.v, %.lr.ph46.prol ]
   %i.ad = icmp eq i32 %spec.select, 1
   br i1 %i.ad, label %._crit_edge47, label %.lr.ph46
 
 .lr.ph46:                                         ; preds = %.lr.ph46.prol.loopexit, %.lr.ph46
-  %.12844 = phi i32 [ %i.ba, %.lr.ph46 ], [ %.12844.unr, %.lr.ph46.prol.loopexit ] ; 3 uses
-  %.13043 = phi i64 [ %i.ap, %.lr.ph46 ], [ %.13043.unr, %.lr.ph46.prol.loopexit ]
+  %.12844 = phi i64 [ %i.ap, %.lr.ph46 ], [ %.12844.unr, %.lr.ph46.prol.loopexit ]
+  %.13043 = phi i32 [ %i.ba, %.lr.ph46 ], [ %.13043.unr, %.lr.ph46.prol.loopexit ] ; 3 uses
   %.242 = phi i64 [ %i.at, %.lr.ph46 ], [ %.242.unr, %.lr.ph46.prol.loopexit ] ; 4 uses
   %i.ae = icmp ne i64 %.242, 0
   tail call void @llvm.assume(i1 %i.ae)
@@ -219,11 +224,11 @@ bb.a:
   %i.aj = mul i64 %i.ai, %i.m
   %i.ak = add i64 %i.aj, %i.l
   %i.al = inttoptr i64 %i.ak to ptr
-  %i.am = zext i32 %.12844 to i64
+  %i.am = zext i32 %.13043 to i64
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.am
   store ptr %i.al, ptr %i.an, align 8, !tbaa !40
-  %i.ao = add i32 %.12844, 1
-  %i.ap = add nsw i64 %.13043, -2                 ; 2 uses
+  %i.ao = add i32 %.13043, 1
+  %i.ap = add nsw i64 %.12844, -2                 ; 2 uses
   %i.aq = icmp ne i64 %i.ag, %.242
   tail call void @llvm.assume(i1 %i.aq)
   %i.ar = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %i.ah, i1 true) ; 2 uses
@@ -236,7 +241,7 @@ bb.a:
   %i.ay = zext i32 %i.ao to i64
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.ay
   store ptr %i.ax, ptr %i.az, align 8, !tbaa !40
-  %i.ba = add i32 %.12844, 2                      ; 2 uses
+  %i.ba = add i32 %.13043, 2                      ; 2 uses
   %.not.1 = icmp eq i64 %i.ap, 0
   br i1 %.not.1, label %._crit_edge47, label %.lr.ph46, !llvm.loop !41
 

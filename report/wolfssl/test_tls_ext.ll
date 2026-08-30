@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wolfssl/original/test_tls_ext?download=true
+inline.NumInlined: 1
+inline.NumDeleted: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -189,8 +191,8 @@ bb.d:                                             ; preds = %.critedge272
   br label %.critedge270
 
 .critedge270:                                     ; preds = %.critedge270.sink.split, %.critedge272
-  %.0258 = phi ptr [ %i.z, %.critedge272 ], [ null, %.critedge270.sink.split ] ; 2 uses
   %1 = phi i1 [ true, %.critedge272 ], [ false, %.critedge270.sink.split ]
+  %.0 = phi ptr [ %i.z, %.critedge272 ], [ null, %.critedge270.sink.split ] ; 2 uses
   %i.al = load ptr, ptr %i.c, align 8, !tbaa !12
   call void @wolfSSL_free(ptr noundef %i.al) #8
   store ptr null, ptr %i.c, align 8, !tbaa !12
@@ -218,7 +220,7 @@ bb.f:                                             ; preds = %bb.e
 
 .critedge276:                                     ; preds = %bb.e
   %i.aw = load ptr, ptr %i.c, align 8, !tbaa !12
-  %i.ax = call i32 @wolfSSL_set_session(ptr noundef %i.aw, ptr noundef %.0258) #8 ; 2 uses
+  %i.ax = call i32 @wolfSSL_set_session(ptr noundef %i.aw, ptr noundef %.0) #8 ; 2 uses
   %i.ay = icmp eq i32 %i.ax, 1
   br i1 %i.ay, label %.critedge278, label %.critedge274
 
@@ -290,7 +292,7 @@ bb.g:                                             ; preds = %.critedge282
 
 .critedge281:                                     ; preds = %.critedge281.sink.split, %.critedge270, %.critedge282
   %.14 = phi i32 [ 1, %.critedge282 ], [ 0, %.critedge270 ], [ 0, %.critedge281.sink.split ]
-  call void @wolfSSL_SESSION_free(ptr noundef %.0258) #8
+  call void @wolfSSL_SESSION_free(ptr noundef %.0) #8
   %i.co = load ptr, ptr %i.c, align 8, !tbaa !12
   call void @wolfSSL_free(ptr noundef %i.co) #8
   %i.cp = load ptr, ptr %i.d, align 8, !tbaa !12
@@ -693,8 +695,8 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.br = zext nneg i32 %i.bg to i64
   %i.bs = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.br
-  %i.bt = sub nsw i32 %i.b, %i.bh
-  %1 = sext i32 %i.bt to i64
+  %i.bt = sub nuw nsw i32 %i.b, %i.bh
+  %1 = zext nneg i32 %i.bt to i64
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.ax, ptr nonnull align 1 %i.bs, i64 %1, i1 false)
   %i.bu = sub nsw i32 %i.l, %i.bg                 ; 2 uses
   %i.bv = sub nsw i32 %i.ai, %i.bg                ; 3 uses

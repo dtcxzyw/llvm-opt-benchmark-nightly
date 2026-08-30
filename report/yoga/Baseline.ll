@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/yoga/original/Baseline?download=true
+inline.NumInlined: 140
+inline.NumDeleted: 74
 begin_hunk_0_@_ZN8facebook4yoga16isBaselineLayoutEPKNS0_4NodeE:bb.a
   %common.resume.op = phi { ptr, i32 } [ %.pn, %_ZN8facebook4yoga18LayoutableChildrenINS0_4NodeEE8IteratorD2Ev.exit32 ], [ %i.r, %bb.f ], [ %i.r, %.lr.ph.i.i.i.i ]
   resume { ptr, i32 } %common.resume.op
@@ -200,8 +202,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK8facebook4yoga4Node8getChildEm.exit:          ; preds = %bb.a
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.c
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %.promoted9 = load ptr, ptr %i.m, align 8
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %.0.peel = load ptr, ptr %i.l, align 8, !tbaa !81 ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.0.peel, i64 60
   %i.o = load i8, ptr %i.n, align 4
@@ -210,29 +211,32 @@ _ZNK8facebook4yoga4Node8getChildEm.exit:          ; preds = %bb.a
   br i1 %i.q, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %_ZNK8facebook4yoga4Node8getChildEm.exit
-  %i.r = getelementptr inbounds nuw i8, ptr %.0.peel, i64 696
-  %i.s = getelementptr inbounds nuw i8, ptr %.0.peel, i64 704
+  %i.r = getelementptr inbounds nuw i8, ptr %.0.peel, i64 696 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %.0.peel, i64 704 ; 2 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !72
-  %i.u = load ptr, ptr %i.r, align 8, !tbaa !73   ; 2 uses
+  %i.u = load ptr, ptr %i.r, align 8, !tbaa !73
   %.not.peel = icmp eq ptr %i.t, %i.u
   br i1 %.not.peel, label %.loopexit, label %_ZNK8facebook4yoga4Node8getChildEm.exit7.peel.next
 
 _ZNK8facebook4yoga4Node8getChildEm.exit7.peel.next: ; preds = %bb.c
-  %i.v = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #12 ; 5 uses
+  %i.v = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #12 ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   store ptr %i.a, ptr %i.w, align 8
   %.sroa.4.0..sroa_idx.peel = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   store i64 %i.c, ptr %.sroa.4.0..sroa_idx.peel, align 8
-  store ptr %.promoted9, ptr %i.v, align 8, !tbaa !83
+  %1 = load ptr, ptr %i.m, align 8, !tbaa !83
+  store ptr %1, ptr %i.v, align 8, !tbaa !83
   store ptr %i.v, ptr %i.m, align 8, !tbaa !83
   store ptr %.0.peel, ptr %0, align 8, !tbaa !74
   store i64 0, ptr %i.b, align 8, !tbaa !92
-  br label %_ZNK8facebook4yoga4Node8getChildEm.exit7
+  %2 = load ptr, ptr %i.s, align 8, !tbaa !72
+  %3 = load ptr, ptr %i.r, align 8, !tbaa !73     ; 2 uses
+  %.not.i.i.i6.not.peel = icmp eq ptr %2, %3
+  br i1 %.not.i.i.i6.not.peel, label %.loopexit11, label %_ZNK8facebook4yoga4Node8getChildEm.exit7
 
-_ZNK8facebook4yoga4Node8getChildEm.exit7:         ; preds = %bb.e, %_ZNK8facebook4yoga4Node8getChildEm.exit7.peel.next
-  %1 = phi ptr [ %i.v, %_ZNK8facebook4yoga4Node8getChildEm.exit7.peel.next ], [ %i.ag, %bb.e ]
-  %i.x = phi ptr [ %.0.peel, %_ZNK8facebook4yoga4Node8getChildEm.exit7.peel.next ], [ %.0, %bb.e ]
-  %.0.in = phi ptr [ %i.u, %_ZNK8facebook4yoga4Node8getChildEm.exit7.peel.next ], [ %i.aj, %bb.e ]
+_ZNK8facebook4yoga4Node8getChildEm.exit7:         ; preds = %_ZNK8facebook4yoga4Node8getChildEm.exit7.peel.next, %bb.e
+  %i.x = phi ptr [ %.0, %bb.e ], [ %.0.peel, %_ZNK8facebook4yoga4Node8getChildEm.exit7.peel.next ]
+  %.0.in = phi ptr [ %i.aj, %bb.e ], [ %3, %_ZNK8facebook4yoga4Node8getChildEm.exit7.peel.next ]
   %.0 = load ptr, ptr %.0.in, align 8, !tbaa !81  ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.0, i64 60
   %i.z = load i8, ptr %i.y, align 4
@@ -249,12 +253,13 @@ bb.d:                                             ; preds = %_ZNK8facebook4yoga4
   br i1 %.not, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ag = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #12 ; 5 uses
+  %i.ag = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #12 ; 4 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   store ptr %i.x, ptr %i.ah, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
   store i64 0, ptr %.sroa.4.0..sroa_idx, align 8
-  store ptr %1, ptr %i.ag, align 8, !tbaa !83
+  %4 = load ptr, ptr %i.m, align 8, !tbaa !83
+  store ptr %4, ptr %i.ag, align 8, !tbaa !83
   store ptr %i.ag, ptr %i.m, align 8, !tbaa !83
   store ptr %.0, ptr %0, align 8, !tbaa !74
   store i64 0, ptr %i.b, align 8, !tbaa !92
@@ -263,7 +268,7 @@ bb.e:                                             ; preds = %bb.d
   %.not.i.i.i6.not = icmp eq ptr %i.ai, %i.aj
   br i1 %.not.i.i.i6.not, label %.loopexit11, label %_ZNK8facebook4yoga4Node8getChildEm.exit7, !llvm.loop !97
 
-.loopexit11:                                      ; preds = %bb.e
+.loopexit11:                                      ; preds = %bb.e, %_ZNK8facebook4yoga4Node8getChildEm.exit7.peel.next
   tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.1, i64 noundef 0, i64 noundef 0) #10
   unreachable
 
@@ -271,7 +276,7 @@ bb.e:                                             ; preds = %bb.d
   tail call void @_ZN8facebook4yoga18LayoutableChildrenINS0_4NodeEE8Iterator4nextEv(ptr noundef nonnull align 8 dereferenceable(24) %0)
   br label %.critedge
 
-.critedge:                                        ; preds = %_ZNK8facebook4yoga4Node8getChildEm.exit7, %_ZNK8facebook4yoga4Node8getChildEm.exit, %.loopexit
+.critedge:                                        ; preds = %_ZNK8facebook4yoga4Node8getChildEm.exit, %_ZNK8facebook4yoga4Node8getChildEm.exit7, %.loopexit
   ret void
 }
 

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/msdfgen/original/rasterization?download=true
+inline.NumInlined: 106
+inline.NumDeleted: 58
 begin_hunk_0_@_ZN7msdfgen22distanceSignCorrectionENS_13BitmapSectionIfLi1EEERKNS_5ShapeERKNS_10ProjectionEfNS_8FillRuleE:bb.a
   %wide.trip.count = zext nneg i32 %.fr35 to i64
   br label %.lr.ph30.split.us
@@ -200,8 +202,8 @@ bb.e:                                             ; preds = %bb.d, %.noexc107.i
 
 .lr.ph150.split.us.i:                             ; preds = %._crit_edge.us.i, %.lr.ph150.split.us.preheader.i
   %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge.us.i ], [ 0, %.lr.ph150.split.us.preheader.i ] ; 3 uses
-  %.082148.us.i = phi i1 [ %.284.us.i, %._crit_edge.us.i ], [ false, %.lr.ph150.split.us.preheader.i ]
-  %.093146.us.i = phi ptr [ %i.ax, %._crit_edge.us.i ], [ %i.k, %.lr.ph150.split.us.preheader.i ]
+  %.084152.us.i = phi ptr [ %i.ax, %._crit_edge.us.i ], [ %i.k, %.lr.ph150.split.us.preheader.i ]
+  %.094151.us.i = phi i1 [ %.284.us.i, %._crit_edge.us.i ], [ false, %.lr.ph150.split.us.preheader.i ]
   %i.u = trunc nuw nsw i64 %indvars.iv to i32
   %i.v = uitofp nneg i32 %i.u to double
   %i.w = fadd double %i.v, 5.000000e-01
@@ -219,8 +221,8 @@ bb.f:                                             ; preds = %.lr.ph150.split.us.
 
 .preheader137.us.i:                               ; preds = %.preheader137.us.i.preheader, %bb.k
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.k ], [ 0, %.preheader137.us.i.preheader ] ; 3 uses
-  %.183144.us.i = phi i1 [ %.284.us.i, %bb.k ], [ %.082148.us.i, %.preheader137.us.i.preheader ]
-  %.194142.us.i = phi ptr [ %i.ax, %bb.k ], [ %.093146.us.i, %.preheader137.us.i.preheader ] ; 2 uses
+  %.185148.us.i = phi ptr [ %i.ax, %bb.k ], [ %.084152.us.i, %.preheader137.us.i.preheader ] ; 2 uses
+  %.195147.us.i = phi i1 [ %.284.us.i, %bb.k ], [ %.094151.us.i, %.preheader137.us.i.preheader ]
   %i.aa = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.ab = uitofp nneg i32 %i.aa to double
   %i.ac = fadd double %i.ab, 5.000000e-01
@@ -264,12 +266,12 @@ bb.j:                                             ; preds = %bb.i
 
 .sink.split.i:                                    ; preds = %bb.j, %bb.i
   %.sink.i = phi i8 [ -1, %bb.j ], [ 1, %bb.i ]
-  store i8 %.sink.i, ptr %.194142.us.i, align 1, !tbaa !30
+  store i8 %.sink.i, ptr %.185148.us.i, align 1, !tbaa !30
   br label %bb.k
 
 bb.k:                                             ; preds = %.sink.split.i, %bb.h
-  %.284.us.i = phi i1 [ true, %bb.h ], [ %.183144.us.i, %.sink.split.i ] ; 3 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %.194142.us.i, i64 1 ; 2 uses
+  %.284.us.i = phi i1 [ true, %bb.h ], [ %.195147.us.i, %.sink.split.i ] ; 3 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %.185148.us.i, i64 1 ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond170.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond170.not.i, label %._crit_edge.us.i, label %.preheader137.us.i, !llvm.loop !31
@@ -669,8 +671,8 @@ bb.e:                                             ; preds = %bb.d, %.noexc114.i
 
 .lr.ph157.split.us.i:                             ; preds = %._crit_edge.us.i, %.lr.ph157.split.us.preheader.i
   %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge.us.i ], [ 0, %.lr.ph157.split.us.preheader.i ] ; 3 uses
-  %.088155.us.i = phi i1 [ %.290.us.i, %._crit_edge.us.i ], [ false, %.lr.ph157.split.us.preheader.i ]
-  %.099153.us.i = phi ptr [ %i.bb, %._crit_edge.us.i ], [ %i.k, %.lr.ph157.split.us.preheader.i ]
+  %.090159.us.i = phi ptr [ %i.bb, %._crit_edge.us.i ], [ %i.k, %.lr.ph157.split.us.preheader.i ]
+  %.0100158.us.i = phi i1 [ %.290.us.i, %._crit_edge.us.i ], [ false, %.lr.ph157.split.us.preheader.i ]
   %i.u = trunc nuw nsw i64 %indvars.iv to i32
   %i.v = uitofp nneg i32 %i.u to double
   %i.w = fadd double %i.v, 5.000000e-01
@@ -688,8 +690,8 @@ bb.f:                                             ; preds = %.lr.ph157.split.us.
 
 .preheader144.us.i:                               ; preds = %.preheader144.us.i.preheader, %bb.m
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.m ], [ 0, %.preheader144.us.i.preheader ] ; 3 uses
-  %.189151.us.i = phi i1 [ %.290.us.i, %bb.m ], [ %.088155.us.i, %.preheader144.us.i.preheader ]
-  %.1100149.us.i = phi ptr [ %i.bb, %bb.m ], [ %.099153.us.i, %.preheader144.us.i.preheader ] ; 2 uses
+  %.191155.us.i = phi ptr [ %i.bb, %bb.m ], [ %.090159.us.i, %.preheader144.us.i.preheader ] ; 2 uses
+  %.1101154.us.i = phi i1 [ %.290.us.i, %bb.m ], [ %.0100158.us.i, %.preheader144.us.i.preheader ]
   %i.aa = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.ab = uitofp nneg i32 %i.aa to double
   %i.ac = fadd double %i.ab, 5.000000e-01
@@ -733,11 +735,11 @@ bb.j:                                             ; preds = %bb.i
 
 .sink.split.i:                                    ; preds = %bb.j, %bb.i
   %.sink.i = phi i8 [ -1, %bb.j ], [ 1, %bb.i ]
-  store i8 %.sink.i, ptr %.1100149.us.i, align 1, !tbaa !30
+  store i8 %.sink.i, ptr %.191155.us.i, align 1, !tbaa !30
   br label %bb.k
 
 bb.k:                                             ; preds = %.sink.split.i, %bb.h
-  %.290.us.i = phi i1 [ true, %bb.h ], [ %.189151.us.i, %.sink.split.i ] ; 3 uses
+  %.290.us.i = phi i1 [ true, %bb.h ], [ %.1101154.us.i, %.sink.split.i ] ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.af, i64 12 ; 2 uses
   %i.ay = load float, ptr %i.ax, align 4, !tbaa !16 ; 2 uses
   %i.az = fcmp ule float %i.ay, %3
@@ -750,7 +752,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %i.bb = getelementptr inbounds nuw i8, ptr %.1100149.us.i, i64 1 ; 2 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %.191155.us.i, i64 1 ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond177.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond177.not.i, label %._crit_edge.us.i, label %.preheader144.us.i, !llvm.loop !37

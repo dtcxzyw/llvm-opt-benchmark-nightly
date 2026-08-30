@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wolfssl/original/test_tls13?download=true
+inline.NumInlined: 4
+inline.NumDeleted: 4
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@test_tls13_serverhello_bad_cipher_suites:bb.a
   %i.ku = call i64 @fwrite(ptr nonnull @.str.4, i64 15, i64 1, ptr %i.kt) ; 0 uses
   %i.kv = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.10, ptr noundef nonnull @.str.157, ptr noundef nonnull @.str.120) ; 0 uses
@@ -200,15 +204,15 @@ bb.a:
   br label %.critedge5.preheader
 
 .critedge5.preheader:                             ; preds = %bb.a, %.critedge11
-  %.0103 = phi i32 [ 3, %bb.a ], [ 1, %.critedge11 ]
   %.not675710.i = phi i1 [ true, %bb.a ], [ false, %.critedge11 ] ; 3 uses
   %.075102 = phi i32 [ 0, %bb.a ], [ 1, %.critedge11 ]
+  %.073102 = phi i32 [ 3, %bb.a ], [ 1, %.critedge11 ]
   br label %bb.b
 
 bb.b:                                             ; preds = %.critedge5.preheader, %.critedge5
-  %.1101 = phi i32 [ %.0103, %.critedge5.preheader ], [ %.2, %.critedge5 ] ; 2 uses
-  %.076100 = phi i32 [ 0, %.critedge5.preheader ], [ %i.hf, %.critedge5 ] ; 2 uses
-  %i.j = add nsw i32 %.1101, -1
+  %.1101 = phi i32 [ 0, %.critedge5.preheader ], [ %i.hf, %.critedge5 ] ; 2 uses
+  %.076100 = phi i32 [ %.073102, %.critedge5.preheader ], [ %.2, %.critedge5 ] ; 2 uses
+  %i.j = add nsw i32 %.076100, -1
   %i.k = icmp ult i32 %i.j, 3
   br i1 %i.k, label %.critedge13, label %.critedge
 
@@ -595,7 +599,7 @@ test_tls13_cipher_fuzz_once.exit:                 ; preds = %test_tls13_cipher_f
 
 bb.u:                                             ; preds = %test_tls13_cipher_fuzz_once.exit
   %i.gs = load ptr, ptr @stderr, align 8, !tbaa !9
-  %i.gt = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.gs, ptr noundef nonnull @.str.212, ptr noundef %1, i32 noundef %.075102, i32 noundef %.076100) #14 ; 0 uses
+  %i.gt = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.gs, ptr noundef nonnull @.str.212, ptr noundef %1, i32 noundef %.075102, i32 noundef %.1101) #14 ; 0 uses
   %i.gu = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, ptr noundef nonnull @.str.3, i32 noundef 6665) ; 0 uses
   %i.gv = load ptr, ptr @stdout, align 8, !tbaa !9
   %i.gw = call i64 @fwrite(ptr nonnull @.str.4, i64 15, i64 1, ptr %i.gv) ; 0 uses
@@ -611,7 +615,7 @@ bb.u:                                             ; preds = %test_tls13_cipher_f
 
 .critedge5:                                       ; preds = %test_tls13_cipher_fuzz_once.exit, %bb.u
   %.2 = phi i32 [ 0, %bb.u ], [ 1, %test_tls13_cipher_fuzz_once.exit ] ; 3 uses
-  %i.hf = add nuw nsw i32 %.076100, 1             ; 2 uses
+  %i.hf = add nuw nsw i32 %.1101, 1               ; 2 uses
   %exitcond.not = icmp eq i32 %i.hf, 5
   br i1 %exitcond.not, label %.critedge11, label %bb.b, !llvm.loop !89
 
@@ -622,7 +626,7 @@ bb.u:                                             ; preds = %test_tls13_cipher_f
   br i1 %i.hh, label %.critedge5.preheader, label %.critedge, !llvm.loop !90
 
 .critedge:                                        ; preds = %.critedge11, %bb.b
-  %.1.lcssa126 = phi i32 [ %.1101, %bb.b ], [ %.2, %.critedge11 ]
+  %.1.lcssa126 = phi i32 [ %.076100, %bb.b ], [ %.2, %.critedge11 ]
   ret i32 %.1.lcssa126
 }
 

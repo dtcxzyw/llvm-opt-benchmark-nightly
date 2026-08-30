@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/mold/original/misc_ex?download=true
+inline.NumInlined: 132
+inline.NumDeleted: 82
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -153,12 +157,15 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = sext i32 %i.c to i64
   %i.f = icmp slt i32 %i.c, 0
-  %i.g = shl nsw i64 %i.e, 7                      ; 3 uses
+  %i.g = shl nsw i64 %i.e, 7
   %i.h = select i1 %i.f, i64 -1, i64 %i.g
   %i.i = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.h) #18 ; 3 uses
   store ptr %i.i, ptr %0, align 8, !tbaa !13
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 %i.i, i8 noundef 0, i64 noundef range(i64 -274877906944, 274877906817) %i.g, i1 noundef false) #14
-  %i.j = tail call i32 @sched_getaffinity(i32 noundef 0, i64 noundef range(i64 -274877906944, 274877906817) %i.g, ptr noundef nonnull %i.i) #14
+  %2 = load i32, ptr @_ZN3tbb6detail2r1L9num_masksE, align 4, !tbaa !16
+  %3 = sext i32 %2 to i64
+  %4 = shl nsw i64 %3, 7                          ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 %i.i, i8 noundef 0, i64 noundef range(i64 -274877906944, 274877906817) %4, i1 noundef false) #14
+  %i.j = tail call i32 @sched_getaffinity(i32 noundef 0, i64 noundef range(i64 -274877906944, 274877906817) %4, ptr noundef nonnull %i.i) #14
   %.not.i = icmp eq i32 %i.j, 0
   br i1 %.not.i, label %_ZN3tbb6detail2r1L24get_thread_affinity_maskEmP9cpu_set_t.exit, label %bb.c
 
@@ -295,15 +302,18 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.z = sext i32 %i.y to i64
   %i.aa = icmp slt i32 %i.y, 0
-  %i.ab = shl nsw i64 %i.z, 7                     ; 3 uses
+  %i.ab = shl nsw i64 %i.z, 7
   %i.ac = select i1 %i.aa, i64 -1, i64 %i.ab
   %i.ad = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ac) #18
           to label %.noexc.i unwind label %bb.n   ; 4 uses
 
 .noexc.i:                                         ; preds = %bb.i
   store ptr %i.ad, ptr %1, align 8, !tbaa !13
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 %i.ad, i8 noundef 0, i64 noundef range(i64 -274877906944, 274877906817) %i.ab, i1 noundef false) #14
-  %i.ae = call i32 @sched_getaffinity(i32 noundef 0, i64 noundef range(i64 -274877906944, 274877906817) %i.ab, ptr noundef nonnull %i.ad) #14
+  %2 = load i32, ptr @_ZN3tbb6detail2r1L9num_masksE, align 4, !tbaa !16
+  %3 = sext i32 %2 to i64
+  %4 = shl nsw i64 %3, 7                          ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 %i.ad, i8 noundef 0, i64 noundef range(i64 -274877906944, 274877906817) %4, i1 noundef false) #14
+  %i.ae = call i32 @sched_getaffinity(i32 noundef 0, i64 noundef range(i64 -274877906944, 274877906817) %4, ptr noundef nonnull %i.ad) #14
   %.not.i.i.i = icmp eq i32 %i.ae, 0
   br i1 %.not.i.i.i, label %_ZN3tbb6detail2r1L24get_thread_affinity_maskEmP9cpu_set_t.exit.i.i, label %bb.j
 
@@ -437,19 +447,19 @@ bb.y:                                             ; preds = %bb.z
   br i1 %i.bc, label %.preheader.i, label %._crit_edge.i, !llvm.loop !17
 
 bb.z:                                             ; preds = %bb.z, %.preheader.i
-  %.177.i = phi i32 [ %.079.i, %.preheader.i ], [ %spec.select.i, %bb.z ]
-  %.04576.i = phi i64 [ 0, %.preheader.i ], [ %i.bk, %bb.z ] ; 4 uses
-  %i.bd = and i64 %.04576.i, 63
-  %i.be = lshr i64 %.04576.i, 6
+  %.077.i = phi i64 [ 0, %.preheader.i ], [ %i.bk, %bb.z ] ; 4 uses
+  %.14976.i = phi i32 [ %.079.i, %.preheader.i ], [ %spec.select.i, %bb.z ]
+  %i.bd = and i64 %.077.i, 63
+  %i.be = lshr i64 %.077.i, 6
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %i.be
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !19
   %i.bh = lshr i64 %i.bg, %i.bd
   %i.bi = trunc i64 %i.bh to i32
   %i.bj = and i32 %i.bi, 1
-  %spec.select.i = add nsw i32 %i.bj, %.177.i     ; 4 uses
-  %i.bk = add nuw nsw i64 %.04576.i, 1
+  %spec.select.i = add nsw i32 %i.bj, %.14976.i   ; 4 uses
+  %i.bk = add nuw nsw i64 %.077.i, 1
   %i.bl = icmp slt i32 %spec.select.i, %i.h       ; 2 uses
-  %i.bm = icmp samesign ult i64 %.04576.i, 1023
+  %i.bm = icmp samesign ult i64 %.077.i, 1023
   %i.bn = select i1 %i.bl, i1 %i.bm, i1 false
   br i1 %i.bn, label %bb.z, label %bb.y, !llvm.loop !21
 

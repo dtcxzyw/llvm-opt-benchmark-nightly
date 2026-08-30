@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wolfssl/original/coding?download=true
+inline.NumInlined: 22
+inline.NumDeleted: 1
 begin_hunk_0_@Base64_Decode:bb.a
 
 Base64_SkipNewline.exit188:                       ; preds = %.lr.ph432, %.Base64_SkipNewline.exit188_crit_edge
@@ -200,8 +202,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %.lr.ph, %CEscape.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %CEscape.exit ] ; 4 uses
-  %.0129310 = phi i32 [ %1, %.lr.ph ], [ %i.fm, %CEscape.exit ]
-  %.0135308 = phi i32 [ 0, %.lr.ph ], [ %.2137, %CEscape.exit ] ; 2 uses
+  %.0129310 = phi i32 [ 0, %.lr.ph ], [ %.2137, %CEscape.exit ] ; 2 uses
+  %.0135308 = phi i32 [ %1, %.lr.ph ], [ %i.fm, %CEscape.exit ]
   %.045.i194304307 = phi i32 [ 0, %.lr.ph ], [ %.045.i194305, %CEscape.exit ] ; 13 uses
   %i.u = add nuw i64 %indvars.iv, 1
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv
@@ -604,15 +606,15 @@ bb.bv:                                            ; preds = %bb.bu
 
 bb.bw:                                            ; preds = %bb.bm, %bb.bn, %bb.bp, %bb.br, %bb.bt, %bb.bu, %bb.bv
   %.045.i186 = phi i32 [ %i.er, %bb.bu ], [ %i.en, %bb.bn ], [ %i.eq, %bb.bp ], [ %i.ex, %bb.br ], [ %i.fd, %bb.bt ], [ %i.fj, %bb.bv ], [ %i.en, %bb.bm ] ; 10 uses
-  %i.fm = add i32 %.0129310, -3                   ; 4 uses
+  %i.fm = add i32 %.0135308, -3                   ; 4 uses
   br i1 %.not159, label %CEscape.exit, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.fn = add i32 %.0135308, 1                    ; 5 uses
+  %i.fn = add i32 %.0129310, 1                    ; 5 uses
   %i.fo = and i32 %i.fn, 15
   %i.fp = icmp eq i32 %i.fo, 0
   %i.fq = icmp ne i32 %i.fm, 0
-  %or.cond5 = and i1 %i.fp, %i.fq
+  %or.cond5 = and i1 %i.fq, %i.fp
   br i1 %or.cond5, label %bb.by, label %CEscape.exit
 
 bb.by:                                            ; preds = %bb.bx
@@ -659,26 +661,26 @@ CEscape.exit.sink.split:                          ; preds = %bb.ca, %bb.cc
 
 CEscape.exit:                                     ; preds = %CEscape.exit.sink.split, %bb.cb, %bb.ca, %bb.bw, %bb.bx
   %.045.i194305 = phi i32 [ %.045.i186, %bb.bx ], [ %.045.i186, %bb.bw ], [ %i.fs, %bb.ca ], [ %i.fu, %bb.cb ], [ %.045.i194305.ph, %CEscape.exit.sink.split ] ; 2 uses
-  %.2137 = phi i32 [ %i.fn, %bb.bx ], [ %.0135308, %bb.bw ], [ %i.fn, %bb.ca ], [ %i.fn, %bb.cb ], [ %i.fn, %CEscape.exit.sink.split ]
+  %.2137 = phi i32 [ %i.fn, %bb.bx ], [ %.0129310, %bb.bw ], [ %i.fn, %bb.ca ], [ %i.fn, %bb.cb ], [ %i.fn, %CEscape.exit.sink.split ]
   %i.ge = icmp ugt i32 %i.fm, 2
   br i1 %i.ge, label %bb.g, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %CEscape.exit, %.preheader
   %i.gf = phi i32 [ 0, %.preheader ], [ %.045.i194305, %CEscape.exit ] ; 14 uses
-  %.0133.lcssa = phi i32 [ 0, %.preheader ], [ %i.t, %CEscape.exit ] ; 2 uses
-  %.0129.lcssa = phi i32 [ %1, %.preheader ], [ %i.fm, %CEscape.exit ] ; 2 uses
-  %.not300 = icmp eq i32 %.0129.lcssa, 0
+  %.0133.lcssa = phi i32 [ %1, %.preheader ], [ %i.fm, %CEscape.exit ] ; 2 uses
+  %.0129.lcssa = phi i32 [ 0, %.preheader ], [ %i.t, %CEscape.exit ] ; 2 uses
+  %.not300 = icmp eq i32 %.0133.lcssa, 0
   br i1 %.not300, label %CEscape.exit227, label %bb.cd
 
 bb.cd:                                            ; preds = %._crit_edge
-  %i.gg = icmp eq i32 %.0129.lcssa, 2             ; 2 uses
-  %i.gh = zext i32 %.0133.lcssa to i64
+  %i.gg = icmp eq i32 %.0133.lcssa, 2             ; 2 uses
+  %i.gh = zext i32 %.0129.lcssa to i64
   %i.gi = getelementptr inbounds nuw i8, ptr %0, i64 %i.gh
   %i.gj = load i8, ptr %i.gi, align 1, !tbaa !9   ; 2 uses
   br i1 %i.gg, label %bb.ce, label %bb.cf
 
 bb.ce:                                            ; preds = %bb.cd
-  %i.gk = add i32 %.0133.lcssa, 1
+  %i.gk = add i32 %.0129.lcssa, 1
   %i.gl = zext i32 %i.gk to i64
   %i.gm = getelementptr inbounds nuw i8, ptr %0, i64 %i.gl
   %i.gn = load i8, ptr %i.gm, align 1, !tbaa !9

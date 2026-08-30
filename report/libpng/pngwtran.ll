@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libpng/original/pngwtran?download=true
+inline.NumInlined: 4
+inline.NumDeleted: 4
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumUnrolled: 12
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -101,79 +106,79 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not125.i, label %._crit_edge119.thread.i, label %.lr.ph118.outer.i
 
 .lr.ph118.outer.i:                                ; preds = %bb.m, %.thread.i
-  %.0116.ph.i = phi ptr [ %i.bp, %.thread.i ], [ %i.ad, %bb.m ] ; 9 uses
+  %.083116.ph.i = phi i32 [ %i.bu, %.thread.i ], [ 0, %bb.m ] ; 8 uses
   %.069115.ph.i = phi ptr [ %i.bt, %.thread.i ], [ %i.ad, %bb.m ] ; 9 uses
-  %.090112.ph.i = phi i32 [ %i.bu, %.thread.i ], [ 0, %bb.m ] ; 8 uses
-  %i.an = load i8, ptr %.0116.ph.i, align 1, !tbaa !33
+  %.090112.ph.i = phi ptr [ %i.bp, %.thread.i ], [ %i.ad, %bb.m ] ; 9 uses
+  %i.an = load i8, ptr %.090112.ph.i, align 1, !tbaa !33
   %.not93.i = icmp eq i8 %i.an, 0
   %i.ao = select i1 %.not93.i, i32 0, i32 128     ; 2 uses
-  %i.ap = or disjoint i32 %.090112.ph.i, 1
+  %i.ap = or disjoint i32 %.083116.ph.i, 1
   %exitcond127.not.i = icmp eq i32 %i.ap, %i.am
   br i1 %exitcond127.not.i, label %._crit_edge119.thread.i.sink.split, label %.lr.ph118.i.1
 
 .lr.ph118.i.1:                                    ; preds = %.lr.ph118.outer.i
-  %i.aq = getelementptr i8, ptr %.0116.ph.i, i64 1
+  %i.aq = getelementptr i8, ptr %.090112.ph.i, i64 1
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !33
   %.not93.i.1 = icmp eq i8 %i.ar, 0
   %i.as = select i1 %.not93.i.1, i32 0, i32 64
   %spec.select.i.1 = or disjoint i32 %i.as, %i.ao ; 2 uses
-  %i.at = or disjoint i32 %.090112.ph.i, 2
+  %i.at = or disjoint i32 %.083116.ph.i, 2
   %exitcond127.not.i.1 = icmp eq i32 %i.at, %i.am
   br i1 %exitcond127.not.i.1, label %._crit_edge119.thread.i.sink.split, label %.lr.ph118.i.2
 
 .lr.ph118.i.2:                                    ; preds = %.lr.ph118.i.1
-  %i.au = getelementptr i8, ptr %.0116.ph.i, i64 2
+  %i.au = getelementptr i8, ptr %.090112.ph.i, i64 2
   %i.av = load i8, ptr %i.au, align 1, !tbaa !33
   %.not93.i.2 = icmp eq i8 %i.av, 0
   %i.aw = select i1 %.not93.i.2, i32 0, i32 32
   %spec.select.i.2 = or disjoint i32 %i.aw, %spec.select.i.1 ; 2 uses
-  %i.ax = or disjoint i32 %.090112.ph.i, 3
+  %i.ax = or disjoint i32 %.083116.ph.i, 3
   %exitcond127.not.i.2 = icmp eq i32 %i.ax, %i.am
   br i1 %exitcond127.not.i.2, label %._crit_edge119.thread.i.sink.split, label %.lr.ph118.i.3
 
 .lr.ph118.i.3:                                    ; preds = %.lr.ph118.i.2
-  %i.ay = getelementptr i8, ptr %.0116.ph.i, i64 3
+  %i.ay = getelementptr i8, ptr %.090112.ph.i, i64 3
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !33
   %.not93.i.3 = icmp eq i8 %i.az, 0
   %i.ba = select i1 %.not93.i.3, i32 0, i32 16
   %spec.select.i.3 = or disjoint i32 %i.ba, %spec.select.i.2 ; 2 uses
-  %i.bb = or disjoint i32 %.090112.ph.i, 4
+  %i.bb = or disjoint i32 %.083116.ph.i, 4
   %exitcond127.not.i.3 = icmp eq i32 %i.bb, %i.am
   br i1 %exitcond127.not.i.3, label %._crit_edge119.thread.i.sink.split, label %.lr.ph118.i.4
 
 .lr.ph118.i.4:                                    ; preds = %.lr.ph118.i.3
-  %i.bc = getelementptr i8, ptr %.0116.ph.i, i64 4
+  %i.bc = getelementptr i8, ptr %.090112.ph.i, i64 4
   %i.bd = load i8, ptr %i.bc, align 1, !tbaa !33
   %.not93.i.4 = icmp eq i8 %i.bd, 0
   %i.be = select i1 %.not93.i.4, i32 0, i32 8
   %spec.select.i.4 = or disjoint i32 %i.be, %spec.select.i.3 ; 2 uses
-  %i.bf = or disjoint i32 %.090112.ph.i, 5
+  %i.bf = or disjoint i32 %.083116.ph.i, 5
   %exitcond127.not.i.4 = icmp eq i32 %i.bf, %i.am
   br i1 %exitcond127.not.i.4, label %._crit_edge119.thread.i.sink.split, label %.lr.ph118.i.5
 
 .lr.ph118.i.5:                                    ; preds = %.lr.ph118.i.4
-  %i.bg = getelementptr i8, ptr %.0116.ph.i, i64 5
+  %i.bg = getelementptr i8, ptr %.090112.ph.i, i64 5
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !33
   %.not93.i.5 = icmp eq i8 %i.bh, 0
   %i.bi = select i1 %.not93.i.5, i32 0, i32 4
   %spec.select.i.5 = or disjoint i32 %i.bi, %spec.select.i.4 ; 2 uses
-  %i.bj = or disjoint i32 %.090112.ph.i, 6
+  %i.bj = or disjoint i32 %.083116.ph.i, 6
   %exitcond127.not.i.5 = icmp eq i32 %i.bj, %i.am
   br i1 %exitcond127.not.i.5, label %._crit_edge119.thread.i.sink.split, label %.lr.ph118.i.6
 
 .lr.ph118.i.6:                                    ; preds = %.lr.ph118.i.5
-  %i.bk = getelementptr i8, ptr %.0116.ph.i, i64 6
+  %i.bk = getelementptr i8, ptr %.090112.ph.i, i64 6
   %i.bl = load i8, ptr %i.bk, align 1, !tbaa !33
   %.not93.i.6 = icmp eq i8 %i.bl, 0
   %i.bm = select i1 %.not93.i.6, i32 0, i32 2
   %spec.select.i.6 = or i32 %i.bm, %spec.select.i.5 ; 2 uses
-  %i.bn = or disjoint i32 %.090112.ph.i, 7
+  %i.bn = or disjoint i32 %.083116.ph.i, 7
   %exitcond127.not.i.6 = icmp eq i32 %i.bn, %i.am
   br i1 %exitcond127.not.i.6, label %._crit_edge119.thread.i.sink.split, label %.thread.i
 
 .thread.i:                                        ; preds = %.lr.ph118.i.6
-  %i.bo = getelementptr i8, ptr %.0116.ph.i, i64 7
-  %i.bp = getelementptr i8, ptr %.0116.ph.i, i64 8
+  %i.bo = getelementptr i8, ptr %.090112.ph.i, i64 7
+  %i.bp = getelementptr i8, ptr %.090112.ph.i, i64 8
   %i.bq = load i8, ptr %i.bo, align 1, !tbaa !33
   %.not93.i.7 = icmp ne i8 %i.bq, 0
   %i.br = zext i1 %.not93.i.7 to i32
@@ -181,7 +186,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bs = trunc nuw i32 %spec.select.i.7 to i8
   store i8 %i.bs, ptr %.069115.ph.i, align 1, !tbaa !33
   %i.bt = getelementptr inbounds nuw i8, ptr %.069115.ph.i, i64 1
-  %i.bu = add nuw i32 %.090112.ph.i, 8            ; 2 uses
+  %i.bu = add nuw i32 %.083116.ph.i, 8            ; 2 uses
   %exitcond127.not141.i = icmp eq i32 %i.bu, %i.am
   br i1 %exitcond127.not141.i, label %._crit_edge119.thread.i, label %.lr.ph118.outer.i, !llvm.loop !34
 
@@ -438,16 +443,16 @@ bb.ab:                                            ; preds = %bb.aa
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ac, %.lr.ph151.us.i
-  %.0118149.us.i = phi i32 [ %i.fg, %.lr.ph151.us.i ], [ %i.gh, %bb.ac ] ; 4 uses
-  %.0119148.us.i = phi i32 [ 0, %.lr.ph151.us.i ], [ %.1120.us.i, %bb.ac ]
-  %i.gc = icmp sgt i32 %.0118149.us.i, 0          ; 2 uses
-  %i.gd = shl i32 %i.gb, %.0118149.us.i
-  %i.ge = sub nsw i32 0, %.0118149.us.i
+  %.0118149.us.i = phi i32 [ 0, %.lr.ph151.us.i ], [ %.1120.us.i, %bb.ac ]
+  %.0119148.us.i = phi i32 [ %i.fg, %.lr.ph151.us.i ], [ %i.gh, %bb.ac ] ; 4 uses
+  %i.gc = icmp sgt i32 %.0119148.us.i, 0          ; 2 uses
+  %i.gd = shl i32 %i.gb, %.0119148.us.i
+  %i.ge = sub nsw i32 0, %.0119148.us.i
   %i.gf = lshr i32 %i.gb, %i.ge
   %i.gg = and i32 %i.gf, %.0116.i54
   %.pn128.us.i = select i1 %i.gc, i32 %i.gd, i32 %i.gg
-  %.1120.us.i = or i32 %.pn128.us.i, %.0119148.us.i ; 2 uses
-  %i.gh = sub nsw i32 %.0118149.us.i, %i.ff
+  %.1120.us.i = or i32 %.pn128.us.i, %.0118149.us.i ; 2 uses
+  %i.gh = sub nsw i32 %.0119148.us.i, %i.ff
   br i1 %i.gc, label %bb.ac, label %._crit_edge152.us.i, !llvm.loop !47
 
 ._crit_edge152.us.i:                              ; preds = %bb.ac
@@ -459,16 +464,16 @@ bb.ac:                                            ; preds = %bb.ac, %.lr.ph151.u
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ad, %._crit_edge152.us.i
-  %.0118149.us.i.1 = phi i32 [ %i.fg, %._crit_edge152.us.i ], [ %i.gr, %bb.ad ] ; 4 uses
-  %.0119148.us.i.1 = phi i32 [ 0, %._crit_edge152.us.i ], [ %.1120.us.i.1, %bb.ad ]
-  %i.gm = icmp sgt i32 %.0118149.us.i.1, 0        ; 2 uses
-  %i.gn = shl i32 %i.gl, %.0118149.us.i.1
-  %i.go = sub nsw i32 0, %.0118149.us.i.1
+  %.0118149.us.i.1 = phi i32 [ 0, %._crit_edge152.us.i ], [ %.1120.us.i.1, %bb.ad ]
+  %.0119148.us.i.1 = phi i32 [ %i.fg, %._crit_edge152.us.i ], [ %i.gr, %bb.ad ] ; 4 uses
+  %i.gm = icmp sgt i32 %.0119148.us.i.1, 0        ; 2 uses
+  %i.gn = shl i32 %i.gl, %.0119148.us.i.1
+  %i.go = sub nsw i32 0, %.0119148.us.i.1
   %i.gp = lshr i32 %i.gl, %i.go
   %i.gq = and i32 %i.gp, %.0116.i54
   %.pn128.us.i.1 = select i1 %i.gm, i32 %i.gn, i32 %i.gq
-  %.1120.us.i.1 = or i32 %.pn128.us.i.1, %.0119148.us.i.1 ; 2 uses
-  %i.gr = sub nsw i32 %.0118149.us.i.1, %i.ff
+  %.1120.us.i.1 = or i32 %.pn128.us.i.1, %.0118149.us.i.1 ; 2 uses
+  %i.gr = sub nsw i32 %.0119148.us.i.1, %i.ff
   br i1 %i.gm, label %bb.ad, label %._crit_edge152.us.i.1, !llvm.loop !47
 
 ._crit_edge152.us.i.1:                            ; preds = %bb.ad
@@ -588,16 +593,16 @@ bb.ag:                                            ; preds = %bb.ae
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ah, %.lr.ph151.us.i.epil.preheader
-  %.0118149.us.i.epil = phi i32 [ %i.fg, %.lr.ph151.us.i.epil.preheader ], [ %i.iv, %bb.ah ] ; 4 uses
-  %.0119148.us.i.epil = phi i32 [ 0, %.lr.ph151.us.i.epil.preheader ], [ %.1120.us.i.epil, %bb.ah ]
-  %i.iq = icmp sgt i32 %.0118149.us.i.epil, 0     ; 2 uses
-  %i.ir = shl i32 %i.ip, %.0118149.us.i.epil
-  %i.is = sub nsw i32 0, %.0118149.us.i.epil
+  %.0118149.us.i.epil = phi i32 [ 0, %.lr.ph151.us.i.epil.preheader ], [ %.1120.us.i.epil, %bb.ah ]
+  %.0119148.us.i.epil = phi i32 [ %i.fg, %.lr.ph151.us.i.epil.preheader ], [ %i.iv, %bb.ah ] ; 4 uses
+  %i.iq = icmp sgt i32 %.0119148.us.i.epil, 0     ; 2 uses
+  %i.ir = shl i32 %i.ip, %.0119148.us.i.epil
+  %i.is = sub nsw i32 0, %.0119148.us.i.epil
   %i.it = lshr i32 %i.ip, %i.is
   %i.iu = and i32 %i.it, %.0116.i54
   %.pn128.us.i.epil = select i1 %i.iq, i32 %i.ir, i32 %i.iu
-  %.1120.us.i.epil = or i32 %.pn128.us.i.epil, %.0119148.us.i.epil ; 2 uses
-  %i.iv = sub nsw i32 %.0118149.us.i.epil, %i.ff
+  %.1120.us.i.epil = or i32 %.pn128.us.i.epil, %.0118149.us.i.epil ; 2 uses
+  %i.iv = sub nsw i32 %.0119148.us.i.epil, %i.ff
   br i1 %i.iq, label %bb.ah, label %._crit_edge152.us.i.epil, !llvm.loop !47
 
 ._crit_edge152.us.i.epil:                         ; preds = %bb.ah

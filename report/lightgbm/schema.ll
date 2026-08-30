@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lightgbm/original/schema?download=true
+inline.NumInlined: 147
+inline.NumDeleted: 23
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@ArrowSchemaSetTypeDecimal:bb.a
   br label %bb.k
 
@@ -200,14 +205,14 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.d, label %ArrowSchemaSetFormat.exit, label %.critedge
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.15379 = phi i64 [ %i.h, %.lr.ph ], [ 507, %.lr.ph.preheader ] ; 2 uses
-  %.05478 = phi i64 [ %i.i, %.lr.ph ], [ 1, %.lr.ph.preheader ] ; 2 uses
-  %.15877 = phi ptr [ %i.g, %.lr.ph ], [ %i.c, %.lr.ph.preheader ] ; 2 uses
-  %i.e = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %.15877, i64 noundef %.15379, ptr noundef nonnull @.str.13, i64 noundef %.05478) #17 ; 2 uses
+  %.15379 = phi i64 [ %i.i, %.lr.ph ], [ 1, %.lr.ph.preheader ] ; 2 uses
+  %.15478 = phi ptr [ %i.g, %.lr.ph ], [ %i.c, %.lr.ph.preheader ] ; 2 uses
+  %.15877 = phi i64 [ %i.h, %.lr.ph ], [ 507, %.lr.ph.preheader ] ; 2 uses
+  %i.e = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %.15478, i64 noundef %.15877, ptr noundef nonnull @.str.13, i64 noundef %.15379) #17 ; 2 uses
   %i.f = sext i32 %i.e to i64                     ; 2 uses
-  %i.g = getelementptr inbounds i8, ptr %.15877, i64 %i.f
-  %i.h = sub nsw i64 %.15379, %i.f
-  %i.i = add nuw nsw i64 %.05478, 1               ; 2 uses
+  %i.g = getelementptr inbounds i8, ptr %.15478, i64 %i.f
+  %i.h = sub nsw i64 %.15877, %i.f
+  %i.i = add nuw nsw i64 %.15379, 1               ; 2 uses
   %exitcond.not = icmp eq i64 %i.i, %2
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph
 
@@ -610,9 +615,9 @@ ArrowMetadataReaderInit.exit.i:                   ; preds = %bb.b
   br i1 %i.d, label %ArrowMetadataGetValueInternal.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %ArrowMetadataReaderInit.exit.i, %.critedge.i
+  %.sroa.416.035.i = phi i64 [ %i.l, %.critedge.i ], [ 4, %ArrowMetadataReaderInit.exit.i ] ; 2 uses
   %.sroa.7.034.i = phi i32 [ %i.m, %.critedge.i ], [ %i.c, %ArrowMetadataReaderInit.exit.i ] ; 2 uses
-  %.sroa.415.033.i = phi i64 [ %i.l, %.critedge.i ], [ 4, %ArrowMetadataReaderInit.exit.i ] ; 2 uses
-  %i.e = getelementptr inbounds i8, ptr %0, i64 %.sroa.415.033.i ; 4 uses
+  %i.e = getelementptr inbounds i8, ptr %0, i64 %.sroa.416.035.i ; 4 uses
   %.0.copyload2.i.i = load i32, ptr %i.e, align 1
   %i.f = sext i32 %.0.copyload2.i.i to i64        ; 3 uses
   %i.g = getelementptr i8, ptr %i.e, i64 %i.f
@@ -620,7 +625,7 @@ ArrowMetadataReaderInit.exit.i:                   ; preds = %bb.b
   %.0.copyload.i.i = load i32, ptr %i.h, align 1
   %i.i = add nsw i64 %i.f, 8                      ; 2 uses
   %i.j = sext i32 %.0.copyload.i.i to i64         ; 2 uses
-  %i.k = add i64 %i.i, %.sroa.415.033.i
+  %i.k = add i64 %i.i, %.sroa.416.035.i
   %i.l = add i64 %i.k, %i.j
   %i.m = add nsw i32 %.sroa.7.034.i, -1
   %i.n = icmp eq i64 %2, %i.f
@@ -1023,16 +1028,16 @@ ArrowMetadataReaderInit.exit.i.i:                 ; preds = %bb.a
   br i1 %i.c, label %ArrowMetadataGetValue.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %ArrowMetadataReaderInit.exit.i.i, %.critedge.i.i
+  %.sroa.416.035.i.i = phi i64 [ %i.k, %.critedge.i.i ], [ 4, %ArrowMetadataReaderInit.exit.i.i ] ; 2 uses
   %.sroa.7.034.i.i = phi i32 [ %i.l, %.critedge.i.i ], [ %i.b, %ArrowMetadataReaderInit.exit.i.i ] ; 2 uses
-  %.sroa.415.033.i.i = phi i64 [ %i.k, %.critedge.i.i ], [ 4, %ArrowMetadataReaderInit.exit.i.i ] ; 2 uses
-  %i.d = getelementptr inbounds i8, ptr %0, i64 %.sroa.415.033.i.i ; 3 uses
+  %i.d = getelementptr inbounds i8, ptr %0, i64 %.sroa.416.035.i.i ; 3 uses
   %.0.copyload2.i.i.i = load i32, ptr %i.d, align 1
   %i.e = sext i32 %.0.copyload2.i.i.i to i64      ; 3 uses
   %i.f = getelementptr i8, ptr %i.d, i64 %i.e
   %i.g = getelementptr i8, ptr %i.f, i64 4
   %.0.copyload.i.i.i = load i32, ptr %i.g, align 1
   %i.h = sext i32 %.0.copyload.i.i.i to i64
-  %i.i = add i64 %.sroa.415.033.i.i, 8
+  %i.i = add i64 %.sroa.416.035.i.i, 8
   %i.j = add i64 %i.i, %i.e
   %i.k = add i64 %i.j, %i.h
   %i.l = add nsw i32 %.sroa.7.034.i.i, -1
@@ -1385,16 +1390,16 @@ ArrowMetadataReaderInit.exit.i:                   ; preds = %bb.a
   br label %bb.b
 
 bb.b:                                             ; preds = %.critedge.i, %.lr.ph.i
+  %.sroa.416.035.i = phi i64 [ 4, %.lr.ph.i ], [ %i.n, %.critedge.i ] ; 2 uses
   %.sroa.7.034.i = phi i32 [ %i.c, %.lr.ph.i ], [ %i.o, %.critedge.i ] ; 2 uses
-  %.sroa.415.033.i = phi i64 [ 4, %.lr.ph.i ], [ %i.n, %.critedge.i ] ; 2 uses
-  %i.g = getelementptr inbounds i8, ptr %i.a, i64 %.sroa.415.033.i ; 3 uses
+  %i.g = getelementptr inbounds i8, ptr %i.a, i64 %.sroa.416.035.i ; 3 uses
   %.0.copyload2.i.i = load i32, ptr %i.g, align 1
   %i.h = sext i32 %.0.copyload2.i.i to i64        ; 3 uses
   %i.i = getelementptr i8, ptr %i.g, i64 %i.h
   %i.j = getelementptr i8, ptr %i.i, i64 4
   %.0.copyload.i.i = load i32, ptr %i.j, align 1
   %i.k = sext i32 %.0.copyload.i.i to i64
-  %i.l = add i64 %.sroa.415.033.i, 8
+  %i.l = add i64 %.sroa.416.035.i, 8
   %i.m = add i64 %i.l, %i.h
   %i.n = add i64 %i.m, %i.k
   %i.o = add nsw i32 %.sroa.7.034.i, -1

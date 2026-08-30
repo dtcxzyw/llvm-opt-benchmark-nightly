@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/file_test?download=true
+inline.NumInlined: 666
+inline.NumDeleted: 208
 begin_hunk_0_@_ZN18File_Failures_Test8TestBodyEv:.noexc.i
 bb.ad:                                            ; preds = %bb.ac
   invoke void @_ZNK7testing8internal12AssertHelperaSERKNS_7MessageE(ptr noundef nonnull align 8 dereferenceable(8) %11, ptr noundef nonnull align 8 dereferenceable(8) %10)
@@ -200,7 +202,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.ep = load ptr, ptr %i.eo, align 16, !tbaa !50
   store ptr %i.ep, ptr %i.el, align 16, !tbaa !50
   %.not.i.i.i.i.i = icmp eq ptr %i.ek, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %13, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %13, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIfSaIfEED2Ev.exit, label %_ZNSt6vectorIfSaIfEEaSEOS1_.exit
 
 _ZNSt6vectorIfSaIfEEaSEOS1_.exit:                 ; preds = %bb.ax

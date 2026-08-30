@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libevent/original/http?download=true
+inline.NumInlined: 140
+inline.NumDeleted: 49
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 @.str.13 = private unnamed_addr constant [76 x i8] c"<HTML><HEAD>\0A<TITLE>%d %s</TITLE>\0A</HEAD><BODY>\0A<H1>%s</H1>\0A</BODY></HTML>\0A\00", align 1
 @.str.14 = private unnamed_addr constant [15 x i8] c"Content-Length\00", align 1
@@ -200,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not53, label %.thread64, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
-  %.02947 = phi i64 [ %i.i, %bb.c ], [ 0, %bb.b ] ; 2 uses
-  %.03346 = phi i64 [ %i.h, %bb.c ], [ 0, %bb.b ] ; 2 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %.02947
+  %.02947 = phi i64 [ %i.h, %bb.c ], [ 0, %bb.b ] ; 2 uses
+  %.03346 = phi i64 [ %i.i, %bb.c ], [ 0, %bb.b ] ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %.03346
   %i.d = load i8, ptr %i.c, align 1
   %switch.tableidx = add i8 %i.d, -34             ; 2 uses
   %i.e = icmp ult i8 %switch.tableidx, 29
@@ -217,7 +221,7 @@ switch.lookup:                                    ; preds = %.lr.ph
 
 html_replace.exit:                                ; preds = %switch.lookup, %.lr.ph
   %.0.i = phi i64 [ 1, %.lr.ph ], [ %switch.ext, %switch.lookup ] ; 2 uses
-  %i.g = xor i64 %.03346, -1
+  %i.g = xor i64 %.02947, -1
   %.not = icmp ugt i64 %.0.i, %i.g
   br i1 %.not, label %.thread, label %bb.c
 
@@ -226,8 +230,8 @@ html_replace.exit:                                ; preds = %switch.lookup, %.lr
   br label %bb.f
 
 bb.c:                                             ; preds = %html_replace.exit
-  %i.h = add i64 %.0.i, %.03346                   ; 3 uses
-  %i.i = add nuw i64 %.02947, 1                   ; 2 uses
+  %i.h = add i64 %.0.i, %.02947                   ; 3 uses
+  %i.i = add nuw i64 %.03346, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.i, %i.b
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !3
 
@@ -252,9 +256,9 @@ bb.e:                                             ; preds = %.thread64, %bb.d
   br label %bb.f
 
 .lr.ph50:                                         ; preds = %bb.d, %html_replace.exit43
-  %.13049 = phi i64 [ %i.w, %html_replace.exit43 ], [ 0, %bb.d ] ; 2 uses
-  %.03248 = phi ptr [ %i.v, %html_replace.exit43 ], [ %i.l, %bb.d ] ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 %.13049 ; 3 uses
+  %.03049 = phi ptr [ %i.v, %html_replace.exit43 ], [ %i.l, %bb.d ] ; 2 uses
+  %.13448 = phi i64 [ %i.w, %html_replace.exit43 ], [ 0, %bb.d ] ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 %.13448 ; 3 uses
   %i.r = load i8, ptr %i.q, align 1
   %switch.tableidx68 = add i8 %i.r, -34           ; 4 uses
   %i.s = icmp ult i8 %switch.tableidx68, 29
@@ -279,9 +283,9 @@ switch.lookup70:                                  ; preds = %switch.hole_check
 html_replace.exit43:                              ; preds = %switch.lookup70, %switch.hole_check, %.lr.ph50
   %.0 = phi ptr [ %i.q, %.lr.ph50 ], [ %switch.load72, %switch.lookup70 ], [ %i.q, %switch.hole_check ]
   %.0.i42 = phi i64 [ 1, %.lr.ph50 ], [ %switch.ext75, %switch.lookup70 ], [ 1, %switch.hole_check ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.03248, ptr noundef nonnull align 1 dereferenceable(1) %.0, i64 %.0.i42, i1 false)
-  %i.v = getelementptr inbounds nuw i8, ptr %.03248, i64 %.0.i42 ; 2 uses
-  %i.w = add nuw i64 %.13049, 1                   ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.03049, ptr noundef nonnull align 1 dereferenceable(1) %.0, i64 %.0.i42, i1 false)
+  %i.v = getelementptr inbounds nuw i8, ptr %.03049, i64 %.0.i42 ; 2 uses
+  %i.w = add nuw i64 %.13448, 1                   ; 2 uses
   %exitcond56.not = icmp eq i64 %i.w, %i.b
   br i1 %exitcond56.not, label %._crit_edge51, label %.lr.ph50, !llvm.loop !5
 
@@ -441,8 +445,8 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.n, %bb.o
-  %.026 = phi ptr [ %i.ai, %bb.o ], [ null, %bb.n ]
-  %.0 = phi ptr [ %i.ak, %bb.o ], [ null, %bb.n ] ; 2 uses
+  %.026 = phi ptr [ %i.ak, %bb.o ], [ null, %bb.n ] ; 2 uses
+  %.0 = phi ptr [ %i.ai, %bb.o ], [ null, %bb.n ]
   %i.al = load ptr, ptr %i.d, align 8             ; 2 uses
   %.not.i34 = icmp eq ptr %i.al, null
   %i.am = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -502,11 +506,11 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x
-  %.not33 = icmp eq ptr %.0, null
+  %.not33 = icmp eq ptr %.026, null
   br i1 %.not33, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  tail call void %.0(ptr noundef null, ptr noundef %.026) #15
+  tail call void %.026(ptr noundef null, ptr noundef %.0) #15
   br label %bb.ab
 
 bb.ab:                                            ; preds = %evhttp_connection_incoming_fail.exit, %bb.z, %bb.aa, %bb.m
@@ -909,21 +913,21 @@ bb.h:                                             ; preds = %thread-pre-split
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.i, %.lr.ph.preheader.i
-  %.084122.i = phi i64 [ %i.ac, %bb.i ], [ %.pr, %.lr.ph.preheader.i ] ; 2 uses
-  %.085121.i = phi ptr [ %i.z, %bb.i ], [ %i.y, %.lr.ph.preheader.i ]
-  %i.z = getelementptr inbounds i8, ptr %.085121.i, i64 -1 ; 4 uses
+  %.083122.i = phi ptr [ %i.z, %bb.i ], [ %i.y, %.lr.ph.preheader.i ]
+  %.084121.i = phi i64 [ %i.ac, %bb.i ], [ %.pr, %.lr.ph.preheader.i ] ; 2 uses
+  %i.z = getelementptr inbounds i8, ptr %.083122.i, i64 -1 ; 4 uses
   %i.aa = load i8, ptr %i.z, align 1
   %i.ab = icmp eq i8 %i.aa, 32
   br i1 %i.ab, label %bb.i, label %.critedge.i
 
 bb.i:                                             ; preds = %.lr.ph.i
   store i8 0, ptr %i.z, align 1
-  %i.ac = add i64 %.084122.i, -1                  ; 2 uses
+  %i.ac = add i64 %.084121.i, -1                  ; 2 uses
   %i.ad = icmp ugt ptr %i.z, %i.j
   br i1 %i.ad, label %.lr.ph.i, label %.critedge.i, !llvm.loop !11
 
 .critedge.i:                                      ; preds = %bb.i, %.lr.ph.i
-  %.084.lcssa.ph.i = phi i64 [ %.084122.i, %.lr.ph.i ], [ %i.ac, %bb.i ]
+  %.084.lcssa.ph.i = phi i64 [ %.084121.i, %.lr.ph.i ], [ %i.ac, %bb.i ]
   %i.ae = icmp ult i64 %.084.lcssa.ph.i, 14
   br i1 %i.ae, label %bb.bo, label %bb.j
 
@@ -1326,8 +1330,8 @@ bb.u:                                             ; preds = %bb.t, %evhttp_decod
   br label %bb.v
 
 bb.v:                                             ; preds = %.thread, %bb.b, %bb.g
-  %.132 = phi ptr [ %.031, %bb.g ], [ %.031, %.thread ], [ null, %bb.b ] ; 2 uses
-  %.030.a = phi ptr [ null, %bb.g ], [ %i.h, %.thread ], [ null, %bb.b ] ; 2 uses
+  %.132 = phi ptr [ null, %bb.g ], [ %i.h, %.thread ], [ null, %bb.b ] ; 2 uses
+  %.030.a = phi ptr [ %.031, %bb.g ], [ %.031, %.thread ], [ null, %bb.b ] ; 2 uses
   %.015.i = load ptr, ptr %1, align 8             ; 2 uses
   %.not16.i = icmp eq ptr %.015.i, null
   br i1 %.not16.i, label %.critedge, label %.lr.ph.i51
@@ -1364,19 +1368,19 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   br i1 %.not.i52, label %.critedge, label %.lr.ph.i51, !llvm.loop !9
 
 .critedge:                                        ; preds = %bb.i, %thread-pre-split, %bb.y, %bb.v
-  %.033 = phi i32 [ -1, %bb.y ], [ -1, %bb.v ], [ 0, %thread-pre-split ], [ 0, %bb.i ] ; 2 uses
-  %.2 = phi ptr [ %.132, %bb.y ], [ %.132, %bb.v ], [ %.031, %thread-pre-split ], [ %.031, %bb.i ] ; 2 uses
-  %.1 = phi ptr [ %.030.a, %bb.y ], [ %.030.a, %bb.v ], [ %i.h, %thread-pre-split ], [ %i.h, %bb.i ] ; 2 uses
-  %.not49 = icmp eq ptr %.1, null
+  %.133 = phi ptr [ %.132, %bb.y ], [ %.132, %bb.v ], [ %i.h, %thread-pre-split ], [ %i.h, %bb.i ] ; 2 uses
+  %.030 = phi i32 [ -1, %bb.y ], [ -1, %bb.v ], [ 0, %thread-pre-split ], [ 0, %bb.i ] ; 2 uses
+  %.1 = phi ptr [ %.030.a, %bb.y ], [ %.030.a, %bb.v ], [ %.031, %thread-pre-split ], [ %.031, %bb.i ] ; 2 uses
+  %.not49 = icmp eq ptr %.133, null
   br i1 %.not49, label %.critedge.thread, label %bb.z
 
 bb.z:                                             ; preds = %.critedge
-  call void @event_mm_free_(ptr noundef nonnull %.1) #15
+  call void @event_mm_free_(ptr noundef nonnull %.133) #15
   br label %.critedge.thread
 
 .critedge.thread:                                 ; preds = %bb.e, %bb.d, %bb.z, %.critedge
-  %.259 = phi ptr [ %.2, %.critedge ], [ %.2, %bb.z ], [ %.031, %bb.d ], [ %.031, %bb.e ] ; 2 uses
-  %.03358 = phi i32 [ %.033, %.critedge ], [ %.033, %bb.z ], [ 0, %bb.d ], [ 0, %bb.e ]
+  %.259 = phi ptr [ %.1, %.critedge ], [ %.1, %bb.z ], [ %.031, %bb.d ], [ %.031, %bb.e ] ; 2 uses
+  %.03358 = phi i32 [ %.030, %.critedge ], [ %.030, %bb.z ], [ 0, %bb.d ], [ 0, %bb.e ]
   %.not50 = icmp eq ptr %.259, null
   br i1 %.not50, label %bb.ab, label %bb.aa
 
@@ -1779,11 +1783,11 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.g, %bb.a
-  %.014 = phi ptr [ %1, %bb.a ], [ %i.l, %bb.g ]  ; 4 uses
-  %.013 = phi ptr [ %0, %bb.a ], [ %i.a, %bb.g ]  ; 2 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %.013, i64 1 ; 2 uses
-  %i.b = load i8, ptr %.013, align 1              ; 3 uses
-  %i.c = load i8, ptr %.014, align 1              ; 3 uses
+  %.014 = phi ptr [ %0, %bb.a ], [ %i.a, %bb.g ]  ; 2 uses
+  %.013 = phi ptr [ %1, %bb.a ], [ %i.l, %bb.g ]  ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %.014, i64 1 ; 2 uses
+  %i.b = load i8, ptr %.014, align 1              ; 3 uses
+  %i.c = load i8, ptr %.013, align 1              ; 3 uses
   switch i8 %i.b, label %bb.e [
     i8 0, label %bb.c
     i8 42, label %.preheader
@@ -1805,7 +1809,7 @@ bb.d:                                             ; preds = %.lr.ph
   br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !56
 
 .lr.ph:                                           ; preds = %.preheader, %bb.d
-  %.124 = phi ptr [ %i.f, %bb.d ], [ %.014, %.preheader ] ; 2 uses
+  %.124 = phi ptr [ %i.f, %bb.d ], [ %.013, %.preheader ] ; 2 uses
   %i.h = tail call fastcc i32 @prefix_suffix_match(ptr noundef nonnull %i.a, ptr noundef %.124)
   %.not15 = icmp eq i32 %i.h, 0
   br i1 %.not15, label %bb.d, label %.loopexit
@@ -1816,13 +1820,13 @@ bb.e:                                             ; preds = %bb.b
 
 bb.f:                                             ; preds = %bb.e
   %i.i = tail call signext i8 @EVUTIL_TOLOWER_(i8 noundef signext %i.b) #15
-  %i.j = load i8, ptr %.014, align 1
+  %i.j = load i8, ptr %.013, align 1
   %i.k = tail call signext i8 @EVUTIL_TOLOWER_(i8 noundef signext %i.j) #15
   %.not17 = icmp eq i8 %i.i, %i.k
   br i1 %.not17, label %bb.g, label %.loopexit
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.l = getelementptr inbounds nuw i8, ptr %.014, i64 1
+  %i.l = getelementptr inbounds nuw i8, ptr %.013, i64 1
   br label %bb.b
 
 .loopexit:                                        ; preds = %bb.f, %.lr.ph, %bb.d, %.preheader, %bb.c
@@ -2225,7 +2229,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   %i.by = tail call i64 @evbuffer_get_length(ptr noundef %i.d) #15
   %i.bz = load i64, ptr %i.bf, align 8            ; 2 uses
   %spec.select = tail call i64 @llvm.umin.i64(i64 %i.by, i64 %i.bz) ; 3 uses
-  %i.ca = sub i64 %i.bz, %spec.select
+  %i.ca = sub nuw i64 %i.bz, %spec.select
   store i64 %i.ca, ptr %i.bf, align 8
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   %i.cc = load i64, ptr %i.cb, align 8
