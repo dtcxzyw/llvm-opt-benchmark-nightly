@@ -205,13 +205,13 @@ bb.a:
   %i.b = trunc nuw i32 %i.a to i1
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.d = load i32, ptr %i.c, align 4
-  %2 = zext i32 %i.d to i64
-  %3 = select i1 %i.b, i64 %2, i64 1
+  %.sroa.0.0 = select i1 %i.b, i32 %i.d, i32 1
+  %2 = zext i32 %.sroa.0.0 to i64
   store i8 2, ptr %0, align 8, !alias.scope !1460
   %.sroa.4.sroa.3.0..sroa.4.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %.sroa.4.sroa.3.0..sroa.4.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !1460
   %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %3, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !1460
+  store i64 %2, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !1460
   ret void
 }
 
@@ -614,13 +614,13 @@ bb.a:
   %i.b = trunc nuw i32 %i.a to i1
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.d = load i32, ptr %i.c, align 4
-  %2 = zext i32 %i.d to i64
-  %3 = select i1 %i.b, i64 %2, i64 1
+  %.sroa.0.0 = select i1 %i.b, i32 %i.d, i32 1
+  %2 = zext i32 %.sroa.0.0 to i64
   store i8 2, ptr %0, align 8, !alias.scope !1501
   %.sroa.4.sroa.3.0..sroa.4.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %.sroa.4.sroa.3.0..sroa.4.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !1501
   %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %3, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !1501
+  store i64 %2, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !1501
   ret void
 }
 
@@ -937,13 +937,13 @@ bb.a:
   %i.b = trunc nuw i32 %i.a to i1
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.d = load i32, ptr %i.c, align 4
-  %2 = zext i32 %i.d to i64
-  %3 = select i1 %i.b, i64 %2, i64 1
+  %.sroa.0.0 = select i1 %i.b, i32 %i.d, i32 1
+  %2 = zext i32 %.sroa.0.0 to i64
   store i8 2, ptr %0, align 8, !alias.scope !1518
   %.sroa.4.sroa.3.0..sroa.4.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %.sroa.4.sroa.3.0..sroa.4.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !1518
   %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %3, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !1518
+  store i64 %2, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !1518
   ret void
 }
 

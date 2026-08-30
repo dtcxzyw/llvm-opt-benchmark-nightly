@@ -202,17 +202,20 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   store i8 0, ptr %i.y, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 2718
-  %.sroa.028.0.copyload = load i16, ptr %i.aa, align 2 ; 2 uses
+  %.sroa.028.0.copyload = load i16, ptr %i.aa, align 2 ; 3 uses
   %i.ab = zext i16 %.sroa.028.0.copyload to i24
-  %.sroa.530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2719
-  %.sroa.530.0.copyload = load i16, ptr %.sroa.530.0..sroa_idx, align 1 ; 2 uses
-  %3 = zext i16 %.sroa.530.0.copyload to i48
-  %4 = lshr i16 %.sroa.530.0.copyload, 8
+  %3 = lshr i16 %.sroa.028.0.copyload, 8
+  %.sroa.633.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2720
+  %.sroa.633.0.copyload = load i8, ptr %.sroa.633.0..sroa_idx, align 8 ; 2 uses
   %i.ac = trunc i16 %.sroa.028.0.copyload to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
-  %i.ad = or disjoint i48 %3, 13238272
+  %4 = zext nneg i16 %3 to i48
+  %5 = zext i8 %.sroa.633.0.copyload to i48
+  %6 = shl nuw nsw i48 %5, 8
+  %7 = or disjoint i48 %6, %4
+  %i.ad = or disjoint i48 %7, 13238272
   %.sroa.038.2.insert.insert = select i1 %i.ac, i48 %i.ad, i48 13241859
   invoke void @_RNvCsb6FLkjZuKG_18ruff_python_parser15parse_unchecked(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(address) dereferenceable(104) %i.m, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.w, i64 noundef %2, i48 %.sroa.038.2.insert.insert)
           to label %bb.h unwind label %bb.g
@@ -339,7 +342,7 @@ bb.z:                                             ; preds = %bb.w
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store i64 2, ptr %i.f, align 8
-  %.sroa.040.2.insert.ext = zext nneg i16 %4 to i24
+  %.sroa.040.2.insert.ext = zext i8 %.sroa.633.0.copyload to i24
   %.sroa.040.2.insert.shift = shl nuw i24 %.sroa.040.2.insert.ext, 16
   %.sroa.040.2.insert.insert = or disjoint i24 %.sroa.040.2.insert.shift, %i.ab
   invoke void @_RNvNtCsEhZmuQNqkz_11ruff_linter6linter10check_path(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.g, ptr noalias noundef nonnull readonly captures(address, read_provenance) @54, i64 noundef 10, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(24) %i.f, ptr noundef nonnull align 8 %i.l, ptr noundef nonnull align 8 %i.k, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.j, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(2432) %i.z, i1 noundef zeroext false, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.p, i8 noundef 0, ptr noundef nonnull align 8 %i.o, i24 %.sroa.040.2.insert.insert, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.h)

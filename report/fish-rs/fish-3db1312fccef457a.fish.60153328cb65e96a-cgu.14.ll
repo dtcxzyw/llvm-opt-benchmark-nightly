@@ -204,10 +204,10 @@ bb.t:                                             ; preds = %bb.s
   %i.hh = load i32, ptr %i.cq, align 4, !range !220, !noalias !1362, !noundef !12
   %i.hi = trunc nuw i32 %i.hh to i1
   %i.hj = load i32, ptr %i.fq, align 4, !noalias !1362
+  %.sroa.05.0.i = select i1 %i.hi, i32 %i.hj, i32 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cq), !noalias !1362
-  %i.hk = zext i32 %i.hj to i64
-  %4 = select i1 %i.hi, i64 %i.hk, i64 0
-  store i64 %4, ptr %i.fp, align 8, !noalias !1362
+  %i.hk = zext i32 %.sroa.05.0.i to i64
+  store i64 %i.hk, ptr %i.fp, align 8, !noalias !1362
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cp), !noalias !1362
   invoke void @_RNvYNtNtCs8frGy5WneL6_4fish3ast16TokenConjunctionNtB4_4Node16try_source_rangeB6_(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.cp, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(16) %.sroa.14.0.i)
           to label %bb.u unwind label %.thread22.i, !noalias !1362
@@ -216,10 +216,10 @@ bb.u:                                             ; preds = %bb.t
   %i.hl = load i32, ptr %i.cp, align 4, !range !220, !noalias !1362, !noundef !12
   %i.hm = trunc nuw i32 %i.hl to i1
   %i.hn = load i32, ptr %i.fr, align 4, !noalias !1362
+  %.sroa.57.0.i = select i1 %i.hm, i32 %i.hn, i32 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cp), !noalias !1362
-  %i.ho = zext i32 %i.hn to i64
-  %5 = select i1 %i.hm, i64 %i.ho, i64 0
-  store i64 %5, ptr %i.fo, align 8, !noalias !1362
+  %i.ho = zext i32 %.sroa.57.0.i to i64
+  store i64 %i.ho, ptr %i.fo, align 8, !noalias !1362
   store i8 1, ptr %i.fn, align 8, !noalias !1362
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cv)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cu), !noalias !1362
@@ -411,9 +411,9 @@ bb.ak:                                            ; preds = %bb.h
   %i.iw = load i32, ptr %i.al, align 4, !range !220, !noalias !1381, !noundef !12
   %i.ix = trunc nuw i32 %i.iw to i1
   %i.iy = load i32, ptr %i.de, align 4, !noalias !1381
+  %.sroa.013.0.i = select i1 %i.ix, i32 %i.iy, i32 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al), !noalias !1381
-  %i.iz = zext i32 %i.iy to i64
-  %6 = select i1 %i.ix, i64 %i.iz, i64 0          ; 8 uses
+  %i.iz = zext i32 %.sroa.013.0.i to i64          ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ak), !noalias !1381
   invoke void @_RNvYNtNtCs8frGy5WneL6_4fish3ast18DecoratedStatementNtB4_4Node16try_source_rangeB6_(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.ak, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.iv)
           to label %.noexc67 unwind label %.loopexit.split-lp.loopexit
@@ -422,9 +422,9 @@ bb.ak:                                            ; preds = %bb.h
   %i.ja = load i32, ptr %i.ak, align 4, !range !220, !noalias !1381, !noundef !12
   %i.jb = trunc nuw i32 %i.ja to i1
   %i.jc = load i32, ptr %i.df, align 4, !noalias !1381
+  %.sroa.515.0.i = select i1 %i.jb, i32 %i.jc, i32 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak), !noalias !1381
-  %i.jd = zext i32 %i.jc to i64
-  %7 = select i1 %i.jb, i64 %i.jd, i64 0          ; 8 uses
+  %i.jd = zext i32 %.sroa.515.0.i to i64          ; 8 uses
   %i.je = invoke noundef i8 @_RNvMsr_NtCs8frGy5WneL6_4fish3astNtB5_18DecoratedStatement10decoration(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.iv)
           to label %.noexc68 unwind label %.loopexit.split-lp.loopexit ; 2 uses
 
@@ -569,8 +569,8 @@ bb.ar:                                            ; preds = %_RNvNtCs8frGy5WneL6
   store i64 0, ptr %i.cm, align 8, !noalias !1381
   store ptr inttoptr (i64 4 to ptr), ptr %.sroa.488.0..sroa_idx.i, align 8, !noalias !1381
   store i64 0, ptr %.sroa.589.0..sroa_idx.i, align 8, !noalias !1381
-  store i64 %6, ptr %i.dp, align 8, !noalias !1381
-  store i64 %7, ptr %i.dq, align 8, !noalias !1381
+  store i64 %i.iz, ptr %i.dp, align 8, !noalias !1381
+  store i64 %i.jd, ptr %i.dq, align 8, !noalias !1381
   store i8 1, ptr %i.do, align 8, !noalias !1381
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cl)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ck), !noalias !1381
@@ -790,8 +790,8 @@ bb.bg:                                            ; preds = %bb.be
   store i64 0, ptr %i.ce, align 8, !noalias !1381
   store ptr inttoptr (i64 4 to ptr), ptr %.sroa.4101.0..sroa_idx.i, align 8, !noalias !1381
   store i64 0, ptr %.sroa.5102.0..sroa_idx.i, align 8, !noalias !1381
-  store i64 %6, ptr %i.dy, align 8, !noalias !1381
-  store i64 %7, ptr %i.dz, align 8, !noalias !1381
+  store i64 %i.iz, ptr %i.dy, align 8, !noalias !1381
+  store i64 %i.jd, ptr %i.dz, align 8, !noalias !1381
   store i8 1, ptr %i.dx, align 8, !noalias !1381
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cd)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cc), !noalias !1381
@@ -943,8 +943,8 @@ bb.bs:                                            ; preds = %.noexc82
   store i64 0, ptr %i.by, align 8, !noalias !1381
   store ptr inttoptr (i64 4 to ptr), ptr %.sroa.4110.0..sroa_idx.i, align 8, !noalias !1381
   store i64 0, ptr %.sroa.5111.0..sroa_idx.i, align 8, !noalias !1381
-  store i64 %6, ptr %i.eb, align 8, !noalias !1381
-  store i64 %7, ptr %i.ec, align 8, !noalias !1381
+  store i64 %i.iz, ptr %i.eb, align 8, !noalias !1381
+  store i64 %i.jd, ptr %i.ec, align 8, !noalias !1381
   store i8 1, ptr %i.ea, align 8, !noalias !1381
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bx)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bw), !noalias !1381
@@ -1072,8 +1072,8 @@ bb.cg:                                            ; preds = %.noexc78
   store i64 0, ptr %i.bt, align 8, !noalias !1381
   store ptr inttoptr (i64 4 to ptr), ptr %.sroa.4123.0..sroa_idx.i, align 8, !noalias !1381
   store i64 0, ptr %.sroa.5124.0..sroa_idx.i, align 8, !noalias !1381
-  store i64 %6, ptr %i.ee, align 8, !noalias !1381
-  store i64 %7, ptr %i.ef, align 8, !noalias !1381
+  store i64 %i.iz, ptr %i.ee, align 8, !noalias !1381
+  store i64 %i.jd, ptr %i.ef, align 8, !noalias !1381
   store i8 1, ptr %i.ed, align 8, !noalias !1381
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bs)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.br), !noalias !1381
@@ -1356,8 +1356,8 @@ bb.dg:                                            ; preds = %bb.df
   store i64 0, ptr %i.bj, align 8, !noalias !1381
   store ptr inttoptr (i64 4 to ptr), ptr %.sroa.4154.0..sroa_idx.i, align 8, !noalias !1381
   store i64 0, ptr %.sroa.5155.0..sroa_idx.i, align 8, !noalias !1381
-  store i64 %6, ptr %i.fh, align 8, !noalias !1381
-  store i64 %7, ptr %i.fi, align 8, !noalias !1381
+  store i64 %i.iz, ptr %i.fh, align 8, !noalias !1381
+  store i64 %i.jd, ptr %i.fi, align 8, !noalias !1381
   store i8 1, ptr %i.fg, align 8, !noalias !1381
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bi)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bh), !noalias !1381
@@ -1618,8 +1618,8 @@ bb.ea:                                            ; preds = %bb.dy
   store i64 0, ptr %i.ay, align 8, !noalias !1381
   store ptr inttoptr (i64 4 to ptr), ptr %.sroa.4168.0..sroa_idx.i, align 8, !noalias !1381
   store i64 0, ptr %.sroa.5169.0..sroa_idx.i, align 8, !noalias !1381
-  store i64 %6, ptr %i.ew, align 8, !noalias !1381
-  store i64 %7, ptr %i.ex, align 8, !noalias !1381
+  store i64 %i.iz, ptr %i.ew, align 8, !noalias !1381
+  store i64 %i.jd, ptr %i.ex, align 8, !noalias !1381
   store i8 1, ptr %i.ev, align 8, !noalias !1381
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ax)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aw), !noalias !1381
@@ -1747,8 +1747,8 @@ bb.eo:                                            ; preds = %bb.dz
   store i64 0, ptr %i.bd, align 8, !noalias !1381
   store ptr inttoptr (i64 4 to ptr), ptr %.sroa.4162.0..sroa_idx.i, align 8, !noalias !1381
   store i64 0, ptr %.sroa.5163.0..sroa_idx.i, align 8, !noalias !1381
-  store i64 %6, ptr %i.ez, align 8, !noalias !1381
-  store i64 %7, ptr %i.fa, align 8, !noalias !1381
+  store i64 %i.iz, ptr %i.ez, align 8, !noalias !1381
+  store i64 %i.jd, ptr %i.fa, align 8, !noalias !1381
   store i8 1, ptr %i.ey, align 8, !noalias !1381
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bc)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bb), !noalias !1381
@@ -1978,8 +1978,8 @@ bb.ft:                                            ; preds = %bb.fs
   store i64 0, ptr %i.ar, align 8, !noalias !1381
   store ptr inttoptr (i64 4 to ptr), ptr %.sroa.4177.0..sroa_idx.i, align 8, !noalias !1381
   store i64 0, ptr %.sroa.5178.0..sroa_idx.i, align 8, !noalias !1381
-  store i64 %6, ptr %i.fe, align 8, !noalias !1381
-  store i64 %7, ptr %i.ff, align 8, !noalias !1381
+  store i64 %i.iz, ptr %i.fe, align 8, !noalias !1381
+  store i64 %i.jd, ptr %i.ff, align 8, !noalias !1381
   store i8 1, ptr %i.fd, align 8, !noalias !1381
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aq)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ap), !noalias !1381
@@ -2168,14 +2168,14 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecmEECs8f
 bb.gj:                                            ; preds = %.thread70.i
   %i.tb = load i32, ptr %i.ai, align 4, !range !220, !noalias !1381, !noundef !12
   %i.tc = trunc nuw i32 %i.tb to i1
-  %i.td = load i32, ptr %i.fj, align 4, !noalias !1381 ; 2 uses
+  %i.td = load i32, ptr %i.fj, align 4, !noalias !1381
+  %.sroa.066.0.i = select i1 %i.tc, i32 %i.td, i32 0 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai), !noalias !1381
-  %i.te = zext i32 %i.td to i64
+  %i.te = zext i32 %.sroa.066.0.i to i64
   %.val258.i = load ptr, ptr %i.ei, align 8, !noalias !1381 ; 6 uses
   %.val259.i = load i64, ptr %i.ej, align 8, !noalias !1381 ; 4 uses
-  %.not.i91.i = icmp ne i32 %i.td, 0
-  %.not.i.not.i = select i1 %i.tc, i1 %.not.i91.i, i1 false
-  br i1 %.not.i.not.i, label %bb.gk, label %_RNvNtCs8frGy5WneL6_4fish15parse_constants31parse_error_offset_source_start.exit.i
+  %.not.i.i = icmp eq i32 %.sroa.066.0.i, 0
+  br i1 %.not.i.i, label %_RNvNtCs8frGy5WneL6_4fish15parse_constants31parse_error_offset_source_start.exit.i, label %bb.gk
 
 bb.gk:                                            ; preds = %bb.gj
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val258.i) ]
@@ -2578,10 +2578,10 @@ bb.ig:                                            ; preds = %bb.if
   %i.wi = load i32, ptr %i.d, align 4, !range !220, !noalias !1514, !noundef !12
   %i.wj = trunc nuw i32 %i.wi to i1
   %i.wk = load i32, ptr %i.ga, align 4, !noalias !1514
+  %.sroa.07.0.i = select i1 %i.wj, i32 %i.wk, i32 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !1514
-  %i.wl = zext i32 %i.wk to i64
-  %8 = select i1 %i.wj, i64 %i.wl, i64 0
-  store i64 %8, ptr %i.fz, align 8, !noalias !1514
+  %i.wl = zext i32 %.sroa.07.0.i to i64
+  store i64 %i.wl, ptr %i.fz, align 8, !noalias !1514
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1514
   invoke void @_RNvYNtNtCs8frGy5WneL6_4fish3ast23JobConjunctionDecoratorNtB4_4Node16try_source_rangeB6_(ptr noalias nofree noundef nonnull sret([12 x i8]) align 4 captures(none) dereferenceable(12) %i.c, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(16) %i.we)
           to label %bb.ih unwind label %.thread11.i
@@ -2590,10 +2590,10 @@ bb.ih:                                            ; preds = %bb.ig
   %i.wm = load i32, ptr %i.c, align 4, !range !220, !noalias !1514, !noundef !12
   %i.wn = trunc nuw i32 %i.wm to i1
   %i.wo = load i32, ptr %i.gb, align 4, !noalias !1514
+  %.sroa.59.0.i = select i1 %i.wn, i32 %i.wo, i32 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1514
-  %i.wp = zext i32 %i.wo to i64
-  %9 = select i1 %i.wn, i64 %i.wp, i64 0
-  store i64 %9, ptr %i.fy, align 8, !noalias !1514
+  %i.wp = zext i32 %.sroa.59.0.i to i64
+  store i64 %i.wp, ptr %i.fy, align 8, !noalias !1514
   store i8 1, ptr %i.fx, align 8, !noalias !1514
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !1514

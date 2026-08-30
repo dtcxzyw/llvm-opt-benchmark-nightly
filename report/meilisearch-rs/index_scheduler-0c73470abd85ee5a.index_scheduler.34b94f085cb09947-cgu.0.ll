@@ -206,8 +206,8 @@ _ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.i.i.i: ; preds = 
 
 _ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread32.i.i.i: ; preds = %bb.z
   %i.cr = trunc nuw i64 %.sroa.01.069.i.i.i to i1
-  %1 = inttoptr i64 %.sroa.7.068.i.i.i to ptr
-  %2 = select i1 %i.cr, ptr %1, ptr null
+  %.sroa.7.0..i.i.i = select i1 %i.cr, i64 %.sroa.7.068.i.i.i, i64 0
+  %1 = inttoptr i64 %.sroa.7.0..i.i.i to ptr
   br label %"_ZN218_$LT$meilisearch_types..tasks..network.._..$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$meilisearch_types..tasks..network..NetworkTopologyStats$GT$..deserialize..__Visitor$u20$as$u20$serde_core..de..Visitor$GT$9visit_map17h670382ad07a37a63E.exit.i.i"
 
 bb.ad:                                            ; preds = %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.i.i.i, %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread36.i.i.i
@@ -346,7 +346,7 @@ bb.ap:                                            ; preds = %_ZN10serde_core2de9
   br i1 %i.dx, label %._crit_edge.i.i.i, label %bb.z
 
 "_ZN218_$LT$meilisearch_types..tasks..network.._..$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$meilisearch_types..tasks..network..NetworkTopologyStats$GT$..deserialize..__Visitor$u20$as$u20$serde_core..de..Visitor$GT$9visit_map17h670382ad07a37a63E.exit.i.i": ; preds = %_ZN10serde_core2de9MapAccess10next_value17h669552e78393dcf5E.exit.i.i.i, %_ZN10serde_core2de9MapAccess10next_value17h8862486ea2380915E.exit.i.i.i, %bb.ai, %bb.ag, %.loopexit.i.i.i.i.i.i, %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread32.i.i.i, %bb.ac, %._crit_edge.i.i.i
-  %.sroa.6.1.i.i.i = phi ptr [ %2, %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread32.i.i.i ], [ %i.db, %bb.ag ], [ %i.bx, %._crit_edge.i.i.i ], [ %i.de, %bb.ai ], [ %i.ci, %bb.ac ], [ %i.da, %.loopexit.i.i.i.i.i.i ], [ %i.dt, %_ZN10serde_core2de9MapAccess10next_value17h669552e78393dcf5E.exit.i.i.i ], [ %i.dd, %_ZN10serde_core2de9MapAccess10next_value17h8862486ea2380915E.exit.i.i.i ] ; 4 uses
+  %.sroa.6.1.i.i.i = phi ptr [ %1, %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread32.i.i.i ], [ %i.db, %bb.ag ], [ %i.bx, %._crit_edge.i.i.i ], [ %i.de, %bb.ai ], [ %i.ci, %bb.ac ], [ %i.da, %.loopexit.i.i.i.i.i.i ], [ %i.dt, %_ZN10serde_core2de9MapAccess10next_value17h669552e78393dcf5E.exit.i.i.i ], [ %i.dd, %_ZN10serde_core2de9MapAccess10next_value17h8862486ea2380915E.exit.i.i.i ] ; 4 uses
   %.sroa.0.1.i.i.i = phi i64 [ 0, %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread32.i.i.i ], [ 1, %bb.ag ], [ 1, %._crit_edge.i.i.i ], [ 1, %bb.ai ], [ 1, %bb.ac ], [ 1, %.loopexit.i.i.i.i.i.i ], [ 1, %_ZN10serde_core2de9MapAccess10next_value17h8862486ea2380915E.exit.i.i.i ], [ 1, %_ZN10serde_core2de9MapAccess10next_value17h669552e78393dcf5E.exit.i.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !208178
   %i.dy = load i8, ptr %i.ac, align 8, !range !1313, !alias.scope !208178, !noundef !14

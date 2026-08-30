@@ -205,8 +205,8 @@ bb.r:                                             ; preds = %.noexc.i.i
   %i.ap = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.aq = load i32, ptr %i.ap, align 8, !range !372, !noalias !12110
   %i.ar = trunc nuw i32 %i.aq to i1
-  %4 = zext i32 %i.ao to i64
-  %5 = select i1 %i.ar, i64 %4, i64 1200
+  %4 = select i1 %i.ar, i32 %i.ao, i32 1200
+  %5 = zext i32 %4 to i64
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %.thread.i.i.i.i
@@ -609,8 +609,8 @@ bb.n:                                             ; preds = %.noexc125
   %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.ae = load i32, ptr %i.ad, align 8, !range !372
   %i.af = trunc nuw i32 %i.ae to i1
-  %2 = zext i32 %i.ac to i64
-  %3 = select i1 %i.af, i64 %2, i64 1200
+  %2 = select i1 %i.af, i32 %i.ac, i32 1200
+  %3 = zext i32 %2 to i64
   br label %bb.r
 
 bb.o:                                             ; preds = %bb.l, %bb.s

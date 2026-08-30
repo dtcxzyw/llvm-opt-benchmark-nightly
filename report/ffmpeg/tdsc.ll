@@ -204,9 +204,8 @@ bb.av:                                            ; preds = %bb.au, %bb.at, %bb.
   %i.hr = load ptr, ptr %i.hq, align 8, !tbaa !38 ; 2 uses
   %i.hs = getelementptr inbounds nuw i8, ptr %i.hr, i64 64
   %i.ht = load i32, ptr %i.hs, align 8, !tbaa !42 ; 2 uses
-  %4 = sext i32 %i.ht to i64
-  %i.hu = sext i32 %i.hp to i64
-  %i.hv = sext i32 %i.hn to i64
+  %i.hu = sext i32 %i.ht to i64
+  %i.hv = sext i32 %i.hp to i64
   %i.hw = load ptr, ptr %i.hr, align 8, !tbaa !60
   %i.hx = mul nuw nsw i32 %.0.i95.i.i, 3
   %i.hy = zext nneg i32 %i.hx to i64
@@ -286,10 +285,11 @@ bb.aw:                                            ; preds = %bb.aw, %.preheader.
   br i1 %exitcond.not.i.i.i, label %._crit_edge.i.i.i, label %bb.aw, !llvm.loop !66
 
 ._crit_edge.i.i.i:                                ; preds = %bb.aw
-  %i.jv = getelementptr inbounds i8, ptr %.024.i43.i.i.i, i64 %4
-  %i.jw = getelementptr inbounds i8, ptr %.025.i42.i.i.i, i64 %i.hu
+  %i.jv = getelementptr inbounds i8, ptr %.024.i43.i.i.i, i64 %i.hu
+  %i.jw = getelementptr inbounds i8, ptr %.025.i42.i.i.i, i64 %i.hv
   %i.jx = trunc i32 %.0.i44.i.i.i to i1
-  %5 = select i1 %i.jx, i64 %i.hv, i64 0          ; 2 uses
+  %4 = select i1 %i.jx, i32 %i.hn, i32 0
+  %5 = sext i32 %4 to i64                         ; 2 uses
   %i.jy = getelementptr inbounds i8, ptr %.026.i41.i.i.i, i64 %5
   %i.jz = getelementptr inbounds i8, ptr %.027.i40.i.i.i, i64 %5
   %i.ka = add nuw nsw i32 %.0.i44.i.i.i, 1        ; 2 uses

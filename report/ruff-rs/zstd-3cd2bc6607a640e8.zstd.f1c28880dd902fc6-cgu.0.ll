@@ -202,9 +202,9 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = trunc i32 %1 to i1
-  %3 = zext i32 %2 to i64
-  %4 = shl nuw i64 %3, 32
-  %.sroa.3.0.insert.shift = select i1 %i.c, i64 %4, i64 0
+  %..i = select i1 %i.c, i32 %2, i32 0
+  %.sroa.3.0.insert.ext = zext i32 %..i to i64
+  %.sroa.3.0.insert.shift = shl nuw i64 %.sroa.3.0.insert.ext, 32
   %i.d = tail call { i64, i64 } @_RNvMs0_CsagZlUBgSdNw_9zstd_safeNtB5_4CCtx13set_parameter(ptr align 8 %0, i64 %.sroa.3.0.insert.shift) ; 2 uses
   %i.e = extractvalue { i64, i64 } %i.d, 0
   %i.f = trunc nuw i64 %i.e to i1

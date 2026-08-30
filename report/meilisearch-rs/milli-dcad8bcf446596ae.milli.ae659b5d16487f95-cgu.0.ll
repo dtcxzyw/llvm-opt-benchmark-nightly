@@ -206,6 +206,7 @@ bb.gj:                                            ; preds = %.noexc534
   %i.zm = getelementptr inbounds nuw i8, ptr %i.f, i64 5
   %i.zn = load i8, ptr %i.zm, align 1, !noalias !236275
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !236275
+  %..i = select i1 %i.zl, i8 %i.zn, i8 5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aw)
   invoke void @_ZN5milli5index5Index22min_word_len_two_typos17hcbb85e4c19939c30E(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.aw, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(496) %i.bd, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bf)
           to label %bb.gk unwind label %bb.cv
@@ -232,9 +233,8 @@ bb.gl:                                            ; preds = %bb.gk
 
 .invoke:                                          ; preds = %bb.gk
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aw)
-  %i.zr = zext i8 %i.zn to i64
-  %6 = select i1 %i.zl, i64 %i.zr, i64 5
-  %i.zs = icmp ult i64 %.sroa.6.0.copyload.i, %6
+  %i.zr = zext i8 %..i to i64
+  %i.zs = icmp ult i64 %.sroa.6.0.copyload.i, %i.zr
   %i.zt = zext i8 %i.zq to i64
   %i.zu = icmp ult i64 %.sroa.6.0.copyload.i, %i.zt
   %. = select i1 %i.zu, i8 1, i8 2
