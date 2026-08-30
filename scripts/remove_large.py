@@ -1,6 +1,6 @@
 import os
 
-SIZE_THRESHOLD = 1e8
+SIZE_THRESHOLD = 3e7
 
 for repo in os.listdir("data"):
     original_dir = f"data/{repo}/original"
