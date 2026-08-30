@@ -204,12 +204,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
 bb.h:                                             ; preds = %bb.g
   %i.w = add nuw nsw i32 %i.u, 1
   store i32 %i.w, ptr @_ZZL12getNextColorvE2id, align 4, !tbaa !19, !noalias !166
-  %3 = zext nneg i32 %i.u to i64
+  %3 = sext i32 %i.u to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.x = phi i64 [ %3, %bb.h ], [ 5, %bb.g ]
-  %i.y = getelementptr inbounds nuw [32 x i8], ptr @_ZZL12getNextColorvE6colors, i64 %i.x ; 2 uses
+  %i.y = getelementptr inbounds [32 x i8], ptr @_ZZL12getNextColorvE6colors, i64 %i.x ; 2 uses
   %i.z = load <2 x double>, ptr %i.y, align 16, !tbaa !86, !noalias !166
   store <2 x double> %i.z, ptr %i.q, align 8, !tbaa !86, !alias.scope !166
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 16
