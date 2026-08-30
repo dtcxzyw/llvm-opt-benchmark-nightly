@@ -204,8 +204,8 @@ bb.a:
   %i.j = trunc nuw i8 %i.i to i1
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.l = load i8, ptr %i.k, align 4, !range !49
-  %2 = zext nneg i8 %i.l to i32
-  %3 = select i1 %i.j, i32 %2, i32 2              ; 3 uses
+  %narrow = select i1 %i.j, i8 %i.l, i8 2         ; 2 uses
+  %2 = zext nneg i8 %narrow to i32                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #14
   store ptr null, ptr %1, align 8, !tbaa !12
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 68
@@ -219,7 +219,7 @@ bb.a:
   %i.u = load ptr, ptr %i.q, align 8, !tbaa !10
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 56
   %i.w = load ptr, ptr %i.v, align 8
-  %i.x = invoke noundef i32 %i.w(ptr noundef nonnull align 8 dereferenceable(8) %i.q, i32 noundef %i.t, ptr noundef nonnull %1, i32 noundef %3)
+  %i.x = invoke noundef i32 %i.w(ptr noundef nonnull align 8 dereferenceable(8) %i.q, i32 noundef %i.t, ptr noundef nonnull %1, i32 noundef %2)
           to label %bb.b unwind label %bb.c       ; 2 uses
 
 bb.b:                                             ; preds = %bb.a
@@ -281,7 +281,7 @@ bb.g:                                             ; preds = %bb.f, %.noexc
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !44
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i64 %i.ba, ptr %i.bb, align 8, !tbaa !60
-  %i.bc = icmp eq i32 %3, 0
+  %i.bc = icmp eq i8 %narrow, 0
   br i1 %i.bc, label %bb.h, label %bb.l
 
 bb.h:                                             ; preds = %bb.g
@@ -321,7 +321,7 @@ bb.k:                                             ; preds = %bb.l
   br label %bb.p
 
 bb.l:                                             ; preds = %_ZNK8NArchive3N7z16CArchiveDatabase10IsItemAntiEi.exit.thread, %_ZNK8NArchive3N7z16CArchiveDatabase10IsItemAntiEi.exit, %bb.h, %bb.g
-  %.016 = phi i32 [ 0, %_ZNK8NArchive3N7z16CArchiveDatabase10IsItemAntiEi.exit ], [ %spec.select, %_ZNK8NArchive3N7z16CArchiveDatabase10IsItemAntiEi.exit.thread ], [ %3, %bb.g ], [ 0, %bb.h ]
+  %.016 = phi i32 [ 0, %_ZNK8NArchive3N7z16CArchiveDatabase10IsItemAntiEi.exit ], [ %spec.select, %_ZNK8NArchive3N7z16CArchiveDatabase10IsItemAntiEi.exit.thread ], [ %2, %bb.g ], [ 0, %bb.h ]
   %i.bs = load ptr, ptr %i.p, align 8, !tbaa !16  ; 2 uses
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !10
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 64

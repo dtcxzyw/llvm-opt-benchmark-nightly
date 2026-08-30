@@ -205,7 +205,6 @@ bb.ah:                                            ; preds = %bb.ag
 intel_dp_has_dsc.exit.thread:                     ; preds = %bb.v, %bb.z, %bb.x, %bb.af, %bb.ah, %bb.ag, %intel_dp_has_dsc.exit
   %.2 = phi i1 [ %.084162, %intel_dp_has_dsc.exit ], [ %i.ej, %bb.af ], [ %i.eo, %bb.ah ], [ %.084162, %bb.ag ], [ %.084162, %bb.x ], [ %.084162, %bb.z ], [ %.084162, %bb.v ] ; 4 uses
   %.081.shrunk = phi i8 [ 0, %intel_dp_has_dsc.exit ], [ %.0.i118, %bb.af ], [ %.0.i118, %bb.ah ], [ %.0.i118, %bb.ag ], [ 0, %bb.x ], [ 0, %bb.z ], [ 0, %bb.v ] ; 2 uses
-  %.081 = zext i8 %.081.shrunk to i32
   %i.ep = load i16, ptr %i.cl, align 8
   %i.eq = icmp ugt i16 %i.ep, 12
   %i.er = icmp ne i32 %.083163, 2
@@ -227,10 +226,11 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %.not.i124.not, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
+  %spec.select101 = zext i8 %.081.shrunk to i32
   %i.ev = load i16, ptr %i.cn, align 2
   %i.ew = zext i16 %i.ev to i32
   %i.ex = load i32, ptr %i.co, align 4
-  %i.ey = call i32 @intel_dsc_get_pixel_rate_with_dsc_bubbles(ptr noundef %i.d, i32 noundef %2, i32 noundef %i.ew, i32 noundef %.081) #15
+  %i.ey = call i32 @intel_dsc_get_pixel_rate_with_dsc_bubbles(ptr noundef %i.d, i32 noundef %2, i32 noundef %i.ew, i32 noundef %spec.select101) #15
   br label %intel_dp_dotclk_valid.exit
 
 bb.al:                                            ; preds = %bb.aj

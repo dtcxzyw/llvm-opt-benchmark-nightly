@@ -204,13 +204,15 @@ bb.ap:                                            ; preds = %_RNvNtCs7tKScEop1B6
   br label %bb.ah
 
 bb.aq:                                            ; preds = %bb.af
+  %.133 = select i1 %.sroa.8164.sroa.0.0.ph.in262, i8 3, i8 2
+  %spec.select = select i1 %i.ag, i8 1, i8 %.133
+  %.sroa.057.0 = select i1 %i.al, i8 0, i8 %spec.select
   %.sroa.0121.0.insert.ext = zext nneg i8 %.sroa.8161.sroa.0.0.ph213.ph259 to i24
   %.sroa.0121.1.insert.shift = select i1 %.sroa.8174.sroa.0.0.ph.in, i24 256, i24 0
   %.sroa.0121.1.insert.insert = or disjoint i24 %.sroa.0121.1.insert.shift, %.sroa.0121.0.insert.ext
-  %5 = select i1 %.sroa.8164.sroa.0.0.ph.in262, i24 196608, i24 131072
-  %6 = select i1 %i.ag, i24 65536, i24 %5
-  %.sroa.0121.2.insert.ext = select i1 %i.al, i24 0, i24 %6
-  %.sroa.0121.2.insert.insert = or disjoint i24 %.sroa.0121.1.insert.insert, %.sroa.0121.2.insert.ext
+  %.sroa.0121.2.insert.ext = zext nneg i8 %.sroa.057.0 to i24
+  %.sroa.0121.2.insert.shift = shl nuw nsw i24 %.sroa.0121.2.insert.ext, 16
+  %.sroa.0121.2.insert.insert = or disjoint i24 %.sroa.0121.2.insert.shift, %.sroa.0121.1.insert.insert
   %i.bk = call fastcc { ptr, ptr } @_RINvNtNtNtCsh036I4OHgIr_6uucore8features8checksum8validate27perform_checksum_validationINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters3map3MapINtNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matches9ValuesRefNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringENvYB3o_INtNtB1w_6borrow6BorrowNtB3q_5OsStrE6borrowEECs4dRV7rdzHEF_18uu_checksum_common(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(64) %i.e, i8 noundef %0, i64 noundef %1, i64 %2, i24 %.sroa.0121.2.insert.insert) #22 ; 2 uses
   %i.bl = extractvalue { ptr, ptr } %i.bk, 0
   %i.bm = extractvalue { ptr, ptr } %i.bk, 1

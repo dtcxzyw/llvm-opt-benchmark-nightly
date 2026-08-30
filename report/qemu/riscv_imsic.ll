@@ -202,12 +202,12 @@ bb.g:                                             ; preds = %bb.d
 riscv_cpu_set_geilen.exit:                        ; preds = %bb.f, %bb.e, %bb.g
   %i.bg = load i8, ptr %i.j, align 16, !range !10, !noundef !11
   %i.bh = trunc nuw i8 %i.bg to i1
-  %2 = getelementptr inbounds nuw i8, ptr %i.i, i64 31784
-  %3 = select i1 %i.bh, i64 3, i64 1              ; 2 uses
-  %i.bi = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %3
+  %2 = select i1 %i.bh, i64 3, i64 1              ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.i, i64 31784
+  %i.bi = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %2
   store ptr @riscv_imsic_rmw, ptr %i.bi, align 8
   %i.bj = getelementptr inbounds nuw i8, ptr %i.i, i64 31816
-  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bj, i64 %3
+  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bj, i64 %2
   store ptr %i.a, ptr %i.bk, align 8
   br label %bb.h
 

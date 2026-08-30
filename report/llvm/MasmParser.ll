@@ -205,7 +205,6 @@ _ZNK4llvm9StringRef18equals_insensitiveES0_.exit.i.i22.3: ; preds = %_ZN4llvm12S
 
 _ZN4llvm12StringSwitchIbbE10CasesLowerESt16initializer_listINS_13StringLiteralEEb.exit.loopexit.thread: ; preds = %_ZN4llvm12StringSwitchIbbE9CaseLowerENS_13StringLiteralEb.exit.thread, %_ZN4llvm12StringSwitchIbbE13CaseLowerImplENS_13StringLiteralERb.exit.i.2, %_ZN4llvm12StringSwitchIbbE13CaseLowerImplENS_13StringLiteralERb.exit.i.1, %_ZN4llvm12StringSwitchIbbE13CaseLowerImplENS_13StringLiteralERb.exit.i, %_ZN4llvm12StringSwitchIbbE9CaseLowerENS_13StringLiteralEb.exit
   %.pre3552 = load i8, ptr %i.ao, align 8, !range !416
-  %5 = zext nneg i8 %.pre3552 to i32
   br label %_ZN4llvm12StringSwitchIbbE10CasesLowerESt16initializer_listINS_13StringLiteralEEb.exit
 
 _ZN4llvm12StringSwitchIbbE10CasesLowerESt16initializer_listINS_13StringLiteralEEb.exit.loopexit: ; preds = %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit.i.i22.3
@@ -213,12 +212,12 @@ _ZN4llvm12StringSwitchIbbE10CasesLowerESt16initializer_listINS_13StringLiteralEE
   %.pre34.pre.pre.fr = freeze i8 %.pre34.pre.pre
   %i.bl = trunc i8 %.pre34.pre.pre.fr to i1
   %.pre35 = load i8, ptr %i.ao, align 8, !range !416
-  %6 = zext nneg i8 %.pre35 to i32
-  %spec.select = select i1 %i.bl, i32 %6, i32 0
+  %narrow = select i1 %i.bl, i8 %.pre35, i8 0
   br label %_ZN4llvm12StringSwitchIbbE10CasesLowerESt16initializer_listINS_13StringLiteralEEb.exit
 
 _ZN4llvm12StringSwitchIbbE10CasesLowerESt16initializer_listINS_13StringLiteralEEb.exit: ; preds = %_ZNK4llvm8AsmToken13getIdentifierEv.exit21, %_ZN4llvm12StringSwitchIbbE10CasesLowerESt16initializer_listINS_13StringLiteralEEb.exit.loopexit.thread, %_ZN4llvm12StringSwitchIbbE13CaseLowerImplENS_13StringLiteralERb.exit.i.2.thread, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit.i.i22.3, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit.i.i22.2, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit.i.i22.1, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit.i.i22, %_ZN4llvm12StringSwitchIbbE10CasesLowerESt16initializer_listINS_13StringLiteralEEb.exit.loopexit
-  %.09 = phi i32 [ 1, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit.i.i22.1 ], [ 0, %_ZN4llvm12StringSwitchIbbE13CaseLowerImplENS_13StringLiteralERb.exit.i.2.thread ], [ 1, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit.i.i22 ], [ %spec.select, %_ZN4llvm12StringSwitchIbbE10CasesLowerESt16initializer_listINS_13StringLiteralEEb.exit.loopexit ], [ %5, %_ZN4llvm12StringSwitchIbbE10CasesLowerESt16initializer_listINS_13StringLiteralEEb.exit.loopexit.thread ], [ 1, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit.i.i22.3 ], [ 1, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit.i.i22.2 ], [ 0, %_ZNK4llvm8AsmToken13getIdentifierEv.exit21 ]
+  %.09.shrunk = phi i8 [ 1, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit.i.i22.1 ], [ 0, %_ZN4llvm12StringSwitchIbbE13CaseLowerImplENS_13StringLiteralERb.exit.i.2.thread ], [ 1, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit.i.i22 ], [ %narrow, %_ZN4llvm12StringSwitchIbbE10CasesLowerESt16initializer_listINS_13StringLiteralEEb.exit.loopexit ], [ %.pre3552, %_ZN4llvm12StringSwitchIbbE10CasesLowerESt16initializer_listINS_13StringLiteralEEb.exit.loopexit.thread ], [ 1, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit.i.i22.3 ], [ 1, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit.i.i22.2 ], [ 0, %_ZNK4llvm8AsmToken13getIdentifierEv.exit21 ]
+  %.09 = zext i8 %.09.shrunk to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   %i.bm = call fastcc noundef nonnull align 8 dereferenceable(40) ptr @_ZN12_GLOBAL__N_110MasmParser3LexENS0_10ExpandKindE(ptr noundef nonnull align 8 dereferenceable(1136) %0, i32 noundef %.09) ; 0 uses
   br label %bb.m

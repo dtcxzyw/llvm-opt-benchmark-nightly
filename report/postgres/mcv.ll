@@ -204,15 +204,14 @@ bb.am:                                            ; preds = %bb.ah, %bb.al
   br i1 %i.fw, label %bb.ag, label %.thread11, !llvm.loop !45
 
 .thread11:                                        ; preds = %bb.am, %bb.ak, %bb.aj, %bb.af
-  %.0234.lcssa = phi i8 [ %i.dy, %bb.af ], [ 1, %bb.aj ], [ 0, %bb.ak ], [ %.1, %bb.am ]
+  %.0234.lcssa = phi i8 [ %i.dy, %bb.af ], [ 1, %bb.aj ], [ 0, %bb.ak ], [ %.1, %bb.am ] ; 2 uses
   %i.fx = getelementptr inbounds i8, ptr %i.r, i64 %i.dz
   %i.fy = load i8, ptr %i.fx, align 1, !range !10, !noundef !11
   %i.fz = trunc nuw i8 %i.fy to i1                ; 2 uses
-  %7 = zext nneg i8 %.0234.lcssa to i32           ; 2 uses
-  %8 = select i1 %i.fz, i32 1, i32 %7
-  %9 = select i1 %i.fz, i32 %7, i32 0
-  %10 = select i1 %4, i32 %8, i32 %9
-  %i.ga = icmp ne i32 %10, 0
+  %7 = select i1 %i.fz, i8 1, i8 %.0234.lcssa
+  %8 = select i1 %i.fz, i8 %.0234.lcssa, i8 0
+  %.in248 = select i1 %4, i8 %7, i8 %8
+  %i.ga = icmp ne i8 %.in248, 0
   %i.gb = getelementptr inbounds i8, ptr %i.r, i64 %i.dz
   %i.gc = zext i1 %i.ga to i8
   store i8 %i.gc, ptr %i.gb, align 1

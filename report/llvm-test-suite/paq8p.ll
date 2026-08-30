@@ -205,7 +205,6 @@ bb.km:                                            ; preds = %bb.kl
   %i.cyv = getelementptr inbounds [2 x i8], ptr %i.cyt, i64 %i.cyu
   store i16 128, ptr %i.cyv, align 2, !tbaa !33
   %cond = icmp eq i32 %spec.store.select, 1
-  %1 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZ9jpegModelR5MixerE2cp, i64 16), align 8, !tbaa !109 ; 2 uses
   %i.cyw = load ptr, ptr getelementptr inbounds nuw (i8, ptr @stretch, i64 16), align 8, !tbaa !32 ; 2 uses
   br i1 %cond, label %bb.kn, label %bb.kp
 
@@ -269,6 +268,7 @@ bb.km:                                            ; preds = %bb.kl
 bb.kn:                                            ; preds = %bb.km
   %i.dap = trunc i32 %i.cew to i1
   %i.daq = select i1 %i.dap, i64 4, i64 1
+  %1 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZ9jpegModelR5MixerE2cp, i64 16), align 8, !tbaa !109
   br label %bb.ko
 
 bb.ko:                                            ; preds = %bb.kn, %bb.ko
@@ -324,12 +324,13 @@ bb.ko:                                            ; preds = %bb.kn, %bb.ko
 
 bb.kp:                                            ; preds = %bb.km
   %i.dcd = and i32 %i.cew, 1
+  %2 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZ9jpegModelR5MixerE2cp, i64 16), align 8, !tbaa !109
   %i.dce = zext nneg i32 %i.dcd to i64
   br label %bb.kq
 
 bb.kq:                                            ; preds = %bb.kp, %bb.kq
   %indvars.iv963 = phi i64 [ 0, %bb.kp ], [ %indvars.iv.next964, %bb.kq ] ; 3 uses
-  %i.dcf = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv963 ; 2 uses
+  %i.dcf = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv963 ; 2 uses
   %i.dcg = load ptr, ptr %i.dcf, align 8, !tbaa !8
   %i.dch = getelementptr inbounds nuw i8, ptr %i.dcg, i64 %i.dce
   %i.dci = getelementptr inbounds nuw i8, ptr %i.dch, i64 1 ; 2 uses

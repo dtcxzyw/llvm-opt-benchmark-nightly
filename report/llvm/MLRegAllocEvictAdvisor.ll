@@ -204,7 +204,7 @@ declare noundef zeroext i1 @_ZNK4llvm23RegAllocEvictionAdvisor18canAllocatePhysR
 define internal fastcc void @_ZNK12_GLOBAL__N_114MLEvictAdvisor15extractFeaturesERKN4llvm15SmallVectorImplIPKNS1_12LiveIntervalEEERNS2_IfEEmllfRNS2_INS1_14LRStartEndInfoEEE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(280) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %2, i64 noundef %3, i64 noundef range(i64 0, 2) %4, i64 noundef %5, float noundef %6) unnamed_addr #1 align 2 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %.sroa.666.i = alloca { [4 x i8], %"struct.(anonymous namespace)::LIFeatureComponents" }, align 4 ; 5 uses
+  %.sroa.668.i = alloca { [4 x i8], %"struct.(anonymous namespace)::LIFeatureComponents" }, align 4 ; 5 uses
   %7 = alloca %"class.llvm::SmallPtrSet.619", align 8 ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
@@ -230,7 +230,7 @@ bb.a:
   %i.r = and i64 %i.q, -7
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 4 uses
-  %.sroa.666.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.666.i, i64 4
+  %.sroa.666.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.668.i, i64 4
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 252
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 248 ; 3 uses
@@ -243,7 +243,7 @@ bb.a:
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %.sroa.666.i.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.666.i, i64 4
+  %.sroa.666.i.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.668.i, i64 4
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZNK12_GLOBAL__N_114MLEvictAdvisor22getLIFeatureComponentsERKN4llvm12LiveIntervalE.exit
@@ -330,7 +330,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNK12_GLO
   %i.cm = or i32 %i.ci, %i.cl
   %i.cn = icmp ugt i32 %i.ce, %i.cm
   %.sroa.0101.1 = select i1 %i.cn, i64 %.sroa.0.0.copyload.i169, i64 %.sroa.0101.0155 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.666.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.668.i)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(53) %.sroa.666.i.4..sroa_idx, i8 0, i64 53, i1 false)
   %i.co = load ptr, ptr %i.t, align 8, !tbaa !390, !noalias !641 ; 3 uses
   %i.cp = load ptr, ptr %i.u, align 8, !tbaa !650, !noalias !641 ; 3 uses
@@ -393,7 +393,7 @@ bb.e:                                             ; preds = %.loopexit.i.i.i.i
   br label %bb.f
 
 _ZN4llvm12DenseMapBaseINS_8DenseMapIjN12_GLOBAL__N_119LIFeatureComponentsENS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjS3_EEEEjS3_S5_S8_E6insertEOSt4pairIjS3_E.exit.i: ; preds = %.lr.ph.i.i.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.666.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.668.i)
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dl, i64 8
   br label %_ZNK12_GLOBAL__N_114MLEvictAdvisor22getLIFeatureComponentsERKN4llvm12LiveIntervalE.exit
 
@@ -420,7 +420,7 @@ bb.f:                                             ; preds = %bb.e, %.loopexit.i.
   store i32 %.sroa.0.0.copyload.i.i, ptr %i.dt, align 4, !tbaa !427, !noalias !651
   %i.eg = getelementptr inbounds nuw i8, ptr %i.dt, i64 8 ; 4 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.eg, ptr noundef nonnull align 4 dereferenceable(56) %.sroa.666.8..sroa_idx.i, i64 56, i1 false), !tbaa.struct !655, !noalias !651
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.666.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.668.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
   store ptr %i.x, ptr %7, align 8, !tbaa !30
   store i32 8, ptr %i.y, align 8, !tbaa !659

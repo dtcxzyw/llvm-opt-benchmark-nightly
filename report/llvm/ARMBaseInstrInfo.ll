@@ -205,9 +205,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.o = trunc nuw i8 %i.n to i1
   %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 410
   %i.q = load i8, ptr %i.p, align 2, !range !216
-  %2 = zext nneg i8 %i.q to i32
-  %3 = select i1 %i.o, i32 %2, i32 0
-  %spec.select = lshr i32 %i.j, %3
+  %narrow = select i1 %i.o, i8 %i.q, i8 0
+  %2 = zext nneg i8 %narrow to i32
+  %spec.select = lshr i32 %i.j, %2
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c

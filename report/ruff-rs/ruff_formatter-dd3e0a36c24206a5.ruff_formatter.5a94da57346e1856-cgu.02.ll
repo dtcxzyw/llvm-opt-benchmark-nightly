@@ -202,9 +202,9 @@ bb.p:                                             ; preds = %bb.o
   %i.bl = zext i8 %.sroa.4.0.copyload..i694.i to i64 ; 2 uses
   %i.bm = load i8, ptr %i.ag, align 4, !range !77, !alias.scope !72, !noalias !75, !noundef !4
   %i.bn = trunc nuw i8 %i.bm to i1                ; 2 uses
-  %5 = zext i8 %i.be to i64
-  %6 = select i1 %i.bn, i64 %5, i64 1
-  %.sroa.011.0.i696.i = mul nuw nsw i64 %6, %i.bk ; 2 uses
+  %narrow390 = select i1 %i.bn, i8 %i.be, i8 1
+  %5 = zext i8 %narrow390 to i64
+  %.sroa.011.0.i696.i = mul nuw nsw i64 %5, %i.bk ; 2 uses
   %i.bo = add nuw nsw i64 %.sroa.011.0.i696.i, %i.bl
   call void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCs7Ma6rQP8bRy_14ruff_formatter(ptr noalias noundef nonnull align 8 dereferenceable(224) %0, i64 noundef %i.bo), !noalias !78
   %.not450.a = icmp eq i16 %.sroa.53.0.copyload.i690.i, 0
@@ -377,9 +377,9 @@ bb.ab:                                            ; preds = %bb.aa
   %i.dy = zext i8 %.sroa.4.0.copyload..i682.i to i64 ; 2 uses
   %i.dz = load i8, ptr %i.ag, align 4, !range !77, !alias.scope !98, !noalias !101, !noundef !4
   %i.ea = trunc nuw i8 %i.dz to i1                ; 2 uses
-  %7 = zext i8 %i.dr to i64
-  %8 = select i1 %i.ea, i64 %7, i64 1
-  %.sroa.011.0.i684.i = mul nuw nsw i64 %8, %i.dx ; 2 uses
+  %narrow387 = select i1 %i.ea, i8 %i.dr, i8 1
+  %6 = zext i8 %narrow387 to i64
+  %.sroa.011.0.i684.i = mul nuw nsw i64 %6, %i.dx ; 2 uses
   %i.eb = add nuw nsw i64 %.sroa.011.0.i684.i, %i.dy
   call void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCs7Ma6rQP8bRy_14ruff_formatter(ptr noalias noundef nonnull align 8 dereferenceable(224) %0, i64 noundef %i.eb), !noalias !103
   %.not446.a = icmp eq i16 %.sroa.53.0.copyload.i678.i, 0
@@ -550,9 +550,9 @@ bb.am:                                            ; preds = %bb.al
   %i.gk = zext i8 %.sroa.4.0.copyload..i670.i to i64 ; 2 uses
   %i.gl = load i8, ptr %i.ag, align 4, !range !77, !alias.scope !120, !noalias !123, !noundef !4
   %i.gm = trunc nuw i8 %i.gl to i1                ; 2 uses
-  %9 = zext i8 %i.gd to i64
-  %10 = select i1 %i.gm, i64 %9, i64 1
-  %.sroa.011.0.i672.i = mul nuw nsw i64 %10, %i.gj ; 2 uses
+  %narrow386 = select i1 %i.gm, i8 %i.gd, i8 1
+  %7 = zext i8 %narrow386 to i64
+  %.sroa.011.0.i672.i = mul nuw nsw i64 %7, %i.gj ; 2 uses
   %i.gn = add nuw nsw i64 %.sroa.011.0.i672.i, %i.gk
   call void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCs7Ma6rQP8bRy_14ruff_formatter(ptr noalias noundef nonnull align 8 dereferenceable(224) %0, i64 noundef %i.gn), !noalias !125
   %.not444 = icmp eq i16 %.sroa.53.0.copyload.i666.i, 0
@@ -796,9 +796,9 @@ bb.bb:                                            ; preds = %bb.ba
   %i.kl = zext i8 %.sroa.4.0.copyload..i658.i to i64 ; 2 uses
   %i.km = load i8, ptr %i.ag, align 4, !range !77, !alias.scope !145, !noalias !148, !noundef !4
   %i.kn = trunc nuw i8 %i.km to i1                ; 2 uses
-  %11 = zext i8 %i.ke to i64
-  %12 = select i1 %i.kn, i64 %11, i64 1
-  %.sroa.011.0.i660.i = mul nuw nsw i64 %12, %i.kk ; 2 uses
+  %narrow = select i1 %i.kn, i8 %i.ke, i8 1
+  %8 = zext i8 %narrow to i64
+  %.sroa.011.0.i660.i = mul nuw nsw i64 %8, %i.kk ; 2 uses
   %i.ko = add nuw nsw i64 %.sroa.011.0.i660.i, %i.kl
   call void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCs7Ma6rQP8bRy_14ruff_formatter(ptr noalias noundef nonnull align 8 dereferenceable(224) %0, i64 noundef %i.ko), !noalias !150
   %.not442 = icmp eq i16 %.sroa.53.0.copyload.i654.i, 0
@@ -1110,9 +1110,9 @@ bb.bx:                                            ; preds = %bb.bw
   %i.ot = zext i8 %.sroa.4.0.copyload..i.i to i64 ; 2 uses
   %i.ou = load i8, ptr %i.ag, align 4, !range !77, !alias.scope !171, !noalias !174, !noundef !4
   %i.ov = trunc nuw i8 %i.ou to i1                ; 2 uses
-  %13 = zext i8 %i.om to i64
-  %14 = select i1 %i.ov, i64 %13, i64 1
-  %.sroa.011.0.i.i = mul nuw nsw i64 %14, %i.os   ; 2 uses
+  %narrow389 = select i1 %i.ov, i8 %i.om, i8 1
+  %9 = zext i8 %narrow389 to i64
+  %.sroa.011.0.i.i = mul nuw nsw i64 %9, %i.os    ; 2 uses
   %i.ow = add nuw nsw i64 %.sroa.011.0.i.i, %i.ot
   call void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCs7Ma6rQP8bRy_14ruff_formatter(ptr noalias noundef nonnull align 8 dereferenceable(224) %0, i64 noundef %i.ow), !noalias !176
   %.not448 = icmp eq i16 %.sroa.53.0.copyload.i.i, 0
@@ -1515,9 +1515,9 @@ bb.ab:                                            ; preds = %bb.aa
   %i.cx = zext i8 %.sroa.4.0.copyload..i694.i to i64 ; 2 uses
   %i.cy = load i8, ptr %i.by, align 4, !range !77, !alias.scope !248, !noalias !251, !noundef !4
   %i.cz = trunc nuw i8 %i.cy to i1                ; 2 uses
-  %4 = zext i8 %i.cq to i64
-  %5 = select i1 %i.cz, i64 %4, i64 1
-  %.sroa.011.0.i696.i = mul nuw nsw i64 %5, %i.cw ; 2 uses
+  %narrow625 = select i1 %i.cz, i8 %i.cq, i8 1
+  %4 = zext i8 %narrow625 to i64
+  %.sroa.011.0.i696.i = mul nuw nsw i64 %4, %i.cw ; 2 uses
   %i.da = add nuw nsw i64 %.sroa.011.0.i696.i, %i.cx
   invoke void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCs7Ma6rQP8bRy_14ruff_formatter(ptr noalias noundef nonnull align 8 dereferenceable(224) %1, i64 noundef %i.da)
           to label %.noexc78.preheader unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
@@ -1709,9 +1709,9 @@ bb.am:                                            ; preds = %bb.al
   %i.fk = zext i8 %.sroa.4.0.copyload..i682.i to i64 ; 2 uses
   %i.fl = load i8, ptr %i.by, align 4, !range !77, !alias.scope !269, !noalias !272, !noundef !4
   %i.fm = trunc nuw i8 %i.fl to i1                ; 2 uses
-  %6 = zext i8 %i.fd to i64
-  %7 = select i1 %i.fm, i64 %6, i64 1
-  %.sroa.011.0.i684.i = mul nuw nsw i64 %7, %i.fj ; 2 uses
+  %narrow622 = select i1 %i.fm, i8 %i.fd, i8 1
+  %5 = zext i8 %narrow622 to i64
+  %.sroa.011.0.i684.i = mul nuw nsw i64 %5, %i.fj ; 2 uses
   %i.fn = add nuw nsw i64 %.sroa.011.0.i684.i, %i.fk
   invoke void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCs7Ma6rQP8bRy_14ruff_formatter(ptr noalias noundef nonnull align 8 dereferenceable(224) %1, i64 noundef %i.fn)
           to label %.noexc88.preheader unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
@@ -1892,9 +1892,9 @@ bb.ax:                                            ; preds = %bb.aw
   %i.hw = zext i8 %.sroa.4.0.copyload..i670.i to i64 ; 2 uses
   %i.hx = load i8, ptr %i.by, align 4, !range !77, !alias.scope !289, !noalias !292, !noundef !4
   %i.hy = trunc nuw i8 %i.hx to i1                ; 2 uses
-  %8 = zext i8 %i.hp to i64
-  %9 = select i1 %i.hy, i64 %8, i64 1
-  %.sroa.011.0.i672.i = mul nuw nsw i64 %9, %i.hv ; 2 uses
+  %narrow621 = select i1 %i.hy, i8 %i.hp, i8 1
+  %6 = zext i8 %narrow621 to i64
+  %.sroa.011.0.i672.i = mul nuw nsw i64 %6, %i.hv ; 2 uses
   %i.hz = add nuw nsw i64 %.sroa.011.0.i672.i, %i.hw
   invoke void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCs7Ma6rQP8bRy_14ruff_formatter(ptr noalias noundef nonnull align 8 dereferenceable(224) %1, i64 noundef %i.hz)
           to label %.noexc96.preheader unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
@@ -2153,9 +2153,9 @@ bb.bn:                                            ; preds = %.noexc104
   %i.lw = zext i8 %.sroa.4.0.copyload..i658.i to i64 ; 2 uses
   %i.lx = load i8, ptr %i.by, align 4, !range !77, !alias.scope !312, !noalias !315, !noundef !4
   %i.ly = trunc nuw i8 %i.lx to i1                ; 2 uses
-  %10 = zext i8 %i.lp to i64
-  %11 = select i1 %i.ly, i64 %10, i64 1
-  %.sroa.011.0.i660.i = mul nuw nsw i64 %11, %i.lv ; 2 uses
+  %narrow = select i1 %i.ly, i8 %i.lp, i8 1
+  %7 = zext i8 %narrow to i64
+  %.sroa.011.0.i660.i = mul nuw nsw i64 %7, %i.lv ; 2 uses
   %i.lz = add nuw nsw i64 %.sroa.011.0.i660.i, %i.lw
   invoke void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCs7Ma6rQP8bRy_14ruff_formatter(ptr noalias noundef nonnull align 8 dereferenceable(224) %1, i64 noundef %i.lz)
           to label %.noexc105.preheader unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
@@ -2483,9 +2483,9 @@ bb.cg:                                            ; preds = %bb.cf
   %i.qe = zext i8 %.sroa.4.0.copyload..i.i to i64 ; 2 uses
   %i.qf = load i8, ptr %i.by, align 4, !range !77, !alias.scope !335, !noalias !338, !noundef !4
   %i.qg = trunc nuw i8 %i.qf to i1                ; 2 uses
-  %12 = zext i8 %i.px to i64
-  %13 = select i1 %i.qg, i64 %12, i64 1
-  %.sroa.011.0.i.i = mul nuw nsw i64 %13, %i.qd   ; 2 uses
+  %narrow624 = select i1 %i.qg, i8 %i.px, i8 1
+  %8 = zext i8 %narrow624 to i64
+  %.sroa.011.0.i.i = mul nuw nsw i64 %8, %i.qd    ; 2 uses
   %i.qh = add nuw nsw i64 %.sroa.011.0.i.i, %i.qe
   invoke void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCs7Ma6rQP8bRy_14ruff_formatter(ptr noalias noundef nonnull align 8 dereferenceable(224) %1, i64 noundef %i.qh)
           to label %.noexc119.preheader unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit
@@ -2888,8 +2888,8 @@ bb.a:
   %i.g = load i8, ptr %i.f, align 2, !range !61, !noundef !4
   %i.h = zext i8 %i.g to i32
   %i.i = mul nuw nsw i32 %i.h, %i.c
-  %3 = zext i8 %.sroa.56.0.copyload to i32
-  %.sroa.015.0 = select i1 %i.b, i32 %3, i32 0
+  %narrow = select i1 %i.b, i8 %.sroa.56.0.copyload, i8 0
+  %.sroa.015.0 = zext i8 %narrow to i32
   %i.j = add nuw nsw i32 %i.i, %.sroa.015.0
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 4 uses
   %i.l = load i32, ptr %i.k, align 4, !noundef !4

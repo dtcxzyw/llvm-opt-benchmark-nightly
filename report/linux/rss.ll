@@ -204,11 +204,10 @@ bb.dc:                                            ; preds = %bb.db
   %i.lf = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.lg = load ptr, ptr %i.lf, align 8
   call void @kfree(ptr noundef %i.lg) #17
-  %5 = zext nneg i8 %.083 to i32
   br label %rss_set_prep_hkey.exit
 
 rss_set_prep_hkey.exit:                           ; preds = %bb.k, %bb.j, %bb.i, %.thread94
-  %.184 = phi i32 [ %5, %.thread94 ], [ 0, %bb.i ], [ 0, %bb.j ], [ 0, %bb.k ]
+  %.184 = phi i8 [ %.083, %.thread94 ], [ 0, %bb.i ], [ 0, %bb.j ], [ 0, %bb.k ]
   %.2 = phi i32 [ %.1, %.thread94 ], [ -22, %bb.i ], [ -22, %bb.j ], [ -12, %bb.k ]
   %i.lh = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.li = load ptr, ptr %i.lh, align 8
@@ -216,7 +215,7 @@ rss_set_prep_hkey.exit:                           ; preds = %bb.k, %bb.j, %bb.i,
   br label %bb.dd
 
 bb.dd:                                            ; preds = %bb.b, %rss_set_prep_hkey.exit
-  %.285 = phi i32 [ 0, %bb.b ], [ %.184, %rss_set_prep_hkey.exit ]
+  %.285 = phi i8 [ 0, %bb.b ], [ %.184, %rss_set_prep_hkey.exit ]
   %.3 = phi i32 [ %i.n, %bb.b ], [ %.2, %rss_set_prep_hkey.exit ] ; 2 uses
   %i.lj = getelementptr inbounds nuw i8, ptr %4, i64 32
   %.val.i82 = load ptr, ptr %i.lj, align 8
@@ -224,8 +223,9 @@ bb.dd:                                            ; preds = %bb.b, %rss_set_prep
   %.not74 = icmp eq i32 %.3, 0
   %i.lk = load i8, ptr %i.c, align 1, !range !16
   %i.ll = trunc nuw i8 %i.lk to i1
-  %6 = select i1 %i.ll, i32 1, i32 %.285
-  %i.lm = select i1 %.not74, i32 %6, i32 %.3
+  %narrow = select i1 %i.ll, i8 1, i8 %.285
+  %5 = zext nneg i8 %narrow to i32
+  %i.lm = select i1 %.not74, i32 %5, i32 %.3
   br label %bb.de
 
 bb.de:                                            ; preds = %bb.a, %bb.dd

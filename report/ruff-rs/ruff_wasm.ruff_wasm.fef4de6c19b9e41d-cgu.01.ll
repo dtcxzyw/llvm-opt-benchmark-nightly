@@ -204,13 +204,13 @@ bb.ai:                                            ; preds = %bb.ah
   %i.di = shl nuw nsw i64 %i.dh, 16
   %i.dj = select i1 %i.dg, i64 %i.di, i64 0
   %i.dk = trunc nuw i16 %.sroa.017.0.lcssa.ph.i.i to i1
-  %5 = zext i16 %.sroa.419.0.lcssa.ph.i.i to i32
-  %6 = select i1 %i.dk, i32 %5, i32 0
+  %5 = select i1 %i.dk, i16 %.sroa.419.0.lcssa.ph.i.i, i16 0
+  %6 = zext i16 %5 to i32
   %.not69.i.i = icmp eq i8 %.sroa.028.0.lcssa.ph.fr.i.i, -1
   %i.dl = zext i8 %.sroa.028.0.lcssa.ph.fr.i.i to i32
   %i.dm = shl nuw nsw i32 %i.dl, 16
   %spec.select.i.i = select i1 %.not69.i.i, i32 131072, i32 %i.dm
-  %i.dn = or disjoint i32 %6, %spec.select.i.i
+  %i.dn = or disjoint i32 %spec.select.i.i, %6
   br label %bb.ax
 
 bb.aj:                                            ; preds = %bb.ai

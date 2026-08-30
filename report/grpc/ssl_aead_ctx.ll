@@ -204,8 +204,8 @@ bb.a:
   %i.c = trunc i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 597
   %i.e = load i8, ptr %i.d, align 1
-  %1 = zext i8 %i.e to i64
-  %.0 = select i1 %i.c, i64 %1, i64 0
+  %narrow = select i1 %i.c, i8 %i.e, i8 0
+  %.0 = zext i8 %narrow to i64
   ret i64 %.0
 }
 
@@ -259,8 +259,8 @@ _ZNK4bssl14SSLAEADContext9SuffixLenEPmmm.exit.thread: ; preds = %bb.a, %_ZNK4bss
   %i.h = trunc i8 %i.g to i1
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 597
   %i.j = load i8, ptr %i.i, align 1
-  %4 = zext i8 %i.j to i64
-  %.0.i8 = select i1 %i.h, i64 %4, i64 0
+  %narrow.i = select i1 %i.h, i8 %i.j, i8 0
+  %.0.i8 = zext i8 %narrow.i to i64
   %i.k = add i64 %i.e, %2
   %i.l = add i64 %i.k, %.0.i8                     ; 4 uses
   store i64 %i.l, ptr %i.a, align 8, !tbaa !29
@@ -303,8 +303,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.i = phi i64 [ %i.h, %bb.b ], [ 0, %bb.a ]
   %i.j = trunc i8 %i.b to i1
-  %1 = zext i8 %i.d to i64
-  %.0.i = select i1 %i.j, i64 %1, i64 0
+  %narrow.i = select i1 %i.j, i8 %i.d, i8 0
+  %.0.i = zext i8 %narrow.i to i64
   %i.k = add i64 %i.i, %.0.i
   ret i64 %i.k
 }
@@ -321,8 +321,8 @@ bb.a:
   %i.c = trunc i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 597
   %i.e = load i8, ptr %i.d, align 1
-  %2 = zext i8 %i.e to i64
-  %.0.i = select i1 %i.c, i64 %2, i64 0           ; 2 uses
+  %narrow.i = select i1 %i.c, i8 %i.e, i8 0
+  %.0.i = zext i8 %narrow.i to i64                ; 2 uses
   %.not = icmp ugt i64 %1, %.0.i
   br i1 %.not, label %bb.b, label %bb.i
 
@@ -456,8 +456,8 @@ _ZNK4bssl14SSLAEADContext11MaxOverheadEv.exit:    ; preds = %bb.c
   %i.k = tail call ptr @EVP_AEAD_CTX_aead(ptr noundef nonnull %i.j)
   %i.l = tail call i64 @EVP_AEAD_max_overhead(ptr noundef %i.k)
   %i.m = trunc i8 %i.f to i1
-  %7 = zext i8 %i.i to i64
-  %.0.i.i = select i1 %i.m, i64 %7, i64 0
+  %narrow.i.i = select i1 %i.m, i8 %i.i, i8 0
+  %.0.i.i = zext i8 %narrow.i.i to i64
   %i.n = add i64 %i.l, %.0.i.i                    ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.p = load i64, ptr %i.o, align 8, !tbaa !48   ; 2 uses
@@ -810,8 +810,8 @@ bb.a:
   %i.g = trunc i8 %i.f to i1
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 597 ; 4 uses
   %i.i = load i8, ptr %i.h, align 1
-  %12 = zext i8 %i.i to i64
-  %.0.i = select i1 %i.g, i64 %12, i64 0
+  %narrow.i = select i1 %i.g, i8 %i.i, i8 0
+  %.0.i = zext i8 %narrow.i to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %i.j = load ptr, ptr %0, align 8, !tbaa !11
   %.not.i.i = icmp eq ptr %i.j, null
@@ -1214,8 +1214,8 @@ bb.a:
   %i.d = trunc i8 %i.c to i1
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 597
   %i.f = load i8, ptr %i.e, align 1
-  %10 = zext i8 %i.f to i64
-  %.0.i = select i1 %i.d, i64 %10, i64 0          ; 2 uses
+  %narrow.i = select i1 %i.d, i8 %i.f, i8 0
+  %.0.i = zext i8 %narrow.i to i64                ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %i.g = load ptr, ptr %0, align 8, !tbaa !11
   %.not.i.i = icmp eq ptr %i.g, null
@@ -1236,7 +1236,7 @@ bb.b:                                             ; preds = %_ZNK4bssl14SSLAEADC
   br label %bb.j
 
 bb.c:                                             ; preds = %_ZNK4bssl14SSLAEADContext9SuffixLenEPmmm.exit.thread, %_ZNK4bssl14SSLAEADContext9SuffixLenEPmmm.exit
-  %i.j = add i64 %.0.i, %9                        ; 4 uses
+  %i.j = add i64 %9, %.0.i                        ; 4 uses
   %i.k = icmp ult i64 %i.j, %9
   br i1 %i.k, label %bb.e, label %bb.d
 

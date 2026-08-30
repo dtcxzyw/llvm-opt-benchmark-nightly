@@ -205,7 +205,8 @@ _ZNK4llvm3MVT20getVectorNumElementsEv.exit:       ; preds = %_ZNK4llvm3MVT26getH
   %i.s = zext i16 %.sroa.04.0.i.i to i64
   %i.t = getelementptr [2 x i8], ptr @_ZZNK4llvm3MVT23getVectorMinNumElementsEvE10NElemTable, i64 %i.s
   %i.u = getelementptr i8, ptr %i.t, i64 -2
-  %i.v = load i16, ptr %i.u, align 2, !tbaa !294  ; 3 uses
+  %i.v = load i16, ptr %i.u, align 2, !tbaa !294  ; 2 uses
+  %27 = zext i16 %i.v to i32                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17)
   call void @llvm.lifetime.start.p0(ptr nonnull %18)
   %i.w = icmp slt i32 %6, 0
@@ -223,9 +224,9 @@ bb.f:                                             ; preds = %_ZNK4llvm3MVT20getV
   %.sroa.speculated112 = select i1 %i.y, ptr %19, ptr %20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %17, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.speculated112, i64 16, i1 false)
   %i.z = trunc i32 %6 to i1
-  %27 = zext i16 %i.v to i64
-  %28 = select i1 %i.z, i64 %27, i64 0
-  %i.aa = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG20getVectorIdxConstantEmRKNS_5SDLocEb(ptr noundef nonnull align 8 dereferenceable(920) %9, i64 noundef %28, ptr noundef nonnull align 8 dereferenceable(12) %0, i1 noundef zeroext false) #38 ; 2 uses
+  %28 = select i1 %i.z, i32 %27, i32 0
+  %29 = zext nneg i32 %28 to i64
+  %i.aa = tail call { ptr, i32 } @_ZN4llvm12SelectionDAG20getVectorIdxConstantEmRKNS_5SDLocEb(ptr noundef nonnull align 8 dereferenceable(920) %9, i64 noundef %29, ptr noundef nonnull align 8 dereferenceable(12) %0, i1 noundef zeroext false) #38 ; 2 uses
   %.fca.0.extract1.i = extractvalue { ptr, i32 } %i.aa, 0
   %.fca.1.extract2.i = extractvalue { ptr, i32 } %i.aa, 1
   store ptr %.fca.0.extract1.i, ptr %18, align 8
@@ -257,9 +258,9 @@ bb.h:                                             ; preds = %"_ZZL21getShuffleHa
   %.sroa.speculated = select i1 %i.ae, ptr %19, ptr %20
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %14, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.speculated, i64 16, i1 false)
   %i.af = trunc i32 %7 to i1
-  %29 = zext i16 %i.v to i64
-  %30 = select i1 %i.af, i64 %29, i64 0
-  %i.ag = call { ptr, i32 } @_ZN4llvm12SelectionDAG20getVectorIdxConstantEmRKNS_5SDLocEb(ptr noundef nonnull align 8 dereferenceable(920) %9, i64 noundef %30, ptr noundef nonnull align 8 dereferenceable(12) %0, i1 noundef zeroext false) #38 ; 2 uses
+  %30 = select i1 %i.af, i32 %27, i32 0
+  %31 = zext nneg i32 %30 to i64
+  %i.ag = call { ptr, i32 } @_ZN4llvm12SelectionDAG20getVectorIdxConstantEmRKNS_5SDLocEb(ptr noundef nonnull align 8 dereferenceable(920) %9, i64 noundef %31, ptr noundef nonnull align 8 dereferenceable(12) %0, i1 noundef zeroext false) #38 ; 2 uses
   %.fca.0.extract1.i69 = extractvalue { ptr, i32 } %i.ag, 0
   %.fca.1.extract2.i70 = extractvalue { ptr, i32 } %i.ag, 1
   store ptr %.fca.0.extract1.i69, ptr %15, align 8

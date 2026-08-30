@@ -204,9 +204,9 @@ bb.bp:                                            ; preds = %bb.bn, %bb.bd
   %.sroa.10208.0621 = phi i64 [ %i.fq, %bb.bo ], [ %i.fn, %bb.bn ] ; 2 uses
   %i.ft = trunc nuw i8 %.sroa.23.0 to i1          ; 2 uses
   %i.fu = trunc nuw i8 %.sroa.20.0 to i1
-  %spec.select461 = zext nneg i8 %.sroa.20.0 to i64
   %spec.select462 = select i1 %i.fu, ptr @0, ptr inttoptr (i64 1 to ptr)
-  %.sroa.9179.0 = select i1 %i.ft, i64 1, i64 %spec.select461 ; 2 uses
+  %narrow = select i1 %i.ft, i8 1, i8 %.sroa.20.0
+  %.sroa.9179.0 = zext nneg i8 %narrow to i64     ; 2 uses
   %.sroa.0177.0 = select i1 %i.ft, ptr @1, ptr %spec.select462 ; 2 uses
   %.not457 = icmp eq i64 %.sroa.10208.0621, 0
   br i1 %.not457, label %bb.bq, label %bb.br
@@ -609,9 +609,9 @@ bb.bz:                                            ; preds = %bb.bx, %bb.bn
   %.sroa.10208.0581 = phi i64 [ %i.ft, %bb.by ], [ %i.fq, %bb.bx ] ; 2 uses
   %i.fw = trunc nuw i8 %.sroa.23.0 to i1          ; 2 uses
   %i.fx = trunc nuw i8 %.sroa.20.0 to i1
-  %spec.select461 = zext nneg i8 %.sroa.20.0 to i64
   %spec.select462 = select i1 %i.fx, ptr @0, ptr inttoptr (i64 1 to ptr)
-  %.sroa.9179.0 = select i1 %i.fw, i64 1, i64 %spec.select461 ; 2 uses
+  %narrow = select i1 %i.fw, i8 1, i8 %.sroa.20.0
+  %.sroa.9179.0 = zext nneg i8 %narrow to i64     ; 2 uses
   %.sroa.0177.0 = select i1 %i.fw, ptr @1, ptr %spec.select462 ; 2 uses
   %.not457 = icmp eq i64 %.sroa.10208.0581, 0
   br i1 %.not457, label %bb.ca, label %bb.cb

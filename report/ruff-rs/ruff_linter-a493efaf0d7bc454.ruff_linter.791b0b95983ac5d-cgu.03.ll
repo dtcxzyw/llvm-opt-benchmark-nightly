@@ -205,19 +205,19 @@ _RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTRNtNtCs56aZGHL6Dc6_
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTRNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic13SecondaryCodeReRNtNtCs5MAO5oZTZb8_16ruff_diagnostics3fix3FixEEECsEhZmuQNqkz_11ruff_linter.exit60.i: ; preds = %_RNvXs4_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterTRNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic13SecondaryCodeReRNtNtCs5MAO5oZTZb8_16ruff_diagnostics3fix3FixEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCsEhZmuQNqkz_11ruff_linter.exit.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !6293
   %i.bp = trunc nuw i32 %.sroa.014.0.ph.lcssa.i to i1
-  %5 = zext i32 %.sroa.517.0.ph.lcssa.i to i64
-  %.sroa.040.0.i = select i1 %i.bp, i64 %5, i64 0 ; 8 uses
+  %narrow.i = select i1 %i.bp, i32 %.sroa.517.0.ph.lcssa.i, i32 0 ; 2 uses
+  %.sroa.040.0.i = zext i32 %narrow.i to i64      ; 7 uses
   %i.bq = load ptr, ptr %3, align 8, !noalias !6293, !nonnull !17, !noundef !17 ; 3 uses
   %i.br = load i64, ptr %i.ae, align 8, !noalias !6293, !noundef !17 ; 6 uses
-  %i.bs = icmp eq i64 %.sroa.040.0.i, 0
+  %i.bs = icmp eq i32 %narrow.i, 0
   br i1 %i.bs, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTRNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic13SecondaryCodeReRNtNtCs5MAO5oZTZb8_16ruff_diagnostics3fix3FixEEECsEhZmuQNqkz_11ruff_linter.exit60.i
-  %.not.i.i = icmp ult i64 %.sroa.040.0.i, %i.br
+  %.not.i.i = icmp ugt i64 %i.br, %.sroa.040.0.i
   br i1 %.not.i.i, label %bb.k, label %.split.i.i
 
 .split.i.i:                                       ; preds = %bb.j
-  %i.bt = icmp eq i64 %.sroa.040.0.i, %i.br
+  %i.bt = icmp eq i64 %i.br, %.sroa.040.0.i
   br i1 %i.bt, label %bb.l, label %bb.n
 
 bb.k:                                             ; preds = %bb.j

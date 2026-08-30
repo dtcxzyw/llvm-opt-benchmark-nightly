@@ -202,8 +202,7 @@ bb.s:                                             ; preds = %bb.r
 
 .critedge.i:                                      ; preds = %bb.r
   %i.bc = trunc nuw i32 %.sroa.5226.0.copyload to i1
-  %3 = zext i32 %.sroa.6.0.copyload to i64
-  %.sroa.010.0.c.i = select i1 %i.bc, i64 %3, i64 2
+  %narrow.c.i = select i1 %i.bc, i32 %.sroa.6.0.copyload, i32 2
   %.sroa.7229.8.copyload230 = load ptr, ptr %i.at, align 8, !noalias !437
   %.sroa.11231.8..sroa_idx232 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.11231.8.copyload233 = load i64, ptr %.sroa.11231.8..sroa_idx232, align 8, !noalias !437
@@ -229,7 +228,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecfEECs5Q
 .thread259:                                       ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecfEECs5QaNqjAn6vc_5shard.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !433
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  br label %bb.aa
+  br label %3
 
 .body.thread299:                                  ; preds = %bb.k, %.noexc, %bb.o, %.noexc215
   %lpad.thr_comm = landingpad { ptr, i32 }
@@ -319,15 +318,15 @@ bb.z:                                             ; preds = %bb.l, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.az, %.thread259, %.thread256, %bb.an, %bb.ag, %bb.z
-  %.sroa.9.sroa.9.sroa.0.sroa.8.sroa.0.1 = phi i64 [ 2, %bb.z ], [ %.sroa.5185.sroa.4.0.copyload, %bb.ag ], [ undef, %.thread256 ], [ %.sroa.5191.sroa.4.sroa.4.0.copyload, %bb.an ], [ %.sroa.010.0.c.i, %.thread259 ], [ %.sroa.010.0.i, %bb.az ]
-  %.sroa.9.sroa.9.sroa.0.sroa.0.1 = phi i64 [ undef, %bb.z ], [ %.sroa.5185.sroa.0.0.copyload, %bb.ag ], [ undef, %.thread256 ], [ %.sroa.5191.sroa.4.sroa.0.0.copyload, %bb.an ], [ %.sroa.11231.8.copyload233, %.thread259 ], [ %.sroa.11231.8.copyload, %bb.az ]
-  %.sroa.9.sroa.9.sroa.10.1 = phi i32 [ undef, %bb.z ], [ undef, %bb.ag ], [ undef, %.thread256 ], [ %.sroa.5191.sroa.7.0.copyload, %bb.an ], [ undef, %.thread259 ], [ undef, %bb.az ]
-  %.sroa.9.sroa.9.sroa.9.1 = phi float [ undef, %bb.z ], [ undef, %bb.ag ], [ undef, %.thread256 ], [ %.sroa.5191.sroa.6.0.copyload, %bb.an ], [ undef, %.thread259 ], [ undef, %bb.az ]
-  %.sroa.9.sroa.9.sroa.8.1 = phi i64 [ undef, %bb.z ], [ undef, %bb.ag ], [ undef, %.thread256 ], [ %.sroa.5191.sroa.5.0.copyload, %bb.an ], [ undef, %.thread259 ], [ undef, %bb.az ]
-  %.sroa.9.sroa.8.1 = phi ptr [ undef, %bb.z ], [ %i.bo, %bb.ag ], [ undef, %.thread256 ], [ %.sroa.5191.sroa.0.0.copyload, %bb.an ], [ %.sroa.7229.8.copyload230, %.thread259 ], [ %.sroa.7229.8.copyload, %bb.az ]
-  %.sroa.9.sroa.0.1 = phi i64 [ %.sroa.0.0.ph, %bb.z ], [ %i.bl, %bb.ag ], [ undef, %.thread256 ], [ %i.ca, %bb.an ], [ -1, %.thread259 ], [ %.sroa.02.0.copyload.i, %bb.az ]
-  %.sroa.017.1 = phi i64 [ -9223372036854775807, %bb.z ], [ -9223372036854775806, %bb.ag ], [ -9223372036854775804, %.thread256 ], [ %i.bw, %bb.an ], [ -9223372036854775807, %.thread259 ], [ -9223372036854775807, %bb.az ]
+bb.aa:                                            ; preds = %.thread256, %3, %bb.an, %bb.ag, %bb.z
+  %.sroa.9.sroa.9.sroa.0.sroa.8.sroa.0.1 = phi i64 [ 2, %bb.z ], [ %.sroa.5185.sroa.4.0.copyload, %bb.ag ], [ undef, %.thread256 ], [ %.sroa.5191.sroa.4.sroa.4.0.copyload, %bb.an ], [ %.sroa.12234.0264, %3 ]
+  %.sroa.9.sroa.9.sroa.0.sroa.0.1 = phi i64 [ undef, %bb.z ], [ %.sroa.5185.sroa.0.0.copyload, %bb.ag ], [ undef, %.thread256 ], [ %.sroa.5191.sroa.4.sroa.0.0.copyload, %bb.an ], [ %.sroa.11231.0265, %3 ]
+  %.sroa.9.sroa.9.sroa.10.1 = phi i32 [ undef, %bb.z ], [ undef, %bb.ag ], [ undef, %.thread256 ], [ %.sroa.5191.sroa.7.0.copyload, %bb.an ], [ undef, %3 ]
+  %.sroa.9.sroa.9.sroa.9.1 = phi float [ undef, %bb.z ], [ undef, %bb.ag ], [ undef, %.thread256 ], [ %.sroa.5191.sroa.6.0.copyload, %bb.an ], [ undef, %3 ]
+  %.sroa.9.sroa.9.sroa.8.1 = phi i64 [ undef, %bb.z ], [ undef, %bb.ag ], [ undef, %.thread256 ], [ %.sroa.5191.sroa.5.0.copyload, %bb.an ], [ undef, %3 ]
+  %.sroa.9.sroa.8.1 = phi ptr [ undef, %bb.z ], [ %i.bo, %bb.ag ], [ undef, %.thread256 ], [ %.sroa.5191.sroa.0.0.copyload, %bb.an ], [ %.sroa.7229.0266, %3 ]
+  %.sroa.9.sroa.0.1 = phi i64 [ %.sroa.0.0.ph, %bb.z ], [ %i.bl, %bb.ag ], [ undef, %.thread256 ], [ %i.ca, %bb.an ], [ %.sroa.0227.0267, %3 ]
+  %.sroa.017.1 = phi i64 [ -9223372036854775807, %bb.z ], [ -9223372036854775806, %bb.ag ], [ -9223372036854775804, %.thread256 ], [ %i.bw, %bb.an ], [ -9223372036854775807, %3 ]
   store i64 %.sroa.017.1, ptr %0, align 8
   %.sroa.9.0..sroa_idx20 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.9.sroa.0.1, ptr %.sroa.9.0..sroa_idx20, align 8
@@ -565,15 +564,14 @@ bb.az:                                            ; preds = %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !433
   %.sroa.02.0.copyload.i = load i64, ptr %i.a, align 8, !noalias !433 ; 2 uses
   %i.cn = trunc nuw i32 %.sroa.5226.0.copyload to i1
-  %4 = zext i32 %.sroa.6.0.copyload to i64
-  %.sroa.010.0.i = select i1 %i.cn, i64 %4, i64 2
+  %narrow.i = select i1 %i.cn, i32 %.sroa.6.0.copyload, i32 2
   %.sroa.7229.8.copyload = load ptr, ptr %i.at, align 8, !noalias !437 ; 3 uses
   %.sroa.11231.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.11231.8.copyload = load i64, ptr %.sroa.11231.8..sroa_idx, align 8, !noalias !437
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !433
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.co = icmp eq i64 %.sroa.02.0.copyload.i, -3
-  br i1 %i.co, label %bb.ba, label %bb.aa
+  br i1 %i.co, label %bb.ba, label %3
 
 bb.ba:                                            ; preds = %bb.az
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7229.8.copyload) ]
@@ -581,6 +579,14 @@ bb.ba:                                            ; preds = %bb.az
   store ptr %.sroa.7229.8.copyload, ptr %i.cp, align 8
   store i64 -1, ptr %0, align 8
   br label %bb.d
+
+3:                                                ; preds = %.thread259, %bb.az
+  %.sroa.0227.0267 = phi i64 [ -1, %.thread259 ], [ %.sroa.02.0.copyload.i, %bb.az ]
+  %.sroa.7229.0266 = phi ptr [ %.sroa.7229.8.copyload230, %.thread259 ], [ %.sroa.7229.8.copyload, %bb.az ]
+  %.sroa.11231.0265 = phi i64 [ %.sroa.11231.8.copyload233, %.thread259 ], [ %.sroa.11231.8.copyload, %bb.az ]
+  %.sroa.12234.0264.in = phi i32 [ %narrow.c.i, %.thread259 ], [ %narrow.i, %bb.az ]
+  %.sroa.12234.0264 = zext i32 %.sroa.12234.0264.in to i64
+  br label %bb.aa
 
 bb.bb:                                            ; preds = %bb.m
   %lpad.thr_comm.split-lp331 = landingpad { ptr, i32 }
@@ -984,8 +990,8 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %.sroa.02.0.copyload = load i64, ptr %i.a, align 8
   %i.q = trunc nuw i32 %i.f to i1
-  %2 = zext i32 %i.h to i64
-  %.sroa.010.0 = select i1 %i.q, i64 %2, i64 2
+  %narrow = select i1 %i.q, i32 %i.h, i32 2
+  %.sroa.010.0 = zext i32 %narrow to i64
   store i64 %.sroa.02.0.copyload, ptr %0, align 8
   %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.48.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %i.b, i64 16, i1 false)
@@ -999,8 +1005,8 @@ bb.c:                                             ; preds = %bb.b, %_RINvNtCskKL
 
 .critedge:                                        ; preds = %bb.a
   %i.r = trunc nuw i32 %i.f to i1
-  %3 = zext i32 %i.h to i64
-  %.sroa.010.0.c = select i1 %i.r, i64 %3, i64 2
+  %narrow.c = select i1 %i.r, i32 %i.h, i32 2
+  %.sroa.010.0.c = zext i32 %narrow.c to i64
   store i64 -1, ptr %0, align 8
   %.sroa.48.0..sroa_idx.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.48.0..sroa_idx.c, ptr noundef nonnull align 8 dereferenceable(16) %i.b, i64 16, i1 false)

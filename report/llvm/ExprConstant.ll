@@ -205,8 +205,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.ie = icmp eq i32 %i.id, 10485760
   %i.if = load i8, ptr %i.a, align 1, !tbaa !754, !range !453, !noundef !412
   %i.ig = trunc nuw i8 %i.if to i1                ; 2 uses
-  %i.ih = load i8, ptr %i.b, align 1, !range !453
-  %88 = zext nneg i8 %i.ih to i64                 ; 2 uses
+  %i.ih = load i8, ptr %i.b, align 1, !range !453 ; 2 uses
   %.val77.i.i = load ptr, ptr %i.ba, align 8, !tbaa !1660
   %i.ii = getelementptr i8, ptr %i.da, i64 8
   %.val78.i.i = load i64, ptr %i.ii, align 8, !tbaa !440 ; 2 uses
@@ -216,10 +215,11 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %i.ie, label %bb.ap, label %bb.at
 
 bb.ap:                                            ; preds = %bb.ao
-  %89 = select i1 %i.ig, i64 1, i64 %88
+  %narrow74.i.i = select i1 %i.ig, i8 1, i8 %i.ih
+  %88 = zext nneg i8 %narrow74.i.i to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %30)
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #24
-  call void @_ZNK5clang10ASTContext12MakeIntValueEmNS_8QualTypeE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::APSInt") align 8 %30, ptr noundef nonnull align 8 dereferenceable(23904) %.val77.val.val.i.i, i64 noundef range(i64 0, 2) %89, i64 %.val78.i.i), !inline_history !1649
+  call void @_ZNK5clang10ASTContext12MakeIntValueEmNS_8QualTypeE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::APSInt") align 8 %30, ptr noundef nonnull align 8 dereferenceable(23904) %.val77.val.val.i.i, i64 noundef range(i64 0, 2) %88, i64 %.val78.i.i), !inline_history !1649
   %i.ik = load i8, ptr %i.ch, align 4
   %i.il = and i8 %i.ik, -2
   store i8 %i.il, ptr %i.ch, align 4
@@ -260,10 +260,11 @@ _ZN12_GLOBAL__N_130DataRecursiveIntBinOpEvaluator7SuccessEmPKN5clang4ExprERNS1_7
   br label %bb.bd
 
 bb.at:                                            ; preds = %bb.ao
-  %90 = select i1 %i.ig, i64 %88, i64 0
+  %narrow.i.i = select i1 %i.ig, i8 %i.ih, i8 0
+  %89 = zext nneg i8 %narrow.i.i to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %28)
   call void @llvm.lifetime.start.p0(ptr nonnull %27) #24
-  call void @_ZNK5clang10ASTContext12MakeIntValueEmNS_8QualTypeE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::APSInt") align 8 %28, ptr noundef nonnull align 8 dereferenceable(23904) %.val77.val.val.i.i, i64 noundef range(i64 0, 2) %90, i64 %.val78.i.i), !inline_history !1649
+  call void @_ZNK5clang10ASTContext12MakeIntValueEmNS_8QualTypeE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::APSInt") align 8 %28, ptr noundef nonnull align 8 dereferenceable(23904) %.val77.val.val.i.i, i64 noundef range(i64 0, 2) %89, i64 %.val78.i.i), !inline_history !1649
   %i.iv = load i8, ptr %i.cb, align 4
   %i.iw = and i8 %i.iv, -2
   store i8 %i.iw, ptr %i.cb, align 4
