@@ -204,16 +204,15 @@ aspeed_smc_flash_addr_width.exit:                 ; preds = %bb.d, %bb.e
   %i.aq = load i32, ptr %i.ap, align 4
   call void %i.am(ptr noundef %i.ak, i32 noundef %i.aq, ptr noundef nonnull %2) #8, !inline_history !28
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.as = load i32, ptr %i.ar, align 8            ; 2 uses
-  %3 = urem i32 %1, %i.as                         ; 2 uses
-  %.not.i25 = icmp eq i32 %3, %1
+  %i.as = load i32, ptr %i.ar, align 8            ; 3 uses
+  %.not.i25 = icmp ult i32 %1, %i.as
   br i1 %.not.i25, label %aspeed_smc_check_segment_addr.exit, label %bb.f
 
 bb.f:                                             ; preds = %aspeed_smc_flash_addr_width.exit
   %i.at = load i32, ptr @qemu_loglevel, align 4
   %i.au = and i32 %i.at, 2048
   %.not12.i = icmp eq i32 %i.au, 0
-  br i1 %.not12.i, label %aspeed_smc_check_segment_addr.exit, label %bb.g, !prof !15
+  br i1 %.not12.i, label %3, label %bb.g, !prof !15
 
 bb.g:                                             ; preds = %bb.f
   %i.av = load i8, ptr %i.c, align 8
@@ -223,11 +222,15 @@ bb.g:                                             ; preds = %bb.f
   %i.az = add i64 %i.ax, %i.ay
   call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.88, ptr noundef nonnull @__func__.aspeed_smc_check_segment_addr, i32 noundef %1, i32 noundef %i.aw, i64 noundef %i.ax, i64 noundef %i.az) #8
   %.pre.i = load i32, ptr %i.ar, align 8
-  %.pre13.i = urem i32 %1, %.pre.i
+  br label %3
+
+3:                                                ; preds = %bb.g, %bb.f
+  %4 = phi i32 [ %.pre.i, %bb.g ], [ %i.as, %bb.f ]
+  %5 = urem i32 %1, %4
   br label %aspeed_smc_check_segment_addr.exit
 
-aspeed_smc_check_segment_addr.exit:               ; preds = %aspeed_smc_flash_addr_width.exit, %bb.f, %bb.g
-  %.0.i26 = phi i32 [ %1, %aspeed_smc_flash_addr_width.exit ], [ %.pre13.i, %bb.g ], [ %3, %bb.f ]
+aspeed_smc_check_segment_addr.exit:               ; preds = %aspeed_smc_flash_addr_width.exit, %3
+  %.0.i26 = phi i32 [ %5, %3 ], [ %1, %aspeed_smc_flash_addr_width.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #8
   %i.ba = getelementptr inbounds nuw i8, ptr %i.b, i64 1656 ; 2 uses
   %i.bb = load ptr, ptr %i.ba, align 8
