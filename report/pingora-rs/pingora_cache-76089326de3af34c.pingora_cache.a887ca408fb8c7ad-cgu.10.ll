@@ -202,17 +202,18 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs5_NtCsG258MDvU3F_3std4timeNtB5_10SystemTime14duration_since(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.b, i64 noundef 0, i32 noundef 0)
   %i.d = load i64, ptr %i.a, align 8, !range !117, !alias.scope !885, !noundef !4
-  %i.e = trunc nuw i64 %i.d to i1
+  %i.e = trunc nuw i64 %i.d to i1                 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.g = load i64, ptr %i.f, align 8, !alias.scope !885
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.i = load i32, ptr %i.h, align 8, !range !888, !alias.scope !885
+  %.sroa.0.0.i = select i1 %i.e, i64 0, i64 %i.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.j = uitofp i64 %i.g to double
+  %i.j = uitofp i64 %.sroa.0.0.i to double
   %i.k = uitofp nneg i32 %i.i to double
   %i.l = fdiv double %i.k, 1.000000e+09
-  %2 = fadd double %i.l, %i.j
-  %3 = select i1 %i.e, double 0.000000e+00, double %2
+  %2 = select i1 %i.e, double 0.000000e+00, double %i.l
+  %3 = fadd double %2, %i.j
   ret double %3
 }
 

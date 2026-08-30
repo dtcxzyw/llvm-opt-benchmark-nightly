@@ -130,20 +130,21 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs5_NtCsaL1QbXo9JQH_3std4timeNtB5_10SystemTime14duration_since(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.b, i64 noundef %2, i32 noundef %3)
   %i.d = load i64, ptr %i.a, align 8, !range !31, !noundef !16
-  %i.e = trunc nuw i64 %i.d to i1
+  %i.e = trunc nuw i64 %i.d to i1                 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.g = load i64, ptr %i.f, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.i = load i32, ptr %i.h, align 8, !range !32
+  %.sroa.0.0 = select i1 %i.e, i64 0, i64 %i.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %i.j = zext i64 %i.g to i128
+  %i.j = zext i64 %.sroa.0.0 to i128
   %i.k = mul nuw nsw i128 %i.j, 1000000000
   %i.l = zext nneg i32 %i.i to i128
-  %i.m = add nuw nsw i128 %i.k, %i.l
+  %4 = select i1 %i.e, i128 0, i128 %i.l
+  %i.m = add nuw nsw i128 %i.k, %4
   %i.n = uitofp nneg i128 %i.m to double
   %i.o = fdiv double %i.n, 1.000000e+03
-  %4 = select i1 %i.e, double 0.000000e+00, double %i.o
-  ret double %4
+  ret double %i.o
 }
 
 ; Function Attrs: cold noinline nonlazybind uwtable

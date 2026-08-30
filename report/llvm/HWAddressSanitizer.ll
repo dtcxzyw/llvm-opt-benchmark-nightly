@@ -204,19 +204,20 @@ bb.lh:                                            ; preds = %_ZNK4llvm8TypeSizec
   br i1 %i.dmz, label %bb.li, label %bb.ln
 
 bb.li:                                            ; preds = %bb.lh
-  %i.dnk = trunc nuw i8 %i.dnj to i1
+  %i.dnk = trunc nuw i8 %i.dnj to i1              ; 2 uses
+  %199 = select i1 %i.dnk, i32 16777216, i32 0
   %i.dnl = load i8, ptr %i.ds, align 4
-  %i.dnm = zext i8 %i.dnl to i32
+  %.0.i.i.i48 = select i1 %i.dnk, i8 %i.dnl, i8 0
+  %i.dnm = zext i8 %.0.i.i.i48 to i32
   %i.dnn = shl nuw nsw i32 %i.dnm, 16
-  %i.dno = or disjoint i32 %i.dnn, 16777216
-  %199 = select i1 %i.dnk, i32 %i.dno, i32 0
+  %i.dno = or disjoint i32 %199, %i.dnn
   %i.dnp = load i8, ptr %i.dv, align 1, !tbaa !202, !range !25, !noundef !26
   %i.dnq = shl nuw nsw i8 %i.dnp, 5
   %i.dnr = zext nneg i8 %i.dnq to i32
-  %i.dns = or disjoint i32 %199, %i.dnr
+  %i.dns = or disjoint i32 %i.dno, %i.dnr
   %i.dnt = select i1 %i.dnc, i32 16, i32 0
   %i.dnu = or disjoint i32 %i.dns, %i.dnt
-  %i.dnv = or i32 %i.dnu, %i.dni
+  %i.dnv = or disjoint i32 %i.dnu, %i.dni
   %i.dnw = or i32 %i.dnv, %i.dlu
   %i.dnx = zext nneg i32 %i.dnw to i64            ; 2 uses
   %i.dny = load i8, ptr %i.hn, align 1, !tbaa !253, !range !25, !noundef !26
