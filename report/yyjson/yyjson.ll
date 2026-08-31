@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %.sroa.0.0.copyload = load ptr, ptr %3, align 8, !tbaa !10
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !10
+  %.sroa.7.0.copyload = load i64, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !10
   %.sroa.77.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
   %.sroa.77.0.copyload = load ptr, ptr %.sroa.77.0..sroa_idx, align 8, !tbaa !10
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 24
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sroa.8.0 = phi ptr [ %.sroa.8.0.copyload, %bb.b ], [ null, %bb.a ] ; 4 uses
   %.sroa.77.0 = phi ptr [ %.sroa.77.0.copyload, %bb.b ], [ @default_free, %bb.a ] ; 2 uses
-  %.sroa.7.0 = phi ptr [ %.sroa.7.0.copyload, %bb.b ], [ @default_realloc, %bb.a ]
+  %.sroa.7.0 = phi i64 [ %.sroa.7.0.copyload, %bb.b ], [ ptrtoint (ptr @default_realloc to i64), %bb.a ]
   %.sroa.0.0 = phi ptr [ %.sroa.0.0.copyload, %bb.b ], [ @default_malloc, %bb.a ] ; 3 uses
   %i.a = and i32 %2, -16221
   %.not48 = icmp eq ptr %0, null
@@ -233,7 +233,7 @@ bb.e:                                             ; preds = %bb.d
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %.sroa.0.0, ptr %i.d, align 8, !tbaa !10
   %.sroa.7.0..sroa_idx5 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  store ptr %.sroa.7.0, ptr %.sroa.7.0..sroa_idx5, align 8, !tbaa !10
+  store i64 %.sroa.7.0, ptr %.sroa.7.0..sroa_idx5, align 8, !tbaa !10
   %.sroa.77.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   store ptr %.sroa.77.0, ptr %.sroa.77.0..sroa_idx9, align 8, !tbaa !10
   %.sroa.8.0..sroa_idx12 = getelementptr inbounds nuw i8, ptr %i.c, i64 32
@@ -411,9 +411,10 @@ bb.g:                                             ; preds = %bb.e
   %.fr = freeze i32 %i.q                          ; 90 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.0.0.copyload = load ptr, ptr %i.r, align 8, !tbaa !10 ; 2 uses
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %10 = load <2 x ptr>, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !10
-  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !10 ; 8 uses
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !10 ; 9 uses
+  %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %.sroa.13.0.copyload = load i64, ptr %.sroa.13.0..sroa_idx, align 8, !tbaa !10
   %.sroa.13338.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   %.sroa.13338.0.copyload = load ptr, ptr %.sroa.13338.0..sroa_idx, align 8, !tbaa !10 ; 10 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 9 uses
@@ -816,7 +817,7 @@ read_str_opt.exit:                                ; preds = %read_null.exit1123.
   %.11763 = phi i64 [ %.10762, %bb.asu ], [ %.4756, %bb.abh ], [ %.0752, %read_num.exit1117.thread3171 ], [ %.0752, %.split3169 ], [ %.0752, %read_true.exit1119.thread ], [ %.0752, %read_false.exit1121.thread ], [ %.0752, %read_null.exit1123.thread ], [ %i.v, %bb.g ], [ %.0752, %read_num.exit1117.thread ], [ %.0752, %.split ], [ %.0752, %bb.ka ], [ %.0752, %bb.ls ] ; 2 uses
   %.20742 = phi i64 [ %.19741, %bb.asu ], [ %.11733, %bb.abh ], [ %.1723, %read_num.exit1117.thread3171 ], [ %.1723, %.split3169 ], [ %.1723, %read_true.exit1119.thread ], [ %.1723, %read_false.exit1121.thread ], [ %.1723, %read_null.exit1123.thread ], [ %i.x, %bb.g ], [ %.1723, %read_num.exit1117.thread ], [ %.1723, %.split ], [ %.1723, %bb.ka ], [ %.1723, %bb.ls ]
   %.11721 = phi i64 [ %.10720, %bb.asu ], [ %.4714, %bb.abh ], [ %.0710, %read_num.exit1117.thread3171 ], [ %.0710, %.split3169 ], [ %.0710, %read_true.exit1119.thread ], [ %.0710, %read_false.exit1121.thread ], [ %.0710, %read_null.exit1123.thread ], [ %i.t, %bb.g ], [ %.0710, %read_num.exit1117.thread ], [ %.0710, %.split ], [ %.0710, %bb.ka ], [ %.0710, %bb.ls ]
-  %.27709 = phi ptr [ %.26708, %bb.asu ], [ %.16698, %bb.abh ], [ %.0682, %read_num.exit1117.thread3171 ], [ %.0682, %.split3169 ], [ %.0682, %read_true.exit1119.thread ], [ %.0682, %read_false.exit1121.thread ], [ %.0682, %read_null.exit1123.thread ], [ %i.ab, %bb.g ], [ %.0682, %read_num.exit1117.thread ], [ %.0682, %.split ], [ %.0682, %bb.ka ], [ %.0682, %bb.ls ] ; 9 uses
+  %.27709 = phi ptr [ %.26708, %bb.asu ], [ %.16698, %bb.abh ], [ %.0682, %read_num.exit1117.thread3171 ], [ %.0682, %.split3169 ], [ %.0682, %read_true.exit1119.thread ], [ %.0682, %read_false.exit1121.thread ], [ %.0682, %read_null.exit1123.thread ], [ %i.ab, %bb.g ], [ %.0682, %read_num.exit1117.thread ], [ %.0682, %.split ], [ %.0682, %bb.ka ], [ %.0682, %bb.ls ] ; 10 uses
   %.27672 = phi ptr [ %.26671, %bb.asu ], [ %.16661, %bb.abh ], [ %.0645, %read_num.exit1117.thread3171 ], [ %.0645, %.split3169 ], [ %.0645, %read_true.exit1119.thread ], [ %.0645, %read_false.exit1121.thread ], [ %.0645, %read_null.exit1123.thread ], [ %i.ad, %bb.g ], [ %.0645, %read_num.exit1117.thread ], [ %.0645, %.split ], [ %.0645, %bb.ka ], [ %.0645, %bb.ls ]
   %.27644 = phi ptr [ %.26643, %bb.asu ], [ %.16633, %bb.abh ], [ %.0617, %read_num.exit1117.thread3171 ], [ %.0617, %.split3169 ], [ %.0617, %read_true.exit1119.thread ], [ %.0617, %read_false.exit1121.thread ], [ %.0617, %read_null.exit1123.thread ], [ %i.z, %bb.g ], [ %.0617, %read_num.exit1117.thread ], [ %.0617, %.split ], [ %.0617, %bb.ka ], [ %.0617, %bb.ls ] ; 2 uses
   %.27 = phi ptr [ %.26, %bb.asu ], [ %.16, %bb.abh ], [ %.0609, %read_num.exit1117.thread3171 ], [ %.0609, %.split3169 ], [ %.0609, %read_true.exit1119.thread ], [ %.0609, %read_false.exit1121.thread ], [ %.0609, %read_null.exit1123.thread ], [ %i.af, %bb.g ], [ %.0609, %read_num.exit1117.thread ], [ %.0609, %.split ], [ %.0609, %bb.ka ], [ %.0609, %bb.ls ]
@@ -868,7 +869,9 @@ bb.asy:                                           ; preds = %._crit_edge4442, %b
   %i.ivx = getelementptr inbounds nuw i8, ptr %.27709, i64 8
   store ptr %.sroa.0.0.copyload, ptr %i.ivx, align 8, !tbaa !10
   %.sroa.5.0..sroa_idx327 = getelementptr inbounds nuw i8, ptr %.27709, i64 16
-  store <2 x ptr> %10, ptr %.sroa.5.0..sroa_idx327, align 8, !tbaa !10
+  store ptr %.sroa.5.0.copyload, ptr %.sroa.5.0..sroa_idx327, align 8, !tbaa !10
+  %.sroa.13.0..sroa_idx336 = getelementptr inbounds nuw i8, ptr %.27709, i64 24
+  store i64 %.sroa.13.0.copyload, ptr %.sroa.13.0..sroa_idx336, align 8, !tbaa !10
   %.sroa.13338.0..sroa_idx339 = getelementptr inbounds nuw i8, ptr %.27709, i64 32
   store ptr %.sroa.13338.0.copyload, ptr %.sroa.13338.0..sroa_idx339, align 8, !tbaa !10
   %i.ivy = load ptr, ptr %i.d, align 8, !tbaa !92
@@ -1271,20 +1274,24 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.0849.0.copyload = load ptr, ptr %2, align 8, !tbaa !10
+  %.sroa.0848.0.copyload = load i64, ptr %2, align 8, !tbaa !10
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !10
+  %.sroa.7.0.copyload = load i64, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !10
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %.sroa.8.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !10
+  %.sroa.8.0.copyload = load i64, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !10
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %.sroa.9.0.copyload = load ptr, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !10
+  %.sroa.9.0.copyload = load i64, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !10
+  %6 = inttoptr i64 %.sroa.0848.0.copyload to ptr
+  %7 = inttoptr i64 %.sroa.7.0.copyload to ptr
+  %8 = inttoptr i64 %.sroa.8.0.copyload to ptr
+  %9 = inttoptr i64 %.sroa.9.0.copyload to ptr
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sroa.9.0 = phi ptr [ %.sroa.9.0.copyload, %bb.b ], [ null, %bb.a ] ; 35 uses
-  %.sroa.8.0 = phi ptr [ %.sroa.8.0.copyload, %bb.b ], [ @default_free, %bb.a ] ; 10 uses
-  %.sroa.7.0 = phi ptr [ %.sroa.7.0.copyload, %bb.b ], [ @default_realloc, %bb.a ] ; 16 uses
-  %.sroa.0849.0 = phi ptr [ %.sroa.0849.0.copyload, %bb.b ], [ @default_malloc, %bb.a ] ; 9 uses
+  %.sroa.9.0 = phi ptr [ %9, %bb.b ], [ null, %bb.a ] ; 35 uses
+  %.sroa.8.0 = phi ptr [ %8, %bb.b ], [ @default_free, %bb.a ] ; 10 uses
+  %.sroa.7.0 = phi ptr [ %7, %bb.b ], [ @default_realloc, %bb.a ] ; 16 uses
+  %.sroa.0849.0 = phi ptr [ %6, %bb.b ], [ @default_malloc, %bb.a ] ; 9 uses
   %.not26.a = icmp eq ptr %4, null                ; 14 uses
   %spec.store.select = select i1 %.not26.a, ptr %5, ptr %4 ; 16 uses
   %.not27.a = icmp eq ptr %3, null                ; 16 uses
@@ -1687,20 +1694,24 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.0486.0.copyload = load ptr, ptr %3, align 8, !tbaa !10
+  %.sroa.0485.0.copyload = load i64, ptr %3, align 8, !tbaa !10
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !10
+  %.sroa.7.0.copyload = load i64, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !10
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %.sroa.8.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !10
+  %.sroa.8.0.copyload = load i64, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !10
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %.sroa.9.0.copyload = load ptr, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !10
+  %.sroa.9.0.copyload = load i64, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !10
+  %7 = inttoptr i64 %.sroa.0485.0.copyload to ptr
+  %8 = inttoptr i64 %.sroa.7.0.copyload to ptr
+  %9 = inttoptr i64 %.sroa.8.0.copyload to ptr
+  %10 = inttoptr i64 %.sroa.9.0.copyload to ptr
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sroa.9.0 = phi ptr [ %.sroa.9.0.copyload, %bb.b ], [ null, %bb.a ] ; 35 uses
-  %.sroa.8.0 = phi ptr [ %.sroa.8.0.copyload, %bb.b ], [ @default_free, %bb.a ] ; 10 uses
-  %.sroa.7.0 = phi ptr [ %.sroa.7.0.copyload, %bb.b ], [ @default_realloc, %bb.a ] ; 16 uses
-  %.sroa.0486.0 = phi ptr [ %.sroa.0486.0.copyload, %bb.b ], [ @default_malloc, %bb.a ] ; 9 uses
+  %.sroa.9.0 = phi ptr [ %10, %bb.b ], [ null, %bb.a ] ; 35 uses
+  %.sroa.8.0 = phi ptr [ %9, %bb.b ], [ @default_free, %bb.a ] ; 10 uses
+  %.sroa.7.0 = phi ptr [ %8, %bb.b ], [ @default_realloc, %bb.a ] ; 16 uses
+  %.sroa.0486.0 = phi ptr [ %7, %bb.b ], [ @default_malloc, %bb.a ] ; 9 uses
   %.not28.a = icmp eq ptr %5, null                ; 16 uses
   %spec.store.select = select i1 %.not28.a, ptr %6, ptr %5 ; 16 uses
   %.not29.a = icmp eq ptr %4, null                ; 16 uses
@@ -2103,7 +2114,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.af, %bb.a
   %.076 = phi ptr [ %1, %bb.a ], [ %.177, %bb.af ] ; 3 uses
-  %.069 = phi ptr [ null, %bb.a ], [ %.170102, %bb.af ]
+  %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ %.sroa.0.196, %bb.af ]
   %.067 = phi i1 [ false, %bb.a ], [ %.168103, %bb.af ] ; 4 uses
   %.034 = phi ptr [ %0, %bb.a ], [ %.1105, %bb.af ] ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.076, i64 1 ; 12 uses
@@ -2284,6 +2295,7 @@ ptr_token_eq.exit:                                ; preds = %bb.m
   br i1 %i.bf, label %ptr_token_eq.exit.thread89, label %ptr_token_eq.exit.thread
 
 ptr_token_eq.exit.thread89:                       ; preds = %ptr_token_eq.exit, %bb.n, %bb.q
+  %5 = ptrtoint ptr %.017.i165 to i64
   %i.bg = getelementptr inbounds nuw i8, ptr %i.an, i64 16
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !85
   br label %ptr_mut_obj_get.exit
@@ -2422,12 +2434,13 @@ ptr_token_to_idx.exit:                            ; preds = %.critedge.i55
 ._crit_edge:                                      ; preds = %.lr.ph153.prol.loopexit, %.lr.ph153, %bb.y
   %i.dh = phi i1 [ false, %bb.y ], [ %i.ch, %.lr.ph153 ], [ %i.ch, %.lr.ph153.prol.loopexit ]
   %.0.i48.lcssa = phi ptr [ %i.bl, %bb.y ], [ %.lcssa239.unr, %.lr.ph153.prol.loopexit ], [ %i.dg, %.lr.ph153 ] ; 2 uses
+  %6 = ptrtoint ptr %.0.i48.lcssa to i64
   %i.di = getelementptr inbounds nuw i8, ptr %.0.i48.lcssa, i64 16
   %i.dj = load ptr, ptr %i.di, align 8, !tbaa !85
   br label %ptr_mut_obj_get.exit
 
 ptr_mut_obj_get.exit:                             ; preds = %ptr_token_eq.exit.thread, %bb.z, %._crit_edge, %ptr_token_to_idx.exit, %bb.v, %bb.u, %bb.t, %ptr_token_to_idx.exit.thread, %ptr_token_eq.exit.thread89, %bb.r
-  %.170 = phi ptr [ %.069, %bb.r ], [ %.017.i165, %ptr_token_eq.exit.thread89 ], [ null, %ptr_token_to_idx.exit.thread ], [ null, %bb.z ], [ null, %bb.u ], [ null, %bb.v ], [ null, %bb.t ], [ %.0.i48.lcssa, %._crit_edge ], [ null, %ptr_token_to_idx.exit ], [ null, %ptr_token_eq.exit.thread ] ; 4 uses
+  %.sroa.0.1 = phi i64 [ %.sroa.0.0, %bb.r ], [ %5, %ptr_token_eq.exit.thread89 ], [ 0, %ptr_token_to_idx.exit.thread ], [ 0, %bb.z ], [ 0, %bb.u ], [ 0, %bb.v ], [ 0, %bb.t ], [ %6, %._crit_edge ], [ 0, %ptr_token_to_idx.exit ], [ 0, %ptr_token_eq.exit.thread ] ; 4 uses
   %.168 = phi i1 [ %.067, %bb.r ], [ %.067, %ptr_token_eq.exit.thread89 ], [ false, %ptr_token_to_idx.exit.thread ], [ true, %bb.z ], [ false, %bb.u ], [ true, %bb.v ], [ false, %bb.t ], [ %i.dh, %._crit_edge ], [ %i.ch, %ptr_token_to_idx.exit ], [ %.067, %ptr_token_eq.exit.thread ] ; 5 uses
   %.1 = phi ptr [ null, %bb.r ], [ %i.bh, %ptr_token_eq.exit.thread89 ], [ null, %ptr_token_to_idx.exit.thread ], [ null, %bb.z ], [ null, %bb.u ], [ null, %bb.v ], [ null, %bb.t ], [ %i.dj, %._crit_edge ], [ null, %ptr_token_to_idx.exit ], [ null, %ptr_token_eq.exit.thread ] ; 5 uses
   %i.dk = icmp eq ptr %.177, %i.b                 ; 2 uses
@@ -2452,18 +2465,19 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %or.cond, label %.thread, label %.thread113
 
 .thread:                                          ; preds = %ptr_mut_obj_get.exit.thread, %bb.ad, %bb.ab
-  %.170101112 = phi ptr [ %.170, %bb.ab ], [ %.170, %bb.ad ], [ null, %ptr_mut_obj_get.exit.thread ] ; 2 uses
+  %.sroa.0.195106 = phi i64 [ %.sroa.0.1, %bb.ab ], [ %.sroa.0.1, %bb.ad ], [ 0, %ptr_mut_obj_get.exit.thread ] ; 2 uses
   %.168104111 = phi i1 [ %.168, %bb.ab ], [ %.168, %bb.ad ], [ %.067, %ptr_mut_obj_get.exit.thread ]
   %.1106110 = phi ptr [ %.1, %bb.ab ], [ %.1, %bb.ad ], [ null, %ptr_mut_obj_get.exit.thread ]
   store ptr %.034, ptr %3, align 8, !tbaa !434
-  store ptr %.170101112, ptr %i.c, align 8, !tbaa !436
+  %7 = inttoptr i64 %.sroa.0.195106 to ptr
+  store ptr %7, ptr %i.c, align 8, !tbaa !436
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ac, %.thread, %ptr_mut_obj_get.exit
   %i.do = phi i1 [ %i.dk, %ptr_mut_obj_get.exit ], [ true, %bb.ac ], [ true, %.thread ]
   %.1105 = phi ptr [ %.1, %ptr_mut_obj_get.exit ], [ %.1, %bb.ac ], [ %.1106110, %.thread ] ; 3 uses
   %.168103 = phi i1 [ %.168, %ptr_mut_obj_get.exit ], [ %.168, %bb.ac ], [ %.168104111, %.thread ]
-  %.170102 = phi ptr [ %.170, %ptr_mut_obj_get.exit ], [ %.170, %bb.ac ], [ %.170101112, %.thread ]
+  %.sroa.0.196 = phi i64 [ %.sroa.0.1, %ptr_mut_obj_get.exit ], [ %.sroa.0.1, %bb.ac ], [ %.sroa.0.195106, %.thread ]
   %.not41.a = icmp eq ptr %.1105, null
   br i1 %.not41.a, label %.thread113, label %bb.af
 

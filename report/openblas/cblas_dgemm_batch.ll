@@ -129,7 +129,7 @@ bb.b:                                             ; preds = %._crit_edge.thread,
 
 bb.c:                                             ; preds = %.lr.ph274, %.loopexit
   %indvars.iv314 = phi i64 [ 0, %.lr.ph274 ], [ %indvars.iv.next315, %.loopexit ] ; 21 uses
-  %.0273 = phi ptr [ null, %.lr.ph274 ], [ %.2, %.loopexit ] ; 2 uses
+  %.sroa.0.0269 = phi i64 [ 0, %.lr.ph274 ], [ %.sroa.0.2, %.loopexit ] ; 2 uses
   %.0229272 = phi i32 [ 0, %.lr.ph274 ], [ %.2231, %.loopexit ] ; 3 uses
   %.0232268 = phi i32 [ 0, %.lr.ph274 ], [ %i.js, %.loopexit ] ; 2 uses
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %indvars.iv314 ; 6 uses
@@ -317,13 +317,11 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.eb = getelementptr inbounds [8 x i8], ptr @gemm_small_kernel_b0, i64 %i.ea
   %i.ec = load i64, ptr %i.eb, align 8, !tbaa !18
-  %16 = inttoptr i64 %i.ec to ptr
   br label %bb.n
 
 bb.l:                                             ; preds = %bb.j
   %i.ed = getelementptr inbounds [8 x i8], ptr @gemm_small_kernel, i64 %i.ea
   %i.ee = load i64, ptr %i.ed, align 8, !tbaa !18
-  %17 = inttoptr i64 %i.ee to ptr
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.i
@@ -337,7 +335,7 @@ bb.m:                                             ; preds = %bb.i
 bb.n:                                             ; preds = %bb.k, %bb.l, %bb.m
   %.0237 = phi i32 [ 196611, %bb.k ], [ 65539, %bb.l ], [ 3, %bb.m ] ; 6 uses
   %.0212 = phi ptr [ null, %bb.k ], [ null, %bb.l ], [ %i.ej, %bb.m ] ; 2 uses
-  %.1 = phi ptr [ %16, %bb.k ], [ %17, %bb.l ], [ %.0273, %bb.m ] ; 4 uses
+  %.sroa.0.1 = phi i64 [ %i.ec, %bb.k ], [ %i.ee, %bb.l ], [ %.sroa.0.0269, %bb.m ] ; 4 uses
   %i.ek = getelementptr inbounds nuw [4 x i8], ptr %15, i64 %indvars.iv314
   %i.el = load i32, ptr %i.ek, align 4, !tbaa !8  ; 9 uses
   %i.em = icmp sgt i32 %i.el, 0
@@ -345,7 +343,8 @@ bb.n:                                             ; preds = %bb.k, %bb.l, %bb.m
 
 .lr.ph260:                                        ; preds = %bb.n
   %.not251 = icmp eq ptr %.0212, null
-  %spec.select253 = select i1 %.not251, ptr %.1, ptr %.0212 ; 6 uses
+  %16 = inttoptr i64 %.sroa.0.1 to ptr
+  %spec.select253 = select i1 %.not251, ptr %16, ptr %.0212 ; 6 uses
   %i.en = sext i32 %.0229272 to i64               ; 4 uses
   %i.eo = sext i32 %.0232268 to i64               ; 6 uses
   %wide.trip.count312 = zext nneg i32 %i.el to i64 ; 4 uses
@@ -616,7 +615,7 @@ bb.n:                                             ; preds = %bb.k, %bb.l, %bb.m
 .loopexit:                                        ; preds = %..loopexit_crit_edge, %.loopexit.loopexit278, %.loopexit.loopexit, %bb.n
   %i.jr = phi i32 [ %.pre, %..loopexit_crit_edge ], [ %i.el, %bb.n ], [ %i.el, %.loopexit.loopexit278 ], [ %i.el, %.loopexit.loopexit ]
   %.2231 = phi i32 [ %.0229272, %..loopexit_crit_edge ], [ %.0229272, %bb.n ], [ %i.jq, %.loopexit.loopexit278 ], [ %i.iu, %.loopexit.loopexit ] ; 3 uses
-  %.2 = phi ptr [ %.0273, %..loopexit_crit_edge ], [ %.1, %bb.n ], [ %.1, %.loopexit.loopexit278 ], [ %.1, %.loopexit.loopexit ]
+  %.sroa.0.2 = phi i64 [ %.sroa.0.0269, %..loopexit_crit_edge ], [ %.sroa.0.1, %bb.n ], [ %.sroa.0.1, %.loopexit.loopexit278 ], [ %.sroa.0.1, %.loopexit.loopexit ]
   %i.js = add nsw i32 %i.jr, %.0232268
   %indvars.iv.next315 = add nuw nsw i64 %indvars.iv314, 1 ; 2 uses
   %exitcond318.not = icmp eq i64 %indvars.iv.next315, %wide.trip.count317

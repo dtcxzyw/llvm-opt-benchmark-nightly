@@ -202,8 +202,9 @@ define void @_Z16gpu_copyCpuToGpu8CompMatr(ptr nofree noundef readonly byval(%st
 bb.a:
   %1 = alloca %struct.QuESTEnv, align 4           ; 5 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !9
-  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %.sroa.2.0.copyload)
+  %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !9
+  %2 = inttoptr i64 %.sroa.2.0.copyload to ptr
+  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
   br i1 %i.a, label %bb.b, label %.critedge.i
 
@@ -245,8 +246,9 @@ define void @_Z16gpu_copyGpuToCpu8CompMatr(ptr nofree noundef readonly byval(%st
 bb.a:
   %1 = alloca %struct.QuESTEnv, align 4           ; 5 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !9
-  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %.sroa.2.0.copyload)
+  %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !9
+  %2 = inttoptr i64 %.sroa.2.0.copyload to ptr
+  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
   br i1 %i.a, label %bb.b, label %.critedge.i
 
@@ -276,8 +278,9 @@ define void @_Z16gpu_copyCpuToGpu8DiagMatr(ptr nofree noundef readonly byval(%st
 bb.a:
   %1 = alloca %struct.QuESTEnv, align 4           ; 5 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !9
-  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %.sroa.2.0.copyload)
+  %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !9
+  %2 = inttoptr i64 %.sroa.2.0.copyload to ptr
+  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
   br i1 %i.a, label %bb.b, label %.critedge.i
 
@@ -307,8 +310,9 @@ define void @_Z16gpu_copyGpuToCpu8DiagMatr(ptr nofree noundef readonly byval(%st
 bb.a:
   %1 = alloca %struct.QuESTEnv, align 4           ; 5 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !9
-  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %.sroa.2.0.copyload)
+  %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !9
+  %2 = inttoptr i64 %.sroa.2.0.copyload to ptr
+  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
   br i1 %i.a, label %bb.b, label %.critedge.i
 
@@ -338,8 +342,9 @@ define void @_Z16gpu_copyCpuToGpu7SuperOp(ptr nofree noundef readonly byval(%str
 bb.a:
   %1 = alloca %struct.QuESTEnv, align 4           ; 5 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !9
-  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %.sroa.2.0.copyload)
+  %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !9
+  %2 = inttoptr i64 %.sroa.2.0.copyload to ptr
+  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
   br i1 %i.a, label %bb.b, label %.critedge.i
 
@@ -369,8 +374,9 @@ define void @_Z16gpu_copyGpuToCpu7SuperOp(ptr nofree noundef readonly byval(%str
 bb.a:
   %1 = alloca %struct.QuESTEnv, align 4           ; 5 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !9
-  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %.sroa.2.0.copyload)
+  %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !9
+  %2 = inttoptr i64 %.sroa.2.0.copyload to ptr
+  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
   br i1 %i.a, label %bb.b, label %.critedge.i
 
@@ -400,8 +406,9 @@ define void @_Z16gpu_copyCpuToGpu17FullStateDiagMatr(ptr nofree noundef readonly
 bb.a:
   %1 = alloca %struct.QuESTEnv, align 4           ; 5 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !9
-  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %.sroa.2.0.copyload)
+  %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !9
+  %2 = inttoptr i64 %.sroa.2.0.copyload to ptr
+  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
   br i1 %i.a, label %bb.b, label %.critedge.i
 

@@ -205,16 +205,19 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %1 = load <2 x ptr>, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !71
+  %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !71
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %.sroa.7.0.copyload = load i64, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !71
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.sroa.8.0.copyload = load ptr, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !71
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
   %.sroa.8.0 = phi ptr [ %.sroa.8.0.copyload, %bb.c ], [ null, %bb.b ], [ null, %bb.a ] ; 2 uses
+  %.sroa.7.0 = phi i64 [ %.sroa.7.0.copyload, %bb.c ], [ ptrtoint (ptr @tg3__default_free to i64), %bb.b ], [ ptrtoint (ptr @tg3__default_free to i64), %bb.a ]
+  %.sroa.6.0 = phi i64 [ %.sroa.6.0.copyload, %bb.c ], [ ptrtoint (ptr @tg3__default_realloc to i64), %bb.b ], [ ptrtoint (ptr @tg3__default_realloc to i64), %bb.a ]
   %.sroa.0.0 = phi ptr [ %i.b, %bb.c ], [ @tg3__default_alloc, %bb.b ], [ @tg3__default_alloc, %bb.a ] ; 2 uses
-  %2 = phi <2 x ptr> [ %1, %bb.c ], [ <ptr @tg3__default_realloc, ptr @tg3__default_free>, %bb.b ], [ <ptr @tg3__default_realloc, ptr @tg3__default_free>, %bb.a ]
-  %i.c = tail call ptr %.sroa.0.0(i64 noundef 80, ptr noundef %.sroa.8.0) #21 ; 13 uses
+  %i.c = tail call ptr %.sroa.0.0(i64 noundef 80, ptr noundef %.sroa.8.0) #21 ; 14 uses
   %.not34 = icmp eq ptr %i.c, null
   br i1 %.not34, label %bb.f, label %.preheader.preheader
 
@@ -231,7 +234,9 @@ bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   store ptr %.sroa.0.0, ptr %i.h, align 8, !tbaa !71
   %.sroa.6.0..sroa_idx8 = getelementptr inbounds nuw i8, ptr %i.c, i64 56
-  store <2 x ptr> %2, ptr %.sroa.6.0..sroa_idx8, align 8, !tbaa !71
+  store i64 %.sroa.6.0, ptr %.sroa.6.0..sroa_idx8, align 8, !tbaa !71
+  %.sroa.7.0..sroa_idx10 = getelementptr inbounds nuw i8, ptr %i.c, i64 64
+  store i64 %.sroa.7.0, ptr %.sroa.7.0..sroa_idx10, align 8, !tbaa !71
   %.sroa.8.0..sroa_idx12 = getelementptr inbounds nuw i8, ptr %i.c, i64 72
   store ptr %.sroa.8.0, ptr %.sroa.8.0..sroa_idx12, align 8, !tbaa !71
   br i1 %.not, label %.thread, label %bb.e
@@ -634,7 +639,8 @@ tg3json_object_at.exit.i.i:                       ; preds = %tg3__json_number_to
   %i.boj = call fastcc ptr @tg3__arena_strdup(ptr noundef %i.bod, ptr noundef readonly %i.boe, i64 noundef %i.boi) #20 ; 2 uses
   %.not.i132.i.i = icmp eq ptr %i.boj, null
   %i.bok = select i1 %.not.i132.i.i, i32 0, i32 %i.boh
-  store ptr %i.boj, ptr %i.boc, align 8, !tbaa !9
+  %7 = ptrtoint ptr %i.boj to i64
+  store i64 %7, ptr %i.boc, align 8, !tbaa !9
   %.sroa.444.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.boc, i64 8
   store i32 %i.bok, ptr %.sroa.444.0..sroa_idx.i.i, align 8, !tbaa !43
   %i.bol = getelementptr inbounds nuw i8, ptr %i.bob, i64 16
@@ -1037,7 +1043,8 @@ tg3__arena_strdup.exit.i.i:                       ; preds = %tg3__memcpy.exit.i.
   %.0.i245.i.i = phi ptr [ %i.bxl, %tg3__memcpy.exit.i.i.i1168 ], [ null, %tg3json_object_at.exit229.i.i ], [ null, %tg3__arena_alloc.exit.i.i.i1161 ], [ null, %bb.ia ], [ null, %bb.if ], [ null, %bb.ie ], [ null, %bb.id ] ; 2 uses
   %.not.i230.i.i = icmp eq ptr %.0.i245.i.i, null
   %i.bzf = select i1 %.not.i230.i.i, i32 0, i32 %i.bvy
-  store ptr %.0.i245.i.i, ptr %i.bvs, align 8, !tbaa !9
+  %8 = ptrtoint ptr %.0.i245.i.i to i64
+  store i64 %8, ptr %i.bvs, align 8, !tbaa !9
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bvs, i64 8
   store i32 %i.bzf, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !43
   %i.bzg = getelementptr inbounds nuw i8, ptr %i.bvr, i64 16
@@ -1440,7 +1447,8 @@ tg3__arena_strdup.exit.i:                         ; preds = %.lr.ph.i.i148.i, %t
   %.0.i149.i = phi ptr [ %i.cwn, %.lr.ph.i.i148.i ], [ null, %bb.kc ], [ null, %tg3__arena_alloc.exit.i.i1433 ], [ null, %bb.jx ], [ null, %bb.jw ], [ null, %bb.kb ], [ null, %bb.ka ] ; 2 uses
   %.not.i63.i = icmp eq ptr %.0.i149.i, null
   %i.cwr = select i1 %.not.i63.i, i32 0, i32 6
-  store ptr %.0.i149.i, ptr %i.cvb, align 8, !tbaa !9
+  %9 = ptrtoint ptr %.0.i149.i to i64
+  store i64 %9, ptr %i.cvb, align 8, !tbaa !9
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.csn, i64 48
   store i32 %i.cwr, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !43
   br label %bb.kd
@@ -1843,7 +1851,8 @@ tg3__arena_strdup.exit.i1745:                     ; preds = %.lr.ph.i.i.i1744, %
   %.0.i201.i = phi ptr [ %i.eis, %.lr.ph.i.i.i1744 ], [ null, %bb.oh ], [ null, %tg3__arena_alloc.exit.i.i1740 ], [ null, %bb.oc ], [ null, %bb.ob ], [ null, %bb.og ], [ null, %bb.of ] ; 2 uses
   %.not.i199.i = icmp eq ptr %.0.i201.i, null
   %i.eiw = select i1 %.not.i199.i, i32 0, i32 6
-  store ptr %.0.i201.i, ptr %i.ehb, align 8, !tbaa !9
+  %10 = ptrtoint ptr %.0.i201.i to i64
+  store i64 %10, ptr %i.ehb, align 8, !tbaa !9
   store i32 %i.eiw, ptr %i.ehc, align 8, !tbaa !43
   br label %bb.oi
 
@@ -2246,7 +2255,8 @@ bb.l:                                             ; preds = %bb.k
   %i.db = tail call fastcc ptr @tg3__arena_strdup(ptr noundef %i.cu, ptr noundef readonly %i.cw, i64 noundef %i.da) #20 ; 2 uses
   %.not.i52 = icmp eq ptr %i.db, null
   %i.dc = select i1 %.not.i52, i32 0, i32 %i.cz
-  store ptr %i.db, ptr %i.ct, align 8, !tbaa !9
+  %5 = ptrtoint ptr %i.db to i64
+  store i64 %5, ptr %i.ct, align 8, !tbaa !9
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %tg3json_array_get.exit.thread
@@ -2649,7 +2659,8 @@ bb.o:                                             ; preds = %bb.n, %bb.l
   %i.ck = call fastcc ptr @tg3__arena_strdup(ptr noundef %i.ch, ptr noundef nonnull readonly %i.ce, i64 noundef %i.cj) #20 ; 2 uses
   %.not.i79 = icmp eq ptr %i.ck, null
   %i.cl = select i1 %.not.i79, i32 0, i32 %i.ci
-  store ptr %i.ck, ptr %i.cg, align 8, !tbaa !9
+  %6 = ptrtoint ptr %i.ck to i64
+  store i64 %6, ptr %i.cg, align 8, !tbaa !9
   %.sroa.426.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32
   store i32 %i.cl, ptr %.sroa.426.0..sroa_idx, align 8, !tbaa !43
   br label %tg3__json_get.exit.thread.thread
@@ -2882,7 +2893,8 @@ tg3json_object_at.exit:                           ; preds = %.preheader, %bb.y
   %i.gb = call fastcc ptr @tg3__arena_strdup(ptr noundef %i.fv, ptr noundef readonly %i.fw, i64 noundef %i.ga) #20 ; 2 uses
   %.not.i132 = icmp eq ptr %i.gb, null
   %i.gc = select i1 %.not.i132, i32 0, i32 %i.fz
-  store ptr %i.gb, ptr %i.fp, align 8, !tbaa !9
+  %7 = ptrtoint ptr %i.gb to i64
+  store i64 %7, ptr %i.fp, align 8, !tbaa !9
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fp, i64 8
   store i32 %i.gc, ptr %.sroa.44.0..sroa_idx, align 8, !tbaa !43
   %i.gd = load i32, ptr %i.fl, align 4, !tbaa !951
@@ -2938,7 +2950,8 @@ bb.ab:                                            ; preds = %bb.aa
   %i.gt = call fastcc ptr @tg3__arena_strdup(ptr noundef %i.gp, ptr noundef nonnull readonly %i.gn, i64 noundef %i.gs) #20 ; 2 uses
   %.not.i135 = icmp eq ptr %i.gt, null
   %i.gu = select i1 %.not.i135, i32 0, i32 %i.gr
-  store ptr %i.gt, ptr %i.go, align 8, !tbaa !9
+  %8 = ptrtoint ptr %i.gt to i64
+  store i64 %8, ptr %i.go, align 8, !tbaa !9
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 48
   store i32 %i.gu, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !43
   br label %bb.ac
@@ -3082,7 +3095,8 @@ bb.h:                                             ; preds = %bb.f
   %i.at = tail call fastcc ptr @tg3__arena_strdup(ptr noundef %i.am, ptr noundef readonly %i.ao, i64 noundef %i.as) #20 ; 2 uses
   %.not.i = icmp eq ptr %i.at, null
   %i.au = select i1 %.not.i, i32 0, i32 %i.ar
-  store ptr %i.at, ptr %3, align 8, !tbaa !9
+  %6 = ptrtoint ptr %i.at to i64
+  store i64 %6, ptr %3, align 8, !tbaa !9
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 %i.au, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !43
   br label %bb.i
@@ -3485,7 +3499,8 @@ bb.f:                                             ; preds = %bb.a
   %i.x = tail call fastcc ptr @tg3__arena_strdup(ptr noundef %i.q, ptr noundef readonly %i.s, i64 noundef %i.w) #20 ; 2 uses
   %.not.i55 = icmp eq ptr %i.x, null
   %i.y = select i1 %.not.i55, i32 0, i32 %i.v
-  store ptr %i.x, ptr %i.p, align 8, !tbaa !9
+  %5 = ptrtoint ptr %i.x to i64
+  store i64 %5, ptr %i.p, align 8, !tbaa !9
   %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 %i.y, ptr %.sroa.48.0..sroa_idx, align 8, !tbaa !43
   br label %tg3__arena_alloc.exit.thread
@@ -3732,7 +3747,8 @@ tg3__arena_alloc.exit72:                          ; preds = %bb.s
   %i.ed = tail call fastcc ptr @tg3__arena_strdup(ptr noundef %i.dv, ptr noundef readonly %i.dy, i64 noundef %i.ec) #20 ; 2 uses
   %.not.i73 = icmp eq ptr %i.ed, null
   %i.ee = select i1 %.not.i73, i32 0, i32 %i.eb
-  store ptr %i.ed, ptr %i.du, align 8, !tbaa !9
+  %6 = ptrtoint ptr %i.ed to i64
+  store i64 %6, ptr %i.du, align 8, !tbaa !9
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.du, i64 8
   store i32 %i.ee, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !43
   %i.ef = getelementptr inbounds nuw i8, ptr %i.du, i64 16

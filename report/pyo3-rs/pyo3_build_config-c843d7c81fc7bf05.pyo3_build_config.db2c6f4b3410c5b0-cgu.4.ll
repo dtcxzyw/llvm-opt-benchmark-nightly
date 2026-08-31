@@ -204,20 +204,22 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %0, align 8
   call void @_RNvMNtCskKLDkoKarTP_4core5sliceSh18split_at_uncheckedCsiOEEQt9hBE2_17pyo3_build_config(ptr nonnull sret([32 x i8]) align 8 %i.a, ptr %i.f, i64 %i.c, i64 %i.e, ptr nonnull align 8 @15) #23
-  %.sroa.01.0.copyload = load ptr, ptr %i.a, align 8
+  %.sroa.01.0.copyload = load i64, ptr %i.a, align 8
   %.sroa.32.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.32.0.copyload = load i64, ptr %.sroa.32.0..sroa_idx, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  store ptr %.sroa.4.0.copyload, ptr %0, align 8, !captures !27
+  %1 = inttoptr i64 %.sroa.01.0.copyload to ptr
+  %2 = inttoptr i64 %.sroa.4.0.copyload to ptr
+  store ptr %2, ptr %0, align 8, !captures !27
   store i64 %.sroa.5.0.copyload, ptr %i.b, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.sroa.3.0 = phi i64 [ %.sroa.32.0.copyload, %bb.b ], [ undef, %bb.a ]
-  %.sroa.0.0 = phi ptr [ %.sroa.01.0.copyload, %bb.b ], [ null, %bb.a ]
+  %.sroa.0.0 = phi ptr [ %1, %bb.b ], [ null, %bb.a ]
   %i.g = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0, 0
   %i.h = insertvalue { ptr, i64 } %i.g, i64 %.sroa.3.0, 1
   ret { ptr, i64 } %i.h

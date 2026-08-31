@@ -202,10 +202,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.g, label %bb.c, !dbg !2135
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !2137, !noalias !2124
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %i.b, ptr noundef nonnull align 8 dereferenceable(136) %0, i64 136, i1 false), !dbg !2143
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 136, !dbg !2137
-  store ptr %.val, ptr %.sroa.4.0..sroa_idx.i, align 8, !dbg !2137, !noalias !2124
+  %2 = ptrtoint ptr %.val to i64, !dbg !2137
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !2139, !noalias !2124
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(136) %i.b, ptr noundef nonnull align 8 dereferenceable(136) %0, i64 136, i1 false), !dbg !2137
+  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 136, !dbg !2139
+  store i64 %2, ptr %.sroa.4.0..sroa_idx.i, align 8, !dbg !2139, !noalias !2124
   tail call void @_RNvCs9MrPpZx4smZ_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #15, !dbg !2145, !noalias !2153
   %i.f = tail call noundef align 8 dereferenceable_or_null(144) ptr @_RNvCs9MrPpZx4smZ_7___rustc12___rust_alloc(i64 noundef range(i64 88, 145) 144, i64 noundef 8) #15, !dbg !2156, !noalias !2153 ; 4 uses
   %i.g = icmp eq ptr %i.f, null, !dbg !2157
@@ -608,14 +609,14 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !2134 = distinct !DILocation(line: 93, column: 24, scope: !2121, inlinedAt: !2122)
 !2135 = !DILocation(line: 2411, column: 12, scope: !2136, inlinedAt: !2134)
 !2136 = distinct !DILexicalBlock(scope: !2132, file: !19, line: 2394, column: 9)
-!2137 = !DILocation(line: 144, column: 18, scope: !2138, inlinedAt: !2142)
-!2138 = distinct !DISubprogram(name: "new<rayon_core::spawn::spawn_job::{closure_env#0}<polars_lazy::frame::exitable::{impl#0}::collect_concurrently::{closure_env#1}>>", linkageName: "_RNvMs3_NtCs4BcJZGCY6Ba_10rayon_core3jobINtB5_7HeapJobNCINvNtB7_5spawn9spawn_jobNCNvMNtNtCs7Ga9Brpi21q_11polars_lazy5frame8exitableNtB1m_9LazyFrame20collect_concurrentlys_0E0E3newB1o_", scope: !2140, file: !2139, line: 143, type: !14, scopeLine: 143, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !15)
-!2139 = !DIFile(filename: "src/job.rs", directory: "/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rayon-core-1.13.0", checksumkind: CSK_MD5, checksum: "65269cc8f007379df130cc82641b17f6")
-!2140 = !DINamespace(name: "HeapJob", scope: !2141)
-!2141 = !DINamespace(name: "job", scope: !2114)
-!2142 = distinct !DILocation(line: 92, column: 5, scope: !2121, inlinedAt: !2122)
-!2143 = !DILocation(line: 94, column: 9, scope: !2144, inlinedAt: !2122)
-!2144 = distinct !DILexicalBlock(scope: !2121, file: !2112, line: 93, column: 9)
+!2137 = !DILocation(line: 94, column: 9, scope: !2138, inlinedAt: !2122)
+!2138 = distinct !DILexicalBlock(scope: !2121, file: !2112, line: 93, column: 9)
+!2139 = !DILocation(line: 144, column: 18, scope: !2140, inlinedAt: !2144)
+!2140 = distinct !DISubprogram(name: "new<rayon_core::spawn::spawn_job::{closure_env#0}<polars_lazy::frame::exitable::{impl#0}::collect_concurrently::{closure_env#1}>>", linkageName: "_RNvMs3_NtCs4BcJZGCY6Ba_10rayon_core3jobINtB5_7HeapJobNCINvNtB7_5spawn9spawn_jobNCNvMNtNtCs7Ga9Brpi21q_11polars_lazy5frame8exitableNtB1m_9LazyFrame20collect_concurrentlys_0E0E3newB1o_", scope: !2142, file: !2141, line: 143, type: !14, scopeLine: 143, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !15)
+!2141 = !DIFile(filename: "src/job.rs", directory: "/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/rayon-core-1.13.0", checksumkind: CSK_MD5, checksum: "65269cc8f007379df130cc82641b17f6")
+!2142 = !DINamespace(name: "HeapJob", scope: !2143)
+!2143 = !DINamespace(name: "job", scope: !2114)
+!2144 = distinct !DILocation(line: 92, column: 5, scope: !2121, inlinedAt: !2122)
 !2145 = !DILocation(line: 99, column: 9, scope: !91, inlinedAt: !2146)
 !2146 = distinct !DILocation(line: 210, column: 73, scope: !95, inlinedAt: !2147)
 !2147 = distinct !DILocation(line: 332, column: 9, scope: !99, inlinedAt: !2148)
@@ -623,7 +624,7 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !2149 = distinct !DILocation(line: 248, column: 18, scope: !104, inlinedAt: !2150)
 !2150 = distinct !DILocation(line: 286, column: 19, scope: !2151, inlinedAt: !2152)
 !2151 = distinct !DISubprogram(name: "new<rayon_core::job::HeapJob<rayon_core::spawn::spawn_job::{closure_env#0}<polars_lazy::frame::exitable::{impl#0}::collect_concurrently::{closure_env#1}>>>", linkageName: "_RNvMNtCsgZ49sUHp3tW_5alloc5boxedINtB2_3BoxINtNtCs4BcJZGCY6Ba_10rayon_core3job7HeapJobNCINvNtBJ_5spawn9spawn_jobNCNvMNtNtCs7Ga9Brpi21q_11polars_lazy5frame8exitableNtB1S_9LazyFrame20collect_concurrentlys_0E0EE3newB1U_", scope: !109, file: !105, line: 284, type: !14, scopeLine: 284, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !15)
-!2152 = distinct !DILocation(line: 144, column: 9, scope: !2138, inlinedAt: !2142)
+!2152 = distinct !DILocation(line: 144, column: 9, scope: !2140, inlinedAt: !2144)
 !2153 = !{!2154, !2125}
 !2154 = distinct !{!2154, !2155, !"_RNvMNtCsgZ49sUHp3tW_5alloc5boxedINtB2_3BoxINtNtCs4BcJZGCY6Ba_10rayon_core3job7HeapJobNCINvNtBJ_5spawn9spawn_jobNCNvMNtNtCs7Ga9Brpi21q_11polars_lazy5frame8exitableNtB1S_9LazyFrame20collect_concurrentlys_0E0EE3newB1U_: argument 0"}
 !2155 = distinct !{!2155, !"_RNvMNtCsgZ49sUHp3tW_5alloc5boxedINtB2_3BoxINtNtCs4BcJZGCY6Ba_10rayon_core3job7HeapJobNCINvNtBJ_5spawn9spawn_jobNCNvMNtNtCs7Ga9Brpi21q_11polars_lazy5frame8exitableNtB1S_9LazyFrame20collect_concurrentlys_0E0EE3newB1U_"}
@@ -642,7 +643,7 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !2168 = distinct !DILocation(line: 160, column: 1, scope: !2111)
 !2169 = !DILocation(line: 289, column: 56, scope: !2170, inlinedAt: !2152)
 !2170 = distinct !DILexicalBlock(scope: !2151, file: !105, line: 286, column: 9)
-!2171 = !DILocation(line: 144, column: 33, scope: !2138, inlinedAt: !2142)
+!2171 = !DILocation(line: 144, column: 33, scope: !2140, inlinedAt: !2144)
 !2172 = !DILocation(line: 155, column: 20, scope: !2173)
 !2173 = distinct !DILexicalBlock(scope: !2116, file: !2112, line: 151, column: 5)
 !2174 = !DILocation(line: 155, column: 11, scope: !2173)

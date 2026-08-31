@@ -49,12 +49,11 @@ bb.d:                                             ; preds = %_RNvXs1_NtCsexYYUdY
 
 _RNvMNtCskIWv9cQVR22_11pingora_lru11linked_listNtB2_5Nodes13with_capacity.exit: ; preds = %bb.b, %bb.c
   %.sroa.10.0.i = phi i64 [ %i.e, %bb.c ], [ 8, %bb.b ]
-  %2 = inttoptr i64 %.sroa.10.0.i to ptr
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.8.0..sroa_idx, i8 0, i64 16, i1 false)
   store i64 %1, ptr %0, align 8
   %.sroa.4.0..sroa_idx1 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %2, ptr %.sroa.4.0..sroa_idx1, align 8
+  store i64 %.sroa.10.0.i, ptr %.sroa.4.0..sroa_idx1, align 8
   %.sroa.5.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %.sroa.5.0..sroa_idx2, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -66,7 +65,7 @@ _RNvMNtCskIWv9cQVR22_11pingora_lru11linked_listNtB2_5Nodes13with_capacity.exit: 
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 80
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.10.0..sroa_idx, i8 0, i64 16, i1 false)
-  store ptr inttoptr (i64 8 to ptr), ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 8, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
   store i64 0, ptr %.sroa.5.0..sroa_idx, align 8
   ret void

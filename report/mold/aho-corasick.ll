@@ -202,13 +202,13 @@ _ZNSt5queueIiSt5dequeIiSaIiEEE4pushERKi.exit26:   ; preds = %bb.i, %_ZNSt5dequeI
   br i1 %.not13, label %.loopexit45.loopexit, label %.lr.ph60, !llvm.loop !62
 
 ._crit_edge63:                                    ; preds = %.loopexit45, %._crit_edge.thread, %._crit_edge
+  %2 = load ptr, ptr %i.q, align 8, !tbaa !45, !noalias !63 ; 2 uses
   %i.fz = load ptr, ptr %1, align 8, !tbaa !43    ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.fz, null
   br i1 %.not.i.i.i, label %_ZNSt5queueIiSt5dequeIiSaIiEEED2Ev.exit, label %bb.ad
 
 bb.ad:                                            ; preds = %._crit_edge63
-  %i.ga = load ptr, ptr %i.l, align 8, !tbaa !57  ; 2 uses
-  %2 = load ptr, ptr %i.q, align 8, !tbaa !61     ; 2 uses
+  %i.ga = load ptr, ptr %i.l, align 8, !tbaa !45, !noalias !66 ; 2 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.gc = icmp ult ptr %i.ga, %i.gb
   br i1 %i.gc, label %.lr.ph.i.i.i.i, label %_ZNSt11_Deque_baseIiSaIiEE16_M_destroy_nodesEPPiS3_.exit.i.i.i
@@ -219,7 +219,7 @@ bb.ad:                                            ; preds = %._crit_edge63
   call void @_ZdlPvm(ptr noundef %i.gd, i64 noundef 512) #14
   %i.ge = getelementptr inbounds nuw i8, ptr %.06.i.i.i.i, i64 8
   %i.gf = icmp ult ptr %.06.i.i.i.i, %2
-  br i1 %i.gf, label %.lr.ph.i.i.i.i, label %_ZNSt11_Deque_baseIiSaIiEE16_M_destroy_nodesEPPiS3_.exit.loopexit.i.i.i, !llvm.loop !63
+  br i1 %i.gf, label %.lr.ph.i.i.i.i, label %_ZNSt11_Deque_baseIiSaIiEE16_M_destroy_nodesEPPiS3_.exit.loopexit.i.i.i, !llvm.loop !69
 
 _ZNSt11_Deque_baseIiSaIiEE16_M_destroy_nodesEPPiS3_.exit.loopexit.i.i.i: ; preds = %.lr.ph.i.i.i.i
   %.pre.i.i.i = load ptr, ptr %1, align 8, !tbaa !43
@@ -588,5 +588,11 @@ attributes #16 = { builtin nounwind allocsize(0) }
 !60 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !61 = !{!39, !40, i64 72}
 !62 = distinct !{!62, !20}
-!63 = distinct !{!63, !20}
+!63 = !{!64}
+!64 = distinct !{!64, !65, !"_ZNSt5dequeIiSaIiEE3endEv: argument 0"}
+!65 = distinct !{!65, !"_ZNSt5dequeIiSaIiEE3endEv"}
+!66 = !{!67}
+!67 = distinct !{!67, !68, !"_ZNSt5dequeIiSaIiEE5beginEv: argument 0"}
+!68 = distinct !{!68, !"_ZNSt5dequeIiSaIiEE5beginEv"}
+!69 = distinct !{!69, !20}
 end_hunk_0

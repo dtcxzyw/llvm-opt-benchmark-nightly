@@ -202,10 +202,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %_RNvMs2_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner6shrinkCsgbWeKYPjk8w_3syn.exit._crit_edge, %bb.a
   %.sroa.511.0.copyload = phi i64 [ %.sroa.511.0.copyload.pre, %_RNvMs2_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner6shrinkCsgbWeKYPjk8w_3syn.exit._crit_edge ], [ %i.c, %bb.a ] ; 2 uses
   %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.410.0.copyload = load ptr, ptr %.sroa.410.0..sroa_idx, align 8, !nonnull !4, !noundef !4
+  %.sroa.410.0.copyload = load i64, ptr %.sroa.410.0..sroa_idx, align 8 ; 2 uses
+  %1 = inttoptr i64 %.sroa.410.0.copyload to ptr
   %i.f = icmp ult i64 %.sroa.511.0.copyload, 288230376151711744
   tail call void @llvm.assume(i1 %i.f)
-  %i.g = insertvalue { ptr, i64 } poison, ptr %.sroa.410.0.copyload, 0
+  %2 = icmp ne i64 %.sroa.410.0.copyload, 0
+  tail call void @llvm.assume(i1 %2)
+  %i.g = insertvalue { ptr, i64 } poison, ptr %1, 0
   %i.h = insertvalue { ptr, i64 } %i.g, i64 %.sroa.511.0.copyload, 1
   ret { ptr, i64 } %i.h
 
@@ -258,10 +261,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %_RNvMs2_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner6shrinkCsgbWeKYPjk8w_3syn.exit._crit_edge, %bb.a
   %.sroa.511.0.copyload = phi i64 [ %.sroa.511.0.copyload.pre, %_RNvMs2_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner6shrinkCsgbWeKYPjk8w_3syn.exit._crit_edge ], [ %i.c, %bb.a ] ; 2 uses
   %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.410.0.copyload = load ptr, ptr %.sroa.410.0..sroa_idx, align 8, !nonnull !4, !noundef !4
+  %.sroa.410.0.copyload = load i64, ptr %.sroa.410.0..sroa_idx, align 8 ; 2 uses
+  %1 = inttoptr i64 %.sroa.410.0.copyload to ptr
   %i.f = icmp sgt i64 %.sroa.511.0.copyload, -1
   tail call void @llvm.assume(i1 %i.f)
-  %i.g = insertvalue { ptr, i64 } poison, ptr %.sroa.410.0.copyload, 0
+  %2 = icmp ne i64 %.sroa.410.0.copyload, 0
+  tail call void @llvm.assume(i1 %2)
+  %i.g = insertvalue { ptr, i64 } poison, ptr %1, 0
   %i.h = insertvalue { ptr, i64 } %i.g, i64 %.sroa.511.0.copyload, 1
   ret { ptr, i64 } %i.h
 
@@ -664,11 +670,12 @@ _RNvXsF_NtCs6et67aoV1xO_11proc_macro23impNtB5_5GroupNtNtCsj6eKBz9Db1c_4core5clon
   %.sroa.846.sroa.5.sroa.0.0.i.i = phi i32 [ %i.ar, %_RNvXsz_NtCs3b5wA5ywLsd_10proc_macro6bridgeINtB5_5GroupNtNtB5_6client11TokenStreamNtBS_4SpanENtNtCsj6eKBz9Db1c_4core5clone5Clone5cloneCsgbWeKYPjk8w_3syn.exit.i.i.i ], [ 0, %bb.f ]
   %.sroa.545.0.i.i = phi ptr [ %i.aq, %_RNvXsz_NtCs3b5wA5ywLsd_10proc_macro6bridgeINtB5_5GroupNtNtB5_6client11TokenStreamNtBS_4SpanENtNtCsj6eKBz9Db1c_4core5clone5Clone5cloneCsgbWeKYPjk8w_3syn.exit.i.i.i ], [ %i.ae, %bb.f ]
   %storemerge.i.i.i = phi i32 [ 0, %_RNvXsz_NtCs3b5wA5ywLsd_10proc_macro6bridgeINtB5_5GroupNtNtB5_6client11TokenStreamNtBS_4SpanENtNtCsj6eKBz9Db1c_4core5clone5Clone5cloneCsgbWeKYPjk8w_3syn.exit.i.i.i ], [ 1, %bb.f ]
+  %2 = ptrtoint ptr %.sroa.545.0.i.i to i64       ; 2 uses
   %.sroa.517.sroa.7.sroa.0.0.extract.trunc29.i = trunc i32 %.sroa.444.0.i.i to i8
   %.sroa.517.sroa.7.sroa.7.0.extract.shift32.i = lshr i32 %.sroa.444.0.i.i, 8
-  %2 = ptrtoint ptr %.sroa.545.0.i.i to i64       ; 2 uses
-  %.sroa.11.sroa.0.0.extract.trunc.i = trunc i64 %2 to i32
-  %.sroa.11.sroa.6.0.extract.shift.i = lshr i64 %2, 32
+  %.sroa.11.sroa.0.0.extract.trunc22.i = trunc i64 %2 to i32
+  %.sroa.11.sroa.6.0.extract.shift23.i = lshr i64 %2, 32
+  %.sroa.11.sroa.6.0.extract.trunc24.i = trunc nuw i64 %.sroa.11.sroa.6.0.extract.shift23.i to i32
   br label %_RNvXsO_Cs6et67aoV1xO_11proc_macro2NtB5_9TokenTreeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i
 
 bb.j:                                             ; preds = %bb.d
@@ -699,8 +706,10 @@ bb.m:                                             ; preds = %bb.j
 
 .noexc12.i:                                       ; preds = %bb.m
   %i.be = extractvalue { ptr, i64 } %i.bd, 0
-  %i.bf = extractvalue { ptr, i64 } %i.bd, 1
+  %i.bf = extractvalue { ptr, i64 } %i.bd, 1      ; 2 uses
   %i.bg = ptrtoint ptr %i.be to i64
+  %3 = lshr i64 %i.bf, 32
+  %4 = trunc nuw i64 %3 to i32
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.j
@@ -712,14 +721,14 @@ bb.n:                                             ; preds = %bb.j
 
 bb.o:                                             ; preds = %bb.n, %.noexc12.i
   %.sroa.09.sroa.0.0.i.i = phi i64 [ %i.bg, %.noexc12.i ], [ %.val1.i.i.i, %bb.n ] ; 3 uses
-  %.sroa.09.sroa.5.0.i.i = phi i64 [ %i.bf, %.noexc12.i ], [ %.sroa.09.sroa.5.0.insert.ext.i.i, %bb.n ] ; 2 uses
+  %.sroa.09.sroa.5.0.i.i = phi i64 [ %i.bf, %.noexc12.i ], [ %.sroa.09.sroa.5.0.insert.ext.i.i, %bb.n ]
+  %.sroa.09.sroa.5.sroa.5.0.i.i = phi i32 [ %4, %.noexc12.i ], [ 0, %bb.n ]
   %.sroa.517.sroa.0.0.extract.trunc.i.a = trunc i64 %.sroa.09.sroa.0.0.i.i to i32
   %.sroa.517.sroa.7.0.extract.shift.i.a = lshr i64 %.sroa.09.sroa.0.0.i.i, 32
   %.sroa.517.sroa.7.sroa.0.0.extract.trunc.i.a = trunc i64 %.sroa.517.sroa.7.0.extract.shift.i.a to i8
   %sum.shift63.i = lshr i64 %.sroa.09.sroa.0.0.i.i, 40
   %.sroa.517.sroa.7.sroa.7.0.extract.trunc.i.a = trunc nuw nsw i64 %sum.shift63.i to i32
   %.sroa.11.sroa.0.0.extract.trunc22.i.a = trunc i64 %.sroa.09.sroa.5.0.i.i to i32
-  %.sroa.11.sroa.6.0.extract.shift23.i = lshr i64 %.sroa.09.sroa.5.0.i.i, 32
   br label %_RNvXsO_Cs6et67aoV1xO_11proc_macro2NtB5_9TokenTreeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i
 
 bb.p:                                             ; preds = %bb.l
@@ -766,15 +775,14 @@ bb.r:                                             ; preds = %bb.q, %.noexc13.i
   %.sroa.517.sroa.7.sroa.7.0.extract.trunc31.i = trunc nuw nsw i64 %sum.shift.i to i32
   %.sroa.15.sroa.0.0.extract.trunc.i = trunc i32 %.sroa.53.sroa.6.0.i.i to i8
   %.sroa.15.sroa.6.0.extract.shift.i = and i32 %.sroa.53.sroa.6.0.i.i, -256
-  %3 = zext i32 %.sroa.53.sroa.5.0.i.i to i64
   br label %_RNvXsO_Cs6et67aoV1xO_11proc_macro2NtB5_9TokenTreeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i
 
 _RNvXsO_Cs6et67aoV1xO_11proc_macro2NtB5_9TokenTreeNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i: ; preds = %bb.r, %bb.o, %bb.k, %_RNvXsF_NtCs6et67aoV1xO_11proc_macro23impNtB5_5GroupNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i
   %.sroa.517.sroa.7.sroa.7.sroa.0.0.i = phi i32 [ %.sroa.517.sroa.7.sroa.7.0.extract.shift32.i, %_RNvXsF_NtCs6et67aoV1xO_11proc_macro23impNtB5_5GroupNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i ], [ %.sroa.517.sroa.7.sroa.7.0.extract.trunc.i.a, %bb.o ], [ 0, %bb.k ], [ %.sroa.517.sroa.7.sroa.7.0.extract.trunc31.i, %bb.r ]
   %.sroa.517.sroa.7.sroa.0.0.i = phi i8 [ %.sroa.517.sroa.7.sroa.0.0.extract.trunc29.i, %_RNvXsF_NtCs6et67aoV1xO_11proc_macro23impNtB5_5GroupNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i ], [ %.sroa.517.sroa.7.sroa.0.0.extract.trunc.i.a, %bb.o ], [ %i.ay, %bb.k ], [ %.sroa.517.sroa.7.sroa.0.0.extract.trunc28.i, %bb.r ]
   %.sroa.517.sroa.0.0.i = phi i32 [ %storemerge.i.i.i, %_RNvXsF_NtCs6et67aoV1xO_11proc_macro23impNtB5_5GroupNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i ], [ %.sroa.517.sroa.0.0.extract.trunc.i.a, %bb.o ], [ %i.ba, %bb.k ], [ %.sroa.517.sroa.0.0.extract.trunc25.i, %bb.r ]
-  %.sroa.11.sroa.6.0.i = phi i64 [ %.sroa.11.sroa.6.0.extract.shift.i, %_RNvXsF_NtCs6et67aoV1xO_11proc_macro23impNtB5_5GroupNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i ], [ %.sroa.11.sroa.6.0.extract.shift23.i, %bb.o ], [ 0, %bb.k ], [ %3, %bb.r ]
-  %.sroa.11.sroa.0.0.i = phi i32 [ %.sroa.11.sroa.0.0.extract.trunc.i, %_RNvXsF_NtCs6et67aoV1xO_11proc_macro23impNtB5_5GroupNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i ], [ %.sroa.11.sroa.0.0.extract.trunc22.i.a, %bb.o ], [ undef, %bb.k ], [ %.sroa.53.sroa.0.0.i.i, %bb.r ]
+  %.sroa.11.sroa.6.0.i = phi i32 [ %.sroa.11.sroa.6.0.extract.trunc24.i, %_RNvXsF_NtCs6et67aoV1xO_11proc_macro23impNtB5_5GroupNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i ], [ %.sroa.09.sroa.5.sroa.5.0.i.i, %bb.o ], [ undef, %bb.k ], [ %.sroa.53.sroa.5.0.i.i, %bb.r ]
+  %.sroa.11.sroa.0.0.i = phi i32 [ %.sroa.11.sroa.0.0.extract.trunc22.i, %_RNvXsF_NtCs6et67aoV1xO_11proc_macro23impNtB5_5GroupNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i ], [ %.sroa.11.sroa.0.0.extract.trunc22.i.a, %bb.o ], [ undef, %bb.k ], [ %.sroa.53.sroa.0.0.i.i, %bb.r ]
   %.sroa.15.sroa.6.sroa.0.0.i = phi i32 [ %.sroa.846.sroa.5.sroa.0.0.i.i, %_RNvXsF_NtCs6et67aoV1xO_11proc_macro23impNtB5_5GroupNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i ], [ 0, %bb.o ], [ 0, %bb.k ], [ %.sroa.15.sroa.6.0.extract.shift.i, %bb.r ]
   %.sroa.15.sroa.0.0.i = phi i8 [ %.sroa.846.sroa.0.0.i.i, %_RNvXsF_NtCs6et67aoV1xO_11proc_macro23impNtB5_5GroupNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i ], [ %i.au, %bb.o ], [ undef, %bb.k ], [ %.sroa.15.sroa.0.0.extract.trunc.i, %bb.r ]
   %.sroa.21.0.i = phi i16 [ undef, %_RNvXsF_NtCs6et67aoV1xO_11proc_macro23impNtB5_5GroupNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone.exit.i.i ], [ undef, %bb.o ], [ undef, %bb.k ], [ %.sroa.53.sroa.9.0.i.i, %bb.r ]
@@ -789,7 +797,8 @@ _RNvXsO_Cs6et67aoV1xO_11proc_macro2NtB5_9TokenTreeNtNtCsj6eKBz9Db1c_4core5clone5
   %.sroa.517.sroa.7.0.insert.shift.i = shl nuw i64 %.sroa.517.sroa.7.0.insert.ext.i, 32
   %.sroa.517.sroa.0.0.insert.ext.i = zext i32 %.sroa.517.sroa.0.0.i to i64
   %.sroa.517.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.517.sroa.7.0.insert.shift.i, %.sroa.517.sroa.0.0.insert.ext.i
-  %.sroa.11.sroa.6.0.insert.shift.i = shl nuw i64 %.sroa.11.sroa.6.0.i, 32
+  %.sroa.11.sroa.6.0.insert.ext.i = zext i32 %.sroa.11.sroa.6.0.i to i64
+  %.sroa.11.sroa.6.0.insert.shift.i = shl nuw i64 %.sroa.11.sroa.6.0.insert.ext.i, 32
   %.sroa.11.sroa.0.0.insert.ext.i = zext i32 %.sroa.11.sroa.0.0.i to i64
   %.sroa.11.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.11.sroa.6.0.insert.shift.i, %.sroa.11.sroa.0.0.insert.ext.i
   %.sroa.15.sroa.0.0.insert.ext.i = zext i8 %.sroa.15.sroa.0.0.i to i32

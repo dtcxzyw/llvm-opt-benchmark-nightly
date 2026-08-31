@@ -77,7 +77,6 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %2, ptr %i.a, align 8
   br label %bb.e
@@ -480,7 +479,7 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i)
   store i64 7, ptr %i.a, align 8
   store i64 1, ptr %.sroa.7.0..sroa_idx, align 8
-  store ptr null, ptr %.sroa.9.0..sroa_idx, align 8
+  store i64 0, ptr %.sroa.9.0..sroa_idx, align 8
   %.val = load i64, ptr %i.d, align 8, !noundef !5
   %i.i = tail call i64 @llvm.uadd.sat.i64(i64 %.val, i64 1) ; 3 uses
   %i.j = load i64, ptr %i.e, align 8, !alias.scope !178, !noundef !5 ; 5 uses
@@ -602,7 +601,7 @@ bb.k:                                             ; preds = %.noexc24
   %.sroa.533.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %.sroa.533.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(88) %.sroa.533, i64 88, i1 false)
   %.sroa.634.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 104
-  store ptr null, ptr %.sroa.634.0..sroa_idx, align 8
+  store i64 0, ptr %.sroa.634.0..sroa_idx, align 8
   %i.bb = load i64, ptr %i.e, align 8, !noundef !5
   %i.bc = add i64 %i.bb, 1                        ; 2 uses
   store i64 %i.bc, ptr %i.e, align 8

@@ -202,11 +202,12 @@ _RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.ac
   store i16 %i.x, ptr %i.bb, align 2
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 2
   store i16 %i.z, ptr %i.bd, align 2
+  %4 = ptrtoint ptr %i.bb to i64
   store i64 -9223372036854775800, ptr %0, align 8
   %.sroa.424.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 1, ptr %.sroa.424.0..sroa_idx, align 8
   %.sroa.424.sroa.4.0..sroa.424.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %i.bb, ptr %.sroa.424.sroa.4.0..sroa.424.0..sroa_idx.sroa_idx, align 8
+  store i64 %4, ptr %.sroa.424.sroa.4.0..sroa.424.0..sroa_idx.sroa_idx, align 8
   %.sroa.424.sroa.5.0..sroa.424.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 1, ptr %.sroa.424.sroa.5.0..sroa.424.0..sroa_idx.sroa_idx, align 8
   br label %bb.f
@@ -299,7 +300,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store i64 -9223372036854775792, ptr %0, align 8
   %.sroa.450.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr inttoptr (i64 -9223372036854775805 to ptr), ptr %.sroa.450.0..sroa_idx, align 8
+  store i64 -9223372036854775805, ptr %.sroa.450.0..sroa_idx, align 8
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -322,7 +323,7 @@ bb.d:                                             ; preds = %bb.f, %bb.e, %bb.b
 bb.e:                                             ; preds = %bb.c
   store i64 -9223372036854775792, ptr %0, align 8
   %.sroa.462.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr inttoptr (i64 -9223372036854775805 to ptr), ptr %.sroa.462.0..sroa_idx, align 8
+  store i64 -9223372036854775805, ptr %.sroa.462.0..sroa_idx, align 8
   br label %bb.d
 
 bb.f:                                             ; preds = %bb.c
@@ -725,25 +726,29 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh16chunks_exact_mutCs53gkmrwjETj_4tiff.exit1: ;
   %i.k = urem i64 %1, %i.f                        ; 2 uses
   %i.l = sub nuw nsw i64 %1, %i.k                 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %i.l
+  %5 = ptrtoint ptr %i.m to i64
+  %6 = ptrtoint ptr %0 to i64
   %i.n = urem i64 %3, %i.i                        ; 2 uses
   %i.o = sub nuw nsw i64 %3, %i.n                 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 %i.o
+  %7 = ptrtoint ptr %2 to i64
+  %8 = ptrtoint ptr %i.p to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !65
-  store ptr %i.m, ptr %i.b, align 8, !noalias !70
+  store i64 %5, ptr %i.b, align 8, !noalias !70
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx, align 8, !noalias !70
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store ptr %0, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !70
+  store i64 %6, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !70
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store i64 %i.l, ptr %.sroa.6.0..sroa_idx, align 8, !noalias !70
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   store i64 %i.f, ptr %.sroa.7.0..sroa_idx, align 8, !noalias !70
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !65
-  store ptr %i.p, ptr %i.a, align 8, !alias.scope !71, !noalias !75
+  store i64 %8, ptr %i.a, align 8, !alias.scope !71, !noalias !75
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %i.n, ptr %.sroa.43.0..sroa_idx, align 8, !alias.scope !71, !noalias !75
   %.sroa.54.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr %2, ptr %.sroa.54.0..sroa_idx, align 8, !alias.scope !71, !noalias !75
+  store i64 %7, ptr %.sroa.54.0..sroa_idx, align 8, !alias.scope !71, !noalias !75
   %.sroa.65.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store i64 %i.o, ptr %.sroa.65.0..sroa_idx, align 8, !alias.scope !71, !noalias !75
   %.sroa.76.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -931,9 +936,10 @@ bb.m:                                             ; preds = %bb.i
 _RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECs53gkmrwjETj_4tiff.exit: ; preds = %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i, %bb.m
   %.sroa.595.0.a = phi ptr [ %i.bb, %bb.m ], [ %i.ay, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i ]
   %.sroa.094.0 = phi i64 [ %i.aq, %bb.m ], [ %i.av, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i ]
+  %.sroa.595.0 = ptrtoint ptr %.sroa.595.0.a to i64
   store i64 %.sroa.094.0, ptr %0, align 8
   %.sroa.062.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.595.0.a, ptr %.sroa.062.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.595.0, ptr %.sroa.062.sroa.4.0..sroa_idx, align 8
   %.sroa.062.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.al, ptr %.sroa.062.sroa.5.0..sroa_idx, align 8
   %.sroa.463.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1011,9 +1017,10 @@ bb.u:                                             ; preds = %bb.q
 _RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECs53gkmrwjETj_4tiff.exit68: ; preds = %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i67, %bb.u
   %.sroa.589.0.a = phi ptr [ %i.cd, %bb.u ], [ %i.ca, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i67 ]
   %.sroa.088.0 = phi i64 [ %i.bs, %bb.u ], [ %i.bx, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i67 ]
+  %.sroa.589.0 = ptrtoint ptr %.sroa.589.0.a to i64
   store i64 %.sroa.088.0, ptr %0, align 8
   %.sroa.050.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.589.0.a, ptr %.sroa.050.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.589.0, ptr %.sroa.050.sroa.4.0..sroa_idx, align 8
   %.sroa.050.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.bn, ptr %.sroa.050.sroa.5.0..sroa_idx, align 8
   %.sroa.451.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1087,9 +1094,10 @@ bb.ab:                                            ; preds = %bb.x
 _RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECs53gkmrwjETj_4tiff.exit70: ; preds = %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i69, %bb.ab
   %.sroa.592.0.a = phi ptr [ %i.dg, %bb.ab ], [ %i.dd, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i69 ]
   %.sroa.091.0 = phi i64 [ %i.cv, %bb.ab ], [ %i.da, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i69 ]
+  %.sroa.592.0 = ptrtoint ptr %.sroa.592.0.a to i64
   store i64 %.sroa.091.0, ptr %0, align 8
   %.sroa.056.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.592.0.a, ptr %.sroa.056.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.592.0, ptr %.sroa.056.sroa.4.0..sroa_idx, align 8
   %.sroa.056.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.cq, ptr %.sroa.056.sroa.5.0..sroa_idx, align 8
   %.sroa.457.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1151,9 +1159,10 @@ bb.ah:                                            ; preds = %bb.ad
 _RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECs53gkmrwjETj_4tiff.exit72: ; preds = %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i71, %bb.ah
   %.sroa.5.0.a = phi ptr [ %i.eb, %bb.ah ], [ %i.dy, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i71 ]
   %.sroa.0.0 = phi i64 [ %i.dq, %bb.ah ], [ %i.dv, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i71 ]
+  %.sroa.5.0 = ptrtoint ptr %.sroa.5.0.a to i64
   store i64 %.sroa.0.0, ptr %0, align 8
   %.sroa.08.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.5.0.a, ptr %.sroa.08.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.5.0, ptr %.sroa.08.sroa.4.0..sroa_idx, align 8
   %.sroa.08.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.dl, ptr %.sroa.08.sroa.5.0..sroa_idx, align 8
   %.sroa.49.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1236,9 +1245,10 @@ bb.ap:                                            ; preds = %bb.al
 _RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECs53gkmrwjETj_4tiff.exit74: ; preds = %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i73, %bb.ap
   %.sroa.580.0.a = phi ptr [ %i.fa, %bb.ap ], [ %i.ex, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i73 ]
   %.sroa.079.0 = phi i64 [ %i.ep, %bb.ap ], [ %i.eu, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i73 ]
+  %.sroa.580.0 = ptrtoint ptr %.sroa.580.0.a to i64
   store i64 %.sroa.079.0, ptr %0, align 8
   %.sroa.020.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.580.0.a, ptr %.sroa.020.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.580.0, ptr %.sroa.020.sroa.4.0..sroa_idx, align 8
   %.sroa.020.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.ek, ptr %.sroa.020.sroa.5.0..sroa_idx, align 8
   %.sroa.421.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1360,9 +1370,10 @@ bb.bd:                                            ; preds = %bb.az
 _RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECs53gkmrwjETj_4tiff.exit76: ; preds = %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i75, %bb.bd
   %.sroa.583.0.a = phi ptr [ %i.gc, %bb.bd ], [ %i.fz, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i75 ]
   %.sroa.082.0 = phi i64 [ %i.fr, %bb.bd ], [ %i.fw, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i75 ]
+  %.sroa.583.0 = ptrtoint ptr %.sroa.583.0.a to i64
   store i64 %.sroa.082.0, ptr %0, align 8
   %.sroa.029.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.583.0.a, ptr %.sroa.029.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.583.0, ptr %.sroa.029.sroa.4.0..sroa_idx, align 8
   %.sroa.029.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.fm, ptr %.sroa.029.sroa.5.0..sroa_idx, align 8
   %.sroa.430.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1422,9 +1433,10 @@ bb.bj:                                            ; preds = %bb.bf
 _RINvXs1_NtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_elemhNtB6_12SpecFromElem9from_elemNtNtBa_5alloc6GlobalECs53gkmrwjETj_4tiff.exit78: ; preds = %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i77, %bb.bj
   %.sroa.586.0.a = phi ptr [ %i.gv, %bb.bj ], [ %i.gs, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i77 ]
   %.sroa.085.0 = phi i64 [ %i.gk, %bb.bj ], [ %i.gp, %_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs53gkmrwjETj_4tiff.exit.i77 ]
+  %.sroa.586.0 = ptrtoint ptr %.sroa.586.0.a to i64
   store i64 %.sroa.085.0, ptr %0, align 8
   %.sroa.044.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.586.0.a, ptr %.sroa.044.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.586.0, ptr %.sroa.044.sroa.4.0..sroa_idx, align 8
   %.sroa.044.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.gf, ptr %.sroa.044.sroa.5.0..sroa_idx, align 8
   %.sroa.445.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24

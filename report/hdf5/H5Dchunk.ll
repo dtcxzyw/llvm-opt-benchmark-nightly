@@ -205,6 +205,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.w
   %i.cc = call ptr @H5T_path_find(ptr noundef %5, ptr noundef nonnull %i.bl) #15 ; 2 uses
+  %13 = ptrtoint ptr %i.cc to i64
   %i.cd = icmp eq ptr %i.cc, null
   br i1 %i.cd, label %bb.z, label %bb.aa
 
@@ -216,6 +217,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.y
   %i.ch = call ptr @H5T_path_find(ptr noundef nonnull %i.bl, ptr noundef nonnull %i.bq) #15 ; 2 uses
+  %14 = ptrtoint ptr %i.ch to i64
   %i.ci = icmp eq ptr %i.ch, null
   br i1 %i.ci, label %bb.ab, label %bb.ac
 
@@ -395,8 +397,8 @@ bb.ap:                                            ; preds = %.thread215, %bb.ao
   %.1160237 = phi i64 [ %i.fd, %.thread215 ], [ %i.fh, %bb.ao ] ; 3 uses
   %.0161234 = phi ptr [ %i.bl, %.thread215 ], [ null, %bb.ao ] ; 4 uses
   %.1164232 = phi ptr [ %i.bq, %.thread215 ], [ null, %bb.ao ] ; 4 uses
-  %.1167231 = phi ptr [ %i.ch, %.thread215 ], [ null, %bb.ao ] ; 3 uses
-  %.1169229 = phi ptr [ %i.cc, %.thread215 ], [ null, %bb.ao ] ; 3 uses
+  %.sroa.091.1221 = phi i64 [ %14, %.thread215 ], [ 0, %bb.ao ] ; 3 uses
+  %.sroa.092.1219 = phi i64 [ %13, %.thread215 ], [ 0, %bb.ao ] ; 3 uses
   %i.fi = call noalias ptr @malloc(i64 noundef %.1158238) #16 ; 3 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %8, i64 48
   store ptr %i.fi, ptr %i.fj, align 8, !tbaa !342
@@ -436,8 +438,8 @@ bb.au:                                            ; preds = %bb.ar, %bb.as, %bb.
   %.1160236 = phi i64 [ %.1160237, %bb.ar ], [ %.1160237, %bb.as ], [ %.1160237, %bb.at ], [ %i.fh, %bb.ao ] ; 2 uses
   %.0161235 = phi ptr [ %.0161234, %bb.ar ], [ %.0161234, %bb.as ], [ %.0161234, %bb.at ], [ null, %bb.ao ] ; 5 uses
   %.1164233 = phi ptr [ %.1164232, %bb.ar ], [ %.1164232, %bb.as ], [ %.1164232, %bb.at ], [ null, %bb.ao ] ; 5 uses
-  %.1167230 = phi ptr [ %.1167231, %bb.ar ], [ %.1167231, %bb.as ], [ %.1167231, %bb.at ], [ null, %bb.ao ]
-  %.1169228 = phi ptr [ %.1169229, %bb.ar ], [ %.1169229, %bb.as ], [ %.1169229, %bb.at ], [ null, %bb.ao ]
+  %.sroa.091.1220 = phi i64 [ %.sroa.091.1221, %bb.ar ], [ %.sroa.091.1221, %bb.as ], [ %.sroa.091.1221, %bb.at ], [ 0, %bb.ao ]
+  %.sroa.092.1218 = phi i64 [ %.sroa.092.1219, %bb.ar ], [ %.sroa.092.1219, %bb.as ], [ %.sroa.092.1219, %bb.at ], [ 0, %bb.ao ]
   %i.ft = call noalias ptr @malloc(i64 noundef %.1160236) #16 ; 2 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %8, i64 40
   store ptr %i.ft, ptr %i.fu, align 8, !tbaa !349
@@ -470,10 +472,12 @@ bb.aw:                                            ; preds = %bb.au
   store ptr %.0161235, ptr %i.gg, align 8, !tbaa !358
   %i.gh = getelementptr inbounds nuw i8, ptr %8, i64 80
   store i8 %.2146248, ptr %i.gh, align 8, !tbaa !359
+  %15 = inttoptr i64 %.sroa.092.1218 to ptr
   %i.gi = getelementptr inbounds nuw i8, ptr %8, i64 112
-  store ptr %.1169228, ptr %i.gi, align 8, !tbaa !360
+  store ptr %15, ptr %i.gi, align 8, !tbaa !360
+  %16 = inttoptr i64 %.sroa.091.1220 to ptr
   %i.gj = getelementptr inbounds nuw i8, ptr %8, i64 120
-  store ptr %.1167230, ptr %i.gj, align 8, !tbaa !361
+  store ptr %16, ptr %i.gj, align 8, !tbaa !361
   %i.gk = getelementptr inbounds nuw i8, ptr %8, i64 128
   store ptr %.1153243, ptr %i.gk, align 8, !tbaa !362
   %i.gl = getelementptr inbounds nuw i8, ptr %8, i64 136

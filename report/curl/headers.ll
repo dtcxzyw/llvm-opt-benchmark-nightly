@@ -52,7 +52,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not94103, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d, %bb.h
-  %.0107 = phi ptr [ %.1, %bb.h ], [ null, %bb.d ] ; 3 uses
+  %.sroa.0.0104 = phi i64 [ %.sroa.0.1, %bb.h ], [ 0, %bb.d ] ; 3 uses
   %.063106 = phi i64 [ %.164, %bb.h ], [ 0, %bb.d ] ; 4 uses
   %.067105 = phi ptr [ %.168, %bb.h ], [ null, %bb.d ] ; 3 uses
   %.071104 = phi ptr [ %i.z, %bb.h ], [ %i.m, %bb.d ] ; 3 uses
@@ -79,17 +79,19 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.y = add i64 %.063106, 1
+  %6 = ptrtoint ptr %i.n to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph, %bb.e, %bb.f, %bb.g
   %.168 = phi ptr [ %.071104, %bb.g ], [ %.067105, %bb.f ], [ %.067105, %bb.e ], [ %.067105, %.lr.ph ] ; 2 uses
   %.164 = phi i64 [ %i.y, %bb.g ], [ %.063106, %bb.f ], [ %.063106, %bb.e ], [ %.063106, %.lr.ph ] ; 5 uses
-  %.1 = phi ptr [ %i.n, %bb.g ], [ %.0107, %bb.f ], [ %.0107, %bb.e ], [ %.0107, %.lr.ph ] ; 3 uses
+  %.sroa.0.1 = phi i64 [ %6, %bb.g ], [ %.sroa.0.0104, %bb.f ], [ %.sroa.0.0104, %bb.e ], [ %.sroa.0.0104, %.lr.ph ] ; 2 uses
   %i.z = tail call ptr @Curl_node_next(ptr noundef nonnull %.071104) #3 ; 2 uses
   %.not94.a = icmp eq ptr %i.z, null
   br i1 %.not94.a, label %._crit_edge, label %.lr.ph, !llvm.loop !76
 
 ._crit_edge:                                      ; preds = %bb.h
+  %7 = inttoptr i64 %.sroa.0.1 to ptr             ; 2 uses
   %.not95.a = icmp eq i64 %.164, 0
   br i1 %.not95.a, label %.critedge, label %bb.i
 
@@ -103,7 +105,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.ab, label %..loopexit_crit_edge, label %bb.k
 
 ..loopexit_crit_edge:                             ; preds = %bb.j
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.1, i64 52
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %7, i64 52
   %.pre = load i8, ptr %.phi.trans.insert, align 4, !tbaa !74
   %.pre117 = zext i8 %.pre to i32
   br label %.loopexit
@@ -151,7 +153,7 @@ bb.o:                                             ; preds = %.lr.ph114, %bb.l, %
 .loopexit:                                        ; preds = %bb.n, %..loopexit_crit_edge
   %.pre-phi = phi i32 [ %.pre117, %..loopexit_crit_edge ], [ %i.aj, %bb.n ]
   %.370 = phi ptr [ %.168, %..loopexit_crit_edge ], [ %.172111, %bb.n ]
-  %.3 = phi ptr [ %.1, %..loopexit_crit_edge ], [ %i.ad, %bb.n ]
+  %.3 = phi ptr [ %7, %..loopexit_crit_edge ], [ %i.ad, %bb.n ]
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 4392 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.3, i64 32
   %i.at = load <2 x ptr>, ptr %i.as, align 8, !tbaa !79

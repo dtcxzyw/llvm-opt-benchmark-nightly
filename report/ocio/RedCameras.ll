@@ -202,7 +202,7 @@ bb.a:
   %i.i = tail call ptr @llvm.invariant.start.p0(i64 8, ptr nonnull @_ZN16OpenColorIO_v2_528RED_REDLOGFILM_RWG_to_LINEARL13linSideOffsetE) ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) @_ZN16OpenColorIO_v2_528RED_REDLOGFILM_RWG_to_LINEARL6paramsE, i8 0, i64 24, i1 false)
   %i.j = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #17
-          to label %__cxx_global_var_init.6.exit unwind label %bb.b ; 4 uses
+          to label %__cxx_global_var_init.6.exit unwind label %bb.b ; 6 uses
 
 bb.b:                                             ; preds = %bb.a
   %i.k = landingpad { ptr, i32 }
@@ -230,9 +230,13 @@ __cxx_global_var_init.6.exit:                     ; preds = %bb.a
   store ptr %i.j, ptr @_ZN16OpenColorIO_v2_528RED_REDLOGFILM_RWG_to_LINEARL6paramsE, align 8, !tbaa !8
   %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 32 ; 2 uses
   store ptr %i.p, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_528RED_REDLOGFILM_RWG_to_LINEARL6paramsE, i64 16), align 8, !tbaa !12
-  store <2 x double> <double f0x3FD2C4B12C4B12C4, double f0x3FE56D5B56D5B56D>, ptr %i.j, align 8
+  store i64 4598954434730070724, ptr %i.j, align 8
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8
+  store i64 4604206433122497901, ptr %.sroa.5.0..sroa_idx.i, align 8
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  store <2 x double> <double f0x3FEFA78B793D0BD5, double f0x3F861D21B0BD0ACE>, ptr %.sroa.6.0..sroa_idx.i, align 8
+  store i64 4607085161299643349, ptr %.sroa.6.0..sroa_idx.i, align 8
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.j, i64 24
+  store i64 4577378101804993230, ptr %.sroa.7.0..sroa_idx.i, align 8
   store ptr %i.p, ptr getelementptr inbounds nuw (i8, ptr @_ZN16OpenColorIO_v2_528RED_REDLOGFILM_RWG_to_LINEARL6paramsE, i64 8), align 8, !tbaa !37
   %i.q = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorIdSaIdEED2Ev, ptr nonnull @_ZN16OpenColorIO_v2_528RED_REDLOGFILM_RWG_to_LINEARL6paramsE, ptr nonnull @__dso_handle) #16 ; 0 uses
   tail call void @_ZN16OpenColorIO_v2_59LogOpDataC1EdRKSt6vectorIdSaIdEES5_S5_NS_18TransformDirectionE(ptr noundef nonnull align 8 dereferenceable(252) @_ZN16OpenColorIO_v2_528RED_REDLOGFILM_RWG_to_LINEARL3logE, double noundef 1.000000e+01, ptr noundef nonnull align 8 dereferenceable(24) @_ZN16OpenColorIO_v2_528RED_REDLOGFILM_RWG_to_LINEARL6paramsE, ptr noundef nonnull align 8 dereferenceable(24) @_ZN16OpenColorIO_v2_528RED_REDLOGFILM_RWG_to_LINEARL6paramsE, ptr noundef nonnull align 8 dereferenceable(24) @_ZN16OpenColorIO_v2_528RED_REDLOGFILM_RWG_to_LINEARL6paramsE, i32 noundef 1)

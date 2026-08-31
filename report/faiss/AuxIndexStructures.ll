@@ -204,12 +204,14 @@ bb.a:
   %i.b = icmp ugt i64 %i.a, 2305843009213693951
   %i.c = shl i64 %i.a, 3
   %i.d = select i1 %i.b, i64 -1, i64 %i.c
-  %i.e = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.d) #27 ; 2 uses
+  %i.e = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.d) #27
+  %1 = ptrtoint ptr %i.e to i64                   ; 2 uses
   %i.f = load i64, ptr %0, align 8, !tbaa !38     ; 2 uses
   %i.g = icmp ugt i64 %i.f, 4611686018427387903
   %i.h = shl i64 %i.f, 2
   %i.i = select i1 %i.g, i64 -1, i64 %i.h
-  %i.j = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.i) #27 ; 2 uses
+  %i.j = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.i) #27
+  %2 = ptrtoint ptr %i.j to i64                   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !46   ; 5 uses
@@ -219,9 +221,9 @@ bb.a:
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store ptr %i.e, ptr %i.m, align 8, !tbaa !56
+  store i64 %1, ptr %i.m, align 8, !tbaa !56
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  store ptr %i.j, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !57
+  store i64 %2, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !57
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   store ptr %i.p, ptr %i.l, align 8, !tbaa !46
   br label %_ZNSt6vectorIN5faiss10BufferList6BufferESaIS2_EE9push_backERKS2_.exit
@@ -250,9 +252,9 @@ _ZNKSt6vectorIN5faiss10BufferList6BufferESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ;
   %i.aa = shl nuw nsw i64 %i.z, 4
   %i.ab = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aa) #27 ; 4 uses
   %i.ac = getelementptr inbounds i8, ptr %i.ab, i64 %i.t ; 3 uses
-  store ptr %i.e, ptr %i.ac, align 8, !tbaa !56
+  store i64 %1, ptr %i.ac, align 8, !tbaa !56
   %.sroa.5.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
-  store ptr %i.j, ptr %.sroa.5.0..sroa_idx2, align 8, !tbaa !57
+  store i64 %2, ptr %.sroa.5.0..sroa_idx2, align 8, !tbaa !57
   %i.ad = icmp sgt i64 %i.t, 0
   br i1 %i.ad, label %bb.e, label %_ZNSt6vectorIN5faiss10BufferList6BufferESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
 
@@ -406,6 +408,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define noundef nonnull align 8 dereferenceable(40) ptr @_ZN5faiss24RangeSearchPartialResult10new_resultEl(ptr noundef nonnull align 8 dereferenceable(72) %0, i64 noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  %2 = ptrtoint ptr %0 to i64                     ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !73   ; 10 uses
@@ -419,7 +422,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i64 0, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !18
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  store ptr %0, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !75
+  store i64 %2, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !75
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.0..sroa_idx, i8 0, i64 16, i1 false)
@@ -454,7 +457,7 @@ _ZNKSt6vectorIN5faiss16RangeQueryResultESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; 
   %.sroa.5.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   store i64 0, ptr %.sroa.5.0..sroa_idx2, align 8, !tbaa !18
   %.sroa.6.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  store ptr %0, ptr %.sroa.6.0..sroa_idx4, align 8, !tbaa !75
+  store i64 %2, ptr %.sroa.6.0..sroa_idx4, align 8, !tbaa !75
   %.sroa.7.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %i.s, i64 24
   %.not10.i.i.i.i.i = icmp eq ptr %i.g, %i.c
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.0..sroa_idx6, i8 0, i64 16, i1 false)

@@ -202,6 +202,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %2 = ptrtoint ptr %i.b to i64
   %i.c = extractvalue { ptr, i64 } %i.a, 1
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8              ; 2 uses
@@ -213,8 +214,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
+  %.sink = phi i64 [ %2, %bb.b ], [ 0, %bb.a ]
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.b, ptr %i.g, align 8
+  store i64 %.sink, ptr %i.g, align 8
   ret void
 }
 

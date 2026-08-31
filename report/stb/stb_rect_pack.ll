@@ -203,7 +203,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !23   ; 5 uses
-  %i.n = load i32, ptr %i.m, align 8, !tbaa !25   ; 3 uses
+  %3 = ptrtoint ptr %i.l to i64
+  %i.n = load i32, ptr %i.m, align 8, !tbaa !25   ; 4 uses
   %i.o = add nsw i32 %i.n, %i.f                   ; 2 uses
   %.not127 = icmp sgt i32 %i.o, %i.g
   br i1 %.not127, label %._crit_edge.thread, label %.lr.ph
@@ -360,37 +361,49 @@ stbrp__skyline_find_min_y.exit.loopexit.us:       ; preds = %bb.h
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %bb.y
+  %4 = phi i32 [ %9, %bb.y ], [ %i.n, %.preheader.preheader ]
   %.2180 = phi ptr [ %.3, %bb.y ], [ %.0.lcssa210, %.preheader.preheader ] ; 2 uses
   %.173179 = phi ptr [ %i.cy, %bb.y ], [ %.173179.ph, %.preheader.preheader ] ; 2 uses
-  %.175178 = phi ptr [ %.276, %bb.y ], [ %i.m, %.preheader.preheader ]
-  %.178177 = phi ptr [ %.279, %bb.y ], [ %i.l, %.preheader.preheader ]
+  %.175178 = phi ptr [ %.276.lcssa, %bb.y ], [ %i.m, %.preheader.preheader ] ; 2 uses
+  %.sroa.0.1180 = phi i64 [ %.sroa.0.2.lcssa, %bb.y ], [ %3, %.preheader.preheader ]
   %.282176 = phi i32 [ %.383, %bb.y ], [ %.080.lcssa209, %.preheader.preheader ] ; 4 uses
   %.085175 = phi i32 [ %.186, %bb.y ], [ %i.bf, %.preheader.preheader ] ; 3 uses
   %.290174 = phi i32 [ %.391, %bb.y ], [ %.088.lcssa208, %.preheader.preheader ] ; 4 uses
   %i.bo = load i32, ptr %.173179, align 8, !tbaa !25 ; 3 uses
-  %i.bp = sub nsw i32 %i.bo, %i.f                 ; 5 uses
-  br label %bb.o
+  %i.bp = sub nsw i32 %i.bo, %i.f                 ; 6 uses
+  %5 = getelementptr inbounds nuw i8, ptr %.175178, i64 8 ; 2 uses
+  %6 = load ptr, ptr %5, align 8, !tbaa !16       ; 2 uses
+  %7 = load i32, ptr %6, align 8, !tbaa !25
+  %.not97171 = icmp sgt i32 %7, %i.bp
+  br i1 %.not97171, label %bb.p, label %bb.o
 
-bb.o:                                             ; preds = %bb.o, %.preheader
-  %.279 = phi ptr [ %.178177, %.preheader ], [ %i.bq, %bb.o ] ; 2 uses
-  %.276 = phi ptr [ %.175178, %.preheader ], [ %i.br, %bb.o ] ; 4 uses
-  %i.bq = getelementptr inbounds nuw i8, ptr %.276, i64 8 ; 2 uses
+bb.o:                                             ; preds = %.preheader, %bb.o
+  %.279 = phi ptr [ %i.br, %bb.o ], [ %6, %.preheader ] ; 3 uses
+  %.276 = phi ptr [ %i.bq, %bb.o ], [ %5, %.preheader ]
+  %i.bq = getelementptr inbounds nuw i8, ptr %.279, i64 8 ; 2 uses
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !16 ; 2 uses
   %i.bs = load i32, ptr %i.br, align 8, !tbaa !25
   %.not100 = icmp sgt i32 %i.bs, %i.bp
-  br i1 %.not100, label %bb.p, label %bb.o, !llvm.loop !32
+  br i1 %.not100, label %._crit_edge174, label %bb.o, !llvm.loop !32
 
-bb.p:                                             ; preds = %bb.o
-  %3 = load i32, ptr %.276, align 8, !tbaa !25    ; 2 uses
-  %i.bt = icmp slt i32 %3, %i.bo
+._crit_edge174:                                   ; preds = %bb.o
+  %8 = ptrtoint ptr %.276 to i64
+  %.pre = load i32, ptr %.279, align 8, !tbaa !25
+  br label %bb.p
+
+bb.p:                                             ; preds = %._crit_edge174, %.preheader
+  %9 = phi i32 [ %.pre, %._crit_edge174 ], [ %4, %.preheader ] ; 3 uses
+  %.sroa.0.2.lcssa = phi i64 [ %8, %._crit_edge174 ], [ %.sroa.0.1180, %.preheader ] ; 2 uses
+  %.276.lcssa = phi ptr [ %.279, %._crit_edge174 ], [ %.175178, %.preheader ] ; 2 uses
+  %i.bt = icmp slt i32 %9, %i.bo
   br i1 %i.bt, label %.lr.ph.i110, label %stbrp__skyline_find_min_y.exit121
 
 .lr.ph.i110:                                      ; preds = %bb.p, %bb.u
-  %i.bu = phi i32 [ %i.cp, %bb.u ], [ %3, %bb.p ] ; 3 uses
+  %i.bu = phi i32 [ %i.cp, %bb.u ], [ %9, %bb.p ] ; 3 uses
   %.03650.i111 = phi i32 [ %.1.i119, %bb.u ], [ 0, %bb.p ]
   %.03749.i112 = phi i32 [ %.138.i120, %bb.u ], [ 0, %bb.p ] ; 4 uses
   %.03948.i113 = phi i32 [ %.140.i116, %bb.u ], [ 0, %bb.p ] ; 4 uses
-  %.04147.i114 = phi ptr [ %i.cq, %bb.u ], [ %.276, %bb.p ] ; 3 uses
+  %.04147.i114 = phi ptr [ %i.cq, %bb.u ], [ %.276.lcssa, %bb.p ] ; 3 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %.04147.i114, i64 4
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !26 ; 5 uses
   %i.bx = icmp sgt i32 %i.bw, %.03948.i113
@@ -459,13 +472,14 @@ bb.w:                                             ; preds = %bb.v
   br i1 %or.cond107, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w, %bb.v
+  %10 = inttoptr i64 %.sroa.0.2.lcssa to ptr
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w, %stbrp__skyline_find_min_y.exit121
   %.391 = phi i32 [ %.036.lcssa.i109, %bb.x ], [ %.290174, %stbrp__skyline_find_min_y.exit121 ], [ %.290174, %bb.w ]
   %.186 = phi i32 [ %i.bp, %bb.x ], [ %.085175, %stbrp__skyline_find_min_y.exit121 ], [ %.085175, %bb.w ] ; 2 uses
   %.383 = phi i32 [ %.039.lcssa.i108, %bb.x ], [ %.282176, %stbrp__skyline_find_min_y.exit121 ], [ %.282176, %bb.w ] ; 2 uses
-  %.3 = phi ptr [ %.279, %bb.x ], [ %.2180, %stbrp__skyline_find_min_y.exit121 ], [ %.2180, %bb.w ] ; 2 uses
+  %.3 = phi ptr [ %10, %bb.x ], [ %.2180, %stbrp__skyline_find_min_y.exit121 ], [ %.2180, %bb.w ] ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.173179, i64 8
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !16 ; 2 uses
   %.not99 = icmp eq ptr %i.cy, null

@@ -204,6 +204,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @stbsp__raise_to_power10(ptr nofree noundef writeonly captures(none) initializes((0, 8)) %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1, double noundef %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
+  %4 = bitcast double %2 to i64                   ; 3 uses
   %or.cond = icmp ult i32 %3, 23
   br i1 %or.cond, label %bb.b, label %bb.c
 
@@ -212,7 +213,6 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw [8 x i8], ptr @stbsp__bot, i64 %i.a
   %i.c = load double, ptr %i.b, align 8           ; 3 uses
   %i.d = fmul double %2, %i.c                     ; 2 uses
-  %4 = bitcast double %2 to i64
   %i.e = and i64 %4, -134217728
   %i.f = bitcast i64 %i.e to double               ; 3 uses
   %i.g = bitcast double %i.c to i64
@@ -247,8 +247,7 @@ bb.e:                                             ; preds = %bb.d
   %i.w = getelementptr inbounds [8 x i8], ptr @stbsp__negbot, i64 %i.v
   %i.x = load double, ptr %i.w, align 8           ; 3 uses
   %i.y = fmul double %2, %i.x                     ; 2 uses
-  %5 = bitcast double %2 to i64
-  %i.z = and i64 %5, -134217728
+  %i.z = and i64 %4, -134217728
   %i.aa = bitcast i64 %i.z to double              ; 3 uses
   %i.ab = bitcast double %i.x to i64
   %i.ac = and i64 %i.ab, -134217728
@@ -273,12 +272,12 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.ap = fadd double %.0, %i.ao                  ; 5 uses
+  %5 = bitcast double %i.ap to i64
   %i.aq = add nsw i32 %spec.store.select, -1
   %i.ar = zext nneg i32 %i.aq to i64              ; 2 uses
   %i.as = getelementptr inbounds nuw [8 x i8], ptr @stbsp__negtop, i64 %i.ar
   %i.at = load double, ptr %i.as, align 8         ; 4 uses
-  %6 = bitcast double %i.ap to i64
-  %i.au = and i64 %6, -134217728
+  %i.au = and i64 %5, -134217728
   %i.av = bitcast i64 %i.au to double             ; 3 uses
   %i.aw = bitcast double %i.at to i64
   %i.ax = and i64 %i.aw, -134217728
@@ -309,8 +308,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bp = getelementptr inbounds [8 x i8], ptr @stbsp__bot, i64 %i.bo
   %i.bq = load double, ptr %i.bp, align 8         ; 3 uses
   %i.br = fmul double %2, %i.bq                   ; 4 uses
-  %7 = bitcast double %2 to i64
-  %i.bs = and i64 %7, -134217728
+  %i.bs = and i64 %4, -134217728
   %i.bt = bitcast i64 %i.bs to double             ; 3 uses
   %i.bu = bitcast double %i.bq to i64
   %i.bv = and i64 %i.bu, -134217728
@@ -328,11 +326,11 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.ce = sub nsw i32 %i.t, %spec.store.select2
   %i.cf = fadd double %i.br, %i.cd                ; 4 uses
+  %6 = bitcast double %i.cf to i64
   %i.cg = zext nneg i32 %i.ce to i64
   %i.ch = getelementptr inbounds nuw [8 x i8], ptr @stbsp__bot, i64 %i.cg
   %i.ci = load double, ptr %i.ch, align 8         ; 4 uses
-  %8 = bitcast double %i.cf to i64
-  %i.cj = and i64 %8, -134217728
+  %i.cj = and i64 %6, -134217728
   %i.ck = bitcast i64 %i.cj to double             ; 3 uses
   %i.cl = bitcast double %i.ci to i64
   %i.cm = and i64 %i.cl, -134217728
@@ -358,12 +356,12 @@ bb.k:                                             ; preds = %bb.i, %bb.j, %bb.h
 
 bb.l:                                             ; preds = %bb.k
   %i.da = fadd double %.1, %i.cz                  ; 5 uses
+  %7 = bitcast double %i.da to i64
   %i.db = add nsw i32 %spec.store.select, -1
   %i.dc = zext nneg i32 %i.db to i64              ; 2 uses
   %i.dd = getelementptr inbounds nuw [8 x i8], ptr @stbsp__top, i64 %i.dc
   %i.de = load double, ptr %i.dd, align 8         ; 4 uses
-  %9 = bitcast double %i.da to i64
-  %i.df = and i64 %9, -134217728
+  %i.df = and i64 %7, -134217728
   %i.dg = bitcast i64 %i.df to double             ; 3 uses
   %i.dh = bitcast double %i.de to i64
   %i.di = and i64 %i.dh, -134217728

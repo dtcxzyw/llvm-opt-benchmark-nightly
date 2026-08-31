@@ -202,17 +202,20 @@ bb.a:
   store i32 %0, ptr %i.d, align 4
   store i64 %1, ptr %i.c, align 8
   store i64 %2, ptr %i.b, align 8
-  store ptr %i.c, ptr %i.a, align 8
+  %3 = ptrtoint ptr %i.c to i64
+  %4 = ptrtoint ptr %i.d to i64
+  %5 = ptrtoint ptr %i.b to i64
+  store i64 %3, ptr %i.a, align 8
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.22.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt to i64), ptr %.sroa.22.0..sroa_idx, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr %i.d, ptr %i.e, align 8
+  store i64 %4, ptr %i.e, align 8
   %.sroa.26.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store ptr @_RNvXsw_NtNtCskKLDkoKarTP_4core3fmt3nummNtB7_8UpperHex3fmt, ptr %.sroa.26.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXsw_NtNtCskKLDkoKarTP_4core3fmt3nummNtB7_8UpperHex3fmt to i64), ptr %.sroa.26.0..sroa_idx, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store ptr %i.b, ptr %i.f, align 8
+  store i64 %5, ptr %i.f, align 8
   %.sroa.210.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  store ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.210.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt to i64), ptr %.sroa.210.0..sroa_idx, align 8
   call void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr nonnull @161, ptr nonnull %i.a, ptr nonnull align 8 @157) #23
   unreachable
 }

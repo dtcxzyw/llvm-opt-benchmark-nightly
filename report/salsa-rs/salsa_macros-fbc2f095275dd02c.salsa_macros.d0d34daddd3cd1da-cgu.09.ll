@@ -202,8 +202,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.d, ptr %i.a, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %2 = load <2 x ptr>, ptr %.sroa.3.0..sroa_idx, align 8
-  store <2 x ptr> %2, ptr %i.g, align 8
+  %2 = load <2 x i64>, ptr %.sroa.3.0..sroa_idx, align 8
+  %3 = inttoptr <2 x i64> %2 to <2 x ptr>
+  store <2 x ptr> %3, ptr %i.g, align 8
   invoke void @_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCs3Eghgi3KVFH_3syn2ty4TypeENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1r_8adapters3map8map_foldRBQ_NtCsRujiHMkeh3_11proc_macro211TokenStreamuNCNvMs_NtCshVzvyy7iigg_12salsa_macros10tracked_fnNtB3w_5Macro6try_fns1_0NCIB29_B2J_NtNtB2L_3imp11TokenStreamuNCINvXsb_B2L_B2J_INtNtB1p_7collect12FromIteratorB2J_E9from_iterINtB2b_3MapBF_B3p_EE0NCIB29_B4K_NtCstuaXukgBIa_10proc_macro11TokenStreamuNCINvXs6_B4M_B4K_IB5s_B4K_E9from_iterIB6c_B6b_B5a_EE0NCINvNvB1l_8for_each4callB6H_NCINvXsj_B6J_B6H_INtB5u_6ExtendB6H_E6extendIB6c_B7X_B7m_EE0E0E0E0E0EB3y_(ptr %.sroa.0.0.copyload, ptr %.sroa.2.0.copyload, ptr nonnull align 8 %i.a)
           to label %bb.b unwind label %bb.c
 
@@ -606,9 +607,9 @@ define hidden void @_RNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapIB3_I
 bb.a:
   %.sroa.5 = alloca [88 x i8], align 8            ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %.sroa.5, ptr noundef nonnull readonly align 8 dereferenceable(88) %1, i64 88, i1 false)
-  store ptr null, ptr %0, align 8
+  store i64 0, ptr %0, align 8
   %.sroa.34.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store ptr null, ptr %.sroa.34.0..sroa_idx, align 8
+  store i64 0, ptr %.sroa.34.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(88) %.sroa.5, i64 88, i1 false)
   ret void
@@ -619,9 +620,9 @@ define hidden void @_RNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapIB3_I
 bb.a:
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(96) %1, i64 96, i1 false)
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store ptr null, ptr %.sroa.2.0..sroa_idx, align 8
+  store i64 0, ptr %.sroa.2.0..sroa_idx, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 128
-  store ptr null, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 0, ptr %.sroa.4.0..sroa_idx, align 8
   ret void
 }
 
@@ -630,9 +631,9 @@ define hidden void @_RNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapIB3_I
 bb.a:
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store ptr null, ptr %.sroa.2.0..sroa_idx, align 8
+  store i64 0, ptr %.sroa.2.0..sroa_idx, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store ptr null, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 0, ptr %.sroa.4.0..sroa_idx, align 8
   ret void
 }
 

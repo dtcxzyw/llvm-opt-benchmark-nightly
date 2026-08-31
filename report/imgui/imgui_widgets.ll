@@ -205,14 +205,14 @@ bb.t:                                             ; preds = %bb.r, %bb.s, %bb.q
   br i1 %.not91, label %bb.u, label %.thread
 
 .thread:                                          ; preds = %bb.t
-  %11 = load float, ptr %i.au, align 4, !tbaa !178
+  %11 = load i32, ptr %i.au, align 4, !tbaa !178
   %i.cs = getelementptr inbounds nuw i8, ptr %i.c, i64 9760
-  %12 = load <2 x float>, ptr %4, align 8, !tbaa !171
-  store <2 x float> %12, ptr %i.cs, align 8, !tbaa !171
+  %12 = load <2 x i32>, ptr %4, align 8, !tbaa !171
+  store <2 x i32> %12, ptr %i.cs, align 8, !tbaa !171
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 9768
   store float %i.bk, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !171
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 9772
-  store float %11, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !171
+  store i32 %11, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !171
   br label %bb.y
 
 bb.u:                                             ; preds = %bb.t
@@ -615,7 +615,7 @@ bb.u:                                             ; preds = %bb.t
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 9256 ; 4 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 9260 ; 2 uses
   %.sroa.6147.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 9264 ; 4 uses
-  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF, float f0xFF7FFFFF>, ptr %i.ck, align 4, !tbaa !171
+  store <4 x i32> <i32 2139095039, i32 2139095039, i32 -8388609, i32 -8388609>, ptr %i.ck, align 4, !tbaa !171
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.cj, ptr noundef nonnull align 4 dereferenceable(16) %i.ck, i64 16, i1 false), !tbaa.struct !231
   %i.cl = getelementptr inbounds nuw i8, ptr %i.a, i64 9280
   %i.cm = getelementptr inbounds nuw i8, ptr %i.a, i64 9272
@@ -1018,15 +1018,15 @@ bb.a:
   %i.h = load float, ptr %i.g, align 4, !tbaa !229
   %i.i = fsub float %i.f, %i.h                    ; 2 uses
   %i.j = fcmp oge float %i.i, 0.000000e+00
-  %0 = getelementptr inbounds nuw i8, ptr %i.a, i64 8036 ; 2 uses
-  %1 = bitcast float %i.i to i32
-  %2 = select i1 %i.j, i32 %1, i32 0
-  store i32 %i.d, ptr %0, align 4
+  %0 = bitcast float %i.i to i32
+  %1 = select i1 %i.j, i32 %0, i32 0
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8036 ; 2 uses
+  store i32 %i.d, ptr %2, align 4
   %.sroa_idx13 = getelementptr inbounds nuw i8, ptr %i.a, i64 8040 ; 2 uses
-  store i32 %2, ptr %.sroa_idx13, align 4
+  store i32 %1, ptr %.sroa_idx13, align 4
   %i.k = tail call noundef float @_ZN5ImGui14GetFrameHeightEv()
   %i.l = tail call noundef zeroext i1 @_ZN5ImGui20BeginViewportSideBarEPKcP13ImGuiViewport8ImGuiDirfi(ptr noundef nonnull @.str.127, ptr noundef %i.b, i32 noundef 2, float noundef %i.k, i32 noundef 1288) ; 2 uses
-  store i32 0, ptr %0, align 4
+  store i32 0, ptr %2, align 4
   store i32 0, ptr %.sroa_idx13, align 4
   br i1 %i.l, label %bb.c, label %bb.b
 
@@ -1429,6 +1429,7 @@ bb.e:                                             ; preds = %bb.d
 _ZL22GetTabBarRefFromTabBarP11ImGuiTabBar.exit:   ; preds = %bb.d, %bb.e
   %.sroa.3.0.i = phi i32 [ %i.y, %bb.e ], [ -1, %bb.d ]
   %.sroa.0.0.i = phi ptr [ null, %bb.e ], [ %0, %bb.d ]
+  %5 = ptrtoint ptr %.sroa.0.0.i to i64
   %i.z = load i32, ptr %i.l, align 8, !tbaa !823  ; 6 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 9140 ; 2 uses
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !824
@@ -1481,7 +1482,7 @@ _ZN8ImVectorI15ImGuiPtrOrIndexE9push_backERKS0_.exit: ; preds = %._ZN8ImVectorI1
   %i.as = phi ptr [ %.pre.i, %._ZN8ImVectorI15ImGuiPtrOrIndexE7reserveEi.exit_crit_edge.i ], [ %i.ak, %bb.i ]
   %i.at = sext i32 %i.ar to i64
   %i.au = getelementptr inbounds [16 x i8], ptr %i.as, i64 %i.at ; 2 uses
-  store ptr %.sroa.0.0.i, ptr %i.au, align 8
+  store i64 %5, ptr %i.au, align 8
   %.sroa.471.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.au, i64 8
   store i32 %.sroa.3.0.i, ptr %.sroa.471.0..sroa_idx, align 8
   %i.av = load i32, ptr %i.l, align 8, !tbaa !823
@@ -1884,7 +1885,7 @@ _ZN8ImVectorI12ImGuiTabItemE9push_backERKS0_.exit: ; preds = %._ZN8ImVectorI12Im
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bc, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.6.0..sroa_idx, i8 0, i64 12, i1 false)
   %.sroa.6338.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bc, i64 28
-  store float -1.000000e+00, ptr %.sroa.6338.0..sroa_idx, align 4
+  store i32 -1082130432, ptr %.sroa.6338.0..sroa_idx, align 4
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bc, i64 32
   store i64 -1, ptr %.sroa.7.0..sroa_idx, align 4
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bc, i64 40

@@ -204,16 +204,17 @@ bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 176
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 180
   store i32 0, ptr %i.c, align 4, !tbaa !50
+  %4 = ptrtoint ptr %i.b to i64
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 192
   %i.e = load i32, ptr %i.d, align 8, !tbaa !309
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 44
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 248 ; 2 uses
-  store ptr %i.b, ptr %i.g, align 8, !tbaa !381
+  store i64 %4, ptr %i.g, align 8, !tbaa !381
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 256
   store i32 %i.e, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !295
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 260
-  %4 = load <2 x float>, ptr %i.f, align 4, !tbaa !311
-  store <2 x float> %4, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !311
+  %5 = load <2 x i32>, ptr %i.f, align 4, !tbaa !311
+  store <2 x i32> %5, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !311
   store ptr %i.g, ptr %2, align 8, !tbaa !380
   %i.h = tail call noundef ptr @_Z33hb_vector_svg_path_draw_funcs_getv() #12
   br label %bb.d

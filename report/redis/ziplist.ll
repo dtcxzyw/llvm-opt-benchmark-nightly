@@ -202,6 +202,8 @@ declare i32 @string2ll(ptr noundef, i64 noundef, ptr noundef) local_unnamed_addr
 ; Function Attrs: nounwind uwtable
 define dso_local void @zipSaveInteger(ptr nofree noundef writeonly captures(none) %0, i64 noundef %1, i8 noundef zeroext %2) local_unnamed_addr #4 {
 bb.a:
+  %3 = alloca i32, align 4                        ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.a = add i8 %2, 64                            ; 2 uses
   %i.b = tail call i8 @llvm.fshl.i8(i8 %i.a, i8 %i.a, i8 7)
   switch i8 %i.b, label %bb.g [
@@ -223,8 +225,11 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.i
 
 bb.d:                                             ; preds = %bb.a
-  %.1.extract.trunc = trunc i64 %1 to i24
-  store i24 %.1.extract.trunc, ptr %0, align 1
+  %.tr = trunc i64 %1 to i32
+  %4 = shl i32 %.tr, 8
+  store i32 %4, ptr %3, align 4, !tbaa !9
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 1
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %0, ptr noundef nonnull align 1 dereferenceable(3) %5, i64 3, i1 false)
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.a
@@ -247,6 +252,7 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 bb.i:                                             ; preds = %bb.c, %bb.e, %bb.g, %bb.f, %bb.d, %bb.b
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   ret void
 }
 

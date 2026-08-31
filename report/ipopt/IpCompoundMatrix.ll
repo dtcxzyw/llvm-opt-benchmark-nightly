@@ -204,7 +204,8 @@ bb.h:                                             ; preds = %bb.g
   %storemerge.idx.i.i.i.i.i = select i1 %i.ay, i64 -8, i64 0
   %storemerge.i.i.i.i.i = getelementptr inbounds i8, ptr %i.aw, i64 %storemerge.idx.i.i.i.i.i
   %i.az = and i32 %i.ah, 63
-  store ptr %storemerge.i.i.i.i.i, ptr %i.am, align 8
+  %7 = ptrtoint ptr %storemerge.i.i.i.i.i to i64
+  store i64 %7, ptr %i.am, align 8
   store i32 %i.az, ptr %i.an, align 8
   %.idx.i = shl nuw nsw i64 %i.at, 3
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.as, i8 0, i64 %.idx.i, i1 false)
@@ -607,11 +608,11 @@ _ZSt4findIN9__gnu_cxx17__normal_iteratorIPPKN5Ipopt7SubjectESt6vectorIS5_SaIS5_E
           to label %.noexc unwind label %bb.p, !inline_history !305
 
 .noexc:                                           ; preds = %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPPKN5Ipopt7SubjectESt6vectorIS5_SaIS5_EEEES5_ET_SB_SB_RKT0_.exit.i
-  %1 = load ptr, ptr %i.l, align 8, !tbaa !300    ; 2 uses
-  %2 = ptrtoint ptr %.sroa.08.0.in.sroa.speculated.i.i.i.i to i64
-  %i.ay = ptrtoint ptr %1 to i64
-  %i.az = sub i64 %2, %i.ay
-  %i.ba = getelementptr inbounds i8, ptr %1, i64 %i.az ; 3 uses
+  %1 = ptrtoint ptr %.sroa.08.0.in.sroa.speculated.i.i.i.i to i64
+  %2 = load ptr, ptr %i.l, align 8, !tbaa !300    ; 2 uses
+  %i.ay = ptrtoint ptr %2 to i64
+  %i.az = sub i64 %1, %i.ay
+  %i.ba = getelementptr inbounds i8, ptr %2, i64 %i.az ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 8 ; 4 uses
   %i.bc = load ptr, ptr %i.n, align 8, !tbaa !300 ; 5 uses
   %.not.i.i.i1 = icmp eq ptr %i.bb, %i.bc
@@ -1014,15 +1015,15 @@ _ZNSt16allocator_traitsISaISt6vectorIbSaIbEEEE9constructIS2_JRKS2_EEEvRS3_PT_DpO
   %.0911.i.i.i = phi ptr [ %i.r, %.lr.ph.i.i.i ], [ %i.c, %_ZNSt16allocator_traitsISaISt6vectorIbSaIbEEEE9constructIS2_JRKS2_EEEvRS3_PT_DpOT0_.exit ] ; 7 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !343)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.012.i.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.0911.i.i.i, i64 40, i1 false), !alias.scope !346
-  store ptr null, ptr %.0911.i.i.i, align 8, !alias.scope !348, !noalias !343
+  store i64 0, ptr %.0911.i.i.i, align 8, !alias.scope !348, !noalias !343
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 8
   store i32 0, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !alias.scope !348, !noalias !343
   %.sroa.51.0..sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 16
-  store ptr null, ptr %.sroa.51.0..sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !alias.scope !348, !noalias !343
+  store i64 0, ptr %.sroa.51.0..sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !alias.scope !348, !noalias !343
   %.sroa.6.0..sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 24
   store i32 0, ptr %.sroa.6.0..sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !alias.scope !348, !noalias !343
   %.sroa.72.0..sroa_idx.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 32
-  store ptr null, ptr %.sroa.72.0..sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !alias.scope !348, !noalias !343
+  store i64 0, ptr %.sroa.72.0..sroa_idx.i.i.i.i.i.i.i.i.i, align 8, !alias.scope !348, !noalias !343
   %i.r = getelementptr inbounds nuw i8, ptr %.0911.i.i.i, i64 40 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.012.i.i.i, i64 40 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.r, %1
@@ -1039,15 +1040,15 @@ _ZNSt6vectorIS_IbSaIbEESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit: ; preds = %.lr
   %.0911.i.i.i29 = phi ptr [ %i.u, %.lr.ph.i.i.i27 ], [ %1, %_ZNSt6vectorIS_IbSaIbEESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit ] ; 7 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !350)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.012.i.i.i28, ptr noundef nonnull align 8 dereferenceable(40) %.0911.i.i.i29, i64 40, i1 false), !alias.scope !353
-  store ptr null, ptr %.0911.i.i.i29, align 8, !alias.scope !355, !noalias !350
+  store i64 0, ptr %.0911.i.i.i29, align 8, !alias.scope !355, !noalias !350
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i30 = getelementptr inbounds nuw i8, ptr %.0911.i.i.i29, i64 8
   store i32 0, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i30, align 8, !alias.scope !355, !noalias !350
   %.sroa.51.0..sroa_idx.i.i.i.i.i.i.i.i.i31 = getelementptr inbounds nuw i8, ptr %.0911.i.i.i29, i64 16
-  store ptr null, ptr %.sroa.51.0..sroa_idx.i.i.i.i.i.i.i.i.i31, align 8, !alias.scope !355, !noalias !350
+  store i64 0, ptr %.sroa.51.0..sroa_idx.i.i.i.i.i.i.i.i.i31, align 8, !alias.scope !355, !noalias !350
   %.sroa.6.0..sroa_idx.i.i.i.i.i.i.i.i.i32 = getelementptr inbounds nuw i8, ptr %.0911.i.i.i29, i64 24
   store i32 0, ptr %.sroa.6.0..sroa_idx.i.i.i.i.i.i.i.i.i32, align 8, !alias.scope !355, !noalias !350
   %.sroa.72.0..sroa_idx.i.i.i.i.i.i.i.i.i33 = getelementptr inbounds nuw i8, ptr %.0911.i.i.i29, i64 32
-  store ptr null, ptr %.sroa.72.0..sroa_idx.i.i.i.i.i.i.i.i.i33, align 8, !alias.scope !355, !noalias !350
+  store i64 0, ptr %.sroa.72.0..sroa_idx.i.i.i.i.i.i.i.i.i33, align 8, !alias.scope !355, !noalias !350
   %i.u = getelementptr inbounds nuw i8, ptr %.0911.i.i.i29, i64 40 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.012.i.i.i28, i64 40 ; 2 uses
   %.not.i.i.i34 = icmp eq ptr %i.u, %i.b
@@ -1149,7 +1150,8 @@ bb.b:                                             ; preds = %bb.a
   %storemerge.i.i.i.i = getelementptr inbounds i8, ptr %i.w, i64 %storemerge.idx.i.i.i.i
   %i.z = trunc i64 %i.o to i32
   %i.aa = and i32 %i.z, 63
-  store ptr %storemerge.i.i.i.i, ptr %i.b, align 8
+  %2 = ptrtoint ptr %storemerge.i.i.i.i to i64
+  store i64 %2, ptr %i.b, align 8
   store i32 %i.aa, ptr %i.c, align 8
   br label %_ZNSt6vectorIbSaIbEE13_M_initializeEm.exit
 

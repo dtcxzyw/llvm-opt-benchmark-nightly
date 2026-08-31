@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.noexc.i, %_RINvNtC
           catch ptr null
   %i.f = extractvalue { ptr, i32 } %i.e, 0
   %i.g = invoke { ptr, ptr } @_RNvNvNtCsG258MDvU3F_3std9panicking12catch_unwind7cleanup(ptr noundef %i.f)
-          to label %bb.d unwind label %bb.c       ; 2 uses
+          to label %0 unwind label %bb.c          ; 2 uses
 
 bb.c:                                             ; preds = %bb.b
   %i.h = landingpad { ptr, i32 }
@@ -216,46 +216,49 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEECsbDLrNlwBX3H_4smol.exit.backedge
 
-bb.d:                                             ; preds = %bb.b
-  %0 = extractvalue { ptr, ptr } %i.g, 0          ; 4 uses
-  %1 = extractvalue { ptr, ptr } %i.g, 1          ; 6 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
-  %i.i = load ptr, ptr %1, align 8, !invariant.load !4 ; 2 uses
+0:                                                ; preds = %bb.b
+  %1 = extractvalue { ptr, ptr } %i.g, 0          ; 4 uses
+  %2 = extractvalue { ptr, ptr } %i.g, 1          ; 6 uses
+  %.not = icmp eq ptr %1, null
+  br i1 %.not, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEECsbDLrNlwBX3H_4smol.exit.backedge, label %bb.d
+
+bb.d:                                             ; preds = %0
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  %i.i = load ptr, ptr %2, align 8, !invariant.load !4 ; 2 uses
   %.not.i.i = icmp eq ptr %i.i, null
   br i1 %.not.i.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  invoke void %i.i(ptr noundef nonnull %0)
+  invoke void %i.i(ptr noundef nonnull %1)
           to label %bb.f unwind label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.k = load i64, ptr %i.j, align 8, !range !205, !invariant.load !4 ; 2 uses
   %i.l = icmp eq i64 %i.k, 0
   br i1 %i.l, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEECsbDLrNlwBX3H_4smol.exit.backedge, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.n = load i64, ptr %i.m, align 8, !range !206, !invariant.load !4
-  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %0, i64 noundef range(i64 1, -9223372036854775808) %i.k, i64 noundef range(i64 1, 536870913) %i.n) #20
+  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %1, i64 noundef range(i64 1, -9223372036854775808) %i.k, i64 noundef range(i64 1, 536870913) %i.n) #20
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEECsbDLrNlwBX3H_4smol.exit.backedge
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEECsbDLrNlwBX3H_4smol.exit.backedge: ; preds = %bb.g, %bb.f, %.thread
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEECsbDLrNlwBX3H_4smol.exit.backedge: ; preds = %bb.g, %bb.f, %.thread, %0
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EEECsbDLrNlwBX3H_4smol.exit
 
 bb.h:                                             ; preds = %bb.e
   %i.o = landingpad { ptr, i32 }
           cleanup
-  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.q = load i64, ptr %i.p, align 8, !range !205, !invariant.load !4 ; 2 uses
   %i.r = icmp eq i64 %i.q, 0
   br i1 %i.r, label %_RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCskKLDkoKarTP_4core3any3AnyNtNtBM_6marker4SendEL_ENtNtNtBM_3ops4drop4Drop4dropCsbDLrNlwBX3H_4smol.exit4.i.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.s = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.t = load i64, ptr %i.s, align 8, !range !206, !invariant.load !4
-  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %0, i64 noundef range(i64 1, -9223372036854775808) %i.q, i64 noundef range(i64 1, 536870913) %i.t) #20
+  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %1, i64 noundef range(i64 1, -9223372036854775808) %i.q, i64 noundef range(i64 1, 536870913) %i.t) #20
   br label %_RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCskKLDkoKarTP_4core3any3AnyNtNtBM_6marker4SendEL_ENtNtNtBM_3ops4drop4Drop4dropCsbDLrNlwBX3H_4smol.exit4.i.i
 
 _RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCskKLDkoKarTP_4core3any3AnyNtNtBM_6marker4SendEL_ENtNtNtBM_3ops4drop4Drop4dropCsbDLrNlwBX3H_4smol.exit4.i.i: ; preds = %bb.i, %bb.h

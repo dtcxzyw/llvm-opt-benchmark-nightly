@@ -202,11 +202,10 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %i.f = phi ptr [ %i.k, %.lr.ph ], [ %i.e, %bb.a ]
   %i.g = phi { ptr, ptr } [ %i.j, %.lr.ph ], [ %i.d, %bb.a ]
-  %i.h = extractvalue { ptr, ptr } %i.g, 1        ; 2 uses
+  %i.h = extractvalue { ptr, ptr } %i.g, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.f, ptr %i.b, align 8, !captures !5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.h) ]
   store ptr %i.h, ptr %i.a, align 8, !captures !5
   %i.i = call noundef nonnull align 8 ptr @_RNvMs7_NtNtCsj6eKBz9Db1c_4core3fmt8buildersNtB5_8DebugMap5entry(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @11, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @12) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)

@@ -205,6 +205,7 @@ bb.e:                                             ; preds = %bb.c
   resume { ptr, i32 } %i.e
 
 _ZN3tbb6detail2r18governor17default_page_sizeEv.exit: ; preds = %bb.a, %bb.b, %bb.d
+  %3 = ptrtoint ptr %2 to i64                     ; 2 uses
   %i.f = load i64, ptr @_ZZN3tbb6detail2r18governor17default_page_sizeEvE9page_size, align 8, !tbaa !30 ; 4 uses
   %i.g = add i64 %1, -1
   %i.h = add i64 %i.g, %i.f
@@ -232,7 +233,6 @@ _ZN3tbb6detail2r18governor17default_page_sizeEv.exit: ; preds = %bb.a, %bb.b, %b
   store i64 %i.x, ptr %i.y, align 8, !tbaa !240
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 0, ptr %i.z, align 8, !tbaa !241
-  %3 = ptrtoint ptr %2 to i64                     ; 2 uses
   %i.aa = trunc i64 %3 to i32
   %i.ab = lshr i64 %3, 32
   %i.ac = trunc nuw i64 %i.ab to i32
@@ -635,6 +635,7 @@ bb.a:
   %i.b = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN3tbb6detail2r15arena27get_waiting_threads_monitorEv(ptr noundef nonnull align 128 dereferenceable(768) %i.a) ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
   %i.c = load ptr, ptr %0, align 8, !tbaa !336, !nonnull !24, !align !25
+  %4 = ptrtoint ptr %i.c to i64
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr inttoptr (i64 3452816845 to ptr), ptr %i.d, align 8, !tbaa !26
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -642,7 +643,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 24
   store i64 %1, ptr %i.f, align 8, !tbaa !30
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %3, i64 32
-  store ptr %i.c, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !208
+  store i64 %4, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !208
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 40
   store i64 0, ptr %i.g, align 8
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN3tbb6detail2r110sleep_nodeINS1_14market_contextEEE, i64 16), ptr %3, align 8, !tbaa !31
@@ -1045,6 +1046,7 @@ bb.a:
   %i.b = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN3tbb6detail2r15arena27get_waiting_threads_monitorEv(ptr noundef nonnull align 128 dereferenceable(768) %i.a) ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
   %i.c = load ptr, ptr %0, align 8, !tbaa !336, !nonnull !24, !align !25
+  %5 = ptrtoint ptr %i.c to i64
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr inttoptr (i64 3452816845 to ptr), ptr %i.d, align 8, !tbaa !26
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 16
@@ -1052,7 +1054,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 24
   store i64 %1, ptr %i.f, align 8, !tbaa !30
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %4, i64 32
-  store ptr %i.c, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !208
+  store i64 %5, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !208
   %i.g = getelementptr inbounds nuw i8, ptr %4, i64 40
   store i64 0, ptr %i.g, align 8
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN3tbb6detail2r110sleep_nodeINS1_14market_contextEEE, i64 16), ptr %4, align 8, !tbaa !31

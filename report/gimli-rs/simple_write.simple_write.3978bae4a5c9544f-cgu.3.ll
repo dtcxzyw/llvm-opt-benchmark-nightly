@@ -202,20 +202,22 @@ bb.bm:                                            ; preds = %bb.bl
   br i1 %.not325, label %bb.bn, label %bb.cd
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.fk = load ptr, ptr %i.eu, align 8, !nonnull !5, !noundef !5 ; 3 uses
+  %i.fk = load ptr, ptr %i.eu, align 8, !nonnull !5, !noundef !5 ; 2 uses
   %i.fl = load i64, ptr %i.d, align 8, !range !30, !noundef !5
   %i.fm = load i64, ptr %i.ev, align 8, !noundef !5 ; 2 uses
   %i.fn = icmp ult i64 %i.fm, 576460752303423488
   call void @llvm.assume(i1 %i.fn)
   %i.fo = getelementptr inbounds nuw [16 x i8], ptr %i.fk, i64 %i.fm
+  %6 = ptrtoint ptr %i.fk to i64                  ; 2 uses
+  %7 = ptrtoint ptr %i.fo to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  store ptr %i.fk, ptr %i.c, align 8
+  store i64 %6, ptr %i.c, align 8
   %.sroa.5154.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
-  store ptr %i.fk, ptr %.sroa.5154.0..sroa_idx, align 8
+  store i64 %6, ptr %.sroa.5154.0..sroa_idx, align 8
   %.sroa.6155.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   store i64 %i.fl, ptr %.sroa.6155.0..sroa_idx, align 8
   %.sroa.7156.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 2 uses
-  store ptr %i.fo, ptr %.sroa.7156.0..sroa_idx, align 8
+  store i64 %7, ptr %.sroa.7156.0..sroa_idx, align 8
   br label %bb.bo
 
 bb.bo:                                            ; preds = %bb.ca, %bb.bn

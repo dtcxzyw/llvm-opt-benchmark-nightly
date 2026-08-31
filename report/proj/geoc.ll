@@ -100,8 +100,9 @@ declare noundef ptr @_Z6pj_newv() local_unnamed_addr #4
 define internal void @_ZL7inverseR8PJ_COORDP8PJconsts(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(32) %0, ptr nofree noundef readonly captures(none) %1) #0 {
 bb.a:
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.sroa.0.sroa.2.0.copyload = load double, ptr %.sroa.0.sroa.2.0..sroa_idx, align 8 ; 4 uses
-  %i.a = tail call double @llvm.fabs.f64(double %.sroa.0.sroa.2.0.copyload)
+  %.sroa.0.sroa.2.0.copyload = load i64, ptr %.sroa.0.sroa.2.0..sroa_idx, align 8 ; 3 uses
+  %2 = bitcast i64 %.sroa.0.sroa.2.0.copyload to double ; 2 uses
+  %i.a = tail call double @llvm.fabs.f64(double %2)
   %or.cond.i = fcmp ogt double %i.a, f0x3FF921FB53FF74E8
   br i1 %or.cond.i, label %_Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD.exit, label %bb.b
 
@@ -114,14 +115,15 @@ bb.b:                                             ; preds = %bb.a
 .sink.split.i:                                    ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 264
   %i.f = load double, ptr %i.e, align 8, !tbaa !40, !noalias !49
-  %i.g = tail call double @tan(double noundef %.sroa.0.sroa.2.0.copyload) #6, !noalias !49
+  %i.g = tail call double @tan(double noundef %2) #6, !noalias !49
   %i.h = fmul double %i.f, %i.g
   %i.i = tail call double @atan(double noundef %i.h) #6, !noalias !49
+  %3 = bitcast double %i.i to i64
   br label %_Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD.exit
 
 _Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD.exit: ; preds = %bb.a, %bb.b, %.sink.split.i
-  %.sroa.4.0 = phi double [ %.sroa.0.sroa.2.0.copyload, %bb.a ], [ %.sroa.0.sroa.2.0.copyload, %bb.b ], [ %i.i, %.sink.split.i ]
-  store double %.sroa.4.0, ptr %.sroa.0.sroa.2.0..sroa_idx, align 8
+  %.sroa.4.0 = phi i64 [ %.sroa.0.sroa.2.0.copyload, %bb.a ], [ %.sroa.0.sroa.2.0.copyload, %bb.b ], [ %3, %.sink.split.i ]
+  store i64 %.sroa.4.0, ptr %.sroa.0.sroa.2.0..sroa_idx, align 8
   ret void
 }
 
@@ -129,8 +131,9 @@ _Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD.exit: ; preds = %bb
 define internal void @_ZL7forwardR8PJ_COORDP8PJconsts(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(32) %0, ptr nofree noundef readonly captures(none) %1) #0 {
 bb.a:
   %.sroa.0.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.sroa.0.sroa.2.0.copyload = load double, ptr %.sroa.0.sroa.2.0..sroa_idx, align 8 ; 4 uses
-  %i.a = tail call double @llvm.fabs.f64(double %.sroa.0.sroa.2.0.copyload)
+  %.sroa.0.sroa.2.0.copyload = load i64, ptr %.sroa.0.sroa.2.0..sroa_idx, align 8 ; 3 uses
+  %2 = bitcast i64 %.sroa.0.sroa.2.0.copyload to double ; 2 uses
+  %i.a = tail call double @llvm.fabs.f64(double %2)
   %or.cond.i = fcmp ogt double %i.a, f0x3FF921FB53FF74E8
   br i1 %or.cond.i, label %_Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD.exit, label %bb.b
 
@@ -143,14 +146,15 @@ bb.b:                                             ; preds = %bb.a
 .sink.split.i:                                    ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 256
   %i.f = load double, ptr %i.e, align 8, !tbaa !40, !noalias !52
-  %i.g = tail call double @tan(double noundef %.sroa.0.sroa.2.0.copyload) #6, !noalias !52
+  %i.g = tail call double @tan(double noundef %2) #6, !noalias !52
   %i.h = fmul double %i.f, %i.g
   %i.i = tail call double @atan(double noundef %i.h) #6, !noalias !52
+  %3 = bitcast double %i.i to i64
   br label %_Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD.exit
 
 _Z22pj_geocentric_latitudePK8PJconsts12PJ_DIRECTION8PJ_COORD.exit: ; preds = %bb.a, %bb.b, %.sink.split.i
-  %.sroa.4.0 = phi double [ %.sroa.0.sroa.2.0.copyload, %bb.a ], [ %.sroa.0.sroa.2.0.copyload, %bb.b ], [ %i.i, %.sink.split.i ]
-  store double %.sroa.4.0, ptr %.sroa.0.sroa.2.0..sroa_idx, align 8
+  %.sroa.4.0 = phi i64 [ %.sroa.0.sroa.2.0.copyload, %bb.a ], [ %.sroa.0.sroa.2.0.copyload, %bb.b ], [ %3, %.sink.split.i ]
+  store i64 %.sroa.4.0, ptr %.sroa.0.sroa.2.0..sroa_idx, align 8
   ret void
 }
 

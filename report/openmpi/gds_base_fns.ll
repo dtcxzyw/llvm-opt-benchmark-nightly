@@ -77,7 +77,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %bb.g
   %.01220 = phi ptr [ %.012, %bb.g ], [ %.01216, %bb.a ] ; 3 uses
   %.019 = phi i32 [ %.1, %bb.g ], [ -1, %bb.a ]   ; 4 uses
-  %.01018 = phi ptr [ %.111, %bb.g ], [ null, %bb.a ] ; 3 uses
+  %.sroa.0.015 = phi i64 [ %.sroa.0.1, %bb.g ], [ 0, %bb.a ] ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.01220, i64 152 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !24
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 32
@@ -108,18 +108,23 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.q = load ptr, ptr %i.d, align 8, !tbaa !24
+  %2 = ptrtoint ptr %i.q to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.b, %bb.f, %bb.e, %.lr.ph
-  %.111 = phi ptr [ %.01018, %.lr.ph ], [ %i.q, %bb.f ], [ %.01018, %bb.e ], [ %.01018, %bb.b ] ; 2 uses
+  %.sroa.0.1 = phi i64 [ %.sroa.0.015, %.lr.ph ], [ %2, %bb.f ], [ %.sroa.0.015, %bb.e ], [ %.sroa.0.015, %bb.b ] ; 2 uses
   %.1 = phi i32 [ %.019, %.lr.ph ], [ %i.o, %bb.f ], [ %.019, %bb.e ], [ %.019, %bb.b ]
   %i.r = getelementptr inbounds nuw i8, ptr %.01220, i64 120
   %.012 = load ptr, ptr %i.r, align 8, !tbaa !31  ; 2 uses
   %.not = icmp eq ptr %.012, getelementptr inbounds nuw (i8, ptr @pmix_gds_globals, i64 120)
-  br i1 %.not, label %.loopexit, label %.lr.ph, !llvm.loop !32
+  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !32
 
-.loopexit:                                        ; preds = %bb.g, %bb.a
-  %.013 = phi ptr [ null, %bb.a ], [ %.111, %bb.g ]
+._crit_edge.loopexit:                             ; preds = %bb.g
+  %3 = inttoptr i64 %.sroa.0.1 to ptr
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %._crit_edge.loopexit, %bb.a
+  %.013 = phi ptr [ null, %bb.a ], [ %3, %._crit_edge.loopexit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret ptr %.013
 }

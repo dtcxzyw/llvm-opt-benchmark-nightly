@@ -205,8 +205,9 @@ bb.c:                                             ; preds = %.noexc
 bb.d:                                             ; preds = %.noexc._crit_edge, %bb.a
   %.sroa.33.0.copyload = phi i64 [ %.sroa.33.0.copyload.pre, %.noexc._crit_edge ], [ %i.c, %bb.a ]
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.22.0.copyload = load ptr, ptr %.sroa.22.0..sroa_idx, align 8
-  %i.h = insertvalue { ptr, i64 } poison, ptr %.sroa.22.0.copyload, 0
+  %.sroa.22.0.copyload = load i64, ptr %.sroa.22.0..sroa_idx, align 8
+  %2 = inttoptr i64 %.sroa.22.0.copyload to ptr
+  %i.h = insertvalue { ptr, i64 } poison, ptr %2, 0
   %i.i = insertvalue { ptr, i64 } %i.h, i64 %.sroa.33.0.copyload, 1
   ret { ptr, i64 } %i.i
 
@@ -478,7 +479,8 @@ bb.u:                                             ; preds = %.noexc._crit_edge.i
   %i.as = extractvalue { i64, i1 } %i.ao, 0
   %.sroa.0.0.i13 = select i1 %i.ap, i64 %..i12, i64 %i.as
   %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.22.0.copyload.i = load ptr, ptr %.sroa.22.0..sroa_idx.i, align 8
+  %.sroa.22.0.copyload.i = load i64, ptr %.sroa.22.0..sroa_idx.i, align 8
+  %5 = inttoptr i64 %.sroa.22.0.copyload.i to ptr
   %i.at = load i64, ptr %i.d, align 8             ; 2 uses
   %i.au = load i32, ptr %i.e, align 8             ; 2 uses
   %i.av = udiv i64 %i.at, 10
@@ -508,7 +510,7 @@ bb.u:                                             ; preds = %.noexc._crit_edge.i
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i64 %.sroa.0.0.i13, ptr %i.bi, align 8
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store ptr %.sroa.22.0.copyload.i, ptr %i.bj, align 8
+  store ptr %5, ptr %i.bj, align 8
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i64 %.sroa.33.0.copyload.i, ptr %i.bk, align 8
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 80

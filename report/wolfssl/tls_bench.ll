@@ -202,7 +202,7 @@ mygetopt.exit.thread.thread:                      ; preds = %bb.b, %.thread669
   %.0171421 = phi i32 [ %.0171421.be, %.lr.ph.backedge ], [ 0, %bb.b ] ; 20 uses
   %.0175420 = phi i32 [ %.0175420.be, %.lr.ph.backedge ], [ 0, %bb.b ] ; 15 uses
   %.0177419 = phi i32 [ %.0177419.be, %.lr.ph.backedge ], [ 11112, %bb.b ] ; 16 uses
-  %.0179418 = phi ptr [ %.0179418.be, %.lr.ph.backedge ], [ @.str, %bb.b ] ; 16 uses
+  %.sroa.0.0415 = phi i64 [ %.sroa.0.0415.be, %.lr.ph.backedge ], [ ptrtoint (ptr @.str to i64), %bb.b ] ; 16 uses
   %.0181417 = phi i32 [ %.0181417.be, %.lr.ph.backedge ], [ 0, %bb.b ] ; 20 uses
   %.0183416 = phi i32 [ %.0183416.be, %.lr.ph.backedge ], [ 0, %bb.b ] ; 16 uses
   %.0185415 = phi i32 [ %.0185415.be, %.lr.ph.backedge ], [ 0, %bb.b ] ; 16 uses
@@ -390,7 +390,7 @@ mygetopt.exit:                                    ; preds = %bb.m, %bb.o, %bb.q,
   %.0171421.be = phi i32 [ %.0171421, %mygetopt.exit ], [ %.0171421, %bb.x ], [ %.0171421, %bb.y ], [ %.0171421, %bb.z ], [ %.0171421, %bb.aa ], [ %.0171421, %bb.ad ], [ %.0171421, %bb.ae ], [ %.0171421, %bb.af ], [ %.0171421, %bb.ag ], [ %.0171421, %bb.ai ], [ %.0171421, %bb.aj ], [ %.0171421, %bb.ak ], [ %.0171421, %bb.al ], [ 1, %bb.am ], [ %.0171421, %mygetopt.exit ]
   %.0175420.be = phi i32 [ %.0175420, %mygetopt.exit ], [ %.0175420, %bb.x ], [ %.0175420, %bb.y ], [ %.0175420, %bb.z ], [ %.0175420, %bb.aa ], [ %.0175420, %bb.ad ], [ 1, %bb.ae ], [ %.0175420, %bb.af ], [ %.0175420, %bb.ag ], [ %.0175420, %bb.ai ], [ %.0175420, %bb.aj ], [ %.0175420, %bb.ak ], [ %.0175420, %bb.al ], [ %.0175420, %bb.am ], [ %.0175420, %mygetopt.exit ]
   %.0177419.be = phi i32 [ %.0177419, %mygetopt.exit ], [ %.0177419, %bb.x ], [ %.0177419, %bb.y ], [ %.0177419, %bb.z ], [ %i.bh, %bb.aa ], [ %.0177419, %bb.ad ], [ %.0177419, %bb.ae ], [ %.0177419, %bb.af ], [ %.0177419, %bb.ag ], [ %.0177419, %bb.ai ], [ %.0177419, %bb.aj ], [ %.0177419, %bb.ak ], [ %.0177419, %bb.al ], [ %.0177419, %bb.am ], [ %.0177419, %mygetopt.exit ]
-  %.0179418.be = phi ptr [ %.0179418, %mygetopt.exit ], [ %.0179418, %bb.x ], [ %.0179418, %bb.y ], [ %i.be, %bb.z ], [ %.0179418, %bb.aa ], [ %.0179418, %bb.ad ], [ %.0179418, %bb.ae ], [ %.0179418, %bb.af ], [ %.0179418, %bb.ag ], [ %.0179418, %bb.ai ], [ %.0179418, %bb.aj ], [ %.0179418, %bb.ak ], [ %.0179418, %bb.al ], [ %.0179418, %bb.am ], [ %.0179418, %mygetopt.exit ]
+  %.sroa.0.0415.be = phi i64 [ %.sroa.0.0415, %mygetopt.exit ], [ %.sroa.0.0415, %bb.x ], [ %.sroa.0.0415, %bb.y ], [ %4, %bb.z ], [ %.sroa.0.0415, %bb.aa ], [ %.sroa.0.0415, %bb.ad ], [ %.sroa.0.0415, %bb.ae ], [ %.sroa.0.0415, %bb.af ], [ %.sroa.0.0415, %bb.ag ], [ %.sroa.0.0415, %bb.ai ], [ %.sroa.0.0415, %bb.aj ], [ %.sroa.0.0415, %bb.ak ], [ %.sroa.0.0415, %bb.al ], [ %.sroa.0.0415, %bb.am ], [ %.sroa.0.0415, %mygetopt.exit ]
   %.0181417.be = phi i32 [ %.0181417, %mygetopt.exit ], [ 1, %bb.x ], [ %.0181417, %bb.y ], [ %.0181417, %bb.z ], [ %.0181417, %bb.aa ], [ %.0181417, %bb.ad ], [ %.0181417, %bb.ae ], [ %.0181417, %bb.af ], [ %.0181417, %bb.ag ], [ %.0181417, %bb.ai ], [ %.0181417, %bb.aj ], [ %.0181417, %bb.ak ], [ %.0181417, %bb.al ], [ %.0181417, %bb.am ], [ %.0181417, %mygetopt.exit ]
   %.0183416.be = phi i32 [ %.0183416, %mygetopt.exit ], [ %.0183416, %bb.x ], [ 1, %bb.y ], [ %.0183416, %bb.z ], [ %.0183416, %bb.aa ], [ %.0183416, %bb.ad ], [ %.0183416, %bb.ae ], [ %.0183416, %bb.af ], [ %.0183416, %bb.ag ], [ %.0183416, %bb.ai ], [ %.0183416, %bb.aj ], [ %.0183416, %bb.ak ], [ %.0183416, %bb.al ], [ %.0183416, %bb.am ], [ %.0183416, %mygetopt.exit ]
   %.0185415.be = phi i32 [ %.0185415, %mygetopt.exit ], [ %.0185415, %bb.x ], [ %.0185415, %bb.y ], [ %.0185415, %bb.z ], [ %.0185415, %bb.aa ], [ %.0185415, %bb.ad ], [ %.0185415, %bb.ae ], [ %.0185415, %bb.af ], [ %.0185415, %bb.ag ], [ %.0185415, %bb.ai ], [ %.0185415, %bb.aj ], [ 1, %bb.ak ], [ %.0185415, %bb.al ], [ %.0185415, %bb.am ], [ %.0185415, %mygetopt.exit ]
@@ -413,6 +413,7 @@ bb.y:                                             ; preds = %mygetopt.exit
 
 bb.z:                                             ; preds = %mygetopt.exit
   %i.be = load ptr, ptr @myoptarg, align 8, !tbaa !19
+  %4 = ptrtoint ptr %i.be to i64
   br label %.lr.ph.backedge
 
 bb.aa:                                            ; preds = %mygetopt.exit
@@ -505,7 +506,7 @@ bb.ao:                                            ; preds = %mygetopt.exit.threa
   %.0169296710 = phi i32 [ 0, %mygetopt.exit.thread.thread ], [ %.0169422, %mygetopt.exit.thread ]
   %.0171305708 = phi i32 [ 0, %mygetopt.exit.thread.thread ], [ %.0171421, %mygetopt.exit.thread ] ; 2 uses
   %.0177324704 = phi i32 [ 11112, %mygetopt.exit.thread.thread ], [ %.0177419, %mygetopt.exit.thread ]
-  %.0179333702 = phi ptr [ @.str, %mygetopt.exit.thread.thread ], [ %.0179418, %mygetopt.exit.thread ]
+  %.sroa.0.0330699 = phi i64 [ ptrtoint (ptr @.str to i64), %mygetopt.exit.thread.thread ], [ %.sroa.0.0415, %mygetopt.exit.thread ]
   %.0181342700 = phi i32 [ 0, %mygetopt.exit.thread.thread ], [ %.0181417, %mygetopt.exit.thread ] ; 2 uses
   %.0183352698 = phi i32 [ 0, %mygetopt.exit.thread.thread ], [ %.0183416, %mygetopt.exit.thread ]
   %.0185361695 = phi i32 [ 0, %mygetopt.exit.thread.thread ], [ %.0185415, %mygetopt.exit.thread ]
@@ -523,7 +524,7 @@ bb.aq:                                            ; preds = %mygetopt.exit.threa
   %.0169296709 = phi i32 [ %.0169296710, %bb.ap ], [ %.0169422, %mygetopt.exit.thread ]
   %.0171305707 = phi i32 [ %.0171305708, %bb.ap ], [ %.0171421, %mygetopt.exit.thread ] ; 6 uses
   %.0177324703 = phi i32 [ %.0177324704, %bb.ap ], [ %.0177419, %mygetopt.exit.thread ] ; 2 uses
-  %.0179333701 = phi ptr [ %.0179333702, %bb.ap ], [ %.0179418, %mygetopt.exit.thread ]
+  %.sroa.0.0330698 = phi i64 [ %.sroa.0.0330699, %bb.ap ], [ %.sroa.0.0415, %mygetopt.exit.thread ]
   %.0181342699 = phi i32 [ %.0181342700, %bb.ap ], [ %.0181417, %mygetopt.exit.thread ] ; 8 uses
   %.0183352697 = phi i32 [ %.0183352698, %bb.ap ], [ %.0183416, %mygetopt.exit.thread ] ; 3 uses
   %.0185361694 = phi i32 [ %.0185361695, %bb.ap ], [ %.0185415, %mygetopt.exit.thread ] ; 3 uses
@@ -676,6 +677,7 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bg
   %.not236 = icmp eq i32 %.0185361694, 0          ; 4 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.do, i64 8 ; 2 uses
   %i.dw = icmp sgt i32 %spec.select, 0            ; 2 uses
+  %5 = inttoptr i64 %.sroa.0.0330698 to ptr
   %i.dx = or i32 %.0181342699, %.0183352697
   %or.cond5.not = icmp eq i32 %i.dx, 0            ; 2 uses
   %i.dy = icmp slt i32 %spec.select, 1
@@ -759,7 +761,7 @@ bb.br:                                            ; preds = %bb.bq, %bb.bp
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33360) %i.fa, i8 0, i64 33360, i1 false)
   %i.fb = getelementptr inbounds nuw i8, ptr %i.ez, i64 16
-  store ptr %.0179333701, ptr %i.fb, align 8, !tbaa !38
+  store ptr %5, ptr %i.fb, align 8, !tbaa !38
   %i.fc = trunc nuw nsw i64 %indvars.iv to i32
   %i.fd = add i32 %.0177324703, %i.fc
   %i.fe = getelementptr inbounds nuw i8, ptr %i.ez, i64 24

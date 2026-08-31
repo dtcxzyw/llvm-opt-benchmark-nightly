@@ -202,8 +202,6 @@ bb.e:                                             ; preds = %bb.d
 
 _RNvNtCs1Rjy1FfFCsk_5rayon3str18find_char_midpoint.exit.thread: ; preds = %bb.c, %.loopexit.i, %_RNvNtCs1Rjy1FfFCsk_5rayon3str18find_char_midpoint.exit
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr null, ptr %2, align 8
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e, %.split3.i
@@ -213,23 +211,27 @@ bb.f:                                             ; preds = %bb.e, %.split3.i
 bb.g:                                             ; preds = %bb.e, %.split3.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sroa.0.1.i
   %i.x = sub i64 %i.c, %.sroa.0.1.i
+  %2 = ptrtoint ptr %i.a to i64
+  %3 = ptrtoint ptr %i.w to i64
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.z = load i64, ptr %i.y, align 8, !noundef !4 ; 2 uses
   %i.aa = add i64 %i.z, %.sroa.0.1.i
-  store ptr %i.a, ptr %0, align 8
+  store i64 %2, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.0.1.i, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.z, ptr %.sroa.5.0..sroa_idx, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %i.w, ptr %i.ab, align 8
+  store i64 %3, ptr %i.ab, align 8
   %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %i.x, ptr %.sroa.45.0..sroa_idx, align 8
-  %.sroa.56.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i64 %i.aa, ptr %.sroa.56.0..sroa_idx, align 8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %_RNvNtCs1Rjy1FfFCsk_5rayon3str18find_char_midpoint.exit.thread
+  %.sink24 = phi i64 [ 40, %bb.g ], [ 24, %_RNvNtCs1Rjy1FfFCsk_5rayon3str18find_char_midpoint.exit.thread ]
+  %.sink = phi i64 [ %i.aa, %bb.g ], [ 0, %_RNvNtCs1Rjy1FfFCsk_5rayon3str18find_char_midpoint.exit.thread ]
+  %.sroa.56.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 %.sink24
+  store i64 %.sink, ptr %.sroa.56.0..sroa_idx, align 8
   ret void
 }
 

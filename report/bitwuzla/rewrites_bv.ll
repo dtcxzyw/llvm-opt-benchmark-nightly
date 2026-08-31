@@ -204,11 +204,12 @@ bb.h:                                             ; preds = %bb.g
   br label %.body
 
 bb.i:                                             ; preds = %bb.f
+  %11 = ptrtoint ptr %i.l to i64
   store ptr %i.m, ptr %3, align 8, !tbaa !27
   %i.u = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   store ptr %i.u, ptr %i.v, align 8, !tbaa !30
-  store ptr %i.l, ptr %i.m, align 8
+  store i64 %11, ptr %i.m, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   store ptr %i.u, ptr %i.w, align 8, !tbaa !31
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
@@ -270,6 +271,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.m, %bb.m
   %i.ar = load ptr, ptr %i.w, align 8, !tbaa !42
+  %12 = ptrtoint ptr %i.ar to i64
   %i.as = invoke noundef ptr @_ZNK4bzla4Node5beginEv(ptr noundef nonnull align 8 dereferenceable(8) %i.an)
           to label %bb.o unwind label %bb.u
 
@@ -279,9 +281,8 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.au = load ptr, ptr %3, align 8, !tbaa !42    ; 2 uses
-  %11 = ptrtoint ptr %i.ar to i64
   %i.av = ptrtoint ptr %i.au to i64
-  %i.aw = sub i64 %11, %i.av
+  %i.aw = sub i64 %12, %i.av
   %i.ax = getelementptr inbounds i8, ptr %i.au, i64 %i.aw
   invoke void @_ZNSt6vectorISt17reference_wrapperIKN4bzla4NodeEESaIS4_EE15_M_range_insertIPS3_EEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EET_SD_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr %i.ax, ptr noundef %i.as, ptr noundef %i.at)
           to label %bb.bb unwind label %bb.u

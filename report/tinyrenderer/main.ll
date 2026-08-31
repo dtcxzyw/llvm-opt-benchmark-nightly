@@ -90,7 +90,7 @@ bb.a:
   %8 = alloca %struct.mat, align 8                ; 5 uses
   %9 = alloca %struct.vec.18, align 16            ; 7 uses
   %10 = alloca %struct.vec.18, align 16           ; 7 uses
-  %11 = alloca %struct.vec, align 16              ; 3 uses
+  %11 = alloca %struct.vec, align 8               ; 4 uses
   %12 = alloca %struct.vec, align 8               ; 2 uses
   %13 = alloca %struct.TGAImage, align 8          ; 10 uses
   %14 = alloca %class.Model, align 8              ; 8 uses
@@ -164,9 +164,11 @@ _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit: ; preds = %bb.f
   br label %bb.ah
 
 bb.h:                                             ; preds = %bb.a
-  store <2 x double> <double -1.000000e+00, double 0.000000e+00>, ptr %11, align 16, !tbaa !41
+  store i64 -4616189618054758400, ptr %11, align 8, !tbaa !41
+  %.sroa.6128.0..sroa_idx = getelementptr inbounds nuw i8, ptr %11, i64 8
+  store i64 0, ptr %.sroa.6128.0..sroa_idx, align 8, !tbaa !41
   %.sroa.7130.0..sroa_idx = getelementptr inbounds nuw i8, ptr %11, i64 16
-  store double 2.000000e+00, ptr %.sroa.7130.0..sroa_idx, align 16, !tbaa !41
+  store i64 4611686018427387904, ptr %.sroa.7130.0..sroa_idx, align 8, !tbaa !41
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %12, i8 0, i64 24, i1 false)
   tail call void @_Z6lookat3vecILi3EES0_S0_(ptr noundef nonnull byval(%struct.vec) align 8 %11, ptr noundef nonnull byval(%struct.vec) align 8 %12, ptr noundef nonnull byval(%struct.vec) align 8 @__const.main.up)
   tail call void @_Z16init_perspectived(double noundef f0x4001E3779B97F4A8)

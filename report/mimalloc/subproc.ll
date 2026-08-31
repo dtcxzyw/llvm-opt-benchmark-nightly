@@ -60,7 +60,8 @@ bb.c:                                             ; preds = %mi_lock_acquire.exi
   br label %.split
 
 bb.d:                                             ; preds = %mi_lock_acquire.exit.split
-  store ptr %i.e, ptr %2, align 8
+  %3 = ptrtoint ptr %i.e to i64
+  store i64 %3, ptr %2, align 8
   store i64 %1, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !21
   store i64 282578783305735, ptr %.sroa.5.0..sroa_idx, align 8
   br label %.split
@@ -105,7 +106,8 @@ bb.c:                                             ; preds = %mi_lock_acquire.exi
   br label %.split
 
 bb.d:                                             ; preds = %mi_lock_acquire.exit.split
-  store ptr %i.e, ptr %3, align 8
+  %4 = ptrtoint ptr %i.e to i64
+  store i64 %4, ptr %3, align 8
   store i64 %1, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !21
   store i64 282578783305735, ptr %.sroa.5.0..sroa_idx, align 8
   br label %.split
@@ -204,7 +206,8 @@ bb.n:                                             ; preds = %bb.c
   br i1 %.not32, label %bb.q, label %.thread35
 
 .thread35:                                        ; preds = %bb.g, %bb.i, %_mi_memid_size.exit.i, %bb.n
-  store ptr %i.e, ptr %3, align 8
+  %4 = ptrtoint ptr %i.e to i64
+  store i64 %4, ptr %3, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %2, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !21
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -436,7 +439,7 @@ bb.c:                                             ; preds = %bb.b
 
 _mi_subproc.exit:                                 ; preds = %bb.a, %bb.b, %bb.c
   %.0.i = phi ptr [ %i.h, %bb.c ], [ @mi_process_subproc_main, %bb.b ], [ @mi_process_subproc_main, %bb.a ] ; 4 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %.0.i, i64 1432 ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %.0.i, i64 1432 ; 5 uses
   %i.j = tail call i32 @pthread_mutex_lock(ptr noundef nonnull %i.i) #10 ; 3 uses
   %.not.i.i = icmp eq i32 %i.j, 0
   br i1 %.not.i.i, label %mi_lock_acquire.exit.i, label %bb.d
@@ -448,14 +451,19 @@ bb.d:                                             ; preds = %_mi_subproc.exit
 mi_lock_acquire.exit.i:                           ; preds = %bb.d, %_mi_subproc.exit
   %i.k = getelementptr inbounds nuw i8, ptr %.0.i, i64 1424 ; 3 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !8
-  %i.m = tail call noalias ptr @mi_theap_zalloc(ptr noundef %i.l, i64 noundef 5904) #10 ; 21 uses
+  %i.m = tail call noalias ptr @mi_theap_zalloc(ptr noundef %i.l, i64 noundef 5904) #10 ; 20 uses
   %i.n = icmp eq ptr %i.m, null
-  %0 = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.i) #10 ; 0 uses
-  br i1 %i.n, label %bb.r, label %bb.e
+  br i1 %i.n, label %0, label %bb.e
+
+0:                                                ; preds = %mi_lock_acquire.exit.i
+  %1 = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.i) #10 ; 0 uses
+  br label %bb.r
 
 bb.e:                                             ; preds = %mi_lock_acquire.exit.i
+  %2 = ptrtoint ptr %i.m to i64                   ; 2 uses
+  %3 = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.i) #10 ; 0 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 1504
-  store ptr %i.m, ptr %i.o, align 8
+  store i64 %2, ptr %i.o, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 1512
   store i64 5904, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !21
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 1520
@@ -481,7 +489,7 @@ _mi_meta_free.exit:                               ; preds = %mi_lock_acquire.exi
 
 bb.g:                                             ; preds = %mi_lock_acquire.exit.i26
   %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 3712 ; 2 uses
-  store ptr %i.m, ptr %i.u, align 8
+  store i64 %2, ptr %i.u, align 8
   %.sroa.7.0..sroa_idx39 = getelementptr inbounds nuw i8, ptr %i.r, i64 3720
   store i64 5904, ptr %.sroa.7.0..sroa_idx39, align 8, !tbaa !21
   %.sroa.8.0..sroa_idx43 = getelementptr inbounds nuw i8, ptr %i.r, i64 3728
@@ -579,8 +587,8 @@ bb.q:                                             ; preds = %mi_subproc_init.exi
   store ptr %i.r, ptr %i.ar, align 8, !tbaa !8
   br label %bb.r
 
-bb.r:                                             ; preds = %mi_lock_acquire.exit.i, %_mi_meta_free.exit, %bb.q, %mi_subproc_destroy.exit
-  %.sroa.022.2 = phi ptr [ %i.m, %bb.q ], [ null, %_mi_meta_free.exit ], [ null, %mi_subproc_destroy.exit ], [ null, %mi_lock_acquire.exit.i ]
+bb.r:                                             ; preds = %_mi_meta_free.exit, %bb.q, %mi_subproc_destroy.exit, %0
+  %.sroa.022.2 = phi ptr [ null, %0 ], [ null, %_mi_meta_free.exit ], [ null, %mi_subproc_destroy.exit ], [ %i.m, %bb.q ]
   ret ptr %.sroa.022.2
 }
 
@@ -978,7 +986,7 @@ bb.d:                                             ; preds = %bb.a, %._crit_edge
 define hidden noundef nonnull ptr @_mi_subproc_main_init() local_unnamed_addr #0 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) @mi_subprocs_lock, i8 0, i64 40, i1 false)
-  store ptr @mi_process_subproc_main, ptr getelementptr inbounds nuw (i8, ptr @mi_process_subproc_main, i64 1504), align 32
+  store i64 ptrtoint (ptr @mi_process_subproc_main to i64), ptr getelementptr inbounds nuw (i8, ptr @mi_process_subproc_main, i64 1504), align 32
   store i64 5904, ptr getelementptr inbounds nuw (i8, ptr @mi_process_subproc_main, i64 1512), align 8, !tbaa !21
   store i64 1103806595074, ptr getelementptr inbounds nuw (i8, ptr @mi_process_subproc_main, i64 1520), align 16
   store ptr null, ptr getelementptr inbounds nuw (i8, ptr @mi_process_subproc_main, i64 1528), align 8, !tbaa !39

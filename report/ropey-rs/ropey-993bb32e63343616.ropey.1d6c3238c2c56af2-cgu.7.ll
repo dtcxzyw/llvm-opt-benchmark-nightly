@@ -204,7 +204,7 @@ _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtNtCs2wCc12M
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %.backedge
 
-bb.z:                                             ; preds = %_RNvXs9_NtNtCskKLDkoKarTP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit39, %bb.k
+bb.z:                                             ; preds = %bb.k, %_RNvXs9_NtNtCskKLDkoKarTP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit39
   %.sroa.31.0 = phi i64 [ %i.bk, %_RNvXs9_NtNtCskKLDkoKarTP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit39 ], [ 0, %bb.k ] ; 2 uses
   %.sroa.20.0 = phi ptr [ %i.bl, %_RNvXs9_NtNtCskKLDkoKarTP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit39 ], [ inttoptr (i64 1 to ptr), %bb.k ]
   %.sroa.17.0 = phi i64 [ %i.v, %_RNvXs9_NtNtCskKLDkoKarTP_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3get.exit39 ], [ %.sroa.5.0, %bb.k ]
@@ -534,13 +534,15 @@ bb.z:                                             ; preds = %.noexc27
   store i64 %i.ca, ptr %i.f, align 8, !noalias !88
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !88
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !88
-  store ptr %i.g, ptr %i.e, align 8, !noalias !88
+  %2 = ptrtoint ptr %i.g to i64
+  %3 = ptrtoint ptr %i.f to i64
+  store i64 %2, ptr %i.e, align 8, !noalias !88
   %.sroa.42.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  store ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.42.0..sroa_idx.i.i, align 8, !noalias !88
+  store i64 ptrtoint (ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt to i64), ptr %.sroa.42.0..sroa_idx.i.i, align 8, !noalias !88
   %i.cb = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  store ptr %i.f, ptr %i.cb, align 8, !noalias !88
+  store i64 %3, ptr %i.cb, align 8, !noalias !88
   %.sroa.46.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 24
-  store ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.46.0..sroa_idx.i.i, align 8, !noalias !88
+  store i64 ptrtoint (ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt to i64), ptr %.sroa.46.0..sroa_idx.i.i, align 8, !noalias !88
   invoke void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @19, ptr noundef nonnull %i.e, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #20
           to label %.noexc29 unwind label %bb.n
 
@@ -660,6 +662,7 @@ _RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5sl
   %i.dt = icmp ule i64 %.sroa.0.0.i.i.i.i, %i.ct
   call void @llvm.assume(i1 %i.dt)
   %i.du = and i64 %i.cx, 576460752303423484       ; 3 uses
+  %4 = getelementptr inbounds nuw [16 x i8], ptr %i.cv, i64 %i.du ; 3 uses
   %.not.i187.i.i = icmp eq i64 %i.du, 0
   br i1 %.not.i187.i.i, label %._crit_edge192.i.i, label %.lr.ph191.i.i
 
@@ -710,10 +713,9 @@ bb.ac:                                            ; preds = %._crit_edge.i.i
 
 ._crit_edge192.i.i:                               ; preds = %.lr.ph191.i.i, %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterhENCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBb_9core_arch3x867___m128iEs_0ENtNtNtB9_6traits8iterator8Iterator5countCs2wCc12Mnjqg_5ropey.exit.i.i
   %.sroa.01.0.i.lcssa.i.i = phi i64 [ %.sroa.0.0.i.i.i.i, %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterhENCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBb_9core_arch3x867___m128iEs_0ENtNtNtB9_6traits8iterator8Iterator5countCs2wCc12Mnjqg_5ropey.exit.i.i ], [ %i.ht, %.lr.ph191.i.i ]
-  %2 = getelementptr inbounds nuw [16 x i8], ptr %i.cv, i64 %i.du ; 3 uses
   %i.er = shl i64 %i.cx, 4
   %.idx.i.i = and i64 %i.er, 48                   ; 3 uses
-  %i.es = getelementptr inbounds nuw i8, ptr %2, i64 %.idx.i.i
+  %i.es = getelementptr inbounds nuw i8, ptr %4, i64 %.idx.i.i
   %i.et = icmp samesign eq i64 %.idx.i.i, 0
   br i1 %i.et, label %._crit_edge197.i.i, label %.lr.ph196.i.i.preheader
 
@@ -726,7 +728,7 @@ bb.ac:                                            ; preds = %._crit_edge.i.i
   br i1 %lcmp.mod.not, label %.lr.ph196.i.i.prol.loopexit, label %.lr.ph196.i.i.prol
 
 .lr.ph196.i.i.prol:                               ; preds = %.lr.ph196.i.i.preheader, %.lr.ph196.i.i.prol
-  %.sroa.012.0.i194.i.i.prol = phi ptr [ %i.ey, %.lr.ph196.i.i.prol ], [ %2, %.lr.ph196.i.i.preheader ] ; 2 uses
+  %.sroa.012.0.i194.i.i.prol = phi ptr [ %i.ey, %.lr.ph196.i.i.prol ], [ %4, %.lr.ph196.i.i.preheader ] ; 2 uses
   %i.ex = phi <16 x i8> [ %i.fc, %.lr.ph196.i.i.prol ], [ zeroinitializer, %.lr.ph196.i.i.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph196.i.i.prol ], [ 0, %.lr.ph196.i.i.preheader ]
   %i.ey = getelementptr inbounds nuw i8, ptr %.sroa.012.0.i194.i.i.prol, i64 16 ; 2 uses
@@ -740,7 +742,7 @@ bb.ac:                                            ; preds = %._crit_edge.i.i
 
 .lr.ph196.i.i.prol.loopexit:                      ; preds = %.lr.ph196.i.i.prol, %.lr.ph196.i.i.preheader
   %.lcssa121.unr = phi <16 x i8> [ poison, %.lr.ph196.i.i.preheader ], [ %i.fc, %.lr.ph196.i.i.prol ]
-  %.sroa.012.0.i194.i.i.unr = phi ptr [ %2, %.lr.ph196.i.i.preheader ], [ %i.ey, %.lr.ph196.i.i.prol ]
+  %.sroa.012.0.i194.i.i.unr = phi ptr [ %4, %.lr.ph196.i.i.preheader ], [ %i.ey, %.lr.ph196.i.i.prol ]
   %.unr = phi <16 x i8> [ zeroinitializer, %.lr.ph196.i.i.preheader ], [ %i.fc, %.lr.ph196.i.i.prol ]
   %i.fd = icmp ult i64 %i.eu, 48
   br i1 %i.fd, label %._crit_edge197.i.i, label %.lr.ph196.i.i
@@ -1143,7 +1145,7 @@ bb.g:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i64 0, ptr %i.l, align 8
   %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store ptr inttoptr (i64 1 to ptr), ptr %.sroa.48.0..sroa_idx, align 8
+  store i64 1, ptr %.sroa.48.0..sroa_idx, align 8
   %.sroa.59.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.59.0..sroa_idx, i8 0, i64 16, i1 false)
   ret void

@@ -205,9 +205,10 @@ bb.j:                                             ; preds = %bb.i
   %i.hr = fdiv double 1.000000e+02, %i.hq
   store double %i.hr, ptr %i.p, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
-  store ptr %i.p, ptr %i.o, align 8
+  %0 = ptrtoint ptr %i.p to i64
+  store i64 %0, ptr %i.o, align 8
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  store ptr @_RNvXs7_NtNtCskKLDkoKarTP_4core3fmt5floatdNtB7_7Display3fmt, ptr %.sroa.42.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs7_NtNtCskKLDkoKarTP_4core3fmt5floatdNtB7_7Display3fmt to i64), ptr %.sroa.42.0..sroa_idx, align 8
   invoke void @_RNvNtNtCsG258MDvU3F_3std2io5stdio6__print(ptr noundef nonnull @4, ptr noundef nonnull %i.o)
           to label %bb.k unwind label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs2QOiZQTg0gD_24bg4_prediction_benchmark.exit
 
@@ -264,9 +265,10 @@ bb.m:                                             ; preds = %_RNvMNtNtNtCs31YAwB
   %i.in = fdiv double 1.000000e+02, %i.im
   store double %i.in, ptr %i.l, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
-  store ptr %i.l, ptr %i.k, align 8
+  %1 = ptrtoint ptr %i.l to i64
+  store i64 %1, ptr %i.k, align 8
   %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  store ptr @_RNvXs7_NtNtCskKLDkoKarTP_4core3fmt5floatdNtB7_7Display3fmt, ptr %.sroa.46.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs7_NtNtCskKLDkoKarTP_4core3fmt5floatdNtB7_7Display3fmt to i64), ptr %.sroa.46.0..sroa_idx, align 8
   invoke void @_RNvNtNtCsG258MDvU3F_3std2io5stdio6__print(ptr noundef nonnull @5, ptr noundef nonnull %i.k)
           to label %bb.n unwind label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs2QOiZQTg0gD_24bg4_prediction_benchmark.exit
 
@@ -305,9 +307,10 @@ bb.q:                                             ; preds = %bb.p
   %i.ja = fdiv double 1.000000e+02, %i.iz
   store double %i.ja, ptr %i.h, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
-  store ptr %i.h, ptr %i.g, align 8
+  %2 = ptrtoint ptr %i.h to i64
+  store i64 %2, ptr %i.g, align 8
   %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  store ptr @_RNvXs7_NtNtCskKLDkoKarTP_4core3fmt5floatdNtB7_7Display3fmt, ptr %.sroa.410.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs7_NtNtCskKLDkoKarTP_4core3fmt5floatdNtB7_7Display3fmt to i64), ptr %.sroa.410.0..sroa_idx, align 8
   invoke void @_RNvNtNtCsG258MDvU3F_3std2io5stdio6__print(ptr noundef nonnull @6, ptr noundef nonnull %i.g)
           to label %bb.r unwind label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs2QOiZQTg0gD_24bg4_prediction_benchmark.exit
 
@@ -346,9 +349,10 @@ bb.u:                                             ; preds = %bb.t
   %i.jn = fdiv double 1.000000e+02, %i.jm
   store double %i.jn, ptr %i.d, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  store ptr %i.d, ptr %i.c, align 8
+  %3 = ptrtoint ptr %i.d to i64
+  store i64 %3, ptr %i.c, align 8
   %.sroa.414.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store ptr @_RNvXs7_NtNtCskKLDkoKarTP_4core3fmt5floatdNtB7_7Display3fmt, ptr %.sroa.414.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs7_NtNtCskKLDkoKarTP_4core3fmt5floatdNtB7_7Display3fmt to i64), ptr %.sroa.414.0..sroa_idx, align 8
   invoke void @_RNvNtNtCsG258MDvU3F_3std2io5stdio6__print(ptr noundef nonnull @7, ptr noundef nonnull %i.c)
           to label %bb.v unwind label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs2QOiZQTg0gD_24bg4_prediction_benchmark.exit
 

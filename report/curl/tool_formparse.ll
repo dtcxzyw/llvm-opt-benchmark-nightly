@@ -203,7 +203,7 @@ bb.f:                                             ; preds = %bb.e
   %.0108198 = phi ptr [ %.3111, %.critedge10 ], [ null, %.preheader.preheader ] ; 4 uses
   %.0119197 = phi ptr [ %.1120, %.critedge10 ], [ null, %.preheader.preheader ] ; 6 uses
   %.0121196 = phi ptr [ %.1122, %.critedge10 ], [ null, %.preheader.preheader ] ; 6 uses
-  %.0123195 = phi ptr [ %.1124, %.critedge10 ], [ null, %.preheader.preheader ] ; 6 uses
+  %.sroa.0.0192 = phi i64 [ %.sroa.0.1, %.critedge10 ], [ 0, %.preheader.preheader ] ; 6 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.promoted182, i64 1 ; 2 uses
   %.not61184 = icmp eq ptr %.promoted182, null
   br i1 %.not61184, label %.critedge6, label %.lr.ph185
@@ -250,6 +250,7 @@ bb.i:                                             ; preds = %.critedge.i, %bb.h
   br label %bb.i, !llvm.loop !41
 
 param_type.exit:                                  ; preds = %bb.i
+  %9 = ptrtoint ptr %.0.i to i64
   %i.ak = call i64 @strcspn(ptr noundef nonnull %.0.i, ptr noundef nonnull @.str.17) #15
   %i.al = getelementptr inbounds nuw i8, ptr %.0.i, i64 %i.ak ; 4 uses
   %i.am = load i8, ptr %i.al, align 1, !tbaa !34
@@ -652,7 +653,7 @@ bb.ao:                                            ; preds = %bb.an
 
 .critedge10:                                      ; preds = %.critedge10.loopexit, %param_headers.exit, %bb.an, %bb.ao, %param_filename.exit, %param_encoder.exit, %param_type.exit
   %.promoted182227 = phi ptr [ %i.eo, %bb.an ], [ %i.eo, %bb.ao ], [ %i.al, %param_type.exit ], [ %i.eh, %param_encoder.exit ], [ %i.dr, %param_headers.exit ], [ %i.bc, %param_filename.exit ], [ %i.ej, %.critedge10.loopexit ]
-  %.1124 = phi ptr [ %.0123195, %bb.an ], [ %.0123195, %bb.ao ], [ %.0.i, %param_type.exit ], [ %.0123195, %param_encoder.exit ], [ %.0123195, %param_headers.exit ], [ %.0123195, %param_filename.exit ], [ %.0123195, %.critedge10.loopexit ] ; 2 uses
+  %.sroa.0.1 = phi i64 [ %.sroa.0.0192, %bb.an ], [ %.sroa.0.0192, %bb.ao ], [ %9, %param_type.exit ], [ %.sroa.0.0192, %param_encoder.exit ], [ %.sroa.0.0192, %param_headers.exit ], [ %.sroa.0.0192, %param_filename.exit ], [ %.sroa.0.0192, %.critedge10.loopexit ] ; 2 uses
   %.1122 = phi ptr [ %.0121196, %bb.an ], [ %.0121196, %bb.ao ], [ %.0121196, %param_type.exit ], [ %.0121196, %param_encoder.exit ], [ %.0121196, %param_headers.exit ], [ %i.as, %param_filename.exit ], [ %.0121196, %.critedge10.loopexit ] ; 4 uses
   %.1120 = phi ptr [ %.0119197, %bb.an ], [ %.0119197, %bb.ao ], [ %.0119197, %param_type.exit ], [ %i.dx, %param_encoder.exit ], [ %.0119197, %param_headers.exit ], [ %.0119197, %param_filename.exit ], [ %.0119197, %.critedge10.loopexit ] ; 4 uses
   %.1116 = phi i8 [ %i.ep, %bb.an ], [ %i.ep, %bb.ao ], [ %i.am, %param_type.exit ], [ %i.ei, %param_encoder.exit ], [ %.2117, %param_headers.exit ], [ %i.bd, %param_filename.exit ], [ %.lcssa210, %.critedge10.loopexit ] ; 4 uses
@@ -662,6 +663,7 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %i.es, label %.preheader, label %._crit_edge, !llvm.loop !60
 
 ._crit_edge:                                      ; preds = %.critedge10
+  %10 = inttoptr i64 %.sroa.0.1 to ptr
   %.not58 = icmp eq ptr %.3111, null
   br i1 %.not58, label %bb.aq, label %bb.ap
 
@@ -670,7 +672,7 @@ bb.ap:                                            ; preds = %._crit_edge
   br label %bb.aq
 
 bb.aq:                                            ; preds = %._crit_edge, %bb.ap
-  store ptr %.1124, ptr %3, align 8, !tbaa !32
+  store ptr %10, ptr %3, align 8, !tbaa !32
   br i1 %.not, label %bb.as, label %bb.ar
 
 .thread261:                                       ; preds = %.critedge2

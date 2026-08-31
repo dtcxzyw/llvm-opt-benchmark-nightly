@@ -205,9 +205,10 @@ _ZN20b3AlignedObjectArrayIN12b3DynamicBvh7sStkCLNEE10deallocateEv.exit.i.i: ; pr
   store i8 1, ptr %i.n, align 8, !tbaa !92
   store ptr %.sink123, ptr %i.o, align 8, !tbaa !96
   store i32 %.sink, ptr %i.q, align 8, !tbaa !98
-  store ptr %i.ab, ptr %.sink123, align 8, !tbaa !41
+  %4 = ptrtoint ptr %i.ab to i64
+  store i64 %4, ptr %.sink123, align 8, !tbaa !41
   %.sroa.584.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sink123, i64 8
-  store ptr null, ptr %.sroa.584.0..sroa_idx, align 8, !tbaa !41
+  store i64 0, ptr %.sroa.584.0..sroa_idx, align 8, !tbaa !41
   store i32 1, ptr %i.p, align 4, !tbaa !97
   br label %bb.f
 
@@ -242,7 +243,7 @@ bb.h:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.i:                                             ; preds = %.noexc35, %bb.g
-  %.0.i.i34 = phi ptr [ %i.am, %bb.g ], [ %i.an, %.noexc35 ] ; 9 uses
+  %.0.i.i34 = phi ptr [ %i.am, %bb.g ], [ %i.an, %.noexc35 ] ; 8 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %.0.i.i34, i64 32
   store ptr %.sroa.9.0.copyload, ptr %i.ao, align 16, !tbaa !56
   %i.ap = getelementptr inbounds nuw i8, ptr %.0.i.i34, i64 40
@@ -289,6 +290,8 @@ bb.o:                                             ; preds = %bb.n, %bb.j
 
 bb.p:                                             ; preds = %bb.o
   %i.ba = load ptr, ptr %i.ak, align 8, !tbaa !34
+  %5 = ptrtoint ptr %i.ba to i64
+  %6 = ptrtoint ptr %.0.i.i34 to i64              ; 2 uses
   %i.bb = icmp eq i32 %i.ah, %i.ae
   br i1 %i.bb, label %bb.q, label %bb.t
 
@@ -392,12 +395,13 @@ bb.t:                                             ; preds = %_ZN20b3AlignedObjec
   %i.bw = phi i32 [ %.pre.i45, %_ZN20b3AlignedObjectArrayIN12b3DynamicBvh7sStkCLNEE10deallocateEv.exit.i.i44 ], [ %i.ae, %bb.q ], [ %i.ah, %bb.p ] ; 2 uses
   %i.bx = sext i32 %i.bw to i64
   %i.by = getelementptr inbounds [16 x i8], ptr %i.bv, i64 %i.bx ; 2 uses
-  store ptr %i.ba, ptr %i.by, align 8, !tbaa !41
+  store i64 %5, ptr %i.by, align 8, !tbaa !41
   %.sroa.582.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.by, i64 8
-  store ptr %.0.i.i34, ptr %.sroa.582.0..sroa_idx, align 8, !tbaa !41
+  store i64 %6, ptr %.sroa.582.0..sroa_idx, align 8, !tbaa !41
   %i.bz = add nsw i32 %i.bw, 1                    ; 3 uses
   store i32 %i.bz, ptr %i.p, align 4, !tbaa !97
   %i.ca = load ptr, ptr %i.ay, align 16, !tbaa !34
+  %7 = ptrtoint ptr %i.ca to i64
   %i.cb = icmp eq i32 %i.bz, %i.bu
   br i1 %i.cb, label %bb.u, label %bb.y
 
@@ -505,9 +509,9 @@ bb.y:                                             ; preds = %_ZN20b3AlignedObjec
   %i.cv = phi i32 [ %.pre.i66, %_ZN20b3AlignedObjectArrayIN12b3DynamicBvh7sStkCLNEE10deallocateEv.exit.i.i65 ], [ %i.bu, %bb.u ], [ %i.bz, %bb.t ] ; 2 uses
   %i.cw = sext i32 %i.cv to i64
   %i.cx = getelementptr inbounds [16 x i8], ptr %i.ct, i64 %i.cw ; 2 uses
-  store ptr %i.ca, ptr %i.cx, align 8, !tbaa !41
+  store i64 %7, ptr %i.cx, align 8, !tbaa !41
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
-  store ptr %.0.i.i34, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !41
+  store i64 %6, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !41
   %i.cy = add nsw i32 %i.cv, 1                    ; 2 uses
   store i32 %i.cy, ptr %i.p, align 4, !tbaa !97
   br label %thread-pre-split

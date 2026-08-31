@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.0.sroa.phi = phi ptr [ %.0.sroa.gep, %bb.c ], [ %.0.sroa.gep26, %bb.d ] ; 6 uses
+  %.0.sroa.phi = phi ptr [ %.0.sroa.gep, %bb.c ], [ %.0.sroa.gep26, %bb.d ] ; 7 uses
   %.0.sroa.phi49 = phi ptr [ %.0.sroa.gep50.a, %bb.c ], [ %.0.sroa.gep51, %bb.d ]
   %.0.sroa.phi52 = phi ptr [ %.0.sroa.gep53.a, %bb.c ], [ %.0.sroa.gep54, %bb.d ]
   %.0 = phi ptr [ %6, %bb.c ], [ %7, %bb.d ]
@@ -216,16 +216,19 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0.sroa.phi, i64 32
-  %11 = load <2 x ptr>, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !55
+  %.sroa.6.0.copyload.i = load i64, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !55
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0.sroa.phi, i64 40
+  %.sroa.7.0.copyload.i = load i64, ptr %.sroa.7.0..sroa_idx.i, align 8, !tbaa !55
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0.sroa.phi, i64 48
   %.sroa.8.0.copyload.i = load ptr, ptr %.sroa.8.0..sroa_idx.i, align 8, !tbaa !55
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.sroa.8.0.i = phi ptr [ %.sroa.8.0.copyload.i, %bb.f ], [ null, %bb.e ] ; 2 uses
+  %.sroa.7.0.i = phi i64 [ %.sroa.7.0.copyload.i, %bb.f ], [ ptrtoint (ptr @tg3__default_free to i64), %bb.e ]
+  %.sroa.6.0.i = phi i64 [ %.sroa.6.0.copyload.i, %bb.f ], [ ptrtoint (ptr @tg3__default_realloc to i64), %bb.e ]
   %.sroa.0.0.i = phi ptr [ %i.h, %bb.f ], [ @tg3__default_alloc, %bb.e ] ; 2 uses
-  %12 = phi <2 x ptr> [ %11, %bb.f ], [ <ptr @tg3__default_realloc, ptr @tg3__default_free>, %bb.e ]
-  %i.i = tail call ptr %.sroa.0.0.i(i64 noundef 80, ptr noundef %.sroa.8.0.i) #28, !inline_history !140 ; 10 uses
+  %i.i = tail call ptr %.sroa.0.0.i(i64 noundef 80, ptr noundef %.sroa.8.0.i) #28, !inline_history !140 ; 11 uses
   %.not34.i = icmp eq ptr %i.i, null
   br i1 %.not34.i, label %bb.h, label %bb.m
 
@@ -283,7 +286,9 @@ bb.m:                                             ; preds = %bb.g
   %i.ab = getelementptr inbounds nuw i8, ptr %i.i, i64 48
   store ptr %.sroa.0.0.i, ptr %i.ab, align 8, !tbaa !55
   %.sroa.6.0..sroa_idx8.i = getelementptr inbounds nuw i8, ptr %i.i, i64 56
-  store <2 x ptr> %12, ptr %.sroa.6.0..sroa_idx8.i, align 8, !tbaa !55
+  store i64 %.sroa.6.0.i, ptr %.sroa.6.0..sroa_idx8.i, align 8, !tbaa !55
+  %.sroa.7.0..sroa_idx10.i = getelementptr inbounds nuw i8, ptr %i.i, i64 64
+  store i64 %.sroa.7.0.i, ptr %.sroa.7.0..sroa_idx10.i, align 8, !tbaa !55
   %.sroa.8.0..sroa_idx12.i = getelementptr inbounds nuw i8, ptr %i.i, i64 72
   store ptr %.sroa.8.0.i, ptr %.sroa.8.0..sroa_idx12.i, align 8, !tbaa !55
   %i.ac = getelementptr inbounds nuw i8, ptr %.0.sroa.phi, i64 16
@@ -686,8 +691,9 @@ tg3json_object_at.exit.i.i:                       ; preds = %tg3__json_number_to
   %i.asg = trunc i64 %i.asf to i32
   %i.ash = call fastcc { ptr, i32 } @tg3__arena_str(ptr noundef %i.asc, ptr noundef %i.asd, i32 noundef %i.asg) ; 2 uses
   %i.asi = extractvalue { ptr, i32 } %i.ash, 0
+  %6 = ptrtoint ptr %i.asi to i64
   %i.asj = extractvalue { ptr, i32 } %i.ash, 1
-  store ptr %i.asi, ptr %i.asb, align 8, !tbaa !10
+  store i64 %6, ptr %i.asb, align 8, !tbaa !10
   %.sroa.444.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.asb, i64 8
   store i32 %i.asj, ptr %.sroa.444.0..sroa_idx.i.i, align 8, !tbaa !36
   %i.ask = getelementptr inbounds nuw i8, ptr %i.asa, i64 16
@@ -1090,7 +1096,8 @@ tg3__arena_str.exit.i.i:                          ; preds = %bb.jg, %tg3__arena_
   %.0.i.i213.i.i = phi ptr [ %i.bbg, %bb.jg ], [ null, %tg3json_object_at.exit209.i.i ], [ null, %tg3__arena_alloc.exit.i.i.i.i ], [ null, %bb.iy ], [ null, %bb.jd ], [ null, %bb.jc ], [ null, %bb.jb ] ; 2 uses
   %.not.i214.i.i = icmp eq ptr %.0.i.i213.i.i, null
   %i.bbi = select i1 %.not.i214.i.i, i32 0, i32 %i.azt
-  store ptr %.0.i.i213.i.i, ptr %i.azo, align 8, !tbaa !10
+  %7 = ptrtoint ptr %.0.i.i213.i.i to i64
+  store i64 %7, ptr %i.azo, align 8, !tbaa !10
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.azo, i64 8
   store i32 %i.bbi, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !36
   %i.bbj = getelementptr inbounds nuw i8, ptr %i.azn, i64 16
@@ -1493,7 +1500,8 @@ tg3__arena_str.exit.i:                            ; preds = %bb.mk, %tg3__arena_
   %.0.i.i.i1220 = phi ptr [ %i.btl, %bb.mk ], [ null, %bb.md ], [ null, %tg3__arena_alloc.exit.i.i.i1217 ], [ null, %bb.me ], [ null, %bb.mj ], [ null, %bb.mi ], [ null, %bb.mh ] ; 2 uses
   %.not.i.i1221 = icmp eq ptr %.0.i.i.i1220, null
   %i.btn = select i1 %.not.i.i1221, i32 0, i32 6
-  store ptr %.0.i.i.i1220, ptr %i.brz, align 8, !tbaa !10
+  %8 = ptrtoint ptr %.0.i.i.i1220 to i64
+  store i64 %8, ptr %i.brz, align 8, !tbaa !10
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.brf, i64 48
   store i32 %i.btn, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !36
   br label %bb.ml
@@ -1896,7 +1904,8 @@ tg3__arena_str.exit.i1437:                        ; preds = %bb.sx, %tg3__arena_
   %.0.i.i156.i = phi ptr [ %i.dbw, %bb.sx ], [ null, %bb.sq ], [ null, %tg3__arena_alloc.exit.i.i.i1433 ], [ null, %bb.sr ], [ null, %bb.sw ], [ null, %bb.sv ], [ null, %bb.su ] ; 2 uses
   %.not.i157.i = icmp eq ptr %.0.i.i156.i, null
   %i.dby = select i1 %.not.i157.i, i32 0, i32 6
-  store ptr %.0.i.i156.i, ptr %i.daj, align 8, !tbaa !10
+  %9 = ptrtoint ptr %.0.i.i156.i to i64
+  store i64 %9, ptr %i.daj, align 8, !tbaa !10
   %.sroa.4.0..sroa_idx.i1438 = getelementptr inbounds nuw i8, ptr %i.dai, i64 16
   store i32 %i.dby, ptr %.sroa.4.0..sroa_idx.i1438, align 8, !tbaa !36
   br label %bb.sy
@@ -2299,7 +2308,7 @@ bb.ac:                                            ; preds = %tg3__parse_glb_head
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %tg3__parse_glb_header.exit
-  %.0.sroa.phi = phi ptr [ %.0.sroa.gep, %tg3__parse_glb_header.exit ], [ %.0.sroa.gep28, %bb.ac ] ; 6 uses
+  %.0.sroa.phi = phi ptr [ %.0.sroa.gep, %tg3__parse_glb_header.exit ], [ %.0.sroa.gep28, %bb.ac ] ; 7 uses
   %.0.sroa.phi56 = phi ptr [ %.0.sroa.gep57.a, %tg3__parse_glb_header.exit ], [ %.0.sroa.gep58, %bb.ac ]
   %.0.sroa.phi59 = phi ptr [ %.0.sroa.gep60.a, %tg3__parse_glb_header.exit ], [ %.0.sroa.gep61, %bb.ac ]
   %.0 = phi ptr [ %6, %tg3__parse_glb_header.exit ], [ %7, %bb.ac ]
@@ -2310,16 +2319,19 @@ bb.ad:                                            ; preds = %bb.ac, %tg3__parse_
 
 bb.ae:                                            ; preds = %bb.ad
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0.sroa.phi, i64 32
-  %11 = load <2 x ptr>, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !55
+  %.sroa.6.0.copyload.i = load i64, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !55
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0.sroa.phi, i64 40
+  %.sroa.7.0.copyload.i = load i64, ptr %.sroa.7.0..sroa_idx.i, align 8, !tbaa !55
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0.sroa.phi, i64 48
   %.sroa.8.0.copyload.i = load ptr, ptr %.sroa.8.0..sroa_idx.i, align 8, !tbaa !55
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad
   %.sroa.8.0.i = phi ptr [ %.sroa.8.0.copyload.i, %bb.ae ], [ null, %bb.ad ] ; 2 uses
+  %.sroa.7.0.i = phi i64 [ %.sroa.7.0.copyload.i, %bb.ae ], [ ptrtoint (ptr @tg3__default_free to i64), %bb.ad ]
+  %.sroa.6.0.i = phi i64 [ %.sroa.6.0.copyload.i, %bb.ae ], [ ptrtoint (ptr @tg3__default_realloc to i64), %bb.ad ]
   %.sroa.0.0.i = phi ptr [ %i.cj, %bb.ae ], [ @tg3__default_alloc, %bb.ad ] ; 2 uses
-  %12 = phi <2 x ptr> [ %11, %bb.ae ], [ <ptr @tg3__default_realloc, ptr @tg3__default_free>, %bb.ad ]
-  %i.ck = tail call ptr %.sroa.0.0.i(i64 noundef 80, ptr noundef %.sroa.8.0.i) #28, !inline_history !140 ; 10 uses
+  %i.ck = tail call ptr %.sroa.0.0.i(i64 noundef 80, ptr noundef %.sroa.8.0.i) #28, !inline_history !140 ; 11 uses
   %.not34.i = icmp eq ptr %i.ck, null
   br i1 %.not34.i, label %bb.ag, label %bb.al
 
@@ -2377,7 +2389,9 @@ bb.al:                                            ; preds = %bb.af
   %i.dd = getelementptr inbounds nuw i8, ptr %i.ck, i64 48
   store ptr %.sroa.0.0.i, ptr %i.dd, align 8, !tbaa !55
   %.sroa.6.0..sroa_idx8.i = getelementptr inbounds nuw i8, ptr %i.ck, i64 56
-  store <2 x ptr> %12, ptr %.sroa.6.0..sroa_idx8.i, align 8, !tbaa !55
+  store i64 %.sroa.6.0.i, ptr %.sroa.6.0..sroa_idx8.i, align 8, !tbaa !55
+  %.sroa.7.0..sroa_idx10.i = getelementptr inbounds nuw i8, ptr %i.ck, i64 64
+  store i64 %.sroa.7.0.i, ptr %.sroa.7.0..sroa_idx10.i, align 8, !tbaa !55
   %.sroa.8.0..sroa_idx12.i = getelementptr inbounds nuw i8, ptr %i.ck, i64 72
   store ptr %.sroa.8.0.i, ptr %.sroa.8.0..sroa_idx12.i, align 8, !tbaa !55
   %i.de = getelementptr inbounds nuw i8, ptr %.0.sroa.phi, i64 16
@@ -2780,8 +2794,9 @@ bb.o:                                             ; preds = %bb.n
   %i.ck = trunc i64 %i.cj to i32
   %i.cl = tail call fastcc { ptr, i32 } @tg3__arena_str(ptr noundef %i.cf, ptr noundef %i.ch, i32 noundef %i.ck) ; 2 uses
   %i.cm = extractvalue { ptr, i32 } %i.cl, 0
+  %5 = ptrtoint ptr %i.cm to i64
   %i.cn = extractvalue { ptr, i32 } %i.cl, 1
-  store ptr %i.cm, ptr %i.ce, align 8, !tbaa !10
+  store i64 %5, ptr %i.ce, align 8, !tbaa !10
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %tg3json_array_get.exit.thread
@@ -3184,8 +3199,9 @@ bb.s:                                             ; preds = %bb.r, %bb.p
   %i.bw = trunc i64 %i.bt to i32
   %i.bx = call fastcc { ptr, i32 } @tg3__arena_str(ptr noundef %i.bv, ptr noundef nonnull %i.br, i32 noundef %i.bw) ; 2 uses
   %i.by = extractvalue { ptr, i32 } %i.bx, 0
+  %7 = ptrtoint ptr %i.by to i64
   %i.bz = extractvalue { ptr, i32 } %i.bx, 1
-  store ptr %i.by, ptr %i.bu, align 8, !tbaa !10
+  store i64 %7, ptr %i.bu, align 8, !tbaa !10
   %.sroa.426.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32
   store i32 %i.bz, ptr %.sroa.426.0..sroa_idx, align 8, !tbaa !36
   call void @free(ptr noundef nonnull %i.br) #28
@@ -3360,8 +3376,9 @@ tg3json_object_at.exit:                           ; preds = %.preheader, %bb.af
   %i.ey = trunc i64 %i.ex to i32
   %i.ez = call fastcc { ptr, i32 } @tg3__arena_str(ptr noundef %i.eu, ptr noundef %i.ev, i32 noundef %i.ey) ; 2 uses
   %i.fa = extractvalue { ptr, i32 } %i.ez, 0
+  %8 = ptrtoint ptr %i.fa to i64
   %i.fb = extractvalue { ptr, i32 } %i.ez, 1
-  store ptr %i.fa, ptr %i.et, align 8, !tbaa !10
+  store i64 %8, ptr %i.et, align 8, !tbaa !10
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.et, i64 8
   store i32 %i.fb, ptr %.sroa.44.0..sroa_idx, align 8, !tbaa !36
   %i.fc = load i32, ptr %i.ep, align 4, !tbaa !567
@@ -3441,8 +3458,9 @@ bb.al:                                            ; preds = %bb.ak, %bb.ai
   %i.ft = trunc i64 %i.fq to i32
   %i.fu = call fastcc { ptr, i32 } @tg3__arena_str(ptr noundef %i.fs, ptr noundef nonnull %i.fo, i32 noundef %i.ft) ; 2 uses
   %i.fv = extractvalue { ptr, i32 } %i.fu, 0
+  %9 = ptrtoint ptr %i.fv to i64
   %i.fw = extractvalue { ptr, i32 } %i.fu, 1
-  store ptr %i.fv, ptr %i.fr, align 8, !tbaa !10
+  store i64 %9, ptr %i.fr, align 8, !tbaa !10
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 48
   store i32 %i.fw, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !36
   call void @free(ptr noundef nonnull %i.fo) #28
@@ -3542,8 +3560,9 @@ bb.k:                                             ; preds = %bb.i
   %i.ac = trunc i64 %i.ab to i32
   %i.ad = tail call fastcc { ptr, i32 } @tg3__arena_str(ptr noundef %i.x, ptr noundef %i.z, i32 noundef %i.ac) ; 2 uses
   %i.ae = extractvalue { ptr, i32 } %i.ad, 0
+  %6 = ptrtoint ptr %i.ae to i64
   %i.af = extractvalue { ptr, i32 } %i.ad, 1
-  store ptr %i.ae, ptr %3, align 8, !tbaa !10
+  store i64 %6, ptr %3, align 8, !tbaa !10
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 %i.af, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !36
   br label %bb.l
@@ -3946,8 +3965,9 @@ bb.f:                                             ; preds = %bb.b
   %i.r = trunc i64 %i.q to i32
   %i.s = tail call fastcc { ptr, i32 } @tg3__arena_str(ptr noundef %i.m, ptr noundef %i.o, i32 noundef %i.r) ; 2 uses
   %i.t = extractvalue { ptr, i32 } %i.s, 0
+  %5 = ptrtoint ptr %i.t to i64
   %i.u = extractvalue { ptr, i32 } %i.s, 1
-  store ptr %i.t, ptr %i.l, align 8, !tbaa !10
+  store i64 %5, ptr %i.l, align 8, !tbaa !10
   %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 %i.u, ptr %.sroa.48.0..sroa_idx, align 8, !tbaa !36
   br label %tg3__arena_alloc.exit.thread
@@ -4192,8 +4212,9 @@ tg3__arena_alloc.exit70:                          ; preds = %bb.s
   %i.dx = trunc i64 %i.dw to i32
   %i.dy = tail call fastcc { ptr, i32 } @tg3__arena_str(ptr noundef %i.dr, ptr noundef %i.du, i32 noundef %i.dx) ; 2 uses
   %i.dz = extractvalue { ptr, i32 } %i.dy, 0
+  %6 = ptrtoint ptr %i.dz to i64
   %i.ea = extractvalue { ptr, i32 } %i.dy, 1
-  store ptr %i.dz, ptr %i.dq, align 8, !tbaa !10
+  store i64 %6, ptr %i.dq, align 8, !tbaa !10
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dq, i64 8
   store i32 %i.ea, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !36
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dq, i64 16

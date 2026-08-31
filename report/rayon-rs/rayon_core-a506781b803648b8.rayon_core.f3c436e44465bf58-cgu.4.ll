@@ -202,13 +202,14 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtCs
   resume { ptr, i32 } %i.i
 
 _RNvMs0_NtCskVyUMSjkkSy_10rayon_core5scopeNtB5_9ScopeBase3new.exit: ; preds = %bb.f
+  %3 = ptrtoint ptr %i.h to i64
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !121
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !121
-  store ptr %i.h, ptr %0, align 8
+  store i64 %3, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr null, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 0, ptr %.sroa.4.0..sroa_idx, align 8
   ret void
 }
 
@@ -387,10 +388,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %_RNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner6shrinkCskVyUMSjkkSy_10rayon_core.exit._crit_edge, %bb.a
   %.sroa.511.0.copyload = phi i64 [ %.sroa.511.0.copyload.pre, %_RNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner6shrinkCskVyUMSjkkSy_10rayon_core.exit._crit_edge ], [ %i.c, %bb.a ] ; 2 uses
   %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.410.0.copyload = load ptr, ptr %.sroa.410.0..sroa_idx, align 8, !nonnull !4, !noundef !4
+  %.sroa.410.0.copyload = load i64, ptr %.sroa.410.0..sroa_idx, align 8 ; 2 uses
+  %1 = inttoptr i64 %.sroa.410.0.copyload to ptr
   %i.f = icmp ult i64 %.sroa.511.0.copyload, 576460752303423488
   tail call void @llvm.assume(i1 %i.f)
-  %i.g = insertvalue { ptr, i64 } poison, ptr %.sroa.410.0.copyload, 0
+  %2 = icmp ne i64 %.sroa.410.0.copyload, 0
+  tail call void @llvm.assume(i1 %2)
+  %i.g = insertvalue { ptr, i64 } poison, ptr %1, 0
   %i.h = insertvalue { ptr, i64 } %i.g, i64 %.sroa.511.0.copyload, 1
   ret { ptr, i64 } %i.h
 
@@ -497,7 +501,7 @@ common.resume:                                    ; preds = %.body, %bb.h, %bb.i
 _RNvMs0_NtCskVyUMSjkkSy_10rayon_core5scopeNtB5_9ScopeBase3new.exit: ; preds = %bb.f
   store ptr %i.l, ptr %i.f, align 8, !alias.scope !134, !noalias !144
   %i.q = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  store ptr null, ptr %i.q, align 8, !alias.scope !134, !noalias !144
+  store i64 0, ptr %i.q, align 8, !alias.scope !134, !noalias !144
   %i.r = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.r, ptr noundef nonnull align 8 dereferenceable(32) %i.d, i64 32, i1 false), !noalias !144
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !137

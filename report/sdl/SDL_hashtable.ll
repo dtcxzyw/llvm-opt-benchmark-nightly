@@ -204,6 +204,8 @@ bb.k:                                             ; preds = %find_first_item.exi
   br label %insert_item.exit
 
 .critedge:                                        ; preds = %bb.f, %bb.g, %bb.c, %delete_item.exit
+  %5 = ptrtoint ptr %1 to i64                     ; 2 uses
+  %6 = ptrtoint ptr %2 to i64                     ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   %i.cb = load i32, ptr %i.ca, align 8            ; 2 uses
   %i.cc = add i32 %i.cb, 1                        ; 2 uses
@@ -380,14 +382,14 @@ bb.u:                                             ; preds = %bb.l, %._crit_edge.
   %.pre-phi69 = phi i32 [ %.pre68, %._crit_edge.i.loopexit ], [ %.04356.i, %bb.u ] ; 2 uses
   %.sroa.10.2 = phi i32 [ %.sroa.10.1, %._crit_edge.i.loopexit ], [ -2147483648, %bb.u ]
   %.sroa.7.2 = phi i32 [ %.sroa.7.1, %._crit_edge.i.loopexit ], [ %i.f, %bb.u ]
-  %.sroa.6.2 = phi ptr [ %.sroa.6.1, %._crit_edge.i.loopexit ], [ %2, %bb.u ]
-  %.sroa.0.2 = phi ptr [ %.sroa.0.1, %._crit_edge.i.loopexit ], [ %1, %bb.u ]
+  %.sroa.6.2 = phi i64 [ %.sroa.6.1, %._crit_edge.i.loopexit ], [ %6, %bb.u ]
+  %.sroa.0.2 = phi i64 [ %.sroa.0.1, %._crit_edge.i.loopexit ], [ %5, %bb.u ]
   %.043.lcssa.i = phi i32 [ %.043.i, %._crit_edge.i.loopexit ], [ %.04356.i, %bb.u ] ; 2 uses
   %.lcssa55.i = phi ptr [ %i.fm, %._crit_edge.i.loopexit ], [ %i.eo, %bb.u ] ; 4 uses
   %.lcssa.i = phi ptr [ %i.fn, %._crit_edge.i.loopexit ], [ %i.ep, %bb.u ] ; 2 uses
-  store ptr %.sroa.0.2, ptr %.lcssa55.i, align 8
+  store i64 %.sroa.0.2, ptr %.lcssa55.i, align 8
   %.sroa.6.0..lcssa55.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.lcssa55.i, i64 8
-  store ptr %.sroa.6.2, ptr %.sroa.6.0..lcssa55.i.sroa_idx, align 8
+  store i64 %.sroa.6.2, ptr %.sroa.6.0..lcssa55.i.sroa_idx, align 8
   %.sroa.7.0..lcssa55.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.lcssa55.i, i64 16
   store i32 %.sroa.7.2, ptr %.sroa.7.0..lcssa55.i.sroa_idx, align 8
   %.sroa.10.0..lcssa55.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.lcssa55.i, i64 20
@@ -412,8 +414,8 @@ bb.v:                                             ; preds = %._crit_edge.i
 .lr.ph.i31:                                       ; preds = %bb.u, %bb.y
   %.sroa.10.0 = phi i32 [ %.sroa.10.1, %bb.y ], [ -2147483648, %bb.u ] ; 2 uses
   %.sroa.7.0 = phi i32 [ %.sroa.7.1, %bb.y ], [ %i.f, %bb.u ] ; 3 uses
-  %.sroa.6.0 = phi ptr [ %.sroa.6.1, %bb.y ], [ %2, %bb.u ] ; 2 uses
-  %.sroa.0.0 = phi ptr [ %.sroa.0.1, %bb.y ], [ %1, %bb.u ] ; 2 uses
+  %.sroa.6.0 = phi i64 [ %.sroa.6.1, %bb.y ], [ %6, %bb.u ] ; 2 uses
+  %.sroa.0.0 = phi i64 [ %.sroa.0.1, %bb.y ], [ %5, %bb.u ] ; 2 uses
   %.sroa.646.0.copyload = phi i32 [ %i.fo, %bb.y ], [ %i.eq, %bb.u ] ; 3 uses
   %i.ey = phi ptr [ %i.fn, %bb.y ], [ %i.ep, %bb.u ] ; 2 uses
   %i.ez = phi ptr [ %i.fm, %bb.y ], [ %i.eo, %bb.u ] ; 5 uses
@@ -428,14 +430,14 @@ bb.v:                                             ; preds = %._crit_edge.i
   br i1 %i.fd, label %bb.w, label %bb.y
 
 bb.w:                                             ; preds = %.lr.ph.i31
-  %.sroa.045.0.copyload = load ptr, ptr %i.ez, align 8 ; 2 uses
+  %.sroa.044.0.copyload = load i64, ptr %i.ez, align 8 ; 2 uses
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ez, i64 8 ; 2 uses
-  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ez, i64 16 ; 2 uses
   %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 8 ; 2 uses
   %.sroa.646.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ez, i64 20
-  store ptr %.sroa.0.0, ptr %i.ez, align 8
-  store ptr %.sroa.6.0, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.0.0, ptr %i.ez, align 8
+  store i64 %.sroa.6.0, ptr %.sroa.4.0..sroa_idx, align 8
   store i32 %.sroa.7.0, ptr %.sroa.5.0..sroa_idx, align 8
   store i32 %.sroa.10.0, ptr %.sroa.646.0..sroa_idx, align 4
   %i.fe = load i32, ptr %i.ey, align 4
@@ -454,8 +456,8 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.x, %bb.w, %.lr.ph.i31
   %.sroa.10.1 = phi i32 [ %.sroa.646.0.copyload, %bb.x ], [ %.sroa.646.0.copyload, %bb.w ], [ %.sroa.10.0, %.lr.ph.i31 ] ; 2 uses
   %.sroa.7.1 = phi i32 [ %.sroa.5.0.copyload, %bb.x ], [ %.sroa.5.0.copyload, %bb.w ], [ %.sroa.7.0, %.lr.ph.i31 ] ; 3 uses
-  %.sroa.6.1 = phi ptr [ %.sroa.4.0.copyload, %bb.x ], [ %.sroa.4.0.copyload, %bb.w ], [ %.sroa.6.0, %.lr.ph.i31 ] ; 2 uses
-  %.sroa.0.1 = phi ptr [ %.sroa.045.0.copyload, %bb.x ], [ %.sroa.045.0.copyload, %bb.w ], [ %.sroa.0.0, %.lr.ph.i31 ] ; 2 uses
+  %.sroa.6.1 = phi i64 [ %.sroa.4.0.copyload, %bb.x ], [ %.sroa.4.0.copyload, %bb.w ], [ %.sroa.6.0, %.lr.ph.i31 ] ; 2 uses
+  %.sroa.0.1 = phi i64 [ %.sroa.044.0.copyload, %bb.x ], [ %.sroa.044.0.copyload, %bb.w ], [ %.sroa.0.0, %.lr.ph.i31 ] ; 2 uses
   %i.fk = add i32 %.04359.i, 1
   %.043.i = and i32 %i.fk, %i.el                  ; 3 uses
   %i.fl = zext i32 %.043.i to i64

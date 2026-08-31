@@ -1,0 +1,298 @@
+diff --git a/llvm/lib/Transforms/Scalar/SROA.cpp b/llvm/lib/Transforms/Scalar/SROA.cpp
+index e4770154e2998..13e3c95e3e1ce 100644
+--- a/llvm/lib/Transforms/Scalar/SROA.cpp
++++ b/llvm/lib/Transforms/Scalar/SROA.cpp
+@@ -5379,6 +5379,95 @@ static FixedVectorType *tryCanonicalizeStructToVector(StructType *STy,
+   return VTy;
+ }
+ 
++/// Return true if V is only forwarded through bit-preserving SSA operations
++/// and eventually stored. In this case the type of V is only acting as a
++/// carrier for its bits.
++static bool isOnlyForwardedToStores(Value *V, const DataLayout &DL,
++                                    SmallPtrSetImpl<Value *> &Visited) {
++  if (!Visited.insert(V).second)
++    return true;
++
++  for (User *U : V->users()) {
++    if (auto *SI = dyn_cast<StoreInst>(U)) {
++      if (SI->getValueOperand() != V || SI->isVolatile() || SI->isAtomic())
++        return false;
++      continue;
++    }
++
++    auto *I = dyn_cast<Instruction>(U);
++    if (!I)
++      return false;
++
++    bool IsTransparent = isa<PHINode, SelectInst, FreezeInst, BitCastInst>(I);
++    if (isa<PtrToIntInst, IntToPtrInst>(I))
++      IsTransparent = canConvertValue(DL, V->getType(), I->getType());
++    if (!IsTransparent || !isOnlyForwardedToStores(I, DL, Visited))
++      return false;
++  }
++
++  return true;
++}
++
++/// Return true if an integer can be used as a bit carrier for every access to
++/// P. Restrict this to whole-partition accesses so that choosing IntTy does not
++/// require integer widening or partial insert/extract operations.
++static bool isIntegerCarrierViable(Partition &P, IntegerType *IntTy,
++                                   const DataLayout &DL) {
++  auto IsViableSlice = [&](const Slice &S) {
++    if (S.isDead())
++      return true;
++
++    Use *U = S.getUse();
++    if (!U)
++      return true;
++    User *Usr = U->getUser();
++
++    if (auto *MI = dyn_cast<MemIntrinsic>(Usr))
++      return !MI->isVolatile() && isa<Constant>(MI->getLength()) &&
++             S.isSplittable();
++
++    if (auto *II = dyn_cast<IntrinsicInst>(Usr))
++      return II->isLifetimeStartOrEnd() || II->isDroppable();
++
++    if (S.beginOffset() != P.beginOffset() || S.endOffset() != P.endOffset())
++      return false;
++
++    auto IsConvertible = [&](Type *UseTy) {
++      return canConvertValue(DL, UseTy, IntTy) &&
++             canConvertValue(DL, IntTy, UseTy);
++    };
++
++    if (auto *LI = dyn_cast<LoadInst>(Usr)) {
++      if (LI->isVolatile() || LI->isAtomic() || !IsConvertible(LI->getType()))
++        return false;
++      SmallPtrSet<Value *, 8> Visited;
++      return isOnlyForwardedToStores(LI, DL, Visited);
++    }
++
++    if (auto *SI = dyn_cast<StoreInst>(Usr))
++      return !SI->isVolatile() && !SI->isAtomic() &&
++             IsConvertible(SI->getValueOperand()->getType());
++
++    auto *PN = dyn_cast<PHINode>(Usr);
++    if (!PN || !isSafePHIToSpeculate(*PN))
++      return false;
++
++    for (User *PhiUser : PN->users()) {
++      auto *LI = cast<LoadInst>(PhiUser);
++      if (!IsConvertible(LI->getType()))
++        return false;
++      SmallPtrSet<Value *, 8> Visited;
++      if (!isOnlyForwardedToStores(LI, DL, Visited))
++        return false;
++    }
++    return true;
++  };
++
++  return llvm::all_of(P, IsViableSlice) &&
++         llvm::all_of(P.splitSliceTails(),
++                      [&](const Slice *S) { return IsViableSlice(*S); });
++}
++
+ /// Select a partition type for an alloca partition.
+ ///
+ /// Try to compute a friendly type for this partition of the alloca. This
+@@ -5434,6 +5523,18 @@ selectPartitionType(Partition &P, const DataLayout &DL, AllocaInst &AI,
+     return {VecTy, false, VecTy};
+   }
+ 
++  // When a partition is only used to forward bits between memory locations,
++  // use a legal integer as a common carrier. In particular, this keeps pointer
++  // and integer accesses to adjacent partitions in a uniform representation
++  // that later vectorization can recognize.
++  if (!VecTy && DL.isLegalInteger(P.size() * 8)) {
++    IntegerType *IntTy = Type::getIntNTy(C, P.size() * 8);
++    if (isIntegerCarrierViable(P, IntTy, DL)) {
++      LogSelection("forwarding-int-carrier", IntTy, nullptr, false);
++      return {IntTy, false, nullptr};
++    }
++  }
++
+   // Check if there is a common type that all slices of the partition use that
+   // spans the partition.
+   auto [CommonUseTy, LargestIntTy] =
+diff --git a/llvm/test/Transforms/SROA/alignment.ll b/llvm/test/Transforms/SROA/alignment.ll
+index 952be29095f17..37aec88f55552 100644
+--- a/llvm/test/Transforms/SROA/alignment.ll
++++ b/llvm/test/Transforms/SROA/alignment.ll
+@@ -250,12 +250,16 @@ define void @test7(ptr %out) {
+ ;
+ ; CHECK-LABEL: @test7(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[A_SROA_0_0_COPYLOAD:%.*]] = load double, ptr [[OUT:%.*]], align 1
++; CHECK-NEXT:    [[A_SROA_0_0_COPYLOAD:%.*]] = load i64, ptr [[OUT:%.*]], align 1
+ ; CHECK-NEXT:    [[A_SROA_4_0_OUT_SROA_IDX:%.*]] = getelementptr inbounds i8, ptr [[OUT]], i64 8
+-; CHECK-NEXT:    [[A_SROA_4_0_COPYLOAD:%.*]] = load double, ptr [[A_SROA_4_0_OUT_SROA_IDX]], align 1
+-; CHECK-NEXT:    store double [[A_SROA_4_0_COPYLOAD]], ptr [[OUT]], align 1
++; CHECK-NEXT:    [[A_SROA_4_0_COPYLOAD:%.*]] = load i64, ptr [[A_SROA_4_0_OUT_SROA_IDX]], align 1
++; CHECK-NEXT:    [[TMP0:%.*]] = bitcast i64 [[A_SROA_4_0_COPYLOAD]] to double
++; CHECK-NEXT:    [[TMP1:%.*]] = bitcast i64 [[A_SROA_0_0_COPYLOAD]] to double
++; CHECK-NEXT:    [[TMP2:%.*]] = bitcast double [[TMP0]] to i64
++; CHECK-NEXT:    [[TMP3:%.*]] = bitcast double [[TMP1]] to i64
++; CHECK-NEXT:    store i64 [[TMP2]], ptr [[OUT]], align 1
+ ; CHECK-NEXT:    [[A_SROA_4_0_OUT_SROA_IDX2:%.*]] = getelementptr inbounds i8, ptr [[OUT]], i64 8
+-; CHECK-NEXT:    store double [[A_SROA_0_0_COPYLOAD]], ptr [[A_SROA_4_0_OUT_SROA_IDX2]], align 1
++; CHECK-NEXT:    store i64 [[TMP3]], ptr [[A_SROA_4_0_OUT_SROA_IDX2]], align 1
+ ; CHECK-NEXT:    ret void
+ ;
+ ; CHECK-DEBUGLOC-LABEL: @test7(
+@@ -263,15 +267,19 @@ define void @test7(ptr %out) {
+ ; CHECK-DEBUGLOC-NEXT:      #dbg_value(ptr poison, [[META86:![0-9]+]], !DIExpression(), [[META90:![0-9]+]])
+ ; CHECK-DEBUGLOC-NEXT:      #dbg_value(ptr undef, [[META86]], !DIExpression(), [[META90]])
+ ; CHECK-DEBUGLOC-NEXT:      #dbg_value(ptr undef, [[META87:![0-9]+]], !DIExpression(), [[META91:![0-9]+]])
+-; CHECK-DEBUGLOC-NEXT:    [[A_SROA_0_0_COPYLOAD:%.*]] = load double, ptr [[OUT:%.*]], align 1, !dbg [[DBG92:![0-9]+]]
++; CHECK-DEBUGLOC-NEXT:    [[A_SROA_0_0_COPYLOAD:%.*]] = load i64, ptr [[OUT:%.*]], align 1, !dbg [[DBG92:![0-9]+]]
+ ; CHECK-DEBUGLOC-NEXT:    [[A_SROA_4_0_OUT_SROA_IDX:%.*]] = getelementptr inbounds i8, ptr [[OUT]], i64 8, !dbg [[DBG92]]
+-; CHECK-DEBUGLOC-NEXT:    [[A_SROA_4_0_COPYLOAD:%.*]] = load double, ptr [[A_SROA_4_0_OUT_SROA_IDX]], align 1, !dbg [[DBG92]]
+-; CHECK-DEBUGLOC-NEXT:      #dbg_value(double [[A_SROA_4_0_COPYLOAD]], [[META88:![0-9]+]], !DIExpression(), [[META93:![0-9]+]])
+-; CHECK-DEBUGLOC-NEXT:      #dbg_value(double [[A_SROA_0_0_COPYLOAD]], [[META89:![0-9]+]], !DIExpression(), [[META94:![0-9]+]])
+-; CHECK-DEBUGLOC-NEXT:    store double [[A_SROA_4_0_COPYLOAD]], ptr [[OUT]], align 1, !dbg [[DBG95:![0-9]+]]
+-; CHECK-DEBUGLOC-NEXT:    [[A_SROA_4_0_OUT_SROA_IDX2:%.*]] = getelementptr inbounds i8, ptr [[OUT]], i64 8, !dbg [[DBG95]]
+-; CHECK-DEBUGLOC-NEXT:    store double [[A_SROA_0_0_COPYLOAD]], ptr [[A_SROA_4_0_OUT_SROA_IDX2]], align 1, !dbg [[DBG95]]
+-; CHECK-DEBUGLOC-NEXT:    ret void, !dbg [[DBG96:![0-9]+]]
++; CHECK-DEBUGLOC-NEXT:    [[A_SROA_4_0_COPYLOAD:%.*]] = load i64, ptr [[A_SROA_4_0_OUT_SROA_IDX]], align 1, !dbg [[DBG92]]
++; CHECK-DEBUGLOC-NEXT:    [[TMP0:%.*]] = bitcast i64 [[A_SROA_4_0_COPYLOAD]] to double, !dbg [[DBG93:![0-9]+]]
++; CHECK-DEBUGLOC-NEXT:      #dbg_value(double [[TMP0]], [[META88:![0-9]+]], !DIExpression(), [[DBG93]])
++; CHECK-DEBUGLOC-NEXT:    [[TMP1:%.*]] = bitcast i64 [[A_SROA_0_0_COPYLOAD]] to double, !dbg [[DBG94:![0-9]+]]
++; CHECK-DEBUGLOC-NEXT:      #dbg_value(double [[TMP1]], [[META89:![0-9]+]], !DIExpression(), [[DBG94]])
++; CHECK-DEBUGLOC-NEXT:    [[TMP2:%.*]] = bitcast double [[TMP0]] to i64, !dbg [[DBG95:![0-9]+]]
++; CHECK-DEBUGLOC-NEXT:    [[TMP3:%.*]] = bitcast double [[TMP1]] to i64, !dbg [[DBG96:![0-9]+]]
++; CHECK-DEBUGLOC-NEXT:    store i64 [[TMP2]], ptr [[OUT]], align 1, !dbg [[DBG97:![0-9]+]]
++; CHECK-DEBUGLOC-NEXT:    [[A_SROA_4_0_OUT_SROA_IDX2:%.*]] = getelementptr inbounds i8, ptr [[OUT]], i64 8, !dbg [[DBG97]]
++; CHECK-DEBUGLOC-NEXT:    store i64 [[TMP3]], ptr [[A_SROA_4_0_OUT_SROA_IDX2]], align 1, !dbg [[DBG97]]
++; CHECK-DEBUGLOC-NEXT:    ret void, !dbg [[DBG98:![0-9]+]]
+ ;
+ entry:
+   %a = alloca [16 x i8]
+diff --git a/llvm/test/Transforms/SROA/integer-forwarding-carrier.ll b/llvm/test/Transforms/SROA/integer-forwarding-carrier.ll
+new file mode 100644
+index 0000000000000..7d8f32378814f
+--- /dev/null
++++ b/llvm/test/Transforms/SROA/integer-forwarding-carrier.ll
+@@ -0,0 +1,120 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 5
++; RUN: opt < %s -passes='sroa<modify-cfg>' -S | FileCheck %s
++
++target datalayout = "e-p:64:64-n8:16:32:64"
++
++declare void @llvm.memcpy.p0.p0.i64(ptr, ptr, i64, i1 immarg)
++
++define void @forward_pointer_as_integer(i1 %cond, ptr %source, ptr %other,
++                                        ptr %destination) {
++; CHECK-LABEL: define void @forward_pointer_as_integer(
++; CHECK-SAME: i1 [[COND:%.*]], ptr [[SOURCE:%.*]], ptr [[OTHER:%.*]], ptr [[DESTINATION:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[TEMPORARY_SROA_0_0_COPYLOAD:%.*]] = load i64, ptr [[SOURCE]], align 8
++; CHECK-NEXT:    [[TMP0:%.*]] = inttoptr i64 [[TEMPORARY_SROA_0_0_COPYLOAD]] to ptr
++; CHECK-NEXT:    br i1 [[COND]], label %[[THEN:.*]], label %[[CONT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[ADDRESS_SROA_SPECULATE_LOAD_THEN:%.*]] = load ptr, ptr [[OTHER]], align 8
++; CHECK-NEXT:    br label %[[CONT]]
++; CHECK:       [[CONT]]:
++; CHECK-NEXT:    [[ADDRESS_SROA_SPECULATED:%.*]] = phi ptr [ [[ADDRESS_SROA_SPECULATE_LOAD_THEN]], %[[THEN]] ], [ [[TMP0]], %[[ENTRY]] ]
++; CHECK-NEXT:    store ptr [[ADDRESS_SROA_SPECULATED]], ptr [[DESTINATION]], align 8
++; CHECK-NEXT:    ret void
++;
++entry:
++  %temporary = alloca { ptr }, align 8
++  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %temporary, ptr align 8 %source,
++                                  i64 8, i1 false)
++  br i1 %cond, label %then, label %cont
++
++then:
++  br label %cont
++
++cont:
++  %address = phi ptr [ %other, %then ], [ %temporary, %entry ]
++  %value = load ptr, ptr %address, align 8
++  store ptr %value, ptr %destination, align 8
++  ret void
++}
++
++define i8 @do_not_forward_semantic_pointer(i1 %cond, ptr %source, ptr %other) {
++; CHECK-LABEL: define i8 @do_not_forward_semantic_pointer(
++; CHECK-SAME: i1 [[COND:%.*]], ptr [[SOURCE:%.*]], ptr [[OTHER:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[TEMPORARY_SROA_0_0_COPYLOAD:%.*]] = load ptr, ptr [[SOURCE]], align 8
++; CHECK-NEXT:    br i1 [[COND]], label %[[THEN:.*]], label %[[CONT:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[ADDRESS_SROA_SPECULATE_LOAD_THEN:%.*]] = load ptr, ptr [[OTHER]], align 8
++; CHECK-NEXT:    br label %[[CONT]]
++; CHECK:       [[CONT]]:
++; CHECK-NEXT:    [[ADDRESS_SROA_SPECULATED:%.*]] = phi ptr [ [[ADDRESS_SROA_SPECULATE_LOAD_THEN]], %[[THEN]] ], [ [[TEMPORARY_SROA_0_0_COPYLOAD]], %[[ENTRY]] ]
++; CHECK-NEXT:    [[RESULT:%.*]] = load i8, ptr [[ADDRESS_SROA_SPECULATED]], align 1
++; CHECK-NEXT:    ret i8 [[RESULT]]
++;
++entry:
++  %temporary = alloca { ptr }, align 8
++  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %temporary, ptr align 8 %source,
++                                  i64 8, i1 false)
++  br i1 %cond, label %then, label %cont
++
++then:
++  br label %cont
++
++cont:
++  %address = phi ptr [ %other, %then ], [ %temporary, %entry ]
++  %value = load ptr, ptr %address, align 8
++  %result = load i8, ptr %value
++  ret i8 %result
++}
++
++define void @forward_shifted_pointer_pair(i1 %cond, ptr %source,
++                                          ptr %destination) {
++; CHECK-LABEL: define void @forward_shifted_pointer_pair(
++; CHECK-SAME: i1 [[COND:%.*]], ptr [[SOURCE:%.*]], ptr [[DESTINATION:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[TEMPORARY_SROA_0_0_COPYLOAD:%.*]] = load i64, ptr [[SOURCE]], align 8
++; CHECK-NEXT:    [[TEMPORARY_SROA_2_0_SOURCE_SROA_IDX:%.*]] = getelementptr inbounds i8, ptr [[SOURCE]], i64 8
++; CHECK-NEXT:    [[TEMPORARY_SROA_2_0_COPYLOAD:%.*]] = load i64, ptr [[TEMPORARY_SROA_2_0_SOURCE_SROA_IDX]], align 8
++; CHECK-NEXT:    [[TEMPORARY_SROA_4_0_SOURCE_SROA_IDX:%.*]] = getelementptr inbounds i8, ptr [[SOURCE]], i64 16
++; CHECK-NEXT:    [[TEMPORARY_SROA_4_0_COPYLOAD:%.*]] = load i64, ptr [[TEMPORARY_SROA_4_0_SOURCE_SROA_IDX]], align 8
++; CHECK-NEXT:    br i1 [[COND]], label %[[ORDINARY:.*]], label %[[SHIFTED:.*]]
++; CHECK:       [[ORDINARY]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = inttoptr i64 [[TEMPORARY_SROA_4_0_COPYLOAD]] to ptr
++; CHECK-NEXT:    [[TMP1:%.*]] = inttoptr i64 [[TEMPORARY_SROA_2_0_COPYLOAD]] to ptr
++; CHECK-NEXT:    br label %[[MERGE:.*]]
++; CHECK:       [[SHIFTED]]:
++; CHECK-NEXT:    [[TMP2:%.*]] = inttoptr i64 [[TEMPORARY_SROA_2_0_COPYLOAD]] to ptr
++; CHECK-NEXT:    [[TMP3:%.*]] = inttoptr i64 [[TEMPORARY_SROA_0_0_COPYLOAD]] to ptr
++; CHECK-NEXT:    br label %[[MERGE]]
++; CHECK:       [[MERGE]]:
++; CHECK-NEXT:    [[ADDRESS0_SROA_SPECULATED:%.*]] = phi ptr [ [[TMP1]], %[[ORDINARY]] ], [ [[TMP3]], %[[SHIFTED]] ]
++; CHECK-NEXT:    [[ADDRESS1_SROA_SPECULATED:%.*]] = phi ptr [ [[TMP0]], %[[ORDINARY]] ], [ [[TMP2]], %[[SHIFTED]] ]
++; CHECK-NEXT:    [[DESTINATION1:%.*]] = getelementptr inbounds i8, ptr [[DESTINATION]], i64 8
++; CHECK-NEXT:    store ptr [[ADDRESS0_SROA_SPECULATED]], ptr [[DESTINATION]], align 8
++; CHECK-NEXT:    store ptr [[ADDRESS1_SROA_SPECULATED]], ptr [[DESTINATION1]], align 8
++; CHECK-NEXT:    ret void
++;
++entry:
++  %temporary = alloca [6 x i32], align 8
++  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %temporary, ptr align 8 %source,
++                                  i64 24, i1 false)
++  %slot1 = getelementptr inbounds i8, ptr %temporary, i64 8
++  %slot2 = getelementptr inbounds i8, ptr %temporary, i64 16
++  br i1 %cond, label %ordinary, label %shifted
++
++ordinary:
++  br label %merge
++
++shifted:
++  br label %merge
++
++merge:
++  %address0 = phi ptr [ %slot1, %ordinary ], [ %temporary, %shifted ]
++  %address1 = phi ptr [ %slot2, %ordinary ], [ %slot1, %shifted ]
++  %value0 = load ptr, ptr %address0, align 8
++  %value1 = load ptr, ptr %address1, align 8
++  %destination1 = getelementptr inbounds i8, ptr %destination, i64 8
++  store ptr %value0, ptr %destination, align 8
++  store ptr %value1, ptr %destination1, align 8
++  ret void
++}

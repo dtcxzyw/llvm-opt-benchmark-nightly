@@ -204,7 +204,7 @@ bb.a:
   call void @_RINvMs4_NtCskVyUMSjkkSy_10rayon_core8registryNtB6_8Registry3newNtB6_12DefaultSpawnEB8_(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.a, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(96) %i.c), !noalias !99
   %i.d = load i64, ptr %i.a, align 8, !range !4, !noalias !95, !noundef !5 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.f = load ptr, ptr %i.e, align 8, !noalias !95 ; 4 uses
+  %i.f = load ptr, ptr %i.e, align 8, !noalias !95 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !95
   %.not = icmp eq i64 %i.d, -1
   br i1 %.not, label %bb.g, label %bb.b
@@ -252,7 +252,6 @@ _RNvMNtCs1xwejQucwHj_5alloc5boxedINtB2_3BoxNtCskVyUMSjkkSy_10rayon_core20ThreadP
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.f, ptr %i.n, align 8
   store ptr null, ptr %0, align 8
@@ -655,7 +654,7 @@ bb.a:
 define hidden void @_RNvMs8_NtCskVyUMSjkkSy_10rayon_core3jobNtB5_7JobFifo3new(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([256 x i8]) align 128 captures(none) dereferenceable(256) %0) unnamed_addr #0 {
 bb.a:
   tail call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #18
-  %i.a = tail call noundef align 8 dereferenceable_or_null(1520) ptr @_RNvCsjHpjAFo4bi0_7___rustc19___rust_alloc_zeroed(i64 noundef 1520, i64 noundef 8) #18 ; 3 uses
+  %i.a = tail call noundef align 8 dereferenceable_or_null(1520) ptr @_RNvCsjHpjAFo4bi0_7___rustc19___rust_alloc_zeroed(i64 noundef 1520, i64 noundef 8) #18 ; 2 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.b, label %_RNvMsc_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_5BlockNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE3newBY_.exit, !prof !44
 
@@ -664,13 +663,14 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _RNvMsc_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_5BlockNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE3newBY_.exit: ; preds = %bb.a
+  %1 = ptrtoint ptr %i.a to i64                   ; 2 uses
   store i64 0, ptr %0, align 128
   %.sroa.49.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.a, ptr %.sroa.49.0..sroa_idx, align 8
+  store i64 %1, ptr %.sroa.49.0..sroa_idx, align 8
   %.sroa.611.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 128
   store i64 0, ptr %.sroa.611.0..sroa_idx, align 128
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 136
-  store ptr %i.a, ptr %.sroa.7.0..sroa_idx, align 8
+  store i64 %1, ptr %.sroa.7.0..sroa_idx, align 8
   ret void
 }
 
@@ -1073,9 +1073,7 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.i52
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i52
 
 _RNvMsc_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_5BlockNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE7destroyBY_.exit: ; preds = %bb.i, %._crit_edge.i, %_RNvMsb_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_4SlotNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE10wait_writeBX_.exit51
-  %i.cf = phi <2 x ptr> [ %i.br, %_RNvMsb_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_4SlotNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE10wait_writeBX_.exit51 ], [ %i.bv, %._crit_edge.i ], [ %i.bv, %bb.i ] ; 2 uses
-  %2 = extractelement <2 x ptr> %i.cf, i64 0
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
+  %i.cf = phi <2 x ptr> [ %i.br, %_RNvMsb_NtCsjayvGk2fZH7_15crossbeam_deque5dequeINtB5_4SlotNtNtCskVyUMSjkkSy_10rayon_core3job6JobRefE10wait_writeBX_.exit51 ], [ %i.bv, %._crit_edge.i ], [ %i.bv, %bb.i ]
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 8
   store <2 x ptr> %i.cf, ptr %i.cg, align 8
   br label %bb.k

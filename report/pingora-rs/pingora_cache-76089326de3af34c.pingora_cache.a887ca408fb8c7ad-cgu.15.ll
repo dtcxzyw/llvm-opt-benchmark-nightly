@@ -205,10 +205,11 @@ bb.k:                                             ; preds = %_RINvNtCskKLDkoKarT
   unreachable
 
 bb.l:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxSNtNtNtCs84JG9zk80ZV_4http6header3map3PosEECset5b41vfmiv_13pingora_cache.exit
-  %i.as = load ptr, ptr %i.aq, align 8, !nonnull !14, !noundef !14 ; 2 uses
+  %i.as = load ptr, ptr %i.aq, align 8, !nonnull !14, !noundef !14
   %i.at = icmp samesign ugt i64 %i.ap, 5
   call void @llvm.assume(i1 %i.at)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
+  %1 = ptrtoint ptr %i.as to i64                  ; 2 uses
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCs84JG9zk80ZV_4http6header3map6BucketNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCset5b41vfmiv_13pingora_cache(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.e)
           to label %bb.n unwind label %bb.m
 
@@ -237,14 +238,14 @@ bb.p:                                             ; preds = %bb.n
   %eh.lpad-body = phi { ptr, i32 } [ %i.aw, %bb.p ], [ %i.au, %bb.m ]
   store i64 %i.ap, ptr %i.e, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store ptr %i.as, ptr %.sroa.5.0..sroa_idx, align 8
+  store i64 %1, ptr %.sroa.5.0..sroa_idx, align 8
   store i64 0, ptr %i.f, align 8
   br label %common.resume
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtNtCs84JG9zk80ZV_4http6header3map6BucketNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameEEECset5b41vfmiv_13pingora_cache.exit: ; preds = %bb.n
   store i64 %i.ap, ptr %i.e, align 8
   %.sroa.5.0..sroa_idx5 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store ptr %i.as, ptr %.sroa.5.0..sroa_idx5, align 8
+  store i64 %1, ptr %.sroa.5.0..sroa_idx5, align 8
   store i64 0, ptr %i.f, align 8
   br label %_RNvMs0_NtNtCs84JG9zk80ZV_4http6header3mapINtB5_9HeaderMapNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameE7rebuildCset5b41vfmiv_13pingora_cache.exit
 
@@ -647,10 +648,11 @@ bb.k:                                             ; preds = %_RINvNtCskKLDkoKarT
   unreachable
 
 bb.l:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxSNtNtNtCs84JG9zk80ZV_4http6header3map3PosEECset5b41vfmiv_13pingora_cache.exit
-  %i.as = load ptr, ptr %i.aq, align 8, !nonnull !14, !noundef !14 ; 2 uses
+  %i.as = load ptr, ptr %i.aq, align 8, !nonnull !14, !noundef !14
   %i.at = icmp samesign ugt i64 %i.ap, 5
   call void @llvm.assume(i1 %i.at)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
+  %1 = ptrtoint ptr %i.as to i64                  ; 2 uses
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecINtNtNtCs84JG9zk80ZV_4http6header3map6BucketNtNtBK_5value11HeaderValueEENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCset5b41vfmiv_13pingora_cache(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.e)
           to label %bb.n unwind label %bb.m
 
@@ -679,14 +681,14 @@ bb.p:                                             ; preds = %bb.n
   %eh.lpad-body = phi { ptr, i32 } [ %i.aw, %bb.p ], [ %i.au, %bb.m ]
   store i64 %i.ap, ptr %i.e, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store ptr %i.as, ptr %.sroa.5.0..sroa_idx, align 8
+  store i64 %1, ptr %.sroa.5.0..sroa_idx, align 8
   store i64 0, ptr %i.f, align 8
   br label %common.resume
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecINtNtNtCs84JG9zk80ZV_4http6header3map6BucketNtNtB1d_5value11HeaderValueEEECset5b41vfmiv_13pingora_cache.exit: ; preds = %bb.n
   store i64 %i.ap, ptr %i.e, align 8
   %.sroa.5.0..sroa_idx5 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store ptr %i.as, ptr %.sroa.5.0..sroa_idx5, align 8
+  store i64 %1, ptr %.sroa.5.0..sroa_idx5, align 8
   store i64 0, ptr %i.f, align 8
   br label %_RNvMs0_NtNtCs84JG9zk80ZV_4http6header3mapNtB5_9HeaderMap7rebuildCset5b41vfmiv_13pingora_cache.exit
 

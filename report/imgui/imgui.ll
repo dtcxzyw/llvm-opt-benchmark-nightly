@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.m, %bb.i
   %.not.i = icmp eq ptr %i.ap, null
   %i.aq = select i1 %.not.i, ptr %.057, ptr %i.ap ; 5 uses
   %i.ar = icmp eq ptr %i.aq, %.057                ; 2 uses
-  %i.as = icmp eq ptr %.056, %i.aq
+  %i.as = icmp eq ptr %i.aq, %.056
   %or.cond = and i1 %i.as, %i.ar
   br i1 %or.cond, label %bb.m, label %bb.k
 
@@ -608,9 +608,10 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.az = call fastcc noundef ptr @_ZL23GetViewportBgFgDrawListP14ImGuiViewportPmPKc(ptr noundef nonnull %i.aa, i64 noundef 1, ptr noundef nonnull @.str.86) ; 10 uses
-  %.sroa.015.0.copyload = load ptr, ptr %i.l, align 8, !tbaa !485 ; 5 uses
+  %.sroa.015.0.copyload = load i64, ptr %i.l, align 8, !tbaa !485
   %.sroa.8.0.copyload = load i64, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !486 ; 5 uses
-  call void @_ZN10ImDrawList11PushTextureE12ImTextureRef(ptr noundef nonnull align 8 dereferenceable(224) %i.az, ptr %.sroa.015.0.copyload, i64 %.sroa.8.0.copyload)
+  %17 = inttoptr i64 %.sroa.015.0.copyload to ptr ; 5 uses
+  call void @_ZN10ImDrawList11PushTextureE12ImTextureRef(ptr noundef nonnull align 8 dereferenceable(224) %i.az, ptr %17, i64 %.sroa.8.0.copyload)
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #41
   %i.ba = load <2 x float>, ptr %9, align 8, !tbaa !8 ; 2 uses
   %i.bb = fadd <2 x float> %i.o, %i.ba
@@ -621,7 +622,7 @@ bb.d:                                             ; preds = %bb.c
   %i.be = fmul <2 x float> %i.n, %i.bd
   %i.bf = fadd <2 x float> %i.ba, %i.be
   store <2 x float> %i.bf, ptr %11, align 8
-  call void @_ZN10ImDrawList8AddImageE12ImTextureRefRK6ImVec2S3_S3_S3_j(ptr noundef nonnull align 8 dereferenceable(224) %i.az, ptr %.sroa.015.0.copyload, i64 %.sroa.8.0.copyload, ptr noundef nonnull align 4 dereferenceable(8) %10, ptr noundef nonnull align 4 dereferenceable(8) %11, ptr noundef nonnull align 4 dereferenceable(8) %i.j, ptr noundef nonnull align 4 dereferenceable(8) %i.p, i32 noundef %5)
+  call void @_ZN10ImDrawList8AddImageE12ImTextureRefRK6ImVec2S3_S3_S3_j(ptr noundef nonnull align 8 dereferenceable(224) %i.az, ptr %17, i64 %.sroa.8.0.copyload, ptr noundef nonnull align 4 dereferenceable(8) %10, ptr noundef nonnull align 4 dereferenceable(8) %11, ptr noundef nonnull align 4 dereferenceable(8) %i.j, ptr noundef nonnull align 4 dereferenceable(8) %i.p, i32 noundef %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #41
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #41
@@ -634,7 +635,7 @@ bb.d:                                             ; preds = %bb.c
   %i.bk = fmul <2 x float> %i.n, %i.bj
   %i.bl = fadd <2 x float> %i.bg, %i.bk
   store <2 x float> %i.bl, ptr %13, align 8
-  call void @_ZN10ImDrawList8AddImageE12ImTextureRefRK6ImVec2S3_S3_S3_j(ptr noundef nonnull align 8 dereferenceable(224) %i.az, ptr %.sroa.015.0.copyload, i64 %.sroa.8.0.copyload, ptr noundef nonnull align 4 dereferenceable(8) %12, ptr noundef nonnull align 4 dereferenceable(8) %13, ptr noundef nonnull align 4 dereferenceable(8) %i.j, ptr noundef nonnull align 4 dereferenceable(8) %i.p, i32 noundef %5)
+  call void @_ZN10ImDrawList8AddImageE12ImTextureRefRK6ImVec2S3_S3_S3_j(ptr noundef nonnull align 8 dereferenceable(224) %i.az, ptr %17, i64 %.sroa.8.0.copyload, ptr noundef nonnull align 4 dereferenceable(8) %12, ptr noundef nonnull align 4 dereferenceable(8) %13, ptr noundef nonnull align 4 dereferenceable(8) %i.j, ptr noundef nonnull align 4 dereferenceable(8) %i.p, i32 noundef %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #41
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #41
@@ -643,7 +644,7 @@ bb.d:                                             ; preds = %bb.c
   %i.bo = load <2 x float>, ptr %9, align 8, !tbaa !8
   %i.bp = fadd <2 x float> %i.bn, %i.bo
   store <2 x float> %i.bp, ptr %14, align 8
-  call void @_ZN10ImDrawList8AddImageE12ImTextureRefRK6ImVec2S3_S3_S3_j(ptr noundef nonnull align 8 dereferenceable(224) %i.az, ptr %.sroa.015.0.copyload, i64 %.sroa.8.0.copyload, ptr noundef nonnull align 4 dereferenceable(8) %9, ptr noundef nonnull align 4 dereferenceable(8) %14, ptr noundef nonnull align 4 dereferenceable(8) %i.j, ptr noundef nonnull align 4 dereferenceable(8) %i.p, i32 noundef %4)
+  call void @_ZN10ImDrawList8AddImageE12ImTextureRefRK6ImVec2S3_S3_S3_j(ptr noundef nonnull align 8 dereferenceable(224) %i.az, ptr %17, i64 %.sroa.8.0.copyload, ptr noundef nonnull align 4 dereferenceable(8) %9, ptr noundef nonnull align 4 dereferenceable(8) %14, ptr noundef nonnull align 4 dereferenceable(8) %i.j, ptr noundef nonnull align 4 dereferenceable(8) %i.p, i32 noundef %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #41
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #41
   %i.bq = load <2 x float>, ptr %7, align 8, !tbaa !8
@@ -651,7 +652,7 @@ bb.d:                                             ; preds = %bb.c
   %i.bs = load <2 x float>, ptr %9, align 8, !tbaa !8
   %i.bt = fadd <2 x float> %i.br, %i.bs
   store <2 x float> %i.bt, ptr %15, align 8
-  call void @_ZN10ImDrawList8AddImageE12ImTextureRefRK6ImVec2S3_S3_S3_j(ptr noundef nonnull align 8 dereferenceable(224) %i.az, ptr %.sroa.015.0.copyload, i64 %.sroa.8.0.copyload, ptr noundef nonnull align 4 dereferenceable(8) %9, ptr noundef nonnull align 4 dereferenceable(8) %15, ptr noundef nonnull align 4 dereferenceable(8) %8, ptr noundef nonnull align 4 dereferenceable(8) %i.r, i32 noundef %3)
+  call void @_ZN10ImDrawList8AddImageE12ImTextureRefRK6ImVec2S3_S3_S3_j(ptr noundef nonnull align 8 dereferenceable(224) %i.az, ptr %17, i64 %.sroa.8.0.copyload, ptr noundef nonnull align 4 dereferenceable(8) %9, ptr noundef nonnull align 4 dereferenceable(8) %15, ptr noundef nonnull align 4 dereferenceable(8) %8, ptr noundef nonnull align 4 dereferenceable(8) %i.r, i32 noundef %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #41
   br i1 %or.cond3, label %bb.e, label %bb.f
 
@@ -1054,14 +1055,14 @@ bb.rd:                                            ; preds = %bb.rc, %bb.ra
   %i.cld = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8408
   store i32 %i.clc, ptr %i.cld, align 8, !tbaa !391
   %i.cle = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8428
-  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF, float f0xFF7FFFFF>, ptr %i.cle, align 4, !tbaa !8
+  store <4 x i32> <i32 2139095039, i32 2139095039, i32 -8388609, i32 -8388609>, ptr %i.cle, align 4, !tbaa !8
   br label %.thread.i315.i
 
 bb.re:                                            ; preds = %bb.qd
   %i.clf = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8408
   store i32 -1, ptr %i.clf, align 8, !tbaa !391
   %i.clg = getelementptr inbounds nuw i8, ptr %i.cfm, i64 8428
-  store <4 x float> <float f0x7F7FFFFF, float f0x7F7FFFFF, float f0xFF7FFFFF, float f0xFF7FFFFF>, ptr %i.clg, align 4, !tbaa !8
+  store <4 x i32> <i32 2139095039, i32 2139095039, i32 -8388609, i32 -8388609>, ptr %i.clg, align 4, !tbaa !8
   br label %_ZN5ImGuiL23NavUpdatePageUpPageDownEv.exit.i.i
 
 .thread.i315.i:                                   ; preds = %.thread234.i.i, %bb.qc, %bb.qb
@@ -1464,7 +1465,7 @@ bb.da:                                            ; preds = %bb.cz
   %i.wm = zext i1 %i.wk to i8
   store i8 %i.wm, ptr %i.wl, align 1, !tbaa !1221
   %i.wn = getelementptr inbounds nuw i8, ptr %.pre1059, i64 616
-  store <4 x float> <float f0xFF7FFFFF, float f0xFF7FFFFF, float f0x7F7FFFFF, float f0x7F7FFFFF>, ptr %i.wn, align 8, !tbaa !8
+  store <4 x i32> <i32 -8388609, i32 -8388609, i32 2139095039, i32 2139095039>, ptr %i.wn, align 8, !tbaa !8
   %i.wo = getelementptr inbounds nuw i8, ptr %.pre1059, i64 264
   call void @_ZN8ImVectorIjE6resizeEi(ptr noundef nonnull align 8 dereferenceable(16) %i.wo, i32 noundef 1)
   %i.wp = load ptr, ptr %i.g, align 8, !tbaa !705
@@ -1867,8 +1868,8 @@ _Z7ImClampRK6ImVec2S1_S1_.exit.i:                 ; preds = %bb.ku, %_ZN5ImGuiL2
   %i.bnv = getelementptr [16 x i8], ptr %i.bns, i64 %i.bnu
   %i.bnw = getelementptr i8, ptr %i.bnv, i64 -16
   %i.bnx = getelementptr inbounds nuw i8, ptr %i.bnl, i64 616
-  %31 = load <4 x float>, ptr %i.bnw, align 4, !tbaa !8
-  store <4 x float> %31, ptr %i.bnx, align 8, !tbaa !8
+  %31 = load <4 x i32>, ptr %i.bnw, align 4, !tbaa !8
+  store <4 x i32> %31, ptr %i.bnx, align 8, !tbaa !8
   br i1 %or.cond534, label %.thread986, label %bb.kv
 
 bb.kv:                                            ; preds = %_Z7ImClampRK6ImVec2S1_S1_.exit.i
@@ -2271,8 +2272,8 @@ bb.qe:                                            ; preds = %bb.qd
   %i.dib = getelementptr [16 x i8], ptr %i.dhy, i64 %i.dia
   %i.dic = getelementptr i8, ptr %i.dib, i64 -16
   %i.did = getelementptr inbounds nuw i8, ptr %i.dhr, i64 616
-  %32 = load <4 x float>, ptr %i.dic, align 4, !tbaa !8
-  store <4 x float> %32, ptr %i.did, align 8, !tbaa !8
+  %32 = load <4 x i32>, ptr %i.dic, align 4, !tbaa !8
+  store <4 x i32> %32, ptr %i.did, align 8, !tbaa !8
   %.pre1065 = load ptr, ptr %i.g, align 8, !tbaa !705
   br label %bb.qf
 
@@ -2633,8 +2634,8 @@ bb.a:
   %i.m = getelementptr [16 x i8], ptr %i.j, i64 %i.l
   %i.n = getelementptr i8, ptr %i.m, i64 -16
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 616
-  %3 = load <4 x float>, ptr %i.n, align 4, !tbaa !8
-  store <4 x float> %3, ptr %i.o, align 8, !tbaa !8
+  %3 = load <4 x i32>, ptr %i.n, align 4, !tbaa !8
+  store <4 x i32> %3, ptr %i.o, align 8, !tbaa !8
   ret void
 }
 
@@ -2658,8 +2659,8 @@ bb.a:
   %i.m = getelementptr [16 x i8], ptr %i.j, i64 %i.l
   %i.n = getelementptr i8, ptr %i.m, i64 -16
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 616
-  %0 = load <4 x float>, ptr %i.n, align 4, !tbaa !8
-  store <4 x float> %0, ptr %i.o, align 8, !tbaa !8
+  %0 = load <4 x i32>, ptr %i.n, align 4, !tbaa !8
+  store <4 x i32> %0, ptr %i.o, align 8, !tbaa !8
   ret void
 }
 
@@ -3062,6 +3063,7 @@ bb.by:                                            ; preds = %_ZN8ImVectorIP13ImT
   %i.pk = phi i32 [ %.pre.i102, %.lr.ph.i101 ], [ %i.sl, %_ZN8ImVectorIP13ImTextureDataE9push_backERKS1_.exit.i ] ; 6 uses
   %.02530.i = phi ptr [ %i.pe, %.lr.ph.i101 ], [ %i.sm, %_ZN8ImVectorIP13ImTextureDataE9push_backERKS1_.exit.i ] ; 2 uses
   %i.pl = load ptr, ptr %.02530.i, align 8, !tbaa !485 ; 2 uses
+  %2 = ptrtoint ptr %i.pl to i64
   %i.pm = load i32, ptr %i.pi, align 4, !tbaa !515
   %i.pn = trunc i32 %i.pm to i16
   %i.po = getelementptr inbounds nuw i8, ptr %i.pl, i64 92
@@ -3222,7 +3224,6 @@ _ZN8ImVectorIP13ImTextureDataE9push_backERKS1_.exit.i: ; preds = %bb.ci, %._ZN8I
   %i.sh = phi ptr [ %.pre.i.i103, %._ZN8ImVectorIP13ImTextureDataE7reserveEi.exit_crit_edge.i.i ], [ %i.qa, %bb.ci ]
   %i.si = sext i32 %i.sg to i64
   %i.sj = getelementptr inbounds [8 x i8], ptr %i.sh, i64 %i.si
-  %2 = ptrtoint ptr %i.pl to i64
   store i64 %2, ptr %i.sj, align 8
   %i.sk = load i32, ptr %i.on, align 8, !tbaa !528
   %i.sl = add nsw i32 %i.sk, 1                    ; 2 uses
@@ -3625,8 +3626,8 @@ bb.m:                                             ; preds = %bb.l
   %i.av = getelementptr [16 x i8], ptr %i.as, i64 %i.au
   %i.aw = getelementptr i8, ptr %i.av, i64 -16
   %i.ax = getelementptr inbounds nuw i8, ptr %i.al, i64 616
-  %0 = load <4 x float>, ptr %i.aw, align 4, !tbaa !8
-  store <4 x float> %0, ptr %i.ax, align 8, !tbaa !8
+  %0 = load <4 x i32>, ptr %i.aw, align 4, !tbaa !8
+  store <4 x i32> %0, ptr %i.ax, align 8, !tbaa !8
   %.pre39 = load ptr, ptr @GImGui, align 8, !tbaa !193
   br label %bb.n
 
@@ -4029,9 +4030,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 620
-  %6 = load float, ptr %i.aj, align 4, !tbaa !401
+  %6 = load i32, ptr %i.aj, align 4, !tbaa !401
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ad, i64 628
-  %7 = load float, ptr %i.ak, align 4, !tbaa !402
+  %7 = load i32, ptr %i.ak, align 4, !tbaa !402
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
@@ -4049,16 +4050,16 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.sink109 = phi float [ f0xFF7FFFFF, %bb.c ], [ %i.an, %bb.d ]
-  %.sink108 = phi float [ %6, %bb.c ], [ f0xFF7FFFFF, %bb.d ]
+  %.sink108 = phi i32 [ %6, %bb.c ], [ -8388609, %bb.d ]
   %.sink107 = phi float [ f0x7F7FFFFF, %bb.c ], [ %i.au, %bb.d ]
-  %.sink = phi float [ %7, %bb.c ], [ f0x7F7FFFFF, %bb.d ]
+  %.sink = phi i32 [ %7, %bb.c ], [ 2139095039, %bb.d ]
   store float %.sink109, ptr %2, align 4, !tbaa !8
   %i.av = getelementptr inbounds nuw i8, ptr %2, i64 4
-  store float %.sink108, ptr %i.av, align 4, !tbaa !8
+  store i32 %.sink108, ptr %i.av, align 4, !tbaa !8
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 8
   store float %.sink107, ptr %i.aw, align 4, !tbaa !8
   %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 12
-  store float %.sink, ptr %i.ax, align 4, !tbaa !8
+  store i32 %.sink, ptr %i.ax, align 4, !tbaa !8
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 228
@@ -4461,7 +4462,7 @@ bb.g:                                             ; preds = %bb.c, %bb.f
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !705 ; 5 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
-  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !705
+  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !705
   tail call void @_ZN8ImVectorI14ImGuiPopupDataE6resizeEi(ptr noundef nonnull align 8 dereferenceable(16) %i.z, i32 noundef %0)
   %i.ae = icmp ne ptr %.sroa.3.0.copyload, null
   %or.cond = select i1 %1, i1 %i.ae, i1 false
@@ -4472,15 +4473,19 @@ bb.h:                                             ; preds = %.loopexit
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !722 ; 2 uses
   %i.ah = and i32 %i.ag, 268435456
   %.not32 = icmp eq i32 %i.ah, 0
-  br i1 %.not32, label %bb.j, label %bb.i
+  br i1 %.not32, label %2, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload, i64 944
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !1043
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.h, %bb.i
-  %i.ak = phi ptr [ %i.aj, %bb.i ], [ %.sroa.5.0.copyload, %bb.h ] ; 3 uses
+2:                                                ; preds = %bb.h
+  %3 = inttoptr i64 %.sroa.5.0.copyload to ptr
+  br label %bb.j
+
+bb.j:                                             ; preds = %2, %bb.i
+  %i.ak = phi ptr [ %i.aj, %bb.i ], [ %3, %2 ]    ; 3 uses
   %.not33 = icmp eq ptr %i.ak, null
   br i1 %.not33, label %.split, label %bb.k
 
@@ -4883,7 +4888,7 @@ bb.gf:                                            ; preds = %_ZNK15ImGuiPackedDa
   br i1 %.not.i2.i, label %_ZN5ImGui14PushStyleColorEiRK6ImVec4.exit.i, label %bb.gg
 
 bb.gg:                                            ; preds = %bb.gf
-  store <4 x float> <float 1.000000e+00, float 4.000000e-01, float 4.000000e-01, float 1.000000e+00>, ptr %i.bag, align 4, !tbaa !8
+  store <4 x i32> <i32 1065353216, i32 1053609165, i32 1053609165, i32 1065353216>, ptr %i.bag, align 4, !tbaa !8
   br label %_ZN5ImGui14PushStyleColorEiRK6ImVec4.exit.i
 
 _ZN5ImGui14PushStyleColorEiRK6ImVec4.exit.i:      ; preds = %bb.gg, %bb.gf
@@ -5039,7 +5044,7 @@ bb.gv:                                            ; preds = %_ZNK15ImGuiPackedDa
   br i1 %.not.i2.i700, label %_ZN5ImGui14PushStyleColorEiRK6ImVec4.exit.i704, label %bb.gw
 
 bb.gw:                                            ; preds = %bb.gv
-  store <4 x float> <float 1.000000e+00, float 4.000000e-01, float 4.000000e-01, float 1.000000e+00>, ptr %i.bco, align 4, !tbaa !8
+  store <4 x i32> <i32 1065353216, i32 1053609165, i32 1053609165, i32 1065353216>, ptr %i.bco, align 4, !tbaa !8
   br label %_ZN5ImGui14PushStyleColorEiRK6ImVec4.exit.i704
 
 _ZN5ImGui14PushStyleColorEiRK6ImVec4.exit.i704:   ; preds = %bb.gw, %bb.gv

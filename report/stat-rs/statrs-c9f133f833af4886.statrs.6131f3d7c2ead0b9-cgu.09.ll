@@ -204,8 +204,9 @@ bb.l:                                             ; preds = %.lr.ph
 bb.m:                                             ; preds = %.lr.ph
   %i.ak = mul i64 %.val20, %.sroa.010.051
   %i.al = getelementptr [8 x i8], ptr %.val19, i64 %i.ak
+  %4 = ptrtoint ptr %i.al to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  store ptr %i.al, ptr %i.e, align 8
+  store i64 %4, ptr %i.e, align 8
   store i64 %.val20, ptr %.sroa.434.0..sroa_idx, align 8
   store i64 %.val20, ptr %.sroa.535.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
@@ -608,13 +609,15 @@ bb.a:
   %i.a = alloca [32 x i8], align 8                ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %0, ptr %i.a, align 8
+  %2 = ptrtoint ptr %0 to i64
+  %3 = ptrtoint ptr %i.b to i64
+  store i64 %2, ptr %i.a, align 8
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXs7_NtNtCs3oUPovFnLWP_4core3fmt5floatdNtB7_7Display3fmt, ptr %.sroa.43.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs7_NtNtCs3oUPovFnLWP_4core3fmt5floatdNtB7_7Display3fmt to i64), ptr %.sroa.43.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr %i.b, ptr %i.c, align 8
+  store i64 %3, ptr %i.c, align 8
   %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store ptr @_RNvXs7_NtNtCs3oUPovFnLWP_4core3fmt5floatdNtB7_7Display3fmt, ptr %.sroa.47.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs7_NtNtCs3oUPovFnLWP_4core3fmt5floatdNtB7_7Display3fmt to i64), ptr %.sroa.47.0..sroa_idx, align 8
   %i.d = load ptr, ptr %1, align 8, !nonnull !22, !noundef !22
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !nonnull !22, !align !23, !noundef !22
@@ -629,13 +632,15 @@ bb.a:
   %i.a = alloca [32 x i8], align 8                ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %0, ptr %i.a, align 8
+  %2 = ptrtoint ptr %0 to i64
+  %3 = ptrtoint ptr %i.b to i64
+  store i64 %2, ptr %i.a, align 8
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXs6_NtNtCs3oUPovFnLWP_4core3fmt5floatdNtB7_5Debug3fmt, ptr %.sroa.43.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs6_NtNtCs3oUPovFnLWP_4core3fmt5floatdNtB7_5Debug3fmt to i64), ptr %.sroa.43.0..sroa_idx, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr %i.b, ptr %i.c, align 8
+  store i64 %3, ptr %i.c, align 8
   %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store ptr @_RNvXs6_NtNtCs3oUPovFnLWP_4core3fmt5floatdNtB7_5Debug3fmt, ptr %.sroa.47.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs6_NtNtCs3oUPovFnLWP_4core3fmt5floatdNtB7_5Debug3fmt to i64), ptr %.sroa.47.0..sroa_idx, align 8
   %i.d = load ptr, ptr %1, align 8, !nonnull !22, !noundef !22
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !nonnull !22, !align !23, !noundef !22
