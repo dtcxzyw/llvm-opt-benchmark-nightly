@@ -1213,6 +1213,14 @@ def run_opt_file(
         return "failed to execute opt task"
 
 
+_WORKER_BASELINE_STATS = None
+
+
+def _init_worker(baseline_stats):
+    global _WORKER_BASELINE_STATS
+    _WORKER_BASELINE_STATS = baseline_stats
+
+
 def _run_opt_task(args):
     (
         idx,
@@ -1220,14 +1228,17 @@ def _run_opt_task(args):
         file,
         worker_count,
         config,
-        baseline_per_file_stats,
         enable_ir_diff,
         compare_ref_root,
         deadline,
     ) = args
     worker_idx = idx % worker_count
     file_key = f"{proj}/{file}"
-    baseline_file_stats = baseline_per_file_stats.get(file_key)
+    baseline_file_stats = (
+        _WORKER_BASELINE_STATS.get(file_key)
+        if _WORKER_BASELINE_STATS is not None
+        else None
+    )
     compare_ref_path = None
     if compare_ref_root is not None:
         compare_ref_path = os.path.join(compare_ref_root, f"{proj}-s-{file}")
@@ -1326,7 +1337,6 @@ def run_opt(
             file,
             worker_count,
             config,
-            baseline_per_file_stats,
             enable_ir_diff,
             compare_ref_root,
             deadline,
@@ -1334,7 +1344,11 @@ def run_opt(
         for idx, (proj, file) in enumerate(tasks)
     ]
 
-    pool = multiprocessing.Pool(processes=worker_count)
+    pool = multiprocessing.Pool(
+        processes=worker_count,
+        initializer=_init_worker,
+        initargs=(baseline_per_file_stats,),
+    )
     try:
         results_iter = pool.imap_unordered(_run_opt_task, task_args, chunksize=1)
         with tqdm(total=len(tasks), desc="run_opt", mininterval=10) as pbar:
