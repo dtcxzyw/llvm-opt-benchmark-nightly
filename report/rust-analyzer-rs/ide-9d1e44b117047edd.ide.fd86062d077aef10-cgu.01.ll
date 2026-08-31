@@ -205,27 +205,25 @@ tailrecurse.i:                                    ; preds = %.lr.ph.i
 bb.q:                                             ; preds = %.lr.ph.i
   %i.co = getelementptr inbounds nuw i8, ptr %.tr16.i, i64 8
   %i.cp = getelementptr inbounds nuw i8, ptr %.tr717.i, i64 8
-  %.val.i.a = load ptr, ptr %i.co, align 8, !noalias !5649, !noundef !4 ; 2 uses
+  %.val.i = load ptr, ptr %i.co, align 8, !noalias !5649, !noundef !4 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.tr16.i, i64 16
+  %.val.i.a = load ptr, ptr %2, align 8, !noalias !5649 ; 3 uses
   %.val5.i = load ptr, ptr %i.cp, align 8, !noalias !5652, !noundef !4 ; 3 uses
-  %2 = icmp ne ptr %.val.i.a, null                ; 2 uses
-  %3 = icmp eq ptr %.val5.i, null                 ; 3 uses
-  %not..i.i = xor i1 %3, true
-  %i.cq = xor i1 %2, %3
+  %3 = getelementptr inbounds nuw i8, ptr %.tr717.i, i64 16
+  %.val6.i = load ptr, ptr %3, align 8, !noalias !5652 ; 3 uses
+  %4 = icmp ne ptr %.val.i, null                  ; 2 uses
+  %5 = icmp eq ptr %.val5.i, null                 ; 2 uses
+  %i.cq = xor i1 %4, %5
   br i1 %i.cq, label %bb.r, label %_RNvXsk_NtCslLuZgPVt6hg_3ide9runnablesNtB5_12RunnableKindNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread
 
 bb.r:                                             ; preds = %bb.q
-  %4 = getelementptr inbounds nuw i8, ptr %.tr717.i, i64 16
-  %.val6.i = load ptr, ptr %4, align 8, !noalias !5652
-  %5 = getelementptr inbounds nuw i8, ptr %.tr16.i, i64 16
-  %.val4.i = load ptr, ptr %5, align 8, !noalias !5649
-  %6 = icmp eq ptr %.val4.i, %.val6.i             ; 2 uses
-  br i1 %2, label %.split16, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
+  br i1 %4, label %.split16, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
 .split16:                                         ; preds = %bb.r
-  tail call void @llvm.assume(i1 %not..i.i)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5.i) ]
-  %i.cr = icmp eq ptr %.val.i.a, %.val5.i
-  %spec.select.i.i = select i1 %i.cr, i1 %6, i1 false
+  %6 = icmp eq ptr %.val.i, %.val5.i
+  %i.cr = icmp eq ptr %.val.i.a, %.val6.i
+  %spec.select.i.i = select i1 %6, i1 %i.cr, i1 false
   br i1 %spec.select.i.i, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread13, label %_RNvXsk_NtCslLuZgPVt6hg_3ide9runnablesNtB5_12RunnableKindNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread
 
 bb.s:                                             ; preds = %.lr.ph.i
@@ -261,8 +259,11 @@ bb.t:                                             ; preds = %.lr.ph.i
   br i1 %i.dl, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread13, label %_RNvXsk_NtCslLuZgPVt6hg_3ide9runnablesNtB5_12RunnableKindNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread
 
 _RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit: ; preds = %bb.r
-  tail call void @llvm.assume(i1 %3)
-  br i1 %6, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread13, label %_RNvXsk_NtCslLuZgPVt6hg_3ide9runnablesNtB5_12RunnableKindNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread
+  tail call void @llvm.assume(i1 %5)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.a) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6.i) ]
+  %7 = icmp eq ptr %.val.i.a, %.val6.i
+  br i1 %7, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread13, label %_RNvXsk_NtCslLuZgPVt6hg_3ide9runnablesNtB5_12RunnableKindNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread
 
 _RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread13: ; preds = %.lr.ph.i, %.split17, %.split16, %.split15, %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit, %bb.p
   %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 145
