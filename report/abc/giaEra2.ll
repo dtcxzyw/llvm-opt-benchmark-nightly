@@ -205,16 +205,15 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.e
   %i.ar = icmp samesign ult i64 %indvars.iv19.i, 1073741823
-  %i.as = shl nsw i32 %spec.select.sink.i15.i, 1
-  %spec.select.i.i = select i1 %i.ar, i32 %i.as, i32 2147483647 ; 4 uses
-  %1 = sext i32 %spec.select.i.i to i64
+  %i.as = shl nuw nsw i32 %spec.select.sink.i15.i, 1
+  %spec.select.i.i = select i1 %i.ar, i32 %i.as, i32 2147483647 ; 3 uses
+  %1 = zext nneg i32 %spec.select.i.i to i64      ; 2 uses
   %.not.i10.i.i = icmp samesign ult i64 %indvars.iv19.i, %1
   br i1 %.not.i10.i.i, label %bb.j, label %Vec_PtrPush.exit.i
 
 bb.j:                                             ; preds = %bb.i
   %.not9.i11.i.i = icmp eq ptr %storemerge17.i, null
-  %2 = zext nneg i32 %spec.select.i.i to i64
-  %i.at = shl nuw nsw i64 %2, 3                   ; 2 uses
+  %i.at = shl nuw nsw i64 %1, 3                   ; 2 uses
   br i1 %.not9.i11.i.i, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -617,8 +616,8 @@ bb.z:                                             ; preds = %bb.y
 
 Gia_WordFindFirstBit.exit.i:                      ; preds = %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l
   %.06.i.i = phi i32 [ 0, %bb.l ], [ 12, %bb.x ], [ 11, %bb.w ], [ 8, %bb.t ], [ 1, %bb.m ], [ 10, %bb.v ], [ 7, %bb.s ], [ 6, %bb.r ], [ 2, %bb.n ], [ 4, %bb.p ], [ 9, %bb.u ], [ %i.cm, %bb.z ], [ 3, %bb.o ], [ 5, %bb.q ], [ 13, %bb.y ]
-  %indvars.iv.tr.i = trunc nsw i64 %indvars.iv.i72 to i32
-  %i.cn = shl nsw i32 %indvars.iv.tr.i, 4
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i72 to i32
+  %i.cn = shl nuw i32 %indvars.iv.tr.i, 4
   %i.co = or disjoint i32 %.06.i.i, %i.cn
   br label %bb.aa
 
@@ -1021,8 +1020,8 @@ bb.z:                                             ; preds = %bb.y
 
 Gia_WordFindFirstBit.exit.i:                      ; preds = %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l
   %.06.i.i = phi i32 [ 0, %bb.l ], [ 12, %bb.x ], [ 11, %bb.w ], [ 8, %bb.t ], [ 1, %bb.m ], [ 10, %bb.v ], [ 7, %bb.s ], [ 6, %bb.r ], [ 2, %bb.n ], [ 4, %bb.p ], [ 9, %bb.u ], [ %i.di, %bb.z ], [ 3, %bb.o ], [ 5, %bb.q ], [ 13, %bb.y ]
-  %indvars.iv.tr.i = trunc nsw i64 %indvars.iv.i112 to i32
-  %i.dj = shl nsw i32 %indvars.iv.tr.i, 4
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i112 to i32
+  %i.dj = shl nuw i32 %indvars.iv.tr.i, 4
   %i.dk = or disjoint i32 %.06.i.i, %i.dj
   br label %bb.aa
 
@@ -1300,8 +1299,8 @@ bb.az:                                            ; preds = %bb.ay
 
 Gia_WordFindFirstBit.exit.i149:                   ; preds = %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al
   %.06.i.i150 = phi i32 [ 0, %bb.al ], [ 12, %bb.ax ], [ 11, %bb.aw ], [ 8, %bb.at ], [ 1, %bb.am ], [ 10, %bb.av ], [ 7, %bb.as ], [ 6, %bb.ar ], [ 2, %bb.an ], [ 4, %bb.ap ], [ 9, %bb.au ], [ %i.hp, %bb.az ], [ 3, %bb.ao ], [ 5, %bb.aq ], [ 13, %bb.ay ]
-  %indvars.iv.tr.i151 = trunc nsw i64 %indvars.iv.i145 to i32
-  %i.hq = shl nsw i32 %indvars.iv.tr.i151, 4
+  %indvars.iv.tr.i151 = trunc nuw i64 %indvars.iv.i145 to i32
+  %i.hq = shl nuw i32 %indvars.iv.tr.i151, 4
   %i.hr = or disjoint i32 %.06.i.i150, %i.hq
   br label %bb.ba
 

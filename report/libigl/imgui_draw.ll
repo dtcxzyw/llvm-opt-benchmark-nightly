@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br label %.lr.ph.preheader
 
 bb.e:                                             ; preds = %bb.c
-  %i.aa = shl nsw i32 %2, 2
+  %i.aa = shl nuw nsw i32 %2, 2
   %i.ab = mul nuw nsw i32 %2, 3
   %i.ac = select i1 %i.j, i32 %i.aa, i32 %i.ab
   %i.ad = select i1 %i.j, i32 5, i32 3
@@ -220,7 +220,7 @@ bb.e:                                             ; preds = %bb.c
   %i.ah = shl nuw nsw i64 %i.ag, 3
   %i.ai = alloca i8, i64 %i.ah, align 16          ; 9 uses
   %i.aj = zext nneg i32 %2 to i64                 ; 4 uses
-  %i.ak = getelementptr [8 x i8], ptr %i.ai, i64 %i.aj ; 15 uses
+  %i.ak = getelementptr [8 x i8], ptr %i.ai, i64 %i.aj ; 14 uses
   %wide.trip.count = zext nneg i32 %i.g to i64
   br label %.lr.ph
 
@@ -266,7 +266,7 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph
 bb.h:                                             ; preds = %._crit_edge
   %i.bg = getelementptr i8, ptr %i.ak, i64 -16
   %i.bh = zext nneg i32 %i.f to i64               ; 3 uses
-  %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %i.bh ; 7 uses
+  %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %i.bh ; 5 uses
   %i.bj = load i64, ptr %i.bg, align 8
   store i64 %i.bj, ptr %i.bi, align 8
   %or.cond5 = select i1 %.not446, i1 %i.j, i1 false
@@ -554,28 +554,23 @@ bb.o:                                             ; preds = %bb.h
   %i.ho = fmul <2 x float> %i.hn, %i.hl
   %i.hp = load <2 x float>, ptr %i.hk, align 4, !tbaa !9 ; 4 uses
   %i.hq = fadd <2 x float> %i.ho, %i.hp
-  %i.hr = shl nsw i32 %i.f, 2                     ; 2 uses
+  %i.hr = shl nuw nsw i32 %i.f, 2
   %i.hs = zext nneg i32 %i.hr to i64
-  %i.ht = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %i.hs
+  %i.ht = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %i.hs ; 4 uses
   store <2 x float> %i.hq, ptr %i.ht, align 8
-  %i.hu = load <2 x float>, ptr %i.bi, align 8, !tbaa !9
+  %6 = getelementptr inbounds nuw i8, ptr %i.ht, i64 8
+  %7 = getelementptr inbounds nuw i8, ptr %i.ht, i64 16
+  %i.hu = load <2 x float>, ptr %i.bi, align 8, !tbaa !9 ; 2 uses
   %i.hv = insertelement <2 x float> poison, float %i.gs, i64 0
-  %i.hw = shufflevector <2 x float> %i.hv, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.hx = fmul <2 x float> %i.hw, %i.hu
+  %i.hw = shufflevector <2 x float> %i.hv, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.hx = fmul <2 x float> %i.hw, %i.hu           ; 2 uses
   %i.hy = fadd <2 x float> %i.hp, %i.hx
-  %6 = zext nneg i32 %i.hr to i64
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %6 ; 3 uses
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store <2 x float> %i.hy, ptr %8, align 8
-  %9 = load <2 x float>, ptr %i.bi, align 8, !tbaa !9
-  %10 = fmul <2 x float> %i.hw, %9
-  %i.hz = fsub <2 x float> %i.hp, %10
-  %11 = getelementptr inbounds nuw i8, ptr %7, i64 16
-  store <2 x float> %i.hz, ptr %11, align 8
-  %12 = load <2 x float>, ptr %i.bi, align 8, !tbaa !9
-  %i.ia = fmul <2 x float> %i.hn, %12
+  store <2 x float> %i.hy, ptr %6, align 8
+  %i.hz = fsub <2 x float> %i.hp, %i.hx
+  store <2 x float> %i.hz, ptr %7, align 8
+  %i.ia = fmul <2 x float> %i.hn, %i.hu
   %i.ib = fsub <2 x float> %i.hp, %i.ia
-  %i.ic = getelementptr inbounds nuw i8, ptr %7, i64 24
+  %i.ic = getelementptr inbounds nuw i8, ptr %i.ht, i64 24
   store <2 x float> %i.ib, ptr %i.ic, align 8
   br label %.lr.ph622
 
@@ -978,9 +973,9 @@ bb.k:                                             ; preds = %bb.i
   %i.fh = zext i16 %i.eu to i64
   %i.fi = getelementptr inbounds nuw i8, ptr %.8.val, i64 %i.fh
   %i.fj = sub nsw i32 %0, %i.ej
-  %i.fk = shl nsw i32 %i.fj, 1
-  %1 = sext i32 %i.fk to i64
-  %i.fl = getelementptr inbounds i8, ptr %i.fi, i64 %1
+  %i.fk = shl nuw nsw i32 %i.fj, 1
+  %1 = zext nneg i32 %i.fk to i64
+  %i.fl = getelementptr inbounds nuw i8, ptr %i.fi, i64 %1
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 %i.a
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fm, i64 %i.em
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fn, i64 16

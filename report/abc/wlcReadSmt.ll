@@ -205,16 +205,15 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.f
   %i.aa = icmp samesign ult i64 %indvars.iv156.i, 1073741823
-  %i.ab = shl nsw i32 %spec.select.sink.i127.i, 1
-  %spec.select.i.i = select i1 %i.aa, i32 %i.ab, i32 2147483647 ; 4 uses
-  %4 = sext i32 %spec.select.i.i to i64
+  %i.ab = shl nuw nsw i32 %spec.select.sink.i127.i, 1
+  %spec.select.i.i = select i1 %i.aa, i32 %i.ab, i32 2147483647 ; 3 uses
+  %4 = zext nneg i32 %spec.select.i.i to i64      ; 2 uses
   %.not.i9.i.i = icmp samesign ult i64 %indvars.iv156.i, %4
   br i1 %.not.i9.i.i, label %bb.k, label %Vec_IntPush.exit.i
 
 bb.k:                                             ; preds = %bb.j
   %.not9.i10.i.i = icmp eq ptr %storemerge123129.i, null
-  %5 = zext nneg i32 %spec.select.i.i to i64
-  %i.ac = shl nuw nsw i64 %5, 2                   ; 2 uses
+  %i.ac = shl nuw nsw i64 %4, 2                   ; 2 uses
   br i1 %.not9.i10.i.i, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -493,16 +492,15 @@ bb.at:                                            ; preds = %bb.ar
 
 bb.au:                                            ; preds = %bb.aq
   %i.cr = icmp samesign ult i64 %indvars.iv161.i, 1073741823
-  %i.cs = shl nsw i32 %spec.select.sink.i115146.i, 1
-  %spec.select.i111.i = select i1 %i.cr, i32 %i.cs, i32 2147483647 ; 4 uses
-  %6 = sext i32 %spec.select.i111.i to i64
-  %.not.i9.i112.i = icmp samesign ult i64 %indvars.iv161.i, %6
+  %i.cs = shl nuw nsw i32 %spec.select.sink.i115146.i, 1
+  %spec.select.i111.i = select i1 %i.cr, i32 %i.cs, i32 2147483647 ; 3 uses
+  %5 = zext nneg i32 %spec.select.i111.i to i64   ; 2 uses
+  %.not.i9.i112.i = icmp samesign ult i64 %indvars.iv161.i, %5
   br i1 %.not.i9.i112.i, label %bb.av, label %Vec_IntPush.exit118.i
 
 bb.av:                                            ; preds = %bb.au
   %.not9.i10.i113.i = icmp eq ptr %storemerge122148.i, null
-  %7 = zext nneg i32 %spec.select.i111.i to i64
-  %i.ct = shl nuw nsw i64 %7, 2                   ; 2 uses
+  %i.ct = shl nuw nsw i64 %5, 2                   ; 2 uses
   br i1 %.not9.i10.i113.i, label %bb.ax, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av

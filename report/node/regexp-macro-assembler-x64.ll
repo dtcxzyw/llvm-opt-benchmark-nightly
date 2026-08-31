@@ -202,8 +202,7 @@ bb.i:                                             ; preds = %.lr.ph
 _ZN2v88internal23RegExpMacroAssemblerX6417register_locationEi.exit: ; preds = %.lr.ph, %bb.i
   %i.bj = shl i64 %indvars.iv, 27
   %.sroa.0752.3.insert.ext = sub i64 72057592293097472, %i.bj
-  %.sroa.0752.3.insert.shift = and i64 %.sroa.0752.3.insert.ext, 72057593903710208
-  %.sroa.0752.3.insert.insert = or disjoint i64 %.sroa.0752.3.insert.shift, 8716288
+  %.sroa.0752.3.insert.insert = or disjoint i64 %.sroa.0752.3.insert.ext, 8716288
   call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %i.b, i64 %.sroa.0752.3.insert.insert, ptr nonnull inttoptr (i64 5 to ptr), i8 0, i32 noundef 8) #13
   %i.bk = load i32, ptr %i.am, align 8
   %i.bl = sext i32 %i.bk to i64
@@ -377,8 +376,7 @@ bb.aa:                                            ; preds = %.peel.next.peel.new
 bb.ab:                                            ; preds = %.peel.next.peel.newph, %bb.aa
   %i.cy = shl i64 %indvars.iv825, 27
   %.sroa.0762.3.insert.ext = sub i64 72057592293097472, %i.cy
-  %.sroa.0762.3.insert.shift = and i64 %.sroa.0762.3.insert.ext, 72057593903710208
-  %.sroa.0762.3.insert.insert = or disjoint i64 %.sroa.0762.3.insert.shift, 8716288
+  %.sroa.0762.3.insert.insert = or disjoint i64 %.sroa.0762.3.insert.ext, 8716288
   call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %i.b, i8 0, i64 %.sroa.0762.3.insert.insert, ptr nonnull inttoptr (i64 5 to ptr), i32 noundef 8) #13
   call void @_ZN2v88internal9Assembler13arithmetic_opEhNS0_8RegisterES2_i(ptr noundef nonnull align 8 dereferenceable(408) %i.b, i8 noundef zeroext 3, i8 0, i8 1, i32 noundef 8) #13
   %i.cz = load i32, ptr %i.ad, align 8

@@ -205,7 +205,7 @@ _m3dstbi__mul2sizes_valid.exit.i.i.i.i.i:         ; preds = %bb.bn
   br i1 %.not23.i.i.i.i.i, label %_m3dstbi__malloc_mad3.exit.i.i.i, label %_m3dstbi__mul2sizes_valid.exit.thread15.i.i.i.i.i
 
 _m3dstbi__mul2sizes_valid.exit.thread15.i.i.i.i.i: ; preds = %_m3dstbi__mul2sizes_valid.exit.i.i.i.i.i, %bb.bn
-  %i.np = mul nsw i32 %i.nl, %i.nk                ; 3 uses
+  %i.np = mul nuw nsw i32 %i.nl, %i.nk            ; 3 uses
   %i.nq = or i32 %i.nj, %i.np
   %or.cond.not.i10.i.i.i.i.i = icmp sgt i32 %i.nq, -1
   br i1 %or.cond.not.i10.i.i.i.i.i, label %bb.bo, label %_m3dstbi__malloc_mad3.exit.i.i.i
@@ -220,7 +220,7 @@ _m3dstbi__mul2sizes_valid.exit12.i.i.i.i.i:       ; preds = %bb.bo
   br i1 %.not.i.i.i.i.i, label %_m3dstbi__malloc_mad3.exit.i.i.i, label %_m3dstbi__mad3sizes_valid.exit.i.i.i.i
 
 _m3dstbi__mad3sizes_valid.exit.i.i.i.i:           ; preds = %_m3dstbi__mul2sizes_valid.exit12.i.i.i.i.i, %bb.bo
-  %i.nt = mul nsw i32 %i.nj, %i.np
+  %i.nt = mul nuw nsw i32 %i.nj, %i.np
   %i.nu = sext i32 %i.nt to i64
   %i.nv = call noalias noundef ptr @malloc(i64 noundef range(i64 -2147483648, 2147483648) %i.nu) #56
   br label %_m3dstbi__malloc_mad3.exit.i.i.i
@@ -623,7 +623,7 @@ bb.rl:                                            ; preds = %.lr.ph2988, %._crit
 
 .preheader2724.lr.ph:                             ; preds = %bb.rl
   %i.cmm = icmp sgt i32 %i.cmi, 0
-  %i.cmn = mul nsw i32 %i.cmi, %i.cmg             ; 2 uses
+  %i.cmn = mul nuw nsw i32 %i.cmi, %i.cmg         ; 2 uses
   %i.cmo = add nsw i32 %i.cmk, -1
   %i.cmp = add nsw i32 %i.cmi, -1
   %i.cmq = add nsw i32 %i.cmg, -1
@@ -1026,7 +1026,7 @@ bb.b:                                             ; preds = %.lr.ph, %.thread
   %i.az = fmul float %.sroa.01030.0.vec.extract, %i.ay ; 24 uses
   %i.ba = fadd nnan float %i.ax, 5.000000e-01
   %i.bb = fmul float %.sroa.01030.0.vec.extract, %i.ba ; 24 uses
-  %i.bc = mul nsw i32 %i.aw, %.010501066
+  %i.bc = mul nuw nsw i32 %i.aw, %.010501066
   %i.bd = add nsw i32 %i.bc, %.010511059
   %i.be = sext i32 %i.bd to i64
   %i.bf = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.be ; 7 uses
@@ -1175,7 +1175,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.dc, label %bb.g, label %bb.k
 
 bb.g:                                             ; preds = %bb.f
-  %i.dd = mul nsw i32 %i.aw, %i.y
+  %i.dd = mul nuw nsw i32 %i.aw, %i.y
   %i.de = add nsw i32 %i.dd, %.010511059
   %i.df = sext i32 %i.de to i64
   %i.dg = getelementptr inbounds [4 x i8], ptr %i.a, i64 %i.df ; 4 uses
@@ -1376,7 +1376,7 @@ bb.s:                                             ; preds = %bb.n, %bb.o, %bb.p,
   br i1 %i.fz, label %bb.t, label %bb.x
 
 bb.t:                                             ; preds = %bb.s
-  %i.ga = mul nsw i32 %.pre.pre, %.010501066
+  %i.ga = mul nuw nsw i32 %.pre.pre, %.010501066
   %i.gb = add nuw nsw i32 %.010511059, 1
   %i.gc = add nsw i32 %i.gb, %i.ga
   %i.gd = sext i32 %i.gc to i64
@@ -1779,7 +1779,7 @@ _m3dstbi__mul2sizes_valid.exit.i.i:               ; preds = %bb.b
   br i1 %.not23.i.i, label %_m3dstbi__malloc_mad3.exit.thread, label %_m3dstbi__mul2sizes_valid.exit.thread15.i.i
 
 _m3dstbi__mul2sizes_valid.exit.thread15.i.i:      ; preds = %_m3dstbi__mul2sizes_valid.exit.i.i, %bb.b
-  %i.m = mul nsw i32 %5, %4                       ; 3 uses
+  %i.m = mul nuw nsw i32 %5, %4                   ; 3 uses
   %i.n = or i32 %i.h, %i.m
   %or.cond.not.i10.i.i = icmp sgt i32 %i.n, -1
   br i1 %or.cond.not.i10.i.i, label %bb.c, label %_m3dstbi__malloc_mad3.exit.thread
@@ -1799,7 +1799,7 @@ _m3dstbi__malloc_mad3.exit.thread:                ; preds = %_m3dstbi__mul2sizes
   br label %.loopexit713.sink.split
 
 _m3dstbi__malloc_mad3.exit:                       ; preds = %bb.c, %_m3dstbi__mul2sizes_valid.exit12.i.i
-  %i.r = mul nsw i32 %i.h, %i.m
+  %i.r = mul nuw nsw i32 %i.h, %i.m
   %i.s = sext i32 %i.r to i64
   %i.t = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -2147483648, 2147483648) %i.s) #56 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
@@ -2202,7 +2202,7 @@ bb.aw:                                            ; preds = %.thread681
 
 .lr.ph869:                                        ; preds = %.lr.ph869.prol.loopexit, %.lr.ph869
   %indvars.iv980 = phi i64 [ %indvars.iv.next981.1, %.lr.ph869 ], [ %indvars.iv980.unr, %.lr.ph869.prol.loopexit ] ; 4 uses
-  %i.aqo = shl nsw i64 %indvars.iv980, 2
+  %i.aqo = shl nuw nsw i64 %indvars.iv980, 2
   %i.aqp = getelementptr inbounds nuw i8, ptr %i.ape, i64 %i.aqo ; 4 uses
   %i.aqq = getelementptr inbounds nuw i8, ptr %i.aqp, i64 3
   store i8 -1, ptr %i.aqq, align 1
@@ -2219,7 +2219,7 @@ bb.aw:                                            ; preds = %.thread681
   %i.aqz = load i8, ptr %i.aqs, align 1
   store i8 %i.aqz, ptr %i.aqp, align 1
   %indvars.iv.next981 = add nsw i64 %indvars.iv980, -1 ; 3 uses
-  %i.ara = shl nsw i64 %indvars.iv.next981, 2
+  %i.ara = shl nuw nsw i64 %indvars.iv.next981, 2
   %i.arb = getelementptr inbounds nuw i8, ptr %i.ape, i64 %i.ara ; 4 uses
   %i.arc = getelementptr inbounds nuw i8, ptr %i.arb, i64 3
   store i8 -1, ptr %i.arc, align 1

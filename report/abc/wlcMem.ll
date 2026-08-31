@@ -205,14 +205,13 @@ bb.g:                                             ; preds = %bb.f
   br i1 %exitcond.not.i195, label %Vec_IntFind.exit197, label %bb.f, !llvm.loop !48
 
 ._crit_edge.loopexit.split.loop.exit12.i196:      ; preds = %bb.f
-  %7 = trunc nuw nsw i64 %indvars.iv.i193 to i32
-  %8 = shl nsw i32 %7, 1
-  %9 = sext i32 %8 to i64
+  %7 = shl nuw i64 %indvars.iv.i193, 1
+  %8 = and i64 %7, 4294967294
   br label %Vec_IntFind.exit197
 
 Vec_IntFind.exit197:                              ; preds = %bb.g, %bb.c, %._crit_edge.loopexit.split.loop.exit12.i196
   %.07.i310 = phi i32 [ -1, %bb.c ], [ %.07.i, %._crit_edge.loopexit.split.loop.exit12.i196 ], [ %.07.i, %bb.g ]
-  %.07.i190 = phi i64 [ -2, %bb.c ], [ %9, %._crit_edge.loopexit.split.loop.exit12.i196 ], [ -2, %bb.g ]
+  %.07.i190 = phi i64 [ -2, %bb.c ], [ %8, %._crit_edge.loopexit.split.loop.exit12.i196 ], [ -2, %bb.g ]
   %i.as = shl nsw i32 %.07.i310, 1
   %.val144 = load ptr, ptr %i.n, align 8, !tbaa !8 ; 2 uses
   %i.at = sext i32 %i.as to i64
@@ -545,13 +544,12 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %exitcond.not.i236, label %Vec_IntFind.exit238, label %bb.ah, !llvm.loop !48
 
 ._crit_edge.loopexit.split.loop.exit12.i237:      ; preds = %bb.ah
-  %10 = trunc nuw nsw i64 %indvars.iv.i234 to i32
-  %11 = shl nsw i32 %10, 1
-  %12 = sext i32 %11 to i64
+  %9 = shl nuw i64 %indvars.iv.i234, 1
+  %10 = and i64 %9, 4294967294
   br label %Vec_IntFind.exit238
 
 Vec_IntFind.exit238:                              ; preds = %bb.ai, %.lr.ph, %._crit_edge.loopexit.split.loop.exit12.i237
-  %.07.i231 = phi i64 [ -2, %.lr.ph ], [ %12, %._crit_edge.loopexit.split.loop.exit12.i237 ], [ -2, %bb.ai ]
+  %.07.i231 = phi i64 [ -2, %.lr.ph ], [ %10, %._crit_edge.loopexit.split.loop.exit12.i237 ], [ -2, %bb.ai ]
   %.val139 = load ptr, ptr %i.n, align 8, !tbaa !8
   %i.fy = getelementptr [4 x i8], ptr %.val139, i64 %.07.i231 ; 2 uses
   %i.fz = load i32, ptr %i.fy, align 4, !tbaa !12

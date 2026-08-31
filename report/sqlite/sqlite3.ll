@@ -206,7 +206,7 @@ sqlite3LogEst.exit.i:                             ; preds = %.loopexit.i.i, %bb.
 
 bb.bi:                                            ; preds = %sqlite3LogEst.exit.i
   %i.iz = sub nuw nsw i32 %.0298, %i.hs
-  %i.ja = mul nsw i32 %i.iz, 100
+  %i.ja = mul nuw nsw i32 %i.iz, 100
   %i.jb = sdiv i32 %i.ja, %.0298                  ; 4 uses
   %i.jc = sext i32 %i.jb to i64                   ; 3 uses
   %i.jd = icmp ult i32 %i.jb, 8

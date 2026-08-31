@@ -202,13 +202,12 @@ bb.l:                                             ; preds = %_ZNK6icu_7813OlsonT
 
 bb.m:                                             ; preds = %.peel.next
   %i.cc = load ptr, ptr %i.ag, align 8, !tbaa !40
-  %i.cd = shl nuw i64 %indvars.iv, 1
-  %1 = and i64 %i.cd, 4294967294
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.cc, i64 %1 ; 2 uses
-  %i.ce = load i32, ptr %2, align 4, !tbaa !41
+  %i.cd = shl nuw nsw i64 %indvars.iv, 3
+  %1 = getelementptr inbounds nuw i8, ptr %i.cc, i64 %i.cd ; 2 uses
+  %i.ce = load i32, ptr %1, align 4, !tbaa !41
   %i.cf = zext i32 %i.ce to i64
   %i.cg = shl nuw i64 %i.cf, 32
-  %i.ch = getelementptr i8, ptr %2, i64 4
+  %i.ch = getelementptr i8, ptr %1, i64 4
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !41
   %i.cj = zext i32 %i.ci to i64
   %i.ck = or disjoint i64 %i.cg, %i.cj
@@ -611,7 +610,7 @@ bb.ai:                                            ; preds = %bb.ag, %bb.ah, %bb.
 
 bb.aj:                                            ; preds = %._crit_edge
   %i.dq = load ptr, ptr %i.i, align 8, !tbaa !35
-  %.idx = shl nsw i64 %indvars.iv187, 3
+  %.idx = shl nuw nsw i64 %indvars.iv187, 3
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 %.idx ; 2 uses
   %i.ds = load i32, ptr %i.dr, align 4, !tbaa !41
   %i.dt = mul nsw i32 %i.ds, 1000
@@ -625,7 +624,7 @@ bb.aj:                                            ; preds = %._crit_edge
 bb.ak:                                            ; preds = %bb.aj
   store i16 %i.bl, ptr %i.bi, align 8, !tbaa !59
   %i.dz = sext i16 %i.bl to i64
-  %i.ea = shl nsw i64 %i.dz, 3
+  %i.ea = shl nuw nsw i64 %i.dz, 3
   %i.eb = invoke noalias ptr @uprv_malloc_78(i64 noundef %i.ea) #21
           to label %bb.al unwind label %.loopexit156 ; 3 uses
 

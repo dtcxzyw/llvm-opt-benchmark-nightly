@@ -204,13 +204,12 @@ bb.p:                                             ; preds = %.loopexit.i, %.lr.p
   br i1 %.not103.i, label %.loopexit2.i, label %vector.body134
 
 vector.body134:                                   ; preds = %bb.p
-  %i.fl = shl nuw nsw i64 %indvars.iv65.i, 7
-  %4 = and i64 %i.fl, 4294967168                  ; 17 uses
-  %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %4 ; 3 uses
+  %i.fl = shl nuw nsw i64 %indvars.iv65.i, 7      ; 17 uses
+  %i.fm = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.fl ; 3 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fm, i64 16 ; 2 uses
   %wide.load136.a = load <4 x float>, ptr %i.fm, align 4, !tbaa !30
   %wide.load137.a = load <4 x float>, ptr %i.fn, align 4, !tbaa !30
-  %i.fo = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %4 ; 3 uses
+  %i.fo = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %i.fl ; 3 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 16 ; 2 uses
   %wide.load138.a = load <4 x float>, ptr %i.fo, align 4, !tbaa !30
   %wide.load139 = load <4 x float>, ptr %i.fp, align 4, !tbaa !30
@@ -218,7 +217,7 @@ vector.body134:                                   ; preds = %bb.p
   store <4 x float> %wide.load139, ptr %i.fn, align 4, !tbaa !30
   store <4 x float> %wide.load136.a, ptr %i.fo, align 4, !tbaa !30
   store <4 x float> %wide.load137.a, ptr %i.fp, align 4, !tbaa !30
-  %i.fq = or disjoint i64 %4, 8                   ; 2 uses
+  %i.fq = or disjoint i64 %i.fl, 8                ; 2 uses
   %i.fr = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.fq ; 3 uses
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fr, i64 16 ; 2 uses
   %wide.load136.1.a = load <4 x float>, ptr %i.fr, align 4, !tbaa !30
@@ -231,7 +230,7 @@ vector.body134:                                   ; preds = %bb.p
   store <4 x float> %wide.load139.1, ptr %i.fs, align 4, !tbaa !30
   store <4 x float> %wide.load136.1.a, ptr %i.ft, align 4, !tbaa !30
   store <4 x float> %wide.load137.1.a, ptr %i.fu, align 4, !tbaa !30
-  %i.fv = or disjoint i64 %4, 16                  ; 2 uses
+  %i.fv = or disjoint i64 %i.fl, 16               ; 2 uses
   %i.fw = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.fv ; 3 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 16 ; 2 uses
   %wide.load136.2.a = load <4 x float>, ptr %i.fw, align 4, !tbaa !30
@@ -244,7 +243,7 @@ vector.body134:                                   ; preds = %bb.p
   store <4 x float> %wide.load139.2, ptr %i.fx, align 4, !tbaa !30
   store <4 x float> %wide.load136.2.a, ptr %i.fy, align 4, !tbaa !30
   store <4 x float> %wide.load137.2.a, ptr %i.fz, align 4, !tbaa !30
-  %i.ga = or disjoint i64 %4, 24                  ; 2 uses
+  %i.ga = or disjoint i64 %i.fl, 24               ; 2 uses
   %i.gb = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.ga ; 3 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 16 ; 2 uses
   %wide.load136.3.a = load <4 x float>, ptr %i.gb, align 4, !tbaa !30
@@ -257,7 +256,7 @@ vector.body134:                                   ; preds = %bb.p
   store <4 x float> %wide.load139.3, ptr %i.gc, align 4, !tbaa !30
   store <4 x float> %wide.load136.3.a, ptr %i.gd, align 4, !tbaa !30
   store <4 x float> %wide.load137.3.a, ptr %i.ge, align 4, !tbaa !30
-  %i.gf = or disjoint i64 %4, 32                  ; 2 uses
+  %i.gf = or disjoint i64 %i.fl, 32               ; 2 uses
   %i.gg = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.gf ; 3 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gg, i64 16 ; 2 uses
   %wide.load136.4.a = load <4 x float>, ptr %i.gg, align 4, !tbaa !30
@@ -270,7 +269,7 @@ vector.body134:                                   ; preds = %bb.p
   store <4 x float> %wide.load139.4, ptr %i.gh, align 4, !tbaa !30
   store <4 x float> %wide.load136.4.a, ptr %i.gi, align 4, !tbaa !30
   store <4 x float> %wide.load137.4.a, ptr %i.gj, align 4, !tbaa !30
-  %i.gk = or disjoint i64 %4, 40                  ; 2 uses
+  %i.gk = or disjoint i64 %i.fl, 40               ; 2 uses
   %i.gl = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.gk ; 3 uses
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 16 ; 2 uses
   %wide.load136.5.a = load <4 x float>, ptr %i.gl, align 4, !tbaa !30
@@ -283,7 +282,7 @@ vector.body134:                                   ; preds = %bb.p
   store <4 x float> %wide.load139.5, ptr %i.gm, align 4, !tbaa !30
   store <4 x float> %wide.load136.5.a, ptr %i.gn, align 4, !tbaa !30
   store <4 x float> %wide.load137.5.a, ptr %i.go, align 4, !tbaa !30
-  %i.gp = or disjoint i64 %4, 48                  ; 2 uses
+  %i.gp = or disjoint i64 %i.fl, 48               ; 2 uses
   %i.gq = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.gp ; 3 uses
   %i.gr = getelementptr inbounds nuw i8, ptr %i.gq, i64 16 ; 2 uses
   %wide.load136.6.a = load <4 x float>, ptr %i.gq, align 4, !tbaa !30
@@ -296,7 +295,7 @@ vector.body134:                                   ; preds = %bb.p
   store <4 x float> %wide.load139.6, ptr %i.gr, align 4, !tbaa !30
   store <4 x float> %wide.load136.6.a, ptr %i.gs, align 4, !tbaa !30
   store <4 x float> %wide.load137.6.a, ptr %i.gt, align 4, !tbaa !30
-  %i.gu = or disjoint i64 %4, 56                  ; 2 uses
+  %i.gu = or disjoint i64 %i.fl, 56               ; 2 uses
   %i.gv = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.gu ; 3 uses
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gv, i64 16 ; 2 uses
   %wide.load136.7.a = load <4 x float>, ptr %i.gv, align 4, !tbaa !30
@@ -309,7 +308,7 @@ vector.body134:                                   ; preds = %bb.p
   store <4 x float> %wide.load139.7, ptr %i.gw, align 4, !tbaa !30
   store <4 x float> %wide.load136.7.a, ptr %i.gx, align 4, !tbaa !30
   store <4 x float> %wide.load137.7.a, ptr %i.gy, align 4, !tbaa !30
-  %i.gz = or disjoint i64 %4, 64                  ; 2 uses
+  %i.gz = or disjoint i64 %i.fl, 64               ; 2 uses
   %i.ha = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.gz ; 3 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %i.ha, i64 16 ; 2 uses
   %wide.load136.8.a = load <4 x float>, ptr %i.ha, align 4, !tbaa !30
@@ -322,7 +321,7 @@ vector.body134:                                   ; preds = %bb.p
   store <4 x float> %wide.load139.8, ptr %i.hb, align 4, !tbaa !30
   store <4 x float> %wide.load136.8.a, ptr %i.hc, align 4, !tbaa !30
   store <4 x float> %wide.load137.8.a, ptr %i.hd, align 4, !tbaa !30
-  %i.he = or disjoint i64 %4, 72                  ; 2 uses
+  %i.he = or disjoint i64 %i.fl, 72               ; 2 uses
   %i.hf = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.he ; 3 uses
   %i.hg = getelementptr inbounds nuw i8, ptr %i.hf, i64 16 ; 2 uses
   %wide.load136.9.a = load <4 x float>, ptr %i.hf, align 4, !tbaa !30
@@ -335,7 +334,7 @@ vector.body134:                                   ; preds = %bb.p
   store <4 x float> %wide.load139.9, ptr %i.hg, align 4, !tbaa !30
   store <4 x float> %wide.load136.9.a, ptr %i.hh, align 4, !tbaa !30
   store <4 x float> %wide.load137.9.a, ptr %i.hi, align 4, !tbaa !30
-  %i.hj = or disjoint i64 %4, 80                  ; 2 uses
+  %i.hj = or disjoint i64 %i.fl, 80               ; 2 uses
   %i.hk = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.hj ; 3 uses
   %i.hl = getelementptr inbounds nuw i8, ptr %i.hk, i64 16 ; 2 uses
   %wide.load136.10.a = load <4 x float>, ptr %i.hk, align 4, !tbaa !30
@@ -348,7 +347,7 @@ vector.body134:                                   ; preds = %bb.p
   store <4 x float> %wide.load139.10, ptr %i.hl, align 4, !tbaa !30
   store <4 x float> %wide.load136.10.a, ptr %i.hm, align 4, !tbaa !30
   store <4 x float> %wide.load137.10.a, ptr %i.hn, align 4, !tbaa !30
-  %i.ho = or disjoint i64 %4, 88                  ; 2 uses
+  %i.ho = or disjoint i64 %i.fl, 88               ; 2 uses
   %i.hp = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.ho ; 3 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 16 ; 2 uses
   %wide.load136.11.a = load <4 x float>, ptr %i.hp, align 4, !tbaa !30
@@ -361,7 +360,7 @@ vector.body134:                                   ; preds = %bb.p
   store <4 x float> %wide.load139.11, ptr %i.hq, align 4, !tbaa !30
   store <4 x float> %wide.load136.11.a, ptr %i.hr, align 4, !tbaa !30
   store <4 x float> %wide.load137.11.a, ptr %i.hs, align 4, !tbaa !30
-  %i.ht = or disjoint i64 %4, 96                  ; 2 uses
+  %i.ht = or disjoint i64 %i.fl, 96               ; 2 uses
   %i.hu = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.ht ; 3 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hu, i64 16 ; 2 uses
   %wide.load136.12.a = load <4 x float>, ptr %i.hu, align 4, !tbaa !30
@@ -374,7 +373,7 @@ vector.body134:                                   ; preds = %bb.p
   store <4 x float> %wide.load139.12, ptr %i.hv, align 4, !tbaa !30
   store <4 x float> %wide.load136.12.a, ptr %i.hw, align 4, !tbaa !30
   store <4 x float> %wide.load137.12.a, ptr %i.hx, align 4, !tbaa !30
-  %i.hy = or disjoint i64 %4, 104                 ; 2 uses
+  %i.hy = or disjoint i64 %i.fl, 104              ; 2 uses
   %i.hz = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.hy ; 3 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %i.hz, i64 16 ; 2 uses
   %wide.load136.13.a = load <4 x float>, ptr %i.hz, align 4, !tbaa !30
@@ -387,7 +386,7 @@ vector.body134:                                   ; preds = %bb.p
   store <4 x float> %wide.load139.13, ptr %i.ia, align 4, !tbaa !30
   store <4 x float> %wide.load136.13.a, ptr %i.ib, align 4, !tbaa !30
   store <4 x float> %wide.load137.13.a, ptr %i.ic, align 4, !tbaa !30
-  %i.id = or disjoint i64 %4, 112                 ; 2 uses
+  %i.id = or disjoint i64 %i.fl, 112              ; 2 uses
   %i.ie = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.id ; 3 uses
   %i.if = getelementptr inbounds nuw i8, ptr %i.ie, i64 16 ; 2 uses
   %wide.load136.14.a = load <4 x float>, ptr %i.ie, align 4, !tbaa !30
@@ -400,7 +399,7 @@ vector.body134:                                   ; preds = %bb.p
   store <4 x float> %wide.load139.14, ptr %i.if, align 4, !tbaa !30
   store <4 x float> %wide.load136.14.a, ptr %i.ig, align 4, !tbaa !30
   store <4 x float> %wide.load137.14.a, ptr %i.ih, align 4, !tbaa !30
-  %i.ii = or disjoint i64 %4, 120                 ; 2 uses
+  %i.ii = or disjoint i64 %i.fl, 120              ; 2 uses
   %i.ij = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %i.ii ; 3 uses
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ij, i64 16 ; 2 uses
   %wide.load136.15.a = load <4 x float>, ptr %i.ij, align 4, !tbaa !30
@@ -422,9 +421,8 @@ vector.body134:                                   ; preds = %bb.p
   br i1 %.not104.i, label %.loopexit.i, label %vector.body
 
 vector.body:                                      ; preds = %.loopexit2.i
-  %i.ip = shl nuw nsw i64 %indvars.iv65.i, 7
-  %5 = and i64 %i.ip, 4294967168
-  %invariant.gep.i = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %5 ; 33 uses
+  %i.ip = shl nuw nsw i64 %indvars.iv65.i, 9
+  %invariant.gep.i = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.ip ; 33 uses
   %i.iq = getelementptr inbounds nuw i8, ptr %invariant.gep.i, i64 16 ; 2 uses
   %wide.load = load <4 x float>, ptr %invariant.gep.i, align 4, !tbaa !30
   %wide.load132 = load <4 x float>, ptr %i.iq, align 4, !tbaa !30

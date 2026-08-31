@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.co = add nsw i32 %6, -1
-  %i.cp = mul nsw i32 %i.co, %5
+  %i.cp = mul nuw nsw i32 %i.co, %5
   tail call void @_ZN10btSoftBody7setMassEif(ptr noundef nonnull align 8 dereferenceable(2064) %i.cg, i32 noundef %i.cp, float noundef 0.000000e+00)
   br label %bb.k
 
@@ -216,7 +216,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.cr = add nsw i32 %6, -1
-  %i.cs = mul nsw i32 %i.cr, %5
+  %i.cs = mul nuw nsw i32 %i.cr, %5
   %i.ct = add nsw i32 %5, -1
   %i.cu = add nuw nsw i32 %i.ct, %i.cs
   tail call void @_ZN10btSoftBody7setMassEif(ptr noundef nonnull align 8 dereferenceable(2064) %i.cg, i32 noundef %i.cu, float noundef 0.000000e+00)
@@ -451,7 +451,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.bk = add nsw i32 %6, -1
-  %i.bl = mul nsw i32 %i.bk, %5
+  %i.bl = mul nuw nsw i32 %i.bk, %5
   tail call void @_ZN10btSoftBody7setMassEif(ptr noundef nonnull align 8 dereferenceable(2064) %i.bc, i32 noundef %i.bl, float noundef 0.000000e+00)
   br label %bb.k
 
@@ -462,7 +462,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.bn = add nsw i32 %6, -1
-  %i.bo = mul nsw i32 %i.bn, %5
+  %i.bo = mul nuw nsw i32 %i.bn, %5
   %i.bp = add nsw i32 %5, -1
   %i.bq = add nuw nsw i32 %i.bp, %i.bo
   tail call void @_ZN10btSoftBody7setMassEif(ptr noundef nonnull align 8 dereferenceable(2064) %i.bc, i32 noundef %i.bq, float noundef 0.000000e+00)
@@ -512,7 +512,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 bb.t:                                             ; preds = %bb.s
   %i.cf = add nsw i32 %6, -1
-  %i.cg = mul nsw i32 %i.cf, %5
+  %i.cg = mul nuw nsw i32 %i.cf, %5
   %i.ch = add nsw i32 %5, -1
   %i.ci = lshr i32 %i.ch, 1
   %i.cj = add nuw nsw i32 %i.cg, %i.ci
@@ -915,7 +915,7 @@ _ZN20btAlignedObjectArrayIiE10deallocateEv.exit.i.i.i.i: ; preds = %bb.w, %_ZNK2
   %i.he = shl nsw i64 %i.hd, 2
   %scevgep.i.i = getelementptr i8, ptr %i.hc, i64 %i.he
   %i.hf = sub nsw i64 %wide.trip.count.i.i.i129, %i.hd
-  %i.hg = shl nsw i64 %i.hf, 2
+  %i.hg = shl nuw nsw i64 %i.hf, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i.i, i8 0, i64 %i.hg, i1 false), !tbaa !64
   br label %_ZN20btAlignedObjectArrayIiE6resizeEiRKi.exit.i.i
 
@@ -1318,7 +1318,7 @@ _ZN20btAlignedObjectArrayIPKN10btSoftBody4NodeEE10deallocateEv.exit.i.i.i.i: ; p
   %i.ji = shl nsw i64 %i.jh, 3
   %scevgep.i.i = getelementptr i8, ptr %i.jg, i64 %i.ji
   %i.jj = sub nsw i64 %wide.trip.count.i.i.i132, %i.jh
-  %i.jk = shl nsw i64 %i.jj, 3
+  %i.jk = shl nuw nsw i64 %i.jj, 3
   call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i.i, i8 0, i64 %i.jk, i1 false), !tbaa !45
   br label %_ZN20btAlignedObjectArrayIPKN10btSoftBody4NodeEE6resizeEiRKS3_.exit.i.i
 
@@ -1612,7 +1612,7 @@ _ZN20btAlignedObjectArrayIPKN10btSoftBody4NodeEE10deallocateEv.exit.i.i.i.i160: 
   %i.mu = shl nsw i64 %i.mt, 3
   %scevgep.i.i152 = getelementptr i8, ptr %i.ms, i64 %i.mu
   %i.mv = sub nsw i64 %wide.trip.count.i.i.i151, %i.mt
-  %i.mw = shl nsw i64 %i.mv, 3
+  %i.mw = shl nuw nsw i64 %i.mv, 3
   call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i.i152, i8 0, i64 %i.mw, i1 false), !tbaa !45
   br label %_ZN20btAlignedObjectArrayIPKN10btSoftBody4NodeEE6resizeEiRKS3_.exit.i.i141
 
@@ -2015,7 +2015,7 @@ _ZN20btAlignedObjectArrayIPKN10btSoftBody4NodeEE10deallocateEv.exit.i.i.i.i: ; p
   %i.ff = shl nsw i64 %i.fe, 3
   %scevgep.i.i = getelementptr i8, ptr %i.fd, i64 %i.ff
   %i.fg = sub nsw i64 %wide.trip.count.i.i.i87, %i.fe
-  %i.fh = shl nsw i64 %i.fg, 3
+  %i.fh = shl nuw nsw i64 %i.fg, 3
   call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i.i, i8 0, i64 %i.fh, i1 false), !tbaa !45
   br label %_ZN20btAlignedObjectArrayIPKN10btSoftBody4NodeEE6resizeEiRKS3_.exit.i.i
 
@@ -2418,7 +2418,7 @@ _ZN20btAlignedObjectArrayIPKN10btSoftBody4NodeEE10deallocateEv.exit.i.i.i.i184: 
   %i.ni = shl nsw i64 %i.nh, 3
   %scevgep.i.i176 = getelementptr i8, ptr %i.ng, i64 %i.ni
   %i.nj = sub nsw i64 %wide.trip.count.i.i.i175, %i.nh
-  %i.nk = shl nsw i64 %i.nj, 3
+  %i.nk = shl nuw nsw i64 %i.nj, 3
   call void @llvm.memset.p0.i64(ptr align 8 %scevgep.i.i176, i8 0, i64 %i.nk, i1 false), !tbaa !45
   br label %_ZN20btAlignedObjectArrayIPKN10btSoftBody4NodeEE6resizeEiRKS3_.exit.i.i165
 

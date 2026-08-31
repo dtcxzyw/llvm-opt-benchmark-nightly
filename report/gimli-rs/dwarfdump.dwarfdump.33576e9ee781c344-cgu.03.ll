@@ -202,10 +202,10 @@ bb.e:                                             ; preds = %_RINvMNtCskKLDkoKar
   %i.au = load i64, ptr %i.at, align 8, !noalias !452
   %i.av = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.aw = load i64, ptr %i.av, align 8, !noalias !452
+  %.sroa.011.1.i = select i1 %i.as, i64 %i.au, i64 0
   %.sroa.713.1.i = select i1 %i.as, i64 %i.aw, i64 0 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !452
-  %i.ax = inttoptr i64 %i.au to ptr
-  %2 = select i1 %i.as, ptr %i.ax, ptr null
+  %i.ax = inttoptr i64 %.sroa.011.1.i to ptr
   br label %bb.g
 
 bb.f:                                             ; preds = %_RNvMs0_NtNtNtCs9Jn0q30Ea0B_6object4read5macho7sectionINtB5_12MachOSectionINtNtBb_5macho12MachHeader32NtNtBb_6endian10EndiannessEE20maybe_compressed_gnuCs4phXRVW1pDQ_9dwarfdump.exit.thread28.i, %_RNvMs0_NtNtNtCs9Jn0q30Ea0B_6object4read5macho7sectionINtB5_12MachOSectionINtNtBb_5macho12MachHeader32NtNtBb_6endian10EndiannessEE20maybe_compressed_gnuCs4phXRVW1pDQ_9dwarfdump.exit.thread35.i
@@ -220,7 +220,7 @@ bb.f:                                             ; preds = %_RNvMs0_NtNtNtCs9Jn
 
 bb.g:                                             ; preds = %bb.e, %bb.d
   %i.ba = phi ptr [ %i.s, %bb.d ], [ %i.an, %bb.e ] ; 2 uses
-  %.sroa.011.0.i = phi ptr [ %i.aj, %bb.d ], [ %2, %bb.e ]
+  %.sroa.011.0.i = phi ptr [ %i.aj, %bb.d ], [ %i.ax, %bb.e ]
   %.sroa.412.0.i = phi i64 [ %i.al, %bb.d ], [ %.sroa.713.1.i, %bb.e ]
   %.sroa.713.0.i = phi i64 [ %.sroa.12.0.copyload.i, %bb.d ], [ %.sroa.713.1.i, %bb.e ]
   %.sroa.1014.0.i = phi i8 [ %i.ah, %bb.d ], [ 0, %bb.e ]
@@ -376,10 +376,10 @@ bb.e:                                             ; preds = %_RINvMNtCskKLDkoKar
   %i.au = load i64, ptr %i.at, align 8, !noalias !469
   %i.av = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.aw = load i64, ptr %i.av, align 8, !noalias !469
+  %.sroa.011.1.i = select i1 %i.as, i64 %i.au, i64 0
   %.sroa.713.1.i = select i1 %i.as, i64 %i.aw, i64 0 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !469
-  %i.ax = inttoptr i64 %i.au to ptr
-  %2 = select i1 %i.as, ptr %i.ax, ptr null
+  %i.ax = inttoptr i64 %.sroa.011.1.i to ptr
   br label %bb.g
 
 bb.f:                                             ; preds = %_RNvMs0_NtNtNtCs9Jn0q30Ea0B_6object4read5macho7sectionINtB5_12MachOSectionINtNtBb_5macho12MachHeader64NtNtBb_6endian10EndiannessEE20maybe_compressed_gnuCs4phXRVW1pDQ_9dwarfdump.exit.thread28.i, %_RNvMs0_NtNtNtCs9Jn0q30Ea0B_6object4read5macho7sectionINtB5_12MachOSectionINtNtBb_5macho12MachHeader64NtNtBb_6endian10EndiannessEE20maybe_compressed_gnuCs4phXRVW1pDQ_9dwarfdump.exit.thread35.i
@@ -394,7 +394,7 @@ bb.f:                                             ; preds = %_RNvMs0_NtNtNtCs9Jn
 
 bb.g:                                             ; preds = %bb.e, %bb.d
   %i.ba = phi ptr [ %i.s, %bb.d ], [ %i.an, %bb.e ] ; 2 uses
-  %.sroa.011.0.i = phi ptr [ %i.aj, %bb.d ], [ %2, %bb.e ]
+  %.sroa.011.0.i = phi ptr [ %i.aj, %bb.d ], [ %i.ax, %bb.e ]
   %.sroa.412.0.i = phi i64 [ %i.al, %bb.d ], [ %.sroa.713.1.i, %bb.e ]
   %.sroa.713.0.i = phi i64 [ %.sroa.12.0.copyload.i, %bb.d ], [ %.sroa.713.1.i, %bb.e ]
   %.sroa.1014.0.i = phi i8 [ %i.ah, %bb.d ], [ 0, %bb.e ]

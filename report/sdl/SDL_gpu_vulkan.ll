@@ -205,6 +205,7 @@ bb.ax:                                            ; preds = %.lr.ph215, %bb.ax
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.my, i64 30
   %.sroa.11.0.copyload = load i8, ptr %.sroa.11.0..sroa_idx, align 2
   %i.na = trunc i8 %.sroa.11.0.copyload to i1
+  %narrow = select i1 %i.na, i8 %.sroa.9.0.copyload, i8 15
   %i.nb = and i8 %.sroa.10.0.copyload, 1
   %i.nc = zext nneg i8 %i.nb to i32
   %i.nd = getelementptr inbounds nuw [32 x i8], ptr %i.v, i64 %indvars.iv227 ; 8 uses
@@ -239,10 +240,9 @@ bb.ax:                                            ; preds = %.lr.ph215, %bb.ax
   %i.oa = load i32, ptr %i.nz, align 4
   %i.ob = getelementptr inbounds nuw i8, ptr %i.nd, i64 24
   store i32 %i.oa, ptr %i.ob, align 8
-  %i.oc = zext i8 %.sroa.9.0.copyload to i32
-  %20 = select i1 %i.na, i32 %i.oc, i32 15
+  %i.oc = zext i8 %narrow to i32
   %i.od = getelementptr inbounds nuw i8, ptr %i.nd, i64 28
-  store i32 %20, ptr %i.od, align 4
+  store i32 %i.oc, ptr %i.od, align 4
   %indvars.iv.next228 = add nuw nsw i64 %indvars.iv227, 1 ; 2 uses
   %exitcond231.not = icmp eq i64 %indvars.iv.next228, %wide.trip.count230
   br i1 %exitcond231.not, label %._crit_edge216, label %bb.ax, !llvm.loop !64

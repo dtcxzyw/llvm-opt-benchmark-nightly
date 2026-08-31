@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %.lr.ph127, %._crit_
   %i.do = phi ptr [ %.pre144, %.lr.ph127 ], [ %i.fw, %._crit_edge ]
   %indvars.iv = phi i64 [ 0, %.lr.ph127 ], [ %indvars.iv.next, %._crit_edge ] ; 3 uses
   %i.dp = phi i32 [ %i.dg, %.lr.ph127 ], [ %i.fx, %._crit_edge ]
-  %i.dq = mul nsw i32 %i.dp, %i.dj
+  %i.dq = mul nuw nsw i32 %i.dp, %i.dj
   %i.dr = trunc nuw nsw i64 %indvars.iv to i32
   %i.ds = add nsw i32 %i.dq, %i.dr
   %i.dt = sext i32 %i.ds to i64                   ; 3 uses
@@ -607,13 +607,13 @@ bb.ae:                                            ; preds = %bb.ad
   %i.fx = zext nneg i32 %i.ba to i64
   %i.fy = zext nneg i32 %i.bf to i64
   %i.fz = sext i32 %i.fn to i64
-  %i.ga = mul nsw i64 %i.fz, %i.fy
+  %i.ga = mul nuw nsw i64 %i.fz, %i.fy
   %i.gb = add nsw i64 %i.ga, %i.fx
   %i.gc = icmp ugt i64 %i.fw, %i.gb
   br i1 %i.gc, label %bb.af, label %.loopexit
 
 bb.af:                                            ; preds = %bb.ae
-  %i.gd = mul nsw i32 %i.fn, %i.bf
+  %i.gd = mul nuw nsw i32 %i.fn, %i.bf
   %i.ge = add nsw i32 %i.gd, %i.ba
   %i.gf = sext i32 %i.ge to i64
   %i.gg = getelementptr inbounds nuw [24 x i8], ptr %i.fs, i64 %i.gf ; 2 uses
@@ -874,13 +874,13 @@ bb.l:                                             ; preds = %bb.k
   %i.cc = zext nneg i32 %3 to i64
   %i.cd = zext nneg i32 %4 to i64
   %i.ce = sext i32 %i.bp to i64
-  %i.cf = mul nsw i64 %i.ce, %i.cd
+  %i.cf = mul nuw nsw i64 %i.ce, %i.cd
   %i.cg = add nsw i64 %i.cf, %i.cc
   %i.ch = icmp ugt i64 %i.cb, %i.cg
   br i1 %i.ch, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
-  %i.ci = mul nsw i32 %i.bp, %4
+  %i.ci = mul nuw nsw i32 %i.bp, %4
   %i.cj = add nsw i32 %i.ci, %3
   %i.ck = sext i32 %i.cj to i64
   %i.cl = getelementptr inbounds nuw [24 x i8], ptr %i.bx, i64 %i.ck ; 2 uses

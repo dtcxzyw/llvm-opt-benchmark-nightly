@@ -205,7 +205,7 @@ _ZNSt10unique_ptrIN7openvdb5v13_05tools15filter_internal9VoxelizerINS1_4tree4Tre
   %i.y = getelementptr inbounds nuw i8, ptr %i.n, i64 1264
   store i64 %i.w, ptr %i.y, align 8, !tbaa !112
   store ptr %i.n, ptr %7, align 8, !tbaa !113
-  %i.z = shl nsw i32 %.sroa.speculated, 2
+  %i.z = shl nuw nsw i32 %.sroa.speculated, 2
   %i.aa = invoke noundef i32 @_ZN7openvdb5v13_05tools15filter_internal9VoxelizerINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE3runEi(ptr noundef nonnull align 8 dereferenceable(1272) %i.n, i32 noundef %i.z)
           to label %bb.g unwind label %bb.j
 
@@ -311,7 +311,7 @@ _ZNKSt14default_deleteIA_PN7openvdb5v13_04tree8LeafNodeIfLj3EEEEclIS5_EENSt9enab
   br label %.body
 
 .lr.ph:                                           ; preds = %.noexc.i
-  %i.ay = shl nsw i32 %.sroa.speculated, 2        ; 2 uses
+  %i.ay = shl nuw nsw i32 %.sroa.speculated, 2    ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.bb = getelementptr inbounds nuw i8, ptr %6, i64 16
@@ -714,7 +714,7 @@ _ZNSt10unique_ptrIN7openvdb5v13_05tools15filter_internal9VoxelizerINS1_4tree4Tre
   %i.y = getelementptr inbounds nuw i8, ptr %i.n, i64 1264
   store i64 %i.w, ptr %i.y, align 8, !tbaa !486
   store ptr %i.n, ptr %7, align 8, !tbaa !487
-  %i.z = shl nsw i32 %.sroa.speculated, 2
+  %i.z = shl nuw nsw i32 %.sroa.speculated, 2
   %i.aa = invoke noundef i32 @_ZN7openvdb5v13_05tools15filter_internal9VoxelizerINS0_4tree4TreeINS4_8RootNodeINS4_12InternalNodeINS7_INS4_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE3runEi(ptr noundef nonnull align 8 dereferenceable(1272) %i.n, i32 noundef %i.z)
           to label %bb.g unwind label %bb.j
 
@@ -820,7 +820,7 @@ _ZNKSt14default_deleteIA_PN7openvdb5v13_04tree8LeafNodeIdLj3EEEEclIS5_EENSt9enab
   br label %.body
 
 .lr.ph:                                           ; preds = %.noexc.i
-  %i.ay = shl nsw i32 %.sroa.speculated, 2        ; 2 uses
+  %i.ay = shl nuw nsw i32 %.sroa.speculated, 2    ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.bb = getelementptr inbounds nuw i8, ptr %6, i64 16

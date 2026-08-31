@@ -150,14 +150,14 @@ _RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noi
   %.sroa.51.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.51.0.copyload.i.i = load ptr, ptr %.sroa.51.0..sroa_idx.i.i, align 8, !noalias !29, !nonnull !14
   %.sroa.05.0.i.i = shl nuw nsw i8 %i.f, 1
+  %.sroa.57.0.i.i = select i1 %i.j, i8 %.sroa.4.0.copyload.i.i, i8 undef
   %i.k = ptrtoint ptr %.sroa.51.0.copyload.i.i to i64
   %i.l = select i1 %i.j, i64 undef, i64 %i.k      ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !29
   %.sroa.9.8.insert.ext = zext nneg i8 %.sroa.05.0.i.i to i64
-  %i.m = zext i8 %.sroa.4.0.copyload.i.i to i64
+  %i.m = zext i8 %.sroa.57.0.i.i to i64
   %i.n = shl nuw nsw i64 %i.m, 8
-  %.sroa.9.9.insert.shift = select i1 %i.j, i64 %i.n, i64 0
-  %.sroa.9.9.insert.insert = or disjoint i64 %.sroa.9.9.insert.shift, %.sroa.9.8.insert.ext
+  %.sroa.9.9.insert.insert = or disjoint i64 %i.n, %.sroa.9.8.insert.ext
   %.sroa.18.sroa.0.0.extract.trunc = trunc i64 %i.l to i8
   br label %bb.g
 
@@ -175,14 +175,14 @@ _RINvNtCsgW4lhAJgVdS_9multihash9multihash8read_u64QRShECshuexzQAPOo_12libp2p_noi
   %.sroa.51.0..sroa_idx.i76.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.51.0.copyload.i77.i = load ptr, ptr %.sroa.51.0..sroa_idx.i76.i, align 8, !noalias !35, !nonnull !14
   %.sroa.05.0.i78.i = shl nuw nsw i8 %i.i, 1
+  %.sroa.57.0.i79.i = select i1 %i.r, i8 %.sroa.4.0.copyload.i75.i, i8 undef
   %i.s = ptrtoint ptr %.sroa.51.0.copyload.i77.i to i64
   %i.t = select i1 %i.r, i64 undef, i64 %i.s      ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !35
   %.sroa.9.8.insert.ext29 = zext nneg i8 %.sroa.05.0.i78.i to i64
-  %i.u = zext i8 %.sroa.4.0.copyload.i75.i to i64
+  %i.u = zext i8 %.sroa.57.0.i79.i to i64
   %i.v = shl nuw nsw i64 %i.u, 8
-  %.sroa.9.9.insert.shift40 = select i1 %i.r, i64 %i.v, i64 0
-  %.sroa.9.9.insert.insert42 = or disjoint i64 %.sroa.9.9.insert.shift40, %.sroa.9.8.insert.ext29
+  %.sroa.9.9.insert.insert42 = or disjoint i64 %i.v, %.sroa.9.8.insert.ext29
   %.sroa.18.sroa.0.0.extract.trunc45 = trunc i64 %i.t to i8
   br label %bb.g
 

@@ -205,9 +205,9 @@ thread-pre-split.i:                               ; preds = %bb.bb
 .lr.ph.i:                                         ; preds = %.outer.i, %.lr.ph.lr.ph.i
   %.sroa.0.0.ph279.i = phi i64 [ 0, %.lr.ph.lr.ph.i ], [ %i.uz, %.outer.i ] ; 2 uses
   %.sroa.02.0.ph278.i = phi ptr [ %i.pg, %.lr.ph.lr.ph.i ], [ %i.pp, %.outer.i ]
-  %.sroa.019.0.ph276.i = phi i32 [ 0, %.lr.ph.lr.ph.i ], [ %.sroa.019.1.i, %.outer.i ] ; 3 uses
+  %.sroa.019.0.ph276.i = phi i32 [ 0, %.lr.ph.lr.ph.i ], [ %.sroa.019.1.i, %.outer.i ] ; 2 uses
   %.sroa.522.0.ph274.i = phi i32 [ undef, %.lr.ph.lr.ph.i ], [ %.sroa.522.1.i, %.outer.i ] ; 3 uses
-  %i.po = trunc nuw i32 %.sroa.019.0.ph276.i to i1
+  %i.po = trunc nuw i32 %.sroa.019.0.ph276.i to i1 ; 2 uses
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bw, %.lr.ph.i
@@ -294,15 +294,18 @@ _RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNCNvNtCsoTR8nlGN3X_18ty_pyt
   %i.qz = icmp eq ptr %i.px, %i.pu
   br i1 %i.qz, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionIBw_RNtNtCs5MAO5oZTZb8_16ruff_diagnostics4edit4EditEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB21_8PeekableINtNtB23_6filter6FilterINtNtNtB5_5slice4iter4IterBN_ENCNvNtCsoTR8nlGN3X_18ty_python_semantic5fixes11apply_fixess_0EE4peek0EB3K_.exit.thread.i, label %.lr.ph.i.i.i.i.i
 
-.outer._crit_edge.i:                              ; preds = %.outer.i, %bb.bw
-  %.sroa.522.0.ph.lcssa267.i = phi i32 [ %.sroa.522.0.ph274.i, %bb.bw ], [ %.sroa.522.1.i, %.outer.i ] ; 2 uses
-  %.sroa.019.0.ph.lcssa255.i = phi i32 [ %.sroa.019.0.ph276.i, %bb.bw ], [ %.sroa.019.1.i, %.outer.i ]
-  %.sroa.0.0.ph.lcssa243.i = phi i64 [ %.sroa.0.0.ph279.i, %bb.bw ], [ %i.uz, %.outer.i ] ; 3 uses
-  %6 = trunc nuw i32 %.sroa.019.0.ph.lcssa255.i to i1
-  %i.ra = zext i32 %.sroa.522.0.ph.lcssa267.i to i64 ; 6 uses
-  %7 = icmp ne i32 %.sroa.522.0.ph.lcssa267.i, 0
-  %.not885 = select i1 %6, i1 %7, i1 false
-  br i1 %.not885, label %bb.bm, label %.outer._crit_edge.thread.i
+.outer._crit_edge.i.loopexit1384:                 ; preds = %.outer.i
+  %.pre = trunc nuw i32 %.sroa.019.1.i to i1
+  br label %.outer._crit_edge.i
+
+.outer._crit_edge.i:                              ; preds = %bb.bw, %.outer._crit_edge.i.loopexit1384
+  %.pre-phi = phi i1 [ %.pre, %.outer._crit_edge.i.loopexit1384 ], [ %i.po, %bb.bw ]
+  %.sroa.019.0.ph.lcssa255.i = phi i32 [ %.sroa.522.1.i, %.outer._crit_edge.i.loopexit1384 ], [ %.sroa.522.0.ph274.i, %bb.bw ]
+  %.sroa.0.0.ph.lcssa243.i = phi i64 [ %i.uz, %.outer._crit_edge.i.loopexit1384 ], [ %.sroa.0.0.ph279.i, %bb.bw ] ; 3 uses
+  %narrow.i = select i1 %.pre-phi, i32 %.sroa.019.0.ph.lcssa255.i, i32 0 ; 2 uses
+  %i.ra = zext i32 %narrow.i to i64               ; 6 uses
+  %6 = icmp eq i32 %narrow.i, 0
+  br i1 %6, label %.outer._crit_edge.thread.i, label %bb.bm
 
 bb.bm:                                            ; preds = %.outer._crit_edge.i
   %.not.i.i = icmp ugt i64 %.sroa.3.0, %i.ra
@@ -587,7 +590,7 @@ _RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtCs5MAO5oZTZb8_16ruff_
   %i.uy = load i64, ptr %i.ux, align 8, !noalias !4044, !noundef !8
   %i.uz = add i64 %i.uy, %.sroa.0.0.ph279.i       ; 2 uses
   %i.va = icmp eq ptr %i.pp, %i.pn
-  br i1 %i.va, label %.outer._crit_edge.i, label %.lr.ph.i
+  br i1 %i.va, label %.outer._crit_edge.i.loopexit1384, label %.lr.ph.i
 
 bb.cg:                                            ; preds = %bb.cf
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @169, i64 noundef 38, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @239) #51

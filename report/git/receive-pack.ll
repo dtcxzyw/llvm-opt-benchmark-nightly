@@ -205,9 +205,8 @@ bb.ce:                                            ; preds = %.preheader.us.i.i
   %i.jx = load i32, ptr %i.ju, align 4, !tbaa !12
   %i.jy = add nsw i32 %i.jx, 1
   store i32 %i.jy, ptr %i.ju, align 4, !tbaa !12
-  %i.jz = shl i64 %indvars.iv70.i.i, 5
-  %27 = and i64 %i.jz, 4294967264
-  %invariant.gep.i.i = getelementptr inbounds nuw [4 x i8], ptr %i.iz, i64 %27 ; 2 uses
+  %i.jz = shl nuw nsw i64 %indvars.iv70.i.i, 7
+  %invariant.gep.i.i = getelementptr inbounds nuw i8, ptr %i.iz, i64 %i.jz ; 2 uses
   br label %bb.cf
 
 bb.cf:                                            ; preds = %bb.cj, %bb.ce

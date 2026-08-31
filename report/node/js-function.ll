@@ -204,10 +204,14 @@ bb.k:                                             ; preds = %.sink.split, %_ZNK2
   %i.dq = inttoptr i64 %i.dp to ptr               ; 2 uses
   %i.dr = load i32, ptr %i.dq, align 4
   %i.ds = icmp sgt i32 %i.dr, 0
-  br i1 %i.ds, label %.lr.ph, label %.sink.split60
+  br i1 %i.ds, label %.lr.ph.preheader, label %.sink.split60
 
-.lr.ph:                                           ; preds = %bb.k, %bb.n
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.n ], [ 0, %bb.k ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %bb.k
+  %invariant.op = add i64 %i.di, 47
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.n
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.n ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #14
   store i64 %i.do, ptr %7, align 8
   %i.dt = trunc nuw nsw i64 %indvars.iv to i32
@@ -217,10 +221,8 @@ bb.k:                                             ; preds = %.sink.split, %_ZNK2
   br i1 %i.dv, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.dw = shl i64 %indvars.iv, 3
-  %narrow = add i64 %i.dw, 47
-  %8 = and i64 %narrow, 4294967295
-  %i.dx = add i64 %i.di, %8
+  %i.dw = shl nuw nsw i64 %indvars.iv, 3
+  %i.dx = add i64 %i.dw, %invariant.op
   %i.dy = inttoptr i64 %i.dx to ptr
   %i.dz = load atomic volatile i64, ptr %i.dy monotonic, align 8 ; 2 uses
   %i.ea = and i64 %i.dz, 4294967295

@@ -204,9 +204,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit._crit_edge: 
   %.022.lcssa = phi i32 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.preheader ], [ %.2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit ], [ %.2.us.1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit._crit_edge.loopexit56.unr-lcssa ], [ %.02241.us.epil.init, %bb.d ], [ %i.t, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit.us.sink.split.epil ]
   %i.x = trunc nuw i8 %.025.lcssa to i1
   %i.y = xor i8 %.023.lcssa, 1
-  %4 = zext nneg i8 %i.y to i32
-  %5 = select i1 %i.x, i32 %4, i32 0
-  %spec.select37 = sub i32 %.022.lcssa, %5
+  %4 = select i1 %i.x, i8 %i.y, i8 0
+  %5 = zext nneg i8 %4 to i32
+  %spec.select37 = sub nsw i32 %.022.lcssa, %5
   %i.z = sext i32 %spec.select37 to i64
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %i.z, i8 noundef signext 0)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit33 unwind label %bb.l

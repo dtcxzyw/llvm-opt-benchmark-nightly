@@ -205,7 +205,7 @@ _ZNSt6vectorItSaItEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %bb.of
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorItSaItEEC2EmRKS0_.exit.i, label %bb.oh
 
 bb.oh:                                            ; preds = %_ZNSt6vectorItSaItEE17_S_check_init_lenEmRKS0_.exit.i.i
-  %i.kmo = shl nsw i64 %i.kmm, 1                  ; 2 uses
+  %i.kmo = shl nuw nsw i64 %i.kmm, 1              ; 2 uses
   %i.kmp = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.kmo) #18
           to label %.noexc360.i unwind label %bb.on ; 4 uses
 
@@ -355,7 +355,7 @@ bb.op:                                            ; preds = %._crit_edge498.i, %
   %i.kow = trunc nsw i64 %indvars.iv570.i to i32
   %i.kox = sub nsw i32 %i.kov, %i.kow
   %.sroa.speculated411.i = call i32 @llvm.smin.i32(i32 %.sroa.speculated433.i, i32 %i.kox)
-  %i.koy = add nsw i32 %.sroa.speculated411.i, %i.kmh ; 13 uses
+  %i.koy = add nsw i32 %.sroa.speculated411.i, %i.kmh ; 12 uses
   %i.koz = load ptr, ptr %i.knl, align 8, !tbaa !17
   %i.kpa = mul nsw i64 %indvars.iv570.i, %i.knz
   %i.kpb = getelementptr inbounds i8, ptr %i.koz, i64 %i.kpa ; 3 uses
@@ -395,15 +395,11 @@ bb.op:                                            ; preds = %._crit_edge498.i, %
 
 .preheader451.i:                                  ; preds = %bb.op, %._crit_edge463.split.i.loopexit
   %indvars.iv514.i = phi i64 [ %indvars.iv.next515.i, %._crit_edge463.split.i.loopexit ], [ 0, %bb.op ] ; 4 uses
-  %i.kpw = mul nuw nsw i64 %indvars.iv514.i, %i.kpm
+  %i.kpw = mul nuw nsw i64 %indvars.iv514.i, %i.kpm ; 2 uses
   %invariant.gep670.i = getelementptr inbounds nuw i8, ptr %i.kpb, i64 %indvars.iv514.i ; 2 uses
-  %indvars.iv514.tr.i = trunc nuw nsw i64 %indvars.iv514.i to i32 ; 2 uses
+  %indvars.iv514.tr.i = trunc nuw nsw i64 %indvars.iv514.i to i32
   %i.kpx = shl nuw nsw i32 %indvars.iv514.tr.i, 4 ; 2 uses
   br label %bb.oq
-
-.lr.ph460.preheader.i:                            ; preds = %bb.oq
-  %38 = mul i32 %i.koy, %indvars.iv514.tr.i
-  br label %.lr.ph460.i
 
 bb.oq:                                            ; preds = %bb.oq, %.preheader451.i
   %indvars.iv.i562 = phi i64 [ 0, %.preheader451.i ], [ %indvars.iv.next.i563, %bb.oq ] ; 4 uses
@@ -437,10 +433,10 @@ bb.oq:                                            ; preds = %bb.oq, %.preheader4
   store i16 %i.kqv, ptr %i.kqt, align 2, !tbaa !46
   %indvars.iv.next.i563 = add nuw nsw i64 %indvars.iv.i562, 1 ; 2 uses
   %i.kqw = icmp slt i64 %indvars.iv.next.i563, %i.kpl
-  br i1 %i.kqw, label %bb.oq, label %.lr.ph460.preheader.i, !llvm.loop !114
+  br i1 %i.kqw, label %bb.oq, label %.lr.ph460.i, !llvm.loop !114
 
-.lr.ph460.i:                                      ; preds = %._crit_edge.i564, %.lr.ph460.preheader.i
-  %storemerge356461.i = phi i32 [ %i.krt, %._crit_edge.i564 ], [ 1, %.lr.ph460.preheader.i ] ; 2 uses
+.lr.ph460.i:                                      ; preds = %bb.oq, %._crit_edge.i564
+  %storemerge356461.i = phi i32 [ %i.krt, %._crit_edge.i564 ], [ 1, %bb.oq ] ; 2 uses
   %.sroa.speculated407.i = call i32 @llvm.smin.i32(i32 %i.knq, i32 %storemerge356461.i)
   %i.kqx = sext i32 %.sroa.speculated407.i to i64
   %i.kqy = mul i64 %i.kmb, %i.kqx
@@ -448,18 +444,17 @@ bb.oq:                                            ; preds = %bb.oq, %.preheader4
   br label %bb.or
 
 bb.or:                                            ; preds = %bb.or, %.lr.ph460.i
-  %indvars.iv511.i = phi i64 [ 0, %.lr.ph460.i ], [ %indvars.iv.next512.i, %bb.or ] ; 3 uses
-  %39 = trunc i64 %indvars.iv511.i to i32         ; 2 uses
-  %40 = add i32 %38, %39
-  %41 = shl nsw i32 %40, 4
+  %indvars.iv511.i = phi i64 [ 0, %.lr.ph460.i ], [ %indvars.iv.next512.i, %bb.or ] ; 4 uses
+  %38 = add nuw nsw i64 %indvars.iv511.i, %i.kpw
+  %39 = shl nuw nsw i64 %38, 4
   %i.kqz = mul nuw nsw i64 %indvars.iv511.i, %i.knz
   %gep673.i = getelementptr inbounds nuw i8, ptr %gep675.i, i64 %i.kqz ; 2 uses
   %i.kra = load i8, ptr %gep673.i, align 1, !tbaa !28
   %i.krb = lshr i8 %i.kra, 4
-  %42 = zext nneg i8 %i.krb to i32
-  %43 = or disjoint i32 %41, %42
-  %44 = zext nneg i32 %43 to i64
-  %i.krc = getelementptr inbounds nuw [2 x i8], ptr %i.kne, i64 %44 ; 2 uses
+  %40 = zext nneg i8 %i.krb to i64
+  %.masked664.i = and i64 %39, 4294967280
+  %41 = getelementptr inbounds nuw [2 x i8], ptr %i.kne, i64 %.masked664.i
+  %i.krc = getelementptr inbounds nuw [2 x i8], ptr %41, i64 %40 ; 2 uses
   %i.krd = load i16, ptr %i.krc, align 2, !tbaa !46
   %i.kre = add i16 %i.krd, 1
   store i16 %i.kre, ptr %i.krc, align 2, !tbaa !46
@@ -468,7 +463,8 @@ bb.or:                                            ; preds = %bb.or, %.lr.ph460.i
   %i.krh = lshr i32 %i.krg, 4
   %i.kri = or disjoint i32 %i.krh, %i.kpx
   %i.krj = mul nuw nsw i32 %i.kri, %i.koy
-  %i.krk = add nuw nsw i32 %i.krj, %39
+  %42 = trunc nuw nsw i64 %indvars.iv511.i to i32
+  %i.krk = add nuw nsw i32 %i.krj, %42
   %i.krl = shl nsw i32 %i.krk, 4
   %i.krm = and i32 %i.krg, 15
   %i.krn = or disjoint i32 %i.krl, %i.krm

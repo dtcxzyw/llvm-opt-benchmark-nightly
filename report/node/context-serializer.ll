@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit: ; preds = %bb.d, %bb.e
   %i.w = phi i32 [ %i.v, %bb.e ], [ 24, %bb.d ]
-  %i.x = shl nsw i32 %.040170, 3
+  %i.x = shl nuw nsw i32 %.040170, 3
   %i.y = add nsw i32 %i.w, %i.x
   %i.z = sext i32 %i.y to i64
   %i.aa = add i64 %i.k, %i.z
@@ -533,7 +533,7 @@ bb.ag:                                            ; preds = %bb.af
 
 _ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit57: ; preds = %bb.af, %bb.ag
   %i.ee = phi i32 [ %i.ed, %bb.ag ], [ 24, %bb.af ]
-  %i.ef = shl nsw i32 %.041171, 3
+  %i.ef = shl nuw nsw i32 %.041171, 3
   %i.eg = add nsw i32 %i.ee, %i.ef
   %i.eh = sext i32 %i.eg to i64
   %i.ei = add i64 %i.k, %i.eh
@@ -619,13 +619,14 @@ bb.am:                                            ; preds = %bb.al
   %i.fq = load atomic volatile i8, ptr %i.fp monotonic, align 1
   %i.fr = icmp slt i8 %i.fq, 0
   %i.fs = call noundef i32 @_ZN2v88internal8JSObject13GetHeaderSizeENS0_12InstanceTypeEb(i16 noundef zeroext %i.fm, i1 noundef zeroext %i.fr) #14
-  %11 = sext i32 %i.fs to i64
   br label %_ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit66
 
 _ZN2v88internal8JSObject22GetEmbedderFieldOffsetEi.exit66: ; preds = %bb.al, %bb.am
-  %12 = phi i64 [ %11, %bb.am ], [ 24, %bb.al ]
-  %13 = shl nuw nsw i64 %indvars.iv, 3
-  %14 = add nsw i64 %12, %13
+  %11 = phi i32 [ %i.fs, %bb.am ], [ 24, %bb.al ]
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %12 = shl nuw i32 %indvars.iv.tr, 3
+  %13 = add nsw i32 %11, %12
+  %14 = sext i32 %13 to i64
   %i.ft = add i64 %i.dh, %14
   %i.fu = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0110.1, i64 %indvars.iv
   %i.fv = load i64, ptr %i.fu, align 8

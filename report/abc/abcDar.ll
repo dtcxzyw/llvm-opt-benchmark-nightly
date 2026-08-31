@@ -205,16 +205,15 @@ bb.af:                                            ; preds = %bb.ad
 
 bb.ag:                                            ; preds = %bb.ac
   %i.it = icmp samesign ult i64 %indvars.iv19.i, 1073741823
-  %i.iu = shl nsw i32 %spec.select.sink.i15.i, 1
-  %spec.select.i.i = select i1 %i.it, i32 %i.iu, i32 2147483647 ; 4 uses
-  %3 = sext i32 %spec.select.i.i to i64
+  %i.iu = shl nuw nsw i32 %spec.select.sink.i15.i, 1
+  %spec.select.i.i = select i1 %i.it, i32 %i.iu, i32 2147483647 ; 3 uses
+  %3 = zext nneg i32 %spec.select.i.i to i64      ; 2 uses
   %.not.i10.i.i = icmp samesign ult i64 %indvars.iv19.i, %3
   br i1 %.not.i10.i.i, label %bb.ah, label %Vec_PtrPush.exit.i
 
 bb.ah:                                            ; preds = %bb.ag
   %.not9.i11.i.i = icmp eq ptr %storemerge17.i, null
-  %4 = zext nneg i32 %spec.select.i.i to i64
-  %i.iv = shl nuw nsw i64 %4, 3                   ; 2 uses
+  %i.iv = shl nuw nsw i64 %3, 3                   ; 2 uses
   br i1 %.not9.i11.i.i, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah

@@ -205,7 +205,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 .preheader108:                                    ; preds = %.preheader108.lr.ph.split, %._crit_edge122
   %indvars.iv151 = phi i64 [ 1, %.preheader108.lr.ph.split ], [ %indvars.iv.next152, %._crit_edge122 ] ; 3 uses
   %i.bc = add nsw i64 %indvars.iv151, -1
-  %i.bd = mul nsw i64 %i.bc, %i.aw
+  %i.bd = mul nuw nsw i64 %i.bc, %i.aw
   %i.be = mul nuw nsw i64 %indvars.iv151, %i.aw
   %invariant.gep = getelementptr [8 x i8], ptr %i.av, i64 %i.bd ; 6 uses
   %invariant.gep185 = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %i.be ; 6 uses
@@ -333,7 +333,7 @@ scalar.ph189:                                     ; preds = %scalar.ph189.prol.l
   %i.cm = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %indvars.iv161
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !164 ; 7 uses
   %i.co = add nsw i64 %indvars.iv161, -1
-  %i.cp = mul nsw i64 %i.co, %i.cj
+  %i.cp = mul nuw nsw i64 %i.co, %i.cj
   %i.cq = getelementptr [8 x i8], ptr %i.ch, i64 %i.cp ; 6 uses
   br i1 %min.iters.check204, label %scalar.ph203.preheader, label %vector.memcheck202
 
@@ -463,7 +463,7 @@ scalar.ph203:                                     ; preds = %scalar.ph203.prol.l
   %i.eh = getelementptr inbounds nuw [8 x i8], ptr %i.ea, i64 %indvars.iv171
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !164 ; 7 uses
   %i.ej = add nsw i64 %indvars.iv171, -1
-  %i.ek = mul nsw i64 %i.ej, %i.ee
+  %i.ek = mul nuw nsw i64 %i.ej, %i.ee
   %i.el = getelementptr [8 x i8], ptr %i.ec, i64 %i.ek ; 6 uses
   br i1 %min.iters.check220, label %scalar.ph219.preheader, label %vector.memcheck215
 

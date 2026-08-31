@@ -204,7 +204,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   %i.ke = getelementptr inbounds [16 x i8], ptr %i.kc, i64 %i.kd
   %i.kf = sub nsw i32 %i.jv, %i.jw
   %i.kg = sext i32 %i.kf to i64
-  %i.kh = shl nsw i64 %i.kg, 4
+  %i.kh = shl nuw nsw i64 %i.kg, 4
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.ke, i8 0, i64 %i.kh, i1 false)
   store i32 %i.jv, ptr %i.jk, align 8, !tbaa !102
   br label %Vec_WecGrow.exit.i.i
@@ -607,16 +607,15 @@ bb.an:                                            ; preds = %bb.al
 
 bb.ao:                                            ; preds = %bb.ak
   %i.ga = icmp samesign ult i64 %indvars.iv19.i, 1073741823
-  %i.gb = shl nsw i32 %spec.select.sink.i15.i, 1
-  %spec.select.i.i97 = select i1 %i.ga, i32 %i.gb, i32 2147483647 ; 4 uses
-  %11 = sext i32 %spec.select.i.i97 to i64
+  %i.gb = shl nuw nsw i32 %spec.select.sink.i15.i, 1
+  %spec.select.i.i97 = select i1 %i.ga, i32 %i.gb, i32 2147483647 ; 3 uses
+  %11 = zext nneg i32 %spec.select.i.i97 to i64   ; 2 uses
   %.not.i10.i.i = icmp samesign ult i64 %indvars.iv19.i, %11
   br i1 %.not.i10.i.i, label %bb.ap, label %Vec_PtrPush.exit.i
 
 bb.ap:                                            ; preds = %bb.ao
   %.not9.i11.i.i = icmp eq ptr %storemerge17.i, null
-  %12 = zext nneg i32 %spec.select.i.i97 to i64
-  %i.gc = shl nuw nsw i64 %12, 3                  ; 2 uses
+  %i.gc = shl nuw nsw i64 %11, 3                  ; 2 uses
   br i1 %.not9.i11.i.i, label %bb.ar, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap

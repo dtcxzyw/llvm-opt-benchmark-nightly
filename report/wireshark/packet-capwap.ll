@@ -204,15 +204,15 @@ bb.k:                                             ; preds = %bb.j
   %i.br = trunc nuw i8 %i.bq to i1
   %i.bs = zext nneg i8 %i.bq to i32
   %spec.select = add nuw nsw i32 %.0145, %i.bs    ; 2 uses
+  %spec.select156 = select i1 %i.br, i8 4, i8 %i.bp
   %i.bt = load i32, ptr @hf_capwap_header_wireless_length, align 4
   %i.bu = add nuw nsw i32 %spec.select, %2
   %i.bv = tail call ptr @proto_tree_add_item(ptr noundef %i.j, i32 noundef %i.bt, ptr noundef %0, i32 noundef %i.bu, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.bw = add nuw nsw i32 %spec.select, 1         ; 2 uses
   %i.bx = load i32, ptr @hf_capwap_header_wireless_data, align 4
   %i.by = add nuw nsw i32 %i.bw, %2               ; 8 uses
-  %i.bz = zext i8 %i.bp to i32
-  %10 = select i1 %i.br, i32 4, i32 %i.bz         ; 2 uses
-  %i.ca = tail call ptr @proto_tree_add_item(ptr noundef %i.j, i32 noundef %i.bx, ptr noundef %0, i32 noundef %i.by, i32 noundef %10, i32 noundef 0) ; 0 uses
+  %i.bz = zext i8 %spec.select156 to i32          ; 2 uses
+  %i.ca = tail call ptr @proto_tree_add_item(ptr noundef %i.j, i32 noundef %i.bx, ptr noundef %0, i32 noundef %i.by, i32 noundef %i.bz, i32 noundef 0) ; 0 uses
   %i.cb = load i8, ptr %5, align 1
   %i.cc = icmp eq i8 %i.cb, 1
   br i1 %i.cc, label %bb.l, label %dissect_capwap_data_message_bindings_ieee80211.exit
@@ -259,7 +259,7 @@ bb.n:                                             ; preds = %bb.l
   br label %dissect_capwap_data_message_bindings_ieee80211.exit
 
 dissect_capwap_data_message_bindings_ieee80211.exit: ; preds = %bb.n, %bb.m, %bb.k
-  %i.df = add nuw nsw i32 %i.bw, %10              ; 3 uses
+  %i.df = add nuw nsw i32 %i.bw, %i.bz            ; 3 uses
   %i.dg = add nuw nsw i32 %i.df, %2               ; 2 uses
   %i.dh = sub nsw i32 0, %i.dg
   %i.di = and i32 %i.dh, 3                        ; 3 uses

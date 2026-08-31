@@ -204,16 +204,23 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 224
-  %i.e = trunc nuw i16 %i.c to i1
+  %i.e = trunc nuw i16 %i.c to i1                 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 258
-  %6 = load i32, ptr %i.f, align 2
+  %6 = load i16, ptr %i.f, align 2
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 260
+  %8 = load i16, ptr %7, align 4
+  %narrow = select i1 %i.e, i16 %6, i16 0
+  %.sroa.510.0 = zext i16 %narrow to i32
+  %.sroa.611.0 = select i1 %i.e, i16 %8, i16 undef
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 262
   %i.h = load i8, ptr %i.g, align 2, !range !58, !noundef !9
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.d, i64 32, i1 false)
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i16 %i.c, ptr %.sroa.8.0..sroa_idx, align 4
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 34
-  %.sroa.14.sroa.0.0.insert.insert = select i1 %i.e, i32 %6, i32 0
+  %.sroa.14.sroa.7.0.insert.ext = zext i16 %.sroa.611.0 to i32
+  %.sroa.14.sroa.7.0.insert.shift = shl nuw i32 %.sroa.14.sroa.7.0.insert.ext, 16
+  %.sroa.14.sroa.0.0.insert.insert = or disjoint i32 %.sroa.14.sroa.7.0.insert.shift, %.sroa.510.0
   store i32 %.sroa.14.sroa.0.0.insert.insert, ptr %.sroa.14.0..sroa_idx, align 2
   br label %bb.j
 

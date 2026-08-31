@@ -205,7 +205,7 @@ bb.bc:                                            ; preds = %bb.bb
 bb.bd:                                            ; preds = %bb.bd, %bb.bc
   %.sroa.0101.1.i.i = phi i64 [ %spec.select.i168.i, %bb.bc ], [ %i.lo, %bb.bd ] ; 9 uses
   %i.ln = icmp ult i64 %.sroa.0101.1.i.i, %.sroa.0.0.i.i
-  %i.lo = shl nsw i64 %.sroa.0101.1.i.i, 1
+  %i.lo = shl nuw nsw i64 %.sroa.0101.1.i.i, 1
   br i1 %i.ln, label %bb.bd, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
@@ -251,7 +251,7 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %bb.bi, %bb.bh
   %.sroa.0104.1.i.i = phi i64 [ %spec.select247.i.i, %bb.bh ], [ %i.lx, %bb.bi ] ; 8 uses
   %i.lw = icmp ult i64 %.sroa.0104.1.i.i, %.sroa.0.0.i.i
-  %i.lx = shl nsw i64 %.sroa.0104.1.i.i, 1
+  %i.lx = shl nuw nsw i64 %.sroa.0104.1.i.i, 1
   br i1 %i.lw, label %bb.bi, label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
@@ -654,7 +654,7 @@ bb.is:                                            ; preds = %bb.ir
 bb.it:                                            ; preds = %bb.it, %bb.is
   %.sroa.0101.1.i.i368 = phi i64 [ %spec.select.i170.i, %bb.is ], [ %i.bdz, %bb.it ] ; 9 uses
   %i.bdy = icmp ult i64 %.sroa.0101.1.i.i368, %.sroa.0.0.i.i204
-  %i.bdz = shl nsw i64 %.sroa.0101.1.i.i368, 1
+  %i.bdz = shl nuw nsw i64 %.sroa.0101.1.i.i368, 1
   br i1 %i.bdy, label %bb.it, label %bb.iu
 
 bb.iu:                                            ; preds = %bb.it
@@ -700,7 +700,7 @@ bb.ix:                                            ; preds = %bb.iw
 bb.iy:                                            ; preds = %bb.iy, %bb.ix
   %.sroa.0104.1.i.i363 = phi i64 [ %spec.select247.i.i362, %bb.ix ], [ %i.bei, %bb.iy ] ; 8 uses
   %i.beh = icmp ult i64 %.sroa.0104.1.i.i363, %.sroa.0.0.i.i204
-  %i.bei = shl nsw i64 %.sroa.0104.1.i.i363, 1
+  %i.bei = shl nuw nsw i64 %.sroa.0104.1.i.i363, 1
   br i1 %i.beh, label %bb.iy, label %bb.iz
 
 bb.iz:                                            ; preds = %bb.iy
@@ -1103,7 +1103,7 @@ bb.qp:                                            ; preds = %bb.qo
 bb.qq:                                            ; preds = %bb.qq, %bb.qp
   %.sroa.0101.1.i.i909 = phi i64 [ %spec.select.i170.i908, %bb.qp ], [ %i.cuz, %bb.qq ] ; 9 uses
   %i.cuy = icmp ult i64 %.sroa.0101.1.i.i909, %.sroa.0.0.i.i634
-  %i.cuz = shl nsw i64 %.sroa.0101.1.i.i909, 1
+  %i.cuz = shl nuw nsw i64 %.sroa.0101.1.i.i909, 1
   br i1 %i.cuy, label %bb.qq, label %bb.qr
 
 bb.qr:                                            ; preds = %bb.qq
@@ -1149,7 +1149,7 @@ bb.qu:                                            ; preds = %bb.qt
 bb.qv:                                            ; preds = %bb.qv, %bb.qu
   %.sroa.0104.1.i.i901 = phi i64 [ %spec.select247.i.i900, %bb.qu ], [ %i.cvi, %bb.qv ] ; 8 uses
   %i.cvh = icmp ult i64 %.sroa.0104.1.i.i901, %.sroa.0.0.i.i634
-  %i.cvi = shl nsw i64 %.sroa.0104.1.i.i901, 1
+  %i.cvi = shl nuw nsw i64 %.sroa.0104.1.i.i901, 1
   br i1 %i.cvh, label %bb.qv, label %bb.qw
 
 bb.qw:                                            ; preds = %bb.qv
@@ -1552,6 +1552,7 @@ bb.eb:                                            ; preds = %bb.ea
   %i.qi = trunc nuw i32 %i.qh to i1
   %i.qj = getelementptr inbounds nuw i8, ptr %1, i64 68
   %i.qk = load i32, ptr %i.qj, align 4, !alias.scope !40803, !noalias !40806
+  %.sroa.5.0.i.i = select i1 %i.qi, i32 %i.qk, i32 undef
   %i.ql = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.qm = load i32, ptr %i.ql, align 8, !range !6084, !alias.scope !40803, !noalias !40806, !noundef !27 ; 2 uses
   %i.qn = trunc nuw i32 %i.qm to i1               ; 2 uses
@@ -1590,10 +1591,9 @@ bb.eb:                                            ; preds = %bb.ea
   %.sroa.512.0.i.i = select i1 %i.rm, i32 %i.ro, i32 undef ; 2 uses
   %.sroa.26283.56.insert.ext.i = zext i8 %i.qg to i32
   %.sroa.0276.0.insert.ext.i = zext nneg i32 %i.qh to i64
-  %i.rp = zext i32 %i.qk to i64
+  %i.rp = zext i32 %.sroa.5.0.i.i to i64
   %i.rq = shl nuw i64 %i.rp, 32
-  %.sroa.0276.4.insert.shift.i = select i1 %i.qi, i64 %i.rq, i64 0
-  %.sroa.0276.4.insert.insert.i = or disjoint i64 %.sroa.0276.4.insert.shift.i, %.sroa.0276.0.insert.ext.i
+  %.sroa.0276.4.insert.insert.i = or disjoint i64 %i.rq, %.sroa.0276.0.insert.ext.i
   call void @llvm.experimental.noalias.scope.decl(metadata !40808)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !40811
   %.sroa.0.0.i.i.i = select i1 %i.qx, i32 %i.qz, i32 65535
@@ -1996,6 +1996,7 @@ bb.ec:                                            ; preds = %bb.eb
   %i.qk = trunc nuw i32 %i.qj to i1
   %i.ql = getelementptr inbounds nuw i8, ptr %1, i64 68
   %i.qm = load i32, ptr %i.ql, align 4, !alias.scope !40938, !noalias !40941
+  %.sroa.5.0.i.i = select i1 %i.qk, i32 %i.qm, i32 undef
   %i.qn = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.qo = load i32, ptr %i.qn, align 8, !range !6084, !alias.scope !40938, !noalias !40941, !noundef !27 ; 2 uses
   %i.qp = trunc nuw i32 %i.qo to i1               ; 2 uses
@@ -2034,10 +2035,9 @@ bb.ec:                                            ; preds = %bb.eb
   %.sroa.512.0.i.i = select i1 %i.ro, i32 %i.rq, i32 undef ; 2 uses
   %.sroa.26288.56.insert.ext.i = zext i8 %i.qi to i32
   %.sroa.0281.0.insert.ext.i = zext nneg i32 %i.qj to i64
-  %i.rr = zext i32 %i.qm to i64
+  %i.rr = zext i32 %.sroa.5.0.i.i to i64
   %i.rs = shl nuw i64 %i.rr, 32
-  %.sroa.0281.4.insert.shift.i = select i1 %i.qk, i64 %i.rs, i64 0
-  %.sroa.0281.4.insert.insert.i = or disjoint i64 %.sroa.0281.4.insert.shift.i, %.sroa.0281.0.insert.ext.i
+  %.sroa.0281.4.insert.insert.i = or disjoint i64 %i.rs, %.sroa.0281.0.insert.ext.i
   call void @llvm.experimental.noalias.scope.decl(metadata !40943)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !40946
   %.sroa.0.0.i.i.i = select i1 %i.qz, i32 %i.rb, i32 65535

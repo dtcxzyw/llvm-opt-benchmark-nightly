@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %i.y, label %bb.d, label %bb.e, !prof !66
 
 bb.d:                                             ; preds = %bb.c
-  %gepdiff = shl nsw i64 %i.p, 2
+  %gepdiff = shl nuw nsw i64 %i.p, 2
   call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.x, ptr align 4 %i.v, i64 %gepdiff, i1 false)
   %.pre = load ptr, ptr %6, align 8, !tbaa !226
   %.pre53 = load ptr, ptr %5, align 8, !tbaa !226
@@ -607,7 +607,7 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %i.y, label %bb.d, label %bb.e, !prof !66
 
 bb.d:                                             ; preds = %bb.c
-  %gepdiff = shl nsw i64 %i.p, 2
+  %gepdiff = shl nuw nsw i64 %i.p, 2
   call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.x, ptr align 4 %i.v, i64 %gepdiff, i1 false)
   %.pre = load ptr, ptr %6, align 8, !tbaa !226
   %.pre53 = load ptr, ptr %5, align 8, !tbaa !226
@@ -1010,7 +1010,7 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %i.y, label %bb.d, label %bb.e, !prof !66
 
 bb.d:                                             ; preds = %bb.c
-  %gepdiff = shl nsw i64 %i.p, 2
+  %gepdiff = shl nuw nsw i64 %i.p, 2
   call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.x, ptr align 4 %i.v, i64 %gepdiff, i1 false)
   %.pre = load ptr, ptr %6, align 8, !tbaa !226
   %.pre53 = load ptr, ptr %5, align 8, !tbaa !226
@@ -1413,7 +1413,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.f, !prof !66
 
 bb.e:                                             ; preds = %bb.d
-  %.idx.neg = shl nsw i64 %2, 3
+  %.idx.neg = shl nuw nsw i64 %2, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr nonnull align 8 %i.o, i64 %.idx.neg, i1 false)
   %.pre97 = load ptr, ptr %i.c, align 8, !tbaa !63
   br label %_ZSt22__uninitialized_move_aIPdS0_SaIdEET0_T_S3_S2_RT1_.exit
@@ -1816,7 +1816,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.f, !prof !66
 
 bb.e:                                             ; preds = %bb.d
-  %.idx.neg = shl nsw i64 %2, 2
+  %.idx.neg = shl nuw nsw i64 %2, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.d, ptr nonnull align 4 %i.o, i64 %.idx.neg, i1 false)
   %.pre97 = load ptr, ptr %i.c, align 8, !tbaa !103
   br label %_ZSt22__uninitialized_move_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit
@@ -2219,8 +2219,8 @@ bb.f:                                             ; preds = %bb.e
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEES6_ET0_T_S8_S7_.exit: ; preds = %bb.f
   %i.aj = load i32, ptr %.sroa.042.0, align 4, !tbaa !105
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.042.0, i64 4
-  %.idx87 = shl nsw i64 %.0, 2                    ; 2 uses
-  %i.al = getelementptr inbounds i8, ptr %.sroa.042.0, i64 %.idx87
+  %.idx87 = shl nuw nsw i64 %.0, 2                ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.042.0, i64 %.idx87
   %gepdiff = add nsw i64 %.idx87, -4
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %.sroa.042.0, ptr nonnull align 4 %i.ak, i64 %gepdiff, i1 false)
   %i.am = getelementptr inbounds i8, ptr %i.al, i64 -4
@@ -2362,7 +2362,7 @@ bb.i:                                             ; preds = %bb.e
 bb.j:                                             ; preds = %bb.i
   %i.cd = getelementptr inbounds i8, ptr %i.cc, i64 -4 ; 2 uses
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !105
-  %.idx = shl nsw i64 %.0, 2
+  %.idx = shl nuw nsw i64 %.0, 2
   %i.cf = add nsw i64 %.idx, -4                   ; 3 uses
   %i.cg = ashr exact i64 %i.cf, 2                 ; 2 uses
   %i.ch = icmp sgt i64 %i.cg, 1

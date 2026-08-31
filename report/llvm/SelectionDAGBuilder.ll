@@ -205,14 +205,15 @@ bb.dj:                                            ; preds = %bb.cz
   %i.acy = load i16, ptr %i.ex, align 8           ; 2 uses
   %i.acz = lshr i16 %i.acy, 1
   %i.ada = and i16 %i.acz, 1
-  %spec.select793 = zext nneg i16 %i.ada to i64
-  %i.adb = trunc i16 %i.acy to i1
+  %i.adb = trunc i16 %i.acy to i1                 ; 2 uses
   %i.adc = getelementptr inbounds nuw i8, ptr %2, i64 96
   %.sroa.6.0..sroa_idx26 = getelementptr inbounds nuw i8, ptr %27, i64 2
   %.sroa.8.0..sroa_idx27 = getelementptr inbounds nuw i8, ptr %27, i64 8
-  %i.add = shl nuw nsw i64 %spec.select793, 32
-  %29 = or disjoint i64 %i.add, 4
-  %.sroa.0652.0.insert.insert = select i1 %i.adb, i64 4294967299, i64 %29
+  %narrow = select i1 %i.adb, i16 1, i16 %i.ada
+  %.sroa.6654.0.insert.ext = zext nneg i16 %narrow to i64
+  %i.add = shl nuw nsw i64 %.sroa.6654.0.insert.ext, 32
+  %.sroa.0652.0.insert.ext = select i1 %i.adb, i64 3, i64 4
+  %.sroa.0652.0.insert.insert = or disjoint i64 %i.add, %.sroa.0652.0.insert.ext
   br label %bb.dk
 
 ._crit_edge846:                                   ; preds = %_ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE9push_backES1_.exit633

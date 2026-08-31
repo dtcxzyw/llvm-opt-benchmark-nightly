@@ -204,7 +204,7 @@ bb.eb:                                            ; preds = %bb.ea
   %i.rn = load ptr, ptr %i.rm, align 8, !tbaa !58 ; 2 uses
   %.not9.i23.i.i.i.i.i = icmp eq ptr %i.rn, null
   %i.ro = sext i32 %spec.select.i.i.i.i.i to i64
-  %i.rp = shl nsw i64 %i.ro, 2                    ; 2 uses
+  %i.rp = shl nuw nsw i64 %i.ro, 2                ; 2 uses
   br i1 %.not9.i23.i.i.i.i.i, label %bb.ed, label %bb.ec
 
 bb.ec:                                            ; preds = %bb.eb
@@ -607,15 +607,14 @@ bb.k:                                             ; preds = %bb.i
 bb.l:                                             ; preds = %bb.h
   %i.ce = icmp samesign ult i64 %indvars.iv88.i, 1073741823
   %i.cf = shl nuw nsw i32 %spec.select.sink.i67.i, 1
-  %spec.select.i.i = select i1 %i.ce, i32 %i.cf, i32 2147483647 ; 4 uses
-  %i.cg = zext nneg i32 %spec.select.i.i to i64
+  %spec.select.i.i = select i1 %i.ce, i32 %i.cf, i32 2147483647 ; 3 uses
+  %i.cg = zext nneg i32 %spec.select.i.i to i64   ; 2 uses
   %.not.i9.i.i = icmp samesign ult i64 %indvars.iv88.i, %i.cg
   br i1 %.not.i9.i.i, label %bb.m, label %Vec_IntPush.exit.i
 
 bb.m:                                             ; preds = %bb.l
   %.not9.i10.i.i = icmp eq ptr %storemerge69.i, null
-  %4 = zext nneg i32 %spec.select.i.i to i64
-  %i.ch = shl nuw nsw i64 %4, 2                   ; 2 uses
+  %i.ch = shl nuw nsw i64 %i.cg, 2                ; 2 uses
   br i1 %.not9.i10.i.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -661,15 +660,14 @@ bb.s:                                             ; preds = %bb.q
 bb.t:                                             ; preds = %bb.p
   %i.cw = icmp samesign ult i64 %indvars.iv88.i, 1073741823
   %i.cx = shl nuw nsw i32 %spec.select.sink.i5075.i, 1
-  %spec.select.i46.i = select i1 %i.cw, i32 %i.cx, i32 2147483647 ; 4 uses
-  %i.cy = zext nneg i32 %spec.select.i46.i to i64
+  %spec.select.i46.i = select i1 %i.cw, i32 %i.cx, i32 2147483647 ; 3 uses
+  %i.cy = zext nneg i32 %spec.select.i46.i to i64 ; 2 uses
   %.not.i9.i47.i = icmp samesign ult i64 %indvars.iv88.i, %i.cy
   br i1 %.not.i9.i47.i, label %bb.u, label %Vec_IntPush.exit53.i
 
 bb.u:                                             ; preds = %bb.t
   %.not9.i10.i48.i = icmp eq ptr %storemerge6077.i, null
-  %5 = zext nneg i32 %spec.select.i46.i to i64
-  %i.cz = shl nuw nsw i64 %5, 2                   ; 2 uses
+  %i.cz = shl nuw nsw i64 %i.cy, 2                ; 2 uses
   br i1 %.not9.i10.i48.i, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u

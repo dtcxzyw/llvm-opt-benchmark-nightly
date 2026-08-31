@@ -206,7 +206,7 @@ bb.c:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.t = xor i64 %i.h, -1                         ; 2 uses
   %i.u = add nsw i64 %i.d, %i.t
-  %i.v = shl nsw i64 %i.u, 4
+  %i.v = shl nuw nsw i64 %i.u, 4
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.o, ptr nonnull align 8 %i.s, i64 %i.v, i1 false), !noalias !7445
   %i.w = add nsw i64 %i.d, -1
   store i64 %i.w, ptr %i.c, align 8, !alias.scope !7445
@@ -230,7 +230,7 @@ bb.d:                                             ; preds = %"_ZN5alloc3vec16Vec
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(104) %i.ac, i64 104, i1 false)
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 104
   %i.ae = add nsw i64 %i.y, %i.t
-  %i.af = mul nsw i64 %i.ae, 104
+  %i.af = mul nuw nsw i64 %i.ae, 104
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ac, ptr nonnull align 8 %i.ad, i64 %i.af, i1 false), !noalias !7453
   %i.ag = add nsw i64 %i.y, -1
   store i64 %i.ag, ptr %i.x, align 8, !alias.scope !7448, !noalias !7451
@@ -633,8 +633,8 @@ _ZN10serde_core2de9MapAccess8next_key17h8f1f673b1b4318d8E.exit.i.i.i: ; preds = 
 
 _ZN10serde_core2de9MapAccess8next_key17h8f1f673b1b4318d8E.exit.thread32.i.i.i: ; preds = %bb.z
   %i.cr = trunc nuw i64 %.sroa.01.069.i.i.i to i1
-  %1 = inttoptr i64 %.sroa.7.068.i.i.i to ptr
-  %2 = select i1 %i.cr, ptr %1, ptr null
+  %.sroa.7.0..i.i.i = select i1 %i.cr, i64 %.sroa.7.068.i.i.i, i64 0
+  %1 = inttoptr i64 %.sroa.7.0..i.i.i to ptr
   br label %"_ZN218_$LT$meilisearch_types..tasks..network.._..$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$meilisearch_types..tasks..network..NetworkTopologyStats$GT$..deserialize..__Visitor$u20$as$u20$serde_core..de..Visitor$GT$9visit_map17h347cda206bb9f72cE.exit.i.i"
 
 bb.ad:                                            ; preds = %_ZN10serde_core2de9MapAccess8next_key17h8f1f673b1b4318d8E.exit.i.i.i, %_ZN10serde_core2de9MapAccess8next_key17h8f1f673b1b4318d8E.exit.thread36.i.i.i
@@ -773,7 +773,7 @@ bb.ap:                                            ; preds = %_ZN10serde_core2de9
   br i1 %i.dx, label %._crit_edge.i.i.i, label %bb.z
 
 "_ZN218_$LT$meilisearch_types..tasks..network.._..$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$meilisearch_types..tasks..network..NetworkTopologyStats$GT$..deserialize..__Visitor$u20$as$u20$serde_core..de..Visitor$GT$9visit_map17h347cda206bb9f72cE.exit.i.i": ; preds = %_ZN10serde_core2de9MapAccess10next_value17h51a8cfeb6a468decE.exit.i.i.i, %_ZN10serde_core2de9MapAccess10next_value17hc8d3d64154c36cfeE.exit.i.i.i, %bb.ai, %bb.ag, %.loopexit.i.i.i.i.i.i, %_ZN10serde_core2de9MapAccess8next_key17h8f1f673b1b4318d8E.exit.thread32.i.i.i, %bb.ac, %._crit_edge.i.i.i
-  %.sroa.6.1.i.i.i = phi ptr [ %2, %_ZN10serde_core2de9MapAccess8next_key17h8f1f673b1b4318d8E.exit.thread32.i.i.i ], [ %i.db, %bb.ag ], [ %i.bx, %._crit_edge.i.i.i ], [ %i.de, %bb.ai ], [ %i.ci, %bb.ac ], [ %i.da, %.loopexit.i.i.i.i.i.i ], [ %i.dt, %_ZN10serde_core2de9MapAccess10next_value17h51a8cfeb6a468decE.exit.i.i.i ], [ %i.dd, %_ZN10serde_core2de9MapAccess10next_value17hc8d3d64154c36cfeE.exit.i.i.i ] ; 4 uses
+  %.sroa.6.1.i.i.i = phi ptr [ %1, %_ZN10serde_core2de9MapAccess8next_key17h8f1f673b1b4318d8E.exit.thread32.i.i.i ], [ %i.db, %bb.ag ], [ %i.bx, %._crit_edge.i.i.i ], [ %i.de, %bb.ai ], [ %i.ci, %bb.ac ], [ %i.da, %.loopexit.i.i.i.i.i.i ], [ %i.dt, %_ZN10serde_core2de9MapAccess10next_value17h51a8cfeb6a468decE.exit.i.i.i ], [ %i.dd, %_ZN10serde_core2de9MapAccess10next_value17hc8d3d64154c36cfeE.exit.i.i.i ] ; 4 uses
   %.sroa.0.1.i.i.i = phi i64 [ 0, %_ZN10serde_core2de9MapAccess8next_key17h8f1f673b1b4318d8E.exit.thread32.i.i.i ], [ 1, %bb.ag ], [ 1, %._crit_edge.i.i.i ], [ 1, %bb.ai ], [ 1, %bb.ac ], [ 1, %.loopexit.i.i.i.i.i.i ], [ 1, %_ZN10serde_core2de9MapAccess10next_value17hc8d3d64154c36cfeE.exit.i.i.i ], [ 1, %_ZN10serde_core2de9MapAccess10next_value17h51a8cfeb6a468decE.exit.i.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !61448
   %i.dy = load i8, ptr %i.ac, align 8, !range !447, !alias.scope !61448, !noundef !15
@@ -1176,7 +1176,7 @@ bb.ek:                                            ; preds = %"_ZN4core3str6trait
   %i.aho = getelementptr inbounds nuw i8, ptr %i.ahk, i64 16
   %i.ahp = xor i64 %i.agu, -1                     ; 2 uses
   %i.ahq = add nsw i64 %i.agq, %i.ahp
-  %i.ahr = shl nsw i64 %i.ahq, 4
+  %i.ahr = shl nuw nsw i64 %i.ahq, 4
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ahk, ptr nonnull align 8 %i.aho, i64 %i.ahr, i1 false), !noalias !86538
   %i.ahs = add nsw i64 %i.agq, -1
   store i64 %i.ahs, ptr %i.agp, align 8, !alias.scope !86539, !noalias !86527
@@ -1206,7 +1206,7 @@ bb.ek:                                            ; preds = %"_ZN4core3str6trait
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %.sroa.11442.i.i.i, ptr noundef nonnull align 8 dereferenceable(96) %.sroa.11442.16..sroa_idx443.i.i.i, i64 96, i1 false), !noalias !86546
   %i.aib = getelementptr inbounds nuw i8, ptr %i.aia, i64 104
   %i.aic = add nsw i64 %i.ahu, %i.ahp
-  %i.aid = mul nsw i64 %i.aic, 104
+  %i.aid = mul nuw nsw i64 %i.aic, 104
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aia, ptr nonnull align 8 %i.aib, i64 %i.aid, i1 false), !noalias !86547
   %i.aie = add nsw i64 %i.ahu, -1
   store i64 %i.aie, ptr %i.aht, align 8, !alias.scope !86543, !noalias !86544
@@ -1609,7 +1609,7 @@ bb.hx:                                            ; preds = %"_ZN4core3str6trait
   %i.aow = getelementptr inbounds nuw i8, ptr %i.aos, i64 16
   %i.aox = xor i64 %i.aoc, -1                     ; 2 uses
   %i.aoy = add nsw i64 %i.any, %i.aox
-  %i.aoz = shl nsw i64 %i.aoy, 4
+  %i.aoz = shl nuw nsw i64 %i.aoy, 4
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aos, ptr nonnull align 8 %i.aow, i64 %i.aoz, i1 false), !noalias !86749
   %i.apa = add nsw i64 %i.any, -1
   store i64 %i.apa, ptr %i.anx, align 8, !alias.scope !86750, !noalias !86738
@@ -1639,7 +1639,7 @@ bb.hx:                                            ; preds = %"_ZN4core3str6trait
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %.sroa.11448.i.i.i, ptr noundef nonnull align 8 dereferenceable(96) %.sroa.11448.16..sroa_idx449.i.i.i, i64 96, i1 false), !noalias !86757
   %i.apj = getelementptr inbounds nuw i8, ptr %i.api, i64 104
   %i.apk = add nsw i64 %i.apc, %i.aox
-  %i.apl = mul nsw i64 %i.apk, 104
+  %i.apl = mul nuw nsw i64 %i.apk, 104
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.api, ptr nonnull align 8 %i.apj, i64 %i.apl, i1 false), !noalias !86758
   %i.apm = add nsw i64 %i.apc, -1
   store i64 %i.apm, ptr %i.apb, align 8, !alias.scope !86754, !noalias !86755

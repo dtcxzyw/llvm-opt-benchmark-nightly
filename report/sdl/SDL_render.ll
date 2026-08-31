@@ -205,10 +205,10 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 144
   %i.r = load <2 x float>, ptr %i.q, align 4      ; 6 uses
-  %i.s = shl nsw i32 %2, 3                        ; 2 uses
+  %i.s = shl nuw nsw i32 %2, 3
   %i.t = zext nneg i32 %i.s to i64
   %i.u = shl nuw nsw i64 %i.t, 2                  ; 2 uses
-  %i.v = icmp samesign ult i32 %i.s, 32           ; 2 uses
+  %i.v = icmp samesign ult i32 %2, 4              ; 2 uses
   br i1 %i.v, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
@@ -222,7 +222,7 @@ bb.k:                                             ; preds = %bb.i
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.y = phi ptr [ %i.w, %bb.j ], [ %i.x, %bb.k ] ; 9 uses
   %i.z = add nsw i32 %2, -1                       ; 2 uses
-  %i.aa = mul nsw i32 %i.z, 12
+  %i.aa = mul nuw nsw i32 %i.z, 12
   %i.ab = mul nuw nsw i32 %2, 6
   %i.ac = add nuw nsw i32 %i.aa, %i.ab            ; 2 uses
   %i.ad = zext nneg i32 %i.ac to i64
@@ -246,7 +246,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %or.cond, label %bb.p, label %QueueCmdGeometry.exit
 
 bb.p:                                             ; preds = %bb.o
-  %i.al = shl nsw i32 %2, 2
+  %i.al = shl nuw nsw i32 %2, 2
   %i.am = load float, ptr %1, align 4
   %i.an = zext nneg i32 %i.z to i64
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.an ; 2 uses

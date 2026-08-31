@@ -204,8 +204,8 @@ bb.o:                                             ; preds = %bb.m
 bb.p:                                             ; preds = %bb.o, %bb.i
   %.sroa.0.019 = phi i64 [ %i.al, %bb.o ], [ %.sroa.03.0.copyload, %bb.i ]
   %i.ap = trunc nuw i32 %i.i to i1
-  %3 = zext i32 %i.k to i64
-  %.sroa.0.0 = select i1 %i.ap, i64 %3, i64 30
+  %narrow = select i1 %i.ap, i32 %i.k, i32 30
+  %.sroa.0.0 = zext i32 %narrow to i64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aq, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
