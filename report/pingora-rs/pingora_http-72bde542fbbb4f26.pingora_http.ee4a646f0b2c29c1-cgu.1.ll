@@ -205,9 +205,8 @@ bb.s:                                             ; preds = %bb.q
   %i.bp = load i64, ptr %i.bo, align 8, !alias.scope !406, !noalias !407 ; 15 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.br = load ptr, ptr %i.bq, align 8, !alias.scope !406, !noalias !407, !nonnull !4 ; 3 uses
-  %i.bs = load ptr, ptr %i.i, align 8, !alias.scope !393, !noalias !408 ; 8 uses
-  %i.bt = icmp eq ptr %i.bs, null                 ; 8 uses
-  %not..i.i.i.i.i = xor i1 %i.bt, true
+  %i.bs = load ptr, ptr %i.i, align 8, !alias.scope !393, !noalias !408 ; 9 uses
+  %i.bt = icmp eq ptr %i.bs, null                 ; 7 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
   %i.bv = load i8, ptr %i.bu, align 8, !range !210, !alias.scope !393, !noalias !408
   %i.bw = getelementptr inbounds nuw i8, ptr %i.i, i64 16
@@ -391,7 +390,7 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %i.du, label %bb.al, label %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i.i.i
 
 bb.al:                                            ; preds = %bb.ak
-  call void @llvm.assume(i1 %not..i.i.i.i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bs) ]
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dr, i64 80
   %i.dx = load i64, ptr %i.dw, align 8, !noalias !395, !noundef !4
   %i.dy = icmp eq i64 %i.dx, %i.bx
@@ -707,7 +706,7 @@ bb.bn:                                            ; preds = %bb.p
 
 bb.bo:                                            ; preds = %bb.dl, %bb.bn
   %.sroa.522.0.i.i = phi i8 [ %.sroa.430.0.copyload.i.i, %bb.dl ], [ %i.hh, %bb.bn ] ; 2 uses
-  %.sroa.020.0.i.i = phi ptr [ %.sroa.029.0.copyload.i.i, %bb.dl ], [ null, %bb.bn ] ; 11 uses
+  %.sroa.020.0.i.i = phi ptr [ %.sroa.029.0.copyload.i.i, %bb.dl ], [ null, %bb.bn ] ; 12 uses
   store ptr %.sroa.020.0.i.i, ptr %i.j, align 8, !noalias !373
   %.sroa.522.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 4 uses
   store i8 %.sroa.522.0.i.i, ptr %.sroa.522.0..sroa_idx.i.i, align 8, !noalias !373
@@ -747,8 +746,7 @@ bb.br:                                            ; preds = %bb.bp
   %i.hw = load i64, ptr %i.hv, align 8, !alias.scope !586, !noalias !587 ; 15 uses
   %i.hx = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 4 uses
   %i.hy = load ptr, ptr %i.hx, align 8, !alias.scope !586, !noalias !587, !nonnull !4 ; 3 uses
-  %i.hz = icmp eq ptr %.sroa.020.0.i.i, null      ; 8 uses
-  %not..i.i.i46.i.i = xor i1 %i.hz, true
+  %i.hz = icmp eq ptr %.sroa.020.0.i.i, null      ; 7 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.ib = load i64, ptr %i.ia, align 8, !alias.scope !573, !noalias !588 ; 9 uses
   %i.ic = load ptr, ptr %.sroa.522.0..sroa_idx.i.i, align 8, !alias.scope !573, !noalias !588 ; 8 uses
@@ -918,7 +916,7 @@ bb.cj:                                            ; preds = %bb.ci
   br i1 %i.ju, label %bb.ck, label %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i53.i.i
 
 bb.ck:                                            ; preds = %bb.cj
-  call void @llvm.assume(i1 %not..i.i.i46.i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.020.0.i.i) ]
   %i.jw = getelementptr inbounds nuw i8, ptr %i.jr, i64 72
   %i.jx = load i64, ptr %i.jw, align 8, !noalias !575, !noundef !4
   %i.jy = icmp eq i64 %i.jx, %i.ib

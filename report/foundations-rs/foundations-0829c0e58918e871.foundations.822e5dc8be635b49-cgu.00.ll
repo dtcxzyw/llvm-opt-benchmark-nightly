@@ -203,9 +203,8 @@ bb.d:                                             ; preds = %bb.b
   %i.y = load i64, ptr %i.x, align 8              ; 15 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
   %i.aa = load ptr, ptr %i.z, align 8, !nonnull !14 ; 3 uses
-  %i.ab = load ptr, ptr %2, align 8               ; 8 uses
-  %i.ac = icmp eq ptr %i.ab, null                 ; 8 uses
-  %not..i.i = xor i1 %i.ac, true
+  %i.ab = load ptr, ptr %2, align 8               ; 9 uses
+  %i.ac = icmp eq ptr %i.ab, null                 ; 7 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.ae = load i8, ptr %i.ad, align 8, !range !163
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -401,7 +400,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.cc, label %bb.y, label %_RNvXsy_NtNtCs74LoFwSioHw_4http6header4nameNtB5_10HeaderNameNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit, !dbg !375
 
 bb.y:                                             ; preds = %bb.x
-  tail call void @llvm.assume(i1 %not..i.i), !dbg !375
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ab) ], !dbg !375
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bz, i64 80, !dbg !378
   %i.cf = load i64, ptr %i.ce, align 8, !dbg !378, !noundef !14
   %i.cg = icmp eq i64 %i.cf, %i.ag, !dbg !399
@@ -804,7 +803,7 @@ bb.a:
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 9, !dbg !1264 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(103) %.sroa.9, ptr noundef nonnull align 1 dereferenceable(103) %.sroa.9.0..sroa_idx, i64 103, i1 false), !dbg !1264
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16, !dbg !1265
-  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !1265 ; 17 uses
+  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !1265 ; 18 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 24, !dbg !1265
   %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !dbg !1265 ; 13 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32, !dbg !1265
@@ -918,8 +917,7 @@ bb.i:                                             ; preds = %bb.g
   %i.af = load i64, ptr %i.ae, align 8, !alias.scope !1379, !noalias !1357 ; 14 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 3 uses
   %i.ah = load ptr, ptr %i.ag, align 8, !alias.scope !1379, !noalias !1357, !nonnull !14 ; 3 uses
-  %i.ai = icmp eq ptr %.sroa.4.0.copyload, null   ; 8 uses
-  %not..i.i.i.i = xor i1 %i.ai, true
+  %i.ai = icmp eq ptr %.sroa.4.0.copyload, null   ; 7 uses
   %.not = icmp eq i64 %i.ab, 0
   br label %.outer81, !dbg !1383
 
@@ -1090,7 +1088,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.ca, label %bb.ab, label %_RNvXsy_NtNtCs74LoFwSioHw_4http6header4nameNtB5_10HeaderNameNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit.i.i, !dbg !1520
 
 bb.ab:                                            ; preds = %bb.aa
-  call void @llvm.assume(i1 %not..i.i.i.i), !dbg !1520
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.4.0.copyload) ], !dbg !1520
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bx, i64 80, !dbg !1521
   %i.cd = load i64, ptr %i.cc, align 8, !dbg !1521, !noalias !1357, !noundef !14
   %i.ce = icmp eq i64 %i.cd, %.sroa.6.0.copyload, !dbg !1527

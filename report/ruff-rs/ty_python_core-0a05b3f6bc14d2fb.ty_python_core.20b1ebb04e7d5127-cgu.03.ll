@@ -204,31 +204,28 @@ bb.c:                                             ; preds = %bb.b
   %.val2.i = load ptr, ptr %i.e, align 8, !alias.scope !2764, !noalias !2761, !nonnull !4, !align !12, !noundef !4 ; 2 uses
   %.val.i.i = load ptr, ptr %.val.i, align 8, !noalias !2766, !noundef !4 ; 2 uses
   %i.f = getelementptr i8, ptr %.val.i, i64 8
-  %.val1.i.i = load i64, ptr %i.f, align 8, !noalias !2766 ; 3 uses
+  %.val1.i.i = load i64, ptr %i.f, align 8, !noalias !2766 ; 2 uses
   %.val2.i.i = load ptr, ptr %.val2.i, align 8, !noalias !2766, !noundef !4 ; 3 uses
-  %2 = getelementptr i8, ptr %.val2.i, i64 8
-  %.val3.i.i = load i64, ptr %2, align 8, !noalias !2766 ; 2 uses
   %i.g = icmp ne ptr %.val.i.i, null              ; 2 uses
-  %i.h = icmp eq ptr %.val2.i.i, null             ; 3 uses
-  %not..i.i.i.i = xor i1 %i.h, true
+  %i.h = icmp eq ptr %.val2.i.i, null             ; 2 uses
   %i.i = xor i1 %i.g, %i.h
-  br i1 %i.i, label %3, label %_RNvXs2B_NtCskLngH8kgpZI_15ruff_python_ast10comparableNtB6_16ComparableNumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
+  br i1 %i.i, label %bb.d, label %_RNvXs2B_NtCskLngH8kgpZI_15ruff_python_ast10comparableNtB6_16ComparableNumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
-3:                                                ; preds = %bb.c
-  br i1 %i.g, label %bb.d, label %bb.e
+bb.d:                                             ; preds = %bb.c
+  %2 = getelementptr i8, ptr %.val2.i, i64 8
+  %.val3.i.i = load i64, ptr %2, align 8, !noalias !2766
+  %i.j = icmp eq i64 %.val1.i.i, %.val3.i.i       ; 2 uses
+  br i1 %i.g, label %3, label %bb.e
 
-bb.d:                                             ; preds = %3
-  tail call void @llvm.assume(i1 %not..i.i.i.i)
+3:                                                ; preds = %bb.d
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i) ]
-  %i.j = icmp eq i64 %.val1.i.i, %.val3.i.i
   br i1 %i.j, label %bb.f, label %_RNvXs2B_NtCskLngH8kgpZI_15ruff_python_ast10comparableNtB6_16ComparableNumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
-bb.e:                                             ; preds = %3
+bb.e:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.h)
-  %4 = icmp eq i64 %.val1.i.i, %.val3.i.i
   br label %_RNvXs2B_NtCskLngH8kgpZI_15ruff_python_ast10comparableNtB6_16ComparableNumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
-bb.f:                                             ; preds = %bb.d
+bb.f:                                             ; preds = %3
   %bcmp.i.i.i.i = tail call i32 @bcmp(ptr nonnull readonly %.val.i.i, ptr nonnull readonly %.val2.i.i, i64 %.val1.i.i), !noalias !2766
   %i.k = icmp eq i32 %bcmp.i.i.i.i, 0
   br label %_RNvXs2B_NtCskLngH8kgpZI_15ruff_python_ast10comparableNtB6_16ComparableNumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
@@ -255,8 +252,8 @@ bb.i:                                             ; preds = %bb.h
   %i.x = icmp eq i64 %i.u, %i.w
   br label %_RNvXs2B_NtCskLngH8kgpZI_15ruff_python_ast10comparableNtB6_16ComparableNumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
-_RNvXs2B_NtCskLngH8kgpZI_15ruff_python_ast10comparableNtB6_16ComparableNumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit: ; preds = %bb.a, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i
-  %.sroa.0.0.shrunk.i = phi i1 [ false, %bb.h ], [ %i.o, %bb.g ], [ %i.x, %bb.i ], [ false, %bb.a ], [ %i.k, %bb.f ], [ false, %bb.c ], [ %4, %bb.e ], [ false, %bb.d ]
+_RNvXs2B_NtCskLngH8kgpZI_15ruff_python_ast10comparableNtB6_16ComparableNumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit: ; preds = %bb.a, %bb.c, %3, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i
+  %.sroa.0.0.shrunk.i = phi i1 [ false, %bb.h ], [ %i.o, %bb.g ], [ %i.x, %bb.i ], [ false, %bb.a ], [ %i.k, %bb.f ], [ false, %bb.c ], [ %i.j, %bb.e ], [ false, %3 ]
   ret i1 %.sroa.0.0.shrunk.i
 }
 

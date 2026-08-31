@@ -205,14 +205,14 @@ bb.bb:                                            ; preds = %bb.ba
   store <2 x i64> %i.dm, ptr %.sroa.513.0..sroa_idx.i.i, align 16, !noalias !158
   store <2 x i64> %i.di, ptr %.sroa.7.0..sroa_idx.i.i, align 16, !noalias !158
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.915.0..sroa_idx.i.i, i8 0, i64 24, i1 false), !noalias !158
-  %i.dn = load ptr, ptr %i.au, align 8, !noalias !159, !noundef !10 ; 2 uses
+  %i.dn = load ptr, ptr %i.au, align 8, !noalias !159, !noundef !10 ; 3 uses
   %i.do = icmp ne ptr %i.dn, null
   %i.dp = zext i1 %i.do to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !166
   store i64 %i.dp, ptr %i.e, align 8, !noalias !166
   call fastcc void @_RNvXs3_NtNtCskKLDkoKarTP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.e, i64 noundef 8) #28, !noalias !171
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !166
-  %.not.i.i.i.i.i = icmp eq ptr %i.dn, null       ; 2 uses
+  %.not.i.i.i.i.i = icmp eq ptr %i.dn, null
   br i1 %.not.i.i.i.i.i, label %bb.bd, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
@@ -304,7 +304,7 @@ _RINvXs3_NtNtCskKLDkoKarTP_4core4hash5implsRNtNtNtCs577yCKf7gy3_4http6header4nam
   br label %.loopexit.i
 
 bb.be:                                            ; preds = %bb.ba
-  %i.gf = load ptr, ptr %i.au, align 8, !noalias !181, !noundef !10 ; 2 uses
+  %i.gf = load ptr, ptr %i.au, align 8, !noalias !181, !noundef !10 ; 5 uses
   %i.gg = icmp ne ptr %i.gf, null
   %i.gh = zext i1 %i.gg to i64
   %i.gi = xor i64 %i.gh, -3750763034362895579
@@ -401,7 +401,7 @@ bb.bg:                                            ; preds = %bb.be
 
 .loopexit.i:                                      ; preds = %.lr.ph.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i, %bb.bg, %bb.bf, %_RINvXs3_NtNtCskKLDkoKarTP_4core4hash5implsRNtNtNtCs577yCKf7gy3_4http6header4name10HeaderNameNtB8_4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit.i.i
   %i.in = phi i8 [ %i.du, %_RINvXs3_NtNtCskKLDkoKarTP_4core4hash5implsRNtNtNtCs577yCKf7gy3_4http6header4name10HeaderNameNtB8_4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit.i.i ], [ %i.ij, %bb.bg ], [ %i.gn, %bb.bf ], [ %i.gn, %.lr.ph.i.i.i.i.i.i.i ], [ %i.gn, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ]
-  %4 = phi i1 [ %.not.i.i.i.i.i, %_RINvXs3_NtNtCskKLDkoKarTP_4core4hash5implsRNtNtNtCs577yCKf7gy3_4http6header4name10HeaderNameNtB8_4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit.i.i ], [ true, %bb.bg ], [ false, %bb.bf ], [ false, %.lr.ph.i.i.i.i.i.i.i ], [ false, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 3 uses
+  %4 = phi ptr [ %i.dn, %_RINvXs3_NtNtCskKLDkoKarTP_4core4hash5implsRNtNtNtCs577yCKf7gy3_4http6header4name10HeaderNameNtB8_4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit.i.i ], [ null, %bb.bg ], [ %i.gf, %bb.bf ], [ %i.gf, %.lr.ph.i.i.i.i.i.i.i ], [ %i.gf, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 2 uses
   %.sroa.0.0.i.i = phi i64 [ %i.ge, %_RINvXs3_NtNtCskKLDkoKarTP_4core4hash5implsRNtNtNtCs577yCKf7gy3_4http6header4name10HeaderNameNtB8_4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit.i.i ], [ %i.im, %bb.bg ], [ %i.gj, %bb.bf ], [ %.lcssa.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ], [ %i.ih, %.lr.ph.i.i.i.i.i.i.i ]
   %i.io = trunc i64 %.sroa.0.0.i.i to i16
   %i.ip = and i16 %i.io, 32767                    ; 6 uses
@@ -413,7 +413,7 @@ bb.bg:                                            ; preds = %bb.be
   %i.iv = zext i16 %i.iq to i64
   %i.iw = load i64, ptr %i.bc, align 8, !alias.scope !140, !noalias !143 ; 5 uses
   %i.ix = load ptr, ptr %i.bd, align 8, !alias.scope !140, !noalias !143, !nonnull !10
-  %not..i.i.i = xor i1 %4, true
+  %5 = icmp eq ptr %4, null                       ; 2 uses
   %i.iy = load i64, ptr %i.ax, align 8            ; 2 uses
   %i.iz = load ptr, ptr %i.aw, align 8            ; 2 uses
   %i.ja = ptrtoint ptr %i.iz to i64
@@ -617,14 +617,14 @@ bb.bz:                                            ; preds = %bb.by
   %i.lk = getelementptr inbounds nuw i8, ptr %i.lj, i64 64
   %i.ll = load ptr, ptr %i.lk, align 8, !noalias !143, !noundef !10
   %i.lm = icmp ne ptr %i.ll, null                 ; 2 uses
-  %i.ln = xor i1 %4, %i.lm
+  %i.ln = xor i1 %5, %i.lm
   br i1 %i.ln, label %bb.ca, label %_RNvXsh_NtNtCs577yCKf7gy3_4http6header4nameNtB5_10HeaderNameINtNtCskKLDkoKarTP_4core3cmp9PartialEqRBE_E2eq.exit.thread.i
 
 bb.ca:                                            ; preds = %bb.bz
   br i1 %i.lm, label %bb.cb, label %_RNvXsh_NtNtCs577yCKf7gy3_4http6header4nameNtB5_10HeaderNameINtNtCskKLDkoKarTP_4core3cmp9PartialEqRBE_E2eq.exit.i
 
 bb.cb:                                            ; preds = %bb.ca
-  call void @llvm.assume(i1 %not..i.i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ]
   %i.lo = getelementptr inbounds nuw i8, ptr %i.lj, i64 80
   %i.lp = load i64, ptr %i.lo, align 8, !noalias !143, !noundef !10
   %i.lq = icmp eq i64 %i.lp, %i.iy
@@ -642,7 +642,7 @@ bb.cc:                                            ; preds = %bb.by
           to label %bb.bh unwind label %.loopexit.split-lp143, !noalias !143
 
 _RNvXsh_NtNtCs577yCKf7gy3_4http6header4nameNtB5_10HeaderNameINtNtCskKLDkoKarTP_4core3cmp9PartialEqRBE_E2eq.exit.i: ; preds = %bb.ca
-  call void @llvm.assume(i1 %4)
+  call void @llvm.assume(i1 %5)
   %i.lu = getelementptr inbounds nuw i8, ptr %i.lj, i64 72
   %i.lv = load i8, ptr %i.lu, align 8, !range !172, !noalias !143, !noundef !10
   %i.lw = icmp eq i8 %i.lv, %.ph
@@ -1045,9 +1045,8 @@ bb.a:
   %.val = load ptr, ptr %1, align 8, !nonnull !10, !align !31, !noundef !10 ; 4 uses
   %i.a = load ptr, ptr %0, align 8, !noundef !10
   %i.b = icmp ne ptr %i.a, null                   ; 2 uses
-  %i.c = load ptr, ptr %.val, align 8, !noundef !10
-  %i.d = icmp eq ptr %i.c, null                   ; 3 uses
-  %not..i.i = xor i1 %i.d, true
+  %i.c = load ptr, ptr %.val, align 8, !noundef !10 ; 2 uses
+  %i.d = icmp eq ptr %i.c, null                   ; 2 uses
   %i.e = xor i1 %i.b, %i.d
   br i1 %i.e, label %bb.b, label %_RNvXsy_NtNtCs577yCKf7gy3_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit
 
@@ -1055,7 +1054,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @llvm.assume(i1 %not..i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = load i64, ptr %i.f, align 8, !noundef !10 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.val, i64 16
@@ -1091,9 +1090,8 @@ define hidden noundef zeroext i1 @_RNvXCsjqcU1oJFKXj_9hashbrownNtNtNtCsliWsDkOzY
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !noundef !10
   %i.b = icmp ne ptr %i.a, null                   ; 2 uses
-  %i.c = load ptr, ptr %1, align 8, !noundef !10
-  %i.d = icmp eq ptr %i.c, null                   ; 3 uses
-  %not..i.i = xor i1 %i.d, true
+  %i.c = load ptr, ptr %1, align 8, !noundef !10  ; 2 uses
+  %i.d = icmp eq ptr %i.c, null                   ; 2 uses
   %i.e = xor i1 %i.b, %i.d
   br i1 %i.e, label %bb.b, label %_RNvXsy_NtNtCsliWsDkOzYJy_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit
 
@@ -1101,7 +1099,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @llvm.assume(i1 %not..i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = load i64, ptr %i.f, align 8, !noundef !10 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -1139,9 +1137,8 @@ bb.a:
   %.val1 = load ptr, ptr %1, align 8, !nonnull !10, !align !31, !noundef !10 ; 4 uses
   %i.a = load ptr, ptr %.val, align 8, !noundef !10
   %i.b = icmp ne ptr %i.a, null                   ; 2 uses
-  %i.c = load ptr, ptr %.val1, align 8, !noundef !10
-  %i.d = icmp eq ptr %i.c, null                   ; 3 uses
-  %not..i.i.i = xor i1 %i.d, true
+  %i.c = load ptr, ptr %.val1, align 8, !noundef !10 ; 2 uses
+  %i.d = icmp eq ptr %i.c, null                   ; 2 uses
   %i.e = xor i1 %i.b, %i.d
   br i1 %i.e, label %bb.b, label %_RNvXs7_NtNtCskKLDkoKarTP_4core3cmp5implsRNtNtNtCs577yCKf7gy3_4http6header4name10HeaderNameNtB7_9PartialEq2eqCsl8OoimOLbh_6qdrant.exit
 
@@ -1149,7 +1146,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @llvm.assume(i1 %not..i.i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   %i.f = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.g = load i64, ptr %i.f, align 8, !noundef !10 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.val1, i64 16
