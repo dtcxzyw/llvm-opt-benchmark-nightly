@@ -1,8 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ropey-rs/original/ropey-993bb32e63343616.ropey.1d6c3238c2c56af2-cgu.2?download=true
 inline.NumInlined: 711
 inline.NumDeleted: 57
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 11
+loop-unroll.NumRuntimeUnrolled: 12
 loop-unroll.NumUnrolled: 12
 begin_hunk_0_@_RNvMNtCs2wCc12Mnjqg_5ropey5sliceNtB2_9RopeSlice19new_with_byte_range:bb.a
   %i.mv = icmp eq i8 %.mask1.i, -88
@@ -205,8 +204,8 @@ bb.bc:                                            ; preds = %bb.dt, %_RNvNtCsk17
   br i1 %i.pi, label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoEENtNtNtB8_6traits8iterator8Iterator4nextB1D_.exit.thread, label %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCs2wCc12Mnjqg_5ropey4tree9text_info8TextInfoEENtNtNtB8_6traits8iterator8Iterator4nextB1D_.exit
 
 ._crit_edge:                                      ; preds = %bb.ec, %bb.g
-  %.sroa.037.0.lcssa = phi i64 [ %2, %bb.g ], [ %i.atq, %bb.ec ] ; 24 uses
-  %.sroa.060.0.lcssa = phi i64 [ %3, %bb.g ], [ %i.atp, %bb.ec ] ; 24 uses
+  %.sroa.037.0.lcssa = phi i64 [ %2, %bb.g ], [ %i.atq, %bb.ec ] ; 25 uses
+  %.sroa.060.0.lcssa = phi i64 [ %3, %bb.g ], [ %i.atp, %bb.ec ] ; 25 uses
   %.lcssa1428 = phi ptr [ %i.o, %bb.g ], [ %i.ats, %bb.ec ]
   %i.pj = getelementptr inbounds nuw i8, ptr %.lcssa1428, i64 24 ; 7 uses
   %i.pk = call { ptr, i64 } @_RNvXs5_NtNtCs2wCc12Mnjqg_5ropey4tree9node_textNtB5_8NodeTextNtNtNtCskKLDkoKarTP_4core3ops5deref5Deref5deref(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1000) %i.pj) ; 2 uses
@@ -312,7 +311,7 @@ _RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit.thread1343: ; preds = %
 
 _RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit.thread: ; preds = %bb.bm, %bb.bk, %bb.bf, %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit222, %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit
   %i.qw = phi ptr [ %i.qi, %bb.bm ], [ %i.pt, %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit ], [ %i.qi, %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit222 ], [ %i.pt, %bb.bf ], [ %i.qi, %bb.bk ]
-  %i.qx = sub i64 %.sroa.060.0.lcssa, %.sroa.037.0.lcssa ; 21 uses
+  %i.qx = sub i64 %.sroa.060.0.lcssa, %.sroa.037.0.lcssa ; 19 uses
   %i.qy = getelementptr inbounds nuw i8, ptr %i.qw, i64 %.sroa.037.0.lcssa
   %i.qz = call { ptr, i64 } @_RNvXs5_NtNtCs2wCc12Mnjqg_5ropey4tree9node_textNtB5_8NodeTextNtNtNtCskKLDkoKarTP_4core3ops5deref5Deref5deref(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1000) %i.pj) ; 2 uses
   %i.ra = extractvalue { ptr, i64 } %i.qz, 0      ; 4 uses
@@ -350,7 +349,7 @@ _RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit231.thread1353: ; preds 
   unreachable
 
 _RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit231.thread: ; preds = %bb.bq, %bb.bo, %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit231
-  %i.rm = getelementptr inbounds nuw i8, ptr %i.ra, i64 %.sroa.037.0.lcssa ; 8 uses
+  %i.rm = getelementptr inbounds nuw i8, ptr %i.ra, i64 %.sroa.037.0.lcssa ; 6 uses
   %i.rn = icmp samesign ult i64 %i.qx, 16
   br i1 %i.rn, label %bb.bt, label %bb.bs
 
@@ -431,75 +430,49 @@ _RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5sl
 
 bb.bt:                                            ; preds = %_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range.exit231.thread
   %i.ss = icmp samesign eq i64 %.sroa.037.0.lcssa, %.sroa.060.0.lcssa
-  br i1 %i.ss, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit, label %.preheader1826
+  br i1 %i.ss, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit, label %vector.ph1904.a
 
-.preheader1826:                                   ; preds = %bb.bt
-  %min.iters.check1903 = icmp ult i64 %i.qx, 4
-  br i1 %min.iters.check1903, label %scalar.ph1902.preheader, label %vector.ph1904.a
+vector.ph1904.a:                                  ; preds = %bb.bt
+  %n.vec1905.a = and i64 %i.qx, 3                 ; 3 uses
+  %4 = sub i64 %.sroa.037.0.lcssa, %.sroa.060.0.lcssa
+  %5 = icmp ugt i64 %4, -4
+  br i1 %5, label %.preheader1826.epil.preheader, label %scalar.ph1902.preheader
 
-vector.ph1904.a:                                  ; preds = %.preheader1826
-  %n.vec1905.a = and i64 %i.qx, 12                ; 4 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.rm, i64 2
-  %wide.load1910 = load <2 x i8>, ptr %i.rm, align 1
-  %wide.load1911 = load <2 x i8>, ptr %4, align 1
-  %5 = icmp sgt <2 x i8> %wide.load1910, splat (i8 -65)
-  %6 = icmp sgt <2 x i8> %wide.load1911, splat (i8 -65)
-  %7 = zext <2 x i1> %5 to <2 x i64>              ; 2 uses
-  %8 = zext <2 x i1> %6 to <2 x i64>              ; 2 uses
-  %9 = icmp eq i64 %n.vec1905.a, 4
-  br i1 %9, label %middle.block1913, label %vector.body1906.1
-
-vector.body1906.1:                                ; preds = %vector.ph1904.a
-  %10 = getelementptr inbounds nuw i8, ptr %i.rm, i64 4
-  %11 = getelementptr inbounds nuw i8, ptr %i.rm, i64 6
-  %wide.load1910.1 = load <2 x i8>, ptr %10, align 1
-  %wide.load1911.1 = load <2 x i8>, ptr %11, align 1
-  %12 = icmp sgt <2 x i8> %wide.load1910.1, splat (i8 -65)
-  %13 = icmp sgt <2 x i8> %wide.load1911.1, splat (i8 -65)
-  %14 = zext <2 x i1> %12 to <2 x i64>
-  %15 = zext <2 x i1> %13 to <2 x i64>
-  %16 = add nuw nsw <2 x i64> %7, %14             ; 2 uses
-  %17 = add nuw nsw <2 x i64> %8, %15             ; 2 uses
-  %18 = icmp eq i64 %n.vec1905.a, 8
-  br i1 %18, label %middle.block1913, label %vector.body1906.2
-
-vector.body1906.2:                                ; preds = %vector.body1906.1
-  %19 = getelementptr inbounds nuw i8, ptr %i.rm, i64 8
-  %20 = getelementptr inbounds nuw i8, ptr %i.rm, i64 10
-  %wide.load1910.2 = load <2 x i8>, ptr %19, align 1
-  %wide.load1911.2 = load <2 x i8>, ptr %20, align 1
-  %21 = icmp sgt <2 x i8> %wide.load1910.2, splat (i8 -65)
-  %22 = icmp sgt <2 x i8> %wide.load1911.2, splat (i8 -65)
-  %23 = zext <2 x i1> %21 to <2 x i64>
-  %24 = zext <2 x i1> %22 to <2 x i64>
-  %25 = add nuw nsw <2 x i64> %16, %23
-  %26 = add nuw nsw <2 x i64> %17, %24
-  br label %middle.block1913
-
-middle.block1913:                                 ; preds = %vector.body1906.2, %vector.body1906.1, %vector.ph1904.a
-  %.lcssa2151 = phi <2 x i64> [ %7, %vector.ph1904.a ], [ %16, %vector.body1906.1 ], [ %25, %vector.body1906.2 ]
-  %.lcssa2150 = phi <2 x i64> [ %8, %vector.ph1904.a ], [ %17, %vector.body1906.1 ], [ %26, %vector.body1906.2 ]
-  %bin.rdx1914 = add nsw <2 x i64> %.lcssa2150, %.lcssa2151
-  %27 = call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx1914) ; 2 uses
-  %cmp.n1915 = icmp eq i64 %i.qx, %n.vec1905.a
-  br i1 %cmp.n1915, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit, label %scalar.ph1902.preheader
-
-scalar.ph1902.preheader:                          ; preds = %.preheader1826, %middle.block1913
-  %.sroa.04.0.i527.ph = phi i64 [ 0, %.preheader1826 ], [ %n.vec1905.a, %middle.block1913 ]
-  %.sroa.02.0.i528.ph = phi i64 [ 0, %.preheader1826 ], [ %27, %middle.block1913 ]
+scalar.ph1902.preheader:                          ; preds = %vector.ph1904.a
+  %unroll_iter = and i64 %i.qx, 12
   br label %scalar.ph1902
 
-scalar.ph1902:                                    ; preds = %scalar.ph1902.preheader, %scalar.ph1902
-  %.sroa.04.0.i527.a = phi i64 [ %i.sx, %scalar.ph1902 ], [ %.sroa.04.0.i527.ph, %scalar.ph1902.preheader ] ; 2 uses
-  %.sroa.02.0.i528 = phi i64 [ %i.sw, %scalar.ph1902 ], [ %.sroa.02.0.i528.ph, %scalar.ph1902.preheader ]
-  %i.st = getelementptr inbounds nuw i8, ptr %i.rm, i64 %.sroa.04.0.i527.a
+scalar.ph1902:                                    ; preds = %scalar.ph1902, %scalar.ph1902.preheader
+  %.sroa.04.0.i527 = phi i64 [ 0, %scalar.ph1902.preheader ], [ %i.sw, %scalar.ph1902 ] ; 5 uses
+  %.sroa.04.0.i527.a = phi i64 [ 0, %scalar.ph1902.preheader ], [ %21, %scalar.ph1902 ]
+  %.sroa.02.0.i528 = phi i64 [ 0, %scalar.ph1902.preheader ], [ %i.sx, %scalar.ph1902 ]
+  %6 = getelementptr inbounds nuw i8, ptr %i.rm, i64 %.sroa.04.0.i527
+  %.val.i529 = load i8, ptr %6, align 1, !noundef !8
+  %7 = icmp sgt i8 %.val.i529, -65
+  %8 = zext i1 %7 to i64
+  %9 = add i64 %.sroa.04.0.i527.a, %8
+  %10 = getelementptr inbounds nuw i8, ptr %i.rm, i64 %.sroa.04.0.i527
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 1
+  %.val.i529.1 = load i8, ptr %11, align 1, !noundef !8
+  %12 = icmp sgt i8 %.val.i529.1, -65
+  %13 = zext i1 %12 to i64
+  %14 = add i64 %9, %13
+  %15 = getelementptr inbounds nuw i8, ptr %i.rm, i64 %.sroa.04.0.i527
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 2
+  %.val.i529.2 = load i8, ptr %16, align 1, !noundef !8
+  %17 = icmp sgt i8 %.val.i529.2, -65
+  %18 = zext i1 %17 to i64
+  %19 = add i64 %14, %18
+  %20 = getelementptr inbounds nuw i8, ptr %i.rm, i64 %.sroa.04.0.i527
+  %i.st = getelementptr inbounds nuw i8, ptr %20, i64 3
   %.val.i529.a = load i8, ptr %i.st, align 1, !noundef !8
   %i.su = icmp sgt i8 %.val.i529.a, -65
   %i.sv = zext i1 %i.su to i64
-  %i.sw = add i64 %.sroa.02.0.i528, %i.sv         ; 2 uses
-  %i.sx = add nuw i64 %.sroa.04.0.i527.a, 1       ; 2 uses
-  %i.sy = icmp eq i64 %i.sx, %i.qx
-  br i1 %i.sy, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit, label %scalar.ph1902, !llvm.loop !176
+  %21 = add i64 %19, %i.sv                        ; 3 uses
+  %i.sw = add nuw nsw i64 %.sroa.04.0.i527, 4     ; 2 uses
+  %i.sx = add i64 %.sroa.02.0.i528, 4             ; 2 uses
+  %i.sy = icmp eq i64 %i.sx, %unroll_iter
+  br i1 %i.sy, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit.loopexit.unr-lcssa, label %scalar.ph1902
 
 ._crit_edge1460:                                  ; preds = %.lr.ph1459, %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterhENCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBb_9core_arch3x867___m128iEs_0ENtNtNtB9_6traits8iterator8Iterator5countCs2wCc12Mnjqg_5ropey.exit526
   %.sroa.01.0.i.lcssa = phi i64 [ %.sroa.0.0.i.i525, %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterhENCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBb_9core_arch3x867___m128iEs_0ENtNtNtB9_6traits8iterator8Iterator5countCs2wCc12Mnjqg_5ropey.exit526 ], [ %i.wc, %.lr.ph1459 ]
@@ -529,7 +502,7 @@ scalar.ph1902:                                    ; preds = %scalar.ph1902.prehe
   %i.tl = add <16 x i8> %i.tg, %i.tk              ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph1464.prol.loopexit, label %.lr.ph1464.prol, !llvm.loop !177
+  br i1 %prol.iter.cmp.not, label %.lr.ph1464.prol.loopexit, label %.lr.ph1464.prol, !llvm.loop !176
 
 .lr.ph1464.prol.loopexit:                         ; preds = %.lr.ph1464.prol, %.lr.ph1464.preheader
   %.lcssa2156.unr = phi <16 x i8> [ poison, %.lr.ph1464.preheader ], [ %i.tl, %.lr.ph1464.prol ]
@@ -586,8 +559,8 @@ vector.body1890:                                  ; preds = %vector.body1890, %v
   %vec.phi1893 = phi <2 x i64> [ zeroinitializer, %vector.ph1888 ], [ %i.us, %vector.body1890 ]
   %i.ul = getelementptr inbounds nuw i8, ptr %i.rw, i64 %index1891 ; 2 uses
   %i.um = getelementptr inbounds nuw i8, ptr %i.ul, i64 2
-  %wide.load1894 = load <2 x i8>, ptr %i.ul, align 1, !alias.scope !178
-  %wide.load1895 = load <2 x i8>, ptr %i.um, align 1, !alias.scope !178
+  %wide.load1894 = load <2 x i8>, ptr %i.ul, align 1, !alias.scope !177
+  %wide.load1895 = load <2 x i8>, ptr %i.um, align 1, !alias.scope !177
   %i.un = icmp slt <2 x i8> %wide.load1894, splat (i8 -64)
   %i.uo = icmp slt <2 x i8> %wide.load1895, splat (i8 -64)
   %i.up = zext <2 x i1> %i.un to <2 x i64>
@@ -596,7 +569,7 @@ vector.body1890:                                  ; preds = %vector.body1890, %v
   %i.us = add <2 x i64> %vec.phi1893, %i.uq       ; 2 uses
   %index.next1896 = add nuw i64 %index1891, 4     ; 2 uses
   %i.ut = icmp eq i64 %index.next1896, %n.vec1889
-  br i1 %i.ut, label %middle.block1897, label %vector.body1890, !llvm.loop !181
+  br i1 %i.ut, label %middle.block1897, label %vector.body1890, !llvm.loop !180
 
 middle.block1897:                                 ; preds = %vector.body1890
   %bin.rdx1898 = add <2 x i64> %i.us, %i.ur
@@ -613,13 +586,13 @@ middle.block1897:                                 ; preds = %vector.body1890
   %.sroa.04.0.i.i533 = phi i64 [ %i.uz, %.preheader.i532 ], [ %.sroa.04.0.i.i533.ph, %.preheader.i532.preheader2152 ] ; 2 uses
   %.sroa.02.0.i.i534 = phi i64 [ %i.uy, %.preheader.i532 ], [ %.sroa.02.0.i.i534.ph, %.preheader.i532.preheader2152 ]
   %i.uv = getelementptr inbounds nuw i8, ptr %i.rw, i64 %.sroa.04.0.i.i533
-  %.val.i.i535 = load i8, ptr %i.uv, align 1, !alias.scope !178, !noundef !8
+  %.val.i.i535 = load i8, ptr %i.uv, align 1, !alias.scope !177, !noundef !8
   %i.uw = icmp slt i8 %.val.i.i535, -64
   %i.ux = zext i1 %i.uw to i64
   %i.uy = add i64 %.sroa.02.0.i.i534, %i.ux       ; 2 uses
   %i.uz = add nuw i64 %.sroa.04.0.i.i533, 1       ; 2 uses
   %i.va = icmp eq i64 %i.uz, %i.ry
-  br i1 %i.va, label %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterhENCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBb_9core_arch3x867___m128iEs0_0ENtNtNtB9_6traits8iterator8Iterator5countCs2wCc12Mnjqg_5ropey.exit537, label %.preheader.i532, !llvm.loop !182
+  br i1 %i.va, label %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterhENCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBb_9core_arch3x867___m128iEs0_0ENtNtNtB9_6traits8iterator8Iterator5countCs2wCc12Mnjqg_5ropey.exit537, label %.preheader.i532, !llvm.loop !181
 
 _RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterhENCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBb_9core_arch3x867___m128iEs0_0ENtNtNtB9_6traits8iterator8Iterator5countCs2wCc12Mnjqg_5ropey.exit537: ; preds = %.preheader.i532, %middle.block1897, %._crit_edge1465
   %.sroa.0.0.i.i536 = phi i64 [ 0, %._crit_edge1465 ], [ %i.uu, %middle.block1897 ], [ %i.uy, %.preheader.i532 ] ; 2 uses
@@ -663,8 +636,33 @@ _RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5sl
   %.not.i = icmp eq i64 %i.vh, 0
   br i1 %.not.i, label %._crit_edge1460, label %.lr.ph1459
 
-_RINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit: ; preds = %scalar.ph1902, %middle.block1913, %bb.bt, %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterhENCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBb_9core_arch3x867___m128iEs0_0ENtNtNtB9_6traits8iterator8Iterator5countCs2wCc12Mnjqg_5ropey.exit537
-  %.sroa.0.0.i = phi i64 [ %i.vf, %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterhENCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBb_9core_arch3x867___m128iEs0_0ENtNtNtB9_6traits8iterator8Iterator5countCs2wCc12Mnjqg_5ropey.exit537 ], [ 0, %bb.bt ], [ %27, %middle.block1913 ], [ %i.sw, %scalar.ph1902 ]
+_RINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit.loopexit.unr-lcssa: ; preds = %scalar.ph1902
+  %lcmp.mod2166.not = icmp eq i64 %n.vec1905.a, 0
+  br i1 %lcmp.mod2166.not, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit, label %.preheader1826.epil.preheader
+
+.preheader1826.epil.preheader:                    ; preds = %_RINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit.loopexit.unr-lcssa, %vector.ph1904.a
+  %.sroa.04.0.i527.epil.init = phi i64 [ 0, %vector.ph1904.a ], [ %i.sw, %_RINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit.loopexit.unr-lcssa ]
+  %.sroa.02.0.i528.epil.init = phi i64 [ 0, %vector.ph1904.a ], [ %21, %_RINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit.loopexit.unr-lcssa ]
+  %lcmp.mod2168 = icmp ne i64 %n.vec1905.a, 0
+  call void @llvm.assume(i1 %lcmp.mod2168)
+  br label %.preheader1826.epil
+
+.preheader1826.epil:                              ; preds = %.preheader1826.epil, %.preheader1826.epil.preheader
+  %.sroa.04.0.i527.epil = phi i64 [ %26, %.preheader1826.epil ], [ %.sroa.04.0.i527.epil.init, %.preheader1826.epil.preheader ] ; 2 uses
+  %.sroa.02.0.i528.epil = phi i64 [ %25, %.preheader1826.epil ], [ %.sroa.02.0.i528.epil.init, %.preheader1826.epil.preheader ]
+  %epil.iter = phi i64 [ %epil.iter.next, %.preheader1826.epil ], [ 0, %.preheader1826.epil.preheader ]
+  %22 = getelementptr inbounds nuw i8, ptr %i.rm, i64 %.sroa.04.0.i527.epil
+  %.val.i529.epil = load i8, ptr %22, align 1, !noundef !8
+  %23 = icmp sgt i8 %.val.i529.epil, -65
+  %24 = zext i1 %23 to i64
+  %25 = add i64 %.sroa.02.0.i528.epil, %24        ; 2 uses
+  %26 = add nuw nsw i64 %.sroa.04.0.i527.epil, 1
+  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
+  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %n.vec1905.a
+  br i1 %epil.iter.cmp.not, label %_RINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit, label %.preheader1826.epil, !llvm.loop !182
+
+_RINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit: ; preds = %_RINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit.loopexit.unr-lcssa, %.preheader1826.epil, %bb.bt, %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterhENCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBb_9core_arch3x867___m128iEs0_0ENtNtNtB9_6traits8iterator8Iterator5countCs2wCc12Mnjqg_5ropey.exit537
+  %.sroa.0.0.i = phi i64 [ %i.vf, %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterhENCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBb_9core_arch3x867___m128iEs0_0ENtNtNtB9_6traits8iterator8Iterator5countCs2wCc12Mnjqg_5ropey.exit537 ], [ 0, %bb.bt ], [ %21, %_RINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtCskKLDkoKarTP_4core9core_arch3x867___m128iECs2wCc12Mnjqg_5ropey.exit.loopexit.unr-lcssa ], [ %25, %.preheader1826.epil ]
   %i.wd = call { ptr, i64 } @_RNvXs5_NtNtCs2wCc12Mnjqg_5ropey4tree9node_textNtB5_8NodeTextNtNtNtCskKLDkoKarTP_4core3ops5deref5Deref5deref(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(1000) %i.pj) ; 2 uses
   %i.we = extractvalue { ptr, i64 } %i.wd, 0      ; 4 uses
   %i.wf = extractvalue { ptr, i64 } %i.wd, 1      ; 4 uses
@@ -1067,13 +1065,13 @@ attributes #17 = { cold }
 !173 = distinct !{!173, !"_RNCINvNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtBa_6FilterppENtNtNtBe_6traits8iterator8Iterator5count8to_usizeRhNCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBg_9core_arch3x867___m128iEs_0E0Cs2wCc12Mnjqg_5ropey"}
 !174 = distinct !{!174, !24, !25}
 !175 = distinct !{!175, !25, !24}
-!176 = distinct !{!176, !25, !24}
-!177 = distinct !{!177, !34}
-!178 = !{!179}
-!179 = distinct !{!179, !180, !"_RNCINvNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtBa_6FilterppENtNtNtBe_6traits8iterator8Iterator5count8to_usizeRhNCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBg_9core_arch3x867___m128iEs0_0E0Cs2wCc12Mnjqg_5ropey: argument 0"}
-!180 = distinct !{!180, !"_RNCINvNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtBa_6FilterppENtNtNtBe_6traits8iterator8Iterator5count8to_usizeRhNCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBg_9core_arch3x867___m128iEs0_0E0Cs2wCc12Mnjqg_5ropey"}
-!181 = distinct !{!181, !24, !25}
-!182 = distinct !{!182, !25, !24}
+!176 = distinct !{!176, !34}
+!177 = !{!178}
+!178 = distinct !{!178, !179, !"_RNCINvNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtBa_6FilterppENtNtNtBe_6traits8iterator8Iterator5count8to_usizeRhNCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBg_9core_arch3x867___m128iEs0_0E0Cs2wCc12Mnjqg_5ropey: argument 0"}
+!179 = distinct !{!179, !"_RNCINvNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtBa_6FilterppENtNtNtBe_6traits8iterator8Iterator5count8to_usizeRhNCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBg_9core_arch3x867___m128iEs0_0E0Cs2wCc12Mnjqg_5ropey"}
+!180 = distinct !{!180, !24, !25}
+!181 = distinct !{!181, !25, !24}
+!182 = distinct !{!182, !34}
 !183 = !{!184}
 !184 = distinct !{!184, !185, !"_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range: argument 0"}
 !185 = distinct !{!185, !"_RNvNtNtCskKLDkoKarTP_4core3str6traits11check_range"}

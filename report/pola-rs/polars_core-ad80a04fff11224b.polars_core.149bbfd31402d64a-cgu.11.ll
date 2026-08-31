@@ -205,7 +205,7 @@ bb.aj:                                            ; preds = %bb.z, %bb.ai
   br i1 %i.de, label %.loopexit93, label %bb.ak, !dbg !199871
 
 bb.ak:                                            ; preds = %.thread.us.i
-  %i.df = add nuw i64 %i.db, 1, !dbg !199872      ; 2 uses
+  %i.df = add nuw nsw i64 %i.db, 1, !dbg !199872  ; 2 uses
   %exitcond45.not.i = icmp eq i64 %i.df, %i.bv, !dbg !199832
   br i1 %exitcond45.not.i, label %.loopexit94, label %.thread.us.i, !dbg !199832
 
@@ -231,7 +231,7 @@ bb.ak:                                            ; preds = %.thread.us.i
   br i1 %i.dr, label %.loopexit93, label %bb.al, !dbg !199871
 
 bb.al:                                            ; preds = %.else.i
-  %i.ds = add nuw i64 %i.dm, 1, !dbg !199872      ; 2 uses
+  %i.ds = add nuw nsw i64 %i.dm, 1, !dbg !199872  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ds, %i.bv, !dbg !199832
   br i1 %exitcond.not.i, label %.loopexit94, label %.else.i, !dbg !199832
 
@@ -268,7 +268,7 @@ bb.ao:                                            ; preds = %.loopexit93
   %i.dw = getelementptr inbounds nuw i8, ptr %i.j, i64 32, !dbg !199929 ; 5 uses
   %i.dx = load i64, ptr %i.dw, align 8, !dbg !199929, !noalias !199565, !noundef !14 ; 2 uses
   %i.dy = and i64 %i.dx, 63, !dbg !199929         ; 2 uses
-  %i.dz = add i64 %i.dy, %.sroa.3.0.i, !dbg !199936
+  %i.dz = add nuw i64 %i.dy, %.sroa.3.0.i, !dbg !199936
   %i.ea = icmp ult i64 %i.dz, 64, !dbg !199936
   br i1 %i.ea, label %bb.aq, label %bb.ap, !dbg !199936, !prof !861
 
@@ -281,8 +281,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.as, !dbg !199938
 
 bb.aq:                                            ; preds = %bb.ao
-  %3 = and i64 %.sroa.3.0.i, 63, !dbg !199950
-  %notmask.i = shl nsw i64 -1, %3, !dbg !199950
+  %notmask.i = shl nsw i64 -1, %.sroa.3.0.i, !dbg !199950
   %i.eb = xor i64 %notmask.i, -1, !dbg !199950
   %i.ec = shl i64 %i.eb, %i.dy, !dbg !199951
   %i.ed = getelementptr inbounds nuw i8, ptr %i.j, i64 24, !dbg !199953 ; 2 uses
@@ -311,7 +310,7 @@ bb.ar:                                            ; preds = %bb.bs
 
 bb.as:                                            ; preds = %._crit_edge, %bb.aq
   %i.eh = phi i64 [ %.pre, %._crit_edge ], [ %i.eg, %bb.aq ], !dbg !199939
-  %i.ei = sub i64 %i.bv, %.sroa.3.0.i, !dbg !199957 ; 3 uses
+  %i.ei = sub nsw i64 %i.bv, %.sroa.3.0.i, !dbg !199957 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !199945), !dbg !199958
   %i.ej = add i64 %i.eh, %i.ei, !dbg !199939
   %i.ek = getelementptr inbounds nuw i8, ptr %i.j, i64 40, !dbg !199959
@@ -714,7 +713,7 @@ bb.aj:                                            ; preds = %bb.z, %bb.ai
   br i1 %i.de, label %.loopexit93, label %bb.ak, !dbg !205557
 
 bb.ak:                                            ; preds = %.thread.us.i
-  %i.df = add nuw i64 %i.db, 1, !dbg !205558      ; 2 uses
+  %i.df = add nuw nsw i64 %i.db, 1, !dbg !205558  ; 2 uses
   %exitcond45.not.i = icmp eq i64 %i.df, %i.bv, !dbg !205528
   br i1 %exitcond45.not.i, label %.loopexit94, label %.thread.us.i, !dbg !205528
 
@@ -740,7 +739,7 @@ bb.ak:                                            ; preds = %.thread.us.i
   br i1 %i.dr, label %.loopexit93, label %bb.al, !dbg !205557
 
 bb.al:                                            ; preds = %.else.i
-  %i.ds = add nuw i64 %i.dm, 1, !dbg !205558      ; 2 uses
+  %i.ds = add nuw nsw i64 %i.dm, 1, !dbg !205558  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ds, %i.bv, !dbg !205528
   br i1 %exitcond.not.i, label %.loopexit94, label %.else.i, !dbg !205528
 
@@ -777,7 +776,7 @@ bb.ao:                                            ; preds = %.loopexit93
   %i.dw = getelementptr inbounds nuw i8, ptr %i.j, i64 32, !dbg !205605 ; 5 uses
   %i.dx = load i64, ptr %i.dw, align 8, !dbg !205605, !noalias !205288, !noundef !14 ; 2 uses
   %i.dy = and i64 %i.dx, 63, !dbg !205605         ; 2 uses
-  %i.dz = add i64 %i.dy, %.sroa.3.0.i, !dbg !205609
+  %i.dz = add nuw i64 %i.dy, %.sroa.3.0.i, !dbg !205609
   %i.ea = icmp ult i64 %i.dz, 64, !dbg !205609
   br i1 %i.ea, label %bb.aq, label %bb.ap, !dbg !205609, !prof !861
 
@@ -790,8 +789,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.as, !dbg !205611
 
 bb.aq:                                            ; preds = %bb.ao
-  %3 = and i64 %.sroa.3.0.i, 63, !dbg !205623
-  %notmask.i = shl nsw i64 -1, %3, !dbg !205623
+  %notmask.i = shl nsw i64 -1, %.sroa.3.0.i, !dbg !205623
   %i.eb = xor i64 %notmask.i, -1, !dbg !205623
   %i.ec = shl i64 %i.eb, %i.dy, !dbg !205624
   %i.ed = getelementptr inbounds nuw i8, ptr %i.j, i64 24, !dbg !205626 ; 2 uses
@@ -820,7 +818,7 @@ bb.ar:                                            ; preds = %bb.bs
 
 bb.as:                                            ; preds = %._crit_edge, %bb.aq
   %i.eh = phi i64 [ %.pre, %._crit_edge ], [ %i.eg, %bb.aq ], !dbg !205612
-  %i.ei = sub i64 %i.bv, %.sroa.3.0.i, !dbg !205630 ; 3 uses
+  %i.ei = sub nsw i64 %i.bv, %.sroa.3.0.i, !dbg !205630 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !205618), !dbg !205631
   %i.ej = add i64 %i.eh, %i.ei, !dbg !205612
   %i.ek = getelementptr inbounds nuw i8, ptr %i.j, i64 40, !dbg !205632
@@ -1223,7 +1221,7 @@ bb.aj:                                            ; preds = %bb.z, %bb.ai
   br i1 %i.de, label %.loopexit93, label %bb.ak, !dbg !206427
 
 bb.ak:                                            ; preds = %.thread.us.i
-  %i.df = add nuw i64 %i.db, 1, !dbg !206428      ; 2 uses
+  %i.df = add nuw nsw i64 %i.db, 1, !dbg !206428  ; 2 uses
   %exitcond45.not.i = icmp eq i64 %i.df, %i.bv, !dbg !206398
   br i1 %exitcond45.not.i, label %.loopexit94, label %.thread.us.i, !dbg !206398
 
@@ -1249,7 +1247,7 @@ bb.ak:                                            ; preds = %.thread.us.i
   br i1 %i.dr, label %.loopexit93, label %bb.al, !dbg !206427
 
 bb.al:                                            ; preds = %.else.i
-  %i.ds = add nuw i64 %i.dm, 1, !dbg !206428      ; 2 uses
+  %i.ds = add nuw nsw i64 %i.dm, 1, !dbg !206428  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ds, %i.bv, !dbg !206398
   br i1 %exitcond.not.i, label %.loopexit94, label %.else.i, !dbg !206398
 
@@ -1286,7 +1284,7 @@ bb.ao:                                            ; preds = %.loopexit93
   %i.dw = getelementptr inbounds nuw i8, ptr %i.j, i64 32, !dbg !206475 ; 5 uses
   %i.dx = load i64, ptr %i.dw, align 8, !dbg !206475, !noalias !206158, !noundef !14 ; 2 uses
   %i.dy = and i64 %i.dx, 63, !dbg !206475         ; 2 uses
-  %i.dz = add i64 %i.dy, %.sroa.3.0.i, !dbg !206479
+  %i.dz = add nuw i64 %i.dy, %.sroa.3.0.i, !dbg !206479
   %i.ea = icmp ult i64 %i.dz, 64, !dbg !206479
   br i1 %i.ea, label %bb.aq, label %bb.ap, !dbg !206479, !prof !861
 
@@ -1299,8 +1297,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.as, !dbg !206481
 
 bb.aq:                                            ; preds = %bb.ao
-  %3 = and i64 %.sroa.3.0.i, 63, !dbg !206493
-  %notmask.i = shl nsw i64 -1, %3, !dbg !206493
+  %notmask.i = shl nsw i64 -1, %.sroa.3.0.i, !dbg !206493
   %i.eb = xor i64 %notmask.i, -1, !dbg !206493
   %i.ec = shl i64 %i.eb, %i.dy, !dbg !206494
   %i.ed = getelementptr inbounds nuw i8, ptr %i.j, i64 24, !dbg !206496 ; 2 uses
@@ -1329,7 +1326,7 @@ bb.ar:                                            ; preds = %bb.bs
 
 bb.as:                                            ; preds = %._crit_edge, %bb.aq
   %i.eh = phi i64 [ %.pre, %._crit_edge ], [ %i.eg, %bb.aq ], !dbg !206482
-  %i.ei = sub i64 %i.bv, %.sroa.3.0.i, !dbg !206500 ; 3 uses
+  %i.ei = sub nsw i64 %i.bv, %.sroa.3.0.i, !dbg !206500 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !206488), !dbg !206501
   %i.ej = add i64 %i.eh, %i.ei, !dbg !206482
   %i.ek = getelementptr inbounds nuw i8, ptr %i.j, i64 40, !dbg !206502
@@ -1732,7 +1729,7 @@ bb.aj:                                            ; preds = %bb.z, %bb.ai
   br i1 %i.ee, label %.loopexit99, label %bb.ak, !dbg !209106
 
 bb.ak:                                            ; preds = %.thread.us.i
-  %i.ef = add nuw i64 %i.eb, 1, !dbg !209107      ; 2 uses
+  %i.ef = add nuw nsw i64 %i.eb, 1, !dbg !209107  ; 2 uses
   %exitcond45.not.i = icmp eq i64 %i.ef, %i.cv, !dbg !209077
   br i1 %exitcond45.not.i, label %.loopexit100, label %.thread.us.i, !dbg !209077
 
@@ -1758,7 +1755,7 @@ bb.ak:                                            ; preds = %.thread.us.i
   br i1 %i.er, label %.loopexit99, label %bb.al, !dbg !209106
 
 bb.al:                                            ; preds = %.else.i
-  %i.es = add nuw i64 %i.em, 1, !dbg !209107      ; 2 uses
+  %i.es = add nuw nsw i64 %i.em, 1, !dbg !209107  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.es, %i.cv, !dbg !209077
   br i1 %exitcond.not.i, label %.loopexit100, label %.else.i, !dbg !209077
 
@@ -1795,7 +1792,7 @@ bb.ao:                                            ; preds = %.loopexit99
   %i.ew = getelementptr inbounds nuw i8, ptr %i.j, i64 32, !dbg !209154 ; 5 uses
   %i.ex = load i64, ptr %i.ew, align 8, !dbg !209154, !noalias !208809, !noundef !14 ; 2 uses
   %i.ey = and i64 %i.ex, 63, !dbg !209154         ; 2 uses
-  %i.ez = add i64 %i.ey, %.sroa.3.0.i, !dbg !209158
+  %i.ez = add nuw i64 %i.ey, %.sroa.3.0.i, !dbg !209158
   %i.fa = icmp ult i64 %i.ez, 64, !dbg !209158
   br i1 %i.fa, label %bb.aq, label %bb.ap, !dbg !209158, !prof !861
 
@@ -1808,8 +1805,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.as, !dbg !209160
 
 bb.aq:                                            ; preds = %bb.ao
-  %3 = and i64 %.sroa.3.0.i, 63, !dbg !209172
-  %notmask.i = shl nsw i64 -1, %3, !dbg !209172
+  %notmask.i = shl nsw i64 -1, %.sroa.3.0.i, !dbg !209172
   %i.fb = xor i64 %notmask.i, -1, !dbg !209172
   %i.fc = shl i64 %i.fb, %i.ey, !dbg !209173
   %i.fd = getelementptr inbounds nuw i8, ptr %i.j, i64 24, !dbg !209175 ; 2 uses
@@ -1838,7 +1834,7 @@ bb.ar:                                            ; preds = %bb.bs
 
 bb.as:                                            ; preds = %._crit_edge, %bb.aq
   %i.fh = phi i64 [ %.pre, %._crit_edge ], [ %i.fg, %bb.aq ], !dbg !209161
-  %i.fi = sub i64 %i.cv, %.sroa.3.0.i, !dbg !209179 ; 3 uses
+  %i.fi = sub nsw i64 %i.cv, %.sroa.3.0.i, !dbg !209179 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !209167), !dbg !209180
   %i.fj = add i64 %i.fh, %i.fi, !dbg !209161
   %i.fk = getelementptr inbounds nuw i8, ptr %i.j, i64 40, !dbg !209181
@@ -2241,7 +2237,7 @@ bb.aj:                                            ; preds = %bb.z, %bb.ai
   br i1 %i.ee, label %.loopexit99, label %bb.ak, !dbg !211354
 
 bb.ak:                                            ; preds = %.thread.us.i
-  %i.ef = add nuw i64 %i.eb, 1, !dbg !211355      ; 2 uses
+  %i.ef = add nuw nsw i64 %i.eb, 1, !dbg !211355  ; 2 uses
   %exitcond45.not.i = icmp eq i64 %i.ef, %i.cv, !dbg !211325
   br i1 %exitcond45.not.i, label %.loopexit100, label %.thread.us.i, !dbg !211325
 
@@ -2267,7 +2263,7 @@ bb.ak:                                            ; preds = %.thread.us.i
   br i1 %i.er, label %.loopexit99, label %bb.al, !dbg !211354
 
 bb.al:                                            ; preds = %.else.i
-  %i.es = add nuw i64 %i.em, 1, !dbg !211355      ; 2 uses
+  %i.es = add nuw nsw i64 %i.em, 1, !dbg !211355  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.es, %i.cv, !dbg !211325
   br i1 %exitcond.not.i, label %.loopexit100, label %.else.i, !dbg !211325
 
@@ -2304,7 +2300,7 @@ bb.ao:                                            ; preds = %.loopexit99
   %i.ew = getelementptr inbounds nuw i8, ptr %i.j, i64 32, !dbg !211402 ; 5 uses
   %i.ex = load i64, ptr %i.ew, align 8, !dbg !211402, !noalias !211057, !noundef !14 ; 2 uses
   %i.ey = and i64 %i.ex, 63, !dbg !211402         ; 2 uses
-  %i.ez = add i64 %i.ey, %.sroa.3.0.i, !dbg !211406
+  %i.ez = add nuw i64 %i.ey, %.sroa.3.0.i, !dbg !211406
   %i.fa = icmp ult i64 %i.ez, 64, !dbg !211406
   br i1 %i.fa, label %bb.aq, label %bb.ap, !dbg !211406, !prof !861
 
@@ -2317,8 +2313,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.as, !dbg !211408
 
 bb.aq:                                            ; preds = %bb.ao
-  %3 = and i64 %.sroa.3.0.i, 63, !dbg !211420
-  %notmask.i = shl nsw i64 -1, %3, !dbg !211420
+  %notmask.i = shl nsw i64 -1, %.sroa.3.0.i, !dbg !211420
   %i.fb = xor i64 %notmask.i, -1, !dbg !211420
   %i.fc = shl i64 %i.fb, %i.ey, !dbg !211421
   %i.fd = getelementptr inbounds nuw i8, ptr %i.j, i64 24, !dbg !211423 ; 2 uses
@@ -2347,7 +2342,7 @@ bb.ar:                                            ; preds = %bb.bs
 
 bb.as:                                            ; preds = %._crit_edge, %bb.aq
   %i.fh = phi i64 [ %.pre, %._crit_edge ], [ %i.fg, %bb.aq ], !dbg !211409
-  %i.fi = sub i64 %i.cv, %.sroa.3.0.i, !dbg !211427 ; 3 uses
+  %i.fi = sub nsw i64 %i.cv, %.sroa.3.0.i, !dbg !211427 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !211415), !dbg !211428
   %i.fj = add i64 %i.fh, %i.fi, !dbg !211409
   %i.fk = getelementptr inbounds nuw i8, ptr %i.j, i64 40, !dbg !211429
@@ -2750,7 +2745,7 @@ bb.aj:                                            ; preds = %bb.z, %bb.ai
   br i1 %i.ee, label %.loopexit99, label %bb.ak, !dbg !212139
 
 bb.ak:                                            ; preds = %.thread.us.i
-  %i.ef = add nuw i64 %i.eb, 1, !dbg !212140      ; 2 uses
+  %i.ef = add nuw nsw i64 %i.eb, 1, !dbg !212140  ; 2 uses
   %exitcond45.not.i = icmp eq i64 %i.ef, %i.cv, !dbg !212110
   br i1 %exitcond45.not.i, label %.loopexit100, label %.thread.us.i, !dbg !212110
 
@@ -2776,7 +2771,7 @@ bb.ak:                                            ; preds = %.thread.us.i
   br i1 %i.er, label %.loopexit99, label %bb.al, !dbg !212139
 
 bb.al:                                            ; preds = %.else.i
-  %i.es = add nuw i64 %i.em, 1, !dbg !212140      ; 2 uses
+  %i.es = add nuw nsw i64 %i.em, 1, !dbg !212140  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.es, %i.cv, !dbg !212110
   br i1 %exitcond.not.i, label %.loopexit100, label %.else.i, !dbg !212110
 
@@ -2813,7 +2808,7 @@ bb.ao:                                            ; preds = %.loopexit99
   %i.ew = getelementptr inbounds nuw i8, ptr %i.j, i64 32, !dbg !212187 ; 5 uses
   %i.ex = load i64, ptr %i.ew, align 8, !dbg !212187, !noalias !211842, !noundef !14 ; 2 uses
   %i.ey = and i64 %i.ex, 63, !dbg !212187         ; 2 uses
-  %i.ez = add i64 %i.ey, %.sroa.3.0.i, !dbg !212191
+  %i.ez = add nuw i64 %i.ey, %.sroa.3.0.i, !dbg !212191
   %i.fa = icmp ult i64 %i.ez, 64, !dbg !212191
   br i1 %i.fa, label %bb.aq, label %bb.ap, !dbg !212191, !prof !861
 
@@ -2826,8 +2821,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.as, !dbg !212193
 
 bb.aq:                                            ; preds = %bb.ao
-  %3 = and i64 %.sroa.3.0.i, 63, !dbg !212205
-  %notmask.i = shl nsw i64 -1, %3, !dbg !212205
+  %notmask.i = shl nsw i64 -1, %.sroa.3.0.i, !dbg !212205
   %i.fb = xor i64 %notmask.i, -1, !dbg !212205
   %i.fc = shl i64 %i.fb, %i.ey, !dbg !212206
   %i.fd = getelementptr inbounds nuw i8, ptr %i.j, i64 24, !dbg !212208 ; 2 uses
@@ -2856,7 +2850,7 @@ bb.ar:                                            ; preds = %bb.bs
 
 bb.as:                                            ; preds = %._crit_edge, %bb.aq
   %i.fh = phi i64 [ %.pre, %._crit_edge ], [ %i.fg, %bb.aq ], !dbg !212194
-  %i.fi = sub i64 %i.cv, %.sroa.3.0.i, !dbg !212212 ; 3 uses
+  %i.fi = sub nsw i64 %i.cv, %.sroa.3.0.i, !dbg !212212 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !212200), !dbg !212213
   %i.fj = add i64 %i.fh, %i.fi, !dbg !212194
   %i.fk = getelementptr inbounds nuw i8, ptr %i.j, i64 40, !dbg !212214
@@ -3259,7 +3253,7 @@ bb.aj:                                            ; preds = %bb.z, %bb.ai
   br i1 %i.ee, label %.loopexit99, label %bb.ak, !dbg !212924
 
 bb.ak:                                            ; preds = %.thread.us.i
-  %i.ef = add nuw i64 %i.eb, 1, !dbg !212925      ; 2 uses
+  %i.ef = add nuw nsw i64 %i.eb, 1, !dbg !212925  ; 2 uses
   %exitcond45.not.i = icmp eq i64 %i.ef, %i.cv, !dbg !212895
   br i1 %exitcond45.not.i, label %.loopexit100, label %.thread.us.i, !dbg !212895
 
@@ -3285,7 +3279,7 @@ bb.ak:                                            ; preds = %.thread.us.i
   br i1 %i.er, label %.loopexit99, label %bb.al, !dbg !212924
 
 bb.al:                                            ; preds = %.else.i
-  %i.es = add nuw i64 %i.em, 1, !dbg !212925      ; 2 uses
+  %i.es = add nuw nsw i64 %i.em, 1, !dbg !212925  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.es, %i.cv, !dbg !212895
   br i1 %exitcond.not.i, label %.loopexit100, label %.else.i, !dbg !212895
 
@@ -3322,7 +3316,7 @@ bb.ao:                                            ; preds = %.loopexit99
   %i.ew = getelementptr inbounds nuw i8, ptr %i.j, i64 32, !dbg !212972 ; 5 uses
   %i.ex = load i64, ptr %i.ew, align 8, !dbg !212972, !noalias !212627, !noundef !14 ; 2 uses
   %i.ey = and i64 %i.ex, 63, !dbg !212972         ; 2 uses
-  %i.ez = add i64 %i.ey, %.sroa.3.0.i, !dbg !212976
+  %i.ez = add nuw i64 %i.ey, %.sroa.3.0.i, !dbg !212976
   %i.fa = icmp ult i64 %i.ez, 64, !dbg !212976
   br i1 %i.fa, label %bb.aq, label %bb.ap, !dbg !212976, !prof !861
 
@@ -3335,8 +3329,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.as, !dbg !212978
 
 bb.aq:                                            ; preds = %bb.ao
-  %3 = and i64 %.sroa.3.0.i, 63, !dbg !212990
-  %notmask.i = shl nsw i64 -1, %3, !dbg !212990
+  %notmask.i = shl nsw i64 -1, %.sroa.3.0.i, !dbg !212990
   %i.fb = xor i64 %notmask.i, -1, !dbg !212990
   %i.fc = shl i64 %i.fb, %i.ey, !dbg !212991
   %i.fd = getelementptr inbounds nuw i8, ptr %i.j, i64 24, !dbg !212993 ; 2 uses
@@ -3365,7 +3358,7 @@ bb.ar:                                            ; preds = %bb.bs
 
 bb.as:                                            ; preds = %._crit_edge, %bb.aq
   %i.fh = phi i64 [ %.pre, %._crit_edge ], [ %i.fg, %bb.aq ], !dbg !212979
-  %i.fi = sub i64 %i.cv, %.sroa.3.0.i, !dbg !212997 ; 3 uses
+  %i.fi = sub nsw i64 %i.cv, %.sroa.3.0.i, !dbg !212997 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !212985), !dbg !212998
   %i.fj = add i64 %i.fh, %i.fi, !dbg !212979
   %i.fk = getelementptr inbounds nuw i8, ptr %i.j, i64 40, !dbg !212999
@@ -3768,7 +3761,7 @@ bb.aj:                                            ; preds = %bb.z, %bb.ai
   br i1 %i.de, label %.loopexit93, label %bb.ak, !dbg !214533
 
 bb.ak:                                            ; preds = %.thread.us.i
-  %i.df = add nuw i64 %i.db, 1, !dbg !214534      ; 2 uses
+  %i.df = add nuw nsw i64 %i.db, 1, !dbg !214534  ; 2 uses
   %exitcond45.not.i = icmp eq i64 %i.df, %i.bv, !dbg !214504
   br i1 %exitcond45.not.i, label %.loopexit94, label %.thread.us.i, !dbg !214504
 
@@ -3794,7 +3787,7 @@ bb.ak:                                            ; preds = %.thread.us.i
   br i1 %i.dr, label %.loopexit93, label %bb.al, !dbg !214533
 
 bb.al:                                            ; preds = %.else.i
-  %i.ds = add nuw i64 %i.dm, 1, !dbg !214534      ; 2 uses
+  %i.ds = add nuw nsw i64 %i.dm, 1, !dbg !214534  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ds, %i.bv, !dbg !214504
   br i1 %exitcond.not.i, label %.loopexit94, label %.else.i, !dbg !214504
 
@@ -3831,7 +3824,7 @@ bb.ao:                                            ; preds = %.loopexit93
   %i.dw = getelementptr inbounds nuw i8, ptr %i.j, i64 32, !dbg !214581 ; 5 uses
   %i.dx = load i64, ptr %i.dw, align 8, !dbg !214581, !noalias !214264, !noundef !14 ; 2 uses
   %i.dy = and i64 %i.dx, 63, !dbg !214581         ; 2 uses
-  %i.dz = add i64 %i.dy, %.sroa.3.0.i, !dbg !214585
+  %i.dz = add nuw i64 %i.dy, %.sroa.3.0.i, !dbg !214585
   %i.ea = icmp ult i64 %i.dz, 64, !dbg !214585
   br i1 %i.ea, label %bb.aq, label %bb.ap, !dbg !214585, !prof !861
 
@@ -3844,8 +3837,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.as, !dbg !214587
 
 bb.aq:                                            ; preds = %bb.ao
-  %3 = and i64 %.sroa.3.0.i, 63, !dbg !214599
-  %notmask.i = shl nsw i64 -1, %3, !dbg !214599
+  %notmask.i = shl nsw i64 -1, %.sroa.3.0.i, !dbg !214599
   %i.eb = xor i64 %notmask.i, -1, !dbg !214599
   %i.ec = shl i64 %i.eb, %i.dy, !dbg !214600
   %i.ed = getelementptr inbounds nuw i8, ptr %i.j, i64 24, !dbg !214602 ; 2 uses
@@ -3874,7 +3866,7 @@ bb.ar:                                            ; preds = %bb.bs
 
 bb.as:                                            ; preds = %._crit_edge, %bb.aq
   %i.eh = phi i64 [ %.pre, %._crit_edge ], [ %i.eg, %bb.aq ], !dbg !214588
-  %i.ei = sub i64 %i.bv, %.sroa.3.0.i, !dbg !214606 ; 3 uses
+  %i.ei = sub nsw i64 %i.bv, %.sroa.3.0.i, !dbg !214606 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !214594), !dbg !214607
   %i.ej = add i64 %i.eh, %i.ei, !dbg !214588
   %i.ek = getelementptr inbounds nuw i8, ptr %i.j, i64 40, !dbg !214608
@@ -4277,7 +4269,7 @@ bb.aj:                                            ; preds = %bb.z, %bb.ai
   br i1 %i.de, label %.loopexit93, label %bb.ak, !dbg !215325
 
 bb.ak:                                            ; preds = %.thread.us.i
-  %i.df = add nuw i64 %i.db, 1, !dbg !215326      ; 2 uses
+  %i.df = add nuw nsw i64 %i.db, 1, !dbg !215326  ; 2 uses
   %exitcond45.not.i = icmp eq i64 %i.df, %i.bv, !dbg !215296
   br i1 %exitcond45.not.i, label %.loopexit94, label %.thread.us.i, !dbg !215296
 
@@ -4303,7 +4295,7 @@ bb.ak:                                            ; preds = %.thread.us.i
   br i1 %i.dr, label %.loopexit93, label %bb.al, !dbg !215325
 
 bb.al:                                            ; preds = %.else.i
-  %i.ds = add nuw i64 %i.dm, 1, !dbg !215326      ; 2 uses
+  %i.ds = add nuw nsw i64 %i.dm, 1, !dbg !215326  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ds, %i.bv, !dbg !215296
   br i1 %exitcond.not.i, label %.loopexit94, label %.else.i, !dbg !215296
 
@@ -4340,7 +4332,7 @@ bb.ao:                                            ; preds = %.loopexit93
   %i.dw = getelementptr inbounds nuw i8, ptr %i.j, i64 32, !dbg !215373 ; 5 uses
   %i.dx = load i64, ptr %i.dw, align 8, !dbg !215373, !noalias !215056, !noundef !14 ; 2 uses
   %i.dy = and i64 %i.dx, 63, !dbg !215373         ; 2 uses
-  %i.dz = add i64 %i.dy, %.sroa.3.0.i, !dbg !215377
+  %i.dz = add nuw i64 %i.dy, %.sroa.3.0.i, !dbg !215377
   %i.ea = icmp ult i64 %i.dz, 64, !dbg !215377
   br i1 %i.ea, label %bb.aq, label %bb.ap, !dbg !215377, !prof !861
 
@@ -4353,8 +4345,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.as, !dbg !215379
 
 bb.aq:                                            ; preds = %bb.ao
-  %3 = and i64 %.sroa.3.0.i, 63, !dbg !215391
-  %notmask.i = shl nsw i64 -1, %3, !dbg !215391
+  %notmask.i = shl nsw i64 -1, %.sroa.3.0.i, !dbg !215391
   %i.eb = xor i64 %notmask.i, -1, !dbg !215391
   %i.ec = shl i64 %i.eb, %i.dy, !dbg !215392
   %i.ed = getelementptr inbounds nuw i8, ptr %i.j, i64 24, !dbg !215394 ; 2 uses
@@ -4383,7 +4374,7 @@ bb.ar:                                            ; preds = %bb.bs
 
 bb.as:                                            ; preds = %._crit_edge, %bb.aq
   %i.eh = phi i64 [ %.pre, %._crit_edge ], [ %i.eg, %bb.aq ], !dbg !215380
-  %i.ei = sub i64 %i.bv, %.sroa.3.0.i, !dbg !215398 ; 3 uses
+  %i.ei = sub nsw i64 %i.bv, %.sroa.3.0.i, !dbg !215398 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !215386), !dbg !215399
   %i.ej = add i64 %i.eh, %i.ei, !dbg !215380
   %i.ek = getelementptr inbounds nuw i8, ptr %i.j, i64 40, !dbg !215400
@@ -4786,7 +4777,7 @@ bb.aj:                                            ; preds = %bb.z, %bb.ai
   br i1 %i.de, label %.loopexit93, label %bb.ak, !dbg !217052
 
 bb.ak:                                            ; preds = %.thread.us.i
-  %i.df = add nuw i64 %i.db, 1, !dbg !217053      ; 2 uses
+  %i.df = add nuw nsw i64 %i.db, 1, !dbg !217053  ; 2 uses
   %exitcond45.not.i = icmp eq i64 %i.df, %i.bv, !dbg !217023
   br i1 %exitcond45.not.i, label %.loopexit94, label %.thread.us.i, !dbg !217023
 
@@ -4812,7 +4803,7 @@ bb.ak:                                            ; preds = %.thread.us.i
   br i1 %i.dr, label %.loopexit93, label %bb.al, !dbg !217052
 
 bb.al:                                            ; preds = %.else.i
-  %i.ds = add nuw i64 %i.dm, 1, !dbg !217053      ; 2 uses
+  %i.ds = add nuw nsw i64 %i.dm, 1, !dbg !217053  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ds, %i.bv, !dbg !217023
   br i1 %exitcond.not.i, label %.loopexit94, label %.else.i, !dbg !217023
 
@@ -4849,7 +4840,7 @@ bb.ao:                                            ; preds = %.loopexit93
   %i.dw = getelementptr inbounds nuw i8, ptr %i.j, i64 32, !dbg !217100 ; 5 uses
   %i.dx = load i64, ptr %i.dw, align 8, !dbg !217100, !noalias !216783, !noundef !14 ; 2 uses
   %i.dy = and i64 %i.dx, 63, !dbg !217100         ; 2 uses
-  %i.dz = add i64 %i.dy, %.sroa.3.0.i, !dbg !217104
+  %i.dz = add nuw i64 %i.dy, %.sroa.3.0.i, !dbg !217104
   %i.ea = icmp ult i64 %i.dz, 64, !dbg !217104
   br i1 %i.ea, label %bb.aq, label %bb.ap, !dbg !217104, !prof !861
 
@@ -4862,8 +4853,7 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.as, !dbg !217106
 
 bb.aq:                                            ; preds = %bb.ao
-  %3 = and i64 %.sroa.3.0.i, 63, !dbg !217118
-  %notmask.i = shl nsw i64 -1, %3, !dbg !217118
+  %notmask.i = shl nsw i64 -1, %.sroa.3.0.i, !dbg !217118
   %i.eb = xor i64 %notmask.i, -1, !dbg !217118
   %i.ec = shl i64 %i.eb, %i.dy, !dbg !217119
   %i.ed = getelementptr inbounds nuw i8, ptr %i.j, i64 24, !dbg !217121 ; 2 uses
@@ -4892,7 +4882,7 @@ bb.ar:                                            ; preds = %bb.bs
 
 bb.as:                                            ; preds = %._crit_edge, %bb.aq
   %i.eh = phi i64 [ %.pre, %._crit_edge ], [ %i.eg, %bb.aq ], !dbg !217107
-  %i.ei = sub i64 %i.bv, %.sroa.3.0.i, !dbg !217125 ; 3 uses
+  %i.ei = sub nsw i64 %i.bv, %.sroa.3.0.i, !dbg !217125 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !217113), !dbg !217126
   %i.ej = add i64 %i.eh, %i.ei, !dbg !217107
   %i.ek = getelementptr inbounds nuw i8, ptr %i.j, i64 40, !dbg !217127

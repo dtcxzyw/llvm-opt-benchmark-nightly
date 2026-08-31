@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/yara-x-rs/original/yara_x-7f56cf114ea533af.yara_x.54960d49aaff044b-cgu.05?download=true
 inline.NumInlined: 3898
 inline.NumDeleted: 2041
-loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumCompletelyUnrolled: 7
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x7modules2pe6parserNtB4_2PE5parse:bb.a
 _RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters4takeINtB4_4TakeINtNtB6_6copied6CopiedINtNtNtBa_5slice4iter4IterhEEENtNtNtB8_6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit.i.i.i.i.i.i178: ; preds = %bb.hg, %bb.hf
   %.sroa.0.08.i.i.i.i.i179 = phi i16 [ %i.aez, %bb.hg ], [ 0, %bb.hf ] ; 2 uses
@@ -205,15 +205,15 @@ bb.hy:                                            ; preds = %thread-pre-split.i.
   %i.agv = phi i8 [ %.pr.i.i.i.i, %thread-pre-split.i.i.i.i ], [ %i.agu, %bb.hx ]
   %cond.i.i.i.i = icmp eq i8 %i.agv, 43           ; 2 uses
   %i.agw = sext i1 %cond.i.i.i.i to i64
-  %.sroa.15.0.i.i.i.i = add nsw i64 %i.ags, %i.agw ; 4 uses
+  %.sroa.15.0.i.i.i.i = add nsw i64 %i.ags, %i.agw ; 10 uses
   %.sroa.0.0.idx.i.i.i.i = zext i1 %cond.i.i.i.i to i64
-  %.sroa.0.0.i131.i.i.i = getelementptr inbounds nuw i8, ptr %i.agt, i64 %.sroa.0.0.idx.i.i.i.i ; 2 uses
+  %.sroa.0.0.i131.i.i.i = getelementptr inbounds nuw i8, ptr %i.agt, i64 %.sroa.0.0.idx.i.i.i.i ; 9 uses
   %i.agx = icmp samesign ult i64 %.sroa.15.0.i.i.i.i, 9
   br i1 %i.agx, label %.preheader.i.i.i.i, label %.preheader60.i.i.i.i.preheader
 
 .preheader.i.i.i.i:                               ; preds = %bb.hy
   %.not5668.i.i.i.i = icmp eq i64 %.sroa.15.0.i.i.i.i, 0
-  br i1 %.not5668.i.i.i.i, label %.loopexit.i.i.i.i, label %.lr.ph.i.i.i.i182.a
+  br i1 %.not5668.i.i.i.i, label %.loopexit.i.i.i.i, label %.lr.ph.i.i.i.i182
 
 .preheader60.i.i.i.i:                             ; preds = %bb.hz
   %i.agy = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i2030, i64 1
@@ -221,8 +221,8 @@ bb.hy:                                            ; preds = %thread-pre-split.i.
   %.not55.i.i.i.i = icmp eq i64 %i.agz, 0
   br i1 %.not55.i.i.i.i, label %.loopexit.i.i.i.i, label %.preheader60.i.i.i.i.preheader
 
-.loopexit.i.i.i.i:                                ; preds = %.preheader60.i.i.i.i, %bb.ib, %.preheader.i.i.i.i
-  %.sroa.045.1.i.i.i.i = phi i32 [ %i.ahs, %bb.ib ], [ 0, %.preheader.i.i.i.i ], [ %i.ahj, %.preheader60.i.i.i.i ]
+.loopexit.i.i.i.i:                                ; preds = %.preheader60.i.i.i.i, %7, %13, %21, %29, %37, %45, %49, %56, %.preheader.i.i.i.i
+  %.sroa.045.1.i.i.i.i = phi i32 [ %58, %56 ], [ 0, %.preheader.i.i.i.i ], [ %5, %7 ], [ %15, %13 ], [ %23, %21 ], [ %31, %29 ], [ %39, %37 ], [ %47, %45 ], [ %51, %49 ], [ %i.ahj, %.preheader60.i.i.i.i ]
   %i.aha = zext i32 %.sroa.045.1.i.i.i.i to i64
   %i.ahb = shl nuw i64 %i.aha, 32
   br label %_RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit.i.i.i
@@ -253,23 +253,113 @@ bb.ia:                                            ; preds = %.preheader60.i.i.i.
   %spec.select.i.i.i.i = select i1 %i.ahn, i64 513, i64 257
   br label %_RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit.i.i.i
 
-.lr.ph.i.i.i.i182.a:                              ; preds = %.preheader.i.i.i.i, %bb.ib
-  %.sroa.0.271.i.i.i.i = phi ptr [ %5, %bb.ib ], [ %.sroa.0.0.i131.i.i.i, %.preheader.i.i.i.i ] ; 2 uses
-  %.sroa.15.270.i.i.i.i = phi i64 [ %4, %bb.ib ], [ %.sroa.15.0.i.i.i.i, %.preheader.i.i.i.i ]
-  %.sroa.045.269.i.i.i.i = phi i32 [ %i.ahs, %bb.ib ], [ 0, %.preheader.i.i.i.i ]
-  %i.aho = load i8, ptr %.sroa.0.271.i.i.i.i, align 1, !alias.scope !10145, !noalias !10148, !noundef !17
+.lr.ph.i.i.i.i182:                                ; preds = %.preheader.i.i.i.i
+  %3 = load i8, ptr %.sroa.0.0.i131.i.i.i, align 1, !alias.scope !10145, !noalias !10148, !noundef !17
+  %4 = zext i8 %3 to i32
+  %5 = add nsw i32 %4, -48                        ; 3 uses
+  %6 = icmp ult i32 %5, 10
+  br i1 %6, label %7, label %_RINvXsf_NtCsgkljs906P5b_3nom8internalNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x7modules2pe6parserNtBH_2PE13parse_section0INtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB2r_NtB6_9StreamingEEBN_.exit.i
+
+7:                                                ; preds = %.lr.ph.i.i.i.i182
+  %.not56.i.i.i.i = icmp eq i64 %.sroa.15.0.i.i.i.i, 1
+  br i1 %.not56.i.i.i.i, label %.loopexit.i.i.i.i, label %.lr.ph.i.i.i.i182.1
+
+.lr.ph.i.i.i.i182.1:                              ; preds = %7
+  %8 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i131.i.i.i, i64 1
+  %9 = load i8, ptr %8, align 1, !alias.scope !10145, !noalias !10148, !noundef !17
+  %10 = zext i8 %9 to i32
+  %11 = add nsw i32 %10, -48                      ; 2 uses
+  %12 = icmp ult i32 %11, 10
+  br i1 %12, label %13, label %_RINvXsf_NtCsgkljs906P5b_3nom8internalNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x7modules2pe6parserNtBH_2PE13parse_section0INtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB2r_NtB6_9StreamingEEBN_.exit.i
+
+13:                                               ; preds = %.lr.ph.i.i.i.i182.1
+  %14 = mul nuw nsw i32 %5, 10
+  %15 = add nuw nsw i32 %11, %14                  ; 2 uses
+  %.not56.i.i.i.i.1 = icmp eq i64 %.sroa.15.0.i.i.i.i, 2
+  br i1 %.not56.i.i.i.i.1, label %.loopexit.i.i.i.i, label %.lr.ph.i.i.i.i182.2
+
+.lr.ph.i.i.i.i182.2:                              ; preds = %13
+  %16 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i131.i.i.i, i64 2
+  %17 = load i8, ptr %16, align 1, !alias.scope !10145, !noalias !10148, !noundef !17
+  %18 = zext i8 %17 to i32
+  %19 = add nsw i32 %18, -48                      ; 2 uses
+  %20 = icmp ult i32 %19, 10
+  br i1 %20, label %21, label %_RINvXsf_NtCsgkljs906P5b_3nom8internalNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x7modules2pe6parserNtBH_2PE13parse_section0INtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB2r_NtB6_9StreamingEEBN_.exit.i
+
+21:                                               ; preds = %.lr.ph.i.i.i.i182.2
+  %22 = mul nuw nsw i32 %15, 10
+  %23 = add nuw nsw i32 %19, %22                  ; 2 uses
+  %.not56.i.i.i.i.2 = icmp eq i64 %.sroa.15.0.i.i.i.i, 3
+  br i1 %.not56.i.i.i.i.2, label %.loopexit.i.i.i.i, label %.lr.ph.i.i.i.i182.3
+
+.lr.ph.i.i.i.i182.3:                              ; preds = %21
+  %24 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i131.i.i.i, i64 3
+  %25 = load i8, ptr %24, align 1, !alias.scope !10145, !noalias !10148, !noundef !17
+  %26 = zext i8 %25 to i32
+  %27 = add nsw i32 %26, -48                      ; 2 uses
+  %28 = icmp ult i32 %27, 10
+  br i1 %28, label %29, label %_RINvXsf_NtCsgkljs906P5b_3nom8internalNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x7modules2pe6parserNtBH_2PE13parse_section0INtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB2r_NtB6_9StreamingEEBN_.exit.i
+
+29:                                               ; preds = %.lr.ph.i.i.i.i182.3
+  %30 = mul nuw nsw i32 %23, 10
+  %31 = add nuw nsw i32 %27, %30                  ; 2 uses
+  %.not56.i.i.i.i.3 = icmp eq i64 %.sroa.15.0.i.i.i.i, 4
+  br i1 %.not56.i.i.i.i.3, label %.loopexit.i.i.i.i, label %.lr.ph.i.i.i.i182.4
+
+.lr.ph.i.i.i.i182.4:                              ; preds = %29
+  %32 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i131.i.i.i, i64 4
+  %33 = load i8, ptr %32, align 1, !alias.scope !10145, !noalias !10148, !noundef !17
+  %34 = zext i8 %33 to i32
+  %35 = add nsw i32 %34, -48                      ; 2 uses
+  %36 = icmp ult i32 %35, 10
+  br i1 %36, label %37, label %_RINvXsf_NtCsgkljs906P5b_3nom8internalNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x7modules2pe6parserNtBH_2PE13parse_section0INtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB2r_NtB6_9StreamingEEBN_.exit.i
+
+37:                                               ; preds = %.lr.ph.i.i.i.i182.4
+  %38 = mul i32 %31, 10
+  %39 = add i32 %35, %38                          ; 2 uses
+  %.not56.i.i.i.i.4 = icmp eq i64 %.sroa.15.0.i.i.i.i, 5
+  br i1 %.not56.i.i.i.i.4, label %.loopexit.i.i.i.i, label %.lr.ph.i.i.i.i182.5
+
+.lr.ph.i.i.i.i182.5:                              ; preds = %37
+  %40 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i131.i.i.i, i64 5
+  %41 = load i8, ptr %40, align 1, !alias.scope !10145, !noalias !10148, !noundef !17
+  %42 = zext i8 %41 to i32
+  %43 = add nsw i32 %42, -48                      ; 2 uses
+  %44 = icmp ult i32 %43, 10
+  br i1 %44, label %45, label %_RINvXsf_NtCsgkljs906P5b_3nom8internalNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x7modules2pe6parserNtBH_2PE13parse_section0INtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB2r_NtB6_9StreamingEEBN_.exit.i
+
+45:                                               ; preds = %.lr.ph.i.i.i.i182.5
+  %46 = mul i32 %39, 10
+  %47 = add i32 %43, %46                          ; 2 uses
+  %.not56.i.i.i.i.5 = icmp eq i64 %.sroa.15.0.i.i.i.i, 6
+  br i1 %.not56.i.i.i.i.5, label %.loopexit.i.i.i.i, label %.lr.ph.i.i.i.i182.a
+
+.lr.ph.i.i.i.i182.a:                              ; preds = %45
+  %48 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i131.i.i.i, i64 6
+  %i.aho = load i8, ptr %48, align 1, !alias.scope !10145, !noalias !10148, !noundef !17
   %i.ahp = zext i8 %i.aho to i32
   %i.ahq = add nsw i32 %i.ahp, -48                ; 2 uses
   %i.ahr = icmp ult i32 %i.ahq, 10
-  br i1 %i.ahr, label %bb.ib, label %_RINvXsf_NtCsgkljs906P5b_3nom8internalNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x7modules2pe6parserNtBH_2PE13parse_section0INtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB2r_NtB6_9StreamingEEBN_.exit.i
+  br i1 %i.ahr, label %49, label %_RINvXsf_NtCsgkljs906P5b_3nom8internalNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x7modules2pe6parserNtBH_2PE13parse_section0INtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB2r_NtB6_9StreamingEEBN_.exit.i
 
-bb.ib:                                            ; preds = %.lr.ph.i.i.i.i182.a
-  %3 = mul i32 %.sroa.045.269.i.i.i.i, 10
-  %4 = add nsw i64 %.sroa.15.270.i.i.i.i, -1      ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.271.i.i.i.i, i64 1
-  %i.ahs = add i32 %i.ahq, %3                     ; 2 uses
-  %.not56.i.i.i.i = icmp eq i64 %4, 0
-  br i1 %.not56.i.i.i.i, label %.loopexit.i.i.i.i, label %.lr.ph.i.i.i.i182.a
+49:                                               ; preds = %.lr.ph.i.i.i.i182.a
+  %50 = mul i32 %47, 10
+  %51 = add i32 %i.ahq, %50                       ; 2 uses
+  %.not56.i.i.i.i.6 = icmp eq i64 %.sroa.15.0.i.i.i.i, 7
+  br i1 %.not56.i.i.i.i.6, label %.loopexit.i.i.i.i, label %bb.ib
+
+bb.ib:                                            ; preds = %49
+  %52 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i131.i.i.i, i64 7
+  %53 = load i8, ptr %52, align 1, !alias.scope !10145, !noalias !10148, !noundef !17
+  %54 = zext i8 %53 to i32
+  %i.ahs = add nsw i32 %54, -48                   ; 2 uses
+  %55 = icmp ult i32 %i.ahs, 10
+  br i1 %55, label %56, label %_RINvXsf_NtCsgkljs906P5b_3nom8internalNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x7modules2pe6parserNtBH_2PE13parse_section0INtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB2r_NtB6_9StreamingEEBN_.exit.i
+
+56:                                               ; preds = %bb.ib
+  %57 = mul i32 %51, 10
+  %58 = add i32 %i.ahs, %57
+  br label %.loopexit.i.i.i.i
 
 _RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit.i.i.i: ; preds = %bb.ia, %.loopexit.i.i.i.i
   %.sroa.8.0.insert.insert.i.i.i.i = phi i64 [ %spec.select.i.i.i.i, %bb.ia ], [ %i.ahb, %.loopexit.i.i.i.i ] ; 2 uses
@@ -317,9 +407,9 @@ _RNCINvXNtCsgkljs906P5b_3nom6traitsRShNtB5_5Input22split_at_position_modeINtNtB7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !noalias !10141
   br label %_RINvXsf_NtCsgkljs906P5b_3nom8internalNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x7modules2pe6parserNtBH_2PE13parse_section0INtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB2r_NtB6_9StreamingEEBN_.exit.i
 
-_RINvXsf_NtCsgkljs906P5b_3nom8internalNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x7modules2pe6parserNtBH_2PE13parse_section0INtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB2r_NtB6_9StreamingEEBN_.exit.i: ; preds = %bb.hz, %.lr.ph.i.i.i.i182.a, %bb.ht, %.noexc49.i, %.noexc50.i, %bb.hw, %bb.hx, %bb.hx, %_RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit.i.i.i, %bb.ic, %.noexc51.i
-  %.sroa.9.0.i.i.i = phi i64 [ undef, %bb.ht ], [ %.sroa.02.07.i.lcssa.sink.i.i.i, %.noexc51.i ], [ undef, %.noexc50.i ], [ undef, %bb.ic ], [ undef, %_RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit.i.i.i ], [ undef, %.lr.ph.i.i.i.i182.a ], [ undef, %.noexc49.i ], [ undef, %bb.hx ], [ undef, %bb.hx ], [ undef, %bb.hw ], [ undef, %bb.hz ]
-  %.sroa.7.0.i.i.i = phi ptr [ null, %bb.ht ], [ %i.ahw, %.noexc51.i ], [ null, %.noexc50.i ], [ null, %bb.ic ], [ null, %_RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit.i.i.i ], [ null, %.lr.ph.i.i.i.i182.a ], [ null, %.noexc49.i ], [ null, %bb.hx ], [ null, %bb.hx ], [ null, %bb.hw ], [ null, %bb.hz ]
+_RINvXsf_NtCsgkljs906P5b_3nom8internalNCNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x7modules2pe6parserNtBH_2PE13parse_section0INtB6_6ParserRShE7processINtB6_7OutputMNtB6_4EmitB2r_NtB6_9StreamingEEBN_.exit.i: ; preds = %bb.hz, %.lr.ph.i.i.i.i182, %.lr.ph.i.i.i.i182.1, %.lr.ph.i.i.i.i182.2, %.lr.ph.i.i.i.i182.3, %.lr.ph.i.i.i.i182.4, %.lr.ph.i.i.i.i182.5, %.lr.ph.i.i.i.i182.a, %bb.ib, %bb.ht, %.noexc49.i, %.noexc50.i, %bb.hw, %bb.hx, %bb.hx, %_RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit.i.i.i, %bb.ic, %.noexc51.i
+  %.sroa.9.0.i.i.i = phi i64 [ undef, %bb.ht ], [ %.sroa.02.07.i.lcssa.sink.i.i.i, %.noexc51.i ], [ undef, %.noexc50.i ], [ undef, %bb.ic ], [ undef, %_RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit.i.i.i ], [ undef, %.lr.ph.i.i.i.i182 ], [ undef, %.noexc49.i ], [ undef, %bb.hx ], [ undef, %bb.hx ], [ undef, %bb.hw ], [ undef, %bb.ib ], [ undef, %.lr.ph.i.i.i.i182.a ], [ undef, %.lr.ph.i.i.i.i182.5 ], [ undef, %.lr.ph.i.i.i.i182.4 ], [ undef, %.lr.ph.i.i.i.i182.3 ], [ undef, %.lr.ph.i.i.i.i182.2 ], [ undef, %.lr.ph.i.i.i.i182.1 ], [ undef, %bb.hz ]
+  %.sroa.7.0.i.i.i = phi ptr [ null, %bb.ht ], [ %i.ahw, %.noexc51.i ], [ null, %.noexc50.i ], [ null, %bb.ic ], [ null, %_RNvMsB_NtCskKLDkoKarTP_4core3numm27from_ascii_bytes_radix_impl.exit.i.i.i ], [ null, %.lr.ph.i.i.i.i182 ], [ null, %.noexc49.i ], [ null, %bb.hx ], [ null, %bb.hx ], [ null, %bb.hw ], [ null, %bb.ib ], [ null, %.lr.ph.i.i.i.i182.a ], [ null, %.lr.ph.i.i.i.i182.5 ], [ null, %.lr.ph.i.i.i.i182.4 ], [ null, %.lr.ph.i.i.i.i182.3 ], [ null, %.lr.ph.i.i.i.i182.2 ], [ null, %.lr.ph.i.i.i.i182.1 ], [ null, %bb.hz ]
   %i.aif = icmp eq i64 %i.agp, %.sroa.3.0488.i
   br i1 %i.aif, label %.critedge.i, label %bb.ig
 

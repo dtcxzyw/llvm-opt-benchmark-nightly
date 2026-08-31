@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %storemerge10.i.i = phi i64 [ %storemerge.i.i, %.lr.ph.i.i ], [ %storemerge10.i.i.ph, %.lr.ph.i.i.preheader22 ] ; 2 uses
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %storemerge10.i.i
   store i32 %i.o, ptr %i.v, align 4, !tbaa !69
-  %storemerge.i.i = add i64 %storemerge10.i.i, 1  ; 2 uses
+  %storemerge.i.i = add nuw i64 %storemerge10.i.i, 1 ; 2 uses
   %.not.i.i = icmp eq i64 %storemerge.i.i, %i.i
   br i1 %.not.i.i, label %_ZN5boost7movelib13adaptive_xbufIiPimE16initialize_untilEmRi.exit.i, label %.lr.ph.i.i, !llvm.loop !3315
 
@@ -608,7 +608,7 @@ middle.block:                                     ; preds = %vector.body
   %storemerge10.i.i = phi i64 [ %storemerge.i.i, %.lr.ph.i.i ], [ %storemerge10.i.i.ph, %.lr.ph.i.i.preheader24 ] ; 2 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %storemerge10.i.i
   store i32 %i.p, ptr %i.w, align 4, !tbaa !69
-  %storemerge.i.i = add i64 %storemerge10.i.i, 1  ; 2 uses
+  %storemerge.i.i = add nuw i64 %storemerge10.i.i, 1 ; 2 uses
   %.not.i.i = icmp eq i64 %storemerge.i.i, %i.i
   br i1 %.not.i.i, label %_ZN5boost7movelib13adaptive_xbufIiPimE16initialize_untilEmRi.exit.i, label %.lr.ph.i.i, !llvm.loop !4788
 
@@ -1011,7 +1011,7 @@ middle.block:                                     ; preds = %vector.body
   %storemerge10.i = phi i64 [ %storemerge.i, %.lr.ph.i ], [ %storemerge10.i.ph, %.lr.ph.i.preheader15 ] ; 2 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %storemerge10.i
   store i32 %i.q, ptr %i.x, align 4, !tbaa !69
-  %storemerge.i = add i64 %storemerge10.i, 1      ; 2 uses
+  %storemerge.i = add nuw i64 %storemerge10.i, 1  ; 2 uses
   %.not.i = icmp eq i64 %storemerge.i, %4
   br i1 %.not.i, label %_ZN5boost7movelib13adaptive_xbufIiPimE16initialize_untilEmRi.exit, label %.lr.ph.i, !llvm.loop !8142
 
@@ -1414,7 +1414,7 @@ middle.block:                                     ; preds = %vector.body
   %storemerge10.i = phi i64 [ %storemerge.i, %.lr.ph.i ], [ %storemerge10.i.ph, %.lr.ph.i.preheader16 ] ; 2 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %storemerge10.i
   store i32 %i.q, ptr %i.x, align 4, !tbaa !69
-  %storemerge.i = add i64 %storemerge10.i, 1      ; 2 uses
+  %storemerge.i = add nuw i64 %storemerge10.i, 1  ; 2 uses
   %.not.i = icmp eq i64 %storemerge.i, %5
   br i1 %.not.i, label %_ZN5boost7movelib13adaptive_xbufIiPimE16initialize_untilEmRi.exit, label %.lr.ph.i, !llvm.loop !12078
 
@@ -1817,7 +1817,7 @@ middle.block:                                     ; preds = %vector.body
   %storemerge10.i = phi i64 [ %storemerge.i, %.lr.ph.i ], [ %storemerge10.i.ph, %.lr.ph.i.preheader22 ] ; 2 uses
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %storemerge10.i
   store i32 %i.al, ptr %i.as, align 4, !tbaa !69
-  %storemerge.i = add i64 %storemerge10.i, 1      ; 2 uses
+  %storemerge.i = add nuw i64 %storemerge10.i, 1  ; 2 uses
   %.not.i = icmp eq i64 %storemerge.i, %4
   br i1 %.not.i, label %_ZN5boost7movelib13adaptive_xbufIiPimE16initialize_untilEmRi.exit, label %.lr.ph.i, !llvm.loop !15479
 
@@ -2220,7 +2220,7 @@ middle.block:                                     ; preds = %vector.body
   %storemerge10.i = phi i64 [ %storemerge.i, %.lr.ph.i ], [ %storemerge10.i.ph, %.lr.ph.i.preheader23 ] ; 2 uses
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %storemerge10.i
   store i32 %i.al, ptr %i.as, align 4, !tbaa !69
-  %storemerge.i = add i64 %storemerge10.i, 1      ; 2 uses
+  %storemerge.i = add nuw i64 %storemerge10.i, 1  ; 2 uses
   %.not.i = icmp eq i64 %storemerge.i, %5
   br i1 %.not.i, label %_ZN5boost7movelib13adaptive_xbufIiPimE16initialize_untilEmRi.exit, label %.lr.ph.i, !llvm.loop !19955
 

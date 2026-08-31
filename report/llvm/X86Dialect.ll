@@ -205,7 +205,7 @@ _ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit: ; preds = %bb.a
   br i1 %i.ac, label %.lr.ph.i.i62.preheader, label %.thread282
 
 .lr.ph.i.i62.preheader:                           ; preds = %.lr.ph.i.i.preheader
-  %.pre = load ptr, ptr %0, align 8, !tbaa !20    ; 4 uses
+  %.pre = load ptr, ptr %0, align 8, !tbaa !20    ; 5 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 44
   %.pre318 = load i32, ptr %.phi.trans.insert, align 4
   %.pre320 = and i32 %.pre318, 8388608
@@ -218,13 +218,24 @@ _ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit75: ; preds = %.lr.ph.
   %i.af = getelementptr inbounds nuw i8, ptr %.pre, i64 72
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !35
   %i.ah = zext i32 %i.ae to i64
-  %i.ai = add nsw i64 %i.ah, -2                   ; 3 uses
+  %i.ai = add nsw i64 %i.ah, -2                   ; 2 uses
   %i.aj = icmp ugt i64 %i.ai, 1
   br i1 %i.aj, label %_ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit75.thread, label %.preheader
 
 .preheader:                                       ; preds = %_ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit75
   %.not294306 = icmp eq i32 %i.ae, 2
-  br i1 %.not294306, label %._crit_edge, label %.lr.ph309
+  br i1 %.not294306, label %._crit_edge, label %.lr.ph309.preheader
+
+.lr.ph309.preheader:                              ; preds = %.preheader
+  %13 = getelementptr inbounds nuw i8, ptr %i.ag, i64 88
+  %.sroa.0.0.copyload.i.i.i85 = load ptr, ptr %13, align 8, !tbaa !36
+  %14 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i85, i64 8
+  %.0.copyload.i.i.i.i.i86 = load i64, ptr %14, align 8
+  %15 = and i64 %.0.copyload.i.i.i.i.i86, -8
+  %16 = inttoptr i64 %15 to ptr
+  %17 = call fastcc i8 @_ZL38__mlir_ods_local_type_constraint_X8613PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef nonnull %.pre, ptr %16, ptr nonnull @.str.7, i64 7, i32 noundef 2)
+  %18 = trunc nuw i8 %17 to i1
+  br i1 %18, label %._crit_edge.loopexit, label %.thread282
 
 _ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit75.thread: ; preds = %.lr.ph.i.i62.preheader, %_ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit75
   %i.ak = phi i64 [ %i.ai, %_ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit75 ], [ -2, %.lr.ph.i.i62.preheader ]
@@ -360,28 +371,7 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.l, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
   br label %.thread282
 
-.lr.ph309:                                        ; preds = %.preheader, %21
-  %.4308 = phi i32 [ %22, %21 ], [ 2, %.preheader ] ; 2 uses
-  %.sroa.4230.0307 = phi i64 [ %23, %21 ], [ 0, %.preheader ] ; 2 uses
-  %13 = getelementptr inbounds nuw [32 x i8], ptr %i.ag, i64 %.sroa.4230.0307
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 88
-  %.sroa.0.0.copyload.i.i.i85 = load ptr, ptr %14, align 8, !tbaa !36
-  %15 = load ptr, ptr %0, align 8, !tbaa !20
-  %16 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i85, i64 8
-  %.0.copyload.i.i.i.i.i86 = load i64, ptr %16, align 8
-  %17 = and i64 %.0.copyload.i.i.i.i.i86, -8
-  %18 = inttoptr i64 %17 to ptr
-  %19 = call fastcc i8 @_ZL38__mlir_ods_local_type_constraint_X8613PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %15, ptr %18, ptr nonnull @.str.7, i64 7, i32 noundef %.4308)
-  %20 = trunc nuw i8 %19 to i1
-  br i1 %20, label %21, label %.thread282
-
-21:                                               ; preds = %.lr.ph309
-  %22 = add i32 %.4308, 1
-  %23 = add nuw nsw i64 %.sroa.4230.0307, 1       ; 2 uses
-  %.not294 = icmp eq i64 %23, %i.ai
-  br i1 %.not294, label %._crit_edge.loopexit, label %.lr.ph309
-
-._crit_edge.loopexit:                             ; preds = %21
+._crit_edge.loopexit:                             ; preds = %.lr.ph309.preheader
   %.pre319 = load ptr, ptr %0, align 8, !tbaa !20
   br label %._crit_edge
 
@@ -542,8 +532,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit170:         ; preds = %bb.s, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #26
   br label %.thread282
 
-.thread282:                                       ; preds = %.lr.ph309, %_ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit, %.lr.ph.i.i.preheader, %._crit_edge, %_ZN4mlir18InFlightDiagnosticD2Ev.exit, %_ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit163, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit170, %_ZN4mlir18InFlightDiagnosticD2Ev.exit143
-  %.sroa.044.15 = phi i8 [ 1, %_ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit163 ], [ %i.db, %_ZN4mlir18InFlightDiagnosticD2Ev.exit143 ], [ %i.ei, %_ZN4mlir18InFlightDiagnosticD2Ev.exit170 ], [ 0, %._crit_edge ], [ 0, %_ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit ], [ 0, %bb.a ], [ %i.bp, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %.lr.ph.i.i.preheader ], [ 0, %.lr.ph309 ]
+.thread282:                                       ; preds = %_ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit, %.lr.ph.i.i.preheader, %.lr.ph309.preheader, %._crit_edge, %_ZN4mlir18InFlightDiagnosticD2Ev.exit, %_ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit163, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit170, %_ZN4mlir18InFlightDiagnosticD2Ev.exit143
+  %.sroa.044.15 = phi i8 [ 1, %_ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit163 ], [ %i.db, %_ZN4mlir18InFlightDiagnosticD2Ev.exit143 ], [ %i.ei, %_ZN4mlir18InFlightDiagnosticD2Ev.exit170 ], [ 0, %._crit_edge ], [ 0, %.lr.ph309.preheader ], [ 0, %bb.a ], [ %i.bp, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %.lr.ph.i.i.preheader ], [ 0, %_ZN4mlir3x866avx51214MaskCompressOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.044.15
 }
 

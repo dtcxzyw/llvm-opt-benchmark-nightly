@@ -206,7 +206,7 @@ _ZN4mlir3ptr9FromPtrOp14getODSOperandsEj.exit:
   br i1 %i.j, label %.lr.ph.i.i.preheader, label %.thread145
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZN4mlir3ptr9FromPtrOp14getODSOperandsEj.exit
-  %i.k = load ptr, ptr %0, align 8, !tbaa !43     ; 4 uses
+  %i.k = load ptr, ptr %0, align 8, !tbaa !43     ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 44
   %i.m = load i32, ptr %i.l, align 4
   %i.n = and i32 %i.m, 8388608
@@ -219,13 +219,24 @@ _ZN4mlir3ptr9FromPtrOp14getODSOperandsEj.exit38:  ; preds = %.lr.ph.i.i.preheade
   %i.q = getelementptr inbounds nuw i8, ptr %i.k, i64 72
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !22
   %i.s = zext i32 %i.p to i64
-  %i.t = add nsw i64 %i.s, -1                     ; 3 uses
+  %i.t = add nsw i64 %i.s, -1                     ; 2 uses
   %i.u = icmp ugt i64 %i.t, 1
   br i1 %i.u, label %_ZN4mlir3ptr9FromPtrOp14getODSOperandsEj.exit38.thread, label %.preheader
 
 .preheader:                                       ; preds = %_ZN4mlir3ptr9FromPtrOp14getODSOperandsEj.exit38
   %.not155165 = icmp eq i32 %i.p, 1
-  br i1 %.not155165, label %._crit_edge, label %.lr.ph
+  br i1 %.not155165, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %16 = getelementptr inbounds nuw i8, ptr %i.r, i64 56
+  %.sroa.0.0.copyload.i.i.i47 = load ptr, ptr %16, align 8, !tbaa !25
+  %17 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i47, i64 8
+  %.0.copyload.i.i.i.i.i48 = load i64, ptr %17, align 8
+  %18 = and i64 %.0.copyload.i.i.i.i.i48, -8
+  %19 = inttoptr i64 %18 to ptr
+  %20 = tail call fastcc i8 @_ZL40__mlir_ods_local_type_constraint_PtrOps2PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef nonnull %i.k, ptr %19, ptr nonnull @.str.69, i64 7, i32 noundef 1)
+  %21 = trunc nuw i8 %20 to i1
+  br i1 %21, label %._crit_edge.loopexit, label %.thread145
 
 _ZN4mlir3ptr9FromPtrOp14getODSOperandsEj.exit38.thread: ; preds = %.lr.ph.i.i.preheader, %_ZN4mlir3ptr9FromPtrOp14getODSOperandsEj.exit38
   %i.v = phi i64 [ %i.t, %_ZN4mlir3ptr9FromPtrOp14getODSOperandsEj.exit38 ], [ -1, %.lr.ph.i.i.preheader ]
@@ -361,28 +372,7 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.k, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #25
   br label %.thread145
 
-.lr.ph:                                           ; preds = %.preheader, %24
-  %.2167 = phi i32 [ %25, %24 ], [ 1, %.preheader ] ; 2 uses
-  %.sroa.4113.0166 = phi i64 [ %26, %24 ], [ 0, %.preheader ] ; 2 uses
-  %16 = getelementptr inbounds nuw [32 x i8], ptr %i.r, i64 %.sroa.4113.0166
-  %17 = getelementptr inbounds nuw i8, ptr %16, i64 56
-  %.sroa.0.0.copyload.i.i.i47 = load ptr, ptr %17, align 8, !tbaa !25
-  %18 = load ptr, ptr %0, align 8, !tbaa !43
-  %19 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i47, i64 8
-  %.0.copyload.i.i.i.i.i48 = load i64, ptr %19, align 8
-  %20 = and i64 %.0.copyload.i.i.i.i.i48, -8
-  %21 = inttoptr i64 %20 to ptr
-  %22 = tail call fastcc i8 @_ZL40__mlir_ods_local_type_constraint_PtrOps2PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %18, ptr %21, ptr nonnull @.str.69, i64 7, i32 noundef %.2167)
-  %23 = trunc nuw i8 %22 to i1
-  br i1 %23, label %24, label %.thread145
-
-24:                                               ; preds = %.lr.ph
-  %25 = add i32 %.2167, 1
-  %26 = add nuw nsw i64 %.sroa.4113.0166, 1       ; 2 uses
-  %.not155 = icmp eq i64 %26, %i.t
-  br i1 %.not155, label %._crit_edge.loopexit, label %.lr.ph
-
-._crit_edge.loopexit:                             ; preds = %24
+._crit_edge.loopexit:                             ; preds = %.lr.ph.preheader
   %.pre = load ptr, ptr %0, align 8, !tbaa !43
   br label %._crit_edge
 
@@ -594,8 +584,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit83:          ; preds = %bb.w, %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #25
   br label %.thread145
 
-.thread145:                                       ; preds = %.lr.ph, %_ZN4mlir3ptr9FromPtrOp14getODSOperandsEj.exit, %._crit_edge, %bb.n, %bb.m, %_ZN4mlir3ptr9FromPtrOp11getMetadataEv.exit, %_ZN4mlir18InFlightDiagnosticD2Ev.exit, %_ZN4llvm4castIN4mlir20PtrLikeTypeInterfaceENS1_4TypeEEEDcRKT0_.exit, %_ZN4mlir18InFlightDiagnosticD2Ev.exit83
-  %.sroa.027.11 = phi i8 [ %i.ed, %_ZN4mlir18InFlightDiagnosticD2Ev.exit83 ], [ 1, %bb.n ], [ 1, %_ZN4llvm4castIN4mlir20PtrLikeTypeInterfaceENS1_4TypeEEEDcRKT0_.exit ], [ 0, %_ZN4mlir3ptr9FromPtrOp14getODSOperandsEj.exit ], [ 0, %._crit_edge ], [ %i.ba, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir3ptr9FromPtrOp11getMetadataEv.exit ], [ 1, %bb.m ], [ 0, %.lr.ph ]
+.thread145:                                       ; preds = %_ZN4mlir3ptr9FromPtrOp14getODSOperandsEj.exit, %.lr.ph.preheader, %._crit_edge, %bb.n, %bb.m, %_ZN4mlir3ptr9FromPtrOp11getMetadataEv.exit, %_ZN4mlir18InFlightDiagnosticD2Ev.exit, %_ZN4llvm4castIN4mlir20PtrLikeTypeInterfaceENS1_4TypeEEEDcRKT0_.exit, %_ZN4mlir18InFlightDiagnosticD2Ev.exit83
+  %.sroa.027.11 = phi i8 [ %i.ed, %_ZN4mlir18InFlightDiagnosticD2Ev.exit83 ], [ 1, %bb.n ], [ 1, %_ZN4llvm4castIN4mlir20PtrLikeTypeInterfaceENS1_4TypeEEEDcRKT0_.exit ], [ 0, %.lr.ph.preheader ], [ 0, %._crit_edge ], [ %i.ba, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 1, %_ZN4mlir3ptr9FromPtrOp11getMetadataEv.exit ], [ 1, %bb.m ], [ 0, %_ZN4mlir3ptr9FromPtrOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.027.11
 }
 

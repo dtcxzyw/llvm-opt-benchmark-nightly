@@ -205,7 +205,7 @@ bb.ci:                                            ; preds = %bb.ch
   %i.vi = getelementptr inbounds nuw [16 x i8], ptr %.pre261.i, i64 %.0131225.i.epil.init
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.vh, ptr noundef nonnull align 8 dereferenceable(16) %i.vi, i64 16, i1 false), !tbaa.struct !48
   %i.vj = getelementptr inbounds nuw i8, ptr %i.vh, i64 16
-  %i.vk = add nuw i64 %.0131225.i.epil.init, 1    ; 2 uses
+  %i.vk = add nuw nsw i64 %.0131225.i.epil.init, 1 ; 2 uses
   %i.vl = getelementptr inbounds nuw [16 x i8], ptr %.pre261.i, i64 %i.vk
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.vj, ptr noundef nonnull align 8 dereferenceable(16) %i.vl, i64 16, i1 false), !tbaa.struct !48
   br label %._crit_edge227.loopexit.peel.begin.i
@@ -252,7 +252,7 @@ bb.cj:                                            ; preds = %bb.cj, %.lr.ph226.s
   %i.wj = getelementptr inbounds nuw [16 x i8], ptr %.pre261.i, i64 %i.wg
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.wi, ptr noundef nonnull align 8 dereferenceable(16) %i.wj, i64 16, i1 false), !tbaa.struct !48
   %i.wk = getelementptr inbounds nuw i8, ptr %i.wi, i64 16
-  %i.wl = add nuw i64 %.0131225.i, 2              ; 4 uses
+  %i.wl = add nuw nsw i64 %.0131225.i, 2          ; 4 uses
   %i.wm = getelementptr inbounds nuw [16 x i8], ptr %.pre261.i, i64 %i.wl
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.wk, ptr noundef nonnull align 8 dereferenceable(16) %i.wm, i64 16, i1 false), !tbaa.struct !48
   %niter434.next.1 = add nuw i64 %niter434, 2     ; 2 uses
@@ -655,7 +655,7 @@ bb.dq:                                            ; preds = %bb.dp
   %i.aft = getelementptr inbounds nuw [16 x i8], ptr %.pre.i, i64 %.0123215.i.epil.init
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.afs, ptr noundef nonnull align 8 dereferenceable(16) %i.aft, i64 16, i1 false), !tbaa.struct !48
   %i.afu = getelementptr inbounds nuw i8, ptr %i.afs, i64 16
-  %i.afv = add nuw i64 %.0123215.i.epil.init, 1   ; 2 uses
+  %i.afv = add nuw nsw i64 %.0123215.i.epil.init, 1 ; 2 uses
   %i.afw = getelementptr inbounds nuw [16 x i8], ptr %.pre.i, i64 %i.afv
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.afu, ptr noundef nonnull align 8 dereferenceable(16) %i.afw, i64 16, i1 false), !tbaa.struct !48
   br label %._crit_edge217.loopexit.peel.begin.i
@@ -704,7 +704,7 @@ bb.dr:                                            ; preds = %bb.dr, %.lr.ph216.s
   %i.agv = getelementptr inbounds nuw [16 x i8], ptr %.pre.i, i64 %i.ags
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.agu, ptr noundef nonnull align 8 dereferenceable(16) %i.agv, i64 16, i1 false), !tbaa.struct !48
   %i.agw = getelementptr inbounds nuw i8, ptr %i.agu, i64 16
-  %i.agx = add nuw i64 %.0123215.i, 2             ; 4 uses
+  %i.agx = add nuw nsw i64 %.0123215.i, 2         ; 4 uses
   %i.agy = getelementptr inbounds nuw [16 x i8], ptr %.pre.i, i64 %i.agx
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.agw, ptr noundef nonnull align 8 dereferenceable(16) %i.agy, i64 16, i1 false), !tbaa.struct !48
   %niter426.next.1 = add nuw i64 %niter426, 2     ; 2 uses

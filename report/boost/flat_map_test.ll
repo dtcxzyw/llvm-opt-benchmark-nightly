@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.8.0.i = phi i64 [ %storemerge.i.i, %.lr.ph.i.i ], [ %.sroa.8.0.i.ph, %.lr.ph.i.i.preheader22 ] ; 3 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.sroa.8.0.i
   store i64 %i.o, ptr %i.w, align 4
-  %storemerge.i.i = add i64 %.sroa.8.0.i, 1       ; 2 uses
+  %storemerge.i.i = add nuw i64 %.sroa.8.0.i, 1   ; 2 uses
   %.not.i.i = icmp eq i64 %storemerge.i.i, %i.i
   br i1 %.not.i.i, label %_ZN5boost7movelib13adaptive_xbufISt4pairIiiEPS3_mE16initialize_untilEmRS3_.exit.i, label %.lr.ph.i.i, !llvm.loop !2038
 
@@ -608,7 +608,7 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.8.0.i = phi i64 [ %storemerge.i.i, %.lr.ph.i.i ], [ %.sroa.8.0.i.ph, %.lr.ph.i.i.preheader24 ] ; 3 uses
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.sroa.8.0.i
   store i64 %i.p, ptr %i.x, align 4
-  %storemerge.i.i = add i64 %.sroa.8.0.i, 1       ; 2 uses
+  %storemerge.i.i = add nuw i64 %.sroa.8.0.i, 1   ; 2 uses
   %.not.i.i = icmp eq i64 %storemerge.i.i, %i.i
   br i1 %.not.i.i, label %_ZN5boost7movelib13adaptive_xbufISt4pairIiiEPS3_mE16initialize_untilEmRS3_.exit.i, label %.lr.ph.i.i, !llvm.loop !3019
 
@@ -1011,7 +1011,7 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.8.0 = phi i64 [ %storemerge.i, %.lr.ph.i ], [ %.sroa.8.0.ph, %.lr.ph.i.preheader19 ] ; 3 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.sroa.8.0
   store i64 %i.m, ptr %i.u, align 4
-  %storemerge.i = add i64 %.sroa.8.0, 1           ; 2 uses
+  %storemerge.i = add nuw i64 %.sroa.8.0, 1       ; 2 uses
   %.not.i = icmp eq i64 %storemerge.i, %4
   br i1 %.not.i, label %_ZN5boost7movelib13adaptive_xbufISt4pairIiiEPS3_mE16initialize_untilEmRS3_.exit, label %.lr.ph.i, !llvm.loop !6912
 
@@ -1414,7 +1414,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.o, align 4, !tbaa !830
   %storemerge9.i = add i32 %i.m, 2
   store i32 %storemerge9.i, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !21
-  %storemerge.i = add i64 %storemerge15.i, 1      ; 4 uses
+  %storemerge.i = add nuw i64 %storemerge15.i, 1  ; 4 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge.i ; 2 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge15.i ; 3 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !830
@@ -1428,8 +1428,8 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.v, align 4, !tbaa !830
   %storemerge9.i.1 = add i32 %i.t, 2
   store i32 %storemerge9.i.1, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !21
-  %storemerge.i.1 = add i64 %storemerge15.i, 2    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %storemerge.i.1 = add nuw i64 %storemerge15.i, 2 ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph.i
 
@@ -1832,7 +1832,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.o, align 4, !tbaa !830
   %storemerge9.i = add i32 %i.m, 2
   store i32 %storemerge9.i, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !21
-  %storemerge.i = add i64 %storemerge15.i, 1      ; 4 uses
+  %storemerge.i = add nuw i64 %storemerge15.i, 1  ; 4 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %storemerge.i ; 2 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %storemerge15.i ; 3 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !830
@@ -1846,8 +1846,8 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.v, align 4, !tbaa !830
   %storemerge9.i.1 = add i32 %i.t, 2
   store i32 %storemerge9.i.1, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !21
-  %storemerge.i.1 = add i64 %storemerge15.i, 2    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %storemerge.i.1 = add nuw i64 %storemerge15.i, 2 ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph.i
 
@@ -2250,7 +2250,7 @@ bb.d:                                             ; preds = %bb.c
   store i32 0, ptr %i.y, align 4, !tbaa !830
   %storemerge9.i = add i32 %i.w, 2
   store i32 %storemerge9.i, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !21
-  %storemerge.i = add i64 %storemerge15.i, 1      ; 4 uses
+  %storemerge.i = add nuw i64 %storemerge15.i, 1  ; 4 uses
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge.i ; 2 uses
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge15.i ; 3 uses
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !830
@@ -2264,8 +2264,8 @@ bb.d:                                             ; preds = %bb.c
   store i32 0, ptr %i.af, align 4, !tbaa !830
   %storemerge9.i.1 = add i32 %i.ad, 2
   store i32 %storemerge9.i.1, ptr @_ZN5boost9container4test11movable_int5countE, align 4, !tbaa !21
-  %storemerge.i.1 = add i64 %storemerge15.i, 2    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %storemerge.i.1 = add nuw i64 %storemerge15.i, 2 ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph.i
 
@@ -2668,7 +2668,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 %i.p, ptr %i.n, align 4, !tbaa !16392
   %storemerge9.i = add i32 %i.m, 2
   store i32 %storemerge9.i, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i = add i64 %storemerge15.i, 1      ; 4 uses
+  %storemerge.i = add nuw i64 %storemerge15.i, 1  ; 4 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge.i ; 2 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge15.i ; 2 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !16392
@@ -2680,8 +2680,8 @@ bb.c:                                             ; preds = %bb.b
   store i32 %i.w, ptr %i.u, align 4, !tbaa !16392
   %storemerge9.i.1 = add i32 %i.t, 2
   store i32 %storemerge9.i.1, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i.1 = add i64 %storemerge15.i, 2    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %storemerge.i.1 = add nuw i64 %storemerge15.i, 2 ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph.i
 
@@ -3084,7 +3084,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 %i.p, ptr %i.n, align 4, !tbaa !16392
   %storemerge9.i = add i32 %i.m, 2
   store i32 %storemerge9.i, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i = add i64 %storemerge15.i, 1      ; 4 uses
+  %storemerge.i = add nuw i64 %storemerge15.i, 1  ; 4 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %storemerge.i ; 2 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %storemerge15.i ; 2 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !16392
@@ -3096,8 +3096,8 @@ bb.c:                                             ; preds = %bb.b
   store i32 %i.w, ptr %i.u, align 4, !tbaa !16392
   %storemerge9.i.1 = add i32 %i.t, 2
   store i32 %storemerge9.i.1, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i.1 = add i64 %storemerge15.i, 2    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %storemerge.i.1 = add nuw i64 %storemerge15.i, 2 ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph.i
 
@@ -3500,7 +3500,7 @@ bb.d:                                             ; preds = %bb.c
   store i32 %i.z, ptr %i.x, align 4, !tbaa !16392
   %storemerge9.i = add i32 %i.w, 2
   store i32 %storemerge9.i, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i = add i64 %storemerge15.i, 1      ; 4 uses
+  %storemerge.i = add nuw i64 %storemerge15.i, 1  ; 4 uses
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge.i ; 2 uses
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge15.i ; 2 uses
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !16392
@@ -3512,8 +3512,8 @@ bb.d:                                             ; preds = %bb.c
   store i32 %i.ag, ptr %i.ae, align 4, !tbaa !16392
   %storemerge9.i.1 = add i32 %i.ad, 2
   store i32 %storemerge9.i.1, ptr @_ZN5boost9container4test12copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i.1 = add i64 %storemerge15.i, 2    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %storemerge.i.1 = add nuw i64 %storemerge15.i, 2 ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph.i
 
@@ -3916,7 +3916,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.o, align 4, !tbaa !21435
   %storemerge9.i = add i32 %i.m, 2
   store i32 %storemerge9.i, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i = add i64 %storemerge15.i, 1      ; 4 uses
+  %storemerge.i = add nuw i64 %storemerge15.i, 1  ; 4 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge.i ; 2 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge15.i ; 3 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !21435
@@ -3930,8 +3930,8 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.v, align 4, !tbaa !21435
   %storemerge9.i.1 = add i32 %i.t, 2
   store i32 %storemerge9.i.1, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i.1 = add i64 %storemerge15.i, 2    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %storemerge.i.1 = add nuw i64 %storemerge15.i, 2 ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph.i
 
@@ -4334,7 +4334,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.o, align 4, !tbaa !21435
   %storemerge9.i = add i32 %i.m, 2
   store i32 %storemerge9.i, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i = add i64 %storemerge15.i, 1      ; 4 uses
+  %storemerge.i = add nuw i64 %storemerge15.i, 1  ; 4 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %storemerge.i ; 2 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %storemerge15.i ; 3 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !21435
@@ -4348,8 +4348,8 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.v, align 4, !tbaa !21435
   %storemerge9.i.1 = add i32 %i.t, 2
   store i32 %storemerge9.i.1, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i.1 = add i64 %storemerge15.i, 2    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %storemerge.i.1 = add nuw i64 %storemerge15.i, 2 ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph.i
 
@@ -4752,7 +4752,7 @@ bb.d:                                             ; preds = %bb.c
   store i32 0, ptr %i.y, align 4, !tbaa !21435
   %storemerge9.i = add i32 %i.w, 2
   store i32 %storemerge9.i, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i = add i64 %storemerge15.i, 1      ; 4 uses
+  %storemerge.i = add nuw i64 %storemerge15.i, 1  ; 4 uses
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge.i ; 2 uses
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge15.i ; 3 uses
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !21435
@@ -4766,8 +4766,8 @@ bb.d:                                             ; preds = %bb.c
   store i32 0, ptr %i.af, align 4, !tbaa !21435
   %storemerge9.i.1 = add i32 %i.ad, 2
   store i32 %storemerge9.i.1, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i.1 = add i64 %storemerge15.i, 2    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %storemerge.i.1 = add nuw i64 %storemerge15.i, 2 ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph.i
 
@@ -5170,7 +5170,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.o, align 4, !tbaa !21435
   %storemerge9.i = add i32 %i.m, 2
   store i32 %storemerge9.i, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i = add i64 %storemerge15.i, 1      ; 4 uses
+  %storemerge.i = add nuw i64 %storemerge15.i, 1  ; 4 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge.i ; 2 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge15.i ; 3 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !21435
@@ -5184,8 +5184,8 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.v, align 4, !tbaa !21435
   %storemerge9.i.1 = add i32 %i.t, 2
   store i32 %storemerge9.i.1, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i.1 = add i64 %storemerge15.i, 2    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %storemerge.i.1 = add nuw i64 %storemerge15.i, 2 ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph.i
 
@@ -5588,7 +5588,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.o, align 4, !tbaa !21435
   %storemerge9.i = add i32 %i.m, 2
   store i32 %storemerge9.i, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i = add i64 %storemerge15.i, 1      ; 4 uses
+  %storemerge.i = add nuw i64 %storemerge15.i, 1  ; 4 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %storemerge.i ; 2 uses
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %storemerge15.i ; 3 uses
   %i.s = load i32, ptr %i.r, align 4, !tbaa !21435
@@ -5602,8 +5602,8 @@ bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.v, align 4, !tbaa !21435
   %storemerge9.i.1 = add i32 %i.t, 2
   store i32 %storemerge9.i.1, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i.1 = add i64 %storemerge15.i, 2    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %storemerge.i.1 = add nuw i64 %storemerge15.i, 2 ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph.i
 
@@ -6006,7 +6006,7 @@ bb.d:                                             ; preds = %bb.c
   store i32 0, ptr %i.y, align 4, !tbaa !21435
   %storemerge9.i = add i32 %i.w, 2
   store i32 %storemerge9.i, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i = add i64 %storemerge15.i, 1      ; 4 uses
+  %storemerge.i = add nuw i64 %storemerge15.i, 1  ; 4 uses
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge.i ; 2 uses
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %storemerge15.i ; 3 uses
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !21435
@@ -6020,8 +6020,8 @@ bb.d:                                             ; preds = %bb.c
   store i32 0, ptr %i.af, align 4, !tbaa !21435
   %storemerge9.i.1 = add i32 %i.ad, 2
   store i32 %storemerge9.i.1, ptr @_ZN5boost9container4test24movable_and_copyable_int5countE, align 4, !tbaa !21
-  %storemerge.i.1 = add i64 %storemerge15.i, 2    ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %storemerge.i.1 = add nuw i64 %storemerge15.i, 2 ; 2 uses
+  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph.i
 

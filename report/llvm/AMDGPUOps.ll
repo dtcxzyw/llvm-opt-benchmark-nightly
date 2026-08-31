@@ -205,7 +205,7 @@ _ZL41__mlir_ods_local_type_constraint_AMDGPU25PN4mlir9OperationENS_4TypeEN4llvm9
   br i1 %i.ec, label %.lr.ph.i.i60.preheader, label %.thread163
 
 .lr.ph.i.i60.preheader:                           ; preds = %_ZL41__mlir_ods_local_type_constraint_AMDGPU25PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit.thread
-  %.pre = load ptr, ptr %0, align 8, !tbaa !8     ; 4 uses
+  %.pre = load ptr, ptr %0, align 8, !tbaa !8     ; 5 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 44
   %.pre199 = load i32, ptr %.phi.trans.insert, align 4
   %.pre201 = and i32 %.pre199, 8388608
@@ -218,13 +218,24 @@ _ZN4mlir6amdgpu19PackedScaledTruncOp14getODSOperandsEj.exit73: ; preds = %.lr.ph
   %i.ef = getelementptr inbounds nuw i8, ptr %.pre, i64 72
   %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !14
   %i.eh = zext i32 %i.ee to i64
-  %i.ei = add nsw i64 %i.eh, -2                   ; 3 uses
+  %i.ei = add nsw i64 %i.eh, -2                   ; 2 uses
   %i.ej = icmp ugt i64 %i.ei, 1
   br i1 %i.ej, label %_ZN4mlir6amdgpu19PackedScaledTruncOp14getODSOperandsEj.exit73.thread, label %.preheader
 
 .preheader:                                       ; preds = %_ZN4mlir6amdgpu19PackedScaledTruncOp14getODSOperandsEj.exit73
   %.not174186 = icmp eq i32 %i.ee, 2
-  br i1 %.not174186, label %._crit_edge, label %.lr.ph189
+  br i1 %.not174186, label %._crit_edge, label %.lr.ph189.preheader
+
+.lr.ph189.preheader:                              ; preds = %.preheader
+  %21 = getelementptr inbounds nuw i8, ptr %i.eg, i64 88
+  %.sroa.0.0.copyload.i.i.i85 = load ptr, ptr %21, align 8, !tbaa !17
+  %22 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i85, i64 8
+  %.0.copyload.i.i.i.i.i86 = load i64, ptr %22, align 8
+  %23 = and i64 %.0.copyload.i.i.i.i.i86, -8
+  %24 = inttoptr i64 %23 to ptr
+  %25 = call fastcc i8 @_ZL41__mlir_ods_local_type_constraint_AMDGPU27PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef nonnull %.pre, ptr %24, ptr nonnull @.str.117, i64 7, i32 noundef 2)
+  %26 = trunc nuw i8 %25 to i1
+  br i1 %26, label %._crit_edge.loopexit, label %.thread163
 
 _ZN4mlir6amdgpu19PackedScaledTruncOp14getODSOperandsEj.exit73.thread: ; preds = %.lr.ph.i.i60.preheader, %_ZN4mlir6amdgpu19PackedScaledTruncOp14getODSOperandsEj.exit73
   %i.ek = phi i64 [ %i.ei, %_ZN4mlir6amdgpu19PackedScaledTruncOp14getODSOperandsEj.exit73 ], [ -2, %.lr.ph.i.i60.preheader ]
@@ -360,28 +371,7 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit80:          ; preds = %bb.ar, %bb.as
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #25
   br label %.thread163
 
-.lr.ph189:                                        ; preds = %.preheader, %29
-  %.4188 = phi i32 [ %30, %29 ], [ 2, %.preheader ] ; 2 uses
-  %.sroa.4107.0187 = phi i64 [ %31, %29 ], [ 0, %.preheader ] ; 2 uses
-  %21 = getelementptr inbounds nuw [32 x i8], ptr %i.eg, i64 %.sroa.4107.0187
-  %22 = getelementptr inbounds nuw i8, ptr %21, i64 88
-  %.sroa.0.0.copyload.i.i.i85 = load ptr, ptr %22, align 8, !tbaa !17
-  %23 = load ptr, ptr %0, align 8, !tbaa !8
-  %24 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i85, i64 8
-  %.0.copyload.i.i.i.i.i86 = load i64, ptr %24, align 8
-  %25 = and i64 %.0.copyload.i.i.i.i.i86, -8
-  %26 = inttoptr i64 %25 to ptr
-  %27 = call fastcc i8 @_ZL41__mlir_ods_local_type_constraint_AMDGPU27PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %23, ptr %26, ptr nonnull @.str.117, i64 7, i32 noundef %.4188)
-  %28 = trunc nuw i8 %27 to i1
-  br i1 %28, label %29, label %.thread163
-
-29:                                               ; preds = %.lr.ph189
-  %30 = add i32 %.4188, 1
-  %31 = add nuw nsw i64 %.sroa.4107.0187, 1       ; 2 uses
-  %.not174 = icmp eq i64 %31, %i.ei
-  br i1 %.not174, label %._crit_edge.loopexit, label %.lr.ph189
-
-._crit_edge.loopexit:                             ; preds = %29
+._crit_edge.loopexit:                             ; preds = %.lr.ph189.preheader
   %.pre200 = load ptr, ptr %0, align 8, !tbaa !8
   br label %._crit_edge
 
@@ -397,8 +387,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit80:          ; preds = %bb.ar, %bb.as
   %i.gc = call fastcc i8 @_ZL41__mlir_ods_local_type_constraint_AMDGPU27PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %i.fy, ptr %i.gb, ptr nonnull @.str.118, i64 6, i32 noundef 0)
   br label %.thread163
 
-.thread163:                                       ; preds = %.lr.ph189, %._crit_edge, %_ZL41__mlir_ods_local_type_constraint_AMDGPU25PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit, %_ZL41__mlir_ods_local_type_constraint_AMDGPU25PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit.thread, %_ZN4mlir18InFlightDiagnosticD2Ev.exit80, %bb.f, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.038.15 = phi i8 [ %i.l, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZL41__mlir_ods_local_type_constraint_AMDGPU25PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit.thread ], [ %i.gc, %._crit_edge ], [ 0, %_ZL41__mlir_ods_local_type_constraint_AMDGPU25PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit ], [ 0, %bb.f ], [ %i.fp, %_ZN4mlir18InFlightDiagnosticD2Ev.exit80 ], [ 0, %.lr.ph189 ]
+.thread163:                                       ; preds = %._crit_edge, %_ZL41__mlir_ods_local_type_constraint_AMDGPU25PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit, %_ZL41__mlir_ods_local_type_constraint_AMDGPU25PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit.thread, %.lr.ph189.preheader, %_ZN4mlir18InFlightDiagnosticD2Ev.exit80, %bb.f, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.038.15 = phi i8 [ %i.l, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZL41__mlir_ods_local_type_constraint_AMDGPU25PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit.thread ], [ 0, %_ZL41__mlir_ods_local_type_constraint_AMDGPU25PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit ], [ 0, %.lr.ph189.preheader ], [ 0, %bb.f ], [ %i.fp, %_ZN4mlir18InFlightDiagnosticD2Ev.exit80 ], [ %i.gc, %._crit_edge ]
   ret i8 %.sroa.038.15
 }
 
@@ -801,7 +791,7 @@ _ZN4mlir6amdgpu21PackedStochRoundFp8Op14getODSOperandsEj.exit: ; preds = %bb.f
   br i1 %i.am, label %.lr.ph.i.i56.preheader, label %.thread156
 
 .lr.ph.i.i56.preheader:                           ; preds = %.lr.ph.i.i.preheader
-  %.pre = load ptr, ptr %0, align 8, !tbaa !8     ; 4 uses
+  %.pre = load ptr, ptr %0, align 8, !tbaa !8     ; 5 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 44
   %.pre191 = load i32, ptr %.phi.trans.insert, align 4
   %.pre193 = and i32 %.pre191, 8388608
@@ -814,13 +804,24 @@ _ZN4mlir6amdgpu21PackedStochRoundFp8Op14getODSOperandsEj.exit69: ; preds = %.lr.
   %i.ap = getelementptr inbounds nuw i8, ptr %.pre, i64 72
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !14
   %i.ar = zext i32 %i.ao to i64
-  %i.as = add nsw i64 %i.ar, -2                   ; 3 uses
+  %i.as = add nsw i64 %i.ar, -2                   ; 2 uses
   %i.at = icmp ugt i64 %i.as, 1
   br i1 %i.at, label %_ZN4mlir6amdgpu21PackedStochRoundFp8Op14getODSOperandsEj.exit69.thread, label %.preheader
 
 .preheader:                                       ; preds = %_ZN4mlir6amdgpu21PackedStochRoundFp8Op14getODSOperandsEj.exit69
   %.not167179 = icmp eq i32 %i.ao, 2
-  br i1 %.not167179, label %._crit_edge, label %.lr.ph182
+  br i1 %.not167179, label %._crit_edge, label %.lr.ph182.preheader
+
+.lr.ph182.preheader:                              ; preds = %.preheader
+  %9 = getelementptr inbounds nuw i8, ptr %i.aq, i64 88
+  %.sroa.0.0.copyload.i.i.i81 = load ptr, ptr %9, align 8, !tbaa !17
+  %10 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i81, i64 8
+  %.0.copyload.i.i.i.i.i82 = load i64, ptr %10, align 8
+  %11 = and i64 %.0.copyload.i.i.i.i.i82, -8
+  %12 = inttoptr i64 %11 to ptr
+  %13 = call fastcc i8 @_ZL41__mlir_ods_local_type_constraint_AMDGPU28PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef nonnull %.pre, ptr %12, ptr nonnull @.str.117, i64 7, i32 noundef 2)
+  %14 = trunc nuw i8 %13 to i1
+  br i1 %14, label %._crit_edge.loopexit, label %.thread156
 
 _ZN4mlir6amdgpu21PackedStochRoundFp8Op14getODSOperandsEj.exit69.thread: ; preds = %.lr.ph.i.i56.preheader, %_ZN4mlir6amdgpu21PackedStochRoundFp8Op14getODSOperandsEj.exit69
   %i.au = phi i64 [ %i.as, %_ZN4mlir6amdgpu21PackedStochRoundFp8Op14getODSOperandsEj.exit69 ], [ -2, %.lr.ph.i.i56.preheader ]
@@ -956,28 +957,7 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit76:          ; preds = %bb.q, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
   br label %.thread156
 
-.lr.ph182:                                        ; preds = %.preheader, %17
-  %.4181 = phi i32 [ %18, %17 ], [ 2, %.preheader ] ; 2 uses
-  %.sroa.4103.0180 = phi i64 [ %19, %17 ], [ 0, %.preheader ] ; 2 uses
-  %9 = getelementptr inbounds nuw [32 x i8], ptr %i.aq, i64 %.sroa.4103.0180
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 88
-  %.sroa.0.0.copyload.i.i.i81 = load ptr, ptr %10, align 8, !tbaa !17
-  %11 = load ptr, ptr %0, align 8, !tbaa !8
-  %12 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i81, i64 8
-  %.0.copyload.i.i.i.i.i82 = load i64, ptr %12, align 8
-  %13 = and i64 %.0.copyload.i.i.i.i.i82, -8
-  %14 = inttoptr i64 %13 to ptr
-  %15 = call fastcc i8 @_ZL41__mlir_ods_local_type_constraint_AMDGPU28PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %11, ptr %14, ptr nonnull @.str.117, i64 7, i32 noundef %.4181)
-  %16 = trunc nuw i8 %15 to i1
-  br i1 %16, label %17, label %.thread156
-
-17:                                               ; preds = %.lr.ph182
-  %18 = add i32 %.4181, 1
-  %19 = add nuw nsw i64 %.sroa.4103.0180, 1       ; 2 uses
-  %.not167 = icmp eq i64 %19, %i.as
-  br i1 %.not167, label %._crit_edge.loopexit, label %.lr.ph182
-
-._crit_edge.loopexit:                             ; preds = %17
+._crit_edge.loopexit:                             ; preds = %.lr.ph182.preheader
   %.pre192 = load ptr, ptr %0, align 8, !tbaa !8
   br label %._crit_edge
 
@@ -993,8 +973,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit76:          ; preds = %bb.q, %bb.r
   %i.cm = call fastcc i8 @_ZL41__mlir_ods_local_type_constraint_AMDGPU28PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %i.ci, ptr %i.cl, ptr nonnull @.str.118, i64 6, i32 noundef 0)
   br label %.thread156
 
-.thread156:                                       ; preds = %.lr.ph182, %._crit_edge, %_ZN4mlir6amdgpu21PackedStochRoundFp8Op14getODSOperandsEj.exit, %.lr.ph.i.i.preheader, %_ZN4mlir18InFlightDiagnosticD2Ev.exit76, %bb.f, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.038.15 = phi i8 [ %i.l, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %.lr.ph.i.i.preheader ], [ %i.cm, %._crit_edge ], [ 0, %_ZN4mlir6amdgpu21PackedStochRoundFp8Op14getODSOperandsEj.exit ], [ 0, %bb.f ], [ %i.bz, %_ZN4mlir18InFlightDiagnosticD2Ev.exit76 ], [ 0, %.lr.ph182 ]
+.thread156:                                       ; preds = %._crit_edge, %_ZN4mlir6amdgpu21PackedStochRoundFp8Op14getODSOperandsEj.exit, %.lr.ph.i.i.preheader, %.lr.ph182.preheader, %_ZN4mlir18InFlightDiagnosticD2Ev.exit76, %bb.f, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.038.15 = phi i8 [ %i.l, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %.lr.ph.i.i.preheader ], [ 0, %_ZN4mlir6amdgpu21PackedStochRoundFp8Op14getODSOperandsEj.exit ], [ 0, %.lr.ph182.preheader ], [ 0, %bb.f ], [ %i.bz, %_ZN4mlir18InFlightDiagnosticD2Ev.exit76 ], [ %i.cm, %._crit_edge ]
   ret i8 %.sroa.038.15
 }
 

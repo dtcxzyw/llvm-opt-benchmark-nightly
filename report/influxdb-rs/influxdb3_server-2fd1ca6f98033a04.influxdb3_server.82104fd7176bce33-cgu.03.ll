@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.ap, %.lr.ph.i
   %.sroa.076.0150.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ct, %bb.ap ] ; 5 uses
-  %i.ct = add nuw i64 %.sroa.076.0150.i, 1        ; 2 uses
+  %i.ct = add nuw nsw i64 %.sroa.076.0150.i, 1    ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %.val.i, i64 %.sroa.076.0150.i
   %i.cv = load i8, ptr %i.cu, align 1, !range !3092, !noalias !12824, !noundef !6
   %i.cw = trunc nuw i8 %i.cv to i1
@@ -257,7 +257,7 @@ bb.s:                                             ; preds = %bb.q
 
 bb.t:                                             ; preds = %bb.am, %.lr.ph153.i
   %.sroa.078.0151.i = phi i64 [ 0, %.lr.ph153.i ], [ %i.dh, %bb.am ] ; 5 uses
-  %i.dh = add nuw i64 %.sroa.078.0151.i, 1        ; 2 uses
+  %i.dh = add nuw nsw i64 %.sroa.078.0151.i, 1    ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %.val.i, i64 %.sroa.078.0151.i
   %i.dj = load i8, ptr %i.di, align 1, !range !3092, !noalias !12827, !noundef !6
   %i.dk = trunc nuw i8 %i.dj to i1
@@ -549,7 +549,7 @@ bb.ba:                                            ; preds = %bb.ay
 
 bb.bb:                                            ; preds = %bb.ce, %.lr.ph.i30
   %.sroa.076.0150.i31 = phi i64 [ 0, %.lr.ph.i30 ], [ %i.eu, %bb.ce ] ; 5 uses
-  %i.eu = add nuw i64 %.sroa.076.0150.i31, 1      ; 2 uses
+  %i.eu = add nuw nsw i64 %.sroa.076.0150.i31, 1  ; 2 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %.val.i6, i64 %.sroa.076.0150.i31
   %i.ew = load i8, ptr %i.ev, align 1, !range !3092, !noalias !12851, !noundef !6
   %i.ex = trunc nuw i8 %i.ew to i1
@@ -604,7 +604,7 @@ bb.bh:                                            ; preds = %bb.bf
 
 bb.bi:                                            ; preds = %bb.cb, %.lr.ph153.i39
   %.sroa.078.0151.i40 = phi i64 [ 0, %.lr.ph153.i39 ], [ %i.fi, %bb.cb ] ; 5 uses
-  %i.fi = add nuw i64 %.sroa.078.0151.i40, 1      ; 2 uses
+  %i.fi = add nuw nsw i64 %.sroa.078.0151.i40, 1  ; 2 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %.val.i6, i64 %.sroa.078.0151.i40
   %i.fk = load i8, ptr %i.fj, align 1, !range !3092, !noalias !12854, !noundef !6
   %i.fl = trunc nuw i8 %i.fk to i1
@@ -896,7 +896,7 @@ bb.cp:                                            ; preds = %bb.cn
 
 bb.cq:                                            ; preds = %bb.dt, %.lr.ph.i100
   %.sroa.076.0150.i101 = phi i64 [ 0, %.lr.ph.i100 ], [ %i.gv, %bb.dt ] ; 5 uses
-  %i.gv = add nuw i64 %.sroa.076.0150.i101, 1     ; 2 uses
+  %i.gv = add nuw nsw i64 %.sroa.076.0150.i101, 1 ; 2 uses
   %i.gw = getelementptr inbounds nuw i8, ptr %.val.i76, i64 %.sroa.076.0150.i101
   %i.gx = load i8, ptr %i.gw, align 1, !range !3092, !noalias !12878, !noundef !6
   %i.gy = trunc nuw i8 %i.gx to i1
@@ -951,7 +951,7 @@ bb.cw:                                            ; preds = %bb.cu
 
 bb.cx:                                            ; preds = %bb.dq, %.lr.ph153.i109
   %.sroa.078.0151.i110 = phi i64 [ 0, %.lr.ph153.i109 ], [ %i.hj, %bb.dq ] ; 5 uses
-  %i.hj = add nuw i64 %.sroa.078.0151.i110, 1     ; 2 uses
+  %i.hj = add nuw nsw i64 %.sroa.078.0151.i110, 1 ; 2 uses
   %i.hk = getelementptr inbounds nuw i8, ptr %.val.i76, i64 %.sroa.078.0151.i110
   %i.hl = load i8, ptr %i.hk, align 1, !range !3092, !noalias !12881, !noundef !6
   %i.hm = trunc nuw i8 %i.hl to i1
@@ -1243,7 +1243,7 @@ bb.ee:                                            ; preds = %bb.ec
 
 bb.ef:                                            ; preds = %bb.fi, %.lr.ph.i170
   %.sroa.076.0150.i171 = phi i64 [ 0, %.lr.ph.i170 ], [ %i.iw, %bb.fi ] ; 5 uses
-  %i.iw = add nuw i64 %.sroa.076.0150.i171, 1     ; 2 uses
+  %i.iw = add nuw nsw i64 %.sroa.076.0150.i171, 1 ; 2 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %.val.i146, i64 %.sroa.076.0150.i171
   %i.iy = load i8, ptr %i.ix, align 1, !range !3092, !noalias !12905, !noundef !6
   %i.iz = trunc nuw i8 %i.iy to i1
@@ -1298,7 +1298,7 @@ bb.el:                                            ; preds = %bb.ej
 
 bb.em:                                            ; preds = %bb.ff, %.lr.ph153.i179
   %.sroa.078.0151.i180 = phi i64 [ 0, %.lr.ph153.i179 ], [ %i.jk, %bb.ff ] ; 5 uses
-  %i.jk = add nuw i64 %.sroa.078.0151.i180, 1     ; 2 uses
+  %i.jk = add nuw nsw i64 %.sroa.078.0151.i180, 1 ; 2 uses
   %i.jl = getelementptr inbounds nuw i8, ptr %.val.i146, i64 %.sroa.078.0151.i180
   %i.jm = load i8, ptr %i.jl, align 1, !range !3092, !noalias !12908, !noundef !6
   %i.jn = trunc nuw i8 %i.jm to i1
@@ -1590,7 +1590,7 @@ bb.ft:                                            ; preds = %bb.fr
 
 bb.fu:                                            ; preds = %bb.gx, %.lr.ph.i240
   %.sroa.076.0150.i241 = phi i64 [ 0, %.lr.ph.i240 ], [ %i.kx, %bb.gx ] ; 5 uses
-  %i.kx = add nuw i64 %.sroa.076.0150.i241, 1     ; 2 uses
+  %i.kx = add nuw nsw i64 %.sroa.076.0150.i241, 1 ; 2 uses
   %i.ky = getelementptr inbounds nuw i8, ptr %.val.i216, i64 %.sroa.076.0150.i241
   %i.kz = load i8, ptr %i.ky, align 1, !range !3092, !noalias !12932, !noundef !6
   %i.la = trunc nuw i8 %i.kz to i1
@@ -1645,7 +1645,7 @@ bb.ga:                                            ; preds = %bb.fy
 
 bb.gb:                                            ; preds = %bb.gu, %.lr.ph153.i249
   %.sroa.078.0151.i250 = phi i64 [ 0, %.lr.ph153.i249 ], [ %i.ll, %bb.gu ] ; 5 uses
-  %i.ll = add nuw i64 %.sroa.078.0151.i250, 1     ; 2 uses
+  %i.ll = add nuw nsw i64 %.sroa.078.0151.i250, 1 ; 2 uses
   %i.lm = getelementptr inbounds nuw i8, ptr %.val.i216, i64 %.sroa.078.0151.i250
   %i.ln = load i8, ptr %i.lm, align 1, !range !3092, !noalias !12935, !noundef !6
   %i.lo = trunc nuw i8 %i.ln to i1
@@ -1937,7 +1937,7 @@ bb.hi:                                            ; preds = %bb.hg
 
 bb.hj:                                            ; preds = %bb.im, %.lr.ph.i310
   %.sroa.076.0150.i311 = phi i64 [ 0, %.lr.ph.i310 ], [ %i.my, %bb.im ] ; 5 uses
-  %i.my = add nuw i64 %.sroa.076.0150.i311, 1     ; 2 uses
+  %i.my = add nuw nsw i64 %.sroa.076.0150.i311, 1 ; 2 uses
   %i.mz = getelementptr inbounds nuw i8, ptr %.val.i286, i64 %.sroa.076.0150.i311
   %i.na = load i8, ptr %i.mz, align 1, !range !3092, !noalias !12959, !noundef !6
   %i.nb = trunc nuw i8 %i.na to i1
@@ -1992,7 +1992,7 @@ bb.hp:                                            ; preds = %bb.hn
 
 bb.hq:                                            ; preds = %bb.ij, %.lr.ph153.i319
   %.sroa.078.0151.i320 = phi i64 [ 0, %.lr.ph153.i319 ], [ %i.nm, %bb.ij ] ; 5 uses
-  %i.nm = add nuw i64 %.sroa.078.0151.i320, 1     ; 2 uses
+  %i.nm = add nuw nsw i64 %.sroa.078.0151.i320, 1 ; 2 uses
   %i.nn = getelementptr inbounds nuw i8, ptr %.val.i286, i64 %.sroa.078.0151.i320
   %i.no = load i8, ptr %i.nn, align 1, !range !3092, !noalias !12962, !noundef !6
   %i.np = trunc nuw i8 %i.no to i1

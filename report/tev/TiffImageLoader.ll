@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/TiffImageLoader?download=true
 inline.NumInlined: 18382
 inline.NumDeleted: 4972
-loop-unroll.NumCompletelyUnrolled: 111
+loop-unroll.NumCompletelyUnrolled: 113
 loop-unroll.NumRuntimeUnrolled: 64
-loop-unroll.NumUnrolled: 175
+loop-unroll.NumUnrolled: 177
 begin_hunk_0_@"_ZN3tev10ThreadPool11parallelForITkNSt3__18integralEmTkNS2_9invocableIT_EEZNS_23postprocessLinearRawDngEP4tiffRKNS_16MultiChannelViewIfEERNS_9ImageDataEbbiE3$_9EENS_4TaskIvEES4_S4_mT0_i":.from.
   invoke void @__cxa_end_catch()
           to label %_ZN3tev15TaskPromiseBaseIvE11return_voidEv.exit unwind label %.from.70
@@ -205,12 +205,12 @@ define dso_local void @_ZN3tev14postprocessRgbEP4tiffttmRKNS_16MultiChannelViewI
   %25 = alloca %"struct.std::__1::array.86", align 4 ; 5 uses
   %26 = alloca %"struct.std::__1::array.86", align 4 ; 5 uses
   %27 = alloca %class.anon.236, align 8           ; 4 uses
-  %i.b = tail call noalias noundef nonnull dereferenceable(432) ptr @_Znwm(i64 noundef 432) #47 ; 82 uses
+  %i.b = tail call noalias noundef nonnull dereferenceable(432) ptr @_Znwm(i64 noundef 432) #47 ; 84 uses
   store ptr @_ZN3tev14postprocessRgbEP4tiffttmRKNS_16MultiChannelViewIfEERNS_9ImageDataERKNSt3__14spanIKhLm18446744073709551615EEENS_10EAlphaKindEi.resume, ptr %i.b, align 8
   %destroy.addr = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr @_ZN3tev14postprocessRgbEP4tiffttmRKNS_16MultiChannelViewIfEERNS_9ImageDataERKNSt3__14spanIKhLm18446744073709551615EEENS_10EAlphaKindEi.destroy, ptr %destroy.addr, align 8
   %.reload.addr914 = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 5 uses
-  %.reload.addr915 = getelementptr inbounds nuw i8, ptr %i.b, i64 184 ; 23 uses
+  %.reload.addr915 = getelementptr inbounds nuw i8, ptr %i.b, i64 184 ; 22 uses
   %.reload.addr916 = getelementptr inbounds nuw i8, ptr %i.b, i64 240 ; 31 uses
   %.reload.addr920 = getelementptr inbounds nuw i8, ptr %i.b, i64 360 ; 13 uses
   %.reload.addr925 = getelementptr inbounds nuw i8, ptr %i.b, i64 272 ; 13 uses
@@ -613,7 +613,10 @@ _ZN4tlog5debugENSt3__117basic_string_viewIcNS0_11char_traitsIcEEEE.exit274: ; pr
   br i1 %exitcond.not1080, label %._crit_edge, label %.lr.ph.lr.ph, !llvm.loop !705
 
 .lr.ph.lr.ph:                                     ; preds = %.lr.ph.from..preheader
-  br label %.lr.ph, !llvm.loop !705
+  %28 = getelementptr inbounds nuw i8, ptr %i.b, i64 208
+  %29 = load i64, ptr %28, align 16, !tbaa !92
+  %30 = icmp ult i64 %29, 2
+  br i1 %30, label %.lr.ph._crit_edge, label %.lr.ph.from., !llvm.loop !705
 
 bb.bv:                                            ; preds = %_ZN4tlog5debugENSt3__117basic_string_viewIcNS0_11char_traitsIcEEEE.exit274
   %i.oy = call ptr @__cxa_allocate_exception(i64 16) #44 ; 4 uses
@@ -691,10 +694,7 @@ bb.by:                                            ; preds = %bb.bw
   call void @__cxa_free_exception(ptr %i.oy) #44
   br label %.from.774
 
-.lr.ph.from..._crit_edge.loopexit_crit_edge:      ; preds = %.lr.ph.from..a
-  br label %._crit_edge, !llvm.loop !705
-
-._crit_edge:                                      ; preds = %.lr.ph.from..preheader, %.lr.ph.from..._crit_edge.loopexit_crit_edge, %.preheader.split
+._crit_edge:                                      ; preds = %.lr.ph.from., %.lr.ph.from..1, %.lr.ph.from..preheader, %.preheader.split
   %.reload832 = load i16, ptr %.spill.addr830, align 2, !tbaa !693
   %.reload827 = load i16, ptr %.spill.addr825, align 8, !tbaa !693
   %.reload816 = load ptr, ptr %.spill.addr, align 16, !tbaa !693
@@ -716,16 +716,8 @@ bb.by:                                            ; preds = %bb.bw
   %i.ps = invoke { ptr, i64 } @_ZN3tev11tiffGetSpanItEENSt3__14spanIKT_Lm18446744073709551615EEEP4tiffj(ptr noundef %.reload816, i32 noundef 342)
           to label %bb.cc unwind label %.from.695 ; 2 uses
 
-.lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.lr.ph.from..a
-  %28 = phi i64 [ 1, %.lr.ph.lr.ph ], [ %33, %.lr.ph.from..a ] ; 3 uses
-  %29 = getelementptr inbounds nuw [16 x i8], ptr %.reload.addr915, i64 %28
-  %30 = getelementptr inbounds nuw i8, ptr %29, i64 8
-  %31 = load i64, ptr %30, align 8, !tbaa !92
-  %32 = icmp ult i64 %31, 2
-  br i1 %32, label %.lr.ph._crit_edge, label %.lr.ph.from..a, !llvm.loop !705
-
-.lr.ph._crit_edge:                                ; preds = %.lr.ph, %.lr.ph.preheader
-  %storemerge511.lcssa = phi i64 [ 0, %.lr.ph.preheader ], [ %28, %.lr.ph ]
+.lr.ph._crit_edge:                                ; preds = %.lr.ph.lr.ph, %.lr.ph.from..a, %.lr.ph.preheader
+  %storemerge511.lcssa = phi i64 [ 0, %.lr.ph.preheader ], [ 1, %.lr.ph.lr.ph ], [ 2, %.lr.ph.from..a ]
   %i.pt = call ptr @__cxa_allocate_exception(i64 16) #44 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #44
   store i64 %storemerge511.lcssa, ptr %.reload.addr926, align 16, !tbaa !12, !noalias !706
@@ -785,10 +777,18 @@ bb.cb:                                            ; preds = %bb.bz
   call void @__cxa_free_exception(ptr %i.pt) #44
   br label %.from.774
 
-.lr.ph.from..a:                                   ; preds = %.lr.ph
-  %33 = add nuw nsw i64 %28, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %33, %i.ou
-  br i1 %exitcond.not, label %.lr.ph.from..._crit_edge.loopexit_crit_edge, label %.lr.ph, !llvm.loop !705
+.lr.ph.from.:                                     ; preds = %.lr.ph.lr.ph
+  %exitcond.not = icmp eq i64 %i.ou, 2
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.from..a, !llvm.loop !705
+
+.lr.ph.from..a:                                   ; preds = %.lr.ph.from.
+  %31 = getelementptr inbounds nuw i8, ptr %i.b, i64 224
+  %32 = load i64, ptr %31, align 16, !tbaa !92
+  %33 = icmp ult i64 %32, 2
+  br i1 %33, label %.lr.ph._crit_edge, label %.lr.ph.from..1, !llvm.loop !705
+
+.lr.ph.from..1:                                   ; preds = %.lr.ph.from..a
+  br label %._crit_edge, !llvm.loop !705
 
 bb.cc:                                            ; preds = %._crit_edge
   %i.qg = extractvalue { ptr, i64 } %i.ps, 1
@@ -1191,7 +1191,7 @@ resume.entry:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %15 = alloca %"struct.nanogui::Array.39", align 8 ; 6 uses
   %.reload.addr914 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
-  %.reload.addr915 = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 21 uses
+  %.reload.addr915 = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 20 uses
   %.reload.addr917 = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 27 uses
   %.reload.addr920 = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 11 uses
   %.reload.addr925 = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 11 uses
@@ -1594,7 +1594,10 @@ _ZN4tlog5debugENSt3__117basic_string_viewIcNS0_11char_traitsIcEEEE.exit274: ; pr
   br i1 %exitcond.not94, label %._crit_edge, label %.lr.ph.lr.ph, !llvm.loop !6878
 
 .lr.ph.lr.ph:                                     ; preds = %.lr.ph.from..preheader
-  br label %.lr.ph, !llvm.loop !6878
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 208
+  %17 = load i64, ptr %16, align 16, !tbaa !92
+  %18 = icmp ult i64 %17, 2
+  br i1 %18, label %.lr.ph._crit_edge, label %.lr.ph.from., !llvm.loop !6878
 
 bb.ax:                                            ; preds = %_ZN4tlog5debugENSt3__117basic_string_viewIcNS0_11char_traitsIcEEEE.exit274
   %i.jh = call ptr @__cxa_allocate_exception(i64 16) #44 ; 4 uses
@@ -1672,10 +1675,7 @@ bb.ba:                                            ; preds = %bb.ay
   call void @__cxa_free_exception(ptr %i.jh) #44
   br label %.from.774
 
-.lr.ph.from..._crit_edge.loopexit_crit_edge:      ; preds = %.lr.ph.from..a
-  br label %._crit_edge, !llvm.loop !6878
-
-._crit_edge:                                      ; preds = %.lr.ph.from..preheader, %.lr.ph.from..._crit_edge.loopexit_crit_edge, %.preheader.split
+._crit_edge:                                      ; preds = %.lr.ph.from., %.lr.ph.from..1, %.lr.ph.from..preheader, %.preheader.split
   %.reload.addr831 = getelementptr inbounds nuw i8, ptr %0, i64 426
   %.reload832 = load i16, ptr %.reload.addr831, align 2, !tbaa !693
   %.reload.addr826 = getelementptr inbounds nuw i8, ptr %0, i64 424
@@ -1699,16 +1699,8 @@ bb.ba:                                            ; preds = %bb.ay
   %i.kb = invoke { ptr, i64 } @_ZN3tev11tiffGetSpanItEENSt3__14spanIKT_Lm18446744073709551615EEEP4tiffj(ptr noundef %.reload816, i32 noundef 342)
           to label %bb.be unwind label %.from.695 ; 2 uses
 
-.lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.lr.ph.from..a
-  %16 = phi i64 [ 1, %.lr.ph.lr.ph ], [ %21, %.lr.ph.from..a ] ; 3 uses
-  %17 = getelementptr inbounds nuw [16 x i8], ptr %.reload.addr915, i64 %16
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 8
-  %19 = load i64, ptr %18, align 16, !tbaa !92
-  %20 = icmp ult i64 %19, 2
-  br i1 %20, label %.lr.ph._crit_edge, label %.lr.ph.from..a, !llvm.loop !6878
-
-.lr.ph._crit_edge:                                ; preds = %.lr.ph, %.lr.ph.preheader
-  %storemerge511.lcssa = phi i64 [ 0, %.lr.ph.preheader ], [ %16, %.lr.ph ]
+.lr.ph._crit_edge:                                ; preds = %.lr.ph.lr.ph, %.lr.ph.from..a, %.lr.ph.preheader
+  %storemerge511.lcssa = phi i64 [ 0, %.lr.ph.preheader ], [ 1, %.lr.ph.lr.ph ], [ 2, %.lr.ph.from..a ]
   %i.kc = call ptr @__cxa_allocate_exception(i64 16) #44 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #44
   store i64 %storemerge511.lcssa, ptr %.reload.addr926, align 16, !tbaa !12, !noalias !6879
@@ -1768,10 +1760,18 @@ bb.bd:                                            ; preds = %bb.bb
   call void @__cxa_free_exception(ptr %i.kc) #44
   br label %.from.774
 
-.lr.ph.from..a:                                   ; preds = %.lr.ph
-  %21 = add nuw nsw i64 %16, 1                    ; 2 uses
-  %exitcond.not = icmp eq i64 %21, %i.jd
-  br i1 %exitcond.not, label %.lr.ph.from..._crit_edge.loopexit_crit_edge, label %.lr.ph, !llvm.loop !6878
+.lr.ph.from.:                                     ; preds = %.lr.ph.lr.ph
+  %exitcond.not = icmp eq i64 %i.jd, 2
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.from..a, !llvm.loop !6878
+
+.lr.ph.from..a:                                   ; preds = %.lr.ph.from.
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 224
+  %20 = load i64, ptr %19, align 16, !tbaa !92
+  %21 = icmp ult i64 %20, 2
+  br i1 %21, label %.lr.ph._crit_edge, label %.lr.ph.from..1, !llvm.loop !6878
+
+.lr.ph.from..1:                                   ; preds = %.lr.ph.from..a
+  br label %._crit_edge, !llvm.loop !6878
 
 bb.be:                                            ; preds = %._crit_edge
   %i.kp = extractvalue { ptr, i64 } %i.kb, 1

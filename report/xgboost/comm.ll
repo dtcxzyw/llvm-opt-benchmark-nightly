@@ -205,12 +205,16 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %next.gep.a = getelementptr i8, ptr %i.ee, i64 %index
-  %i.er = getelementptr inbounds nuw i8, ptr %next.gep.a, i64 1
-  %wide.load = load <16 x i8>, ptr %i.er, align 1, !tbaa !43
-  %i.es = getelementptr inbounds nuw i8, ptr %i.co, i64 %index
-  %i.et = getelementptr inbounds nuw i8, ptr %i.es, i64 1
-  store <16 x i8> %wide.load, ptr %i.et, align 1, !tbaa !43
+  %next.gep = getelementptr i8, ptr %i.ee, i64 %index ; 2 uses
+  %next.gep.a = getelementptr inbounds nuw i8, ptr %next.gep, i64 1
+  %i.er = getelementptr inbounds nuw i8, ptr %next.gep, i64 9
+  %wide.load = load <8 x i8>, ptr %next.gep.a, align 1, !tbaa !43
+  %wide.load916 = load <8 x i8>, ptr %i.er, align 1, !tbaa !43
+  %52 = getelementptr inbounds nuw i8, ptr %i.co, i64 %index ; 2 uses
+  %i.es = getelementptr inbounds nuw i8, ptr %52, i64 1
+  %i.et = getelementptr inbounds nuw i8, ptr %52, i64 9
+  store <8 x i8> %wide.load, ptr %i.es, align 1, !tbaa !43
+  store <8 x i8> %wide.load916, ptr %i.et, align 1, !tbaa !43
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.eu = icmp eq i64 %index.next, %n.vec
   br i1 %i.eu, label %.lr.ph.i.i.i.i.i.preheader922, label %vector.body, !llvm.loop !234

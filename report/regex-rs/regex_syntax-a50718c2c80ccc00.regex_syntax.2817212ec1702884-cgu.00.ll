@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/regex-rs/original/regex_syntax-a50718c2c80ccc00.regex_syntax.2817212ec1702884-cgu.00?download=true
 inline.NumInlined: 618
 inline.NumDeleted: 116
-loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_RNvMs3_NtNtCs3roNzt6HBWW_12regex_syntax3ast5parseINtB5_7ParserIQNtB5_6ParserE11parse_octalB9_
 define internal fastcc void @_RNvMs3_NtNtCs3roNzt6HBWW_12regex_syntax3ast5parseINtB5_7ParserIQNtB5_6ParserE11parse_octalB9_(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(56) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #4 personality ptr @rust_eh_personality !dbg !12964 {
 bb.a:
@@ -204,9 +204,9 @@ bb.q:                                             ; preds = %thread-pre-split.i,
   %i.aj = phi i8 [ %.pr.i, %thread-pre-split.i ], [ %i.ai, %bb.p ], !dbg !13320
   %cond.i = icmp eq i8 %i.aj, 43, !dbg !13320     ; 2 uses
   %i.ak = sext i1 %cond.i to i64, !dbg !13320
-  %.sroa.15.0.i = add nsw i64 %i.ag, %i.ak, !dbg !13320 ; 4 uses
+  %.sroa.15.0.i = add nsw i64 %i.ag, %i.ak, !dbg !13320 ; 10 uses
   %.sroa.0.0.idx.i = zext i1 %cond.i to i64, !dbg !13320
-  %.sroa.0.0.i41 = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.sroa.0.0.idx.i, !dbg !13320 ; 2 uses
+  %.sroa.0.0.i41 = getelementptr inbounds nuw i8, ptr %i.ah, i64 %.sroa.0.0.idx.i, !dbg !13320 ; 9 uses
     #dbg_value(ptr %.sroa.0.0.i41, !13233, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13284)
     #dbg_value(ptr %.sroa.0.0.i41, !13223, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13282)
     #dbg_value(i64 %.sroa.15.0.i, !13233, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13284)
@@ -218,9 +218,9 @@ bb.q:                                             ; preds = %thread-pre-split.i,
     #dbg_value(ptr %.sroa.0.0.i41, !13291, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13292)
     #dbg_value(i64 %.sroa.15.0.i, !13291, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13292)
   %i.al = icmp samesign ult i64 %.sroa.15.0.i, 9
-  br i1 %i.al, label %.preheader.i.a, label %.preheader81.split.us.i.preheader, !dbg !13331
+  br i1 %i.al, label %.preheader.i, label %.preheader81.split.us.i.preheader, !dbg !13331
 
-.preheader81.split.us.i:                          ; preds = %bb.r
+.preheader81.split.us.i:                          ; preds = %2
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.1.us.i56, i64 1, !dbg !13332
     #dbg_value(ptr %i.am, !13258, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13333)
   %i.an = add nsw i64 %.sroa.15.1.us.i55, -1, !dbg !13332 ; 2 uses
@@ -232,7 +232,7 @@ bb.q:                                             ; preds = %thread-pre-split.i,
     #dbg_value(i32 %i.ao, !13297, !DIExpression(), !13304)
     #dbg_value(i32 %i.ao, !13315, !DIExpression(), !13316)
     #dbg_value(i32 %i.ao, !13325, !DIExpression(), !13329)
-  %i.ap = or disjoint i32 %i.at, %i.ao, !dbg !13337 ; 2 uses
+  %i.ap = or disjoint i32 %4, %i.ao, !dbg !13337  ; 2 uses
     #dbg_value(ptr %i.am, !13233, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13284)
     #dbg_value(ptr %i.am, !13223, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13282)
     #dbg_value(i64 %i.an, !13233, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13284)
@@ -259,20 +259,20 @@ bb.q:                                             ; preds = %thread-pre-split.i,
     #dbg_value(i1 %i.aq, !13300, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13335)
     #dbg_value(i1 %i.aq, !13339, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13342)
   %i.ar = load i8, ptr %.sroa.0.1.us.i56, align 1, !dbg !13344, !alias.scope !13321, !noundef !27 ; 2 uses
-  br i1 %i.aq, label %.split.us.i, label %bb.r, !dbg !13345, !prof !1194
+  br i1 %i.aq, label %.split.us.i, label %2, !dbg !13345, !prof !1194
 
-bb.r:                                             ; preds = %.preheader81.split.us.i.preheader
+2:                                                ; preds = %.preheader81.split.us.i.preheader
     #dbg_value(i32 %.sroa.045.0.us.i54, !13298, !DIExpression(DW_OP_constu, 3, DW_OP_shl, DW_OP_stack_value), !13335)
     #dbg_value(i64 %.sroa.15.1.us.i55, !13258, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13333)
     #dbg_value(ptr %.sroa.0.1.us.i56, !13258, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13333)
     #dbg_value(i32 %.sroa.045.0.us.i54, !13259, !DIExpression(DW_OP_constu, 3, DW_OP_shl, DW_OP_stack_value, DW_OP_LLVM_fragment, 32, 32), !13336)
     #dbg_value(i32 1, !13259, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !13336)
-  %i.as = zext i8 %i.ar to i32, !dbg !13346
-    #dbg_value(i32 %i.as, !13347, !DIExpression(), !13355)
+  %3 = zext i8 %i.ar to i32, !dbg !13346
+    #dbg_value(i32 %3, !13347, !DIExpression(), !13355)
     #dbg_value(i32 8, !13352, !DIExpression(), !13355)
-  %i.at = add nsw i32 %i.as, -48, !dbg !13357     ; 2 uses
+  %4 = add nsw i32 %3, -48, !dbg !13357           ; 2 uses
     #dbg_value(i32 poison, !13353, !DIExpression(), !13358)
-  %i.au = icmp ult i32 %i.at, 8, !dbg !13359
+  %5 = icmp ult i32 %4, 8, !dbg !13359
     #dbg_value(i32 poison, !13261, !DIExpression(), !13360)
     #dbg_value(i32 %.sroa.045.0.us.i54, !13240, !DIExpression(DW_OP_constu, 3, DW_OP_shl, DW_OP_stack_value), !13324)
     #dbg_value(i32 %.sroa.045.0.us.i54, !13297, !DIExpression(DW_OP_constu, 3, DW_OP_shl, DW_OP_stack_value), !13304)
@@ -280,9 +280,9 @@ bb.r:                                             ; preds = %.preheader81.split.
     #dbg_value(i32 %.sroa.045.0.us.i54, !13325, !DIExpression(DW_OP_constu, 3, DW_OP_shl, DW_OP_stack_value), !13329)
     #dbg_value(i32 poison, !13328, !DIExpression(), !13329)
     #dbg_value(i1 false, !13339, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !13361)
-  br i1 %i.au, label %.preheader81.split.us.i, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread, !dbg !13363
+  br i1 %5, label %.preheader81.split.us.i, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread, !dbg !13363
 
-.preheader.i.a:                                   ; preds = %bb.q
+.preheader.i:                                     ; preds = %bb.q
     #dbg_value(ptr %.sroa.0.0.i41, !13233, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13284)
     #dbg_value(ptr %.sroa.0.0.i41, !13223, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13282)
     #dbg_value(i64 %.sroa.15.0.i, !13233, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13284)
@@ -291,54 +291,340 @@ bb.r:                                             ; preds = %.preheader81.split.
     #dbg_value(i32 0, !13315, !DIExpression(), !13316)
     #dbg_value(i32 0, !13297, !DIExpression(), !13304)
     #dbg_value(i32 0, !13240, !DIExpression(), !13324)
-  %.not7391.i.a = icmp eq i64 %.sroa.15.0.i, 0, !dbg !13364
+  %.not7391.i = icmp eq i64 %.sroa.15.0.i, 0, !dbg !13364
+  br i1 %.not7391.i, label %.loopexit.i, label %.lr.ph.split.us.i, !dbg !13364
+
+.lr.ph.split.us.i:                                ; preds = %.preheader.i
+    #dbg_value(ptr %.sroa.0.0.i41, !13242, !DIExpression(), !13365)
+    #dbg_value(ptr %.sroa.0.0.i41, !13244, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(!DIArgList(i32 0, i32 8), !13240, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13324)
+    #dbg_value(!DIArgList(i32 0, i32 8), !13297, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13304)
+    #dbg_value(!DIArgList(i32 0, i32 8), !13315, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13316)
+    #dbg_value(!DIArgList(i32 0, i32 8), !13325, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13329)
+  %6 = load i8, ptr %.sroa.0.0.i41, align 1, !dbg !13366, !alias.scope !13321, !noundef !27
+  %7 = zext i8 %6 to i32, !dbg !13367
+    #dbg_value(i32 %7, !13347, !DIExpression(), !13368)
+    #dbg_value(i32 8, !13352, !DIExpression(), !13368)
+  %8 = add nsw i32 %7, -48, !dbg !13370           ; 3 uses
+    #dbg_value(i32 poison, !13353, !DIExpression(), !13371)
+  %9 = icmp ult i32 %8, 8, !dbg !13372
+  br i1 %9, label %10, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread, !dbg !13373
+
+10:                                               ; preds = %.lr.ph.split.us.i
+    #dbg_value(i32 0, !13240, !DIExpression(), !13324)
+    #dbg_value(i32 0, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 0, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 0, !13325, !DIExpression(), !13329)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(ptr %.sroa.0.0.i41, !13244, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i32 poison, !13245, !DIExpression(), !13374)
+    #dbg_value(ptr %.sroa.0.0.i41, !13233, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13284)
+    #dbg_value(ptr %.sroa.0.0.i41, !13223, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13282)
+    #dbg_value(i64 %.sroa.15.0.i, !13233, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13284)
+    #dbg_value(i64 %.sroa.15.0.i, !13223, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13282)
+    #dbg_value(i32 %8, !13325, !DIExpression(), !13329)
+    #dbg_value(i32 %8, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 %8, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 %8, !13240, !DIExpression(), !13324)
+  %.not73.us.i = icmp eq i64 %.sroa.15.0.i, 1, !dbg !13364
+  br i1 %.not73.us.i, label %.loopexit.i, label %.lr.ph.split.us.i.1, !dbg !13364
+
+.lr.ph.split.us.i.1:                              ; preds = %10
+  %11 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i41, i64 1, !dbg !13375
+    #dbg_value(ptr %11, !13244, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(ptr %11, !13233, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13284)
+    #dbg_value(ptr %11, !13223, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13282)
+    #dbg_value(ptr %11, !13242, !DIExpression(), !13365)
+    #dbg_value(ptr %11, !13244, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(!DIArgList(i32 %8, i32 8), !13240, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13324)
+    #dbg_value(!DIArgList(i32 %8, i32 8), !13297, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13304)
+    #dbg_value(!DIArgList(i32 %8, i32 8), !13315, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13316)
+    #dbg_value(!DIArgList(i32 %8, i32 8), !13325, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13329)
+  %12 = load i8, ptr %11, align 1, !dbg !13366, !alias.scope !13321, !noundef !27
+  %13 = zext i8 %12 to i32, !dbg !13367
+    #dbg_value(i32 %13, !13347, !DIExpression(), !13368)
+    #dbg_value(i32 8, !13352, !DIExpression(), !13368)
+  %14 = add nsw i32 %13, -48, !dbg !13370         ; 2 uses
+    #dbg_value(i32 poison, !13353, !DIExpression(), !13371)
+  %15 = icmp ult i32 %14, 8, !dbg !13372
+  br i1 %15, label %16, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread, !dbg !13373
+
+16:                                               ; preds = %.lr.ph.split.us.i.1
+  %17 = shl nuw nsw i32 %8, 3, !dbg !13376
+    #dbg_value(i32 %17, !13240, !DIExpression(), !13324)
+    #dbg_value(i32 %17, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 %17, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 %17, !13325, !DIExpression(), !13329)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 2, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(ptr %.sroa.0.0.i41, !13244, !DIExpression(DW_OP_plus_uconst, 2, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i32 poison, !13245, !DIExpression(), !13374)
+  %18 = or disjoint i32 %14, %17, !dbg !13377     ; 2 uses
+    #dbg_value(ptr %.sroa.0.0.i41, !13233, !DIExpression(DW_OP_plus_uconst, 2, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13284)
+    #dbg_value(ptr %.sroa.0.0.i41, !13223, !DIExpression(DW_OP_plus_uconst, 2, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13282)
+    #dbg_value(i64 %.sroa.15.0.i, !13233, !DIExpression(DW_OP_constu, 2, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13284)
+    #dbg_value(i64 %.sroa.15.0.i, !13223, !DIExpression(DW_OP_constu, 2, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13282)
+    #dbg_value(i32 %18, !13325, !DIExpression(), !13329)
+    #dbg_value(i32 %18, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 %18, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 %18, !13240, !DIExpression(), !13324)
+  %.not73.us.i.1 = icmp eq i64 %.sroa.15.0.i, 2, !dbg !13364
+  br i1 %.not73.us.i.1, label %.loopexit.i, label %.lr.ph.split.us.i.2, !dbg !13364
+
+.lr.ph.split.us.i.2:                              ; preds = %16
+  %19 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i41, i64 2, !dbg !13375
+    #dbg_value(ptr %19, !13244, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(ptr %19, !13233, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13284)
+    #dbg_value(ptr %19, !13223, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13282)
+    #dbg_value(ptr %19, !13242, !DIExpression(), !13365)
+    #dbg_value(ptr %19, !13244, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 2, DW_OP_minus, DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(!DIArgList(i32 %18, i32 8), !13240, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13324)
+    #dbg_value(!DIArgList(i32 %18, i32 8), !13297, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13304)
+    #dbg_value(!DIArgList(i32 %18, i32 8), !13315, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13316)
+    #dbg_value(!DIArgList(i32 %18, i32 8), !13325, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13329)
+  %20 = load i8, ptr %19, align 1, !dbg !13366, !alias.scope !13321, !noundef !27
+  %21 = zext i8 %20 to i32, !dbg !13367
+    #dbg_value(i32 %21, !13347, !DIExpression(), !13368)
+    #dbg_value(i32 8, !13352, !DIExpression(), !13368)
+  %22 = add nsw i32 %21, -48, !dbg !13370         ; 2 uses
+    #dbg_value(i32 poison, !13353, !DIExpression(), !13371)
+  %23 = icmp ult i32 %22, 8, !dbg !13372
+  br i1 %23, label %24, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread, !dbg !13373
+
+24:                                               ; preds = %.lr.ph.split.us.i.2
+  %25 = shl nuw nsw i32 %18, 3, !dbg !13376
+    #dbg_value(i32 %25, !13240, !DIExpression(), !13324)
+    #dbg_value(i32 %25, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 %25, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 %25, !13325, !DIExpression(), !13329)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 3, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(ptr %.sroa.0.0.i41, !13244, !DIExpression(DW_OP_plus_uconst, 3, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i32 poison, !13245, !DIExpression(), !13374)
+  %26 = or disjoint i32 %22, %25, !dbg !13377     ; 2 uses
+    #dbg_value(ptr %.sroa.0.0.i41, !13233, !DIExpression(DW_OP_plus_uconst, 3, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13284)
+    #dbg_value(ptr %.sroa.0.0.i41, !13223, !DIExpression(DW_OP_plus_uconst, 3, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13282)
+    #dbg_value(i64 %.sroa.15.0.i, !13233, !DIExpression(DW_OP_constu, 3, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13284)
+    #dbg_value(i64 %.sroa.15.0.i, !13223, !DIExpression(DW_OP_constu, 3, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13282)
+    #dbg_value(i32 %26, !13325, !DIExpression(), !13329)
+    #dbg_value(i32 %26, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 %26, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 %26, !13240, !DIExpression(), !13324)
+  %.not73.us.i.2 = icmp eq i64 %.sroa.15.0.i, 3, !dbg !13364
+  br i1 %.not73.us.i.2, label %.loopexit.i, label %.lr.ph.split.us.i.3, !dbg !13364
+
+.lr.ph.split.us.i.3:                              ; preds = %24
+  %27 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i41, i64 3, !dbg !13375
+    #dbg_value(ptr %27, !13244, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(ptr %27, !13233, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13284)
+    #dbg_value(ptr %27, !13223, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13282)
+    #dbg_value(ptr %27, !13242, !DIExpression(), !13365)
+    #dbg_value(ptr %27, !13244, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 3, DW_OP_minus, DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(!DIArgList(i32 %26, i32 8), !13240, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13324)
+    #dbg_value(!DIArgList(i32 %26, i32 8), !13297, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13304)
+    #dbg_value(!DIArgList(i32 %26, i32 8), !13315, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13316)
+    #dbg_value(!DIArgList(i32 %26, i32 8), !13325, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13329)
+  %28 = load i8, ptr %27, align 1, !dbg !13366, !alias.scope !13321, !noundef !27
+  %29 = zext i8 %28 to i32, !dbg !13367
+    #dbg_value(i32 %29, !13347, !DIExpression(), !13368)
+    #dbg_value(i32 8, !13352, !DIExpression(), !13368)
+  %30 = add nsw i32 %29, -48, !dbg !13370         ; 2 uses
+    #dbg_value(i32 poison, !13353, !DIExpression(), !13371)
+  %31 = icmp ult i32 %30, 8, !dbg !13372
+  br i1 %31, label %32, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread, !dbg !13373
+
+32:                                               ; preds = %.lr.ph.split.us.i.3
+  %33 = shl nuw nsw i32 %26, 3, !dbg !13376
+    #dbg_value(i32 %33, !13240, !DIExpression(), !13324)
+    #dbg_value(i32 %33, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 %33, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 %33, !13325, !DIExpression(), !13329)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 4, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(ptr %.sroa.0.0.i41, !13244, !DIExpression(DW_OP_plus_uconst, 4, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i32 poison, !13245, !DIExpression(), !13374)
+  %34 = or disjoint i32 %30, %33, !dbg !13377     ; 2 uses
+    #dbg_value(ptr %.sroa.0.0.i41, !13233, !DIExpression(DW_OP_plus_uconst, 4, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13284)
+    #dbg_value(ptr %.sroa.0.0.i41, !13223, !DIExpression(DW_OP_plus_uconst, 4, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13282)
+    #dbg_value(i64 %.sroa.15.0.i, !13233, !DIExpression(DW_OP_constu, 4, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13284)
+    #dbg_value(i64 %.sroa.15.0.i, !13223, !DIExpression(DW_OP_constu, 4, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13282)
+    #dbg_value(i32 %34, !13325, !DIExpression(), !13329)
+    #dbg_value(i32 %34, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 %34, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 %34, !13240, !DIExpression(), !13324)
+  %.not73.us.i.3 = icmp eq i64 %.sroa.15.0.i, 4, !dbg !13364
+  br i1 %.not73.us.i.3, label %.loopexit.i, label %.lr.ph.split.us.i.4, !dbg !13364
+
+.lr.ph.split.us.i.4:                              ; preds = %32
+  %35 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i41, i64 4, !dbg !13375
+    #dbg_value(ptr %35, !13244, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(ptr %35, !13233, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13284)
+    #dbg_value(ptr %35, !13223, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13282)
+    #dbg_value(ptr %35, !13242, !DIExpression(), !13365)
+    #dbg_value(ptr %35, !13244, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 4, DW_OP_minus, DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(!DIArgList(i32 %34, i32 8), !13240, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13324)
+    #dbg_value(!DIArgList(i32 %34, i32 8), !13297, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13304)
+    #dbg_value(!DIArgList(i32 %34, i32 8), !13315, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13316)
+    #dbg_value(!DIArgList(i32 %34, i32 8), !13325, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13329)
+  %36 = load i8, ptr %35, align 1, !dbg !13366, !alias.scope !13321, !noundef !27
+  %37 = zext i8 %36 to i32, !dbg !13367
+    #dbg_value(i32 %37, !13347, !DIExpression(), !13368)
+    #dbg_value(i32 8, !13352, !DIExpression(), !13368)
+  %38 = add nsw i32 %37, -48, !dbg !13370         ; 2 uses
+    #dbg_value(i32 poison, !13353, !DIExpression(), !13371)
+  %39 = icmp ult i32 %38, 8, !dbg !13372
+  br i1 %39, label %40, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread, !dbg !13373
+
+40:                                               ; preds = %.lr.ph.split.us.i.4
+  %41 = shl i32 %34, 3, !dbg !13376
+    #dbg_value(i32 %41, !13240, !DIExpression(), !13324)
+    #dbg_value(i32 %41, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 %41, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 %41, !13325, !DIExpression(), !13329)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 5, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(ptr %.sroa.0.0.i41, !13244, !DIExpression(DW_OP_plus_uconst, 5, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i32 poison, !13245, !DIExpression(), !13374)
+  %42 = or disjoint i32 %38, %41, !dbg !13377     ; 2 uses
+    #dbg_value(ptr %.sroa.0.0.i41, !13233, !DIExpression(DW_OP_plus_uconst, 5, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13284)
+    #dbg_value(ptr %.sroa.0.0.i41, !13223, !DIExpression(DW_OP_plus_uconst, 5, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13282)
+    #dbg_value(i64 %.sroa.15.0.i, !13233, !DIExpression(DW_OP_constu, 5, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13284)
+    #dbg_value(i64 %.sroa.15.0.i, !13223, !DIExpression(DW_OP_constu, 5, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13282)
+    #dbg_value(i32 %42, !13325, !DIExpression(), !13329)
+    #dbg_value(i32 %42, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 %42, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 %42, !13240, !DIExpression(), !13324)
+  %.not73.us.i.4 = icmp eq i64 %.sroa.15.0.i, 5, !dbg !13364
+  br i1 %.not73.us.i.4, label %.loopexit.i, label %bb.r, !dbg !13364
+
+bb.r:                                             ; preds = %40
+  %43 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i41, i64 5, !dbg !13375
+    #dbg_value(ptr %43, !13244, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(ptr %43, !13233, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13284)
+    #dbg_value(ptr %43, !13223, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13282)
+    #dbg_value(ptr %43, !13242, !DIExpression(), !13365)
+    #dbg_value(ptr %43, !13244, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 5, DW_OP_minus, DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(!DIArgList(i32 %42, i32 8), !13240, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13324)
+    #dbg_value(!DIArgList(i32 %42, i32 8), !13297, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13304)
+    #dbg_value(!DIArgList(i32 %42, i32 8), !13315, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13316)
+    #dbg_value(!DIArgList(i32 %42, i32 8), !13325, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13329)
+  %44 = load i8, ptr %43, align 1, !dbg !13366, !alias.scope !13321, !noundef !27
+  %i.as = zext i8 %44 to i32, !dbg !13367
+    #dbg_value(i32 %i.as, !13347, !DIExpression(), !13368)
+    #dbg_value(i32 8, !13352, !DIExpression(), !13368)
+  %i.at = add nsw i32 %i.as, -48, !dbg !13370     ; 2 uses
+    #dbg_value(i32 poison, !13353, !DIExpression(), !13371)
+  %i.au = icmp ult i32 %i.at, 8, !dbg !13372
+  br i1 %i.au, label %.preheader.i.a, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread, !dbg !13373
+
+.preheader.i.a:                                   ; preds = %bb.r
+  %45 = shl i32 %42, 3, !dbg !13376
+    #dbg_value(i32 %45, !13240, !DIExpression(), !13324)
+    #dbg_value(i32 %45, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 %45, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 %45, !13325, !DIExpression(), !13329)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 6, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(ptr %.sroa.0.0.i41, !13244, !DIExpression(DW_OP_plus_uconst, 6, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i32 poison, !13245, !DIExpression(), !13374)
+  %46 = or disjoint i32 %i.at, %45, !dbg !13377   ; 2 uses
+    #dbg_value(ptr %.sroa.0.0.i41, !13233, !DIExpression(DW_OP_plus_uconst, 6, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13284)
+    #dbg_value(ptr %.sroa.0.0.i41, !13223, !DIExpression(DW_OP_plus_uconst, 6, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13282)
+    #dbg_value(i64 %.sroa.15.0.i, !13233, !DIExpression(DW_OP_constu, 6, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13284)
+    #dbg_value(i64 %.sroa.15.0.i, !13223, !DIExpression(DW_OP_constu, 6, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13282)
+    #dbg_value(i32 %46, !13325, !DIExpression(), !13329)
+    #dbg_value(i32 %46, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 %46, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 %46, !13240, !DIExpression(), !13324)
+  %.not7391.i.a = icmp eq i64 %.sroa.15.0.i, 6, !dbg !13364
   br i1 %.not7391.i.a, label %.loopexit.i, label %.lr.ph.split.us.i.a, !dbg !13364
 
-.lr.ph.split.us.i.a:                              ; preds = %.preheader.i.a, %bb.s
-  %.sroa.0.294.us.i = phi ptr [ %4, %bb.s ], [ %.sroa.0.0.i41, %.preheader.i.a ] ; 2 uses
-  %.sroa.15.293.us.i = phi i64 [ %3, %bb.s ], [ %.sroa.15.0.i, %.preheader.i.a ]
-  %.sroa.045.292.us.i = phi i32 [ %5, %bb.s ], [ 0, %.preheader.i.a ]
-    #dbg_value(ptr %.sroa.0.294.us.i, !13242, !DIExpression(), !13365)
-    #dbg_value(ptr %.sroa.0.294.us.i, !13244, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
-    #dbg_value(i64 %.sroa.15.293.us.i, !13244, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
-    #dbg_value(!DIArgList(i32 %.sroa.045.292.us.i, i32 8), !13240, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13324)
-    #dbg_value(!DIArgList(i32 %.sroa.045.292.us.i, i32 8), !13297, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13304)
-    #dbg_value(!DIArgList(i32 %.sroa.045.292.us.i, i32 8), !13315, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13316)
-    #dbg_value(!DIArgList(i32 %.sroa.045.292.us.i, i32 8), !13325, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13329)
-  %i.av = load i8, ptr %.sroa.0.294.us.i, align 1, !dbg !13366, !alias.scope !13321, !noundef !27
+.lr.ph.split.us.i.a:                              ; preds = %.preheader.i.a
+  %47 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i41, i64 6, !dbg !13375
+    #dbg_value(ptr %47, !13244, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(ptr %47, !13233, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13284)
+    #dbg_value(ptr %47, !13223, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13282)
+    #dbg_value(ptr %47, !13242, !DIExpression(), !13365)
+    #dbg_value(ptr %47, !13244, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 6, DW_OP_minus, DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(!DIArgList(i32 %46, i32 8), !13240, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13324)
+    #dbg_value(!DIArgList(i32 %46, i32 8), !13297, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13304)
+    #dbg_value(!DIArgList(i32 %46, i32 8), !13315, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13316)
+    #dbg_value(!DIArgList(i32 %46, i32 8), !13325, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13329)
+  %i.av = load i8, ptr %47, align 1, !dbg !13366, !alias.scope !13321, !noundef !27
   %i.aw = zext i8 %i.av to i32, !dbg !13367
     #dbg_value(i32 %i.aw, !13347, !DIExpression(), !13368)
     #dbg_value(i32 8, !13352, !DIExpression(), !13368)
   %i.ax = add nsw i32 %i.aw, -48, !dbg !13370     ; 2 uses
     #dbg_value(i32 poison, !13353, !DIExpression(), !13371)
   %i.ay = icmp ult i32 %i.ax, 8, !dbg !13372
-  br i1 %i.ay, label %bb.s, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread, !dbg !13373
+  br i1 %i.ay, label %48, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread, !dbg !13373
 
-bb.s:                                             ; preds = %.lr.ph.split.us.i.a
-  %2 = shl i32 %.sroa.045.292.us.i, 3, !dbg !13374
-    #dbg_value(i32 %2, !13240, !DIExpression(), !13324)
-    #dbg_value(i32 %2, !13297, !DIExpression(), !13304)
-    #dbg_value(i32 %2, !13315, !DIExpression(), !13316)
-    #dbg_value(i32 %2, !13325, !DIExpression(), !13329)
-  %3 = add nsw i64 %.sroa.15.293.us.i, -1, !dbg !13375 ; 2 uses
-    #dbg_value(i64 %3, !13244, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13365)
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.294.us.i, i64 1, !dbg !13375
-    #dbg_value(ptr %4, !13244, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13365)
-    #dbg_value(i32 poison, !13245, !DIExpression(), !13376)
-  %5 = or disjoint i32 %i.ax, %2, !dbg !13377     ; 2 uses
-    #dbg_value(ptr %4, !13233, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13284)
-    #dbg_value(ptr %4, !13223, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13282)
-    #dbg_value(i64 %3, !13233, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13284)
-    #dbg_value(i64 %3, !13223, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !13282)
-    #dbg_value(i32 %5, !13325, !DIExpression(), !13329)
-    #dbg_value(i32 %5, !13315, !DIExpression(), !13316)
-    #dbg_value(i32 %5, !13297, !DIExpression(), !13304)
-    #dbg_value(i32 %5, !13240, !DIExpression(), !13324)
-  %.not73.us.i = icmp eq i64 %3, 0, !dbg !13364
-  br i1 %.not73.us.i, label %.loopexit.i, label %.lr.ph.split.us.i.a, !dbg !13364
+48:                                               ; preds = %.lr.ph.split.us.i.a
+  %49 = shl i32 %46, 3, !dbg !13376
+    #dbg_value(i32 %49, !13240, !DIExpression(), !13324)
+    #dbg_value(i32 %49, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 %49, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 %49, !13325, !DIExpression(), !13329)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 7, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(ptr %.sroa.0.0.i41, !13244, !DIExpression(DW_OP_plus_uconst, 7, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i32 poison, !13245, !DIExpression(), !13374)
+  %50 = or disjoint i32 %i.ax, %49, !dbg !13377   ; 2 uses
+    #dbg_value(ptr %.sroa.0.0.i41, !13233, !DIExpression(DW_OP_plus_uconst, 7, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13284)
+    #dbg_value(ptr %.sroa.0.0.i41, !13223, !DIExpression(DW_OP_plus_uconst, 7, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13282)
+    #dbg_value(i64 %.sroa.15.0.i, !13233, !DIExpression(DW_OP_constu, 7, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13284)
+    #dbg_value(i64 %.sroa.15.0.i, !13223, !DIExpression(DW_OP_constu, 7, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13282)
+    #dbg_value(i32 %50, !13325, !DIExpression(), !13329)
+    #dbg_value(i32 %50, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 %50, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 %50, !13240, !DIExpression(), !13324)
+  %.not73.us.i.6 = icmp eq i64 %.sroa.15.0.i, 7, !dbg !13364
+  br i1 %.not73.us.i.6, label %.loopexit.i, label %bb.s, !dbg !13364
 
-.loopexit.i:                                      ; preds = %.preheader81.split.us.i, %bb.s, %.preheader.i.a
-  %.sroa.045.1.i = phi i32 [ %5, %bb.s ], [ 0, %.preheader.i.a ], [ %i.ap, %.preheader81.split.us.i ], !dbg !13378
+bb.s:                                             ; preds = %48
+  %51 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i41, i64 7, !dbg !13375
+    #dbg_value(ptr %51, !13244, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(ptr %51, !13233, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13284)
+    #dbg_value(ptr %51, !13223, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !13282)
+    #dbg_value(ptr %51, !13242, !DIExpression(), !13365)
+    #dbg_value(ptr %51, !13244, !DIExpression(DW_OP_plus_uconst, 1, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 7, DW_OP_minus, DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(!DIArgList(i32 %50, i32 8), !13240, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13324)
+    #dbg_value(!DIArgList(i32 %50, i32 8), !13297, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13304)
+    #dbg_value(!DIArgList(i32 %50, i32 8), !13315, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13316)
+    #dbg_value(!DIArgList(i32 %50, i32 8), !13325, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_mul, DW_OP_stack_value), !13329)
+  %52 = load i8, ptr %51, align 1, !dbg !13366, !alias.scope !13321, !noundef !27
+  %53 = zext i8 %52 to i32, !dbg !13367
+    #dbg_value(i32 %53, !13347, !DIExpression(), !13368)
+    #dbg_value(i32 8, !13352, !DIExpression(), !13368)
+  %54 = add nsw i32 %53, -48, !dbg !13370         ; 2 uses
+    #dbg_value(i32 poison, !13353, !DIExpression(), !13371)
+  %55 = icmp ult i32 %54, 8, !dbg !13372
+  br i1 %55, label %56, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread, !dbg !13373
+
+56:                                               ; preds = %bb.s
+  %57 = shl i32 %50, 3, !dbg !13376
+    #dbg_value(i32 %57, !13240, !DIExpression(), !13324)
+    #dbg_value(i32 %57, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 %57, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 %57, !13325, !DIExpression(), !13329)
+    #dbg_value(i64 %.sroa.15.0.i, !13244, !DIExpression(DW_OP_constu, 8, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13365)
+    #dbg_value(ptr %.sroa.0.0.i41, !13244, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13365)
+    #dbg_value(i32 poison, !13245, !DIExpression(), !13374)
+  %58 = or disjoint i32 %54, %57, !dbg !13377
+    #dbg_value(ptr %.sroa.0.0.i41, !13233, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13284)
+    #dbg_value(ptr %.sroa.0.0.i41, !13223, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !13282)
+    #dbg_value(i64 %.sroa.15.0.i, !13233, !DIExpression(DW_OP_constu, 8, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13284)
+    #dbg_value(i64 %.sroa.15.0.i, !13223, !DIExpression(DW_OP_constu, 8, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !13282)
+    #dbg_value(i32 %58, !13325, !DIExpression(), !13329)
+    #dbg_value(i32 %58, !13315, !DIExpression(), !13316)
+    #dbg_value(i32 %58, !13297, !DIExpression(), !13304)
+    #dbg_value(i32 %58, !13240, !DIExpression(), !13324)
+  br label %.loopexit.i, !dbg !13364
+
+.loopexit.i:                                      ; preds = %.preheader81.split.us.i, %10, %16, %24, %32, %40, %.preheader.i.a, %48, %56, %.preheader.i
+  %.sroa.045.1.i = phi i32 [ %58, %56 ], [ 0, %.preheader.i ], [ %8, %10 ], [ %18, %16 ], [ %26, %24 ], [ %34, %32 ], [ %42, %40 ], [ %46, %.preheader.i.a ], [ %50, %48 ], [ %i.ap, %.preheader81.split.us.i ], !dbg !13378
     #dbg_value(i32 %.sroa.045.1.i, !13325, !DIExpression(), !13329)
     #dbg_value(i32 %.sroa.045.1.i, !13315, !DIExpression(), !13316)
     #dbg_value(i32 %.sroa.045.1.i, !13297, !DIExpression(), !13304)
@@ -368,8 +654,8 @@ _RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit: ; preds = 
     #dbg_value(i64 %.sroa.8.0.insert.insert.i, !13384, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 8), !13396)
   br i1 %i.bd, label %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread, label %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultmNtNtNtB4_3num5error13ParseIntErrorE6expectCs3roNzt6HBWW_12regex_syntax.exit, !dbg !13400, !prof !13401
 
-_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread: ; preds = %bb.r, %.lr.ph.split.us.i.a, %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread, %bb.p, %bb.p, %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit
-  %.sroa.8.0.insert.insert.i47 = phi i64 [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit ], [ 257, %.lr.ph.split.us.i.a ], [ 257, %bb.p ], [ 257, %bb.p ], [ 1, %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread ], [ 257, %bb.r ]
+_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit.thread: ; preds = %2, %.lr.ph.split.us.i, %.lr.ph.split.us.i.1, %.lr.ph.split.us.i.2, %.lr.ph.split.us.i.3, %.lr.ph.split.us.i.4, %bb.r, %.lr.ph.split.us.i.a, %bb.s, %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread, %bb.p, %bb.p, %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit
+  %.sroa.8.0.insert.insert.i47 = phi i64 [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCsj6eKBz9Db1c_4core3numm27from_ascii_bytes_radix_impl.exit ], [ 257, %.lr.ph.split.us.i ], [ 257, %bb.p ], [ 257, %bb.p ], [ 1, %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread ], [ 257, %bb.s ], [ 257, %.lr.ph.split.us.i.a ], [ 257, %bb.r ], [ 257, %.lr.ph.split.us.i.4 ], [ 257, %.lr.ph.split.us.i.3 ], [ 257, %.lr.ph.split.us.i.2 ], [ 257, %.lr.ph.split.us.i.1 ], [ 257, %2 ]
   %.sroa.4.0.extract.shift.i = lshr i64 %.sroa.8.0.insert.insert.i47, 8
     #dbg_value(i64 %.sroa.4.0.extract.shift.i, !13384, !DIExpression(DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 8, 8), !13396)
   %.sroa.4.0.extract.trunc.i = trunc i64 %.sroa.4.0.extract.shift.i to i8
@@ -772,9 +1058,9 @@ begin_hunk_1_@llvm.umax.i64
 !13371 = !DILocation(line: 0, scope: !13354, inlinedAt: !13369)
 !13372 = !DILocation(line: 427, column: 12, scope: !13354, inlinedAt: !13369)
 !13373 = !DILocation(line: 1801, column: 25, scope: !13243, inlinedAt: !13283)
-!13374 = !DILocation(line: 1820, column: 33, scope: !13243, inlinedAt: !13283)
+!13374 = !DILocation(line: 0, scope: !13246, inlinedAt: !13283)
 !13375 = !DILocation(line: 1819, column: 43, scope: !13243, inlinedAt: !13283)
-!13376 = !DILocation(line: 0, scope: !13246, inlinedAt: !13283)
+!13376 = !DILocation(line: 1820, column: 33, scope: !13243, inlinedAt: !13283)
 !13377 = !DILocation(line: 1822, column: 33, scope: !13246, inlinedAt: !13283)
 !13378 = !DILocation(line: 1797, column: 34, scope: !13232, inlinedAt: !13283)
 !13379 = !DILocation(line: 1861, column: 14, scope: !13224, inlinedAt: !13283)

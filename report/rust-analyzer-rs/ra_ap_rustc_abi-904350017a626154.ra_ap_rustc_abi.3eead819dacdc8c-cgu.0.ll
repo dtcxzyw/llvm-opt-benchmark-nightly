@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/ra_ap_rustc_abi-904350017a626154.ra_ap_rustc_abi.3eead819dacdc8c-cgu.0?download=true
 inline.NumInlined: 173
 inline.NumDeleted: 65
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB5_16TargetDataLayout33parse_from_llvm_datalayout_string:bb.a
   %i.bg = extractvalue { i64, i64 } %.merged.i.i.i, 0
   %i.bh = trunc nuw i64 %i.bg to i1
@@ -204,8 +204,8 @@ bb.v:                                             ; preds = %bb.u
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cn, i64 1
   %i.ct = load i8, ptr %i.cs, align 1, !alias.scope !37, !noundef !11
   %i.cu = icmp sgt i8 %i.ct, -65
-  %i.cv = add i64 %i.co, -1                       ; 6 uses
-  %i.cw = getelementptr inbounds nuw i8, ptr %i.cn, i64 1 ; 8 uses
+  %i.cv = add i64 %i.co, -1                       ; 13 uses
+  %i.cw = getelementptr inbounds nuw i8, ptr %i.cn, i64 1 ; 15 uses
   br i1 %i.cu, label %bb.w, label %.invoke, !prof !36
 
 bb.w:                                             ; preds = %bb.v
@@ -222,22 +222,22 @@ bb.x:                                             ; preds = %bb.w
 thread-pre-split.i:                               ; preds = %bb.w, %bb.x
   %cond.i = icmp eq i8 %i.cx, 43                  ; 2 uses
   %i.cy = sext i1 %cond.i to i64
-  %.sroa.15.0.i = add nsw i64 %i.cv, %i.cy        ; 4 uses
+  %.sroa.15.0.i = add nsw i64 %i.cv, %i.cy        ; 10 uses
   %.sroa.0.0.idx.i = zext i1 %cond.i to i64
-  %.sroa.0.0.i787 = getelementptr inbounds nuw i8, ptr %i.cw, i64 %.sroa.0.0.idx.i ; 2 uses
+  %.sroa.0.0.i787 = getelementptr inbounds nuw i8, ptr %i.cw, i64 %.sroa.0.0.idx.i ; 9 uses
   %i.cz = icmp samesign ult i64 %.sroa.15.0.i, 9
   br i1 %i.cz, label %.preheader.i, label %.preheader60.i.preheader
 
 .preheader.i:                                     ; preds = %thread-pre-split.i
   %.not5668.i = icmp eq i64 %.sroa.15.0.i, 0
-  br i1 %.not5668.i, label %.loopexit.i, label %.lr.ph.i.a
+  br i1 %.not5668.i, label %.loopexit.i, label %.lr.ph.i
 
-.preheader60.i:                                   ; preds = %bb.aa
+.preheader60.i:                                   ; preds = %4
   %.not55.i = icmp eq i64 %i.dd, 0
   br i1 %.not55.i, label %.loopexit.i, label %.preheader60.i.preheader
 
-.loopexit.i:                                      ; preds = %.preheader60.i, %bb.ab, %.preheader.i
-  %.sroa.045.1.i = phi i32 [ %i.dt, %bb.ab ], [ 0, %.preheader.i ], [ %i.dn, %.preheader60.i ]
+.loopexit.i:                                      ; preds = %.preheader60.i, %11, %17, %25, %33, %41, %47, %51, %58, %.preheader.i
+  %.sroa.045.1.i = phi i32 [ %60, %58 ], [ 0, %.preheader.i ], [ %9, %11 ], [ %19, %17 ], [ %27, %25 ], [ %35, %33 ], [ %43, %41 ], [ %49, %47 ], [ %53, %51 ], [ %5, %.preheader60.i ]
   %i.da = zext i32 %.sroa.045.1.i to i64
   %i.db = shl nuw i64 %i.da, 32
   br label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit
@@ -245,7 +245,7 @@ thread-pre-split.i:                               ; preds = %bb.w, %bb.x
 .preheader60.i.preheader:                         ; preds = %thread-pre-split.i, %.preheader60.i
   %.sroa.0.1.i7884922 = phi ptr [ %i.dc, %.preheader60.i ], [ %.sroa.0.0.i787, %thread-pre-split.i ] ; 2 uses
   %.sroa.15.1.i4921 = phi i64 [ %i.dd, %.preheader60.i ], [ %.sroa.15.0.i, %thread-pre-split.i ]
-  %.sroa.045.0.i4920 = phi i32 [ %i.dn, %.preheader60.i ], [ 0, %thread-pre-split.i ]
+  %.sroa.045.0.i4920 = phi i32 [ %5, %.preheader60.i ], [ 0, %thread-pre-split.i ]
   %i.dc = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i7884922, i64 1
   %i.dd = add nsw i64 %.sroa.15.1.i4921, -1       ; 2 uses
   %i.de = call { i32, i1 } @llvm.umul.with.overflow.i32(i32 %.sroa.045.0.i4920, i32 10) ; 2 uses
@@ -258,7 +258,7 @@ bb.y:                                             ; preds = %.preheader60.i.preh
   %i.di = zext i8 %i.dh to i32
   %i.dj = add nsw i32 %i.di, -48                  ; 2 uses
   %i.dk = icmp ult i32 %i.dj, 10
-  br i1 %i.dk, label %bb.aa, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread
+  br i1 %i.dk, label %4, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread
 
 bb.z:                                             ; preds = %.preheader60.i.preheader
   %i.dl = add i8 %i.dh, -48
@@ -266,28 +266,118 @@ bb.z:                                             ; preds = %.preheader60.i.preh
   %spec.select.i = select i1 %i.dm, i64 513, i64 257
   br label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit
 
-bb.aa:                                            ; preds = %bb.y
-  %i.dn = add i32 %i.dj, %i.df                    ; 3 uses
-  %i.do = icmp ult i32 %i.dn, %i.df
-  br i1 %i.do, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread, label %.preheader60.i, !prof !7
+4:                                                ; preds = %bb.y
+  %5 = add i32 %i.dj, %i.df                       ; 3 uses
+  %6 = icmp ult i32 %5, %i.df
+  br i1 %6, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread, label %.preheader60.i, !prof !7
 
-.lr.ph.i.a:                                       ; preds = %.preheader.i, %bb.ab
-  %.sroa.0.271.i = phi ptr [ %6, %bb.ab ], [ %.sroa.0.0.i787, %.preheader.i ] ; 2 uses
-  %.sroa.15.270.i = phi i64 [ %5, %bb.ab ], [ %.sroa.15.0.i, %.preheader.i ]
-  %.sroa.045.269.i = phi i32 [ %i.dt, %bb.ab ], [ 0, %.preheader.i ]
-  %i.dp = load i8, ptr %.sroa.0.271.i, align 1, !alias.scope !40, !noundef !11
+.lr.ph.i:                                         ; preds = %.preheader.i
+  %7 = load i8, ptr %.sroa.0.0.i787, align 1, !alias.scope !40, !noundef !11
+  %8 = zext i8 %7 to i32
+  %9 = add nsw i32 %8, -48                        ; 3 uses
+  %10 = icmp ult i32 %9, 10
+  br i1 %10, label %11, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread
+
+11:                                               ; preds = %.lr.ph.i
+  %.not56.i = icmp eq i64 %.sroa.15.0.i, 1
+  br i1 %.not56.i, label %.loopexit.i, label %.lr.ph.i.1
+
+.lr.ph.i.1:                                       ; preds = %11
+  %12 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i787, i64 1
+  %13 = load i8, ptr %12, align 1, !alias.scope !40, !noundef !11
+  %14 = zext i8 %13 to i32
+  %15 = add nsw i32 %14, -48                      ; 2 uses
+  %16 = icmp ult i32 %15, 10
+  br i1 %16, label %17, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread
+
+17:                                               ; preds = %.lr.ph.i.1
+  %18 = mul nuw nsw i32 %9, 10
+  %19 = add nuw nsw i32 %15, %18                  ; 2 uses
+  %.not56.i.1 = icmp eq i64 %.sroa.15.0.i, 2
+  br i1 %.not56.i.1, label %.loopexit.i, label %.lr.ph.i.2
+
+.lr.ph.i.2:                                       ; preds = %17
+  %20 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i787, i64 2
+  %21 = load i8, ptr %20, align 1, !alias.scope !40, !noundef !11
+  %22 = zext i8 %21 to i32
+  %23 = add nsw i32 %22, -48                      ; 2 uses
+  %24 = icmp ult i32 %23, 10
+  br i1 %24, label %25, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread
+
+25:                                               ; preds = %.lr.ph.i.2
+  %26 = mul nuw nsw i32 %19, 10
+  %27 = add nuw nsw i32 %23, %26                  ; 2 uses
+  %.not56.i.2 = icmp eq i64 %.sroa.15.0.i, 3
+  br i1 %.not56.i.2, label %.loopexit.i, label %.lr.ph.i.3
+
+.lr.ph.i.3:                                       ; preds = %25
+  %28 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i787, i64 3
+  %29 = load i8, ptr %28, align 1, !alias.scope !40, !noundef !11
+  %30 = zext i8 %29 to i32
+  %31 = add nsw i32 %30, -48                      ; 2 uses
+  %32 = icmp ult i32 %31, 10
+  br i1 %32, label %33, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread
+
+33:                                               ; preds = %.lr.ph.i.3
+  %34 = mul nuw nsw i32 %27, 10
+  %35 = add nuw nsw i32 %31, %34                  ; 2 uses
+  %.not56.i.3 = icmp eq i64 %.sroa.15.0.i, 4
+  br i1 %.not56.i.3, label %.loopexit.i, label %.lr.ph.i.4
+
+.lr.ph.i.4:                                       ; preds = %33
+  %36 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i787, i64 4
+  %37 = load i8, ptr %36, align 1, !alias.scope !40, !noundef !11
+  %38 = zext i8 %37 to i32
+  %39 = add nsw i32 %38, -48                      ; 2 uses
+  %40 = icmp ult i32 %39, 10
+  br i1 %40, label %41, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread
+
+41:                                               ; preds = %.lr.ph.i.4
+  %42 = mul i32 %35, 10
+  %43 = add i32 %39, %42                          ; 2 uses
+  %.not56.i.4 = icmp eq i64 %.sroa.15.0.i, 5
+  br i1 %.not56.i.4, label %.loopexit.i, label %bb.aa
+
+bb.aa:                                            ; preds = %41
+  %44 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i787, i64 5
+  %45 = load i8, ptr %44, align 1, !alias.scope !40, !noundef !11
+  %46 = zext i8 %45 to i32
+  %i.dn = add nsw i32 %46, -48                    ; 2 uses
+  %i.do = icmp ult i32 %i.dn, 10
+  br i1 %i.do, label %47, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread
+
+47:                                               ; preds = %bb.aa
+  %48 = mul i32 %43, 10
+  %49 = add i32 %i.dn, %48                        ; 2 uses
+  %.not56.i.5 = icmp eq i64 %.sroa.15.0.i, 6
+  br i1 %.not56.i.5, label %.loopexit.i, label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %47
+  %50 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i787, i64 6
+  %i.dp = load i8, ptr %50, align 1, !alias.scope !40, !noundef !11
   %i.dq = zext i8 %i.dp to i32
   %i.dr = add nsw i32 %i.dq, -48                  ; 2 uses
   %i.ds = icmp ult i32 %i.dr, 10
-  br i1 %i.ds, label %bb.ab, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread
+  br i1 %i.ds, label %51, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread
 
-bb.ab:                                            ; preds = %.lr.ph.i.a
-  %4 = mul i32 %.sroa.045.269.i, 10
-  %5 = add nsw i64 %.sroa.15.270.i, -1            ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.271.i, i64 1
-  %i.dt = add i32 %i.dr, %4                       ; 2 uses
-  %.not56.i = icmp eq i64 %5, 0
-  br i1 %.not56.i, label %.loopexit.i, label %.lr.ph.i.a
+51:                                               ; preds = %.lr.ph.i.a
+  %52 = mul i32 %49, 10
+  %53 = add i32 %i.dr, %52                        ; 2 uses
+  %.not56.i.6 = icmp eq i64 %.sroa.15.0.i, 7
+  br i1 %.not56.i.6, label %.loopexit.i, label %bb.ab
+
+bb.ab:                                            ; preds = %51
+  %54 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i787, i64 7
+  %55 = load i8, ptr %54, align 1, !alias.scope !40, !noundef !11
+  %56 = zext i8 %55 to i32
+  %i.dt = add nsw i32 %56, -48                    ; 2 uses
+  %57 = icmp ult i32 %i.dt, 10
+  br i1 %57, label %58, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread
+
+58:                                               ; preds = %bb.ab
+  %59 = mul i32 %53, 10
+  %60 = add i32 %i.dt, %59
+  br label %.loopexit.i
 
 .invoke.sink.split:                               ; preds = %.loopexit1712.thread, %bb.eo, %bb.do, %.split3364, %.split3357
   %.ph4143 = phi ptr [ %i.qi, %.split3357 ], [ %i.qc, %.split3364 ], [ %i.qi, %bb.do ], [ %i.qc, %bb.eo ], [ %i.qc, %.loopexit1712.thread ]
@@ -312,10 +402,10 @@ _RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit: ; preds = 
   %i.dx = trunc i64 %.sroa.8.0.insert.insert.i to i1
   br i1 %i.dx, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread, label %bb.ac
 
-_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread: ; preds = %bb.x, %bb.x, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit, %bb.aa, %bb.y, %.lr.ph.i.a, %.split3350
-  %.sroa.0.0.i7863353 = phi ptr [ %i.cw, %bb.aa ], [ %i.cr, %.split3350 ], [ %i.cw, %.lr.ph.i.a ], [ %i.cw, %bb.y ], [ %i.cw, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit ], [ %i.cw, %bb.x ], [ %i.cw, %bb.x ]
-  %7 = phi i64 [ %i.cv, %bb.aa ], [ 0, %.split3350 ], [ %i.cv, %.lr.ph.i.a ], [ %i.cv, %bb.y ], [ %i.cv, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit ], [ 1, %bb.x ], [ 1, %bb.x ]
-  %.sroa.8.0.insert.insert.i1571 = phi i64 [ 513, %bb.aa ], [ 1, %.split3350 ], [ 257, %.lr.ph.i.a ], [ 257, %bb.y ], [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit ], [ 257, %bb.x ], [ 257, %bb.x ]
+_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread: ; preds = %bb.x, %bb.x, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit, %4, %bb.y, %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i.4, %bb.aa, %.lr.ph.i.a, %bb.ab, %.split3350
+  %.sroa.0.0.i7863353 = phi ptr [ %i.cw, %4 ], [ %i.cr, %.split3350 ], [ %i.cw, %.lr.ph.i ], [ %i.cw, %bb.ab ], [ %i.cw, %.lr.ph.i.a ], [ %i.cw, %bb.aa ], [ %i.cw, %.lr.ph.i.4 ], [ %i.cw, %.lr.ph.i.3 ], [ %i.cw, %.lr.ph.i.2 ], [ %i.cw, %.lr.ph.i.1 ], [ %i.cw, %bb.y ], [ %i.cw, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit ], [ %i.cw, %bb.x ], [ %i.cw, %bb.x ]
+  %61 = phi i64 [ %i.cv, %4 ], [ 0, %.split3350 ], [ %i.cv, %.lr.ph.i ], [ %i.cv, %bb.ab ], [ %i.cv, %.lr.ph.i.a ], [ %i.cv, %bb.aa ], [ %i.cv, %.lr.ph.i.4 ], [ %i.cv, %.lr.ph.i.3 ], [ %i.cv, %.lr.ph.i.2 ], [ %i.cv, %.lr.ph.i.1 ], [ %i.cv, %bb.y ], [ %i.cv, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit ], [ 1, %bb.x ], [ 1, %bb.x ]
+  %.sroa.8.0.insert.insert.i1571 = phi i64 [ 513, %4 ], [ 1, %.split3350 ], [ 257, %.lr.ph.i ], [ 257, %bb.ab ], [ 257, %.lr.ph.i.a ], [ 257, %bb.aa ], [ 257, %.lr.ph.i.4 ], [ 257, %.lr.ph.i.3 ], [ 257, %.lr.ph.i.2 ], [ 257, %.lr.ph.i.1 ], [ 257, %bb.y ], [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit ], [ 257, %bb.x ], [ 257, %bb.x ]
   %.sroa.4731.0.extract.shift = lshr i64 %.sroa.8.0.insert.insert.i1571, 8
   %.sroa.4731.0.extract.trunc = trunc i64 %.sroa.4731.0.extract.shift to i8
   %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -360,7 +450,7 @@ bb.ag:                                            ; preds = %bb.ae
 
 bb.ah:                                            ; preds = %.loopexit1735, %.loopexit1729, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit1094.thread, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1169, %.loopexit1723, %bb.dv, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit965, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit818.thread, %bb.hu, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1029, %bb.fs, %bb.dh, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1383, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1341, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1299, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1257, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1215, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread
   %.sink4978 = phi i64 [ 40, %.loopexit1735 ], [ 40, %.loopexit1729 ], [ 40, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit ], [ 24, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit1094.thread ], [ 40, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1169 ], [ 40, %.loopexit1723 ], [ 40, %bb.dv ], [ 40, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit965 ], [ 24, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit818.thread ], [ 16, %bb.hu ], [ 40, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1029 ], [ 40, %bb.fs ], [ 16, %bb.dh ], [ 40, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1383 ], [ 40, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1341 ], [ 40, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1299 ], [ 40, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1257 ], [ 40, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1215 ], [ 24, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread ]
-  %.sink4977 = phi i64 [ %i.kt, %.loopexit1735 ], [ %i.nq, %.loopexit1729 ], [ %.sroa.19.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit ], [ %.sroa.11.0, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit1094.thread ], [ %.sroa.221448.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1169 ], [ %i.adh, %.loopexit1723 ], [ %i.ru, %bb.dv ], [ %.sroa.221540.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit965 ], [ %.sroa.11180.0, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit818.thread ], [ %i.agv, %bb.hu ], [ %.sroa.221517.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1029 ], [ %i.yj, %bb.fs ], [ %i.pp, %bb.dh ], [ %.sroa.22.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1383 ], [ %.sroa.221396.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1341 ], [ %.sroa.221407.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1299 ], [ %.sroa.221418.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1257 ], [ %.sroa.221429.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1215 ], [ %7, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread ]
+  %.sink4977 = phi i64 [ %i.kt, %.loopexit1735 ], [ %i.nq, %.loopexit1729 ], [ %.sroa.19.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit ], [ %.sroa.11.0, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit1094.thread ], [ %.sroa.221448.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1169 ], [ %i.adh, %.loopexit1723 ], [ %i.ru, %bb.dv ], [ %.sroa.221540.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit965 ], [ %.sroa.11180.0, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit818.thread ], [ %i.agv, %bb.hu ], [ %.sroa.221517.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1029 ], [ %i.yj, %bb.fs ], [ %i.pp, %bb.dh ], [ %.sroa.22.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1383 ], [ %.sroa.221396.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1341 ], [ %.sroa.221407.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1299 ], [ %.sroa.221418.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1257 ], [ %.sroa.221429.0, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1215 ], [ %61, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread ]
   %.sink4976 = phi i64 [ 48, %.loopexit1735 ], [ 48, %.loopexit1729 ], [ 48, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit ], [ 32, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit1094.thread ], [ 48, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1169 ], [ 48, %.loopexit1723 ], [ 48, %bb.dv ], [ 48, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit965 ], [ 32, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit818.thread ], [ 24, %bb.hu ], [ 48, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1029 ], [ 48, %bb.fs ], [ 24, %bb.dh ], [ 48, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1383 ], [ 48, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1341 ], [ 48, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1299 ], [ 48, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1257 ], [ 48, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1215 ], [ 32, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread ]
   %.sink4975 = phi ptr [ @14, %.loopexit1735 ], [ @14, %.loopexit1729 ], [ @14, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit ], [ @14, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit1094.thread ], [ @14, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1169 ], [ @14, %.loopexit1723 ], [ @16, %bb.dv ], [ %i.qi, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit965 ], [ @11, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit818.thread ], [ %i.agy, %bb.hu ], [ %i.qc, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1029 ], [ @19, %bb.fs ], [ %i.pu, %bb.dh ], [ @6, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1383 ], [ @7, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1341 ], [ @8, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1299 ], [ @9, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1257 ], [ @10, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1215 ], [ @5, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread ]
   %.sink4974 = phi i64 [ 56, %.loopexit1735 ], [ 56, %.loopexit1729 ], [ 56, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit ], [ 40, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit1094.thread ], [ 56, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1169 ], [ 56, %.loopexit1723 ], [ 56, %bb.dv ], [ 56, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit965 ], [ 40, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit818.thread ], [ 32, %bb.hu ], [ 56, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1029 ], [ 56, %bb.fs ], [ 32, %bb.dh ], [ 56, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1383 ], [ 56, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1341 ], [ 56, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1299 ], [ 56, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1257 ], [ 56, %_RNCNvMs2_CskVLyBV5N46_15ra_ap_rustc_abiNtB7_16TargetDataLayout33parse_from_llvm_datalayout_strings1_0B7_.exit1215 ], [ 40, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread ]
