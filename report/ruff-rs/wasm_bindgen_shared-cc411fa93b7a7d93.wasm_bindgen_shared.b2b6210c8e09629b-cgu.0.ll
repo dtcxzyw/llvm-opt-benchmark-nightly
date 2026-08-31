@@ -204,7 +204,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RNvCsflha3QUX5Q5_19wasm_bindgen_shared18export_name_suffix(ptr noalias nofree nonnull writeonly align 8 captures(none) %0, ptr %1, i64 %2) unnamed_addr #8 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [24 x i8], align 8                ; 14 uses
+  %i.a = alloca [24 x i8], align 8                ; 11 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 %2 ; 5 uses
   %i.c = icmp samesign eq i64 %2, 0
   %.not.not.i.i.i.i40 = icmp eq ptr %1, null
@@ -234,21 +234,9 @@ bb.b:                                             ; preds = %.lr.ph
 _RINvXs7_NtNtCs4NRVxsYgnAr_4core3str4iterNtB6_5BytesNtNtNtNtBa_4iter6traits8iterator8Iterator3allNCNvCsflha3QUX5Q5_19wasm_bindgen_shared18export_name_suffix0EB1A_.exit: ; preds = %.lr.ph
   tail call void @llvm.experimental.noalias.scope.decl(metadata !198)
   %.not.i.i.i = icmp slt i64 %2, 0
-  br i1 %.not.i.i.i, label %bb.d, label %3
+  br i1 %.not.i.i.i, label %bb.d, label %bb.c
 
-3:                                                ; preds = %_RINvXs7_NtNtCs4NRVxsYgnAr_4core3str4iterNtB6_5BytesNtNtNtNtBa_4iter6traits8iterator8Iterator3allNCNvCsflha3QUX5Q5_19wasm_bindgen_shared18export_name_suffix0EB1A_.exit
-  %4 = icmp eq i64 %2, 0
-  br i1 %4, label %.thread, label %bb.c
-
-.thread:                                          ; preds = %3
-  store i64 %2, ptr %i.a, align 8, !alias.scope !198
-  %.sroa.2.0..sroa_idx.i37 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr inttoptr (i64 1 to ptr), ptr %.sroa.2.0..sroa_idx.i37, align 8, !alias.scope !198
-  %.sroa.3.0..sroa_idx.i38 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store i64 0, ptr %.sroa.3.0..sroa_idx.i38, align 8, !alias.scope !198
-  br label %_RNvXNtNtCs4NRVxsYgnAr_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit
-
-bb.c:                                             ; preds = %3
+bb.c:                                             ; preds = %_RINvXs7_NtNtCs4NRVxsYgnAr_4core3str4iterNtB6_5BytesNtNtNtNtBa_4iter6traits8iterator8Iterator3allNCNvCsflha3QUX5Q5_19wasm_bindgen_shared18export_name_suffix0EB1A_.exit
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #32, !noalias !198
   %i.p = tail call ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 range(i64 0, -9223372036854775807) %2, i64 1) #32, !noalias !198 ; 3 uses
   %i.q = icmp eq ptr %i.p, null
@@ -279,7 +267,8 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   store ptr %i.p, ptr %.sroa.2.0..sroa_idx.i, align 8, !alias.scope !198
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   store i64 0, ptr %.sroa.3.0..sroa_idx.i, align 8, !alias.scope !198
-  br label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i
+  %3 = icmp samesign eq i64 %2, 0
+  br i1 %3, label %_RNvXNtNtCs4NRVxsYgnAr_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit, label %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i
 
 _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i: ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i.preheader, %.backedge
   %i.u = phi ptr [ %i.cs, %.backedge ], [ %i.p, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i.preheader ] ; 3 uses
@@ -358,7 +347,7 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   tail call fastcc void @_RNvNvNtCs4NRVxsYgnAr_4core4hint21unreachable_unchecked18precondition_checkCsflha3QUX5Q5_19wasm_bindgen_shared(ptr nonnull align 8 @3) #32
   unreachable
 
-_RNvXNtNtCs4NRVxsYgnAr_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit: ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i, %.backedge, %.thread
+_RNvXNtNtCs4NRVxsYgnAr_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit: ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i, %.backedge, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsflha3QUX5Q5_19wasm_bindgen_shared.exit.i.i.preheader
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   br label %bb.n
 
