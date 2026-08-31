@@ -205,7 +205,7 @@ bb.bl:                                            ; preds = %.lr.ph833
   %i.om = call fast float @llvm.vector.reduce.fadd.v8f32(float 0.000000e+00, <8 x float> %i.ol)
   %i.on = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i
   store float %i.om, ptr %i.on, align 4, !tbaa !233, !alias.scope !543, !noalias !548
-  %i.oo = add nuw i64 %.186.i.i.i.i, 1            ; 2 uses
+  %i.oo = add nuw nsw i64 %.186.i.i.i.i, 1        ; 2 uses
   %i.op = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0533.0617634, i64 %i.oo
   %i.oq = load i32, ptr %i.op, align 4, !tbaa !21, !noalias !546
   %i.or = zext i32 %i.oq to i64
@@ -216,7 +216,7 @@ bb.bl:                                            ; preds = %.lr.ph833
   %i.ow = call fast float @llvm.vector.reduce.fadd.v8f32(float 0.000000e+00, <8 x float> %i.ov)
   %i.ox = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %i.oo
   store float %i.ow, ptr %i.ox, align 4, !tbaa !233, !alias.scope !543, !noalias !548
-  %i.oy = add nuw i64 %.186.i.i.i.i, 2            ; 2 uses
+  %i.oy = add nuw nsw i64 %.186.i.i.i.i, 2        ; 2 uses
   %exitcond.not.i.i.i.i.1 = icmp eq i64 %i.oy, %.0607830
   br i1 %exitcond.not.i.i.i.i.1, label %.lr.ph827, label %.lr.ph87.i.i.i.i, !llvm.loop !550
 
@@ -470,7 +470,7 @@ bb.bm:                                            ; preds = %.lr.ph833
   %i.xn = call fast float @llvm.vector.reduce.fadd.v16f32(float 0.000000e+00, <16 x float> %i.xm)
   %i.xo = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i
   store float %i.xn, ptr %i.xo, align 4, !tbaa !233, !alias.scope !556, !noalias !561
-  %i.xp = add nuw i64 %.186.i.i.i.i.i, 1          ; 2 uses
+  %i.xp = add nuw nsw i64 %.186.i.i.i.i.i, 1      ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i64 %i.xp, %.0607830
   br i1 %exitcond.not.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i, !llvm.loop !563
 
@@ -647,7 +647,7 @@ bb.bn:                                            ; preds = %.lr.ph833
   %i.abu = call fast float @llvm.vector.reduce.fadd.v24f32(float 0.000000e+00, <24 x float> %i.abt)
   %i.abv = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i
   store float %i.abu, ptr %i.abv, align 4, !tbaa !233, !alias.scope !569, !noalias !574
-  %i.abw = add nuw i64 %.186.i.i.i.i.i.i, 1       ; 2 uses
+  %i.abw = add nuw nsw i64 %.186.i.i.i.i.i.i, 1   ; 2 uses
   %exitcond94.not.i.i.i.i.i.i = icmp eq i64 %i.abw, %.0607830
   br i1 %exitcond94.not.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i, !llvm.loop !576
 
@@ -860,7 +860,7 @@ bb.bo:                                            ; preds = %.lr.ph833
   %i.ahb = call fast float @llvm.vector.reduce.fadd.v32f32(float 0.000000e+00, <32 x float> %i.aha)
   %i.ahc = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i
   store float %i.ahb, ptr %i.ahc, align 4, !tbaa !233, !alias.scope !582, !noalias !587
-  %i.ahd = add nuw i64 %.186.i.i.i.i.i.i.i, 1     ; 2 uses
+  %i.ahd = add nuw nsw i64 %.186.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond94.not.i.i.i.i.i.i.i = icmp eq i64 %i.ahd, %.0607830
   br i1 %exitcond94.not.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i, !llvm.loop !589
 
@@ -1118,7 +1118,7 @@ bb.bp:                                            ; preds = %.lr.ph833
   %i.anq = call fast float @llvm.vector.reduce.fadd.v32f32(float 0.000000e+00, <32 x float> %i.anp)
   %i.anr = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i.i
   store float %i.anq, ptr %i.anr, align 4, !tbaa !233, !alias.scope !595, !noalias !600
-  %i.ans = add nuw i64 %.186.i.i.i.i.i.i.i.i, 1   ; 2 uses
+  %i.ans = add nuw nsw i64 %.186.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond94.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.ans, %.0607830
   br i1 %exitcond94.not.i.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i.i, !llvm.loop !602
 
@@ -1412,7 +1412,7 @@ bb.bq:                                            ; preds = %.lr.ph833
   %i.avf = call fast float @llvm.vector.reduce.fadd.v32f32(float 0.000000e+00, <32 x float> %i.ave)
   %i.avg = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i.i.i
   store float %i.avf, ptr %i.avg, align 4, !tbaa !233, !alias.scope !608, !noalias !613
-  %i.avh = add nuw i64 %.186.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.avh = add nuw nsw i64 %.186.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond94.not.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.avh, %.0607830
   br i1 %exitcond94.not.i.i.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i.i.i, !llvm.loop !615
 
@@ -1741,7 +1741,7 @@ bb.br:                                            ; preds = %.lr.ph833
   %i.bdu = call fast float @llvm.vector.reduce.fadd.v32f32(float 0.000000e+00, <32 x float> %i.bdt)
   %i.bdv = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i.i.i.i
   store float %i.bdu, ptr %i.bdv, align 4, !tbaa !233, !alias.scope !621, !noalias !626
-  %i.bdw = add nuw i64 %.186.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.bdw = add nuw nsw i64 %.186.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond94.not.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.bdw, %.0607830
   br i1 %exitcond94.not.i.i.i.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i.i.i.i, !llvm.loop !628
 
@@ -2144,7 +2144,7 @@ begin_hunk_1_@_ZN5faiss11hnsw_detail31search_from_candidates_panoramaERKNS_4HNSW
   %i.bpg = call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %bin.rdx1535)
   %i.bph = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i.i.i.i.i
   store float %i.bpg, ptr %i.bph, align 4, !tbaa !233, !alias.scope !634, !noalias !639
-  %i.bpi = add nuw i64 %.186.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.bpi = add nuw nsw i64 %.186.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.bpi, %.0607830
   br i1 %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !641
 
@@ -2547,7 +2547,7 @@ begin_hunk_2_@_ZN5faiss11hnsw_detail31search_from_candidates_panoramaERKNS_4HNSW
   %i.cca = call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %bin.rdx1576)
   %i.ccb = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i
   store float %i.cca, ptr %i.ccb, align 4, !tbaa !233, !alias.scope !647, !noalias !652
-  %i.ccc = add nuw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.ccc = add nuw nsw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.ccc, %.0607830
   br i1 %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !654
 
@@ -2950,7 +2950,7 @@ begin_hunk_3_@_ZN5faiss11hnsw_detail31search_from_candidates_panoramaERKNS_4HNSW
   %i.cqc = call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %bin.rdx1617)
   %i.cqd = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i
   store float %i.cqc, ptr %i.cqd, align 4, !tbaa !233, !alias.scope !660, !noalias !665
-  %i.cqe = add nuw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.cqe = add nuw nsw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.cqe, %.0607830
   br i1 %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !667
 
@@ -3353,7 +3353,7 @@ begin_hunk_4_@_ZN5faiss11hnsw_detail31search_from_candidates_panoramaERKNS_4HNSW
   %i.dfm = call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %bin.rdx1658)
   %i.dfn = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   store float %i.dfm, ptr %i.dfn, align 4, !tbaa !233, !alias.scope !673, !noalias !678
-  %i.dfo = add nuw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.dfo = add nuw nsw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.dfo, %.0607830
   br i1 %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !680
 
@@ -3623,7 +3623,7 @@ middle.block1723:                                 ; preds = %vector.body1702
   %i.dls = call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %bin.rdx1699)
   %i.dlt = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   store float %i.dls, ptr %i.dlt, align 4, !tbaa !233, !alias.scope !686, !noalias !692
-  %i.dlu = add nuw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.dlu = add nuw nsw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.dlu, %.0607830
   br i1 %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !694
 
@@ -3905,7 +3905,7 @@ middle.block1764:                                 ; preds = %vector.body1743
   %i.dsg = call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %bin.rdx1740)
   %i.dsh = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   store float %i.dsg, ptr %i.dsh, align 4, !tbaa !233, !alias.scope !700, !noalias !706
-  %i.dsi = add nuw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.dsi = add nuw nsw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.dsi, %.0607830
   br i1 %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !708
 
@@ -4199,7 +4199,7 @@ middle.block1805:                                 ; preds = %vector.body1784
   %i.dzc = call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %bin.rdx1781)
   %i.dzd = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   store float %i.dzc, ptr %i.dzd, align 4, !tbaa !233, !alias.scope !714, !noalias !720
-  %i.dze = add nuw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.dze = add nuw nsw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.dze, %.0607830
   br i1 %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !722
 
@@ -4505,7 +4505,7 @@ middle.block1846:                                 ; preds = %vector.body1825
   %i.egg = call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %bin.rdx1822)
   %i.egh = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   store float %i.egg, ptr %i.egh, align 4, !tbaa !233, !alias.scope !728, !noalias !734
-  %i.egi = add nuw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.egi = add nuw nsw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.egi, %.0607830
   br i1 %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !736
 
@@ -4827,7 +4827,7 @@ middle.block1330:                                 ; preds = %vector.body1309
   %i.ent = call fast float @llvm.vector.reduce.fadd.v4f32(float 0.000000e+00, <4 x float> %bin.rdx)
   %i.enu = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   store float %i.ent, ptr %i.enu, align 4, !tbaa !233, !alias.scope !742, !noalias !748
-  %i.env = add nuw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.env = add nuw nsw i64 %.186.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.env, %.0607830
   br i1 %exitcond94.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph87.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !750
 
@@ -5064,7 +5064,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.lcssa1294 = phi float [ %i.eru, %middle.block1345 ], [ %i.esa, %scalar.ph ]
   %i.esc = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.0, i64 %.196.us.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   store float %.lcssa1294, ptr %i.esc, align 4, !tbaa !233, !alias.scope !756, !noalias !763
-  %i.esd = add nuw i64 %.196.us.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.esd = add nuw nsw i64 %.196.us.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond113.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.esd, %.0607830
   br i1 %exitcond113.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph827, label %.lr.ph.us99.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !llvm.loop !767
 

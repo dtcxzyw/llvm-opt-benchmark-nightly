@@ -205,7 +205,7 @@ bb.a:
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.y
   store ptr %i.t, ptr %i.z, align 8, !tbaa !606
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
-  %i.aa = and i64 %i.i, 4294967295                ; 10 uses
+  %i.aa = and i64 %i.i, 4294967295                ; 9 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
   store ptr %i.ab, ptr %2, align 8, !tbaa !35
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
@@ -256,7 +256,7 @@ _ZN4llvm11SmallVectorIPN5clang4ExprELj4EEC2Em.exit: ; preds = %bb.a, %.sink.spli
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !35 ; 6 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ao, i64 13152 ; 2 uses
   %.promoted = load i32, ptr %i.ar, align 8, !tbaa !42 ; 5 uses
-  %wide.trip.count = and i64 %i.i, 4294967295     ; 4 uses
+  %wide.trip.count = and i64 %i.i, 4294967295     ; 5 uses
   %min.iters.check = icmp samesign ult i64 %wide.trip.count, 10
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
@@ -325,7 +325,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   %.lcssa52.unr = phi i32 [ poison, %scalar.ph.preheader ], [ %i.bn, %scalar.ph.prol ]
   %indvars.iv.unr = phi i64 [ %indvars.iv.ph, %scalar.ph.preheader ], [ %indvars.iv.next.prol, %scalar.ph.prol ]
   %.unr = phi i32 [ %.ph, %scalar.ph.preheader ], [ %i.bn, %scalar.ph.prol ]
-  %i.bp = sub nsw i64 %indvars.iv.ph, %i.aa
+  %i.bp = sub nsw i64 %indvars.iv.ph, %wide.trip.count
   %i.bq = icmp ugt i64 %i.bp, -4
   br i1 %i.bq, label %._crit_edge, label %scalar.ph
 

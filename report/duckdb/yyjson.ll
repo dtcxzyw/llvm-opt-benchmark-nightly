@@ -204,7 +204,7 @@ _ZN13duckdb_yyjsonL18write_string_noescEPhPKhm.exit85: ; preds = %.lr.ph3179.pro
   br label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit540
 
 bb.ec:                                            ; preds = %_ZN13duckdb_yyjsonL23get_enc_table_with_flagEj.exit59
-  %i.adn = tail call noundef ptr %.sroa.01324.0.copyload(ptr noundef %.sroa.8.0.copyload, i64 noundef 34), !inline_history !283 ; 30 uses
+  %i.adn = tail call noundef ptr %.sroa.01324.0.copyload(ptr noundef %.sroa.8.0.copyload, i64 noundef 34), !inline_history !283 ; 29 uses
   %.not102.i = icmp eq ptr %i.adn, null
   br i1 %.not102.i, label %bb.ii, label %bb.ed
 
@@ -258,7 +258,7 @@ bb.ek:                                            ; preds = %bb.ei
 
 bb.el:                                            ; preds = %bb.ee
   store i8 45, ptr %i.adn, align 1, !tbaa !81
-  %.lobit.i624 = lshr i64 %i.adr, 63              ; 2 uses
+  %.lobit.i624 = lshr i64 %i.adr, 63
   %i.aee = getelementptr i8, ptr %i.adn, i64 %.lobit.i624 ; 38 uses
   %.mask.i = and i64 %i.adr, 9223372036854775807
   %i.aef = icmp eq i64 %.mask.i, 0
@@ -661,7 +661,7 @@ _ZN13duckdb_yyjsonL27write_u64_len_15_to_17_trimEPhm.exit848: ; preds = %bb.fp, 
   br label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit540
 
 bb.ft:                                            ; preds = %bb.fl
-  %i.avn = getelementptr inbounds nuw i8, ptr %i.aee, i64 1 ; 2 uses
+  %i.avn = getelementptr inbounds nuw i8, ptr %i.aee, i64 1 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.aee, i8 48, i64 24, i1 false)
   store i8 %i.ara, ptr %i.avn, align 1, !tbaa !81
   %i.avo = icmp ne i32 %i.aqw, 0
@@ -820,17 +820,15 @@ bb.fz:                                            ; preds = %bb.fx
 ._crit_edge3127:                                  ; preds = %bb.fw, %bb.fy, %bb.fz
   %.sink5224.a = phi i64 [ %i.ayi, %bb.fw ], [ %i.azg, %bb.fy ], [ %i.azr, %bb.fz ]
   %.pn.i862 = and i64 %.sink5224.a, 4294967295
-  %.0.i863 = getelementptr inbounds nuw i8, ptr %i.awa, i64 %.pn.i862 ; 2 uses
-  %6 = getelementptr i8, ptr %i.adn, i64 %.lobit.i624
-  %scevgep3718 = getelementptr i8, ptr %6, i64 1
+  %scevgep3718 = getelementptr inbounds nuw i8, ptr %i.awa, i64 %.pn.i862 ; 2 uses
   %i.azs = zext nneg i32 %i.aqj to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.aee, ptr align 1 %scevgep3718, i64 %i.azs, i1 false), !tbaa !81
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.aee, ptr nonnull align 1 %i.avn, i64 %i.azs, i1 false), !tbaa !81
   %i.azt = zext nneg i32 %i.aqj to i64
   %i.azu = getelementptr inbounds nuw i8, ptr %i.aee, i64 %i.azt ; 2 uses
   store i8 46, ptr %i.azu, align 1, !tbaa !81
   %i.azv = getelementptr inbounds nuw i8, ptr %i.azu, i64 2 ; 2 uses
-  %i.azw = icmp ult ptr %i.azv, %.0.i863
-  %spec.select = select i1 %i.azw, ptr %.0.i863, ptr %i.azv
+  %i.azw = icmp ult ptr %i.azv, %scevgep3718
+  %spec.select = select i1 %i.azw, ptr %scevgep3718, ptr %i.azv
   br label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit540
 
 bb.ga:                                            ; preds = %_ZN13duckdb_yyjsonL14f64_bin_to_decEmjmiPmPi.exit706
@@ -1233,7 +1231,7 @@ _ZN13duckdb_yyjsonL18write_string_noescEPhPKhm.exit.i: ; preds = %.lr.ph2360.pro
   br label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit98.i
 
 bb.ec:                                            ; preds = %_ZN13duckdb_yyjsonL23get_enc_table_with_flagEj.exit.i
-  %i.adn = tail call noundef ptr %.sroa.0491.0.copyload(ptr noundef %.sroa.8.0.copyload, i64 noundef 34), !inline_history !329 ; 30 uses
+  %i.adn = tail call noundef ptr %.sroa.0491.0.copyload(ptr noundef %.sroa.8.0.copyload, i64 noundef 34), !inline_history !329 ; 29 uses
   %.not102.i.i = icmp eq ptr %i.adn, null
   br i1 %.not102.i.i, label %bb.ii, label %bb.ed
 
@@ -1287,7 +1285,7 @@ bb.ek:                                            ; preds = %bb.ei
 
 bb.el:                                            ; preds = %bb.ee
   store i8 45, ptr %i.adn, align 1, !tbaa !81
-  %.lobit.i120.i = lshr i64 %i.adr, 63            ; 2 uses
+  %.lobit.i120.i = lshr i64 %i.adr, 63
   %i.aee = getelementptr i8, ptr %i.adn, i64 %.lobit.i120.i ; 38 uses
   %.mask.i.i = and i64 %i.adr, 9223372036854775807
   %i.aef = icmp eq i64 %.mask.i.i, 0
@@ -1690,7 +1688,7 @@ _ZN13duckdb_yyjsonL27write_u64_len_15_to_17_trimEPhm.exit.i: ; preds = %bb.fs, %
   br label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit98.i
 
 bb.ft:                                            ; preds = %bb.fl
-  %i.avp = getelementptr inbounds nuw i8, ptr %i.aee, i64 1 ; 2 uses
+  %i.avp = getelementptr inbounds nuw i8, ptr %i.aee, i64 1 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.aee, i8 48, i64 24, i1 false)
   store i8 %i.ara, ptr %i.avp, align 1, !tbaa !81
   %i.avq = icmp ne i32 %i.aqw, 0
@@ -1849,17 +1847,15 @@ bb.fz:                                            ; preds = %bb.fx
 ._crit_edge2308:                                  ; preds = %bb.fz, %bb.fy, %bb.fw
   %.sink4415.a = phi i64 [ %i.azt, %bb.fz ], [ %i.azi, %bb.fy ], [ %i.ayk, %bb.fw ]
   %i.azu = and i64 %.sink4415.a, 4294967295
-  %7 = getelementptr inbounds nuw i8, ptr %i.awc, i64 %i.azu ; 2 uses
-  %8 = getelementptr i8, ptr %i.adn, i64 %.lobit.i120.i
-  %scevgep2901 = getelementptr i8, ptr %8, i64 1
+  %scevgep2901 = getelementptr inbounds nuw i8, ptr %i.awc, i64 %i.azu ; 2 uses
   %i.azv = zext nneg i32 %i.aqj to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.aee, ptr align 1 %scevgep2901, i64 %i.azv, i1 false), !tbaa !81
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.aee, ptr nonnull align 1 %i.avp, i64 %i.azv, i1 false), !tbaa !81
   %i.azw = zext nneg i32 %i.aqj to i64
   %i.azx = getelementptr inbounds nuw i8, ptr %i.aee, i64 %i.azw ; 2 uses
   store i8 46, ptr %i.azx, align 1, !tbaa !81
   %i.azy = getelementptr inbounds nuw i8, ptr %i.azx, i64 2 ; 2 uses
-  %i.azz = icmp ult ptr %i.azy, %7
-  %spec.select = select i1 %i.azz, ptr %7, ptr %i.azy
+  %i.azz = icmp ult ptr %i.azy, %scevgep2901
+  %spec.select = select i1 %i.azz, ptr %scevgep2901, ptr %i.azy
   br label %_ZN13duckdb_yyjsonL12write_stringEPhbbPKhmS2_.exit98.i
 
 bb.ga:                                            ; preds = %_ZN13duckdb_yyjsonL14f64_bin_to_decEmjmiPmPi.exit136.i

@@ -205,22 +205,14 @@ bb.e:                                             ; preds = %.lr.ph469, %bb.e
   br i1 %i.gb, label %.epil.preheader, label %.lr.ph481.new
 
 .preheader404:                                    ; preds = %._crit_edge491, %.preheader406
-  %.2.lcssa = phi i64 [ %.1227.lcssa, %.preheader406 ], [ %i.nh, %._crit_edge491 ] ; 2 uses
+  %.2.lcssa = phi i64 [ %.1227.lcssa, %.preheader406 ], [ %i.nh, %._crit_edge491 ] ; 4 uses
   %i.jk = icmp slt i64 %.2.lcssa, %0
   br i1 %i.jk, label %.preheader.lr.ph, label %._crit_edge512
 
 .preheader.lr.ph:                                 ; preds = %.preheader404
-  %.not496 = icmp slt i64 %1, 2
   %i.jl = and i64 %1, -2                          ; 2 uses
-  %7 = add i64 %1, -2                             ; 2 uses
-  %8 = lshr i64 %7, 1
-  %9 = add nuw i64 %8, 1                          ; 2 uses
-  %xtraiter675 = and i64 %9, 3                    ; 3 uses
-  %10 = icmp ult i64 %7, 6
-  %unroll_iter680 = and i64 %9, -4
-  %lcmp.mod677.not = icmp eq i64 %xtraiter675, 0
-  %lcmp.mod679 = icmp ne i64 %xtraiter675, 0
-  br label %.preheader
+  %.not496 = icmp slt i64 %1, 2
+  br i1 %.not496, label %._crit_edge500, label %.lr.ph499
 
 .lr.ph481.new:                                    ; preds = %.lr.ph481, %.lr.ph481.new
   %i.jm = phi i64 [ %i.kk, %.lr.ph481.new ], [ 2, %.lr.ph481 ] ; 4 uses
@@ -376,21 +368,26 @@ bb.e:                                             ; preds = %.lr.ph469, %bb.e
   %i.ni = icmp slt i64 %i.nh, %i.e
   br i1 %i.ni, label %.preheader405, label %.preheader404, !llvm.loop !128
 
-.preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge507
-  %.3511 = phi i64 [ %.2.lcssa, %.preheader.lr.ph ], [ %11, %._crit_edge507 ] ; 4 uses
-  br i1 %.not496, label %._crit_edge500, label %.lr.ph499
-
-.lr.ph499:                                        ; preds = %.preheader
+.lr.ph499:                                        ; preds = %.preheader.lr.ph
   %i.nj = load ptr, ptr %3, align 8, !tbaa !115   ; 5 uses
-  %i.nk = mul nsw i64 %.3511, %.sroa.33.0.copyload
+  %i.nk = mul nsw i64 %.2.lcssa, %.sroa.33.0.copyload
   %invariant.gep = getelementptr [8 x i8], ptr %.sroa.0329.0.copyload, i64 %i.nk ; 5 uses
-  br i1 %10, label %.epil.preheader674, label %.lr.ph499.new.a
+  %7 = add nsw i64 %1, -2                         ; 2 uses
+  %8 = lshr i64 %7, 1
+  %9 = add nuw i64 %8, 1                          ; 2 uses
+  %xtraiter675 = and i64 %9, 3                    ; 3 uses
+  %10 = icmp ult i64 %7, 6
+  br i1 %10, label %.epil.preheader674, label %.lr.ph499.new
 
-.lr.ph499.new.a:                                  ; preds = %.lr.ph499, %.lr.ph499.new.a
-  %i.nl = phi i64 [ %i.oj, %.lr.ph499.new.a ], [ 2, %.lr.ph499 ] ; 6 uses
-  %.0205498 = phi i64 [ %i.od, %.lr.ph499.new.a ], [ 0, %.lr.ph499 ] ; 2 uses
-  %.0392497 = phi <2 x double> [ %i.oi, %.lr.ph499.new.a ], [ zeroinitializer, %.lr.ph499 ]
-  %niter681 = phi i64 [ %niter681.next.3, %.lr.ph499.new.a ], [ 0, %.lr.ph499 ]
+.lr.ph499.new:                                    ; preds = %.lr.ph499
+  %unroll_iter680 = and i64 %9, -4
+  br label %.lr.ph499.new.a
+
+.lr.ph499.new.a:                                  ; preds = %.lr.ph499.new.a, %.lr.ph499.new
+  %i.nl = phi i64 [ 2, %.lr.ph499.new ], [ %i.oj, %.lr.ph499.new.a ] ; 6 uses
+  %.0205498 = phi i64 [ 0, %.lr.ph499.new ], [ %i.od, %.lr.ph499.new.a ] ; 2 uses
+  %.0392497 = phi <2 x double> [ zeroinitializer, %.lr.ph499.new ], [ %i.oi, %.lr.ph499.new.a ]
+  %niter681 = phi i64 [ 0, %.lr.ph499.new ], [ %niter681.next.3, %.lr.ph499.new.a ]
   %i.nm = getelementptr [8 x i8], ptr %i.nj, i64 %.0205498
   %i.nn = load <2 x double>, ptr %i.nm, align 1, !tbaa !25
   %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %.0205498
@@ -424,12 +421,14 @@ bb.e:                                             ; preds = %.lr.ph469, %bb.e
   br i1 %niter681.ncmp.3, label %._crit_edge500.loopexit.unr-lcssa, label %.lr.ph499.new.a, !llvm.loop !129
 
 ._crit_edge500.loopexit.unr-lcssa:                ; preds = %.lr.ph499.new.a
+  %lcmp.mod677.not = icmp eq i64 %xtraiter675, 0
   br i1 %lcmp.mod677.not, label %._crit_edge500, label %.epil.preheader674
 
 .epil.preheader674:                               ; preds = %._crit_edge500.loopexit.unr-lcssa, %.lr.ph499
   %.epil.init = phi i64 [ 2, %.lr.ph499 ], [ %i.oj, %._crit_edge500.loopexit.unr-lcssa ]
   %.0205498.epil.init = phi i64 [ 0, %.lr.ph499 ], [ %i.od, %._crit_edge500.loopexit.unr-lcssa ]
   %.0392497.epil.init = phi <2 x double> [ zeroinitializer, %.lr.ph499 ], [ %i.oi, %._crit_edge500.loopexit.unr-lcssa ]
+  %lcmp.mod679 = icmp ne i64 %xtraiter675, 0
   tail call void @llvm.assume(i1 %lcmp.mod679)
   br label %bb.f
 
@@ -449,9 +448,9 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter675
   br i1 %epil.iter.cmp.not, label %._crit_edge500, label %bb.f, !llvm.loop !130
 
-._crit_edge500:                                   ; preds = %._crit_edge500.loopexit.unr-lcssa, %bb.f, %.preheader
-  %.0392.lcssa = phi <2 x double> [ zeroinitializer, %.preheader ], [ %i.oi, %._crit_edge500.loopexit.unr-lcssa ], [ %i.op, %bb.f ] ; 2 uses
-  %.0205.lcssa = phi i64 [ 0, %.preheader ], [ %i.jl, %bb.f ], [ %i.jl, %._crit_edge500.loopexit.unr-lcssa ] ; 5 uses
+._crit_edge500:                                   ; preds = %._crit_edge500.loopexit.unr-lcssa, %bb.f, %.preheader.lr.ph
+  %.0392.lcssa = phi <2 x double> [ zeroinitializer, %.preheader.lr.ph ], [ %i.oi, %._crit_edge500.loopexit.unr-lcssa ], [ %i.op, %bb.f ] ; 2 uses
+  %.0205.lcssa = phi i64 [ 0, %.preheader.lr.ph ], [ %i.jl, %bb.f ], [ %i.jl, %._crit_edge500.loopexit.unr-lcssa ] ; 5 uses
   %shift = shufflevector <2 x double> %.0392.lcssa, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %.0392.lcssa, %shift
   %i.or = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 3 uses
@@ -459,7 +458,7 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   br i1 %i.os, label %.lr.ph506, label %._crit_edge507
 
 .lr.ph506:                                        ; preds = %._crit_edge500
-  %i.ot = mul nsw i64 %.3511, %.sroa.33.0.copyload
+  %i.ot = mul nsw i64 %.2.lcssa, %.sroa.33.0.copyload
   %invariant.gep509 = getelementptr [8 x i8], ptr %.sroa.0329.0.copyload, i64 %i.ot ; 5 uses
   %i.ou = load ptr, ptr %3, align 8, !tbaa !115   ; 5 uses
   %i.ov = sub i64 %1, %.0205.lcssa
@@ -526,14 +525,12 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
 
 ._crit_edge507:                                   ; preds = %.prol.loopexit683, %.lr.ph506.new, %._crit_edge500
   %.0.lcssa = phi double [ %i.or, %._crit_edge500 ], [ %.lcssa648.unr, %.prol.loopexit683 ], [ %i.qa, %.lr.ph506.new ]
-  %i.qc = mul nsw i64 %.3511, %5
+  %i.qc = mul nsw i64 %.2.lcssa, %5
   %i.qd = getelementptr inbounds [8 x i8], ptr %4, i64 %i.qc ; 2 uses
   %i.qe = load double, ptr %i.qd, align 8, !tbaa !28
   %i.qf = tail call double @llvm.fmuladd.f64(double %6, double %.0.lcssa, double %i.qe)
   store double %i.qf, ptr %i.qd, align 8, !tbaa !28
-  %11 = add nuw nsw i64 %.3511, 1                 ; 2 uses
-  %exitcond552.not = icmp eq i64 %11, %0
-  br i1 %exitcond552.not, label %._crit_edge512, label %.preheader, !llvm.loop !133
+  br label %._crit_edge512
 
 ._crit_edge512:                                   ; preds = %._crit_edge507, %.preheader404
   ret void
@@ -704,5 +701,4 @@ attributes #17 = { nounwind allocsize(0) }
 !130 = distinct !{!130, !31}
 !131 = distinct !{!131, !31}
 !132 = distinct !{!132, !27}
-!133 = distinct !{!133, !27}
 end_hunk_0

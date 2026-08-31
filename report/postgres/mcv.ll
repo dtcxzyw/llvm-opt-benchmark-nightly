@@ -204,7 +204,7 @@ bb.w:                                             ; preds = %VARSIZE_ANY.exit255
   %i.ch = tail call ptr @palloc(i64 noundef %i.bg) #13 ; 8 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.ch, ptr nonnull align 1 %i.cg, i64 %i.bg, i1 false)
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.bg
-  %wide.trip.count = zext nneg i32 %i.ao to i64   ; 4 uses
+  %wide.trip.count = zext nneg i32 %i.ao to i64   ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
   %i.cj = icmp ult i16 %i.ag, 4
   br i1 %i.cj, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
@@ -314,7 +314,7 @@ bb.ab:                                            ; preds = %VARSIZE_ANY.exit260
 
 .lr.ph281.preheader:                              ; preds = %VARSIZE_ANY.exit260
   %i.ea = tail call ptr @palloc_mul(i64 noundef 8, i64 noundef %i.bd) #13 ; 10 uses
-  %wide.trip.count347 = zext nneg i32 %i.ao to i64
+  %wide.trip.count347 = zext nneg i32 %i.ao to i64 ; 3 uses
   br label %.lr.ph281
 
 .lr.ph281:                                        ; preds = %.lr.ph281.preheader, %.lr.ph281
@@ -357,9 +357,9 @@ bb.ab:                                            ; preds = %VARSIZE_ANY.exit260
 .lr.ph315.us.preheader:                           ; preds = %.loopexit
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ew, i64 48
   %wide.trip.count377 = zext nneg i32 %i.ad to i64
-  %xtraiter438 = and i64 %wide.trip.count, 1
+  %xtraiter438 = and i64 %wide.trip.count347, 1
   %i.fb = icmp eq i16 %i.ag, 1
-  %unroll_iter443 = and i64 %wide.trip.count, 14
+  %unroll_iter443 = and i64 %wide.trip.count347, 14
   %lcmp.mod440.not = icmp eq i64 %xtraiter438, 0
   %lcmp.mod442 = trunc i16 %i.ag to i1
   br label %.lr.ph315.us

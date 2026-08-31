@@ -204,22 +204,21 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.a, align 8              ; 5 uses
-  %i.i = ptrtoint ptr %i.h to i64                 ; 3 uses
-  %i.j = ptrtoint ptr %i.b to i64                 ; 3 uses
-  %i.k = sub i64 %i.i, %i.j
+  %i.i = ptrtoint ptr %i.h to i64                 ; 2 uses
+  %i.j = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.k = sub i64 %i.i, %i.j                       ; 4 uses
   %i.l = trunc i64 %i.k to i32                    ; 3 uses
   %.not7.i = icmp eq ptr %i.b, %i.h
   br i1 %.not7.i, label %_ZN2v88internal6torque12_GLOBAL__N_120LineAndColumnTracker7AdvanceEPKcS5_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %bb.b
-  %8 = sub i64 %i.i, %i.j                         ; 3 uses
-  %xtraiter = and i64 %8, 1
+  %xtraiter = and i64 %i.k, 1
   %i.m = add i64 %i.i, -1
   %i.n = icmp eq i64 %i.m, %i.j
   br i1 %i.n, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
 
 .lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
-  %unroll_iter = and i64 %8, -2
+  %unroll_iter = and i64 %i.k, -2
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.i.preheader.new
@@ -256,7 +255,7 @@ _ZN2v88internal6torque12_GLOBAL__N_120LineAndColumnTracker7AdvanceEPKcS5_.exit.l
   %.epil.init = phi i32 [ 0, %.lr.ph.i.preheader ], [ %i.aa, %_ZN2v88internal6torque12_GLOBAL__N_120LineAndColumnTracker7AdvanceEPKcS5_.exit.loopexit.unr-lcssa ]
   %.epil.init538 = phi i32 [ 0, %.lr.ph.i.preheader ], [ %i.ab, %_ZN2v88internal6torque12_GLOBAL__N_120LineAndColumnTracker7AdvanceEPKcS5_.exit.loopexit.unr-lcssa ]
   %.08.i.epil.init = phi ptr [ %i.b, %.lr.ph.i.preheader ], [ %i.ac, %_ZN2v88internal6torque12_GLOBAL__N_120LineAndColumnTracker7AdvanceEPKcS5_.exit.loopexit.unr-lcssa ]
-  %lcmp.mod541 = trunc i64 %8 to i1
+  %lcmp.mod541 = trunc i64 %i.k to i1
   call void @llvm.assume(i1 %lcmp.mod541)
   %i.ad = load i8, ptr %.08.i.epil.init, align 1
   %i.ae = icmp eq i8 %i.ad, 10                    ; 2 uses
@@ -293,7 +292,7 @@ bb.c:                                             ; preds = %.lr.ph, %_ZN2v88int
 
 bb.d:                                             ; preds = %bb.c
   %i.as = load ptr, ptr %i.a, align 8             ; 7 uses
-  %i.at = ptrtoint ptr %i.as to i64               ; 6 uses
+  %i.at = ptrtoint ptr %i.as to i64               ; 5 uses
   %i.au = ptrtoint ptr %i.aq to i64               ; 5 uses
   %i.av = sub i64 %i.at, %i.au
   %i.aw = trunc i64 %i.av to i32
@@ -676,16 +675,15 @@ _ZNSt6vectorIN2v88internal6torque12MatchedInputESaIS3_EE9push_backEOS3_.exit: ; 
 
 bb.aa:                                            ; preds = %_ZNSt6vectorIN2v88internal6torque12MatchedInputESaIS3_EE9push_backEOS3_.exit
   %i.ew = load ptr, ptr %i.a, align 8             ; 6 uses
-  %i.ex = ptrtoint ptr %i.ew to i64               ; 4 uses
-  %i.ey = sub i64 %i.ex, %i.at
+  %i.ex = ptrtoint ptr %i.ew to i64               ; 3 uses
+  %i.ey = sub i64 %i.ex, %i.at                    ; 2 uses
   %i.ez = trunc i64 %i.ey to i32
   %i.fa = add i32 %i.ax, %i.ez                    ; 2 uses
   %.not7.i56 = icmp eq ptr %i.as, %i.ew
   br i1 %.not7.i56, label %_ZN2v88internal6torque12_GLOBAL__N_120LineAndColumnTracker7AdvanceEPKcS5_.exit62, label %.lr.ph.i57.preheader
 
 .lr.ph.i57.preheader:                             ; preds = %bb.aa
-  %9 = sub i64 %i.ex, %i.at
-  %xtraiter546 = and i64 %9, 1
+  %xtraiter546 = and i64 %i.ey, 1
   %lcmp.mod547.not = icmp eq i64 %xtraiter546, 0
   br i1 %lcmp.mod547.not, label %.lr.ph.i57.prol.loopexit, label %.lr.ph.i57.prol
 

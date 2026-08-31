@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.g
   %.0563920 = phi i32 [ %.pre1086, %.lr.ph._crit_edge ], [ %.0563920.ph, %.lr.ph.preheader ] ; 2 uses
   %i.br = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.0563920) ; 2 uses
   store i8 %i.br, ptr %i.af, align 1
-  %.pre1086 = add nuw i32 %.0563920, 1            ; 5 uses
+  %.pre1086 = add i32 %.0563920, 1                ; 5 uses
   switch i8 %i.br, label %.lr.ph._crit_edge [
     i8 32, label %bb.j
     i8 13, label %bb.j
@@ -224,8 +224,8 @@ bb.k:                                             ; preds = %bb.j
   br label %.loopexit779
 
 .lr.ph._crit_edge:                                ; preds = %.lr.ph, %bb.j, %bb.j, %bb.j
-  %4 = icmp ult i32 %.pre1086, %i.ap
-  br i1 %4, label %.lr.ph, label %.loopexit779.loopexit, !llvm.loop !10
+  %exitcond.not = icmp eq i32 %.pre1086, %i.ap
+  br i1 %exitcond.not, label %.loopexit779.loopexit, label %.lr.ph, !llvm.loop !10
 
 .loopexit779.loopexit:                            ; preds = %.lr.ph._crit_edge
   %.pre = load i32, ptr %i.t, align 4
