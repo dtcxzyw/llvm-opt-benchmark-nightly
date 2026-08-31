@@ -1,0 +1,682 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index ef324c40e44a6..fe9a1b7025942 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -1006,6 +1006,12 @@ MonotonicInfo State::getMonotonicityInfo(PHINode &PN, Value *Step) {
+     const auto *Add = cast<OverflowingBinaryOperator>(Step);
+     Info.Unsigned = !Info.Decreasing && Add->hasNoUnsignedWrap();
+     Info.Signed = Add->hasNoSignedWrap();
++  } else if (match(Step, m_ExtractValue<0>(
++                             m_Intrinsic<Intrinsic::sadd_with_overflow>(
++                                 m_Specific(&PN), m_APInt(StepOffset))))) {
++    // A checked add carries no no-wrap flags of its own, so leave it to SCEV
++    // below, which knows the overflow flag guards its uses.
++    Info.Decreasing = StepOffset->isNegative();
+   } else if (const auto *GEP = dyn_cast<GEPOperator>(Step)) {
+     // TODO: Handle the non-increasing direction, which needs a nusw GEP with a
+     // negative constant offset.
+@@ -1084,18 +1090,33 @@ void State::addInfoForInductions(BasicBlock &BB) {
+     return;
+ 
+   // A is either a phi or a post-increment PN + C with constant step. For the
+-  // latter, extract the constant IncStep.
++  // latter, extract the constant IncStep. A checked add's value component is
++  // the same value as the corresponding plain add, so look through it too.
+   Value *A;
+   Value *B;
+   PHINode *PN = nullptr;
+   const APInt *IncStep = nullptr;
+   CmpPredicate Pred;
+-  auto IndValue =
+-      m_Value(A, m_CombineOr(m_Phi(PN), m_c_Add(m_Phi(PN), m_APInt(IncStep))));
++  auto PostInc =
++      m_CombineOr(m_c_Add(m_Phi(PN), m_APInt(IncStep)),
++                  m_ExtractValue<0>(m_Intrinsic<Intrinsic::sadd_with_overflow>(
++                      m_Phi(PN), m_APInt(IncStep))));
++  auto IndValue = m_Value(A, m_CombineOr(m_Phi(PN), PostInc));
+ 
+-  if (!match(BB.getTerminator(),
+-             m_Br(m_c_ICmp(Pred, IndValue, m_Value(B)), m_Value(), m_Value())))
++  auto *Br = dyn_cast<CondBrInst>(BB.getTerminator());
++  if (!Br)
+     return;
++  // The condition is the counting compare, possibly or-ed with extra exit
++  // conditions: an overflow-checked increment yields `or(overflow, A s>= B)`.
++  // A disjunction only proves the compare where it is false, so peeling it is
++  // restricted to the predicates that continue the loop on the false edge.
++  auto CountingCmp = m_c_ICmp(Pred, IndValue, m_Value(B));
++  bool Peeled = false;
++  if (!match(Br->getCondition(), CountingCmp)) {
++    if (!match(Br->getCondition(), m_c_Or(CountingCmp, m_Value())))
++      return;
++    Peeled = true;
++  }
+   if (PN->getParent() != Header || PN->getNumIncomingValues() != 2 ||
+       !SE.isSCEVable(PN->getType()))
+     return;
+@@ -1109,12 +1130,36 @@ void State::addInfoForInductions(BasicBlock &BB) {
+   if (&BB == Latch && !IncStep)
+     return;
+ 
++  // Determine which edge continues the loop. m_c_ICmp normalises Pred to
++  // `A Pred B`, so it holds exactly on the true edge. A relational predicate
++  // additionally describes an inequality-controlled loop, which steps past B
++  // instead of reaching it; ContinuePred is then the bound that holds on the
++  // continue edge, and the facts are derived separately below.
+   BasicBlock *InLoopSucc = nullptr;
+-  if (Pred == CmpInst::ICMP_NE)
+-    InLoopSucc = cast<CondBrInst>(BB.getTerminator())->getSuccessor(0);
+-  else if (Pred == CmpInst::ICMP_EQ)
+-    InLoopSucc = cast<CondBrInst>(BB.getTerminator())->getSuccessor(1);
+-  else
++  CmpInst::Predicate ContinuePred = CmpInst::BAD_ICMP_PREDICATE;
++  switch (Pred) {
++  case CmpInst::ICMP_NE:
++    InLoopSucc = Br->getSuccessor(0);
++    break;
++  case CmpInst::ICMP_EQ:
++    InLoopSucc = Br->getSuccessor(1);
++    break;
++  case CmpInst::ICMP_SLT:
++  case CmpInst::ICMP_SLE:
++    InLoopSucc = Br->getSuccessor(0);
++    ContinuePred = Pred;
++    break;
++  case CmpInst::ICMP_SGE:
++  case CmpInst::ICMP_SGT:
++    InLoopSucc = Br->getSuccessor(1);
++    ContinuePred = CmpInst::getInversePredicate(Pred);
++    break;
++  default:
++    return;
++  }
++  // A disjunction only implies the compare where the whole `or` is false, so
++  // it may only be peeled when the loop continues on the false edge.
++  if (Peeled && InLoopSucc != Br->getSuccessor(1))
+     return;
+ 
+   if (!L->contains(InLoopSucc) || !L->isLoopExiting(&BB) || InLoopSucc == &BB)
+@@ -1125,6 +1170,36 @@ void State::addInfoForInductions(BasicBlock &BB) {
+     return;
+ 
+   auto [StartValue, Backedge] = getStartAndBackedgeValue(*PN, LoopPred);
++  DomTreeNode *DTN = DT.getNode(InLoopSucc);
++
++  // An inequality-controlled loop steps past B rather than reaching it, so the
++  // EQ/NE reasoning below does not apply. Instead, when the compared value is
++  // the phi's own backedge value, PN literally holds that value on every
++  // header entry through the backedge, where the compare was known to hold.
++  // With the first iteration covered by a precondition on StartValue, PN s< B
++  // holds throughout the loop.
++  if (ContinuePred != CmpInst::BAD_ICMP_PREDICATE) {
++    if (A != Backedge)
++      return;
++    // PN s>= StartValue needs the induction to actually increase, which also
++    // rules out stepping past B by wrapping around.
++    if (!getMonotonicityInfo(*PN, Backedge).Signed)
++      return;
++    WorkList.push_back(
++        FactOrCheck::getConditionFact(DTN, CmpInst::ICMP_SGE, PN, StartValue));
++    WorkList.push_back(FactOrCheck::getConditionFact(
++        DTN, ContinuePred, PN, B, ConditionTy(ContinuePred, StartValue, B)));
++    // A non-negative StartValue keeps PN non-negative, and PN s< B then forces
++    // B positive, so the bound holds unsigned as well. Predicate the fact on
++    // the unsigned compare so it can be discharged without a signed bound on B.
++    if (isKnownNonNegative(StartValue, BB.getDataLayout())) {
++      CmpInst::Predicate UPred = ICmpInst::getUnsignedPredicate(ContinuePred);
++      WorkList.push_back(FactOrCheck::getConditionFact(
++          DTN, UPred, PN, B, ConditionTy(UPred, StartValue, B)));
++    }
++    return;
++  }
++
+   const APInt *StepOffset = nullptr;
+   const SCEV *StartSCEV = nullptr;
+   if (match(Backedge, m_c_Add(m_Specific(PN), m_APInt(StepOffset)))) {
+@@ -1138,8 +1213,6 @@ void State::addInfoForInductions(BasicBlock &BB) {
+       return;
+   }
+ 
+-  DomTreeNode *DTN = DT.getNode(InLoopSucc);
+-
+   // If we looked through `PN + C`, only derive facts when that add is
+   // really the induction's post-increment or post-decrement.
+   if (IncStep && *IncStep != *StepOffset)
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-inequality-latch.ll b/llvm/test/Transforms/ConstraintElimination/induction-inequality-latch.ll
+new file mode 100644
+index 0000000000000..79a4f6141e7c0
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/induction-inequality-latch.ll
+@@ -0,0 +1,453 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck %s
++
++; A loop controlled by an inequality on the post-increment (continue while
++; i + step </<= B, or exit while i + step >=/> B) bounds the header value:
++; continuing implies i + step is below B, and the next header value *is* that
++; value, so PN stays below B in the loop. The first iteration is covered by a
++; precondition on the start value. This is the shape of a strided loop such as
++; `for (i = 0; ; i += 2) { ...; if (i + 2 >= n) break; }`.
++
++declare { i64, i1 } @llvm.sadd.with.overflow.i64(i64, i64)
++declare void @use(i1)
++
++; Continue-while-true `slt(i + 2, n)` latch: the bound check i u< n folds.
++define void @stride2_slt_latch(i64 %n) {
++; CHECK-LABEL: define void @stride2_slt_latch(
++; CHECK-SAME: i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[EZ:%.*]] = icmp eq i64 [[N]], 0
++; CHECK-NEXT:    br i1 [[EZ]], label %[[EXIT:.*]], label %[[PH:.*]]
++; CHECK:       [[PH]]:
++; CHECK-NEXT:    br label %[[H:.*]]
++; CHECK:       [[H]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, %[[PH]] ], [ [[INEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    br label %[[LATCH]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[INEXT]] = add nsw i64 [[I]], 2
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[INEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[H]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %ez = icmp eq i64 %n, 0
++  br i1 %ez, label %exit, label %ph
++
++ph:
++  br label %h
++
++h:
++  %i = phi i64 [ 0, %ph ], [ %inext, %latch ]
++  %oob = icmp ult i64 %i, %n
++  call void @use(i1 %oob)
++  br label %latch
++
++latch:
++  %inext = add nsw i64 %i, 2
++  %c = icmp slt i64 %inext, %n
++  br i1 %c, label %h, label %exit
++
++exit:
++  ret void
++}
++
++; Exit-while-true `sge(i + 2, n)` latch: the reversed polarity is recognised via
++; the inverse predicate, so the bound check still folds.
++define void @stride2_sge_latch(i64 %n) {
++; CHECK-LABEL: define void @stride2_sge_latch(
++; CHECK-SAME: i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[EZ:%.*]] = icmp eq i64 [[N]], 0
++; CHECK-NEXT:    br i1 [[EZ]], label %[[EXIT:.*]], label %[[PH:.*]]
++; CHECK:       [[PH]]:
++; CHECK-NEXT:    br label %[[H:.*]]
++; CHECK:       [[H]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, %[[PH]] ], [ [[INEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    br label %[[LATCH]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[INEXT]] = add nsw i64 [[I]], 2
++; CHECK-NEXT:    [[EXITC:%.*]] = icmp sge i64 [[INEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[EXITC]], label %[[EXIT]], label %[[H]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %ez = icmp eq i64 %n, 0
++  br i1 %ez, label %exit, label %ph
++
++ph:
++  br label %h
++
++h:
++  %i = phi i64 [ 0, %ph ], [ %inext, %latch ]
++  %oob = icmp ult i64 %i, %n
++  call void @use(i1 %oob)
++  br label %latch
++
++latch:
++  %inext = add nsw i64 %i, 2
++  %exitc = icmp sge i64 %inext, %n
++  br i1 %exitc, label %exit, label %h
++
++exit:
++  ret void
++}
++
++; The counting compare OR-ed with an overflow flag, and a checked add as the
++; step: the shape an overflow-checked strided counter produces. The `or` is
++; peeled (its other disjuncts only make the loop exit earlier) and the bound
++; check folds.
++define void @stride2_sadd_or_latch(i64 %n) {
++; CHECK-LABEL: define void @stride2_sadd_or_latch(
++; CHECK-SAME: i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[EZ:%.*]] = icmp eq i64 [[N]], 0
++; CHECK-NEXT:    br i1 [[EZ]], label %[[EXIT:.*]], label %[[PH:.*]]
++; CHECK:       [[PH]]:
++; CHECK-NEXT:    br label %[[H:.*]]
++; CHECK:       [[H]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, %[[PH]] ], [ [[INEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    br label %[[LATCH]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[S:%.*]] = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 [[I]], i64 2)
++; CHECK-NEXT:    [[INEXT]] = extractvalue { i64, i1 } [[S]], 0
++; CHECK-NEXT:    [[OV:%.*]] = extractvalue { i64, i1 } [[S]], 1
++; CHECK-NEXT:    [[EXITC:%.*]] = icmp sge i64 [[INEXT]], [[N]]
++; CHECK-NEXT:    [[COND:%.*]] = or i1 [[OV]], [[EXITC]]
++; CHECK-NEXT:    br i1 [[COND]], label %[[EXIT]], label %[[H]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %ez = icmp eq i64 %n, 0
++  br i1 %ez, label %exit, label %ph
++
++ph:
++  br label %h
++
++h:
++  %i = phi i64 [ 0, %ph ], [ %inext, %latch ]
++  %oob = icmp ult i64 %i, %n
++  call void @use(i1 %oob)
++  br label %latch
++
++latch:
++  %s = call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i, i64 2)
++  %inext = extractvalue { i64, i1 } %s, 0
++  %ov = extractvalue { i64, i1 } %s, 1
++  %exitc = icmp sge i64 %inext, %n
++  %cond = or i1 %ov, %exitc
++  br i1 %cond, label %exit, label %h
++
++exit:
++  ret void
++}
++
++; A non-constant start value works too: the precondition is a compare against
++; StartValue itself, discharged here by the `start s< n` guard.
++define void @symbolic_start(i64 %start, i64 %n) {
++; CHECK-LABEL: define void @symbolic_start(
++; CHECK-SAME: i64 [[START:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NN:%.*]] = icmp slt i64 [[START]], [[N]]
++; CHECK-NEXT:    br i1 [[NN]], label %[[PH:.*]], label %[[EXIT:.*]]
++; CHECK:       [[PH]]:
++; CHECK-NEXT:    br label %[[H:.*]]
++; CHECK:       [[H]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ [[START]], %[[PH]] ], [ [[INEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    br label %[[LATCH]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[INEXT]] = add nsw i64 [[I]], 3
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[INEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[H]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %nn = icmp slt i64 %start, %n
++  br i1 %nn, label %ph, label %exit
++
++ph:
++  br label %h
++
++h:
++  %i = phi i64 [ %start, %ph ], [ %inext, %latch ]
++  %oob = icmp slt i64 %i, %n
++  call void @use(i1 %oob)
++  br label %latch
++
++latch:
++  %inext = add nsw i64 %i, 3
++  %c = icmp slt i64 %inext, %n
++  br i1 %c, label %h, label %exit
++
++exit:
++  ret void
++}
++
++; Negative test: a wrapping step (no nsw, not signed-monotonic) must not derive
++; the bound. With i8, start 0, step 2 and n 127 the induction reaches 126, and
++; 126 + 2 == -128 s< 127 continues, so the header value is *not* below n.
++define void @neg_wrapping_step(i8 %n) {
++; CHECK-LABEL: define void @neg_wrapping_step(
++; CHECK-SAME: i8 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[EZ:%.*]] = icmp eq i8 [[N]], 0
++; CHECK-NEXT:    br i1 [[EZ]], label %[[EXIT:.*]], label %[[PH:.*]]
++; CHECK:       [[PH]]:
++; CHECK-NEXT:    br label %[[H:.*]]
++; CHECK:       [[H]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i8 [ 0, %[[PH]] ], [ [[INEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[OOB:%.*]] = icmp ult i8 [[I]], [[N]]
++; CHECK-NEXT:    call void @use(i1 [[OOB]])
++; CHECK-NEXT:    br label %[[LATCH]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[INEXT]] = add i8 [[I]], 2
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i8 [[INEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[H]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %ez = icmp eq i8 %n, 0
++  br i1 %ez, label %exit, label %ph
++
++ph:
++  br label %h
++
++h:
++  %i = phi i8 [ 0, %ph ], [ %inext, %latch ]
++  %oob = icmp ult i8 %i, %n
++  call void @use(i1 %oob)
++  br label %latch
++
++latch:
++  %inext = add i8 %i, 2
++  %c = icmp slt i8 %inext, %n
++  br i1 %c, label %h, label %exit
++
++exit:
++  ret void
++}
++
++; Negative test: the compared value is not the phi's backedge value. The latch
++; tests i + 2 but the induction advances by 4, so continuing says nothing about
++; the next header value.
++define void @neg_compared_value_not_backedge(i64 %n) {
++; CHECK-LABEL: define void @neg_compared_value_not_backedge(
++; CHECK-SAME: i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[EZ:%.*]] = icmp eq i64 [[N]], 0
++; CHECK-NEXT:    br i1 [[EZ]], label %[[EXIT:.*]], label %[[PH:.*]]
++; CHECK:       [[PH]]:
++; CHECK-NEXT:    br label %[[H:.*]]
++; CHECK:       [[H]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, %[[PH]] ], [ [[INEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[OOB:%.*]] = icmp ult i64 [[I]], [[N]]
++; CHECK-NEXT:    call void @use(i1 [[OOB]])
++; CHECK-NEXT:    br label %[[LATCH]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[PROBE:%.*]] = add nsw i64 [[I]], 2
++; CHECK-NEXT:    [[INEXT]] = add nsw i64 [[I]], 4
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[PROBE]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[H]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %ez = icmp eq i64 %n, 0
++  br i1 %ez, label %exit, label %ph
++
++ph:
++  br label %h
++
++h:
++  %i = phi i64 [ 0, %ph ], [ %inext, %latch ]
++  %oob = icmp ult i64 %i, %n
++  call void @use(i1 %oob)
++  br label %latch
++
++latch:
++  %probe = add nsw i64 %i, 2
++  %inext = add nsw i64 %i, 4
++  %c = icmp slt i64 %probe, %n
++  br i1 %c, label %h, label %exit
++
++exit:
++  ret void
++}
++
++; Negative test: B is not loop-invariant, so `PN s< B` in one iteration says
++; nothing about the next.
++define void @neg_variant_bound(ptr %p) {
++; CHECK-LABEL: define void @neg_variant_bound(
++; CHECK-SAME: ptr [[P:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[H:.*]]
++; CHECK:       [[H]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[INEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[N:%.*]] = load i64, ptr [[P]], align 4
++; CHECK-NEXT:    [[OOB:%.*]] = icmp slt i64 [[I]], [[N]]
++; CHECK-NEXT:    call void @use(i1 [[OOB]])
++; CHECK-NEXT:    br label %[[LATCH]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[INEXT]] = add nsw i64 [[I]], 2
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[INEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[H]], label %[[EXIT:.*]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %h
++
++h:
++  %i = phi i64 [ 0, %entry ], [ %inext, %latch ]
++  %n = load i64, ptr %p
++  %oob = icmp slt i64 %i, %n
++  call void @use(i1 %oob)
++  br label %latch
++
++latch:
++  %inext = add nsw i64 %i, 2
++  %c = icmp slt i64 %inext, %n
++  br i1 %c, label %h, label %exit
++
++exit:
++  ret void
++}
++
++; Negative test: a negative start value must not produce the *unsigned* bound.
++; The signed fact still holds, so `i s< n` folds while `i u< n` does not: with
++; start -4 the first iterations have i u> n.
++define void @neg_negative_start_no_unsigned_fact(i64 %n) {
++; CHECK-LABEL: define void @neg_negative_start_no_unsigned_fact(
++; CHECK-SAME: i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NN:%.*]] = icmp sgt i64 [[N]], 0
++; CHECK-NEXT:    br i1 [[NN]], label %[[PH:.*]], label %[[EXIT:.*]]
++; CHECK:       [[PH]]:
++; CHECK-NEXT:    br label %[[H:.*]]
++; CHECK:       [[H]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ -4, %[[PH]] ], [ [[INEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    [[OOBU:%.*]] = icmp ult i64 [[I]], [[N]]
++; CHECK-NEXT:    call void @use(i1 [[OOBU]])
++; CHECK-NEXT:    br label %[[LATCH]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[INEXT]] = add nsw i64 [[I]], 2
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[INEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[H]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %nn = icmp sgt i64 %n, 0
++  br i1 %nn, label %ph, label %exit
++
++ph:
++  br label %h
++
++h:
++  %i = phi i64 [ -4, %ph ], [ %inext, %latch ]
++  %oobs = icmp slt i64 %i, %n
++  call void @use(i1 %oobs)
++  %oobu = icmp ult i64 %i, %n
++  call void @use(i1 %oobu)
++  br label %latch
++
++latch:
++  %inext = add nsw i64 %i, 2
++  %c = icmp slt i64 %inext, %n
++  br i1 %c, label %h, label %exit
++
++exit:
++  ret void
++}
++
++; Negative test: wrong polarity. The loop continues on the edge where
++; `i + 2 s>= n`, so the induction is *above* the bound in the loop, not below.
++define void @neg_wrong_polarity(i64 %n) {
++; CHECK-LABEL: define void @neg_wrong_polarity(
++; CHECK-SAME: i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[H:.*]]
++; CHECK:       [[H]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[INEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[OOB:%.*]] = icmp slt i64 [[I]], [[N]]
++; CHECK-NEXT:    call void @use(i1 [[OOB]])
++; CHECK-NEXT:    br label %[[LATCH]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[INEXT]] = add nsw i64 [[I]], 2
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[INEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT:.*]], label %[[H]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %h
++
++h:
++  %i = phi i64 [ 0, %entry ], [ %inext, %latch ]
++  %oob = icmp slt i64 %i, %n
++  call void @use(i1 %oob)
++  br label %latch
++
++latch:
++  %inext = add nsw i64 %i, 2
++  %c = icmp slt i64 %inext, %n
++  br i1 %c, label %exit, label %h
++
++exit:
++  ret void
++}
++
++; Negative test: the disjunction is on the *continue* edge. `or(x, i + 2 s< n)`
++; being true does not imply the compare, so no bound may be derived.
++define void @neg_or_on_continue_edge(i64 %n, i1 %x) {
++; CHECK-LABEL: define void @neg_or_on_continue_edge(
++; CHECK-SAME: i64 [[N:%.*]], i1 [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[EZ:%.*]] = icmp eq i64 [[N]], 0
++; CHECK-NEXT:    br i1 [[EZ]], label %[[EXIT:.*]], label %[[PH:.*]]
++; CHECK:       [[PH]]:
++; CHECK-NEXT:    br label %[[H:.*]]
++; CHECK:       [[H]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, %[[PH]] ], [ [[INEXT:%.*]], %[[LATCH:.*]] ]
++; CHECK-NEXT:    [[OOB:%.*]] = icmp ult i64 [[I]], [[N]]
++; CHECK-NEXT:    call void @use(i1 [[OOB]])
++; CHECK-NEXT:    br label %[[LATCH]]
++; CHECK:       [[LATCH]]:
++; CHECK-NEXT:    [[INEXT]] = add nsw i64 [[I]], 2
++; CHECK-NEXT:    [[C:%.*]] = icmp slt i64 [[INEXT]], [[N]]
++; CHECK-NEXT:    [[COND:%.*]] = or i1 [[X]], [[C]]
++; CHECK-NEXT:    br i1 [[COND]], label %[[H]], label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %ez = icmp eq i64 %n, 0
++  br i1 %ez, label %exit, label %ph
++
++ph:
++  br label %h
++
++h:
++  %i = phi i64 [ 0, %ph ], [ %inext, %latch ]
++  %oob = icmp ult i64 %i, %n
++  call void @use(i1 %oob)
++  br label %latch
++
++latch:
++  %inext = add nsw i64 %i, 2
++  %c = icmp slt i64 %inext, %n
++  %cond = or i1 %x, %c
++  br i1 %cond, label %h, label %exit
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/PhaseOrdering/constraint-elimination-strided-bound.ll b/llvm/test/Transforms/PhaseOrdering/constraint-elimination-strided-bound.ll
+new file mode 100644
+index 0000000000000..f0d6ac556aead
+--- /dev/null
++++ b/llvm/test/Transforms/PhaseOrdering/constraint-elimination-strided-bound.ll
+@@ -0,0 +1,73 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes='default<O3>' -S %s | FileCheck %s
++
++; Reduced from C:
++;
++;   long sum_every_other(const long *a, long n) {
++;     if (n <= 0) return 0;
++;     long s = 0, i = 0;
++;     do {
++;       if ((unsigned long)i >= (unsigned long)n) abort();
++;       s += a[i];
++;       i += 2;
++;     } while (i < n);
++;     return s;
++;   }
++;
++; The bounds check is redundant: the loop only comes back round while i + 2 is
++; still below n, so i stays below n. Constraint elimination derives that from
++; the inequality latch on the post-increment, and the call to abort() is gone
++; end to end.
++
++target datalayout = "e-m:o-i64:64-i128:128-n32:64-S128"
++
++declare void @abort() noreturn
++
++define i64 @sum_every_other(ptr %a, i64 %n) {
++; CHECK-LABEL: define i64 @sum_every_other(
++; CHECK-SAME: ptr nofree readonly captures(none) [[A:%.*]], i64 [[N:%.*]]) local_unnamed_addr #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i64 [[N]], 1
++; CHECK-NEXT:    br i1 [[CMP]], label %[[RETURN:.*]], label %[[DO_BODY:.*]]
++; CHECK:       [[DO_BODY]]:
++; CHECK-NEXT:    [[S:%.*]] = phi i64 [ [[ADD:%.*]], %[[DO_BODY]] ], [ 0, %[[ENTRY]] ]
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ [[INEXT:%.*]], %[[DO_BODY]] ], [ 0, %[[ENTRY]] ]
++; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr inbounds nuw [8 x i8], ptr [[A]], i64 [[I]]
++; CHECK-NEXT:    [[V:%.*]] = load i64, ptr [[ARRAYIDX]], align 8
++; CHECK-NEXT:    [[ADD]] = add nsw i64 [[V]], [[S]]
++; CHECK-NEXT:    [[INEXT]] = add nuw nsw i64 [[I]], 2
++; CHECK-NEXT:    [[CMP5:%.*]] = icmp slt i64 [[INEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[CMP5]], label %[[DO_BODY]], label %[[RETURN]]
++; CHECK:       [[RETURN]]:
++; CHECK-NEXT:    [[R:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[ADD]], %[[DO_BODY]] ]
++; CHECK-NEXT:    ret i64 [[R]]
++;
++entry:
++  %cmp = icmp sle i64 %n, 0
++  br i1 %cmp, label %return, label %ph
++
++ph:
++  br label %do.body
++
++do.body:
++  %s = phi i64 [ 0, %ph ], [ %add, %do.cond ]
++  %i = phi i64 [ 0, %ph ], [ %inext, %do.cond ]
++  %oob = icmp uge i64 %i, %n
++  br i1 %oob, label %trap, label %do.cond
++
++do.cond:
++  %arrayidx = getelementptr inbounds i64, ptr %a, i64 %i
++  %v = load i64, ptr %arrayidx, align 8
++  %add = add nsw i64 %s, %v
++  %inext = add nsw i64 %i, 2
++  %cmp5 = icmp slt i64 %inext, %n
++  br i1 %cmp5, label %do.body, label %return
++
++trap:
++  call void @abort()
++  unreachable
++
++return:
++  %r = phi i64 [ 0, %entry ], [ %add, %do.cond ]
++  ret i64 %r
++}

@@ -1,0 +1,6 @@
+Delta,Added Lines,Removed Lines,Download URL
+-4,25,29,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/min_quad_with_fixed.1.bc?download=true
+-4,25,29,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/quadprog.bc?download=true
+-8,10,18,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/color_hsv.dispatch.bc?download=true
+-11,7,18,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/wasm_bindgen_shared-cc411fa93b7a7d93.wasm_bindgen_shared.b2b6210c8e09629b-cgu.0.bc?download=true
+-20,25,45,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/markdown-fa269332a230e88d.markdown.200b78164f002d53-cgu.13.bc?download=true
