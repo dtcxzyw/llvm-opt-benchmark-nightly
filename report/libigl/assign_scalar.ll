@@ -205,17 +205,17 @@ bb.e:                                             ; preds = %_ZL14__gthread_once
   %i.q = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   %i.r = load atomic ptr, ptr %i.q monotonic, align 8
   call void @_ZN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEEEC2ERKSD_(ptr noundef nonnull align 8 dereferenceable(9) %4, ptr noundef nonnull align 16 dereferenceable(64) %i.r)
-  %i.s = load ptr, ptr %4, align 8, !tbaa !95
+  %i.s = load ptr, ptr %4, align 8, !tbaa !95     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  %9 = load <2 x double>, ptr %i.t, align 16      ; 2 uses
-  %10 = extractelement <2 x double> %9, i64 0
-  %11 = fneg double %10                           ; 2 uses
-  %12 = extractelement <2 x double> %9, i64 1     ; 2 uses
-  store double %11, ptr %1, align 8, !tbaa !12
+  %9 = load double, ptr %i.t, align 16, !tbaa !70
+  %10 = fneg double %9                            ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.s, i64 24
+  %12 = load double, ptr %11, align 8, !tbaa !70  ; 2 uses
+  store double %10, ptr %1, align 8, !tbaa !12
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.bc, %bb.e
-  %i.u = phi double [ %i.v, %bb.bc ], [ %11, %bb.e ]
+  %i.u = phi double [ %i.v, %bb.bc ], [ %10, %bb.e ]
   %i.v = call double @nextafter(double noundef %i.u, double noundef %12) #24 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
@@ -618,7 +618,7 @@ bb.a:
   %4 = alloca %class.anon.101, align 8            ; 5 uses
   %5 = alloca %class.anon, align 8                ; 4 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !95     ; 6 uses
-  %i.b = load ptr, ptr %1, align 8, !tbaa !95     ; 2 uses
+  %i.b = load ptr, ptr %1, align 8, !tbaa !95     ; 3 uses
   %i.c = icmp eq ptr %i.a, %i.b
   br i1 %i.c, label %bb.l, label %bb.b
 
@@ -626,19 +626,18 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.f = load double, ptr %i.e, align 8, !tbaa !70
-  %6 = load <2 x double>, ptr %i.d, align 16      ; 2 uses
-  %7 = extractelement <2 x double> %6, i64 0
-  %i.g = fneg double %7
+  %6 = load double, ptr %i.d, align 16, !tbaa !70
+  %i.g = fneg double %6
   %i.h = fcmp olt double %i.f, %i.g
   br i1 %i.h, label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %8 = extractelement <2 x double> %6, i64 1
-  %9 = load <2 x double>, ptr %i.i, align 16, !tbaa !70
-  %10 = extractelement <2 x double> %9, i64 0
-  %11 = fneg double %10
-  %i.j = fcmp ugt double %8, %11
+  %7 = load double, ptr %i.i, align 16, !tbaa !70
+  %8 = fneg double %7
+  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %10 = load double, ptr %9, align 8, !tbaa !70
+  %i.j = fcmp ugt double %10, %8
   %i.k = select i1 %i.j, i16 256, i16 0
   br label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit
 
@@ -863,12 +862,12 @@ bb.e:                                             ; preds = %_ZL14__gthread_once
   %i.q = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   %i.r = load atomic ptr, ptr %i.q monotonic, align 8
   call void @_ZN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEEEC2ERKSD_(ptr noundef nonnull align 8 dereferenceable(9) %4, ptr noundef nonnull align 16 dereferenceable(64) %i.r)
-  %i.s = load ptr, ptr %4, align 8, !tbaa !95
+  %i.s = load ptr, ptr %4, align 8, !tbaa !95     ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  %9 = load <2 x double>, ptr %i.t, align 16      ; 2 uses
-  %10 = extractelement <2 x double> %9, i64 0
-  %11 = extractelement <2 x double> %9, i64 1
-  %i.u = fptrunc double %10 to float
+  %9 = load double, ptr %i.t, align 16, !tbaa !70
+  %10 = getelementptr inbounds nuw i8, ptr %i.s, i64 24
+  %11 = load double, ptr %10, align 8, !tbaa !70
+  %i.u = fptrunc double %9 to float
   %i.v = fneg float %i.u                          ; 2 uses
   store float %i.v, ptr %1, align 4, !tbaa !130
   %i.w = fptrunc double %11 to float              ; 2 uses
@@ -1271,9 +1270,8 @@ _ZN5boost14multiprecision6numberINS0_8backends16rational_adaptorINS2_15cpp_int_b
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.u = load double, ptr %i.t, align 8, !tbaa !70
-  %6 = load <2 x double>, ptr %i.s, align 16, !tbaa !70
-  %7 = extractelement <2 x double> %6, i64 0
-  %i.v = fneg double %7
+  %6 = load double, ptr %i.s, align 16, !tbaa !70
+  %i.v = fneg double %6
   %i.w = fcmp oeq double %i.u, %i.v
   br i1 %i.w, label %bb.m, label %bb.k
 
@@ -1676,9 +1674,8 @@ _ZN4CGAL3absIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.n = load double, ptr %i.m, align 8, !tbaa !70
-  %4 = load <2 x double>, ptr %i.l, align 16, !tbaa !70
-  %5 = extractelement <2 x double> %4, i64 0
-  %i.o = fneg double %5
+  %4 = load double, ptr %i.l, align 16, !tbaa !70
+  %i.o = fneg double %4
   %i.p = fcmp oeq double %i.n, %i.o
   br i1 %i.p, label %bb.i, label %bb.g
 

@@ -205,7 +205,7 @@ bb.a:
   %i.v = load float, ptr %i.u, align 8, !tbaa !32
   %i.w = fmul float %i.q, %i.v                    ; 6 uses
   store float %i.w, ptr %i.u, align 8, !tbaa !32
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 444 ; 5 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 444 ; 4 uses
   %i.y = load float, ptr %i.x, align 4, !tbaa !32
   %i.z = fmul float %i.q, %i.y                    ; 6 uses
   store float %i.z, ptr %i.x, align 4, !tbaa !32
@@ -250,7 +250,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %i.ax = phi float [ %i.at, %bb.d ], [ %i.z, %bb.c ], [ %i.z, %bb.b ] ; 2 uses
+  %i.ax = phi float [ %i.at, %bb.d ], [ %i.z, %bb.c ], [ %i.z, %bb.b ] ; 6 uses
   %i.ay = phi float [ %i.as, %bb.d ], [ %i.w, %bb.c ], [ %i.w, %bb.b ] ; 3 uses
   %i.az = phi float [ %i.ar, %bb.d ], [ %i.t, %bb.c ], [ %i.t, %bb.b ] ; 2 uses
   %i.ba = phi float [ %i.aw, %bb.d ], [ %i.m, %bb.c ], [ %i.m, %bb.b ] ; 2 uses
@@ -269,12 +269,11 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %.sroa.0.0.copyload3.i = load <2 x float>, ptr %i.e, align 4 ; 5 uses
-  %.sroa.8.0.copyload.i = load <2 x float>, ptr %i.k, align 4
   %.sroa.0.0.vec.extract.i = extractelement <2 x float> %.sroa.0.0.copyload3.i, i64 0 ; 2 uses
   %foldExtExtBinop = fmul <2 x float> %.sroa.0.0.copyload3.i, %.sroa.0.0.copyload3.i
   %i.bi = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.bj = tail call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract.i, float %.sroa.0.0.vec.extract.i, float %i.bi)
-  %.sroa.8.8.vec.extract.i = extractelement <2 x float> %.sroa.8.0.copyload.i, i64 0 ; 4 uses
+  %.sroa.8.8.vec.extract.i = load float, ptr %i.k, align 4, !tbaa !45 ; 4 uses
   %i.bk = tail call noundef float @llvm.fmuladd.f32(float %.sroa.8.8.vec.extract.i, float %.sroa.8.8.vec.extract.i, float %i.bj)
   %sqrt.i.i.i = tail call noundef float @llvm.sqrt.f32(float %i.bk)
   %i.bl = fdiv float 1.000000e+00, %sqrt.i.i.i    ; 2 uses
@@ -309,16 +308,14 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %.sroa.0.0.copyload3.i13 = load <2 x float>, ptr %i.r, align 4 ; 5 uses
-  %.sroa.8.0.copyload.i15 = load <2 x float>, ptr %i.x, align 4
   %.sroa.0.0.vec.extract.i16 = extractelement <2 x float> %.sroa.0.0.copyload3.i13, i64 0 ; 2 uses
   %foldExtExtBinop54 = fmul <2 x float> %.sroa.0.0.copyload3.i13, %.sroa.0.0.copyload3.i13
   %i.ca = extractelement <2 x float> %foldExtExtBinop54, i64 1
   %i.cb = tail call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract.i16, float %.sroa.0.0.vec.extract.i16, float %i.ca)
-  %.sroa.8.8.vec.extract.i18 = extractelement <2 x float> %.sroa.8.0.copyload.i15, i64 0 ; 4 uses
-  %i.cc = tail call noundef float @llvm.fmuladd.f32(float %.sroa.8.8.vec.extract.i18, float %.sroa.8.8.vec.extract.i18, float %i.cb)
+  %i.cc = tail call noundef float @llvm.fmuladd.f32(float %i.ax, float %i.ax, float %i.cb)
   %sqrt.i.i.i19 = tail call noundef float @llvm.sqrt.f32(float %i.cc)
   %i.cd = fdiv float 1.000000e+00, %sqrt.i.i.i19  ; 2 uses
-  %i.ce = fmul float %.sroa.8.8.vec.extract.i18, %i.cd
+  %i.ce = fmul float %i.ax, %i.cd
   %i.cf = fmul float %i.ce, 5.000000e-03
   %i.cg = insertelement <2 x float> poison, float %i.cd, i64 0
   %i.ch = shufflevector <2 x float> %i.cg, <2 x float> poison, <2 x i32> zeroinitializer
@@ -327,7 +324,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ck = insertelement <2 x float> %.sroa.0.0.copyload3.i13, float %i.ay, i64 1
   %i.cl = fsub <2 x float> %i.ck, %i.cj
   store <2 x float> %i.cl, ptr %i.r, align 4, !tbaa !32
-  %i.cm = fsub float %.sroa.8.8.vec.extract.i18, %i.cf
+  %i.cm = fsub float %i.ax, %i.cf
   store float %i.cm, ptr %i.x, align 4, !tbaa !32
   br label %bb.m
 

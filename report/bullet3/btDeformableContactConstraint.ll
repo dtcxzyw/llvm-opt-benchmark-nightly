@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   store i8 1, ptr %i.er, align 8, !tbaa !106
   %i.es = fmul float %.1, %.1                     ; 7 uses
   %i.et = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 5 uses
-  %.sroa.5165.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
+  %.sroa.5165.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %.sroa.5165.0.copyload = load float, ptr %.sroa.5165.0..sroa_idx, align 8 ; 2 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %i.bd, i64 140 ; 3 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %i.bd, i64 144
@@ -268,7 +268,7 @@ bb.j:                                             ; preds = %bb.i
   %i.gz = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.gw, <2 x float> %i.gy, <2 x float> %i.gu)
   %i.ha = fsub <2 x float> %i.gm, %i.gz           ; 4 uses
   store <2 x float> %i.ha, ptr %i.et, align 8, !tbaa !40
-  %i.hb = fsub float %.sroa.5165.0.copyload, %i.gl ; 3 uses
+  %i.hb = fsub float %.sroa.5165.0.copyload, %i.gl ; 6 uses
   store float %i.hb, ptr %.sroa.5165.0..sroa_idx, align 8, !tbaa !40
   %i.hc = load float, ptr %i.r, align 4, !tbaa !40
   %i.hd = load float, ptr %i.s, align 4, !tbaa !40
@@ -318,18 +318,16 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m
   %.sroa.0.0.copyload3.i = load <2 x float>, ptr %i.et, align 8 ; 2 uses
-  %.sroa.8.0.copyload.i = load <2 x float>, ptr %.sroa.5165.0..sroa_idx, align 8, !tbaa !19
   %.sroa.0.0.vec.extract.i = extractelement <2 x float> %.sroa.0.0.copyload3.i, i64 0 ; 3 uses
   %.sroa.0.4.vec.extract.i = extractelement <2 x float> %.sroa.0.0.copyload3.i, i64 1 ; 3 uses
   %i.ib = fmul float %.sroa.0.4.vec.extract.i, %.sroa.0.4.vec.extract.i
   %i.ic = tail call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract.i, float %.sroa.0.0.vec.extract.i, float %i.ib)
-  %.sroa.8.8.vec.extract.i = extractelement <2 x float> %.sroa.8.0.copyload.i, i64 0 ; 3 uses
-  %i.id = tail call noundef float @llvm.fmuladd.f32(float %.sroa.8.8.vec.extract.i, float %.sroa.8.8.vec.extract.i, float %i.ic)
+  %i.id = tail call noundef float @llvm.fmuladd.f32(float %i.hb, float %i.hb, float %i.ic)
   %sqrt.i.i.i = tail call noundef float @llvm.sqrt.f32(float %i.id)
   %i.ie = fdiv float 1.000000e+00, %sqrt.i.i.i    ; 3 uses
   %i.if = fmul float %.sroa.0.0.vec.extract.i, %i.ie
   %i.ig = fmul float %.sroa.0.4.vec.extract.i, %i.ie
-  %i.ih = fmul float %.sroa.8.8.vec.extract.i, %i.ie
+  %i.ih = fmul float %i.hb, %i.ie
   %i.ii = fcmp ogt float %i.ho, f0x34000000
   %.0.i104 = select i1 %i.ii, float %sqrt.i.i, float 0.000000e+00 ; 3 uses
   %i.ij = fmul float %.0.i104, %i.if
@@ -732,7 +730,7 @@ bb.a:
   %i.ao = fsub float %i.v, %i.am                  ; 2 uses
   %.sroa.3.12.vec.insert.i18 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ao, i64 0
   %i.ap = load <2 x float>, ptr %i.aa, align 8    ; 3 uses
-  %.sroa.5100.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 4 uses
+  %.sroa.5100.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
   %.sroa.5100.0.copyload = load float, ptr %.sroa.5100.0..sroa_idx, align 8 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !171
@@ -768,7 +766,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.bk = fsub <2 x float> %i.ap, %i.bj           ; 4 uses
   store <2 x float> %i.bk, ptr %i.aa, align 8, !tbaa !40
   %.pn = fmul float %i.ao, %.pn149
-  %storemerge = fsub float %.sroa.5100.0.copyload, %.pn ; 3 uses
+  %storemerge = fsub float %.sroa.5100.0.copyload, %.pn ; 6 uses
   store float %storemerge, ptr %.sroa.5100.0..sroa_idx, align 8, !tbaa !40
   %i.bl = load float, ptr %i.p, align 4, !tbaa !40
   %i.bm = load float, ptr %i.q, align 4, !tbaa !40
@@ -818,18 +816,16 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %.sroa.0.0.copyload3.i = load <2 x float>, ptr %i.aa, align 8 ; 2 uses
-  %.sroa.8.0.copyload.i = load <2 x float>, ptr %.sroa.5100.0..sroa_idx, align 8, !tbaa !19
   %.sroa.0.0.vec.extract.i = extractelement <2 x float> %.sroa.0.0.copyload3.i, i64 0 ; 3 uses
   %.sroa.0.4.vec.extract.i = extractelement <2 x float> %.sroa.0.0.copyload3.i, i64 1 ; 3 uses
   %i.ck = fmul float %.sroa.0.4.vec.extract.i, %.sroa.0.4.vec.extract.i
   %i.cl = tail call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract.i, float %.sroa.0.0.vec.extract.i, float %i.ck)
-  %.sroa.8.8.vec.extract.i = extractelement <2 x float> %.sroa.8.0.copyload.i, i64 0 ; 3 uses
-  %i.cm = tail call noundef float @llvm.fmuladd.f32(float %.sroa.8.8.vec.extract.i, float %.sroa.8.8.vec.extract.i, float %i.cl)
+  %i.cm = tail call noundef float @llvm.fmuladd.f32(float %storemerge, float %storemerge, float %i.cl)
   %sqrt.i.i.i = tail call noundef float @llvm.sqrt.f32(float %i.cm)
   %i.cn = fdiv float 1.000000e+00, %sqrt.i.i.i    ; 3 uses
   %i.co = fmul float %.sroa.0.0.vec.extract.i, %i.cn
   %i.cp = fmul float %.sroa.0.4.vec.extract.i, %i.cn
-  %i.cq = fmul float %.sroa.8.8.vec.extract.i, %i.cn
+  %i.cq = fmul float %storemerge, %i.cn
   %i.cr = fcmp ogt float %i.bx, f0x34000000
   %.0.i47 = select i1 %i.cr, float %sqrt.i.i, float 0.000000e+00 ; 3 uses
   %i.cs = fmul float %.0.i47, %i.co

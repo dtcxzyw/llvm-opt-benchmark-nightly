@@ -205,15 +205,13 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.
   ]
 
 bb.ah:                                            ; preds = %bb.ag
-  %18 = load <4 x float>, ptr %15, align 16, !tbaa !34
-  %19 = extractelement <4 x float> %18, i64 0
-  store float %19, ptr %11, align 1, !tbaa !34
+  %18 = load float, ptr %15, align 16, !tbaa !34
+  store float %18, ptr %11, align 1, !tbaa !34
   br label %_ZNK11OpenImageIO4v3_14simd7vfloat45storeEPfi.exit264
 
 bb.ai:                                            ; preds = %bb.ag
-  %20 = load <2 x double>, ptr %15, align 16, !tbaa !34
-  %21 = extractelement <2 x double> %20, i64 0
-  store double %21, ptr %11, align 1, !tbaa !34
+  %19 = load double, ptr %15, align 16, !tbaa !34
+  store double %19, ptr %11, align 1, !tbaa !34
   br label %_ZNK11OpenImageIO4v3_14simd7vfloat45storeEPfi.exit264
 
 bb.aj:                                            ; preds = %bb.ag
@@ -253,21 +251,17 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   ]
 
 _ZNK11OpenImageIO4v3_14simd7vfloat45storeEPfi.exit263.thread: ; preds = %bb.an
-  %22 = load <4 x float>, ptr %16, align 16, !tbaa !34
-  %23 = extractelement <4 x float> %22, i64 0
-  store float %23, ptr %12, align 1, !tbaa !34
-  %24 = load <4 x float>, ptr %17, align 16, !tbaa !34
-  %25 = extractelement <4 x float> %24, i64 0
-  store float %25, ptr %13, align 1, !tbaa !34
+  %20 = load float, ptr %16, align 16, !tbaa !34
+  store float %20, ptr %12, align 1, !tbaa !34
+  %21 = load float, ptr %17, align 16, !tbaa !34
+  store float %21, ptr %13, align 1, !tbaa !34
   br label %_ZNK11OpenImageIO4v3_14simd7vfloat45storeEPfi.exit
 
 _ZNK11OpenImageIO4v3_14simd7vfloat45storeEPfi.exit263.thread298: ; preds = %bb.an
-  %26 = load <2 x double>, ptr %16, align 16, !tbaa !34
-  %27 = extractelement <2 x double> %26, i64 0
-  store double %27, ptr %12, align 1, !tbaa !34
-  %28 = load <2 x double>, ptr %17, align 16, !tbaa !34
-  %29 = extractelement <2 x double> %28, i64 0
-  store double %29, ptr %13, align 1, !tbaa !34
+  %22 = load double, ptr %16, align 16, !tbaa !34
+  store double %22, ptr %12, align 1, !tbaa !34
+  %23 = load double, ptr %17, align 16, !tbaa !34
+  store double %23, ptr %13, align 1, !tbaa !34
   br label %_ZNK11OpenImageIO4v3_14simd7vfloat45storeEPfi.exit
 
 _ZNK11OpenImageIO4v3_14simd7vfloat45storeEPfi.exit263.thread299: ; preds = %bb.an

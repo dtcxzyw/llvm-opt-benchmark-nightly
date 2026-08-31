@@ -205,28 +205,29 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr %4, align 8, !tbaa !653    ; 7 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.e = load double, ptr %i.d, align 8, !tbaa !24 ; 2 uses
-  %6 = load <2 x double>, ptr %i.c, align 16, !tbaa !24 ; 4 uses
-  %7 = extractelement <2 x double> %6, i64 0      ; 2 uses
-  %i.f = fneg double %7                           ; 2 uses
+  %6 = load double, ptr %i.c, align 16, !tbaa !24
+  %i.f = fneg double %6                           ; 2 uses
   %i.g = fcmp oeq double %i.e, %i.f
   br i1 %i.g, label %_ZNK4CGAL19Cartesian_converterINS_5EpeckENS_5EpickENS_12NT_converterINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS6_8backends16rational_adaptorINS8_15cpp_int_backendILm0ELm0ELNS6_16cpp_integer_typeE1ELNS6_18cpp_int_check_typeE0ESaIyEEEEELNS6_26expression_template_optionE1EEEEEdEEEclERKSI_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %6) ; 2 uses
+  %7 = load <2 x double>, ptr %i.c, align 16      ; 4 uses
+  %i.h = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %7) ; 2 uses
   %i.i = shufflevector <2 x double> %i.h, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.j = call noundef <2 x double> @llvm.x86.sse2.max.sd(<2 x double> %i.h, <2 x double> %i.i)
   %i.k = extractelement <2 x double> %i.j, i64 0  ; 2 uses
   %i.l = fcmp oeq double %i.k, 0.000000e+00
+  %8 = extractelement <2 x double> %7, i64 0
   br i1 %i.l, label %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.thread.i.i.i.i, label %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.i.i.i.i
 
 _ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.i.i.i.i: ; preds = %bb.c
   %i.m = call noundef nonnull align 8 dereferenceable(8) ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZZN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEEE40relative_precision_of_to_double_internalEvE31relative_precision_of_to_double)
   %i.n = load double, ptr %i.m, align 8, !tbaa !27
-  %shift = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %6, %shift
+  %shift = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x double> %shift, %7
   %i.o = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.p = fmul double %i.o, 5.000000e-01
   %i.q = fmul double %i.k, %i.n
@@ -234,7 +235,7 @@ _ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.
   br i1 %i.r, label %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.thread.i.i.i.i, label %bb.d
 
 _ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.thread.i.i.i.i: ; preds = %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.i.i.i.i, %bb.c
-  %i.s = fsub double %i.e, %7
+  %i.s = fsub double %i.e, %8
   %i.t = fmul double %i.s, 5.000000e-01
   br label %_ZNK4CGAL19Cartesian_converterINS_5EpeckENS_5EpickENS_12NT_converterINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS6_8backends16rational_adaptorINS8_15cpp_int_backendILm0ELm0ELNS6_16cpp_integer_typeE1ELNS6_18cpp_int_check_typeE0ESaIyEEEEELNS6_26expression_template_optionE1EEEEEdEEEclERKSI_.exit
 
@@ -282,8 +283,7 @@ _ZNK4CGAL4LazyINS_11Interval_ntILb0EEEN5boost14multiprecision6numberINS4_8backen
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
   %i.ae = load double, ptr %i.ad, align 8, !tbaa !24
-  %8 = load <2 x double>, ptr %i.ac, align 16, !tbaa !24
-  %9 = extractelement <2 x double> %8, i64 0
+  %9 = load double, ptr %i.ac, align 16, !tbaa !24
   %i.af = fsub double %i.ae, %9
   %i.ag = fmul double %i.af, 5.000000e-01
   br label %_ZNK4CGAL19Cartesian_converterINS_5EpeckENS_5EpickENS_12NT_converterINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS6_8backends16rational_adaptorINS8_15cpp_int_backendILm0ELm0ELNS6_16cpp_integer_typeE1ELNS6_18cpp_int_check_typeE0ESaIyEEEEELNS6_26expression_template_optionE1EEEEEdEEEclERKSI_.exit
@@ -686,28 +686,29 @@ bb.a:
   call void @_ZNK4CGAL20Lazy_construction_ntINS_5EpeckENS_23CartesianKernelFunctors11Compute_x_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEENS3_INS4_IN5boost14multiprecision6numberINSA_8backends16rational_adaptorINSC_15cpp_int_backendILm0ELm0ELNSA_16cpp_integer_typeE1ELNSA_18cpp_int_check_typeE0ESaIyEEEEELNSA_26expression_template_optionE1EEEEEEEEclIJNS_7Point_3IS1_EEEEENS_13Lazy_exact_ntINSt9remove_cvINSt16remove_referenceIDTcldtdefpT2ecspclsr4CGALE5exactfp_EEEE4typeEE4typeEEEDpRKT_(ptr dead_on_unwind nonnull writable sret(%"class.CGAL::Lazy_exact_nt") align 8 %12, ptr noundef nonnull align 1 dereferenceable(1) %11, ptr noundef nonnull align 8 dereferenceable(8) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #38, !noalias !794
   %i.a = load ptr, ptr %12, align 8, !tbaa !653   ; 5 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.d = load double, ptr %i.c, align 8, !tbaa !24 ; 2 uses
-  %15 = load <2 x double>, ptr %i.b, align 16, !tbaa !24 ; 4 uses
-  %16 = extractelement <2 x double> %15, i64 0    ; 2 uses
-  %i.e = fneg double %16                          ; 2 uses
+  %15 = load double, ptr %i.b, align 16, !tbaa !24
+  %i.e = fneg double %15                          ; 2 uses
   %i.f = fcmp oeq double %i.d, %i.e
   br i1 %i.f, label %_ZNK4CGAL12NT_converterINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEEdEclERKSF_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %15) ; 2 uses
+  %16 = load <2 x double>, ptr %i.b, align 16     ; 4 uses
+  %i.g = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %16) ; 2 uses
   %i.h = shufflevector <2 x double> %i.g, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.i = call noundef <2 x double> @llvm.x86.sse2.max.sd(<2 x double> %i.g, <2 x double> %i.h)
   %i.j = extractelement <2 x double> %i.i, i64 0  ; 2 uses
   %i.k = fcmp oeq double %i.j, 0.000000e+00
+  %17 = extractelement <2 x double> %16, i64 0
   br i1 %i.k, label %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.thread.i.i.i, label %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.i.i.i
 
 _ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.i.i.i: ; preds = %bb.b
   %i.l = call noundef nonnull align 8 dereferenceable(8) ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZZN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEEE40relative_precision_of_to_double_internalEvE31relative_precision_of_to_double)
   %i.m = load double, ptr %i.l, align 8, !tbaa !27
-  %shift = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x double> %15, %shift
+  %shift = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x double> %shift, %16
   %i.n = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.o = fmul double %i.n, 5.000000e-01
   %i.p = fmul double %i.j, %i.m
@@ -715,7 +716,7 @@ _ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.
   br i1 %i.q, label %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.thread.i.i.i, label %bb.c
 
 _ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.thread.i.i.i: ; preds = %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.i.i.i, %bb.b
-  %i.r = fsub double %i.d, %16
+  %i.r = fsub double %i.d, %17
   %i.s = fmul double %i.r, 5.000000e-01
   br label %_ZNK4CGAL12NT_converterINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEEdEclERKSF_.exit
 
@@ -762,8 +763,7 @@ _ZNK4CGAL4LazyINS_11Interval_ntILb0EEEN5boost14multiprecision6numberINS4_8backen
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
   %i.ad = load double, ptr %i.ac, align 8, !tbaa !24
-  %17 = load <2 x double>, ptr %i.ab, align 16, !tbaa !24
-  %18 = extractelement <2 x double> %17, i64 0
+  %18 = load double, ptr %i.ab, align 16, !tbaa !24
   %i.ae = fsub double %i.ad, %18
   %i.af = fmul double %i.ae, 5.000000e-01
   br label %_ZNK4CGAL12NT_converterINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEEdEclERKSF_.exit
@@ -778,28 +778,29 @@ _ZNK4CGAL12NT_converterINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8b
 bb.g:                                             ; preds = %_ZNK4CGAL12NT_converterINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEEdEclERKSF_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #38, !noalias !797
   %i.ag = load ptr, ptr %13, align 8, !tbaa !653  ; 5 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 16 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
   %i.aj = load double, ptr %i.ai, align 8, !tbaa !24 ; 2 uses
-  %19 = load <2 x double>, ptr %i.ah, align 16, !tbaa !24 ; 4 uses
-  %20 = extractelement <2 x double> %19, i64 0    ; 2 uses
-  %i.ak = fneg double %20                         ; 2 uses
+  %19 = load double, ptr %i.ah, align 16, !tbaa !24
+  %i.ak = fneg double %19                         ; 2 uses
   %i.al = fcmp oeq double %i.aj, %i.ak
   br i1 %i.al, label %_ZNK4CGAL12NT_converterINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEEdEclERKSF_.exit21, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.am = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %19) ; 2 uses
+  %20 = load <2 x double>, ptr %i.ah, align 16    ; 4 uses
+  %i.am = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %20) ; 2 uses
   %i.an = shufflevector <2 x double> %i.am, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.ao = call noundef <2 x double> @llvm.x86.sse2.max.sd(<2 x double> %i.am, <2 x double> %i.an)
   %i.ap = extractelement <2 x double> %i.ao, i64 0 ; 2 uses
   %i.aq = fcmp oeq double %i.ap, 0.000000e+00
+  %21 = extractelement <2 x double> %20, i64 0
   br i1 %i.aq, label %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.thread.i.i.i18, label %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.i.i.i13
 
 _ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.i.i.i13: ; preds = %bb.h
   %i.ar = call noundef nonnull align 8 dereferenceable(8) ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZZN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEEE40relative_precision_of_to_double_internalEvE31relative_precision_of_to_double)
   %i.as = load double, ptr %i.ar, align 8, !tbaa !27
-  %shift60 = shufflevector <2 x double> %19, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop61 = fadd <2 x double> %19, %shift60
+  %shift60 = shufflevector <2 x double> %20, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop61 = fadd <2 x double> %shift60, %20
   %i.at = extractelement <2 x double> %foldExtExtBinop61, i64 0
   %i.au = fmul double %i.at, 5.000000e-01
   %i.av = fmul double %i.ap, %i.as
@@ -807,7 +808,7 @@ _ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.
   br i1 %i.aw, label %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.thread.i.i.i18, label %bb.i
 
 _ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.thread.i.i.i18: ; preds = %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.i.i.i13, %bb.h
-  %i.ax = fsub double %i.aj, %20
+  %i.ax = fsub double %i.aj, %21
   %i.ay = fmul double %i.ax, 5.000000e-01
   br label %_ZNK4CGAL12NT_converterINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEEdEclERKSF_.exit21
 
@@ -854,8 +855,7 @@ _ZNK4CGAL4LazyINS_11Interval_ntILb0EEEN5boost14multiprecision6numberINS4_8backen
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 16
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bg, i64 24
   %i.bj = load double, ptr %i.bi, align 8, !tbaa !24
-  %21 = load <2 x double>, ptr %i.bh, align 16, !tbaa !24
-  %22 = extractelement <2 x double> %21, i64 0
+  %22 = load double, ptr %i.bh, align 16, !tbaa !24
   %i.bk = fsub double %i.bj, %22
   %i.bl = fmul double %i.bk, 5.000000e-01
   br label %_ZNK4CGAL12NT_converterINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEEdEclERKSF_.exit21
@@ -870,28 +870,29 @@ _ZNK4CGAL12NT_converterINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8b
 bb.m:                                             ; preds = %_ZNK4CGAL12NT_converterINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEEdEclERKSF_.exit21
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #38, !noalias !800
   %i.bm = load ptr, ptr %14, align 8, !tbaa !653  ; 7 uses
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 16
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 16 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 24
   %i.bp = load double, ptr %i.bo, align 8, !tbaa !24 ; 2 uses
-  %23 = load <2 x double>, ptr %i.bn, align 16, !tbaa !24 ; 4 uses
-  %24 = extractelement <2 x double> %23, i64 0    ; 2 uses
-  %i.bq = fneg double %24                         ; 2 uses
+  %23 = load double, ptr %i.bn, align 16, !tbaa !24
+  %i.bq = fneg double %23                         ; 2 uses
   %i.br = fcmp oeq double %i.bp, %i.bq
   br i1 %i.br, label %bb.r, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.bs = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %23) ; 2 uses
+  %24 = load <2 x double>, ptr %i.bn, align 16    ; 4 uses
+  %i.bs = call noundef <2 x double> @llvm.fabs.v2f64(<2 x double> %24) ; 2 uses
   %i.bt = shufflevector <2 x double> %i.bs, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.bu = call noundef <2 x double> @llvm.x86.sse2.max.sd(<2 x double> %i.bs, <2 x double> %i.bt)
   %i.bv = extractelement <2 x double> %i.bu, i64 0 ; 2 uses
   %i.bw = fcmp oeq double %i.bv, 0.000000e+00
+  %25 = extractelement <2 x double> %24, i64 0
   br i1 %i.bw, label %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.thread.i.i.i27, label %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.i.i.i22
 
 _ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.i.i.i22: ; preds = %bb.n
   %i.bx = call noundef nonnull align 8 dereferenceable(8) ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZZN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEEE40relative_precision_of_to_double_internalEvE31relative_precision_of_to_double)
   %i.by = load double, ptr %i.bx, align 8, !tbaa !27
-  %shift63 = shufflevector <2 x double> %23, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop64 = fadd <2 x double> %23, %shift63
+  %shift63 = shufflevector <2 x double> %24, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop64 = fadd <2 x double> %shift63, %24
   %i.bz = extractelement <2 x double> %foldExtExtBinop64, i64 0
   %i.ca = fmul double %i.bz, 5.000000e-01
   %i.cb = fmul double %i.bv, %i.by
@@ -899,7 +900,7 @@ _ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.
   br i1 %i.cc, label %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.thread.i.i.i27, label %bb.o
 
 _ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.thread.i.i.i27: ; preds = %_ZN4CGAL30has_smaller_relative_precisionILb0EEEbRKNS_11Interval_ntIXT_EEEd.exit.i.i.i22, %bb.n
-  %i.cd = fsub double %i.bp, %24
+  %i.cd = fsub double %i.bp, %25
   %i.ce = fmul double %i.cd, 5.000000e-01
   br label %bb.r
 
@@ -947,8 +948,7 @@ _ZNK4CGAL4LazyINS_11Interval_ntILb0EEEN5boost14multiprecision6numberINS4_8backen
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 16
   %i.co = getelementptr inbounds nuw i8, ptr %i.cm, i64 24
   %i.cp = load double, ptr %i.co, align 8, !tbaa !24
-  %25 = load <2 x double>, ptr %i.cn, align 16, !tbaa !24
-  %26 = extractelement <2 x double> %25, i64 0
+  %26 = load double, ptr %i.cn, align 16, !tbaa !24
   %i.cq = fsub double %i.cp, %26
   %i.cr = fmul double %i.cq, 5.000000e-01
   br label %bb.r
@@ -1351,15 +1351,15 @@ bb.a:
   %i.cb = extractelement <2 x double> %i.ca, i64 0 ; 2 uses
   %i.cc = fneg double %i.cb
   %i.cd = fcmp olt double %i.cb, 0.000000e+00
-  %14 = extractelement <2 x double> %i.ca, i64 1  ; 2 uses
   br i1 %i.cd, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %.noexc
-  %i.ce = fcmp olt double %14, 0.000000e+00
+  %.sroa.0.8.vec.extract.i.i.i = extractelement <2 x double> %i.ca, i64 1 ; 2 uses
+  %i.ce = fcmp olt double %.sroa.0.8.vec.extract.i.i.i, 0.000000e+00
   br i1 %i.ce, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.cf = fcmp une double %14, %i.cc
+  %i.cf = fcmp une double %.sroa.0.8.vec.extract.i.i.i, %i.cc
   %i.cg = select i1 %i.cf, i64 8589934591, i64 0
   br label %bb.d
 
@@ -1762,17 +1762,17 @@ bb.a:
   %i.bn = fneg double %i.bm                       ; 2 uses
   %.sroa.0.8.vec.extract.i.i = extractelement <2 x double> %i.bl, i64 1 ; 2 uses
   %i.bo = fcmp olt double %.sroa.0.8.vec.extract.i.i, %i.bn
-  %11 = extractelement <2 x double> %i.au, i64 1  ; 2 uses
   br i1 %i.bo, label %_ZN4CGAL13orientationC2INS_11Interval_ntILb0EEEEENS_19Same_uncertainty_ntINS_4SignET_E4typeERKS5_S9_S9_S9_S9_S9_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.bp = extractelement <2 x double> %i.bl, i64 0
   %i.bq = fneg double %i.bp                       ; 2 uses
-  %i.br = fcmp olt double %11, %i.bq
+  %.sroa.05.8.vec.extract.i.i = extractelement <2 x double> %i.au, i64 1 ; 2 uses
+  %i.br = fcmp olt double %.sroa.05.8.vec.extract.i.i, %i.bq
   br i1 %i.br, label %_ZN4CGAL13orientationC2INS_11Interval_ntILb0EEEEENS_19Same_uncertainty_ntINS_4SignET_E4typeERKS5_S9_S9_S9_S9_S9_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.bs = fcmp une double %11, %i.bq
+  %i.bs = fcmp une double %.sroa.05.8.vec.extract.i.i, %i.bq
   %i.bt = fcmp une double %.sroa.0.8.vec.extract.i.i, %i.bn
   %or.cond.not.i.i.i.i.i = or i1 %i.bt, %i.bs
   %i.bu = select i1 %or.cond.not.i.i.i.i.i, i64 8589934591, i64 0
@@ -1869,17 +1869,17 @@ bb.d:                                             ; preds = %_ZN4CGAL13orientati
   %i.es = fneg double %i.er                       ; 2 uses
   %.sroa.0.8.vec.extract.i.i22 = extractelement <2 x double> %i.eq, i64 1 ; 2 uses
   %i.et = fcmp olt double %.sroa.0.8.vec.extract.i.i22, %i.es
-  %12 = extractelement <2 x double> %i.dz, i64 1  ; 2 uses
   br i1 %i.et, label %_ZN4CGAL13orientationC2INS_11Interval_ntILb0EEEEENS_19Same_uncertainty_ntINS_4SignET_E4typeERKS5_S9_S9_S9_S9_S9_.exit25, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.eu = extractelement <2 x double> %i.eq, i64 0
   %i.ev = fneg double %i.eu                       ; 2 uses
-  %i.ew = fcmp olt double %12, %i.ev
+  %.sroa.05.8.vec.extract.i.i25 = extractelement <2 x double> %i.dz, i64 1 ; 2 uses
+  %i.ew = fcmp olt double %.sroa.05.8.vec.extract.i.i25, %i.ev
   br i1 %i.ew, label %_ZN4CGAL13orientationC2INS_11Interval_ntILb0EEEEENS_19Same_uncertainty_ntINS_4SignET_E4typeERKS5_S9_S9_S9_S9_S9_.exit25, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.ex = fcmp une double %12, %i.ev
+  %i.ex = fcmp une double %.sroa.05.8.vec.extract.i.i25, %i.ev
   %i.ey = fcmp une double %.sroa.0.8.vec.extract.i.i22, %i.es
   %or.cond.not.i.i.i.i.i23 = or i1 %i.ey, %i.ex
   %i.ez = select i1 %or.cond.not.i.i.i.i.i23, i64 8589934591, i64 0
@@ -1976,17 +1976,17 @@ bb.g:                                             ; preds = %_ZN4CGAL13orientati
   %i.hx = fneg double %i.hw                       ; 2 uses
   %.sroa.0.8.vec.extract.i.i31 = extractelement <2 x double> %i.hv, i64 1 ; 2 uses
   %i.hy = fcmp olt double %.sroa.0.8.vec.extract.i.i31, %i.hx
-  %13 = extractelement <2 x double> %i.he, i64 1  ; 2 uses
   br i1 %i.hy, label %_ZN4CGAL13orientationC2INS_11Interval_ntILb0EEEEENS_19Same_uncertainty_ntINS_4SignET_E4typeERKS5_S9_S9_S9_S9_S9_.exit34, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.hz = extractelement <2 x double> %i.hv, i64 0
   %i.ia = fneg double %i.hz                       ; 2 uses
-  %i.ib = fcmp olt double %13, %i.ia
+  %.sroa.05.8.vec.extract.i.i37 = extractelement <2 x double> %i.he, i64 1 ; 2 uses
+  %i.ib = fcmp olt double %.sroa.05.8.vec.extract.i.i37, %i.ia
   br i1 %i.ib, label %_ZN4CGAL13orientationC2INS_11Interval_ntILb0EEEEENS_19Same_uncertainty_ntINS_4SignET_E4typeERKS5_S9_S9_S9_S9_S9_.exit34, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ic = fcmp une double %13, %i.ia
+  %i.ic = fcmp une double %.sroa.05.8.vec.extract.i.i37, %i.ia
   %i.id = fcmp une double %.sroa.0.8.vec.extract.i.i31, %i.hx
   %or.cond.not.i.i.i.i.i32 = or i1 %i.id, %i.ic
   %i.ie = select i1 %or.cond.not.i.i.i.i.i32, i64 8589934591, i64 0
@@ -2389,15 +2389,15 @@ begin_hunk_4_@_ZN4CGAL33coplanar_side_of_bounded_circleC3INS_11Interval_ntILb0EE
   %i.nl = extractelement <2 x double> %i.nk, i64 0 ; 2 uses
   %i.nm = fneg double %i.nl
   %i.nn = fcmp olt double %i.nl, 0.000000e+00
-  %28 = extractelement <2 x double> %i.nk, i64 1  ; 2 uses
   br i1 %i.nn, label %_ZN4CGAL19sign_of_determinantINS_11Interval_ntILb0EEEEENS_3SgnIT_E11result_typeERKS4_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.no = fcmp olt double %28, 0.000000e+00
+  %.sroa.0.8.vec.extract.i = extractelement <2 x double> %i.nk, i64 1 ; 2 uses
+  %i.no = fcmp olt double %.sroa.0.8.vec.extract.i, 0.000000e+00
   br i1 %i.no, label %_ZN4CGAL19sign_of_determinantINS_11Interval_ntILb0EEEEENS_3SgnIT_E11result_typeERKS4_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.np = fcmp une double %28, %i.nm
+  %i.np = fcmp une double %.sroa.0.8.vec.extract.i, %i.nm
   %i.nq = select i1 %i.np, i64 8589934591, i64 0
   br label %_ZN4CGAL19sign_of_determinantINS_11Interval_ntILb0EEEEENS_3SgnIT_E11result_typeERKS4_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_.exit
 
@@ -2800,15 +2800,15 @@ begin_hunk_5_@_ZN4CGAL25side_of_oriented_sphereC3INS_11Interval_ntILb0EEEEENS_19
   %i.ip = extractelement <2 x double> %i.io, i64 0 ; 2 uses
   %i.iq = fneg double %i.ip
   %i.ir = fcmp olt double %i.ip, 0.000000e+00
-  %31 = extractelement <2 x double> %i.io, i64 1  ; 2 uses
   br i1 %i.ir, label %_ZN4CGAL19sign_of_determinantINS_11Interval_ntILb0EEEEENS_3SgnIT_E11result_typeERKS4_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.is = fcmp olt double %31, 0.000000e+00
+  %.sroa.0.8.vec.extract.i = extractelement <2 x double> %i.io, i64 1 ; 2 uses
+  %i.is = fcmp olt double %.sroa.0.8.vec.extract.i, 0.000000e+00
   br i1 %i.is, label %_ZN4CGAL19sign_of_determinantINS_11Interval_ntILb0EEEEENS_3SgnIT_E11result_typeERKS4_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.it = fcmp une double %31, %i.iq
+  %i.it = fcmp une double %.sroa.0.8.vec.extract.i, %i.iq
   %i.iu = select i1 %i.it, i64 8589934591, i64 0
   br label %_ZN4CGAL19sign_of_determinantINS_11Interval_ntILb0EEEEENS_3SgnIT_E11result_typeERKS4_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_.exit
 

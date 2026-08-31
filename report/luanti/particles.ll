@@ -204,9 +204,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 .split.us.preheader:                              ; preds = %bb.h
   %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.by, i64 612 ; 4 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.by, i64 604 ; 4 uses
-  %.sroa.01.0.copyload.i.us = load <2 x float>, ptr %i.cn, align 4
   %.sroa.22.0.copyload.i.us = load float, ptr %.sroa.22.0..sroa_idx.i, align 4, !tbaa !79
-  %.sroa.0115.0.vec.extract.us = extractelement <2 x float> %.sroa.01.0.copyload.i.us, i64 0
+  %.sroa.0115.0.vec.extract.us = load float, ptr %i.cn, align 4
   %i.co = fdiv nsz float %.sroa.0115.0.vec.extract.us, 1.000000e+01
   %i.cp = fdiv nsz float %.sroa.22.0.copyload.i.us, 1.000000e+01
   %i.cq = load float, ptr %i.ce, align 8, !tbaa !210
@@ -249,9 +248,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   store <2 x float> %i.dv, ptr %.0.i, align 4, !tbaa !79
   %i.dw = fadd nsz float %i.do, %i.dl
   store float %i.dw, ptr %.sroa.5144.0..0.i.sroa_idx, align 4, !tbaa !126
-  %.sroa.01.0.copyload.i.us.1 = load <2 x float>, ptr %i.cn, align 4
   %.sroa.22.0.copyload.i.us.1 = load float, ptr %.sroa.22.0..sroa_idx.i, align 4, !tbaa !79
-  %.sroa.0115.0.vec.extract.us.1 = extractelement <2 x float> %.sroa.01.0.copyload.i.us.1, i64 0
+  %.sroa.0115.0.vec.extract.us.1 = load float, ptr %i.cn, align 4
   %i.dx = fdiv nsz float %.sroa.0115.0.vec.extract.us.1, 1.000000e+01
   %i.dy = fdiv nsz float %.sroa.22.0.copyload.i.us.1, 1.000000e+01
   %i.dz = load float, ptr %i.ce, align 8, !tbaa !210
@@ -295,9 +293,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   store <2 x float> %i.ff, ptr %i.bs, align 4, !tbaa !79
   %i.fg = fadd nsz float %i.ex, %i.eu
   store float %i.fg, ptr %i.ei, align 4, !tbaa !126
-  %.sroa.01.0.copyload.i.us.2 = load <2 x float>, ptr %i.cn, align 4
   %.sroa.22.0.copyload.i.us.2 = load float, ptr %.sroa.22.0..sroa_idx.i, align 4, !tbaa !79
-  %.sroa.0115.0.vec.extract.us.2 = extractelement <2 x float> %.sroa.01.0.copyload.i.us.2, i64 0
+  %.sroa.0115.0.vec.extract.us.2 = load float, ptr %i.cn, align 4
   %i.fh = fdiv nsz float %.sroa.0115.0.vec.extract.us.2, 1.000000e+01
   %i.fi = fdiv nsz float %.sroa.22.0.copyload.i.us.2, 1.000000e+01
   %i.fj = load float, ptr %i.ce, align 8, !tbaa !210
@@ -352,9 +349,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   store <2 x float> %i.ha, ptr %i.bt, align 4, !tbaa !79
   %i.hb = fadd nsz float %i.gu, %i.gr
   store float %i.hb, ptr %i.ft, align 4, !tbaa !126
-  %.sroa.01.0.copyload.i.us.3 = load <2 x float>, ptr %i.cn, align 4
   %.sroa.22.0.copyload.i.us.3 = load float, ptr %.sroa.22.0..sroa_idx.i, align 4, !tbaa !79
-  %.sroa.0115.0.vec.extract.us.3 = extractelement <2 x float> %.sroa.01.0.copyload.i.us.3, i64 0
+  %.sroa.0115.0.vec.extract.us.3 = load float, ptr %i.cn, align 4
   %i.hc = fdiv nsz float %.sroa.0115.0.vec.extract.us.3, 1.000000e+01
   %i.hd = fdiv nsz float %.sroa.22.0.copyload.i.us.3, 1.000000e+01
   %i.he = load float, ptr %i.ce, align 8, !tbaa !210

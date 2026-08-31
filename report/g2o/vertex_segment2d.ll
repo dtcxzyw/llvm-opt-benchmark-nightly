@@ -205,8 +205,7 @@ _ZStneIcSt11char_traitsIcESaIcEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exi
 
 bb.e:                                             ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbPKT_RKNSt7__cxx1112basic_stringIS3_T0_T1_EE.exit.thread28
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 176
-  %3 = load <2 x double>, ptr %i.s, align 8, !tbaa !52, !noalias !60
-  %.sroa.027.0.vec.extract = extractelement <2 x double> %3, i64 0
+  %.sroa.027.0.vec.extract = load double, ptr %i.s, align 8, !tbaa !52, !noalias !60
   %i.t = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.r, double noundef %.sroa.027.0.vec.extract) ; 2 uses
   %i.u = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.t, ptr noundef nonnull @.str, i64 noundef 1) ; 0 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 184
@@ -250,8 +249,7 @@ _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit: ; preds = %bb.g
   %i.am = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5flushEv(ptr noundef nonnull align 8 dereferenceable(8) %i.al) ; 0 uses
   %i.an = load ptr, ptr %i.q, align 8, !tbaa !56
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 192
-  %4 = load <2 x double>, ptr %i.ao, align 8, !tbaa !52, !noalias !79
-  %.sroa.025.0.vec.extract = extractelement <2 x double> %4, i64 0
+  %.sroa.025.0.vec.extract = load double, ptr %i.ao, align 8, !tbaa !52, !noalias !79
   %i.ap = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIdEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.an, double noundef %.sroa.025.0.vec.extract) ; 2 uses
   %i.aq = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.ap, ptr noundef nonnull @.str, i64 noundef 1) ; 0 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 200
