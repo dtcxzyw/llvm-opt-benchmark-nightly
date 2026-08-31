@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit.i: ; 
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %i.ap
   store i8 0, ptr %i.as, align 1, !tbaa !33
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #25
-  %i.at = load i64, ptr %i.aq, align 8, !tbaa !34 ; 16 uses
+  %i.at = load i64, ptr %i.aq, align 8, !tbaa !34 ; 14 uses
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(ptr noundef nonnull align 8 dereferenceable(32) %19, ptr noundef nonnull align 8 dereferenceable(32) %7) #25
   store i64 0, ptr %i.t, align 8, !tbaa !34
   %i.au = load ptr, ptr %20, align 8, !tbaa !31
@@ -228,34 +228,29 @@ bb.i:                                             ; preds = %_ZNSt7__cxx1112basi
   %.095.i = phi i1 [ undef, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit.i ], [ %.297.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit178.i ] ; 3 uses
   %.091.i = phi i64 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit.i ], [ %.7.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit178.i ] ; 2 uses
   %i.bh = icmp ult i64 %.091.i, %i.at
-  %.pre250.i = load ptr, ptr %7, align 8, !tbaa !31 ; 4 uses
+  %.pre250.i = load ptr, ptr %7, align 8, !tbaa !31 ; 3 uses
   br i1 %i.bh, label %.preheader.i, label %split.i
 
 .preheader.i:                                     ; preds = %bb.i, %bb.j
-  %.192202.i = phi i64 [ %i.bm, %bb.j ], [ %.091.i, %bb.i ] ; 7 uses
+  %.192202.i = phi i64 [ %i.bm, %bb.j ], [ %.091.i, %bb.i ] ; 4 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.pre250.i, i64 %.192202.i
   %i.bj = load i8, ptr %i.bi, align 1, !tbaa !33
   %i.bk = zext i8 %i.bj to i32
   %i.bl = call i32 @isspace(i32 noundef %i.bk) #29
   %.not.i142 = icmp eq i32 %i.bl, 0
-  br i1 %.not.i142, label %.critedge.i, label %bb.j
+  br i1 %.not.i142, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %.preheader.i
   %i.bm = add i64 %.192202.i, 1                   ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.bm, %i.at
   br i1 %exitcond.not.i, label %split.i, label %.preheader.i, !llvm.loop !175
 
-.critedge.i:                                      ; preds = %.preheader.i
-  %28 = icmp eq i64 %.192202.i, %i.at
-  br i1 %28, label %split.i, label %bb.k
-
-bb.k:                                             ; preds = %.critedge.i
+bb.k:                                             ; preds = %.preheader.i
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #25
   store ptr %i.av, ptr %8, align 8, !tbaa !27
   store i64 0, ptr %i.aw, align 8, !tbaa !34
   store i8 0, ptr %i.av, align 8, !tbaa !33
-  %29 = icmp ult i64 %.192202.i, %i.at
-  br i1 %29, label %.lr.ph.i, label %.critedge189.preheader.i
+  br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.k, %bb.ac
   %.088204.i = phi i8 [ %.290.i, %bb.ac ], [ 0, %bb.k ] ; 3 uses
@@ -478,14 +473,13 @@ bb.ac:                                            ; preds = %_ZNSt7__cxx1112basi
   br i1 %i.dx, label %.lr.ph.i, label %.thread.i
 
 .thread.i:                                        ; preds = %bb.ac, %bb.v
-  %.293.lcssa.ph.i = phi i64 [ %.4.i, %bb.ac ], [ %.293203.i, %bb.v ] ; 8 uses
+  %.293.lcssa.ph.i = phi i64 [ %.4.i, %bb.ac ], [ %.293203.i, %bb.v ] ; 9 uses
   %.pre248.i = load i64, ptr %i.aw, align 8, !tbaa !34
   %i.dy = icmp eq i64 %.pre248.i, 8
   br i1 %i.dy, label %.split.i, label %.critedge189.preheader.i
 
-.critedge189.preheader.i:                         ; preds = %.split.i, %.thread.i, %bb.k
-  %.293.lcssa319.i = phi i64 [ %.293.lcssa.ph.i, %.thread.i ], [ %.293.lcssa.ph.i, %.split.i ], [ %.192202.i, %bb.k ] ; 3 uses
-  %i.dz = icmp ult i64 %.293.lcssa319.i, %i.at
+.critedge189.preheader.i:                         ; preds = %.split.i, %.thread.i
+  %i.dz = icmp ult i64 %.293.lcssa.ph.i, %i.at
   br i1 %i.dz, label %.lr.ph208.i, label %.critedge6.i
 
 .lr.ph208.i:                                      ; preds = %.critedge189.preheader.i
@@ -888,7 +882,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit175.i: ; preds = %
   br label %.critedge6.i
 
 bb.bt:                                            ; preds = %.critedge189.i, %.lr.ph208.i
-  %.6207.i = phi i64 [ %.293.lcssa319.i, %.lr.ph208.i ], [ %i.mb, %.critedge189.i ] ; 3 uses
+  %.6207.i = phi i64 [ %.293.lcssa.ph.i, %.lr.ph208.i ], [ %i.mb, %.critedge189.i ] ; 3 uses
   %i.lx = getelementptr inbounds nuw i8, ptr %i.ea, i64 %.6207.i
   %i.ly = load i8, ptr %i.lx, align 1, !tbaa !33
   %i.lz = zext i8 %i.ly to i32
@@ -904,7 +898,7 @@ bb.bt:                                            ; preds = %.critedge189.i, %.l
 .critedge6.i:                                     ; preds = %.critedge189.i, %bb.bt, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit175.i, %.critedge4.i, %.critedge189.preheader.i
   %i.mc = phi i1 [ true, %.critedge4.i ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit175.i ], [ false, %.critedge189.preheader.i ], [ true, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i ], [ false, %bb.bt ], [ false, %.critedge189.i ]
   %.297.i = phi i1 [ false, %.critedge4.i ], [ %i.lo, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit175.i ], [ %.095.i, %.critedge189.preheader.i ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i ], [ %.095.i, %bb.bt ], [ %.095.i, %.critedge189.i ] ; 2 uses
-  %.7.i = phi i64 [ %.293.lcssa.ph.i, %.critedge4.i ], [ %.293.lcssa.ph.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit175.i ], [ %.293.lcssa319.i, %.critedge189.preheader.i ], [ %.293.lcssa.ph.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i ], [ %.6207.i, %bb.bt ], [ %i.at, %.critedge189.i ]
+  %.7.i = phi i64 [ %.293.lcssa.ph.i, %.critedge4.i ], [ %.293.lcssa.ph.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit175.i ], [ %.293.lcssa.ph.i, %.critedge189.preheader.i ], [ %.293.lcssa.ph.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i ], [ %.6207.i, %bb.bt ], [ %i.at, %.critedge189.i ]
   %i.md = load ptr, ptr %8, align 8, !tbaa !31    ; 2 uses
   %i.me = icmp eq ptr %i.md, %i.av
   br i1 %i.me, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit178.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i176.i
@@ -923,16 +917,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit178._crit_edge.i: 
   %.pre249.i = load ptr, ptr %7, align 8, !tbaa !31
   br label %split.i, !llvm.loop !196
 
-split.i:                                          ; preds = %.critedge.i, %bb.i, %bb.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit178._crit_edge.i
-  %30 = phi ptr [ %.pre249.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit178._crit_edge.i ], [ %.pre250.i, %bb.j ], [ %.pre250.i, %bb.i ], [ %.pre250.i, %.critedge.i ] ; 2 uses
-  %.398.i = phi i1 [ %.297.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit178._crit_edge.i ], [ false, %bb.j ], [ false, %bb.i ], [ false, %.critedge.i ]
-  %i.mh = icmp eq ptr %30, %i.ai
+split.i:                                          ; preds = %bb.i, %bb.j, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit178._crit_edge.i
+  %28 = phi ptr [ %.pre249.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit178._crit_edge.i ], [ %.pre250.i, %bb.j ], [ %.pre250.i, %bb.i ] ; 2 uses
+  %.398.i = phi i1 [ %.297.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit178._crit_edge.i ], [ false, %bb.j ], [ false, %bb.i ]
+  %i.mh = icmp eq ptr %28, %i.ai
   br i1 %i.mh, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i179.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i179.i: ; preds = %split.i
   %i.mi = load i64, ptr %i.ai, align 8, !tbaa !33
   %i.mj = add i64 %i.mi, 1
-  call void @_ZdlPvm(ptr noundef %30, i64 noundef %i.mj) #27
+  call void @_ZdlPvm(ptr noundef %28, i64 noundef %i.mj) #27
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %split.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i179.i

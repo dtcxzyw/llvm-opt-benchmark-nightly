@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.f
           cleanup
   br label %.body34
 
-.loopexit.split-lp11:                             ; preds = %bb.i, %bb.u, %7
+.loopexit.split-lp11:                             ; preds = %bb.i, %bb.u
   %lpad.loopexit.split-lp13 = landingpad { ptr, i32 }
           cleanup
   br label %.body34
@@ -247,24 +247,13 @@ bb.k:                                             ; preds = %bb.y, %bb.u
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.p, %.lr.ph.i
-  %i.ap = phi i64 [ %.sroa.4.029, %.lr.ph.i ], [ %i.aq, %bb.p ] ; 3 uses
+  %i.ap = phi i64 [ %.sroa.4.029, %.lr.ph.i ], [ %i.aq, %bb.p ] ; 2 uses
   %i.aq = add i64 %i.ap, 1                        ; 4 uses
   %i.ar = shl nuw i64 %i.ap, 1                    ; 3 uses
-  %4 = icmp slt i64 %i.ap, 0
-  br i1 %4, label %7, label %5
+  %4 = icmp ult i64 %i.ar, %i.ao
+  br i1 %4, label %bb.m, label %bb.p
 
-5:                                                ; preds = %bb.l
-  %6 = icmp ult i64 %i.ar, %i.ao
-  br i1 %6, label %bb.m, label %bb.p
-
-7:                                                ; preds = %bb.l
-  invoke void @_RNvNtNtCs3oUPovFnLWP_4core9panicking11panic_const24panic_const_mul_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @188) #31
-          to label %.noexc33 unwind label %.loopexit.split-lp11
-
-.noexc33:                                         ; preds = %7
-  unreachable
-
-bb.m:                                             ; preds = %5
+bb.m:                                             ; preds = %bb.l
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %.val.i.i.i.i, i64 %i.ar
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
   %i.at = load i64, ptr %i.as, align 8, !noalias !830, !noundef !5 ; 7 uses
@@ -282,7 +271,7 @@ bb.o:                                             ; preds = %bb.n
   %i.az = icmp eq i64 %i.ay, -1
   br i1 %i.az, label %bb.p, label %bb.q
 
-bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m, %5
+bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m, %bb.l
   %exitcond.not.i = icmp eq i64 %i.aq, %i.ag
   br i1 %exitcond.not.i, label %.loopexit8, label %bb.l
 

@@ -206,7 +206,7 @@ bb.j:                                             ; preds = %bb.h
 _ZN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj5datum13PrimeMeridianEEEC2ERKS8_.exit: ; preds = %bb.g, %bb.i, %bb.j
   %i.z = load i64, ptr %i.c, align 8, !tbaa !18, !noalias !1723 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !17, !noalias !1723 ; 8 uses
+  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !17, !noalias !1723 ; 7 uses
   %i.ac = icmp ult i64 %i.z, %i.ab
   br i1 %i.ac, label %bb.k, label %bb.ah
 
@@ -215,7 +215,7 @@ bb.k:                                             ; preds = %_ZN7dropbox6oxygen2
   br label %.lr.ph.i104
 
 .lr.ph.i104:                                      ; preds = %bb.k, %bb.l
-  %.01.i105 = phi i64 [ %i.ah, %bb.l ], [ %i.z, %bb.k ] ; 4 uses
+  %.01.i105 = phi i64 [ %i.ah, %bb.l ], [ %i.z, %bb.k ] ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.val39.i, i64 %.01.i105
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !19, !noalias !1723 ; 2 uses
   %i.af = zext i8 %i.ae to i32
@@ -233,10 +233,8 @@ _ZN5osgeo4proj2ioL9skipSpaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIc
   br label %bb.ah
 
 _ZN5osgeo4proj2ioL9skipSpaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEm.exit108: ; preds = %.lr.ph.i104
-  %20 = icmp ult i64 %.01.i105, %i.ab
   %i.ai = icmp eq i8 %i.ae, 44
-  %or.cond211 = and i1 %20, %i.ai
-  br i1 %or.cond211, label %bb.m, label %bb.ah
+  br i1 %i.ai, label %bb.m, label %bb.ah
 
 bb.m:                                             ; preds = %_ZN5osgeo4proj2ioL9skipSpaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEm.exit108
   %i.aj = add nuw i64 %.01.i105, 1                ; 3 uses
@@ -594,7 +592,7 @@ bb.az:                                            ; preds = %bb.ay
 bb.ba:                                            ; preds = %bb.az, %bb.ay
   %i.eb = load i64, ptr %i.c, align 8, !tbaa !18, !noalias !1723 ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.ed = load i64, ptr %i.ec, align 8, !tbaa !17, !noalias !1723 ; 6 uses
+  %i.ed = load i64, ptr %i.ec, align 8, !tbaa !17, !noalias !1723 ; 5 uses
   %i.ee = icmp ult i64 %i.eb, %i.ed
   br i1 %i.ee, label %bb.bb, label %_ZN5osgeo4proj2ioL9skipSpaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEm.exit71.thread
 
@@ -603,7 +601,7 @@ bb.bb:                                            ; preds = %bb.ba
   br label %.lr.ph.i67
 
 .lr.ph.i67:                                       ; preds = %bb.bb, %bb.bc
-  %.01.i68 = phi i64 [ %i.ej, %bb.bc ], [ %i.eb, %bb.bb ] ; 4 uses
+  %.01.i68 = phi i64 [ %i.ej, %bb.bc ], [ %i.eb, %bb.bb ] ; 3 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %.val35.i, i64 %.01.i68
   %i.eg = load i8, ptr %i.ef, align 1, !tbaa !19, !noalias !1723 ; 2 uses
   %i.eh = zext i8 %i.eg to i32
@@ -617,10 +615,8 @@ bb.bc:                                            ; preds = %.lr.ph.i67
   br i1 %exitcond.not.i70, label %_ZN5osgeo4proj2ioL9skipSpaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEm.exit71.thread, label %.lr.ph.i67, !llvm.loop !148
 
 _ZN5osgeo4proj2ioL9skipSpaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEm.exit71: ; preds = %.lr.ph.i67
-  %21 = icmp ult i64 %.01.i68, %i.ed
   %i.ek = icmp eq i8 %i.eg, 44
-  %or.cond212 = and i1 %21, %i.ek
-  br i1 %or.cond212, label %bb.bd, label %_ZN5osgeo4proj2ioL9skipSpaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEm.exit71.thread
+  br i1 %i.ek, label %bb.bd, label %_ZN5osgeo4proj2ioL9skipSpaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEm.exit71.thread
 
 bb.bd:                                            ; preds = %_ZN5osgeo4proj2ioL9skipSpaceERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEm.exit71
   %i.el = add nuw i64 %.01.i68, 1                 ; 3 uses
