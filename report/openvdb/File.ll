@@ -202,12 +202,14 @@ bb.h:                                             ; preds = %_ZNK5boost9iostream
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef i64 @_ZN5boost9iostreams6detail11execute_allINS1_14copy_operationINS_17reference_wrapperISt14basic_ifstreamIcSt11char_traitsIcEEEENS4_IN7openvdb5v13_02io8TempFileEEEEENS1_26device_close_all_operationIS9_EEEENS1_14execute_traitsIT_NS_9result_ofIFSJ_vEE4typeEE11result_typeESJ_T0_(ptr noundef byval(%"class.boost::iostreams::detail::copy_operation") align 8 %0, ptr %1) local_unnamed_addr #4 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.06.0.copyload = load ptr, ptr %0, align 8, !tbaa !106
+  %.sroa.06.0.copyload = load i64, ptr %0, align 8, !tbaa !106
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !108
+  %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !108
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.3.0.copyload = load i64, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !70
-  %i.a = invoke noundef i64 @_ZN5boost9iostreams6detail9copy_implINS_17reference_wrapperISt14basic_ifstreamIcSt11char_traitsIcEEEENS3_IN7openvdb5v13_02io8TempFileEEEEElRT_RT0_lN4mpl_5bool_ILb0EEESK_(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.06.0.copyload, ptr noundef nonnull align 8 dereferenceable(8) %.sroa.2.0.copyload, i64 noundef %.sroa.3.0.copyload)
+  %2 = inttoptr i64 %.sroa.06.0.copyload to ptr
+  %3 = inttoptr i64 %.sroa.2.0.copyload to ptr
+  %i.a = invoke noundef i64 @_ZN5boost9iostreams6detail9copy_implINS_17reference_wrapperISt14basic_ifstreamIcSt11char_traitsIcEEEENS3_IN7openvdb5v13_02io8TempFileEEEEElRT_RT0_lN4mpl_5bool_ILb0EEESK_(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, i64 noundef %.sroa.3.0.copyload)
           to label %_ZN5boost9iostreams6detail11execute_allINS1_14copy_operationINS_17reference_wrapperISt14basic_ifstreamIcSt11char_traitsIcEEEENS4_IN7openvdb5v13_02io8TempFileEEEEEEENS1_14execute_traitsIT_NS_9result_ofIFSH_vEE4typeEE11result_typeESH_.exit unwind label %bb.b
 
 _ZN5boost9iostreams6detail11execute_allINS1_14copy_operationINS_17reference_wrapperISt14basic_ifstreamIcSt11char_traitsIcEEEENS4_IN7openvdb5v13_02io8TempFileEEEEEEENS1_14execute_traitsIT_NS_9result_ofIFSH_vEE4typeEE11result_typeESH_.exit: ; preds = %bb.a

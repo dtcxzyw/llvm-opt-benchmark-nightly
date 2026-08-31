@@ -204,7 +204,8 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEN7CaDiCaL19shrink_
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #16
   tail call void @llvm.experimental.noalias.scope.decl(metadata !217)
   %i.ai = load ptr, ptr %i.t, align 8, !tbaa !8, !noalias !217 ; 4 uses
-  store ptr %i.ai, ptr %1, align 8, !tbaa !8, !alias.scope !217
+  %4 = ptrtoint ptr %i.ai to i64
+  store i64 %4, ptr %1, align 8, !tbaa !8, !alias.scope !217
   %i.aj = load i32, ptr %i.ag, align 4, !tbaa !11 ; 6 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 3 uses
   %i.al = load i8, ptr %i.ak, align 8, !tbaa !220, !range !221, !noundef !222
@@ -607,7 +608,7 @@ bb.s:                                             ; preds = %.loopexit.split-lp,
   %.not.i.i.i = icmp eq ptr %.sroa.0107.0156, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %bb.u
 
-.lr.ph153:                                        ; preds = %._crit_edge150, %bb.q, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i, %bb.l, %bb.r
+.lr.ph153:                                        ; preds = %._crit_edge150, %bb.r, %bb.q, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i, %bb.l
   %.sroa.0117.1 = phi ptr [ %.sroa.0117.0154, %._crit_edge150 ], [ %.sroa.0107.0156, %bb.q ], [ %.sroa.0107.0156, %bb.r ], [ %.sroa.0107.0156, %bb.l ], [ %.sroa.0107.0156, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i ], [ %i.dd, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i ] ; 2 uses
   %.sroa.0107.1 = phi ptr [ %.sroa.0107.0156, %._crit_edge150 ], [ %.sroa.0107.0156, %bb.q ], [ %.sroa.0107.0156, %bb.r ], [ %.sroa.0107.0156, %bb.l ], [ %.sroa.0107.0156, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i ], [ %i.dd, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i ]
   %.sroa.10.1 = phi ptr [ %.sroa.10.0157, %._crit_edge150 ], [ %.sroa.10.0157, %bb.q ], [ %spec.select, %bb.r ], [ %i.cv, %bb.l ], [ %i.cy, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i ], [ %i.dj, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit36.i ]

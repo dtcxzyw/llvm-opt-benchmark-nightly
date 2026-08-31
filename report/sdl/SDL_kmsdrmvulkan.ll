@@ -200,8 +200,9 @@ bb.s:                                             ; preds = %bb.p, %bb.q
   br i1 %exitcond.not, label %.critedge, label %bb.p, !llvm.loop !6
 
 bb.t:                                             ; preds = %bb.r
-  %.sroa.067.0.copyload = load ptr, ptr %i.bp, align 8 ; 2 uses
-  store ptr %.sroa.067.0.copyload, ptr %i.e, align 8
+  %.sroa.067.0.copyload = load i64, ptr %i.bp, align 8
+  %8 = inttoptr i64 %.sroa.067.0.copyload to ptr  ; 2 uses
+  store ptr %8, ptr %i.e, align 8
   br label %bb.v
 
 .critedge:                                        ; preds = %bb.s, %bb.o, %bb.r
@@ -232,7 +233,7 @@ thread-pre-split:                                 ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %thread-pre-split, %bb.t
-  %i.cj = phi ptr [ %.pr, %thread-pre-split ], [ %.sroa.067.0.copyload, %bb.t ]
+  %i.cj = phi ptr [ %.pr, %thread-pre-split ], [ %8, %bb.t ]
   %.not162 = icmp eq ptr %i.cj, null
   br i1 %.not162, label %bb.w, label %bb.x
 

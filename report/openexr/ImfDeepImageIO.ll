@@ -142,6 +142,7 @@ bb.a:
   %7 = alloca %"class.Imf_3_4::TileDescription", align 4 ; 8 uses
   %8 = alloca %"class.Imath_3_2::Box", align 8    ; 6 uses
   %9 = alloca %"struct.Imf_3_4::Channel", align 8 ; 6 uses
+  %.sroa.2 = alloca i64, align 8                  ; 2 uses
   %10 = alloca %"class.Imf_3_4::DeepTiledOutputFile", align 8 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
@@ -376,9 +377,9 @@ bb.ak:                                            ; preds = %bb.aj
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.053.0, i64 32
   %.fca.0.extract = extractvalue { i64, i64 } %i.ax, 0
   %.fca.1.extract = extractvalue { i64, i64 } %i.ax, 1
+  store i64 %.fca.1.extract, ptr %.sroa.2, align 8
   store i64 %.fca.0.extract, ptr %9, align 8
-  %.sroa.2.0.extract.trunc = trunc i64 %.fca.1.extract to i40
-  store i40 %.sroa.2.0.extract.trunc, ptr %.sroa.2.0..sroa_idx, align 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %.sroa.2.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(5) %.sroa.2, i64 5, i1 false)
   invoke void @_ZN7Imf_3_411ChannelList6insertERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS_7ChannelE(ptr noundef nonnull align 8 dereferenceable(48) %i.au, ptr noundef nonnull align 8 dereferenceable(32) %i.ay, ptr noundef nonnull align 4 dereferenceable(13) %9)
           to label %bb.al unwind label %bb.am
 
@@ -517,6 +518,7 @@ bb.a:
   %7 = alloca %"class.Imf_3_4::DeepFrameBuffer", align 8 ; 15 uses
   %8 = alloca %"struct.Imf_3_4::Slice", align 8   ; 5 uses
   %9 = alloca %"struct.Imf_3_4::Channel", align 8 ; 6 uses
+  %.sroa.2 = alloca i64, align 8                  ; 2 uses
   %10 = alloca %"struct.Imf_3_4::DeepSlice", align 8 ; 5 uses
   %11 = alloca %"class.Imf_3_4::DeepScanLineOutputFile", align 8 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #15
@@ -713,9 +715,9 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.z
   %.fca.0.extract = extractvalue { i64, i64 } %i.ap, 0
   %.fca.1.extract = extractvalue { i64, i64 } %i.ap, 1
+  store i64 %.fca.1.extract, ptr %.sroa.2, align 8
   store i64 %.fca.0.extract, ptr %9, align 8
-  %.sroa.2.0.extract.trunc = trunc i64 %.fca.1.extract to i40
-  store i40 %.sroa.2.0.extract.trunc, ptr %.sroa.2.0..sroa_idx, align 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %.sroa.2.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(5) %.sroa.2, i64 5, i1 false)
   invoke void @_ZN7Imf_3_411ChannelList6insertERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS_7ChannelE(ptr noundef nonnull align 8 dereferenceable(48) %i.al, ptr noundef nonnull align 8 dereferenceable(32) %i.am, ptr noundef nonnull align 4 dereferenceable(13) %9)
           to label %bb.ab unwind label %bb.ae
 

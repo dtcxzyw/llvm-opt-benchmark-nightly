@@ -205,6 +205,7 @@ bb.z:                                             ; preds = %bb.y
 .lr.ph15.i:                                       ; preds = %_ZN8ImVectorIP10MyDocumentE9push_backERKS1_.exit.i, %.lr.ph15.preheader.i
   %i.cs = phi i32 [ %i.dn, %_ZN8ImVectorIP10MyDocumentE9push_backERKS1_.exit.i ], [ %.pre.i, %.lr.ph15.preheader.i ] ; 6 uses
   %.08713.i = phi ptr [ %i.do, %_ZN8ImVectorIP10MyDocumentE9push_backERKS1_.exit.i ], [ %i.co, %.lr.ph15.preheader.i ] ; 2 uses
+  %173 = ptrtoint ptr %.08713.i to i64
   %i.ct = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZL23ShowExampleAppDocumentsPbE3app, i64 20), align 4, !tbaa !31
   %i.cu = icmp eq i32 %i.cs, %i.ct
   br i1 %i.cu, label %bb.aa, label %._ZN8ImVectorIP10MyDocumentE7reserveEi.exit_crit_edge.i.i
@@ -253,7 +254,6 @@ _ZN8ImVectorIP10MyDocumentE9push_backERKS1_.exit.i: ; preds = %bb.ad, %._ZN8ImVe
   %i.dj = phi ptr [ %.pre.i.i, %._ZN8ImVectorIP10MyDocumentE7reserveEi.exit_crit_edge.i.i ], [ %i.dc, %bb.ad ]
   %i.dk = sext i32 %i.di to i64
   %i.dl = getelementptr inbounds [8 x i8], ptr %i.dj, i64 %i.dk
-  %173 = ptrtoint ptr %.08713.i to i64
   store i64 %173, ptr %i.dl, align 8
   %i.dm = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZL23ShowExampleAppDocumentsPbE3app, i64 16), align 8, !tbaa !27
   %i.dn = add nsw i32 %i.dm, 1                    ; 2 uses
@@ -416,6 +416,7 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.au
   store i8 1, ptr %i.fa, align 4, !tbaa !21
+  %174 = ptrtoint ptr %.08521.i to i64
   %i.fo = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZL23ShowExampleAppDocumentsPbE3app, i64 16), align 8, !tbaa !27 ; 6 uses
   %i.fp = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZL23ShowExampleAppDocumentsPbE3app, i64 20), align 4, !tbaa !31
   %i.fq = icmp eq i32 %i.fo, %i.fp
@@ -465,7 +466,6 @@ _ZN8ImVectorIP10MyDocumentE9push_backERKS1_.exit108.i: ; preds = %bb.az, %._ZN8I
   %i.gf = phi ptr [ %.pre.i103.i, %._ZN8ImVectorIP10MyDocumentE7reserveEi.exit_crit_edge.i102.i ], [ %i.fy, %bb.az ]
   %i.gg = sext i32 %i.ge to i64
   %i.gh = getelementptr inbounds [8 x i8], ptr %i.gf, i64 %i.gg
-  %174 = ptrtoint ptr %.08521.i to i64
   store i64 %174, ptr %i.gh, align 8
   %i.gi = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZL23ShowExampleAppDocumentsPbE3app, i64 16), align 8, !tbaa !27
   %i.gj = add nsw i32 %i.gi, 1
@@ -868,7 +868,7 @@ bb.fu:                                            ; preds = %_ZL29ShowExampleApp
   %i.ajv = getelementptr inbounds nuw i8, ptr %i.aju, i64 56
   %i.ajw = load ptr, ptr %i.ajv, align 8, !tbaa !103 ; 3 uses
   %i.ajx = getelementptr inbounds nuw i8, ptr %i.ajw, i64 40
-  %.sroa.011.0.copyload.i = load ptr, ptr %i.ajx, align 8, !tbaa !104
+  %.sroa.011.0.copyload.i = load i64, ptr %i.ajx, align 8, !tbaa !104
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ajw, i64 48
   %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !105
   %i.ajy = getelementptr inbounds nuw i8, ptr %i.ajw, i64 56
@@ -889,9 +889,10 @@ bb.fv:                                            ; preds = %bb.fu
   %i.akj = select <2 x i1> %i.aki, <2 x float> %i.akg, <2 x float> splat (float 1.000000e+00) ; 2 uses
   %i.akk = fcmp oge <2 x float> %i.akd, %i.akj
   %i.akl = select <2 x i1> %i.akk, <2 x float> %i.akd, <2 x float> %i.akj
+  %175 = inttoptr i64 %.sroa.011.0.copyload.i to ptr
   %i.akm = extractelement <2 x i32> %i.akb, i64 0
   %i.akn = extractelement <2 x i32> %i.akb, i64 1
-  call fastcc void @_ZL29ExampleImageViewer_DrawCanvasP22ExampleImageViewerData6ImVec212ImTextureRefii(ptr noundef nonnull @_ZZL25ShowExampleAppImageViewerPbE12image_viewer, <2 x float> %i.akl, ptr %.sroa.011.0.copyload.i, i64 %.sroa.4.0.copyload.i, i32 noundef %i.akm, i32 noundef %i.akn)
+  call fastcc void @_ZL29ExampleImageViewer_DrawCanvasP22ExampleImageViewerData6ImVec212ImTextureRefii(ptr noundef nonnull @_ZZL25ShowExampleAppImageViewerPbE12image_viewer, <2 x float> %i.akl, ptr %175, i64 %.sroa.4.0.copyload.i, i32 noundef %i.akm, i32 noundef %i.akn)
   br label %_ZL25ShowExampleAppImageViewerPb.exit
 
 _ZL25ShowExampleAppImageViewerPb.exit:            ; preds = %bb.fu, %bb.fv
@@ -1294,10 +1295,10 @@ bb.fl:                                            ; preds = %bb.fk, %bb.fj
 
 bb.fm:                                            ; preds = %bb.fl
   %i.px = getelementptr inbounds nuw i8, ptr %i.pv, i64 8
-  %84 = load float, ptr %i.px, align 8, !tbaa !240
-  %85 = load <2 x float>, ptr %i.pv, align 16, !tbaa !56
-  store <2 x float> %85, ptr @_ZZL32DemoWindowWidgetsColorAndPickersvE5color, align 8, !tbaa !56
-  store float %84, ptr getelementptr inbounds nuw (i8, ptr @_ZZL32DemoWindowWidgetsColorAndPickersvE5color, i64 8), align 8, !tbaa !56
+  %84 = load i32, ptr %i.px, align 8, !tbaa !240
+  %85 = load <2 x i32>, ptr %i.pv, align 16, !tbaa !56
+  store <2 x i32> %85, ptr @_ZZL32DemoWindowWidgetsColorAndPickersvE5color, align 8, !tbaa !56
+  store i32 %84, ptr getelementptr inbounds nuw (i8, ptr @_ZZL32DemoWindowWidgetsColorAndPickersvE5color, i64 8), align 8, !tbaa !56
   br label %bb.fn
 
 bb.fn:                                            ; preds = %bb.fm, %bb.fl
@@ -1700,7 +1701,7 @@ bb.ja:                                            ; preds = %_ZL22DemoWindowWidg
   %i.afo = getelementptr inbounds nuw i8, ptr %i.afn, i64 56
   %i.afp = load ptr, ptr %i.afo, align 8, !tbaa !103 ; 3 uses
   %i.afq = getelementptr inbounds nuw i8, ptr %i.afp, i64 40
-  %.sroa.021.0.copyload.i = load ptr, ptr %i.afq, align 8, !tbaa !104 ; 10 uses
+  %.sroa.021.0.copyload.i = load i64, ptr %i.afq, align 8, !tbaa !104
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.afp, i64 48
   %.sroa.6.0.copyload.i = load i64, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !105 ; 10 uses
   %i.afr = getelementptr inbounds nuw i8, ptr %i.afp, i64 56
@@ -1732,6 +1733,7 @@ bb.jb:                                            ; preds = %bb.ja
 bb.jc:                                            ; preds = %bb.jb, %bb.ja
   %i.agg = phi float [ %i.agf, %bb.jb ], [ 1.000000e+00, %bb.ja ]
   call void @_ZN5ImGui12PushStyleVarEif(i32 noundef 24, float noundef %i.agg)
+  %86 = inttoptr i64 %.sroa.021.0.copyload.i to ptr ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %55) #30
   %i.agh = extractelement <2 x float> %i.afv, i64 0
   %i.agi = extractelement <2 x float> %i.afv, i64 1 ; 2 uses
@@ -1740,7 +1742,7 @@ bb.jc:                                            ; preds = %bb.jb, %bb.ja
   store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %56, align 16, !tbaa !56
   call void @llvm.lifetime.start.p0(ptr nonnull %57) #30
   store <4 x float> splat (float 1.000000e+00), ptr %57, align 16, !tbaa !56
-  call void @_ZN5ImGui11ImageWithBgE12ImTextureRefRK6ImVec2S3_S3_RK6ImVec4S6_(ptr %.sroa.021.0.copyload.i, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %55, ptr noundef nonnull align 4 dereferenceable(8) %53, ptr noundef nonnull align 4 dereferenceable(8) %54, ptr noundef nonnull align 4 dereferenceable(16) %56, ptr noundef nonnull align 4 dereferenceable(16) %57)
+  call void @_ZN5ImGui11ImageWithBgE12ImTextureRefRK6ImVec2S3_S3_RK6ImVec4S6_(ptr %86, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %55, ptr noundef nonnull align 4 dereferenceable(8) %53, ptr noundef nonnull align 4 dereferenceable(8) %54, ptr noundef nonnull align 4 dereferenceable(16) %56, ptr noundef nonnull align 4 dereferenceable(16) %57)
   call void @llvm.lifetime.end.p0(ptr nonnull %57) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %56) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %55) #30
@@ -1752,7 +1754,7 @@ bb.jc:                                            ; preds = %bb.jb, %bb.ja
   call fastcc void @_ZL30ExampleImageViewer_DrawOptionsP22ExampleImageViewerData(ptr noundef nonnull @_ZZL23DemoWindowWidgetsImagesvE12image_viewer)
   %i.agl = fptosi float %i.agh to i32
   %i.agm = fptosi float %i.agi to i32
-  call fastcc void @_ZL29ExampleImageViewer_DrawCanvasP22ExampleImageViewerData6ImVec212ImTextureRefii(ptr noundef nonnull @_ZZL23DemoWindowWidgetsImagesvE12image_viewer, <2 x float> %.sroa.0.4.vec.insert.i, ptr %.sroa.021.0.copyload.i, i64 %.sroa.6.0.copyload.i, i32 noundef %i.agl, i32 noundef %i.agm)
+  call fastcc void @_ZL29ExampleImageViewer_DrawCanvasP22ExampleImageViewerData6ImVec212ImTextureRefii(ptr noundef nonnull @_ZZL23DemoWindowWidgetsImagesvE12image_viewer, <2 x float> %.sroa.0.4.vec.insert.i, ptr %86, i64 %.sroa.6.0.copyload.i, i32 noundef %i.agl, i32 noundef %i.agm)
   call void @_ZN5ImGui10DemoMarkerEPKciS1_(ptr noundef nonnull @.str.5, i32 noundef 1920, ptr noundef nonnull @.str.776)
   call void @_ZN5ImGui13SeparatorTextEPKc(ptr noundef nonnull @.str.777)
   call void (ptr, ...) @_ZN5ImGui11TextWrappedEPKcz(ptr noundef nonnull @.str.778)
@@ -1769,7 +1771,7 @@ bb.jc:                                            ; preds = %bb.jb, %bb.ja
   store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %62, align 16, !tbaa !56
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #30
   store <4 x float> splat (float 1.000000e+00), ptr %63, align 16, !tbaa !56
-  %i.agp = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %.sroa.021.0.copyload.i, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
+  %i.agp = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %86, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
   br i1 %i.agp, label %bb.jd, label %.peel.next.i27
 
 bb.jd:                                            ; preds = %bb.jc
@@ -1802,7 +1804,7 @@ bb.jd:                                            ; preds = %bb.jc
   store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %62, align 16, !tbaa !56
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #30
   store <4 x float> splat (float 1.000000e+00), ptr %63, align 16, !tbaa !56
-  %i.ags = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %.sroa.021.0.copyload.i, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
+  %i.ags = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %86, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
   br i1 %i.ags, label %bb.je, label %bb.jf
 
 bb.je:                                            ; preds = %.peel.next.i27
@@ -1836,7 +1838,7 @@ bb.jf:                                            ; preds = %bb.je, %.peel.next.
   store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %62, align 16, !tbaa !56
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #30
   store <4 x float> splat (float 1.000000e+00), ptr %63, align 16, !tbaa !56
-  %i.agv = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %.sroa.021.0.copyload.i, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
+  %i.agv = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %86, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
   br i1 %i.agv, label %bb.jg, label %bb.jh
 
 bb.jg:                                            ; preds = %bb.jf
@@ -1870,7 +1872,7 @@ bb.jh:                                            ; preds = %bb.jg, %bb.jf
   store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %62, align 16, !tbaa !56
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #30
   store <4 x float> splat (float 1.000000e+00), ptr %63, align 16, !tbaa !56
-  %i.agy = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %.sroa.021.0.copyload.i, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
+  %i.agy = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %86, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
   br i1 %i.agy, label %bb.ji, label %bb.jj
 
 bb.ji:                                            ; preds = %bb.jh
@@ -1904,7 +1906,7 @@ bb.jj:                                            ; preds = %bb.ji, %bb.jh
   store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %62, align 16, !tbaa !56
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #30
   store <4 x float> splat (float 1.000000e+00), ptr %63, align 16, !tbaa !56
-  %i.ahb = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %.sroa.021.0.copyload.i, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
+  %i.ahb = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %86, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
   br i1 %i.ahb, label %bb.jk, label %bb.jl
 
 bb.jk:                                            ; preds = %bb.jj
@@ -1938,7 +1940,7 @@ bb.jl:                                            ; preds = %bb.jk, %bb.jj
   store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %62, align 16, !tbaa !56
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #30
   store <4 x float> splat (float 1.000000e+00), ptr %63, align 16, !tbaa !56
-  %i.ahe = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %.sroa.021.0.copyload.i, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
+  %i.ahe = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %86, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
   br i1 %i.ahe, label %bb.jm, label %bb.jn
 
 bb.jm:                                            ; preds = %bb.jl
@@ -1972,7 +1974,7 @@ bb.jn:                                            ; preds = %bb.jm, %bb.jl
   store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %62, align 16, !tbaa !56
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #30
   store <4 x float> splat (float 1.000000e+00), ptr %63, align 16, !tbaa !56
-  %i.ahh = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %.sroa.021.0.copyload.i, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
+  %i.ahh = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %86, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
   br i1 %i.ahh, label %bb.jo, label %bb.jp
 
 bb.jo:                                            ; preds = %bb.jn
@@ -2006,7 +2008,7 @@ bb.jp:                                            ; preds = %bb.jo, %bb.jn
   store <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %62, align 16, !tbaa !56
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #30
   store <4 x float> splat (float 1.000000e+00), ptr %63, align 16, !tbaa !56
-  %i.ahk = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %.sroa.021.0.copyload.i, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
+  %i.ahk = call noundef zeroext i1 @_ZN5ImGui11ImageButtonEPKc12ImTextureRefRK6ImVec2S5_S5_RK6ImVec4S8_(ptr noundef nonnull @.str.157, ptr %86, i64 %.sroa.6.0.copyload.i, ptr noundef nonnull align 4 dereferenceable(8) %59, ptr noundef nonnull align 4 dereferenceable(8) %60, ptr noundef nonnull align 4 dereferenceable(8) %61, ptr noundef nonnull align 4 dereferenceable(16) %62, ptr noundef nonnull align 4 dereferenceable(16) %63)
   br i1 %i.ahk, label %bb.jq, label %.loopexit.i29
 
 bb.jq:                                            ; preds = %bb.jp
@@ -2409,10 +2411,10 @@ sub_0:                                            ; preds = %bb.aa
   br i1 %i.bp, label %bb.ab, label %.critedge
 
 bb.ab:                                            ; preds = %.tail, %bb.aa
-  %9 = phi <2 x float> [ splat (float 4.000000e-01), %bb.aa ], [ <float 8.000000e-01, float 6.000000e-01>, %.tail ]
-  store float 1.000000e+00, ptr %8, align 4, !tbaa !56
-  store <2 x float> %9, ptr %.sroa.440.0..sroa_idx, align 4, !tbaa !56
-  store float 1.000000e+00, ptr %.sroa.642.0..sroa_idx, align 4, !tbaa !56
+  %9 = phi <2 x i32> [ splat (i32 1053609165), %bb.aa ], [ <i32 1061997773, i32 1058642330>, %.tail ]
+  store i32 1065353216, ptr %8, align 4, !tbaa !56
+  store <2 x i32> %9, ptr %.sroa.440.0..sroa_idx, align 4, !tbaa !56
+  store i32 1065353216, ptr %.sroa.642.0..sroa_idx, align 4, !tbaa !56
   call void @_ZN5ImGui14PushStyleColorEiRK6ImVec4(i32 noundef 0, ptr noundef nonnull align 4 dereferenceable(16) %8)
   call void @_ZN5ImGui15TextUnformattedEPKcS1_(ptr noundef nonnull %i.bj, ptr noundef null)
   call void @_ZN5ImGui13PopStyleColorEi(i32 noundef 1)
@@ -2581,10 +2583,10 @@ bb.e:                                             ; preds = %bb.d, %_ZNK8ImVecto
 _ZN8ImVectorIPcE9push_backERKS0_.exit:            ; preds = %._ZN8ImVectorIPcE7reserveEi.exit_crit_edge.i, %bb.e
   %i.z = phi i32 [ %i.h, %._ZN8ImVectorIPcE7reserveEi.exit_crit_edge.i ], [ %.pre3.i, %bb.e ]
   %i.aa = phi ptr [ %.pre.i, %._ZN8ImVectorIPcE7reserveEi.exit_crit_edge.i ], [ %i.s, %bb.e ]
-  %3 = sext i32 %i.z to i64
-  %4 = getelementptr inbounds [8 x i8], ptr %i.aa, i64 %3
-  %5 = ptrtoint ptr %i.g to i64
-  store i64 %5, ptr %4, align 8
+  %3 = ptrtoint ptr %i.g to i64
+  %4 = sext i32 %i.z to i64
+  %5 = getelementptr inbounds [8 x i8], ptr %i.aa, i64 %4
+  store i64 %3, ptr %5, align 8
   %i.ab = load i32, ptr %i.d, align 8, !tbaa !444
   %i.ac = add nsw i32 %i.ab, 1
   store i32 %i.ac, ptr %i.d, align 8, !tbaa !444
@@ -2750,6 +2752,7 @@ bb.d:                                             ; preds = %_ZN17ExampleAppCons
   %i.av = add i64 %i.au, 1                        ; 2 uses
   %i.aw = tail call noundef ptr @_ZN5ImGui8MemAllocEm(i64 noundef %i.av) ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aw, ptr nonnull align 1 %1, i64 %i.av, i1 false)
+  %2 = ptrtoint ptr %i.aw to i64
   %i.ax = load i32, ptr %i.b, align 8, !tbaa !444 ; 6 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 292 ; 2 uses
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !443
@@ -2800,7 +2803,6 @@ _ZN8ImVectorIPcE9push_backERKS0_.exit:            ; preds = %._ZN8ImVectorIPcE7r
   %i.bp = phi ptr [ %.pre.i, %._ZN8ImVectorIPcE7reserveEi.exit_crit_edge.i ], [ %i.bi, %bb.h ]
   %i.bq = sext i32 %i.bo to i64
   %i.br = getelementptr inbounds [8 x i8], ptr %i.bp, i64 %i.bq
-  %2 = ptrtoint ptr %i.aw to i64
   store i64 %2, ptr %i.br, align 8
   %i.bs = load i32, ptr %i.b, align 8, !tbaa !444 ; 2 uses
   %i.bt = add nsw i32 %i.bs, 1                    ; 2 uses
@@ -3203,7 +3205,7 @@ bb.b:                                             ; preds = %.noexc, %bb.a
   %.sroa.8124.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 38
   store i8 0, ptr %.sroa.8124.0..sroa_idx, align 2
   %.sroa.9126.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 40
-  store <4 x float> <float 4.000000e-01, float 8.000000e-01, float 4.000000e-01, float 1.000000e+00>, ptr %.sroa.9126.0..sroa_idx, align 4
+  store <4 x i32> <i32 1053609165, i32 1061997773, i32 1053609165, i32 1065353216>, ptr %.sroa.9126.0..sroa_idx, align 4
   %i.k = load i32, ptr %0, align 8, !tbaa !20     ; 2 uses
   %i.l = add nsw i32 %i.k, 1                      ; 6 uses
   store i32 %i.l, ptr %0, align 8, !tbaa !20
@@ -3270,7 +3272,7 @@ bb.f:                                             ; preds = %._ZN8ImVectorI10MyD
   %.sroa.8113.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 38
   store i8 0, ptr %.sroa.8113.0..sroa_idx, align 2
   %.sroa.9115.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.af, i64 40
-  store <4 x float> <float 8.000000e-01, float 5.000000e-01, float 1.000000e+00, float 1.000000e+00>, ptr %.sroa.9115.0..sroa_idx, align 4
+  store <4 x i32> <i32 1061997773, i32 1056964608, i32 1065353216, i32 1065353216>, ptr %.sroa.9115.0..sroa_idx, align 4
   %i.ag = load i32, ptr %0, align 8, !tbaa !20    ; 2 uses
   %i.ah = add nsw i32 %i.ag, 1                    ; 6 uses
   store i32 %i.ah, ptr %0, align 8, !tbaa !20
@@ -3337,7 +3339,7 @@ bb.j:                                             ; preds = %._ZN8ImVectorI10MyD
   %.sroa.8103.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bb, i64 38
   store i8 0, ptr %.sroa.8103.0..sroa_idx, align 2
   %.sroa.9105.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bb, i64 40
-  store <4 x float> <float 1.000000e+00, float 8.000000e-01, float 5.000000e-01, float 1.000000e+00>, ptr %.sroa.9105.0..sroa_idx, align 4
+  store <4 x i32> <i32 1065353216, i32 1061997773, i32 1056964608, i32 1065353216>, ptr %.sroa.9105.0..sroa_idx, align 4
   %i.bc = load i32, ptr %0, align 8, !tbaa !20    ; 2 uses
   %i.bd = add nsw i32 %i.bc, 1                    ; 6 uses
   store i32 %i.bd, ptr %0, align 8, !tbaa !20
@@ -3404,7 +3406,7 @@ bb.n:                                             ; preds = %._ZN8ImVectorI10MyD
   %.sroa.893.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bx, i64 38
   store i8 0, ptr %.sroa.893.0..sroa_idx, align 2
   %.sroa.995.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bx, i64 40
-  store <4 x float> <float 1.000000e+00, float 3.000000e-01, float 4.000000e-01, float 1.000000e+00>, ptr %.sroa.995.0..sroa_idx, align 4
+  store <4 x i32> <i32 1065353216, i32 1050253722, i32 1053609165, i32 1065353216>, ptr %.sroa.995.0..sroa_idx, align 4
   %i.by = load i32, ptr %0, align 8, !tbaa !20    ; 2 uses
   %i.bz = add nsw i32 %i.by, 1                    ; 6 uses
   store i32 %i.bz, ptr %0, align 8, !tbaa !20
@@ -3471,7 +3473,7 @@ bb.r:                                             ; preds = %._ZN8ImVectorI10MyD
   %.sroa.883.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ct, i64 38
   store i8 0, ptr %.sroa.883.0..sroa_idx, align 2
   %.sroa.985.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ct, i64 40
-  store <4 x float> <float 4.000000e-01, float 8.000000e-01, float 8.000000e-01, float 1.000000e+00>, ptr %.sroa.985.0..sroa_idx, align 4
+  store <4 x i32> <i32 1053609165, i32 1061997773, i32 1061997773, i32 1065353216>, ptr %.sroa.985.0..sroa_idx, align 4
   %i.cu = load i32, ptr %0, align 8, !tbaa !20    ; 2 uses
   %i.cv = add nsw i32 %i.cu, 1                    ; 6 uses
   store i32 %i.cv, ptr %0, align 8, !tbaa !20
@@ -3538,7 +3540,7 @@ bb.v:                                             ; preds = %.noexc53, %._ZN8ImV
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dp, i64 38
   store i8 0, ptr %.sroa.8.0..sroa_idx, align 2
   %.sroa.978.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dp, i64 40
-  store <4 x float> <float 8.000000e-01, float 8.000000e-01, float 1.000000e+00, float 1.000000e+00>, ptr %.sroa.978.0..sroa_idx, align 4
+  store <4 x i32> <i32 1061997773, i32 1061997773, i32 1065353216, i32 1065353216>, ptr %.sroa.978.0..sroa_idx, align 4
   %i.dq = load i32, ptr %0, align 8, !tbaa !20
   %i.dr = add nsw i32 %i.dq, 1
   store i32 %i.dr, ptr %0, align 8, !tbaa !20

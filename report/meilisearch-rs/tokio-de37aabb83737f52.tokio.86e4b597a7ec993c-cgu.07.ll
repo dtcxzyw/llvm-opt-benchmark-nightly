@@ -202,8 +202,9 @@ bb.c:                                             ; preds = %.noexc
   %.sroa.33.0.copyload = phi i64 [ %.sroa.33.0.copyload.pre, %".noexc._ZN5alloc3vec16Vec$LT$T$C$A$GT$13shrink_to_fit17h09b53acff9b09d4bE.exit_crit_edge" ], [ %i.c, %bb.a ]
   %.sroa.01.0.copyload = phi i64 [ %.sroa.01.0.copyload.pre, %".noexc._ZN5alloc3vec16Vec$LT$T$C$A$GT$13shrink_to_fit17h09b53acff9b09d4bE.exit_crit_edge" ], [ %i.a, %bb.a ]
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.22.0.copyload = load ptr, ptr %.sroa.22.0..sroa_idx, align 8
-  %i.h = tail call { ptr, i64 } @"_ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$8into_box17hda0a0d89b020bd66E"(i64 %.sroa.01.0.copyload, ptr %.sroa.22.0.copyload, i64 %.sroa.33.0.copyload)
+  %.sroa.22.0.copyload = load i64, ptr %.sroa.22.0..sroa_idx, align 8
+  %2 = inttoptr i64 %.sroa.22.0.copyload to ptr
+  %i.h = tail call { ptr, i64 } @"_ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$8into_box17hda0a0d89b020bd66E"(i64 %.sroa.01.0.copyload, ptr %2, i64 %.sroa.33.0.copyload)
   ret { ptr, i64 } %i.h
 
 bb.d:                                             ; preds = %bb.e
@@ -257,8 +258,9 @@ bb.c:                                             ; preds = %.noexc
   %.sroa.33.0.copyload = phi i64 [ %.sroa.33.0.copyload.pre, %".noexc._ZN5alloc3vec16Vec$LT$T$C$A$GT$13shrink_to_fit17h83f8433c9041ea37E.exit_crit_edge" ], [ %i.c, %bb.a ]
   %.sroa.01.0.copyload = phi i64 [ %.sroa.01.0.copyload.pre, %".noexc._ZN5alloc3vec16Vec$LT$T$C$A$GT$13shrink_to_fit17h83f8433c9041ea37E.exit_crit_edge" ], [ %i.a, %bb.a ]
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.22.0.copyload = load ptr, ptr %.sroa.22.0..sroa_idx, align 8
-  %i.h = tail call { ptr, i64 } @"_ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$8into_box17h0e4998b94d429ba6E"(i64 %.sroa.01.0.copyload, ptr %.sroa.22.0.copyload, i64 %.sroa.33.0.copyload)
+  %.sroa.22.0.copyload = load i64, ptr %.sroa.22.0..sroa_idx, align 8
+  %2 = inttoptr i64 %.sroa.22.0.copyload to ptr
+  %i.h = tail call { ptr, i64 } @"_ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$8into_box17h0e4998b94d429ba6E"(i64 %.sroa.01.0.copyload, ptr %2, i64 %.sroa.33.0.copyload)
   ret { ptr, i64 } %i.h
 
 bb.d:                                             ; preds = %bb.e

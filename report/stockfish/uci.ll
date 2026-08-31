@@ -204,14 +204,15 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit: ; preds = %bb.i
   %i.y = sub i64 %.1.i.i, %.09
   %i.z = sub nuw i64 %1, %.09
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %i.z, i64 %i.y) ; 2 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 %.09 ; 2 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 %.09
+  %5 = ptrtoint ptr %i.aa to i64                  ; 2 uses
   %.not.i = icmp eq ptr %i.i, %i.h
   br i1 %.not.i, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit
   store i64 %.sroa.speculated.i, ptr %i.i, align 8, !tbaa !11
   %.sroa.534.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  store ptr %i.aa, ptr %.sroa.534.0..sroa_idx, align 8, !tbaa !32
+  store i64 %5, ptr %.sroa.534.0..sroa_idx, align 8, !tbaa !32
   %i.ab = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
   store ptr %i.ab, ptr %i.f, align 8, !tbaa !47
   br label %bb.o
@@ -242,7 +243,7 @@ _ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEm
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ae ; 2 uses
   store i64 %.sroa.speculated.i, ptr %i.an, align 8, !tbaa !11
   %.sroa.534.0..sroa_idx35 = getelementptr inbounds nuw i8, ptr %i.an, i64 8
-  store ptr %i.aa, ptr %.sroa.534.0..sroa_idx35, align 8, !tbaa !32
+  store i64 %5, ptr %.sroa.534.0..sroa_idx35, align 8, !tbaa !32
   %.not10.i.i.i.i.i = icmp eq ptr %i.j, %i.h
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i, label %.lr.ph.i.i.i.i.i
 
@@ -289,14 +290,15 @@ bb.p:                                             ; preds = %_ZNKSt17basic_strin
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit13: ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findES2_m.exit.thread
   %i.ax = sub nuw i64 %1, %.09                    ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 %.09 ; 2 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 %.09
+  %6 = ptrtoint ptr %i.ay to i64                  ; 2 uses
   %.not.i14 = icmp eq ptr %i.i, %i.h
   br i1 %.not.i14, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit13
   store i64 %i.ax, ptr %i.i, align 8, !tbaa !11
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  store ptr %i.ay, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !32
+  store i64 %6, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !32
   %i.az = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   store ptr %i.az, ptr %i.f, align 8, !tbaa !47
   br label %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit27
@@ -326,7 +328,7 @@ _ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEm
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 %i.bc ; 2 uses
   store i64 %i.ax, ptr %i.bl, align 8, !tbaa !11
   %.sroa.5.0..sroa_idx30 = getelementptr inbounds nuw i8, ptr %i.bl, i64 8
-  store ptr %i.ay, ptr %.sroa.5.0..sroa_idx30, align 8, !tbaa !32
+  store i64 %6, ptr %.sroa.5.0..sroa_idx30, align 8, !tbaa !32
   %.not10.i.i.i.i.i18 = icmp eq ptr %i.j, %i.h
   br i1 %.not10.i.i.i.i.i18, label %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i23, label %.lr.ph.i.i.i.i.i19
 
@@ -729,13 +731,15 @@ bb.a:
   store i8 0, ptr %i.c, align 8, !tbaa !34
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #26
   store i64 0, ptr %i.b, align 8, !tbaa !11
-  %i.e = call noundef nonnull align 8 dereferenceable(80) ptr @_ZN9Stockfish6Engine11get_optionsEv(ptr noundef nonnull align 8 dereferenceable(1680) %0) #26 ; 2 uses
+  %i.e = call noundef nonnull align 8 dereferenceable(80) ptr @_ZN9Stockfish6Engine11get_optionsEv(ptr noundef nonnull align 8 dereferenceable(1680) %0) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
+  %10 = ptrtoint ptr %i.b to i64
+  %11 = ptrtoint ptr %i.e to i64                  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 24
-  store ptr %i.b, ptr %3, align 8, !tbaa !211
+  store i64 %10, ptr %3, align 8, !tbaa !211
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store ptr %i.e, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !212
+  store i64 %11, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !212
   store ptr @"_ZNSt17_Function_handlerIFvRKN9Stockfish6Search8InfoFullEEZNS0_9UCIEngine5benchERSiE3$_0E9_M_invokeERKSt9_Any_dataS4_", ptr %i.g, align 8, !tbaa !84
   store ptr @"_ZNSt17_Function_handlerIFvRKN9Stockfish6Search8InfoFullEEZNS0_9UCIEngine5benchERSiE3$_0E10_M_managerERSt9_Any_dataRKSA_St18_Manager_operation", ptr %i.f, align 8, !tbaa !76
   call void @_ZN9Stockfish6Engine18set_on_update_fullEOSt8functionIFvRKNS_6Search8InfoFullEEE(ptr noundef nonnull align 8 dereferenceable(1680) %0, ptr noundef nonnull align 8 dereferenceable(32) %3) #26
@@ -879,12 +883,11 @@ _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit: ; preds = %bb.d
   %i.by = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo3putEc(ptr noundef nonnull align 8 dereferenceable(8) %i.bj, i8 noundef signext %.0.i.i.i) #26
   %i.bz = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5flushEv(ptr noundef nonnull align 8 dereferenceable(8) %i.by) #26 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #26
-  %10 = ptrtoint ptr %i.e to i64
   %i.ca = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %9, i64 24
   %i.cc = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i64 0, ptr %i.cc, align 8
-  store i64 %10, ptr %9, align 8, !tbaa !212
+  store i64 %11, ptr %9, align 8, !tbaa !212
   store ptr @"_ZNSt17_Function_handlerIFvRKN9Stockfish6Search8InfoFullEEZNS0_9UCIEngine5benchERSiE3$_1E9_M_invokeERKSt9_Any_dataS4_", ptr %i.cb, align 8, !tbaa !84
   store ptr @"_ZNSt17_Function_handlerIFvRKN9Stockfish6Search8InfoFullEEZNS0_9UCIEngine5benchERSiE3$_1E10_M_managerERSt9_Any_dataRKSA_St18_Manager_operation", ptr %i.ca, align 8, !tbaa !76
   call void @_ZN9Stockfish6Engine18set_on_update_fullEOSt8functionIFvRKNS_6Search8InfoFullEEE(ptr noundef nonnull align 8 dereferenceable(1680) %0, ptr noundef nonnull align 8 dereferenceable(32) %9) #26

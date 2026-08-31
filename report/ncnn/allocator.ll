@@ -112,11 +112,12 @@ bb.e:                                             ; preds = %bb.c
   %i.ae = tail call i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) %i.ad) #16 ; 0 uses
   %i.af = load ptr, ptr %i.b, align 8, !tbaa !9   ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 120
+  %2 = ptrtoint ptr %i.w to i64
   %i.ah = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #18 ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
   store i64 %i.j, ptr %i.ai, align 8
   %.sroa.418.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
-  store ptr %i.w, ptr %.sroa.418.0..sroa_idx, align 8
+  store i64 %2, ptr %.sroa.418.0..sroa_idx, align 8
   tail call void @_ZNSt8__detail15_List_node_base7_M_hookEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %i.ah, ptr noundef nonnull align 8 dereferenceable(24) %i.ag) #16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.af, i64 136 ; 2 uses
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !30
@@ -197,11 +198,12 @@ _ZN4ncnnL10fastMallocEm.exit:                     ; preds = %.sink.split, %bb.h,
   %i.bm = call i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) %i.bl) #16 ; 0 uses
   %i.bn = load ptr, ptr %i.b, align 8, !tbaa !9   ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 120
+  %3 = ptrtoint ptr %i.bj to i64
   %i.bp = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #18 ; 3 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 16
   store i64 %1, ptr %i.bq, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bp, i64 24
-  store ptr %i.bj, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %3, ptr %.sroa.4.0..sroa_idx, align 8
   call void @_ZNSt8__detail15_List_node_base7_M_hookEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %i.bp, ptr noundef nonnull align 8 dereferenceable(24) %i.bo) #16
   %i.br = getelementptr inbounds nuw i8, ptr %i.bn, i64 136 ; 2 uses
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !30
@@ -256,11 +258,12 @@ bb.d:                                             ; preds = %bb.c
   %i.s = tail call i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) %i.r) #16 ; 0 uses
   %i.t = load ptr, ptr %i.a, align 8, !tbaa !9    ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 96
+  %2 = ptrtoint ptr %1 to i64
   %i.v = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #18 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   store i64 %i.k, ptr %i.w, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 24
-  store ptr %1, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %2, ptr %.sroa.4.0..sroa_idx, align 8
   tail call void @_ZNSt8__detail15_List_node_base7_M_hookEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %i.v, ptr noundef nonnull align 8 dereferenceable(24) %i.u) #16
   %i.x = getelementptr inbounds nuw i8, ptr %i.t, i64 112 ; 2 uses
   %i.y = load i64, ptr %i.x, align 8, !tbaa !30
@@ -348,11 +351,12 @@ bb.d:                                             ; preds = %bb.b
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.033.061, i64 noundef 32) #17
   %i.x = load ptr, ptr %i.b, align 8, !tbaa !36   ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 40
+  %2 = ptrtoint ptr %i.t to i64
   %i.z = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #18 ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   store i64 %i.g, ptr %i.aa, align 8
   %.sroa.418.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.z, i64 24
-  store ptr %i.t, ptr %.sroa.418.0..sroa_idx, align 8
+  store i64 %2, ptr %.sroa.418.0..sroa_idx, align 8
   tail call void @_ZNSt8__detail15_List_node_base7_M_hookEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %i.z, ptr noundef nonnull align 8 dereferenceable(24) %i.y) #16
   br label %bb.i
 
@@ -421,11 +425,12 @@ _ZN4ncnnL10fastMallocEm.exit:                     ; preds = %.sink.split, %bb.g,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   %i.au = load ptr, ptr %i.b, align 8, !tbaa !36  ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 40
+  %3 = ptrtoint ptr %i.at to i64
   %i.aw = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #18 ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   store i64 %1, ptr %i.ax, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aw, i64 24
-  store ptr %i.at, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %3, ptr %.sroa.4.0..sroa_idx, align 8
   call void @_ZNSt8__detail15_List_node_base7_M_hookEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %i.aw, ptr noundef nonnull align 8 dereferenceable(24) %i.av) #16
   br label %bb.i
 
@@ -470,11 +475,12 @@ bb.d:                                             ; preds = %bb.c
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.03.0, i64 noundef 32) #17
   %i.l = load ptr, ptr %i.a, align 8, !tbaa !36   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
+  %2 = ptrtoint ptr %1 to i64
   %i.n = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #18 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   store i64 %i.h, ptr %i.o, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 24
-  store ptr %1, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %2, ptr %.sroa.4.0..sroa_idx, align 8
   tail call void @_ZNSt8__detail15_List_node_base7_M_hookEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %i.m) #16
   %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 32 ; 2 uses
   %i.q = load i64, ptr %i.p, align 8, !tbaa !30

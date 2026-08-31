@@ -204,7 +204,7 @@ bb.y:                                             ; preds = %.loopexit, %.thread
   unreachable
 
 _RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7J7HIv3PenH_8uu_cksum.exit.thread67: ; preds = %bb.s, %.thread, %bb.aa
-  %4 = phi ptr [ %i.dg, %bb.aa ], [ inttoptr (i64 1 to ptr), %.thread ], [ inttoptr (i64 1 to ptr), %bb.s ]
+  %.sroa.1051.073 = phi i64 [ %4, %bb.aa ], [ 1, %.thread ], [ 1, %bb.s ]
   tail call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #12, !noalias !24
   %i.dl = tail call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef 32, i64 noundef 8) #12, !noalias !24 ; 6 uses
   %i.dm = icmp eq ptr %i.dl, null
@@ -219,7 +219,7 @@ _RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit.exit: ; preds = %_RNvMs5_NtCs7t
   %.sroa.441.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dl, i64 8
   store i64 %3, ptr %.sroa.441.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx42 = getelementptr inbounds nuw i8, ptr %i.dl, i64 16
-  store ptr %4, ptr %.sroa.5.0..sroa_idx42, align 8
+  store i64 %.sroa.1051.073, ptr %.sroa.5.0..sroa_idx42, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dl, i64 24
   store i64 %3, ptr %.sroa.6.0..sroa_idx, align 8
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -230,6 +230,7 @@ _RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit.exit: ; preds = %_RNvMs5_NtCs7t
   br label %bb.d
 
 bb.aa:                                            ; preds = %.thread.thread
+  %4 = ptrtoint ptr %i.dg to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.dg, ptr nonnull align 1 %2, i64 %3, i1 false)
   br label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7J7HIv3PenH_8uu_cksum.exit.thread67
 
@@ -366,19 +367,20 @@ bb.a:
   %i.d = alloca [8 x i8], align 8                 ; 4 uses
   %i.e = alloca [16 x i8], align 8                ; 5 uses
   %i.f = alloca [8 x i8], align 8                 ; 4 uses
-  %i.g = alloca [16 x i8], align 8                ; 4 uses
+  %i.g = alloca [16 x i8], align 8                ; 3 uses
   store ptr %0, ptr %i.g, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store i64 %1, ptr %i.h, align 8
+  %3 = ptrtoint ptr %i.g to i64                   ; 2 uses
   br i1 %2, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store ptr @_RNvNvNtNtCs2vKOLqTMYjT_3std2io5stdio6stderr8INSTANCE, ptr %i.d, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  store ptr %i.g, ptr %i.c, align 8
+  store i64 %3, ptr %i.c, align 8
   %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store ptr @_RNvXs1i_NtCs6JMX4GRUq9U_4core3fmtReNtB6_7Display3fmtCs7J7HIv3PenH_8uu_cksum, ptr %.sroa.46.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs1i_NtCs6JMX4GRUq9U_4core3fmtReNtB6_7Display3fmtCs7J7HIv3PenH_8uu_cksum to i64), ptr %.sroa.46.0..sroa_idx, align 8
   %i.i = call noundef ptr @_RNvXso_NtNtCs2vKOLqTMYjT_3std2io5stdioNtB5_6StderrNtNtNtCs6JMX4GRUq9U_4core2io5write5Write9write_fmt(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.d, ptr noundef nonnull @9, ptr noundef nonnull %i.c) #12 ; 4 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtNtB4_2io5error5ErrorEECs7J7HIv3PenH_8uu_cksum.exit, label %bb.c
@@ -427,9 +429,9 @@ bb.f:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store ptr @_RNvNvNtNtCs2vKOLqTMYjT_3std2io5stdio6stderr8INSTANCE, ptr %i.f, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  store ptr %i.g, ptr %i.e, align 8
+  store i64 %3, ptr %i.e, align 8
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  store ptr @_RNvXs1i_NtCs6JMX4GRUq9U_4core3fmtReNtB6_7Display3fmtCs7J7HIv3PenH_8uu_cksum, ptr %.sroa.42.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs1i_NtCs6JMX4GRUq9U_4core3fmtReNtB6_7Display3fmtCs7J7HIv3PenH_8uu_cksum to i64), ptr %.sroa.42.0..sroa_idx, align 8
   %i.r = call noundef ptr @_RNvXso_NtNtCs2vKOLqTMYjT_3std2io5stdioNtB5_6StderrNtNtNtCs6JMX4GRUq9U_4core2io5write5Write9write_fmt(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.f, ptr noundef nonnull @10, ptr noundef nonnull %i.e) #12 ; 4 uses
   %i.s = icmp eq ptr %i.r, null
   br i1 %i.s, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtNtB4_2io5error5ErrorEECs7J7HIv3PenH_8uu_cksum.exit10, label %bb.g

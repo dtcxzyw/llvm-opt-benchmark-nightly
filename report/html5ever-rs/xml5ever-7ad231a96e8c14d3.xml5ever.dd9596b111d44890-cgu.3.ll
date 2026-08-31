@@ -202,13 +202,15 @@ switch.lookup:
   store ptr %switch.load, ptr %i.b, align 8, !noalias !15, !captures !18
   store i64 %switch.ext, ptr %i.i, align 8, !noalias !15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !15
-  store ptr %i.c, ptr %i.a, align 8, !noalias !15
+  %2 = ptrtoint ptr %i.c to i64
+  %3 = ptrtoint ptr %i.b to i64
+  store i64 %2, ptr %i.a, align 8, !noalias !15
   %.sroa.43.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtRINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetENtB6_7Display3fmtCsj1ugBVjDER0_8xml5ever, ptr %.sroa.43.0..sroa_idx.i, align 8, !noalias !15
+  store i64 ptrtoint (ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtRINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms15PrefixStaticSetENtB6_7Display3fmtCsj1ugBVjDER0_8xml5ever to i64), ptr %.sroa.43.0..sroa_idx.i, align 8, !noalias !15
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr %i.b, ptr %i.j, align 8, !noalias !15
+  store i64 %3, ptr %i.j, align 8, !noalias !15
   %.sroa.47.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtReNtB6_7Display3fmtCsj1ugBVjDER0_8xml5ever, ptr %.sroa.47.0..sroa_idx.i, align 8, !noalias !15
+  store i64 ptrtoint (ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtReNtB6_7Display3fmtCsj1ugBVjDER0_8xml5ever to i64), ptr %.sroa.47.0..sroa_idx.i, align 8, !noalias !15
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   %i.k = call noundef zeroext i1 @_RNvNtCskKLDkoKarTP_4core3fmt5write(ptr noundef nonnull %.val, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val1, ptr noundef nonnull @11, ptr noundef nonnull %i.a)
@@ -244,13 +246,15 @@ switch.lookup:
   store ptr %switch.load, ptr %i.b, align 8, !noalias !19, !captures !18
   store i64 %switch.ext, ptr %i.i, align 8, !noalias !19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !19
-  store ptr %i.c, ptr %i.a, align 8, !noalias !19
+  %2 = ptrtoint ptr %i.c to i64
+  %3 = ptrtoint ptr %i.b to i64
+  store i64 %2, ptr %i.a, align 8, !noalias !19
   %.sroa.43.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtRINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetENtB6_7Display3fmtCsj1ugBVjDER0_8xml5ever, ptr %.sroa.43.0..sroa_idx.i, align 8, !noalias !19
+  store i64 ptrtoint (ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtRINtNtCsgv7xG79AfeB_12string_cache4atom4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetENtB6_7Display3fmtCsj1ugBVjDER0_8xml5ever to i64), ptr %.sroa.43.0..sroa_idx.i, align 8, !noalias !19
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr %i.b, ptr %i.j, align 8, !noalias !19
+  store i64 %3, ptr %i.j, align 8, !noalias !19
   %.sroa.47.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtReNtB6_7Display3fmtCsj1ugBVjDER0_8xml5ever, ptr %.sroa.47.0..sroa_idx.i, align 8, !noalias !19
+  store i64 ptrtoint (ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtReNtB6_7Display3fmtCsj1ugBVjDER0_8xml5ever to i64), ptr %.sroa.47.0..sroa_idx.i, align 8, !noalias !19
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
   %i.k = call noundef zeroext i1 @_RNvNtCskKLDkoKarTP_4core3fmt5write(ptr noundef nonnull %.val, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %.val1, ptr noundef nonnull @11, ptr noundef nonnull %i.a)
@@ -653,7 +657,7 @@ _RNvXsi_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4
 _RNvXsi_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.thread5.i.i.i: ; preds = %_RNvXsi_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.i.i.i, %_RNvXs8_NtCsgv7xG79AfeB_12string_cache4atomINtB5_4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetENtNtCskKLDkoKarTP_4core3cmp3Ord3cmpCsj1ugBVjDER0_8xml5ever.exit.thread.i.i.i.i
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ee = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.ef = load ptr, ptr %i.ed, align 8, !nonnull !7, !noundef !7 ; 4 uses
+  %i.ef = load ptr, ptr %i.ed, align 8, !nonnull !7, !noundef !7 ; 3 uses
   %i.eg = ptrtoint ptr %i.ef to i64               ; 3 uses
   %i.eh = icmp eq ptr %i.ef, inttoptr (i64 15 to ptr)
   br i1 %i.eh, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsj1ugBVjDER0_8xml5ever.exit.i.i.i.i, label %bb.ar
@@ -663,9 +667,7 @@ bb.ar:                                            ; preds = %_RNvXsi_NtCsa2F6HLA
   br i1 %i.ei, label %bb.au, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  %i.ej = and i64 %i.eg, 1
-  %2 = sub nsw i64 0, %i.ej
-  %3 = getelementptr i8, ptr %i.ef, i64 %2
+  %i.ej = and i64 %i.eg, -2
   %i.ek = trunc i64 %i.eg to i1
   br i1 %i.ek, label %bb.at, label %bb.av
 
@@ -681,7 +683,8 @@ bb.au:                                            ; preds = %bb.ar
 
 bb.av:                                            ; preds = %bb.at, %bb.as
   %.sroa.01.0.i.i.i.i.i.i = phi i64 [ %i.en, %bb.at ], [ 0, %bb.as ]
-  %i.ep = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %2 = inttoptr i64 %i.ej to ptr
+  %i.ep = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.er = load i32, ptr %i.eq, align 8, !noundef !7
   %i.es = zext i32 %i.er to i64
@@ -691,7 +694,7 @@ bb.av:                                            ; preds = %bb.at, %bb.as
 _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsj1ugBVjDER0_8xml5ever.exit.i.i.i.i: ; preds = %bb.av, %bb.au, %_RNvXsi_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.thread5.i.i.i
   %.sroa.4.0.i.i.i.i.i = phi i64 [ %i.es, %bb.av ], [ %i.eg, %bb.au ], [ 0, %_RNvXsi_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.thread5.i.i.i ] ; 2 uses
   %.sroa.0.0.i.i.i.i.i = phi ptr [ %i.et, %bb.av ], [ %i.eo, %bb.au ], [ inttoptr (i64 1 to ptr), %_RNvXsi_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.thread5.i.i.i ]
-  %i.eu = load ptr, ptr %i.ee, align 8, !nonnull !7, !noundef !7 ; 4 uses
+  %i.eu = load ptr, ptr %i.ee, align 8, !nonnull !7, !noundef !7 ; 3 uses
   %i.ev = ptrtoint ptr %i.eu to i64               ; 3 uses
   %i.ew = icmp eq ptr %i.eu, inttoptr (i64 15 to ptr)
   br i1 %i.ew, label %_RNvXso_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core3cmp3Ord3cmpCsj1ugBVjDER0_8xml5ever.exit.i.i.i, label %bb.aw
@@ -701,9 +704,7 @@ bb.aw:                                            ; preds = %_RNvMss_NtCsldpiDta
   br i1 %i.ex, label %bb.az, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.ey = and i64 %i.ev, 1
-  %4 = sub nsw i64 0, %i.ey
-  %5 = getelementptr i8, ptr %i.eu, i64 %4
+  %i.ey = and i64 %i.ev, -2
   %i.ez = trunc i64 %i.ev to i1
   br i1 %i.ez, label %bb.ay, label %bb.ba
 
@@ -719,7 +720,8 @@ bb.az:                                            ; preds = %bb.aw
 
 bb.ba:                                            ; preds = %bb.ay, %bb.ax
   %.sroa.01.0.i.i1.i.i.i.i = phi i64 [ %i.fc, %bb.ay ], [ 0, %bb.ax ]
-  %i.fe = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %3 = inttoptr i64 %i.ey to ptr
+  %i.fe = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ff = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.fg = load i32, ptr %i.ff, align 8, !noundef !7
   %i.fh = zext i32 %i.fg to i64

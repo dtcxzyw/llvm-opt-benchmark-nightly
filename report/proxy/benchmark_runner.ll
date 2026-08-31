@@ -202,6 +202,7 @@ _ZN9benchmark8internallsIA86_cEERNS0_7LogTypeES4_RKT_.exit: ; preds = %bb.b, %_Z
   store i32 0, ptr %i.ag, align 4, !tbaa !18
   %i.ah = load ptr, ptr %0, align 8, !tbaa !15
   %i.ai = call double @strtod(ptr noundef %i.ah, ptr noundef nonnull %i.b) #23
+  %1 = bitcast double %i.ai to i64
   %i.aj = load atomic i8, ptr @_ZGVZN9benchmark8internal18GetNullLogInstanceEvE8null_log acquire, align 8
   %i.ak = icmp eq i8 %i.aj, 0
   br i1 %i.ak, label %bb.o, label %_ZN9benchmark8internal18GetNullLogInstanceEv.exit19, !prof !19
@@ -240,7 +241,6 @@ bb.q:                                             ; preds = %_ZN9benchmark8inter
   br label %_ZN9benchmark8internallsIA43_cEERNS0_7LogTypeES4_RKT_.exit
 
 _ZN9benchmark8internallsIA43_cEERNS0_7LogTypeES4_RKT_.exit: ; preds = %_ZN9benchmark8internal18GetNullLogInstanceEv.exit19, %_ZN9benchmark8internallsIA58_cEERNS0_7LogTypeES4_RKT_.exit, %_ZN9benchmark8internallsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERNS0_7LogTypeES9_RKT_.exit22, %bb.q
-  %1 = bitcast double %i.ai to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
   br label %bb.r
 
@@ -643,11 +643,13 @@ _ZNSt10unique_ptrIN9benchmark8internal13ThreadManagerESt14default_deleteIS2_EE5r
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 120
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !113 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
+  %5 = ptrtoint ptr %1 to i64
+  %6 = ptrtoint ptr %3 to i64
   %i.ba = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store ptr %1, ptr %4, align 8, !tbaa !140
+  store i64 %5, ptr %4, align 8, !tbaa !140
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store ptr %3, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !142
+  store i64 %6, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !142
   store ptr @"_ZNSt17_Function_handlerIFviEZN9benchmark8internal15BenchmarkRunner13DoNIterationsEvE3$_0E9_M_invokeERKSt9_Any_dataOi", ptr %i.bb, align 8, !tbaa !144
   store ptr @"_ZNSt17_Function_handlerIFviEZN9benchmark8internal15BenchmarkRunner13DoNIterationsEvE3$_0E10_M_managerERSt9_Any_dataRKS6_St18_Manager_operation", ptr %i.ba, align 8, !tbaa !88
   %i.bc = load ptr, ptr %i.az, align 8, !tbaa !95

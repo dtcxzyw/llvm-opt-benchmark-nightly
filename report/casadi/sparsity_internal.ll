@@ -204,7 +204,8 @@ _ZNSt6vectorIbSaIbEEC2EmRKbRKS0_.exit:            ; preds = %bb.p
   %storemerge.i.i.i.i.i = getelementptr inbounds i8, ptr %i.cd, i64 %storemerge.idx.i.i.i.i.i ; 2 uses
   %i.cg = trunc i64 %i.bo to i32
   %i.ch = and i32 %i.cg, 63                       ; 2 uses
-  store ptr %storemerge.i.i.i.i.i, ptr %i.bq, align 8
+  %8 = ptrtoint ptr %storemerge.i.i.i.i.i to i64
+  store i64 %8, ptr %i.bq, align 8
   store i32 %i.ch, ptr %i.br, align 8
   %.idx.i = shl nuw nsw i64 %i.ca, 3
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.bx, i8 0, i64 %.idx.i, i1 false)
@@ -607,11 +608,11 @@ _ZNK6casadi16SparsityInternal7get_rowEv.exit:     ; preds = %.thread.i.i.i, %bb.
   %i.di = load i64, ptr %i.dh, align 8, !tbaa !8  ; 2 uses
   %i.dj = getelementptr [8 x i8], ptr %i.dg, i64 %i.di
   %i.dk = getelementptr i8, ptr %i.dj, i64 24     ; 2 uses
+  %19 = ptrtoint ptr %i.de to i64
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dg, i64 16
   %i.dm = getelementptr inbounds [8 x i8], ptr %i.dl, i64 %i.di
   %i.dn = load i64, ptr %i.dm, align 8, !tbaa !8
   %i.do = getelementptr inbounds [8 x i8], ptr %i.dk, i64 %i.dn
-  %19 = ptrtoint ptr %i.de to i64
   %i.dp = ptrtoint ptr %i.dd to i64
   %i.dq = sub i64 %19, %i.dp
   %i.dr = getelementptr inbounds i8, ptr %i.dd, i64 %i.dq
@@ -1014,6 +1015,7 @@ _ZNSt6vectorIxSaIxEEC2EmRKxRKS0_.exit:            ; preds = %_ZNSt6vectorIxSaIxE
   %.idx = shl nuw nsw i64 %i.av, 3                ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 %.idx ; 6 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.ax ; 2 uses
+  %2 = ptrtoint ptr %.sroa.0120.2 to i64
   %.not142 = icmp eq ptr %.sroa.0120.2, %.sroa.16.0
   br i1 %.not142, label %.preheader, label %.lr.ph144
 
@@ -1416,7 +1418,6 @@ _ZNSt6vectorIxSaIxEED2Ev.exit53:                  ; preds = %bb.aa, %bb.ab
 
 bb.ac:                                            ; preds = %_ZNSt6vectorIxSaIxEED2Ev.exit53
   %i.gm = ptrtoint ptr %.sroa.23.2 to i64
-  %2 = ptrtoint ptr %.sroa.0120.2 to i64
   %i.gn = sub i64 %i.gm, %2
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0120.2, i64 noundef %i.gn) #30
   br label %_ZNSt6vectorIxSaIxEED2Ev.exit55

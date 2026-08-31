@@ -204,7 +204,7 @@ bb.ax:                                            ; preds = %bb.ap
   %i.cd = getelementptr inbounds nuw i8, ptr %i.be, i64 288
   %i.ce = load i32, ptr %i.cd, align 8, !tbaa !165 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.be, i64 296
-  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !181 ; 2 uses
+  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !181
   %i.ch = getelementptr inbounds nuw i8, ptr %i.be, i64 304
   %i.ci = load i64, ptr %i.ch, align 8, !tbaa !182 ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.be, i64 312
@@ -215,13 +215,14 @@ bb.ax:                                            ; preds = %bb.ap
   %i.co = getelementptr inbounds nuw i8, ptr %i.be, i64 337
   %i.cp = load i8, ptr %i.co, align 1, !tbaa !185, !range !157, !noundef !158
   %i.cq = zext nneg i8 %i.cp to i32               ; 2 uses
+  %4 = ptrtoint ptr %i.cg to i64                  ; 2 uses
   %.not.i.i43 = icmp eq ptr %i.av, %i.au
   br i1 %.not.i.i43, label %bb.az, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
   store i32 %i.ce, ptr %i.av, align 8, !tbaa !171
   %.sroa.667.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 8
-  store ptr %i.cg, ptr %.sroa.667.0..sroa_idx, align 8, !tbaa !174
+  store i64 %4, ptr %.sroa.667.0..sroa_idx, align 8, !tbaa !174
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 16
   store i64 %i.ci, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !175
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 24
@@ -267,7 +268,7 @@ _ZNKSt6vectorIN7Imf_3_412_GLOBAL__N_113TOutSliceInfoESaIS2_EE12_M_check_lenEmPKc
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 %i.cu ; 7 uses
   store i32 %i.ce, ptr %i.de, align 8, !tbaa !171
   %.sroa.667.0..sroa_idx68 = getelementptr inbounds nuw i8, ptr %i.de, i64 8
-  store ptr %i.cg, ptr %.sroa.667.0..sroa_idx68, align 8, !tbaa !174
+  store i64 %4, ptr %.sroa.667.0..sroa_idx68, align 8, !tbaa !174
   %.sroa.7.0..sroa_idx70 = getelementptr inbounds nuw i8, ptr %i.de, i64 16
   store i64 %i.ci, ptr %.sroa.7.0..sroa_idx70, align 8, !tbaa !175
   %.sroa.8.0..sroa_idx72 = getelementptr inbounds nuw i8, ptr %i.de, i64 24
@@ -670,7 +671,7 @@ bb.er:                                            ; preds = %bb.eq, %bb.ep, %bb.
   br label %_ZNSt3mapIN7Imf_3_412_GLOBAL__N_19TileCoordEPNS1_12BufferedTileESt4lessIS2_ESaISt4pairIKS2_S4_EEEixERS8_.exit.i
 
 _ZNSt3mapIN7Imf_3_412_GLOBAL__N_19TileCoordEPNS1_12BufferedTileESt4lessIS2_ESaISt4pairIKS2_S4_EEEixERS8_.exit.i: ; preds = %.thread10.i.i.i, %bb.er, %_ZNKSt4lessIN7Imf_3_412_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit.i.i, %bb.cv, %bb.ct, %bb.cr
-  %.sroa.016.0.i.i = phi ptr [ %.sroa.01.0.ph.i.i.i, %.thread10.i.i.i ], [ %.19.i.i.i.i.i, %_ZNKSt4lessIN7Imf_3_412_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit.i.i ], [ %i.lr, %bb.er ], [ %.19.i.i.i.i.i, %bb.cr ], [ %.19.i.i.i.i.i, %bb.cv ], [ %.19.i.i.i.i.i, %bb.ct ]
+  %.sroa.016.0.i.i = phi ptr [ %.19.i.i.i.i.i, %bb.ct ], [ %.19.i.i.i.i.i, %_ZNKSt4lessIN7Imf_3_412_GLOBAL__N_19TileCoordEEclERKS2_S5_.exit.i.i ], [ %.19.i.i.i.i.i, %bb.cr ], [ %.19.i.i.i.i.i, %bb.cv ], [ %i.lr, %bb.er ], [ %.sroa.01.0.ph.i.i.i, %.thread10.i.i.i ]
   %i.re = getelementptr inbounds nuw i8, ptr %.sroa.016.0.i.i, i64 48
   store ptr %i.ke, ptr %i.re, align 8, !tbaa !218
   br label %_ZN7Imf_3_412_GLOBAL__N_117bufferedTileWriteEPNS_17OutputStreamMutexEPNS_15TiledOutputFile4DataEiiiiPKci.exit

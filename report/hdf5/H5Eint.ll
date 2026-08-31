@@ -202,8 +202,9 @@ bb.d:                                             ; preds = %._crit_edge, %bb.a
   br i1 %i.l, label %H5E__get_auto.exit, label %bb.e, !prof !12
 
 H5E__get_auto.exit:                               ; preds = %bb.d
-  %.sroa.3.0.copyload = load ptr, ptr getelementptr inbounds nuw (i8, ptr @H5E_stack_g, i64 2072), align 8, !tbaa !55
-  store ptr %.sroa.3.0.copyload, ptr %0, align 8, !tbaa !55
+  %.sroa.3.0.copyload = load i64, ptr getelementptr inbounds nuw (i8, ptr @H5E_stack_g, i64 2072), align 8, !tbaa !55
+  %1 = inttoptr i64 %.sroa.3.0.copyload to ptr
+  store ptr %1, ptr %0, align 8, !tbaa !55
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %H5E__get_auto.exit, %bb.d

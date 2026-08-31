@@ -97,6 +97,7 @@ bb.c:                                             ; preds = %bb.a
   %i.m = load ptr, ptr %i.l, align 8, !alias.scope !12, !noalias !15, !nonnull !9, !noundef !9
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.o = load i64, ptr %i.n, align 8, !alias.scope !12, !noalias !15, !noundef !9
+  %2 = ptrtoint ptr %i.m to i64
   br label %_RNvXsp_CsfsXztIhCltD_13pingora_errorNtB5_9ErrorTypeNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit
 
 bb.d:                                             ; preds = %bb.a
@@ -106,10 +107,11 @@ bb.d:                                             ; preds = %bb.a
   %i.s = load i64, ptr %i.r, align 8, !alias.scope !12, !noalias !15, !noundef !9
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 26
   %i.u = load i16, ptr %i.t, align 2, !alias.scope !12, !noalias !15, !noundef !9
+  %3 = ptrtoint ptr %i.q to i64
   br label %_RNvXsp_CsfsXztIhCltD_13pingora_errorNtB5_9ErrorTypeNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit
 
 _RNvXsp_CsfsXztIhCltD_13pingora_errorNtB5_9ErrorTypeNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit: ; preds = %bb.d, %bb.c, %bb.b, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
-  %.sroa.64.0 = phi ptr [ undef, %bb.a ], [ %i.q, %bb.d ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.b ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ %i.m, %bb.c ], [ undef, %bb.a ]
+  %.sroa.64.0 = phi i64 [ undef, %bb.a ], [ %3, %bb.d ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.b ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ %2, %bb.c ], [ undef, %bb.a ]
   %.sroa.4.0 = phi i16 [ undef, %bb.a ], [ %i.u, %bb.d ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ %i.k, %bb.b ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.c ], [ undef, %bb.a ]
   %.sroa.8.0 = phi i64 [ undef, %bb.a ], [ %i.s, %bb.d ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.b ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ undef, %bb.a ], [ %i.o, %bb.c ], [ undef, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !17
@@ -157,7 +159,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 26
   store i16 %.sroa.4.0, ptr %.sroa.4.0..sroa_idx, align 2, !noalias !28
   %.sroa.64.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  store ptr %.sroa.64.0, ptr %.sroa.64.0..sroa_idx, align 8, !noalias !28
+  store i64 %.sroa.64.0, ptr %.sroa.64.0..sroa_idx, align 8, !noalias !28
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   store i64 %.sroa.8.0, ptr %.sroa.8.0..sroa_idx, align 8, !noalias !28
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 65
@@ -560,20 +562,19 @@ define hidden { i64, i64 } @_RNvMs2_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecI
 bb.a:
   %.val = load i64, ptr %0, align 8               ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %.val10 = load ptr, ptr %i.a, align 8           ; 3 uses
   %i.b = icmp eq i64 %3, 0
   %i.c = icmp eq i64 %.val, 0
   %or.cond.i = select i1 %i.b, i1 true, i1 %i.c
   br i1 %or.cond.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %.val11 = load ptr, ptr %i.a, align 8, !nonnull !9, !noundef !9 ; 2 uses
   %4 = mul nuw i64 %.val, %3                      ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val10) ]
   %i.d = icmp eq i64 %1, 0
   br i1 %i.d, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator6shrink.exit
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit: ; preds = %bb.b
-  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val10, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2) #22
+  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val11, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2) #22
   %i.e = inttoptr i64 %2 to ptr
   store ptr %i.e, ptr %i.a, align 8
   br label %bb.c
@@ -586,7 +587,7 @@ _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Al
   %i.f = mul nuw i64 %3, %1                       ; 3 uses
   %i.g = icmp ule i64 %i.f, %4
   tail call void @llvm.assume(i1 %i.g)
-  %i.h = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.val10, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef %i.f) #22 ; 2 uses
+  %i.h = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.val11, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef %i.f) #22 ; 2 uses
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %bb.e, label %bb.d
 

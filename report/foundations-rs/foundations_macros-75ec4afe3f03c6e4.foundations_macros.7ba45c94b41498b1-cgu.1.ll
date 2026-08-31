@@ -202,27 +202,30 @@ bb.e:                                             ; preds = %bb.d
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define hidden void @_RINvMNtNtCs3oUPovFnLWP_4core3fmt2rtNtB3_8Argument11new_displayINtNtCsk5uxfcyCLQt_5quote9___private20IdentFragmentAdapterRbEECsaC8UfsfJL0H_18foundations_macros(ptr nofree writeonly sret([16 x i8]) align 8 captures(none) initializes((0, 16)) %0, ptr align 8 %1) unnamed_addr #2 {
 bb.a:
-  store ptr %1, ptr %0, align 8
+  %2 = ptrtoint ptr %1 to i64
+  store i64 %2, ptr %0, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr @_RNvXs7_NtCsk5uxfcyCLQt_5quote9___privateINtB5_20IdentFragmentAdapterRbENtNtCs3oUPovFnLWP_4core3fmt7Display3fmtCsaC8UfsfJL0H_18foundations_macros, ptr %.sroa.2.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs7_NtCsk5uxfcyCLQt_5quote9___privateINtB5_20IdentFragmentAdapterRbENtNtCs3oUPovFnLWP_4core3fmt7Display3fmtCsaC8UfsfJL0H_18foundations_macros to i64), ptr %.sroa.2.0..sroa_idx, align 8
   ret void
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define hidden void @_RINvMNtNtCs3oUPovFnLWP_4core3fmt2rtNtB3_8Argument11new_displayRbECsaC8UfsfJL0H_18foundations_macros(ptr nofree writeonly sret([16 x i8]) align 8 captures(none) initializes((0, 16)) %0, ptr align 8 %1) unnamed_addr #2 {
 bb.a:
-  store ptr %1, ptr %0, align 8
+  %2 = ptrtoint ptr %1 to i64
+  store i64 %2, ptr %0, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr @_RNvXs1i_NtCs3oUPovFnLWP_4core3fmtRbNtB6_7Display3fmtCsaC8UfsfJL0H_18foundations_macros, ptr %.sroa.2.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs1i_NtCs3oUPovFnLWP_4core3fmtRbNtB6_7Display3fmtCsaC8UfsfJL0H_18foundations_macros to i64), ptr %.sroa.2.0..sroa_idx, align 8
   ret void
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
 define hidden void @_RINvMNtNtCs3oUPovFnLWP_4core3fmt2rtNtB3_8Argument11new_displayRdECsaC8UfsfJL0H_18foundations_macros(ptr nofree writeonly sret([16 x i8]) align 8 captures(none) initializes((0, 16)) %0, ptr align 8 %1) unnamed_addr #2 {
 bb.a:
-  store ptr %1, ptr %0, align 8
+  %2 = ptrtoint ptr %1 to i64
+  store i64 %2, ptr %0, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr @_RNvXs1i_NtCs3oUPovFnLWP_4core3fmtRdNtB6_7Display3fmtCsaC8UfsfJL0H_18foundations_macros, ptr %.sroa.2.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs1i_NtCs3oUPovFnLWP_4core3fmtRdNtB6_7Display3fmtCsaC8UfsfJL0H_18foundations_macros to i64), ptr %.sroa.2.0..sroa_idx, align 8
   ret void
 }
 
@@ -625,7 +628,7 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.d unwind label %bb.g
 
 bb.c:                                             ; preds = %bb.a
-  store ptr null, ptr %0, align 8
+  store i64 0, ptr %0, align 8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %.sroa.3.0..sroa_idx, align 8
   call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtBG_6string6StringEECsje5z0uo7eGy_12darling_core(ptr nonnull align 8 %i.b)
@@ -633,14 +636,15 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.b
   %.sroa.010.0.copyload = load i64, ptr %i.b, align 8
-  %.sroa.211.0.copyload = load ptr, ptr %i.i, align 8 ; 3 uses
+  %.sroa.211.0.copyload = load i64, ptr %i.i, align 8
   %.sroa.312.0.copyload = load i64, ptr %i.f, align 8
-  %i.k = getelementptr inbounds nuw [24 x i8], ptr %.sroa.211.0.copyload, i64 %.sroa.312.0.copyload
-  store ptr %.sroa.211.0.copyload, ptr %i.a, align 8
+  %3 = inttoptr i64 %.sroa.211.0.copyload to ptr  ; 3 uses
+  %i.k = getelementptr inbounds nuw [24 x i8], ptr %3, i64 %.sroa.312.0.copyload
+  store ptr %3, ptr %i.a, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store i64 %.sroa.010.0.copyload, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr %.sroa.211.0.copyload, ptr %i.m, align 8
+  store ptr %3, ptr %i.m, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store ptr %i.k, ptr %i.n, align 8
   call void @_RINvMse_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3setINtB6_8BTreeSetNtNtBc_6string6StringE16from_sorted_iterINtNtNtBc_3vec9into_iter8IntoIterB18_EECsje5z0uo7eGy_12darling_core(ptr sret([24 x i8]) align 8 %0, ptr nonnull align 8 %i.a)
@@ -686,7 +690,7 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.d unwind label %bb.g
 
 bb.c:                                             ; preds = %bb.a
-  store ptr null, ptr %0, align 8
+  store i64 0, ptr %0, align 8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %.sroa.3.0..sroa_idx, align 8
   call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtBG_6string6StringEECsje5z0uo7eGy_12darling_core(ptr nonnull align 8 %i.b)
@@ -694,14 +698,15 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.b
   %.sroa.010.0.copyload = load i64, ptr %i.b, align 8
-  %.sroa.211.0.copyload = load ptr, ptr %i.i, align 8 ; 3 uses
+  %.sroa.211.0.copyload = load i64, ptr %i.i, align 8
   %.sroa.312.0.copyload = load i64, ptr %i.f, align 8
-  %i.k = getelementptr inbounds nuw [24 x i8], ptr %.sroa.211.0.copyload, i64 %.sroa.312.0.copyload
-  store ptr %.sroa.211.0.copyload, ptr %i.a, align 8
+  %3 = inttoptr i64 %.sroa.211.0.copyload to ptr  ; 3 uses
+  %i.k = getelementptr inbounds nuw [24 x i8], ptr %3, i64 %.sroa.312.0.copyload
+  store ptr %3, ptr %i.a, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store i64 %.sroa.010.0.copyload, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr %.sroa.211.0.copyload, ptr %i.m, align 8
+  store ptr %3, ptr %i.m, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store ptr %i.k, ptr %i.n, align 8
   call void @_RINvMse_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3setINtB6_8BTreeSetNtNtBc_6string6StringE16from_sorted_iterINtNtNtBc_3vec9into_iter8IntoIterB18_EECsje5z0uo7eGy_12darling_core(ptr sret([24 x i8]) align 8 %0, ptr nonnull align 8 %i.a)
@@ -1104,7 +1109,7 @@ define hidden void @_RNvMNtCs1xwejQucwHj_5alloc6stringNtB2_6String3newCsaC8UfsfJ
 bb.a:
   store i64 0, ptr %0, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr inttoptr (i64 1 to ptr), ptr %.sroa.2.0..sroa_idx, align 8
+  store i64 1, ptr %.sroa.2.0..sroa_idx, align 8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %.sroa.3.0..sroa_idx, align 8
   ret void
@@ -1507,7 +1512,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 0, ptr %i.b, align 8, !noalias !47
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr inttoptr (i64 1 to ptr), ptr %.sroa.2.0..sroa_idx.i, align 8, !noalias !47
+  store i64 1, ptr %.sroa.2.0..sroa_idx.i, align 8, !noalias !47
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 0, ptr %.sroa.3.0..sroa_idx.i, align 8, !noalias !47
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -1605,7 +1610,7 @@ bb.a:
 ; Function Attrs: inlinehint nonlazybind uwtable
 define hidden void @_RNvXsK_Cse4VeaA6Ikg_11proc_macro2NtB5_11TokenStreamNtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsaC8UfsfJL0H_18foundations_macros(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr align 8 %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [24 x i8], align 8                ; 6 uses
+  %i.a = alloca [24 x i8], align 8                ; 5 uses
   %i.b = alloca [4 x i8], align 4                 ; 4 uses
   %i.c = load i64, ptr %1, align 8, !noalias !50
   %i.d = icmp eq i64 %i.c, -1
@@ -1614,6 +1619,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = tail call ptr @_RNvXss_NtCse4VeaA6Ikg_11proc_macro28fallbackNtB5_11TokenStreamNtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsaC8UfsfJL0H_18foundations_macros(ptr nonnull align 8 %i.e) #26, !noalias !50
+  %2 = ptrtoint ptr %i.f to i64
+  %3 = insertelement <2 x i64> <i64 poison, i64 undef>, i64 %2, i64 0
   br label %_RNvXsz_NtCse4VeaA6Ikg_11proc_macro23impNtB5_11TokenStreamNtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsaC8UfsfJL0H_18foundations_macros.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -1643,23 +1650,18 @@ bb.f:                                             ; preds = %bb.d
 _RNvXsA_NtCse4VeaA6Ikg_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsaC8UfsfJL0H_18foundations_macros.exit.i: ; preds = %bb.c
   %.sroa.0.0.copyload1 = load i64, ptr %i.a, align 8
   %.sroa.3.0..sroa_idx2 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.3.0.copyload3 = load ptr, ptr %.sroa.3.0..sroa_idx2, align 8
-  %.sroa.4.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.sroa.4.0.copyload5 = load i64, ptr %.sroa.4.0..sroa_idx4, align 8
+  %4 = load <2 x i64>, ptr %.sroa.3.0..sroa_idx2, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !50
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !50
   br label %_RNvXsz_NtCse4VeaA6Ikg_11proc_macro23impNtB5_11TokenStreamNtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsaC8UfsfJL0H_18foundations_macros.exit
 
 _RNvXsz_NtCse4VeaA6Ikg_11proc_macro23impNtB5_11TokenStreamNtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsaC8UfsfJL0H_18foundations_macros.exit: ; preds = %_RNvXsA_NtCse4VeaA6Ikg_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsaC8UfsfJL0H_18foundations_macros.exit.i, %bb.b
   %.sroa.46.0 = phi i32 [ undef, %bb.b ], [ %i.h, %_RNvXsA_NtCse4VeaA6Ikg_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsaC8UfsfJL0H_18foundations_macros.exit.i ]
-  %.sroa.4.0 = phi i64 [ undef, %bb.b ], [ %.sroa.4.0.copyload5, %_RNvXsA_NtCse4VeaA6Ikg_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsaC8UfsfJL0H_18foundations_macros.exit.i ]
-  %.sroa.3.0 = phi ptr [ %i.f, %bb.b ], [ %.sroa.3.0.copyload3, %_RNvXsA_NtCse4VeaA6Ikg_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsaC8UfsfJL0H_18foundations_macros.exit.i ]
   %.sroa.0.0 = phi i64 [ -1, %bb.b ], [ %.sroa.0.0.copyload1, %_RNvXsA_NtCse4VeaA6Ikg_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsaC8UfsfJL0H_18foundations_macros.exit.i ]
+  %5 = phi <2 x i64> [ %3, %bb.b ], [ %4, %_RNvXsA_NtCse4VeaA6Ikg_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsaC8UfsfJL0H_18foundations_macros.exit.i ]
   store i64 %.sroa.0.0, ptr %0, align 8
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.3.0, ptr %.sroa.3.0..sroa_idx, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.4.0, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store <2 x i64> %5, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 %.sroa.46.0, ptr %.sroa.46.0..sroa_idx, align 8
   ret void

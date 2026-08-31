@@ -204,36 +204,41 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not59, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
+  %3 = ptrtoint ptr %i.b to i64
   store i32 2, ptr %2, align 16, !tbaa !91
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %i.b, ptr %.sroa.413.0..sroa_idx, align 8, !tbaa !48
+  store i64 %3, ptr %.sroa.413.0..sroa_idx, align 8, !tbaa !48
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %4 = ptrtoint ptr %i.d to i64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.j, i8 -1, i64 16, i1 false)
   store i32 2, ptr %i.l, align 16, !tbaa !91
   %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 40
-  store ptr %i.d, ptr %.sroa.410.0..sroa_idx, align 8, !tbaa !48
+  store i64 %4, ptr %.sroa.410.0..sroa_idx, align 8, !tbaa !48
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %5 = ptrtoint ptr %i.f to i64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.m, i8 -1, i64 16, i1 false)
   store i32 2, ptr %i.n, align 16, !tbaa !91
   %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 72
-  store ptr %i.f, ptr %.sroa.47.0..sroa_idx, align 8, !tbaa !48
+  store i64 %5, ptr %.sroa.47.0..sroa_idx, align 8, !tbaa !48
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 80
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 96
+  %6 = ptrtoint ptr %i.h to i64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.o, i8 -1, i64 16, i1 false)
   store i32 2, ptr %i.p, align 16, !tbaa !91
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 104
-  store ptr %i.h, ptr %.sroa.44.0..sroa_idx, align 8, !tbaa !48
+  store i64 %6, ptr %.sroa.44.0..sroa_idx, align 8, !tbaa !48
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 112
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 128
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 112
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.q, i8 -1, i64 16, i1 false)
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !69
+  %7 = ptrtoint ptr %i.t to i64
   store i32 2, ptr %i.r, align 16, !tbaa !91
   %.sroa.41.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 136
-  store ptr %i.t, ptr %.sroa.41.0..sroa_idx, align 8, !tbaa !48
+  store i64 %7, ptr %.sroa.41.0..sroa_idx, align 8, !tbaa !48
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 144
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.u, i8 -1, i64 16, i1 false)
   store i64 -1, ptr %i.a, align 8, !tbaa !18
@@ -372,18 +377,20 @@ bb.a:
   br i1 %.not, label %bb.k, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %3 = ptrtoint ptr %i.b to i64
   store i32 2, ptr %2, align 16, !tbaa !91
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %i.b, ptr %.sroa.44.0..sroa_idx, align 8, !tbaa !48
+  store i64 %3, ptr %.sroa.44.0..sroa_idx, align 8, !tbaa !48
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 112
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.d, i8 -1, i64 16, i1 false)
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !69
+  %4 = ptrtoint ptr %i.h to i64
   store i32 2, ptr %i.f, align 16, !tbaa !91
   %.sroa.41.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 40
-  store ptr %i.h, ptr %.sroa.41.0..sroa_idx, align 8, !tbaa !48
+  store i64 %4, ptr %.sroa.41.0..sroa_idx, align 8, !tbaa !48
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 48
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.i, i8 -1, i64 16, i1 false)
   store i64 -1, ptr %i.a, align 8, !tbaa !18
@@ -550,9 +557,10 @@ bb.a:
   store i64 -1, ptr %i.a, align 8, !tbaa !18
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !69
+  %3 = ptrtoint ptr %i.c to i64
   store i32 2, ptr %2, align 16, !tbaa !91
   %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %i.c, ptr %.sroa.45.0..sroa_idx, align 8, !tbaa !48
+  store i64 %3, ptr %.sroa.45.0..sroa_idx, align 8, !tbaa !48
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.d, i8 -1, i64 16, i1 false)

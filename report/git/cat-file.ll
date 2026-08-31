@@ -204,19 +204,21 @@ bb.cg:                                            ; preds = %st_mult.exit.i.i, %
   %.2.i.i = phi i64 [ %..i.i, %st_mult.exit.i.i ], [ %.039132.i.i, %bb.cd ]
   %i.qv = getelementptr inbounds nuw i8, ptr %.lcssa141169.i.i, i64 8
   %i.qw = load ptr, ptr %i.qv, align 8, !tbaa !102
+  %21 = ptrtoint ptr %i.qw to i64
   %.not.i59.i.i = icmp eq ptr %.0.ph.i.i, null
   br i1 %.not.i59.i.i, label %xstrdup_or_null.exit.i.i, label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg
   %i.qx = call ptr @xstrdup(ptr noundef nonnull %.0.ph.i.i) #14
+  %22 = ptrtoint ptr %i.qx to i64
   br label %xstrdup_or_null.exit.i.i
 
 xstrdup_or_null.exit.i.i:                         ; preds = %bb.ch, %bb.cg
-  %21 = phi ptr [ %i.qx, %bb.ch ], [ null, %bb.cg ]
+  %23 = phi i64 [ %22, %bb.ch ], [ 0, %bb.cg ]
   %i.qy = getelementptr inbounds nuw [16 x i8], ptr %.141.i.i, i64 %.089130.i.i ; 2 uses
-  store ptr %i.qw, ptr %i.qy, align 8, !tbaa !104
+  store i64 %21, ptr %i.qy, align 8, !tbaa !104
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.qy, i64 8
-  store ptr %21, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !37
+  store i64 %23, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !37
   br label %free_cmds.exit.i.i
 
 free_cmds.exit.i.i:                               ; preds = %.lr.ph.i57.i.i, %xstrdup_or_null.exit.i.i, %bb.cc, %dispatch_calls.exit.i.i

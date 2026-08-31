@@ -205,6 +205,7 @@ arenas_i_impl.exit.thread34:                      ; preds = %bb.r, %bb.j, %bb.m,
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 3) i32 @ctl_lookup(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef writeonly captures(address_is_null) %3, ptr noundef %4, ptr nofree noundef captures(none) %5) unnamed_addr #0 {
 bb.a:
+  %6 = ptrtoint ptr %2 to i64
   %i.a = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %2, i32 noundef 46) #16 ; 2 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %bb.b, label %bb.c
@@ -216,9 +217,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.b = phi ptr [ %strchr, %bb.b ], [ %i.a, %bb.a ] ; 2 uses
-  %6 = ptrtoint ptr %i.b to i64
-  %i.c = ptrtoint ptr %2 to i64
-  %i.d = sub i64 %6, %i.c                         ; 2 uses
+  %i.c = ptrtoint ptr %i.b to i64
+  %i.d = sub i64 %i.c, %6                         ; 2 uses
   %i.e = icmp eq i64 %i.d, 0
   br i1 %i.e, label %.thread93, label %.preheader100
 
@@ -621,7 +621,8 @@ bb.f:                                             ; preds = %bb.e
 
 .thread:                                          ; preds = %bb.f
   %i.f = load <2 x ptr>, ptr %5, align 8, !tbaa !194
-  store <2 x ptr> %i.f, ptr %i.a, align 8, !tbaa !194
+  %7 = ptrtoint <2 x ptr> %i.f to <2 x i64>
+  store <2 x i64> %7, ptr %i.a, align 8, !tbaa !194
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %.thread, %bb.f, %bb.c

@@ -10,6 +10,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @png_read_filter_row_sub3_sse2(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readnone captures(none) %2) local_unnamed_addr #0 {
 bb.a:
+  %3 = alloca i32, align 4                        ; 4 uses
+  %4 = alloca i32, align 4                        ; 12 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !8    ; 5 uses
   %i.c = icmp ugt i64 %i.b, 3
@@ -26,8 +28,10 @@ bb.a:
   %.019.val.prol = load i32, ptr %1, align 1      ; 2 uses
   %i.g = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.019.val.prol, i64 0
   %i.h = bitcast <4 x i32> %i.g to <16 x i8>      ; 2 uses
-  %.0.extract.trunc.i.prol = trunc i32 %.019.val.prol to i24
-  store i24 %.0.extract.trunc.i.prol, ptr %1, align 1
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  store i32 %.019.val.prol, ptr %4, align 4, !tbaa !11
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %1, ptr noundef nonnull align 4 dereferenceable(3) %4, i64 3, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 3 ; 2 uses
   %i.j = add i64 %i.b, -3
   br label %.lr.ph.prol.loopexit
@@ -49,23 +53,27 @@ bb.a:
   %i.m = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.019.val, i64 0
   %i.n = bitcast <4 x i32> %i.m to <16 x i8>
   %i.o = add <16 x i8> %i.l, %i.n                 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.p = bitcast <16 x i8> %i.o to <4 x i32>
   %i.q = extractelement <4 x i32> %i.p, i64 0
-  %.0.extract.trunc.i = trunc i32 %i.q to i24
-  store i24 %.0.extract.trunc.i, ptr %.01922, align 1
+  store i32 %i.q, ptr %4, align 4, !tbaa !11
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.01922, ptr noundef nonnull align 4 dereferenceable(3) %4, i64 3, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %i.r = getelementptr inbounds nuw i8, ptr %.01922, i64 3 ; 2 uses
   %.019.val.1 = load i32, ptr %i.r, align 1
   %i.s = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.019.val.1, i64 0
   %i.t = bitcast <4 x i32> %i.s to <16 x i8>
   %i.u = add <16 x i8> %i.o, %i.t                 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.v = bitcast <16 x i8> %i.u to <4 x i32>
   %i.w = extractelement <4 x i32> %i.v, i64 0
-  %.0.extract.trunc.i.1 = trunc i32 %i.w to i24
-  store i24 %.0.extract.trunc.i.1, ptr %i.r, align 1
+  store i32 %i.w, ptr %4, align 4, !tbaa !11
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.r, ptr noundef nonnull align 4 dereferenceable(3) %4, i64 3, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %i.x = getelementptr inbounds nuw i8, ptr %.01922, i64 6 ; 2 uses
   %i.y = add i64 %.01823, -6                      ; 2 uses
   %i.z = icmp ugt i64 %i.y, 3
-  br i1 %i.z, label %.lr.ph, label %._crit_edge.thread, !llvm.loop !11
+  br i1 %i.z, label %.lr.ph, label %._crit_edge.thread, !llvm.loop !12
 
 ._crit_edge:                                      ; preds = %bb.a
   %.not = icmp eq i64 %i.b, 0
@@ -79,15 +87,23 @@ bb.a:
   %i.aa = insertelement <4 x i32> poison, i32 %.0.insert.ext.i, i64 0
   %i.ab = bitcast <4 x i32> %i.aa to <16 x i8>
   %i.ac = add <16 x i8> %.lcssa35, %i.ab
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.ad = bitcast <16 x i8> %i.ac to <4 x i32>
   %i.ae = extractelement <4 x i32> %i.ad, i64 0
-  %.0.extract.trunc.i21 = trunc i32 %i.ae to i24
-  store i24 %.0.extract.trunc.i21, ptr %.019.lcssa34, align 1
+  store i32 %i.ae, ptr %3, align 4, !tbaa !11
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.019.lcssa34, ptr noundef nonnull align 4 dereferenceable(3) %3, i64 3, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge.thread, %._crit_edge
   ret void
 }
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @png_read_filter_row_sub4_sse2(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readnone captures(none) %2) local_unnamed_addr #0 {
@@ -140,7 +156,7 @@ bb.a:
   %i.w = getelementptr inbounds nuw i8, ptr %.01011, i64 8
   %i.x = add i64 %.0912, -8                       ; 2 uses
   %i.y = icmp ugt i64 %i.x, 4
-  br i1 %i.y, label %.lr.ph, label %._crit_edge, !llvm.loop !13
+  br i1 %i.y, label %.lr.ph, label %._crit_edge, !llvm.loop !14
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.a
   ret void
@@ -149,6 +165,8 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @png_read_filter_row_avg3_sse2(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
+  %3 = alloca i32, align 4                        ; 4 uses
+  %4 = alloca i32, align 4                        ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !8    ; 3 uses
   %i.c = icmp ugt i64 %i.b, 3
@@ -174,15 +192,17 @@ bb.a:
   %i.n = bitcast <4 x i32> %i.f to <16 x i8>
   %i.o = add <16 x i8> %i.m, %i.n                 ; 2 uses
   %i.p = bitcast <16 x i8> %i.o to <2 x i64>      ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.q = bitcast <16 x i8> %i.o to <4 x i32>
   %i.r = extractelement <4 x i32> %i.q, i64 0
-  %.0.extract.trunc.i = trunc i32 %i.r to i24
-  store i24 %.0.extract.trunc.i, ptr %.043, align 1
+  store i32 %i.r, ptr %4, align 4, !tbaa !11
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.043, ptr noundef nonnull align 4 dereferenceable(3) %4, i64 3, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %i.s = getelementptr inbounds nuw i8, ptr %.03342, i64 3 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.043, i64 3 ; 2 uses
   %i.u = add i64 %.03540, -3                      ; 2 uses
   %i.v = icmp ugt i64 %i.u, 3
-  br i1 %i.v, label %.lr.ph, label %._crit_edge.thread, !llvm.loop !14
+  br i1 %i.v, label %.lr.ph, label %._crit_edge.thread, !llvm.loop !15
 
 ._crit_edge:                                      ; preds = %bb.a
   %.not = icmp eq i64 %i.b, 0
@@ -208,10 +228,12 @@ bb.a:
   %i.af = bitcast <4 x i32> %i.y to <16 x i8>
   %i.ag = add <16 x i8> %i.ab, %i.af
   %i.ah = sub <16 x i8> %i.ag, %i.ae
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.ai = bitcast <16 x i8> %i.ah to <4 x i32>
   %i.aj = extractelement <4 x i32> %i.ai, i64 0
-  %.0.extract.trunc.i39 = trunc i32 %i.aj to i24
-  store i24 %.0.extract.trunc.i39, ptr %.0.lcssa58, align 1
+  store i32 %i.aj, ptr %3, align 4, !tbaa !11
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.0.lcssa58, ptr noundef nonnull align 4 dereferenceable(3) %3, i64 3, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge.thread, %._crit_edge
@@ -254,7 +276,7 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %.023, i64 4
   %i.v = add i64 %.01821, -4                      ; 2 uses
   %i.w = icmp ugt i64 %i.v, 4
-  br i1 %i.w, label %.lr.ph, label %._crit_edge, !llvm.loop !15
+  br i1 %i.w, label %.lr.ph, label %._crit_edge, !llvm.loop !16
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   ret void
@@ -263,6 +285,8 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @png_read_filter_row_paeth3_sse2(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
+  %3 = alloca i32, align 4                        ; 4 uses
+  %4 = alloca i32, align 4                        ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !8    ; 3 uses
   %i.c = icmp ugt i64 %i.b, 3
@@ -303,15 +327,17 @@ bb.a:
   %i.ab = bitcast <16 x i8> %i.aa to <2 x i64>
   %i.ac = bitcast <16 x i8> %i.aa to <8 x i16>
   %i.ad = tail call <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16> %i.ac, <8 x i16> poison)
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.ae = bitcast <16 x i8> %i.ad to <4 x i32>
   %i.af = extractelement <4 x i32> %i.ae, i64 0
-  %.0.extract.trunc.i = trunc i32 %i.af to i24
-  store i24 %.0.extract.trunc.i, ptr %.082, align 1
+  store i32 %i.af, ptr %4, align 4, !tbaa !11
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.082, ptr noundef nonnull align 4 dereferenceable(3) %4, i64 3, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %i.ag = getelementptr inbounds nuw i8, ptr %.07081, i64 3 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.082, i64 3 ; 2 uses
   %i.ai = add i64 %.07180, -3                     ; 2 uses
   %i.aj = icmp ugt i64 %i.ai, 3
-  br i1 %i.aj, label %.lr.ph, label %._crit_edge.thread, !llvm.loop !16
+  br i1 %i.aj, label %.lr.ph, label %._crit_edge.thread, !llvm.loop !17
 
 ._crit_edge.thread:                               ; preds = %.lr.ph
   %i.ak = bitcast <16 x i8> %i.f to <8 x i16>
@@ -354,10 +380,12 @@ bb.b:                                             ; preds = %._crit_edge.thread,
   %i.bg = add <16 x i8> %i.ar, %i.bf
   %i.bh = bitcast <16 x i8> %i.bg to <8 x i16>
   %i.bi = tail call <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16> %i.bh, <8 x i16> poison)
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.bj = bitcast <16 x i8> %i.bi to <4 x i32>
   %i.bk = extractelement <4 x i32> %i.bj, i64 0
-  %.0.extract.trunc.i77 = trunc i32 %i.bk to i24
-  store i24 %.0.extract.trunc.i77, ptr %.0.lcssa101, align 1
+  store i32 %i.bk, ptr %3, align 4, !tbaa !11
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.0.lcssa101, ptr noundef nonnull align 4 dereferenceable(3) %3, i64 3, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %._crit_edge
@@ -415,28 +443,32 @@ bb.a:
   %i.ai = getelementptr inbounds nuw i8, ptr %.03940, i64 4
   %i.aj = add i64 %.03742, -4                     ; 2 uses
   %i.ak = icmp ugt i64 %i.aj, 4
-  br i1 %i.ak, label %.lr.ph, label %._crit_edge, !llvm.loop !17
+  br i1 %i.ak, label %.lr.ph, label %._crit_edge, !llvm.loop !18
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   ret void
 }
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
-declare <16 x i8> @llvm.x86.sse2.pavg.b(<16 x i8>, <16 x i8>) #1
+declare <16 x i8> @llvm.x86.sse2.pavg.b(<16 x i8>, <16 x i8>) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x i16> @llvm.smin.v8i16(<8 x i16>, <8 x i16>) #2
+declare <8 x i16> @llvm.smin.v8i16(<8 x i16>, <8 x i16>) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
-declare <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16>, <8 x i16>) #1
+declare <16 x i8> @llvm.x86.sse2.packuswb.128(<8 x i16>, <8 x i16>) #2
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x i16> @llvm.abs.v8i16(<8 x i16>, i1 immarg) #3
+declare <8 x i16> @llvm.abs.v8i16(<8 x i16>, i1 immarg) #4
 
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { nocallback nofree nosync nounwind willreturn memory(none) }
-attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #3 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #2 = { nocallback nofree nosync nounwind willreturn memory(none) }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
@@ -453,11 +485,12 @@ attributes #3 = { nocallback nofree nosync nounwind speculatable willreturn memo
 !8 = !{!9, !10, i64 8}
 !9 = !{!"png_row_info_struct", !5, i64 0, !10, i64 8, !6, i64 16, !6, i64 17, !6, i64 18, !6, i64 19}
 !10 = !{!"long", !6, i64 0}
-!11 = distinct !{!11, !12}
-!12 = !{!"llvm.loop.mustprogress"}
-!13 = distinct !{!13, !12}
-!14 = distinct !{!14, !12}
-!15 = distinct !{!15, !12}
-!16 = distinct !{!16, !12}
-!17 = distinct !{!17, !12}
+!11 = !{!5, !5, i64 0}
+!12 = distinct !{!12, !13}
+!13 = !{!"llvm.loop.mustprogress"}
+!14 = distinct !{!14, !13}
+!15 = distinct !{!15, !13}
+!16 = distinct !{!16, !13}
+!17 = distinct !{!17, !13}
+!18 = distinct !{!18, !13}
 end_hunk_0

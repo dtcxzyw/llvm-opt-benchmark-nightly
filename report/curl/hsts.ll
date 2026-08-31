@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %hsts_debugtime.exit
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.l
   %.04283.us = phi i64 [ %.3.ph.us, %bb.l ], [ 0, %.lr.ph ] ; 5 uses
   %.04482.us = phi ptr [ %i.p, %bb.l ], [ %i.n, %.lr.ph ] ; 2 uses
-  %.04581.us = phi ptr [ %.348.ph.us, %bb.l ], [ null, %.lr.ph ] ; 4 uses
+  %.sroa.024.076.us = phi i64 [ %.sroa.024.3.ph.us, %bb.l ], [ 0, %.lr.ph ] ; 4 uses
   %i.o = call ptr @Curl_node_elem(ptr noundef nonnull %.04482.us) #9 ; 7 uses
   %i.p = call ptr @Curl_node_next(ptr noundef nonnull %.04482.us) #9 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 32
@@ -239,12 +239,13 @@ bb.i:                                             ; preds = %bb.h
   %.not60.us = icmp ne i32 %i.ad, 0
   %i.ae = icmp ugt i64 %i.u, %.04283.us
   %or.cond63.us = select i1 %.not60.us, i1 %i.ae, i1 false ; 2 uses
-  %spec.select64.us = select i1 %or.cond63.us, ptr %i.o, ptr %.04581.us
+  %4 = ptrtoint ptr %i.o to i64
+  %spec.select59.us = select i1 %or.cond63.us, i64 %4, i64 %.sroa.024.076.us
   %spec.select65.us = select i1 %or.cond63.us, i64 %i.u, i64 %.04283.us
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
-  %.247.us = phi ptr [ %.04581.us, %bb.g ], [ %.04581.us, %bb.h ], [ %spec.select64.us, %bb.i ] ; 2 uses
+  %.sroa.024.2.us = phi i64 [ %.sroa.024.076.us, %bb.g ], [ %.sroa.024.076.us, %bb.h ], [ %spec.select59.us, %bb.i ] ; 2 uses
   %.2.us = phi i64 [ %.04283.us, %bb.g ], [ %.04283.us, %bb.h ], [ %spec.select65.us, %bb.i ] ; 2 uses
   %i.af = icmp eq i64 %spec.select, %i.u
   br i1 %i.af, label %bb.k, label %bb.l
@@ -255,10 +256,10 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not61.us, label %bb.l, label %.thread75
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.f
-  %.348.ph.us = phi ptr [ %.04581.us, %bb.f ], [ %.247.us, %bb.k ], [ %.247.us, %bb.j ] ; 2 uses
+  %.sroa.024.3.ph.us = phi i64 [ %.sroa.024.076.us, %bb.f ], [ %.sroa.024.2.us, %bb.k ], [ %.sroa.024.2.us, %bb.j ] ; 2 uses
   %.3.ph.us = phi i64 [ %.04283.us, %bb.f ], [ %.2.us, %bb.k ], [ %.2.us, %bb.j ]
   %.not57.us = icmp eq ptr %i.p, null
-  br i1 %.not57.us, label %.thread75, label %.lr.ph.split.us, !llvm.loop !29
+  br i1 %.not57.us, label %.loopexit.loopexit, label %.lr.ph.split.us, !llvm.loop !29
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.p
   %.04482 = phi ptr [ %i.ai, %bb.p ], [ %i.n, %.lr.ph ] ; 2 uses
@@ -290,8 +291,12 @@ bb.p:                                             ; preds = %bb.n, %bb.o, %bb.m
   %.not57 = icmp eq ptr %i.ai, null
   br i1 %.not57, label %.thread75, label %.lr.ph.split, !llvm.loop !29
 
-.thread75:                                        ; preds = %bb.p, %bb.o, %bb.l, %bb.k, %bb.e, %hsts_debugtime.exit, %bb.a
-  %.352 = phi ptr [ null, %bb.a ], [ null, %hsts_debugtime.exit ], [ %.348.ph.us, %bb.l ], [ null, %bb.e ], [ %i.o, %bb.k ], [ null, %bb.p ], [ %i.ah, %bb.o ]
+.loopexit.loopexit:                               ; preds = %bb.l
+  %5 = inttoptr i64 %.sroa.024.3.ph.us to ptr
+  br label %.thread75
+
+.thread75:                                        ; preds = %bb.o, %bb.p, %bb.k, %bb.a, %bb.e, %.loopexit.loopexit, %hsts_debugtime.exit
+  %.352 = phi ptr [ %5, %.loopexit.loopexit ], [ null, %hsts_debugtime.exit ], [ %i.o, %bb.k ], [ null, %bb.a ], [ null, %bb.e ], [ null, %bb.p ], [ %i.ah, %bb.o ]
   ret ptr %.352
 }
 

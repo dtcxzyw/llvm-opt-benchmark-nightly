@@ -204,7 +204,6 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.br = select <4 x i1> %i.bp, <4 x float> %i.bq, <4 x float> %predphi86
   %i.bs = fmul <4 x float> %i.br, splat (float f0x3E2AAAAB)
   %i.bt = and <4 x i1> %i.ax, %i.az
-  %4 = select <4 x i1> %i.bt, <4 x float> %i.ba, <4 x float> zeroinitializer
   %predphi87 = select <4 x i1> %i.ax, <4 x float> %i.bs, <4 x float> zeroinitializer
   %i.bu = fcmp olt <4 x float> %i.as, zeroinitializer
   %i.bv = fadd <4 x float> %i.aw, %i.as
@@ -212,7 +211,6 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bx = fneg <4 x float> %i.as                  ; 2 uses
   %i.by = fcmp olt <4 x float> %i.aw, %i.bx
   %i.bz = fdiv <4 x float> %i.ay, %i.bx
-  %5 = select <4 x i1> %i.by, <4 x float> %i.bz, <4 x float> %4
   %i.ca = getelementptr inbounds nuw i8, ptr %next.gep82.a, i64 12
   %i.cb = getelementptr i8, ptr %i.g, i64 28
   %i.cc = getelementptr i8, ptr %i.h, i64 44
@@ -225,6 +223,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.cj = insertelement <4 x float> %i.ci, float %i.cf, i64 1
   %i.ck = insertelement <4 x float> %i.cj, float %i.cg, i64 2
   %i.cl = insertelement <4 x float> %i.ck, float %i.ch, i64 3
+  %4 = select <4 x i1> %i.bt, <4 x float> %i.ba, <4 x float> zeroinitializer
+  %5 = select <4 x i1> %i.by, <4 x float> %i.bz, <4 x float> %4
   %i.cm = shufflevector <4 x float> %predphi87, <4 x float> %5, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %i.cn = shufflevector <4 x float> %i.bw, <4 x float> %i.cl, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
   %interleaved.vec = shufflevector <8 x float> %i.cm, <8 x float> %i.cn, <16 x i32> <i32 0, i32 4, i32 8, i32 12, i32 1, i32 5, i32 9, i32 13, i32 2, i32 6, i32 10, i32 14, i32 3, i32 7, i32 11, i32 15>
@@ -270,7 +270,8 @@ middle.block:                                     ; preds = %vector.body
 bb.b:                                             ; preds = %.lr.ph
   %i.da = fcmp une float %.sroa.speculated, 0.000000e+00
   %i.db = fdiv float %i.cz, %.sroa.speculated
-  %.041 = select i1 %i.da, float %i.db, float 0.000000e+00
+  %6 = bitcast float %i.db to i32
+  %.sroa.0.0 = select i1 %i.da, i32 %6, i32 0
   %i.dc = fcmp oeq float %i.cp, %.sroa.speculated
   br i1 %i.dc, label %bb.c, label %bb.d
 
@@ -304,7 +305,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f, %bb.c
   br label %.lr.ph._crit_edge
 
 .lr.ph._crit_edge:                                ; preds = %.lr.ph, %bb.g
-  %.142 = phi float [ %.041, %bb.g ], [ 0.000000e+00, %.lr.ph ]
+  %.sroa.0.1 = phi i32 [ %.sroa.0.0, %bb.g ], [ 0, %.lr.ph ]
   %.2 = phi float [ %i.do, %bb.g ], [ 0.000000e+00, %.lr.ph ]
   %i.dp = fcmp olt float %.sroa.speculated62, 0.000000e+00
   %i.dq = fadd float %.sroa.speculated, %.sroa.speculated62
@@ -312,10 +313,11 @@ bb.g:                                             ; preds = %bb.e, %bb.f, %bb.c
   %i.dr = fneg float %.sroa.speculated62          ; 2 uses
   %i.ds = fcmp olt float %.sroa.speculated, %i.dr
   %i.dt = fdiv float %i.cz, %i.dr
-  %.243 = select i1 %i.ds, float %i.dt, float %.142
+  %7 = bitcast float %i.dt to i32
+  %.sroa.0.2 = select i1 %i.ds, i32 %7, i32 %.sroa.0.1
   store float %.2, ptr %.04675, align 4, !tbaa !10
   %i.du = getelementptr inbounds nuw i8, ptr %.04675, i64 4
-  store float %.243, ptr %i.du, align 4, !tbaa !10
+  store i32 %.sroa.0.2, ptr %i.du, align 4, !tbaa !10
   %i.dv = getelementptr inbounds nuw i8, ptr %.04675, i64 8
   store float %.044, ptr %i.dv, align 4, !tbaa !10
   %i.dw = getelementptr inbounds nuw i8, ptr %.04774, i64 12

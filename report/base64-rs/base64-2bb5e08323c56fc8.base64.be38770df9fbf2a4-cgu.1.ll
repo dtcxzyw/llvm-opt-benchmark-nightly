@@ -203,13 +203,15 @@ bb.b:                                             ; preds = %bb.a
   %i.q = load i8, ptr %i.p, align 1, !noundef !4
   store i8 %i.q, ptr %i.k, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
-  store ptr %i.k, ptr %i.j, align 8
+  %2 = ptrtoint ptr %i.k to i64
+  %3 = ptrtoint ptr %i.l to i64
+  store i64 %2, ptr %i.j, align 8
   %.sroa.49.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  store ptr @_RNvXNtNtNtCskKLDkoKarTP_4core3fmt3num3imphNtB6_7Display3fmt, ptr %.sroa.49.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXNtNtNtCskKLDkoKarTP_4core3fmt3num3imphNtB6_7Display3fmt to i64), ptr %.sroa.49.0..sroa_idx, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  store ptr %i.l, ptr %i.r, align 8
+  store i64 %3, ptr %i.r, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 24
-  store ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.413.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt to i64), ptr %.sroa.413.0..sroa_idx, align 8
   %i.s = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.u = load ptr, ptr %i.t, align 8, !nonnull !4, !align !91, !noundef !4
@@ -225,9 +227,10 @@ bb.c:                                             ; preds = %bb.a
   %i.x = load i64, ptr %i.w, align 8, !noundef !4
   store i64 %i.x, ptr %i.i, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
-  store ptr %i.i, ptr %i.h, align 8
+  %4 = ptrtoint ptr %i.i to i64
+  store i64 %4, ptr %i.h, align 8
   %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  store ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.45.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt to i64), ptr %.sroa.45.0..sroa_idx, align 8
   %i.y = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !nonnull !4, !align !91, !noundef !4
@@ -336,21 +339,25 @@ bb.k:                                             ; preds = %bb.g, %bb.f, %bb.j
   %storemerge = phi i32 [ %.sroa.4.0.i.ph, %bb.j ], [ 65533, %bb.f ], [ 65533, %bb.g ]
   store i32 %storemerge, ptr %i.d, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.f, ptr %i.a, align 8
+  %5 = ptrtoint ptr %i.f to i64
+  %6 = ptrtoint ptr %i.d to i64
+  %7 = ptrtoint ptr %i.g to i64
+  %8 = ptrtoint ptr %i.e to i64
+  store i64 %5, ptr %i.a, align 8
   %.sroa.443.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXse_NtNtCskKLDkoKarTP_4core3fmt3numhNtB7_8LowerHex3fmt, ptr %.sroa.443.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXse_NtNtCskKLDkoKarTP_4core3fmt3numhNtB7_8LowerHex3fmt to i64), ptr %.sroa.443.0..sroa_idx, align 8
   %i.bx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr %i.d, ptr %i.bx, align 8
+  store i64 %6, ptr %i.bx, align 8
   %.sroa.447.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store ptr @_RNvXsk_NtCskKLDkoKarTP_4core3fmtcNtB5_7Display3fmt, ptr %.sroa.447.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXsk_NtCskKLDkoKarTP_4core3fmtcNtB5_7Display3fmt to i64), ptr %.sroa.447.0..sroa_idx, align 8
   %i.by = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store ptr %i.g, ptr %i.by, align 8
+  store i64 %7, ptr %i.by, align 8
   %.sroa.451.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  store ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.451.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt to i64), ptr %.sroa.451.0..sroa_idx, align 8
   %i.bz = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  store ptr %i.e, ptr %i.bz, align 8
+  store i64 %8, ptr %i.bz, align 8
   %.sroa.455.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  store ptr @_RNvXsa_NtNtCskKLDkoKarTP_4core3fmt3numhNtB7_6Binary3fmt, ptr %.sroa.455.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXsa_NtNtCskKLDkoKarTP_4core3fmt3numhNtB7_6Binary3fmt to i64), ptr %.sroa.455.0..sroa_idx, align 8
   %i.ca = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.cc = load ptr, ptr %i.cb, align 8, !nonnull !4, !align !91, !noundef !4
@@ -386,9 +393,10 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %0, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.b, ptr %i.a, align 8
+  %2 = ptrtoint ptr %i.b to i64
+  store i64 %2, ptr %i.a, align 8
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtRNtNtCsgkxsgNF9KUO_6base646decode11DecodeErrorNtB6_7Display3fmtBA_, ptr %.sroa.43.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtRNtNtCsgkxsgNF9KUO_6base646decode11DecodeErrorNtB6_7Display3fmtBA_ to i64), ptr %.sroa.43.0..sroa_idx, align 8
   %i.e = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !nonnull !4, !align !91, !noundef !4
@@ -583,9 +591,10 @@ bb.a:
   %i.d = zext i8 %i.c to i32
   store i32 %i.d, ptr %i.b, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.b, ptr %i.a, align 8
+  %2 = ptrtoint ptr %i.b to i64
+  store i64 %2, ptr %i.a, align 8
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXsk_NtCskKLDkoKarTP_4core3fmtcNtB5_7Display3fmt, ptr %.sroa.43.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXsk_NtCskKLDkoKarTP_4core3fmtcNtB5_7Display3fmt to i64), ptr %.sroa.43.0..sroa_idx, align 8
   %i.e = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !nonnull !4, !align !91, !noundef !4
@@ -856,9 +865,10 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store ptr %i.h, ptr %i.f, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  store ptr %i.f, ptr %i.e, align 8
+  %2 = ptrtoint ptr %i.f to i64
+  store i64 %2, ptr %i.e, align 8
   %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  store ptr @_RNvXs1o_NtCskKLDkoKarTP_4core3fmtRhNtB6_8LowerHex3fmtCsgkxsgNF9KUO_6base64, ptr %.sroa.411.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs1o_NtCskKLDkoKarTP_4core3fmtRhNtB6_8LowerHex3fmtCsgkxsgNF9KUO_6base64 to i64), ptr %.sroa.411.0..sroa_idx, align 8
   %i.i = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !nonnull !4, !align !91, !noundef !4
@@ -871,9 +881,10 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store ptr %i.h, ptr %i.d, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  store ptr %i.d, ptr %i.c, align 8
+  %3 = ptrtoint ptr %i.d to i64
+  store i64 %3, ptr %i.c, align 8
   %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store ptr @_RNvXs1o_NtCskKLDkoKarTP_4core3fmtRhNtB6_8LowerHex3fmtCsgkxsgNF9KUO_6base64, ptr %.sroa.47.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs1o_NtCskKLDkoKarTP_4core3fmtRhNtB6_8LowerHex3fmtCsgkxsgNF9KUO_6base64 to i64), ptr %.sroa.47.0..sroa_idx, align 8
   %i.m = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !nonnull !4, !align !91, !noundef !4
@@ -886,9 +897,10 @@ bb.d:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.h, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.b, ptr %i.a, align 8
+  %4 = ptrtoint ptr %i.b to i64
+  store i64 %4, ptr %i.a, align 8
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXs1o_NtCskKLDkoKarTP_4core3fmtRhNtB6_8LowerHex3fmtCsgkxsgNF9KUO_6base64, ptr %.sroa.43.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs1o_NtCskKLDkoKarTP_4core3fmtRhNtB6_8LowerHex3fmtCsgkxsgNF9KUO_6base64 to i64), ptr %.sroa.43.0..sroa_idx, align 8
   %i.q = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.s = load ptr, ptr %i.r, align 8, !nonnull !4, !align !91, !noundef !4
@@ -961,9 +973,10 @@ bb.a:
   %i.b = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %0, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.b, ptr %i.a, align 8
+  %2 = ptrtoint ptr %i.b to i64
+  store i64 %2, ptr %i.a, align 8
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtRNtNtCsgkxsgNF9KUO_6base646decode11DecodeErrorNtB6_7Display3fmtBA_, ptr %.sroa.43.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs1i_NtCskKLDkoKarTP_4core3fmtRNtNtCsgkxsgNF9KUO_6base646decode11DecodeErrorNtB6_7Display3fmtBA_ to i64), ptr %.sroa.43.0..sroa_idx, align 8
   %i.c = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !nonnull !4, !align !91, !noundef !4
@@ -1005,13 +1018,15 @@ _RNvMNtCsgkxsgNF9KUO_6base648alphabetNtB2_8Alphabet6as_str.exit: ; preds = %bb.a
   store i64 %i.k, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  store ptr %i.d, ptr %i.c, align 8
+  %2 = ptrtoint ptr %i.d to i64
+  %3 = ptrtoint ptr %i.m to i64
+  store i64 %2, ptr %i.c, align 8
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store ptr @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtReNtB6_5Debug3fmtCsgkxsgNF9KUO_6base64, ptr %.sroa.43.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs1g_NtCskKLDkoKarTP_4core3fmtReNtB6_5Debug3fmtCsgkxsgNF9KUO_6base64 to i64), ptr %.sroa.43.0..sroa_idx, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  store ptr %i.m, ptr %i.n, align 8
+  store i64 %3, ptr %i.n, align 8
   %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  store ptr @_RNvXs2_NtCsgkxsgNF9KUO_6base648alphabetNtB5_6SymbolNtNtCskKLDkoKarTP_4core3fmt5Debug3fmt, ptr %.sroa.47.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs2_NtCsgkxsgNF9KUO_6base648alphabetNtB5_6SymbolNtNtCskKLDkoKarTP_4core3fmt5Debug3fmt to i64), ptr %.sroa.47.0..sroa_idx, align 8
   %i.o = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !nonnull !4, !align !91, !noundef !4

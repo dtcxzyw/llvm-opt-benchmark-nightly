@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.lr.ph, %bb.i
   %.041 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.i ]
   %.03240 = phi i32 [ 0, %.lr.ph ], [ %i.ad, %bb.i ] ; 4 uses
-  %.03439 = phi ptr [ null, %.lr.ph ], [ %.135, %bb.i ] ; 2 uses
+  %.sroa.09.036 = phi i64 [ 0, %.lr.ph ], [ %.sroa.09.1, %bb.i ] ; 2 uses
   %.not38 = icmp eq i32 %.041, 0
   %i.v = sext i32 %.03240 to i64
   %i.w = getelementptr inbounds [8 x i8], ptr %i.u, i64 %i.v ; 2 uses
@@ -213,7 +213,9 @@ bb.e:                                             ; preds = %.lr.ph, %bb.i
   br i1 %.not38, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  store ptr %.03439, ptr %i.w, align 8, !tbaa !29
+  %2 = ptrtoint ptr %i.x to i64
+  %3 = inttoptr i64 %.sroa.09.036 to ptr
+  store ptr %3, ptr %i.w, align 8, !tbaa !29
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.e
@@ -225,11 +227,12 @@ bb.h:                                             ; preds = %bb.g
   %i.aa = sext i32 %i.z to i64
   %i.ab = getelementptr inbounds [8 x i8], ptr %i.u, i64 %i.aa ; 2 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !29
+  %4 = ptrtoint ptr %i.ac to i64
   store ptr %i.i, ptr %i.ab, align 8, !tbaa !29
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.f, %bb.h, %bb.g
-  %.135 = phi ptr [ %i.x, %bb.f ], [ %i.ac, %bb.h ], [ %.03439, %bb.g ]
+  %.sroa.09.1 = phi i64 [ %2, %bb.f ], [ %4, %bb.h ], [ %.sroa.09.036, %bb.g ]
   %.133 = phi i32 [ %.03240, %bb.f ], [ %i.z, %bb.h ], [ %.03240, %bb.g ]
   %.1 = phi i32 [ 1, %bb.f ], [ 1, %bb.h ], [ 0, %bb.g ]
   %i.ad = add nsw i32 %.133, 1                    ; 2 uses

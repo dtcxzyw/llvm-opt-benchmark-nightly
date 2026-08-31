@@ -202,11 +202,12 @@ bb.a:
   %i.c = alloca [72 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i64 -9223372036854775790, ptr %i.c, align 8
+  %2 = ptrtoint ptr %i.c to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.a, ptr noundef nonnull align 8 dereferenceable(64) %1, i64 64, i1 false)
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  store ptr %i.c, ptr %.sroa.2.0..sroa_idx, align 8
+  store i64 %2, ptr %.sroa.2.0..sroa_idx, align 8
   invoke void @_RINvXs1e_NtNtNtCs2pqxYH9ZEk8_3std11collections4hash3mapINtB7_7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store3gcp7builder15GoogleConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12FromIteratorTB15_B26_EE9from_iterINtNtB2Q_8adapters12GenericShuntINtNtB47_3map3MapINtB7_8IntoIterB15_B26_ENCINvMs_NtCs62u4JVtZyFF_13deltalake_gcp6configNtB5n_15GcpConfigHelper7try_newB15_B26_BR_E0EINtNtB2S_6result6ResultNtNtB2S_7convert10InfallibleNtB1b_5ErrorEEEB5p_(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.b, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(72) %i.a)
           to label %_RNCINvXso_NtCsbvkFyIu7lgC_4core6resultINtB8_6ResultINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store3gcp7builder15GoogleConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringENtB1O_5ErrorEINtNtNtNtBa_4iter6traits7collect12FromIteratorIBB_TB1I_B2J_EB3m_EE9from_iterINtNtNtB3G_8adapters3map3MapINtBQ_8IntoIterB1I_B2J_ENCINvMs_NtCs62u4JVtZyFF_13deltalake_gcp6configNtB5L_15GcpConfigHelper7try_newB1I_B2J_BN_E0EE0B5N_.exit unwind label %bb.b
 
@@ -609,9 +610,10 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store ptr %i.e, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.b, ptr %i.a, align 8
+  %2 = ptrtoint ptr %i.b to i64
+  store i64 %2, ptr %i.a, align 8
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXs1i_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs6Po7BT7Nknu_5alloc6string6StringNtB6_7Display3fmtCs62u4JVtZyFF_13deltalake_gcp, ptr %.sroa.43.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs1i_NtCsbvkFyIu7lgC_4core3fmtRNtNtCs6Po7BT7Nknu_5alloc6string6StringNtB6_7Display3fmtCs62u4JVtZyFF_13deltalake_gcp to i64), ptr %.sroa.43.0..sroa_idx, align 8
   %i.f = load ptr, ptr %1, align 8, !nonnull !3, !noundef !3
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !3, !align !10, !noundef !3
@@ -1014,6 +1016,7 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.ao = extractvalue { i64, ptr } %i.ak, 1
+  %2 = ptrtoint ptr %i.ao to i64
   %.sroa.057.0.copyload.i = load i64, ptr %i.i, align 8, !noalias !153
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.334.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16
@@ -1024,7 +1027,7 @@ bb.l:                                             ; preds = %bb.k
   %.sroa.233.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i64 %.sroa.057.0.copyload.i, ptr %.sroa.233.0..sroa_idx.i, align 8, !noalias !153
   %.sroa.334.sroa.2.0..sroa.334.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  store ptr %i.ao, ptr %.sroa.334.sroa.2.0..sroa.334.0..sroa_idx.sroa_idx.i, align 8, !noalias !153
+  store i64 %2, ptr %.sroa.334.sroa.2.0..sroa.334.0..sroa_idx.sroa_idx.i, align 8, !noalias !153
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !153
   invoke void @_RNvXNtCsjyY8HP3IvQ6_12object_store5localNtB4_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtB2_5ErrorE4from(ptr noalias noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.c, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(88) %i.d)
           to label %bb.q unwind label %bb.j, !noalias !143
@@ -1115,12 +1118,13 @@ bb.w:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !153
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.3.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.8..sroa_idx.i, i64 16, i1 false), !noalias !153
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !148
+  %3 = ptrtoint ptr %i.r to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !148
   store i64 -9223372036854775795, ptr %i.g, align 8, !noalias !153
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store i64 %.sroa.4.8.copyload.i, ptr %.sroa.2.0..sroa_idx.i, align 8, !noalias !153
   %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.g, i64 32
-  store ptr %i.r, ptr %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx.sroa_idx.i, align 8, !noalias !153
+  store i64 %3, ptr %.sroa.3.sroa.2.0..sroa.3.0..sroa_idx.sroa_idx.i, align 8, !noalias !153
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !153
   invoke void @_RNvXNtCsjyY8HP3IvQ6_12object_store5localNtB4_5ErrorINtNtCsbvkFyIu7lgC_4core7convert4FromNtB2_5ErrorE4from(ptr noalias noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.f, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(88) %i.g)
           to label %bb.x unwind label %.thread90.i, !noalias !143

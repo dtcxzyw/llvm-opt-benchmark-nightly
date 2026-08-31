@@ -14,13 +14,15 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define hidden void @nghttp2_pq_init(ptr nofree noundef writeonly captures(none) initializes((0, 40)) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
-  store ptr null, ptr %0, align 8, !tbaa !8
+  %3 = ptrtoint ptr %1 to i64
+  %4 = ptrtoint ptr %2 to i64
+  store i64 0, ptr %0, align 8, !tbaa !8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %2, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !11
+  store i64 %4, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !11
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.3.0..sroa_idx, i8 0, i64 16, i1 false)
-  store ptr %1, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !11
+  store i64 %3, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !11
   ret void
 }
 

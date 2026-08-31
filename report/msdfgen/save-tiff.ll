@@ -10,7 +10,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define noundef zeroext i1 @_ZN7msdfgen8saveTiffERKNS_18BitmapConstSectionIfLi1EEEPKc(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.04.0.copyload = load ptr, ptr %0, align 8, !tbaa !8
+  %.sroa.04.0.copyload = load i64, ptr %0, align 8, !tbaa !8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.2.0.copyload = load i32, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !11 ; 2 uses
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -24,12 +24,13 @@ bb.a:
   br i1 %.not.i, label %_ZN7msdfgen13saveTiffFloatILi1EEEbNS_18BitmapConstSectionIfXT_EEEPKc.exit, label %_ZN7msdfgen18BitmapConstSectionIfLi1EE8reorientENS_16YAxisOrientationE.exit.i
 
 _ZN7msdfgen18BitmapConstSectionIfLi1EE8reorientENS_16YAxisOrientationE.exit.i: ; preds = %bb.a
+  %2 = inttoptr i64 %.sroa.04.0.copyload to ptr
   %.not.i.i = icmp eq i32 %.sroa.5.0.copyload, 1  ; 2 uses
   %i.b = add nsw i32 %.sroa.3.0.copyload, -1
   %i.c = mul nsw i32 %i.b, %.sroa.4.0.copyload
   %narrow = select i1 %.not.i.i, i32 0, i32 %i.c
   %.sroa.0.0.idx = sext i32 %narrow to i64
-  %.sroa.0.0 = getelementptr inbounds [4 x i8], ptr %.sroa.04.0.copyload, i64 %.sroa.0.0.idx
+  %.sroa.0.0 = getelementptr inbounds [4 x i8], ptr %2, i64 %.sroa.0.0.idx
   tail call fastcc void @_ZN7msdfgenL15writeTiffHeaderEP8_IO_FILEiii(ptr noundef %i.a, i32 noundef %.sroa.2.0.copyload, i32 noundef %.sroa.3.0.copyload, i32 noundef 1)
   %i.d = icmp sgt i32 %.sroa.3.0.copyload, 0
   br i1 %i.d, label %.lr.ph.i, label %._crit_edge.i
@@ -64,7 +65,7 @@ _ZN7msdfgen13saveTiffFloatILi1EEEbNS_18BitmapConstSectionIfXT_EEEPKc.exit: ; pre
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define noundef zeroext i1 @_ZN7msdfgen8saveTiffERKNS_18BitmapConstSectionIfLi3EEEPKc(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.04.0.copyload = load ptr, ptr %0, align 8, !tbaa !8
+  %.sroa.04.0.copyload = load i64, ptr %0, align 8, !tbaa !8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.2.0.copyload = load i32, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !11 ; 2 uses
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -78,12 +79,13 @@ bb.a:
   br i1 %.not.i, label %_ZN7msdfgen13saveTiffFloatILi3EEEbNS_18BitmapConstSectionIfXT_EEEPKc.exit, label %_ZN7msdfgen18BitmapConstSectionIfLi3EE8reorientENS_16YAxisOrientationE.exit.i
 
 _ZN7msdfgen18BitmapConstSectionIfLi3EE8reorientENS_16YAxisOrientationE.exit.i: ; preds = %bb.a
+  %2 = inttoptr i64 %.sroa.04.0.copyload to ptr
   %.not.i.i = icmp eq i32 %.sroa.5.0.copyload, 1  ; 2 uses
   %i.b = add nsw i32 %.sroa.3.0.copyload, -1
   %i.c = mul nsw i32 %i.b, %.sroa.4.0.copyload
   %narrow = select i1 %.not.i.i, i32 0, i32 %i.c
   %.sroa.0.0.idx = sext i32 %narrow to i64
-  %.sroa.0.0 = getelementptr inbounds [4 x i8], ptr %.sroa.04.0.copyload, i64 %.sroa.0.0.idx
+  %.sroa.0.0 = getelementptr inbounds [4 x i8], ptr %2, i64 %.sroa.0.0.idx
   tail call fastcc void @_ZN7msdfgenL15writeTiffHeaderEP8_IO_FILEiii(ptr noundef %i.a, i32 noundef %.sroa.2.0.copyload, i32 noundef %.sroa.3.0.copyload, i32 noundef 3)
   %i.d = icmp sgt i32 %.sroa.3.0.copyload, 0
   br i1 %i.d, label %.lr.ph.i, label %._crit_edge.i
@@ -119,7 +121,7 @@ _ZN7msdfgen13saveTiffFloatILi3EEEbNS_18BitmapConstSectionIfXT_EEEPKc.exit: ; pre
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define noundef zeroext i1 @_ZN7msdfgen8saveTiffERKNS_18BitmapConstSectionIfLi4EEEPKc(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.04.0.copyload = load ptr, ptr %0, align 8, !tbaa !8
+  %.sroa.04.0.copyload = load i64, ptr %0, align 8, !tbaa !8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.2.0.copyload = load i32, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !11 ; 2 uses
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -133,12 +135,13 @@ bb.a:
   br i1 %.not.i, label %_ZN7msdfgen13saveTiffFloatILi4EEEbNS_18BitmapConstSectionIfXT_EEEPKc.exit, label %_ZN7msdfgen18BitmapConstSectionIfLi4EE8reorientENS_16YAxisOrientationE.exit.i
 
 _ZN7msdfgen18BitmapConstSectionIfLi4EE8reorientENS_16YAxisOrientationE.exit.i: ; preds = %bb.a
+  %2 = inttoptr i64 %.sroa.04.0.copyload to ptr
   %.not.i.i = icmp eq i32 %.sroa.5.0.copyload, 1  ; 2 uses
   %i.b = add nsw i32 %.sroa.3.0.copyload, -1
   %i.c = mul nsw i32 %i.b, %.sroa.4.0.copyload
   %narrow = select i1 %.not.i.i, i32 0, i32 %i.c
   %.sroa.0.0.idx = sext i32 %narrow to i64
-  %.sroa.0.0 = getelementptr inbounds [4 x i8], ptr %.sroa.04.0.copyload, i64 %.sroa.0.0.idx
+  %.sroa.0.0 = getelementptr inbounds [4 x i8], ptr %2, i64 %.sroa.0.0.idx
   tail call fastcc void @_ZN7msdfgenL15writeTiffHeaderEP8_IO_FILEiii(ptr noundef %i.a, i32 noundef %.sroa.2.0.copyload, i32 noundef %.sroa.3.0.copyload, i32 noundef 4)
   %i.d = icmp sgt i32 %.sroa.3.0.copyload, 0
   br i1 %i.d, label %.lr.ph.i, label %._crit_edge.i

@@ -202,10 +202,10 @@ bb.aj:                                            ; preds = %bb.ai
   %i.di = fcmp uge double %i.db, -1.000000e+02
   %i.dj = call double @llvm.fabs.f64(double %i.cy)
   %i.dk = fcmp ugt double %i.dj, 9.000000e+01     ; 2 uses
-  %or.cond524 = or i1 %i.dk, %i.di
+  %or.cond524 = or i1 %i.di, %i.dk
   %i.dl = call double @llvm.fabs.f64(double %i.de)
   %i.dm = fcmp ugt double %i.dl, 9.000000e+01     ; 2 uses
-  %or.cond526 = or i1 %or.cond524, %i.dm
+  %or.cond526 = or i1 %i.dm, %or.cond524
   br i1 %or.cond526, label %_ZNSolsEPFRSoS_E.exit547, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
@@ -284,7 +284,7 @@ bb.an:                                            ; preds = %bb.ai, %bb.ah, %bb.
 
 _ZNSolsEPFRSoS_E.exit547:                         ; preds = %.noexc741, %bb.aj
   %i.eg = fcmp ule double %i.dh, 1.000000e+02
-  %or.cond528 = or i1 %i.dk, %i.eg
+  %or.cond528 = or i1 %i.eg, %i.dk
   %or.cond530 = or i1 %i.dm, %or.cond528
   br i1 %or.cond530, label %_ZNSolsEPFRSoS_E.exit553, label %bb.ao
 
@@ -529,8 +529,8 @@ _ZN5osgeo4proj4util8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #27
   br label %.body
 
-.body:                                            ; preds = %.loopexit831, %.loopexit.split-lp832, %_ZN5osgeo4proj4util8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit560, %bb.an
-  %.pn509.pn = phi { ptr, i32 } [ %i.ef, %bb.an ], [ %i.gx, %_ZN5osgeo4proj4util8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit560 ], [ %lpad.loopexit833, %.loopexit831 ], [ %lpad.loopexit.split-lp834, %.loopexit.split-lp832 ] ; 3 uses
+.body:                                            ; preds = %_ZN5osgeo4proj4util8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit560, %.loopexit.split-lp832, %.loopexit831, %bb.an
+  %.pn509.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp834, %.loopexit.split-lp832 ], [ %i.ef, %bb.an ], [ %i.gx, %_ZN5osgeo4proj4util8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit560 ], [ %lpad.loopexit833, %.loopexit831 ] ; 3 uses
   %.3327 = extractvalue { ptr, i32 } %.pn509.pn, 1
   %i.hc = call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #27
   %i.hd = icmp eq i32 %.3327, %i.hc
@@ -933,7 +933,8 @@ bb.k:                                             ; preds = %.loopexit
   %i.aj = call double @strtod(ptr noundef %i.ai, ptr noundef nonnull %i.b) #27
   %i.ak = load ptr, ptr %i.b, align 8, !tbaa !17
   %i.al = icmp eq ptr %i.ak, %i.ai
-  %spec.store.select = select i1 %i.al, double +inf, double %i.aj
+  %3 = bitcast double %i.aj to i64
+  %4 = select i1 %i.al, i64 9218868437227405312, i64 %3
   store ptr %i.ai, ptr %i.b, align 8, !tbaa !17
   %.72 = select i1 %.b52, double %i.ac, double %i.af ; 2 uses
   %i.am = fcmp oeq double %.72, +inf
@@ -995,7 +996,7 @@ bb.s:                                             ; preds = %bb.p, %bb.q, %bb.r
   %i.bl = load ptr, ptr @_ZL14transformation, align 8, !tbaa !124
   store <2 x double> %i.bk, ptr %2, align 16
   store double %i.ah, ptr %.sroa.8.0..sroa_idx, align 16
-  store double %spec.store.select, ptr %.sroa.10.0..sroa_idx, align 8, !tbaa !16
+  store i64 %4, ptr %.sroa.10.0..sroa_idx, align 8, !tbaa !16
   call void @proj_trans(ptr dead_on_unwind nonnull writable sret(%union.PJ_COORD) align 8 %1, ptr noundef %i.bl, i32 noundef 1, ptr noundef nonnull byval(%union.PJ_COORD) align 8 %2)
   %.sroa.0.0.copyload5 = load double, ptr %1, align 8 ; 4 uses
   %.sroa.6.0.copyload7 = load double, ptr %.sroa.6.0..sroa_idx6, align 8 ; 3 uses

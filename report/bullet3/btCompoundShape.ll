@@ -205,11 +205,12 @@ bb.n:                                             ; preds = %bb.m
   %i.aw = sext i32 %i.av to i64
   %i.ax = inttoptr i64 %i.aw to ptr
   %i.ay = call noundef ptr @_ZN6btDbvt6insertERK12btDbvtAabbMmPv(ptr noundef nonnull align 8 dereferenceable(64) %i.as, ptr noundef nonnull align 4 dereferenceable(32) %5, ptr noundef %i.ax)
+  %6 = ptrtoint ptr %i.ay to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %.sroa.14.0 = phi ptr [ null, %bb.m ], [ %i.ay, %bb.n ]
+  %.sroa.14.0 = phi i64 [ 0, %bb.m ], [ %6, %bb.n ]
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 5 uses
   %i.ba = load i32, ptr %i.az, align 4, !tbaa !22 ; 7 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
@@ -294,6 +295,7 @@ _ZN20btAlignedObjectArrayI20btCompoundShapeChildE10deallocateEv.exit.i.i: ; pred
 
 _ZN20btAlignedObjectArrayI20btCompoundShapeChildE9push_backERKS0_.exit: ; preds = %bb.o, %bb.p, %_ZN20btAlignedObjectArrayI20btCompoundShapeChildE10deallocateEv.exit.i.i
   %i.ce = phi i32 [ %i.ba, %bb.o ], [ %i.ba, %bb.p ], [ %.pre4.i, %_ZN20btAlignedObjectArrayI20btCompoundShapeChildE10deallocateEv.exit.i.i ]
+  %7 = ptrtoint ptr %2 to i64
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !21
   %i.ch = sext i32 %i.ce to i64
@@ -306,13 +308,13 @@ _ZN20btAlignedObjectArrayI20btCompoundShapeChildE9push_backERKS0_.exit: ; preds 
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ci, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cl, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.48..sroa_idx, i64 16, i1 false), !tbaa.struct !32
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ci, i64 64
-  store ptr %2, ptr %i.cm, align 8
+  store i64 %7, ptr %i.cm, align 8
   %.sroa.12.64..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ci, i64 72
   store i32 %i.h, ptr %.sroa.12.64..sroa_idx, align 8
   %.sroa.13.64..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ci, i64 76
   store float %i.l, ptr %.sroa.13.64..sroa_idx, align 4
   %.sroa.14.64..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ci, i64 80
-  store ptr %.sroa.14.0, ptr %.sroa.14.64..sroa_idx, align 8
+  store i64 %.sroa.14.0, ptr %.sroa.14.64..sroa_idx, align 8
   %i.cn = load i32, ptr %i.az, align 4, !tbaa !22
   %i.co = add nsw i32 %i.cn, 1
   store i32 %i.co, ptr %i.az, align 4, !tbaa !22
@@ -612,9 +614,9 @@ bb.a:
   %1 = alloca %class.btVector3, align 4           ; 6 uses
   %2 = alloca %class.btVector3, align 4           ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
-  store <4 x float> <float f0x5D5E0B6B, float f0x5D5E0B6B, float f0x5D5E0B6B, float 0.000000e+00>, ptr %i.a, align 8
+  store <4 x i32> <i32 1566444395, i32 1566444395, i32 1566444395, i32 0>, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
-  store <4 x float> <float f0xDD5E0B6B, float f0xDD5E0B6B, float f0xDD5E0B6B, float 0.000000e+00>, ptr %i.b, align 8
+  store <4 x i32> <i32 -581039253, i32 -581039253, i32 -581039253, i32 0>, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !22
   %i.e = icmp sgt i32 %i.d, 0
@@ -1004,7 +1006,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %.sroa.15164.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 56
   store float %i.bc, ptr %.sroa.15164.0..sroa_idx, align 4
   %.sroa.21.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 60
-  store float 0.000000e+00, ptr %.sroa.21.0..sroa_idx, align 4, !tbaa !33
+  store i32 0, ptr %.sroa.21.0..sroa_idx, align 4, !tbaa !33
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   %i.be = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.bf = getelementptr inbounds nuw i8, ptr %4, i64 16

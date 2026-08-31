@@ -17,9 +17,10 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define hidden void @nghttp2_map_init(ptr nofree noundef writeonly captures(none) initializes((0, 56)) %0, i64 noundef %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
+  %3 = ptrtoint ptr %2 to i64
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
-  store ptr %2, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !8
+  store i64 %3, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %1, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !10
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -399,9 +400,9 @@ bb.a:
   br i1 %i.d, label %bb.k, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = shl nuw i64 1, %1
-  %3 = load ptr, ptr %i.a, align 8, !tbaa !12
-  %i.e = tail call ptr @nghttp2_mem_calloc(ptr noundef %3, i64 noundef %2, i64 noundef 13) #12 ; 6 uses
+  %2 = load ptr, ptr %i.a, align 8, !tbaa !12
+  %3 = shl nuw i64 1, %1
+  %i.e = tail call ptr @nghttp2_mem_calloc(ptr noundef %2, i64 noundef %3, i64 noundef 13) #12 ; 6 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %bb.k, label %bb.c
 

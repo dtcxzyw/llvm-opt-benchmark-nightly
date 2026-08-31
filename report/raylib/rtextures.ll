@@ -205,10 +205,10 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %.not.i.i35.i, label %stbi__parse_uncompressed_block.exit.thread.i, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %6 = load ptr, ptr %i.d, align 8                ; 2 uses
-  %7 = ptrtoint ptr %i.ae to i64
-  %i.er = ptrtoint ptr %6 to i64                  ; 2 uses
-  %i.es = sub i64 %7, %i.er                       ; 2 uses
+  %6 = ptrtoint ptr %i.ae to i64
+  %7 = load ptr, ptr %i.d, align 8                ; 2 uses
+  %i.er = ptrtoint ptr %7 to i64                  ; 2 uses
+  %i.es = sub i64 %6, %i.er                       ; 2 uses
   %i.et = trunc i64 %i.es to i32                  ; 2 uses
   %i.eu = xor i32 %i.et, -1
   %i.ev = icmp ugt i32 %i.ef, %i.eu
@@ -235,7 +235,7 @@ bb.ad:                                            ; preds = %.lr.ph.i.i.i
 ._crit_edge.i.i.i:                                ; preds = %bb.ad, %.preheader.i.i.i
   %.0.lcssa.i.i.i = phi i32 [ %i.ey, %.preheader.i.i.i ], [ %i.fc, %bb.ad ]
   %i.fe = zext i32 %.0.lcssa.i.i.i to i64         ; 2 uses
-  %i.ff = tail call ptr @realloc(ptr noundef %6, i64 noundef %i.fe) #54 ; 4 uses
+  %i.ff = tail call ptr @realloc(ptr noundef %7, i64 noundef %i.fe) #54 ; 4 uses
   %i.fg = icmp eq ptr %i.ff, null
   br i1 %i.fg, label %stbi__parse_uncompressed_block.exit.thread.i, label %stbi__zexpand.exit.i.i
 
@@ -638,10 +638,10 @@ bb.bt:                                            ; preds = %bb.bs
   br i1 %.not.i.i68.i, label %stbi__parse_huffman_block.exit.i, label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt
-  %8 = load ptr, ptr %i.d, align 8                ; 2 uses
-  %9 = ptrtoint ptr %.063.i.i to i64
-  %i.lz = ptrtoint ptr %8 to i64                  ; 2 uses
-  %i.ma = sub i64 %9, %i.lz                       ; 2 uses
+  %8 = ptrtoint ptr %.063.i.i to i64
+  %9 = load ptr, ptr %i.d, align 8                ; 2 uses
+  %i.lz = ptrtoint ptr %9 to i64                  ; 2 uses
+  %i.ma = sub i64 %8, %i.lz                       ; 2 uses
   %i.mb = trunc i64 %i.ma to i32                  ; 3 uses
   %i.mc = icmp eq i32 %i.mb, -1
   br i1 %i.mc, label %stbi__parse_huffman_block.exit.i, label %.preheader.i.i69.i
@@ -666,7 +666,7 @@ bb.bv:                                            ; preds = %.lr.ph.i.i70.i
 ._crit_edge.i.i72.i:                              ; preds = %bb.bv, %.preheader.i.i69.i
   %.0.lcssa.i.i73.i = phi i32 [ %i.mf, %.preheader.i.i69.i ], [ %i.mh, %bb.bv ]
   %i.mi = zext i32 %.0.lcssa.i.i73.i to i64       ; 2 uses
-  %i.mj = tail call ptr @realloc(ptr noundef %8, i64 noundef %i.mi) #54 ; 4 uses
+  %i.mj = tail call ptr @realloc(ptr noundef %9, i64 noundef %i.mi) #54 ; 4 uses
   %i.mk = icmp eq ptr %i.mj, null
   br i1 %i.mk, label %stbi__parse_huffman_block.exit.i, label %bb.bw
 
@@ -1069,7 +1069,8 @@ GenImageColor.exit:                               ; preds = %bb.a
   %i.l = mul nsw i32 %i.k, %i.j
   %i.m = sext i32 %i.l to i64
   %i.n = tail call noalias ptr @calloc(i64 noundef %i.m, i64 noundef 4) #56, !noalias !101
-  store ptr %i.n, ptr %0, align 8
+  %7 = ptrtoint ptr %i.n to i64
+  store i64 %7, ptr %0, align 8
   store <2 x i32> %i.i, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 1, ptr %.sroa.6.0..sroa_idx, align 8
@@ -1472,7 +1473,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not.i, label %GenImageColor.exit, label %.lr.ph.i, !llvm.loop !139
 
 GenImageColor.exit:                               ; preds = %.lr.ph.i, %middle.block, %.loopexit
-  store ptr %i.bb, ptr %3, align 8
+  %5 = ptrtoint ptr %i.bb to i64
+  store i64 %5, ptr %3, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 %i.ax, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 12

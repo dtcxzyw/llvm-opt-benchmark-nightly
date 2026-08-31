@@ -98,7 +98,11 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.c
   %i.q = call ptr @H5G__create_named(ptr noundef nonnull %8, ptr noundef nonnull %2, i64 noundef %3, i64 noundef %4) #4 ; 2 uses
   %i.r = icmp eq ptr %i.q, null
-  br i1 %i.r, label %bb.g, label %.thread28
+  br i1 %i.r, label %bb.g, label %.thread30
+
+.thread30:                                        ; preds = %bb.f
+  %10 = ptrtoint ptr %i.q to i64
+  br label %.thread28
 
 bb.g:                                             ; preds = %bb.f
   %i.s = load i64, ptr @H5E_SYM_g, align 8, !tbaa !10
@@ -108,6 +112,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #4
+  %11 = ptrtoint ptr %i.l to i64
   %i.v = call ptr @H5G_oloc(ptr noundef nonnull %i.l) #4 ; 2 uses
   %i.w = icmp eq ptr %i.v, null
   br i1 %i.w, label %bb.i, label %bb.j
@@ -119,7 +124,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %.2 = phi ptr [ null, %bb.i ], [ %i.l, %bb.h ]
+  %.sroa.0.2 = phi i64 [ 0, %bb.i ], [ %11, %bb.h ]
   %i.aa = call i32 @H5O_dec_rc_by_loc(ptr noundef %i.v) #4
   %i.ab = icmp slt i32 %i.aa, 0
   br i1 %i.ab, label %bb.k, label %.thread28
@@ -130,10 +135,11 @@ bb.k:                                             ; preds = %bb.j
   %i.ae = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str, ptr noundef nonnull @__func__.H5VL__native_group_create, i32 noundef 120, i64 noundef %i.ac, i64 noundef %i.ad, ptr noundef nonnull @.str.4) #4 ; 0 uses
   br label %.thread28
 
-.thread28:                                        ; preds = %bb.e, %bb.b, %bb.g, %bb.f, %bb.k, %bb.j
-  %.4 = phi ptr [ null, %bb.b ], [ null, %bb.k ], [ %.2, %bb.j ], [ null, %bb.e ], [ %i.q, %bb.f ], [ null, %bb.g ]
+.thread28:                                        ; preds = %bb.e, %bb.b, %bb.g, %.thread30, %bb.j, %bb.k
+  %.sroa.0.4 = phi i64 [ 0, %bb.e ], [ 0, %bb.k ], [ %.sroa.0.2, %bb.j ], [ %10, %.thread30 ], [ 0, %bb.g ], [ 0, %bb.b ]
+  %12 = inttoptr i64 %.sroa.0.4 to ptr
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #4
-  ret ptr %.4
+  ret ptr %12
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)

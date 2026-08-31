@@ -205,11 +205,11 @@ bb.n:                                             ; preds = %bb.m
 .critedge:                                        ; preds = %.critedge4, %..critedge_crit_edge, %.critedge4.preheader
   %.lcssa40 = phi ptr [ %i.ay, %..critedge_crit_edge ], [ %scevgep, %.critedge4.preheader ], [ %scevgep, %.critedge4 ] ; 2 uses
   %i.bf = ptrtoint ptr %.lcssa40 to i64
-  %i.bg = ptrtoint ptr %0 to i64
+  %i.bg = ptrtoint ptr %0 to i64                  ; 2 uses
   %i.bh = sub i64 %i.bf, %i.bg
   %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !530, !nonnull !34, !align !532 ; 2 uses
-  store ptr %0, ptr %i.bj, align 8
+  store i64 %i.bg, ptr %i.bj, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
   store i64 %i.bh, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !43
   %i.bk = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -612,10 +612,12 @@ _ZN3fmt3v126detail12needs_escapeEj.exit.i.i:      ; preds = %switch.early.test.i
 _ZZN3fmt3v126detail18for_each_codepointIZNS1_11find_escapeEPKcS4_EUljNS0_17basic_string_viewIcEEE_EEvS6_T_ENKUlS4_S4_E_clES4_S4_.exit.thread: ; preds = %.lr.ph, %switch.early.test.i.i.i, %switch.early.test.i.i.i, %switch.early.test.i.i.i, %_ZN3fmt3v126detail12needs_escapeEj.exit.i.i
   %i.bp = add nsw i64 %i.p, %i.m
   %i.bq = select i1 %.not.i, i64 %i.bp, i64 1
+  %3 = ptrtoint ptr %.02455 to i64
   %i.br = getelementptr inbounds nuw i8, ptr %.02455, i64 %i.bq
-  store ptr %.02455, ptr %2, align 8, !tbaa !47
+  %4 = ptrtoint ptr %i.br to i64
+  store i64 %3, ptr %2, align 8, !tbaa !47
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %i.br, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !47
+  store i64 %4, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !47
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %2, i64 16
   store i32 %i.bm, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !76
   br label %.thread
@@ -852,9 +854,11 @@ _ZN3fmt3v126detail12needs_escapeEj.exit.i.i41:    ; preds = %switch.early.test.i
 _ZZN3fmt3v126detail18for_each_codepointIZNS1_11find_escapeEPKcS4_EUljNS0_17basic_string_viewIcEEE_EEvS6_T_ENKUlS4_S4_E_clES4_S4_.exit42.thread: ; preds = %_ZN3fmt3v126detail4copyIcPKcPcTnNSt9enable_ifIXoontcvNS1_23is_back_insert_iteratorIT1_St17integral_constantIbLb1EEEE_EntoocvNS1_10has_appendIS8_T0_vEE_EcvNS1_10has_insertIS8_SD_vEE_EEiE4typeELi0EEES8_SD_SD_S8_.exit, %switch.early.test.i.i.i37, %switch.early.test.i.i.i37, %switch.early.test.i.i.i37, %_ZN3fmt3v126detail12needs_escapeEj.exit.i.i41
   %i.fx = add nsw i64 %i.dx, %i.du
   %i.fy = select i1 %.not.i36, i64 %i.fx, i64 1
+  %5 = ptrtoint ptr %.3 to i64
   %i.fz = getelementptr inbounds nuw i8, ptr %.3, i64 %i.fy
-  store ptr %.3, ptr %2, align 8, !tbaa !47
-  store ptr %i.fz, ptr %.sroa.4.0..sroa_idx.i.i39, align 8, !tbaa !47
+  %6 = ptrtoint ptr %i.fz to i64
+  store i64 %5, ptr %2, align 8, !tbaa !47
+  store i64 %6, ptr %.sroa.4.0..sroa_idx.i.i39, align 8, !tbaa !47
   store i32 %i.fu, ptr %.sroa.5.0..sroa_idx.i.i40, align 8, !tbaa !76
   br label %.loopexit75
 

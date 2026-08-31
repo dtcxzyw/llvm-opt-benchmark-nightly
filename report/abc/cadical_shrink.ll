@@ -204,7 +204,8 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEN7CaDiCaL19shrink_
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #16
   tail call void @llvm.experimental.noalias.scope.decl(metadata !231)
   %i.w = load ptr, ptr %i.h, align 8, !tbaa !8, !noalias !231 ; 4 uses
-  store ptr %i.w, ptr %1, align 8, !tbaa !8, !alias.scope !231
+  %4 = ptrtoint ptr %i.w to i64
+  store i64 %4, ptr %1, align 8, !tbaa !8, !alias.scope !231
   %i.x = load i32, ptr %i.u, align 4, !tbaa !11   ; 6 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 3 uses
   %i.z = load i8, ptr %i.y, align 8, !tbaa !234, !range !202, !noundef !203
@@ -607,7 +608,7 @@ bb.r:                                             ; preds = %bb.q
   %spec.select = select i1 %.not.i.i, ptr %.sroa.8.0142, ptr %i.dn
   br label %.lr.ph138
 
-.lr.ph138:                                        ; preds = %._crit_edge135, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i, %bb.l, %bb.q, %bb.r
+.lr.ph138:                                        ; preds = %._crit_edge135, %bb.r, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i, %bb.l, %bb.q
   %.sroa.0106.1 = phi ptr [ %.sroa.0106.0139, %._crit_edge135 ], [ %.sroa.095.0141, %bb.q ], [ %.sroa.095.0141, %bb.r ], [ %.sroa.095.0141, %bb.l ], [ %.sroa.095.0141, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i ], [ %i.dd, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ] ; 2 uses
   %.sroa.095.1 = phi ptr [ %.sroa.095.0141, %._crit_edge135 ], [ %.sroa.095.0141, %bb.q ], [ %.sroa.095.0141, %bb.r ], [ %.sroa.095.0141, %bb.l ], [ %.sroa.095.0141, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i ], [ %i.dd, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ]
   %.sroa.8.1 = phi ptr [ %.sroa.8.0142, %._crit_edge135 ], [ %.sroa.8.0142, %bb.q ], [ %spec.select, %bb.r ], [ %i.cv, %bb.l ], [ %i.cy, %_ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i ], [ %i.dk, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i ]

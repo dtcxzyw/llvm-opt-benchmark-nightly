@@ -202,10 +202,11 @@ bb.b:                                             ; preds = %bb.a
   %i.i = tail call { ptr, i64 } @_ZN5alloc6string6String6as_str17h0ac3830c0b1d2095E(ptr nonnull align 8 %i.e) ; 2 uses
   %i.j = extractvalue { ptr, i64 } %i.i, 0
   %i.k = extractvalue { ptr, i64 } %i.i, 1
+  %2 = ptrtoint ptr %i.j to i64
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.h, ptr %.sroa.2.0..sroa_idx, align 8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %i.j, ptr %.sroa.3.0..sroa_idx, align 8
+  store i64 %2, ptr %.sroa.3.0..sroa_idx, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %i.k, ptr %.sroa.4.0..sroa_idx, align 8
   br label %bb.c
@@ -608,9 +609,10 @@ bb.a:
   %i.c = alloca [24 x i8], align 8                ; 2 uses
   %i.d = alloca [40 x i8], align 8                ; 3 uses
   %i.e = alloca [40 x i8], align 8                ; 5 uses
+  %2 = ptrtoint ptr %0 to i64                     ; 2 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.2.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
-  store ptr %0, ptr %i.d, align 8
+  store i64 %2, ptr %i.d, align 8
   call void @_ZN3std5panic12catch_unwind17h633a90d9f53448ffE(ptr nonnull sret([40 x i8]) align 8 %i.e, ptr nonnull align 8 %i.d)
   %i.f = load i64, ptr %i.e, align 8
   switch i64 %i.f, label %bb.e [
@@ -640,7 +642,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.24.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.3, i64 32, i1 false)
   %.sroa.35.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  store ptr %0, ptr %.sroa.35.0..sroa_idx, align 8
+  store i64 %2, ptr %.sroa.35.0..sroa_idx, align 8
   %i.n = call { ptr, ptr } @_ZN3std5panic12catch_unwind17h559092bf696a248cE(ptr nonnull align 8 %i.a) ; 2 uses
   %i.o = extractvalue { ptr, ptr } %i.n, 0
   %i.p = extractvalue { ptr, ptr } %i.n, 1
@@ -690,9 +692,10 @@ bb.a:
   %i.c = alloca [24 x i8], align 8                ; 2 uses
   %i.d = alloca [40 x i8], align 8                ; 3 uses
   %i.e = alloca [40 x i8], align 8                ; 5 uses
+  %2 = ptrtoint ptr %0 to i64                     ; 2 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.2.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
-  store ptr %0, ptr %i.d, align 8
+  store i64 %2, ptr %i.d, align 8
   call void @_ZN3std5panic12catch_unwind17h4daced1d7e85abd6E(ptr nonnull sret([40 x i8]) align 8 %i.e, ptr nonnull align 8 %i.d)
   %i.f = load i64, ptr %i.e, align 8
   switch i64 %i.f, label %bb.e [
@@ -722,7 +725,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.24.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.3, i64 32, i1 false)
   %.sroa.35.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  store ptr %0, ptr %.sroa.35.0..sroa_idx, align 8
+  store i64 %2, ptr %.sroa.35.0..sroa_idx, align 8
   %i.n = call { ptr, ptr } @_ZN3std5panic12catch_unwind17h28b90f474b879855E(ptr nonnull align 8 %i.a) ; 2 uses
   %i.o = extractvalue { ptr, ptr } %i.n, 0
   %i.p = extractvalue { ptr, ptr } %i.n, 1

@@ -202,7 +202,7 @@ bb.ar:                                            ; preds = %.loopexit119
   br label %bb.as
 
 bb.as:                                            ; preds = %._crit_edge.i, %.lr.ph76.i
-  %.05374.i = phi ptr [ null, %.lr.ph76.i ], [ %.1.i111, %._crit_edge.i ]
+  %.sroa.033.071.i = phi i64 [ 0, %.lr.ph76.i ], [ %.sroa.033.1.i, %._crit_edge.i ]
   %.05473.i = phi i32 [ 0, %.lr.ph76.i ], [ %i.gn, %._crit_edge.i ] ; 2 uses
   %i.em = call ptr @OPENSSL_sk_value(ptr noundef %i.eh, i32 noundef %.05473.i) #9 ; 7 uses
   %i.en = call ptr @X509_REVOKED_get0_revocationDate(ptr noundef %i.em) #9
@@ -270,16 +270,21 @@ bb.bc:                                            ; preds = %bb.ba, %bb.az
   %i.fg = phi ptr [ %i.fe, %bb.ba ], [ %i.fb, %bb.az ]
   %i.fh = call i32 @OPENSSL_sk_push(ptr noundef nonnull %i.fg, ptr noundef nonnull %i.er) #9
   %.not63.i = icmp eq i32 %i.fh, 0
-  br i1 %.not63.i, label %bb.bd, label %bb.be
+  br i1 %.not63.i, label %bb.bd, label %4
 
 bb.bd:                                            ; preds = %bb.bc
   call void @GENERAL_NAMES_free(ptr noundef nonnull %i.er) #9
   br label %crl_set_issuers.exit.thread
 
-bb.be:                                            ; preds = %bb.bc, %bb.av
-  %.1.i111 = phi ptr [ %.05374.i, %bb.av ], [ %i.er, %bb.bc ] ; 2 uses
+4:                                                ; preds = %bb.bc
+  %5 = ptrtoint ptr %i.er to i64
+  br label %bb.be
+
+bb.be:                                            ; preds = %4, %bb.av
+  %.sroa.033.1.i = phi i64 [ %5, %4 ], [ %.sroa.033.071.i, %bb.av ] ; 2 uses
+  %6 = inttoptr i64 %.sroa.033.1.i to ptr
   %i.fi = getelementptr inbounds nuw i8, ptr %i.em, i64 40
-  store ptr %.1.i111, ptr %i.fi, align 8, !tbaa !68
+  store ptr %6, ptr %i.fi, align 8, !tbaa !68
   %i.fj = call ptr @X509_REVOKED_get_ext_d2i(ptr noundef %i.em, i32 noundef 141, ptr noundef nonnull %i.a, ptr noundef null) #9 ; 3 uses
   %i.fk = icmp eq ptr %i.fj, null                 ; 2 uses
   %i.fl = load i32, ptr %i.a, align 4

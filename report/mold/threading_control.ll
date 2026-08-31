@@ -205,20 +205,22 @@ bb.a:
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.2.0.copyload = load i32, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !12
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.44.0.copyload = load ptr, ptr %.sroa.44.0..sroa_idx, align 8, !tbaa !195
+  %.sroa.44.0.copyload = load i64, ptr %.sroa.44.0..sroa_idx, align 8, !tbaa !195
   %.sroa.55.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %.sroa.55.0.copyload = load ptr, ptr %.sroa.55.0..sroa_idx, align 8, !tbaa !196
+  %.sroa.55.0.copyload = load i64, ptr %.sroa.55.0..sroa_idx, align 8, !tbaa !196
+  %3 = inttoptr i64 %.sroa.44.0.copyload to ptr
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !32
-  %i.d = tail call noundef zeroext i1 @_ZN3tbb6detail2r117thread_dispatcher21try_unregister_clientEPNS1_24thread_dispatcher_clientEmj(ptr noundef nonnull align 8 dereferenceable(152) %i.c, ptr noundef %.sroa.44.0.copyload, i64 noundef %.sroa.03.0.copyload, i32 noundef %.sroa.2.0.copyload) ; 2 uses
+  %i.d = tail call noundef zeroext i1 @_ZN3tbb6detail2r117thread_dispatcher21try_unregister_clientEPNS1_24thread_dispatcher_clientEmj(ptr noundef nonnull align 8 dereferenceable(152) %i.c, ptr noundef %3, i64 noundef %.sroa.03.0.copyload, i32 noundef %.sroa.2.0.copyload) ; 2 uses
   br i1 %i.d, label %bb.b, label %_ZN3tbb6detail2r122threading_control_impl18try_destroy_clientENS2_15client_snapshotE.exit
 
 bb.b:                                             ; preds = %bb.a
+  %4 = inttoptr i64 %.sroa.55.0.copyload to ptr
   %i.e = load ptr, ptr %i.a, align 8, !tbaa !55   ; 2 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !19
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   %i.h = load ptr, ptr %i.g, align 8
-  tail call void %i.h(ptr noundef nonnull align 8 dereferenceable(16) %i.e, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.55.0.copyload), !inline_history !197
+  tail call void %i.h(ptr noundef nonnull align 8 dereferenceable(16) %i.e, ptr noundef nonnull align 8 dereferenceable(24) %4), !inline_history !197
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
   store ptr null, ptr %2, align 8, !tbaa !133
   call void @_ZN3tbb6detail2d118unique_scoped_lockINS1_5mutexEE7acquireERS3_(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 1 dereferenceable(1) @_ZN3tbb6detail2r117threading_control25g_threading_control_mutexE)

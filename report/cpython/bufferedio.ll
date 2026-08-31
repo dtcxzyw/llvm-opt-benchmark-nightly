@@ -202,8 +202,8 @@ _PyVectorcall_FunctionInline.exit.i.i.i.i:        ; preds = %bb.ao
   %i.cu = getelementptr i8, ptr %.val.i.i.i.i.i, i64 56
   %i.cv = load i64, ptr %i.cu, align 8, !tbaa !95
   %i.cw = getelementptr i8, ptr %i.co, i64 %i.cv
-  %.0.copyload.i.i.i.i.i = load ptr, ptr %i.cw, align 1 ; 2 uses
-  %i.cx = icmp eq ptr %.0.copyload.i.i.i.i.i, null
+  %.sroa.0.0.copyload.i.i.i.i.i = load i64, ptr %i.cw, align 1 ; 2 uses
+  %i.cx = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i, 0
   br i1 %i.cx, label %_PyVectorcall_FunctionInline.exit.thread.i.i.i.i, label %bb.ap
 
 _PyVectorcall_FunctionInline.exit.thread.i.i.i.i: ; preds = %_PyVectorcall_FunctionInline.exit.i.i.i.i, %bb.ao
@@ -211,7 +211,8 @@ _PyVectorcall_FunctionInline.exit.thread.i.i.i.i: ; preds = %_PyVectorcall_Funct
   br label %_PyObject_CallNoArgs.exit.i.i
 
 bb.ap:                                            ; preds = %_PyVectorcall_FunctionInline.exit.i.i.i.i
-  %i.cz = call ptr %.0.copyload.i.i.i.i.i(ptr noundef nonnull %i.co, ptr noundef null, i64 noundef 0, ptr noundef null) #9, !inline_history !96
+  %3 = inttoptr i64 %.sroa.0.0.copyload.i.i.i.i.i to ptr
+  %i.cz = call ptr %3(ptr noundef nonnull %i.co, ptr noundef null, i64 noundef 0, ptr noundef null) #9, !inline_history !96
   %i.da = call ptr @_Py_CheckFunctionResult(ptr noundef %i.cq, ptr noundef nonnull %i.co, ptr noundef %i.cz, ptr noundef null) #9
   br label %_PyObject_CallNoArgs.exit.i.i
 

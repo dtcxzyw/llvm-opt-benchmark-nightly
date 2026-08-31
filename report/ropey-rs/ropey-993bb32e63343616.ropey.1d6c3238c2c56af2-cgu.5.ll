@@ -202,15 +202,16 @@ bb.i:                                             ; preds = %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1024) %i.an, ptr noundef nonnull align 8 dereferenceable(1024) %i.c, i64 1024, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
-  %.sroa.0.0.copyload = load ptr, ptr %0, align 8, !nonnull !8, !noundef !8
+  %.sroa.0.0.copyload = load i64, ptr %0, align 8
   store ptr %i.an, ptr %0, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 960
   store i8 0, ptr %.sroa.5.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
+  %4 = inttoptr i64 %.sroa.0.0.copyload to ptr
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.o, ptr noundef nonnull align 8 dereferenceable(32) %i.u, i64 32, i1 false)
   %i.ar = getelementptr inbounds nuw i8, ptr %i.o, i64 32
-  store ptr %.sroa.0.0.copyload, ptr %i.ar, align 8
+  store ptr %4, ptr %i.ar, align 8
   invoke void @_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren4push(ptr noalias nofree noundef nonnull align 8 dereferenceable(968) %i.p, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(40) %i.o)
           to label %bb.j unwind label %bb.r
 
@@ -386,15 +387,16 @@ bb.ae:                                            ; preds = %bb.aa
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1024) %i.bq, ptr noundef nonnull align 8 dereferenceable(1024) %i.a, i64 1024, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.410)
-  %.sroa.07.0.copyload = load ptr, ptr %0, align 8, !nonnull !8, !noundef !8
+  %.sroa.07.0.copyload = load i64, ptr %0, align 8
   store ptr %i.bq, ptr %0, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   %.sroa.524.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 960
   store i8 0, ptr %.sroa.524.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
+  %5 = inttoptr i64 %.sroa.07.0.copyload to ptr
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.g, ptr noundef nonnull align 8 dereferenceable(32) %i.k, i64 32, i1 false)
   %i.bu = getelementptr inbounds nuw i8, ptr %i.g, i64 32
-  store ptr %.sroa.07.0.copyload, ptr %i.bu, align 8
+  store ptr %5, ptr %i.bu, align 8
   invoke void @_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren4push(ptr noalias nofree noundef nonnull align 8 dereferenceable(968) %i.h, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(40) %i.g)
           to label %bb.af unwind label %bb.am
 
@@ -797,13 +799,15 @@ bb.ab:                                            ; preds = %.noexc42
   store i64 %i.gd, ptr %i.g, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  store ptr %i.h, ptr %i.f, align 8
+  %2 = ptrtoint ptr %i.h to i64
+  %3 = ptrtoint ptr %i.g to i64
+  store i64 %2, ptr %i.f, align 8
   %.sroa.44.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  store ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.44.0..sroa_idx.i, align 8
+  store i64 ptrtoint (ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt to i64), ptr %.sroa.44.0..sroa_idx.i, align 8
   %i.ge = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  store ptr %i.g, ptr %i.ge, align 8
+  store i64 %3, ptr %i.ge, align 8
   %.sroa.48.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.f, i64 24
-  store ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.48.0..sroa_idx.i, align 8
+  store i64 ptrtoint (ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt to i64), ptr %.sroa.48.0..sroa_idx.i, align 8
   invoke void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @3, ptr noundef nonnull %i.f, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #21
           to label %.noexc51 unwind label %bb.cd
 
@@ -1206,7 +1210,8 @@ _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtNtCs2wCc12M
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1024) %i.s, ptr noundef nonnull align 8 dereferenceable(1024) %i.f, i64 1024, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.43)
-  store ptr %i.s, ptr %1, align 8
+  %3 = ptrtoint ptr %i.s to i64
+  store i64 %3, ptr %1, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.j, ptr %i.w, align 8
   store i64 -1, ptr %0, align 8
