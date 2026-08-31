@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.g
   %.03963 = phi ptr [ %.03958, %.lr.ph ], [ %.039, %bb.g ] ; 9 uses
   %.03162 = phi i32 [ 0, %.lr.ph ], [ %.2, %bb.g ] ; 5 uses
   %.03261 = phi i32 [ 0, %.lr.ph ], [ %.3, %bb.g ] ; 6 uses
-  %.03560 = phi ptr [ null, %.lr.ph ], [ %.338, %bb.g ] ; 5 uses
+  %.sroa.0.055 = phi i64 [ 0, %.lr.ph ], [ %.sroa.0.3, %bb.g ] ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.03963, i64 372
   %i.h = load i32, ptr %i.g, align 4, !tbaa !23
   %.not45 = icmp eq i32 %i.h, 0
@@ -257,12 +257,13 @@ bb.f:                                             ; preds = %bb.e
   %i.ak = add i32 %.03162, 1
   %i.al = add nsw i32 %i.ai, %i.ae                ; 2 uses
   %i.am = icmp sgt i32 %i.al, %.03261
-  %spec.select = select i1 %i.am, ptr %.03963, ptr %.03560
+  %2 = ptrtoint ptr %.03963 to i64
+  %spec.select = select i1 %i.am, i64 %2, i64 %.sroa.0.055
   %spec.select49 = tail call i32 @llvm.smax.i32(i32 %i.al, i32 %.03261)
   br label %bb.g
 
 bb.g:                                             ; preds = %.thread, %bb.b, %bb.c, %bb.d, %bb.e
-  %.338 = phi ptr [ %.03560, %bb.c ], [ %.03560, %bb.d ], [ %.03560, %bb.e ], [ %spec.select, %.thread ], [ %.03560, %bb.b ] ; 3 uses
+  %.sroa.0.3 = phi i64 [ %.sroa.0.055, %bb.c ], [ %.sroa.0.055, %bb.d ], [ %.sroa.0.055, %bb.e ], [ %spec.select, %.thread ], [ %.sroa.0.055, %bb.b ] ; 2 uses
   %.3 = phi i32 [ %.03261, %bb.c ], [ %.03261, %bb.d ], [ %.03261, %bb.e ], [ %spec.select49, %.thread ], [ %.03261, %bb.b ]
   %.2 = phi i32 [ %.03162, %bb.c ], [ %.03162, %bb.d ], [ %.03162, %bb.e ], [ %i.ak, %.thread ], [ %.03162, %bb.b ] ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.03963, i64 400
@@ -272,6 +273,7 @@ bb.g:                                             ; preds = %.thread, %bb.b, %bb
 
 ._crit_edge:                                      ; preds = %bb.g
   %i.ao = icmp ugt i32 %.2, 1
+  %3 = inttoptr i64 %.sroa.0.3 to ptr             ; 2 uses
   br i1 %i.ao, label %bb.h, label %.loopexit
 
 bb.h:                                             ; preds = %._crit_edge
@@ -279,7 +281,7 @@ bb.h:                                             ; preds = %._crit_edge
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.f, %bb.a, %._crit_edge, %bb.h
-  %.343 = phi ptr [ %.338, %._crit_edge ], [ %.338, %bb.h ], [ null, %bb.a ], [ %.03963, %bb.f ]
+  %.343 = phi ptr [ %3, %._crit_edge ], [ null, %bb.a ], [ %3, %bb.h ], [ %.03963, %bb.f ]
   ret ptr %.343
 }
 

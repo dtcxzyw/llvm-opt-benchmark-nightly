@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.n
   %.val40 = load double, ptr %4, align 8
   %.val40.fr = freeze double %.val40              ; 10 uses
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %.sroa.3.0.copyload = load double, ptr %.sroa.3.0..sroa_idx, align 8 ; 3 uses
+  %.sroa.3.0.copyload = load i64, ptr %.sroa.3.0..sroa_idx, align 8 ; 2 uses
   %i.au = fcmp oeq double %.val40.fr, +inf
   %i.av = fadd double %.val40.fr, f0xC01921FB54442D18
   %i.aw = fadd double %.val40.fr, f0x401921FB54442D18
@@ -243,7 +243,7 @@ bb.q:                                             ; preds = %.lr.ph.i57.us
 _ZN12_GLOBAL__N_113gridshiftData19grid_apply_internalEP6pj_ctxRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEb6PJ_XYZ12PJ_DIRECTIONPKN5osgeo4proj16GenericShiftGridEPNSE_19GenericShiftGridSetERb.exit.thread.split.us: ; preds = %bb.q
   %i.be = insertelement <2 x double> <double +inf, double poison>, double %.val41.us, i64 1
   store <2 x double> %i.be, ptr %0, align 8, !tbaa !115
-  store double %.sroa.3.0.copyload, ptr %i.d, align 8, !tbaa !115
+  store i64 %.sroa.3.0.copyload, ptr %i.d, align 8, !tbaa !115
   br label %.sink.split
 
 .split:                                           ; preds = %.split.preheader, %_ZN12_GLOBAL__N_113gridshiftData19grid_apply_internalEP6pj_ctxRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEb6PJ_XYZ12PJ_DIRECTIONPKN5osgeo4proj16GenericShiftGridEPNSE_19GenericShiftGridSetERb.exit
@@ -327,6 +327,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.x
   %i.co = icmp eq i32 %3, 1
+  %7 = bitcast i64 %.sroa.3.0.copyload to double  ; 2 uses
   br i1 %i.co, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
@@ -334,14 +335,14 @@ bb.aa:                                            ; preds = %bb.z
   %i.cq = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.cr = load <2 x double>, ptr %i.cq, align 8, !tbaa !115, !noalias !153
   %i.cs = insertelement <2 x double> poison, double %.val41.pre, i64 0
-  %i.ct = insertelement <2 x double> %i.cs, double %.sroa.3.0.copyload, i64 1
+  %i.ct = insertelement <2 x double> %i.cs, double %7, i64 1
   %i.cu = fadd <2 x double> %i.ct, %i.cr
   br label %_ZN12_GLOBAL__N_113gridshiftData19grid_apply_internalEP6pj_ctxRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEb6PJ_XYZ12PJ_DIRECTIONPKN5osgeo4proj16GenericShiftGridEPNSE_19GenericShiftGridSetERb.exit.thread115
 
 bb.ab:                                            ; preds = %bb.z
   %i.cv = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.cw = load double, ptr %i.cv, align 8, !tbaa !118, !noalias !153
-  %i.cx = fsub double %.sroa.3.0.copyload, %i.cw
+  %i.cx = fsub double %7, %i.cw
   %i.cy = insertelement <2 x double> poison, double %.val41.pre, i64 0
   %i.cz = insertelement <2 x double> %i.cy, double %i.cx, i64 1
   br label %_ZN12_GLOBAL__N_113gridshiftData19grid_apply_internalEP6pj_ctxRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEb6PJ_XYZ12PJ_DIRECTIONPKN5osgeo4proj16GenericShiftGridEPNSE_19GenericShiftGridSetERb.exit.thread115

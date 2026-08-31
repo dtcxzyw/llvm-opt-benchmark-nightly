@@ -204,7 +204,7 @@ bb.cb:                                            ; preds = %bb.ca
   %.0179493 = phi i32 [ %i.ju, %bb.ci ], [ %i.ja, %.lr.ph.preheader ]
   %.0180492 = phi ptr [ %.1181, %bb.ci ], [ %i.jc, %.lr.ph.preheader ] ; 7 uses
   %.0182491 = phi i32 [ %.1183, %bb.ci ], [ 0, %.lr.ph.preheader ] ; 3 uses
-  %.0184490 = phi ptr [ %.1185, %bb.ci ], [ null, %.lr.ph.preheader ]
+  %.sroa.0.0488 = phi i64 [ %.sroa.0.1, %bb.ci ], [ 0, %.lr.ph.preheader ]
   %i.jd = load i32, ptr %i.iy, align 8, !tbaa !12
   %i.je = and i32 %i.jd, 4
   %.not257 = icmp eq i32 %i.je, 0
@@ -222,17 +222,18 @@ bb.cd:                                            ; preds = %.lr.ph
   %i.jk = load i64, ptr %i.jj, align 8, !tbaa !115
   %i.jl = getelementptr inbounds nuw i8, ptr %.0180492, i64 24
   %i.jm = load ptr, ptr %i.jl, align 8, !tbaa !117
+  %6 = ptrtoint ptr %i.jm to i64
   br label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd, %bb.cc
   %.0186 = phi i64 [ %i.jg, %bb.cc ], [ %i.jk, %bb.cd ]
-  %.1185 = phi ptr [ %.0184490, %bb.cc ], [ %i.jm, %bb.cd ] ; 2 uses
+  %.sroa.0.1 = phi i64 [ %.sroa.0.0488, %bb.cc ], [ %6, %bb.cd ] ; 2 uses
   %.1183 = phi i32 [ %i.jh, %bb.cc ], [ %.0182491, %bb.cd ]
   %.1181 = phi ptr [ %i.jf, %bb.cc ], [ %i.ji, %bb.cd ]
   %i.jn = getelementptr inbounds nuw i8, ptr %.0180492, i64 8
   %i.jo = load i8, ptr %i.jn, align 8, !tbaa !12  ; 2 uses
   %i.jp = icmp ne i8 %i.jo, 0
-  %.not258 = icmp eq ptr %.1185, null
+  %.not258 = icmp eq i64 %.sroa.0.1, 0
   %or.cond264 = select i1 %i.jp, i1 %.not258, i1 false, !prof !118
   br i1 %or.cond264, label %bb.cf, label %bb.ci, !prof !118
 

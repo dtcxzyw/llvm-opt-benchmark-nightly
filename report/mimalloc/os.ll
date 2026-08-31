@@ -202,13 +202,14 @@ _mi_os_good_alloc_size.exit:                      ; preds = %bb.g, %bb.i, %bb.j
 bb.k:                                             ; preds = %_mi_os_good_alloc_size.exit
   %i.t = load i8, ptr %i.b, align 1, !tbaa !29, !range !12, !noundef !13
   %i.u = load i8, ptr %i.a, align 1, !tbaa !29, !range !12, !noundef !13
+  %3 = ptrtoint ptr %i.r to i64
   %.sroa.5.22.insert.ext = zext nneg i8 %i.t to i64
   %.sroa.5.22.insert.shift = shl nuw nsw i64 %.sroa.5.22.insert.ext, 48
   %.sroa.5.20.insert.ext = zext nneg i8 %i.u to i64
   %.sroa.5.20.insert.shift = shl nuw nsw i64 %.sroa.5.20.insert.ext, 32
   %.sroa.5.22.insert.insert = or disjoint i64 %.sroa.5.22.insert.shift, %.sroa.5.20.insert.shift
   %.sroa.5.20.insert.insert = or disjoint i64 %.sroa.5.22.insert.insert, 1099511627779
-  store ptr %i.r, ptr %2, align 8
+  store i64 %3, ptr %2, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 %.010.i, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !26
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -611,6 +612,7 @@ mi_os_prim_free.exit117.i:                        ; preds = %bb.ap, %bb.ak, %bb.
   %.2.i = phi ptr [ %i.am, %_mi_is_aligned.exit.i ], [ %i.bo, %bb.aa ], [ %i.bx, %bb.ap ], [ %i.bx, %bb.aj ], [ %i.bo, %_mi_align_up_ptr.exit.i ], [ %i.bx, %bb.ak ], [ %i.am, %bb.p ]
   %i.cu = load i8, ptr %i.c, align 1, !tbaa !29, !range !12, !noundef !13
   %i.cv = load i8, ptr %i.b, align 1, !tbaa !29, !range !12, !noundef !13
+  %6 = ptrtoint ptr %.285.i to i64
   %.sroa.5.21.insert.insert.i = select i1 %3, i64 1099511627779, i64 3
   %.sroa.5.22.insert.ext.i = zext nneg i8 %i.cu to i64
   %.sroa.5.22.insert.shift.i = shl nuw nsw i64 %.sroa.5.22.insert.ext.i, 48
@@ -618,7 +620,7 @@ mi_os_prim_free.exit117.i:                        ; preds = %bb.ap, %bb.ak, %bb.
   %.sroa.5.20.insert.ext.i = zext nneg i8 %i.cv to i64
   %.sroa.5.20.insert.shift.i = shl nuw nsw i64 %.sroa.5.20.insert.ext.i, 32
   %.sroa.5.20.insert.insert.i = or disjoint i64 %.sroa.5.22.insert.insert.i, %.sroa.5.20.insert.shift.i
-  store ptr %.285.i, ptr %5, align 8
+  store i64 %6, ptr %5, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 %.282.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !26
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 16
@@ -707,13 +709,14 @@ _mi_os_alloc.exit.thread11:                       ; preds = %_mi_os_good_alloc_s
 bb.k:                                             ; preds = %_mi_os_good_alloc_size.exit.i
   %i.t = load i8, ptr %i.b, align 1, !tbaa !29, !range !12, !noundef !13 ; 2 uses
   %i.u = load i8, ptr %i.a, align 1, !tbaa !29, !range !12, !noundef !13
+  %3 = ptrtoint ptr %i.r to i64
   %.sroa.5.22.insert.ext.i = zext nneg i8 %i.t to i64
   %.sroa.5.22.insert.shift.i = shl nuw nsw i64 %.sroa.5.22.insert.ext.i, 48
   %.sroa.5.20.insert.ext.i = zext nneg i8 %i.u to i64
   %.sroa.5.20.insert.shift.i = shl nuw nsw i64 %.sroa.5.20.insert.ext.i, 32
   %.sroa.5.22.insert.insert.i = or disjoint i64 %.sroa.5.22.insert.shift.i, %.sroa.5.20.insert.shift.i
   %.sroa.5.20.insert.insert.i = or disjoint i64 %.sroa.5.22.insert.insert.i, 1099511627779
-  store ptr %i.r, ptr %2, align 8
+  store i64 %3, ptr %2, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 %.010.i.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !26
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -1116,7 +1119,7 @@ mi_theap_is_initialized.exit.thread.i:            ; preds = %mi_theap_is_initial
   br label %bb.j
 
 bb.j:                                             ; preds = %mi_theap_is_initialized.exit.thread.i, %bb.i, %bb.g
-  %.1.i = phi i64 [ %.021.i, %bb.g ], [ %i.n, %bb.i ], [ 35184372088832, %mi_theap_is_initialized.exit.thread.i ] ; 2 uses
+  %.1.i = phi i64 [ %.021.i, %bb.g ], [ %i.n, %bb.i ], [ 35184372088832, %mi_theap_is_initialized.exit.thread.i ] ; 3 uses
   %i.o = add i64 %.1.i, %i.d
   %i.p = cmpxchg weak ptr @mi_huge_start, i64 %.021.i, i64 %i.o acq_rel acquire, align 64 ; 2 uses
   %i.q = extractvalue { i64, i1 } %i.p, 1
@@ -1124,7 +1127,7 @@ bb.j:                                             ; preds = %mi_theap_is_initial
   br i1 %i.q, label %bb.k, label %bb.g, !llvm.loop !36
 
 bb.k:                                             ; preds = %bb.j
-  %i.s = inttoptr i64 %.1.i to ptr                ; 4 uses
+  %i.s = inttoptr i64 %.1.i to ptr                ; 3 uses
   %i.t = tail call i64 @_mi_clock_start() #9
   %.not120 = icmp eq i64 %1, 0
   br i1 %.not120, label %.loopexit, label %.lr.ph
@@ -1277,7 +1280,7 @@ bb.w:                                             ; preds = %bb.v
   %.sroa.5.22.insert.ext = zext nneg i8 %.2 to i64
   %.sroa.5.22.insert.shift = shl nuw nsw i64 %.sroa.5.22.insert.ext, 48
   %.sroa.5.20.insert.insert = or disjoint i64 %.sroa.5.22.insert.shift, 1103806595075
-  store ptr %i.s, ptr %6, align 8
+  store i64 %.1.i, ptr %6, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i64 %i.at, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !26
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses

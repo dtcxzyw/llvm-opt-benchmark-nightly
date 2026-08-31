@@ -70,6 +70,7 @@ bb.a:
 .lr.ph.i:                                         ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !19
+  %1 = ptrtoint ptr %i.f to i64
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48
   br label %bb.b
 
@@ -80,7 +81,7 @@ bb.a:
   br label %.lr.ph107.i
 
 bb.b:                                             ; preds = %bb.i, %.lr.ph.i
-  %.075103.i = phi ptr [ %i.f, %.lr.ph.i ], [ %.176.i, %bb.i ] ; 4 uses
+  %.sroa.0.0100.i = phi i64 [ %1, %.lr.ph.i ], [ %.sroa.0.1.i, %bb.i ] ; 3 uses
   %.077102.i = phi ptr [ %i.d, %.lr.ph.i ], [ %.279.i, %bb.i ] ; 5 uses
   %.083101.i = phi i32 [ 0, %.lr.ph.i ], [ %.285.i, %bb.i ] ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.077102.i, i64 32
@@ -95,8 +96,10 @@ bb.b:                                             ; preds = %bb.i, %.lr.ph.i
 bb.c:                                             ; preds = %bb.b
   %spec.select.i = tail call i32 @llvm.smax.i32(i32 %i.k, i32 %.083101.i)
   store ptr %.077102.i, ptr %i.m, align 8, !tbaa !21
-  %i.p = getelementptr inbounds nuw i8, ptr %.075103.i, i64 24
+  %2 = inttoptr i64 %.sroa.0.0100.i to ptr        ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !19
+  %3 = ptrtoint ptr %i.q to i64
   br label %bb.i
 
 bb.d:                                             ; preds = %bb.b
@@ -154,8 +157,8 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.c
   %.285.i = phi i32 [ %spec.select.i, %bb.c ], [ %.083101.i, %bb.h ], [ %.083101.i, %bb.g ] ; 2 uses
-  %.279.i = phi ptr [ %.075103.i, %bb.c ], [ %.178.i, %bb.h ], [ %.178.i, %bb.g ] ; 2 uses
-  %.176.i = phi ptr [ %i.q, %bb.c ], [ %.075103.i, %bb.h ], [ %.075103.i, %bb.g ]
+  %.279.i = phi ptr [ %2, %bb.c ], [ %.178.i, %bb.h ], [ %.178.i, %bb.g ] ; 2 uses
+  %.sroa.0.1.i = phi i64 [ %3, %bb.c ], [ %.sroa.0.0100.i, %bb.h ], [ %.sroa.0.0100.i, %bb.g ]
   %.not.i = icmp eq ptr %.279.i, %0
   br i1 %.not.i, label %.lr.ph107.preheader.i, label %bb.b, !llvm.loop !26
 

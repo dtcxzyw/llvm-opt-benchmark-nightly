@@ -205,9 +205,9 @@ define dso_local void @_ZN42ProxyFmtFormatNoWcharTests_TestFormat_Test8TestBodyE
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16
   store ptr %i.a, ptr %i.b, align 8, !tbaa !24
-  store ptr @_ZZN3pro2v46detail9conv_metaINS0_5proxyIN38proxy_fmt_format_no_wchar_tests_detail11FormattableEEENS1_16destroy_dispatchEDoFvvEEC1IPiEESt15in_place_type_tIT_EENUlRS6_E_8__invokeESF_, ptr %3, align 8
+  store i64 ptrtoint (ptr @_ZZN3pro2v46detail9conv_metaINS0_5proxyIN38proxy_fmt_format_no_wchar_tests_detail11FormattableEEENS1_16destroy_dispatchEDoFvvEEC1IPiEESt15in_place_type_tIT_EENUlRS6_E_8__invokeESF_ to i64), ptr %3, align 8
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store ptr @_ZZN3pro2v46detail9conv_metaINS0_23proxy_indirect_accessorIN38proxy_fmt_format_no_wchar_tests_detail11FormattableEEENS1_13format_traitsIN3fmt3v129formatterESt17basic_string_viewNS9_26basic_format_parse_contextENS1_20fmt_buffered_contextEE8dispatchEKFNS9_14basic_appenderIcEESB_IcSt11char_traitsIcEERNS9_7contextEEEC1IPiEESt15in_place_type_tIT_EENUlRKS6_SK_SM_E_8__invokeESV_SK_SM_, ptr %.sroa.4.0..sroa_idx.i.i, align 8
+  store i64 ptrtoint (ptr @_ZZN3pro2v46detail9conv_metaINS0_23proxy_indirect_accessorIN38proxy_fmt_format_no_wchar_tests_detail11FormattableEEENS1_13format_traitsIN3fmt3v129formatterESt17basic_string_viewNS9_26basic_format_parse_contextENS1_20fmt_buffered_contextEE8dispatchEKFNS9_14basic_appenderIcEESB_IcSt11char_traitsIcEERNS9_7contextEEEC1IPiEESt15in_place_type_tIT_EENUlRKS6_SK_SM_E_8__invokeESV_SK_SM_ to i64), ptr %.sroa.4.0..sroa_idx.i.i, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #19, !noalias !26
@@ -610,6 +610,7 @@ bb.a:
   %5 = alloca %"class.fmt::v12::parse_context", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !24
+  %6 = ptrtoint ptr %2 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   store i32 32768, ptr %4, align 8, !tbaa !67
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 4
@@ -623,7 +624,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 32
   store i32 0, ptr %i.f, align 8, !tbaa !29
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
-  store ptr %2, ptr %5, align 8, !tbaa !71
+  store i64 %6, ptr %5, align 8, !tbaa !71
   %.sroa.2.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 %1, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i, align 8, !tbaa !72
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 16
@@ -1026,11 +1027,11 @@ bb.n:                                             ; preds = %bb.m
 .critedge:                                        ; preds = %.critedge4, %..critedge_crit_edge, %.critedge4.preheader
   %.lcssa40 = phi ptr [ %i.ay, %..critedge_crit_edge ], [ %scevgep, %.critedge4.preheader ], [ %scevgep, %.critedge4 ] ; 2 uses
   %i.bf = ptrtoint ptr %.lcssa40 to i64
-  %i.bg = ptrtoint ptr %0 to i64
+  %i.bg = ptrtoint ptr %0 to i64                  ; 2 uses
   %i.bh = sub i64 %i.bf, %i.bg
   %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !92, !nonnull !51, !align !94 ; 2 uses
-  store ptr %0, ptr %i.bj, align 8
+  store i64 %i.bg, ptr %i.bj, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
   store i64 %i.bh, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !29
   %i.bk = getelementptr inbounds nuw i8, ptr %2, i64 16

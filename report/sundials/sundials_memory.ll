@@ -201,6 +201,7 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #8
 define ptr @SUNMemoryHelper_Clone(ptr noundef %0) local_unnamed_addr #7 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %1 = load ptr, ptr %i.a, align 8, !tbaa !17     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !13   ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 48
@@ -210,22 +211,19 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %0, align 8, !tbaa !30
-  %.not13.a = icmp eq ptr %i.f, null
-  br i1 %.not13.a, label %1, label %SUNMemoryHelper_NewEmpty.exit.thread
+  %.not13 = icmp ne ptr %i.f, null
+  %.not13.a = icmp eq ptr %1, null
+  %or.cond = select i1 %.not13, i1 true, i1 %.not13.a
+  br i1 %or.cond, label %SUNMemoryHelper_NewEmpty.exit.thread, label %SUNMemoryHelper_NewEmpty.exit
 
-1:                                                ; preds = %bb.b
-  %2 = load ptr, ptr %i.a, align 8, !tbaa !17     ; 2 uses
-  %3 = icmp eq ptr %2, null
-  br i1 %3, label %SUNMemoryHelper_NewEmpty.exit.thread, label %SUNMemoryHelper_NewEmpty.exit
-
-SUNMemoryHelper_NewEmpty.exit:                    ; preds = %1
+SUNMemoryHelper_NewEmpty.exit:                    ; preds = %bb.b
   %i.g = tail call noalias dereferenceable_or_null(32) ptr @malloc(i64 noundef 32) #11 ; 4 uses
   %calloc.i = tail call dereferenceable_or_null(64) ptr @calloc(i64 1, i64 64) ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   store ptr %calloc.i, ptr %i.h, align 8, !tbaa !13
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
-  store ptr %2, ptr %i.i, align 8, !tbaa !17
+  store ptr %1, ptr %i.i, align 8, !tbaa !17
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %calloc.i, ptr noundef nonnull align 8 dereferenceable(64) %i.c, i64 64, i1 false)
   br label %SUNMemoryHelper_NewEmpty.exit.thread
 
@@ -233,8 +231,8 @@ bb.c:                                             ; preds = %bb.a
   %i.j = tail call ptr %i.e(ptr noundef nonnull %0) #12
   br label %SUNMemoryHelper_NewEmpty.exit.thread
 
-SUNMemoryHelper_NewEmpty.exit.thread:             ; preds = %1, %SUNMemoryHelper_NewEmpty.exit, %bb.b, %bb.c
-  %.0 = phi ptr [ %i.j, %bb.c ], [ null, %bb.b ], [ %i.g, %SUNMemoryHelper_NewEmpty.exit ], [ null, %1 ]
+SUNMemoryHelper_NewEmpty.exit.thread:             ; preds = %SUNMemoryHelper_NewEmpty.exit, %bb.b, %bb.c
+  %.0 = phi ptr [ %i.j, %bb.c ], [ null, %bb.b ], [ %i.g, %SUNMemoryHelper_NewEmpty.exit ]
   ret ptr %.0
 }
 

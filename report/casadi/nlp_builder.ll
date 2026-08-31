@@ -204,8 +204,9 @@ _ZNSt6vectorIdSaIdEE6resizeEmRKd.exit936:         ; preds = %._ZNSt6vectorIdSaId
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #22
   %i.bmx = getelementptr inbounds nuw i8, ptr %i.bmw, i64 200
   %i.bmy = load ptr, ptr %i.bmx, align 8, !tbaa !181
+  %82 = ptrtoint ptr %i.bmy to i64
   %i.bmz = getelementptr inbounds nuw i8, ptr %i.bmw, i64 216
-  store ptr %i.bmy, ptr %i.bmz, align 8
+  store i64 %82, ptr %i.bmz, align 8
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bmw, i64 224
   store i32 0, ptr %.sroa.2.0..sroa_idx.i.i, align 8
   %i.bna = load i64, ptr %i.afs, align 8, !tbaa !184 ; 3 uses
@@ -608,9 +609,9 @@ bb.ld:                                            ; preds = %bb.lc
   %i.bvr = load ptr, ptr %i.bvq, align 8, !tbaa !181
   %i.bvs = getelementptr inbounds nuw i8, ptr %i.bvo, i64 224
   %i.bvt = load i32, ptr %i.bvs, align 8, !tbaa !189
-  %82 = load ptr, ptr %i.bvp, align 8, !tbaa !181
   %83 = ptrtoint ptr %i.bvr to i64
-  %i.bvu = ptrtoint ptr %82 to i64
+  %84 = load ptr, ptr %i.bvp, align 8, !tbaa !181
+  %i.bvu = ptrtoint ptr %84 to i64
   %i.bvv = sub i64 %83, %i.bvu
   %i.bvw = shl nsw i64 %i.bvv, 3
   %i.bvx = zext i32 %i.bvt to i64
@@ -1013,17 +1014,17 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 define linkonce_odr void @_ZNSt6vectorIbSaIbEE13_M_insert_auxESt13_Bit_iteratorb(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr %1, i32 %2, i1 noundef zeroext %3) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !181  ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !181  ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !186
   %.not = icmp eq ptr %i.b, %i.d
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.f = load i32, ptr %i.e, align 8              ; 5 uses
-  %4 = ptrtoint ptr %i.b to i64                   ; 2 uses
   br i1 %.not, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.g = zext i32 %i.f to i64                     ; 2 uses
+  %4 = ptrtoint ptr %i.b to i64
   %i.h = ptrtoint ptr %1 to i64
   %i.i = sub i64 %4, %i.h
   %i.j = shl nsw i64 %i.i, 3
@@ -1114,9 +1115,10 @@ bb.g:                                             ; preds = %_ZNSt14_Bit_referen
   br label %_ZNSt13_Bit_iteratorppEv.exit
 
 bb.h:                                             ; preds = %bb.a
+  %5 = ptrtoint ptr %i.b to i64
   %i.at = load ptr, ptr %0, align 8, !tbaa !181
   %i.au = ptrtoint ptr %i.at to i64
-  %i.av = sub i64 %4, %i.au
+  %i.av = sub i64 %5, %i.au
   %i.aw = shl nsw i64 %i.av, 3
   %i.ax = zext i32 %i.f to i64
   %i.ay = add nsw i64 %i.aw, %i.ax                ; 4 uses
@@ -1137,10 +1139,11 @@ _ZNKSt6vectorIbSaIbEE12_M_check_lenEmPKc.exit:    ; preds = %bb.h
   %i.bf = lshr i64 %i.be, 3
   %i.bg = and i64 %i.bf, 1152921504606846968
   %i.bh = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bg) #25 ; 5 uses
+  %6 = ptrtoint ptr %i.bh to i64
   %i.bi = load ptr, ptr %0, align 8, !tbaa !181   ; 4 uses
-  %i.bj = ptrtoint ptr %1 to i64                  ; 2 uses
-  %i.bk = ptrtoint ptr %i.bi to i64               ; 2 uses
-  %i.bl = sub i64 %i.bj, %i.bk                    ; 4 uses
+  %i.bj = ptrtoint ptr %i.bi to i64               ; 2 uses
+  %i.bk = ptrtoint ptr %1 to i64                  ; 2 uses
+  %i.bl = sub i64 %i.bk, %i.bj                    ; 4 uses
   %i.bm = icmp sgt i64 %i.bl, 8
   br i1 %i.bm, label %bb.j, label %bb.k, !prof !367
 
@@ -1244,7 +1247,7 @@ _ZNSt14_Bit_referenceaSEb.exit53:                 ; preds = %bb.p, %bb.q
   %.sroa.0.0.copyload.i54 = load ptr, ptr %i.a, align 8
   %.sroa.2.0.copyload.i55 = load i32, ptr %i.e, align 8
   %i.cs = ptrtoint ptr %.sroa.0.0.copyload.i54 to i64
-  %i.ct = sub i64 %i.cs, %i.bj
+  %i.ct = sub i64 %i.cs, %i.bk
   %i.cu = shl nsw i64 %i.ct, 3
   %i.cv = zext i32 %.sroa.2.0.copyload.i55 to i64
   %i.cw = zext i32 %2 to i64
@@ -1299,13 +1302,14 @@ _ZNSt14_Bit_referenceaSERKS_.exit.i.i.i.i.i66:    ; preds = %bb.s, %bb.r
 _ZSt4copyISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit:  ; preds = %_ZNSt14_Bit_referenceaSERKS_.exit.i.i.i.i.i66, %_ZNSt14_Bit_referenceaSEb.exit53
   %.sroa.59.0.lcssa.i.i.i.i.i58 = phi i32 [ %.sroa.683.0, %_ZNSt14_Bit_referenceaSEb.exit53 ], [ %.sroa.59.1.i.i.i.i.i70, %_ZNSt14_Bit_referenceaSERKS_.exit.i.i.i.i.i66 ]
   %.sroa.07.0.lcssa.i.i.i.i.i59 = phi ptr [ %.sroa.082.0, %_ZNSt14_Bit_referenceaSEb.exit53 ], [ %.sroa.07.1.i.i.i.i.i72, %_ZNSt14_Bit_referenceaSERKS_.exit.i.i.i.i.i66 ]
+  %7 = ptrtoint ptr %.sroa.07.0.lcssa.i.i.i.i.i59 to i64
   %.not.i73 = icmp eq ptr %i.bi, null
   br i1 %.not.i73, label %_ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit, label %bb.t
 
 bb.t:                                             ; preds = %_ZSt4copyISt13_Bit_iteratorS0_ET0_T_S2_S1_.exit
   %i.dr = load ptr, ptr %i.c, align 8, !tbaa !186 ; 2 uses
   %i.ds = ptrtoint ptr %i.dr to i64
-  %i.dt = sub i64 %i.ds, %i.bk                    ; 2 uses
+  %i.dt = sub i64 %i.ds, %i.bj                    ; 2 uses
   %i.du = ashr exact i64 %i.dt, 3
   %i.dv = sub nsw i64 0, %i.du
   %i.dw = getelementptr inbounds [8 x i8], ptr %i.dr, i64 %i.dv
@@ -1316,10 +1320,10 @@ _ZNSt13_Bvector_baseISaIbEE13_M_deallocateEv.exit: ; preds = %_ZSt4copyISt13_Bit
   %i.dx = lshr i64 %i.be, 6
   %i.dy = getelementptr inbounds nuw [8 x i8], ptr %i.bh, i64 %i.dx
   store ptr %i.dy, ptr %i.c, align 8, !tbaa !186
-  store ptr %i.bh, ptr %0, align 8
+  store i64 %6, ptr %0, align 8
   %.sroa.587.0..sroa_idx88 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 0, ptr %.sroa.587.0..sroa_idx88, align 8
-  store ptr %.sroa.07.0.lcssa.i.i.i.i.i59, ptr %i.a, align 8
+  store i64 %7, ptr %i.a, align 8
   store i32 %.sroa.59.0.lcssa.i.i.i.i.i58, ptr %i.e, align 8
   br label %_ZNSt13_Bit_iteratorppEv.exit
 

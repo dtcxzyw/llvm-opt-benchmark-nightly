@@ -202,11 +202,12 @@ bb.j:                                             ; preds = %._crit_edge, %bb.d
   %.246 = phi ptr [ null, %bb.d ], [ %.044, %._crit_edge ]
   %i.ay = add i64 %i.ax, 1
   store i64 %i.ay, ptr %i.af, align 8, !tbaa !49
+  %4 = ptrtoint ptr %i.ae to i64
   br label %.thread53
 
 .thread53:                                        ; preds = %bb.j, %bb.i, %bb.g
   %.347 = phi ptr [ %.246, %bb.j ], [ null, %bb.g ], [ %.044, %bb.i ] ; 2 uses
-  %.1 = phi ptr [ %i.ae, %bb.j ], [ null, %bb.g ], [ null, %bb.i ]
+  %.sroa.0.1 = phi i64 [ %4, %bb.j ], [ 0, %bb.g ], [ 0, %bb.i ]
   %i.az = getelementptr inbounds nuw i8, ptr %i.ae, i64 56
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !22
   %i.bb = call i32 @H5AC_unprotect(ptr noundef %0, ptr noundef nonnull @H5AC_LHEAP_PRFX, i64 noundef %i.ba, ptr noundef nonnull %i.y, i32 noundef 0) #6
@@ -220,7 +221,7 @@ bb.k:                                             ; preds = %.thread53
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %.thread53
-  %.2 = phi ptr [ null, %bb.k ], [ %.1, %.thread53 ] ; 2 uses
+  %.sroa.0.2 = phi i64 [ 0, %bb.k ], [ %.sroa.0.1, %.thread53 ] ; 2 uses
   %.not = icmp eq ptr %.347, null
   br i1 %.not, label %bb.o, label %bb.m
 
@@ -237,10 +238,11 @@ bb.n:                                             ; preds = %bb.m
   %i.bm = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.2, ptr noundef nonnull @__func__.H5HL_protect, i32 noundef 366, i64 noundef %i.bk, i64 noundef %i.bl, ptr noundef nonnull @.str.14) #6 ; 0 uses
   br label %bb.o
 
-bb.o:                                             ; preds = %.thread63, %bb.b, %bb.n, %bb.m, %bb.l
-  %.3 = phi ptr [ null, %bb.n ], [ %.2, %bb.m ], [ %.2, %bb.l ], [ null, %bb.b ], [ null, %.thread63 ]
+bb.o:                                             ; preds = %.thread63, %bb.l, %bb.m, %bb.n, %bb.b
+  %.sroa.0.3 = phi i64 [ 0, %bb.n ], [ %.sroa.0.2, %bb.m ], [ %.sroa.0.2, %bb.l ], [ 0, %bb.b ], [ 0, %.thread63 ]
+  %5 = inttoptr i64 %.sroa.0.3 to ptr
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
-  ret ptr %.3
+  ret ptr %5
 }
 
 declare ptr @H5AC_protect(ptr noundef, ptr noundef, i64 noundef, ptr noundef, i32 noundef) local_unnamed_addr #2

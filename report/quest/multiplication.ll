@@ -202,7 +202,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit21:                  ; preds = %_ZNSt6vectorIiSaIiE
   %.sroa.6.sroa.0.0.copyload85 = load <2 x double>, ptr %i.aa, align 8, !tbaa !26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   %i.ab = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #10
-          to label %bb.g unwind label %bb.f       ; 4 uses
+          to label %bb.g unwind label %bb.f       ; 5 uses
 
 bb.f:                                             ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit21
   %i.ac = landingpad { ptr, i32 }
@@ -215,7 +215,9 @@ bb.g:                                             ; preds = %_ZNSt6vectorIiSaIiE
   store ptr %i.ab, ptr %5, align 8, !tbaa !36
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 32 ; 2 uses
   store ptr %i.ae, ptr %i.i, align 8, !tbaa !38
-  store <2 x double> <double 1.000000e+00, double 0.000000e+00>, ptr %i.ab, align 8
+  store i64 4607182418800017408, ptr %i.ab, align 8
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
+  store i64 0, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
   store <2 x double> %.sroa.6.sroa.0.0.copyload85, ptr %.sroa.6.0..sroa_idx, align 8
   store ptr %i.ae, ptr %i.j, align 8, !tbaa !39
@@ -505,7 +507,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit33:                  ; preds = %_ZNSt6vectorIiSaIiE
   %.sroa.6.sroa.0.0.copyload95 = load <2 x double>, ptr %i.ah, align 8, !tbaa !26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   %i.ai = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #10
-          to label %bb.g unwind label %bb.f       ; 4 uses
+          to label %bb.g unwind label %bb.f       ; 5 uses
 
 bb.f:                                             ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit33
   %i.aj = landingpad { ptr, i32 }
@@ -518,7 +520,9 @@ bb.g:                                             ; preds = %_ZNSt6vectorIiSaIiE
   store ptr %i.ai, ptr %5, align 8, !tbaa !36
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 32 ; 2 uses
   store ptr %i.al, ptr %i.k, align 8, !tbaa !38
-  store <2 x double> <double 1.000000e+00, double 0.000000e+00>, ptr %i.ai, align 8
+  store i64 4607182418800017408, ptr %i.ai, align 8
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
+  store i64 0, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
   store <2 x double> %.sroa.6.sroa.0.0.copyload95, ptr %.sroa.6.0..sroa_idx, align 8
   store ptr %i.al, ptr %i.l, align 8, !tbaa !39

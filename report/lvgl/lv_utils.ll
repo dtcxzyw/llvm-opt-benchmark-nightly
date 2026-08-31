@@ -9,11 +9,16 @@ target triple = "x86_64-pc-linux-gnu"
 define noundef ptr @lv_utils_bsearch(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, ptr nofree noundef readonly captures(none) %4) local_unnamed_addr #0 {
 bb.a:
   %.not22 = icmp eq i64 %2, 0
-  br i1 %.not22, label %._crit_edge, label %.lr.ph
+  br i1 %.not22, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.a, %bb.d
-  %.024 = phi ptr [ %.1, %bb.d ], [ %1, %bb.a ]   ; 2 uses
-  %.01923 = phi i64 [ %.120, %bb.d ], [ %2, %bb.a ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.a
+  %5 = ptrtoint ptr %1 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
+  %.024 = phi ptr [ %.1, %bb.d ], [ %1, %.lr.ph.preheader ]
+  %.sroa.0.021 = phi i64 [ %.sroa.0.1, %bb.d ], [ %5, %.lr.ph.preheader ] ; 2 uses
+  %.01923 = phi i64 [ %.120, %bb.d ], [ %2, %.lr.ph.preheader ] ; 2 uses
   %i.a = lshr i64 %.01923, 1                      ; 3 uses
   %i.b = mul i64 %i.a, %3
   %i.c = getelementptr inbounds nuw i8, ptr %.024, i64 %i.b ; 3 uses
@@ -25,16 +30,22 @@ bb.b:                                             ; preds = %.lr.ph
   %i.f = and i64 %.01923, 1
   %i.g = xor i64 %i.f, 1
   %i.h = sub nsw i64 %i.a, %i.g
-  %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 %3
+  %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 %3 ; 2 uses
+  %6 = ptrtoint ptr %i.i to i64
   br label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph
   %i.j = icmp slt i32 %i.d, 0
-  br i1 %i.j, label %bb.d, label %._crit_edge
+  br i1 %i.j, label %7, label %._crit_edge
 
-bb.d:                                             ; preds = %bb.c, %bb.b
-  %.120 = phi i64 [ %i.h, %bb.b ], [ %i.a, %bb.c ] ; 2 uses
-  %.1 = phi ptr [ %i.i, %bb.b ], [ %.024, %bb.c ]
+7:                                                ; preds = %bb.c
+  %8 = inttoptr i64 %.sroa.0.021 to ptr
+  br label %bb.d
+
+bb.d:                                             ; preds = %7, %bb.b
+  %.120 = phi i64 [ %i.h, %bb.b ], [ %i.a, %7 ]   ; 2 uses
+  %.sroa.0.1 = phi i64 [ %6, %bb.b ], [ %.sroa.0.021, %7 ]
+  %.1 = phi ptr [ %i.i, %bb.b ], [ %8, %7 ]
   %.not = icmp eq i64 %.120, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !8
 

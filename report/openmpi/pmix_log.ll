@@ -202,9 +202,13 @@ bb.f:                                             ; preds = %bb.e
   %or.cond445 = or i1 %.not, %.not394
   br i1 %or.cond445, label %.loopexit, label %.lr.ph
 
+._crit_edge.loopexit:                             ; preds = %bb.k
+  %6 = inttoptr i64 %.sroa.0.1 to ptr
+  br label %.loopexit
+
 .lr.ph:                                           ; preds = %bb.f, %bb.k
   %.0393 = phi i64 [ %i.y, %bb.k ], [ 0, %bb.f ]  ; 2 uses
-  %.0213392 = phi ptr [ %.1, %bb.k ], [ null, %bb.f ] ; 3 uses
+  %.sroa.0.0388 = phi i64 [ %.sroa.0.1, %bb.k ], [ 0, %bb.f ] ; 3 uses
   %i.o = getelementptr inbounds nuw [552 x i8], ptr %2, i64 %.0393 ; 4 uses
   %i.p = tail call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %i.o, ptr noundef nonnull dereferenceable(16) @.str.4, i64 noundef 511) #13
   %i.q = icmp eq i32 %i.p, 0
@@ -228,16 +232,17 @@ bb.i:                                             ; preds = %.lr.ph
 bb.j:                                             ; preds = %bb.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.o, i64 528
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !76
+  %7 = ptrtoint ptr %i.x to i64
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.g, %bb.h, %bb.j, %bb.i
-  %.1 = phi ptr [ %.0213392, %bb.h ], [ %.0213392, %bb.g ], [ %i.x, %bb.j ], [ %.0213392, %bb.i ] ; 2 uses
+  %.sroa.0.1 = phi i64 [ %.sroa.0.0388, %bb.h ], [ %.sroa.0.0388, %bb.g ], [ %7, %bb.j ], [ %.sroa.0.0388, %bb.i ] ; 2 uses
   %i.y = add nuw i64 %.0393, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.y, %3
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !78
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !78
 
-.loopexit:                                        ; preds = %bb.k, %bb.f
-  %.2 = phi ptr [ null, %bb.f ], [ %.1, %bb.k ]
+.loopexit:                                        ; preds = %._crit_edge.loopexit, %bb.f
+  %.2 = phi ptr [ null, %bb.f ], [ %6, %._crit_edge.loopexit ]
   %i.z = load ptr, ptr getelementptr inbounds nuw (i8, ptr @pmix_globals, i64 328), align 8, !tbaa !79
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 136
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !80

@@ -204,9 +204,13 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 4 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !39
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 132
-  %3 = insertelement <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, float %2, i64 0
-  %4 = shufflevector <4 x float> %3, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  store <4 x float> %4, ptr %i.b, align 4
+  store float %2, ptr %i.b, align 4
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 136
+  store float %2, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 140
+  store float %2, ptr %.sroa.5.0..sroa_idx, align 4
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 144
+  store i32 0, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !40
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 128
   store i8 0, ptr %i.c, align 8, !tbaa !31
   ret void
@@ -230,9 +234,13 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 112
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 4 dereferenceable(16) %1, i64 16, i1 false)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 148
-  %3 = insertelement <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, float %2, i64 0
-  %4 = shufflevector <4 x float> %3, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  store <4 x float> %4, ptr %i.b, align 4
+  store float %2, ptr %i.b, align 4
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 152
+  store float %2, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 156
+  store float %2, ptr %.sroa.5.0..sroa_idx, align 4
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 160
+  store i32 0, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !40
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 128
   store i8 0, ptr %i.c, align 8, !tbaa !31
   ret void

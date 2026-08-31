@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %._crit_edge102, %.t
 
 .lr.ph:                                           ; preds = %bb.e, %bb.g
   %i.aa = phi ptr [ %i.ag, %bb.g ], [ %i.z, %bb.e ] ; 3 uses
-  %.06698 = phi ptr [ %.167, %bb.g ], [ null, %bb.e ] ; 2 uses
+  %.sroa.09.095 = phi i64 [ %.sroa.09.1, %bb.g ], [ 0, %bb.e ] ; 2 uses
   %.07097 = phi ptr [ %.171, %bb.g ], [ %i.y, %bb.e ] ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !78
@@ -216,18 +216,24 @@ bb.e:                                             ; preds = %._crit_edge102, %.t
 bb.f:                                             ; preds = %.lr.ph
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !84
   store ptr %i.af, ptr %.07097, align 8, !tbaa !48
-  store ptr %.06698, ptr %i.ae, align 8, !tbaa !84
+  %1 = inttoptr i64 %.sroa.09.095 to ptr
+  store ptr %1, ptr %i.ae, align 8, !tbaa !84
+  %2 = ptrtoint ptr %i.aa to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %bb.f
   %.171 = phi ptr [ %.07097, %bb.f ], [ %i.ae, %.lr.ph ] ; 2 uses
-  %.167 = phi ptr [ %i.aa, %bb.f ], [ %.06698, %.lr.ph ] ; 2 uses
+  %.sroa.09.1 = phi i64 [ %2, %bb.f ], [ %.sroa.09.095, %.lr.ph ] ; 2 uses
   %i.ag = load ptr, ptr %.171, align 8, !tbaa !48 ; 2 uses
   %.not81 = icmp eq ptr %i.ag, null
-  br i1 %.not81, label %.thread85.a, label %.lr.ph
+  br i1 %.not81, label %.thread82.loopexit, label %.lr.ph
 
-.thread85.a:                                      ; preds = %bb.g, %bb.e
-  %.066.lcssa = phi ptr [ null, %bb.e ], [ %.167, %bb.g ]
+.thread82.loopexit:                               ; preds = %bb.g
+  %3 = inttoptr i64 %.sroa.09.1 to ptr
+  br label %.thread85.a
+
+.thread85.a:                                      ; preds = %.thread82.loopexit, %bb.e
+  %.066.lcssa = phi ptr [ null, %bb.e ], [ %3, %.thread82.loopexit ]
   store ptr %.066.lcssa, ptr %i.w, align 8, !tbaa !48
   %i.ah = load i64, ptr %i.d, align 8, !tbaa !35
   %i.ai = add nsw i64 %i.ah, 2                    ; 2 uses

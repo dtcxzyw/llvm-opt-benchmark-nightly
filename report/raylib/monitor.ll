@@ -202,7 +202,7 @@ refreshVideoModes.exit:                           ; preds = %.refreshVideoModes.
   %i.l = phi i32 [ %.pre, %.refreshVideoModes.exit_crit_edge ], [ %i.i, %bb.c ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %i.m = icmp sgt i32 %i.l, 0
-  br i1 %i.m, label %.lr.ph, label %.loopexit
+  br i1 %i.m, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %refreshVideoModes.exit
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -225,7 +225,7 @@ refreshVideoModes.exit:                           ; preds = %.refreshVideoModes.
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.m
   %indvars.iv122 = phi i64 [ %indvars.iv.next123, %bb.m ], [ 0, %.lr.ph ] ; 2 uses
-  %.074.us = phi ptr [ %.1.us, %bb.m ], [ null, %.lr.ph ]
+  %.sroa.0.071.us = phi i64 [ %.sroa.0.1.us, %bb.m ], [ 0, %.lr.ph ]
   %.04773.us = phi i32 [ %.148.us, %bb.m ], [ -1, %.lr.ph ] ; 3 uses
   %.05172.us = phi i32 [ %.152.us, %bb.m ], [ -1, %.lr.ph ] ; 2 uses
   %.05471.us = phi i32 [ %.155.us, %bb.m ], [ -1, %.lr.ph ] ; 3 uses
@@ -293,23 +293,24 @@ bb.k:                                             ; preds = %bb.j
   br i1 %or.cond67.us, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i
+  %2 = ptrtoint ptr %i.y to i64
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.155.us = phi i32 [ %i.au, %bb.l ], [ %.05471.us, %bb.k ]
   %.152.us = phi i32 [ %i.ax, %bb.l ], [ %.05172.us, %bb.k ]
   %.148.us = phi i32 [ %.2.us, %bb.l ], [ %.04773.us, %bb.k ]
-  %.1.us = phi ptr [ %i.y, %bb.l ], [ %.074.us, %bb.k ] ; 2 uses
+  %.sroa.0.1.us = phi i64 [ %2, %bb.l ], [ %.sroa.0.071.us, %bb.k ] ; 2 uses
   %indvars.iv.next123 = add nuw nsw i64 %indvars.iv122, 1 ; 2 uses
   %exitcond126.not = icmp eq i64 %indvars.iv.next123, %wide.trip.count125
-  br i1 %exitcond126.not, label %.loopexit, label %.lr.ph.split.us
+  br i1 %exitcond126.not, label %._crit_edge, label %.lr.ph.split.us
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   br i1 %.not63, label %.lr.ph.split.split.us, label %.lr.ph.split.split
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %bb.u
   %indvars.iv117 = phi i64 [ %indvars.iv.next118, %bb.u ], [ 0, %.lr.ph.split ] ; 2 uses
-  %.074.us75 = phi ptr [ %.1.us89, %bb.u ], [ null, %.lr.ph.split ]
+  %.sroa.0.071.us72 = phi i64 [ %.sroa.0.1.us86, %bb.u ], [ 0, %.lr.ph.split ]
   %.04773.us76 = phi i32 [ %.148.us88, %bb.u ], [ -1, %.lr.ph.split ] ; 3 uses
   %.05172.us77 = phi i32 [ %.152.us87, %bb.u ], [ -1, %.lr.ph.split ] ; 2 uses
   %.05471.us78 = phi i32 [ %.155.us86, %bb.u ], [ -1, %.lr.ph.split ] ; 3 uses
@@ -366,23 +367,24 @@ bb.s:                                             ; preds = %bb.r
   br i1 %or.cond67.us85, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
+  %3 = ptrtoint ptr %i.bd to i64
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
   %.155.us86 = phi i32 [ %i.bu, %bb.t ], [ %.05471.us78, %bb.s ]
   %.152.us87 = phi i32 [ %i.by, %bb.t ], [ %.05172.us77, %bb.s ]
   %.148.us88 = phi i32 [ %.2.us82, %bb.t ], [ %.04773.us76, %bb.s ]
-  %.1.us89 = phi ptr [ %i.bd, %bb.t ], [ %.074.us75, %bb.s ] ; 2 uses
+  %.sroa.0.1.us86 = phi i64 [ %3, %bb.t ], [ %.sroa.0.071.us72, %bb.s ] ; 2 uses
   %indvars.iv.next118 = add nuw nsw i64 %indvars.iv117, 1 ; 2 uses
   %exitcond121.not = icmp eq i64 %indvars.iv.next118, %wide.trip.count125
-  br i1 %exitcond121.not, label %.loopexit, label %.lr.ph.split.split.us
+  br i1 %exitcond121.not, label %._crit_edge, label %.lr.ph.split.split.us
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split
   br i1 %.not64, label %.lr.ph.split.split.split.us, label %.lr.ph.split.split.split
 
 .lr.ph.split.split.split.us:                      ; preds = %.lr.ph.split.split, %bb.aa
   %indvars.iv112 = phi i64 [ %indvars.iv.next113, %bb.aa ], [ 0, %.lr.ph.split.split ] ; 2 uses
-  %.074.us92 = phi ptr [ %.1.us105, %bb.aa ], [ null, %.lr.ph.split.split ]
+  %.sroa.0.071.us89 = phi i64 [ %.sroa.0.1.us102, %bb.aa ], [ 0, %.lr.ph.split.split ]
   %.04773.us93 = phi i32 [ %.148.us104, %bb.aa ], [ -1, %.lr.ph.split.split ] ; 3 uses
   %.05172.us94 = phi i32 [ %.152.us103, %bb.aa ], [ -1, %.lr.ph.split.split ] ; 2 uses
   %.05471.us95 = phi i32 [ %.155.us102, %bb.aa ], [ -1, %.lr.ph.split.split ] ; 3 uses
@@ -432,20 +434,21 @@ bb.y:                                             ; preds = %bb.x
   br i1 %or.cond67.us101, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y, %bb.x, %bb.w
+  %4 = ptrtoint ptr %i.ce to i64
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
   %.155.us102 = phi i32 [ %i.cv, %bb.z ], [ %.05471.us95, %bb.y ]
   %.152.us103 = phi i32 [ %i.cz, %bb.z ], [ %.05172.us94, %bb.y ]
   %.148.us104 = phi i32 [ %i.cn, %bb.z ], [ %.04773.us93, %bb.y ]
-  %.1.us105 = phi ptr [ %i.ce, %bb.z ], [ %.074.us92, %bb.y ] ; 2 uses
+  %.sroa.0.1.us102 = phi i64 [ %4, %bb.z ], [ %.sroa.0.071.us89, %bb.y ] ; 2 uses
   %indvars.iv.next113 = add nuw nsw i64 %indvars.iv112, 1 ; 2 uses
   %exitcond116.not = icmp eq i64 %indvars.iv.next113, %wide.trip.count125
-  br i1 %exitcond116.not, label %.loopexit, label %.lr.ph.split.split.split.us
+  br i1 %exitcond116.not, label %._crit_edge, label %.lr.ph.split.split.split.us
 
 .lr.ph.split.split.split:                         ; preds = %.lr.ph.split.split, %bb.ag
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ag ], [ 0, %.lr.ph.split.split ] ; 2 uses
-  %.074 = phi ptr [ %.1, %bb.ag ], [ null, %.lr.ph.split.split ]
+  %.sroa.0.071 = phi i64 [ %.sroa.0.1, %bb.ag ], [ 0, %.lr.ph.split.split ]
   %.04773 = phi i32 [ %.148, %bb.ag ], [ -1, %.lr.ph.split.split ] ; 3 uses
   %.05172 = phi i32 [ %.152, %bb.ag ], [ -1, %.lr.ph.split.split ] ; 2 uses
   %.05471 = phi i32 [ %.155, %bb.ag ], [ -1, %.lr.ph.split.split ] ; 3 uses
@@ -500,20 +503,26 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %or.cond67, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.ac
+  %5 = ptrtoint ptr %i.df to i64
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.ae, %bb.af
   %.155 = phi i32 [ %i.eb, %bb.af ], [ %.05471, %bb.ae ]
   %.152 = phi i32 [ %i.ef, %bb.af ], [ %.05172, %bb.ae ]
   %.148 = phi i32 [ %i.dt, %bb.af ], [ %.04773, %bb.ae ]
-  %.1 = phi ptr [ %i.df, %bb.af ], [ %.074, %bb.ae ] ; 2 uses
+  %.sroa.0.1 = phi i64 [ %5, %bb.af ], [ %.sroa.0.071, %bb.ae ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count125
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph.split.split.split
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split.split.split
 
-.loopexit:                                        ; preds = %bb.ag, %bb.aa, %bb.u, %bb.m, %refreshVideoModes.exit, %refreshVideoModes.exit.thread
-  %.057 = phi ptr [ null, %refreshVideoModes.exit.thread ], [ null, %refreshVideoModes.exit ], [ %.1.us89, %bb.u ], [ %.1.us105, %bb.aa ], [ %.1.us, %bb.m ], [ %.1, %bb.ag ]
-  ret ptr %.057
+._crit_edge:                                      ; preds = %bb.ag, %bb.aa, %bb.u, %bb.m, %refreshVideoModes.exit
+  %.sroa.0.0.lcssa = phi i64 [ 0, %refreshVideoModes.exit ], [ %.sroa.0.1.us86, %bb.u ], [ %.sroa.0.1.us102, %bb.aa ], [ %.sroa.0.1.us, %bb.m ], [ %.sroa.0.1, %bb.ag ]
+  %6 = inttoptr i64 %.sroa.0.0.lcssa to ptr
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %refreshVideoModes.exit.thread, %._crit_edge
+  %.054 = phi ptr [ %6, %._crit_edge ], [ null, %refreshVideoModes.exit.thread ]
+  ret ptr %.054
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)

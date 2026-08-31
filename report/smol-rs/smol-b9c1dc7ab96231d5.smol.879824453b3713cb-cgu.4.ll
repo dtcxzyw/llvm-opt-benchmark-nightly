@@ -202,6 +202,9 @@ bb.e:                                             ; preds = %bb.f, %bb.c
   %i.ag = call align 8 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNtCs8NKWGp8lJEP_8fastrand10global_rng3RNG0s_023___RUST_STD_INTERNAL_VAL) ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.i, i64 184 ; 2 uses
+  %1 = insertelement <2 x ptr> poison, ptr %i.af, i64 0
+  %2 = insertelement <2 x ptr> %1, ptr %i.ai, i64 1
+  %3 = ptrtoint <2 x ptr> %2 to <2 x i64>
   %.sroa.816.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.aj = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.ak = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -213,8 +216,6 @@ bb.e:                                             ; preds = %bb.f, %bb.c
   %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
-  %1 = insertelement <2 x ptr> poison, ptr %i.af, i64 0
-  %2 = insertelement <2 x ptr> %1, ptr %i.ai, i64 1
   br label %.backedge.i.i.i
 
 .body44.i.i.i:                                    ; preds = %bb.ar, %bb.al, %.body.i.i.i, %.body.thread.i.i.i
@@ -265,7 +266,8 @@ _RNvMs3_Csa9iXSdNszRG_14async_executorNtB5_8Executor5state.exit.i.i.i.i: ; preds
 
 .thread.i.i.i.i:                                  ; preds = %_RNvMs3_Csa9iXSdNszRG_14async_executorNtB5_8Executor5state.exit.i.i.i.i
   store i8 0, ptr %i.ab, align 16, !noalias !76
-  store ptr %i.ax, ptr %.sroa.7.0..sroa_idx.i.i.i.i, align 16, !noalias !76
+  %4 = ptrtoint ptr %i.ax to i64
+  store i64 %4, ptr %.sroa.7.0..sroa_idx.i.i.i.i, align 16, !noalias !76
   store i8 0, ptr %.phi.trans.insert.i.i.i.i, align 1, !noalias !76
   br label %bb.m
 
@@ -353,7 +355,7 @@ bb.q:                                             ; preds = %.noexc.i.i.i.i.i, %
   store i64 %i.bi, ptr %i.ag, align 8, !noalias !80
   store i64 %i.bp, ptr %i.ai, align 8, !noalias !80
   store i8 0, ptr %i.ae, align 8, !noalias !80
-  store <2 x ptr> %2, ptr %i.i, align 16, !noalias !80
+  store <2 x i64> %3, ptr %i.i, align 16, !noalias !80
   store i8 0, ptr %.sroa.816.0..sroa_idx.i.i.i.i.i, align 16, !noalias !80
   br label %bb.u
 
@@ -756,6 +758,7 @@ bb.n:                                             ; preds = %_RNvMsv_NtCskKLDkoK
   %i.az = phi i64 [ 1, %.thread62.i.i.i ], [ %spec.select.i.i, %bb.n ]
   %i.ba = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.bb = getelementptr inbounds nuw i8, ptr %i.g, i64 40
+  %2 = ptrtoint ptr %i.k to i64
   %.sroa.424.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.bc = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.bd = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 4 uses
@@ -774,8 +777,8 @@ _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsexYYUdYSQU6
   store i64 0, ptr %i.g, align 8
   store i8 0, ptr %i.bb, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  store ptr %i.k, ptr %i.e, align 8
-  store ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.424.0..sroa_idx.i.i.i, align 8
+  store i64 %2, ptr %i.e, align 8
+  store i64 ptrtoint (ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt to i64), ptr %.sroa.424.0..sroa_idx.i.i.i, align 8
   call void @_RNvNvNtCsexYYUdYSQU6_5alloc3fmt6format12format_inner(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.f, ptr noundef nonnull @11, ptr noundef nonnull %i.e)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @_RNvMNtNtCsG258MDvU3F_3std6thread7builderNtB2_7Builder4name(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.h, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(48) %i.g, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.f)
@@ -790,7 +793,7 @@ _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCsexYYUdYSQU6
 
 ._crit_edge.i.i.i:                                ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsG258MDvU3F_3std6thread11join_handle10JoinHandlezEECsbDLrNlwBX3H_4smol.exit.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  store ptr null, ptr %i.d, align 8
+  store i64 0, ptr %i.d, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.bh = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   store i8 0, ptr %i.bh, align 8

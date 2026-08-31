@@ -202,7 +202,7 @@ bb.dv:                                            ; preds = %bb.du
   %.1258.i = phi ptr [ %.2259.i, %bb.ev ], [ null, %bb.f ] ; 14 uses
   %.051114.i.i = phi ptr [ %i.lg, %bb.ev ], [ null, %bb.f ] ; 4 uses
   %.053113.i.i = phi ptr [ %i.mp, %bb.ev ], [ %i.b, %bb.f ] ; 23 uses
-  %.054112.i.i = phi ptr [ %.2.i.i, %bb.ev ], [ null, %bb.f ] ; 2 uses
+  %.sroa.0.0108.i.i = phi i64 [ %.sroa.0.2.i.i, %bb.ev ], [ 0, %bb.f ] ; 2 uses
   %i.jh = call ptr @Curl_bufref_ptr(ptr noundef nonnull %.053113.i.i) #6 ; 2 uses
   %.not64.i.i = icmp eq ptr %i.jh, null           ; 2 uses
   br i1 %.not64.i.i, label %bb.dx, label %bb.dw
@@ -268,7 +268,8 @@ bb.ec:                                            ; preds = %bb.eb
   %i.kb = call ptr @Curl_bufref_ptr(ptr noundef nonnull %i.ka) #6
   %i.kc = call ptr @Curl_mime_contenttype(ptr noundef %i.kb) #6 ; 2 uses
   %.not78.i.i.a = icmp eq ptr %i.kc, null
-  %spec.select.i.i = select i1 %.not78.i.i.a, ptr %.054112.i.i, ptr %i.kc ; 2 uses
+  %3 = inttoptr i64 %.sroa.0.0108.i.i to ptr
+  %spec.select.i.i = select i1 %.not78.i.i.a, ptr %3, ptr %i.kc ; 2 uses
   %.not79.i.i.a = icmp eq ptr %spec.select.i.i, null
   %spec.store.select.i.i = select i1 %.not79.i.i.a, ptr @.str.2, ptr %spec.select.i.i ; 2 uses
   %i.kd = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %spec.store.select.i.i) #7
@@ -443,10 +444,11 @@ AddHttpPost.exit.i.i:                             ; preds = %.else.i, %bb.et, %b
 
 bb.eu:                                            ; preds = %AddHttpPost.exit.i.i
   %i.mn = call ptr @Curl_bufref_ptr(ptr noundef nonnull %i.lt) #6
+  %4 = ptrtoint ptr %i.mn to i64
   br label %bb.ev
 
 bb.ev:                                            ; preds = %bb.eu, %AddHttpPost.exit.i.i
-  %.2.i.i = phi ptr [ %.054112.i.i, %AddHttpPost.exit.i.i ], [ %i.mn, %bb.eu ]
+  %.sroa.0.2.i.i = phi i64 [ %.sroa.0.0108.i.i, %AddHttpPost.exit.i.i ], [ %4, %bb.eu ]
   %i.mo = getelementptr inbounds nuw i8, ptr %.053113.i.i, i64 112
   %i.mp = load ptr, ptr %i.mo, align 8, !tbaa !28 ; 2 uses
   %.not.i251.i.a = icmp eq ptr %i.mp, null

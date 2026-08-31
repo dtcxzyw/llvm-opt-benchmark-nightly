@@ -205,6 +205,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 48
+  %6 = ptrtoint ptr %0 to i64                     ; 2 uses
   %.sroa.040.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.4.0..sroa_idx3.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.5.0..sroa_idx5.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -240,6 +241,7 @@ bb.b:                                             ; preds = %bb.a, %_ZN5Eigen9De
   store i64 %.03253, ptr %i.d, align 8, !tbaa !92
   store i64 3, ptr %i.e, align 8, !tbaa !95
   %i.q = getelementptr [8 x i8], ptr %0, i64 %.03253 ; 5 uses
+  %7 = ptrtoint ptr %i.o to i64
   %i.r = getelementptr i8, ptr %i.q, i64 %.idx.i.i.i ; 2 uses
   %i.s = load double, ptr %i.r, align 8, !tbaa !36 ; 2 uses
   %.not54 = icmp eq i64 %.03253, 0
@@ -277,18 +279,19 @@ bb.e:                                             ; preds = %bb.d
   ]
 
 .thread:                                          ; preds = %bb.e
+  %8 = ptrtoint ptr %i.q to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #19
-  store ptr %i.o, ptr %1, align 8
+  store i64 %7, ptr %1, align 8
   store i64 %i.m, ptr %.sroa.040.sroa.4.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   store i64 %.03253, ptr %.sroa.4.0..sroa_idx3.i.i.i.i, align 8
-  store ptr %0, ptr %.sroa.5.0..sroa_idx5.i.i.i.i, align 8
+  store i64 %6, ptr %.sroa.5.0..sroa_idx5.i.i.i.i, align 8
   store i64 %i.n, ptr %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx5.i.i.i.i.sroa_idx, align 8
   store i64 0, ptr %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx5.i.i.i.i.sroa_idx, align 8
   store i64 3, ptr %.sroa.5.sroa.6.0..sroa.5.0..sroa_idx5.i.i.i.i.sroa_idx, align 8
-  store ptr %i.q, ptr %i.f, align 8
+  store i64 %8, ptr %i.f, align 8
   store i64 %.03253, ptr %.sroa.6.sroa.5.0..sroa_idx, align 8
-  store ptr %0, ptr %.sroa.6.sroa.6.0..sroa_idx, align 8
+  store i64 %6, ptr %.sroa.6.sroa.6.0..sroa_idx, align 8
   store i64 %.03253, ptr %.sroa.6.sroa.7.0..sroa_idx, align 8
   store i64 0, ptr %.sroa.6.sroa.8.0..sroa_idx, align 8
   store i64 1, ptr %.sroa.6.sroa.9.0..sroa_idx, align 8

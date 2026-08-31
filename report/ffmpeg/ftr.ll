@@ -107,8 +107,9 @@ bb.a:
   %or.cond.i.i = icmp ult i32 %i.h, 2147483135    ; 2 uses
   %i.i = icmp ne ptr %i.d, null
   %or.cond3.i.i = and i1 %i.i, %or.cond.i.i       ; 2 uses
-  %.014.i.i = select i1 %or.cond.i.i, ptr %i.d, ptr null
   %.013.i.i = select i1 %or.cond3.i.i, i32 %i.h, i32 0 ; 3 uses
+  %6 = ptrtoint ptr %i.d to i64
+  %7 = select i1 %or.cond.i.i, i64 %6, i64 0
   %i.j = add nuw nsw i32 %.013.i.i, 8
   br i1 %or.cond3.i.i, label %bb.b, label %bb.x
 
@@ -146,7 +147,7 @@ bb.d:                                             ; preds = %.lr.ph144, %bb.c
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv153
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !38   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
-  store ptr %.014.i.i, ptr %4, align 8, !tbaa !50
+  store i64 %7, ptr %4, align 8, !tbaa !50
   store i32 %.sroa.4.0140, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !51
   store i32 %.013.i.i, ptr %.sroa.11.0..sroa_idx, align 4, !tbaa !51
   store i32 %i.j, ptr %.sroa.14.0..sroa_idx, align 8, !tbaa !51

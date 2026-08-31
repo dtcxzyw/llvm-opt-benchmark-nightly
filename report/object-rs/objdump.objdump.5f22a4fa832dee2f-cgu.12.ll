@@ -204,9 +204,10 @@ bb.c:                                             ; preds = %.noexc
   %i.n = icmp ule i64 %..i9, %i.j
   tail call void @llvm.assume(i1 %i.n)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !70
+  %3 = ptrtoint ptr %i.m to i64
   store i64 %i.j, ptr %i.b, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr %i.m, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %3, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 0, ptr %.sroa.5.0..sroa_idx, align 8
   br label %bb.d
@@ -609,9 +610,10 @@ bb.f:                                             ; preds = %bb.b
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag)
-  store ptr %i.ai, ptr %i.ag, align 8
+  %0 = ptrtoint ptr %i.ai to i64
+  store i64 %0, ptr %i.ag, align 8
   %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
-  store ptr @_RNvXsq_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtCskKLDkoKarTP_4core3fmt7Display3fmt, ptr %.sroa.48.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXsq_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtCskKLDkoKarTP_4core3fmt7Display3fmt to i64), ptr %.sroa.48.0..sroa_idx, align 8
   invoke void @_RNvNtNtCsG258MDvU3F_3std2io5stdio7__eprint(ptr noundef nonnull @7, ptr noundef nonnull %i.ag)
           to label %bb.i unwind label %bb.e
 
@@ -865,13 +867,15 @@ bb.ah:                                            ; preds = %bb.ag
   %i.cl = load ptr, ptr %i.ck, align 8, !nonnull !8, !noundef !8
   store ptr %i.cl, ptr %i.z, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y)
-  store ptr %i.af, ptr %i.y, align 8
+  %1 = ptrtoint ptr %i.af to i64
+  %2 = ptrtoint ptr %i.z to i64
+  store i64 %1, ptr %i.y, align 8
   %.sroa.412.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.y, i64 8
-  store ptr @_RNvXsq_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtCskKLDkoKarTP_4core3fmt7Display3fmt, ptr %.sroa.412.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXsq_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtCskKLDkoKarTP_4core3fmt7Display3fmt to i64), ptr %.sroa.412.0..sroa_idx, align 8
   %i.cm = getelementptr inbounds nuw i8, ptr %i.y, i64 16
-  store ptr %i.z, ptr %i.cm, align 8
+  store i64 %2, ptr %i.cm, align 8
   %.sroa.416.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.y, i64 24
-  store ptr @_RNvXs3_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5ErrorNtNtB9_3fmt7Display3fmt, ptr %.sroa.416.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs3_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5ErrorNtNtB9_3fmt7Display3fmt to i64), ptr %.sroa.416.0..sroa_idx, align 8
   invoke void @_RNvNtNtCsG258MDvU3F_3std2io5stdio7__eprint(ptr noundef nonnull @11, ptr noundef nonnull %i.y)
           to label %bb.bs unwind label %bb.br
 
@@ -915,13 +919,15 @@ bb.ak:                                            ; preds = %bb.aj
   %i.cz = load ptr, ptr %i.cy, align 8, !nonnull !8, !noundef !8
   store ptr %i.cz, ptr %i.v, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
-  store ptr %i.af, ptr %i.u, align 8
+  %3 = ptrtoint ptr %i.af to i64
+  %4 = ptrtoint ptr %i.v to i64
+  store i64 %3, ptr %i.u, align 8
   %.sroa.420.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  store ptr @_RNvXsq_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtCskKLDkoKarTP_4core3fmt7Display3fmt, ptr %.sroa.420.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXsq_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtCskKLDkoKarTP_4core3fmt7Display3fmt to i64), ptr %.sroa.420.0..sroa_idx, align 8
   %i.da = getelementptr inbounds nuw i8, ptr %i.u, i64 16
-  store ptr %i.v, ptr %i.da, align 8
+  store i64 %4, ptr %i.da, align 8
   %.sroa.424.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.u, i64 24
-  store ptr @_RNvXs3_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5ErrorNtNtB9_3fmt7Display3fmt, ptr %.sroa.424.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs3_NtNtCskKLDkoKarTP_4core2io5errorNtB5_5ErrorNtNtB9_3fmt7Display3fmt to i64), ptr %.sroa.424.0..sroa_idx, align 8
   invoke void @_RNvNtNtCsG258MDvU3F_3std2io5stdio7__eprint(ptr noundef nonnull @10, ptr noundef nonnull %i.u)
           to label %bb.bq unwind label %bb.bp
 
@@ -962,7 +968,7 @@ _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultINtNtCsexYYUdYSQU6_5alloc3vec3VecN
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 16
   %.sroa.7.0.copyload = load i64, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.7.0 = select i1 %i.dj, i64 0, i64 %.sroa.7.0.copyload ; 2 uses
-  %.sroa.5.0 = select i1 %i.dj, ptr inttoptr (i64 8 to ptr), ptr %.sroa.5.0.copyload ; 3 uses
+  %.sroa.5.0 = select i1 %i.dj, ptr inttoptr (i64 8 to ptr), ptr %.sroa.5.0.copyload ; 2 uses
   %.sroa.0.0 = select i1 %i.dj, i64 0, i64 %i.di
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
@@ -970,13 +976,15 @@ _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultINtNtCsexYYUdYSQU6_5alloc3vec3VecN
   %i.dk = icmp ult i64 %.sroa.7.0, 384307168202282326
   call void @llvm.assume(i1 %i.dk)
   %i.dl = getelementptr inbounds nuw [24 x i8], ptr %.sroa.5.0, i64 %.sroa.7.0
-  store ptr %.sroa.5.0, ptr %i.r, align 8
+  %5 = ptrtoint ptr %.sroa.5.0 to i64             ; 2 uses
+  %6 = ptrtoint ptr %i.dl to i64
+  store i64 %5, ptr %i.r, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 8
-  store ptr %.sroa.5.0, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %5, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   store i64 %.sroa.0.0, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 24
-  store ptr %i.dl, ptr %.sroa.6.0..sroa_idx, align 8
+  store i64 %6, ptr %.sroa.6.0..sroa_idx, align 8
   %i.dm = getelementptr inbounds nuw i8, ptr %i.r, i64 32
   store ptr %i.af, ptr %i.dm, align 8
   invoke void @_RINvNtNtCsexYYUdYSQU6_5alloc3vec16in_place_collect18from_iter_in_placeINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB4_9into_iter8IntoIterNtNtB6_6string6StringENCNvCs8aoZCP6pRcV_7objdump4main0ENtCsgQ7e0lqRvgo_7memmap24MmapEB2L_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.s, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(40) %i.r)

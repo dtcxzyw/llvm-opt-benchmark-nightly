@@ -204,7 +204,8 @@ bb.a:
   store i64 %.sroa.4.0.copyload, ptr %.sroa.714.0..sroa_idx15, align 16, !tbaa !46
   %.sroa.818.0..sroa_idx19 = getelementptr inbounds nuw i8, ptr %7, i64 80
   %i.e = load <2 x ptr>, ptr %i.c, align 8, !tbaa !49
-  store <2 x ptr> %i.e, ptr %.sroa.818.0..sroa_idx19, align 16, !tbaa !49
+  %8 = ptrtoint <2 x ptr> %i.e to <2 x i64>
+  store <2 x i64> %8, ptr %.sroa.818.0..sroa_idx19, align 16, !tbaa !49
   tail call void @_Z35accel_densmatr_allTargDiagMatr_subA5Qureg17FullStateDiagMatrSt7complexIdEbbb(ptr noundef nonnull byval(%struct.Qureg) align 8 %0, ptr noundef nonnull byval(%struct.FullStateDiagMatr) align 8 %7, double %2, double %3, i1 noundef zeroext %4, i1 noundef zeroext %5, i1 noundef zeroext %6)
   ret void
 }

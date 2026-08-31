@@ -74,11 +74,11 @@ _RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command14override
   %.sroa.0.0.copyload.i3 = load i64, ptr %i.a, align 8, !alias.scope !24, !noalias !28 ; 2 uses
   %i.p = icmp eq i64 %.sroa.0.0.copyload.i3, -1   ; 2 uses
   %.sroa.55.0..sroa_idx.i4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.5.i2.sroa.0.0.copyload = load ptr, ptr %.sroa.55.0..sroa_idx.i4, align 8
+  %.sroa.5.i2.sroa.0.0.copyload = load i64, ptr %.sroa.55.0..sroa_idx.i4, align 8
   %.sroa.5.i2.sroa.4.0..sroa.55.0..sroa_idx.i4.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.5.i2.sroa.4.0.copyload = load i64, ptr %.sroa.5.i2.sroa.4.0..sroa.55.0..sroa_idx.i4.sroa_idx, align 8
   %.sroa.5.i2.sroa.4.0 = select i1 %i.p, i64 undef, i64 %.sroa.5.i2.sroa.4.0.copyload
-  %.sroa.5.i2.sroa.0.0 = select i1 %i.p, ptr undef, ptr %.sroa.5.i2.sroa.0.0.copyload
+  %.sroa.5.i2.sroa.0.0 = select i1 %i.p, i64 undef, i64 %.sroa.5.i2.sroa.0.0.copyload
   %i.q = icmp sgt i64 %.sroa.4.0.copyload, 0
   br i1 %i.q, label %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i.i.i7, label %_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNtCs7tKScEop1B6_5alloc6string6StringECs4FLgx4CFoZI_7uu_vdir.exit
 
@@ -88,11 +88,12 @@ _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9All
   br label %_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNtCs7tKScEop1B6_5alloc6string6StringECs4FLgx4CFoZI_7uu_vdir.exit
 
 _RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command5aboutNtNtCs7tKScEop1B6_5alloc6string6StringECs4FLgx4CFoZI_7uu_vdir.exit: ; preds = %_RINvMs0_NtNtCsgNwXemyrBWj_12clap_builder7builder7commandNtB6_7Command14override_usageNtNtCs7tKScEop1B6_5alloc6string6StringECs4FLgx4CFoZI_7uu_vdir.exit, %_RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i.i.i.i7
+  %1 = inttoptr i64 %.sroa.5.i2.sroa.0.0 to ptr
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(320) %0, ptr noundef nonnull align 8 dereferenceable(320) %i.d, i64 320, i1 false)
   %.sroa.4.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %0, i64 320
   store i64 %.sroa.0.0.copyload.i3, ptr %.sroa.4.0..sroa_idx9, align 8, !alias.scope !28, !noalias !22
   %.sroa.6.0..sroa_idx11 = getelementptr inbounds nuw i8, ptr %0, i64 328
-  store ptr %.sroa.5.i2.sroa.0.0, ptr %.sroa.6.0..sroa_idx11, align 8, !alias.scope !28, !noalias !22
+  store ptr %1, ptr %.sroa.6.0..sroa_idx11, align 8, !alias.scope !28, !noalias !22
   %.sroa.8.0..sroa_idx13 = getelementptr inbounds nuw i8, ptr %0, i64 336
   store i64 %.sroa.5.i2.sroa.4.0, ptr %.sroa.8.0..sroa_idx13, align 8, !alias.scope !28, !noalias !22
   %.sroa.8.sroa.5.0..sroa.8.0..sroa_idx13.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 344

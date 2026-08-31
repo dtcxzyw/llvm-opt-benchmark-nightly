@@ -202,18 +202,19 @@ bb.b:                                             ; preds = %_RNCINvNtNtNtCskKLD
   br i1 %i.p, label %bb.c, label %bb.r
 
 bb.c:                                             ; preds = %bb.b
-  %.sroa.02.0.copyload.i.i.i = load ptr, ptr %i.k, align 8, !noalias !30 ; 2 uses
-  %.sroa.23.0.copyload.i.i.i = load ptr, ptr %.sroa.23.0..sroa_idx.i.i.i, align 8, !noalias !30 ; 2 uses
+  %.sroa.02.0.copyload.i.i.i = load i64, ptr %i.k, align 8, !noalias !30 ; 2 uses
+  %.sroa.23.0.copyload.i.i.i = load i64, ptr %.sroa.23.0..sroa_idx.i.i.i, align 8, !noalias !30 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !33)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !30
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !30
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !36
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !37
-  %i.q = icmp eq ptr %.sroa.02.0.copyload.i.i.i, null
+  %i.q = icmp eq i64 %.sroa.02.0.copyload.i.i.i, 0
   br i1 %i.q, label %bb.d, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultNtNtCsG258MDvU3F_3std2fs8DirEntryNtNtNtB4_2io5error5ErrorE6expectCsd1MEfrgau3F_18build_script_build.exit.i.i.i.i.i
 
 bb.d:                                             ; preds = %bb.c
-  store ptr %.sroa.23.0.copyload.i.i.i, ptr %i.b, align 8, !noalias !40
+  %2 = inttoptr i64 %.sroa.23.0.copyload.i.i.i to ptr
+  store ptr %2, ptr %i.b, align 8, !noalias !40
   invoke void @_RNvNtCskKLDkoKarTP_4core6result13unwrap_failed(ptr nonnull @5, i64 17, ptr nonnull %i.b, ptr nonnull align 8 @25, ptr nonnull align 8 @7) #17
           to label %bb.f unwind label %bb.e, !noalias !40
 
@@ -237,8 +238,9 @@ common.resume.i.i.i.i:                            ; preds = %bb.o, %bb.k, %bb.h,
   resume { ptr, i32 } %common.resume.op.i.i.i.i
 
 _RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultNtNtCsG258MDvU3F_3std2fs8DirEntryNtNtNtB4_2io5error5ErrorE6expectCsd1MEfrgau3F_18build_script_build.exit.i.i.i.i.i: ; preds = %bb.c
-  store ptr %.sroa.02.0.copyload.i.i.i, ptr %i.c, align 8, !noalias !37
-  store ptr %.sroa.23.0.copyload.i.i.i, ptr %.sroa.3.0..sroa_idx2.i.i.i.i.i, align 8, !noalias !37
+  %3 = inttoptr i64 %.sroa.02.0.copyload.i.i.i to ptr
+  store ptr %3, ptr %i.c, align 8, !noalias !37
+  store i64 %.sroa.23.0.copyload.i.i.i, ptr %.sroa.3.0..sroa_idx2.i.i.i.i.i, align 8, !noalias !37
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx4.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.34.0..sroa_idx.i.i.i, i64 24, i1 false), !noalias !30
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !37
   invoke void @_RNvMsA_NtCsG258MDvU3F_3std2fsNtB5_8DirEntry4path(ptr nonnull sret([24 x i8]) align 8 %i.d, ptr nonnull align 8 %i.c)

@@ -202,9 +202,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %0, ptr %i.a, align 8
+  %2 = ptrtoint ptr %0 to i64
+  store i64 %2, ptr %i.a, align 8
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXs8_NtNtCskKLDkoKarTP_4core3fmt3numjNtB7_8UpperHex3fmt, ptr %.sroa.44.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs8_NtNtCskKLDkoKarTP_4core3fmt3numjNtB7_8UpperHex3fmt to i64), ptr %.sroa.44.0..sroa_idx, align 8
   %i.d = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !nonnull !6, !align !8, !noundef !6

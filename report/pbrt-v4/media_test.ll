@@ -202,15 +202,16 @@ _ZN4pstd8optionalIN4pbrt19PhaseFunctionSampleEEptEv.exit54: ; preds = %_ZN7testi
   %i.bn = call { <2 x float>, float } @_ZN4pbrt22SampleHenyeyGreensteinENS_7Vector3IfEEfNS_6Point2IfEEPf(<2 x float> %.sroa.06.4.vec.insert.i, float %i.al, float noundef %storemerge123, <2 x float> %i.bm, ptr noundef nonnull %i.a), !noalias !11 ; 2 uses
   %.fca.0.extract.i = extractvalue { <2 x float>, float } %i.bn, 0
   %.fca.1.extract.i = extractvalue { <2 x float>, float } %i.bn, 1
-  %10 = load float, ptr %i.a, align 4, !tbaa !14, !noalias !11 ; 3 uses
+  %10 = load i32, ptr %i.a, align 4, !tbaa !14, !noalias !11 ; 3 uses
   store i8 1, ptr %i.b, align 4, !tbaa !16, !alias.scope !11
-  store float %10, ptr %3, align 4, !alias.scope !11
+  store i32 %10, ptr %3, align 4, !alias.scope !11
   store <2 x float> %.fca.0.extract.i, ptr %.sroa.4.0..sroa_idx12.i, align 4, !alias.scope !11
   store float %.fca.1.extract.i, ptr %.sroa.5.0..sroa_idx.i, align 4, !alias.scope !11
-  store float %10, ptr %.sroa.6.0..sroa_idx.i, align 4, !alias.scope !11
+  store i32 %10, ptr %.sroa.6.0..sroa_idx.i, align 4, !alias.scope !11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20, !noalias !11
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
-  %i.bo = fcmp ord float %10, 0.000000e+00
+  %11 = bitcast i32 %10 to float
+  %i.bo = fcmp ord float %11, 0.000000e+00
   br i1 %i.bo, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %_ZN4pstd8optionalIN4pbrt19PhaseFunctionSampleEEptEv.exit54

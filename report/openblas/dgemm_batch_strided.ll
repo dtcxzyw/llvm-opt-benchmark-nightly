@@ -161,7 +161,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.split
   %i.ci = getelementptr inbounds nuw i8, ptr %i.bu, i64 128
   store i32 3, ptr %i.ci, align 8, !tbaa !24
   %i.cj = getelementptr inbounds nuw i8, ptr %i.bu, i64 120
-  store ptr %i.bp, ptr %i.cj, align 8
+  store ptr %i.bp, ptr %i.cj, align 8, !tbaa !25
   %indvars.iv.next165 = or disjoint i64 %indvars.iv164, 1 ; 4 uses
   %i.ck = getelementptr inbounds nuw [136 x i8], ptr %i.t, i64 %indvars.iv.next165 ; 10 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 48
@@ -188,11 +188,11 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.split
   %i.cy = getelementptr inbounds nuw i8, ptr %i.ck, i64 128
   store i32 3, ptr %i.cy, align 8, !tbaa !24
   %i.cz = getelementptr inbounds nuw i8, ptr %i.ck, i64 120
-  store ptr %i.bp, ptr %i.cz, align 8
+  store ptr %i.bp, ptr %i.cz, align 8, !tbaa !25
   %indvars.iv.next165.1 = add nuw nsw i64 %indvars.iv164, 2 ; 2 uses
   %niter188.next.1 = add i64 %niter188, 2         ; 2 uses
   %niter188.ncmp.1 = icmp eq i64 %niter188.next.1, %unroll_iter187
-  br i1 %niter188.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.b, !llvm.loop !25
+  br i1 %niter188.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.b, !llvm.loop !26
 
 .lr.ph.split.split.split:                         ; preds = %.lr.ph.split.split
   %i.da = sext i32 %i.g to i64                    ; 6 uses
@@ -240,7 +240,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.split
   %i.du = getelementptr inbounds nuw i8, ptr %i.dg, i64 128
   store i32 196611, ptr %i.du, align 8, !tbaa !24
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dg, i64 120
-  store ptr %i.de, ptr %i.dv, align 8
+  store ptr %i.de, ptr %i.dv, align 8, !tbaa !25
   %indvars.iv.next160 = or disjoint i64 %indvars.iv159, 1 ; 4 uses
   %i.dw = getelementptr inbounds nuw [136 x i8], ptr %i.t, i64 %indvars.iv.next160 ; 10 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 48
@@ -267,11 +267,11 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.split
   %i.ek = getelementptr inbounds nuw i8, ptr %i.dw, i64 128
   store i32 196611, ptr %i.ek, align 8, !tbaa !24
   %i.el = getelementptr inbounds nuw i8, ptr %i.dw, i64 120
-  store ptr %i.de, ptr %i.el, align 8
+  store ptr %i.de, ptr %i.el, align 8, !tbaa !25
   %indvars.iv.next160.1 = add nuw nsw i64 %indvars.iv159, 2 ; 2 uses
   %niter182.next.1 = add i64 %niter182, 2         ; 2 uses
   %niter182.ncmp.1 = icmp eq i64 %niter182.next.1, %unroll_iter181
-  br i1 %niter182.ncmp.1, label %.loopexit.loopexit174.unr-lcssa, label %bb.c, !llvm.loop !25
+  br i1 %niter182.ncmp.1, label %.loopexit.loopexit174.unr-lcssa, label %bb.c, !llvm.loop !26
 
 .lr.ph.split.split.split.split:                   ; preds = %.lr.ph.split.split.split
   %i.em = load i64, ptr %i.bk, align 8, !tbaa !14
@@ -316,7 +316,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.split
   %i.fd = getelementptr inbounds nuw i8, ptr %i.ep, i64 128
   store i32 65539, ptr %i.fd, align 8, !tbaa !24
   %i.fe = getelementptr inbounds nuw i8, ptr %i.ep, i64 120
-  store ptr %i.en, ptr %i.fe, align 8
+  store ptr %i.en, ptr %i.fe, align 8, !tbaa !25
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 4 uses
   %i.ff = getelementptr inbounds nuw [136 x i8], ptr %i.t, i64 %indvars.iv.next ; 10 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %i.ff, i64 48
@@ -343,11 +343,11 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.split
   %i.ft = getelementptr inbounds nuw i8, ptr %i.ff, i64 128
   store i32 65539, ptr %i.ft, align 8, !tbaa !24
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ff, i64 120
-  store ptr %i.en, ptr %i.fu, align 8
+  store ptr %i.en, ptr %i.fu, align 8, !tbaa !25
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.loopexit.loopexit175.unr-lcssa, label %bb.e, !llvm.loop !25
+  br i1 %niter.ncmp.1, label %.loopexit.loopexit175.unr-lcssa, label %bb.e, !llvm.loop !26
 
 bb.f:                                             ; preds = %.lr.ph
   store i32 %spec.store.select8, ptr %i.c, align 4
@@ -388,7 +388,7 @@ bb.f:                                             ; preds = %.lr.ph
   %i.gk = getelementptr inbounds nuw i8, ptr %i.fw, i64 128
   store i32 3, ptr %i.gk, align 8, !tbaa !24
   %i.gl = getelementptr inbounds nuw i8, ptr %i.fw, i64 120
-  store ptr %i.bp, ptr %i.gl, align 8
+  store ptr %i.bp, ptr %i.gl, align 8, !tbaa !25
   br label %.loopexit
 
 .loopexit.loopexit174.unr-lcssa:                  ; preds = %bb.c
@@ -424,7 +424,7 @@ bb.f:                                             ; preds = %.lr.ph
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gm, i64 128
   store i32 196611, ptr %i.ha, align 8, !tbaa !24
   %i.hb = getelementptr inbounds nuw i8, ptr %i.gm, i64 120
-  store ptr %i.de, ptr %i.hb, align 8
+  store ptr %i.de, ptr %i.hb, align 8, !tbaa !25
   br label %.loopexit
 
 .loopexit.loopexit175.unr-lcssa:                  ; preds = %bb.e
@@ -460,7 +460,7 @@ bb.f:                                             ; preds = %.lr.ph
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hc, i64 128
   store i32 65539, ptr %i.hq, align 8, !tbaa !24
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hc, i64 120
-  store ptr %i.en, ptr %i.hr, align 8
+  store ptr %i.en, ptr %i.hr, align 8, !tbaa !25
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.epil.preheader, %.loopexit.loopexit175.unr-lcssa, %.epil.preheader177, %.loopexit.loopexit174.unr-lcssa, %.epil.preheader183, %.loopexit.loopexit.unr-lcssa, %.lr.ph.split
@@ -561,6 +561,7 @@ attributes #7 = { nounwind allocsize(0) }
 !22 = !{!17, !13, i64 8}
 !23 = !{!17, !13, i64 16}
 !24 = !{!17, !5, i64 128}
-!25 = distinct !{!25, !26}
-!26 = !{!"llvm.loop.mustprogress"}
+!25 = !{!17, !13, i64 120}
+!26 = distinct !{!26, !27}
+!27 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

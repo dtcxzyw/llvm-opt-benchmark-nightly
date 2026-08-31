@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not.i.i49, label %_ZNKSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  store double 0.000000e+00, ptr %i.aj, align 8, !tbaa !27
+  store i64 0, ptr %i.aj, align 8, !tbaa !27
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   store double %1, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !27
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
@@ -217,7 +217,7 @@ _ZNKSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i:
           to label %_ZNSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i unwind label %_ZNSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EED2Ev.exit.loopexit ; 10 uses
 
 _ZNSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i: ; preds = %_ZNKSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
-  store double 0.000000e+00, ptr %i.bb, align 8, !tbaa !27
+  store i64 0, ptr %i.bb, align 8, !tbaa !27
   %.sroa.5.0..sroa_idx5.i = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
   store double %1, ptr %.sroa.5.0..sroa_idx5.i, align 8, !tbaa !27
   %.sroa.6.0..sroa_idx7.i = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
@@ -274,13 +274,14 @@ bb.m:                                             ; preds = %_ZN5Ipopt16Piecewis
   %i.bt = fsub double %2, %i.bs
   %i.bu = fdiv double %i.br, %i.bt
   %i.bv = icmp eq ptr %i.bk, %i.bl
-  %..i52 = select i1 %i.bv, double 0.000000e+00, double %i.bu ; 2 uses
+  %3 = bitcast double %i.bu to i64
+  %4 = select i1 %i.bv, i64 0, i64 %3             ; 2 uses
   %i.bw = load ptr, ptr %i.ad, align 8, !tbaa !33
   %.not.i.i53 = icmp eq ptr %i.bl, %i.bw
   br i1 %.not.i.i53, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  store double %..i52, ptr %i.bl, align 8, !tbaa !27
+  store i64 %4, ptr %i.bl, align 8, !tbaa !27
   %.sroa.5.0..sroa_idx.i54 = getelementptr inbounds nuw i8, ptr %i.bl, i64 8
   store <2 x double> %i.bp, ptr %.sroa.5.0..sroa_idx.i54, align 8, !tbaa !27
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bl, i64 24 ; 3 uses
@@ -316,7 +317,7 @@ _ZNKSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i5
 
 .noexc65:                                         ; preds = %_ZNKSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i56
   %i.cj = getelementptr inbounds i8, ptr %i.ci, i64 %i.ca ; 3 uses
-  store double %..i52, ptr %i.cj, align 8, !tbaa !27
+  store i64 %4, ptr %i.cj, align 8, !tbaa !27
   %.sroa.5.0..sroa_idx5.i59 = getelementptr inbounds nuw i8, ptr %i.cj, i64 8
   store <2 x double> %i.bp, ptr %.sroa.5.0..sroa_idx5.i59, align 8, !tbaa !27
   %i.ck = icmp sgt i64 %i.ca, 0
@@ -364,16 +365,16 @@ bb.r:                                             ; preds = %_ZN5Ipopt16Piecewis
   br i1 %i.cz, label %bb.s, label %_ZN5Ipopt16PiecewisePenalty8AddEntryEddd.exit81
 
 bb.s:                                             ; preds = %bb.r
-  %3 = load double, ptr %.sroa.0137.0170, align 8, !tbaa !23
+  %5 = load i64, ptr %.sroa.0137.0170, align 8, !tbaa !23
   %i.da = getelementptr inbounds nuw i8, ptr %.sroa.0137.0170, i64 8
   %i.db = load <2 x double>, ptr %i.da, align 8, !tbaa !27 ; 2 uses
   %i.dc = icmp eq ptr %i.cu, %i.cv
-  %..i67 = select i1 %i.dc, double 0.000000e+00, double %3 ; 2 uses
+  %6 = select i1 %i.dc, i64 0, i64 %5             ; 2 uses
   %.not.i.i68 = icmp eq ptr %i.cv, %.pre173.a
   br i1 %.not.i.i68, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  store double %..i67, ptr %i.cv, align 8, !tbaa !27
+  store i64 %6, ptr %i.cv, align 8, !tbaa !27
   %.sroa.5.0..sroa_idx.i69 = getelementptr inbounds nuw i8, ptr %i.cv, i64 8
   store <2 x double> %i.db, ptr %.sroa.5.0..sroa_idx.i69, align 8, !tbaa !27
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cv, i64 24 ; 2 uses
@@ -402,7 +403,7 @@ _ZNKSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i7
 
 .noexc80:                                         ; preds = %_ZNKSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i71
   %i.dp = getelementptr inbounds i8, ptr %i.do, i64 %i.dg ; 3 uses
-  store double %..i67, ptr %i.dp, align 8, !tbaa !27
+  store i64 %6, ptr %i.dp, align 8, !tbaa !27
   %.sroa.5.0..sroa_idx5.i74 = getelementptr inbounds nuw i8, ptr %i.dp, i64 8
   store <2 x double> %i.db, ptr %.sroa.5.0..sroa_idx5.i74, align 8, !tbaa !27
   %i.dq = icmp sgt i64 %i.dg, 0
@@ -445,12 +446,13 @@ _ZN5Ipopt16PiecewisePenalty8AddEntryEddd.exit81:  ; preds = %_ZNSt6vectorIN5Ipop
   %i.eg = fsub double %2, %i.ef
   %i.eh = fdiv double %i.ed, %i.eg
   %i.ei = icmp eq ptr %i.ea, %i.dz
-  %..i82 = select i1 %i.ei, double 0.000000e+00, double %i.eh ; 2 uses
+  %7 = bitcast double %i.eh to i64
+  %8 = select i1 %i.ei, i64 0, i64 %7             ; 2 uses
   %.not.i.i83 = icmp eq ptr %i.dz, %i.dy
   br i1 %.not.i.i83, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %_ZN5Ipopt16PiecewisePenalty8AddEntryEddd.exit81
-  store double %..i82, ptr %i.dz, align 8, !tbaa !27
+  store i64 %8, ptr %i.dz, align 8, !tbaa !27
   %.sroa.5.0..sroa_idx.i84 = getelementptr inbounds nuw i8, ptr %i.dz, i64 8
   store double %1, ptr %.sroa.5.0..sroa_idx.i84, align 8, !tbaa !27
   %.sroa.6.0..sroa_idx.i85 = getelementptr inbounds nuw i8, ptr %i.dz, i64 16
@@ -481,7 +483,7 @@ _ZNKSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i8
 
 .noexc95:                                         ; preds = %_ZNKSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i86
   %i.ev = getelementptr inbounds i8, ptr %i.eu, i64 %i.em ; 4 uses
-  store double %..i82, ptr %i.ev, align 8, !tbaa !27
+  store i64 %8, ptr %i.ev, align 8, !tbaa !27
   %.sroa.5.0..sroa_idx5.i89 = getelementptr inbounds nuw i8, ptr %i.ev, i64 8
   store double %1, ptr %.sroa.5.0..sroa_idx5.i89, align 8, !tbaa !27
   %.sroa.6.0..sroa_idx7.i90 = getelementptr inbounds nuw i8, ptr %i.ev, i64 16
@@ -525,17 +527,17 @@ _ZN5Ipopt16PiecewisePenalty8AddEntryEddd.exit96:  ; preds = %_ZNSt6vectorIN5Ipop
   br i1 %or.cond45, label %_ZN5Ipopt16PiecewisePenalty8AddEntryEddd.exit111, label %bb.ab
 
 bb.ab:                                            ; preds = %_ZN5Ipopt16PiecewisePenalty8AddEntryEddd.exit96
-  %4 = load double, ptr %.sroa.0137.0170, align 8, !tbaa !23
+  %9 = load i64, ptr %.sroa.0137.0170, align 8, !tbaa !23
   %i.fj = getelementptr inbounds nuw i8, ptr %.sroa.0137.0170, i64 8
   %i.fk = load <2 x double>, ptr %i.fj, align 8, !tbaa !27 ; 2 uses
   %i.fl = icmp eq ptr %i.fe, %i.fh
-  %..i97 = select i1 %i.fl, double 0.000000e+00, double %4 ; 2 uses
+  %10 = select i1 %i.fl, i64 0, i64 %9            ; 2 uses
   %i.fm = load ptr, ptr %i.ad, align 8, !tbaa !33
   %.not.i.i98 = icmp eq ptr %i.fh, %i.fm
   br i1 %.not.i.i98, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  store double %..i97, ptr %i.fh, align 8, !tbaa !27
+  store i64 %10, ptr %i.fh, align 8, !tbaa !27
   %.sroa.5.0..sroa_idx.i99 = getelementptr inbounds nuw i8, ptr %i.fh, i64 8
   store <2 x double> %i.fk, ptr %.sroa.5.0..sroa_idx.i99, align 8, !tbaa !27
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fh, i64 24 ; 3 uses
@@ -564,7 +566,7 @@ _ZNKSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i1
 
 .noexc110:                                        ; preds = %_ZNKSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i101
   %i.fz = getelementptr inbounds i8, ptr %i.fy, i64 %i.fq ; 3 uses
-  store double %..i97, ptr %i.fz, align 8, !tbaa !27
+  store i64 %10, ptr %i.fz, align 8, !tbaa !27
   %.sroa.5.0..sroa_idx5.i104 = getelementptr inbounds nuw i8, ptr %i.fz, i64 8
   store <2 x double> %i.fk, ptr %.sroa.5.0..sroa_idx5.i104, align 8, !tbaa !27
   %i.ga = icmp sgt i64 %i.fq, 0
@@ -617,7 +619,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %.not.i.i113, label %_ZNKSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i116, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  store double 0.000000e+00, ptr %i.gg, align 8, !tbaa !27
+  store i64 0, ptr %i.gg, align 8, !tbaa !27
   %.sroa.5.0..sroa_idx.i114 = getelementptr inbounds nuw i8, ptr %i.gg, i64 8
   store double %1, ptr %.sroa.5.0..sroa_idx.i114, align 8, !tbaa !27
   %.sroa.6.0..sroa_idx.i115 = getelementptr inbounds nuw i8, ptr %i.gg, i64 16
@@ -632,7 +634,7 @@ _ZNKSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i1
           to label %_ZNSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i121 unwind label %_ZNSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EED2Ev.exit.loopexit ; 10 uses
 
 _ZNSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i121: ; preds = %_ZNKSt6vectorIN5Ipopt17PiecewisePenEntryESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i116
-  store double 0.000000e+00, ptr %i.gs, align 8, !tbaa !27
+  store i64 0, ptr %i.gs, align 8, !tbaa !27
   %.sroa.5.0..sroa_idx5.i119 = getelementptr inbounds nuw i8, ptr %i.gs, i64 8
   store double %1, ptr %.sroa.5.0..sroa_idx5.i119, align 8, !tbaa !27
   %.sroa.6.0..sroa_idx7.i120 = getelementptr inbounds nuw i8, ptr %i.gs, i64 16

@@ -204,7 +204,7 @@ TLSX_Find.exit.thread:                            ; preds = %.lr.ph.i
 
 bb.c:                                             ; preds = %.lr.ph, %TLSX_IsGroupSupported.exit.thread
   %.046103 = phi i32 [ 36, %.lr.ph ], [ %.1, %TLSX_IsGroupSupported.exit.thread ] ; 3 uses
-  %.050102 = phi ptr [ null, %.lr.ph ], [ %.151, %TLSX_IsGroupSupported.exit.thread ] ; 2 uses
+  %.sroa.0.0100 = phi i64 [ 0, %.lr.ph ], [ %.sroa.0.1, %TLSX_IsGroupSupported.exit.thread ] ; 2 uses
   %.153101 = phi ptr [ %i.f, %.lr.ph ], [ %i.t, %TLSX_IsGroupSupported.exit.thread ] ; 3 uses
   %i.i = load i16, ptr %.153101, align 8, !tbaa !117 ; 2 uses
   switch i16 %i.i, label %TLSX_IsGroupSupported.exit.thread [
@@ -247,12 +247,13 @@ TLSX_KeyShare_GroupRank.exit:                     ; preds = %bb.e, %.split.loop.
   %i.q = icmp ne i32 %.012.i, -1
   %i.r = icmp slt i32 %.012.i, %.046103
   %or.cond = select i1 %i.q, i1 %i.r, i1 false    ; 2 uses
-  %spec.select = select i1 %or.cond, ptr %.153101, ptr %.050102
+  %2 = ptrtoint ptr %.153101 to i64
+  %spec.select = select i1 %or.cond, i64 %2, i64 %.sroa.0.0100
   %spec.select68 = select i1 %or.cond, i32 %.012.i, i32 %.046103
   br label %TLSX_IsGroupSupported.exit.thread
 
 TLSX_IsGroupSupported.exit.thread:                ; preds = %bb.c, %TLSX_KeyShare_GroupRank.exit
-  %.151 = phi ptr [ %spec.select, %TLSX_KeyShare_GroupRank.exit ], [ %.050102, %bb.c ] ; 3 uses
+  %.sroa.0.1 = phi i64 [ %spec.select, %TLSX_KeyShare_GroupRank.exit ], [ %.sroa.0.0100, %bb.c ] ; 3 uses
   %.1 = phi i32 [ %spec.select68, %TLSX_KeyShare_GroupRank.exit ], [ %.046103, %bb.c ]
   %i.s = getelementptr inbounds nuw i8, ptr %.153101, i64 8
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !95   ; 2 uses
@@ -260,7 +261,7 @@ TLSX_IsGroupSupported.exit.thread:                ; preds = %bb.c, %TLSX_KeyShar
   br i1 %.not62, label %._crit_edge, label %bb.c, !llvm.loop !195
 
 ._crit_edge:                                      ; preds = %TLSX_IsGroupSupported.exit.thread
-  %i.u = icmp eq ptr %.151, null
+  %i.u = icmp eq i64 %.sroa.0.1, 0
   br i1 %i.u, label %.preheader, label %bb.i
 
 .preheader:                                       ; preds = %bb.b, %bb.a, %TLSX_Find.exit.thread, %._crit_edge
@@ -314,7 +315,8 @@ TLSX_KeyShare_GroupRank.exit77.thread:            ; preds = %bb.h, %TLSX_KeyShar
   br i1 %.not63, label %TLSX_Push.exit, label %bb.j
 
 bb.i:                                             ; preds = %._crit_edge
-  %i.ag = load i16, ptr %.151, align 8, !tbaa !117
+  %3 = inttoptr i64 %.sroa.0.1 to ptr
+  %i.ag = load i16, ptr %3, align 8, !tbaa !117
   br label %bb.j
 
 bb.j:                                             ; preds = %._crit_edge108, %bb.i
@@ -437,7 +439,7 @@ bb.e:                                             ; preds = %.lr.ph.i
 
 bb.f:                                             ; preds = %.lr.ph, %TLSX_SupportedGroups_Find.exit.thread
   %.03579 = phi i32 [ 36, %.lr.ph ], [ %.1, %TLSX_SupportedGroups_Find.exit.thread ] ; 8 uses
-  %.03678 = phi ptr [ null, %.lr.ph ], [ %.137, %TLSX_SupportedGroups_Find.exit.thread ] ; 7 uses
+  %.sroa.0.073 = phi i64 [ 0, %.lr.ph ], [ %.sroa.0.1, %TLSX_SupportedGroups_Find.exit.thread ] ; 7 uses
   %.03977 = phi ptr [ %i.i, %.lr.ph ], [ %i.au, %TLSX_SupportedGroups_Find.exit.thread ] ; 6 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.03977, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !181
@@ -561,20 +563,25 @@ TLSX_KeyShare_GroupRank.exit:                     ; preds = %bb.o, %.split.loop.
   %i.ar = icmp ne i32 %.012.i, -1
   %i.as = icmp slt i32 %.012.i, %.03579
   %or.cond52 = select i1 %i.ar, i1 %i.as, i1 false ; 2 uses
-  %spec.select = select i1 %or.cond52, ptr %.03977, ptr %.03678
+  %6 = ptrtoint ptr %.03977 to i64
+  %spec.select = select i1 %or.cond52, i64 %6, i64 %.sroa.0.073
   %spec.select53 = select i1 %or.cond52, i32 %.012.i, i32 %.03579
   br label %TLSX_SupportedGroups_Find.exit.thread
 
 TLSX_SupportedGroups_Find.exit.thread:            ; preds = %bb.i, %TLSX_Find.exit.i, %bb.m, %.loopexit.i, %TLSX_KeyShare_GroupRank.exit, %bb.l, %bb.f
-  %.137 = phi ptr [ %.03678, %bb.f ], [ %spec.select, %TLSX_KeyShare_GroupRank.exit ], [ %.03678, %TLSX_Find.exit.i ], [ %.03678, %bb.l ], [ %.03678, %.loopexit.i ], [ %.03678, %bb.m ], [ %.03678, %bb.i ] ; 2 uses
+  %.sroa.0.1 = phi i64 [ %.sroa.0.073, %bb.f ], [ %spec.select, %TLSX_KeyShare_GroupRank.exit ], [ %.sroa.0.073, %TLSX_Find.exit.i ], [ %.sroa.0.073, %bb.l ], [ %.sroa.0.073, %.loopexit.i ], [ %.sroa.0.073, %bb.m ], [ %.sroa.0.073, %bb.i ] ; 2 uses
   %.1 = phi i32 [ %.03579, %bb.f ], [ %spec.select53, %TLSX_KeyShare_GroupRank.exit ], [ %.03579, %TLSX_Find.exit.i ], [ %.03579, %bb.l ], [ %.03579, %.loopexit.i ], [ %.03579, %bb.m ], [ %.03579, %bb.i ]
   %i.at = getelementptr inbounds nuw i8, ptr %.03977, i64 72
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !192 ; 2 uses
   %.not47 = icmp eq ptr %i.au, null
-  br i1 %.not47, label %._crit_edge, label %bb.f, !llvm.loop !197
+  br i1 %.not47, label %._crit_edge.loopexit, label %bb.f, !llvm.loop !197
 
-._crit_edge:                                      ; preds = %bb.d, %TLSX_SupportedGroups_Find.exit.thread, %bb.c, %.thread
-  %.036.lcssa = phi ptr [ null, %.thread ], [ %.137, %TLSX_SupportedGroups_Find.exit.thread ], [ null, %bb.c ], [ null, %bb.d ]
+._crit_edge.loopexit:                             ; preds = %TLSX_SupportedGroups_Find.exit.thread
+  %7 = inttoptr i64 %.sroa.0.1 to ptr
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.d, %bb.c, %._crit_edge.loopexit, %.thread
+  %.036.lcssa = phi ptr [ null, %.thread ], [ %7, %._crit_edge.loopexit ], [ null, %bb.c ], [ null, %bb.d ]
   store ptr %.036.lcssa, ptr %4, align 8, !tbaa !172
   store i8 1, ptr %5, align 1, !tbaa !51
   br label %bb.p

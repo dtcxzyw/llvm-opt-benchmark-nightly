@@ -205,9 +205,9 @@ define dso_local noundef i32 @main() local_unnamed_addr #0 personality ptr @__gx
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #22
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   store double 3.141590e+00, ptr %i.a, align 8, !tbaa !10, !alias.scope !13
-  store ptr @_ZZN3pro2v46detail9conv_metaINS0_5proxyI11FormattableEENS1_16destroy_dispatchEDoFvvEEC1INS1_11inplace_ptrIdEEEESt15in_place_type_tIT_EENUlRS5_E_8__invokeESF_, ptr %1, align 8, !alias.scope !13
+  store i64 ptrtoint (ptr @_ZZN3pro2v46detail9conv_metaINS0_5proxyI11FormattableEENS1_16destroy_dispatchEDoFvvEEC1INS1_11inplace_ptrIdEEEESt15in_place_type_tIT_EENUlRS5_E_8__invokeESF_ to i64), ptr %1, align 8, !alias.scope !13
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store ptr @_ZZN3pro2v46detail9conv_metaINS0_23proxy_indirect_accessorI11FormattableEENS1_13format_traitsIN3fmt3v129formatterESt17basic_string_viewNS8_26basic_format_parse_contextENS1_20fmt_buffered_contextEE8dispatchEKFNS8_14basic_appenderIcEESA_IcSt11char_traitsIcEERNS8_7contextEEEC1INS1_11inplace_ptrIdEEEESt15in_place_type_tIT_EENUlRKS5_SJ_SL_E_8__invokeESV_SJ_SL_, ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 8, !alias.scope !13
+  store i64 ptrtoint (ptr @_ZZN3pro2v46detail9conv_metaINS0_23proxy_indirect_accessorI11FormattableEENS1_13format_traitsIN3fmt3v129formatterESt17basic_string_viewNS8_26basic_format_parse_contextENS1_20fmt_buffered_contextEE8dispatchEKFNS8_14basic_appenderIcEESA_IcSt11char_traitsIcEERNS8_7contextEEEC1INS1_11inplace_ptrIdEEEESt15in_place_type_tIT_EENUlRKS5_SJ_SL_E_8__invokeESV_SJ_SL_ to i64), ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 8, !alias.scope !13
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #22, !noalias !18
   store ptr %1, ptr %0, align 16, !tbaa !21
@@ -320,6 +320,7 @@ define linkonce_odr dso_local ptr @_ZZN3pro2v46detail9conv_metaINS0_23proxy_indi
 bb.a:
   %4 = alloca %"struct.fmt::v12::formatter", align 8 ; 10 uses
   %5 = alloca %"class.fmt::v12::parse_context", align 8 ; 6 uses
+  %6 = ptrtoint ptr %2 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   store i32 32768, ptr %4, align 8, !tbaa !32
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 4
@@ -333,7 +334,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 32
   store i32 0, ptr %i.d, align 8, !tbaa !21
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  store ptr %2, ptr %5, align 8, !tbaa !36
+  store i64 %6, ptr %5, align 8, !tbaa !36
   %.sroa.2.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 %1, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i, align 8, !tbaa !37
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 16
@@ -736,11 +737,11 @@ bb.n:                                             ; preds = %bb.m
 .critedge:                                        ; preds = %.critedge4, %..critedge_crit_edge, %.critedge4.preheader
   %.lcssa40 = phi ptr [ %i.ay, %..critedge_crit_edge ], [ %scevgep, %.critedge4.preheader ], [ %scevgep, %.critedge4 ] ; 2 uses
   %i.bf = ptrtoint ptr %.lcssa40 to i64
-  %i.bg = ptrtoint ptr %0 to i64
+  %i.bg = ptrtoint ptr %0 to i64                  ; 2 uses
   %i.bh = sub i64 %i.bf, %i.bg
   %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !55, !nonnull !57, !align !58 ; 2 uses
-  store ptr %0, ptr %i.bj, align 8
+  store i64 %i.bg, ptr %i.bj, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
   store i64 %i.bh, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !21
   %i.bk = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -944,8 +945,9 @@ bb.q:                                             ; preds = %bb.o, %bb.n
 bb.r:                                             ; preds = %bb.q
   %i.bj = load ptr, ptr %11, align 8, !tbaa !76
   %i.bk = load i64, ptr %i.bb, align 8, !tbaa !71 ; 3 uses
+  %13 = ptrtoint ptr %i.bj to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
-  store ptr %i.bj, ptr %5, align 8, !tbaa !36
+  store i64 %13, ptr %5, align 8, !tbaa !36
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 %i.bk, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !37
   %i.bl = invoke ptr @_ZN3fmt3v126detail12write_paddedIcLNS0_5alignE2ENS0_14basic_appenderIcEERZNS1_11write_bytesIcLS3_2ES5_EET1_S7_NS0_17basic_string_viewIcEERKNS0_12format_specsEEUlS5_E_EES7_S7_SC_mmOT2_(ptr %0, ptr noundef nonnull align 4 dereferenceable(16) %8, i64 noundef %i.bk, i64 noundef %i.bk, ptr noundef nonnull align 8 dereferenceable(16) %5)
@@ -1348,6 +1350,7 @@ _ZN3fmt3v126detail6fill_nINS0_14basic_appenderIcEEmcEET_S5_T0_RKT1_.exit: ; pred
 define linkonce_odr dso_local ptr @_ZN3fmt3v126detail14do_write_floatIcNS1_14digit_groupingIcEENS0_14basic_appenderIcEENS1_9dragonbox10decimal_fpIdEEEET1_SA_RKT2_RKNS0_12format_specsENS0_4signEiNS0_10locale_refE(ptr %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(16) %2, i32 noundef %3, i32 noundef %4, ptr %5) local_unnamed_addr #6 comdat {
 bb.a:
   %6 = alloca %class.anon.9, align 8              ; 11 uses
+  %7 = ptrtoint ptr %5 to i64
   %i.a = load i32, ptr %2, align 4, !tbaa !32     ; 2 uses
   %i.b = and i32 %i.a, 16384
   %.not = icmp eq i32 %i.b, 0
@@ -1396,7 +1399,6 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.ac, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.c, %bb.d
-  %7 = ptrtoint ptr %5 to i64
   %i.ad = tail call ptr @_ZN3fmt3v126detail11write_fixedIcNS1_14digit_groupingIcEENS0_14basic_appenderIcEENS1_9dragonbox10decimal_fpIdEEEET1_SA_RKT2_iT_RKNS0_12format_specsENS0_4signENS0_10locale_refE(ptr %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %i.q, i8 noundef signext %i.e, ptr noundef nonnull align 4 dereferenceable(16) %2, i32 noundef %3, i64 %7)
   br label %bb.q
 
@@ -1799,6 +1801,7 @@ _ZN3fmt3v1219basic_memory_bufferIjLm32ENS0_6detail9allocatorIjEEED2Ev.exit45: ; 
 define linkonce_odr dso_local ptr @_ZN3fmt3v126detail14do_write_floatIcNS1_14digit_groupingIcEENS0_14basic_appenderIcEENS1_14big_decimal_fpEEET1_S8_RKT2_RKNS0_12format_specsENS0_4signEiNS0_10locale_refE(ptr %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(16) %2, i32 noundef %3, i32 noundef %4, ptr %5) local_unnamed_addr #6 comdat {
 bb.a:
   %6 = alloca %class.anon.25, align 8             ; 11 uses
+  %7 = ptrtoint ptr %5 to i64
   %i.a = load i32, ptr %2, align 4, !tbaa !32     ; 2 uses
   %i.b = and i32 %i.a, 16384
   %.not = icmp eq i32 %i.b, 0
@@ -1836,7 +1839,6 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.s, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.c, %bb.d
-  %7 = ptrtoint ptr %5 to i64
   %i.t = tail call ptr @_ZN3fmt3v126detail11write_fixedIcNS1_14digit_groupingIcEENS0_14basic_appenderIcEENS1_14big_decimal_fpEEET1_S8_RKT2_iT_RKNS0_12format_specsENS0_4signENS0_10locale_refE(ptr %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %i.g, i8 noundef signext %i.e, ptr noundef nonnull align 4 dereferenceable(16) %2, i32 noundef %3, i64 %7)
   br label %bb.q
 

@@ -204,6 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr i8, ptr %i.e, i64 8
   %.val.i = load ptr, ptr %i.j, align 8
   %i.k = tail call ptr @dsa_get_address(ptr noundef %.val.i, i64 noundef %i.i) #14
+  %1 = ptrtoint ptr %i.k to i64
   %i.l = load ptr, ptr %i.f, align 8
   %i.m = load ptr, ptr %i.l, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 56
@@ -218,7 +219,7 @@ bb.b:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds [24 x i8], ptr %i.s, i64 %i.t ; 2 uses
   store i64 %i.i, ptr %i.u, align 8
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  store ptr %i.k, ptr %.sroa.5.0..sroa_idx.i, align 8
+  store i64 %1, ptr %.sroa.5.0..sroa_idx.i, align 8
   %i.v = load i32, ptr %i.r, align 4
   %i.w = sext i32 %i.v to i64
   %i.x = getelementptr inbounds [24 x i8], ptr %i.s, i64 %i.w
@@ -231,6 +232,7 @@ bb.c:                                             ; preds = %bb.a
   store ptr %i.e, ptr %i.z, align 8
   %i.aa = load ptr, ptr %i.e, align 8             ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8
+  %2 = ptrtoint ptr %i.ab to i64
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
   %i.ad = load i32, ptr %i.ac, align 8
   %i.ae = sdiv i32 %i.ad, 8                       ; 3 uses
@@ -241,8 +243,7 @@ bb.c:                                             ; preds = %bb.a
   %i.ah = getelementptr inbounds nuw i8, ptr %i.z, i64 8 ; 2 uses
   %i.ai = sext i32 %i.ae to i64
   %i.aj = getelementptr inbounds [16 x i8], ptr %i.ah, i64 %i.ai
-  %1 = ptrtoint ptr %i.ab to i64
-  store i64 %1, ptr %i.aj, align 8
+  store i64 %2, ptr %i.aj, align 8
   %i.ak = load i32, ptr %i.ag, align 4
   %i.al = sext i32 %i.ak to i64
   %i.am = getelementptr inbounds [16 x i8], ptr %i.ah, i64 %i.al

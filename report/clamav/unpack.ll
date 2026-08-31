@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.f, %._crit_edge
 bb.c:                                             ; preds = %bb.b
   %.sroa.010.0.copyload = load i8, ptr %i.ac, align 1, !tbaa !27
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.1, i64 12
-  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 1, !tbaa !79
+  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 1, !tbaa !79
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %bb.c
@@ -227,7 +227,7 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.412.0..sroa_idx13 = getelementptr inbounds i8, ptr %.057, i64 -9
   store i8 %i.an, ptr %.sroa.412.0..sroa_idx13, align 1, !tbaa !27
   %.sroa.5.0..sroa_idx15 = getelementptr inbounds i8, ptr %.057, i64 -8
-  store ptr %.sroa.5.0.copyload, ptr %.sroa.5.0..sroa_idx15, align 1, !tbaa !79
+  store i64 %.sroa.5.0.copyload, ptr %.sroa.5.0..sroa_idx15, align 1, !tbaa !79
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.b, %.critedge
@@ -270,7 +270,7 @@ bb.i:                                             ; preds = %bb.h
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 1
   %.sroa.4.0.copyload = load i8, ptr %.sroa.4.0..sroa_idx, align 1, !tbaa !27
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 2
-  %.sroa.7.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 1, !tbaa !79
+  %.sroa.7.0.copyload = load i64, ptr %.sroa.7.0..sroa_idx, align 1, !tbaa !79
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.j, %bb.i
@@ -299,7 +299,7 @@ bb.k:                                             ; preds = %bb.j
   store i8 %.sroa.0.0.copyload, ptr %i.j, align 1, !tbaa !27
   %.sroa.4.0..sroa_idx5 = getelementptr inbounds nuw i8, ptr %0, i64 3
   store i8 %i.bm, ptr %.sroa.4.0..sroa_idx5, align 1, !tbaa !27
-  store ptr %.sroa.7.0.copyload, ptr %i.f, align 1, !tbaa !79
+  store i64 %.sroa.7.0.copyload, ptr %i.f, align 1, !tbaa !79
   br label %bb.s
 
 bb.l:                                             ; preds = %._crit_edge90, %bb.h
@@ -702,6 +702,7 @@ bb.h:                                             ; preds = %.loopexit89, %bb.g
   %.25382 = phi ptr [ %.253, %bb.h ], [ %i.c, %bb.b ] ; 6 uses
   %i.x = load i8, ptr %i.g, align 1, !tbaa !27    ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.g, i64 1
+  %3 = ptrtoint ptr %i.y to i64
   %i.z = load i16, ptr %.25382, align 1, !tbaa !61 ; 2 uses
   %.not72 = icmp eq i16 %i.z, 1
   br i1 %.not72, label %bb.n, label %bb.i
@@ -814,7 +815,7 @@ bb.t:                                             ; preds = %_ZN12SubAllocator12
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.0.i12.i, i64 3
   store i8 %.sroa.6.0, ptr %.sroa.6.0..sroa_idx, align 1, !tbaa !27
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.0.i12.i, i64 4
-  store ptr %i.y, ptr %.sroa.8.0..sroa_idx, align 1, !tbaa !79
+  store i64 %3, ptr %.sroa.8.0..sroa_idx, align 1, !tbaa !79
   %i.bs = getelementptr inbounds nuw i8, ptr %.0.i12.i, i64 12
   store ptr %.354, ptr %i.bs, align 1, !tbaa !58
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bk, i64 2

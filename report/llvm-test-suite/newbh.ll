@@ -93,17 +93,18 @@ bb.a:                                             ; preds = %.preheader118.prehe
   %i.r = load <2 x double>, ptr %.sroa.5.0..sroa_idx, align 16
   %i.s = load <2 x double>, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.8.0.copyload = load double, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !14
-  %.sroa.9.0.copyload = load ptr, ptr %.sroa.9.0..sroa_idx, align 16, !tbaa !15 ; 2 uses
+  %.sroa.9.0.copyload = load i64, ptr %.sroa.9.0..sroa_idx, align 16, !tbaa !15
   %.sroa.10.0.copyload = load ptr, ptr %.sroa.10.0..sroa_idx, align 8, !tbaa !15
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #20
+  %1 = inttoptr i64 %.sroa.9.0.copyload to ptr    ; 2 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv
-  store ptr %.sroa.9.0.copyload, ptr %i.t, align 8, !tbaa !15
+  store ptr %1, ptr %i.t, align 8, !tbaa !15
   %.not100 = icmp eq ptr %.098123, null
   br i1 %.not100, label %.preheader116.preheader, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %.098123, i64 128
-  store ptr %.sroa.9.0.copyload, ptr %i.u, align 8, !tbaa !17
+  store ptr %1, ptr %i.u, align 8, !tbaa !17
   br label %.preheader116.preheader
 
 .preheader116.preheader:                          ; preds = %bb.b, %bb.a

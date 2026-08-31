@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.a
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCs87O7Q65ve1k_7bitcode5serde3ser11LazyEncoderE7reserveCs1ElB0qm0ygX_13influxdb3_wal.exit.thread.i: ; preds = %bb.g
   tail call void @_RINvNvMs2_NtCscdodAO9FK5_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs1ElB0qm0ygX_13influxdb3_wal(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %i.b, i64 noundef %i.w, i64 noundef 8, i64 noundef 96)
-  %i.aa = load i64, ptr %i.a, align 8, !alias.scope !34, !noundef !3
+  %i.aa = load i64, ptr %i.a, align 8, !alias.scope !34
   br label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCs87O7Q65ve1k_7bitcode5serde3ser11LazyEncoderE7reserveCs1ElB0qm0ygX_13influxdb3_wal.exit.i
 
 _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCs87O7Q65ve1k_7bitcode5serde3ser11LazyEncoderE7reserveCs1ElB0qm0ygX_13influxdb3_wal.exit.i: ; preds = %bb.g, %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCs87O7Q65ve1k_7bitcode5serde3ser11LazyEncoderE7reserveCs1ElB0qm0ygX_13influxdb3_wal.exit.thread.i
@@ -269,7 +269,7 @@ _RINvMsj_NtCscdodAO9FK5_5alloc3vecINtB6_3VecNtNtNtCs87O7Q65ve1k_7bitcode5serde3s
   store i64 %.lcssa, ptr %i.a, align 8, !alias.scope !34, !noalias !47
   br label %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCs87O7Q65ve1k_7bitcode5serde3ser11LazyEncoderE8truncateCs1ElB0qm0ygX_13influxdb3_wal.exit
 
-_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCs87O7Q65ve1k_7bitcode5serde3ser11LazyEncoderE8truncateCs1ElB0qm0ygX_13influxdb3_wal.exit: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs87O7Q65ve1k_7bitcode5serde3ser11LazyEncoderECs1ElB0qm0ygX_13influxdb3_wal.exit.i.i, %bb.b, %_RINvMsj_NtCscdodAO9FK5_5alloc3vecINtB6_3VecNtNtNtCs87O7Q65ve1k_7bitcode5serde3ser11LazyEncoderE14extend_trustedINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters4take4TakeINtNtNtB1S_7sources11repeat_with10RepeatWithNvYBF_NtNtB1U_7default7Default7defaultEEECs1ElB0qm0ygX_13influxdb3_wal.exit
+_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecNtNtNtCs87O7Q65ve1k_7bitcode5serde3ser11LazyEncoderE8truncateCs1ElB0qm0ygX_13influxdb3_wal.exit: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs87O7Q65ve1k_7bitcode5serde3ser11LazyEncoderECs1ElB0qm0ygX_13influxdb3_wal.exit.i.i, %_RINvMsj_NtCscdodAO9FK5_5alloc3vecINtB6_3VecNtNtNtCs87O7Q65ve1k_7bitcode5serde3ser11LazyEncoderE14extend_trustedINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters4take4TakeINtNtNtB1S_7sources11repeat_with10RepeatWithNvYBF_NtNtB1U_7default7Default7defaultEEECs1ElB0qm0ygX_13influxdb3_wal.exit, %bb.b
   ret void
 }
 
@@ -672,9 +672,10 @@ bb.aa:                                            ; preds = %bb.z, %bb.v
   %.sroa.4.0.i.i = phi i64 [ %i.cv, %bb.v ], [ %i.di, %bb.z ]
   %.sroa.0.0.i.i = phi ptr [ %i.cw, %bb.v ], [ %i.dj, %bb.z ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !305
+  %2 = ptrtoint ptr %.sroa.0.0.i.i to i64
   store i64 -1, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.0.0.i.i, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %2, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.sroa.4.0.i.i, ptr %.sroa.5.0..sroa_idx, align 8
   br label %bb.ab
@@ -1077,9 +1078,10 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.y, label %_RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcDNtCs1ElB0qm0ygX_13influxdb3_wal15WalFileNotifierEL_ENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB13_.exit, label %.lr.ph.i
 
 _RINvXNvMNtCscdodAO9FK5_5alloc5sliceSp9to_vec_inINtNtB8_4sync3ArcDNtCs1ElB0qm0ygX_13influxdb3_wal15WalFileNotifierEL_ENtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalEB13_.exit: ; preds = %.lr.ph.i, %bb.e, %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs1ElB0qm0ygX_13influxdb3_wal.exit.i
+  %2 = ptrtoint ptr %i.l to i64
   store i64 %i.i, ptr %0, align 8, !noalias !362
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.l, ptr %.sroa.4.0..sroa_idx, align 8, !noalias !362
+  store i64 %2, ptr %.sroa.4.0..sroa_idx, align 8, !noalias !362
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.e, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !362
   ret void
@@ -1482,7 +1484,7 @@ attributes #24 = { noreturn }
 !44 = distinct !{!44, !45, !"_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtB5_4TakeINtNtNtB9_7sources11repeat_with10RepeatWithNvYNtNtNtCs87O7Q65ve1k_7bitcode5serde3ser11LazyEncoderNtNtBb_7default7Default7defaultEENtNtNtB9_6traits8iterator8Iterator8for_eachNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB3U_3VecB1I_E14extend_trustedBN_E0ECs1ElB0qm0ygX_13influxdb3_wal: argument 0"}
 !45 = distinct !{!45, !"_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtB5_4TakeINtNtNtB9_7sources11repeat_with10RepeatWithNvYNtNtNtCs87O7Q65ve1k_7bitcode5serde3ser11LazyEncoderNtNtBb_7default7Default7defaultEENtNtNtB9_6traits8iterator8Iterator8for_eachNCINvMsj_NtCscdodAO9FK5_5alloc3vecINtB3U_3VecB1I_E14extend_trustedBN_E0ECs1ElB0qm0ygX_13influxdb3_wal"}
 !46 = distinct !{!46, !12}
-!47 = !{!42, !44}
+!47 = !{!40, !42, !44}
 !48 = !{!49, !51}
 !49 = distinct !{!49, !50, !"_RNvXsk_NtCsc96bKABWO34_9hashbrown3mapINtB5_10IntoValuesINtNtCscdodAO9FK5_5alloc4sync3ArceENtCs1ElB0qm0ygX_13influxdb3_wal10WriteBatchENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextB1s_: argument 1:pre.rot"}
 !50 = distinct !{!50, !"_RNvXsk_NtCsc96bKABWO34_9hashbrown3mapINtB5_10IntoValuesINtNtCscdodAO9FK5_5alloc4sync3ArceENtCs1ElB0qm0ygX_13influxdb3_wal10WriteBatchENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextB1s_"}

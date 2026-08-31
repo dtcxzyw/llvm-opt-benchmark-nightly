@@ -204,9 +204,10 @@ bb.a:
 define void @_RINvNtCs3oUPovFnLWP_4core9panicking13panic_displayReECsatzsiS36G5T_11typst_utils(ptr align 8 %0, ptr align 8 %1) unnamed_addr #3 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
-  store ptr %0, ptr %i.a, align 8
+  %2 = ptrtoint ptr %0 to i64
+  store i64 %2, ptr %i.a, align 8
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXs1i_NtCs3oUPovFnLWP_4core3fmtReNtB6_7Display3fmtCsaDvkSoazevh_14rustc_demangle, ptr %.sroa.22.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs1i_NtCs3oUPovFnLWP_4core3fmtReNtB6_7Display3fmtCsaDvkSoazevh_14rustc_demangle to i64), ptr %.sroa.22.0..sroa_idx, align 8
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking9panic_fmt(ptr nonnull @3, ptr nonnull %i.a, ptr align 8 %1) #35
   unreachable
 }
@@ -267,7 +268,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %i.b, align 8
   %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr inttoptr (i64 8 to ptr), ptr %.sroa.45.0..sroa_idx, align 8
+  store i64 8, ptr %.sroa.45.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 0, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -670,11 +671,12 @@ bb.aa:                                            ; preds = %bb.w
 bb.ab:                                            ; preds = %._crit_edge.i.i, %bb.u
   %.sroa.311.0.copyload.i.i = phi i64 [ %.sroa.311.0.copyload.pre.i.i, %._crit_edge.i.i ], [ %i.as, %bb.u ] ; 2 uses
   %.sroa.210.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.210.0.copyload.i.i = load ptr, ptr %.sroa.210.0..sroa_idx.i.i, align 8 ; 2 uses
+  %.sroa.210.0.copyload.i.i = load i64, ptr %.sroa.210.0..sroa_idx.i.i, align 8
+  %2 = inttoptr i64 %.sroa.210.0.copyload.i.i to ptr ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.az = load ptr, ptr %i.f, align 8
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 40
-  %i.bb = invoke i64 @_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3mapINtB5_7HashMapReNtNtCsatzsiS36G5T_11typst_utils4pico7PicoStrNtCs87aT6TjYOVO_10rustc_hash13FxBuildHasherE6insertBT_(ptr nonnull align 8 %i.ba, ptr %.sroa.210.0.copyload.i.i, i64 %.sroa.311.0.copyload.i.i, i64 %i.ap)
+  %i.bb = invoke i64 @_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3mapINtB5_7HashMapReNtNtCsatzsiS36G5T_11typst_utils4pico7PicoStrNtCs87aT6TjYOVO_10rustc_hash13FxBuildHasherE6insertBT_(ptr nonnull align 8 %i.ba, ptr %2, i64 %.sroa.311.0.copyload.i.i, i64 %i.ap)
           to label %bb.ac unwind label %bb.o      ; 0 uses
 
 bb.ac:                                            ; preds = %bb.ab
@@ -694,7 +696,7 @@ bb.ae:                                            ; preds = %bb.ac, %bb.ad
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bc, i64 24
   %i.bj = load ptr, ptr %i.bi, align 8
   %i.bk = getelementptr inbounds nuw [16 x i8], ptr %i.bj, i64 %i.bf ; 2 uses
-  store ptr %.sroa.210.0.copyload.i.i, ptr %i.bk, align 8, !captures !4
+  store ptr %2, ptr %i.bk, align 8, !captures !4
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   store i64 %.sroa.311.0.copyload.i.i, ptr %i.bl, align 8
   %i.bm = add i64 %i.bf, 1
@@ -815,9 +817,10 @@ _RNvXsd_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecReEINtNtNtCs3oUPovFnLWP_4core3ops5in
 bb.m:                                             ; preds = %bb.o, %_RNvXsd_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecReEINtNtNtCs3oUPovFnLWP_4core3ops5index5IndexjE5indexCsatzsiS36G5T_11typst_utils.exit
   %.sroa.3.0 = phi i64 [ %i.ah, %_RNvXsd_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecReEINtNtNtCs3oUPovFnLWP_4core3ops5index5IndexjE5indexCsatzsiS36G5T_11typst_utils.exit ], [ %i.am, %bb.o ]
   %.sroa.0.0.a = phi ptr [ %i.af, %_RNvXsd_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecReEINtNtNtCs3oUPovFnLWP_4core3ops5index5IndexjE5indexCsatzsiS36G5T_11typst_utils.exit ], [ %i.ak, %bb.o ]
+  %.sroa.0.0 = ptrtoint ptr %.sroa.0.0.a to i64
   store i8 1, ptr %0, align 8
   %.sroa.25.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.0.0.a, ptr %.sroa.25.0..sroa_idx, align 8
+  store i64 %.sroa.0.0, ptr %.sroa.25.0..sroa_idx, align 8
   %.sroa.36.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.sroa.3.0, ptr %.sroa.36.0..sroa_idx, align 8
   br label %bb.p
@@ -1220,8 +1223,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %._crit_edge, %bb.a
   %.sroa.311.0.copyload = phi i64 [ %.sroa.311.0.copyload.pre, %._crit_edge ], [ %i.c, %bb.a ]
   %.sroa.210.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.210.0.copyload = load ptr, ptr %.sroa.210.0..sroa_idx, align 8
-  %i.f = insertvalue { ptr, i64 } poison, ptr %.sroa.210.0.copyload, 0
+  %.sroa.210.0.copyload = load i64, ptr %.sroa.210.0..sroa_idx, align 8
+  %1 = inttoptr i64 %.sroa.210.0.copyload to ptr
+  %i.f = insertvalue { ptr, i64 } poison, ptr %1, 0
   %i.g = insertvalue { ptr, i64 } %i.f, i64 %.sroa.311.0.copyload, 1
   ret { ptr, i64 } %i.g
 

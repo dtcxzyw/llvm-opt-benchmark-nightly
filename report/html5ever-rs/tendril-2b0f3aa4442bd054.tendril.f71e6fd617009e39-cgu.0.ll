@@ -130,15 +130,17 @@ _RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf811take_buffer.exi
   br i1 %i.aa, label %bb.r, label %bb.q, !prof !10
 
 bb.q:                                             ; preds = %_RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf811take_buffer.exit6
+  %.sroa.3.0 = ptrtoint ptr %1 to i64
   %i.ab = sub nuw nsw i64 %3, %.sroa.0.0.i11
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.0.0.i11
+  %4 = ptrtoint ptr %i.ac to i64
   store i64 %.sroa.0.0, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %1, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.3.0, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.52.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %.pn18, ptr %.sroa.52.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %i.ac, ptr %.sroa.6.0..sroa_idx, align 8
+  store i64 %4, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %i.ab, ptr %.sroa.7.0..sroa_idx, align 8
   br label %bb.p
@@ -178,6 +180,8 @@ _RNvMNtCskKLDkoKarTP_4core5sliceSh8split_atCsldpiDtalS19_7tendril.exit: ; preds 
   %i.j = trunc nuw i8 %i.g to i1
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 %i.f ; 2 uses
   %i.l = sub nuw nsw i64 %2, %i.f                 ; 6 uses
+  %3 = ptrtoint ptr %1 to i64                     ; 2 uses
+  %4 = ptrtoint ptr %i.k to i64
   br i1 %i.j, label %bb.f, label %bb.g
 
 bb.d:                                             ; preds = %bb.a
@@ -218,9 +222,9 @@ _RNvMNtCsldpiDtalS19_7tendril11utf8_decodeNtB2_14IncompleteUtf83new.exit: ; pred
   %.sroa.0.0.insert.ext.i = zext i32 %.sroa.0.i.0..sroa.0.i.0..sroa.0.i.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.01.0.copyload.i to i40
   %.sroa.0.0.insert.insert.i = or disjoint i40 %.sroa.2.0.insert.shift.i, %.sroa.0.0.insert.ext.i
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr null, ptr %i.t, align 8
+  store i64 0, ptr %i.t, align 8
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %1, ptr %.sroa.43.0..sroa_idx, align 8
+  store i64 %3, ptr %.sroa.43.0..sroa_idx, align 8
   %.sroa.54.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %i.f, ptr %.sroa.54.0..sroa_idx, align 8
   %.sroa.65.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -233,11 +237,11 @@ bb.i:                                             ; preds = %bb.j, %_RNvMNtCsldp
 
 bb.j:                                             ; preds = %bb.f
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %1, ptr %i.u, align 8
+  store i64 %3, ptr %i.u, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.f, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %i.k, ptr %.sroa.5.0..sroa_idx, align 8
+  store i64 %4, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %i.q, ptr %.sroa.6.0..sroa_idx, align 8
   br label %bb.i

@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %stripsnug.exit
 bb.aa:                                            ; preds = %bb.af, %bb.z
   %.048.i = phi ptr [ %i.bp, %bb.z ], [ %.3.i, %bb.af ] ; 4 uses
   %.045.i = phi ptr [ null, %bb.z ], [ %.247.i, %bb.af ] ; 5 uses
-  %.042.i = phi ptr [ null, %bb.z ], [ %.244.i, %bb.af ] ; 7 uses
+  %.sroa.0.0.i = phi i64 [ 0, %bb.z ], [ %.sroa.0.2.i, %bb.af ] ; 7 uses
   %.040.i = phi i64 [ 0, %bb.z ], [ %.141.i, %bb.af ] ; 7 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %.048.i, i64 8 ; 5 uses
   %i.br = load i64, ptr %.048.i, align 8, !tbaa !31 ; 7 uses
@@ -225,7 +225,8 @@ bb.aa:                                            ; preds = %bb.af, %bb.z
 
 bb.ab:                                            ; preds = %bb.aa
   %i.bu = icmp eq i64 %.040.i, 0
-  %spec.select.i = select i1 %i.bu, ptr %.048.i, ptr %.042.i
+  %4 = ptrtoint ptr %.048.i to i64
+  %spec.select.i = select i1 %i.bu, i64 %4, i64 %.sroa.0.0.i
   %i.bv = add nsw i64 %.040.i, 1
   br label %bb.af
 
@@ -258,14 +259,15 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.ce, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %.loopexit.i
+  %5 = inttoptr i64 %.sroa.0.0.i to ptr
   %i.cf = trunc i64 %.040.i to i32
   store i32 %i.cf, ptr %i.am, align 8, !tbaa !36
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %.loopexit.i, %bb.ab, %bb.aa, %bb.aa, %bb.aa
   %.3.i = phi ptr [ %i.bq, %bb.aa ], [ %i.bq, %bb.ab ], [ %i.bq, %bb.aa ], [ %i.bq, %bb.aa ], [ %.250.i, %bb.ae ], [ %.250.i, %.loopexit.i ]
-  %.247.i = phi ptr [ %.045.i, %bb.aa ], [ %.045.i, %bb.ab ], [ %.045.i, %bb.aa ], [ %.045.i, %bb.aa ], [ %.042.i, %bb.ae ], [ %.045.i, %.loopexit.i ] ; 4 uses
-  %.244.i = phi ptr [ %.042.i, %bb.aa ], [ %spec.select.i, %bb.ab ], [ %.042.i, %bb.aa ], [ %.042.i, %bb.aa ], [ %.042.i, %bb.ae ], [ %.042.i, %.loopexit.i ]
+  %.247.i = phi ptr [ %.045.i, %bb.aa ], [ %.045.i, %bb.ab ], [ %.045.i, %bb.aa ], [ %.045.i, %bb.aa ], [ %5, %bb.ae ], [ %.045.i, %.loopexit.i ] ; 4 uses
+  %.sroa.0.2.i = phi i64 [ %.sroa.0.0.i, %bb.aa ], [ %spec.select.i, %bb.ab ], [ %.sroa.0.0.i, %bb.aa ], [ %.sroa.0.0.i, %bb.aa ], [ %.sroa.0.0.i, %bb.ae ], [ %.sroa.0.0.i, %.loopexit.i ]
   %.141.i = phi i64 [ %.040.i, %bb.aa ], [ %i.bv, %bb.ab ], [ %.040.i, %bb.aa ], [ %.040.i, %bb.aa ], [ 0, %bb.ae ], [ 0, %.loopexit.i ]
   %.2.i = phi i64 [ %i.br, %bb.aa ], [ %i.br, %bb.ab ], [ %i.br, %bb.aa ], [ %i.br, %bb.aa ], [ %.1.i, %bb.ae ], [ %.1.i, %.loopexit.i ]
   %i.cg = and i64 %.2.i, 4160749568

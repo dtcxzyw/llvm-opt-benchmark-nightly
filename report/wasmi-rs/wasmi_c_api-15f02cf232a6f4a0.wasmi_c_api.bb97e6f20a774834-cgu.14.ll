@@ -204,9 +204,9 @@ bb.j:                                             ; preds = %bb.c
   br label %_RNvXsb_NtCsefoF4u9kbII_5wasmi5valueNtB5_3ValNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i
 
 _RNvXsb_NtCsefoF4u9kbII_5wasmi5valueNtB5_3ValNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i: ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d
+  %.sroa.19.sroa.0.0.i = phi i64 [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.g ], [ %.sroa.19.1.insert.ext.i, %bb.h ], [ 0, %bb.i ], [ 0, %bb.j ]
   %.sroa.15.sroa.8.0.i = phi i64 [ 0, %bb.d ], [ %.sroa.15.sroa.8.0.extract.shift19.i, %bb.e ], [ 0, %bb.f ], [ %.sroa.15.sroa.8.0.extract.shift17.i, %bb.g ], [ %.sroa.15.sroa.8.0.extract.shift.i, %bb.h ], [ 0, %bb.i ], [ 0, %bb.j ]
   %.sroa.15.sroa.0.0.i = phi i32 [ undef, %bb.d ], [ %.sroa.15.sroa.0.0.extract.trunc16.i, %bb.e ], [ undef, %bb.f ], [ %.sroa.15.sroa.0.0.extract.trunc15.i, %bb.g ], [ %.sroa.15.sroa.0.0.extract.trunc.i, %bb.h ], [ %.sroa.5.0.i.i, %bb.i ], [ %.sroa.52.0.i.i, %bb.j ]
-  %.sroa.19.0.i = phi i64 [ undef, %bb.d ], [ undef, %bb.e ], [ undef, %bb.f ], [ undef, %bb.g ], [ %.sroa.19.1.insert.ext.i, %bb.h ], [ undef, %bb.i ], [ undef, %bb.j ]
   %.sroa.11.0.i = phi i32 [ %i.v, %bb.d ], [ undef, %bb.e ], [ %i.z, %bb.f ], [ undef, %bb.g ], [ %.sroa.11.1.copyload.i, %bb.h ], [ %i.ae, %bb.i ], [ %i.ai, %bb.j ]
   %i.al = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.7.043.i ; 5 uses
   %.sroa.431.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.al, i64 1
@@ -219,15 +219,16 @@ _RNvXsb_NtCsefoF4u9kbII_5wasmi5valueNtB5_3ValNtNtCskKLDkoKarTP_4core5clone5Clone
   %.sroa.633.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.al, i64 8
   store i64 %.sroa.15.sroa.0.0.insert.insert.i, ptr %.sroa.633.0..sroa_idx.i, align 8, !noalias !372
   %.sroa.734.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.al, i64 16
-  store i64 %.sroa.19.0.i, ptr %.sroa.734.0..sroa_idx.i, align 8, !noalias !372
+  store i64 %.sroa.19.sroa.0.0.i, ptr %.sroa.734.0..sroa_idx.i, align 8, !noalias !372
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.1014.i)
   %i.am = icmp eq i64 %i.p, 0
   br i1 %i.am, label %_RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtCsefoF4u9kbII_5wasmi5value3ValNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsg6ypMx2A1Am_11wasmi_c_api.exit, label %.lr.ph.i
 
 _RINvXNvMNtCsexYYUdYSQU6_5alloc5sliceSp9to_vec_inNtNtCsefoF4u9kbII_5wasmi5value3ValNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECsg6ypMx2A1Am_11wasmi_c_api.exit: ; preds = %.lr.ph.i, %_RNvXsb_NtCsefoF4u9kbII_5wasmi5valueNtB5_3ValNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i, %_RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsg6ypMx2A1Am_11wasmi_c_api.exit.i
+  %1 = ptrtoint ptr %i.l to i64
   store i64 %i.i, ptr %i.b, align 8, !noalias !369
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr %i.l, ptr %.sroa.4.0..sroa_idx, align 8, !noalias !369
+  store i64 %1, ptr %.sroa.4.0..sroa_idx, align 8, !noalias !369
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %i.e, ptr %.sroa.5.0..sroa_idx, align 8, !noalias !369
   %i.an = call { ptr, i64 } @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtCsefoF4u9kbII_5wasmi5value3ValE16into_boxed_sliceCsg6ypMx2A1Am_11wasmi_c_api(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.b)

@@ -205,13 +205,14 @@ bb.a:
   %i.g = alloca [1 x i8], align 1                 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   store i8 0, ptr %i.g, align 1
+  %2 = ptrtoint ptr %i.g to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !20)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !23)
+  call void @llvm.experimental.noalias.scope.decl(metadata !20)
+  call void @llvm.experimental.noalias.scope.decl(metadata !23)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !26
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.e, ptr noundef nonnull align 8 dereferenceable(40) %1, i64 40, i1 false), !alias.scope !29, !noalias !33
   %.sroa.4.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %i.e, i64 40
-  store ptr %i.g, ptr %.sroa.4.0..sroa_idx6, align 8, !alias.scope !29, !noalias !33
+  store i64 %2, ptr %.sroa.4.0..sroa_idx6, align 8, !alias.scope !29, !noalias !33
   call void @llvm.experimental.noalias.scope.decl(metadata !34)
   call void @llvm.experimental.noalias.scope.decl(metadata !37)
   call void @llvm.experimental.noalias.scope.decl(metadata !39)
@@ -602,6 +603,7 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCs1yfHP
   br i1 %i.p, label %.lr.ph.i.i.i.i.i.i, label %_RNvXs_NtNtCsexYYUdYSQU6_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtB8_6string6StringEINtB4_18SpecFromIterNestedB13_INtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtNtB22_3ops5range5RangejENCNvMNtNtNtCseHTIzroA4w0_6object4read5macho10dyld_cacheNtB3f_9DyldCache17subcache_suffixes0EE9from_iterCs1yfHPQhS7hZ_13dyldcachedump.exit
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCs1yfHPQhS7hZ_13dyldcachedump.exit.i.i.i
+  %3 = ptrtoint ptr %i.b to i64
   %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   br label %bb.c
 
@@ -612,8 +614,8 @@ bb.c:                                             ; preds = %_RNCINvNtNtNtCskKLD
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !84
   store i64 %.sroa.0.010.i.i.i.i.i.i, ptr %i.b, align 8, !noalias !93
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !93
-  store ptr %i.b, ptr %i.a, align 8, !noalias !93
-  store ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt, ptr %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !93
+  store i64 %3, ptr %i.a, align 8, !noalias !93
+  store i64 ptrtoint (ptr @_RNvXsi_NtNtNtCskKLDkoKarTP_4core3fmt3num3impjNtB9_7Display3fmt to i64), ptr %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !93
   invoke void @_RNvNvNtCsexYYUdYSQU6_5alloc3fmt6format12format_inner(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.c, ptr noundef nonnull @2, ptr noundef nonnull %i.a)
           to label %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map8map_foldjNtNtCsexYYUdYSQU6_5alloc6string6StringuNCNvMNtNtNtCseHTIzroA4w0_6object4read5macho10dyld_cacheNtB1D_9DyldCache17subcache_suffixes0NCINvNvNtNtNtB8_6traits8iterator8Iterator8for_each4callBV_NCINvMsk_NtBZ_3vecINtB46_3VecBV_E14extend_trustedINtB4_3MapINtNtNtBa_3ops5range5RangejEB1y_EE0E0E0Cs1yfHPQhS7hZ_13dyldcachedump.exit.i.i.i.i.i.i unwind label %.body.i, !noalias !96
 
@@ -978,12 +980,13 @@ bb.o:                                             ; preds = %bb.g
   unreachable
 
 bb.p:                                             ; preds = %bb.l, %bb.k
+  %3 = ptrtoint ptr %i.bp to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !112
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !112
   %i.bu = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %.val10.i.i.i.i.i.i ; 3 uses
   store i64 %i.bn, ptr %i.bu, align 8, !noalias !138
   %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
-  store ptr %i.bp, ptr %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !138
+  store i64 %3, ptr %.sroa.42.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !138
   %.sroa.53.0..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
   store i64 %i.bi, ptr %.sroa.53.0..sroa_idx.i.i.i.i.i.i.i, align 8, !noalias !138
   %i.bv = add i64 %.val10.i.i.i.i.i.i, 1          ; 2 uses
@@ -1106,9 +1109,10 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecRShE7reserveCs1yfHPQhS7hZ_13dyldcache
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader.i.i.epil.preheader, %.loopexit.loopexit.unr-lcssa, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecRShE7reserveCs1yfHPQhS7hZ_13dyldcachedump.exit.i.i
+  %3 = ptrtoint ptr %i.l to i64
   store i64 %i.i, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.l, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %3, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.e, ptr %.sroa.5.0..sroa_idx, align 8
   ret void

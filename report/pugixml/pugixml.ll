@@ -205,11 +205,13 @@ _ZNK4pugi8xml_node5beginEv.exit:                  ; preds = %bb.a, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.f = load ptr, ptr %1, align 8, !tbaa !57
   call void @_ZN4pugi17xml_node_iteratorC1EPNS_15xml_node_structES2_(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef null, ptr noundef %i.f)
+  %4 = ptrtoint <2 x ptr> %i.e to <2 x i64>
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.h = load <2 x ptr>, ptr %2, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
-  store <2 x ptr> %i.e, ptr %0, align 8, !tbaa !63
-  store <2 x ptr> %i.h, ptr %i.g, align 8, !tbaa !63
+  %5 = ptrtoint <2 x ptr> %i.h to <2 x i64>
+  store <2 x i64> %4, ptr %0, align 8, !tbaa !63
+  store <2 x i64> %5, ptr %i.g, align 8, !tbaa !63
   ret void
 }
 
@@ -355,11 +357,13 @@ _ZNK4pugi8xml_node16attributes_beginEv.exit:      ; preds = %bb.a, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.f = load ptr, ptr %1, align 8, !tbaa !57
   call void @_ZN4pugi22xml_attribute_iteratorC1EPNS_20xml_attribute_structEPNS_15xml_node_structE(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef null, ptr noundef %i.f)
+  %4 = ptrtoint <2 x ptr> %i.e to <2 x i64>
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.h = load <2 x ptr>, ptr %2, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
-  store <2 x ptr> %i.e, ptr %0, align 8, !tbaa !53
-  store <2 x ptr> %i.h, ptr %i.g, align 8, !tbaa !53
+  %5 = ptrtoint <2 x ptr> %i.h to <2 x i64>
+  store <2 x i64> %4, ptr %0, align 8, !tbaa !53
+  store <2 x i64> %5, ptr %i.g, align 8, !tbaa !53
   ret void
 }
 
@@ -762,7 +766,8 @@ _ZNK4pugi8xml_node10last_childEv.exit:            ; preds = %bb.f, %bb.h, %bb.i
 
 bb.j:                                             ; preds = %_ZNK4pugi8xml_node10last_childEv.exit, %_ZNK4pugi8xml_node16previous_siblingEv.exit
   %.sroa.0.0.a = phi ptr [ %i.f, %_ZNK4pugi8xml_node16previous_siblingEv.exit ], [ %i.m, %_ZNK4pugi8xml_node10last_childEv.exit ]
-  store ptr %.sroa.0.0.a, ptr %0, align 8, !tbaa !63
+  %.sroa.0.0 = ptrtoint ptr %.sroa.0.0.a to i64
+  store i64 %.sroa.0.0, ptr %0, align 8, !tbaa !63
   ret ptr %0
 }
 
@@ -831,7 +836,8 @@ _ZNK4pugi8xml_node10last_childEv.exit.i:          ; preds = %bb.i, %bb.h, %bb.f
 
 _ZN4pugi17xml_node_iteratormmEv.exit:             ; preds = %_ZNK4pugi8xml_node16previous_siblingEv.exit.i, %_ZNK4pugi8xml_node10last_childEv.exit.i
   %.sroa.0.0.i.a = phi ptr [ %i.e, %_ZNK4pugi8xml_node16previous_siblingEv.exit.i ], [ %i.j, %_ZNK4pugi8xml_node10last_childEv.exit.i ]
-  store ptr %.sroa.0.0.i.a, ptr %0, align 8, !tbaa !63
+  %.sroa.0.0.i = ptrtoint ptr %.sroa.0.0.i.a to i64
+  store i64 %.sroa.0.0.i, ptr %0, align 8, !tbaa !63
   %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %.sroa.0.0.copyload, 0
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %.sroa.2.0.copyload, 1
   ret { ptr, ptr } %.fca.1.insert
@@ -991,7 +997,8 @@ _ZNK4pugi8xml_node14last_attributeEv.exit:        ; preds = %bb.f, %bb.h, %bb.i
 
 bb.j:                                             ; preds = %_ZNK4pugi8xml_node14last_attributeEv.exit, %_ZNK4pugi13xml_attribute18previous_attributeEv.exit
   %.sroa.0.0.a = phi ptr [ %i.f, %_ZNK4pugi13xml_attribute18previous_attributeEv.exit ], [ %i.m, %_ZNK4pugi8xml_node14last_attributeEv.exit ]
-  store ptr %.sroa.0.0.a, ptr %0, align 8, !tbaa !68
+  %.sroa.0.0 = ptrtoint ptr %.sroa.0.0.a to i64
+  store i64 %.sroa.0.0, ptr %0, align 8, !tbaa !68
   ret ptr %0
 }
 
@@ -1060,7 +1067,8 @@ _ZNK4pugi8xml_node14last_attributeEv.exit.i:      ; preds = %bb.i, %bb.h, %bb.f
 
 _ZN4pugi22xml_attribute_iteratormmEv.exit:        ; preds = %_ZNK4pugi13xml_attribute18previous_attributeEv.exit.i, %_ZNK4pugi8xml_node14last_attributeEv.exit.i
   %.sroa.0.0.i.a = phi ptr [ %i.e, %_ZNK4pugi13xml_attribute18previous_attributeEv.exit.i ], [ %i.j, %_ZNK4pugi8xml_node14last_attributeEv.exit.i ]
-  store ptr %.sroa.0.0.i.a, ptr %0, align 8, !tbaa !68
+  %.sroa.0.0.i = ptrtoint ptr %.sroa.0.0.i.a to i64
+  store i64 %.sroa.0.0.i, ptr %0, align 8, !tbaa !68
   %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %.sroa.0.0.copyload, 0
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %.sroa.2.0.copyload, 1
   ret { ptr, ptr } %.fca.1.insert
@@ -1211,7 +1219,8 @@ bb.d:                                             ; preds = %_ZN4pugi4impl12_GLO
 _ZNK4pugi8xml_node12next_siblingEPKc.exit:        ; preds = %bb.b, %bb.d, %._crit_edge.i
   %i.k = load ptr, ptr %1, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  store ptr %i.k, ptr %0, align 8, !tbaa !63
+  %2 = ptrtoint ptr %i.k to i64
+  store i64 %2, ptr %0, align 8, !tbaa !63
   ret ptr %0
 }
 
@@ -1272,7 +1281,8 @@ bb.d:                                             ; preds = %_ZN4pugi4impl12_GLO
 _ZN4pugi23xml_named_node_iteratorppEv.exit:       ; preds = %bb.b, %bb.d, %._crit_edge.i.i
   %i.k = load ptr, ptr %3, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  store ptr %i.k, ptr %1, align 8, !tbaa !63
+  %4 = ptrtoint ptr %i.k to i64
+  store i64 %4, ptr %1, align 8, !tbaa !63
   ret void
 }
 
@@ -1366,7 +1376,8 @@ bb.h:                                             ; preds = %bb.f
 _ZNK4pugi8xml_node10last_childEv.exit:            ; preds = %bb.e, %bb.g, %bb.h
   %i.v = load ptr, ptr %2, align 8                ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
-  store ptr %i.v, ptr %0, align 8, !tbaa !63
+  %4 = ptrtoint ptr %i.v to i64
+  store i64 %4, ptr %0, align 8, !tbaa !63
   %.not.i4 = icmp eq ptr %i.v, null               ; 2 uses
   br i1 %.not.i4, label %_ZNK4pugi8xml_node4nameEv.exit, label %bb.i
 
@@ -1447,7 +1458,8 @@ _ZNK4pugi8xml_node16previous_siblingEPKc.exit19:  ; preds = %bb.j, %bb.l, %._cri
 
 .sink.split:                                      ; preds = %_ZNK4pugi8xml_node16previous_siblingEPKc.exit, %_ZNK4pugi8xml_node16previous_siblingEPKc.exit19
   %.sink = phi ptr [ %i.aq, %_ZNK4pugi8xml_node16previous_siblingEPKc.exit19 ], [ %i.o, %_ZNK4pugi8xml_node16previous_siblingEPKc.exit ]
-  store ptr %.sink, ptr %0, align 8, !tbaa !63
+  %5 = ptrtoint ptr %.sink to i64
+  store i64 %5, ptr %0, align 8, !tbaa !63
   br label %bb.m
 
 bb.m:                                             ; preds = %.sink.split, %_ZN4pugi4impl12_GLOBAL__N_18strequalEPKcS3_.exit

@@ -205,12 +205,13 @@ declare noundef i32 @snprintf(ptr noalias noundef writeonly captures(none), i64 
 define hidden void @_ZN5LexerC2EPKc(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(48) initializes((0, 48)) %0, ptr noundef %1) unnamed_addr #3 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %2 = ptrtoint ptr %1 to i64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, i8 0, i64 32, i1 false)
   %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #17
-  store ptr @.str.4, ptr %0, align 8, !tbaa !41
+  store i64 ptrtoint (ptr @.str.4 to i64), ptr %0, align 8, !tbaa !41
   %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 5, ptr %.sroa.22.0..sroa_idx.i, align 8, !tbaa !29
-  store ptr %1, ptr %i.a, align 8, !tbaa !41
+  store i64 %2, ptr %i.a, align 8, !tbaa !41
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %i.b, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !29
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -223,11 +224,13 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define hidden void @_ZN5Lexer5StartE11StringPieceS0_(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(48) initializes((0, 48)) %0, ptr %1, i64 %2, ptr %3, i64 %4) local_unnamed_addr #4 align 2 {
 bb.a:
-  store ptr %1, ptr %0, align 8, !tbaa !41
+  %5 = ptrtoint ptr %1 to i64
+  %6 = ptrtoint ptr %3 to i64
+  store i64 %5, ptr %0, align 8, !tbaa !41
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %2, ptr %.sroa.22.0..sroa_idx, align 8, !tbaa !29
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %3, ptr %i.a, align 8, !tbaa !41
+  store i64 %6, ptr %i.a, align 8, !tbaa !41
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %4, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !29
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -452,6 +455,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.w, label %bb.bw, label %.thread
 
 bb.z:                                             ; preds = %bb.x
+  %1 = ptrtoint ptr %i.t to i64
   switch i8 %i.u, label %.thread [
     i8 13, label %bb.am
     i8 35, label %bb.ao
@@ -459,6 +463,7 @@ bb.z:                                             ; preds = %bb.x
 
 bb.aa:                                            ; preds = %bb.g
   %i.x = getelementptr inbounds nuw i8, ptr %.0148, i64 1 ; 4 uses
+  %2 = ptrtoint ptr %i.x to i64
   %i.y = load i8, ptr %i.x, align 1, !tbaa !19    ; 2 uses
   %i.z = icmp eq i8 %i.y, 0
   br i1 %i.z, label %.thread, label %bb.ap
@@ -540,13 +545,14 @@ bb.am:                                            ; preds = %bb.z
   br i1 %i.be, label %bb.bw, label %.thread
 
 bb.an:                                            ; preds = %bb.ap
+  %3 = inttoptr i64 %.sroa.084.2 to ptr
   %i.bf = icmp eq i32 %.2, 0
   %spec.select = select i1 %i.bf, i32 7, i32 0
   br label %.thread
 
 bb.ao:                                            ; preds = %bb.ap, %bb.z
   %.8 = phi ptr [ %i.t, %bb.z ], [ %.9, %bb.ap ]
-  %.1146 = phi ptr [ %i.t, %bb.z ], [ %.2147, %bb.ap ]
+  %.sroa.084.1 = phi i64 [ %1, %bb.z ], [ %.sroa.084.2, %bb.ap ]
   %.1 = phi i32 [ 0, %bb.z ], [ %.2, %bb.ap ]
   %i.bg = getelementptr inbounds nuw i8, ptr %.8, i64 1 ; 2 uses
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !19
@@ -554,7 +560,7 @@ bb.ao:                                            ; preds = %bb.ap, %bb.z
 
 bb.ap:                                            ; preds = %bb.aa, %bb.ao
   %.9 = phi ptr [ %i.bg, %bb.ao ], [ %i.x, %bb.aa ] ; 2 uses
-  %.2147 = phi ptr [ %.1146, %bb.ao ], [ %i.x, %bb.aa ] ; 2 uses
+  %.sroa.084.2 = phi i64 [ %.sroa.084.1, %bb.ao ], [ %2, %bb.aa ] ; 2 uses
   %.1142 = phi i8 [ %i.bh, %bb.ao ], [ %i.y, %bb.aa ]
   %.2 = phi i32 [ %.1, %bb.ao ], [ 1, %bb.aa ]    ; 2 uses
   switch i8 %.1142, label %bb.ao [
@@ -783,7 +789,7 @@ bb.bw:                                            ; preds = %bb.w, %bb.am, %bb.y
 
 .thread:                                          ; preds = %bb.z, %bb.aa, %bb.an, %bb.am, %bb.w, %bb.y, %bb.ax, %bb.aw, %bb.bs, %bb.bh, %bb.al, %bb.br, %bb.bk, %bb.bi, %bb.ae, %bb.ad, %bb.bu, %bb.ac, %.loopexit
   %.0148382 = phi ptr [ %.0148, %bb.an ], [ %.0148384, %bb.ac ], [ %.0148, %bb.bu ], [ %.0148, %bb.ad ], [ %.0148, %bb.ae ], [ %.0148, %bb.bi ], [ %.0148, %bb.bk ], [ %.0148, %bb.br ], [ %.0148, %bb.al ], [ %.0148, %bb.bh ], [ %.0148, %bb.bs ], [ %.0148, %bb.aw ], [ %.0148, %bb.ax ], [ %.0148, %bb.am ], [ %.0148, %.loopexit ], [ %.0148, %bb.w ], [ %.0148, %bb.y ], [ %.0148, %bb.aa ], [ %.0148, %bb.z ]
-  %.10.ph.ph = phi ptr [ %.2147, %bb.an ], [ %.6, %bb.ac ], [ %i.fe, %bb.bu ], [ %i.ag, %bb.ad ], [ %i.ah, %bb.ae ], [ %i.dj, %bb.bi ], [ %i.ds, %bb.bk ], [ %i.eq, %bb.br ], [ %i.ba, %bb.al ], [ %i.dd, %bb.bh ], [ %i.ew, %bb.bs ], [ %i.ca, %bb.aw ], [ %i.cb, %bb.ax ], [ %i.t, %bb.am ], [ %i.p, %.loopexit ], [ %i.q, %bb.w ], [ %i.t, %bb.y ], [ %i.t, %bb.z ], [ %i.x, %bb.aa ]
+  %.10.ph.ph = phi ptr [ %3, %bb.an ], [ %.6, %bb.ac ], [ %i.fe, %bb.bu ], [ %i.ag, %bb.ad ], [ %i.ah, %bb.ae ], [ %i.dj, %bb.bi ], [ %i.ds, %bb.bk ], [ %i.eq, %bb.br ], [ %i.ba, %bb.al ], [ %i.dd, %bb.bh ], [ %i.ew, %bb.bs ], [ %i.ca, %bb.aw ], [ %i.cb, %bb.ax ], [ %i.t, %bb.am ], [ %i.p, %.loopexit ], [ %i.q, %bb.w ], [ %i.t, %bb.y ], [ %i.t, %bb.z ], [ %i.x, %bb.aa ]
   %.1144.ph.ph = phi i32 [ %spec.select, %bb.an ], [ 5, %bb.ac ], [ 14, %bb.bu ], [ 2, %bb.ad ], [ 4, %bb.ae ], [ 13, %bb.bi ], [ 1, %bb.bk ], [ 3, %bb.br ], [ 9, %bb.al ], [ 12, %bb.bh ], [ 6, %bb.bs ], [ 11, %bb.aw ], [ 10, %bb.ax ], [ 7, %bb.am ], [ 0, %.loopexit ], [ 0, %bb.w ], [ 7, %bb.y ], [ 7, %bb.z ], [ 0, %bb.aa ] ; 3 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %.0148382, ptr %i.fn, align 8, !tbaa !18

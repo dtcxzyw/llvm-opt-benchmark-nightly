@@ -205,6 +205,7 @@ _RNvXso_NtNtCs3oUPovFnLWP_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB
   %.sroa.4.121.a = phi ptr [ %0, %bb.a ], [ %.sroa.4.0, %bb.d ], [ %.sroa.4.0, %_RNvXs3_NtNtCs3oUPovFnLWP_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCs4wS76oGtFbW_12typst_assets.exit.i.i.i ], [ %.sroa.4.0, %bb.e ] ; 6 uses
   %.sroa.18.019 = phi i64 [ 0, %bb.a ], [ %i.aq, %bb.d ], [ %i.aq, %_RNvXs3_NtNtCs3oUPovFnLWP_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCs4wS76oGtFbW_12typst_assets.exit.i.i.i ], [ %i.aq, %bb.e ] ; 3 uses
   %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ %i.c, %bb.d ], [ %i.c, %_RNvXs3_NtNtCs3oUPovFnLWP_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCs4wS76oGtFbW_12typst_assets.exit.i.i.i ], [ %i.c, %bb.e ] ; 3 uses
+  %.sroa.4.121 = ptrtoint ptr %.sroa.4.121.a to i64
   %i.bi = icmp eq ptr %.sroa.4.121.a, %i.a
   br i1 %i.bi, label %.loopexit, label %.lr.ph.i.i4
 
@@ -333,8 +334,7 @@ bb.t:                                             ; preds = %_RNvXs3_NtNtCs3oUPo
 
 bb.u:                                             ; preds = %_RNvXs3_NtNtCs3oUPovFnLWP_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCs4wS76oGtFbW_12typst_assets.exit.i.i.i6, %bb.o, %bb.n
   %i.dm = ptrtoint ptr %i.bj to i64
-  %2 = ptrtoint ptr %.sroa.4.121.a to i64
-  %i.dn = sub i64 %.sroa.18.019, %2
+  %i.dn = sub i64 %.sroa.18.019, %.sroa.4.121
   %i.do = add i64 %i.dn, %i.dm
   br label %.loopexit
 
@@ -737,9 +737,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr @466, ptr %i.a, align 8
+  store i64 ptrtoint (ptr @466 to i64), ptr %i.a, align 8
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXse_NtNtCs3oUPovFnLWP_4core3fmt3numhNtB7_8LowerHex3fmt, ptr %.sroa.43.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXse_NtNtCs3oUPovFnLWP_4core3fmt3numhNtB7_8LowerHex3fmt to i64), ptr %.sroa.43.0..sroa_idx, align 8
   %i.e = load ptr, ptr %1, align 8, !nonnull !18, !noundef !18
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !nonnull !18, !align !148, !noundef !18
@@ -957,9 +957,10 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !169
   store ptr %i.c, ptr %i.b, align 8, !noalias !179
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !179
-  store ptr %i.b, ptr %i.a, align 8, !noalias !179
+  %2 = ptrtoint ptr %i.b to i64
+  store i64 %2, ptr %i.a, align 8, !noalias !179
   %.sroa.42.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXs1o_NtCs3oUPovFnLWP_4core3fmtRhNtB6_8LowerHex3fmtCs4wS76oGtFbW_12typst_assets, ptr %.sroa.42.0..sroa_idx.i.i, align 8, !noalias !179
+  store i64 ptrtoint (ptr @_RNvXs1o_NtCs3oUPovFnLWP_4core3fmtRhNtB6_8LowerHex3fmtCs4wS76oGtFbW_12typst_assets to i64), ptr %.sroa.42.0..sroa_idx.i.i, align 8, !noalias !179
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val1.i.i.i = load ptr, ptr %i.bb, align 8, !alias.scope !181, !noalias !182, !nonnull !18, !noundef !18
   %.val.i.i.i = load ptr, ptr %1, align 8, !alias.scope !181, !noalias !182, !nonnull !18, !noundef !18
@@ -1159,6 +1160,7 @@ _RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs4wS76
   unreachable
 
 _RINvMs_NtCs6fhnmY1I3Kb_8bitflags6parserNtB5_10ParseError18invalid_named_flagReECs4wS76oGtFbW_12typst_assets.exit.i: ; preds = %.thread.i
+  %3 = ptrtoint ptr %i.bq to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bq, ptr noundef nonnull readonly align 1 dereferenceable(1) %i.aa, i64 range(i64 1, -9223372036854775808) %i.ab, i1 false), !noalias !218
   %.sroa.9.sroa.8.0.extract.shift = and i64 %i.ab, -256
   br label %.loopexit
@@ -1189,6 +1191,7 @@ _RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs4wS76
   unreachable
 
 bb.q:                                             ; preds = %bb.p
+  %4 = ptrtoint ptr %i.bu to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bu, ptr nonnull readonly align 1 %i.bn, i64 range(i64 0, -9223372036854775808) %i.bm, i1 false), !noalias !236
   br label %bb.s
 
@@ -1199,7 +1202,7 @@ bb.r:                                             ; preds = %_RNvMs5_NtCs1xwejQu
   resume { ptr, i32 } %i.bw
 
 bb.s:                                             ; preds = %bb.q, %bb.o
-  %.sroa.5.0.i.i.i.i.i = phi ptr [ %i.bu, %bb.q ], [ inttoptr (i64 1 to ptr), %bb.o ]
+  %.sroa.5.0.i.i.i.i.i = phi i64 [ %4, %bb.q ], [ 1, %bb.o ]
   switch i64 %i.bo, label %bb.t [
     i64 0, label %_RNCINvNtCs6fhnmY1I3Kb_8bitflags6parser8from_strNtNtCs4wS76oGtFbW_12typst_assets6mathml10PropertiesE0BN_.exit.i
     i64 1, label %bb.u
@@ -1230,7 +1233,7 @@ bb.v:                                             ; preds = %bb.l
   %.sroa.9.sroa.8.sroa.0.1.ph = phi i64 [ %i.bz, %_RNCINvNtCs6fhnmY1I3Kb_8bitflags6parser8from_strNtNtCs4wS76oGtFbW_12typst_assets6mathml10PropertiesE0BN_.exit.i ], [ %.sroa.9.sroa.8.0.extract.shift, %_RINvMs_NtCs6fhnmY1I3Kb_8bitflags6parserNtB5_10ParseError18invalid_named_flagReECs4wS76oGtFbW_12typst_assets.exit.i ], [ %i.ab, %_RNvXs_NtNtCs3oUPovFnLWP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i ]
   %.sroa.9.sroa.0.1.ph = phi i64 [ %i.bm, %_RNCINvNtCs6fhnmY1I3Kb_8bitflags6parser8from_strNtNtCs4wS76oGtFbW_12typst_assets6mathml10PropertiesE0BN_.exit.i ], [ %i.ab, %_RINvMs_NtCs6fhnmY1I3Kb_8bitflags6parserNtB5_10ParseError18invalid_named_flagReECs4wS76oGtFbW_12typst_assets.exit.i ], [ %i.ab, %_RNvXs_NtNtCs3oUPovFnLWP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i ]
   %.sroa.16.1.ph = phi i64 [ %i.bm, %_RNCINvNtCs6fhnmY1I3Kb_8bitflags6parser8from_strNtNtCs4wS76oGtFbW_12typst_assets6mathml10PropertiesE0BN_.exit.i ], [ %i.ab, %_RINvMs_NtCs6fhnmY1I3Kb_8bitflags6parserNtB5_10ParseError18invalid_named_flagReECs4wS76oGtFbW_12typst_assets.exit.i ], [ undef, %_RNvXs_NtNtCs3oUPovFnLWP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i ]
-  %.sroa.15.1.ph = phi ptr [ %.sroa.5.0.i.i.i.i.i, %_RNCINvNtCs6fhnmY1I3Kb_8bitflags6parser8from_strNtNtCs4wS76oGtFbW_12typst_assets6mathml10PropertiesE0BN_.exit.i ], [ %i.bq, %_RINvMs_NtCs6fhnmY1I3Kb_8bitflags6parserNtB5_10ParseError18invalid_named_flagReECs4wS76oGtFbW_12typst_assets.exit.i ], [ undef, %_RNvXs_NtNtCs3oUPovFnLWP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i ]
+  %.sroa.15.1.ph = phi i64 [ %.sroa.5.0.i.i.i.i.i, %_RNCINvNtCs6fhnmY1I3Kb_8bitflags6parser8from_strNtNtCs4wS76oGtFbW_12typst_assets6mathml10PropertiesE0BN_.exit.i ], [ %3, %_RINvMs_NtCs6fhnmY1I3Kb_8bitflags6parserNtB5_10ParseError18invalid_named_flagReECs4wS76oGtFbW_12typst_assets.exit.i ], [ undef, %_RNvXs_NtNtCs3oUPovFnLWP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i ]
   %.sroa.0.1.ph = phi i64 [ 2, %_RNCINvNtCs6fhnmY1I3Kb_8bitflags6parser8from_strNtNtCs4wS76oGtFbW_12typst_assets6mathml10PropertiesE0BN_.exit.i ], [ 1, %_RINvMs_NtCs6fhnmY1I3Kb_8bitflags6parserNtB5_10ParseError18invalid_named_flagReECs4wS76oGtFbW_12typst_assets.exit.i ], [ %i.ab, %_RNvXs_NtNtCs3oUPovFnLWP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %.sroa.9.sroa.0.0.insert.ext = and i64 %.sroa.9.sroa.0.1.ph, 255
@@ -1239,7 +1242,7 @@ bb.v:                                             ; preds = %bb.l
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.9.sroa.0.0.insert.insert, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %.sroa.15.1.ph, ptr %.sroa.5.0..sroa_idx, align 8
+  store i64 %.sroa.15.1.ph, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %.sroa.16.1.ph, ptr %.sroa.6.0..sroa_idx, align 8
   br label %bb.w

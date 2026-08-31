@@ -205,6 +205,7 @@ ISEQ_IS_ENTRY_START.exit471.i:                    ; preds = %bb.bs, %.thread494.
   %i.nj = getelementptr [16 x i8], ptr %i.ni, i64 %.2.i468.i
   %i.nk = and i64 %.in.i, 4294967295
   %i.nl = getelementptr [16 x i8], ptr %i.nj, i64 %i.nk
+  %3 = ptrtoint ptr %i.nl to i64
   %i.nm = load i32, ptr %i.fy, align 4, !tbaa !124
   %i.nn = add i32 %i.nm, %i.ng
   %i.no = load i32, ptr %i.ga, align 8, !tbaa !121
@@ -224,7 +225,6 @@ bb.bu:                                            ; preds = %ISEQ_IS_ENTRY_START
   br label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu, %ISEQ_IS_ENTRY_START.exit471.i
-  %3 = ptrtoint ptr %i.nl to i64
   %i.nv = add i32 %.0331.i, %i.ij
   %i.nw = sext i32 %i.nv to i64
   %i.nx = getelementptr [8 x i8], ptr %i.fv, i64 %i.nw
@@ -627,7 +627,8 @@ bb.j:                                             ; preds = %RSTRING_PTR.exit.i
   br label %ruby_nonempty_memcpy.exit.i
 
 ruby_nonempty_memcpy.exit.i:                      ; preds = %bb.j, %RSTRING_PTR.exit.i
-  store ptr %i.ah, ptr %i.d, align 8, !tbaa !496
+  %4 = ptrtoint ptr %i.ah to i64
+  store i64 %4, ptr %i.d, align 8, !tbaa !496
   %.sroa.29.0..sroa_idx.i = getelementptr i8, ptr %0, i64 824
   store i64 %i.af, ptr %.sroa.29.0..sroa_idx.i, align 8, !tbaa !36
   %.sroa.310.0..sroa_idx.i = getelementptr i8, ptr %0, i64 832
@@ -645,7 +646,8 @@ bb.k:                                             ; preds = %bb.e
 bb.l:                                             ; preds = %bb.k
   %i.ap = tail call i32 @close(i32 noundef %i.k) #37 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #37
-  store ptr %i.a, ptr %i.d, align 8, !tbaa !496
+  %5 = ptrtoint ptr %i.a to i64
+  store i64 %5, ptr %i.d, align 8, !tbaa !496
   %.sroa.22.0..sroa_idx.i = getelementptr i8, ptr %0, i64 824
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.22.0..sroa_idx.i, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #37
@@ -658,7 +660,8 @@ bb.m:                                             ; preds = %bb.k
   br i1 %i.ar, label %pm_read_file.exit.thread19, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  store ptr %i.aq, ptr %i.d, align 8, !tbaa !496
+  %6 = ptrtoint ptr %i.aq to i64
+  store i64 %6, ptr %i.d, align 8, !tbaa !496
   %.sroa.2.0..sroa_idx.i = getelementptr i8, ptr %0, i64 824
   store i64 %i.an, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !36
   %.sroa.3.0..sroa_idx.i = getelementptr i8, ptr %0, i64 832
@@ -1061,7 +1064,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.aw = zext i1 %i.av to i32
   %spec.select.i = add i32 %i.aw, %.056.i
   %i.ax = getelementptr [24 x i8], ptr %i.e, i64 %.057.lcssa.i ; 4 uses
-  store ptr %.05876.i, ptr %i.ax, align 8, !tbaa !167
+  %5 = ptrtoint ptr %.05876.i to i64
+  store i64 %5, ptr %i.ax, align 8, !tbaa !167
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
   store i64 %i.n, ptr %.sroa.2.0..sroa_idx.i, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ax, i64 16

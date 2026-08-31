@@ -202,23 +202,24 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.ak = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  %.sroa.0117.0.copyload.i.i = load ptr, ptr %i.ak, align 8, !noalias !1405
+  %.sroa.0117.0.copyload.i.i = load i64, ptr %i.ak, align 8, !noalias !1405
   %.sroa.4118.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16
   %.sroa.6.sroa.8.i.i.sroa.0.0.copyload92 = load i64, ptr %.sroa.4118.0..sroa_idx.i.i, align 8, !noalias !1405
   %.sroa.6.sroa.8.i.i.sroa.7.0..sroa.4118.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   %.sroa.6.sroa.8.i.i.sroa.7.0.copyload94 = load i64, ptr %.sroa.6.sroa.8.i.i.sroa.7.0..sroa.4118.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !1405
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !1405
-  %2 = ptrtoint ptr %.sroa.0117.0.copyload.i.i to i64
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn11restriction10VisibilityECs5JB0sjZZtVB_12tokio_macros.exit.i.i
 
 bb.h:                                             ; preds = %bb.f
   %.sroa.443.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 4
   %.sroa.443.sroa.0.0.copyload.i.i = load i32, ptr %.sroa.443.0..sroa_idx.i.i, align 4, !noalias !1405
-  %.sroa.443.sroa.4.0..sroa.443.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  %.sroa.443.sroa.4.0.copyload.i.i = load ptr, ptr %.sroa.443.sroa.4.0..sroa.443.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !1405 ; 6 uses
-  %.sroa.443.sroa.5.0..sroa.443.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  %3 = load <2 x i64>, ptr %.sroa.443.sroa.5.0..sroa.443.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !1405
+  %.sroa.443.sroa.4.0..sroa.443.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 2 uses
+  %2 = load <2 x i64>, ptr %.sroa.443.sroa.4.0..sroa.443.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !1405
+  %.sroa.443.sroa.4.0.copyload.i.i = load i64, ptr %.sroa.443.sroa.4.0..sroa.443.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !1405
+  %.sroa.443.sroa.5.0..sroa.443.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.q, i64 24
+  %.sroa.6.sroa.8.i.i.sroa.7.0.copyload = load i64, ptr %.sroa.443.sroa.5.0..sroa.443.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !1405
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !1405
+  %3 = inttoptr i64 %.sroa.443.sroa.4.0.copyload.i.i to ptr ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !1405
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !1405
   invoke void @_RNvXs6_NtNtCscBrinq2mG3I_3syn4item7parsingNtB7_9SignatureNtNtB9_5parse5Parse5parse(ptr noalias nofree noundef nonnull sret([288 x i8]) align 8 captures(address) dereferenceable(288) %i.o, ptr noundef nonnull align 8 %i.x)
@@ -621,18 +622,18 @@ bb.bi:                                            ; preds = %_RINvNtCs3oUPovFnLW
   br i1 %i.ck, label %bb.bj, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn11restriction10VisibilityECs5JB0sjZZtVB_12tokio_macros.exit.i.i
 
 bb.bj:                                            ; preds = %bb.bi
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.443.sroa.4.0.copyload.i.i) ]
-  invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn4path4PathECs5JB0sjZZtVB_12tokio_macros(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %.sroa.443.sroa.4.0.copyload.i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %3) ]
+  invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn4path4PathECs5JB0sjZZtVB_12tokio_macros(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %3)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn11restriction13VisRestrictedECs5JB0sjZZtVB_12tokio_macros.exit.i.i.i unwind label %bb.bk, !noalias !1405
 
 bb.bk:                                            ; preds = %bb.bj
   %i.cl = landingpad { ptr, i32 }
           cleanup
-  call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.443.sroa.4.0.copyload.i.i, i64 noundef 48, i64 noundef 8) #10, !noalias !1405
+  call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %3, i64 noundef 48, i64 noundef 8) #10, !noalias !1405
   br label %bb.bo
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn11restriction13VisRestrictedECs5JB0sjZZtVB_12tokio_macros.exit.i.i.i: ; preds = %bb.bj
-  call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.443.sroa.4.0.copyload.i.i, i64 noundef 48, i64 noundef 8) #10, !noalias !1405
+  call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %3, i64 noundef 48, i64 noundef 8) #10, !noalias !1405
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn11restriction10VisibilityECs5JB0sjZZtVB_12tokio_macros.exit.i.i
 
 .thread137.i.i:                                   ; preds = %.thread145.i.i, %bb.as, %bb.r, %.thread141.i.i
@@ -649,7 +650,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn11restriction13Vis
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn11restriction10VisibilityECs5JB0sjZZtVB_12tokio_macros.exit.i.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn11restriction13VisRestrictedECs5JB0sjZZtVB_12tokio_macros.exit.i.i.i, %bb.bi, %bb.g
   %.sroa.22.4 = phi i64 [ %.sroa.6.sroa.8.i.i.sroa.7.0.copyload94, %bb.g ], [ %.sroa.22.3, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn11restriction13VisRestrictedECs5JB0sjZZtVB_12tokio_macros.exit.i.i.i ], [ %.sroa.22.3, %bb.bi ]
   %.sroa.20.4 = phi i64 [ %.sroa.6.sroa.8.i.i.sroa.0.0.copyload92, %bb.g ], [ %.sroa.20.3, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn11restriction13VisRestrictedECs5JB0sjZZtVB_12tokio_macros.exit.i.i.i ], [ %.sroa.20.3, %bb.bi ]
-  %.sroa.11.4 = phi i64 [ %2, %bb.g ], [ %.sroa.11.3, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn11restriction13VisRestrictedECs5JB0sjZZtVB_12tokio_macros.exit.i.i.i ], [ %.sroa.11.3, %bb.bi ]
+  %.sroa.11.4 = phi i64 [ %.sroa.0117.0.copyload.i.i, %bb.g ], [ %.sroa.11.3, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn11restriction13VisRestrictedECs5JB0sjZZtVB_12tokio_macros.exit.i.i.i ], [ %.sroa.11.3, %bb.bi ]
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCscBrinq2mG3I_3syn4attr9AttributeENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs5JB0sjZZtVB_12tokio_macros(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.s)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCscBrinq2mG3I_3syn4attr9AttributeEECs5JB0sjZZtVB_12tokio_macros.exit82.i.i unwind label %bb.bl, !noalias !1405
 
@@ -671,7 +672,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCsc
 
 bb.bn:                                            ; preds = %.body77.thread.i.i, %bb.i
   %.pn66.ph.i.i = phi { ptr, i32 } [ %.pn64167.i.i, %.body77.thread.i.i ], [ %i.al, %bb.i ]
-  invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn11restriction10VisibilityECs5JB0sjZZtVB_12tokio_macros(i32 %i.ai, ptr %.sroa.443.sroa.4.0.copyload.i.i) #12
+  invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCscBrinq2mG3I_3syn11restriction10VisibilityECs5JB0sjZZtVB_12tokio_macros(i32 %i.ai, ptr %3) #12
           to label %bb.bo unwind label %bb.bh, !noalias !1405
 
 bb.bo:                                            ; preds = %bb.bn, %bb.bk, %bb.e
@@ -724,9 +725,9 @@ bb.br:                                            ; preds = %bb.bq
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 364
   store i32 %.sroa.443.sroa.0.0.copyload.i.i, ptr %.sroa.7.0..sroa_idx, align 4
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 368
-  store ptr %.sroa.443.sroa.4.0.copyload.i.i, ptr %.sroa.8.0..sroa_idx, align 8
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 376
-  store <2 x i64> %3, ptr %.sroa.9.0..sroa_idx, align 8
+  store <2 x i64> %2, ptr %.sroa.8.0..sroa_idx, align 8
+  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 384
+  store i64 %.sroa.6.sroa.8.i.i.sroa.7.0.copyload, ptr %.sroa.9.0..sroa_idx, align 8
   invoke void @_RNvMs9_NtCscBrinq2mG3I_3syn5parseNtB5_11ParseBuffer16check_unexpected(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.v, ptr noundef nonnull align 8 %i.x)
           to label %bb.bt unwind label %bb.bs
 
