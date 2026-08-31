@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lean4/original/static?download=true
 inline.NumInlined: 1572
 inline.NumDeleted: 309
-loop-unroll.NumCompletelyUnrolled: 26
+loop-unroll.NumCompletelyUnrolled: 27
 loop-unroll.NumRuntimeUnrolled: 11
-loop-unroll.NumUnrolled: 39
+loop-unroll.NumUnrolled: 40
 loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_ZL17mi_random_init_exP15mi_random_cxt_sb:bb.a
   store i32 0, ptr %i.ed, align 4, !tbaa !71
@@ -206,7 +206,7 @@ bb.i:                                             ; preds = %.loopexit.6
 define hidden noundef i64 @_Z24_mi_commit_mask_next_runPK16mi_commit_mask_sPm(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #22 {
 bb.a:
   %i.a = load i64, ptr %1, align 8, !tbaa !74     ; 3 uses
-  %i.b = lshr i64 %i.a, 6                         ; 3 uses
+  %i.b = lshr i64 %i.a, 6                         ; 9 uses
   %i.c = icmp ult i64 %i.a, 512
   br i1 %i.c, label %.lr.ph.preheader, label %.thread
 
@@ -219,21 +219,20 @@ bb.a:
   br i1 %.not.peel, label %bb.b, label %.preheader
 
 bb.b:                                             ; preds = %.lr.ph.preheader
-  %i.h = add nuw nsw i64 %i.b, 1                  ; 2 uses
+  %i.h = add nuw nsw i64 %i.b, 1                  ; 3 uses
   %exitcond.peel.not = icmp eq i64 %i.h, 8
   br i1 %exitcond.peel.not, label %.thread, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.b, %bb.c
-  %.03348 = phi i64 [ %i.q, %bb.c ], [ %i.h, %bb.b ] ; 3 uses
-  %i.i = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.03348
+.lr.ph:                                           ; preds = %bb.b
+  %i.i = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.h
   %i.j = load i64, ptr %i.i, align 8, !tbaa !74   ; 2 uses
   %.not = icmp eq i64 %i.j, 0
-  br i1 %.not, label %bb.c, label %.preheader
+  br i1 %.not, label %2, label %.preheader
 
-.preheader:                                       ; preds = %.lr.ph, %.lr.ph.preheader
-  %.03049.lcssa = phi i64 [ %i.d, %.lr.ph.preheader ], [ 0, %.lr.ph ] ; 2 uses
-  %.03348.lcssa = phi i64 [ %i.b, %.lr.ph.preheader ], [ %.03348, %.lr.ph ] ; 2 uses
-  %.lcssa57 = phi i64 [ %i.g, %.lr.ph.preheader ], [ %i.j, %.lr.ph ] ; 3 uses
+.preheader:                                       ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %.lr.ph.preheader
+  %.03049.lcssa = phi i64 [ %i.d, %.lr.ph.preheader ], [ 0, %.lr.ph.6 ], [ 0, %.lr.ph.5 ], [ 0, %.lr.ph.4 ], [ 0, %.lr.ph.3 ], [ 0, %.lr.ph.2 ], [ 0, %.lr.ph.1 ], [ 0, %.lr.ph ] ; 2 uses
+  %.03348.lcssa = phi i64 [ %i.b, %.lr.ph.preheader ], [ %i.h, %.lr.ph ], [ %3, %.lr.ph.1 ], [ %7, %.lr.ph.2 ], [ %11, %.lr.ph.3 ], [ %15, %.lr.ph.4 ], [ %19, %.lr.ph.5 ], [ %i.q, %.lr.ph.6 ] ; 2 uses
+  %.lcssa57 = phi i64 [ %i.g, %.lr.ph.preheader ], [ %i.j, %.lr.ph ], [ %5, %.lr.ph.1 ], [ %9, %.lr.ph.2 ], [ %13, %.lr.ph.3 ], [ %17, %.lr.ph.4 ], [ %21, %.lr.ph.5 ], [ %23, %.lr.ph.6 ] ; 3 uses
   %i.k = and i64 %.lcssa57, 1
   %i.l = icmp eq i64 %i.k, 0
   br i1 %i.l, label %.lr.ph52, label %._crit_edge
@@ -247,12 +246,73 @@ bb.b:                                             ; preds = %.lr.ph.preheader
   %i.p = icmp eq i64 %i.o, 0
   br i1 %i.p, label %.lr.ph52, label %._crit_edge, !llvm.loop !320
 
-bb.c:                                             ; preds = %.lr.ph
-  %i.q = add nuw nsw i64 %.03348, 1               ; 2 uses
-  %exitcond.not.a = icmp eq i64 %i.q, 8
-  br i1 %exitcond.not.a, label %.thread, label %.lr.ph, !llvm.loop !321
+2:                                                ; preds = %.lr.ph
+  %3 = add nuw nsw i64 %i.b, 2                    ; 3 uses
+  %exitcond.not = icmp eq i64 %3, 8
+  br i1 %exitcond.not, label %.thread, label %.lr.ph.1
 
-.thread:                                          ; preds = %bb.c, %bb.b, %bb.a
+.lr.ph.1:                                         ; preds = %2
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %3
+  %5 = load i64, ptr %4, align 8, !tbaa !74       ; 2 uses
+  %.not.1 = icmp eq i64 %5, 0
+  br i1 %.not.1, label %6, label %.preheader
+
+6:                                                ; preds = %.lr.ph.1
+  %7 = add nuw nsw i64 %i.b, 3                    ; 3 uses
+  %exitcond.not.1 = icmp eq i64 %7, 8
+  br i1 %exitcond.not.1, label %.thread, label %.lr.ph.2
+
+.lr.ph.2:                                         ; preds = %6
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %7
+  %9 = load i64, ptr %8, align 8, !tbaa !74       ; 2 uses
+  %.not.2 = icmp eq i64 %9, 0
+  br i1 %.not.2, label %10, label %.preheader
+
+10:                                               ; preds = %.lr.ph.2
+  %11 = add nuw nsw i64 %i.b, 4                   ; 3 uses
+  %exitcond.not.2 = icmp eq i64 %11, 8
+  br i1 %exitcond.not.2, label %.thread, label %.lr.ph.3
+
+.lr.ph.3:                                         ; preds = %10
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %11
+  %13 = load i64, ptr %12, align 8, !tbaa !74     ; 2 uses
+  %.not.3 = icmp eq i64 %13, 0
+  br i1 %.not.3, label %14, label %.preheader
+
+14:                                               ; preds = %.lr.ph.3
+  %15 = add nuw nsw i64 %i.b, 5                   ; 3 uses
+  %exitcond.not.3 = icmp eq i64 %15, 8
+  br i1 %exitcond.not.3, label %.thread, label %.lr.ph.4
+
+.lr.ph.4:                                         ; preds = %14
+  %16 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %15
+  %17 = load i64, ptr %16, align 8, !tbaa !74     ; 2 uses
+  %.not.4 = icmp eq i64 %17, 0
+  br i1 %.not.4, label %18, label %.preheader
+
+18:                                               ; preds = %.lr.ph.4
+  %19 = add nuw nsw i64 %i.b, 6                   ; 3 uses
+  %exitcond.not.4 = icmp eq i64 %19, 8
+  br i1 %exitcond.not.4, label %.thread, label %.lr.ph.5
+
+.lr.ph.5:                                         ; preds = %18
+  %20 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %19
+  %21 = load i64, ptr %20, align 8, !tbaa !74     ; 2 uses
+  %.not.5 = icmp eq i64 %21, 0
+  br i1 %.not.5, label %bb.c, label %.preheader
+
+bb.c:                                             ; preds = %.lr.ph.5
+  %i.q = add nuw nsw i64 %i.b, 7                  ; 3 uses
+  %exitcond.not.a = icmp eq i64 %i.q, 8
+  br i1 %exitcond.not.a, label %.thread, label %.lr.ph.6
+
+.lr.ph.6:                                         ; preds = %bb.c
+  %22 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.q
+  %23 = load i64, ptr %22, align 8, !tbaa !74     ; 2 uses
+  %.not.6 = icmp eq i64 %23, 0
+  br i1 %.not.6, label %.thread, label %.preheader
+
+.thread:                                          ; preds = %2, %6, %10, %14, %18, %bb.c, %.lr.ph.6, %bb.b, %bb.a
   store i64 512, ptr %1, align 8, !tbaa !74
   br label %.loopexit
 
@@ -277,7 +337,7 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   %i.u = lshr i64 %.4, 1                          ; 2 uses
   %i.v = and i64 %.4, 2
   %.not40 = icmp eq i64 %i.v, 0
-  br i1 %.not40, label %bb.f, label %bb.e, !llvm.loop !323
+  br i1 %.not40, label %bb.f, label %bb.e, !llvm.loop !321
 
 bb.f:                                             ; preds = %bb.e
   %i.w = add i64 %i.t, %.131.lcssa
@@ -300,7 +360,7 @@ bb.i:                                             ; preds = %bb.f, %bb.h
   %.5 = phi i64 [ %i.ac, %bb.h ], [ %i.u, %bb.f ] ; 2 uses
   %i.ad = and i64 %.5, 1
   %.not41 = icmp eq i64 %i.ad, 0
-  br i1 %.not41, label %.loopexit, label %bb.d, !llvm.loop !324
+  br i1 %.not41, label %.loopexit, label %bb.d, !llvm.loop !322
 
 .loopexit:                                        ; preds = %bb.i, %bb.g, %.thread
   %.036 = phi i64 [ 0, %.thread ], [ %i.t, %bb.g ], [ %i.t, %bb.i ]
@@ -320,13 +380,13 @@ bb.a:
   %2 = alloca %struct.timespec, align 8           ; 5 uses
   %3 = alloca %struct.mi_commit_mask_s, align 8   ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 25
-  %i.b = load i8, ptr %i.a, align 1, !tbaa !325, !range !91, !noundef !92
+  %i.b = load i8, ptr %i.a, align 1, !tbaa !323, !range !91, !noundef !92
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %bb.b, label %bb.u
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !326
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !324
   %i.f = icmp eq i64 %i.e, 0
   br i1 %i.f, label %bb.u, label %bb.c
 
@@ -391,13 +451,13 @@ bb.j:                                             ; preds = %_ZL23mi_commit_mask
   %i.aa = sdiv i64 %i.z, 1000000
   %i.ab = mul nsw i64 %i.x, 1000
   %i.ac = add nsw i64 %i.aa, %i.ab
-  %i.ad = load i64, ptr %i.d, align 8, !tbaa !326
+  %i.ad = load i64, ptr %i.d, align 8, !tbaa !324
   %i.ae = icmp slt i64 %i.ac, %i.ad
   br i1 %i.ae, label %bb.u, label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %_ZL23mi_commit_mask_is_emptyPK16mi_commit_mask_s.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #55
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %3, ptr noundef nonnull align 8 dereferenceable(64) %i.g, i64 64, i1 false), !tbaa.struct !327
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %3, ptr noundef nonnull align 8 dereferenceable(64) %i.g, i64 64, i1 false), !tbaa.struct !325
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.d, i8 0, i64 72, i1 false)
   br label %.lr.ph.preheader.i
 
@@ -443,7 +503,7 @@ bb.l:                                             ; preds = %.lr.ph.preheader.i
 bb.m:                                             ; preds = %.lr.ph.i
   %i.at = add nuw nsw i64 %.03348.i, 1            ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.at, 8
-  br i1 %exitcond.not.i, label %_Z24_mi_commit_mask_next_runPK16mi_commit_mask_sPm.exit.thread, label %.lr.ph.i, !llvm.loop !321
+  br i1 %exitcond.not.i, label %_Z24_mi_commit_mask_next_runPK16mi_commit_mask_sPm.exit.thread, label %.lr.ph.i, !llvm.loop !326
 
 ._crit_edge.i:                                    ; preds = %.lr.ph52.i, %.preheader.i
   %.131.lcssa.i = phi i64 [ %.03049.lcssa.i, %.preheader.i ], [ %i.aq, %.lr.ph52.i ] ; 2 uses
@@ -465,7 +525,7 @@ bb.o:                                             ; preds = %bb.o, %bb.n
   %i.ax = lshr i64 %.4.i, 1                       ; 2 uses
   %i.ay = and i64 %.4.i, 2
   %.not40.i = icmp eq i64 %i.ay, 0
-  br i1 %.not40.i, label %bb.p, label %bb.o, !llvm.loop !323
+  br i1 %.not40.i, label %bb.p, label %bb.o, !llvm.loop !321
 
 bb.p:                                             ; preds = %bb.o
   %i.az = add i64 %i.aw, %.131.lcssa.i
@@ -488,7 +548,7 @@ bb.s:                                             ; preds = %bb.r, %bb.p
   %.5.i = phi i64 [ %i.bf, %bb.r ], [ %i.ax, %bb.p ] ; 2 uses
   %i.bg = and i64 %.5.i, 1
   %.not41.i = icmp eq i64 %i.bg, 0
-  br i1 %.not41.i, label %_Z24_mi_commit_mask_next_runPK16mi_commit_mask_sPm.exit, label %bb.n, !llvm.loop !324
+  br i1 %.not41.i, label %_Z24_mi_commit_mask_next_runPK16mi_commit_mask_sPm.exit, label %bb.n, !llvm.loop !322
 
 _Z24_mi_commit_mask_next_runPK16mi_commit_mask_sPm.exit: ; preds = %bb.q, %bb.s
   %.not = icmp eq i64 %i.aw, 0
@@ -891,7 +951,7 @@ bb.a:
   %3 = alloca %struct.mi_commit_mask_s, align 16  ; 11 uses
   %4 = alloca %struct.mi_commit_mask_s, align 16  ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 25
-  %i.d = load i8, ptr %i.c, align 1, !tbaa !325, !range !91, !noundef !92
+  %i.d = load i8, ptr %i.c, align 1, !tbaa !323, !range !91, !noundef !92
   %i.e = trunc nuw i8 %i.d to i1
   br i1 %i.e, label %bb.b, label %bb.p
 
@@ -1294,7 +1354,7 @@ bb.h:                                             ; preds = %bb.g
   %i.au = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.at ; 2 uses
   %i.av = shl i64 %spec.store.select, 16          ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 25
-  %i.ax = load i8, ptr %i.aw, align 1, !tbaa !325, !range !91, !noundef !92
+  %i.ax = load i8, ptr %i.aw, align 1, !tbaa !323, !range !91, !noundef !92
   %i.ay = trunc nuw i8 %i.ax to i1
   br i1 %i.ay, label %bb.i, label %_ZL25mi_segment_schedule_purgeP12mi_segment_sPhm.exit
 
@@ -1400,7 +1460,7 @@ bb.n:                                             ; preds = %_ZL23mi_commit_mask
   %i.df = add nsw i64 %i.de, %i.db                ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #55
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 5 uses
-  %i.dh = load i64, ptr %i.dg, align 8, !tbaa !326 ; 4 uses
+  %i.dh = load i64, ptr %i.dg, align 8, !tbaa !324 ; 4 uses
   %i.di = icmp eq i64 %i.dh, 0
   br i1 %i.di, label %bb.o, label %bb.q
 
@@ -1416,7 +1476,7 @@ bb.p:                                             ; preds = %bb.o
 mi_option_get.exit22.i:                           ; preds = %bb.p, %bb.o
   %i.dl = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZL7options, i64 480), align 16, !tbaa !116
   %i.dm = add nsw i64 %i.dl, %i.df
-  store i64 %i.dm, ptr %i.dg, align 8, !tbaa !326
+  store i64 %i.dm, ptr %i.dg, align 8, !tbaa !324
   br label %bb.y
 
 bb.q:                                             ; preds = %bb.n
@@ -1455,7 +1515,7 @@ bb.v:                                             ; preds = %bb.u
 mi_option_get.exit24.i:                           ; preds = %bb.v, %bb.u
   %i.dt = phi i64 [ %i.dp, %bb.u ], [ %.pre.i, %bb.v ]
   %i.du = add nsw i64 %i.dt, %i.df
-  store i64 %i.du, ptr %i.dg, align 8, !tbaa !326
+  store i64 %i.du, ptr %i.dg, align 8, !tbaa !324
   br label %bb.y
 
 bb.w:                                             ; preds = %bb.q
@@ -1463,14 +1523,14 @@ bb.w:                                             ; preds = %bb.q
 
 bb.x:                                             ; preds = %bb.w
   call fastcc void @_ZL14mi_option_initP16mi_option_desc_s(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_ZL7options, i64 800)), !inline_history !121
-  %.pre38.i = load i64, ptr %i.dg, align 8, !tbaa !326
+  %.pre38.i = load i64, ptr %i.dg, align 8, !tbaa !324
   br label %mi_option_get.exit25.i
 
 mi_option_get.exit25.i:                           ; preds = %bb.x, %bb.w
   %i.dv = phi i64 [ %i.dh, %bb.w ], [ %.pre38.i, %bb.x ]
   %i.dw = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZL7options, i64 800), align 16, !tbaa !116
   %i.dx = add nsw i64 %i.dw, %i.dv
-  store i64 %i.dx, ptr %i.dg, align 8, !tbaa !326
+  store i64 %i.dx, ptr %i.dg, align 8, !tbaa !324
   br label %bb.y
 
 bb.y:                                             ; preds = %mi_option_get.exit25.i, %mi_option_get.exit24.i, %bb.t, %mi_option_get.exit22.i, %_ZL23mi_commit_mask_is_emptyPK16mi_commit_mask_s.exit.i
@@ -1837,7 +1897,7 @@ mi_option_get.exit.i:                             ; preds = %bb.r, %bb.q
 bb.s:                                             ; preds = %mi_option_get.exit.i, %.critedge.i
   %i.ca = phi i8 [ 0, %.critedge.i ], [ %i.bz, %mi_option_get.exit.i ]
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ax, i64 25
-  store i8 %i.ca, ptr %i.cb, align 1, !tbaa !325
+  store i8 %i.ca, ptr %i.cb, align 1, !tbaa !323
   %i.cc = getelementptr inbounds nuw i8, ptr %i.ax, i64 32
   store i64 %i.aw, ptr %i.cc, align 8, !tbaa !397
   %i.cd = getelementptr inbounds nuw i8, ptr %3, i64 904
@@ -1845,7 +1905,7 @@ bb.s:                                             ; preds = %mi_option_get.exit.
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ax, i64 40
   store ptr %i.ce, ptr %i.cf, align 8, !tbaa !85
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ax, i64 120
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.cg, ptr noundef nonnull align 8 dereferenceable(64) %7, i64 64, i1 false), !tbaa.struct !327
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.cg, ptr noundef nonnull align 8 dereferenceable(64) %7, i64 64, i1 false), !tbaa.struct !325
   %i.ch = getelementptr inbounds nuw i8, ptr %i.ax, i64 48
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.ch, i8 0, i64 72, i1 false)
   tail call fastcc void @_ZL22mi_segments_track_sizelP17mi_segments_tld_s(i64 noundef %i.aw, ptr noundef %3)
@@ -2248,7 +2308,7 @@ mi_option_get.exit.i.i:                           ; preds = %bb.ad, %_ZL22mi_com
   %i.fi = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZL7options, i64 480), align 16, !tbaa !116
   %i.fj = add nsw i64 %i.ff, %i.fi
   %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i64 %i.fj, ptr %i.fk, align 8, !tbaa !326
+  store i64 %i.fj, ptr %i.fk, align 8, !tbaa !324
   %.pre36.i.i = load i64, ptr %i.eb, align 8, !tbaa !74
   %.phi.trans.insert37.i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
   %.pre38.i.i = load i64, ptr %.phi.trans.insert37.i.i, align 8, !tbaa !74
@@ -2651,13 +2711,13 @@ begin_hunk_4_@llvm.experimental.cttz.elts.i64.v16i1
 !318 = !{ptr @_Z18_mi_os_random_weakm}
 !319 = distinct !{!319, !29}
 !320 = distinct !{!320, !29}
-!321 = distinct !{!321, !29, !322}
-!322 = !{!"llvm.loop.peeled.count", i32 1}
-!323 = distinct !{!323, !29}
-!324 = distinct !{!324, !29}
-!325 = !{!79, !46, i64 25}
-!326 = !{!79, !13, i64 48}
-!327 = !{i64 0, i64 64, !27}
+!321 = distinct !{!321, !29}
+!322 = distinct !{!322, !29}
+!323 = !{!79, !46, i64 25}
+!324 = !{!79, !13, i64 48}
+!325 = !{i64 0, i64 64, !27}
+!326 = distinct !{!326, !29, !327}
+!327 = !{!"llvm.loop.peeled.count", i32 1}
 !328 = distinct !{!328, !29}
 !329 = !{!79, !46, i64 24}
 !330 = !{!79, !46, i64 193}
@@ -2723,7 +2783,7 @@ begin_hunk_4_@llvm.experimental.cttz.elts.i64.v16i1
 !390 = distinct !{!390, !29}
 !391 = distinct !{!391, !29}
 !392 = !{!79, !13, i64 256}
-!393 = distinct !{!393, !29, !322}
+!393 = distinct !{!393, !29, !327}
 !394 = !{!208, !13, i64 872}
 !395 = !{!208, !13, i64 880}
 !396 = !{!208, !13, i64 888}

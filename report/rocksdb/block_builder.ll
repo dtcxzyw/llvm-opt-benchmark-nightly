@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rocksdb/original/block_builder?download=true
 inline.NumInlined: 326
 inline.NumDeleted: 124
-loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN7rocksdb12BlockBuilder6FinishEv:bb.a
 
@@ -204,8 +204,8 @@ bb.a:
   br i1 %i.c, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 5 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !40
   %i.g = load ptr, ptr %i.d, align 8, !tbaa !37
   %i.h = ptrtoint ptr %i.f to i64
@@ -219,7 +219,7 @@ bb.c:                                             ; preds = %bb.b
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !49
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.o = load i64, ptr %i.n, align 8, !tbaa !35
-  %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.o ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.o ; 4 uses
   %i.q = tail call { ptr, i64 } @_ZNK7rocksdb12BlockBuilder13GetRestartKeyEjPKc(ptr noundef nonnull align 8 dereferenceable(232) %0, i32 noundef 0, ptr noundef %i.p) ; 2 uses
   %i.r = extractvalue { ptr, i64 } %i.q, 0
   %i.s = extractvalue { ptr, i64 } %i.q, 1        ; 2 uses
@@ -234,7 +234,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ab = tail call { ptr, i64 } @_ZNK7rocksdb12BlockBuilder13GetRestartKeyEjPKc(ptr noundef nonnull align 8 dereferenceable(232) %0, i32 noundef %i.aa, ptr noundef %i.p) ; 2 uses
   %i.ac = extractvalue { ptr, i64 } %i.ab, 0
   %i.ad = extractvalue { ptr, i64 } %i.ab, 1      ; 2 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.af = load i8, ptr %i.ae, align 8, !tbaa !33, !range !52, !noundef !53
   %i.ag = trunc nuw i8 %i.af to i1
   br i1 %i.ag, label %bb.e, label %bb.d
@@ -269,13 +269,119 @@ _ZNK7rocksdb5Slice17difference_offsetERKS0_.exit: ; preds = %.lr.ph.i, %bb.f, %b
   %i.ao = load ptr, ptr %i.e, align 8, !tbaa !40
   %i.ap = load ptr, ptr %i.d, align 8, !tbaa !37
   %.not54.not = icmp eq ptr %i.ao, %i.ap
-  br i1 %.not54.not, label %.thread, label %.lr.ph
+  br i1 %.not54.not, label %.thread, label %.lr.ph.peel
 
-.lr.ph:                                           ; preds = %_ZNK7rocksdb5Slice17difference_offsetERKS0_.exit, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit
-  %.01659 = phi i64 [ %i.bn, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit ], [ 0, %_ZNK7rocksdb5Slice17difference_offsetERKS0_.exit ] ; 6 uses
-  %.sroa.11.058 = phi double [ %.sroa.11.1, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit ], [ 0.000000e+00, %_ZNK7rocksdb5Slice17difference_offsetERKS0_.exit ] ; 2 uses
-  %.sroa.8.057 = phi double [ %.sroa.8.1, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit ], [ 0.000000e+00, %_ZNK7rocksdb5Slice17difference_offsetERKS0_.exit ] ; 3 uses
-  %.sroa.030.055 = phi i64 [ %.014.i, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit ], [ 0, %_ZNK7rocksdb5Slice17difference_offsetERKS0_.exit ]
+.lr.ph.peel:                                      ; preds = %_ZNK7rocksdb5Slice17difference_offsetERKS0_.exit
+  %1 = tail call { ptr, i64 } @_ZNK7rocksdb12BlockBuilder13GetRestartKeyEjPKc(ptr noundef nonnull align 8 dereferenceable(232) %0, i32 noundef 0, ptr noundef %i.p) ; 2 uses
+  %2 = extractvalue { ptr, i64 } %1, 0            ; 2 uses
+  %3 = extractvalue { ptr, i64 } %1, 1            ; 3 uses
+  %4 = load i8, ptr %i.ae, align 8, !tbaa !33, !range !52, !noundef !53
+  %5 = trunc nuw i8 %4 to i1                      ; 2 uses
+  %6 = icmp ugt i64 %3, 7
+  %or.cond48.not.peel = select i1 %5, i1 true, i1 %6
+  br i1 %or.cond48.not.peel, label %.critedge.peel, label %.thread
+
+.critedge.peel:                                   ; preds = %.lr.ph.peel
+  %7 = add i64 %3, -8
+  %spec.select.i.peel = select i1 %5, i64 %3, i64 %7 ; 3 uses
+  %.sroa.speculated.i.peel = tail call i64 @llvm.umin.i64(i64 %spec.select.i.peel, i64 %.0.lcssa.i) ; 3 uses
+  %8 = sub nuw i64 %spec.select.i.peel, %.sroa.speculated.i.peel ; 8 uses
+  %9 = icmp ugt i64 %8, 7
+  br i1 %9, label %52, label %.preheader.i.peel
+
+.preheader.i.peel:                                ; preds = %.critedge.peel
+  %.not.not29.i.peel = icmp ugt i64 %spec.select.i.peel, %.0.lcssa.i ; 2 uses
+  br i1 %.not.not29.i.peel, label %.lr.ph.i24.peel, label %._crit_edge.i.peel
+
+.lr.ph.i24.peel:                                  ; preds = %.preheader.i.peel
+  %10 = getelementptr i8, ptr %2, i64 %.sroa.speculated.i.peel ; 7 uses
+  %11 = load i8, ptr %10, align 1, !tbaa !36
+  %12 = zext i8 %11 to i64                        ; 2 uses
+  %exitcond.not.i25.peel = icmp eq i64 %8, 1
+  br i1 %exitcond.not.i25.peel, label %._crit_edge.i.peel, label %13
+
+13:                                               ; preds = %.lr.ph.i24.peel
+  %14 = shl nuw nsw i64 %12, 8
+  %15 = getelementptr i8, ptr %10, i64 1
+  %16 = load i8, ptr %15, align 1, !tbaa !36
+  %17 = zext i8 %16 to i64
+  %18 = or disjoint i64 %14, %17                  ; 2 uses
+  %exitcond.not.i25.1.peel = icmp eq i64 %8, 2
+  br i1 %exitcond.not.i25.1.peel, label %._crit_edge.i.peel, label %19
+
+19:                                               ; preds = %13
+  %20 = shl nuw nsw i64 %18, 8
+  %21 = getelementptr i8, ptr %10, i64 2
+  %22 = load i8, ptr %21, align 1, !tbaa !36
+  %23 = zext i8 %22 to i64
+  %24 = or disjoint i64 %20, %23                  ; 2 uses
+  %exitcond.not.i25.2.peel = icmp eq i64 %8, 3
+  br i1 %exitcond.not.i25.2.peel, label %._crit_edge.i.peel, label %25
+
+25:                                               ; preds = %19
+  %26 = shl nuw nsw i64 %24, 8
+  %27 = getelementptr i8, ptr %10, i64 3
+  %28 = load i8, ptr %27, align 1, !tbaa !36
+  %29 = zext i8 %28 to i64
+  %30 = or disjoint i64 %26, %29                  ; 2 uses
+  %exitcond.not.i25.3.peel = icmp eq i64 %8, 4
+  br i1 %exitcond.not.i25.3.peel, label %._crit_edge.i.peel, label %31
+
+31:                                               ; preds = %25
+  %32 = shl i64 %30, 8
+  %33 = getelementptr i8, ptr %10, i64 4
+  %34 = load i8, ptr %33, align 1, !tbaa !36
+  %35 = zext i8 %34 to i64
+  %36 = or disjoint i64 %32, %35                  ; 2 uses
+  %exitcond.not.i25.4.peel = icmp eq i64 %8, 5
+  br i1 %exitcond.not.i25.4.peel, label %._crit_edge.i.peel, label %37
+
+37:                                               ; preds = %31
+  %38 = shl i64 %36, 8
+  %39 = getelementptr i8, ptr %10, i64 5
+  %40 = load i8, ptr %39, align 1, !tbaa !36
+  %41 = zext i8 %40 to i64
+  %42 = or disjoint i64 %38, %41                  ; 2 uses
+  %exitcond.not.i25.5.peel = icmp eq i64 %8, 6
+  br i1 %exitcond.not.i25.5.peel, label %._crit_edge.i.peel, label %43
+
+43:                                               ; preds = %37
+  %44 = shl i64 %42, 8
+  %45 = getelementptr i8, ptr %10, i64 6
+  %46 = load i8, ptr %45, align 1, !tbaa !36
+  %47 = zext i8 %46 to i64
+  %48 = or disjoint i64 %44, %47
+  br label %._crit_edge.i.peel
+
+._crit_edge.i.peel:                               ; preds = %.lr.ph.i24.peel, %13, %19, %25, %31, %37, %43, %.preheader.i.peel
+  %.013.lcssa.i.peel = phi i64 [ 0, %.preheader.i.peel ], [ %12, %.lr.ph.i24.peel ], [ %18, %13 ], [ %24, %19 ], [ %30, %25 ], [ %36, %31 ], [ %42, %37 ], [ %48, %43 ]
+  %49 = shl nuw nsw i64 %8, 3
+  %50 = sub nuw nsw i64 64, %49
+  %51 = select i1 %.not.not29.i.peel, i64 %50, i64 0
+  %.1.i.peel = shl i64 %.013.lcssa.i.peel, %51
+  br label %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit.peel
+
+52:                                               ; preds = %.critedge.peel
+  %53 = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.speculated.i.peel
+  %.0.copyload.i.peel = load i64, ptr %53, align 1
+  %54 = tail call noundef i64 @llvm.bswap.i64(i64 %.0.copyload.i.peel)
+  br label %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit.peel
+
+_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit.peel: ; preds = %._crit_edge.i.peel, %52
+  %.014.i.peel = phi i64 [ %54, %52 ], [ %.1.i.peel, %._crit_edge.i.peel ]
+  %55 = load ptr, ptr %i.e, align 8, !tbaa !40
+  %56 = load ptr, ptr %i.d, align 8, !tbaa !37
+  %57 = ptrtoint ptr %55 to i64
+  %58 = ptrtoint ptr %56 to i64
+  %59 = sub i64 %57, %58
+  %.not.peel = icmp ugt i64 %59, 4
+  br i1 %.not.peel, label %.lr.ph, label %.critedge23
+
+.lr.ph:                                           ; preds = %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit.peel, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit
+  %.01659 = phi i64 [ %i.bn, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit ], [ 1, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit.peel ] ; 4 uses
+  %.sroa.11.058 = phi double [ %92, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit ], [ 0.000000e+00, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit.peel ]
+  %.sroa.8.057 = phi double [ %90, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit ], [ 0.000000e+00, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit.peel ] ; 2 uses
+  %.sroa.030.055 = phi i64 [ %.014.i, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit ], [ %.014.i.peel, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit.peel ]
   %i.aq = trunc i64 %.01659 to i32
   %i.ar = tail call { ptr, i64 } @_ZNK7rocksdb12BlockBuilder13GetRestartKeyEjPKc(ptr noundef nonnull align 8 dereferenceable(232) %0, i32 noundef %i.aq, ptr noundef %i.p) ; 2 uses
   %i.as = extractvalue { ptr, i64 } %i.ar, 0      ; 2 uses
@@ -288,136 +394,100 @@ _ZNK7rocksdb5Slice17difference_offsetERKS0_.exit: ; preds = %.lr.ph.i, %bb.f, %b
 
 .critedge:                                        ; preds = %.lr.ph
   %i.ax = add i64 %i.at, -8
-  %spec.select.i = select i1 %i.av, i64 %i.at, i64 %i.ax ; 6 uses
-  %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %spec.select.i, i64 %.0.lcssa.i) ; 4 uses
-  %i.ay = sub nuw i64 %spec.select.i, %.sroa.speculated.i ; 3 uses
+  %spec.select.i = select i1 %i.av, i64 %i.at, i64 %i.ax ; 3 uses
+  %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %spec.select.i, i64 %.0.lcssa.i) ; 3 uses
+  %i.ay = sub nuw i64 %spec.select.i, %.sroa.speculated.i ; 8 uses
   %i.az = icmp ugt i64 %i.ay, 7
   br i1 %i.az, label %bb.g, label %.preheader.i
 
 .preheader.i:                                     ; preds = %.critedge
   %.not.not29.i = icmp ugt i64 %spec.select.i, %.0.lcssa.i ; 2 uses
-  br i1 %.not.not29.i, label %.lr.ph.i24, label %._crit_edge.i
+  br i1 %.not.not29.i, label %.lr.ph.i24, label %._crit_edge.i.loopexit.unr-lcssa
 
 .lr.ph.i24:                                       ; preds = %.preheader.i
-  %i.ba = getelementptr i8, ptr %i.as, i64 %.sroa.speculated.i ; 9 uses
-  %1 = sub i64 %.sroa.speculated.i, %spec.select.i
-  %2 = icmp ugt i64 %1, -8
-  br i1 %2, label %.epil.preheader, label %.lr.ph.i24.new
+  %i.ba = getelementptr i8, ptr %i.as, i64 %.sroa.speculated.i ; 7 uses
+  %60 = load i8, ptr %i.ba, align 1, !tbaa !36
+  %61 = zext i8 %60 to i64                        ; 2 uses
+  %exitcond.not.i25 = icmp eq i64 %i.ay, 1
+  br i1 %exitcond.not.i25, label %._crit_edge.i.loopexit.unr-lcssa, label %.epil.preheader
 
 bb.g:                                             ; preds = %.critedge
   %i.bb = getelementptr inbounds nuw i8, ptr %i.as, i64 %.sroa.speculated.i
   %.0.copyload.i = load i64, ptr %i.bb, align 1
   %i.bc = tail call noundef i64 @llvm.bswap.i64(i64 %.0.copyload.i)
-  br label %_ZN7rocksdb15ReadBe64FromKeyENS_5SliceEbm.exit.a
+  br label %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit
 
-._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %.lr.ph.i24.new
-  %lcmp.mod.not.not = icmp ugt i64 %spec.select.i, %.0.lcssa.i
-  br i1 %lcmp.mod.not.not, label %.epil.preheader, label %._crit_edge.i
+._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %.lr.ph.i24, %.epil.preheader, %bb.h, %._crit_edge.i, %.lr.ph.i24.new, %_ZN7rocksdb15ReadBe64FromKeyENS_5SliceEbm.exit.a, %bb.i, %.preheader.i
+  %.013.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %61, %.lr.ph.i24 ], [ %69, %.epil.preheader ], [ %i.bh, %bb.h ], [ %74, %._crit_edge.i ], [ %i.bm, %.lr.ph.i24.new ], [ %79, %_ZN7rocksdb15ReadBe64FromKeyENS_5SliceEbm.exit.a ], [ %84, %bb.i ]
+  %62 = shl nuw nsw i64 %i.ay, 3
+  %63 = sub nuw nsw i64 64, %62
+  %64 = select i1 %.not.not29.i, i64 %63, i64 0
+  %.1.i = shl i64 %.013.lcssa.i, %64
+  br label %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit
 
-.epil.preheader:                                  ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.lr.ph.i24
-  %.028.i.epil.init = phi i64 [ 0, %.lr.ph.i24 ], [ %49, %._crit_edge.i.loopexit.unr-lcssa ]
-  %.01327.i.epil.init = phi i64 [ 0, %.lr.ph.i24 ], [ %i.bm, %._crit_edge.i.loopexit.unr-lcssa ]
-  %lcmp.mod75 = icmp ugt i64 %spec.select.i, %.0.lcssa.i
-  tail call void @llvm.assume(i1 %lcmp.mod75)
-  br label %bb.h
+.epil.preheader:                                  ; preds = %.lr.ph.i24
+  %65 = shl nuw nsw i64 %61, 8
+  %66 = getelementptr i8, ptr %i.ba, i64 1
+  %67 = load i8, ptr %66, align 1, !tbaa !36
+  %68 = zext i8 %67 to i64
+  %69 = or disjoint i64 %65, %68                  ; 2 uses
+  %exitcond.not.i25.1 = icmp eq i64 %i.ay, 2
+  br i1 %exitcond.not.i25.1, label %._crit_edge.i.loopexit.unr-lcssa, label %bb.h
 
-bb.h:                                             ; preds = %bb.h, %.epil.preheader
-  %.028.i.epil = phi i64 [ %.028.i.epil.init, %.epil.preheader ], [ %3, %bb.h ] ; 2 uses
-  %.01327.i.epil = phi i64 [ %.01327.i.epil.init, %.epil.preheader ], [ %i.bh, %bb.h ]
-  %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.h ]
-  %i.bd = shl i64 %.01327.i.epil, 8
-  %i.be = getelementptr i8, ptr %i.ba, i64 %.028.i.epil
+bb.h:                                             ; preds = %.epil.preheader
+  %i.bd = shl nuw nsw i64 %69, 8
+  %i.be = getelementptr i8, ptr %i.ba, i64 2
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !36
   %i.bg = zext i8 %i.bf to i64
   %i.bh = or disjoint i64 %i.bd, %i.bg            ; 2 uses
-  %3 = add nuw nsw i64 %.028.i.epil, 1
-  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %i.ay
-  br i1 %epil.iter.cmp.not, label %._crit_edge.i, label %bb.h, !llvm.loop !68
+  %epil.iter.cmp.not = icmp eq i64 %i.ay, 3
+  br i1 %epil.iter.cmp.not, label %._crit_edge.i.loopexit.unr-lcssa, label %._crit_edge.i
 
-._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit.unr-lcssa, %bb.h, %.preheader.i
-  %.013.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %i.bm, %._crit_edge.i.loopexit.unr-lcssa ], [ %i.bh, %bb.h ]
-  %4 = shl nuw nsw i64 %i.ay, 3
-  %5 = sub nuw nsw i64 64, %4
-  %6 = select i1 %.not.not29.i, i64 %5, i64 0
-  %.1.i = shl i64 %.013.lcssa.i, %6
-  br label %_ZN7rocksdb15ReadBe64FromKeyENS_5SliceEbm.exit.a
+._crit_edge.i:                                    ; preds = %bb.h
+  %70 = shl nuw nsw i64 %i.bh, 8
+  %71 = getelementptr i8, ptr %i.ba, i64 3
+  %72 = load i8, ptr %71, align 1, !tbaa !36
+  %73 = zext i8 %72 to i64
+  %74 = or disjoint i64 %70, %73                  ; 2 uses
+  %exitcond.not.i25.3 = icmp eq i64 %i.ay, 4
+  br i1 %exitcond.not.i25.3, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i24.new
 
-.lr.ph.i24.new:                                   ; preds = %.lr.ph.i24, %.lr.ph.i24.new
-  %.028.i = phi i64 [ %49, %.lr.ph.i24.new ], [ 0, %.lr.ph.i24 ] ; 9 uses
-  %.01327.i = phi i64 [ %i.bm, %.lr.ph.i24.new ], [ 0, %.lr.ph.i24 ]
-  %niter = phi i64 [ %niter.next.7, %.lr.ph.i24.new ], [ 0, %.lr.ph.i24 ]
-  %7 = getelementptr i8, ptr %i.ba, i64 %.028.i
-  %8 = load i8, ptr %7, align 1, !tbaa !36
-  %9 = zext i8 %8 to i64
-  %10 = shl i64 %.01327.i, 16
-  %11 = shl nuw nsw i64 %9, 8
-  %12 = or disjoint i64 %10, %11
-  %13 = getelementptr i8, ptr %i.ba, i64 %.028.i
-  %14 = getelementptr i8, ptr %13, i64 1
-  %15 = load i8, ptr %14, align 1, !tbaa !36
-  %16 = zext i8 %15 to i64
-  %17 = or disjoint i64 %12, %16
-  %18 = getelementptr i8, ptr %i.ba, i64 %.028.i
-  %19 = getelementptr i8, ptr %18, i64 2
-  %20 = load i8, ptr %19, align 1, !tbaa !36
-  %21 = zext i8 %20 to i64
-  %22 = shl i64 %17, 16
-  %23 = shl nuw nsw i64 %21, 8
-  %24 = or disjoint i64 %22, %23
-  %25 = getelementptr i8, ptr %i.ba, i64 %.028.i
-  %26 = getelementptr i8, ptr %25, i64 3
-  %27 = load i8, ptr %26, align 1, !tbaa !36
-  %28 = zext i8 %27 to i64
-  %29 = or disjoint i64 %24, %28
-  %30 = getelementptr i8, ptr %i.ba, i64 %.028.i
-  %31 = getelementptr i8, ptr %30, i64 4
-  %32 = load i8, ptr %31, align 1, !tbaa !36
-  %33 = zext i8 %32 to i64
-  %34 = shl i64 %29, 16
-  %35 = shl nuw nsw i64 %33, 8
-  %36 = or disjoint i64 %34, %35
-  %37 = getelementptr i8, ptr %i.ba, i64 %.028.i
-  %38 = getelementptr i8, ptr %37, i64 5
-  %39 = load i8, ptr %38, align 1, !tbaa !36
-  %40 = zext i8 %39 to i64
-  %41 = or disjoint i64 %36, %40
-  %42 = getelementptr i8, ptr %i.ba, i64 %.028.i
-  %43 = getelementptr i8, ptr %42, i64 6
-  %44 = load i8, ptr %43, align 1, !tbaa !36
-  %45 = zext i8 %44 to i64
-  %46 = shl i64 %41, 16
-  %i.bi = shl nuw nsw i64 %45, 8
-  %47 = or disjoint i64 %46, %i.bi
-  %48 = getelementptr i8, ptr %i.ba, i64 %.028.i
-  %i.bj = getelementptr i8, ptr %48, i64 7
+.lr.ph.i24.new:                                   ; preds = %._crit_edge.i
+  %i.bi = shl i64 %74, 8
+  %i.bj = getelementptr i8, ptr %i.ba, i64 4
   %i.bk = load i8, ptr %i.bj, align 1, !tbaa !36
   %i.bl = zext i8 %i.bk to i64
-  %i.bm = or disjoint i64 %47, %i.bl              ; 3 uses
-  %49 = add nuw nsw i64 %.028.i, 8                ; 2 uses
-  %niter.next.7 = add i64 %niter, 8               ; 2 uses
-  %niter.ncmp.7 = icmp eq i64 %niter.next.7, 0
-  br i1 %niter.ncmp.7, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i24.new, !llvm.loop !70
+  %i.bm = or disjoint i64 %i.bi, %i.bl            ; 2 uses
+  %niter.ncmp.7 = icmp eq i64 %i.ay, 5
+  br i1 %niter.ncmp.7, label %._crit_edge.i.loopexit.unr-lcssa, label %_ZN7rocksdb15ReadBe64FromKeyENS_5SliceEbm.exit.a
 
-_ZN7rocksdb15ReadBe64FromKeyENS_5SliceEbm.exit.a: ; preds = %bb.g, %._crit_edge.i
-  %.014.i = phi i64 [ %i.bc, %bb.g ], [ %.1.i, %._crit_edge.i ] ; 2 uses
-  %.not.i26 = icmp eq i64 %.01659, 0
-  br i1 %.not.i26, label %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit, label %bb.i
+_ZN7rocksdb15ReadBe64FromKeyENS_5SliceEbm.exit.a: ; preds = %.lr.ph.i24.new
+  %75 = shl i64 %i.bm, 8
+  %76 = getelementptr i8, ptr %i.ba, i64 5
+  %77 = load i8, ptr %76, align 1, !tbaa !36
+  %78 = zext i8 %77 to i64
+  %79 = or disjoint i64 %75, %78                  ; 2 uses
+  %.not.i26 = icmp eq i64 %i.ay, 6
+  br i1 %.not.i26, label %._crit_edge.i.loopexit.unr-lcssa, label %bb.i
 
 bb.i:                                             ; preds = %_ZN7rocksdb15ReadBe64FromKeyENS_5SliceEbm.exit.a
-  %50 = sub i64 %.014.i, %.sroa.030.055
-  %51 = uitofp i64 %50 to double                  ; 2 uses
-  %52 = fsub double %51, %.sroa.8.057             ; 2 uses
-  %53 = uitofp i64 %.01659 to double
-  %54 = fdiv double %52, %53
-  %55 = fadd double %.sroa.8.057, %54             ; 2 uses
-  %56 = fsub double %51, %55
-  %57 = tail call double @llvm.fmuladd.f64(double %52, double %56, double %.sroa.11.058)
-  br label %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit
+  %80 = shl i64 %79, 8
+  %81 = getelementptr i8, ptr %i.ba, i64 6
+  %82 = load i8, ptr %81, align 1, !tbaa !36
+  %83 = zext i8 %82 to i64
+  %84 = or disjoint i64 %80, %83
+  br label %._crit_edge.i.loopexit.unr-lcssa
 
-_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit: ; preds = %_ZN7rocksdb15ReadBe64FromKeyENS_5SliceEbm.exit.a, %bb.i
-  %.sroa.8.1 = phi double [ %.sroa.8.057, %_ZN7rocksdb15ReadBe64FromKeyENS_5SliceEbm.exit.a ], [ %55, %bb.i ] ; 3 uses
-  %.sroa.11.1 = phi double [ %.sroa.11.058, %_ZN7rocksdb15ReadBe64FromKeyENS_5SliceEbm.exit.a ], [ %57, %bb.i ] ; 2 uses
+_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit: ; preds = %._crit_edge.i.loopexit.unr-lcssa, %bb.g
+  %.014.i = phi i64 [ %i.bc, %bb.g ], [ %.1.i, %._crit_edge.i.loopexit.unr-lcssa ] ; 2 uses
+  %85 = sub i64 %.014.i, %.sroa.030.055
+  %86 = uitofp i64 %85 to double                  ; 2 uses
+  %87 = fsub double %86, %.sroa.8.057             ; 2 uses
+  %88 = uitofp i64 %.01659 to double
+  %89 = fdiv double %87, %88
+  %90 = fadd double %.sroa.8.057, %89             ; 3 uses
+  %91 = fsub double %86, %90
+  %92 = tail call double @llvm.fmuladd.f64(double %87, double %91, double %.sroa.11.058) ; 2 uses
   %i.bn = add nuw i64 %.01659, 1                  ; 2 uses
   %i.bo = load ptr, ptr %i.e, align 8, !tbaa !40
   %i.bp = load ptr, ptr %i.d, align 8, !tbaa !37
@@ -426,19 +496,22 @@ _ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit: ; preds = %_ZN7rock
   %i.bs = sub i64 %i.bq, %i.br
   %i.bt = ashr exact i64 %i.bs, 2
   %.not = icmp ult i64 %i.bn, %i.bt
-  br i1 %.not, label %.lr.ph, label %.critedge23, !llvm.loop !71
+  br i1 %.not, label %.lr.ph, label %.critedge23, !llvm.loop !68
 
-.critedge23:                                      ; preds = %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit
-  %i.bu = icmp ugt i64 %.01659, 1
-  %i.bv = fcmp ugt double %.sroa.8.1, 0.000000e+00
+.critedge23:                                      ; preds = %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit.peel
+  %.sroa.8.1.lcssa = phi double [ 0.000000e+00, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit.peel ], [ %90, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit ] ; 2 uses
+  %.sroa.11.1.lcssa = phi double [ 0.000000e+00, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit.peel ], [ %92, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit ]
+  %.01659.lcssa73 = phi i64 [ 0, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit.peel ], [ %.01659, %_ZN7rocksdb12_GLOBAL__N_118UniformDataTracker6AddKeyEm.exit ] ; 2 uses
+  %i.bu = icmp ugt i64 %.01659.lcssa73, 1
+  %i.bv = fcmp ugt double %.sroa.8.1.lcssa, 0.000000e+00
   %or.cond49 = select i1 %i.bu, i1 %i.bv, i1 false
   br i1 %or.cond49, label %_ZNK7rocksdb12_GLOBAL__N_118UniformDataTracker5GetCVEv.exit, label %.thread
 
 _ZNK7rocksdb12_GLOBAL__N_118UniformDataTracker5GetCVEv.exit: ; preds = %.critedge23
-  %i.bw = uitofp i64 %.01659 to double
-  %i.bx = fdiv double %.sroa.11.1, %i.bw
+  %i.bw = uitofp i64 %.01659.lcssa73 to double
+  %i.bx = fdiv double %.sroa.11.1.lcssa, %i.bw
   %i.by = tail call double @sqrt(double noundef %i.bx) #16
-  %i.bz = fdiv double %i.by, %.sroa.8.1           ; 3 uses
+  %i.bz = fdiv double %i.by, %.sroa.8.1.lcssa     ; 3 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !47 ; 3 uses
   %i.cc = icmp ne ptr %i.cb, null
@@ -449,10 +522,10 @@ _ZNK7rocksdb12_GLOBAL__N_118UniformDataTracker5GetCVEv.exit: ; preds = %.critedg
 _ZN7rocksdb17RecordInHistogramEPNS_10StatisticsEjm.exit: ; preds = %_ZNK7rocksdb12_GLOBAL__N_118UniformDataTracker5GetCVEv.exit
   %i.ce = fmul nnan double %i.bz, 1.000000e+04
   %i.cf = fptoui double %i.ce to i64
-  %i.cg = load ptr, ptr %i.cb, align 8, !tbaa !72
+  %i.cg = load ptr, ptr %i.cb, align 8, !tbaa !70
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 216
   %i.ci = load ptr, ptr %i.ch, align 8
-  tail call void %i.ci(ptr noundef nonnull align 8 dereferenceable(33) %i.cb, i32 noundef 70, i64 noundef %i.cf), !inline_history !74
+  tail call void %i.ci(ptr noundef nonnull align 8 dereferenceable(33) %i.cb, i32 noundef 70, i64 noundef %i.cf), !inline_history !72
   br label %bb.k
 
 bb.j:                                             ; preds = %_ZNK7rocksdb12_GLOBAL__N_118UniformDataTracker5GetCVEv.exit
@@ -463,8 +536,8 @@ bb.k:                                             ; preds = %_ZN7rocksdb17Record
   %i.ck = fcmp olt double %i.bz, %i.cj
   br label %.thread
 
-.thread:                                          ; preds = %.lr.ph, %_ZNK7rocksdb5Slice17difference_offsetERKS0_.exit, %.critedge23, %bb.d, %bb.j, %bb.k, %bb.a, %bb.b
-  %.5 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.d ], [ false, %.critedge23 ], [ %i.ck, %bb.k ], [ false, %bb.j ], [ false, %_ZNK7rocksdb5Slice17difference_offsetERKS0_.exit ], [ false, %.lr.ph ]
+.thread:                                          ; preds = %.lr.ph.peel, %.lr.ph, %_ZNK7rocksdb5Slice17difference_offsetERKS0_.exit, %.critedge23, %bb.d, %bb.j, %bb.k, %bb.a, %bb.b
+  %.5 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.d ], [ false, %.critedge23 ], [ %i.ck, %bb.k ], [ false, %bb.j ], [ false, %_ZNK7rocksdb5Slice17difference_offsetERKS0_.exit ], [ false, %.lr.ph ], [ false, %.lr.ph.peel ]
   ret i1 %.5
 }
 
@@ -479,7 +552,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !49
-  store ptr %i.b, ptr %5, align 8, !tbaa !75
+  store ptr %i.b, ptr %5, align 8, !tbaa !73
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !35
@@ -494,7 +567,7 @@ bb.a:
   br i1 %i.j, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = load ptr, ptr %1, align 8, !tbaa !75
+  %i.k = load ptr, ptr %1, align 8, !tbaa !73
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.m = load i64, ptr %i.l, align 8, !tbaa !55
   %i.n = load i64, ptr %i.d, align 8, !tbaa !35
@@ -530,11 +603,11 @@ bb.a:
   store i64 0, ptr %i.h, align 8, !tbaa !35
   store i8 0, ptr %i.g, align 8, !tbaa !36
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  %i.i = load ptr, ptr %1, align 8, !tbaa !75     ; 3 uses
+  %i.i = load ptr, ptr %1, align 8, !tbaa !73     ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.k = load i64, ptr %i.j, align 8, !tbaa !55
   %i.l = and i64 %i.k, 4294967295                 ; 3 uses
-  store ptr %i.i, ptr %8, align 8, !tbaa !75
+  store ptr %i.i, ptr %8, align 8, !tbaa !73
   %i.m = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i64 %i.l, ptr %i.m, align 8, !tbaa !55
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -571,14 +644,14 @@ bb.e:                                             ; preds = %.noexc, %bb.c, %bb.
   br i1 %i.x, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %.sroa.0.0.copyload = load ptr, ptr %3, align 8, !tbaa !76
+  %.sroa.0.0.copyload = load ptr, ptr %3, align 8, !tbaa !74
   br label %bb.l
 
 bb.g:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  %i.y = load ptr, ptr %3, align 8, !tbaa !75     ; 3 uses
+  %i.y = load ptr, ptr %3, align 8, !tbaa !73     ; 3 uses
   %i.z = and i64 %i.w, 4294967295                 ; 3 uses
-  store ptr %i.y, ptr %7, align 8, !tbaa !75
+  store ptr %i.y, ptr %7, align 8, !tbaa !73
   %i.aa = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i64 %i.z, ptr %i.aa, align 8, !tbaa !55
   %i.ab = load i64, ptr %i.n, align 8, !tbaa !32  ; 3 uses
@@ -981,7 +1054,7 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %i.gy, label %bb.bg, label %bb.bn
 
 bb.bg:                                            ; preds = %bb.bf
-  %i.gz = load ptr, ptr %4, align 8, !tbaa !75    ; 3 uses
+  %i.gz = load ptr, ptr %4, align 8, !tbaa !73    ; 3 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.hb = load i64, ptr %i.ha, align 8, !tbaa !55
   %i.hc = and i64 %i.hb, 4294967295               ; 6 uses
@@ -1044,7 +1117,7 @@ bb.bm:                                            ; preds = %.invoke180, %bb.bs,
   br label %bb.by
 
 bb.bn:                                            ; preds = %bb.bf, %bb.be
-  %i.hr = load ptr, ptr %2, align 8, !tbaa !75    ; 3 uses
+  %i.hr = load ptr, ptr %2, align 8, !tbaa !73    ; 3 uses
   %i.hs = and i64 %i.cj, 4294967295               ; 6 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %i.gw, i64 8 ; 2 uses
   %i.hu = load i64, ptr %i.ht, align 8, !tbaa !35 ; 5 uses
@@ -1122,7 +1195,7 @@ bb.bt:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.bu:                                            ; preds = %bb.bt
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #16
-  %i.ip = load ptr, ptr %1, align 8, !tbaa !75
+  %i.ip = load ptr, ptr %1, align 8, !tbaa !73
   %i.iq = load i64, ptr %i.j, align 8, !tbaa !55
   %i.ir = add i64 %i.iq, -8
   store ptr %i.ip, ptr %11, align 8
@@ -1227,10 +1300,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.d = load i64, ptr %i.c, align 8, !tbaa !55
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #16
-  %i.e = load ptr, ptr %3, align 8, !tbaa !75
+  %i.e = load ptr, ptr %3, align 8, !tbaa !73
   %.not = icmp eq i64 %i.b, 0
   %i.f = select i1 %.not, i64 0, i64 %i.d
-  store ptr %i.e, ptr %6, align 8, !tbaa !75
+  store ptr %i.e, ptr %6, align 8, !tbaa !73
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i64 %i.f, ptr %i.g, align 8, !tbaa !55
   call void @_ZN7rocksdb12BlockBuilder18AddWithLastKeyImplERKNS_5SliceES3_S3_PS2_bm(ptr noundef nonnull align 8 dereferenceable(232) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef %4, i1 noundef zeroext %5, i64 noundef %i.b)
@@ -1633,7 +1706,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   %.0 = phi i64 [ %spec.store.select.i, %bb.e ], [ %i.f, %bb.d ], [ %i.f, %bb.c ] ; 2 uses
   %i.q = add nuw i64 %.0, 1                       ; 2 uses
   %i.r = icmp slt i64 %i.q, 0
-  br i1 %i.r, label %bb.g, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit, !prof !77
+  br i1 %i.r, label %bb.g, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit, !prof !75
 
 bb.g:                                             ; preds = %bb.f
   tail call void @_ZSt17__throw_bad_allocv() #17
@@ -1760,7 +1833,7 @@ bb.c:                                             ; preds = %_ZNKSt7__cxx1112bas
   %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.b
   %i.r = icmp ult ptr %i.q, %3
   %i.s = select i1 %i.p, i1 true, i1 %i.r
-  br i1 %i.s, label %bb.d, label %bb.j, !prof !78
+  br i1 %i.s, label %bb.d, label %bb.j, !prof !76
 
 bb.d:                                             ; preds = %bb.c
   %.not35 = icmp eq i64 %i.b, %i.n
@@ -2053,15 +2126,13 @@ attributes #18 = { cold }
 !65 = distinct !{!65, !58}
 !66 = !{!60, !6, i64 4}
 !67 = distinct !{!67, !58}
-!68 = distinct !{!68, !69}
-!69 = !{!"llvm.loop.unroll.disable"}
-!70 = distinct !{!70, !58}
-!71 = distinct !{!71, !58}
-!72 = !{!73, !73, i64 0}
-!73 = !{!"vtable pointer", !8, i64 0}
-!74 = distinct !{null}
-!75 = !{!56, !15, i64 0}
-!76 = !{!15, !15, i64 0}
-!77 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!78 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!68 = distinct !{!68, !58, !69}
+!69 = !{!"llvm.loop.peeled.count", i32 1}
+!70 = !{!71, !71, i64 0}
+!71 = !{!"vtable pointer", !8, i64 0}
+!72 = distinct !{null}
+!73 = !{!56, !15, i64 0}
+!74 = !{!15, !15, i64 0}
+!75 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!76 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 end_hunk_2
