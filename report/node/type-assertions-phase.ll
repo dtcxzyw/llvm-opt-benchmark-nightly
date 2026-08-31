@@ -205,15 +205,16 @@ bb.j:                                             ; preds = %bb.b
   %spec.select28.i = shl nuw nsw i8 %i.ag, 2
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 25
   %i.aj = load i8, ptr %i.ai, align 1, !range !17, !noundef !6
-  %i.ak = trunc nuw i8 %i.aj to i1                ; 2 uses
+  %i.ak = trunc nuw i8 %i.aj to i1                ; 3 uses
   %.sroa.0.0.insert.insert.i17.i.i7 = or disjoint i8 %spec.select.i6, 12
-  %.sroa.013.1.i.a = select i1 %i.ak, i8 %.sroa.0.0.insert.insert.i17.i.i7, i8 %spec.select.i6
-  %i.al = zext nneg i8 %spec.select28.i to i32
+  %.sroa.013.1.i = select i1 %i.ak, i8 %.sroa.0.0.insert.insert.i17.i.i7, i8 %spec.select.i6
+  %.sroa.6.1.i8 = select i1 %i.ak, i32 20224, i32 19456
+  %.sroa.013.1.i.a = select i1 %i.ak, i8 4, i8 %spec.select28.i
+  %i.al = zext nneg i8 %.sroa.013.1.i.a to i32
   %i.am = shl nuw nsw i32 %i.al, 16
-  %i.an = or disjoint i32 %i.am, 19456
-  %.sroa.6.0.insert.insert.i8 = select i1 %i.ak, i32 282368, i32 %i.an
-  %.sroa.013.0.insert.ext.i = zext nneg i8 %.sroa.013.1.i.a to i32
-  %.sroa.013.0.insert.insert.i = or disjoint i32 %.sroa.6.0.insert.insert.i8, %.sroa.013.0.insert.ext.i
+  %i.an = or disjoint i32 %i.am, %.sroa.6.1.i8
+  %.sroa.013.0.insert.ext.i = zext nneg i8 %.sroa.013.1.i to i32
+  %.sroa.013.0.insert.insert.i = or disjoint i32 %i.an, %.sroa.013.0.insert.ext.i
   br label %_ZNK2v88internal8compiler10turboshaft15TaggedBitcastOp7EffectsEv.exit
 
 bb.k:                                             ; preds = %bb.b
@@ -237,11 +238,11 @@ bb.n:                                             ; preds = %bb.b
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.av = load i8, ptr %i.au, align 4, !range !17, !noundef !6 ; 2 uses
   %i.aw = trunc nuw i8 %i.av to i1
+  %spec.select.i14 = select i1 %i.aw, i32 67, i32 3
   %spec.select17.i = shl nuw nsw i8 %i.av, 2
   %.sroa.512.0.insert.ext.i = zext nneg i8 %spec.select17.i to i32
   %.sroa.512.0.insert.shift.i = shl nuw nsw i32 %.sroa.512.0.insert.ext.i, 16
-  %.sroa.07.0.insert.ext.i = select i1 %i.aw, i32 67, i32 3
-  %.sroa.49.0.insert.insert.i = or disjoint i32 %.sroa.512.0.insert.shift.i, %.sroa.07.0.insert.ext.i
+  %.sroa.49.0.insert.insert.i = or disjoint i32 %.sroa.512.0.insert.shift.i, %spec.select.i14
   %.sroa.07.0.insert.insert.i = or disjoint i32 %.sroa.49.0.insert.insert.i, 19456
   br label %_ZNK2v88internal8compiler10turboshaft15TaggedBitcastOp7EffectsEv.exit
 

@@ -205,8 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %._cri
   br i1 %.not6.i.i.i, label %"_ZN4llvm8count_ifIRNS_8ArrayRefIPN3lld4wasm13OutputSegmentEEEZNS3_16DataCountSectionC1ES6_E3$_0EEDaOT_T0_.exit", label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %i.g = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN3lld4wasm3ctxE, i64 1050), align 2, !range !102
-  %4 = zext nneg i8 %i.g to i32                   ; 5 uses
+  %i.g = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN3lld4wasm3ctxE, i64 1050), align 2, !range !102 ; 5 uses
   %i.h = add i64 %2, 2305843009213693951
   %i.i = and i64 %i.h, 2305843009213693951        ; 2 uses
   %i.j = add nuw nsw i64 %i.i, 1                  ; 2 uses
@@ -226,29 +225,33 @@ bb.a:                                             ; preds = %bb.a, %.lr.ph.i.i.i
   %i.l = getelementptr i8, ptr %.05.val.i.i.i, i64 16
   %.05.val.val.i.i.i = load i8, ptr %i.l, align 8, !tbaa !441, !range !102, !noundef !103
   %i.m = trunc nuw i8 %.05.val.val.i.i.i to i1
-  %5 = select i1 %i.m, i32 %4, i32 1
-  %spec.select.i.i.i = add i32 %5, %.08.i.i.i
+  %narrow.i.i.i = select i1 %i.m, i8 %i.g, i8 1
+  %4 = zext nneg i8 %narrow.i.i.i to i32
+  %spec.select.i.i.i = add i32 %.08.i.i.i, %4
   %i.n = getelementptr inbounds nuw i8, ptr %.057.i.i.i, i64 8
   %.05.val.i.i.i.1 = load ptr, ptr %i.n, align 8, !tbaa !440
   %i.o = getelementptr i8, ptr %.05.val.i.i.i.1, i64 16
   %.05.val.val.i.i.i.1 = load i8, ptr %i.o, align 8, !tbaa !441, !range !102, !noundef !103
   %i.p = trunc nuw i8 %.05.val.val.i.i.i.1 to i1
-  %6 = select i1 %i.p, i32 %4, i32 1
-  %spec.select.i.i.i.1 = add i32 %6, %spec.select.i.i.i
+  %narrow.i.i.i.1 = select i1 %i.p, i8 %i.g, i8 1
+  %5 = zext nneg i8 %narrow.i.i.i.1 to i32
+  %spec.select.i.i.i.1 = add i32 %spec.select.i.i.i, %5
   %i.q = getelementptr inbounds nuw i8, ptr %.057.i.i.i, i64 16
   %.05.val.i.i.i.2 = load ptr, ptr %i.q, align 8, !tbaa !440
   %i.r = getelementptr i8, ptr %.05.val.i.i.i.2, i64 16
   %.05.val.val.i.i.i.2 = load i8, ptr %i.r, align 8, !tbaa !441, !range !102, !noundef !103
   %i.s = trunc nuw i8 %.05.val.val.i.i.i.2 to i1
-  %7 = select i1 %i.s, i32 %4, i32 1
-  %spec.select.i.i.i.2 = add i32 %7, %spec.select.i.i.i.1
+  %narrow.i.i.i.2 = select i1 %i.s, i8 %i.g, i8 1
+  %6 = zext nneg i8 %narrow.i.i.i.2 to i32
+  %spec.select.i.i.i.2 = add i32 %spec.select.i.i.i.1, %6
   %i.t = getelementptr inbounds nuw i8, ptr %.057.i.i.i, i64 24
   %.05.val.i.i.i.3 = load ptr, ptr %i.t, align 8, !tbaa !440
   %i.u = getelementptr i8, ptr %.05.val.i.i.i.3, i64 16
   %.05.val.val.i.i.i.3 = load i8, ptr %i.u, align 8, !tbaa !441, !range !102, !noundef !103
   %i.v = trunc nuw i8 %.05.val.val.i.i.i.3 to i1
-  %8 = select i1 %i.v, i32 %4, i32 1
-  %spec.select.i.i.i.3 = add i32 %8, %spec.select.i.i.i.2 ; 3 uses
+  %narrow.i.i.i.3 = select i1 %i.v, i8 %i.g, i8 1
+  %7 = zext nneg i8 %narrow.i.i.i.3 to i32
+  %spec.select.i.i.i.3 = add i32 %spec.select.i.i.i.2, %7 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.057.i.i.i, i64 32 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -273,8 +276,9 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
   %i.x = getelementptr i8, ptr %.05.val.i.i.i.epil, i64 16
   %.05.val.val.i.i.i.epil = load i8, ptr %i.x, align 8, !tbaa !441, !range !102, !noundef !103
   %i.y = trunc nuw i8 %.05.val.val.i.i.i.epil to i1
-  %9 = select i1 %i.y, i32 %4, i32 1
-  %spec.select.i.i.i.epil = add i32 %9, %.08.i.i.i.epil ; 2 uses
+  %narrow.i.i.i.epil = select i1 %i.y, i8 %i.g, i8 1
+  %8 = zext nneg i8 %narrow.i.i.i.epil to i32
+  %spec.select.i.i.i.epil = add i32 %.08.i.i.i.epil, %8 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.057.i.i.i.epil, i64 8
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -677,8 +681,7 @@ bb.a:
   br i1 %.not11, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.e = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN3lld4wasm3ctxE, i64 1050), align 2, !range !102
-  %1 = zext nneg i8 %i.e to i32                   ; 3 uses
+  %i.e = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN3lld4wasm3ctxE, i64 1050), align 2, !range !102 ; 3 uses
   %i.f = add i64 %i.d, 2305843009213693951        ; 2 uses
   %i.g = and i64 %i.f, 2305843009213693951        ; 2 uses
   %i.h = add nuw nsw i64 %i.g, 1                  ; 2 uses
@@ -709,8 +712,9 @@ bb.b:                                             ; preds = %.epil.preheader
   %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.p = load i8, ptr %i.o, align 8, !tbaa !441, !range !102, !noundef !103
   %i.q = trunc nuw i8 %i.p to i1
-  %2 = select i1 %i.q, i32 %1, i32 1
-  %spec.select.epil = add i32 %2, %.01012.epil.init
+  %narrow.epil = select i1 %i.q, i8 %i.e, i8 1
+  %1 = zext nneg i8 %narrow.epil to i32
+  %spec.select.epil = add i32 %.01012.epil.init, %1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %bb.b, %.epil.preheader, %bb.a
@@ -731,8 +735,9 @@ bb.d:                                             ; preds = %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   %i.w = load i8, ptr %i.v, align 8, !tbaa !441, !range !102, !noundef !103
   %i.x = trunc nuw i8 %i.w to i1
-  %3 = select i1 %i.x, i32 %1, i32 1
-  %spec.select = add i32 %3, %.01012
+  %narrow = select i1 %i.x, i8 %i.e, i8 1
+  %2 = zext nneg i8 %narrow to i32
+  %spec.select = add i32 %.01012, %2
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -748,8 +753,9 @@ bb.f:                                             ; preds = %bb.e
   %i.ad = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   %i.ae = load i8, ptr %i.ad, align 8, !tbaa !441, !range !102, !noundef !103
   %i.af = trunc nuw i8 %i.ae to i1
-  %4 = select i1 %i.af, i32 %1, i32 1
-  %spec.select.1 = add i32 %4, %.1
+  %narrow.1 = select i1 %i.af, i8 %i.e, i8 1
+  %3 = zext nneg i8 %narrow.1 to i32
+  %spec.select.1 = add i32 %.1, %3
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -1152,8 +1158,7 @@ bb.z:                                             ; preds = %_ZN3lld4wasm12_GLOB
   br i1 %.not11.i, label %_ZNK3lld4wasm11NameSection20numNamedDataSegmentsEv.exit.thread, label %.lr.ph.i112
 
 .lr.ph.i112:                                      ; preds = %bb.z
-  %i.lc = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN3lld4wasm3ctxE, i64 1050), align 2, !range !102
-  %42 = zext nneg i8 %i.lc to i32                 ; 3 uses
+  %i.lc = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN3lld4wasm3ctxE, i64 1050), align 2, !range !102 ; 3 uses
   %i.ld = add i64 %i.lb, 2305843009213693951      ; 2 uses
   %i.le = and i64 %i.ld, 2305843009213693951      ; 2 uses
   %i.lf = add nuw nsw i64 %i.le, 1                ; 2 uses
@@ -1178,8 +1183,9 @@ bb.ab:                                            ; preds = %bb.aa
   %i.ll = getelementptr inbounds nuw i8, ptr %i.lh, i64 16
   %i.lm = load i8, ptr %i.ll, align 8, !tbaa !441, !range !102, !noundef !103
   %i.ln = trunc nuw i8 %i.lm to i1
-  %43 = select i1 %i.ln, i32 %42, i32 1
-  %spec.select.i113 = add i32 %43, %.01012.i
+  %narrow.i = select i1 %i.ln, i8 %i.lc, i8 1
+  %42 = zext nneg i8 %narrow.i to i32
+  %spec.select.i113 = add i32 %.01012.i, %42
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
@@ -1195,8 +1201,9 @@ bb.ad:                                            ; preds = %bb.ac
   %i.lt = getelementptr inbounds nuw i8, ptr %i.lp, i64 16
   %i.lu = load i8, ptr %i.lt, align 8, !tbaa !441, !range !102, !noundef !103
   %i.lv = trunc nuw i8 %i.lu to i1
-  %44 = select i1 %i.lv, i32 %42, i32 1
-  %spec.select.i113.1 = add i32 %44, %.1.i114
+  %narrow.i.1 = select i1 %i.lv, i8 %i.lc, i8 1
+  %43 = zext nneg i8 %narrow.i.1 to i32
+  %spec.select.i113.1 = add i32 %.1.i114, %43
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
@@ -1226,8 +1233,9 @@ bb.af:                                            ; preds = %.epil.preheader
   %i.mc = getelementptr inbounds nuw i8, ptr %i.ly, i64 16
   %i.md = load i8, ptr %i.mc, align 8, !tbaa !441, !range !102, !noundef !103
   %i.me = trunc nuw i8 %i.md to i1
-  %45 = select i1 %i.me, i32 %42, i32 1
-  %spec.select.i113.epil = add i32 %45, %.01012.i.epil.init
+  %narrow.i.epil = select i1 %i.me, i8 %i.lc, i8 1
+  %44 = zext nneg i8 %narrow.i.epil to i32
+  %spec.select.i113.epil = add i32 %.01012.i.epil.init, %44
   br label %_ZNK3lld4wasm11NameSection20numNamedDataSegmentsEv.exit
 
 _ZNK3lld4wasm11NameSection20numNamedDataSegmentsEv.exit: ; preds = %.epil.preheader, %bb.af, %_ZNK3lld4wasm11NameSection20numNamedDataSegmentsEv.exit.unr-lcssa

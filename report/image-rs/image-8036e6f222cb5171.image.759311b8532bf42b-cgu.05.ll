@@ -205,11 +205,12 @@ bb.cz:                                            ; preds = %.noexc280
   %i.mj = and i8 %i.mi, 2
   %i.mk = icmp eq i8 %i.mj, 0
   %i.ml = load i8, ptr %.sroa.7327.0..sroa_idx, align 4, !range !9, !alias.scope !1462, !noalias !1464, !noundef !4
-  %i.mm = trunc nuw i8 %i.ml to i1
+  %i.mm = trunc nuw i8 %i.ml to i1                ; 2 uses
   %i.mn = getelementptr inbounds nuw i8, ptr %1, i64 68 ; 2 uses
   %.sroa.096.0.copyload.i = load i8, ptr %i.mn, align 4, !alias.scope !1462, !noalias !1464
   %.sroa.398.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 69 ; 2 uses
   %.sroa.398.0.copyload.i = load i32, ptr %.sroa.398.0..sroa_idx.i, align 1, !alias.scope !1462, !noalias !1464
+  %.sroa.096.0.i = select i1 %i.mm, i8 %.sroa.096.0.copyload.i, i8 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac), !noalias !1466
   invoke fastcc void @_RINvNtCsksn9slvsHfS_10image_webp7decoder17read_chunk_headerQINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 captures(none) dereferenceable(32) %i.ac, ptr noalias nofree noundef align 8 dereferenceable(24) %i.kq)
           to label %.noexc281 unwind label %bb.bu
@@ -612,11 +613,11 @@ bb.fd:                                            ; preds = %_RINvYINtNtNtCsj6eK
   %i.rf = load i32, ptr %i.re, align 4, !alias.scope !1462, !noalias !1464, !noundef !4
   %i.rg = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.rh = load i32, ptr %i.rg, align 8, !alias.scope !1462, !noalias !1464, !noundef !4
-  %i.ri = zext i8 %.sroa.096.0.copyload.i to i40
+  %i.ri = zext i8 %.sroa.096.0.i to i40
   %i.rj = zext i32 %.sroa.398.0.copyload.i to i40
   %i.rk = shl nuw i40 %i.rj, 8
-  %4 = or disjoint i40 %i.rk, %i.ri
-  %.sroa.0344.1.insert.insert.i = select i1 %i.mm, i40 %4, i40 0
+  %.sroa.0344.1.insert.shift.i = select i1 %i.mm, i40 %i.rk, i40 0
+  %.sroa.0344.1.insert.insert.i = or disjoint i40 %.sroa.0344.1.insert.shift.i, %i.ri
   invoke void @_RNvNtCsksn9slvsHfS_10image_webp8extended15composite_frame(ptr noalias nofree noundef nonnull %i.qs, i64 noundef %i.qu, i32 noundef %i.qv, i32 noundef %i.qw, i40 %.sroa.0344.1.insert.insert.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.qy, i64 noundef %i.ra, i32 noundef %i.lj, i32 noundef %i.ln, i32 noundef %i.lr, i32 noundef %i.lv, i1 noundef zeroext %.sroa.0328.0.i, i1 noundef zeroext %i.mk, i32 noundef %i.rb, i32 noundef %i.rd, i32 noundef %i.rf, i32 noundef %i.rh)
           to label %bb.ff unwind label %.loopexit.split-lp.i, !noalias !1464
 

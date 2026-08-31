@@ -205,10 +205,10 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !116 ; 3 uses
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 7 uses
   %i.au = load i32, ptr %i.at, align 8, !tbaa !117 ; 3 uses
-  %i.av = mul nsw i32 %i.au, %i.as
-  %3 = sext i32 %i.av to i64                      ; 3 uses
-  %4 = trunc i32 %1 to i1
-  %5 = select i1 %4, i64 %3, i64 0
+  %i.av = mul nsw i32 %i.au, %i.as                ; 3 uses
+  %3 = trunc i32 %1 to i1
+  %4 = select i1 %3, i32 %i.av, i32 0
+  %5 = sext i32 %4 to i64
   %i.aw = getelementptr inbounds [2 x i8], ptr %i.aq, i64 %5 ; 3 uses
   %i.ax = icmp sgt i32 %i.as, 0
   br i1 %i.ax, label %.preheader.lr.ph, label %._crit_edge138
@@ -229,11 +229,13 @@ bb.f:                                             ; preds = %bb.f, %bb.e
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.bj = trunc i32 %1 to i1
-  %6 = select i1 %i.bj, i64 %3, i64 0
-  %i.bk = getelementptr inbounds nuw [2 x i8], ptr %i.aq, i64 %6
+  %6 = select i1 %i.bj, i32 %i.av, i32 0
+  %7 = zext nneg i32 %6 to i64
+  %i.bk = getelementptr inbounds nuw [2 x i8], ptr %i.aq, i64 %7
   %i.bl = trunc i32 %1 to i1
-  %7 = select i1 %i.bl, i64 0, i64 %3
-  %i.bm = getelementptr inbounds nuw [2 x i8], ptr %i.aq, i64 %7
+  %8 = select i1 %i.bl, i32 0, i32 %i.av
+  %9 = zext nneg i32 %8 to i64
+  %i.bm = getelementptr inbounds nuw [2 x i8], ptr %i.aq, i64 %9
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
@@ -636,14 +638,15 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !116
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 8 uses
   %i.ar = load i32, ptr %i.aq, align 8, !tbaa !117 ; 3 uses
-  %i.as = mul nsw i32 %i.ar, %i.ap
-  %3 = sext i32 %i.as to i64                      ; 3 uses
-  %4 = trunc i32 %1 to i1
-  %5 = select i1 %4, i64 %3, i64 0
+  %i.as = mul nsw i32 %i.ar, %i.ap                ; 3 uses
+  %3 = trunc i32 %1 to i1
+  %4 = select i1 %3, i32 %i.as, i32 0
+  %5 = sext i32 %4 to i64
   %i.at = getelementptr inbounds [2 x i8], ptr %i.an, i64 %5 ; 2 uses
   %i.au = trunc i32 %1 to i1
-  %6 = select i1 %i.au, i64 0, i64 %3
-  %i.av = getelementptr inbounds [2 x i8], ptr %i.an, i64 %6 ; 2 uses
+  %6 = select i1 %i.au, i32 0, i32 %i.as
+  %7 = sext i32 %6 to i64
+  %i.av = getelementptr inbounds [2 x i8], ptr %i.an, i64 %7 ; 2 uses
   %i.aw = icmp sgt i32 %i.ar, 0
   br i1 %i.aw, label %.lr.ph, label %._crit_edge
 
@@ -1046,8 +1049,9 @@ bb.bu:                                            ; preds = %bb.bt, %bb.bs
 
 .loopexit:                                        ; preds = %._crit_edge282, %._crit_edge294, %._crit_edge306, %.preheader255.lr.ph, %.preheader258.lr.ph, %.preheader.lr.ph, %.preheader259, %.preheader256, %.preheader254
   %i.uj = trunc i32 %1 to i1
-  %7 = select i1 %i.uj, i64 %3, i64 0
-  %i.uk = getelementptr inbounds [2 x i8], ptr %i.an, i64 %7
+  %8 = select i1 %i.uj, i32 %i.as, i32 0
+  %9 = sext i32 %8 to i64
+  %i.uk = getelementptr inbounds [2 x i8], ptr %i.an, i64 %9
   ret ptr %i.uk
 }
 

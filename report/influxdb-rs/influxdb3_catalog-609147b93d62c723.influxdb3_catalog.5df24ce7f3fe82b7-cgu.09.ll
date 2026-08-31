@@ -204,8 +204,9 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i
 
 .noexc17:                                         ; preds = %bb.g
   %i.bj = extractvalue { i32, i32 } %i.bi, 0
-  %i.bk = trunc i32 %i.bj to i1
+  %i.bk = trunc i32 %i.bj to i1                   ; 2 uses
   %i.bl = extractvalue { i32, i32 } %i.bi, 1
+  %spec.select.i.i.i.i.i.i = select i1 %i.bk, i32 undef, i32 %i.bl
   br i1 %i.bk, label %_RINvXs3_NtCs5CfTnloWo2c_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11PhantomDataTNtCsbFlE7Gjht9i_12influxdb3_id4DbIdNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v116DatabaseSnapshotEENtB6_15DeserializeSeed11deserializeNtNtNtCs87O7Q65ve1k_7bitcode5serde2de14DecoderWrapperEB21_.exit.thread39.i, label %bb.h
 
 bb.h:                                             ; preds = %.noexc17
@@ -608,7 +609,7 @@ _RINvXs3_NtCs5CfTnloWo2c_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11Phantom
 bb.ci:                                            ; preds = %_RINvYNtNvXs0_NtNtCs87O7Q65ve1k_7bitcode5serde2deNtBb_14DecoderWrapperNtNtCs5CfTnloWo2c_10serde_core2de12Deserializer17deserialize_tuple6AccessNtB17_9SeqAccess12next_elementNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v116DatabaseSnapshotEB2S_.exit.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %.sroa.10, ptr noundef nonnull align 8 dereferenceable(120) %.sroa.7.i.i.i.i, i64 120, i1 false), !noalias !2491
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i.i.i.i)
-  %i.gw = zext i32 %i.bl to i64
+  %i.gw = zext i32 %spec.select.i.i.i.i.i.i to i64
   br label %_RINvYNtNvXs0_NtNtCs87O7Q65ve1k_7bitcode5serde2deNtBb_14DecoderWrapperNtNtCs5CfTnloWo2c_10serde_core2de12Deserializer15deserialize_seq6AccessNtB17_9SeqAccess12next_elementTNtCsbFlE7Gjht9i_12influxdb3_id4DbIdNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v116DatabaseSnapshotEEB3q_.exit
 
 .loopexit:                                        ; preds = %bb.f, %bb.g, %bb.i, %bb.j, %bb.k
@@ -1011,8 +1012,9 @@ bb.f:                                             ; preds = %._crit_edge.i.i.i
 
 .noexc17:                                         ; preds = %bb.f
   %i.cc = extractvalue { i32, i32 } %i.cb, 0
-  %i.cd = trunc i32 %i.cc to i1
+  %i.cd = trunc i32 %i.cc to i1                   ; 2 uses
   %i.ce = extractvalue { i32, i32 } %i.cb, 1
+  %spec.select.i.i.i.i.i.i = select i1 %i.cd, i32 undef, i32 %i.ce
   br i1 %i.cd, label %_RINvXs3_NtCs5CfTnloWo2c_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11PhantomDataTNtCsbFlE7Gjht9i_12influxdb3_id7TableIdNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v113TableSnapshotEENtB6_15DeserializeSeed11deserializeNtNtNtCs87O7Q65ve1k_7bitcode5serde2de14DecoderWrapperEB24_.exit.thread39.i, label %bb.g
 
 bb.g:                                             ; preds = %.noexc17
@@ -1415,7 +1417,7 @@ _RINvXs3_NtCs5CfTnloWo2c_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11Phantom
 bb.dr:                                            ; preds = %_RINvYNtNvXs0_NtNtCs87O7Q65ve1k_7bitcode5serde2deNtBb_14DecoderWrapperNtNtCs5CfTnloWo2c_10serde_core2de12Deserializer17deserialize_tuple6AccessNtB17_9SeqAccess12next_elementNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v113TableSnapshotEB2S_.exit.i.i.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(208) %.sroa.10, ptr noundef nonnull align 8 dereferenceable(208) %.sroa.7.i.i.i.i, i64 208, i1 false), !noalias !2909
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i.i.i.i)
-  %i.js = zext i32 %i.ce to i64
+  %i.js = zext i32 %spec.select.i.i.i.i.i.i to i64
   br label %_RINvYNtNvXs0_NtNtCs87O7Q65ve1k_7bitcode5serde2deNtBb_14DecoderWrapperNtNtCs5CfTnloWo2c_10serde_core2de12Deserializer15deserialize_seq6AccessNtB17_9SeqAccess12next_elementTNtCsbFlE7Gjht9i_12influxdb3_id7TableIdNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog8snapshot8versions2v113TableSnapshotEEB3t_.exit
 
 .loopexit:                                        ; preds = %bb.e, %bb.f, %bb.h, %bb.i, %bb.j

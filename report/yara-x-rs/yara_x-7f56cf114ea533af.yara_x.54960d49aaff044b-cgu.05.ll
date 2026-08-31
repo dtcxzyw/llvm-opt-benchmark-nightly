@@ -205,7 +205,9 @@ bb.s:                                             ; preds = %.noexc42
   %i.cp = load i64, ptr %i.ag, align 8
   %.sroa.7.2.i.i.i = select i1 %i.cn, i64 undef, i64 %i.cp
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %4 = select i1 %i.cn, ptr null, ptr %i.co
+  %4 = ptrtoint ptr %i.co to i64
+  %5 = select i1 %i.cn, i64 0, i64 %4
+  %6 = inttoptr i64 %5 to ptr
   br label %_RINvXsC_NtCsgkljs906P5b_3nom8internalTINvNtNtB8_6number8complete6le_u16RShINtNtB8_5error5ErrorB17_EEBA_INtB6_3MapIB1E_NCNvMs2_NtNtNtCs7gfv9tzbXmh_6yara_x7modules6dotnet6parserNtB20_6Dotnet5index0NcNtB20_11StringIndex0ENCNvB1W_15parse_param_row0EEINtB6_6ParserB17_E7processINtB6_7OutputMNtB6_4EmitB4A_NtB6_9StreamingEEB26_.exit.i
 
 _RINvXsC_NtCsgkljs906P5b_3nom8internalTINvNtNtB8_6number8complete6le_u16RShINtNtB8_5error5ErrorB17_EEBA_INtB6_3MapIB1E_NCNvMs2_NtNtNtCs7gfv9tzbXmh_6yara_x7modules6dotnet6parserNtB20_6Dotnet5index0NcNtB20_11StringIndex0ENCNvB1W_15parse_param_row0EEINtB6_6ParserB17_E7processINtB6_7OutputMNtB6_4EmitB4A_NtB6_9StreamingEEB26_.exit.i.thread: ; preds = %.noexc41
@@ -229,7 +231,7 @@ _RINvXsC_NtCsgkljs906P5b_3nom8internalTINvNtNtB8_6number8complete6le_u16RShINtNt
 
 _RINvXsC_NtCsgkljs906P5b_3nom8internalTINvNtNtB8_6number8complete6le_u16RShINtNtB8_5error5ErrorB17_EEBA_INtB6_3MapIB1E_NCNvMs2_NtNtNtCs7gfv9tzbXmh_6yara_x7modules6dotnet6parserNtB20_6Dotnet5index0NcNtB20_11StringIndex0ENCNvB1W_15parse_param_row0EEINtB6_6ParserB17_E7processINtB6_7OutputMNtB6_4EmitB4A_NtB6_9StreamingEEB26_.exit.i: ; preds = %bb.o, %bb.p, %bb.q, %.noexc42, %.noexc43
   %.sroa.7.4.i.i.i = phi i64 [ undef, %bb.q ], [ undef, %.noexc42 ], [ undef, %bb.o ], [ %.sroa.7.2.i.i.i, %.noexc43 ], [ undef, %bb.p ] ; 2 uses
-  %.sroa.0.4.i.i.i = phi ptr [ null, %bb.q ], [ null, %.noexc42 ], [ null, %bb.o ], [ %4, %.noexc43 ], [ null, %bb.p ] ; 2 uses
+  %.sroa.0.4.i.i.i = phi ptr [ null, %bb.q ], [ null, %.noexc42 ], [ null, %bb.o ], [ %6, %.noexc43 ], [ null, %bb.p ] ; 2 uses
   %i.ct = inttoptr i64 %.sroa.034.0.copyload.i to ptr ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !1604
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
@@ -632,7 +634,9 @@ bb.bf:                                            ; preds = %.noexc32.i
   %i.pg = load i64, ptr %i.nf, align 8, !noalias !8770
   %.sroa.7.2.i.i.i.i = select i1 %i.pe, i64 undef, i64 %i.pg
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af), !noalias !8770
-  %4 = select i1 %i.pe, ptr null, ptr %i.pf
+  %4 = ptrtoint ptr %i.pf to i64
+  %5 = select i1 %i.pe, i64 0, i64 %4
+  %6 = inttoptr i64 %5 to ptr
   br label %bb.bh
 
 bb.bg:                                            ; preds = %.noexc31.i
@@ -643,7 +647,7 @@ bb.bg:                                            ; preds = %.noexc31.i
 
 bb.bh:                                            ; preds = %.noexc33.i, %.noexc32.i, %bb.bd, %bb.bc, %bb.bb
   %.sroa.7.4.i.i.i.i = phi i64 [ undef, %bb.bd ], [ undef, %.noexc32.i ], [ undef, %bb.bb ], [ %.sroa.7.2.i.i.i.i, %.noexc33.i ], [ undef, %bb.bc ] ; 2 uses
-  %.sroa.0.4.i.i.i.i = phi ptr [ null, %bb.bd ], [ null, %.noexc32.i ], [ null, %bb.bb ], [ %4, %.noexc33.i ], [ null, %bb.bc ] ; 2 uses
+  %.sroa.0.4.i.i.i.i = phi ptr [ null, %bb.bd ], [ null, %.noexc32.i ], [ null, %bb.bb ], [ %6, %.noexc33.i ], [ null, %bb.bc ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae), !noalias !8808
   invoke fastcc void @_RNCNvMs2_NtNtNtCs7gfv9tzbXmh_6yara_x7modules6dotnet6parserNtB7_6Dotnet5index0Bd_(ptr noalias nofree noundef align 8 captures(address) dereferenceable(32) %i.ae, i8 %.lobit, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sink74.i248.i, i64 noundef range(i64 0, -9223372036854775808) %.sroa.435.sroa.0.0.copyload.i.i) #32
           to label %.noexc45.i unwind label %.loopexit.split-lp.i872, !noalias !8801

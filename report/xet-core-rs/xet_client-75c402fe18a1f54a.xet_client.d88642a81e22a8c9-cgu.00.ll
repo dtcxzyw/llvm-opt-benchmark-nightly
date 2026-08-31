@@ -205,17 +205,18 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   call void @_RNvMs5_NtCsG258MDvU3F_3std4timeNtB5_10SystemTime14duration_since(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.h, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.j, i64 noundef 0, i32 noundef 0)
   %i.z = load i64, ptr %i.h, align 8, !range !84, !alias.scope !4451, !noundef !10
-  %i.aa = trunc nuw i64 %i.z to i1
+  %i.aa = trunc nuw i64 %i.z to i1                ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.ac = load i64, ptr %i.ab, align 8, !alias.scope !4451
   %i.ad = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.ae = load i32, ptr %i.ad, align 8, !range !3929, !alias.scope !4451
+  %.sroa.0.0.i = select i1 %i.aa, i64 0, i64 %i.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
-  %i.af = zext i64 %i.ac to i128
+  %i.af = zext i64 %.sroa.0.0.i to i128
   %i.ag = mul nuw nsw i128 %i.af, 1000000000
   %i.ah = zext nneg i32 %i.ae to i128
-  %3 = add nuw nsw i128 %i.ag, %i.ah
-  %4 = select i1 %i.aa, i128 0, i128 %3
+  %3 = select i1 %i.aa, i128 0, i128 %i.ah
+  %4 = add nuw nsw i128 %i.ag, %3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @_RNvMsm_NtCsG258MDvU3F_3std2fsNtB5_8Metadata7created(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.g, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(176) %i.l)
   %i.ai = getelementptr inbounds nuw i8, ptr %i.g, i64 8
