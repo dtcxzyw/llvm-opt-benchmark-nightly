@@ -202,7 +202,7 @@ bb.a:
   %i.f = load i8, ptr %i.e, align 1, !tbaa !157
   %i.g = zext i8 %i.f to i32                      ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 4 uses
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !82   ; 4 uses
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !82   ; 3 uses
   %.not1521.i.i = icmp ugt i32 %i.i, %i.g
   %.pre.i.i = load ptr, ptr %i.a, align 8, !tbaa !81
   br i1 %.not1521.i.i, label %.lr.ph.i.i, label %_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.thread.i
@@ -213,18 +213,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i
   br i1 %.not15.i.i, label %.lr.ph.i.i, label %_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.thread.i, !llvm.loop !158
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %bb.b
-  %.01222.i.i = phi i32 [ %i.j, %bb.b ], [ %i.g, %bb.a ] ; 3 uses
+  %.01222.i.i = phi i32 [ %i.j, %bb.b ], [ %i.g, %bb.a ] ; 2 uses
   %i.k = zext i32 %.01222.i.i to i64
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i, i64 %i.k
   %i.m = load i32, ptr %i.l, align 4, !tbaa !160
   %.not.i.i = icmp eq i32 %1, %i.m
-  br i1 %.not.i.i, label %_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.i, label %bb.b
+  br i1 %.not.i.i, label %_ZN4llvm9SparseSetIjjNS_8identityEhE6insertERKj.exit, label %bb.b
 
-_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.i: ; preds = %.lr.ph.i.i
-  %2 = icmp eq i32 %.01222.i.i, %i.i
-  br i1 %2, label %_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.thread.i, label %_ZN4llvm9SparseSetIjjNS_8identityEhE6insertERKj.exit
-
-_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.thread.i: ; preds = %bb.b, %_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.i, %bb.a
+_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.thread.i: ; preds = %bb.b, %bb.a
   %i.n = trunc i32 %i.i to i8
   store i8 %i.n, ptr %i.e, align 1, !tbaa !157
   %i.o = load i32, ptr %i.h, align 8, !tbaa !82   ; 2 uses
@@ -247,7 +243,7 @@ bb.d:                                             ; preds = %_ZN4llvm9SparseSetI
   store i32 %i.v, ptr %i.h, align 8, !tbaa !82
   br label %_ZN4llvm9SparseSetIjjNS_8identityEhE6insertERKj.exit
 
-_ZN4llvm9SparseSetIjjNS_8identityEhE6insertERKj.exit: ; preds = %bb.c, %bb.d, %_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.i
+_ZN4llvm9SparseSetIjjNS_8identityEhE6insertERKj.exit: ; preds = %.lr.ph.i.i, %bb.c, %bb.d
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !156
   %i.y = and i32 %1, 63
@@ -650,7 +646,7 @@ bb.g:                                             ; preds = %bb.f
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.ah ; 2 uses
   %i.an = load i8, ptr %i.am, align 1, !tbaa !157
   %i.ao = zext i8 %i.an to i32                    ; 2 uses
-  %i.ap = load i32, ptr %i.ac, align 8, !tbaa !82 ; 4 uses
+  %i.ap = load i32, ptr %i.ac, align 8, !tbaa !82 ; 3 uses
   %.not1521.i.i.i = icmp ugt i32 %i.ap, %i.ao
   %.pre.i.i.i = load ptr, ptr %i.aa, align 8, !tbaa !81
   br i1 %.not1521.i.i.i, label %.lr.ph.i.i.i, label %_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.thread.i.i
@@ -661,18 +657,14 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i
   br i1 %.not15.i.i.i, label %.lr.ph.i.i.i, label %_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.thread.i.i, !llvm.loop !158
 
 .lr.ph.i.i.i:                                     ; preds = %bb.g, %bb.h
-  %.01222.i.i.i = phi i32 [ %i.aq, %bb.h ], [ %i.ao, %bb.g ] ; 3 uses
+  %.01222.i.i.i = phi i32 [ %i.aq, %bb.h ], [ %i.ao, %bb.g ] ; 2 uses
   %i.ar = zext i32 %.01222.i.i.i to i64
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i.i, i64 %i.ar
   %i.at = load i32, ptr %i.as, align 4, !tbaa !160
   %.not.i.i.i = icmp eq i32 %i.af, %i.at
-  br i1 %.not.i.i.i, label %_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.i.i, label %bb.h
+  br i1 %.not.i.i.i, label %_ZN4llvm9SparseSetIjjNS_8identityEhE6insertERKj.exit.i, label %bb.h
 
-_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.i.i: ; preds = %.lr.ph.i.i.i
-  %2 = icmp eq i32 %.01222.i.i.i, %i.ap
-  br i1 %2, label %_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.thread.i.i, label %_ZN4llvm9SparseSetIjjNS_8identityEhE6insertERKj.exit.i
-
-_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.thread.i.i: ; preds = %bb.h, %_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.i.i, %bb.g
+_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.thread.i.i: ; preds = %bb.h, %bb.g
   %i.au = trunc i32 %i.ap to i8
   store i8 %i.au, ptr %i.am, align 1, !tbaa !157
   %i.av = load i32, ptr %i.ac, align 8, !tbaa !82 ; 2 uses
@@ -694,7 +686,7 @@ bb.j:                                             ; preds = %_ZN4llvm9SparseSetI
   store i32 %i.bb, ptr %i.ac, align 8, !tbaa !82
   br label %_ZN4llvm9SparseSetIjjNS_8identityEhE6insertERKj.exit.i
 
-_ZN4llvm9SparseSetIjjNS_8identityEhE6insertERKj.exit.i: ; preds = %bb.j, %bb.i, %_ZN4llvm9SparseSetIjjNS_8identityEhE9findIndexEj.exit.i.i, %bb.f
+_ZN4llvm9SparseSetIjjNS_8identityEhE6insertERKj.exit.i: ; preds = %.lr.ph.i.i.i, %bb.j, %bb.i, %bb.f
   %i.bc = getelementptr inbounds nuw i8, ptr %.014.i, i64 16 ; 2 uses
   %.not.i5 = icmp eq ptr %i.bc, %i.n
   br i1 %.not.i5, label %_ZNK4llvm14SpillPlacement4Node22getDissentingNeighborsERNS_9SparseSetIjjNS_8identityEhEEPKS1_.exit, label %bb.f
