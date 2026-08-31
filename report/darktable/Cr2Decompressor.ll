@@ -204,11 +204,11 @@ _ZN8rawspeed21Cr2OutputTileIteratorppEv.exit:
   %.sroa.1546.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.1546.0.copyload = load ptr, ptr %.sroa.1546.0..sroa_idx, align 8, !tbaa !16 ; 4 uses
   %.sroa.21.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %.sroa.21.0.copyload = load i32, ptr %.sroa.21.0..sroa_idx, align 8, !tbaa !15 ; 4 uses
+  %.sroa.21.0.copyload = load i32, ptr %.sroa.21.0..sroa_idx, align 8, !tbaa !15 ; 5 uses
   %.sroa.2957.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 32
   %.sroa.2957.0.copyload = load i64, ptr %.sroa.2957.0..sroa_idx, align 8 ; 2 uses
   %.sroa.39.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %.sroa.39.0.copyload = load i32, ptr %.sroa.39.0..sroa_idx, align 8, !tbaa !15 ; 2 uses
+  %.sroa.39.0.copyload = load i32, ptr %.sroa.39.0..sroa_idx, align 8, !tbaa !15 ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !231, !nonnull !154, !align !242
   %i.c = icmp eq ptr %.sroa.035.0.copyload, %i.b
@@ -222,9 +222,13 @@ _ZN8rawspeed21Cr2OutputTileIteratorppEv.exit:
   %i.i = icmp eq ptr %.sroa.1546.0.copyload, %i.h
   tail call void @llvm.assume(i1 %i.i)
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !237  ; 2 uses
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !237  ; 3 uses
+  %2 = icmp ne i32 %.sroa.21.0.copyload, %i.k
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %i.m = load i32, ptr %i.l, align 8              ; 2 uses
+  %i.m = load i32, ptr %i.l, align 8              ; 3 uses
+  %3 = icmp ne i32 %.sroa.39.0.copyload, %i.m
+  %.not108 = select i1 %2, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %.not108)
   %i.n = load i32, ptr %.sroa.1546.0.copyload, align 4, !tbaa !11 ; 4 uses
   %i.o = icmp slt i32 %.sroa.21.0.copyload, %i.n
   tail call void @llvm.assume(i1 %i.o)

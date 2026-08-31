@@ -205,12 +205,15 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.am = load i32, ptr %i.al, align 8, !tbaa !34
   %i.an = and i32 %i.am, 4
-  %.not71 = icmp eq i32 %i.an, 0
+  %.not71 = icmp eq i32 %i.an, 0                  ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 64
+  %8 = load ptr, ptr %7, align 8                  ; 3 uses
+  %9 = icmp ne ptr %8, null
+  %10 = select i1 %.not71, i1 true, i1 %9
+  call void @llvm.assume(i1 %10)
   br i1 %.not71, label %.thread64, label %bb.f
 
 bb.f:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 64
-  %8 = load ptr, ptr %7, align 8                  ; 2 uses
   %.not.i.i = icmp eq ptr %8, null
   %i.ao = select i1 %.not.i.i, ptr @_ZN11opencv_onnx28_TypeProto_default_instance_E, ptr %8 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 40
@@ -223,14 +226,18 @@ bb.g:                                             ; preds = %bb.f
   %i.at = load ptr, ptr %i.as, align 8            ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 16
   %i.av = load i32, ptr %i.au, align 4, !tbaa !34
-  %i.aw = trunc i32 %i.av to i1
+  %i.aw = trunc i32 %i.av to i1                   ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.at, i64 24
+  %12 = load ptr, ptr %11, align 8                ; 3 uses
+  %13 = icmp ne ptr %12, null
+  %not..i.i47 = xor i1 %i.aw, true
+  %14 = select i1 %not..i.i47, i1 true, i1 %13
+  call void @llvm.assume(i1 %14)
   br i1 %i.aw, label %bb.h, label %.thread64
 
 bb.h:                                             ; preds = %bb.g
-  %9 = getelementptr inbounds nuw i8, ptr %i.at, i64 24
-  %10 = load ptr, ptr %9, align 8                 ; 2 uses
-  %.not.i.i49 = icmp eq ptr %10, null
-  %i.ax = select i1 %.not.i.i49, ptr @_ZN11opencv_onnx35_TensorShapeProto_default_instance_E, ptr %10
+  %.not.i.i49 = icmp eq ptr %12, null
+  %i.ax = select i1 %.not.i.i49, ptr @_ZN11opencv_onnx35_TensorShapeProto_default_instance_E, ptr %12
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 24
   %i.az = load i32, ptr %i.ay, align 8, !tbaa !342
   br label %.thread64
@@ -296,14 +303,17 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit5
   %i.bx = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.by = load i32, ptr %i.bx, align 8, !tbaa !34
   %i.bz = and i32 %i.by, 4
-  %.not70 = icmp eq i32 %i.bz, 0
+  %.not70 = icmp eq i32 %i.bz, 0                  ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %6, i64 64
+  %16 = load ptr, ptr %15, align 8                ; 3 uses
+  %17 = icmp ne ptr %16, null
+  %18 = select i1 %.not70, i1 true, i1 %17
+  call void @llvm.assume(i1 %18)
   br i1 %.not70, label %.thread68, label %bb.m
 
 bb.m:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit51.thread
-  %11 = getelementptr inbounds nuw i8, ptr %6, i64 64
-  %12 = load ptr, ptr %11, align 8                ; 2 uses
-  %.not.i.i53 = icmp eq ptr %12, null
-  %i.ca = select i1 %.not.i.i53, ptr @_ZN11opencv_onnx28_TypeProto_default_instance_E, ptr %12 ; 2 uses
+  %.not.i.i53 = icmp eq ptr %16, null
+  %i.ca = select i1 %.not.i.i53, ptr @_ZN11opencv_onnx28_TypeProto_default_instance_E, ptr %16 ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 40
   %i.cc = load i32, ptr %i.cb, align 8, !tbaa !34
   %i.cd = icmp eq i32 %i.cc, 1
@@ -314,14 +324,18 @@ bb.n:                                             ; preds = %bb.m
   %i.cf = load ptr, ptr %i.ce, align 8            ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 16
   %i.ch = load i32, ptr %i.cg, align 4, !tbaa !34
-  %i.ci = trunc i32 %i.ch to i1
+  %i.ci = trunc i32 %i.ch to i1                   ; 2 uses
+  %19 = getelementptr inbounds nuw i8, ptr %i.cf, i64 24
+  %20 = load ptr, ptr %19, align 8                ; 3 uses
+  %21 = icmp ne ptr %20, null
+  %not..i.i55 = xor i1 %i.ci, true
+  %22 = select i1 %not..i.i55, i1 true, i1 %21
+  call void @llvm.assume(i1 %22)
   br i1 %i.ci, label %bb.o, label %.thread68
 
 bb.o:                                             ; preds = %bb.n
-  %13 = getelementptr inbounds nuw i8, ptr %i.cf, i64 24
-  %14 = load ptr, ptr %13, align 8                ; 2 uses
-  %.not.i.i57 = icmp eq ptr %14, null
-  %i.cj = select i1 %.not.i.i57, ptr @_ZN11opencv_onnx35_TensorShapeProto_default_instance_E, ptr %14
+  %.not.i.i57 = icmp eq ptr %20, null
+  %i.cj = select i1 %.not.i.i57, ptr @_ZN11opencv_onnx35_TensorShapeProto_default_instance_E, ptr %20
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 24
   %i.cl = load i32, ptr %i.ck, align 8, !tbaa !342
   br label %.thread68

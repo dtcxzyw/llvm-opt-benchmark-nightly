@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
   %i.av = load ptr, ptr %i.au, align 8, !noalias !76, !noundef !10
   %bcmp.i.i.i.i.i.i = tail call i32 @bcmp(ptr %i.av, ptr %i.w, i64 %i.v), !noalias !76
   %i.aw = icmp eq i32 %bcmp.i.i.i.i.i.i, 0
-  br i1 %i.aw, label %_RINvXs0_NtNtNtCs4j34XAPZOn0_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit, label %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread.i.i
+  br i1 %i.aw, label %bb.l, label %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread.i.i
 
 _RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.i.i: ; preds = %bb.g
   tail call void @llvm.assume(i1 %i.t)
@@ -243,20 +243,21 @@ bb.k:                                             ; preds = %bb.j
   invoke void %i.be(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.bf, ptr noundef %i.bg, i64 noundef %i.bh)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4j34XAPZOn0_4http6header4name10HeaderNameECsgO8S5jLFugx_23deltalake_catalog_unity.exit unwind label %bb.m, !inline_history !60
 
-_RINvXs0_NtNtNtCs4j34XAPZOn0_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit: ; preds = %bb.c, %.loopexit, %.split.i.i, %._RINvXs0_NtNtNtCs4j34XAPZOn0_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit_crit_edge
-  %2 = phi ptr [ %.pre, %._RINvXs0_NtNtNtCs4j34XAPZOn0_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit_crit_edge ], [ %i.s, %.split.i.i ], [ %i.s, %.loopexit ], [ %i.s, %bb.c ] ; 2 uses
-  %3 = phi i1 [ false, %._RINvXs0_NtNtNtCs4j34XAPZOn0_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit_crit_edge ], [ false, %bb.c ], [ false, %.loopexit ], [ true, %.split.i.i ] ; 2 uses
+_RINvXs0_NtNtNtCs4j34XAPZOn0_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit: ; preds = %bb.c, %.loopexit, %._RINvXs0_NtNtNtCs4j34XAPZOn0_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit_crit_edge
+  %2 = phi ptr [ %.pre, %._RINvXs0_NtNtNtCs4j34XAPZOn0_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit_crit_edge ], [ %i.s, %.loopexit ], [ %i.s, %bb.c ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !97)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !98)
   %i.bi = icmp eq ptr %2, null
   br i1 %i.bi, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4j34XAPZOn0_4http6header4name10HeaderNameECsgO8S5jLFugx_23deltalake_catalog_unity.exit2, label %bb.l
 
-bb.l:                                             ; preds = %_RINvXs0_NtNtNtCs4j34XAPZOn0_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit
+bb.l:                                             ; preds = %.split.i.i, %_RINvXs0_NtNtNtCs4j34XAPZOn0_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit
+  %3 = phi i1 [ false, %_RINvXs0_NtNtNtCs4j34XAPZOn0_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit ], [ true, %.split.i.i ]
+  %4 = phi ptr [ %2, %_RINvXs0_NtNtNtCs4j34XAPZOn0_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit ], [ %i.s, %.split.i.i ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !99)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !102)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !105)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !108)
-  %i.bj = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %i.bj = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.bk = load ptr, ptr %i.bj, align 8, !noalias !111, !nonnull !10, !noundef !10
   %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -267,7 +268,7 @@ bb.l:                                             ; preds = %_RINvXs0_NtNtNtCs4j
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4j34XAPZOn0_4http6header4name10HeaderNameECsgO8S5jLFugx_23deltalake_catalog_unity.exit2
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4j34XAPZOn0_4http6header4name10HeaderNameECsgO8S5jLFugx_23deltalake_catalog_unity.exit2: ; preds = %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.i.i, %_RINvXs0_NtNtNtCs4j34XAPZOn0_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit, %bb.l
-  %i.bq = phi i1 [ %3, %bb.l ], [ %3, %_RINvXs0_NtNtNtCs4j34XAPZOn0_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit ], [ true, %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.i.i ]
+  %i.bq = phi i1 [ %3, %bb.l ], [ false, %_RINvXs0_NtNtNtCs4j34XAPZOn0_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECsgO8S5jLFugx_23deltalake_catalog_unity.exit ], [ true, %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.i.i ]
   ret i1 %i.bq
 
 bb.m:                                             ; preds = %bb.k

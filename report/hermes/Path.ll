@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_ZN4llvh5ErrorD2Ev.
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN4llvh3sys2fs8TempFile6createERKNS_5TwineEj(ptr dead_on_unwind noalias writable sret(%"class.llvh::Expected.42") align 8 initializes((0, 1)) %0, ptr noundef nonnull align 8 dereferenceable(18) %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %3 = alloca %"class.llvh::Error", align 8       ; 4 uses
+  %3 = alloca %"class.llvh::Error", align 8       ; 5 uses
   %4 = alloca %"class.llvh::Error", align 8       ; 5 uses
   %5 = alloca %class.anon.50, align 1             ; 3 uses
   %i.a = alloca i64, align 8                      ; 6 uses
@@ -327,22 +327,37 @@ bb.g:                                             ; preds = %_ZN4llvh3sys2fs8Tem
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store ptr %i.al, ptr %4, align 8, !tbaa !203
   call void @_ZN4llvh12handleErrorsIJZNS_12consumeErrorENS_5ErrorEEUlRKNS_13ErrorInfoBaseEE_EEES1_S1_DpOT_(ptr dead_on_unwind nonnull writable sret(%"class.llvh::Error") align 8 %3, ptr noundef nonnull %4, ptr noundef nonnull align 1 dereferenceable(1) %5)
-  store ptr null, ptr %3, align 8, !tbaa !203
-  %i.am = load ptr, ptr %4, align 8, !tbaa !203
+  %i.am = load ptr, ptr %3, align 8, !tbaa !203
   %i.an = ptrtoint ptr %i.am to i64
   %i.ao = and i64 %i.an, -2                       ; 2 uses
+  %11 = inttoptr i64 %i.ao to ptr                 ; 3 uses
+  store ptr %11, ptr %3, align 8, !tbaa !203
   %i.ap = icmp eq i64 %i.ao, 0
-  br i1 %i.ap, label %_ZN4llvh12consumeErrorENS_5ErrorE.exit, label %bb.h
+  br i1 %i.ap, label %_ZN4llvh5ErrorD2Ev.exit.i.i, label %12
 
-bb.h:                                             ; preds = %bb.g
-  %i.aq = inttoptr i64 %i.ao to ptr               ; 2 uses
+12:                                               ; preds = %bb.g
+  %13 = load ptr, ptr %11, align 8, !tbaa !223
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 8
+  %15 = load ptr, ptr %14, align 8
+  call void %15(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %11) #30, !inline_history !250
+  br label %_ZN4llvh5ErrorD2Ev.exit.i.i
+
+_ZN4llvh5ErrorD2Ev.exit.i.i:                      ; preds = %12, %bb.g
+  %16 = load ptr, ptr %4, align 8, !tbaa !203
+  %17 = ptrtoint ptr %16 to i64
+  %18 = and i64 %17, -2                           ; 2 uses
+  %19 = icmp eq i64 %18, 0
+  br i1 %19, label %_ZN4llvh12consumeErrorENS_5ErrorE.exit, label %bb.h
+
+bb.h:                                             ; preds = %_ZN4llvh5ErrorD2Ev.exit.i.i
+  %i.aq = inttoptr i64 %18 to ptr                 ; 2 uses
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !223
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
   %i.at = load ptr, ptr %i.as, align 8
   call void %i.at(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.aq) #30, !inline_history !250
   br label %_ZN4llvh12consumeErrorENS_5ErrorE.exit
 
-_ZN4llvh12consumeErrorENS_5ErrorE.exit:           ; preds = %bb.g, %bb.h
+_ZN4llvh12consumeErrorENS_5ErrorE.exit:           ; preds = %_ZN4llvh5ErrorD2Ev.exit.i.i, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #30

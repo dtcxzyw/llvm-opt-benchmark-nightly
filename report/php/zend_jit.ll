@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/php/original/zend_jit?download=true
-inline.NumInlined: 2176
+inline.NumInlined: 2175
 inline.NumDeleted: 168
 loop-unroll.NumCompletelyUnrolled: 4
 loop-unroll.NumRuntimeUnrolled: 21
@@ -205,8 +205,12 @@ define internal fastcc range(i32 0, 2) i32 @zend_jit_send_val(ptr noundef nonnul
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.b = load i32, ptr %i.a, align 4, !tbaa !57   ; 3 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %i.d = icmp ult i32 %i.b, 13
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 2 uses
+  %4 = load i8, ptr %i.c, align 4, !tbaa !102
+  %5 = icmp eq i8 %4, 65
+  %i.d = icmp ult i32 %i.b, 13                    ; 2 uses
+  %6 = select i1 %5, i1 true, i1 %i.d
+  tail call void @llvm.assume(i1 %6)
   tail call fastcc void @zend_jit_reuse_ip(ptr noundef %0)
   %i.e = load i8, ptr %i.c, align 4, !tbaa !102
   %i.f = icmp eq i8 %i.e, 116
@@ -609,7 +613,7 @@ bb.x:                                             ; preds = %jit_STUB_FUNC_ADDR.
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @zend_jit_assign_to_variable(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, i32 noundef %4, i32 noundef %5, i8 noundef zeroext %6, i64 noundef %7, i32 noundef %8, i64 noundef %9, i64 noundef %10, i1 noundef zeroext %11) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [32 x i8], align 16               ; 10 uses
+  %i.a = alloca [32 x i8], align 16               ; 11 uses
   store i32 0, ptr %i.a, align 16, !tbaa !65
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   store i32 6, ptr %i.b, align 4, !tbaa !65
@@ -1012,8 +1016,12 @@ bb.cf:                                            ; preds = %.thread371
   %i.js = load ptr, ptr %i.jr, align 8, !tbaa !312
   %i.jt = icmp eq ptr %i.js, %i.c
   call void @llvm.assume(i1 %i.jt)
-  %i.ju = load i32, ptr %i.c, align 16, !tbaa !65 ; 2 uses
-  %i.jv = icmp eq i32 %i.ju, 1
+  %12 = load i32, ptr %i.a, align 16, !tbaa !65
+  %i.ju = load i32, ptr %i.c, align 16, !tbaa !65 ; 3 uses
+  %13 = icmp eq i32 %12, %i.ju
+  %i.jv = icmp eq i32 %i.ju, 1                    ; 2 uses
+  %spec.select332 = or i1 %13, %i.jv
+  call void @llvm.assume(i1 %spec.select332)
   %i.jw = getelementptr inbounds nuw i8, ptr %0, i64 1032
   store i32 -1, ptr %i.jw, align 8, !tbaa !311
   store ptr null, ptr %i.jr, align 8, !tbaa !312
@@ -1416,7 +1424,12 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
   %.050.lcssa = phi i32 [ 1, %bb.a ], [ %i.y, %._crit_edge.loopexit ]
-  %.0.lcssa = phi ptr [ %i.t, %bb.a ], [ %i.ar, %._crit_edge.loopexit ]
+  %.0.lcssa = phi ptr [ %i.t, %bb.a ], [ %i.ar, %._crit_edge.loopexit ] ; 2 uses
+  %4 = load i32, ptr %.0.lcssa, align 4, !tbaa !65 ; 2 uses
+  %5 = icmp eq i32 %4, 0
+  %6 = icmp eq i32 %4, %3
+  %spec.select = or i1 %5, %6
+  tail call void @llvm.assume(i1 %spec.select)
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 992
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !374
   %i.ab = getelementptr inbounds [4 x i8], ptr %i.aa, i64 %i.e
@@ -1819,7 +1832,8 @@ bb.r:                                             ; preds = %bb.i
   unreachable
 
 zend_jit_is_constant_cmp_long_long.exit:          ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j
-  %.sink.i = phi i1 [ true, %bb.p ], [ false, %bb.o ], [ true, %bb.n ], [ true, %bb.m ], [ false, %bb.l ], [ false, %bb.k ], [ true, %bb.j ], [ false, %bb.q ] ; 2 uses
+  %.sink.i = phi i1 [ true, %bb.p ], [ false, %bb.o ], [ true, %bb.n ], [ true, %bb.m ], [ false, %bb.l ], [ false, %bb.k ], [ true, %bb.j ], [ false, %bb.q ] ; 3 uses
+  %11 = icmp eq i8 %7, 47
   switch i8 %7, label %jit_set_Z_TYPE_INFO.exit [
     i8 47, label %bb.s
     i8 46, label %bb.s
@@ -1864,20 +1878,24 @@ jit_set_Z_TYPE_INFO.exit:                         ; preds = %bb.v, %bb.u, %zend_
   br i1 %or.cond7, label %bb.z, label %bb.w
 
 bb.w:                                             ; preds = %jit_set_Z_TYPE_INFO.exit
-  %11 = select i1 %.sink.i, i32 %8, i32 %9        ; 2 uses
   switch i8 %7, label %bb.y [
     i8 46, label %bb.x
     i8 43, label %bb.x
   ]
 
 bb.x:                                             ; preds = %bb.w, %bb.w
+  %12 = select i1 %.sink.i, i32 %8, i32 %9
   %i.av = tail call i32 @_ir_IF(ptr noundef nonnull %0, i32 noundef -2) #34 ; 2 uses
-  tail call void @ir_set_op(ptr noundef nonnull %0, i32 noundef %i.av, i32 noundef 3, i32 noundef %11) #34
+  tail call void @ir_set_op(ptr noundef nonnull %0, i32 noundef %i.av, i32 noundef 3, i32 noundef %12) #34
   br label %bb.bd
 
 bb.y:                                             ; preds = %bb.w
+  %13 = icmp eq i8 %7, 44
+  %or.cond13 = or i1 %13, %11
+  tail call void @llvm.assume(i1 %or.cond13)
+  %14 = select i1 %.sink.i, i32 %8, i32 %9
   %i.aw = tail call i32 @_ir_IF(ptr noundef nonnull %0, i32 noundef -3) #34 ; 2 uses
-  tail call void @ir_set_op(ptr noundef nonnull %0, i32 noundef %i.aw, i32 noundef 3, i32 noundef %11) #34
+  tail call void @ir_set_op(ptr noundef nonnull %0, i32 noundef %i.aw, i32 noundef 3, i32 noundef %14) #34
   br label %bb.bd
 
 bb.z:                                             ; preds = %jit_set_Z_TYPE_INFO.exit
@@ -2280,7 +2298,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %bb.i,
 define internal ptr @zend_jit_push_static_method_call_frame_tmp(ptr noundef %0, ptr noundef %1, i32 noundef %2) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !726
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !726  ; 2 uses
   %i.c = load i32, ptr %0, align 8, !tbaa !317    ; 2 uses
   %i.d = icmp ne i32 %i.c, 0
   tail call void @llvm.assume(i1 %i.d)
@@ -2338,6 +2356,12 @@ bb.f:                                             ; preds = %zend_vm_stack_push_
 zend_vm_stack_push_call_frame_ex.exit.sink.split: ; preds = %bb.e, %bb.f
   %.sink14 = phi ptr [ %i.t, %bb.f ], [ %i.aa, %bb.e ] ; 5 uses
   %.sink = phi i32 [ 0, %bb.f ], [ 262144, %bb.e ]
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %4 = load ptr, ptr %3, align 8, !tbaa !57
+  %.not.i6 = icmp eq ptr %4, null
+  %5 = icmp ne ptr %i.b, null
+  %6 = or i1 %5, %.not.i6
+  tail call void @llvm.assume(i1 %6)
   %i.ac = getelementptr inbounds nuw i8, ptr %.sink14, i64 24
   store ptr %1, ptr %i.ac, align 8, !tbaa !159
   %i.ad = getelementptr inbounds nuw i8, ptr %.sink14, i64 32
@@ -2357,7 +2381,7 @@ zend_vm_stack_push_call_frame_ex.exit:            ; preds = %zend_vm_stack_push_
 define internal ptr @zend_jit_push_static_method_call_frame(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i32 noundef %2) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !726
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !726  ; 2 uses
   %i.c = add i32 %2, 5
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.e = load i32, ptr %i.d, align 8, !tbaa !57
@@ -2400,6 +2424,12 @@ bb.d:                                             ; preds = %zend_vm_stack_push_
 zend_vm_stack_push_call_frame_ex.exit:            ; preds = %bb.c, %bb.d
   %.sink10 = phi ptr [ %i.v, %bb.c ], [ %i.o, %bb.d ] ; 5 uses
   %.sink = phi i32 [ 262144, %bb.c ], [ 0, %bb.d ]
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %4 = load ptr, ptr %3, align 8, !tbaa !57
+  %.not.i = icmp eq ptr %4, null
+  %5 = icmp ne ptr %i.b, null
+  %6 = or i1 %5, %.not.i
+  tail call void @llvm.assume(i1 %6)
   %i.x = getelementptr inbounds nuw i8, ptr %.sink10, i64 24
   store ptr %1, ptr %i.x, align 8, !tbaa !159
   %i.y = getelementptr inbounds nuw i8, ptr %.sink10, i64 32
@@ -2624,7 +2654,7 @@ bb.c:                                             ; preds = %instanceof_function
   br label %zend_vm_stack_push_call_frame_ex.exit
 
 instanceof_function.exit.thread:                  ; preds = %instanceof_function.exit.instanceof_function.exit.thread_crit_edge, %bb.b
-  %i.j = phi ptr [ %.pre, %instanceof_function.exit.instanceof_function.exit.thread_crit_edge ], [ %i.e, %bb.b ] ; 2 uses
+  %i.j = phi ptr [ %.pre, %instanceof_function.exit.instanceof_function.exit.thread_crit_edge ], [ %i.e, %bb.b ] ; 4 uses
   %i.k = add i32 %2, 5
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.m = load i32, ptr %i.l, align 8, !tbaa !57
@@ -2657,6 +2687,12 @@ zend_vm_stack_push_call_frame.exit:               ; preds = %instanceof_function
 
 bb.e:                                             ; preds = %zend_vm_stack_push_call_frame.exit
   %i.ad = tail call ptr @zend_vm_stack_extend(i64 noundef %i.x) #34 ; 5 uses
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %4 = load ptr, ptr %3, align 8, !tbaa !57
+  %.not.i = icmp eq ptr %4, null
+  %5 = icmp ne ptr %i.j, null
+  %6 = or i1 %5, %.not.i
+  tail call void @llvm.assume(i1 %6)
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
   store ptr %1, ptr %i.ae, align 8, !tbaa !159
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 32
@@ -2670,6 +2706,12 @@ bb.e:                                             ; preds = %zend_vm_stack_push_
 bb.f:                                             ; preds = %zend_vm_stack_push_call_frame.exit
   %i.ai = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.x
   store ptr %i.ai, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 480), align 8, !tbaa !720
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %8 = load ptr, ptr %7, align 8, !tbaa !57
+  %.not.i8 = icmp eq ptr %8, null
+  %9 = icmp ne ptr %i.j, null
+  %10 = or i1 %9, %.not.i8
+  tail call void @llvm.assume(i1 %10)
   %i.aj = getelementptr inbounds nuw i8, ptr %i.w, i64 24
   store ptr %1, ptr %i.aj, align 8, !tbaa !159
   %i.ak = getelementptr inbounds nuw i8, ptr %i.w, i64 32
@@ -3072,9 +3114,12 @@ bb.f:                                             ; preds = %bb.d
   %i.al = sext i32 %i.ai to i64
   %i.am = getelementptr inbounds [16 x i8], ptr %i.ak, i64 %i.al ; 2 uses
   %i.an = load i8, ptr %i.am, align 8, !tbaa !57
-  switch i8 %i.an, label %switch.edge [
+  switch i8 %i.an, label %2 [
     i8 111, label %bb.g
     i8 112, label %bb.j
+    i8 116, label %switch.edge
+    i8 109, label %switch.edge
+    i8 115, label %switch.edge
   ]
 
 bb.g:                                             ; preds = %bb.f
@@ -3097,7 +3142,10 @@ bb.j:                                             ; preds = %bb.f
   tail call fastcc void @zend_jit_case_start(ptr noundef %0, i32 noundef %i.z, i32 noundef %1, i32 noundef %i.ai)
   br label %jit_IF_TRUE_FALSE_ex.exit
 
-switch.edge:                                      ; preds = %bb.f
+2:                                                ; preds = %bb.f
+  unreachable
+
+switch.edge:                                      ; preds = %bb.f, %bb.f, %bb.f
   %i.as = and i32 %i.j, 4096
   %.not201 = icmp eq i32 %i.as, 0
   br i1 %.not201, label %bb.m, label %bb.k

@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca [32 x i8], align 8                ; 7 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
   %i.c = alloca [12 x i8], align 4                ; 4 uses
-  %i.d = alloca [24 x i8], align 8                ; 3 uses
+  %i.d = alloca [24 x i8], align 8                ; 5 uses
   %i.e = alloca [24 x i8], align 8                ; 6 uses
   %i.f = alloca [64 x i8], align 8                ; 4 uses
   %i.g = alloca [32 x i8], align 8                ; 6 uses
@@ -546,9 +546,13 @@ bb.u:                                             ; preds = %.lr.ph, %bb.aa
           to label %.noexc82 unwind label %.loopexit.split-lp316
 
 .noexc82:                                         ; preds = %._crit_edge
+  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %3 = load i64, ptr %2, align 8, !range !389, !noalias !9192, !noundef !3
+  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %5 = load i64, ptr %4, align 8, !noalias !9192
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !9192
   %i.ct = invoke noundef i64 @_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copiedINtB5_6CopiedINtNtNtBb_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEENtNtNtB9_6traits8iterator8Iterator4foldjNCINvNtB7_3map8map_foldB1s_jjNCINvNvXs1_NtB7_6filterINtB3y_6FilterppEB2g_5count8to_usizeB1s_NCNvXs18_NtB1u_7displayNtB4x_16DisplayUnionTypeNtB4x_11FmtDetailed12fmt_detaileds1_0E0NCINvXsK_NtB2k_5accumjNtB5V_3Sum3sumINtB2Z_3MapBP_B3n_EE0E0EB1w_(ptr noundef nonnull %i.as, ptr noundef nonnull %i.bl, i64 noundef 0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ah)
-          to label %bb.ak unwind label %.loopexit.split-lp316
+          to label %bb.ak unwind label %.loopexit.split-lp316 ; 2 uses
 
 .body187:                                         ; preds = %.loopexit315, %.loopexit.split-lp316, %bb.fa, %bb.y, %.body182
   %.sroa.045.4 = phi i8 [ 1, %bb.y ], [ 0, %.body182 ], [ 0, %bb.fa ], [ 1, %.loopexit315 ], [ %.sroa.045.5.ph, %.loopexit.split-lp316 ]
@@ -695,6 +699,11 @@ bb.aj:                                            ; preds = %bb.ah, %bb.ai
   br label %bb.aa
 
 bb.ak:                                            ; preds = %.noexc82
+  %6 = trunc nuw i64 %3 to i1
+  %7 = icmp uge i64 %5, %i.ct
+  %not..i = xor i1 %6, true
+  %8 = select i1 %not..i, i1 true, i1 %7
+  call void @llvm.assume(i1 %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x)
   %i.ea = load i64, ptr %i.bk, align 8, !noundef !3 ; 3 uses
@@ -1097,7 +1106,7 @@ bb.a:
   %i.a = alloca [32 x i8], align 8                ; 7 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
   %i.c = alloca [12 x i8], align 4                ; 6 uses
-  %i.d = alloca [24 x i8], align 8                ; 3 uses
+  %i.d = alloca [24 x i8], align 8                ; 5 uses
   %i.e = alloca [12 x i8], align 4                ; 4 uses
   %i.f = alloca [40 x i8], align 8                ; 7 uses
   %i.g = alloca [80 x i8], align 8                ; 15 uses
@@ -1232,8 +1241,17 @@ _RINvNtNtCsoTR8nlGN3X_18ty_python_semantic5types7display19numeric_tower_groupINt
   store ptr %i.o, ptr %i.ax, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !9613
   call void @_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copiedINtB4_6CopiedINtNtNtBa_5slice4iter4IterNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11subclass_of14SubclassOfTypeEENtNtNtB8_6traits8iterator8Iterator9size_hintB1x_(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.d, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.n)
+  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %3 = load i64, ptr %2, align 8, !range !389, !noalias !9613, !noundef !3
+  %4 = trunc nuw i64 %3 to i1
+  %5 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %6 = load i64, ptr %5, align 8, !noalias !9613
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !9613
-  %i.ay = call noundef i64 @_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copiedINtB5_6CopiedINtNtNtBb_5slice4iter4IterNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11subclass_of14SubclassOfTypeEENtNtNtB9_6traits8iterator8Iterator4foldjNCINvNtB7_3map8map_foldB1s_jjNCINvNvXs1_NtB7_6filterINtB3Y_6FilterppEB2G_5count8to_usizeB1s_NCNvXs1c_NtB1w_7displayNtB4X_22DisplaySubclassOfGroupNtB4X_11FmtDetailed12fmt_detaileds0_0E0NCINvXsK_NtB2K_5accumjNtB6r_3Sum3sumINtB3p_3MapBP_B3N_EE0E0EB1y_(ptr noundef nonnull %i.ai, ptr noundef nonnull %i.av, i64 noundef 0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.o)
+  %i.ay = call noundef i64 @_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copiedINtB5_6CopiedINtNtNtBb_5slice4iter4IterNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types11subclass_of14SubclassOfTypeEENtNtNtB9_6traits8iterator8Iterator4foldjNCINvNtB7_3map8map_foldB1s_jjNCINvNvXs1_NtB7_6filterINtB3Y_6FilterppEB2G_5count8to_usizeB1s_NCNvXs1c_NtB1w_7displayNtB4X_22DisplaySubclassOfGroupNtB4X_11FmtDetailed12fmt_detaileds0_0E0NCINvXsK_NtB2K_5accumjNtB6r_3Sum3sumINtB3p_3MapBP_B3N_EE0E0EB1y_(ptr noundef nonnull %i.ai, ptr noundef nonnull %i.av, i64 noundef 0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.o) ; 2 uses
+  %7 = icmp uge i64 %6, %i.ay
+  %not..i = xor i1 %4, true
+  %8 = select i1 %not..i, i1 true, i1 %7
+  call void @llvm.assume(i1 %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   %i.az = icmp ult i64 %i.ak, 576460752303423488
   call void @llvm.assume(i1 %i.az)

@@ -205,7 +205,7 @@ ZSTDMT_getInputDataInUse.exit.i:                  ; preds = %bb.f, %.thread.i.i,
   br i1 %i.an, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %ZSTDMT_getInputDataInUse.exit.i
-  %i.ao = load ptr, ptr %i.af, align 8, !tbaa !62 ; 7 uses
+  %i.ao = load ptr, ptr %i.af, align 8, !tbaa !62 ; 8 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 288
   %i.aq = load i64, ptr %i.ap, align 8, !tbaa !149 ; 7 uses
   %i.ar = icmp eq ptr %.sroa.0.3.i.i, null
@@ -238,16 +238,16 @@ ZSTDMT_isOverlapped.exit.thread.i:                ; preds = %ZSTDMT_isOverlapped
   %.sroa.4.0..sroa_idx.i36.i = getelementptr inbounds nuw i8, ptr %0, i64 2792
   %.sroa.4.0.copyload.i37.i = load ptr, ptr %.sroa.4.0..sroa_idx.i36.i, align 8 ; 2 uses
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 2800
-  %.sroa.5.0.copyload.i.i = load ptr, ptr %.sroa.5.0..sroa_idx.i.i, align 8
+  %.sroa.5.0.copyload.i.i = load ptr, ptr %.sroa.5.0..sroa_idx.i.i, align 8 ; 2 uses
   %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 2808
-  %.sroa.6.0.copyload.i.i = load i32, ptr %.sroa.6.0..sroa_idx.i.i, align 8
+  %.sroa.6.0.copyload.i.i = load i32, ptr %.sroa.6.0..sroa_idx.i.i, align 8 ; 3 uses
   %i.be = icmp eq ptr %.sroa.5.0.copyload.i.i, null
   %or.cond.i.i.i.i = select i1 %i.be, i1 true, i1 %i.as
   %i.bf = icmp eq ptr %.sroa.4.0.copyload.i37.i, null ; 2 uses
   %i.bg = zext i32 %.sroa.6.0.copyload.i.i to i64
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.4.0.copyload.i37.i, i64 %i.bg ; 2 uses
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.aq
-  %i.bj = icmp samesign eq i64 %i.aq, 0
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.aq ; 2 uses
+  %i.bj = icmp samesign eq i64 %i.aq, 0           ; 2 uses
   %i.bk = icmp eq ptr %.sroa.0.0.copyload.i.i, %i.bh
   %or.cond19.not.i7.i.not10.i.i = select i1 %i.bj, i1 true, i1 %i.bk
   %i.bl = icmp uge ptr %i.ao, %.sroa.0.0.copyload.i.i
@@ -265,6 +265,20 @@ ZSTDMT_doesOverlapWindow.exit.us.i.i:             ; preds = %.critedge.preheader
   br label %ZSTDMT_doesOverlapWindow.exit.us.i.i
 
 .critedge.preheader.split.i.i:                    ; preds = %.critedge.preheader.i.i
+  %.sroa.7.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 2812
+  %.sroa.7.0.copyload.i.i = load i32, ptr %.sroa.7.0..sroa_idx.i.i, align 4 ; 3 uses
+  %4 = zext i32 %.sroa.7.0.copyload.i.i to i64
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload.i.i, i64 %4 ; 2 uses
+  %6 = sub i32 %.sroa.6.0.copyload.i.i, %.sroa.7.0.copyload.i.i
+  %7 = zext i32 %6 to i64
+  %8 = getelementptr inbounds nuw i8, ptr %5, i64 %7
+  %9 = icmp eq i32 %.sroa.6.0.copyload.i.i, %.sroa.7.0.copyload.i.i
+  %or.cond19.not.i.not19.i.i.i = select i1 %i.bj, i1 true, i1 %9
+  %10 = icmp uge ptr %i.ao, %8
+  %11 = icmp uge ptr %5, %i.bi
+  %.not16.i.i.i = select i1 %or.cond19.not.i.not19.i.i.i, i1 true, i1 %10
+  %narrow.i.not.i.i.i = select i1 %.not16.i.i.i, i1 true, i1 %11
+  tail call void @llvm.assume(i1 %narrow.i.not.i.i.i)
   %brmerge16.i.i = select i1 %i.bf, i1 true, i1 %narrow.i8.i.not.i.i
   br i1 %brmerge16.i.i, label %ZSTDMT_waitForLdmComplete.exit.i, label %ZSTDMT_doesOverlapWindow.exit.us13.i.i
 
@@ -281,7 +295,7 @@ ZSTDMT_waitForLdmComplete.exit.i:                 ; preds = %.critedge.preheader
 bb.i:                                             ; preds = %ZSTDMT_waitForLdmComplete.exit.i, %ZSTDMT_getInputDataInUse.exit.i
   %i.bo = phi i64 [ %i.aq, %ZSTDMT_waitForLdmComplete.exit.i ], [ %i.aj, %ZSTDMT_getInputDataInUse.exit.i ]
   %i.bp = load ptr, ptr %i.af, align 8, !tbaa !62 ; 2 uses
-  %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bo ; 6 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bo ; 7 uses
   %i.br = icmp eq ptr %.sroa.0.3.i.i, null
   %i.bs = icmp eq ptr %i.bp, null                 ; 3 uses
   %or.cond.i38.i = select i1 %i.br, i1 true, i1 %i.bs
@@ -315,16 +329,16 @@ ZSTDMT_isOverlapped.exit43.thread.i:              ; preds = %ZSTDMT_isOverlapped
   %.sroa.4.0..sroa_idx.i46.i = getelementptr inbounds nuw i8, ptr %0, i64 2792
   %.sroa.4.0.copyload.i47.i = load ptr, ptr %.sroa.4.0..sroa_idx.i46.i, align 8 ; 2 uses
   %.sroa.5.0..sroa_idx.i48.i = getelementptr inbounds nuw i8, ptr %0, i64 2800
-  %.sroa.5.0.copyload.i49.i = load ptr, ptr %.sroa.5.0..sroa_idx.i48.i, align 8
+  %.sroa.5.0.copyload.i49.i = load ptr, ptr %.sroa.5.0..sroa_idx.i48.i, align 8 ; 2 uses
   %.sroa.6.0..sroa_idx.i50.i = getelementptr inbounds nuw i8, ptr %0, i64 2808
-  %.sroa.6.0.copyload.i51.i = load i32, ptr %.sroa.6.0..sroa_idx.i50.i, align 8
+  %.sroa.6.0.copyload.i51.i = load i32, ptr %.sroa.6.0..sroa_idx.i50.i, align 8 ; 3 uses
   %i.cd = icmp eq ptr %.sroa.5.0.copyload.i49.i, null
   %or.cond.i.i.i52.i = select i1 %i.cd, i1 true, i1 %i.bs
   %i.ce = icmp eq ptr %.sroa.4.0.copyload.i47.i, null ; 2 uses
   %i.cf = zext i32 %.sroa.6.0.copyload.i51.i to i64
   %i.cg = getelementptr inbounds nuw i8, ptr %.sroa.4.0.copyload.i47.i, i64 %i.cf ; 2 uses
-  %i.ch = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.am
-  %i.ci = icmp samesign eq i64 %i.am, 0
+  %i.ch = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.am ; 2 uses
+  %i.ci = icmp samesign eq i64 %i.am, 0           ; 2 uses
   %i.cj = icmp eq ptr %.sroa.0.0.copyload.i45.i, %i.cg
   %or.cond19.not.i7.i.not10.i53.i = select i1 %i.ci, i1 true, i1 %i.cj
   %i.ck = icmp uge ptr %i.bq, %.sroa.0.0.copyload.i45.i
@@ -342,6 +356,20 @@ ZSTDMT_doesOverlapWindow.exit.us.i67.i:           ; preds = %.critedge.preheader
   br label %ZSTDMT_doesOverlapWindow.exit.us.i67.i
 
 .critedge.preheader.split.i56.i:                  ; preds = %.critedge.preheader.i44.i
+  %.sroa.7.0..sroa_idx.i57.i = getelementptr inbounds nuw i8, ptr %0, i64 2812
+  %.sroa.7.0.copyload.i58.i = load i32, ptr %.sroa.7.0..sroa_idx.i57.i, align 4 ; 3 uses
+  %12 = zext i32 %.sroa.7.0.copyload.i58.i to i64
+  %13 = getelementptr inbounds nuw i8, ptr %.sroa.5.0.copyload.i49.i, i64 %12 ; 2 uses
+  %14 = sub i32 %.sroa.6.0.copyload.i51.i, %.sroa.7.0.copyload.i58.i
+  %15 = zext i32 %14 to i64
+  %16 = getelementptr inbounds nuw i8, ptr %13, i64 %15
+  %17 = icmp eq i32 %.sroa.6.0.copyload.i51.i, %.sroa.7.0.copyload.i58.i
+  %or.cond19.not.i.not19.i.i59.i = select i1 %i.ci, i1 true, i1 %17
+  %18 = icmp uge ptr %i.bq, %16
+  %19 = icmp uge ptr %13, %i.ch
+  %.not16.i.i60.i = select i1 %or.cond19.not.i.not19.i.i59.i, i1 true, i1 %18
+  %narrow.i.not.i.i61.i = select i1 %.not16.i.i60.i, i1 true, i1 %19
+  tail call void @llvm.assume(i1 %narrow.i.not.i.i61.i)
   %brmerge16.i62.i = select i1 %i.ce, i1 true, i1 %narrow.i8.i.not.i55.i
   br i1 %brmerge16.i62.i, label %ZSTDMT_waitForLdmComplete.exit68.i, label %ZSTDMT_doesOverlapWindow.exit.us13.i63.i
 

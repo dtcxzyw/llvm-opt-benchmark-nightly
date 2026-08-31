@@ -204,10 +204,10 @@ bb.h:                                             ; preds = %bb.a, %._crit_edge5
 define hidden void @_ZN2v88internal6maglev32StraightForwardRegisterAllocator15HoistLoopSpillsEPNS1_10BasicBlockE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(424) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #11 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 416
-  %i.b = load ptr, ptr %i.a, align 8              ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.d = load i32, ptr %i.c, align 4              ; 3 uses
-  %i.e = load i64, ptr %i.b, align 8              ; 3 uses
+  %i.e = load i64, ptr %i.b, align 8              ; 4 uses
   %i.f = icmp ult i64 %i.e, 2
   br i1 %i.f, label %bb.b, label %bb.d
 
@@ -228,7 +228,14 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.l, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.l, align 8 ; 6 uses
+  %2 = getelementptr i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.e
+  %3 = getelementptr i8, ptr %2, i64 16
+  %4 = icmp ule ptr %3, %i.b
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  %6 = icmp ule ptr %5, %.sroa.0.0.copyload.i.i.i.i.i
+  %7 = select i1 %4, i1 true, i1 %6
+  tail call void @llvm.assume(i1 %7)
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.n = load i64, ptr %i.m, align 8
@@ -575,10 +582,10 @@ _ZN2v88internal11RegListBaseINS0_8RegisterEE8IteratorppEv.exit: ; preds = %_ZN2v
 define linkonce_odr hidden void @_ZN2v88internal6maglev32StraightForwardRegisterAllocator16HoistLoopReloadsINS0_8RegisterEEEvPNS1_10BasicBlockERNS1_18RegisterFrameStateIT_EE(ptr noundef nonnull align 8 dereferenceable(424) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(132) %2) local_unnamed_addr #11 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 416
-  %i.b = load ptr, ptr %i.a, align 8              ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.d = load i32, ptr %i.c, align 4              ; 3 uses
-  %i.e = load i64, ptr %i.b, align 8              ; 3 uses
+  %i.e = load i64, ptr %i.b, align 8              ; 4 uses
   %i.f = icmp ult i64 %i.e, 2
   br i1 %i.f, label %bb.b, label %bb.d
 
@@ -599,7 +606,14 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.l, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.l, align 8 ; 6 uses
+  %3 = getelementptr i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.e
+  %4 = getelementptr i8, ptr %3, i64 16
+  %5 = icmp ule ptr %4, %i.b
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  %7 = icmp ule ptr %6, %.sroa.0.0.copyload.i.i.i.i.i
+  %8 = select i1 %5, i1 true, i1 %7
+  tail call void @llvm.assume(i1 %8)
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.n = load i64, ptr %i.m, align 8
@@ -851,10 +865,10 @@ bb.x:                                             ; preds = %bb.n, %bb.o, %_ZN2v
 define linkonce_odr hidden void @_ZN2v88internal6maglev32StraightForwardRegisterAllocator16HoistLoopReloadsINS0_11XMMRegisterEEEvPNS1_10BasicBlockERNS1_18RegisterFrameStateIT_EE(ptr noundef nonnull align 8 dereferenceable(424) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(132) %2) local_unnamed_addr #11 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 416
-  %i.b = load ptr, ptr %i.a, align 8              ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8              ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.d = load i32, ptr %i.c, align 4              ; 3 uses
-  %i.e = load i64, ptr %i.b, align 8              ; 3 uses
+  %i.e = load i64, ptr %i.b, align 8              ; 4 uses
   %i.f = icmp ult i64 %i.e, 2
   br i1 %i.f, label %bb.b, label %bb.d
 
@@ -875,7 +889,14 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.l, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.l, align 8 ; 6 uses
+  %3 = getelementptr i8, ptr %.sroa.0.0.copyload.i.i.i.i.i, i64 %i.e
+  %4 = getelementptr i8, ptr %3, i64 16
+  %5 = icmp ule ptr %4, %i.b
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
+  %7 = icmp ule ptr %6, %.sroa.0.0.copyload.i.i.i.i.i
+  %8 = select i1 %5, i1 true, i1 %7
+  tail call void @llvm.assume(i1 %8)
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.n = load i64, ptr %i.m, align 8

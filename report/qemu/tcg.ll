@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %.loopexit.i.i, %.lr
   %.0210225.i.i = phi i1 [ false, %.lr.ph.i.i ], [ %.2.i.i, %.loopexit.i.i ] ; 4 uses
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv.i.i
   %i.o = load ptr, ptr %i.n, align 8              ; 3 uses
-  %i.p = icmp samesign uge i64 %indvars.iv.i.i, %i.m ; 3 uses
+  %i.p = icmp samesign uge i64 %indvars.iv.i.i, %i.m ; 4 uses
   %i.q = load i8, ptr %i.o, align 1               ; 3 uses
   switch i8 %i.q, label %bb.k [
     i8 48, label %bb.g
@@ -254,6 +254,8 @@ bb.g:                                             ; preds = %bb.f, %bb.f, %bb.f,
   br label %.loopexit.i.i
 
 bb.h:                                             ; preds = %bb.f
+  %3 = xor i1 %i.p, true
+  tail call void @llvm.assume(i1 %3)
   %i.al = getelementptr inbounds nuw [12 x i8], ptr %i.e, i64 %indvars.iv.i.i ; 2 uses
   %i.am = load i64, ptr %i.al, align 4
   %i.an = or i64 %i.am, 4294967296

@@ -204,8 +204,8 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define hidden void @_ZN5cppgc8internal17BasicMarkingStateD2Ev(ptr noundef nonnull align 8 dereferenceable(328) initializes((0, 8)) %0) unnamed_addr #0 align 2 {
 bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5cppgc8internal17BasicMarkingStateE, i64 16), ptr %0, align 8
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8              ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 4 uses
+  %i.b = load i64, ptr %i.a, align 8              ; 4 uses
   %i.c = icmp ne i64 %i.b, 0
   tail call void @llvm.assume(i1 %i.c)
   %i.d = icmp ult i64 %i.b, 2
@@ -214,14 +214,34 @@ bb.a:
 _ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE7deallocEv.exit.i.i.i.a: ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 304
   %i.f = load i64, ptr %i.e, align 8
-  %i.g = and i64 %i.f, 65536
+  %i.g = and i64 %i.f, 65536                      ; 2 uses
+  %.not.i.i.i.i.i.i = icmp eq i64 %i.g, 0
   %.phi.trans.insert.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 312
-  %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i.i, align 8
-  %1 = icmp ne i64 %i.g, 0
-  tail call void @_ZN4absl18container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS0_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 noundef %i.b, ptr noundef %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i, i64 noundef 16, i64 noundef 8, i1 noundef zeroext %1)
+  %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i.i, align 8 ; 5 uses
+  %.pre.i.i.i.i = add i64 %i.b, 16                ; 2 uses
+  br i1 %.not.i.i.i.i.i.i, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE7deallocEv.exit.i.i.i, label %1
+
+1:                                                ; preds = %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE7deallocEv.exit.i.i.i.a
+  %2 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i, i64 %.pre.i.i.i.i
+  %3 = icmp ule ptr %2, %i.a
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 328
+  %5 = icmp ule ptr %4, %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i
+  %6 = select i1 %3, i1 true, i1 %5
+  tail call void @llvm.assume(i1 %6)
+  br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE7deallocEv.exit.i.i.i
+
+_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE7deallocEv.exit.i.i.i: ; preds = %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE7deallocEv.exit.i.i.i.a, %1
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i, i64 %.pre.i.i.i.i
+  %8 = icmp ule ptr %7, %i.a
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 328
+  %10 = icmp ule ptr %9, %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i
+  %11 = select i1 %8, i1 true, i1 %10
+  tail call void @llvm.assume(i1 %11)
+  %12 = icmp ne i64 %i.g, 0
+  tail call void @_ZN4absl18container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS0_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 noundef %i.b, ptr noundef %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i, i64 noundef 16, i64 noundef 8, i1 noundef zeroext %12)
   br label %_ZN4heap4base18CachedUnorderedMapIPN5cppgc8internal8BasePageElN2v84base4hashIS5_EEED2Ev.exit
 
-_ZN4heap4base18CachedUnorderedMapIPN5cppgc8internal8BasePageElN2v84base4hashIS5_EEED2Ev.exit: ; preds = %bb.a, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE7deallocEv.exit.i.i.i.a
+_ZN4heap4base18CachedUnorderedMapIPN5cppgc8internal8BasePageElN2v84base4hashIS5_EEED2Ev.exit: ; preds = %bb.a, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE7deallocEv.exit.i.i.i
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 248
   %i.i = load ptr, ptr %i.h, align 8              ; 3 uses
   %.not.i = icmp eq ptr %i.i, null
@@ -611,7 +631,7 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #2
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN5cppgc8internal17BasicMarkingState7PublishEv(ptr noundef nonnull align 8 dereferenceable(328) %0) unnamed_addr #0 align 2 {
 bb.a:
-  %1 = alloca %"class.absl::flat_hash_map", align 8 ; 10 uses
+  %1 = alloca %"class.absl::flat_hash_map", align 8 ; 16 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   tail call void @_ZN4heap4base8WorklistIN5cppgc15TraceDescriptorELt512EE5Local7PublishEv(ptr noundef nonnull align 8 dereferenceable(24) %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
@@ -673,13 +693,20 @@ _ZN4heap4base18CachedUnorderedMapIPN5cppgc8internal8BasePageElN2v84base4hashIS5_
   br i1 %.not.i.i, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE5beginEv.exit.preheader, label %bb.g, !prof !15
 
 bb.g:                                             ; preds = %_ZN4heap4base18CachedUnorderedMapIPN5cppgc8internal8BasePageElN2v84base4hashIS5_EEE4TakeEv.exit
-  %i.v = load i64, ptr %1, align 8
+  %i.v = load i64, ptr %1, align 8                ; 2 uses
   %i.w = icmp ult i64 %i.v, 2
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   br i1 %i.w, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE5beginEv.exit.preheader, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.x, align 8, !nonnull !5, !noundef !5 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.x, align 8, !nonnull !5, !noundef !5 ; 5 uses
+  %2 = getelementptr i8, ptr %.sroa.0.0.copyload.i.i.i.i, i64 %i.v
+  %3 = getelementptr i8, ptr %2, i64 16
+  %4 = icmp ule ptr %3, %1
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %6 = icmp ule ptr %5, %.sroa.0.0.copyload.i.i.i.i
+  %7 = select i1 %4, i1 true, i1 %6
+  call void @llvm.assume(i1 %7)
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 24
   %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.y, align 8 ; 2 uses
   %i.z = load i8, ptr %.sroa.0.0.copyload.i.i.i.i, align 1
@@ -729,17 +756,37 @@ _ZN4absl18container_internalneERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIPN5c
   br i1 %i.ah, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %_ZN4absl18container_internalneERKNS0_12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE8iteratorESM_.exit
-  %i.al = load i64, ptr %1, align 8               ; 3 uses
+  %i.al = load i64, ptr %1, align 8               ; 4 uses
   %i.am = icmp ne i64 %i.al, 0
   call void @llvm.assume(i1 %i.am)
   %i.an = icmp ult i64 %i.al, 2
-  br i1 %i.an, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEED2Ev.exit, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE7deallocEv.exit.i.i
+  br i1 %i.an, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEED2Ev.exit, label %8
 
-_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE7deallocEv.exit.i.i: ; preds = %bb.l
-  %2 = and i64 %i.u, 65536
-  %.phi.trans.insert.i.i.i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.0.0.copyload.i.i.i1.pre.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i.a, align 8
-  %i.ao = icmp ne i64 %2, 0
+8:                                                ; preds = %bb.l
+  %9 = and i64 %i.u, 65536                        ; 2 uses
+  %.not.i.i.i.i.i = icmp eq i64 %9, 0
+  %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %.sroa.0.0.copyload.i.i.i1.pre.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i, align 8 ; 5 uses
+  %.pre.i.i.i = add i64 %i.al, 16                 ; 2 uses
+  br i1 %.not.i.i.i.i.i, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE7deallocEv.exit.i.i, label %10
+
+10:                                               ; preds = %8
+  %11 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i1.pre.i.i.i, i64 %.pre.i.i.i
+  %12 = icmp ule ptr %11, %1
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %14 = icmp ule ptr %13, %.sroa.0.0.copyload.i.i.i1.pre.i.i.i
+  %15 = select i1 %12, i1 true, i1 %14
+  call void @llvm.assume(i1 %15)
+  br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE7deallocEv.exit.i.i
+
+_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE7deallocEv.exit.i.i: ; preds = %8, %10
+  %16 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i1.pre.i.i.i, i64 %.pre.i.i.i
+  %17 = icmp ule ptr %16, %1
+  %.phi.trans.insert.i.i.i.a = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %18 = icmp ule ptr %.phi.trans.insert.i.i.i.a, %.sroa.0.0.copyload.i.i.i1.pre.i.i.i
+  %19 = select i1 %17, i1 true, i1 %18
+  call void @llvm.assume(i1 %19)
+  %i.ao = icmp ne i64 %9, 0
   call void @_ZN4absl18container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS0_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(32) %1, i64 noundef %i.al, ptr noundef %.sroa.0.0.copyload.i.i.i1.pre.i.i.i, i64 noundef 16, i64 noundef 8, i1 noundef zeroext %i.ao)
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEED2Ev.exit
 
@@ -1142,13 +1189,20 @@ _ZN4absl18container_internal8AllocateILm8ESaIcEEEPvPT0_m.exit: ; preds = %bb.a
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIPN5cppgc8internal8BasePageElEEN2v84base4hashIS6_EENS0_6HashEqIS6_vE2EqESaISt4pairIKS6_lEEE46transfer_unprobed_elements_to_next_capacity_fnERNS0_12CommonFieldsEPKNS0_6ctrl_tEPvSP_PFvSP_hmmE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) #12 comdat align 2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8                ; 4 uses
+  %i.a = load i64, ptr %0, align 8                ; 5 uses
   %i.b = lshr i64 %i.a, 1                         ; 4 uses
   %i.c = and i64 %i.a, 30
   %i.d = icmp eq i64 %i.c, 30
   tail call void @llvm.assume(i1 %i.d)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.0.0.copyload.i.i = load ptr, ptr %i.e, align 8 ; 3 uses
+  %.sroa.0.0.copyload.i.i = load ptr, ptr %i.e, align 8 ; 5 uses
+  %5 = getelementptr i8, ptr %.sroa.0.0.copyload.i.i, i64 %i.a
+  %6 = getelementptr i8, ptr %5, i64 16
+  %7 = icmp ule ptr %6, %0
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %9 = icmp ule ptr %8, %.sroa.0.0.copyload.i.i
+  %10 = select i1 %7, i1 true, i1 %9
+  tail call void @llvm.assume(i1 %10)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8

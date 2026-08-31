@@ -19,7 +19,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(inaccessiblemem: readwrite, errnomem: write) uwtable
 define noalias noundef ptr @EpdAlloc() local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #17
+  %i.a = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #18
   ret ptr %i.a
 }
 
@@ -61,7 +61,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @free(ptr noundef nonnull %0) #18
+  tail call void @free(ptr noundef nonnull %0) #19
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -77,7 +77,7 @@ bb.a:
   %2 = alloca %struct.EpDoubleStruct, align 8     ; 6 uses
   %3 = alloca %struct.EpDoubleStruct, align 8     ; 5 uses
   %i.a = load double, ptr %0, align 8             ; 4 uses
-  %i.b = bitcast double %i.a to i64               ; 3 uses
+  %i.b = bitcast double %i.a to i64               ; 5 uses
   %or.cond10.i.not = icmp eq i64 %i.b, -2251799813685248
   br i1 %or.cond10.i.not, label %bb.b, label %bb.c
 
@@ -103,8 +103,14 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.r
 
 bb.g:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
+  %4 = and i64 %i.b, 9221120237041090559
+  %or.cond7.i.i.i = icmp ne i64 %4, 9218868437227405312
+  %5 = and i64 %i.b, -9221120237041090560
+  %or.cond9.not.i.i.i = icmp eq i64 %5, 2251799813685248
+  %or.cond.not.i.i.not.i = or i1 %or.cond7.i.i.i, %or.cond9.not.i.i.i
+  tail call void @llvm.assume(i1 %or.cond.not.i.i.not.i)
   %i.d = fcmp une double %i.a, 0.000000e+00
   br i1 %i.d, label %bb.h, label %EpdGetValueAndDecimalExponent.exit
 
@@ -144,9 +150,9 @@ bb.k:                                             ; preds = %bb.i
 EpdGetValueAndDecimalExponent.exit:               ; preds = %bb.g, %bb.h, %bb.j, %bb.k
   %.017 = phi double [ -qnan, %bb.h ], [ 0.000000e+00, %bb.g ], [ %.pre.i, %bb.k ], [ %i.n, %bb.j ]
   %.0 = phi i32 [ 0, %bb.h ], [ 0, %bb.g ], [ %.pre9.i, %bb.k ], [ 0, %bb.j ] ; 6 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
-  %i.r = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(1) @.str.3, double noundef %.017) #18 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #19
+  %i.r = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(1) @.str.3, double noundef %.017) #19 ; 0 uses
   %strchr = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %1, i32 101) ; 2 uses
   %i.s = icmp sgt i32 %.0, -1
   br i1 %i.s, label %bb.l, label %bb.o
@@ -157,11 +163,11 @@ bb.l:                                             ; preds = %EpdGetValueAndDecim
   br i1 %i.t, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %i.v = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.u, ptr noundef nonnull dereferenceable(1) @.str.5, i32 noundef %.0) #18 ; 0 uses
+  %i.v = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.u, ptr noundef nonnull dereferenceable(1) @.str.5, i32 noundef %.0) #19 ; 0 uses
   br label %bb.r
 
 bb.n:                                             ; preds = %bb.l
-  %i.w = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.u, ptr noundef nonnull dereferenceable(1) @.str.6, i32 noundef %.0) #18 ; 0 uses
+  %i.w = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.u, ptr noundef nonnull dereferenceable(1) @.str.6, i32 noundef %.0) #19 ; 0 uses
   br label %bb.r
 
 bb.o:                                             ; preds = %EpdGetValueAndDecimalExponent.exit
@@ -171,11 +177,11 @@ bb.o:                                             ; preds = %EpdGetValueAndDecim
   br i1 %i.y, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.aa = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.z, ptr noundef nonnull dereferenceable(1) @.str.7, i32 noundef %i.x) #18 ; 0 uses
+  %i.aa = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.z, ptr noundef nonnull dereferenceable(1) @.str.7, i32 noundef %i.x) #19 ; 0 uses
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.o
-  %i.ab = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.z, ptr noundef nonnull dereferenceable(1) @.str.8, i32 noundef %i.x) #18 ; 0 uses
+  %i.ab = tail call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.z, ptr noundef nonnull dereferenceable(1) @.str.8, i32 noundef %i.x) #19 ; 0 uses
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.n, %bb.m, %bb.q, %bb.p, %bb.e, %bb.f, %bb.b
@@ -211,8 +217,8 @@ define void @EpdGetValueAndDecimalExponent(ptr nofree noundef readonly captures(
 bb.a:
   %3 = alloca %struct.EpDoubleStruct, align 8     ; 6 uses
   %4 = alloca %struct.EpDoubleStruct, align 8     ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   %i.a = load i64, ptr %0, align 8                ; 5 uses
   %i.b = and i64 %i.a, 9221120237041090559
   %or.cond7.i.i = icmp ne i64 %i.b, 9218868437227405312
@@ -274,8 +280,8 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %.sink.split, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
   ret void
 }
 
@@ -594,16 +600,16 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
-  %i.h = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) @.str.9, double noundef %i.c) #18 ; 0 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
+  %i.h = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) @.str.9, double noundef %i.c) #19 ; 0 uses
   %strchr.i = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.a, i32 69)
-  %i.i = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef %strchr.i, ptr noundef nonnull @.str.11, ptr noundef nonnull %i.b) #18 ; 0 uses
+  %i.i = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef %strchr.i, ptr noundef nonnull @.str.11, ptr noundef nonnull %i.b) #19 ; 0 uses
   %i.j = load i32, ptr %i.b, align 4, !tbaa !13   ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   %i.k = sitofp i32 %i.j to double
-  %i.l = call double @pow(double noundef 1.000000e+01, double noundef %i.k) #18
+  %i.l = call double @pow(double noundef 1.000000e+01, double noundef %i.k) #19
   %i.m = load double, ptr %0, align 8, !tbaa !8
   %i.n = fdiv double %i.m, %i.l
   store double %i.n, ptr %0, align 8, !tbaa !8
@@ -1006,8 +1012,8 @@ bb.d:                                             ; preds = %bb.c
   br label %EpdConvert.exit
 
 bb.e:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   %i.l = lshr i32 %0, 1                           ; 2 uses
   %i.m = sub nuw nsw i32 %0, %i.l
   call void @EpdPow2(i32 noundef %i.l, ptr noundef nonnull %2)
@@ -1079,8 +1085,8 @@ bb.l:                                             ; preds = %bb.k
   br label %EpdMultiply3.exit
 
 EpdMultiply3.exit:                                ; preds = %bb.e, %bb.f, %bb.l, %bb.k, %bb.j, %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #19
   br label %EpdConvert.exit
 
 EpdConvert.exit:                                  ; preds = %bb.d, %bb.c, %bb.b, %EpdMultiply3.exit
@@ -1113,16 +1119,16 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond.not.i.not.i, label %bb.c, label %EpdNormalizeDecimal.exit
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #18
-  %i.j = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull dereferenceable(1) @.str.9, double noundef %ldexp) #18 ; 0 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #19
+  %i.j = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull dereferenceable(1) @.str.9, double noundef %ldexp) #19 ; 0 uses
   %strchr.i.i = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.c, i32 69)
-  %i.k = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef %strchr.i.i, ptr noundef nonnull @.str.11, ptr noundef nonnull %i.d) #18 ; 0 uses
+  %i.k = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef %strchr.i.i, ptr noundef nonnull @.str.11, ptr noundef nonnull %i.d) #19 ; 0 uses
   %i.l = load i32, ptr %i.d, align 4, !tbaa !13   ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #19
   %i.m = sitofp i32 %i.l to double
-  %i.n = call double @pow(double noundef 1.000000e+01, double noundef %i.m) #18
+  %i.n = call double @pow(double noundef 1.000000e+01, double noundef %i.m) #19
   %i.o = load double, ptr %1, align 8, !tbaa !8
   %i.p = fdiv double %i.o, %i.n
   store double %i.p, ptr %1, align 8, !tbaa !8
@@ -1132,8 +1138,8 @@ bb.c:                                             ; preds = %bb.b
   br label %EpdNormalizeDecimal.exit
 
 bb.d:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   %i.s = lshr i32 %0, 1                           ; 2 uses
   %i.t = sub nuw nsw i32 %0, %i.s
   call void @EpdPow2Decimal(i32 noundef %i.s, ptr noundef nonnull %2)
@@ -1189,16 +1195,16 @@ bb.i:                                             ; preds = %bb.h
   br label %EpdMultiply3Decimal.exit
 
 bb.j:                                             ; preds = %bb.h
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
-  %i.ao = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) @.str.9, double noundef %i.ae) #18 ; 0 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
+  %i.ao = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) @.str.9, double noundef %i.ae) #19 ; 0 uses
   %strchr.i.i13 = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.a, i32 69)
-  %i.ap = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef %strchr.i.i13, ptr noundef nonnull @.str.11, ptr noundef nonnull %i.b) #18 ; 0 uses
+  %i.ap = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef %strchr.i.i13, ptr noundef nonnull @.str.11, ptr noundef nonnull %i.b) #19 ; 0 uses
   %i.aq = load i32, ptr %i.b, align 4, !tbaa !13  ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   %i.ar = sitofp i32 %i.aq to double
-  %i.as = call double @pow(double noundef 1.000000e+01, double noundef %i.ar) #18
+  %i.as = call double @pow(double noundef 1.000000e+01, double noundef %i.ar) #19
   %i.at = load double, ptr %1, align 8, !tbaa !8
   %i.au = fdiv double %i.at, %i.as
   store double %i.au, ptr %1, align 8, !tbaa !8
@@ -1208,8 +1214,8 @@ bb.j:                                             ; preds = %bb.h
   br label %EpdMultiply3Decimal.exit
 
 EpdMultiply3Decimal.exit:                         ; preds = %bb.d, %bb.e, %bb.j, %bb.i, %bb.g
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #19
   br label %EpdNormalizeDecimal.exit
 
 EpdNormalizeDecimal.exit:                         ; preds = %bb.b, %bb.c, %EpdMultiply3Decimal.exit
@@ -1244,14 +1250,14 @@ define i32 @EpdGetExponentDecimal(double noundef %0) local_unnamed_addr #6 {
 bb.a:
   %i.a = alloca [24 x i8], align 16               ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
-  %i.c = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) @.str.9, double noundef %0) #18 ; 0 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
+  %i.c = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) @.str.9, double noundef %0) #19 ; 0 uses
   %strchr = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.a, i32 69)
-  %i.d = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef %strchr, ptr noundef nonnull @.str.11, ptr noundef nonnull %i.b) #18 ; 0 uses
+  %i.d = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef %strchr, ptr noundef nonnull @.str.11, ptr noundef nonnull %i.b) #19 ; 0 uses
   %i.e = load i32, ptr %i.b, align 4, !tbaa !13
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #18
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   ret i32 %i.e
 }
 
@@ -1292,6 +1298,9 @@ declare double @ldexp(double, i32) local_unnamed_addr #15
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #16
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #17
+
 attributes #0 = { mustprogress nofree nounwind willreturn memory(inaccessiblemem: readwrite, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1309,8 +1318,9 @@ attributes #13 = { nofree nosync nounwind memory(argmem: write, errnomem: write)
 attributes #14 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
 attributes #15 = { nocallback nofree nosync nounwind willreturn memory(errnomem: write) }
 attributes #16 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #17 = { nounwind allocsize(0) }
-attributes #18 = { nounwind }
+attributes #17 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #18 = { nounwind allocsize(0) }
+attributes #19 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

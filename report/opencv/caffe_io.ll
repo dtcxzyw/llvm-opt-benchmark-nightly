@@ -204,11 +204,16 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %.lr.ph
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 2 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !14
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !14   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.j = load i32, ptr %i.i, align 4, !tbaa !25
   %i.k = and i32 %i.j, 2
-  %.not = icmp eq i32 %i.k, 0                     ; 2 uses
+  %.not = icmp eq i32 %i.k, 0                     ; 3 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.h, i64 248
+  %2 = load ptr, ptr %1, align 8
+  %3 = icmp ne ptr %2, null
+  %4 = select i1 %.not, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp ne i64 %indvars.iv.next, %wide.trip.count
   %or.cond.not = select i1 %.not, i1 %exitcond.not, i1 false
@@ -611,7 +616,12 @@ _ZN12opencv_caffe16V1LayerParameter10add_bottomERKNSt7__cxx1112basic_stringIcSt1
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.aw = load i32, ptr %i.av, align 8, !tbaa !25
   %i.ax = and i32 %i.aw, 2
-  %.not663 = icmp eq i32 %i.ax, 0
+  %.not663 = icmp eq i32 %i.ax, 0                 ; 2 uses
+  %32 = getelementptr inbounds nuw i8, ptr %0, i64 248
+  %33 = load ptr, ptr %32, align 8                ; 3 uses
+  %34 = icmp ne ptr %33, null
+  %35 = select i1 %.not663, i1 true, i1 %34
+  tail call void @llvm.assume(i1 %35)
   br i1 %.not663, label %bb.lq, label %bb.t
 
 bb.n:                                             ; preds = %.lr.ph699, %_ZN12opencv_caffe16V1LayerParameter7add_topERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
@@ -677,8 +687,6 @@ _ZN12opencv_caffe16V1LayerParameter7add_topERKNSt7__cxx1112basic_stringIcSt11cha
   br i1 %i.bx, label %bb.n, label %._crit_edge, !llvm.loop !167
 
 bb.t:                                             ; preds = %._crit_edge
-  %32 = getelementptr inbounds nuw i8, ptr %0, i64 248
-  %33 = load ptr, ptr %32, align 8                ; 2 uses
   %.not.i.i = icmp eq ptr %33, null
   %i.by = select i1 %.not.i.i, ptr @_ZN12opencv_caffe35_V0LayerParameter_default_instance_E, ptr %33 ; 52 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 16 ; 30 uses
@@ -1081,8 +1089,12 @@ bb.bb:                                            ; preds = %_ZN12opencv_caffe16
   %.1 = phi i1 [ %.0239, %_ZN12opencv_caffe16V1LayerParameter25mutable_convolution_paramEv.exit265 ], [ %.0239, %_ZN12opencv_caffe16V1LayerParameter27mutable_inner_product_paramEv.exit270 ], [ false, %_ZN2cv3dnn11GLogWrapperD2Ev.exit273 ], [ %.0239, %bb.ar ] ; 3 uses
   %i.mv = load i32, ptr %i.bz, align 8, !tbaa !25
   %i.mw = and i32 %i.mv, 32
-  %.not667 = icmp eq i32 %i.mw, 0
-  %i.mx = getelementptr inbounds nuw i8, ptr %i.by, i64 128 ; 2 uses
+  %.not667 = icmp eq i32 %i.mw, 0                 ; 2 uses
+  %i.mx = getelementptr inbounds nuw i8, ptr %i.by, i64 128 ; 3 uses
+  %36 = load ptr, ptr %i.mx, align 8
+  %37 = icmp ne ptr %36, null
+  %38 = select i1 %.not667, i1 true, i1 %37
+  call void @llvm.assume(i1 %38)
   br i1 %.not667, label %bb.bp, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
@@ -1337,8 +1349,12 @@ bb.bp:                                            ; preds = %_ZN12opencv_caffe20
   %.2 = phi i1 [ %.1, %_ZN12opencv_caffe20ConvolutionParameter21mutable_weight_fillerEv.exit ], [ %.1, %_ZN12opencv_caffe21InnerProductParameter21mutable_weight_fillerEv.exit ], [ false, %_ZN2cv3dnn11GLogWrapperD2Ev.exit295 ], [ %.1, %bb.bb ] ; 3 uses
   %i.ri = load i32, ptr %i.bz, align 8, !tbaa !25
   %i.rj = and i32 %i.ri, 64
-  %.not668 = icmp eq i32 %i.rj, 0
-  %i.rk = getelementptr inbounds nuw i8, ptr %i.by, i64 136 ; 2 uses
+  %.not668 = icmp eq i32 %i.rj, 0                 ; 2 uses
+  %i.rk = getelementptr inbounds nuw i8, ptr %i.by, i64 136 ; 3 uses
+  %39 = load ptr, ptr %i.rk, align 8
+  %40 = icmp ne ptr %39, null
+  %41 = select i1 %.not668, i1 true, i1 %40
+  call void @llvm.assume(i1 %41)
   br i1 %.not668, label %bb.cd, label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp
@@ -1741,8 +1757,12 @@ bb.li:                                            ; preds = %_ZNK6google8protobu
   %.26 = phi i1 [ %.25, %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit605 ], [ false, %_ZN2cv3dnn11GLogWrapperD2Ev.exit608 ], [ %.25, %bb.kw ] ; 2 uses
   %i.csu = load i32, ptr %i.bz, align 8, !tbaa !25
   %i.csv = and i32 %i.csu, 128
-  %.not693 = icmp eq i32 %i.csv, 0
-  %i.csw = getelementptr inbounds nuw i8, ptr %i.by, i64 144
+  %.not693 = icmp eq i32 %i.csv, 0                ; 2 uses
+  %i.csw = getelementptr inbounds nuw i8, ptr %i.by, i64 144 ; 2 uses
+  %42 = load ptr, ptr %i.csw, align 8
+  %43 = icmp ne ptr %42, null
+  %44 = select i1 %.not693, i1 true, i1 %43
+  call void @llvm.assume(i1 %44)
   br i1 %.not693, label %bb.lq, label %bb.lj
 
 bb.lj:                                            ; preds = %bb.li
@@ -2145,11 +2165,16 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.b ] ; 2 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv.i
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !14
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !14   ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.j = load i32, ptr %i.i, align 4, !tbaa !25
   %i.k = and i32 %i.j, 2
-  %.not.i = icmp eq i32 %i.k, 0                   ; 2 uses
+  %.not.i = icmp eq i32 %i.k, 0                   ; 3 uses
+  %15 = getelementptr inbounds nuw i8, ptr %i.h, i64 248
+  %16 = load ptr, ptr %15, align 8
+  %17 = icmp ne ptr %16, null
+  %18 = select i1 %.not.i, i1 true, i1 %17
+  tail call void @llvm.assume(i1 %18)
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp ne i64 %indvars.iv.next.i, %wide.trip.count.i
   %or.cond.not.i = select i1 %.not.i, i1 %exitcond.not.i, i1 false
@@ -2552,8 +2577,12 @@ _ZN12opencv_caffe14LayerParameter9add_paramEv.exit227: ; preds = %bb.bf, %bb.bg
 ._crit_edge414:                                   ; preds = %_ZN12opencv_caffe14LayerParameter15add_loss_weightEf.exit, %.preheader
   %i.mg = load i32, ptr %i.av, align 8, !tbaa !25 ; 2 uses
   %i.mh = and i32 %i.mg, 1048576
-  %.not347 = icmp eq i32 %i.mh, 0
-  %i.mi = getelementptr inbounds nuw i8, ptr %0, i64 400
+  %.not347 = icmp eq i32 %i.mh, 0                 ; 2 uses
+  %i.mi = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 2 uses
+  %7 = load ptr, ptr %i.mi, align 8
+  %8 = icmp ne ptr %7, null
+  %9 = select i1 %.not347, i1 true, i1 %8
+  tail call void @llvm.assume(i1 %9)
   br i1 %.not347, label %bb.bn, label %bb.bk
 
 bb.bh:                                            ; preds = %.lr.ph413, %_ZN12opencv_caffe14LayerParameter15add_loss_weightEf.exit
@@ -2632,8 +2661,12 @@ _ZN12opencv_caffe14LayerParameter22mutable_accuracy_paramEv.exit: ; preds = %bb.
 bb.bn:                                            ; preds = %_ZN12opencv_caffe14LayerParameter22mutable_accuracy_paramEv.exit, %._crit_edge414
   %i.np = phi i32 [ %.pre445, %_ZN12opencv_caffe14LayerParameter22mutable_accuracy_paramEv.exit ], [ %i.mg, %._crit_edge414 ] ; 2 uses
   %i.nq = and i32 %i.np, 65536
-  %.not348 = icmp eq i32 %i.nq, 0
-  %i.nr = getelementptr inbounds nuw i8, ptr %0, i64 368
+  %.not348 = icmp eq i32 %i.nq, 0                 ; 2 uses
+  %i.nr = getelementptr inbounds nuw i8, ptr %0, i64 368 ; 2 uses
+  %10 = load ptr, ptr %i.nr, align 8
+  %11 = icmp ne ptr %10, null
+  %12 = select i1 %.not348, i1 true, i1 %11
+  tail call void @llvm.assume(i1 %12)
   br i1 %.not348, label %bb.br, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
@@ -2676,8 +2709,12 @@ _ZN12opencv_caffe14LayerParameter20mutable_argmax_paramEv.exit: ; preds = %bb.bo
 bb.br:                                            ; preds = %_ZN12opencv_caffe14LayerParameter20mutable_argmax_paramEv.exit, %bb.bn
   %i.oi = phi i32 [ %.pre446, %_ZN12opencv_caffe14LayerParameter20mutable_argmax_paramEv.exit ], [ %i.np, %bb.bn ] ; 2 uses
   %i.oj = and i32 %i.oi, 4
-  %.not349 = icmp eq i32 %i.oj, 0
-  %i.ok = getelementptr inbounds nuw i8, ptr %0, i64 256
+  %.not349 = icmp eq i32 %i.oj, 0                 ; 2 uses
+  %i.ok = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 2 uses
+  %13 = load ptr, ptr %i.ok, align 8
+  %14 = icmp ne ptr %13, null
+  %15 = select i1 %.not349, i1 true, i1 %14
+  tail call void @llvm.assume(i1 %15)
   br i1 %.not349, label %bb.bv, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
@@ -2720,8 +2757,12 @@ _ZN12opencv_caffe14LayerParameter20mutable_concat_paramEv.exit: ; preds = %bb.bs
 bb.bv:                                            ; preds = %_ZN12opencv_caffe14LayerParameter20mutable_concat_paramEv.exit, %bb.br
   %i.pb = phi i32 [ %.pre447, %_ZN12opencv_caffe14LayerParameter20mutable_concat_paramEv.exit ], [ %i.oi, %bb.br ] ; 2 uses
   %i.pc = and i32 %i.pb, 536870912
-  %.not350 = icmp eq i32 %i.pc, 0
-  %i.pd = getelementptr inbounds nuw i8, ptr %0, i64 472
+  %.not350 = icmp eq i32 %i.pc, 0                 ; 2 uses
+  %i.pd = getelementptr inbounds nuw i8, ptr %0, i64 472 ; 2 uses
+  %16 = load ptr, ptr %i.pd, align 8
+  %17 = icmp ne ptr %16, null
+  %18 = select i1 %.not350, i1 true, i1 %17
+  tail call void @llvm.assume(i1 %18)
   br i1 %.not350, label %bb.bz, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
@@ -2764,8 +2805,12 @@ _ZN12opencv_caffe14LayerParameter30mutable_contrastive_loss_paramEv.exit: ; pred
 bb.bz:                                            ; preds = %_ZN12opencv_caffe14LayerParameter30mutable_contrastive_loss_paramEv.exit, %bb.bv
   %i.pu = phi i32 [ %.pre448, %_ZN12opencv_caffe14LayerParameter30mutable_contrastive_loss_paramEv.exit ], [ %i.pb, %bb.bv ] ; 2 uses
   %i.pv = and i32 %i.pu, 8
-  %.not351 = icmp eq i32 %i.pv, 0
-  %i.pw = getelementptr inbounds nuw i8, ptr %0, i64 264
+  %.not351 = icmp eq i32 %i.pv, 0                 ; 2 uses
+  %i.pw = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 2 uses
+  %19 = load ptr, ptr %i.pw, align 8
+  %20 = icmp ne ptr %19, null
+  %21 = select i1 %.not351, i1 true, i1 %20
+  tail call void @llvm.assume(i1 %21)
   br i1 %.not351, label %bb.cd, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
@@ -2808,8 +2853,12 @@ _ZN12opencv_caffe14LayerParameter25mutable_convolution_paramEv.exit: ; preds = %
 bb.cd:                                            ; preds = %_ZN12opencv_caffe14LayerParameter25mutable_convolution_paramEv.exit, %bb.bz
   %i.qn = phi i32 [ %.pre449, %_ZN12opencv_caffe14LayerParameter25mutable_convolution_paramEv.exit ], [ %i.pu, %bb.bz ] ; 2 uses
   %i.qo = and i32 %i.qn, 16
-  %.not352 = icmp eq i32 %i.qo, 0
-  %i.qp = getelementptr inbounds nuw i8, ptr %0, i64 272
+  %.not352 = icmp eq i32 %i.qo, 0                 ; 2 uses
+  %i.qp = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
+  %22 = load ptr, ptr %i.qp, align 8
+  %23 = icmp ne ptr %22, null
+  %24 = select i1 %.not352, i1 true, i1 %23
+  tail call void @llvm.assume(i1 %24)
   br i1 %.not352, label %bb.ch, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd
@@ -2852,8 +2901,12 @@ _ZN12opencv_caffe14LayerParameter18mutable_data_paramEv.exit: ; preds = %bb.ce, 
 bb.ch:                                            ; preds = %_ZN12opencv_caffe14LayerParameter18mutable_data_paramEv.exit, %bb.cd
   %i.rg = phi i32 [ %.pre450, %_ZN12opencv_caffe14LayerParameter18mutable_data_paramEv.exit ], [ %i.qn, %bb.cd ] ; 2 uses
   %i.rh = and i32 %i.rg, 32
-  %.not353 = icmp eq i32 %i.rh, 0
-  %i.ri = getelementptr inbounds nuw i8, ptr %0, i64 280
+  %.not353 = icmp eq i32 %i.rh, 0                 ; 2 uses
+  %i.ri = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 2 uses
+  %25 = load ptr, ptr %i.ri, align 8
+  %26 = icmp ne ptr %25, null
+  %27 = select i1 %.not353, i1 true, i1 %26
+  tail call void @llvm.assume(i1 %27)
   br i1 %.not353, label %bb.cl, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch
@@ -2896,8 +2949,12 @@ _ZN12opencv_caffe14LayerParameter21mutable_dropout_paramEv.exit: ; preds = %bb.c
 bb.cl:                                            ; preds = %_ZN12opencv_caffe14LayerParameter21mutable_dropout_paramEv.exit, %bb.ch
   %i.rz = phi i32 [ %.pre451, %_ZN12opencv_caffe14LayerParameter21mutable_dropout_paramEv.exit ], [ %i.rg, %bb.ch ] ; 2 uses
   %i.sa = and i32 %i.rz, 524288
-  %.not354 = icmp eq i32 %i.sa, 0
-  %i.sb = getelementptr inbounds nuw i8, ptr %0, i64 392
+  %.not354 = icmp eq i32 %i.sa, 0                 ; 2 uses
+  %i.sb = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 2 uses
+  %28 = load ptr, ptr %i.sb, align 8
+  %29 = icmp ne ptr %28, null
+  %30 = select i1 %.not354, i1 true, i1 %29
+  tail call void @llvm.assume(i1 %30)
   br i1 %.not354, label %bb.cp, label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl
@@ -2940,8 +2997,12 @@ _ZN12opencv_caffe14LayerParameter24mutable_dummy_data_paramEv.exit: ; preds = %b
 bb.cp:                                            ; preds = %_ZN12opencv_caffe14LayerParameter24mutable_dummy_data_paramEv.exit, %bb.cl
   %i.ss = phi i32 [ %.pre452, %_ZN12opencv_caffe14LayerParameter24mutable_dummy_data_paramEv.exit ], [ %i.rz, %bb.cl ] ; 2 uses
   %i.st = and i32 %i.ss, 131072
-  %.not355 = icmp eq i32 %i.st, 0
-  %i.su = getelementptr inbounds nuw i8, ptr %0, i64 376
+  %.not355 = icmp eq i32 %i.st, 0                 ; 2 uses
+  %i.su = getelementptr inbounds nuw i8, ptr %0, i64 376 ; 2 uses
+  %31 = load ptr, ptr %i.su, align 8
+  %32 = icmp ne ptr %31, null
+  %33 = select i1 %.not355, i1 true, i1 %32
+  tail call void @llvm.assume(i1 %33)
   br i1 %.not355, label %bb.ct, label %bb.cq
 
 bb.cq:                                            ; preds = %bb.cp
@@ -2984,8 +3045,12 @@ _ZN12opencv_caffe14LayerParameter21mutable_eltwise_paramEv.exit: ; preds = %bb.c
 bb.ct:                                            ; preds = %_ZN12opencv_caffe14LayerParameter21mutable_eltwise_paramEv.exit, %bb.cp
   %i.tl = phi i32 [ %.pre453, %_ZN12opencv_caffe14LayerParameter21mutable_eltwise_paramEv.exit ], [ %i.ss, %bb.cp ] ; 2 uses
   %i.tm = and i32 %i.tl, 1073741824
-  %.not356 = icmp eq i32 %i.tm, 0
-  %i.tn = getelementptr inbounds nuw i8, ptr %0, i64 480
+  %.not356 = icmp eq i32 %i.tm, 0                 ; 2 uses
+  %i.tn = getelementptr inbounds nuw i8, ptr %0, i64 480 ; 2 uses
+  %34 = load ptr, ptr %i.tn, align 8
+  %35 = icmp ne ptr %34, null
+  %36 = select i1 %.not356, i1 true, i1 %35
+  tail call void @llvm.assume(i1 %36)
   br i1 %.not356, label %bb.cx, label %bb.cu
 
 bb.cu:                                            ; preds = %bb.ct
@@ -3028,8 +3093,12 @@ _ZN12opencv_caffe14LayerParameter17mutable_exp_paramEv.exit: ; preds = %bb.cu, %
 bb.cx:                                            ; preds = %_ZN12opencv_caffe14LayerParameter17mutable_exp_paramEv.exit, %bb.ct
   %i.ue = phi i32 [ %.pre454, %_ZN12opencv_caffe14LayerParameter17mutable_exp_paramEv.exit ], [ %i.tl, %bb.ct ] ; 2 uses
   %i.uf = and i32 %i.ue, 64
-  %.not357 = icmp eq i32 %i.uf, 0
-  %i.ug = getelementptr inbounds nuw i8, ptr %0, i64 288
+  %.not357 = icmp eq i32 %i.uf, 0                 ; 2 uses
+  %i.ug = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 2 uses
+  %37 = load ptr, ptr %i.ug, align 8
+  %38 = icmp ne ptr %37, null
+  %39 = select i1 %.not357, i1 true, i1 %38
+  tail call void @llvm.assume(i1 %39)
   br i1 %.not357, label %bb.db, label %bb.cy
 
 bb.cy:                                            ; preds = %bb.cx
@@ -3072,8 +3141,12 @@ _ZN12opencv_caffe14LayerParameter23mutable_hdf5_data_paramEv.exit: ; preds = %bb
 bb.db:                                            ; preds = %_ZN12opencv_caffe14LayerParameter23mutable_hdf5_data_paramEv.exit, %bb.cx
   %i.ux = phi i32 [ %.pre455, %_ZN12opencv_caffe14LayerParameter23mutable_hdf5_data_paramEv.exit ], [ %i.ue, %bb.cx ] ; 2 uses
   %i.uy = and i32 %i.ux, 128
-  %.not358 = icmp eq i32 %i.uy, 0
-  %i.uz = getelementptr inbounds nuw i8, ptr %0, i64 296
+  %.not358 = icmp eq i32 %i.uy, 0                 ; 2 uses
+  %i.uz = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
+  %40 = load ptr, ptr %i.uz, align 8
+  %41 = icmp ne ptr %40, null
+  %42 = select i1 %.not358, i1 true, i1 %41
+  tail call void @llvm.assume(i1 %42)
   br i1 %.not358, label %bb.df, label %bb.dc
 
 bb.dc:                                            ; preds = %bb.db
@@ -3116,8 +3189,12 @@ _ZN12opencv_caffe14LayerParameter25mutable_hdf5_output_paramEv.exit: ; preds = %
 bb.df:                                            ; preds = %_ZN12opencv_caffe14LayerParameter25mutable_hdf5_output_paramEv.exit, %bb.db
   %i.vq = phi i32 [ %.pre456, %_ZN12opencv_caffe14LayerParameter25mutable_hdf5_output_paramEv.exit ], [ %i.ux, %bb.db ] ; 2 uses
   %i.vr = and i32 %i.vq, 2097152
-  %.not359 = icmp eq i32 %i.vr, 0
-  %i.vs = getelementptr inbounds nuw i8, ptr %0, i64 408
+  %.not359 = icmp eq i32 %i.vr, 0                 ; 2 uses
+  %i.vs = getelementptr inbounds nuw i8, ptr %0, i64 408 ; 2 uses
+  %43 = load ptr, ptr %i.vs, align 8
+  %44 = icmp ne ptr %43, null
+  %45 = select i1 %.not359, i1 true, i1 %44
+  tail call void @llvm.assume(i1 %45)
   br i1 %.not359, label %bb.dj, label %bb.dg
 
 bb.dg:                                            ; preds = %bb.df
@@ -3160,8 +3237,12 @@ _ZN12opencv_caffe14LayerParameter24mutable_hinge_loss_paramEv.exit: ; preds = %b
 bb.dj:                                            ; preds = %_ZN12opencv_caffe14LayerParameter24mutable_hinge_loss_paramEv.exit, %bb.df
   %i.wj = phi i32 [ %.pre457, %_ZN12opencv_caffe14LayerParameter24mutable_hinge_loss_paramEv.exit ], [ %i.vq, %bb.df ] ; 2 uses
   %i.wk = and i32 %i.wj, 256
-  %.not360 = icmp eq i32 %i.wk, 0
-  %i.wl = getelementptr inbounds nuw i8, ptr %0, i64 304
+  %.not360 = icmp eq i32 %i.wk, 0                 ; 2 uses
+  %i.wl = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 2 uses
+  %46 = load ptr, ptr %i.wl, align 8
+  %47 = icmp ne ptr %46, null
+  %48 = select i1 %.not360, i1 true, i1 %47
+  tail call void @llvm.assume(i1 %48)
   br i1 %.not360, label %bb.dn, label %bb.dk
 
 bb.dk:                                            ; preds = %bb.dj
@@ -3204,8 +3285,12 @@ _ZN12opencv_caffe14LayerParameter24mutable_image_data_paramEv.exit: ; preds = %b
 bb.dn:                                            ; preds = %_ZN12opencv_caffe14LayerParameter24mutable_image_data_paramEv.exit, %bb.dj
   %i.xc = phi i32 [ %.pre458, %_ZN12opencv_caffe14LayerParameter24mutable_image_data_paramEv.exit ], [ %i.wj, %bb.dj ] ; 2 uses
   %i.xd = and i32 %i.xc, 512
-  %.not361 = icmp eq i32 %i.xd, 0
-  %i.xe = getelementptr inbounds nuw i8, ptr %0, i64 312
+  %.not361 = icmp eq i32 %i.xd, 0                 ; 2 uses
+  %i.xe = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 2 uses
+  %49 = load ptr, ptr %i.xe, align 8
+  %50 = icmp ne ptr %49, null
+  %51 = select i1 %.not361, i1 true, i1 %50
+  tail call void @llvm.assume(i1 %51)
   br i1 %.not361, label %bb.dr, label %bb.do
 
 bb.do:                                            ; preds = %bb.dn
@@ -3248,8 +3333,12 @@ _ZN12opencv_caffe14LayerParameter27mutable_infogain_loss_paramEv.exit: ; preds =
 bb.dr:                                            ; preds = %_ZN12opencv_caffe14LayerParameter27mutable_infogain_loss_paramEv.exit, %bb.dn
   %i.xv = phi i32 [ %.pre459, %_ZN12opencv_caffe14LayerParameter27mutable_infogain_loss_paramEv.exit ], [ %i.xc, %bb.dn ] ; 2 uses
   %i.xw = and i32 %i.xv, 1024
-  %.not362 = icmp eq i32 %i.xw, 0
-  %i.xx = getelementptr inbounds nuw i8, ptr %0, i64 320
+  %.not362 = icmp eq i32 %i.xw, 0                 ; 2 uses
+  %i.xx = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 2 uses
+  %52 = load ptr, ptr %i.xx, align 8
+  %53 = icmp ne ptr %52, null
+  %54 = select i1 %.not362, i1 true, i1 %53
+  tail call void @llvm.assume(i1 %54)
   br i1 %.not362, label %bb.dv, label %bb.ds
 
 bb.ds:                                            ; preds = %bb.dr
@@ -3292,8 +3381,12 @@ _ZN12opencv_caffe14LayerParameter27mutable_inner_product_paramEv.exit: ; preds =
 bb.dv:                                            ; preds = %_ZN12opencv_caffe14LayerParameter27mutable_inner_product_paramEv.exit, %bb.dr
   %i.yo = phi i32 [ %.pre460, %_ZN12opencv_caffe14LayerParameter27mutable_inner_product_paramEv.exit ], [ %i.xv, %bb.dr ] ; 2 uses
   %i.yp = and i32 %i.yo, 2048
-  %.not363 = icmp eq i32 %i.yp, 0
-  %i.yq = getelementptr inbounds nuw i8, ptr %0, i64 328
+  %.not363 = icmp eq i32 %i.yp, 0                 ; 2 uses
+  %i.yq = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 2 uses
+  %55 = load ptr, ptr %i.yq, align 8
+  %56 = icmp ne ptr %55, null
+  %57 = select i1 %.not363, i1 true, i1 %56
+  tail call void @llvm.assume(i1 %57)
   br i1 %.not363, label %bb.dz, label %bb.dw
 
 bb.dw:                                            ; preds = %bb.dv
@@ -3336,8 +3429,12 @@ _ZN12opencv_caffe14LayerParameter17mutable_lrn_paramEv.exit: ; preds = %bb.dw, %
 bb.dz:                                            ; preds = %_ZN12opencv_caffe14LayerParameter17mutable_lrn_paramEv.exit, %bb.dv
   %i.zh = phi i32 [ %.pre461, %_ZN12opencv_caffe14LayerParameter17mutable_lrn_paramEv.exit ], [ %i.yo, %bb.dv ] ; 2 uses
   %i.zi = and i32 %i.zh, 32768
-  %.not364 = icmp eq i32 %i.zi, 0
-  %i.zj = getelementptr inbounds nuw i8, ptr %0, i64 360
+  %.not364 = icmp eq i32 %i.zi, 0                 ; 2 uses
+  %i.zj = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 2 uses
+  %58 = load ptr, ptr %i.zj, align 8
+  %59 = icmp ne ptr %58, null
+  %60 = select i1 %.not364, i1 true, i1 %59
+  tail call void @llvm.assume(i1 %60)
   br i1 %.not364, label %bb.ed, label %bb.ea
 
 bb.ea:                                            ; preds = %bb.dz
@@ -3380,8 +3477,12 @@ _ZN12opencv_caffe14LayerParameter25mutable_memory_data_paramEv.exit: ; preds = %
 bb.ed:                                            ; preds = %_ZN12opencv_caffe14LayerParameter25mutable_memory_data_paramEv.exit, %bb.dz
   %i.aaa = phi i32 [ %.pre462, %_ZN12opencv_caffe14LayerParameter25mutable_memory_data_paramEv.exit ], [ %i.zh, %bb.dz ] ; 2 uses
   %i.aab = and i32 %i.aaa, 16777216
-  %.not365 = icmp eq i32 %i.aab, 0
-  %i.aac = getelementptr inbounds nuw i8, ptr %0, i64 432
+  %.not365 = icmp eq i32 %i.aab, 0                ; 2 uses
+  %i.aac = getelementptr inbounds nuw i8, ptr %0, i64 432 ; 2 uses
+  %61 = load ptr, ptr %i.aac, align 8
+  %62 = icmp ne ptr %61, null
+  %63 = select i1 %.not365, i1 true, i1 %62
+  tail call void @llvm.assume(i1 %63)
   br i1 %.not365, label %bb.eh, label %bb.ee
 
 bb.ee:                                            ; preds = %bb.ed
@@ -3424,8 +3525,12 @@ _ZN12opencv_caffe14LayerParameter17mutable_mvn_paramEv.exit: ; preds = %bb.ee, %
 bb.eh:                                            ; preds = %_ZN12opencv_caffe14LayerParameter17mutable_mvn_paramEv.exit, %bb.ed
   %i.aat = phi i32 [ %.pre463, %_ZN12opencv_caffe14LayerParameter17mutable_mvn_paramEv.exit ], [ %i.aaa, %bb.ed ] ; 2 uses
   %i.aau = and i32 %i.aat, 4096
-  %.not366 = icmp eq i32 %i.aau, 0
-  %i.aav = getelementptr inbounds nuw i8, ptr %0, i64 336
+  %.not366 = icmp eq i32 %i.aau, 0                ; 2 uses
+  %i.aav = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 2 uses
+  %64 = load ptr, ptr %i.aav, align 8
+  %65 = icmp ne ptr %64, null
+  %66 = select i1 %.not366, i1 true, i1 %65
+  tail call void @llvm.assume(i1 %66)
   br i1 %.not366, label %bb.el, label %bb.ei
 
 bb.ei:                                            ; preds = %bb.eh
@@ -3468,8 +3573,12 @@ _ZN12opencv_caffe14LayerParameter21mutable_pooling_paramEv.exit: ; preds = %bb.e
 bb.el:                                            ; preds = %_ZN12opencv_caffe14LayerParameter21mutable_pooling_paramEv.exit, %bb.eh
   %i.abm = phi i32 [ %.pre464, %_ZN12opencv_caffe14LayerParameter21mutable_pooling_paramEv.exit ], [ %i.aat, %bb.eh ] ; 2 uses
   %i.abn = and i32 %i.abm, 16384
-  %.not367 = icmp eq i32 %i.abn, 0
-  %i.abo = getelementptr inbounds nuw i8, ptr %0, i64 352
+  %.not367 = icmp eq i32 %i.abn, 0                ; 2 uses
+  %i.abo = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
+  %67 = load ptr, ptr %i.abo, align 8
+  %68 = icmp ne ptr %67, null
+  %69 = select i1 %.not367, i1 true, i1 %68
+  tail call void @llvm.assume(i1 %69)
   br i1 %.not367, label %bb.ep, label %bb.em
 
 bb.em:                                            ; preds = %bb.el
@@ -3512,8 +3621,12 @@ _ZN12opencv_caffe14LayerParameter19mutable_power_paramEv.exit: ; preds = %bb.em,
 bb.ep:                                            ; preds = %_ZN12opencv_caffe14LayerParameter19mutable_power_paramEv.exit, %bb.el
   %i.acf = phi i32 [ %.pre465, %_ZN12opencv_caffe14LayerParameter19mutable_power_paramEv.exit ], [ %i.abm, %bb.el ] ; 2 uses
   %i.acg = and i32 %i.acf, 4194304
-  %.not368 = icmp eq i32 %i.acg, 0
-  %i.ach = getelementptr inbounds nuw i8, ptr %0, i64 416
+  %.not368 = icmp eq i32 %i.acg, 0                ; 2 uses
+  %i.ach = getelementptr inbounds nuw i8, ptr %0, i64 416 ; 2 uses
+  %70 = load ptr, ptr %i.ach, align 8
+  %71 = icmp ne ptr %70, null
+  %72 = select i1 %.not368, i1 true, i1 %71
+  tail call void @llvm.assume(i1 %72)
   br i1 %.not368, label %bb.et, label %bb.eq
 
 bb.eq:                                            ; preds = %bb.ep
@@ -3556,8 +3669,12 @@ _ZN12opencv_caffe14LayerParameter18mutable_relu_paramEv.exit: ; preds = %bb.eq, 
 bb.et:                                            ; preds = %_ZN12opencv_caffe14LayerParameter18mutable_relu_paramEv.exit, %bb.ep
   %i.acy = phi i32 [ %.pre466, %_ZN12opencv_caffe14LayerParameter18mutable_relu_paramEv.exit ], [ %i.acf, %bb.ep ] ; 2 uses
   %i.acz = and i32 %i.acy, 134217728
-  %.not369 = icmp eq i32 %i.acz, 0
-  %i.ada = getelementptr inbounds nuw i8, ptr %0, i64 456
+  %.not369 = icmp eq i32 %i.acz, 0                ; 2 uses
+  %i.ada = getelementptr inbounds nuw i8, ptr %0, i64 456 ; 2 uses
+  %73 = load ptr, ptr %i.ada, align 8
+  %74 = icmp ne ptr %73, null
+  %75 = select i1 %.not369, i1 true, i1 %74
+  tail call void @llvm.assume(i1 %75)
   br i1 %.not369, label %bb.ex, label %bb.eu
 
 bb.eu:                                            ; preds = %bb.et
@@ -3600,8 +3717,12 @@ _ZN12opencv_caffe14LayerParameter21mutable_sigmoid_paramEv.exit: ; preds = %bb.e
 bb.ex:                                            ; preds = %_ZN12opencv_caffe14LayerParameter21mutable_sigmoid_paramEv.exit, %bb.et
   %i.adr = phi i32 [ %.pre467, %_ZN12opencv_caffe14LayerParameter21mutable_sigmoid_paramEv.exit ], [ %i.acy, %bb.et ] ; 2 uses
   %i.ads = and i32 %i.adr, 268435456
-  %.not370 = icmp eq i32 %i.ads, 0
-  %i.adt = getelementptr inbounds nuw i8, ptr %0, i64 464
+  %.not370 = icmp eq i32 %i.ads, 0                ; 2 uses
+  %i.adt = getelementptr inbounds nuw i8, ptr %0, i64 464 ; 2 uses
+  %76 = load ptr, ptr %i.adt, align 8
+  %77 = icmp ne ptr %76, null
+  %78 = select i1 %.not370, i1 true, i1 %77
+  tail call void @llvm.assume(i1 %78)
   br i1 %.not370, label %bb.fb, label %bb.ey
 
 bb.ey:                                            ; preds = %bb.ex
@@ -3644,8 +3765,12 @@ _ZN12opencv_caffe14LayerParameter21mutable_softmax_paramEv.exit: ; preds = %bb.e
 bb.fb:                                            ; preds = %_ZN12opencv_caffe14LayerParameter21mutable_softmax_paramEv.exit, %bb.ex
   %i.aek = phi i32 [ %.pre468, %_ZN12opencv_caffe14LayerParameter21mutable_softmax_paramEv.exit ], [ %i.adr, %bb.ex ] ; 2 uses
   %i.ael = and i32 %i.aek, 8388608
-  %.not371 = icmp eq i32 %i.ael, 0
-  %i.aem = getelementptr inbounds nuw i8, ptr %0, i64 424
+  %.not371 = icmp eq i32 %i.ael, 0                ; 2 uses
+  %i.aem = getelementptr inbounds nuw i8, ptr %0, i64 424 ; 2 uses
+  %79 = load ptr, ptr %i.aem, align 8
+  %80 = icmp ne ptr %79, null
+  %81 = select i1 %.not371, i1 true, i1 %80
+  tail call void @llvm.assume(i1 %81)
   br i1 %.not371, label %bb.ff, label %bb.fc
 
 bb.fc:                                            ; preds = %bb.fb
@@ -3688,8 +3813,12 @@ _ZN12opencv_caffe14LayerParameter19mutable_slice_paramEv.exit: ; preds = %bb.fc,
 bb.ff:                                            ; preds = %_ZN12opencv_caffe14LayerParameter19mutable_slice_paramEv.exit, %bb.fb
   %i.afd = phi i32 [ %.pre469, %_ZN12opencv_caffe14LayerParameter19mutable_slice_paramEv.exit ], [ %i.aek, %bb.fb ] ; 2 uses
   %i.afe = and i32 %i.afd, 67108864
-  %.not372 = icmp eq i32 %i.afe, 0
-  %i.aff = getelementptr inbounds nuw i8, ptr %0, i64 448
+  %.not372 = icmp eq i32 %i.afe, 0                ; 2 uses
+  %i.aff = getelementptr inbounds nuw i8, ptr %0, i64 448 ; 2 uses
+  %82 = load ptr, ptr %i.aff, align 8
+  %83 = icmp ne ptr %82, null
+  %84 = select i1 %.not372, i1 true, i1 %83
+  tail call void @llvm.assume(i1 %84)
   br i1 %.not372, label %bb.fj, label %bb.fg
 
 bb.fg:                                            ; preds = %bb.ff
@@ -3732,8 +3861,12 @@ _ZN12opencv_caffe14LayerParameter18mutable_tanh_paramEv.exit: ; preds = %bb.fg, 
 bb.fj:                                            ; preds = %_ZN12opencv_caffe14LayerParameter18mutable_tanh_paramEv.exit, %bb.ff
   %i.afw = phi i32 [ %.pre470, %_ZN12opencv_caffe14LayerParameter18mutable_tanh_paramEv.exit ], [ %i.afd, %bb.ff ] ; 2 uses
   %i.afx = and i32 %i.afw, 262144
-  %.not373 = icmp eq i32 %i.afx, 0
-  %i.afy = getelementptr inbounds nuw i8, ptr %0, i64 384
+  %.not373 = icmp eq i32 %i.afx, 0                ; 2 uses
+  %i.afy = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 2 uses
+  %85 = load ptr, ptr %i.afy, align 8
+  %86 = icmp ne ptr %85, null
+  %87 = select i1 %.not373, i1 true, i1 %86
+  tail call void @llvm.assume(i1 %87)
   br i1 %.not373, label %bb.fn, label %bb.fk
 
 bb.fk:                                            ; preds = %bb.fj
@@ -3776,8 +3909,12 @@ _ZN12opencv_caffe14LayerParameter23mutable_threshold_paramEv.exit: ; preds = %bb
 bb.fn:                                            ; preds = %_ZN12opencv_caffe14LayerParameter23mutable_threshold_paramEv.exit, %bb.fj
   %i.agp = phi i32 [ %.pre471, %_ZN12opencv_caffe14LayerParameter23mutable_threshold_paramEv.exit ], [ %i.afw, %bb.fj ] ; 2 uses
   %i.agq = and i32 %i.agp, 8192
-  %.not374 = icmp eq i32 %i.agq, 0
-  %i.agr = getelementptr inbounds nuw i8, ptr %0, i64 344
+  %.not374 = icmp eq i32 %i.agq, 0                ; 2 uses
+  %i.agr = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 2 uses
+  %88 = load ptr, ptr %i.agr, align 8
+  %89 = icmp ne ptr %88, null
+  %90 = select i1 %.not374, i1 true, i1 %89
+  tail call void @llvm.assume(i1 %90)
   br i1 %.not374, label %bb.fr, label %bb.fo
 
 bb.fo:                                            ; preds = %bb.fn
@@ -3820,8 +3957,12 @@ _ZN12opencv_caffe14LayerParameter25mutable_window_data_paramEv.exit: ; preds = %
 bb.fr:                                            ; preds = %_ZN12opencv_caffe14LayerParameter25mutable_window_data_paramEv.exit, %bb.fn
   %i.ahi = phi i32 [ %.pre472, %_ZN12opencv_caffe14LayerParameter25mutable_window_data_paramEv.exit ], [ %i.agp, %bb.fn ] ; 2 uses
   %i.ahj = and i32 %i.ahi, 33554432
-  %.not375 = icmp eq i32 %i.ahj, 0
-  %i.ahk = getelementptr inbounds nuw i8, ptr %0, i64 440
+  %.not375 = icmp eq i32 %i.ahj, 0                ; 2 uses
+  %i.ahk = getelementptr inbounds nuw i8, ptr %0, i64 440 ; 2 uses
+  %91 = load ptr, ptr %i.ahk, align 8
+  %92 = icmp ne ptr %91, null
+  %93 = select i1 %.not375, i1 true, i1 %92
+  tail call void @llvm.assume(i1 %93)
   br i1 %.not375, label %bb.fv, label %bb.fs
 
 bb.fs:                                            ; preds = %bb.fr
@@ -3863,8 +4004,12 @@ _ZN12opencv_caffe14LayerParameter23mutable_transform_paramEv.exit: ; preds = %bb
 
 bb.fv:                                            ; preds = %_ZN12opencv_caffe14LayerParameter23mutable_transform_paramEv.exit, %bb.fr
   %i.aib = phi i32 [ %.pre473, %_ZN12opencv_caffe14LayerParameter23mutable_transform_paramEv.exit ], [ %i.ahi, %bb.fr ] ; 2 uses
-  %i.aic = icmp sgt i32 %i.aib, -1
-  %i.aid = getelementptr inbounds nuw i8, ptr %0, i64 488
+  %i.aic = icmp sgt i32 %i.aib, -1                ; 2 uses
+  %i.aid = getelementptr inbounds nuw i8, ptr %0, i64 488 ; 2 uses
+  %94 = load ptr, ptr %i.aid, align 8
+  %95 = icmp ne ptr %94, null
+  %96 = select i1 %i.aic, i1 true, i1 %95
+  tail call void @llvm.assume(i1 %96)
   br i1 %i.aic, label %bb.fz, label %bb.fw
 
 bb.fw:                                            ; preds = %bb.fv
@@ -3907,7 +4052,12 @@ _ZN12opencv_caffe14LayerParameter18mutable_loss_paramEv.exit: ; preds = %bb.fw, 
 bb.fz:                                            ; preds = %_ZN12opencv_caffe14LayerParameter18mutable_loss_paramEv.exit, %bb.fv
   %i.aiu = phi i32 [ %.pre474, %_ZN12opencv_caffe14LayerParameter18mutable_loss_paramEv.exit ], [ %i.aib, %bb.fv ]
   %i.aiv = and i32 %i.aiu, 2
-  %.not376 = icmp eq i32 %i.aiv, 0                ; 2 uses
+  %.not376 = icmp eq i32 %i.aiv, 0                ; 3 uses
+  %97 = getelementptr inbounds nuw i8, ptr %0, i64 248
+  %98 = load ptr, ptr %97, align 8
+  %99 = icmp ne ptr %98, null
+  %100 = select i1 %.not376, i1 true, i1 %99
+  tail call void @llvm.assume(i1 %100)
   br i1 %.not376, label %bb.gf, label %bb.ga
 
 bb.ga:                                            ; preds = %bb.fz

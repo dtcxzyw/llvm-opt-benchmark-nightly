@@ -204,7 +204,7 @@ declare ptr @zend_hooked_object_get_iterator(ptr noundef, ptr noundef, i32 nound
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @zend_file_cache_serialize_ast(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) unnamed_addr #0 {
 bb.a:
-  %i.a = load i16, ptr %0, align 8, !tbaa !320    ; 4 uses
+  %i.a = load i16, ptr %0, align 8, !tbaa !320    ; 6 uses
   %i.b = and i16 %i.a, -2
   %switch = icmp eq i16 %i.b, 64
   br i1 %switch, label %bb.b, label %bb.c
@@ -341,6 +341,11 @@ bb.p:                                             ; preds = %bb.j
   br label %.loopexit
 
 zend_ast_is_decl.exit:                            ; preds = %bb.j
+  %4 = and i16 %i.a, 64
+  %5 = icmp eq i16 %4, 0
+  %6 = icmp ult i16 %i.a, 68
+  %spec.select118.not = or i1 %6, %5
+  tail call void @llvm.assume(i1 %spec.select118.not)
   %i.ay = lshr i16 %i.a, 8                        ; 2 uses
   %.not128 = icmp eq i16 %i.ay, 0
   br i1 %.not128, label %.loopexit, label %.lr.ph126
@@ -743,7 +748,7 @@ declare void @zval_ptr_dtor(ptr noundef) #3
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @zend_file_cache_unserialize_ast(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr noundef %2) unnamed_addr #0 {
 bb.a:
-  %i.a = load i16, ptr %0, align 8, !tbaa !320    ; 4 uses
+  %i.a = load i16, ptr %0, align 8, !tbaa !320    ; 6 uses
   %i.b = and i16 %i.a, -2
   %switch = icmp eq i16 %i.b, 64
   br i1 %switch, label %bb.b, label %bb.c
@@ -856,6 +861,11 @@ bb.n:                                             ; preds = %bb.k
   br label %.loopexit
 
 zend_ast_is_decl.exit:                            ; preds = %bb.k
+  %3 = and i16 %i.a, 64
+  %4 = icmp eq i16 %3, 0
+  %5 = icmp ult i16 %i.a, 68
+  %spec.select.not = or i1 %5, %4
+  tail call void @llvm.assume(i1 %spec.select.not)
   %i.an = lshr i16 %i.a, 8                        ; 2 uses
   %.not105 = icmp eq i16 %i.an, 0
   br i1 %.not105, label %.loopexit, label %.lr.ph103

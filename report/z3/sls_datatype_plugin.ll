@@ -205,7 +205,7 @@ _ZN6vectorIPN3euf5enodeELb0EjE3endEv.exit.i.i:    ; preds = %_ZN7obj_mapIN3euf5e
 .lr.ph97.i.i:                                     ; preds = %_ZN6vectorIPN3euf5enodeELb0EjE3endEv.exit.i.i, %._crit_edge.thread.i.i
   %.02896.i.i = phi i1 [ %.2.i.i, %._crit_edge.thread.i.i ], [ true, %_ZN6vectorIPN3euf5enodeELb0EjE3endEv.exit.i.i ] ; 2 uses
   %.03495.i.i = phi ptr [ %i.afu, %._crit_edge.thread.i.i ], [ %i.sb, %_ZN6vectorIPN3euf5enodeELb0EjE3endEv.exit.i.i ] ; 2 uses
-  %i.si = load ptr, ptr %.03495.i.i, align 8, !tbaa !193 ; 5 uses
+  %i.si = load ptr, ptr %.03495.i.i, align 8, !tbaa !193 ; 7 uses
   %i.sj = load ptr, ptr %i.si, align 8, !tbaa !195 ; 2 uses
   %i.sk = load i32, ptr %i.sj, align 4, !tbaa !189 ; 2 uses
   %i.sl = load ptr, ptr %i.c, align 8, !tbaa !57  ; 3 uses
@@ -267,9 +267,13 @@ _ZNK8datatype4util14is_constructorEPK4expr.exit.i.i.i: ; preds = %bb.cr
 
 _ZNK8datatype4util14is_constructorEPK4expr.exit.thread.i.i.i: ; preds = %_ZNK8datatype4util14is_constructorEPK4expr.exit.i.i.i, %bb.cr, %.noexc180, %.lr.ph.i.i.i
   %.not.i12.i.i.i = icmp eq ptr %.sroa.7.022.i.i.i, null
-  %spec.select.i.i.i = select i1 %.not.i12.i.i.i, ptr %.sroa.013.023.i.i.i, ptr %.sroa.7.022.i.i.i
+  %spec.select.i.i.i = select i1 %.not.i12.i.i.i, ptr %.sroa.013.023.i.i.i, ptr %.sroa.7.022.i.i.i ; 2 uses
   %i.tk = getelementptr inbounds nuw i8, ptr %.sroa.013.023.i.i.i, i64 56
-  %i.tl = load ptr, ptr %i.tk, align 8, !tbaa !206 ; 2 uses
+  %i.tl = load ptr, ptr %i.tk, align 8, !tbaa !206 ; 3 uses
+  %.not.i.i41.i.i = icmp ne ptr %spec.select.i.i.i, %i.si
+  %22 = icmp ne ptr %i.tl, %i.si
+  %23 = or i1 %.not.i.i41.i.i, %22
+  call void @llvm.assume(i1 %23)
   %.pre.i.i175 = load ptr, ptr %i.tl, align 8, !tbaa !195
   br label %.lr.ph.i.i.i
 

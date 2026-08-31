@@ -204,10 +204,12 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %10, i64 12 ; 6 uses
   store i32 16, ptr %i.h, align 4, !tbaa !104
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %i.j = call noundef zeroext i1 @_ZNK4llvm6Triple11isArch32BitEv(ptr noundef nonnull align 8 dereferenceable(56) %i.i) #17
+  %i.j = call noundef zeroext i1 @_ZNK4llvm6Triple11isArch32BitEv(ptr noundef nonnull align 8 dereferenceable(56) %i.i) #17 ; 2 uses
   %i.k = load ptr, ptr %i.b, align 8, !tbaa !8, !nonnull !13, !align !14
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16
-  %i.m = call noundef zeroext i1 @_ZNK4llvm6Triple11isArch64BitEv(ptr noundef nonnull align 8 dereferenceable(56) %i.l) #17 ; 0 uses
+  %i.m = call noundef zeroext i1 @_ZNK4llvm6Triple11isArch64BitEv(ptr noundef nonnull align 8 dereferenceable(56) %i.l) #17
+  %or.cond = or i1 %i.j, %i.m
+  call void @llvm.assume(i1 %or.cond)
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 80
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !105
   %i.p = call noundef ptr @_ZNK4llvm3opt7ArgList10getLastArgIJN5clang7options2IDEEEEPNS0_3ArgEDpT_(ptr noundef nonnull align 8 dereferenceable(176) %i.o, i32 noundef 2270) ; 3 uses
@@ -610,8 +612,10 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %13, i64 12 ; 30 uses
   store i32 16, ptr %i.k, align 4, !tbaa !104
   %i.l = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 4 uses
-  %i.m = call noundef zeroext i1 @_ZNK4llvm6Triple11isArch32BitEv(ptr noundef nonnull align 8 dereferenceable(56) %i.l) #17 ; 6 uses
-  %i.n = call noundef zeroext i1 @_ZNK4llvm6Triple11isArch64BitEv(ptr noundef nonnull align 8 dereferenceable(56) %i.l) #17 ; 0 uses
+  %i.m = call noundef zeroext i1 @_ZNK4llvm6Triple11isArch32BitEv(ptr noundef nonnull align 8 dereferenceable(56) %i.l) #17 ; 7 uses
+  %i.n = call noundef zeroext i1 @_ZNK4llvm6Triple11isArch64BitEv(ptr noundef nonnull align 8 dereferenceable(56) %i.l) #17
+  %or.cond = or i1 %i.m, %i.n
+  call void @llvm.assume(i1 %or.cond)
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !105
   %i.q = call noundef ptr @_ZNK4llvm3opt7ArgList10getLastArgIJN5clang7options2IDEEEEPNS0_3ArgEDpT_(ptr noundef nonnull align 8 dereferenceable(176) %i.p, i32 noundef 2270) ; 3 uses

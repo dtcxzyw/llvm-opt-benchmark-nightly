@@ -205,18 +205,18 @@ _ZN11duckdb_zstdL24ZSTDMT_getInputDataInUseEPNS_13ZSTDMT_CCtx_sE.exit.i: ; preds
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !130 ; 2 uses
   %i.ak = sub i64 %i.ah, %i.aj
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 256
-  %i.am = load i64, ptr %i.al, align 8, !tbaa !122 ; 4 uses
+  %i.am = load i64, ptr %i.al, align 8, !tbaa !122 ; 6 uses
   %i.an = icmp ult i64 %i.ak, %i.am
   br i1 %i.an, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %_ZN11duckdb_zstdL24ZSTDMT_getInputDataInUseEPNS_13ZSTDMT_CCtx_sE.exit.i
-  %i.ao = load ptr, ptr %i.af, align 8, !tbaa !66 ; 5 uses
+  %i.ao = load ptr, ptr %i.af, align 8, !tbaa !66 ; 8 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 288
-  %i.aq = load i64, ptr %i.ap, align 8, !tbaa !156 ; 5 uses
+  %i.aq = load i64, ptr %i.ap, align 8, !tbaa !156 ; 7 uses
   %i.ar = icmp eq ptr %.sroa.0.3.i.i, null
-  %i.as = icmp eq ptr %i.ao, null
+  %i.as = icmp eq ptr %i.ao, null                 ; 3 uses
   %or.cond.i.i = select i1 %i.ar, i1 true, i1 %i.as
-  br i1 %or.cond.i.i, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.thread.i.a, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.i
+  br i1 %or.cond.i.i, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.thread.i, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.i
 
 _ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.i: ; preds = %bb.h
   %i.at = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.aq
@@ -228,27 +228,77 @@ _ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.i: ; preds
   %i.ay = icmp uge ptr %.sroa.0.3.i.i, %i.at
   %.not76.i = select i1 %or.cond19.not.i.not79.i, i1 true, i1 %i.ax
   %narrow.i.not.i = select i1 %.not76.i, i1 true, i1 %i.ay
-  br i1 %narrow.i.not.i, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.thread.i.a, label %_ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exit.thread132
+  br i1 %narrow.i.not.i, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.thread.i, label %_ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exit.thread132
 
-_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.thread.i.a: ; preds = %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.i, %bb.h
-  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 2 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %4 = load i32, ptr %i.ba, align 8, !tbaa !128
-  %i.bb = icmp eq i32 %4, 1                       ; 0 uses
-  %5 = load ptr, ptr %i.az, align 8, !tbaa !157
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.ao, ptr align 1 %5, i64 %i.aq, i1 false)
-  store ptr %i.ao, ptr %i.az, align 8, !tbaa !157
+_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.thread.i: ; preds = %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.i, %bb.h
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 136
+  %6 = load i32, ptr %5, align 8, !tbaa !128
+  %7 = icmp eq i32 %6, 1
+  br i1 %7, label %.critedge.preheader.i.i, label %_ZN11duckdb_zstdL25ZSTDMT_waitForLdmCompleteEPNS_13ZSTDMT_CCtx_sENS_8buffer_sE.exit.i
+
+.critedge.preheader.i.i:                          ; preds = %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.thread.i
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 2784
+  %.sroa.0.0.copyload.i.i = load ptr, ptr %8, align 8, !tbaa !148 ; 2 uses
+  %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 2792
+  %.sroa.2.0.copyload.i.i = load ptr, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !148 ; 2 uses
+  %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 2800
+  %.sroa.3.0.copyload.i.i = load ptr, ptr %.sroa.3.0..sroa_idx.i.i, align 8, !tbaa !148 ; 2 uses
+  %.sroa.4.0..sroa_idx.i43.i = getelementptr inbounds nuw i8, ptr %0, i64 2808
+  %.sroa.4.0.copyload.i44.i = load i32, ptr %.sroa.4.0..sroa_idx.i43.i, align 8, !tbaa !3 ; 3 uses
+  %9 = icmp eq ptr %.sroa.3.0.copyload.i.i, null
+  %or.cond.i.i.i.i = select i1 %9, i1 true, i1 %i.as
+  %10 = icmp eq ptr %.sroa.2.0.copyload.i.i, null
+  %or.cond.i12.i.i.i = select i1 %10, i1 true, i1 %i.as
+  %11 = zext i32 %.sroa.4.0.copyload.i44.i to i64
+  %12 = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i.i, i64 %11 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.aq ; 2 uses
+  %14 = icmp samesign eq i64 %i.aq, 0             ; 2 uses
+  %15 = icmp eq ptr %.sroa.0.0.copyload.i.i, %12
+  %16 = icmp uge ptr %i.ao, %.sroa.0.0.copyload.i.i
+  %17 = icmp uge ptr %12, %13
+  br i1 %or.cond.i.i.i.i, label %_ZN11duckdb_zstdL24ZSTDMT_doesOverlapWindowENS_8buffer_sENS_13ZSTD_window_tE.exit.thread.sink.split.i.i, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.thread.i.a
+
+_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.thread.i.a: ; preds = %.critedge.preheader.i.i
+  %i.az = getelementptr inbounds nuw i8, ptr %0, i64 2812
+  %.sroa.5.0.copyload.i.i = load i32, ptr %i.az, align 4, !tbaa !3 ; 3 uses
+  %18 = zext i32 %.sroa.5.0.copyload.i.i to i64
+  %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload.i.i, i64 %18 ; 2 uses
+  %19 = sub i32 %.sroa.4.0.copyload.i44.i, %.sroa.5.0.copyload.i.i
+  %20 = zext i32 %19 to i64
+  %21 = getelementptr inbounds nuw i8, ptr %i.ba, i64 %20
+  %i.bb = icmp eq i32 %.sroa.4.0.copyload.i44.i, %.sroa.5.0.copyload.i.i
+  %or.cond19.not.i.not25.i.i.i = select i1 %14, i1 true, i1 %i.bb
+  %22 = icmp uge ptr %i.ao, %21
+  %23 = icmp uge ptr %i.ba, %13
+  %.not22.i.i.i = select i1 %or.cond19.not.i.not25.i.i.i, i1 true, i1 %22
+  %narrow.i.not.i.i.i = select i1 %.not22.i.i.i, i1 true, i1 %23
+  tail call void @llvm.assume(i1 %narrow.i.not.i.i.i)
+  br label %_ZN11duckdb_zstdL24ZSTDMT_doesOverlapWindowENS_8buffer_sENS_13ZSTD_window_tE.exit.thread.sink.split.i.i
+
+_ZN11duckdb_zstdL24ZSTDMT_doesOverlapWindowENS_8buffer_sENS_13ZSTD_window_tE.exit.thread.sink.split.i.i: ; preds = %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.thread.i.a, %.critedge.preheader.i.i
+  %24 = select i1 %or.cond.i12.i.i.i, i1 true, i1 %14
+  %25 = select i1 %24, i1 true, i1 %15
+  %26 = select i1 %25, i1 true, i1 %16
+  %brmerge18.i.i = select i1 %26, i1 true, i1 %17
+  tail call void @llvm.assume(i1 %brmerge18.i.i)
+  br label %_ZN11duckdb_zstdL25ZSTDMT_waitForLdmCompleteEPNS_13ZSTDMT_CCtx_sENS_8buffer_sE.exit.i
+
+_ZN11duckdb_zstdL25ZSTDMT_waitForLdmCompleteEPNS_13ZSTDMT_CCtx_sENS_8buffer_sE.exit.i: ; preds = %_ZN11duckdb_zstdL24ZSTDMT_doesOverlapWindowENS_8buffer_sENS_13ZSTD_window_tE.exit.thread.sink.split.i.i, %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.thread.i
+  %27 = load ptr, ptr %4, align 8, !tbaa !157
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.ao, ptr align 1 %27, i64 %i.aq, i1 false)
+  store ptr %i.ao, ptr %4, align 8, !tbaa !157
   store i64 %i.aq, ptr %i.ai, align 8, !tbaa !130
   br label %bb.i
 
-bb.i:                                             ; preds = %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.thread.i.a, %_ZN11duckdb_zstdL24ZSTDMT_getInputDataInUseEPNS_13ZSTDMT_CCtx_sE.exit.i
-  %i.bc = phi i64 [ %i.aq, %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit.thread.i.a ], [ %i.aj, %_ZN11duckdb_zstdL24ZSTDMT_getInputDataInUseEPNS_13ZSTDMT_CCtx_sE.exit.i ]
+bb.i:                                             ; preds = %_ZN11duckdb_zstdL25ZSTDMT_waitForLdmCompleteEPNS_13ZSTDMT_CCtx_sENS_8buffer_sE.exit.i, %_ZN11duckdb_zstdL24ZSTDMT_getInputDataInUseEPNS_13ZSTDMT_CCtx_sE.exit.i
+  %i.bc = phi i64 [ %i.aq, %_ZN11duckdb_zstdL25ZSTDMT_waitForLdmCompleteEPNS_13ZSTDMT_CCtx_sENS_8buffer_sE.exit.i ], [ %i.aj, %_ZN11duckdb_zstdL24ZSTDMT_getInputDataInUseEPNS_13ZSTDMT_CCtx_sE.exit.i ]
   %i.bd = load ptr, ptr %i.af, align 8, !tbaa !66 ; 2 uses
-  %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 %i.bc ; 4 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 %i.bc ; 7 uses
   %i.bf = icmp eq ptr %.sroa.0.3.i.i, null
-  %i.bg = icmp eq ptr %i.bd, null
+  %i.bg = icmp eq ptr %i.bd, null                 ; 3 uses
   %or.cond.i45.i = select i1 %i.bf, i1 true, i1 %i.bg
-  br i1 %or.cond.i45.i, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.thread.i.a, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.i
+  br i1 %or.cond.i45.i, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.thread.i, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.i
 
 _ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.i: ; preds = %bb.i
   %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.am
@@ -260,25 +310,75 @@ _ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.i: ; pre
   %i.bm = icmp uge ptr %.sroa.0.3.i.i, %i.bh
   %.not82.i = select i1 %or.cond19.not.i46.not84.i, i1 true, i1 %i.bl
   %narrow.i47.not.i = select i1 %.not82.i, i1 true, i1 %i.bm
-  br i1 %narrow.i47.not.i, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.thread.i.a, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.i._ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exitthread-pre-split_crit_edge
+  br i1 %narrow.i47.not.i, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.thread.i, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.i._ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exitthread-pre-split_crit_edge
 
 _ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.i._ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exitthread-pre-split_crit_edge: ; preds = %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.i
   %.pr.pre = load ptr, ptr %i.l, align 8, !tbaa !154
   br label %_ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exit
 
-_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.thread.i.a: ; preds = %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.i, %bb.i
-  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %i.bo = load i32, ptr %i.bn, align 8, !tbaa !128
-  %i.bp = icmp eq i32 %i.bo, 1                    ; 0 uses
+_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.thread.i: ; preds = %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.i, %bb.i
+  %28 = getelementptr inbounds nuw i8, ptr %0, i64 136
+  %29 = load i32, ptr %28, align 8, !tbaa !128
+  %30 = icmp eq i32 %29, 1
+  br i1 %30, label %.critedge.preheader.i51.i, label %_ZN11duckdb_zstdL25ZSTDMT_waitForLdmCompleteEPNS_13ZSTDMT_CCtx_sENS_8buffer_sE.exit69.i
+
+.critedge.preheader.i51.i:                        ; preds = %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.thread.i
+  %31 = getelementptr inbounds nuw i8, ptr %0, i64 2784
+  %.sroa.0.0.copyload.i52.i = load ptr, ptr %31, align 8, !tbaa !148 ; 2 uses
+  %.sroa.2.0..sroa_idx.i53.i = getelementptr inbounds nuw i8, ptr %0, i64 2792
+  %.sroa.2.0.copyload.i54.i = load ptr, ptr %.sroa.2.0..sroa_idx.i53.i, align 8, !tbaa !148 ; 2 uses
+  %.sroa.3.0..sroa_idx.i55.i = getelementptr inbounds nuw i8, ptr %0, i64 2800
+  %.sroa.3.0.copyload.i56.i = load ptr, ptr %.sroa.3.0..sroa_idx.i55.i, align 8, !tbaa !148 ; 2 uses
+  %.sroa.4.0..sroa_idx.i57.i = getelementptr inbounds nuw i8, ptr %0, i64 2808
+  %.sroa.4.0.copyload.i58.i = load i32, ptr %.sroa.4.0..sroa_idx.i57.i, align 8, !tbaa !3 ; 3 uses
+  %32 = icmp eq ptr %.sroa.3.0.copyload.i56.i, null
+  %or.cond.i.i.i59.i = select i1 %32, i1 true, i1 %i.bg
+  %33 = icmp eq ptr %.sroa.2.0.copyload.i54.i, null
+  %or.cond.i12.i.i60.i = select i1 %33, i1 true, i1 %i.bg
+  %34 = zext i32 %.sroa.4.0.copyload.i58.i to i64
+  %35 = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i54.i, i64 %34 ; 2 uses
+  %36 = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.am ; 2 uses
+  %37 = icmp samesign eq i64 %i.am, 0             ; 2 uses
+  %38 = icmp eq ptr %.sroa.0.0.copyload.i52.i, %35
+  %39 = icmp uge ptr %i.be, %.sroa.0.0.copyload.i52.i
+  %40 = icmp uge ptr %35, %36
+  br i1 %or.cond.i.i.i59.i, label %_ZN11duckdb_zstdL24ZSTDMT_doesOverlapWindowENS_8buffer_sENS_13ZSTD_window_tE.exit.thread.sink.split.i67.i, label %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.thread.i.a
+
+_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.thread.i.a: ; preds = %.critedge.preheader.i51.i
+  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 2812
+  %i.bo = load i32, ptr %i.bn, align 4, !tbaa !3  ; 3 uses
+  %41 = zext i32 %i.bo to i64
+  %42 = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload.i56.i, i64 %41 ; 2 uses
+  %43 = sub i32 %.sroa.4.0.copyload.i58.i, %i.bo
+  %44 = zext i32 %43 to i64
+  %45 = getelementptr inbounds nuw i8, ptr %42, i64 %44
+  %i.bp = icmp eq i32 %.sroa.4.0.copyload.i58.i, %i.bo
+  %or.cond19.not.i.not25.i.i64.i = select i1 %37, i1 true, i1 %i.bp
+  %46 = icmp uge ptr %i.be, %45
+  %47 = icmp uge ptr %42, %36
+  %.not22.i.i65.i = select i1 %or.cond19.not.i.not25.i.i64.i, i1 true, i1 %46
+  %narrow.i.not.i.i66.i = select i1 %.not22.i.i65.i, i1 true, i1 %47
+  tail call void @llvm.assume(i1 %narrow.i.not.i.i66.i)
+  br label %_ZN11duckdb_zstdL24ZSTDMT_doesOverlapWindowENS_8buffer_sENS_13ZSTD_window_tE.exit.thread.sink.split.i67.i
+
+_ZN11duckdb_zstdL24ZSTDMT_doesOverlapWindowENS_8buffer_sENS_13ZSTD_window_tE.exit.thread.sink.split.i67.i: ; preds = %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.thread.i.a, %.critedge.preheader.i51.i
+  %48 = select i1 %or.cond.i12.i.i60.i, i1 true, i1 %37
+  %49 = select i1 %48, i1 true, i1 %38
+  %50 = select i1 %49, i1 true, i1 %39
+  %brmerge18.i68.i = select i1 %50, i1 true, i1 %40
+  tail call void @llvm.assume(i1 %brmerge18.i68.i)
+  br label %_ZN11duckdb_zstdL25ZSTDMT_waitForLdmCompleteEPNS_13ZSTDMT_CCtx_sENS_8buffer_sE.exit69.i
+
+_ZN11duckdb_zstdL25ZSTDMT_waitForLdmCompleteEPNS_13ZSTDMT_CCtx_sENS_8buffer_sE.exit69.i: ; preds = %_ZN11duckdb_zstdL24ZSTDMT_doesOverlapWindowENS_8buffer_sENS_13ZSTD_window_tE.exit.thread.sink.split.i67.i, %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.thread.i
   store ptr %i.be, ptr %i.l, align 8, !tbaa !38
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 304
   store i64 %i.am, ptr %.sroa.9.0..sroa_idx.i, align 8, !tbaa !39
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 312
-  store i64 0, ptr %6, align 8, !tbaa !86
+  %51 = getelementptr inbounds nuw i8, ptr %0, i64 312
+  store i64 0, ptr %51, align 8, !tbaa !86
   br label %_ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exit
 
-_ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exit: ; preds = %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.i._ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exitthread-pre-split_crit_edge, %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.thread.i.a
-  %i.bq = phi ptr [ %i.be, %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.thread.i.a ], [ %.pr.pre, %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.i._ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exitthread-pre-split_crit_edge ] ; 2 uses
+_ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exit: ; preds = %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.i._ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exitthread-pre-split_crit_edge, %_ZN11duckdb_zstdL25ZSTDMT_waitForLdmCompleteEPNS_13ZSTDMT_CCtx_sENS_8buffer_sE.exit69.i
+  %i.bq = phi ptr [ %i.be, %_ZN11duckdb_zstdL25ZSTDMT_waitForLdmCompleteEPNS_13ZSTDMT_CCtx_sENS_8buffer_sE.exit69.i ], [ %.pr.pre, %_ZN11duckdb_zstdL19ZSTDMT_isOverlappedENS_8buffer_sENS_7range_tE.exit50.i._ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exitthread-pre-split_crit_edge ] ; 2 uses
   %.not58 = icmp eq ptr %i.bq, null
   br i1 %.not58, label %_ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exit.thread132, label %_ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exit._ZN11duckdb_zstdL23ZSTDMT_tryGetInputRangeEPNS_13ZSTDMT_CCtx_sE.exit.thread_crit_edge
 

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.w, %bb.b
-  %i.l = phi i32 [ %i.bw, %bb.w ], [ %i.d, %bb.b ] ; 7 uses
+  %i.l = phi i32 [ %i.bw, %bb.w ], [ %i.d, %bb.b ] ; 9 uses
   %.not16 = icmp eq i32 %i.l, 95
   br i1 %.not16, label %.thread, label %bb.d
 
@@ -332,6 +332,10 @@ bb.u:                                             ; preds = %bb.e
   br i1 %i.bi, label %bb.v, label %.thread
 
 bb.v:                                             ; preds = %bb.u
+  %1 = icmp samesign ult i32 %i.l, 48
+  %2 = icmp eq i32 %i.l, 58
+  %3 = or i1 %1, %2
+  tail call void @llvm.assume(i1 %3)
   %switch.tableidx = add nsw i32 %i.l, -43        ; 3 uses
   %i.bj = icmp ult i32 %switch.tableidx, 16
   %switch.maskindex = trunc i32 %switch.tableidx to i16
@@ -734,7 +738,7 @@ bb.ce:                                            ; preds = %bb.cd, %bb.af, %bb.
 ; Function Attrs: mustprogress noinline uwtable
 define linkonce_odr noundef double @_ZN4toml2v34impl7impl_ex6parser11parse_floatEv(ptr noundef nonnull align 8 dereferenceable(3496) %0) local_unnamed_addr #24 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.6 = alloca %"class.std::basic_string_view", align 8 ; 6 uses
+  %.sroa.6 = alloca %"class.std::basic_string_view", align 8 ; 8 uses
   %1 = alloca %"class.std::basic_string_view", align 8 ; 5 uses
   %i.a = alloca [128 x i8], align 16              ; 6 uses
   %2 = alloca %"class.std::basic_string_view", align 8 ; 5 uses
@@ -777,20 +781,37 @@ bb.a:
   %37 = alloca %"class.std::basic_string_view", align 8 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 3192 ; 4 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !461, !nonnull !121, !noundef !121
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !488  ; 2 uses
-  %i.g = icmp ne i32 %i.f, 43
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !488  ; 4 uses
+  %i.g = icmp ne i32 %i.f, 43                     ; 2 uses
+  br i1 %i.g, label %_ZN12_GLOBAL__N_18is_matchIJDiDiDiEEEbDiDpT_.exit, label %.thread
+
+.thread:                                          ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  %38 = getelementptr inbounds nuw i8, ptr %0, i64 3472 ; 4 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, ptr noundef nonnull align 8 dereferenceable(16) %38, i64 16, i1 false)
+  %38 = getelementptr inbounds nuw i8, ptr %0, i64 3472 ; 3 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, ptr noundef nonnull align 8 dereferenceable(16) %38, i64 16, i1 false), !tbaa.struct !460
   store i64 14, ptr %38, align 8, !tbaa !139
+  %.sroa.2.0..sroa_idx.i102 = getelementptr inbounds nuw i8, ptr %0, i64 3480
+  store ptr @.str.116, ptr %.sroa.2.0..sroa_idx.i102, align 8, !tbaa !140
+  br label %.thread.a
+
+_ZN12_GLOBAL__N_18is_matchIJDiDiDiEEEbDiDpT_.exit: ; preds = %bb.a
+  %39 = add i32 %i.f, -45
+  %40 = icmp ult i32 %39, 2
+  %41 = add i32 %i.f, -48
+  %42 = icmp ult i32 %41, 10
+  %43 = or i1 %40, %42
+  tail call void @llvm.assume(i1 %43)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
+  %44 = getelementptr inbounds nuw i8, ptr %0, i64 3472 ; 4 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, ptr noundef nonnull align 8 dereferenceable(16) %44, i64 16, i1 false), !tbaa.struct !460
+  store i64 14, ptr %44, align 8, !tbaa !139
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 3480
   store ptr @.str.116, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !140
-  switch i32 %i.f, label %bb.g [
-    i32 45, label %.thread.a
-    i32 43, label %.thread.a
-  ]
+  %45 = icmp eq i32 %i.f, 45
+  br i1 %45, label %.thread.a, label %bb.g
 
-.thread.a:                                        ; preds = %bb.a, %bb.a
+.thread.a:                                        ; preds = %_ZN12_GLOBAL__N_18is_matchIJDiDiDiEEEbDiDpT_.exit, %.thread
+  %46 = phi ptr [ %38, %.thread ], [ %44, %_ZN12_GLOBAL__N_18is_matchIJDiDiDiEEEbDiDpT_.exit ] ; 3 uses
   invoke void @_ZN4toml2v34impl7impl_ex6parser7advanceEv(ptr noundef nonnull align 8 dereferenceable(3496) %0)
           to label %bb.b unwind label %bb.e
 
@@ -821,8 +842,9 @@ bb.f:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #50
   br label %bb.cw
 
-bb.g:                                             ; preds = %bb.a, %bb.b
-  %i.l = phi i1 [ %i.g, %bb.b ], [ false, %bb.a ]
+bb.g:                                             ; preds = %_ZN12_GLOBAL__N_18is_matchIJDiDiDiEEEbDiDpT_.exit, %bb.b
+  %i.l = phi i1 [ %i.g, %bb.b ], [ false, %_ZN12_GLOBAL__N_18is_matchIJDiDiDiEEEbDiDpT_.exit ]
+  %47 = phi ptr [ %46, %bb.b ], [ %44, %_ZN12_GLOBAL__N_18is_matchIJDiDiDiEEEbDiDpT_.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #50
   br label %thread-pre-split
 
@@ -1225,7 +1247,7 @@ _ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev.exit: ; preds = 
   call void @llvm.lifetime.end.p0(ptr nonnull %33) #50
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #50
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #50
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %38, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, i64 16, i1 false), !tbaa.struct !460
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %47, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, i64 16, i1 false), !tbaa.struct !460
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   ret double %i.ex
 
@@ -1283,8 +1305,9 @@ bb.cv:                                            ; preds = %.loopexit, %.loopex
   br label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv, %bb.f, %bb.e
+  %48 = phi ptr [ %46, %bb.f ], [ %47, %bb.cv ], [ %46, %bb.e ]
   %.pn57 = phi { ptr, i32 } [ %i.k, %bb.f ], [ %.pn55, %bb.cv ], [ %i.j, %bb.e ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %38, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, i64 16, i1 false), !tbaa.struct !460
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %48, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, i64 16, i1 false), !tbaa.struct !460
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   resume { ptr, i32 } %.pn57
 }
@@ -1687,8 +1710,11 @@ bb.a:
   %3 = alloca %"class.std::basic_string_view", align 8 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 3192 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !461, !nonnull !121, !noundef !121
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !488  ; 4 uses
-  %i.d = icmp eq i32 %i.c, 39                     ; 2 uses
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !488  ; 5 uses
+  %4 = icmp eq i32 %i.c, 34
+  %i.d = icmp eq i32 %i.c, 39                     ; 3 uses
+  %5 = or i1 %4, %i.d
+  tail call void @llvm.assume(i1 %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 3472 ; 4 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, ptr noundef nonnull align 8 dereferenceable(16) %i.e, i64 16, i1 false), !tbaa.struct !460

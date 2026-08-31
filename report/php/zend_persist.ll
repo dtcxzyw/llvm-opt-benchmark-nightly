@@ -205,7 +205,7 @@ declare ptr @zend_shared_memdup_put_free(ptr noundef, i64 noundef) local_unnamed
 define internal fastcc ptr @zend_persist_ast(ptr noundef %0) unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct._zval_struct, align 8       ; 6 uses
-  %i.a = load i16, ptr %0, align 8, !tbaa !315    ; 4 uses
+  %i.a = load i16, ptr %0, align 8, !tbaa !315    ; 6 uses
   %i.b = and i16 %i.a, -2
   %switch = icmp eq i16 %i.b, 64
   br i1 %switch, label %bb.b, label %bb.c
@@ -282,6 +282,11 @@ bb.j:                                             ; preds = %bb.h
   br label %.loopexit
 
 zend_ast_is_decl.exit:                            ; preds = %bb.h
+  %2 = and i16 %i.a, 64
+  %3 = icmp eq i16 %2, 0
+  %4 = icmp ult i16 %i.a, 68
+  %spec.select.not = or i1 %4, %3
+  tail call void @llvm.assume(i1 %spec.select.not)
   %i.aa = lshr i16 %i.a, 8                        ; 3 uses
   %i.ab = shl nuw nsw i16 %i.aa, 3
   %narrow = add nuw nsw i16 %i.ab, 8

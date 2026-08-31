@@ -94,30 +94,31 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %zend_vm_stack_push_call_frame_ex.exit, %bb.a
-  %.019 = phi ptr [ %i.b, %bb.a ], [ %i.aq, %zend_vm_stack_push_call_frame_ex.exit ] ; 6 uses
+  %.019 = phi ptr [ %i.b, %bb.a ], [ %i.aq, %zend_vm_stack_push_call_frame_ex.exit ] ; 7 uses
   %.0 = phi ptr [ null, %bb.a ], [ %.sink31, %zend_vm_stack_push_call_frame_ex.exit ]
+  %1 = getelementptr inbounds nuw i8, ptr %.019, i64 32
   %i.c = getelementptr inbounds nuw i8, ptr %.019, i64 40
   %i.d = load i32, ptr %i.c, align 8, !tbaa !30   ; 2 uses
   %i.e = and i32 %i.d, -262145
-  %i.f = getelementptr inbounds nuw i8, ptr %.019, i64 24 ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %.019, i64 44 ; 2 uses
-  %2 = load i32, ptr %1, align 4, !tbaa !30       ; 3 uses
-  %3 = load <2 x ptr>, ptr %i.f, align 8, !tbaa !30
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !31   ; 4 uses
-  %i.h = add i32 %2, 5
-  %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 72
+  %i.f = getelementptr inbounds nuw i8, ptr %.019, i64 24
+  %2 = load ptr, ptr %i.f, align 8, !tbaa !31     ; 6 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.019, i64 44 ; 2 uses
+  %4 = load i32, ptr %3, align 4, !tbaa !30       ; 3 uses
+  %i.g = load ptr, ptr %1, align 8, !tbaa !30     ; 2 uses
+  %i.h = add i32 %4, 5
+  %i.i = getelementptr inbounds nuw i8, ptr %2, i64 72
   %i.j = load i32, ptr %i.i, align 8, !tbaa !30
   %i.k = add i32 %i.h, %i.j                       ; 2 uses
-  %i.l = load i8, ptr %i.g, align 8, !tbaa !30
+  %i.l = load i8, ptr %2, align 8, !tbaa !30
   %.not.i = icmp eq i8 %i.l, 1
   br i1 %.not.i, label %zend_vm_calc_used_stack.exit, label %bb.c, !prof !32
 
 bb.c:                                             ; preds = %bb.b
-  %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 92
+  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 92
   %i.n = load i32, ptr %i.m, align 4, !tbaa !30
-  %i.o = getelementptr inbounds nuw i8, ptr %i.g, i64 32
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.p = load i32, ptr %i.o, align 8, !tbaa !30
-  %..i = tail call i32 @llvm.umin.i32(i32 %i.p, i32 %2)
+  %..i = tail call i32 @llvm.umin.i32(i32 %i.p, i32 %4)
   %i.q = add i32 %i.n, %i.k
   %i.r = sub i32 %i.q, %..i
   br label %zend_vm_calc_used_stack.exit
@@ -132,6 +133,8 @@ zend_vm_calc_used_stack.exit:                     ; preds = %bb.b, %bb.c
   %i.x = ptrtoint ptr %i.t to i64
   %i.y = sub i64 %i.w, %i.x
   %i.z = icmp ult i64 %i.y, %i.u
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %6 = icmp ne ptr %i.g, null
   br i1 %i.z, label %bb.d, label %bb.e, !prof !32
 
 bb.d:                                             ; preds = %zend_vm_calc_used_stack.exit
@@ -145,17 +148,23 @@ bb.e:                                             ; preds = %zend_vm_calc_used_s
   br label %zend_vm_stack_push_call_frame_ex.exit
 
 zend_vm_stack_push_call_frame_ex.exit:            ; preds = %bb.d, %bb.e
-  %.sink31 = phi ptr [ %i.aa, %bb.d ], [ %i.t, %bb.e ] ; 8 uses
+  %.sink31 = phi ptr [ %i.aa, %bb.d ], [ %i.t, %bb.e ] ; 9 uses
   %.sink = phi i32 [ %i.ab, %bb.d ], [ %i.e, %bb.e ]
-  %i.ad = getelementptr inbounds nuw i8, ptr %.sink31, i64 24
-  store <2 x ptr> %3, ptr %i.ad, align 8, !tbaa !30
+  %7 = load ptr, ptr %5, align 8, !tbaa !30
+  %.not.i21 = icmp eq ptr %7, null
+  %8 = or i1 %6, %.not.i21
+  tail call void @llvm.assume(i1 %8)
+  %9 = getelementptr inbounds nuw i8, ptr %.sink31, i64 24
+  store ptr %2, ptr %9, align 8, !tbaa !31
+  %i.ad = getelementptr inbounds nuw i8, ptr %.sink31, i64 32
+  store ptr %i.g, ptr %i.ad, align 8, !tbaa !30
   %i.ae = getelementptr inbounds nuw i8, ptr %.sink31, i64 40
   store i32 %.sink, ptr %i.ae, align 8, !tbaa !30
   %i.af = getelementptr inbounds nuw i8, ptr %.sink31, i64 44
-  store i32 %2, ptr %i.af, align 4, !tbaa !30
+  store i32 %4, ptr %i.af, align 4, !tbaa !30
   %i.ag = getelementptr inbounds nuw i8, ptr %.sink31, i64 80
   %i.ah = getelementptr inbounds nuw i8, ptr %.019, i64 80
-  %i.ai = load i32, ptr %1, align 4, !tbaa !30
+  %i.ai = load i32, ptr %3, align 4, !tbaa !30
   %i.aj = zext i32 %i.ai to i64
   %i.ak = shl nuw nsw i64 %i.aj, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ag, ptr nonnull align 8 %i.ah, i64 %i.ak, i1 false)

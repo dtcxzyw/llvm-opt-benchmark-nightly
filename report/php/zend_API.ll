@@ -205,6 +205,10 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
+  %3 = icmp eq i32 %0, 1
+  %4 = icmp eq ptr %1, null
+  %5 = or i1 %3, %4
+  tail call void @llvm.assume(i1 %5)
   store i32 %0, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 840), align 8, !tbaa !376
   store ptr %1, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 832), align 8, !tbaa !379
   ret void

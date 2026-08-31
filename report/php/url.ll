@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ac = tail call ptr @__ctype_b_loc() #16
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !28 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.031.i, i64 1
-  %i.af = load i8, ptr %i.ae, align 1, !tbaa !17  ; 3 uses
+  %i.af = load i8, ptr %i.ae, align 1, !tbaa !17  ; 5 uses
   %i.ag = zext i8 %i.af to i64
   %i.ah = getelementptr inbounds nuw [2 x i8], ptr %i.ad, i64 %i.ag
   %i.ai = load i16, ptr %i.ah, align 2, !tbaa !30
@@ -214,7 +214,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.ak = getelementptr i8, ptr %.031.i, i64 2    ; 2 uses
-  %i.al = load i8, ptr %i.ak, align 1, !tbaa !17  ; 3 uses
+  %i.al = load i8, ptr %i.ak, align 1, !tbaa !17  ; 5 uses
   %i.am = zext i8 %i.al to i64
   %i.an = getelementptr inbounds nuw [2 x i8], ptr %i.ad, i64 %i.am
   %i.ao = load i16, ptr %i.an, align 2, !tbaa !30
@@ -223,10 +223,24 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not26.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
+  %2 = and i8 %i.af, -33
+  %3 = add i8 %2, -65
+  %or.cond13.i.i.i = icmp ult i8 %3, 6
+  %4 = add i8 %i.af, -48
+  %5 = icmp ult i8 %4, 10
+  %6 = or i1 %5, %or.cond13.i.i.i
+  call void @llvm.assume(i1 %6)
   %i.aq = lshr i8 %i.af, 6
   %i.ar = mul nuw nsw i8 %i.aq, 9
   %i.as = add i8 %i.ar, %i.af
   %i.at = shl i8 %i.as, 4
+  %7 = and i8 %i.al, -33
+  %8 = add i8 %7, -65
+  %or.cond13.i5.i.i = icmp ult i8 %8, 6
+  %9 = add i8 %i.al, -48
+  %10 = icmp ult i8 %9, 10
+  %11 = or i1 %10, %or.cond13.i5.i.i
+  call void @llvm.assume(i1 %11)
   %i.au = lshr i8 %i.al, 6
   %i.av = mul nuw nsw i8 %i.au, 9
   %i.aw = and i8 %i.al, 15
@@ -294,7 +308,7 @@ bb.d:                                             ; preds = %bb.c
   %i.f = tail call ptr @__ctype_b_loc() #16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !28   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.031, i64 1
-  %i.i = load i8, ptr %i.h, align 1, !tbaa !17    ; 3 uses
+  %i.i = load i8, ptr %i.h, align 1, !tbaa !17    ; 5 uses
   %i.j = zext i8 %i.i to i64
   %i.k = getelementptr inbounds nuw [2 x i8], ptr %i.g, i64 %i.j
   %i.l = load i16, ptr %i.k, align 2, !tbaa !30
@@ -304,7 +318,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr i8, ptr %.031, i64 2       ; 2 uses
-  %i.o = load i8, ptr %i.n, align 1, !tbaa !17    ; 3 uses
+  %i.o = load i8, ptr %i.n, align 1, !tbaa !17    ; 5 uses
   %i.p = zext i8 %i.o to i64
   %i.q = getelementptr inbounds nuw [2 x i8], ptr %i.g, i64 %i.p
   %i.r = load i16, ptr %i.q, align 2, !tbaa !30
@@ -313,10 +327,24 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not26, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  %3 = and i8 %i.i, -33
+  %4 = add i8 %3, -65
+  %or.cond13.i.i = icmp ult i8 %4, 6
+  %5 = add i8 %i.i, -48
+  %6 = icmp ult i8 %5, 10
+  %7 = or i1 %6, %or.cond13.i.i
+  tail call void @llvm.assume(i1 %7)
   %i.t = lshr i8 %i.i, 6
   %i.u = mul nuw nsw i8 %i.t, 9
   %i.v = add i8 %i.u, %i.i
   %i.w = shl i8 %i.v, 4
+  %8 = and i8 %i.o, -33
+  %9 = add i8 %8, -65
+  %or.cond13.i5.i = icmp ult i8 %9, 6
+  %10 = add i8 %i.o, -48
+  %11 = icmp ult i8 %10, 10
+  %12 = or i1 %11, %or.cond13.i5.i
+  tail call void @llvm.assume(i1 %12)
   %i.x = lshr i8 %i.o, 6
   %i.y = mul nuw nsw i8 %i.x, 9
   %i.z = and i8 %i.o, 15
@@ -376,7 +404,7 @@ bb.d:                                             ; preds = %bb.c
   %i.f = tail call ptr @__ctype_b_loc() #16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !28   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.031.i, i64 1
-  %i.i = load i8, ptr %i.h, align 1, !tbaa !17    ; 3 uses
+  %i.i = load i8, ptr %i.h, align 1, !tbaa !17    ; 5 uses
   %i.j = zext i8 %i.i to i64
   %i.k = getelementptr inbounds nuw [2 x i8], ptr %i.g, i64 %i.j
   %i.l = load i16, ptr %i.k, align 2, !tbaa !30
@@ -386,7 +414,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr i8, ptr %.031.i, i64 2     ; 2 uses
-  %i.o = load i8, ptr %i.n, align 1, !tbaa !17    ; 3 uses
+  %i.o = load i8, ptr %i.n, align 1, !tbaa !17    ; 5 uses
   %i.p = zext i8 %i.o to i64
   %i.q = getelementptr inbounds nuw [2 x i8], ptr %i.g, i64 %i.p
   %i.r = load i16, ptr %i.q, align 2, !tbaa !30
@@ -395,10 +423,24 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not26.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  %2 = and i8 %i.i, -33
+  %3 = add i8 %2, -65
+  %or.cond13.i.i.i = icmp ult i8 %3, 6
+  %4 = add i8 %i.i, -48
+  %5 = icmp ult i8 %4, 10
+  %6 = or i1 %5, %or.cond13.i.i.i
+  tail call void @llvm.assume(i1 %6)
   %i.t = lshr i8 %i.i, 6
   %i.u = mul nuw nsw i8 %i.t, 9
   %i.v = add i8 %i.u, %i.i
   %i.w = shl i8 %i.v, 4
+  %7 = and i8 %i.o, -33
+  %8 = add i8 %7, -65
+  %or.cond13.i5.i.i = icmp ult i8 %8, 6
+  %9 = add i8 %i.o, -48
+  %10 = icmp ult i8 %9, 10
+  %11 = or i1 %10, %or.cond13.i5.i.i
+  tail call void @llvm.assume(i1 %11)
   %i.x = lshr i8 %i.o, 6
   %i.y = mul nuw nsw i8 %i.x, 9
   %i.z = and i8 %i.o, 15
@@ -801,7 +843,7 @@ bb.d:                                             ; preds = %.lr.ph.i
   %i.ab = tail call ptr @__ctype_b_loc() #16
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !28 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.028.i, i64 1
-  %i.ae = load i8, ptr %i.ad, align 1, !tbaa !17  ; 3 uses
+  %i.ae = load i8, ptr %i.ad, align 1, !tbaa !17  ; 5 uses
   %i.af = zext i8 %i.ae to i64
   %i.ag = getelementptr inbounds nuw [2 x i8], ptr %i.ac, i64 %i.af
   %i.ah = load i16, ptr %i.ag, align 2, !tbaa !30
@@ -811,7 +853,7 @@ bb.d:                                             ; preds = %.lr.ph.i
 
 bb.e:                                             ; preds = %bb.d
   %i.aj = getelementptr i8, ptr %.028.i, i64 2    ; 2 uses
-  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !17  ; 3 uses
+  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !17  ; 5 uses
   %i.al = zext i8 %i.ak to i64
   %i.am = getelementptr inbounds nuw [2 x i8], ptr %i.ac, i64 %i.al
   %i.an = load i16, ptr %i.am, align 2, !tbaa !30
@@ -820,10 +862,24 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not23.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
+  %2 = and i8 %i.ae, -33
+  %3 = add i8 %2, -65
+  %or.cond13.i.i.i = icmp ult i8 %3, 6
+  %4 = add i8 %i.ae, -48
+  %5 = icmp ult i8 %4, 10
+  %6 = or i1 %5, %or.cond13.i.i.i
+  call void @llvm.assume(i1 %6)
   %i.ap = lshr i8 %i.ae, 6
   %i.aq = mul nuw nsw i8 %i.ap, 9
   %i.ar = add i8 %i.aq, %i.ae
   %i.as = shl i8 %i.ar, 4
+  %7 = and i8 %i.ak, -33
+  %8 = add i8 %7, -65
+  %or.cond13.i5.i.i = icmp ult i8 %8, 6
+  %9 = add i8 %i.ak, -48
+  %10 = icmp ult i8 %9, 10
+  %11 = or i1 %10, %or.cond13.i5.i.i
+  call void @llvm.assume(i1 %11)
   %i.at = lshr i8 %i.ak, 6
   %i.au = mul nuw nsw i8 %i.at, 9
   %i.av = and i8 %i.ak, 15
@@ -883,7 +939,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.e = tail call ptr @__ctype_b_loc() #16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !28   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.028, i64 1
-  %i.h = load i8, ptr %i.g, align 1, !tbaa !17    ; 3 uses
+  %i.h = load i8, ptr %i.g, align 1, !tbaa !17    ; 5 uses
   %i.i = zext i8 %i.h to i64
   %i.j = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %i.i
   %i.k = load i16, ptr %i.j, align 2, !tbaa !30
@@ -893,7 +949,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr i8, ptr %.028, i64 2       ; 2 uses
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !17    ; 3 uses
+  %i.n = load i8, ptr %i.m, align 1, !tbaa !17    ; 5 uses
   %i.o = zext i8 %i.n to i64
   %i.p = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %i.o
   %i.q = load i16, ptr %i.p, align 2, !tbaa !30
@@ -902,10 +958,24 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not23, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  %3 = and i8 %i.h, -33
+  %4 = add i8 %3, -65
+  %or.cond13.i.i = icmp ult i8 %4, 6
+  %5 = add i8 %i.h, -48
+  %6 = icmp ult i8 %5, 10
+  %7 = or i1 %6, %or.cond13.i.i
+  tail call void @llvm.assume(i1 %7)
   %i.s = lshr i8 %i.h, 6
   %i.t = mul nuw nsw i8 %i.s, 9
   %i.u = add i8 %i.t, %i.h
   %i.v = shl i8 %i.u, 4
+  %8 = and i8 %i.n, -33
+  %9 = add i8 %8, -65
+  %or.cond13.i5.i = icmp ult i8 %9, 6
+  %10 = add i8 %i.n, -48
+  %11 = icmp ult i8 %10, 10
+  %12 = or i1 %11, %or.cond13.i5.i
+  tail call void @llvm.assume(i1 %12)
   %i.w = lshr i8 %i.n, 6
   %i.x = mul nuw nsw i8 %i.w, 9
   %i.y = and i8 %i.n, 15
@@ -957,7 +1027,7 @@ bb.b:                                             ; preds = %.lr.ph.i
   %i.e = tail call ptr @__ctype_b_loc() #16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !28   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.028.i, i64 1
-  %i.h = load i8, ptr %i.g, align 1, !tbaa !17    ; 3 uses
+  %i.h = load i8, ptr %i.g, align 1, !tbaa !17    ; 5 uses
   %i.i = zext i8 %i.h to i64
   %i.j = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %i.i
   %i.k = load i16, ptr %i.j, align 2, !tbaa !30
@@ -967,7 +1037,7 @@ bb.b:                                             ; preds = %.lr.ph.i
 
 bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr i8, ptr %.028.i, i64 2     ; 2 uses
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !17    ; 3 uses
+  %i.n = load i8, ptr %i.m, align 1, !tbaa !17    ; 5 uses
   %i.o = zext i8 %i.n to i64
   %i.p = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %i.o
   %i.q = load i16, ptr %i.p, align 2, !tbaa !30
@@ -976,10 +1046,24 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not23.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  %2 = and i8 %i.h, -33
+  %3 = add i8 %2, -65
+  %or.cond13.i.i.i = icmp ult i8 %3, 6
+  %4 = add i8 %i.h, -48
+  %5 = icmp ult i8 %4, 10
+  %6 = or i1 %5, %or.cond13.i.i.i
+  tail call void @llvm.assume(i1 %6)
   %i.s = lshr i8 %i.h, 6
   %i.t = mul nuw nsw i8 %i.s, 9
   %i.u = add i8 %i.t, %i.h
   %i.v = shl i8 %i.u, 4
+  %7 = and i8 %i.n, -33
+  %8 = add i8 %7, -65
+  %or.cond13.i5.i.i = icmp ult i8 %8, 6
+  %9 = add i8 %i.n, -48
+  %10 = icmp ult i8 %9, 10
+  %11 = or i1 %10, %or.cond13.i5.i.i
+  tail call void @llvm.assume(i1 %11)
   %i.w = lshr i8 %i.n, 6
   %i.x = mul nuw nsw i8 %i.w, 9
   %i.y = and i8 %i.n, 15

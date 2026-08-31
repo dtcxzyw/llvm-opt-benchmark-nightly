@@ -205,7 +205,7 @@ _ZN4llvm4castIN4mlir9FloatTypeENS1_4TypeEEEDcRKT0_.exit70: ; preds = %bb.i, %bb.
   %.sroa.0.0.copyload.i72 = load ptr, ptr %14, align 8, !tbaa !1192
   %i.cb = load ptr, ptr %.sroa.0.0.copyload.i72, align 8, !tbaa !1186
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.cc, align 8, !tbaa !14 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.cc, align 8, !tbaa !14 ; 5 uses
   %i.cd = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_16Float4E2M1FNTypeEvE2idE
   br i1 %i.cd, label %bb.o, label %bb.l
 
@@ -223,6 +223,10 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.l
+  %23 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_16Float6E2M3FNTypeEvE2idE
+  %24 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_16Float6E3M2FNTypeEvE2idE
+  %spec.select.i76 = or i1 %23, %24
+  call void @llvm.assume(i1 %spec.select.i76)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #29
   store i64 3, ptr %i.b, align 8, !tbaa !24
   %i.ch = call ptr @_ZN4mlir10VectorType3getEN4llvm8ArrayRefIlEENS_4TypeENS2_IbEE(ptr nonnull %i.b, i64 1, ptr %i.bq, ptr null, i64 0) #29

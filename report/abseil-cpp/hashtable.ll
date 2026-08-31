@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 _ZN4absl12lts_2026052618container_internal15btree_containerINS1_5btreeINS1_15map_params_implImmJEEEEEED2Ev.exit: ; preds = %_ZNSt6vectorIN4absl12lts_2026052618debugging_internal14ProfileBuilder7MappingESaIS4_EED2Ev.exit, %bb.e
-  %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 7 uses
   %i.bm = load i64, ptr %i.bl, align 8            ; 2 uses
   %i.bn = and i64 %i.bm, 255
   %i.bo = icmp ne i64 %i.bn, 0
@@ -221,7 +221,7 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20260
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
   %i.br = load i64, ptr %i.bl, align 8            ; 2 uses
   %i.bs = and i64 %i.br, 255                      ; 2 uses
-  %notmask.i.i.i.i.i.i = shl nsw i64 -1, %i.bs    ; 4 uses
+  %notmask.i.i.i.i.i.i = shl nsw i64 -1, %i.bs    ; 8 uses
   %i.bt = add nsw i64 %notmask.i.i.i.i.i.i, 281474976710655
   %i.bu = or i64 %i.bt, %notmask.i.i.i.i.i.i
   %i.bv = icmp eq i64 %i.bu, -1
@@ -230,22 +230,51 @@ bb.g:                                             ; preds = %_ZN4absl12lts_20260
   call void @llvm.assume(i1 %i.bw)
   %i.bx = icmp samesign ugt i64 %notmask.i.i.i.i.i.i, -281474976710657
   call void @llvm.assume(i1 %i.bx)
-  %i.by = and i64 %i.br, 65536
+  %i.by = and i64 %i.br, 65536                    ; 2 uses
+  %.not.i.i.i.i.i = icmp eq i64 %i.by, 0
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.sroa.0.0.copyload.i.i.i2.pre.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i, align 8, !tbaa !28
-  %2 = xor i64 %notmask.i.i.i.i.i.i, -1
-  %3 = icmp ne i64 %i.by, 0
-  invoke void @_ZN4absl12lts_2026052618container_internal22DeallocateBackingArrayILm8ENS0_18debugging_internal14ProfileBuilder17HashtablezBarrierIcEEEEvPvmPNS1_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(24) %i.bl, i64 noundef %2, ptr noundef %.sroa.0.0.copyload.i.i.i2.pre.i.i.i, i64 noundef 16, i64 noundef 8, i1 noundef zeroext %3)
+  %.sroa.0.0.copyload.i.i.i2.pre.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i, align 8, !tbaa !28 ; 5 uses
+  br i1 %.not.i.i.i.i.i, label %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyImNS0_18debugging_internal10LocationIdEEEJNS0_13hash_internal4HashImEESt8equal_toImENS4_14ProfileBuilder17HashtablezBarrierISt4pairIKmS5_EEEEE5infozEv.exit_crit_edge.i.i.i, label %2
+
+._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyImNS0_18debugging_internal10LocationIdEEEJNS0_13hash_internal4HashImEESt8equal_toImENS4_14ProfileBuilder17HashtablezBarrierISt4pairIKmS5_EEEEE5infozEv.exit_crit_edge.i.i.i: ; preds = %.noexc.i
+  %.pre.i.i.i = sub nsw i64 15, %notmask.i.i.i.i.i.i
+  br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyImNS0_18debugging_internal10LocationIdEEEJNS0_13hash_internal4HashImEESt8equal_toImENS4_14ProfileBuilder17HashtablezBarrierISt4pairIKmS5_EEEEE7deallocEv.exit.i.i
+
+2:                                                ; preds = %.noexc.i
+  %3 = icmp samesign ugt i64 %notmask.i.i.i.i.i.i, -3
+  %4 = sub nsw i64 15, %notmask.i.i.i.i.i.i       ; 2 uses
+  %5 = select i1 %3, i64 0, i64 %4
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i2.pre.i.i.i, i64 %5
+  %7 = icmp ule ptr %6, %i.bl
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %9 = icmp ule ptr %8, %.sroa.0.0.copyload.i.i.i2.pre.i.i.i
+  %10 = select i1 %7, i1 true, i1 %9
+  call void @llvm.assume(i1 %10)
+  br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyImNS0_18debugging_internal10LocationIdEEEJNS0_13hash_internal4HashImEESt8equal_toImENS4_14ProfileBuilder17HashtablezBarrierISt4pairIKmS5_EEEEE7deallocEv.exit.i.i
+
+_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyImNS0_18debugging_internal10LocationIdEEEJNS0_13hash_internal4HashImEESt8equal_toImENS4_14ProfileBuilder17HashtablezBarrierISt4pairIKmS5_EEEEE7deallocEv.exit.i.i: ; preds = %2, %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyImNS0_18debugging_internal10LocationIdEEEJNS0_13hash_internal4HashImEESt8equal_toImENS4_14ProfileBuilder17HashtablezBarrierISt4pairIKmS5_EEEEE5infozEv.exit_crit_edge.i.i.i
+  %.pre-phi.i.i.i = phi i64 [ %.pre.i.i.i, %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyImNS0_18debugging_internal10LocationIdEEEJNS0_13hash_internal4HashImEESt8equal_toImENS4_14ProfileBuilder17HashtablezBarrierISt4pairIKmS5_EEEEE5infozEv.exit_crit_edge.i.i.i ], [ %4, %2 ]
+  %11 = xor i64 %notmask.i.i.i.i.i.i, -1
+  %12 = icmp samesign ugt i64 %notmask.i.i.i.i.i.i, -3
+  %13 = select i1 %12, i64 0, i64 %.pre-phi.i.i.i
+  %14 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i2.pre.i.i.i, i64 %13
+  %15 = icmp ule ptr %14, %i.bl
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %17 = icmp ule ptr %16, %.sroa.0.0.copyload.i.i.i2.pre.i.i.i
+  %18 = select i1 %15, i1 true, i1 %17
+  call void @llvm.assume(i1 %18)
+  %19 = icmp ne i64 %i.by, 0
+  invoke void @_ZN4absl12lts_2026052618container_internal22DeallocateBackingArrayILm8ENS0_18debugging_internal14ProfileBuilder17HashtablezBarrierIcEEEEvPvmPNS1_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(24) %i.bl, i64 noundef %11, ptr noundef %.sroa.0.0.copyload.i.i.i2.pre.i.i.i, i64 noundef 16, i64 noundef 8, i1 noundef zeroext %19)
           to label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyImNS0_18debugging_internal10LocationIdEEEJNS0_13hash_internal4HashImEESt8equal_toImENS4_14ProfileBuilder17HashtablezBarrierISt4pairIKmS5_EEEEED2Ev.exit unwind label %bb.h
 
-bb.h:                                             ; preds = %.noexc.i, %bb.g
+bb.h:                                             ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyImNS0_18debugging_internal10LocationIdEEEJNS0_13hash_internal4HashImEESt8equal_toImENS4_14ProfileBuilder17HashtablezBarrierISt4pairIKmS5_EEEEE7deallocEv.exit.i.i, %bb.g
   %i.bz = landingpad { ptr, i32 }
           catch ptr null
   %i.ca = extractvalue { ptr, i32 } %i.bz, 0
   call void @__clang_call_terminate(ptr %i.ca) #22
   unreachable
 
-_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyImNS0_18debugging_internal10LocationIdEEEJNS0_13hash_internal4HashImEESt8equal_toImENS4_14ProfileBuilder17HashtablezBarrierISt4pairIKmS5_EEEEED2Ev.exit: ; preds = %_ZN4absl12lts_2026052618container_internal15btree_containerINS1_5btreeINS1_15map_params_implImmJEEEEEED2Ev.exit, %.noexc.i
+_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyImNS0_18debugging_internal10LocationIdEEEJNS0_13hash_internal4HashImEESt8equal_toImENS4_14ProfileBuilder17HashtablezBarrierISt4pairIKmS5_EEEEED2Ev.exit: ; preds = %_ZN4absl12lts_2026052618container_internal15btree_containerINS1_5btreeINS1_15map_params_implImmJEEEEEED2Ev.exit, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyImNS0_18debugging_internal10LocationIdEEEJNS0_13hash_internal4HashImEESt8equal_toImENS4_14ProfileBuilder17HashtablezBarrierISt4pairIKmS5_EEEEE7deallocEv.exit.i.i
   invoke void @_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE15destructor_implEv(ptr noundef nonnull align 8 dereferenceable(24) %0)
           to label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEED2Ev.exit unwind label %bb.i
 
@@ -394,14 +423,21 @@ define linkonce_odr dso_local void @_ZN4absl12lts_2026052618container_internal12
 bb.a:
   %i.a = load i64, ptr %0, align 8
   %i.b = and i64 %i.a, 255
-  %notmask.i.i = shl nsw i64 -1, %i.b             ; 2 uses
+  %notmask.i.i = shl nsw i64 -1, %i.b             ; 3 uses
   %i.c = xor i64 %notmask.i.i, -1                 ; 3 uses
   %i.d = lshr i64 %i.c, 1                         ; 4 uses
   %i.e = and i64 %notmask.i.i, 30
   %i.f = icmp eq i64 %i.e, 0
   tail call void @llvm.assume(i1 %i.f)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.0.0.copyload.i.i = load ptr, ptr %i.g, align 8, !tbaa !28 ; 3 uses
+  %.sroa.0.0.copyload.i.i = load ptr, ptr %i.g, align 8, !tbaa !28 ; 5 uses
+  %5 = sub i64 15, %notmask.i.i
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i, i64 %5
+  %7 = icmp ule ptr %6, %0
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %9 = icmp ule ptr %8, %.sroa.0.0.copyload.i.i
+  %10 = select i1 %7, i1 true, i1 %9
+  tail call void @llvm.assume(i1 %10)
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.h, align 8, !tbaa !28
   %i.i = and i64 %i.d, 4611686018427387888
@@ -804,8 +840,19 @@ bb.h:                                             ; preds = %_ZN4absl12lts_20260
 define linkonce_odr dso_local void @_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE28find_or_prepare_insert_largeIS9_EESH_INSL_8iteratorEbERKT_(ptr dead_on_unwind noalias writable sret(%"struct.std::pair.59") align 8 %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(32) %2) local_unnamed_addr #11 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
-  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.a, align 8, !tbaa !28
-  %i.b = load i64, ptr %1, align 8
+  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.a, align 8, !tbaa !28 ; 3 uses
+  %i.b = load i64, ptr %1, align 8                ; 2 uses
+  %3 = and i64 %i.b, 255
+  %notmask.i.i.i.i.i = shl nsw i64 -1, %3         ; 2 uses
+  %4 = icmp samesign ugt i64 %notmask.i.i.i.i.i, -3
+  %5 = sub i64 15, %notmask.i.i.i.i.i
+  %6 = select i1 %4, i64 0, i64 %5
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i, i64 %6
+  %8 = icmp ule ptr %7, %1
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
+  %10 = icmp ule ptr %9, %.sroa.0.0.copyload.i.i.i.i
+  %11 = select i1 %8, i1 true, i1 %10
+  tail call void @llvm.assume(i1 %11)
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i, i32 0, i32 1, i32 1)
   %i.c = lshr i64 %i.b, 8
   %i.d = and i64 %i.c, 255
@@ -815,11 +862,19 @@ bb.a:
   %i.h = tail call noundef i64 @_ZN4absl12lts_2026052613hash_internal15MixingHashState18combine_contiguousES2_PKhm(i64 %i.d, ptr noundef %i.e, i64 noundef %i.g) ; 3 uses
   %i.i = load i64, ptr %1, align 8, !noalias !111
   %i.j = and i64 %i.i, 255
-  %notmask.i.i.i.i.i.i = shl nsw i64 -1, %i.j
+  %notmask.i.i.i.i.i.i = shl nsw i64 -1, %i.j     ; 5 uses
   %i.k = xor i64 %notmask.i.i.i.i.i.i, -1         ; 2 uses
   %i.l = lshr i64 %i.h, 57
   %i.m = trunc nuw nsw i64 %i.l to i8
-  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.a, align 8, !tbaa !28 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.a, align 8, !tbaa !28 ; 5 uses
+  %12 = icmp samesign ugt i64 %notmask.i.i.i.i.i.i, -3
+  %13 = sub i64 15, %notmask.i.i.i.i.i.i          ; 3 uses
+  %14 = select i1 %12, i64 0, i64 %13
+  %15 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i, i64 %14
+  %16 = icmp ule ptr %15, %1
+  %17 = icmp ule ptr %9, %.sroa.0.0.copyload.i.i.i
+  %18 = select i1 %16, i1 true, i1 %17
+  tail call void @llvm.assume(i1 %18)
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %.sroa.0.0.copyload.i.i.i3 = load ptr, ptr %i.n, align 8, !tbaa !28 ; 4 uses
   %i.o = insertelement <16 x i8> poison, i8 %i.m, i64 0
@@ -885,7 +940,11 @@ _ZN4absl12lts_2026052618container_internal18hash_policy_traitsINS1_17FlatHashMap
 bb.e:                                             ; preds = %_ZN4absl12lts_2026052618container_internal18hash_policy_traitsINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEvE5applyINS1_12EqualElementIS9_NS1_8StringEqEEEJRSt4pairIKS9_SB_EESC_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSN_DpOSO_.exit
   %i.aq = tail call noundef i64 @_ZN4absl12lts_2026052618container_internal18PrepareInsertLargeERNS1_12CommonFieldsERKNS1_15PolicyFunctionsEmNS1_18NonIterableBitMaskIjLi16ELi0EEENS1_8FindInfoE(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(72) @_ZZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE18GetPolicyFunctionsEvE5value, i64 noundef %i.h, i32 %i.ap, i64 %.sroa.639.0, i64 %.sroa.14.0)
   %.sroa.0.0.copyload.i.i.i.i7.pre = load ptr, ptr %i.a, align 8, !tbaa !28
+  %.pre = load i64, ptr %1, align 8
   %.sroa.0.0.copyload.i.i.i2.i.pre = load ptr, ptr %i.n, align 8, !tbaa !28
+  %.pre76 = and i64 %.pre, 255
+  %.pre77 = shl nsw i64 -1, %.pre76               ; 2 uses
+  %.pre78 = sub i64 15, %.pre77
   br label %_ZZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE28find_or_prepare_insert_largeIS9_EESH_INSL_8iteratorEbERKT_ENKUlvE_clEv.exit
 
 bb.f:                                             ; preds = %_ZN4absl12lts_2026052618container_internal18hash_policy_traitsINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEvE5applyINS1_12EqualElementIS9_NS1_8StringEqEEEJRSt4pairIKS9_SB_EESC_EEDTclsrT1_5applyclsr3stdE7forwardIT_Efp_Espclsr3stdE7forwardIT0_Efp0_EEEOSN_DpOSO_.exit
@@ -894,10 +953,19 @@ bb.f:                                             ; preds = %_ZN4absl12lts_20260
   br label %bb.b
 
 _ZZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE28find_or_prepare_insert_largeIS9_EESH_INSL_8iteratorEbERKT_ENKUlvE_clEv.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i, %bb.d, %bb.e
+  %.pre-phi79 = phi i64 [ %.pre78, %bb.e ], [ %13, %bb.d ], [ %13, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i ]
+  %notmask.i.i.i.i.i8.pre-phi = phi i64 [ %.pre77, %bb.e ], [ %notmask.i.i.i.i.i.i, %bb.d ], [ %notmask.i.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i ]
   %.sroa.0.0.copyload.i.i.i2.i = phi ptr [ %.sroa.0.0.copyload.i.i.i2.i.pre, %bb.e ], [ %.sroa.0.0.copyload.i.i.i3, %bb.d ], [ %.sroa.0.0.copyload.i.i.i3, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i ]
-  %.sroa.0.0.copyload.i.i.i.i7 = phi ptr [ %.sroa.0.0.copyload.i.i.i.i7.pre, %bb.e ], [ %.sroa.0.0.copyload.i.i.i, %bb.d ], [ %.sroa.0.0.copyload.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i7 = phi ptr [ %.sroa.0.0.copyload.i.i.i.i7.pre, %bb.e ], [ %.sroa.0.0.copyload.i.i.i, %bb.d ], [ %.sroa.0.0.copyload.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i ] ; 4 uses
   %.349.ph = phi i64 [ %i.aq, %bb.e ], [ %i.ad, %bb.d ], [ %i.ad, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i ] ; 2 uses
   %.3.ph = phi i8 [ 1, %bb.e ], [ 0, %bb.d ], [ 0, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i.i.i.i ]
+  %19 = icmp samesign ugt i64 %notmask.i.i.i.i.i8.pre-phi, -3
+  %20 = select i1 %19, i64 0, i64 %.pre-phi79
+  %21 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i7, i64 %20
+  %22 = icmp ule ptr %21, %1
+  %23 = icmp ule ptr %9, %.sroa.0.0.copyload.i.i.i.i7
+  %24 = select i1 %22, i1 true, i1 %23
+  tail call void @llvm.assume(i1 %24)
   %i.at = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i7, i64 %.349.ph
   %i.au = getelementptr inbounds nuw [40 x i8], ptr %.sroa.0.0.copyload.i.i.i2.i, i64 %.349.ph
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i.i.i7) ]
@@ -970,22 +1038,51 @@ bb.e:                                             ; preds = %bb.b
 _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE7destroyEPNS1_13map_slot_typeIS9_SB_EE.exit: ; preds = %bb.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i.i.i.i, %bb.c, %bb.e
   %i.l = load i64, ptr %0, align 8                ; 2 uses
   %i.m = and i64 %i.l, 255
-  %notmask.i.i.i.i = shl nsw i64 -1, %i.m         ; 4 uses
+  %notmask.i.i.i.i = shl nsw i64 -1, %i.m         ; 8 uses
   %i.n = add nsw i64 %notmask.i.i.i.i, 281474976710655
   %i.o = or i64 %i.n, %notmask.i.i.i.i
   %i.p = icmp eq i64 %i.o, -1
   call void @llvm.assume(i1 %i.p)
   %i.q = icmp samesign ugt i64 %notmask.i.i.i.i, -281474976710657
   call void @llvm.assume(i1 %i.q)
-  %i.r = and i64 %i.l, 65536
+  %i.r = and i64 %i.l, 65536                      ; 2 uses
+  %.not.i.i.i = icmp eq i64 %i.r, 0
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.0.0.copyload.i.i.i2.pre.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !28
-  %2 = xor i64 %notmask.i.i.i.i, -1
-  %3 = icmp ne i64 %i.r, 0
-  call void @_ZN4absl12lts_2026052618container_internal22DeallocateBackingArrayILm8ENS0_18debugging_internal14ProfileBuilder17HashtablezBarrierIcEEEEvPvmPNS1_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %2, ptr noundef %.sroa.0.0.copyload.i.i.i2.pre.i, i64 noundef 40, i64 noundef 8, i1 noundef zeroext %3)
+  %.sroa.0.0.copyload.i.i.i2.pre.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !28 ; 5 uses
+  br i1 %.not.i.i.i, label %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE5infozEv.exit_crit_edge.i, label %2
+
+._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE5infozEv.exit_crit_edge.i: ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE7destroyEPNS1_13map_slot_typeIS9_SB_EE.exit
+  %.pre.i = sub nsw i64 15, %notmask.i.i.i.i
+  br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE7deallocEv.exit
+
+2:                                                ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE7destroyEPNS1_13map_slot_typeIS9_SB_EE.exit
+  %3 = icmp samesign ugt i64 %notmask.i.i.i.i, -3
+  %4 = sub nsw i64 15, %notmask.i.i.i.i           ; 2 uses
+  %5 = select i1 %3, i64 0, i64 %4
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i2.pre.i, i64 %5
+  %7 = icmp ule ptr %6, %0
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %9 = icmp ule ptr %8, %.sroa.0.0.copyload.i.i.i2.pre.i
+  %10 = select i1 %7, i1 true, i1 %9
+  call void @llvm.assume(i1 %10)
+  br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE7deallocEv.exit
+
+_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE7deallocEv.exit: ; preds = %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE5infozEv.exit_crit_edge.i, %2
+  %.pre-phi.i = phi i64 [ %.pre.i, %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE5infozEv.exit_crit_edge.i ], [ %4, %2 ]
+  %11 = xor i64 %notmask.i.i.i.i, -1
+  %12 = icmp samesign ugt i64 %notmask.i.i.i.i, -3
+  %13 = select i1 %12, i64 0, i64 %.pre-phi.i
+  %14 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i2.pre.i, i64 %13
+  %15 = icmp ule ptr %14, %0
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %17 = icmp ule ptr %16, %.sroa.0.0.copyload.i.i.i2.pre.i
+  %18 = select i1 %15, i1 true, i1 %17
+  call void @llvm.assume(i1 %18)
+  %19 = icmp ne i64 %i.r, 0
+  call void @_ZN4absl12lts_2026052618container_internal22DeallocateBackingArrayILm8ENS0_18debugging_internal14ProfileBuilder17HashtablezBarrierIcEEEEvPvmPNS1_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %11, ptr noundef %.sroa.0.0.copyload.i.i.i2.pre.i, i64 noundef 40, i64 noundef 8, i1 noundef zeroext %19)
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.a, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE7destroyEPNS1_13map_slot_typeIS9_SB_EE.exit
+bb.f:                                             ; preds = %bb.a, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_18debugging_internal8StringIdEEEJNS1_10StringHashENS1_8StringEqENSA_14ProfileBuilder17HashtablezBarrierISt4pairIKS9_SB_EEEEE7deallocEv.exit
   ret void
 }
 

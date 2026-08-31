@@ -202,9 +202,12 @@ _ZN4llvm10TypeSwitchIN4mlir4TypeENS_9StringRefEE4CaseINS1_5async9ValueTypeEZNK12
   %i.f = inttoptr i64 %i.e to ptr
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !775
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %i.h, align 8, !tbaa !14
-  %i.i = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5async9ValueTypeEvE2idE
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %i.h, align 8, !tbaa !14 ; 2 uses
+  %6 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5async9TokenTypeEvE2idE
+  %i.i = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5async9ValueTypeEvE2idE ; 2 uses
   %.sroa.5.1 = select i1 %i.i, ptr @.str.15, ptr @.str.14
+  %.sroa.11.1 = or i1 %6, %i.i
+  tail call void @llvm.assume(i1 %.sroa.11.1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   call void @_ZN4mlir9TypeRangeC1EN4llvm8ArrayRefINS_4TypeEEE(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr null, i64 0) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
@@ -432,9 +435,12 @@ _ZN4llvm10TypeSwitchIN4mlir4TypeENS_9StringRefEE4CaseINS1_5async9ValueTypeEZNK12
   %i.f = inttoptr i64 %i.e to ptr
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !775
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %i.h, align 8, !tbaa !14
-  %i.i = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5async9ValueTypeEvE2idE
+  %.sroa.0.0.copyload.i.i.i.i.i.i.i.i = load ptr, ptr %i.h, align 8, !tbaa !14 ; 2 uses
+  %6 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5async9TokenTypeEvE2idE
+  %i.i = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_5async9ValueTypeEvE2idE ; 2 uses
   %.sroa.5.1 = select i1 %i.i, ptr @.str.17, ptr @.str.16
+  %.sroa.11.1 = or i1 %6, %i.i
+  tail call void @llvm.assume(i1 %.sroa.11.1)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   call void @_ZN4mlir9TypeRangeC1EN4llvm8ArrayRefINS_4TypeEEE(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr null, i64 0) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20

@@ -204,8 +204,12 @@ _ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit69._crit_edge: ; 
 bb.ac:                                            ; preds = %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit69._crit_edge, %bb.z
   %i.gk = phi i32 [ %.pre81, %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit69._crit_edge ], [ %i.fx, %bb.z ] ; 2 uses
   %i.gl = and i32 %i.gk, 16
-  %.not75 = icmp eq i32 %i.gl, 0
-  %i.gm = getelementptr inbounds nuw i8, ptr %1, i64 208
+  %.not75 = icmp eq i32 %i.gl, 0                  ; 2 uses
+  %i.gm = getelementptr inbounds nuw i8, ptr %1, i64 208 ; 2 uses
+  %2 = load ptr, ptr %i.gm, align 8
+  %3 = icmp ne ptr %2, null
+  %4 = select i1 %.not75, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %.not75, label %bb.ah, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
@@ -237,8 +241,12 @@ bb.ah:                                            ; preds = %bb.ac
 bb.ai:                                            ; preds = %bb.af, %bb.ah
   %i.gs = phi i32 [ %.pre82, %bb.af ], [ %i.gk, %bb.ah ] ; 2 uses
   %i.gt = and i32 %i.gs, 32
-  %.not76 = icmp eq i32 %i.gt, 0
-  %i.gu = getelementptr inbounds nuw i8, ptr %1, i64 216
+  %.not76 = icmp eq i32 %i.gt, 0                  ; 2 uses
+  %i.gu = getelementptr inbounds nuw i8, ptr %1, i64 216 ; 2 uses
+  %5 = load ptr, ptr %i.gu, align 8
+  %6 = icmp ne ptr %5, null
+  %7 = select i1 %.not76, i1 true, i1 %6
+  tail call void @llvm.assume(i1 %7)
   br i1 %.not76, label %bb.an, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
@@ -270,8 +278,12 @@ bb.an:                                            ; preds = %bb.ai
 bb.ao:                                            ; preds = %bb.al, %bb.an
   %i.ha = phi i32 [ %.pre83, %bb.al ], [ %i.gs, %bb.an ] ; 2 uses
   %i.hb = and i32 %i.ha, 64
-  %.not77 = icmp eq i32 %i.hb, 0
-  %i.hc = getelementptr inbounds nuw i8, ptr %1, i64 224
+  %.not77 = icmp eq i32 %i.hb, 0                  ; 2 uses
+  %i.hc = getelementptr inbounds nuw i8, ptr %1, i64 224 ; 2 uses
+  %8 = load ptr, ptr %i.hc, align 8
+  %9 = icmp ne ptr %8, null
+  %10 = select i1 %.not77, i1 true, i1 %9
+  tail call void @llvm.assume(i1 %10)
   br i1 %.not77, label %bb.at, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
@@ -303,8 +315,12 @@ bb.at:                                            ; preds = %bb.ao
 bb.au:                                            ; preds = %bb.ar, %bb.at
   %i.hi = phi i32 [ %.pre84, %bb.ar ], [ %i.ha, %bb.at ]
   %i.hj = and i32 %i.hi, 128
-  %.not78 = icmp eq i32 %i.hj, 0
-  %i.hk = getelementptr inbounds nuw i8, ptr %1, i64 232
+  %.not78 = icmp eq i32 %i.hj, 0                  ; 2 uses
+  %i.hk = getelementptr inbounds nuw i8, ptr %1, i64 232 ; 2 uses
+  %11 = load ptr, ptr %i.hk, align 8
+  %12 = icmp ne ptr %11, null
+  %13 = select i1 %.not78, i1 true, i1 %12
+  tail call void @llvm.assume(i1 %13)
   br i1 %.not78, label %bb.ay, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
@@ -707,8 +723,13 @@ bb.l:                                             ; preds = %_ZN11opencv_onnx9Ty
   %i.bd = phi ptr [ %spec.select56, %_ZN11opencv_onnx9TypeProto31_internal_mutable_sequence_typeEv.exit ], [ %i.aq, %_ZN11opencv_onnx9TypeProto31_internal_mutable_sequence_typeEv.exit.thread ] ; 3 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
   %i.bf = load i32, ptr %i.be, align 4, !tbaa !21
-  %i.bg = trunc i32 %i.bf to i1
-  %i.bh = getelementptr inbounds nuw i8, ptr %i.bd, i64 24
+  %i.bg = trunc i32 %i.bf to i1                   ; 2 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %i.bd, i64 24 ; 2 uses
+  %2 = load ptr, ptr %i.bh, align 8
+  %3 = icmp ne ptr %2, null
+  %not..i.i = xor i1 %i.bg, true
+  %4 = select i1 %not..i.i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.bg, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %bb.l
@@ -930,8 +951,13 @@ bb.af:                                            ; preds = %_ZN11opencv_onnx9Ty
   %i.ex = phi ptr [ %spec.select58, %_ZN11opencv_onnx9TypeProto31_internal_mutable_optional_typeEv.exit ], [ %i.ek, %_ZN11opencv_onnx9TypeProto31_internal_mutable_optional_typeEv.exit.thread ] ; 3 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ex, i64 16
   %i.ez = load i32, ptr %i.ey, align 4, !tbaa !21
-  %i.fa = trunc i32 %i.ez to i1
-  %i.fb = getelementptr inbounds nuw i8, ptr %i.ex, i64 24
+  %i.fa = trunc i32 %i.ez to i1                   ; 2 uses
+  %i.fb = getelementptr inbounds nuw i8, ptr %i.ex, i64 24 ; 2 uses
+  %5 = load ptr, ptr %i.fb, align 8
+  %6 = icmp ne ptr %5, null
+  %not..i = xor i1 %i.fa, true
+  %7 = select i1 %not..i, i1 true, i1 %6
+  tail call void @llvm.assume(i1 %7)
   br i1 %i.fa, label %bb.ag, label %bb.aj
 
 bb.ag:                                            ; preds = %bb.af
@@ -1334,8 +1360,12 @@ _ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit21._crit_edge: ; 
 bb.k:                                             ; preds = %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit21._crit_edge, %bb.h
   %i.bg = phi i32 [ %.pre23, %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit21._crit_edge ], [ %i.at, %bb.h ]
   %i.bh = and i32 %i.bg, 4
-  %.not22 = icmp eq i32 %i.bh, 0
-  %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 64
+  %.not22 = icmp eq i32 %i.bh, 0                  ; 2 uses
+  %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
+  %2 = load ptr, ptr %i.bi, align 8
+  %3 = icmp ne ptr %2, null
+  %4 = select i1 %.not22, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %.not22, label %bb.o, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -1738,8 +1768,13 @@ bb.c:                                             ; preds = %.noexc23
 
 bb.d:                                             ; preds = %.noexc16, %.noexc
   %i.ax = load i32, ptr %i.c, align 8, !tbaa !21  ; 2 uses
-  %i.ay = trunc i32 %i.ax to i1
-  %i.az = getelementptr inbounds nuw i8, ptr %1, i64 72
+  %i.ay = trunc i32 %i.ax to i1                   ; 2 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
+  %2 = load ptr, ptr %i.az, align 8
+  %3 = icmp ne ptr %2, null
+  %not..i = xor i1 %i.ay, true
+  %4 = select i1 %not..i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.ay, label %bb.e, label %bb.l
 
 bb.e:                                             ; preds = %bb.d
@@ -1786,8 +1821,12 @@ bb.l:                                             ; preds = %bb.d
 bb.m:                                             ; preds = %bb.g, %bb.l
   %i.bi = phi i32 [ %.pre, %bb.g ], [ %i.ax, %bb.l ]
   %i.bj = and i32 %i.bi, 2
-  %.not = icmp eq i32 %i.bj, 0
-  %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 80
+  %.not = icmp eq i32 %i.bj, 0                    ; 2 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
+  %5 = load ptr, ptr %i.bk, align 8
+  %6 = icmp ne ptr %5, null
+  %7 = select i1 %.not, i1 true, i1 %6
+  tail call void @llvm.assume(i1 %7)
   br i1 %.not, label %bb.q, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -2190,8 +2229,12 @@ _ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit54._crit_edge: ; 
 bb.y:                                             ; preds = %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit54._crit_edge, %bb.v
   %i.fi = phi i32 [ %.pre60, %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit54._crit_edge ], [ %i.ev, %bb.v ]
   %i.fj = and i32 %i.fi, 16
-  %.not57 = icmp eq i32 %i.fj, 0
-  %i.fk = getelementptr inbounds nuw i8, ptr %1, i64 176
+  %.not57 = icmp eq i32 %i.fj, 0                  ; 2 uses
+  %i.fk = getelementptr inbounds nuw i8, ptr %1, i64 176 ; 2 uses
+  %2 = load ptr, ptr %i.fk, align 8
+  %3 = icmp ne ptr %2, null
+  %4 = select i1 %.not57, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %.not57, label %bb.ac, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
@@ -2594,8 +2637,12 @@ _ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit69._crit_edge: ; 
 bb.ad:                                            ; preds = %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit69._crit_edge, %bb.aa
   %i.gn = phi i32 [ %.pre74, %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit69._crit_edge ], [ %i.ga, %bb.aa ]
   %i.go = and i32 %i.gn, 8
-  %.not72 = icmp eq i32 %i.go, 0
-  %i.gp = getelementptr inbounds nuw i8, ptr %1, i64 240
+  %.not72 = icmp eq i32 %i.go, 0                  ; 2 uses
+  %i.gp = getelementptr inbounds nuw i8, ptr %1, i64 240 ; 2 uses
+  %2 = load ptr, ptr %i.gp, align 8
+  %3 = icmp ne ptr %2, null
+  %4 = select i1 %.not72, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %.not72, label %bb.ah, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
@@ -2998,8 +3045,13 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.noexc13, %.noexc
   %i.y = load i32, ptr %i.c, align 8, !tbaa !21   ; 2 uses
-  %i.z = trunc i32 %i.y to i1
-  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %i.z = trunc i32 %i.y to i1                     ; 2 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
+  %2 = load ptr, ptr %i.aa, align 8
+  %3 = icmp ne ptr %2, null
+  %not..i = xor i1 %i.z, true
+  %4 = select i1 %not..i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.z, label %bb.d, label %bb.j
 
 bb.d:                                             ; preds = %bb.c
@@ -3041,8 +3093,12 @@ bb.j:                                             ; preds = %bb.c
 bb.k:                                             ; preds = %bb.f, %bb.j
   %i.ai = phi i32 [ %.pre, %bb.f ], [ %i.y, %bb.j ]
   %i.aj = and i32 %i.ai, 2
-  %.not = icmp eq i32 %i.aj, 0
-  %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %.not = icmp eq i32 %i.aj, 0                    ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
+  %5 = load ptr, ptr %i.ak, align 8
+  %6 = icmp ne ptr %5, null
+  %7 = select i1 %.not, i1 true, i1 %6
+  tail call void @llvm.assume(i1 %7)
   br i1 %.not, label %bb.o, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -3445,8 +3501,13 @@ define hidden void @_ZN11opencv_onnx16TypeProto_TensorC2ERKS0_(ptr noundef nonnu
 
 bb.a:                                             ; preds = %.noexc9, %.noexc
   %i.l = load i32, ptr %i.c, align 8, !tbaa !21
-  %i.m = trunc i32 %i.l to i1
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.m = trunc i32 %i.l to i1                     ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %2 = load ptr, ptr %i.n, align 8
+  %3 = icmp ne ptr %2, null
+  %not..i = xor i1 %i.m, true
+  %4 = select i1 %not..i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.m, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
@@ -3849,8 +3910,13 @@ define hidden void @_ZN11opencv_onnx18TypeProto_SequenceC2ERKS0_(ptr noundef non
 
 bb.a:                                             ; preds = %.noexc8, %.noexc
   %i.l = load i32, ptr %i.c, align 8, !tbaa !21
-  %i.m = trunc i32 %i.l to i1
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.m = trunc i32 %i.l to i1                     ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %2 = load ptr, ptr %i.n, align 8
+  %3 = icmp ne ptr %2, null
+  %not..i = xor i1 %i.m, true
+  %4 = select i1 %not..i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.m, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
@@ -4253,12 +4319,16 @@ define hidden void @_ZN11opencv_onnx18TypeProto_Sequence21CheckTypeAndMergeFromE
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load i32, ptr %i.a, align 8, !tbaa !21
-  %i.c = trunc i32 %i.b to i1
+  %i.c = trunc i32 %i.b to i1                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %2 = load ptr, ptr %i.d, align 8                ; 2 uses
+  %3 = icmp ne ptr %2, null
+  %not..i.i = xor i1 %i.c, true
+  %4 = select i1 %not..i.i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.c, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %2 = load ptr, ptr %i.d, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !21
   %i.g = or i32 %i.f, 1
@@ -4318,12 +4388,16 @@ define hidden void @_ZN11opencv_onnx18TypeProto_Sequence9MergeFromERKS0_(ptr nou
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load i32, ptr %i.a, align 8, !tbaa !21
-  %i.c = trunc i32 %i.b to i1
+  %i.c = trunc i32 %i.b to i1                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %2 = load ptr, ptr %i.d, align 8                ; 2 uses
+  %3 = icmp ne ptr %2, null
+  %not..i = xor i1 %i.c, true
+  %4 = select i1 %not..i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.c, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %2 = load ptr, ptr %i.d, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !21
   %i.g = or i32 %i.f, 1
@@ -4438,12 +4512,16 @@ bb.g:                                             ; preds = %_ZN11opencv_onnx9Ty
 _ZN11opencv_onnx18TypeProto_Sequence5ClearEv.exit: ; preds = %_ZN11opencv_onnx9TypeProto5ClearEv.exit.i, %bb.g
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.x = load i32, ptr %i.w, align 8, !tbaa !21
-  %i.y = trunc i32 %i.x to i1
+  %i.y = trunc i32 %i.x to i1                     ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %2 = load ptr, ptr %i.z, align 8                ; 2 uses
+  %3 = icmp ne ptr %2, null
+  %not..i.i = xor i1 %i.y, true
+  %4 = select i1 %not..i.i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.y, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %_ZN11opencv_onnx18TypeProto_Sequence5ClearEv.exit
-  %2 = load ptr, ptr %i.z, align 8
   %i.aa = load i32, ptr %i.b, align 8, !tbaa !21
   %i.ab = or i32 %i.aa, 1
   store i32 %i.ab, ptr %i.b, align 8, !tbaa !21
@@ -4595,8 +4673,13 @@ define hidden void @_ZN11opencv_onnx13TypeProto_MapC2ERKS0_(ptr noundef nonnull 
 
 bb.a:                                             ; preds = %.noexc9, %.noexc
   %i.l = load i32, ptr %i.c, align 8, !tbaa !21
-  %i.m = trunc i32 %i.l to i1
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.m = trunc i32 %i.l to i1                     ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %2 = load ptr, ptr %i.n, align 8
+  %3 = icmp ne ptr %2, null
+  %not..i = xor i1 %i.m, true
+  %4 = select i1 %not..i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.m, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
@@ -4999,8 +5082,13 @@ define hidden void @_ZN11opencv_onnx18TypeProto_OptionalC2ERKS0_(ptr noundef non
 
 bb.a:                                             ; preds = %.noexc8, %.noexc
   %i.l = load i32, ptr %i.c, align 8, !tbaa !21
-  %i.m = trunc i32 %i.l to i1
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.m = trunc i32 %i.l to i1                     ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %2 = load ptr, ptr %i.n, align 8
+  %3 = icmp ne ptr %2, null
+  %not..i = xor i1 %i.m, true
+  %4 = select i1 %not..i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.m, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
@@ -5403,12 +5491,16 @@ define hidden void @_ZN11opencv_onnx18TypeProto_Optional21CheckTypeAndMergeFromE
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load i32, ptr %i.a, align 8, !tbaa !21
-  %i.c = trunc i32 %i.b to i1
+  %i.c = trunc i32 %i.b to i1                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %2 = load ptr, ptr %i.d, align 8                ; 2 uses
+  %3 = icmp ne ptr %2, null
+  %not..i.i = xor i1 %i.c, true
+  %4 = select i1 %not..i.i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.c, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %2 = load ptr, ptr %i.d, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !21
   %i.g = or i32 %i.f, 1
@@ -5468,12 +5560,16 @@ define hidden void @_ZN11opencv_onnx18TypeProto_Optional9MergeFromERKS0_(ptr nou
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load i32, ptr %i.a, align 8, !tbaa !21
-  %i.c = trunc i32 %i.b to i1
+  %i.c = trunc i32 %i.b to i1                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %2 = load ptr, ptr %i.d, align 8                ; 2 uses
+  %3 = icmp ne ptr %2, null
+  %not..i = xor i1 %i.c, true
+  %4 = select i1 %not..i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.c, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %2 = load ptr, ptr %i.d, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !21
   %i.g = or i32 %i.f, 1
@@ -5588,12 +5684,16 @@ bb.g:                                             ; preds = %_ZN11opencv_onnx9Ty
 _ZN11opencv_onnx18TypeProto_Optional5ClearEv.exit: ; preds = %_ZN11opencv_onnx9TypeProto5ClearEv.exit.i, %bb.g
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.x = load i32, ptr %i.w, align 8, !tbaa !21
-  %i.y = trunc i32 %i.x to i1
+  %i.y = trunc i32 %i.x to i1                     ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %2 = load ptr, ptr %i.z, align 8                ; 2 uses
+  %3 = icmp ne ptr %2, null
+  %not..i.i = xor i1 %i.y, true
+  %4 = select i1 %not..i.i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.y, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %_ZN11opencv_onnx18TypeProto_Optional5ClearEv.exit
-  %2 = load ptr, ptr %i.z, align 8
   %i.aa = load i32, ptr %i.b, align 8, !tbaa !21
   %i.ab = or i32 %i.aa, 1
   store i32 %i.ab, ptr %i.b, align 8, !tbaa !21
@@ -5745,8 +5845,13 @@ define hidden void @_ZN11opencv_onnx22TypeProto_SparseTensorC2ERKS0_(ptr noundef
 
 bb.a:                                             ; preds = %.noexc9, %.noexc
   %i.l = load i32, ptr %i.c, align 8, !tbaa !21
-  %i.m = trunc i32 %i.l to i1
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.m = trunc i32 %i.l to i1                     ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %2 = load ptr, ptr %i.n, align 8
+  %3 = icmp ne ptr %2, null
+  %not..i = xor i1 %i.m, true
+  %4 = select i1 %not..i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.m, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
@@ -6149,12 +6254,16 @@ bb.k:                                             ; preds = %_ZNK6google8protobu
   %i.az = select i1 %i.aw, ptr %i.ay, ptr @_ZN11opencv_onnx37_TypeProto_Sequence_default_instance_E ; 3 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 16
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !21
-  %i.bc = trunc i32 %i.bb to i1
+  %i.bc = trunc i32 %i.bb to i1                   ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.az, i64 24 ; 2 uses
+  %2 = load ptr, ptr %i.bd, align 8               ; 2 uses
+  %3 = icmp ne ptr %2, null
+  %not..i.i = xor i1 %i.bc, true
+  %4 = select i1 %not..i.i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.bc, label %bb.l, label %.noexc26
 
 bb.l:                                             ; preds = %bb.k
-  %2 = load ptr, ptr %i.bd, align 8
   %i.be = getelementptr inbounds nuw i8, ptr %i.at, i64 16 ; 2 uses
   %i.bf = load i32, ptr %i.be, align 4, !tbaa !21
   %i.bg = or i32 %i.bf, 1
@@ -6336,12 +6445,16 @@ bb.aa:                                            ; preds = %_ZNK6google8protobu
   %i.dz = select i1 %i.dw, ptr %i.dy, ptr @_ZN11opencv_onnx37_TypeProto_Optional_default_instance_E ; 3 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 16
   %i.eb = load i32, ptr %i.ea, align 4, !tbaa !21
-  %i.ec = trunc i32 %i.eb to i1
+  %i.ec = trunc i32 %i.eb to i1                   ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %i.dz, i64 24 ; 2 uses
+  %5 = load ptr, ptr %i.ed, align 8               ; 2 uses
+  %6 = icmp ne ptr %5, null
+  %not..i.i49 = xor i1 %i.ec, true
+  %7 = select i1 %not..i.i49, i1 true, i1 %6
+  tail call void @llvm.assume(i1 %7)
   br i1 %i.ec, label %bb.ab, label %.noexc56
 
 bb.ab:                                            ; preds = %bb.aa
-  %3 = load ptr, ptr %i.ed, align 8
   %i.ee = getelementptr inbounds nuw i8, ptr %i.dt, i64 16 ; 2 uses
   %i.ef = load i32, ptr %i.ee, align 4, !tbaa !21
   %i.eg = or i32 %i.ef, 1
@@ -6374,7 +6487,7 @@ _ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit.i.i52: ; preds =
   br label %_ZN11opencv_onnx18TypeProto_Optional27_internal_mutable_elem_typeEv.exit.i
 
 _ZN11opencv_onnx18TypeProto_Optional27_internal_mutable_elem_typeEv.exit.i: ; preds = %.noexc55, %bb.ab
-  %i.er = phi ptr [ %.pre.i54, %.noexc55 ], [ %3, %bb.ab ] ; 2 uses
+  %i.er = phi ptr [ %.pre.i54, %.noexc55 ], [ %5, %bb.ab ] ; 2 uses
   %i.es = phi ptr [ %i.eq, %.noexc55 ], [ %i.ei, %bb.ab ]
   %.not.i.i51 = icmp eq ptr %i.er, null
   %i.et = select i1 %.not.i.i51, ptr @_ZN11opencv_onnx28_TypeProto_default_instance_E, ptr %i.er

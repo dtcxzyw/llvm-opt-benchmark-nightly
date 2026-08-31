@@ -205,8 +205,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 48
   %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i8 = load ptr, ptr %i.ax, align 8, !tbaa !221
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i8, i64 16
-  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !301
-  %.not1.i.i9 = icmp eq ptr %i.aw, null
+  %i.az = load ptr, ptr %i.ay, align 8, !tbaa !301 ; 2 uses
+  %14 = icmp ne ptr %i.az, @_ZN4mlir6detail14TypeIDResolverINS_3omp17UnrollHeuristicOpEvE2idE
+  %.not1.i.i9 = icmp eq ptr %i.aw, null           ; 2 uses
+  %.not.i.i10 = or i1 %.not1.i.i9, %14
+  call void @llvm.assume(i1 %.not.i.i10)
   %.sink16.i.sroa.gep.i.i = getelementptr inbounds nuw i8, ptr %8, i64 21
   %.sink16.i.sroa.gep1.i.i = getelementptr inbounds nuw i8, ptr %8, i64 30
   %i.ba = icmp ne ptr %i.az, @_ZN4mlir6detail14TypeIDResolverINS_3omp6FuseOpEvE2idE
