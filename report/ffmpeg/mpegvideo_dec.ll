@@ -204,11 +204,11 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !9
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 720
   %i.d = load i32, ptr %i.c, align 8, !tbaa !142  ; 38 uses
-  %i.e = lshr i32 8, %i.d                         ; 40 uses
+  %i.e = lshr i32 8, %i.d                         ; 41 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 3108 ; 6 uses
   %i.g = load i32, ptr %i.f, align 4, !tbaa !138  ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 3112 ; 2 uses
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !136  ; 16 uses
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !136  ; 18 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 2732
   %i.k = load i32, ptr %i.j, align 4, !tbaa !163
   switch i32 %i.k, label %bb.dm [
@@ -271,7 +271,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bb = zext nneg i32 %4 to i64
   %i.bc = getelementptr inbounds nuw [32 x i8], ptr %i.ba, i64 %i.bb
   %i.bd = load <2 x i32>, ptr %i.bc, align 16, !tbaa !37 ; 2 uses
-  %i.be = shl nuw nsw i32 %i.e, 1                 ; 4 uses
+  %i.be = shl nuw nsw i32 %i.e, 1                 ; 5 uses
   %i.bf = add nsw i32 %i.d, -1                    ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 3860
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !151 ; 2 uses
@@ -306,11 +306,10 @@ bb.b:                                             ; preds = %bb.a
   %i.ci = extractelement <2 x i32> %i.cb, i64 0   ; 2 uses
   %i.cj = ashr i32 %i.ci, %i.ch
   %i.ck = add nsw i32 %i.cj, %i.cg                ; 5 uses
-  %i.cl = mul i32 %i.i, %i.e                      ; 3 uses
-  %7 = shl i32 %i.cl, 1
+  %i.cl = mul i32 %i.be, %i.i
   %i.cm = extractelement <2 x i32> %i.cb, i64 1
   %i.cn = ashr i32 %i.cm, %i.ch
-  %i.co = add nsw i32 %i.cn, %7                   ; 6 uses
+  %i.co = add nsw i32 %i.cn, %i.cl                ; 6 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 360
   %i.cq = load i32, ptr %i.cp, align 8, !tbaa !143
   switch i32 %i.cq, label %bb.e [
@@ -334,9 +333,10 @@ bb.d:                                             ; preds = %bb.b
   %i.da = extractelement <2 x i32> %i.cx, i64 0
   %i.db = ashr i32 %i.da, %i.d
   %i.dc = add nsw i32 %i.db, %i.cf
+  %7 = mul nsw i32 %i.i, %i.e
   %i.dd = extractelement <2 x i32> %i.cx, i64 1
   %i.de = ashr i32 %i.dd, %i.d
-  %i.df = add nsw i32 %i.de, %i.cl
+  %i.df = add nsw i32 %i.de, %7
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.b
@@ -348,9 +348,10 @@ bb.f:                                             ; preds = %bb.e
   %i.di = extractelement <2 x i32> %i.dg, i64 0
   %i.dj = ashr i32 %i.di, %i.ch
   %i.dk = add nsw i32 %i.dj, %i.cf
+  %8 = mul nsw i32 %i.i, %i.e
   %i.dl = extractelement <2 x i32> %i.dg, i64 1
   %i.dm = ashr i32 %i.dl, %i.ch
-  %i.dn = add nsw i32 %i.dm, %i.cl
+  %i.dn = add nsw i32 %i.dm, %8
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.e
