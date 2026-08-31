@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_RNCINvNvNtNtNtNtCs
   br i1 %i.t, label %bb.c, label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator8position5checkmNCNCNvNtNtCskY9G75ZWc4U_11polars_expr8dispatch15groups_dispatch18backward_fill_nulls_00E0B1r_.exit.i.i.i, !dbg !144472
 
 _RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator8position5checkmNCNCNvNtNtCskY9G75ZWc4U_11polars_expr8dispatch15groups_dispatch18backward_fill_nulls_00E0B1r_.exit.i.i.i: ; preds = %bb.b
-  %i.u = add i64 %i.j, 1, !dbg !144473            ; 2 uses
+  %i.u = add nuw nsw i64 %i.j, 1, !dbg !144473    ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.u, %i.g, !dbg !144421
   br i1 %exitcond.not.i.i, label %.loopexit.i.i, label %bb.b, !dbg !144438
 
@@ -222,8 +222,8 @@ bb.c:                                             ; preds = %bb.b
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !144493
   %i.ab = load i32, ptr %i.aa, align 8, !dbg !144493, !noalias !144476, !noundef !14
   %i.ac = zext i32 %i.ab to i64, !dbg !144493     ; 4 uses
-  %i.ad = sub i64 %i.g, %i.j, !dbg !144494        ; 4 uses
-  %i.ae = add i64 %i.ad, -1, !dbg !144494         ; 3 uses
+  %i.ad = sub nsw i64 %i.g, %i.j, !dbg !144494    ; 4 uses
+  %i.ae = add nsw i64 %i.ad, -1, !dbg !144494     ; 3 uses
   %i.af = icmp ult i64 %i.ae, %i.ac, !dbg !144495
   br i1 %i.af, label %bb.d, label %bb.e, !dbg !144495
 

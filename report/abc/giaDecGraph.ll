@@ -205,7 +205,7 @@ _ZNKSt6vectorIN8DecGraph12DecisionNodeESaIS1_EE12_M_check_lenEmPKc.exit.i: ; pre
   store i32 -1, ptr %i.amj, align 8, !tbaa !254
   %i.amk = getelementptr inbounds nuw i8, ptr %.08.i.i.i30.i.prol, i64 44
   store i32 -1, ptr %i.amk, align 4, !tbaa !253
-  %i.aml = add nsw i64 %.057.i.i.i31.i.prol, -1   ; 2 uses
+  %i.aml = add i64 %.057.i.i.i31.i.prol, -1       ; 2 uses
   %i.amm = getelementptr inbounds nuw i8, ptr %.08.i.i.i30.i.prol, i64 48 ; 2 uses
   %prol.iter1269.next = add i64 %prol.iter1269, 1 ; 2 uses
   %prol.iter1269.cmp.not = icmp eq i64 %prol.iter1269.next, %xtraiter1267
@@ -259,7 +259,7 @@ _ZNKSt6vectorIN8DecGraph12DecisionNodeESaIS1_EE12_M_check_lenEmPKc.exit.i: ; pre
   store i32 -1, ptr %i.anf, align 8, !tbaa !254
   %i.ang = getelementptr inbounds nuw i8, ptr %.08.i.i.i30.i, i64 188
   store i32 -1, ptr %i.ang, align 4, !tbaa !253
-  %i.anh = add nsw i64 %.057.i.i.i31.i, -4        ; 2 uses
+  %i.anh = add i64 %.057.i.i.i31.i, -4            ; 2 uses
   %i.ani = getelementptr inbounds nuw i8, ptr %.08.i.i.i30.i, i64 192
   %.not.i.i.i32.i.3 = icmp eq i64 %i.anh, 0
   br i1 %.not.i.i.i32.i.3, label %_ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit34.i, label %.lr.ph.i.i.i29.i, !llvm.loop !410
@@ -662,7 +662,7 @@ _ZNKSt6vectorIN8DecGraph12DecisionNodeESaIS1_EE12_M_check_lenEmPKc.exit.i: ; pre
   store i32 -1, ptr %i.zp, align 8, !tbaa !254
   %i.zq = getelementptr inbounds nuw i8, ptr %.08.i.i.i30.i.prol, i64 44
   store i32 -1, ptr %i.zq, align 4, !tbaa !253
-  %i.zr = add nsw i64 %.057.i.i.i31.i.prol, -1    ; 2 uses
+  %i.zr = add i64 %.057.i.i.i31.i.prol, -1        ; 2 uses
   %i.zs = getelementptr inbounds nuw i8, ptr %.08.i.i.i30.i.prol, i64 48 ; 2 uses
   %prol.iter917.next = add i64 %prol.iter917, 1   ; 2 uses
   %prol.iter917.cmp.not = icmp eq i64 %prol.iter917.next, %xtraiter915
@@ -716,7 +716,7 @@ _ZNKSt6vectorIN8DecGraph12DecisionNodeESaIS1_EE12_M_check_lenEmPKc.exit.i: ; pre
   store i32 -1, ptr %i.aal, align 8, !tbaa !254
   %i.aam = getelementptr inbounds nuw i8, ptr %.08.i.i.i30.i, i64 188
   store i32 -1, ptr %i.aam, align 4, !tbaa !253
-  %i.aan = add nsw i64 %.057.i.i.i31.i, -4        ; 2 uses
+  %i.aan = add i64 %.057.i.i.i31.i, -4            ; 2 uses
   %i.aao = getelementptr inbounds nuw i8, ptr %.08.i.i.i30.i, i64 192
   %.not.i.i.i32.i.3 = icmp eq i64 %i.aan, 0
   br i1 %.not.i.i.i32.i.3, label %_ZSt27__uninitialized_default_n_aIPN8DecGraph12DecisionNodeEmS1_ET_S3_T0_RSaIT1_E.exit34.i, label %.lr.ph.i.i.i29.i, !llvm.loop !410
