@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %bb.c
 
 bb.v:                                             ; preds = %bb.u
   %.not42 = icmp ult i64 %i.ce, %i.i, !dbg !15380
-  br i1 %.not42, label %.preheader.preheader, label %.loopexit, !dbg !15380
+  br i1 %.not42, label %.preheader.split, label %.loopexit, !dbg !15380
 
 bb.w:                                             ; preds = %bb.u
   store i64 %i.ce, ptr %i.j, align 8, !dbg !15383
@@ -214,26 +214,26 @@ bb.w:                                             ; preds = %bb.u
   store i64 %i.ce, ptr %i.cg, align 8, !dbg !15384
   br label %bb.t, !dbg !15385
 
-.loopexit:                                        ; preds = %.preheader.preheader, %bb.x, %bb.v
-  %.sroa.02.0 = phi i64 [ %i.i, %bb.v ], [ %i.i, %bb.x ], [ %.sroa.08.0, %.preheader.preheader ], !dbg !15386 ; 2 uses
-  store i64 %.sroa.02.0, ptr %i.j, align 8, !dbg !15387
-  %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !15389
-  store i64 %i.k, ptr %i.ch, align 8, !dbg !15389
-  %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !15389
-  store i64 %.sroa.02.0, ptr %i.ci, align 8, !dbg !15389
+.preheader.split:                                 ; preds = %bb.v, %bb.x
+  %.sroa.08.0 = phi i64 [ %i.cj, %bb.x ], [ %i.ce, %bb.v ], !dbg !15386 ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 %.sroa.08.0, !dbg !15387
+  %3 = load i8, ptr %2, align 1, !dbg !15387, !noundef !15
+  %4 = icmp sgt i8 %3, -65, !dbg !15389
+  br i1 %4, label %.loopexit, label %bb.x, !dbg !15387
+
+.loopexit:                                        ; preds = %.preheader.split, %bb.x, %bb.v
+  %.sroa.02.0 = phi i64 [ %i.i, %bb.v ], [ %i.i, %bb.x ], [ %.sroa.08.0, %.preheader.split ], !dbg !15392 ; 2 uses
+  store i64 %.sroa.02.0, ptr %i.j, align 8, !dbg !15393
+  %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !15395
+  store i64 %i.k, ptr %i.ch, align 8, !dbg !15395
+  %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !15395
+  store i64 %.sroa.02.0, ptr %i.ci, align 8, !dbg !15395
   br label %bb.t, !dbg !15385
 
-.preheader.preheader:                             ; preds = %bb.v, %bb.x
-  %.sroa.08.0 = phi i64 [ %i.cj, %bb.x ], [ %i.ce, %bb.v ], !dbg !15390 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 %.sroa.08.0, !dbg !15391
-  %3 = load i8, ptr %2, align 1, !dbg !15391, !noundef !15
-  %4 = icmp sgt i8 %3, -65, !dbg !15393
-  br i1 %4, label %.loopexit, label %bb.x, !dbg !15391
-
-bb.x:                                             ; preds = %.preheader.preheader
+bb.x:                                             ; preds = %.preheader.split
   %i.cj = add i64 %.sroa.08.0, 1, !dbg !15396     ; 2 uses
   %exitcond96.not = icmp eq i64 %i.cj, %i.i, !dbg !15397
-  br i1 %exitcond96.not, label %.loopexit, label %.preheader.preheader, !dbg !15397
+  br i1 %exitcond96.not, label %.loopexit, label %.preheader.split, !dbg !15397
 
 bb.y:                                             ; preds = %bb.d
   %i.ck = getelementptr inbounds nuw i8, ptr %1, i64 72, !dbg !15254
@@ -447,30 +447,30 @@ _RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_14Rej
 .split.us:                                        ; preds = %.lr.ph.i.split, %bb.z
   %.us-phi = phi i64 [ %i.di, %bb.z ], [ %i.eh, %.lr.ph.i.split ], !dbg !15502 ; 5 uses
   %.not = icmp ult i64 %.us-phi, %i.o, !dbg !15505
-  br i1 %.not, label %.preheader58.preheader, label %.loopexit59, !dbg !15505
+  br i1 %.not, label %.preheader58.split, label %.loopexit59, !dbg !15505
 
-.loopexit59:                                      ; preds = %.sink.split.i, %.loopexit137, %.preheader58.preheader, %bb.aj, %bb.y, %.split.us
-  %i.fj = phi i64 [ %.us-phi, %.split.us ], [ %i.o, %bb.y ], [ %.us-phi, %.preheader58.preheader ], [ %i.o, %.loopexit137 ], [ %.us-phi, %bb.aj ], [ %i.o, %.sink.split.i ], !dbg !15508
-  %.sroa.018.0 = phi i64 [ %i.o, %.split.us ], [ %i.o, %bb.y ], [ %i.o, %bb.aj ], [ %i.o, %.loopexit137 ], [ %.sroa.013.0, %.preheader58.preheader ], [ %i.o, %.sink.split.i ], !dbg !15510 ; 2 uses
+.preheader58.split:                               ; preds = %.split.us, %bb.aj
+  %.sroa.013.0 = phi i64 [ %i.fm, %bb.aj ], [ %.us-phi, %.split.us ], !dbg !15508 ; 3 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.co, i64 %.sroa.013.0, !dbg !15509
+  %6 = load i8, ptr %5, align 1, !dbg !15509, !noundef !15
+  %7 = icmp sgt i8 %6, -65, !dbg !15511
+  br i1 %7, label %.loopexit59, label %bb.aj, !dbg !15509
+
+.loopexit59:                                      ; preds = %.sink.split.i, %.loopexit137, %.preheader58.split, %bb.aj, %bb.y, %.split.us
+  %i.fj = phi i64 [ %.us-phi, %.split.us ], [ %i.o, %bb.y ], [ %.us-phi, %.preheader58.split ], [ %i.o, %.loopexit137 ], [ %.us-phi, %bb.aj ], [ %i.o, %.sink.split.i ], !dbg !15514
+  %.sroa.018.0 = phi i64 [ %i.o, %.split.us ], [ %i.o, %bb.y ], [ %i.o, %bb.aj ], [ %i.o, %.loopexit137 ], [ %.sroa.013.0, %.preheader58.split ], [ %i.o, %.sink.split.i ], !dbg !15516 ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !15502
   %i.fl = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !15502
-  %..i = tail call noundef i64 @llvm.umax.i64(i64 %i.fj, i64 %.sroa.018.0), !dbg !15511
-  store i64 %..i, ptr %i.l, align 8, !dbg !15515
-  store i64 %i.m, ptr %i.fk, align 8, !dbg !15516
-  store i64 %.sroa.018.0, ptr %i.fl, align 8, !dbg !15516
-  br label %bb.t, !dbg !15517
+  %..i = tail call noundef i64 @llvm.umax.i64(i64 %i.fj, i64 %.sroa.018.0), !dbg !15517
+  store i64 %..i, ptr %i.l, align 8, !dbg !15521
+  store i64 %i.m, ptr %i.fk, align 8, !dbg !15522
+  store i64 %.sroa.018.0, ptr %i.fl, align 8, !dbg !15522
+  br label %bb.t, !dbg !15523
 
-.preheader58.preheader:                           ; preds = %.split.us, %bb.aj
-  %.sroa.013.0 = phi i64 [ %i.fm, %bb.aj ], [ %.us-phi, %.split.us ], !dbg !15518 ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.co, i64 %.sroa.013.0, !dbg !15519
-  %6 = load i8, ptr %5, align 1, !dbg !15519, !noundef !15
-  %7 = icmp sgt i8 %6, -65, !dbg !15521
-  br i1 %7, label %.loopexit59, label %bb.aj, !dbg !15519
-
-bb.aj:                                            ; preds = %.preheader58.preheader
+bb.aj:                                            ; preds = %.preheader58.split
   %i.fm = add nuw i64 %.sroa.013.0, 1, !dbg !15524 ; 2 uses
   %exitcond.not = icmp eq i64 %i.fm, %i.o, !dbg !15525
-  br i1 %exitcond.not, label %.loopexit59, label %.preheader58.preheader, !dbg !15525
+  br i1 %exitcond.not, label %.loopexit59, label %.preheader58.split, !dbg !15525
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
@@ -873,18 +873,18 @@ begin_hunk_1_@llvm.umin.i64
 !15383 = !DILocation(line: 1167, column: 21, scope: !15251)
 !15384 = !DILocation(line: 1168, column: 21, scope: !15251)
 !15385 = !DILocation(line: 1166, column: 17, scope: !15251)
-!15386 = !DILocation(line: 0, scope: !15381, inlinedAt: !15382)
-!15387 = !DILocation(line: 1173, column: 21, scope: !15388)
-!15388 = distinct !DILexicalBlock(scope: !15251, file: !40, line: 1172, column: 21)
-!15389 = !DILocation(line: 1174, column: 21, scope: !15388)
-!15390 = !DILocation(line: 1172, scope: !15251)
-!15391 = !DILocation(line: 486, column: 20, scope: !15392, inlinedAt: !15382)
-!15392 = distinct !DILexicalBlock(scope: !15381, file: !10, line: 485, column: 13)
-!15393 = !DILocation(line: 1231, column: 9, scope: !15394, inlinedAt: !15395)
-!15394 = distinct !DISubprogram(name: "is_utf8_char_boundary", linkageName: "_RNvMs4_NtCskKLDkoKarTP_4core3numh21is_utf8_char_boundary", scope: !15282, file: !5583, line: 1229, type: !14, scopeLine: 1229, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !7, templateParams: !15)
-!15395 = !DILocation(line: 486, column: 39, scope: !15392, inlinedAt: !15382)
-!15396 = !DILocation(line: 487, column: 17, scope: !15392, inlinedAt: !15382)
-!15397 = !DILocation(line: 488, column: 20, scope: !15392, inlinedAt: !15382)
+!15386 = !DILocation(line: 1172, scope: !15251)
+!15387 = !DILocation(line: 486, column: 20, scope: !15388, inlinedAt: !15382)
+!15388 = distinct !DILexicalBlock(scope: !15381, file: !10, line: 485, column: 13)
+!15389 = !DILocation(line: 1231, column: 9, scope: !15390, inlinedAt: !15391)
+!15390 = distinct !DISubprogram(name: "is_utf8_char_boundary", linkageName: "_RNvMs4_NtCskKLDkoKarTP_4core3numh21is_utf8_char_boundary", scope: !15282, file: !5583, line: 1229, type: !14, scopeLine: 1229, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !7, templateParams: !15)
+!15391 = !DILocation(line: 486, column: 39, scope: !15388, inlinedAt: !15382)
+!15392 = !DILocation(line: 0, scope: !15381, inlinedAt: !15382)
+!15393 = !DILocation(line: 1173, column: 21, scope: !15394)
+!15394 = distinct !DILexicalBlock(scope: !15251, file: !40, line: 1172, column: 21)
+!15395 = !DILocation(line: 1174, column: 21, scope: !15394)
+!15396 = !DILocation(line: 487, column: 17, scope: !15388, inlinedAt: !15382)
+!15397 = !DILocation(line: 488, column: 20, scope: !15388, inlinedAt: !15382)
 !15398 = !DILocation(line: 1186, column: 31, scope: !15253)
 !15399 = !DILocation(line: 1188, column: 21, scope: !15400)
 !15400 = distinct !DILexicalBlock(scope: !15253, file: !40, line: 1186, column: 17)
@@ -995,24 +995,24 @@ begin_hunk_1_@llvm.umin.i64
 !15505 = !DILocation(line: 482, column: 12, scope: !15381, inlinedAt: !15506)
 !15506 = !DILocation(line: 1194, column: 47, scope: !15507)
 !15507 = distinct !DILexicalBlock(scope: !15400, file: !40, line: 1192, column: 21)
-!15508 = !DILocation(line: 1195, column: 57, scope: !15509)
-!15509 = distinct !DILexicalBlock(scope: !15507, file: !40, line: 1194, column: 25)
-!15510 = !DILocation(line: 0, scope: !15381, inlinedAt: !15506)
-!15511 = !DILocation(line: 1099, column: 5, scope: !1398, inlinedAt: !15512)
-!15512 = distinct !DILocation(line: 1742, column: 8, scope: !15513, inlinedAt: !15514)
-!15513 = distinct !DISubprogram(name: "max<usize>", linkageName: "_RINvNtCskKLDkoKarTP_4core3cmp3maxjECs2NzvFoTxuAy_2rg", scope: !1401, file: !1399, line: 1741, type: !14, scopeLine: 1741, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !7, templateParams: !15)
-!15514 = !DILocation(line: 1195, column: 45, scope: !15509)
-!15515 = !DILocation(line: 1195, column: 25, scope: !15509)
-!15516 = !DILocation(line: 1196, column: 25, scope: !15509)
-!15517 = !DILocation(line: 1197, column: 21, scope: !15400)
-!15518 = !DILocation(line: 0, scope: !15400)
-!15519 = !DILocation(line: 486, column: 20, scope: !15520, inlinedAt: !15506)
-!15520 = distinct !DILexicalBlock(scope: !15381, file: !10, line: 485, column: 13)
-!15521 = !DILocation(line: 1231, column: 9, scope: !15394, inlinedAt: !15522)
-!15522 = !DILocation(line: 486, column: 39, scope: !15523, inlinedAt: !15506)
-!15523 = !DILexicalBlockFile(scope: !15520, file: !10, discriminator: 2)
-!15524 = !DILocation(line: 487, column: 17, scope: !15520, inlinedAt: !15506)
-!15525 = !DILocation(line: 488, column: 20, scope: !15520, inlinedAt: !15506)
+!15508 = !DILocation(line: 0, scope: !15400)
+!15509 = !DILocation(line: 486, column: 20, scope: !15510, inlinedAt: !15506)
+!15510 = distinct !DILexicalBlock(scope: !15381, file: !10, line: 485, column: 13)
+!15511 = !DILocation(line: 1231, column: 9, scope: !15390, inlinedAt: !15512)
+!15512 = !DILocation(line: 486, column: 39, scope: !15513, inlinedAt: !15506)
+!15513 = !DILexicalBlockFile(scope: !15510, file: !10, discriminator: 2)
+!15514 = !DILocation(line: 1195, column: 57, scope: !15515)
+!15515 = distinct !DILexicalBlock(scope: !15507, file: !40, line: 1194, column: 25)
+!15516 = !DILocation(line: 0, scope: !15381, inlinedAt: !15506)
+!15517 = !DILocation(line: 1099, column: 5, scope: !1398, inlinedAt: !15518)
+!15518 = distinct !DILocation(line: 1742, column: 8, scope: !15519, inlinedAt: !15520)
+!15519 = distinct !DISubprogram(name: "max<usize>", linkageName: "_RINvNtCskKLDkoKarTP_4core3cmp3maxjECs2NzvFoTxuAy_2rg", scope: !1401, file: !1399, line: 1741, type: !14, scopeLine: 1741, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !7, templateParams: !15)
+!15520 = !DILocation(line: 1195, column: 45, scope: !15515)
+!15521 = !DILocation(line: 1195, column: 25, scope: !15515)
+!15522 = !DILocation(line: 1196, column: 25, scope: !15515)
+!15523 = !DILocation(line: 1197, column: 21, scope: !15400)
+!15524 = !DILocation(line: 487, column: 17, scope: !15510, inlinedAt: !15506)
+!15525 = !DILocation(line: 488, column: 20, scope: !15510, inlinedAt: !15506)
 !15526 = distinct !DISubprogram(name: "doc_category", linkageName: "_RNvXsw_NtNtCs2NzvFoTxuAy_2rg5flags4defsNtB5_15HyperlinkFormatNtB7_4Flag12doc_category", scope: !15527, file: !11497, line: 2910, type: !14, scopeLine: 2910, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !7, templateParams: !15)
 !15527 = !DINamespace(name: "{impl#34}", scope: !11499)
 !15528 = !DILocation(line: 2912, column: 6, scope: !15526)

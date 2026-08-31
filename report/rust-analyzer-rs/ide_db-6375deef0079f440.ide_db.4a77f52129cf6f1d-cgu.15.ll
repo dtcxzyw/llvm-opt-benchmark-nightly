@@ -205,14 +205,21 @@ bb.h:                                             ; preds = %_RNvXs3_NtNtCshzWfH
   %i.au = sub i64 %i.at, %i.as
   %i.av = add i64 %i.au, 1                        ; 2 uses
   %.not = icmp ult i64 %i.av, %2
-  br i1 %.not, label %.preheader.preheader, label %.loopexit
+  br i1 %.not, label %.preheader.split, label %.loopexit
 
 .loopexit39:                                      ; preds = %bb.g, %bb.a
   tail call void @_RNvNtCshzWfHUSfYae_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @27, i64 noundef 35, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @28) #38
   unreachable
 
-.loopexit:                                        ; preds = %.preheader.preheader, %bb.h
-  %.sroa.02.0 = phi i64 [ %2, %bb.h ], [ %.sroa.08.0, %.preheader.preheader ] ; 7 uses
+.preheader.split:                                 ; preds = %bb.h, %bb.j
+  %.sroa.08.0 = phi i64 [ %i.bd, %bb.j ], [ %i.av, %bb.h ] ; 3 uses
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.08.0
+  %4 = load i8, ptr %3, align 1, !noundef !18
+  %5 = icmp sgt i8 %4, -65
+  br i1 %5, label %.loopexit, label %bb.j
+
+.loopexit:                                        ; preds = %.preheader.split, %bb.h
+  %.sroa.02.0 = phi i64 [ %2, %bb.h ], [ %.sroa.08.0, %.preheader.split ] ; 7 uses
   %i.aw = icmp eq i64 %.sroa.02.0, 0
   br i1 %i.aw, label %_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checked.exit, label %.thread
 
@@ -236,17 +243,10 @@ bb.i:                                             ; preds = %.thread
   %i.bc = sub i64 %2, %.sroa.02.02763
   br label %_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checked.exit
 
-.preheader.preheader:                             ; preds = %bb.h, %bb.j
-  %.sroa.08.0 = phi i64 [ %i.bd, %bb.j ], [ %i.av, %bb.h ] ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.08.0
-  %4 = load i8, ptr %3, align 1, !noundef !18
-  %5 = icmp sgt i8 %4, -65
-  br i1 %5, label %.loopexit, label %bb.j
-
-bb.j:                                             ; preds = %.preheader.preheader
+bb.j:                                             ; preds = %.preheader.split
   %i.bd = add nuw i64 %.sroa.08.0, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.bd, %2
-  br i1 %exitcond.not, label %.split.i, label %.preheader.preheader
+  br i1 %exitcond.not, label %.split.i, label %.preheader.split
 
 _RNvMNtCshzWfHUSfYae_4core3stre16split_at_checked.exit: ; preds = %.split.i, %.loopexit
   %.sroa.02.025 = phi i64 [ 0, %.loopexit ], [ %.sroa.02.02763, %.split.i ]

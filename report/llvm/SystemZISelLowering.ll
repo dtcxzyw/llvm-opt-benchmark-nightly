@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   br label %_ZL19CC_SystemZ_XPLINK64jN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateE.exit.thread
 
 .thread102.i:                                     ; preds = %.critedge2.i, %bb.w, %bb.t, %bb.s
-  %.pre175183.i = phi i16 [ %.pr98.i, %bb.s ], [ %.pr101.i, %bb.t ], [ 8, %bb.w ], [ %.pre169.i, %.critedge2.i ] ; 4 uses
+  %.pre175183.i = phi i16 [ %.pr101.i, %bb.t ], [ %.pr98.i, %bb.s ], [ 8, %bb.w ], [ %.pre169.i, %.critedge2.i ] ; 4 uses
   %i.er = load ptr, ptr %i.e, align 8, !tbaa !766, !nonnull !19, !align !74
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 16
   %i.et = load ptr, ptr %i.es, align 8, !tbaa !434, !nonnull !19, !align !74
@@ -608,7 +608,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.q = and i32 %.pre153.i, 16384
   %.not.i.i.2.i = icmp eq i32 %i.q, 0
-  br i1 %.not.i.i.2.i, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit.i, label %.thread77.i.thread
+  br i1 %.not.i.i.2.i, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit.i, label %bb.k
 
 _ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit.i: ; preds = %bb.g, %bb.f, %bb.e
   %.0613.i.i.lcssa.wide.i = phi i64 [ 0, %bb.e ], [ 1, %bb.f ], [ 2, %bb.g ]
@@ -666,12 +666,12 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.aq = icmp eq i32 %.pre32.a, 0
   br i1 %i.aq, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit71.i, label %.thread77.i.thread
 
-.thread77.i.thread:                               ; preds = %bb.g, %.thread77.i
+.thread77.i.thread:                               ; preds = %.thread77.i
   %i.ar = and i32 %.pre153.i, 8192
   %.not.i.i68.1.i = icmp eq i32 %i.ar, 0
   br i1 %.not.i.i68.1.i, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit71.i, label %bb.k
 
-bb.k:                                             ; preds = %.thread77.i.thread
+bb.k:                                             ; preds = %bb.g, %.thread77.i.thread
   %i.as = and i32 %.pre153.i, 4096
   %.not.i.i68.2.i = icmp eq i32 %i.as, 0
   br i1 %.not.i.i68.2.i, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit71.i, label %.thread110.i
@@ -1074,7 +1074,7 @@ bb.m:                                             ; preds = %bb.l
   %.not.i.i40.2 = icmp eq i32 %i.dd, 0
   br i1 %.not.i.i40.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit.thread
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.k, %bb.l, %bb.m, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j
   %.sink87 = phi i16 [ %i.br, %bb.j ], [ %i.ah, %bb.f ], [ %i.aq, %bb.g ], [ %i.az, %bb.h ], [ %i.bi, %bb.i ], [ %i.cd, %bb.k ], [ %i.cm, %bb.l ], [ %i.cv, %bb.m ] ; 3 uses
   call void @_ZN4llvm7CCState13MarkAllocatedEt(ptr noundef nonnull align 8 dereferenceable(420) %5, i16 noundef zeroext %.sink87) #27
   %.not = icmp eq i16 %.sink87, 0
@@ -1386,7 +1386,7 @@ bb.c:                                             ; preds = %bb.b
   %.not.i.i.2 = icmp eq i32 %i.ae, 0
   br i1 %.not.i.i.2, label %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit.thread
 
-_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i: ; preds = %.critedge, %bb.b, %bb.c
+_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i: ; preds = %bb.c, %bb.b, %.critedge
   %i.af = phi i16 [ %i.e, %.critedge ], [ %i.n, %bb.b ], [ %i.w, %bb.c ]
   tail call void @_ZN4llvm7CCState13MarkAllocatedEt(ptr noundef nonnull align 8 dereferenceable(420) %5, i16 noundef zeroext %i.af) #27
   %.pr.pre = load i16, ptr %2, align 2, !tbaa !212
@@ -1452,7 +1452,7 @@ bb.e:                                             ; preds = %bb.d
   %.not.i.i19.2 = icmp eq i32 %i.bq, 0
   br i1 %.not.i.i19.2, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit22, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit22.thread
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit22: ; preds = %bb.e, %bb.d, %.critedge2
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit22: ; preds = %.critedge2, %bb.d, %bb.e
   %i.br = phi i16 [ %i.aq, %.critedge2 ], [ %i.az, %bb.d ], [ %i.bi, %bb.e ]
   tail call void @_ZN4llvm7CCState13MarkAllocatedEt(ptr noundef nonnull align 8 dereferenceable(420) %5, i16 noundef zeroext %i.br) #27
   %.pre = load ptr, ptr %i.ao, align 8, !tbaa !21 ; 2 uses
@@ -1489,7 +1489,7 @@ bb.f:                                             ; preds = %_ZN4llvm7CCState11A
   %.not.i.i24.2 = icmp eq i32 %i.cl, 0
   br i1 %.not.i.i24.2, label %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i26, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit27
 
-_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i26: ; preds = %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit22, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit22.thread, %bb.f
+_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i26: ; preds = %bb.f, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit22.thread, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit22
   %i.cm = phi i16 [ %i.aq, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit22 ], [ %i.bu, %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit22.thread ], [ %i.cd, %bb.f ]
   tail call void @_ZN4llvm7CCState13MarkAllocatedEt(ptr noundef nonnull align 8 dereferenceable(420) %5, i16 noundef zeroext %i.cm) #27
   br label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit27
