@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !9060)
   %i.an = load ptr, ptr %i.o, align 8, !alias.scope !9062, !noalias !9063, !noundef !10 ; 2 uses
   %i.ao = icmp eq ptr %i.an, null                 ; 2 uses
-  %i.ap = load ptr, ptr %i.am, align 8, !alias.scope !9064, !noalias !9065, !noundef !10 ; 3 uses
+  %i.ap = load ptr, ptr %i.am, align 8, !alias.scope !9064, !noalias !9065, !noundef !10 ; 2 uses
   %i.aq = icmp eq ptr %i.ap, null                 ; 3 uses
   %i.ar = xor i1 %i.ao, %i.aq
   br i1 %i.ar, label %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterINtNtCsdovh4xi6v3I_4span6ast_id9FileAstIdNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ItemENtNtNtCsileJQcQObtj_7hir_def9item_tree5attrs10AttrsOrCfgENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB3o_3all5checkTRBV_RB2t_ENCNvXs4_B6_INtB6_7HashMapBV_B2t_NtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherENtNtB3w_3cmp9PartialEq2eq0E0INtNtNtB3w_3ops12control_flow11ControlFlowuEEB2z_.exit, label %bb.h
@@ -254,27 +254,26 @@ tailrecurse.i.i.i.i.i.i.i:                        ; preds = %.lr.ph.i.i.i.i.i.i.
 bb.j:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i
   %i.bh = getelementptr inbounds nuw i8, ptr %.tr16.i.i.i.i.i.i.i, i64 8
   %i.bi = getelementptr inbounds nuw i8, ptr %.tr717.i.i.i.i.i.i.i, i64 8
-  %.val.i.i.i.i.i.i.i.a = load ptr, ptr %i.bh, align 8, !noalias !9071, !noundef !10 ; 2 uses
-  %.val5.i.i.i.i.i.i.i = load ptr, ptr %i.bi, align 8, !noalias !9072, !noundef !10 ; 3 uses
-  %i.bj = icmp ne ptr %.val.i.i.i.i.i.i.i.a, null ; 2 uses
-  %i.bk = icmp eq ptr %.val5.i.i.i.i.i.i.i, null  ; 3 uses
+  %.val.i.i.i.i.i.i.i = load ptr, ptr %i.bh, align 8, !noalias !9071, !noundef !10 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.tr16.i.i.i.i.i.i.i, i64 16
+  %.val4.i.i.i.i.i.i.i = load ptr, ptr %2, align 8, !noalias !9071 ; 3 uses
+  %.val.i.i.i.i.i.i.i.a = load ptr, ptr %i.bi, align 8, !noalias !9072, !noundef !10 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.tr717.i.i.i.i.i.i.i, i64 16
+  %.val5.i.i.i.i.i.i.i = load ptr, ptr %3, align 8, !noalias !9072 ; 3 uses
+  %i.bj = icmp ne ptr %.val.i.i.i.i.i.i.i, null   ; 2 uses
+  %i.bk = icmp eq ptr %.val.i.i.i.i.i.i.i.a, null ; 3 uses
   %not..i.i.i.i.i.i.i.i = xor i1 %i.bk, true
   %i.bl = xor i1 %i.bj, %i.bk
   br i1 %i.bl, label %bb.k, label %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterINtNtCsdovh4xi6v3I_4span6ast_id9FileAstIdNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ItemENtNtNtCsileJQcQObtj_7hir_def9item_tree5attrs10AttrsOrCfgENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB3o_3all5checkTRBV_RB2t_ENCNvXs4_B6_INtB6_7HashMapBV_B2t_NtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherENtNtB3w_3cmp9PartialEq2eq0E0INtNtNtB3w_3ops12control_flow11ControlFlowuEEB2z_.exit
 
 bb.k:                                             ; preds = %bb.j
-  %2 = getelementptr inbounds nuw i8, ptr %.tr717.i.i.i.i.i.i.i, i64 16
-  %.val6.i.i.i.i.i.i.i = load ptr, ptr %2, align 8, !noalias !9072
-  %3 = getelementptr inbounds nuw i8, ptr %.tr16.i.i.i.i.i.i.i, i64 16
-  %.val4.i.i.i.i.i.i.i = load ptr, ptr %3, align 8, !noalias !9071
-  %4 = icmp eq ptr %.val4.i.i.i.i.i.i.i, %.val6.i.i.i.i.i.i.i ; 2 uses
   br i1 %i.bj, label %.split7.i.i.i.i.i.i, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i.i.i.i.i
 
 .split7.i.i.i.i.i.i:                              ; preds = %bb.k
   call void @llvm.assume(i1 %not..i.i.i.i.i.i.i.i)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5.i.i.i.i.i.i.i) ]
-  %i.bm = icmp eq ptr %.val.i.i.i.i.i.i.i.a, %.val5.i.i.i.i.i.i.i
-  %spec.select.i.i.i.i.i.i.i.i = select i1 %i.bm, i1 %4, i1 false
+  %4 = icmp eq ptr %.val.i.i.i.i.i.i.i, %.val.i.i.i.i.i.i.i.a
+  %i.bm = icmp eq ptr %.val4.i.i.i.i.i.i.i, %.val5.i.i.i.i.i.i.i
+  %spec.select.i.i.i.i.i.i.i.i = select i1 %4, i1 %i.bm, i1 false
   br i1 %spec.select.i.i.i.i.i.i.i.i, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread5.i.i.i.i.i.i, label %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterINtNtCsdovh4xi6v3I_4span6ast_id9FileAstIdNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ItemENtNtNtCsileJQcQObtj_7hir_def9item_tree5attrs10AttrsOrCfgENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB3o_3all5checkTRBV_RB2t_ENCNvXs4_B6_INtB6_7HashMapBV_B2t_NtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherENtNtB3w_3cmp9PartialEq2eq0E0INtNtNtB3w_3ops12control_flow11ControlFlowuEEB2z_.exit
 
 bb.l:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i
@@ -311,7 +310,10 @@ bb.m:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
 
 _RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i.i.i.i.i: ; preds = %bb.k
   call void @llvm.assume(i1 %i.bk)
-  br i1 %4, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread5.i.i.i.i.i.i, label %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterINtNtCsdovh4xi6v3I_4span6ast_id9FileAstIdNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ItemENtNtNtCsileJQcQObtj_7hir_def9item_tree5attrs10AttrsOrCfgENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB3o_3all5checkTRBV_RB2t_ENCNvXs4_B6_INtB6_7HashMapBV_B2t_NtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherENtNtB3w_3cmp9PartialEq2eq0E0INtNtNtB3w_3ops12control_flow11ControlFlowuEEB2z_.exit
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val4.i.i.i.i.i.i.i) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5.i.i.i.i.i.i.i) ]
+  %5 = icmp eq ptr %.val4.i.i.i.i.i.i.i, %.val5.i.i.i.i.i.i.i
+  br i1 %5, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread5.i.i.i.i.i.i, label %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterINtNtCsdovh4xi6v3I_4span6ast_id9FileAstIdNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ItemENtNtNtCsileJQcQObtj_7hir_def9item_tree5attrs10AttrsOrCfgENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB3o_3all5checkTRBV_RB2t_ENCNvXs4_B6_INtB6_7HashMapBV_B2t_NtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherENtNtB3w_3cmp9PartialEq2eq0E0INtNtNtB3w_3ops12control_flow11ControlFlowuEEB2z_.exit
 
 bb.n:                                             ; preds = %bb.h
   %i.ch = xor i1 %i.aq, true
@@ -320,7 +322,6 @@ bb.n:                                             ; preds = %bb.h
   %i.cj = load i64, ptr %i.ci, align 8, !alias.scope !9062, !noalias !9063, !noundef !10 ; 2 uses
   %i.ck = getelementptr inbounds i8, ptr %i.ac, i64 -8
   %i.cl = load i64, ptr %i.ck, align 8, !alias.scope !9064, !noalias !9065, !noundef !10
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ap) ]
   %i.cm = icmp eq i64 %i.cj, %i.cl
   br i1 %i.cm, label %.split48.i, label %_RINvYINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map4IterINtNtCsdovh4xi6v3I_4span6ast_id9FileAstIdNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ItemENtNtNtCsileJQcQObtj_7hir_def9item_tree5attrs10AttrsOrCfgENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB3o_3all5checkTRBV_RB2t_ENCNvXs4_B6_INtB6_7HashMapBV_B2t_NtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherENtNtB3w_3cmp9PartialEq2eq0E0INtNtNtB3w_3ops12control_flow11ControlFlowuEEB2z_.exit
 

@@ -205,11 +205,11 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load ptr, ptr %i.i, align 8, !alias.scope !9999, !noalias !9996, !nonnull !4, !align !10, !noundef !4
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.l = load ptr, ptr %i.k, align 8, !alias.scope !9999, !noalias !9996, !nonnull !4, !align !32, !noundef !4 ; 2 uses
-  %.sroa.0.0.copyload.i = load i32, ptr %i.l, align 4, !noalias !10001 ; 3 uses
+  %.sroa.0.0.copyload.i = load i32, ptr %i.l, align 4, !noalias !10001 ; 4 uses
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 4
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.n = load ptr, ptr %i.m, align 8, !alias.scope !9999, !noalias !9996, !nonnull !4, !align !32, !noundef !4 ; 2 uses
-  %.sroa.01.0.copyload.i = load i32, ptr %i.n, align 4, !noalias !10001 ; 2 uses
+  %.sroa.01.0.copyload.i = load i32, ptr %i.n, align 4, !noalias !10001 ; 3 uses
   %.sroa.42.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 4
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10002)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10005)
@@ -243,10 +243,17 @@ bb.f:                                             ; preds = %bb.g, %bb.e
   br label %_RNCNvMs4_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB7_19DisjointnessChecker15check_type_pairso_0Bb_.exit
 
 bb.g:                                             ; preds = %bb.e
-  switch i32 %.sroa.01.0.copyload.i, label %bb.j [
+  switch i32 %.sroa.01.0.copyload.i, label %2 [
     i32 0, label %bb.h
     i32 1, label %bb.f
   ], !prof !10018
+
+2:                                                ; preds = %bb.g
+  %3 = icmp eq i32 %.sroa.0.0.copyload.i, 3
+  %4 = icmp eq i32 %.sroa.01.0.copyload.i, 3
+  %or.cond.i.i = or i1 %3, %4
+  tail call void @llvm.assume(i1 %or.cond.i.i)
+  br label %bb.j
 
 bb.h:                                             ; preds = %bb.g
   %i.z = icmp eq i32 %.sroa.0.0.copyload.i, 0
@@ -271,7 +278,7 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !10020
   br label %_RNCNvMs4_NtNtCsoTR8nlGN3X_18ty_python_semantic5types8relationNtB7_19DisjointnessChecker15check_type_pairso_0Bb_.exit
 
-bb.j:                                             ; preds = %bb.g, %bb.h
+bb.j:                                             ; preds = %bb.h, %2
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @87, i64 noundef 40, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @128) #64, !noalias !10020
   unreachable
 
@@ -674,31 +681,29 @@ bb.f:                                             ; preds = %bb.e
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i = load ptr, ptr %i.q, align 8, !alias.scope !29512, !noalias !29515, !noundef !4 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.val2.i = load i64, ptr %i.s, align 8, !alias.scope !29512, !noalias !29515 ; 3 uses
-  %.val3.i = load ptr, ptr %i.r, align 8, !alias.scope !29515, !noalias !29512, !noundef !4 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.val4.i = load i64, ptr %2, align 8, !alias.scope !29515, !noalias !29512 ; 2 uses
+  %.val2.i = load i64, ptr %i.s, align 8, !alias.scope !29512, !noalias !29515 ; 2 uses
+  %.val3.i = load ptr, ptr %i.r, align 8, !alias.scope !29515, !noalias !29512, !noundef !4 ; 2 uses
   %i.t = icmp ne ptr %.val.i, null                ; 2 uses
   %i.u = icmp eq ptr %.val3.i, null               ; 3 uses
   %not..i.i = xor i1 %i.u, true
   %i.v = xor i1 %i.t, %i.u
-  br i1 %i.v, label %3, label %_RNvXs5t_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_6NumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
+  br i1 %i.v, label %bb.g, label %_RNvXs5t_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_6NumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
-3:                                                ; preds = %bb.f
-  br i1 %i.t, label %bb.g, label %bb.h
+bb.g:                                             ; preds = %bb.f
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %.val4.i = load i64, ptr %2, align 8, !alias.scope !29515, !noalias !29512
+  %i.w = icmp eq i64 %.val2.i, %.val4.i           ; 2 uses
+  br i1 %i.t, label %3, label %bb.h
 
-bb.g:                                             ; preds = %3
+3:                                                ; preds = %bb.g
   tail call void @llvm.assume(i1 %not..i.i)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i) ]
-  %i.w = icmp eq i64 %.val2.i, %.val4.i
   br i1 %i.w, label %bb.i, label %_RNvXs5t_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_6NumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
-bb.h:                                             ; preds = %3
+bb.h:                                             ; preds = %bb.g
   tail call void @llvm.assume(i1 %i.u)
-  %4 = icmp eq i64 %.val2.i, %.val4.i
   br label %_RNvXs5t_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_6NumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
-bb.i:                                             ; preds = %bb.g
+bb.i:                                             ; preds = %3
   %bcmp.i.i = tail call i32 @bcmp(ptr nonnull readonly %.val.i, ptr nonnull readonly %.val3.i, i64 %.val2.i), !noalias !29517
   %i.x = icmp eq i32 %bcmp.i.i, 0
   br label %_RNvXs5t_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_6NumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
@@ -725,8 +730,8 @@ bb.l:                                             ; preds = %bb.k
   %i.ak = fcmp oeq double %i.ah, %i.aj
   br label %_RNvXs5t_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_6NumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
-_RNvXs5t_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_6NumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit: ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.d, %bb.c, %bb.a, %bb.b
-  %.sroa.0.0 = phi i1 [ false, %bb.c ], [ false, %bb.b ], [ false, %bb.a ], [ false, %bb.k ], [ %i.ab, %bb.j ], [ %i.ak, %bb.l ], [ false, %bb.d ], [ %i.x, %bb.i ], [ false, %bb.f ], [ %4, %bb.h ], [ false, %bb.g ]
+_RNvXs5t_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtB6_6NumberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit: ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %3, %bb.f, %bb.d, %bb.c, %bb.a, %bb.b
+  %.sroa.0.0 = phi i1 [ false, %bb.c ], [ false, %bb.b ], [ false, %bb.a ], [ false, %bb.k ], [ %i.ab, %bb.j ], [ %i.ak, %bb.l ], [ false, %bb.d ], [ %i.x, %bb.i ], [ false, %bb.f ], [ %i.w, %bb.h ], [ false, %3 ]
   ret i1 %.sroa.0.0
 }
 

@@ -204,7 +204,10 @@ bb.u:                                             ; preds = %bb.t, %bb.m
   %i.ey = getelementptr inbounds nuw [8 x i8], ptr %i.cv, i64 %.4.i43 ; 3 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 2
   %i.fa = load i16, ptr %i.ez, align 2            ; 4 uses
-  %i.fb = icmp sgt i16 %i.fa, 0
+  %i.fb = icmp sgt i16 %i.fa, 0                   ; 2 uses
+  %2 = icmp eq i16 %i.fa, -1                      ; 2 uses
+  %or.cond.i = or i1 %i.fb, %2
+  tail call void @llvm.assume(i1 %or.cond.i)
   %i.fc = getelementptr inbounds nuw i8, ptr %i.ey, i64 5
   %i.fd = load i8, ptr %i.fc, align 1             ; 3 uses
   br i1 %i.fb, label %bb.v, label %bb.ac
@@ -255,7 +258,6 @@ bb.ab:                                            ; preds = %bb.v
   br label %align_fetch_then_add.exit
 
 bb.ac:                                            ; preds = %.lr.ph
-  %2 = icmp eq i16 %i.fa, -1
   br i1 %2, label %bb.ad, label %bb.ak
 
 bb.ad:                                            ; preds = %bb.ac
@@ -351,7 +353,10 @@ bb.al:                                            ; preds = %.lr.ph47
   %i.hn = getelementptr inbounds nuw [8 x i8], ptr %i.cv, i64 %.5.i46 ; 3 uses
   %i.ho = getelementptr inbounds nuw i8, ptr %i.hn, i64 2
   %i.hp = load i16, ptr %i.ho, align 2            ; 4 uses
-  %i.hq = icmp sgt i16 %i.hp, 0
+  %i.hq = icmp sgt i16 %i.hp, 0                   ; 2 uses
+  %3 = icmp eq i16 %i.hp, -1                      ; 2 uses
+  %or.cond3.i = or i1 %i.hq, %3
+  tail call void @llvm.assume(i1 %or.cond3.i)
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hn, i64 5
   %i.hs = load i8, ptr %i.hr, align 1             ; 3 uses
   br i1 %i.hq, label %bb.am, label %bb.at
@@ -402,7 +407,6 @@ bb.as:                                            ; preds = %bb.am
   br label %align_fetch_then_add.exit24
 
 bb.at:                                            ; preds = %bb.al
-  %3 = icmp eq i16 %i.hp, -1
   br i1 %3, label %bb.au, label %bb.bb
 
 bb.au:                                            ; preds = %bb.at
@@ -805,7 +809,10 @@ bb.u:                                             ; preds = %bb.t, %bb.m
   %i.ey = getelementptr inbounds nuw [8 x i8], ptr %i.cv, i64 %.4.i43 ; 3 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 2
   %i.fa = load i16, ptr %i.ez, align 2            ; 4 uses
-  %i.fb = icmp sgt i16 %i.fa, 0
+  %i.fb = icmp sgt i16 %i.fa, 0                   ; 2 uses
+  %2 = icmp eq i16 %i.fa, -1                      ; 2 uses
+  %or.cond.i = or i1 %i.fb, %2
+  tail call void @llvm.assume(i1 %or.cond.i)
   %i.fc = getelementptr inbounds nuw i8, ptr %i.ey, i64 5
   %i.fd = load i8, ptr %i.fc, align 1             ; 3 uses
   br i1 %i.fb, label %bb.v, label %bb.ac
@@ -856,7 +863,6 @@ bb.ab:                                            ; preds = %bb.v
   br label %align_fetch_then_add.exit
 
 bb.ac:                                            ; preds = %.lr.ph
-  %2 = icmp eq i16 %i.fa, -1
   br i1 %2, label %bb.ad, label %bb.ak
 
 bb.ad:                                            ; preds = %bb.ac
@@ -952,7 +958,10 @@ bb.al:                                            ; preds = %.lr.ph47
   %i.hn = getelementptr inbounds nuw [8 x i8], ptr %i.cv, i64 %.5.i46 ; 3 uses
   %i.ho = getelementptr inbounds nuw i8, ptr %i.hn, i64 2
   %i.hp = load i16, ptr %i.ho, align 2            ; 4 uses
-  %i.hq = icmp sgt i16 %i.hp, 0
+  %i.hq = icmp sgt i16 %i.hp, 0                   ; 2 uses
+  %3 = icmp eq i16 %i.hp, -1                      ; 2 uses
+  %or.cond3.i = or i1 %i.hq, %3
+  tail call void @llvm.assume(i1 %or.cond3.i)
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hn, i64 5
   %i.hs = load i8, ptr %i.hr, align 1             ; 3 uses
   br i1 %i.hq, label %bb.am, label %bb.at
@@ -1003,7 +1012,6 @@ bb.as:                                            ; preds = %bb.am
   br label %align_fetch_then_add.exit24
 
 bb.at:                                            ; preds = %bb.al
-  %3 = icmp eq i16 %i.hp, -1
   br i1 %3, label %bb.au, label %bb.bb
 
 bb.au:                                            ; preds = %bb.at

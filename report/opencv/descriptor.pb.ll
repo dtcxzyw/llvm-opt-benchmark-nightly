@@ -204,8 +204,12 @@ _ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit61._crit_edge: ; 
 bb.z:                                             ; preds = %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit61._crit_edge, %bb.w
   %i.fx = phi i32 [ %.pre67, %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit61._crit_edge ], [ %i.fk, %bb.w ] ; 2 uses
   %i.fy = and i32 %i.fx, 8
-  %.not64 = icmp eq i32 %i.fy, 0
-  %i.fz = getelementptr inbounds nuw i8, ptr %1, i64 200
+  %.not64 = icmp eq i32 %i.fy, 0                  ; 2 uses
+  %i.fz = getelementptr inbounds nuw i8, ptr %1, i64 200 ; 2 uses
+  %2 = load ptr, ptr %i.fz, align 8
+  %3 = icmp ne ptr %2, null
+  %4 = select i1 %.not64, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %.not64, label %bb.ae, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
@@ -237,8 +241,12 @@ bb.ae:                                            ; preds = %bb.z
 bb.af:                                            ; preds = %bb.ac, %bb.ae
   %i.gf = phi i32 [ %.pre68, %bb.ac ], [ %i.fx, %bb.ae ]
   %i.gg = and i32 %i.gf, 16
-  %.not65 = icmp eq i32 %i.gg, 0
-  %i.gh = getelementptr inbounds nuw i8, ptr %1, i64 208
+  %.not65 = icmp eq i32 %i.gg, 0                  ; 2 uses
+  %i.gh = getelementptr inbounds nuw i8, ptr %1, i64 208 ; 2 uses
+  %5 = load ptr, ptr %i.gh, align 8
+  %6 = icmp ne ptr %5, null
+  %7 = select i1 %.not65, i1 true, i1 %6
+  tail call void @llvm.assume(i1 %7)
   br i1 %.not65, label %bb.aj, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
@@ -641,9 +649,12 @@ bb.h:                                             ; preds = %_ZNK6google8protobu
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
   %i.at = load i32, ptr %i.as, align 4, !tbaa !71
   %i.au = and i32 %i.at, 32
-  %.not.i.i = icmp eq i32 %i.au, 0
+  %.not.i.i = icmp eq i32 %i.au, 0                ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.ar, i64 64
-  %i.aw = load ptr, ptr %i.av, align 8            ; 3 uses
+  %i.aw = load ptr, ptr %i.av, align 8            ; 4 uses
+  %1 = icmp ne ptr %i.aw, null
+  %2 = select i1 %.not.i.i, i1 true, i1 %1
+  tail call void @llvm.assume(i1 %2)
   br i1 %.not.i.i, label %_ZNK6google8protobuf20FieldDescriptorProto13IsInitializedEv.exit.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -707,9 +718,12 @@ _ZNK6google8protobuf20FieldDescriptorProto13IsInitializedEv.exit.i: ; preds = %_
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.by = load i32, ptr %i.bx, align 8, !tbaa !71
   %i.bz = and i32 %i.by, 8
-  %.not = icmp eq i32 %i.bz, 0
+  %.not = icmp eq i32 %i.bz, 0                    ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 200
-  %i.cb = load ptr, ptr %i.ca, align 8            ; 3 uses
+  %i.cb = load ptr, ptr %i.ca, align 8            ; 4 uses
+  %3 = icmp ne ptr %i.cb, null
+  %4 = select i1 %.not, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %.not, label %_ZN6google8protobuf8internal17AllAreInitializedINS0_15DescriptorProtoEEEbRKNS0_16RepeatedPtrFieldIT_EE.exit, label %bb.n
 
 bb.n:                                             ; preds = %.loopexit
@@ -1002,8 +1016,13 @@ define hidden void @_ZN6google8protobuf30DescriptorProto_ExtensionRangeC2ERKS1_(
 
 bb.a:                                             ; preds = %.noexc9, %.noexc
   %i.l = load i32, ptr %i.c, align 8, !tbaa !71
-  %i.m = trunc i32 %i.l to i1
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.m = trunc i32 %i.l to i1                     ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %2 = load ptr, ptr %i.n, align 8
+  %3 = icmp ne ptr %2, null
+  %not..i = xor i1 %i.m, true
+  %4 = select i1 %not..i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.m, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
@@ -1406,9 +1425,13 @@ define hidden noundef zeroext i1 @_ZNK6google8protobuf30DescriptorProto_Extensio
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i32, ptr %i.a, align 8, !tbaa !71
-  %i.c = trunc i32 %i.b to i1
+  %i.c = trunc i32 %i.b to i1                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.e = load ptr, ptr %i.d, align 8              ; 3 uses
+  %i.e = load ptr, ptr %i.d, align 8              ; 4 uses
+  %1 = icmp ne ptr %i.e, null
+  %not..i = xor i1 %i.c, true
+  %2 = select i1 %not..i, i1 true, i1 %1
+  tail call void @llvm.assume(i1 %2)
   br i1 %i.c, label %bb.b, label %_ZNK6google8protobuf21ExtensionRangeOptions13IsInitializedEv.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -1811,8 +1834,12 @@ bb.u:                                             ; preds = %.noexc34, %bb.w, %_
 bb.v:                                             ; preds = %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit._crit_edge, %bb.j
   %i.gd = phi i32 [ %.pre, %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit._crit_edge ], [ %i.fi, %bb.j ]
   %i.ge = and i32 %i.gd, 2
-  %.not = icmp eq i32 %i.ge, 0
-  %i.gf = getelementptr inbounds nuw i8, ptr %1, i64 224
+  %.not = icmp eq i32 %i.ge, 0                    ; 2 uses
+  %i.gf = getelementptr inbounds nuw i8, ptr %1, i64 224 ; 2 uses
+  %2 = load ptr, ptr %i.gf, align 8
+  %3 = icmp ne ptr %2, null
+  %4 = select i1 %.not, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %.not, label %bb.z, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
@@ -2215,9 +2242,12 @@ bb.b:                                             ; preds = %_ZNK6google8protobu
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.j = load i32, ptr %i.i, align 4, !tbaa !71
   %i.k = and i32 %i.j, 32
-  %.not.i.i = icmp eq i32 %i.k, 0
+  %.not.i.i = icmp eq i32 %i.k, 0                 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 64
-  %i.m = load ptr, ptr %i.l, align 8              ; 3 uses
+  %i.m = load ptr, ptr %i.l, align 8              ; 4 uses
+  %1 = icmp ne ptr %i.m, null
+  %2 = select i1 %.not.i.i, i1 true, i1 %1
+  tail call void @llvm.assume(i1 %2)
   br i1 %.not.i.i, label %_ZNK6google8protobuf20FieldDescriptorProto13IsInitializedEv.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -2346,9 +2376,13 @@ bb.l:                                             ; preds = %_ZNK6google8protobu
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !29 ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !71
-  %i.bv = trunc i32 %i.bu to i1
+  %i.bv = trunc i32 %i.bu to i1                   ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bs, i64 24
-  %i.bx = load ptr, ptr %i.bw, align 8            ; 3 uses
+  %i.bx = load ptr, ptr %i.bw, align 8            ; 4 uses
+  %3 = icmp ne ptr %i.bx, null
+  %not..i.i.i = xor i1 %i.bv, true
+  %4 = select i1 %not..i.i.i, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %i.bv, label %bb.m, label %_ZNK6google8protobuf30DescriptorProto_ExtensionRange13IsInitializedEv.exit.i
 
 bb.m:                                             ; preds = %bb.l
@@ -2428,9 +2462,12 @@ bb.r:                                             ; preds = %_ZNK6google8protobu
   %i.dg = getelementptr inbounds nuw i8, ptr %i.df, i64 16
   %i.dh = load i32, ptr %i.dg, align 4, !tbaa !71
   %i.di = and i32 %i.dh, 32
-  %.not.i.i15 = icmp eq i32 %i.di, 0
+  %.not.i.i15 = icmp eq i32 %i.di, 0              ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.df, i64 64
-  %i.dk = load ptr, ptr %i.dj, align 8            ; 3 uses
+  %i.dk = load ptr, ptr %i.dj, align 8            ; 4 uses
+  %5 = icmp ne ptr %i.dk, null
+  %6 = select i1 %.not.i.i15, i1 true, i1 %5
+  tail call void @llvm.assume(i1 %6)
   br i1 %.not.i.i15, label %_ZNK6google8protobuf20FieldDescriptorProto13IsInitializedEv.exit.i22, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -2510,9 +2547,12 @@ bb.x:                                             ; preds = %_ZNK6google8protobu
   %i.et = getelementptr inbounds nuw i8, ptr %i.es, i64 16
   %i.eu = load i32, ptr %i.et, align 4, !tbaa !71
   %i.ev = and i32 %i.eu, 2
-  %.not.i.i27 = icmp eq i32 %i.ev, 0
+  %.not.i.i27 = icmp eq i32 %i.ev, 0              ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %i.es, i64 32
-  %i.ex = load ptr, ptr %i.ew, align 8            ; 3 uses
+  %i.ex = load ptr, ptr %i.ew, align 8            ; 4 uses
+  %7 = icmp ne ptr %i.ex, null
+  %8 = select i1 %.not.i.i27, i1 true, i1 %7
+  tail call void @llvm.assume(i1 %8)
   br i1 %.not.i.i27, label %_ZNK6google8protobuf20OneofDescriptorProto13IsInitializedEv.exit.i, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
@@ -2576,13 +2616,16 @@ _ZNK6google8protobuf20OneofDescriptorProto13IsInitializedEv.exit.i: ; preds = %_
   %i.fy = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.fz = load i32, ptr %i.fy, align 8, !tbaa !71
   %i.ga = and i32 %i.fz, 2
-  %.not = icmp eq i32 %i.ga, 0
+  %.not = icmp eq i32 %i.ga, 0                    ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 224
+  %10 = load ptr, ptr %9, align 8                 ; 2 uses
+  %11 = icmp ne ptr %10, null
+  %12 = select i1 %.not, i1 true, i1 %11
+  tail call void @llvm.assume(i1 %12)
   br i1 %.not, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %.loopexit
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 224
-  %2 = load ptr, ptr %1, align 8
-  %i.gb = tail call noundef zeroext i1 @_ZNK6google8protobuf14MessageOptions13IsInitializedEv(ptr noundef nonnull align 8 dereferenceable(80) %2)
+  %i.gb = tail call noundef zeroext i1 @_ZNK6google8protobuf14MessageOptions13IsInitializedEv(ptr noundef nonnull align 8 dereferenceable(80) %10)
   br i1 %i.gb, label %bb.ae, label %_ZN6google8protobuf8internal17AllAreInitializedINS0_20FieldDescriptorProtoEEEbRKNS0_16RepeatedPtrFieldIT_EE.exit
 
 bb.ae:                                            ; preds = %bb.ad, %.loopexit
@@ -2985,8 +3028,12 @@ _ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit29._crit_edge: ; 
 bb.q:                                             ; preds = %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit29._crit_edge, %bb.n
   %i.bz = phi i32 [ %.pre37, %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit29._crit_edge ], [ %i.bm, %bb.n ]
   %i.ca = and i32 %i.bz, 32
-  %.not33 = icmp eq i32 %i.ca, 0
-  %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 64
+  %.not33 = icmp eq i32 %i.ca, 0                  ; 2 uses
+  %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
+  %2 = load ptr, ptr %i.cb, align 8
+  %3 = icmp ne ptr %2, null
+  %4 = select i1 %.not33, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %.not33, label %bb.u, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -3389,9 +3436,12 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i32, ptr %i.a, align 8, !tbaa !71
   %i.c = and i32 %i.b, 32
-  %.not = icmp eq i32 %i.c, 0
+  %.not = icmp eq i32 %i.c, 0                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.e = load ptr, ptr %i.d, align 8              ; 3 uses
+  %i.e = load ptr, ptr %i.d, align 8              ; 4 uses
+  %1 = icmp ne ptr %i.e, null
+  %2 = select i1 %.not, i1 true, i1 %1
+  tail call void @llvm.assume(i1 %2)
   br i1 %.not, label %_ZNK6google8protobuf12FieldOptions13IsInitializedEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -3682,8 +3732,12 @@ bb.d:                                             ; preds = %.noexc10, %bb.f, %_
 bb.e:                                             ; preds = %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit._crit_edge, %bb.a
   %i.z = phi i32 [ %.pre, %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit._crit_edge ], [ %i.m, %bb.a ]
   %i.aa = and i32 %i.z, 2
-  %.not = icmp eq i32 %i.aa, 0
-  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %.not = icmp eq i32 %i.aa, 0                    ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
+  %2 = load ptr, ptr %i.ab, align 8
+  %3 = icmp ne ptr %2, null
+  %4 = select i1 %.not, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %.not, label %bb.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -4086,9 +4140,12 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i32, ptr %i.a, align 8, !tbaa !71
   %i.c = and i32 %i.b, 2
-  %.not = icmp eq i32 %i.c, 0
+  %.not = icmp eq i32 %i.c, 0                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.e = load ptr, ptr %i.d, align 8              ; 3 uses
+  %i.e = load ptr, ptr %i.d, align 8              ; 4 uses
+  %1 = icmp ne ptr %i.e, null
+  %2 = select i1 %.not, i1 true, i1 %1
+  tail call void @llvm.assume(i1 %2)
   br i1 %.not, label %_ZNK6google8protobuf12OneofOptions13IsInitializedEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -4491,8 +4548,12 @@ bb.k:                                             ; preds = %.noexc19, %bb.m, %_
 bb.l:                                             ; preds = %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit._crit_edge, %bb.e
   %i.ch = phi i32 [ %.pre, %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit._crit_edge ], [ %i.br, %bb.e ]
   %i.ci = and i32 %i.ch, 2
-  %.not = icmp eq i32 %i.ci, 0
-  %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 104
+  %.not = icmp eq i32 %i.ci, 0                    ; 2 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
+  %2 = load ptr, ptr %i.cj, align 8
+  %3 = icmp ne ptr %2, null
+  %4 = select i1 %.not, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %.not, label %bb.p, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -4895,9 +4956,12 @@ bb.b:                                             ; preds = %_ZNK6google8protobu
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.j = load i32, ptr %i.i, align 4, !tbaa !71
   %i.k = and i32 %i.j, 2
-  %.not.i.i = icmp eq i32 %i.k, 0
+  %.not.i.i = icmp eq i32 %i.k, 0                 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 32
-  %i.m = load ptr, ptr %i.l, align 8              ; 3 uses
+  %i.m = load ptr, ptr %i.l, align 8              ; 4 uses
+  %1 = icmp ne ptr %i.m, null
+  %2 = select i1 %.not.i.i, i1 true, i1 %1
+  tail call void @llvm.assume(i1 %2)
   br i1 %.not.i.i, label %_ZNK6google8protobuf24EnumValueDescriptorProto13IsInitializedEv.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -4961,9 +5025,12 @@ _ZNK6google8protobuf24EnumValueDescriptorProto13IsInitializedEv.exit.i: ; preds 
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ao = load i32, ptr %i.an, align 8, !tbaa !71
   %i.ap = and i32 %i.ao, 2
-  %.not = icmp eq i32 %i.ap, 0
+  %.not = icmp eq i32 %i.ap, 0                    ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.ar = load ptr, ptr %i.aq, align 8            ; 3 uses
+  %i.ar = load ptr, ptr %i.aq, align 8            ; 4 uses
+  %3 = icmp ne ptr %i.ar, null
+  %4 = select i1 %.not, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %.not, label %_ZN6google8protobuf8internal17AllAreInitializedINS0_24EnumValueDescriptorProtoEEEbRKNS0_16RepeatedPtrFieldIT_EE.exit, label %bb.h
 
 bb.h:                                             ; preds = %.loopexit
@@ -5255,8 +5322,12 @@ bb.d:                                             ; preds = %.noexc11, %bb.f, %_
 bb.e:                                             ; preds = %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit._crit_edge, %bb.a
   %i.z = phi i32 [ %.pre, %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit._crit_edge ], [ %i.m, %bb.a ]
   %i.aa = and i32 %i.z, 2
-  %.not = icmp eq i32 %i.aa, 0
-  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %.not = icmp eq i32 %i.aa, 0                    ; 2 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
+  %2 = load ptr, ptr %i.ab, align 8
+  %3 = icmp ne ptr %2, null
+  %4 = select i1 %.not, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %.not, label %bb.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -5659,9 +5730,12 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i32, ptr %i.a, align 8, !tbaa !71
   %i.c = and i32 %i.b, 2
-  %.not = icmp eq i32 %i.c, 0
+  %.not = icmp eq i32 %i.c, 0                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.e = load ptr, ptr %i.d, align 8              ; 3 uses
+  %i.e = load ptr, ptr %i.d, align 8              ; 4 uses
+  %1 = icmp ne ptr %i.e, null
+  %2 = select i1 %.not, i1 true, i1 %1
+  tail call void @llvm.assume(i1 %2)
   br i1 %.not, label %_ZNK6google8protobuf16EnumValueOptions13IsInitializedEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -5989,8 +6063,12 @@ bb.g:                                             ; preds = %.noexc13, %bb.i, %_
 bb.h:                                             ; preds = %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit._crit_edge, %bb.c
   %i.at = phi i32 [ %.pre, %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit._crit_edge ], [ %i.af, %bb.c ]
   %i.au = and i32 %i.at, 2
-  %.not = icmp eq i32 %i.au, 0
-  %i.av = getelementptr inbounds nuw i8, ptr %1, i64 56
+  %.not = icmp eq i32 %i.au, 0                    ; 2 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %2 = load ptr, ptr %i.av, align 8
+  %3 = icmp ne ptr %2, null
+  %4 = select i1 %.not, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %.not, label %bb.l, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
@@ -6393,9 +6471,12 @@ bb.b:                                             ; preds = %_ZNK6google8protobu
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.j = load i32, ptr %i.i, align 4, !tbaa !71
   %i.k = and i32 %i.j, 8
-  %.not.i.i = icmp eq i32 %i.k, 0
+  %.not.i.i = icmp eq i32 %i.k, 0                 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 48
-  %i.m = load ptr, ptr %i.l, align 8              ; 3 uses
+  %i.m = load ptr, ptr %i.l, align 8              ; 4 uses
+  %1 = icmp ne ptr %i.m, null
+  %2 = select i1 %.not.i.i, i1 true, i1 %1
+  tail call void @llvm.assume(i1 %2)
   br i1 %.not.i.i, label %_ZNK6google8protobuf21MethodDescriptorProto13IsInitializedEv.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -6459,9 +6540,12 @@ _ZNK6google8protobuf21MethodDescriptorProto13IsInitializedEv.exit.i: ; preds = %
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ao = load i32, ptr %i.an, align 8, !tbaa !71
   %i.ap = and i32 %i.ao, 2
-  %.not = icmp eq i32 %i.ap, 0
+  %.not = icmp eq i32 %i.ap, 0                    ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.ar = load ptr, ptr %i.aq, align 8            ; 3 uses
+  %i.ar = load ptr, ptr %i.aq, align 8            ; 4 uses
+  %3 = icmp ne ptr %i.ar, null
+  %4 = select i1 %.not, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %.not, label %_ZN6google8protobuf8internal17AllAreInitializedINS0_21MethodDescriptorProtoEEEbRKNS0_16RepeatedPtrFieldIT_EE.exit, label %bb.h
 
 bb.h:                                             ; preds = %.loopexit
@@ -6799,8 +6883,12 @@ _ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit21._crit_edge: ; 
 bb.k:                                             ; preds = %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit21._crit_edge, %bb.h
   %i.az = phi i32 [ %.pre25, %_ZNK6google8protobuf11MessageLite21GetArenaForAllocationEv.exit21._crit_edge ], [ %i.am, %bb.h ]
   %i.ba = and i32 %i.az, 8
-  %.not23 = icmp eq i32 %i.ba, 0
-  %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %.not23 = icmp eq i32 %i.ba, 0                  ; 2 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
+  %2 = load ptr, ptr %i.bb, align 8
+  %3 = icmp ne ptr %2, null
+  %4 = select i1 %.not23, i1 true, i1 %3
+  tail call void @llvm.assume(i1 %4)
   br i1 %.not23, label %bb.o, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -7203,9 +7291,12 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i32, ptr %i.a, align 8, !tbaa !71
   %i.c = and i32 %i.b, 8
-  %.not = icmp eq i32 %i.c, 0
+  %.not = icmp eq i32 %i.c, 0                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.e = load ptr, ptr %i.d, align 8              ; 3 uses
+  %i.e = load ptr, ptr %i.d, align 8              ; 4 uses
+  %1 = icmp ne ptr %i.e, null
+  %2 = select i1 %.not, i1 true, i1 %1
+  tail call void @llvm.assume(i1 %2)
   br i1 %.not, label %_ZNK6google8protobuf13MethodOptions13IsInitializedEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

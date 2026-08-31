@@ -204,7 +204,7 @@ _ZN12_GLOBAL__N_114ReflectionTestD2Ev.exit:       ; preds = %bb.a, %_ZNKSt14defa
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZN12_GLOBAL__N_135ReflectionTest_TestGetAllFlags_Test8TestBodyEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"class.absl::lts_20260526::flat_hash_map", align 8 ; 11 uses
+  %1 = alloca %"class.absl::lts_20260526::flat_hash_map", align 8 ; 15 uses
   %2 = alloca %"class.testing::AssertionResult", align 8 ; 9 uses
   %3 = alloca %"class.absl::lts_20260526::container_internal::raw_hash_set<absl::lts_20260526::container_internal::FlatHashMapPolicy<std::basic_string_view<char>, absl::lts_20260526::CommandLineFlag *>>::iterator", align 8 ; 6 uses
   %4 = alloca %"class.absl::lts_20260526::container_internal::raw_hash_set<absl::lts_20260526::container_internal::FlatHashMapPolicy<std::basic_string_view<char>, absl::lts_20260526::CommandLineFlag *>>::iterator", align 8 ; 5 uses
@@ -221,9 +221,9 @@ bb.a:
   %15 = alloca %"class.testing::Message", align 8 ; 7 uses
   %16 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %17 = alloca %"class.std::vector", align 8      ; 13 uses
-  %18 = alloca %"class.absl::lts_20260526::flat_hash_map", align 8 ; 12 uses
+  %18 = alloca %"class.absl::lts_20260526::flat_hash_map", align 8 ; 18 uses
   %19 = alloca %"struct.std::pair", align 8       ; 5 uses
-  %20 = alloca %"class.absl::lts_20260526::flat_hash_map", align 8 ; 13 uses
+  %20 = alloca %"class.absl::lts_20260526::flat_hash_map", align 8 ; 19 uses
   %21 = alloca %"struct.std::pair", align 8       ; 5 uses
   %22 = alloca %"class.testing::AssertionResult", align 8 ; 9 uses
   %23 = alloca %"class.testing::internal::PredicateFormatterFromMatcher", align 8 ; 9 uses
@@ -626,7 +626,7 @@ _ZN7testing15AssertionResultD2Ev.exit106:         ; preds = %bb.ba, %_ZNKSt14def
           to label %bb.bc unwind label %bb.bh
 
 bb.bc:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit106
-  %i.co = load i64, ptr %18, align 8              ; 2 uses
+  %i.co = load i64, ptr %18, align 8              ; 3 uses
   %.not.i.i107 = icmp ult i64 %i.co, 131072
   br i1 %.not.i.i107, label %._crit_edge, label %bb.bd, !prof !22
 
@@ -642,7 +642,18 @@ bb.be:                                            ; preds = %bb.bd
 
 bb.bf:                                            ; preds = %bb.bd
   %i.cs = getelementptr inbounds nuw i8, ptr %18, i64 8
-  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.cs, align 8, !tbaa !23, !nonnull !33, !noundef !33 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.cs, align 8, !tbaa !23, !nonnull !33, !noundef !33 ; 5 uses
+  %26 = and i64 %i.co, 255
+  %notmask.i.i.i.i.i = shl nsw i64 -1, %26        ; 2 uses
+  %27 = icmp samesign ugt i64 %notmask.i.i.i.i.i, -3
+  %28 = sub i64 15, %notmask.i.i.i.i.i
+  %29 = select i1 %27, i64 0, i64 %28
+  %30 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i, i64 %29
+  %31 = icmp ule ptr %30, %18
+  %32 = getelementptr inbounds nuw i8, ptr %18, i64 24
+  %33 = icmp ule ptr %32, %.sroa.0.0.copyload.i.i.i.i
+  %34 = select i1 %31, i1 true, i1 %33
+  call void @llvm.assume(i1 %34)
   %i.ct = getelementptr inbounds nuw i8, ptr %18, i64 16
   %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.ct, align 8, !tbaa !23 ; 2 uses
   %i.cu = load i8, ptr %.sroa.0.0.copyload.i.i.i.i, align 1, !tbaa !126
@@ -802,7 +813,7 @@ bb.bm:                                            ; preds = %.loopexit.split-lp2
   br label %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EED2Ev.exit188
 
 bb.bn:                                            ; preds = %._crit_edge
-  %i.eq = load i64, ptr %20, align 8              ; 2 uses
+  %i.eq = load i64, ptr %20, align 8              ; 3 uses
   %.not.i.i112 = icmp ult i64 %i.eq, 131072
   br i1 %.not.i.i112, label %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i.i.i.i.thread, label %bb.bo, !prof !22
 
@@ -818,7 +829,18 @@ bb.bp:                                            ; preds = %bb.bo
 
 bb.bq:                                            ; preds = %bb.bo
   %i.eu = getelementptr inbounds nuw i8, ptr %20, i64 8
-  %.sroa.0.0.copyload.i.i.i.i113 = load ptr, ptr %i.eu, align 8, !tbaa !23, !nonnull !33, !noundef !33 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i.i113 = load ptr, ptr %i.eu, align 8, !tbaa !23, !nonnull !33, !noundef !33 ; 5 uses
+  %35 = and i64 %i.eq, 255
+  %notmask.i.i.i.i.i114 = shl nsw i64 -1, %35     ; 2 uses
+  %36 = icmp samesign ugt i64 %notmask.i.i.i.i.i114, -3
+  %37 = sub i64 15, %notmask.i.i.i.i.i114
+  %38 = select i1 %36, i64 0, i64 %37
+  %39 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i113, i64 %38
+  %40 = icmp ule ptr %39, %20
+  %41 = getelementptr inbounds nuw i8, ptr %20, i64 24
+  %42 = icmp ule ptr %41, %.sroa.0.0.copyload.i.i.i.i113
+  %43 = select i1 %40, i1 true, i1 %42
+  call void @llvm.assume(i1 %43)
   %i.ev = getelementptr inbounds nuw i8, ptr %20, i64 16
   %.sroa.0.0.copyload.i.i.i115 = load ptr, ptr %i.ev, align 8, !tbaa !23 ; 2 uses
   %i.ew = load i8, ptr %.sroa.0.0.copyload.i.i.i.i113, align 1, !tbaa !126
@@ -1170,7 +1192,8 @@ _ZN7testing15AssertionResultD2Ev.exit163:         ; preds = %bb.cl, %_ZNKSt14def
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #30
   %i.ie = load i64, ptr %20, align 8              ; 2 uses
   %i.if = and i64 %i.ie, 255                      ; 2 uses
-  %notmask.i.i.i.i.i164 = shl nsw i64 -1, %i.if   ; 4 uses
+  %notmask.i.i.i.i.i164 = shl nsw i64 -1, %i.if   ; 8 uses
+  %44 = xor i64 %notmask.i.i.i.i.i164, -1
   %i.ig = add nsw i64 %notmask.i.i.i.i.i164, 281474976710655
   %i.ih = or i64 %i.ig, %notmask.i.i.i.i.i164
   %i.ii = icmp eq i64 %i.ih, -1
@@ -1178,15 +1201,43 @@ _ZN7testing15AssertionResultD2Ev.exit163:         ; preds = %bb.cl, %_ZNKSt14def
   %i.ij = icmp samesign ugt i64 %notmask.i.i.i.i.i164, -281474976710657
   call void @llvm.assume(i1 %i.ij)
   %i.ik = icmp eq i64 %i.if, 0
-  br i1 %i.ik, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEED2Ev.exit, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i
+  br i1 %i.ik, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEED2Ev.exit, label %45
 
-_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i: ; preds = %_ZN7testing15AssertionResultD2Ev.exit163
-  %26 = xor i64 %notmask.i.i.i.i.i164, -1
-  %27 = and i64 %i.ie, 65536
-  %.phi.trans.insert.i.i.i.a = getelementptr inbounds nuw i8, ptr %20, i64 8
-  %.sroa.0.0.copyload.i.i.i2.pre.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i.a, align 8, !tbaa !23
-  %i.il = icmp ne i64 %27, 0
-  invoke void @_ZN4absl12lts_2026052618container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS1_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(24) %20, i64 noundef %26, ptr noundef %.sroa.0.0.copyload.i.i.i2.pre.i.i.i, i64 noundef 24, i64 noundef 8, i1 noundef zeroext %i.il)
+45:                                               ; preds = %_ZN7testing15AssertionResultD2Ev.exit163
+  %46 = and i64 %i.ie, 65536                      ; 2 uses
+  %.not.i.i.i.i.i165 = icmp eq i64 %46, 0
+  %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %20, i64 8
+  %.sroa.0.0.copyload.i.i.i2.pre.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i, align 8, !tbaa !23 ; 5 uses
+  br i1 %.not.i.i.i.i.i165, label %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i.i, label %47
+
+._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i.i: ; preds = %45
+  %.pre.i.i.i = sub nsw i64 15, %notmask.i.i.i.i.i164
+  br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i
+
+47:                                               ; preds = %45
+  %48 = icmp samesign ugt i64 %notmask.i.i.i.i.i164, -3
+  %49 = sub nsw i64 15, %notmask.i.i.i.i.i164     ; 2 uses
+  %50 = select i1 %48, i64 0, i64 %49
+  %51 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i2.pre.i.i.i, i64 %50
+  %52 = icmp ule ptr %51, %20
+  %53 = getelementptr inbounds nuw i8, ptr %20, i64 24
+  %54 = icmp ule ptr %53, %.sroa.0.0.copyload.i.i.i2.pre.i.i.i
+  %55 = select i1 %52, i1 true, i1 %54
+  call void @llvm.assume(i1 %55)
+  br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i
+
+_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i: ; preds = %47, %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i.i
+  %.pre-phi.i.i.i = phi i64 [ %.pre.i.i.i, %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i.i ], [ %49, %47 ]
+  %56 = icmp samesign ugt i64 %notmask.i.i.i.i.i164, -3
+  %57 = select i1 %56, i64 0, i64 %.pre-phi.i.i.i
+  %58 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i2.pre.i.i.i, i64 %57
+  %59 = icmp ule ptr %58, %20
+  %.phi.trans.insert.i.i.i.a = getelementptr inbounds nuw i8, ptr %20, i64 24
+  %60 = icmp ule ptr %.phi.trans.insert.i.i.i.a, %.sroa.0.0.copyload.i.i.i2.pre.i.i.i
+  %61 = select i1 %59, i1 true, i1 %60
+  call void @llvm.assume(i1 %61)
+  %i.il = icmp ne i64 %46, 0
+  invoke void @_ZN4absl12lts_2026052618container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS1_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(24) %20, i64 noundef %44, ptr noundef %.sroa.0.0.copyload.i.i.i2.pre.i.i.i, i64 noundef 24, i64 noundef 8, i1 noundef zeroext %i.il)
           to label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEED2Ev.exit unwind label %bb.cn
 
 bb.cn:                                            ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i
@@ -1210,7 +1261,8 @@ bb.co:                                            ; preds = %_ZN4absl12lts_20260
 _ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EED2Ev.exit: ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEED2Ev.exit, %bb.co
   %i.iq = load i64, ptr %18, align 8              ; 2 uses
   %i.ir = and i64 %i.iq, 255                      ; 2 uses
-  %notmask.i.i.i.i.i167 = shl nsw i64 -1, %i.ir   ; 4 uses
+  %notmask.i.i.i.i.i167 = shl nsw i64 -1, %i.ir   ; 8 uses
+  %62 = xor i64 %notmask.i.i.i.i.i167, -1
   %i.is = add nsw i64 %notmask.i.i.i.i.i167, 281474976710655
   %i.it = or i64 %i.is, %notmask.i.i.i.i.i167
   %i.iu = icmp eq i64 %i.it, -1
@@ -1218,15 +1270,43 @@ _ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EED2Ev.exit: ; pred
   %i.iv = icmp samesign ugt i64 %notmask.i.i.i.i.i167, -281474976710657
   call void @llvm.assume(i1 %i.iv)
   %i.iw = icmp eq i64 %i.ir, 0
-  br i1 %i.iw, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEED2Ev.exit175, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i171
+  br i1 %i.iw, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEED2Ev.exit175, label %63
 
-_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i171: ; preds = %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EED2Ev.exit
-  %28 = xor i64 %notmask.i.i.i.i.i167, -1
-  %29 = and i64 %i.iq, 65536
-  %.phi.trans.insert.i.i.i169.a = getelementptr inbounds nuw i8, ptr %18, i64 8
-  %.sroa.0.0.copyload.i.i.i2.pre.i.i.i170 = load ptr, ptr %.phi.trans.insert.i.i.i169.a, align 8, !tbaa !23
-  %i.ix = icmp ne i64 %29, 0
-  invoke void @_ZN4absl12lts_2026052618container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS1_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(24) %18, i64 noundef %28, ptr noundef %.sroa.0.0.copyload.i.i.i2.pre.i.i.i170, i64 noundef 24, i64 noundef 8, i1 noundef zeroext %i.ix)
+63:                                               ; preds = %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EED2Ev.exit
+  %64 = and i64 %i.iq, 65536                      ; 2 uses
+  %.not.i.i.i.i.i168 = icmp eq i64 %64, 0
+  %.phi.trans.insert.i.i.i169 = getelementptr inbounds nuw i8, ptr %18, i64 8
+  %.sroa.0.0.copyload.i.i.i2.pre.i.i.i170 = load ptr, ptr %.phi.trans.insert.i.i.i169, align 8, !tbaa !23 ; 5 uses
+  br i1 %.not.i.i.i.i.i168, label %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i.i173, label %65
+
+._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i.i173: ; preds = %63
+  %.pre.i.i.i174 = sub nsw i64 15, %notmask.i.i.i.i.i167
+  br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i171
+
+65:                                               ; preds = %63
+  %66 = icmp samesign ugt i64 %notmask.i.i.i.i.i167, -3
+  %67 = sub nsw i64 15, %notmask.i.i.i.i.i167     ; 2 uses
+  %68 = select i1 %66, i64 0, i64 %67
+  %69 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i2.pre.i.i.i170, i64 %68
+  %70 = icmp ule ptr %69, %18
+  %71 = getelementptr inbounds nuw i8, ptr %18, i64 24
+  %72 = icmp ule ptr %71, %.sroa.0.0.copyload.i.i.i2.pre.i.i.i170
+  %73 = select i1 %70, i1 true, i1 %72
+  call void @llvm.assume(i1 %73)
+  br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i171
+
+_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i171: ; preds = %65, %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i.i173
+  %.pre-phi.i.i.i172 = phi i64 [ %.pre.i.i.i174, %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i.i173 ], [ %67, %65 ]
+  %74 = icmp samesign ugt i64 %notmask.i.i.i.i.i167, -3
+  %75 = select i1 %74, i64 0, i64 %.pre-phi.i.i.i172
+  %76 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i2.pre.i.i.i170, i64 %75
+  %77 = icmp ule ptr %76, %18
+  %.phi.trans.insert.i.i.i169.a = getelementptr inbounds nuw i8, ptr %18, i64 24
+  %78 = icmp ule ptr %.phi.trans.insert.i.i.i169.a, %.sroa.0.0.copyload.i.i.i2.pre.i.i.i170
+  %79 = select i1 %77, i1 true, i1 %78
+  call void @llvm.assume(i1 %79)
+  %i.ix = icmp ne i64 %64, 0
+  invoke void @_ZN4absl12lts_2026052618container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS1_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(24) %18, i64 noundef %62, ptr noundef %.sroa.0.0.copyload.i.i.i2.pre.i.i.i170, i64 noundef 24, i64 noundef 8, i1 noundef zeroext %i.ix)
           to label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEED2Ev.exit175 unwind label %bb.cp
 
 bb.cp:                                            ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i171
@@ -1255,7 +1335,8 @@ _ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EED2Ev.exit177: ; p
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #30
   %i.jg = load i64, ptr %1, align 8               ; 2 uses
   %i.jh = and i64 %i.jg, 255                      ; 2 uses
-  %notmask.i.i.i.i.i178 = shl nsw i64 -1, %i.jh   ; 4 uses
+  %notmask.i.i.i.i.i178 = shl nsw i64 -1, %i.jh   ; 8 uses
+  %80 = xor i64 %notmask.i.i.i.i.i178, -1
   %i.ji = add nsw i64 %notmask.i.i.i.i.i178, 281474976710655
   %i.jj = or i64 %i.ji, %notmask.i.i.i.i.i178
   %i.jk = icmp eq i64 %i.jj, -1
@@ -1263,15 +1344,43 @@ _ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EED2Ev.exit177: ; p
   %i.jl = icmp samesign ugt i64 %notmask.i.i.i.i.i178, -281474976710657
   call void @llvm.assume(i1 %i.jl)
   %i.jm = icmp eq i64 %i.jh, 0
-  br i1 %i.jm, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEED2Ev.exit186, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i182
+  br i1 %i.jm, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEED2Ev.exit186, label %81
 
-_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i182: ; preds = %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EED2Ev.exit177
-  %30 = xor i64 %notmask.i.i.i.i.i178, -1
-  %31 = and i64 %i.jg, 65536
-  %.phi.trans.insert.i.i.i180.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.0.0.copyload.i.i.i2.pre.i.i.i181 = load ptr, ptr %.phi.trans.insert.i.i.i180.a, align 8, !tbaa !23
-  %i.jn = icmp ne i64 %31, 0
-  invoke void @_ZN4absl12lts_2026052618container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS1_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %30, ptr noundef %.sroa.0.0.copyload.i.i.i2.pre.i.i.i181, i64 noundef 24, i64 noundef 8, i1 noundef zeroext %i.jn)
+81:                                               ; preds = %_ZNSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EED2Ev.exit177
+  %82 = and i64 %i.jg, 65536                      ; 2 uses
+  %.not.i.i.i.i.i179 = icmp eq i64 %82, 0
+  %.phi.trans.insert.i.i.i180 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %.sroa.0.0.copyload.i.i.i2.pre.i.i.i181 = load ptr, ptr %.phi.trans.insert.i.i.i180, align 8, !tbaa !23 ; 5 uses
+  br i1 %.not.i.i.i.i.i179, label %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i.i184, label %83
+
+._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i.i184: ; preds = %81
+  %.pre.i.i.i185 = sub nsw i64 15, %notmask.i.i.i.i.i178
+  br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i182
+
+83:                                               ; preds = %81
+  %84 = icmp samesign ugt i64 %notmask.i.i.i.i.i178, -3
+  %85 = sub nsw i64 15, %notmask.i.i.i.i.i178     ; 2 uses
+  %86 = select i1 %84, i64 0, i64 %85
+  %87 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i2.pre.i.i.i181, i64 %86
+  %88 = icmp ule ptr %87, %1
+  %89 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %90 = icmp ule ptr %89, %.sroa.0.0.copyload.i.i.i2.pre.i.i.i181
+  %91 = select i1 %88, i1 true, i1 %90
+  call void @llvm.assume(i1 %91)
+  br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i182
+
+_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i182: ; preds = %83, %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i.i184
+  %.pre-phi.i.i.i183 = phi i64 [ %.pre.i.i.i185, %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i.i184 ], [ %85, %83 ]
+  %92 = icmp samesign ugt i64 %notmask.i.i.i.i.i178, -3
+  %93 = select i1 %92, i64 0, i64 %.pre-phi.i.i.i183
+  %94 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i2.pre.i.i.i181, i64 %93
+  %95 = icmp ule ptr %94, %1
+  %.phi.trans.insert.i.i.i180.a = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %96 = icmp ule ptr %.phi.trans.insert.i.i.i180.a, %.sroa.0.0.copyload.i.i.i2.pre.i.i.i181
+  %97 = select i1 %95, i1 true, i1 %96
+  call void @llvm.assume(i1 %97)
+  %i.jn = icmp ne i64 %82, 0
+  invoke void @_ZN4absl12lts_2026052618container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS1_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %80, ptr noundef %.sroa.0.0.copyload.i.i.i2.pre.i.i.i181, i64 noundef 24, i64 noundef 8, i1 noundef zeroext %i.jn)
           to label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEED2Ev.exit186 unwind label %bb.cr
 
 bb.cr:                                            ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i.i182
@@ -1345,7 +1454,7 @@ declare void @_ZN4absl12lts_2026052611GetAllFlagsEv(ptr dead_on_unwind writable 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local { ptr, ptr } @_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE4findIA9_cEENSB_8iteratorERKT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 1 dereferenceable(9) %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8                ; 3 uses
+  %i.a = load i64, ptr %0, align 8                ; 4 uses
   %i.b = and i64 %i.a, 254
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %bb.b, label %bb.e
@@ -1379,7 +1488,18 @@ _ZN4absl12lts_2026052618container_internal18hash_policy_traitsINS1_17FlatHashMap
 
 bb.e:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.i, align 8, !tbaa !23
+  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.i, align 8, !tbaa !23 ; 3 uses
+  %2 = and i64 %i.a, 255
+  %notmask.i.i.i.i.i = shl nsw i64 -1, %2         ; 2 uses
+  %3 = icmp samesign ugt i64 %notmask.i.i.i.i.i, -3
+  %4 = sub i64 15, %notmask.i.i.i.i.i
+  %5 = select i1 %3, i64 0, i64 %4
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i, i64 %5
+  %7 = icmp ule ptr %6, %0
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %9 = icmp ule ptr %8, %.sroa.0.0.copyload.i.i.i.i
+  %10 = select i1 %7, i1 true, i1 %9
+  tail call void @llvm.assume(i1 %10)
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i, i32 0, i32 1, i32 1)
   %i.j = lshr i64 %i.a, 8
   %i.k = and i64 %i.j, 255
@@ -1396,7 +1516,7 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicy
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local { ptr, ptr } @_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE4findIA18_cEENSB_8iteratorERKT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 1 dereferenceable(18) %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8                ; 3 uses
+  %i.a = load i64, ptr %0, align 8                ; 4 uses
   %i.b = and i64 %i.a, 254
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %bb.b, label %bb.e
@@ -1430,7 +1550,18 @@ _ZN4absl12lts_2026052618container_internal18hash_policy_traitsINS1_17FlatHashMap
 
 bb.e:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.i, align 8, !tbaa !23
+  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.i, align 8, !tbaa !23 ; 3 uses
+  %2 = and i64 %i.a, 255
+  %notmask.i.i.i.i.i = shl nsw i64 -1, %2         ; 2 uses
+  %3 = icmp samesign ugt i64 %notmask.i.i.i.i.i, -3
+  %4 = sub i64 15, %notmask.i.i.i.i.i
+  %5 = select i1 %3, i64 0, i64 %4
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i, i64 %5
+  %7 = icmp ule ptr %6, %0
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %9 = icmp ule ptr %8, %.sroa.0.0.copyload.i.i.i.i
+  %10 = select i1 %7, i1 true, i1 %9
+  tail call void @llvm.assume(i1 %10)
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i, i32 0, i32 1, i32 1)
   %i.j = lshr i64 %i.a, 8
   %i.k = and i64 %i.j, 255
@@ -1447,7 +1578,7 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicy
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local { ptr, ptr } @_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE4findIA20_cEENSB_8iteratorERKT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 1 dereferenceable(20) %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8                ; 3 uses
+  %i.a = load i64, ptr %0, align 8                ; 4 uses
   %i.b = and i64 %i.a, 254
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %bb.b, label %bb.e
@@ -1481,7 +1612,18 @@ _ZN4absl12lts_2026052618container_internal18hash_policy_traitsINS1_17FlatHashMap
 
 bb.e:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.i, align 8, !tbaa !23
+  %.sroa.0.0.copyload.i.i.i.i = load ptr, ptr %i.i, align 8, !tbaa !23 ; 3 uses
+  %2 = and i64 %i.a, 255
+  %notmask.i.i.i.i.i = shl nsw i64 -1, %2         ; 2 uses
+  %3 = icmp samesign ugt i64 %notmask.i.i.i.i.i, -3
+  %4 = sub i64 15, %notmask.i.i.i.i.i
+  %5 = select i1 %3, i64 0, i64 %4
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i.i, i64 %5
+  %7 = icmp ule ptr %6, %0
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %9 = icmp ule ptr %8, %.sroa.0.0.copyload.i.i.i.i
+  %10 = select i1 %7, i1 true, i1 %9
+  tail call void @llvm.assume(i1 %10)
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i, i32 0, i32 1, i32 1)
   %i.j = lshr i64 %i.a, 8
   %i.k = and i64 %i.j, 255
@@ -1884,7 +2026,8 @@ define linkonce_odr dso_local void @_ZN4absl12lts_2026052618container_internal12
 bb.a:
   %i.a = load i64, ptr %0, align 8                ; 2 uses
   %i.b = and i64 %i.a, 255                        ; 2 uses
-  %notmask.i.i.i.i = shl nsw i64 -1, %i.b         ; 4 uses
+  %notmask.i.i.i.i = shl nsw i64 -1, %i.b         ; 8 uses
+  %1 = xor i64 %notmask.i.i.i.i, -1
   %i.c = add nsw i64 %notmask.i.i.i.i, 281474976710655
   %i.d = or i64 %i.c, %notmask.i.i.i.i
   %i.e = icmp eq i64 %i.d, -1
@@ -1892,14 +2035,42 @@ bb.a:
   %i.f = icmp samesign ugt i64 %notmask.i.i.i.i, -281474976710657
   tail call void @llvm.assume(i1 %i.f)
   %i.g = icmp eq i64 %i.b, 0
-  br i1 %i.g, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE15destructor_implEv.exit, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i
+  br i1 %i.g, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE15destructor_implEv.exit, label %2
 
-_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i: ; preds = %bb.a
-  %1 = xor i64 %notmask.i.i.i.i, -1
-  %2 = and i64 %i.a, 65536
-  %.phi.trans.insert.i.i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.0.0.copyload.i.i.i2.pre.i.i = load ptr, ptr %.phi.trans.insert.i.i.a, align 8, !tbaa !23
-  %i.h = icmp ne i64 %2, 0
+2:                                                ; preds = %bb.a
+  %3 = and i64 %i.a, 65536                        ; 2 uses
+  %.not.i.i.i.i = icmp eq i64 %3, 0
+  %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %.sroa.0.0.copyload.i.i.i2.pre.i.i = load ptr, ptr %.phi.trans.insert.i.i, align 8, !tbaa !23 ; 5 uses
+  br i1 %.not.i.i.i.i, label %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i, label %4
+
+._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i: ; preds = %2
+  %.pre.i.i = sub nsw i64 15, %notmask.i.i.i.i
+  br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i
+
+4:                                                ; preds = %2
+  %5 = icmp samesign ugt i64 %notmask.i.i.i.i, -3
+  %6 = sub nsw i64 15, %notmask.i.i.i.i           ; 2 uses
+  %7 = select i1 %5, i64 0, i64 %6
+  %8 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i2.pre.i.i, i64 %7
+  %9 = icmp ule ptr %8, %0
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %11 = icmp ule ptr %10, %.sroa.0.0.copyload.i.i.i2.pre.i.i
+  %12 = select i1 %9, i1 true, i1 %11
+  tail call void @llvm.assume(i1 %12)
+  br label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i
+
+_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE7deallocEv.exit.i: ; preds = %4, %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i
+  %.pre-phi.i.i = phi i64 [ %.pre.i.i, %._ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE5infozEv.exit_crit_edge.i.i ], [ %6, %4 ]
+  %13 = icmp samesign ugt i64 %notmask.i.i.i.i, -3
+  %14 = select i1 %13, i64 0, i64 %.pre-phi.i.i
+  %15 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i2.pre.i.i, i64 %14
+  %16 = icmp ule ptr %15, %0
+  %.phi.trans.insert.i.i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %17 = icmp ule ptr %.phi.trans.insert.i.i.a, %.sroa.0.0.copyload.i.i.i2.pre.i.i
+  %18 = select i1 %16, i1 true, i1 %17
+  tail call void @llvm.assume(i1 %18)
+  %i.h = icmp ne i64 %3, 0
   invoke void @_ZN4absl12lts_2026052618container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS1_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %1, ptr noundef %.sroa.0.0.copyload.i.i.i2.pre.i.i, i64 noundef 24, i64 noundef 8, i1 noundef zeroext %i.h)
           to label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEEPNS0_15CommandLineFlagEEEJEE15destructor_implEv.exit unwind label %bb.b
 
@@ -2302,12 +2473,21 @@ define linkonce_odr dso_local { ptr, ptr } @_ZN4absl12lts_2026052618container_in
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noalias !227
   %i.b = and i64 %i.a, 255
-  %notmask.i.i.i.i.i.i = shl nsw i64 -1, %i.b
+  %notmask.i.i.i.i.i.i = shl nsw i64 -1, %i.b     ; 3 uses
   %i.c = xor i64 %notmask.i.i.i.i.i.i, -1         ; 2 uses
   %i.d = lshr i64 %2, 57
   %i.e = trunc nuw nsw i64 %i.d to i8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.f, align 8, !tbaa !23 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.f, align 8, !tbaa !23 ; 5 uses
+  %3 = icmp samesign ugt i64 %notmask.i.i.i.i.i.i, -3
+  %4 = sub i64 15, %notmask.i.i.i.i.i.i
+  %5 = select i1 %3, i64 0, i64 %4
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i, i64 %5
+  %7 = icmp ule ptr %6, %0
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %9 = icmp ule ptr %8, %.sroa.0.0.copyload.i.i.i
+  %10 = select i1 %7, i1 true, i1 %9
+  tail call void @llvm.assume(i1 %10)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.0.0.copyload.i.i.i14 = load ptr, ptr %i.g, align 8, !tbaa !23 ; 2 uses
   %i.h = insertelement <16 x i8> poison, i8 %i.e, i64 0
@@ -2604,12 +2784,21 @@ define linkonce_odr dso_local { ptr, ptr } @_ZN4absl12lts_2026052618container_in
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noalias !233
   %i.b = and i64 %i.a, 255
-  %notmask.i.i.i.i.i.i = shl nsw i64 -1, %i.b
+  %notmask.i.i.i.i.i.i = shl nsw i64 -1, %i.b     ; 3 uses
   %i.c = xor i64 %notmask.i.i.i.i.i.i, -1         ; 2 uses
   %i.d = lshr i64 %2, 57
   %i.e = trunc nuw nsw i64 %i.d to i8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.f, align 8, !tbaa !23 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.f, align 8, !tbaa !23 ; 5 uses
+  %3 = icmp samesign ugt i64 %notmask.i.i.i.i.i.i, -3
+  %4 = sub i64 15, %notmask.i.i.i.i.i.i
+  %5 = select i1 %3, i64 0, i64 %4
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i, i64 %5
+  %7 = icmp ule ptr %6, %0
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %9 = icmp ule ptr %8, %.sroa.0.0.copyload.i.i.i
+  %10 = select i1 %7, i1 true, i1 %9
+  tail call void @llvm.assume(i1 %10)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.0.0.copyload.i.i.i14 = load ptr, ptr %i.g, align 8, !tbaa !23 ; 2 uses
   %i.h = insertelement <16 x i8> poison, i8 %i.e, i64 0
@@ -2694,12 +2883,21 @@ define linkonce_odr dso_local { ptr, ptr } @_ZN4absl12lts_2026052618container_in
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noalias !237
   %i.b = and i64 %i.a, 255
-  %notmask.i.i.i.i.i.i = shl nsw i64 -1, %i.b
+  %notmask.i.i.i.i.i.i = shl nsw i64 -1, %i.b     ; 3 uses
   %i.c = xor i64 %notmask.i.i.i.i.i.i, -1         ; 2 uses
   %i.d = lshr i64 %2, 57
   %i.e = trunc nuw nsw i64 %i.d to i8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.f, align 8, !tbaa !23 ; 3 uses
+  %.sroa.0.0.copyload.i.i.i = load ptr, ptr %i.f, align 8, !tbaa !23 ; 5 uses
+  %3 = icmp samesign ugt i64 %notmask.i.i.i.i.i.i, -3
+  %4 = sub i64 15, %notmask.i.i.i.i.i.i
+  %5 = select i1 %3, i64 0, i64 %4
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i, i64 %5
+  %7 = icmp ule ptr %6, %0
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %9 = icmp ule ptr %8, %.sroa.0.0.copyload.i.i.i
+  %10 = select i1 %7, i1 true, i1 %9
+  tail call void @llvm.assume(i1 %10)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.0.0.copyload.i.i.i14 = load ptr, ptr %i.g, align 8, !tbaa !23 ; 2 uses
   %i.h = insertelement <16 x i8> poison, i8 %i.e, i64 0

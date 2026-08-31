@@ -1,0 +1,102 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 45748c4f35189..3187c148d05e9 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -643,8 +643,22 @@ static bool isEphemeralValueOf(const Instruction *I, const Value *E) {
+   // The instruction defining an assumption's condition itself is always
+   // considered ephemeral to that assumption (even if it has other
+   // non-ephemeral users). See r246696's test case for an example.
+-  if (is_contained(I->operands(), E))
+-    return true;
++  SmallPtrSet<const Instruction *, 16> Visited;
++  SmallVector<const Instruction *, 16> WorkList;
++  WorkList.push_back(I);
++  while (!WorkList.empty()) {
++    const Instruction *V = WorkList.pop_back_val();
++    if (is_contained(V->operands(), E))
++      return true;
++    for (Value *Op : V->operands())
++      if (Op->getType()->isIntOrIntVectorTy(1) &&
++          match(Op, m_CombineOr(m_LogicalOp(), m_Not(m_Value())))) {
++        if (auto *OpI = dyn_cast<Instruction>(Op))
++          if (Visited.insert(OpI).second)
++            WorkList.push_back(OpI);
++      }
++  }
++  Visited.clear();
+ 
+   const auto *EI = dyn_cast<Instruction>(E);
+   if (!EI)
+@@ -653,8 +667,6 @@ static bool isEphemeralValueOf(const Instruction *I, const Value *E) {
+   if (EI == I)
+     return true;
+ 
+-  SmallPtrSet<const Instruction *, 16> Visited;
+-  SmallVector<const Instruction *, 16> WorkList;
+   Visited.insert(EI);
+   WorkList.push_back(EI);
+   bool ReachesI = false;
+@@ -1135,29 +1147,15 @@ void llvm::computeKnownBitsFromContext(const Value *V, KnownBits &Known,
+       Known.setAllZero();
+       return;
+     }
+-    auto *Trunc = dyn_cast<TruncInst>(Arg);
+-    if (Trunc && Trunc->getOperand(0) == V &&
+-        isValidAssumeForContext(I, Q)) {
+-      if (Trunc->hasNoUnsignedWrap()) {
+-        Known = KnownBits::makeConstant(APInt(BitWidth, 1));
+-        return;
+-      }
+-      Known.One.setBit(0);
+-      return;
+-    }
+ 
+     // The remaining tests are all recursive, so bail out if we hit the limit.
+     if (Depth == MaxAnalysisRecursionDepth)
+       continue;
+ 
+-    ICmpInst *Cmp = dyn_cast<ICmpInst>(Arg);
+-    if (!Cmp)
+-      continue;
+-
+     if (!isValidAssumeForContext(I, Q))
+       continue;
+ 
+-    computeKnownBitsFromICmpCond(V, Cmp, Known, Q, /*Invert=*/false);
++    computeKnownBitsFromCond(V, Arg, Known, Q, /*Invert=*/false, Depth);
+   }
+ 
+   // Conflicting assumption: Undefined behavior will occur on this execution
+@@ -10783,8 +10781,6 @@ void llvm::findValuesAffectedByCondition(
+ 
+     if (IsAssume) {
+       AddAffected(V);
+-      if (match(V, m_Not(m_Value(X))))
+-        AddAffected(X);
+     }
+ 
+     if (match(V, m_LogicalOp(m_Value(A), m_Value(B)))) {
+@@ -10793,10 +10789,10 @@ void llvm::findValuesAffectedByCondition(
+       // Finally, assume(A || B) / assume(!(A && B)) generally don't provide
+       // enough information to be worth handling (intersection of information as
+       // opposed to union).
+-      if (!IsAssume) {
+-        Worklist.push_back(A);
+-        Worklist.push_back(B);
+-      }
++
++      Worklist.push_back(A);
++      Worklist.push_back(B);
++
+     } else if (match(V, m_ICmp(Pred, m_Value(A), m_Value(B)))) {
+       bool HasRHSC = match(B, m_ConstantInt());
+       if (ICmpInst::isEquality(Pred)) {
+@@ -10884,7 +10880,7 @@ void llvm::findValuesAffectedByCondition(
+       // Assume is checked here as X is already added above for assumes in
+       // addValueAffectedByCondition
+       AddAffected(X);
+-    } else if (!IsAssume && match(V, m_Not(m_Value(X)))) {
++    } else if (match(V, m_Not(m_Value(X)))) {
+       // Assume is checked here to avoid issues with ephemeral values
+       Worklist.push_back(X);
+     }

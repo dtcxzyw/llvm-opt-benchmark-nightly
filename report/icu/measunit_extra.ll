@@ -205,7 +205,12 @@ _ZN6icu_7816MaybeStackVectorINS_10CharStringELi8EE28emplaceBackAndCheckErrorCode
   %i.e = trunc i64 %i.d to i32
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !169, !nonnull !126, !align !164
-  %i.h = tail call noundef ptr @_ZN6icu_7810MemoryPoolINS_10CharStringELi8EE6createIJEEEPS1_DpOT_(ptr noundef nonnull align 8 dereferenceable(88) %i.g)
+  %i.h = tail call noundef ptr @_ZN6icu_7810MemoryPoolINS_10CharStringELi8EE6createIJEEEPS1_DpOT_(ptr noundef nonnull align 8 dereferenceable(88) %i.g) ; 2 uses
+  %6 = load i32, ptr %4, align 4, !tbaa !17
+  %7 = icmp sgt i32 %6, 0
+  %8 = icmp ne ptr %i.h, null
+  %or.cond.i.i.not = or i1 %8, %7
+  tail call void @llvm.assume(i1 %or.cond.i.i.not)
   %i.i = tail call noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString6appendEPKciR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %i.h, ptr noundef nonnull %1, i32 noundef %i.e, ptr noundef nonnull align 4 dereferenceable(4) %4) ; 0 uses
   %i.j = load i32, ptr %4, align 4, !tbaa !17
   %i.k = icmp slt i32 %i.j, 1
@@ -238,7 +243,12 @@ _ZN6icu_7816MaybeStackVectorINS_10CharStringELi8EE28emplaceBackAndCheckErrorCode
   %i.u = call noundef ptr %i.t(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %4)
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !171, !nonnull !126, !align !164
-  %i.x = call noundef ptr @_ZN6icu_7810MemoryPoolINS_10CharStringELi8EE6createIJEEEPS1_DpOT_(ptr noundef nonnull align 8 dereferenceable(88) %i.w)
+  %i.x = call noundef ptr @_ZN6icu_7810MemoryPoolINS_10CharStringELi8EE6createIJEEEPS1_DpOT_(ptr noundef nonnull align 8 dereferenceable(88) %i.w) ; 2 uses
+  %9 = load i32, ptr %4, align 4, !tbaa !17
+  %10 = icmp sgt i32 %9, 0
+  %11 = icmp ne ptr %i.x, null
+  %or.cond.i.i21.not = or i1 %11, %10
+  call void @llvm.assume(i1 %or.cond.i.i21.not)
   %i.y = load i32, ptr %i.a, align 4, !tbaa !60
   %i.z = call noundef nonnull align 8 dereferenceable(60) ptr @_ZN6icu_7810CharString20appendInvariantCharsEPKDsiR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(60) %i.x, ptr noundef %i.u, i32 noundef %i.y, ptr noundef nonnull align 4 dereferenceable(4) %4) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17

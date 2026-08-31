@@ -202,12 +202,16 @@ bb.h:                                             ; preds = %_ZN6google8protobuf
   %spec.select.i.i21.i = select i1 %.not.i.i20.i, ptr @_ZN6google8protobuf23MessageOptions_globals_E, ptr %i.al ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %spec.select.i.i21.i, i64 32
   %i.an = load i32, ptr %i.am, align 4, !tbaa !47
-  %i.ao = trunc i32 %i.an to i1
+  %i.ao = trunc i32 %i.an to i1                   ; 2 uses
+  %25 = getelementptr inbounds nuw i8, ptr %spec.select.i.i21.i, i64 40
+  %26 = load ptr, ptr %25, align 8                ; 3 uses
+  %27 = icmp ne ptr %26, null
+  %not..i.i = xor i1 %i.ao, true
+  %28 = select i1 %not..i.i, i1 true, i1 %27
+  call void @llvm.assume(i1 %28)
   br i1 %i.ao, label %bb.i, label %_ZNSt6vectorIN6google8protobuf10FeatureSetESaIS2_EE9push_backERKS2_.exit.i
 
 bb.i:                                             ; preds = %bb.h
-  %25 = getelementptr inbounds nuw i8, ptr %spec.select.i.i21.i, i64 40
-  %26 = load ptr, ptr %25, align 8                ; 2 uses
   %.not.i.i24.i = icmp eq ptr %26, null
   %spec.select.i.i25.i = select i1 %.not.i.i24.i, ptr @_ZN6google8protobuf19FeatureSet_globals_E, ptr %26 ; 2 uses
   %i.ap = load ptr, ptr %i.aj, align 8, !tbaa !53 ; 3 uses
@@ -610,12 +614,16 @@ bb.h:                                             ; preds = %_ZN6google8protobuf
   %spec.select.i.i21.i = select i1 %.not.i.i20.i, ptr @_ZN6google8protobuf23MessageOptions_globals_E, ptr %i.af ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %spec.select.i.i21.i, i64 32
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !47
-  %i.ai = trunc i32 %i.ah to i1
+  %i.ai = trunc i32 %i.ah to i1                   ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %spec.select.i.i21.i, i64 40
+  %11 = load ptr, ptr %10, align 8                ; 3 uses
+  %12 = icmp ne ptr %11, null
+  %not..i.i = xor i1 %i.ai, true
+  %13 = select i1 %not..i.i, i1 true, i1 %12
+  call void @llvm.assume(i1 %13)
   br i1 %i.ai, label %bb.i, label %_ZNSt6vectorIN6google8protobuf10FeatureSetESaIS2_EE9push_backERKS2_.exit.i
 
 bb.i:                                             ; preds = %bb.h
-  %10 = getelementptr inbounds nuw i8, ptr %spec.select.i.i21.i, i64 40
-  %11 = load ptr, ptr %10, align 8                ; 2 uses
   %.not.i.i24.i = icmp eq ptr %11, null
   %spec.select.i.i25.i = select i1 %.not.i.i24.i, ptr @_ZN6google8protobuf19FeatureSet_globals_E, ptr %11 ; 2 uses
   %i.aj = load ptr, ptr %i.ad, align 8, !tbaa !53 ; 3 uses

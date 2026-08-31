@@ -204,8 +204,12 @@ bb.r:                                             ; preds = %zend_check_method_a
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   %.0 = phi ptr [ %i.ax, %bb.q ], [ %i.ba, %bb.r ] ; 2 uses
-  %.not = icmp eq ptr %.0, null
-  br i1 %.not, label %bb.u, label %bb.t, !prof !69
+  %2 = icmp ne ptr %.0, null                      ; 2 uses
+  %3 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @executor_globals, i64 960), align 8
+  %4 = icmp ne ptr %3, null
+  %5 = select i1 %2, i1 true, i1 %4
+  tail call void @llvm.assume(i1 %5)
+  br i1 %2, label %bb.t, label %bb.u, !prof !68
 
 bb.t:                                             ; preds = %bb.s
   store ptr %.0, ptr %1, align 8, !tbaa !35

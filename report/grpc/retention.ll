@@ -202,12 +202,15 @@ bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load i32, ptr %i.a, align 8, !tbaa !30
   %i.c = and i32 %i.b, 4096
-  %.not = icmp eq i32 %i.c, 0
+  %.not = icmp eq i32 %i.c, 0                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 184 ; 2 uses
+  %5 = load ptr, ptr %i.d, align 8                ; 3 uses
+  %6 = icmp ne ptr %5, null
+  %7 = select i1 %.not, i1 true, i1 %6
+  call void @llvm.assume(i1 %7)
   br i1 %.not, label %_ZN6google8protobuf8compiler12_GLOBAL__N_119StripSourceCodeInfoERSt6vectorIS3_IiSaIiEESaIS5_EERNS0_14SourceCodeInfoE.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %5 = load ptr, ptr %i.d, align 8                ; 2 uses
   %i.e = icmp eq ptr %5, null
   br i1 %i.e, label %bb.d, label %_ZN6google8protobuf19FileDescriptorProto24mutable_source_code_infoEv.exit
 

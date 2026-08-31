@@ -205,7 +205,7 @@ bb.a:
   %4 = alloca %"class.v8::internal::WritableJitAllocation", align 8 ; 10 uses
   %5 = alloca %"class.v8::internal::WritableRelocIterator", align 8 ; 6 uses
   %6 = alloca %"class.v8::internal::WasmCodePointer", align 4 ; 4 uses
-  %7 = alloca %"class.absl::flat_hash_map", align 8 ; 8 uses
+  %7 = alloca %"class.absl::flat_hash_map", align 8 ; 12 uses
   %8 = alloca %"class.v8::internal::wasm::NativeModuleSerializer", align 8 ; 24 uses
   %9 = alloca %"class.v8::internal::wasm::(anonymous namespace)::Writer", align 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
@@ -608,19 +608,39 @@ bb.au:                                            ; preds = %bb.au, %.lr.ph.i32.
   br i1 %i.om, label %bb.au, label %_ZN2v88internal4wasm22NativeModuleSerializer18WriteTieringBudgetEPNS1_12_GLOBAL__N_16WriterE.exit.i, !llvm.loop !15
 
 _ZN2v88internal4wasm22NativeModuleSerializer18WriteTieringBudgetEPNS1_12_GLOBAL__N_16WriterE.exit.i: ; preds = %bb.au, %bb.at, %._crit_edge42.i
-  %i.on = load i64, ptr %7, align 8               ; 3 uses
+  %i.on = load i64, ptr %7, align 8               ; 4 uses
   %i.oo = icmp ne i64 %i.on, 0
   call void @llvm.assume(i1 %i.oo)
   %i.op = icmp ult i64 %i.on, 2
-  br i1 %i.op, label %bb.av, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal15WasmCodePointerEjEENS_13hash_internal4HashIS5_EESt8equal_toIS5_ESaISt4pairIKS5_jEEE7deallocEv.exit.i.i.i
+  br i1 %i.op, label %bb.av, label %10
 
-_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal15WasmCodePointerEjEENS_13hash_internal4HashIS5_EESt8equal_toIS5_ESaISt4pairIKS5_jEEE7deallocEv.exit.i.i.i: ; preds = %_ZN2v88internal4wasm22NativeModuleSerializer18WriteTieringBudgetEPNS1_12_GLOBAL__N_16WriterE.exit.i
-  %i.oq = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %10 = load i64, ptr %i.oq, align 8
-  %11 = and i64 %10, 65536
+10:                                               ; preds = %_ZN2v88internal4wasm22NativeModuleSerializer18WriteTieringBudgetEPNS1_12_GLOBAL__N_16WriterE.exit.i
+  %11 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %12 = load i64, ptr %11, align 8
+  %13 = and i64 %12, 65536                        ; 2 uses
+  %.not.i.i.i.i.i35.i = icmp eq i64 %13, 0
   %.phi.trans.insert.i.i.i.i = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i.i, align 8
-  %i.or = icmp ne i64 %11, 0
+  %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i = load ptr, ptr %.phi.trans.insert.i.i.i.i, align 8 ; 5 uses
+  %.pre.i.i.i.i = add i64 %i.on, 16               ; 2 uses
+  br i1 %.not.i.i.i.i.i35.i, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal15WasmCodePointerEjEENS_13hash_internal4HashIS5_EESt8equal_toIS5_ESaISt4pairIKS5_jEEE7deallocEv.exit.i.i.i, label %14
+
+14:                                               ; preds = %10
+  %15 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i, i64 %.pre.i.i.i.i
+  %16 = icmp ule ptr %15, %7
+  %17 = getelementptr inbounds nuw i8, ptr %7, i64 32
+  %18 = icmp ule ptr %17, %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i
+  %19 = select i1 %16, i1 true, i1 %18
+  call void @llvm.assume(i1 %19)
+  br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal15WasmCodePointerEjEENS_13hash_internal4HashIS5_EESt8equal_toIS5_ESaISt4pairIKS5_jEEE7deallocEv.exit.i.i.i
+
+_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyIN2v88internal15WasmCodePointerEjEENS_13hash_internal4HashIS5_EESt8equal_toIS5_ESaISt4pairIKS5_jEEE7deallocEv.exit.i.i.i: ; preds = %10, %14
+  %i.oq = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i, i64 %.pre.i.i.i.i
+  %20 = icmp ule ptr %i.oq, %7
+  %21 = getelementptr inbounds nuw i8, ptr %7, i64 32
+  %22 = icmp ule ptr %21, %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i
+  %23 = select i1 %20, i1 true, i1 %22
+  call void @llvm.assume(i1 %23)
+  %i.or = icmp ne i64 %13, 0
   call void @_ZN4absl18container_internal22DeallocateBackingArrayILm8ESaIcEEEvPvmPNS0_6ctrl_tEmmb(ptr noundef nonnull align 8 dereferenceable(32) %7, i64 noundef %i.on, ptr noundef %.sroa.0.0.copyload.i.i.i1.pre.i.i.i.i, i64 noundef 8, i64 noundef 4, i1 noundef zeroext %i.or)
   br label %bb.av
 
@@ -1023,7 +1043,7 @@ declare noundef i32 @_ZNK2v88internal4wasm12NativeModule25GetBuiltinInJumptableS
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef nonnull align 4 dereferenceable(4) ptr @_ZNK4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIN2v88internal15WasmCodePointerEjEENS_13hash_internal4HashIS5_EESt8equal_toIS5_ESaISt4pairIKS5_jEEE2atIS5_S6_EEDTclsrT0_5valueclL_ZSt9addressofIKSE_EPT_RSL_EclL_ZSt7declvalIRSK_EDTcl9__declvalISL_ELi0EEEvEEEEERSD_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 4 dereferenceable(4) %1) local_unnamed_addr #10 comdat align 2 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8                ; 3 uses
+  %i.a = load i64, ptr %0, align 8                ; 4 uses
   %i.b = icmp ult i64 %i.a, 2
   br i1 %i.b, label %bb.b, label %bb.d
 
@@ -1044,7 +1064,14 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 4 uses
+  %.sroa.0.0.copyload.i.i.i.i.i.i = load ptr, ptr %i.i, align 8 ; 6 uses
+  %2 = getelementptr i8, ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i64 %i.a
+  %3 = getelementptr i8, ptr %2, i64 16
+  %4 = icmp ule ptr %3, %0
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %6 = icmp ule ptr %5, %.sroa.0.0.copyload.i.i.i.i.i.i
+  %7 = select i1 %4, i1 true, i1 %6
+  tail call void @llvm.assume(i1 %7)
   tail call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i32 0, i32 1, i32 1)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = load i64, ptr %i.j, align 8

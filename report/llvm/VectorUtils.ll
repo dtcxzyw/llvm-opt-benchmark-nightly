@@ -205,6 +205,7 @@ $_ZGVZN4mlir6detail14TypeIDResolverINS_7OpTrait12ConstantLikeIZNS_6TypeID3getIS3
 @.str.19 = private unnamed_addr constant [238 x i8] c"` but it isn't known in this MLIRContext: the dialect may not be loaded or this operation hasn't been added by the dialect. See also https://mlir.llvm.org/getting_started/Faq/#registered-loaded-dependent-whats-up-with-dialects-management\00", align 1
 @_ZN4mlir6detail14TypeIDResolverINS_6memref5DimOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @.str.20 = private unnamed_addr constant [11 x i8] c"memref.dim\00", align 1
+@_ZN4mlir6detail14TypeIDResolverINS_18UnrankedTensorTypeEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @_ZN4mlir6detail14TypeIDResolverINS_6tensor5DimOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
 @.str.21 = private unnamed_addr constant [11 x i8] c"tensor.dim\00", align 1
 @_ZN4mlir6detail14TypeIDResolverINS_4func8ReturnOpEvE2idE = external global %"class.mlir::SelfOwningTypeID", align 8
@@ -230,7 +231,7 @@ bb.a:
   %i.d = inttoptr i64 %i.c to ptr
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !10
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 144
-  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.f, align 8, !tbaa !14 ; 2 uses
+  %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.f, align 8, !tbaa !14 ; 4 uses
   %i.g = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_18UnrankedMemRefTypeEvE2idE
   %i.h = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_10MemRefTypeEvE2idE
   %spec.select.i = or i1 %i.g, %i.h
@@ -259,6 +260,10 @@ _ZN4mlir9OpBuilder12createOrFoldINS_6memref5DimOpEJRNS_5ValueERlEEENSt9enable_if
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.a
+  %7 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_18UnrankedTensorTypeEvE2idE
+  %8 = icmp eq ptr %.sroa.0.0.copyload.i.i.i.i.i, @_ZN4mlir6detail14TypeIDResolverINS_16RankedTensorTypeEvE2idE
+  %spec.select.i8 = or i1 %7, %8
+  tail call void @llvm.assume(i1 %spec.select.i8)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   store ptr %i.n, ptr %4, align 8, !tbaa !16

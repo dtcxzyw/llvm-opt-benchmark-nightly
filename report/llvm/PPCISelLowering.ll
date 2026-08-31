@@ -205,10 +205,12 @@ _ZL21canConvertSETCCToXoriPN4llvm6SDNodeE.exit:   ; preds = %_ZN4llvm8dyn_castIN
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 68
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !602
   store i32 %i.bv, ptr %i.bt, align 8, !tbaa !603
-  %i.bw = icmp ne i32 %i.h, 193                   ; 2 uses
-  %.not.i71 = icmp eq i32 %i.bo, 193
-  %brmerge.i.a = or i1 %i.bw, %.not.i71
-  br i1 %brmerge.i.a, label %._crit_edge.i, label %bb.e
+  %i.bw = icmp ne i32 %i.h, 193                   ; 3 uses
+  %.not.i71 = icmp eq i32 %i.bo, 193              ; 2 uses
+  %brmerge.i = or i1 %i.bw, %.not.i71
+  %not..i = xor i1 %i.bw, true
+  %brmerge.i.a = or i1 %.not.i71, %not..i
+  br i1 %brmerge.i, label %._crit_edge.i, label %bb.e
 
 bb.e:                                             ; preds = %_ZL21canConvertSETCCToXoriPN4llvm6SDNodeE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
@@ -243,6 +245,7 @@ bb.e:                                             ; preds = %_ZL21canConvertSETC
   br label %_ZL18ConvertSETCCToXoriPN4llvm6SDNodeERNS_12SelectionDAGE.exit
 
 ._crit_edge.i:                                    ; preds = %_ZL21canConvertSETCCToXoriPN4llvm6SDNodeE.exit
+  tail call void @llvm.assume(i1 %brmerge.i.a)
   tail call void @llvm.assume(i1 %i.bw)
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.lifetime.start.p0(ptr nonnull %7)

@@ -205,7 +205,16 @@ bb.al:                                            ; preds = %_ZN4llvm7CCState11A
   br label %bb.ay
 
 bb.am:                                            ; preds = %bb.ac
+  %11 = add i16 %1, -12
+  %or.cond.i = icmp ult i16 %11, 7
+  %12 = add i16 %1, -105
+  %or.cond3.i = icmp ult i16 %12, 58
+  %or.cond4.i = or i1 %or.cond.i, %or.cond3.i
+  %13 = add i16 %1, -195
+  %spec.select.i125 = icmp ult i16 %13, 21
+  %14 = or i1 %spec.select.i125, %or.cond4.i
   %.not92 = xor i1 %i.aa, true
+  tail call void @llvm.assume(i1 %14)
   tail call void @llvm.assume(i1 %.not92)
   br i1 %i.bk, label %bb.an, label %bb.ao
 

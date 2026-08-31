@@ -202,7 +202,7 @@ bb.a:
   %i.e = alloca [16 x i8], align 16               ; 6 uses
   %i.f = alloca [16 x i8], align 8                ; 5 uses
   %i.g = alloca [16 x i8], align 16               ; 8 uses
-  %i.h = alloca [24 x i8], align 8                ; 3 uses
+  %i.h = alloca [24 x i8], align 8                ; 5 uses
   %i.i = alloca [16 x i8], align 8                ; 5 uses
   %i.j = alloca [16 x i8], align 8                ; 5 uses
   %i.k = alloca [16 x i8], align 16               ; 6 uses
@@ -605,9 +605,13 @@ bb.am:                                            ; preds = %.loopexit339
           to label %.noexc196 unwind label %bb.ao
 
 .noexc196:                                        ; preds = %bb.am
+  %2 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  %3 = load i64, ptr %2, align 8, !range !8, !noundef !3
+  %4 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
+  %5 = load i64, ptr %4, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   %i.gf = invoke noundef i64 @_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6clonedINtB5_6ClonedINtNtNtBb_5slice4iter4IterlEENtNtNtB9_6traits8iterator8Iterator4foldjNCINvNtB7_3map8map_foldljjNCINvNvXs1_NtB7_6filterINtB2K_6FilterppEB1v_5count8to_usizelNCNvXNtNtCskwGTd9yTe3I_8terminfo6parser8compiledNtNtB3G_8database8DatabaseINtNtBb_7convert4FromNtB3C_8DatabaseE4froms7_0E0NCINvXsK_NtB1z_5accumjNtB5E_3Sum3sumINtB2e_3MapBP_B2z_EE0E0EB3G_(ptr noundef nonnull %i.ga, ptr noundef nonnull %i.gd, i64 noundef 0)
-          to label %bb.ap unwind label %bb.ao
+          to label %bb.ap unwind label %bb.ao     ; 2 uses
 
 bb.an:                                            ; preds = %bb.bl, %.loopexit339
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w)
@@ -627,6 +631,11 @@ bb.ao:                                            ; preds = %bb.bj, %.noexc196, 
   br label %.body215
 
 bb.ap:                                            ; preds = %.noexc196
+  %6 = trunc nuw i64 %3 to i1
+  %7 = icmp uge i64 %5, %i.gf
+  %not..i = xor i1 %6, true
+  %8 = select i1 %not..i, i1 true, i1 %7
+  call void @llvm.assume(i1 %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   store i64 %i.gf, ptr %i.ad, align 8
   %.sroa.442.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ad, i64 8

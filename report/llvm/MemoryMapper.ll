@@ -202,7 +202,7 @@ bb.a:
   %2 = alloca %"class.llvm::Expected.30", align 8 ; 6 uses
   %3 = alloca %"class.llvm::Expected.30", align 8 ; 6 uses
   %4 = alloca %"class.llvm::Twine", align 8       ; 6 uses
-  %5 = alloca %"class.llvm::Expected.30", align 8 ; 9 uses
+  %5 = alloca %"class.llvm::Expected.30", align 8 ; 10 uses
   %6 = alloca %"class.llvm::Error", align 8       ; 7 uses
   %7 = alloca %"class.llvm::orc::shared::WrapperFunctionBuffer", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -283,7 +283,8 @@ _ZN4llvm8ExpectedINS_3orc12ExecutorAddrEED2Ev.exit.sink.split.i.i.i: ; preds = %
 bb.d:                                             ; preds = %.critedge.i.i
   store ptr null, ptr %6, align 8, !tbaa !41
   %i.ac = load i8, ptr %i.c, align 8
-  %i.ad = trunc i8 %i.ac to i1
+  %i.ad = trunc i8 %i.ac to i1                    ; 2 uses
+  %8 = load i64, ptr %5, align 8, !tbaa !168
   br i1 %i.ad, label %bb.e, label %_ZN4llvm5ErrorD2Ev.exit.i10.i.i
 
 bb.e:                                             ; preds = %bb.d
@@ -292,6 +293,10 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN4llvm5ErrorD2Ev.exit.i10.i.i:                  ; preds = %bb.e, %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
+  %9 = icmp eq i64 %8, 0
+  %not.80.i.i = xor i1 %i.ad, true
+  %spec.select76.i.i = select i1 %not.80.i.i, i1 true, i1 %9
+  call void @llvm.assume(i1 %spec.select76.i.i)
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   store i8 -1, ptr %i.ae, align 8
   store ptr %i.ab, ptr %2, align 8, !tbaa !22, !alias.scope !770

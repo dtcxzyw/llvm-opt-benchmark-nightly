@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %bb.ab, %.thread167,
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !1083, !nonnull !12, !align !13
   %i.ew = getelementptr i8, ptr %i.ev, i64 64
   %.val = load i64, ptr %i.ew, align 8
-  %i.ex = call fastcc noundef i32 @_ZL27getVariableCategoryFromDeclRKN5clang11LangOptionsEPKNS_9ValueDeclE(i64 %.val, ptr noundef nonnull %i.av) ; 6 uses
+  %i.ex = call fastcc noundef i32 @_ZL27getVariableCategoryFromDeclRKN5clang11LangOptionsEPKNS_9ValueDeclE(i64 %.val, ptr noundef nonnull %i.av) ; 7 uses
   %i.ey = load ptr, ptr %i.es, align 8, !tbaa !2391, !nonnull !12, !align !13
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 216
   %i.fa = load ptr, ptr %i.ez, align 8, !tbaa !1083, !nonnull !12, !align !13
@@ -330,7 +330,7 @@ _ZNK5clang13CXXRecordDecl8isLambdaEv.exit:        ; preds = %bb.as
 .critedge102:                                     ; preds = %bb.as, %bb.ar, %_ZNK5clang13CXXRecordDecl8isLambdaEv.exit
   %i.gy = load ptr, ptr %0, align 8, !tbaa !2373  ; 2 uses
   %i.gz = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_110DSAStackTy18mustBeFirstprivateEN5clang26OpenMPDefaultmapClauseKindE(ptr noundef nonnull align 8 dereferenceable(28840) %i.gy, i32 noundef %i.ex)
-  %i.ha = trunc i64 %.sroa.5.0.extract.shift to i1
+  %i.ha = trunc i64 %.sroa.5.0.extract.shift to i1 ; 2 uses
   %not. = xor i1 %i.gz, true
   %i.hb = select i1 %not., i1 true, i1 %i.ha
   br i1 %i.hb, label %.critedge106, label %.critedge104
@@ -357,6 +357,8 @@ bb.at:                                            ; preds = %.critedge106
   br label %bb.bk
 
 bb.au:                                            ; preds = %.critedge106
+  %13 = icmp eq i32 %i.ex, 1
+  %spec.select = select i1 %13, i1 true, i1 %i.ha
   %i.hi = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.0.0.copyload.i116 = load i64, ptr %i.hi, align 8, !tbaa !104
   %i.hj = call fastcc noundef zeroext i1 @_ZL28hasConstQualifiedMappingTypeN5clang8QualTypeE(i64 %.sroa.0.0.copyload.i116)
@@ -385,6 +387,7 @@ bb.ay:                                            ; preds = %bb.au
   br label %_ZL28getMapClauseKindFromModifierN5clang30OpenMPDefaultmapClauseModifierEbb.exit
 
 bb.az:                                            ; preds = %bb.au, %bb.au, %bb.au
+  call void @llvm.assume(i1 %spec.select)
   %i.hk = select i1 %i.hj, i64 1, i64 3
   br label %_ZL28getMapClauseKindFromModifierN5clang30OpenMPDefaultmapClauseModifierEbb.exit
 

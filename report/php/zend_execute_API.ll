@@ -204,7 +204,7 @@ zend_string_release_ex.exit:                      ; preds = %bb.g
   br label %bb.k
 
 bb.k:                                             ; preds = %zend_string_release_ex.exit, %bb.f
-  %i.ab = phi ptr [ %i.k, %bb.f ], [ %.pre, %zend_string_release_ex.exit ] ; 17 uses
+  %i.ab = phi ptr [ %i.k, %bb.f ], [ %.pre, %zend_string_release_ex.exit ] ; 18 uses
   %.0167 = phi ptr [ %1, %bb.f ], [ %spec.store.select, %zend_string_release_ex.exit ] ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 4 ; 10 uses
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !12
@@ -224,7 +224,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.l, %bb.m
-  %.0170 = phi ptr [ %i.ai, %bb.m ], [ %i.ag, %bb.l ]
+  %.0170 = phi ptr [ %i.ai, %bb.m ], [ %i.ag, %bb.l ] ; 2 uses
   %.0169 = phi i32 [ 33685504, %bb.m ], [ 33686280, %bb.l ] ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.ak = load i32, ptr %i.aj, align 8, !tbaa !191 ; 3 uses
@@ -256,6 +256,8 @@ zend_vm_calc_used_stack.exit:                     ; preds = %bb.n, %bb.o
   %i.bb = ptrtoint ptr %i.ax to i64
   %i.bc = sub i64 %i.ba, %i.bb
   %i.bd = icmp ult i64 %i.bc, %i.ay
+  %3 = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
+  %4 = icmp ne ptr %.0170, null
   br i1 %i.bd, label %bb.p, label %bb.q, !prof !97
 
 bb.p:                                             ; preds = %zend_vm_calc_used_stack.exit
@@ -271,6 +273,10 @@ bb.q:                                             ; preds = %zend_vm_calc_used_s
 zend_vm_stack_push_call_frame_ex.exit:            ; preds = %bb.p, %bb.q
   %.sink372 = phi ptr [ %i.be, %bb.p ], [ %i.ax, %bb.q ] ; 5 uses
   %.sink = phi i32 [ %i.bf, %bb.p ], [ %.0169, %bb.q ]
+  %5 = load ptr, ptr %3, align 8, !tbaa !12
+  %.not.i271 = icmp eq ptr %5, null
+  %6 = or i1 %4, %.not.i271
+  call void @llvm.assume(i1 %6)
   %i.bh = getelementptr inbounds nuw i8, ptr %.sink372, i64 24
   store ptr %i.ab, ptr %i.bh, align 8, !tbaa !161
   %i.bi = getelementptr inbounds nuw i8, ptr %.sink372, i64 32

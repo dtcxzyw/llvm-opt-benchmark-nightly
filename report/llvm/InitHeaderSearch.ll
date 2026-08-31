@@ -204,14 +204,20 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
-  %i.bx = phi i32 [ %.pre.i, %bb.m ], [ %i.ba, %bb.l ], [ %i.ba, %bb.k ] ; 2 uses
+  %i.bx = phi i32 [ %.pre.i, %bb.m ], [ %i.ba, %bb.l ], [ %i.ba, %bb.k ] ; 3 uses
   %cond.i.i = icmp eq i32 %i.bx, 0
   br i1 %cond.i.i, label %_ZNK4llvm6Triple10isOSDarwinEv.exit.thread3.i.i.i, label %_ZNK4llvm6Triple10isOSDarwinEv.exit.i.i.i
 
 _ZNK4llvm6Triple10isOSDarwinEv.exit.i.i.i:        ; preds = %bb.n
   %i.by = and i32 %i.bx, -9
-  %spec.select.i.i.i.i.i.a = icmp ne i32 %i.by, 1
-  call void @llvm.assume(i1 %spec.select.i.i.i.i.i.a)
+  %spec.select.i.i.i.i.i = icmp ne i32 %i.by, 1
+  call void @llvm.assume(i1 %spec.select.i.i.i.i.i)
+  %27 = getelementptr inbounds nuw i8, ptr %3, i64 40
+  %28 = load i32, ptr %27, align 8, !tbaa !47
+  %29 = icmp ne i32 %28, 1
+  %spec.select.i.i.i.i.i.a = icmp ne i32 %i.bx, 47
+  %.not40.i.i = or i1 %spec.select.i.i.i.i.i.a, %29
+  call void @llvm.assume(i1 %.not40.i.i)
   br label %_ZNK4llvm6Triple10isOSDarwinEv.exit.thread3.i.i.i
 
 _ZNK4llvm6Triple10isOSDarwinEv.exit.thread3.i.i.i: ; preds = %bb.n, %_ZNK4llvm6Triple10isOSDarwinEv.exit.i.i.i

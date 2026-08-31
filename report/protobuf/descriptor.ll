@@ -205,7 +205,12 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.gi = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.gj = load i32, ptr %i.gi, align 8, !tbaa !3  ; 2 uses
   %i.gk = and i32 %i.gj, 2048
-  %.not.i80 = icmp eq i32 %i.gk, 0
+  %.not.i80 = icmp eq i32 %i.gk, 0                ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %1, i64 176
+  %18 = load ptr, ptr %17, align 8
+  %19 = icmp ne ptr %18, null
+  %20 = select i1 %.not.i80, i1 true, i1 %19
+  call void @llvm.assume(i1 %20)
   br i1 %.not.i80, label %bb.ab, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISK_EEvi.exit.i
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISK_EEvi.exit.i: ; preds = %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayIS8_EEvi.exit.i
@@ -215,7 +220,12 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
 
 bb.ab:                                            ; preds = %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISK_EEvi.exit.i, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayIS8_EEvi.exit.i
   %i.gm = and i32 %i.gj, 4096
-  %.not62.i = icmp eq i32 %i.gm, 0
+  %.not62.i = icmp eq i32 %i.gm, 0                ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %1, i64 184
+  %22 = load ptr, ptr %21, align 8
+  %23 = icmp ne ptr %22, null
+  %24 = select i1 %.not62.i, i1 true, i1 %23
+  call void @llvm.assume(i1 %24)
   br i1 %.not62.i, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayINS0_17ServiceDescriptorEEEvi.exit.i.i, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayIS9_EEvi.exit.i
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayIS9_EEvi.exit.i: ; preds = %bb.ab
@@ -262,11 +272,16 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.hn = phi i32 [ %i.hu, %_ZN6google8protobufL18PlanAllocationSizeERKNS0_16RepeatedPtrFieldINS0_21MethodDescriptorProtoEEEmRNS0_8internal13FlatAllocatorE.exit.us.i.i ], [ 0, %.lr.ph.i.i ] ; 2 uses
   %.sroa.022.028.us.i.i = phi ptr [ %i.jw, %_ZN6google8protobufL18PlanAllocationSizeERKNS0_16RepeatedPtrFieldINS0_21MethodDescriptorProtoEEEmRNS0_8internal13FlatAllocatorE.exit.us.i.i ], [ %i.hg, %.lr.ph.i.i ] ; 2 uses
   %i.ho = phi i32 [ %i.jv, %_ZN6google8protobufL18PlanAllocationSizeERKNS0_16RepeatedPtrFieldINS0_21MethodDescriptorProtoEEEmRNS0_8internal13FlatAllocatorE.exit.us.i.i ], [ %i.gy, %.lr.ph.i.i ]
-  %i.hp = load ptr, ptr %.sroa.022.028.us.i.i, align 8, !tbaa !323 ; 4 uses
+  %i.hp = load ptr, ptr %.sroa.022.028.us.i.i, align 8, !tbaa !323 ; 5 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 16
   %i.hr = load i32, ptr %i.hq, align 4, !tbaa !3
   %i.hs = and i32 %i.hr, 4
-  %.not26.us.i.i = icmp eq i32 %i.hs, 0
+  %.not26.us.i.i = icmp eq i32 %i.hs, 0           ; 2 uses
+  %25 = getelementptr inbounds nuw i8, ptr %i.hp, i64 48
+  %26 = load ptr, ptr %25, align 8
+  %27 = icmp ne ptr %26, null
+  %28 = select i1 %.not26.us.i.i, i1 true, i1 %27
+  call void @llvm.assume(i1 %28)
   br i1 %.not26.us.i.i, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayINS0_16MethodDescriptorEEEvi.exit.i.us.i.i, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISI_EEvi.exit.us.i.i
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISI_EEvi.exit.us.i.i: ; preds = %.lr.ph.split.us.i.i
@@ -318,7 +333,7 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.iy = phi i32 [ %i.hm, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE15PlanEntityNamesEm.exit.lr.ph.i.us.i.i ], [ %i.js, %bb.ac ] ; 2 uses
   %.sroa.012.017.i.us.i.i = phi ptr [ %i.is, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE15PlanEntityNamesEm.exit.lr.ph.i.us.i.i ], [ %i.jt, %bb.ac ] ; 2 uses
   %i.iz = phi i32 [ %i.ik, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE15PlanEntityNamesEm.exit.lr.ph.i.us.i.i ], [ %i.jm, %bb.ac ]
-  %i.ja = load ptr, ptr %.sroa.012.017.i.us.i.i, align 8, !tbaa !323 ; 2 uses
+  %i.ja = load ptr, ptr %.sroa.012.017.i.us.i.i, align 8, !tbaa !323 ; 3 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %i.ja, i64 24
   %i.jc = load ptr, ptr %i.jb, align 8, !tbaa !276
   %i.jd = ptrtoint ptr %i.jc to i64
@@ -335,7 +350,12 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.jn = getelementptr inbounds nuw i8, ptr %i.ja, i64 16
   %i.jo = load i32, ptr %i.jn, align 8, !tbaa !3
   %i.jp = and i32 %i.jo, 8
-  %.not15.i.us.i.i = icmp eq i32 %i.jp, 0
+  %.not15.i.us.i.i = icmp eq i32 %i.jp, 0         ; 2 uses
+  %29 = getelementptr inbounds nuw i8, ptr %i.ja, i64 48
+  %30 = load ptr, ptr %29, align 8
+  %31 = icmp ne ptr %30, null
+  %32 = select i1 %.not15.i.us.i.i, i1 true, i1 %31
+  call void @llvm.assume(i1 %32)
   br i1 %.not15.i.us.i.i, label %bb.ac, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISJ_EEvi.exit.i.us.i.i
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISJ_EEvi.exit.i.us.i.i: ; preds = %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE15PlanEntityNamesEm.exit.i.us.i.i
@@ -362,11 +382,16 @@ _ZN6google8protobufL18PlanAllocationSizeERKNS0_16RepeatedPtrFieldINS0_21MethodDe
   %i.jy = phi i32 [ %i.kf, %_ZN6google8protobufL18PlanAllocationSizeERKNS0_16RepeatedPtrFieldINS0_21MethodDescriptorProtoEEEmRNS0_8internal13FlatAllocatorE.exit.i.i ], [ 0, %.lr.ph.i.i ] ; 2 uses
   %.sroa.022.028.i.i = phi ptr [ %i.mi, %_ZN6google8protobufL18PlanAllocationSizeERKNS0_16RepeatedPtrFieldINS0_21MethodDescriptorProtoEEEmRNS0_8internal13FlatAllocatorE.exit.i.i ], [ %i.hg, %.lr.ph.i.i ] ; 2 uses
   %i.jz = phi i32 [ %i.mh, %_ZN6google8protobufL18PlanAllocationSizeERKNS0_16RepeatedPtrFieldINS0_21MethodDescriptorProtoEEEmRNS0_8internal13FlatAllocatorE.exit.i.i ], [ %i.gy, %.lr.ph.i.i ]
-  %i.ka = load ptr, ptr %.sroa.022.028.i.i, align 8, !tbaa !323 ; 4 uses
+  %i.ka = load ptr, ptr %.sroa.022.028.i.i, align 8, !tbaa !323 ; 5 uses
   %i.kb = getelementptr inbounds nuw i8, ptr %i.ka, i64 16
   %i.kc = load i32, ptr %i.kb, align 4, !tbaa !3
   %i.kd = and i32 %i.kc, 4
-  %.not26.i.i = icmp eq i32 %i.kd, 0
+  %.not26.i.i = icmp eq i32 %i.kd, 0              ; 2 uses
+  %33 = getelementptr inbounds nuw i8, ptr %i.ka, i64 48
+  %34 = load ptr, ptr %33, align 8
+  %35 = icmp ne ptr %34, null
+  %36 = select i1 %.not26.i.i, i1 true, i1 %35
+  call void @llvm.assume(i1 %36)
   br i1 %.not26.i.i, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayINS0_16MethodDescriptorEEEvi.exit.i.i.i, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISI_EEvi.exit.i.i
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISI_EEvi.exit.i.i: ; preds = %.lr.ph.split.i.i
@@ -419,7 +444,7 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.lk = phi i32 [ %i.jx, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE15PlanEntityNamesEm.exit.lr.ph.i.i.i ], [ %i.me, %bb.ad ] ; 2 uses
   %.sroa.012.017.i.i.i = phi ptr [ %i.le, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE15PlanEntityNamesEm.exit.lr.ph.i.i.i ], [ %i.mf, %bb.ad ] ; 2 uses
   %i.ll = phi i32 [ %i.kw, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE15PlanEntityNamesEm.exit.lr.ph.i.i.i ], [ %i.ly, %bb.ad ]
-  %i.lm = load ptr, ptr %.sroa.012.017.i.i.i, align 8, !tbaa !323 ; 2 uses
+  %i.lm = load ptr, ptr %.sroa.012.017.i.i.i, align 8, !tbaa !323 ; 3 uses
   %i.ln = getelementptr inbounds nuw i8, ptr %i.lm, i64 24
   %i.lo = load ptr, ptr %i.ln, align 8, !tbaa !276
   %i.lp = ptrtoint ptr %i.lo to i64
@@ -436,7 +461,12 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.lz = getelementptr inbounds nuw i8, ptr %i.lm, i64 16
   %i.ma = load i32, ptr %i.lz, align 8, !tbaa !3
   %i.mb = and i32 %i.ma, 8
-  %.not15.i.i.i = icmp eq i32 %i.mb, 0
+  %.not15.i.i.i = icmp eq i32 %i.mb, 0            ; 2 uses
+  %37 = getelementptr inbounds nuw i8, ptr %i.lm, i64 48
+  %38 = load ptr, ptr %37, align 8
+  %39 = icmp ne ptr %38, null
+  %40 = select i1 %.not15.i.i.i, i1 true, i1 %39
+  call void @llvm.assume(i1 %40)
   br i1 %.not15.i.i.i, label %bb.ad, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISJ_EEvi.exit.i.i.i
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISJ_EEvi.exit.i.i.i: ; preds = %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE15PlanEntityNamesEm.exit.i.i.i
@@ -839,12 +869,15 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !3
   %i.d = and i32 %i.c, 2048
-  %.not66 = icmp eq i32 %i.d, 0
+  %.not66 = icmp eq i32 %i.d, 0                   ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %5, i64 176
+  %18 = load ptr, ptr %17, align 8                ; 3 uses
+  %19 = icmp ne ptr %18, null
+  %20 = select i1 %.not66, i1 true, i1 %19
+  tail call void @llvm.assume(i1 %20)
   br i1 %.not66, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %17 = getelementptr inbounds nuw i8, ptr %5, i64 176
-  %18 = load ptr, ptr %17, align 8                ; 2 uses
   %.not.i.i = icmp eq ptr %18, null
   %i.e = select i1 %.not.i.i, ptr @_ZN6google8protobuf30_FileOptions_default_instance_E, ptr %18 ; 5 uses
   %.val.i = load ptr, ptr %8, align 8, !tbaa !270
@@ -1215,12 +1248,15 @@ bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
   %i.i = load i32, ptr %i.h, align 4, !tbaa !3
   %i.j = and i32 %i.i, 1024
-  %.not44 = icmp eq i32 %i.j, 0
+  %.not44 = icmp eq i32 %i.j, 0                   ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 120 ; 3 uses
+  %13 = load ptr, ptr %i.k, align 8               ; 3 uses
+  %14 = icmp ne ptr %13, null
+  %15 = select i1 %.not44, i1 true, i1 %14
+  tail call void @llvm.assume(i1 %15)
   br i1 %.not44, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
-  %13 = load ptr, ptr %i.k, align 8               ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !818
   %i.n = icmp eq ptr %13, null
@@ -1623,8 +1659,12 @@ bb.r:                                             ; preds = %bb.q, %bb.o
   store i8 0, ptr %i.ce, align 2, !tbaa !1174
   %i.cf = load i32, ptr %i.h, align 8, !tbaa !3
   %i.cg = and i32 %i.cf, 4096
-  %.not771 = icmp eq i32 %i.cg, 0
-  %i.ch = getelementptr inbounds nuw i8, ptr %1, i64 184
+  %.not771 = icmp eq i32 %i.cg, 0                 ; 2 uses
+  %i.ch = getelementptr inbounds nuw i8, ptr %1, i64 184 ; 2 uses
+  %57 = load ptr, ptr %i.ch, align 8
+  %58 = icmp ne ptr %57, null
+  %59 = select i1 %.not771, i1 true, i1 %58
+  call void @llvm.assume(i1 %59)
   br i1 %.not771, label %_ZN6google8protobuf14SourceCodeInfoaSERKS1_.exit, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -2027,7 +2067,7 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE15PlanEntityNamesEm.exit: ; preds = %.lr.ph, %_ZN6google8protobufL18PlanAllocationSizeERKNS0_16RepeatedPtrFieldINS0_20OneofDescriptorProtoEEEmRNS0_8internal13FlatAllocatorE.exit
   %i.y = phi i32 [ %i.g, %.lr.ph ], [ %i.fv, %_ZN6google8protobufL18PlanAllocationSizeERKNS0_16RepeatedPtrFieldINS0_20OneofDescriptorProtoEEEmRNS0_8internal13FlatAllocatorE.exit ]
   %.sroa.057.064 = phi ptr [ %i.o, %.lr.ph ], [ %i.fw, %_ZN6google8protobufL18PlanAllocationSizeERKNS0_16RepeatedPtrFieldINS0_20OneofDescriptorProtoEEEmRNS0_8internal13FlatAllocatorE.exit ] ; 2 uses
-  %i.z = load ptr, ptr %.sroa.057.064, align 8, !tbaa !323 ; 12 uses
+  %i.z = load ptr, ptr %.sroa.057.064, align 8, !tbaa !323 ; 13 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 152
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !276
   %i.ac = ptrtoint ptr %i.ab to i64
@@ -2044,7 +2084,12 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.am = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   %i.an = load i32, ptr %i.am, align 8, !tbaa !3
   %i.ao = and i32 %i.an, 512
-  %.not61 = icmp eq i32 %i.ao, 0
+  %.not61 = icmp eq i32 %i.ao, 0                  ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.z, i64 160
+  %7 = load ptr, ptr %6, align 8
+  %8 = icmp ne ptr %7, null
+  %9 = select i1 %.not61, i1 true, i1 %8
+  tail call void @llvm.assume(i1 %9)
   br i1 %.not61, label %bb.d, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISC_EEvi.exit
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISC_EEvi.exit: ; preds = %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE15PlanEntityNamesEm.exit
@@ -2116,10 +2161,16 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.bp = phi i32 [ %i.bv, %bb.g ], [ %.promoted.i, %.lr.ph.i ] ; 2 uses
   %.sroa.010.014.i.prol = phi ptr [ %i.bw, %bb.g ], [ %i.bi, %.lr.ph.i ] ; 2 uses
   %prol.iter = phi i64 [ %prol.iter.next, %bb.g ], [ 0, %.lr.ph.i ]
-  %i.bq = load ptr, ptr %.sroa.010.014.i.prol, align 8, !tbaa !323
+  %i.bq = load ptr, ptr %.sroa.010.014.i.prol, align 8, !tbaa !323 ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 16
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !3
-  %i.bt = trunc i32 %i.bs to i1
+  %i.bt = trunc i32 %i.bs to i1                   ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %i.bq, i64 24
+  %11 = load ptr, ptr %10, align 8
+  %12 = icmp ne ptr %11, null
+  %not..i.i.prol = xor i1 %i.bt, true
+  %13 = select i1 %not..i.i.prol, i1 true, i1 %12
+  tail call void @llvm.assume(i1 %13)
   br i1 %i.bt, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i.prol, label %bb.g
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i.prol: ; preds = %.prol.preheader
@@ -2143,10 +2194,16 @@ bb.g:                                             ; preds = %_ZN6google8protobuf
 .lr.ph.i.new:                                     ; preds = %.prol.loopexit, %bb.k
   %i.by = phi i32 [ %i.cz, %bb.k ], [ %.unr, %.prol.loopexit ] ; 2 uses
   %.sroa.010.014.i = phi ptr [ %i.da, %bb.k ], [ %.sroa.010.014.i.unr, %.prol.loopexit ] ; 5 uses
-  %i.bz = load ptr, ptr %.sroa.010.014.i, align 8, !tbaa !323
+  %i.bz = load ptr, ptr %.sroa.010.014.i, align 8, !tbaa !323 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !3
-  %i.cc = trunc i32 %i.cb to i1
+  %i.cc = trunc i32 %i.cb to i1                   ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %i.bz, i64 24
+  %15 = load ptr, ptr %14, align 8
+  %16 = icmp ne ptr %15, null
+  %not..i.i = xor i1 %i.cc, true
+  %17 = select i1 %not..i.i, i1 true, i1 %16
+  tail call void @llvm.assume(i1 %17)
   br i1 %i.cc, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i, label %bb.h
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i: ; preds = %.lr.ph.i.new
@@ -2157,10 +2214,16 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
 bb.h:                                             ; preds = %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i, %.lr.ph.i.new
   %i.ce = phi i32 [ %i.cd, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i ], [ %i.by, %.lr.ph.i.new ] ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %.sroa.010.014.i, i64 8
-  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !323
+  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !323 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !3
-  %i.cj = trunc i32 %i.ci to i1
+  %i.cj = trunc i32 %i.ci to i1                   ; 2 uses
+  %18 = getelementptr inbounds nuw i8, ptr %i.cg, i64 24
+  %19 = load ptr, ptr %18, align 8
+  %20 = icmp ne ptr %19, null
+  %not..i.i.1 = xor i1 %i.cj, true
+  %21 = select i1 %not..i.i.1, i1 true, i1 %20
+  tail call void @llvm.assume(i1 %21)
   br i1 %i.cj, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i.1, label %bb.i
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i.1: ; preds = %bb.h
@@ -2171,10 +2234,16 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
 bb.i:                                             ; preds = %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i.1, %bb.h
   %i.cl = phi i32 [ %i.ck, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i.1 ], [ %i.ce, %bb.h ] ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %.sroa.010.014.i, i64 16
-  %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !323
+  %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !323 ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 16
   %i.cp = load i32, ptr %i.co, align 4, !tbaa !3
-  %i.cq = trunc i32 %i.cp to i1
+  %i.cq = trunc i32 %i.cp to i1                   ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %i.cn, i64 24
+  %23 = load ptr, ptr %22, align 8
+  %24 = icmp ne ptr %23, null
+  %not..i.i.2 = xor i1 %i.cq, true
+  %25 = select i1 %not..i.i.2, i1 true, i1 %24
+  tail call void @llvm.assume(i1 %25)
   br i1 %i.cq, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i.2, label %bb.j
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i.2: ; preds = %bb.i
@@ -2185,10 +2254,16 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
 bb.j:                                             ; preds = %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i.2, %bb.i
   %i.cs = phi i32 [ %i.cr, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i.2 ], [ %i.cl, %bb.i ] ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %.sroa.010.014.i, i64 24
-  %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !323
+  %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !323 ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 16
   %i.cw = load i32, ptr %i.cv, align 4, !tbaa !3
-  %i.cx = trunc i32 %i.cw to i1
+  %i.cx = trunc i32 %i.cw to i1                   ; 2 uses
+  %26 = getelementptr inbounds nuw i8, ptr %i.cu, i64 24
+  %27 = load ptr, ptr %26, align 8
+  %28 = icmp ne ptr %27, null
+  %not..i.i.3 = xor i1 %i.cx, true
+  %29 = select i1 %not..i.i.3, i1 true, i1 %28
+  tail call void @llvm.assume(i1 %29)
   br i1 %i.cx, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i.3, label %bb.k
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISG_EEvi.exit.i.3: ; preds = %bb.j
@@ -2272,7 +2347,7 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.eg = phi i32 [ %i.ey, %bb.n ], [ %.promoted21.i, %.lr.ph.i55 ] ; 2 uses
   %.sroa.014.020.us.i = phi ptr [ %i.ez, %bb.n ], [ %i.eb, %.lr.ph.i55 ] ; 2 uses
   %i.eh = phi i32 [ %i.et, %bb.n ], [ %i.dt, %.lr.ph.i55 ]
-  %i.ei = load ptr, ptr %.sroa.014.020.us.i, align 8, !tbaa !323 ; 2 uses
+  %i.ei = load ptr, ptr %.sroa.014.020.us.i, align 8, !tbaa !323 ; 3 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %i.ei, i64 24
   %i.ek = load ptr, ptr %i.ej, align 8, !tbaa !276
   %i.el = ptrtoint ptr %i.ek to i64
@@ -2288,7 +2363,12 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.eu = getelementptr inbounds nuw i8, ptr %i.ei, i64 16
   %i.ev = load i32, ptr %i.eu, align 8, !tbaa !3
   %i.ew = and i32 %i.ev, 2
-  %.not18.us.i = icmp eq i32 %i.ew, 0
+  %.not18.us.i = icmp eq i32 %i.ew, 0             ; 2 uses
+  %30 = getelementptr inbounds nuw i8, ptr %i.ei, i64 32
+  %31 = load ptr, ptr %30, align 8
+  %32 = icmp ne ptr %31, null
+  %33 = select i1 %.not18.us.i, i1 true, i1 %32
+  tail call void @llvm.assume(i1 %33)
   br i1 %.not18.us.i, label %bb.n, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISH_EEvi.exit.us.i
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISH_EEvi.exit.us.i: ; preds = %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE15PlanEntityNamesEm.exit.us.i
@@ -2306,7 +2386,7 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.fa = phi i32 [ %i.ft, %bb.o ], [ %.promoted21.i, %.lr.ph.i55 ] ; 2 uses
   %.sroa.014.020.i = phi ptr [ %i.fu, %bb.o ], [ %i.eb, %.lr.ph.i55 ] ; 2 uses
   %i.fb = phi i32 [ %i.fo, %bb.o ], [ %i.dt, %.lr.ph.i55 ]
-  %i.fc = load ptr, ptr %.sroa.014.020.i, align 8, !tbaa !323 ; 2 uses
+  %i.fc = load ptr, ptr %.sroa.014.020.i, align 8, !tbaa !323 ; 3 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 24
   %i.fe = load ptr, ptr %i.fd, align 8, !tbaa !276
   %i.ff = ptrtoint ptr %i.fe to i64
@@ -2323,7 +2403,12 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fc, i64 16
   %i.fq = load i32, ptr %i.fp, align 8, !tbaa !3
   %i.fr = and i32 %i.fq, 2
-  %.not18.i = icmp eq i32 %i.fr, 0
+  %.not18.i = icmp eq i32 %i.fr, 0                ; 2 uses
+  %34 = getelementptr inbounds nuw i8, ptr %i.fc, i64 32
+  %35 = load ptr, ptr %34, align 8
+  %36 = icmp ne ptr %35, null
+  %37 = select i1 %.not18.i, i1 true, i1 %36
+  tail call void @llvm.assume(i1 %37)
   br i1 %.not18.i, label %bb.o, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISH_EEvi.exit.i
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISH_EEvi.exit.i: ; preds = %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE15PlanEntityNamesEm.exit.i
@@ -2412,7 +2497,7 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.z = phi i32 [ %.promoted42, %.lr.ph ], [ %i.as, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayIS8_EEvi.exit ] ; 2 uses
   %.sroa.035.041 = phi ptr [ %i.o, %.lr.ph ], [ %i.cz, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayIS8_EEvi.exit ] ; 2 uses
   %i.aa = phi i32 [ %i.g, %.lr.ph ], [ %i.cw, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayIS8_EEvi.exit ]
-  %i.ab = load ptr, ptr %.sroa.035.041, align 8, !tbaa !323 ; 6 uses
+  %i.ab = load ptr, ptr %.sroa.035.041, align 8, !tbaa !323 ; 7 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 72
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !276
   %i.ae = ptrtoint ptr %i.ad to i64
@@ -2429,7 +2514,12 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
   %i.ap = load i32, ptr %i.ao, align 8, !tbaa !3
   %i.aq = and i32 %i.ap, 16
-  %.not39 = icmp eq i32 %i.aq, 0
+  %.not39 = icmp eq i32 %i.aq, 0                  ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.ab, i64 80
+  %5 = load ptr, ptr %4, align 8
+  %6 = icmp ne ptr %5, null
+  %7 = select i1 %.not39, i1 true, i1 %6
+  tail call void @llvm.assume(i1 %7)
   br i1 %.not39, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayIS8_EEvi.exit.i, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISE_EEvi.exit
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISE_EEvi.exit: ; preds = %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE15PlanEntityNamesEm.exit
@@ -2471,11 +2561,16 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader
-  %i.bo = load ptr, ptr %i.bi, align 8, !tbaa !323
+  %i.bo = load ptr, ptr %i.bi, align 8, !tbaa !323 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
   %i.bq = load i32, ptr %i.bp, align 4, !tbaa !3
   %i.br = and i32 %i.bq, 2
-  %.not18.i.prol = icmp eq i32 %i.br, 0
+  %.not18.i.prol = icmp eq i32 %i.br, 0           ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.bo, i64 32
+  %9 = load ptr, ptr %8, align 8
+  %10 = icmp ne ptr %9, null
+  %11 = select i1 %.not18.i.prol, i1 true, i1 %10
+  tail call void @llvm.assume(i1 %11)
   br i1 %.not18.i.prol, label %.lr.ph.i.prol.loopexit.unr-lcssa, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISF_EEvi.exit.i.prol
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISF_EEvi.exit.i.prol: ; preds = %.lr.ph.i.prol
@@ -2499,11 +2594,16 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.bw = phi i32 [ %i.cl, %bb.d ], [ %.unr46, %.lr.ph.i.prol.loopexit ]
   %i.bx = phi i32 [ %i.cm, %bb.d ], [ %.unr46, %.lr.ph.i.prol.loopexit ] ; 2 uses
   %.sroa.015.020.i = phi ptr [ %i.cn, %bb.d ], [ %.sroa.015.020.i.unr, %.lr.ph.i.prol.loopexit ] ; 3 uses
-  %i.by = load ptr, ptr %.sroa.015.020.i, align 8, !tbaa !323
+  %i.by = load ptr, ptr %.sroa.015.020.i, align 8, !tbaa !323 ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 16
   %i.ca = load i32, ptr %i.bz, align 4, !tbaa !3
   %i.cb = and i32 %i.ca, 2
-  %.not18.i = icmp eq i32 %i.cb, 0
+  %.not18.i = icmp eq i32 %i.cb, 0                ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %i.by, i64 32
+  %13 = load ptr, ptr %12, align 8
+  %14 = icmp ne ptr %13, null
+  %15 = select i1 %.not18.i, i1 true, i1 %14
+  tail call void @llvm.assume(i1 %15)
   br i1 %.not18.i, label %.lr.ph.i.1, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISF_EEvi.exit.i
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISF_EEvi.exit.i: ; preds = %.lr.ph.i
@@ -2515,11 +2615,16 @@ _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_string
   %i.cd = phi i32 [ %i.cc, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISF_EEvi.exit.i ], [ %i.bw, %.lr.ph.i ]
   %i.ce = phi i32 [ %i.cc, %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISF_EEvi.exit.i ], [ %i.bx, %.lr.ph.i ] ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %.sroa.015.020.i, i64 8
-  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !323
+  %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !323 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !3
   %i.cj = and i32 %i.ci, 2
-  %.not18.i.1 = icmp eq i32 %i.cj, 0
+  %.not18.i.1 = icmp eq i32 %i.cj, 0              ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %i.cg, i64 32
+  %17 = load ptr, ptr %16, align 8
+  %18 = icmp ne ptr %17, null
+  %19 = select i1 %.not18.i.1, i1 true, i1 %18
+  tail call void @llvm.assume(i1 %19)
   br i1 %.not18.i.1, label %bb.d, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISF_EEvi.exit.i.1
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISF_EEvi.exit.i.1: ; preds = %.lr.ph.i.1
@@ -2619,17 +2724,22 @@ bb.d:                                             ; preds = %.lr.ph, %bb.j
   %i.x = phi i32 [ %.promoted, %.lr.ph ], [ %i.ae, %bb.j ] ; 2 uses
   %.sroa.026.039 = phi ptr [ %i.o, %.lr.ph ], [ %i.ek, %bb.j ] ; 2 uses
   %i.y = phi i32 [ %i.g, %.lr.ph ], [ %.sink, %bb.j ] ; 3 uses
-  %i.z = load ptr, ptr %.sroa.026.039, align 8, !tbaa !323 ; 4 uses
+  %i.z = load ptr, ptr %.sroa.026.039, align 8, !tbaa !323 ; 5 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16 ; 3 uses
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !3  ; 2 uses
   %i.ac = and i32 %i.ab, 32
-  %.not36 = icmp eq i32 %i.ac, 0
+  %.not36 = icmp eq i32 %i.ac, 0                  ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.z, i64 64
+  %5 = load ptr, ptr %4, align 8
+  %6 = icmp ne ptr %5, null
+  %7 = select i1 %.not36, i1 true, i1 %6
+  tail call void @llvm.assume(i1 %7)
   br i1 %.not36, label %bb.e, label %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISD_EEvi.exit
 
 _ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISD_EEvi.exit: ; preds = %bb.d
   %i.ad = add nsw i32 %i.x, 1                     ; 2 uses
   store i32 %i.ad, ptr %i.s, align 8, !tbaa !3
-  %.pre = load i32, ptr %i.aa, align 4, !tbaa !3
+  %.pre = load i32, ptr %i.aa, align 8, !tbaa !3
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN6google8protobuf12_GLOBAL__N_117FlatAllocatorImplIJcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_14SourceCodeInfoENS0_20FileDescriptorTablesENS0_10FeatureSetENS0_14MessageOptionsENS0_12FieldOptionsENS0_11EnumOptionsENS0_16EnumValueOptionsENS0_21ExtensionRangeOptionsENS0_12OneofOptionsENS0_14ServiceOptionsENS0_13MethodOptionsENS0_11FileOptionsEEE9PlanArrayISD_EEvi.exit, %bb.d
@@ -3032,12 +3142,16 @@ bb.e:                                             ; preds = %bb.d
 .critedge:                                        ; preds = %_ZN6google8protobuf12_GLOBAL__N_117GetParentFeaturesEPKNS0_10DescriptorE.exit
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
   %i.p = load i32, ptr %i.o, align 4, !tbaa !3
-  %i.q = trunc i32 %i.p to i1
+  %i.q = trunc i32 %i.p to i1                     ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 40 ; 3 uses
+  %13 = load ptr, ptr %i.r, align 8               ; 3 uses
+  %14 = icmp ne ptr %13, null
+  %not..i = xor i1 %i.q, true
+  %15 = select i1 %not..i, i1 true, i1 %14
+  tail call void @llvm.assume(i1 %15)
   br i1 %i.q, label %bb.f, label %bb.k
 
 bb.f:                                             ; preds = %.critedge
-  %13 = load ptr, ptr %i.r, align 8               ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !818
   %i.u = icmp eq ptr %13, null
@@ -3357,12 +3471,15 @@ bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !3
   %i.l = and i32 %i.k, 2
-  %.not45 = icmp eq i32 %i.l, 0
+  %.not45 = icmp eq i32 %i.l, 0                   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 3 uses
+  %13 = load ptr, ptr %i.m, align 8               ; 3 uses
+  %14 = icmp ne ptr %13, null
+  %15 = select i1 %.not45, i1 true, i1 %14
+  tail call void @llvm.assume(i1 %15)
   br i1 %.not45, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
-  %13 = load ptr, ptr %i.m, align 8               ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !818
   %i.p = icmp eq ptr %13, null
@@ -3682,12 +3799,15 @@ bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !3
   %i.l = and i32 %i.k, 4
-  %.not45 = icmp eq i32 %i.l, 0
+  %.not45 = icmp eq i32 %i.l, 0                   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 72 ; 3 uses
+  %13 = load ptr, ptr %i.m, align 8               ; 3 uses
+  %14 = icmp ne ptr %13, null
+  %15 = select i1 %.not45, i1 true, i1 %14
+  tail call void @llvm.assume(i1 %15)
   br i1 %.not45, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
-  %13 = load ptr, ptr %i.m, align 8               ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !818
   %i.p = icmp eq ptr %13, null
@@ -4022,12 +4142,16 @@ bb.e:                                             ; preds = %bb.d
 .critedge:                                        ; preds = %_ZN6google8protobuf12_GLOBAL__N_117GetParentFeaturesEPKNS0_14EnumDescriptorE.exit
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
   %i.p = load i32, ptr %i.o, align 4, !tbaa !3
-  %i.q = trunc i32 %i.p to i1
+  %i.q = trunc i32 %i.p to i1                     ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 40 ; 3 uses
+  %13 = load ptr, ptr %i.r, align 8               ; 3 uses
+  %14 = icmp ne ptr %13, null
+  %not..i = xor i1 %i.q, true
+  %15 = select i1 %not..i, i1 true, i1 %14
+  tail call void @llvm.assume(i1 %15)
   br i1 %i.q, label %bb.f, label %bb.k
 
 bb.f:                                             ; preds = %.critedge
-  %13 = load ptr, ptr %i.r, align 8               ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !818
   %i.u = icmp eq ptr %13, null
@@ -4347,12 +4471,15 @@ bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !3
   %i.l = and i32 %i.k, 2
-  %.not44 = icmp eq i32 %i.l, 0
+  %.not44 = icmp eq i32 %i.l, 0                   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 3 uses
+  %13 = load ptr, ptr %i.m, align 8               ; 3 uses
+  %14 = icmp ne ptr %13, null
+  %15 = select i1 %.not44, i1 true, i1 %14
+  tail call void @llvm.assume(i1 %15)
   br i1 %.not44, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
-  %13 = load ptr, ptr %i.m, align 8               ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !818
   %i.p = icmp eq ptr %13, null
@@ -4706,12 +4833,15 @@ bb.g:                                             ; preds = %bb.f
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 4 uses
   %i.x = load i32, ptr %i.w, align 4, !tbaa !3
   %i.y = and i32 %i.x, 4
-  %.not50 = icmp eq i32 %i.y, 0
+  %.not50 = icmp eq i32 %i.y, 0                   ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %4, i64 72 ; 3 uses
+  %13 = load ptr, ptr %i.z, align 8               ; 3 uses
+  %14 = icmp ne ptr %13, null
+  %15 = select i1 %.not50, i1 true, i1 %14
+  tail call void @llvm.assume(i1 %15)
   br i1 %.not50, label %bb.m, label %bb.h
 
 bb.h:                                             ; preds = %.critedge
-  %13 = load ptr, ptr %i.z, align 8               ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !818
   %i.ac = icmp eq ptr %13, null
@@ -5114,12 +5244,15 @@ bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !3
   %i.l = and i32 %i.k, 2
-  %.not45 = icmp eq i32 %i.l, 0
+  %.not45 = icmp eq i32 %i.l, 0                   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 3 uses
+  %13 = load ptr, ptr %i.m, align 8               ; 3 uses
+  %14 = icmp ne ptr %13, null
+  %15 = select i1 %.not45, i1 true, i1 %14
+  tail call void @llvm.assume(i1 %15)
   br i1 %.not45, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
-  %13 = load ptr, ptr %i.m, align 8               ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !818
   %i.p = icmp eq ptr %13, null
@@ -5439,12 +5572,15 @@ bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !3
   %i.l = and i32 %i.k, 2
-  %.not45 = icmp eq i32 %i.l, 0
+  %.not45 = icmp eq i32 %i.l, 0                   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 3 uses
+  %13 = load ptr, ptr %i.m, align 8               ; 3 uses
+  %14 = icmp ne ptr %13, null
+  %15 = select i1 %.not45, i1 true, i1 %14
+  tail call void @llvm.assume(i1 %15)
   br i1 %.not45, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
-  %13 = load ptr, ptr %i.m, align 8               ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !818
   %i.p = icmp eq ptr %13, null
@@ -5847,12 +5983,15 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !3
   %i.d = and i32 %i.c, 512
-  %.not66 = icmp eq i32 %i.d, 0
+  %.not66 = icmp eq i32 %i.d, 0                   ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %5, i64 160
+  %18 = load ptr, ptr %17, align 8                ; 3 uses
+  %19 = icmp ne ptr %18, null
+  %20 = select i1 %.not66, i1 true, i1 %19
+  tail call void @llvm.assume(i1 %20)
   br i1 %.not66, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %17 = getelementptr inbounds nuw i8, ptr %5, i64 160
-  %18 = load ptr, ptr %17, align 8                ; 2 uses
   %.not.i.i = icmp eq ptr %18, null
   %i.e = select i1 %.not.i.i, ptr @_ZN6google8protobuf33_MessageOptions_default_instance_E, ptr %18 ; 5 uses
   %.val.i = load ptr, ptr %8, align 8, !tbaa !270
@@ -6255,12 +6394,15 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !3
   %i.d = and i32 %i.c, 32
-  %.not66 = icmp eq i32 %i.d, 0
+  %.not66 = icmp eq i32 %i.d, 0                   ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %5, i64 64
+  %18 = load ptr, ptr %17, align 8                ; 3 uses
+  %19 = icmp ne ptr %18, null
+  %20 = select i1 %.not66, i1 true, i1 %19
+  tail call void @llvm.assume(i1 %20)
   br i1 %.not66, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %17 = getelementptr inbounds nuw i8, ptr %5, i64 64
-  %18 = load ptr, ptr %17, align 8                ; 2 uses
   %.not.i.i = icmp eq ptr %18, null
   %i.e = select i1 %.not.i.i, ptr @_ZN6google8protobuf31_FieldOptions_default_instance_E, ptr %18 ; 5 uses
   %.val.i = load ptr, ptr %8, align 8, !tbaa !270
@@ -6663,12 +6805,16 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !3
-  %i.d = trunc i32 %i.c to i1
+  %i.d = trunc i32 %i.c to i1                     ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %18 = load ptr, ptr %17, align 8                ; 3 uses
+  %19 = icmp ne ptr %18, null
+  %not..i = xor i1 %i.d, true
+  %20 = select i1 %not..i, i1 true, i1 %19
+  tail call void @llvm.assume(i1 %20)
   br i1 %i.d, label %bb.b, label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
-  %17 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %18 = load ptr, ptr %17, align 8                ; 2 uses
   %.not.i.i = icmp eq ptr %18, null
   %i.e = select i1 %.not.i.i, ptr @_ZN6google8protobuf40_ExtensionRangeOptions_default_instance_E, ptr %18 ; 5 uses
   %.val.i = load ptr, ptr %8, align 8, !tbaa !270
@@ -7009,12 +7155,15 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !3
   %i.d = and i32 %i.c, 2
-  %.not66 = icmp eq i32 %i.d, 0
+  %.not66 = icmp eq i32 %i.d, 0                   ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %18 = load ptr, ptr %17, align 8                ; 3 uses
+  %19 = icmp ne ptr %18, null
+  %20 = select i1 %.not66, i1 true, i1 %19
+  tail call void @llvm.assume(i1 %20)
   br i1 %.not66, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %17 = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %18 = load ptr, ptr %17, align 8                ; 2 uses
   %.not.i.i = icmp eq ptr %18, null
   %i.e = select i1 %.not.i.i, ptr @_ZN6google8protobuf31_OneofOptions_default_instance_E, ptr %18 ; 5 uses
   %.val.i = load ptr, ptr %8, align 8, !tbaa !270
@@ -7417,12 +7566,15 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !3
   %i.d = and i32 %i.c, 16
-  %.not66 = icmp eq i32 %i.d, 0
+  %.not66 = icmp eq i32 %i.d, 0                   ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %5, i64 80
+  %18 = load ptr, ptr %17, align 8                ; 3 uses
+  %19 = icmp ne ptr %18, null
+  %20 = select i1 %.not66, i1 true, i1 %19
+  tail call void @llvm.assume(i1 %20)
   br i1 %.not66, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %17 = getelementptr inbounds nuw i8, ptr %5, i64 80
-  %18 = load ptr, ptr %17, align 8                ; 2 uses
   %.not.i.i = icmp eq ptr %18, null
   %i.e = select i1 %.not.i.i, ptr @_ZN6google8protobuf30_EnumOptions_default_instance_E, ptr %18 ; 5 uses
   %.val.i = load ptr, ptr %8, align 8, !tbaa !270
@@ -7825,12 +7977,15 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !3
   %i.d = and i32 %i.c, 2
-  %.not66 = icmp eq i32 %i.d, 0
+  %.not66 = icmp eq i32 %i.d, 0                   ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %18 = load ptr, ptr %17, align 8                ; 3 uses
+  %19 = icmp ne ptr %18, null
+  %20 = select i1 %.not66, i1 true, i1 %19
+  tail call void @llvm.assume(i1 %20)
   br i1 %.not66, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %17 = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %18 = load ptr, ptr %17, align 8                ; 2 uses
   %.not.i.i = icmp eq ptr %18, null
   %i.e = select i1 %.not.i.i, ptr @_ZN6google8protobuf35_EnumValueOptions_default_instance_E, ptr %18 ; 5 uses
   %.val.i = load ptr, ptr %8, align 8, !tbaa !270
@@ -8229,12 +8384,15 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !3
   %i.d = and i32 %i.c, 4
-  %.not66 = icmp eq i32 %i.d, 0
+  %.not66 = icmp eq i32 %i.d, 0                   ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %5, i64 48
+  %18 = load ptr, ptr %17, align 8                ; 3 uses
+  %19 = icmp ne ptr %18, null
+  %20 = select i1 %.not66, i1 true, i1 %19
+  tail call void @llvm.assume(i1 %20)
   br i1 %.not66, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %17 = getelementptr inbounds nuw i8, ptr %5, i64 48
-  %18 = load ptr, ptr %17, align 8                ; 2 uses
   %.not.i.i = icmp eq ptr %18, null
   %i.e = select i1 %.not.i.i, ptr @_ZN6google8protobuf33_ServiceOptions_default_instance_E, ptr %18 ; 5 uses
   %.val.i = load ptr, ptr %8, align 8, !tbaa !270
@@ -8575,12 +8733,15 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.c = load i32, ptr %i.b, align 8, !tbaa !3
   %i.d = and i32 %i.c, 8
-  %.not66 = icmp eq i32 %i.d, 0
+  %.not66 = icmp eq i32 %i.d, 0                   ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %5, i64 48
+  %18 = load ptr, ptr %17, align 8                ; 3 uses
+  %19 = icmp ne ptr %18, null
+  %20 = select i1 %.not66, i1 true, i1 %19
+  tail call void @llvm.assume(i1 %20)
   br i1 %.not66, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %17 = getelementptr inbounds nuw i8, ptr %5, i64 48
-  %18 = load ptr, ptr %17, align 8                ; 2 uses
   %.not.i.i = icmp eq ptr %18, null
   %i.e = select i1 %.not.i.i, ptr @_ZN6google8protobuf32_MethodOptions_default_instance_E, ptr %18 ; 5 uses
   %.val.i = load ptr, ptr %8, align 8, !tbaa !270

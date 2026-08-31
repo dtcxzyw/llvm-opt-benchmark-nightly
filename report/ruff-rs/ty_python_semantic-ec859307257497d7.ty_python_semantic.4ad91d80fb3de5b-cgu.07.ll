@@ -205,8 +205,8 @@ bb.bk:                                            ; preds = %.noexc
   %.mux.i = and i1 %.not.i, %i.hx
   br i1 %brmerge.i, label %_RNvXsi_NtCs2O29vuvTAEJ_14ty_python_core5placeNtB5_9PlaceExprNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i, label %bb.bm
 
-_RNvXsi_NtCs2O29vuvTAEJ_14ty_python_core5placeNtB5_9PlaceExprNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.ithread-pre-split: ; preds = %bb.bm, %bb.bo, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.i.i, %bb.bq, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit13.i.i, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit13.thread.i.i, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.thread.i.i, %bb.bs, %.noexc6.i, %_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i, %bb.bt
-  %.sroa.0.0.shrunk.i.ph = phi i1 [ false, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.thread.i.i ], [ false, %bb.bq ], [ false, %bb.bo ], [ false, %.noexc6.i ], [ false, %_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i ], [ false, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.i.i ], [ false, %bb.bm ], [ %i.jz, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit13.thread.i.i ], [ false, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit13.i.i ], [ %i.kk, %bb.bt ], [ false, %bb.bs ]
+_RNvXsi_NtCs2O29vuvTAEJ_14ty_python_core5placeNtB5_9PlaceExprNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.ithread-pre-split: ; preds = %bb.bm, %bb.bo, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.i.i, %bb.bq, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit13.i.i, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit13.thread.i.i, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.thread.i.i, %7, %.noexc6.i, %_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i, %bb.bt
+  %.sroa.0.0.shrunk.i.ph = phi i1 [ false, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.thread.i.i ], [ false, %bb.bq ], [ false, %bb.bo ], [ false, %.noexc6.i ], [ false, %_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i ], [ false, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.i.i ], [ false, %bb.bm ], [ %i.jz, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit13.thread.i.i ], [ false, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit13.i.i ], [ %i.kk, %bb.bt ], [ false, %7 ]
   %.pr454 = load i8, ptr %i.hv, align 1, !alias.scope !17460
   br label %_RNvXsi_NtCs2O29vuvTAEJ_14ty_python_core5placeNtB5_9PlaceExprNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i
 
@@ -325,36 +325,34 @@ _RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit13.thread.i.i: ; p
 _RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.thread.i.i: ; preds = %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.i.i, %bb.bp
   %.val.i.i = load ptr, ptr %i.p, align 8, !alias.scope !17463, !noalias !17466, !noundef !15 ; 2 uses
   %i.ka = getelementptr inbounds nuw i8, ptr %i.p, i64 8
-  %.val2.i.i = load i64, ptr %i.ka, align 8, !alias.scope !17463, !noalias !17466 ; 3 uses
-  %.val3.i.i = load ptr, ptr %i.o, align 8, !alias.scope !17466, !noalias !17463, !noundef !15 ; 3 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  %.val4.i.i = load i64, ptr %6, align 8, !alias.scope !17466, !noalias !17463 ; 2 uses
+  %.val2.i.i = load i64, ptr %i.ka, align 8, !alias.scope !17463, !noalias !17466 ; 2 uses
+  %.val3.i.i = load ptr, ptr %i.o, align 8, !alias.scope !17466, !noalias !17463, !noundef !15 ; 2 uses
   %i.kb = icmp ne ptr %.val.i.i, null             ; 2 uses
   %i.kc = icmp eq ptr %.val3.i.i, null            ; 3 uses
   %not..i.i.i = xor i1 %i.kc, true
   %i.kd = xor i1 %i.kb, %i.kc
-  br i1 %i.kd, label %7, label %_RNvXsi_NtCs2O29vuvTAEJ_14ty_python_core5placeNtB5_9PlaceExprNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.ithread-pre-split
+  br i1 %i.kd, label %bb.bs, label %_RNvXsi_NtCs2O29vuvTAEJ_14ty_python_core5placeNtB5_9PlaceExprNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.ithread-pre-split
 
-7:                                                ; preds = %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.thread.i.i
-  br i1 %i.kb, label %bb.bs, label %_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i
+bb.bs:                                            ; preds = %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.thread.i.i
+  %6 = getelementptr inbounds nuw i8, ptr %i.o, i64 8
+  %.val4.i.i = load i64, ptr %6, align 8, !alias.scope !17466, !noalias !17463
+  %i.ke = icmp eq i64 %.val2.i.i, %.val4.i.i      ; 2 uses
+  br i1 %i.kb, label %7, label %_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i
 
-bb.bs:                                            ; preds = %7
+7:                                                ; preds = %bb.bs
   call void @llvm.assume(i1 %not..i.i.i)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.i.i) ]
-  %i.ke = icmp eq i64 %.val2.i.i, %.val4.i.i
   br i1 %i.ke, label %.split.i.i, label %_RNvXsi_NtCs2O29vuvTAEJ_14ty_python_core5placeNtB5_9PlaceExprNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.ithread-pre-split
 
-.split.i.i:                                       ; preds = %bb.bs
+.split.i.i:                                       ; preds = %7
   %i.kf = invoke noundef zeroext i1 @_RNvXs2_NtNtCs4NRVxsYgnAr_4core5slice3cmpNtNtCs2O29vuvTAEJ_14ty_python_core6member11SegmentInfoINtB5_14SlicePartialEqBC_E17equal_same_lengthCsoTR8nlGN3X_18ty_python_semantic(ptr noundef nonnull %.val.i.i, ptr noundef nonnull %.val3.i.i, i64 noundef %.val2.i.i)
           to label %.noexc6.i unwind label %bb.bu
 
 .noexc6.i:                                        ; preds = %.split.i.i
   br i1 %i.kf, label %bb.bt, label %_RNvXsi_NtCs2O29vuvTAEJ_14ty_python_core5placeNtB5_9PlaceExprNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.ithread-pre-split
 
-_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i: ; preds = %7
+_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i: ; preds = %bb.bs
   call void @llvm.assume(i1 %i.kc)
-  %8 = icmp eq i64 %.val2.i.i, %.val4.i.i
-  br i1 %8, label %bb.bt, label %_RNvXsi_NtCs2O29vuvTAEJ_14ty_python_core5placeNtB5_9PlaceExprNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.ithread-pre-split
+  br i1 %i.ke, label %bb.bt, label %_RNvXsi_NtCs2O29vuvTAEJ_14ty_python_core5placeNtB5_9PlaceExprNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.ithread-pre-split
 
 bb.bt:                                            ; preds = %_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i, %.noexc6.i
   %i.kg = getelementptr inbounds nuw i8, ptr %i.p, i64 32

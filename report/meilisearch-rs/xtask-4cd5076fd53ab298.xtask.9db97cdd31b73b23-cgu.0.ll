@@ -205,11 +205,7 @@ bb.l:                                             ; preds = %bb.j
   %i.ab = icmp ult i64 %i.aa, 88686269585142076
   call void @llvm.assume(i1 %i.ab)
   %i.ac = icmp eq i64 %i.aa, 0
-  br i1 %i.ac, label %"_ZN4http6header3map18HeaderMap$LT$T$GT$12contains_key17hd72bec0a7b061d3aE.exit.thread95", label %bb.m
-
-"_ZN4http6header3map18HeaderMap$LT$T$GT$12contains_key17hd72bec0a7b061d3aE.exit.thread95": ; preds = %bb.l
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  br label %bb.z
+  br i1 %i.ac, label %"_ZN4http6header3map18HeaderMap$LT$T$GT$12contains_key17hd72bec0a7b061d3aE.exit.thread82", label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ad = call fastcc noundef i16 @_ZN4http6header3map15hash_elem_using17hfa00c2547dd9d71bE(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.y, ptr noundef nonnull readonly align 8 dereferenceable(32) %i.d), !noalias !42701 ; 2 uses
@@ -297,7 +293,7 @@ bb.s:                                             ; preds = %bb.r
   %i.bt = load ptr, ptr %i.bs, align 8, !noalias !42702, !noundef !8
   %bcmp.i.i.i.i.i.i.i = call i32 @bcmp(ptr %i.bt, ptr %i.av, i64 %i.au), !noalias !42702
   %i.bu = icmp eq i32 %bcmp.i.i.i.i.i.i.i, 0
-  br i1 %i.bu, label %"_ZN92_$LT$http..header..name..HeaderName$u20$as$u20$http..header..map..as_header_name..Sealed$GT$4find17h54bdff71bbc06893E.exit.i", label %"_ZN71_$LT$http..header..name..HeaderName$u20$as$u20$core..cmp..PartialEq$GT$2eq17hd9fe00166c2a3e98E.exit.thread.i.i.i"
+  br i1 %i.bu, label %bb.w, label %"_ZN71_$LT$http..header..name..HeaderName$u20$as$u20$core..cmp..PartialEq$GT$2eq17hd9fe00166c2a3e98E.exit.thread.i.i.i"
 
 "_ZN71_$LT$http..header..name..HeaderName$u20$as$u20$core..cmp..PartialEq$GT$2eq17hd9fe00166c2a3e98E.exit.i.i.i": ; preds = %bb.r
   call void @llvm.assume(i1 %i.as)
@@ -329,12 +325,16 @@ bb.v:                                             ; preds = %bb.u
   invoke void %i.ca(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.cb, ptr noundef %i.av, i64 noundef %i.au)
           to label %.thread73 unwind label %bb.x, !noalias !42686, !inline_history !19544
 
-"_ZN92_$LT$http..header..name..HeaderName$u20$as$u20$http..header..map..as_header_name..Sealed$GT$4find17h54bdff71bbc06893E.exit.i": ; preds = %.split.i.i.i, %bb.n, %.loopexit
-  %3 = phi i1 [ false, %.loopexit ], [ true, %.split.i.i.i ], [ false, %bb.n ]
+"_ZN92_$LT$http..header..name..HeaderName$u20$as$u20$http..header..map..as_header_name..Sealed$GT$4find17h54bdff71bbc06893E.exit.i": ; preds = %bb.n, %.loopexit
   %i.cc = icmp eq ptr %i.ar, null
-  br i1 %i.cc, label %"_ZN4http6header3map18HeaderMap$LT$T$GT$12contains_key17hd72bec0a7b061d3aE.exit", label %bb.w
+  br i1 %i.cc, label %"_ZN4http6header3map18HeaderMap$LT$T$GT$12contains_key17hd72bec0a7b061d3aE.exit.thread82", label %bb.w
 
-bb.w:                                             ; preds = %"_ZN92_$LT$http..header..name..HeaderName$u20$as$u20$http..header..map..as_header_name..Sealed$GT$4find17h54bdff71bbc06893E.exit.i"
+"_ZN4http6header3map18HeaderMap$LT$T$GT$12contains_key17hd72bec0a7b061d3aE.exit.thread82": ; preds = %bb.l, %"_ZN92_$LT$http..header..name..HeaderName$u20$as$u20$http..header..map..as_header_name..Sealed$GT$4find17h54bdff71bbc06893E.exit.i"
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
+  br label %bb.z
+
+bb.w:                                             ; preds = %.split.i.i.i, %"_ZN92_$LT$http..header..name..HeaderName$u20$as$u20$http..header..map..as_header_name..Sealed$GT$4find17h54bdff71bbc06893E.exit.i"
+  %3 = phi i1 [ false, %"_ZN92_$LT$http..header..name..HeaderName$u20$as$u20$http..header..map..as_header_name..Sealed$GT$4find17h54bdff71bbc06893E.exit.i" ], [ true, %.split.i.i.i ]
   %i.cd = getelementptr inbounds nuw i8, ptr %i.ar, i64 32
   %i.ce = load ptr, ptr %i.cd, align 8, !noalias !42717, !nonnull !8, !noundef !8
   %i.cf = getelementptr inbounds nuw i8, ptr %i.d, i64 24
@@ -362,11 +362,11 @@ bb.y:                                             ; preds = %bb.ae
           cleanup
   br label %.thread43
 
-"_ZN4http6header3map18HeaderMap$LT$T$GT$12contains_key17hd72bec0a7b061d3aE.exit": ; preds = %"_ZN92_$LT$http..header..name..HeaderName$u20$as$u20$http..header..map..as_header_name..Sealed$GT$4find17h54bdff71bbc06893E.exit.i", %bb.w
+"_ZN4http6header3map18HeaderMap$LT$T$GT$12contains_key17hd72bec0a7b061d3aE.exit": ; preds = %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br i1 %3, label %bb.ae, label %bb.z
 
-bb.z:                                             ; preds = %"_ZN4http6header3map18HeaderMap$LT$T$GT$12contains_key17hd72bec0a7b061d3aE.exit.thread95", %"_ZN4http6header3map18HeaderMap$LT$T$GT$12contains_key17hd72bec0a7b061d3aE.exit"
+bb.z:                                             ; preds = %"_ZN4http6header3map18HeaderMap$LT$T$GT$12contains_key17hd72bec0a7b061d3aE.exit", %"_ZN4http6header3map18HeaderMap$LT$T$GT$12contains_key17hd72bec0a7b061d3aE.exit.thread82"
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.j, ptr noundef nonnull align 8 dereferenceable(32) @1257, i64 32, i1 false)

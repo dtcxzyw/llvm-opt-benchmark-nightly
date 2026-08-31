@@ -205,8 +205,12 @@ _ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St4h
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 4 uses
   %i.y = load i32, ptr %i.x, align 8, !tbaa !104  ; 2 uses
   %i.z = and i32 %i.y, 16
-  %.not159 = icmp eq i32 %i.z, 0
+  %.not159 = icmp eq i32 %i.z, 0                  ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 240 ; 2 uses
+  %14 = load ptr, ptr %i.aa, align 8              ; 3 uses
+  %15 = icmp ne ptr %14, null
+  %16 = select i1 %.not159, i1 true, i1 %15
+  tail call void @llvm.assume(i1 %16)
   br i1 %.not159, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_S5_EEE5clearEv.exit
@@ -248,7 +252,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.f,
   br label %bb.df
 
 bb.g:                                             ; preds = %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_S5_EEE5clearEv.exit
-  %14 = load ptr, ptr %i.aa, align 8              ; 2 uses
   %i.ai = icmp eq ptr %14, null
   br i1 %i.ai, label %bb.h, label %bb.j
 
@@ -651,7 +654,7 @@ declare void @_ZNSt15basic_streambufIcSt11char_traitsIcEED2Ev(ptr noundef nonnul
 define hidden void @_ZN2cv3dnn14dnn5_v2026060513ONNXImporter214getLayerParamsERKN11opencv_onnx9NodeProtoE(ptr dead_on_unwind noalias writable sret(%"class.cv::dnn::dnn5_v20260605::LayerParams") align 8 initializes((8, 12), (16, 24)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(761) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(184) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %3 = alloca %"class.opencv_onnx::AttributeProto", align 8 ; 20 uses
+  %3 = alloca %"class.opencv_onnx::AttributeProto", align 8 ; 21 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 29 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %6 = alloca %"class.std::allocator", align 1    ; 3 uses
@@ -774,8 +777,9 @@ bb.a:
   %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %3, i64 208
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.bi = getelementptr inbounds nuw i8, ptr %39, i64 24
-  %i.bj = getelementptr inbounds nuw i8, ptr %41, i64 16 ; 4 uses
+  %53 = getelementptr inbounds nuw i8, ptr %39, i64 24
+  %i.bi = getelementptr inbounds nuw i8, ptr %41, i64 16 ; 4 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %3, i64 216
   %i.bk = getelementptr inbounds nuw i8, ptr %3, i64 112
   %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 88
   %i.bm = getelementptr inbounds nuw i8, ptr %50, i64 16 ; 2 uses
@@ -1178,14 +1182,17 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit400: ; preds = %bb
 
 bb.ea:                                            ; preds = %bb.dm
   %i.ur = and i32 %i.nw, 16
-  %.not521 = icmp eq i32 %i.ur, 0
+  %.not521 = icmp eq i32 %i.ur, 0                 ; 2 uses
+  %54 = load ptr, ptr %i.bg, align 8              ; 3 uses
+  %55 = icmp ne ptr %54, null
+  %56 = select i1 %.not521, i1 true, i1 %55
+  call void @llvm.assume(i1 %56)
   br i1 %.not521, label %bb.ep, label %bb.eb
 
 bb.eb:                                            ; preds = %bb.ea
-  %53 = load ptr, ptr %i.bg, align 8              ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %39) #24
-  %.not.i.i401 = icmp eq ptr %53, null
-  %i.us = select i1 %.not.i.i401, ptr @_ZN11opencv_onnx30_TensorProto_default_instance_E, ptr %53
+  %.not.i.i401 = icmp eq ptr %54, null
+  %i.us = select i1 %.not.i.i401, ptr @_ZN11opencv_onnx30_TensorProto_default_instance_E, ptr %54
   invoke void @_ZN11opencv_onnx11TensorProtoC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(256) %39, ptr noundef nonnull align 8 dereferenceable(256) %i.us)
           to label %bb.ec unwind label %bb.eh
 
@@ -1206,7 +1213,7 @@ bb.ee:                                            ; preds = %bb.ed
 
 bb.ef:                                            ; preds = %bb.ee
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #24
-  %i.ut = load i32, ptr %i.bi, align 8, !tbaa !266
+  %i.ut = load i32, ptr %53, align 8, !tbaa !266
   store i32 %i.ut, ptr %i.e, align 4, !tbaa !104
   %i.uu = invoke noundef nonnull align 4 dereferenceable(4) ptr @_ZN2cv3dnn14dnn5_v202606054Dict3setIiEERKT_RKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(32) %41, ptr noundef nonnull align 4 dereferenceable(4) %i.e)
           to label %bb.eg unwind label %bb.el     ; 0 uses
@@ -1214,11 +1221,11 @@ bb.ef:                                            ; preds = %bb.ee
 bb.eg:                                            ; preds = %bb.ef
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #24
   %i.uv = load ptr, ptr %41, align 8, !tbaa !94   ; 2 uses
-  %i.uw = icmp eq ptr %i.uv, %i.bj
+  %i.uw = icmp eq ptr %i.uv, %i.bi
   br i1 %i.uw, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit404, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i402
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i402: ; preds = %bb.eg
-  %i.ux = load i64, ptr %i.bj, align 8, !tbaa !15
+  %i.ux = load i64, ptr %i.bi, align 8, !tbaa !15
   %i.uy = add i64 %i.ux, 1
   call void @_ZdlPvm(ptr noundef %i.uv, i64 noundef %i.uy) #27
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit404
@@ -1262,11 +1269,11 @@ bb.el:                                            ; preds = %bb.ef
           catch ptr @_ZTIN2cv9ExceptionE          ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #24
   %i.ve = load ptr, ptr %41, align 8, !tbaa !94   ; 2 uses
-  %i.vf = icmp eq ptr %i.ve, %i.bj
+  %i.vf = icmp eq ptr %i.ve, %i.bi
   br i1 %i.vf, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit407, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i405
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i405: ; preds = %bb.el
-  %i.vg = load i64, ptr %i.bj, align 8, !tbaa !15
+  %i.vg = load i64, ptr %i.bi, align 8, !tbaa !15
   %i.vh = add i64 %i.vg, 1
   call void @_ZdlPvm(ptr noundef %i.ve, i64 noundef %i.vh) #27
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit407
@@ -1295,7 +1302,11 @@ bb.eo:                                            ; preds = %bb.en, %bb.eh
 
 bb.ep:                                            ; preds = %bb.ea
   %i.vi = and i32 %i.nw, 32
-  %.not522 = icmp eq i32 %i.vi, 0
+  %.not522 = icmp eq i32 %i.vi, 0                 ; 2 uses
+  %57 = load ptr, ptr %i.bj, align 8
+  %58 = icmp ne ptr %57, null
+  %59 = select i1 %.not522, i1 true, i1 %58
+  call void @llvm.assume(i1 %59)
   br i1 %.not522, label %bb.eq, label %_ZNSt6vectorIiSaIiEED2Ev.exit
 
 bb.eq:                                            ; preds = %bb.ep
@@ -1698,7 +1709,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.f,
 
 bb.g:                                             ; preds = %bb.a
   %i.k = and i32 %i.b, 4
-  %.not123 = icmp eq i32 %i.k, 0
+  %.not123 = icmp eq i32 %i.k, 0                  ; 2 uses
+  %17 = getelementptr inbounds nuw i8, ptr %1, i64 64
+  %18 = load ptr, ptr %17, align 8                ; 3 uses
+  %19 = icmp ne ptr %18, null
+  %20 = select i1 %.not123, i1 true, i1 %19
+  tail call void @llvm.assume(i1 %20)
   br i1 %.not123, label %bb.h, label %bb.m
 
 bb.h:                                             ; preds = %bb.g
@@ -1740,8 +1756,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit96: ; preds = %bb.
   br label %common.resume
 
 bb.m:                                             ; preds = %bb.g
-  %17 = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %18 = load ptr, ptr %17, align 8                ; 2 uses
   %.not.i.i = icmp eq ptr %18, null
   %i.s = select i1 %.not.i.i, ptr @_ZN11opencv_onnx28_TypeProto_default_instance_E, ptr %18 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 40
@@ -1792,7 +1806,13 @@ bb.s:                                             ; preds = %bb.m
   %i.ae = load ptr, ptr %i.ad, align 8            ; 3 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !104
-  %i.ah = trunc i32 %i.ag to i1
+  %i.ah = trunc i32 %i.ag to i1                   ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %i.ae, i64 24
+  %22 = load ptr, ptr %21, align 8                ; 3 uses
+  %23 = icmp ne ptr %22, null
+  %not..i.i100 = xor i1 %i.ah, true
+  %24 = select i1 %not..i.i100, i1 true, i1 %23
+  tail call void @llvm.assume(i1 %24)
   br i1 %i.ah, label %bb.y, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
@@ -1834,10 +1854,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit103: ; preds = %bb
   br label %common.resume
 
 bb.y:                                             ; preds = %bb.s
-  %19 = getelementptr inbounds nuw i8, ptr %i.ae, i64 24
-  %20 = load ptr, ptr %19, align 8                ; 2 uses
-  %.not.i.i104 = icmp eq ptr %20, null
-  %i.ap = select i1 %.not.i.i104, ptr @_ZN11opencv_onnx35_TensorShapeProto_default_instance_E, ptr %20 ; 2 uses
+  %.not.i.i104 = icmp eq ptr %22, null
+  %i.ap = select i1 %.not.i.i104, ptr @_ZN11opencv_onnx35_TensorShapeProto_default_instance_E, ptr %22 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ae, i64 32
   %i.ar = load i32, ptr %i.aq, align 8, !tbaa !458 ; 3 uses
   %switch.tableidx = add i32 %i.ar, -1            ; 3 uses

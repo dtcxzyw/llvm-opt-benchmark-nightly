@@ -204,7 +204,18 @@ bb.fl:                                            ; preds = %_ZN4llvm12StringSwi
   br i1 %i.ahb, label %_ZN4llvm23SmallVectorTemplateBaseIPKN5clang4AttrELb1EE9push_backES4_.exit, label %_ZN4llvmeqENS_9StringRefES0_.exit.thread.i
 
 _ZN4llvm12StringSwitchIN5clang12LoopHintAttr10OptionTypeES3_E4CaseENS_13StringLiteralES3_.exit213.thread.i: ; preds = %_ZN4llvm12StringSwitchIN5clang12LoopHintAttr10OptionTypeES3_E4CaseENS_13StringLiteralES3_.exit213.i, %bb.fb, %bb.fa, %bb.ez, %bb.ex, %bb.ew
-  %spec.select.i507.i = phi i32 [ %spec.select.i.i, %_ZN4llvm12StringSwitchIN5clang12LoopHintAttr10OptionTypeES3_E4CaseENS_13StringLiteralES3_.exit213.i ], [ 0, %bb.fb ], [ 0, %bb.fa ], [ 0, %bb.ez ], [ 0, %bb.ex ], [ 0, %bb.ew ] ; 4 uses
+  %spec.select.i507.i = phi i32 [ %spec.select.i.i, %_ZN4llvm12StringSwitchIN5clang12LoopHintAttr10OptionTypeES3_E4CaseENS_13StringLiteralES3_.exit213.i ], [ 0, %bb.fb ], [ 0, %bb.fa ], [ 0, %bb.ez ], [ 0, %bb.ex ], [ 0, %bb.ew ] ; 8 uses
+  %68 = and i32 %spec.select.i507.i, -3           ; 2 uses
+  %or.cond5.i = icmp eq i32 %68, 0
+  %69 = icmp eq i32 %spec.select.i507.i, 11
+  %or.cond7.i = or i1 %69, %or.cond5.i
+  %70 = icmp eq i32 %spec.select.i507.i, 4
+  %or.cond9.i = or i1 %70, %or.cond7.i
+  %71 = icmp eq i32 %68, 8
+  %or.cond13.i = or i1 %71, %or.cond9.i
+  %72 = icmp eq i32 %spec.select.i507.i, 12
+  %or.cond15.i99 = or i1 %72, %or.cond13.i
+  call void @llvm.assume(i1 %or.cond15.i99)
   %i.ahc = getelementptr inbounds nuw i8, ptr %i.yd, i64 8
   %i.ahd = load ptr, ptr %i.ahc, align 8, !tbaa !1234
   %i.ahe = getelementptr inbounds nuw i8, ptr %i.ahd, i64 16

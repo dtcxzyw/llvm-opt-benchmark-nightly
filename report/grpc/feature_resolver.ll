@@ -204,7 +204,12 @@ bb.l:                                             ; preds = %._crit_edge
   %i.cx = getelementptr inbounds nuw i8, ptr %i.ao, i64 32
   %i.cy = load i32, ptr %i.cx, align 8, !tbaa !64, !noalias !103
   %i.cz = and i32 %i.cy, 8
-  %.not.i = icmp eq i32 %i.cz, 0
+  %.not.i = icmp eq i32 %i.cz, 0                  ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.ao, i64 80
+  %3 = load ptr, ptr %2, align 8, !noalias !103   ; 3 uses
+  %4 = icmp ne ptr %3, null
+  %5 = select i1 %.not.i, i1 true, i1 %4
+  tail call void @llvm.assume(i1 %5)
   br i1 %.not.i, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -219,8 +224,6 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.v
 
 bb.n:                                             ; preds = %bb.l
-  %2 = getelementptr inbounds nuw i8, ptr %i.ao, i64 80
-  %3 = load ptr, ptr %2, align 8, !noalias !103   ; 2 uses
   %.not.i.i.i = icmp eq ptr %3, null
   %spec.select.i.i.i = select i1 %.not.i.i.i, ptr @_ZN6google8protobuf36FieldOptions_FeatureSupport_globals_E, ptr %3 ; 3 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i, i64 16
@@ -623,12 +626,15 @@ bb.d:                                             ; preds = %.lr.ph, %bb.au
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 32
   %i.u = load i32, ptr %i.t, align 4, !tbaa !64
   %i.v = and i32 %i.u, 8
-  %.not160 = icmp eq i32 %i.v, 0
+  %.not160 = icmp eq i32 %i.v, 0                  ; 2 uses
+  %23 = getelementptr inbounds nuw i8, ptr %i.s, i64 80
+  %24 = load ptr, ptr %23, align 8                ; 3 uses
+  %25 = icmp ne ptr %24, null
+  %26 = select i1 %.not160, i1 true, i1 %25
+  call void @llvm.assume(i1 %26)
   br i1 %.not160, label %bb.k, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %23 = getelementptr inbounds nuw i8, ptr %i.s, i64 80
-  %24 = load ptr, ptr %23, align 8                ; 2 uses
   %.not.i.i = icmp eq ptr %24, null
   %spec.select.i.i = select i1 %.not.i.i, ptr @_ZN6google8protobuf36FieldOptions_FeatureSupport_globals_E, ptr %24 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %spec.select.i.i, i64 16
@@ -1031,11 +1037,16 @@ _ZN4absl12lts_202505126StatusD2Ev.exit:           ; preds = %bb.a
   %i.al = getelementptr inbounds i8, ptr %i.ah, i64 %i.ak
   call void @llvm.experimental.noalias.scope.decl(metadata !192)
   %i.am = getelementptr inbounds nuw i8, ptr %i.ag, i64 24 ; 2 uses
-  %i.an = load ptr, ptr %i.am, align 8, !tbaa !177, !noalias !192
+  %i.an = load ptr, ptr %i.am, align 8, !tbaa !177, !noalias !192 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 32
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !64, !noalias !192
   %i.aq = and i32 %i.ap, 4
-  %.not49.i = icmp eq i32 %i.aq, 0
+  %.not49.i = icmp eq i32 %i.aq, 0                ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.an, i64 64
+  %4 = load ptr, ptr %3, align 8, !noalias !192
+  %5 = icmp ne ptr %4, null
+  %6 = select i1 %.not49.i, i1 true, i1 %5
+  call void @llvm.assume(i1 %6)
   br i1 %.not49.i, label %.thread, label %bb.b
 
 .thread:                                          ; preds = %.lr.ph.split

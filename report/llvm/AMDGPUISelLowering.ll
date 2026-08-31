@@ -205,14 +205,16 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.i = tail call noundef ptr @_ZN4llvm6AMDGPU14isNamedBarrierERKNS_14GlobalVariableE(ptr noundef nonnull align 8 dereferenceable(89) %i.e) #25
+  %14 = icmp eq ptr %i.i, null                    ; 2 uses
   %i.j = tail call i64 @_ZN4llvm25AMDGPUMachineFunctionInfo21getLDSAbsoluteAddressERKNS_11GlobalValueE(ptr noundef nonnull align 8 dereferenceable(48) %i.e) #25 ; 3 uses
   %.sroa.090.0.extract.trunc = trunc i64 %i.j to i32
   %i.k = and i64 %i.j, 4294967296
-  %.not109 = icmp eq i64 %i.k, 0
-  br i1 %.not109, label %.critedge, label %bb.c
+  %15 = icmp ne i64 %i.k, 0                       ; 2 uses
+  %or.cond.not = or i1 %14, %15
+  tail call void @llvm.assume(i1 %or.cond.not)
+  br i1 %15, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %bb.b
-  %14 = icmp eq ptr %i.i, null
   br i1 %14, label %bb.d, label %_ZNRSt8optionalIjE5valueEv.exit
 
 _ZNRSt8optionalIjE5valueEv.exit:                  ; preds = %bb.c

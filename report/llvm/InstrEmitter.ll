@@ -204,7 +204,7 @@ bb.a:
   %14 = alloca %"class.llvm::MachineInstrBuilder", align 8 ; 7 uses
   %15 = alloca %"struct.std::pair.2", align 8     ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !70   ; 3 uses
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !70   ; 4 uses
   %i.d = xor i32 %i.c, -1
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 56
   %.sroa.0154.0183 = load ptr, ptr %i.e, align 8, !tbaa !65 ; 2 uses
@@ -475,7 +475,10 @@ bb.r:                                             ; preds = %bb.p, %bb.q, %bb.j
   br label %bb.y
 
 bb.s:                                             ; preds = %._crit_edge
-  %i.ed = icmp eq i32 %i.c, -10
+  %i.ed = icmp eq i32 %i.c, -10                   ; 2 uses
+  %16 = icmp eq i32 %i.c, -13
+  %or.cond = or i1 %i.ed, %16
+  tail call void @llvm.assume(i1 %or.cond)
   %i.ee = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.ef = load ptr, ptr %i.ee, align 8, !tbaa !71 ; 6 uses
   br i1 %i.ed, label %bb.t, label %bb.u
@@ -571,7 +574,7 @@ _ZN4llvm7BuildMIERNS_15MachineFunctionERKNS_10MIMetadataERKNS_11MCInstrDescENS_8
   %i.gi = load ptr, ptr %i.gh, align 8, !tbaa !73
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gi, i64 8
   %i.gk = load ptr, ptr %i.gj, align 8, !tbaa !74
-  %i.gl = zext i32 %i.d to i64
+  %i.gl = zext nneg i32 %i.d to i64
   %i.gm = sub nsw i64 0, %i.gl
   %i.gn = getelementptr inbounds [32 x i8], ptr %i.gk, i64 %i.gm
   %i.go = tail call noundef ptr @_ZN4llvm15MachineFunction18CreateMachineInstrERKNS_11MCInstrDescENS_8DebugLocEb(ptr noundef nonnull align 8 dereferenceable(1065) %i.gf, ptr noundef nonnull align 8 dereferenceable(32) %i.gn, ptr %.sroa.09.0.copyload, i1 noundef zeroext false) #14 ; 2 uses

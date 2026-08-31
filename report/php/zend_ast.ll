@@ -202,7 +202,7 @@ bb.a:
 ; Function Attrs: nofree nosync nounwind memory(read, inaccessiblemem: write, target_mem: none) uwtable
 define internal fastcc i64 @zend_ast_tree_size(ptr nofree noundef nonnull readonly captures(none) %0) unnamed_addr #8 {
 bb.a:
-  %i.a = load i16, ptr %0, align 8, !tbaa !72     ; 3 uses
+  %i.a = load i16, ptr %0, align 8, !tbaa !72     ; 5 uses
   switch i16 %i.a, label %bb.c [
     i16 64, label %.loopexit
     i16 65, label %.loopexit
@@ -251,6 +251,11 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   br i1 %exitcond.not, label %.loopexit, label %bb.e, !llvm.loop !165
 
 zend_ast_is_decl.exit:                            ; preds = %bb.c
+  %1 = and i16 %i.a, 64
+  %2 = icmp eq i16 %1, 0
+  %3 = icmp ult i16 %i.a, 68
+  %spec.select.not = or i1 %3, %2
+  tail call void @llvm.assume(i1 %spec.select.not)
   %i.m = lshr i16 %i.a, 8                         ; 3 uses
   %i.n = shl nuw nsw i16 %i.m, 3
   %narrow = add nuw nsw i16 %i.n, 8
@@ -290,7 +295,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i
 ; Function Attrs: nounwind uwtable
 define internal fastcc nonnull ptr @zend_ast_tree_copy(ptr nofree noundef readonly captures(none) %0, ptr noundef initializes((0, 4)) %1) unnamed_addr #0 {
 bb.a:
-  %i.a = load i16, ptr %0, align 8, !tbaa !72     ; 6 uses
+  %i.a = load i16, ptr %0, align 8, !tbaa !72     ; 8 uses
   switch i16 %i.a, label %bb.f [
     i16 64, label %bb.b
     i16 65, label %bb.d
@@ -469,6 +474,11 @@ bb.n:                                             ; preds = %bb.l
   br label %.loopexit
 
 zend_ast_is_decl.exit:                            ; preds = %bb.l
+  %2 = and i16 %i.a, 64
+  %3 = icmp eq i16 %2, 0
+  %4 = icmp ult i16 %i.a, 68
+  %spec.select.not = or i1 %4, %3
+  tail call void @llvm.assume(i1 %spec.select.not)
   %i.cd = lshr i16 %i.a, 8                        ; 3 uses
   store i16 %i.a, ptr %1, align 8, !tbaa !72
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 2
@@ -736,7 +746,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define dso_local void @zend_ast_apply(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i16, ptr %0, align 8, !tbaa !72     ; 2 uses
+  %i.a = load i16, ptr %0, align 8, !tbaa !72     ; 4 uses
   %i.b = and i16 %i.a, 128
   %.not = icmp eq i16 %i.b, 0
   br i1 %.not, label %zend_ast_is_decl.exit, label %.preheader
@@ -762,6 +772,11 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   br i1 %i.i, label %bb.b, label %.loopexit, !llvm.loop !174
 
 zend_ast_is_decl.exit:                            ; preds = %bb.a
+  %3 = and i16 %i.a, 64
+  %4 = icmp eq i16 %3, 0
+  %5 = icmp ult i16 %i.a, 68
+  %spec.select.not = or i1 %5, %4
+  tail call void @llvm.assume(i1 %spec.select.not)
   %i.j = lshr i16 %i.a, 8                         ; 2 uses
   %.not25 = icmp eq i16 %i.j, 0
   br i1 %.not25, label %.loopexit, label %.lr.ph23
