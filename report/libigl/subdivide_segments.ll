@@ -205,7 +205,7 @@ bb.a:
   %4 = alloca %class.anon.199, align 8            ; 5 uses
   %5 = alloca %class.anon.198, align 8            ; 4 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !71     ; 6 uses
-  %i.b = load ptr, ptr %1, align 8, !tbaa !71     ; 2 uses
+  %i.b = load ptr, ptr %1, align 8, !tbaa !71     ; 3 uses
   %i.c = icmp eq ptr %i.a, %i.b
   br i1 %i.c, label %bb.l, label %bb.b
 
@@ -213,19 +213,18 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.f = load double, ptr %i.e, align 8, !tbaa !45
-  %6 = load <2 x double>, ptr %i.d, align 16      ; 2 uses
-  %7 = extractelement <2 x double> %6, i64 0
-  %i.g = fneg double %7
+  %6 = load double, ptr %i.d, align 16, !tbaa !45
+  %i.g = fneg double %6
   %i.h = fcmp olt double %i.f, %i.g
   br i1 %i.h, label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %8 = extractelement <2 x double> %6, i64 1
-  %9 = load <2 x double>, ptr %i.i, align 16, !tbaa !45
-  %10 = extractelement <2 x double> %9, i64 0
-  %11 = fneg double %10
-  %i.j = fcmp ugt double %8, %11
+  %7 = load double, ptr %i.i, align 16, !tbaa !45
+  %8 = fneg double %7
+  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %10 = load double, ptr %9, align 8, !tbaa !45
+  %i.j = fcmp ugt double %10, %8
   %i.k = select i1 %i.j, i16 256, i16 0
   br label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit
 
@@ -628,9 +627,8 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.g = load double, ptr %i.f, align 8, !tbaa !45, !noalias !446
-  %4 = load <2 x double>, ptr %i.e, align 16, !tbaa !45, !noalias !446
-  %5 = extractelement <2 x double> %4, i64 0      ; 2 uses
-  %i.h = fneg double %5
+  %4 = load double, ptr %i.e, align 16, !tbaa !45, !noalias !446 ; 2 uses
+  %i.h = fneg double %4
   %i.i = fcmp oeq double %i.g, %i.h
   br i1 %i.i, label %bb.b, label %_ZNK4CGAL14Epic_converterINS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_7Point_2IS4_EE.exit.i.i.i.i
 
@@ -638,9 +636,8 @@ bb.b:                                             ; preds = %.lr.ph.i
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.l = load double, ptr %i.k, align 8, !tbaa !45, !noalias !446
-  %6 = load <2 x double>, ptr %i.j, align 16, !tbaa !45, !noalias !446
-  %7 = extractelement <2 x double> %6, i64 0      ; 2 uses
-  %i.m = fneg double %7
+  %5 = load double, ptr %i.j, align 16, !tbaa !45, !noalias !446 ; 2 uses
+  %i.m = fneg double %5
   %i.n = fcmp oeq double %i.l, %i.m
   br i1 %i.n, label %bb.c, label %_ZNK4CGAL14Epic_converterINS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_7Point_2IS4_EE.exit.i.i.i.i
 
@@ -654,9 +651,8 @@ bb.c:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 24
   %i.s = load double, ptr %i.r, align 8, !tbaa !45, !noalias !449
-  %8 = load <2 x double>, ptr %i.q, align 16, !tbaa !45, !noalias !449
-  %9 = extractelement <2 x double> %8, i64 0      ; 2 uses
-  %i.t = fneg double %9
+  %6 = load double, ptr %i.q, align 16, !tbaa !45, !noalias !449 ; 2 uses
+  %i.t = fneg double %6
   %i.u = fcmp oeq double %i.s, %i.t
   br i1 %i.u, label %bb.d, label %_ZNK4CGAL14Epic_converterINS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_7Point_2IS4_EE.exit10.i.i.i.i
 
@@ -664,9 +660,8 @@ bb.d:                                             ; preds = %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %i.p, i64 32
   %i.w = getelementptr inbounds nuw i8, ptr %i.p, i64 40
   %i.x = load double, ptr %i.w, align 8, !tbaa !45, !noalias !449
-  %10 = load <2 x double>, ptr %i.v, align 16, !tbaa !45, !noalias !449
-  %11 = extractelement <2 x double> %10, i64 0    ; 2 uses
-  %i.y = fneg double %11
+  %7 = load double, ptr %i.v, align 16, !tbaa !45, !noalias !449 ; 2 uses
+  %i.y = fneg double %7
   %i.z = fcmp oeq double %i.x, %i.y
   br i1 %i.z, label %_ZNK9__gnu_cxx5__ops19_Iter_equal_to_iterclINS_17__normal_iteratorIPN4CGAL7Point_2INS4_5EpeckEEESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.i, label %_ZNK4CGAL14Epic_converterINS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_7Point_2IS4_EE.exit10.i.i.i.i
 
@@ -676,8 +671,8 @@ _ZNK4CGAL14Epic_converterINS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKN
   br i1 %i.aa, label %_ZSt15__adjacent_findIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_2INS2_5EpeckEEESt6vectorIS5_SaIS5_EEEENS0_5__ops19_Iter_equal_to_iterEET_SD_SD_T0_.exit, label %bb.e
 
 _ZNK9__gnu_cxx5__ops19_Iter_equal_to_iterclINS_17__normal_iteratorIPN4CGAL7Point_2INS4_5EpeckEEESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit.i: ; preds = %bb.d
-  %i.ab = fcmp oeq double %5, %9
-  %i.ac = fcmp oeq double %7, %11
+  %i.ab = fcmp oeq double %4, %6
+  %i.ac = fcmp oeq double %5, %7
   %i.ad = and i1 %i.ab, %i.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
   br i1 %i.ad, label %_ZSt15__adjacent_findIN9__gnu_cxx17__normal_iteratorIPN4CGAL7Point_2INS2_5EpeckEEESt6vectorIS5_SaIS5_EEEENS0_5__ops19_Iter_equal_to_iterEET_SD_SD_T0_.exit, label %bb.e
@@ -704,9 +699,8 @@ bb.f:                                             ; preds = %_ZSt15__adjacent_fi
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
   %i.al = load double, ptr %i.ak, align 8, !tbaa !45, !noalias !453
-  %12 = load <2 x double>, ptr %i.aj, align 16, !tbaa !45, !noalias !453
-  %13 = extractelement <2 x double> %12, i64 0    ; 2 uses
-  %i.am = fneg double %13
+  %8 = load double, ptr %i.aj, align 16, !tbaa !45, !noalias !453 ; 2 uses
+  %i.am = fneg double %8
   %i.an = fcmp oeq double %i.al, %i.am
   br i1 %i.an, label %bb.g, label %_ZNK4CGAL14Epic_converterINS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_7Point_2IS4_EE.exit.i.i.i
 
@@ -714,9 +708,8 @@ bb.g:                                             ; preds = %.lr.ph
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ai, i64 32
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ai, i64 40
   %i.aq = load double, ptr %i.ap, align 8, !tbaa !45, !noalias !453
-  %14 = load <2 x double>, ptr %i.ao, align 16, !tbaa !45, !noalias !453
-  %15 = extractelement <2 x double> %14, i64 0    ; 2 uses
-  %i.ar = fneg double %15
+  %9 = load double, ptr %i.ao, align 16, !tbaa !45, !noalias !453 ; 2 uses
+  %i.ar = fneg double %9
   %i.as = fcmp oeq double %i.aq, %i.ar
   br i1 %i.as, label %bb.h, label %_ZNK4CGAL14Epic_converterINS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_7Point_2IS4_EE.exit.i.i.i
 
@@ -730,9 +723,8 @@ bb.h:                                             ; preds = %bb.g
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 24
   %i.ax = load double, ptr %i.aw, align 8, !tbaa !45, !noalias !456
-  %16 = load <2 x double>, ptr %i.av, align 16, !tbaa !45, !noalias !456
-  %17 = extractelement <2 x double> %16, i64 0    ; 2 uses
-  %i.ay = fneg double %17
+  %10 = load double, ptr %i.av, align 16, !tbaa !45, !noalias !456 ; 2 uses
+  %i.ay = fneg double %10
   %i.az = fcmp oeq double %i.ax, %i.ay
   br i1 %i.az, label %bb.i, label %_ZNK4CGAL14Epic_converterINS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_7Point_2IS4_EE.exit10.i.i.i
 
@@ -740,9 +732,8 @@ bb.i:                                             ; preds = %bb.h
   %i.ba = getelementptr inbounds nuw i8, ptr %i.au, i64 32
   %i.bb = getelementptr inbounds nuw i8, ptr %i.au, i64 40
   %i.bc = load double, ptr %i.bb, align 8, !tbaa !45, !noalias !456
-  %18 = load <2 x double>, ptr %i.ba, align 16, !tbaa !45, !noalias !456
-  %19 = extractelement <2 x double> %18, i64 0    ; 2 uses
-  %i.bd = fneg double %19
+  %11 = load double, ptr %i.ba, align 16, !tbaa !45, !noalias !456 ; 2 uses
+  %i.bd = fneg double %11
   %i.be = fcmp oeq double %i.bc, %i.bd
   br i1 %i.be, label %_ZNK9__gnu_cxx5__ops19_Iter_equal_to_iterclINS_17__normal_iteratorIPN4CGAL7Point_2INS4_5EpeckEEESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit, label %_ZNK4CGAL14Epic_converterINS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKNS_7Point_2IS4_EE.exit10.i.i.i
 
@@ -752,8 +743,8 @@ _ZNK4CGAL14Epic_converterINS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEclERKN
   br i1 %i.bf, label %bb.k, label %bb.j
 
 _ZNK9__gnu_cxx5__ops19_Iter_equal_to_iterclINS_17__normal_iteratorIPN4CGAL7Point_2INS4_5EpeckEEESt6vectorIS7_SaIS7_EEEESC_EEbT_T0_.exit: ; preds = %bb.i
-  %i.bg = fcmp oeq double %13, %17
-  %i.bh = fcmp oeq double %15, %19
+  %i.bg = fcmp oeq double %8, %10
+  %i.bh = fcmp oeq double %9, %11
   %i.bi = and i1 %i.bg, %i.bh
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
   br i1 %i.bi, label %bb.k, label %bb.j
@@ -813,24 +804,23 @@ bb.a:
   call void @llvm.x86.sse.ldmxcsr(ptr nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
-  %i.m = load ptr, ptr %1, align 8, !tbaa !71     ; 2 uses
+  %i.m = load ptr, ptr %1, align 8, !tbaa !71     ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %i.o = load ptr, ptr %2, align 8, !tbaa !71     ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
-  %9 = load <2 x double>, ptr %i.n, align 16      ; 2 uses
-  %10 = extractelement <2 x double> %9, i64 0
-  %i.p = fneg double %10                          ; 2 uses
+  %9 = load double, ptr %i.n, align 16, !tbaa !45
+  %i.p = fneg double %9                           ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 24
   %i.r = load double, ptr %i.q, align 8, !tbaa !45 ; 2 uses
   %i.s = fcmp olt double %i.r, %i.p
-  %11 = extractelement <2 x double> %9, i64 1     ; 2 uses
   br i1 %i.s, label %_ZN4CGALeqERKNS_11Interval_ntILb0EEES3_.exit.i.i.i.i.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %12 = load <2 x double>, ptr %i.t, align 16, !tbaa !45
-  %13 = extractelement <2 x double> %12, i64 0
-  %i.u = fneg double %13                          ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %i.m, i64 24
+  %11 = load double, ptr %10, align 8, !tbaa !45  ; 2 uses
+  %12 = load double, ptr %i.t, align 16, !tbaa !45
+  %i.u = fneg double %12                          ; 2 uses
   %i.v = fcmp olt double %11, %i.u
   br i1 %i.v, label %_ZN4CGALeqERKNS_11Interval_ntILb0EEES3_.exit.i.i.i.i.i, label %bb.c
 
@@ -854,26 +844,25 @@ _ZN4CGALeqERKNS_11Interval_ntILb0EEES3_.exit.i.i.i.i.i: ; preds = %bb.c, %bb.b, 
 
 bb.d:                                             ; preds = %.noexc
   %i.ab = getelementptr inbounds nuw i8, ptr %i.m, i64 32
-  %14 = load <2 x double>, ptr %i.ab, align 16    ; 2 uses
-  %15 = extractelement <2 x double> %14, i64 0
-  %i.ac = fneg double %15                         ; 2 uses
+  %13 = load double, ptr %i.ab, align 16, !tbaa !45
+  %i.ac = fneg double %13                         ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.o, i64 40
   %i.ae = load double, ptr %i.ad, align 8, !tbaa !45 ; 2 uses
   %i.af = fcmp olt double %i.ae, %i.ac
-  %16 = extractelement <2 x double> %14, i64 1    ; 2 uses
   br i1 %i.af, label %_ZN4CGALeqERKNS_11Interval_ntILb0EEES3_.exit6.i.i.i.i.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.ag = getelementptr inbounds nuw i8, ptr %i.o, i64 32
-  %17 = load <2 x double>, ptr %i.ag, align 16, !tbaa !45
-  %18 = extractelement <2 x double> %17, i64 0
-  %i.ah = fneg double %18                         ; 2 uses
-  %i.ai = fcmp olt double %16, %i.ah
+  %14 = getelementptr inbounds nuw i8, ptr %i.m, i64 40
+  %15 = load double, ptr %14, align 8, !tbaa !45  ; 2 uses
+  %16 = load double, ptr %i.ag, align 16, !tbaa !45
+  %i.ah = fneg double %16                         ; 2 uses
+  %i.ai = fcmp olt double %15, %i.ah
   br i1 %i.ai, label %_ZN4CGALeqERKNS_11Interval_ntILb0EEES3_.exit6.i.i.i.i.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.aj = fcmp oeq double %i.ae, %i.ac
-  %i.ak = fcmp oeq double %16, %i.ah
+  %i.ak = fcmp oeq double %15, %i.ah
   %or.cond.i4.i.i.i.i.i = and i1 %i.aj, %i.ak
   %i.al = zext i1 %or.cond.i4.i.i.i.i.i to i16
   %i.am = or disjoint i16 %i.al, 256

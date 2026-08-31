@@ -205,17 +205,17 @@ bb.a:
   %3 = alloca %class.anon.553, align 8            ; 5 uses
   %4 = alloca %class.anon.552, align 8            ; 4 uses
   %i.b = sitofp i32 %1 to double                  ; 2 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !24     ; 4 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !24     ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %5 = load <2 x double>, ptr %i.d, align 16      ; 2 uses
-  %6 = extractelement <2 x double> %5, i64 0
-  %7 = fneg double %6
-  %8 = fcmp olt double %i.b, %7                   ; 3 uses
-  %9 = extractelement <2 x double> %5, i64 1
+  %5 = load double, ptr %i.d, align 16, !tbaa !27
+  %6 = fneg double %5
+  %7 = fcmp olt double %i.b, %6                   ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
+  %9 = load double, ptr %8, align 8
   %i.e = fcmp ole double %9, %i.b
-  %not. = xor i1 %8, true
+  %not. = xor i1 %7, true
   %narrow.i = select i1 %not., i1 %i.e, i1 false
-  %i.f = xor i1 %8, %narrow.i
+  %i.f = xor i1 %7, %narrow.i
   br i1 %i.f, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -320,7 +320,7 @@ _ZN5boost14multiprecisionltIiNS0_8backends16rational_adaptorINS2_15cpp_int_backe
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.a, %_ZN5boost14multiprecisionltIiNS0_8backends16rational_adaptorINS2_15cpp_int_backendILm0ELm0ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyEEEEELNS0_26expression_template_optionE1EEENSt9enable_ifIXaaaasr6detail22is_valid_mixed_compareINS0_6numberIT0_XT1_EEET_EE5valuenesr15number_categoryISD_EE5valueLNS0_20number_category_typeE4Entsr20is_number_expressionISF_EE5valueEbE4typeERKSF_RKSE_.exit
-  %.0 = phi i1 [ %i.al, %_ZN5boost14multiprecisionltIiNS0_8backends16rational_adaptorINS2_15cpp_int_backendILm0ELm0ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyEEEEELNS0_26expression_template_optionE1EEENSt9enable_ifIXaaaasr6detail22is_valid_mixed_compareINS0_6numberIT0_XT1_EEET_EE5valuenesr15number_categoryISD_EE5valueLNS0_20number_category_typeE4Entsr20is_number_expressionISF_EE5valueEbE4typeERKSF_RKSE_.exit ], [ %8, %bb.a ]
+  %.0 = phi i1 [ %i.al, %_ZN5boost14multiprecisionltIiNS0_8backends16rational_adaptorINS2_15cpp_int_backendILm0ELm0ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyEEEEELNS0_26expression_template_optionE1EEENSt9enable_ifIXaaaasr6detail22is_valid_mixed_compareINS0_6numberIT0_XT1_EEET_EE5valuenesr15number_categoryISD_EE5valueLNS0_20number_category_typeE4Entsr20is_number_expressionISF_EE5valueEbE4typeERKSF_RKSE_.exit ], [ %7, %bb.a ]
   ret i1 %.0
 }
 
@@ -723,9 +723,8 @@ _ZN5boost14multiprecision6numberINS0_8backends16rational_adaptorINS2_15cpp_int_b
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.u = load double, ptr %i.t, align 8, !tbaa !27
-  %6 = load <2 x double>, ptr %i.s, align 16, !tbaa !27
-  %7 = extractelement <2 x double> %6, i64 0
-  %i.v = fneg double %7
+  %6 = load double, ptr %i.s, align 16, !tbaa !27
+  %i.v = fneg double %6
   %i.w = fcmp oeq double %i.u, %i.v
   br i1 %i.w, label %bb.m, label %bb.k
 
@@ -1128,9 +1127,8 @@ _ZN5boost14multiprecision6numberINS0_8backends16rational_adaptorINS2_15cpp_int_b
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.u = load double, ptr %i.t, align 8, !tbaa !27
-  %6 = load <2 x double>, ptr %i.s, align 16, !tbaa !27
-  %7 = extractelement <2 x double> %6, i64 0
-  %i.v = fneg double %7
+  %6 = load double, ptr %i.s, align 16, !tbaa !27
+  %i.v = fneg double %6
   %i.w = fcmp oeq double %i.u, %i.v
   br i1 %i.w, label %bb.m, label %bb.k
 

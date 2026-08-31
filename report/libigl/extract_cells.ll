@@ -205,7 +205,7 @@ bb.br:                                            ; preds = %.preheader1514, %_Z
   %i.lm = getelementptr [16 x i8], ptr %i.lj, i64 %i.li
   %i.ln = getelementptr [16 x i8], ptr %i.lm, i64 %i.ll ; 2 uses
   %i.lo = load ptr, ptr %i.ln, align 8, !tbaa !129 ; 6 uses
-  %i.lp = load ptr, ptr %i.ld, align 8, !tbaa !129 ; 2 uses
+  %i.lp = load ptr, ptr %i.ld, align 8, !tbaa !129 ; 3 uses
   %i.lq = icmp eq ptr %i.lo, %i.lp
   br i1 %i.lq, label %_ZSt3minIN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEEERKT_SI_SI_.exit.thread, label %bb.bs
 
@@ -213,19 +213,18 @@ bb.bs:                                            ; preds = %bb.br
   %i.lr = getelementptr inbounds nuw i8, ptr %i.lp, i64 16
   %i.ls = getelementptr inbounds nuw i8, ptr %i.lo, i64 24
   %i.lt = load double, ptr %i.ls, align 8, !tbaa !33
-  %50 = load <2 x double>, ptr %i.lr, align 16    ; 2 uses
-  %51 = extractelement <2 x double> %50, i64 0
-  %i.lu = fneg double %51
+  %50 = load double, ptr %i.lr, align 16, !tbaa !33
+  %i.lu = fneg double %50
   %i.lv = fcmp olt double %i.lt, %i.lu
   br i1 %i.lv, label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit.i, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
   %i.lw = getelementptr inbounds nuw i8, ptr %i.lo, i64 16
-  %52 = extractelement <2 x double> %50, i64 1
-  %53 = load <2 x double>, ptr %i.lw, align 16, !tbaa !33
-  %54 = extractelement <2 x double> %53, i64 0
-  %55 = fneg double %54
-  %i.lx = fcmp ugt double %52, %55
+  %51 = load double, ptr %i.lw, align 16, !tbaa !33
+  %52 = fneg double %51
+  %53 = getelementptr inbounds nuw i8, ptr %i.lp, i64 24
+  %54 = load double, ptr %53, align 8, !tbaa !33
+  %i.lx = fcmp ugt double %54, %52
   %.fr = freeze i1 %i.lx
   %i.ly = select i1 %.fr, i16 256, i16 0
   br label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit.i
@@ -432,7 +431,7 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg, %bb.
   %i.of = getelementptr [16 x i8], ptr %i.oc, i64 %i.ob
   %i.og = getelementptr [16 x i8], ptr %i.of, i64 %i.oe ; 3 uses
   %i.oh = load ptr, ptr %i.nw, align 8, !tbaa !129 ; 6 uses
-  %i.oi = load ptr, ptr %i.og, align 8, !tbaa !129 ; 2 uses
+  %i.oi = load ptr, ptr %i.og, align 8, !tbaa !129 ; 3 uses
   %i.oj = icmp eq ptr %i.oh, %i.oi
   br i1 %i.oj, label %_ZSt3maxIN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEEERKT_SI_SI_.exit.thread, label %bb.cj
 
@@ -440,19 +439,18 @@ bb.cj:                                            ; preds = %bb.ci
   %i.ok = getelementptr inbounds nuw i8, ptr %i.oi, i64 16
   %i.ol = getelementptr inbounds nuw i8, ptr %i.oh, i64 24
   %i.om = load double, ptr %i.ol, align 8, !tbaa !33
-  %56 = load <2 x double>, ptr %i.ok, align 16    ; 2 uses
-  %57 = extractelement <2 x double> %56, i64 0
-  %i.on = fneg double %57
+  %55 = load double, ptr %i.ok, align 16, !tbaa !33
+  %i.on = fneg double %55
   %i.oo = fcmp olt double %i.om, %i.on
   br i1 %i.oo, label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit.i746, label %bb.ck
 
 bb.ck:                                            ; preds = %bb.cj
   %i.op = getelementptr inbounds nuw i8, ptr %i.oh, i64 16
-  %58 = extractelement <2 x double> %56, i64 1
-  %59 = load <2 x double>, ptr %i.op, align 16, !tbaa !33
-  %60 = extractelement <2 x double> %59, i64 0
-  %61 = fneg double %60
-  %i.oq = fcmp ugt double %58, %61
+  %56 = load double, ptr %i.op, align 16, !tbaa !33
+  %57 = fneg double %56
+  %58 = getelementptr inbounds nuw i8, ptr %i.oi, i64 24
+  %59 = load double, ptr %58, align 8, !tbaa !33
+  %i.oq = fcmp ugt double %59, %57
   %.fr1487 = freeze i1 %i.oq
   %i.or = select i1 %.fr1487, i16 256, i16 0
   br label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit.i746
@@ -828,7 +826,7 @@ bb.dt:                                            ; preds = %bb.ds
   %i.su = load ptr, ptr %42, align 8, !tbaa !138  ; 3 uses
   %i.sv = getelementptr [16 x i8], ptr %i.su, i64 %storemerge2171648 ; 2 uses
   %i.sw = load ptr, ptr %i.st, align 8, !tbaa !129 ; 6 uses
-  %i.sx = load ptr, ptr %i.sv, align 8, !tbaa !129 ; 2 uses
+  %i.sx = load ptr, ptr %i.sv, align 8, !tbaa !129 ; 3 uses
   %i.sy = icmp eq ptr %i.sw, %i.sx
   br i1 %i.sy, label %.noexc390.thread, label %bb.du
 
@@ -836,19 +834,18 @@ bb.du:                                            ; preds = %bb.dt
   %i.sz = getelementptr inbounds nuw i8, ptr %i.sx, i64 16
   %i.ta = getelementptr inbounds nuw i8, ptr %i.sw, i64 24
   %i.tb = load double, ptr %i.ta, align 8, !tbaa !33
-  %62 = load <2 x double>, ptr %i.sz, align 16    ; 2 uses
-  %63 = extractelement <2 x double> %62, i64 0
-  %i.tc = fneg double %63
+  %60 = load double, ptr %i.sz, align 16, !tbaa !33
+  %i.tc = fneg double %60
   %i.td = fcmp olt double %i.tb, %i.tc
   br i1 %i.td, label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit.i764, label %bb.dv
 
 bb.dv:                                            ; preds = %bb.du
   %i.te = getelementptr inbounds nuw i8, ptr %i.sw, i64 16
-  %64 = extractelement <2 x double> %62, i64 1
-  %65 = load <2 x double>, ptr %i.te, align 16, !tbaa !33
-  %66 = extractelement <2 x double> %65, i64 0
-  %67 = fneg double %66
-  %i.tf = fcmp ugt double %64, %67
+  %61 = load double, ptr %i.te, align 16, !tbaa !33
+  %62 = fneg double %61
+  %63 = getelementptr inbounds nuw i8, ptr %i.sx, i64 24
+  %64 = load double, ptr %63, align 8, !tbaa !33
+  %i.tf = fcmp ugt double %64, %62
   %i.tg = select i1 %i.tf, i16 256, i16 0
   br label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit.i764
 
@@ -1251,7 +1248,7 @@ bb.br:                                            ; preds = %.preheader1515, %_Z
   %i.lh = getelementptr [16 x i8], ptr %i.le, i64 %i.lg
   %i.li = getelementptr [16 x i8], ptr %i.lh, i64 %.01461642 ; 2 uses
   %i.lj = load ptr, ptr %i.li, align 8, !tbaa !129 ; 6 uses
-  %i.lk = load ptr, ptr %i.ky, align 8, !tbaa !129 ; 2 uses
+  %i.lk = load ptr, ptr %i.ky, align 8, !tbaa !129 ; 3 uses
   %i.ll = icmp eq ptr %i.lj, %i.lk
   br i1 %i.ll, label %_ZSt3minIN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEEERKT_SI_SI_.exit.thread, label %bb.bs
 
@@ -1259,19 +1256,18 @@ bb.bs:                                            ; preds = %bb.br
   %i.lm = getelementptr inbounds nuw i8, ptr %i.lk, i64 16
   %i.ln = getelementptr inbounds nuw i8, ptr %i.lj, i64 24
   %i.lo = load double, ptr %i.ln, align 8, !tbaa !33
-  %50 = load <2 x double>, ptr %i.lm, align 16    ; 2 uses
-  %51 = extractelement <2 x double> %50, i64 0
-  %i.lp = fneg double %51
+  %50 = load double, ptr %i.lm, align 16, !tbaa !33
+  %i.lp = fneg double %50
   %i.lq = fcmp olt double %i.lo, %i.lp
   br i1 %i.lq, label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit.i, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
   %i.lr = getelementptr inbounds nuw i8, ptr %i.lj, i64 16
-  %52 = extractelement <2 x double> %50, i64 1
-  %53 = load <2 x double>, ptr %i.lr, align 16, !tbaa !33
-  %54 = extractelement <2 x double> %53, i64 0
-  %55 = fneg double %54
-  %i.ls = fcmp ugt double %52, %55
+  %51 = load double, ptr %i.lr, align 16, !tbaa !33
+  %52 = fneg double %51
+  %53 = getelementptr inbounds nuw i8, ptr %i.lk, i64 24
+  %54 = load double, ptr %53, align 8, !tbaa !33
+  %i.ls = fcmp ugt double %54, %52
   %.fr = freeze i1 %i.ls
   %i.lt = select i1 %.fr, i16 256, i16 0
   br label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit.i
@@ -1474,7 +1470,7 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg, %bb.
   %i.nw = getelementptr [16 x i8], ptr %i.nt, i64 %i.nv
   %i.nx = getelementptr [16 x i8], ptr %i.nw, i64 %.01461642 ; 3 uses
   %i.ny = load ptr, ptr %i.nn, align 8, !tbaa !129 ; 6 uses
-  %i.nz = load ptr, ptr %i.nx, align 8, !tbaa !129 ; 2 uses
+  %i.nz = load ptr, ptr %i.nx, align 8, !tbaa !129 ; 3 uses
   %i.oa = icmp eq ptr %i.ny, %i.nz
   br i1 %i.oa, label %_ZSt3maxIN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEEERKT_SI_SI_.exit.thread, label %bb.cj
 
@@ -1482,19 +1478,18 @@ bb.cj:                                            ; preds = %bb.ci
   %i.ob = getelementptr inbounds nuw i8, ptr %i.nz, i64 16
   %i.oc = getelementptr inbounds nuw i8, ptr %i.ny, i64 24
   %i.od = load double, ptr %i.oc, align 8, !tbaa !33
-  %56 = load <2 x double>, ptr %i.ob, align 16    ; 2 uses
-  %57 = extractelement <2 x double> %56, i64 0
-  %i.oe = fneg double %57
+  %55 = load double, ptr %i.ob, align 16, !tbaa !33
+  %i.oe = fneg double %55
   %i.of = fcmp olt double %i.od, %i.oe
   br i1 %i.of, label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit.i749, label %bb.ck
 
 bb.ck:                                            ; preds = %bb.cj
   %i.og = getelementptr inbounds nuw i8, ptr %i.ny, i64 16
-  %58 = extractelement <2 x double> %56, i64 1
-  %59 = load <2 x double>, ptr %i.og, align 16, !tbaa !33
-  %60 = extractelement <2 x double> %59, i64 0
-  %61 = fneg double %60
-  %i.oh = fcmp ugt double %58, %61
+  %56 = load double, ptr %i.og, align 16, !tbaa !33
+  %57 = fneg double %56
+  %58 = getelementptr inbounds nuw i8, ptr %i.nz, i64 24
+  %59 = load double, ptr %58, align 8, !tbaa !33
+  %i.oh = fcmp ugt double %59, %57
   %.fr1488 = freeze i1 %i.oh
   %i.oi = select i1 %.fr1488, i16 256, i16 0
   br label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit.i749
@@ -1870,7 +1865,7 @@ bb.dt:                                            ; preds = %bb.ds
   %.idx.i.i.i12.i = mul nuw i64 %storemerge2171649, 48 ; 6 uses
   %i.sk = getelementptr i8, ptr %i.sj, i64 %.idx.i.i.i12.i ; 2 uses
   %i.sl = load ptr, ptr %i.si, align 8, !tbaa !129 ; 6 uses
-  %i.sm = load ptr, ptr %i.sk, align 8, !tbaa !129 ; 2 uses
+  %i.sm = load ptr, ptr %i.sk, align 8, !tbaa !129 ; 3 uses
   %i.sn = icmp eq ptr %i.sl, %i.sm
   br i1 %i.sn, label %.noexc393.thread, label %bb.du
 
@@ -1878,19 +1873,18 @@ bb.du:                                            ; preds = %bb.dt
   %i.so = getelementptr inbounds nuw i8, ptr %i.sm, i64 16
   %i.sp = getelementptr inbounds nuw i8, ptr %i.sl, i64 24
   %i.sq = load double, ptr %i.sp, align 8, !tbaa !33
-  %62 = load <2 x double>, ptr %i.so, align 16    ; 2 uses
-  %63 = extractelement <2 x double> %62, i64 0
-  %i.sr = fneg double %63
+  %60 = load double, ptr %i.so, align 16, !tbaa !33
+  %i.sr = fneg double %60
   %i.ss = fcmp olt double %i.sq, %i.sr
   br i1 %i.ss, label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit.i767, label %bb.dv
 
 bb.dv:                                            ; preds = %bb.du
   %i.st = getelementptr inbounds nuw i8, ptr %i.sl, i64 16
-  %64 = extractelement <2 x double> %62, i64 1
-  %65 = load <2 x double>, ptr %i.st, align 16, !tbaa !33
-  %66 = extractelement <2 x double> %65, i64 0
-  %67 = fneg double %66
-  %i.su = fcmp ugt double %64, %67
+  %61 = load double, ptr %i.st, align 16, !tbaa !33
+  %62 = fneg double %61
+  %63 = getelementptr inbounds nuw i8, ptr %i.sm, i64 24
+  %64 = load double, ptr %63, align 8, !tbaa !33
+  %i.su = fcmp ugt double %64, %62
   %i.sv = select i1 %i.su, i16 256, i16 0
   br label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit.i767
 
@@ -2293,7 +2287,7 @@ bb.a:
   %4 = alloca %class.anon.230, align 8            ; 5 uses
   %5 = alloca %class.anon.229, align 8            ; 4 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !129    ; 6 uses
-  %i.b = load ptr, ptr %1, align 8, !tbaa !129    ; 2 uses
+  %i.b = load ptr, ptr %1, align 8, !tbaa !129    ; 3 uses
   %i.c = icmp eq ptr %i.a, %i.b
   br i1 %i.c, label %bb.l, label %bb.b
 
@@ -2301,19 +2295,18 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.f = load double, ptr %i.e, align 8, !tbaa !33
-  %6 = load <2 x double>, ptr %i.d, align 16      ; 2 uses
-  %7 = extractelement <2 x double> %6, i64 0
-  %i.g = fneg double %7
+  %6 = load double, ptr %i.d, align 16, !tbaa !33
+  %i.g = fneg double %6
   %i.h = fcmp olt double %i.f, %i.g
   br i1 %i.h, label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %8 = extractelement <2 x double> %6, i64 1
-  %9 = load <2 x double>, ptr %i.i, align 16, !tbaa !33
-  %10 = extractelement <2 x double> %9, i64 0
-  %11 = fneg double %10
-  %i.j = fcmp ugt double %8, %11
+  %7 = load double, ptr %i.i, align 16, !tbaa !33
+  %8 = fneg double %7
+  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %10 = load double, ptr %9, align 8, !tbaa !33
+  %i.j = fcmp ugt double %10, %8
   %i.k = select i1 %i.j, i16 256, i16 0
   br label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit
 
@@ -2716,25 +2709,25 @@ bb.a:
   call void @llvm.x86.sse.ldmxcsr(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  %i.j = load ptr, ptr %1, align 8, !tbaa !129    ; 2 uses
+  %i.j = load ptr, ptr %1, align 8, !tbaa !129    ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 3 uses
-  %i.l = load ptr, ptr %2, align 8, !tbaa !129
+  %i.l = load ptr, ptr %2, align 8, !tbaa !129    ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %3 = load <2 x double>, ptr %i.m, align 16      ; 2 uses
-  %4 = extractelement <2 x double> %3, i64 0      ; 2 uses
-  %5 = fneg double %4                             ; 6 uses
-  %6 = fcmp olt double %4, 0.000000e+00
-  %7 = extractelement <2 x double> %3, i64 1      ; 7 uses
-  br i1 %6, label %bb.b, label %bb.f
+  %3 = load double, ptr %i.m, align 16, !tbaa !33 ; 2 uses
+  %4 = fneg double %3                             ; 6 uses
+  %5 = fcmp olt double %3, 0.000000e+00
+  %6 = getelementptr inbounds nuw i8, ptr %i.l, i64 24
+  %7 = load double, ptr %6, align 8, !tbaa !33    ; 7 uses
+  br i1 %5, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %8 = load <2 x double>, ptr %i.k, align 16      ; 2 uses
-  %9 = extractelement <2 x double> %8, i64 0      ; 2 uses
-  %i.n = fcmp ogt double %9, 0.000000e+00
+  %8 = load double, ptr %i.k, align 16, !tbaa !33 ; 2 uses
+  %i.n = fcmp ogt double %8, 0.000000e+00
   br i1 %i.n, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %10 = extractelement <2 x double> %8, i64 1
+  %9 = getelementptr inbounds nuw i8, ptr %i.j, i64 24
+  %10 = load double, ptr %9, align 8, !tbaa !33
   %i.o = fcmp olt double %10, 0.000000e+00
   br i1 %i.o, label %bb.d, label %bb.e
 
@@ -2742,9 +2735,9 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.024.i = phi double [ %5, %bb.d ], [ %5, %bb.c ], [ %7, %bb.b ]
-  %.023.i = phi double [ %7, %bb.d ], [ %5, %bb.c ], [ %5, %bb.b ]
-  %i.p = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %9) #22, !srcloc !489
+  %.024.i = phi double [ %4, %bb.d ], [ %4, %bb.c ], [ %7, %bb.b ]
+  %.023.i = phi double [ %7, %bb.d ], [ %4, %bb.c ], [ %4, %bb.b ]
+  %i.p = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %8) #22, !srcloc !489
   %i.q = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %.024.i) #22, !srcloc !489
   %i.r = fdiv double %i.p, %i.q
   %i.s = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %i.r) #22, !srcloc !489
@@ -2763,11 +2756,11 @@ bb.f:                                             ; preds = %bb.a
   br i1 %i.ab, label %bb.g, label %_ZN4CGALdvERKNS_11Interval_ntILb0EEES3_.exit
 
 bb.g:                                             ; preds = %bb.f
-  %11 = load <2 x double>, ptr %i.k, align 16     ; 2 uses
-  %12 = extractelement <2 x double> %11, i64 0
-  %13 = fcmp ogt double %12, 0.000000e+00
-  %14 = extractelement <2 x double> %11, i64 1    ; 2 uses
-  br i1 %13, label %bb.h, label %bb.j
+  %11 = load double, ptr %i.k, align 16, !tbaa !33
+  %12 = fcmp ogt double %11, 0.000000e+00
+  %13 = getelementptr inbounds nuw i8, ptr %i.j, i64 24
+  %14 = load double, ptr %13, align 8, !tbaa !33  ; 2 uses
+  br i1 %12, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
   %i.ac = fcmp olt double %14, 0.000000e+00
@@ -2777,16 +2770,15 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
-  %.022.i = phi double [ %5, %bb.i ], [ %7, %bb.h ], [ %7, %bb.g ]
-  %.0.i = phi double [ %7, %bb.i ], [ %7, %bb.h ], [ %5, %bb.g ]
+  %.022.i = phi double [ %4, %bb.i ], [ %7, %bb.h ], [ %7, %bb.g ]
+  %.0.i = phi double [ %7, %bb.i ], [ %7, %bb.h ], [ %4, %bb.g ]
   %i.ad = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %14) #22, !srcloc !489
   %i.ae = fneg double %.022.i
   %i.af = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %i.ae) #22, !srcloc !489
   %i.ag = fdiv double %i.ad, %i.af
   %i.ah = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %i.ag) #22, !srcloc !489
-  %15 = load <2 x double>, ptr %i.k, align 16, !tbaa !33
-  %16 = extractelement <2 x double> %15, i64 0
-  %i.ai = fneg double %16
+  %15 = load double, ptr %i.k, align 16, !tbaa !33
+  %i.ai = fneg double %15
   %i.aj = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %i.ai) #22, !srcloc !489
   %i.ak = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %.0.i) #22, !srcloc !489
   %i.al = fdiv double %i.aj, %i.ak
@@ -2962,9 +2954,8 @@ _ZN5boost14multiprecision6numberINS0_8backends16rational_adaptorINS2_15cpp_int_b
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.u = load double, ptr %i.t, align 8, !tbaa !33
-  %6 = load <2 x double>, ptr %i.s, align 16, !tbaa !33
-  %7 = extractelement <2 x double> %6, i64 0
-  %i.v = fneg double %7
+  %6 = load double, ptr %i.s, align 16, !tbaa !33
+  %i.v = fneg double %6
   %i.w = fcmp oeq double %i.u, %i.v
   br i1 %i.w, label %bb.m, label %bb.k
 
@@ -3367,9 +3358,8 @@ _ZN5boost14multiprecision6numberINS0_8backends16rational_adaptorINS2_15cpp_int_b
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.u = load double, ptr %i.t, align 8, !tbaa !33
-  %6 = load <2 x double>, ptr %i.s, align 16, !tbaa !33
-  %7 = extractelement <2 x double> %6, i64 0
-  %i.v = fneg double %7
+  %6 = load double, ptr %i.s, align 16, !tbaa !33
+  %i.v = fneg double %6
   %i.w = fcmp oeq double %i.u, %i.v
   br i1 %i.w, label %bb.m, label %bb.k
 
