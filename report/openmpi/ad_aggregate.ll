@@ -203,7 +203,7 @@ ADIOI_Calc_aggregator.exit162:                    ; preds = %bb.e, %.loopexit.i1
   br i1 %i.e, label %.lr.ph217.preheader, label %._crit_edge218
 
 .lr.ph217.preheader:                              ; preds = %._crit_edge
-  %wide.trip.count246 = zext nneg i32 %8 to i64   ; 5 uses
+  %wide.trip.count246 = zext nneg i32 %8 to i64   ; 3 uses
   %min.iters.check = icmp ult i32 %8, 4
   br i1 %min.iters.check, label %.lr.ph217.preheader278, label %vector.ph
 
@@ -259,12 +259,13 @@ middle.block:                                     ; preds = %vector.body
   %i.cu = shl i64 %.lcssa275, 4
   %i.cv = tail call ptr @ADIOI_Malloc_fn(i64 noundef %i.cu, i32 noundef 333, ptr noundef nonnull @.str.1) #7 ; 3 uses
   store ptr %i.cv, ptr %i.cg, align 8, !tbaa !51
-  %xtraiter = and i64 %wide.trip.count246, 1
+  %wide.trip.count251 = zext nneg i32 %8 to i64   ; 2 uses
+  %xtraiter = and i64 %wide.trip.count251, 1
   %i.cw = icmp eq i32 %8, 1
   br i1 %i.cw, label %.lr.ph223.epil.preheader, label %.lr.ph223.preheader.new
 
 .lr.ph223.preheader.new:                          ; preds = %.lr.ph223.preheader
-  %unroll_iter = and i64 %wide.trip.count246, 2147483646
+  %unroll_iter = and i64 %wide.trip.count251, 2147483646
   br label %.lr.ph223
 
 .preheader.loopexit.unr-lcssa:                    ; preds = %bb.i
