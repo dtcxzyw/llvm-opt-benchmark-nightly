@@ -205,10 +205,10 @@ bb.gi:                                            ; preds = %bb.gh
   %i.zp = ptrtoint ptr %i.zn to i64
   %i.zq = sub i64 %i.zo, %i.zp                    ; 2 uses
   %i.zr = ashr exact i64 %i.zq, 2
-  %i.zs = shl i64 %.02454.i.i.i.i, 3              ; 2 uses
+  %i.zs = shl nuw nsw i64 %.02454.i.i.i.i, 3      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #15, !noalias !354
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15, !noalias !354
-  %i.zt = add i64 %i.zs, 16                       ; 2 uses
+  %i.zt = add nuw i64 %i.zs, 16                   ; 2 uses
   store i64 %i.zt, ptr %i.c, align 8, !tbaa !60, !noalias !354
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #15, !noalias !354
   %i.zu = load ptr, ptr %i.hq, align 8, !tbaa !308, !noalias !354

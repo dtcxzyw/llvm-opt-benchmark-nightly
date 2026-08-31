@@ -205,7 +205,7 @@ bb.ci:                                            ; preds = %bb.ch
   %.not.i.i323.12 = icmp eq i32 %i.wx, 0
   br i1 %.not.i.i323.12, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit326, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit326.thread
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit326: ; preds = %_ZN4llvm7CCState13AllocateStackEjNS_5AlignE.exit320, %bb.bx, %bb.by, %bb.bz, %bb.ca, %bb.cb, %bb.cc, %bb.cd, %bb.ce, %bb.cf, %bb.cg, %bb.ch, %bb.ci
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit326: ; preds = %bb.ci, %bb.ch, %bb.cg, %bb.cf, %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca, %bb.bz, %bb.by, %bb.bx, %_ZN4llvm7CCState13AllocateStackEjNS_5AlignE.exit320
   %.0613.i.i322.lcssa.wide = phi i64 [ 0, %_ZN4llvm7CCState13AllocateStackEjNS_5AlignE.exit320 ], [ 1, %bb.bx ], [ 2, %bb.by ], [ 3, %bb.bz ], [ 4, %bb.ca ], [ 5, %bb.cb ], [ 6, %bb.cc ], [ 7, %bb.cd ], [ 8, %bb.ce ], [ 9, %bb.cf ], [ 10, %bb.cg ], [ 11, %bb.ch ], [ 12, %bb.ci ]
   %i.wy = getelementptr inbounds nuw [2 x i8], ptr @_ZL3FPR, i64 %.0613.i.i322.lcssa.wide
   %i.wz = load i16, ptr %i.wy, align 2, !tbaa !191 ; 2 uses
@@ -554,7 +554,15 @@ bb.dm:                                            ; preds = %bb.dl
   %.not.i.i342.11 = icmp eq i32 %i.adb, 0
   br i1 %.not.i.i342.11, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit345, label %.critedge268
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit345: ; preds = %bb.db, %bb.dc, %bb.dd, %bb.de, %bb.df, %bb.dg, %bb.dh, %bb.di, %bb.dj, %bb.dk, %bb.dl, %bb.dm
+.critedge268:                                     ; preds = %bb.dm
+  %27 = getelementptr inbounds nuw i8, ptr %7, i64 40
+  %28 = load i8, ptr %27, align 8, !tbaa !833, !range !23, !noundef !24
+  %29 = trunc nuw i8 %28 to i1
+  %30 = getelementptr inbounds nuw i8, ptr %7, i64 48 ; 2 uses
+  %31 = load i64, ptr %30, align 8, !tbaa !856    ; 2 uses
+  br i1 %29, label %bb.dp, label %bb.dq
+
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit345: ; preds = %bb.dm, %bb.dl, %bb.dk, %bb.dj, %bb.di, %bb.dh, %bb.dg, %bb.df, %bb.de, %bb.dd, %bb.dc, %bb.db
   %.0613.i.i341.lcssa.wide = phi i64 [ 0, %bb.db ], [ 1, %bb.dc ], [ 2, %bb.dd ], [ 3, %bb.de ], [ 4, %bb.df ], [ 5, %bb.dg ], [ 6, %bb.dh ], [ 7, %bb.di ], [ 8, %bb.dj ], [ 9, %bb.dk ], [ 10, %bb.dl ], [ 11, %bb.dm ]
   %i.adc = getelementptr inbounds nuw [2 x i8], ptr @_ZZL6CC_AIXjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE2VR, i64 %.0613.i.i341.lcssa.wide
   %i.add = load i16, ptr %i.adc, align 2, !tbaa !191 ; 2 uses
@@ -604,14 +612,6 @@ bb.do:                                            ; preds = %_ZN4llvm7CCState11A
 _ZN4llvm7CCState6addLocERKNS_11CCValAssignE.exit347: ; preds = %bb.dn, %bb.do
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #31
   br label %.loopexit
-
-.critedge268:                                     ; preds = %bb.dm
-  %27 = getelementptr inbounds nuw i8, ptr %7, i64 40
-  %28 = load i8, ptr %27, align 8, !tbaa !833, !range !23, !noundef !24
-  %29 = trunc nuw i8 %28 to i1
-  %30 = getelementptr inbounds nuw i8, ptr %7, i64 48 ; 2 uses
-  %31 = load i64, ptr %30, align 8, !tbaa !856    ; 2 uses
-  br i1 %29, label %bb.dp, label %bb.dq
 
 bb.dp:                                            ; preds = %.critedge268
   %i.aeb = add i64 %31, 31
@@ -1015,7 +1015,15 @@ bb.fc:                                            ; preds = %bb.fb
   %.not.i.i383.11 = icmp eq i32 %i.anz, 0
   br i1 %.not.i.i383.11, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit386, label %.critedge270
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit386: ; preds = %bb.er, %bb.es, %bb.et, %bb.eu, %bb.ev, %bb.ew, %bb.ex, %bb.ey, %bb.ez, %bb.fa, %bb.fb, %bb.fc
+.critedge270:                                     ; preds = %bb.fc
+  %32 = getelementptr inbounds nuw i8, ptr %7, i64 40
+  %33 = load i8, ptr %32, align 8, !tbaa !833, !range !23, !noundef !24
+  %34 = trunc nuw i8 %33 to i1
+  %35 = getelementptr inbounds nuw i8, ptr %7, i64 48 ; 2 uses
+  %36 = load i64, ptr %35, align 8, !tbaa !856    ; 2 uses
+  br i1 %34, label %bb.fp, label %bb.fq
+
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit386: ; preds = %bb.fc, %bb.fb, %bb.fa, %bb.ez, %bb.ey, %bb.ex, %bb.ew, %bb.ev, %bb.eu, %bb.et, %bb.es, %bb.er
   %.0613.i.i382.lcssa.wide = phi i64 [ 0, %bb.er ], [ 1, %bb.es ], [ 2, %bb.et ], [ 3, %bb.eu ], [ 4, %bb.ev ], [ 5, %bb.ew ], [ 6, %bb.ex ], [ 7, %bb.ey ], [ 8, %bb.ez ], [ 9, %bb.fa ], [ 10, %bb.fb ], [ 11, %bb.fc ]
   %i.aoa = getelementptr inbounds nuw [2 x i8], ptr @_ZZL6CC_AIXjN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE2VR, i64 %.0613.i.i382.lcssa.wide
   %i.aob = load i16, ptr %i.aoa, align 2, !tbaa !191 ; 2 uses
@@ -1204,14 +1212,6 @@ _ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit399: ; preds = %bb.fo, %_ZNK4
   %i.asa = add i32 %.0253586, %i.h                ; 2 uses
   %.not258 = icmp eq i32 %i.asa, 16
   br i1 %.not258, label %bb.ff, label %.lr.ph.i.i394, !llvm.loop !1148
-
-.critedge270:                                     ; preds = %bb.fc
-  %32 = getelementptr inbounds nuw i8, ptr %7, i64 40
-  %33 = load i8, ptr %32, align 8, !tbaa !833, !range !23, !noundef !24
-  %34 = trunc nuw i8 %33 to i1
-  %35 = getelementptr inbounds nuw i8, ptr %7, i64 48 ; 2 uses
-  %36 = load i64, ptr %35, align 8, !tbaa !856    ; 2 uses
-  br i1 %34, label %bb.fp, label %bb.fq
 
 bb.fp:                                            ; preds = %.critedge270
   %i.asb = add i64 %36, 31

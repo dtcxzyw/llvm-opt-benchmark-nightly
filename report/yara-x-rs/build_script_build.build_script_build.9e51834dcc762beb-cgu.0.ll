@@ -205,8 +205,8 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t
   store i64 %i.bn, ptr %i.ah, align 8, !alias.scope !52, !noalias !46
   br label %.sink.split.i.i.i
 
-.sink.split.i.i.i:                                ; preds = %.loopexit45.i.i.i, %.loopexit.i.i.i.a, %bb.z, %bb.w, %bb.s, %bb.r, %bb.l, %bb.k, %bb.j
-  %.sink.i.i.i = phi i64 [ 1, %.loopexit45.i.i.i ], [ 0, %bb.z ], [ 1, %.loopexit.i.i.i.a ], [ 2, %bb.r ], [ 0, %bb.s ], [ 1, %bb.w ], [ 2, %bb.k ], [ 2, %bb.l ], [ 2, %bb.j ] ; 2 uses
+.sink.split.i.i.i:                                ; preds = %.loopexit45.i.i.i, %.preheader.preheader.i.i.i, %bb.z, %bb.w, %bb.s, %bb.r, %bb.l, %bb.k, %bb.j
+  %.sink.i.i.i = phi i64 [ 1, %.loopexit45.i.i.i ], [ 0, %bb.z ], [ 1, %.preheader.preheader.i.i.i ], [ 2, %bb.r ], [ 0, %bb.s ], [ 1, %bb.w ], [ 2, %bb.k ], [ 2, %bb.l ], [ 2, %bb.j ] ; 2 uses
   store i64 %.sink.i.i.i, ptr %i.m, align 8, !alias.scope !52, !noalias !46
   br label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsdAIXAMGuHRT_18build_script_build.exit.i.i
 
@@ -220,7 +220,7 @@ bb.x:                                             ; preds = %bb.k
 
 bb.y:                                             ; preds = %bb.x
   %.not41.i.i.i = icmp ult i64 %i.bs, %i.ap
-  br i1 %.not41.i.i.i, label %.preheader.preheader.i.i.i, label %.loopexit.i.i.i.a
+  br i1 %.not41.i.i.i, label %.loopexit.i.i.i.a, label %.preheader.preheader.i.i.i
 
 bb.z:                                             ; preds = %bb.x
   store i64 %i.bs, ptr %i.ac, align 8, !noalias !49
@@ -228,24 +228,24 @@ bb.z:                                             ; preds = %bb.x
   store i64 %i.bs, ptr %i.ah, align 8, !alias.scope !52, !noalias !46
   br label %.sink.split.i.i.i
 
-.loopexit.i.i.i.a:                                ; preds = %bb.aa, %.preheader.preheader.i.i.i, %bb.y
-  %.sroa.02.0.i.i.i = phi i64 [ %i.ap, %bb.y ], [ %.sroa.08.0.i.i.i, %.preheader.preheader.i.i.i ], [ %i.ap, %bb.aa ] ; 2 uses
+.loopexit.i.i.i.a:                                ; preds = %bb.y, %bb.aa
+  %.sroa.08.0.i.i.i = phi i64 [ %i.bt, %bb.aa ], [ %i.bs, %bb.y ] ; 3 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.ao, i64 %.sroa.08.0.i.i.i
+  %4 = load i8, ptr %3, align 1, !noalias !49
+  %5 = icmp sgt i8 %4, -65
+  br i1 %5, label %.preheader.preheader.i.i.i, label %bb.aa
+
+.preheader.preheader.i.i.i:                       ; preds = %bb.aa, %.loopexit.i.i.i.a, %bb.y
+  %.sroa.02.0.i.i.i = phi i64 [ %i.ap, %bb.y ], [ %.sroa.08.0.i.i.i, %.loopexit.i.i.i.a ], [ %i.ap, %bb.aa ] ; 2 uses
   store i64 %.sroa.02.0.i.i.i, ptr %i.ac, align 8, !noalias !49
   store i64 %i.aq, ptr %i.ag, align 8, !alias.scope !52, !noalias !46
   store i64 %.sroa.02.0.i.i.i, ptr %i.ah, align 8, !alias.scope !52, !noalias !46
   br label %.sink.split.i.i.i
 
-.preheader.preheader.i.i.i:                       ; preds = %bb.y, %bb.aa
-  %.sroa.08.0.i.i.i = phi i64 [ %i.bt, %bb.aa ], [ %i.bs, %bb.y ] ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.ao, i64 %.sroa.08.0.i.i.i
-  %4 = load i8, ptr %3, align 1, !noalias !49
-  %5 = icmp sgt i8 %4, -65
-  br i1 %5, label %.loopexit.i.i.i.a, label %bb.aa
-
-bb.aa:                                            ; preds = %.preheader.preheader.i.i.i
+bb.aa:                                            ; preds = %.loopexit.i.i.i.a
   %i.bt = add i64 %.sroa.08.0.i.i.i, 1            ; 2 uses
   %exitcond50.not.i.i.i = icmp eq i64 %i.bt, %i.ap
-  br i1 %exitcond50.not.i.i.i, label %.loopexit.i.i.i.a, label %.preheader.preheader.i.i.i
+  br i1 %exitcond50.not.i.i.i, label %.preheader.preheader.i.i.i, label %.loopexit.i.i.i.a
 
 bb.ab:                                            ; preds = %bb.l
   %i.bu = load i64, ptr %i.ad, align 8, !noalias !49
@@ -264,10 +264,17 @@ bb.ac:                                            ; preds = %bb.ab
   %i.cd = load ptr, ptr %i.aa, align 8, !noalias !49
   %i.ce = load i64, ptr %i.ab, align 8, !noalias !49 ; 4 uses
   %.not.i.i.i = icmp ult i64 %i.cc, %i.ce
-  br i1 %.not.i.i.i, label %.preheader44.preheader.i.i.i, label %.loopexit45.i.i.i
+  br i1 %.not.i.i.i, label %.preheader44.split.i.i.i, label %.loopexit45.i.i.i
 
-.loopexit45.i.i.i:                                ; preds = %bb.ad, %.preheader44.preheader.i.i.i, %bb.ac
-  %.sroa.018.0.i.i.i = phi i64 [ %i.ce, %bb.ac ], [ %.sroa.013.0.i.i.i, %.preheader44.preheader.i.i.i ], [ %i.ce, %bb.ad ] ; 2 uses
+.preheader44.split.i.i.i:                         ; preds = %bb.ac, %bb.ad
+  %.sroa.013.0.i.i.i = phi i64 [ %i.ch, %bb.ad ], [ %i.cc, %bb.ac ] ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.cd, i64 %.sroa.013.0.i.i.i
+  %7 = load i8, ptr %6, align 1, !noalias !46
+  %8 = icmp sgt i8 %7, -65
+  br i1 %8, label %.loopexit45.i.i.i, label %bb.ad
+
+.loopexit45.i.i.i:                                ; preds = %bb.ad, %.preheader44.split.i.i.i, %bb.ac
+  %.sroa.018.0.i.i.i = phi i64 [ %i.ce, %bb.ac ], [ %.sroa.013.0.i.i.i, %.preheader44.split.i.i.i ], [ %i.ce, %bb.ad ] ; 2 uses
   %i.cf = load i64, ptr %i.z, align 8, !noalias !49
   %i.cg = call i64 @_RNvYjNtNtCskKLDkoKarTP_4core3cmp3Ord3maxCs2nizDKKJVD2_6chrono(i64 %.sroa.018.0.i.i.i, i64 %i.cf) #25, !noalias !46
   store i64 %i.cg, ptr %i.z, align 8, !noalias !49
@@ -275,17 +282,10 @@ bb.ac:                                            ; preds = %bb.ab
   store i64 %.sroa.018.0.i.i.i, ptr %i.ah, align 8, !alias.scope !52, !noalias !46
   br label %.sink.split.i.i.i
 
-.preheader44.preheader.i.i.i:                     ; preds = %bb.ac, %bb.ad
-  %.sroa.013.0.i.i.i = phi i64 [ %i.ch, %bb.ad ], [ %i.cc, %bb.ac ] ; 3 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.cd, i64 %.sroa.013.0.i.i.i
-  %7 = load i8, ptr %6, align 1, !noalias !46
-  %8 = icmp sgt i8 %7, -65
-  br i1 %8, label %.loopexit45.i.i.i, label %bb.ad
-
-bb.ad:                                            ; preds = %.preheader44.preheader.i.i.i
+bb.ad:                                            ; preds = %.preheader44.split.i.i.i
   %i.ch = add i64 %.sroa.013.0.i.i.i, 1           ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.ch, %i.ce
-  br i1 %exitcond.not.i.i.i, label %.loopexit45.i.i.i, label %.preheader44.preheader.i.i.i
+  br i1 %exitcond.not.i.i.i, label %.loopexit45.i.i.i, label %.preheader44.split.i.i.i
 
 _RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsdAIXAMGuHRT_18build_script_build.exit.i.i: ; preds = %bb.ab, %.sink.split.i.i.i
   %i.ci = phi i64 [ %.sink.i.i.i, %.sink.split.i.i.i ], [ %i.bz, %bb.ab ]

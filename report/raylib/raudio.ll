@@ -205,7 +205,7 @@ compute_samples.exit.loopexit.us.us:              ; preds = %._crit_edge.us.i.us
   %indvars70 = trunc i64 %indvars.iv57.i.us to i32 ; 2 uses
   %i.fk = add nsw i32 %.03245.i.us, %indvars70    ; 2 uses
   %i.fl = icmp sgt i32 %i.fk, %6
-  %i.fm = sub i32 %6, %indvars70
+  %i.fm = sub nuw i32 %6, %indvars70
   %spec.select.i.us = select i1 %i.fl, i32 %i.fm, i32 %.03245.i.us ; 2 uses
   %i.fn = icmp sgt i32 %spec.select.i.us, 0
   br i1 %i.fn, label %.lr.ph.preheader.i.us, label %._crit_edge.i.us
@@ -295,7 +295,7 @@ compute_samples.exit.loopexit48.us:               ; preds = %._crit_edge.i.us
   %indvars70.1 = trunc i64 %indvars.iv57.i.us.1 to i32 ; 2 uses
   %i.gq = add nsw i32 %.03245.i.us.1, %indvars70.1 ; 2 uses
   %i.gr = icmp sgt i32 %i.gq, %6
-  %i.gs = sub i32 %6, %indvars70.1
+  %i.gs = sub nuw i32 %6, %indvars70.1
   %spec.select.i.us.1 = select i1 %i.gr, i32 %i.gs, i32 %.03245.i.us.1 ; 2 uses
   %i.gt = icmp sgt i32 %spec.select.i.us.1, 0
   br i1 %i.gt, label %.lr.ph.preheader.i.us.1, label %._crit_edge.i.us.1

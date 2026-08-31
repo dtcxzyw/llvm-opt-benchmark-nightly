@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   %.not.i.i.4 = icmp eq i32 %i.h, 0
   br i1 %.not.i.i.4, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEEPKt.exit, label %.thread61
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEEPKt.exit: ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.f
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEEPKt.exit: ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
   %.0613.i.i.lcssa.wide = phi i64 [ 0, %bb.b ], [ 1, %bb.c ], [ 2, %bb.d ], [ 3, %bb.e ], [ 4, %bb.f ] ; 2 uses
   %i.i = getelementptr inbounds nuw [2 x i8], ptr @_ZZL8CC_BPF32jN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList4, i64 %.0613.i.i.lcssa.wide
   %i.j = load i16, ptr %i.i, align 2, !tbaa !163  ; 2 uses
@@ -286,7 +286,7 @@ bb.n:                                             ; preds = %bb.m
   %.not.i.i31.4 = icmp eq i32 %i.aq, 0
   br i1 %.not.i.i31.4, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEEPKt.exit34, label %.thread61
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEEPKt.exit34: ; preds = %bb.j, %bb.k, %bb.l, %bb.m, %bb.n
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEEPKt.exit34: ; preds = %bb.n, %bb.m, %bb.l, %bb.k, %bb.j
   %.0613.i.i30.lcssa.wide = phi i64 [ 0, %bb.j ], [ 1, %bb.k ], [ 2, %bb.l ], [ 3, %bb.m ], [ 4, %bb.n ] ; 2 uses
   %i.ar = getelementptr inbounds nuw [2 x i8], ptr @_ZZL8CC_BPF64jN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %.0613.i.i30.lcssa.wide
   %i.as = load i16, ptr %i.ar, align 2, !tbaa !163 ; 2 uses
@@ -469,7 +469,7 @@ bb.f:                                             ; preds = %bb.e
   %.not.i.i.4 = icmp eq i32 %i.j, 0
   br i1 %.not.i.i.4, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit, label %.thread47
 
-_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %.thread, %bb.c, %bb.d, %bb.e, %bb.f
+_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %.thread
   %.0613.i.i.lcssa.wide = phi i64 [ 0, %.thread ], [ 1, %bb.c ], [ 2, %bb.d ], [ 3, %bb.e ], [ 4, %bb.f ]
   %i.k = getelementptr inbounds nuw [2 x i8], ptr @_ZZL8CC_BPF64jN4llvm3MVTES0_NS_11CCValAssign7LocInfoENS_3ISD10ArgFlagsTyEPNS_4TypeERNS_7CCStateEE8RegList1, i64 %.0613.i.i.lcssa.wide
   %i.l = load i16, ptr %i.k, align 2, !tbaa !163  ; 2 uses

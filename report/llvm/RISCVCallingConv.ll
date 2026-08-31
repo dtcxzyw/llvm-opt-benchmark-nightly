@@ -204,7 +204,7 @@ bb.ay:                                            ; preds = %bb.ax
   %.not.i.i48.14 = icmp eq i32 %i.cq, 0
   br i1 %.not.i.i48.14, label %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i50, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit
 
-_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i50: ; preds = %bb.ak, %bb.al, %bb.am, %bb.an, %bb.ao, %bb.ap, %bb.aq, %bb.ar, %bb.as, %bb.at, %bb.au, %bb.av, %bb.aw, %bb.ax, %bb.ay
+_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i50: ; preds = %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak
   %.0613.i.i47.lcssa.wide = phi i64 [ 0, %bb.ak ], [ 1, %bb.al ], [ 2, %bb.am ], [ 3, %bb.an ], [ 4, %bb.ao ], [ 5, %bb.ap ], [ 6, %bb.aq ], [ 7, %bb.ar ], [ 8, %bb.as ], [ 9, %bb.at ], [ 10, %bb.au ], [ 11, %bb.av ], [ 12, %bb.aw ], [ 13, %bb.ax ], [ 14, %bb.ay ]
   %i.cr = getelementptr inbounds nuw [2 x i8], ptr @_ZL10ArgVRN2M1s, i64 %.0613.i.i47.lcssa.wide
   %i.cs = load i16, ptr %i.cr, align 2, !tbaa !41 ; 2 uses
@@ -290,7 +290,7 @@ bb.bn:                                            ; preds = %bb.bm
   %.not.i.i53.13 = icmp eq i32 %i.dm, 0
   br i1 %.not.i.i53.13, label %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i55, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit
 
-_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i55: ; preds = %bb.ba, %bb.bb, %bb.bc, %bb.bd, %bb.be, %bb.bf, %bb.bg, %bb.bh, %bb.bi, %bb.bj, %bb.bk, %bb.bl, %bb.bm, %bb.bn
+_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i55: ; preds = %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.bj, %bb.bi, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba
   %.0613.i.i52.lcssa.wide = phi i64 [ 0, %bb.ba ], [ 1, %bb.bb ], [ 2, %bb.bc ], [ 3, %bb.bd ], [ 4, %bb.be ], [ 5, %bb.bf ], [ 6, %bb.bg ], [ 7, %bb.bh ], [ 8, %bb.bi ], [ 9, %bb.bj ], [ 10, %bb.bk ], [ 11, %bb.bl ], [ 12, %bb.bm ], [ 13, %bb.bn ]
   %i.dn = getelementptr inbounds nuw [2 x i8], ptr @_ZL10ArgVRN3M1s, i64 %.0613.i.i52.lcssa.wide
   %i.do = load i16, ptr %i.dn, align 2, !tbaa !41 ; 2 uses
@@ -372,7 +372,7 @@ bb.cb:                                            ; preds = %bb.ca
   %.not.i.i58.12 = icmp eq i32 %i.ei, 0
   br i1 %.not.i.i58.12, label %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i60, label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit
 
-_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i60: ; preds = %bb.bp, %bb.bq, %bb.br, %bb.bs, %bb.bt, %bb.bu, %bb.bv, %bb.bw, %bb.bx, %bb.by, %bb.bz, %bb.ca, %bb.cb
+_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i60: ; preds = %bb.cb, %bb.ca, %bb.bz, %bb.by, %bb.bx, %bb.bw, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %bb.bp
   %.0613.i.i57.lcssa.wide = phi i64 [ 0, %bb.bp ], [ 1, %bb.bq ], [ 2, %bb.br ], [ 3, %bb.bs ], [ 4, %bb.bt ], [ 5, %bb.bu ], [ 6, %bb.bv ], [ 7, %bb.bw ], [ 8, %bb.bx ], [ 9, %bb.by ], [ 10, %bb.bz ], [ 11, %bb.ca ], [ 12, %bb.cb ]
   %i.ej = getelementptr inbounds nuw [2 x i8], ptr @_ZL10ArgVRN4M1s, i64 %.0613.i.i57.lcssa.wide
   %i.ek = load i16, ptr %i.ej, align 2, !tbaa !41 ; 2 uses
@@ -443,7 +443,7 @@ bb.cq:                                            ; preds = %bb.co
   br label %_ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit
 
 _ZN4llvm7CCState11AllocateRegENS_8ArrayRefItEE.exit: ; preds = %bb.cb, %bb.bn, %bb.ay, %bb.ai, %bb.af, %bb.aa, %bb.r, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i60, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i55, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i50, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i45, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i40, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i35, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i, %_ZN4llvm7CCState11AllocateRegEt.exit, %bb.cq, %bb.cp, %bb.cn, %bb.cl, %bb.cj, %bb.ch, %bb.cf, %bb.cd
-  %.sroa.093.0 = phi i32 [ %i.fb, %bb.cq ], [ 36, %_ZN4llvm7CCState11AllocateRegEt.exit ], [ %i.dp, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i55 ], [ 0, %bb.ai ], [ 0, %bb.ay ], [ 0, %bb.af ], [ 0, %bb.r ], [ 0, %bb.aa ], [ %i.en, %bb.cd ], [ %i.ep, %bb.cf ], [ %i.er, %bb.ch ], [ %i.et, %bb.cj ], [ %i.ev, %bb.cl ], [ %i.ex, %bb.cn ], [ %i.ez, %bb.cp ], [ %i.aj, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i ], [ 0, %bb.bn ], [ %i.az, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i35 ], [ %i.el, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i60 ], [ %i.bl, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i40 ], [ %i.ct, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i50 ], [ %i.bv, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i45 ], [ 0, %bb.cb ]
+  %.sroa.093.0 = phi i32 [ %i.fb, %bb.cq ], [ 36, %_ZN4llvm7CCState11AllocateRegEt.exit ], [ %i.dp, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i55 ], [ 0, %bb.af ], [ 0, %bb.ay ], [ 0, %bb.bn ], [ 0, %bb.r ], [ 0, %bb.aa ], [ %i.en, %bb.cd ], [ %i.ep, %bb.cf ], [ %i.er, %bb.ch ], [ %i.et, %bb.cj ], [ %i.ev, %bb.cl ], [ %i.ex, %bb.cn ], [ %i.ez, %bb.cp ], [ %i.aj, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i ], [ %i.ct, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i50 ], [ %i.az, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i35 ], [ %i.el, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i60 ], [ %i.bl, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i40 ], [ 0, %bb.ai ], [ %i.bv, %_ZNK4llvm7CCState19getFirstUnallocatedENS_8ArrayRefItEE.exit.i45 ], [ 0, %bb.cb ]
   ret i32 %.sroa.093.0
 }
 
