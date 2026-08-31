@@ -205,10 +205,10 @@ bb.c:                                             ; preds = %bb.b
   %.0134.v = trunc i64 %.0134.v.v to i32
   %.0134 = bitcast i32 %.0134.v to float          ; 6 uses
   %i.k = icmp eq i32 %3, 1
+  %.not174 = icmp eq i32 %1, 0                    ; 2 uses
   br i1 %i.k, label %.preheader, label %.preheader148
 
 .preheader148:                                    ; preds = %bb.c
-  %.not174 = icmp eq i32 %1, 0
   br i1 %.not174, label %.loopexit, label %.lr.ph163
 
 .lr.ph163:                                        ; preds = %.preheader148
@@ -223,12 +223,11 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.i
 
 .preheader:                                       ; preds = %bb.c
-  %.0197.in = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %.0197 = load float, ptr %.0197.in, align 4, !tbaa !15 ; 3 uses
-  %.not175 = icmp eq i32 %1, 0
-  br i1 %.not175, label %.loopexit, label %.lr.ph171
+  br i1 %.not174, label %.loopexit, label %.lr.ph171
 
 .lr.ph171:                                        ; preds = %.preheader
+  %.sroa.0.0.in = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %.sroa.0.0199 = load float, ptr %.sroa.0.0.in, align 4, !tbaa !15 ; 3 uses
   %notmask147 = shl nsw i32 -1, %5                ; 3 uses
   %i.n = fptrunc double %7 to float               ; 3 uses
   %wide.trip.count195 = zext i32 %1 to i64        ; 2 uses
@@ -257,7 +256,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  %i.x = phi float [ %i.w, %bb.e ], [ %.0197, %bb.d ]
+  %i.x = phi float [ %i.w, %bb.e ], [ %.sroa.0.0199, %bb.d ]
   store float %i.x, ptr %i.p, align 4, !tbaa !94
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv192
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 4 ; 2 uses
@@ -274,7 +273,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %i.ah = phi float [ %i.ag, %bb.g ], [ %.0197, %bb.f ]
+  %i.ah = phi float [ %i.ag, %bb.g ], [ %.sroa.0.0199, %bb.f ]
   store float %i.ah, ptr %i.z, align 4, !tbaa !94
   %indvars.iv.next193.1 = add nuw nsw i64 %indvars.iv192, 2 ; 2 uses
   %niter19.next.1 = add i64 %niter19, 2           ; 2 uses
@@ -503,7 +502,7 @@ bb.r:                                             ; preds = %.epil.preheader14
   br label %.loopexit.loopexit.epilog-lcssa
 
 .loopexit.loopexit.epilog-lcssa:                  ; preds = %bb.r, %.epil.preheader14
-  %i.dh = phi float [ %i.dg, %bb.r ], [ %.0197, %.epil.preheader14 ]
+  %i.dh = phi float [ %i.dg, %bb.r ], [ %.sroa.0.0199, %.epil.preheader14 ]
   store float %i.dh, ptr %i.cz, align 4, !tbaa !94
   br label %.loopexit
 

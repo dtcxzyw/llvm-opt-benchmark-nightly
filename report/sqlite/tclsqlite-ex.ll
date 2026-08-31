@@ -206,6 +206,7 @@ declare i32 @sqlite3_trace_v2(ptr noundef, i32 noundef, ptr noundef, ptr noundef
 ; Function Attrs: nounwind uwtable
 define internal noundef i32 @DbTraceV2Handler(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr noundef %2, ptr noundef %3) #4 {
 bb.a:
+  %4 = ptrtoint ptr %2 to i64                     ; 4 uses
   %i.a = tail call range(i32 0, 33) i32 @llvm.ctpop.i32(i32 %0)
   %i.b = icmp eq i32 %i.a, 1
   br i1 %i.b, label %.split, label %bb.n
@@ -236,7 +237,6 @@ bb.b:                                             ; preds = %.split
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !176
   %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 3920
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !341
-  %4 = ptrtoint ptr %2 to i64
   %i.s = tail call ptr %i.r(i64 noundef %4) #20
   %i.t = tail call i32 %i.n(ptr noundef %i.p, ptr noundef nonnull %i.i, ptr noundef %i.s) #20 ; 0 uses
   %i.u = load ptr, ptr @tclStubsPtr, align 8, !tbaa !148 ; 2 uses
@@ -291,8 +291,7 @@ bb.e:                                             ; preds = %.split
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !176
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ba, i64 3920
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !341
-  %5 = ptrtoint ptr %2 to i64
-  %i.bh = tail call ptr %i.bg(i64 noundef %5) #20
+  %i.bh = tail call ptr %i.bg(i64 noundef %4) #20
   %i.bi = tail call i32 %i.bc(ptr noundef %i.be, ptr noundef nonnull %i.ax, ptr noundef %i.bh) #20 ; 0 uses
   %i.bj = load ptr, ptr @tclStubsPtr, align 8, !tbaa !148 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 368
@@ -345,8 +344,7 @@ bb.h:                                             ; preds = %.split
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !176
   %i.ct = getelementptr inbounds nuw i8, ptr %i.co, i64 3920
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !341
-  %6 = ptrtoint ptr %2 to i64
-  %i.cv = tail call ptr %i.cu(i64 noundef %6) #20
+  %i.cv = tail call ptr %i.cu(i64 noundef %4) #20
   %i.cw = tail call i32 %i.cq(ptr noundef %i.cs, ptr noundef nonnull %i.cl, ptr noundef %i.cv) #20 ; 0 uses
   %i.cx = load ptr, ptr @tclStubsPtr, align 8, !tbaa !148
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 2360
@@ -391,8 +389,7 @@ bb.k:                                             ; preds = %.split
   %i.dy = load ptr, ptr %i.dx, align 8, !tbaa !176
   %i.dz = getelementptr inbounds nuw i8, ptr %i.du, i64 3920
   %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !341
-  %7 = ptrtoint ptr %2 to i64
-  %i.eb = tail call ptr %i.ea(i64 noundef %7) #20
+  %i.eb = tail call ptr %i.ea(i64 noundef %4) #20
   %i.ec = tail call i32 %i.dw(ptr noundef %i.dy, ptr noundef nonnull %i.dr, ptr noundef %i.eb) #20 ; 0 uses
   %i.ed = load ptr, ptr @tclStubsPtr, align 8, !tbaa !148
   %i.ee = getelementptr inbounds nuw i8, ptr %i.ed, i64 2360

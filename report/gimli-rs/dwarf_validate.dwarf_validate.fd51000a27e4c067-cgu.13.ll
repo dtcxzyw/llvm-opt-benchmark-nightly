@@ -204,15 +204,16 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _RNvMCsfER1pEaRVit_11typed_arenaINtB2_5ArenaINtNtCsexYYUdYSQU6_5alloc6borrow3CowShEE13with_capacityCslKoDbeUmNq5_14dwarf_validate.exit: ; preds = %bb.a
+  %1 = ptrtoint ptr %i.a to i64
   store i64 0, ptr %0, align 8, !alias.scope !110
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 42, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !110
   %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %i.a, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !110
+  store i64 %1, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !110
   %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i, i8 0, i64 16, i1 false), !alias.scope !110
-  store ptr inttoptr (i64 8 to ptr), ptr %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !110
+  store i64 8, ptr %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !110
   %.sroa.4.sroa.8.0..sroa.4.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i64 0, ptr %.sroa.4.sroa.8.0..sroa.4.0..sroa_idx.sroa_idx.i, align 8, !alias.scope !110
   ret void
@@ -266,13 +267,12 @@ bb.g:                                             ; preds = %bb.b, %bb.d
 _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCslKoDbeUmNq5_14dwarf_validate.exit: ; preds = %bb.e, %bb.c
   %.sroa.10.0 = phi i64 [ %i.n, %bb.e ], [ 8, %bb.c ]
   %.sroa.4.0 = phi i64 [ %..i, %bb.e ], [ 0, %bb.c ] ; 2 uses
-  %2 = inttoptr i64 %.sroa.10.0 to ptr
   %i.o = icmp samesign ule i64 %..i, %.sroa.4.0
   tail call void @llvm.assume(i1 %i.o)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false)
   store i64 %.sroa.4.0, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %2, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.10.0, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 0, ptr %.sroa.5.0..sroa_idx, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -318,20 +318,19 @@ define hidden { i64, i64 } @_RNvMs2_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecI
 bb.a:
   %.val = load i64, ptr %0, align 8               ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %.val10 = load ptr, ptr %i.a, align 8           ; 3 uses
   %i.b = icmp eq i64 %3, 0
   %i.c = icmp eq i64 %.val, 0
   %or.cond.i = select i1 %i.b, i1 true, i1 %i.c
   br i1 %or.cond.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %.val11 = load ptr, ptr %i.a, align 8, !nonnull !5, !noundef !5 ; 2 uses
   %4 = mul nuw i64 %.val, %3                      ; 3 uses
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val10) ]
   %i.d = icmp eq i64 %1, 0
   br i1 %i.d, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit, label %_RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator6shrink.exit
 
 _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Allocator10deallocate.exit: ; preds = %bb.b
-  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val10, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2) #23
+  tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val11, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2) #23
   %i.e = inttoptr i64 %2 to ptr
   store ptr %i.e, ptr %i.a, align 8
   br label %bb.c
@@ -344,7 +343,7 @@ _RNvXs1_NtCsexYYUdYSQU6_5alloc5allocNtB5_6GlobalNtNtCskKLDkoKarTP_4core5alloc9Al
   %i.f = mul nuw i64 %3, %1                       ; 3 uses
   %i.g = icmp ule i64 %i.f, %4
   tail call void @llvm.assume(i1 %i.g)
-  %i.h = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.val10, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef %i.f) #23 ; 2 uses
+  %i.h = tail call noundef ptr @_RNvCsbkii2mvYdKU_7___rustc14___rust_realloc(ptr noundef nonnull %.val11, i64 noundef %4, i64 noundef range(i64 1, -9223372036854775807) %2, i64 noundef %i.f) #23 ; 2 uses
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %bb.e, label %bb.d
 

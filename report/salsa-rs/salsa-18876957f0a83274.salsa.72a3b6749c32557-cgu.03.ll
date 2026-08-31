@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.c, label %.outer._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.outer
-  %.sroa.0.0.ph108 = phi ptr [ %i.mo, %.outer ], [ %0, %bb.a ] ; 22 uses
+  %.sroa.0.0.ph108 = phi ptr [ %i.mo, %.outer ], [ %0, %bb.a ] ; 21 uses
   %.sroa.16.0.ph107 = phi i64 [ %i.lz, %.outer ], [ %1, %bb.a ] ; 2 uses
   %.sroa.025.0.ph106 = phi i32 [ %i.fr, %.outer ], [ %4, %bb.a ] ; 2 uses
   %.sroa.028.0.ph105 = phi ptr [ null, %.outer ], [ %5, %bb.a ] ; 3 uses
@@ -608,7 +608,6 @@ bb.ag:                                            ; preds = %bb.af
 
 _RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCsC8CapfvpQ1_5salsa5zalsa9ErasedJar12split_at_mutBy_.exit: ; preds = %bb.af
   %i.kp = getelementptr inbounds nuw [40 x i8], ptr %.sroa.0.0.ph108, i64 %.sroa.11.1.lcssa.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph108) ]
   call void @_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortNtNtCsC8CapfvpQ1_5salsa5zalsa9ErasedJarNCINvMNtCscdodAO9FK5_5alloc5sliceSB15_7sort_byNCINvMs1_B17_NtB17_5Zalsa3newNtNtB19_13database_impl12DatabaseImplE0E0EB19_(ptr noalias noundef nonnull align 8 %i.kp, i64 noundef %i.ka, ptr noalias noundef nonnull align 8 %2, i64 noundef %3, i32 noundef %i.fr, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(40) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(8) %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.kq = icmp ult i64 %.sroa.11.1.lcssa.i, 33

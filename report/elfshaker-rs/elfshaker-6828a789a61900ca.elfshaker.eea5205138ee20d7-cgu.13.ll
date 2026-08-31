@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.b, label %.outer._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.outer
-  %.sroa.0.0.ph96 = phi ptr [ %i.fv, %.outer ], [ %0, %bb.a ] ; 22 uses
+  %.sroa.0.0.ph96 = phi ptr [ %i.fv, %.outer ], [ %0, %bb.a ] ; 21 uses
   %.sroa.16.0.ph95 = phi i64 [ %i.fg, %.outer ], [ %1, %bb.a ] ; 2 uses
   %.sroa.025.0.ph94 = phi i32 [ %i.j, %.outer ], [ %4, %bb.a ] ; 2 uses
   %.sroa.028.0.ph93 = phi ptr [ null, %.outer ], [ %5, %bb.a ] ; 4 uses
@@ -493,7 +493,6 @@ bb.r:                                             ; preds = %bb.q
 
 _RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtCskuiImRAV2ip_9elfshaker7packidx12FileEntryRef12split_at_mutBy_.exit: ; preds = %bb.q
   %i.dw = getelementptr inbounds nuw [40 x i8], ptr %.sroa.0.0.ph96, i64 %.sroa.11.1.lcssa.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph96) ]
   call void @_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortNtNtCskuiImRAV2ip_9elfshaker7packidx12FileEntryRefNCINvMNtCs1xwejQucwHj_5alloc5sliceSB15_7sort_byNCNvMsd_B17_NtB17_9PackIndex25compute_snapshot_checksum0E0EB19_(ptr noalias nofree noundef nonnull align 8 %i.dw, i64 noundef %i.dh, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef %3, i32 noundef %i.j, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(40) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %6) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.dx = icmp ult i64 %.sroa.11.1.lcssa.i, 33
@@ -657,7 +656,7 @@ bb.a:
   br i1 %i.b, label %.outer._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.outer
-  %.sroa.0.0.ph96 = phi ptr [ %i.cp, %.outer ], [ %0, %bb.a ] ; 20 uses
+  %.sroa.0.0.ph96 = phi ptr [ %i.cp, %.outer ], [ %0, %bb.a ] ; 19 uses
   %.sroa.16.0.ph95 = phi i64 [ %i.ca, %.outer ], [ %1, %bb.a ] ; 2 uses
   %.sroa.025.0.ph94 = phi i32 [ %i.h, %.outer ], [ %4, %bb.a ] ; 2 uses
   %.sroa.028.0.ph93 = phi ptr [ null, %.outer ], [ %5, %bb.a ] ; 2 uses
@@ -854,7 +853,6 @@ bb.o:                                             ; preds = %bb.n
 
 _RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtCskuiImRAV2ip_9elfshaker7packidx9FileEntry12split_at_mutBy_.exit: ; preds = %bb.n
   %i.bg = getelementptr inbounds nuw [64 x i8], ptr %.sroa.0.0.ph96, i64 %.sroa.11.1.lcssa.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph96) ]
   call void @_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortNtNtCskuiImRAV2ip_9elfshaker7packidx9FileEntryNCINvMNtCs1xwejQucwHj_5alloc5sliceSB15_7sort_byNCINvNtNtB19_4repo4pack13extract_filesRRNtNtCsaL1QbXo9JQH_3std4path4PathE0E0EB19_(ptr noalias nofree noundef nonnull align 8 %i.bg, i64 noundef %i.ar, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef %3, i32 noundef %i.h, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(64) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %6) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.bh = icmp ult i64 %.sroa.11.1.lcssa.i, 33
@@ -992,7 +990,7 @@ bb.a:
   br i1 %i.b, label %.outer._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.outer
-  %.sroa.0.0.ph104 = phi ptr [ %i.du, %.outer ], [ %0, %bb.a ] ; 21 uses
+  %.sroa.0.0.ph104 = phi ptr [ %i.du, %.outer ], [ %0, %bb.a ] ; 20 uses
   %.sroa.16.0.ph103 = phi i64 [ %i.df, %.outer ], [ %1, %bb.a ] ; 2 uses
   %.sroa.025.0.ph102 = phi i32 [ %i.j, %.outer ], [ %4, %bb.a ] ; 2 uses
   %.sroa.028.0.ph101 = phi ptr [ null, %.outer ], [ %5, %bb.a ] ; 3 uses
@@ -1236,7 +1234,6 @@ bb.q:                                             ; preds = %bb.p
 
 _RNvMNtCs3oUPovFnLWP_4core5sliceSNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackId12split_at_mutBA_.exit: ; preds = %bb.p
   %i.cf = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.ph104, i64 %.sroa.11.1.lcssa.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph104) ]
   call void @_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack6PackIdNvYB15_NtNtBa_3cmp10PartialOrd2ltEB1b_(ptr noalias nofree noundef nonnull align 8 %i.cf, i64 noundef %i.bq, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef %3, i32 noundef %i.j, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(24) %i.a, ptr noalias nofree noundef nonnull %6) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.cg = icmp ult i64 %.sroa.11.1.lcssa.i, 33
@@ -1385,7 +1382,7 @@ bb.a:
   br i1 %i.b, label %.outer._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.outer
-  %.sroa.0.0.ph126 = phi ptr [ %i.ig, %.outer ], [ %0, %bb.a ] ; 23 uses
+  %.sroa.0.0.ph126 = phi ptr [ %i.ig, %.outer ], [ %0, %bb.a ] ; 22 uses
   %.sroa.16.0.ph125 = phi i64 [ %i.hr, %.outer ], [ %1, %bb.a ] ; 2 uses
   %.sroa.025.0.ph124 = phi i32 [ %i.f, %.outer ], [ %4, %bb.a ] ; 2 uses
   %.sroa.028.0.ph123 = phi ptr [ null, %.outer ], [ %5, %bb.a ] ; 2 uses
@@ -1746,7 +1743,6 @@ bb.q:                                             ; preds = %bb.p
 
 _RNvMNtCs3oUPovFnLWP_4core5sliceSRNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsString12split_at_mutCskuiImRAV2ip_9elfshaker.exit: ; preds = %bb.p
   %i.ei = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph126, i64 %.sroa.27.2.lcssa.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph126) ]
   call void @_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortRNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringNvYB15_NtNtBa_3cmp10PartialOrd2ltECskuiImRAV2ip_9elfshaker(ptr noalias nofree noundef nonnull align 8 %i.ei, i64 noundef %i.dt, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef %3, i32 noundef %i.f, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(8) %i.a, ptr noalias nofree noundef nonnull %6) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.ej = icmp ult i64 %.sroa.27.2.lcssa.i, 33
@@ -2011,7 +2007,7 @@ bb.a:
   br i1 %i.b, label %.outer._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.outer
-  %.sroa.0.0.ph96 = phi ptr [ %i.cg, %.outer ], [ %0, %bb.a ] ; 20 uses
+  %.sroa.0.0.ph96 = phi ptr [ %i.cg, %.outer ], [ %0, %bb.a ] ; 19 uses
   %.sroa.16.0.ph95 = phi i64 [ %i.br, %.outer ], [ %1, %bb.a ] ; 2 uses
   %.sroa.025.0.ph94 = phi i32 [ %i.f, %.outer ], [ %4, %bb.a ] ; 2 uses
   %.sroa.028.0.ph93 = phi ptr [ null, %.outer ], [ %5, %bb.a ] ; 2 uses
@@ -2204,7 +2200,6 @@ bb.p:                                             ; preds = %bb.o
 
 _RNvMNtCs3oUPovFnLWP_4core5sliceSTmNtNtCskuiImRAV2ip_9elfshaker7packidx14ObjectMetadataE12split_at_mutBA_.exit: ; preds = %bb.o
   %i.az = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.ph96, i64 %.sroa.11.1.lcssa.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph96) ]
   call void @_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortTmNtNtCskuiImRAV2ip_9elfshaker7packidx14ObjectMetadataENCINvMNtCs1xwejQucwHj_5alloc5sliceSB15_7sort_byNCINvXs1o_NtNtNtB26_11collections5btree3mapINtB2T_8BTreeMapmB17_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB15_E9from_iterINtNtNtB3T_8adapters3map3MapINtNtB4Q_9enumerate9EnumerateINtNtNtB26_3vec9into_iter8IntoIterB17_EENCINvXsf_B19_NtB19_14VisitPackIndexNtNtCs6LlcditsbhK_5serde2de7Visitor9visit_seqINtNtCs974quTetXso_9rmp_serde6decode9SeqAccessINtB7F_10ReadReaderINtNtNtNtB26_2io8buffered9bufreader9BufReaderNtNtCsaL1QbXo9JQH_3std2fs4FileEENtNtB7H_6config13DefaultConfigEE0EE0E0EB1b_(ptr noalias nofree noundef nonnull align 8 %i.az, i64 noundef %i.ak, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef %3, i32 noundef %i.f, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %6) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.ba = icmp ult i64 %.sroa.11.1.lcssa.i, 33
@@ -2343,7 +2338,7 @@ bb.a:
   br i1 %i.b, label %.outer._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.outer
-  %.sroa.0.0.ph96 = phi ptr [ %i.cg, %.outer ], [ %0, %bb.a ] ; 20 uses
+  %.sroa.0.0.ph96 = phi ptr [ %i.cg, %.outer ], [ %0, %bb.a ] ; 19 uses
   %.sroa.16.0.ph95 = phi i64 [ %i.br, %.outer ], [ %1, %bb.a ] ; 2 uses
   %.sroa.025.0.ph94 = phi i32 [ %i.f, %.outer ], [ %4, %bb.a ] ; 2 uses
   %.sroa.028.0.ph93 = phi ptr [ null, %.outer ], [ %5, %bb.a ] ; 2 uses
@@ -2536,7 +2531,6 @@ bb.p:                                             ; preds = %bb.o
 
 _RNvMNtCs3oUPovFnLWP_4core5sliceSTmNtNtCskuiImRAV2ip_9elfshaker7packidx14ObjectMetadataE12split_at_mutBA_.exit: ; preds = %bb.o
   %i.az = getelementptr inbounds nuw [24 x i8], ptr %.sroa.0.0.ph96, i64 %.sroa.11.1.lcssa.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.ph96) ]
   call void @_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6stable9quicksort9quicksortTmNtNtCskuiImRAV2ip_9elfshaker7packidx14ObjectMetadataENCINvMNtCs1xwejQucwHj_5alloc5sliceSB15_7sort_byNCINvXs1o_NtNtNtB26_11collections5btree3mapINtB2T_8BTreeMapmB17_EINtNtNtNtBa_4iter6traits7collect12FromIteratorB15_E9from_iterINtNtNtB3T_8adapters3map3MapINtNtB4Q_9enumerate9EnumerateINtNtNtB26_3vec9into_iter8IntoIterB17_EENCINvXsf_B19_NtB19_14VisitPackIndexNtNtCs6LlcditsbhK_5serde2de7Visitor9visit_seqINtNtCs974quTetXso_9rmp_serde6decode9SeqAccessINtB7F_10ReadReaderINtNtNtNtB26_2io8buffered9bufreader9BufReaderRShEENtNtB7H_6config13DefaultConfigEE0EE0E0EB1b_(ptr noalias nofree noundef nonnull align 8 %i.az, i64 noundef %i.ak, ptr noalias nofree noundef nonnull align 8 %2, i64 noundef %3, i32 noundef %i.f, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable_or_null(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %6) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.ba = icmp ult i64 %.sroa.11.1.lcssa.i, 33
