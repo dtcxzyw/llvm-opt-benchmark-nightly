@@ -204,8 +204,8 @@ ext4_ext_next_leaf_block.exit.thread:             ; preds = %bb.ag, %ext4_ext_dr
 bb.au:                                            ; preds = %bb.df, %ext4_ext_next_leaf_block.exit.thread
   %.val49.i = phi i16 [ %.val49.pre.i, %ext4_ext_next_leaf_block.exit.thread ], [ %.val.i239, %bb.df ] ; 5 uses
   %.044.i = phi ptr [ %2, %ext4_ext_next_leaf_block.exit.thread ], [ %i.sw, %bb.df ] ; 13 uses
-  %i.gh = zext i16 %.val49.i to i32               ; 3 uses
-  %i.gi = zext i16 %.val49.i to i64               ; 3 uses
+  %i.gh = zext i16 %.val49.i to i32               ; 2 uses
+  %i.gi = zext i16 %.val49.i to i64               ; 4 uses
   %i.gj = getelementptr [48 x i8], ptr %.044.i, i64 %i.gi ; 6 uses
   %.not71120.i = icmp eq i16 %.val49.i, 0         ; 2 uses
   br i1 %.not71120.i, label %.critedge.i, label %.lr.ph.i
@@ -580,11 +580,11 @@ bb.bu:                                            ; preds = %bb.bt
   br label %.thread.i.i
 
 bb.bv:                                            ; preds = %bb.ck, %.lr.ph343.i.i
-  %5 = phi i32 [ %i.ma, %.lr.ph343.i.i ], [ %i.qd, %bb.ck ] ; 2 uses
-  %.0222342.in.i.i = phi i32 [ %i.gh, %.lr.ph343.i.i ], [ %.0222342.i.i, %bb.ck ]
+  %indvars.iv375.i.i = phi i64 [ %i.gi, %.lr.ph343.i.i ], [ %indvars.iv.next376.i.i, %bb.ck ]
+  %.0222342.in.i.i = phi i32 [ %i.ma, %.lr.ph343.i.i ], [ %i.qd, %bb.ck ] ; 2 uses
   %.1227341.i.i = phi i32 [ %.0226.lcssa405.i.i, %.lr.ph343.i.i ], [ %i.mb, %bb.ck ]
   %.0228340.i.i = phi i64 [ %i.ix, %.lr.ph343.i.i ], [ %i.me, %bb.ck ] ; 2 uses
-  %.0222342.i.i = add i32 %.0222342.in.i.i, -1    ; 3 uses
+  %indvars.iv.next376.i.i = add nsw i64 %indvars.iv375.i.i, -1 ; 3 uses
   %i.mb = add i32 %.1227341.i.i, -1               ; 2 uses
   %i.mc = sext i32 %i.mb to i64
   %i.md = getelementptr [8 x i8], ptr %i.hm, i64 %i.mc
@@ -642,7 +642,7 @@ bb.bz:                                            ; preds = %lock_buffer.exit290
   %i.mz = trunc i64 %i.my to i16
   %i.na = getelementptr i8, ptr %.val.i.i, i64 4  ; 2 uses
   store i16 %i.mz, ptr %i.na, align 4
-  %i.nb = trunc i32 %.0222342.i.i to i16
+  %i.nb = trunc i64 %indvars.iv.next376.i.i to i16
   %i.nc = sub i16 %.val49.i, %i.nb
   %i.nd = getelementptr i8, ptr %.val.i.i, i64 6
   store i16 %i.nc, ptr %i.nd, align 2
@@ -657,8 +657,7 @@ bb.bz:                                            ; preds = %lock_buffer.exit290
   %i.nj = trunc i64 %i.ni to i16
   %i.nk = getelementptr i8, ptr %.val.i.i, i64 20
   store i16 %i.nj, ptr %i.nk, align 4
-  %6 = sext i32 %.0222342.i.i to i64
-  %i.nl = getelementptr [48 x i8], ptr %.044.i, i64 %6 ; 5 uses
+  %i.nl = getelementptr [48 x i8], ptr %.044.i, i64 %indvars.iv.next376.i.i ; 5 uses
   %i.nm = getelementptr i8, ptr %i.nl, i64 32     ; 2 uses
   %i.nn = load ptr, ptr %i.nm, align 8            ; 4 uses
   %i.no = getelementptr i8, ptr %i.nn, i64 4
@@ -803,8 +802,8 @@ bb.cj:                                            ; preds = %bb.ci, %bb.cg
   br i1 %.not270.i.i, label %bb.ck, label %.thread.i.i
 
 bb.ck:                                            ; preds = %bb.cj, %brelse.exit298.i.i
-  %i.qd = add i32 %5, -1
-  %.not260.i.i = icmp eq i32 %5, 0
+  %i.qd = add nsw i32 %.0222342.in.i.i, -1
+  %.not260.i.i = icmp eq i32 %.0222342.in.i.i, 0
   br i1 %.not260.i.i, label %._crit_edge344.i.i, label %bb.bv, !llvm.loop !56
 
 ._crit_edge344.i.i:                               ; preds = %bb.ck, %.preheader315.i.i

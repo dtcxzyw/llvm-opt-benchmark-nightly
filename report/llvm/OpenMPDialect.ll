@@ -205,7 +205,7 @@ _ZN4mlir3omp15CanonicalLoopOp14getODSOperandsEj.exit:
   br i1 %i.i, label %.lr.ph.i.i.preheader, label %.thread92
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZN4mlir3omp15CanonicalLoopOp14getODSOperandsEj.exit
-  %i.j = load ptr, ptr %0, align 8, !tbaa !102    ; 3 uses
+  %i.j = load ptr, ptr %0, align 8, !tbaa !102    ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 44
   %i.l = load i32, ptr %i.k, align 4
   %i.m = and i32 %i.l, 8388608
@@ -218,13 +218,24 @@ _ZN4mlir3omp15CanonicalLoopOp14getODSOperandsEj.exit42: ; preds = %.lr.ph.i.i.pr
   %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 72
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !314
   %i.r = zext i32 %i.o to i64
-  %i.s = add nsw i64 %i.r, -1                     ; 3 uses
+  %i.s = add nsw i64 %i.r, -1                     ; 2 uses
   %i.t = icmp ugt i64 %i.s, 1
   br i1 %i.t, label %_ZN4mlir3omp15CanonicalLoopOp14getODSOperandsEj.exit42.thread, label %.preheader
 
 .preheader:                                       ; preds = %_ZN4mlir3omp15CanonicalLoopOp14getODSOperandsEj.exit42
   %.not96102 = icmp eq i32 %i.o, 1
-  br i1 %.not96102, label %.thread92, label %.lr.ph
+  br i1 %.not96102, label %bb.m, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %6 = getelementptr inbounds nuw i8, ptr %i.q, i64 56
+  %.sroa.0.0.copyload.i.i.i51 = load ptr, ptr %6, align 8, !tbaa !319
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i51, i64 8
+  %.0.copyload.i.i.i.i.i52 = load i64, ptr %7, align 8
+  %8 = and i64 %.0.copyload.i.i.i.i.i52, -8
+  %9 = inttoptr i64 %8 to ptr
+  %10 = tail call fastcc i8 @_ZL43__mlir_ods_local_type_constraint_OpenMPOps9PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef nonnull %i.j, ptr %9, ptr nonnull @.str.322, i64 7, i32 noundef 1)
+  %11 = trunc nuw i8 %10 to i1
+  br i1 %11, label %bb.m, label %.thread92
 
 _ZN4mlir3omp15CanonicalLoopOp14getODSOperandsEj.exit42.thread: ; preds = %.lr.ph.i.i.preheader, %_ZN4mlir3omp15CanonicalLoopOp14getODSOperandsEj.exit42
   %i.u = phi i64 [ %i.s, %_ZN4mlir3omp15CanonicalLoopOp14getODSOperandsEj.exit42 ], [ -1, %.lr.ph.i.i.preheader ]
@@ -360,29 +371,11 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.k, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #32
   br label %.thread92
 
-.lr.ph:                                           ; preds = %.preheader, %bb.m
-  %.2104 = phi i32 [ %14, %bb.m ], [ 1, %.preheader ] ; 2 uses
-  %.sroa.4.0103 = phi i64 [ %15, %bb.m ], [ 0, %.preheader ] ; 2 uses
-  %6 = getelementptr inbounds nuw [32 x i8], ptr %i.q, i64 %.sroa.4.0103
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 56
-  %.sroa.0.0.copyload.i.i.i51 = load ptr, ptr %7, align 8, !tbaa !319
-  %8 = load ptr, ptr %0, align 8, !tbaa !102
-  %9 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i51, i64 8
-  %.0.copyload.i.i.i.i.i52 = load i64, ptr %9, align 8
-  %10 = and i64 %.0.copyload.i.i.i.i.i52, -8
-  %11 = inttoptr i64 %10 to ptr
-  %12 = tail call fastcc i8 @_ZL43__mlir_ods_local_type_constraint_OpenMPOps9PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %8, ptr %11, ptr nonnull @.str.322, i64 7, i32 noundef %.2104)
-  %13 = trunc nuw i8 %12 to i1
-  br i1 %13, label %bb.m, label %.thread92
+bb.m:                                             ; preds = %.lr.ph.preheader, %.preheader
+  br label %.thread92
 
-bb.m:                                             ; preds = %.lr.ph
-  %14 = add i32 %.2104, 1
-  %15 = add nuw nsw i64 %.sroa.4.0103, 1          ; 2 uses
-  %.not96 = icmp eq i64 %15, %i.s
-  br i1 %.not96, label %.thread92, label %.lr.ph
-
-.thread92:                                        ; preds = %.lr.ph, %bb.m, %.preheader, %_ZN4mlir3omp15CanonicalLoopOp14getODSOperandsEj.exit, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.030.11 = phi i8 [ 1, %.preheader ], [ 0, %_ZN4mlir3omp15CanonicalLoopOp14getODSOperandsEj.exit ], [ %i.az, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %.lr.ph ], [ 1, %bb.m ]
+.thread92:                                        ; preds = %_ZN4mlir3omp15CanonicalLoopOp14getODSOperandsEj.exit, %.lr.ph.preheader, %bb.m, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.030.11 = phi i8 [ 1, %bb.m ], [ 0, %.lr.ph.preheader ], [ %i.az, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZN4mlir3omp15CanonicalLoopOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.030.11
 }
 
