@@ -205,8 +205,8 @@ bb.at:                                            ; preds = %bb.as
   %i.hk = load i32, ptr %i.hj, align 8            ; 3 uses
   store i32 %i.hk, ptr %i.hg, align 4
   %i.hl = getelementptr inbounds nuw i8, ptr %i.c, i64 136
-  %i.hm = load i32, ptr %i.hl, align 8            ; 2 uses
-  %i.hn = shl i32 %i.hm, 1
+  %i.hm = load i32, ptr %i.hl, align 8
+  %i.hn = shl i32 %i.hm, 1                        ; 2 uses
   %i.ho = sdiv i32 2147483647, %i.hn
   %.not.i119 = icmp slt i32 %i.hk, %i.ho
   br i1 %.not.i119, label %bb.av, label %bb.au
@@ -227,8 +227,7 @@ bb.au:                                            ; preds = %bb.at
 bb.av:                                            ; preds = %bb.at
   %i.hv = getelementptr inbounds nuw i8, ptr %i.c, i64 128 ; 2 uses
   %i.hw = load ptr, ptr %i.hv, align 8
-  %4 = shl i32 %i.hk, 1
-  %i.hx = mul i32 %4, %i.hm
+  %i.hx = mul i32 %i.hn, %i.hk
   %i.hy = sext i32 %i.hx to i64
   %i.hz = tail call ptr @repalloc_mul_extended(ptr noundef %i.hw, i64 noundef 2, i64 noundef %i.hy, i32 noundef 2) #17 ; 4 uses
   %i.ia = icmp eq ptr %i.hz, null

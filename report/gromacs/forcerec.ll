@@ -205,19 +205,19 @@ bb.a:
   %i.a = alloca float, align 4                    ; 5 uses
   %i.b = alloca float, align 4                    ; 5 uses
   %i.c = zext i1 %2 to i32
-  %i.d = add i32 %1, %i.c                         ; 6 uses
+  %i.d = add i32 %1, %i.c                         ; 4 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
+  %6 = mul i32 %i.d, %i.d                         ; 3 uses
   br i1 %5, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %6 = mul nsw i32 %i.d, 3
-  %7 = mul nsw i32 %6, %i.d                       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
   store float 0.000000e+00, ptr %i.a, align 4, !tbaa !39
-  %.not107 = icmp eq i32 %7, 0
+  %.not107 = icmp eq i32 %6, 0
   br i1 %.not107, label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
+  %7 = mul i32 %6, 3
   %i.e = sext i32 %7 to i64
   invoke void @_ZNSt6vectorIfSaIfEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPfS1_EEmRKf(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr null, i64 noundef %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
           to label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit unwind label %bb.d
@@ -404,15 +404,14 @@ scalar.ph134:                                     ; preds = %scalar.ph134, %scal
   br i1 %exitcond94.not.1, label %._crit_edge70, label %scalar.ph134, !llvm.loop !50
 
 bb.e:                                             ; preds = %bb.a
-  %i.bv = shl nsw i32 %i.d, 1
-  %8 = mul nsw i32 %i.bv, %i.d                    ; 2 uses
+  %i.bv = shl i32 %6, 1                           ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #28
   store float 0.000000e+00, ptr %i.b, align 4, !tbaa !39
-  %.not = icmp eq i32 %8, 0
+  %.not = icmp eq i32 %i.bv, 0
   br i1 %.not, label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit57, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.bw = sext i32 %8 to i64
+  %i.bw = sext i32 %i.bv to i64
   invoke void @_ZNSt6vectorIfSaIfEE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPfS1_EEmRKf(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr null, i64 noundef %i.bw, ptr noundef nonnull align 4 dereferenceable(4) %i.b)
           to label %_ZNSt6vectorIfSaIfEE6resizeEmRKf.exit57 unwind label %bb.g
 

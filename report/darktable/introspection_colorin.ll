@@ -205,8 +205,8 @@ bb.dy:                                            ; preds = %bb.ds
   %.val76 = load i32, ptr %i.akp, align 4, !tbaa !124 ; 2 uses
   %.8.val.fr.i78 = freeze i32 %.val75             ; 13 uses
   %i.akq = sext i32 %.val76 to i64                ; 5 uses
-  %i.akr = sext i32 %.8.val.fr.i78 to i64         ; 6 uses
-  %i.aks = shl nsw i64 %i.akr, 2                  ; 3 uses
+  %i.akr = sext i32 %.8.val.fr.i78 to i64         ; 3 uses
+  %i.aks = shl nsw i64 %i.akr, 2                  ; 7 uses
   %i.akt = shl nsw i64 %i.akr, 4
   %i.aku = add nsw i64 %i.akt, 48
   %i.akv = and i64 %i.aku, -64
@@ -271,8 +271,7 @@ bb.dy:                                            ; preds = %bb.ds
 
 .preheader.us.us.i:                               ; preds = %bb.ea, %.preheader.us.us.preheader.i
   %.0474.us.us.i = phi i64 [ %i.anu, %bb.ea ], [ 0, %.preheader.us.us.preheader.i ] ; 2 uses
-  %6 = shl i64 %.0474.us.us.i, 2
-  %i.alv = mul i64 %6, %i.akr                     ; 2 uses
+  %i.alv = mul i64 %.0474.us.us.i, %i.aks         ; 2 uses
   %i.alw = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.alv ; 2 uses
   %brmerge249 = select i1 %min.iters.check, i1 true, i1 %i.alr
   br i1 %brmerge249, label %scalar.ph.preheader, label %vector.body
@@ -416,21 +415,23 @@ bb.ea:                                            ; preds = %bb.dz, %._crit_edge
   br i1 %.not.us.us.i, label %bb.dz, label %.lr.ph3.us.us.preheader.i
 
 .preheader.us.i:                                  ; preds = %.lr.ph6.split.us.i, %bb.ec
-  %.0474.us.i = phi i64 [ %i.aoa, %bb.ec ], [ 0, %.lr.ph6.split.us.i ]
+  %.0474.us.i = phi i64 [ %i.aoa, %bb.ec ], [ 0, %.lr.ph6.split.us.i ] ; 2 uses
+  %6 = mul nuw i64 %.0474.us.i, %i.aks
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %6 ; 4 uses
   %i.anx = load ptr, ptr %i.alc, align 16, !tbaa !126
   %.not.us.i86 = icmp eq ptr %i.anx, null
   br i1 %.not.us.i86, label %bb.eb, label %._crit_edge.us.i87
 
 ._crit_edge.us.i87:                               ; preds = %.preheader.us.i
   %i.any = load ptr, ptr %i.ald, align 32, !tbaa !174
-  tail call void @cmsDoTransform(ptr noundef %i.any, ptr noundef %i.akw, ptr noundef %3, i32 noundef 0) #18
+  tail call void @cmsDoTransform(ptr noundef %i.any, ptr noundef %i.akw, ptr noundef %7, i32 noundef 0) #18
   %.pre.i = load ptr, ptr %i.ale, align 8, !tbaa !186
-  tail call void @cmsDoTransform(ptr noundef %.pre.i, ptr noundef %3, ptr noundef %3, i32 noundef 0) #18
+  tail call void @cmsDoTransform(ptr noundef %.pre.i, ptr noundef %7, ptr noundef %7, i32 noundef 0) #18
   br label %bb.ec
 
 bb.eb:                                            ; preds = %.preheader.us.i
   %i.anz = load ptr, ptr %i.alf, align 8, !tbaa !187
-  tail call void @cmsDoTransform(ptr noundef %i.anz, ptr noundef %i.akw, ptr noundef %3, i32 noundef 0) #18
+  tail call void @cmsDoTransform(ptr noundef %i.anz, ptr noundef %i.akw, ptr noundef %7, i32 noundef 0) #18
   br label %bb.ec
 
 bb.ec:                                            ; preds = %bb.eb, %._crit_edge.us.i87
@@ -452,8 +453,7 @@ bb.ec:                                            ; preds = %bb.eb, %._crit_edge
 
 .lr.ph6.split.split.us.i:                         ; preds = %bb.ee, %.lr.ph6.split.split.us.preheader.i
   %.0474.us8.i = phi i64 [ %i.aox, %bb.ee ], [ 0, %.lr.ph6.split.split.us.preheader.i ] ; 2 uses
-  %7 = shl i64 %.0474.us8.i, 2
-  %i.aoc = mul i64 %7, %i.akr                     ; 2 uses
+  %i.aoc = mul i64 %.0474.us8.i, %i.aks           ; 2 uses
   %i.aod = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.aoc ; 2 uses
   %i.aoe = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.aoc ; 9 uses
   %i.aof = load ptr, ptr %i.alc, align 16, !tbaa !126
@@ -539,8 +539,7 @@ bb.ef:                                            ; preds = %bb.ef, %.epil.prehe
 
 .lr.ph6.split.split.i:                            ; preds = %.lr.ph6.split.i, %bb.ei
   %.0474.i = phi i64 [ %i.apj, %bb.ei ], [ 0, %.lr.ph6.split.i ] ; 2 uses
-  %8 = shl i64 %.0474.i, 2
-  %i.apc = mul nuw nsw i64 %8, %i.akr             ; 2 uses
+  %i.apc = mul nuw i64 %.0474.i, %i.aks           ; 2 uses
   %i.apd = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.apc ; 2 uses
   %i.ape = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.apc ; 4 uses
   %i.apf = load ptr, ptr %i.alc, align 16, !tbaa !126

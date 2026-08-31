@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.a, %bb.b
   %.0138 = phi ptr [ @_ZN2cvL13Lanczos4Tab_fE, %bb.b ], [ @_ZN2cvL13BilinearTab_fE, %bb.a ] ; 2 uses
   %.0135 = phi ptr [ @_ZN2cvL13Lanczos4Tab_iE, %bb.b ], [ @_ZN2cvL13BilinearTab_iE, %bb.a ] ; 2 uses
   %exitcond.not.1 = phi i1 [ false, %bb.b ], [ true, %bb.a ]
-  %.0134 = phi i32 [ 8, %bb.b ], [ 2, %bb.a ]     ; 14 uses
+  %.0134 = phi i32 [ 8, %bb.b ], [ 2, %bb.a ]     ; 12 uses
   %i.h = zext nneg i32 %0 to i64
   %i.i = getelementptr inbounds nuw i8, ptr @_ZZN2cvL14initInterTab2DEibE7inittab, i64 %i.h ; 2 uses
   %i.j = load i8, ptr %i.i, align 1, !tbaa !44, !range !1806, !noundef !1807
@@ -396,7 +396,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
   br label %.body
 
 _ZN2cvL14initInterTab1DEiPfi.exit:                ; preds = %_ZN2cvL19interpolateLanczos4EfPf.exit.i, %bb.i, %.preheader.preheader.i
-  %i.do = mul nuw nsw i32 %.0134, %.0134
+  %i.do = mul nuw nsw i32 %.0134, %.0134          ; 2 uses
   %i.dp = zext nneg i32 %i.do to i64              ; 2 uses
   %i.dq = lshr exact i32 %.0134, 1                ; 3 uses
   %i.dr = zext nneg i32 %.0134 to i64             ; 9 uses
@@ -702,9 +702,8 @@ bb.w:                                             ; preds = %bb.v
   br i1 %exitcond217.not, label %_ZN2cv10AutoBufferIfLm264EED2Ev.exit, label %.preheader156, !llvm.loop !1814
 
 _ZN2cv10AutoBufferIfLm264EED2Ev.exit:             ; preds = %bb.w
-  %i.kb = shl nuw nsw i32 %.0134, 10
-  %7 = mul nuw nsw i32 %i.kb, %.0134
-  %i.kc = zext nneg i32 %7 to i64
+  %i.kb = shl nuw nsw i32 %i.do, 10
+  %i.kc = zext nneg i32 %i.kb to i64
   %i.kd = sub nsw i64 0, %i.kc                    ; 2 uses
   %i.ke = getelementptr inbounds [4 x i8], ptr %i.jz, i64 %i.kd
   %i.kf = getelementptr inbounds [2 x i8], ptr %i.ka, i64 %i.kd
