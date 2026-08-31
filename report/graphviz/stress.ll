@@ -205,9 +205,9 @@ gv_calloc.exit26:                                 ; preds = %gv_calloc.exit
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.loopexit
   %indvars.iv31 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next32, %.loopexit ] ; 6 uses
   %.030 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.lcssa, %.loopexit ] ; 3 uses
-  %2 = sub nsw i64 %wide.trip.count39, %indvars.iv31 ; 3 uses
   %indvars38 = trunc i64 %indvars.iv31 to i32
   tail call void @bfs(i32 noundef %indvars38, ptr noundef %0, i32 noundef %1, ptr noundef nonnull %i.q) #15
+  %2 = sub nsw i64 %wide.trip.count39, %indvars.iv31 ; 3 uses
   %min.iters.check = icmp ult i64 %2, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
