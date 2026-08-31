@@ -205,7 +205,7 @@ _ZN4mlir24DiagnosedDefiniteFailureD2Ev.exit224:   ; preds = %bb.ak, %bb.al
   store ptr null, ptr %42, align 8, !tbaa !30
   %i.ls = load ptr, ptr %1, align 8, !tbaa !30    ; 4 uses
   %i.lt = getelementptr inbounds nuw i8, ptr %i.ls, i64 44
-  %i.lu = load i32, ptr %i.lt, align 4            ; 3 uses
+  %i.lu = load i32, ptr %i.lt, align 4            ; 2 uses
   %.not.i.i.i.i225 = icmp ugt i32 %i.lu, 16777215
   call void @llvm.assume(i1 %.not.i.i.i.i225)
   %i.lv = getelementptr inbounds nuw i8, ptr %i.ls, i64 64
@@ -372,9 +372,6 @@ _ZN4mlir9transform13CastAndCallOp11getFunctionEv.exit267: ; preds = %.critedge13
   %i.oe = load i32, ptr %i.od, align 4, !tbaa !33
   %i.of = add i32 %i.oc, %i.oe
   %i.og = zext i32 %i.of to i64
-  %62 = and i32 %i.lu, 8388608
-  %.not.i.i.i13.i.i254 = icmp ne i32 %62, 0
-  call void @llvm.assume(i1 %.not.i.i.i13.i.i254)
   %i.oh = getelementptr inbounds nuw i8, ptr %i.ls, i64 72
   %i.oi = load ptr, ptr %i.oh, align 8, !tbaa !35
   %i.oj = getelementptr inbounds nuw [32 x i8], ptr %i.oi, i64 %i.og

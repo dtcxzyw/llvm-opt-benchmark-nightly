@@ -205,26 +205,25 @@ _RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.i.i.i: ; preds = 
 _RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.thread.i.i.i: ; preds = %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.i.i.i, %bb.d
   %.val.i.i.i = load ptr, ptr %i.l, align 8, !alias.scope !1692, !noalias !1693, !noundef !4 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %.val1.i.i.i = load i64, ptr %i.am, align 8, !alias.scope !1692, !noalias !1693 ; 4 uses
-  %.val2.i.i.i = load ptr, ptr %i.m, align 8, !alias.scope !1693, !noalias !1692, !noundef !4 ; 3 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  %.val3.i.i.i = load i64, ptr %2, align 8, !alias.scope !1693, !noalias !1692 ; 2 uses
+  %.val1.i.i.i = load i64, ptr %i.am, align 8, !alias.scope !1692, !noalias !1693 ; 3 uses
+  %.val2.i.i.i = load ptr, ptr %i.m, align 8, !alias.scope !1693, !noalias !1692, !noundef !4 ; 2 uses
   %i.an = icmp ne ptr %.val.i.i.i, null           ; 2 uses
   %i.ao = icmp eq ptr %.val2.i.i.i, null          ; 3 uses
   %not..i.i.i.i = xor i1 %i.ao, true
   %i.ap = xor i1 %i.an, %i.ao
-  br i1 %i.ap, label %3, label %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5slice3cmpNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
+  br i1 %i.ap, label %bb.e, label %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5slice3cmpNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
-3:                                                ; preds = %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.thread.i.i.i
-  br i1 %i.an, label %bb.e, label %_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i.i
+bb.e:                                             ; preds = %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.thread.i.i.i
+  %2 = getelementptr inbounds nuw i8, ptr %i.m, i64 8
+  %.val3.i.i.i = load i64, ptr %2, align 8, !alias.scope !1693, !noalias !1692
+  %i.aq = icmp eq i64 %.val1.i.i.i, %.val3.i.i.i  ; 2 uses
+  br i1 %i.an, label %3, label %_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i.i
 
-bb.e:                                             ; preds = %3
+3:                                                ; preds = %bb.e
   tail call void @llvm.assume(i1 %not..i.i.i.i)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i.i) ]
-  %i.aq = icmp eq i64 %.val1.i.i.i, %.val3.i.i.i
   br i1 %i.aq, label %bb.f, label %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5slice3cmpNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
-bb.f:                                             ; preds = %bb.e
+bb.f:                                             ; preds = %3
   %i.ar = icmp eq i64 %.val1.i.i.i, 0
   br i1 %i.ar, label %_RNvYNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neB6_.exit.i, label %.lr.ph.i.i.i.i.i
 
@@ -242,10 +241,9 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i
   %.not.i.i.i.i.i = icmp eq i32 %.val.i.i.i.i.i, %.val5.i.i.i.i.i
   br i1 %.not.i.i.i.i.i, label %bb.g, label %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5slice3cmpNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
-_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i.i: ; preds = %3
+_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i.i: ; preds = %bb.e
   tail call void @llvm.assume(i1 %i.ao)
-  %4 = icmp eq i64 %.val1.i.i.i, %.val3.i.i.i
-  br i1 %4, label %_RNvYNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neB6_.exit.i, label %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5slice3cmpNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
+  br i1 %i.aq, label %_RNvYNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neB6_.exit.i, label %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5slice3cmpNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
 _RNvYNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neB6_.exit.i: ; preds = %bb.g, %_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i.i, %bb.f
   %i.av = getelementptr inbounds nuw i8, ptr %i.l, i64 32
@@ -255,8 +253,8 @@ _RNvYNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberNtNtCs4NRVxsYgnAr_4core3cmp
   %.not.i = icmp eq i8 %i.aw, %i.ay
   br i1 %.not.i, label %bb.c, label %_RNvXs2_NtNtCs4NRVxsYgnAr_4core5slice3cmpNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
-_RNvXs2_NtNtCs4NRVxsYgnAr_4core5slice3cmpNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit: ; preds = %_RNvYNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neB6_.exit.i, %_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i.i, %bb.e, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.thread.i.i.i, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.i.i.i, %.lr.ph.i, %bb.c, %.lr.ph.i.i.i.i.i, %bb.b, %bb.a
-  %.sroa.0.0 = phi i1 [ false, %bb.a ], [ false, %.lr.ph.i.i.i.i.i ], [ true, %bb.b ], [ false, %bb.e ], [ false, %.lr.ph.i ], [ false, %_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i.i ], [ false, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.i.i.i ], [ false, %_RNvYNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neB6_.exit.i ], [ true, %bb.c ], [ false, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.thread.i.i.i ]
+_RNvXs2_NtNtCs4NRVxsYgnAr_4core5slice3cmpNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit: ; preds = %_RNvYNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neB6_.exit.i, %_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i.i, %3, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.thread.i.i.i, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.i.i.i, %.lr.ph.i, %bb.c, %.lr.ph.i.i.i.i.i, %bb.b, %bb.a
+  %.sroa.0.0 = phi i1 [ false, %bb.a ], [ false, %.lr.ph.i.i.i.i.i ], [ true, %bb.b ], [ false, %3 ], [ false, %.lr.ph.i ], [ false, %_RNvXs1s_NtCs2O29vuvTAEJ_14ty_python_core6memberNtB6_8SegmentsNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i.i ], [ false, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.i.i.i ], [ false, %_RNvYNtNtCs2O29vuvTAEJ_14ty_python_core6member6MemberNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2neB6_.exit.i ], [ true, %bb.c ], [ false, %_RNvMNtCsj8vhLppEnlJ_8char_str4reprNtB2_4Repr10content_eq.exit.thread.i.i.i ]
   ret i1 %.sroa.0.0
 }
 

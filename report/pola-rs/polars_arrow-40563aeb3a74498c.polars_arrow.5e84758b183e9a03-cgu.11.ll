@@ -204,42 +204,21 @@ bb.c:                                             ; preds = %bb.a
 
 .lr.ph.i:                                         ; preds = %.noexc1, %.noexc2
   %.sroa.020.049.i = phi i64 [ %i.p, %.noexc2 ], [ 0, %.noexc1 ]
-  %.sroa.0.048.i = phi i64 [ %.sroa.0.5.i.7, %.noexc2 ], [ %1, %.noexc1 ] ; 15 uses
+  %.sroa.0.048.i = phi i64 [ %.sroa.0.5.i.7, %.noexc2 ], [ %1, %.noexc1 ] ; 8 uses
   %.sroa.15.047.i = phi i8 [ %.sroa.15.5.i.7, %.noexc2 ], [ %2, %.noexc1 ]
-  %.not8.i.i.i = icmp ne i64 %.sroa.0.048.i, 1, !dbg !1292
-  call void @llvm.assume(i1 %.not8.i.i.i), !dbg !1305
-  %.not8.i.1.i.i = icmp ne i64 %.sroa.0.048.i, 2, !dbg !1292
-  call void @llvm.assume(i1 %.not8.i.1.i.i), !dbg !1305
-  %.not8.i.2.i.i = icmp ne i64 %.sroa.0.048.i, 3, !dbg !1292
-  call void @llvm.assume(i1 %.not8.i.2.i.i), !dbg !1305
-  %.not8.i.3.i.i = icmp ne i64 %.sroa.0.048.i, 4, !dbg !1292
-  call void @llvm.assume(i1 %.not8.i.3.i.i), !dbg !1305
-  %.not8.i.4.i.i = icmp ne i64 %.sroa.0.048.i, 5, !dbg !1292
-  call void @llvm.assume(i1 %.not8.i.4.i.i), !dbg !1305
-  %.not8.i.5.i.i = icmp ne i64 %.sroa.0.048.i, 6, !dbg !1292
-  call void @llvm.assume(i1 %.not8.i.5.i.i), !dbg !1305
-  %.not8.i.6.i.i = icmp ne i64 %.sroa.0.048.i, 7, !dbg !1292
-  call void @llvm.assume(i1 %.not8.i.6.i.i), !dbg !1305
-  %3 = and i64 %.sroa.0.048.i, -2, !dbg !1292
-  %.not8.i.i.i.1 = icmp ne i64 %3, 8, !dbg !1292
+  %.not8.i.i.i.1 = icmp ne i64 %.sroa.0.048.i, 1, !dbg !1292
   call void @llvm.assume(i1 %.not8.i.i.i.1), !dbg !1305
-  %4 = and i64 %.sroa.0.048.i, -2, !dbg !1292
-  %.not8.i.i.i.2 = icmp ne i64 %4, 16, !dbg !1292
+  %.not8.i.i.i.2 = icmp ne i64 %.sroa.0.048.i, 2, !dbg !1292
   call void @llvm.assume(i1 %.not8.i.i.i.2), !dbg !1305
-  %5 = and i64 %.sroa.0.048.i, -2, !dbg !1292
-  %.not8.i.i.i.3 = icmp ne i64 %5, 24, !dbg !1292
+  %.not8.i.i.i.3 = icmp ne i64 %.sroa.0.048.i, 3, !dbg !1292
   call void @llvm.assume(i1 %.not8.i.i.i.3), !dbg !1305
-  %6 = and i64 %.sroa.0.048.i, -2, !dbg !1292
-  %.not8.i.i.i.4 = icmp ne i64 %6, 32, !dbg !1292
+  %.not8.i.i.i.4 = icmp ne i64 %.sroa.0.048.i, 4, !dbg !1292
   call void @llvm.assume(i1 %.not8.i.i.i.4), !dbg !1305
-  %7 = and i64 %.sroa.0.048.i, -2, !dbg !1292
-  %.not8.i.i.i.5 = icmp ne i64 %7, 40, !dbg !1292
+  %.not8.i.i.i.5 = icmp ne i64 %.sroa.0.048.i, 5, !dbg !1292
   call void @llvm.assume(i1 %.not8.i.i.i.5), !dbg !1305
-  %8 = and i64 %.sroa.0.048.i, -2, !dbg !1292
-  %.not8.i.i.i.6 = icmp ne i64 %8, 48, !dbg !1292
+  %.not8.i.i.i.6 = icmp ne i64 %.sroa.0.048.i, 6, !dbg !1292
   call void @llvm.assume(i1 %.not8.i.i.i.6), !dbg !1305
-  %9 = and i64 %.sroa.0.048.i, -2, !dbg !1292
-  %.not8.i.i.i.7 = icmp ne i64 %9, 56, !dbg !1292
+  %.not8.i.i.i.7 = icmp ne i64 %.sroa.0.048.i, 7, !dbg !1292
   call void @llvm.assume(i1 %.not8.i.i.i.7), !dbg !1305
   invoke void @_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE7reserveCs8774dFTUdNv_12polars_arrow(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c, i64 noundef 8)
           to label %.noexc2 unwind label %.loopexit.split-lp.loopexit, !dbg !1306

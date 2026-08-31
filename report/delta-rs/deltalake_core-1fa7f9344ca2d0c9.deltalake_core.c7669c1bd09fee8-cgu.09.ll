@@ -205,7 +205,7 @@ bb.dd:                                            ; preds = %bb.dc
   tail call void @llvm.experimental.noalias.scope.decl(metadata !24125)
   %i.td = load ptr, ptr %i.sr, align 8, !alias.scope !24127, !noalias !24128, !noundef !4 ; 2 uses
   %i.te = icmp ne ptr %i.td, null                 ; 2 uses
-  %i.tf = load ptr, ptr %i.ss, align 8, !alias.scope !24128, !noalias !24127, !noundef !4 ; 3 uses
+  %i.tf = load ptr, ptr %i.ss, align 8, !alias.scope !24128, !noalias !24127, !noundef !4 ; 2 uses
   %i.tg = icmp eq ptr %i.tf, null                 ; 3 uses
   %not..i.i = xor i1 %i.tg, true
   %i.th = xor i1 %i.te, %i.tg
@@ -220,7 +220,6 @@ bb.df:                                            ; preds = %bb.de
   %i.tj = load i64, ptr %i.ti, align 16, !alias.scope !24127, !noalias !24128, !noundef !4 ; 2 uses
   %i.tk = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.tl = load i64, ptr %i.tk, align 16, !alias.scope !24128, !noalias !24127, !noundef !4
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.tf) ]
   %i.tm = icmp eq i64 %i.tj, %i.tl
   br i1 %i.tm, label %bb.dh, label %_RNvXsn_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan3ddlNtB5_19CreateExternalTableNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 

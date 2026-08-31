@@ -205,7 +205,7 @@ bb.a:
   %30 = alloca %"class.boost::beast::buffers_prefix_view.962", align 16 ; 12 uses
   %31 = alloca %"class.boost::beast::buffers_prefix_view.962", align 8 ; 6 uses
   %32 = alloca %"class.boost::system::error_code", align 8 ; 2 uses
-  %33 = alloca %"class.boost::beast::buffers_suffix.948", align 16 ; 14 uses
+  %33 = alloca %"class.boost::beast::buffers_suffix.948", align 16 ; 13 uses
   %34 = alloca %"struct.boost::beast::zlib::z_params", align 8 ; 13 uses
   %35 = alloca %"class.boost::beast::detail::buffers_pair", align 8 ; 5 uses
   %36 = alloca %"class.boost::beast::detail::buffers_pair", align 8 ; 4 uses
@@ -608,7 +608,7 @@ _ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb1EEE
 _ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb1EEEE14const_iteratorneERKS8_.exit.thread.us.lr.ph.i.i.i: ; preds = %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb1EEEE14const_iteratorneERKS8_.exit.thread.us.lr.ph.i.i.i.lr.ph, %.loopexit
   %i.ny = phi ptr [ %i.na, %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb1EEEE14const_iteratorneERKS8_.exit.thread.us.lr.ph.i.i.i.lr.ph ], [ %i.ri, %.loopexit ] ; 2 uses
   %i.nz = phi ptr [ %i.mw, %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb1EEEE14const_iteratorneERKS8_.exit.thread.us.lr.ph.i.i.i.lr.ph ], [ %i.te, %.loopexit ] ; 7 uses
-  %.fr.i.i577 = phi ptr [ %33, %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb1EEEE14const_iteratorneERKS8_.exit.thread.us.lr.ph.i.i.i.lr.ph ], [ %.fr13.i, %.loopexit ] ; 5 uses
+  %.fr.i.i577 = phi ptr [ %33, %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb1EEEE14const_iteratorneERKS8_.exit.thread.us.lr.ph.i.i.i.lr.ph ], [ %.fr13.i, %.loopexit ] ; 4 uses
   %.0576 = phi i1 [ false, %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb1EEEE14const_iteratorneERKS8_.exit.thread.us.lr.ph.i.i.i.lr.ph ], [ %.3, %.loopexit ] ; 3 uses
   %.4215575 = phi i64 [ 0, %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb1EEEE14const_iteratorneERKS8_.exit.thread.us.lr.ph.i.i.i.lr.ph ], [ %i.th, %.loopexit ] ; 4 uses
   %i.oa = getelementptr inbounds nuw i8, ptr %.fr.i.i577, i64 32 ; 2 uses
@@ -670,10 +670,8 @@ bb.ca:                                            ; preds = %_ZNK5boost5beast6de
   store i64 0, ptr %i.ng, align 8, !tbaa !2888
   store i64 0, ptr %i.nh, align 8, !tbaa !2890
   store i32 2, ptr %i.ni, align 8, !tbaa !2891
-  %43 = icmp eq ptr %.fr.i.i577, %33
   %i.ot = icmp eq ptr %i.nz, %i.ny
-  %44 = select i1 %43, i1 %i.ot, i1 false
-  br i1 %44, label %_ZN5boost5beast13buffers_frontINS0_14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb1EEEEEEENSt11conditionalIXsr26is_mutable_buffer_sequenceIT_EE5valueENS_4asio14mutable_bufferENSB_12const_bufferEE4typeERKSA_.exit, label %bb.cb
+  br i1 %i.ot, label %_ZN5boost5beast13buffers_frontINS0_14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb1EEEEEEENSt11conditionalIXsr26is_mutable_buffer_sequenceIT_EE5valueENS_4asio14mutable_bufferENSB_12const_bufferEE4typeERKSA_.exit, label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca
   %i.ou = load ptr, ptr %i.od, align 8, !tbaa !6396
