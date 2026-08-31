@@ -205,7 +205,7 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.8.0.i = phi i64 [ %storemerge.i.i, %.lr.ph.i.i ], [ %.sroa.8.0.i.ph, %.lr.ph.i.i.preheader22 ] ; 3 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.sroa.8.0.i
   store i64 %i.o, ptr %i.w, align 4
-  %storemerge.i.i = add i64 %.sroa.8.0.i, 1       ; 2 uses
+  %storemerge.i.i = add nuw i64 %.sroa.8.0.i, 1   ; 2 uses
   %.not.i.i = icmp eq i64 %storemerge.i.i, %i.i
   br i1 %.not.i.i, label %_ZN5boost7movelib13adaptive_xbufISt4pairIiiEPS3_mE16initialize_untilEmRS3_.exit.i, label %.lr.ph.i.i, !llvm.loop !2433
 
@@ -608,7 +608,7 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.8.0.i = phi i64 [ %storemerge.i.i, %.lr.ph.i.i ], [ %.sroa.8.0.i.ph, %.lr.ph.i.i.preheader24 ] ; 3 uses
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %.sroa.8.0.i
   store i64 %i.p, ptr %i.x, align 4
-  %storemerge.i.i = add i64 %.sroa.8.0.i, 1       ; 2 uses
+  %storemerge.i.i = add nuw i64 %.sroa.8.0.i, 1   ; 2 uses
   %.not.i.i = icmp eq i64 %storemerge.i.i, %i.i
   br i1 %.not.i.i, label %_ZN5boost7movelib13adaptive_xbufISt4pairIiiEPS3_mE16initialize_untilEmRS3_.exit.i, label %.lr.ph.i.i, !llvm.loop !3414
 
@@ -1011,7 +1011,7 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.8.0 = phi i64 [ %storemerge.i, %.lr.ph.i ], [ %.sroa.8.0.ph, %.lr.ph.i.preheader19 ] ; 3 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.sroa.8.0
   store i64 %i.m, ptr %i.u, align 4
-  %storemerge.i = add i64 %.sroa.8.0, 1           ; 2 uses
+  %storemerge.i = add nuw i64 %.sroa.8.0, 1       ; 2 uses
   %.not.i = icmp eq i64 %storemerge.i, %4
   br i1 %.not.i, label %_ZN5boost7movelib13adaptive_xbufISt4pairIiiEPS3_mE16initialize_untilEmRS3_.exit, label %.lr.ph.i, !llvm.loop !4975
 
@@ -1414,7 +1414,7 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.8.0 = phi i64 [ %storemerge.i, %.lr.ph.i ], [ %.sroa.8.0.ph, %.lr.ph.i.preheader19 ] ; 3 uses
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.sroa.8.0
   store i64 %i.q, ptr %i.y, align 4
-  %storemerge.i = add i64 %.sroa.8.0, 1           ; 2 uses
+  %storemerge.i = add nuw i64 %.sroa.8.0, 1       ; 2 uses
   %.not.i = icmp eq i64 %storemerge.i, %4
   br i1 %.not.i, label %_ZN5boost7movelib13adaptive_xbufISt4pairIiiEPS3_mE16initialize_untilEmRS3_.exit, label %.lr.ph.i, !llvm.loop !12911
 
@@ -1817,7 +1817,7 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.8.0 = phi i64 [ %storemerge.i, %.lr.ph.i ], [ %.sroa.8.0.ph, %.lr.ph.i.preheader20 ] ; 3 uses
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.sroa.8.0
   store i64 %i.q, ptr %i.y, align 4
-  %storemerge.i = add i64 %.sroa.8.0, 1           ; 2 uses
+  %storemerge.i = add nuw i64 %.sroa.8.0, 1       ; 2 uses
   %.not.i = icmp eq i64 %storemerge.i, %5
   br i1 %.not.i, label %_ZN5boost7movelib13adaptive_xbufISt4pairIiiEPS3_mE16initialize_untilEmRS3_.exit, label %.lr.ph.i, !llvm.loop !16674
 
@@ -2220,7 +2220,7 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.8.0 = phi i64 [ %storemerge.i, %.lr.ph.i ], [ %.sroa.8.0.ph, %.lr.ph.i.preheader26 ] ; 3 uses
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.sroa.8.0
   store i64 %i.al, ptr %i.at, align 4
-  %storemerge.i = add i64 %.sroa.8.0, 1           ; 2 uses
+  %storemerge.i = add nuw i64 %.sroa.8.0, 1       ; 2 uses
   %.not.i = icmp eq i64 %storemerge.i, %4
   br i1 %.not.i, label %_ZN5boost7movelib13adaptive_xbufISt4pairIiiEPS3_mE16initialize_untilEmRS3_.exit, label %.lr.ph.i, !llvm.loop !22741
 
@@ -2623,7 +2623,7 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.8.0 = phi i64 [ %storemerge.i, %.lr.ph.i ], [ %.sroa.8.0.ph, %.lr.ph.i.preheader27 ] ; 3 uses
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %.sroa.8.0
   store i64 %i.al, ptr %i.at, align 4
-  %storemerge.i = add i64 %.sroa.8.0, 1           ; 2 uses
+  %storemerge.i = add nuw i64 %.sroa.8.0, 1       ; 2 uses
   %.not.i = icmp eq i64 %storemerge.i, %5
   br i1 %.not.i, label %_ZN5boost7movelib13adaptive_xbufISt4pairIiiEPS3_mE16initialize_untilEmRS3_.exit, label %.lr.ph.i, !llvm.loop !27231
 

@@ -205,7 +205,7 @@ _ZN4mlir5xegpu6DpasOp14getODSOperandsEj.exit:     ; preds = %bb.c
   br i1 %i.an, label %.lr.ph.i.i75.preheader, label %.thread214
 
 .lr.ph.i.i75.preheader:                           ; preds = %.lr.ph.i.i.preheader
-  %.pre = load ptr, ptr %0, align 8, !tbaa !105   ; 4 uses
+  %.pre = load ptr, ptr %0, align 8, !tbaa !105   ; 5 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 44
   %.pre239 = load i32, ptr %.phi.trans.insert, align 4
   %.pre241 = and i32 %.pre239, 8388608
@@ -218,13 +218,24 @@ _ZN4mlir5xegpu6DpasOp14getODSOperandsEj.exit88:   ; preds = %.lr.ph.i.i75.prehea
   %i.aq = getelementptr inbounds nuw i8, ptr %.pre, i64 72
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !108
   %i.as = zext i32 %i.ap to i64
-  %i.at = add nsw i64 %i.as, -2                   ; 3 uses
+  %i.at = add nsw i64 %i.as, -2                   ; 2 uses
   %i.au = icmp ugt i64 %i.at, 1
   br i1 %i.au, label %_ZN4mlir5xegpu6DpasOp14getODSOperandsEj.exit88.thread, label %.preheader
 
 .preheader:                                       ; preds = %_ZN4mlir5xegpu6DpasOp14getODSOperandsEj.exit88
   %.not225232 = icmp eq i32 %i.ap, 2
-  br i1 %.not225232, label %._crit_edge, label %.lr.ph234
+  br i1 %.not225232, label %._crit_edge, label %.lr.ph234.preheader
+
+.lr.ph234.preheader:                              ; preds = %.preheader
+  %8 = getelementptr inbounds nuw i8, ptr %i.ar, i64 88
+  %.sroa.0.0.copyload.i.i.i93 = load ptr, ptr %8, align 8, !tbaa !111
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i93, i64 8
+  %.0.copyload.i.i.i.i.i94 = load i64, ptr %9, align 8
+  %10 = and i64 %.0.copyload.i.i.i.i.i94, -8
+  %11 = inttoptr i64 %10 to ptr
+  %12 = call fastcc i8 @_ZL39__mlir_ods_local_type_constraint_XeGPU9PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef nonnull %.pre, ptr %11, ptr nonnull @.str.80, i64 7, i32 noundef 2)
+  %13 = trunc nuw i8 %12 to i1
+  br i1 %13, label %.lr.ph234, label %bb.d
 
 _ZN4mlir5xegpu6DpasOp14getODSOperandsEj.exit88.thread: ; preds = %.lr.ph.i.i75.preheader, %_ZN4mlir5xegpu6DpasOp14getODSOperandsEj.exit88
   %i.av = phi i64 [ %i.at, %_ZN4mlir5xegpu6DpasOp14getODSOperandsEj.exit88 ], [ -2, %.lr.ph.i.i75.preheader ]
@@ -248,42 +259,21 @@ _ZN4mlir5xegpu6DpasOp14getODSOperandsEj.exit88.thread: ; preds = %.lr.ph.i.i75.p
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
   br label %.thread214
 
-8:                                                ; preds = %.lr.ph234
-  %9 = add i32 %11, 1
-  %10 = add nuw nsw i64 %.sroa.4167.0233, 1       ; 2 uses
-  %.not225 = icmp eq i64 %10, %i.at
-  br i1 %.not225, label %._crit_edge.loopexit, label %.lr.ph234
-
-.lr.ph234:                                        ; preds = %.preheader, %8
-  %11 = phi i32 [ %9, %8 ], [ 2, %.preheader ]    ; 2 uses
-  %.sroa.4167.0233 = phi i64 [ %10, %8 ], [ 0, %.preheader ] ; 2 uses
-  %12 = getelementptr inbounds nuw [32 x i8], ptr %i.ar, i64 %.sroa.4167.0233
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 88
-  %.sroa.0.0.copyload.i.i.i93 = load ptr, ptr %13, align 8, !tbaa !111
+.lr.ph234:                                        ; preds = %.lr.ph234.preheader
   %i.bc = load ptr, ptr %0, align 8, !tbaa !105
-  %14 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i93, i64 8
-  %.0.copyload.i.i.i.i.i94 = load i64, ptr %14, align 8
-  %15 = and i64 %.0.copyload.i.i.i.i.i94, -8
-  %16 = inttoptr i64 %15 to ptr
-  %17 = call fastcc i8 @_ZL39__mlir_ods_local_type_constraint_XeGPU9PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %i.bc, ptr %16, ptr nonnull @.str.80, i64 7, i32 noundef %11)
-  %18 = trunc nuw i8 %17 to i1
-  br i1 %18, label %8, label %bb.d
+  br label %._crit_edge
 
 .thread214:                                       ; preds = %_ZN4mlir5xegpu6DpasOp14getODSOperandsEj.exit, %.lr.ph.i.i.preheader, %_ZN4mlir5xegpu6DpasOp14getODSOperandsEj.exit88.thread
   %.sroa.053.11.ph = phi i8 [ %i.bb, %_ZN4mlir5xegpu6DpasOp14getODSOperandsEj.exit88.thread ], [ 0, %.lr.ph.i.i.preheader ], [ 0, %_ZN4mlir5xegpu6DpasOp14getODSOperandsEj.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
   br label %.thread222
 
-bb.d:                                             ; preds = %.lr.ph234
+bb.d:                                             ; preds = %.lr.ph234.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
   br label %.thread222
 
-._crit_edge.loopexit:                             ; preds = %8
-  %.pre240 = load ptr, ptr %0, align 8, !tbaa !105
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
-  %i.bd = phi ptr [ %.pre240, %._crit_edge.loopexit ], [ %.pre, %.preheader ]
+._crit_edge:                                      ; preds = %.lr.ph234, %.preheader
+  %i.bd = phi ptr [ %i.bc, %.lr.ph234 ], [ %.pre, %.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #26
   %i.be = getelementptr inbounds i8, ptr %i.bd, i64 -16
   %i.bf = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.be, i64 noundef 0) #26

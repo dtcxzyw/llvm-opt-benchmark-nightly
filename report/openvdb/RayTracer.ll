@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openvdb/original/RayTracer?download=true
 inline.NumInlined: 4637
 inline.NumDeleted: 1864
-loop-unroll.NumCompletelyUnrolled: 16
+loop-unroll.NumCompletelyUnrolled: 18
 loop-unroll.NumRuntimeUnrolled: 69
-loop-unroll.NumUnrolled: 93
+loop-unroll.NumUnrolled: 95
 begin_hunk_0_@_ZNK7openvdb5v13_04tree12InternalNodeINS1_8LeafNodeIfLj3EEELj4EE21evalActiveBoundingBoxERNS0_4math9CoordBBoxEb:bb.a
 .lr.ph65:                                         ; preds = %.lr.ph.i.i.i.i11.preheader, %.lr.ph.i.i.i.i11
   %indvars.iv.i.i.i.i1264 = phi i64 [ %indvars.iv.next.i.i.i.i14, %.lr.ph.i.i.i.i11 ], [ %i.co, %.lr.ph.i.i.i.i11.preheader ]
@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %_ZNK7openvdb5v13_04
 
 .lr.ph:                                           ; preds = %bb.b
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !689 ; 2 uses
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !689 ; 8 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit
@@ -239,7 +239,7 @@ bb.c:                                             ; preds = %.lr.ph, %_ZN7openvd
 
 bb.d:                                             ; preds = %bb.c
   %i.ar = and i32 %i.ao, 63
-  %i.as = zext nneg i32 %i.ap to i64              ; 2 uses
+  %i.as = zext nneg i32 %i.ap to i64              ; 8 uses
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %i.as
   %i.au = load i64, ptr %i.at, align 8, !tbaa !232 ; 2 uses
   %i.av = zext nneg i32 %i.ar to i64              ; 2 uses
@@ -252,31 +252,94 @@ bb.e:                                             ; preds = %bb.d
   %i.ay = shl nsw i64 -1, %i.av
   %i.az = and i64 %i.au, %i.ay                    ; 2 uses
   %.not2226.i.i.i.i = icmp eq i64 %i.az, 0
-  br i1 %.not2226.i.i.i.i, label %.lr.ph.i.i.i.i.preheader.a, label %.critedge.i.i.i.i
+  br i1 %.not2226.i.i.i.i, label %.lr.ph.i.i.i.i.preheader, label %.critedge.i.i.i.i
 
-.lr.ph.i.i.i.i.preheader.a:                       ; preds = %bb.e
-  %exitcond.not.i.i.i.i109.a = icmp eq i32 %i.ap, 7
-  br i1 %exitcond.not.i.i.i.i109.a, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread, label %.lr.ph111
+.lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
+  %exitcond.not.i.i.i.i109 = icmp eq i32 %i.ap, 7
+  br i1 %exitcond.not.i.i.i.i109, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread, label %.lr.ph111
 
-.lr.ph.i.i.i.i.a:                                 ; preds = %.lr.ph111
-  %exitcond.not.i.i.i.i.a = icmp eq i64 %indvars.iv.next.i.i.i.i, 7
-  br i1 %exitcond.not.i.i.i.i.a, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread, label %.lr.ph111, !llvm.loop !690
+.lr.ph.i.i.i.i:                                   ; preds = %.lr.ph111
+  %exitcond.not.i.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i.i, 7
+  br i1 %exitcond.not.i.i.i.i, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread, label %.lr.ph111.1
 
-.lr.ph111:                                        ; preds = %.lr.ph.i.i.i.i.preheader.a, %.lr.ph.i.i.i.i.a
-  %indvars.iv.i.i.i.i110 = phi i64 [ %indvars.iv.next.i.i.i.i, %.lr.ph.i.i.i.i.a ], [ %i.as, %.lr.ph.i.i.i.i.preheader.a ]
-  %indvars.iv.next.i.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.i110, 1 ; 4 uses
+.lr.ph111.1:                                      ; preds = %.lr.ph.i.i.i.i
+  %indvars.iv.next.i.i.i.i.1 = add nuw nsw i64 %i.as, 2 ; 3 uses
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv.next.i.i.i.i.1
+  %5 = load i64, ptr %4, align 8, !tbaa !232      ; 2 uses
+  %.not22.i.i.i.i.1 = icmp eq i64 %5, 0
+  br i1 %.not22.i.i.i.i.1, label %.lr.ph.i.i.i.i.1, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
+
+.lr.ph.i.i.i.i.1:                                 ; preds = %.lr.ph111.1
+  %exitcond.not.i.i.i.i.1 = icmp eq i64 %indvars.iv.next.i.i.i.i.1, 7
+  br i1 %exitcond.not.i.i.i.i.1, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread, label %.lr.ph111.2
+
+.lr.ph111.2:                                      ; preds = %.lr.ph.i.i.i.i.1
+  %indvars.iv.next.i.i.i.i.2 = add nuw nsw i64 %i.as, 3 ; 3 uses
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv.next.i.i.i.i.2
+  %7 = load i64, ptr %6, align 8, !tbaa !232      ; 2 uses
+  %.not22.i.i.i.i.2 = icmp eq i64 %7, 0
+  br i1 %.not22.i.i.i.i.2, label %.lr.ph.i.i.i.i.2, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
+
+.lr.ph.i.i.i.i.2:                                 ; preds = %.lr.ph111.2
+  %exitcond.not.i.i.i.i.2 = icmp eq i64 %indvars.iv.next.i.i.i.i.2, 7
+  br i1 %exitcond.not.i.i.i.i.2, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread, label %.lr.ph111.3
+
+.lr.ph111.3:                                      ; preds = %.lr.ph.i.i.i.i.2
+  %indvars.iv.next.i.i.i.i.3 = add nuw nsw i64 %i.as, 4 ; 3 uses
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv.next.i.i.i.i.3
+  %9 = load i64, ptr %8, align 8, !tbaa !232      ; 2 uses
+  %.not22.i.i.i.i.3 = icmp eq i64 %9, 0
+  br i1 %.not22.i.i.i.i.3, label %.lr.ph.i.i.i.i.3, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
+
+.lr.ph.i.i.i.i.3:                                 ; preds = %.lr.ph111.3
+  %exitcond.not.i.i.i.i.3 = icmp eq i64 %indvars.iv.next.i.i.i.i.3, 7
+  br i1 %exitcond.not.i.i.i.i.3, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread, label %.lr.ph111.4
+
+.lr.ph111.4:                                      ; preds = %.lr.ph.i.i.i.i.3
+  %indvars.iv.next.i.i.i.i.4 = add nuw nsw i64 %i.as, 5 ; 3 uses
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv.next.i.i.i.i.4
+  %11 = load i64, ptr %10, align 8, !tbaa !232    ; 2 uses
+  %.not22.i.i.i.i.4 = icmp eq i64 %11, 0
+  br i1 %.not22.i.i.i.i.4, label %.lr.ph.i.i.i.i.4, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
+
+.lr.ph.i.i.i.i.4:                                 ; preds = %.lr.ph111.4
+  %exitcond.not.i.i.i.i.4 = icmp eq i64 %indvars.iv.next.i.i.i.i.4, 7
+  br i1 %exitcond.not.i.i.i.i.4, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread, label %.lr.ph111.5
+
+.lr.ph111.5:                                      ; preds = %.lr.ph.i.i.i.i.4
+  %indvars.iv.next.i.i.i.i.5 = add nuw nsw i64 %i.as, 6 ; 3 uses
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv.next.i.i.i.i.5
+  %13 = load i64, ptr %12, align 8, !tbaa !232    ; 2 uses
+  %.not22.i.i.i.i.5 = icmp eq i64 %13, 0
+  br i1 %.not22.i.i.i.i.5, label %.lr.ph.i.i.i.i.preheader.a, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
+
+.lr.ph.i.i.i.i.preheader.a:                       ; preds = %.lr.ph111.5
+  %exitcond.not.i.i.i.i109.a = icmp eq i64 %indvars.iv.next.i.i.i.i.5, 7
+  br i1 %exitcond.not.i.i.i.i109.a, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread, label %.lr.ph.i.i.i.i.a
+
+.lr.ph.i.i.i.i.a:                                 ; preds = %.lr.ph.i.i.i.i.preheader.a
+  %indvars.iv.next.i.i.i.i.6 = add nuw nsw i64 %i.as, 7 ; 2 uses
+  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv.next.i.i.i.i.6
+  %15 = load i64, ptr %14, align 8, !tbaa !232    ; 2 uses
+  %exitcond.not.i.i.i.i.a = icmp eq i64 %15, 0
+  br i1 %exitcond.not.i.i.i.i.a, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
+
+.lr.ph111:                                        ; preds = %.lr.ph.i.i.i.i.preheader
+  %indvars.iv.next.i.i.i.i = add nuw nsw i64 %i.as, 1 ; 3 uses
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv.next.i.i.i.i
   %i.bb = load i64, ptr %i.ba, align 8, !tbaa !232 ; 2 uses
   %.not22.i.i.i.i = icmp eq i64 %i.bb, 0
-  br i1 %.not22.i.i.i.i, label %.lr.ph.i.i.i.i.a, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
+  br i1 %.not22.i.i.i.i, label %.lr.ph.i.i.i.i, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
 
-.critedge.loopexit.i.i.i.i:                       ; preds = %.lr.ph111
-  %i.bc = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i to i32
+.critedge.loopexit.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.a, %.lr.ph111.5, %.lr.ph111.4, %.lr.ph111.3, %.lr.ph111.2, %.lr.ph111.1, %.lr.ph111
+  %indvars.iv.next.i.i.i.i.lcssa = phi i64 [ %indvars.iv.next.i.i.i.i, %.lr.ph111 ], [ %indvars.iv.next.i.i.i.i.1, %.lr.ph111.1 ], [ %indvars.iv.next.i.i.i.i.2, %.lr.ph111.2 ], [ %indvars.iv.next.i.i.i.i.3, %.lr.ph111.3 ], [ %indvars.iv.next.i.i.i.i.4, %.lr.ph111.4 ], [ %indvars.iv.next.i.i.i.i.5, %.lr.ph111.5 ], [ %indvars.iv.next.i.i.i.i.6, %.lr.ph.i.i.i.i.a ]
+  %.lcssa = phi i64 [ %i.bb, %.lr.ph111 ], [ %5, %.lr.ph111.1 ], [ %7, %.lr.ph111.2 ], [ %9, %.lr.ph111.3 ], [ %11, %.lr.ph111.4 ], [ %13, %.lr.ph111.5 ], [ %15, %.lr.ph.i.i.i.i.a ]
+  %i.bc = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i.lcssa to i32
   br label %.critedge.i.i.i.i
 
 .critedge.i.i.i.i:                                ; preds = %.critedge.loopexit.i.i.i.i, %bb.e
   %.016.lcssa.i.i.i.i = phi i32 [ %i.ap, %bb.e ], [ %i.bc, %.critedge.loopexit.i.i.i.i ]
-  %.0.lcssa.i.i.i.i = phi i64 [ %i.az, %bb.e ], [ %i.bb, %.critedge.loopexit.i.i.i.i ]
+  %.0.lcssa.i.i.i.i = phi i64 [ %i.az, %bb.e ], [ %.lcssa, %.critedge.loopexit.i.i.i.i ]
   %i.bd = shl nuw nsw i32 %.016.lcssa.i.i.i.i, 6
   %i.be = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.0.lcssa.i.i.i.i, i1 true)
   %i.bf = trunc nuw nsw i64 %i.be to i32
@@ -288,7 +351,7 @@ _ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3
   %.not60 = icmp eq i32 %.118.i.i.i.i, 512
   br i1 %.not60, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread, label %bb.c, !llvm.loop !691
 
-_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread: ; preds = %bb.c, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit, %.lr.ph.i.i.i.i.preheader.a, %.lr.ph.i.i.i.i.a
+_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit.thread: ; preds = %bb.c, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIfLj3EEEEppEv.exit, %.lr.ph.i.i.i.i.preheader, %.lr.ph.i.i.i.i.a, %.lr.ph.i.i.i.i, %.lr.ph.i.i.i.i.1, %.lr.ph.i.i.i.i.2, %.lr.ph.i.i.i.i.3, %.lr.ph.i.i.i.i.4, %.lr.ph.i.i.i.i.preheader.a
   %i.bh = load i32, ptr %i.a, align 8, !tbaa !324 ; 2 uses
   %i.bi = add nsw i32 %i.bh, %i.ai
   %i.bj = load i32, ptr %i.d, align 4, !tbaa !324 ; 2 uses
@@ -691,7 +754,7 @@ bb.b:                                             ; preds = %_ZNK7openvdb5v13_04
 
 .lr.ph:                                           ; preds = %bb.b
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !689 ; 2 uses
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !689 ; 8 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit
@@ -725,7 +788,7 @@ bb.c:                                             ; preds = %.lr.ph, %_ZN7openvd
 
 bb.d:                                             ; preds = %bb.c
   %i.ar = and i32 %i.ao, 63
-  %i.as = zext nneg i32 %i.ap to i64              ; 2 uses
+  %i.as = zext nneg i32 %i.ap to i64              ; 8 uses
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %i.as
   %i.au = load i64, ptr %i.at, align 8, !tbaa !232 ; 2 uses
   %i.av = zext nneg i32 %i.ar to i64              ; 2 uses
@@ -738,31 +801,94 @@ bb.e:                                             ; preds = %bb.d
   %i.ay = shl nsw i64 -1, %i.av
   %i.az = and i64 %i.au, %i.ay                    ; 2 uses
   %.not2226.i.i.i.i = icmp eq i64 %i.az, 0
-  br i1 %.not2226.i.i.i.i, label %.lr.ph.i.i.i.i.preheader.a, label %.critedge.i.i.i.i
+  br i1 %.not2226.i.i.i.i, label %.lr.ph.i.i.i.i.preheader, label %.critedge.i.i.i.i
 
-.lr.ph.i.i.i.i.preheader.a:                       ; preds = %bb.e
-  %exitcond.not.i.i.i.i109.a = icmp eq i32 %i.ap, 7
-  br i1 %exitcond.not.i.i.i.i109.a, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread, label %.lr.ph111
+.lr.ph.i.i.i.i.preheader:                         ; preds = %bb.e
+  %exitcond.not.i.i.i.i109 = icmp eq i32 %i.ap, 7
+  br i1 %exitcond.not.i.i.i.i109, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread, label %.lr.ph111
 
-.lr.ph.i.i.i.i.a:                                 ; preds = %.lr.ph111
-  %exitcond.not.i.i.i.i.a = icmp eq i64 %indvars.iv.next.i.i.i.i, 7
-  br i1 %exitcond.not.i.i.i.i.a, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread, label %.lr.ph111, !llvm.loop !690
+.lr.ph.i.i.i.i:                                   ; preds = %.lr.ph111
+  %exitcond.not.i.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i.i, 7
+  br i1 %exitcond.not.i.i.i.i, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread, label %.lr.ph111.1
 
-.lr.ph111:                                        ; preds = %.lr.ph.i.i.i.i.preheader.a, %.lr.ph.i.i.i.i.a
-  %indvars.iv.i.i.i.i110 = phi i64 [ %indvars.iv.next.i.i.i.i, %.lr.ph.i.i.i.i.a ], [ %i.as, %.lr.ph.i.i.i.i.preheader.a ]
-  %indvars.iv.next.i.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.i110, 1 ; 4 uses
+.lr.ph111.1:                                      ; preds = %.lr.ph.i.i.i.i
+  %indvars.iv.next.i.i.i.i.1 = add nuw nsw i64 %i.as, 2 ; 3 uses
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv.next.i.i.i.i.1
+  %5 = load i64, ptr %4, align 8, !tbaa !232      ; 2 uses
+  %.not22.i.i.i.i.1 = icmp eq i64 %5, 0
+  br i1 %.not22.i.i.i.i.1, label %.lr.ph.i.i.i.i.1, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
+
+.lr.ph.i.i.i.i.1:                                 ; preds = %.lr.ph111.1
+  %exitcond.not.i.i.i.i.1 = icmp eq i64 %indvars.iv.next.i.i.i.i.1, 7
+  br i1 %exitcond.not.i.i.i.i.1, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread, label %.lr.ph111.2
+
+.lr.ph111.2:                                      ; preds = %.lr.ph.i.i.i.i.1
+  %indvars.iv.next.i.i.i.i.2 = add nuw nsw i64 %i.as, 3 ; 3 uses
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv.next.i.i.i.i.2
+  %7 = load i64, ptr %6, align 8, !tbaa !232      ; 2 uses
+  %.not22.i.i.i.i.2 = icmp eq i64 %7, 0
+  br i1 %.not22.i.i.i.i.2, label %.lr.ph.i.i.i.i.2, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
+
+.lr.ph.i.i.i.i.2:                                 ; preds = %.lr.ph111.2
+  %exitcond.not.i.i.i.i.2 = icmp eq i64 %indvars.iv.next.i.i.i.i.2, 7
+  br i1 %exitcond.not.i.i.i.i.2, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread, label %.lr.ph111.3
+
+.lr.ph111.3:                                      ; preds = %.lr.ph.i.i.i.i.2
+  %indvars.iv.next.i.i.i.i.3 = add nuw nsw i64 %i.as, 4 ; 3 uses
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv.next.i.i.i.i.3
+  %9 = load i64, ptr %8, align 8, !tbaa !232      ; 2 uses
+  %.not22.i.i.i.i.3 = icmp eq i64 %9, 0
+  br i1 %.not22.i.i.i.i.3, label %.lr.ph.i.i.i.i.3, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
+
+.lr.ph.i.i.i.i.3:                                 ; preds = %.lr.ph111.3
+  %exitcond.not.i.i.i.i.3 = icmp eq i64 %indvars.iv.next.i.i.i.i.3, 7
+  br i1 %exitcond.not.i.i.i.i.3, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread, label %.lr.ph111.4
+
+.lr.ph111.4:                                      ; preds = %.lr.ph.i.i.i.i.3
+  %indvars.iv.next.i.i.i.i.4 = add nuw nsw i64 %i.as, 5 ; 3 uses
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv.next.i.i.i.i.4
+  %11 = load i64, ptr %10, align 8, !tbaa !232    ; 2 uses
+  %.not22.i.i.i.i.4 = icmp eq i64 %11, 0
+  br i1 %.not22.i.i.i.i.4, label %.lr.ph.i.i.i.i.4, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
+
+.lr.ph.i.i.i.i.4:                                 ; preds = %.lr.ph111.4
+  %exitcond.not.i.i.i.i.4 = icmp eq i64 %indvars.iv.next.i.i.i.i.4, 7
+  br i1 %exitcond.not.i.i.i.i.4, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread, label %.lr.ph111.5
+
+.lr.ph111.5:                                      ; preds = %.lr.ph.i.i.i.i.4
+  %indvars.iv.next.i.i.i.i.5 = add nuw nsw i64 %i.as, 6 ; 3 uses
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv.next.i.i.i.i.5
+  %13 = load i64, ptr %12, align 8, !tbaa !232    ; 2 uses
+  %.not22.i.i.i.i.5 = icmp eq i64 %13, 0
+  br i1 %.not22.i.i.i.i.5, label %.lr.ph.i.i.i.i.preheader.a, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
+
+.lr.ph.i.i.i.i.preheader.a:                       ; preds = %.lr.ph111.5
+  %exitcond.not.i.i.i.i109.a = icmp eq i64 %indvars.iv.next.i.i.i.i.5, 7
+  br i1 %exitcond.not.i.i.i.i109.a, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread, label %.lr.ph.i.i.i.i.a
+
+.lr.ph.i.i.i.i.a:                                 ; preds = %.lr.ph.i.i.i.i.preheader.a
+  %indvars.iv.next.i.i.i.i.6 = add nuw nsw i64 %i.as, 7 ; 2 uses
+  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv.next.i.i.i.i.6
+  %15 = load i64, ptr %14, align 8, !tbaa !232    ; 2 uses
+  %exitcond.not.i.i.i.i.a = icmp eq i64 %15, 0
+  br i1 %exitcond.not.i.i.i.i.a, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
+
+.lr.ph111:                                        ; preds = %.lr.ph.i.i.i.i.preheader
+  %indvars.iv.next.i.i.i.i = add nuw nsw i64 %i.as, 1 ; 3 uses
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv.next.i.i.i.i
   %i.bb = load i64, ptr %i.ba, align 8, !tbaa !232 ; 2 uses
   %.not22.i.i.i.i = icmp eq i64 %i.bb, 0
-  br i1 %.not22.i.i.i.i, label %.lr.ph.i.i.i.i.a, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
+  br i1 %.not22.i.i.i.i, label %.lr.ph.i.i.i.i, label %.critedge.loopexit.i.i.i.i, !llvm.loop !690
 
-.critedge.loopexit.i.i.i.i:                       ; preds = %.lr.ph111
-  %i.bc = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i to i32
+.critedge.loopexit.i.i.i.i:                       ; preds = %.lr.ph.i.i.i.i.a, %.lr.ph111.5, %.lr.ph111.4, %.lr.ph111.3, %.lr.ph111.2, %.lr.ph111.1, %.lr.ph111
+  %indvars.iv.next.i.i.i.i.lcssa = phi i64 [ %indvars.iv.next.i.i.i.i, %.lr.ph111 ], [ %indvars.iv.next.i.i.i.i.1, %.lr.ph111.1 ], [ %indvars.iv.next.i.i.i.i.2, %.lr.ph111.2 ], [ %indvars.iv.next.i.i.i.i.3, %.lr.ph111.3 ], [ %indvars.iv.next.i.i.i.i.4, %.lr.ph111.4 ], [ %indvars.iv.next.i.i.i.i.5, %.lr.ph111.5 ], [ %indvars.iv.next.i.i.i.i.6, %.lr.ph.i.i.i.i.a ]
+  %.lcssa = phi i64 [ %i.bb, %.lr.ph111 ], [ %5, %.lr.ph111.1 ], [ %7, %.lr.ph111.2 ], [ %9, %.lr.ph111.3 ], [ %11, %.lr.ph111.4 ], [ %13, %.lr.ph111.5 ], [ %15, %.lr.ph.i.i.i.i.a ]
+  %i.bc = trunc nuw nsw i64 %indvars.iv.next.i.i.i.i.lcssa to i32
   br label %.critedge.i.i.i.i
 
 .critedge.i.i.i.i:                                ; preds = %.critedge.loopexit.i.i.i.i, %bb.e
   %.016.lcssa.i.i.i.i = phi i32 [ %i.ap, %bb.e ], [ %i.bc, %.critedge.loopexit.i.i.i.i ]
-  %.0.lcssa.i.i.i.i = phi i64 [ %i.az, %bb.e ], [ %i.bb, %.critedge.loopexit.i.i.i.i ]
+  %.0.lcssa.i.i.i.i = phi i64 [ %i.az, %bb.e ], [ %.lcssa, %.critedge.loopexit.i.i.i.i ]
   %i.bd = shl nuw nsw i32 %.016.lcssa.i.i.i.i, 6
   %i.be = call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.0.lcssa.i.i.i.i, i1 true)
   %i.bf = trunc nuw nsw i64 %i.be to i32
@@ -774,7 +900,7 @@ _ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3
   %.not60 = icmp eq i32 %.118.i.i.i.i, 512
   br i1 %.not60, label %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread, label %bb.c, !llvm.loop !978
 
-_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread: ; preds = %bb.c, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit, %.lr.ph.i.i.i.i.preheader.a, %.lr.ph.i.i.i.i.a
+_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit.thread: ; preds = %bb.c, %_ZN7openvdb5v13_04tree12IteratorBaseINS0_4util14OnMaskIteratorINS3_8NodeMaskILj3EEEEEKNS1_8LeafNodeIdLj3EEEEppEv.exit, %.lr.ph.i.i.i.i.preheader, %.lr.ph.i.i.i.i.a, %.lr.ph.i.i.i.i, %.lr.ph.i.i.i.i.1, %.lr.ph.i.i.i.i.2, %.lr.ph.i.i.i.i.3, %.lr.ph.i.i.i.i.4, %.lr.ph.i.i.i.i.preheader.a
   %i.bh = load i32, ptr %i.a, align 8, !tbaa !324 ; 2 uses
   %i.bi = add nsw i32 %i.bh, %i.ai
   %i.bj = load i32, ptr %i.d, align 4, !tbaa !324 ; 2 uses

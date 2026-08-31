@@ -205,16 +205,14 @@ bb.bw:                                            ; preds = %bb.bv
   %.not33.i.i = icmp eq ptr %.88.val.fr.i.i, null
   %i.df = getelementptr i8, ptr %.val, i64 872    ; 4 uses
   %i.dg = icmp ugt i16 %i.dc, 15                  ; 2 uses
-  %wide.trip.count84.i.i = zext nneg i16 %i.dd to i64 ; 4 uses
+  %wide.trip.count84.i.i = zext nneg i16 %i.dd to i64 ; 2 uses
   br i1 %.not33.i.i, label %.lr.ph.split.us.i.i, label %.lr.ph.split.i.i
 
 .lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i.i
   br i1 %i.dg, label %.lr.ph.split.us.split.i.i, label %.lr.ph.split.us.split.us.i.i
 
-.lr.ph.split.us.split.us.i.i:                     ; preds = %.lr.ph.split.us.i.i, %nh_check_attr_fdb_group.exit.thread12.us.us.i.i
-  %indvars.iv76.i.i = phi i64 [ %indvars.iv.next77.i.i, %nh_check_attr_fdb_group.exit.thread12.us.us.i.i ], [ 0, %.lr.ph.split.us.i.i ] ; 2 uses
-  %8 = getelementptr [8 x i8], ptr %i.de, i64 %indvars.iv76.i.i
-  %i.dh = load i32, ptr %8, align 4               ; 2 uses
+.lr.ph.split.us.split.us.i.i:                     ; preds = %.lr.ph.split.us.i.i
+  %i.dh = load i32, ptr %i.de, align 4            ; 2 uses
   %i.di = load volatile ptr, ptr %i.df, align 8   ; 2 uses
   %.not32.i.us.us.i.i = icmp eq ptr %i.di, null
   br i1 %.not32.i.us.us.i.i, label %.loopexit.i.i, label %.lr.ph.i.us.us.i.i
@@ -262,12 +260,7 @@ valid_group_nh.exit.us.us.i.i:                    ; preds = %bb.ca, %nexthop_fin
   %i.eb = getelementptr i8, ptr %i.du, i64 %.sink.i.i
   %.0.us.us.i.i = load i8, ptr %i.eb, align 1, !range !11, !noundef !12
   %i.ec = trunc nuw i8 %.0.us.us.i.i to i1
-  br i1 %i.ec, label %.split25.us.i.i, label %nh_check_attr_fdb_group.exit.thread12.us.us.i.i
-
-nh_check_attr_fdb_group.exit.thread12.us.us.i.i:  ; preds = %valid_group_nh.exit.us.us.i.i
-  %indvars.iv.next77.i.i = add nuw nsw i64 %indvars.iv76.i.i, 1 ; 2 uses
-  %exitcond80.not.i.i = icmp eq i64 %indvars.iv.next77.i.i, %wide.trip.count84.i.i
-  br i1 %exitcond80.not.i.i, label %rtm_to_nh_config_rtnl.exit, label %.lr.ph.split.us.split.us.i.i, !llvm.loop !130
+  br i1 %i.ec, label %.split25.us.i.i, label %rtm_to_nh_config_rtnl.exit
 
 .lr.ph.split.us.split.i.i:                        ; preds = %.lr.ph.split.us.i.i, %nh_check_attr_fdb_group.exit.thread12.us.i.i
   %indvars.iv81.i.i = phi i64 [ %indvars.iv.next82.i.i, %nh_check_attr_fdb_group.exit.thread12.us.i.i ], [ 0, %.lr.ph.split.us.i.i ] ; 2 uses
@@ -336,11 +329,8 @@ nh_check_attr_fdb_group.exit.thread12.us.i.i:     ; preds = %valid_group_nh.exit
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.i.i
   br i1 %i.dg, label %.lr.ph.split.split.i.i, label %.lr.ph.split.split.us.i.i
 
-.lr.ph.split.split.us.i.i:                        ; preds = %.lr.ph.split.i.i, %nh_check_attr_fdb_group.exit.thread12.us36.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %nh_check_attr_fdb_group.exit.thread12.us36.i.i ], [ 0, %.lr.ph.split.i.i ] ; 2 uses
-  %.0218.us27.i.i = phi i8 [ %.2315.us37.i.i, %nh_check_attr_fdb_group.exit.thread12.us36.i.i ], [ 0, %.lr.ph.split.i.i ] ; 3 uses
-  %9 = getelementptr [8 x i8], ptr %i.de, i64 %indvars.iv.i.i
-  %i.fd = load i32, ptr %9, align 4               ; 2 uses
+.lr.ph.split.split.us.i.i:                        ; preds = %.lr.ph.split.i.i
+  %i.fd = load i32, ptr %i.de, align 4            ; 2 uses
   %i.fe = load volatile ptr, ptr %i.df, align 8   ; 2 uses
   %.not32.i.us28.i.i = icmp eq ptr %i.fe, null
   br i1 %.not32.i.us28.i.i, label %.loopexit.i.i, label %.lr.ph.i.us29.i.i
@@ -368,7 +358,7 @@ nexthop_find_by_id.exit.us32.i.i:                 ; preds = %bb.cg
   %i.fn = load i8, ptr %i.fm, align 2, !range !11, !noundef !12
   %i.fo = trunc nuw i8 %i.fn to i1
   %i.fp = getelementptr i8, ptr %i.ff, i64 128
-  %i.fq = load ptr, ptr %i.fp, align 8            ; 4 uses
+  %i.fq = load ptr, ptr %i.fp, align 8            ; 3 uses
   br i1 %i.fo, label %bb.ci, label %valid_group_nh.exit.us35.i.i
 
 bb.ci:                                            ; preds = %nexthop_find_by_id.exit.us32.i.i
@@ -387,23 +377,7 @@ valid_group_nh.exit.us35.i.i:                     ; preds = %bb.cj, %nexthop_fin
   %i.fx = getelementptr i8, ptr %i.fq, i64 26
   %i.fy = load i8, ptr %i.fx, align 2, !range !11, !noundef !12
   %i.fz = trunc nuw i8 %i.fy to i1
-  br i1 %i.fz, label %10, label %.split40.us.i.i
-
-10:                                               ; preds = %valid_group_nh.exit.us35.i.i
-  %11 = icmp eq i8 %.0218.us27.i.i, 0
-  %12 = getelementptr i8, ptr %i.fq, i64 24
-  %13 = load i8, ptr %12, align 8                 ; 2 uses
-  br i1 %11, label %nh_check_attr_fdb_group.exit.thread12.us36.i.i, label %14
-
-14:                                               ; preds = %10
-  %.not16.i.us.i.i = icmp eq i8 %.0218.us27.i.i, %13
-  br i1 %.not16.i.us.i.i, label %nh_check_attr_fdb_group.exit.thread12.us36.i.i, label %.split42.us.i.i
-
-nh_check_attr_fdb_group.exit.thread12.us36.i.i:   ; preds = %14, %10
-  %.2315.us37.i.i = phi i8 [ %13, %10 ], [ %.0218.us27.i.i, %14 ]
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count84.i.i
-  br i1 %exitcond.not.i.i, label %rtm_to_nh_config_rtnl.exit, label %.lr.ph.split.split.us.i.i, !llvm.loop !130
+  br i1 %i.fz, label %rtm_to_nh_config_rtnl.exit, label %.split40.us.i.i
 
 .lr.ph.split.split.i.i:                           ; preds = %.lr.ph.split.i.i, %nh_check_attr_fdb_group.exit.thread12.i.i
   %indvars.iv72.i.i = phi i64 [ %indvars.iv.next73.i.i, %nh_check_attr_fdb_group.exit.thread12.i.i ], [ 0, %.lr.ph.split.i.i ] ; 2 uses
@@ -432,7 +406,7 @@ bb.cl:                                            ; preds = %bb.ck, %.lr.ph.i.i.
   %.not.i.i.i = icmp eq ptr %i.gj, null
   br i1 %.not.i.i.i, label %.loopexit.i.i, label %.lr.ph.i.i.i
 
-.loopexit.i.i:                                    ; preds = %.lr.ph.split.split.us.i.i, %bb.ch, %.lr.ph.split.split.i.i, %bb.cl, %.lr.ph.split.us.split.us.i.i, %bb.by, %.lr.ph.split.us.split.i.i, %bb.cc
+.loopexit.i.i:                                    ; preds = %bb.ch, %.lr.ph.split.split.i.i, %bb.cl, %bb.by, %.lr.ph.split.us.split.i.i, %bb.cc, %.lr.ph.split.split.us.i.i, %.lr.ph.split.us.split.us.i.i
   call void @do_trace_netlink_extack(ptr noundef nonnull @nh_check_attr_group_rtnl.__msg) #16
   %.not31.i.i = icmp eq ptr %2, null
   br i1 %.not31.i.i, label %rtm_to_nh_config_rtnl.exit.thread, label %nh_check_attr_group_rtnl.exit.sink.split.i
@@ -451,7 +425,7 @@ bb.cm:                                            ; preds = %nexthop_find_by_id.
   %i.gr = trunc nuw i8 %i.gq to i1
   br i1 %i.gr, label %.split21.us.i.i, label %bb.cn
 
-.split21.us.i.i:                                  ; preds = %bb.ci, %bb.cm, %bb.bz, %bb.ce
+.split21.us.i.i:                                  ; preds = %bb.cm, %bb.ce, %bb.ci, %bb.bz
   call void @do_trace_netlink_extack(ptr noundef nonnull @valid_group_nh.__msg) #16
   %.not29.i.i.i = icmp eq ptr %2, null
   br i1 %.not29.i.i.i, label %rtm_to_nh_config_rtnl.exit.thread, label %nh_check_attr_group_rtnl.exit.sink.split.i
@@ -462,7 +436,7 @@ bb.cn:                                            ; preds = %bb.cm
   %i.gu = trunc nuw i8 %i.gt to i1
   br i1 %i.gu, label %.split23.us.i.i, label %valid_group_nh.exit.i.i
 
-.split23.us.i.i:                                  ; preds = %bb.cj, %bb.cn, %bb.ca, %bb.cf
+.split23.us.i.i:                                  ; preds = %bb.cn, %bb.cf, %bb.cj, %bb.ca
   call void @do_trace_netlink_extack(ptr noundef nonnull @valid_group_nh.__msg.38) #16
   %.not28.i.i.i = icmp eq ptr %2, null
   br i1 %.not28.i.i.i, label %rtm_to_nh_config_rtnl.exit.thread, label %nh_check_attr_group_rtnl.exit.sink.split.i
@@ -484,7 +458,7 @@ valid_group_nh.exit.i.i:                          ; preds = %bb.co, %bb.cn
   %i.ha = trunc nuw i8 %i.gz to i1
   br i1 %i.ha, label %bb.cp, label %.split40.us.i.i
 
-.split40.us.i.i:                                  ; preds = %valid_group_nh.exit.us35.i.i, %valid_group_nh.exit.i.i
+.split40.us.i.i:                                  ; preds = %valid_group_nh.exit.i.i, %valid_group_nh.exit.us35.i.i
   call void @do_trace_netlink_extack(ptr noundef nonnull @nh_check_attr_fdb_group.__msg) #16
   %.not.i37.i.i = icmp eq ptr %2, null
   br i1 %.not.i37.i.i, label %rtm_to_nh_config_rtnl.exit.thread, label %nh_check_attr_group_rtnl.exit.sink.split.i
@@ -499,12 +473,12 @@ bb.cq:                                            ; preds = %bb.cp
   %.not16.i.i.i = icmp eq i8 %.0218.i.i, %i.hd
   br i1 %.not16.i.i.i, label %nh_check_attr_fdb_group.exit.thread12.i.i, label %.split42.us.i.i
 
-.split42.us.i.i:                                  ; preds = %14, %bb.cq
+.split42.us.i.i:                                  ; preds = %bb.cq
   call void @do_trace_netlink_extack(ptr noundef nonnull @nh_check_attr_fdb_group.__msg.40) #16
   %.not17.i.i.i = icmp eq ptr %2, null
   br i1 %.not17.i.i.i, label %rtm_to_nh_config_rtnl.exit.thread, label %nh_check_attr_group_rtnl.exit.sink.split.i
 
-.split25.us.i.i:                                  ; preds = %valid_group_nh.exit.us.us.i.i, %valid_group_nh.exit.us.i.i
+.split25.us.i.i:                                  ; preds = %valid_group_nh.exit.us.i.i, %valid_group_nh.exit.us.us.i.i
   call void @do_trace_netlink_extack(ptr noundef nonnull @nh_check_attr_group_rtnl.__msg.37) #16
   %.not34.i.i = icmp eq ptr %2, null
   br i1 %.not34.i.i, label %rtm_to_nh_config_rtnl.exit.thread, label %nh_check_attr_group_rtnl.exit.sink.split.i
@@ -580,7 +554,7 @@ nh_check_attr_group_rtnl.exit.sink.split.i:       ; preds = %bb.cy, %bb.cx, %bb.
   store ptr %nh_check_attr_fdb_group.__msg.40.sink.i.sink.i, ptr %2, align 8
   br label %rtm_to_nh_config_rtnl.exit.thread
 
-rtm_to_nh_config_rtnl.exit:                       ; preds = %nh_check_attr_fdb_group.exit.thread12.us36.i.i, %nh_check_attr_fdb_group.exit.thread12.i.i, %nh_check_attr_fdb_group.exit.thread12.us.us.i.i, %nh_check_attr_fdb_group.exit.thread12.us.i.i, %netif_carrier_ok.exit.i, %bb.cr, %bb.bw
+rtm_to_nh_config_rtnl.exit:                       ; preds = %nh_check_attr_fdb_group.exit.thread12.i.i, %nh_check_attr_fdb_group.exit.thread12.us.i.i, %netif_carrier_ok.exit.i, %bb.cr, %valid_group_nh.exit.us35.i.i, %valid_group_nh.exit.us.us.i.i, %bb.bw
   %i.hq = load i32, ptr %7, align 8
   %.not.i34 = icmp eq i32 %i.hq, 0
   br i1 %.not.i34, label %bb.cz, label %bb.df

@@ -205,7 +205,7 @@ _ZN4mlir13sparse_tensor18ExtractIterSpaceOp14getODSOperandsEj.exit: ; preds = %b
   br i1 %i.av, label %.lr.ph.i.i.preheader, label %.thread105
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZN4mlir13sparse_tensor18ExtractIterSpaceOp14getODSOperandsEj.exit
-  %i.aw = load ptr, ptr %0, align 8, !tbaa !602   ; 4 uses
+  %i.aw = load ptr, ptr %0, align 8, !tbaa !602   ; 5 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 44
   %i.ay = load i32, ptr %i.ax, align 4
   %i.az = and i32 %i.ay, 8388608
@@ -218,13 +218,24 @@ _ZN4mlir13sparse_tensor18ExtractIterSpaceOp14getODSOperandsEj.exit47: ; preds = 
   %i.bc = getelementptr inbounds nuw i8, ptr %i.aw, i64 72
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !505
   %i.be = zext i32 %i.bb to i64
-  %i.bf = add nsw i64 %i.be, -1                   ; 3 uses
+  %i.bf = add nsw i64 %i.be, -1                   ; 2 uses
   %i.bg = icmp ugt i64 %i.bf, 1
   br i1 %i.bg, label %_ZN4mlir13sparse_tensor18ExtractIterSpaceOp14getODSOperandsEj.exit47.thread, label %.preheader
 
 .preheader:                                       ; preds = %_ZN4mlir13sparse_tensor18ExtractIterSpaceOp14getODSOperandsEj.exit47
   %.not115118 = icmp eq i32 %i.bb, 1
-  br i1 %.not115118, label %._crit_edge, label %.lr.ph
+  br i1 %.not115118, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %9 = getelementptr inbounds nuw i8, ptr %i.bd, i64 56
+  %.sroa.0.0.copyload.i.i.i52 = load ptr, ptr %9, align 8, !tbaa !509
+  %10 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i52, i64 8
+  %.0.copyload.i.i.i.i.i53 = load i64, ptr %10, align 8
+  %11 = and i64 %.0.copyload.i.i.i.i.i53, -8
+  %12 = inttoptr i64 %11 to ptr
+  %13 = call fastcc i8 @_ZL49__mlir_ods_local_type_constraint_SparseTensorOps2PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef nonnull %i.aw, ptr %12, ptr nonnull @.str.177, i64 7, i32 noundef 1)
+  %14 = trunc nuw i8 %13 to i1
+  br i1 %14, label %.lr.ph, label %bb.m
 
 _ZN4mlir13sparse_tensor18ExtractIterSpaceOp14getODSOperandsEj.exit47.thread: ; preds = %.lr.ph.i.i.preheader, %_ZN4mlir13sparse_tensor18ExtractIterSpaceOp14getODSOperandsEj.exit47
   %i.bh = phi i64 [ %i.bf, %_ZN4mlir13sparse_tensor18ExtractIterSpaceOp14getODSOperandsEj.exit47 ], [ -1, %.lr.ph.i.i.preheader ]
@@ -248,42 +259,21 @@ _ZN4mlir13sparse_tensor18ExtractIterSpaceOp14getODSOperandsEj.exit47.thread: ; p
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #30
   br label %.thread105
 
-9:                                                ; preds = %.lr.ph
-  %10 = add i32 %12, 1
-  %11 = add nuw nsw i64 %.sroa.474.0119, 1        ; 2 uses
-  %.not115 = icmp eq i64 %11, %i.bf
-  br i1 %.not115, label %._crit_edge.loopexit, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.preheader, %9
-  %12 = phi i32 [ %10, %9 ], [ 1, %.preheader ]   ; 2 uses
-  %.sroa.474.0119 = phi i64 [ %11, %9 ], [ 0, %.preheader ] ; 2 uses
-  %13 = getelementptr inbounds nuw [32 x i8], ptr %i.bd, i64 %.sroa.474.0119
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 56
-  %.sroa.0.0.copyload.i.i.i52 = load ptr, ptr %14, align 8, !tbaa !509
+.lr.ph:                                           ; preds = %.lr.ph.preheader
   %i.bo = load ptr, ptr %0, align 8, !tbaa !602
-  %15 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i52, i64 8
-  %.0.copyload.i.i.i.i.i53 = load i64, ptr %15, align 8
-  %16 = and i64 %.0.copyload.i.i.i.i.i53, -8
-  %17 = inttoptr i64 %16 to ptr
-  %18 = call fastcc i8 @_ZL49__mlir_ods_local_type_constraint_SparseTensorOps2PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %i.bo, ptr %17, ptr nonnull @.str.177, i64 7, i32 noundef %12)
-  %19 = trunc nuw i8 %18 to i1
-  br i1 %19, label %9, label %bb.m
+  br label %._crit_edge
 
 .thread105:                                       ; preds = %_ZN4mlir13sparse_tensor18ExtractIterSpaceOp14getODSOperandsEj.exit, %_ZN4mlir13sparse_tensor18ExtractIterSpaceOp14getODSOperandsEj.exit47.thread
   %.sroa.032.7.ph = phi i8 [ %i.bn, %_ZN4mlir13sparse_tensor18ExtractIterSpaceOp14getODSOperandsEj.exit47.thread ], [ 0, %_ZN4mlir13sparse_tensor18ExtractIterSpaceOp14getODSOperandsEj.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
   br label %.thread113
 
-bb.m:                                             ; preds = %.lr.ph
+bb.m:                                             ; preds = %.lr.ph.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
   br label %.thread113
 
-._crit_edge.loopexit:                             ; preds = %9
-  %.pre = load ptr, ptr %0, align 8, !tbaa !602
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
-  %i.bp = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.aw, %.preheader ]
+._crit_edge:                                      ; preds = %.lr.ph, %.preheader
+  %i.bp = phi ptr [ %i.bo, %.lr.ph ], [ %i.aw, %.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
   %i.bq = getelementptr inbounds i8, ptr %i.bp, i64 -16
   %i.br = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.bq, i64 noundef 0) #30
@@ -686,7 +676,7 @@ _ZN4mlir13sparse_tensor10PushBackOp14getODSOperandsEj.exit: ; preds = %bb.a
   br i1 %i.aj, label %.lr.ph.i.i98.preheader, label %.thread359
 
 .lr.ph.i.i98.preheader:                           ; preds = %.lr.ph.i.i78.preheader
-  %.pre421 = load ptr, ptr %0, align 8, !tbaa !602 ; 4 uses
+  %.pre421 = load ptr, ptr %0, align 8, !tbaa !602 ; 5 uses
   %.phi.trans.insert422 = getelementptr inbounds nuw i8, ptr %.pre421, i64 44
   %.pre423 = load i32, ptr %.phi.trans.insert422, align 4
   %.pre426 = and i32 %.pre423, 8388608
@@ -699,13 +689,24 @@ _ZN4mlir13sparse_tensor10PushBackOp14getODSOperandsEj.exit111: ; preds = %.lr.ph
   %i.am = getelementptr inbounds nuw i8, ptr %.pre421, i64 72
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !505
   %i.ao = zext i32 %i.al to i64
-  %i.ap = add nsw i64 %i.ao, -3                   ; 3 uses
+  %i.ap = add nsw i64 %i.ao, -3                   ; 2 uses
   %i.aq = icmp ugt i64 %i.ap, 1
   br i1 %i.aq, label %_ZN4mlir13sparse_tensor10PushBackOp14getODSOperandsEj.exit111.thread, label %.preheader
 
 .preheader:                                       ; preds = %_ZN4mlir13sparse_tensor10PushBackOp14getODSOperandsEj.exit111
   %.not380402 = icmp eq i32 %i.al, 3
-  br i1 %.not380402, label %._crit_edge, label %.lr.ph405
+  br i1 %.not380402, label %._crit_edge, label %.lr.ph405.preheader
+
+.lr.ph405.preheader:                              ; preds = %.preheader
+  %12 = getelementptr inbounds nuw i8, ptr %i.an, i64 120
+  %.sroa.0.0.copyload.i.i.i121 = load ptr, ptr %12, align 8, !tbaa !509
+  %13 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i121, i64 8
+  %.0.copyload.i.i.i.i.i122 = load i64, ptr %13, align 8
+  %14 = and i64 %.0.copyload.i.i.i.i.i122, -8
+  %15 = inttoptr i64 %14 to ptr
+  %16 = call fastcc i8 @_ZL50__mlir_ods_local_type_constraint_SparseTensorOps12PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef nonnull %.pre421, ptr %15, ptr nonnull @.str.177, i64 7, i32 noundef 3)
+  %17 = trunc nuw i8 %16 to i1
+  br i1 %17, label %._crit_edge.loopexit, label %.thread359
 
 _ZN4mlir13sparse_tensor10PushBackOp14getODSOperandsEj.exit111.thread: ; preds = %.lr.ph.i.i98.preheader, %_ZN4mlir13sparse_tensor10PushBackOp14getODSOperandsEj.exit111
   %i.ar = phi i64 [ %i.ap, %_ZN4mlir13sparse_tensor10PushBackOp14getODSOperandsEj.exit111 ], [ -3, %.lr.ph.i.i98.preheader ]
@@ -841,28 +842,7 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.l, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #30
   br label %.thread359
 
-.lr.ph405:                                        ; preds = %.preheader, %20
-  %.6404 = phi i32 [ %21, %20 ], [ 3, %.preheader ] ; 2 uses
-  %.sroa.4289.0403 = phi i64 [ %22, %20 ], [ 0, %.preheader ] ; 2 uses
-  %12 = getelementptr inbounds nuw [32 x i8], ptr %i.an, i64 %.sroa.4289.0403
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 120
-  %.sroa.0.0.copyload.i.i.i121 = load ptr, ptr %13, align 8, !tbaa !509
-  %14 = load ptr, ptr %0, align 8, !tbaa !602
-  %15 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i121, i64 8
-  %.0.copyload.i.i.i.i.i122 = load i64, ptr %15, align 8
-  %16 = and i64 %.0.copyload.i.i.i.i.i122, -8
-  %17 = inttoptr i64 %16 to ptr
-  %18 = call fastcc i8 @_ZL50__mlir_ods_local_type_constraint_SparseTensorOps12PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %14, ptr %17, ptr nonnull @.str.177, i64 7, i32 noundef %.6404)
-  %19 = trunc nuw i8 %18 to i1
-  br i1 %19, label %20, label %.thread359
-
-20:                                               ; preds = %.lr.ph405
-  %21 = add i32 %.6404, 1
-  %22 = add nuw nsw i64 %.sroa.4289.0403, 1       ; 2 uses
-  %.not380 = icmp eq i64 %22, %i.ap
-  br i1 %.not380, label %._crit_edge.loopexit, label %.lr.ph405
-
-._crit_edge.loopexit:                             ; preds = %20
+._crit_edge.loopexit:                             ; preds = %.lr.ph405.preheader
   %.pre424 = load ptr, ptr %0, align 8, !tbaa !602
   br label %._crit_edge
 
@@ -1088,8 +1068,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit227:         ; preds = %bb.y, %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #30
   br label %.thread359
 
-.thread359:                                       ; preds = %.lr.ph405, %_ZN4mlir13sparse_tensor10PushBackOp14getODSOperandsEj.exit, %.lr.ph.i.i.preheader, %.lr.ph.i.i78.preheader, %._crit_edge, %bb.n, %_ZN4mlir18InFlightDiagnosticD2Ev.exit, %._crit_edge.i.i214, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit227, %_ZN4mlir18InFlightDiagnosticD2Ev.exit177
-  %.sroa.058.23 = phi i8 [ 1, %._crit_edge.i.i214 ], [ %i.es, %_ZN4mlir18InFlightDiagnosticD2Ev.exit177 ], [ %i.fl, %_ZN4mlir18InFlightDiagnosticD2Ev.exit227 ], [ 0, %_ZN4mlir13sparse_tensor10PushBackOp14getODSOperandsEj.exit ], [ 0, %.lr.ph.i.i.preheader ], [ 0, %bb.a ], [ 0, %.lr.ph.i.i78.preheader ], [ %i.bw, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %bb.n ], [ 0, %._crit_edge ], [ 0, %.lr.ph405 ]
+.thread359:                                       ; preds = %_ZN4mlir13sparse_tensor10PushBackOp14getODSOperandsEj.exit, %.lr.ph.i.i.preheader, %.lr.ph.i.i78.preheader, %.lr.ph405.preheader, %._crit_edge, %bb.n, %_ZN4mlir18InFlightDiagnosticD2Ev.exit, %._crit_edge.i.i214, %bb.a, %_ZN4mlir18InFlightDiagnosticD2Ev.exit227, %_ZN4mlir18InFlightDiagnosticD2Ev.exit177
+  %.sroa.058.23 = phi i8 [ 1, %._crit_edge.i.i214 ], [ %i.es, %_ZN4mlir18InFlightDiagnosticD2Ev.exit177 ], [ %i.fl, %_ZN4mlir18InFlightDiagnosticD2Ev.exit227 ], [ 0, %.lr.ph405.preheader ], [ 0, %.lr.ph.i.i.preheader ], [ 0, %bb.a ], [ 0, %.lr.ph.i.i78.preheader ], [ %i.bw, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %bb.n ], [ 0, %._crit_edge ], [ 0, %_ZN4mlir13sparse_tensor10PushBackOp14getODSOperandsEj.exit ]
   ret i8 %.sroa.058.23
 }
 

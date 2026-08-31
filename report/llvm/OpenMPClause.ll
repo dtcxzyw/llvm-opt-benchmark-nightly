@@ -205,7 +205,7 @@ _ZNK4llvm15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInit
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZNK4llvm15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS5_8PrefViewEEdeEv.exit6.i.i.i, %.lr.ph.i.i.i
-  %storemerge3.i.i.i = phi i64 [ 1, %.lr.ph.i.i.i ], [ %i.bk, %_ZNK4llvm15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS5_8PrefViewEEdeEv.exit6.i.i.i ] ; 3 uses
+  %storemerge3.i.i.i = phi i64 [ 1, %.lr.ph.i.i.i ], [ %9, %_ZNK4llvm15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS5_8PrefViewEEdeEv.exit6.i.i.i ] ; 3 uses
   %i.bb = load ptr, ptr %i.ax, align 8, !tbaa !652
   %i.bc = load ptr, ptr %i.ay, align 8, !tbaa !656 ; 2 uses
   %i.bd = ptrtoint ptr %i.bb to i64
@@ -216,53 +216,43 @@ bb.h:                                             ; preds = %_ZNK4llvm15mapped_i
 
 bb.i:                                             ; preds = %bb.h
   %i.bh = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %i.an, ptr noundef nonnull @.str.10, i64 noundef 2) #21 ; 0 uses
-  br label %"_ZZN4llvm10interleaveINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS7_8PrefViewEEEEEZNS6_16OMPClausePrinter18VisitOMPInitClauseEPS7_E3$_0NS_11raw_ostreamES9_EEvRKT_RT1_T0_RKNS_9StringRefEENKUlvE_clEv.exit.i.i.i"
+  br label %_ZNK4llvm15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS5_8PrefViewEEdeEv.exit6.i.i.i
 
 bb.j:                                             ; preds = %bb.h
   store i16 8236, ptr %i.bc, align 1
   %i.bi = load ptr, ptr %i.ay, align 8, !tbaa !656
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 2
   store ptr %i.bj, ptr %i.ay, align 8, !tbaa !656
-  br label %"_ZZN4llvm10interleaveINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS7_8PrefViewEEEEEZNS6_16OMPClausePrinter18VisitOMPInitClauseEPS7_E3$_0NS_11raw_ostreamES9_EEvRKT_RT1_T0_RKNS_9StringRefEENKUlvE_clEv.exit.i.i.i"
+  br label %_ZNK4llvm15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS5_8PrefViewEEdeEv.exit6.i.i.i
 
-"_ZZN4llvm10interleaveINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS7_8PrefViewEEEEEZNS6_16OMPClausePrinter18VisitOMPInitClauseEPS7_E3$_0NS_11raw_ostreamES9_EEvRKT_RT1_T0_RKNS_9StringRefEENKUlvE_clEv.exit.i.i.i": ; preds = %bb.j, %bb.i
+_ZNK4llvm15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS5_8PrefViewEEdeEv.exit6.i.i.i: ; preds = %bb.j, %bb.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !773)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !776)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !779)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !782)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !785)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !788)
-  %7 = and i64 %storemerge3.i.i.i, 4294967295     ; 2 uses
-  %8 = icmp eq i64 %7, 0
-  br i1 %8, label %_ZNK4llvm15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS5_8PrefViewEEdeEv.exit6.i.i.i, label %9
-
-9:                                                ; preds = %"_ZZN4llvm10interleaveINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS7_8PrefViewEEEEEZNS6_16OMPClausePrinter18VisitOMPInitClauseEPS7_E3$_0NS_11raw_ostreamES9_EEvRKT_RT1_T0_RKNS_9StringRefEENKUlvE_clEv.exit.i.i.i"
-  %10 = add i64 %storemerge3.i.i.i, 4294967295
-  %11 = and i64 %10, 4294967295
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %11
-  %13 = load i32, ptr %12, align 4, !tbaa !330, !noalias !791
-  br label %_ZNK4llvm15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS5_8PrefViewEEdeEv.exit6.i.i.i
-
-_ZNK4llvm15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS5_8PrefViewEEdeEv.exit6.i.i.i: ; preds = %9, %"_ZZN4llvm10interleaveINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS7_8PrefViewEEEEEZNS6_16OMPClausePrinter18VisitOMPInitClauseEPS7_E3$_0NS_11raw_ostreamES9_EEvRKT_RT1_T0_RKNS_9StringRefEENKUlvE_clEv.exit.i.i.i"
-  %14 = phi i32 [ %13, %9 ], [ 0, %"_ZZN4llvm10interleaveINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS7_8PrefViewEEEEEZNS6_16OMPClausePrinter18VisitOMPInitClauseEPS7_E3$_0NS_11raw_ostreamES9_EEvRKT_RT1_T0_RKNS_9StringRefEENKUlvE_clEv.exit.i.i.i" ] ; 2 uses
-  %i.bk = add i64 %storemerge3.i.i.i, 1           ; 3 uses
+  %i.bk = add nuw nsw i64 %storemerge3.i.i.i, 4294967295
   %i.bl = and i64 %i.bk, 4294967295
-  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.bl
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %i.bl
+  %8 = load i32, ptr %7, align 4, !tbaa !330, !noalias !791 ; 2 uses
+  %9 = add nuw nsw i64 %storemerge3.i.i.i, 1      ; 3 uses
+  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %9
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !17, !noalias !791
   store ptr %i.bn, ptr %5, align 8, !tbaa !770, !alias.scope !791
   %i.bo = load i32, ptr %i.m, align 8, !tbaa !146, !noalias !791
   %i.bp = zext i32 %i.bo to i64
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.bp
-  %i.br = zext i32 %14 to i64
+  %i.br = zext i32 %8 to i64
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.bq, i64 %i.br
-  %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %7
+  %i.bt = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %storemerge3.i.i.i
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !330, !noalias !791
-  %i.bv = sub i32 %i.bu, %14
+  %i.bv = sub i32 %i.bu, %8
   %i.bw = zext i32 %i.bv to i64
   store ptr %i.bs, ptr %i.az, align 8, !tbaa !772, !alias.scope !791
   store i64 %i.bw, ptr %i.ba, align 8, !tbaa !359, !alias.scope !791
   tail call fastcc void @"_ZZN5clang16OMPClausePrinter18VisitOMPInitClauseEPNS_13OMPInitClauseEENK3$_0clENS1_8PrefViewE"(ptr nonnull readonly %0, ptr noundef nonnull byval(%"struct.clang::OMPInitClause::PrefView") align 8 %5)
-  %.not.i.i.i = icmp eq i64 %i.bk, %i.ai
+  %.not.i.i.i = icmp eq i64 %9, %i.ai
   br i1 %.not.i.i.i, label %"_ZN4llvm15interleaveCommaINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS7_8PrefViewEEEEEZNS6_16OMPClausePrinter18VisitOMPInitClauseEPS7_E3$_0NS_11raw_ostreamES9_EEvRKT_RT1_T0_.exit", label %bb.h, !llvm.loop !792
 
 "_ZN4llvm15interleaveCommaINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS7_8PrefViewEEEEEZNS6_16OMPClausePrinter18VisitOMPInitClauseEPS7_E3$_0NS_11raw_ostreamES9_EEvRKT_RT1_T0_.exit": ; preds = %_ZNK4llvm15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS5_8PrefViewEEdeEv.exit6.i.i.i, %bb.g, %_ZNK4llvm15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS5_8PrefViewEEdeEv.exit.i.i.i

@@ -204,13 +204,23 @@ _ZN4test28AttrSizedResultCompileTestOp13getODSResultsEj.exit51: ; preds = %._cri
   %.09.lcssa.i.tr.i47 = trunc nuw i64 %.09.lcssa.i28.i46 to i32
   %.narrow.i48 = add i32 %i.ba, %.09.lcssa.i.tr.i47
   %i.bg = zext i32 %.narrow.i48 to i64            ; 2 uses
-  %i.bh = sub nsw i64 %i.bg, %.09.lcssa.i28.i46   ; 3 uses
+  %i.bh = sub nsw i64 %i.bg, %.09.lcssa.i28.i46   ; 2 uses
   %i.bi = icmp ugt i64 %i.bh, 1
   br i1 %i.bi, label %bb.f, label %.preheader
 
 .preheader:                                       ; preds = %_ZN4test28AttrSizedResultCompileTestOp13getODSResultsEj.exit51
   %.not118133 = icmp eq i64 %.09.lcssa.i28.i46, %i.bg
-  br i1 %.not118133, label %.thread114, label %.lr.ph136
+  br i1 %.not118133, label %.thread114, label %.lr.ph136.preheader
+
+.lr.ph136.preheader:                              ; preds = %.preheader
+  %6 = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.bf, i64 noundef 0) #27
+  %7 = load ptr, ptr %0, align 8, !tbaa !192
+  %8 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %.0.copyload.i.i.i.i.i60 = load i64, ptr %8, align 8
+  %9 = and i64 %.0.copyload.i.i.i.i.i60, -8
+  %10 = inttoptr i64 %9 to ptr
+  %11 = tail call fastcc i8 @_ZL42__mlir_ods_local_type_constraint_0TestOps1PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %7, ptr %10, ptr nonnull @.str.14, i64 6, i32 noundef %.2.lcssa)
+  br label %.thread114
 
 bb.f:                                             ; preds = %_ZN4test28AttrSizedResultCompileTestOp13getODSResultsEj.exit51
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #27
@@ -346,27 +356,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.q, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
   br label %.thread114
 
-.lr.ph136:                                        ; preds = %.preheader, %13
-  %.4135 = phi i32 [ %14, %13 ], [ %.2.lcssa, %.preheader ] ; 2 uses
-  %.sroa.4.0134 = phi i64 [ %15, %13 ], [ 0, %.preheader ] ; 2 uses
-  %6 = tail call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.bf, i64 noundef %.sroa.4.0134) #27
-  %7 = load ptr, ptr %0, align 8, !tbaa !192
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %.0.copyload.i.i.i.i.i60 = load i64, ptr %8, align 8
-  %9 = and i64 %.0.copyload.i.i.i.i.i60, -8
-  %10 = inttoptr i64 %9 to ptr
-  %11 = tail call fastcc i8 @_ZL42__mlir_ods_local_type_constraint_0TestOps1PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %7, ptr %10, ptr nonnull @.str.14, i64 6, i32 noundef %.4135)
-  %12 = trunc nuw i8 %11 to i1
-  br i1 %12, label %13, label %.thread114
-
-13:                                               ; preds = %.lr.ph136
-  %14 = add i32 %.4135, 1
-  %15 = add nuw nsw i64 %.sroa.4.0134, 1          ; 2 uses
-  %.not118 = icmp eq i64 %15, %i.bh
-  br i1 %.not118, label %.thread114, label %.lr.ph136
-
-.thread114:                                       ; preds = %.lr.ph, %.lr.ph130, %13, %.lr.ph136, %.preheader, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.023.12 = phi i8 [ 1, %.preheader ], [ 0, %.lr.ph130 ], [ %i.co, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %.lr.ph136 ], [ 1, %13 ], [ 0, %.lr.ph ]
+.thread114:                                       ; preds = %.lr.ph, %.lr.ph130, %.lr.ph136.preheader, %.preheader, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.023.12 = phi i8 [ 1, %.preheader ], [ 0, %.lr.ph130 ], [ %i.co, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ %11, %.lr.ph136.preheader ], [ 0, %.lr.ph ]
   ret i8 %.sroa.023.12
 }
 

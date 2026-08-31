@@ -205,13 +205,16 @@ bb.jw:                                            ; preds = %bb.ju
   store i32 0, ptr %i.hy, align 8, !tbaa !66, !noalias !2589
   store i32 8, ptr %i.hz, align 4, !tbaa !67, !noalias !2589
   %.not173379.i.i = icmp eq i32 %i.asf, 3
-  br i1 %.not173379.i.i, label %.critedge.i.i, label %.lr.ph382.i.i
+  br i1 %.not173379.i.i, label %.critedge.i.i, label %.lr.ph382.preheader.i.i
 
-.lr.ph382.i.i:                                    ; preds = %bb.jw, %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit.i.i
-  %.0134380.i.i = phi i32 [ %178, %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit.i.i ], [ 3, %bb.jw ] ; 2 uses
-  %177 = zext i32 %.0134380.i.i to i64
+.lr.ph382.preheader.i.i:                          ; preds = %bb.jw
+  %177 = zext i32 %i.asf to i64
+  br label %.lr.ph382.i.i
+
+.lr.ph382.i.i:                                    ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit.i.i, %.lr.ph382.preheader.i.i
+  %indvars.iv405.i.i = phi i64 [ 3, %.lr.ph382.preheader.i.i ], [ %indvars.iv.next406.i.i, %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit.i.i ] ; 2 uses
   %i.ash = load ptr, ptr %71, align 8, !tbaa !21, !noalias !2589
-  %i.asi = getelementptr inbounds nuw [8 x i8], ptr %i.ash, i64 %177
+  %i.asi = getelementptr inbounds nuw [8 x i8], ptr %i.ash, i64 %indvars.iv405.i.i
   %i.asj = load i64, ptr %i.asi, align 8, !tbaa !68
   %i.ask = trunc i64 %i.asj to i32
   %i.asl = call fastcc noundef ptr @_ZN12_GLOBAL__N_113BitcodeReader11getTypeByIDEj(ptr noundef nonnull align 8 dereferenceable(2040) %1, i32 noundef %i.ask) ; 3 uses
@@ -239,8 +242,8 @@ bb.jz:                                            ; preds = %bb.jx
   br label %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit.i.i
 
 _ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit.i.i: ; preds = %bb.jz, %bb.jy
-  %178 = add i32 %.0134380.i.i, 1                 ; 2 uses
-  %.not173.i.i = icmp eq i32 %178, %i.asf
+  %indvars.iv.next406.i.i = add nuw nsw i64 %indvars.iv405.i.i, 1 ; 2 uses
+  %.not173.i.i = icmp eq i64 %indvars.iv.next406.i.i, %177
   br i1 %.not173.i.i, label %.critedge.i.i, label %.lr.ph382.i.i, !llvm.loop !2613
 
 .critedge.i.i:                                    ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit.i.i, %.lr.ph382.i.i, %bb.jw
@@ -319,13 +322,16 @@ bb.kh:                                            ; preds = %bb.kf
   store i32 0, ptr %i.hp, align 8, !tbaa !66, !noalias !2589
   store i32 8, ptr %i.hq, align 4, !tbaa !67, !noalias !2589
   %.not170373.i.i = icmp eq i32 %i.atq, 2
-  br i1 %.not170373.i.i, label %._crit_edge377.i.i, label %.lr.ph376.i.i
+  br i1 %.not170373.i.i, label %._crit_edge377.i.i, label %.lr.ph376.preheader.i.i
 
-.lr.ph376.i.i:                                    ; preds = %bb.kh, %bb.km
-  %.0137374.i.i = phi i32 [ %180, %bb.km ], [ 2, %bb.kh ] ; 2 uses
-  %179 = zext i32 %.0137374.i.i to i64
+.lr.ph376.preheader.i.i:                          ; preds = %bb.kh
+  %178 = zext i32 %i.atq to i64
+  br label %.lr.ph376.i.i
+
+.lr.ph376.i.i:                                    ; preds = %bb.km, %.lr.ph376.preheader.i.i
+  %indvars.iv402.i.i = phi i64 [ 2, %.lr.ph376.preheader.i.i ], [ %indvars.iv.next403.i.i, %bb.km ] ; 2 uses
   %i.ats = load ptr, ptr %71, align 8, !tbaa !21, !noalias !2589
-  %i.att = getelementptr inbounds nuw [8 x i8], ptr %i.ats, i64 %179
+  %i.att = getelementptr inbounds nuw [8 x i8], ptr %i.ats, i64 %indvars.iv402.i.i
   %i.atu = load i64, ptr %i.att, align 8, !tbaa !68
   %i.atv = trunc i64 %i.atu to i32
   %i.atw = call fastcc noundef ptr @_ZN12_GLOBAL__N_113BitcodeReader11getTypeByIDEj(ptr noundef nonnull align 8 dereferenceable(2040) %1, i32 noundef %i.atv) ; 4 uses
@@ -357,8 +363,8 @@ bb.kl:                                            ; preds = %bb.kj
   br label %bb.km
 
 bb.km:                                            ; preds = %bb.kl, %bb.kk
-  %180 = add i32 %.0137374.i.i, 1                 ; 2 uses
-  %.not170.i.i = icmp eq i32 %180, %i.atq
+  %indvars.iv.next403.i.i = add nuw nsw i64 %indvars.iv402.i.i, 1 ; 2 uses
+  %.not170.i.i = icmp eq i64 %indvars.iv.next403.i.i, %178
   br i1 %.not170.i.i, label %._crit_edge377.i.i, label %.lr.ph376.i.i, !llvm.loop !2614
 
 _ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit213.i.i: ; preds = %bb.ki
@@ -446,10 +452,14 @@ bb.ku:                                            ; preds = %bb.ks
   store i32 0, ptr %i.hi, align 8, !tbaa !66, !noalias !2589
   store i32 8, ptr %i.hj, align 4, !tbaa !67, !noalias !2589
   %.not167368.i.i = icmp eq i32 %i.avc, 1
-  br i1 %.not167368.i.i, label %.critedge181.i.i, label %.lr.ph371.i.i
+  br i1 %.not167368.i.i, label %.critedge181.i.i, label %.lr.ph371.preheader.i.i
 
-.lr.ph371.i.i:                                    ; preds = %bb.ku, %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit219.i.i
-  %indvars.iv399.i.i = phi i64 [ %indvars.iv.next400.i.i, %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit219.i.i ], [ 1, %bb.ku ] ; 2 uses
+.lr.ph371.preheader.i.i:                          ; preds = %bb.ku
+  %179 = zext i32 %i.avc to i64
+  br label %.lr.ph371.i.i
+
+.lr.ph371.i.i:                                    ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit219.i.i, %.lr.ph371.preheader.i.i
+  %indvars.iv399.i.i = phi i64 [ 1, %.lr.ph371.preheader.i.i ], [ %indvars.iv.next400.i.i, %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit219.i.i ] ; 2 uses
   %i.avd = load ptr, ptr %71, align 8, !tbaa !21, !noalias !2589
   %i.ave = getelementptr inbounds nuw [8 x i8], ptr %i.avd, i64 %indvars.iv399.i.i
   %i.avf = load i64, ptr %i.ave, align 8, !tbaa !68
@@ -480,8 +490,7 @@ bb.kx:                                            ; preds = %bb.kv
 
 _ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit219.i.i: ; preds = %bb.kx, %bb.kw
   %indvars.iv.next400.i.i = add nuw nsw i64 %indvars.iv399.i.i, 1 ; 2 uses
-  %lftr.wideiv784 = trunc i64 %indvars.iv.next400.i.i to i32
-  %exitcond785 = icmp eq i32 %i.avc, %lftr.wideiv784
+  %exitcond785 = icmp eq i64 %indvars.iv.next400.i.i, %179
   br i1 %exitcond785, label %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit219..critedge181.loopexit_crit_edge.i.i, label %.lr.ph371.i.i, !llvm.loop !2615
 
 _ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit219..critedge181.loopexit_crit_edge.i.i: ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit219.i.i
