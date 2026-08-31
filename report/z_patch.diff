@@ -1,0 +1,400 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index ef324c40e44a6..9845d288d2b38 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -1757,6 +1757,70 @@ static void generateReproducer(Instruction *Cond, bool IsSigned, Module *M,
+   assert(!verifyFunction(*F, &dbgs()));
+ }
+ 
++/// The constraint systems model unbounded integers, so they do not know that
++/// every value is bounded by the range of its type. That is invisible to
++/// ordinary queries, but it makes a condition that singles out an extreme value
++/// of the type unprovable: `X == SMAX` cannot be refuted from `X s< W` alone,
++/// because the system holds no fact `W s<= SMAX`. For the widest type the bound
++/// is not even representable, as SMAX is the system's sentinel value.
++///
++/// Recover exactly that missing bit of information: if the system proves
++/// `X s< W` for some other value W of the same type, then, W being an in-range
++/// integer (W s<= SMAX), X s<= SMAX - 1. Symmetrically `X s> W` gives
++/// X s>= SMIN + 1. Either fact decides any condition whose truth depends only
++/// on whether X is the corresponding extreme value, such as the `X == SMAX`
++/// that an `sadd.with.overflow(X, 1)` check canonicalizes to.
++static std::optional<bool> checkConditionAtSignedExtreme(
++    CmpInst::Predicate Pred, Value *A, Value *B, const ConstraintInfo &Info) {
++  Type *Ty = A->getType();
++  const APInt *C;
++  if (!Ty->isIntegerTy() || !match(B, m_APInt(C)))
++    return std::nullopt;
++
++  // The set of values of A for which the condition is true.
++  ConstantRange CR = ConstantRange::makeExactICmpRegion(Pred, *C);
++  unsigned BitWidth = Ty->getIntegerBitWidth();
++  for (bool AtMax : {true, false}) {
++    APInt Extreme = AtMax ? APInt::getSignedMaxValue(BitWidth)
++                          : APInt::getSignedMinValue(BitWidth);
++    // Knowing A != Extreme only decides the condition if being Extreme is the
++    // only thing that can make it true, or the only thing that can make it
++    // false. Conditions that are already constant are not this rule's business.
++    auto OnlyExtreme = [&Extreme](const ConstantRange &R) {
++      const APInt *Single = R.getSingleElement();
++      return Single && *Single == Extreme;
++    };
++    std::optional<bool> Result;
++    if (OnlyExtreme(CR))
++      Result = false;
++    else if (OnlyExtreme(CR.inverse()))
++      Result = true;
++    else
++      continue;
++
++    // Look for a bound that keeps A strictly on the near side of Extreme.
++    // Prefer the direct query against the neighbouring constant, which is
++    // representable even when Extreme is not. Otherwise fall back to scanning
++    // for a witness value: any value of the same type serves, because all of
++    // them are in range, and A being strictly beyond one of them puts A at
++    // least one step away from Extreme.
++    CmpInst::Predicate BoundPred =
++        AtMax ? CmpInst::ICMP_SLE : CmpInst::ICMP_SGE;
++    APInt Neighbour = AtMax ? Extreme - 1 : Extreme + 1;
++    if (Info.doesHold(BoundPred, A, ConstantInt::get(Ty, Neighbour)))
++      return Result;
++
++    CmpInst::Predicate WitnessPred =
++        AtMax ? CmpInst::ICMP_SLT : CmpInst::ICMP_SGT;
++    for (const auto &KV : Info.getValue2Index(/*Signed=*/true)) {
++      Value *W = KV.first;
++      if (W != A && W->getType() == Ty && Info.doesHold(WitnessPred, A, W))
++        return Result;
++    }
++  }
++  return std::nullopt;
++}
++
+ static std::optional<bool> checkCondition(CmpInst::Predicate Pred, Value *A,
+                                           Value *B, Instruction *CheckInst,
+                                           ConstraintInfo &Info) {
+@@ -1816,6 +1880,21 @@ static std::optional<bool> checkCondition(CmpInst::Predicate Pred, Value *A,
+       if (auto ImpliedCondition = TryWithConstraint(SR))
+         return ImpliedCondition;
+   }
++
++  // Finally, handle conditions that only the range of A's type can refute.
++  if (auto ImpliedCondition = checkConditionAtSignedExtreme(Pred, A, B, Info)) {
++    if (!DebugCounter::shouldExecute(EliminatedCounter))
++      return std::nullopt;
++    LLVM_DEBUG({
++      dbgs() << "Condition ";
++      dumpUnpackedICmp(dbgs(),
++                       *ImpliedCondition ? Pred
++                                         : CmpInst::getInversePredicate(Pred),
++                       A, B);
++      dbgs() << " implied by a strict bound at the signed extreme\n";
++    });
++    return ImpliedCondition;
++  }
+   return std::nullopt;
+ }
+ 
+diff --git a/llvm/test/Transforms/ConstraintElimination/icmp-signed-extreme.ll b/llvm/test/Transforms/ConstraintElimination/icmp-signed-extreme.ll
+new file mode 100644
+index 0000000000000..620e544d94641
+--- /dev/null
++++ b/llvm/test/Transforms/ConstraintElimination/icmp-signed-extreme.ll
+@@ -0,0 +1,297 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=constraint-elimination -S %s | FileCheck %s
++
++; A strict bound A s< W, for any other value W of the same type, implies
++; A s<= SMAX - 1, because W itself is an in-range integer. That refutes
++; A == SMAX. Symmetrically A s> W refutes A == SMIN. This is the information
++; the constraint systems lack, as they model unbounded integers.
++
++declare void @llvm.assume(i1)
++declare void @llvm.trap()
++
++define i1 @eq_smax_witness_slt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @eq_smax_witness_slt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    ret i1 false
++;
++  %pre = icmp slt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %c = icmp eq i64 %a, 9223372036854775807
++  ret i1 %c
++}
++
++define i1 @ne_smax_witness_slt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @ne_smax_witness_slt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    ret i1 true
++;
++  %pre = icmp slt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %c = icmp ne i64 %a, 9223372036854775807
++  ret i1 %c
++}
++
++; icmp sgt A, SMAX-1 is another spelling of A == SMAX.
++define i1 @sgt_smax_minus_one_witness_slt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @sgt_smax_minus_one_witness_slt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    ret i1 false
++;
++  %pre = icmp slt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %c = icmp sgt i64 %a, 9223372036854775806
++  ret i1 %c
++}
++
++; ... and so is icmp sle A, SMAX-1, with the opposite answer.
++define i1 @sle_smax_minus_one_witness_slt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @sle_smax_minus_one_witness_slt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    ret i1 true
++;
++  %pre = icmp slt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %c = icmp sle i64 %a, 9223372036854775806
++  ret i1 %c
++}
++
++define i1 @eq_smin_witness_sgt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @eq_smin_witness_sgt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp sgt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    ret i1 false
++;
++  %pre = icmp sgt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %c = icmp eq i64 %a, -9223372036854775808
++  ret i1 %c
++}
++
++define i1 @slt_smin_plus_one_witness_sgt(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @slt_smin_plus_one_witness_sgt(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp sgt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    ret i1 false
++;
++  %pre = icmp sgt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %c = icmp slt i64 %a, -9223372036854775807
++  ret i1 %c
++}
++
++; A constant bound works too, and is found without scanning for a witness.
++define i1 @eq_smax_constant_bound(i64 %a) {
++; CHECK-LABEL: define i1 @eq_smax_constant_bound(
++; CHECK-SAME: i64 [[A:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], 5
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    ret i1 false
++;
++  %pre = icmp slt i64 %a, 5
++  call void @llvm.assume(i1 %pre)
++  %c = icmp eq i64 %a, 9223372036854775807
++  ret i1 %c
++}
++
++; Narrower types, where SMAX is representable in the constraint system, work
++; through the same path.
++define i1 @eq_smax_i32(i32 %a, i32 %w) {
++; CHECK-LABEL: define i1 @eq_smax_i32(
++; CHECK-SAME: i32 [[A:%.*]], i32 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i32 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    ret i1 false
++;
++  %pre = icmp slt i32 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %c = icmp eq i32 %a, 2147483647
++  ret i1 %c
++}
++
++define i1 @eq_smax_i8(i8 %a, i8 %w) {
++; CHECK-LABEL: define i1 @eq_smax_i8(
++; CHECK-SAME: i8 [[A:%.*]], i8 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i8 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    ret i1 false
++;
++  %pre = icmp slt i8 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %c = icmp eq i8 %a, 127
++  ret i1 %c
++}
++
++; The motivating shape: a bounded induction counter's increment cannot overflow,
++; after the sadd.with.overflow check has been canonicalized to icmp eq X, SMAX.
++define i1 @counter_overflow_check_in_loop(ptr %p, i64 %count) {
++; CHECK-LABEL: define i1 @counter_overflow_check_in_loop(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[COUNT:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[NN:%.*]] = icmp sge i64 [[COUNT]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[NN]])
++; CHECK-NEXT:    [[GT1:%.*]] = icmp sgt i64 [[COUNT]], 1
++; CHECK-NEXT:    br i1 [[GT1]], label %[[PH:.*]], label %[[RET_TRUE:.*]]
++; CHECK:       [[PH]]:
++; CHECK-NEXT:    [[SUB:%.*]] = add nsw i64 [[COUNT]], -1
++; CHECK-NEXT:    br label %[[HEADER:.*]]
++; CHECK:       [[HEADER]]:
++; CHECK-NEXT:    [[I:%.*]] = phi i64 [ 0, %[[PH]] ], [ [[I_NEXT:%.*]], %[[ACCESS:.*]] ]
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[I]], [[SUB]]
++; CHECK-NEXT:    br i1 [[DONE]], label %[[RET_TRUE]], label %[[BODY:.*]]
++; CHECK:       [[BODY]]:
++; CHECK-NEXT:    br i1 false, label %[[TRAP:.*]], label %[[ACCESS]]
++; CHECK:       [[ACCESS]]:
++; CHECK-NEXT:    [[I_NEXT]] = add nsw i64 [[I]], 1
++; CHECK-NEXT:    [[A0:%.*]] = getelementptr inbounds i64, ptr [[P]], i64 [[I]]
++; CHECK-NEXT:    [[V0:%.*]] = load i64, ptr [[A0]], align 4
++; CHECK-NEXT:    [[GT:%.*]] = icmp sgt i64 [[V0]], 0
++; CHECK-NEXT:    br i1 [[GT]], label %[[RET_FALSE:.*]], label %[[HEADER]]
++; CHECK:       [[RET_TRUE]]:
++; CHECK-NEXT:    ret i1 true
++; CHECK:       [[RET_FALSE]]:
++; CHECK-NEXT:    ret i1 false
++; CHECK:       [[TRAP]]:
++; CHECK-NEXT:    tail call void @llvm.trap()
++; CHECK-NEXT:    unreachable
++;
++entry:
++  %nn = icmp sge i64 %count, 0
++  call void @llvm.assume(i1 %nn)
++  %gt1 = icmp sgt i64 %count, 1
++  br i1 %gt1, label %ph, label %ret.true
++ph:
++  %sub = add nsw i64 %count, -1
++  br label %header
++header:
++  %i = phi i64 [ 0, %ph ], [ %i.next, %access ]
++  %done = icmp eq i64 %i, %sub
++  br i1 %done, label %ret.true, label %body
++body:
++  %ov = icmp eq i64 %i, 9223372036854775807
++  br i1 %ov, label %trap, label %access
++access:
++  %i.next = add nsw i64 %i, 1
++  %a0 = getelementptr inbounds i64, ptr %p, i64 %i
++  %v0 = load i64, ptr %a0
++  %gt = icmp sgt i64 %v0, 0
++  br i1 %gt, label %ret.false, label %header
++ret.true:
++  ret i1 true
++ret.false:
++  ret i1 false
++trap:
++  tail call void @llvm.trap()
++  unreachable
++}
++
++; Negative tests.
++
++; A non-strict bound does not exclude the extreme: W itself may be SMAX.
++define i1 @neg_non_strict_bound(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @neg_non_strict_bound(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp sle i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[A]], 9223372036854775807
++; CHECK-NEXT:    ret i1 [[C]]
++;
++  %pre = icmp sle i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %c = icmp eq i64 %a, 9223372036854775807
++  ret i1 %c
++}
++
++; A bound on the far side of the extreme says nothing about it.
++define i1 @neg_bound_on_wrong_side(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @neg_bound_on_wrong_side(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp sgt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[A]], 9223372036854775807
++; CHECK-NEXT:    ret i1 [[C]]
++;
++  %pre = icmp sgt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %c = icmp eq i64 %a, 9223372036854775807
++  ret i1 %c
++}
++
++define i1 @neg_smin_with_upper_bound_only(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @neg_smin_with_upper_bound_only(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[A]], -9223372036854775808
++; CHECK-NEXT:    ret i1 [[C]]
++;
++  %pre = icmp slt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %c = icmp eq i64 %a, -9223372036854775808
++  ret i1 %c
++}
++
++; An unsigned bound must not license a conclusion about the signed extreme.
++define i1 @neg_unsigned_bound_only(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @neg_unsigned_bound_only(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp ult i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[A]], 9223372036854775807
++; CHECK-NEXT:    ret i1 [[C]]
++;
++  %pre = icmp ult i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %c = icmp eq i64 %a, 9223372036854775807
++  ret i1 %c
++}
++
++define i1 @neg_no_facts(i64 %a) {
++; CHECK-LABEL: define i1 @neg_no_facts(
++; CHECK-SAME: i64 [[A:%.*]]) {
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[A]], 9223372036854775807
++; CHECK-NEXT:    ret i1 [[C]]
++;
++  %c = icmp eq i64 %a, 9223372036854775807
++  ret i1 %c
++}
++
++; The condition does not hinge on the extreme alone, so the rule does not apply
++; (and the ordinary solver cannot prove it either).
++define i1 @neg_condition_not_at_extreme(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @neg_condition_not_at_extreme(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[C:%.*]] = icmp sgt i64 [[A]], 100
++; CHECK-NEXT:    ret i1 [[C]]
++;
++  %pre = icmp slt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %c = icmp sgt i64 %a, 100
++  ret i1 %c
++}
++
++; The unsigned extreme is not covered: A s< W says nothing about A ==u UMAX.
++define i1 @neg_unsigned_extreme(i64 %a, i64 %w) {
++; CHECK-LABEL: define i1 @neg_unsigned_extreme(
++; CHECK-SAME: i64 [[A:%.*]], i64 [[W:%.*]]) {
++; CHECK-NEXT:    [[PRE:%.*]] = icmp slt i64 [[A]], [[W]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[PRE]])
++; CHECK-NEXT:    [[C:%.*]] = icmp ugt i64 [[A]], -2
++; CHECK-NEXT:    ret i1 [[C]]
++;
++  %pre = icmp slt i64 %a, %w
++  call void @llvm.assume(i1 %pre)
++  %c = icmp ugt i64 %a, -2
++  ret i1 %c
++}

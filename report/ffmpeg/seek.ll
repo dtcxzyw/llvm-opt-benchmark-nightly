@@ -204,13 +204,13 @@ bb.a:
   %i.h = alloca [32 x i8], align 1                ; 3 uses
   %i.i = alloca [32 x i8], align 1                ; 4 uses
   %i.j = alloca [32 x i8], align 1                ; 3 uses
-  %i.k = alloca [32 x i8], align 1                ; 4 uses
+  %i.k = alloca [32 x i8], align 1                ; 3 uses
   store i64 %3, ptr %i.a, align 8, !tbaa !57
   store i64 %4, ptr %i.b, align 8, !tbaa !57
   store i64 %7, ptr %i.c, align 8, !tbaa !57
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #17
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.e, i8 0, i64 32, i1 false)
-  %i.l = icmp eq i64 %2, -9223372036854775808     ; 2 uses
+  %i.l = icmp eq i64 %2, -9223372036854775808
   br i1 %i.l, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -399,25 +399,15 @@ av_ts_make_string.exit90:                         ; preds = %bb.v, %bb.w
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.j, i8 0, i64 32, i1 false)
   %i.bp = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.j, i64 noundef 32, ptr noundef nonnull @.str.22, i64 noundef %.0.i86102105) #17 ; 0 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.k, i8 0, i64 32, i1 false)
-  br i1 %i.l, label %11, label %12
-
-11:                                               ; preds = %av_ts_make_string.exit90
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.k, ptr noundef nonnull align 1 dereferenceable(6) @.str.21, i64 6, i1 false)
-  br label %av_ts_make_string.exit91
-
-12:                                               ; preds = %av_ts_make_string.exit90
-  %13 = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.k, i64 noundef 32, ptr noundef nonnull @.str.22, i64 noundef %2) #17 ; 0 uses
-  br label %av_ts_make_string.exit91
-
-av_ts_make_string.exit91:                         ; preds = %11, %12
+  %11 = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.k, i64 noundef 32, ptr noundef nonnull @.str.22, i64 noundef %2) #17 ; 0 uses
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 56, ptr noundef nonnull @.str.19, i64 noundef %i.bl, i64 noundef %i.bi, i64 noundef %i.ak, ptr noundef nonnull %i.h, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef nonnull %i.k, i64 noundef %.162107, i64 noundef %i.bc, i32 noundef %.1) #17
   br i1 %i.bn, label %bb.x, label %bb.y
 
-bb.x:                                             ; preds = %av_ts_make_string.exit91
+bb.x:                                             ; preds = %av_ts_make_string.exit90
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 16, ptr noundef nonnull @.str.20) #17
   br label %bb.ab
 
-bb.y:                                             ; preds = %av_ts_make_string.exit91
+bb.y:                                             ; preds = %av_ts_make_string.exit90
   %.not82 = icmp sgt i64 %2, %.0.i86              ; 3 uses
   %i.bq = add nsw i64 %i.bc, -1
   %i.br = load i64, ptr %i.d, align 8             ; 3 uses
