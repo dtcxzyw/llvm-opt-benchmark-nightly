@@ -205,7 +205,7 @@ _ZN4mold8ArenaPtrINS_6SymbolINS_6X86_64EEEEaSEPS3_.exit: ; preds = %.lr.ph.i.i.i
   ]
 
 bb.c:                                             ; preds = %.lr.ph.split
-  %i.bn = shl nsw i64 %.03792, 2
+  %i.bn = shl nuw nsw i64 %.03792, 2
   %i.bo = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.bn
   %.0.copyload.i5.i.i = load i32, ptr %i.bo, align 1
   %i.bp = zext i32 %.0.copyload.i5.i.i to i64
@@ -272,7 +272,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.ck = load ptr, ptr %i.ba, align 8, !tbaa !92
-  %i.cl = shl nsw i64 %.04095, 2
+  %i.cl = shl nuw nsw i64 %.04095, 2
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ck, i64 %i.cl
   %.0.copyload.i5.i.i43 = load i32, ptr %i.cm, align 1
   %i.cn = zext i32 %.0.copyload.i5.i.i43 to i64
@@ -345,7 +345,7 @@ bb.n:                                             ; preds = %_ZN4mold8ArenaPtrIN
 
 bb.o:                                             ; preds = %bb.n
   %i.dp = load ptr, ptr %i.ba, align 8, !tbaa !92
-  %i.dq = shl nsw i64 %.04095, 2
+  %i.dq = shl nuw nsw i64 %.04095, 2
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dp, i64 %i.dq
   %.0.copyload.i5.i = load i32, ptr %i.dr, align 1
   %i.ds = zext i32 %.0.copyload.i5.i to i64
@@ -748,7 +748,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN4mold17
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %i.ak = shl nsw i64 %.0201, 2
+  %i.ak = shl nuw nsw i64 %.0201, 2
   %i.al = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.ak
   %.0.copyload.i5.i = load i32, ptr %i.al, align 1
   %i.am = zext i32 %.0.copyload.i5.i to i64
@@ -1151,7 +1151,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.at = load ptr, ptr %i.af, align 8, !tbaa !92
-  %i.au = shl nsw i64 %.02652, 2
+  %i.au = shl nuw nsw i64 %.02652, 2
   %i.av = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.au
   %.0.copyload.i5.i.i = load i32, ptr %i.av, align 1
   %i.aw = zext i32 %.0.copyload.i5.i.i to i64
@@ -1554,7 +1554,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.f, !prof !1035
 
 bb.e:                                             ; preds = %bb.d
-  %.idx.neg = shl nsw i64 %2, 2
+  %.idx.neg = shl nuw nsw i64 %2, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.d, ptr nonnull align 4 %i.o, i64 %.idx.neg, i1 false)
   %.pre76 = load ptr, ptr %i.c, align 8, !tbaa !835
   br label %_ZSt22__uninitialized_move_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit

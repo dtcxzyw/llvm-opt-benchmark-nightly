@@ -206,8 +206,8 @@ bb.v:                                             ; preds = %"_ZN5alloc5boxed12B
   %i.bm = trunc nuw i32 %i.bl to i1
   %i.bn = getelementptr inbounds nuw i8, ptr %2, i64 148
   %i.bo = load i32, ptr %i.bn, align 4, !alias.scope !46278, !noalias !46286
-  %4 = zext i32 %i.bo to i64
-  %.sroa.018.0.i = select i1 %i.bm, i64 %4, i64 4294967295 ; 3 uses
+  %narrow.i = select i1 %i.bm, i32 %i.bo, i32 -1  ; 2 uses
+  %.sroa.018.0.i = zext i32 %narrow.i to i64      ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !46294)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !46297
   store i64 152, ptr %i.m, align 8, !noalias !46297
@@ -215,7 +215,7 @@ bb.v:                                             ; preds = %"_ZN5alloc5boxed12B
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8.i.i.i.i.i.i.i.i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i)
   call void @llvm.experimental.noalias.scope.decl(metadata !46326), !noalias !46329
-  %i.bp = icmp eq i64 %.sroa.018.0.i, 0
+  %i.bp = icmp eq i32 %narrow.i, 0
   br i1 %i.bp, label %._crit_edge.i.i.i.i.i.i.i.i.i, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
@@ -425,7 +425,7 @@ bb.an:                                            ; preds = %"_ZN5alloc3vec16Vec
 bb.ao:                                            ; preds = %.noexc9.i.i.i.i.i.i.i.i.i.i
   %i.dj = extractvalue { i32, i32 } %i.dg, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i)
-  %i.dk = add nsw i64 %.sroa.11.019.i.i.i.i.i.i.i.i.i.i, -1 ; 3 uses
+  %i.dk = add i64 %.sroa.11.019.i.i.i.i.i.i.i.i.i.i, -1 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !46404
   invoke fastcc void @_ZN15index_scheduler5queue5tasks9TaskQueue8get_task17h27ec9948e8e7a7e8E(ptr noalias noundef align 8 captures(address) dereferenceable(784) %i.g, i64 %.val.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i32 %.val4.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.w, i32 noundef %i.dj)
           to label %.noexc10.i.i.i.i.i.i.i.i.i.i unwind label %bb.au, !noalias !46425
@@ -828,8 +828,8 @@ bb.v:                                             ; preds = %"_ZN5alloc5boxed12B
   %i.bj = trunc nuw i32 %i.bi to i1
   %i.bk = getelementptr inbounds nuw i8, ptr %2, i64 148
   %i.bl = load i32, ptr %i.bk, align 4, !alias.scope !46714, !noalias !46722
-  %4 = zext i32 %i.bl to i64
-  %.sroa.018.0.i = select i1 %i.bj, i64 %4, i64 4294967295
+  %narrow.i = select i1 %i.bj, i32 %i.bl, i32 -1
+  %.sroa.018.0.i = zext i32 %narrow.i to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !46730
   store i64 152, ptr %i.j, align 8, !noalias !46730
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !46746
@@ -1232,7 +1232,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.gs = getelementptr inbounds nuw i8, ptr %i.fv, i64 32
   %i.gt = xor i64 %.sroa.05.0.lcssa.i.i.i.i.i.i, -1
   %i.gu = add nsw i64 %..sroa.5.sroa.5.0.copyload.i.i.i, %i.gt
-  %i.gv = shl nsw i64 %i.gu, 5
+  %i.gv = shl nuw nsw i64 %i.gu, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fv, ptr nonnull align 8 %i.gs, i64 %i.gv, i1 false), !noalias !50292
   %i.gw = add nsw i64 %..sroa.5.sroa.5.0.copyload.i.i.i, -1 ; 4 uses
   store i64 %i.gw, ptr %.sroa.518.0..sroa_idx.i.i, align 8, !alias.scope !50294, !noalias !50295
@@ -1635,7 +1635,7 @@ bb.cl:                                            ; preds = %bb.ck, %bb.cj
   %i.rr = getelementptr inbounds nuw i8, ptr %i.qu, i64 32
   %i.rs = xor i64 %.sroa.05.0.lcssa.i.i.i.i.i543.i, -1
   %i.rt = add nsw i64 %..sroa.5.sroa.5.0.copyload.i.i540.i, %i.rs
-  %i.ru = shl nsw i64 %i.rt, 5
+  %i.ru = shl nuw nsw i64 %i.rt, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.qu, ptr nonnull align 8 %i.rr, i64 %i.ru, i1 false), !noalias !50552
   %i.rv = add nsw i64 %..sroa.5.sroa.5.0.copyload.i.i540.i, -1 ; 4 uses
   store i64 %i.rv, ptr %.sroa.521.0..sroa_idx.i.i, align 8, !alias.scope !50554, !noalias !50555
@@ -2038,7 +2038,7 @@ bb.ed:                                            ; preds = %bb.ec, %bb.eb
   %i.aag = getelementptr inbounds nuw i8, ptr %i.zj, i64 32
   %i.aah = xor i64 %.sroa.05.0.lcssa.i.i.i.i.i689.i, -1
   %i.aai = add nsw i64 %..sroa.5.sroa.5.0.copyload.i.i684.i, %i.aah
-  %i.aaj = shl nsw i64 %i.aai, 5
+  %i.aaj = shl nuw nsw i64 %i.aai, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.zj, ptr nonnull align 8 %i.aag, i64 %i.aaj, i1 false), !noalias !50746
   %i.aak = add nsw i64 %..sroa.5.sroa.5.0.copyload.i.i684.i, -1 ; 3 uses
   store i64 %i.aak, ptr %.sroa.518.0..sroa_idx.i687.i, align 8, !alias.scope !50748, !noalias !50749
@@ -2441,7 +2441,7 @@ bb.ep:                                            ; preds = %bb.eo, %.noexc57
   call void @llvm.experimental.noalias.scope.decl(metadata !51464)
   %.sroa.4.0.copyload.i.i = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !51467 ; 4 uses
   %i.nf = add nsw i64 %.promoted26.i.i, %i.mv
-  %i.ng = shl nsw i64 %i.nf, 5
+  %i.ng = shl nuw nsw i64 %i.nf, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.mr, ptr nonnull align 8 %i.mu, i64 %i.ng, i1 false), !noalias !51469
   %i.nh = add nsw i64 %.promoted26.i.i, -1        ; 4 uses
   store i64 %i.nh, ptr %.sroa.59.0..sroa_idx, align 8, !alias.scope !51471, !noalias !51472
@@ -2844,7 +2844,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.ct = getelementptr inbounds nuw i8, ptr %i.bw, i64 32
   %i.cu = xor i64 %.sroa.05.0.lcssa.i.i.i.i.i, -1
   %i.cv = add nsw i64 %..sroa.5.sroa.5.0.copyload.i.i, %i.cu
-  %i.cw = shl nsw i64 %i.cv, 5
+  %i.cw = shl nuw nsw i64 %i.cv, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bw, ptr nonnull align 8 %i.ct, i64 %i.cw, i1 false), !noalias !52706
   %i.cx = add nsw i64 %..sroa.5.sroa.5.0.copyload.i.i, -1 ; 4 uses
   store i64 %i.cx, ptr %.sroa.521.0..sroa_idx.i, align 8, !alias.scope !52708, !noalias !52709
@@ -3247,7 +3247,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fd, i64 32
   %i.gb = xor i64 %.sroa.05.0.lcssa.i.i.i.i.i309, -1
   %i.gc = add nsw i64 %..sroa.5.sroa.5.0.copyload.i.i304, %i.gb
-  %i.gd = shl nsw i64 %i.gc, 5
+  %i.gd = shl nuw nsw i64 %i.gc, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fd, ptr nonnull align 8 %i.ga, i64 %i.gd, i1 false), !noalias !52809
   %i.ge = add nsw i64 %..sroa.5.sroa.5.0.copyload.i.i304, -1 ; 4 uses
   store i64 %i.ge, ptr %.sroa.521.0..sroa_idx.i307, align 8, !alias.scope !52811, !noalias !52812
@@ -3650,7 +3650,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.dh = getelementptr inbounds nuw i8, ptr %i.ck, i64 32
   %i.di = xor i64 %.sroa.05.0.lcssa.i.i.i, -1
   %i.dj = add nsw i64 %i.ci, %i.di
-  %i.dk = shl nsw i64 %i.dj, 5
+  %i.dk = shl nuw nsw i64 %i.dj, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ck, ptr nonnull align 8 %i.dh, i64 %i.dk, i1 false), !noalias !53910
   %i.dl = add nsw i64 %i.ci, -1
   store i64 %i.dl, ptr %i.ch, align 8, !alias.scope !53912, !noalias !53913
@@ -4053,7 +4053,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   %i.eb = getelementptr inbounds nuw i8, ptr %i.de, i64 32
   %i.ec = xor i64 %.sroa.05.0.lcssa.i.i.i, -1
   %i.ed = add nsw i64 %i.dc, %i.ec
-  %i.ee = shl nsw i64 %i.ed, 5
+  %i.ee = shl nuw nsw i64 %i.ed, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.de, ptr nonnull align 8 %i.eb, i64 %i.ee, i1 false), !noalias !54190
   %i.ef = add nsw i64 %i.dc, -1
   store i64 %i.ef, ptr %i.bs, align 8, !alias.scope !54192, !noalias !54193
@@ -4456,7 +4456,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.bx = getelementptr inbounds nuw i8, ptr %i.ba, i64 32
   %i.by = xor i64 %.sroa.05.0.lcssa.i.i.i, -1
   %i.bz = add nsw i64 %i.ay, %i.by
-  %i.ca = shl nsw i64 %i.bz, 5
+  %i.ca = shl nuw nsw i64 %i.bz, 5
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ba, ptr nonnull align 8 %i.bx, i64 %i.ca, i1 false), !noalias !55293
   %i.cb = add nsw i64 %i.ay, -1                   ; 3 uses
   store i64 %i.cb, ptr %i.ax, align 8, !alias.scope !55295, !noalias !55296
@@ -4859,7 +4859,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.aw
   %i.gj = getelementptr inbounds nuw i8, ptr %i.fm, i64 32
   %i.gk = xor i64 %.sroa.05.0.lcssa.i.i.i, -1
   %i.gl = add nsw i64 %.sroa.17.32.copyload.i, %i.gk
-  %i.gm = shl nsw i64 %i.gl, 5
+  %i.gm = shl nuw nsw i64 %i.gl, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fm, ptr nonnull align 8 %i.gj, i64 %i.gm, i1 false), !noalias !55538
   %i.gn = add nsw i64 %.sroa.17.32.copyload.i, -1 ; 3 uses
   store i64 %i.gn, ptr %.sroa.522.sroa.2.0..sroa.522.16..sroa_idx.sroa_idx, align 8, !alias.scope !55540, !noalias !55541
@@ -5262,7 +5262,7 @@ bb.t:                                             ; preds = %bb.s, %.noexc
   tail call void @llvm.experimental.noalias.scope.decl(metadata !60676)
   %.sroa.4.0.copyload.i = load ptr, ptr %.sroa.4.0..sroa_idx.i243, align 8, !noalias !60679 ; 4 uses
   %i.bi = add nsw i64 %.promoted26.i, %i.ay
-  %i.bj = shl nsw i64 %i.bi, 5
+  %i.bj = shl nuw nsw i64 %i.bi, 5
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.au, ptr nonnull align 8 %i.ax, i64 %i.bj, i1 false), !noalias !60681
   %i.bk = add nsw i64 %.promoted26.i, -1          ; 5 uses
   store i64 %i.bk, ptr %.sroa.559.0..sroa_idx, align 8, !alias.scope !60683, !noalias !60684
@@ -5397,7 +5397,7 @@ bb.ac:                                            ; preds = %bb.ab, %.noexc281
   tail call void @llvm.experimental.noalias.scope.decl(metadata !60693)
   %.sroa.4.0.copyload.i279 = load ptr, ptr %.sroa.4.0..sroa_idx.i267, align 8, !noalias !60696 ; 4 uses
   %i.cg = add nsw i64 %.promoted26.i268, %i.bw
-  %i.ch = shl nsw i64 %i.cg, 5
+  %i.ch = shl nuw nsw i64 %i.cg, 5
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.bs, ptr nonnull align 8 %i.bv, i64 %i.ch, i1 false), !noalias !60698
   %i.ci = add nsw i64 %.promoted26.i268, -1       ; 5 uses
   store i64 %i.ci, ptr %.sroa.572.0..sroa_idx, align 8, !alias.scope !60700, !noalias !60701
@@ -5800,7 +5800,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   %i.eb = getelementptr inbounds nuw i8, ptr %i.de, i64 32
   %i.ec = xor i64 %.sroa.05.0.lcssa.i.i.i, -1
   %i.ed = add nsw i64 %.pre1380, %i.ec
-  %i.ee = shl nsw i64 %i.ed, 5
+  %i.ee = shl nuw nsw i64 %i.ed, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.de, ptr nonnull align 8 %i.eb, i64 %i.ee, i1 false), !noalias !69103
   %i.ef = add nsw i64 %.pre1380, -1
   store i64 %i.ef, ptr %.sroa.5502.0..sroa_idx, align 8, !alias.scope !69105, !noalias !69106
@@ -5975,7 +5975,7 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bb
   %i.fs = getelementptr inbounds nuw i8, ptr %i.ev, i64 32
   %i.ft = xor i64 %.sroa.05.0.lcssa.i.i.i737, -1
   %i.fu = add nsw i64 %.pre1382, %i.ft
-  %i.fv = shl nsw i64 %i.fu, 5
+  %i.fv = shl nuw nsw i64 %i.fu, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ev, ptr nonnull align 8 %i.fs, i64 %i.fv, i1 false), !noalias !69122
   %i.fw = add nsw i64 %.pre1382, -1
   store i64 %i.fw, ptr %.sroa.5529.0..sroa_idx, align 8, !alias.scope !69124, !noalias !69125
@@ -6247,7 +6247,7 @@ bb.bw:                                            ; preds = %bb.bv, %bb.bu
   %i.it = getelementptr inbounds nuw i8, ptr %i.hw, i64 32
   %i.iu = xor i64 %.sroa.05.0.lcssa.i.i.i753, -1
   %i.iv = add nsw i64 %.pre1384, %i.iu
-  %i.iw = shl nsw i64 %i.iv, 5
+  %i.iw = shl nuw nsw i64 %i.iv, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.hw, ptr nonnull align 8 %i.it, i64 %i.iw, i1 false), !noalias !69141
   %i.ix = add nsw i64 %.pre1384, -1
   store i64 %i.ix, ptr %.sroa.5571.0..sroa_idx, align 8, !alias.scope !69143, !noalias !69144
@@ -6497,7 +6497,7 @@ bb.co:                                            ; preds = %bb.cn, %bb.cm
   %i.lv = getelementptr inbounds nuw i8, ptr %i.ky, i64 32
   %i.lw = xor i64 %.sroa.05.0.lcssa.i.i.i784, -1
   %i.lx = add nsw i64 %.pre1386, %i.lw
-  %i.ly = shl nsw i64 %i.lx, 5
+  %i.ly = shl nuw nsw i64 %i.lx, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ky, ptr nonnull align 8 %i.lv, i64 %i.ly, i1 false), !noalias !69160
   %i.lz = add nsw i64 %.pre1386, -1
   store i64 %i.lz, ptr %.sroa.5599.0..sroa_idx, align 8, !alias.scope !69162, !noalias !69163
@@ -6881,7 +6881,7 @@ bb.dr:                                            ; preds = %bb.dq, %bb.dp
   %i.pq = getelementptr inbounds nuw i8, ptr %i.ot, i64 32
   %i.pr = xor i64 %.sroa.05.0.lcssa.i.i.i835, -1
   %i.ps = add nsw i64 %.pre1388, %i.pr
-  %i.pt = shl nsw i64 %i.ps, 5
+  %i.pt = shl nuw nsw i64 %i.ps, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ot, ptr nonnull align 8 %i.pq, i64 %i.pt, i1 false), !noalias !69212
   %i.pu = add nsw i64 %.pre1388, -1
   store i64 %i.pu, ptr %.sroa.5627.0..sroa_idx, align 8, !alias.scope !69214, !noalias !69215
@@ -7284,7 +7284,7 @@ bb.gh:                                            ; preds = %bb.gg, %bb.gf
   %i.sc = getelementptr inbounds nuw i8, ptr %i.rf, i64 32
   %i.sd = xor i64 %.sroa.05.0.lcssa.i.i.i, -1
   %i.se = add nsw i64 %i.rd, %i.sd
-  %i.sf = shl nsw i64 %i.se, 5
+  %i.sf = shl nuw nsw i64 %i.se, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.rf, ptr nonnull align 8 %i.sc, i64 %i.sf, i1 false), !noalias !153858
   %i.sg = add nsw i64 %i.rd, -1
   store i64 %i.sg, ptr %i.eb, align 8, !alias.scope !153860, !noalias !153861
@@ -7687,7 +7687,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   tail call void @llvm.experimental.noalias.scope.decl(metadata !187425)
   %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !noalias !187428 ; 4 uses
   %i.af = add nsw i64 %.promoted36, %i.r
-  %i.ag = shl nsw i64 %i.af, 5
+  %i.ag = shl nuw nsw i64 %i.af, 5
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.n, ptr nonnull align 8 %i.q, i64 %i.ag, i1 false), !noalias !187430
   %i.ah = add nsw i64 %.promoted36, -1            ; 4 uses
   store i64 %i.ah, ptr %i.j, align 8, !alias.scope !187425, !noalias !187432
@@ -8090,7 +8090,7 @@ bb.x:                                             ; preds = %bb.s
   %i.dm = getelementptr inbounds nuw i8, ptr %i.cj, i64 4
   %i.dn = xor i64 %i.ch, -1
   %i.do = add nsw i64 %i.bt, %i.dn
-  %i.dp = shl nsw i64 %i.do, 2
+  %i.dp = shl nuw nsw i64 %i.do, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 2 %i.cj, ptr nonnull align 2 %i.dm, i64 %i.dp, i1 false), !noalias !187487
   %i.dq = add nsw i64 %i.bt, -1
   store i64 %i.dq, ptr %i.bs, align 8, !alias.scope !187487
@@ -8493,8 +8493,8 @@ _ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.i.i.i: ; preds = 
 
 _ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread32.i.i.i: ; preds = %bb.z
   %i.cr = trunc nuw i64 %.sroa.01.069.i.i.i to i1
-  %1 = inttoptr i64 %.sroa.7.068.i.i.i to ptr
-  %2 = select i1 %i.cr, ptr %1, ptr null
+  %.sroa.7.0..i.i.i = select i1 %i.cr, i64 %.sroa.7.068.i.i.i, i64 0
+  %1 = inttoptr i64 %.sroa.7.0..i.i.i to ptr
   br label %"_ZN218_$LT$meilisearch_types..tasks..network.._..$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$meilisearch_types..tasks..network..NetworkTopologyStats$GT$..deserialize..__Visitor$u20$as$u20$serde_core..de..Visitor$GT$9visit_map17h670382ad07a37a63E.exit.i.i"
 
 bb.ad:                                            ; preds = %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.i.i.i, %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread36.i.i.i
@@ -8633,7 +8633,7 @@ bb.ap:                                            ; preds = %_ZN10serde_core2de9
   br i1 %i.dx, label %._crit_edge.i.i.i, label %bb.z
 
 "_ZN218_$LT$meilisearch_types..tasks..network.._..$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$meilisearch_types..tasks..network..NetworkTopologyStats$GT$..deserialize..__Visitor$u20$as$u20$serde_core..de..Visitor$GT$9visit_map17h670382ad07a37a63E.exit.i.i": ; preds = %_ZN10serde_core2de9MapAccess10next_value17h669552e78393dcf5E.exit.i.i.i, %_ZN10serde_core2de9MapAccess10next_value17h8862486ea2380915E.exit.i.i.i, %bb.ai, %bb.ag, %.loopexit.i.i.i.i.i.i, %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread32.i.i.i, %bb.ac, %._crit_edge.i.i.i
-  %.sroa.6.1.i.i.i = phi ptr [ %2, %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread32.i.i.i ], [ %i.db, %bb.ag ], [ %i.bx, %._crit_edge.i.i.i ], [ %i.de, %bb.ai ], [ %i.ci, %bb.ac ], [ %i.da, %.loopexit.i.i.i.i.i.i ], [ %i.dt, %_ZN10serde_core2de9MapAccess10next_value17h669552e78393dcf5E.exit.i.i.i ], [ %i.dd, %_ZN10serde_core2de9MapAccess10next_value17h8862486ea2380915E.exit.i.i.i ] ; 4 uses
+  %.sroa.6.1.i.i.i = phi ptr [ %1, %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread32.i.i.i ], [ %i.db, %bb.ag ], [ %i.bx, %._crit_edge.i.i.i ], [ %i.de, %bb.ai ], [ %i.ci, %bb.ac ], [ %i.da, %.loopexit.i.i.i.i.i.i ], [ %i.dt, %_ZN10serde_core2de9MapAccess10next_value17h669552e78393dcf5E.exit.i.i.i ], [ %i.dd, %_ZN10serde_core2de9MapAccess10next_value17h8862486ea2380915E.exit.i.i.i ] ; 4 uses
   %.sroa.0.1.i.i.i = phi i64 [ 0, %_ZN10serde_core2de9MapAccess8next_key17h290a5909f537dab6E.exit.thread32.i.i.i ], [ 1, %bb.ag ], [ 1, %._crit_edge.i.i.i ], [ 1, %bb.ai ], [ 1, %bb.ac ], [ 1, %.loopexit.i.i.i.i.i.i ], [ 1, %_ZN10serde_core2de9MapAccess10next_value17h8862486ea2380915E.exit.i.i.i ], [ 1, %_ZN10serde_core2de9MapAccess10next_value17h669552e78393dcf5E.exit.i.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !208178
   %i.dy = load i8, ptr %i.ac, align 8, !range !1313, !alias.scope !208178, !noundef !14

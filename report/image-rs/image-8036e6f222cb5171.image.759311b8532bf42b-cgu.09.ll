@@ -205,10 +205,10 @@ bb.bc:                                            ; preds = %bb.az
   %i.fx = load i8, ptr %i.fb, align 4, !range !5, !alias.scope !1325, !noalias !1331, !noundef !4
   %i.fy = trunc nuw i8 %i.fx to i1
   %i.fz = load i8, ptr %i.fm, align 1, !alias.scope !1325, !noalias !1331
-  %2 = zext i8 %i.fz to i64
-  %.sroa.031.0.i.i.i.i = select i1 %i.fy, i64 %2, i64 0
+  %narrow.i.i.i.i = select i1 %i.fy, i8 %i.fz, i8 0
+  %.sroa.031.0.i.i.i.i = zext i8 %narrow.i.i.i.i to i64
   %i.ga = udiv i64 %i.fw, 3
-  %.not64.i.i.i.i = icmp samesign ult i64 %.sroa.031.0.i.i.i.i, %i.ga
+  %.not64.i.i.i.i = icmp samesign ugt i64 %i.ga, %.sroa.031.0.i.i.i.i
   br i1 %.not64.i.i.i.i, label %_RINvMs0_NtCsvKatKEpids_3gif6readerNtB6_13DecodeOptions9read_infoINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEECsa5QsYiPB8Gl_5image.exit.i.i, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc

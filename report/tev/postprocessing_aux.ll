@@ -205,7 +205,7 @@ middle.block107:                                  ; preds = %vector.body98
 
 .lr.ph59:                                         ; preds = %.preheader
   %i.bu = shl i32 %4, 1                           ; 3 uses
-  %.neg52 = add i32 %i.bu, -2                     ; 2 uses
+  %.neg52 = add nsw i32 %i.bu, -2                 ; 2 uses
   %i.bv = sext i32 %.1.lcssa to i64               ; 9 uses
   %i.bw = sext i32 %3 to i64                      ; 2 uses
   %i.bx = sext i32 %5 to i64                      ; 3 uses

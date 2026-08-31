@@ -27,7 +27,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.d = add nuw nsw i32 %0, 2                    ; 4 uses
   %i.e = tail call noalias dereferenceable_or_null(32) ptr @uprv_malloc_78(i64 noundef 32) #10 ; 8 uses
-  %i.f = shl nsw i32 %i.d, 14
+  %i.f = shl nuw nsw i32 %i.d, 14
   %i.g = zext nneg i32 %i.f to i64
   %i.h = tail call noalias ptr @uprv_malloc_78(i64 noundef %i.g) #10 ; 7 uses
   %i.i = icmp eq ptr %i.e, null
@@ -286,7 +286,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
 
 bb.u:                                             ; preds = %bb.t
   %i.cj = getelementptr inbounds [4 x i8], ptr %.2, i64 %.pre-phi ; 2 uses
-  %i.ck = shl nsw i64 %.pre-phi, 2
+  %i.ck = shl nuw nsw i64 %.pre-phi, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.cj, ptr align 4 %.2, i64 %i.ck, i1 false)
   store i32 %i.m, ptr %i.cj, align 4, !tbaa !17
   %i.cl = getelementptr inbounds nuw i8, ptr %.2, i64 4
@@ -574,7 +574,7 @@ bb.o:                                             ; preds = %bb.m, %bb.i
   %.06071.i = phi i32 [ %.161.i, %bb.r ], [ 0, %bb.o ] ; 2 uses
   %i.aq = add nuw nsw i32 %.06071.i, %.05972.i
   %i.ar = lshr i32 %i.aq, 1                       ; 4 uses
-  %i.as = mul nsw i32 %i.ar, %i.g
+  %i.as = mul nuw nsw i32 %i.ar, %i.g
   %i.at = sext i32 %i.as to i64
   %i.au = getelementptr inbounds [4 x i8], ptr %i.m, i64 %i.at ; 3 uses
   %i.av = load i32, ptr %i.au, align 4, !tbaa !17

@@ -205,9 +205,9 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 131
   %i.t = load i8, ptr %i.s, align 1, !range !20
   %i.u = xor i8 %i.t, 1
-  %1 = zext nneg i8 %i.u to i32
-  %2 = select i1 %i.r, i32 %1, i32 0
-  %spec.select.i.i = add nuw nsw i32 %2, %.09.i.i ; 2 uses
+  %narrow.i = select i1 %i.r, i8 %i.u, i8 0
+  %1 = zext nneg i8 %narrow.i to i32
+  %spec.select.i.i = add nuw nsw i32 %.09.i.i, %1 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.v, %i.n
   br i1 %.not.i.i, label %_ZNK7testing9TestSuite21reportable_test_countEv.exit, label %.lr.ph.i.i, !llvm.loop !812
@@ -244,9 +244,9 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 131
   %i.j = load i8, ptr %i.i, align 1, !range !20
   %i.k = xor i8 %i.j, 1
-  %1 = zext nneg i8 %i.k to i32
-  %2 = select i1 %i.h, i32 %1, i32 0
-  %spec.select.i = add nuw nsw i32 %2, %.09.i     ; 2 uses
+  %narrow = select i1 %i.h, i8 %i.k, i8 0
+  %1 = zext nneg i8 %narrow to i32
+  %spec.select.i = add nuw nsw i32 %.09.i, %1     ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i, i64 8 ; 2 uses
   %.not.i = icmp eq ptr %i.l, %i.d
   br i1 %.not.i, label %_ZN7testing8internal7CountIfISt6vectorIPNS_8TestInfoESaIS4_EEPFbPKS3_EEEiRKT_T0_.exit, label %.lr.ph.i, !llvm.loop !812
@@ -649,9 +649,9 @@ _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic
   %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 131
   %i.ag = load i8, ptr %i.af, align 1, !range !20
   %i.ah = xor i8 %i.ag, 1
-  %20 = zext nneg i8 %i.ah to i32
-  %21 = select i1 %i.ae, i32 %20, i32 0
-  %spec.select.i.i.i.i = add nuw nsw i32 %21, %.09.i.i.i.i ; 2 uses
+  %narrow.i.i.i = select i1 %i.ae, i8 %i.ah, i8 0
+  %20 = zext nneg i8 %narrow.i.i.i to i32
+  %spec.select.i.i.i.i = add nuw nsw i32 %.09.i.i.i.i, %20 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.ai, %i.aa
   br i1 %.not.i.i.i.i, label %_ZNK7testing9TestSuite21reportable_test_countEv.exit.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !812
@@ -1054,9 +1054,9 @@ _ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i.i: ; 
   %i.ov = getelementptr inbounds nuw i8, ptr %i.or, i64 131
   %i.ow = load i8, ptr %i.ov, align 1, !range !20
   %i.ox = xor i8 %i.ow, 1
-  %22 = zext nneg i8 %i.ox to i32
-  %23 = select i1 %i.ou, i32 %22, i32 0
-  %spec.select.i.i = add nuw nsw i32 %23, %.09.i.i ; 2 uses
+  %narrow.i = select i1 %i.ou, i8 %i.ox, i8 0
+  %21 = zext nneg i8 %narrow.i to i32
+  %spec.select.i.i = add nuw nsw i32 %.09.i.i, %21 ; 2 uses
   %i.oy = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.oy, %i.oq
   br i1 %.not.i.i, label %_ZNK7testing9TestSuite21reportable_test_countEv.exit, label %.lr.ph.i.i, !llvm.loop !812
@@ -1459,9 +1459,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit94: ; preds = %_ZN
   %i.as = getelementptr inbounds nuw i8, ptr %i.ao, i64 131
   %i.at = load i8, ptr %i.as, align 1, !range !20
   %i.au = xor i8 %i.at, 1
-  %20 = zext nneg i8 %i.au to i32
-  %21 = select i1 %i.ar, i32 %20, i32 0
-  %spec.select.i.i = add nuw nsw i32 %21, %.09.i.i ; 2 uses
+  %narrow.i = select i1 %i.ar, i8 %i.au, i8 0
+  %20 = zext nneg i8 %narrow.i to i32
+  %spec.select.i.i = add nuw nsw i32 %.09.i.i, %20 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.av, %i.an
   br i1 %.not.i.i, label %_ZNK7testing9TestSuite21reportable_test_countEv.exit, label %.lr.ph.i.i, !llvm.loop !812
@@ -1864,9 +1864,9 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 131
   %i.v = load i8, ptr %i.u, align 1, !range !20
   %i.w = xor i8 %i.v, 1
-  %1 = zext nneg i8 %i.w to i32
-  %2 = select i1 %i.t, i32 %1, i32 0
-  %spec.select.i.i.i = add nuw nsw i32 %2, %.09.i.i.i ; 2 uses
+  %narrow.i.i = select i1 %i.t, i8 %i.w, i8 0
+  %1 = zext nneg i8 %narrow.i.i to i32
+  %spec.select.i.i.i = add nuw nsw i32 %.09.i.i.i, %1 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.x, %i.p
   br i1 %.not.i.i.i, label %_ZNK7testing9TestSuite21reportable_test_countEv.exit.i, label %.lr.ph.i.i.i, !llvm.loop !812
@@ -2181,9 +2181,9 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %_ZN7tes
   %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 131
   %i.ad = load i8, ptr %i.ac, align 1, !range !20
   %i.ae = xor i8 %i.ad, 1
-  %16 = zext nneg i8 %i.ae to i32
-  %17 = select i1 %i.ab, i32 %16, i32 0
-  %spec.select.i.i.i.i = add nuw nsw i32 %17, %.09.i.i.i.i ; 2 uses
+  %narrow.i.i.i = select i1 %i.ab, i8 %i.ae, i8 0
+  %16 = zext nneg i8 %narrow.i.i.i to i32
+  %spec.select.i.i.i.i = add nuw nsw i32 %.09.i.i.i.i, %16 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.af, %i.x
   br i1 %.not.i.i.i.i, label %_ZNK7testing9TestSuite21reportable_test_countEv.exit.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !812
@@ -2586,9 +2586,9 @@ _ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i.i: ; 
   %i.kr = getelementptr inbounds nuw i8, ptr %i.kn, i64 131
   %i.ks = load i8, ptr %i.kr, align 1, !range !20
   %i.kt = xor i8 %i.ks, 1
-  %18 = zext nneg i8 %i.kt to i32
-  %19 = select i1 %i.kq, i32 %18, i32 0
-  %spec.select.i.i = add nuw nsw i32 %19, %.09.i.i ; 2 uses
+  %narrow.i = select i1 %i.kq, i8 %i.kt, i8 0
+  %17 = zext nneg i8 %narrow.i to i32
+  %spec.select.i.i = add nuw nsw i32 %.09.i.i, %17 ; 2 uses
   %i.ku = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.ku, %i.km
   br i1 %.not.i.i, label %_ZNK7testing9TestSuite21reportable_test_countEv.exit, label %.lr.ph.i.i, !llvm.loop !812
@@ -2991,9 +2991,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit102: ; preds = %_Z
   %i.az = getelementptr inbounds nuw i8, ptr %i.av, i64 131
   %i.ba = load i8, ptr %i.az, align 1, !range !20
   %i.bb = xor i8 %i.ba, 1
-  %17 = zext nneg i8 %i.bb to i32
-  %18 = select i1 %i.ay, i32 %17, i32 0
-  %spec.select.i.i = add nuw nsw i32 %18, %.09.i.i ; 2 uses
+  %narrow.i = select i1 %i.ay, i8 %i.bb, i8 0
+  %17 = zext nneg i8 %narrow.i to i32
+  %spec.select.i.i = add nuw nsw i32 %.09.i.i, %17 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.04.08.i.i, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.bc, %i.au
   br i1 %.not.i.i, label %_ZNK7testing9TestSuite21reportable_test_countEv.exit, label %.lr.ph.i.i, !llvm.loop !812
@@ -3396,8 +3396,8 @@ bb.f:                                             ; preds = %bb.e
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPPN7testing8TestInfoESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit: ; preds = %bb.f
   %i.aj = load ptr, ptr %.sroa.041.0, align 8, !tbaa !803
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.041.0, i64 8
-  %.idx86 = shl nsw i64 %.0, 3                    ; 2 uses
-  %i.al = getelementptr inbounds i8, ptr %.sroa.041.0, i64 %.idx86
+  %.idx86 = shl nuw nsw i64 %.0, 3                ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.041.0, i64 %.idx86
   %gepdiff = add nsw i64 %.idx86, -8
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.sroa.041.0, ptr nonnull align 8 %i.ak, i64 %gepdiff, i1 false)
   %i.am = getelementptr inbounds i8, ptr %i.al, i64 -8
@@ -3539,7 +3539,7 @@ bb.i:                                             ; preds = %bb.e
 bb.j:                                             ; preds = %bb.i
   %i.cd = getelementptr inbounds i8, ptr %i.cc, i64 -8 ; 2 uses
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !803
-  %.idx = shl nsw i64 %.0, 3
+  %.idx = shl nuw nsw i64 %.0, 3
   %i.cf = add nsw i64 %.idx, -8                   ; 3 uses
   %i.cg = ashr exact i64 %i.cf, 3                 ; 2 uses
   %i.ch = icmp sgt i64 %i.cg, 1

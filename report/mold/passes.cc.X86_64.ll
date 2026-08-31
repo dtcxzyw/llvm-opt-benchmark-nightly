@@ -205,8 +205,8 @@ _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN4mold6ElfRelINS2_6X86_64EEESt4spanIS5
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %6, ptr noundef nonnull align 1 dereferenceable(24) %.sroa.040.0, i64 24, i1 false), !tbaa.struct !1506
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.040.0, i64 24
-  %.idx85 = mul nsw i64 %.0, 24                   ; 2 uses
-  %i.u = getelementptr inbounds i8, ptr %.sroa.040.0, i64 %.idx85
+  %.idx85 = mul nuw nsw i64 %.0, 24               ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %.sroa.040.0, i64 %.idx85
   %gepdiff = add nsw i64 %.idx85, -24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %.sroa.040.0, ptr nonnull align 1 %i.t, i64 %gepdiff, i1 false)
   %i.v = getelementptr inbounds i8, ptr %i.u, i64 -24
@@ -287,7 +287,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ah = getelementptr inbounds [24 x i8], ptr %.sroa.040.0, i64 %.0
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 -24 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %7, ptr noundef nonnull align 1 dereferenceable(24) %i.ai, i64 24, i1 false), !tbaa.struct !1506
-  %.idx = mul nsw i64 %.0, 24
+  %.idx = mul nuw nsw i64 %.0, 24
   %i.aj = add nsw i64 %.idx, -24                  ; 2 uses
   %i.ak = icmp sgt i64 %.0, 2
   br i1 %i.ak, label %bb.k, label %bb.l, !prof !1349
@@ -690,8 +690,8 @@ _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPZN4mold14sort_init_finiINS2_6X86_64EEE
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.040.0, i64 16, i1 false), !tbaa.struct !3718
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.040.0, i64 16
-  %.idx85 = shl nsw i64 %.0, 4                    ; 2 uses
-  %i.u = getelementptr inbounds i8, ptr %.sroa.040.0, i64 %.idx85
+  %.idx85 = shl nuw nsw i64 %.0, 4                ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %.sroa.040.0, i64 %.idx85
   %gepdiff = add nsw i64 %.idx85, -16
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.sroa.040.0, ptr nonnull align 8 %i.t, i64 %gepdiff, i1 false)
   %i.v = getelementptr inbounds i8, ptr %i.u, i64 -16
@@ -772,7 +772,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ah = getelementptr inbounds [16 x i8], ptr %.sroa.040.0, i64 %.0 ; 2 uses
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 -16 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %i.ai, i64 16, i1 false), !tbaa.struct !3718
-  %.idx = shl nsw i64 %.0, 4
+  %.idx = shl nuw nsw i64 %.0, 4
   %i.aj = add nsw i64 %.idx, -16                  ; 3 uses
   %i.ak = ashr exact i64 %i.aj, 4                 ; 2 uses
   %i.al = icmp sgt i64 %i.ak, 1
@@ -1175,8 +1175,8 @@ _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPZN4mold14sort_ctor_dtorINS2_6X86_64EEE
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.040.0, i64 16, i1 false), !tbaa.struct !3718
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.040.0, i64 16
-  %.idx85 = shl nsw i64 %.0, 4                    ; 2 uses
-  %i.u = getelementptr inbounds i8, ptr %.sroa.040.0, i64 %.idx85
+  %.idx85 = shl nuw nsw i64 %.0, 4                ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %.sroa.040.0, i64 %.idx85
   %gepdiff = add nsw i64 %.idx85, -16
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.sroa.040.0, ptr nonnull align 8 %i.t, i64 %gepdiff, i1 false)
   %i.v = getelementptr inbounds i8, ptr %i.u, i64 -16
@@ -1257,7 +1257,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ah = getelementptr inbounds [16 x i8], ptr %.sroa.040.0, i64 %.0 ; 2 uses
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 -16 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %i.ai, i64 16, i1 false), !tbaa.struct !3718
-  %.idx = shl nsw i64 %.0, 4
+  %.idx = shl nuw nsw i64 %.0, 4
   %i.aj = add nsw i64 %.idx, -16                  ; 3 uses
   %i.ak = ashr exact i64 %i.aj, 4                 ; 2 uses
   %i.al = icmp sgt i64 %i.ak, 1
@@ -1660,8 +1660,8 @@ bb.f:                                             ; preds = %bb.e
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPPN4mold5ChunkINS2_6X86_64EEESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit: ; preds = %bb.f
   %i.ak = load ptr, ptr %.sroa.041.0, align 8, !tbaa !490
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.041.0, i64 8
-  %.idx86 = shl nsw i64 %.0, 3                    ; 2 uses
-  %i.am = getelementptr inbounds i8, ptr %.sroa.041.0, i64 %.idx86
+  %.idx86 = shl nuw nsw i64 %.0, 3                ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.041.0, i64 %.idx86
   %gepdiff = add nsw i64 %.idx86, -8
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.sroa.041.0, ptr nonnull align 8 %i.al, i64 %gepdiff, i1 false)
   %i.an = getelementptr inbounds i8, ptr %i.am, i64 -8
@@ -1803,7 +1803,7 @@ bb.i:                                             ; preds = %bb.e
 bb.j:                                             ; preds = %bb.i
   %i.ce = getelementptr inbounds i8, ptr %i.cd, i64 -8 ; 2 uses
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !490
-  %.idx = shl nsw i64 %.0, 3
+  %.idx = shl nuw nsw i64 %.0, 3
   %i.cg = add nsw i64 %.idx, -8                   ; 3 uses
   %i.ch = ashr exact i64 %i.cg, 3                 ; 2 uses
   %i.ci = icmp sgt i64 %i.ch, 1
@@ -2206,8 +2206,8 @@ bb.f:                                             ; preds = %bb.e
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPPN4mold6SymbolINS2_6X86_64EEESt4spanIS6_Lm18446744073709551615EEEESA_ET0_T_SC_SB_.exit: ; preds = %bb.f
   %i.ak = load ptr, ptr %.sroa.041.0, align 8, !tbaa !425
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.041.0, i64 8
-  %.idx86 = shl nsw i64 %.0, 3                    ; 2 uses
-  %i.am = getelementptr inbounds i8, ptr %.sroa.041.0, i64 %.idx86
+  %.idx86 = shl nuw nsw i64 %.0, 3                ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.041.0, i64 %.idx86
   %gepdiff = add nsw i64 %.idx86, -8
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.sroa.041.0, ptr nonnull align 8 %i.al, i64 %gepdiff, i1 false)
   %i.an = getelementptr inbounds i8, ptr %i.am, i64 -8
@@ -2349,7 +2349,7 @@ bb.i:                                             ; preds = %bb.e
 bb.j:                                             ; preds = %bb.i
   %i.ce = getelementptr inbounds i8, ptr %i.cd, i64 -8 ; 2 uses
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !425
-  %.idx = shl nsw i64 %.0, 3
+  %.idx = shl nuw nsw i64 %.0, 3
   %i.cg = add nsw i64 %.idx, -8                   ; 3 uses
   %i.ch = ashr exact i64 %i.cg, 3                 ; 2 uses
   %i.ci = icmp sgt i64 %i.ch, 1
@@ -2752,8 +2752,8 @@ bb.f:                                             ; preds = %bb.e
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPPN4mold12InputSectionINS2_6X86_64EEESt6vectorIS6_SaIS6_EEEESB_ET0_T_SD_SC_.exit: ; preds = %bb.f
   %i.ak = load ptr, ptr %.sroa.041.0, align 8, !tbaa !29
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.041.0, i64 8
-  %.idx86 = shl nsw i64 %.0, 3                    ; 2 uses
-  %i.am = getelementptr inbounds i8, ptr %.sroa.041.0, i64 %.idx86
+  %.idx86 = shl nuw nsw i64 %.0, 3                ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %.sroa.041.0, i64 %.idx86
   %gepdiff = add nsw i64 %.idx86, -8
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.sroa.041.0, ptr nonnull align 8 %i.al, i64 %gepdiff, i1 false)
   %i.an = getelementptr inbounds i8, ptr %i.am, i64 -8
@@ -2895,7 +2895,7 @@ bb.i:                                             ; preds = %bb.e
 bb.j:                                             ; preds = %bb.i
   %i.ce = getelementptr inbounds i8, ptr %i.cd, i64 -8 ; 2 uses
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !29
-  %.idx = shl nsw i64 %.0, 3
+  %.idx = shl nuw nsw i64 %.0, 3
   %i.cg = add nsw i64 %.idx, -8                   ; 3 uses
   %i.ch = ashr exact i64 %i.cg, 3                 ; 2 uses
   %i.ci = icmp sgt i64 %i.ch, 1

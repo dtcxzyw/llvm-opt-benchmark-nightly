@@ -205,7 +205,7 @@ _ZSt6fill_nIPPdmS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc343
 .lr.ph1369.epil:                                  ; preds = %.lr.ph1369.epil, %.lr.ph1369.epil.preheader
   %indvars.iv1784.epil = phi i64 [ %indvars.iv1784.epil.init, %.lr.ph1369.epil.preheader ], [ %indvars.iv.next1785.epil, %.lr.ph1369.epil ] ; 3 uses
   %epil.iter = phi i64 [ 0, %.lr.ph1369.epil.preheader ], [ %epil.iter.next, %.lr.ph1369.epil ]
-  %i.rb = mul nsw i64 %indvars.iv1784.epil, %i.qs
+  %i.rb = mul nuw nsw i64 %indvars.iv1784.epil, %i.qs
   %i.rc = getelementptr inbounds nuw [8 x i8], ptr %i.qo, i64 %i.rb
   %i.rd = getelementptr inbounds nuw [8 x i8], ptr %i.qv, i64 %indvars.iv1784.epil
   store ptr %i.rc, ptr %i.rd, align 8, !tbaa !64
@@ -232,22 +232,22 @@ bb.dr:                                            ; preds = %_ZNSt6vectorIPdSaIS
 .lr.ph1369:                                       ; preds = %.lr.ph1369, %.lr.ph1369.preheader.new
   %indvars.iv1784 = phi i64 [ 0, %.lr.ph1369.preheader.new ], [ %indvars.iv.next1785.3, %.lr.ph1369 ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph1369.preheader.new ], [ %niter.next.3, %.lr.ph1369 ]
-  %i.rg = mul nsw i64 %indvars.iv1784, %i.qs
+  %i.rg = mul nuw nsw i64 %indvars.iv1784, %i.qs
   %i.rh = getelementptr inbounds nuw [8 x i8], ptr %i.qo, i64 %i.rg
   %i.ri = getelementptr inbounds nuw [8 x i8], ptr %i.qv, i64 %indvars.iv1784
   store ptr %i.rh, ptr %i.ri, align 8, !tbaa !64
   %indvars.iv.next1785 = or disjoint i64 %indvars.iv1784, 1 ; 2 uses
-  %i.rj = mul nsw i64 %indvars.iv.next1785, %i.qs
+  %i.rj = mul nuw nsw i64 %indvars.iv.next1785, %i.qs
   %i.rk = getelementptr inbounds nuw [8 x i8], ptr %i.qo, i64 %i.rj
   %i.rl = getelementptr inbounds nuw [8 x i8], ptr %i.qv, i64 %indvars.iv.next1785
   store ptr %i.rk, ptr %i.rl, align 8, !tbaa !64
   %indvars.iv.next1785.1 = or disjoint i64 %indvars.iv1784, 2 ; 2 uses
-  %i.rm = mul nsw i64 %indvars.iv.next1785.1, %i.qs
+  %i.rm = mul nuw nsw i64 %indvars.iv.next1785.1, %i.qs
   %i.rn = getelementptr inbounds nuw [8 x i8], ptr %i.qo, i64 %i.rm
   %i.ro = getelementptr inbounds nuw [8 x i8], ptr %i.qv, i64 %indvars.iv.next1785.1
   store ptr %i.rn, ptr %i.ro, align 8, !tbaa !64
   %indvars.iv.next1785.2 = or disjoint i64 %indvars.iv1784, 3 ; 2 uses
-  %i.rp = mul nsw i64 %indvars.iv.next1785.2, %i.qs
+  %i.rp = mul nuw nsw i64 %indvars.iv.next1785.2, %i.qs
   %i.rq = getelementptr inbounds nuw [8 x i8], ptr %i.qo, i64 %i.rp
   %i.rr = getelementptr inbounds nuw [8 x i8], ptr %i.qv, i64 %indvars.iv.next1785.2
   store ptr %i.rq, ptr %i.rr, align 8, !tbaa !64
@@ -650,7 +650,7 @@ _ZSt6fill_nIPPimS0_ET_S2_T0_RKT1_.exit.loopexit.i.i.i.i.i: ; preds = %.noexc374
 .lr.ph1395.epil:                                  ; preds = %.lr.ph1395.epil, %.lr.ph1395.epil.preheader
   %indvars.iv1814.epil = phi i64 [ %indvars.iv1814.epil.init, %.lr.ph1395.epil.preheader ], [ %indvars.iv.next1815.epil, %.lr.ph1395.epil ] ; 3 uses
   %epil.iter3336 = phi i64 [ 0, %.lr.ph1395.epil.preheader ], [ %epil.iter3336.next, %.lr.ph1395.epil ]
-  %i.yu = mul nsw i64 %indvars.iv1814.epil, %i.qs
+  %i.yu = mul nuw nsw i64 %indvars.iv1814.epil, %i.qs
   %i.yv = getelementptr inbounds nuw [4 x i8], ptr %i.yp, i64 %i.yu
   %i.yw = getelementptr inbounds nuw [8 x i8], ptr %i.yr, i64 %indvars.iv1814.epil
   store ptr %i.yv, ptr %i.yw, align 8, !tbaa !78
@@ -681,22 +681,22 @@ bb.ek:                                            ; preds = %_ZNSt6vectorIPiSaIS
 .lr.ph1395:                                       ; preds = %.lr.ph1395, %.lr.ph1395.preheader.new
   %indvars.iv1814 = phi i64 [ 0, %.lr.ph1395.preheader.new ], [ %indvars.iv.next1815.3, %.lr.ph1395 ] ; 6 uses
   %niter3340 = phi i64 [ 0, %.lr.ph1395.preheader.new ], [ %niter3340.next.3, %.lr.ph1395 ]
-  %i.zb = mul nsw i64 %indvars.iv1814, %i.qs
+  %i.zb = mul nuw nsw i64 %indvars.iv1814, %i.qs
   %i.zc = getelementptr inbounds nuw [4 x i8], ptr %i.yp, i64 %i.zb
   %i.zd = getelementptr inbounds nuw [8 x i8], ptr %i.yr, i64 %indvars.iv1814
   store ptr %i.zc, ptr %i.zd, align 8, !tbaa !78
   %indvars.iv.next1815 = or disjoint i64 %indvars.iv1814, 1 ; 2 uses
-  %i.ze = mul nsw i64 %indvars.iv.next1815, %i.qs
+  %i.ze = mul nuw nsw i64 %indvars.iv.next1815, %i.qs
   %i.zf = getelementptr inbounds nuw [4 x i8], ptr %i.yp, i64 %i.ze
   %i.zg = getelementptr inbounds nuw [8 x i8], ptr %i.yr, i64 %indvars.iv.next1815
   store ptr %i.zf, ptr %i.zg, align 8, !tbaa !78
   %indvars.iv.next1815.1 = or disjoint i64 %indvars.iv1814, 2 ; 2 uses
-  %i.zh = mul nsw i64 %indvars.iv.next1815.1, %i.qs
+  %i.zh = mul nuw nsw i64 %indvars.iv.next1815.1, %i.qs
   %i.zi = getelementptr inbounds nuw [4 x i8], ptr %i.yp, i64 %i.zh
   %i.zj = getelementptr inbounds nuw [8 x i8], ptr %i.yr, i64 %indvars.iv.next1815.1
   store ptr %i.zi, ptr %i.zj, align 8, !tbaa !78
   %indvars.iv.next1815.2 = or disjoint i64 %indvars.iv1814, 3 ; 2 uses
-  %i.zk = mul nsw i64 %indvars.iv.next1815.2, %i.qs
+  %i.zk = mul nuw nsw i64 %indvars.iv.next1815.2, %i.qs
   %i.zl = getelementptr inbounds nuw [4 x i8], ptr %i.yp, i64 %i.zk
   %i.zm = getelementptr inbounds nuw [8 x i8], ptr %i.yr, i64 %indvars.iv.next1815.2
   store ptr %i.zl, ptr %i.zm, align 8, !tbaa !78
@@ -740,9 +740,9 @@ bb.em:                                            ; preds = %bb.el
 
 .critedge:                                        ; preds = %bb.em, %.critedge.loopexit.split.loop.exit2411, %.preheader716
   %.0127.lcssa = phi i32 [ 0, %.preheader716 ], [ %i.aaf, %.critedge.loopexit.split.loop.exit2411 ], [ %i.xs, %bb.em ] ; 2 uses
-  %i.aag = shl nsw i32 %i.qj, 1
-  %5 = sext i32 %i.aag to i64
-  %i.aah = shl nsw i64 %5, 2                      ; 4 uses
+  %i.aag = shl nuw nsw i32 %i.qj, 1
+  %5 = zext nneg i32 %i.aag to i64
+  %i.aah = shl nuw nsw i64 %5, 2                  ; 4 uses
   %i.aai = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aah) #19
           to label %.preheader.preheader.i383 unwind label %bb.fu ; 19 uses
 

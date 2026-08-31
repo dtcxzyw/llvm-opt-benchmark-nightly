@@ -204,9 +204,9 @@ bb.u:                                             ; preds = %._crit_edge, %bb.q
   br i1 %i.cr, label %bb.g, label %._crit_edge
 
 .thread139:                                       ; preds = %bb.i
-  %3 = uitofp i1 %i.cl to double
-  %4 = select i1 %i.cg, double %3, double 0.000000e+00
-  %i.cs = fadd double %i.cp, %4
+  %narrow = select i1 %i.cg, i1 %i.cl, i1 false
+  %3 = uitofp i1 %narrow to double
+  %i.cs = fadd double %i.cp, %3
   %i.ct = fmul double %.150.jt3, %i.cs
   br label %_ZN6hermes23parseIntWithRadixDigitsILb0EN4llvh9StringRefEZNS_17parseIntWithRadixILb0ES2_EENS_8OptValueIdEET0_iEUlhE_EEbS6_iT1_.exit
 

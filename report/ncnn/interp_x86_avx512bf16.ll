@@ -205,10 +205,10 @@ bb.d:                                             ; preds = %.lr.ph150, %bb.d
   br label %._crit_edge
 
 iter.check:                                       ; preds = %.preheader
-  %i.ep = shl nsw i32 %i.en, 1
+  %i.ep = shl nuw nsw i32 %i.en, 1
   %i.eq = sext i32 %.2.lcssa to i64               ; 7 uses
   %i.er = sext i32 %i.en to i64                   ; 11 uses
-  %9 = sext i32 %i.ep to i64                      ; 2 uses
+  %9 = zext nneg i32 %i.ep to i64                 ; 2 uses
   %invariant.gep = getelementptr [2 x i8], ptr %i.at, i64 %i.er ; 3 uses
   %invariant.gep208 = getelementptr [2 x i8], ptr %i.at, i64 %9 ; 3 uses
   %i.es = sub nsw i64 %i.er, %i.eq                ; 7 uses

@@ -204,9 +204,7 @@ bb.co:                                            ; preds = %bb.cn, %bb.by
   %i.pz = getelementptr inbounds nuw i8, ptr %7, i64 48
   %i.qa = getelementptr i8, ptr %0, i64 4920
   %i.qb = load i8, ptr @ieee80211_ac_to_qos_mask, align 1
-  %10 = zext i8 %i.qb to i32
   %i.qc = load i8, ptr getelementptr inbounds nuw (i8, ptr @ieee80211_ac_to_qos_mask, i64 1), align 1
-  %11 = zext i8 %i.qc to i32
   %i.qd = load i8, ptr getelementptr inbounds nuw (i8, ptr @ieee80211_ac_to_qos_mask, i64 2), align 1
   %i.qe = zext i8 %i.qd to i32
   %i.qf = load i8, ptr getelementptr inbounds nuw (i8, ptr @ieee80211_ac_to_qos_mask, i64 3), align 1
@@ -244,7 +242,8 @@ bb.cr:                                            ; preds = %bb.cq
   %i.qv = getelementptr i8, ptr %i.qu, i64 1008
   %i.qw = load i8, ptr %i.qv, align 2, !range !28, !noundef !29
   %i.qx = trunc nuw i8 %i.qw to i1
-  %spec.store.select.i = select i1 %i.qx, i32 %10, i32 0 ; 3 uses
+  %narrow = select i1 %i.qx, i8 %i.qb, i8 0       ; 2 uses
+  %spec.store.select.i = zext i8 %narrow to i32   ; 2 uses
   store i32 %spec.store.select.i, ptr %i.jw, align 8
   %i.qy = getelementptr i8, ptr %i.qu, i64 1022
   %i.qz = load i8, ptr %i.qy, align 2, !range !28, !noundef !29
@@ -252,12 +251,13 @@ bb.cr:                                            ; preds = %bb.cq
   br i1 %i.ra, label %bb.cs, label %bb.ct
 
 bb.cs:                                            ; preds = %bb.cr
-  %12 = or i32 %spec.store.select.i, %11          ; 2 uses
-  store i32 %12, ptr %i.jw, align 8
+  %10 = or i8 %narrow, %i.qc
+  %11 = zext i8 %10 to i32                        ; 2 uses
+  store i32 %11, ptr %i.jw, align 8
   br label %bb.ct
 
 bb.ct:                                            ; preds = %bb.cs, %bb.cr
-  %i.rb = phi i32 [ %spec.store.select.i, %bb.cr ], [ %12, %bb.cs ] ; 2 uses
+  %i.rb = phi i32 [ %spec.store.select.i, %bb.cr ], [ %11, %bb.cs ] ; 2 uses
   %i.rc = getelementptr i8, ptr %i.qu, i64 1036
   %i.rd = load i8, ptr %i.rc, align 2, !range !28, !noundef !29
   %i.re = trunc nuw i8 %i.rd to i1

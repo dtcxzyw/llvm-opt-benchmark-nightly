@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %.lr.ph632, %.loopex
   br i1 %i.eo, label %.lr.ph608.split.us.preheader, label %.loopexit570
 
 .lr.ph608.split.us.preheader:                     ; preds = %.lr.ph608
-  %i.ey = mul nsw i64 %indvars.iv737, %i.er
+  %i.ey = mul nuw nsw i64 %indvars.iv737, %i.er
   %i.ez = sext i32 %i.et to i64
   %wide.trip.count735 = sext i32 %i.ev to i64
   %invariant.gep = getelementptr [8 x i8], ptr %3, i64 %i.ey ; 2 uses
@@ -608,7 +608,7 @@ bb.d:                                             ; preds = %bb.b
   %i.i = shl nsw i32 %i.b, 1
   %i.j = sext i32 %i.i to i64
   %i.k = shl nsw i64 %i.j, 3                      ; 3 uses
-  %i.l = shl nsw i64 %i.f, 3                      ; 4 uses
+  %i.l = shl nuw nsw i64 %i.f, 3                  ; 4 uses
   %i.m = icmp eq i32 %i.c, 0
   br i1 %i.m, label %bb.e, label %bb.f
 

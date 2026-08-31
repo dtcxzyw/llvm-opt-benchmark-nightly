@@ -202,8 +202,8 @@ pvar_all_init.exit:                               ; preds = %bb.as, %a2a_size_st
 .lr.ph161:                                        ; preds = %pvar_all_init.exit, %bb.bl
   %i.hq = phi i32 [ %i.kx, %bb.bl ], [ %i.hi, %pvar_all_init.exit ]
   %.0160 = phi i32 [ %i.ky, %bb.bl ], [ 0, %pvar_all_init.exit ] ; 11 uses
-  %i.hr = mul nsw i32 %i.hq, 13
-  %3 = sext i32 %i.hr to i64
+  %i.hr = mul nuw nsw i32 %i.hq, 13
+  %3 = zext nneg i32 %i.hr to i64
   call void @llvm.memset.p0.i64(ptr align 1 %i.hl, i8 0, i64 %3, i1 false)
   %i.hs = call i32 @MPI_Allgather(ptr noundef nonnull %i.ai, i32 noundef 13, ptr noundef nonnull @ompi_mpi_char, ptr noundef %i.hl, i32 noundef 13, ptr noundef nonnull @ompi_mpi_char, ptr noundef nonnull @ompi_mpi_comm_world) #11 ; 0 uses
   %i.ht = load i32, ptr %i.af, align 4, !tbaa !9  ; 2 uses

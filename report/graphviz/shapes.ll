@@ -205,7 +205,7 @@ bb.bq:                                            ; preds = %bb.bo
 
 bb.br:                                            ; preds = %bb.bq
   %i.jv = load ptr, ptr @stderr, align 8, !tbaa !13
-  %i.jw = shl nsw i64 %spec.select, 5
+  %i.jw = shl nuw nsw i64 %spec.select, 5
   %i.jx = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.jv, ptr noundef nonnull @.str.6, i64 noundef %i.jw) #28 ; 0 uses
   call fastcc void @graphviz_exit() #29
   unreachable
@@ -608,7 +608,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   %i.aq = load ptr, ptr @stderr, align 8, !tbaa !13
-  %i.ar = shl nsw i64 %.199, 5
+  %i.ar = shl nuw nsw i64 %.199, 5
   %i.as = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.aq, ptr noundef nonnull @.str.6, i64 noundef %i.ar) #28 ; 0 uses
   tail call fastcc void @graphviz_exit() #29
   unreachable
@@ -879,20 +879,20 @@ bb.h:                                             ; preds = %bb.g
   br label %gv_recalloc.exit.i
 
 bb.i:                                             ; preds = %bb.g
-  %i.aa = tail call ptr @realloc(ptr noundef %i.m, i64 noundef range(i64 0, -7) %i.y) #32 ; 3 uses
+  %i.aa = tail call ptr @realloc(ptr noundef %i.m, i64 noundef %i.y) #32 ; 3 uses
   %i.ab = icmp eq ptr %i.aa, null
   br i1 %i.ab, label %bb.j, label %bb.k
 
 .thread17:                                        ; preds = %.preheader.i.i
   store i64 1, ptr @N_UserShape, align 8, !tbaa !119
-  %i.ac = tail call dereferenceable_or_null(8) ptr @realloc(ptr noundef nonnull %i.m, i64 noundef range(i64 0, -7) 8) #32 ; 2 uses
+  %i.ac = tail call dereferenceable_or_null(8) ptr @realloc(ptr noundef nonnull %i.m, i64 noundef 8) #32 ; 2 uses
   %i.ad = icmp eq ptr %i.ac, null
   br i1 %i.ad, label %bb.j, label %.thread18
 
 bb.j:                                             ; preds = %.thread17, %bb.i
   %i.ae = phi i64 [ 8, %.thread17 ], [ %i.y, %bb.i ]
   %i.af = load ptr, ptr @stderr, align 8, !tbaa !13
-  %i.ag = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.af, ptr noundef nonnull @.str.6, i64 noundef range(i64 0, -7) %i.ae) #28 ; 0 uses
+  %i.ag = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.af, ptr noundef nonnull @.str.6, i64 noundef %i.ae) #28 ; 0 uses
   tail call fastcc void @graphviz_exit() #29
   unreachable
 
