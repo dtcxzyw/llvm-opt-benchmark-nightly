@@ -205,7 +205,7 @@ _ZNSt6vectorIcSaIcEE17_M_realloc_insertIJRKcEEEvN9__gnu_cxx17__normal_iteratorIP
 
 _ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i: ; preds = %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJRKcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i.i.i.i.i, %bb.e
   %i.ae = phi ptr [ %i.p, %bb.e ], [ %i.ac, %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJRKcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i.i.i.i.i ]
-  %i.af = add i64 %.04.i.i.i, -1                  ; 2 uses
+  %i.af = add nsw i64 %.04.i.i.i, -1              ; 2 uses
   %.not.i.i.i = icmp eq i64 %i.af, 0
   br i1 %.not.i.i.i, label %_ZSt6fill_nISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEmcET_S6_T0_RKT1_.exit, label %bb.d, !llvm.loop !3621
 
@@ -446,7 +446,7 @@ _ZNSt6vectorIcSaIcEE17_M_realloc_insertIJRKcEEEvN9__gnu_cxx17__normal_iteratorIP
 
 _ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i80: ; preds = %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJRKcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i.i.i.i.i87, %bb.x
   %i.cu = phi ptr [ %i.cf, %bb.x ], [ %i.cs, %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJRKcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i.i.i.i.i87 ]
-  %i.cv = add i64 %.04.i.i.i78, -1                ; 2 uses
+  %i.cv = add nsw i64 %.04.i.i.i78, -1            ; 2 uses
   %.not.i.i.i81 = icmp eq i64 %i.cv, 0
   br i1 %.not.i.i.i81, label %_ZSt6fill_nISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEmcET_S6_T0_RKT1_.exit88, label %bb.w, !llvm.loop !3621
 

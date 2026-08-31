@@ -1,0 +1,124 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 5ad8de523ab39..bd80917c0522f 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -16210,6 +16210,53 @@ void ScalarEvolution::LoopGuards::collectFromBlock(
+     }
+   }
+ 
++  // A guard (A <u B) implies the difference B - A, which cannot wrap, is at
++  // least one. If additionally (B <=u A + C) holds for a constant C, the
++  // difference is also bounded above by C. Record both, as trip counts of
++  // loops counting from A up to B are expressed in terms of that difference,
++  // while a rewrite of B alone cannot be related back to A.
++  //
++  // The upper bound on its own does not tighten the range of B - A: the
++  // rewrite is a umin against a constant and leaves the unsigned minimum at
++  // zero. It is the lower bound that bounds the common (B - A - 1) trip count.
++  SmallMapVector<std::pair<const SCEV *, const SCEV *>, bool, 4> ULessThan;
++  for (auto [Pred, LHS, RHS] : GuardsToProcess) {
++    // Pointer differences are only meaningful for a common base, which is not
++    // known here, and getMinusSCEV bails out on unrelated bases.
++    if ((Pred != ICmpInst::ICMP_ULT && Pred != ICmpInst::ICMP_ULE) ||
++        LHS->getType()->isPointerTy())
++      continue;
++    bool &IsStrict = ULessThan[{LHS, RHS}];
++    IsStrict |= Pred == ICmpInst::ICMP_ULT;
++  }
++  for (auto [Bounds, IsStrict] : ULessThan) {
++    if (!IsStrict)
++      continue;
++    auto [A, B] = Bounds;
++    const SCEV *Diff = SE.getMinusSCEV(B, A);
++    GuardsToProcess.emplace_back(ICmpInst::ICMP_UGE, Diff,
++                                 SE.getOne(Diff->getType()));
++  }
++  for (unsigned I = 0, E = GuardsToProcess.size(); I != E; ++I) {
++    auto [Pred, B, UB] = GuardsToProcess[I];
++    const APInt *C;
++    const SCEV *A;
++    if ((Pred != ICmpInst::ICMP_ULT && Pred != ICmpInst::ICMP_ULE) ||
++        B->getType()->isPointerTy() ||
++        !match(UB, m_scev_Add(m_scev_APInt(C), m_SCEV(A))) ||
++        !ULessThan.contains({A, B}))
++      continue;
++    APInt Bound = *C;
++    if (Pred == ICmpInst::ICMP_ULT) {
++      // B <u A + 0 contradicts A <=u B, there is no bound to derive.
++      if (Bound.isZero())
++        continue;
++      --Bound;
++    }
++    GuardsToProcess.emplace_back(ICmpInst::ICMP_ULE, SE.getMinusSCEV(B, A),
++                                 SE.getConstant(Bound));
++  }
++
+   // Process divisibility guards in reverse order to populate DivGuards early.
+   DenseMap<const SCEV *, APInt> Multiples;
+   LoopGuards DivGuards(SE);
+diff --git a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+index 18aff4f73830b..b4fd0b6dec616 100644
+--- a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
++++ b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+@@ -1904,7 +1904,7 @@ define void @two_sided_guard_bounds_difference(ptr %dst, i64 %n, i64 %start) {
+ ; CHECK-NEXT:    --> {(1 + %start),+,1}<nuw><%loop> U: full-set S: full-set Exits: %n LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @two_sided_guard_bounds_difference
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (-1 * %start) + %n)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 -2
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 6
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (-1 * %start) + %n)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+@@ -1944,7 +1944,7 @@ define void @two_sided_guard_bounds_difference_ule(ptr %dst, i64 %n, i64 %start)
+ ; CHECK-NEXT:    --> {(1 + %start),+,1}<nuw><%loop> U: full-set S: full-set Exits: %n LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @two_sided_guard_bounds_difference_ule
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (-1 * %start) + %n)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 -2
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 7
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (-1 * %start) + %n)
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+@@ -2042,3 +2042,43 @@ loop:
+ exit:
+   ret void
+ }
++
++; The guards are on pointers with unrelated bases, so the difference is not
++; expressible and nothing must be derived from them.
++define void @two_sided_guard_unrelated_pointers(ptr %dst, ptr %a, ptr %b) {
++; CHECK-LABEL: 'two_sided_guard_unrelated_pointers'
++; CHECK-NEXT:  Classifying expressions for: @two_sided_guard_unrelated_pointers
++; CHECK-NEXT:    %add = getelementptr i8, ptr %a, i64 8
++; CHECK-NEXT:    --> (8 + %a) U: full-set S: full-set
++; CHECK-NEXT:    %and = and i1 %c.0, %c.1
++; CHECK-NEXT:    --> (%c.0 umin %c.1) U: full-set S: full-set
++; CHECK-NEXT:    %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,100) S: [0,100) Exits: 99 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %gep = getelementptr i8, ptr %dst, i64 %iv
++; CHECK-NEXT:    --> {%dst,+,1}<nw><%loop> U: full-set S: full-set Exits: (99 + %dst) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nuw i64 %iv, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,101) S: [1,101) Exits: 100 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @two_sided_guard_unrelated_pointers
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i64 99
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 99
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i64 99
++; CHECK-NEXT:  Loop %loop: Trip multiple is 100
++;
++entry:
++  %c.0 = icmp ult ptr %a, %b
++  %add = getelementptr i8, ptr %a, i64 8
++  %c.1 = icmp ult ptr %b, %add
++  %and = and i1 %c.0, %c.1
++  br i1 %and, label %loop, label %exit
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %gep = getelementptr i8, ptr %dst, i64 %iv
++  store i8 0, ptr %gep
++  %iv.next = add nuw i64 %iv, 1
++  %ec = icmp eq i64 %iv.next, 100
++  br i1 %ec, label %exit, label %loop
++
++exit:
++  ret void
++}

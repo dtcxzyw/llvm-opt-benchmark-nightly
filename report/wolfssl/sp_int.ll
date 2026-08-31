@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @_sp_div_same_size(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef captures(none) %2) unnamed_addr #10 {
 bb.a:
-  %i.a = load i16, ptr %1, align 8, !tbaa !16     ; 5 uses
+  %i.a = load i16, ptr %1, align 8, !tbaa !16     ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %i.c = zext i16 %i.a to i32                     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
@@ -267,7 +267,7 @@ bb.c:                                             ; preds = %split
 
 .lr.ph64.i:                                       ; preds = %bb.c
   %i.ac = zext i16 %i.aa to i64
-  %wide.trip.count87.i = zext i16 %i.a to i64
+  %wide.trip.count87.i = zext i16 %i.a to i64     ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %.lr.ph64.i
@@ -291,8 +291,7 @@ bb.e:                                             ; preds = %bb.d
   %i.am = ashr i128 %i.ak, 64                     ; 2 uses
   %indvars.iv.next83.i = add nuw nsw i64 %indvars.iv82.i, 1 ; 2 uses
   %indvars.iv.next81.i = add nuw nsw i64 %indvars.iv80.i, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next81.i to i16
-  %exitcond = icmp eq i16 %i.a, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next81.i, %wide.trip.count87.i
   br i1 %exitcond, label %.critedge2.loopexit.i, label %bb.d, !llvm.loop !82
 
 .critedge2.loopexit.i:                            ; preds = %bb.e, %bb.d

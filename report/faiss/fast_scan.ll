@@ -205,6 +205,8 @@ bb.e:                                             ; preds = %_ZN5faiss12rabitq_u
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 16
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !14469 ; 2 uses
   %i.aq = icmp ult i64 %i.al, %i.ap
+  %6 = sub i64 %i.ap, %i.al
+  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %6, i64 32)
   %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 44
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !14491
   %i.at = getelementptr inbounds nuw i8, ptr %i.an, i64 104
@@ -226,12 +228,9 @@ bb.e:                                             ; preds = %_ZN5faiss12rabitq_u
   br i1 %i.aq, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.thread
-  %6 = sub nuw i64 %i.ap, %i.al
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.bk = getelementptr inbounds i8, ptr %i.h, i64 -4 ; 7 uses
   %i.bl = getelementptr inbounds i8, ptr %i.k, i64 -8 ; 7 uses
-  %7 = call i64 @llvm.umax.i64(i64 %6, i64 1)
-  %umax = call i64 @llvm.umin.i64(i64 %7, i64 32)
   br label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.ah, %.thread
@@ -607,7 +606,7 @@ bb.ag:                                            ; preds = %_ZN5faiss4CMaxIflE4
 
 bb.ah:                                            ; preds = %.sink.split, %.split, %_ZN5faiss12rabitq_utils30compute_1bit_adjusted_distanceEfRKNS0_14SignBitFactorsERKNS0_16QueryFactorsDataEbmm.exit73, %_ZN5faiss12rabitq_utils23should_refine_candidateEffffb.exit, %bb.r
   %i.ir = add nuw nsw i64 %.094, 1                ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ir, %umax
+  %exitcond.not = icmp eq i64 %i.ir, %.sroa.speculated
   br i1 %exitcond.not, label %._crit_edge, label %bb.g, !llvm.loop !14534
 
 bb.ai:                                            ; preds = %bb.w, %bb.d
@@ -1010,6 +1009,8 @@ bb.e:                                             ; preds = %_ZN5faiss12rabitq_u
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 16
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !14469 ; 2 uses
   %i.aq = icmp ult i64 %i.al, %i.ap
+  %6 = sub i64 %i.ap, %i.al
+  %.sroa.speculated = call i64 @llvm.umin.i64(i64 %6, i64 32)
   %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 44
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !14491
   %i.at = getelementptr inbounds nuw i8, ptr %i.an, i64 104
@@ -1031,12 +1032,9 @@ bb.e:                                             ; preds = %_ZN5faiss12rabitq_u
   br i1 %i.aq, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.thread
-  %6 = sub nuw i64 %i.ap, %i.al
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.bk = getelementptr inbounds i8, ptr %i.h, i64 -4 ; 7 uses
   %i.bl = getelementptr inbounds i8, ptr %i.k, i64 -8 ; 7 uses
-  %7 = call i64 @llvm.umax.i64(i64 %6, i64 1)
-  %umax = call i64 @llvm.umin.i64(i64 %7, i64 32)
   br label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.ah, %.thread
@@ -1412,7 +1410,7 @@ bb.ag:                                            ; preds = %_ZN5faiss4CMinIflE4
 
 bb.ah:                                            ; preds = %.sink.split, %.split, %_ZN5faiss12rabitq_utils30compute_1bit_adjusted_distanceEfRKNS0_14SignBitFactorsERKNS0_16QueryFactorsDataEbmm.exit73, %_ZN5faiss12rabitq_utils23should_refine_candidateEffffb.exit, %bb.r
   %i.ir = add nuw nsw i64 %.094, 1                ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ir, %umax
+  %exitcond.not = icmp eq i64 %i.ir, %.sroa.speculated
   br i1 %exitcond.not, label %._crit_edge, label %bb.g, !llvm.loop !15192
 
 bb.ai:                                            ; preds = %bb.w, %bb.d

@@ -204,7 +204,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i: ; preds = %bb.c
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.w
   store i8 %i.ac, ptr %i.af, align 1, !tbaa !78
   %i.ag = add nuw i64 %.01213.i, 1
-  %i.ah = add i64 %.014.i, 1                      ; 2 uses
+  %i.ah = add nuw i64 %.014.i, 1                  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ah, %i.l
   br i1 %exitcond.not.i, label %_ZZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS3_E_clIhEEDaS3_ENKUlS3_E_clImEEDaS3_.exit, label %bb.c, !llvm.loop !578
 
@@ -405,7 +405,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i.1: ; preds = %_Z
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.ca
   store i8 %i.cg, ptr %i.ci, align 1, !tbaa !78
   %i.cj = add nuw i64 %.01213.i.i, 2              ; 2 uses
-  %i.ck = add i64 %.014.i.i, 2                    ; 2 uses
+  %i.ck = add nuw i64 %.014.i.i, 2                ; 2 uses
   %niter286.next.1 = add i64 %niter286, 2         ; 2 uses
   %niter286.ncmp.1 = icmp eq i64 %niter286.next.1, %unroll_iter285
   br i1 %niter286.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit.loopexit.unr-lcssa, label %bb.l, !llvm.loop !578
@@ -535,7 +535,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i67.1: ; preds = %
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 %i.dy
   store i8 %i.ee, ptr %i.eg, align 1, !tbaa !78
   %i.eh = add nuw i64 %.01213.i.i66, 2            ; 2 uses
-  %i.ei = add i64 %.014.i.i65, 2                  ; 2 uses
+  %i.ei = add nuw i64 %.014.i.i65, 2              ; 2 uses
   %niter278.next.1 = add i64 %niter278, 2         ; 2 uses
   %niter278.ncmp.1 = icmp eq i64 %niter278.next.1, %unroll_iter277
   br i1 %niter278.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit69.loopexit.unr-lcssa, label %bb.o, !llvm.loop !578
@@ -640,7 +640,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i73.1: ; preds = %
   %i.gd = getelementptr inbounds nuw i8, ptr %i.gc, i64 %i.fv
   store i8 %i.gb, ptr %i.gd, align 1, !tbaa !78
   %i.ge = add nuw i64 %.01213.i.i72, 2            ; 2 uses
-  %i.gf = add i64 %.014.i.i71, 2                  ; 2 uses
+  %i.gf = add nuw i64 %.014.i.i71, 2              ; 2 uses
   %niter270.next.1 = add i64 %niter270, 2         ; 2 uses
   %niter270.ncmp.1 = icmp eq i64 %niter270.next.1, %unroll_iter269
   br i1 %niter270.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit75.loopexit.unr-lcssa, label %bb.q, !llvm.loop !578
@@ -770,7 +770,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i79.1: ; preds = %
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ia, i64 %i.ht
   store i8 %i.hz, ptr %i.ib, align 1, !tbaa !78
   %i.ic = add nuw i64 %.01213.i.i78, 2            ; 2 uses
-  %i.id = add i64 %.014.i.i77, 2                  ; 2 uses
+  %i.id = add nuw i64 %.014.i.i77, 2              ; 2 uses
   %niter262.next.1 = add i64 %niter262, 2         ; 2 uses
   %niter262.ncmp.1 = icmp eq i64 %niter262.next.1, %unroll_iter261
   br i1 %niter262.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit81.loopexit.unr-lcssa, label %bb.t, !llvm.loop !578
@@ -875,7 +875,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i85.1: ; preds = %
   %i.jy = getelementptr inbounds nuw i8, ptr %i.jx, i64 %i.jq
   store i8 %i.jw, ptr %i.jy, align 1, !tbaa !78
   %i.jz = add nuw i64 %.01213.i.i84, 2            ; 2 uses
-  %i.ka = add i64 %.014.i.i83, 2                  ; 2 uses
+  %i.ka = add nuw i64 %.014.i.i83, 2              ; 2 uses
   %niter254.next.1 = add i64 %niter254, 2         ; 2 uses
   %niter254.ncmp.1 = icmp eq i64 %niter254.next.1, %unroll_iter253
   br i1 %niter254.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit87.loopexit.unr-lcssa, label %bb.v, !llvm.loop !578
@@ -980,7 +980,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i91.1: ; preds = %
   %i.lv = getelementptr inbounds nuw i8, ptr %i.lu, i64 %i.ln
   store i8 %i.lt, ptr %i.lv, align 1, !tbaa !78
   %i.lw = add nuw i64 %.01213.i.i90, 2            ; 2 uses
-  %i.lx = add i64 %.014.i.i89, 2                  ; 2 uses
+  %i.lx = add nuw i64 %.014.i.i89, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit93.loopexit.unr-lcssa, label %bb.x, !llvm.loop !578
@@ -1121,7 +1121,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.1: ; preds = %_ZNK
   %i.as = getelementptr inbounds nuw [2 x i8], ptr %i.ah, i64 %i.am
   store i16 %i.ar, ptr %i.as, align 2, !tbaa !373
   %i.at = add nuw i64 %.01213.i, 2                ; 2 uses
-  %i.au = add i64 %.014.i, 2                      ; 2 uses
+  %i.au = add nuw i64 %.014.i, 2                  ; 2 uses
   %niter294.next.1 = add i64 %niter294, 2         ; 2 uses
   %niter294.ncmp.1 = icmp eq i64 %niter294.next.1, %unroll_iter293
   br i1 %niter294.ncmp.1, label %_ZZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS3_E_clItEEDaS3_ENKUlS3_E_clImEEDaS3_.exit.loopexit.unr-lcssa, label %.lr.ph.i.new, !llvm.loop !591
@@ -1361,7 +1361,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i.1: ; preds = %_Z
   %i.dh = getelementptr inbounds nuw [2 x i8], ptr %i.cw, i64 %i.db
   store i16 %i.dg, ptr %i.dh, align 2, !tbaa !373
   %i.di = add nuw i64 %.01213.i.i, 2              ; 2 uses
-  %i.dj = add i64 %.014.i.i, 2                    ; 2 uses
+  %i.dj = add nuw i64 %.014.i.i, 2                ; 2 uses
   %niter286.next.1 = add i64 %niter286, 2         ; 2 uses
   %niter286.ncmp.1 = icmp eq i64 %niter286.next.1, %unroll_iter285
   br i1 %niter286.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.new, !llvm.loop !591
@@ -1496,7 +1496,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i67.1: ; preds = %
   %i.fg = getelementptr inbounds nuw [2 x i8], ptr %i.ev, i64 %i.fa
   store i16 %i.ff, ptr %i.fg, align 2, !tbaa !373
   %i.fh = add nuw i64 %.01213.i.i66, 2            ; 2 uses
-  %i.fi = add i64 %.014.i.i65, 2                  ; 2 uses
+  %i.fi = add nuw i64 %.014.i.i65, 2              ; 2 uses
   %niter278.next.1 = add i64 %niter278, 2         ; 2 uses
   %niter278.ncmp.1 = icmp eq i64 %niter278.next.1, %unroll_iter277
   br i1 %niter278.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit69.loopexit.unr-lcssa, label %.lr.ph.i.i64.new, !llvm.loop !591
@@ -1584,7 +1584,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i73.1: ; preds = %
   %i.gw = getelementptr inbounds nuw [2 x i8], ptr %i.gl, i64 %i.gq
   store i16 %i.gv, ptr %i.gw, align 2, !tbaa !373
   %i.gx = add nuw i64 %.01213.i.i72, 2            ; 2 uses
-  %i.gy = add i64 %.014.i.i71, 2                  ; 2 uses
+  %i.gy = add nuw i64 %.014.i.i71, 2              ; 2 uses
   %niter270.next.1 = add i64 %niter270, 2         ; 2 uses
   %niter270.ncmp.1 = icmp eq i64 %niter270.next.1, %unroll_iter269
   br i1 %niter270.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit75.loopexit.unr-lcssa, label %.lr.ph.i.i70.new, !llvm.loop !591
@@ -1719,7 +1719,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i79.1: ; preds = %
   %i.iv = getelementptr inbounds nuw [2 x i8], ptr %i.ik, i64 %i.ip
   store i16 %i.iu, ptr %i.iv, align 2, !tbaa !373
   %i.iw = add nuw i64 %.01213.i.i78, 2            ; 2 uses
-  %i.ix = add i64 %.014.i.i77, 2                  ; 2 uses
+  %i.ix = add nuw i64 %.014.i.i77, 2              ; 2 uses
   %niter262.next.1 = add i64 %niter262, 2         ; 2 uses
   %niter262.ncmp.1 = icmp eq i64 %niter262.next.1, %unroll_iter261
   br i1 %niter262.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit81.loopexit.unr-lcssa, label %.lr.ph.i.i76.new, !llvm.loop !591
@@ -1807,7 +1807,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i85.1: ; preds = %
   %i.kl = getelementptr inbounds nuw [2 x i8], ptr %i.ka, i64 %i.kf
   store i16 %i.kk, ptr %i.kl, align 2, !tbaa !373
   %i.km = add nuw i64 %.01213.i.i84, 2            ; 2 uses
-  %i.kn = add i64 %.014.i.i83, 2                  ; 2 uses
+  %i.kn = add nuw i64 %.014.i.i83, 2              ; 2 uses
   %niter254.next.1 = add i64 %niter254, 2         ; 2 uses
   %niter254.ncmp.1 = icmp eq i64 %niter254.next.1, %unroll_iter253
   br i1 %niter254.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit87.loopexit.unr-lcssa, label %.lr.ph.i.i82.new, !llvm.loop !591
@@ -1895,7 +1895,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i91.1: ; preds = %
   %i.mb = getelementptr inbounds nuw [2 x i8], ptr %i.lq, i64 %i.lv
   store i16 %i.ma, ptr %i.mb, align 2, !tbaa !373
   %i.mc = add nuw i64 %.01213.i.i90, 2            ; 2 uses
-  %i.md = add i64 %.014.i.i89, 2                  ; 2 uses
+  %i.md = add nuw i64 %.014.i.i89, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit93.loopexit.unr-lcssa, label %.lr.ph.i.i88.new, !llvm.loop !591
@@ -2026,7 +2026,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.1: ; preds = %_ZNK
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %i.am
   store i32 %i.ar, ptr %i.as, align 4, !tbaa !137
   %i.at = add nuw i64 %.01213.i, 2                ; 2 uses
-  %i.au = add i64 %.014.i, 2                      ; 2 uses
+  %i.au = add nuw i64 %.014.i, 2                  ; 2 uses
   %niter294.next.1 = add i64 %niter294, 2         ; 2 uses
   %niter294.ncmp.1 = icmp eq i64 %niter294.next.1, %unroll_iter293
   br i1 %niter294.ncmp.1, label %_ZZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS3_E_clIjEEDaS3_ENKUlS3_E_clImEEDaS3_.exit.loopexit.unr-lcssa, label %.lr.ph.i.new, !llvm.loop !604
@@ -2266,7 +2266,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i.1: ; preds = %_Z
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.cw, i64 %i.db
   store i32 %i.dg, ptr %i.dh, align 4, !tbaa !137
   %i.di = add nuw i64 %.01213.i.i, 2              ; 2 uses
-  %i.dj = add i64 %.014.i.i, 2                    ; 2 uses
+  %i.dj = add nuw i64 %.014.i.i, 2                ; 2 uses
   %niter286.next.1 = add i64 %niter286, 2         ; 2 uses
   %niter286.ncmp.1 = icmp eq i64 %niter286.next.1, %unroll_iter285
   br i1 %niter286.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.new, !llvm.loop !604
@@ -2401,7 +2401,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i67.1: ; preds = %
   %i.fg = getelementptr inbounds nuw [4 x i8], ptr %i.ev, i64 %i.fa
   store i32 %i.ff, ptr %i.fg, align 4, !tbaa !137
   %i.fh = add nuw i64 %.01213.i.i66, 2            ; 2 uses
-  %i.fi = add i64 %.014.i.i65, 2                  ; 2 uses
+  %i.fi = add nuw i64 %.014.i.i65, 2              ; 2 uses
   %niter278.next.1 = add i64 %niter278, 2         ; 2 uses
   %niter278.ncmp.1 = icmp eq i64 %niter278.next.1, %unroll_iter277
   br i1 %niter278.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit69.loopexit.unr-lcssa, label %.lr.ph.i.i64.new, !llvm.loop !604
@@ -2489,7 +2489,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i73.1: ; preds = %
   %i.gw = getelementptr inbounds nuw [4 x i8], ptr %i.gl, i64 %i.gq
   store i32 %i.gv, ptr %i.gw, align 4, !tbaa !137
   %i.gx = add nuw i64 %.01213.i.i72, 2            ; 2 uses
-  %i.gy = add i64 %.014.i.i71, 2                  ; 2 uses
+  %i.gy = add nuw i64 %.014.i.i71, 2              ; 2 uses
   %niter270.next.1 = add i64 %niter270, 2         ; 2 uses
   %niter270.ncmp.1 = icmp eq i64 %niter270.next.1, %unroll_iter269
   br i1 %niter270.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit75.loopexit.unr-lcssa, label %.lr.ph.i.i70.new, !llvm.loop !604
@@ -2624,7 +2624,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i79.1: ; preds = %
   %i.iv = getelementptr inbounds nuw [4 x i8], ptr %i.ik, i64 %i.ip
   store i32 %i.iu, ptr %i.iv, align 4, !tbaa !137
   %i.iw = add nuw i64 %.01213.i.i78, 2            ; 2 uses
-  %i.ix = add i64 %.014.i.i77, 2                  ; 2 uses
+  %i.ix = add nuw i64 %.014.i.i77, 2              ; 2 uses
   %niter262.next.1 = add i64 %niter262, 2         ; 2 uses
   %niter262.ncmp.1 = icmp eq i64 %niter262.next.1, %unroll_iter261
   br i1 %niter262.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit81.loopexit.unr-lcssa, label %.lr.ph.i.i76.new, !llvm.loop !604
@@ -2712,7 +2712,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i85.1: ; preds = %
   %i.kl = getelementptr inbounds nuw [4 x i8], ptr %i.ka, i64 %i.kf
   store i32 %i.kk, ptr %i.kl, align 4, !tbaa !137
   %i.km = add nuw i64 %.01213.i.i84, 2            ; 2 uses
-  %i.kn = add i64 %.014.i.i83, 2                  ; 2 uses
+  %i.kn = add nuw i64 %.014.i.i83, 2              ; 2 uses
   %niter254.next.1 = add i64 %niter254, 2         ; 2 uses
   %niter254.ncmp.1 = icmp eq i64 %niter254.next.1, %unroll_iter253
   br i1 %niter254.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit87.loopexit.unr-lcssa, label %.lr.ph.i.i82.new, !llvm.loop !604
@@ -2800,7 +2800,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i91.1: ; preds = %
   %i.mb = getelementptr inbounds nuw [4 x i8], ptr %i.lq, i64 %i.lv
   store i32 %i.ma, ptr %i.mb, align 4, !tbaa !137
   %i.mc = add nuw i64 %.01213.i.i90, 2            ; 2 uses
-  %i.md = add i64 %.014.i.i89, 2                  ; 2 uses
+  %i.md = add nuw i64 %.014.i.i89, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIhEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit93.loopexit.unr-lcssa, label %.lr.ph.i.i88.new, !llvm.loop !604
@@ -3133,7 +3133,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i: ; preds = %bb.c
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.w
   store i8 %i.ad, ptr %i.ag, align 1, !tbaa !78
   %i.ah = add nuw i64 %.01213.i, 1
-  %i.ai = add i64 %.014.i, 1                      ; 2 uses
+  %i.ai = add nuw i64 %.014.i, 1                  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ai, %i.l
   br i1 %exitcond.not.i, label %_ZZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS3_E_clIhEEDaS3_ENKUlS3_E_clImEEDaS3_.exit, label %bb.c, !llvm.loop !628
 
@@ -3336,7 +3336,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i.1: ; preds = %_Z
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 %i.cc
   store i8 %i.cj, ptr %i.cl, align 1, !tbaa !78
   %i.cm = add nuw i64 %.01213.i.i, 2              ; 2 uses
-  %i.cn = add i64 %.014.i.i, 2                    ; 2 uses
+  %i.cn = add nuw i64 %.014.i.i, 2                ; 2 uses
   %niter284.next.1 = add i64 %niter284, 2         ; 2 uses
   %niter284.ncmp.1 = icmp eq i64 %niter284.next.1, %unroll_iter283
   br i1 %niter284.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit.loopexit.unr-lcssa, label %bb.l, !llvm.loop !628
@@ -3469,7 +3469,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i65.1: ; preds = %
   %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 %i.ed
   store i8 %i.ek, ptr %i.em, align 1, !tbaa !78
   %i.en = add nuw i64 %.01213.i.i64, 2            ; 2 uses
-  %i.eo = add i64 %.014.i.i63, 2                  ; 2 uses
+  %i.eo = add nuw i64 %.014.i.i63, 2              ; 2 uses
   %niter276.next.1 = add i64 %niter276, 2         ; 2 uses
   %niter276.ncmp.1 = icmp eq i64 %niter276.next.1, %unroll_iter275
   br i1 %niter276.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit67.loopexit.unr-lcssa, label %bb.o, !llvm.loop !628
@@ -3577,7 +3577,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i71.1: ; preds = %
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 %i.gd
   store i8 %i.gk, ptr %i.gm, align 1, !tbaa !78
   %i.gn = add nuw i64 %.01213.i.i70, 2            ; 2 uses
-  %i.go = add i64 %.014.i.i69, 2                  ; 2 uses
+  %i.go = add nuw i64 %.014.i.i69, 2              ; 2 uses
   %niter268.next.1 = add i64 %niter268, 2         ; 2 uses
   %niter268.ncmp.1 = icmp eq i64 %niter268.next.1, %unroll_iter267
   br i1 %niter268.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit73.loopexit.unr-lcssa, label %bb.q, !llvm.loop !628
@@ -3710,7 +3710,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i77.1: ; preds = %
   %i.in = getelementptr inbounds nuw i8, ptr %i.im, i64 %i.ie
   store i8 %i.il, ptr %i.in, align 1, !tbaa !78
   %i.io = add nuw i64 %.01213.i.i76, 2            ; 2 uses
-  %i.ip = add i64 %.014.i.i75, 2                  ; 2 uses
+  %i.ip = add nuw i64 %.014.i.i75, 2              ; 2 uses
   %niter260.next.1 = add i64 %niter260, 2         ; 2 uses
   %niter260.ncmp.1 = icmp eq i64 %niter260.next.1, %unroll_iter259
   br i1 %niter260.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit79.loopexit.unr-lcssa, label %bb.t, !llvm.loop !628
@@ -3818,7 +3818,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i83.1: ; preds = %
   %i.kn = getelementptr inbounds nuw i8, ptr %i.km, i64 %i.ke
   store i8 %i.kl, ptr %i.kn, align 1, !tbaa !78
   %i.ko = add nuw i64 %.01213.i.i82, 2            ; 2 uses
-  %i.kp = add i64 %.014.i.i81, 2                  ; 2 uses
+  %i.kp = add nuw i64 %.014.i.i81, 2              ; 2 uses
   %niter252.next.1 = add i64 %niter252, 2         ; 2 uses
   %niter252.ncmp.1 = icmp eq i64 %niter252.next.1, %unroll_iter251
   br i1 %niter252.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit85.loopexit.unr-lcssa, label %bb.v, !llvm.loop !628
@@ -3926,7 +3926,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i89.1: ; preds = %
   %i.mn = getelementptr inbounds nuw i8, ptr %i.mm, i64 %i.me
   store i8 %i.ml, ptr %i.mn, align 1, !tbaa !78
   %i.mo = add nuw i64 %.01213.i.i88, 2            ; 2 uses
-  %i.mp = add i64 %.014.i.i87, 2                  ; 2 uses
+  %i.mp = add nuw i64 %.014.i.i87, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit91.loopexit.unr-lcssa, label %bb.x, !llvm.loop !628
@@ -4066,7 +4066,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.1: ; preds = %_ZNK
   %i.aq = getelementptr inbounds nuw [2 x i8], ptr %i.ag, i64 %i.al
   store i16 %i.ap, ptr %i.aq, align 2, !tbaa !373
   %i.ar = add nuw i64 %.01213.i, 2                ; 2 uses
-  %i.as = add i64 %.014.i, 2                      ; 2 uses
+  %i.as = add nuw i64 %.014.i, 2                  ; 2 uses
   %niter292.next.1 = add i64 %niter292, 2         ; 2 uses
   %niter292.ncmp.1 = icmp eq i64 %niter292.next.1, %unroll_iter291
   br i1 %niter292.ncmp.1, label %_ZZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS3_E_clItEEDaS3_ENKUlS3_E_clImEEDaS3_.exit.loopexit.unr-lcssa, label %.lr.ph.i.new, !llvm.loop !641
@@ -4303,7 +4303,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i.1: ; preds = %_Z
   %i.dc = getelementptr inbounds nuw [2 x i8], ptr %i.cs, i64 %i.cx
   store i16 %i.db, ptr %i.dc, align 2, !tbaa !373
   %i.dd = add nuw i64 %.01213.i.i, 2              ; 2 uses
-  %i.de = add i64 %.014.i.i, 2                    ; 2 uses
+  %i.de = add nuw i64 %.014.i.i, 2                ; 2 uses
   %niter284.next.1 = add i64 %niter284, 2         ; 2 uses
   %niter284.ncmp.1 = icmp eq i64 %niter284.next.1, %unroll_iter283
   br i1 %niter284.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.new, !llvm.loop !641
@@ -4435,7 +4435,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i65.1: ; preds = %
   %i.ey = getelementptr inbounds nuw [2 x i8], ptr %i.eo, i64 %i.et
   store i16 %i.ex, ptr %i.ey, align 2, !tbaa !373
   %i.ez = add nuw i64 %.01213.i.i64, 2            ; 2 uses
-  %i.fa = add i64 %.014.i.i63, 2                  ; 2 uses
+  %i.fa = add nuw i64 %.014.i.i63, 2              ; 2 uses
   %niter276.next.1 = add i64 %niter276, 2         ; 2 uses
   %niter276.ncmp.1 = icmp eq i64 %niter276.next.1, %unroll_iter275
   br i1 %niter276.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit67.loopexit.unr-lcssa, label %.lr.ph.i.i62.new, !llvm.loop !641
@@ -4520,7 +4520,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i71.1: ; preds = %
   %i.gl = getelementptr inbounds nuw [2 x i8], ptr %i.gb, i64 %i.gg
   store i16 %i.gk, ptr %i.gl, align 2, !tbaa !373
   %i.gm = add nuw i64 %.01213.i.i70, 2            ; 2 uses
-  %i.gn = add i64 %.014.i.i69, 2                  ; 2 uses
+  %i.gn = add nuw i64 %.014.i.i69, 2              ; 2 uses
   %niter268.next.1 = add i64 %niter268, 2         ; 2 uses
   %niter268.ncmp.1 = icmp eq i64 %niter268.next.1, %unroll_iter267
   br i1 %niter268.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit73.loopexit.unr-lcssa, label %.lr.ph.i.i68.new, !llvm.loop !641
@@ -4652,7 +4652,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i77.1: ; preds = %
   %i.ih = getelementptr inbounds nuw [2 x i8], ptr %i.hx, i64 %i.ic
   store i16 %i.ig, ptr %i.ih, align 2, !tbaa !373
   %i.ii = add nuw i64 %.01213.i.i76, 2            ; 2 uses
-  %i.ij = add i64 %.014.i.i75, 2                  ; 2 uses
+  %i.ij = add nuw i64 %.014.i.i75, 2              ; 2 uses
   %niter260.next.1 = add i64 %niter260, 2         ; 2 uses
   %niter260.ncmp.1 = icmp eq i64 %niter260.next.1, %unroll_iter259
   br i1 %niter260.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit79.loopexit.unr-lcssa, label %.lr.ph.i.i74.new, !llvm.loop !641
@@ -4737,7 +4737,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i83.1: ; preds = %
   %i.ju = getelementptr inbounds nuw [2 x i8], ptr %i.jk, i64 %i.jp
   store i16 %i.jt, ptr %i.ju, align 2, !tbaa !373
   %i.jv = add nuw i64 %.01213.i.i82, 2            ; 2 uses
-  %i.jw = add i64 %.014.i.i81, 2                  ; 2 uses
+  %i.jw = add nuw i64 %.014.i.i81, 2              ; 2 uses
   %niter252.next.1 = add i64 %niter252, 2         ; 2 uses
   %niter252.ncmp.1 = icmp eq i64 %niter252.next.1, %unroll_iter251
   br i1 %niter252.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit85.loopexit.unr-lcssa, label %.lr.ph.i.i80.new, !llvm.loop !641
@@ -4822,7 +4822,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i89.1: ; preds = %
   %i.lh = getelementptr inbounds nuw [2 x i8], ptr %i.kx, i64 %i.lc
   store i16 %i.lg, ptr %i.lh, align 2, !tbaa !373
   %i.li = add nuw i64 %.01213.i.i88, 2            ; 2 uses
-  %i.lj = add i64 %.014.i.i87, 2                  ; 2 uses
+  %i.lj = add nuw i64 %.014.i.i87, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit91.loopexit.unr-lcssa, label %.lr.ph.i.i86.new, !llvm.loop !641
@@ -4952,7 +4952,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.1: ; preds = %_ZNK
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %i.am
   store i32 %i.ar, ptr %i.as, align 4, !tbaa !137
   %i.at = add nuw i64 %.01213.i, 2                ; 2 uses
-  %i.au = add i64 %.014.i, 2                      ; 2 uses
+  %i.au = add nuw i64 %.014.i, 2                  ; 2 uses
   %niter292.next.1 = add i64 %niter292, 2         ; 2 uses
   %niter292.ncmp.1 = icmp eq i64 %niter292.next.1, %unroll_iter291
   br i1 %niter292.ncmp.1, label %_ZZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS3_E_clIjEEDaS3_ENKUlS3_E_clImEEDaS3_.exit.loopexit.unr-lcssa, label %.lr.ph.i.new, !llvm.loop !654
@@ -5192,7 +5192,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i.1: ; preds = %_Z
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.cw, i64 %i.db
   store i32 %i.dg, ptr %i.dh, align 4, !tbaa !137
   %i.di = add nuw i64 %.01213.i.i, 2              ; 2 uses
-  %i.dj = add i64 %.014.i.i, 2                    ; 2 uses
+  %i.dj = add nuw i64 %.014.i.i, 2                ; 2 uses
   %niter284.next.1 = add i64 %niter284, 2         ; 2 uses
   %niter284.ncmp.1 = icmp eq i64 %niter284.next.1, %unroll_iter283
   br i1 %niter284.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.new, !llvm.loop !654
@@ -5327,7 +5327,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i65.1: ; preds = %
   %i.fg = getelementptr inbounds nuw [4 x i8], ptr %i.ev, i64 %i.fa
   store i32 %i.ff, ptr %i.fg, align 4, !tbaa !137
   %i.fh = add nuw i64 %.01213.i.i64, 2            ; 2 uses
-  %i.fi = add i64 %.014.i.i63, 2                  ; 2 uses
+  %i.fi = add nuw i64 %.014.i.i63, 2              ; 2 uses
   %niter276.next.1 = add i64 %niter276, 2         ; 2 uses
   %niter276.ncmp.1 = icmp eq i64 %niter276.next.1, %unroll_iter275
   br i1 %niter276.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit67.loopexit.unr-lcssa, label %.lr.ph.i.i62.new, !llvm.loop !654
@@ -5415,7 +5415,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i71.1: ; preds = %
   %i.gw = getelementptr inbounds nuw [4 x i8], ptr %i.gl, i64 %i.gq
   store i32 %i.gv, ptr %i.gw, align 4, !tbaa !137
   %i.gx = add nuw i64 %.01213.i.i70, 2            ; 2 uses
-  %i.gy = add i64 %.014.i.i69, 2                  ; 2 uses
+  %i.gy = add nuw i64 %.014.i.i69, 2              ; 2 uses
   %niter268.next.1 = add i64 %niter268, 2         ; 2 uses
   %niter268.ncmp.1 = icmp eq i64 %niter268.next.1, %unroll_iter267
   br i1 %niter268.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit73.loopexit.unr-lcssa, label %.lr.ph.i.i68.new, !llvm.loop !654
@@ -5550,7 +5550,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i77.1: ; preds = %
   %i.iv = getelementptr inbounds nuw [4 x i8], ptr %i.ik, i64 %i.ip
   store i32 %i.iu, ptr %i.iv, align 4, !tbaa !137
   %i.iw = add nuw i64 %.01213.i.i76, 2            ; 2 uses
-  %i.ix = add i64 %.014.i.i75, 2                  ; 2 uses
+  %i.ix = add nuw i64 %.014.i.i75, 2              ; 2 uses
   %niter260.next.1 = add i64 %niter260, 2         ; 2 uses
   %niter260.ncmp.1 = icmp eq i64 %niter260.next.1, %unroll_iter259
   br i1 %niter260.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit79.loopexit.unr-lcssa, label %.lr.ph.i.i74.new, !llvm.loop !654
@@ -5638,7 +5638,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i83.1: ; preds = %
   %i.kl = getelementptr inbounds nuw [4 x i8], ptr %i.ka, i64 %i.kf
   store i32 %i.kk, ptr %i.kl, align 4, !tbaa !137
   %i.km = add nuw i64 %.01213.i.i82, 2            ; 2 uses
-  %i.kn = add i64 %.014.i.i81, 2                  ; 2 uses
+  %i.kn = add nuw i64 %.014.i.i81, 2              ; 2 uses
   %niter252.next.1 = add i64 %niter252, 2         ; 2 uses
   %niter252.ncmp.1 = icmp eq i64 %niter252.next.1, %unroll_iter251
   br i1 %niter252.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit85.loopexit.unr-lcssa, label %.lr.ph.i.i80.new, !llvm.loop !654
@@ -5726,7 +5726,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i89.1: ; preds = %
   %i.mb = getelementptr inbounds nuw [4 x i8], ptr %i.lq, i64 %i.lv
   store i32 %i.ma, ptr %i.mb, align 4, !tbaa !137
   %i.mc = add nuw i64 %.01213.i.i88, 2            ; 2 uses
-  %i.md = add i64 %.014.i.i87, 2                  ; 2 uses
+  %i.md = add nuw i64 %.014.i.i87, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingItEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit91.loopexit.unr-lcssa, label %.lr.ph.i.i86.new, !llvm.loop !654
@@ -6059,7 +6059,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i: ; preds = %bb.c
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.w
   store i8 %i.ad, ptr %i.ag, align 1, !tbaa !78
   %i.ah = add nuw i64 %.01213.i, 1
-  %i.ai = add i64 %.014.i, 1                      ; 2 uses
+  %i.ai = add nuw i64 %.014.i, 1                  ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ai, %i.l
   br i1 %exitcond.not.i, label %_ZZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS3_E_clIhEEDaS3_ENKUlS3_E_clImEEDaS3_.exit, label %bb.c, !llvm.loop !678
 
@@ -6262,7 +6262,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i.1: ; preds = %_Z
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 %i.cc
   store i8 %i.cj, ptr %i.cl, align 1, !tbaa !78
   %i.cm = add nuw i64 %.01213.i.i, 2              ; 2 uses
-  %i.cn = add i64 %.014.i.i, 2                    ; 2 uses
+  %i.cn = add nuw i64 %.014.i.i, 2                ; 2 uses
   %niter284.next.1 = add i64 %niter284, 2         ; 2 uses
   %niter284.ncmp.1 = icmp eq i64 %niter284.next.1, %unroll_iter283
   br i1 %niter284.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit.loopexit.unr-lcssa, label %bb.l, !llvm.loop !678
@@ -6395,7 +6395,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i65.1: ; preds = %
   %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 %i.ed
   store i8 %i.ek, ptr %i.em, align 1, !tbaa !78
   %i.en = add nuw i64 %.01213.i.i64, 2            ; 2 uses
-  %i.eo = add i64 %.014.i.i63, 2                  ; 2 uses
+  %i.eo = add nuw i64 %.014.i.i63, 2              ; 2 uses
   %niter276.next.1 = add i64 %niter276, 2         ; 2 uses
   %niter276.ncmp.1 = icmp eq i64 %niter276.next.1, %unroll_iter275
   br i1 %niter276.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit67.loopexit.unr-lcssa, label %bb.o, !llvm.loop !678
@@ -6503,7 +6503,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i71.1: ; preds = %
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 %i.gd
   store i8 %i.gk, ptr %i.gm, align 1, !tbaa !78
   %i.gn = add nuw i64 %.01213.i.i70, 2            ; 2 uses
-  %i.go = add i64 %.014.i.i69, 2                  ; 2 uses
+  %i.go = add nuw i64 %.014.i.i69, 2              ; 2 uses
   %niter268.next.1 = add i64 %niter268, 2         ; 2 uses
   %niter268.ncmp.1 = icmp eq i64 %niter268.next.1, %unroll_iter267
   br i1 %niter268.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit73.loopexit.unr-lcssa, label %bb.q, !llvm.loop !678
@@ -6636,7 +6636,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i77.1: ; preds = %
   %i.in = getelementptr inbounds nuw i8, ptr %i.im, i64 %i.ie
   store i8 %i.il, ptr %i.in, align 1, !tbaa !78
   %i.io = add nuw i64 %.01213.i.i76, 2            ; 2 uses
-  %i.ip = add i64 %.014.i.i75, 2                  ; 2 uses
+  %i.ip = add nuw i64 %.014.i.i75, 2              ; 2 uses
   %niter260.next.1 = add i64 %niter260, 2         ; 2 uses
   %niter260.ncmp.1 = icmp eq i64 %niter260.next.1, %unroll_iter259
   br i1 %niter260.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit79.loopexit.unr-lcssa, label %bb.t, !llvm.loop !678
@@ -6744,7 +6744,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i83.1: ; preds = %
   %i.kn = getelementptr inbounds nuw i8, ptr %i.km, i64 %i.ke
   store i8 %i.kl, ptr %i.kn, align 1, !tbaa !78
   %i.ko = add nuw i64 %.01213.i.i82, 2            ; 2 uses
-  %i.kp = add i64 %.014.i.i81, 2                  ; 2 uses
+  %i.kp = add nuw i64 %.014.i.i81, 2              ; 2 uses
   %niter252.next.1 = add i64 %niter252, 2         ; 2 uses
   %niter252.ncmp.1 = icmp eq i64 %niter252.next.1, %unroll_iter251
   br i1 %niter252.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit85.loopexit.unr-lcssa, label %bb.v, !llvm.loop !678
@@ -6852,7 +6852,7 @@ _ZNK7xgboost6common4SpanIhLm18446744073709551615EEixEm.exit.i.i89.1: ; preds = %
   %i.mn = getelementptr inbounds nuw i8, ptr %i.mm, i64 %i.me
   store i8 %i.ml, ptr %i.mn, align 1, !tbaa !78
   %i.mo = add nuw i64 %.01213.i.i88, 2            ; 2 uses
-  %i.mp = add i64 %.014.i.i87, 2                  ; 2 uses
+  %i.mp = add nuw i64 %.014.i.i87, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clIhEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit91.loopexit.unr-lcssa, label %bb.x, !llvm.loop !678
@@ -6994,7 +6994,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.1: ; preds = %_ZNK
   %i.as = getelementptr inbounds nuw [2 x i8], ptr %i.ah, i64 %i.am
   store i16 %i.ar, ptr %i.as, align 2, !tbaa !373
   %i.at = add nuw i64 %.01213.i, 2                ; 2 uses
-  %i.au = add i64 %.014.i, 2                      ; 2 uses
+  %i.au = add nuw i64 %.014.i, 2                  ; 2 uses
   %niter292.next.1 = add i64 %niter292, 2         ; 2 uses
   %niter292.ncmp.1 = icmp eq i64 %niter292.next.1, %unroll_iter291
   br i1 %niter292.ncmp.1, label %_ZZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS3_E_clItEEDaS3_ENKUlS3_E_clImEEDaS3_.exit.loopexit.unr-lcssa, label %.lr.ph.i.new, !llvm.loop !691
@@ -7234,7 +7234,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i.1: ; preds = %_Z
   %i.dh = getelementptr inbounds nuw [2 x i8], ptr %i.cw, i64 %i.db
   store i16 %i.dg, ptr %i.dh, align 2, !tbaa !373
   %i.di = add nuw i64 %.01213.i.i, 2              ; 2 uses
-  %i.dj = add i64 %.014.i.i, 2                    ; 2 uses
+  %i.dj = add nuw i64 %.014.i.i, 2                ; 2 uses
   %niter284.next.1 = add i64 %niter284, 2         ; 2 uses
   %niter284.ncmp.1 = icmp eq i64 %niter284.next.1, %unroll_iter283
   br i1 %niter284.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.new, !llvm.loop !691
@@ -7369,7 +7369,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i65.1: ; preds = %
   %i.fg = getelementptr inbounds nuw [2 x i8], ptr %i.ev, i64 %i.fa
   store i16 %i.ff, ptr %i.fg, align 2, !tbaa !373
   %i.fh = add nuw i64 %.01213.i.i64, 2            ; 2 uses
-  %i.fi = add i64 %.014.i.i63, 2                  ; 2 uses
+  %i.fi = add nuw i64 %.014.i.i63, 2              ; 2 uses
   %niter276.next.1 = add i64 %niter276, 2         ; 2 uses
   %niter276.ncmp.1 = icmp eq i64 %niter276.next.1, %unroll_iter275
   br i1 %niter276.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit67.loopexit.unr-lcssa, label %.lr.ph.i.i62.new, !llvm.loop !691
@@ -7457,7 +7457,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i71.1: ; preds = %
   %i.gw = getelementptr inbounds nuw [2 x i8], ptr %i.gl, i64 %i.gq
   store i16 %i.gv, ptr %i.gw, align 2, !tbaa !373
   %i.gx = add nuw i64 %.01213.i.i70, 2            ; 2 uses
-  %i.gy = add i64 %.014.i.i69, 2                  ; 2 uses
+  %i.gy = add nuw i64 %.014.i.i69, 2              ; 2 uses
   %niter268.next.1 = add i64 %niter268, 2         ; 2 uses
   %niter268.ncmp.1 = icmp eq i64 %niter268.next.1, %unroll_iter267
   br i1 %niter268.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit73.loopexit.unr-lcssa, label %.lr.ph.i.i68.new, !llvm.loop !691
@@ -7592,7 +7592,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i77.1: ; preds = %
   %i.iv = getelementptr inbounds nuw [2 x i8], ptr %i.ik, i64 %i.ip
   store i16 %i.iu, ptr %i.iv, align 2, !tbaa !373
   %i.iw = add nuw i64 %.01213.i.i76, 2            ; 2 uses
-  %i.ix = add i64 %.014.i.i75, 2                  ; 2 uses
+  %i.ix = add nuw i64 %.014.i.i75, 2              ; 2 uses
   %niter260.next.1 = add i64 %niter260, 2         ; 2 uses
   %niter260.ncmp.1 = icmp eq i64 %niter260.next.1, %unroll_iter259
   br i1 %niter260.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit79.loopexit.unr-lcssa, label %.lr.ph.i.i74.new, !llvm.loop !691
@@ -7680,7 +7680,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i83.1: ; preds = %
   %i.kl = getelementptr inbounds nuw [2 x i8], ptr %i.ka, i64 %i.kf
   store i16 %i.kk, ptr %i.kl, align 2, !tbaa !373
   %i.km = add nuw i64 %.01213.i.i82, 2            ; 2 uses
-  %i.kn = add i64 %.014.i.i81, 2                  ; 2 uses
+  %i.kn = add nuw i64 %.014.i.i81, 2              ; 2 uses
   %niter252.next.1 = add i64 %niter252, 2         ; 2 uses
   %niter252.ncmp.1 = icmp eq i64 %niter252.next.1, %unroll_iter251
   br i1 %niter252.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit85.loopexit.unr-lcssa, label %.lr.ph.i.i80.new, !llvm.loop !691
@@ -7768,7 +7768,7 @@ _ZNK7xgboost6common4SpanItLm18446744073709551615EEixEm.exit.i.i89.1: ; preds = %
   %i.mb = getelementptr inbounds nuw [2 x i8], ptr %i.lq, i64 %i.lv
   store i16 %i.ma, ptr %i.mb, align 2, !tbaa !373
   %i.mc = add nuw i64 %.01213.i.i88, 2            ; 2 uses
-  %i.md = add i64 %.014.i.i87, 2                  ; 2 uses
+  %i.md = add nuw i64 %.014.i.i87, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clItEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit91.loopexit.unr-lcssa, label %.lr.ph.i.i86.new, !llvm.loop !691
@@ -7897,7 +7897,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.1: ; preds = %_ZNK
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %i.al
   store i32 %i.ap, ptr %i.aq, align 4, !tbaa !137
   %i.ar = add nuw i64 %.01213.i, 2                ; 2 uses
-  %i.as = add i64 %.014.i, 2                      ; 2 uses
+  %i.as = add nuw i64 %.014.i, 2                  ; 2 uses
   %niter292.next.1 = add i64 %niter292, 2         ; 2 uses
   %niter292.ncmp.1 = icmp eq i64 %niter292.next.1, %unroll_iter291
   br i1 %niter292.ncmp.1, label %_ZZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS3_E_clIjEEDaS3_ENKUlS3_E_clImEEDaS3_.exit.loopexit.unr-lcssa, label %.lr.ph.i.new, !llvm.loop !704
@@ -8134,7 +8134,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i.1: ; preds = %_Z
   %i.dc = getelementptr inbounds nuw [4 x i8], ptr %i.cs, i64 %i.cx
   store i32 %i.db, ptr %i.dc, align 4, !tbaa !137
   %i.dd = add nuw i64 %.01213.i.i, 2              ; 2 uses
-  %i.de = add i64 %.014.i.i, 2                    ; 2 uses
+  %i.de = add nuw i64 %.014.i.i, 2                ; 2 uses
   %niter284.next.1 = add i64 %niter284, 2         ; 2 uses
   %niter284.ncmp.1 = icmp eq i64 %niter284.next.1, %unroll_iter283
   br i1 %niter284.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.new, !llvm.loop !704
@@ -8266,7 +8266,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i65.1: ; preds = %
   %i.ey = getelementptr inbounds nuw [4 x i8], ptr %i.eo, i64 %i.et
   store i32 %i.ex, ptr %i.ey, align 4, !tbaa !137
   %i.ez = add nuw i64 %.01213.i.i64, 2            ; 2 uses
-  %i.fa = add i64 %.014.i.i63, 2                  ; 2 uses
+  %i.fa = add nuw i64 %.014.i.i63, 2              ; 2 uses
   %niter276.next.1 = add i64 %niter276, 2         ; 2 uses
   %niter276.ncmp.1 = icmp eq i64 %niter276.next.1, %unroll_iter275
   br i1 %niter276.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit67.loopexit.unr-lcssa, label %.lr.ph.i.i62.new, !llvm.loop !704
@@ -8351,7 +8351,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i71.1: ; preds = %
   %i.gl = getelementptr inbounds nuw [4 x i8], ptr %i.gb, i64 %i.gg
   store i32 %i.gk, ptr %i.gl, align 4, !tbaa !137
   %i.gm = add nuw i64 %.01213.i.i70, 2            ; 2 uses
-  %i.gn = add i64 %.014.i.i69, 2                  ; 2 uses
+  %i.gn = add nuw i64 %.014.i.i69, 2              ; 2 uses
   %niter268.next.1 = add i64 %niter268, 2         ; 2 uses
   %niter268.ncmp.1 = icmp eq i64 %niter268.next.1, %unroll_iter267
   br i1 %niter268.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit73.loopexit.unr-lcssa, label %.lr.ph.i.i68.new, !llvm.loop !704
@@ -8483,7 +8483,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i77.1: ; preds = %
   %i.ih = getelementptr inbounds nuw [4 x i8], ptr %i.hx, i64 %i.ic
   store i32 %i.ig, ptr %i.ih, align 4, !tbaa !137
   %i.ii = add nuw i64 %.01213.i.i76, 2            ; 2 uses
-  %i.ij = add i64 %.014.i.i75, 2                  ; 2 uses
+  %i.ij = add nuw i64 %.014.i.i75, 2              ; 2 uses
   %niter260.next.1 = add i64 %niter260, 2         ; 2 uses
   %niter260.ncmp.1 = icmp eq i64 %niter260.next.1, %unroll_iter259
   br i1 %niter260.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit79.loopexit.unr-lcssa, label %.lr.ph.i.i74.new, !llvm.loop !704
@@ -8568,7 +8568,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i83.1: ; preds = %
   %i.ju = getelementptr inbounds nuw [4 x i8], ptr %i.jk, i64 %i.jp
   store i32 %i.jt, ptr %i.ju, align 4, !tbaa !137
   %i.jv = add nuw i64 %.01213.i.i82, 2            ; 2 uses
-  %i.jw = add i64 %.014.i.i81, 2                  ; 2 uses
+  %i.jw = add nuw i64 %.014.i.i81, 2              ; 2 uses
   %niter252.next.1 = add i64 %niter252, 2         ; 2 uses
   %niter252.ncmp.1 = icmp eq i64 %niter252.next.1, %unroll_iter251
   br i1 %niter252.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit85.loopexit.unr-lcssa, label %.lr.ph.i.i80.new, !llvm.loop !704
@@ -8653,7 +8653,7 @@ _ZNK7xgboost6common4SpanIjLm18446744073709551615EEixEm.exit.i.i89.1: ; preds = %
   %i.lh = getelementptr inbounds nuw [4 x i8], ptr %i.kx, i64 %i.lc
   store i32 %i.lg, ptr %i.lh, align 4, !tbaa !137
   %i.li = add nuw i64 %.01213.i.i88, 2            ; 2 uses
-  %i.lj = add i64 %.014.i.i87, 2                  ; 2 uses
+  %i.lj = add nuw i64 %.014.i.i87, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZN4dmlc12OMPException3RunIZZN7xgboost6common12ColumnMatrix17SetIndexNoMissingIjEEvmPKT_mmiENKUlS6_E_clIjEEDaS6_EUlS6_E_JmEEEvS6_DpT0_.exit91.loopexit.unr-lcssa, label %.lr.ph.i.i86.new, !llvm.loop !704

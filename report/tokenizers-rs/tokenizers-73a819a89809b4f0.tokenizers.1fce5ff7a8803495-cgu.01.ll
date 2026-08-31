@@ -205,8 +205,8 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE7reserveCs2JiOgHzbbc7_10tokenizers.e
 
 .preheader.i.i.i:                                 ; preds = %_RNvXsd_NtNtCs4NRVxsYgnAr_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusivehENtNtNtB7_6traits8iterator8Iterator9size_hintCs2JiOgHzbbc7_10tokenizers.exit, %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.l = load ptr, ptr %i.k, align 8, !nonnull !3, !noundef !3 ; 11 uses
-  %i.m = load i64, ptr %i.d, align 8, !noundef !3 ; 13 uses
+  %i.l = load ptr, ptr %i.k, align 8, !nonnull !3, !noundef !3 ; 10 uses
+  %i.m = load i64, ptr %i.d, align 8, !noundef !3 ; 12 uses
   %i.n = icmp ult i8 %.sroa.2.0.extract.trunc, %.sroa.3.0.extract.trunc
   br i1 %i.n, label %iter.check, label %.thread.i.i.i
 
@@ -224,12 +224,12 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.s = and i64 %i.r, 24
-  %n.vec = and i64 %i.r, 480                      ; 11 uses
+  %n.vec = and i64 %i.r, 480                      ; 10 uses
   %i.t = add i64 %i.m, %n.vec                     ; 2 uses
   %i.u = trunc i64 %n.vec to i8
   %i.v = add i8 %.sroa.2.0.extract.trunc, %i.u    ; 2 uses
   %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %.sroa.2.0.extract.trunc, i64 0
-  %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 16 uses
+  %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer ; 14 uses
   %induction = add nuw <16 x i8> %broadcast.splat, <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15>
   %step.add = add nuw <16 x i8> %broadcast.splat, <i8 16, i8 17, i8 18, i8 19, i8 20, i8 21, i8 22, i8 23, i8 24, i8 25, i8 26, i8 27, i8 28, i8 29, i8 30, i8 31>
   %i.w = getelementptr i8, ptr %i.l, i64 %i.m     ; 2 uses
@@ -237,85 +237,74 @@ vector.ph:                                        ; preds = %vector.main.loop.it
   store <16 x i8> %induction, ptr %i.w, align 1, !noalias !90
   store <16 x i8> %step.add, ptr %i.x, align 1, !noalias !90
   %i.y = icmp eq i64 %n.vec, 32
-  br i1 %i.y, label %middle.block, label %vector.body.1
+  br i1 %i.y, label %middle.block, label %vector.body.2.a
 
-vector.body.1:                                    ; preds = %vector.ph
-  %vec.ind.next = add nuw <16 x i8> %broadcast.splat, <i8 32, i8 33, i8 34, i8 35, i8 36, i8 37, i8 38, i8 39, i8 40, i8 41, i8 42, i8 43, i8 44, i8 45, i8 46, i8 47>
-  %step.add.1 = add nuw <16 x i8> %broadcast.splat, <i8 48, i8 49, i8 50, i8 51, i8 52, i8 53, i8 54, i8 55, i8 56, i8 57, i8 58, i8 59, i8 60, i8 61, i8 62, i8 63>
-  %2 = getelementptr i8, ptr %i.l, i64 %i.m       ; 2 uses
-  %3 = getelementptr i8, ptr %2, i64 32
-  %4 = getelementptr i8, ptr %2, i64 48
-  store <16 x i8> %vec.ind.next, ptr %3, align 1, !noalias !90
-  store <16 x i8> %step.add.1, ptr %4, align 1, !noalias !90
-  %5 = icmp eq i64 %n.vec, 64
-  br i1 %5, label %middle.block, label %vector.body.2.a
-
-vector.body.2.a:                                  ; preds = %vector.body.1
-  %vec.ind.next.1.a = add nuw <16 x i8> %broadcast.splat, <i8 64, i8 65, i8 66, i8 67, i8 68, i8 69, i8 70, i8 71, i8 72, i8 73, i8 74, i8 75, i8 76, i8 77, i8 78, i8 79>
-  %step.add.2.a = add nuw <16 x i8> %broadcast.splat, <i8 80, i8 81, i8 82, i8 83, i8 84, i8 85, i8 86, i8 87, i8 88, i8 89, i8 90, i8 91, i8 92, i8 93, i8 94, i8 95>
+vector.body.2.a:                                  ; preds = %vector.ph
+  %vec.ind.next.1.a = add nuw <16 x i8> %broadcast.splat, <i8 32, i8 33, i8 34, i8 35, i8 36, i8 37, i8 38, i8 39, i8 40, i8 41, i8 42, i8 43, i8 44, i8 45, i8 46, i8 47>
+  %step.add.2.a = add nuw <16 x i8> %broadcast.splat, <i8 48, i8 49, i8 50, i8 51, i8 52, i8 53, i8 54, i8 55, i8 56, i8 57, i8 58, i8 59, i8 60, i8 61, i8 62, i8 63>
   %i.z = getelementptr i8, ptr %i.l, i64 %i.m     ; 2 uses
-  %i.aa = getelementptr i8, ptr %i.z, i64 64
-  %i.ab = getelementptr i8, ptr %i.z, i64 80
+  %i.aa = getelementptr i8, ptr %i.z, i64 32
+  %i.ab = getelementptr i8, ptr %i.z, i64 48
   store <16 x i8> %vec.ind.next.1.a, ptr %i.aa, align 1, !noalias !90
   store <16 x i8> %step.add.2.a, ptr %i.ab, align 1, !noalias !90
-  %i.ac = icmp eq i64 %n.vec, 96
+  %i.ac = icmp eq i64 %n.vec, 64
   br i1 %i.ac, label %middle.block, label %vector.body.3.a
 
 vector.body.3.a:                                  ; preds = %vector.body.2.a
-  %vec.ind.next.2.a = add nuw <16 x i8> %broadcast.splat, <i8 96, i8 97, i8 98, i8 99, i8 100, i8 101, i8 102, i8 103, i8 104, i8 105, i8 106, i8 107, i8 108, i8 109, i8 110, i8 111>
-  %step.add.3.a = add nuw <16 x i8> %broadcast.splat, <i8 112, i8 113, i8 114, i8 115, i8 116, i8 117, i8 118, i8 119, i8 120, i8 121, i8 122, i8 123, i8 124, i8 125, i8 126, i8 127>
+  %vec.ind.next.2.a = add nuw <16 x i8> %broadcast.splat, <i8 64, i8 65, i8 66, i8 67, i8 68, i8 69, i8 70, i8 71, i8 72, i8 73, i8 74, i8 75, i8 76, i8 77, i8 78, i8 79>
+  %step.add.3.a = add nuw <16 x i8> %broadcast.splat, <i8 80, i8 81, i8 82, i8 83, i8 84, i8 85, i8 86, i8 87, i8 88, i8 89, i8 90, i8 91, i8 92, i8 93, i8 94, i8 95>
   %i.ad = getelementptr i8, ptr %i.l, i64 %i.m    ; 2 uses
-  %i.ae = getelementptr i8, ptr %i.ad, i64 96
-  %i.af = getelementptr i8, ptr %i.ad, i64 112
+  %i.ae = getelementptr i8, ptr %i.ad, i64 64
+  %i.af = getelementptr i8, ptr %i.ad, i64 80
   store <16 x i8> %vec.ind.next.2.a, ptr %i.ae, align 1, !noalias !90
   store <16 x i8> %step.add.3.a, ptr %i.af, align 1, !noalias !90
-  %i.ag = icmp eq i64 %n.vec, 128
+  %i.ag = icmp eq i64 %n.vec, 96
   br i1 %i.ag, label %middle.block, label %vector.body.4.a
 
 vector.body.4.a:                                  ; preds = %vector.body.3.a
-  %vec.ind.next.3.a = add nuw <16 x i8> %broadcast.splat, <i8 -128, i8 -127, i8 -126, i8 -125, i8 -124, i8 -123, i8 -122, i8 -121, i8 -120, i8 -119, i8 -118, i8 -117, i8 -116, i8 -115, i8 -114, i8 -113>
-  %step.add.4.a = add nuw <16 x i8> %broadcast.splat, <i8 -112, i8 -111, i8 -110, i8 -109, i8 -108, i8 -107, i8 -106, i8 -105, i8 -104, i8 -103, i8 -102, i8 -101, i8 -100, i8 -99, i8 -98, i8 -97>
+  %vec.ind.next.3.a = add nuw <16 x i8> %broadcast.splat, <i8 96, i8 97, i8 98, i8 99, i8 100, i8 101, i8 102, i8 103, i8 104, i8 105, i8 106, i8 107, i8 108, i8 109, i8 110, i8 111>
+  %step.add.4.a = add nuw <16 x i8> %broadcast.splat, <i8 112, i8 113, i8 114, i8 115, i8 116, i8 117, i8 118, i8 119, i8 120, i8 121, i8 122, i8 123, i8 124, i8 125, i8 126, i8 127>
   %i.ah = getelementptr i8, ptr %i.l, i64 %i.m    ; 2 uses
-  %i.ai = getelementptr i8, ptr %i.ah, i64 128
-  %i.aj = getelementptr i8, ptr %i.ah, i64 144
+  %i.ai = getelementptr i8, ptr %i.ah, i64 96
+  %i.aj = getelementptr i8, ptr %i.ah, i64 112
   store <16 x i8> %vec.ind.next.3.a, ptr %i.ai, align 1, !noalias !90
   store <16 x i8> %step.add.4.a, ptr %i.aj, align 1, !noalias !90
-  %i.ak = icmp eq i64 %n.vec, 160
+  %i.ak = icmp eq i64 %n.vec, 128
   br i1 %i.ak, label %middle.block, label %vector.body.5.a
 
 vector.body.5.a:                                  ; preds = %vector.body.4.a
-  %vec.ind.next.4.a = add nuw <16 x i8> %broadcast.splat, <i8 -96, i8 -95, i8 -94, i8 -93, i8 -92, i8 -91, i8 -90, i8 -89, i8 -88, i8 -87, i8 -86, i8 -85, i8 -84, i8 -83, i8 -82, i8 -81>
-  %step.add.5.a = add nuw <16 x i8> %broadcast.splat, <i8 -80, i8 -79, i8 -78, i8 -77, i8 -76, i8 -75, i8 -74, i8 -73, i8 -72, i8 -71, i8 -70, i8 -69, i8 -68, i8 -67, i8 -66, i8 -65>
+  %vec.ind.next.4.a = add nuw <16 x i8> %broadcast.splat, <i8 -128, i8 -127, i8 -126, i8 -125, i8 -124, i8 -123, i8 -122, i8 -121, i8 -120, i8 -119, i8 -118, i8 -117, i8 -116, i8 -115, i8 -114, i8 -113>
+  %step.add.5.a = add nuw <16 x i8> %broadcast.splat, <i8 -112, i8 -111, i8 -110, i8 -109, i8 -108, i8 -107, i8 -106, i8 -105, i8 -104, i8 -103, i8 -102, i8 -101, i8 -100, i8 -99, i8 -98, i8 -97>
   %i.al = getelementptr i8, ptr %i.l, i64 %i.m    ; 2 uses
-  %i.am = getelementptr i8, ptr %i.al, i64 160
-  %i.an = getelementptr i8, ptr %i.al, i64 176
+  %i.am = getelementptr i8, ptr %i.al, i64 128
+  %i.an = getelementptr i8, ptr %i.al, i64 144
   store <16 x i8> %vec.ind.next.4.a, ptr %i.am, align 1, !noalias !90
   store <16 x i8> %step.add.5.a, ptr %i.an, align 1, !noalias !90
-  %i.ao = icmp eq i64 %n.vec, 192
+  %i.ao = icmp eq i64 %n.vec, 160
   br i1 %i.ao, label %middle.block, label %vector.body.6.a
 
 vector.body.6.a:                                  ; preds = %vector.body.5.a
-  %vec.ind.next.5.a = add nuw <16 x i8> %broadcast.splat, <i8 -64, i8 -63, i8 -62, i8 -61, i8 -60, i8 -59, i8 -58, i8 -57, i8 -56, i8 -55, i8 -54, i8 -53, i8 -52, i8 -51, i8 -50, i8 -49>
-  %step.add.6.a = add nuw <16 x i8> %broadcast.splat, <i8 -48, i8 -47, i8 -46, i8 -45, i8 -44, i8 -43, i8 -42, i8 -41, i8 -40, i8 -39, i8 -38, i8 -37, i8 -36, i8 -35, i8 -34, i8 -33>
+  %vec.ind.next.5.a = add nuw <16 x i8> %broadcast.splat, <i8 -96, i8 -95, i8 -94, i8 -93, i8 -92, i8 -91, i8 -90, i8 -89, i8 -88, i8 -87, i8 -86, i8 -85, i8 -84, i8 -83, i8 -82, i8 -81>
+  %step.add.6.a = add nuw <16 x i8> %broadcast.splat, <i8 -80, i8 -79, i8 -78, i8 -77, i8 -76, i8 -75, i8 -74, i8 -73, i8 -72, i8 -71, i8 -70, i8 -69, i8 -68, i8 -67, i8 -66, i8 -65>
   %i.ap = getelementptr i8, ptr %i.l, i64 %i.m    ; 2 uses
-  %i.aq = getelementptr i8, ptr %i.ap, i64 192
-  %i.ar = getelementptr i8, ptr %i.ap, i64 208
+  %i.aq = getelementptr i8, ptr %i.ap, i64 160
+  %i.ar = getelementptr i8, ptr %i.ap, i64 176
   store <16 x i8> %vec.ind.next.5.a, ptr %i.aq, align 1, !noalias !90
   store <16 x i8> %step.add.6.a, ptr %i.ar, align 1, !noalias !90
-  %i.as = icmp eq i64 %n.vec, 224
+  %i.as = icmp eq i64 %n.vec, 192
   br i1 %i.as, label %middle.block, label %vector.body.7
 
 vector.body.7:                                    ; preds = %vector.body.6.a
-  %vec.ind.next.6 = add nuw <16 x i8> %broadcast.splat, <i8 -32, i8 -31, i8 -30, i8 -29, i8 -28, i8 -27, i8 -26, i8 -25, i8 -24, i8 -23, i8 -22, i8 -21, i8 -20, i8 -19, i8 -18, i8 -17>
-  %step.add.7 = add nuw <16 x i8> %broadcast.splat, <i8 -16, i8 -15, i8 -14, i8 -13, i8 -12, i8 -11, i8 -10, i8 -9, i8 -8, i8 -7, i8 -6, i8 -5, i8 -4, i8 -3, i8 -2, i8 -1>
+  %vec.ind.next.6 = add nuw <16 x i8> %broadcast.splat, <i8 -64, i8 -63, i8 -62, i8 -61, i8 -60, i8 -59, i8 -58, i8 -57, i8 -56, i8 -55, i8 -54, i8 -53, i8 -52, i8 -51, i8 -50, i8 -49>
+  %step.add.7 = add nuw <16 x i8> %broadcast.splat, <i8 -48, i8 -47, i8 -46, i8 -45, i8 -44, i8 -43, i8 -42, i8 -41, i8 -40, i8 -39, i8 -38, i8 -37, i8 -36, i8 -35, i8 -34, i8 -33>
   %i.at = getelementptr i8, ptr %i.l, i64 %i.m    ; 2 uses
-  %i.au = getelementptr i8, ptr %i.at, i64 224
-  %i.av = getelementptr i8, ptr %i.at, i64 240
+  %i.au = getelementptr i8, ptr %i.at, i64 192
+  %i.av = getelementptr i8, ptr %i.at, i64 208
   store <16 x i8> %vec.ind.next.6, ptr %i.au, align 1, !noalias !90
   store <16 x i8> %step.add.7, ptr %i.av, align 1, !noalias !90
   br label %middle.block
 
-middle.block:                                     ; preds = %vector.body.7, %vector.body.6.a, %vector.body.5.a, %vector.body.4.a, %vector.body.3.a, %vector.body.2.a, %vector.body.1, %vector.ph
+middle.block:                                     ; preds = %vector.body.7, %vector.body.6.a, %vector.body.5.a, %vector.body.4.a, %vector.body.3.a, %vector.body.2.a, %vector.ph
   %cmp.n = icmp eq i64 %i.r, %n.vec
   br i1 %cmp.n, label %.thread.i.i.i, label %vec.epilog.iter.check
 

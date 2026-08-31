@@ -205,12 +205,12 @@ bb.m:                                             ; preds = %.loopexit311.i
   br i1 %.not353.i, label %.loopexit309.i, label %.preheader.preheader.i
 
 .preheader.preheader.i:                           ; preds = %bb.m
-  %wide.trip.count380.i = zext i32 %i.cw to i64
-  %wide.trip.count375.i = zext i32 %i.ks to i64   ; 2 uses
-  %xtraiter200 = and i64 %wide.trip.count375.i, 3 ; 3 uses
+  %wide.trip.count380.i = zext i32 %i.ks to i64   ; 2 uses
+  %wide.trip.count375.i = zext i32 %i.cw to i64
+  %xtraiter200 = and i64 %wide.trip.count380.i, 3 ; 3 uses
   %i.kt = add i32 %i.ks, -1
   %i.ku = icmp ult i32 %i.kt, 3
-  %unroll_iter203 = and i64 %wide.trip.count375.i, 4294967292
+  %unroll_iter203 = and i64 %wide.trip.count380.i, 4294967292
   %lcmp.mod201.not = icmp eq i64 %xtraiter200, 0
   %lcmp.mod202 = icmp ne i64 %xtraiter200, 0
   br label %.preheader.i
@@ -275,7 +275,7 @@ bb.n:                                             ; preds = %bb.n, %.epil.prehea
 
 ._crit_edge329.i:                                 ; preds = %bb.n, %._crit_edge329.i.unr-lcssa
   %indvars.iv.next378.i = add nuw nsw i64 %indvars.iv377.i, 1 ; 2 uses
-  %exitcond381.not.i = icmp eq i64 %indvars.iv.next378.i, %wide.trip.count380.i
+  %exitcond381.not.i = icmp eq i64 %indvars.iv.next378.i, %wide.trip.count375.i
   br i1 %exitcond381.not.i, label %.loopexit309.i, label %.preheader.i, !llvm.loop !306
 
 .loopexit309.i:                                   ; preds = %._crit_edge329.i, %bb.m, %.loopexit311.i

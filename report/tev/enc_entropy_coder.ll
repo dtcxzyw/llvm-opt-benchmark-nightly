@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.v, %.preheader74
   br i1 %i.nb, label %bb.v, label %._crit_edge.us90.i, !llvm.loop !13
 
 ._crit_edge.us90.i:                               ; preds = %bb.v
-  %i.nc = add nuw i64 %.06586.us.i, 1
+  %i.nc = add nuw nsw i64 %.06586.us.i, 1
   %factor.op.mul.reass.us89.i.1 = mul i64 %i.nc, %factor.op.mul81.i
   %i.nd = getelementptr i8, ptr %i.hg, i64 %factor.op.mul.reass.us89.i.1
   br label %bb.w
@@ -223,7 +223,7 @@ bb.w:                                             ; preds = %bb.w, %._crit_edge.
   br i1 %i.nl, label %bb.w, label %._crit_edge.us90.i.1, !llvm.loop !13
 
 ._crit_edge.us90.i.1:                             ; preds = %bb.w
-  %i.nm = add nuw i64 %.06586.us.i, 2             ; 2 uses
+  %i.nm = add nuw nsw i64 %.06586.us.i, 2         ; 2 uses
   %exitcond103.not.i.1 = icmp eq i64 %i.nm, %i.fr
   br i1 %exitcond103.not.i.1, label %.preheader.preheader.i, label %.preheader74.us.i, !llvm.loop !16
 
@@ -626,7 +626,7 @@ bb.v:                                             ; preds = %bb.v, %.preheader77
   br i1 %i.mq, label %bb.v, label %._crit_edge.us94.i, !llvm.loop !119
 
 ._crit_edge.us94.i:                               ; preds = %bb.v
-  %i.mr = add nuw i64 %.06589.us.i, 1
+  %i.mr = add nuw nsw i64 %.06589.us.i, 1
   %factor.op.mul.reass.us93.i.1 = mul i64 %i.mr, %factor.op.mul82.i
   %i.ms = getelementptr i8, ptr %i.il, i64 %factor.op.mul.reass.us93.i.1
   br label %bb.w
@@ -644,7 +644,7 @@ bb.w:                                             ; preds = %bb.w, %._crit_edge.
   br i1 %i.mz, label %bb.w, label %._crit_edge.us94.i.1, !llvm.loop !119
 
 ._crit_edge.us94.i.1:                             ; preds = %bb.w
-  %i.na = add nuw i64 %.06589.us.i, 2             ; 2 uses
+  %i.na = add nuw nsw i64 %.06589.us.i, 2         ; 2 uses
   %exitcond109.not.i.1 = icmp eq i64 %i.na, %i.gu
   br i1 %exitcond109.not.i.1, label %.preheader.preheader.i, label %.preheader77.us.i, !llvm.loop !121
 
@@ -1047,7 +1047,7 @@ bb.v:                                             ; preds = %bb.v, %.preheader74
   br i1 %i.nb, label %bb.v, label %._crit_edge.us90.i, !llvm.loop !191
 
 ._crit_edge.us90.i:                               ; preds = %bb.v
-  %i.nc = add nuw i64 %.06586.us.i, 1
+  %i.nc = add nuw nsw i64 %.06586.us.i, 1
   %factor.op.mul.reass.us89.i.1 = mul i64 %i.nc, %factor.op.mul81.i
   %i.nd = getelementptr i8, ptr %i.hg, i64 %factor.op.mul.reass.us89.i.1
   br label %bb.w
@@ -1065,7 +1065,7 @@ bb.w:                                             ; preds = %bb.w, %._crit_edge.
   br i1 %i.nl, label %bb.w, label %._crit_edge.us90.i.1, !llvm.loop !191
 
 ._crit_edge.us90.i.1:                             ; preds = %bb.w
-  %i.nm = add nuw i64 %.06586.us.i, 2             ; 2 uses
+  %i.nm = add nuw nsw i64 %.06586.us.i, 2         ; 2 uses
   %exitcond103.not.i.1 = icmp eq i64 %i.nm, %i.fr
   br i1 %exitcond103.not.i.1, label %.preheader.preheader.i, label %.preheader74.us.i, !llvm.loop !193
 

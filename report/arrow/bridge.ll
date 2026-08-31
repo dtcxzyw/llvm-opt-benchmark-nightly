@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.bo, ptr %i.bq, align 8, !tbaa !48
   %i.br = getelementptr inbounds nuw i8, ptr %.07.i.i.i.i.i, i64 696
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.br, i8 0, i64 72, i1 false)
-  %i.bs = add nsw i64 %.056.i.i.i.i.i, -2         ; 2 uses
+  %i.bs = add i64 %.056.i.i.i.i.i, -2             ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.07.i.i.i.i.i, i64 768 ; 2 uses
   %.not.i.i.i.i.i.1 = icmp eq i64 %i.bs, 0
   br i1 %.not.i.i.i.i.i.1, label %_ZSt27__uninitialized_default_n_aIPN5arrow12_GLOBAL__N_114SchemaExporterEmS2_ET_S4_T0_RSaIT1_E.exit.i.i, label %.preheader.i.i, !llvm.loop !981
