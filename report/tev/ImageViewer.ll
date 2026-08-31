@@ -205,20 +205,20 @@ define internal void @"_ZNSt3__110__function6__funcIZN3tev11ImageViewerC1EN7nano
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val = load ptr, ptr %i.a, align 8, !tbaa !2352 ; 2 uses
-  %.val2 = load <2 x float>, ptr %1, align 4
+  %2 = load <4 x float>, ptr %1, align 4
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load <2 x float>, ptr %i.b, align 4
   %i.c = getelementptr i8, ptr %.val, i64 1104
   %.val.val = load ptr, ptr %i.c, align 16, !tbaa !184
   %i.d = getelementptr i8, ptr %.val, i64 1272
   %.val.val4 = load ptr, ptr %i.d, align 8, !tbaa !403
   %i.e = getelementptr i8, ptr %.val.val4, i64 148
+  %.sroa.3.8.vec.extract.i.i.i.i = load float, ptr %i.b, align 4
   %i.f = getelementptr inbounds nuw i8, ptr %.val.val, i64 220
   %.val.val4.val = load float, ptr %i.e, align 4, !tbaa !404
   %i.g = insertelement <4 x float> poison, float %.val.val4.val, i64 0
   %i.h = shufflevector <4 x float> %i.g, <4 x float> poison, <4 x i32> zeroinitializer
-  %2 = shufflevector <2 x float> %.val2, <2 x float> %.val3, <4 x i32> <i32 0, i32 1, i32 2, i32 poison>
-  %i.i = insertelement <4 x float> %2, float 1.000000e+00, i64 3
+  %3 = insertelement <4 x float> %2, float 1.000000e+00, i64 3
+  %i.i = insertelement <4 x float> %3, float %.sroa.3.8.vec.extract.i.i.i.i, i64 2
   %i.j = fmul <4 x float> %i.h, %i.i
   store <4 x float> %i.j, ptr %i.f, align 4
   ret void
