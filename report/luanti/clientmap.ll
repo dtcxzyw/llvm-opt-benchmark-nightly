@@ -205,10 +205,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i: ; preds = %bb.b, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #2
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 416 ; 2 uses
-  %.sroa.055.0.copyload = load <2 x float>, ptr %i.w, align 8 ; 2 uses
   %.sroa.256.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 424
-  %.sroa.256.0.copyload.a = load float, ptr %.sroa.256.0..sroa_idx, align 8, !tbaa !59 ; 2 uses
-  %i.x = insertelement <2 x float> %.sroa.055.0.copyload, float %.sroa.256.0.copyload.a, i64 1 ; 2 uses
+  %.sroa.256.0.copyload = load float, ptr %.sroa.256.0..sroa_idx, align 8, !tbaa !59 ; 2 uses
+  %.sroa.256.0.copyload.a = load float, ptr %i.w, align 8
+  %5 = insertelement <2 x float> poison, float %.sroa.256.0.copyload.a, i64 0
+  %i.x = insertelement <2 x float> %5, float %.sroa.256.0.copyload, i64 1 ; 2 uses
   %i.y = fcmp nsz ogt <2 x float> %i.x, zeroinitializer
   %i.z = select <2 x i1> %i.y, <2 x float> splat (float 5.000000e+00), <2 x float> splat (float -5.000000e+00)
   %i.aa = fadd nsz <2 x float> %i.x, %i.z
@@ -239,6 +240,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   %i.au = getelementptr inbounds nuw i8, ptr %i.ac, i64 4
   %i.av = load i8, ptr %i.au, align 4, !tbaa !502, !range !152, !noundef !153
   %i.aw = trunc nuw i8 %i.av to i1
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 420
   %i.ax = extractelement <2 x i32> %i.at, i64 0
   %i.ay = extractelement <2 x i32> %i.at, i64 1
   br label %bb.e
@@ -334,6 +336,7 @@ bb.h:                                             ; preds = %bb.g, %bb.e
 
 .lr.ph:                                           ; preds = %bb.h
   %i.cc = load float, ptr %i.w, align 8, !tbaa !494
+  %7 = load float, ptr %6, align 4, !tbaa !495
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %bb.n
@@ -380,12 +383,12 @@ bb.l:                                             ; preds = %bb.j, %bb.k
   %.078 = phi nsz float [ 0.000000e+00, %bb.k ], [ %i.ct, %bb.j ]
   %.sroa.0155.0.vec.extract = extractelement <2 x float> %.sroa.0155.0, i64 0
   %i.cw = fsub nsz float %.sroa.0155.0.vec.extract, %i.cc ; 2 uses
-  %foldExtExtBinop = fsub nsz <2 x float> %.sroa.0155.0, %.sroa.055.0.copyload ; 2 uses
-  %i.cx = fsub nsz float %.sroa.9.0, %.sroa.256.0.copyload.a ; 2 uses
-  %foldExtExtBinop201 = fmul nsz <2 x float> %foldExtExtBinop, %foldExtExtBinop
-  %5 = extractelement <2 x float> %foldExtExtBinop201, i64 1
-  %i.cy = call nsz float @llvm.fmuladd.f32(float %i.cw, float %i.cw, float %5)
-  %i.cz = call nsz float @llvm.fmuladd.f32(float %i.cx, float %i.cx, float %i.cy)
+  %.sroa.0155.4.vec.extract = extractelement <2 x float> %.sroa.0155.0, i64 1
+  %i.cx = fsub nsz float %.sroa.0155.4.vec.extract, %7 ; 2 uses
+  %8 = fsub nsz float %.sroa.9.0, %.sroa.256.0.copyload ; 2 uses
+  %9 = fmul nsz float %i.cx, %i.cx
+  %i.cy = call nsz float @llvm.fmuladd.f32(float %i.cw, float %i.cw, float %9)
+  %i.cz = call nsz float @llvm.fmuladd.f32(float %8, float %8, float %i.cy)
   %i.da = call nsz noundef float @llvm.sqrt.f32(float %i.cz)
   %i.db = call nsz float @llvm.fmuladd.f32(float %i.ad, float 1.000000e+01, float %.078)
   %i.dc = fcmp nsz ogt float %i.da, %i.db
