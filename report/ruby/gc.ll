@@ -205,7 +205,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.thread.i:          ; preds = %rbimpl_RB_TYPE_P_fa
   call void (ptr, ...) @rb_bug(ptr noundef nonnull @.str.134, i64 noundef %i.v, ptr noundef nonnull %i.w) #61
   unreachable
 
-rb_type.exit.i:                                   ; preds = %bb.g, %thread-pre-split.i, %bb.e, %bb.d, %bb.b, %bb.a, %rbimpl_RB_TYPE_P_fastpath.exit.i
+rb_type.exit.i:                                   ; preds = %bb.a, %rbimpl_RB_TYPE_P_fastpath.exit.i, %bb.g, %thread-pre-split.i, %bb.e, %bb.d, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #46
   %i.x = load i64, ptr %.pre27, align 8, !tbaa !109 ; 8 uses
   %i.y = trunc i64 %i.x to i32                    ; 7 uses
