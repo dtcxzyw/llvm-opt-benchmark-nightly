@@ -205,7 +205,7 @@ ll_pad_input.exit:                                ; preds = %ll_pad_input.exit.l
   %.pre1074 = phi i32 [ %.pre1074.pre, %bb.d ], [ %i.x, %bb.h ], [ %i.x, %ll_pad_input.exit.loopexit.unr-lcssa ] ; 15 uses
   %.pre = phi i32 [ %.pre.pre, %bb.d ], [ %i.w, %bb.h ], [ %i.w, %ll_pad_input.exit.loopexit.unr-lcssa ] ; 17 uses
   %i.ma = phi i32 [ %i.s, %bb.d ], [ %i.u, %bb.h ], [ %i.u, %ll_pad_input.exit.loopexit.unr-lcssa ] ; 3 uses
-  %.0528797 = phi i32 [ %i.r, %bb.d ], [ %i.n, %bb.h ], [ %i.n, %ll_pad_input.exit.loopexit.unr-lcssa ] ; 16 uses
+  %.0528797 = phi i32 [ %i.r, %bb.d ], [ %i.n, %bb.h ], [ %i.n, %ll_pad_input.exit.loopexit.unr-lcssa ] ; 14 uses
   %storemerge = phi ptr [ %i.t, %bb.d ], [ %i.ac, %bb.h ], [ %i.ac, %ll_pad_input.exit.loopexit.unr-lcssa ] ; 5 uses
   store ptr %storemerge, ptr %i.e, align 16, !tbaa !17
   %.not617 = icmp eq ptr %storemerge, null        ; 2 uses
@@ -608,7 +608,7 @@ vec.epilog.vector.body1373:                       ; preds = %vec.epilog.vector.b
 dl.exit678:                                       ; preds = %._crit_edge877.thread, %._crit_edge.loopexit.i677
   %i.qi = phi ptr [ %i.py, %._crit_edge.loopexit.i677 ], [ %i.nk, %._crit_edge877.thread ] ; 4 uses
   %i.qj = phi ptr [ %i.pw, %._crit_edge.loopexit.i677 ], [ %i.ni, %._crit_edge877.thread ]
-  %i.qk = phi i32 [ %i.pt, %._crit_edge.loopexit.i677 ], [ %i.nf, %._crit_edge877.thread ]
+  %i.qk = phi i32 [ %i.pt, %._crit_edge.loopexit.i677 ], [ %i.nf, %._crit_edge877.thread ] ; 3 uses
   %.in829 = phi i32 [ %i.qf, %._crit_edge.loopexit.i677 ], [ %.pre, %._crit_edge877.thread ]
   %.05.lcssa.i671 = phi i32 [ %i.qg, %._crit_edge.loopexit.i677 ], [ %.pre1074, %._crit_edge877.thread ]
   %i.ql = sext i32 %.in829 to i64
@@ -1011,7 +1011,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 .lr.ph.i729.preheader:                            ; preds = %bb.ab
   %xtraiter1627 = and i32 %.0528797, 7            ; 3 uses
-  %i.zh = icmp ult i32 %.0528797, 8
+  %i.zh = icmp ult i32 %i.qk, 7
   br i1 %i.zh, label %.lr.ph.i729.epil.preheader, label %.lr.ph.i729.preheader.new
 
 .lr.ph.i729.preheader.new:                        ; preds = %.lr.ph.i729.preheader
@@ -1047,7 +1047,7 @@ bb.ab:                                            ; preds = %bb.aa
 .lr.ph.i737.preheader:                            ; preds = %.lr.ph.i729.epil, %.lr.ph.i737.preheader.unr-lcssa
   %.lcssa1396 = phi i32 [ %i.zi, %.lr.ph.i737.preheader.unr-lcssa ], [ %i.zj, %.lr.ph.i729.epil ]
   %xtraiter1634 = and i32 %.0528797, 7            ; 3 uses
-  %i.zk = icmp ult i32 %.0528797, 8
+  %i.zk = icmp ult i32 %i.qk, 7
   br i1 %i.zk, label %.lr.ph.i737.epil.preheader, label %.lr.ph.i737.preheader.new
 
 .lr.ph.i737.preheader.new:                        ; preds = %.lr.ph.i737.preheader

@@ -205,7 +205,6 @@ bb.f:                                             ; preds = %.lr.ph.split.us54, 
 .lr.ph.split.us:                                  ; preds = %.outer.loopexit.split, %.outer.loopexit.split.us.us
   %.us-phi56 = phi i32 [ %i.b, %.outer.loopexit.split.us.us ], [ %i.aa, %.outer.loopexit.split ]
   %i.v = sext i32 %.us-phi56 to i64
-  %5 = zext nneg i32 %1 to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.i, %.lr.ph.split.us
@@ -221,8 +220,9 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.z, label %.outer._crit_edge, label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %6 = icmp slt i64 %indvars.iv.next, %5
-  br i1 %6, label %bb.g, label %.outer._crit_edge, !llvm.loop !50
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond.not = icmp eq i32 %1, %lftr.wideiv
+  br i1 %exitcond.not, label %.outer._crit_edge, label %bb.g, !llvm.loop !50
 
 .lr.ph.split:                                     ; preds = %.lr.ph.lr.ph, %bb.o
   %.02131 = phi i32 [ %.1, %bb.o ], [ 1, %.lr.ph.lr.ph ] ; 2 uses

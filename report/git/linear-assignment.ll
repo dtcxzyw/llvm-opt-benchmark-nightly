@@ -45,7 +45,7 @@ st_mult.exit360:                                  ; preds = %st_mult.exit
   br label %bb.at
 
 bb.e:                                             ; preds = %bb.a
-  %i.i = zext nneg i32 %0 to i64                  ; 5 uses
+  %i.i = zext nneg i32 %0 to i64                  ; 2 uses
   %i.j = shl nuw nsw i64 %i.i, 2                  ; 5 uses
   tail call void @llvm.memset.p0.i64(ptr align 4 %3, i8 -1, i64 %i.j, i1 false)
   %i.k = sext i32 %1 to i64                       ; 2 uses
@@ -54,7 +54,7 @@ bb.e:                                             ; preds = %bb.a
   %i.m = tail call ptr @xmalloc(i64 noundef %i.j) #8 ; 25 uses
   %i.n = ptrtoaddr ptr %i.m to i64                ; 3 uses
   %i.o = icmp sgt i32 %1, 1
-  %i.p = zext nneg i32 %0 to i64                  ; 6 uses
+  %i.p = zext nneg i32 %0 to i64                  ; 9 uses
   %wide.trip.count = zext i32 %1 to i64
   %i.q = add nsw i64 %wide.trip.count, -1         ; 3 uses
   %xtraiter = and i64 %i.q, 1
@@ -178,7 +178,7 @@ st_mult.exit361:                                  ; preds = %bb.j
 
 .lr.ph410:                                        ; preds = %st_mult.exit361
   %wide.trip.count485 = zext nneg i32 %1 to i64
-  %i.bi = add nsw i64 %i.i, -1                    ; 3 uses
+  %i.bi = add nsw i64 %i.p, -1                    ; 3 uses
   %xtraiter601 = and i64 %i.bi, 1
   %i.bj = icmp eq i32 %0, 2
   %unroll_iter605 = and i64 %i.bi, -2
@@ -566,9 +566,9 @@ bb.ag:                                            ; preds = %._crit_edge411
   %diff.check585 = icmp ugt i64 %i.gg, -32
   %n.vec = and i64 %i.p, 2147483640               ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %i.p
-  %xtraiter607 = and i64 %i.i, 1
+  %xtraiter607 = and i64 %i.p, 1
   %lcmp.mod608.not = icmp eq i64 %xtraiter607, 0
-  %i.gh = add nsw i64 %i.i, -1
+  %i.gh = add nsw i64 %i.p, -1
   br label %.lr.ph435
 
 .lr.ph435:                                        ; preds = %bb.as, %.lr.ph458

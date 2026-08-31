@@ -205,7 +205,7 @@ bb.bm:                                            ; preds = %bb.bl
 bb.bn:                                            ; preds = %bb.bn, %.lr.ph.new
   %.0152214 = phi i64 [ 0, %.lr.ph.new ], [ %i.db, %bb.bn ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.bn ]
-  %i.cm = shl i64 %.0152214, 2
+  %i.cm = shl nuw nsw i64 %.0152214, 2
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ca, i64 %i.cm ; 4 uses
   store i8 0, ptr %i.cn, align 1, !tbaa !23
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 1
@@ -217,7 +217,7 @@ bb.bn:                                            ; preds = %bb.bn, %.lr.ph.new
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cn, i64 3
   store i8 %i.cr, ptr %i.cs, align 1, !tbaa !23
   %i.ct = or disjoint i64 %.0152214, 1            ; 2 uses
-  %i.cu = shl i64 %i.ct, 2
+  %i.cu = shl nuw nsw i64 %i.ct, 2
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ca, i64 %i.cu ; 4 uses
   store i8 0, ptr %i.cv, align 1, !tbaa !23
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 1
@@ -228,8 +228,8 @@ bb.bn:                                            ; preds = %bb.bn, %.lr.ph.new
   %i.cz = load i8, ptr %i.cy, align 1, !tbaa !23
   %i.da = getelementptr inbounds nuw i8, ptr %i.cv, i64 3
   store i8 %i.cz, ptr %i.da, align 1, !tbaa !23
-  %i.db = add nuw i64 %.0152214, 2                ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
+  %i.db = add nuw nsw i64 %.0152214, 2            ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader202.loopexit.unr-lcssa, label %bb.bn, !llvm.loop !53
 

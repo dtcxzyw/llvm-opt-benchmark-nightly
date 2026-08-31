@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %8) #37
   %i.h = invoke noundef i64 @_ZN6duckdb10ColumnData10ScanVectorERNS_15ColumnScanStateERNS_6VectorEmNS_14ScanVectorTypeEm(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(284) %1, ptr noundef nonnull align 8 dereferenceable(104) %7, i64 noundef %3, i32 noundef 1, i64 noundef 0)
-          to label %bb.j unwind label %bb.s       ; 12 uses
+          to label %bb.j unwind label %bb.s       ; 10 uses
 
 bb.j:                                             ; preds = %bb.i
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 312
@@ -238,7 +238,7 @@ bb.o:                                             ; preds = %bb.n
   %i.q = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !1757 ; 7 uses
   %i.s = load ptr, ptr %9, align 8, !tbaa !1193
-  %i.t = add i64 %i.h, -1                         ; 2 uses
+  %i.t = add i64 %i.h, -1                         ; 4 uses
   %i.u = load ptr, ptr %i.s, align 8, !tbaa !152  ; 2 uses
   %.not.i = icmp eq ptr %i.u, null
   br i1 %.not.i, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit, label %bb.p
@@ -272,7 +272,7 @@ bb.q:                                             ; preds = %_ZNK6duckdb15Select
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit94.preheader: ; preds = %.lr.ph
   %xtraiter = and i64 %i.h, 1
-  %i.ah = icmp eq i64 %i.h, 1
+  %i.ah = icmp eq i64 %i.t, 0
   br i1 %i.ah, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit94.epil.preheader, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit94.preheader.new
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit94.preheader.new: ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit94.preheader
@@ -281,7 +281,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit94.preheader.new: ; preds = %_ZNK6d
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit94.us.preheader: ; preds = %.lr.ph
   %xtraiter122 = and i64 %i.h, 1
-  %i.ai = icmp eq i64 %i.h, 1
+  %i.ai = icmp eq i64 %i.t, 0
   br i1 %i.ai, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit94.us.epil.preheader, label %_ZNK6duckdb15SelectionVector9get_indexEm.exit94.us.preheader.new
 
 _ZNK6duckdb15SelectionVector9get_indexEm.exit94.us.preheader.new: ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit94.us.preheader
