@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
   %.03552.i = phi i32 [ 0, %.lr.ph54.i ], [ %i.dy, %._crit_edge49.i ] ; 2 uses
   %.03651.i = phi ptr [ %.020, %.lr.ph54.i ], [ %i.cv, %._crit_edge49.i ]
   %.03750.i = phi ptr [ %.01219, %.lr.ph54.i ], [ %i.dz, %._crit_edge49.i ] ; 4 uses
-  %i.al = sub nuw nsw i32 %i.ab, %.03552.i        ; 2 uses
+  %i.al = sub nuw nsw i32 %i.ab, %.03552.i
   %.sroa.speculated.i = call i32 @llvm.smin.i32(i32 %i.al, i32 256) ; 2 uses
   %i.am = mul nuw nsw i32 %.sroa.speculated.i, 3
   %i.an = zext nneg i32 %i.am to i64              ; 2 uses
@@ -211,13 +211,9 @@ bb.f:                                             ; preds = %bb.e
 ._crit_edge.i:                                    ; preds = %.lr.ph.i
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
   invoke void @_ZN2cv5utils5trace7details6RegionC1ERKNS3_21LocationStaticStorageE(ptr noundef nonnull align 8 dereferenceable(12) %2, ptr noundef nonnull align 8 dereferenceable(32) @_ZZNK2cv3hal12cpu_baseline12_GLOBAL__N_19RGB2HLS_fclEPKfPfiE25__cv_trace_location_fn717)
-          to label %.noexc17 unwind label %bb.r
+          to label %.lr.ph.i16 unwind label %bb.r
 
-.noexc17:                                         ; preds = %._crit_edge.i
-  %5 = icmp sgt i32 %i.al, 0
-  br i1 %5, label %.lr.ph.i16, label %._crit_edge.i14
-
-.lr.ph.i16:                                       ; preds = %.noexc17
+.lr.ph.i16:                                       ; preds = %._crit_edge.i
   %i.ao = load i32, ptr %i.af, align 4, !tbaa !49
   %i.ap = load i32, ptr %i.ag, align 4, !tbaa !50 ; 2 uses
   %i.aq = sext i32 %i.ap to i64
@@ -304,7 +300,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.g
   %exitcond.not.i = icmp eq i32 %i.cb, %.sroa.speculated.i
   br i1 %exitcond.not.i, label %._crit_edge.i14, label %bb.g, !llvm.loop !177
 
-._crit_edge.i14:                                  ; preds = %bb.o, %.noexc17
+._crit_edge.i14:                                  ; preds = %bb.o
   %i.ce = load i32, ptr %i.u, align 8, !tbaa !68
   %.not.i.i15 = icmp eq i32 %i.ce, 0
   br i1 %.not.i.i15, label %.lr.ph48.preheader.i, label %bb.p
@@ -707,7 +703,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.t
   %.03855.i = phi i32 [ 0, %.lr.ph57.i ], [ %i.ga, %._crit_edge51.i ] ; 2 uses
   %.03954.i = phi ptr [ %.020, %.lr.ph57.i ], [ %i.gb, %._crit_edge51.i ] ; 15 uses
   %.04053.i = phi ptr [ %.01219, %.lr.ph57.i ], [ %i.hf, %._crit_edge51.i ]
-  %i.am = sub nuw nsw i32 %i.ae, %.03855.i        ; 3 uses
+  %i.am = sub nuw nsw i32 %i.ae, %.03855.i        ; 2 uses
   %.sroa.speculated.i = call i32 @llvm.smin.i32(i32 %i.am, i32 256) ; 2 uses
   %i.an = mul nuw nsw i32 %.sroa.speculated.i, 3
   %i.ao = zext nneg i32 %i.an to i64              ; 3 uses
@@ -817,13 +813,9 @@ middle.block:                                     ; preds = %vector.body
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %middle.block
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
   invoke void @_ZN2cv5utils5trace7details6RegionC1ERKNS3_21LocationStaticStorageE(ptr noundef nonnull align 8 dereferenceable(12) %2, ptr noundef nonnull align 8 dereferenceable(32) @_ZZNK2cv3hal12cpu_baseline12_GLOBAL__N_19HLS2RGB_fclEPKfPfiE26__cv_trace_location_fn1014)
-          to label %.noexc17 unwind label %bb.o
+          to label %.lr.ph.i16 unwind label %bb.o
 
-.noexc17:                                         ; preds = %._crit_edge.i
-  %5 = icmp sgt i32 %i.am, 0
-  br i1 %5, label %.lr.ph.i16, label %._crit_edge.i14
-
-.lr.ph.i16:                                       ; preds = %.noexc17
+.lr.ph.i16:                                       ; preds = %._crit_edge.i
   %i.dl = load i32, ptr %i.ah, align 4, !tbaa !98 ; 2 uses
   %i.dm = load i32, ptr %i.ak, align 4, !tbaa !99 ; 2 uses
   %i.dn = sext i32 %i.dm to i64
@@ -930,7 +922,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %exitcond.not.i = icmp eq i32 %i.fu, %.sroa.speculated.i
   br i1 %exitcond.not.i, label %._crit_edge.i14, label %bb.e, !llvm.loop !195
 
-._crit_edge.i14:                                  ; preds = %bb.l, %.noexc17
+._crit_edge.i14:                                  ; preds = %bb.l
   %i.fx = load i32, ptr %i.x, align 8, !tbaa !68
   %.not.i.i15 = icmp eq i32 %i.fx, 0
   br i1 %.not.i.i15, label %.lr.ph50.preheader.i, label %bb.m

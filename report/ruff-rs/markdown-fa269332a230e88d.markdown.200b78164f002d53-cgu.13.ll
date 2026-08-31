@@ -204,66 +204,46 @@ bb.j:                                             ; preds = %bb.i
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs2KzzoC5ewhj_8markdown5state5StateEEB11_.exit: ; preds = %bb.i, %bb.j
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.o, ptr noundef nonnull align 8 dereferenceable(48) %i.i, i64 48, i1 false)
-  %i.an = load ptr, ptr %i.m, align 8, !nonnull !4, !noundef !4 ; 6 uses
+  %i.an = load ptr, ptr %i.m, align 8, !nonnull !4, !noundef !4 ; 9 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 512
-  %i.ap = load i64, ptr %i.ao, align 8, !noundef !4 ; 4 uses
+  %i.ap = load i64, ptr %i.ao, align 8, !noundef !4 ; 3 uses
   %i.aq = icmp sgt i64 %i.ap, -1
   call void @llvm.assume(i1 %i.aq)
   %i.ar = icmp eq i64 %i.ap, 0
   br i1 %i.ar, label %._crit_edge.thread, label %bb.k
 
 bb.k:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs2KzzoC5ewhj_8markdown5state5StateEEB11_.exit
-  %2 = add nsw i64 %i.ap, -1                      ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.an, i64 504
-  %i.at = load ptr, ptr %i.as, align 8, !nonnull !4, !noundef !4 ; 3 uses
+  %i.at = load ptr, ptr %i.as, align 8, !nonnull !4, !noundef !4 ; 2 uses
+  %2 = add nsw i64 %i.ap, -1                      ; 3 uses
   %3 = getelementptr inbounds nuw i8, ptr %i.at, i64 %2
-  %4 = load i8, ptr %3, align 1, !range !26, !noundef !4 ; 3 uses
-  %switch.selectcmp.case1.peel = icmp eq i8 %4, 78
-  %switch.selectcmp.case2.peel = icmp eq i8 %4, 29
-  %switch.selectcmp.peel = or i1 %switch.selectcmp.case1.peel, %switch.selectcmp.case2.peel ; 3 uses
+  %4 = load i8, ptr %3, align 1, !range !26, !noundef !4 ; 2 uses
   %i.au = icmp eq i64 %2, 0
-  br i1 %i.au, label %._crit_edge, label %switch.early.test
+  br i1 %i.au, label %._crit_edge, label %switch.early.test138
 
-switch.early.test:                                ; preds = %bb.k
-  switch i8 %4, label %.peel.next.preheader [
-    i8 78, label %._crit_edge
-    i8 29, label %._crit_edge
+._crit_edge:                                      ; preds = %.peel.next, %bb.k
+  %.lcssa137 = phi i8 [ %4, %bb.k ], [ %i.ax, %.peel.next ]
+  switch i8 %.lcssa137, label %._crit_edge.thread [
+    i8 78, label %bb.l
+    i8 29, label %bb.l
   ]
-
-.peel.next.preheader:                             ; preds = %switch.early.test
-  %5 = add nsw i64 %i.ap, -2                      ; 3 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.at, i64 %5
-  %7 = load i8, ptr %6, align 1, !range !26, !noundef !4 ; 3 uses
-  %switch.selectcmp.case1145 = icmp eq i8 %7, 78
-  %switch.selectcmp.case2146 = icmp eq i8 %7, 29
-  %switch.selectcmp147 = or i1 %switch.selectcmp.case1145, %switch.selectcmp.case2146 ; 2 uses
-  %8 = icmp eq i64 %5, 0
-  br i1 %8, label %._crit_edge, label %switch.early.test138
-
-._crit_edge:                                      ; preds = %.peel.next, %switch.early.test138, %switch.early.test138, %.peel.next.preheader, %switch.early.test, %switch.early.test, %bb.k
-  %switch.selectcmp.lcssa = phi i1 [ %switch.selectcmp.peel, %switch.early.test ], [ %switch.selectcmp.peel, %switch.early.test ], [ %switch.selectcmp.peel, %bb.k ], [ %switch.selectcmp147, %.peel.next.preheader ], [ %switch.selectcmp148, %switch.early.test138 ], [ %switch.selectcmp148, %switch.early.test138 ], [ %switch.selectcmp, %.peel.next ]
-  br i1 %switch.selectcmp.lcssa, label %bb.l, label %._crit_edge.thread
 
 .peel.next:                                       ; preds = %switch.early.test138
   %i.av = add i64 %i.ba, -1                       ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.av
-  %i.ax = load i8, ptr %i.aw, align 1, !range !26, !noundef !4 ; 3 uses
-  %switch.selectcmp.case1 = icmp eq i8 %i.ax, 78
-  %switch.selectcmp.case2 = icmp eq i8 %i.ax, 29
-  %switch.selectcmp = or i1 %switch.selectcmp.case1, %switch.selectcmp.case2 ; 2 uses
+  %i.ax = load i8, ptr %i.aw, align 1, !range !26, !noundef !4 ; 2 uses
   %i.ay = icmp eq i64 %i.av, 0
   br i1 %i.ay, label %._crit_edge, label %switch.early.test138
 
-switch.early.test138:                             ; preds = %.peel.next.preheader, %.peel.next
-  %switch.selectcmp148 = phi i1 [ %switch.selectcmp, %.peel.next ], [ %switch.selectcmp147, %.peel.next.preheader ] ; 2 uses
-  %i.az = phi i8 [ %i.ax, %.peel.next ], [ %7, %.peel.next.preheader ]
-  %i.ba = phi i64 [ %i.av, %.peel.next ], [ %5, %.peel.next.preheader ]
+switch.early.test138:                             ; preds = %bb.k, %.peel.next
+  %i.az = phi i8 [ %i.ax, %.peel.next ], [ %4, %bb.k ]
+  %i.ba = phi i64 [ %i.av, %.peel.next ], [ %2, %bb.k ]
   switch i8 %i.az, label %.peel.next [
-    i8 78, label %._crit_edge
-    i8 29, label %._crit_edge
+    i8 78, label %bb.l
+    i8 29, label %bb.l
   ]
 
-._crit_edge.thread:                               ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs2KzzoC5ewhj_8markdown5state5StateEEB11_.exit, %._crit_edge
+._crit_edge.thread:                               ; preds = %._crit_edge, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs2KzzoC5ewhj_8markdown5state5StateEEB11_.exit
   %i.bb = getelementptr inbounds nuw i8, ptr %i.an, i64 488
   %i.bc = load i64, ptr %i.bb, align 8, !noundef !4 ; 4 uses
   %i.bd = icmp ult i64 %i.bc, 115292150460684698
@@ -271,10 +251,10 @@ switch.early.test138:                             ; preds = %.peel.next.preheade
   %i.be = icmp eq i64 %i.bc, 0
   br i1 %i.be, label %bb.l, label %bb.m
 
-bb.l:                                             ; preds = %bb.n, %._crit_edge.thread, %._crit_edge
-  %.sroa.013.0.lcssa129 = phi i8 [ 0, %bb.n ], [ 0, %._crit_edge.thread ], [ 1, %._crit_edge ] ; 3 uses
-  %9 = phi ptr [ %i.bo, %bb.n ], [ %i.an, %._crit_edge.thread ], [ %i.an, %._crit_edge ]
-  %i.bf = getelementptr inbounds nuw i8, ptr %9, i64 655
+bb.l:                                             ; preds = %switch.early.test138, %switch.early.test138, %._crit_edge, %._crit_edge, %bb.n, %._crit_edge.thread
+  %.sroa.013.0.lcssa124 = phi i8 [ 0, %bb.n ], [ 0, %._crit_edge.thread ], [ 1, %._crit_edge ], [ 1, %._crit_edge ], [ 1, %switch.early.test138 ], [ 1, %switch.early.test138 ] ; 3 uses
+  %5 = phi ptr [ %i.bo, %bb.n ], [ %i.an, %._crit_edge.thread ], [ %i.an, %._crit_edge ], [ %i.an, %._crit_edge ], [ %i.an, %switch.early.test138 ], [ %i.an, %switch.early.test138 ]
+  %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 655
   store i8 0, ptr %i.bf, align 1
   %i.bg = load ptr, ptr %i.m, align 8, !nonnull !4, !noundef !4
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 656
@@ -318,7 +298,7 @@ bb.p:                                             ; preds = %bb.n, %bb.n
   br i1 %i.cb, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.t, %bb.s, %bb.r, %bb.p, %bb.l
-  %.sroa.013.2 = phi i8 [ 1, %bb.s ], [ %.sroa.013.0.lcssa129, %bb.t ], [ %.sroa.013.0.lcssa129, %bb.l ], [ 1, %bb.r ], [ 1, %bb.p ]
+  %.sroa.013.2 = phi i8 [ 1, %bb.s ], [ %.sroa.013.0.lcssa124, %bb.t ], [ %.sroa.013.0.lcssa124, %bb.l ], [ 1, %bb.r ], [ 1, %bb.p ]
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 328 ; 2 uses
   %i.cd = load i64, ptr %i.cc, align 8, !noundef !4
   %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -346,7 +326,7 @@ bb.s:                                             ; preds = %bb.t, %bb.r
 bb.t:                                             ; preds = %bb.l
   %i.co = getelementptr inbounds nuw i8, ptr %1, i64 400
   %i.cp = load i8, ptr %i.co, align 8, !range !20, !noundef !4
-  %i.cq = and i8 %i.cp, %.sroa.013.0.lcssa129
+  %i.cq = and i8 %i.cp, %.sroa.013.0.lcssa124
   %or.cond7.not = icmp eq i8 %i.cq, 0
   br i1 %or.cond7.not, label %bb.q, label %bb.s
 
