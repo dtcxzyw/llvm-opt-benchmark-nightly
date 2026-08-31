@@ -1,0 +1,221 @@
+diff --git a/llvm/include/llvm/Transforms/Scalar/Reassociate.h b/llvm/include/llvm/Transforms/Scalar/Reassociate.h
+index a261d0b9baf02..441b63ac35a9a 100644
+--- a/llvm/include/llvm/Transforms/Scalar/Reassociate.h
++++ b/llvm/include/llvm/Transforms/Scalar/Reassociate.h
+@@ -134,6 +134,7 @@ class ReassociatePass : public OptionalPassInfoMixin<ReassociatePass> {
+                                                Value *OtherOp);
+   Instruction *canonicalizeNegFPConstants(Instruction *I);
+   void BuildPairMap(ReversePostOrderTraversal<Function *> &RPOT);
++  void convertShiftsUsedByMulsToMuls(Function &F);
+ };
+ 
+ } // end namespace llvm
+diff --git a/llvm/lib/Transforms/Scalar/Reassociate.cpp b/llvm/lib/Transforms/Scalar/Reassociate.cpp
+index c8a27e6509ec3..2de2aeeec627a 100644
+--- a/llvm/lib/Transforms/Scalar/Reassociate.cpp
++++ b/llvm/lib/Transforms/Scalar/Reassociate.cpp
+@@ -2674,6 +2674,79 @@ ReassociatePass::BuildPairMap(ReversePostOrderTraversal<Function *> &RPOT) {
+   }
+ }
+ 
++// Convert some left shifts by constants to multiplications so they can be used
++// for reassociation.
++void ReassociatePass::convertShiftsUsedByMulsToMuls(Function &F) {
++  using ShiftMapKeyT = std::pair<Value *, ConstantInt *>;
++
++  DenseMap<ShiftMapKeyT, Instruction *> ShiftMap;
++  SmallVector<Instruction *> ShiftsToBeConvertedToMuls;
++
++  for (BasicBlock &BI : F) {
++    for (Instruction &I : BI) {
++      Value *LHS = nullptr;
++      ConstantInt *ConstVal = nullptr;
++
++      if (match(&I, m_Shl(m_Value(LHS), m_ConstantInt(ConstVal)))) {
++        ShiftMapKeyT ShiftKey{LHS, ConstVal};
++        auto OtherShiftIte = ShiftMap.try_emplace(ShiftKey, &I).first;
++        Instruction *OtherShift = OtherShiftIte->second;
++        // We should use the most popular such shift instruction for
++        // reassociation.
++        if (I.getNumUses() > OtherShift->getNumUses())
++          OtherShiftIte->second = &I;
++        continue;
++      }
++
++      Value *OtherOp = nullptr;
++      if (!match(&I, m_Mul(m_Value(LHS), m_Value(OtherOp))))
++        continue;
++
++      bool LHSisSHL = false;
++      // Both operands of the mul are shl:
++      //   %4 = shl i8 %1, 1
++      //   %5 = shl i8 %0, 1
++      //   %6 = mul i8 %5, %1
++      if (match(LHS, m_Shl(m_Value(), m_ConstantInt(ConstVal))))
++        LHSisSHL = true;
++      // One operand of the mul is shl, the other is a mul with a constant:
++      //   %4 = shl i8 %1, 1
++      //   %5 = mul i8 %0, 2
++      //   %6 = mul i8 %5, %1
++      else if (match(LHS, m_c_Mul(m_Value(), m_ConstantInt(ConstVal)))) {
++        // Since we search by the constant used for shl but we have a mul now,
++        // we must get the log2 of the constant.
++        APInt Const = ConstVal->getValue();
++        if (!Const.isPowerOf2())
++          continue;
++        APInt ShiftAmount(Const.getBitWidth(), Const.logBase2());
++        ConstVal = ConstantInt::get(ConstVal->getContext(), ShiftAmount);
++      } else
++        continue;
++
++      // Check if there was a shift, that has the other parameter of the
++      // multiplication with shifed by the same constant.
++      ShiftMapKeyT ShiftKey{OtherOp, ConstVal};
++      auto Ite = ShiftMap.find(ShiftKey);
++      if (Ite != ShiftMap.end()) {
++        ShiftsToBeConvertedToMuls.push_back(Ite->second);
++        // If both parameters of the multiplication are left shift we should
++        // convert both.
++        if (LHSisSHL) {
++          assert(match(LHS, m_Shl(m_Value(), m_Value())) &&
++                 "Only shl instructions can be converted to mul!");
++          ShiftsToBeConvertedToMuls.push_back(cast<Instruction>(LHS));
++        }
++      }
++    }
++  }
++
++  for (Instruction *I : ShiftsToBeConvertedToMuls) {
++    MadeChange = true;
++    ConvertShiftToMul(I);
++  }
++}
++
+ PreservedAnalyses ReassociatePass::run(Function &F,
+                                        FunctionAnalysisManager &AM) {
+   // UniformityInfo is empty (and cheap) on targets without branch divergence,
+@@ -2685,6 +2758,22 @@ PreservedAnalyses ReassociatePass::run(Function &F,
+ PreservedAnalyses ReassociatePass::runImpl(Function &F, UniformityInfo &UI) {
+   UA = &UI;
+ 
++  // Serach for shifts that could be worth converting to multiplications,
++  // so they can be used in later for reassociation.
++  // For example, in the following case:
++  //   %4 = shl i8 %1, 1
++  //   %5 = shl i8 %0, 1
++  //   %6 = mul i8 %5, %1
++  //   use %6
++  //   use %4
++  //
++  // If both shifts were treated as multiplications, we could have:
++  //   %4 = shl i8 %1, 1
++  //   %5 = mul i8 %0, %4
++  //   use %5
++  //   use %4
++  convertShiftsUsedByMulsToMuls(F);
++
+   // Get the functions basic blocks in Reverse Post Order. This order is used by
+   // BuildRankMap to pre calculate ranks correctly. It also excludes dead basic
+   // blocks (it has been seen that the analysis in this pass could hang when
+diff --git a/llvm/test/Transforms/Reassociate/shl-to-mul.ll b/llvm/test/Transforms/Reassociate/shl-to-mul.ll
+new file mode 100644
+index 0000000000000..d356f11454eb4
+--- /dev/null
++++ b/llvm/test/Transforms/Reassociate/shl-to-mul.ll
+@@ -0,0 +1,96 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=reassociate -S < %s | FileCheck %s -check-prefix=REASSOC
++; RUN: opt -passes=reassociate,early-cse -S < %s | FileCheck %s -check-prefix=REASSOC-CSE
++
++define i8 @shlShlMul(i8 %0, i8 %1, ptr %2) {
++; REASSOC-LABEL: define i8 @shlShlMul(
++; REASSOC-SAME: i8 [[TMP0:%.*]], i8 [[TMP1:%.*]], ptr [[TMP2:%.*]]) {
++; REASSOC-NEXT:    [[TMP4:%.*]] = mul i8 [[TMP1]], 2
++; REASSOC-NEXT:    [[TMP5:%.*]] = mul i8 [[TMP1]], 2
++; REASSOC-NEXT:    [[TMP6:%.*]] = mul i8 [[TMP5]], [[TMP0]]
++; REASSOC-NEXT:    store i8 [[TMP6]], ptr [[TMP2]], align 8
++; REASSOC-NEXT:    ret i8 [[TMP4]]
++;
++; REASSOC-CSE-LABEL: define i8 @shlShlMul(
++; REASSOC-CSE-SAME: i8 [[TMP0:%.*]], i8 [[TMP1:%.*]], ptr [[TMP2:%.*]]) {
++; REASSOC-CSE-NEXT:    [[TMP4:%.*]] = mul i8 [[TMP1]], 2
++; REASSOC-CSE-NEXT:    [[TMP6:%.*]] = mul i8 [[TMP4]], [[TMP0]]
++; REASSOC-CSE-NEXT:    store i8 [[TMP6]], ptr [[TMP2]], align 8
++; REASSOC-CSE-NEXT:    ret i8 [[TMP4]]
++;
++  %4 = shl i8 %1, 1
++  %5 = shl i8 %0, 1
++  %6 = mul i8 %5, %1
++  store i8 %6, ptr %2, align 8
++  ret i8 %4
++}
++
++define i8 @shlMulMul(i8 %0, i8 %1, ptr %2) {
++; REASSOC-LABEL: define i8 @shlMulMul(
++; REASSOC-SAME: i8 [[TMP0:%.*]], i8 [[TMP1:%.*]], ptr [[TMP2:%.*]]) {
++; REASSOC-NEXT:    [[TMP4:%.*]] = mul i8 [[TMP1]], 2
++; REASSOC-NEXT:    [[TMP5:%.*]] = mul i8 [[TMP1]], 2
++; REASSOC-NEXT:    [[TMP6:%.*]] = mul i8 [[TMP5]], [[TMP0]]
++; REASSOC-NEXT:    store i8 [[TMP6]], ptr [[TMP2]], align 8
++; REASSOC-NEXT:    ret i8 [[TMP4]]
++;
++; REASSOC-CSE-LABEL: define i8 @shlMulMul(
++; REASSOC-CSE-SAME: i8 [[TMP0:%.*]], i8 [[TMP1:%.*]], ptr [[TMP2:%.*]]) {
++; REASSOC-CSE-NEXT:    [[TMP4:%.*]] = mul i8 [[TMP1]], 2
++; REASSOC-CSE-NEXT:    [[TMP6:%.*]] = mul i8 [[TMP4]], [[TMP0]]
++; REASSOC-CSE-NEXT:    store i8 [[TMP6]], ptr [[TMP2]], align 8
++; REASSOC-CSE-NEXT:    ret i8 [[TMP4]]
++;
++  %4 = shl i8 %1, 1
++  %5 = mul i8 %0, 2
++  %6 = mul i8 %5, %1
++  store i8 %6, ptr %2, align 8
++  ret i8 %4
++}
++
++define i8 @mulShlMul(i8 %0, i8 %1, ptr %2) {
++; REASSOC-LABEL: define i8 @mulShlMul(
++; REASSOC-SAME: i8 [[TMP0:%.*]], i8 [[TMP1:%.*]], ptr [[TMP2:%.*]]) {
++; REASSOC-NEXT:    [[TMP4:%.*]] = mul i8 [[TMP1]], 2
++; REASSOC-NEXT:    [[TMP5:%.*]] = mul i8 [[TMP0]], 2
++; REASSOC-NEXT:    [[TMP6:%.*]] = mul i8 [[TMP5]], [[TMP1]]
++; REASSOC-NEXT:    store i8 [[TMP6]], ptr [[TMP2]], align 8
++; REASSOC-NEXT:    ret i8 [[TMP4]]
++;
++; REASSOC-CSE-LABEL: define i8 @mulShlMul(
++; REASSOC-CSE-SAME: i8 [[TMP0:%.*]], i8 [[TMP1:%.*]], ptr [[TMP2:%.*]]) {
++; REASSOC-CSE-NEXT:    [[TMP4:%.*]] = mul i8 [[TMP1]], 2
++; REASSOC-CSE-NEXT:    [[TMP5:%.*]] = mul i8 [[TMP0]], 2
++; REASSOC-CSE-NEXT:    [[TMP6:%.*]] = mul i8 [[TMP5]], [[TMP1]]
++; REASSOC-CSE-NEXT:    store i8 [[TMP6]], ptr [[TMP2]], align 8
++; REASSOC-CSE-NEXT:    ret i8 [[TMP4]]
++;
++  %4 = mul i8 %1, 2
++  %5 = shl i8 %0, 1
++  %6 = mul i8 %5, %1
++  store i8 %6, ptr %2, align 8
++  ret i8 %4
++}
++
++define i8 @mulMulMul(i8 %0, i8 %1, ptr %2) {
++; REASSOC-LABEL: define i8 @mulMulMul(
++; REASSOC-SAME: i8 [[TMP0:%.*]], i8 [[TMP1:%.*]], ptr [[TMP2:%.*]]) {
++; REASSOC-NEXT:    [[TMP4:%.*]] = mul i8 [[TMP1]], 2
++; REASSOC-NEXT:    [[TMP5:%.*]] = mul i8 [[TMP1]], 2
++; REASSOC-NEXT:    [[TMP6:%.*]] = mul i8 [[TMP5]], [[TMP0]]
++; REASSOC-NEXT:    store i8 [[TMP6]], ptr [[TMP2]], align 8
++; REASSOC-NEXT:    ret i8 [[TMP4]]
++;
++; REASSOC-CSE-LABEL: define i8 @mulMulMul(
++; REASSOC-CSE-SAME: i8 [[TMP0:%.*]], i8 [[TMP1:%.*]], ptr [[TMP2:%.*]]) {
++; REASSOC-CSE-NEXT:    [[TMP4:%.*]] = mul i8 [[TMP1]], 2
++; REASSOC-CSE-NEXT:    [[TMP5:%.*]] = mul i8 [[TMP4]], [[TMP0]]
++; REASSOC-CSE-NEXT:    store i8 [[TMP5]], ptr [[TMP2]], align 8
++; REASSOC-CSE-NEXT:    ret i8 [[TMP4]]
++;
++  %4 = mul i8 %1, 2
++  %5 = mul i8 %0, 2
++  %6 = mul i8 %5, %1
++  store i8 %6, ptr %2, align 8
++  ret i8 %4
++}
