@@ -203,7 +203,6 @@ bb.d:                                             ; preds = %bb.c
   %spec.select = tail call i64 @llvm.umin.i64(i64 %i.u, i64 8) ; 2 uses
   %i.v = sub i64 %i.b, %i.m
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 824
-  %umax = tail call i64 @llvm.umax.i64(i64 %spec.select, i64 1)
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph63, %bb.e
@@ -213,7 +212,7 @@ bb.e:                                             ; preds = %.lr.ph63, %bb.e
   %i.z = getelementptr inbounds nuw i8, ptr %i.w, i64 %.04762
   store i8 %i.y, ptr %i.z, align 1
   %i.aa = add nuw nsw i64 %.04762, 1              ; 2 uses
-  %exitcond.not = icmp eq i64 %i.aa, %umax
+  %exitcond.not = icmp eq i64 %i.aa, %spec.select
   br i1 %exitcond.not, label %._crit_edge, label %bb.e, !llvm.loop !24
 
 ._crit_edge:                                      ; preds = %bb.e
@@ -539,9 +538,6 @@ declare noundef i32 @putc(i32 noundef, ptr noundef captures(none)) local_unnamed
 
 ; Function Attrs: nofree nounwind
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.smax.i8(i8, i8) #14
