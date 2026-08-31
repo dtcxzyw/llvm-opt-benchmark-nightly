@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.b, %bb.c
   %.sink = phi i64 [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 26, %bb.c ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ], [ 25, %bb.b ]
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 %.sink ; 7 uses
-  %.sroa.0.0.extract.trunc.i = trunc i56 %2 to i8 ; 5 uses
+  %.sroa.0.0.extract.trunc.i = trunc i56 %2 to i8 ; 3 uses
   %.sroa.617.0.extract.shift.i = lshr i56 %2, 8
   %.sroa.617.0.extract.trunc.i = trunc i56 %.sroa.617.0.extract.shift.i to i16 ; 2 uses
   %.sroa.8.0.extract.shift.i = lshr i56 %2, 24
@@ -235,15 +235,17 @@ bb.f:                                             ; preds = %bb.e
 .cont22.i:                                        ; preds = %.cont.i
   %i.m = trunc nuw i8 %.sroa.01.0.copyload.i.i.i to i1
   %i.n = trunc i56 %2 to i1                       ; 2 uses
-  br i1 %i.m, label %bb.g, label %.split.i
+  br i1 %i.m, label %3, label %bb.g
+
+3:                                                ; preds = %.cont22.i
+  br i1 %i.n, label %.split.i, label %_RNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang.exit
 
 bb.g:                                             ; preds = %.cont22.i
-  %3 = icmp eq i16 %.sroa.5.sroa.0.0.copyload.i.i.i, %.sroa.617.0.extract.trunc.i
-  %or.cond.i = select i1 %i.n, i1 %3, i1 false
-  br i1 %or.cond.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i, label %_RNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang.exit
-
-.split.i:                                         ; preds = %.cont22.i
   br i1 %i.n, label %_RNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang.exit, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i
+
+.split.i:                                         ; preds = %3
+  %4 = icmp eq i16 %.sroa.5.sroa.0.0.copyload.i.i.i, %.sroa.617.0.extract.trunc.i
+  br i1 %4, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i, label %_RNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang.exit
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i: ; preds = %.split.i, %bb.g, %bb.f
   store i8 %.sroa.0.0.extract.trunc.i, ptr %i.j, align 1, !alias.scope !12648
@@ -254,8 +256,8 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_libr
   store i8 %.sroa.9.0.extract.trunc.i, ptr %.sroa.48.sroa.5.0..sroa.48.0..sroa_idx.sroa_idx.i, align 1, !alias.scope !12648
   br label %_RNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang.exit
 
-_RNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang.exit: ; preds = %bb.e, %.cont.i, %bb.g, %.split.i, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i
-  %.sroa.0.1.i = phi i8 [ 2, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i ], [ %.sroa.0.0.extract.trunc.i, %bb.g ], [ %.sroa.0.0.extract.trunc.i, %.cont.i ], [ 2, %bb.e ], [ %.sroa.0.0.extract.trunc.i, %.split.i ]
+_RNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang.exit: ; preds = %bb.e, %.cont.i, %3, %bb.g, %.split.i, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i
+  %.sroa.0.1.i = phi i8 [ 2, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i ], [ 1, %bb.g ], [ 1, %.split.i ], [ 2, %bb.e ], [ %.sroa.0.0.extract.trunc.i, %.cont.i ], [ 0, %3 ]
   %.sroa.617.0.insert.insert.i = and i56 %2, -256
   %.sroa.0.0.insert.ext.i = zext i8 %.sroa.0.1.i to i56
   %.sroa.0.0.insert.insert.i = or disjoint i56 %.sroa.617.0.insert.insert.i, %.sroa.0.0.insert.ext.i
@@ -658,7 +660,7 @@ bb.fr:                                            ; preds = %bb.fq
 bb.fs:                                            ; preds = %bb.fr, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq, %bb.fq
   %.sink.i.i358 = phi i64 [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 26, %bb.fr ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ], [ 25, %bb.fq ]
   %i.ajs = getelementptr inbounds nuw i8, ptr %i.ajp, i64 %.sink.i.i358 ; 6 uses
-  %.sroa.0.0.extract.trunc.i.i.i = trunc i24 %.sroa.018.0.copyload.i to i8 ; 5 uses
+  %.sroa.0.0.extract.trunc.i.i.i = trunc i24 %.sroa.018.0.copyload.i to i8 ; 3 uses
   %.sroa.617.0.extract.shift.i.i.i = lshr i56 %.sroa.016.0.insert.ext.i, 8
   %.sroa.617.0.extract.trunc.i.i.i = trunc nuw i56 %.sroa.617.0.extract.shift.i.i.i to i16 ; 2 uses
   %.sroa.8.0.extract.trunc.i.i.i = trunc i32 %.sroa.06.0.copyload.i to i24
@@ -687,15 +689,17 @@ bb.ft:                                            ; preds = %bb.fs
 .cont22.i.i.i:                                    ; preds = %.cont.i.i38.i
   %i.ajv = trunc nuw i8 %.sroa.01.0.copyload.i.i.i.i.i to i1
   %i.ajw = trunc i24 %.sroa.018.0.copyload.i to i1 ; 2 uses
-  br i1 %i.ajv, label %bb.fu, label %.split.i.i.i
+  br i1 %i.ajv, label %6, label %bb.fu
+
+6:                                                ; preds = %.cont22.i.i.i
+  br i1 %i.ajw, label %.split.i.i.i, label %_RNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang.exit.i.i
 
 bb.fu:                                            ; preds = %.cont22.i.i.i
-  %6 = icmp eq i16 %.sroa.5.sroa.0.0.copyload.i.i.i.i.i, %.sroa.617.0.extract.trunc.i.i.i
-  %or.cond.i.i.i367 = select i1 %i.ajw, i1 %6, i1 false
-  br i1 %or.cond.i.i.i367, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i.i.i, label %_RNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang.exit.i.i
-
-.split.i.i.i:                                     ; preds = %.cont22.i.i.i
   br i1 %i.ajw, label %_RNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang.exit.i.i, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i.i.i
+
+.split.i.i.i:                                     ; preds = %6
+  %7 = icmp eq i16 %.sroa.5.sroa.0.0.copyload.i.i.i.i.i, %.sroa.617.0.extract.trunc.i.i.i
+  br i1 %7, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i.i.i, label %_RNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang.exit.i.i
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i.i.i: ; preds = %.split.i.i.i, %bb.fu, %bb.ft
   store i8 %.sroa.0.0.extract.trunc.i.i.i, ptr %i.ajs, align 1, !alias.scope !15687, !noalias !15676
@@ -704,8 +708,8 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_libr
   store i32 %.sroa.06.0.copyload.i, ptr %.sroa.48.sroa.4.0..sroa.48.0..sroa_idx.sroa_idx.i.i.i, align 1, !alias.scope !15687, !noalias !15676
   br label %_RNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang.exit.i.i
 
-_RNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang.exit.i.i: ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i.i.i, %.split.i.i.i, %bb.fu, %.cont.i.i38.i, %bb.fs
-  %.sroa.0.1.i.i.i = phi i8 [ 2, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i.i.i ], [ %.sroa.0.0.extract.trunc.i.i.i, %bb.fu ], [ %.sroa.0.0.extract.trunc.i.i.i, %.cont.i.i38.i ], [ 2, %bb.fs ], [ %.sroa.0.0.extract.trunc.i.i.i, %.split.i.i.i ]
+_RNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang.exit.i.i: ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i.i.i, %.split.i.i.i, %bb.fu, %6, %.cont.i.i38.i, %bb.fs
+  %.sroa.0.1.i.i.i = phi i8 [ 2, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i.i.i ], [ 1, %bb.fu ], [ 1, %.split.i.i.i ], [ 2, %bb.fs ], [ %.sroa.0.0.extract.trunc.i.i.i, %.cont.i.i38.i ], [ 0, %6 ]
   %.sroa.617.0.insert.insert.i.i.i = and i56 %.sroa.016.3.insert.insert.i, -256
   %.sroa.0.0.insert.ext.i.i.i = zext i8 %.sroa.0.1.i.i.i to i56
   %.sroa.0.0.insert.insert.i.i.i = or disjoint i56 %.sroa.617.0.insert.insert.i.i.i, %.sroa.0.0.insert.ext.i.i.i
@@ -1108,7 +1112,7 @@ bb.x:                                             ; preds = %.thread
 
 .loopexit:                                        ; preds = %.noexc26.a, %.noexc27, %.noexc25.a, %bb.x
   store i8 %i.cs, ptr %i.cr, align 2, !alias.scope !20720, !noalias !20723
-  %.sroa.011.0.copyload.i = load i8, ptr %i.an, align 8, !noalias !20682 ; 7 uses
+  %.sroa.011.0.copyload.i = load i8, ptr %i.an, align 8, !noalias !20682 ; 5 uses
   %.not41.i = icmp eq i8 %.sroa.011.0.copyload.i, -1
   %.sroa.512.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.an, i64 1
   %.sroa.512.sroa.0.0.copyload.i = load i48, ptr %.sroa.512.0..sroa_idx.i, align 1, !noalias !20682
@@ -1145,15 +1149,17 @@ bb.y:                                             ; preds = %.loopexit
 .cont22.i:                                        ; preds = %.cont.i
   %i.dq = trunc nuw i8 %.sroa.01.0.copyload.i.i.i to i1
   %i.dr = trunc i8 %.sroa.011.0.copyload.i to i1  ; 2 uses
-  br i1 %i.dq, label %bb.z, label %.split.i
+  br i1 %i.dq, label %5, label %bb.z
+
+5:                                                ; preds = %.cont22.i
+  br i1 %i.dr, label %.split.i, label %bb.aa
 
 bb.z:                                             ; preds = %.cont22.i
-  %5 = icmp eq i16 %.sroa.5.sroa.0.0.copyload.i.i.i, %.sroa.617.0.extract.trunc.i
-  %or.cond.i24 = select i1 %i.dr, i1 %5, i1 false
-  br i1 %or.cond.i24, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i, label %bb.aa
-
-.split.i:                                         ; preds = %.cont22.i
   br i1 %i.dr, label %bb.aa, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i
+
+.split.i:                                         ; preds = %5
+  %6 = icmp eq i16 %.sroa.5.sroa.0.0.copyload.i.i.i, %.sroa.617.0.extract.trunc.i
+  br i1 %6, label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i, label %bb.aa
 
 _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i: ; preds = %.split.i, %bb.z, %bb.y
   store i8 %.sroa.011.0.copyload.i, ptr %1, align 1, !alias.scope !20745, !noalias !20746
@@ -1164,8 +1170,8 @@ _RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_libr
   store i8 %.sroa.9.0.extract.trunc.i, ptr %.sroa.48.sroa.5.0..sroa.48.0..sroa_idx.sroa_idx.i, align 1, !alias.scope !20745, !noalias !20746
   br label %bb.aa
 
-bb.aa:                                            ; preds = %.loopexit, %.loopexit, %.cont.i, %bb.z, %.split.i, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i
-  %.sroa.0.1.i = phi i8 [ 2, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i ], [ %.sroa.011.0.copyload.i, %bb.z ], [ %.sroa.011.0.copyload.i, %.cont.i ], [ 2, %.loopexit ], [ %.sroa.011.0.copyload.i, %.split.i ], [ 2, %.loopexit ] ; 2 uses
+bb.aa:                                            ; preds = %.loopexit, %.loopexit, %.cont.i, %5, %bb.z, %.split.i, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i
+  %.sroa.0.1.i = phi i8 [ 2, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionQNtNtNtCsdaEETE4DqmE_13typst_library4text4lang6LocaleE6map_orbNCNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4util14propagate_lang0EB1Q_.exit.thread34.i ], [ 1, %bb.z ], [ 1, %.split.i ], [ 2, %.loopexit ], [ %.sroa.011.0.copyload.i, %.cont.i ], [ 0, %5 ], [ 2, %.loopexit ] ; 2 uses
   %.sroa.0.0.insert.ext.i = zext i8 %.sroa.0.1.i to i56
   %.sroa.0.0.insert.insert.i = or disjoint i56 %.sroa.034.1.insert.shift.i, %.sroa.0.0.insert.ext.i
   %i.ds = load i64, ptr %2, align 8, !range !1841, !noundef !21
