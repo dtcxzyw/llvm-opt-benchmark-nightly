@@ -204,17 +204,17 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !alias.scope !1812, !noalias !1815, !noundef !8 ; 2 uses
   %i.b = icmp eq ptr %i.a, null                   ; 2 uses
   %i.c = load ptr, ptr %1, align 8, !alias.scope !1815, !noalias !1812, !noundef !8 ; 3 uses
-  %i.d = icmp eq ptr %i.c, null                   ; 3 uses
+  %i.d = icmp eq ptr %i.c, null                   ; 2 uses
   %i.e = xor i1 %i.b, %i.d
   br i1 %i.e, label %_RNvXsw_NtCs4NRVxsYgnAr_4core6resultINtB5_6ResultINtNtCscdodAO9FK5_5alloc5boxed3BoxSNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEB1j_ENtNtB7_3cmp9PartialEq2eqCs4o81Y09oZk1_10ty_project.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   br i1 %i.b, label %bb.c, label %bb.ak
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.assume(i1 %i.d)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i = load ptr, ptr %i.f, align 8, !alias.scope !1812, !noalias !1815, !nonnull !8, !noundef !8 ; 25 uses
   %.val2.i = load ptr, ptr %2, align 8, !alias.scope !1815, !noalias !1812, !nonnull !8, !noundef !8 ; 25 uses
   %i.g = icmp eq ptr %.val.i, %.val2.i
@@ -474,12 +474,9 @@ bb.aj:                                            ; preds = %.split34.i.i.i.i, %
   br label %_RNvXsw_NtCs4NRVxsYgnAr_4core6resultINtB5_6ResultINtNtCscdodAO9FK5_5alloc5boxed3BoxSNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEB1j_ENtNtB7_3cmp9PartialEq2eqCs4o81Y09oZk1_10ty_project.exit
 
 bb.ak:                                            ; preds = %bb.b
-  %3 = xor i1 %i.d, true
-  tail call void @llvm.assume(i1 %3)
   %i.ec = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val4.i = load i64, ptr %i.ec, align 8, !alias.scope !1812, !noalias !1815, !noundef !8 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val6.i = load i64, ptr %4, align 8, !alias.scope !1815, !noalias !1812, !noundef !8
+  %.val6.i = load i64, ptr %2, align 8, !alias.scope !1815, !noalias !1812, !noundef !8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   %i.ed = icmp eq i64 %.val4.i, %.val6.i
   br i1 %i.ed, label %bb.al, label %_RNvXsw_NtCs4NRVxsYgnAr_4core6resultINtB5_6ResultINtNtCscdodAO9FK5_5alloc5boxed3BoxSNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic10DiagnosticEB1j_ENtNtB7_3cmp9PartialEq2eqCs4o81Y09oZk1_10ty_project.exit

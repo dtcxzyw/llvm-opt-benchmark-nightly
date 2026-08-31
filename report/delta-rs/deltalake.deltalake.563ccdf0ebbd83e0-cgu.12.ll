@@ -205,9 +205,8 @@ bb.n:                                             ; preds = %bb.m
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 64
   %i.bg = load ptr, ptr %i.bf, align 8, !noundef !4
   %i.bh = icmp ne ptr %i.bg, null                 ; 2 uses
-  %i.bi = load ptr, ptr %1, align 8, !noundef !4
-  %i.bj = icmp eq ptr %i.bi, null                 ; 3 uses
-  %not..i.i = xor i1 %i.bj, true
+  %i.bi = load ptr, ptr %1, align 8, !noundef !4  ; 2 uses
+  %i.bj = icmp eq ptr %i.bi, null                 ; 2 uses
   %i.bk = xor i1 %i.bh, %i.bj
   br i1 %i.bk, label %bb.o, label %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
@@ -215,7 +214,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.bh, label %bb.p, label %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.p:                                             ; preds = %bb.o
-  tail call void @llvm.assume(i1 %not..i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bi) ]
   %i.bl = getelementptr inbounds nuw i8, ptr %i.be, i64 80
   %i.bm = load i64, ptr %i.bl, align 8, !noundef !4 ; 2 uses
   %i.bn = load i64, ptr %i.ab, align 8, !noundef !4
@@ -618,10 +617,9 @@ bb.n:                                             ; preds = %bb.m
   %i.bg = getelementptr inbounds nuw [104 x i8], ptr %i.bf, i64 %i.ai ; 9 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 64
   %i.bi = load ptr, ptr %i.bh, align 8, !noalias !1583, !noundef !4
-  %i.bj = icmp ne ptr %i.bi, null                 ; 3 uses
-  %i.bk = load ptr, ptr %2, align 8, !alias.scope !1603, !noalias !1602, !noundef !4 ; 2 uses
+  %i.bj = icmp ne ptr %i.bi, null                 ; 2 uses
+  %i.bk = load ptr, ptr %2, align 8, !alias.scope !1603, !noalias !1602, !noundef !4 ; 3 uses
   %i.bl = icmp eq ptr %i.bk, null                 ; 3 uses
-  %not..i.i.i.i = xor i1 %i.bl, true
   %i.bm = xor i1 %i.bj, %i.bl
   br i1 %i.bm, label %bb.o, label %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread.i.i
 
@@ -629,7 +627,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.bj, label %bb.p, label %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.i.i
 
 bb.p:                                             ; preds = %bb.o
-  tail call void @llvm.assume(i1 %not..i.i.i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bk) ]
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bg, i64 80
   %i.bo = load i64, ptr %i.bn, align 8, !noalias !1583, !noundef !4 ; 2 uses
   %i.bp = load i64, ptr %i.ad, align 8, !alias.scope !1603, !noalias !1602, !noundef !4
@@ -657,6 +655,7 @@ _RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4c
   br i1 %i.by, label %bb.r, label %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread.i.i
 
 bb.r:                                             ; preds = %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.i.i, %.split.i.i
+  %.lcssa31.i = phi i1 [ true, %_RNvXsy_NtNtCs4j34XAPZOn0_4http6header4nameNtB5_10HeaderNameNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.i.i ], [ %i.bl, %.split.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !1601
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.f, ptr noundef nonnull align 8 dereferenceable(40) %3, i64 40, i1 false), !noalias !1596
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1604)
@@ -1038,7 +1037,7 @@ bb.be:                                            ; preds = %_RNvMs0_NtNtCs4j34X
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !1601
   call void @llvm.experimental.noalias.scope.decl(metadata !1690)
   call void @llvm.experimental.noalias.scope.decl(metadata !1693)
-  br i1 %i.bj, label %bb.bf, label %_RINvXNtNtNtCs4j34XAPZOn0_4http6header3map16into_header_nameNtNtB7_4name10HeaderNameNtB3_6Sealed10try_insertNtNtB7_5value11HeaderValueECs7p2uQeJxui2_9deltalake.exit
+  br i1 %.lcssa31.i, label %_RINvXNtNtNtCs4j34XAPZOn0_4http6header3map16into_header_nameNtNtB7_4name10HeaderNameNtB3_6Sealed10try_insertNtNtB7_5value11HeaderValueECs7p2uQeJxui2_9deltalake.exit, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
   call void @llvm.experimental.noalias.scope.decl(metadata !1696)
@@ -1441,8 +1440,7 @@ bb.cz:                                            ; preds = %bb.cy
   %i.sf = load ptr, ptr %i.rt, align 8, !alias.scope !16912, !noalias !16913, !noundef !4 ; 2 uses
   %i.sg = icmp ne ptr %i.sf, null                 ; 2 uses
   %i.sh = load ptr, ptr %i.ru, align 8, !alias.scope !16913, !noalias !16912, !noundef !4 ; 3 uses
-  %i.si = icmp eq ptr %i.sh, null                 ; 3 uses
-  %not..i.i = xor i1 %i.si, true
+  %i.si = icmp eq ptr %i.sh, null                 ; 2 uses
   %i.sj = xor i1 %i.sg, %i.si
   br i1 %i.sj, label %bb.da, label %_RNvXsn_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan3ddlNtB5_19CreateExternalTableNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
@@ -1450,7 +1448,6 @@ bb.da:                                            ; preds = %bb.cz
   br i1 %i.sg, label %bb.db, label %bb.dc
 
 bb.db:                                            ; preds = %bb.da
-  tail call void @llvm.assume(i1 %not..i.i)
   %i.sk = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.sl = load i64, ptr %i.sk, align 16, !alias.scope !16912, !noalias !16913, !noundef !4 ; 2 uses
   %i.sm = getelementptr inbounds nuw i8, ptr %1, i64 16

@@ -205,14 +205,14 @@ bb.bb:                                            ; preds = %bb.ba
   store <2 x i64> %i.es, ptr %.sroa.513.0..sroa_idx.i.i, align 16, !dbg !712, !noalias !694
   store <2 x i64> %i.eo, ptr %.sroa.7.0..sroa_idx.i.i, align 16, !dbg !712, !noalias !694
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.915.0..sroa_idx.i.i, i8 0, i64 24, i1 false), !dbg !712, !noalias !694
-  %i.et = load ptr, ptr %i.av, align 8, !dbg !714, !noalias !729, !noundef !16 ; 2 uses
+  %i.et = load ptr, ptr %i.av, align 8, !dbg !714, !noalias !729, !noundef !16 ; 3 uses
   %i.eu = icmp ne ptr %i.et, null, !dbg !714
   %i.ev = zext i1 %i.eu to i64, !dbg !714
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !dbg !736, !noalias !746
   store i64 %i.ev, ptr %i.e, align 8, !dbg !751, !noalias !746
   call fastcc void @_RNvXs3_NtNtCs3oUPovFnLWP_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCsbaWXNhtWAp9_11foundations(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.e, i64 noundef 8) #40, !dbg !754, !noalias !761
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !dbg !762, !noalias !746
-  %.not.i.i.i.i.i = icmp eq ptr %i.et, null, !dbg !763 ; 2 uses
+  %.not.i.i.i.i.i = icmp eq ptr %i.et, null, !dbg !763
   br i1 %.not.i.i.i.i.i, label %bb.bd, label %bb.bc, !dbg !763
 
 bb.bc:                                            ; preds = %bb.bb
@@ -304,7 +304,7 @@ _RINvXs3_NtNtCs3oUPovFnLWP_4core4hash5implsRNtNtNtCs74LoFwSioHw_4http6header4nam
   br label %.loopexit.i, !dbg !932
 
 bb.be:                                            ; preds = %bb.ba
-  %i.hl = load ptr, ptr %i.av, align 8, !dbg !933, !noalias !941, !noundef !16 ; 2 uses
+  %i.hl = load ptr, ptr %i.av, align 8, !dbg !933, !noalias !941, !noundef !16 ; 5 uses
   %i.hm = icmp ne ptr %i.hl, null, !dbg !933
   %i.hn = zext i1 %i.hm to i64, !dbg !933
   %i.ho = xor i64 %i.hn, -3750763034362895579, !dbg !948
@@ -401,7 +401,7 @@ bb.bg:                                            ; preds = %bb.be
 
 .loopexit.i:                                      ; preds = %.lr.ph.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i, %bb.bg, %bb.bf, %_RINvXs3_NtNtCs3oUPovFnLWP_4core4hash5implsRNtNtNtCs74LoFwSioHw_4http6header4name10HeaderNameNtB8_4Hash4hashNtNtNtCsaL1QbXo9JQH_3std4hash6random13DefaultHasherECsbaWXNhtWAp9_11foundations.exit.i.i
   %i.jt = phi i8 [ %i.fa, %_RINvXs3_NtNtCs3oUPovFnLWP_4core4hash5implsRNtNtNtCs74LoFwSioHw_4http6header4name10HeaderNameNtB8_4Hash4hashNtNtNtCsaL1QbXo9JQH_3std4hash6random13DefaultHasherECsbaWXNhtWAp9_11foundations.exit.i.i ], [ %i.jp, %bb.bg ], [ %i.ht, %bb.bf ], [ %i.ht, %.lr.ph.i.i.i.i.i.i.i ], [ %i.ht, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ]
-  %4 = phi i1 [ %.not.i.i.i.i.i, %_RINvXs3_NtNtCs3oUPovFnLWP_4core4hash5implsRNtNtNtCs74LoFwSioHw_4http6header4name10HeaderNameNtB8_4Hash4hashNtNtNtCsaL1QbXo9JQH_3std4hash6random13DefaultHasherECsbaWXNhtWAp9_11foundations.exit.i.i ], [ true, %bb.bg ], [ false, %bb.bf ], [ false, %.lr.ph.i.i.i.i.i.i.i ], [ false, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 3 uses
+  %4 = phi ptr [ %i.et, %_RINvXs3_NtNtCs3oUPovFnLWP_4core4hash5implsRNtNtNtCs74LoFwSioHw_4http6header4name10HeaderNameNtB8_4Hash4hashNtNtNtCsaL1QbXo9JQH_3std4hash6random13DefaultHasherECsbaWXNhtWAp9_11foundations.exit.i.i ], [ null, %bb.bg ], [ %i.hl, %bb.bf ], [ %i.hl, %.lr.ph.i.i.i.i.i.i.i ], [ %i.hl, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ] ; 2 uses
   %.sroa.0.0.i.i = phi i64 [ %i.hk, %_RINvXs3_NtNtCs3oUPovFnLWP_4core4hash5implsRNtNtNtCs74LoFwSioHw_4http6header4name10HeaderNameNtB8_4Hash4hashNtNtNtCsaL1QbXo9JQH_3std4hash6random13DefaultHasherECsbaWXNhtWAp9_11foundations.exit.i.i ], [ %i.js, %bb.bg ], [ %i.hp, %bb.bf ], [ %.lcssa.unr, %.lr.ph.i.i.i.i.i.i.i.prol.loopexit ], [ %i.jn, %.lr.ph.i.i.i.i.i.i.i ], !dbg !1028
   %i.ju = trunc i64 %.sroa.0.0.i.i to i16, !dbg !1029
   %i.jv = and i16 %i.ju, 32767, !dbg !1029        ; 6 uses
@@ -413,7 +413,7 @@ bb.bg:                                            ; preds = %bb.be
   %i.kb = zext i16 %i.jw to i64
   %i.kc = load i64, ptr %i.bd, align 8, !alias.scope !648, !noalias !663 ; 4 uses
   %i.kd = load ptr, ptr %i.be, align 8, !alias.scope !648, !noalias !663, !nonnull !16
-  %not..i.i.i = xor i1 %4, true
+  %5 = icmp eq ptr %4, null                       ; 2 uses
   %i.ke = load i64, ptr %i.ay, align 8            ; 2 uses
   %i.kf = load ptr, ptr %i.ax, align 8            ; 2 uses
   %i.kg = ptrtoint ptr %i.kf to i64
@@ -620,14 +620,14 @@ bb.by:                                            ; preds = %bb.bx
   %i.mt = getelementptr inbounds nuw i8, ptr %i.ms, i64 64, !dbg !1277
   %i.mu = load ptr, ptr %i.mt, align 8, !dbg !1278, !noalias !663, !noundef !16
   %i.mv = icmp ne ptr %i.mu, null, !dbg !1278     ; 2 uses
-  %i.mw = xor i1 %4, %i.mv, !dbg !1288
+  %i.mw = xor i1 %5, %i.mv, !dbg !1288
   br i1 %i.mw, label %bb.bz, label %_RNvXsh_NtNtCs74LoFwSioHw_4http6header4nameNtB5_10HeaderNameINtNtCs3oUPovFnLWP_4core3cmp9PartialEqRBE_E2eq.exit.thread.i, !dbg !1288
 
 bb.bz:                                            ; preds = %bb.by
   br i1 %i.mv, label %bb.ca, label %_RNvXsh_NtNtCs74LoFwSioHw_4http6header4nameNtB5_10HeaderNameINtNtCs3oUPovFnLWP_4core3cmp9PartialEqRBE_E2eq.exit.i, !dbg !1288
 
 bb.ca:                                            ; preds = %bb.bz
-  call void @llvm.assume(i1 %not..i.i.i), !dbg !1288
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %4) ], !dbg !1288
   %i.mx = getelementptr inbounds nuw i8, ptr %i.ms, i64 80, !dbg !1291
   %i.my = load i64, ptr %i.mx, align 8, !dbg !1291, !noalias !663, !noundef !16
   %i.mz = icmp eq i64 %i.my, %i.ke, !dbg !1309
@@ -645,7 +645,7 @@ bb.cb:                                            ; preds = %bb.bx
           to label %bb.bh unwind label %.loopexit.split-lp112, !dbg !1264, !noalias !663
 
 _RNvXsh_NtNtCs74LoFwSioHw_4http6header4nameNtB5_10HeaderNameINtNtCs3oUPovFnLWP_4core3cmp9PartialEqRBE_E2eq.exit.i: ; preds = %bb.bz
-  call void @llvm.assume(i1 %4), !dbg !1288
+  call void @llvm.assume(i1 %5), !dbg !1288
   %i.nd = getelementptr inbounds nuw i8, ptr %i.ms, i64 72, !dbg !1325
   %i.ne = load i8, ptr %i.nd, align 8, !dbg !1325, !range !778, !noalias !663, !noundef !16
   %i.nf = icmp eq i8 %i.ne, %.ph, !dbg !1332

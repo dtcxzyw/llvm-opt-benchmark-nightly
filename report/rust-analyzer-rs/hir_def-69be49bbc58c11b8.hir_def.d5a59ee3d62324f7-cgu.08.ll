@@ -205,8 +205,8 @@ bb.a:
     i64 0, label %_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
   ]
 
-_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit: ; preds = %tailrecurse, %.lr.ph, %bb.a, %8, %bb.d, %bb.b, %bb.g, %bb.e, %bb.h, %bb.f
-  %.sroa.0.0.shrunk = phi i1 [ false, %bb.g ], [ false, %bb.b ], [ %i.x, %bb.f ], [ %spec.select.i, %bb.d ], [ %i.ah, %bb.h ], [ false, %bb.e ], [ %6, %8 ], [ false, %bb.a ], [ false, %tailrecurse ], [ true, %.lr.ph ]
+_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit: ; preds = %tailrecurse, %.lr.ph, %bb.a, %bb.d, %bb.c, %bb.b, %bb.g, %bb.e, %bb.h, %bb.f
+  %.sroa.0.0.shrunk = phi i1 [ false, %bb.g ], [ false, %bb.b ], [ %i.x, %bb.f ], [ %spec.select.i, %bb.c ], [ %i.ah, %bb.h ], [ false, %bb.e ], [ %9, %bb.d ], [ false, %bb.a ], [ false, %tailrecurse ], [ true, %.lr.ph ]
   ret i1 %.sroa.0.0.shrunk
 
 default.unreachable30:                            ; preds = %.lr.ph
@@ -225,31 +225,32 @@ tailrecurse:                                      ; preds = %.lr.ph
 bb.b:                                             ; preds = %.lr.ph
   %i.l = getelementptr inbounds nuw i8, ptr %.tr16, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %.tr717, i64 8
-  %.val.a = load ptr, ptr %i.l, align 8, !noundef !8 ; 2 uses
+  %.val = load ptr, ptr %i.l, align 8, !noundef !8 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.tr16, i64 16
+  %.val.a = load ptr, ptr %2, align 8             ; 3 uses
   %.val5 = load ptr, ptr %i.m, align 8, !noundef !8 ; 3 uses
-  %2 = icmp ne ptr %.val.a, null                  ; 2 uses
-  %3 = icmp eq ptr %.val5, null                   ; 3 uses
-  %not..i = xor i1 %3, true
-  %i.n = xor i1 %2, %3
-  br i1 %i.n, label %bb.c, label %_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
+  %3 = getelementptr inbounds nuw i8, ptr %.tr717, i64 16
+  %.val6 = load ptr, ptr %3, align 8              ; 3 uses
+  %4 = icmp ne ptr %.val, null                    ; 2 uses
+  %5 = icmp eq ptr %.val5, null                   ; 2 uses
+  %i.n = xor i1 %4, %5
+  br i1 %i.n, label %6, label %_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
-bb.c:                                             ; preds = %bb.b
-  %4 = getelementptr inbounds nuw i8, ptr %.tr717, i64 16
-  %.val6 = load ptr, ptr %4, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %.tr16, i64 16
-  %.val4 = load ptr, ptr %5, align 8
-  %6 = icmp eq ptr %.val4, %.val6                 ; 2 uses
-  br i1 %2, label %bb.d, label %8
+6:                                                ; preds = %bb.b
+  br i1 %4, label %bb.c, label %bb.d
 
-bb.d:                                             ; preds = %bb.c
-  tail call void @llvm.assume(i1 %not..i)
+bb.c:                                             ; preds = %6
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5) ]
-  %7 = icmp eq ptr %.val.a, %.val5
-  %spec.select.i = select i1 %7, i1 %6, i1 false
+  %7 = icmp eq ptr %.val, %.val5
+  %8 = icmp eq ptr %.val.a, %.val6
+  %spec.select.i = select i1 %7, i1 %8, i1 false
   br label %_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
-8:                                                ; preds = %bb.c
-  tail call void @llvm.assume(i1 %3)
+bb.d:                                             ; preds = %6
+  tail call void @llvm.assume(i1 %5)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.a) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6) ]
+  %9 = icmp eq ptr %.val.a, %.val6
   br label %_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
 bb.e:                                             ; preds = %.lr.ph

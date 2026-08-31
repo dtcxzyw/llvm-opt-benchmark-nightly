@@ -121,9 +121,8 @@ bb.f:                                             ; preds = %bb.e
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 56
   %i.al = load ptr, ptr %i.ak, align 8, !noalias !15, !noundef !14
   %i.am = icmp ne ptr %i.al, null                 ; 2 uses
-  %i.an = load ptr, ptr %2, align 8, !noalias !15, !noundef !14
-  %i.ao = icmp eq ptr %i.an, null                 ; 3 uses
-  %not..i.i.i.i = xor i1 %i.ao, true
+  %i.an = load ptr, ptr %2, align 8, !noalias !15, !noundef !14 ; 2 uses
+  %i.ao = icmp eq ptr %i.an, null                 ; 2 uses
   %i.ap = xor i1 %i.am, %i.ao
   br i1 %i.ap, label %bb.g, label %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread.i.i
 
@@ -131,7 +130,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.am, label %bb.h, label %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i.i
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @llvm.assume(i1 %not..i.i.i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
   %i.aq = getelementptr inbounds nuw i8, ptr %i.aj, i64 72
   %i.ar = load i64, ptr %i.aq, align 8, !noalias !15, !noundef !14 ; 2 uses
   %i.as = load i64, ptr %i.t, align 8, !noalias !15, !noundef !14
@@ -534,9 +533,8 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.o, align 8, !alias.scope !94, !noalias !97, !nonnull !14
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.s = load ptr, ptr %1, align 8                ; 5 uses
-  %i.t = icmp eq ptr %i.s, null                   ; 4 uses
-  %not..i.i.i = xor i1 %i.t, true
+  %i.s = load ptr, ptr %1, align 8                ; 6 uses
+  %i.t = icmp eq ptr %i.s, null                   ; 3 uses
   %i.u = load i8, ptr %i.q, align 8, !range !16
   %i.v = load i64, ptr %i.r, align 8              ; 3 uses
   %i.w = load ptr, ptr %i.q, align 8              ; 2 uses
@@ -594,7 +592,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ap, label %bb.h, label %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @llvm.assume(i1 %not..i.i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.ar = getelementptr inbounds nuw i8, ptr %i.am, i64 80
   %i.as = load i64, ptr %i.ar, align 8, !noalias !104, !noundef !14
   %i.at = icmp eq i64 %i.as, %i.v
@@ -605,7 +603,7 @@ bb.h:                                             ; preds = %bb.g
   %i.av = load ptr, ptr %i.au, align 8, !noalias !104, !noundef !14
   %bcmp.i.i.i.i.i = tail call i32 @bcmp(ptr %i.av, ptr %i.w, i64 %i.v), !noalias !104
   %i.aw = icmp eq i32 %bcmp.i.i.i.i.i, 0
-  br i1 %i.aw, label %_RINvXs0_NtNtNtCs84JG9zk80ZV_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit, label %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread.i
+  br i1 %i.aw, label %bb.l, label %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread.i
 
 _RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i: ; preds = %bb.g
   tail call void @llvm.assume(i1 %i.t)
@@ -640,22 +638,23 @@ bb.k:                                             ; preds = %bb.j
   invoke void %i.be(ptr noundef %i.bc, ptr noundef %i.w, i64 noundef %i.v)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http6header4name10HeaderNameECs2TJrahNLnPN_22pingora_load_balancing.exit unwind label %bb.m, !inline_history !124
 
-_RINvXs0_NtNtNtCs84JG9zk80ZV_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit: ; preds = %.split.i, %.loopexit, %bb.c, %._RINvXs0_NtNtNtCs84JG9zk80ZV_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit_crit_edge
-  %2 = phi ptr [ %.pre, %._RINvXs0_NtNtNtCs84JG9zk80ZV_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit_crit_edge ], [ %i.s, %bb.c ], [ %i.s, %.loopexit ], [ %i.s, %.split.i ] ; 2 uses
-  %3 = phi i1 [ false, %._RINvXs0_NtNtNtCs84JG9zk80ZV_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit_crit_edge ], [ true, %.split.i ], [ false, %.loopexit ], [ false, %bb.c ] ; 2 uses
+_RINvXs0_NtNtNtCs84JG9zk80ZV_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit: ; preds = %.loopexit, %bb.c, %._RINvXs0_NtNtNtCs84JG9zk80ZV_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit_crit_edge
+  %2 = phi ptr [ %.pre, %._RINvXs0_NtNtNtCs84JG9zk80ZV_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit_crit_edge ], [ %i.s, %bb.c ], [ %i.s, %.loopexit ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !125)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !126)
   %i.bf = icmp eq ptr %2, null
   br i1 %i.bf, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http6header4name10HeaderNameECs2TJrahNLnPN_22pingora_load_balancing.exit1, label %bb.l
 
-bb.l:                                             ; preds = %_RINvXs0_NtNtNtCs84JG9zk80ZV_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit
+bb.l:                                             ; preds = %.split.i, %_RINvXs0_NtNtNtCs84JG9zk80ZV_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit
+  %3 = phi i1 [ false, %_RINvXs0_NtNtNtCs84JG9zk80ZV_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit ], [ true, %.split.i ]
+  %4 = phi ptr [ %2, %_RINvXs0_NtNtNtCs84JG9zk80ZV_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit ], [ %i.s, %.split.i ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !127)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !130)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !133)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !136)
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.bh = load ptr, ptr %i.bg, align 8, !alias.scope !139, !noundef !14
-  %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %i.bi = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.bj = load ptr, ptr %i.bi, align 8, !noalias !139, !nonnull !14, !noundef !14
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bl = load ptr, ptr %i.bk, align 8, !alias.scope !139, !noundef !14
@@ -665,7 +664,7 @@ bb.l:                                             ; preds = %_RINvXs0_NtNtNtCs84
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http6header4name10HeaderNameECs2TJrahNLnPN_22pingora_load_balancing.exit1
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs84JG9zk80ZV_4http6header4name10HeaderNameECs2TJrahNLnPN_22pingora_load_balancing.exit1: ; preds = %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i, %_RINvXs0_NtNtNtCs84JG9zk80ZV_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit, %bb.l
-  %i.bo = phi i1 [ %3, %bb.l ], [ %3, %_RINvXs0_NtNtNtCs84JG9zk80ZV_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit ], [ true, %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i ]
+  %i.bo = phi i1 [ %3, %bb.l ], [ false, %_RINvXs0_NtNtNtCs84JG9zk80ZV_4http6header3map14as_header_nameNtNtBa_4name10HeaderNameNtB6_6Sealed4findNtNtBa_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit ], [ true, %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i ]
   ret i1 %i.bo
 
 bb.m:                                             ; preds = %bb.k
@@ -712,9 +711,8 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %i.o, align 8, !alias.scope !146, !noalias !147, !nonnull !14
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.s = load ptr, ptr %1, align 8                ; 5 uses
-  %i.t = icmp eq ptr %i.s, null                   ; 4 uses
-  %not..i.i.i.i = xor i1 %i.t, true
+  %i.s = load ptr, ptr %1, align 8                ; 6 uses
+  %i.t = icmp eq ptr %i.s, null                   ; 3 uses
   %i.u = load i8, ptr %i.q, align 8, !range !16
   %i.v = load i64, ptr %i.r, align 8              ; 3 uses
   %i.w = load ptr, ptr %i.q, align 8              ; 2 uses
@@ -772,7 +770,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.ap, label %bb.h, label %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i.i
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @llvm.assume(i1 %not..i.i.i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   %i.ar = getelementptr inbounds nuw i8, ptr %i.am, i64 80
   %i.as = load i64, ptr %i.ar, align 8, !noalias !154, !noundef !14
   %i.at = icmp eq i64 %i.as, %i.v
@@ -939,9 +937,8 @@ bb.f:                                             ; preds = %bb.e
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 64
   %i.al = load ptr, ptr %i.ak, align 8, !noalias !199, !noundef !14
   %i.am = icmp ne ptr %i.al, null                 ; 2 uses
-  %i.an = load ptr, ptr %2, align 8, !noalias !199, !noundef !14
-  %i.ao = icmp eq ptr %i.an, null                 ; 3 uses
-  %not..i.i.i.i = xor i1 %i.ao, true
+  %i.an = load ptr, ptr %2, align 8, !noalias !199, !noundef !14 ; 2 uses
+  %i.ao = icmp eq ptr %i.an, null                 ; 2 uses
   %i.ap = xor i1 %i.am, %i.ao
   br i1 %i.ap, label %bb.g, label %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread.i.i
 
@@ -949,7 +946,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.am, label %bb.h, label %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i.i
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @llvm.assume(i1 %not..i.i.i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.an) ]
   %i.aq = getelementptr inbounds nuw i8, ptr %i.aj, i64 80
   %i.ar = load i64, ptr %i.aq, align 8, !noalias !199, !noundef !14 ; 2 uses
   %i.as = load i64, ptr %i.t, align 8, !noalias !199, !noundef !14
