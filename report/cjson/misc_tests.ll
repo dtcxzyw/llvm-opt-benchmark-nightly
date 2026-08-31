@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 20 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !39   ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !35   ; 6 uses
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !35   ; 5 uses
   %i.i = icmp ult i64 %i.f, %i.h
   br i1 %i.i, label %bb.c, label %.critedge.thread119
 
@@ -222,11 +222,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.n, label %.lr.ph.i, label %buffer_skip_whitespace.exit
 
 .lr.ph.i:                                         ; preds = %bb.d, %bb.e
-  %i.o = phi i64 [ %i.s, %bb.e ], [ %i.m, %bb.d ] ; 4 uses
+  %i.o = phi i64 [ %i.s, %bb.e ], [ %i.m, %bb.d ] ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.o
   %i.q = load i8, ptr %i.p, align 1, !tbaa !40
   %i.r = icmp ult i8 %i.q, 33
-  br i1 %i.r, label %bb.e, label %.critedge.i
+  br i1 %i.r, label %bb.e, label %buffer_skip_whitespace.exit
 
 bb.e:                                             ; preds = %.lr.ph.i
   %i.s = add i64 %i.o, 1                          ; 3 uses
@@ -234,17 +234,13 @@ bb.e:                                             ; preds = %.lr.ph.i
   %exitcond.not.i = icmp eq i64 %i.s, %i.h
   br i1 %exitcond.not.i, label %.critedge.thread.i, label %.lr.ph.i
 
-.critedge.i:                                      ; preds = %.lr.ph.i
-  %2 = icmp eq i64 %i.o, %i.h
-  br i1 %2, label %.critedge.thread.i, label %buffer_skip_whitespace.exit
-
-.critedge.thread.i:                               ; preds = %bb.e, %.critedge.i
+.critedge.thread.i:                               ; preds = %bb.e
   %i.t = add i64 %i.h, -1                         ; 2 uses
   store i64 %i.t, ptr %i.e, align 8, !tbaa !39
   br label %buffer_skip_whitespace.exit
 
-buffer_skip_whitespace.exit:                      ; preds = %bb.d, %.critedge.i, %.critedge.thread.i
-  %i.u = phi i64 [ %i.m, %bb.d ], [ %i.o, %.critedge.i ], [ %i.t, %.critedge.thread.i ] ; 5 uses
+buffer_skip_whitespace.exit:                      ; preds = %.lr.ph.i, %bb.d, %.critedge.thread.i
+  %i.u = phi i64 [ %i.t, %.critedge.thread.i ], [ %i.m, %bb.d ], [ %i.o, %.lr.ph.i ] ; 5 uses
   %i.v = icmp ult i64 %i.u, %i.h
   br i1 %i.v, label %bb.f, label %bb.g
 
@@ -292,7 +288,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %.172 = phi ptr [ %.071, %bb.k ], [ %i.ac, %bb.j ] ; 10 uses
   %i.af = load i64, ptr %i.e, align 8, !tbaa !39
   %i.ag = add i64 %i.af, 1                        ; 3 uses
-  %i.ah = load i64, ptr %i.g, align 8, !tbaa !35  ; 4 uses
+  %i.ah = load i64, ptr %i.g, align 8, !tbaa !35  ; 3 uses
   %i.ai = icmp ult i64 %i.ag, %i.ah
   br i1 %i.ai, label %bb.m, label %.critedge.thread123
 
@@ -303,11 +299,11 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ak, label %buffer_skip_whitespace.exit97, label %.lr.ph.i93
 
 .lr.ph.i93:                                       ; preds = %bb.m, %bb.n
-  %i.al = phi i64 [ %i.ap, %bb.n ], [ %i.ag, %bb.m ] ; 3 uses
+  %i.al = phi i64 [ %i.ap, %bb.n ], [ %i.ag, %bb.m ] ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.al
   %i.an = load i8, ptr %i.am, align 1, !tbaa !40
   %i.ao = icmp ult i8 %i.an, 33
-  br i1 %i.ao, label %bb.n, label %.critedge.i94
+  br i1 %i.ao, label %bb.n, label %buffer_skip_whitespace.exit97
 
 bb.n:                                             ; preds = %.lr.ph.i93
   %i.ap = add i64 %i.al, 1                        ; 3 uses
@@ -315,16 +311,12 @@ bb.n:                                             ; preds = %.lr.ph.i93
   %exitcond.not.i96 = icmp eq i64 %i.ap, %i.ah
   br i1 %exitcond.not.i96, label %.critedge.thread.i95, label %.lr.ph.i93
 
-.critedge.i94:                                    ; preds = %.lr.ph.i93
-  %3 = icmp eq i64 %i.al, %i.ah
-  br i1 %3, label %.critedge.thread.i95, label %buffer_skip_whitespace.exit97
-
-.critedge.thread.i95:                             ; preds = %bb.n, %.critedge.i94
+.critedge.thread.i95:                             ; preds = %bb.n
   %i.aq = add i64 %i.ah, -1
   store i64 %i.aq, ptr %i.e, align 8, !tbaa !39
   br label %buffer_skip_whitespace.exit97
 
-buffer_skip_whitespace.exit97:                    ; preds = %bb.m, %.critedge.i94, %.critedge.thread.i95
+buffer_skip_whitespace.exit97:                    ; preds = %.lr.ph.i93, %bb.m, %.critedge.thread.i95
   %i.ar = tail call fastcc i32 @parse_string(ptr noundef %i.ac, ptr noundef %1)
   %.not86 = icmp eq i32 %i.ar, 0
   br i1 %.not86, label %.critedge.thread123, label %bb.o
@@ -333,17 +325,17 @@ bb.o:                                             ; preds = %buffer_skip_whitesp
   %i.as = load ptr, ptr %1, align 8, !tbaa !33    ; 4 uses
   %i.at = icmp ne ptr %i.as, null
   %.pre = load i64, ptr %i.e, align 8, !tbaa !39  ; 3 uses
-  %.pre159 = load i64, ptr %i.g, align 8, !tbaa !35 ; 9 uses
+  %.pre159 = load i64, ptr %i.g, align 8, !tbaa !35 ; 7 uses
   %i.au = icmp ult i64 %.pre, %.pre159
   %or.cond = select i1 %i.at, i1 %i.au, i1 false
   br i1 %or.cond, label %.lr.ph.i99, label %buffer_skip_whitespace.exit103
 
 .lr.ph.i99:                                       ; preds = %bb.o, %bb.p
-  %i.av = phi i64 [ %i.az, %bb.p ], [ %.pre, %bb.o ] ; 4 uses
+  %i.av = phi i64 [ %i.az, %bb.p ], [ %.pre, %bb.o ] ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.av
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !40
   %i.ay = icmp ult i8 %i.ax, 33
-  br i1 %i.ay, label %bb.p, label %.critedge.i100
+  br i1 %i.ay, label %bb.p, label %buffer_skip_whitespace.exit103
 
 bb.p:                                             ; preds = %.lr.ph.i99
   %i.az = add i64 %i.av, 1                        ; 3 uses
@@ -351,17 +343,13 @@ bb.p:                                             ; preds = %.lr.ph.i99
   %exitcond.not.i102 = icmp eq i64 %i.az, %.pre159
   br i1 %exitcond.not.i102, label %.critedge.thread.i101, label %.lr.ph.i99
 
-.critedge.i100:                                   ; preds = %.lr.ph.i99
-  %4 = icmp eq i64 %i.av, %.pre159
-  br i1 %4, label %.critedge.thread.i101, label %buffer_skip_whitespace.exit103
-
-.critedge.thread.i101:                            ; preds = %bb.p, %.critedge.i100
+.critedge.thread.i101:                            ; preds = %bb.p
   %i.ba = add i64 %.pre159, -1                    ; 2 uses
   store i64 %i.ba, ptr %i.e, align 8, !tbaa !39
   br label %buffer_skip_whitespace.exit103
 
-buffer_skip_whitespace.exit103:                   ; preds = %bb.o, %.critedge.i100, %.critedge.thread.i101
-  %i.bb = phi i64 [ %.pre, %bb.o ], [ %i.ba, %.critedge.thread.i101 ], [ %i.av, %.critedge.i100 ] ; 3 uses
+buffer_skip_whitespace.exit103:                   ; preds = %.lr.ph.i99, %bb.o, %.critedge.thread.i101
+  %i.bb = phi i64 [ %i.ba, %.critedge.thread.i101 ], [ %.pre, %bb.o ], [ %i.av, %.lr.ph.i99 ] ; 3 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ac, i64 32 ; 2 uses
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !19
   %i.be = getelementptr inbounds nuw i8, ptr %i.ac, i64 56
@@ -383,11 +371,11 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bj, label %.lr.ph.i105, label %buffer_skip_whitespace.exit109
 
 .lr.ph.i105:                                      ; preds = %bb.r, %bb.s
-  %i.bk = phi i64 [ %i.bo, %bb.s ], [ %i.bi, %bb.r ] ; 3 uses
+  %i.bk = phi i64 [ %i.bo, %bb.s ], [ %i.bi, %bb.r ] ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.bk
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !40
   %i.bn = icmp ult i8 %i.bm, 33
-  br i1 %i.bn, label %bb.s, label %.critedge.i106
+  br i1 %i.bn, label %bb.s, label %buffer_skip_whitespace.exit109
 
 bb.s:                                             ; preds = %.lr.ph.i105
   %i.bo = add i64 %i.bk, 1                        ; 3 uses
@@ -395,16 +383,12 @@ bb.s:                                             ; preds = %.lr.ph.i105
   %exitcond.not.i108 = icmp eq i64 %i.bo, %.pre159
   br i1 %exitcond.not.i108, label %.critedge.thread.i107, label %.lr.ph.i105
 
-.critedge.i106:                                   ; preds = %.lr.ph.i105
-  %5 = icmp eq i64 %i.bk, %.pre159
-  br i1 %5, label %.critedge.thread.i107, label %buffer_skip_whitespace.exit109
-
-.critedge.thread.i107:                            ; preds = %bb.s, %.critedge.i106
+.critedge.thread.i107:                            ; preds = %bb.s
   %i.bp = add i64 %.pre159, -1
   store i64 %i.bp, ptr %i.e, align 8, !tbaa !39
   br label %buffer_skip_whitespace.exit109
 
-buffer_skip_whitespace.exit109:                   ; preds = %bb.r, %.critedge.i106, %.critedge.thread.i107
+buffer_skip_whitespace.exit109:                   ; preds = %.lr.ph.i105, %bb.r, %.critedge.thread.i107
   %i.bq = tail call fastcc i32 @parse_value(ptr noundef %i.ac, ptr noundef nonnull %1)
   %.not88 = icmp eq i32 %i.bq, 0
   br i1 %.not88, label %.critedge.thread123, label %bb.t
@@ -413,17 +397,17 @@ bb.t:                                             ; preds = %buffer_skip_whitesp
   %i.br = load ptr, ptr %1, align 8, !tbaa !33    ; 3 uses
   %i.bs = icmp ne ptr %i.br, null
   %.pre232 = load i64, ptr %i.e, align 8, !tbaa !39 ; 3 uses
-  %.pre233 = load i64, ptr %i.g, align 8, !tbaa !35 ; 5 uses
+  %.pre233 = load i64, ptr %i.g, align 8, !tbaa !35 ; 4 uses
   %i.bt = icmp ult i64 %.pre232, %.pre233
   %or.cond272 = select i1 %i.bs, i1 %i.bt, i1 false
   br i1 %or.cond272, label %.lr.ph.i195, label %buffer_skip_whitespace.exit199
 
 .lr.ph.i195:                                      ; preds = %bb.t, %bb.u
-  %i.bu = phi i64 [ %i.by, %bb.u ], [ %.pre232, %bb.t ] ; 4 uses
+  %i.bu = phi i64 [ %i.by, %bb.u ], [ %.pre232, %bb.t ] ; 3 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.br, i64 %i.bu
   %i.bw = load i8, ptr %i.bv, align 1, !tbaa !40
   %i.bx = icmp ult i8 %i.bw, 33
-  br i1 %i.bx, label %bb.u, label %.critedge.i196
+  br i1 %i.bx, label %bb.u, label %buffer_skip_whitespace.exit199
 
 bb.u:                                             ; preds = %.lr.ph.i195
   %i.by = add i64 %i.bu, 1                        ; 3 uses
@@ -431,17 +415,13 @@ bb.u:                                             ; preds = %.lr.ph.i195
   %exitcond.not.i198 = icmp eq i64 %i.by, %.pre233
   br i1 %exitcond.not.i198, label %.critedge.thread.i197, label %.lr.ph.i195
 
-.critedge.i196:                                   ; preds = %.lr.ph.i195
-  %6 = icmp eq i64 %i.bu, %.pre233
-  br i1 %6, label %.critedge.thread.i197, label %buffer_skip_whitespace.exit199
-
-.critedge.thread.i197:                            ; preds = %bb.u, %.critedge.i196
+.critedge.thread.i197:                            ; preds = %bb.u
   %i.bz = add i64 %.pre233, -1                    ; 2 uses
   store i64 %i.bz, ptr %i.e, align 8, !tbaa !39
   br label %buffer_skip_whitespace.exit199
 
-buffer_skip_whitespace.exit199:                   ; preds = %bb.t, %.critedge.i196, %.critedge.thread.i197
-  %i.ca = phi i64 [ %.pre232, %bb.t ], [ %i.bz, %.critedge.thread.i197 ], [ %i.bu, %.critedge.i196 ] ; 3 uses
+buffer_skip_whitespace.exit199:                   ; preds = %.lr.ph.i195, %bb.t, %.critedge.thread.i197
+  %i.ca = phi i64 [ %i.bz, %.critedge.thread.i197 ], [ %.pre232, %bb.t ], [ %i.bu, %.lr.ph.i195 ] ; 3 uses
   %i.cb = icmp ult i64 %i.ca, %.pre233
   br i1 %i.cb, label %bb.v, label %.critedge.thread123
 

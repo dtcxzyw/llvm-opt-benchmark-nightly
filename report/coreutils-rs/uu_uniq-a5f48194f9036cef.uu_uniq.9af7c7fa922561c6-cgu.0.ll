@@ -205,20 +205,16 @@ bb.a:
   br i1 %i.f, label %.lr.ph.i.i, label %_RNvMCsdiTcXS7gKpe_7uu_uniqNtB2_4Uniq18skip_fields_offset.exit.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph15.i.i, %bb.b
-  %.sroa.09.19.i.i = phi i64 [ %i.i, %bb.b ], [ %.sroa.09.014.i.i, %.lr.ph15.i.i ] ; 4 uses
+  %.sroa.09.19.i.i = phi i64 [ %i.i, %bb.b ], [ %.sroa.09.014.i.i, %.lr.ph15.i.i ] ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.09.19.i.i
   %i.h = load i8, ptr %i.g, align 1, !alias.scope !1474, !noalias !1469, !noundef !4
-  switch i8 %i.h, label %.preheader.i.i [
+  switch i8 %i.h, label %.lr.ph12.i.i [
     i8 9, label %bb.b
     i8 10, label %bb.b
     i8 12, label %bb.b
     i8 13, label %bb.b
     i8 32, label %bb.b
   ]
-
-.preheader.i.i:                                   ; preds = %.lr.ph.i.i
-  %4 = icmp ult i64 %.sroa.09.19.i.i, %2
-  br i1 %4, label %.lr.ph12.i.i, label %_RNvMCsdiTcXS7gKpe_7uu_uniqNtB2_4Uniq18skip_fields_offset.exit.i
 
 bb.b:                                             ; preds = %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i, %.lr.ph.i.i
   %i.i = add i64 %.sroa.09.19.i.i, 1              ; 2 uses
@@ -229,8 +225,8 @@ bb.c:                                             ; preds = %.lr.ph12.i.i, %.lr.
   %exitcond21.not.i.i = icmp eq i64 %i.e, %.val3.i
   br i1 %exitcond21.not.i.i, label %_RNvMCsdiTcXS7gKpe_7uu_uniqNtB2_4Uniq18skip_fields_offset.exit.i, label %.lr.ph15.i.i
 
-.lr.ph12.i.i:                                     ; preds = %.preheader.i.i, %bb.d
-  %.sroa.09.211.i.i = phi i64 [ %i.l, %bb.d ], [ %.sroa.09.19.i.i, %.preheader.i.i ] ; 4 uses
+.lr.ph12.i.i:                                     ; preds = %.lr.ph.i.i, %bb.d
+  %.sroa.09.211.i.i = phi i64 [ %i.l, %bb.d ], [ %.sroa.09.19.i.i, %.lr.ph.i.i ] ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.09.211.i.i
   %i.k = load i8, ptr %i.j, align 1, !alias.scope !1474, !noalias !1469, !noundef !4
   switch i8 %i.k, label %bb.d [
@@ -246,8 +242,8 @@ bb.d:                                             ; preds = %.lr.ph12.i.i
   %exitcond20.not.i.i = icmp eq i64 %i.l, %2
   br i1 %exitcond20.not.i.i, label %_RNvMCsdiTcXS7gKpe_7uu_uniqNtB2_4Uniq18skip_fields_offset.exit.i, label %.lr.ph12.i.i
 
-_RNvMCsdiTcXS7gKpe_7uu_uniqNtB2_4Uniq18skip_fields_offset.exit.i: ; preds = %bb.c, %.preheader.i.i, %.lr.ph15.i.i, %bb.b, %bb.d, %bb.a
-  %.sroa.0.0.i.i = phi i64 [ %2, %bb.d ], [ 0, %bb.a ], [ %2, %bb.b ], [ %2, %.lr.ph15.i.i ], [ %.sroa.09.211.i.i, %bb.c ], [ %2, %.preheader.i.i ] ; 4 uses
+_RNvMCsdiTcXS7gKpe_7uu_uniqNtB2_4Uniq18skip_fields_offset.exit.i: ; preds = %bb.c, %.lr.ph15.i.i, %bb.b, %bb.d, %bb.a
+  %.sroa.0.0.i.i = phi i64 [ %2, %bb.d ], [ 0, %bb.a ], [ %2, %bb.b ], [ %.sroa.09.211.i.i, %bb.c ], [ %2, %.lr.ph15.i.i ] ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.n = load i64, ptr %i.m, align 8, !range !257, !alias.scope !1469, !noalias !1472, !noundef !4
   %i.o = trunc nuw i64 %i.n to i1
