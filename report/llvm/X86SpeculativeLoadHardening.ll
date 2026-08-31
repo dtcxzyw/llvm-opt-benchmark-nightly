@@ -204,19 +204,21 @@ bb.fh:                                            ; preds = %bb.fg, %._crit_edge
   %i.aqc = getelementptr inbounds nuw i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 8192), i64 %i.aqb
   %i.aqd = getelementptr inbounds nuw [4 x i8], ptr %i.aqc, i64 %.pre-phi338.i
   %i.aqe = load i32, ptr %i.aqd, align 4, !tbaa !281
-  %i.aqf = lshr i32 %i.aqe, %.pre-phi340.i
-  %i.aqg = trunc i32 %i.aqf to i1                 ; 4 uses
+  %i.aqf = lshr i32 %i.aqe, %.pre-phi340.i        ; 2 uses
+  %i.aqg = trunc i32 %i.aqf to i1                 ; 2 uses
   %.pre329.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 8348), align 4, !tbaa !638
   %.phi.trans.insert330.i = zext i32 %.pre329.i to i64
   %.phi.trans.insert331.i = getelementptr inbounds nuw i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 8320), i64 %.phi.trans.insert330.i
   %.phi.trans.insert332.i = getelementptr inbounds nuw [4 x i8], ptr %.phi.trans.insert331.i, i64 %.pre-phi338.i
   %.pre333.i = load i32, ptr %.phi.trans.insert332.i, align 4, !tbaa !281
   %.pre342.i = lshr i32 %.pre333.i, %.pre-phi340.i
-  %.pre344.i = trunc i32 %.pre342.i to i1         ; 2 uses
-  %brmerge.i = select i1 %i.aqg, i1 true, i1 %.pre344.i
-  %not..i = xor i1 %i.aqg, true
-  %.pre344.mux.i = select i1 %not..i, i1 true, i1 %.pre344.i
-  br i1 %brmerge.i, label %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit166.i, label %bb.fi
+  %.pre342.fr.i = freeze i32 %.pre342.i           ; 2 uses
+  %.pre344.i = trunc i32 %.pre342.fr.i to i1
+  %72 = or i32 %i.aqf, %.pre342.fr.i
+  %73 = and i32 %72, 1
+  %brmerge976.not = icmp eq i32 %73, 0
+  %.mux = select i1 %i.aqg, i64 -15190, i64 -15193
+  br i1 %brmerge976.not, label %bb.fi, label %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit166.i
 
 bb.fi:                                            ; preds = %bb.fh
   %i.aqh = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvm25X86MCRegisterClassStorageE, i64 8476), align 4, !tbaa !638
@@ -228,17 +230,14 @@ bb.fi:                                            ; preds = %bb.fh
   %i.aqn = trunc i32 %i.aqm to i1
   br i1 %i.aqn, label %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit166.i, label %bb.fj
 
-_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit166.i: ; preds = %bb.fi, %bb.fh
-  %.pre-phi345.i = phi i1 [ %.pre344.mux.i, %bb.fh ], [ false, %bb.fi ]
-  %cond.fr.i = freeze i1 %.pre-phi345.i           ; 2 uses
+_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit166.i: ; preds = %bb.fh, %bb.fi
+  %.neg250.i = phi i64 [ %.mux, %bb.fh ], [ -15196, %bb.fi ]
   %i.aqo = load ptr, ptr %i.x, align 8, !tbaa !172
   %i.aqp = call i32 @_ZN4llvm19MachineRegisterInfo21createVirtualRegisterEPKNS_15MCRegisterClassENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(520) %i.aqo, ptr noundef nonnull %i.aoe, ptr nonnull @.str.20, i64 0) #19 ; 2 uses
   %.sroa.025.0.copyload.i = load ptr, ptr %i.ahp, align 8, !tbaa !591
   %i.aqq = load ptr, ptr %i.af, align 8, !tbaa !173
   %i.aqr = getelementptr inbounds nuw i8, ptr %i.aqq, i64 8
   %i.aqs = load ptr, ptr %i.aqr, align 8, !tbaa !298
-  %spec.select.i242 = select i1 %cond.fr.i, i64 -15193, i64 -15196
-  %.neg250.i = select i1 %i.aqg, i64 -15190, i64 %spec.select.i242
   %i.aqt = getelementptr inbounds [32 x i8], ptr %i.aqs, i64 %.neg250.i
   %i.aqu = load ptr, ptr %i.ant, align 8, !tbaa !301 ; 3 uses
   %i.aqv = call noundef ptr @_ZN4llvm15MachineFunction18CreateMachineInstrERKNS_11MCInstrDescENS_8DebugLocEb(ptr noundef nonnull align 8 dereferenceable(1065) %i.aqu, ptr noundef nonnull align 8 dereferenceable(32) %i.aqt, ptr %.sroa.025.0.copyload.i, i1 noundef zeroext false) #19 ; 3 uses
@@ -257,12 +256,12 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_14ilist_iteratorINS_12ilist_detail12
   store i32 0, ptr %49, align 8, !alias.scope !807
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.aqv, ptr noundef nonnull align 8 dereferenceable(1065) %i.aqu, ptr noundef nonnull align 8 dereferenceable(32) %49) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %49) #19
+  %74 = select i1 %.pre344.i, i64 -18453, i64 -18462
+  %.neg252.i = select i1 %i.aqg, i64 -18444, i64 %74
   %.sroa.021.0.copyload.i = load ptr, ptr %i.ahp, align 8, !tbaa !591
   %i.aqx = load ptr, ptr %i.af, align 8, !tbaa !173
   %i.aqy = getelementptr inbounds nuw i8, ptr %i.aqx, i64 8
   %i.aqz = load ptr, ptr %i.aqy, align 8, !tbaa !298
-  %.neg251.i = select i1 %cond.fr.i, i64 -18453, i64 -18462
-  %.neg252.i = select i1 %i.aqg, i64 -18444, i64 %.neg251.i
   %i.ara = getelementptr inbounds [32 x i8], ptr %i.aqz, i64 %.neg252.i
   %i.arb = load ptr, ptr %i.ant, align 8, !tbaa !301 ; 4 uses
   %i.arc = call noundef ptr @_ZN4llvm15MachineFunction18CreateMachineInstrERKNS_11MCInstrDescENS_8DebugLocEb(ptr noundef nonnull align 8 dereferenceable(1065) %i.arb, ptr noundef nonnull align 8 dereferenceable(32) %i.ara, ptr %.sroa.021.0.copyload.i, i1 noundef zeroext false) #19 ; 4 uses

@@ -205,7 +205,8 @@ bb.ad:                                            ; preds = %bb.ac, %.thread209
 bb.ae:                                            ; preds = %bb.ad
   %i.dd = load i32, ptr %i.bv, align 4, !tbaa !70 ; 2 uses
   %i.de = icmp sgt i32 %i.dd, 0
-  %.pre = load i64, ptr %i.cx, align 8, !tbaa !73 ; 3 uses
+  %.pre = load i64, ptr %i.cx, align 8, !tbaa !73 ; 2 uses
+  %1 = trunc i64 %.pre to i32                     ; 2 uses
   br i1 %i.de, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.ae
@@ -224,8 +225,6 @@ bb.af:                                            ; preds = %.lr.ph, %.loopexit
   %i.dh = ashr i32 %.0179215, 1                   ; 3 uses
   %i.di = ashr i32 %.0216, 1                      ; 3 uses
   %i.dj = getelementptr inbounds nuw [96 x i8], ptr %i.bw, i64 %indvars.iv.next228
-  %1 = zext i32 %i.dh to i64
-  %2 = zext i32 %i.di to i64
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %bb.ag
@@ -238,15 +237,14 @@ bb.ag:                                            ; preds = %bb.af, %bb.ag
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dk, i64 8
   store i64 %.pre, ptr %i.dn, align 8, !tbaa !79
   %i.do = icmp samesign ugt i64 %indvars.iv223, 1
-  %3 = select i1 %i.do, i64 %2, i64 0
-  %4 = mul i64 %.pre, %3
+  %2 = select i1 %i.do, i32 %i.di, i32 0
   %i.dp = trunc i64 %indvars.iv223 to i1
-  %5 = select i1 %i.dp, i64 %1, i64 0
-  %6 = add i64 %4, %5
-  %sext = shl i64 %6, 32
-  %7 = ashr exact i64 %sext, 30
-  %8 = getelementptr inbounds i8, ptr %i.db, i64 %7
-  store ptr %8, ptr %i.dk, align 8, !tbaa !80
+  %3 = select i1 %i.dp, i32 %i.dh, i32 0
+  %4 = mul i32 %2, %1
+  %5 = add i32 %4, %3
+  %6 = sext i32 %5 to i64
+  %7 = getelementptr inbounds [4 x i8], ptr %i.db, i64 %6
+  store ptr %7, ptr %i.dk, align 8, !tbaa !80
   %indvars.iv.next224 = add nuw nsw i64 %indvars.iv223, 1 ; 2 uses
   %exitcond226.not = icmp eq i64 %indvars.iv.next224, 4
   br i1 %exitcond226.not, label %.loopexit, label %bb.ag, !llvm.loop !81
@@ -254,11 +252,10 @@ bb.ag:                                            ; preds = %bb.af, %bb.ag
 ._crit_edge:                                      ; preds = %.loopexit, %bb.ae
   %i.dq = getelementptr inbounds nuw [112 x i8], ptr %i.b, i64 %indvars.iv230
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 1640
-  %9 = trunc i64 %.pre to i32
   %i.ds = load i32, ptr %i.ct, align 4, !tbaa !72
   %i.dt = load i32, ptr %i.an, align 8, !tbaa !56
   %i.du = load i32, ptr %i.aq, align 4, !tbaa !57
-  %i.dv = tail call i32 @ff_vc2enc_init_transforms(ptr noundef nonnull %i.dr, i32 noundef %9, i32 noundef %i.ds, i32 noundef %i.dt, i32 noundef %i.du) #14
+  %i.dv = tail call i32 @ff_vc2enc_init_transforms(ptr noundef nonnull %i.dr, i32 noundef %1, i32 noundef %i.ds, i32 noundef %i.dt, i32 noundef %i.du) #14
   %.not205 = icmp eq i32 %i.dv, 0
   br i1 %.not205, label %bb.z, label %.critedge207
 
@@ -661,7 +658,7 @@ init_quant_matrix.exit.i:                         ; preds = %.preheader70.i.i, %
 .lr.ph.i:                                         ; preds = %.preheader123.i, %.lr.ph.i
   %i.fe = phi i32 [ %i.ft, %.lr.ph.i ], [ %i.fc, %.preheader123.i ]
   %.0106129.i = phi i32 [ %i.fs, %.lr.ph.i ], [ 0, %.preheader123.i ] ; 3 uses
-  %i.ff = mul nsw i32 %i.fe, %.0105130.i
+  %i.ff = mul nuw nsw i32 %i.fe, %.0105130.i
   %i.fg = add nsw i32 %i.ff, %.0106129.i
   %i.fh = sext i32 %i.fg to i64
   %i.fi = getelementptr inbounds [496 x i8], ptr %i.at, i64 %i.fh ; 5 uses
@@ -1064,7 +1061,7 @@ flush_put_bits.exit.i:                            ; preds = %bb.df, %encode_pict
   %i.acj = phi i32 [ %i.acv, %.lr.ph.i57 ], [ %i.ach, %.preheader.i ]
   %.129.i = phi i32 [ %i.act, %.lr.ph.i57 ], [ %.031.i, %.preheader.i ] ; 2 uses
   %.02528.i = phi i32 [ %i.acu, %.lr.ph.i57 ], [ 0, %.preheader.i ] ; 2 uses
-  %i.ack = mul nsw i32 %i.acj, %.02430.i
+  %i.ack = mul nuw nsw i32 %i.acj, %.02430.i
   %i.acl = add nsw i32 %.02528.i, %i.ack
   %i.acm = sext i32 %i.acl to i64
   %i.acn = getelementptr inbounds [496 x i8], ptr %i.abn, i64 %i.acm ; 2 uses

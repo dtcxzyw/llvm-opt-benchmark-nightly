@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %indvars.iv108 = phi i64 [ %indvars.iv, %.lr.ph ], [ %indvars.iv.next109, %_ZNSt6vectorISt4pairIiiESaIS1_EE9push_backEOS1_.exit ] ; 3 uses
   %i.at = phi i32 [ %i.z, %.lr.ph ], [ %i.cq, %_ZNSt6vectorISt4pairIiiESaIS1_EE9push_backEOS1_.exit ]
   %i.au = load ptr, ptr %i.m, align 8, !tbaa !181
-  %i.av = mul nsw i32 %i.at, %i.ad
+  %i.av = mul nuw nsw i32 %i.at, %i.ad
   %i.aw = trunc nuw nsw i64 %indvars.iv108 to i32
   %i.ax = add nsw i32 %i.av, %i.aw
   %i.ay = sext i32 %i.ax to i64
@@ -607,8 +607,7 @@ bb.a:
   %.pre48 = phi ptr [ %.pre48.pre, %.preheader.lr.ph ], [ %i.ip, %bb.b ]
   %.pre = phi i32 [ %.pre.pre, %.preheader.lr.ph ], [ %i.in, %bb.b ]
   %indvars.iv45 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next46, %bb.b ] ; 2 uses
-  %i.y = shl i64 %indvars.iv45, 2
-  %5 = and i64 %i.y, 4294967292
+  %i.y = shl nuw nsw i64 %indvars.iv45, 2
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
@@ -625,7 +624,7 @@ bb.c:                                             ; preds = %.preheader, %_ZN12_
   %i.ac = phi ptr [ %.pre48, %.preheader ], [ %i.ip, %_ZN12_GLOBAL__N_19calcDerivERKN2cv3MatES3_dS1_.exit ]
   %i.ad = phi i32 [ %.pre, %.preheader ], [ %i.in, %_ZN12_GLOBAL__N_19calcDerivERKN2cv3MatES3_dS1_.exit ]
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %_ZN12_GLOBAL__N_19calcDerivERKN2cv3MatES3_dS1_.exit ] ; 2 uses
-  %i.ae = add nuw nsw i64 %indvars.iv, %5         ; 5 uses
+  %i.ae = add nuw nsw i64 %indvars.iv, %i.y       ; 5 uses
   %i.af = icmp slt i32 %i.ad, 2
   %i.ag = load i64, ptr %i.k, align 8
   %i.ah = mul i64 %i.ag, %i.ae
@@ -1028,8 +1027,7 @@ bb.a:
   %.pre48 = phi ptr [ %.pre48.pre, %.preheader.lr.ph ], [ %i.ip, %bb.b ]
   %.pre = phi i32 [ %.pre.pre, %.preheader.lr.ph ], [ %i.in, %bb.b ]
   %indvars.iv45 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next46, %bb.b ] ; 2 uses
-  %i.y = shl i64 %indvars.iv45, 2
-  %5 = and i64 %i.y, 4294967292
+  %i.y = shl nuw nsw i64 %indvars.iv45, 2
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
@@ -1046,7 +1044,7 @@ bb.c:                                             ; preds = %.preheader, %_ZN12_
   %i.ac = phi ptr [ %.pre48, %.preheader ], [ %i.ip, %_ZN12_GLOBAL__N_19calcDerivERKN2cv3MatES3_dS1_.exit ]
   %i.ad = phi i32 [ %.pre, %.preheader ], [ %i.in, %_ZN12_GLOBAL__N_19calcDerivERKN2cv3MatES3_dS1_.exit ]
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %_ZN12_GLOBAL__N_19calcDerivERKN2cv3MatES3_dS1_.exit ] ; 2 uses
-  %i.ae = add nuw nsw i64 %indvars.iv, %5         ; 5 uses
+  %i.ae = add nuw nsw i64 %indvars.iv, %i.y       ; 5 uses
   %i.af = icmp slt i32 %i.ad, 2
   %i.ag = load i64, ptr %i.k, align 8
   %i.ah = mul i64 %i.ag, %i.ae

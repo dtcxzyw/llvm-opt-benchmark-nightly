@@ -204,8 +204,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
   %.lhs.trunc = add nuw nsw i16 %i.i, 7
   %i.r = lshr i16 %.lhs.trunc, 3
-  %.zext = zext nneg i16 %i.r to i32
-  %4 = select i1 %i.f, i32 %.zext, i32 0          ; 2 uses
+  %narrow = select i1 %i.f, i16 %i.r, i16 0       ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.t = load ptr, ptr %i.s, align 8              ; 2 uses
   %.not = icmp eq ptr %i.t, null
@@ -500,12 +499,12 @@ bb.v:                                             ; preds = %bb.u, %._crit_edge1
   br i1 %.0132, label %bb.w, label %bb.ab
 
 bb.w:                                             ; preds = %bb.v
-  %.not167 = icmp eq i32 %4, 0
+  %.not167 = icmp eq i16 %narrow, 0
   br i1 %.not167, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   %i.ev = getelementptr inbounds nuw i8, ptr %.val152, i64 23
-  %i.ew = zext nneg i32 %4 to i64                 ; 2 uses
+  %i.ew = zext nneg i16 %narrow to i64            ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.eu, ptr nonnull align 1 %i.ev, i64 %i.ew, i1 false)
   %i.ex = getelementptr i8, ptr %i.eu, i64 %i.ew
   %i.ey = getelementptr i8, ptr %i.ex, i64 -1

@@ -205,14 +205,14 @@ bb.o:                                             ; preds = %bb.l
 
 bb.p:                                             ; preds = %bb.o
   %i.cm = sub nsw i32 %.06282.i.i, %i.cd
-  %i.cn = shl nsw i32 %i.cm, 1
+  %i.cn = shl nuw nsw i32 %i.cm, 1
   %i.co = load i32, ptr %i.ae, align 4, !tbaa !19
   %i.cp = mul nsw i32 %i.cn, %i.co
   br label %.sink.split.i.i
 
 bb.q:                                             ; preds = %bb.o
   %i.cq = sub nsw i32 %.06282.i.i, %i.cd
-  %i.cr = shl nsw i32 %i.cq, 1
+  %i.cr = shl nuw nsw i32 %i.cq, 1
   %i.cs = or disjoint i32 %i.cr, 1
   %i.ct = load i32, ptr %i.ae, align 4, !tbaa !19
   %i.cu = mul nsw i32 %i.ct, %i.cs
@@ -615,15 +615,14 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %bb.f
   %i.y = icmp samesign ult i64 %indvars.iv.i, 1073741823
   %i.z = shl nuw nsw i32 %spec.select.sink.i10.i, 1
-  %spec.select.i.i = select i1 %i.y, i32 %i.z, i32 2147483647 ; 4 uses
-  %i.aa = zext nneg i32 %spec.select.i.i to i64
+  %spec.select.i.i = select i1 %i.y, i32 %i.z, i32 2147483647 ; 3 uses
+  %i.aa = zext nneg i32 %spec.select.i.i to i64   ; 2 uses
   %.not.i9.i.i = icmp samesign ult i64 %indvars.iv.i, %i.aa
   br i1 %.not.i9.i.i, label %bb.k, label %Vec_IntPush.exit.i
 
 bb.k:                                             ; preds = %bb.j
   %.not9.i10.i.i = icmp eq ptr %storemerge12.i, null
-  %3 = zext nneg i32 %spec.select.i.i to i64
-  %i.ab = shl nuw nsw i64 %3, 2                   ; 2 uses
+  %i.ab = shl nuw nsw i64 %i.aa, 2                ; 2 uses
   br i1 %.not9.i10.i.i, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k

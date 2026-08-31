@@ -205,15 +205,14 @@ bb.p:                                             ; preds = %bb.n
 bb.q:                                             ; preds = %bb.m
   %i.cd = icmp samesign ult i64 %indvars.iv.i, 1073741823
   %i.ce = shl nuw nsw i32 %spec.select.sink.i9.i, 1
-  %spec.select.i.i = select i1 %i.cd, i32 %i.ce, i32 2147483647 ; 4 uses
-  %i.cf = zext nneg i32 %spec.select.i.i to i64
+  %spec.select.i.i = select i1 %i.cd, i32 %i.ce, i32 2147483647 ; 3 uses
+  %i.cf = zext nneg i32 %spec.select.i.i to i64   ; 2 uses
   %.not.i10.i.i = icmp samesign ult i64 %indvars.iv.i, %i.cf
   br i1 %.not.i10.i.i, label %bb.r, label %Vec_FltPush.exit.i
 
 bb.r:                                             ; preds = %bb.q
   %.not9.i11.i.i = icmp eq ptr %storemerge11.i, null
-  %1 = zext nneg i32 %spec.select.i.i to i64
-  %i.cg = shl nuw nsw i64 %1, 2                   ; 2 uses
+  %i.cg = shl nuw nsw i64 %i.cf, 2                ; 2 uses
   br i1 %.not9.i11.i.i, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -379,15 +378,14 @@ bb.ah:                                            ; preds = %bb.af
 bb.ai:                                            ; preds = %bb.ae
   %i.el = icmp samesign ult i64 %indvars.iv.i114, 1073741823
   %i.em = shl nuw nsw i32 %spec.select.sink.i9.i116, 1
-  %spec.select.i.i125 = select i1 %i.el, i32 %i.em, i32 2147483647 ; 4 uses
-  %i.en = zext nneg i32 %spec.select.i.i125 to i64
+  %spec.select.i.i125 = select i1 %i.el, i32 %i.em, i32 2147483647 ; 3 uses
+  %i.en = zext nneg i32 %spec.select.i.i125 to i64 ; 2 uses
   %.not.i10.i.i126 = icmp samesign ult i64 %indvars.iv.i114, %i.en
   br i1 %.not.i10.i.i126, label %bb.aj, label %Vec_FltPush.exit.i118
 
 bb.aj:                                            ; preds = %bb.ai
   %.not9.i11.i.i127 = icmp eq ptr %storemerge11.i115, null
-  %2 = zext nneg i32 %spec.select.i.i125 to i64
-  %i.eo = shl nuw nsw i64 %2, 2                   ; 2 uses
+  %i.eo = shl nuw nsw i64 %i.en, 2                ; 2 uses
   br i1 %.not9.i11.i.i127, label %bb.al, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj

@@ -204,11 +204,10 @@ bb.k:                                             ; preds = %.lr.ph172, %._crit_
 
 .lr.ph:                                           ; preds = %bb.k
   %i.dm = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
-  %8 = shl i64 %indvars.iv195, 3
-  %9 = and i64 %8, 4294967288
   %wide.trip.count = zext nneg i32 %i.dk to i64
+  %.idx217 = shl nuw nsw i64 %indvars.iv195, 5
   %indvars.iv195.tr = trunc nuw nsw i64 %indvars.iv195 to i32
-  %i.dn = shl nsw i32 %indvars.iv195.tr, 4
+  %i.dn = shl nuw i32 %indvars.iv195.tr, 4
   br label %bb.l
 
 ._crit_edge:                                      ; preds = %bb.n, %bb.k
@@ -226,8 +225,8 @@ bb.l:                                             ; preds = %.lr.ph, %bb.n
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 16
   %i.du = load ptr, ptr %i.dt, align 8
   %i.dv = getelementptr inbounds nuw [4 x i8], ptr %i.du, i64 %indvars.iv
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %9
-  %i.dw = load i32, ptr %10, align 4, !tbaa !22   ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.dv, i64 %.idx217
+  %i.dw = load i32, ptr %8, align 4, !tbaa !22    ; 3 uses
   %i.dx = lshr i32 %i.dw, %i.bg                   ; 2 uses
   %i.dy = lshr i32 %i.dx, 1
   %i.dz = zext nneg i32 %i.dy to i64
@@ -364,9 +363,8 @@ bb.u:                                             ; preds = %.lr.ph186, %._crit_
 
 .lr.ph183:                                        ; preds = %bb.u
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gl, i64 8
-  %11 = shl i64 %indvars.iv203, 3
-  %12 = and i64 %11, 4294967288
   %wide.trip.count201 = zext nneg i32 %i.gp to i64
+  %.idx218 = shl nuw nsw i64 %indvars.iv203, 5
   br label %bb.v
 
 ._crit_edge184.loopexit:                          ; preds = %bb.y
@@ -387,8 +385,8 @@ bb.v:                                             ; preds = %.lr.ph183, %bb.y
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gv, i64 16
   %i.gx = load ptr, ptr %i.gw, align 8
   %i.gy = getelementptr inbounds nuw [4 x i8], ptr %i.gx, i64 %indvars.iv198
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %i.gy, i64 %12
-  %i.gz = load i32, ptr %13, align 4, !tbaa !22   ; 3 uses
+  %9 = getelementptr inbounds nuw i8, ptr %i.gy, i64 %.idx218
+  %i.gz = load i32, ptr %9, align 4, !tbaa !22    ; 3 uses
   %i.ha = lshr i32 %i.gz, %i.bq
   %i.hb = zext i32 %i.ha to i64                   ; 4 uses
   %i.hc = lshr i64 %i.hb, 1

@@ -203,9 +203,9 @@ bb.ah:                                            ; preds = %.lr.ph228, %bb.ah
   %indvars.iv259 = phi i64 [ 0, %.lr.ph228 ], [ %indvars.iv.next260, %bb.ah ] ; 4 uses
   %i.gz = load i32, ptr getelementptr inbounds nuw (i8, ptr @cube, i64 8), align 8, !tbaa !18
   %i.ha = shl nsw i32 %i.gz, 1
-  %2 = shl nuw nsw i64 %indvars.iv259, 2
-  %3 = sext i32 %i.ha to i64
-  %4 = add nsw i64 %2, %3                         ; 4 uses
+  %indvars.iv259.tr = trunc nuw i64 %indvars.iv259 to i32
+  %2 = shl nuw i32 %indvars.iv259.tr, 2
+  %3 = add nsw i32 %i.ha, %2
   %i.hb = load ptr, ptr %i.gw, align 8, !tbaa !23
   %i.hc = getelementptr inbounds nuw [4 x i8], ptr %i.hb, i64 %indvars.iv259
   %i.hd = load i32, ptr %i.hc, align 4, !tbaa !4
@@ -233,6 +233,7 @@ bb.ah:                                            ; preds = %.lr.ph228, %bb.ah
   %i.hz = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) @.str.1, ptr noundef %i.hv, ptr noundef %i.hy) #14 ; 0 uses
   %i.ia = call ptr @util_strsav(ptr noundef nonnull %i.a) #14
   %i.ib = load ptr, ptr %i.go, align 8, !tbaa !42
+  %4 = sext i32 %3 to i64                         ; 4 uses
   %i.ic = getelementptr inbounds [8 x i8], ptr %i.ib, i64 %4
   store ptr %i.ia, ptr %i.ic, align 8, !tbaa !43
   %i.id = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) @.str.1, ptr noundef %i.hv, ptr noundef %i.hs) #14 ; 0 uses
@@ -531,11 +532,7 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.v = load i32, ptr %1, align 8, !tbaa !21     ; 2 uses
   %i.w = icmp sgt i32 %i.v, 0
-  br i1 %i.w, label %.preheader.preheader, label %.preheader.lr.ph.split.us
-
-.preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %2 = zext i32 %i.f to i64
-  br label %.preheader
+  br i1 %i.w, label %.preheader, label %.preheader.lr.ph.split.us
 
 .preheader.lr.ph.split.us:                        ; preds = %.preheader.lr.ph
   %i.x = sext i32 %i.n to i64
@@ -547,10 +544,10 @@ bb.a:
   %i.z = icmp ult ptr %i.y, %i.q
   br i1 %i.z, label %.preheader.us, label %._crit_edge56
 
-.preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
-  %i.aa = phi i32 [ %i.dl, %._crit_edge ], [ %i.n, %.preheader.preheader ]
-  %i.ab = phi i32 [ %i.dm, %._crit_edge ], [ %i.v, %.preheader.preheader ] ; 2 uses
-  %.04855 = phi ptr [ %i.do, %._crit_edge ], [ %i.k, %.preheader.preheader ] ; 9 uses
+.preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge
+  %i.aa = phi i32 [ %i.dl, %._crit_edge ], [ %i.n, %.preheader.lr.ph ]
+  %i.ab = phi i32 [ %i.dm, %._crit_edge ], [ %i.v, %.preheader.lr.ph ] ; 2 uses
+  %.04855 = phi ptr [ %i.do, %._crit_edge ], [ %i.k, %.preheader.lr.ph ] ; 9 uses
   %i.ac = icmp sgt i32 %i.ab, 0
   br i1 %i.ac, label %.lr.ph, label %._crit_edge
 
@@ -590,8 +587,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.l
   %i.bf = and i32 %i.aq, 31
   %i.bg = shl nuw i32 1, %i.bf
   %i.bh = and i32 %i.be, %i.bg                    ; 2 uses
-  %3 = shl nuw nsw i64 %indvars.iv, 2
-  %4 = add nuw i64 %3, %2                         ; 4 uses
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %2 = shl nuw i32 %indvars.iv.tr, 2
+  %3 = add nsw i32 %2, %i.f                       ; 5 uses
   %i.bi = ashr i32 %i.ak, 5
   %i.bj = sext i32 %i.bi to i64
   %i.bk = getelementptr [4 x i8], ptr %.04855, i64 %i.bj
@@ -608,8 +606,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not49, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %5 = trunc i64 %4 to i32
-  %i.bq = add i32 %5, 3                           ; 2 uses
+  %i.bq = add nsw i32 %3, 3                       ; 2 uses
   %i.br = and i32 %i.bq, 31
   %i.bs = shl nuw i32 1, %i.br
   %i.bt = ashr i32 %i.bq, 5
@@ -626,8 +623,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %.not50, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %6 = trunc i64 %4 to i32
-  %i.bz = add i32 %6, 2                           ; 2 uses
+  %i.bz = add nsw i32 %3, 2                       ; 2 uses
   %i.ca = and i32 %i.bz, 31
   %i.cb = shl nuw i32 1, %i.ca
   %i.cc = ashr i32 %i.bz, 5
@@ -657,8 +653,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not52, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %7 = trunc i64 %4 to i32
-  %i.cr = add i32 %7, 1                           ; 2 uses
+  %i.cr = add nsw i32 %3, 1                       ; 2 uses
   %i.cs = and i32 %i.cr, 31
   %i.ct = shl nuw i32 1, %i.cs
   %i.cu = ashr i32 %i.cr, 5
@@ -675,10 +670,9 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %.not53, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %8 = trunc i64 %4 to i32                        ; 2 uses
-  %i.da = and i32 %8, 31
+  %i.da = and i32 %3, 31
   %i.db = shl nuw i32 1, %i.da
-  %i.dc = ashr i32 %8, 5
+  %i.dc = ashr i32 %3, 5
   %i.dd = sext i32 %i.dc to i64
   %i.de = getelementptr [4 x i8], ptr %.04855, i64 %i.dd
   %i.df = getelementptr i8, ptr %i.de, i64 4      ; 2 uses

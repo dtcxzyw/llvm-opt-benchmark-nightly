@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.m
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !32 ; 2 uses
   %.not9.i23.i = icmp eq ptr %i.dh, null
   %i.di = sext i32 %spec.select.i144 to i64
-  %i.dj = shl nsw i64 %i.di, 2                    ; 2 uses
+  %i.dj = shl nuw nsw i64 %i.di, 2                ; 2 uses
   br i1 %.not9.i23.i, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -321,7 +321,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.ey = load ptr, ptr %i.ex, align 8, !tbaa !46 ; 2 uses
   %.not9.i23.i152 = icmp eq ptr %i.ey, null
   %i.ez = sext i32 %spec.select.i150 to i64
-  %i.fa = shl nsw i64 %i.ez, 3                    ; 2 uses
+  %i.fa = shl nuw nsw i64 %i.ez, 3                ; 2 uses
   br i1 %.not9.i23.i152, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
@@ -724,7 +724,7 @@ bb.m:                                             ; preds = %bb.l
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !46 ; 2 uses
   %.not9.i23.i = icmp eq ptr %i.al, null
   %i.am = sext i32 %spec.select.i to i64
-  %i.an = shl nsw i64 %i.am, 3                    ; 2 uses
+  %i.an = shl nuw nsw i64 %i.am, 3                ; 2 uses
   br i1 %.not9.i23.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -848,7 +848,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !32 ; 2 uses
   %.not9.i23.i168 = icmp eq ptr %i.cc, null
   %i.cd = sext i32 %spec.select.i166 to i64
-  %i.ce = shl nsw i64 %i.cd, 2                    ; 2 uses
+  %i.ce = shl nuw nsw i64 %i.cd, 2                ; 2 uses
   br i1 %.not9.i23.i168, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
@@ -1064,7 +1064,7 @@ bb.at:                                            ; preds = %bb.as
   %i.eq = load ptr, ptr %i.ep, align 8, !tbaa !46 ; 2 uses
   %.not9.i23.i182 = icmp eq ptr %i.eq, null
   %i.er = sext i32 %spec.select.i180 to i64
-  %i.es = shl nsw i64 %i.er, 3                    ; 2 uses
+  %i.es = shl nuw nsw i64 %i.er, 3                ; 2 uses
   br i1 %.not9.i23.i182, label %bb.av, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
@@ -1467,16 +1467,15 @@ bb.dt:                                            ; preds = %bb.dr
 
 bb.du:                                            ; preds = %bb.dq
   %i.tm = icmp samesign ult i64 %indvars.iv19.i, 1073741823
-  %i.tn = shl nsw i32 %spec.select.sink.i15.i, 1
-  %spec.select.i.i201 = select i1 %i.tm, i32 %i.tn, i32 2147483647 ; 4 uses
-  %3 = sext i32 %spec.select.i.i201 to i64
+  %i.tn = shl nuw nsw i32 %spec.select.sink.i15.i, 1
+  %spec.select.i.i201 = select i1 %i.tm, i32 %i.tn, i32 2147483647 ; 3 uses
+  %3 = zext nneg i32 %spec.select.i.i201 to i64   ; 2 uses
   %.not.i10.i.i = icmp samesign ult i64 %indvars.iv19.i, %3
   br i1 %.not.i10.i.i, label %bb.dv, label %Vec_PtrPush.exit.i
 
 bb.dv:                                            ; preds = %bb.du
   %.not9.i11.i.i = icmp eq ptr %storemerge17.i, null
-  %4 = zext nneg i32 %spec.select.i.i201 to i64
-  %i.to = shl nuw nsw i64 %4, 3                   ; 2 uses
+  %i.to = shl nuw nsw i64 %3, 3                   ; 2 uses
   br i1 %.not9.i11.i.i, label %bb.dx, label %bb.dw
 
 bb.dw:                                            ; preds = %bb.dv

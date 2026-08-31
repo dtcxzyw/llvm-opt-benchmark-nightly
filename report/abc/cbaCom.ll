@@ -202,7 +202,7 @@ bb.go:                                            ; preds = %bb.gn
   %i.ub = load ptr, ptr %i.nz, align 8, !tbaa !37 ; 2 uses
   %.not9.i23.i.i.i.i.i.i.i = icmp eq ptr %i.ub, null
   %i.uc = sext i32 %spec.select.i.i.i.i.i.i.i to i64
-  %i.ud = shl nsw i64 %i.uc, 2                    ; 2 uses
+  %i.ud = shl nuw nsw i64 %i.uc, 2                ; 2 uses
   br i1 %.not9.i23.i.i.i.i.i.i.i, label %bb.gq, label %bb.gp
 
 bb.gp:                                            ; preds = %bb.go
@@ -233,7 +233,7 @@ Vec_IntGrow.exit.i.i.i.i.i.i.i:                   ; preds = %Vec_IntGrow.exit.si
   %i.uj = shl nsw i64 %i.ui, 2
   %scevgep.i.i.i.i.i.i = getelementptr i8, ptr %i.uh, i64 %i.uj
   %i.uk = sub nsw i64 %wide.trip.count.i.i.i.i.i.i.i, %i.ui
-  %i.ul = shl nsw i64 %i.uk, 2
+  %i.ul = shl nuw nsw i64 %i.uk, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i.i.i.i.i.i, i8 0, i64 %i.ul, i1 false), !tbaa !10
   br label %._crit_edge.i.i.i.i.i.i.i
 
@@ -332,7 +332,7 @@ bb.gz:                                            ; preds = %bb.gy
 bb.ha:                                            ; preds = %bb.gz
   %.not9.i23.i.i.i.i.i.i = icmp eq ptr %i.vg, null
   %i.vs = sext i32 %spec.select.i.i.i93.i.i.i to i64
-  %i.vt = shl nsw i64 %i.vs, 2                    ; 2 uses
+  %i.vt = shl nuw nsw i64 %i.vs, 2                ; 2 uses
   br i1 %.not9.i23.i.i.i.i.i.i, label %bb.hc, label %bb.hb
 
 bb.hb:                                            ; preds = %bb.ha
@@ -365,7 +365,7 @@ Vec_IntGrow.exit.i.i.i91.i.i.i:                   ; preds = %Vec_IntGrow.exit.si
   %i.wa = shl nsw i64 %i.vz, 2
   %scevgep.i.i.i.i.i = getelementptr i8, ptr %i.vw, i64 %i.wa
   %i.wb = sub nsw i64 %wide.trip.count.i.i.i.i.i.i, %i.vz
-  %i.wc = shl nsw i64 %i.wb, 2
+  %i.wc = shl nuw nsw i64 %i.wb, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i.i.i.i.i, i8 -1, i64 %i.wc, i1 false), !tbaa !10
   br label %._crit_edge.i.i.i.i.i.i
 
@@ -536,7 +536,7 @@ bb.hp:                                            ; preds = %bb.ho
   %i.yo = load ptr, ptr %i.xz, align 8, !tbaa !37 ; 2 uses
   %.not9.i23.i.i.i.i.i = icmp eq ptr %i.yo, null
   %i.yp = sext i32 %spec.select.i.i.i.i50.i to i64
-  %i.yq = shl nsw i64 %i.yp, 2                    ; 2 uses
+  %i.yq = shl nuw nsw i64 %i.yp, 2                ; 2 uses
   br i1 %.not9.i23.i.i.i.i.i, label %bb.hr, label %bb.hq
 
 bb.hq:                                            ; preds = %bb.hp
@@ -567,7 +567,7 @@ Vec_IntGrow.exit.i.i.i.i46.i:                     ; preds = %Vec_IntGrow.exit.si
   %i.yw = shl nsw i64 %i.yv, 2
   %scevgep.i.i.i.i = getelementptr i8, ptr %i.yu, i64 %i.yw
   %i.yx = sub nsw i64 %wide.trip.count.i.i.i.i48.i, %i.yv
-  %i.yy = shl nsw i64 %i.yx, 2
+  %i.yy = shl nuw nsw i64 %i.yx, 2
   call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i.i.i.i, i8 -1, i64 %i.yy, i1 false), !tbaa !10
   br label %._crit_edge.i.i.i.i49.i
 
@@ -970,16 +970,15 @@ bb.ko:                                            ; preds = %bb.km
 
 bb.kp:                                            ; preds = %bb.kl
   %i.ail = icmp samesign ult i64 %indvars.iv19.i.i.i, 1073741823
-  %i.aim = shl nsw i32 %spec.select.sink.i15.i.i.i, 1
-  %spec.select.i.i133.i.i = select i1 %i.ail, i32 %i.aim, i32 2147483647 ; 4 uses
-  %3 = sext i32 %spec.select.i.i133.i.i to i64
+  %i.aim = shl nuw nsw i32 %spec.select.sink.i15.i.i.i, 1
+  %spec.select.i.i133.i.i = select i1 %i.ail, i32 %i.aim, i32 2147483647 ; 3 uses
+  %3 = zext nneg i32 %spec.select.i.i133.i.i to i64 ; 2 uses
   %.not.i10.i.i.i.i = icmp samesign ult i64 %indvars.iv19.i.i.i, %3
   br i1 %.not.i10.i.i.i.i, label %bb.kq, label %Vec_PtrPush.exit.i.i.i
 
 bb.kq:                                            ; preds = %bb.kp
   %.not9.i11.i.i.i.i = icmp eq ptr %storemerge17.i.i.i, null
-  %4 = zext nneg i32 %spec.select.i.i133.i.i to i64
-  %i.ain = shl nuw nsw i64 %4, 3                  ; 2 uses
+  %i.ain = shl nuw nsw i64 %3, 3                  ; 2 uses
   br i1 %.not9.i11.i.i.i.i, label %bb.ks, label %bb.kr
 
 bb.kr:                                            ; preds = %bb.kq
@@ -1382,7 +1381,7 @@ Vec_IntGrow.exit.i.i.i:                           ; preds = %Vec_IntGrow.exit.si
   %i.ad = shl nsw i64 %i.ac, 2
   %scevgep.i.i = getelementptr i8, ptr %i.ab, i64 %i.ad
   %i.ae = sub nsw i64 %wide.trip.count.i.i.i, %i.ac
-  %i.af = shl nsw i64 %i.ae, 2
+  %i.af = shl nuw nsw i64 %i.ae, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i.i, i8 0, i64 %i.af, i1 false), !tbaa !10
   br label %._crit_edge.i.i.i
 
