@@ -204,8 +204,7 @@ bb.a:
   br i1 %2, label %bb.i, label %_ZNSt6vectorIiSaIiEED2Ev.exit
 
 .lr.ph255:                                        ; preds = %bb.a, %.loopexit234
-  %i.h = phi i64 [ %6, %.loopexit234 ], [ 0, %bb.a ]
-  %.0253 = phi i32 [ %5, %.loopexit234 ], [ 0, %bb.a ]
+  %i.h = phi i64 [ %indvars.iv.next287, %.loopexit234 ], [ 0, %bb.a ] ; 2 uses
   %i.i = getelementptr inbounds nuw [280 x i8], ptr %i.c, i64 %i.h ; 10 uses
   %i.j = load i8, ptr %i.i, align 8, !tbaa !36, !range !58, !noundef !59
   %i.k = trunc nuw i8 %i.j to i1
@@ -235,8 +234,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph252, %bb.h
-  %i.ab = phi i64 [ 0, %.lr.ph252 ], [ %4, %bb.h ] ; 7 uses
-  %.0135251 = phi i32 [ 0, %.lr.ph252 ], [ %3, %bb.h ]
+  %i.ab = phi i64 [ 0, %.lr.ph252 ], [ %indvars.iv.next284, %bb.h ] ; 8 uses
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.ab
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !63
   %.not145 = icmp eq i64 %i.ad, 0
@@ -442,15 +440,15 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph.1
   br i1 %niter362.ncmp.3, label %._crit_edge249.loopexit.unr-lcssa, label %.lr.ph248, !llvm.loop !159
 
 bb.h:                                             ; preds = %bb.b, %._crit_edge249
-  %3 = add i32 %.0135251, 1                       ; 2 uses
-  %4 = zext i32 %3 to i64                         ; 2 uses
-  %i.dn = icmp ugt i64 %i.s, %4
+  %indvars.iv.next284 = add i64 %i.ab, 1          ; 2 uses
+  %3 = and i64 %indvars.iv.next284, 4294967295
+  %i.dn = icmp ugt i64 %i.s, %3
   br i1 %i.dn, label %bb.b, label %.loopexit234, !llvm.loop !160
 
 .loopexit234:                                     ; preds = %bb.h, %.preheader233, %.lr.ph255
-  %5 = add i32 %.0253, 1                          ; 2 uses
-  %6 = zext i32 %5 to i64                         ; 2 uses
-  %i.do = icmp ugt i64 %i.g, %6
+  %indvars.iv.next287 = add i64 %i.h, 1           ; 2 uses
+  %4 = and i64 %indvars.iv.next287, 4294967295
+  %i.do = icmp ugt i64 %i.g, %4
   br i1 %i.do, label %.lr.ph255, label %._crit_edge256, !llvm.loop !161
 
 bb.i:                                             ; preds = %._crit_edge256

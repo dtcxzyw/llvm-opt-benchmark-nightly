@@ -1,0 +1,301 @@
+diff --git a/llvm/lib/Transforms/Scalar/SROA.cpp b/llvm/lib/Transforms/Scalar/SROA.cpp
+index e4770154e2998..208741f8fdc35 100644
+--- a/llvm/lib/Transforms/Scalar/SROA.cpp
++++ b/llvm/lib/Transforms/Scalar/SROA.cpp
+@@ -154,6 +154,25 @@ using RewriteableMemOp =
+     std::variant<PossiblySpeculatableLoad, UnspeculatableStore>;
+ using RewriteableMemOps = SmallVector<RewriteableMemOp, 2>;
+ 
++/// Select instructions that use an alloca and are subsequently loaded can be
++/// rewritten to load both input pointers and then select between the result,
++/// allowing the load of the alloca to be promoted.
++/// From this:
++///   %P2 = select i1 %cond, ptr %Alloca, ptr %Other
++///   %V = load <type>, ptr %P2
++/// to:
++///   %V1 = load <type>, ptr %Alloca      -> will be mem2reg'd
++///   %V2 = load <type>, ptr %Other
++///   %V = select i1 %cond, <type> %V1, <type> %V2
++///
++/// We can do this to a select if its only uses are loads
++/// and if either the operand to the select can be loaded unconditionally,
++///        or if we are allowed to perform CFG modifications.
++/// If found an intervening bitcast with a single use of the load,
++/// allow the promotion.
++static std::optional<RewriteableMemOps>
++isSafeSelectToSpeculate(SelectInst &SI, bool PreserveCFG);
++
+ /// An optimization pass providing Scalar Replacement of Aggregates.
+ ///
+ /// This pass takes allocations which can be completely analyzed (that is, they
+@@ -219,25 +238,6 @@ class SROA {
+   /// allocas.
+   SmallMapVector<SelectInst *, RewriteableMemOps, 8> SelectsToRewrite;
+ 
+-  /// Select instructions that use an alloca and are subsequently loaded can be
+-  /// rewritten to load both input pointers and then select between the result,
+-  /// allowing the load of the alloca to be promoted.
+-  /// From this:
+-  ///   %P2 = select i1 %cond, ptr %Alloca, ptr %Other
+-  ///   %V = load <type>, ptr %P2
+-  /// to:
+-  ///   %V1 = load <type>, ptr %Alloca      -> will be mem2reg'd
+-  ///   %V2 = load <type>, ptr %Other
+-  ///   %V = select i1 %cond, <type> %V1, <type> %V2
+-  ///
+-  /// We can do this to a select if its only uses are loads
+-  /// and if either the operand to the select can be loaded unconditionally,
+-  ///        or if we are allowed to perform CFG modifications.
+-  /// If found an intervening bitcast with a single use of the load,
+-  /// allow the promotion.
+-  static std::optional<RewriteableMemOps>
+-  isSafeSelectToSpeculate(SelectInst &SI, bool PreserveCFG);
+-
+ public:
+   SROA(LLVMContext *C, DomTreeUpdater *DTU, AssumptionCache *AC,
+        SROAOptions Options)
+@@ -1478,11 +1478,45 @@ LLVM_DUMP_METHOD void AllocaSlices::dump() const { print(dbgs()); }
+ 
+ #endif // !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
+ 
++/// Find a common load/store type used through a pointer select.
++///
++/// Look through a select to see if all of its users are loads or stores of one
++/// common type. If there is a common type that matches a common type for the
++/// rest of the alloca slices, then we can transform this select to use branched
++/// control flow, with direct loads/stores to the alloca, and promote through
++/// the common type.
++static Type *findCommonTypeThroughSelect(SelectInst &SI, bool PreserveCFG) {
++  if (!isSafeSelectToSpeculate(SI, PreserveCFG))
++    return nullptr;
++
++  Type *Ty = nullptr;
++
++  for (User *U : SI.users()) {
++    // Look through bitcasting the select result
++    if (auto *BC = dyn_cast<BitCastInst>(U); BC && BC->hasOneUse())
++      U = *BC->user_begin();
++
++    Type *UserTy = nullptr;
++    if (auto *LI = dyn_cast<LoadInst>(U))
++      UserTy = LI->getType();
++    else if (auto *Store = dyn_cast<StoreInst>(U))
++      // Slice building rejects stores of the select-derived pointer, so it must
++      // be the store's pointer operand here.
++      UserTy = Store->getValueOperand()->getType();
++
++    if (!UserTy || (Ty && Ty != UserTy))
++      return nullptr;
++    Ty = UserTy;
++  }
++
++  return Ty;
++}
++
+ /// Walk the range of a partitioning looking for a common type to cover this
+ /// sequence of slices.
+ static std::pair<Type *, IntegerType *>
+ findCommonType(AllocaSlices::const_iterator B, AllocaSlices::const_iterator E,
+-               uint64_t EndOffset) {
++               uint64_t EndOffset, bool PreserveCFG) {
+   Type *Ty = nullptr;
+   bool TyIsCommon = true;
+   IntegerType *ITy = nullptr;
+@@ -1501,6 +1535,8 @@ findCommonType(AllocaSlices::const_iterator B, AllocaSlices::const_iterator E,
+       UserTy = LI->getType();
+     } else if (StoreInst *SI = dyn_cast<StoreInst>(U->getUser())) {
+       UserTy = SI->getValueOperand()->getType();
++    } else if (auto *SI = dyn_cast<SelectInst>(U->getUser())) {
++      UserTy = findCommonTypeThroughSelect(*SI, PreserveCFG);
+     }
+ 
+     if (IntegerType *UserITy = dyn_cast_or_null<IntegerType>(UserTy)) {
+@@ -1717,8 +1753,10 @@ isSafeLoadOfSelectToSpeculate(LoadInst &LI, SelectInst &SI, bool PreserveCFG) {
+   return Spec;
+ }
+ 
+-std::optional<RewriteableMemOps>
+-SROA::isSafeSelectToSpeculate(SelectInst &SI, bool PreserveCFG) {
++namespace {
++
++static std::optional<RewriteableMemOps>
++isSafeSelectToSpeculate(SelectInst &SI, bool PreserveCFG) {
+   RewriteableMemOps Ops;
+ 
+   for (User *U : SI.users()) {
+@@ -1764,6 +1802,8 @@ SROA::isSafeSelectToSpeculate(SelectInst &SI, bool PreserveCFG) {
+   return Ops;
+ }
+ 
++} // namespace
++
+ static void speculateSelectInstLoads(SelectInst &SI, LoadInst &LI,
+                                      IRBuilderTy &IRB) {
+   LLVM_DEBUG(dbgs() << "    original load: " << SI << "\n");
+@@ -5392,7 +5432,7 @@ static FixedVectorType *tryCanonicalizeStructToVector(StructType *STy,
+ ///     nullptr.
+ static std::tuple<Type *, bool, VectorType *>
+ selectPartitionType(Partition &P, const DataLayout &DL, AllocaInst &AI,
+-                    LLVMContext &C, bool AggregateToVector) {
++                    LLVMContext &C, bool AggregateToVector, bool PreserveCFG) {
+   auto LogSelection = [&](StringRef Path, Type *SelectedTy,
+                           VectorType *SelectedVecTy, bool SelectedIntWidening) {
+     LLVM_DEBUG({
+@@ -5437,7 +5477,7 @@ selectPartitionType(Partition &P, const DataLayout &DL, AllocaInst &AI,
+   // Check if there is a common type that all slices of the partition use that
+   // spans the partition.
+   auto [CommonUseTy, LargestIntTy] =
+-      findCommonType(P.begin(), P.end(), P.endOffset());
++      findCommonType(P.begin(), P.end(), P.endOffset(), PreserveCFG);
+   if (CommonUseTy) {
+     TypeSize CommonUseSize = DL.getTypeAllocSize(CommonUseTy);
+     if (CommonUseSize.isFixed() && CommonUseSize.getFixedValue() >= P.size()) {
+@@ -5534,7 +5574,7 @@ SROA::rewritePartition(AllocaInst &AI, AllocaSlices &AS, Partition &P) {
+   const DataLayout &DL = AI.getDataLayout();
+   // Select the type for the new alloca that spans the partition.
+   auto [PartitionTy, IsIntegerWideningViable, VecTy] =
+-      selectPartitionType(P, DL, AI, *C, AggregateToVector);
++      selectPartitionType(P, DL, AI, *C, AggregateToVector, PreserveCFG);
+ 
+   // Check for the case where we're going to rewrite to a new alloca of the
+   // exact same type as the original, and with the same access offsets. In that
+diff --git a/llvm/test/Transforms/SROA/select-common-type.ll b/llvm/test/Transforms/SROA/select-common-type.ll
+new file mode 100644
+index 0000000000000..2779c1789bd37
+--- /dev/null
++++ b/llvm/test/Transforms/SROA/select-common-type.ll
+@@ -0,0 +1,106 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 5
++; RUN: opt < %s -passes='sroa<modify-cfg>' -S | FileCheck %s
++; RUN: opt < %s -passes='sroa<preserve-cfg>' -S | FileCheck %s --check-prefix=PRESERVE
++
++%pair = type { i32, i32 }
++
++define i64 @load_same_type(i1 %cond, ptr %other) {
++; PRESERVE-LABEL: define i64 @load_same_type(
++; PRESERVE:         [[ZERO:%.*]] = alloca [[PAIR:%.*]], align 8
++; PRESERVE-NEXT:    store i64 0, ptr [[ZERO]], align 8
++; PRESERVE-NEXT:    [[ADDR:%.*]] = select i1 {{%.*}}, ptr [[OTHER:%.*]], ptr [[ZERO]]
++; PRESERVE-NEXT:    [[VALUE:%.*]] = load i64, ptr [[ADDR]], align 8
++; PRESERVE-NEXT:    ret i64 [[VALUE]]
++;
++; CHECK-LABEL: define i64 @load_same_type(
++; CHECK-SAME: i1 [[COND:%.*]], ptr [[OTHER:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br i1 [[COND]], label %[[ENTRY_THEN:.*]], label %[[ENTRY_CONT:.*]]
++; CHECK:       [[ENTRY_THEN]]:
++; CHECK-NEXT:    [[VALUE_THEN_VAL:%.*]] = load i64, ptr [[OTHER]], align 8
++; CHECK-NEXT:    br label %[[ENTRY_CONT]]
++; CHECK:       [[ENTRY_CONT]]:
++; CHECK-NEXT:    [[VALUE:%.*]] = phi i64 [ [[VALUE_THEN_VAL]], %[[ENTRY_THEN]] ], [ 0, %[[ENTRY]] ]
++; CHECK-NEXT:    ret i64 [[VALUE]]
++;
++entry:
++  %zero = alloca %pair, align 8
++  store i64 0, ptr %zero, align 8
++  %addr = select i1 %cond, ptr %other, ptr %zero
++  %value = load i64, ptr %addr, align 8
++  ret i64 %value
++}
++
++define i64 @store_same_type(i64 %initial, i64 %value, i1 %cond, ptr %other) {
++; PRESERVE-LABEL: define i64 @store_same_type(
++; PRESERVE:         [[TEMPORARY:%.*]] = alloca [[PAIR:%.*]], align 8
++; PRESERVE-NEXT:    store i64 [[INITIAL:%.*]], ptr [[TEMPORARY]], align 8
++; PRESERVE-NEXT:    [[ADDR:%.*]] = select i1 {{%.*}}, ptr [[TEMPORARY]], ptr [[OTHER:%.*]]
++; PRESERVE-NEXT:    store i64 [[VALUE:%.*]], ptr [[ADDR]], align 8
++; PRESERVE-NEXT:    [[RESULT:%.*]] = load i64, ptr [[TEMPORARY]], align 8
++; PRESERVE-NEXT:    ret i64 [[RESULT]]
++;
++; CHECK-LABEL: define i64 @store_same_type(
++; CHECK-SAME: i64 [[INITIAL:%.*]], i64 [[VALUE:%.*]], i1 [[COND:%.*]], ptr [[OTHER:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br i1 [[COND]], label %[[ENTRY_THEN:.*]], label %[[ENTRY_ELSE:.*]]
++; CHECK:       [[ENTRY_THEN]]:
++; CHECK-NEXT:    br label %[[ENTRY_CONT:.*]]
++; CHECK:       [[ENTRY_ELSE]]:
++; CHECK-NEXT:    store i64 [[VALUE]], ptr [[OTHER]], align 8
++; CHECK-NEXT:    br label %[[ENTRY_CONT]]
++; CHECK:       [[ENTRY_CONT]]:
++; CHECK-NEXT:    [[TEMPORARY_SROA_0_0:%.*]] = phi i64 [ [[VALUE]], %[[ENTRY_THEN]] ], [ [[INITIAL]], %[[ENTRY_ELSE]] ]
++; CHECK-NEXT:    ret i64 [[TEMPORARY_SROA_0_0]]
++;
++entry:
++  %temporary = alloca %pair, align 8
++  store i64 %initial, ptr %temporary, align 8
++  %addr = select i1 %cond, ptr %temporary, ptr %other
++  store i64 %value, ptr %addr, align 8
++  %result = load i64, ptr %temporary, align 8
++  ret i64 %result
++}
++
++define i64 @mixed_types(i1 %cond, ptr %other) {
++; CHECK-LABEL: define i64 @mixed_types(
++; CHECK-SAME: i1 [[COND:%.*]], ptr [[OTHER:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[TEMPORARY:%.*]] = alloca [[PAIR:%.*]], align 8
++; CHECK-NEXT:    store i64 0, ptr [[TEMPORARY]], align 8
++; CHECK-NEXT:    [[ADDR:%.*]] = select i1 [[COND]], ptr [[TEMPORARY]], ptr [[OTHER]]
++; CHECK-NEXT:    [[LOW:%.*]] = load i32, ptr [[ADDR]], align 4
++; CHECK-NEXT:    store i32 [[LOW]], ptr [[ADDR]], align 4
++; CHECK-NEXT:    [[WHOLE:%.*]] = load i64, ptr [[ADDR]], align 8
++; CHECK-NEXT:    ret i64 [[WHOLE]]
++;
++entry:
++  %temporary = alloca %pair, align 8
++  store i64 0, ptr %temporary, align 8
++  %addr = select i1 %cond, ptr %temporary, ptr %other
++  %low = load i32, ptr %addr, align 4
++  store i32 %low, ptr %addr, align 4
++  %whole = load i64, ptr %addr, align 8
++  ret i64 %whole
++}
++
++define i64 @volatile_load_same_type(i1 %cond, ptr %other) {
++; CHECK-LABEL: define i64 @volatile_load_same_type(
++; CHECK-SAME: i1 [[COND:%.*]], ptr [[OTHER:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[ZERO:%.*]] = alloca [[PAIR:%.*]], align 8
++; CHECK-NEXT:    store i64 0, ptr [[ZERO]], align 8
++; CHECK-NEXT:    [[ADDR:%.*]] = select i1 [[COND]], ptr [[OTHER]], ptr [[ZERO]]
++; CHECK-NEXT:    [[VALUE:%.*]] = load volatile i64, ptr [[ADDR]], align 8
++; CHECK-NEXT:    ret i64 [[VALUE]]
++;
++; PRESERVE-LABEL: define i64 @volatile_load_same_type(
++; PRESERVE:         [[ZERO:%.*]] = alloca [[PAIR:%.*]], align 8
++;
++entry:
++  %zero = alloca %pair, align 8
++  store i64 0, ptr %zero, align 8
++  %addr = select i1 %cond, ptr %other, ptr %zero
++  %value = load volatile i64, ptr %addr, align 8
++  ret i64 %value
++}
+diff --git a/llvm/test/Transforms/SROA/select-gep.ll b/llvm/test/Transforms/SROA/select-gep.ll
+index 688ea03cddac0..ec55f8029be20 100644
+--- a/llvm/test/Transforms/SROA/select-gep.ll
++++ b/llvm/test/Transforms/SROA/select-gep.ll
+@@ -159,20 +159,17 @@ bb:
+ ; promotable. The allocas here will be optimized away by subsequent passes.
+ define i32 @test_select_idx_memcpy(i1 %c, ptr %p) {
+ ; CHECK-LABEL: @test_select_idx_memcpy(
+-; CHECK-NEXT:    [[ALLOCA_SROA_0:%.*]] = alloca [4 x i8], align 8
+ ; CHECK-NEXT:    [[ALLOCA_SROA_2:%.*]] = alloca [20 x i8], align 4
+-; CHECK-NEXT:    [[ALLOCA_SROA_22:%.*]] = alloca [4 x i8], align 8
+ ; CHECK-NEXT:    [[ALLOCA_SROA_3:%.*]] = alloca [132 x i8], align 4
+-; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 8 [[ALLOCA_SROA_0]], ptr align 1 [[P:%.*]], i64 4, i1 false)
++; CHECK-NEXT:    [[ALLOCA_SROA_0_0_COPYLOAD:%.*]] = load i32, ptr [[P:%.*]], align 1
+ ; CHECK-NEXT:    [[ALLOCA_SROA_2_0_P_SROA_IDX:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 4
+ ; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[ALLOCA_SROA_2]], ptr align 1 [[ALLOCA_SROA_2_0_P_SROA_IDX]], i64 20, i1 false)
+ ; CHECK-NEXT:    [[ALLOCA_SROA_22_0_P_SROA_IDX:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 24
+-; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 8 [[ALLOCA_SROA_22]], ptr align 1 [[ALLOCA_SROA_22_0_P_SROA_IDX]], i64 4, i1 false)
++; CHECK-NEXT:    [[ALLOCA_SROA_22_0_COPYLOAD:%.*]] = load i32, ptr [[ALLOCA_SROA_22_0_P_SROA_IDX]], align 1
+ ; CHECK-NEXT:    [[ALLOCA_SROA_3_0_P_SROA_IDX:%.*]] = getelementptr inbounds i8, ptr [[P]], i64 28
+ ; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[ALLOCA_SROA_3]], ptr align 1 [[ALLOCA_SROA_3_0_P_SROA_IDX]], i64 132, i1 false)
+ ; CHECK-NEXT:    [[IDX:%.*]] = select i1 [[C:%.*]], i64 24, i64 0
+-; CHECK-NEXT:    [[IDX_SROA_SEL:%.*]] = select i1 [[C]], ptr [[ALLOCA_SROA_22]], ptr [[ALLOCA_SROA_0]]
+-; CHECK-NEXT:    [[RES:%.*]] = load i32, ptr [[IDX_SROA_SEL]], align 4
++; CHECK-NEXT:    [[RES:%.*]] = select i1 [[C]], i32 [[ALLOCA_SROA_22_0_COPYLOAD]], i32 [[ALLOCA_SROA_0_0_COPYLOAD]]
+ ; CHECK-NEXT:    ret i32 [[RES]]
+ ;
+   %alloca = alloca [20 x i64], align 8

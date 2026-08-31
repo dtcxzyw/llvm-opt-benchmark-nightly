@@ -45,7 +45,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"class.std::tuple" = type { %"struct.std::_Tuple_impl" }
 %"struct.std::_Tuple_impl" = type { %"struct.std::_Head_base.75" }
 %"struct.std::_Head_base.75" = type { ptr }
-%"struct.llvm::objcopy::MachineInfo" = type <{ i16, i8, i8, i8, i8 }>
 %"class.std::unique_ptr.76" = type { %"struct.std::__uniq_ptr_data.77" }
 %"struct.std::__uniq_ptr_data.77" = type { %"class.std::__uniq_ptr_impl.78" }
 %"class.std::__uniq_ptr_impl.78" = type { %"class.std::tuple.79" }
@@ -448,7 +447,7 @@ define dso_local void @_ZN4llvm7objcopy3elf20executeObjcopyOnIHexERKNS0_12Common
 bb.a:
   %5 = alloca %"class.llvm::objcopy::elf::IHexReader", align 8 ; 6 uses
   %6 = alloca %"class.llvm::Expected", align 8    ; 9 uses
-  %7 = alloca %"struct.llvm::objcopy::MachineInfo", align 2 ; 4 uses
+  %.sroa.0.sroa.0 = alloca [6 x i8], align 8      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4llvm7objcopy3elf10IHexReaderE, i64 16), ptr %5, align 8, !tbaa !161
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -470,13 +469,13 @@ _ZNSt10unique_ptrIN4llvm13ErrorInfoBaseESt14default_deleteIS1_EED2Ev.exit.i: ; p
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 44
-  call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(5) %7, i8 0, i64 5, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.sroa.0)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %.sroa.0.sroa.0, i8 0, i64 5, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 50
   %i.i = load i8, ptr %i.h, align 2, !tbaa !174, !range !102, !noundef !103
   %i.j = trunc nuw i8 %i.i to i1
-  %spec.select.i = select i1 %i.j, ptr %i.g, ptr %7
-  %.sroa.0.0.i = load i48, ptr %spec.select.i, align 2 ; 2 uses
+  %spec.select.i = select i1 %i.j, ptr %i.g, ptr %.sroa.0.sroa.0
+  %.sroa.0.0.i = load i48, ptr %spec.select.i, align 4 ; 2 uses
   %i.k = and i48 %.sroa.0.0.i, 16777216
   %.not = icmp eq i48 %i.k, 0
   %i.l = and i48 %.sroa.0.0.i, 4294967296
@@ -484,7 +483,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = select i1 %.not13, i32 3, i32 1
   %i.n = select i1 %.not13, i32 2, i32 0
   %.0.i = select i1 %.not, i32 %i.n, i32 %i.m     ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %7)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.sroa.0)
   %i.o = load ptr, ptr %6, align 8, !tbaa !134
   call fastcc void @_ZL10handleArgsRKN4llvm7objcopy12CommonConfigERKNS0_9ELFConfigENS0_3elf7ElfTypeERNS7_6ObjectE(ptr dead_on_unwind noalias writable align 8 %0, ptr noundef nonnull align 8 dereferenceable(1104) %1, ptr noundef nonnull align 8 dereferenceable(88) %2, i32 noundef %.0.i, ptr noundef nonnull align 8 dereferenceable(457) %i.o)
   %i.p = load ptr, ptr %0, align 8, !tbaa !172
@@ -887,7 +886,7 @@ define dso_local void @_ZN4llvm7objcopy3elf25executeObjcopyOnRawBinaryERKNS0_12C
 bb.a:
   %5 = alloca %"class.llvm::objcopy::elf::BinaryReader", align 8 ; 7 uses
   %6 = alloca %"class.llvm::Expected", align 8    ; 9 uses
-  %7 = alloca %"struct.llvm::objcopy::MachineInfo", align 2 ; 4 uses
+  %.sroa.0.sroa.0 = alloca [6 x i8], align 8      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
   %i.a = load i8, ptr %2, align 8, !tbaa !441
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4llvm7objcopy3elf12BinaryReaderE, i64 16), ptr %5, align 8, !tbaa !161
@@ -912,13 +911,13 @@ _ZNSt10unique_ptrIN4llvm13ErrorInfoBaseESt14default_deleteIS1_EED2Ev.exit.i: ; p
 
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 44
-  call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(5) %7, i8 0, i64 5, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.sroa.0)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %.sroa.0.sroa.0, i8 0, i64 5, i1 false)
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 50
   %i.k = load i8, ptr %i.j, align 2, !tbaa !174, !range !102, !noundef !103
   %i.l = trunc nuw i8 %i.k to i1
-  %spec.select.i = select i1 %i.l, ptr %i.i, ptr %7
-  %.sroa.0.0.i = load i48, ptr %spec.select.i, align 2 ; 2 uses
+  %spec.select.i = select i1 %i.l, ptr %i.i, ptr %.sroa.0.sroa.0
+  %.sroa.0.0.i = load i48, ptr %spec.select.i, align 4 ; 2 uses
   %i.m = and i48 %.sroa.0.0.i, 16777216
   %.not = icmp eq i48 %i.m, 0
   %i.n = and i48 %.sroa.0.0.i, 4294967296
@@ -926,7 +925,7 @@ bb.b:                                             ; preds = %bb.a
   %i.o = select i1 %.not14, i32 3, i32 1
   %i.p = select i1 %.not14, i32 2, i32 0
   %.0.i = select i1 %.not, i32 %i.p, i32 %i.o     ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %7)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.sroa.0)
   %i.q = load ptr, ptr %6, align 8, !tbaa !134
   call fastcc void @_ZL10handleArgsRKN4llvm7objcopy12CommonConfigERKNS0_9ELFConfigENS0_3elf7ElfTypeERNS7_6ObjectE(ptr dead_on_unwind noalias writable align 8 %0, ptr noundef nonnull align 8 dereferenceable(1104) %1, ptr noundef nonnull align 8 dereferenceable(88) %2, i32 noundef %.0.i, ptr noundef nonnull align 8 dereferenceable(457) %i.q)
   %i.r = load ptr, ptr %0, align 8, !tbaa !172

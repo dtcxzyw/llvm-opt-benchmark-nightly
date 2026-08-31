@@ -205,9 +205,9 @@ declare void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev(p
 define hidden void @_ZNK8rawspeed10NefDecoder17parseWhiteBalanceEv(ptr nofree noundef nonnull readonly align 8 captures(address) dereferenceable(104) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %.sroa.3 = alloca i32, align 4                  ; 8 uses
+  %.sroa.3 = alloca <2 x i16>, align 4            ; 8 uses
   %.sroa.10 = alloca i16, align 2                 ; 6 uses
-  %.sroa.13 = alloca i32, align 4                 ; 8 uses
+  %.sroa.13 = alloca <2 x i16>, align 4           ; 8 uses
   %.sroa.20 = alloca i16, align 2                 ; 6 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 3 uses

@@ -205,23 +205,23 @@ bb.n:                                             ; preds = %bb.k
 .thread618:                                       ; preds = %bb.n
   br label %thread-pre-split417
 
-thread-pre-split417:                              ; preds = %thread-pre-split.thread, %bb.n, %thread-pre-split, %.thread618
-  %.sroa.0297.sroa.0.1 = phi x86_fp80 [ %1, %thread-pre-split ], [ %1, %bb.n ], [ 5.000000e-01, %thread-pre-split.thread ], [ 5.000000e-01, %.thread618 ] ; 21 uses
-  %.sroa.0333.sroa.0.1 = phi x86_fp80 [ %0, %thread-pre-split ], [ %0, %bb.n ], [ 1.000000e+00, %thread-pre-split.thread ], [ %1, %.thread618 ] ; 23 uses
-  %.1387 = phi x86_fp80 [ %3, %thread-pre-split ], [ %3, %bb.n ], [ %3, %thread-pre-split.thread ], [ %2, %.thread618 ] ; 10 uses
-  %.1379 = phi x86_fp80 [ %2, %thread-pre-split ], [ %2, %bb.n ], [ %2, %thread-pre-split.thread ], [ %3, %.thread618 ] ; 16 uses
+thread-pre-split417:                              ; preds = %thread-pre-split.thread, %.thread618, %bb.n, %thread-pre-split
+  %.sroa.0297.sroa.0.1 = phi x86_fp80 [ %3, %thread-pre-split ], [ %3, %bb.n ], [ %3, %thread-pre-split.thread ], [ %2, %.thread618 ] ; 10 uses
+  %.sroa.0333.sroa.0.1 = phi x86_fp80 [ %2, %thread-pre-split ], [ %2, %bb.n ], [ %2, %thread-pre-split.thread ], [ %3, %.thread618 ] ; 16 uses
+  %.1387 = phi x86_fp80 [ %1, %thread-pre-split ], [ %1, %bb.n ], [ 5.000000e-01, %thread-pre-split.thread ], [ 5.000000e-01, %.thread618 ] ; 17 uses
+  %.1379 = phi x86_fp80 [ %0, %thread-pre-split ], [ 5.000000e-01, %bb.n ], [ 1.000000e+00, %thread-pre-split.thread ], [ %1, %.thread618 ] ; 20 uses
   %.1166 = phi i8 [ 0, %thread-pre-split ], [ 0, %bb.n ], [ 0, %thread-pre-split.thread ], [ 1, %.thread618 ] ; 11 uses
-  %i.r = fcmp oeq x86_fp80 %.sroa.0297.sroa.0.1, 5.000000e-01
-  %i.s = fcmp oge x86_fp80 %.sroa.0333.sroa.0.1, 5.000000e-01
+  %i.r = fcmp oeq x86_fp80 %.1387, 5.000000e-01
+  %i.s = fcmp oge x86_fp80 %.1379, 5.000000e-01
   %or.cond = and i1 %i.r, %i.s
-  %i.t = fcmp une x86_fp80 %.1379, 1.000000e+00
-  %or.cond3 = and i1 %or.cond, %i.t
+  %i.t = fcmp une x86_fp80 %.sroa.0333.sroa.0.1, 1.000000e+00
+  %or.cond3 = and i1 %i.t, %or.cond
   br i1 %or.cond3, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %thread-pre-split417
-  %i.u = fmul x86_fp80 %.1379, 5.000000e-01       ; 2 uses
+  %i.u = fmul x86_fp80 %.sroa.0333.sroa.0.1, 5.000000e-01 ; 2 uses
   %i.v = fsub x86_fp80 1.000000e+00, %i.u
-  %i.w = fmul nnan x86_fp80 %.sroa.0333.sroa.0.1, 2.000000e+00 ; 3 uses
+  %i.w = fmul nnan x86_fp80 %.1379, 2.000000e+00  ; 3 uses
   %i.x = tail call noundef x86_fp80 @_ZN5boost4math6detail18inverse_students_tIeNS0_8policies6policyINS3_13promote_floatILb0EEENS3_14promote_doubleILb0EEENS3_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEET_SB_SB_SB_RKT0_Pb(x86_fp80 noundef %i.w, x86_fp80 noundef %i.u, x86_fp80 noundef %i.v, ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef null) ; 2 uses
   %i.y = fmul x86_fp80 %i.x, %i.x                 ; 2 uses
   %i.z = fadd x86_fp80 %i.w, %i.y                 ; 2 uses
@@ -230,26 +230,26 @@ bb.o:                                             ; preds = %thread-pre-split417
   br label %.thread428
 
 bb.p:                                             ; preds = %thread-pre-split417
-  %i.ac = fcmp oeq x86_fp80 %.sroa.0297.sroa.0.1, 1.000000e+00
+  %i.ac = fcmp oeq x86_fp80 %.1387, 1.000000e+00
   br i1 %i.ac, label %.thread640, label %bb.w
 
 .thread640:                                       ; preds = %thread-pre-split.thread, %bb.p
-  %.sroa.0333.sroa.0.1636649 = phi x86_fp80 [ %.sroa.0333.sroa.0.1, %bb.p ], [ %1, %thread-pre-split.thread ] ; 5 uses
-  %.1387637648 = phi x86_fp80 [ %.1387, %bb.p ], [ %2, %thread-pre-split.thread ] ; 2 uses
-  %.1379638647 = phi x86_fp80 [ %.1379, %bb.p ], [ %3, %thread-pre-split.thread ] ; 3 uses
+  %.sroa.0333.sroa.0.1636649 = phi x86_fp80 [ %.sroa.0297.sroa.0.1, %bb.p ], [ %2, %thread-pre-split.thread ] ; 2 uses
+  %.1387637648 = phi x86_fp80 [ %.sroa.0333.sroa.0.1, %bb.p ], [ %3, %thread-pre-split.thread ] ; 3 uses
+  %.1379638647 = phi x86_fp80 [ %.1379, %bb.p ], [ %1, %thread-pre-split.thread ] ; 5 uses
   %.1166639646 = phi i8 [ %.1166, %bb.p ], [ 1, %thread-pre-split.thread ]
-  %i.ad = fcmp olt x86_fp80 %.1379638647, %.1387637648
+  %i.ad = fcmp olt x86_fp80 %.1387637648, %.sroa.0333.sroa.0.1636649
   br i1 %i.ad, label %bb.q, label %bb.t
 
 bb.q:                                             ; preds = %.thread640
-  %i.ae = fcmp ogt x86_fp80 %.sroa.0333.sroa.0.1636649, 1.000000e+00
-  %i.af = fdiv x86_fp80 1.000000e+00, %.sroa.0333.sroa.0.1636649
-  %i.ag = tail call noundef x86_fp80 @powl(x86_fp80 noundef %.1379638647, x86_fp80 noundef %i.af) #41 ; 3 uses
+  %i.ae = fcmp ogt x86_fp80 %.1379638647, 1.000000e+00
+  %i.af = fdiv x86_fp80 1.000000e+00, %.1379638647
+  %i.ag = tail call noundef x86_fp80 @powl(x86_fp80 noundef %.1387637648, x86_fp80 noundef %i.af) #41 ; 3 uses
   br i1 %i.ae, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  %i.ah = tail call noundef x86_fp80 @logl(x86_fp80 noundef %.1379638647) #41
-  %i.ai = fdiv x86_fp80 %i.ah, %.sroa.0333.sroa.0.1636649
+  %i.ah = tail call noundef x86_fp80 @logl(x86_fp80 noundef %.1387637648) #41
+  %i.ai = fdiv x86_fp80 %i.ah, %.1379638647
   %i.aj = tail call noundef x86_fp80 @_ZN5boost4math5expm1IeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_fffffE4typeESC_RKT0_(x86_fp80 noundef %i.ai, ptr noundef nonnull align 1 dereferenceable(1) %4)
   %i.ak = fneg x86_fp80 %i.aj
   br label %bb.u
@@ -259,12 +259,12 @@ bb.s:                                             ; preds = %bb.q
   br label %bb.u
 
 bb.t:                                             ; preds = %.thread640
-  %i.am = fneg x86_fp80 %.1387637648              ; 2 uses
+  %i.am = fneg x86_fp80 %.sroa.0333.sroa.0.1636649 ; 2 uses
   %i.an = tail call noundef x86_fp80 @_ZN5boost4math5log1pINS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEEeeRKT_(x86_fp80 noundef %i.am, ptr noundef nonnull align 1 dereferenceable(1) %4)
-  %i.ao = fdiv x86_fp80 %i.an, %.sroa.0333.sroa.0.1636649
+  %i.ao = fdiv x86_fp80 %i.an, %.1379638647
   %i.ap = tail call noundef x86_fp80 @expl(x86_fp80 noundef %i.ao) #41
   %i.aq = tail call noundef x86_fp80 @_ZN5boost4math5log1pINS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEEeeRKT_(x86_fp80 noundef %i.am, ptr noundef nonnull align 1 dereferenceable(1) %4)
-  %i.ar = fdiv x86_fp80 %i.aq, %.sroa.0333.sroa.0.1636649
+  %i.ar = fdiv x86_fp80 %i.aq, %.1379638647
   %i.as = tail call noundef x86_fp80 @_ZN5boost4math5expm1IeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_fffffE4typeESC_RKT0_(x86_fp80 noundef %i.ar, ptr noundef nonnull align 1 dereferenceable(1) %4)
   %i.at = fneg x86_fp80 %i.as
   br label %bb.u
@@ -283,12 +283,12 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.ce
 
 bb.w:                                             ; preds = %bb.p
-  %i.av = fadd x86_fp80 %.sroa.0333.sroa.0.1, %.sroa.0297.sroa.0.1 ; 2 uses
+  %i.av = fadd x86_fp80 %0, %1                    ; 8 uses
   %i.aw = fcmp ogt x86_fp80 %i.av, 5.000000e+00
   br i1 %i.aw, label %bb.x, label %bb.am
 
 bb.x:                                             ; preds = %bb.w
-  %i.ax = fcmp ogt x86_fp80 %.1379, 5.000000e-01
+  %i.ax = fcmp ogt x86_fp80 %.sroa.0333.sroa.0.1, 5.000000e-01
   br i1 %i.ax, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
@@ -296,15 +296,15 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x
-  %.sroa.0297.sroa.0.2 = phi x86_fp80 [ %.sroa.0333.sroa.0.1, %bb.y ], [ %.sroa.0297.sroa.0.1, %bb.x ] ; 11 uses
-  %.sroa.0333.sroa.0.2 = phi x86_fp80 [ %.sroa.0297.sroa.0.1, %bb.y ], [ %.sroa.0333.sroa.0.1, %bb.x ] ; 14 uses
-  %.2388 = phi x86_fp80 [ %.1379, %bb.y ], [ %.1387, %bb.x ] ; 4 uses
-  %.2380 = phi x86_fp80 [ %.1387, %bb.y ], [ %.1379, %bb.x ] ; 7 uses
+  %.sroa.0297.sroa.0.2 = phi x86_fp80 [ %.sroa.0333.sroa.0.1, %bb.y ], [ %.sroa.0297.sroa.0.1, %bb.x ] ; 4 uses
+  %.sroa.0333.sroa.0.2 = phi x86_fp80 [ %.sroa.0297.sroa.0.1, %bb.y ], [ %.sroa.0333.sroa.0.1, %bb.x ] ; 7 uses
+  %.2388 = phi x86_fp80 [ %.1379, %bb.y ], [ %.1387, %bb.x ] ; 11 uses
+  %.2380 = phi x86_fp80 [ %.1387, %bb.y ], [ %.1379, %bb.x ] ; 14 uses
   %.2167 = phi i8 [ %i.ay, %bb.y ], [ %.1166, %bb.x ] ; 4 uses
-  %i.az = fcmp olt x86_fp80 %.sroa.0297.sroa.0.2, %.sroa.0333.sroa.0.2
-  %i.ba = select i1 %i.az, x86_fp80 %.sroa.0297.sroa.0.2, x86_fp80 %.sroa.0333.sroa.0.2 ; 4 uses
-  %i.bb = fcmp olt x86_fp80 %.sroa.0333.sroa.0.2, %.sroa.0297.sroa.0.2 ; 2 uses
-  %i.bc = select i1 %i.bb, x86_fp80 %.sroa.0297.sroa.0.2, x86_fp80 %.sroa.0333.sroa.0.2
+  %i.az = fcmp olt x86_fp80 %.2388, %.2380
+  %i.ba = select i1 %i.az, x86_fp80 %.2388, x86_fp80 %.2380 ; 4 uses
+  %i.bb = fcmp olt x86_fp80 %.2380, %.2388        ; 2 uses
+  %i.bc = select i1 %i.bb, x86_fp80 %.2388, x86_fp80 %.2380
   %i.bd = tail call noundef x86_fp80 @sqrtl(x86_fp80 noundef %i.ba) #41
   %i.be = fsub x86_fp80 %i.bc, %i.ba
   %i.bf = fcmp ogt x86_fp80 %i.bd, %i.be
@@ -313,40 +313,39 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   br i1 %or.cond5, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
-  %i.bh = tail call noundef x86_fp80 @_ZN5boost4math6detail28temme_method_1_ibeta_inverseIeNS0_8policies6policyINS3_13promote_floatILb0EEENS3_14promote_doubleILb0EEENS3_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEET_SB_SB_SB_RKT0_(x86_fp80 noundef %.sroa.0333.sroa.0.2, x86_fp80 noundef %.sroa.0297.sroa.0.2, x86_fp80 noundef %.2380, ptr noundef nonnull align 1 dereferenceable(1) %4) ; 2 uses
+  %i.bh = tail call noundef x86_fp80 @_ZN5boost4math6detail28temme_method_1_ibeta_inverseIeNS0_8policies6policyINS3_13promote_floatILb0EEENS3_14promote_doubleILb0EEENS3_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEET_SB_SB_SB_RKT0_(x86_fp80 noundef %.2380, x86_fp80 noundef %.2388, x86_fp80 noundef %.sroa.0333.sroa.0.2, ptr noundef nonnull align 1 dereferenceable(1) %4) ; 2 uses
   %i.bi = fsub x86_fp80 1.000000e+00, %i.bh
   br label %.thread428
 
 bb.ab:                                            ; preds = %bb.z
-  %7 = fadd x86_fp80 %.sroa.0333.sroa.0.1, %.sroa.0297.sroa.0.1 ; 5 uses
-  %i.bj = fdiv x86_fp80 %.sroa.0333.sroa.0.2, %7
+  %i.bj = fdiv x86_fp80 %.2380, %i.av
   %i.bk = tail call noundef x86_fp80 @sqrtl(x86_fp80 noundef %i.bj) #41
   %i.bl = tail call noundef x86_fp80 @asinl(x86_fp80 noundef %i.bk) #41
-  %i.bm = fdiv x86_fp80 %i.ba, %7                 ; 2 uses
+  %i.bm = fdiv x86_fp80 %i.ba, %i.av              ; 2 uses
   %i.bn = fcmp oge x86_fp80 %i.bm, f0x3FFCCCCCCCCCCCCCD000
   %i.bo = fcmp ole x86_fp80 %i.bm, f0x3FFECCCCCCCCCCCCD000
   %or.cond7 = and i1 %i.bn, %i.bo
-  %i.bp = fcmp oge x86_fp80 %7, 1.000000e+01
+  %i.bp = fcmp oge x86_fp80 %i.av, 1.000000e+01
   %or.cond9 = and i1 %i.bp, %or.cond7
   br i1 %or.cond9, label %bb.ac, label %bb.ag
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.bq = fdiv x86_fp80 1.000000e+00, %.sroa.0333.sroa.0.2 ; 2 uses
-  %i.br = tail call noundef x86_fp80 @powl(x86_fp80 noundef %.2380, x86_fp80 noundef %i.bq) #41 ; 2 uses
+  %i.bq = fdiv x86_fp80 1.000000e+00, %.2380      ; 2 uses
+  %i.br = tail call noundef x86_fp80 @powl(x86_fp80 noundef %.sroa.0333.sroa.0.2, x86_fp80 noundef %i.bq) #41 ; 2 uses
   %i.bs = fcmp olt x86_fp80 %i.br, f0x3FF6A3D70A3D70A3D800
-  %i.bt = fcmp olt x86_fp80 %7, 2.000000e+02
+  %i.bt = fcmp olt x86_fp80 %i.av, 2.000000e+02
   %or.cond547 = and i1 %i.bt, %i.bs
   br i1 %or.cond547, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.bu = tail call noundef x86_fp80 @_ZN5boost4math4betaIeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_(x86_fp80 noundef %.sroa.0333.sroa.0.2, x86_fp80 noundef %.sroa.0297.sroa.0.2)
-  %i.bv = fmul x86_fp80 %.sroa.0333.sroa.0.2, %i.bu
+  %i.bu = tail call noundef x86_fp80 @_ZN5boost4math4betaIeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_(x86_fp80 noundef %.2380, x86_fp80 noundef %.2388)
+  %i.bv = fmul x86_fp80 %.2380, %i.bu
   %i.bw = tail call noundef x86_fp80 @powl(x86_fp80 noundef %i.bv, x86_fp80 noundef %i.bq) #41
   %i.bx = fmul x86_fp80 %i.br, %i.bw
   br label %bb.af
 
 bb.ae:                                            ; preds = %bb.ac
-  %i.by = tail call noundef x86_fp80 @_ZN5boost4math6detail28temme_method_2_ibeta_inverseIeNS0_8policies6policyINS3_13promote_floatILb0EEENS3_14promote_doubleILb0EEENS3_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEET_SB_SB_SB_SB_SB_RKT0_(x86_fp80 noundef %.sroa.0333.sroa.0.2, x86_fp80 noundef %.sroa.0297.sroa.0.2, x86_fp80 noundef %.2380, x86_fp80 noundef %7, x86_fp80 noundef %i.bl, ptr noundef nonnull align 1 dereferenceable(1) %4)
+  %i.by = tail call noundef x86_fp80 @_ZN5boost4math6detail28temme_method_2_ibeta_inverseIeNS0_8policies6policyINS3_13promote_floatILb0EEENS3_14promote_doubleILb0EEENS3_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEET_SB_SB_SB_SB_SB_RKT0_(x86_fp80 noundef %.2380, x86_fp80 noundef %.2388, x86_fp80 noundef %.sroa.0333.sroa.0.2, x86_fp80 noundef %i.av, x86_fp80 noundef %i.bl, ptr noundef nonnull align 1 dereferenceable(1) %4)
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad
@@ -361,17 +360,17 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ca = xor i8 %.2167, 1
   br label %thread-pre-split418
 
-thread-pre-split418:                              ; preds = %bb.ag, %bb.ah
-  %.sroa.0297.sroa.0.3 = phi x86_fp80 [ %.sroa.0333.sroa.0.2, %bb.ah ], [ %.sroa.0297.sroa.0.2, %bb.ag ] ; 7 uses
-  %.sroa.0333.sroa.0.3 = phi x86_fp80 [ %.sroa.0297.sroa.0.2, %bb.ah ], [ %.sroa.0333.sroa.0.2, %bb.ag ] ; 4 uses
-  %.3389 = phi x86_fp80 [ %.2380, %bb.ah ], [ %.2388, %bb.ag ] ; 4 uses
-  %.3381 = phi x86_fp80 [ %.2388, %bb.ah ], [ %.2380, %bb.ag ] ; 3 uses
+thread-pre-split418:                              ; preds = %bb.ah, %bb.ag
+  %.sroa.0297.sroa.0.3 = phi x86_fp80 [ %.sroa.0333.sroa.0.2, %bb.ah ], [ %.sroa.0297.sroa.0.2, %bb.ag ] ; 4 uses
+  %.sroa.0333.sroa.0.3 = phi x86_fp80 [ %.sroa.0297.sroa.0.2, %bb.ah ], [ %.sroa.0333.sroa.0.2, %bb.ag ] ; 3 uses
+  %.3389 = phi x86_fp80 [ %.2380, %bb.ah ], [ %.2388, %bb.ag ] ; 7 uses
+  %.3381 = phi x86_fp80 [ %.2388, %bb.ah ], [ %.2380, %bb.ag ] ; 4 uses
   %.3 = phi i8 [ %i.ca, %bb.ah ], [ %.2167, %bb.ag ] ; 2 uses
-  %i.cb = fcmp olt x86_fp80 %.sroa.0297.sroa.0.3, 2.000000e+00
+  %i.cb = fcmp olt x86_fp80 %.3389, 2.000000e+00
   br i1 %i.cb, label %bb.ai, label %.thread423
 
 bb.ai:                                            ; preds = %thread-pre-split418
-  %i.cc = invoke noundef x86_fp80 @_ZN5boost4math4betaIeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_(x86_fp80 noundef %.sroa.0333.sroa.0.3, x86_fp80 noundef %.sroa.0297.sroa.0.3)
+  %i.cc = invoke noundef x86_fp80 @_ZN5boost4math4betaIeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_(x86_fp80 noundef %.3381, x86_fp80 noundef %.3389)
           to label %bb.ak unwind label %bb.aj     ; 2 uses
 
 bb.aj:                                            ; preds = %bb.ai
@@ -397,32 +396,32 @@ bb.al:                                            ; preds = %bb.ak, %.thread
   %.0175420 = phi x86_fp80 [ f0x7FFEFFFFFFFFFFFFFFFF, %.thread ], [ %i.cc, %bb.ak ]
   %i.ck = fmul x86_fp80 %.sroa.0297.sroa.0.3, %.3389
   %i.cl = fmul x86_fp80 %i.ck, %.0175420
-  %i.cm = fdiv x86_fp80 1.000000e+00, %.sroa.0297.sroa.0.3
+  %i.cm = fdiv x86_fp80 1.000000e+00, %.3389
   %i.cn = tail call noundef x86_fp80 @powl(x86_fp80 noundef %i.cl, x86_fp80 noundef %i.cm) #41 ; 3 uses
   %i.co = fsub x86_fp80 1.000000e+00, %i.cn
   %i.cp = fcmp ogt x86_fp80 %i.cn, f0x3FEEA7C5AC471B478800
   br i1 %i.cp, label %.thread423, label %.thread428
 
 .thread423:                                       ; preds = %thread-pre-split418, %bb.ak, %bb.al
-  %i.cq = tail call noundef x86_fp80 @_ZN5boost4math6detail28temme_method_3_ibeta_inverseIeNS0_8policies6policyINS3_13promote_floatILb0EEENS3_14promote_doubleILb0EEENS3_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEET_SB_SB_SB_SB_RKT0_(x86_fp80 noundef %.sroa.0333.sroa.0.3, x86_fp80 noundef %.sroa.0297.sroa.0.3, x86_fp80 noundef %.3381, x86_fp80 noundef %.3389, ptr noundef nonnull align 1 dereferenceable(1) %4) ; 2 uses
+  %i.cq = tail call noundef x86_fp80 @_ZN5boost4math6detail28temme_method_3_ibeta_inverseIeNS0_8policies6policyINS3_13promote_floatILb0EEENS3_14promote_doubleILb0EEENS3_14default_policyES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_EEEET_SB_SB_SB_SB_RKT0_(x86_fp80 noundef %.3381, x86_fp80 noundef %.3389, x86_fp80 noundef %.sroa.0333.sroa.0.3, x86_fp80 noundef %.sroa.0297.sroa.0.3, ptr noundef nonnull align 1 dereferenceable(1) %4) ; 2 uses
   %i.cr = fsub x86_fp80 1.000000e+00, %i.cq
   br label %.thread428
 
 bb.am:                                            ; preds = %bb.w
-  %i.cs = fcmp olt x86_fp80 %.sroa.0333.sroa.0.1, 1.000000e+00
-  %i.ct = fcmp olt x86_fp80 %.sroa.0297.sroa.0.1, 1.000000e+00
-  %or.cond11 = and i1 %i.cs, %i.ct
+  %i.cs = fcmp olt x86_fp80 %.1379, 1.000000e+00
+  %i.ct = fcmp olt x86_fp80 %.1387, 1.000000e+00
+  %or.cond11 = and i1 %i.ct, %i.cs
   br i1 %or.cond11, label %bb.an, label %bb.ba
 
 bb.an:                                            ; preds = %bb.am
-  %i.cu = fsub x86_fp80 1.000000e+00, %.sroa.0333.sroa.0.1
-  %i.cv = fsub x86_fp80 2.000000e+00, %.sroa.0333.sroa.0.1
-  %i.cw = fsub x86_fp80 %i.cv, %.sroa.0297.sroa.0.1
+  %i.cu = fsub x86_fp80 1.000000e+00, %.1379
+  %i.cv = fsub x86_fp80 2.000000e+00, %.1379
+  %i.cw = fsub x86_fp80 %i.cv, %.1387
   %i.cx = fdiv x86_fp80 %i.cu, %i.cw              ; 6 uses
-  %i.cy = tail call noundef x86_fp80 @_ZN5boost4math5ibetaIeeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_RKT2_(x86_fp80 noundef %.sroa.0333.sroa.0.1, x86_fp80 noundef %.sroa.0297.sroa.0.1, x86_fp80 noundef %i.cx, ptr noundef nonnull align 1 dereferenceable(1) %4)
-  %i.cz = fsub x86_fp80 %i.cy, %.1379             ; 2 uses
+  %i.cy = tail call noundef x86_fp80 @_ZN5boost4math5ibetaIeeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_RKT2_(x86_fp80 noundef %.1379, x86_fp80 noundef %.1387, x86_fp80 noundef %i.cx, ptr noundef nonnull align 1 dereferenceable(1) %4)
+  %i.cz = fsub x86_fp80 %i.cy, %.sroa.0333.sroa.0.1 ; 2 uses
   %i.da = tail call noundef x86_fp80 @llvm.fabs.f80(x86_fp80 %i.cz)
-  %i.db = fdiv x86_fp80 %i.da, %.1379
+  %i.db = fdiv x86_fp80 %i.da, %.sroa.0333.sroa.0.1
   %i.dc = fcmp olt x86_fp80 %i.db, f0x3FC1C000000000000000
   br i1 %i.dc, label %bb.ao, label %bb.ap
 
@@ -443,16 +442,16 @@ bb.aq:                                            ; preds = %bb.ap
   %i.dj = fsub x86_fp80 1.000000e+00, %i.cx
   br label %thread-pre-split426
 
-thread-pre-split426:                              ; preds = %bb.ap, %bb.aq
-  %.sroa.0297.sroa.0.4 = phi x86_fp80 [ %.sroa.0333.sroa.0.1, %bb.aq ], [ %.sroa.0297.sroa.0.1, %bb.ap ] ; 4 uses
-  %.sroa.0333.sroa.0.4 = phi x86_fp80 [ %.sroa.0297.sroa.0.1, %bb.aq ], [ %.sroa.0333.sroa.0.1, %bb.ap ] ; 7 uses
-  %.4390 = phi x86_fp80 [ %.1379, %bb.aq ], [ %.1387, %bb.ap ]
-  %.4 = phi x86_fp80 [ %.1387, %bb.aq ], [ %.1379, %bb.ap ] ; 3 uses
+thread-pre-split426:                              ; preds = %bb.aq, %bb.ap
+  %.sroa.0297.sroa.0.4 = phi x86_fp80 [ %.sroa.0333.sroa.0.1, %bb.aq ], [ %.sroa.0297.sroa.0.1, %bb.ap ]
+  %.sroa.0333.sroa.0.4 = phi x86_fp80 [ %.sroa.0297.sroa.0.1, %bb.aq ], [ %.sroa.0333.sroa.0.1, %bb.ap ] ; 3 uses
+  %.4390 = phi x86_fp80 [ %.1379, %bb.aq ], [ %.1387, %bb.ap ] ; 4 uses
+  %.4 = phi x86_fp80 [ %.1387, %bb.aq ], [ %.1379, %bb.ap ] ; 7 uses
   %.0178 = phi x86_fp80 [ %i.dj, %bb.aq ], [ %i.cx, %bb.ap ] ; 3 uses
   %.6 = phi i8 [ %i.di, %bb.aq ], [ %.1166, %bb.ap ] ; 3 uses
-  %i.dk = fcmp olt x86_fp80 %.sroa.0333.sroa.0.4, f0x00018000000000000000
-  %i.dl = fcmp ogt x86_fp80 %.sroa.0297.sroa.0.4, f0x00018000000000000000
-  %or.cond548 = and i1 %i.dk, %i.dl
+  %i.dk = fcmp olt x86_fp80 %.4, f0x00018000000000000000
+  %i.dl = fcmp ogt x86_fp80 %.4390, f0x00018000000000000000
+  %or.cond548 = and i1 %i.dl, %i.dk
   br i1 %or.cond548, label %bb.ar, label %bb.au
 
 bb.ar:                                            ; preds = %thread-pre-split426
@@ -470,7 +469,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   br label %bb.ce
 
 bb.au:                                            ; preds = %thread-pre-split426
-  %i.dp = invoke noundef x86_fp80 @_ZN5boost4math4betaIeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_(x86_fp80 noundef %.sroa.0333.sroa.0.4, x86_fp80 noundef %.sroa.0297.sroa.0.4)
+  %i.dp = invoke noundef x86_fp80 @_ZN5boost4math4betaIeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_(x86_fp80 noundef %.4, x86_fp80 noundef %.4390)
           to label %bb.aw unwind label %bb.av     ; 2 uses
 
 bb.av:                                            ; preds = %bb.au
@@ -494,16 +493,15 @@ bb.aw:                                            ; preds = %bb.au
   br i1 %i.dx, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %.critedge, %bb.aw
-  %i.dy = fadd x86_fp80 %.sroa.0333.sroa.0.4, 1.000000e+00
+  %i.dy = fadd x86_fp80 %.4, 1.000000e+00
   %i.dz = tail call noundef x86_fp80 @_ZN5boost4math6lgammaIeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_fffffE4typeESC_RKT0_(x86_fp80 noundef %i.dy, ptr noundef nonnull align 1 dereferenceable(1) %4)
-  %i.ea = tail call noundef x86_fp80 @_ZN5boost4math6lgammaIeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_fffffE4typeESC_RKT0_(x86_fp80 noundef %.sroa.0297.sroa.0.4, ptr noundef nonnull align 1 dereferenceable(1) %4)
-  %8 = fadd x86_fp80 %i.dz, %i.ea
-  %i.eb = fadd x86_fp80 %.sroa.0297.sroa.0.1, %.sroa.0333.sroa.0.1
-  %i.ec = tail call noundef x86_fp80 @_ZN5boost4math6lgammaIeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_fffffE4typeESC_RKT0_(x86_fp80 noundef %i.eb, ptr noundef nonnull align 1 dereferenceable(1) %4)
-  %i.ed = fsub x86_fp80 %8, %i.ec
-  %i.ee = tail call noundef x86_fp80 @logl(x86_fp80 noundef %.4) #41
+  %i.ea = tail call noundef x86_fp80 @_ZN5boost4math6lgammaIeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_fffffE4typeESC_RKT0_(x86_fp80 noundef %.4390, ptr noundef nonnull align 1 dereferenceable(1) %4)
+  %i.eb = fadd x86_fp80 %i.dz, %i.ea
+  %i.ec = tail call noundef x86_fp80 @_ZN5boost4math6lgammaIeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_fffffE4typeESC_RKT0_(x86_fp80 noundef %i.av, ptr noundef nonnull align 1 dereferenceable(1) %4)
+  %i.ed = fsub x86_fp80 %i.eb, %i.ec
+  %i.ee = tail call noundef x86_fp80 @logl(x86_fp80 noundef %.sroa.0333.sroa.0.4) #41
   %i.ef = fadd x86_fp80 %i.ed, %i.ee
-  %i.eg = fdiv x86_fp80 %i.ef, %.sroa.0333.sroa.0.4
+  %i.eg = fdiv x86_fp80 %i.ef, %.4
   %i.eh = tail call noundef x86_fp80 @expl(x86_fp80 noundef %i.eg) #41 ; 2 uses
   %i.ei = fcmp ogt x86_fp80 %i.eh, f0x403F8000000000000000
   %spec.select549 = select i1 %i.ei, x86_fp80 f0x403F8000000000000000, x86_fp80 %i.eh
@@ -512,7 +510,7 @@ bb.ax:                                            ; preds = %.critedge, %bb.aw
 bb.ay:                                            ; preds = %bb.aw
   %i.ej = fmul x86_fp80 %.sroa.0333.sroa.0.4, %.4
   %i.ek = fmul x86_fp80 %i.ej, %i.dp
-  %i.el = fdiv x86_fp80 1.000000e+00, %.sroa.0333.sroa.0.4
+  %i.el = fdiv x86_fp80 1.000000e+00, %.4
   %i.em = tail call noundef x86_fp80 @powl(x86_fp80 noundef %i.ek, x86_fp80 noundef %i.el) #41
   br label %bb.az
 
@@ -526,37 +524,37 @@ bb.az:                                            ; preds = %bb.ax, %bb.ay
   br label %.thread428
 
 bb.ba:                                            ; preds = %bb.am
-  %i.er = fcmp ogt x86_fp80 %.sroa.0333.sroa.0.1, 1.000000e+00
-  %i.es = fcmp ogt x86_fp80 %.sroa.0297.sroa.0.1, 1.000000e+00
-  %or.cond13 = and i1 %i.er, %i.es
+  %i.er = fcmp ogt x86_fp80 %.1379, 1.000000e+00
+  %i.es = fcmp ogt x86_fp80 %.1387, 1.000000e+00
+  %or.cond13 = and i1 %i.es, %i.er
   br i1 %or.cond13, label %bb.bb, label %bb.bi
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.et = fadd x86_fp80 %.sroa.0333.sroa.0.1, -1.000000e+00
+  %i.et = fadd x86_fp80 %.1379, -1.000000e+00
   %i.eu = fadd x86_fp80 %i.av, -2.000000e+00      ; 2 uses
   %i.ev = fdiv x86_fp80 %i.et, %i.eu              ; 2 uses
-  %i.ew = tail call noundef x86_fp80 @_ZN5boost4math5ibetaIeeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_RKT2_(x86_fp80 noundef %.sroa.0333.sroa.0.1, x86_fp80 noundef %.sroa.0297.sroa.0.1, x86_fp80 noundef %i.ev, ptr noundef nonnull align 1 dereferenceable(1) %4)
-  %i.ex = fcmp olt x86_fp80 %i.ew, %.1379
+  %i.ew = tail call noundef x86_fp80 @_ZN5boost4math5ibetaIeeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_RKT2_(x86_fp80 noundef %.1379, x86_fp80 noundef %.1387, x86_fp80 noundef %i.ev, ptr noundef nonnull align 1 dereferenceable(1) %4)
+  %i.ex = fcmp olt x86_fp80 %i.ew, %.sroa.0333.sroa.0.1
   br i1 %i.ex, label %bb.bc, label %bb.bd
 
 bb.bc:                                            ; preds = %bb.bb
-  %i.ey = fadd x86_fp80 %.sroa.0297.sroa.0.1, -1.000000e+00
+  %i.ey = fadd x86_fp80 %.1387, -1.000000e+00
   %i.ez = fdiv x86_fp80 %i.ey, %i.eu
   %i.fa = xor i8 %.1166, 1
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc, %bb.bb
-  %.sroa.0297.sroa.0.5 = phi x86_fp80 [ %.sroa.0333.sroa.0.1, %bb.bc ], [ %.sroa.0297.sroa.0.1, %bb.bb ] ; 12 uses
-  %.sroa.0333.sroa.0.5 = phi x86_fp80 [ %.sroa.0297.sroa.0.1, %bb.bc ], [ %.sroa.0333.sroa.0.1, %bb.bb ] ; 17 uses
-  %.0415 = phi x86_fp80 [ %i.ez, %bb.bc ], [ %i.ev, %bb.bb ] ; 3 uses
-  %.6392 = phi x86_fp80 [ %.1379, %bb.bc ], [ %.1387, %bb.bb ]
-  %.6382 = phi x86_fp80 [ %.1387, %bb.bc ], [ %.1379, %bb.bb ] ; 2 uses
+  %.sroa.0297.sroa.0.5 = phi x86_fp80 [ %i.ez, %bb.bc ], [ %i.ev, %bb.bb ] ; 3 uses
+  %.sroa.0333.sroa.0.5 = phi x86_fp80 [ %.sroa.0333.sroa.0.1, %bb.bc ], [ %.sroa.0297.sroa.0.1, %bb.bb ]
+  %.0415 = phi x86_fp80 [ %.sroa.0297.sroa.0.1, %bb.bc ], [ %.sroa.0333.sroa.0.1, %bb.bb ] ; 2 uses
+  %.6392 = phi x86_fp80 [ %.1379, %bb.bc ], [ %.1387, %bb.bb ] ; 12 uses
+  %.6382 = phi x86_fp80 [ %.1387, %bb.bc ], [ %.1379, %bb.bb ] ; 17 uses
   %.8 = phi i8 [ %i.fa, %bb.bc ], [ %.1166, %bb.bb ]
-  %i.fb = fmul x86_fp80 %.6382, %.sroa.0333.sroa.0.5
-  %i.fc = tail call noundef x86_fp80 @_ZN5boost4math4betaIeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_(x86_fp80 noundef %.sroa.0333.sroa.0.5, x86_fp80 noundef %.sroa.0297.sroa.0.5)
+  %i.fb = fmul x86_fp80 %.0415, %.6382
+  %i.fc = tail call noundef x86_fp80 @_ZN5boost4math4betaIeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_(x86_fp80 noundef %.6382, x86_fp80 noundef %.6392)
   %i.fd = fmul x86_fp80 %i.fb, %i.fc
   %i.fe = tail call noundef x86_fp80 @logl(x86_fp80 noundef %i.fd) #41
-  %i.ff = fdiv x86_fp80 %i.fe, %.sroa.0333.sroa.0.5 ; 2 uses
+  %i.ff = fdiv x86_fp80 %i.fe, %.6382             ; 2 uses
   %i.fg = tail call noundef x86_fp80 @expl(x86_fp80 noundef %i.ff) #41 ; 8 uses
   %i.fh = fcmp olt x86_fp80 %i.fg, f0x3FFEE666666666666800
   br i1 %i.fh, label %bb.be, label %bb.bf
@@ -572,53 +570,53 @@ bb.bf:                                            ; preds = %bb.bd
 
 bb.bg:                                            ; preds = %bb.bf, %bb.be
   %i.fl = phi x86_fp80 [ %i.fi, %bb.be ], [ %i.fk, %bb.bf ]
-  %i.fm = fcmp olt x86_fp80 %.sroa.0297.sroa.0.5, %.sroa.0333.sroa.0.5
+  %i.fm = fcmp olt x86_fp80 %.6392, %.6382
   %i.fn = fcmp olt x86_fp80 %i.fg, f0x3FFCCCCCCCCCCCCCD000
   %or.cond15 = and i1 %i.fm, %i.fn
   br i1 %or.cond15, label %_ZN5boost4math5tools19evaluate_polynomialIeeEET0_PKT_RKS3_m.exit, label %bb.bh
 
 _ZN5boost4math5tools19evaluate_polynomialIeeEET0_PKT_RKS3_m.exit: ; preds = %bb.bg
-  %i.fo = fadd x86_fp80 %.sroa.0333.sroa.0.5, -1.000000e+00 ; 3 uses
-  %i.fp = fadd x86_fp80 %.sroa.0297.sroa.0.5, -1.000000e+00 ; 3 uses
-  %i.fq = fmul x86_fp80 %.sroa.0333.sroa.0.5, %.sroa.0333.sroa.0.5 ; 7 uses
-  %i.fr = fmul x86_fp80 %.sroa.0333.sroa.0.5, %i.fq ; 2 uses
-  %i.fs = fmul x86_fp80 %.sroa.0297.sroa.0.5, %.sroa.0297.sroa.0.5 ; 3 uses
+  %i.fo = fadd x86_fp80 %.6382, -1.000000e+00     ; 3 uses
+  %i.fp = fadd x86_fp80 %.6392, -1.000000e+00     ; 3 uses
+  %i.fq = fmul x86_fp80 %.6382, %.6382            ; 7 uses
+  %i.fr = fmul x86_fp80 %.6382, %i.fq             ; 2 uses
+  %i.fs = fmul x86_fp80 %.6392, %.6392            ; 3 uses
   %i.ft = fdiv x86_fp80 %i.fp, %i.fo
   %i.fu = fmul x86_fp80 %i.fo, %i.fo              ; 2 uses
-  %i.fv = fmul nnan x86_fp80 %.sroa.0333.sroa.0.5, 3.000000e+00
-  %i.fw = fmul x86_fp80 %i.fv, %.sroa.0297.sroa.0.5
-  %i.fx = fmul nnan x86_fp80 %.sroa.0297.sroa.0.5, 5.000000e+00
-  %i.fy = fadd x86_fp80 %i.fw, %i.fx
+  %i.fv = fmul nnan x86_fp80 %.6382, 3.000000e+00
+  %i.fw = fmul x86_fp80 %.6392, %i.fv
+  %i.fx = fmul nnan x86_fp80 %.6392, 5.000000e+00
+  %i.fy = fadd x86_fp80 %i.fx, %i.fw
   %i.fz = fadd x86_fp80 %i.fq, %i.fy
-  %i.ga = fsub x86_fp80 %i.fz, %.sroa.0333.sroa.0.5
+  %i.ga = fsub x86_fp80 %i.fz, %.6382
   %i.gb = fadd x86_fp80 %i.ga, -4.000000e+00
   %i.gc = fmul x86_fp80 %i.fp, %i.gb
-  %i.gd = fadd x86_fp80 %.sroa.0333.sroa.0.5, 2.000000e+00 ; 2 uses
+  %i.gd = fadd x86_fp80 %.6382, 2.000000e+00      ; 2 uses
   %i.ge = fmul nnan x86_fp80 %i.gd, 2.000000e+00
   %i.gf = fmul x86_fp80 %i.ge, %i.fu
   %i.gg = fdiv x86_fp80 %i.gc, %i.gf
-  %i.gh = fadd nnan x86_fp80 %.sroa.0333.sroa.0.5, 1.000000e+00
+  %i.gh = fadd nnan x86_fp80 %.6382, 1.000000e+00
   %i.gi = fmul x86_fp80 %i.gh, %i.fu
-  %i.gj = fmul nnan x86_fp80 %.sroa.0333.sroa.0.5, 3.300000e+01
-  %i.gk = fmul x86_fp80 %i.gj, %i.fs
+  %i.gj = fmul nnan x86_fp80 %.6382, 3.300000e+01
+  %i.gk = fmul x86_fp80 %i.fs, %i.gj
   %i.gl = fmul nnan x86_fp80 %i.fs, 3.100000e+01
-  %i.gm = fadd x86_fp80 %i.gk, %i.gl
+  %i.gm = fadd x86_fp80 %i.gl, %i.gk
   %i.gn = fmul nnan x86_fp80 %i.fq, 8.000000e+00
-  %i.go = fmul x86_fp80 %i.gn, %i.fs
-  %i.gp = fadd x86_fp80 %i.go, %i.gm
-  %i.gq = fmul nnan x86_fp80 %.sroa.0333.sroa.0.5, 3.000000e+01
-  %i.gr = fmul x86_fp80 %i.gq, %.sroa.0297.sroa.0.5
+  %i.go = fmul x86_fp80 %i.fs, %i.gn
+  %i.gp = fadd x86_fp80 %i.gm, %i.go
+  %i.gq = fmul nnan x86_fp80 %.6382, 3.000000e+01
+  %i.gr = fmul x86_fp80 %.6392, %i.gq
   %i.gs = fsub x86_fp80 %i.gp, %i.gr
-  %i.gt = fmul nnan x86_fp80 %.sroa.0297.sroa.0.5, 4.700000e+01
+  %i.gt = fmul nnan x86_fp80 %.6392, 4.700000e+01
   %i.gu = fsub x86_fp80 %i.gs, %i.gt
   %i.gv = fmul nnan x86_fp80 %i.fq, 1.100000e+01
-  %i.gw = fmul x86_fp80 %.sroa.0297.sroa.0.5, %i.gv
+  %i.gw = fmul x86_fp80 %.6392, %i.gv
   %i.gx = fadd x86_fp80 %i.gw, %i.gu
   %i.gy = fmul x86_fp80 %i.fr, 6.000000e+00
-  %i.gz = fmul x86_fp80 %.sroa.0297.sroa.0.5, %i.gy
+  %i.gz = fmul x86_fp80 %.6392, %i.gy
   %i.ha = fadd x86_fp80 %i.gz, %i.gx
   %i.hb = fadd x86_fp80 %i.ha, 1.800000e+01
-  %i.hc = fmul nnan x86_fp80 %.sroa.0333.sroa.0.5, 4.000000e+00
+  %i.hc = fmul nnan x86_fp80 %.6382, 4.000000e+00
   %i.hd = fadd x86_fp80 %i.hc, %i.hb
   %i.he = fsub x86_fp80 %i.hd, %i.fr
   %i.hf = fmul x86_fp80 %i.fq, %i.fq
@@ -626,7 +624,7 @@ _ZN5boost4math5tools19evaluate_polynomialIeeEET0_PKT_RKS3_m.exit: ; preds = %bb.
   %i.hh = fmul nnan x86_fp80 %i.fq, 1.000000e+01
   %i.hi = fsub x86_fp80 %i.hg, %i.hh
   %i.hj = fmul x86_fp80 %i.fp, %i.hi
-  %i.hk = fadd nnan x86_fp80 %.sroa.0333.sroa.0.5, 3.000000e+00
+  %i.hk = fadd nnan x86_fp80 %.6382, 3.000000e+00
   %i.hl = fmul nnan x86_fp80 %i.hk, 3.000000e+00
   %i.hm = fmul x86_fp80 %i.gd, %i.hl
   %i.hn = fmul x86_fp80 %i.hm, %i.gi
@@ -643,39 +641,39 @@ _ZN5boost4math5tools19evaluate_polynomialIeeEET0_PKT_RKS3_m.exit: ; preds = %bb.
 
 bb.bh:                                            ; preds = %_ZN5boost4math5tools19evaluate_polynomialIeeEET0_PKT_RKS3_m.exit, %bb.bg
   %.4400 = phi x86_fp80 [ %i.hw, %_ZN5boost4math5tools19evaluate_polynomialIeeEET0_PKT_RKS3_m.exit ], [ %i.fg, %bb.bg ] ; 2 uses
-  %i.hx = fcmp ogt x86_fp80 %.4400, %.0415
-  %spec.select551 = select i1 %i.hx, x86_fp80 %.0415, x86_fp80 %.4400
+  %i.hx = fcmp ogt x86_fp80 %.4400, %.sroa.0297.sroa.0.5
+  %spec.select551 = select i1 %i.hx, x86_fp80 %.sroa.0297.sroa.0.5, x86_fp80 %.4400
   br label %.thread428
 
 bb.bi:                                            ; preds = %bb.ba
-  %i.hy = fcmp olt x86_fp80 %.sroa.0297.sroa.0.1, %.sroa.0333.sroa.0.1
+  %i.hy = fcmp olt x86_fp80 %.1387, %.1379
   br i1 %i.hy, label %bb.bj, label %thread-pre-split437
 
 bb.bj:                                            ; preds = %bb.bi
   %i.hz = xor i8 %.1166, 1
   br label %thread-pre-split437
 
-thread-pre-split437:                              ; preds = %bb.bi, %bb.bj
-  %.sroa.0297.sroa.0.6 = phi x86_fp80 [ %.sroa.0333.sroa.0.1, %bb.bj ], [ %.sroa.0297.sroa.0.1, %bb.bi ] ; 9 uses
-  %.sroa.0333.sroa.0.6 = phi x86_fp80 [ %.sroa.0297.sroa.0.1, %bb.bj ], [ %.sroa.0333.sroa.0.1, %bb.bi ] ; 10 uses
-  %.7393 = phi x86_fp80 [ %.1379, %bb.bj ], [ %.1387, %bb.bi ] ; 5 uses
-  %.7383 = phi x86_fp80 [ %.1387, %bb.bj ], [ %.1379, %bb.bi ] ; 9 uses
+thread-pre-split437:                              ; preds = %bb.bj, %bb.bi
+  %.sroa.0297.sroa.0.6 = phi x86_fp80 [ %.sroa.0333.sroa.0.1, %bb.bj ], [ %.sroa.0297.sroa.0.1, %bb.bi ] ; 5 uses
+  %.sroa.0333.sroa.0.6 = phi x86_fp80 [ %.sroa.0297.sroa.0.1, %bb.bj ], [ %.sroa.0333.sroa.0.1, %bb.bi ] ; 9 uses
+  %.7393 = phi x86_fp80 [ %.1379, %bb.bj ], [ %.1387, %bb.bi ] ; 9 uses
+  %.7383 = phi x86_fp80 [ %.1387, %bb.bj ], [ %.1379, %bb.bi ] ; 10 uses
   %.9 = phi i8 [ %i.hz, %bb.bj ], [ %.1166, %bb.bi ] ; 5 uses
-  %i.ia = fcmp olt x86_fp80 %.sroa.0333.sroa.0.6, f0x00018000000000000000
+  %i.ia = fcmp olt x86_fp80 %.7383, f0x00018000000000000000
   br i1 %i.ia, label %bb.bk, label %bb.bl
 
 bb.bk:                                            ; preds = %thread-pre-split437
-  %i.ib = fcmp olt x86_fp80 %.7383, 1.000000e+00
+  %i.ib = fcmp olt x86_fp80 %.sroa.0333.sroa.0.6, 1.000000e+00
   br i1 %i.ib, label %.thread444, label %.thread464.thread
 
 bb.bl:                                            ; preds = %thread-pre-split437
-  %i.ic = fdiv x86_fp80 1.000000e+00, %.sroa.0333.sroa.0.6 ; 2 uses
-  %i.id = tail call noundef x86_fp80 @powl(x86_fp80 noundef %.7383, x86_fp80 noundef %i.ic) #41
+  %i.ic = fdiv x86_fp80 1.000000e+00, %.7383      ; 2 uses
+  %i.id = tail call noundef x86_fp80 @powl(x86_fp80 noundef %.sroa.0333.sroa.0.6, x86_fp80 noundef %i.ic) #41
   %i.ie = fcmp olt x86_fp80 %i.id, 5.000000e-01
   br i1 %i.ie, label %bb.bm, label %bb.br
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.if = invoke noundef x86_fp80 @_ZN5boost4math4betaIeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_(x86_fp80 noundef %.sroa.0333.sroa.0.6, x86_fp80 noundef %.sroa.0297.sroa.0.6)
+  %i.if = invoke noundef x86_fp80 @_ZN5boost4math4betaIeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_(x86_fp80 noundef %.7383, x86_fp80 noundef %.7393)
           to label %bb.bn unwind label %bb.bo
 
 bb.bn:                                            ; preds = %bb.bm
@@ -714,14 +712,14 @@ bb.bq:                                            ; preds = %bb.bn
   br label %.thread428
 
 bb.br:                                            ; preds = %bb.bl
-  %i.iu = invoke noundef x86_fp80 @_ZN5boost4math4betaIeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_(x86_fp80 noundef %.sroa.0333.sroa.0.6, x86_fp80 noundef %.sroa.0297.sroa.0.6)
+  %i.iu = invoke noundef x86_fp80 @_ZN5boost4math4betaIeeNS0_8policies6policyINS2_13promote_floatILb0EEENS2_14promote_doubleILb0EEENS2_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEENS0_5tools12promote_argsIT_T0_T1_fffE4typeESC_SD_SE_(x86_fp80 noundef %.7383, x86_fp80 noundef %.7393)
           to label %bb.bs unwind label %bb.bt
 
 bb.bs:                                            ; preds = %bb.br
-  %i.iv = fmul x86_fp80 %.sroa.0297.sroa.0.6, %i.iu
-  %i.iw = tail call noundef x86_fp80 @powl(x86_fp80 noundef %.7383, x86_fp80 noundef %i.iv) #41
+  %i.iv = fmul x86_fp80 %.7393, %i.iu
+  %i.iw = tail call noundef x86_fp80 @powl(x86_fp80 noundef %.sroa.0333.sroa.0.6, x86_fp80 noundef %i.iv) #41
   %i.ix = fsub x86_fp80 1.000000e+00, %i.iw
-  %i.iy = fdiv x86_fp80 1.000000e+00, %.sroa.0297.sroa.0.6
+  %i.iy = fdiv x86_fp80 1.000000e+00, %.7393
   %i.iz = tail call noundef x86_fp80 @powl(x86_fp80 noundef %i.ix, x86_fp80 noundef %i.iy) #41 ; 4 uses
   %i.ja = fcmp ule x86_fp80 %i.iz, 1.000000e+00
   %i.jb = tail call x86_fp80 @llvm.fabs.f80(x86_fp80 %i.iz)
@@ -755,39 +753,39 @@ bb.bv:                                            ; preds = %bb.bs
   br label %.thread428
 
 .thread428:                                       ; preds = %bb.bh, %bb.az, %bb.aa, %bb.al, %.thread423, %bb.af, %.thread442, %.thread439, %bb.o
-  %.sroa.0297.sroa.0.7 = phi x86_fp80 [ %.sroa.0297.sroa.0.1, %bb.o ], [ %.sroa.0297.sroa.0.2, %bb.aa ], [ %.sroa.0297.sroa.0.2, %bb.af ], [ %.sroa.0297.sroa.0.3, %.thread423 ], [ %.sroa.0297.sroa.0.3, %bb.al ], [ %.sroa.0297.sroa.0.4, %bb.az ], [ %.sroa.0297.sroa.0.5, %bb.bh ], [ %.sroa.0297.sroa.0.6, %.thread439 ], [ %.sroa.0297.sroa.0.6, %.thread442 ] ; 2 uses
-  %.sroa.0333.sroa.0.7 = phi x86_fp80 [ %.sroa.0333.sroa.0.1, %bb.o ], [ %.sroa.0333.sroa.0.2, %bb.aa ], [ %.sroa.0333.sroa.0.2, %bb.af ], [ %.sroa.0333.sroa.0.3, %.thread423 ], [ %.sroa.0333.sroa.0.3, %bb.al ], [ %.sroa.0333.sroa.0.4, %bb.az ], [ %.sroa.0333.sroa.0.5, %bb.bh ], [ %.sroa.0333.sroa.0.6, %.thread439 ], [ %.sroa.0333.sroa.0.6, %.thread442 ] ; 2 uses
-  %.6414 = phi x86_fp80 [ %i.aa, %bb.o ], [ %i.bi, %bb.aa ], [ %i.bz, %bb.af ], [ %i.cr, %.thread423 ], [ %i.cn, %bb.al ], [ %i.ep, %bb.az ], [ %i.fl, %bb.bh ], [ %i.it, %.thread439 ], [ %.5413, %.thread442 ]
-  %.8404 = phi x86_fp80 [ %i.ab, %bb.o ], [ %i.bh, %bb.aa ], [ %storemerge, %bb.af ], [ %i.cq, %.thread423 ], [ %i.co, %bb.al ], [ %spec.select550, %bb.az ], [ %spec.select551, %bb.bh ], [ %.7403, %.thread439 ], [ %i.jk, %.thread442 ] ; 2 uses
-  %.8394 = phi x86_fp80 [ %.1387, %bb.o ], [ %.2388, %bb.aa ], [ %.2388, %bb.af ], [ %.3389, %.thread423 ], [ %.3389, %bb.al ], [ %.4390, %bb.az ], [ %.6392, %bb.bh ], [ %.7393, %.thread439 ], [ %.7393, %.thread442 ] ; 2 uses
-  %.8384 = phi x86_fp80 [ %.1379, %bb.o ], [ %.2380, %bb.aa ], [ %.2380, %bb.af ], [ %.3381, %.thread423 ], [ %.3381, %bb.al ], [ %.4, %bb.az ], [ %.6382, %bb.bh ], [ %.7383, %.thread439 ], [ %.7383, %.thread442 ] ; 2 uses
-  %.1173 = phi x86_fp80 [ 1.000000e+00, %bb.o ], [ 1.000000e+00, %bb.aa ], [ 1.000000e+00, %bb.af ], [ 1.000000e+00, %.thread423 ], [ 1.000000e+00, %bb.al ], [ %.0178, %bb.az ], [ %.0415, %bb.bh ], [ 1.000000e+00, %.thread439 ], [ 1.000000e+00, %.thread442 ] ; 2 uses
-  %.10 = phi i8 [ %.1166, %bb.o ], [ %.2167, %bb.aa ], [ %.2167, %bb.af ], [ %.3, %.thread423 ], [ %.3, %bb.al ], [ %.6, %bb.az ], [ %.8, %bb.bh ], [ %.9, %.thread439 ], [ %.9, %.thread442 ] ; 2 uses
-  %i.jl = fcmp ogt x86_fp80 %.8404, 5.000000e-01
+  %.sroa.0297.sroa.0.7 = phi x86_fp80 [ %i.aa, %bb.o ], [ %i.bi, %bb.aa ], [ %i.bz, %bb.af ], [ %i.cr, %.thread423 ], [ %i.cn, %bb.al ], [ %i.it, %.thread439 ], [ %.5413, %.thread442 ], [ %i.ep, %bb.az ], [ %i.fl, %bb.bh ]
+  %.sroa.0333.sroa.0.7 = phi x86_fp80 [ %i.ab, %bb.o ], [ %i.bh, %bb.aa ], [ %storemerge, %bb.af ], [ %i.cq, %.thread423 ], [ %i.co, %bb.al ], [ %.7403, %.thread439 ], [ %i.jk, %.thread442 ], [ %spec.select550, %bb.az ], [ %spec.select551, %bb.bh ] ; 2 uses
+  %.6414 = phi x86_fp80 [ %.sroa.0297.sroa.0.1, %bb.o ], [ %.sroa.0297.sroa.0.2, %bb.aa ], [ %.sroa.0297.sroa.0.2, %bb.af ], [ %.sroa.0297.sroa.0.3, %.thread423 ], [ %.sroa.0297.sroa.0.3, %bb.al ], [ %.sroa.0297.sroa.0.6, %.thread439 ], [ %.sroa.0297.sroa.0.6, %.thread442 ], [ %.sroa.0297.sroa.0.4, %bb.az ], [ %.sroa.0333.sroa.0.5, %bb.bh ] ; 2 uses
+  %.8404 = phi x86_fp80 [ %.sroa.0333.sroa.0.1, %bb.o ], [ %.sroa.0333.sroa.0.2, %bb.aa ], [ %.sroa.0333.sroa.0.2, %bb.af ], [ %.sroa.0333.sroa.0.3, %.thread423 ], [ %.sroa.0333.sroa.0.3, %bb.al ], [ %.sroa.0333.sroa.0.6, %.thread439 ], [ %.sroa.0333.sroa.0.6, %.thread442 ], [ %.sroa.0333.sroa.0.4, %bb.az ], [ %.0415, %bb.bh ] ; 2 uses
+  %.8394 = phi x86_fp80 [ 5.000000e-01, %bb.o ], [ %.2388, %bb.aa ], [ %.2388, %bb.af ], [ %.3389, %.thread423 ], [ %.3389, %bb.al ], [ %.7393, %.thread439 ], [ %.7393, %.thread442 ], [ %.4390, %bb.az ], [ %.6392, %bb.bh ] ; 2 uses
+  %.8384 = phi x86_fp80 [ %.1379, %bb.o ], [ %.2380, %bb.aa ], [ %.2380, %bb.af ], [ %.3381, %.thread423 ], [ %.3381, %bb.al ], [ %.7383, %.thread439 ], [ %.7383, %.thread442 ], [ %.4, %bb.az ], [ %.6382, %bb.bh ] ; 2 uses
+  %.1173 = phi x86_fp80 [ 1.000000e+00, %bb.o ], [ 1.000000e+00, %bb.aa ], [ 1.000000e+00, %bb.af ], [ 1.000000e+00, %.thread423 ], [ 1.000000e+00, %bb.al ], [ 1.000000e+00, %.thread439 ], [ 1.000000e+00, %.thread442 ], [ %.0178, %bb.az ], [ %.sroa.0297.sroa.0.5, %bb.bh ] ; 2 uses
+  %.10 = phi i8 [ %.1166, %bb.o ], [ %.2167, %bb.aa ], [ %.2167, %bb.af ], [ %.3, %.thread423 ], [ %.3, %bb.al ], [ %.9, %.thread439 ], [ %.9, %.thread442 ], [ %.6, %bb.az ], [ %.8, %bb.bh ] ; 2 uses
+  %i.jl = fcmp ogt x86_fp80 %.sroa.0333.sroa.0.7, 5.000000e-01
   br i1 %i.jl, label %.thread444, label %.thread464
 
 .thread444:                                       ; preds = %bb.bk, %.thread428
-  %.sroa.0297.sroa.0.8 = phi x86_fp80 [ %.sroa.0297.sroa.0.7, %.thread428 ], [ %.sroa.0297.sroa.0.6, %bb.bk ] ; 2 uses
-  %.sroa.0333.sroa.0.8 = phi x86_fp80 [ %.sroa.0333.sroa.0.7, %.thread428 ], [ %.sroa.0333.sroa.0.6, %bb.bk ] ; 2 uses
-  %.10455 = phi i8 [ %.10, %.thread428 ], [ %.9, %bb.bk ]
-  %.1173454 = phi x86_fp80 [ %.1173, %.thread428 ], [ 1.000000e+00, %bb.bk ]
-  %.8384453 = phi x86_fp80 [ %.8384, %.thread428 ], [ %.7383, %bb.bk ] ; 2 uses
-  %.8394452 = phi x86_fp80 [ %.8394, %.thread428 ], [ %.7393, %bb.bk ] ; 2 uses
-  %.6414451 = phi x86_fp80 [ %.6414, %.thread428 ], [ 0.000000e+00, %bb.bk ] ; 2 uses
-  %i.jm = xor i8 %.10455, 1                       ; 2 uses
-  %i.jn = fsub x86_fp80 1.000000e+00, %.1173454   ; 2 uses
+  %.10479 = phi i8 [ %.10, %.thread428 ], [ %.9, %bb.bk ]
+  %.sroa.0333.sroa.0.8 = phi x86_fp80 [ %.1173, %.thread428 ], [ 1.000000e+00, %bb.bk ]
+  %.8387477 = phi x86_fp80 [ %.8384, %.thread428 ], [ %.7383, %bb.bk ] ; 2 uses
+  %.1173454 = phi x86_fp80 [ %.8394, %.thread428 ], [ %.7393, %bb.bk ] ; 2 uses
+  %.8384453 = phi x86_fp80 [ %.8404, %.thread428 ], [ %.sroa.0333.sroa.0.6, %bb.bk ] ; 2 uses
+  %.8394452 = phi x86_fp80 [ %.6414, %.thread428 ], [ %.sroa.0297.sroa.0.6, %bb.bk ] ; 2 uses
+  %.6414451 = phi x86_fp80 [ %.sroa.0297.sroa.0.7, %.thread428 ], [ 0.000000e+00, %bb.bk ] ; 2 uses
+  %i.jm = xor i8 %.10479, 1                       ; 2 uses
+  %i.jn = fsub x86_fp80 1.000000e+00, %.sroa.0333.sroa.0.8 ; 2 uses
   %i.jo = fcmp oeq x86_fp80 %i.jn, 0.000000e+00
   br i1 %i.jo, label %.thread464, label %bb.by
 
 .thread464:                                       ; preds = %.thread428, %.thread444
-  %.sroa.0297.sroa.0.9 = phi x86_fp80 [ %.sroa.0333.sroa.0.8, %.thread444 ], [ %.sroa.0297.sroa.0.7, %.thread428 ] ; 2 uses
-  %.sroa.0333.sroa.0.9 = phi x86_fp80 [ %.sroa.0297.sroa.0.8, %.thread444 ], [ %.sroa.0333.sroa.0.7, %.thread428 ] ; 2 uses
-  %.11478 = phi i8 [ %i.jm, %.thread444 ], [ %.10, %.thread428 ] ; 2 uses
-  %.2174477 = phi x86_fp80 [ 1.000000e+00, %.thread444 ], [ %.1173, %.thread428 ] ; 2 uses
-  %.9385475 = phi x86_fp80 [ %.8394452, %.thread444 ], [ %.8384, %.thread428 ] ; 2 uses
-  %.9395473 = phi x86_fp80 [ %.8384453, %.thread444 ], [ %.8394, %.thread428 ] ; 2 uses
-  %.9405471 = phi x86_fp80 [ %.6414451, %.thread444 ], [ %.8404, %.thread428 ] ; 3 uses
-  %i.jp = trunc nuw i8 %.11478 to i1
+  %.11510 = phi i8 [ %i.jm, %.thread444 ], [ %.10, %.thread428 ] ; 2 uses
+  %.sroa.0333.sroa.0.9 = phi x86_fp80 [ 1.000000e+00, %.thread444 ], [ %.1173, %.thread428 ] ; 2 uses
+  %.9388507 = phi x86_fp80 [ %.1173454, %.thread444 ], [ %.8384, %.thread428 ] ; 2 uses
+  %.2174477 = phi x86_fp80 [ %.8387477, %.thread444 ], [ %.8394, %.thread428 ] ; 2 uses
+  %.9385475 = phi x86_fp80 [ %.8394452, %.thread444 ], [ %.8404, %.thread428 ] ; 2 uses
+  %.9395473 = phi x86_fp80 [ %.8384453, %.thread444 ], [ %.6414, %.thread428 ] ; 2 uses
+  %.9405471 = phi x86_fp80 [ %.6414451, %.thread444 ], [ %.sroa.0333.sroa.0.7, %.thread428 ] ; 3 uses
+  %i.jp = trunc nuw i8 %.11510 to i1
   %i.jq = icmp eq ptr %5, null
   %or.cond17 = and i1 %i.jq, %i.jp
   br i1 %or.cond17, label %bb.bw, label %bb.bx
@@ -808,11 +806,11 @@ bb.bw:                                            ; preds = %.thread464
   br i1 %i.jt, label %.thread483, label %bb.bx
 
 .thread483:                                       ; preds = %.thread464.thread, %bb.bw
-  %.sroa.0297.sroa.0.10 = phi x86_fp80 [ %.sroa.0297.sroa.0.9, %bb.bw ], [ %.sroa.0297.sroa.0.6, %.thread464.thread ]
-  %.sroa.0333.sroa.0.10 = phi x86_fp80 [ %.sroa.0333.sroa.0.9, %bb.bw ], [ %.sroa.0333.sroa.0.6, %.thread464.thread ]
-  %.2174477505519 = phi x86_fp80 [ %.2174477, %bb.bw ], [ 1.000000e+00, %.thread464.thread ]
-  %.9385475507518 = phi x86_fp80 [ %.9385475, %bb.bw ], [ %.7383, %.thread464.thread ]
-  %.9395473509517 = phi x86_fp80 [ %.9395473, %bb.bw ], [ %.7393, %.thread464.thread ]
+  %.sroa.0297.sroa.0.10 = phi x86_fp80 [ %.sroa.0333.sroa.0.9, %bb.bw ], [ 1.000000e+00, %.thread464.thread ]
+  %.sroa.0333.sroa.0.10 = phi x86_fp80 [ %.9388507, %bb.bw ], [ %.7383, %.thread464.thread ]
+  %.2174477505519 = phi x86_fp80 [ %.2174477, %bb.bw ], [ %.7393, %.thread464.thread ]
+  %.9385475507518 = phi x86_fp80 [ %.9385475, %bb.bw ], [ %.sroa.0333.sroa.0.6, %.thread464.thread ]
+  %.9395473509517 = phi x86_fp80 [ %.9395473, %bb.bw ], [ %.sroa.0297.sroa.0.6, %.thread464.thread ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #41
   store i64 200, ptr %i.b, align 8, !tbaa !260
   br label %bb.ca
@@ -824,56 +822,56 @@ bb.bx:                                            ; preds = %.thread464, %bb.bw
   br label %bb.by
 
 bb.by:                                            ; preds = %bb.bx, %.thread444
-  %.sroa.0297.sroa.0.11 = phi x86_fp80 [ %.sroa.0297.sroa.0.9, %bb.bx ], [ %.sroa.0333.sroa.0.8, %.thread444 ] ; 2 uses
-  %.sroa.0333.sroa.0.11 = phi x86_fp80 [ %.sroa.0333.sroa.0.9, %bb.bx ], [ %.sroa.0297.sroa.0.8, %.thread444 ] ; 2 uses
-  %.11479 = phi i8 [ %.11478, %bb.bx ], [ %i.jm, %.thread444 ] ; 2 uses
-  %.2174476 = phi x86_fp80 [ %.2174477, %bb.bx ], [ 1.000000e+00, %.thread444 ] ; 2 uses
-  %.9385474 = phi x86_fp80 [ %.9385475, %bb.bx ], [ %.8394452, %.thread444 ] ; 2 uses
-  %.9395472 = phi x86_fp80 [ %.9395473, %bb.bx ], [ %.8384453, %.thread444 ] ; 2 uses
-  %.11407 = phi x86_fp80 [ %spec.select558, %bb.bx ], [ %.6414451, %.thread444 ] ; 3 uses
-  %.2171 = phi x86_fp80 [ %.1170, %bb.bx ], [ %i.jn, %.thread444 ] ; 2 uses
+  %.11511 = phi i8 [ %i.jm, %.thread444 ], [ %.11510, %bb.bx ] ; 2 uses
+  %.sroa.0333.sroa.0.11 = phi x86_fp80 [ 1.000000e+00, %.thread444 ], [ %.sroa.0333.sroa.0.9, %bb.bx ] ; 2 uses
+  %.9388506 = phi x86_fp80 [ %.1173454, %.thread444 ], [ %.9388507, %bb.bx ] ; 2 uses
+  %.2174476 = phi x86_fp80 [ %.8387477, %.thread444 ], [ %.2174477, %bb.bx ] ; 2 uses
+  %.9385474 = phi x86_fp80 [ %.8394452, %.thread444 ], [ %.9385475, %bb.bx ] ; 2 uses
+  %.9395472 = phi x86_fp80 [ %.8384453, %.thread444 ], [ %.9395473, %bb.bx ] ; 2 uses
+  %.11407 = phi x86_fp80 [ %.6414451, %.thread444 ], [ %spec.select558, %bb.bx ] ; 3 uses
+  %.2171 = phi x86_fp80 [ %i.jn, %.thread444 ], [ %.1170, %bb.bx ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #41
   store i64 200, ptr %i.b, align 8, !tbaa !260
   %i.jv = fcmp olt x86_fp80 %.11407, f0x3F58EF73D256A5C0F800
   br i1 %i.jv, label %bb.bz, label %bb.ca
 
 bb.bz:                                            ; preds = %.thread533, %bb.by
-  %.sroa.0297.sroa.0.12 = phi x86_fp80 [ %.sroa.0297.sroa.0.11, %bb.by ], [ %.sroa.0297.sroa.0.6, %.thread533 ] ; 2 uses
-  %.sroa.0333.sroa.0.12 = phi x86_fp80 [ %.sroa.0333.sroa.0.11, %bb.by ], [ %.sroa.0333.sroa.0.6, %.thread533 ] ; 2 uses
-  %.2171545 = phi x86_fp80 [ %.2171, %bb.by ], [ f0x00018000000000000000, %.thread533 ]
-  %.11407544 = phi x86_fp80 [ %.11407, %bb.by ], [ f0x00018000000000000000, %.thread533 ]
-  %.9395472543 = phi x86_fp80 [ %.9395472, %bb.by ], [ %.7393, %.thread533 ]
-  %.9385474542 = phi x86_fp80 [ %.9385474, %bb.by ], [ %.7383, %.thread533 ]
-  %.2174476541 = phi x86_fp80 [ %.2174476, %bb.by ], [ 1.000000e+00, %.thread533 ]
-  %.11479540 = phi i8 [ %.11479, %bb.by ], [ %.9, %.thread533 ]
-  %i.jw = fcmp olt x86_fp80 %.sroa.0333.sroa.0.12, 1.000000e+00
-  %i.jx = fcmp olt x86_fp80 %.sroa.0297.sroa.0.12, 1.000000e+00
-  %or.cond19 = or i1 %i.jw, %i.jx
+  %.sroa.0297.sroa.0.12 = phi x86_fp80 [ f0x00018000000000000000, %.thread533 ], [ %.2171, %bb.by ]
+  %.sroa.0333.sroa.0.12 = phi x86_fp80 [ f0x00018000000000000000, %.thread533 ], [ %.11407, %bb.by ]
+  %.2171545 = phi x86_fp80 [ %.sroa.0297.sroa.0.6, %.thread533 ], [ %.9395472, %bb.by ]
+  %.11407544 = phi x86_fp80 [ %.sroa.0333.sroa.0.6, %.thread533 ], [ %.9385474, %bb.by ]
+  %.9395472543 = phi x86_fp80 [ %.7393, %.thread533 ], [ %.2174476, %bb.by ] ; 2 uses
+  %.9385474542 = phi x86_fp80 [ %.7383, %.thread533 ], [ %.9388506, %bb.by ] ; 2 uses
+  %.2174476541 = phi x86_fp80 [ 1.000000e+00, %.thread533 ], [ %.sroa.0333.sroa.0.11, %bb.by ]
+  %.11479540 = phi i8 [ %.9, %.thread533 ], [ %.11511, %bb.by ]
+  %i.jw = fcmp olt x86_fp80 %.9385474542, 1.000000e+00
+  %i.jx = fcmp olt x86_fp80 %.9395472543, 1.000000e+00
+  %or.cond19 = or i1 %i.jx, %i.jw
   %spec.select559 = select i1 %or.cond19, i32 48, i32 32
   br label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz, %.thread483, %bb.by
-  %.sroa.0297.sroa.0.13 = phi x86_fp80 [ %.sroa.0297.sroa.0.10, %.thread483 ], [ %.sroa.0297.sroa.0.12, %bb.bz ], [ %.sroa.0297.sroa.0.11, %bb.by ]
-  %.sroa.0333.sroa.0.13 = phi x86_fp80 [ %.sroa.0333.sroa.0.10, %.thread483 ], [ %.sroa.0333.sroa.0.12, %bb.bz ], [ %.sroa.0333.sroa.0.11, %bb.by ]
-  %.2171495 = phi x86_fp80 [ f0x3FC08000000000000000, %.thread483 ], [ %.2171545, %bb.bz ], [ %.2171, %bb.by ] ; 2 uses
-  %.11407494 = phi x86_fp80 [ f0x3FC08000000000000000, %.thread483 ], [ %.11407544, %bb.bz ], [ %.11407, %bb.by ]
-  %.9395472493 = phi x86_fp80 [ %.9395473509517, %.thread483 ], [ %.9395472543, %bb.bz ], [ %.9395472, %bb.by ] ; 2 uses
-  %.9385474492 = phi x86_fp80 [ %.9385475507518, %.thread483 ], [ %.9385474542, %bb.bz ], [ %.9385474, %bb.by ] ; 2 uses
-  %.2174476491 = phi x86_fp80 [ %.2174477505519, %.thread483 ], [ %.2174476541, %bb.bz ], [ %.2174476, %bb.by ]
-  %.11479490 = phi i8 [ 1, %.thread483 ], [ %.11479540, %bb.bz ], [ %.11479, %bb.by ]
+  %.sroa.0297.sroa.0.13 = phi x86_fp80 [ f0x3FC08000000000000000, %.thread483 ], [ %.sroa.0297.sroa.0.12, %bb.bz ], [ %.2171, %bb.by ] ; 2 uses
+  %.sroa.0333.sroa.0.13 = phi x86_fp80 [ f0x3FC08000000000000000, %.thread483 ], [ %.sroa.0333.sroa.0.12, %bb.bz ], [ %.11407, %bb.by ]
+  %.2171495 = phi x86_fp80 [ %.9395473509517, %.thread483 ], [ %.2171545, %bb.bz ], [ %.9395472, %bb.by ] ; 2 uses
+  %.11407494 = phi x86_fp80 [ %.9385475507518, %.thread483 ], [ %.11407544, %bb.bz ], [ %.9385474, %bb.by ] ; 2 uses
+  %.9395472493 = phi x86_fp80 [ %.2174477505519, %.thread483 ], [ %.9395472543, %bb.bz ], [ %.2174476, %bb.by ]
+  %.9385474492 = phi x86_fp80 [ %.sroa.0333.sroa.0.10, %.thread483 ], [ %.9385474542, %bb.bz ], [ %.9388506, %bb.by ]
+  %.2174476491 = phi x86_fp80 [ %.sroa.0297.sroa.0.10, %.thread483 ], [ %.2174476541, %bb.bz ], [ %.sroa.0333.sroa.0.11, %bb.by ]
+  %.11479490 = phi i8 [ 1, %.thread483 ], [ %.11479540, %bb.bz ], [ %.11511, %bb.by ]
   %.0 = phi i32 [ 32, %.thread483 ], [ %spec.select559, %bb.bz ], [ 32, %bb.by ]
-  %i.jy = fcmp uge x86_fp80 %.9385474492, %.9395472493 ; 2 uses
-  %i.jz = select i1 %i.jy, x86_fp80 %.9395472493, x86_fp80 %.9385474492
+  %i.jy = fcmp uge x86_fp80 %.11407494, %.2171495 ; 2 uses
+  %i.jz = select i1 %i.jy, x86_fp80 %.2171495, x86_fp80 %.11407494
   %i.ka = zext i1 %i.jy to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  store x86_fp80 %.sroa.0333.sroa.0.13, ptr %6, align 16
+  store x86_fp80 %.9385474492, ptr %6, align 16
   %.sroa.2223.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 16
-  store x86_fp80 %.sroa.0297.sroa.0.13, ptr %.sroa.2223.0..sroa_idx, align 16
+  store x86_fp80 %.9395472493, ptr %.sroa.2223.0..sroa_idx, align 16
   %.sroa.3224.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 32
   store x86_fp80 %i.jz, ptr %.sroa.3224.0..sroa_idx, align 16
   %.sroa.4225.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 48
   store i8 %i.ka, ptr %.sroa.4225.0..sroa_idx, align 16
-  %i.kb = call noundef x86_fp80 @_ZN5boost4math5tools6detail24second_order_root_finderINS2_11halley_stepENS0_6detail11ibeta_rootsIeNS0_8policies6policyINS7_13promote_floatILb0EEENS7_14promote_doubleILb0EEENS7_14default_policyESD_SD_SD_SD_SD_SD_SD_SD_SD_SD_EEEEeEET1_T0_SG_SG_SG_iRm(ptr noundef nonnull byval(%"struct.boost::math::detail::ibeta_roots") align 16 %6, x86_fp80 noundef %.11407494, x86_fp80 noundef %.2171495, x86_fp80 noundef %.2174476491, i32 noundef %.0, ptr noundef nonnull align 8 dereferenceable(8) %i.b) ; 2 uses
+  %i.kb = call noundef x86_fp80 @_ZN5boost4math5tools6detail24second_order_root_finderINS2_11halley_stepENS0_6detail11ibeta_rootsIeNS0_8policies6policyINS7_13promote_floatILb0EEENS7_14promote_doubleILb0EEENS7_14default_policyESD_SD_SD_SD_SD_SD_SD_SD_SD_SD_EEEEeEET1_T0_SG_SG_SG_iRm(ptr noundef nonnull byval(%"struct.boost::math::detail::ibeta_roots") align 16 %6, x86_fp80 noundef %.sroa.0333.sroa.0.13, x86_fp80 noundef %.sroa.0297.sroa.0.13, x86_fp80 noundef %.2174476491, i32 noundef %.0, ptr noundef nonnull align 8 dereferenceable(8) %i.b) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %i.kc = load i64, ptr %i.b, align 8, !tbaa !260 ; 2 uses
   %.not.i222 = icmp ult i64 %i.kc, 200
@@ -889,7 +887,7 @@ bb.cb:                                            ; preds = %bb.ca
   br label %_ZN5boost4math8policies21check_root_iterationsIeNS1_6policyINS1_13promote_floatILb0EEENS1_14promote_doubleILb0EEENS1_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEEvPKcmRKT0_.exit
 
 _ZN5boost4math8policies21check_root_iterationsIeNS1_6policyINS1_13promote_floatILb0EEENS1_14promote_doubleILb0EEENS1_14default_policyES8_S8_S8_S8_S8_S8_S8_S8_S8_S8_EEEEvPKcmRKT0_.exit: ; preds = %bb.ca, %bb.cb
-  %i.kf = fcmp oeq x86_fp80 %i.kb, %.2171495
+  %i.kf = fcmp oeq x86_fp80 %i.kb, %.sroa.0297.sroa.0.13
   %spec.select560 = select i1 %i.kf, x86_fp80 0.000000e+00, x86_fp80 %i.kb ; 3 uses
   %.not216 = icmp eq ptr %5, null
   %.pre = trunc nuw i8 %.11479490 to i1           ; 2 uses
@@ -1292,13 +1290,13 @@ bb.c:                                             ; preds = %bb.a
   br label %.lr.ph
 
 bb.d:                                             ; preds = %bb.q
-  %i.w = fsub x86_fp80 1.000000e+00, %.171        ; 2 uses
-  %i.x = tail call noundef x86_fp80 @logl(x86_fp80 noundef %.171) #41, !noalias !9960
+  %i.w = fsub x86_fp80 1.000000e+00, %.173        ; 2 uses
+  %i.x = tail call noundef x86_fp80 @logl(x86_fp80 noundef %.173) #41, !noalias !9960
   %i.y = tail call noundef x86_fp80 @logl(x86_fp80 noundef %i.w) #41, !noalias !9960
   %i.z = fmul x86_fp80 %i.j, %i.y
   %i.aa = fadd x86_fp80 %i.x, %i.z
   %i.ab = fadd x86_fp80 %i.k, %i.aa               ; 2 uses
-  %i.ac = fdiv x86_fp80 1.000000e+00, %.171
+  %i.ac = fdiv x86_fp80 1.000000e+00, %.173
   %i.ad = fdiv x86_fp80 %i.j, %i.w
   %i.ae = fsub x86_fp80 %i.ac, %i.ad
   %i.af = add i64 %i.ah, -1                       ; 2 uses
@@ -1309,36 +1307,36 @@ bb.d:                                             ; preds = %bb.q
   %i.ah = phi i64 [ %i.af, %bb.d ], [ %i.r, %.lr.ph.preheader ] ; 5 uses
   %i.ai = phi x86_fp80 [ %i.ae, %bb.d ], [ %i.v, %.lr.ph.preheader ] ; 2 uses
   %i.aj = phi x86_fp80 [ %i.ab, %bb.d ], [ %i.q, %.lr.ph.preheader ] ; 5 uses
-  %.01391 = phi x86_fp80 [ %.01391., %bb.d ], [ 0.000000e+00, %.lr.ph.preheader ]
-  %.01690 = phi x86_fp80 [ %..01690, %bb.d ], [ 0.000000e+00, %.lr.ph.preheader ]
+  %.01391 = phi x86_fp80 [ %.1, %bb.d ], [ 0.000000e+00, %.lr.ph.preheader ]
+  %.01690 = phi x86_fp80 [ %.117, %bb.d ], [ 0.000000e+00, %.lr.ph.preheader ]
   %.01889 = phi x86_fp80 [ %.119, %bb.d ], [ f0x7FFEFFFFFFFFFFFFFFFF, %.lr.ph.preheader ]
-  %.06788 = phi x86_fp80 [ %i.aj, %bb.d ], [ 0.000000e+00, %.lr.ph.preheader ] ; 2 uses
-  %.06887 = phi x86_fp80 [ %.3, %bb.d ], [ f0x7FFEFFFFFFFFFFFFFFFF, %.lr.ph.preheader ] ; 2 uses
-  %.07086 = phi x86_fp80 [ %.171, %bb.d ], [ %1, %.lr.ph.preheader ] ; 12 uses
-  %.val7685 = phi x86_fp80 [ %.val7685..07086, %bb.d ], [ %2, %.lr.ph.preheader ] ; 9 uses
-  %.sroa.057.val7984 = phi x86_fp80 [ %.07086..sroa.057.val7984, %bb.d ], [ %3, %.lr.ph.preheader ] ; 8 uses
+  %.06788 = phi x86_fp80 [ %.168, %bb.d ], [ %3, %.lr.ph.preheader ] ; 8 uses
+  %.06887 = phi x86_fp80 [ %i.aj, %bb.d ], [ 0.000000e+00, %.lr.ph.preheader ] ; 2 uses
+  %.07086 = phi x86_fp80 [ %.3, %bb.d ], [ f0x7FFEFFFFFFFFFFFFFFFF, %.lr.ph.preheader ] ; 2 uses
+  %.val7685 = phi x86_fp80 [ %.173, %bb.d ], [ %1, %.lr.ph.preheader ] ; 12 uses
+  %.sroa.057.val7984 = phi x86_fp80 [ %.sroa.speculate.load.false77, %bb.d ], [ %2, %.lr.ph.preheader ] ; 9 uses
   %i.ak = fcmp oeq x86_fp80 %i.ai, 0.000000e+00
   br i1 %i.ak, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.al = fcmp oeq x86_fp80 %.06788, 0.000000e+00
+  %i.al = fcmp oeq x86_fp80 %.06887, 0.000000e+00
   br i1 %i.al, label %bb.f, label %_ZN5boost4math5tools6detail22handle_zero_derivativeINS0_6detail17temme_root_finderIeEEeEEvT_RT0_RKS8_S9_S9_S9_SB_SB_.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.am = fcmp oeq x86_fp80 %.07086, %.val7685
-  %storemerge.i = select i1 %i.am, x86_fp80 %.sroa.057.val7984, x86_fp80 %.val7685 ; 3 uses
+  %i.am = fcmp oeq x86_fp80 %.val7685, %.sroa.057.val7984
+  %storemerge.i = select i1 %i.am, x86_fp80 %.06788, x86_fp80 %.sroa.057.val7984 ; 3 uses
   %i.an = fsub x86_fp80 1.000000e+00, %storemerge.i
   %i.ao = tail call noundef x86_fp80 @logl(x86_fp80 noundef %storemerge.i) #41, !noalias !9965
   %i.ap = tail call noundef x86_fp80 @logl(x86_fp80 noundef %i.an) #41, !noalias !9965
   %i.aq = fmul x86_fp80 %i.j, %i.ap
   %i.ar = fadd x86_fp80 %i.ao, %i.aq
   %i.as = fadd x86_fp80 %i.k, %i.ar
-  %i.at = fsub x86_fp80 %storemerge.i, %.07086
+  %i.at = fsub x86_fp80 %storemerge.i, %.val7685
   br label %_ZN5boost4math5tools6detail22handle_zero_derivativeINS0_6detail17temme_root_finderIeEEeEEvT_RT0_RKS8_S9_S9_S9_SB_SB_.exit
 
 _ZN5boost4math5tools6detail22handle_zero_derivativeINS0_6detail17temme_root_finderIeEEeEEvT_RT0_RKS8_S9_S9_S9_SB_SB_.exit: ; preds = %bb.e, %bb.f
-  %.4 = phi x86_fp80 [ %i.at, %bb.f ], [ %.06887, %bb.e ]
-  %i.au = phi x86_fp80 [ %i.as, %bb.f ], [ %.06788, %bb.e ] ; 2 uses
+  %.4 = phi x86_fp80 [ %i.at, %bb.f ], [ %.07086, %bb.e ]
+  %i.au = phi x86_fp80 [ %i.as, %bb.f ], [ %.06887, %bb.e ] ; 2 uses
   %i.av = fcmp oeq x86_fp80 %i.au, 0.000000e+00
   %i.aw = bitcast x86_fp80 %i.au to i80
   %.not.i.i = icmp sgt i80 %i.aw, -1
@@ -1351,8 +1349,8 @@ _ZN5boost4math5tools6detail22handle_zero_derivativeINS0_6detail17temme_root_find
   %i.bc = icmp slt i32 %i.bb, 0
   %i.bd = fcmp olt x86_fp80 %.4, 0.000000e+00
   %i.be = xor i1 %i.bd, %i.bc
-  %i.bf = select i1 %i.be, x86_fp80 %.sroa.057.val7984, x86_fp80 %.val7685
-  %i.bg = fsub x86_fp80 %.07086, %i.bf
+  %i.bf = select i1 %i.be, x86_fp80 %.06788, x86_fp80 %.sroa.057.val7984
+  %i.bg = fsub x86_fp80 %.val7685, %i.bf
   %i.bh = fmul x86_fp80 %i.bg, 5.000000e-01
   br label %bb.h
 
@@ -1370,55 +1368,61 @@ bb.h:                                             ; preds = %bb.g, %_ZN5boost4ma
 
 bb.i:                                             ; preds = %bb.h
   %i.bn = fcmp ogt x86_fp80 %.169, 0.000000e+00
-  %.in.v = select i1 %i.bn, x86_fp80 %.val7685, x86_fp80 %.sroa.057.val7984
-  %.in = fsub x86_fp80 %.07086, %.in.v
+  %.in.v = select i1 %i.bn, x86_fp80 %.sroa.057.val7984, x86_fp80 %.06788
+  %.in = fsub x86_fp80 %.val7685, %.in.v
   %i.bo = fmul x86_fp80 %.in, 5.000000e-01        ; 2 uses
   %i.bp = fmul x86_fp80 %i.bo, 3.000000e+00
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %.2 = phi x86_fp80 [ %i.bo, %bb.i ], [ %.169, %bb.h ] ; 2 uses
-  %.119 = phi x86_fp80 [ %i.bp, %bb.i ], [ %.06887, %bb.h ]
-  %i.bq = fsub x86_fp80 %.07086, %.2              ; 3 uses
-  %i.br = fcmp ugt x86_fp80 %i.bq, %.val7685
+  %.119 = phi x86_fp80 [ %i.bp, %bb.i ], [ %.07086, %bb.h ]
+  %i.bq = fsub x86_fp80 %.val7685, %.2            ; 3 uses
+  %i.br = fcmp ugt x86_fp80 %i.bq, %.sroa.057.val7984
   br i1 %i.br, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.bs = fsub x86_fp80 %.07086, %.val7685
+  %i.bs = fsub x86_fp80 %.val7685, %.sroa.057.val7984
   %i.bt = fmul x86_fp80 %i.bs, 5.000000e-01       ; 2 uses
-  %i.bu = fsub x86_fp80 %.07086, %i.bt            ; 4 uses
-  %i.bv = fcmp oeq x86_fp80 %i.bu, %.val7685
-  %i.bw = fcmp oeq x86_fp80 %i.bu, %.sroa.057.val7984
+  %i.bu = fsub x86_fp80 %.val7685, %i.bt          ; 4 uses
+  %i.bv = fcmp oeq x86_fp80 %i.bu, %.sroa.057.val7984
+  %i.bw = fcmp oeq x86_fp80 %i.bu, %.06788
   %or.cond = select i1 %i.bv, i1 true, i1 %i.bw
-  br i1 %or.cond, label %.critedge, label %bb.n
+  br i1 %or.cond, label %.critedge, label %6
 
 bb.l:                                             ; preds = %bb.j
-  %i.bx = fcmp ult x86_fp80 %i.bq, %.sroa.057.val7984
-  br i1 %i.bx, label %bb.n, label %bb.m
+  %i.bx = fcmp ult x86_fp80 %i.bq, %.06788
+  br i1 %i.bx, label %6, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.by = fsub x86_fp80 %.07086, %.sroa.057.val7984
+  %i.by = fsub x86_fp80 %.val7685, %.06788
   %i.bz = fmul x86_fp80 %i.by, 5.000000e-01       ; 2 uses
-  %i.ca = fsub x86_fp80 %.07086, %i.bz            ; 4 uses
-  %i.cb = fcmp oeq x86_fp80 %i.ca, %.val7685
-  %i.cc = fcmp oeq x86_fp80 %i.ca, %.sroa.057.val7984
-  %or.cond30 = or i1 %i.cb, %i.cc
-  br i1 %or.cond30, label %.critedge, label %bb.n
+  %i.ca = fsub x86_fp80 %.val7685, %i.bz          ; 4 uses
+  %i.cb = fcmp oeq x86_fp80 %i.ca, %.sroa.057.val7984
+  %i.cc = fcmp oeq x86_fp80 %i.ca, %.06788
+  %or.cond30 = select i1 %i.cb, i1 true, i1 %i.cc
+  br i1 %or.cond30, label %.critedge, label %6
 
-bb.n:                                             ; preds = %bb.m, %bb.k, %bb.l
-  %.171 = phi x86_fp80 [ %i.bq, %bb.l ], [ %i.ca, %bb.m ], [ %i.bu, %bb.k ] ; 8 uses
+6:                                                ; preds = %bb.m, %bb.k, %bb.l
+  %.173 = phi x86_fp80 [ %i.bq, %bb.l ], [ %i.ca, %bb.m ], [ %i.bu, %bb.k ] ; 8 uses
   %.3 = phi x86_fp80 [ %.2, %bb.l ], [ %i.bz, %bb.m ], [ %i.bt, %bb.k ] ; 3 uses
-  %6 = fcmp ogt x86_fp80 %.3, 0.000000e+00        ; 4 uses
-  %.07086..sroa.057.val7984 = select i1 %6, x86_fp80 %.07086, x86_fp80 %.sroa.057.val7984
-  %.val7685..07086 = select i1 %6, x86_fp80 %.val7685, x86_fp80 %.07086
-  %..01690 = select i1 %6, x86_fp80 %i.aj, x86_fp80 %.01690 ; 2 uses
-  %.01391. = select i1 %6, x86_fp80 %.01391, x86_fp80 %i.aj ; 2 uses
-  %i.cd = fmul x86_fp80 %..01690, %.01391.
+  %7 = fcmp ogt x86_fp80 %.3, 0.000000e+00
+  br i1 %7, label %bb.n, label %8
+
+8:                                                ; preds = %6
+  br label %bb.n
+
+bb.n:                                             ; preds = %6, %8
+  %.sroa.speculate.load.false77 = phi x86_fp80 [ %.val7685, %8 ], [ %.sroa.057.val7984, %6 ]
+  %.168 = phi x86_fp80 [ %.06788, %8 ], [ %.val7685, %6 ]
+  %.117 = phi x86_fp80 [ %.01690, %8 ], [ %i.aj, %6 ] ; 2 uses
+  %.1 = phi x86_fp80 [ %i.aj, %8 ], [ %.01391, %6 ] ; 2 uses
+  %i.cd = fmul x86_fp80 %.117, %.1
   %i.ce = fcmp ogt x86_fp80 %i.cd, 0.000000e+00
   br i1 %i.ce, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  store x86_fp80 %.07086, ptr %i.a, align 16
+  store x86_fp80 %.val7685, ptr %i.a, align 16
   %i.cf = load ptr, ptr @_ZZN5boost4math5tools22newton_raphson_iterateINS0_6detail17temme_root_finderIeEEeEET0_T_S6_S6_S6_iRmE8function, align 8, !tbaa !893
   call void @_ZN5boost4math8policies6detail11raise_errorINS0_16evaluation_errorEeEEvPKcS6_RKT0_(ptr noundef %i.cf, ptr noundef nonnull @.str.347, ptr noundef nonnull align 16 dereferenceable(16) %i.a)
   br label %bb.r
@@ -1428,7 +1432,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %.not, label %.critedge, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.cg = fmul x86_fp80 %.171, %i.g
+  %i.cg = fmul x86_fp80 %.173, %i.g
   %i.ch = tail call noundef x86_fp80 @llvm.fabs.f80(x86_fp80 %i.cg)
   %i.ci = tail call noundef x86_fp80 @llvm.fabs.f80(x86_fp80 %.3)
   %i.cj = fcmp olt x86_fp80 %i.ch, %i.ci
@@ -1439,7 +1443,7 @@ bb.q:                                             ; preds = %bb.p
 
 .critedge:                                        ; preds = %bb.d, %bb.k, %bb.m, %bb.p, %..critedge_crit_edge114, %bb.c
   %.lcssa = phi i64 [ %i.r, %bb.c ], [ %i.ah, %..critedge_crit_edge114 ], [ 0, %bb.p ], [ %i.ah, %bb.m ], [ %i.ah, %bb.k ], [ %i.af, %bb.d ]
-  %.272 = phi x86_fp80 [ %1, %bb.c ], [ %.171, %..critedge_crit_edge114 ], [ %.171, %bb.p ], [ %i.ca, %bb.m ], [ %i.bu, %bb.k ], [ %.171, %bb.d ]
+  %.272 = phi x86_fp80 [ %1, %bb.c ], [ %.173, %..critedge_crit_edge114 ], [ %.173, %bb.p ], [ %i.ca, %bb.m ], [ %i.bu, %bb.k ], [ %.173, %bb.d ]
   %i.ck = sub i64 %i.h, %.lcssa
   store i64 %i.ck, ptr %5, align 8, !tbaa !260
   br label %bb.r
@@ -1842,7 +1846,6 @@ bb.a:
   %i.o = alloca x86_fp80, align 16                ; 4 uses
   %i.p = alloca x86_fp80, align 16                ; 4 uses
   %i.q = alloca x86_fp80, align 16                ; 4 uses
-  %.sroa.091 = alloca [10 x i8], align 16         ; 4 uses
   %i.r = alloca x86_fp80, align 16                ; 4 uses
   %i.s = load x86_fp80, ptr %0, align 16, !tbaa !182 ; 11 uses
   %i.t = tail call x86_fp80 @llvm.fabs.f80(x86_fp80 %i.s) ; 2 uses
@@ -2063,9 +2066,7 @@ _ZN5boost4math10fpclassifyIeEEiT_.exit:           ; preds = %bb.z
   %i.ch = tail call { x86_fp80, i32 } @llvm.frexp.f80.i32(x86_fp80 %i.s)
   %i.ci = extractvalue { x86_fp80, i32 } %i.ch, 1
   %i.cj = select i1 %i.cg, i32 %i.ci, i32 -16381  ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.091)
   %i.ck = tail call noundef x86_fp80 @ldexpl(x86_fp80 noundef 1.000000e+00, i32 noundef %i.cj) #41 ; 4 uses
-  store x86_fp80 %i.ck, ptr %.sroa.091, align 16, !tbaa !182
   %i.cl = fcmp ogt x86_fp80 %i.w, %i.ck
   br i1 %i.cl, label %bb.ab, label %bb.ac
 
@@ -2102,7 +2103,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %or.cond112, label %select.unfold110, label %_ZN5boost4math10fpclassifyIeEEiT_.exit86
 
 select.unfold110:                                 ; preds = %.select.unfold110_crit_edge, %bb.ad
-  %i.cx = phi x86_fp80 [ %.pre116, %.select.unfold110_crit_edge ], [ %.pre117, %bb.ad ] ; 3 uses
+  %i.cx = phi x86_fp80 [ %.pre116, %.select.unfold110_crit_edge ], [ %.pre117, %bb.ad ] ; 4 uses
   %i.cy = fsub x86_fp80 %i.cx, %i.cw
   %i.cz = fcmp olt x86_fp80 %i.cy, f0x00018000000000000000
   br i1 %i.cz, label %_ZN5boost4math10fpclassifyIeEEiT_.exit86, label %bb.ae
@@ -2125,10 +2126,9 @@ _ZN5boost4math10fpclassifyIeEEiT_.exit86:         ; preds = %bb.ad, %select.unfo
 
 bb.ae:                                            ; preds = %select.unfold110
   %i.dn = fcmp olt x86_fp80 %i.cx, %i.ck
-  %..i87 = select i1 %i.dn, ptr %1, ptr %.sroa.091
-  %7 = load x86_fp80, ptr %..i87, align 16, !tbaa !182 ; 2 uses
-  %i.do = fneg x86_fp80 %7
-  %i.dp = fsub x86_fp80 %i.cw, %7                 ; 3 uses
+  %.sroa.speculated93 = select i1 %i.dn, x86_fp80 %i.cx, x86_fp80 %i.ck ; 2 uses
+  %i.do = fneg x86_fp80 %.sroa.speculated93
+  %i.dp = fsub x86_fp80 %i.cw, %.sroa.speculated93 ; 3 uses
   %i.dq = fsub x86_fp80 %i.dp, %i.cw              ; 2 uses
   %i.dr = fsub x86_fp80 %i.dp, %i.dq
   %i.ds = fsub x86_fp80 %i.cw, %i.dr
@@ -2150,7 +2150,6 @@ bb.af:                                            ; preds = %bb.ae, %_ZN5boost4m
   %i.dz = call noundef x86_fp80 @ldexpl(x86_fp80 noundef %.1, i32 noundef %.0109) #41
   %i.ea = fadd x86_fp80 %i.dy, %i.dz
   %i.eb = fadd x86_fp80 %.072, %i.ea
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.091)
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.g, %bb.af, %bb.aa, %bb.y, %bb.q, %bb.l, %bb.f, %bb.d, %bb.b

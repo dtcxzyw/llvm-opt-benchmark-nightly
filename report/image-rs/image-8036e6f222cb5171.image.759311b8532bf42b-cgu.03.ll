@@ -205,9 +205,9 @@ bb.a:
   %.sroa.6.0.copyload.i = load ptr, ptr %.sroa.6.0..sroa_idx.i, align 8, !alias.scope !1391, !noalias !1388
   %.sroa.7.24.copyload.i = load ptr, ptr %0, align 8, !alias.scope !1388, !noalias !1391 ; 2 uses
   %.sroa.9.24..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.9.24.copyload.i = load i64, ptr %.sroa.9.24..sroa_idx.i, align 8, !alias.scope !1388, !noalias !1391
+  %.sroa.9.24.copyload.i = load ptr, ptr %.sroa.9.24..sroa_idx.i, align 8, !alias.scope !1388, !noalias !1391
   %.sroa.10.24..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.10.24.copyload.i = load i64, ptr %.sroa.10.24..sroa_idx.i, align 8, !alias.scope !1388, !noalias !1391
+  %.sroa.10.24.copyload.i = load ptr, ptr %.sroa.10.24..sroa_idx.i, align 8, !alias.scope !1388, !noalias !1391
   %i.e = icmp ult i64 %i.b, %i.d
   br i1 %i.e, label %.lr.ph.i.i, label %_RINvXs0_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_3ops5range5RangejENCNvNtNtCsa5QsYiPB8Gl_5image8imageops9fast_blur15boxes_for_gauss0ENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_foldjjuNCB1r_s_0NCINvNvB2t_8for_each4calljNCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB49_3VecjE14extend_trustedIBO_BN_B3r_EE0E0E0EB1x_.exit
 
@@ -221,8 +221,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.i
   %i.g = add nuw i64 %.sroa.0.010.i.i, 1          ; 2 uses
   %i.h = load i64, ptr %.sroa.7.24.copyload.i, align 8, !noalias !1393, !noundef !12
   %i.i = icmp ult i64 %.sroa.0.010.i.i, %i.h
-  %.sroa.speculated.v.i = select i1 %i.i, i64 %.sroa.9.24.copyload.i, i64 %.sroa.10.24.copyload.i
-  %.sroa.speculated.i = inttoptr i64 %.sroa.speculated.v.i to ptr
+  %.sroa.speculated.i = select i1 %i.i, ptr %.sroa.9.24.copyload.i, ptr %.sroa.10.24.copyload.i
   %i.j = load float, ptr %.sroa.speculated.i, align 4, !noalias !1393, !noundef !12
   %i.k = tail call noundef i64 @llvm.fptoui.sat.i64.f32(float %i.j)
   %i.l = tail call i64 @llvm.usub.sat.i64(i64 %i.k, i64 1)
