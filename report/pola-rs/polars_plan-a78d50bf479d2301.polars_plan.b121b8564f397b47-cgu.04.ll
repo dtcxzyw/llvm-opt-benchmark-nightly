@@ -205,7 +205,7 @@ _RNCINvNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   %storemerge.i = add i64 %.sink29.i, 1, !dbg !138478
   store i64 %storemerge.i, ptr %i.s, align 8, !dbg !138478, !noalias !138244
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !138479, !noalias !138244
-  %i.dm = add nuw i64 %i.ab, 1, !dbg !138480      ; 2 uses
+  %i.dm = add nuw nsw i64 %i.ab, 1, !dbg !138480  ; 2 uses
   %i.dn = icmp eq i64 %i.dm, %i.f, !dbg !138482
   br i1 %i.dn, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterNtNtCs2mZqlW55729_12polars_utils7float164pf16ENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtB1G_8adapters9enumerateINtB2v_9EnumeratepEB1A_4fold9enumerateRBQ_uNCINvNvB1A_8for_each4callTjB3y_ENCNCINvNtNtNtNtCsePnBjWcsLF5_10polars_ops5frame4join9hash_join21single_keys_semi_anti14semi_anti_implB3y_RSBQ_E00E0E0ECsfcROwRM8ZtH_11polars_plan.exit, label %bb.f, !dbg !138482
 
@@ -465,7 +465,7 @@ _RNCINvNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   %storemerge.i = add i64 %.sink28.i, 1, !dbg !138760
   store i64 %storemerge.i, ptr %i.s, align 8, !dbg !138760, !noalias !138532
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !138761, !noalias !138532
-  %i.dg = add nuw i64 %i.ad, 1, !dbg !138762      ; 2 uses
+  %i.dg = add nuw nsw i64 %i.ad, 1, !dbg !138762  ; 2 uses
   %i.dh = icmp eq i64 %i.dg, %i.f, !dbg !138764
   br i1 %i.dh, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterNtNtCs2mZqlW55729_12polars_utils7hashing9BytesHashENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtB1L_8adapters9enumerateINtB2A_9EnumeratepEB1F_4fold9enumerateRBQ_uNCINvNvB1F_8for_each4callTjB3D_ENCNCINvNtNtNtNtCsePnBjWcsLF5_10polars_ops5frame4join9hash_join21single_keys_semi_anti14semi_anti_implB3D_RSBQ_E00E0E0ECsfcROwRM8ZtH_11polars_plan.exit, label %bb.f, !dbg !138764
 
@@ -658,7 +658,7 @@ _RNCINvNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   %storemerge.i = add i64 %.sink18.i, 1, !dbg !139030 ; 2 uses
   store i64 %storemerge.i, ptr %i.s, align 8, !dbg !139030, !noalias !138814
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !139031, !noalias !138814
-  %i.cf = add nuw i64 %i.ac, 1, !dbg !139032      ; 2 uses
+  %i.cf = add nuw nsw i64 %i.ac, 1, !dbg !139032  ; 2 uses
   %i.cg = icmp eq i64 %i.cf, %i.f, !dbg !139034
   br i1 %i.cg, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterdENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBY_8adapters9enumerateINtB1N_9EnumeratepEBS_4fold9enumerateRduNCINvNvBS_8for_each4callTjB2O_ENCNCINvNtNtNtNtCsePnBjWcsLF5_10polars_ops5frame4join9hash_join21single_keys_semi_anti14semi_anti_implB2O_RSdE00E0E0ECsfcROwRM8ZtH_11polars_plan.exit, label %bb.f, !dbg !139034
 
@@ -852,7 +852,7 @@ _RNCINvNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   %storemerge.i = add i64 %.sink18.i, 1, !dbg !139301 ; 2 uses
   store i64 %storemerge.i, ptr %i.s, align 8, !dbg !139301, !noalias !139084
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !139302, !noalias !139084
-  %i.cg = add nuw i64 %i.ac, 1, !dbg !139303      ; 2 uses
+  %i.cg = add nuw nsw i64 %i.ac, 1, !dbg !139303  ; 2 uses
   %i.ch = icmp eq i64 %i.cg, %i.f, !dbg !139305
   br i1 %i.ch, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterfENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBY_8adapters9enumerateINtB1N_9EnumeratepEBS_4fold9enumerateRfuNCINvNvBS_8for_each4callTjB2O_ENCNCINvNtNtNtNtCsePnBjWcsLF5_10polars_ops5frame4join9hash_join21single_keys_semi_anti14semi_anti_implB2O_RSfE00E0E0ECsfcROwRM8ZtH_11polars_plan.exit, label %bb.f, !dbg !139305
 
@@ -1040,7 +1040,7 @@ _RNCINvNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   %storemerge.i = add i64 %.sink18.i, 1, !dbg !139555 ; 2 uses
   store i64 %storemerge.i, ptr %i.s, align 8, !dbg !139555, !noalias !139355
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !139556, !noalias !139355
-  %i.cb = add nuw i64 %i.ac, 1, !dbg !139557      ; 2 uses
+  %i.cb = add nuw nsw i64 %i.ac, 1, !dbg !139557  ; 2 uses
   %i.cc = icmp eq i64 %i.cb, %i.f, !dbg !139559
   br i1 %i.cc, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBY_8adapters9enumerateINtB1N_9EnumeratepEBS_4fold9enumerateRhuNCINvNvBS_8for_each4callTjB2O_ENCNCINvNtNtNtNtCsePnBjWcsLF5_10polars_ops5frame4join9hash_join21single_keys_semi_anti14semi_anti_implB2O_RShE00E0E0ECsfcROwRM8ZtH_11polars_plan.exit, label %bb.f, !dbg !139559
 
@@ -1228,7 +1228,7 @@ _RNCINvNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   %storemerge.i = add i64 %.sink18.i, 1, !dbg !139808 ; 2 uses
   store i64 %storemerge.i, ptr %i.s, align 8, !dbg !139808, !noalias !139609
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !139809, !noalias !139609
-  %i.cb = add nuw i64 %i.ac, 1, !dbg !139810      ; 2 uses
+  %i.cb = add nuw nsw i64 %i.ac, 1, !dbg !139810  ; 2 uses
   %i.cc = icmp eq i64 %i.cb, %i.f, !dbg !139812
   br i1 %i.cc, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4ItermENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBY_8adapters9enumerateINtB1N_9EnumeratepEBS_4fold9enumerateRmuNCINvNvBS_8for_each4callTjB2O_ENCNCINvNtNtNtNtCsePnBjWcsLF5_10polars_ops5frame4join9hash_join21single_keys_semi_anti14semi_anti_implB2O_RSmE00E0E0ECsfcROwRM8ZtH_11polars_plan.exit, label %bb.f, !dbg !139812
 
@@ -1419,7 +1419,7 @@ _RNCINvNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   %storemerge.i = add i64 %.sink18.i, 1, !dbg !140066 ; 2 uses
   store i64 %storemerge.i, ptr %i.s, align 8, !dbg !140066, !noalias !139862
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !140067, !noalias !139862
-  %i.ce = add nuw i64 %i.ac, 1, !dbg !140068      ; 2 uses
+  %i.ce = add nuw nsw i64 %i.ac, 1, !dbg !140068  ; 2 uses
   %i.cf = icmp eq i64 %i.ce, %i.f, !dbg !140070
   br i1 %i.cf, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IteroENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBY_8adapters9enumerateINtB1N_9EnumeratepEBS_4fold9enumerateRouNCINvNvBS_8for_each4callTjB2O_ENCNCINvNtNtNtNtCsePnBjWcsLF5_10polars_ops5frame4join9hash_join21single_keys_semi_anti14semi_anti_implB2O_RSoE00E0E0ECsfcROwRM8ZtH_11polars_plan.exit, label %bb.f, !dbg !140070
 
@@ -1607,7 +1607,7 @@ _RNCINvNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   %storemerge.i = add i64 %.sink18.i, 1, !dbg !140319 ; 2 uses
   store i64 %storemerge.i, ptr %i.s, align 8, !dbg !140319, !noalias !140120
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !140320, !noalias !140120
-  %i.cb = add nuw i64 %i.ac, 1, !dbg !140321      ; 2 uses
+  %i.cb = add nuw nsw i64 %i.ac, 1, !dbg !140321  ; 2 uses
   %i.cc = icmp eq i64 %i.cb, %i.f, !dbg !140323
   br i1 %i.cc, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4ItertENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBY_8adapters9enumerateINtB1N_9EnumeratepEBS_4fold9enumerateRtuNCINvNvBS_8for_each4callTjB2O_ENCNCINvNtNtNtNtCsePnBjWcsLF5_10polars_ops5frame4join9hash_join21single_keys_semi_anti14semi_anti_implB2O_RStE00E0E0ECsfcROwRM8ZtH_11polars_plan.exit, label %bb.f, !dbg !140323
 
@@ -1794,7 +1794,7 @@ _RNCINvNvXs_NtNtNtCscgRAwXFJnXP_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   %storemerge.i = add i64 %.sink18.i, 1, !dbg !140571 ; 2 uses
   store i64 %storemerge.i, ptr %i.s, align 8, !dbg !140571, !noalias !140373
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !140572, !noalias !140373
-  %i.ca = add nuw i64 %i.ac, 1, !dbg !140573      ; 2 uses
+  %i.ca = add nuw nsw i64 %i.ac, 1, !dbg !140573  ; 2 uses
   %i.cb = icmp eq i64 %i.ca, %i.f, !dbg !140575
   br i1 %i.cb, label %_RINvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNvXs_NtNtBY_8adapters9enumerateINtB1N_9EnumeratepEBS_4fold9enumerateRyuNCINvNvBS_8for_each4callTjB2O_ENCNCINvNtNtNtNtCsePnBjWcsLF5_10polars_ops5frame4join9hash_join21single_keys_semi_anti14semi_anti_implB2O_RSyE00E0E0ECsfcROwRM8ZtH_11polars_plan.exit, label %bb.f, !dbg !140575
 

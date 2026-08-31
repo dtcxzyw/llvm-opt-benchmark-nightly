@@ -205,12 +205,12 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %.lr.ph.i251
   %i.gt = load ptr, ptr %i.gi, align 8, !tbaa !75
-  %i.gu = shl i64 %indvars.iv.i, 33
-  %sext.i = add i64 %i.gu, 8589934592
+  %i.gu = shl nuw i64 %indvars.iv.i, 33
+  %sext.i = add nuw i64 %i.gu, 8589934592
   %i.gv = ashr exact i64 %sext.i, 32              ; 2 uses
   %i.gw = getelementptr inbounds [32 x i8], ptr %i.gt, i64 %i.gv ; 2 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gw, i64 8
-  %i.gy = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.gs, ptr noundef nonnull @.str.14, ptr noundef %i.gw, ptr noundef nonnull %i.gx) #9
+  %i.gy = call i32 (ptr, ptr, ...) @__isoc99_sscanf(ptr noundef nonnull %i.gs, ptr noundef nonnull @.str.14, ptr noundef nonnull %i.gw, ptr noundef nonnull %i.gx) #9
   %.not239.i = icmp eq i32 %i.gy, 2
   br i1 %.not239.i, label %bb.w, label %.loopexit266.i
 
