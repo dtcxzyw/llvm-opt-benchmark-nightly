@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-per?download=true
 inline.NumInlined: 74
 inline.NumDeleted: 11
-loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 4
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@dissect_per_integer64b:bb.a
   %i.aj = lshr i32 %.058.lcssa, 3
   %i.ak = add nuw nsw i32 %i.c, 1                 ; 2 uses
@@ -205,8 +205,8 @@ bb.q:                                             ; preds = %._crit_edge, %._cri
   %i.ay = load ptr, ptr %i.ax, align 8
   %i.az = getelementptr i8, ptr %i.ay, i64 416
   %i.ba = load ptr, ptr %i.az, align 8
-  %i.bb = call noalias dereferenceable_or_null(641) ptr @wmem_alloc(ptr noundef %i.ba, i64 noundef 641) #14 ; 24 uses
-  %i.bc = and i32 %.1259, 7                       ; 5 uses
+  %i.bb = call noalias dereferenceable_or_null(641) ptr @wmem_alloc(ptr noundef %i.ba, i64 noundef 641) #14 ; 29 uses
+  %i.bc = and i32 %.1259, 7                       ; 14 uses
   %.not350 = icmp eq i32 %i.bc, 0
   br i1 %.not350, label %.preheader318, label %bb.r
 
@@ -215,9 +215,9 @@ bb.r:                                             ; preds = %bb.q
   %exitcond356.peel.not = icmp eq i32 %i.bc, 1
   br i1 %exitcond356.peel.not, label %.preheader318, label %.lr.ph329
 
-.preheader318:                                    ; preds = %bb.v, %bb.r, %bb.q
-  %.0240.lcssa = phi i32 [ 0, %bb.q ], [ 1, %bb.r ], [ %i.bc, %bb.v ] ; 2 uses
-  %.0237.lcssa = phi i32 [ 0, %bb.q ], [ 1, %bb.r ], [ %.2, %bb.v ] ; 2 uses
+.preheader318:                                    ; preds = %.lr.ph329, %bb.s, %bb.t, %bb.u, %bb.v, %.lr.ph329.5, %bb.r, %bb.q
+  %.0240.lcssa = phi i32 [ 0, %bb.q ], [ 1, %bb.r ], [ %i.bc, %.lr.ph329.5 ], [ %i.bc, %bb.v ], [ %i.bc, %bb.u ], [ %i.bc, %bb.t ], [ %i.bc, %bb.s ], [ %i.bc, %.lr.ph329 ] ; 2 uses
+  %.0237.lcssa = phi i32 [ 0, %bb.q ], [ 1, %bb.r ], [ 2, %.lr.ph329 ], [ 3, %bb.s ], [ 4, %bb.t ], [ 6, %bb.u ], [ 7, %bb.v ], [ 8, %.lr.ph329.5 ] ; 2 uses
   %i.bd = icmp sgt i32 %i.aw, 0
   br i1 %i.bd, label %.lr.ph338, label %.preheader
 
@@ -225,39 +225,42 @@ bb.r:                                             ; preds = %bb.q
   %i.be = getelementptr i8, ptr %2, i64 24
   br label %bb.w
 
-.lr.ph329:                                        ; preds = %bb.r, %bb.v
-  %.0237327 = phi i32 [ %.2, %bb.v ], [ 1, %bb.r ] ; 4 uses
-  %.0240326 = phi i32 [ %18, %bb.v ], [ 1, %bb.r ] ; 2 uses
-  %10 = and i32 %.0240326, 3
-  %.not281 = icmp eq i32 %10, 0
-  %11 = icmp slt i32 %.0237327, 640
-  %or.cond284 = select i1 %.not281, i1 %11, i1 false
-  br i1 %or.cond284, label %bb.s, label %bb.t
+.lr.ph329:                                        ; preds = %bb.r
+  %10 = getelementptr i8, ptr %i.bb, i64 1
+  store i8 46, ptr %10, align 1
+  %.not281 = icmp eq i32 %i.bc, 2
+  br i1 %.not281, label %.preheader318, label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph329
-  %12 = add nsw i32 %.0237327, 1
-  %13 = sext i32 %.0237327 to i64
-  %14 = getelementptr i8, ptr %i.bb, i64 %13
-  store i8 32, ptr %14, align 1
-  br label %bb.t
+  %11 = getelementptr i8, ptr %i.bb, i64 2
+  store i8 46, ptr %11, align 1
+  %exitcond356.not.1 = icmp eq i32 %i.bc, 3
+  br i1 %exitcond356.not.1, label %.preheader318, label %bb.t
 
-bb.t:                                             ; preds = %bb.s, %.lr.ph329
-  %.1 = phi i32 [ %.0237327, %.lr.ph329 ], [ %12, %bb.s ] ; 4 uses
-  %15 = icmp slt i32 %.1, 640
-  br i1 %15, label %bb.u, label %bb.v
+bb.t:                                             ; preds = %bb.s
+  %12 = getelementptr i8, ptr %i.bb, i64 3
+  store i8 46, ptr %12, align 1
+  %exitcond356.not.2 = icmp eq i32 %i.bc, 4
+  br i1 %exitcond356.not.2, label %.preheader318, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %16 = add nsw i32 %.1, 1
-  %17 = sext i32 %.1 to i64
-  %i.bf = getelementptr i8, ptr %i.bb, i64 %17
+  %13 = getelementptr i8, ptr %i.bb, i64 4
+  store i8 32, ptr %13, align 1
+  %i.bf = getelementptr i8, ptr %i.bb, i64 5
   store i8 46, ptr %i.bf, align 1
-  br label %bb.v
+  %exitcond356.not.3 = icmp eq i32 %i.bc, 5
+  br i1 %exitcond356.not.3, label %.preheader318, label %bb.v
 
-bb.v:                                             ; preds = %bb.t, %bb.u
-  %.2 = phi i32 [ %16, %bb.u ], [ %.1, %bb.t ]    ; 2 uses
-  %18 = add nuw nsw i32 %.0240326, 1              ; 2 uses
-  %exitcond356.not = icmp eq i32 %18, %i.bc
-  br i1 %exitcond356.not, label %.preheader318, label %.lr.ph329, !llvm.loop !24
+bb.v:                                             ; preds = %bb.u
+  %14 = getelementptr i8, ptr %i.bb, i64 6
+  store i8 46, ptr %14, align 1
+  %exitcond356.not = icmp eq i32 %i.bc, 6
+  br i1 %exitcond356.not, label %.preheader318, label %.lr.ph329.5
+
+.lr.ph329.5:                                      ; preds = %bb.v
+  %15 = getelementptr i8, ptr %i.bb, i64 7
+  store i8 46, ptr %15, align 1
+  br label %.preheader318
 
 .preheader.loopexit:                              ; preds = %bb.ae
   %i.bg = add nuw i32 %i.aw, %i.bc
@@ -353,7 +356,7 @@ bb.ae:                                            ; preds = %.sink.split, %bb.ac
   %.6 = phi i32 [ %.5, %bb.ad ], [ %.5, %bb.ac ], [ %i.cf, %.sink.split ] ; 2 uses
   %i.ci = add nuw nsw i32 %.2245334, 1            ; 2 uses
   %exitcond358.not = icmp eq i32 %i.ci, %i.aw
-  br i1 %exitcond358.not, label %.preheader.loopexit, label %bb.w, !llvm.loop !25
+  br i1 %exitcond358.not, label %.preheader.loopexit, label %bb.w, !llvm.loop !24
 
 .lr.ph347:                                        ; preds = %.preheader
   %i.cj = and i32 %.1241.lcssa, 3
@@ -709,7 +712,7 @@ bb.br:                                            ; preds = %.thread312._crit_ed
   %i.ho = add i32 %.6264319, 8                    ; 3 uses
   %i.hp = add nuw nsw i32 %.0234321, 1
   %exitcond.not = icmp eq i32 %.0234321, %i.hc
-  br i1 %exitcond.not, label %bb.bs, label %bb.br, !llvm.loop !26
+  br i1 %exitcond.not, label %bb.bs, label %bb.br, !llvm.loop !25
 
 bb.bs:                                            ; preds = %bb.br
   %i.hq = lshr exact i32 %i.ho, 3
@@ -1112,7 +1115,7 @@ proto_item_set_hidden.exit:                       ; preds = %bb.h, %bb.g, %bb.f,
   %i.aa = getelementptr i8, ptr %i.z, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8
   %.not = icmp eq ptr %i.ab, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !27
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !26
 
 ._crit_edge:                                      ; preds = %.lr.ph
   %i.ac = load i8, ptr %i.a, align 1, !range !6, !noundef !7
@@ -1192,7 +1195,7 @@ bb.p:                                             ; preds = %.lr.ph139, %bb.o
   %i.bc = getelementptr i8, ptr %i.bb, i64 8
   %i.bd = load ptr, ptr %i.bc, align 8
   %.not108 = icmp eq ptr %i.bd, null
-  br i1 %.not108, label %.thread, label %.lr.ph139, !llvm.loop !28
+  br i1 %.not108, label %.thread, label %.lr.ph139, !llvm.loop !27
 
 bb.q:                                             ; preds = %._crit_edge.thread, %._crit_edge
   %i.be = load i32, ptr @hf_per_choice_extension_index, align 4
@@ -1229,7 +1232,7 @@ bb.t:                                             ; preds = %.lr.ph144, %bb.s
   %i.bs = getelementptr i8, ptr %i.br, i64 8
   %i.bt = load ptr, ptr %i.bs, align 8
   %.not111 = icmp eq ptr %i.bt, null
-  br i1 %.not111, label %.thread, label %.lr.ph144, !llvm.loop !29
+  br i1 %.not111, label %.thread, label %.lr.ph144, !llvm.loop !28
 
 .loopexit:                                        ; preds = %bb.n, %bb.r
   %i.bu = phi i32 [ %i.bi, %bb.r ], [ %i.at, %bb.n ]
@@ -1399,7 +1402,7 @@ bb.i:                                             ; preds = %bb.h, %.lr.ph
   %i.ah = getelementptr [24 x i8], ptr %6, i64 %i.ag ; 2 uses
   %i.ai = load ptr, ptr %i.ah, align 8
   %.not192 = icmp eq ptr %i.ai, null
-  br i1 %.not192, label %._crit_edge, label %.lr.ph, !llvm.loop !30
+  br i1 %.not192, label %._crit_edge, label %.lr.ph, !llvm.loop !29
 
 ._crit_edge:                                      ; preds = %bb.i
   %i.aj = icmp ugt i32 %.1167, 128
@@ -1490,7 +1493,7 @@ bb.s:                                             ; preds = %bb.r, %bb.n, %.lr.p
   %i.bj = getelementptr [24 x i8], ptr %6, i64 %i.bi ; 2 uses
   %i.bk = load ptr, ptr %i.bj, align 8            ; 2 uses
   %.not.i205 = icmp eq ptr %i.bk, null
-  br i1 %.not.i205, label %index_get_optional_name.exit, label %.lr.ph.i, !llvm.loop !31
+  br i1 %.not.i205, label %index_get_optional_name.exit, label %.lr.ph.i, !llvm.loop !30
 
 index_get_optional_name.exit:                     ; preds = %bb.s, %bb.m, %bb.p, %bb.q
   %.014.i = phi ptr [ @.str.183, %bb.p ], [ %i.bf, %bb.q ], [ @.str.184, %bb.m ], [ @.str.184, %bb.s ]
@@ -1542,7 +1545,7 @@ bb.x:                                             ; preds = %proto_item_set_hidd
 bb.y:                                             ; preds = %proto_item_set_hidden.exit208, %bb.x
   %i.cf = add nuw i32 %.1174242, 1                ; 2 uses
   %exitcond.not = icmp eq i32 %i.cf, %.1167
-  br i1 %exitcond.not, label %.preheader231.loopexit, label %bb.l, !llvm.loop !32
+  br i1 %exitcond.not, label %.preheader231.loopexit, label %bb.l, !llvm.loop !31
 
 .lr.ph252:                                        ; preds = %.preheader231, %.thread
   %i.cg = phi ptr [ %i.dp, %.thread ], [ %i.aq, %.preheader231 ]
@@ -1625,7 +1628,7 @@ index_get_field_name.exit:                        ; preds = %bb.ae, %bb.af
   %i.do = getelementptr [24 x i8], ptr %6, i64 %i.dn ; 2 uses
   %i.dp = load ptr, ptr %i.do, align 8            ; 2 uses
   %.not193 = icmp eq ptr %i.dp, null
-  br i1 %.not193, label %._crit_edge253, label %.lr.ph252, !llvm.loop !33
+  br i1 %.not193, label %._crit_edge253, label %.lr.ph252, !llvm.loop !32
 
 ._crit_edge253:                                   ; preds = %.thread, %.preheader231.thread, %.preheader231
   %.2181.lcssa = phi i32 [ %.1180.lcssa, %.preheader231 ], [ %.0179, %.preheader231.thread ], [ %.3182, %.thread ] ; 2 uses
@@ -1724,7 +1727,7 @@ bb.ap:                                            ; preds = %bb.ao, %.lr.ph.i213
   %i.eu = getelementptr [24 x i8], ptr %6, i64 %i.et ; 2 uses
   %i.ev = load ptr, ptr %i.eu, align 8            ; 2 uses
   %.not.i215 = icmp eq ptr %i.ev, null
-  br i1 %.not.i215, label %index_get_extension_name.exit, label %.lr.ph.i213, !llvm.loop !34
+  br i1 %.not.i215, label %index_get_extension_name.exit, label %.lr.ph.i213, !llvm.loop !33
 
 index_get_extension_name.exit:                    ; preds = %bb.ap, %bb.aj, %bb.al, %bb.am, %bb.an
   %.016.i = phi ptr [ @.str.183, %bb.am ], [ %i.eq, %bb.an ], [ @.str.185, %bb.al ], [ @.str.184, %bb.aj ], [ @.str.184, %bb.ap ]
@@ -1764,7 +1767,7 @@ proto_item_set_hidden.exit219:                    ; preds = %bb.at, %bb.as, %bb.
   %i.fk = or disjoint i32 %i.fh, %i.fj            ; 2 uses
   %i.fl = add nuw i32 %.3176256, 1
   %exitcond291.not = icmp eq i32 %.3176256, %i.du
-  br i1 %exitcond291.not, label %.preheader229, label %bb.ai, !llvm.loop !35
+  br i1 %exitcond291.not, label %.preheader229, label %bb.ai, !llvm.loop !34
 
 .preheader228:                                    ; preds = %.lr.ph265, %.preheader229
   %.0163.lcssa = phi i32 [ 0, %.preheader229 ], [ %spec.select204, %.lr.ph265 ]
@@ -1788,7 +1791,7 @@ proto_item_set_hidden.exit219:                    ; preds = %bb.at, %bb.as, %bb.
   %i.fu = getelementptr [24 x i8], ptr %6, i64 %i.ft ; 2 uses
   %i.fv = load ptr, ptr %i.fu, align 8
   %.not194 = icmp eq ptr %i.fv, null
-  br i1 %.not194, label %.preheader228, label %.lr.ph265, !llvm.loop !36
+  br i1 %.not194, label %.preheader228, label %.lr.ph265, !llvm.loop !35
 
 bb.au:                                            ; preds = %.lr.ph278, %bb.bg
   %i.fw = phi i32 [ %i.dv, %.lr.ph278 ], [ %i.id, %bb.bg ]
@@ -1845,7 +1848,7 @@ bb.az:                                            ; preds = %.lr.ph270, %bb.ay
   %i.gr = getelementptr [24 x i8], ptr %6, i64 %i.gq ; 2 uses
   %i.gs = load ptr, ptr %i.gr, align 8
   %.not197 = icmp eq ptr %i.gs, null
-  br i1 %.not197, label %._crit_edge271, label %.lr.ph270, !llvm.loop !37
+  br i1 %.not197, label %._crit_edge271, label %.lr.ph270, !llvm.loop !36
 
 ._crit_edge271:                                   ; preds = %bb.az, %bb.ax, %.preheader
   %.0161 = phi i32 [ 0, %.preheader ], [ %.4172268, %bb.ax ], [ 0, %bb.az ] ; 2 uses
@@ -1919,7 +1922,7 @@ bb.bg:                                            ; preds = %bb.bc, %bb.bd, %bb.
   %i.ic = add nuw i32 %.5178276, 1                ; 2 uses
   %i.id = load i32, ptr %i.e, align 4             ; 2 uses
   %i.ie = icmp ult i32 %i.ic, %i.id
-  br i1 %i.ie, label %bb.au, label %._crit_edge279, !llvm.loop !38
+  br i1 %i.ie, label %bb.au, label %._crit_edge279, !llvm.loop !37
 
 ._crit_edge279:                                   ; preds = %bb.bg, %.preheader228
   %.5184.lcssa = phi i32 [ %.4183.lcssa, %.preheader228 ], [ %.7, %bb.bg ]
@@ -1968,7 +1971,7 @@ bb.a:
   %i.k = getelementptr [24 x i8], ptr %4, i64 %i.j ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8
   %.not = icmp eq ptr %i.l, null
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !39
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !38
 
 ._crit_edge:                                      ; preds = %.lr.ph
   %i.m = icmp ugt i32 %spec.select, 128
@@ -2040,7 +2043,7 @@ bb.g:                                             ; preds = %proto_item_set_hidd
 bb.h:                                             ; preds = %bb.g, %proto_item_set_hidden.exit.us
   %i.am = add nuw i32 %.15781.us, 1               ; 2 uses
   %exitcond100.not = icmp eq i32 %i.am, %spec.select
-  br i1 %exitcond100.not, label %.preheader, label %.lr.ph84.split.us, !llvm.loop !40
+  br i1 %exitcond100.not, label %.preheader, label %.lr.ph84.split.us, !llvm.loop !39
 
 .preheader:                                       ; preds = %bb.s, %bb.h, %bb.c
   %.059.lcssa.ph = phi i32 [ %i.u, %bb.h ], [ %1, %bb.c ], [ %i.ao, %bb.s ] ; 2 uses
@@ -2099,7 +2102,7 @@ bb.n:                                             ; preds = %bb.m, %bb.i, %.lr.p
   %i.bf = getelementptr [24 x i8], ptr %4, i64 %i.be ; 2 uses
   %i.bg = load ptr, ptr %i.bf, align 8            ; 2 uses
   %.not.i = icmp eq ptr %i.bg, null
-  br i1 %.not.i, label %index_get_optional_name.exit, label %.lr.ph.i, !llvm.loop !31
+  br i1 %.not.i, label %index_get_optional_name.exit, label %.lr.ph.i, !llvm.loop !30
 
 index_get_optional_name.exit:                     ; preds = %bb.n, %.lr.ph84.split, %bb.k, %bb.l
   %.014.i = phi ptr [ @.str.183, %bb.k ], [ %i.bb, %bb.l ], [ @.str.184, %.lr.ph84.split ], [ @.str.184, %bb.n ]
@@ -2146,7 +2149,7 @@ bb.r:                                             ; preds = %proto_item_set_hidd
 bb.s:                                             ; preds = %proto_item_set_hidden.exit, %bb.r
   %i.bz = add nuw i32 %.15781, 1                  ; 2 uses
   %exitcond.not = icmp eq i32 %i.bz, %spec.select
-  br i1 %exitcond.not, label %.preheader, label %.lr.ph84.split, !llvm.loop !40
+  br i1 %exitcond.not, label %.preheader, label %.lr.ph84.split, !llvm.loop !39
 
 .lr.ph91:                                         ; preds = %.preheader, %.thread
   %i.ca = phi ptr [ %i.dh, %.thread ], [ %.pr, %.preheader ]
@@ -2227,7 +2230,7 @@ index_get_field_name.exit:                        ; preds = %bb.x, %bb.y, %bb.z
   %i.dg = getelementptr [24 x i8], ptr %4, i64 %i.df ; 2 uses
   %i.dh = load ptr, ptr %i.dg, align 8            ; 2 uses
   %.not63 = icmp eq ptr %i.dh, null
-  br i1 %.not63, label %._crit_edge92, label %.lr.ph91, !llvm.loop !41
+  br i1 %.not63, label %._crit_edge92, label %.lr.ph91, !llvm.loop !40
 
 ._crit_edge92:                                    ; preds = %.thread, %bb.a, %.preheader
   %.160.lcssa = phi i32 [ %.059.lcssa.ph, %.preheader ], [ %1, %bb.a ], [ %.261, %.thread ]
@@ -2630,7 +2633,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.x, !llvm.loop !42
+  br i1 %exitcond.not, label %.loopexit, label %bb.x, !llvm.loop !41
 
 .loopexit:                                        ; preds = %bb.ab, %bb.w, %bb.v, %bb.f
   %i.cn = load ptr, ptr %i.i, align 8
@@ -3033,7 +3036,7 @@ attributes #15 = { nounwind willreturn memory(read) }
 !21 = distinct !{!21, !9, !11}
 !22 = distinct !{!22, !9, !11}
 !23 = distinct !{!23, !9}
-!24 = distinct !{!24, !9, !11}
+!24 = distinct !{!24, !9}
 !25 = distinct !{!25, !9}
 !26 = distinct !{!26, !9}
 !27 = distinct !{!27, !9}
@@ -3051,5 +3054,4 @@ attributes #15 = { nounwind willreturn memory(read) }
 !39 = distinct !{!39, !9}
 !40 = distinct !{!40, !9}
 !41 = distinct !{!41, !9}
-!42 = distinct !{!42, !9}
 end_hunk_3

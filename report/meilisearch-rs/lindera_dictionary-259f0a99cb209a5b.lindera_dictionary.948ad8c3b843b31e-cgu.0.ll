@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/meilisearch-rs/original/lindera_dictionary-259f0a99cb209a5b.lindera_dictionary.948ad8c3b843b31e-cgu.0?download=true
 inline.NumInlined: 4519
 inline.NumDeleted: 2001
-loop-unroll.NumCompletelyUnrolled: 17
+loop-unroll.NumCompletelyUnrolled: 18
 loop-unroll.NumRuntimeUnrolled: 24
-loop-unroll.NumUnrolled: 41
+loop-unroll.NumUnrolled: 42
 begin_hunk_0_@_ZN18lindera_dictionary10dictionary18unknown_dictionary17UnknownDictionary4load17h4b1400551000445aE:bb.a
   br label %.sink.split.i
 
@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.split
   br i1 %i.aq, label %_ZN4core5slice6memchr6memchr17h42eb1bd28cc17905E.exit.thread24.i.i, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i
-  %i.ar = add nuw i64 %.sroa.01.05.i.i.i, 1       ; 2 uses
+  %i.ar = add nuw nsw i64 %.sroa.01.05.i.i.i, 1   ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.ar, %i.al
   br i1 %exitcond.not.i.i.i, label %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h17c433ea5c23113bE.exit.i.sink.split", label %.lr.ph.i.i.i
 
@@ -608,7 +608,7 @@ bb.y:                                             ; preds = %bb.aa, %.lr.ph.spli
   br i1 %i.gh, label %_ZN4core5slice6memchr6memchr17h42eb1bd28cc17905E.exit.thread24.i.i.i.i.i.i.i, label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i.i
-  %i.gi = add nuw i64 %.sroa.01.05.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.gi = add nuw nsw i64 %.sroa.01.05.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.gi, %i.gc
   br i1 %exitcond.not.i.i.i.i.i.i.i.i, label %select.unfold.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i
 
@@ -748,7 +748,7 @@ bb.ac:                                            ; preds = %bb.ae, %.lr.ph.i.i.
   br i1 %i.hq, label %_ZN4core5slice6memchr6memchr17h42eb1bd28cc17905E.exit.thread24.i.i.i.i.i.i.i.i.i, label %bb.ad
 
 bb.ad:                                            ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i
-  %i.hr = add nuw i64 %.sroa.01.05.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
+  %i.hr = add nuw nsw i64 %.sroa.01.05.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.hr, %i.hl
   br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i, label %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h17c433ea5c23113bE.exit.i.i.i.i.i.i.i.i", label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
@@ -1151,7 +1151,7 @@ bb.k:                                             ; preds = %bb.m, %.lr.ph.split
   br i1 %i.dp, label %_ZN4core5slice6memchr6memchr17h42eb1bd28cc17905E.exit.thread24.i.i.i, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph.i.i.i.i
-  %i.dq = add nuw i64 %.sroa.01.05.i.i.i.i, 1     ; 2 uses
+  %i.dq = add nuw nsw i64 %.sroa.01.05.i.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %i.dq, %i.dk
   br i1 %exitcond.not.i.i.i.i, label %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h17c433ea5c23113bE.exit.i.i.sink.split", label %.lr.ph.i.i.i.i
 
@@ -1272,7 +1272,7 @@ bb.o:                                             ; preds = %"_ZN4core5slice29_$
   br i1 %i.ey, label %_ZN4core5slice6memchr6memchr17h42eb1bd28cc17905E.exit.thread24.i.i85.i, label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph.i.i.i94.i
-  %i.ez = add nuw i64 %.sroa.01.05.i.i.i95.i, 1   ; 2 uses
+  %i.ez = add nuw nsw i64 %.sroa.01.05.i.i.i95.i, 1 ; 2 uses
   %exitcond.not.i.i.i96.i = icmp eq i64 %i.ez, %i.et
   br i1 %exitcond.not.i.i.i96.i, label %"_ZN4core3str4iter22SplitInternal$LT$P$GT$4next17h0583ab8b2c96f1b7E.exit.thread.i", label %.lr.ph.i.i.i94.i
 
@@ -1675,7 +1675,7 @@ bb.j:                                             ; preds = %bb.l, %.lr.ph.split
   br i1 %i.bl, label %_ZN4core5slice6memchr6memchr17h42eb1bd28cc17905E.exit.thread24.i.i, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph.i.i.i
-  %i.bm = add nuw i64 %.sroa.01.05.i.i.i, 1       ; 2 uses
+  %i.bm = add nuw nsw i64 %.sroa.01.05.i.i.i, 1   ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.bm, %i.bg
   br i1 %exitcond.not.i.i.i, label %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h17c433ea5c23113bE.exit.i.sink.split", label %.lr.ph.i.i.i
 
@@ -2078,12 +2078,12 @@ select.unfold.i.i.i:                              ; preds = %"_ZN4core3str4iter2
   %.pre.i.i.i19.i.i.i = phi i64 [ %i.lj, %bb.bx ], [ %.pre.i.i.i20.i.i.i, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h5b25cc8c060053d3E.exit.i.i.i.i.i" ]
   %i.md = phi i8 [ 0, %bb.bx ], [ 1, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h5b25cc8c060053d3E.exit.i.i.i.i.i" ]
   %.pn28.i.i.i = phi i64 [ %i.ju, %bb.bx ], [ %.pre2.i.i.i.i.i.i, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h5b25cc8c060053d3E.exit.i.i.i.i.i" ]
-  %.sroa.4.1.i.i.i.i.i = sub nuw i64 %.pn28.i.i.i, %.pre.i.i.i20.i.i.i ; 9 uses
+  %.sroa.4.1.i.i.i.i.i = sub nuw i64 %.pn28.i.i.i, %.pre.i.i.i20.i.i.i ; 15 uses
   %.not.i.i.i.i316 = icmp eq i64 %.sroa.4.1.i.i.i.i.i, 0
   br i1 %.not.i.i.i.i316, label %bb.bm, label %bb.by
 
 bb.by:                                            ; preds = %select.unfold.i.i.i
-  %.sroa.0.1.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i, i64 %.pre.i.i.i20.i.i.i ; 5 uses
+  %.sroa.0.1.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i, i64 %.pre.i.i.i20.i.i.i ; 11 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !6923), !noalias !6852
   %cond = icmp eq i64 %.sroa.4.1.i.i.i.i.i, 1
   %i.me = load i8, ptr %.sroa.0.1.i.i.i.i.i, align 1, !alias.scope !6926, !noalias !6933 ; 2 uses
@@ -2109,7 +2109,7 @@ bb.ca:                                            ; preds = %thread-pre-split.i.
 
 bb.cb:                                            ; preds = %thread-pre-split.i.i.i.i.i.i.i.i
   %i.mi = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i.i, i64 1 ; 2 uses
-  %i.mj = add i64 %.sroa.4.1.i.i.i.i.i, -1        ; 3 uses
+  %i.mj = add i64 %.sroa.4.1.i.i.i.i.i, -1        ; 2 uses
   %i.mk = icmp ult i64 %.sroa.4.1.i.i.i.i.i, 9
   %.not91118.i.i.i.i.i.i.i.i = icmp eq i64 %i.mj, 0 ; 2 uses
   br i1 %i.mk, label %.preheader105.i.i.i.i.i.i.i.i, label %.preheader108.i.i.i.i.i.i.i.i.preheader
@@ -2118,7 +2118,7 @@ bb.cb:                                            ; preds = %thread-pre-split.i.
   br i1 %.not91118.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i, label %.lr.ph937
 
 .preheader105.i.i.i.i.i.i.i.i:                    ; preds = %bb.cb
-  br i1 %.not91118.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.a
+  br i1 %.not91118.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i
 
 bb.cc:                                            ; preds = %bb.cg
   %i.ml = getelementptr inbounds nuw i8, ptr %.sroa.03.0.i.i.i.i.i.i.i.i941, i64 1
@@ -2134,8 +2134,8 @@ bb.cc:                                            ; preds = %bb.cg
   %.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.mp, 0
   br i1 %.not.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i, label %.lr.ph937
 
-.loopexit.i.i.i.i.i.i.i.i:                        ; preds = %.preheader108.i.i.i.i.i.i.i.i, %bb.ce, %bb.cc, %bb.ch, %.preheader108.i.i.i.i.i.i.i.i.preheader, %.preheader102.i.i.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i.i.i, %.preheader105.i.i.i.i.i.i.i.i
-  %.sroa.033.3.i.i.i.i.i.i.i.i = phi i32 [ %8, %bb.ce ], [ %i.ny, %bb.ch ], [ %i.mn, %bb.cc ], [ 0, %.preheader.i.i.i.i.i.i.i.i ], [ 0, %.preheader105.i.i.i.i.i.i.i.i ], [ 0, %.preheader102.i.i.i.i.i.i.i.i ], [ 0, %.preheader108.i.i.i.i.i.i.i.i.preheader ], [ %i.mq, %.preheader108.i.i.i.i.i.i.i.i ]
+.loopexit.i.i.i.i.i.i.i.i:                        ; preds = %.preheader108.i.i.i.i.i.i.i.i, %8, %16, %24, %32, %40, %44, %52, %bb.cc, %bb.ch, %.preheader108.i.i.i.i.i.i.i.i.preheader, %.preheader102.i.i.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i.i.i, %.preheader105.i.i.i.i.i.i.i.i
+  %.sroa.033.3.i.i.i.i.i.i.i.i = phi i32 [ %54, %52 ], [ %i.ny, %bb.ch ], [ %i.mn, %bb.cc ], [ 0, %.preheader.i.i.i.i.i.i.i.i ], [ 0, %.preheader105.i.i.i.i.i.i.i.i ], [ 0, %.preheader102.i.i.i.i.i.i.i.i ], [ 0, %.preheader108.i.i.i.i.i.i.i.i.preheader ], [ %10, %8 ], [ %18, %16 ], [ %26, %24 ], [ %34, %32 ], [ %42, %40 ], [ %46, %44 ], [ %i.mq, %.preheader108.i.i.i.i.i.i.i.i ]
   %i.mr = zext i32 %.sroa.033.3.i.i.i.i.i.i.i.i to i64
   %i.ms = shl nuw i64 %i.mr, 32
   br label %_ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.i.i.i.i.i
@@ -2167,28 +2167,105 @@ bb.cd:                                            ; preds = %.lr.ph937
   %.mux.le.i.i.i.i.i.i.i.i = select i1 %i.my, i64 256, i64 768
   br label %.loopexit101.i.i.i.i.i.i.i.i
 
-.loopexit101.i.i.i.i.i.i.i.i:                     ; preds = %bb.cd, %.lr.ph.i.i.i.i.i.i.i.i.a, %bb.cg, %.lr.ph129.i.i.i.i.i.i.i.i, %.loopexit110.split.loop.exit116.i.i.i.i.i.i.i.i, %.loopexit104.split.loop.exit122.i.i.i.i.i.i.i.i
-  %.sroa.12.2.i.i.i.i.i.i.i.i = phi i64 [ 256, %.lr.ph129.i.i.i.i.i.i.i.i ], [ 512, %bb.cg ], [ 256, %.lr.ph.i.i.i.i.i.i.i.i.a ], [ %.mux97.le.i.i.i.i.i.i.i.i, %.loopexit104.split.loop.exit122.i.i.i.i.i.i.i.i ], [ %.mux.le.i.i.i.i.i.i.i.i, %.loopexit110.split.loop.exit116.i.i.i.i.i.i.i.i ], [ 768, %bb.cd ]
+.loopexit101.i.i.i.i.i.i.i.i:                     ; preds = %bb.cd, %.lr.ph.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.1, %.lr.ph.i.i.i.i.i.i.i.i.2, %.lr.ph.i.i.i.i.i.i.i.i.3, %.lr.ph.i.i.i.i.i.i.i.i.4, %.lr.ph.i.i.i.i.i.i.i.i.a, %bb.ce, %bb.cg, %.lr.ph129.i.i.i.i.i.i.i.i, %.loopexit110.split.loop.exit116.i.i.i.i.i.i.i.i, %.loopexit104.split.loop.exit122.i.i.i.i.i.i.i.i
+  %.sroa.12.2.i.i.i.i.i.i.i.i = phi i64 [ 256, %.lr.ph129.i.i.i.i.i.i.i.i ], [ 512, %bb.cg ], [ 256, %.lr.ph.i.i.i.i.i.i.i.i ], [ %.mux97.le.i.i.i.i.i.i.i.i, %.loopexit104.split.loop.exit122.i.i.i.i.i.i.i.i ], [ %.mux.le.i.i.i.i.i.i.i.i, %.loopexit110.split.loop.exit116.i.i.i.i.i.i.i.i ], [ 256, %bb.ce ], [ 256, %.lr.ph.i.i.i.i.i.i.i.i.a ], [ 256, %.lr.ph.i.i.i.i.i.i.i.i.4 ], [ 256, %.lr.ph.i.i.i.i.i.i.i.i.3 ], [ 256, %.lr.ph.i.i.i.i.i.i.i.i.2 ], [ 256, %.lr.ph.i.i.i.i.i.i.i.i.1 ], [ 768, %bb.cd ]
   %i.nc = or disjoint i64 %.sroa.12.2.i.i.i.i.i.i.i.i, 1
   br label %_ZN4core3ops8function5FnMut8call_mut17ha5c257e1a5640fcdE.exit.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i.i.i.a:                         ; preds = %.preheader105.i.i.i.i.i.i.i.i, %bb.ce
-  %.sroa.03.3121.i.i.i.i.i.i.i.i = phi ptr [ %7, %bb.ce ], [ %i.mi, %.preheader105.i.i.i.i.i.i.i.i ] ; 2 uses
-  %.sroa.27.3120.i.i.i.i.i.i.i.i = phi i64 [ %6, %bb.ce ], [ %i.mj, %.preheader105.i.i.i.i.i.i.i.i ]
-  %.sroa.033.4119.i.i.i.i.i.i.i.i = phi i32 [ %8, %bb.ce ], [ 0, %.preheader105.i.i.i.i.i.i.i.i ]
-  %i.nd = load i8, ptr %.sroa.03.3121.i.i.i.i.i.i.i.i, align 1, !alias.scope !6926, !noalias !6933, !noundef !6
+.lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %.preheader105.i.i.i.i.i.i.i.i
+  %5 = load i8, ptr %i.mi, align 1, !alias.scope !6926, !noalias !6933, !noundef !6 ; 2 uses
+  %6 = add i8 %5, -48
+  %7 = icmp ult i8 %6, 10
+  br i1 %7, label %8, label %.loopexit101.i.i.i.i.i.i.i.i
+
+8:                                                ; preds = %.lr.ph.i.i.i.i.i.i.i.i
+  %9 = zext i8 %5 to i32
+  %10 = sub nsw i32 48, %9                        ; 2 uses
+  %.not91.i.i.i.i.i.i.i.i = icmp eq i64 %.sroa.4.1.i.i.i.i.i, 2
+  br i1 %.not91.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.1
+
+.lr.ph.i.i.i.i.i.i.i.i.1:                         ; preds = %8
+  %11 = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i.i, i64 2
+  %12 = load i8, ptr %11, align 1, !alias.scope !6926, !noalias !6933, !noundef !6
+  %13 = zext i8 %12 to i32
+  %14 = add nsw i32 %13, -48                      ; 2 uses
+  %15 = icmp ult i32 %14, 10
+  br i1 %15, label %16, label %.loopexit101.i.i.i.i.i.i.i.i
+
+16:                                               ; preds = %.lr.ph.i.i.i.i.i.i.i.i.1
+  %17 = mul nsw i32 %10, 10
+  %18 = sub nsw i32 %17, %14                      ; 2 uses
+  %.not91.i.i.i.i.i.i.i.i.1 = icmp eq i64 %.sroa.4.1.i.i.i.i.i, 3
+  br i1 %.not91.i.i.i.i.i.i.i.i.1, label %.loopexit.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.2
+
+.lr.ph.i.i.i.i.i.i.i.i.2:                         ; preds = %16
+  %19 = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i.i, i64 3
+  %20 = load i8, ptr %19, align 1, !alias.scope !6926, !noalias !6933, !noundef !6
+  %21 = zext i8 %20 to i32
+  %22 = add nsw i32 %21, -48                      ; 2 uses
+  %23 = icmp ult i32 %22, 10
+  br i1 %23, label %24, label %.loopexit101.i.i.i.i.i.i.i.i
+
+24:                                               ; preds = %.lr.ph.i.i.i.i.i.i.i.i.2
+  %25 = mul nsw i32 %18, 10
+  %26 = sub nsw i32 %25, %22                      ; 2 uses
+  %.not91.i.i.i.i.i.i.i.i.2 = icmp eq i64 %.sroa.4.1.i.i.i.i.i, 4
+  br i1 %.not91.i.i.i.i.i.i.i.i.2, label %.loopexit.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.3
+
+.lr.ph.i.i.i.i.i.i.i.i.3:                         ; preds = %24
+  %27 = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i.i, i64 4
+  %28 = load i8, ptr %27, align 1, !alias.scope !6926, !noalias !6933, !noundef !6
+  %29 = zext i8 %28 to i32
+  %30 = add nsw i32 %29, -48                      ; 2 uses
+  %31 = icmp ult i32 %30, 10
+  br i1 %31, label %32, label %.loopexit101.i.i.i.i.i.i.i.i
+
+32:                                               ; preds = %.lr.ph.i.i.i.i.i.i.i.i.3
+  %33 = mul nsw i32 %26, 10
+  %34 = sub i32 %33, %30                          ; 2 uses
+  %.not91.i.i.i.i.i.i.i.i.3 = icmp eq i64 %.sroa.4.1.i.i.i.i.i, 5
+  br i1 %.not91.i.i.i.i.i.i.i.i.3, label %.loopexit.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.4
+
+.lr.ph.i.i.i.i.i.i.i.i.4:                         ; preds = %32
+  %35 = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i.i, i64 5
+  %36 = load i8, ptr %35, align 1, !alias.scope !6926, !noalias !6933, !noundef !6
+  %37 = zext i8 %36 to i32
+  %38 = add nsw i32 %37, -48                      ; 2 uses
+  %39 = icmp ult i32 %38, 10
+  br i1 %39, label %40, label %.loopexit101.i.i.i.i.i.i.i.i
+
+40:                                               ; preds = %.lr.ph.i.i.i.i.i.i.i.i.4
+  %41 = mul i32 %34, 10
+  %42 = sub i32 %41, %38                          ; 2 uses
+  %.not91.i.i.i.i.i.i.i.i.4 = icmp eq i64 %.sroa.4.1.i.i.i.i.i, 6
+  br i1 %.not91.i.i.i.i.i.i.i.i.4, label %.loopexit.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.a
+
+.lr.ph.i.i.i.i.i.i.i.i.a:                         ; preds = %40
+  %43 = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i.i, i64 6
+  %i.nd = load i8, ptr %43, align 1, !alias.scope !6926, !noalias !6933, !noundef !6
   %i.ne = zext i8 %i.nd to i32
   %i.nf = add nsw i32 %i.ne, -48                  ; 2 uses
   %i.ng = icmp ult i32 %i.nf, 10
-  br i1 %i.ng, label %bb.ce, label %.loopexit101.i.i.i.i.i.i.i.i
+  br i1 %i.ng, label %44, label %.loopexit101.i.i.i.i.i.i.i.i
 
-bb.ce:                                            ; preds = %.lr.ph.i.i.i.i.i.i.i.i.a
-  %5 = mul i32 %.sroa.033.4119.i.i.i.i.i.i.i.i, 10
-  %6 = add nsw i64 %.sroa.27.3120.i.i.i.i.i.i.i.i, -1 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.03.3121.i.i.i.i.i.i.i.i, i64 1
-  %8 = sub i32 %5, %i.nf                          ; 2 uses
-  %.not91.i.i.i.i.i.i.i.i = icmp eq i64 %6, 0
-  br i1 %.not91.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.a
+44:                                               ; preds = %.lr.ph.i.i.i.i.i.i.i.i.a
+  %45 = mul i32 %42, 10
+  %46 = sub i32 %45, %i.nf                        ; 2 uses
+  %.not91.i.i.i.i.i.i.i.i.5 = icmp eq i64 %.sroa.4.1.i.i.i.i.i, 7
+  br i1 %.not91.i.i.i.i.i.i.i.i.5, label %.loopexit.i.i.i.i.i.i.i.i, label %bb.ce
+
+bb.ce:                                            ; preds = %44
+  %47 = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i.i.i.i.i, i64 7
+  %48 = load i8, ptr %47, align 1, !alias.scope !6926, !noalias !6933, !noundef !6
+  %49 = zext i8 %48 to i32
+  %50 = add nsw i32 %49, -48                      ; 2 uses
+  %51 = icmp ult i32 %50, 10
+  br i1 %51, label %52, label %.loopexit101.i.i.i.i.i.i.i.i
+
+52:                                               ; preds = %bb.ce
+  %53 = mul i32 %46, 10
+  %54 = sub i32 %53, %50
+  br label %.loopexit.i.i.i.i.i.i.i.i
 
 bb.cf:                                            ; preds = %bb.bz, %thread-pre-split.i.i.i.i.i.i.i.i
   %i.nh = icmp ult i64 %.sroa.4.1.i.i.i.i.i, 8
@@ -2591,7 +2668,7 @@ bb.g:                                             ; preds = %bb.i, %.lr.ph.split
   br i1 %i.x, label %_ZN4core5slice6memchr6memchr17h42eb1bd28cc17905E.exit.thread24.i, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph.i.i
-  %i.y = add nuw i64 %.sroa.01.05.i.i, 1          ; 2 uses
+  %i.y = add nuw nsw i64 %.sroa.01.05.i.i, 1      ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.y, %i.s
   br i1 %exitcond.not.i.i, label %.critedge24, label %.lr.ph.i.i
 

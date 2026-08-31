@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/quick_xml-bc3eeb8a35a1fd08.quick_xml.1ac36040eb2affe1-cgu.00?download=true
 inline.NumInlined: 172
 inline.NumDeleted: 59
-loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_RNvNtCs2isvxI5XMib_9quick_xml6escape12parse_number:bb.a
   store i32 120, ptr %i.a, align 4
   %i.b = call noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_withCs2isvxI5XMib_9quick_xml(ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.a, i64 noundef 1)
@@ -205,9 +205,9 @@ bb.p:                                             ; preds = %_RNvMsB_NtCs4NRVxsY
   %i.by = icmp eq i64 %.sroa.058.0.in, 0
   br i1 %i.by, label %bb.v, label %bb.u
 
-_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread: ; preds = %bb.g, %bb.f, %.lr.ph.split.us.i, %.lr.ph.split.us.i.1, %.lr.ph.split.us.i.2, %.lr.ph.split.us.i.3, %.lr.ph.split.us.i.4, %.lr.ph.split.us.i.5, %.lr.ph.split.us.i.6, %.lr.ph.split.us.i.7, %bb.s, %.lr.ph.split.i.a, %bb.r, %bb.e, %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit140, %bb.c, %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit, %bb.b, %bb.q, %bb.q, %bb.d, %bb.d
-  %.sroa.6.sroa.0.0.in = phi i64 [ 0, %bb.d ], [ 0, %bb.q ], [ 0, %bb.d ], [ 257, %bb.s ], [ 0, %bb.q ], [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit ], [ 257, %bb.r ], [ 257, %.lr.ph.split.us.i ], [ 1, %bb.b ], [ 257, %bb.e ], [ 257, %.lr.ph.split.i.a ], [ %.sroa.8.0.insert.insert.i125, %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit140 ], [ 1, %bb.c ], [ 257, %.lr.ph.split.us.i.7 ], [ 257, %.lr.ph.split.us.i.6 ], [ 257, %.lr.ph.split.us.i.5 ], [ 257, %.lr.ph.split.us.i.4 ], [ 257, %.lr.ph.split.us.i.3 ], [ 257, %.lr.ph.split.us.i.2 ], [ 257, %.lr.ph.split.us.i.1 ], [ 513, %bb.g ], [ 257, %bb.f ]
-  %.sroa.0.0 = phi i64 [ 0, %bb.d ], [ 0, %bb.q ], [ 0, %bb.d ], [ 1, %bb.s ], [ 0, %bb.q ], [ 1, %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit ], [ 1, %bb.r ], [ 1, %.lr.ph.split.us.i ], [ 1, %bb.b ], [ 1, %bb.e ], [ 1, %.lr.ph.split.i.a ], [ 1, %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit140 ], [ 1, %bb.c ], [ 1, %.lr.ph.split.us.i.7 ], [ 1, %.lr.ph.split.us.i.6 ], [ 1, %.lr.ph.split.us.i.5 ], [ 1, %.lr.ph.split.us.i.4 ], [ 1, %.lr.ph.split.us.i.3 ], [ 1, %.lr.ph.split.us.i.2 ], [ 1, %.lr.ph.split.us.i.1 ], [ 1, %bb.f ], [ 1, %bb.g ]
+_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread: ; preds = %bb.g, %bb.f, %.lr.ph.split.us.i, %.lr.ph.split.us.i.1, %.lr.ph.split.us.i.2, %.lr.ph.split.us.i.3, %.lr.ph.split.us.i.4, %.lr.ph.split.us.i.5, %.lr.ph.split.us.i.6, %.lr.ph.split.us.i.7, %bb.s, %.lr.ph.split.i, %.lr.ph.split.i.1, %.lr.ph.split.i.2, %.lr.ph.split.i.3, %.lr.ph.split.i.4, %.lr.ph.split.i.5, %.lr.ph.split.i.a, %bb.t, %bb.r, %bb.e, %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit140, %bb.c, %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit, %bb.b, %bb.q, %bb.q, %bb.d, %bb.d
+  %.sroa.6.sroa.0.0.in = phi i64 [ 0, %bb.d ], [ 0, %bb.q ], [ 0, %bb.d ], [ 257, %bb.s ], [ 0, %bb.q ], [ %.sroa.8.0.insert.insert.i, %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit ], [ 257, %bb.r ], [ 257, %.lr.ph.split.us.i ], [ 1, %bb.b ], [ 257, %bb.e ], [ 257, %.lr.ph.split.i ], [ %.sroa.8.0.insert.insert.i125, %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit140 ], [ 1, %bb.c ], [ 257, %bb.t ], [ 257, %.lr.ph.split.i.a ], [ 257, %.lr.ph.split.i.5 ], [ 257, %.lr.ph.split.i.4 ], [ 257, %.lr.ph.split.i.3 ], [ 257, %.lr.ph.split.i.2 ], [ 257, %.lr.ph.split.i.1 ], [ 257, %.lr.ph.split.us.i.7 ], [ 257, %.lr.ph.split.us.i.6 ], [ 257, %.lr.ph.split.us.i.5 ], [ 257, %.lr.ph.split.us.i.4 ], [ 257, %.lr.ph.split.us.i.3 ], [ 257, %.lr.ph.split.us.i.2 ], [ 257, %.lr.ph.split.us.i.1 ], [ 513, %bb.g ], [ 257, %bb.f ]
+  %.sroa.0.0 = phi i64 [ 0, %bb.d ], [ 0, %bb.q ], [ 0, %bb.d ], [ 1, %bb.s ], [ 0, %bb.q ], [ 1, %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit ], [ 1, %bb.r ], [ 1, %.lr.ph.split.us.i ], [ 1, %bb.b ], [ 1, %bb.e ], [ 1, %.lr.ph.split.i ], [ 1, %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit140 ], [ 1, %bb.c ], [ 1, %bb.t ], [ 1, %.lr.ph.split.i.a ], [ 1, %.lr.ph.split.i.5 ], [ 1, %.lr.ph.split.i.4 ], [ 1, %.lr.ph.split.i.3 ], [ 1, %.lr.ph.split.i.2 ], [ 1, %.lr.ph.split.i.1 ], [ 1, %.lr.ph.split.us.i.7 ], [ 1, %.lr.ph.split.us.i.6 ], [ 1, %.lr.ph.split.us.i.5 ], [ 1, %.lr.ph.split.us.i.4 ], [ 1, %.lr.ph.split.us.i.3 ], [ 1, %.lr.ph.split.us.i.2 ], [ 1, %.lr.ph.split.us.i.1 ], [ 1, %bb.f ], [ 1, %bb.g ]
   %i.bz = and i64 %.sroa.6.sroa.0.0.in, 65280
   br label %bb.v
 
@@ -227,15 +227,15 @@ bb.r:                                             ; preds = %bb.q
 thread-pre-split.i138:                            ; preds = %bb.r
   %cond.i126 = icmp eq i8 %i.ca, 43               ; 2 uses
   %i.cb = sext i1 %cond.i126 to i64
-  %.sroa.15.0.i127 = add nsw i64 %i.c, %i.cb      ; 4 uses
+  %.sroa.15.0.i127 = add nsw i64 %i.c, %i.cb      ; 10 uses
   %.sroa.0.0.idx.i128 = zext i1 %cond.i126 to i64
-  %.sroa.0.0.i129 = getelementptr inbounds nuw i8, ptr %i.d, i64 %.sroa.0.0.idx.i128 ; 2 uses
+  %.sroa.0.0.i129 = getelementptr inbounds nuw i8, ptr %i.d, i64 %.sroa.0.0.idx.i128 ; 9 uses
   %i.cc = icmp samesign ult i64 %.sroa.15.0.i127, 9
   br i1 %i.cc, label %.preheader.i135, label %.preheader64.split.i.preheader
 
 .preheader.i135:                                  ; preds = %thread-pre-split.i138
   %.not5674.i136 = icmp eq i64 %.sroa.15.0.i127, 0
-  br i1 %.not5674.i136, label %.loopexit.i133, label %.lr.ph.split.i.a
+  br i1 %.not5674.i136, label %.loopexit.i133, label %.lr.ph.split.i
 
 .preheader64.split.i:                             ; preds = %bb.s
   %i.cd = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i162, i64 1
@@ -245,8 +245,8 @@ thread-pre-split.i138:                            ; preds = %bb.r
   %.not55.i = icmp eq i64 %i.ce, 0
   br i1 %.not55.i, label %.loopexit.i133, label %.preheader64.split.i.preheader
 
-.loopexit.i133:                                   ; preds = %.preheader64.split.i, %bb.t, %.preheader.i135
-  %.sroa.045.1.i134 = phi i32 [ %5, %bb.t ], [ 0, %.preheader.i135 ], [ %i.cg, %.preheader64.split.i ]
+.loopexit.i133:                                   ; preds = %.preheader64.split.i, %10, %20, %32, %44, %56, %68, %72, %84, %.preheader.i135
+  %.sroa.045.1.i134 = phi i32 [ %86, %84 ], [ 0, %.preheader.i135 ], [ %spec.select82.i, %10 ], [ %22, %20 ], [ %34, %32 ], [ %46, %44 ], [ %58, %56 ], [ %70, %68 ], [ %74, %72 ], [ %i.cg, %.preheader64.split.i ]
   %i.ch = zext i32 %.sroa.045.1.i134 to i64
   %i.ci = shl nuw i64 %i.ch, 32
   br label %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit140
@@ -278,11 +278,120 @@ bb.s:                                             ; preds = %.preheader64.split.
   %spec.select.i132 = select i1 %i.cu, i64 513, i64 257
   br label %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit140
 
-.lr.ph.split.i.a:                                 ; preds = %.preheader.i135, %bb.t
-  %.sroa.0.277.i = phi ptr [ %4, %bb.t ], [ %.sroa.0.0.i129, %.preheader.i135 ] ; 2 uses
-  %.sroa.15.276.i = phi i64 [ %3, %bb.t ], [ %.sroa.15.0.i127, %.preheader.i135 ]
-  %.sroa.045.275.i = phi i32 [ %5, %bb.t ], [ 0, %.preheader.i135 ]
-  %i.cv = load i8, ptr %.sroa.0.277.i, align 1, !alias.scope !398, !noundef !6 ; 2 uses
+.lr.ph.split.i:                                   ; preds = %.preheader.i135
+  %2 = load i8, ptr %.sroa.0.0.i129, align 1, !alias.scope !398, !noundef !6 ; 2 uses
+  %3 = zext i8 %2 to i32                          ; 2 uses
+  %4 = icmp ugt i8 %2, 57
+  %5 = add nsw i32 %3, -65
+  %6 = and i32 %5, -33
+  %7 = add nuw nsw i32 %6, 10
+  %8 = add nsw i32 %3, -48
+  %spec.select82.i = select i1 %4, i32 %7, i32 %8 ; 3 uses
+  %9 = icmp ult i32 %spec.select82.i, 16
+  br i1 %9, label %10, label %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread
+
+10:                                               ; preds = %.lr.ph.split.i
+  %.not56.i = icmp eq i64 %.sroa.15.0.i127, 1
+  br i1 %.not56.i, label %.loopexit.i133, label %.lr.ph.split.i.1
+
+.lr.ph.split.i.1:                                 ; preds = %10
+  %11 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i129, i64 1
+  %12 = load i8, ptr %11, align 1, !alias.scope !398, !noundef !6 ; 2 uses
+  %13 = zext i8 %12 to i32                        ; 2 uses
+  %14 = icmp ugt i8 %12, 57
+  %15 = add nsw i32 %13, -65
+  %16 = and i32 %15, -33
+  %17 = add nuw nsw i32 %16, 10
+  %18 = add nsw i32 %13, -48
+  %spec.select82.i.1 = select i1 %14, i32 %17, i32 %18 ; 2 uses
+  %19 = icmp ult i32 %spec.select82.i.1, 16
+  br i1 %19, label %20, label %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread
+
+20:                                               ; preds = %.lr.ph.split.i.1
+  %21 = shl nuw nsw i32 %spec.select82.i, 4
+  %22 = or disjoint i32 %spec.select82.i.1, %21   ; 2 uses
+  %.not56.i.1 = icmp eq i64 %.sroa.15.0.i127, 2
+  br i1 %.not56.i.1, label %.loopexit.i133, label %.lr.ph.split.i.2
+
+.lr.ph.split.i.2:                                 ; preds = %20
+  %23 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i129, i64 2
+  %24 = load i8, ptr %23, align 1, !alias.scope !398, !noundef !6 ; 2 uses
+  %25 = zext i8 %24 to i32                        ; 2 uses
+  %26 = icmp ugt i8 %24, 57
+  %27 = add nsw i32 %25, -65
+  %28 = and i32 %27, -33
+  %29 = add nuw nsw i32 %28, 10
+  %30 = add nsw i32 %25, -48
+  %spec.select82.i.2 = select i1 %26, i32 %29, i32 %30 ; 2 uses
+  %31 = icmp ult i32 %spec.select82.i.2, 16
+  br i1 %31, label %32, label %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread
+
+32:                                               ; preds = %.lr.ph.split.i.2
+  %33 = shl nuw nsw i32 %22, 4
+  %34 = or disjoint i32 %spec.select82.i.2, %33   ; 2 uses
+  %.not56.i.2 = icmp eq i64 %.sroa.15.0.i127, 3
+  br i1 %.not56.i.2, label %.loopexit.i133, label %.lr.ph.split.i.3
+
+.lr.ph.split.i.3:                                 ; preds = %32
+  %35 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i129, i64 3
+  %36 = load i8, ptr %35, align 1, !alias.scope !398, !noundef !6 ; 2 uses
+  %37 = zext i8 %36 to i32                        ; 2 uses
+  %38 = icmp ugt i8 %36, 57
+  %39 = add nsw i32 %37, -65
+  %40 = and i32 %39, -33
+  %41 = add nuw nsw i32 %40, 10
+  %42 = add nsw i32 %37, -48
+  %spec.select82.i.3 = select i1 %38, i32 %41, i32 %42 ; 2 uses
+  %43 = icmp ult i32 %spec.select82.i.3, 16
+  br i1 %43, label %44, label %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread
+
+44:                                               ; preds = %.lr.ph.split.i.3
+  %45 = shl nuw nsw i32 %34, 4
+  %46 = or disjoint i32 %spec.select82.i.3, %45   ; 2 uses
+  %.not56.i.3 = icmp eq i64 %.sroa.15.0.i127, 4
+  br i1 %.not56.i.3, label %.loopexit.i133, label %.lr.ph.split.i.4
+
+.lr.ph.split.i.4:                                 ; preds = %44
+  %47 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i129, i64 4
+  %48 = load i8, ptr %47, align 1, !alias.scope !398, !noundef !6 ; 2 uses
+  %49 = zext i8 %48 to i32                        ; 2 uses
+  %50 = icmp ugt i8 %48, 57
+  %51 = add nsw i32 %49, -65
+  %52 = and i32 %51, -33
+  %53 = add nuw nsw i32 %52, 10
+  %54 = add nsw i32 %49, -48
+  %spec.select82.i.4 = select i1 %50, i32 %53, i32 %54 ; 2 uses
+  %55 = icmp ult i32 %spec.select82.i.4, 16
+  br i1 %55, label %56, label %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread
+
+56:                                               ; preds = %.lr.ph.split.i.4
+  %57 = shl i32 %46, 4
+  %58 = or disjoint i32 %spec.select82.i.4, %57   ; 2 uses
+  %.not56.i.4 = icmp eq i64 %.sroa.15.0.i127, 5
+  br i1 %.not56.i.4, label %.loopexit.i133, label %.lr.ph.split.i.5
+
+.lr.ph.split.i.5:                                 ; preds = %56
+  %59 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i129, i64 5
+  %60 = load i8, ptr %59, align 1, !alias.scope !398, !noundef !6 ; 2 uses
+  %61 = zext i8 %60 to i32                        ; 2 uses
+  %62 = icmp ugt i8 %60, 57
+  %63 = add nsw i32 %61, -65
+  %64 = and i32 %63, -33
+  %65 = add nuw nsw i32 %64, 10
+  %66 = add nsw i32 %61, -48
+  %spec.select82.i.5 = select i1 %62, i32 %65, i32 %66 ; 2 uses
+  %67 = icmp ult i32 %spec.select82.i.5, 16
+  br i1 %67, label %68, label %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread
+
+68:                                               ; preds = %.lr.ph.split.i.5
+  %69 = shl i32 %58, 4
+  %70 = or disjoint i32 %spec.select82.i.5, %69   ; 2 uses
+  %.not56.i.5 = icmp eq i64 %.sroa.15.0.i127, 6
+  br i1 %.not56.i.5, label %.loopexit.i133, label %.lr.ph.split.i.a
+
+.lr.ph.split.i.a:                                 ; preds = %68
+  %71 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i129, i64 6
+  %i.cv = load i8, ptr %71, align 1, !alias.scope !398, !noundef !6 ; 2 uses
   %i.cw = zext i8 %i.cv to i32                    ; 2 uses
   %i.cx = icmp ugt i8 %i.cv, 57
   %i.cy = add nsw i32 %i.cw, -65
@@ -291,15 +400,31 @@ bb.s:                                             ; preds = %.preheader64.split.
   %i.db = add nsw i32 %i.cw, -48
   %spec.select82.i.a = select i1 %i.cx, i32 %i.da, i32 %i.db ; 2 uses
   %i.dc = icmp ult i32 %spec.select82.i.a, 16
-  br i1 %i.dc, label %bb.t, label %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread
+  br i1 %i.dc, label %72, label %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread
 
-bb.t:                                             ; preds = %.lr.ph.split.i.a
-  %2 = shl i32 %.sroa.045.275.i, 4
-  %3 = add nsw i64 %.sroa.15.276.i, -1            ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.277.i, i64 1
-  %5 = or disjoint i32 %spec.select82.i.a, %2     ; 2 uses
-  %.not56.i = icmp eq i64 %3, 0
-  br i1 %.not56.i, label %.loopexit.i133, label %.lr.ph.split.i.a
+72:                                               ; preds = %.lr.ph.split.i.a
+  %73 = shl i32 %70, 4
+  %74 = or disjoint i32 %spec.select82.i.a, %73   ; 2 uses
+  %.not56.i.6 = icmp eq i64 %.sroa.15.0.i127, 7
+  br i1 %.not56.i.6, label %.loopexit.i133, label %bb.t
+
+bb.t:                                             ; preds = %72
+  %75 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i129, i64 7
+  %76 = load i8, ptr %75, align 1, !alias.scope !398, !noundef !6 ; 2 uses
+  %77 = zext i8 %76 to i32                        ; 2 uses
+  %78 = icmp ugt i8 %76, 57
+  %79 = add nsw i32 %77, -65
+  %80 = and i32 %79, -33
+  %81 = add nuw nsw i32 %80, 10
+  %82 = add nsw i32 %77, -48
+  %spec.select82.i.7 = select i1 %78, i32 %81, i32 %82 ; 2 uses
+  %83 = icmp ult i32 %spec.select82.i.7, 16
+  br i1 %83, label %84, label %_RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit.thread
+
+84:                                               ; preds = %bb.t
+  %85 = shl i32 %74, 4
+  %86 = or disjoint i32 %spec.select82.i.7, %85
+  br label %.loopexit.i133
 
 _RNvMsB_NtCs4NRVxsYgnAr_4core3numm16from_ascii_radix.exit140: ; preds = %.loopexit.i133, %.split.us.i131
   %.sroa.8.0.insert.insert.i125 = phi i64 [ %spec.select.i132, %.split.us.i131 ], [ %i.ci, %.loopexit.i133 ] ; 3 uses

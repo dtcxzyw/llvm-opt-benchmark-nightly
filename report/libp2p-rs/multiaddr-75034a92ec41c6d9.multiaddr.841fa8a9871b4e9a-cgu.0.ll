@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libp2p-rs/original/multiaddr-75034a92ec41c6d9.multiaddr.841fa8a9871b4e9a-cgu.0?download=true
 inline.NumInlined: 153
 inline.NumDeleted: 44
-loop-unroll.NumCompletelyUnrolled: 5
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl:bb.a
 bb.i:                                             ; preds = %.lr.ph.2
   %i.am = mul nuw i16 %i.ag, 10
@@ -204,22 +204,22 @@ bb.l:                                             ; preds = %thread-pre-split.i,
   %i.az = phi i8 [ %.pr.i, %thread-pre-split.i ], [ %i.ay, %bb.k ]
   %cond.i = icmp eq i8 %i.az, 43                  ; 2 uses
   %i.ba = sext i1 %cond.i to i64
-  %.sroa.15.0.i = add nsw i64 %.sroa.4.1.i190.ph, %i.ba ; 4 uses
+  %.sroa.15.0.i = add nsw i64 %.sroa.4.1.i190.ph, %i.ba ; 6 uses
   %.sroa.0.0.idx.i = zext i1 %cond.i to i64
-  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i191.ph, i64 %.sroa.0.0.idx.i ; 2 uses
+  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i191.ph, i64 %.sroa.0.0.idx.i ; 5 uses
   %i.bb = icmp samesign ult i64 %.sroa.15.0.i, 5
   br i1 %i.bb, label %.preheader.i, label %.preheader58.i.preheader
 
 .preheader.i:                                     ; preds = %bb.l
   %.not5466.i = icmp eq i64 %.sroa.15.0.i, 0
-  br i1 %.not5466.i, label %.loopexit.i, label %.lr.ph.i.a
+  br i1 %.not5466.i, label %.loopexit.i, label %.lr.ph.i
 
 .preheader58.i:                                   ; preds = %bb.o
   %.not53.i = icmp eq i64 %i.bf, 0
   br i1 %.not53.i, label %.loopexit.i, label %.preheader58.i.preheader
 
-.loopexit.i:                                      ; preds = %.preheader58.i, %bb.p, %.preheader.i
-  %.sroa.043.1.i = phi i16 [ %i.by, %bb.p ], [ 0, %.preheader.i ], [ %i.bq, %.preheader58.i ]
+.loopexit.i:                                      ; preds = %.preheader58.i, %7, %14, %bb.p, %24, %.preheader.i
+  %.sroa.043.1.i = phi i16 [ %27, %24 ], [ 0, %.preheader.i ], [ %8, %7 ], [ %17, %14 ], [ %i.by, %bb.p ], [ %i.bq, %.preheader58.i ]
   %i.bc = zext i16 %.sroa.043.1.i to i32
   %i.bd = shl nuw i32 %i.bc, 16
   br label %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit
@@ -254,24 +254,61 @@ bb.o:                                             ; preds = %bb.m
   %i.br = icmp ult i16 %i.bq, %i.bh
   br i1 %i.br, label %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread, label %.preheader58.i, !prof !144
 
-.lr.ph.i.a:                                       ; preds = %.preheader.i, %bb.p
-  %.sroa.0.269.i = phi ptr [ %4, %bb.p ], [ %.sroa.0.0.i, %.preheader.i ] ; 2 uses
-  %.sroa.15.268.i = phi i64 [ %3, %bb.p ], [ %.sroa.15.0.i, %.preheader.i ]
-  %.sroa.043.267.i = phi i16 [ %i.by, %bb.p ], [ 0, %.preheader.i ]
-  %i.bs = load i8, ptr %.sroa.0.269.i, align 1, !alias.scope !271, !noundef !5
+.lr.ph.i:                                         ; preds = %.preheader.i
+  %3 = load i8, ptr %.sroa.0.0.i, align 1, !alias.scope !271, !noundef !5
+  %4 = zext i8 %3 to i32
+  %5 = add nsw i32 %4, -48                        ; 2 uses
+  %6 = icmp ult i32 %5, 10
+  br i1 %6, label %7, label %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread
+
+7:                                                ; preds = %.lr.ph.i
+  %8 = trunc nuw nsw i32 %5 to i16                ; 2 uses
+  %.not54.i = icmp eq i64 %.sroa.15.0.i, 1
+  br i1 %.not54.i, label %.loopexit.i, label %.lr.ph.i.1
+
+.lr.ph.i.1:                                       ; preds = %7
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 1
+  %10 = load i8, ptr %9, align 1, !alias.scope !271, !noundef !5
+  %11 = zext i8 %10 to i32
+  %12 = add nsw i32 %11, -48                      ; 2 uses
+  %13 = icmp ult i32 %12, 10
+  br i1 %13, label %14, label %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread
+
+14:                                               ; preds = %.lr.ph.i.1
+  %15 = mul nuw nsw i16 %8, 10
+  %16 = trunc nuw nsw i32 %12 to i16
+  %17 = add nuw nsw i16 %15, %16                  ; 2 uses
+  %.not54.i.1 = icmp eq i64 %.sroa.15.0.i, 2
+  br i1 %.not54.i.1, label %.loopexit.i, label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %14
+  %18 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 2
+  %i.bs = load i8, ptr %18, align 1, !alias.scope !271, !noundef !5
   %i.bt = zext i8 %i.bs to i32
   %i.bu = add nsw i32 %i.bt, -48                  ; 2 uses
   %i.bv = icmp ult i32 %i.bu, 10
   br i1 %i.bv, label %bb.p, label %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread
 
 bb.p:                                             ; preds = %.lr.ph.i.a
-  %i.bw = mul i16 %.sroa.043.267.i, 10
-  %3 = add nsw i64 %.sroa.15.268.i, -1            ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.269.i, i64 1
+  %i.bw = mul nuw i16 %17, 10
   %i.bx = trunc nuw nsw i32 %i.bu to i16
-  %i.by = add i16 %i.bw, %i.bx                    ; 2 uses
-  %.not54.i.a = icmp eq i64 %3, 0
-  br i1 %.not54.i.a, label %.loopexit.i, label %.lr.ph.i.a
+  %i.by = add nuw nsw i16 %i.bw, %i.bx            ; 2 uses
+  %.not54.i.a = icmp eq i64 %.sroa.15.0.i, 3
+  br i1 %.not54.i.a, label %.loopexit.i, label %.lr.ph.i.3
+
+.lr.ph.i.3:                                       ; preds = %bb.p
+  %19 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 3
+  %20 = load i8, ptr %19, align 1, !alias.scope !271, !noundef !5
+  %21 = zext i8 %20 to i32
+  %22 = add nsw i32 %21, -48                      ; 2 uses
+  %23 = icmp ult i32 %22, 10
+  br i1 %23, label %24, label %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread
+
+24:                                               ; preds = %.lr.ph.i.3
+  %25 = mul i16 %i.by, 10
+  %26 = trunc nuw nsw i32 %22 to i16
+  %27 = add i16 %25, %26
+  br label %.loopexit.i
 
 _RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit: ; preds = %.loopexit.i, %bb.n
   %.sroa.8.0.insert.insert.i = phi i32 [ %spec.select.i, %bb.n ], [ %i.bd, %.loopexit.i ] ; 3 uses
@@ -307,8 +344,8 @@ bb.r:                                             ; preds = %_RNvMsz_NtCskKLDkoK
   store i64 %.sroa.9.sroa.6.0, ptr %.sroa.6138.0..sroa_idx, align 8
   br label %bb.al
 
-_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread: ; preds = %bb.o, %bb.m, %.lr.ph.i.a, %_RNvXs_NtNtCskKLDkoKarTP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i198, %bb.k, %bb.k, %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit
-  %.sroa.8.0.insert.insert.i246 = phi i32 [ %.sroa.8.0.insert.insert.i, %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit ], [ 257, %bb.k ], [ 257, %.lr.ph.i.a ], [ 257, %bb.k ], [ 1, %_RNvXs_NtNtCskKLDkoKarTP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i198 ], [ 257, %bb.m ], [ 513, %bb.o ]
+_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread: ; preds = %bb.o, %bb.m, %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.a, %.lr.ph.i.3, %_RNvXs_NtNtCskKLDkoKarTP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i198, %bb.k, %bb.k, %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit
+  %.sroa.8.0.insert.insert.i246 = phi i32 [ %.sroa.8.0.insert.insert.i, %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit ], [ 257, %bb.k ], [ 257, %.lr.ph.i ], [ 257, %bb.k ], [ 1, %_RNvXs_NtNtCskKLDkoKarTP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i198 ], [ 257, %.lr.ph.i.3 ], [ 257, %.lr.ph.i.a ], [ 257, %.lr.ph.i.1 ], [ 257, %bb.m ], [ 513, %bb.o ]
   %.sroa.4164.0.extract.shift = lshr i32 %.sroa.8.0.insert.insert.i246, 8
   %.sroa.4164.0.extract.trunc = trunc i32 %.sroa.4164.0.extract.shift to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -669,22 +706,22 @@ bb.l:                                             ; preds = %thread-pre-split.i,
   %i.ba = phi i8 [ %.pr.i, %thread-pre-split.i ], [ %i.az, %bb.k ]
   %cond.i = icmp eq i8 %i.ba, 43                  ; 2 uses
   %i.bb = sext i1 %cond.i to i64
-  %.sroa.15.0.i = add nsw i64 %.sroa.4.1.i190.ph, %i.bb ; 4 uses
+  %.sroa.15.0.i = add nsw i64 %.sroa.4.1.i190.ph, %i.bb ; 6 uses
   %.sroa.0.0.idx.i = zext i1 %cond.i to i64
-  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i191.ph, i64 %.sroa.0.0.idx.i ; 2 uses
+  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i191.ph, i64 %.sroa.0.0.idx.i ; 5 uses
   %i.bc = icmp samesign ult i64 %.sroa.15.0.i, 5
   br i1 %i.bc, label %.preheader.i, label %.preheader58.i.preheader
 
 .preheader.i:                                     ; preds = %bb.l
   %.not5466.i = icmp eq i64 %.sroa.15.0.i, 0
-  br i1 %.not5466.i, label %.loopexit.i, label %.lr.ph.i.a
+  br i1 %.not5466.i, label %.loopexit.i, label %.lr.ph.i
 
 .preheader58.i:                                   ; preds = %bb.o
   %.not53.i = icmp eq i64 %i.bg, 0
   br i1 %.not53.i, label %.loopexit.i, label %.preheader58.i.preheader
 
-.loopexit.i:                                      ; preds = %.preheader58.i, %bb.p, %.preheader.i
-  %.sroa.043.1.i = phi i16 [ %i.bz, %bb.p ], [ 0, %.preheader.i ], [ %i.br, %.preheader58.i ]
+.loopexit.i:                                      ; preds = %.preheader58.i, %7, %14, %bb.p, %24, %.preheader.i
+  %.sroa.043.1.i = phi i16 [ %27, %24 ], [ 0, %.preheader.i ], [ %8, %7 ], [ %17, %14 ], [ %i.bz, %bb.p ], [ %i.br, %.preheader58.i ]
   %i.bd = zext i16 %.sroa.043.1.i to i32
   %i.be = shl nuw i32 %i.bd, 16
   br label %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit
@@ -719,24 +756,61 @@ bb.o:                                             ; preds = %bb.m
   %i.bs = icmp ult i16 %i.br, %i.bi
   br i1 %i.bs, label %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread, label %.preheader58.i, !prof !144
 
-.lr.ph.i.a:                                       ; preds = %.preheader.i, %bb.p
-  %.sroa.0.269.i = phi ptr [ %4, %bb.p ], [ %.sroa.0.0.i, %.preheader.i ] ; 2 uses
-  %.sroa.15.268.i = phi i64 [ %3, %bb.p ], [ %.sroa.15.0.i, %.preheader.i ]
-  %.sroa.043.267.i = phi i16 [ %i.bz, %bb.p ], [ 0, %.preheader.i ]
-  %i.bt = load i8, ptr %.sroa.0.269.i, align 1, !alias.scope !302, !noundef !5
+.lr.ph.i:                                         ; preds = %.preheader.i
+  %3 = load i8, ptr %.sroa.0.0.i, align 1, !alias.scope !302, !noundef !5
+  %4 = zext i8 %3 to i32
+  %5 = add nsw i32 %4, -48                        ; 2 uses
+  %6 = icmp ult i32 %5, 10
+  br i1 %6, label %7, label %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread
+
+7:                                                ; preds = %.lr.ph.i
+  %8 = trunc nuw nsw i32 %5 to i16                ; 2 uses
+  %.not54.i = icmp eq i64 %.sroa.15.0.i, 1
+  br i1 %.not54.i, label %.loopexit.i, label %.lr.ph.i.1
+
+.lr.ph.i.1:                                       ; preds = %7
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 1
+  %10 = load i8, ptr %9, align 1, !alias.scope !302, !noundef !5
+  %11 = zext i8 %10 to i32
+  %12 = add nsw i32 %11, -48                      ; 2 uses
+  %13 = icmp ult i32 %12, 10
+  br i1 %13, label %14, label %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread
+
+14:                                               ; preds = %.lr.ph.i.1
+  %15 = mul nuw nsw i16 %8, 10
+  %16 = trunc nuw nsw i32 %12 to i16
+  %17 = add nuw nsw i16 %15, %16                  ; 2 uses
+  %.not54.i.1 = icmp eq i64 %.sroa.15.0.i, 2
+  br i1 %.not54.i.1, label %.loopexit.i, label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %14
+  %18 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 2
+  %i.bt = load i8, ptr %18, align 1, !alias.scope !302, !noundef !5
   %i.bu = zext i8 %i.bt to i32
   %i.bv = add nsw i32 %i.bu, -48                  ; 2 uses
   %i.bw = icmp ult i32 %i.bv, 10
   br i1 %i.bw, label %bb.p, label %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread
 
 bb.p:                                             ; preds = %.lr.ph.i.a
-  %i.bx = mul i16 %.sroa.043.267.i, 10
-  %3 = add nsw i64 %.sroa.15.268.i, -1            ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.269.i, i64 1
+  %i.bx = mul nuw i16 %17, 10
   %i.by = trunc nuw nsw i32 %i.bv to i16
-  %i.bz = add i16 %i.bx, %i.by                    ; 2 uses
-  %.not54.i.a = icmp eq i64 %3, 0
-  br i1 %.not54.i.a, label %.loopexit.i, label %.lr.ph.i.a
+  %i.bz = add nuw nsw i16 %i.bx, %i.by            ; 2 uses
+  %.not54.i.a = icmp eq i64 %.sroa.15.0.i, 3
+  br i1 %.not54.i.a, label %.loopexit.i, label %.lr.ph.i.3
+
+.lr.ph.i.3:                                       ; preds = %bb.p
+  %19 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 3
+  %20 = load i8, ptr %19, align 1, !alias.scope !302, !noundef !5
+  %21 = zext i8 %20 to i32
+  %22 = add nsw i32 %21, -48                      ; 2 uses
+  %23 = icmp ult i32 %22, 10
+  br i1 %23, label %24, label %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread
+
+24:                                               ; preds = %.lr.ph.i.3
+  %25 = mul i16 %i.bz, 10
+  %26 = trunc nuw nsw i32 %22 to i16
+  %27 = add i16 %25, %26
+  br label %.loopexit.i
 
 _RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit: ; preds = %.loopexit.i, %bb.n
   %.sroa.8.0.insert.insert.i = phi i32 [ %spec.select.i, %bb.n ], [ %i.be, %.loopexit.i ] ; 3 uses
@@ -774,8 +848,8 @@ bb.r:                                             ; preds = %_RNvMsz_NtCskKLDkoK
   store i16 1, ptr %0, align 8
   br label %bb.al
 
-_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread: ; preds = %bb.o, %bb.m, %.lr.ph.i.a, %_RNvXs_NtNtCskKLDkoKarTP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i198, %bb.k, %bb.k, %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit
-  %.sroa.8.0.insert.insert.i246 = phi i32 [ %.sroa.8.0.insert.insert.i, %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit ], [ 257, %bb.k ], [ 257, %.lr.ph.i.a ], [ 257, %bb.k ], [ 1, %_RNvXs_NtNtCskKLDkoKarTP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i198 ], [ 257, %bb.m ], [ 513, %bb.o ]
+_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit.thread: ; preds = %bb.o, %bb.m, %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.a, %.lr.ph.i.3, %_RNvXs_NtNtCskKLDkoKarTP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i198, %bb.k, %bb.k, %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit
+  %.sroa.8.0.insert.insert.i246 = phi i32 [ %.sroa.8.0.insert.insert.i, %_RNvMsz_NtCskKLDkoKarTP_4core3numt27from_ascii_bytes_radix_impl.exit ], [ 257, %bb.k ], [ 257, %.lr.ph.i ], [ 257, %bb.k ], [ 1, %_RNvXs_NtNtCskKLDkoKarTP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i198 ], [ 257, %.lr.ph.i.3 ], [ 257, %.lr.ph.i.a ], [ 257, %.lr.ph.i.1 ], [ 257, %bb.m ], [ 513, %bb.o ]
   %.sroa.4164.0.extract.shift = lshr i32 %.sroa.8.0.insert.insert.i246, 8
   %.sroa.4164.0.extract.trunc = trunc i32 %.sroa.4164.0.extract.shift to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)

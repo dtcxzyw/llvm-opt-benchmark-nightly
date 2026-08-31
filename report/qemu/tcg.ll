@@ -205,6 +205,7 @@ bb.k:                                             ; preds = %bb.i, %bb.j, %bb.g
 
 .lr.ph409:                                        ; preds = %.preheader388
   %i.db = getelementptr inbounds nuw i8, ptr %.0429, i64 32
+  %3 = zext nneg i32 %.0316.lcssa to i64
   br label %bb.l
 
 .peel.next:                                       ; preds = %.lr.ph403, %.peel.next
@@ -221,26 +222,29 @@ bb.k:                                             ; preds = %bb.i, %bb.j, %bb.g
   br i1 %exitcond466.not, label %.preheader388.loopexit.loopexit, label %.peel.next, !llvm.loop !29
 
 bb.l:                                             ; preds = %.lr.ph409, %bb.l
-  %.4408 = phi i32 [ 0, %.lr.ph409 ], [ %i.dp, %bb.l ]
-  %.1317407 = phi i32 [ %.0316.lcssa, %.lr.ph409 ], [ %3, %bb.l ] ; 3 uses
+  %indvars.iv468 = phi i64 [ %3, %.lr.ph409 ], [ %indvars.iv.next469, %bb.l ] ; 3 uses
+  %.1317407 = phi i32 [ 0, %.lr.ph409 ], [ %i.dp, %bb.l ]
   %.6329406 = phi i32 [ %.5328.lcssa, %.lr.ph409 ], [ %i.do, %bb.l ]
-  %.not366 = icmp eq i32 %.1317407, 0
+  %.not366 = icmp eq i64 %indvars.iv468, 0
   %i.di = select i1 %.not366, ptr @.str.16, ptr @.str.15
-  %3 = add i32 %.1317407, 1                       ; 2 uses
-  %4 = sext i32 %.1317407 to i64
-  %i.dj = getelementptr inbounds [8 x i8], ptr %i.db, i64 %4
+  %indvars.iv.next469 = add nuw nsw i64 %indvars.iv468, 1 ; 2 uses
+  %i.dj = getelementptr inbounds nuw [8 x i8], ptr %i.db, i64 %indvars.iv468
   %i.dk = load i64, ptr %i.dj, align 8
   %i.dl = call fastcc ptr @tcg_get_arg_str(ptr noundef %0, ptr noundef %i.a, i64 noundef %i.dk) ; 0 uses
   %i.dm = call i32 (ptr, i32, ptr, ...) @__fprintf_chk(ptr noundef %1, i32 noundef 1, ptr noundef nonnull @.str.17, ptr noundef nonnull %i.di, ptr noundef nonnull %i.a) #26
   %i.dn = call i32 @llvm.smax.i32(i32 %i.dm, i32 0)
   %i.do = add i32 %i.dn, %.6329406                ; 2 uses
-  %i.dp = add nuw nsw i32 %.4408, 1               ; 2 uses
+  %i.dp = add nuw nsw i32 %.1317407, 1            ; 2 uses
   %exitcond468.not = icmp eq i32 %i.dp, %i.cq
-  br i1 %exitcond468.not, label %._crit_edge, label %bb.l, !llvm.loop !31
+  br i1 %exitcond468.not, label %._crit_edge.loopexit, label %bb.l, !llvm.loop !31
 
-._crit_edge:                                      ; preds = %bb.l, %.preheader388
-  %.6329.lcssa = phi i32 [ %.5328.lcssa, %.preheader388 ], [ %i.do, %bb.l ] ; 5 uses
-  %.1317.lcssa = phi i32 [ %.0316.lcssa, %.preheader388 ], [ %3, %bb.l ] ; 8 uses
+._crit_edge.loopexit:                             ; preds = %bb.l
+  %4 = trunc nuw nsw i64 %indvars.iv.next469 to i32
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader388
+  %.6329.lcssa = phi i32 [ %.5328.lcssa, %.preheader388 ], [ %i.do, %._crit_edge.loopexit ] ; 5 uses
+  %.1317.lcssa = phi i32 [ %.0316.lcssa, %.preheader388 ], [ %4, %._crit_edge.loopexit ] ; 8 uses
   switch i8 %trunc383, label %bb.aa [
     i8 4, label %bb.m
     i8 49, label %bb.m

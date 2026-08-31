@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/coreutils-rs/original/uu_expr-c49a31e1b3bb1312.uu_expr.1dfcadec2fff7288-cgu.0?download=true
 inline.NumInlined: 1053
 inline.NumDeleted: 538
-loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumCompletelyUnrolled: 6
 loop-unroll.NumRuntimeUnrolled: 15
-loop-unroll.NumUnrolled: 20
+loop-unroll.NumUnrolled: 21
 begin_hunk_0_@_RNvMs1_NtCs2zCsf9UsIrc_7uu_expr11syntax_treeNtB5_8StringOp4eval:bb.a
   %.sroa.04.1.i.i.i = phi i1 [ %i.pa, %bb.bq ], [ false, %bb.bp ] ; 2 uses
   %.not.i.i.i.i79.i.i.i = icmp eq ptr %.sroa.0.0.i112.i.i, %i.cu
@@ -205,7 +205,7 @@ bb.cj:                                            ; preds = %_RNvMNtCs6JMX4GRUq9
   %.not69.i.i.i = icmp eq ptr %i.rz, null         ; 2 uses
   %i.sa = extractvalue { ptr, i64 } %i.ry, 1      ; 2 uses
   %.sroa.414.0.i.i.i = select i1 %.not69.i.i.i, i64 0, i64 %i.sa ; 8 uses
-  %.sroa.012.0.i.i.i = select i1 %.not69.i.i.i, ptr inttoptr (i64 1 to ptr), ptr %i.rz ; 18 uses
+  %.sroa.012.0.i.i.i = select i1 %.not69.i.i.i, ptr inttoptr (i64 1 to ptr), ptr %i.rz ; 20 uses
   br label %.lr.ph.split.i.i.i.i.i
 
 .lr.ph.split.i.i.i.i.i:                           ; preds = %bb.cn, %bb.cj
@@ -253,7 +253,7 @@ bb.cm:                                            ; preds = %_RNvNtNtCs6JMX4GRUq
   %i.sp = add i64 %i.sb, 1
   %i.sq = add i64 %i.sp, %i.so                    ; 4 uses
   %.not12.i.i.i.i.i = icmp ugt i64 %i.sq, %.sroa.414.0.i.i.i
-  %i.sr = add i64 %i.so, %i.sb                    ; 13 uses
+  %i.sr = add i64 %i.so, %i.sb                    ; 15 uses
   %or.cond.i.not.i.i.i.i = icmp ult i64 %i.sr, %.sroa.414.0.i.i.i
   br i1 %or.cond.i.not.i.i.i.i, label %bb.co, label %bb.cn
 
@@ -656,20 +656,23 @@ bb.ek:                                            ; preds = %thread-pre-split.i1
 
 bb.el:                                            ; preds = %thread-pre-split.i198.i.i.i
   %i.yv = getelementptr inbounds nuw i8, ptr %.sroa.012.0.i.i.i, i64 1 ; 2 uses
-  %4 = add nsw i64 %i.sr, -1                      ; 2 uses
   %i.yw = icmp samesign ult i64 %i.sr, 5
-  br i1 %i.yw, label %.lr.ph142.i179.i.i.i.a, label %.lr.ph.i165.i.i.i
+  br i1 %i.yw, label %.lr.ph142.i179.i.i.i, label %.lr.ph.i165.i.i.i.preheader
 
-.loopexit.i172.i.i.i:                             ; preds = %bb.eo, %bb.ep, %bb.et, %bb.eu
-  %.sroa.085.1.i173.i.i.i = phi i16 [ %i.zw, %bb.ep ], [ %i.aat, %bb.eu ], [ %i.aak, %bb.et ], [ %i.zl, %bb.eo ]
+.lr.ph.i165.i.i.i.preheader:                      ; preds = %bb.el
+  %4 = add nsw i64 %i.sr, -1
+  br label %.lr.ph.i165.i.i.i
+
+.loopexit.i172.i.i.i:                             ; preds = %bb.eo, %9, %bb.ep, %18, %bb.et, %bb.eu
+  %.sroa.085.1.i173.i.i.i = phi i16 [ %21, %18 ], [ %i.aat, %bb.eu ], [ %i.aak, %bb.et ], [ %11, %9 ], [ %i.zw, %bb.ep ], [ %i.zl, %bb.eo ]
   %i.yx = zext i16 %.sroa.085.1.i173.i.i.i to i32
   %i.yy = shl nuw i32 %i.yx, 16
   br label %_RNvMsn_NtCs6JMX4GRUq9U_4core3nums27from_ascii_bytes_radix_impl.exit200.i.i.i
 
-.lr.ph.i165.i.i.i:                                ; preds = %bb.el, %bb.eo
-  %.sroa.0.1137.i166.i.i.i = phi ptr [ %i.yz, %bb.eo ], [ %i.yv, %bb.el ] ; 3 uses
-  %.sroa.26.1136.i167.i.i.i = phi i64 [ %i.za, %bb.eo ], [ %4, %bb.el ]
-  %.sroa.085.0135.i168.i.i.i = phi i16 [ %i.zl, %bb.eo ], [ 0, %bb.el ]
+.lr.ph.i165.i.i.i:                                ; preds = %.lr.ph.i165.i.i.i.preheader, %bb.eo
+  %.sroa.0.1137.i166.i.i.i = phi ptr [ %i.yz, %bb.eo ], [ %i.yv, %.lr.ph.i165.i.i.i.preheader ] ; 3 uses
+  %.sroa.26.1136.i167.i.i.i = phi i64 [ %i.za, %bb.eo ], [ %4, %.lr.ph.i165.i.i.i.preheader ]
+  %.sroa.085.0135.i168.i.i.i = phi i16 [ %i.zl, %bb.eo ], [ 0, %.lr.ph.i165.i.i.i.preheader ]
   %i.yz = getelementptr inbounds nuw i8, ptr %.sroa.0.1137.i166.i.i.i, i64 1
   %i.za = add nsw i64 %.sroa.26.1136.i167.i.i.i, -1 ; 2 uses
   %i.zb = call { i16, i1 } @llvm.smul.with.overflow.i16(i16 %.sroa.085.0135.i168.i.i.i, i16 10) ; 2 uses
@@ -704,24 +707,47 @@ bb.eo:                                            ; preds = %bb.en
   %i.zp = select i1 %i.zo, i32 %.sink189.i176.i.i.i, i32 257
   br label %_RNvMsn_NtCs6JMX4GRUq9U_4core3nums27from_ascii_bytes_radix_impl.exit200.i.i.i
 
-.lr.ph142.i179.i.i.i.a:                           ; preds = %bb.el, %bb.ep
-  %.sroa.0.2141.i180.i.i.i = phi ptr [ %6, %bb.ep ], [ %i.yv, %bb.el ] ; 2 uses
-  %.sroa.26.2140.i181.i.i.i = phi i64 [ %5, %bb.ep ], [ %4, %bb.el ]
-  %.sroa.085.2139.i182.i.i.i = phi i16 [ %i.zw, %bb.ep ], [ 0, %bb.el ]
-  %i.zq = load i8, ptr %.sroa.0.2141.i180.i.i.i, align 1, !alias.scope !824, !noalias !775, !noundef !4
+.lr.ph142.i179.i.i.i:                             ; preds = %bb.el
+  %5 = load i8, ptr %i.yv, align 1, !alias.scope !824, !noalias !775, !noundef !4
+  %6 = zext i8 %5 to i32
+  %7 = add nsw i32 %6, -48                        ; 2 uses
+  %8 = icmp ult i32 %7, 10
+  br i1 %8, label %9, label %_RNvMsn_NtCs6JMX4GRUq9U_4core3nums27from_ascii_bytes_radix_impl.exit200.i.i.i
+
+9:                                                ; preds = %.lr.ph142.i179.i.i.i
+  %10 = trunc nuw nsw i32 %7 to i16               ; 2 uses
+  %11 = sub nsw i16 0, %10
+  %.not104.i183.i.i.i = icmp eq i64 %i.sr, 2
+  br i1 %.not104.i183.i.i.i, label %.loopexit.i172.i.i.i, label %.lr.ph142.i179.i.i.i.a
+
+.lr.ph142.i179.i.i.i.a:                           ; preds = %9
+  %12 = getelementptr inbounds nuw i8, ptr %.sroa.012.0.i.i.i, i64 2
+  %i.zq = load i8, ptr %12, align 1, !alias.scope !824, !noalias !775, !noundef !4
   %i.zr = zext i8 %i.zq to i32
   %i.zs = add nsw i32 %i.zr, -48                  ; 2 uses
   %i.zt = icmp ult i32 %i.zs, 10
   br i1 %i.zt, label %bb.ep, label %_RNvMsn_NtCs6JMX4GRUq9U_4core3nums27from_ascii_bytes_radix_impl.exit200.i.i.i
 
 bb.ep:                                            ; preds = %.lr.ph142.i179.i.i.i.a
-  %i.zu = mul i16 %.sroa.085.2139.i182.i.i.i, 10
-  %5 = add nsw i64 %.sroa.26.2140.i181.i.i.i, -1  ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.2141.i180.i.i.i, i64 1
+  %i.zu = mul nsw i16 %10, -10
   %i.zv = trunc nuw nsw i32 %i.zs to i16
-  %i.zw = sub i16 %i.zu, %i.zv                    ; 2 uses
-  %.not104.i183.i.i.i.a = icmp eq i64 %5, 0
-  br i1 %.not104.i183.i.i.i.a, label %.loopexit.i172.i.i.i, label %.lr.ph142.i179.i.i.i.a
+  %i.zw = sub nsw i16 %i.zu, %i.zv                ; 2 uses
+  %.not104.i183.i.i.i.a = icmp eq i64 %i.sr, 3
+  br i1 %.not104.i183.i.i.i.a, label %.loopexit.i172.i.i.i, label %.lr.ph142.i179.i.i.i.2
+
+.lr.ph142.i179.i.i.i.2:                           ; preds = %bb.ep
+  %13 = getelementptr inbounds nuw i8, ptr %.sroa.012.0.i.i.i, i64 3
+  %14 = load i8, ptr %13, align 1, !alias.scope !824, !noalias !775, !noundef !4
+  %15 = zext i8 %14 to i32
+  %16 = add nsw i32 %15, -48                      ; 2 uses
+  %17 = icmp ult i32 %16, 10
+  br i1 %17, label %18, label %_RNvMsn_NtCs6JMX4GRUq9U_4core3nums27from_ascii_bytes_radix_impl.exit200.i.i.i
+
+18:                                               ; preds = %.lr.ph142.i179.i.i.i.2
+  %19 = mul i16 %i.zw, 10
+  %20 = trunc nuw nsw i32 %16 to i16
+  %21 = sub i16 %19, %20
+  br label %.loopexit.i172.i.i.i
 
 bb.eq:                                            ; preds = %bb.ek, %thread-pre-split.i198.i.i.i
   %.sroa.26.0.i184.i.i.i = phi i64 [ %i.yu, %bb.ek ], [ %i.sr, %thread-pre-split.i198.i.i.i ] ; 3 uses
@@ -777,8 +803,8 @@ bb.eu:                                            ; preds = %.lr.ph151.i193.i.i.
   %.not106.i197.i.i.i = icmp eq i64 %i.aaq, 0
   br i1 %.not106.i197.i.i.i, label %.loopexit.i172.i.i.i, label %.lr.ph151.i193.i.i.i
 
-_RNvMsn_NtCs6JMX4GRUq9U_4core3nums27from_ascii_bytes_radix_impl.exit200.i.i.i: ; preds = %bb.en, %bb.em, %.lr.ph142.i179.i.i.i.a, %bb.es, %bb.er, %.lr.ph151.i193.i.i.i, %.loopexit113.sink.split.i174.i.i.i, %.loopexit.i172.i.i.i, %bb.ej, %bb.ej
-  %.sroa.12.0.insert.insert.i164.i.i.i = phi i32 [ 257, %bb.ej ], [ %i.yy, %.loopexit.i172.i.i.i ], [ %i.zp, %.loopexit113.sink.split.i174.i.i.i ], [ 257, %bb.ej ], [ 257, %.lr.ph142.i179.i.i.i.a ], [ 257, %.lr.ph151.i193.i.i.i ], [ 257, %bb.er ], [ 513, %bb.es ], [ 769, %bb.en ], [ 257, %bb.em ] ; 2 uses
+_RNvMsn_NtCs6JMX4GRUq9U_4core3nums27from_ascii_bytes_radix_impl.exit200.i.i.i: ; preds = %bb.en, %bb.em, %.lr.ph142.i179.i.i.i, %.lr.ph142.i179.i.i.i.a, %.lr.ph142.i179.i.i.i.2, %bb.es, %bb.er, %.lr.ph151.i193.i.i.i, %.loopexit113.sink.split.i174.i.i.i, %.loopexit.i172.i.i.i, %bb.ej, %bb.ej
+  %.sroa.12.0.insert.insert.i164.i.i.i = phi i32 [ 257, %bb.ej ], [ %i.yy, %.loopexit.i172.i.i.i ], [ %i.zp, %.loopexit113.sink.split.i174.i.i.i ], [ 257, %bb.ej ], [ 257, %.lr.ph142.i179.i.i.i ], [ 257, %.lr.ph151.i193.i.i.i ], [ 257, %bb.er ], [ 513, %bb.es ], [ 257, %.lr.ph142.i179.i.i.i.2 ], [ 257, %.lr.ph142.i179.i.i.i.a ], [ 769, %bb.en ], [ 257, %bb.em ] ; 2 uses
   %.sroa.556.0.extract.shift.i.i.i = lshr i32 %.sroa.12.0.insert.insert.i164.i.i.i, 16
   %.sroa.556.0.extract.trunc.i.i.i = trunc nuw i32 %.sroa.556.0.extract.shift.i.i.i to i16
   %cond507.i.i.i = icmp eq i64 %i.su, 1

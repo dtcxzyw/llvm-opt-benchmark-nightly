@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/rust_analyzer-8b8982baf95623f0.rust_analyzer.4b86991ef7848226-cgu.11?download=true
 inline.NumInlined: 4205
 inline.NumDeleted: 1515
-loop-unroll.NumCompletelyUnrolled: 18
+loop-unroll.NumCompletelyUnrolled: 19
 loop-unroll.NumRuntimeUnrolled: 7
-loop-unroll.NumUnrolled: 35
+loop-unroll.NumUnrolled: 36
 begin_hunk_0_@_RNvNtNtCs6u1mgJOKDyY_13rust_analyzer8handlers12notification31handle_did_change_watched_files:bb.a
 .loopexit37:                                      ; preds = %bb.e
   %lpad.loopexit39 = landingpad { ptr, i32 }
@@ -205,7 +205,7 @@ _RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread: ; p
   %i.g = icmp eq i64 %.pr.pre, -1
   br i1 %i.g, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCs1lnireelaHN_13gen_lsp_types9generated10structures28WorkDoneProgressCancelParamsECs6u1mgJOKDyY_13rust_analyzer.exit, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread.thread
 
-_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread.thread: ; preds = %bb.j, %.lr.ph.i.a, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit, %bb.m, %bb.h, %bb.h, %bb.g, %bb.f, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread
+_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread.thread: ; preds = %bb.j, %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i.4, %.lr.ph.i.5, %.lr.ph.i.a, %bb.l, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit, %bb.m, %bb.h, %bb.h, %bb.g, %bb.f, %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread
   invoke void @_RNvXsp_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs6u1mgJOKDyY_13rust_analyzer(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECs6u1mgJOKDyY_13rust_analyzer.exit.i.i unwind label %bb.c
 
@@ -264,15 +264,15 @@ bb.i:                                             ; preds = %thread-pre-split.i,
   %i.n = phi i8 [ %.pr.i, %thread-pre-split.i ], [ %i.m, %bb.h ]
   %cond.i = icmp eq i8 %i.n, 43                   ; 2 uses
   %i.o = sext i1 %cond.i to i64
-  %.sroa.15.0.i = add nsw i64 %i.k, %i.o          ; 4 uses
+  %.sroa.15.0.i = add nsw i64 %i.k, %i.o          ; 10 uses
   %.sroa.0.0.idx.i = zext i1 %cond.i to i64
-  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %i.l, i64 %.sroa.0.0.idx.i ; 2 uses
+  %.sroa.0.0.i = getelementptr inbounds nuw i8, ptr %i.l, i64 %.sroa.0.0.idx.i ; 9 uses
   %i.p = icmp samesign ult i64 %.sroa.15.0.i, 9
   br i1 %i.p, label %.preheader.i, label %.preheader60.i.preheader
 
 .preheader.i:                                     ; preds = %bb.i
   %.not5668.i = icmp eq i64 %.sroa.15.0.i, 0
-  br i1 %.not5668.i, label %.loopexit.i, label %.lr.ph.i.a
+  br i1 %.not5668.i, label %.loopexit.i, label %.lr.ph.i
 
 .preheader60.i:                                   ; preds = %bb.j
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.0.1.i42, i64 1
@@ -280,8 +280,8 @@ bb.i:                                             ; preds = %thread-pre-split.i,
   %.not55.i = icmp eq i64 %i.r, 0
   br i1 %.not55.i, label %.loopexit.i, label %.preheader60.i.preheader
 
-.loopexit.i:                                      ; preds = %.preheader60.i, %bb.l, %.preheader.i
-  %.sroa.045.1.i = phi i32 [ %i.ak, %bb.l ], [ 0, %.preheader.i ], [ %i.ab, %.preheader60.i ]
+.loopexit.i:                                      ; preds = %.preheader60.i, %6, %12, %20, %28, %36, %44, %48, %55, %.preheader.i
+  %.sroa.045.1.i = phi i32 [ %57, %55 ], [ 0, %.preheader.i ], [ %4, %6 ], [ %14, %12 ], [ %22, %20 ], [ %30, %28 ], [ %38, %36 ], [ %46, %44 ], [ %50, %48 ], [ %i.ab, %.preheader60.i ]
   %i.s = zext i32 %.sroa.045.1.i to i64
   %i.t = shl nuw i64 %i.s, 32
   br label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit
@@ -312,23 +312,113 @@ bb.k:                                             ; preds = %.preheader60.i.preh
   %spec.select.i = select i1 %i.af, i64 513, i64 257
   br label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit
 
-.lr.ph.i.a:                                       ; preds = %.preheader.i, %bb.l
-  %.sroa.0.271.i = phi ptr [ %4, %bb.l ], [ %.sroa.0.0.i, %.preheader.i ] ; 2 uses
-  %.sroa.15.270.i = phi i64 [ %3, %bb.l ], [ %.sroa.15.0.i, %.preheader.i ]
-  %.sroa.045.269.i = phi i32 [ %i.ak, %bb.l ], [ 0, %.preheader.i ]
-  %i.ag = load i8, ptr %.sroa.0.271.i, align 1, !alias.scope !5628, !noundef !10
+.lr.ph.i:                                         ; preds = %.preheader.i
+  %2 = load i8, ptr %.sroa.0.0.i, align 1, !alias.scope !5628, !noundef !10
+  %3 = zext i8 %2 to i32
+  %4 = add nsw i32 %3, -48                        ; 3 uses
+  %5 = icmp ult i32 %4, 10
+  br i1 %5, label %6, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread.thread
+
+6:                                                ; preds = %.lr.ph.i
+  %.not56.i = icmp eq i64 %.sroa.15.0.i, 1
+  br i1 %.not56.i, label %.loopexit.i, label %.lr.ph.i.1
+
+.lr.ph.i.1:                                       ; preds = %6
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 1
+  %8 = load i8, ptr %7, align 1, !alias.scope !5628, !noundef !10
+  %9 = zext i8 %8 to i32
+  %10 = add nsw i32 %9, -48                       ; 2 uses
+  %11 = icmp ult i32 %10, 10
+  br i1 %11, label %12, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread.thread
+
+12:                                               ; preds = %.lr.ph.i.1
+  %13 = mul nuw nsw i32 %4, 10
+  %14 = add nuw nsw i32 %10, %13                  ; 2 uses
+  %.not56.i.1 = icmp eq i64 %.sroa.15.0.i, 2
+  br i1 %.not56.i.1, label %.loopexit.i, label %.lr.ph.i.2
+
+.lr.ph.i.2:                                       ; preds = %12
+  %15 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 2
+  %16 = load i8, ptr %15, align 1, !alias.scope !5628, !noundef !10
+  %17 = zext i8 %16 to i32
+  %18 = add nsw i32 %17, -48                      ; 2 uses
+  %19 = icmp ult i32 %18, 10
+  br i1 %19, label %20, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread.thread
+
+20:                                               ; preds = %.lr.ph.i.2
+  %21 = mul nuw nsw i32 %14, 10
+  %22 = add nuw nsw i32 %18, %21                  ; 2 uses
+  %.not56.i.2 = icmp eq i64 %.sroa.15.0.i, 3
+  br i1 %.not56.i.2, label %.loopexit.i, label %.lr.ph.i.3
+
+.lr.ph.i.3:                                       ; preds = %20
+  %23 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 3
+  %24 = load i8, ptr %23, align 1, !alias.scope !5628, !noundef !10
+  %25 = zext i8 %24 to i32
+  %26 = add nsw i32 %25, -48                      ; 2 uses
+  %27 = icmp ult i32 %26, 10
+  br i1 %27, label %28, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread.thread
+
+28:                                               ; preds = %.lr.ph.i.3
+  %29 = mul nuw nsw i32 %22, 10
+  %30 = add nuw nsw i32 %26, %29                  ; 2 uses
+  %.not56.i.3 = icmp eq i64 %.sroa.15.0.i, 4
+  br i1 %.not56.i.3, label %.loopexit.i, label %.lr.ph.i.4
+
+.lr.ph.i.4:                                       ; preds = %28
+  %31 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 4
+  %32 = load i8, ptr %31, align 1, !alias.scope !5628, !noundef !10
+  %33 = zext i8 %32 to i32
+  %34 = add nsw i32 %33, -48                      ; 2 uses
+  %35 = icmp ult i32 %34, 10
+  br i1 %35, label %36, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread.thread
+
+36:                                               ; preds = %.lr.ph.i.4
+  %37 = mul i32 %30, 10
+  %38 = add i32 %34, %37                          ; 2 uses
+  %.not56.i.4 = icmp eq i64 %.sroa.15.0.i, 5
+  br i1 %.not56.i.4, label %.loopexit.i, label %.lr.ph.i.5
+
+.lr.ph.i.5:                                       ; preds = %36
+  %39 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 5
+  %40 = load i8, ptr %39, align 1, !alias.scope !5628, !noundef !10
+  %41 = zext i8 %40 to i32
+  %42 = add nsw i32 %41, -48                      ; 2 uses
+  %43 = icmp ult i32 %42, 10
+  br i1 %43, label %44, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread.thread
+
+44:                                               ; preds = %.lr.ph.i.5
+  %45 = mul i32 %38, 10
+  %46 = add i32 %42, %45                          ; 2 uses
+  %.not56.i.5 = icmp eq i64 %.sroa.15.0.i, 6
+  br i1 %.not56.i.5, label %.loopexit.i, label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %44
+  %47 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 6
+  %i.ag = load i8, ptr %47, align 1, !alias.scope !5628, !noundef !10
   %i.ah = zext i8 %i.ag to i32
   %i.ai = add nsw i32 %i.ah, -48                  ; 2 uses
   %i.aj = icmp ult i32 %i.ai, 10
-  br i1 %i.aj, label %bb.l, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread.thread
+  br i1 %i.aj, label %48, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread.thread
 
-bb.l:                                             ; preds = %.lr.ph.i.a
-  %2 = mul i32 %.sroa.045.269.i, 10
-  %3 = add nsw i64 %.sroa.15.270.i, -1            ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.271.i, i64 1
-  %i.ak = add i32 %i.ai, %2                       ; 2 uses
-  %.not56.i = icmp eq i64 %3, 0
-  br i1 %.not56.i, label %.loopexit.i, label %.lr.ph.i.a
+48:                                               ; preds = %.lr.ph.i.a
+  %49 = mul i32 %46, 10
+  %50 = add i32 %i.ai, %49                        ; 2 uses
+  %.not56.i.6 = icmp eq i64 %.sroa.15.0.i, 7
+  br i1 %.not56.i.6, label %.loopexit.i, label %bb.l
+
+bb.l:                                             ; preds = %48
+  %51 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 7
+  %52 = load i8, ptr %51, align 1, !alias.scope !5628, !noundef !10
+  %53 = zext i8 %52 to i32
+  %i.ak = add nsw i32 %53, -48                    ; 2 uses
+  %54 = icmp ult i32 %i.ak, 10
+  br i1 %54, label %55, label %_RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit.thread.thread
+
+55:                                               ; preds = %bb.l
+  %56 = mul i32 %50, 10
+  %57 = add i32 %i.ak, %56
+  br label %.loopexit.i
 
 _RNvMsB_NtCshzWfHUSfYae_4core3numm27from_ascii_bytes_radix_impl.exit: ; preds = %bb.k, %.loopexit.i
   %.sroa.8.0.insert.insert.i = phi i64 [ %spec.select.i, %bb.k ], [ %i.t, %.loopexit.i ] ; 2 uses

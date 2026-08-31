@@ -204,16 +204,19 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %.lr.ph.i.i.i
   %exitcond.peel.not.i.i.i = icmp eq i32 %i.ah, 1
-  br i1 %exitcond.peel.not.i.i.i, label %._crit_edge.i.i, label %.peel.next.i.i.i
+  br i1 %exitcond.peel.not.i.i.i, label %._crit_edge.i.i, label %.peel.next.i.preheader.i.i
+
+.peel.next.i.preheader.i.i:                       ; preds = %bb.h
+  %zext.i.i = zext nneg i32 %i.ah to i64
+  br label %.peel.next.i.i.i
 
 bb.i:                                             ; preds = %.peel.next.i.i.i
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next.i.i.i to i32
-  %exitcond = icmp eq i32 %i.ah, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next.i.i.i, %zext.i.i
   br i1 %exitcond, label %._crit_edge.i.i, label %.peel.next.i.i.i, !llvm.loop !67
 
-.peel.next.i.i.i:                                 ; preds = %bb.h, %bb.i
-  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %bb.i ], [ 1, %bb.h ] ; 2 uses
+.peel.next.i.i.i:                                 ; preds = %bb.i, %.peel.next.i.preheader.i.i
+  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %bb.i ], [ 1, %.peel.next.i.preheader.i.i ] ; 2 uses
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %indvars.iv.i.i.i
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !65 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 72
@@ -259,16 +262,19 @@ ist_iter.exit.i.i:                                ; preds = %.peel.next.i.i.i, %
 
 bb.j:                                             ; preds = %.lr.ph.i82.i.i
   %exitcond.peel.not.i84.i.i = icmp eq i32 %i.bc, 1
-  br i1 %exitcond.peel.not.i84.i.i, label %print_stream_maps.exit.i, label %.peel.next.i85.i.i
+  br i1 %exitcond.peel.not.i84.i.i, label %print_stream_maps.exit.i, label %.peel.next.i85.preheader.i.i
+
+.peel.next.i85.preheader.i.i:                     ; preds = %bb.j
+  %zext146.i.i = zext nneg i32 %i.bc to i64
+  br label %.peel.next.i85.i.i
 
 bb.k:                                             ; preds = %.peel.next.i85.i.i
   %indvars.iv.next.i88.i.i = add nuw nsw i64 %indvars.iv.i86.i.i, 1 ; 2 uses
-  %lftr.wideiv78 = trunc i64 %indvars.iv.next.i88.i.i to i32
-  %exitcond79 = icmp eq i32 %i.bc, %lftr.wideiv78
+  %exitcond79 = icmp eq i64 %indvars.iv.next.i88.i.i, %zext146.i.i
   br i1 %exitcond79, label %print_stream_maps.exit.i, label %.peel.next.i85.i.i, !llvm.loop !44
 
-.peel.next.i85.i.i:                               ; preds = %bb.j, %bb.k
-  %indvars.iv.i86.i.i = phi i64 [ %indvars.iv.next.i88.i.i, %bb.k ], [ 1, %bb.j ] ; 2 uses
+.peel.next.i85.i.i:                               ; preds = %bb.k, %.peel.next.i85.preheader.i.i
+  %indvars.iv.i86.i.i = phi i64 [ %indvars.iv.next.i88.i.i, %bb.k ], [ 1, %.peel.next.i85.preheader.i.i ] ; 2 uses
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %indvars.iv.i86.i.i
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !42 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 32
@@ -671,16 +677,19 @@ bb.bg:                                            ; preds = %bb.bf
 
 bb.bh:                                            ; preds = %.lr.ph.i.i27.i
   %exitcond.peel.not.i.i29.i = icmp eq i32 %i.jp, 1
-  br i1 %exitcond.peel.not.i.i29.i, label %.preheader.i24.i, label %.peel.next.i.i30.i
+  br i1 %exitcond.peel.not.i.i29.i, label %.preheader.i24.i, label %.peel.next.i.preheader.i30.i
+
+.peel.next.i.preheader.i30.i:                     ; preds = %bb.bh
+  %zext.i31.i = zext nneg i32 %i.jp to i64
+  br label %.peel.next.i.i30.i
 
 bb.bi:                                            ; preds = %.peel.next.i.i30.i
   %indvars.iv.next.i.i33.i = add nuw nsw i64 %indvars.iv.i.i31.i, 1 ; 2 uses
-  %lftr.wideiv80 = trunc i64 %indvars.iv.next.i.i33.i to i32
-  %exitcond81 = icmp eq i32 %i.jp, %lftr.wideiv80
+  %exitcond81 = icmp eq i64 %indvars.iv.next.i.i33.i, %zext.i31.i
   br i1 %exitcond81, label %.preheader.i24.i, label %.peel.next.i.i30.i, !llvm.loop !44
 
-.peel.next.i.i30.i:                               ; preds = %bb.bh, %bb.bi
-  %indvars.iv.i.i31.i = phi i64 [ %indvars.iv.next.i.i33.i, %bb.bi ], [ 1, %bb.bh ] ; 2 uses
+.peel.next.i.i30.i:                               ; preds = %bb.bi, %.peel.next.i.preheader.i30.i
+  %indvars.iv.i.i31.i = phi i64 [ %indvars.iv.next.i.i33.i, %bb.bi ], [ 1, %.peel.next.i.preheader.i30.i ] ; 2 uses
   %i.jv = getelementptr inbounds nuw [8 x i8], ptr %i.jr, i64 %indvars.iv.i.i31.i
   %i.jw = load ptr, ptr %i.jv, align 8, !tbaa !42 ; 2 uses
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jw, i64 32
@@ -1083,16 +1092,19 @@ bb.i:                                             ; preds = %bb.h, %bb.b
 
 bb.j:                                             ; preds = %.lr.ph.i
   %exitcond.peel.not.i = icmp eq i32 %i.v, 1
-  br i1 %exitcond.peel.not.i, label %._crit_edge, label %.peel.next.i
+  br i1 %exitcond.peel.not.i, label %._crit_edge, label %.peel.next.i.preheader
+
+.peel.next.i.preheader:                           ; preds = %bb.j
+  %zext = zext nneg i32 %i.v to i64
+  br label %.peel.next.i
 
 bb.k:                                             ; preds = %.peel.next.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next.i to i32
-  %exitcond = icmp eq i32 %i.v, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next.i, %zext
   br i1 %exitcond, label %._crit_edge, label %.peel.next.i, !llvm.loop !44
 
-.peel.next.i:                                     ; preds = %bb.j, %bb.k
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.k ], [ 1, %bb.j ] ; 2 uses
+.peel.next.i:                                     ; preds = %.peel.next.i.preheader, %bb.k
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.k ], [ 1, %.peel.next.i.preheader ] ; 2 uses
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %indvars.iv.i
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !42 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 32
