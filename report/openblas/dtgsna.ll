@@ -202,17 +202,15 @@ bb.bb:                                            ; preds = %bb.ba, %bb.az
   store i32 %indvars507, ptr %i.i, align 4, !tbaa !8
   store i32 1, ptr %i.j, align 4, !tbaa !8
   %i.kl = load i32, ptr %17, align 4, !tbaa !8
-  %i.km = load i32, ptr %3, align 4, !tbaa !8     ; 4 uses
-  %20 = shl i32 %i.km, 1
-  %21 = mul nsw i32 %20, %i.km
+  %i.km = load i32, ptr %3, align 4, !tbaa !8     ; 2 uses
+  %20 = mul i32 %i.km, %i.km                      ; 2 uses
+  %21 = shl i32 %20, 1                            ; 2 uses
   %i.kn = sub nsw i32 %i.kl, %21
   store i32 %i.kn, ptr %i.b, align 4, !tbaa !8
-  %22 = mul nsw i32 %i.km, %i.km                  ; 2 uses
-  %i.ko = zext nneg i32 %22 to i64
+  %i.ko = zext nneg i32 %20 to i64
   %i.kp = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %i.ko
   %i.kq = getelementptr inbounds nuw i8, ptr %i.kp, i64 8
-  %23 = shl nuw i32 %22, 1
-  %i.kr = sext i32 %23 to i64
+  %i.kr = sext i32 %21 to i64
   %i.ks = getelementptr [8 x i8], ptr %i.ai, i64 %i.kr
   %i.kt = getelementptr i8, ptr %i.ks, i64 8
   call void @dtgexc_(ptr noundef nonnull @c_false, ptr noundef nonnull @c_false, ptr noundef nonnull %3, ptr noundef %16, ptr noundef nonnull %3, ptr noundef nonnull %i.kq, ptr noundef nonnull %3, ptr noundef nonnull %i.p, ptr noundef nonnull @c__1, ptr noundef nonnull %i.q, ptr noundef nonnull @c__1, ptr noundef nonnull %i.i, ptr noundef nonnull %i.j, ptr noundef %i.kt, ptr noundef nonnull %i.b, ptr noundef nonnull %i.f) #6
@@ -225,19 +223,18 @@ bb.bc:                                            ; preds = %bb.bb
   %i.kx = fcmp une double %i.kw, 0.000000e+00     ; 2 uses
   %spec.store.select = select i1 %i.kx, i32 2, i32 1 ; 5 uses
   store i32 %spec.store.select, ptr %i.n, align 4
-  %i.ky = load i32, ptr %3, align 4, !tbaa !8     ; 7 uses
+  %i.ky = load i32, ptr %3, align 4, !tbaa !8     ; 5 uses
   %i.kz = sub nsw i32 %i.ky, %spec.store.select
   store i32 %i.kz, ptr %i.o, align 4, !tbaa !8
   %i.la = icmp eq i32 %i.ky, %spec.store.select
   br i1 %i.la, label %bb.be, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
-  %i.lb = mul nsw i32 %i.ky, %i.ky
+  %i.lb = mul i32 %i.ky, %i.ky                    ; 2 uses
   %i.lc = add nuw nsw i32 %i.lb, 1                ; 3 uses
-  %i.ld = shl i32 %i.ky, 1
-  %24 = mul nsw i32 %i.ld, %i.ky                  ; 2 uses
+  %i.ld = shl i32 %i.lb, 1                        ; 2 uses
   %i.le = load i32, ptr %17, align 4, !tbaa !8
-  %i.lf = sub nsw i32 %i.le, %24
+  %i.lf = sub nsw i32 %i.le, %i.ld
   store i32 %i.lf, ptr %i.b, align 4, !tbaa !8
   %i.lg = add i32 %i.ky, 1
   %i.lh = zext i1 %i.kx to i32
@@ -258,7 +255,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.lw = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %i.lv
   %i.lx = sext i32 %i.hx to i64
   %i.ly = getelementptr inbounds [8 x i8], ptr %i.ah, i64 %i.lx ; 3 uses
-  %i.lz = sext i32 %24 to i64
+  %i.lz = sext i32 %i.ld to i64
   %i.ma = getelementptr [8 x i8], ptr %i.ai, i64 %i.lz
   %i.mb = getelementptr i8, ptr %i.ma, i64 16
   call void @dtgsyl_(ptr noundef nonnull @.str.7, ptr noundef nonnull @c__3, ptr noundef nonnull %i.o, ptr noundef nonnull %i.n, ptr noundef %i.ll, ptr noundef nonnull %3, ptr noundef nonnull %16, ptr noundef nonnull %3, ptr noundef %i.lo, ptr noundef nonnull %3, ptr noundef nonnull %i.lr, ptr noundef nonnull %3, ptr noundef nonnull %i.lt, ptr noundef nonnull %3, ptr noundef nonnull %i.lw, ptr noundef nonnull %3, ptr noundef nonnull %i.k, ptr noundef nonnull %i.ly, ptr noundef %i.mb, ptr noundef nonnull %i.b, ptr noundef %18, ptr noundef nonnull %i.f) #6

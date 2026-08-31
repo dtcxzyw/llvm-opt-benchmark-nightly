@@ -205,8 +205,8 @@ _ZNSt6vectorIdSaIdEEC2EmRKdRKS0_.exit157.i:       ; preds = %.noexc156.i, %_ZNSt
   %.sroa.13.0305314.i = phi ptr [ null, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %i.cev, %.noexc156.i ] ; 3 uses
   %.sroa.0241.0.i = phi ptr [ null, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %i.cey, %.noexc156.i ] ; 16 uses
   %.sroa.12.0.i = phi i64 [ 0, %_ZNSt6vectorIdSaIdEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %i.cfa, %.noexc156.i ] ; 2 uses
-  %i.cfb = shl nuw nsw i32 %i.cek, 2
-  %i.cfc = mul nuw nsw i32 %i.cfb, %i.cek         ; 2 uses
+  %i.cfb = shl i32 %i.cek, 2
+  %i.cfc = mul i32 %i.cfb, %i.cek                 ; 2 uses
   %i.cfd = zext nneg i32 %i.cfc to i64            ; 3 uses
   %.not.i.i.i.i159.i = icmp eq i32 %i.cfc, 0
   br i1 %.not.i.i.i.i159.i, label %_ZNSt6vectorIdSaIdEEC2EmRKdRKS0_.exit177.i, label %bb.sp
@@ -243,6 +243,7 @@ _ZNSt6vectorIdSaIdEEC2EmRKdRKS0_.exit177.i:       ; preds = %.noexc176.i, %_ZNSt
   br i1 %i.cfq, label %.lr.ph400.i, label %._crit_edge401.i
 
 .lr.ph400.i:                                      ; preds = %_ZNSt6vectorIdSaIdEEC2EmRKdRKS0_.exit177.i
+  %.reass.i733 = mul i32 %i.cen, %i.cek
   %i.cfr = lshr i32 %i.cek, 1                     ; 3 uses
   %i.cfs = sub nuw nsw i32 %i.cek, %i.cfr         ; 6 uses
   %i.cft = add i32 %i.cen, -1                     ; 2 uses
@@ -263,7 +264,6 @@ _ZNSt6vectorIdSaIdEEC2EmRKdRKS0_.exit177.i:       ; preds = %.noexc176.i, %_ZNSt
   %i.cgg = zext nneg i32 %i.cek to i64
   %wide.trip.count428.i = zext nneg i32 %i.cel to i64
   %wide.trip.count409.i = zext nneg i32 %smax.i to i64 ; 7 uses
-  %.reass.i734 = mul i32 %i.cen, %i.cek
   %i.cgh = load ptr, ptr %i.cby, align 8
   br i1 %.not.i.i.i.i.i730, label %._crit_edge401.i, label %.lr.ph.i736.preheader.preheader
 
@@ -300,7 +300,7 @@ _ZNSt6vectorIdSaIdEEC2EmRKdRKS0_.exit177.i:       ; preds = %.noexc176.i, %_ZNSt
 .lr.ph.i736.preheader:                            ; preds = %.lr.ph.i736.preheader.preheader, %._crit_edge398.i.loopexit
   %indvars.iv425.i = phi i64 [ %indvars.iv.next426.i, %._crit_edge398.i.loopexit ], [ 0, %.lr.ph.i736.preheader.preheader ] ; 3 uses
   %i.cgs = trunc nuw nsw i64 %indvars.iv425.i to i32
-  %i.cgt = mul i32 %.reass.i734, %i.cgs           ; 2 uses
+  %i.cgt = mul i32 %.reass.i733, %i.cgs           ; 2 uses
   br label %.lr.ph.i736
 
 .lr.ph.i736:                                      ; preds = %.lr.ph.i736.preheader, %._crit_edge.i740

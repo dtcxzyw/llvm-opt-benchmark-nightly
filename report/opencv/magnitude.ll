@@ -137,12 +137,11 @@ bb.a:
           to label %bb.b unwind label %bb.dc      ; 10 uses
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.9.0.insert.ext149 = zext i32 %2 to i64   ; 2 uses
-  %.sroa.9.0.insert.shift150 = shl nuw i64 %.sroa.9.0.insert.ext149, 32
+  %.sroa.9.0.insert.ext149 = zext i32 %2 to i64
+  %.sroa.9.0.insert.shift150 = shl nuw i64 %.sroa.9.0.insert.ext149, 32 ; 2 uses
   %.sroa.0124.0.insert.ext134 = zext i32 %1 to i64 ; 2 uses
   %.sroa.0124.0.insert.insert136 = or disjoint i64 %.sroa.9.0.insert.shift150, %.sroa.0124.0.insert.ext134 ; 6 uses
-  %3 = shl nuw i64 %.sroa.0124.0.insert.ext134, 32
-  %sext.i = mul i64 %3, %.sroa.9.0.insert.ext149  ; 2 uses
+  %sext.i = mul i64 %.sroa.9.0.insert.shift150, %.sroa.0124.0.insert.ext134 ; 2 uses
   %i.f = ashr exact i64 %sext.i, 32               ; 9 uses
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN2cv3hfs7orutils11MemoryBlockIiEE, i64 16), ptr %i.e, align 8, !tbaa !8
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses

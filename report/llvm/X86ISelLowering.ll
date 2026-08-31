@@ -205,11 +205,10 @@ _ZN4llvm11SmallVectorIiLj32EEC2Em.exit.i.i:       ; preds = %.sink.split.i.i.i.i
 
 .preheader129.i.i:                                ; preds = %.thread.i.i, %.preheader129.lr.ph.i.i
   %i.bwt = phi i32 [ %i.bwr, %.preheader129.lr.ph.i.i ], [ %i.cbl, %.thread.i.i ] ; 4 uses
-  %.052161.i.i = phi i32 [ 2, %.preheader129.lr.ph.i.i ], [ %i.cbk, %.thread.i.i ] ; 6 uses
+  %.052161.i.i = phi i32 [ 2, %.preheader129.lr.ph.i.i ], [ %i.cbk, %.thread.i.i ] ; 5 uses
   %i.bwu = add i32 %.052161.i.i, %i.boa
-  %174 = sext i32 %.052161.i.i to i64             ; 3 uses
-  %.idx127.i.i = shl nsw i64 %174, 2              ; 5 uses
-  %175 = zext i32 %.052161.i.i to i64
+  %174 = zext i32 %.052161.i.i to i64             ; 4 uses
+  %.idx127.i.i = shl nuw nsw i64 %174, 2          ; 5 uses
   %i.bwv = add nsw i64 %.idx127.i.i, -8
   %i.bww = add nsw i64 %.idx127.i.i, -4           ; 2 uses
   %i.bwx = lshr exact i64 %i.bww, 2
@@ -254,7 +253,7 @@ _ZN4llvm11SmallVectorIiLj32EEC2Em.exit.i.i:       ; preds = %.sink.split.i.i.i.i
 
 .lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i439.i, %_ZSt4iotaIPiiEvT_S1_T0_.exit.us.i.i
   %indvars.iv188.i.i = phi i64 [ %indvars.iv.next189.i.i, %_ZSt4iotaIPiiEvT_S1_T0_.exit.us.i.i ], [ 0, %.lr.ph.i439.i ] ; 3 uses
-  %i.bxn = getelementptr inbounds [4 x i8], ptr %.pre792.i, i64 %indvars.iv188.i.i ; 4 uses
+  %i.bxn = getelementptr inbounds nuw [4 x i8], ptr %.pre792.i, i64 %indvars.iv188.i.i ; 4 uses
   %i.bxo = getelementptr inbounds nuw i8, ptr %i.bxn, i64 %.idx127.i.i
   %i.bxp = trunc nsw i64 %indvars.iv188.i.i to i32
   %i.bxq = add i32 %i.bxf, %i.bxp                 ; 3 uses
@@ -300,7 +299,7 @@ middle.block3774:                                 ; preds = %vector.body3767
   br i1 %.not.i67.us.i.i, label %_ZSt4iotaIPiiEvT_S1_T0_.exit.us.i.i, label %.lr.ph.i66.us.i.i, !llvm.loop !4999
 
 _ZSt4iotaIPiiEvT_S1_T0_.exit.us.i.i:              ; preds = %.lr.ph.i66.us.i.i, %middle.block3774
-  %indvars.iv.next189.i.i = add nsw i64 %indvars.iv188.i.i, %174 ; 2 uses
+  %indvars.iv.next189.i.i = add nuw nsw i64 %indvars.iv188.i.i, %174 ; 2 uses
   %i.bxy = icmp eq i64 %indvars.iv.next189.i.i, %i.bwh
   br i1 %i.bxy, label %._crit_edge.i442.i, label %.lr.ph.split.us.i.i, !llvm.loop !5000
 
@@ -330,7 +329,7 @@ _ZSt4iotaIPiiEvT_S1_T0_.exit.us.i.i:              ; preds = %.lr.ph.i66.us.i.i, 
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.split.i.i.preheader, %_ZSt4iotaIPiiEvT_S1_T0_.exit73.loopexit.i.i
   %indvars.iv.i440.i = phi i64 [ %indvars.iv.next.i441.i, %_ZSt4iotaIPiiEvT_S1_T0_.exit73.loopexit.i.i ], [ 0, %.lr.ph.split.i.i.preheader ] ; 3 uses
-  %i.byf = getelementptr inbounds [4 x i8], ptr %.pre792.i, i64 %indvars.iv.i440.i ; 5 uses
+  %i.byf = getelementptr inbounds nuw [4 x i8], ptr %.pre792.i, i64 %indvars.iv.i440.i ; 5 uses
   %i.byg = getelementptr inbounds nuw i8, ptr %i.byf, i64 %.idx.i.i ; 4 uses
   %i.byh = trunc nsw i64 %indvars.iv.i440.i to i32 ; 4 uses
   %i.byi = add i32 %i.bxf, %i.byh                 ; 3 uses
@@ -376,7 +375,7 @@ middle.block3810:                                 ; preds = %vector.body3803
   br i1 %.not.i67.i.i, label %_ZSt4iotaIPiiEvT_S1_T0_.exit.i.i, label %.lr.ph.i66.i.i, !llvm.loop !5002
 
 _ZSt4iotaIPiiEvT_S1_T0_.exit.i.i:                 ; preds = %.lr.ph.i66.i.i, %middle.block3810
-  %i.byq = getelementptr inbounds i8, ptr %i.byf, i64 %.idx127.i.i
+  %i.byq = getelementptr inbounds nuw i8, ptr %i.byf, i64 %.idx127.i.i
   br i1 %min.iters.check3779, label %.lr.ph.i69.i.i.preheader, label %vector.ph3780
 
 vector.ph3780:                                    ; preds = %_ZSt4iotaIPiiEvT_S1_T0_.exit.i.i
@@ -419,7 +418,7 @@ middle.block3792:                                 ; preds = %vector.body3785
   br i1 %.not.i72.i.i, label %_ZSt4iotaIPiiEvT_S1_T0_.exit73.loopexit.i.i, label %.lr.ph.i69.i.i, !llvm.loop !5004
 
 _ZSt4iotaIPiiEvT_S1_T0_.exit73.loopexit.i.i:      ; preds = %.lr.ph.i69.i.i, %middle.block3792
-  %indvars.iv.next.i441.i = add nsw i64 %indvars.iv.i440.i, %174 ; 2 uses
+  %indvars.iv.next.i441.i = add nuw nsw i64 %indvars.iv.i440.i, %174 ; 2 uses
   %i.byy = icmp eq i64 %indvars.iv.next.i441.i, %i.bwh
   br i1 %i.byy, label %._crit_edge.i442.i, label %.lr.ph.split.i.i, !llvm.loop !5000
 
@@ -631,7 +630,7 @@ _ZN4llvm19ShuffleVectorSDNode11commuteMaskENS_15MutableArrayRefIiEE.exit.i.i2097
 
 _ZL19isShuffleEquivalentN4llvm8ArrayRefIiEES1_NS_7SDValueES2_.exit96.i.i: ; preds = %.lr.ph.i85.i.i, %_ZN4llvm19ShuffleVectorSDNode11commuteMaskENS_15MutableArrayRefIiEE.exit.i.i2097
   %indvars.iv.next193.i.i = add nuw nsw i64 %indvars.iv192.i.i, 1 ; 2 uses
-  %.not.i443.i = icmp eq i64 %indvars.iv.next193.i.i, %175
+  %.not.i443.i = icmp eq i64 %indvars.iv.next193.i.i, %174
   %indvar.next = add i64 %indvar, 1
   br i1 %.not.i443.i, label %.thread.i.i, label %.preheader.i.i, !llvm.loop !5007
 

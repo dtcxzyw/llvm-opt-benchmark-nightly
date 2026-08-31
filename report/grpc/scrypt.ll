@@ -46,7 +46,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b,
 bb.f:                                             ; preds = %bb.d
   %i.k = icmp eq i64 %7, 0
   %spec.store.select = select i1 %i.k, i64 68157440, i64 %7
-  %i.l = shl i64 %5, 1                            ; 9 uses
+  %i.l = shl i64 %5, 1                            ; 11 uses
   %i.m = shl i64 %5, 7                            ; 3 uses
   %i.n = udiv i64 %spec.store.select, %i.m        ; 2 uses
   %.not70 = icmp ugt i64 %i.n, %6
@@ -63,13 +63,11 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br label %bb.o
 
 bb.i:                                             ; preds = %bb.g
-  %10 = shl nuw nsw i64 %6, 1                     ; 2 uses
-  %i.r = mul i64 %10, %5                          ; 2 uses
-  %11 = shl i64 %i.r, 6                           ; 2 uses
-  %i.s = shl nuw nsw i64 %4, 1
-  %i.t = add nuw nsw i64 %i.s, 2
-  %i.u = add nuw nsw i64 %i.t, %10
-  %i.v = mul i64 %i.u, %5
+  %i.r = mul i64 %i.l, %6                         ; 2 uses
+  %i.s = shl i64 %i.r, 6                          ; 2 uses
+  %i.t = add nuw nsw i64 %4, 1
+  %i.u = add nuw nsw i64 %i.t, %6
+  %i.v = mul i64 %i.l, %i.u
   %i.w = tail call ptr @OPENSSL_calloc(i64 noundef %i.v, i64 noundef 64) #5 ; 9 uses
   %i.x = icmp eq ptr %i.w, null
   br i1 %i.x, label %bb.o, label %bb.j
@@ -78,7 +76,7 @@ bb.j:                                             ; preds = %bb.i
   %i.y = getelementptr inbounds nuw [64 x i8], ptr %i.w, i64 %i.r ; 4 uses
   %i.z = getelementptr inbounds nuw [64 x i8], ptr %i.y, i64 %i.l ; 8 uses
   %i.aa = tail call ptr @EVP_sha256() #5
-  %i.ab = tail call i32 @PKCS5_PBKDF2_HMAC(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3, i32 noundef 1, ptr noundef %i.aa, i64 noundef %11, ptr noundef nonnull %i.w) #5
+  %i.ab = tail call i32 @PKCS5_PBKDF2_HMAC(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3, i32 noundef 1, ptr noundef %i.aa, i64 noundef %i.s, ptr noundef nonnull %i.w) #5
   %.not71 = icmp eq i32 %i.ab, 0
   br i1 %.not71, label %bb.n, label %_ZL14OPENSSL_memcpyPvPKvm.exit.i.lr.ph
 
@@ -119,7 +117,7 @@ _ZL11scryptROMixP7block_tmmS0_S0_.exit.loopexit.us: ; preds = %.split.i.us
 
 ._crit_edge:                                      ; preds = %_ZL11scryptROMixP7block_tmmS0_S0_.exit.loopexit74, %_ZL11scryptROMixP7block_tmmS0_S0_.exit.loopexit.us
   %i.ai = tail call ptr @EVP_sha256() #5
-  %i.aj = tail call i32 @PKCS5_PBKDF2_HMAC(ptr noundef %0, i64 noundef %1, ptr noundef nonnull %i.w, i64 noundef %11, i32 noundef 1, ptr noundef %i.ai, i64 noundef %9, ptr noundef %8) #5
+  %i.aj = tail call i32 @PKCS5_PBKDF2_HMAC(ptr noundef %0, i64 noundef %1, ptr noundef nonnull %i.w, i64 noundef %i.s, i32 noundef 1, ptr noundef %i.ai, i64 noundef %9, ptr noundef %8) #5
   %.not72 = icmp ne i32 %i.aj, 0
   %spec.select = zext i1 %.not72 to i32
   br label %bb.n

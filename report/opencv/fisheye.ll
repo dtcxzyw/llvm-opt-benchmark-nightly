@@ -205,7 +205,7 @@ _ZNK2cv11_InputArray6getMatEi.exit:               ; preds = %.noexc
           to label %bb.cx unwind label %bb.dk
 
 bb.cx:                                            ; preds = %_ZNK2cv11_InputArray6getMatEi.exit
-  %i.dj = trunc i64 %i.di to i32                  ; 5 uses
+  %i.dj = trunc i64 %i.di to i32                  ; 3 uses
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %186) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %186) #18
   %i.dk = invoke noundef i64 @_ZNK2cv11_InputArray5totalEi(ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef -1)
@@ -608,7 +608,7 @@ bb.ie:                                            ; preds = %bb.id
   call void @llvm.lifetime.end.p0(ptr nonnull %250) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %251) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %252) #18
-  %i.px = shl nsw i32 %i.dj, 2                    ; 14 uses
+  %i.px = shl i32 %i.dj, 2                        ; 16 uses
   %i.py = mul nsw i32 %i.px, %i.dl                ; 4 uses
   %i.pz = add i32 %i.kz, 24                       ; 4 uses
   invoke void @_ZN2cv3Mat5zerosEiii(ptr dead_on_unwind nonnull writable sret(%"class.cv::MatExpr") align 8 %252, i32 noundef %i.py, i32 noundef %i.pz, i32 noundef 6)
@@ -1011,7 +1011,7 @@ bb.iu:                                            ; preds = %bb.is, %bb.ir, %bb.
   br label %bb.adu
 
 .lr.ph1467:                                       ; preds = %bb.it, %bb.tu
-  %indvars.iv1566 = phi i64 [ %indvars.iv.next1567, %bb.tu ], [ 0, %bb.it ] ; 8 uses
+  %indvars.iv1566 = phi i64 [ %indvars.iv.next1567, %bb.tu ], [ 0, %bb.it ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %267) #18
   invoke void @_ZN2cv3Mat5zerosEiii(ptr dead_on_unwind nonnull writable sret(%"class.cv::MatExpr") align 8 %267, i32 noundef %i.px, i32 noundef %i.pz, i32 noundef 6)
           to label %bb.iv unwind label %bb.mq
@@ -1035,7 +1035,7 @@ _ZN2cv3MataSERKNS_7MatExprE.exit1007:             ; preds = %bb.iv
           to label %.noexc1008 unwind label %bb.mt ; 0 uses
 
 .noexc1008:                                       ; preds = %_ZN2cv3MataSERKNS_7MatExprE.exit1007
-  %i.acf = trunc nuw nsw i64 %indvars.iv1566 to i32 ; 3 uses
+  %i.acf = trunc nuw nsw i64 %indvars.iv1566 to i32 ; 4 uses
   invoke void @_ZNK2cv11_InputArray7getMat_Ei(ptr dead_on_unwind nonnull writable sret(%"class.cv::Mat") align 8 %269, ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef %i.acf)
           to label %_ZNK2cv11_InputArray6getMatEi.exit1010 unwind label %bb.mt
 
@@ -1438,13 +1438,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1153: ; preds = %b
 ._crit_edge1464.thread:                           ; preds = %bb.mp, %._crit_edge1464
   call void @llvm.lifetime.start.p0(ptr nonnull %383) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %384) #18
-  %indvars.iv1566.tr = trunc nuw i64 %indvars.iv1566 to i32
-  %430 = shl nuw i32 %indvars.iv1566.tr, 2
-  %i.akn = mul nsw i32 %430, %i.dj                ; 2 uses
+  %i.akn = mul i32 %i.px, %i.acf                  ; 2 uses
   %indvars.iv.next1567 = add nuw nsw i64 %indvars.iv1566, 1 ; 3 uses
-  %indvars.iv.next1567.tr = trunc nuw i64 %indvars.iv.next1567 to i32
-  %431 = shl nuw i32 %indvars.iv.next1567.tr, 2
-  %i.ako = mul nsw i32 %431, %i.dj                ; 2 uses
+  %indvars.iv.next1567.tr = trunc nuw nsw i64 %indvars.iv.next1567 to i32
+  %i.ako = mul i32 %i.px, %indvars.iv.next1567.tr ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #18, !noalias !395
   store i32 %i.akn, ptr %50, align 4, !tbaa !105, !noalias !395
   store i32 %i.ako, ptr %i.yg, align 4, !tbaa !107, !noalias !395

@@ -204,13 +204,13 @@ bb.ac:                                            ; preds = %bb.w
           to label %bb.ad unwind label %bb.ar
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.av = trunc i64 %i.au to i32                  ; 5 uses
+  %i.av = trunc i64 %i.au to i32                  ; 6 uses
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %50) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %50) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %51) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %52) #22
-  %i.aw = shl i32 %i.av, 2                        ; 2 uses
-  %i.ax = mul nsw i32 %i.aw, %i.as                ; 2 uses
+  %i.aw = shl i32 %i.as, 2
+  %i.ax = mul i32 %i.aw, %i.av                    ; 2 uses
   %i.ay = mul i32 %i.as, 6                        ; 15 uses
   %i.az = add i32 %i.ay, 6                        ; 2 uses
   %i.ba = add i32 %i.ay, 26                       ; 4 uses
@@ -504,6 +504,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.gg = getelementptr inbounds nuw i8, ptr %98, i64 224
   %i.gh = getelementptr inbounds nuw i8, ptr %98, i64 16
   %i.gi = getelementptr inbounds nuw i8, ptr %33, i64 4
+  %187 = shl i32 %i.av, 2
   %i.gj = shl nsw i32 %i.av, 1                    ; 9 uses
   %i.gk = getelementptr inbounds nuw i8, ptr %102, i64 4
   %i.gl = getelementptr inbounds nuw i8, ptr %102, i64 8
@@ -906,7 +907,7 @@ bb.ce:                                            ; preds = %_ZNK2cv7MatExprcvNS
   call void @llvm.lifetime.start.p0(ptr nonnull %100) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %101) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %102) #22
-  %i.ne = mul i32 %i.aw, %.0528                   ; 2 uses
+  %i.ne = mul i32 %187, %.0528                    ; 2 uses
   store i32 %i.az, ptr %102, align 4, !tbaa !556
   store i32 %i.ne, ptr %i.gk, align 4, !tbaa !558
   store i32 10, ptr %i.gl, align 4, !tbaa !559

@@ -205,11 +205,10 @@ bb.g:                                             ; preds = %bb.f
   %i.bo = tail call ptr @memmove(ptr noundef %i.bh, ptr noundef %i.bk, i64 noundef %i.bn) #18 ; 0 uses
   %i.bp = load i32, ptr @lines, align 4           ; 6 uses
   %i.bq = add nsw i32 %i.bp, -1
-  %i.br = load i32, ptr @cols, align 4            ; 6 uses
-  %i.bs = shl i32 %i.br, 1
+  %i.br = load i32, ptr @cols, align 4            ; 5 uses
+  %i.bs = shl i32 %i.br, 1                        ; 2 uses
   %i.bt = mul i32 %i.bs, %i.bq                    ; 2 uses
-  %1 = shl i32 %i.bp, 1
-  %i.bu = mul i32 %1, %i.br                       ; 2 uses
+  %i.bu = mul i32 %i.bs, %i.bp                    ; 2 uses
   %i.bv = icmp slt i32 %i.bt, %i.bu
   br i1 %i.bv, label %.lr.ph.i38, label %scroll.exit
 
@@ -254,11 +253,10 @@ bb.k:                                             ; preds = %bb.j
   %i.cp = tail call ptr @memmove(ptr noundef nonnull %i.cb, ptr noundef %i.cl, i64 noundef %i.co) #18 ; 0 uses
   %i.cq = load i32, ptr @lines, align 4           ; 6 uses
   %i.cr = add nsw i32 %i.cq, -1
-  %i.cs = load i32, ptr @cols, align 4            ; 6 uses
-  %i.ct = shl i32 %i.cs, 1
+  %i.cs = load i32, ptr @cols, align 4            ; 5 uses
+  %i.ct = shl i32 %i.cs, 1                        ; 2 uses
   %i.cu = mul i32 %i.ct, %i.cr                    ; 2 uses
-  %2 = shl i32 %i.cq, 1
-  %i.cv = mul i32 %2, %i.cs                       ; 2 uses
+  %i.cv = mul i32 %i.ct, %i.cq                    ; 2 uses
   %i.cw = icmp slt i32 %i.cu, %i.cv
   br i1 %i.cw, label %.lr.ph.i39, label %scroll.exit
 

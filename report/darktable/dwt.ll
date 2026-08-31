@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %dwt_get_image_layer
   call void @llvm.experimental.noalias.scope.decl(metadata !39)
   call void @llvm.experimental.noalias.scope.decl(metadata !42)
   %i.cb = sext i32 %.val82.i to i64               ; 10 uses
-  %i.cc = sext i32 %.val.i to i64                 ; 12 uses
+  %i.cc = sext i32 %.val.i to i64                 ; 10 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !44)
   call void @llvm.experimental.noalias.scope.decl(metadata !47)
   %i.cd = shl nuw i32 1, %.097.i                  ; 2 uses
@@ -219,7 +219,7 @@ bb.q:                                             ; preds = %dwt_get_image_layer
   %i.cg = trunc i64 %..i.i.i to i32               ; 6 uses
   %.not.i.i.i.i = icmp sgt i32 %.val82.i, %i.cg
   %i.ch = shl nsw i64 %i.cf, 1                    ; 2 uses
-  %i.ci = shl nsw i64 %i.cc, 2                    ; 20 uses
+  %i.ci = shl nsw i64 %i.cc, 2                    ; 22 uses
   %.not69.i.i.i = icmp eq i32 %.val.i, 0          ; 2 uses
   br i1 %.not.i.i.i.i, label %.lr.ph.split.us.i.i.i, label %.lr.ph.split.i.i.i
 
@@ -270,8 +270,7 @@ bb.s:                                             ; preds = %.lr.ph.split.us.spl
 dwt_interleave_rows.exit.us.us.i.i.i:             ; preds = %bb.s, %bb.r
   %.1.i.us.us.i.i.i = phi i32 [ %i.dc, %bb.r ], [ %i.dg, %bb.s ]
   %i.dh = sext i32 %.1.i.us.us.i.i.i to i64       ; 5 uses
-  %3 = shl nsw i64 %i.dh, 2
-  %i.di = mul i64 %3, %i.cc                       ; 2 uses
+  %i.di = mul i64 %i.ci, %i.dh                    ; 2 uses
   %i.dj = icmp ult i64 %..i.i.i, %i.dh
   %i.dk = sub nuw nsw i64 %i.dh, %..i.i.i
   %i.dl = sub nuw nsw i64 %..i.i.i, %i.dh
@@ -350,8 +349,7 @@ dwt_interleave_rows.exit.i.i.i.preheader:         ; preds = %.lr.ph.split.i.i.i
 
 dwt_interleave_rows.exit.i.i.i:                   ; preds = %dwt_interleave_rows.exit.i.i.i.preheader, %._crit_edge.i.i.i
   %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %._crit_edge.i.i.i ], [ 0, %dwt_interleave_rows.exit.i.i.i.preheader ] ; 6 uses
-  %4 = shl nuw nsw i64 %indvars.iv.i.i.i, 2
-  %i.ev = mul i64 %4, %i.cc                       ; 2 uses
+  %i.ev = mul i64 %indvars.iv.i.i.i, %i.ci        ; 2 uses
   %i.ew = icmp ult i64 %..i.i.i, %indvars.iv.i.i.i
   %i.ex = sub nuw i64 %indvars.iv.i.i.i, %..i.i.i
   %i.ey = sub nuw i64 %..i.i.i, %indvars.iv.i.i.i

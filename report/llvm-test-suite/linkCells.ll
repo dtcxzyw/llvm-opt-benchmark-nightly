@@ -138,11 +138,11 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.k = sub nsw i32 %1, %i.b                     ; 7 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !4    ; 7 uses
-  %3 = shl nsw i32 %i.m, 1
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !4    ; 6 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.o = load i32, ptr %i.n, align 4, !tbaa !4    ; 5 uses
-  %i.p = mul nsw i32 %3, %i.o
+  %i.o = load i32, ptr %i.n, align 4, !tbaa !4    ; 4 uses
+  %3 = shl i32 %i.o, 1                            ; 2 uses
+  %i.p = mul i32 %3, %i.m                         ; 2 uses
   %i.q = icmp slt i32 %i.k, %i.p
   br i1 %i.q, label %bb.d, label %bb.g
 
@@ -166,38 +166,35 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br label %bb.j
 
 bb.g:                                             ; preds = %bb.c
-  %4 = shl nsw i32 %i.o, 1                        ; 2 uses
-  %i.z = load i32, ptr %0, align 4, !tbaa !4      ; 3 uses
+  %i.z = load i32, ptr %0, align 4, !tbaa !4      ; 2 uses
   %i.aa = add i32 %i.m, 2                         ; 2 uses
   %i.ab = add i32 %i.z, %i.aa
-  %i.ac = mul nsw i32 %i.ab, %4                   ; 2 uses
+  %i.ac = mul nsw i32 %i.ab, %3                   ; 2 uses
   %i.ad = icmp slt i32 %i.k, %i.ac
+  %4 = add nsw i32 %i.z, 2                        ; 6 uses
   br i1 %i.ad, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %5 = mul nsw i32 %4, %i.m
-  %i.ae = sub nsw i32 %i.k, %5                    ; 2 uses
-  %6 = add nsw i32 %i.z, 2                        ; 3 uses
-  %i.af = mul nsw i32 %6, %i.o                    ; 2 uses
+  %i.ae = sub nsw i32 %i.k, %i.p                  ; 2 uses
+  %i.af = mul nsw i32 %4, %i.o                    ; 2 uses
   %i.ag = icmp slt i32 %i.ae, %i.af               ; 2 uses
   %i.ah = add nsw i32 %i.m, 1
   %.071.i = select i1 %i.ag, i32 0, i32 %i.ah
   %i.ai = select i1 %i.ag, i32 0, i32 %i.af
   %.1.i = sub nsw i32 %i.ae, %i.ai                ; 2 uses
-  %i.aj = srem i32 %.1.i, %6
-  %i.ak = sdiv i32 %.1.i, %6
+  %i.aj = srem i32 %.1.i, %4
+  %i.ak = sdiv i32 %.1.i, %4
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
   %i.al = sub nsw i32 %i.k, %i.ac                 ; 2 uses
-  %7 = add nsw i32 %i.z, 2                        ; 3 uses
-  %i.am = mul nsw i32 %7, %i.aa                   ; 2 uses
+  %i.am = mul nsw i32 %4, %i.aa                   ; 2 uses
   %i.an = icmp slt i32 %i.al, %i.am               ; 2 uses
   %.068.i = select i1 %i.an, i32 -1, i32 %i.o
   %i.ao = select i1 %i.an, i32 0, i32 %i.am
   %.2.i = sub nsw i32 %i.al, %i.ao                ; 2 uses
-  %i.ap = srem i32 %.2.i, %7
-  %i.aq = sdiv i32 %.2.i, %7
+  %i.ap = srem i32 %.2.i, %4
+  %i.aq = sdiv i32 %.2.i, %4
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.f

@@ -205,7 +205,7 @@ bb.a:
   %i.f = getelementptr inbounds [77168 x i8], ptr %i.d, i64 %i.e ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 3928
   %i.h = load i8, ptr %i.g, align 8, !tbaa !79
-  %i.i = zext i8 %i.h to i32                      ; 3 uses
+  %i.i = zext i8 %i.h to i32                      ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 448
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !102  ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 64
@@ -228,7 +228,7 @@ bb.a:
   %i.ac = shl i32 %i.ab, 3                        ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.f, i64 96
   store i32 %i.aa, ptr %i.ad, align 16, !tbaa !178
-  %i.ae = shl nuw nsw i32 %i.i, 6                 ; 4 uses
+  %i.ae = shl nuw nsw i32 %i.i, 6                 ; 5 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 3924 ; 4 uses
   %i.ag = ashr exact i32 %i.aa, 3                 ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 19160
@@ -253,6 +253,7 @@ bb.a:
   %i.aw = getelementptr inbounds nuw i8, ptr %i.b, i64 3956
   %i.ax = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.ay = getelementptr inbounds nuw i8, ptr %i.f, i64 16
+  %factor.op.mul.reass = mul i32 %i.ae, %i.z      ; 3 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.f, i64 52384
   %i.ba = getelementptr inbounds nuw i8, ptr %i.b, i64 2
   %i.bb = getelementptr inbounds nuw i8, ptr %i.b, i64 5
@@ -265,9 +266,7 @@ bb.a:
   %i.bi = getelementptr inbounds nuw i8, ptr %i.b, i64 3960
   %i.bj = sub nsw i32 %i.ac, %i.aa
   %i.bk = getelementptr inbounds nuw i8, ptr %i.b, i64 19136
-  %4 = shl i32 %i.z, 6
-  %5 = mul nsw i32 %4, %i.i                       ; 3 uses
-  %i.bl = sext i32 %5 to i64
+  %i.bl = sext i32 %factor.op.mul.reass to i64
   %i.bm = mul nsw i64 %i.au, 63
   %i.bn = shl i32 %i.bj, 3
   %i.bo = mul i32 %i.bn, %i.i                     ; 3 uses
@@ -388,7 +387,7 @@ bb.g:                                             ; preds = %._crit_edge
   %i.ds = load ptr, ptr %i.bq, align 8, !tbaa !125
   %i.dt = load i8, ptr %i.af, align 4, !tbaa !75
   %i.du = zext i8 %i.dt to i32                    ; 2 uses
-  %i.dv = ashr i32 %5, %i.du
+  %i.dv = ashr i32 %factor.op.mul.reass, %i.du
   %i.dw = sext i32 %i.dv to i64
   %i.dx = getelementptr inbounds i8, ptr %i.ds, i64 %i.dw
   %i.dy = load ptr, ptr %i.br, align 8, !tbaa !125
@@ -406,7 +405,7 @@ bb.g:                                             ; preds = %._crit_edge
   %i.ej = load ptr, ptr %i.bt, align 8, !tbaa !125
   %i.ek = load i8, ptr %i.af, align 4, !tbaa !75
   %i.el = zext i8 %i.ek to i32                    ; 2 uses
-  %i.em = ashr i32 %5, %i.el
+  %i.em = ashr i32 %factor.op.mul.reass, %i.el
   %i.en = sext i32 %i.em to i64
   %i.eo = getelementptr inbounds i8, ptr %i.ej, i64 %i.en
   %i.ep = load ptr, ptr %i.bu, align 8, !tbaa !125
