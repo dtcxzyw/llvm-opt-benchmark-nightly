@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %_RINvXsi_NtCscdodAO9FK5_5alloc3vecINtB6_3VecIBw_hEEINtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect6ExtendBF_E6extendINtNtBV_6option6OptionBF_EECs43kcu4yvms7_24influxdb3_query_executor.exit.i, %.lr.ph.i
   %.sroa.016.023.i = phi i64 [ 0, %.lr.ph.i ], [ %i.q, %_RINvXsi_NtCscdodAO9FK5_5alloc3vecINtB6_3VecIBw_hEEINtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect6ExtendBF_E6extendINtNtBV_6option6OptionBF_EECs43kcu4yvms7_24influxdb3_query_executor.exit.i ] ; 2 uses
-  %i.q = add nuw i64 %.sroa.016.023.i, 1          ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.016.023.i, 1      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !20793
   invoke void @_RNvMse_NtNtNtNtCs8dy3IO6wsj9_8wasmtime7runtime9component4func5typedINtB5_8WasmListINtNtCscdodAO9FK5_5alloc3vec3VechEE14get_from_storeCs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %2, ptr noalias noundef nonnull align 8 dereferenceable(104) %1, i64 noundef %.sroa.016.023.i)
           to label %.noexc unwind label %.loopexit

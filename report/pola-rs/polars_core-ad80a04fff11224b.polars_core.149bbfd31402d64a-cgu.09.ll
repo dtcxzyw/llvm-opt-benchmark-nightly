@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.d, %.new2403
   %i.q = icmp slt i8 %i.o, %.val2.i.i.i.i.i.i.2, !dbg !49283
   %.1.i.i.i.i.i.i.2 = select i1 %i.q, i64 %.sroa.1.0.i.i.i.i.2, i64 %.1.i.i.i.i.i.i.1, !dbg !49290
   %i.r = tail call i8 @llvm.smax.i8(i8 %i.o, i8 %.val2.i.i.i.i.i.i.2), !dbg !49241 ; 2 uses
-  %.sroa.1.0.i.i.i.i.3 = add nuw i64 %.sroa.1.0.i.i.in.i.i, 4, !dbg !49271 ; 3 uses
+  %.sroa.1.0.i.i.i.i.3 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 4, !dbg !49271 ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.f, i64 %.sroa.1.0.i.i.i.i.2, !dbg !49272
   %.val2.i.i.i.i.i.i.3 = load i8, ptr %i.s, align 1, !dbg !49241, !alias.scope !49303, !noalias !49306, !noundef !13 ; 2 uses
   %i.t = icmp slt i8 %i.r, %.val2.i.i.i.i.i.i.3, !dbg !49283
@@ -257,7 +257,7 @@ bb.f:                                             ; preds = %bb.f, %.new
   %i.ag = icmp slt i8 %.val.i.i.i.i.i.i61.2, %i.ae, !dbg !49371
   %.1.i.i.i.i.i.i63.2 = select i1 %i.ag, i64 %.sroa.1.0.i.i.i.i60.2, i64 %.1.i.i.i.i.i.i63.1, !dbg !49374
   %i.ah = tail call i8 @llvm.smin.i8(i8 %.val.i.i.i.i.i.i61.2, i8 %i.ae), !dbg !49329 ; 2 uses
-  %.sroa.1.0.i.i.i.i60.3 = add nuw i64 %.sroa.1.0.i.i.in.i.i57, 4, !dbg !49359 ; 3 uses
+  %.sroa.1.0.i.i.i.i60.3 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i57, 4, !dbg !49359 ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.v, i64 %.sroa.1.0.i.i.i.i60.2, !dbg !49360
   %.val.i.i.i.i.i.i61.3 = load i8, ptr %i.ai, align 1, !dbg !49329, !alias.scope !49387, !noalias !49390, !noundef !13 ; 2 uses
   %i.aj = icmp slt i8 %.val.i.i.i.i.i.i61.3, %i.ah, !dbg !49371
@@ -650,7 +650,7 @@ bb.bn:                                            ; preds = %bb.bn, %.epil.prehe
   %.sroa.1.0.i.i.in.i.i57.epil = phi i64 [ %.sroa.1.0.i.i.in.i.i57.epil.init, %.epil.preheader ], [ %.sroa.1.0.i.i.i.i60.epil, %bb.bn ] ; 2 uses
   %.sroa.02.0.i.i.i.i59.epil = phi i64 [ %.sroa.02.0.i.i.i.i59.epil.init, %.epil.preheader ], [ %.1.i.i.i.i.i.i63.epil, %bb.bn ], !dbg !49358
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.bn ]
-  %.sroa.1.0.i.i.i.i60.epil = add nuw i64 %.sroa.1.0.i.i.in.i.i57.epil, 1, !dbg !49359 ; 2 uses
+  %.sroa.1.0.i.i.i.i60.epil = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i57.epil, 1, !dbg !49359 ; 2 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %i.v, i64 %.sroa.1.0.i.i.in.i.i57.epil, !dbg !49360
   tail call void @llvm.experimental.noalias.scope.decl(metadata !49363), !dbg !49364
   tail call void @llvm.experimental.noalias.scope.decl(metadata !49365), !dbg !49364
@@ -734,7 +734,7 @@ bb.bx:                                            ; preds = %bb.bx, %.epil.prehe
   %.sroa.1.0.i.i.in.i.i.epil = phi i64 [ %.sroa.1.0.i.i.in.i.i.epil.init, %.epil.preheader2404 ], [ %.sroa.1.0.i.i.i.i.epil, %bb.bx ] ; 2 uses
   %.sroa.02.0.i.i.i.i.epil = phi i64 [ %.sroa.02.0.i.i.i.i.epil.init, %.epil.preheader2404 ], [ %.1.i.i.i.i.i.i.epil, %bb.bx ], !dbg !49270
   %epil.iter2434 = phi i64 [ 0, %.epil.preheader2404 ], [ %epil.iter2434.next, %bb.bx ]
-  %.sroa.1.0.i.i.i.i.epil = add nuw i64 %.sroa.1.0.i.i.in.i.i.epil, 1, !dbg !49271 ; 2 uses
+  %.sroa.1.0.i.i.i.i.epil = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i.epil, 1, !dbg !49271 ; 2 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %i.f, i64 %.sroa.1.0.i.i.in.i.i.epil, !dbg !49272
   tail call void @llvm.experimental.noalias.scope.decl(metadata !49275), !dbg !49276
   tail call void @llvm.experimental.noalias.scope.decl(metadata !49277), !dbg !49276
@@ -1137,7 +1137,7 @@ bb.d:                                             ; preds = %bb.d, %.new2403
   %i.q = icmp ult i8 %i.o, %.val2.i.i.i.i.i.i.2, !dbg !50981
   %.1.i.i.i.i.i.i.2 = select i1 %i.q, i64 %.sroa.1.0.i.i.i.i.2, i64 %.1.i.i.i.i.i.i.1, !dbg !50988
   %i.r = tail call i8 @llvm.umax.i8(i8 %i.o, i8 %.val2.i.i.i.i.i.i.2), !dbg !50939 ; 2 uses
-  %.sroa.1.0.i.i.i.i.3 = add nuw i64 %.sroa.1.0.i.i.in.i.i, 4, !dbg !50969 ; 3 uses
+  %.sroa.1.0.i.i.i.i.3 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 4, !dbg !50969 ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.f, i64 %.sroa.1.0.i.i.i.i.2, !dbg !50970
   %.val2.i.i.i.i.i.i.3 = load i8, ptr %i.s, align 1, !dbg !50939, !alias.scope !51001, !noalias !51004, !noundef !13 ; 2 uses
   %i.t = icmp ult i8 %i.r, %.val2.i.i.i.i.i.i.3, !dbg !50981
@@ -1189,7 +1189,7 @@ bb.f:                                             ; preds = %bb.f, %.new
   %i.ag = icmp ult i8 %.val.i.i.i.i.i.i61.2, %i.ae, !dbg !51069
   %.1.i.i.i.i.i.i63.2 = select i1 %i.ag, i64 %.sroa.1.0.i.i.i.i60.2, i64 %.1.i.i.i.i.i.i63.1, !dbg !51072
   %i.ah = tail call i8 @llvm.umin.i8(i8 %.val.i.i.i.i.i.i61.2, i8 %i.ae), !dbg !51027 ; 2 uses
-  %.sroa.1.0.i.i.i.i60.3 = add nuw i64 %.sroa.1.0.i.i.in.i.i57, 4, !dbg !51057 ; 3 uses
+  %.sroa.1.0.i.i.i.i60.3 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i57, 4, !dbg !51057 ; 3 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.v, i64 %.sroa.1.0.i.i.i.i60.2, !dbg !51058
   %.val.i.i.i.i.i.i61.3 = load i8, ptr %i.ai, align 1, !dbg !51027, !alias.scope !51085, !noalias !51088, !noundef !13 ; 2 uses
   %i.aj = icmp ult i8 %.val.i.i.i.i.i.i61.3, %i.ah, !dbg !51069
@@ -1582,7 +1582,7 @@ bb.bn:                                            ; preds = %bb.bn, %.epil.prehe
   %.sroa.1.0.i.i.in.i.i57.epil = phi i64 [ %.sroa.1.0.i.i.in.i.i57.epil.init, %.epil.preheader ], [ %.sroa.1.0.i.i.i.i60.epil, %bb.bn ] ; 2 uses
   %.sroa.02.0.i.i.i.i59.epil = phi i64 [ %.sroa.02.0.i.i.i.i59.epil.init, %.epil.preheader ], [ %.1.i.i.i.i.i.i63.epil, %bb.bn ], !dbg !51056
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.bn ]
-  %.sroa.1.0.i.i.i.i60.epil = add nuw i64 %.sroa.1.0.i.i.in.i.i57.epil, 1, !dbg !51057 ; 2 uses
+  %.sroa.1.0.i.i.i.i60.epil = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i57.epil, 1, !dbg !51057 ; 2 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %i.v, i64 %.sroa.1.0.i.i.in.i.i57.epil, !dbg !51058
   tail call void @llvm.experimental.noalias.scope.decl(metadata !51061), !dbg !51062
   tail call void @llvm.experimental.noalias.scope.decl(metadata !51063), !dbg !51062
@@ -1666,7 +1666,7 @@ bb.bx:                                            ; preds = %bb.bx, %.epil.prehe
   %.sroa.1.0.i.i.in.i.i.epil = phi i64 [ %.sroa.1.0.i.i.in.i.i.epil.init, %.epil.preheader2404 ], [ %.sroa.1.0.i.i.i.i.epil, %bb.bx ] ; 2 uses
   %.sroa.02.0.i.i.i.i.epil = phi i64 [ %.sroa.02.0.i.i.i.i.epil.init, %.epil.preheader2404 ], [ %.1.i.i.i.i.i.i.epil, %bb.bx ], !dbg !50968
   %epil.iter2434 = phi i64 [ 0, %.epil.preheader2404 ], [ %epil.iter2434.next, %bb.bx ]
-  %.sroa.1.0.i.i.i.i.epil = add nuw i64 %.sroa.1.0.i.i.in.i.i.epil, 1, !dbg !50969 ; 2 uses
+  %.sroa.1.0.i.i.i.i.epil = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i.epil, 1, !dbg !50969 ; 2 uses
   %i.ef = getelementptr inbounds nuw i8, ptr %i.f, i64 %.sroa.1.0.i.i.in.i.i.epil, !dbg !50970
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50973), !dbg !50974
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50975), !dbg !50974
@@ -2069,7 +2069,7 @@ bb.g:                                             ; preds = %bb.g, %.new133
   %i.u = icmp slt i8 %i.s, %.val2.i.i.i.i.i.i.2, !dbg !80958
   %.1.i.i.i.i.i.i.2 = select i1 %i.u, i64 %.sroa.1.0.i.i.i.i.2, i64 %.1.i.i.i.i.i.i.1, !dbg !80961
   %i.v = tail call i8 @llvm.smax.i8(i8 %i.s, i8 %.val2.i.i.i.i.i.i.2), !dbg !80925 ; 2 uses
-  %.sroa.1.0.i.i.i.i.3 = add nuw i64 %.sroa.1.0.i.i.in.i.i, 4, !dbg !80947 ; 3 uses
+  %.sroa.1.0.i.i.i.i.3 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 4, !dbg !80947 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sroa.1.0.i.i.i.i.2, !dbg !80948
   %.val2.i.i.i.i.i.i.3 = load i8, ptr %i.w, align 1, !dbg !80925, !alias.scope !80974, !noalias !80977, !noundef !13 ; 2 uses
   %i.x = icmp slt i8 %i.v, %.val2.i.i.i.i.i.i.3, !dbg !80958
@@ -2120,7 +2120,7 @@ bb.i:                                             ; preds = %bb.i, %.new
   %i.aj = icmp slt i8 %.val.i.i.i.i.i.i33.2, %i.ah, !dbg !81030
   %.1.i.i.i.i.i.i35.2 = select i1 %i.aj, i64 %.sroa.1.0.i.i.i.i32.2, i64 %.1.i.i.i.i.i.i35.1, !dbg !81033
   %i.ak = tail call i8 @llvm.smin.i8(i8 %.val.i.i.i.i.i.i33.2, i8 %i.ah), !dbg !80996 ; 2 uses
-  %.sroa.1.0.i.i.i.i32.3 = add nuw i64 %.sroa.1.0.i.i.in.i.i29, 4, !dbg !81019 ; 3 uses
+  %.sroa.1.0.i.i.i.i32.3 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i29, 4, !dbg !81019 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.z, i64 %.sroa.1.0.i.i.i.i32.2, !dbg !81020
   %.val.i.i.i.i.i.i33.3 = load i8, ptr %i.al, align 1, !dbg !80996, !alias.scope !81046, !noalias !81049, !noundef !13 ; 2 uses
   %i.am = icmp slt i8 %.val.i.i.i.i.i.i33.3, %i.ak, !dbg !81030
@@ -2283,7 +2283,7 @@ bb.y:                                             ; preds = %bb.y, %.epil.prehea
   %.sroa.1.0.i.i.in.i.i29.epil = phi i64 [ %.sroa.1.0.i.i.in.i.i29.epil.init, %.epil.preheader ], [ %.sroa.1.0.i.i.i.i32.epil, %bb.y ] ; 2 uses
   %.sroa.02.0.i.i.i.i31.epil = phi i64 [ %.sroa.02.0.i.i.i.i31.epil.init, %.epil.preheader ], [ %.1.i.i.i.i.i.i35.epil, %bb.y ], !dbg !81018
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.y ]
-  %.sroa.1.0.i.i.i.i32.epil = add nuw i64 %.sroa.1.0.i.i.in.i.i29.epil, 1, !dbg !81019 ; 2 uses
+  %.sroa.1.0.i.i.i.i32.epil = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i29.epil, 1, !dbg !81019 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.z, i64 %.sroa.1.0.i.i.in.i.i29.epil, !dbg !81020
   tail call void @llvm.experimental.noalias.scope.decl(metadata !81022), !dbg !81023
   tail call void @llvm.experimental.noalias.scope.decl(metadata !81024), !dbg !81023
@@ -2330,7 +2330,7 @@ bb.ab:                                            ; preds = %bb.ab, %.epil.prehe
   %.sroa.1.0.i.i.in.i.i.epil = phi i64 [ %.sroa.1.0.i.i.in.i.i.epil.init, %.epil.preheader134 ], [ %.sroa.1.0.i.i.i.i.epil, %bb.ab ] ; 2 uses
   %.sroa.02.0.i.i.i.i.epil = phi i64 [ %.sroa.02.0.i.i.i.i.epil.init, %.epil.preheader134 ], [ %.1.i.i.i.i.i.i.epil, %bb.ab ], !dbg !80946
   %epil.iter136 = phi i64 [ 0, %.epil.preheader134 ], [ %epil.iter136.next, %bb.ab ]
-  %.sroa.1.0.i.i.i.i.epil = add nuw i64 %.sroa.1.0.i.i.in.i.i.epil, 1, !dbg !80947 ; 2 uses
+  %.sroa.1.0.i.i.i.i.epil = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i.epil, 1, !dbg !80947 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sroa.1.0.i.i.in.i.i.epil, !dbg !80948
   tail call void @llvm.experimental.noalias.scope.decl(metadata !80950), !dbg !80951
   tail call void @llvm.experimental.noalias.scope.decl(metadata !80952), !dbg !80951
@@ -2733,7 +2733,7 @@ bb.g:                                             ; preds = %bb.g, %.new133
   %i.u = icmp ult i8 %i.s, %.val2.i.i.i.i.i.i.2, !dbg !82112
   %.1.i.i.i.i.i.i.2 = select i1 %i.u, i64 %.sroa.1.0.i.i.i.i.2, i64 %.1.i.i.i.i.i.i.1, !dbg !82115
   %i.v = tail call i8 @llvm.umax.i8(i8 %i.s, i8 %.val2.i.i.i.i.i.i.2), !dbg !82079 ; 2 uses
-  %.sroa.1.0.i.i.i.i.3 = add nuw i64 %.sroa.1.0.i.i.in.i.i, 4, !dbg !82101 ; 3 uses
+  %.sroa.1.0.i.i.i.i.3 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i, 4, !dbg !82101 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sroa.1.0.i.i.i.i.2, !dbg !82102
   %.val2.i.i.i.i.i.i.3 = load i8, ptr %i.w, align 1, !dbg !82079, !alias.scope !82128, !noalias !82131, !noundef !13 ; 2 uses
   %i.x = icmp ult i8 %i.v, %.val2.i.i.i.i.i.i.3, !dbg !82112
@@ -2784,7 +2784,7 @@ bb.i:                                             ; preds = %bb.i, %.new
   %i.aj = icmp ult i8 %.val.i.i.i.i.i.i33.2, %i.ah, !dbg !82184
   %.1.i.i.i.i.i.i35.2 = select i1 %i.aj, i64 %.sroa.1.0.i.i.i.i32.2, i64 %.1.i.i.i.i.i.i35.1, !dbg !82187
   %i.ak = tail call i8 @llvm.umin.i8(i8 %.val.i.i.i.i.i.i33.2, i8 %i.ah), !dbg !82150 ; 2 uses
-  %.sroa.1.0.i.i.i.i32.3 = add nuw i64 %.sroa.1.0.i.i.in.i.i29, 4, !dbg !82173 ; 3 uses
+  %.sroa.1.0.i.i.i.i32.3 = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i29, 4, !dbg !82173 ; 3 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.z, i64 %.sroa.1.0.i.i.i.i32.2, !dbg !82174
   %.val.i.i.i.i.i.i33.3 = load i8, ptr %i.al, align 1, !dbg !82150, !alias.scope !82200, !noalias !82203, !noundef !13 ; 2 uses
   %i.am = icmp ult i8 %.val.i.i.i.i.i.i33.3, %i.ak, !dbg !82184
@@ -2947,7 +2947,7 @@ bb.y:                                             ; preds = %bb.y, %.epil.prehea
   %.sroa.1.0.i.i.in.i.i29.epil = phi i64 [ %.sroa.1.0.i.i.in.i.i29.epil.init, %.epil.preheader ], [ %.sroa.1.0.i.i.i.i32.epil, %bb.y ] ; 2 uses
   %.sroa.02.0.i.i.i.i31.epil = phi i64 [ %.sroa.02.0.i.i.i.i31.epil.init, %.epil.preheader ], [ %.1.i.i.i.i.i.i35.epil, %bb.y ], !dbg !82172
   %epil.iter = phi i64 [ 0, %.epil.preheader ], [ %epil.iter.next, %bb.y ]
-  %.sroa.1.0.i.i.i.i32.epil = add nuw i64 %.sroa.1.0.i.i.in.i.i29.epil, 1, !dbg !82173 ; 2 uses
+  %.sroa.1.0.i.i.i.i32.epil = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i29.epil, 1, !dbg !82173 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.z, i64 %.sroa.1.0.i.i.in.i.i29.epil, !dbg !82174
   tail call void @llvm.experimental.noalias.scope.decl(metadata !82176), !dbg !82177
   tail call void @llvm.experimental.noalias.scope.decl(metadata !82178), !dbg !82177
@@ -2994,7 +2994,7 @@ bb.ab:                                            ; preds = %bb.ab, %.epil.prehe
   %.sroa.1.0.i.i.in.i.i.epil = phi i64 [ %.sroa.1.0.i.i.in.i.i.epil.init, %.epil.preheader134 ], [ %.sroa.1.0.i.i.i.i.epil, %bb.ab ] ; 2 uses
   %.sroa.02.0.i.i.i.i.epil = phi i64 [ %.sroa.02.0.i.i.i.i.epil.init, %.epil.preheader134 ], [ %.1.i.i.i.i.i.i.epil, %bb.ab ], !dbg !82100
   %epil.iter136 = phi i64 [ 0, %.epil.preheader134 ], [ %epil.iter136.next, %bb.ab ]
-  %.sroa.1.0.i.i.i.i.epil = add nuw i64 %.sroa.1.0.i.i.in.i.i.epil, 1, !dbg !82101 ; 2 uses
+  %.sroa.1.0.i.i.i.i.epil = add nuw nsw i64 %.sroa.1.0.i.i.in.i.i.epil, 1, !dbg !82101 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sroa.1.0.i.i.in.i.i.epil, !dbg !82102
   tail call void @llvm.experimental.noalias.scope.decl(metadata !82104), !dbg !82105
   tail call void @llvm.experimental.noalias.scope.decl(metadata !82106), !dbg !82105

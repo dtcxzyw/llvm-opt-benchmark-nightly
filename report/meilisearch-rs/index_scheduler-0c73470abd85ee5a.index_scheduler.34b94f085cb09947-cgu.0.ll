@@ -206,7 +206,7 @@ bb.e:                                             ; preds = %.loopexit
 .lr.ph.i.i:                                       ; preds = %.loopexit.thread, %"_ZN4core3ptr195drop_in_place$LT$thread_local..Entry$LT$milli..update..new..thread_local..MostlySendWrapper$LT$milli..update..new..thread_local..FullySend$LT$core..cell..Cell$LT$bumpalo..Bump$GT$$GT$$GT$$GT$$GT$17h260543ac31eb9eb8E.exit.i.i"
   %.sroa.0.010.i.i = phi i64 [ %i.al, %"_ZN4core3ptr195drop_in_place$LT$thread_local..Entry$LT$milli..update..new..thread_local..MostlySendWrapper$LT$milli..update..new..thread_local..FullySend$LT$core..cell..Cell$LT$bumpalo..Bump$GT$$GT$$GT$$GT$$GT$17h260543ac31eb9eb8E.exit.i.i" ], [ 0, %.loopexit.thread ] ; 2 uses
   %i.ak = getelementptr inbounds nuw [32 x i8], ptr %.sroa.10.0.i.i.i.i.i.i.i, i64 %.sroa.0.010.i.i ; 2 uses
-  %i.al = add nuw i64 %.sroa.0.010.i.i, 1         ; 2 uses
+  %i.al = add nuw nsw i64 %.sroa.0.010.i.i, 1     ; 2 uses
   %i.am = getelementptr i8, ptr %i.ak, i64 24
   %.val9.i.i = load i8, ptr %i.am, align 8, !range !1313, !alias.scope !37880, !noundef !14
   %i.an = trunc nuw i8 %.val9.i.i to i1
@@ -388,7 +388,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 .lr.ph.i.i:                                       ; preds = %.loopexit, %"_ZN4core3ptr194drop_in_place$LT$thread_local..Entry$LT$milli..update..new..thread_local..MostlySendWrapper$LT$core..cell..RefCell$LT$milli..update..new..extract..vectors..EmbeddingExtractorData$GT$$GT$$GT$$GT$17hca1a35fcdb478cf3E.exit.i.i"
   %.sroa.0.08.i.i = phi i64 [ %i.al, %"_ZN4core3ptr194drop_in_place$LT$thread_local..Entry$LT$milli..update..new..thread_local..MostlySendWrapper$LT$core..cell..RefCell$LT$milli..update..new..extract..vectors..EmbeddingExtractorData$GT$$GT$$GT$$GT$17hca1a35fcdb478cf3E.exit.i.i" ], [ 0, %.loopexit ] ; 2 uses
   %i.ak = getelementptr inbounds nuw [64 x i8], ptr %.sroa.10.0.i.i.i.i.i.i.i, i64 %.sroa.0.08.i.i ; 2 uses
-  %i.al = add nuw i64 %.sroa.0.08.i.i, 1          ; 2 uses
+  %i.al = add nuw nsw i64 %.sroa.0.08.i.i, 1      ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
   %i.an = load i8, ptr %i.am, align 8, !range !1313, !alias.scope !37914, !noundef !14
   %i.ao = trunc nuw i8 %i.an to i1
@@ -555,7 +555,7 @@ bb.e:                                             ; preds = %.loopexit
 .lr.ph.i.i:                                       ; preds = %.loopexit.thread, %"_ZN4core3ptr186drop_in_place$LT$thread_local..Entry$LT$core..cell..RefCell$LT$$LP$alloc..vec..Vec$LT$h3o..index..cell..CellIndex$GT$$C$alloc..vec..Vec$LT$h3o..index..cell..CellIndex$GT$$RP$$GT$$GT$$GT$17h77d458a1d41d2b2aE.exit.i.i"
   %.sroa.0.07.i.i = phi i64 [ %i.al, %"_ZN4core3ptr186drop_in_place$LT$thread_local..Entry$LT$core..cell..RefCell$LT$$LP$alloc..vec..Vec$LT$h3o..index..cell..CellIndex$GT$$C$alloc..vec..Vec$LT$h3o..index..cell..CellIndex$GT$$RP$$GT$$GT$$GT$17h77d458a1d41d2b2aE.exit.i.i" ], [ 0, %.loopexit.thread ] ; 2 uses
   %i.ak = getelementptr inbounds nuw [64 x i8], ptr %.sroa.10.0.i.i.i.i.i.i.i, i64 %.sroa.0.07.i.i ; 5 uses
-  %i.al = add nuw i64 %.sroa.0.07.i.i, 1          ; 2 uses
+  %i.al = add nuw nsw i64 %.sroa.0.07.i.i, 1      ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !37955)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !37958)
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
@@ -958,7 +958,7 @@ bb.e:                                             ; preds = %.loopexit
 .lr.ph.i.i:                                       ; preds = %.loopexit.thread, %"_ZN4core3ptr171drop_in_place$LT$thread_local..Entry$LT$milli..update..new..thread_local..MostlySendWrapper$LT$milli..update..new..thread_local..FullySend$LT$bumpalo..Bump$GT$$GT$$GT$$GT$17h4d3095520da56899E.exit.i.i"
   %.sroa.0.010.i.i = phi i64 [ %i.al, %"_ZN4core3ptr171drop_in_place$LT$thread_local..Entry$LT$milli..update..new..thread_local..MostlySendWrapper$LT$milli..update..new..thread_local..FullySend$LT$bumpalo..Bump$GT$$GT$$GT$$GT$17h4d3095520da56899E.exit.i.i" ], [ 0, %.loopexit.thread ] ; 2 uses
   %i.ak = getelementptr inbounds nuw [32 x i8], ptr %.sroa.10.0.i.i.i.i.i.i.i, i64 %.sroa.0.010.i.i ; 2 uses
-  %i.al = add nuw i64 %.sroa.0.010.i.i, 1         ; 2 uses
+  %i.al = add nuw nsw i64 %.sroa.0.010.i.i, 1     ; 2 uses
   %i.am = getelementptr i8, ptr %i.ak, i64 24
   %.val9.i.i = load i8, ptr %i.am, align 8, !range !1313, !alias.scope !38203, !noundef !14
   %i.an = trunc nuw i8 %.val9.i.i to i1
@@ -1361,7 +1361,7 @@ bb.c:                                             ; preds = %bb.e, %.lr.ph.split
   br i1 %i.x, label %_ZN4core5slice6memchr6memchr17h42eb1bd28cc17905E.exit.thread24.i.i.i.i.i, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i.i
-  %i.y = add nuw i64 %.sroa.01.05.i.i.i.i.i.i, 1  ; 2 uses
+  %i.y = add nuw nsw i64 %.sroa.01.05.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i.i.i.i = icmp eq i64 %i.y, %i.s
   br i1 %exitcond.not.i.i.i.i.i.i, label %_ZN4core5slice6memchr6memchr17h42eb1bd28cc17905E.exit.thread.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
 

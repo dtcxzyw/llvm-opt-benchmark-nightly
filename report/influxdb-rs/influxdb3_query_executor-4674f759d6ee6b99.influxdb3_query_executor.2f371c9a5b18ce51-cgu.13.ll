@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %.noexc6, %.lr.ph.i
   %.sroa.016.020.i = phi i64 [ 0, %.lr.ph.i ], [ %i.q, %.noexc6 ] ; 2 uses
-  %i.q = add nuw i64 %.sroa.016.020.i, 1          ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.016.020.i, 1      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !12236
   invoke void @_RNvMse_NtNtNtNtCs8dy3IO6wsj9_8wasmtime7runtime9component4func5typedINtB5_8WasmListNtNtCscdodAO9FK5_5alloc6string6StringE14get_from_storeCs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %2, ptr noalias noundef nonnull align 8 dereferenceable(104) %1, i64 noundef %.sroa.016.020.i)
           to label %.noexc unwind label %.loopexit
@@ -496,7 +496,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %.noexc6, %.lr.ph.i
   %.sroa.016.020.i = phi i64 [ 0, %.lr.ph.i ], [ %i.q, %.noexc6 ] ; 2 uses
-  %i.q = add nuw i64 %.sroa.016.020.i, 1          ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.016.020.i, 1      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !12271
   invoke void @_RNvMse_NtNtNtNtCs8dy3IO6wsj9_8wasmtime7runtime9component4func5typedINtB5_8WasmListNtNtNtNtNtNtCsjU3KQFpSKkZ_24datafusion_udf_wasm_host8bindings7exports19datafusion_udf_wasm3udf5types8DataTypeE14get_from_storeCs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %2, ptr noalias noundef nonnull align 8 dereferenceable(104) %1, i64 noundef %.sroa.016.020.i)
           to label %.noexc unwind label %.loopexit
@@ -656,7 +656,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %.noexc6, %.lr.ph.i
   %.sroa.014.018.i = phi i64 [ 0, %.lr.ph.i ], [ %i.q, %.noexc6 ] ; 2 uses
-  %i.q = add nuw i64 %.sroa.014.018.i, 1          ; 2 uses
+  %i.q = add nuw nsw i64 %.sroa.014.018.i, 1      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !12285
   invoke void @_RNvMse_NtNtNtNtCs8dy3IO6wsj9_8wasmtime7runtime9component4func5typedINtB5_8WasmListTNtNtCscdodAO9FK5_5alloc6string6StringINtNtB1n_3vec3VechEEE14get_from_storeCs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %2, ptr noalias noundef nonnull align 8 dereferenceable(104) %1, i64 noundef %.sroa.014.018.i)

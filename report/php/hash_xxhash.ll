@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   %i.cn = shufflevector <2 x i64> %i.ce, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %i.co = add <2 x i64> %i.aj, %i.cn
   %i.cp = add <2 x i64> %i.co, %i.cm              ; 3 uses
-  %i.cq = add nuw i64 %.0.i1746.i, 1              ; 2 uses
+  %i.cq = add nuw nsw i64 %.0.i1746.i, 1          ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.cq, %i.af
   br i1 %exitcond.not.i, label %XXH3_accumulate.exit20.loopexit.i, label %.lr.ph.i, !llvm.loop !86
 
@@ -608,7 +608,7 @@ bb.m:                                             ; preds = %bb.l
   %i.ye = shufflevector <2 x i64> %i.xv, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %i.yf = add <2 x i64> %i.wa, %i.ye
   %i.yg = add <2 x i64> %i.yf, %i.yd              ; 3 uses
-  %i.yh = add nuw i64 %.0.i2954.i, 1              ; 2 uses
+  %i.yh = add nuw nsw i64 %.0.i2954.i, 1          ; 2 uses
   %exitcond94.not.i = icmp eq i64 %i.yh, %i.vw
   br i1 %exitcond94.not.i, label %XXH3_accumulate.exit32.loopexit.i, label %.lr.ph55.i, !llvm.loop !86
 
@@ -932,11 +932,11 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.17.0.i = phi <2 x i64> [ %i.bc, %.lr.ph.i ], [ %.sroa.17.0.copyload.i, %bb.d ]
   %.sroa.0.0.i = phi <2 x i64> [ %i.ap, %.lr.ph.i ], [ %.sroa.0.0.copyload.i, %bb.d ]
   %.0.i33.i50.i = phi i64 [ %i.cd, %.lr.ph.i ], [ 0, %bb.d ] ; 3 uses
-  %i.aa = shl i64 %.0.i33.i50.i, 6
+  %i.aa = shl nuw nsw i64 %.0.i33.i50.i, 6
   %i.ab = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.aa ; 5 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull readonly %i.ac, i32 0, i32 3, i32 1), !noalias !235
-  %i.ad = shl i64 %.0.i33.i50.i, 3
+  %i.ad = shl nuw nsw i64 %.0.i33.i50.i, 3
   %i.ae = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.ad ; 4 uses
   %i.af = load <2 x i64>, ptr %i.ab, align 1, !tbaa !12, !noalias !240 ; 2 uses
   %i.ag = load <2 x i64>, ptr %i.ae, align 1, !tbaa !12, !noalias !240
@@ -992,7 +992,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ca = shufflevector <2 x i64> %i.br, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %i.cb = add <2 x i64> %.sroa.45.0.i, %i.ca
   %i.cc = add <2 x i64> %i.cb, %i.bz              ; 2 uses
-  %i.cd = add nuw i64 %.0.i33.i50.i, 1            ; 2 uses
+  %i.cd = add nuw nsw i64 %.0.i33.i50.i, 1        ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.cd, %i.w
   br i1 %exitcond.not.i, label %XXH3_accumulate.exit36.i.i, label %.lr.ph.i, !llvm.loop !86
 
@@ -1395,7 +1395,7 @@ bb.f:                                             ; preds = %bb.e
   %i.cn = shufflevector <2 x i64> %i.ce, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %i.co = add <2 x i64> %i.aj, %i.cn
   %i.cp = add <2 x i64> %i.co, %i.cm              ; 3 uses
-  %i.cq = add nuw i64 %.0.i1746.i, 1              ; 2 uses
+  %i.cq = add nuw nsw i64 %.0.i1746.i, 1          ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.cq, %i.af
   br i1 %exitcond.not.i, label %XXH3_accumulate.exit20.loopexit.i, label %.lr.ph.i, !llvm.loop !86
 
@@ -1798,7 +1798,7 @@ bb.m:                                             ; preds = %bb.l
   %i.ye = shufflevector <2 x i64> %i.xv, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %i.yf = add <2 x i64> %i.wa, %i.ye
   %i.yg = add <2 x i64> %i.yf, %i.yd              ; 3 uses
-  %i.yh = add nuw i64 %.0.i2954.i, 1              ; 2 uses
+  %i.yh = add nuw nsw i64 %.0.i2954.i, 1          ; 2 uses
   %exitcond94.not.i = icmp eq i64 %i.yh, %i.vw
   br i1 %exitcond94.not.i, label %XXH3_accumulate.exit32.loopexit.i, label %.lr.ph55.i, !llvm.loop !86
 
@@ -2122,11 +2122,11 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.17.0.i = phi <2 x i64> [ %i.bc, %.lr.ph.i ], [ %.sroa.17.0.copyload.i, %bb.d ]
   %.sroa.0.0.i = phi <2 x i64> [ %i.ap, %.lr.ph.i ], [ %.sroa.0.0.copyload.i, %bb.d ]
   %.0.i33.i61.i = phi i64 [ %i.cd, %.lr.ph.i ], [ 0, %bb.d ] ; 3 uses
-  %i.aa = shl i64 %.0.i33.i61.i, 6
+  %i.aa = shl nuw nsw i64 %.0.i33.i61.i, 6
   %i.ab = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.aa ; 5 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull readonly %i.ac, i32 0, i32 3, i32 1), !noalias !485
-  %i.ad = shl i64 %.0.i33.i61.i, 3
+  %i.ad = shl nuw nsw i64 %.0.i33.i61.i, 3
   %i.ae = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.ad ; 4 uses
   %i.af = load <2 x i64>, ptr %i.ab, align 1, !tbaa !12, !noalias !490 ; 2 uses
   %i.ag = load <2 x i64>, ptr %i.ae, align 1, !tbaa !12, !noalias !490
@@ -2182,7 +2182,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ca = shufflevector <2 x i64> %i.br, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
   %i.cb = add <2 x i64> %.sroa.45.0.i, %i.ca
   %i.cc = add <2 x i64> %i.cb, %i.bz              ; 2 uses
-  %i.cd = add nuw i64 %.0.i33.i61.i, 1            ; 2 uses
+  %i.cd = add nuw nsw i64 %.0.i33.i61.i, 1        ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.cd, %i.w
   br i1 %exitcond.not.i, label %XXH3_accumulate.exit36.i.i, label %.lr.ph.i, !llvm.loop !86
 
