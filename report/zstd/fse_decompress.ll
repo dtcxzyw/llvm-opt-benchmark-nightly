@@ -205,6 +205,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 514
   %i.aj = load i16, ptr %i.ai, align 2, !tbaa !30
   %.not48.i.i = icmp eq i16 %i.aj, 0
+  %14 = ptrtoint ptr %0 to i64                    ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 3 uses
   %i.al = getelementptr inbounds i8, ptr %i.ak, i64 -3 ; 2 uses
   br i1 %.not48.i.i, label %bb.ao, label %bb.i
@@ -607,9 +608,8 @@ bb.am:                                            ; preds = %bb.ah
 
 bb.an:                                            ; preds = %bb.am, %bb.af
   %.2.i11.i = phi ptr [ %i.is, %bb.af ], [ %i.kb, %bb.am ]
-  %14 = ptrtoint ptr %.2.i11.i to i64
-  %i.kc = ptrtoint ptr %0 to i64
-  %i.kd = sub i64 %14, %i.kc
+  %i.kc = ptrtoint ptr %.2.i11.i to i64
+  %i.kd = sub i64 %i.kc, %14
   br label %FSE_decompress_usingDTable_generic.exit12.i
 
 FSE_decompress_usingDTable_generic.exit12.i:      ; preds = %BIT_reloadDStream.exit.i, %bb.ag, %bb.an, %.preheader193.i, %bb.t, %BIT_initDStream.exit.i, %bb.s, %bb.k, %bb.i
@@ -1012,9 +1012,8 @@ bb.bi:                                            ; preds = %bb.bd
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bb
   %.2.i.i = phi ptr [ %i.qp, %bb.bb ], [ %i.se, %bb.bi ]
-  %15 = ptrtoint ptr %.2.i.i to i64
-  %i.sf = ptrtoint ptr %0 to i64
-  %i.sg = sub i64 %15, %i.sf
+  %i.sf = ptrtoint ptr %.2.i.i to i64
+  %i.sg = sub i64 %i.sf, %14
   br label %FSE_decompress_usingDTable_generic.exit.i
 
 FSE_decompress_usingDTable_generic.exit.i:        ; preds = %BIT_reloadDStream.exit41.i, %bb.bc, %bb.bj, %.preheader.i, %bb.ap, %bb.ao
@@ -1099,6 +1098,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ah = getelementptr inbounds nuw i8, ptr %5, i64 514
   %i.ai = load i16, ptr %i.ah, align 2, !tbaa !30
   %.not48.i = icmp eq i16 %i.ai, 0
+  %13 = ptrtoint ptr %0 to i64                    ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 3 uses
   %i.ak = getelementptr inbounds i8, ptr %i.aj, i64 -3 ; 2 uses
   br i1 %.not48.i, label %bb.an, label %bb.g
@@ -1501,9 +1501,8 @@ bb.al:                                            ; preds = %bb.ag
 
 bb.am:                                            ; preds = %bb.al, %bb.ae
   %.2.i11 = phi ptr [ %i.if, %bb.ae ], [ %i.jo, %bb.al ]
-  %13 = ptrtoint ptr %.2.i11 to i64
-  %i.jp = ptrtoint ptr %0 to i64
-  %i.jq = sub i64 %13, %i.jp
+  %i.jp = ptrtoint ptr %.2.i11 to i64
+  %i.jq = sub i64 %i.jp, %13
   br label %FSE_decompress_usingDTable_generic.exit12
 
 FSE_decompress_usingDTable_generic.exit12:        ; preds = %bb.af, %BIT_reloadDStream.exit, %.preheader193, %bb.r, %bb.q, %bb.i, %bb.g, %BIT_initDStream.exit, %bb.am
@@ -1895,9 +1894,8 @@ bb.bi:                                            ; preds = %bb.bd
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bb
   %.2.i = phi ptr [ %i.pq, %bb.bb ], [ %i.rf, %bb.bi ]
-  %14 = ptrtoint ptr %.2.i to i64
-  %i.rg = ptrtoint ptr %0 to i64
-  %i.rh = sub i64 %14, %i.rg
+  %i.rg = ptrtoint ptr %.2.i to i64
+  %i.rh = sub i64 %i.rg, %13
   br label %FSE_decompress_usingDTable_generic.exit
 
 FSE_decompress_usingDTable_generic.exit:          ; preds = %bb.bc, %BIT_reloadDStream.exit41, %.preheader, %bb.ao, %bb.an, %bb.bj

@@ -204,6 +204,7 @@ tsdn_rtree_ctx.exit:                              ; preds = %bb.b, %bb.c
 bb.d:                                             ; preds = %tsdn_rtree_ctx.exit
   %i.f = load ptr, ptr %i.a, align 8, !tbaa !32
   %i.g = load ptr, ptr %i.b, align 8, !tbaa !32   ; 2 uses
+  %6 = ptrtoint ptr %2 to i64
   %i.h = icmp eq ptr %2, null
   br i1 %i.h, label %.critedge.i, label %bb.e
 
@@ -218,7 +219,6 @@ bb.e:                                             ; preds = %bb.d
 .critedge.i:                                      ; preds = %bb.e, %bb.d
   %.sroa.7.0.i = phi i64 [ %i.i, %bb.e ], [ 0, %bb.d ]
   %i.l = phi i64 [ %i.k, %bb.e ], [ 0, %bb.d ]
-  %6 = ptrtoint ptr %2 to i64
   %i.m = and i64 %6, 281474976710655
   %i.n = zext i32 %3 to i64
   %i.o = shl i64 %i.n, 48
@@ -509,6 +509,7 @@ bb.c:                                             ; preds = %bb.a
 
 tsdn_rtree_ctx.exit:                              ; preds = %bb.b, %bb.c
   %.0.i = phi ptr [ %4, %bb.b ], [ %i.b, %bb.c ]  ; 11 uses
+  %5 = ptrtoint ptr %2 to i64
   %i.c = getelementptr i8, ptr %2, i64 8
   %.val = load ptr, ptr %i.c, align 8, !tbaa !17  ; 2 uses
   %i.d = ptrtoint ptr %.val to i64
@@ -524,7 +525,6 @@ tsdn_rtree_ctx.exit:                              ; preds = %bb.b, %bb.c
   %i.m = getelementptr inbounds i8, ptr %i.l, i64 -4096
   %i.n = ptrtoint ptr %i.m to i64
   %i.o = add i64 %i.n, -4096                      ; 2 uses
-  %5 = ptrtoint ptr %2 to i64
   %i.p = and i64 %5, 281474976710654
   %i.q = zext i32 %3 to i64
   %i.r = shl i64 %i.q, 48
@@ -894,6 +894,7 @@ tsdn_rtree_ctx.exit:                              ; preds = %bb.b, %bb.c
   br i1 %.not, label %rtree_write.exit, label %bb.d
 
 bb.d:                                             ; preds = %tsdn_rtree_ctx.exit
+  %6 = ptrtoint ptr %2 to i64                     ; 2 uses
   %.val24 = load i64, ptr %2, align 8, !tbaa !12  ; 2 uses
   %i.c = lshr i64 %.val24, 44
   %i.d = trunc i64 %i.c to i8
@@ -1013,7 +1014,6 @@ rtree_leaf_elm_lookup.exit.i19:                   ; preds = %bb.i, %bb.h, %bb.g,
   br i1 %i.bm, label %rtree_write.exit21, label %bb.j
 
 bb.j:                                             ; preds = %rtree_leaf_elm_lookup.exit.i19
-  %6 = ptrtoint ptr %2 to i64
   %i.bn = and i64 %6, 281474976710655
   %i.bo = zext i32 %3 to i64
   %i.bp = shl i64 %i.bo, 48
@@ -1158,8 +1158,7 @@ rtree_leaf_elm_lookup.exit.i:                     ; preds = %bb.q, %bb.p, %bb.o,
   br i1 %i.em, label %rtree_write.exit, label %bb.r
 
 bb.r:                                             ; preds = %rtree_leaf_elm_lookup.exit.i
-  %7 = ptrtoint ptr %2 to i64
-  %i.en = and i64 %7, 281474976710654
+  %i.en = and i64 %6, 281474976710654
   %i.eo = zext i32 %3 to i64
   %i.ep = shl i64 %i.eo, 48
   %i.eq = shl nuw nsw i8 %i.e, 1
@@ -1248,6 +1247,7 @@ bb.a:
   %i.a = load ptr, ptr %2, align 8, !tbaa !35
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !37   ; 2 uses
+  %7 = ptrtoint ptr %3 to i64
   %i.d = icmp eq ptr %3, null
   br i1 %i.d, label %.critedge.i, label %bb.b
 
@@ -1263,7 +1263,6 @@ bb.b:                                             ; preds = %bb.a
 
 .critedge.i:                                      ; preds = %bb.b, %bb.a
   %i.j = phi i64 [ %i.i, %bb.b ], [ 65302194596872192, %bb.a ]
-  %7 = ptrtoint ptr %3 to i64
   %i.k = and i64 %7, 281474976710655
   %i.l = or i64 %i.j, %i.k
   %i.m = inttoptr i64 %i.l to ptr                 ; 2 uses
@@ -1280,6 +1279,7 @@ emap_rtree_write_acquired.exit:                   ; preds = %.critedge.i, %bb.c
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !38
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !39   ; 2 uses
+  %8 = ptrtoint ptr %5 to i64
   %i.r = icmp eq ptr %5, null
   br i1 %i.r, label %.critedge.i12, label %bb.d
 
@@ -1295,7 +1295,6 @@ bb.d:                                             ; preds = %emap_rtree_write_ac
 
 .critedge.i12:                                    ; preds = %bb.d, %emap_rtree_write_acquired.exit
   %i.x = phi i64 [ %i.w, %bb.d ], [ 65302194596872192, %emap_rtree_write_acquired.exit ]
-  %8 = ptrtoint ptr %5 to i64
   %i.y = and i64 %8, 281474976710655
   %i.z = or i64 %i.x, %i.y
   %i.aa = inttoptr i64 %i.z to ptr                ; 2 uses
@@ -1366,6 +1365,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %.0.in = phi ptr [ %i.c, %bb.d ], [ %i.e, %bb.c ]
   %.0 = load ptr, ptr %.0.in, align 8, !tbaa !32  ; 2 uses
   %i.g = load ptr, ptr %2, align 8, !tbaa !35
+  %5 = ptrtoint ptr %3 to i64
   %i.h = icmp eq ptr %3, null
   br i1 %i.h, label %.critedge.i, label %bb.f
 
@@ -1381,7 +1381,6 @@ bb.f:                                             ; preds = %bb.e
 
 .critedge.i:                                      ; preds = %bb.f, %bb.e
   %i.n = phi i64 [ %i.m, %bb.f ], [ 65302194596872192, %bb.e ]
-  %5 = ptrtoint ptr %3 to i64
   %i.o = and i64 %5, 281474976710655
   %i.p = or i64 %i.n, %i.o
   %i.q = inttoptr i64 %i.p to ptr                 ; 2 uses
@@ -1724,8 +1723,7 @@ bb.g:                                             ; preds = %rtree_leaf_elm_look
   %i.bo = shl i64 %i.be, 16
   %i.bp = ashr exact i64 %i.bo, 16
   %i.bq = and i64 %i.bp, -128
-  %5 = inttoptr i64 %i.bq to ptr
-  store ptr %5, ptr %4, align 8, !tbaa !49
+  store i64 %i.bq, ptr %4, align 8, !tbaa !49
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 %i.bg, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !51
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 12

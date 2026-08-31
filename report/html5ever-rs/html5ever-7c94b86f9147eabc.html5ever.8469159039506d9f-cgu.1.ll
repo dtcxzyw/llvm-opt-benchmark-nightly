@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.g = load ptr, ptr %i.f, align 8, !nonnull !5, !noundef !5 ; 4 uses
+  %i.g = load ptr, ptr %i.f, align 8, !nonnull !5, !noundef !5 ; 3 uses
   %i.h = ptrtoint ptr %i.g to i64                 ; 3 uses
   %i.i = icmp eq ptr %i.g, inttoptr (i64 15 to ptr)
   br i1 %i.i, label %_RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks20opt_tendril_as_slice.exit, label %bb.c
@@ -214,9 +214,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.j, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = and i64 %i.h, 1
-  %2 = sub nsw i64 0, %i.k
-  %3 = getelementptr i8, ptr %i.g, i64 %2
+  %i.k = and i64 %i.h, -2
   %i.l = trunc i64 %i.h to i1
   br i1 %i.l, label %bb.e, label %bb.g
 
@@ -232,7 +230,8 @@ bb.f:                                             ; preds = %bb.c
 
 bb.g:                                             ; preds = %bb.e, %bb.d
   %.sroa.01.0.i.i.i = phi i64 [ %i.o, %bb.e ], [ 0, %bb.d ]
-  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %2 = inttoptr i64 %i.k to ptr
+  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.s = load i32, ptr %i.r, align 8, !noundef !5
   %i.t = zext i32 %i.s to i64
@@ -249,7 +248,7 @@ _RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks2
 
 bb.h:                                             ; preds = %_RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks20opt_tendril_as_slice.exit
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.z = load ptr, ptr %i.y, align 8, !nonnull !5, !noundef !5 ; 4 uses
+  %i.z = load ptr, ptr %i.y, align 8, !nonnull !5, !noundef !5 ; 3 uses
   %i.aa = ptrtoint ptr %i.z to i64                ; 3 uses
   %i.ab = icmp eq ptr %i.z, inttoptr (i64 15 to ptr)
   br i1 %i.ab, label %_RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks20opt_tendril_as_slice.exit88, label %bb.i
@@ -259,9 +258,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ac, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ad = and i64 %i.aa, 1
-  %4 = sub nsw i64 0, %i.ad
-  %5 = getelementptr i8, ptr %i.z, i64 %4
+  %i.ad = and i64 %i.aa, -2
   %i.ae = trunc i64 %i.aa to i1
   br i1 %i.ae, label %bb.k, label %bb.m
 
@@ -277,7 +274,8 @@ bb.l:                                             ; preds = %bb.i
 
 bb.m:                                             ; preds = %bb.k, %bb.j
   %.sroa.01.0.i.i.i87 = phi i64 [ %i.ah, %bb.k ], [ 0, %bb.j ]
-  %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %3 = inttoptr i64 %i.ad to ptr
+  %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.al = load i32, ptr %i.ak, align 8, !noundef !5
   %i.am = zext i32 %i.al to i64
@@ -294,7 +292,7 @@ _RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks2
 
 bb.n:                                             ; preds = %_RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks20opt_tendril_as_slice.exit88
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.as = load ptr, ptr %i.ar, align 8, !nonnull !5, !noundef !5 ; 4 uses
+  %i.as = load ptr, ptr %i.ar, align 8, !nonnull !5, !noundef !5 ; 3 uses
   %i.at = ptrtoint ptr %i.as to i64               ; 3 uses
   %i.au = icmp eq ptr %i.as, inttoptr (i64 15 to ptr)
   br i1 %i.au, label %_RNvNvNtNtCsbmOI1VUejFP_9html5ever12tree_builder4data24doctype_error_and_quirks20opt_tendril_as_slice.exit92, label %bb.o
@@ -304,9 +302,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.av, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.aw = and i64 %i.at, 1
-  %6 = sub nsw i64 0, %i.aw
-  %7 = getelementptr i8, ptr %i.as, i64 %6
+  %i.aw = and i64 %i.at, -2
   %i.ax = trunc i64 %i.at to i1
   br i1 %i.ax, label %bb.q, label %bb.s
 
@@ -322,7 +318,8 @@ bb.r:                                             ; preds = %bb.o
 
 bb.s:                                             ; preds = %bb.q, %bb.p
   %.sroa.01.0.i.i.i91 = phi i64 [ %i.ba, %bb.q ], [ 0, %bb.p ]
-  %i.bc = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %4 = inttoptr i64 %i.aw to ptr
+  %i.bc = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.be = load i32, ptr %i.bd, align 8, !noundef !5
   %i.bf = zext i32 %i.be to i64
@@ -725,7 +722,7 @@ _RNvXsi_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4
 _RNvXsi_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.thread5.i.i.i: ; preds = %_RNvXsi_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.i.i.i, %_RNvXs8_NtCsgv7xG79AfeB_12string_cache4atomINtB5_4AtomNtCsbN1FUDjLgAL_9web_atoms18NamespaceStaticSetENtNtCskKLDkoKarTP_4core3cmp3Ord3cmpCsbmOI1VUejFP_9html5ever.exit.thread.i.i.i.i
   %i.ed = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ee = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.ef = load ptr, ptr %i.ed, align 8, !nonnull !5, !noundef !5 ; 4 uses
+  %i.ef = load ptr, ptr %i.ed, align 8, !nonnull !5, !noundef !5 ; 3 uses
   %i.eg = ptrtoint ptr %i.ef to i64               ; 3 uses
   %i.eh = icmp eq ptr %i.ef, inttoptr (i64 15 to ptr)
   br i1 %i.eh, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsbmOI1VUejFP_9html5ever.exit.i.i.i.i, label %bb.ar
@@ -735,9 +732,7 @@ bb.ar:                                            ; preds = %_RNvXsi_NtCsa2F6HLA
   br i1 %i.ei, label %bb.au, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  %i.ej = and i64 %i.eg, 1
-  %2 = sub nsw i64 0, %i.ej
-  %3 = getelementptr i8, ptr %i.ef, i64 %2
+  %i.ej = and i64 %i.eg, -2
   %i.ek = trunc i64 %i.eg to i1
   br i1 %i.ek, label %bb.at, label %bb.av
 
@@ -753,7 +748,8 @@ bb.au:                                            ; preds = %bb.ar
 
 bb.av:                                            ; preds = %bb.at, %bb.as
   %.sroa.01.0.i.i.i.i.i.i = phi i64 [ %i.en, %bb.at ], [ 0, %bb.as ]
-  %i.ep = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %2 = inttoptr i64 %i.ej to ptr
+  %i.ep = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.er = load i32, ptr %i.eq, align 8, !noundef !5
   %i.es = zext i32 %i.er to i64
@@ -763,7 +759,7 @@ bb.av:                                            ; preds = %bb.at, %bb.as
 _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E13as_byte_sliceCsbmOI1VUejFP_9html5ever.exit.i.i.i.i: ; preds = %bb.av, %bb.au, %_RNvXsi_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.thread5.i.i.i
   %.sroa.4.0.i.i.i.i.i = phi i64 [ %i.es, %bb.av ], [ %i.eg, %bb.au ], [ 0, %_RNvXsi_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.thread5.i.i.i ] ; 2 uses
   %.sroa.0.0.i.i.i.i.i = phi ptr [ %i.et, %bb.av ], [ %i.eo, %bb.au ], [ inttoptr (i64 1 to ptr), %_RNvXsi_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4core3cmp3Ord3cmp.exit.thread5.i.i.i ]
-  %i.eu = load ptr, ptr %i.ee, align 8, !nonnull !5, !noundef !5 ; 4 uses
+  %i.eu = load ptr, ptr %i.ee, align 8, !nonnull !5, !noundef !5 ; 3 uses
   %i.ev = ptrtoint ptr %i.eu to i64               ; 3 uses
   %i.ew = icmp eq ptr %i.eu, inttoptr (i64 15 to ptr)
   br i1 %i.ew, label %_RNvXso_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8ENtNtCskKLDkoKarTP_4core3cmp3Ord3cmpCsbmOI1VUejFP_9html5ever.exit.i.i.i, label %bb.aw
@@ -773,9 +769,7 @@ bb.aw:                                            ; preds = %_RNvMss_NtCsldpiDta
   br i1 %i.ex, label %bb.az, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.ey = and i64 %i.ev, 1
-  %4 = sub nsw i64 0, %i.ey
-  %5 = getelementptr i8, ptr %i.eu, i64 %4
+  %i.ey = and i64 %i.ev, -2
   %i.ez = trunc i64 %i.ev to i1
   br i1 %i.ez, label %bb.ay, label %bb.ba
 
@@ -791,7 +785,8 @@ bb.az:                                            ; preds = %bb.aw
 
 bb.ba:                                            ; preds = %bb.ay, %bb.ax
   %.sroa.01.0.i.i1.i.i.i.i = phi i64 [ %i.fc, %bb.ay ], [ 0, %bb.ax ]
-  %i.fe = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %3 = inttoptr i64 %i.ey to ptr
+  %i.fe = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.ff = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.fg = load i32, ptr %i.ff, align 8, !noundef !5
   %i.fh = zext i32 %i.fg to i64

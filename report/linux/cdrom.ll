@@ -204,7 +204,6 @@ bb.b:                                             ; preds = %copy_from_user.exit
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 12
   %i.l = load i32, ptr %i.k, align 4
   %i.m = zext i32 %i.l to i64
-  %5 = inttoptr i64 %i.m to ptr
   store i32 %.sroa.0.0.copyload6, ptr %3, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 4
   store i8 %i.h, ptr %.sroa.2.0..sroa_idx, align 4
@@ -213,7 +212,7 @@ bb.b:                                             ; preds = %copy_from_user.exit
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 12
   store i32 0, ptr %.sroa.5.0..sroa_idx, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store ptr %5, ptr %.sroa.6.0..sroa_idx, align 8
+  store i64 %i.m, ptr %.sroa.6.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   br label %bb.c
 
