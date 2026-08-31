@@ -205,15 +205,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   %i.h = phi i64 [ %i.g, %.lr.ph.i ], [ %i.l, %bb.d ]
-  %.sroa.59.0.copyload.i = load i64, ptr %.sroa.59.0..sroa_idx.i, align 8, !noalias !2615
-  %.sroa.610.0.copyload.i = load i64, ptr %.sroa.610.0..sroa_idx.i, align 8, !noalias !2615
-  %.sroa.711.0.copyload.i = load i64, ptr %.sroa.711.0..sroa_idx.i, align 8, !noalias !2615
-  %.sroa.8.0.copyload.i = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !2615
+  %.sroa.59.0.copyload.i = load ptr, ptr %.sroa.59.0..sroa_idx.i, align 8, !noalias !2615
+  %.sroa.610.0.copyload.i = load ptr, ptr %.sroa.610.0..sroa_idx.i, align 8, !noalias !2615
+  %.sroa.711.0.copyload.i = load ptr, ptr %.sroa.711.0..sroa_idx.i, align 8, !noalias !2615
+  %.sroa.8.0.copyload.i = load ptr, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !2615
   %i.i = icmp eq i64 %i.h, 0                      ; 2 uses
-  %.sroa.0.0.i.sroa.speculated.v.i.i = select i1 %i.i, i64 %.sroa.711.0.copyload.i, i64 %.sroa.59.0.copyload.i
-  %.sroa.0.0.i.sroa.speculated.i.i = inttoptr i64 %.sroa.0.0.i.sroa.speculated.v.i.i to ptr
-  %.sroa.01.0.i.sroa.speculated.v.i.i = select i1 %i.i, i64 %.sroa.8.0.copyload.i, i64 %.sroa.610.0.copyload.i
-  %.sroa.01.0.i.sroa.speculated.i.i = inttoptr i64 %.sroa.01.0.i.sroa.speculated.v.i.i to ptr
+  %.sroa.0.0.i.sroa.speculated.i.i = select i1 %i.i, ptr %.sroa.711.0.copyload.i, ptr %.sroa.59.0.copyload.i
+  %.sroa.01.0.i.sroa.speculated.i.i = select i1 %i.i, ptr %.sroa.8.0.copyload.i, ptr %.sroa.610.0.copyload.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2619
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %.sroa.43.0..sroa_idx.i.i, ptr noundef nonnull align 1 dereferenceable(16) %.sroa.0.0.i.sroa.speculated.i.i, i64 16, i1 false), !noalias !2628
   %i.j = load i32, ptr %.sroa.01.0.i.sroa.speculated.i.i, align 4, !noalias !2629, !noundef !5
@@ -284,17 +282,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   %i.h = phi i64 [ %i.g, %.lr.ph.i ], [ %i.m, %bb.d ]
-  %.sroa.57.0.copyload.i = load i64, ptr %.sroa.57.0..sroa_idx.i, align 8, !noalias !2646
-  %.sroa.68.0.copyload.i = load i64, ptr %.sroa.68.0..sroa_idx.i, align 8, !noalias !2646
-  %.sroa.79.0.copyload.i = load i64, ptr %.sroa.79.0..sroa_idx.i, align 8, !noalias !2646
-  %.sroa.8.0.copyload.i = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !2646
+  %.sroa.57.0.copyload.i = load ptr, ptr %.sroa.57.0..sroa_idx.i, align 8, !noalias !2646
+  %.sroa.68.0.copyload.i = load ptr, ptr %.sroa.68.0..sroa_idx.i, align 8, !noalias !2646
+  %.sroa.79.0.copyload.i = load ptr, ptr %.sroa.79.0..sroa_idx.i, align 8, !noalias !2646
+  %.sroa.8.0.copyload.i = load ptr, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !2646
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2646
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2650
   %i.i = icmp eq i64 %i.h, 0                      ; 2 uses
-  %.sroa.0.0.i.sroa.speculated.v.i.i = select i1 %i.i, i64 %.sroa.79.0.copyload.i, i64 %.sroa.57.0.copyload.i
-  %.sroa.0.0.i.sroa.speculated.i.i = inttoptr i64 %.sroa.0.0.i.sroa.speculated.v.i.i to ptr
-  %.sroa.01.0.i.sroa.speculated.v.i.i = select i1 %i.i, i64 %.sroa.8.0.copyload.i, i64 %.sroa.68.0.copyload.i
-  %.sroa.01.0.i.sroa.speculated.i.i = inttoptr i64 %.sroa.01.0.i.sroa.speculated.v.i.i to ptr
+  %.sroa.0.0.i.sroa.speculated.i.i = select i1 %i.i, ptr %.sroa.79.0.copyload.i, ptr %.sroa.57.0.copyload.i
+  %.sroa.01.0.i.sroa.speculated.i.i = select i1 %i.i, ptr %.sroa.8.0.copyload.i, ptr %.sroa.68.0.copyload.i
   %i.j = load i64, ptr %.sroa.0.0.i.sroa.speculated.i.i, align 8, !noalias !2655, !noundef !5
   %i.k = load i32, ptr %.sroa.01.0.i.sroa.speculated.i.i, align 4, !noalias !2655, !noundef !5
   store i8 0, ptr %i.a, align 8, !noalias !2650
