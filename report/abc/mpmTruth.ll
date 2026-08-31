@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/mpmTruth?download=true
 inline.NumInlined: 95
 inline.NumDeleted: 35
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 12
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 11
 loop-unroll.NumUnrolled: 13
 begin_hunk_0_@Mpm_CutComputeTruth:bb.a
   br label %vector.body185
@@ -205,7 +205,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.xu = mul i32 %i.xt, %i.xq
   %i.xv = sext i32 %i.xu to i64                   ; 2 uses
   %i.xw = getelementptr inbounds [8 x i8], ptr %i.xo, i64 %i.xv ; 10 uses
-  %i.xx = lshr i32 %i.xa, 27                      ; 7 uses
+  %i.xx = lshr i32 %i.xa, 27                      ; 9 uses
   %.not.i.i.i23 = icmp eq i32 %i.xx, 0
   br i1 %.not.i.i.i23, label %Abc_TtSupportAndSize.exit.i.i, label %.lr.ph.i.i.i24
 
@@ -219,55 +219,78 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %i.xy, label %.lr.ph.split.us.i.i.i, label %.lr.ph.split.split.split.preheader.i.i.i
 
 .lr.ph.split.us.i.i.i:                            ; preds = %.lr.ph.i.i.i24
-  %i.yd = load i64, ptr %i.xw, align 8, !tbaa !36 ; 6 uses
-  %wide.trip.count55.i.i.i = zext nneg i32 %i.xx to i64 ; 2 uses
-  %xtraiter253.a = and i64 %wide.trip.count55.i.i.i, 1
+  %i.yd = load i64, ptr %i.xw, align 8, !tbaa !36 ; 12 uses
+  %9 = lshr i64 %i.yd, 1
+  %10 = xor i64 %9, %i.yd
+  %xtraiter253.a = and i64 %10, 6148914691236517205
+  %.not18.us.i.i.i = icmp ne i64 %xtraiter253.a, 0 ; 4 uses
+  %.3.i.i = zext i1 %.not18.us.i.i.i to i32       ; 2 uses
+  %11 = zext i1 %.not18.us.i.i.i to i32           ; 2 uses
   %i.ye = icmp eq i32 %i.xx, 1
-  br i1 %i.ye, label %Abc_TtHasVar.exit.us.i.i.i.epil.preheader, label %.lr.ph.split.us.i.i.i.new
+  br i1 %i.ye, label %Abc_TtSupportAndSize.exit.i.i, label %.lr.ph.split.us.i.i.i.new
 
 .lr.ph.split.us.i.i.i.new:                        ; preds = %.lr.ph.split.us.i.i.i
-  %unroll_iter = and i64 %wide.trip.count55.i.i.i, 6
-  br label %Abc_TtHasVar.exit.us.i.i.i
+  %12 = lshr i64 %i.yd, 2
+  %13 = xor i64 %12, %i.yd
+  %unroll_iter = and i64 %13, 3689348814741910323
+  %.not18.us.i.i.i.1 = icmp eq i64 %unroll_iter, 0 ; 3 uses
+  %14 = select i1 %.not18.us.i.i.i, i32 2, i32 1  ; 2 uses
+  %.3.i.i.1 = select i1 %.not18.us.i.i.i.1, i32 %.3.i.i, i32 %14 ; 2 uses
+  %15 = select i1 %.not18.us.i.i.i.1, i32 0, i32 2
+  %.1.us.i.i.i.1 = or disjoint i32 %15, %11       ; 2 uses
+  %exitcond56.not.i.i.i.1 = icmp eq i32 %i.xx, 2
+  br i1 %exitcond56.not.i.i.i.1, label %Abc_TtSupportAndSize.exit.i.i, label %Abc_TtHasVar.exit.us.i.i.i
 
-Abc_TtHasVar.exit.us.i.i.i:                       ; preds = %Abc_TtHasVar.exit.us.i.i.i, %.lr.ph.split.us.i.i.i.new
-  %.2.i.i34 = phi i32 [ 0, %.lr.ph.split.us.i.i.i.new ], [ %.3.i.i.1, %Abc_TtHasVar.exit.us.i.i.i ]
-  %9 = phi i32 [ 0, %.lr.ph.split.us.i.i.i.new ], [ %i.yk, %Abc_TtHasVar.exit.us.i.i.i ] ; 2 uses
-  %indvars.iv52.i.i.i = phi i64 [ 0, %.lr.ph.split.us.i.i.i.new ], [ %indvars.iv.next53.i.i.i.1, %Abc_TtHasVar.exit.us.i.i.i ] ; 4 uses
-  %.022.us.i.i.i = phi i32 [ 0, %.lr.ph.split.us.i.i.i.new ], [ %.1.us.i.i.i.1.a, %Abc_TtHasVar.exit.us.i.i.i ]
-  %niter = phi i64 [ 0, %.lr.ph.split.us.i.i.i.new ], [ %niter.next.1, %Abc_TtHasVar.exit.us.i.i.i ]
-  %10 = trunc nuw nsw i64 %indvars.iv52.i.i.i to i32
-  %11 = shl nuw nsw i32 1, %10                    ; 2 uses
-  %12 = zext nneg i32 %11 to i64
-  %13 = lshr i64 %i.yd, %12
-  %14 = getelementptr inbounds nuw [8 x i8], ptr @s_Truths6Neg, i64 %indvars.iv52.i.i.i
-  %15 = load i64, ptr %14, align 16, !tbaa !36
-  %16 = xor i64 %13, %i.yd
-  %17 = and i64 %16, %15
-  %.not18.us.i.i.i = icmp eq i64 %17, 0           ; 3 uses
-  %18 = add nsw i32 %9, 1                         ; 2 uses
-  %.3.i.i = select i1 %.not18.us.i.i.i, i32 %.2.i.i34, i32 %18
-  %19 = select i1 %.not18.us.i.i.i, i32 %9, i32 %18 ; 2 uses
-  %i.yf = select i1 %.not18.us.i.i.i, i32 0, i32 %11
-  %.1.us.i.i.i = or i32 %i.yf, %.022.us.i.i.i
-  %indvars.iv.next53.i.i.i = or disjoint i64 %indvars.iv52.i.i.i, 1 ; 2 uses
-  %20 = trunc nuw nsw i64 %indvars.iv.next53.i.i.i to i32
-  %21 = shl nuw nsw i32 1, %20                    ; 2 uses
-  %22 = zext nneg i32 %21 to i64
-  %i.yg = lshr i64 %i.yd, %22
-  %23 = getelementptr inbounds nuw [8 x i8], ptr @s_Truths6Neg, i64 %indvars.iv.next53.i.i.i
-  %24 = load i64, ptr %23, align 8, !tbaa !36
+Abc_TtHasVar.exit.us.i.i.i:                       ; preds = %.lr.ph.split.us.i.i.i.new
+  %16 = zext i1 %.not18.us.i.i.i to i32
+  %i.yf = select i1 %.not18.us.i.i.i.1, i32 %16, i32 %14 ; 2 uses
+  %i.yg = lshr i64 %i.yd, 4
   %i.yh = xor i64 %i.yg, %i.yd
-  %i.yi = and i64 %i.yh, %24
+  %i.yi = and i64 %i.yh, 1085102592571150095
   %.not18.us.i.i.i.1.a = icmp eq i64 %i.yi, 0     ; 3 uses
-  %i.yj = add nsw i32 %19, 1                      ; 2 uses
-  %.3.i.i.1 = select i1 %.not18.us.i.i.i.1.a, i32 %.3.i.i, i32 %i.yj ; 3 uses
-  %i.yk = select i1 %.not18.us.i.i.i.1.a, i32 %19, i32 %i.yj ; 2 uses
-  %i.yl = select i1 %.not18.us.i.i.i.1.a, i32 0, i32 %21
-  %.1.us.i.i.i.1.a = or i32 %i.yl, %.1.us.i.i.i   ; 3 uses
-  %indvars.iv.next53.i.i.i.1 = add nuw nsw i64 %indvars.iv52.i.i.i, 2 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %Abc_TtSupportAndSize.exit.i.i.loopexit.unr-lcssa, label %Abc_TtHasVar.exit.us.i.i.i, !llvm.loop !76
+  %i.yj = add nuw nsw i32 %i.yf, 1                ; 2 uses
+  %i.yk = select i1 %.not18.us.i.i.i.1.a, i32 %.3.i.i.1, i32 %i.yj ; 2 uses
+  %i.yl = select i1 %.not18.us.i.i.i.1.a, i32 0, i32 4
+  %.1.us.i.i.i.1.a = or disjoint i32 %i.yl, %.1.us.i.i.i.1 ; 2 uses
+  %niter.ncmp.1 = icmp eq i32 %i.xx, 3
+  br i1 %niter.ncmp.1, label %Abc_TtSupportAndSize.exit.i.i, label %Abc_TtHasVar.exit.us.i.i.i.3
+
+Abc_TtHasVar.exit.us.i.i.i.3:                     ; preds = %Abc_TtHasVar.exit.us.i.i.i
+  %17 = select i1 %.not18.us.i.i.i.1.a, i32 %i.yf, i32 %i.yj ; 2 uses
+  %18 = lshr i64 %i.yd, 8
+  %19 = xor i64 %18, %i.yd
+  %20 = and i64 %19, 71777214294589695
+  %.not18.us.i.i.i.3 = icmp eq i64 %20, 0         ; 3 uses
+  %21 = add nuw nsw i32 %17, 1                    ; 2 uses
+  %.3.i.i.3 = select i1 %.not18.us.i.i.i.3, i32 %i.yk, i32 %21 ; 2 uses
+  %22 = select i1 %.not18.us.i.i.i.3, i32 0, i32 8
+  %.1.us.i.i.i.3 = or disjoint i32 %22, %.1.us.i.i.i.1.a ; 2 uses
+  %exitcond56.not.i.i.i.3 = icmp eq i32 %i.xx, 4
+  br i1 %exitcond56.not.i.i.i.3, label %Abc_TtSupportAndSize.exit.i.i, label %Abc_TtHasVar.exit.us.i.i.i.4
+
+Abc_TtHasVar.exit.us.i.i.i.4:                     ; preds = %Abc_TtHasVar.exit.us.i.i.i.3
+  %23 = select i1 %.not18.us.i.i.i.3, i32 %17, i32 %21 ; 2 uses
+  %24 = lshr i64 %i.yd, 16
+  %25 = xor i64 %24, %i.yd
+  %26 = and i64 %25, 281470681808895
+  %.not18.us.i.i.i.4 = icmp eq i64 %26, 0         ; 3 uses
+  %27 = add nuw nsw i32 %23, 1                    ; 2 uses
+  %.3.i.i.4 = select i1 %.not18.us.i.i.i.4, i32 %.3.i.i.3, i32 %27 ; 2 uses
+  %28 = select i1 %.not18.us.i.i.i.4, i32 0, i32 16
+  %.1.us.i.i.i.4 = or disjoint i32 %28, %.1.us.i.i.i.3 ; 2 uses
+  %exitcond56.not.i.i.i.4 = icmp eq i32 %i.xx, 5
+  br i1 %exitcond56.not.i.i.i.4, label %Abc_TtSupportAndSize.exit.i.i, label %Abc_TtHasVar.exit.us.i.i.i.5
+
+Abc_TtHasVar.exit.us.i.i.i.5:                     ; preds = %Abc_TtHasVar.exit.us.i.i.i.4
+  %29 = select i1 %.not18.us.i.i.i.4, i32 %23, i32 %27
+  %30 = lshr i64 %i.yd, 32
+  %.masked = and i64 %i.yd, 4294967295
+  %.not18.us.i.i.i.5 = icmp eq i64 %30, %.masked  ; 2 uses
+  %31 = add nsw i32 %29, 1
+  %.3.i.i.5 = select i1 %.not18.us.i.i.i.5, i32 %.3.i.i.4, i32 %31
+  %32 = select i1 %.not18.us.i.i.i.5, i32 0, i32 32
+  %.1.us.i.i.i.5 = or disjoint i32 %32, %.1.us.i.i.i.4
+  br label %Abc_TtSupportAndSize.exit.i.i
 
 .lr.ph.split.split.split.preheader.i.i.i:         ; preds = %.lr.ph.i.i.i24
   %wide.trip.count.i.i.i25 = zext nneg i32 %i.xx to i64
@@ -292,7 +315,7 @@ Abc_TtHasVar.exit.us.i.i.i:                       ; preds = %Abc_TtHasVar.exit.u
 bb.bd:                                            ; preds = %bb.be
   %indvars.iv.next53.i.i.i.i = add nuw nsw i64 %indvars.iv52.i.i.i.i, 1 ; 2 uses
   %exitcond56.not.i.i.i.i = icmp eq i64 %indvars.iv.next53.i.i.i.i, %i.yb
-  br i1 %exitcond56.not.i.i.i.i, label %Abc_TtHasVar.exit.thread.i.i.i, label %bb.be, !llvm.loop !77
+  br i1 %exitcond56.not.i.i.i.i, label %Abc_TtHasVar.exit.thread.i.i.i, label %bb.be, !llvm.loop !76
 
 bb.be:                                            ; preds = %bb.bd, %.lr.ph.i.i.i.i
   %indvars.iv52.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i ], [ %indvars.iv.next53.i.i.i.i, %bb.bd ] ; 2 uses
@@ -320,7 +343,7 @@ bb.be:                                            ; preds = %bb.bd, %.lr.ph.i.i.
 bb.bf:                                            ; preds = %bb.bg
   %indvars.iv.next.i.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i.i, %i.zc
-  br i1 %exitcond.not.i.i.i.i, label %bb.bh, label %bb.bg, !llvm.loop !78
+  br i1 %exitcond.not.i.i.i.i, label %bb.bh, label %bb.bg, !llvm.loop !77
 
 bb.bg:                                            ; preds = %bb.bf, %.preheader.i.i.i.i
   %indvars.iv.i.i.i.i = phi i64 [ 0, %.preheader.i.i.i.i ], [ %indvars.iv.next.i.i.i.i, %bb.bf ] ; 3 uses
@@ -334,7 +357,7 @@ bb.bg:                                            ; preds = %bb.bf, %.preheader.
 bb.bh:                                            ; preds = %bb.bf
   %i.zg = getelementptr inbounds nuw [8 x i8], ptr %.03343.i.i.i.i, i64 %i.zb ; 2 uses
   %i.zh = icmp ult ptr %i.zg, %i.yc
-  br i1 %i.zh, label %.preheader.i.i.i.i, label %Abc_TtHasVar.exit.thread.i.i.i, !llvm.loop !79
+  br i1 %i.zh, label %.preheader.i.i.i.i, label %Abc_TtHasVar.exit.thread.i.i.i, !llvm.loop !78
 
 Abc_TtHasVar.exit.thread15.loopexit.i.i.i:        ; preds = %bb.bg
   %.pre59.i.i.i = shl nuw nsw i32 1, %i.yo
@@ -352,37 +375,11 @@ Abc_TtHasVar.exit.thread.i.i.i:                   ; preds = %bb.bh, %bb.bd, %Abc
   %.1.i.i.i27 = phi i32 [ %.022.i.i.i, %bb.bd ], [ %i.zi, %Abc_TtHasVar.exit.thread15.i.i.i ], [ %.022.i.i.i, %bb.bh ] ; 2 uses
   %indvars.iv.next.i.i.i28 = add nuw nsw i64 %indvars.iv.i.i.i26, 1 ; 2 uses
   %exitcond.not.i.i.i29 = icmp eq i64 %indvars.iv.next.i.i.i28, %wide.trip.count.i.i.i25
-  br i1 %exitcond.not.i.i.i29, label %Abc_TtSupportAndSize.exit.i.i, label %.lr.ph.split.split.split.i.i.i, !llvm.loop !76
+  br i1 %exitcond.not.i.i.i29, label %Abc_TtSupportAndSize.exit.i.i, label %.lr.ph.split.split.split.i.i.i, !llvm.loop !79
 
-Abc_TtSupportAndSize.exit.i.i.loopexit.unr-lcssa: ; preds = %Abc_TtHasVar.exit.us.i.i.i
-  %lcmp.mod254.not = icmp eq i64 %xtraiter253.a, 0
-  br i1 %lcmp.mod254.not, label %Abc_TtSupportAndSize.exit.i.i, label %Abc_TtHasVar.exit.us.i.i.i.epil.preheader
-
-Abc_TtHasVar.exit.us.i.i.i.epil.preheader:        ; preds = %Abc_TtSupportAndSize.exit.i.i.loopexit.unr-lcssa, %.lr.ph.split.us.i.i.i
-  %.2.i.i34.epil.init = phi i32 [ 0, %.lr.ph.split.us.i.i.i ], [ %.3.i.i.1, %Abc_TtSupportAndSize.exit.i.i.loopexit.unr-lcssa ]
-  %.epil.init = phi i32 [ 0, %.lr.ph.split.us.i.i.i ], [ %i.yk, %Abc_TtSupportAndSize.exit.i.i.loopexit.unr-lcssa ]
-  %indvars.iv52.i.i.i.epil.init = phi i64 [ 0, %.lr.ph.split.us.i.i.i ], [ %indvars.iv.next53.i.i.i.1, %Abc_TtSupportAndSize.exit.i.i.loopexit.unr-lcssa ] ; 2 uses
-  %.022.us.i.i.i.epil.init = phi i32 [ 0, %.lr.ph.split.us.i.i.i ], [ %.1.us.i.i.i.1.a, %Abc_TtSupportAndSize.exit.i.i.loopexit.unr-lcssa ]
-  %lcmp.mod257 = trunc i32 %i.xx to i1
-  tail call void @llvm.assume(i1 %lcmp.mod257)
-  %25 = trunc nuw nsw i64 %indvars.iv52.i.i.i.epil.init to i32
-  %26 = shl nuw nsw i32 1, %25                    ; 2 uses
-  %27 = zext nneg i32 %26 to i64
-  %28 = lshr i64 %i.yd, %27
-  %29 = getelementptr inbounds nuw [8 x i8], ptr @s_Truths6Neg, i64 %indvars.iv52.i.i.i.epil.init
-  %30 = load i64, ptr %29, align 8, !tbaa !36
-  %31 = xor i64 %28, %i.yd
-  %32 = and i64 %31, %30
-  %.not18.us.i.i.i.epil = icmp eq i64 %32, 0      ; 2 uses
-  %33 = add nsw i32 %.epil.init, 1
-  %.3.i.i.epil = select i1 %.not18.us.i.i.i.epil, i32 %.2.i.i34.epil.init, i32 %33
-  %34 = select i1 %.not18.us.i.i.i.epil, i32 0, i32 %26
-  %.1.us.i.i.i.epil = or i32 %34, %.022.us.i.i.i.epil.init
-  br label %Abc_TtSupportAndSize.exit.i.i
-
-Abc_TtSupportAndSize.exit.i.i:                    ; preds = %Abc_TtHasVar.exit.thread.i.i.i, %Abc_TtHasVar.exit.us.i.i.i.epil.preheader, %Abc_TtSupportAndSize.exit.i.i.loopexit.unr-lcssa, %bb.bc
-  %.4.i.i = phi i32 [ 0, %bb.bc ], [ %.3.i.i.epil, %Abc_TtHasVar.exit.us.i.i.i.epil.preheader ], [ %.3.i.i.1, %Abc_TtSupportAndSize.exit.i.i.loopexit.unr-lcssa ], [ %.138.i.i, %Abc_TtHasVar.exit.thread.i.i.i ] ; 3 uses
-  %.0.lcssa.i.i.i30 = phi i32 [ 0, %bb.bc ], [ %.1.us.i.i.i.epil, %Abc_TtHasVar.exit.us.i.i.i.epil.preheader ], [ %.1.us.i.i.i.1.a, %Abc_TtSupportAndSize.exit.i.i.loopexit.unr-lcssa ], [ %.1.i.i.i27, %Abc_TtHasVar.exit.thread.i.i.i ]
+Abc_TtSupportAndSize.exit.i.i:                    ; preds = %Abc_TtHasVar.exit.thread.i.i.i, %.lr.ph.split.us.i.i.i, %.lr.ph.split.us.i.i.i.new, %Abc_TtHasVar.exit.us.i.i.i, %Abc_TtHasVar.exit.us.i.i.i.3, %Abc_TtHasVar.exit.us.i.i.i.4, %Abc_TtHasVar.exit.us.i.i.i.5, %bb.bc
+  %.4.i.i = phi i32 [ 0, %bb.bc ], [ %.3.i.i.5, %Abc_TtHasVar.exit.us.i.i.i.5 ], [ %.3.i.i, %.lr.ph.split.us.i.i.i ], [ %.3.i.i.1, %.lr.ph.split.us.i.i.i.new ], [ %i.yk, %Abc_TtHasVar.exit.us.i.i.i ], [ %.3.i.i.3, %Abc_TtHasVar.exit.us.i.i.i.3 ], [ %.3.i.i.4, %Abc_TtHasVar.exit.us.i.i.i.4 ], [ %.138.i.i, %Abc_TtHasVar.exit.thread.i.i.i ] ; 3 uses
+  %.0.lcssa.i.i.i30 = phi i32 [ 0, %bb.bc ], [ %.1.us.i.i.i.5, %Abc_TtHasVar.exit.us.i.i.i.5 ], [ %11, %.lr.ph.split.us.i.i.i ], [ %.1.us.i.i.i.1, %.lr.ph.split.us.i.i.i.new ], [ %.1.us.i.i.i.1.a, %Abc_TtHasVar.exit.us.i.i.i ], [ %.1.us.i.i.i.3, %Abc_TtHasVar.exit.us.i.i.i.3 ], [ %.1.us.i.i.i.4, %Abc_TtHasVar.exit.us.i.i.i.4 ], [ %.1.i.i.i27, %Abc_TtHasVar.exit.thread.i.i.i ]
   %i.zl = icmp eq i32 %.4.i.i, %i.xx
   br i1 %i.zl, label %Mpm_CutComputeTruth7.exit, label %bb.bi
 

@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %.lr.ph.i
   br i1 %i.cj, label %.loopexit.i, label %.preheader131.i
 
 .preheader131.i:                                  ; preds = %._crit_edge.i
-  %i.ck = udiv i32 %.043, %.079.lcssa.i           ; 2 uses
+  %i.ck = udiv i32 %.043, %.079.lcssa.i           ; 3 uses
   %i.cl = icmp ugt i32 %i.ck, 2
   br i1 %i.cl, label %.lr.ph142.preheader.i, label %._crit_edge143.i
 
@@ -226,16 +226,12 @@ bb.t:                                             ; preds = %.lr.ph.i
   br i1 %.not93.i, label %bb.u, label %._crit_edge143.i
 
 bb.u:                                             ; preds = %.lr.ph142.i
-  %indvars.iv.next192.i = add nuw nsw i64 %indvars.iv191.i, 1 ; 3 uses
-  %4 = icmp samesign ult i64 %indvars.iv.next192.i, %i.cm
-  br i1 %4, label %.lr.ph142.i, label %._crit_edge143.loopexit.split.loop.exit247.i, !llvm.loop !78
+  %indvars.iv.next192.i = add nuw nsw i64 %indvars.iv191.i, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next192.i, %i.cm
+  br i1 %exitcond.not, label %._crit_edge143.i, label %.lr.ph142.i, !llvm.loop !78
 
-._crit_edge143.loopexit.split.loop.exit247.i:     ; preds = %bb.u
-  %indvars.le.i = trunc i64 %indvars.iv.next192.i to i32
-  br label %._crit_edge143.i
-
-._crit_edge143.i:                                 ; preds = %.lr.ph142.i, %._crit_edge143.loopexit.split.loop.exit247.i, %.preheader131.i
-  %.078.lcssa.i = phi i32 [ 2, %.preheader131.i ], [ %indvars.le.i, %._crit_edge143.loopexit.split.loop.exit247.i ], [ %indvars193.i, %.lr.ph142.i ] ; 2 uses
+._crit_edge143.i:                                 ; preds = %.lr.ph142.i, %bb.u, %.preheader131.i
+  %.078.lcssa.i = phi i32 [ 2, %.preheader131.i ], [ %indvars193.i, %.lr.ph142.i ], [ %i.ck, %bb.u ] ; 2 uses
   %i.cu = add i32 %.084149.i, 1                   ; 4 uses
   %i.cv = zext i32 %i.cu to i64                   ; 3 uses
   %i.cw = mul nuw nsw i64 %i.cv, 12

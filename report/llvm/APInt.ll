@@ -204,12 +204,11 @@ bb.m:                                             ; preds = %_ZN4llvm5APInt9tcCo
   %indvars.iv.next.i7493 = phi i64 [ %indvars.iv.next.i74.1, %.lr.ph.i72 ], [ 1, %.lr.ph.i72.preheader142 ] ; 4 uses
   %i.ey = phi i64 [ %i.fl, %.lr.ph.i72 ], [ %i.ex, %.lr.ph.i72.preheader142 ]
   %i.ez = phi ptr [ %i.fk, %.lr.ph.i72 ], [ %3, %.lr.ph.i72.preheader142 ]
-  %indvars.iv.i7392 = phi i64 [ %indvars.iv.next.i74, %.lr.ph.i72 ], [ 0, %.lr.ph.i72.preheader142 ]
+  %indvars.iv.i7392 = phi i64 [ %i.fg, %.lr.ph.i72 ], [ 0, %.lr.ph.i72.preheader142 ]
   %niter = phi i64 [ %niter.next.1, %.lr.ph.i72 ], [ 0, %.lr.ph.i72.preheader142 ]
-  %5 = add nuw nsw i64 %indvars.iv.i7392, 1
-  %6 = and i64 %5, 4294967295
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %6
-  %i.fa = load i64, ptr %7, align 8, !tbaa !11
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.i7392
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.fa = load i64, ptr %6, align 8, !tbaa !11
   %i.fb = shl i64 %i.fa, 63
   %i.fc = or disjoint i64 %i.fb, %i.ey
   store i64 %i.fc, ptr %i.ez, align 8, !tbaa !11
@@ -217,17 +216,15 @@ bb.m:                                             ; preds = %_ZN4llvm5APInt9tcCo
   %i.fe = load i64, ptr %i.fd, align 8, !tbaa !11
   %i.ff = lshr i64 %i.fe, 1                       ; 2 uses
   store i64 %i.ff, ptr %i.fd, align 8, !tbaa !11
-  %indvars.iv.next.i74 = add nuw nsw i64 %indvars.iv.next.i7493, 1 ; 3 uses
-  %i.fg = add nuw nsw i64 %indvars.iv.next.i7493, 1
-  %8 = and i64 %i.fg, 4294967295
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %8
-  %i.fh = load i64, ptr %9, align 8, !tbaa !11
+  %i.fg = add nuw nsw i64 %indvars.iv.next.i7493, 1 ; 3 uses
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.next.i7493
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.fh = load i64, ptr %8, align 8, !tbaa !11    ; 2 uses
   %i.fi = shl i64 %i.fh, 63
   %i.fj = or disjoint i64 %i.fi, %i.ff
   store i64 %i.fj, ptr %i.fd, align 8, !tbaa !11
-  %i.fk = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.next.i74 ; 4 uses
-  %10 = load i64, ptr %i.fk, align 8, !tbaa !11
-  %i.fl = lshr i64 %10, 1                         ; 3 uses
+  %i.fk = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.fg ; 3 uses
+  %i.fl = lshr i64 %i.fh, 1                       ; 3 uses
   store i64 %i.fl, ptr %i.fk, align 8, !tbaa !11
   %indvars.iv.next.i74.1 = add nuw nsw i64 %indvars.iv.next.i7493, 2 ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
@@ -241,12 +238,11 @@ bb.m:                                             ; preds = %_ZN4llvm5APInt9tcCo
   %indvars.iv.next.i7493.epil.init = phi i64 [ 1, %.lr.ph.i72.preheader142 ], [ %indvars.iv.next.i74.1, %.loopexit.loopexit.unr-lcssa ]
   %.epil.init = phi i64 [ %i.ex, %.lr.ph.i72.preheader142 ], [ %i.fl, %.loopexit.loopexit.unr-lcssa ]
   %.epil.init161 = phi ptr [ %3, %.lr.ph.i72.preheader142 ], [ %i.fk, %.loopexit.loopexit.unr-lcssa ]
-  %indvars.iv.i7392.epil.init = phi i64 [ 0, %.lr.ph.i72.preheader142 ], [ %indvars.iv.next.i74, %.loopexit.loopexit.unr-lcssa ]
+  %indvars.iv.i7392.epil.init = phi i64 [ 0, %.lr.ph.i72.preheader142 ], [ %i.fg, %.loopexit.loopexit.unr-lcssa ]
   tail call void @llvm.assume(i1 %lcmp.mod163)
-  %11 = add nuw nsw i64 %indvars.iv.i7392.epil.init, 1
-  %12 = and i64 %11, 4294967295
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %12
-  %i.fm = load i64, ptr %13, align 8, !tbaa !11
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.i7392.epil.init
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %i.fm = load i64, ptr %10, align 8, !tbaa !11
   %i.fn = shl i64 %i.fm, 63
   %i.fo = or disjoint i64 %i.fn, %.epil.init
   store i64 %i.fo, ptr %.epil.init161, align 8, !tbaa !11

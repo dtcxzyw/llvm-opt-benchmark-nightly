@@ -204,7 +204,7 @@ _ZN4mlir4vcix11BinaryImmOp14getODSOperandsEj.exit: ; preds = %bb.l
   br i1 %i.av, label %.lr.ph.i.i.preheader, label %.thread105
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZN4mlir4vcix11BinaryImmOp14getODSOperandsEj.exit
-  %i.aw = load ptr, ptr %0, align 8, !tbaa !93    ; 4 uses
+  %i.aw = load ptr, ptr %0, align 8, !tbaa !93    ; 5 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 44
   %i.ay = load i32, ptr %i.ax, align 4
   %i.az = and i32 %i.ay, 8388608
@@ -217,13 +217,24 @@ _ZN4mlir4vcix11BinaryImmOp14getODSOperandsEj.exit47: ; preds = %.lr.ph.i.i.prehe
   %i.bc = getelementptr inbounds nuw i8, ptr %i.aw, i64 72
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !70
   %i.be = zext i32 %i.bb to i64
-  %i.bf = add nsw i64 %i.be, -1                   ; 3 uses
+  %i.bf = add nsw i64 %i.be, -1                   ; 2 uses
   %i.bg = icmp ugt i64 %i.bf, 1
   br i1 %i.bg, label %_ZN4mlir4vcix11BinaryImmOp14getODSOperandsEj.exit47.thread, label %.preheader
 
 .preheader:                                       ; preds = %_ZN4mlir4vcix11BinaryImmOp14getODSOperandsEj.exit47
   %.not115118 = icmp eq i32 %i.bb, 1
-  br i1 %.not115118, label %._crit_edge, label %.lr.ph
+  br i1 %.not115118, label %._crit_edge, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %9 = getelementptr inbounds nuw i8, ptr %i.bd, i64 56
+  %.sroa.0.0.copyload.i.i.i52 = load ptr, ptr %9, align 8, !tbaa !126
+  %10 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i52, i64 8
+  %.0.copyload.i.i.i.i.i53 = load i64, ptr %10, align 8
+  %11 = and i64 %.0.copyload.i.i.i.i.i53, -8
+  %12 = inttoptr i64 %11 to ptr
+  %13 = call fastcc i8 @_ZL41__mlir_ods_local_type_constraint_VCIXOps2PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef nonnull %i.aw, ptr %12, ptr nonnull @.str.12, i64 7, i32 noundef 1)
+  %14 = trunc nuw i8 %13 to i1
+  br i1 %14, label %.lr.ph, label %bb.m
 
 _ZN4mlir4vcix11BinaryImmOp14getODSOperandsEj.exit47.thread: ; preds = %.lr.ph.i.i.preheader, %_ZN4mlir4vcix11BinaryImmOp14getODSOperandsEj.exit47
   %i.bh = phi i64 [ %i.bf, %_ZN4mlir4vcix11BinaryImmOp14getODSOperandsEj.exit47 ], [ -1, %.lr.ph.i.i.preheader ]
@@ -247,42 +258,21 @@ _ZN4mlir4vcix11BinaryImmOp14getODSOperandsEj.exit47.thread: ; preds = %.lr.ph.i.
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
   br label %.thread105
 
-9:                                                ; preds = %.lr.ph
-  %10 = add i32 %12, 1
-  %11 = add nuw nsw i64 %.sroa.474.0119, 1        ; 2 uses
-  %.not115 = icmp eq i64 %11, %i.bf
-  br i1 %.not115, label %._crit_edge.loopexit, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.preheader, %9
-  %12 = phi i32 [ %10, %9 ], [ 1, %.preheader ]   ; 2 uses
-  %.sroa.474.0119 = phi i64 [ %11, %9 ], [ 0, %.preheader ] ; 2 uses
-  %13 = getelementptr inbounds nuw [32 x i8], ptr %i.bd, i64 %.sroa.474.0119
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 56
-  %.sroa.0.0.copyload.i.i.i52 = load ptr, ptr %14, align 8, !tbaa !126
+.lr.ph:                                           ; preds = %.lr.ph.preheader
   %i.bo = load ptr, ptr %0, align 8, !tbaa !93
-  %15 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i52, i64 8
-  %.0.copyload.i.i.i.i.i53 = load i64, ptr %15, align 8
-  %16 = and i64 %.0.copyload.i.i.i.i.i53, -8
-  %17 = inttoptr i64 %16 to ptr
-  %18 = call fastcc i8 @_ZL41__mlir_ods_local_type_constraint_VCIXOps2PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %i.bo, ptr %17, ptr nonnull @.str.12, i64 7, i32 noundef %12)
-  %19 = trunc nuw i8 %18 to i1
-  br i1 %19, label %9, label %bb.m
+  br label %._crit_edge
 
 .thread105:                                       ; preds = %_ZN4mlir4vcix11BinaryImmOp14getODSOperandsEj.exit, %_ZN4mlir4vcix11BinaryImmOp14getODSOperandsEj.exit47.thread
   %.sroa.032.7.ph = phi i8 [ %i.bn, %_ZN4mlir4vcix11BinaryImmOp14getODSOperandsEj.exit47.thread ], [ 0, %_ZN4mlir4vcix11BinaryImmOp14getODSOperandsEj.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   br label %.thread113
 
-bb.m:                                             ; preds = %.lr.ph
+bb.m:                                             ; preds = %.lr.ph.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   br label %.thread113
 
-._crit_edge.loopexit:                             ; preds = %9
-  %.pre = load ptr, ptr %0, align 8, !tbaa !93
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader
-  %i.bp = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %i.aw, %.preheader ]
+._crit_edge:                                      ; preds = %.lr.ph, %.preheader
+  %i.bp = phi ptr [ %i.bo, %.lr.ph ], [ %i.aw, %.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   %i.bq = getelementptr inbounds i8, ptr %i.bp, i64 -16
   %i.br = call noundef ptr @_ZN4mlir6detail12OpResultImpl21getNextResultAtOffsetEl(ptr noundef nonnull align 8 dereferenceable(16) %i.bq, i64 noundef 0) #24
@@ -685,7 +675,7 @@ _ZN4mlir4vcix8BinaryOp14getODSOperandsEj.exit:    ; preds = %bb.f
   br i1 %i.aw, label %_ZL41__mlir_ods_local_type_constraint_VCIXOps3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit.thread, label %bb.g
 
 .lr.ph.i.i56.preheader:                           ; preds = %_ZL41__mlir_ods_local_type_constraint_VCIXOps3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit.thread, %_ZL41__mlir_ods_local_type_constraint_VCIXOps3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit
-  %.pre = load ptr, ptr %0, align 8, !tbaa !93    ; 4 uses
+  %.pre = load ptr, ptr %0, align 8, !tbaa !93    ; 5 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 44
   %.pre219 = load i32, ptr %.phi.trans.insert, align 4
   %.pre221 = and i32 %.pre219, 8388608
@@ -877,13 +867,24 @@ _ZN4mlir4vcix8BinaryOp14getODSOperandsEj.exit69:  ; preds = %.lr.ph.i.i56.prehea
   %i.cm = getelementptr inbounds nuw i8, ptr %.pre, i64 72
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !70
   %i.co = zext i32 %i.cl to i64
-  %i.cp = add nsw i64 %i.co, -2                   ; 3 uses
+  %i.cp = add nsw i64 %i.co, -2                   ; 2 uses
   %i.cq = icmp ugt i64 %i.cp, 1
   br i1 %i.cq, label %_ZN4mlir4vcix8BinaryOp14getODSOperandsEj.exit69.thread, label %.preheader
 
 .preheader:                                       ; preds = %_ZN4mlir4vcix8BinaryOp14getODSOperandsEj.exit69
   %.not194206 = icmp eq i32 %i.cl, 2
-  br i1 %.not194206, label %._crit_edge, label %.lr.ph209
+  br i1 %.not194206, label %._crit_edge, label %.lr.ph209.preheader
+
+.lr.ph209.preheader:                              ; preds = %.preheader
+  %16 = getelementptr inbounds nuw i8, ptr %i.cn, i64 88
+  %.sroa.0.0.copyload.i.i.i81 = load ptr, ptr %16, align 8, !tbaa !126
+  %17 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i81, i64 8
+  %.0.copyload.i.i.i.i.i82 = load i64, ptr %17, align 8
+  %18 = and i64 %.0.copyload.i.i.i.i.i82, -8
+  %19 = inttoptr i64 %18 to ptr
+  %20 = call fastcc i8 @_ZL41__mlir_ods_local_type_constraint_VCIXOps2PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef nonnull %.pre, ptr %19, ptr nonnull @.str.12, i64 7, i32 noundef 2)
+  %21 = trunc nuw i8 %20 to i1
+  br i1 %21, label %._crit_edge.loopexit, label %.thread180
 
 _ZN4mlir4vcix8BinaryOp14getODSOperandsEj.exit69.thread: ; preds = %.lr.ph.i.i56.preheader, %_ZN4mlir4vcix8BinaryOp14getODSOperandsEj.exit69
   %i.cr = phi i64 [ %i.cp, %_ZN4mlir4vcix8BinaryOp14getODSOperandsEj.exit69 ], [ -2, %.lr.ph.i.i56.preheader ]
@@ -1019,28 +1020,7 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit76:          ; preds = %bb.al, %bb.am
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #24
   br label %.thread180
 
-.lr.ph209:                                        ; preds = %.preheader, %24
-  %.4208 = phi i32 [ %25, %24 ], [ 2, %.preheader ] ; 2 uses
-  %.sroa.4117.0207 = phi i64 [ %26, %24 ], [ 0, %.preheader ] ; 2 uses
-  %16 = getelementptr inbounds nuw [32 x i8], ptr %i.cn, i64 %.sroa.4117.0207
-  %17 = getelementptr inbounds nuw i8, ptr %16, i64 88
-  %.sroa.0.0.copyload.i.i.i81 = load ptr, ptr %17, align 8, !tbaa !126
-  %18 = load ptr, ptr %0, align 8, !tbaa !93
-  %19 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i81, i64 8
-  %.0.copyload.i.i.i.i.i82 = load i64, ptr %19, align 8
-  %20 = and i64 %.0.copyload.i.i.i.i.i82, -8
-  %21 = inttoptr i64 %20 to ptr
-  %22 = call fastcc i8 @_ZL41__mlir_ods_local_type_constraint_VCIXOps2PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %18, ptr %21, ptr nonnull @.str.12, i64 7, i32 noundef %.4208)
-  %23 = trunc nuw i8 %22 to i1
-  br i1 %23, label %24, label %.thread180
-
-24:                                               ; preds = %.lr.ph209
-  %25 = add i32 %.4208, 1
-  %26 = add nuw nsw i64 %.sroa.4117.0207, 1       ; 2 uses
-  %.not194 = icmp eq i64 %26, %i.cp
-  br i1 %.not194, label %._crit_edge.loopexit, label %.lr.ph209
-
-._crit_edge.loopexit:                             ; preds = %24
+._crit_edge.loopexit:                             ; preds = %.lr.ph209.preheader
   %.pre220 = load ptr, ptr %0, align 8, !tbaa !93
   br label %._crit_edge
 
@@ -1056,8 +1036,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit76:          ; preds = %bb.al, %bb.am
   %i.ej = call fastcc i8 @_ZL41__mlir_ods_local_type_constraint_VCIXOps1PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %i.ef, ptr %i.ei, ptr nonnull @.str.15, i64 6, i32 noundef 0)
   br label %.thread180
 
-.thread180:                                       ; preds = %.lr.ph209, %._crit_edge, %_ZN4mlir4vcix8BinaryOp14getODSOperandsEj.exit, %_ZL41__mlir_ods_local_type_constraint_VCIXOps3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit, %_ZN4mlir18InFlightDiagnosticD2Ev.exit76, %bb.f, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
-  %.sroa.038.15 = phi i8 [ %i.l, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZL41__mlir_ods_local_type_constraint_VCIXOps3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit ], [ %i.ej, %._crit_edge ], [ 0, %_ZN4mlir4vcix8BinaryOp14getODSOperandsEj.exit ], [ 0, %bb.f ], [ %i.dw, %_ZN4mlir18InFlightDiagnosticD2Ev.exit76 ], [ 0, %.lr.ph209 ]
+.thread180:                                       ; preds = %._crit_edge, %_ZN4mlir4vcix8BinaryOp14getODSOperandsEj.exit, %_ZL41__mlir_ods_local_type_constraint_VCIXOps3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit, %.lr.ph209.preheader, %_ZN4mlir18InFlightDiagnosticD2Ev.exit76, %bb.f, %_ZN4mlir18InFlightDiagnosticD2Ev.exit
+  %.sroa.038.15 = phi i8 [ %i.l, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZL41__mlir_ods_local_type_constraint_VCIXOps3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit ], [ 0, %_ZN4mlir4vcix8BinaryOp14getODSOperandsEj.exit ], [ 0, %.lr.ph209.preheader ], [ 0, %bb.f ], [ %i.dw, %_ZN4mlir18InFlightDiagnosticD2Ev.exit76 ], [ %i.ej, %._crit_edge ]
   ret i8 %.sroa.038.15
 }
 

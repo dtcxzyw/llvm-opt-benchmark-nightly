@@ -56,10 +56,9 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %.idx.us = shl i64 %i.q, 4                      ; 5 uses
   %i.r = zext nneg i32 %0 to i64                  ; 4 uses
   %i.s = zext nneg i32 %0 to i64
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 4 uses
+  %wide.trip.count = zext nneg i32 %1 to i64      ; 3 uses
   %i.t = fdiv double 0.000000e+00, %i.l
   %exitcond82.peel.not = icmp eq i32 %1, 1
-  %4 = add nsw i64 %wide.trip.count, -2           ; 2 uses
   %scevgep101.a = getelementptr i8, ptr %i.p, i64 8 ; 2 uses
   %i.u = shl nuw nsw i64 %i.r, 3                  ; 3 uses
   %i.v = shl nuw nsw i64 %wide.trip.count, 3      ; 5 uses
@@ -81,10 +80,9 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %scevgep106.a = getelementptr i8, ptr %i.ag, i64 -8 ; 2 uses
   %i.ah = add nsw i64 %i.v, -12                   ; 2 uses
   %i.ai = add nsw i64 %wide.trip.count, -1        ; 3 uses
-  %min.iters.check = icmp ult i32 %1, 15
-  %ident.check = icmp ne i32 %0, 1
-  %mul.result = shl nsw i64 %4, 3                 ; 6 uses
-  %mul.overflow = icmp ugt i64 %4, 2305843009213693951
+  %min.iters.check = icmp ugt i32 %1, 8
+  %ident.check.not = icmp eq i32 %0, 1
+  %or.cond = and i1 %min.iters.check, %ident.check.not
   %bound0 = icmp ult ptr %scevgep101.a, %scevgep104.a
   %bound1 = icmp ult ptr %scevgep103.a, %scevgep102.a
   %found.conflict = and i1 %bound0, %bound1
@@ -107,7 +105,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
 
 bb.a:                                             ; preds = %.lr.ph78.split.us, %._crit_edge.us
   %indvars.iv85 = phi i64 [ %indvars.iv.next86, %._crit_edge.us ], [ 0, %.lr.ph78.split.us ] ; 8 uses
-  %.07276.us = phi i32 [ %.2.us.lcssa, %._crit_edge.us ], [ 0, %.lr.ph78.split.us ] ; 8 uses
+  %.07276.us = phi i32 [ %.2.us.lcssa, %._crit_edge.us ], [ 0, %.lr.ph78.split.us ] ; 6 uses
   %i.am = trunc nuw i64 %indvars.iv85 to i32
   %i.an = uitofp nneg i32 %i.am to double
   %i.ao = fmul nnan double %i.an, f0x401921FB54442D18
@@ -124,51 +122,15 @@ bb.a:                                             ; preds = %.lr.ph78.split.us, 
   br i1 %exitcond82.peel.not, label %._crit_edge.us, label %.peel.next
 
 .peel.next:                                       ; preds = %bb.a
-  %i.av = load ptr, ptr %3, align 8, !tbaa !17    ; 14 uses
+  %i.av = load ptr, ptr %3, align 8, !tbaa !17    ; 9 uses
   %i.aw = icmp eq i64 %indvars.iv.next86, %i.r
   %i.ax = trunc nuw nsw i64 %indvars.iv.next86 to i32
   %iv.rem = select i1 %i.aw, i32 0, i32 %i.ax     ; 3 uses
-  %i.ay = load i64, ptr %i.m, align 8, !tbaa !20  ; 8 uses
+  %i.ay = load i64, ptr %i.m, align 8, !tbaa !20  ; 6 uses
   %i.az = shl nsw i64 %i.ay, 1                    ; 3 uses
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
+  br i1 %or.cond, label %vector.memcheck, label %scalar.ph.preheader
 
-vector.scevcheck:                                 ; preds = %.peel.next
-  %5 = sext i32 %.07276.us to i64                 ; 2 uses
-  %6 = shl nsw i64 %5, 2                          ; 3 uses
-  %scevgep = getelementptr i8, ptr %i.av, i64 %6  ; 2 uses
-  %7 = getelementptr i8, ptr %scevgep, i64 %mul.result
-  %8 = icmp ult ptr %7, %scevgep
-  %9 = add i64 %i.ay, %5
-  %10 = shl i64 %9, 2                             ; 2 uses
-  %scevgep94 = getelementptr i8, ptr %i.av, i64 %10 ; 2 uses
-  %11 = getelementptr i8, ptr %scevgep94, i64 %mul.result
-  %12 = icmp ult ptr %11, %scevgep94
-  %13 = or i1 %12, %mul.overflow
-  %14 = shl i64 %i.ay, 3
-  %15 = add i64 %14, %6                           ; 2 uses
-  %scevgep95 = getelementptr i8, ptr %i.av, i64 %15 ; 2 uses
-  %16 = getelementptr i8, ptr %scevgep95, i64 %mul.result
-  %17 = icmp ult ptr %16, %scevgep95
-  %scevgep96 = getelementptr i8, ptr %i.av, i64 4 ; 2 uses
-  %scevgep97 = getelementptr i8, ptr %scevgep96, i64 %6 ; 2 uses
-  %18 = getelementptr i8, ptr %scevgep97, i64 %mul.result
-  %19 = icmp ult ptr %18, %scevgep97
-  %scevgep98 = getelementptr i8, ptr %scevgep96, i64 %10 ; 2 uses
-  %20 = getelementptr i8, ptr %scevgep98, i64 %mul.result
-  %21 = icmp ult ptr %20, %scevgep98
-  %scevgep99 = getelementptr i8, ptr %i.av, i64 4
-  %scevgep100 = getelementptr i8, ptr %scevgep99, i64 %15 ; 2 uses
-  %22 = getelementptr i8, ptr %scevgep100, i64 %mul.result
-  %23 = icmp ult ptr %22, %scevgep100
-  %24 = or i1 %8, %ident.check
-  %25 = or i1 %24, %13
-  %26 = or i1 %17, %25
-  %27 = or i1 %19, %26
-  %28 = or i1 %21, %27
-  %29 = or i1 %23, %28
-  br i1 %29, label %scalar.ph.preheader, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %vector.scevcheck
+vector.memcheck:                                  ; preds = %.peel.next
   %i.ba = sext i32 %.07276.us to i64              ; 2 uses
   %i.bb = shl nsw i64 %i.ba, 2                    ; 5 uses
   %scevgep107.a = getelementptr i8, ptr %i.av, i64 %i.bb ; 5 uses
@@ -316,9 +278,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
 middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge.us, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %.peel.next, %middle.block
-  %indvars.iv.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %vector.scevcheck ], [ 1, %.peel.next ], [ %i.aj, %middle.block ]
-  %.174.us.ph = phi i32 [ %.07276.us, %vector.memcheck ], [ %.07276.us, %vector.scevcheck ], [ %.07276.us, %.peel.next ], [ %i.bh, %middle.block ]
+scalar.ph.preheader:                              ; preds = %vector.memcheck, %.peel.next, %middle.block
+  %indvars.iv.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.peel.next ], [ %i.aj, %middle.block ]
+  %.174.us.ph = phi i32 [ %.07276.us, %vector.memcheck ], [ %.07276.us, %.peel.next ], [ %i.bh, %middle.block ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph

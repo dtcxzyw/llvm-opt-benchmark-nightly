@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/QCS?download=true
 inline.NumInlined: 264
 inline.NumDeleted: 54
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN3QCSC2EPK9InputFileP5Hydro:._crit_edge.i.i
   store double %i.d, ptr %i.e, align 8, !tbaa !20
   %i.f = load ptr, ptr %3, align 8, !tbaa !21     ; 2 uses
@@ -204,7 +205,7 @@ bb.a:
   %i.aa = sub nsw i32 %i.z, %i.u
   %i.ab = sext i32 %i.aa to i64
   %i.ac = shl nsw i64 %i.ab, 4                    ; 2 uses
-  %i.ad = tail call noalias noundef ptr @malloc(i64 noundef %i.ac) #13 ; 8 uses
+  %i.ad = tail call noalias noundef ptr @malloc(i64 noundef %i.ac) #13 ; 9 uses
   %.not5.i.i.i = icmp eq i32 %i.z, %i.u
   br i1 %.not5.i.i.i, label %_ZSt4fillIP7double2S0_EvT_S2_RKT0_.exit, label %.lr.ph.i.i.i.preheader
 
@@ -252,8 +253,8 @@ _ZSt4fillIP7double2S0_EvT_S2_RKT0_.exit:          ; preds = %.lr.ph.i.i.i.prehea
   br i1 %i.aw, label %.lr.ph362.preheader, label %.preheader
 
 .lr.ph362.preheader:                              ; preds = %.preheader359
-  %i.ax = sext i32 %i.u to i64                    ; 4 uses
-  %wide.trip.count369 = sext i32 %i.z to i64      ; 2 uses
+  %i.ax = sext i32 %i.u to i64                    ; 3 uses
+  %wide.trip.count369 = sext i32 %i.z to i64
   %i.ay = sub nsw i64 %wide.trip.count369, %i.ax  ; 2 uses
   %min.iters.check = icmp ult i64 %i.ay, 2
   br i1 %min.iters.check, label %.lr.ph362, label %vector.body.preheader
@@ -324,21 +325,16 @@ vector.body:                                      ; preds = %vector.body.prehead
   %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !69 ; 2 uses
   br label %bb.b
 
-.lr.ph362:                                        ; preds = %.lr.ph362.preheader, %.lr.ph362
-  %indvars.iv366 = phi i64 [ %indvars.iv.next367, %.lr.ph362 ], [ %i.ax, %.lr.ph362.preheader ] ; 3 uses
-  %8 = sub nsw i64 %indvars.iv366, %i.ax
-  %i.ck = getelementptr inbounds [4 x i8], ptr %i.p, i64 %indvars.iv366
+.lr.ph362:                                        ; preds = %.lr.ph362.preheader
+  %i.ck = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.ax
   %i.cl = load i32, ptr %i.ck, align 4, !tbaa !4
   %i.cm = sitofp i32 %i.cl to double
-  %9 = getelementptr inbounds [16 x i8], ptr %i.ad, i64 %8 ; 2 uses
-  %i.cn = load <2 x double>, ptr %9, align 8, !tbaa !60
+  %i.cn = load <2 x double>, ptr %i.ad, align 8, !tbaa !60
   %i.co = insertelement <2 x double> poison, double %i.cm, i64 0
   %i.cp = shufflevector <2 x double> %i.co, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cq = fdiv <2 x double> %i.cn, %i.cp
-  store <2 x double> %i.cq, ptr %9, align 8, !tbaa !60
-  %indvars.iv.next367 = add nsw i64 %indvars.iv366, 1 ; 2 uses
-  %exitcond370.not = icmp eq i64 %indvars.iv.next367, %wide.trip.count369
-  br i1 %exitcond370.not, label %.preheader, label %.lr.ph362, !llvm.loop !70
+  store <2 x double> %i.cq, ptr %i.ad, align 8, !tbaa !60
+  br label %.preheader
 
 ._crit_edge:                                      ; preds = %bb.d, %.preheader
   tail call void @free(ptr noundef %i.ad) #11
@@ -367,9 +363,9 @@ bb.b:                                             ; preds = %.lr.ph364, %bb.d
   %i.dj = getelementptr inbounds [16 x i8], ptr %i.f, i64 %i.di ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
   %i.dl = getelementptr inbounds [16 x i8], ptr %i.h, i64 %i.di ; 2 uses
-  %i.dm = load double, ptr %i.dl, align 8, !tbaa !71 ; 4 uses
+  %i.dm = load double, ptr %i.dl, align 8, !tbaa !70 ; 4 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dl, i64 8
-  %i.do = load double, ptr %i.dn, align 8, !tbaa !73 ; 4 uses
+  %i.do = load double, ptr %i.dn, align 8, !tbaa !72 ; 4 uses
   %i.dp = sext i32 %i.dd to i64
   %i.dq = getelementptr inbounds [16 x i8], ptr %i.f, i64 %i.dp
   %i.dr = sext i32 %i.dh to i64                   ; 2 uses
@@ -380,27 +376,27 @@ bb.b:                                             ; preds = %.lr.ph364, %bb.d
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 8
   %i.dx = sext i32 %i.cv to i64
   %i.dy = getelementptr inbounds [16 x i8], ptr %i.l, i64 %i.dx ; 2 uses
-  %i.dz = load double, ptr %i.dy, align 8, !tbaa !71 ; 2 uses
+  %i.dz = load double, ptr %i.dy, align 8, !tbaa !70 ; 2 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dy, i64 8
-  %i.eb = load double, ptr %i.ea, align 8, !tbaa !73 ; 2 uses
+  %i.eb = load double, ptr %i.ea, align 8, !tbaa !72 ; 2 uses
   %i.ec = sext i32 %i.db to i64
   %i.ed = getelementptr inbounds [16 x i8], ptr %i.f, i64 %i.ec
   %i.ee = sext i32 %i.df to i64                   ; 2 uses
   %i.ef = getelementptr inbounds [16 x i8], ptr %i.j, i64 %i.ee ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 8
   %i.eh = load <2 x double>, ptr %i.ds, align 8, !tbaa !60 ; 6 uses
-  %i.ei = load double, ptr %i.dt, align 8, !tbaa !73 ; 2 uses
+  %i.ei = load double, ptr %i.dt, align 8, !tbaa !72 ; 2 uses
   %i.ej = load <2 x double>, ptr %i.ef, align 8, !tbaa !60 ; 6 uses
-  %i.ek = load double, ptr %i.eg, align 8, !tbaa !73 ; 2 uses
+  %i.ek = load double, ptr %i.eg, align 8, !tbaa !72 ; 2 uses
   %i.el = fsub double %i.dz, %i.dm                ; 2 uses
   %foldExtExtBinop = fsub <2 x double> %i.ej, %i.eh
   %i.em = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.en = load <2 x double>, ptr %i.dj, align 8, !tbaa !60 ; 4 uses
-  %i.eo = load double, ptr %i.dk, align 8, !tbaa !73 ; 2 uses
+  %i.eo = load double, ptr %i.dk, align 8, !tbaa !72 ; 2 uses
   %i.ep = load <2 x double>, ptr %i.dv, align 8, !tbaa !60 ; 4 uses
-  %i.eq = load double, ptr %i.dw, align 8, !tbaa !73 ; 2 uses
-  %i.er = load <2 x double>, ptr %i.dq, align 8, !tbaa !60, !noalias !74 ; 2 uses
-  %i.es = load <2 x double>, ptr %i.ed, align 8, !tbaa !60, !noalias !77 ; 2 uses
+  %i.eq = load double, ptr %i.dw, align 8, !tbaa !72 ; 2 uses
+  %i.er = load <2 x double>, ptr %i.dq, align 8, !tbaa !60, !noalias !73 ; 2 uses
+  %i.es = load <2 x double>, ptr %i.ed, align 8, !tbaa !60, !noalias !76 ; 2 uses
   %i.et = shufflevector <2 x double> %i.en, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.eu = shufflevector <2 x double> %i.es, <2 x double> %i.er, <2 x i32> <i32 0, i32 2>
   %i.ev = fadd <2 x double> %i.et, %i.eu
@@ -550,7 +546,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   store double %i.jr, ptr %i.js, align 8, !tbaa !60
   %indvars.iv.next372 = add nsw i64 %indvars.iv371, 1 ; 2 uses
   %exitcond375.not = icmp eq i64 %indvars.iv.next372, %i.w
-  br i1 %exitcond375.not, label %._crit_edge, label %bb.b, !llvm.loop !80
+  br i1 %exitcond375.not, label %._crit_edge, label %bb.b, !llvm.loop !79
 }
 
 ; Function Attrs: mustprogress nounwind memory(readwrite, target_mem: none) uwtable
@@ -561,9 +557,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 248
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !53   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 312
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !81
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !80
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 360
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !82
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !81
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 376
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !57   ; 2 uses
   %i.k = sub nsw i32 %6, %5
@@ -632,7 +628,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store double %i.bg, ptr %i.bh, align 8, !tbaa !60
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.lr.ph97, label %bb.b, !llvm.loop !83
+  br i1 %exitcond.not, label %.lr.ph97, label %bb.b, !llvm.loop !82
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.a
   tail call void @free(ptr noundef %i.n) #11
@@ -659,15 +655,15 @@ bb.c:                                             ; preds = %.lr.ph97, %bb.c
   %i.by = getelementptr inbounds [16 x i8], ptr %i.d, i64 %i.bx ; 2 uses
   %i.bz = sext i32 %i.bp to i64
   %i.ca = getelementptr inbounds [16 x i8], ptr %i.d, i64 %i.bz
-  %i.cb = load double, ptr %i.bw, align 8, !tbaa !60, !noalias !84
+  %i.cb = load double, ptr %i.bw, align 8, !tbaa !60, !noalias !83
   %i.cc = sext i32 %i.br to i64
   %i.cd = getelementptr inbounds [8 x i8], ptr %i.j, i64 %i.cc
-  %i.ce = load double, ptr %i.cd, align 8, !tbaa !60, !noalias !87
+  %i.ce = load double, ptr %i.cd, align 8, !tbaa !60, !noalias !86
   %i.cf = fdiv double 1.000000e+00, %i.ce
   %.idx = shl nuw nsw i64 %i.bk, 5
   %i.cg = getelementptr inbounds nuw i8, ptr %4, i64 %.idx ; 2 uses
-  %i.ch = load <2 x double>, ptr %i.by, align 8, !tbaa !60, !noalias !90
-  %i.ci = load <2 x double>, ptr %i.ca, align 8, !tbaa !60, !noalias !90
+  %i.ch = load <2 x double>, ptr %i.by, align 8, !tbaa !60, !noalias !89
+  %i.ci = load <2 x double>, ptr %i.ca, align 8, !tbaa !60, !noalias !89
   %i.cj = fsub <2 x double> %i.ch, %i.ci
   %i.ck = insertelement <2 x double> poison, double %i.cb, i64 0
   %i.cl = shufflevector <2 x double> %i.ck, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -680,11 +676,11 @@ bb.c:                                             ; preds = %.lr.ph97, %bb.c
   %i.cr = getelementptr inbounds [16 x i8], ptr %i.d, i64 %i.cq
   %i.cs = sext i32 %i.bv to i64
   %i.ct = getelementptr inbounds [8 x i8], ptr %i.j, i64 %i.cs
-  %i.cu = load double, ptr %i.ct, align 8, !tbaa !60, !noalias !93
+  %i.cu = load double, ptr %i.ct, align 8, !tbaa !60, !noalias !92
   %i.cv = fdiv double 1.000000e+00, %i.cu
   %i.cw = getelementptr i8, ptr %i.cg, i64 16
-  %i.cx = load <2 x double>, ptr %i.cr, align 8, !tbaa !60, !noalias !96
-  %i.cy = load <2 x double>, ptr %i.by, align 8, !tbaa !60, !noalias !96
+  %i.cx = load <2 x double>, ptr %i.cr, align 8, !tbaa !60, !noalias !95
+  %i.cy = load <2 x double>, ptr %i.by, align 8, !tbaa !60, !noalias !95
   %i.cz = fsub <2 x double> %i.cx, %i.cy
   %i.da = fmul <2 x double> %i.cl, %i.cz
   %i.db = insertelement <2 x double> poison, double %i.cv, i64 0
@@ -693,7 +689,7 @@ bb.c:                                             ; preds = %.lr.ph97, %bb.c
   store <2 x double> %i.dd, ptr %i.cw, align 8, !tbaa !60
   %indvars.iv.next100 = add nsw i64 %indvars.iv99, 1 ; 2 uses
   %exitcond103.not = icmp eq i64 %indvars.iv.next100, %wide.trip.count102
-  br i1 %exitcond103.not, label %._crit_edge, label %bb.c, !llvm.loop !99
+  br i1 %exitcond103.not, label %._crit_edge, label %bb.c, !llvm.loop !98
 }
 
 ; Function Attrs: mustprogress nounwind memory(readwrite, target_mem: none) uwtable
@@ -717,7 +713,7 @@ bb.a:
 
 .lr.ph94:                                         ; preds = %.critedge
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 128
-  %i.l = load ptr, ptr %i.k, align 8, !tbaa !100
+  %i.l = load ptr, ptr %i.k, align 8, !tbaa !99
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 112
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !69
   %i.o = sext i32 %5 to i64                       ; 2 uses
@@ -748,7 +744,7 @@ bb.b:                                             ; preds = %.lr.ph
   store double %i.y, ptr %i.q, align 8, !tbaa !60
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.lr.ph94, label %.lr.ph, !llvm.loop !101
+  br i1 %exitcond.not, label %.lr.ph94, label %.lr.ph, !llvm.loop !100
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.a
   tail call void @free(ptr noundef %i.h) #11
@@ -769,9 +765,9 @@ bb.c:                                             ; preds = %.lr.ph94, %bb.c
   %i.aj = getelementptr i8, ptr %2, i64 %.idx     ; 2 uses
   %i.ak = getelementptr i8, ptr %i.aj, i64 16
   %i.al = getelementptr inbounds [8 x i8], ptr %3, i64 %i.aa
-  %i.am = load double, ptr %i.al, align 8, !tbaa !60, !noalias !102
+  %i.am = load double, ptr %i.al, align 8, !tbaa !60, !noalias !101
   %i.an = getelementptr inbounds [8 x i8], ptr %i.h, i64 %i.aa
-  %i.ao = load double, ptr %i.an, align 8, !tbaa !60, !noalias !105
+  %i.ao = load double, ptr %i.an, align 8, !tbaa !60, !noalias !104
   %i.ap = sext i32 %i.ad to i64                   ; 2 uses
   %i.aq = getelementptr inbounds [8 x i8], ptr %i.h, i64 %i.ap
   %i.ar = shl nsw i32 %i.ad, 1
@@ -779,24 +775,24 @@ bb.c:                                             ; preds = %.lr.ph94, %bb.c
   %i.at = sext i32 %i.ar to i64
   %i.au = getelementptr [16 x i8], ptr %2, i64 %i.at ; 2 uses
   %i.av = getelementptr i8, ptr %i.au, i64 16
-  %i.aw = load double, ptr %i.as, align 8, !tbaa !60, !noalias !108
-  %i.ax = load double, ptr %i.aq, align 8, !tbaa !60, !noalias !111
+  %i.aw = load double, ptr %i.as, align 8, !tbaa !60, !noalias !107
+  %i.ax = load double, ptr %i.aq, align 8, !tbaa !60, !noalias !110
   %i.ay = fdiv double 1.000000e+00, %i.ai
   %i.az = getelementptr inbounds [16 x i8], ptr %4, i64 %indvars.iv96
-  %i.ba = load <2 x double>, ptr %i.aj, align 8, !tbaa !60, !noalias !102
+  %i.ba = load <2 x double>, ptr %i.aj, align 8, !tbaa !60, !noalias !101
   %i.bb = insertelement <2 x double> poison, double %i.am, i64 0
   %i.bc = shufflevector <2 x double> %i.bb, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bd = fmul <2 x double> %i.bc, %i.ba
-  %i.be = load <2 x double>, ptr %i.ak, align 8, !tbaa !60, !noalias !114
+  %i.be = load <2 x double>, ptr %i.ak, align 8, !tbaa !60, !noalias !113
   %i.bf = fadd <2 x double> %i.bd, %i.be
   %i.bg = insertelement <2 x double> poison, double %i.ao, i64 0
   %i.bh = shufflevector <2 x double> %i.bg, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bi = fmul <2 x double> %i.bf, %i.bh
-  %i.bj = load <2 x double>, ptr %i.av, align 8, !tbaa !60, !noalias !108
+  %i.bj = load <2 x double>, ptr %i.av, align 8, !tbaa !60, !noalias !107
   %i.bk = insertelement <2 x double> poison, double %i.aw, i64 0
   %i.bl = shufflevector <2 x double> %i.bk, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bm = fmul <2 x double> %i.bl, %i.bj
-  %i.bn = load <2 x double>, ptr %i.au, align 8, !tbaa !60, !noalias !117
+  %i.bn = load <2 x double>, ptr %i.au, align 8, !tbaa !60, !noalias !116
   %i.bo = fadd <2 x double> %i.bm, %i.bn
   %i.bp = insertelement <2 x double> poison, double %i.ax, i64 0
   %i.bq = shufflevector <2 x double> %i.bp, <2 x double> poison, <2 x i32> zeroinitializer
@@ -808,7 +804,7 @@ bb.c:                                             ; preds = %.lr.ph94, %bb.c
   store <2 x double> %i.bv, ptr %i.az, align 8, !tbaa !60
   %indvars.iv.next97 = add nsw i64 %indvars.iv96, 1 ; 2 uses
   %exitcond100.not = icmp eq i64 %indvars.iv.next97, %wide.trip.count99
-  br i1 %exitcond100.not, label %._crit_edge, label %bb.c, !llvm.loop !120
+  br i1 %exitcond100.not, label %._crit_edge, label %bb.c, !llvm.loop !119
 }
 
 ; Function Attrs: mustprogress nounwind memory(readwrite, target_mem: none) uwtable
@@ -834,9 +830,9 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 248
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !53   ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 360
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !82   ; 6 uses
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !81   ; 6 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 368
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !121  ; 6 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !120  ; 6 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 376
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !57
   %i.y = sub nsw i32 %i.n, %i.i
@@ -896,10 +892,10 @@ vector.memcheck:                                  ; preds = %.lr.ph69
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.an, -4                      ; 3 uses
   %i.aq = add nsw i64 %n.vec, %i.am
-  %i.ar = load double, ptr %i.ak, align 8, !tbaa !22, !alias.scope !122
+  %i.ar = load double, ptr %i.ak, align 8, !tbaa !22, !alias.scope !121
   %broadcast.splatinsert87 = insertelement <2 x double> poison, double %i.ar, i64 0
   %broadcast.splat88 = shufflevector <2 x double> %broadcast.splatinsert87, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.as = load double, ptr %i.al, align 8, !tbaa !23, !alias.scope !122
+  %i.as = load double, ptr %i.al, align 8, !tbaa !23, !alias.scope !121
   %i.at = fmul double %i.as, 2.000000e+00
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.at, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -910,8 +906,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.au = add i64 %index, %i.am                   ; 2 uses
   %i.av = getelementptr inbounds [8 x i8], ptr %i.t, i64 %i.au ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16
-  %wide.load = load <2 x double>, ptr %i.av, align 8, !tbaa !60, !alias.scope !125
-  %wide.load84 = load <2 x double>, ptr %i.aw, align 8, !tbaa !60, !alias.scope !125
+  %wide.load = load <2 x double>, ptr %i.av, align 8, !tbaa !60, !alias.scope !124
+  %wide.load84 = load <2 x double>, ptr %i.aw, align 8, !tbaa !60, !alias.scope !124
   %i.ax = getelementptr inbounds [8 x i8], ptr %i.ab, i64 %index ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
   %wide.load85 = load <2 x double>, ptr %i.ax, align 8, !tbaa !60
@@ -922,11 +918,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.bc = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %broadcast.splat88, <2 x double> %wide.load84, <2 x double> %i.ba)
   %i.bd = getelementptr inbounds [8 x i8], ptr %i.v, i64 %i.au ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 16
-  store <2 x double> %i.bb, ptr %i.bd, align 8, !tbaa !60, !alias.scope !127, !noalias !129
-  store <2 x double> %i.bc, ptr %i.be, align 8, !tbaa !60, !alias.scope !127, !noalias !129
+  store <2 x double> %i.bb, ptr %i.bd, align 8, !tbaa !60, !alias.scope !126, !noalias !128
+  store <2 x double> %i.bc, ptr %i.be, align 8, !tbaa !60, !alias.scope !126, !noalias !128
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.bf = icmp eq i64 %index.next, %n.vec
-  br i1 %i.bf, label %middle.block, label %vector.body, !llvm.loop !130
+  br i1 %i.bf, label %middle.block, label %vector.body, !llvm.loop !129
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.an, %n.vec
@@ -976,13 +972,13 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.ce = getelementptr inbounds [16 x i8], ptr %i.p, i64 %i.cd
   %i.cf = sext i32 %i.bv to i64                   ; 2 uses
   %i.cg = getelementptr inbounds [16 x i8], ptr %i.p, i64 %i.cf
-  %i.ch = load <2 x double>, ptr %i.ce, align 8, !tbaa !60, !noalias !131
-  %i.ci = load <2 x double>, ptr %i.cg, align 8, !tbaa !60, !noalias !131
+  %i.ch = load <2 x double>, ptr %i.ce, align 8, !tbaa !60, !noalias !130
+  %i.ci = load <2 x double>, ptr %i.cg, align 8, !tbaa !60, !noalias !130
   %i.cj = fsub <2 x double> %i.ch, %i.ci          ; 2 uses
   %i.ck = getelementptr inbounds [16 x i8], ptr %i.r, i64 %i.cd
   %i.cl = getelementptr inbounds [16 x i8], ptr %i.r, i64 %i.cf
-  %i.cm = load <2 x double>, ptr %i.ck, align 8, !tbaa !60, !noalias !134
-  %i.cn = load <2 x double>, ptr %i.cl, align 8, !tbaa !60, !noalias !134
+  %i.cm = load <2 x double>, ptr %i.ck, align 8, !tbaa !60, !noalias !133
+  %i.cn = load <2 x double>, ptr %i.cl, align 8, !tbaa !60, !noalias !133
   %i.co = fsub <2 x double> %i.cm, %i.cn          ; 2 uses
   %i.cp = sext i32 %i.cb to i64
   %i.cq = getelementptr inbounds [8 x i8], ptr %i.x, i64 %i.cp
@@ -1004,7 +1000,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   store double %.sroa.speculated, ptr %i.db, align 8, !tbaa !60
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.k
-  br i1 %exitcond.not, label %.preheader, label %bb.b, !llvm.loop !137
+  br i1 %exitcond.not, label %.preheader, label %bb.b, !llvm.loop !136
 
 ._crit_edge:                                      ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %.preheader
   tail call void @free(ptr noundef %i.ab) #11
@@ -1039,7 +1035,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store double %i.dy, ptr %i.dz, align 8, !tbaa !60
   %indvars.iv.next72.1 = add nsw i64 %indvars.iv71, 2 ; 2 uses
   %exitcond75.not.1 = icmp eq i64 %indvars.iv.next72.1, %wide.trip.count74
-  br i1 %exitcond75.not.1, label %._crit_edge, label %scalar.ph, !llvm.loop !138
+  br i1 %exitcond75.not.1, label %._crit_edge, label %scalar.ph, !llvm.loop !137
 }
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
@@ -1167,73 +1163,72 @@ attributes #13 = { nounwind allocsize(0) }
 !67 = !{!43, !48, i64 120}
 !68 = !{!43, !48, i64 96}
 !69 = !{!43, !48, i64 112}
-!70 = distinct !{!70, !63, !65, !64}
-!71 = !{!72, !12, i64 0}
-!72 = !{!"_ZTS7double2", !12, i64 0, !12, i64 8}
-!73 = !{!72, !12, i64 8}
-!74 = !{!75}
-!75 = distinct !{!75, !76, !"_ZplRK7double2S1_: argument 0"}
-!76 = distinct !{!76, !"_ZplRK7double2S1_"}
-!77 = !{!78}
-!78 = distinct !{!78, !79, !"_ZplRK7double2S1_: argument 0"}
-!79 = distinct !{!79, !"_ZplRK7double2S1_"}
-!80 = distinct !{!80, !63}
-!81 = !{!25, !40, i64 312}
-!82 = !{!25, !40, i64 360}
-!83 = distinct !{!83, !63}
-!84 = !{!85}
-!85 = distinct !{!85, !86, !"_ZmlRKdRK7double2: argument 0"}
-!86 = distinct !{!86, !"_ZmlRKdRK7double2"}
-!87 = !{!88}
-!88 = distinct !{!88, !89, !"_ZdvRK7double2RKd: argument 0"}
-!89 = distinct !{!89, !"_ZdvRK7double2RKd"}
-!90 = !{!91}
-!91 = distinct !{!91, !92, !"_ZmiRK7double2S1_: argument 0"}
-!92 = distinct !{!92, !"_ZmiRK7double2S1_"}
-!93 = !{!94}
-!94 = distinct !{!94, !95, !"_ZdvRK7double2RKd: argument 0"}
-!95 = distinct !{!95, !"_ZdvRK7double2RKd"}
-!96 = !{!97}
-!97 = distinct !{!97, !98, !"_ZmiRK7double2S1_: argument 0"}
-!98 = distinct !{!98, !"_ZmiRK7double2S1_"}
-!99 = distinct !{!99, !63}
-!100 = !{!43, !48, i64 128}
-!101 = distinct !{!101, !63}
-!102 = !{!103}
-!103 = distinct !{!103, !104, !"_ZmlRKdRK7double2: argument 0"}
-!104 = distinct !{!104, !"_ZmlRKdRK7double2"}
-!105 = !{!106}
-!106 = distinct !{!106, !107, !"_ZmlRKdRK7double2: argument 0"}
-!107 = distinct !{!107, !"_ZmlRKdRK7double2"}
-!108 = !{!109}
-!109 = distinct !{!109, !110, !"_ZmlRKdRK7double2: argument 0"}
-!110 = distinct !{!110, !"_ZmlRKdRK7double2"}
-!111 = !{!112}
-!112 = distinct !{!112, !113, !"_ZmlRKdRK7double2: argument 0"}
-!113 = distinct !{!113, !"_ZmlRKdRK7double2"}
-!114 = !{!115}
-!115 = distinct !{!115, !116, !"_ZplRK7double2S1_: argument 0"}
-!116 = distinct !{!116, !"_ZplRK7double2S1_"}
-!117 = !{!118}
-!118 = distinct !{!118, !119, !"_ZplRK7double2S1_: argument 0"}
-!119 = distinct !{!119, !"_ZplRK7double2S1_"}
-!120 = distinct !{!120, !63}
-!121 = !{!25, !40, i64 368}
-!122 = !{!123}
-!123 = distinct !{!123, !124}
-!124 = distinct !{!124, !"LVerDomain"}
-!125 = !{!126}
-!126 = distinct !{!126, !124}
-!127 = !{!128}
-!128 = distinct !{!128, !124}
-!129 = !{!123, !126}
-!130 = distinct !{!130, !63, !64, !65}
-!131 = !{!132}
-!132 = distinct !{!132, !133, !"_ZmiRK7double2S1_: argument 0"}
-!133 = distinct !{!133, !"_ZmiRK7double2S1_"}
-!134 = !{!135}
-!135 = distinct !{!135, !136, !"_ZmiRK7double2S1_: argument 0"}
-!136 = distinct !{!136, !"_ZmiRK7double2S1_"}
-!137 = distinct !{!137, !63}
-!138 = distinct !{!138, !63, !64}
+!70 = !{!71, !12, i64 0}
+!71 = !{!"_ZTS7double2", !12, i64 0, !12, i64 8}
+!72 = !{!71, !12, i64 8}
+!73 = !{!74}
+!74 = distinct !{!74, !75, !"_ZplRK7double2S1_: argument 0"}
+!75 = distinct !{!75, !"_ZplRK7double2S1_"}
+!76 = !{!77}
+!77 = distinct !{!77, !78, !"_ZplRK7double2S1_: argument 0"}
+!78 = distinct !{!78, !"_ZplRK7double2S1_"}
+!79 = distinct !{!79, !63}
+!80 = !{!25, !40, i64 312}
+!81 = !{!25, !40, i64 360}
+!82 = distinct !{!82, !63}
+!83 = !{!84}
+!84 = distinct !{!84, !85, !"_ZmlRKdRK7double2: argument 0"}
+!85 = distinct !{!85, !"_ZmlRKdRK7double2"}
+!86 = !{!87}
+!87 = distinct !{!87, !88, !"_ZdvRK7double2RKd: argument 0"}
+!88 = distinct !{!88, !"_ZdvRK7double2RKd"}
+!89 = !{!90}
+!90 = distinct !{!90, !91, !"_ZmiRK7double2S1_: argument 0"}
+!91 = distinct !{!91, !"_ZmiRK7double2S1_"}
+!92 = !{!93}
+!93 = distinct !{!93, !94, !"_ZdvRK7double2RKd: argument 0"}
+!94 = distinct !{!94, !"_ZdvRK7double2RKd"}
+!95 = !{!96}
+!96 = distinct !{!96, !97, !"_ZmiRK7double2S1_: argument 0"}
+!97 = distinct !{!97, !"_ZmiRK7double2S1_"}
+!98 = distinct !{!98, !63}
+!99 = !{!43, !48, i64 128}
+!100 = distinct !{!100, !63}
+!101 = !{!102}
+!102 = distinct !{!102, !103, !"_ZmlRKdRK7double2: argument 0"}
+!103 = distinct !{!103, !"_ZmlRKdRK7double2"}
+!104 = !{!105}
+!105 = distinct !{!105, !106, !"_ZmlRKdRK7double2: argument 0"}
+!106 = distinct !{!106, !"_ZmlRKdRK7double2"}
+!107 = !{!108}
+!108 = distinct !{!108, !109, !"_ZmlRKdRK7double2: argument 0"}
+!109 = distinct !{!109, !"_ZmlRKdRK7double2"}
+!110 = !{!111}
+!111 = distinct !{!111, !112, !"_ZmlRKdRK7double2: argument 0"}
+!112 = distinct !{!112, !"_ZmlRKdRK7double2"}
+!113 = !{!114}
+!114 = distinct !{!114, !115, !"_ZplRK7double2S1_: argument 0"}
+!115 = distinct !{!115, !"_ZplRK7double2S1_"}
+!116 = !{!117}
+!117 = distinct !{!117, !118, !"_ZplRK7double2S1_: argument 0"}
+!118 = distinct !{!118, !"_ZplRK7double2S1_"}
+!119 = distinct !{!119, !63}
+!120 = !{!25, !40, i64 368}
+!121 = !{!122}
+!122 = distinct !{!122, !123}
+!123 = distinct !{!123, !"LVerDomain"}
+!124 = !{!125}
+!125 = distinct !{!125, !123}
+!126 = !{!127}
+!127 = distinct !{!127, !123}
+!128 = !{!122, !125}
+!129 = distinct !{!129, !63, !64, !65}
+!130 = !{!131}
+!131 = distinct !{!131, !132, !"_ZmiRK7double2S1_: argument 0"}
+!132 = distinct !{!132, !"_ZmiRK7double2S1_"}
+!133 = !{!134}
+!134 = distinct !{!134, !135, !"_ZmiRK7double2S1_: argument 0"}
+!135 = distinct !{!135, !"_ZmiRK7double2S1_"}
+!136 = distinct !{!136, !63}
+!137 = distinct !{!137, !63, !64}
 end_hunk_0

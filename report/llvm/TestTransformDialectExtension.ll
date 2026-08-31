@@ -205,7 +205,7 @@ _ZL63__mlir_ods_local_type_constraint_TestTransformDialectExtension3PN4mlir9Oper
   br i1 %i.dx, label %_ZL63__mlir_ods_local_type_constraint_TestTransformDialectExtension3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit.thread, label %.thread82
 
 _ZL63__mlir_ods_local_type_constraint_TestTransformDialectExtension3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit.thread: ; preds = %_ZN4llvm3isaIJN4mlir9transform27TransformParamTypeInterfaceEENS1_4TypeEEEbRKT0_.exit.i, %_ZN4llvm3isaIJN4mlir9transform28TransformHandleTypeInterfaceEENS1_4TypeEEEbRKT0_.exit.i, %_ZN4llvm3isaIJN4mlir9transform33TransformValueHandleTypeInterfaceEENS1_4TypeEEEbRKT0_.exit.i, %_ZL63__mlir_ods_local_type_constraint_TestTransformDialectExtension3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit
-  %i.dy = load ptr, ptr %0, align 8, !tbaa !10    ; 3 uses
+  %i.dy = load ptr, ptr %0, align 8, !tbaa !10    ; 4 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 44
   %i.ea = load i32, ptr %i.dz, align 4
   %i.eb = and i32 %i.ea, 8388608
@@ -218,13 +218,23 @@ _ZN4mlir4test18TestConsumeOperand14getODSOperandsEj.exit31: ; preds = %_ZL63__ml
   %i.ee = getelementptr inbounds nuw i8, ptr %i.dy, i64 72
   %i.ef = load ptr, ptr %i.ee, align 8, !tbaa !18
   %i.eg = zext i32 %i.ed to i64
-  %i.eh = add nsw i64 %i.eg, -1                   ; 3 uses
+  %i.eh = add nsw i64 %i.eg, -1                   ; 2 uses
   %i.ei = icmp ugt i64 %i.eh, 1
   br i1 %i.ei, label %_ZN4mlir4test18TestConsumeOperand14getODSOperandsEj.exit31.thread, label %.preheader
 
 .preheader:                                       ; preds = %_ZN4mlir4test18TestConsumeOperand14getODSOperandsEj.exit31
   %.not8792 = icmp eq i32 %i.ed, 1
-  br i1 %.not8792, label %.thread82, label %.lr.ph
+  br i1 %.not8792, label %.thread82, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %13 = getelementptr inbounds nuw i8, ptr %i.ef, i64 56
+  %.sroa.0.0.copyload.i.i.i42 = load ptr, ptr %13, align 8, !tbaa !19
+  %14 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i42, i64 8
+  %.0.copyload.i.i.i.i.i43 = load i64, ptr %14, align 8
+  %15 = and i64 %.0.copyload.i.i.i.i.i43, -8
+  %16 = inttoptr i64 %15 to ptr
+  %17 = call fastcc i8 @_ZL63__mlir_ods_local_type_constraint_TestTransformDialectExtension2PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef nonnull %i.dy, ptr %16, ptr nonnull @.str.52, i64 7, i32 noundef 1)
+  br label %.thread82
 
 _ZN4mlir4test18TestConsumeOperand14getODSOperandsEj.exit31.thread: ; preds = %_ZL63__mlir_ods_local_type_constraint_TestTransformDialectExtension3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit.thread, %_ZN4mlir4test18TestConsumeOperand14getODSOperandsEj.exit31
   %i.ej = phi i64 [ %i.eh, %_ZN4mlir4test18TestConsumeOperand14getODSOperandsEj.exit31 ], [ -1, %_ZL63__mlir_ods_local_type_constraint_TestTransformDialectExtension3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit.thread ]
@@ -360,29 +370,8 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.aj, %bb.ak
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #31
   br label %.thread82
 
-.lr.ph:                                           ; preds = %.preheader, %21
-  %.294 = phi i32 [ %22, %21 ], [ 1, %.preheader ] ; 2 uses
-  %.sroa.4.093 = phi i64 [ %23, %21 ], [ 0, %.preheader ] ; 2 uses
-  %13 = getelementptr inbounds nuw [32 x i8], ptr %i.ef, i64 %.sroa.4.093
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 56
-  %.sroa.0.0.copyload.i.i.i42 = load ptr, ptr %14, align 8, !tbaa !19
-  %15 = load ptr, ptr %0, align 8, !tbaa !10
-  %16 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i.i42, i64 8
-  %.0.copyload.i.i.i.i.i43 = load i64, ptr %16, align 8
-  %17 = and i64 %.0.copyload.i.i.i.i.i43, -8
-  %18 = inttoptr i64 %17 to ptr
-  %19 = call fastcc i8 @_ZL63__mlir_ods_local_type_constraint_TestTransformDialectExtension2PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj(ptr noundef %15, ptr %18, ptr nonnull @.str.52, i64 7, i32 noundef %.294)
-  %20 = trunc nuw i8 %19 to i1
-  br i1 %20, label %21, label %.thread82
-
-21:                                               ; preds = %.lr.ph
-  %22 = add i32 %.294, 1
-  %23 = add nuw nsw i64 %.sroa.4.093, 1           ; 2 uses
-  %.not87 = icmp eq i64 %23, %i.eh
-  br i1 %.not87, label %.thread82, label %.lr.ph
-
-.thread82:                                        ; preds = %.lr.ph, %21, %_ZL63__mlir_ods_local_type_constraint_TestTransformDialectExtension3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit, %.preheader, %_ZN4mlir18InFlightDiagnosticD2Ev.exit, %bb.a
-  %.sroa.019.8 = phi i8 [ %i.fo, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZL63__mlir_ods_local_type_constraint_TestTransformDialectExtension3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit ], [ 0, %bb.a ], [ 1, %.preheader ], [ 0, %.lr.ph ], [ 1, %21 ]
+.thread82:                                        ; preds = %.lr.ph.preheader, %_ZL63__mlir_ods_local_type_constraint_TestTransformDialectExtension3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit, %.preheader, %_ZN4mlir18InFlightDiagnosticD2Ev.exit, %bb.a
+  %.sroa.019.8 = phi i8 [ %i.fo, %_ZN4mlir18InFlightDiagnosticD2Ev.exit ], [ 0, %_ZL63__mlir_ods_local_type_constraint_TestTransformDialectExtension3PN4mlir9OperationENS_4TypeEN4llvm9StringRefEj.exit ], [ 0, %bb.a ], [ 1, %.preheader ], [ %17, %.lr.ph.preheader ]
   ret i8 %.sroa.019.8
 }
 

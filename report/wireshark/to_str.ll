@@ -1,8 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/to_str?download=true
 inline.NumInlined: 7
 inline.NumDeleted: 4
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
 loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -64,7 +63,7 @@ define ptr @abs_time_to_str_ex(ptr noundef %0, ptr noundef %1, i32 noundef %2, i
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 5 uses
   %i.b = alloca [32 x i8], align 16               ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   %i.c = icmp eq i32 %2, 0
   %spec.store.select = select i1 %i.c, i32 18, i32 %2 ; 5 uses
   switch i32 %spec.store.select, label %bb.g [
@@ -76,7 +75,7 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call noalias dereferenceable_or_null(31) ptr @wmem_alloc(ptr noundef %0, i64 noundef 31) #11 ; 2 uses
+  %i.d = tail call noalias dereferenceable_or_null(31) ptr @wmem_alloc(ptr noundef %0, i64 noundef 31) #10 ; 2 uses
   tail call void @display_epoch_time(ptr noundef %i.d, i64 noundef 31, ptr noundef %1, i32 noundef 9)
   br label %snprint_abs_time_iso8601.exit
 
@@ -98,15 +97,15 @@ bb.e:                                             ; preds = %bb.d, %bb.d
   br label %snprint_abs_time_iso8601.exit
 
 .thread:                                          ; preds = %bb.a, %bb.a, %bb.c, %bb.d
-  %i.j = tail call ptr @gmtime(ptr noundef %1) #10
+  %i.j = tail call ptr @gmtime(ptr noundef %1) #9
   br label %get_fmt_broken_down_time.exit
 
 bb.f:                                             ; preds = %bb.a
-  %i.k = tail call ptr @localtime(ptr noundef %1) #10
+  %i.k = tail call ptr @localtime(ptr noundef %1) #9
   br label %get_fmt_broken_down_time.exit
 
 bb.g:                                             ; preds = %bb.a
-  tail call void (ptr, i32, ptr, i64, ptr, ptr, ...) @ws_log_fatal_full(ptr noundef nonnull @.str.3, i32 noundef 7, ptr noundef nonnull @.str.6, i64 noundef 109, ptr noundef nonnull @__func__.get_fmt_broken_down_time, ptr noundef nonnull @.str.7) #12
+  tail call void (ptr, i32, ptr, i64, ptr, ptr, ...) @ws_log_fatal_full(ptr noundef nonnull @.str.3, i32 noundef 7, ptr noundef nonnull @.str.6, i64 noundef 109, ptr noundef nonnull @__func__.get_fmt_broken_down_time, ptr noundef nonnull @.str.7) #11
   unreachable
 
 get_fmt_broken_down_time.exit:                    ; preds = %.thread, %bb.f
@@ -189,13 +188,13 @@ bb.n:                                             ; preds = %bb.l, %bb.l
   br label %snprint_abs_time_iso8601.exit
 
 bb.o:                                             ; preds = %bb.l
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   store i64 0, ptr %i.a, align 8
   %i.ba = trunc i8 %.0.i39 to i1
   br i1 %i.ba, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.bb = call i64 @strftime(ptr noundef nonnull %i.a, i64 noundef 8, ptr noundef nonnull @.str.29, ptr noundef nonnull %.0.i) #10 ; 0 uses
+  %i.bb = call i64 @strftime(ptr noundef nonnull %i.a, i64 noundef 8, ptr noundef nonnull @.str.29, ptr noundef nonnull %.0.i) #9 ; 0 uses
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
@@ -214,7 +213,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   %i.bo = load i32, ptr %i.bn, align 4
   %i.bp = load i32, ptr %.0.i, align 8
   %i.bq = call noalias ptr (ptr, ptr, ...) @wmem_strdup_printf(ptr noundef %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %i.bc, i32 noundef %i.bf, i32 noundef %i.bi, i32 noundef %i.bk, i32 noundef %i.bm, i32 noundef %i.bo, i32 noundef %i.bp, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a, ptr noundef nonnull %i.bc)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   br label %snprint_abs_time_iso8601.exit
 
 default.unreachable48:                            ; preds = %bb.l
@@ -294,7 +293,7 @@ bb.x:                                             ; preds = %bb.v, %.thread42
 
 snprint_abs_time_iso8601.exit:                    ; preds = %bb.x, %bb.w, %bb.q, %bb.n, %bb.m, %bb.h, %bb.e, %bb.b
   %.032 = phi ptr [ %i.d, %bb.b ], [ %i.i, %bb.e ], [ %i.m, %bb.h ], [ %i.bq, %bb.q ], [ %i.ai, %bb.m ], [ %i.az, %bb.n ], [ %i.cm, %bb.w ], [ %i.dd, %bb.x ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   ret ptr %.032
 }
 
@@ -304,7 +303,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define hidden noundef ptr @abs_time_to_unix_str(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(31) ptr @wmem_alloc(ptr noundef %0, i64 noundef 31) #11 ; 2 uses
+  %i.a = tail call noalias dereferenceable_or_null(31) ptr @wmem_alloc(ptr noundef %0, i64 noundef 31) #10 ; 2 uses
   tail call void @display_epoch_time(ptr noundef %i.a, i64 noundef 31, ptr noundef %1, i32 noundef 9)
   ret ptr %i.a
 }
@@ -325,11 +324,11 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define ptr @abs_time_secs_to_str_ex(ptr noundef %0, i64 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %4 = alloca %struct.nstime_t, align 8           ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
   call void @nstime_set_unset(ptr noundef nonnull %4)
   store i64 %1, ptr %4, align 8
   %i.a = call ptr @abs_time_to_str_ex(ptr noundef %0, ptr noundef nonnull %4, i32 noundef %2, i32 noundef %3)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   ret ptr %i.a
 }
 
@@ -638,7 +637,7 @@ bb.f:                                             ; preds = %bb.e, %bb.b
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define noundef ptr @rel_time_to_secs_str(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(31) ptr @wmem_alloc(ptr noundef %0, i64 noundef 31) #11 ; 2 uses
+  %i.a = tail call noalias dereferenceable_or_null(31) ptr @wmem_alloc(ptr noundef %0, i64 noundef 31) #10 ; 2 uses
   tail call void @display_signed_time(ptr noundef %i.a, i64 noundef 31, ptr noundef %1, i32 noundef 9)
   ret ptr %i.a
 }
@@ -663,119 +662,75 @@ bb.a:
   %i.f = sub i32 0, %i.e
   %.not71 = icmp slt i32 %4, 0
   %.0.in = select i1 %.not71, i32 %i.f, i32 %1
-  %.0 = and i32 %.0.in, 7                         ; 7 uses
-  %i.g = tail call noalias dereferenceable_or_null(320) ptr @wmem_alloc0(ptr noundef %0, i64 noundef 320) #11 ; 27 uses
+  %.0 = and i32 %.0.in, 7                         ; 14 uses
+  %i.g = tail call noalias dereferenceable_or_null(320) ptr @wmem_alloc0(ptr noundef %0, i64 noundef 320) #10 ; 28 uses
   %.not = icmp eq i32 %.0, 0
-  br i1 %.not, label %.preheader72, label %.lr.ph.preheader
+  br i1 %.not, label %.lr.ph.preheader95, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   store i8 46, ptr %i.g, align 1
   %exitcond.peel.not = icmp eq i32 %.0, 1
-  br i1 %exitcond.peel.not, label %.preheader72, label %.lr.ph.preheader95
+  br i1 %exitcond.peel.not, label %.lr.ph.preheader95, label %.lr.ph.epil.preheader
 
-.lr.ph.preheader95:                               ; preds = %.lr.ph.preheader
-  %5 = add nsw i32 %.0, -1                        ; 3 uses
-  %xtraiter = and i32 %5, 1
-  %6 = icmp eq i32 %.0, 2
-  br i1 %6, label %.lr.ph.epil.preheader, label %.lr.ph.preheader95.new
+.lr.ph.preheader95:                               ; preds = %.lr.ph.epil.preheader, %bb.b, %.preheader72.loopexit.epilog-lcssa, %.lr.ph, %.lr.ph.1, %bb.c, %.lr.ph.preheader, %bb.a
+  %.054.lcssa = phi i32 [ 0, %bb.a ], [ 1, %.lr.ph.preheader ], [ %.0, %bb.c ], [ %.0, %.lr.ph.1 ], [ %.0, %.lr.ph ], [ %.0, %.preheader72.loopexit.epilog-lcssa ], [ %.0, %bb.b ], [ %.0, %.lr.ph.epil.preheader ] ; 2 uses
+  %.053.lcssa = phi i32 [ 0, %bb.a ], [ 1, %.lr.ph.preheader ], [ 2, %.lr.ph.epil.preheader ], [ 3, %bb.b ], [ 4, %.preheader72.loopexit.epilog-lcssa ], [ 6, %.lr.ph ], [ 7, %.lr.ph.1 ], [ 8, %bb.c ] ; 2 uses
+  %5 = icmp sgt i32 %2, 0
+  br i1 %5, label %.lr.ph80, label %.preheader
 
-.lr.ph.preheader95.new:                           ; preds = %.lr.ph.preheader95
-  %unroll_iter = and i32 %5, -2
-  br label %.lr.ph
-
-.preheader72.loopexit.unr-lcssa:                  ; preds = %23
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.preheader72, label %.lr.ph.epil.preheader
-
-.lr.ph.epil.preheader:                            ; preds = %.preheader72.loopexit.unr-lcssa, %.lr.ph.preheader95
-  %.05374.epil.init = phi i32 [ 1, %.lr.ph.preheader95 ], [ %26, %.preheader72.loopexit.unr-lcssa ] ; 3 uses
-  %.05473.epil.init = phi i32 [ 1, %.lr.ph.preheader95 ], [ %27, %.preheader72.loopexit.unr-lcssa ]
-  %lcmp.mod97 = trunc i32 %5 to i1
-  tail call void @llvm.assume(i1 %lcmp.mod97)
-  %7 = and i32 %.05473.epil.init, 3
-  %.not66.epil = icmp eq i32 %7, 0
-  br i1 %.not66.epil, label %bb.b, label %.preheader72.loopexit.epilog-lcssa
+.lr.ph.epil.preheader:                            ; preds = %.lr.ph.preheader
+  %6 = getelementptr i8, ptr %i.g, i64 1
+  store i8 46, ptr %6, align 1
+  %.not66.epil = icmp eq i32 %.0, 2
+  br i1 %.not66.epil, label %.lr.ph.preheader95, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.epil.preheader
-  %8 = sext i32 %.05374.epil.init to i64
-  %i.h = getelementptr i8, ptr %i.g, i64 %8
-  store i8 32, ptr %i.h, align 1
-  %9 = add i32 %.05374.epil.init, 1
-  br label %.preheader72.loopexit.epilog-lcssa
+  %i.h = getelementptr i8, ptr %i.g, i64 2
+  store i8 46, ptr %i.h, align 1
+  %exitcond.not.1 = icmp eq i32 %.0, 3
+  br i1 %exitcond.not.1, label %.lr.ph.preheader95, label %.preheader72.loopexit.epilog-lcssa
 
-.preheader72.loopexit.epilog-lcssa:               ; preds = %bb.b, %.lr.ph.epil.preheader
-  %.1.epil = phi i32 [ %.05374.epil.init, %.lr.ph.epil.preheader ], [ %9, %bb.b ] ; 2 uses
-  %10 = sext i32 %.1.epil to i64
-  %i.i = getelementptr i8, ptr %i.g, i64 %10
+.preheader72.loopexit.epilog-lcssa:               ; preds = %bb.b
+  %i.i = getelementptr i8, ptr %i.g, i64 3
   store i8 46, ptr %i.i, align 1
-  %11 = add i32 %.1.epil, 1
-  br label %.preheader72
+  %exitcond.not.2 = icmp eq i32 %.0, 4
+  br i1 %exitcond.not.2, label %.lr.ph.preheader95, label %.lr.ph
 
-.preheader72:                                     ; preds = %.preheader72.loopexit.epilog-lcssa, %.preheader72.loopexit.unr-lcssa, %.lr.ph.preheader, %bb.a
-  %.054.lcssa = phi i32 [ 0, %bb.a ], [ 1, %.lr.ph.preheader ], [ %.0, %.preheader72.loopexit.unr-lcssa ], [ %.0, %.preheader72.loopexit.epilog-lcssa ] ; 2 uses
-  %.053.lcssa = phi i32 [ 0, %bb.a ], [ 1, %.lr.ph.preheader ], [ %26, %.preheader72.loopexit.unr-lcssa ], [ %11, %.preheader72.loopexit.epilog-lcssa ] ; 2 uses
-  %12 = icmp sgt i32 %2, 0
-  br i1 %12, label %.lr.ph80, label %.preheader
+.lr.ph:                                           ; preds = %.preheader72.loopexit.epilog-lcssa
+  %7 = getelementptr i8, ptr %i.g, i64 4
+  store i8 32, ptr %7, align 1
+  %8 = getelementptr i8, ptr %i.g, i64 5
+  store i8 46, ptr %8, align 1
+  %.not66 = icmp eq i32 %.0, 5
+  br i1 %.not66, label %.lr.ph.preheader95, label %.lr.ph.1
 
-.lr.ph:                                           ; preds = %23, %.lr.ph.preheader95.new
-  %.05374 = phi i32 [ 1, %.lr.ph.preheader95.new ], [ %26, %23 ] ; 3 uses
-  %.05473 = phi i32 [ 1, %.lr.ph.preheader95.new ], [ %27, %23 ] ; 3 uses
-  %niter = phi i32 [ 0, %.lr.ph.preheader95.new ], [ %niter.next.1, %23 ]
-  %13 = and i32 %.05473, 3
-  %.not66 = icmp eq i32 %13, 0
-  br i1 %.not66, label %14, label %.lr.ph.1
-
-14:                                               ; preds = %.lr.ph
-  %15 = sext i32 %.05374 to i64
-  %16 = getelementptr i8, ptr %i.g, i64 %15
-  store i8 32, ptr %16, align 1
-  %17 = add i32 %.05374, 1
-  br label %.lr.ph.1
-
-.lr.ph.1:                                         ; preds = %14, %.lr.ph
-  %.1 = phi i32 [ %.05374, %.lr.ph ], [ %17, %14 ] ; 3 uses
-  %18 = sext i32 %.1 to i64
-  %i.j = getelementptr i8, ptr %i.g, i64 %18
+.lr.ph.1:                                         ; preds = %.lr.ph
+  %i.j = getelementptr i8, ptr %i.g, i64 6
   store i8 46, ptr %i.j, align 1
-  %19 = add i32 %.1, 1                            ; 2 uses
-  %20 = and i32 %.05473, 3
-  %.not66.1 = icmp eq i32 %20, 3
-  br i1 %.not66.1, label %bb.c, label %23
+  %.not66.1 = icmp eq i32 %.0, 6
+  br i1 %.not66.1, label %.lr.ph.preheader95, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.1
-  %21 = sext i32 %19 to i64
-  %i.k = getelementptr i8, ptr %i.g, i64 %21
-  store i8 32, ptr %i.k, align 1
-  %22 = add i32 %.1, 2
-  br label %23
-
-23:                                               ; preds = %bb.c, %.lr.ph.1
-  %.1.1 = phi i32 [ %19, %.lr.ph.1 ], [ %22, %bb.c ] ; 2 uses
-  %24 = sext i32 %.1.1 to i64
-  %25 = getelementptr i8, ptr %i.g, i64 %24
-  store i8 46, ptr %25, align 1
-  %26 = add i32 %.1.1, 1                          ; 3 uses
-  %27 = add nuw nsw i32 %.05473, 2                ; 2 uses
-  %niter.next.1 = add i32 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.preheader72.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !6
+  %i.k = getelementptr i8, ptr %i.g, i64 7
+  store i8 46, ptr %i.k, align 1
+  br label %.lr.ph.preheader95
 
 .preheader.loopexit:                              ; preds = %bb.g
   %i.l = add nuw nsw i32 %i.a, %.0
   br label %.preheader
 
-.preheader:                                       ; preds = %.preheader.loopexit, %.preheader72
-  %.155.lcssa = phi i32 [ %.054.lcssa, %.preheader72 ], [ %i.l, %.preheader.loopexit ] ; 10 uses
-  %.2.lcssa = phi i32 [ %.053.lcssa, %.preheader72 ], [ %.5, %.preheader.loopexit ] ; 3 uses
+.preheader:                                       ; preds = %.preheader.loopexit, %.lr.ph.preheader95
+  %.155.lcssa = phi i32 [ %.054.lcssa, %.lr.ph.preheader95 ], [ %i.l, %.preheader.loopexit ] ; 10 uses
+  %.2.lcssa = phi i32 [ %.053.lcssa, %.lr.ph.preheader95 ], [ %.5, %.preheader.loopexit ] ; 3 uses
   %i.m = and i32 %.155.lcssa, 7
   %.not5883 = icmp eq i32 %i.m, 0
   br i1 %.not5883, label %._crit_edge, label %.lr.ph86
 
-.lr.ph80:                                         ; preds = %.preheader72, %bb.g
-  %.05279 = phi i32 [ %i.aa, %bb.g ], [ 0, %.preheader72 ]
-  %.278 = phi i32 [ %.5, %bb.g ], [ %.053.lcssa, %.preheader72 ] ; 3 uses
-  %.15577 = phi i32 [ %i.v, %bb.g ], [ %.054.lcssa, %.preheader72 ] ; 4 uses
-  %.05776 = phi i64 [ %i.z, %bb.g ], [ %i.d, %.preheader72 ] ; 2 uses
+.lr.ph80:                                         ; preds = %.lr.ph.preheader95, %bb.g
+  %.05279 = phi i32 [ %i.aa, %bb.g ], [ 0, %.lr.ph.preheader95 ]
+  %.278 = phi i32 [ %.5, %bb.g ], [ %.053.lcssa, %.lr.ph.preheader95 ] ; 3 uses
+  %.15577 = phi i32 [ %i.v, %bb.g ], [ %.054.lcssa, %.lr.ph.preheader95 ] ; 4 uses
+  %.05776 = phi i64 [ %i.z, %bb.g ], [ %i.d, %.lr.ph.preheader95 ] ; 2 uses
   %.not61 = icmp ne i32 %.15577, 0                ; 2 uses
   %i.n = and i32 %.15577, 3
   %.not62 = icmp eq i32 %i.n, 0
@@ -816,7 +771,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.z = lshr i64 %.05776, 1
   %i.aa = add nuw nsw i32 %.05279, 1              ; 2 uses
   %exitcond90.not = icmp eq i32 %i.aa, %i.a
-  br i1 %exitcond90.not, label %.preheader.loopexit, label %.lr.ph80, !llvm.loop !9
+  br i1 %exitcond90.not, label %.preheader.loopexit, label %.lr.ph80, !llvm.loop !6
 
 .lr.ph86:                                         ; preds = %.preheader
   %i.ab = and i32 %.155.lcssa, 3
@@ -1007,7 +962,7 @@ declare noalias ptr @wmem_alloc0(ptr noundef, i64 noundef) local_unnamed_addr #5
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define noundef ptr @guid_to_str(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(37) ptr @wmem_alloc(ptr noundef %0, i64 noundef 37) #11 ; 2 uses
+  %i.a = tail call noalias dereferenceable_or_null(37) ptr @wmem_alloc(ptr noundef %0, i64 noundef 37) #10 ; 2 uses
   %i.b = load i32, ptr %1, align 4
   %i.c = tail call ptr @dword_to_hex(ptr noundef %i.a, i32 noundef %i.b) ; 2 uses
   %i.d = getelementptr i8, ptr %i.c, i64 1
@@ -1118,9 +1073,6 @@ declare void @wmem_strbuf_append_printf(ptr noundef, ptr noundef, ...) local_unn
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #8
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #9
-
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1130,10 +1082,9 @@ attributes #5 = { null_pointer_is_valid allocsize(1) "no-trapping-math"="true" "
 attributes #6 = { mustprogress nofree norecurse nosync nounwind null_pointer_is_valid sspstrong willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nounwind null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #10 = { nounwind }
-attributes #11 = { allocsize(1) }
-attributes #12 = { noreturn }
+attributes #9 = { nounwind }
+attributes #10 = { allocsize(1) }
+attributes #11 = { noreturn }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}
@@ -1144,8 +1095,6 @@ attributes #12 = { noreturn }
 !3 = !{i32 8, !"PIC Level", i32 2}
 !4 = !{i32 7, !"uwtable", i32 2}
 !5 = !{!"Ubuntu clang version 24.0.0 (++20260805082234+d31b11c260ae-1~exp1~20260805082243.1767)"}
-!6 = distinct !{!6, !7, !8}
+!6 = distinct !{!6, !7}
 !7 = !{!"llvm.loop.mustprogress"}
-!8 = !{!"llvm.loop.peeled.count", i32 1}
-!9 = distinct !{!9, !7}
 end_hunk_0
