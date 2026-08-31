@@ -107,16 +107,16 @@ bb.e:                                             ; preds = %.lr.ph.i
 
 bb.f:                                             ; preds = %.lr.ph.i
   %i.af = getelementptr inbounds nuw i8, ptr %i.r, i64 16
-  %7 = load float, ptr %i.af, align 16, !tbaa !24
+  %7 = load i32, ptr %i.af, align 16, !tbaa !24
   %i.ag = getelementptr inbounds nuw [32 x i8], ptr %6, i64 %.04380.i
-  store float %7, ptr %i.ag, align 16
+  store i32 %7, ptr %i.ag, align 16
   br label %bb.k
 
 bb.g:                                             ; preds = %.lr.ph.i
   %i.ah = getelementptr inbounds nuw i8, ptr %i.r, i64 16
-  %8 = load double, ptr %i.ah, align 16, !tbaa !26
+  %8 = load i64, ptr %i.ah, align 16, !tbaa !26
   %i.ai = getelementptr inbounds nuw [32 x i8], ptr %6, i64 %.04380.i
-  store double %8, ptr %i.ai, align 16
+  store i64 %8, ptr %i.ai, align 16
   br label %bb.k
 
 bb.h:                                             ; preds = %.lr.ph.i
@@ -129,15 +129,17 @@ bb.h:                                             ; preds = %.lr.ph.i
 bb.i:                                             ; preds = %.lr.ph.i
   %i.am = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   %i.an = load ptr, ptr %i.am, align 16, !tbaa !30
+  %9 = ptrtoint ptr %i.an to i64
   %i.ao = getelementptr inbounds nuw [32 x i8], ptr %6, i64 %.04380.i
-  store ptr %i.an, ptr %i.ao, align 16
+  store i64 %9, ptr %i.ao, align 16
   br label %bb.k
 
 bb.j:                                             ; preds = %.lr.ph.i
   %i.ap = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   %i.aq = load ptr, ptr %i.ap, align 16, !tbaa !33
+  %10 = ptrtoint ptr %i.aq to i64
   %i.ar = getelementptr inbounds nuw [32 x i8], ptr %6, i64 %.04380.i
-  store ptr %i.aq, ptr %i.ar, align 16
+  store i64 %10, ptr %i.ar, align 16
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
@@ -294,16 +296,16 @@ bb.e:                                             ; preds = %.lr.ph.i
 
 bb.f:                                             ; preds = %.lr.ph.i
   %i.af = getelementptr inbounds nuw i8, ptr %i.r, i64 16
-  %5 = load float, ptr %i.af, align 16, !tbaa !24
+  %5 = load i32, ptr %i.af, align 16, !tbaa !24
   %i.ag = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %.04380.i
-  store float %5, ptr %i.ag, align 16
+  store i32 %5, ptr %i.ag, align 16
   br label %bb.k
 
 bb.g:                                             ; preds = %.lr.ph.i
   %i.ah = getelementptr inbounds nuw i8, ptr %i.r, i64 16
-  %6 = load double, ptr %i.ah, align 16, !tbaa !26
+  %6 = load i64, ptr %i.ah, align 16, !tbaa !26
   %i.ai = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %.04380.i
-  store double %6, ptr %i.ai, align 16
+  store i64 %6, ptr %i.ai, align 16
   br label %bb.k
 
 bb.h:                                             ; preds = %.lr.ph.i
@@ -316,15 +318,17 @@ bb.h:                                             ; preds = %.lr.ph.i
 bb.i:                                             ; preds = %.lr.ph.i
   %i.am = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   %i.an = load ptr, ptr %i.am, align 16, !tbaa !30
+  %7 = ptrtoint ptr %i.an to i64
   %i.ao = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %.04380.i
-  store ptr %i.an, ptr %i.ao, align 16
+  store i64 %7, ptr %i.ao, align 16
   br label %bb.k
 
 bb.j:                                             ; preds = %.lr.ph.i
   %i.ap = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   %i.aq = load ptr, ptr %i.ap, align 16, !tbaa !33
+  %8 = ptrtoint ptr %i.aq to i64
   %i.ar = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %.04380.i
-  store ptr %i.aq, ptr %i.ar, align 16
+  store i64 %8, ptr %i.ar, align 16
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b

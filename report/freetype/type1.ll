@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %.thread259
   %i.t = phi ptr [ %i.g, %.lr.ph ], [ %i.fe, %.thread259 ] ; 17 uses
   %.0165289 = phi i8 [ 0, %.lr.ph ], [ %.4169, %.thread259 ] ; 3 uses
-  %.0171287 = phi ptr [ null, %.lr.ph ], [ %.1172, %.thread259 ] ; 13 uses
+  %.sroa.0.0284 = phi i64 [ 0, %.lr.ph ], [ %.sroa.0.1, %.thread259 ] ; 13 uses
   %i.u = load i8, ptr %i.t, align 1, !tbaa !99    ; 5 uses
   switch i8 %i.u, label %bb.r [
     i8 101, label %bb.c
@@ -342,6 +342,7 @@ bb.r:                                             ; preds = %bb.b
   br i1 %i.av, label %bb.s, label %.thread223
 
 bb.s:                                             ; preds = %bb.r
+  %4 = ptrtoint ptr %i.t to i64
   %i.aw = load ptr, ptr %i.j, align 8, !tbaa !100
   call void %i.aw(ptr noundef nonnull %1) #17
   %i.ax = load i32, ptr %i.d, align 8, !tbaa !102
@@ -364,7 +365,8 @@ bb.t:                                             ; preds = %.thread223
   br i1 %or.cond, label %bb.u, label %.thread235
 
 bb.u:                                             ; preds = %bb.t
-  store ptr %.0171287, ptr %1, align 8, !tbaa !94
+  %5 = inttoptr i64 %.sroa.0.0284 to ptr
+  store ptr %5, ptr %1, align 8, !tbaa !94
   %i.bf = load ptr, ptr %i.r, align 8, !tbaa !136
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 104
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !137
@@ -426,7 +428,8 @@ bb.z:                                             ; preds = %bb.y
   br i1 %or.cond8, label %bb.aa, label %.thread235
 
 bb.aa:                                            ; preds = %bb.z
-  store ptr %.0171287, ptr %1, align 8, !tbaa !94
+  %6 = inttoptr i64 %.sroa.0.0284 to ptr
+  store ptr %6, ptr %1, align 8, !tbaa !94
   %i.ch = load ptr, ptr %i.r, align 8, !tbaa !136
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 104
   %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !137
@@ -676,7 +679,7 @@ bb.bd:                                            ; preds = %bb.ah, %bb.ai
   br i1 %.not, label %.thread259, label %.thread271
 
 .thread259:                                       ; preds = %bb.bd, %t1_load_keyword.exit.thread, %bb.al, %bb.bc, %t1_load_keyword.exit, %bb.aj, %bb.ag, %bb.q, %read_binary_data.exit, %read_binary_data.exit217, %bb.s, %.thread235
-  %.1172 = phi ptr [ %.0171287, %bb.q ], [ %i.t, %bb.s ], [ %.0171287, %read_binary_data.exit ], [ %.0171287, %read_binary_data.exit217 ], [ %.0171287, %.thread235 ], [ %.0171287, %bb.ag ], [ %.0171287, %t1_load_keyword.exit.thread ], [ %.0171287, %bb.aj ], [ %.0171287, %t1_load_keyword.exit ], [ %.0171287, %bb.bc ], [ %.0171287, %bb.al ], [ %.0171287, %bb.bd ]
+  %.sroa.0.1 = phi i64 [ %.sroa.0.0284, %bb.q ], [ %4, %bb.s ], [ %.sroa.0.0284, %read_binary_data.exit ], [ %.sroa.0.0284, %read_binary_data.exit217 ], [ %.sroa.0.0284, %.thread235 ], [ %.sroa.0.0284, %bb.ag ], [ %.sroa.0.0284, %t1_load_keyword.exit.thread ], [ %.sroa.0.0284, %bb.aj ], [ %.sroa.0.0284, %t1_load_keyword.exit ], [ %.sroa.0.0284, %bb.bc ], [ %.sroa.0.0284, %bb.al ], [ %.sroa.0.0284, %bb.bd ]
   %.4169 = phi i8 [ %.0165289, %bb.q ], [ 1, %bb.s ], [ 0, %read_binary_data.exit ], [ 0, %read_binary_data.exit217 ], [ 0, %.thread235 ], [ 0, %bb.ag ], [ 0, %t1_load_keyword.exit.thread ], [ 0, %bb.aj ], [ 0, %t1_load_keyword.exit ], [ 0, %bb.bc ], [ 0, %bb.al ], [ 0, %bb.bd ]
   %i.fd = load ptr, ptr %i.e, align 8, !tbaa !103
   call void %i.fd(ptr noundef nonnull %1) #17

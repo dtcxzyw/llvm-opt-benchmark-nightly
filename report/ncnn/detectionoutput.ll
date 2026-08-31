@@ -204,11 +204,11 @@ bb.t:                                             ; preds = %.lr.ph, %bb.v
   %i.du = getelementptr inbounds nuw [24 x i8], ptr %i.dt, i64 %indvars.iv ; 2 uses
   %i.dv = load ptr, ptr %6, align 8, !tbaa !60
   %i.dw = load ptr, ptr %i.de, align 8, !tbaa !73
+  %9 = ptrtoint ptr %i.dw to i64
   %i.dx = load ptr, ptr %i.du, align 8, !tbaa !73
   %i.dy = getelementptr inbounds nuw i8, ptr %i.du, i64 8
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !73
   %i.ea = load ptr, ptr %7, align 8, !tbaa !73    ; 2 uses
-  %9 = ptrtoint ptr %i.dw to i64
   %i.eb = ptrtoint ptr %i.ea to i64
   %i.ec = sub i64 %9, %i.eb
   %i.ed = getelementptr inbounds i8, ptr %i.ea, i64 %i.ec
@@ -218,11 +218,11 @@ bb.t:                                             ; preds = %.lr.ph, %bb.v
 bb.u:                                             ; preds = %bb.t
   %i.ee = getelementptr inbounds nuw [24 x i8], ptr %i.dv, i64 %indvars.iv ; 2 uses
   %i.ef = load ptr, ptr %i.df, align 8, !tbaa !46
+  %10 = ptrtoint ptr %i.ef to i64
   %i.eg = load ptr, ptr %i.ee, align 8, !tbaa !46
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ee, i64 8
   %i.ei = load ptr, ptr %i.eh, align 8, !tbaa !46
   %i.ej = load ptr, ptr %8, align 8, !tbaa !46    ; 2 uses
-  %10 = ptrtoint ptr %i.ef to i64
   %i.ek = ptrtoint ptr %i.ej to i64
   %i.el = sub i64 %10, %i.ek
   %i.em = getelementptr inbounds i8, ptr %i.ej, i64 %i.el
@@ -625,15 +625,27 @@ bb.h:                                             ; preds = %bb.g
   %i.bg = mul nsw i64 %indvars.iv, %i.bf
   %i.bh = load i64, ptr %i.n, align 8, !tbaa !50
   %i.bi = mul i64 %i.bg, %i.bh
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.bd, i64 %i.bi
-  %12 = load <4 x float>, ptr %i.bj, align 4, !tbaa !33 ; 2 uses
-  %i.bk = load ptr, ptr %i.o, align 8, !tbaa !75  ; 5 uses
+  %12 = getelementptr inbounds nuw i8, ptr %i.bd, i64 %i.bi ; 4 uses
+  %13 = load i32, ptr %12, align 4, !tbaa !33     ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %12, i64 4
+  %15 = load i32, ptr %14, align 4, !tbaa !33     ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %17 = load i32, ptr %16, align 4, !tbaa !33     ; 2 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %12, i64 12
+  %18 = load i32, ptr %i.bj, align 4, !tbaa !33   ; 2 uses
+  %i.bk = load ptr, ptr %i.o, align 8, !tbaa !75  ; 8 uses
   %i.bl = load ptr, ptr %i.p, align 8, !tbaa !88
   %.not.i = icmp eq ptr %i.bk, %i.bl
   br i1 %.not.i, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  store <4 x float> %12, ptr %i.bk, align 4, !tbaa !33
+  store i32 %13, ptr %i.bk, align 4, !tbaa !33
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 4
+  store i32 %15, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !33
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
+  store i32 %17, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !33
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 12
+  store i32 %18, ptr %.sroa.7.0..sroa_idx, align 4, !tbaa !33
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 16
   store i32 %i.y, ptr %.sroa.8.0..sroa_idx, align 4, !tbaa !40
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bk, i64 20
@@ -670,8 +682,14 @@ _ZNKSt6vectorIN4ncnn8BBoxRectESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %b
           to label %.noexc40 unwind label %.loopexit.split-lp.loopexit ; 4 uses
 
 .noexc40:                                         ; preds = %_ZNKSt6vectorIN4ncnn8BBoxRectESaIS1_EE12_M_check_lenEmPKc.exit.i.i
-  %i.ca = getelementptr inbounds i8, ptr %i.bz, i64 %i.bq ; 3 uses
-  store <4 x float> %12, ptr %i.ca, align 4, !tbaa !33
+  %i.ca = getelementptr inbounds i8, ptr %i.bz, i64 %i.bq ; 6 uses
+  store i32 %13, ptr %i.ca, align 4, !tbaa !33
+  %.sroa.5.0..sroa_idx88 = getelementptr inbounds nuw i8, ptr %i.ca, i64 4
+  store i32 %15, ptr %.sroa.5.0..sroa_idx88, align 4, !tbaa !33
+  %.sroa.6.0..sroa_idx90 = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
+  store i32 %17, ptr %.sroa.6.0..sroa_idx90, align 4, !tbaa !33
+  %.sroa.7.0..sroa_idx92 = getelementptr inbounds nuw i8, ptr %i.ca, i64 12
+  store i32 %18, ptr %.sroa.7.0..sroa_idx92, align 4, !tbaa !33
   %.sroa.8.0..sroa_idx94 = getelementptr inbounds nuw i8, ptr %i.ca, i64 16
   store i32 %i.z, ptr %.sroa.8.0..sroa_idx94, align 4, !tbaa !40
   %i.cb = icmp sgt i64 %i.bq, 0

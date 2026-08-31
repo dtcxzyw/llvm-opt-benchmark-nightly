@@ -204,10 +204,11 @@ _RINvCs2efQY0w7vw4_8smallvec12layout_arrayINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNt
 
 bb.i:                                             ; preds = %bb.j, %_RINvCs2efQY0w7vw4_8smallvec12layout_arrayINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1h_.exit48.i
   %.sroa.031.0.i = phi ptr [ %i.t, %bb.j ], [ %i.w, %_RINvCs2efQY0w7vw4_8smallvec12layout_arrayINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1h_.exit48.i ]
+  %1 = ptrtoint ptr %.sroa.031.0.i to i64
   store i64 1, ptr %0, align 8, !alias.scope !34
   store i64 %i.q, ptr %i.n, align 8, !alias.scope !34
   %.sroa.540.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %.sroa.031.0.i, ptr %.sroa.540.0..sroa_idx.i, align 8, !alias.scope !34
+  store i64 %1, ptr %.sroa.540.0..sroa_idx.i, align 8, !alias.scope !34
   store i64 %i.l, ptr %i.b, align 8, !alias.scope !34
   br label %_RINvCs2efQY0w7vw4_8smallvec10infallibleuECs2wCc12Mnjqg_5ropey.exit
 
@@ -608,11 +609,12 @@ _RINvCs2efQY0w7vw4_8smallvec12layout_arrayhECs2wCc12Mnjqg_5ropey.exit52: ; preds
 
 bb.h:                                             ; preds = %_RINvCs2efQY0w7vw4_8smallvec12layout_arrayhECs2wCc12Mnjqg_5ropey.exit52, %bb.i
   %.sroa.032.0 = phi ptr [ %i.n, %bb.i ], [ %i.p, %_RINvCs2efQY0w7vw4_8smallvec12layout_arrayhECs2wCc12Mnjqg_5ropey.exit52 ]
+  %2 = ptrtoint ptr %.sroa.032.0 to i64
   store i8 1, ptr %0, align 8
   %.sroa.441.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.j, ptr %.sroa.441.0..sroa_idx, align 8
   %.sroa.542.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %.sroa.032.0, ptr %.sroa.542.0..sroa_idx, align 8
+  store i64 %2, ptr %.sroa.542.0..sroa_idx, align 8
   store i64 %1, ptr %i.b, align 8
   br label %bb.l
 
@@ -651,6 +653,7 @@ bb.l:                                             ; preds = %bb.f, %bb.e, %bb.d,
 ; Function Attrs: nofree norecurse nosync nounwind nonlazybind memory(argmem: read) uwtable
 define hidden noundef i64 @_RNvNtCs2wCc12Mnjqg_5ropey9str_utils24last_line_start_byte_idx(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
+  %2 = ptrtoint ptr %0 to i64
   %.not.i66 = icmp samesign eq i64 %1, 0
   br i1 %.not.i66, label %_RNvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB5_9EnumerateNtNtNtBb_3str4iter5BytesENtNtNtB9_6traits12double_ended19DoubleEndedIterator9next_backCs2wCc12Mnjqg_5ropey.exit, label %.lr.ph.preheader
 
@@ -701,7 +704,6 @@ _RNvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB5_9EnumerateNtNtNtB
 
 bb.d:                                             ; preds = %_RNvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB5_9EnumerateNtNtNtBb_3str4iter5BytesENtNtNtB9_6traits12double_ended19DoubleEndedIterator9next_backCs2wCc12Mnjqg_5ropey.exit21, %_RNvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB5_9EnumerateNtNtNtBb_3str4iter5BytesENtNtNtB9_6traits12double_ended19DoubleEndedIterator9next_backCs2wCc12Mnjqg_5ropey.exit15, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph
   %i.j = ptrtoint ptr %i.b to i64
-  %2 = ptrtoint ptr %0 to i64
   %reass.sub = sub i64 %i.j, %2
   %.sroa.0.0 = add i64 %reass.sub, 1
   br label %_RNvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB5_9EnumerateNtNtNtBb_3str4iter5BytesENtNtNtB9_6traits12double_ended19DoubleEndedIterator9next_backCs2wCc12Mnjqg_5ropey.exit
@@ -1104,6 +1106,7 @@ _RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5sl
   %i.ec = icmp ule i64 %.sroa.0.0.i.i.i, %i.dc
   tail call void @llvm.assume(i1 %i.ec)
   %i.ed = and i64 %i.dg, 576460752303423484       ; 3 uses
+  %3 = getelementptr inbounds nuw [16 x i8], ptr %i.de, i64 %i.ed ; 3 uses
   %.not.i187.i = icmp eq i64 %i.ed, 0
   br i1 %.not.i187.i, label %._crit_edge192.i, label %.lr.ph191.i
 
@@ -1154,7 +1157,6 @@ bb.i:                                             ; preds = %._crit_edge.i
 
 ._crit_edge192.i:                                 ; preds = %.lr.ph191.i, %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterhENCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBb_9core_arch3x867___m128iEs_0ENtNtNtB9_6traits8iterator8Iterator5countCs2wCc12Mnjqg_5ropey.exit.i
   %.sroa.01.0.i.lcssa.i = phi i64 [ %.sroa.0.0.i.i.i, %_RNvXs1_NtNtNtCskKLDkoKarTP_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterhENCINvNtCsk17MtNlfUKQ_11str_indices5chars10count_implNtNtNtBb_9core_arch3x867___m128iEs_0ENtNtNtB9_6traits8iterator8Iterator5countCs2wCc12Mnjqg_5ropey.exit.i ], [ %i.ic, %.lr.ph191.i ]
-  %3 = getelementptr inbounds nuw [16 x i8], ptr %i.de, i64 %i.ed ; 3 uses
   %i.fa = shl i64 %i.dg, 4
   %.idx.i = and i64 %i.fa, 48                     ; 3 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %3, i64 %.idx.i

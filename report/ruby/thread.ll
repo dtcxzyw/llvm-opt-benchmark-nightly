@@ -202,12 +202,12 @@ declare ptr @rb_vm_ep_local_ep(ptr noundef) local_unnamed_addr #4
 define dso_local noundef i64 @rb_thread_create(ptr noundef nonnull %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.thread_create_params, align 8 ; 8 uses
+  %3 = ptrtoint ptr %1 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
   store i32 3, ptr %2, align 8, !tbaa !248
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 4
   store i32 0, ptr %i.a, align 4
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %3 = ptrtoint ptr %1 to i64
   store i64 %3, ptr %i.b, align 8, !tbaa !250
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 32
@@ -610,10 +610,10 @@ rb_native_mutex_unlock.exit.i:                    ; preds = %ccan_list_pop_.exit
   br i1 %.not11.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %rb_native_mutex_unlock.exit.i
+  %4 = ptrtoint ptr %i.cc to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   store i32 3, ptr %3, align 8, !tbaa !248
   store i32 0, ptr %i.l, align 4
-  %4 = ptrtoint ptr %i.cc to i64
   store i64 %4, ptr %i.m, align 8, !tbaa !250
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.n, i8 0, i64 16, i1 false)
   store ptr %i.ca, ptr %i.o, align 8, !tbaa !251
@@ -1016,11 +1016,13 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
 ; Function Attrs: nounwind sspstrong uwtable
 define hidden void @rb_threadptr_interrupt_exec(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
+  %4 = ptrtoint ptr %1 to i64
+  %5 = ptrtoint ptr %2 to i64
   %i.a = tail call noalias nonnull dereferenceable(40) ptr @ruby_xmalloc(i64 noundef 40) #50 ; 8 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr %1, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !52
+  store i64 %4, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !52
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store ptr %2, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !52
+  store i64 %5, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !52
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   store i32 %3, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !7
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 36
@@ -1077,11 +1079,13 @@ bb.a:
   %i.a = getelementptr i8, ptr %0, i64 320
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !230  ; 6 uses
   %i.c = or i32 %3, 2
+  %4 = ptrtoint ptr %1 to i64
+  %5 = ptrtoint ptr %2 to i64
   %i.d = tail call noalias nonnull dereferenceable(40) ptr @ruby_xmalloc(i64 noundef 40) #50 ; 8 uses
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store ptr %1, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !52
+  store i64 %4, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !52
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  store ptr %2, ptr %.sroa.3.0..sroa_idx.i, align 8, !tbaa !52
+  store i64 %5, ptr %.sroa.3.0..sroa_idx.i, align 8, !tbaa !52
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   store i32 %i.c, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !7
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 36

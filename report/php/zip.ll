@@ -202,6 +202,7 @@ bb.a:
   store ptr %i.b, ptr %i.e, align 8, !tbaa !79
   %i.f = call i64 @time(ptr noundef null) #14
   %i.g = trunc i64 %i.f to i32                    ; 4 uses
+  %10 = ptrtoint ptr %0 to i64                    ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 316
   %i.i = load i16, ptr %i.h, align 4              ; 3 uses
   %i.j = and i16 %i.i, 256
@@ -320,7 +321,7 @@ zend_hash_update_mem.exit129:                     ; preds = %bb.m, %bb.n
   %.sroa.31.0..sroa_idx194 = getelementptr inbounds nuw i8, ptr %i.au, i64 96
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %.sroa.31.0..sroa_idx194, i8 0, i64 24, i1 false)
   %.sroa.31195.0..sroa_idx200 = getelementptr inbounds nuw i8, ptr %i.au, i64 120
-  store ptr %0, ptr %.sroa.31195.0..sroa_idx200, align 1
+  store i64 %10, ptr %.sroa.31195.0..sroa_idx200, align 1
   %.sroa.32.0..sroa_idx204 = getelementptr inbounds nuw i8, ptr %i.au, i64 128
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(18) %.sroa.32.0..sroa_idx204, i8 0, i64 18, i1 false)
   %.sroa.32205.0..sroa_idx210 = getelementptr inbounds nuw i8, ptr %i.au, i64 146
@@ -477,7 +478,7 @@ zend_hash_update_mem.exit127:                     ; preds = %bb.ad, %bb.ae
   %.sroa.31.0..sroa_idx193 = getelementptr inbounds nuw i8, ptr %i.cw, i64 96
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %.sroa.31.0..sroa_idx193, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.31, i64 24, i1 false)
   %.sroa.31195.0..sroa_idx198 = getelementptr inbounds nuw i8, ptr %i.cw, i64 120
-  store ptr %0, ptr %.sroa.31195.0..sroa_idx198, align 1
+  store i64 %10, ptr %.sroa.31195.0..sroa_idx198, align 1
   %.sroa.32.0..sroa_idx203 = getelementptr inbounds nuw i8, ptr %i.cw, i64 128
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(18) %.sroa.32.0..sroa_idx203, ptr noundef nonnull align 8 dereferenceable(18) %.sroa.32, i64 18, i1 false)
   %.sroa.32205.0..sroa_idx208 = getelementptr inbounds nuw i8, ptr %i.cw, i64 146
@@ -597,7 +598,7 @@ zend_hash_add_mem.exit:                           ; preds = %bb.ao, %bb.ap
   %.sroa.31.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.eb, i64 96
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %.sroa.31.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.31, i64 24, i1 false)
   %.sroa.31195.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.eb, i64 120
-  store ptr %0, ptr %.sroa.31195.0..sroa_idx, align 1
+  store i64 %10, ptr %.sroa.31195.0..sroa_idx, align 1
   %.sroa.32.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.eb, i64 128
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(18) %.sroa.32.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(18) %.sroa.32, i64 18, i1 false)
   %.sroa.32205.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.eb, i64 146
@@ -665,7 +666,7 @@ zend_hash_update_mem.exit:                        ; preds = %bb.au, %bb.av
   %.sroa.31.0..sroa_idx192 = getelementptr inbounds nuw i8, ptr %i.eo, i64 96
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %.sroa.31.0..sroa_idx192, i8 0, i64 24, i1 false)
   %.sroa.31195.0..sroa_idx196 = getelementptr inbounds nuw i8, ptr %i.eo, i64 120
-  store ptr %0, ptr %.sroa.31195.0..sroa_idx196, align 1
+  store i64 %10, ptr %.sroa.31195.0..sroa_idx196, align 1
   %.sroa.32.0..sroa_idx202 = getelementptr inbounds nuw i8, ptr %i.eo, i64 128
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(18) %.sroa.32.0..sroa_idx202, i8 0, i64 18, i1 false)
   %.sroa.32205.0..sroa_idx206 = getelementptr inbounds nuw i8, ptr %i.eo, i64 146

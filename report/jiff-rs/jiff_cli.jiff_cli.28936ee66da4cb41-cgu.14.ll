@@ -204,7 +204,7 @@ bb.a:
   %i.f = alloca [16 x i8], align 8                ; 5 uses
   %i.g = alloca [8 x i8], align 8                 ; 4 uses
   %i.h = alloca [32 x i8], align 8                ; 4 uses
-  %i.i = alloca [8 x i8], align 8                 ; 5 uses
+  %i.i = alloca [8 x i8], align 8                 ; 4 uses
   %i.j = alloca [120 x i8], align 8               ; 6 uses
   %i.k = alloca [16 x i8], align 8                ; 5 uses
   %i.l = alloca [24 x i8], align 8                ; 2 uses
@@ -226,7 +226,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.experimental.noalias.scope.decl(metadata !112)
   store i64 0, ptr %i.o, align 8, !alias.scope !109, !noalias !112
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  store ptr inttoptr (i64 1 to ptr), ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !109, !noalias !112
+  store i64 1, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !109, !noalias !112
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   store i64 0, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !109, !noalias !112
   %i.s = load i64, ptr %i.c, align 8, !range !10, !alias.scope !114, !noalias !109, !noundef !6
@@ -330,9 +330,10 @@ bb.l:                                             ; preds = %bb.f, %bb.i, %bb.e,
   %i.bu = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   store i64 %i.x, ptr %i.bu, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
-  store ptr %i.m, ptr %i.k, align 8
+  %0 = ptrtoint ptr %i.m to i64
+  store i64 %0, ptr %i.k, align 8
   %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 8
-  store ptr @_RNvXs1i_NtCs3oUPovFnLWP_4core3fmtReNtB6_7Display3fmtCs3tZ2SXJA1qv_8jiff_cli, ptr %.sroa.46.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs1i_NtCs3oUPovFnLWP_4core3fmtReNtB6_7Display3fmtCs3tZ2SXJA1qv_8jiff_cli to i64), ptr %.sroa.46.0..sroa_idx, align 8
   invoke void @_RNvNvNtCs1xwejQucwHj_5alloc3fmt6format12format_inner(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.l, ptr noundef nonnull @7, ptr noundef nonnull %i.k)
           to label %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionReE11map_or_elseNtNtCs1xwejQucwHj_5alloc6string6StringNCNvNtB12_3fmt6format0NvYeNtNtB12_6borrow7ToOwned8to_ownedECs3tZ2SXJA1qv_8jiff_cli.exit unwind label %bb.n
 
@@ -418,15 +419,16 @@ bb.z:                                             ; preds = %bb.w
 
 bb.aa:                                            ; preds = %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
+  %1 = ptrtoint ptr %i.i to i64                   ; 2 uses
   br i1 %i.cc, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store ptr @_RNvNvNtNtCsaL1QbXo9JQH_3std2io5stdio6stderr8INSTANCE, ptr %i.e, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  store ptr %i.i, ptr %i.d, align 8
+  store i64 %1, ptr %i.d, align 8
   %.sroa.415.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store ptr @_RNvXs2_NtCs8WPnInWCYsb_6anyhow5errorNtB7_5ErrorNtNtCs3oUPovFnLWP_4core3fmt7Display3fmt, ptr %.sroa.415.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs2_NtCs8WPnInWCYsb_6anyhow5errorNtB7_5ErrorNtNtCs3oUPovFnLWP_4core3fmt7Display3fmt to i64), ptr %.sroa.415.0..sroa_idx, align 8
   %i.cd = invoke noundef ptr @_RNvXso_NtNtCsaL1QbXo9JQH_3std2io5stdioNtB5_6StderrNtNtNtCs3oUPovFnLWP_4core2io5write5Write9write_fmt(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull @9, ptr noundef nonnull %i.d)
           to label %bb.ad unwind label %bb.y      ; 2 uses
 
@@ -434,9 +436,9 @@ bb.ac:                                            ; preds = %bb.aa
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   store ptr @_RNvNvNtNtCsaL1QbXo9JQH_3std2io5stdio6stderr8INSTANCE, ptr %i.g, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  store ptr %i.i, ptr %i.f, align 8
+  store i64 %1, ptr %i.f, align 8
   %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  store ptr @_RNvXs3_NtCs8WPnInWCYsb_6anyhow5errorNtB7_5ErrorNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt, ptr %.sroa.411.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs3_NtCs8WPnInWCYsb_6anyhow5errorNtB7_5ErrorNtNtCs3oUPovFnLWP_4core3fmt5Debug3fmt to i64), ptr %.sroa.411.0..sroa_idx, align 8
   %i.ce = invoke noundef ptr @_RNvXso_NtNtCsaL1QbXo9JQH_3std2io5stdioNtB5_6StderrNtNtNtCs3oUPovFnLWP_4core2io5write5Write9write_fmt(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull @12, ptr noundef nonnull %i.f)
           to label %bb.aj unwind label %bb.y      ; 2 uses
 

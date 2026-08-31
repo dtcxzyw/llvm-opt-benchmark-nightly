@@ -202,14 +202,15 @@ bb.bw:                                            ; preds = %_ZNKSt6vectorIfSaIf
   %i.uo = fmul float %i.ue, 2.000000e+00
   %i.up = fmul float %i.uo, %i.ui
   %i.uq = fdiv float %i.up, %.sink487.i
+  %7 = bitcast float %i.uq to i32
   %i.ur = fmul float %i.ue, %i.ui
   %i.us = fcmp ugt float %i.ur, 0.000000e+00
-  %.0285.i = select i1 %i.us, float %i.uq, float 0.000000e+00 ; 2 uses
+  %spec.select.i = select i1 %i.us, i32 %7, i32 0 ; 2 uses
   %.not.i190.i = icmp eq ptr %i.ub, %i.ua
   br i1 %.not.i190.i, label %bb.by, label %bb.bx
 
 bb.bx:                                            ; preds = %.lr.ph385.i
-  store float %.0285.i, ptr %i.ub, align 4, !tbaa !42
+  store i32 %spec.select.i, ptr %i.ub, align 4, !tbaa !42
   %i.ut = getelementptr inbounds nuw i8, ptr %i.ub, i64 4 ; 2 uses
   store ptr %i.ut, ptr %i.nt, align 8, !tbaa !44
   br label %_ZNSt6vectorIfSaIfEE9push_backERKf.exit199.i
@@ -244,7 +245,7 @@ _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i191.i: ; preds = %bb.by
 
 .noexc198.i:                                      ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i191.i
   %i.vg = getelementptr inbounds i8, ptr %i.vf, i64 %i.ux ; 2 uses
-  store float %.0285.i, ptr %i.vg, align 4, !tbaa !42
+  store i32 %spec.select.i, ptr %i.vg, align 4, !tbaa !42
   %i.vh = icmp sgt i64 %i.ux, 0
   br i1 %i.vh, label %bb.ca, label %_ZNSt6vectorIfSaIfEE11_S_relocateEPfS2_S2_RS0_.exit16.i.i194.i
 

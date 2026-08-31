@@ -205,11 +205,12 @@ bb.j:                                             ; preds = %_ZN11hb_vector_tIcL
 bb.k:                                             ; preds = %bb.j, %bb.a
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !12
-  %.0.copyload = load ptr, ptr %i.am, align 1
+  %.sroa.0.0.copyload = load i64, ptr %i.am, align 1
+  %1 = inttoptr i64 %.sroa.0.0.copyload to ptr
   br label %.thread
 
 .thread:                                          ; preds = %bb.b, %bb.i, %bb.k
-  %.1 = phi ptr [ %.0.copyload, %bb.k ], [ null, %bb.i ], [ null, %bb.b ]
+  %.1 = phi ptr [ %1, %bb.k ], [ null, %bb.i ], [ null, %bb.b ]
   ret ptr %.1
 }
 
@@ -612,16 +613,17 @@ bb.e:                                             ; preds = %bb.c
 _ZN17hb_vector_paint_t12current_bodyEv.exit:      ; preds = %bb.d, %bb.e
   %.0.i.i.i = phi ptr [ @_hb_CrapPool, %bb.d ], [ %i.h, %bb.e ] ; 2 uses
   %i.i = tail call noundef zeroext i1 @_ZN15hb_vector_buf_t10append_strEPKc(ptr noundef nonnull align 8 dereferenceable(20) %.0.i.i.i, ptr noundef nonnull @.str.32) ; 0 uses
+  %4 = ptrtoint ptr %.0.i.i.i to i64
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 192
   %i.k = load i32, ptr %i.j, align 8, !tbaa !459
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 44
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 248 ; 2 uses
-  store ptr %.0.i.i.i, ptr %i.m, align 8, !tbaa !460
+  store i64 %4, ptr %i.m, align 8, !tbaa !460
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 256
   store i32 %i.k, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !74
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 260
-  %4 = load <2 x float>, ptr %i.l, align 4, !tbaa !461
-  store <2 x float> %4, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !461
+  %5 = load <2 x i32>, ptr %i.l, align 4, !tbaa !461
+  store <2 x i32> %5, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !461
   store ptr %i.m, ptr %2, align 8, !tbaa !458
   %i.n = tail call noundef ptr @_Z33hb_vector_pdf_path_draw_funcs_getv() #12
   br label %bb.f

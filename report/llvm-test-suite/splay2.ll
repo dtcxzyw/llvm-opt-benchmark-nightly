@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = tail call ptr @CHsplay(ptr noundef nonnull %0, ptr noundef nonnull byval(%struct.key) align 8 %1) ; 0 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !22     ; 3 uses
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !33
+  %.sroa.3.0.copyload = load i64, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !33
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !20   ; 3 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !22
@@ -215,6 +215,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   tail call void @free(ptr noundef nonnull %i.d) #15
+  %2 = inttoptr i64 %.sroa.3.0.copyload to ptr
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.a
@@ -222,7 +223,7 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  %.0 = phi ptr [ %.sroa.3.0.copyload, %bb.d ], [ null, %bb.e ]
+  %.0 = phi ptr [ %2, %bb.d ], [ null, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #15
   ret ptr %.0
 }

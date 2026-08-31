@@ -202,7 +202,8 @@ _ZNSt10shared_ptrIN16OpenColorIO_v2_515DynamicPropertyEEC2INS0_34DynamicProperty
           to label %bb.dr unwind label %bb.hx
 
 bb.dr:                                            ; preds = %_ZNSt10shared_ptrIN16OpenColorIO_v2_515DynamicPropertyEEC2INS0_34DynamicPropertyGradingHueCurveImplEvEERKS_IT_E.exit
-  %.val = load ptr, ptr %110, align 16, !tbaa !20 ; 7 uses
+  %.val = load ptr, ptr %110, align 16, !tbaa !20
+  %114 = ptrtoint ptr %.val to i64                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %77) #19
   %i.tt = getelementptr inbounds nuw i8, ptr %77, i64 16 ; 3 uses
   %i.tu = getelementptr inbounds nuw i8, ptr %77, i64 24
@@ -241,7 +242,7 @@ bb.dv:                                            ; preds = %bb.dr
   %.sroa.525.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.tx, i64 8
   store i64 0, ptr %.sroa.525.0..sroa_idx.i, align 8
   %.sroa.626.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.tx, i64 16
-  store ptr %.val, ptr %.sroa.626.0..sroa_idx.i, align 16
+  store i64 %114, ptr %.sroa.626.0..sroa_idx.i, align 16
   store ptr %i.tx, ptr %78, align 8, !tbaa !70
   store ptr @_ZNSt17_Function_handlerIFPKivESt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHueCurveImplEKFS1_vEPS5_EEE9_M_invokeERKSt9_Any_data, ptr %i.ud, align 8, !tbaa !72
   store ptr @_ZNSt17_Function_handlerIFPKivESt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHueCurveImplEKFS1_vEPS5_EEE10_M_managerERSt9_Any_dataRKSC_St18_Manager_operation, ptr %i.tw, align 8, !tbaa !69
@@ -313,7 +314,7 @@ _ZNSt8functionIFivEEC2IRSt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHu
   %.sroa.530.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.un, i64 8
   store i64 0, ptr %.sroa.530.0..sroa_idx.i, align 8
   %.sroa.631.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.un, i64 16
-  store ptr %.val, ptr %.sroa.631.0..sroa_idx.i, align 16
+  store i64 %114, ptr %.sroa.631.0..sroa_idx.i, align 16
   store ptr %i.un, ptr %79, align 8, !tbaa !74
   store ptr @_ZNSt17_Function_handlerIFivESt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHueCurveImplEKFivEPS3_EEE9_M_invokeERKSt9_Any_data, ptr %i.ut, align 8, !tbaa !66
   store ptr @_ZNSt17_Function_handlerIFivESt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHueCurveImplEKFivEPS3_EEE10_M_managerERSt9_Any_dataRKSA_St18_Manager_operation, ptr %i.um, align 8, !tbaa !69
@@ -347,7 +348,7 @@ bb.eh:                                            ; preds = %_ZNSt8functionIFivE
   %.sroa.520.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.uv, i64 8
   store i64 0, ptr %.sroa.520.0..sroa_idx.i, align 8
   %.sroa.621.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.uv, i64 16
-  store ptr %.val, ptr %.sroa.621.0..sroa_idx.i, align 16
+  store i64 %114, ptr %.sroa.621.0..sroa_idx.i, align 16
   store ptr %i.uv, ptr %80, align 8, !tbaa !76
   store ptr @_ZNSt17_Function_handlerIFPKfvESt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHueCurveImplEKFS1_vEPS5_EEE9_M_invokeERKSt9_Any_data, ptr %i.vb, align 8, !tbaa !78
   store ptr @_ZNSt17_Function_handlerIFPKfvESt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHueCurveImplEKFS1_vEPS5_EEE10_M_managerERSt9_Any_dataRKSC_St18_Manager_operation, ptr %i.uu, align 8, !tbaa !69
@@ -431,7 +432,7 @@ bb.er:                                            ; preds = %_ZNSt14_Function_ba
   %.sroa.510.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.vp, i64 8
   store i64 0, ptr %.sroa.510.0..sroa_idx.i, align 8
   %.sroa.611.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.vp, i64 16
-  store ptr %.val, ptr %.sroa.611.0..sroa_idx.i, align 16
+  store i64 %114, ptr %.sroa.611.0..sroa_idx.i, align 16
   store ptr %i.vp, ptr %82, align 8, !tbaa !70
   store ptr @_ZNSt17_Function_handlerIFPKivESt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHueCurveImplEKFS1_vEPS5_EEE9_M_invokeERKSt9_Any_data, ptr %i.vv, align 8, !tbaa !72
   store ptr @_ZNSt17_Function_handlerIFPKivESt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHueCurveImplEKFS1_vEPS5_EEE10_M_managerERSt9_Any_dataRKSC_St18_Manager_operation, ptr %i.vo, align 8, !tbaa !69
@@ -503,7 +504,7 @@ _ZNSt8functionIFivEEC2IRSt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHu
   %.sroa.515.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.wf, i64 8
   store i64 0, ptr %.sroa.515.0..sroa_idx.i, align 8
   %.sroa.616.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.wf, i64 16
-  store ptr %.val, ptr %.sroa.616.0..sroa_idx.i, align 16
+  store i64 %114, ptr %.sroa.616.0..sroa_idx.i, align 16
   store ptr %i.wf, ptr %83, align 8, !tbaa !74
   store ptr @_ZNSt17_Function_handlerIFivESt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHueCurveImplEKFivEPS3_EEE9_M_invokeERKSt9_Any_data, ptr %i.wl, align 8, !tbaa !66
   store ptr @_ZNSt17_Function_handlerIFivESt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHueCurveImplEKFivEPS3_EEE10_M_managerERSt9_Any_dataRKSA_St18_Manager_operation, ptr %i.we, align 8, !tbaa !69
@@ -537,7 +538,7 @@ bb.fd:                                            ; preds = %_ZNSt8functionIFivE
   %.sroa.55.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.wn, i64 8
   store i64 0, ptr %.sroa.55.0..sroa_idx.i, align 8
   %.sroa.66.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.wn, i64 16
-  store ptr %.val, ptr %.sroa.66.0..sroa_idx.i, align 16
+  store i64 %114, ptr %.sroa.66.0..sroa_idx.i, align 16
   store ptr %i.wn, ptr %84, align 8, !tbaa !76
   store ptr @_ZNSt17_Function_handlerIFPKfvESt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHueCurveImplEKFS1_vEPS5_EEE9_M_invokeERKSt9_Any_data, ptr %i.wt, align 8, !tbaa !78
   store ptr @_ZNSt17_Function_handlerIFPKfvESt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHueCurveImplEKFS1_vEPS5_EEE10_M_managerERSt9_Any_dataRKSC_St18_Manager_operation, ptr %i.wm, align 8, !tbaa !69
@@ -613,7 +614,7 @@ _ZNSt8functionIFbvEEC2IRSt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHu
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.xe, i64 8
   store i64 0, ptr %.sroa.5.0..sroa_idx.i, align 8
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.xe, i64 16
-  store ptr %.val, ptr %.sroa.6.0..sroa_idx.i, align 16
+  store i64 %114, ptr %.sroa.6.0..sroa_idx.i, align 16
   store ptr %i.xe, ptr %85, align 8, !tbaa !80
   store ptr @_ZNSt17_Function_handlerIFbvESt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHueCurveImplEKFbvEPS3_EEE9_M_invokeERKSt9_Any_data, ptr %i.xk, align 8, !tbaa !82
   store ptr @_ZNSt17_Function_handlerIFbvESt5_BindIFMN16OpenColorIO_v2_534DynamicPropertyGradingHueCurveImplEKFbvEPS3_EEE10_M_managerERSt9_Any_dataRKSA_St18_Manager_operation, ptr %i.xd, align 8, !tbaa !69

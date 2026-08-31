@@ -204,6 +204,7 @@ bb.j:                                             ; preds = %bb.h
 lv_obj_get_style_prop.exit83:                     ; preds = %bb.i, %bb.j
   %.sroa.0.0.i81 = phi ptr [ %.sroa.0.0.copyload.i80, %bb.i ], [ %i.y, %bb.j ] ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
+  %9 = ptrtoint ptr %.sroa.0.0.i81 to i64         ; 2 uses
   store i16 %i.l, ptr %i.e, align 4, !tbaa !61
   %i.z = tail call fastcc ptr @get_trans_style(ptr noundef nonnull %0, i32 noundef %1)
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !50
@@ -218,7 +219,6 @@ lv_obj_get_style_prop.exit83:                     ; preds = %bb.i, %bb.j
   br i1 %i.ag, label %bb.k, label %bb.p
 
 bb.k:                                             ; preds = %lv_obj_get_style_prop.exit83
-  %9 = ptrtoint ptr %.sroa.0.0.i81 to i64         ; 2 uses
   %i.ah = and i64 %9, 4294967295
   %i.ai = icmp eq i64 %i.ah, 32767                ; 2 uses
   %i.aj = ptrtoint ptr %.sroa.0.0.i75 to i64      ; 2 uses
@@ -621,7 +621,8 @@ lv_obj_get_style_prop.exit:                       ; preds = %bb.c, %bb.d
   %.sroa.0.0.i = phi ptr [ %.sroa.0.0.copyload.i, %bb.c ], [ %i.m, %bb.d ]
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #10
-  store ptr %.sroa.0.0.i, ptr %i.n, align 8, !tbaa !38
+  %2 = ptrtoint ptr %.sroa.0.0.i to i64
+  store i64 %2, ptr %i.n, align 8, !tbaa !38
   %i.o = load i8, ptr %i.f, align 8, !tbaa !55    ; 2 uses
   store i8 0, ptr %i.f, align 8, !tbaa !55
   %i.p = load ptr, ptr %i.a, align 8, !tbaa !52

@@ -205,7 +205,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g, %bb.h
   %.sroa.3.0.i.ph.i = phi i64 [ %i.aw, %bb.h ], [ %.sroa.4.126.i.i, %bb.g ]
-  store ptr %1, ptr %0, align 8
+  %6 = ptrtoint ptr %1 to i64
+  store i64 %6, ptr %0, align 8
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.3.0.i.ph.i, ptr %.sroa.43.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -232,7 +233,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 0, ptr %i.a, align 8, !alias.scope !89
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  store ptr inttoptr (i64 8 to ptr), ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !89
+  store i64 8, ptr %.sroa.4.0..sroa_idx.i, align 8, !alias.scope !89
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   store i64 0, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !89
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 3 uses
@@ -635,14 +636,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   store ptr %0, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 3 uses
   store ptr %1, ptr %i.c, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store ptr %i.b, ptr %i.a, align 8
+  %2 = ptrtoint ptr %i.b to i64
+  store i64 %2, ptr %i.a, align 8
   %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store ptr @_RNvXsn_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorEL_ENtNtBM_3fmt5Debug3fmtCs4VV2qO6j7hb_12simple_write, ptr %.sroa.46.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXsn_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorEL_ENtNtBM_3fmt5Debug3fmtCs4VV2qO6j7hb_12simple_write to i64), ptr %.sroa.46.0..sroa_idx, align 8
   invoke void @_RNvNtNtCsG258MDvU3F_3std2io5stdio23attempt_print_to_stderr(ptr noundef nonnull @25, ptr noundef nonnull %i.a)
           to label %bb.e unwind label %bb.d
 

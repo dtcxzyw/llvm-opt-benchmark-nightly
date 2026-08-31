@@ -129,20 +129,23 @@ declare void @_Z36util_deallocEpsilonSensitiveHeapFlagPi(ptr noundef) local_unna
 define void @_Z30freeAllMemoryIfAnyAllocsFailed11PauliStrSum(ptr nofree noundef readonly byval(%struct.PauliStrSum) align 8 captures(none) %0) local_unnamed_addr #7 {
 bb.a:
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !17 ; 2 uses
+  %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !17
   %.sroa.32.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.32.0.copyload = load ptr, ptr %.sroa.32.0..sroa_idx, align 8, !tbaa !18 ; 2 uses
+  %.sroa.32.0.copyload = load i64, ptr %.sroa.32.0..sroa_idx, align 8, !tbaa !18
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %.sroa.43.0.copyload = load ptr, ptr %.sroa.43.0..sroa_idx, align 8, !tbaa !19 ; 2 uses
-  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedP8PauliStr(ptr noundef %.sroa.2.0.copyload)
+  %.sroa.43.0.copyload = load i64, ptr %.sroa.43.0..sroa_idx, align 8, !tbaa !19
+  %1 = inttoptr i64 %.sroa.2.0.copyload to ptr    ; 2 uses
+  %2 = inttoptr i64 %.sroa.32.0.copyload to ptr   ; 2 uses
+  %3 = inttoptr i64 %.sroa.43.0.copyload to ptr   ; 2 uses
+  %i.a = tail call noundef zeroext i1 @_Z15mem_isAllocatedP8PauliStr(ptr noundef %1)
   br i1 %i.a, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %.sroa.32.0.copyload)
+  %i.b = tail call noundef zeroext i1 @_Z15mem_isAllocatedPSt7complexIdE(ptr noundef %2)
   br i1 %i.b, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = tail call noundef zeroext i1 @_Z15mem_isAllocatedPi(ptr noundef %.sroa.43.0.copyload)
+  %i.c = tail call noundef zeroext i1 @_Z15mem_isAllocatedPi(ptr noundef %3)
   %i.d = xor i1 %i.c, true
   br label %bb.d
 
@@ -159,9 +162,9 @@ _Z25didAnyAllocsFailOnAnyNode11PauliStrSum.exit:  ; preds = %bb.d
   br i1 %i.e, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.split, %_Z25didAnyAllocsFailOnAnyNode11PauliStrSum.exit
-  tail call void @_Z23cpu_deallocPauliStringsP8PauliStr(ptr noundef %.sroa.2.0.copyload)
-  tail call void @_Z16cpu_deallocArrayPSt7complexIdE(ptr noundef %.sroa.32.0.copyload)
-  tail call void @_Z36util_deallocEpsilonSensitiveHeapFlagPi(ptr noundef %.sroa.43.0.copyload)
+  tail call void @_Z23cpu_deallocPauliStringsP8PauliStr(ptr noundef %1)
+  tail call void @_Z16cpu_deallocArrayPSt7complexIdE(ptr noundef %2)
+  tail call void @_Z36util_deallocEpsilonSensitiveHeapFlagPi(ptr noundef %3)
   br label %bb.f
 
 bb.f:                                             ; preds = %.split, %_Z25didAnyAllocsFailOnAnyNode11PauliStrSum.exit, %bb.e
@@ -564,14 +567,17 @@ define void @destroyPauliStrSum(ptr nofree noundef readonly byval(%struct.PauliS
 bb.a:
   tail call void @_Z26validate_pauliStrSumFields11PauliStrSumPKc(ptr noundef nonnull byval(%struct.PauliStrSum) align 8 %0, ptr noundef nonnull @__func__.destroyPauliStrSum)
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !17
+  %.sroa.2.0.copyload = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !17
   %.sroa.32.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.32.0.copyload = load ptr, ptr %.sroa.32.0..sroa_idx, align 8, !tbaa !18
+  %.sroa.32.0.copyload = load i64, ptr %.sroa.32.0..sroa_idx, align 8, !tbaa !18
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %.sroa.43.0.copyload = load ptr, ptr %.sroa.43.0..sroa_idx, align 8, !tbaa !19
-  tail call void @_Z23cpu_deallocPauliStringsP8PauliStr(ptr noundef %.sroa.2.0.copyload)
-  tail call void @_Z16cpu_deallocArrayPSt7complexIdE(ptr noundef %.sroa.32.0.copyload)
-  tail call void @_Z36util_deallocEpsilonSensitiveHeapFlagPi(ptr noundef %.sroa.43.0.copyload)
+  %.sroa.43.0.copyload = load i64, ptr %.sroa.43.0..sroa_idx, align 8, !tbaa !19
+  %1 = inttoptr i64 %.sroa.2.0.copyload to ptr
+  %2 = inttoptr i64 %.sroa.32.0.copyload to ptr
+  %3 = inttoptr i64 %.sroa.43.0.copyload to ptr
+  tail call void @_Z23cpu_deallocPauliStringsP8PauliStr(ptr noundef %1)
+  tail call void @_Z16cpu_deallocArrayPSt7complexIdE(ptr noundef %2)
+  tail call void @_Z36util_deallocEpsilonSensitiveHeapFlagPi(ptr noundef %3)
   ret void
 }
 

@@ -88,9 +88,10 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i32 %i.l, ptr %i.c, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store ptr %i.c, ptr %i.b, align 8
+  %2 = ptrtoint ptr %i.c to i64
+  store i64 %2, ptr %i.b, align 8
   %.sroa.42.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr @_RNvXs1_NtCsifPj74NEIss_9getrandom5errorNtB5_5ErrorNtNtCskKLDkoKarTP_4core3fmt7Display3fmt, ptr %.sroa.42.0..sroa_idx.i.i, align 8
+  store i64 ptrtoint (ptr @_RNvXs1_NtCsifPj74NEIss_9getrandom5errorNtB5_5ErrorNtNtCskKLDkoKarTP_4core3fmt7Display3fmt to i64), ptr %.sroa.42.0..sroa_idx.i.i, align 8
   call void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @11, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #20
   unreachable
 
@@ -493,9 +494,10 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i32 %i.g, ptr %i.c, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  store ptr %i.c, ptr %i.b, align 8
+  %1 = ptrtoint ptr %i.c to i64
+  store i64 %1, ptr %i.b, align 8
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr @_RNvXs1_NtCsifPj74NEIss_9getrandom5errorNtB5_5ErrorNtNtCskKLDkoKarTP_4core3fmt7Display3fmt, ptr %.sroa.44.0..sroa_idx, align 8
+  store i64 ptrtoint (ptr @_RNvXs1_NtCsifPj74NEIss_9getrandom5errorNtB5_5ErrorNtNtCskKLDkoKarTP_4core3fmt7Display3fmt to i64), ptr %.sroa.44.0..sroa_idx, align 8
   call void @_RNvNtCskKLDkoKarTP_4core9panicking9panic_fmt(ptr noundef nonnull @8, ptr noundef nonnull %i.b, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #20
   unreachable
 

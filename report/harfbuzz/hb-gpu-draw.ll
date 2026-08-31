@@ -205,12 +205,15 @@ bb.g:                                             ; preds = %_ZN11hb_vector_tIN2
   br label %_ZN17hb_lockable_set_tIN20hb_user_data_array_t19hb_user_data_item_tE10hb_mutex_tE6removeIP18hb_user_data_key_tEEvT_RS2_.exit
 
 bb.h:                                             ; preds = %bb.c, %bb.b
+  %6 = ptrtoint ptr %1 to i64
+  %7 = ptrtoint ptr %2 to i64
+  %8 = ptrtoint ptr %3 to i64
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store ptr %1, ptr %5, align 8, !tbaa !202
+  store i64 %6, ptr %5, align 8, !tbaa !202
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store ptr %2, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !157
+  store i64 %7, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !157
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 16
-  store ptr %3, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !157
+  store i64 %8, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !157
   %i.s = tail call noundef ptr @_ZN17hb_lockable_set_tIN20hb_user_data_array_t19hb_user_data_item_tE10hb_mutex_tE17replace_or_insertIS1_EEPS1_T_RS2_b(ptr noundef nonnull align 8 dereferenceable(16) %i.r, ptr noundef nonnull byval(%"struct.hb_user_data_array_t::hb_user_data_item_t") align 8 %5, ptr noundef nonnull align 8 dereferenceable(40) %0, i1 noundef zeroext %i.a)
   %i.t = icmp ne ptr %i.s, null
   br label %_ZN17hb_lockable_set_tIN20hb_user_data_array_t19hb_user_data_item_tE10hb_mutex_tE6removeIP18hb_user_data_key_tEEvT_RS2_.exit

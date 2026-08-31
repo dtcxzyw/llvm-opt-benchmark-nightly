@@ -107,7 +107,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph, %bb.m
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.m ] ; 5 uses
-  %.0197 = phi ptr [ null, %.lr.ph ], [ %.2, %bb.m ] ; 2 uses
+  %.sroa.0.0192 = phi i64 [ 0, %.lr.ph ], [ %.sroa.0.2, %bb.m ] ; 2 uses
   br i1 %i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -154,13 +154,11 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.bg = getelementptr inbounds [8 x i8], ptr @gemm_small_kernel_b0, i64 %i.bf
   %i.bh = load i64, ptr %i.bg, align 8, !tbaa !10
-  %18 = inttoptr i64 %i.bh to ptr
   br label %bb.l
 
 bb.j:                                             ; preds = %bb.h
   %i.bi = getelementptr inbounds [8 x i8], ptr @gemm_small_kernel, i64 %i.bf
   %i.bj = load i64, ptr %i.bi, align 8, !tbaa !10
-  %19 = inttoptr i64 %i.bj to ptr
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.g
@@ -171,7 +169,7 @@ bb.k:                                             ; preds = %bb.g
 bb.l:                                             ; preds = %bb.i, %bb.j, %bb.k
   %.0178 = phi i32 [ 196611, %bb.i ], [ 65539, %bb.j ], [ 3, %bb.k ]
   %.0160 = phi ptr [ null, %bb.i ], [ null, %bb.j ], [ %i.bl, %bb.k ] ; 2 uses
-  %.1 = phi ptr [ %18, %bb.i ], [ %19, %bb.j ], [ %.0197, %bb.k ] ; 2 uses
+  %.sroa.0.1 = phi i64 [ %i.bh, %bb.i ], [ %i.bj, %bb.j ], [ %.sroa.0.0192, %bb.k ] ; 3 uses
   %i.bm = getelementptr inbounds nuw [136 x i8], ptr %i.f, i64 %indvars.iv ; 12 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 48
   store i64 %.0184, ptr %i.bn, align 8, !tbaa !14
@@ -201,17 +199,21 @@ bb.l:                                             ; preds = %bb.i, %bb.j, %bb.k
   store ptr %i.cb, ptr %i.cc, align 8, !tbaa !23
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bm, i64 128
   store i32 %.0178, ptr %i.cd, align 8, !tbaa !24
-  %i.ce = getelementptr inbounds nuw i8, ptr %i.bm, i64 120
-  %.not192 = icmp eq ptr %.0160, null
-  %spec.store.select194 = select i1 %.not192, ptr %.1, ptr %.0160
-  store ptr %spec.store.select194, ptr %i.ce, align 8
+  %i.ce = getelementptr inbounds nuw i8, ptr %i.bm, i64 120 ; 2 uses
+  store ptr %.0160, ptr %i.ce, align 8, !tbaa !25
+  %.not188 = icmp eq ptr %.0160, null
+  br i1 %.not188, label %18, label %bb.m
+
+18:                                               ; preds = %bb.l
+  %19 = inttoptr i64 %.sroa.0.1 to ptr
+  store ptr %19, ptr %i.ce, align 8, !tbaa !25
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.l, %bb.f
-  %.2 = phi ptr [ %.0197, %bb.f ], [ %.1, %bb.l ]
+bb.m:                                             ; preds = %bb.l, %18, %bb.f
+  %.sroa.0.2 = phi i64 [ %.sroa.0.0192, %bb.f ], [ %.sroa.0.1, %bb.l ], [ %.sroa.0.1, %18 ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !25
+  br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !26
 
 ._crit_edge:                                      ; preds = %bb.m
   %i.cf = call i32 @dgemm_batch_thread(ptr noundef nonnull %i.f, i64 noundef %i.d) #5 ; 0 uses
@@ -305,6 +307,7 @@ attributes #6 = { nounwind allocsize(0) }
 !22 = !{!15, !13, i64 8}
 !23 = !{!15, !13, i64 16}
 !24 = !{!15, !5, i64 128}
-!25 = distinct !{!25, !26}
-!26 = !{!"llvm.loop.mustprogress"}
+!25 = !{!15, !13, i64 120}
+!26 = distinct !{!26, !27}
+!27 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

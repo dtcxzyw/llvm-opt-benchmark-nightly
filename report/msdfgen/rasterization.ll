@@ -202,11 +202,12 @@ bb.a:
   br i1 %or.cond.i, label %bb.b, label %_ZN7msdfgenL27multiDistanceSignCorrectionILi3EEEvNS_13BitmapSectionIfXT_EEERKNS_5ShapeERKNS_10ProjectionEfNS_8FillRuleE.exit
 
 bb.b:                                             ; preds = %bb.a
+  %.sroa.05.0.copyload = load i64, ptr %0, align 8, !tbaa !28
+  %6 = inttoptr i64 %.sroa.05.0.copyload to ptr
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !28
+  %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !29
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !27 ; 3 uses
-  %.sroa.05.0.copyload = load ptr, ptr %0, align 8, !tbaa !29
   %i.c = tail call noundef i32 @_ZNK7msdfgen5Shape19getYAxisOrientationEv(ptr noundef nonnull align 8 dereferenceable(25) %1)
   %.not.i.i = icmp eq i32 %.sroa.5.0.copyload, %i.c ; 2 uses
   %i.d = add nsw i32 %.sroa.3.0.copyload, -1      ; 2 uses
@@ -215,7 +216,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.8.0 = select i1 %.not.i.i, i32 %.sroa.4.0.copyload, i32 %i.f
   %narrow = select i1 %.not.i.i, i32 0, i32 %i.e
   %.sroa.0.0.idx = sext i32 %narrow to i64
-  %.sroa.0.0 = getelementptr inbounds [4 x i8], ptr %.sroa.05.0.copyload, i64 %.sroa.0.0.idx ; 2 uses
+  %.sroa.0.0 = getelementptr inbounds [4 x i8], ptr %6, i64 %.sroa.0.0.idx ; 2 uses
   %i.g = fadd float %3, %3                        ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
   call void @_ZN7msdfgen8ScanlineC1Ev(ptr noundef nonnull align 8 dereferenceable(28) %5)
@@ -618,11 +619,12 @@ bb.a:
   br i1 %or.cond.i, label %bb.b, label %_ZN7msdfgenL27multiDistanceSignCorrectionILi4EEEvNS_13BitmapSectionIfXT_EEERKNS_5ShapeERKNS_10ProjectionEfNS_8FillRuleE.exit
 
 bb.b:                                             ; preds = %bb.a
+  %.sroa.05.0.copyload = load i64, ptr %0, align 8, !tbaa !28
+  %6 = inttoptr i64 %.sroa.05.0.copyload to ptr
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
-  %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !28
+  %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !29
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !27 ; 3 uses
-  %.sroa.05.0.copyload = load ptr, ptr %0, align 8, !tbaa !29
   %i.c = tail call noundef i32 @_ZNK7msdfgen5Shape19getYAxisOrientationEv(ptr noundef nonnull align 8 dereferenceable(25) %1)
   %.not.i.i = icmp eq i32 %.sroa.5.0.copyload, %i.c ; 2 uses
   %i.d = add nsw i32 %.sroa.3.0.copyload, -1      ; 2 uses
@@ -631,7 +633,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.8.0 = select i1 %.not.i.i, i32 %.sroa.4.0.copyload, i32 %i.f
   %narrow = select i1 %.not.i.i, i32 0, i32 %i.e
   %.sroa.0.0.idx = sext i32 %narrow to i64
-  %.sroa.0.0 = getelementptr inbounds [4 x i8], ptr %.sroa.05.0.copyload, i64 %.sroa.0.0.idx ; 2 uses
+  %.sroa.0.0 = getelementptr inbounds [4 x i8], ptr %6, i64 %.sroa.0.0.idx ; 2 uses
   %i.g = fadd float %3, %3                        ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
   call void @_ZN7msdfgen8ScanlineC1Ev(ptr noundef nonnull align 8 dereferenceable(28) %5)
@@ -1034,8 +1036,8 @@ attributes #10 = { builtin allocsize(0) }
 !25 = distinct !{!25, !19}
 !26 = distinct !{!26, !19}
 !27 = !{!5, !5, i64 0}
-!28 = !{!12, !12, i64 0}
-!29 = !{!10, !10, i64 0}
+!28 = !{!10, !10, i64 0}
+!29 = !{!12, !12, i64 0}
 !30 = !{!6, !6, i64 0}
 !31 = distinct !{!31, !19}
 !32 = distinct !{!32, !19}
@@ -1048,5 +1050,5 @@ attributes #10 = { builtin allocsize(0) }
 !39 = distinct !{!39, !19, !34}
 !40 = distinct !{!40, !19}
 !41 = distinct !{!41, !19, !34}
-!42 = !{i64 0, i64 8, !29, i64 8, i64 4, !27, i64 12, i64 4, !27, i64 16, i64 4, !27, i64 20, i64 4, !28}
+!42 = !{i64 0, i64 8, !28, i64 8, i64 4, !27, i64 12, i64 4, !27, i64 16, i64 4, !27, i64 20, i64 4, !29}
 end_hunk_2

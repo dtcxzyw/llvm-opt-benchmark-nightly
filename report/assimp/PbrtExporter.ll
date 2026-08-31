@@ -205,9 +205,11 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 40
   store i64 0, ptr %i.g, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
-  store ptr %1, ptr %2, align 8
+  %3 = ptrtoint ptr %1 to i64
+  %4 = ptrtoint ptr %2 to i64
+  store i64 %3, ptr %2, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  store ptr %2, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %4, ptr %.sroa.4.0..sroa_idx, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   store ptr @"_ZNSt17_Function_handlerIFvP6aiNodeEZN6Assimp12PbrtExporter20WriteWorldDefinitionEvE3$_0E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation", ptr %i.h, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 24

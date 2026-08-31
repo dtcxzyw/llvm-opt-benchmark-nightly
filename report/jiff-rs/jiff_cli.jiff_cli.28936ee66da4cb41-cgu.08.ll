@@ -48,8 +48,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.j = extractvalue { ptr, i64 } %i.h, 0
   %i.k = extractvalue { ptr, i64 } %i.h, 1
+  %3 = ptrtoint ptr %i.j to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !8
-  store ptr %i.j, ptr %0, align 8, !alias.scope !14, !noalias !18
+  store i64 %3, ptr %0, align 8, !alias.scope !14, !noalias !18
   %.sroa.44.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.k, ptr %.sroa.44.0..sroa_idx.i, align 8, !alias.scope !14, !noalias !18
   call void @_RNvXs1_NtNtCs3oUPovFnLWP_4core5array5drainINtB5_5DrainlNCINvMNtNtB9_3ops9try_traitINtBX_17NeverShortCircuitReE10wrap_mut_1lNCINvMsb_NtCslhCKBzvegwQ_10regex_lite6stringNtB26_8Captures7extractKj1_E0E0ENtNtBZ_4drop4Drop4dropCs3tZ2SXJA1qv_8jiff_cli(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b)
@@ -101,16 +102,18 @@ bb.b:                                             ; preds = %.noexc, %bb.a
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtB4_5array5drain5DrainlNCINvMNtNtB4_3ops9try_traitINtB1a_17NeverShortCircuitReE10wrap_mut_1lNCINvMsb_NtCslhCKBzvegwQ_10regex_lite6stringNtB2k_8Captures7extractKj2_E0E0EECs3tZ2SXJA1qv_8jiff_cli.exit unwind label %bb.d
 
 bb.c:                                             ; preds = %.noexc
-  %3 = extractvalue { ptr, i64 } %i.h, 1
-  %4 = extractvalue { ptr, i64 } %i.h, 0
+  %3 = extractvalue { ptr, i64 } %i.h, 0
+  %4 = ptrtoint ptr %3 to i64
+  %5 = extractvalue { ptr, i64 } %i.h, 1
   %i.k = extractvalue { ptr, i64 } %i.i, 0
   %i.l = extractvalue { ptr, i64 } %i.i, 1
+  %6 = ptrtoint ptr %i.k to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !22
-  store ptr %4, ptr %0, align 8, !alias.scope !28, !noalias !32
+  store i64 %4, ptr %0, align 8, !alias.scope !28, !noalias !32
   %.sroa.46.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %3, ptr %.sroa.46.0..sroa_idx.i, align 8, !alias.scope !28, !noalias !32
+  store i64 %5, ptr %.sroa.46.0..sroa_idx.i, align 8, !alias.scope !28, !noalias !32
   %.sroa.57.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %i.k, ptr %.sroa.57.0..sroa_idx.i, align 8, !alias.scope !28, !noalias !32
+  store i64 %6, ptr %.sroa.57.0..sroa_idx.i, align 8, !alias.scope !28, !noalias !32
   %.sroa.68.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %i.l, ptr %.sroa.68.0..sroa_idx.i, align 8, !alias.scope !28, !noalias !32
   call void @_RNvXs1_NtNtCs3oUPovFnLWP_4core5array5drainINtB5_5DrainlNCINvMNtNtB9_3ops9try_traitINtBX_17NeverShortCircuitReE10wrap_mut_1lNCINvMsb_NtCslhCKBzvegwQ_10regex_lite6stringNtB26_8Captures7extractKj2_E0E0ENtNtBZ_4drop4Drop4dropCs3tZ2SXJA1qv_8jiff_cli(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b)
@@ -513,16 +516,16 @@ _RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thre
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !255
   br label %bb.ai
 
-_RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread6: ; preds = %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3tZ2SXJA1qv_8jiff_cli.exit12.i.i.us.i.i, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3tZ2SXJA1qv_8jiff_cli.exit14.i.i.us.i.i, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3tZ2SXJA1qv_8jiff_cli.exit16.i.i.us.i.i, %bb.n, %.split.us.i20.i.i, %.split.us.i10.i.i, %.loopexit42.i.i, %.split165.us.i.i, %bb.m, %bb.g
-  %.sroa.10.0.i.ph.pn = phi i64 [ %i.i, %.split165.us.i.i ], [ %i.gx, %.split.us.i20.i.i ], [ %.promoted156.i.i, %bb.g ], [ %i.i, %bb.m ], [ %i.di, %.loopexit42.i.i ], [ %i.em, %.split.us.i10.i.i ], [ %i.bh, %bb.n ], [ %i.bh, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3tZ2SXJA1qv_8jiff_cli.exit16.i.i.us.i.i ], [ %i.bh, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3tZ2SXJA1qv_8jiff_cli.exit14.i.i.us.i.i ], [ %i.bh, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3tZ2SXJA1qv_8jiff_cli.exit12.i.i.us.i.i ] ; 2 uses
+_RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread6: ; preds = %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3tZ2SXJA1qv_8jiff_cli.exit12.i.i.us.i.i, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3tZ2SXJA1qv_8jiff_cli.exit14.i.i.us.i.i, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3tZ2SXJA1qv_8jiff_cli.exit16.i.i.us.i.i, %bb.n, %bb.g, %bb.m, %.split165.us.i.i, %.loopexit42.i.i, %.split.us.i10.i.i, %.split.us.i20.i.i
+  %.sroa.10.0.i.ph.pn = phi i64 [ %i.i, %.split165.us.i.i ], [ %i.em, %.split.us.i10.i.i ], [ %i.i, %bb.m ], [ %i.di, %.loopexit42.i.i ], [ %i.gx, %.split.us.i20.i.i ], [ %.promoted156.i.i, %bb.g ], [ %i.bh, %bb.n ], [ %i.bh, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3tZ2SXJA1qv_8jiff_cli.exit16.i.i.us.i.i ], [ %i.bh, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3tZ2SXJA1qv_8jiff_cli.exit14.i.i.us.i.i ], [ %i.bh, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3tZ2SXJA1qv_8jiff_cli.exit12.i.i.us.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !255
-  %0 = sub nuw i64 %.8.val, %.sroa.10.0.i.ph.pn
-  %1 = getelementptr inbounds nuw i8, ptr %.0.val, i64 %.sroa.10.0.i.ph.pn
+  %0 = getelementptr inbounds nuw i8, ptr %.0.val, i64 %.sroa.10.0.i.ph.pn
+  %1 = sub nuw i64 %.8.val, %.sroa.10.0.i.ph.pn
   br label %bb.ai
 
 bb.ai:                                            ; preds = %_RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread, %_RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread6
-  %.sroa.3.0 = phi i64 [ %0, %_RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread6 ], [ %.8.val, %_RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread ]
-  %.sroa.0.0 = phi ptr [ %1, %_RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread6 ], [ %.0.val, %_RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread ]
+  %.sroa.3.0 = phi i64 [ %1, %_RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread6 ], [ %.8.val, %_RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread ]
+  %.sroa.0.0 = phi ptr [ %0, %_RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread6 ], [ %.0.val, %_RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread ]
   %i.gy = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0, 0
   %i.gz = insertvalue { ptr, i64 } %i.gy, i64 %.sroa.3.0, 1
   ret { ptr, i64 } %i.gz

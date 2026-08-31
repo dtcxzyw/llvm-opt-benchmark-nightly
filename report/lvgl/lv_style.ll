@@ -104,7 +104,8 @@ bb.c:                                             ; preds = %bb.b
   %i.i = phi i8 [ %i.g, %.lr.ph.split.preheader ], [ %i.at, %lv_style_set_prop.exit ] ; 3 uses
   %i.j = getelementptr inbounds nuw [16 x i8], ptr %i.c, i64 %indvars.iv
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %i.l = load ptr, ptr %i.k, align 8              ; 2 uses
+  %i.l = load ptr, ptr %i.k, align 8
+  %2 = ptrtoint ptr %i.l to i64                   ; 2 uses
   %.val.i = load i8, ptr %i.a, align 4, !tbaa !8  ; 3 uses
   %i.m = icmp eq i8 %.val.i, -1
   br i1 %i.m, label %lv_style_set_prop.exit, label %bb.d
@@ -135,7 +136,7 @@ bb.f:                                             ; preds = %.lr.ph
 
 bb.g:                                             ; preds = %.lr.ph
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %indvars.iv.next.i
-  store ptr %i.l, ptr %i.u, align 8, !tbaa !16
+  store i64 %2, ptr %i.u, align 8, !tbaa !16
   br label %lv_style_set_prop.exit
 
 .loopexit.i:                                      ; preds = %bb.f, %bb.e, %bb.d
@@ -174,7 +175,7 @@ bb.h:                                             ; preds = %.loopexit.i
   %i.al = zext i8 %i.ak to i64
   %i.am = getelementptr [8 x i8], ptr %i.x, i64 %i.al
   %i.an = getelementptr i8, ptr %i.am, i64 -8
-  store ptr %i.l, ptr %i.an, align 8, !tbaa !16
+  store i64 %2, ptr %i.an, align 8, !tbaa !16
   %i.ao = tail call i8 @llvm.umin.i8(i8 %i.i, i8 124)
   %narrow.i.i = lshr i8 %i.ao, 2
   %spec.store.select.i.i = zext nneg i8 %narrow.i.i to i32
@@ -203,7 +204,8 @@ lv_style_set_prop.exit:                           ; preds = %.lr.ph.split, %bb.g
   %i.ay = getelementptr inbounds nuw i8, ptr %i.aw, i64 %indvars.iv52
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !16  ; 4 uses
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv52
-  %i.bb = load ptr, ptr %i.ba, align 8            ; 2 uses
+  %i.bb = load ptr, ptr %i.ba, align 8
+  %3 = ptrtoint ptr %i.bb to i64                  ; 2 uses
   %.val.i24 = load i8, ptr %i.a, align 4, !tbaa !8 ; 3 uses
   %i.bc = icmp eq i8 %.val.i24, -1
   br i1 %i.bc, label %lv_style_set_prop.exit39, label %bb.i
@@ -241,7 +243,7 @@ bb.l:                                             ; preds = %.lr.ph68
 
 bb.m:                                             ; preds = %.lr.ph68
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %indvars.iv.next.i37
-  store ptr %i.bb, ptr %i.bk, align 8, !tbaa !16
+  store i64 %3, ptr %i.bk, align 8, !tbaa !16
   br label %lv_style_set_prop.exit39
 
 .loopexit.i29:                                    ; preds = %bb.l, %bb.k, %bb.j
@@ -280,7 +282,7 @@ bb.n:                                             ; preds = %.loopexit.i29
   %i.cb = zext i8 %i.ca to i64
   %i.cc = getelementptr [8 x i8], ptr %i.bn, i64 %i.cb
   %i.cd = getelementptr i8, ptr %i.cc, i64 -8
-  store ptr %i.bb, ptr %i.cd, align 8, !tbaa !16
+  store i64 %3, ptr %i.cd, align 8, !tbaa !16
   %i.ce = tail call i8 @llvm.umin.i8(i8 %i.az, i8 124)
   %narrow.i.i35 = lshr i8 %i.ce, 2
   %spec.store.select.i.i36 = zext nneg i8 %narrow.i.i35 to i32
@@ -304,6 +306,7 @@ lv_style_set_prop.exit39:                         ; preds = %.lr.ph44.split, %bb
 ; Function Attrs: nounwind uwtable
 define void @lv_style_set_prop(ptr nofree noundef captures(none) %0, i8 noundef zeroext %1, ptr %2) local_unnamed_addr #0 {
 bb.a:
+  %3 = ptrtoint ptr %2 to i64                     ; 2 uses
   %i.a = getelementptr i8, ptr %0, i64 12         ; 5 uses
   %.val = load i8, ptr %i.a, align 4, !tbaa !8    ; 3 uses
   %i.b = icmp eq i8 %.val, -1
@@ -342,7 +345,7 @@ bb.e:                                             ; preds = %.lr.ph
 
 bb.f:                                             ; preds = %.lr.ph
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv.next
-  store ptr %2, ptr %i.j, align 8, !tbaa !16
+  store i64 %3, ptr %i.j, align 8, !tbaa !16
   br label %bb.h
 
 .loopexit:                                        ; preds = %bb.e, %bb.d, %bb.c
@@ -382,7 +385,7 @@ bb.g:                                             ; preds = %.loopexit
   %i.ab = zext i8 %i.aa to i64
   %i.ac = getelementptr [8 x i8], ptr %i.m, i64 %i.ab
   %i.ad = getelementptr i8, ptr %i.ac, i64 -8
-  store ptr %2, ptr %i.ad, align 8, !tbaa !16
+  store i64 %3, ptr %i.ad, align 8, !tbaa !16
   %i.ae = tail call i8 @llvm.umin.i8(i8 %1, i8 124)
   %narrow.i = lshr i8 %i.ae, 2
   %spec.store.select.i = zext nneg i8 %narrow.i to i32

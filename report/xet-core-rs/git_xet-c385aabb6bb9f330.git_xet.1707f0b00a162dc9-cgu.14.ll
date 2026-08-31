@@ -204,9 +204,10 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.g, %bb.e
+  %3 = ptrtoint ptr %i.u to i64
   store i64 %i.r, ptr %0, align 8
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.u, ptr %.sroa.42.0..sroa_idx, align 8
+  store i64 %3, ptr %.sroa.42.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.n, ptr %.sroa.5.0..sroa_idx, align 8
   br label %bb.h
@@ -351,9 +352,10 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.e, %bb.c
+  %3 = ptrtoint ptr %i.h to i64
   store i64 %i.e, ptr %0, align 8
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.h, ptr %.sroa.42.0..sroa_idx, align 8
+  store i64 %3, ptr %.sroa.42.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %2, ptr %.sroa.5.0..sroa_idx, align 8
   ret void
@@ -433,10 +435,11 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.g, %bb.e
+  %3 = ptrtoint ptr %i.u to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   store i64 %i.r, ptr %0, align 8
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.u, ptr %.sroa.413.0..sroa_idx, align 8
+  store i64 %3, ptr %.sroa.413.0..sroa_idx, align 8
   %.sroa.514.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.n, ptr %.sroa.514.0..sroa_idx, align 8
   br label %bb.h
@@ -560,9 +563,10 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.e, %bb.c
+  %3 = ptrtoint ptr %i.h to i64
   store i64 %i.e, ptr %0, align 8
   %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.h, ptr %.sroa.47.0..sroa_idx, align 8
+  store i64 %3, ptr %.sroa.47.0..sroa_idx, align 8
   %.sroa.58.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %2, ptr %.sroa.58.0..sroa_idx, align 8
   ret void

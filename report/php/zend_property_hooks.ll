@@ -202,7 +202,7 @@ bb.aa:                                            ; preds = %bb.z
 .lr.ph191:                                        ; preds = %.lr.ph191.preheader, %bb.ag
   %.0189 = phi i32 [ %i.dm, %bb.ag ], [ %i.cv, %.lr.ph191.preheader ]
   %.0131188 = phi ptr [ %.1, %bb.ag ], [ %i.cx, %.lr.ph191.preheader ] ; 5 uses
-  %.0134186 = phi ptr [ %.1135, %bb.ag ], [ null, %.lr.ph191.preheader ]
+  %.sroa.017.0183 = phi i64 [ %.sroa.017.1, %bb.ag ], [ 0, %.lr.ph191.preheader ]
   %i.cy = load i32, ptr %i.ct, align 8, !tbaa !23
   %i.cz = and i32 %i.cy, 4
   %.not152 = icmp eq i32 %i.cz, 0
@@ -216,10 +216,11 @@ bb.ac:                                            ; preds = %.lr.ph191
   %i.db = getelementptr inbounds nuw i8, ptr %.0131188, i64 32
   %i.dc = getelementptr inbounds nuw i8, ptr %.0131188, i64 24
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !50
+  %5 = ptrtoint ptr %i.dd to i64
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
-  %.1135 = phi ptr [ %.0134186, %bb.ab ], [ %i.dd, %bb.ac ] ; 2 uses
+  %.sroa.017.1 = phi i64 [ %.sroa.017.0183, %bb.ab ], [ %5, %bb.ac ] ; 2 uses
   %.1 = phi ptr [ %i.da, %bb.ab ], [ %i.db, %bb.ac ]
   %i.de = getelementptr inbounds nuw i8, ptr %.0131188, i64 8
   %i.df = load i8, ptr %i.de, align 8, !tbaa !23
@@ -229,7 +230,8 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   ], !prof !53
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.dg = call ptr @zend_hash_add_new(ptr noundef %i.j, ptr noundef %.1135, ptr noundef nonnull %.0131188) #7 ; 2 uses
+  %6 = inttoptr i64 %.sroa.017.1 to ptr
+  %i.dg = call ptr @zend_hash_add_new(ptr noundef %i.j, ptr noundef %6, ptr noundef nonnull %.0131188) #7 ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 9
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !23
   %.not153 = icmp eq i8 %i.di, 0

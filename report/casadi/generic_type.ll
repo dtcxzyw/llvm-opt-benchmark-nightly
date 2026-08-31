@@ -204,7 +204,8 @@ bb.r:                                             ; preds = %bb.q
   %storemerge.i.i.i.i.i.i = getelementptr inbounds i8, ptr %i.bw, i64 %storemerge.idx.i.i.i.i.i.i
   %i.bz = trunc i64 %i.bk to i32
   %i.ca = and i32 %i.bz, 63
-  store ptr %storemerge.i.i.i.i.i.i, ptr %i.bm, align 8
+  %23 = ptrtoint ptr %storemerge.i.i.i.i.i.i to i64
+  store i64 %23, ptr %i.bm, align 8
   store i32 %i.ca, ptr %i.bn, align 8
   %.idx.i.i = shl nuw nsw i64 %i.bt, 3
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.bs, i8 0, i64 %.idx.i.i, i1 false)
@@ -607,10 +608,10 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !37
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !132
-  %2 = load ptr, ptr %1, align 8, !tbaa !37
-  %3 = ptrtoint ptr %i.b to i64
-  %i.e = ptrtoint ptr %2 to i64
-  %i.f = sub i64 %3, %i.e
+  %2 = ptrtoint ptr %i.b to i64
+  %3 = load ptr, ptr %1, align 8, !tbaa !37
+  %i.e = ptrtoint ptr %3 to i64
+  %i.f = sub i64 %2, %i.e
   %i.g = shl nsw i64 %i.f, 3
   %i.h = zext i32 %i.d to i64
   %i.i = add nsw i64 %i.g, %i.h                   ; 5 uses
@@ -1013,9 +1014,9 @@ bb.l:                                             ; preds = %bb.h
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt6vectorIdSaIdEE13_M_assign_auxIN9__gnu_cxx17__normal_iteratorIPxS_IxSaIxEEEEEEvT_S9_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, ptr %2) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoint ptr %2 to i64                   ; 2 uses
-  %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.a, %i.b                       ; 5 uses
+  %i.a = ptrtoint ptr %1 to i64
+  %i.b = ptrtoint ptr %2 to i64                   ; 2 uses
+  %i.c = sub i64 %i.b, %i.a                       ; 5 uses
   %i.d = ashr exact i64 %i.c, 3                   ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !46
@@ -1212,7 +1213,7 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPxSt6vectorIxSaIxEEEElEvRT_T0_St26
   br i1 %i.cd, label %.lr.ph.i.i.i.i.i20, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPxSt6vectorIxSaIxEEEEPdET0_T_S9_S8_.exit24, !llvm.loop !156
 
 _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPxSt6vectorIxSaIxEEEEPdET0_T_S9_S8_.exit24: ; preds = %.lr.ph.i.i.i.i.i20.prol.loopexit, %.lr.ph.i.i.i.i.i20, %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPxSt6vectorIxSaIxEEEElEvRT_T0_St26random_access_iterator_tag.exit
-  %i.ce = sub i64 %i.a, %i.bd
+  %i.ce = sub i64 %i.b, %i.bd
   %i.cf = ashr exact i64 %i.ce, 3                 ; 5 uses
   %i.cg = icmp sgt i64 %i.cf, 0
   br i1 %i.cg, label %.lr.ph.i.i.i.i.i.i.i.i.preheader, label %_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPxSt6vectorIxSaIxEEEEPddET0_T_S9_S8_RSaIT1_E.exit

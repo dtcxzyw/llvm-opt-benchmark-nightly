@@ -204,6 +204,7 @@ bb.be:                                            ; preds = %_ZNSt7__cxx1112basi
   %storemerge.idx.i.i.i.i.i = select i1 %i.ni, i64 -8, i64 0
   %storemerge.i.i.i.i.i = getelementptr inbounds i8, ptr %i.ng, i64 %storemerge.idx.i.i.i.i.i
   %i.nj = and i32 %i.mx, 63
+  %13 = ptrtoint ptr %storemerge.i.i.i.i.i to i64
   %.idx.i = shl nuw nsw i64 %i.nd, 3
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.nc, i8 -1, i64 %.idx.i, i1 false)
   br label %_ZNSt6vectorIbSaIbEEC2EmRKbRKS0_.exit
@@ -211,7 +212,7 @@ bb.be:                                            ; preds = %_ZNSt7__cxx1112basi
 _ZNSt6vectorIbSaIbEEC2EmRKbRKS0_.exit:            ; preds = %bb.be, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit65
   %.sroa.1882.0 = phi ptr [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit65 ], [ %i.ne, %bb.be ]
   %.sroa.15.0 = phi i32 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit65 ], [ %i.nj, %bb.be ]
-  %.sroa.1281.0 = phi ptr [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit65 ], [ %storemerge.i.i.i.i.i, %bb.be ]
+  %.sroa.1280.0 = phi i64 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit65 ], [ %13, %bb.be ]
   %.sroa.079.0 = phi ptr [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit65 ], [ %i.nc, %bb.be ]
   %i.nk = getelementptr inbounds nuw i8, ptr %0, i64 496 ; 4 uses
   %i.nl = load ptr, ptr %i.nk, align 8, !tbaa !231 ; 2 uses
@@ -228,14 +229,14 @@ bb.bf:                                            ; preds = %_ZNSt6vectorIbSaIbE
   %i.ns = sub nsw i64 0, %i.nr
   %i.nt = getelementptr inbounds [8 x i8], ptr %i.nn, i64 %i.ns
   call void @_ZdlPvm(ptr noundef %i.nt, i64 noundef %i.nq) #34
-  store ptr null, ptr %i.nk, align 8
+  store i64 0, ptr %i.nk, align 8
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 504
   store i32 0, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8
   %.sroa.51.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 512
-  store ptr null, ptr %.sroa.51.0..sroa_idx.i.i.i, align 8
+  store i64 0, ptr %.sroa.51.0..sroa_idx.i.i.i, align 8
   %.sroa.6.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 520
   store i32 0, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8
-  store ptr null, ptr %i.nm, align 8
+  store i64 0, ptr %i.nm, align 8
   br label %_ZNSt13_Bvector_baseISaIbEED2Ev.exit
 
 _ZNSt13_Bvector_baseISaIbEED2Ev.exit:             ; preds = %bb.bf, %_ZNSt6vectorIbSaIbEEC2EmRKbRKS0_.exit
@@ -243,7 +244,7 @@ _ZNSt13_Bvector_baseISaIbEED2Ev.exit:             ; preds = %bb.bf, %_ZNSt6vecto
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 504
   store i32 0, ptr %.sroa.9.0..sroa_idx, align 8
   %.sroa.1281.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 512
-  store ptr %.sroa.1281.0, ptr %.sroa.1281.0..sroa_idx, align 8
+  store i64 %.sroa.1280.0, ptr %.sroa.1281.0..sroa_idx, align 8
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 520
   store i32 %.sroa.15.0, ptr %.sroa.15.0..sroa_idx, align 8
   %.sroa.1882.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 528
@@ -646,9 +647,9 @@ bb.ak:                                            ; preds = %.critedge
 
 bb.al:                                            ; preds = %bb.ak
   %i.hr = getelementptr inbounds nuw [8 x i8], ptr %i.hq, i64 %i.em
+  %5 = ptrtoint ptr %i.hr to i64
   %i.hs = load ptr, ptr %i.ea, align 8, !tbaa !207 ; 2 uses
   %i.ht = load ptr, ptr %i.db, align 8, !tbaa !201
-  %5 = ptrtoint ptr %i.hr to i64
   store i64 0, ptr %i.eg, align 8
   store i64 %5, ptr %4, align 8, !tbaa !153
   store <2 x ptr> <ptr @"_ZNSt17_Function_handlerIFdPKfiEZN8LightGBM4GBDT12TrainOneIterES1_S1_E3$_0E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation", ptr @"_ZNSt17_Function_handlerIFdPKfiEZN8LightGBM4GBDT12TrainOneIterES1_S1_E3$_0E9_M_invokeERKSt9_Any_dataOS1_Oi">, ptr %i.ef, align 8, !tbaa !189

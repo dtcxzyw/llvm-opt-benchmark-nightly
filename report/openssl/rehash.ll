@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !54
   %i.v = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %2, ptr noundef nonnull dereferenceable(1) %i.u) #15
   %i.w = icmp eq i32 %i.v, 0
-  br i1 %i.w, label %.thread72, label %.thread71.us
+  br i1 %i.w, label %.split.us, label %.thread71.us
 
 .thread71.us:                                     ; preds = %.lr.ph87.split.us
   %.059.us = load ptr, ptr %.05985.us, align 8, !tbaa !47 ; 2 uses
@@ -213,7 +213,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
 
 .lr.ph87.split:                                   ; preds = %.lr.ph87, %.thread
   %.05985 = phi ptr [ %.059, %.thread ], [ %.05982, %.lr.ph87 ] ; 4 uses
-  %.084 = phi ptr [ %spec.select, %.thread ], [ null, %.lr.ph87 ]
+  %.sroa.0.081 = phi i64 [ %spec.select, %.thread ], [ 0, %.lr.ph87 ]
   %i.x = getelementptr inbounds nuw i8, ptr %.05985, i64 19
   %bcmp = tail call i32 @bcmp(ptr nonnull %3, ptr nonnull %i.x, i64 %i.s)
   %i.y = icmp eq i32 %bcmp, 0
@@ -232,13 +232,20 @@ bb.d:                                             ; preds = %.lr.ph87.split
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !54
   %i.ag = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %2, ptr noundef nonnull dereferenceable(1) %i.af) #15
   %i.ah = icmp eq i32 %i.ag, 0
-  %spec.select = select i1 %i.ah, ptr %.05985, ptr %.084 ; 3 uses
+  %6 = ptrtoint ptr %.05985 to i64
+  %spec.select = select i1 %i.ah, i64 %6, i64 %.sroa.0.081 ; 2 uses
   %.059 = load ptr, ptr %.05985, align 8, !tbaa !47 ; 2 uses
   %.not66.a = icmp eq ptr %.059, null
   br i1 %.not66.a, label %._crit_edge88, label %.lr.ph87.split, !llvm.loop !61
 
-._crit_edge88:                                    ; preds = %.thread
-  %i.ai = icmp eq ptr %spec.select, null
+.split.us:                                        ; preds = %.lr.ph87.split.us
+  %7 = ptrtoint ptr %.05985.us to i64
+  br label %._crit_edge88
+
+._crit_edge88:                                    ; preds = %.thread, %.split.us
+  %.sroa.0.2 = phi i64 [ %7, %.split.us ], [ %spec.select, %.thread ] ; 2 uses
+  %8 = inttoptr i64 %.sroa.0.2 to ptr
+  %i.ai = icmp eq i64 %.sroa.0.2, 0
   br i1 %i.ai, label %._crit_edge88.thread, label %.thread72
 
 ._crit_edge88.thread:                             ; preds = %.thread71.us, %.loopexit.a, %._crit_edge88
@@ -293,9 +300,9 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   store ptr %i.ap, ptr %i.aw, align 8, !tbaa !62
   br label %.thread72
 
-.thread72:                                        ; preds = %.lr.ph87.split.us, %bb.l, %._crit_edge88
-  %.160 = phi ptr [ %i.ap, %bb.l ], [ %spec.select, %._crit_edge88 ], [ %.05985.us, %.lr.ph87.split.us ] ; 3 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %.160, i64 16 ; 2 uses
+.thread72:                                        ; preds = %bb.l, %._crit_edge88
+  %.1 = phi ptr [ %i.ap, %bb.l ], [ %8, %._crit_edge88 ] ; 3 uses
+  %i.ba = getelementptr inbounds nuw i8, ptr %.1, i64 16 ; 2 uses
   %i.bb = load i16, ptr %i.ba, align 8, !tbaa !48
   %i.bc = icmp ult i16 %5, %i.bb
   br i1 %i.bc, label %bb.m, label %bb.n
@@ -309,7 +316,7 @@ bb.n:                                             ; preds = %bb.m, %.thread72
   br i1 %.not69, label %bb.q, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.bd = getelementptr inbounds nuw i8, ptr %.160, i64 18 ; 2 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %.1, i64 18 ; 2 uses
   %i.be = load i8, ptr %i.bd, align 2, !tbaa !55
   %.not70 = icmp eq i8 %i.be, 0
   br i1 %.not70, label %bb.p, label %bb.q
@@ -320,7 +327,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bg = load i16, ptr %i.bf, align 2, !tbaa !46
   %i.bh = add i16 %i.bg, 1
   store i16 %i.bh, ptr %i.bf, align 2, !tbaa !46
-  %i.bi = getelementptr inbounds nuw i8, ptr %.160, i64 19
+  %i.bi = getelementptr inbounds nuw i8, ptr %.1, i64 19
   %i.bj = load i32, ptr @evpmdsize, align 4, !tbaa !16
   %i.bk = sext i32 %i.bj to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bi, ptr align 1 %3, i64 %i.bk, i1 false)
