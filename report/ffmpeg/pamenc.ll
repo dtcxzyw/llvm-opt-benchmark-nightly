@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/pamenc?download=true
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -23,9 +25,9 @@ bb.a:
   %i.a = alloca [100 x i8], align 16              ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 116
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !9    ; 7 uses
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !9    ; 8 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.e = load i32, ptr %i.d, align 8, !tbaa !29   ; 15 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !29   ; 18 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.g = load i32, ptr %i.f, align 8, !tbaa !30
   switch i32 %i.g, label %bb.n [
@@ -90,9 +92,9 @@ bb.k:                                             ; preds = %bb.j
   %i.w = sext i32 %i.o to i64                     ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.v, ptr nonnull align 16 %i.a, i64 %i.w, i1 false)
   %i.x = getelementptr inbounds i8, ptr %i.v, i64 %i.w ; 3 uses
-  %i.y = load ptr, ptr %2, align 8, !tbaa !33     ; 3 uses
+  %i.y = load ptr, ptr %2, align 8, !tbaa !33     ; 5 uses
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 64
-  %i.aa = load i32, ptr %i.z, align 8, !tbaa !34  ; 2 uses
+  %i.aa = load i32, ptr %i.z, align 8, !tbaa !34  ; 3 uses
   %i.ab = load i32, ptr %i.f, align 8, !tbaa !30
   %i.ac = icmp eq i32 %i.ab, 10
   %i.ad = icmp sgt i32 %i.c, 0                    ; 2 uses
@@ -117,83 +119,140 @@ bb.k:                                             ; preds = %bb.j
 
 .preheader.lr.ph:                                 ; preds = %.preheader65
   %i.ah = icmp sgt i32 %i.e, 0
-  %i.ai = sext i32 %i.aa to i64
+  %i.ai = sext i32 %i.aa to i64                   ; 2 uses
   br i1 %i.ah, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %xtraiter88 = and i32 %i.e, 1
-  %4 = icmp eq i32 %i.e, 1
-  %unroll_iter93 = and i32 %i.e, 2147483646
-  %lcmp.mod90.not = icmp eq i32 %xtraiter88, 0
-  %lcmp.mod92 = trunc i32 %i.e to i1
+  %4 = add nsw i32 %i.e, -1
+  %5 = zext nneg i32 %i.e to i64
+  %6 = lshr i32 %4, 3
+  %7 = zext nneg i32 %6 to i64
+  %8 = add nsw i32 %i.c, -1
+  %9 = zext i32 %8 to i64
+  %10 = mul nsw i64 %i.ai, %9
+  %11 = getelementptr i8, ptr %i.y, i64 %10
+  %12 = getelementptr i8, ptr %11, i64 %7
+  %scevgep85 = getelementptr i8, ptr %12, i64 1
+  %13 = zext nneg i32 %i.e to i64                 ; 2 uses
+  %min.iters.check = icmp ult i32 %i.e, 8
+  %stride.check = icmp slt i32 %i.aa, 0
+  %n.vec = and i64 %13, 2147483640                ; 4 uses
+  %14 = trunc nuw nsw i64 %n.vec to i32
+  %cmp.n = icmp eq i64 %n.vec, %13
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
-  %.05576 = phi ptr [ %i.ax, %._crit_edge ], [ %i.y, %.preheader.preheader ] ; 4 uses
-  %.05675 = phi ptr [ %.lcssa, %._crit_edge ], [ %i.x, %.preheader.preheader ] ; 2 uses
+  %.05576 = phi ptr [ %i.ax, %._crit_edge ], [ %i.y, %.preheader.preheader ] ; 5 uses
+  %.05675 = phi ptr [ %.lcssa, %._crit_edge ], [ %i.x, %.preheader.preheader ] ; 6 uses
   %.06174 = phi i32 [ %i.ay, %._crit_edge ], [ 0, %.preheader.preheader ]
-  br i1 %4, label %.epil.preheader87, label %.preheader.new
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
-.preheader.new:                                   ; preds = %.preheader, %.preheader.new
-  %.072 = phi i32 [ %24, %.preheader.new ], [ 0, %.preheader ] ; 5 uses
-  %.15771 = phi ptr [ %23, %.preheader.new ], [ %.05675, %.preheader ] ; 3 uses
-  %niter94 = phi i32 [ %niter94.next.1, %.preheader.new ], [ 0, %.preheader ]
-  %5 = lshr i32 %.072, 3
-  %6 = zext nneg i32 %5 to i64
-  %7 = getelementptr inbounds nuw i8, ptr %.05576, i64 %6
-  %8 = load i8, ptr %7, align 1, !tbaa !35
-  %9 = zext i8 %8 to i32
-  %10 = and i32 %.072, 6
-  %11 = xor i32 %10, 7
-  %12 = lshr i32 %9, %11
-  %13 = trunc nuw nsw i32 %12 to i8
-  %14 = and i8 %13, 1
-  %i.aj = getelementptr inbounds nuw i8, ptr %.15771, i64 1
-  store i8 %14, ptr %.15771, align 1, !tbaa !35
-  %15 = lshr i32 %.072, 3
-  %16 = zext nneg i32 %15 to i64
-  %i.ak = getelementptr inbounds nuw i8, ptr %.05576, i64 %16
-  %i.al = load i8, ptr %i.ak, align 1, !tbaa !35
-  %17 = zext i8 %i.al to i32
-  %18 = and i32 %.072, 6
-  %19 = xor i32 %18, 6
-  %20 = lshr i32 %17, %19
-  %21 = trunc nuw i32 %20 to i8
-  %22 = and i8 %21, 1
-  %23 = getelementptr inbounds nuw i8, ptr %.15771, i64 2 ; 3 uses
-  store i8 %22, ptr %i.aj, align 1, !tbaa !35
-  %24 = add nuw nsw i32 %.072, 2                  ; 2 uses
-  %niter94.next.1 = add nuw nsw i32 %niter94, 2   ; 2 uses
-  %niter94.ncmp.1 = icmp eq i32 %niter94.next.1, %unroll_iter93
-  br i1 %niter94.ncmp.1, label %._crit_edge.unr-lcssa, label %.preheader.new, !llvm.loop !36
+vector.memcheck:                                  ; preds = %.preheader
+  %scevgep = getelementptr i8, ptr %.05675, i64 %5
+  %bound0 = icmp ult ptr %.05675, %scevgep85
+  %bound1 = icmp ult ptr %i.y, %scevgep
+  %found.conflict = and i1 %bound0, %bound1
+  %15 = or i1 %found.conflict, %stride.check
+  br i1 %15, label %scalar.ph.preheader, label %vector.ph
 
-._crit_edge.unr-lcssa:                            ; preds = %.preheader.new
-  br i1 %lcmp.mod90.not, label %._crit_edge, label %.epil.preheader87
+vector.ph:                                        ; preds = %vector.memcheck
+  %16 = getelementptr i8, ptr %.05675, i64 %n.vec ; 2 uses
+  br label %.preheader.new
 
-.epil.preheader87:                                ; preds = %._crit_edge.unr-lcssa, %.preheader
-  %.072.epil.init = phi i32 [ 0, %.preheader ], [ %24, %._crit_edge.unr-lcssa ] ; 2 uses
-  %.15771.epil.init = phi ptr [ %.05675, %.preheader ], [ %23, %._crit_edge.unr-lcssa ] ; 2 uses
-  tail call void @llvm.assume(i1 %lcmp.mod92)
-  %i.am = lshr i32 %.072.epil.init, 3
+.preheader.new:                                   ; preds = %.preheader.new, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %.preheader.new ] ; 3 uses
+  %vec.ind = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vector.ph ], [ %vec.ind.next, %.preheader.new ] ; 2 uses
+  %i.aj = getelementptr i8, ptr %.05675, i64 %index
+  %17 = lshr exact i64 %index, 3
+  %18 = and i64 %17, 536870911
+  %i.ak = getelementptr inbounds nuw i8, ptr %.05576, i64 %18
+  %i.al = load i8, ptr %i.ak, align 1, !tbaa !35, !alias.scope !36
+  %broadcast.splatinsert = insertelement <8 x i8> poison, i8 %i.al, i64 0
+  %broadcast.splat = shufflevector <8 x i8> %broadcast.splatinsert, <8 x i8> poison, <8 x i32> zeroinitializer
+  %19 = trunc <8 x i32> %vec.ind to <8 x i8>
+  %20 = and <8 x i8> %19, splat (i8 7)
+  %21 = xor <8 x i8> %20, splat (i8 7)
+  %22 = lshr <8 x i8> %broadcast.splat, %21
+  %23 = and <8 x i8> %22, splat (i8 1)
+  store <8 x i8> %23, ptr %i.aj, align 1, !tbaa !35, !alias.scope !39, !noalias !36
+  %index.next = add nuw i64 %index, 8             ; 2 uses
+  %vec.ind.next = add nuw nsw <8 x i32> %vec.ind, splat (i32 8)
+  %niter94.ncmp.1 = icmp eq i64 %index.next, %n.vec
+  br i1 %niter94.ncmp.1, label %middle.block, label %.preheader.new, !llvm.loop !41
+
+middle.block:                                     ; preds = %.preheader.new
+  br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
+
+scalar.ph.preheader:                              ; preds = %vector.memcheck, %.preheader, %middle.block
+  %.072.ph = phi i32 [ 0, %vector.memcheck ], [ 0, %.preheader ], [ %14, %middle.block ] ; 6 uses
+  %.15771.ph = phi ptr [ %.05675, %vector.memcheck ], [ %.05675, %.preheader ], [ %16, %middle.block ] ; 3 uses
+  %24 = sub i32 %i.e, %.072.ph
+  %.neg = add i32 %.072.ph, 1
+  %xtraiter90 = and i32 %24, 1
+  %lcmp.mod91.not = icmp eq i32 %xtraiter90, 0
+  br i1 %lcmp.mod91.not, label %._crit_edge.unr-lcssa, label %scalar.ph.prol
+
+scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
+  %25 = lshr i32 %.072.ph, 3
+  %26 = zext nneg i32 %25 to i64
+  %27 = getelementptr inbounds nuw i8, ptr %.05576, i64 %26
+  %28 = load i8, ptr %27, align 1, !tbaa !35
+  %29 = zext i8 %28 to i32
+  %30 = and i32 %.072.ph, 7
+  %31 = xor i32 %30, 7
+  %32 = lshr i32 %29, %31
+  %33 = trunc nuw i32 %32 to i8
+  %34 = and i8 %33, 1
+  %35 = getelementptr inbounds nuw i8, ptr %.15771.ph, i64 1 ; 2 uses
+  store i8 %34, ptr %.15771.ph, align 1, !tbaa !35
+  %36 = add nuw nsw i32 %.072.ph, 1
+  br label %._crit_edge.unr-lcssa
+
+._crit_edge.unr-lcssa:                            ; preds = %scalar.ph.prol, %scalar.ph.preheader
+  %.lcssa87.unr = phi ptr [ poison, %scalar.ph.preheader ], [ %35, %scalar.ph.prol ]
+  %.072.unr = phi i32 [ %.072.ph, %scalar.ph.preheader ], [ %36, %scalar.ph.prol ]
+  %.15771.unr = phi ptr [ %.15771.ph, %scalar.ph.preheader ], [ %35, %scalar.ph.prol ]
+  %37 = icmp eq i32 %i.e, %.neg
+  br i1 %37, label %._crit_edge, label %.epil.preheader87
+
+.epil.preheader87:                                ; preds = %._crit_edge.unr-lcssa, %.epil.preheader87
+  %.072.epil.init = phi i32 [ %50, %.epil.preheader87 ], [ %.072.unr, %._crit_edge.unr-lcssa ] ; 4 uses
+  %.15771.epil.init = phi ptr [ %i.aw, %.epil.preheader87 ], [ %.15771.unr, %._crit_edge.unr-lcssa ] ; 3 uses
+  %38 = lshr i32 %.072.epil.init, 3
+  %39 = zext nneg i32 %38 to i64
+  %40 = getelementptr inbounds nuw i8, ptr %.05576, i64 %39
+  %41 = load i8, ptr %40, align 1, !tbaa !35
+  %42 = zext i8 %41 to i32
+  %43 = and i32 %.072.epil.init, 7
+  %44 = xor i32 %43, 7
+  %45 = lshr i32 %42, %44
+  %46 = trunc nuw i32 %45 to i8
+  %47 = and i8 %46, 1
+  %48 = getelementptr inbounds nuw i8, ptr %.15771.epil.init, i64 1
+  store i8 %47, ptr %.15771.epil.init, align 1, !tbaa !35
+  %49 = add nuw nsw i32 %.072.epil.init, 1        ; 2 uses
+  %i.am = lshr i32 %49, 3
   %i.an = zext nneg i32 %i.am to i64
   %i.ao = getelementptr inbounds nuw i8, ptr %.05576, i64 %i.an
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !35
   %i.aq = zext i8 %i.ap to i32
-  %i.ar = and i32 %.072.epil.init, 7
+  %i.ar = and i32 %49, 7
   %i.as = xor i32 %i.ar, 7
   %i.at = lshr i32 %i.aq, %i.as
   %i.au = trunc nuw i32 %i.at to i8
   %i.av = and i8 %i.au, 1
-  %i.aw = getelementptr inbounds nuw i8, ptr %.15771.epil.init, i64 1
-  store i8 %i.av, ptr %.15771.epil.init, align 1, !tbaa !35
-  br label %._crit_edge
+  %i.aw = getelementptr inbounds nuw i8, ptr %.15771.epil.init, i64 2 ; 2 uses
+  store i8 %i.av, ptr %48, align 1, !tbaa !35
+  %50 = add nuw nsw i32 %.072.epil.init, 2        ; 2 uses
+  %exitcond78.not.1 = icmp eq i32 %50, %i.e
+  br i1 %exitcond78.not.1, label %._crit_edge, label %.epil.preheader87, !llvm.loop !45
 
-._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.epil.preheader87
-  %.lcssa = phi ptr [ %23, %._crit_edge.unr-lcssa ], [ %i.aw, %.epil.preheader87 ]
+._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.epil.preheader87, %middle.block
+  %.lcssa = phi ptr [ %16, %middle.block ], [ %.lcssa87.unr, %._crit_edge.unr-lcssa ], [ %i.aw, %.epil.preheader87 ]
   %i.ax = getelementptr inbounds i8, ptr %.05576, i64 %i.ai
   %i.ay = add nuw nsw i32 %.06174, 1              ; 2 uses
   %exitcond79.not = icmp eq i32 %i.ay, %i.c
-  br i1 %exitcond79.not, label %.loopexit, label %.preheader, !llvm.loop !38
+  br i1 %exitcond79.not, label %.loopexit, label %.preheader, !llvm.loop !46
 
 bb.l:                                             ; preds = %bb.l, %.lr.ph.new
   %.170 = phi ptr [ %i.y, %.lr.ph.new ], [ %i.bg, %bb.l ] ; 2 uses
@@ -213,7 +272,7 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph.new
   %i.bg = getelementptr inbounds i8, ptr %i.be, i64 %i.af ; 2 uses
   %niter.next.3 = add nuw nsw i32 %niter, 4       ; 2 uses
   %niter.ncmp.3 = icmp eq i32 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %.loopexit.loopexit85.unr-lcssa, label %bb.l, !llvm.loop !39
+  br i1 %niter.ncmp.3, label %.loopexit.loopexit85.unr-lcssa, label %bb.l, !llvm.loop !47
 
 .loopexit.loopexit85.unr-lcssa:                   ; preds = %bb.l
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -235,7 +294,7 @@ bb.m:                                             ; preds = %bb.m, %.epil.prehea
   %i.bi = getelementptr inbounds i8, ptr %.170.epil, i64 %i.af
   %epil.iter.next = add i32 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i32 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %.loopexit, label %bb.m, !llvm.loop !40
+  br i1 %epil.iter.cmp.not, label %.loopexit, label %bb.m, !llvm.loop !48
 
 .loopexit:                                        ; preds = %.loopexit.loopexit85.unr-lcssa, %bb.m, %._crit_edge, %.preheader66, %.preheader65, %.preheader.lr.ph
   store i32 1, ptr %3, align 4, !tbaa !34
@@ -311,10 +370,18 @@ attributes #5 = { nounwind }
 !33 = !{!16, !16, i64 0}
 !34 = !{!6, !6, i64 0}
 !35 = !{!7, !7, i64 0}
-!36 = distinct !{!36, !37}
-!37 = !{!"llvm.loop.mustprogress"}
-!38 = distinct !{!38, !37}
-!39 = distinct !{!39, !37}
-!40 = distinct !{!40, !41}
-!41 = !{!"llvm.loop.unroll.disable"}
+!36 = !{!37}
+!37 = distinct !{!37, !38}
+!38 = distinct !{!38, !"LVerDomain"}
+!39 = !{!40}
+!40 = distinct !{!40, !38}
+!41 = distinct !{!41, !42, !43, !44}
+!42 = !{!"llvm.loop.mustprogress"}
+!43 = !{!"llvm.loop.isvectorized", i32 1}
+!44 = !{!"llvm.loop.unroll.runtime.disable"}
+!45 = distinct !{!45, !42, !43}
+!46 = distinct !{!46, !42}
+!47 = distinct !{!47, !42}
+!48 = distinct !{!48, !49}
+!49 = !{!"llvm.loop.unroll.disable"}
 end_hunk_0

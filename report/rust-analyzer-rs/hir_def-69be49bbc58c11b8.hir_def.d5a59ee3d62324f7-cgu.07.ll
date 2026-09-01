@@ -205,34 +205,35 @@ bb.a:
 define hidden noundef zeroext i1 @_RNvXCsfjX3T6UU9IB_9hashbrownNtNtCs4kMRW8zVVbM_3cfg8cfg_expr7CfgAtomINtB2_10EquivalentBq_E10equivalentCsileJQcQObtj_7hir_def(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %1) unnamed_addr #16 {
 bb.a:
   %.val = load ptr, ptr %0, align 8, !noundef !5  ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %.val1 = load ptr, ptr %2, align 8              ; 3 uses
   %.val2 = load ptr, ptr %1, align 8, !noundef !5 ; 3 uses
-  %2 = icmp ne ptr %.val, null                    ; 2 uses
-  %3 = icmp eq ptr %.val2, null                   ; 3 uses
-  %not..i = xor i1 %3, true
-  %i.a = xor i1 %2, %3
-  br i1 %i.a, label %bb.b, label %_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %.val3 = load ptr, ptr %3, align 8              ; 3 uses
+  %4 = icmp ne ptr %.val, null                    ; 2 uses
+  %5 = icmp eq ptr %.val2, null                   ; 2 uses
+  %i.a = xor i1 %4, %5
+  br i1 %i.a, label %6, label %_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
-bb.b:                                             ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val3 = load ptr, ptr %4, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val1 = load ptr, ptr %5, align 8
-  %6 = icmp eq ptr %.val1, %.val3                 ; 2 uses
-  br i1 %2, label %bb.c, label %8
+6:                                                ; preds = %bb.a
+  br i1 %4, label %bb.b, label %bb.c
 
-bb.c:                                             ; preds = %bb.b
-  tail call void @llvm.assume(i1 %not..i)
+bb.b:                                             ; preds = %6
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   %7 = icmp eq ptr %.val, %.val2
-  %spec.select.i = select i1 %7, i1 %6, i1 false
+  %8 = icmp eq ptr %.val1, %.val3
+  %spec.select.i = select i1 %7, i1 %8, i1 false
   br label %_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
-8:                                                ; preds = %bb.b
-  tail call void @llvm.assume(i1 %3)
+bb.c:                                             ; preds = %6
+  tail call void @llvm.assume(i1 %5)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
+  %9 = icmp eq ptr %.val1, %.val3
   br label %_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
-_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit: ; preds = %bb.a, %bb.c, %8
-  %.sroa.0.0.shrunk.i = phi i1 [ %spec.select.i, %bb.c ], [ false, %bb.a ], [ %6, %8 ]
+_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit: ; preds = %bb.a, %bb.b, %bb.c
+  %.sroa.0.0.shrunk.i = phi i1 [ %spec.select.i, %bb.b ], [ false, %bb.a ], [ %9, %bb.c ]
   ret i1 %.sroa.0.0.shrunk.i
 }
 
@@ -635,7 +636,7 @@ bb.co:                                            ; preds = %bb.b
   %i.sk = load ptr, ptr %i.si, align 8, !alias.scope !2971, !noalias !2974, !noundef !5 ; 2 uses
   %i.sl = icmp eq ptr %i.sk, null                 ; 2 uses
   %i.sm = load ptr, ptr %i.sj, align 8, !alias.scope !2974, !noalias !2971, !noundef !5 ; 3 uses
-  %i.sn = icmp eq ptr %i.sm, null                 ; 3 uses
+  %i.sn = icmp eq ptr %i.sm, null                 ; 2 uses
   %i.so = xor i1 %i.sl, %i.sn
   br i1 %i.so, label %_RNvYNtNtCsileJQcQObtj_7hir_def3hir4ExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread, label %bb.cp
 
@@ -652,8 +653,6 @@ bb.cq:                                            ; preds = %bb.cp
   br i1 %i.st, label %.split272, label %_RNvYNtNtCsileJQcQObtj_7hir_def3hir4ExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB6_.exit.thread
 
 bb.cr:                                            ; preds = %bb.cp
-  %3 = xor i1 %i.sn, true
-  tail call void @llvm.assume(i1 %3)
   %i.su = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.sv = load i64, ptr %i.su, align 16, !alias.scope !2971, !noalias !2974, !noundef !5 ; 2 uses
   %i.sw = getelementptr inbounds nuw i8, ptr %i.c, i64 16
@@ -1056,8 +1055,8 @@ bb.a:
     i64 0, label %_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
   ]
 
-_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit: ; preds = %tailrecurse, %.lr.ph, %.lr.ph28, %.lr.ph34, %bb.a, %bb.h, %bb.f, %8, %bb.d, %bb.b, %bb.g, %bb.e
-  %.sroa.0.0.shrunk = phi i1 [ false, %bb.g ], [ false, %bb.a ], [ %6, %8 ], [ %spec.select.i, %bb.d ], [ false, %bb.b ], [ false, %bb.e ], [ true, %bb.h ], [ true, %bb.f ], [ %i.am, %.lr.ph28 ], [ %i.z, %.lr.ph34 ], [ true, %.lr.ph ], [ false, %tailrecurse ]
+_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit: ; preds = %tailrecurse, %.lr.ph, %.lr.ph28, %.lr.ph34, %bb.a, %bb.h, %bb.f, %bb.d, %bb.c, %bb.b, %bb.g, %bb.e
+  %.sroa.0.0.shrunk = phi i1 [ false, %bb.g ], [ false, %bb.a ], [ %9, %bb.d ], [ %spec.select.i, %bb.c ], [ false, %bb.b ], [ false, %bb.e ], [ true, %bb.h ], [ true, %bb.f ], [ %i.am, %.lr.ph28 ], [ %i.z, %.lr.ph34 ], [ true, %.lr.ph ], [ false, %tailrecurse ]
   ret i1 %.sroa.0.0.shrunk
 
 default.unreachable56:                            ; preds = %.lr.ph
@@ -1076,31 +1075,32 @@ tailrecurse:                                      ; preds = %.lr.ph
 bb.b:                                             ; preds = %.lr.ph
   %i.l = getelementptr inbounds nuw i8, ptr %.tr23, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %.tr1024, i64 8
-  %.val.a = load ptr, ptr %i.l, align 8, !noundef !5 ; 2 uses
+  %.val = load ptr, ptr %i.l, align 8, !noundef !5 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.tr23, i64 16
+  %.val.a = load ptr, ptr %2, align 8             ; 3 uses
   %.val5 = load ptr, ptr %i.m, align 8, !noundef !5 ; 3 uses
-  %2 = icmp ne ptr %.val.a, null                  ; 2 uses
-  %3 = icmp eq ptr %.val5, null                   ; 3 uses
-  %not..i = xor i1 %3, true
-  %i.n = xor i1 %2, %3
-  br i1 %i.n, label %bb.c, label %_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
+  %3 = getelementptr inbounds nuw i8, ptr %.tr1024, i64 16
+  %.val6 = load ptr, ptr %3, align 8              ; 3 uses
+  %4 = icmp ne ptr %.val, null                    ; 2 uses
+  %5 = icmp eq ptr %.val5, null                   ; 2 uses
+  %i.n = xor i1 %4, %5
+  br i1 %i.n, label %6, label %_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
-bb.c:                                             ; preds = %bb.b
-  %4 = getelementptr inbounds nuw i8, ptr %.tr1024, i64 16
-  %.val6 = load ptr, ptr %4, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %.tr23, i64 16
-  %.val4 = load ptr, ptr %5, align 8
-  %6 = icmp eq ptr %.val4, %.val6                 ; 2 uses
-  br i1 %2, label %bb.d, label %8
+6:                                                ; preds = %bb.b
+  br i1 %4, label %bb.c, label %bb.d
 
-bb.d:                                             ; preds = %bb.c
-  tail call void @llvm.assume(i1 %not..i)
+bb.c:                                             ; preds = %6
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5) ]
-  %7 = icmp eq ptr %.val.a, %.val5
-  %spec.select.i = select i1 %7, i1 %6, i1 false
+  %7 = icmp eq ptr %.val, %.val5
+  %8 = icmp eq ptr %.val.a, %.val6
+  %spec.select.i = select i1 %7, i1 %8, i1 false
   br label %_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
-8:                                                ; preds = %bb.c
-  tail call void @llvm.assume(i1 %3)
+bb.d:                                             ; preds = %6
+  tail call void @llvm.assume(i1 %5)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.a) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6) ]
+  %9 = icmp eq ptr %.val.a, %.val6
   br label %_RNvXs7_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgAtomNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
 bb.e:                                             ; preds = %.lr.ph

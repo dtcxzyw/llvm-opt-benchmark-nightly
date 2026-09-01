@@ -205,8 +205,7 @@ bb.dd:                                            ; preds = %bb.dc
   %i.td = load ptr, ptr %i.sr, align 8, !alias.scope !24127, !noalias !24128, !noundef !4 ; 2 uses
   %i.te = icmp ne ptr %i.td, null                 ; 2 uses
   %i.tf = load ptr, ptr %i.ss, align 8, !alias.scope !24128, !noalias !24127, !noundef !4 ; 3 uses
-  %i.tg = icmp eq ptr %i.tf, null                 ; 3 uses
-  %not..i.i = xor i1 %i.tg, true
+  %i.tg = icmp eq ptr %i.tf, null                 ; 2 uses
   %i.th = xor i1 %i.te, %i.tg
   br i1 %i.th, label %bb.de, label %_RNvXsn_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan3ddlNtB5_19CreateExternalTableNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
@@ -214,7 +213,6 @@ bb.de:                                            ; preds = %bb.dd
   br i1 %i.te, label %bb.df, label %bb.dg
 
 bb.df:                                            ; preds = %bb.de
-  tail call void @llvm.assume(i1 %not..i.i)
   %i.ti = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.tj = load i64, ptr %i.ti, align 16, !alias.scope !24127, !noalias !24128, !noundef !4 ; 2 uses
   %i.tk = getelementptr inbounds nuw i8, ptr %1, i64 16

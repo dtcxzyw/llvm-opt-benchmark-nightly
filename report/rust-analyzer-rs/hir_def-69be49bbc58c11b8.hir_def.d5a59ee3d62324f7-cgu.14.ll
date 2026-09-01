@@ -204,27 +204,25 @@ tailrecurse.i.i.i.i.i:                            ; preds = %.lr.ph.i.i.i.i.i
 bb.e:                                             ; preds = %.lr.ph.i.i.i.i.i
   %i.z = getelementptr inbounds nuw i8, ptr %.tr16.i.i.i.i.i, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %.tr717.i.i.i.i.i, i64 8
-  %.val.i.i.i.i.i.a = load ptr, ptr %i.z, align 8, !noalias !4012, !noundef !10 ; 2 uses
+  %.val.i.i.i.i.i = load ptr, ptr %i.z, align 8, !noalias !4012, !noundef !10 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.tr16.i.i.i.i.i, i64 16
+  %.val.i.i.i.i.i.a = load ptr, ptr %2, align 8, !noalias !4012 ; 3 uses
   %.val5.i.i.i.i.i = load ptr, ptr %i.aa, align 8, !noalias !4011, !noundef !10 ; 3 uses
-  %2 = icmp ne ptr %.val.i.i.i.i.i.a, null        ; 2 uses
-  %3 = icmp eq ptr %.val5.i.i.i.i.i, null         ; 3 uses
-  %not..i.i.i.i.i.i = xor i1 %3, true
-  %i.ab = xor i1 %2, %3
+  %3 = getelementptr inbounds nuw i8, ptr %.tr717.i.i.i.i.i, i64 16
+  %.val6.i.i.i.i.i = load ptr, ptr %3, align 8, !noalias !4011 ; 3 uses
+  %4 = icmp ne ptr %.val.i.i.i.i.i, null          ; 2 uses
+  %5 = icmp eq ptr %.val5.i.i.i.i.i, null         ; 2 uses
+  %i.ab = xor i1 %4, %5
   br i1 %i.ab, label %bb.f, label %_RNvXsh_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtNtCsileJQcQObtj_7hir_def10signatures23InactiveEnumVariantCodeENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqBK_.exit
 
 bb.f:                                             ; preds = %bb.e
-  %4 = getelementptr inbounds nuw i8, ptr %.tr717.i.i.i.i.i, i64 16
-  %.val6.i.i.i.i.i = load ptr, ptr %4, align 8, !noalias !4011
-  %5 = getelementptr inbounds nuw i8, ptr %.tr16.i.i.i.i.i, i64 16
-  %.val4.i.i.i.i.i = load ptr, ptr %5, align 8, !noalias !4012
-  %6 = icmp eq ptr %.val4.i.i.i.i.i, %.val6.i.i.i.i.i ; 2 uses
-  br i1 %2, label %.split4.i.i.i.i, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i.i.i
+  br i1 %4, label %.split4.i.i.i.i, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i.i.i
 
 .split4.i.i.i.i:                                  ; preds = %bb.f
-  tail call void @llvm.assume(i1 %not..i.i.i.i.i.i)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5.i.i.i.i.i) ]
-  %i.ac = icmp eq ptr %.val.i.i.i.i.i.a, %.val5.i.i.i.i.i
-  %spec.select.i.i.i.i.i.i = select i1 %i.ac, i1 %6, i1 false
+  %6 = icmp eq ptr %.val.i.i.i.i.i, %.val5.i.i.i.i.i
+  %i.ac = icmp eq ptr %.val.i.i.i.i.i.a, %.val6.i.i.i.i.i
+  %spec.select.i.i.i.i.i.i = select i1 %6, i1 %i.ac, i1 false
   br i1 %spec.select.i.i.i.i.i.i, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread2.i.i.i.i, label %_RNvXsh_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtNtCsileJQcQObtj_7hir_def10signatures23InactiveEnumVariantCodeENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqBK_.exit
 
 bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i
@@ -260,8 +258,11 @@ bb.h:                                             ; preds = %.lr.ph.i.i.i.i.i
   br i1 %i.aw, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread2.i.i.i.i, label %_RNvXsh_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtNtCsileJQcQObtj_7hir_def10signatures23InactiveEnumVariantCodeENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqBK_.exit
 
 _RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i.i.i: ; preds = %bb.f
-  tail call void @llvm.assume(i1 %3)
-  br i1 %6, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread2.i.i.i.i, label %_RNvXsh_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtNtCsileJQcQObtj_7hir_def10signatures23InactiveEnumVariantCodeENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqBK_.exit
+  tail call void @llvm.assume(i1 %5)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i.i.a) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6.i.i.i.i.i) ]
+  %7 = icmp eq ptr %.val.i.i.i.i.i.a, %.val6.i.i.i.i.i
+  br i1 %7, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread2.i.i.i.i, label %_RNvXsh_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtNtCsileJQcQObtj_7hir_def10signatures23InactiveEnumVariantCodeENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqBK_.exit
 
 _RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread2.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i, %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i.i.i.i, %.split.i.i.i.i, %.split5.i.i.i.i, %.split4.i.i.i.i
   %i.ax = getelementptr inbounds nuw i8, ptr %i.m, i64 24
@@ -664,27 +665,25 @@ tailrecurse.i:                                    ; preds = %.lr.ph.i2
 bb.aj:                                            ; preds = %.lr.ph.i2
   %i.gg = getelementptr inbounds nuw i8, ptr %.tr16.i, i64 8
   %i.gh = getelementptr inbounds nuw i8, ptr %.tr717.i, i64 8
-  %.val.i.a = load ptr, ptr %i.gg, align 8, !noalias !5278, !noundef !10 ; 2 uses
+  %.val.i = load ptr, ptr %i.gg, align 8, !noalias !5278, !noundef !10 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.tr16.i, i64 16
+  %.val.i.a = load ptr, ptr %2, align 8, !noalias !5278 ; 3 uses
   %.val5.i = load ptr, ptr %i.gh, align 8, !noalias !5281, !noundef !10 ; 3 uses
-  %2 = icmp ne ptr %.val.i.a, null                ; 2 uses
-  %3 = icmp eq ptr %.val5.i, null                 ; 3 uses
-  %not..i.i = xor i1 %3, true
-  %i.gi = xor i1 %2, %3
+  %3 = getelementptr inbounds nuw i8, ptr %.tr717.i, i64 16
+  %.val6.i = load ptr, ptr %3, align 8, !noalias !5281 ; 3 uses
+  %4 = icmp ne ptr %.val.i, null                  ; 2 uses
+  %5 = icmp eq ptr %.val5.i, null                 ; 2 uses
+  %i.gi = xor i1 %4, %5
   br i1 %i.gi, label %bb.ak, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def10expr_store26ExpressionStoreDiagnosticsINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
 bb.ak:                                            ; preds = %bb.aj
-  %4 = getelementptr inbounds nuw i8, ptr %.tr717.i, i64 16
-  %.val6.i = load ptr, ptr %4, align 8, !noalias !5281
-  %5 = getelementptr inbounds nuw i8, ptr %.tr16.i, i64 16
-  %.val4.i = load ptr, ptr %5, align 8, !noalias !5278
-  %6 = icmp eq ptr %.val4.i, %.val6.i             ; 2 uses
-  br i1 %2, label %.split6, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
+  br i1 %4, label %.split6, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
 .split6:                                          ; preds = %bb.ak
-  tail call void @llvm.assume(i1 %not..i.i)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5.i) ]
-  %i.gj = icmp eq ptr %.val.i.a, %.val5.i
-  %spec.select.i.i = select i1 %i.gj, i1 %6, i1 false
+  %6 = icmp eq ptr %.val.i, %.val5.i
+  %i.gj = icmp eq ptr %.val.i.a, %.val6.i
+  %spec.select.i.i = select i1 %6, i1 %i.gj, i1 false
   br i1 %spec.select.i.i, label %.split.i, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def10expr_store26ExpressionStoreDiagnosticsINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
 bb.al:                                            ; preds = %.lr.ph.i2
@@ -720,8 +719,11 @@ bb.am:                                            ; preds = %.lr.ph.i2
   br i1 %i.hd, label %.split.i, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def10expr_store26ExpressionStoreDiagnosticsINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
 _RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit: ; preds = %bb.ak
-  tail call void @llvm.assume(i1 %3)
-  br i1 %6, label %.split.i, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def10expr_store26ExpressionStoreDiagnosticsINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
+  tail call void @llvm.assume(i1 %5)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.a) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6.i) ]
+  %7 = icmp eq ptr %.val.i.a, %.val6.i
+  br i1 %7, label %.split.i, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def10expr_store26ExpressionStoreDiagnosticsINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
 .split.i:                                         ; preds = %.lr.ph.i2, %.split7, %.split6, %.split, %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
   %i.he = getelementptr inbounds nuw i8, ptr %i.j, i64 48
@@ -1008,7 +1010,7 @@ bb.c:                                             ; preds = %.lr.ph.i
   %i.s = load ptr, ptr %i.q, align 8, !alias.scope !5294, !noalias !5297, !noundef !10 ; 2 uses
   %i.t = icmp eq ptr %i.s, null                   ; 2 uses
   %i.u = load ptr, ptr %i.r, align 8, !alias.scope !5297, !noalias !5294, !noundef !10 ; 3 uses
-  %i.v = icmp eq ptr %i.u, null                   ; 3 uses
+  %i.v = icmp eq ptr %i.u, null                   ; 2 uses
   %i.w = xor i1 %i.t, %i.v
   br i1 %i.w, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def9item_tree9ModItemIdINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit, label %bb.d
 
@@ -1056,27 +1058,25 @@ tailrecurse.i.i:                                  ; preds = %.lr.ph.i.i
 bb.f:                                             ; preds = %.lr.ph.i.i
   %i.am = getelementptr inbounds nuw i8, ptr %.tr16.i.i, i64 8
   %i.an = getelementptr inbounds nuw i8, ptr %.tr717.i.i, i64 8
-  %.val.i.i.a = load ptr, ptr %i.am, align 8, !noalias !5304, !noundef !10 ; 2 uses
+  %.val.i.i = load ptr, ptr %i.am, align 8, !noalias !5304, !noundef !10 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.tr16.i.i, i64 16
+  %.val.i.i.a = load ptr, ptr %2, align 8, !noalias !5304 ; 3 uses
   %.val5.i.i = load ptr, ptr %i.an, align 8, !noalias !5305, !noundef !10 ; 3 uses
-  %2 = icmp ne ptr %.val.i.i.a, null              ; 2 uses
-  %3 = icmp eq ptr %.val5.i.i, null               ; 3 uses
-  %not..i.i.i = xor i1 %3, true
-  %i.ao = xor i1 %2, %3
+  %3 = getelementptr inbounds nuw i8, ptr %.tr717.i.i, i64 16
+  %.val6.i.i = load ptr, ptr %3, align 8, !noalias !5305 ; 3 uses
+  %4 = icmp ne ptr %.val.i.i, null                ; 2 uses
+  %5 = icmp eq ptr %.val5.i.i, null               ; 2 uses
+  %i.ao = xor i1 %4, %5
   br i1 %i.ao, label %bb.g, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def9item_tree9ModItemIdINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
 bb.g:                                             ; preds = %bb.f
-  %4 = getelementptr inbounds nuw i8, ptr %.tr717.i.i, i64 16
-  %.val6.i.i = load ptr, ptr %4, align 8, !noalias !5305
-  %5 = getelementptr inbounds nuw i8, ptr %.tr16.i.i, i64 16
-  %.val4.i.i = load ptr, ptr %5, align 8, !noalias !5304
-  %6 = icmp eq ptr %.val4.i.i, %.val6.i.i         ; 2 uses
-  br i1 %2, label %.split7.i, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i
+  br i1 %4, label %.split7.i, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i
 
 .split7.i:                                        ; preds = %bb.g
-  tail call void @llvm.assume(i1 %not..i.i.i)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5.i.i) ]
-  %i.ap = icmp eq ptr %.val.i.i.a, %.val5.i.i
-  %spec.select.i.i.i = select i1 %i.ap, i1 %6, i1 false
+  %6 = icmp eq ptr %.val.i.i, %.val5.i.i
+  %i.ap = icmp eq ptr %.val.i.i.a, %.val6.i.i
+  %spec.select.i.i.i = select i1 %6, i1 %i.ap, i1 false
   br i1 %spec.select.i.i.i, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread5.i, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def9item_tree9ModItemIdINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
 bb.h:                                             ; preds = %.lr.ph.i.i
@@ -1112,12 +1112,13 @@ bb.i:                                             ; preds = %.lr.ph.i.i
   br i1 %i.bj, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread5.i, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def9item_tree9ModItemIdINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
 _RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.i: ; preds = %bb.g
-  tail call void @llvm.assume(i1 %3)
-  br i1 %6, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread5.i, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def9item_tree9ModItemIdINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
+  tail call void @llvm.assume(i1 %5)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.a) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val6.i.i) ]
+  %7 = icmp eq ptr %.val.i.i.a, %.val6.i.i
+  br i1 %7, label %_RNvXsd_NtCs4kMRW8zVVbM_3cfg8cfg_exprNtB5_7CfgExprNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit.thread5.i, label %_RNvXs2_NtNtCshzWfHUSfYae_4core5slice3cmpNtNtCsileJQcQObtj_7hir_def9item_tree9ModItemIdINtB5_14SlicePartialEqBC_E17equal_same_lengthBG_.exit
 
 bb.j:                                             ; preds = %bb.d
-  %7 = xor i1 %i.v, true
-  tail call void @llvm.assume(i1 %7)
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.bl = load i64, ptr %i.bk, align 8, !alias.scope !5294, !noalias !5297, !noundef !10 ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 128

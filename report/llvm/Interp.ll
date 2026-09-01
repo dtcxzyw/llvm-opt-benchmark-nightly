@@ -205,12 +205,12 @@ _ZNK5clang6interp7Pointer6isRootEv.exit.thread.loopexit: ; preds = %bb.l, %_ZNK5
   br label %_ZNK5clang6interp7Pointer6isRootEv.exit.thread
 
 _ZNK5clang6interp7Pointer6isRootEv.exit.thread:   ; preds = %_ZNK5clang6interp7Pointer6isRootEv.exit.thread.loopexit, %.loopexit
-  %i.ci = phi ptr [ %.pre89, %_ZNK5clang6interp7Pointer6isRootEv.exit.thread.loopexit ], [ %i.bi, %.loopexit ] ; 9 uses
+  %i.ci = phi ptr [ %.pre89, %_ZNK5clang6interp7Pointer6isRootEv.exit.thread.loopexit ], [ %i.bi, %.loopexit ] ; 10 uses
   %i.cj = phi i32 [ %.pre, %_ZNK5clang6interp7Pointer6isRootEv.exit.thread.loopexit ], [ %i.bg, %.loopexit ] ; 4 uses
   %i.ck = icmp ne i32 %i.cj, 0
   call void @llvm.assume(i1 %i.ck)
   %i.cl = icmp ne i32 %i.cj, 1
-  %i.cm = icmp eq ptr %i.ci, null                 ; 3 uses
+  %i.cm = icmp eq ptr %i.ci, null                 ; 2 uses
   %or.cond.i.i.i = select i1 %i.cl, i1 true, i1 %i.cm
   br i1 %or.cond.i.i.i, label %bb.m, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -264,8 +264,7 @@ _ZNK5clang6interp7Pointer8getFieldEv.exit:        ; preds = %bb.o
   br label %bb.u
 
 _ZNK5clang6interp7Pointer6isRootEv.exit.i34:      ; preds = %_ZNK5clang6interp7Pointer12getFieldDescEv.exit.thread9.i, %bb.o, %_ZNK5clang6interp7Pointer12getFieldDescEv.exit.i
-  %6 = xor i1 %i.cm, true
-  call void @llvm.assume(i1 %6)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ci) ]
   %i.dg = load i32, ptr %i.bd, align 8, !tbaa !70, !noalias !806 ; 2 uses
   %i.dh = load ptr, ptr %i.ci, align 8, !tbaa !161 ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 24
@@ -668,8 +667,8 @@ _ZNK5clang17PartialDiagnosticlsINS_8QualTypeEEERKS0_RKT_.exit.i88: ; preds = %_Z
 .critedge:                                        ; preds = %bb.u, %bb.q, %.critedge68, %_ZN5clang6interpL20hasVirtualDestructorENS_8QualTypeE.exit
   %i.ij = load i32, ptr %i.ai, align 8, !tbaa !171 ; 2 uses
   %i.ik = icmp ne i32 %i.ij, 1
-  %i.il = load ptr, ptr %i.as, align 8            ; 10 uses
-  %i.im = icmp eq ptr %i.il, null                 ; 3 uses
+  %i.il = load ptr, ptr %i.as, align 8            ; 11 uses
+  %i.im = icmp eq ptr %i.il, null
   %or.cond.i = select i1 %i.ik, i1 true, i1 %i.im
   br i1 %or.cond.i, label %bb.x, label %_ZNK5clang6interp7Pointer6isRootEv.exit
 
@@ -687,8 +686,7 @@ bb.x:                                             ; preds = %.critedge
   br i1 %i.it, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i.i, label %_ZNK5clang6interp7Pointer14isArrayElementEv.exit.thread
 
 _ZNK5clang6interp7Pointer6isRootEv.exit.i.i.i:    ; preds = %bb.x
-  %9 = xor i1 %i.im, true
-  call void @llvm.assume(i1 %9)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.il) ]
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %4, i64 24
   %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !70, !noalias !908 ; 4 uses
   %.pre175 = load ptr, ptr %i.il, align 8, !tbaa !161 ; 4 uses
@@ -760,8 +758,6 @@ _ZNK5clang6interp7Pointer12isOnePastEndEv.exit:   ; preds = %_ZNK5clang6interp7P
   br i1 %i.jx, label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit.thread155, label %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit.thread.thread
 
 _ZNK5clang6interp7Pointer12isOnePastEndEv.exit.thread155: ; preds = %_ZNK5clang6interp7Pointer9isPastEndEv.exit.i, %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit
-  %10 = xor i1 %i.im, true
-  call void @llvm.assume(i1 %10)
   br i1 %i.iz, label %_ZNK5clang6interp7Pointer15isZeroSizeArrayEv.exit, label %_ZNK5clang6interp7Pointer12getFieldDescEv.exit.i
 
 _ZNK5clang6interp7Pointer12getFieldDescEv.exit.i: ; preds = %_ZNK5clang6interp7Pointer12isOnePastEndEv.exit.thread155
@@ -1164,8 +1160,8 @@ bb.d:                                             ; preds = %_ZN5clang6interp10C
 bb.e:                                             ; preds = %bb.d
   %i.au = icmp ne i32 %i.m, 1
   %i.av = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.aw = load ptr, ptr %i.av, align 8            ; 9 uses
-  %i.ax = icmp eq ptr %i.aw, null                 ; 2 uses
+  %i.aw = load ptr, ptr %i.av, align 8            ; 10 uses
+  %i.ax = icmp eq ptr %i.aw, null
   %or.cond.i.i = select i1 %i.au, i1 true, i1 %i.ax
   br i1 %or.cond.i.i, label %bb.f, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i
 
@@ -1205,8 +1201,7 @@ bb.h:                                             ; preds = %_ZNK5clang6interp7P
   %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.bm = load i32, ptr %i.bl, align 8, !tbaa !70, !noalias !4226 ; 7 uses
   %i.bn = load i64, ptr %3, align 8, !tbaa !191, !noalias !4226 ; 2 uses
-  %9 = xor i1 %i.ax, true
-  call void @llvm.assume(i1 %9)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aw) ]
   %i.bo = icmp ugt i32 %i.bm, 16
   %i.bp = zext i32 %i.bm to i64                   ; 4 uses
   %i.bq = icmp eq i64 %i.bn, %i.bp                ; 2 uses
@@ -1448,8 +1443,8 @@ bb.d:                                             ; preds = %_ZN5clang6interp10C
 bb.e:                                             ; preds = %bb.d
   %i.au = icmp ne i32 %i.m, 1
   %i.av = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.aw = load ptr, ptr %i.av, align 8            ; 9 uses
-  %i.ax = icmp eq ptr %i.aw, null                 ; 2 uses
+  %i.aw = load ptr, ptr %i.av, align 8            ; 10 uses
+  %i.ax = icmp eq ptr %i.aw, null
   %or.cond.i.i = select i1 %i.au, i1 true, i1 %i.ax
   br i1 %or.cond.i.i, label %bb.f, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i
 
@@ -1489,8 +1484,7 @@ bb.h:                                             ; preds = %_ZNK5clang6interp7P
   %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.bm = load i32, ptr %i.bl, align 8, !tbaa !70, !noalias !4246 ; 7 uses
   %i.bn = load i64, ptr %3, align 8, !tbaa !191, !noalias !4246 ; 2 uses
-  %9 = xor i1 %i.ax, true
-  call void @llvm.assume(i1 %9)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aw) ]
   %i.bo = icmp ugt i32 %i.bm, 16
   %i.bp = zext i32 %i.bm to i64                   ; 4 uses
   %i.bq = icmp eq i64 %i.bn, %i.bp                ; 2 uses
@@ -1732,8 +1726,8 @@ bb.d:                                             ; preds = %_ZN5clang6interp10C
 bb.e:                                             ; preds = %bb.d
   %i.au = icmp ne i32 %i.m, 1
   %i.av = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.aw = load ptr, ptr %i.av, align 8            ; 9 uses
-  %i.ax = icmp eq ptr %i.aw, null                 ; 2 uses
+  %i.aw = load ptr, ptr %i.av, align 8            ; 10 uses
+  %i.ax = icmp eq ptr %i.aw, null
   %or.cond.i.i = select i1 %i.au, i1 true, i1 %i.ax
   br i1 %or.cond.i.i, label %bb.f, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i
 
@@ -1773,8 +1767,7 @@ bb.h:                                             ; preds = %_ZNK5clang6interp7P
   %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.bm = load i32, ptr %i.bl, align 8, !tbaa !70, !noalias !4266 ; 7 uses
   %i.bn = load i64, ptr %3, align 8, !tbaa !191, !noalias !4266 ; 2 uses
-  %9 = xor i1 %i.ax, true
-  call void @llvm.assume(i1 %9)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aw) ]
   %i.bo = icmp ugt i32 %i.bm, 16
   %i.bp = zext i32 %i.bm to i64                   ; 4 uses
   %i.bq = icmp eq i64 %i.bn, %i.bp                ; 2 uses
@@ -2016,8 +2009,8 @@ bb.d:                                             ; preds = %_ZN5clang6interp10C
 bb.e:                                             ; preds = %bb.d
   %i.au = icmp ne i32 %i.m, 1
   %i.av = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.aw = load ptr, ptr %i.av, align 8            ; 9 uses
-  %i.ax = icmp eq ptr %i.aw, null                 ; 2 uses
+  %i.aw = load ptr, ptr %i.av, align 8            ; 10 uses
+  %i.ax = icmp eq ptr %i.aw, null
   %or.cond.i.i = select i1 %i.au, i1 true, i1 %i.ax
   br i1 %or.cond.i.i, label %bb.f, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i
 
@@ -2057,8 +2050,7 @@ bb.h:                                             ; preds = %_ZNK5clang6interp7P
   %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.bm = load i32, ptr %i.bl, align 8, !tbaa !70, !noalias !4286 ; 7 uses
   %i.bn = load i64, ptr %3, align 8, !tbaa !191, !noalias !4286 ; 2 uses
-  %9 = xor i1 %i.ax, true
-  call void @llvm.assume(i1 %9)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aw) ]
   %i.bo = icmp ugt i32 %i.bm, 16
   %i.bp = zext i32 %i.bm to i64                   ; 4 uses
   %i.bq = icmp eq i64 %i.bn, %i.bp                ; 2 uses
@@ -2300,8 +2292,8 @@ bb.d:                                             ; preds = %_ZN5clang6interp10C
 bb.e:                                             ; preds = %bb.d
   %i.au = icmp ne i32 %i.m, 1
   %i.av = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.aw = load ptr, ptr %i.av, align 8            ; 9 uses
-  %i.ax = icmp eq ptr %i.aw, null                 ; 2 uses
+  %i.aw = load ptr, ptr %i.av, align 8            ; 10 uses
+  %i.ax = icmp eq ptr %i.aw, null
   %or.cond.i.i = select i1 %i.au, i1 true, i1 %i.ax
   br i1 %or.cond.i.i, label %bb.f, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i
 
@@ -2341,8 +2333,7 @@ bb.h:                                             ; preds = %_ZNK5clang6interp7P
   %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.bm = load i32, ptr %i.bl, align 8, !tbaa !70, !noalias !4306 ; 7 uses
   %i.bn = load i64, ptr %3, align 8, !tbaa !191, !noalias !4306 ; 2 uses
-  %9 = xor i1 %i.ax, true
-  call void @llvm.assume(i1 %9)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aw) ]
   %i.bo = icmp ugt i32 %i.bm, 16
   %i.bp = zext i32 %i.bm to i64                   ; 4 uses
   %i.bq = icmp eq i64 %i.bn, %i.bp                ; 2 uses
@@ -2584,8 +2575,8 @@ bb.d:                                             ; preds = %_ZN5clang6interp10C
 bb.e:                                             ; preds = %bb.d
   %i.au = icmp ne i32 %i.m, 1
   %i.av = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.aw = load ptr, ptr %i.av, align 8            ; 9 uses
-  %i.ax = icmp eq ptr %i.aw, null                 ; 2 uses
+  %i.aw = load ptr, ptr %i.av, align 8            ; 10 uses
+  %i.ax = icmp eq ptr %i.aw, null
   %or.cond.i.i = select i1 %i.au, i1 true, i1 %i.ax
   br i1 %or.cond.i.i, label %bb.f, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i
 
@@ -2625,8 +2616,7 @@ bb.h:                                             ; preds = %_ZNK5clang6interp7P
   %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.bm = load i32, ptr %i.bl, align 8, !tbaa !70, !noalias !4326 ; 7 uses
   %i.bn = load i64, ptr %3, align 8, !tbaa !191, !noalias !4326 ; 2 uses
-  %9 = xor i1 %i.ax, true
-  call void @llvm.assume(i1 %9)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.aw) ]
   %i.bo = icmp ugt i32 %i.bm, 16
   %i.bp = zext i32 %i.bm to i64                   ; 4 uses
   %i.bq = icmp eq i64 %i.bn, %i.bp                ; 2 uses
@@ -2963,8 +2953,8 @@ bb.g:                                             ; preds = %.split43, %_ZNK4llv
 bb.h:                                             ; preds = %bb.g
   %i.bs = icmp ne i32 %i.bq, 1
   %i.bt = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.bu = load ptr, ptr %i.bt, align 8            ; 9 uses
-  %i.bv = icmp eq ptr %i.bu, null                 ; 2 uses
+  %i.bu = load ptr, ptr %i.bt, align 8            ; 10 uses
+  %i.bv = icmp eq ptr %i.bu, null
   %or.cond.i.i = select i1 %i.bs, i1 true, i1 %i.bv
   br i1 %or.cond.i.i, label %bb.i, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i
 
@@ -3004,8 +2994,7 @@ bb.k:                                             ; preds = %_ZNK5clang6interp7P
   %i.cj = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.ck = load i32, ptr %i.cj, align 8, !tbaa !70, !noalias !4343 ; 7 uses
   %i.cl = load i64, ptr %5, align 8, !tbaa !191, !noalias !4343 ; 2 uses
-  %11 = xor i1 %i.bv, true
-  call void @llvm.assume(i1 %11)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bu) ]
   %i.cm = icmp ugt i32 %i.ck, 16
   %i.cn = zext i32 %i.ck to i64                   ; 4 uses
   %i.co = icmp eq i64 %i.cl, %i.cn                ; 2 uses
@@ -3362,8 +3351,8 @@ bb.g:                                             ; preds = %.split44, %_ZNK4llv
 bb.h:                                             ; preds = %bb.g
   %i.ce = icmp ne i32 %i.cc, 1
   %i.cf = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.cg = load ptr, ptr %i.cf, align 8            ; 9 uses
-  %i.ch = icmp eq ptr %i.cg, null                 ; 2 uses
+  %i.cg = load ptr, ptr %i.cf, align 8            ; 10 uses
+  %i.ch = icmp eq ptr %i.cg, null
   %or.cond.i.i = select i1 %i.ce, i1 true, i1 %i.ch
   br i1 %or.cond.i.i, label %bb.i, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i
 
@@ -3403,8 +3392,7 @@ bb.k:                                             ; preds = %_ZNK5clang6interp7P
   %i.cv = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.cw = load i32, ptr %i.cv, align 8, !tbaa !70, !noalias !4360 ; 7 uses
   %i.cx = load i64, ptr %5, align 8, !tbaa !191, !noalias !4360 ; 2 uses
-  %11 = xor i1 %i.ch, true
-  call void @llvm.assume(i1 %11)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cg) ]
   %i.cy = icmp ugt i32 %i.cw, 16
   %i.cz = zext i32 %i.cw to i64                   ; 4 uses
   %i.da = icmp eq i64 %i.cx, %i.cz                ; 2 uses
@@ -3641,8 +3629,8 @@ bb.d:                                             ; preds = %_ZN5clang6interp10C
 bb.e:                                             ; preds = %bb.d
   %i.ar = icmp ne i32 %i.m, 1
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.at = load ptr, ptr %i.as, align 8            ; 9 uses
-  %i.au = icmp eq ptr %i.at, null                 ; 2 uses
+  %i.at = load ptr, ptr %i.as, align 8            ; 10 uses
+  %i.au = icmp eq ptr %i.at, null
   %or.cond.i.i = select i1 %i.ar, i1 true, i1 %i.au
   br i1 %or.cond.i.i, label %bb.f, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i
 
@@ -3682,8 +3670,7 @@ bb.h:                                             ; preds = %_ZNK5clang6interp7P
   %i.bi = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.bj = load i32, ptr %i.bi, align 8, !tbaa !70, !noalias !4377 ; 7 uses
   %i.bk = load i64, ptr %3, align 8, !tbaa !191, !noalias !4377 ; 2 uses
-  %9 = xor i1 %i.au, true
-  call void @llvm.assume(i1 %9)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.at) ]
   %i.bl = icmp ugt i32 %i.bj, 16
   %i.bm = zext i32 %i.bj to i64                   ; 4 uses
   %i.bn = icmp eq i64 %i.bk, %i.bm                ; 2 uses
@@ -4086,8 +4073,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp ne i32 %i.k, 1
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8              ; 6 uses
-  %i.p = icmp eq ptr %i.o, null                   ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 7 uses
+  %i.p = icmp eq ptr %i.o, null
   %or.cond.i.i.i = select i1 %i.m, i1 true, i1 %i.p
   br i1 %or.cond.i.i.i, label %bb.d, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -4151,8 +4138,7 @@ _ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit: ; preds = %_ZNK5clang6in
   br i1 %i.al, label %_ZNK5clang6interp7Pointer16canBeInitializedEv.exit, label %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit.thread
 
 _ZNK5clang6interp7Pointer16canBeInitializedEv.exit: ; preds = %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit
-  %3 = xor i1 %i.p, true
-  tail call void @llvm.assume(i1 %3)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.an = load i32, ptr %i.am, align 8, !tbaa !70 ; 2 uses
   %.not = icmp eq i32 %i.an, 0
@@ -4236,8 +4222,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp ne i32 %i.k, 1
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8              ; 6 uses
-  %i.p = icmp eq ptr %i.o, null                   ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 7 uses
+  %i.p = icmp eq ptr %i.o, null
   %or.cond.i.i.i = select i1 %i.m, i1 true, i1 %i.p
   br i1 %or.cond.i.i.i, label %bb.d, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -4301,8 +4287,7 @@ _ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit: ; preds = %_ZNK5clang6in
   br i1 %i.al, label %_ZNK5clang6interp7Pointer16canBeInitializedEv.exit, label %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit.thread
 
 _ZNK5clang6interp7Pointer16canBeInitializedEv.exit: ; preds = %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit
-  %3 = xor i1 %i.p, true
-  tail call void @llvm.assume(i1 %3)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.an = load i32, ptr %i.am, align 8, !tbaa !70 ; 2 uses
   %.not = icmp eq i32 %i.an, 0
@@ -4388,8 +4373,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp ne i32 %i.k, 1
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8              ; 6 uses
-  %i.p = icmp eq ptr %i.o, null                   ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 7 uses
+  %i.p = icmp eq ptr %i.o, null
   %or.cond.i.i.i = select i1 %i.m, i1 true, i1 %i.p
   br i1 %or.cond.i.i.i, label %bb.d, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -4453,8 +4438,7 @@ _ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit: ; preds = %_ZNK5clang6in
   br i1 %i.al, label %_ZNK5clang6interp7Pointer16canBeInitializedEv.exit, label %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit.thread
 
 _ZNK5clang6interp7Pointer16canBeInitializedEv.exit: ; preds = %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit
-  %4 = xor i1 %i.p, true
-  tail call void @llvm.assume(i1 %4)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.an = load i32, ptr %i.am, align 8, !tbaa !70 ; 2 uses
   %.not = icmp eq i32 %i.an, 0
@@ -4541,8 +4525,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp ne i32 %i.k, 1
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8              ; 6 uses
-  %i.p = icmp eq ptr %i.o, null                   ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 7 uses
+  %i.p = icmp eq ptr %i.o, null
   %or.cond.i.i.i = select i1 %i.m, i1 true, i1 %i.p
   br i1 %or.cond.i.i.i, label %bb.d, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -4606,8 +4590,7 @@ _ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit: ; preds = %_ZNK5clang6in
   br i1 %i.al, label %_ZNK5clang6interp7Pointer16canBeInitializedEv.exit, label %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit.thread
 
 _ZNK5clang6interp7Pointer16canBeInitializedEv.exit: ; preds = %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit
-  %4 = xor i1 %i.p, true
-  tail call void @llvm.assume(i1 %4)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.an = load i32, ptr %i.am, align 8, !tbaa !70 ; 2 uses
   %.not = icmp eq i32 %i.an, 0
@@ -4694,8 +4677,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp ne i32 %i.k, 1
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8              ; 6 uses
-  %i.p = icmp eq ptr %i.o, null                   ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 7 uses
+  %i.p = icmp eq ptr %i.o, null
   %or.cond.i.i.i = select i1 %i.m, i1 true, i1 %i.p
   br i1 %or.cond.i.i.i, label %bb.d, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -4759,8 +4742,7 @@ _ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit: ; preds = %_ZNK5clang6in
   br i1 %i.al, label %_ZNK5clang6interp7Pointer16canBeInitializedEv.exit, label %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit.thread
 
 _ZNK5clang6interp7Pointer16canBeInitializedEv.exit: ; preds = %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit
-  %4 = xor i1 %i.p, true
-  tail call void @llvm.assume(i1 %4)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.an = load i32, ptr %i.am, align 8, !tbaa !70 ; 2 uses
   %.not = icmp eq i32 %i.an, 0
@@ -4847,8 +4829,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp ne i32 %i.k, 1
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8              ; 6 uses
-  %i.p = icmp eq ptr %i.o, null                   ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 7 uses
+  %i.p = icmp eq ptr %i.o, null
   %or.cond.i.i.i = select i1 %i.m, i1 true, i1 %i.p
   br i1 %or.cond.i.i.i, label %bb.d, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -4912,8 +4894,7 @@ _ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit: ; preds = %_ZNK5clang6in
   br i1 %i.al, label %_ZNK5clang6interp7Pointer16canBeInitializedEv.exit, label %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit.thread
 
 _ZNK5clang6interp7Pointer16canBeInitializedEv.exit: ; preds = %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit
-  %4 = xor i1 %i.p, true
-  tail call void @llvm.assume(i1 %4)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.an = load i32, ptr %i.am, align 8, !tbaa !70 ; 2 uses
   %.not = icmp eq i32 %i.an, 0
@@ -5000,8 +4981,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp ne i32 %i.k, 1
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8              ; 6 uses
-  %i.p = icmp eq ptr %i.o, null                   ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 7 uses
+  %i.p = icmp eq ptr %i.o, null
   %or.cond.i.i.i = select i1 %i.m, i1 true, i1 %i.p
   br i1 %or.cond.i.i.i, label %bb.d, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -5065,8 +5046,7 @@ _ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit: ; preds = %_ZNK5clang6in
   br i1 %i.al, label %_ZNK5clang6interp7Pointer16canBeInitializedEv.exit, label %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit.thread
 
 _ZNK5clang6interp7Pointer16canBeInitializedEv.exit: ; preds = %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit
-  %4 = xor i1 %i.p, true
-  tail call void @llvm.assume(i1 %4)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.an = load i32, ptr %i.am, align 8, !tbaa !70 ; 2 uses
   %.not = icmp eq i32 %i.an, 0
@@ -5153,8 +5133,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp ne i32 %i.k, 1
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8              ; 6 uses
-  %i.p = icmp eq ptr %i.o, null                   ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 7 uses
+  %i.p = icmp eq ptr %i.o, null
   %or.cond.i.i.i = select i1 %i.m, i1 true, i1 %i.p
   br i1 %or.cond.i.i.i, label %bb.d, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -5218,8 +5198,7 @@ _ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit: ; preds = %_ZNK5clang6in
   br i1 %i.al, label %_ZNK5clang6interp7Pointer16canBeInitializedEv.exit, label %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit.thread
 
 _ZNK5clang6interp7Pointer16canBeInitializedEv.exit: ; preds = %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit
-  %4 = xor i1 %i.p, true
-  tail call void @llvm.assume(i1 %4)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.an = load i32, ptr %i.am, align 8, !tbaa !70 ; 2 uses
   %.not = icmp eq i32 %i.an, 0
@@ -5306,8 +5285,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp ne i32 %i.k, 1
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8              ; 6 uses
-  %i.p = icmp eq ptr %i.o, null                   ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 7 uses
+  %i.p = icmp eq ptr %i.o, null
   %or.cond.i.i.i = select i1 %i.m, i1 true, i1 %i.p
   br i1 %or.cond.i.i.i, label %bb.d, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -5371,8 +5350,7 @@ _ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit: ; preds = %_ZNK5clang6in
   br i1 %i.al, label %_ZNK5clang6interp7Pointer16canBeInitializedEv.exit, label %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit.thread
 
 _ZNK5clang6interp7Pointer16canBeInitializedEv.exit: ; preds = %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit
-  %3 = xor i1 %i.p, true
-  tail call void @llvm.assume(i1 %3)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.an = load i32, ptr %i.am, align 8, !tbaa !70 ; 2 uses
   %.not = icmp eq i32 %i.an, 0
@@ -5460,8 +5438,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp ne i32 %i.k, 1
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8              ; 6 uses
-  %i.p = icmp eq ptr %i.o, null                   ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 7 uses
+  %i.p = icmp eq ptr %i.o, null
   %or.cond.i.i.i = select i1 %i.m, i1 true, i1 %i.p
   br i1 %or.cond.i.i.i, label %bb.d, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -5525,8 +5503,7 @@ _ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit: ; preds = %_ZNK5clang6in
   br i1 %i.al, label %_ZNK5clang6interp7Pointer16canBeInitializedEv.exit, label %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit.thread
 
 _ZNK5clang6interp7Pointer16canBeInitializedEv.exit: ; preds = %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit
-  %3 = xor i1 %i.p, true
-  tail call void @llvm.assume(i1 %3)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.an = load i32, ptr %i.am, align 8, !tbaa !70 ; 2 uses
   %.not = icmp eq i32 %i.an, 0
@@ -5612,8 +5589,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp ne i32 %i.k, 1
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8              ; 6 uses
-  %i.p = icmp eq ptr %i.o, null                   ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 7 uses
+  %i.p = icmp eq ptr %i.o, null
   %or.cond.i.i.i = select i1 %i.m, i1 true, i1 %i.p
   br i1 %or.cond.i.i.i, label %bb.d, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -5677,8 +5654,7 @@ _ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit: ; preds = %_ZNK5clang6in
   br i1 %i.al, label %_ZNK5clang6interp7Pointer16canBeInitializedEv.exit, label %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit.thread
 
 _ZNK5clang6interp7Pointer16canBeInitializedEv.exit: ; preds = %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit
-  %3 = xor i1 %i.p, true
-  tail call void @llvm.assume(i1 %3)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.an = load i32, ptr %i.am, align 8, !tbaa !70 ; 2 uses
   %.not = icmp eq i32 %i.an, 0
@@ -5779,8 +5755,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.w = icmp ne i32 %i.u, 1
   %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 16 ; 2 uses
-  %i.y = load ptr, ptr %i.x, align 8              ; 6 uses
-  %i.z = icmp eq ptr %i.y, null                   ; 2 uses
+  %i.y = load ptr, ptr %i.x, align 8              ; 7 uses
+  %i.z = icmp eq ptr %i.y, null
   %or.cond.i.i.i = select i1 %i.w, i1 true, i1 %i.z
   br i1 %or.cond.i.i.i, label %bb.d, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -5844,8 +5820,7 @@ _ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit: ; preds = %_ZNK5clang6in
   br i1 %i.av, label %_ZNK5clang6interp7Pointer16canBeInitializedEv.exit, label %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit.thread
 
 _ZNK5clang6interp7Pointer16canBeInitializedEv.exit: ; preds = %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit
-  %4 = xor i1 %i.z, true
-  tail call void @llvm.assume(i1 %4)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.y) ]
   %i.aw = getelementptr inbounds nuw i8, ptr %i.r, i64 24
   %i.ax = load i32, ptr %i.aw, align 8, !tbaa !70 ; 2 uses
   %.not = icmp eq i32 %i.ax, 0
@@ -5972,8 +5947,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp ne i32 %i.k, 1
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8              ; 6 uses
-  %i.p = icmp eq ptr %i.o, null                   ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 7 uses
+  %i.p = icmp eq ptr %i.o, null
   %or.cond.i.i.i = select i1 %i.m, i1 true, i1 %i.p
   br i1 %or.cond.i.i.i, label %bb.d, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -6037,8 +6012,7 @@ _ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit: ; preds = %_ZNK5clang6in
   br i1 %i.al, label %_ZNK5clang6interp7Pointer16canBeInitializedEv.exit, label %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit.thread
 
 _ZNK5clang6interp7Pointer16canBeInitializedEv.exit: ; preds = %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit
-  %4 = xor i1 %i.p, true
-  call void @llvm.assume(i1 %4)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.an = load i32, ptr %i.am, align 8, !tbaa !70 ; 2 uses
   %.not = icmp eq i32 %i.an, 0
@@ -6129,8 +6103,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.o = icmp ne i32 %i.m, 1
   %i.p = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
-  %i.q = load ptr, ptr %i.p, align 8              ; 6 uses
-  %i.r = icmp eq ptr %i.q, null                   ; 2 uses
+  %i.q = load ptr, ptr %i.p, align 8              ; 7 uses
+  %i.r = icmp eq ptr %i.q, null
   %or.cond.i.i.i = select i1 %i.o, i1 true, i1 %i.r
   br i1 %or.cond.i.i.i, label %bb.d, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -6194,8 +6168,7 @@ _ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit: ; preds = %_ZNK5clang6in
   br i1 %i.an, label %_ZNK5clang6interp7Pointer16canBeInitializedEv.exit, label %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit.thread
 
 _ZNK5clang6interp7Pointer16canBeInitializedEv.exit: ; preds = %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit
-  %4 = xor i1 %i.r, true
-  call void @llvm.assume(i1 %4)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.q) ]
   %i.ao = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.ap = load i32, ptr %i.ao, align 8, !tbaa !70 ; 2 uses
   %.not = icmp eq i32 %i.ap, 0
@@ -6285,8 +6258,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = icmp ne i32 %i.k, 1
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8              ; 6 uses
-  %i.p = icmp eq ptr %i.o, null                   ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8              ; 7 uses
+  %i.p = icmp eq ptr %i.o, null
   %or.cond.i.i.i = select i1 %i.m, i1 true, i1 %i.p
   br i1 %or.cond.i.i.i, label %bb.d, label %_ZNK5clang6interp7Pointer6isRootEv.exit.i.i
 
@@ -6350,8 +6323,7 @@ _ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit: ; preds = %_ZNK5clang6in
   br i1 %i.al, label %_ZNK5clang6interp7Pointer16canBeInitializedEv.exit, label %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit.thread
 
 _ZNK5clang6interp7Pointer16canBeInitializedEv.exit: ; preds = %_ZNK5clang6interp7Pointer8canDerefENS0_8PrimTypeE.exit
-  %3 = xor i1 %i.p, true
-  tail call void @llvm.assume(i1 %3)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.o) ]
   %i.am = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.an = load i32, ptr %i.am, align 8, !tbaa !70 ; 2 uses
   %.not = icmp eq i32 %i.an, 0

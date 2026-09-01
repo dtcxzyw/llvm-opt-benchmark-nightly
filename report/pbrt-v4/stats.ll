@@ -205,10 +205,11 @@ bb.a:
   %i.c = alloca float, align 4                    ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
   %i.d = uitofp i64 %1 to double
-  %i.e = fmul nnan double %i.d, f0x3F50000000000000 ; 2 uses
-  %i.f = fptrunc double %i.e to float             ; 2 uses
+  %i.e = fmul nnan double %i.d, f0x3F50000000000000
+  %i.f = fptrunc double %i.e to float             ; 3 uses
   store float %i.f, ptr %i.a, align 4, !tbaa !67
-  %i.g = fcmp olt double %i.e, f0x408FFFFFF0000000
+  %2 = tail call noundef float @llvm.fabs.f32(float %i.f)
+  %i.g = fcmp olt float %2, 1.024000e+03
   br i1 %i.g, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -244,8 +245,7 @@ bb.d:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #26
   %i.n = fmul nnan float %i.f, f0x3A800000        ; 3 uses
   store float %i.n, ptr %i.b, align 4, !tbaa !67
-  %2 = tail call noundef float @llvm.fabs.f32(float %i.n)
-  %i.o = fcmp olt float %2, 1.024000e+03
+  %i.o = fcmp olt float %i.n, 1.024000e+03
   br i1 %i.o, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d

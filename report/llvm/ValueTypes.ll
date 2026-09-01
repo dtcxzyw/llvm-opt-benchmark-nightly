@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %_ZNK4llvm3EVT8isVec
 _ZNK4llvm3EVT13getScalarTypeEv.exit.i:            ; preds = %.split._crit_edge.i.i, %bb.c, %bb.b
   %.fca.1.insert.merged.i.i = phi { i16, ptr } [ %i.s, %.split._crit_edge.i.i ], [ %i.n, %bb.b ], [ %i.q, %bb.c ] ; 2 uses
   %i.t = extractvalue { i16, ptr } %.fca.1.insert.merged.i.i, 0 ; 2 uses
-  %i.u = extractvalue { i16, ptr } %.fca.1.insert.merged.i.i, 1 ; 3 uses
+  %i.u = extractvalue { i16, ptr } %.fca.1.insert.merged.i.i, 1 ; 4 uses
   %.not.i.i = icmp eq i16 %i.t, 0
   br i1 %.not.i.i, label %bb.e, label %bb.d
 
@@ -218,7 +218,7 @@ bb.e:                                             ; preds = %_ZNK4llvm3EVT13getS
   %i.z = load i32, ptr %i.y, align 8              ; 3 uses
   %i.aa = and i32 %i.z, 255
   %i.ab = icmp ne i32 %i.aa, 12
-  %.not.not16.i.i.i = icmp eq ptr %i.u, null      ; 2 uses
+  %.not.not16.i.i.i = icmp eq ptr %i.u, null
   %.not.not.i.i.i = or i1 %.not.not16.i.i.i, %i.ab
   br i1 %.not.not.i.i.i, label %bb.g, label %bb.f
 
@@ -230,8 +230,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.ae = and i32 %i.z, 254
   %spec.select.i.i.i.i.i.i.i.i.i.i.i = icmp eq i32 %i.ae, 18
-  %2 = xor i1 %.not.not16.i.i.i, true
-  tail call void @llvm.assume(i1 %2)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u) ]
   tail call void @llvm.assume(i1 %spec.select.i.i.i.i.i.i.i.i.i.i.i)
   %i.af = tail call { i64, i8 } @_ZNK4llvm4Type22getPrimitiveSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(24) %i.u) #17
   %.fca.0.extract.i.i.i = extractvalue { i64, i8 } %i.af, 0
