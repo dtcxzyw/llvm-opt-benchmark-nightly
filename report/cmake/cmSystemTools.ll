@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   br i1 %.sroa.01.0.copyload60.b, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofES2_m.exit.thread
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %.lr.ph.i.i, %bb.e
-  %.0710.i.i = phi i64 [ %i.i, %bb.e ], [ %.01759, %.lr.ph.i.i ] ; 11 uses
+  %.0710.i.i = phi i64 [ %i.i, %bb.e ], [ %.01759, %.lr.ph.i.i ] ; 8 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 %.0710.i.i
   %i.f = load i8, ptr %i.e, align 1, !tbaa !28
   %i.g = sext i8 %i.f to i32
@@ -221,14 +221,10 @@ bb.e:                                             ; preds = %_ZNSt11char_traitsI
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofES2_m.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 %.0710.i.i
   %i.k = icmp eq i64 %.0710.i.i, -1
-  br i1 %i.k, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofES2_m.exit.thread, label %5
+  br i1 %i.k, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofES2_m.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i26
 
-5:                                                ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofES2_m.exit
-  %6 = icmp ult i64 %.0710.i.i, %1
-  br i1 %6, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i26, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofES2_m.exit.thread
-
-_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i26:   ; preds = %5, %bb.f
-  %.0111420.i.i = phi i64 [ %i.p, %bb.f ], [ %.0710.i.i, %5 ] ; 6 uses
+_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i26:   ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofES2_m.exit, %bb.f
+  %.0111420.i.i = phi i64 [ %i.p, %bb.f ], [ %.0710.i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofES2_m.exit ] ; 6 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 %.0111420.i.i
   %i.m = load i8, ptr %i.l, align 1, !tbaa !28
   %i.n = sext i8 %i.m to i32
@@ -245,8 +241,8 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofES2_m.exit: ; preds
   %i.q = icmp eq i64 %.0111420.i.i, -1
   br i1 %i.q, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofES2_m.exit.thread, label %bb.k
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofES2_m.exit.thread: ; preds = %.lr.ph.i.i, %5, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofES2_m.exit, %bb.f
-  %.0.i.i414447 = phi i64 [ %.0710.i.i, %bb.f ], [ %.01759, %.lr.ph.i.i ], [ %.0710.i.i, %5 ], [ %.0710.i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofES2_m.exit ] ; 4 uses
+_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofES2_m.exit.thread: ; preds = %.lr.ph.i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofES2_m.exit, %bb.f
+  %.0.i.i414447 = phi i64 [ %.0710.i.i, %bb.f ], [ %.01759, %.lr.ph.i.i ], [ %.0710.i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofES2_m.exit ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
   %i.r = icmp ugt i64 %.0.i.i414447, %1
   br i1 %i.r, label %bb.g, label %bb.h
@@ -279,10 +275,8 @@ bb.j:                                             ; preds = %bb.g, %bb.h
 
 bb.k:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofES2_m.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #34
-  %i.x = sub i64 %.0111420.i.i, %.0710.i.i
-  %7 = sub nuw i64 %1, %.0710.i.i
-  %.sroa.speculated.i = call i64 @llvm.umin.i64(i64 %7, i64 %i.x)
-  store i64 %.sroa.speculated.i, ptr %4, align 8
+  %i.x = sub nuw i64 %.0111420.i.i, %.0710.i.i
+  store i64 %i.x, ptr %4, align 8
   store ptr %i.j, ptr %i.d, align 8
   %i.y = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJSt17basic_string_viewIcS3_EEEERS5_DpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(16) %4)
           to label %bb.l unwind label %.loopexit  ; 0 uses

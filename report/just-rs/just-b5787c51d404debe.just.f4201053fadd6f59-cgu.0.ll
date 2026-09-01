@@ -205,7 +205,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6309)
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 40 ; 20 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.t, i64 32 ; 4 uses
-  %i.y = load i64, ptr %i.x, align 8, !alias.scope !6312, !noalias !6317, !noundef !29 ; 6 uses
+  %i.y = load i64, ptr %i.x, align 8, !alias.scope !6312, !noalias !6317, !noundef !29 ; 5 uses
   %.promoted.i.i.i = load i64, ptr %i.w, align 8, !alias.scope !6321, !noalias !6322 ; 2 uses
   %i.z = icmp ult i64 %.promoted.i.i.i, %i.y
   br i1 %i.z, label %.lr.ph.i.i.i, label %.loopexit22.i.i
@@ -215,7 +215,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i.i
-  %i.ab = phi i64 [ %.promoted.i.i.i, %.lr.ph.i.i.i ], [ %i.ae, %bb.c ] ; 5 uses
+  %i.ab = phi i64 [ %.promoted.i.i.i, %.lr.ph.i.i.i ], [ %i.ae, %bb.c ] ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6323)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6324)
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ab
@@ -272,10 +272,9 @@ bb.f:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6350)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6353)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6356)
-  %2 = icmp ult i64 %i.ab, %i.y
-  br i1 %2, label %.lr.ph.i.i.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i.i
+  br label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
-.lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %bb.f, %bb.g
+.lr.ph.i.i.i.i.i.i.i.i.i.i:                       ; preds = %bb.g, %bb.f
   %i.ai = phi i64 [ %i.al, %bb.g ], [ %i.ab, %bb.f ] ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ai
   %i.ak = load i8, ptr %i.aj, align 1, !noalias !6359, !noundef !29
@@ -293,7 +292,7 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %exitcond.not.i.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.al, %i.y
   br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
-.loopexit.i.i.i.i.i.i.i.i.i:                      ; preds = %bb.g, %bb.f
+.loopexit.i.i.i.i.i.i.i.i.i:                      ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !6378
   store i64 5, ptr %i.o, align 8, !noalias !6378
   %i.am = invoke fastcc noundef nonnull align 8 ptr @_RNvMs3_NtCshTCYgcDtIbU_10serde_json2deINtB5_12DeserializerNtNtB7_4read7StrReadE10peek_errorCskXtk6F4WjxZ_4just(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.t, ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.o)

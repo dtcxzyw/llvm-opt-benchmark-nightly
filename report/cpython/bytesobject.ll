@@ -205,8 +205,8 @@ Py_DECREF.exit.thread:                            ; preds = %bb.f, %Py_DECREF.ex
   br i1 %i.w, label %bb.j, label %bb.aj
 
 bb.j:                                             ; preds = %.thread61, %.thread58
-  %spec.store.select.i69 = phi i64 [ 9223372036854775807, %.thread61 ], [ %spec.store.select.i, %.thread58 ] ; 6 uses
-  %.val.i68 = phi i64 [ %.val.i64, %.thread61 ], [ %.val.i, %.thread58 ] ; 9 uses
+  %spec.store.select.i69 = phi i64 [ 9223372036854775807, %.thread61 ], [ %spec.store.select.i, %.thread58 ] ; 5 uses
+  %.val.i68 = phi i64 [ %.val.i64, %.thread61 ], [ %.val.i, %.thread58 ] ; 8 uses
   %.166 = phi i64 [ -1, %.thread61 ], [ %.1, %.thread58 ] ; 3 uses
   %i.x = call i64 @llvm.umin.i64(i64 %.166, i64 11)
   %i.y = add nuw nsw i64 %i.x, 1
@@ -366,7 +366,7 @@ Py_DECREF.exit92.i.i:                             ; preds = %bb.w, %bb.v, %bb.u,
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %bb.x
-  %.4121.i.i = phi i64 [ %i.bw, %bb.x ], [ %.3.i.i, %.preheader.i.i.preheader ] ; 5 uses
+  %.4121.i.i = phi i64 [ %i.bw, %bb.x ], [ %.3.i.i, %.preheader.i.i.preheader ] ; 4 uses
   %i.bq = getelementptr i8, ptr %i.bp, i64 %.4121.i.i
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !14
   %i.bs = zext i8 %i.br to i64
@@ -374,18 +374,14 @@ Py_DECREF.exit92.i.i:                             ; preds = %bb.w, %bb.v, %bb.u,
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !7
   %i.bv = and i32 %i.bu, 8
   %.not84.i.i = icmp eq i32 %i.bv, 0
-  br i1 %.not84.i.i, label %.critedge4.i.i, label %bb.x
+  br i1 %.not84.i.i, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %.preheader.i.i
   %i.bw = add i64 %.4121.i.i, 1                   ; 2 uses
   %exitcond130.not.i.i = icmp eq i64 %i.bw, %.val.i68
   br i1 %exitcond130.not.i.i, label %.loopexit.thread.i.i, label %.preheader.i.i, !llvm.loop !234
 
-.critedge4.i.i:                                   ; preds = %.preheader.i.i
-  %.not85.i.i = icmp eq i64 %.4121.i.i, %.val.i68
-  br i1 %.not85.i.i, label %.loopexit.thread.i.i, label %bb.y
-
-bb.y:                                             ; preds = %.critedge4.i.i
+bb.y:                                             ; preds = %.preheader.i.i
   %i.bx = getelementptr i8, ptr %i.bp, i64 %.4121.i.i
   %i.by = sub i64 %.val.i68, %.4121.i.i
   %i.bz = call ptr @PyBytes_FromStringAndSize(ptr noundef nonnull readonly %i.bx, i64 noundef %i.by), !inline_history !230 ; 8 uses
@@ -436,8 +432,8 @@ Py_DECREF.exit88.i.i:                             ; preds = %bb.ag, %bb.af, %bb.
   %i.ck = add nuw i64 %spec.store.select.i69, 1
   br label %.loopexit.thread.i.i
 
-.loopexit.thread.i.i:                             ; preds = %.critedge.i.i, %bb.k, %bb.x, %Py_DECREF.exit88.i.i, %.critedge4.i.i, %.loopexit.i.i, %Py_INCREF.exit.i.i
-  %.2.i.i = phi i64 [ %i.ck, %Py_DECREF.exit88.i.i ], [ %spec.store.select.i69, %.critedge4.i.i ], [ %spec.store.select.i69, %.loopexit.i.i ], [ %.0116.i.i, %bb.k ], [ %i.ba, %Py_INCREF.exit.i.i ], [ %spec.store.select.i69, %bb.x ], [ %.0116.i.i, %.critedge.i.i ]
+.loopexit.thread.i.i:                             ; preds = %.critedge.i.i, %bb.k, %bb.x, %Py_DECREF.exit88.i.i, %.loopexit.i.i, %Py_INCREF.exit.i.i
+  %.2.i.i = phi i64 [ %i.ck, %Py_DECREF.exit88.i.i ], [ %.0116.i.i, %bb.k ], [ %spec.store.select.i69, %.loopexit.i.i ], [ %spec.store.select.i69, %bb.x ], [ %i.ba, %Py_INCREF.exit.i.i ], [ %.0116.i.i, %.critedge.i.i ]
   %i.cl = getelementptr i8, ptr %i.z, i64 16
   store i64 %.2.i.i, ptr %i.cl, align 8, !tbaa !20
   br label %bytes_split_impl.exit

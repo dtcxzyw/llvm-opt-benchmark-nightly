@@ -41,23 +41,19 @@ bb.b:                                             ; preds = %bb.a
 _RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0E0INtNtB8_12control_flow11ControlFlowjEEB2l_.exit: ; preds = %.lr.ph.i, %.critedge.backedge.i, %bb.b
   %.sroa.0.0.i16 = phi i64 [ 0, %bb.b ], [ %i.d, %.lr.ph.i ], [ 0, %.critedge.backedge.i ] ; 3 uses
   %i.h = icmp ult i64 %i.b, %1
-  br i1 %i.h, label %.lr.ph.i19, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBL_4find5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundarys_0E0INtNtB8_12control_flow11ControlFlowjEEB22_.exit
+  br i1 %i.h, label %_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundarys_0B5_.exit.i.i, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBL_4find5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundarys_0E0INtNtB8_12control_flow11ControlFlowjEEB22_.exit
 
-.lr.ph.i19:                                       ; preds = %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0E0INtNtB8_12control_flow11ControlFlowjEEB2l_.exit, %.critedge.backedge.i20
-  %3 = phi i64 [ %4, %.critedge.backedge.i20 ], [ %i.b, %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0E0INtNtB8_12control_flow11ControlFlowjEEB2l_.exit ] ; 4 uses
-  %4 = add i64 %3, 1                              ; 2 uses
-  %5 = icmp ult i64 %3, %1
-  br i1 %5, label %_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundarys_0B5_.exit.i.i, label %.critedge.backedge.i20
-
-_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundarys_0B5_.exit.i.i: ; preds = %.lr.ph.i19
+_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundarys_0B5_.exit.i.i: ; preds = %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0E0INtNtB8_12control_flow11ControlFlowjEEB2l_.exit, %.critedge.backedge.i20
+  %3 = phi i64 [ %4, %.critedge.backedge.i20 ], [ %i.b, %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0E0INtNtB8_12control_flow11ControlFlowjEEB2l_.exit ] ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 %3
   %i.j = load i8, ptr %i.i, align 1, !alias.scope !9, !noalias !12, !noundef !8
   %i.k = icmp sgt i8 %i.j, -65
   br i1 %i.k, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBL_4find5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundarys_0E0INtNtB8_12control_flow11ControlFlowjEEB22_.exit, label %.critedge.backedge.i20
 
-.critedge.backedge.i20:                           ; preds = %_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundarys_0B5_.exit.i.i, %.lr.ph.i19
+.critedge.backedge.i20:                           ; preds = %_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundarys_0B5_.exit.i.i
+  %4 = add i64 %3, 1                              ; 2 uses
   %exitcond.not.i = icmp eq i64 %4, %1
-  br i1 %exitcond.not.i, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBL_4find5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundarys_0E0INtNtB8_12control_flow11ControlFlowjEEB22_.exit, label %.lr.ph.i19
+  br i1 %exitcond.not.i, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBL_4find5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundarys_0E0INtNtB8_12control_flow11ControlFlowjEEB22_.exit, label %_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundarys_0B5_.exit.i.i
 
 _RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBL_4find5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundarys_0E0INtNtB8_12control_flow11ControlFlowjEEB22_.exit: ; preds = %.critedge.backedge.i20, %_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundarys_0B5_.exit.i.i, %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0E0INtNtB8_12control_flow11ControlFlowjEEB2l_.exit, %bb.a
   %.sroa.3.0 = phi i64 [ %2, %bb.a ], [ %1, %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0E0INtNtB8_12control_flow11ControlFlowjEEB2l_.exit ], [ %1, %.critedge.backedge.i20 ], [ %3, %_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundarys_0B5_.exit.i.i ]
