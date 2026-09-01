@@ -205,11 +205,9 @@ bb.an:                                            ; preds = %bb.n, %_ZNSt3__16ve
   %i.hd = call float @llvm.fmuladd.f32(float %i.hb, float 5.000000e-01, float %i.hc) ; 5 uses
   %i.he = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.hf = load i8, ptr %i.he, align 8, !tbaa !13, !range !83, !noundef !84
-  %i.hg = trunc nuw i8 %i.hf to i1
-  %.sroa.9157.0 = select i1 %i.hg, float f0x3F169697, float f0x3F3EBEBF ; 2 uses
-  %.sroa.021.sroa.0.0.vec.insert165 = insertelement <2 x float> poison, float %.sroa.9157.0, i64 0
-  %.sroa.021.sroa.0.4.vec.insert167 = shufflevector <2 x float> %.sroa.021.sroa.0.0.vec.insert165, <2 x float> poison, <2 x i32> zeroinitializer
-  %.sroa.622.sroa.0.4.vec.insert162 = insertelement <2 x float> <float poison, float 1.000000e+00>, float %.sroa.9157.0, i64 0
+  %i.hg = trunc nuw i8 %i.hf to i1                ; 2 uses
+  %.sroa.8.0 = select i1 %i.hg, <2 x float> <float f0x3F169697, float 1.000000e+00>, <2 x float> <float f0x3F3EBEBF, float 1.000000e+00>
+  %.sroa.0149.0 = select i1 %i.hg, <2 x float> splat (float f0x3F169697), <2 x float> splat (float f0x3F3EBEBF)
   %i.hh = load i8, ptr %i.p, align 16, !tbaa !52, !range !83, !noundef !84
   %i.hi = trunc nuw i8 %i.hh to i1
   br i1 %i.hi, label %bb.aq, label %bb.ao
@@ -229,10 +227,10 @@ bb.aq:                                            ; preds = %bb.an, %bb.ao, %bb.
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap
-  %.sroa.021.sroa.0.0 = phi <2 x float> [ splat (float 1.000000e+00), %bb.aq ], [ %.sroa.021.sroa.0.4.vec.insert167, %bb.ap ] ; 3 uses
-  %.sroa.622.sroa.0.0 = phi <2 x float> [ splat (float 1.000000e+00), %bb.aq ], [ %.sroa.622.sroa.0.4.vec.insert162, %bb.ap ] ; 3 uses
-  %.sroa.018.sroa.0.0 = phi <2 x float> [ splat (float 1.000000e+00), %bb.aq ], [ splat (float f0x3F3EBEBF), %bb.ap ]
-  %.sroa.7.sroa.0.0 = phi <2 x float> [ splat (float 1.000000e+00), %bb.aq ], [ <float f0x3F3EBEBF, float 1.000000e+00>, %bb.ap ]
+  %.sroa.021.sroa.0.0 = phi <2 x float> [ splat (float 1.000000e+00), %bb.aq ], [ %.sroa.0149.0, %bb.ap ] ; 3 uses
+  %.sroa.622.sroa.0.0 = phi <2 x float> [ splat (float 1.000000e+00), %bb.aq ], [ splat (float f0x3F3EBEBF), %bb.ap ]
+  %.sroa.018.sroa.0.0 = phi <2 x float> [ splat (float 1.000000e+00), %bb.aq ], [ <float f0x3F3EBEBF, float 1.000000e+00>, %bb.ap ]
+  %.sroa.7.sroa.0.0 = phi <2 x float> [ splat (float 1.000000e+00), %bb.aq ], [ %.sroa.8.0, %bb.ap ] ; 3 uses
   %i.ho = sitofp i32 %i.gz to float
   invoke void @nvgFontSize(ptr noundef %1, float noundef %i.ho)
           to label %bb.as unwind label %bb.au
@@ -308,7 +306,7 @@ bb.aw:                                            ; preds = %_ZNK3tev11ImageButt
           to label %bb.ax unwind label %bb.bt
 
 bb.ax:                                            ; preds = %bb.aw
-  invoke void @nvgFillColor(ptr noundef %1, <2 x float> %.sroa.021.sroa.0.0, <2 x float> %.sroa.622.sroa.0.0)
+  invoke void @nvgFillColor(ptr noundef %1, <2 x float> %.sroa.021.sroa.0.0, <2 x float> %.sroa.7.sroa.0.0)
           to label %bb.ay unwind label %bb.bt
 
 bb.ay:                                            ; preds = %bb.ax
@@ -334,7 +332,7 @@ bb.bc:                                            ; preds = %bb.bb
           to label %bb.bd unwind label %bb.bt
 
 bb.bd:                                            ; preds = %bb.bc
-  invoke void @nvgFillColor(ptr noundef %1, <2 x float> %.sroa.018.sroa.0.0, <2 x float> %.sroa.7.sroa.0.0)
+  invoke void @nvgFillColor(ptr noundef %1, <2 x float> %.sroa.622.sroa.0.0, <2 x float> %.sroa.018.sroa.0.0)
           to label %bb.be unwind label %bb.bt
 
 bb.be:                                            ; preds = %bb.bd
@@ -360,7 +358,7 @@ bb.bi:                                            ; preds = %bb.bh
           to label %bb.bj unwind label %bb.bt
 
 bb.bj:                                            ; preds = %bb.bi
-  invoke void @nvgFillColor(ptr noundef %1, <2 x float> %.sroa.021.sroa.0.0, <2 x float> %.sroa.622.sroa.0.0)
+  invoke void @nvgFillColor(ptr noundef %1, <2 x float> %.sroa.021.sroa.0.0, <2 x float> %.sroa.7.sroa.0.0)
           to label %bb.bk unwind label %bb.bt
 
 bb.bk:                                            ; preds = %bb.bj
@@ -384,7 +382,7 @@ bb.bo:                                            ; preds = %bb.bn
           to label %bb.bp unwind label %bb.bt
 
 bb.bp:                                            ; preds = %bb.bo
-  invoke void @nvgFillColor(ptr noundef %1, <2 x float> %.sroa.021.sroa.0.0, <2 x float> %.sroa.622.sroa.0.0)
+  invoke void @nvgFillColor(ptr noundef %1, <2 x float> %.sroa.021.sroa.0.0, <2 x float> %.sroa.7.sroa.0.0)
           to label %bb.bq unwind label %bb.bt
 
 bb.bq:                                            ; preds = %bb.bp

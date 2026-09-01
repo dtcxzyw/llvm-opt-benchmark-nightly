@@ -202,7 +202,7 @@ bb.a:
   %i.b = alloca double, align 8                   ; 5 uses
   %i.c = alloca double, align 8                   ; 4 uses
   %i.d = alloca double, align 8                   ; 3 uses
-  %.sroa.077 = alloca ptr, align 8                ; 5 uses
+  %.sroa.077 = alloca double, align 8             ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.077)
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !9    ; 3 uses
@@ -420,7 +420,7 @@ bb.a:
   %i.b = alloca double, align 8                   ; 5 uses
   %i.c = alloca double, align 8                   ; 4 uses
   %i.d = alloca double, align 8                   ; 3 uses
-  %.sroa.077 = alloca ptr, align 8                ; 5 uses
+  %.sroa.077 = alloca double, align 8             ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.077)
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !9    ; 3 uses
@@ -635,7 +635,7 @@ bb.a:
   %i.b = alloca double, align 8                   ; 5 uses
   %i.c = alloca double, align 8                   ; 5 uses
   %i.d = alloca double, align 8                   ; 5 uses
-  %.sroa.0110 = alloca ptr, align 8               ; 4 uses
+  %.sroa.0110 = alloca double, align 8            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0110)
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !9    ; 3 uses
@@ -906,7 +906,7 @@ bb.a:
   %i.b = alloca double, align 8                   ; 5 uses
   %i.c = alloca double, align 8                   ; 5 uses
   %i.d = alloca double, align 8                   ; 5 uses
-  %.sroa.0110 = alloca ptr, align 8               ; 4 uses
+  %.sroa.0110 = alloca double, align 8            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0110)
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !9    ; 3 uses
@@ -1177,7 +1177,7 @@ bb.a:
   %i.b = alloca double, align 8                   ; 5 uses
   %i.c = alloca double, align 8                   ; 5 uses
   %i.d = alloca double, align 8                   ; 5 uses
-  %.sroa.0116 = alloca ptr, align 8               ; 4 uses
+  %.sroa.0116 = alloca double, align 8            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0116)
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !9    ; 3 uses
@@ -1481,7 +1481,7 @@ bb.a:
   %i.b = alloca double, align 8                   ; 5 uses
   %i.c = alloca double, align 8                   ; 4 uses
   %i.d = alloca double, align 8                   ; 3 uses
-  %.sroa.063 = alloca ptr, align 8                ; 5 uses
+  %.sroa.063 = alloca double, align 8             ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.063)
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !9    ; 3 uses
@@ -1676,7 +1676,7 @@ bb.a:
   %i.b = alloca double, align 8                   ; 5 uses
   %i.c = alloca double, align 8                   ; 4 uses
   %i.d = alloca double, align 8                   ; 3 uses
-  %.sroa.063 = alloca ptr, align 8                ; 5 uses
+  %.sroa.063 = alloca double, align 8             ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.063)
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !9    ; 3 uses
@@ -1871,7 +1871,7 @@ bb.a:
   %i.b = alloca double, align 8                   ; 5 uses
   %i.c = alloca double, align 8                   ; 4 uses
   %i.d = alloca double, align 8                   ; 3 uses
-  %.sroa.0 = alloca ptr, align 8                  ; 5 uses
+  %.sroa.0 = alloca double, align 8               ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !9    ; 3 uses

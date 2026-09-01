@@ -206,7 +206,7 @@ bb.v:                                             ; preds = %bb.u
 define internal fastcc void @sqlite3GenerateConstraintChecks(ptr noundef %0, ptr noundef nonnull %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef range(i32 -2147483647, -2147483648) %6, i8 noundef zeroext range(i8 0, 3) %7, i8 noundef zeroext %8, i32 noundef range(i32 -2147483648, 2147483647) %9, ptr nofree noundef nonnull writeonly captures(none) %10, ptr noundef %11, ptr noundef %12) unnamed_addr #0 {
 bb.a:
   %13 = alloca %struct.Walker, align 8            ; 7 uses
-  %.sroa.9 = alloca i64, align 8                  ; 8 uses
+  %.sroa.9 = alloca ptr, align 8                  ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9)
   %i.a = icmp ne i32 %6, 0                        ; 7 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !653    ; 8 uses
@@ -609,8 +609,7 @@ bb.bq:                                            ; preds = %._crit_edge1026, %b
   %.3566 = phi i8 [ %.0563.lcssa, %._crit_edge1026 ], [ 0, %bb.ao ], [ 0, %.loopexit1006 ] ; 2 uses
   %i.nv = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
   %i.nw = load ptr, ptr %i.nv, align 8, !tbaa !1099 ; 3 uses
-  %14 = ptrtoint ptr %i.nw to i64
-  store i64 %14, ptr %.sroa.9, align 8, !tbaa !229
+  store ptr %i.nw, ptr %.sroa.9, align 8, !tbaa !229
   %.not626 = icmp eq ptr %12, null
   br i1 %.not626, label %.loopexit1002, label %bb.br
 
@@ -1013,12 +1012,10 @@ bb.jv:                                            ; preds = %bb.ju
 
 bb.jw:                                            ; preds = %sqlite3VdbeResolveLabel.exit840
   %i.bfo = add nsw i32 %.01065, 1
-  %.sroa.9.0..sroa.9.0..sroa.9.0..sroa.9.8. = load i64, ptr %.sroa.9, align 8, !tbaa !229
-  %15 = inttoptr i64 %.sroa.9.0..sroa.9.0..sroa.9.0..sroa.9.8. to ptr
-  %i.bfp = getelementptr inbounds nuw i8, ptr %15, i64 40
+  %.sroa.9.0..sroa.9.0..sroa.9.0..sroa.9.8. = load ptr, ptr %.sroa.9, align 8, !tbaa !229
+  %i.bfp = getelementptr inbounds nuw i8, ptr %.sroa.9.0..sroa.9.0..sroa.9.0..sroa.9.8., i64 40
   %i.bfq = load ptr, ptr %i.bfp, align 8, !tbaa !2795 ; 2 uses
-  %16 = ptrtoint ptr %i.bfq to i64
-  store i64 %16, ptr %.sroa.9, align 8, !tbaa !229
+  store ptr %i.bfq, ptr %.sroa.9, align 8, !tbaa !229
   br label %indexIteratorNext.exit
 
 indexIteratorNext.exit:                           ; preds = %bb.jv, %bb.jw

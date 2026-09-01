@@ -204,7 +204,6 @@ bb.i:                                             ; preds = %.noexc41.i
   %i.as = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.at = load ptr, ptr %i.as, align 8, !noalias !366, !noundef !4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !366
-  %2 = ptrtoint ptr %i.at to i64
   store i16 28, ptr %i.l, align 8, !noalias !352
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !370
   store i64 0, ptr %i.e, align 8, !noalias !370
@@ -217,7 +216,7 @@ bb.i:                                             ; preds = %.noexc41.i
   %.sroa.4.0..sroa_idx68.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i64 %i.an, ptr %.sroa.4.0..sroa_idx68.i, align 8, !noalias !375
   %.sroa.569.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  store i64 %2, ptr %.sroa.569.0..sroa_idx.i, align 8, !noalias !375
+  store ptr %i.at, ptr %.sroa.569.0..sroa_idx.i, align 8, !noalias !375
   %i.au = invoke { ptr, ptr } @_RNvXse_NtNtCsexYYUdYSQU6_5alloc5boxed7convertINtB7_3BoxDNtNtCskKLDkoKarTP_4core5error5ErrorNtNtBW_6marker4SendNtB1t_4SyncEL_EINtNtBW_7convert4FromNtNtCsh8kAdcUVRtT_9rmp_serde6encode5ErrorE4fromCset5b41vfmiv_13pingora_cache(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.d)
           to label %.noexc44.i unwind label %bb.h, !noalias !352 ; 2 uses
 
@@ -233,14 +232,13 @@ bb.i:                                             ; preds = %.noexc41.i
 bb.j:                                             ; preds = %.noexc41.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !366
   store i16 28, ptr %i.l, align 8, !noalias !352
-  %.sroa.1266.0..sroa.1266.16.copyload.cast.i = ptrtoint ptr %i.n to i64
   store i64 -1, ptr %i.m, align 8, !noalias !352
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   store ptr inttoptr (i64 -9223372036854775808 to ptr), ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !352
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   store i64 2, ptr %.sroa.5.0..sroa_idx.i, align 8, !noalias !352
   %.sroa.5.sroa.6.0..sroa.5.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.m, i64 40
-  store i64 %.sroa.1266.0..sroa.1266.16.copyload.cast.i, ptr %.sroa.5.sroa.6.0..sroa.5.0..sroa_idx.sroa_idx.i, align 8, !noalias !352
+  store ptr %i.n, ptr %.sroa.5.sroa.6.0..sroa.5.0..sroa_idx.sroa_idx.i, align 8, !noalias !352
   %i.ay = load i64, ptr %i.ak, align 8, !noalias !352, !noundef !4 ; 2 uses
   %.not3288.i = icmp eq i64 %i.ay, 0
   br i1 %.not3288.i, label %._crit_edge.i, label %.lr.ph.preheader.i

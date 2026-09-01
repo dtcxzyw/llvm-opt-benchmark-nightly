@@ -204,14 +204,13 @@ _RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !85
   call fastcc void @_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator10min_by_key3keyTjRmEmNCNvCsdcxgzuWc7wi_10fish_color13convert_color0E0B1r_(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.n, ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(32) %i.b, i64 noundef %i.o, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(4) %i.p) #20, !noalias !96
   %.sroa.9.24.copyload.i = load i64, ptr %i.n, align 8, !noalias !97
-  %.sroa.11.24.copyload.i = load i64, ptr %.sroa.11.24..sroa_idx.i, align 8, !noalias !97
+  %.sroa.11.24.copyload.i = load ptr, ptr %.sroa.11.24..sroa_idx.i, align 8, !noalias !97
   %.sroa.12.24.copyload.i = load i64, ptr %.sroa.12.24..sroa_idx.i, align 8, !noalias !97 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !85
   %.sroa.640.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.8.0.i to i32
   %.sroa.12.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.12.24.copyload.i to i32
   %i.q = icmp ult i32 %.sroa.12.sroa.0.0.extract.trunc.i, %.sroa.640.sroa.0.0.extract.trunc.i ; 3 uses
-  %3 = inttoptr i64 %.sroa.11.24.copyload.i to ptr
-  %.sroa.4.0.copyload.sroa.speculated.i = select i1 %i.q, ptr %3, ptr %.sroa.627.0.i ; 2 uses
+  %.sroa.4.0.copyload.sroa.speculated.i = select i1 %i.q, ptr %.sroa.11.24.copyload.i, ptr %.sroa.627.0.i ; 2 uses
   %.sroa.032.0.copyload.sroa.speculated.i = select i1 %i.q, i64 %.sroa.9.24.copyload.i, i64 %.sroa.025.0.i ; 2 uses
   %.sroa.533.0.copyload.i = select i1 %i.q, i64 %.sroa.12.24.copyload.i, i64 %.sroa.8.0.i
   %i.r = add nuw nsw i64 %i.o, 1                  ; 2 uses

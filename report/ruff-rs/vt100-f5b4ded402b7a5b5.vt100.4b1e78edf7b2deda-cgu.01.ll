@@ -204,8 +204,8 @@ define hidden void @_RNvMNtCs6rR7J0NOYM8_5vt1004gridNtB2_4Grid19write_contents_d
 bb.a:
   %i.a = alloca [1 x i8], align 1                 ; 3 uses
   %i.b = alloca [14 x i8], align 2                ; 6 uses
-  %.sroa.5 = alloca i64, align 8                  ; 11 uses
-  %.sroa.13 = alloca i64, align 8                 ; 5 uses
+  %.sroa.5 = alloca ptr, align 8                  ; 11 uses
+  %.sroa.13 = alloca ptr, align 8                 ; 5 uses
   %i.c = alloca [168 x i8], align 8               ; 27 uses
   %i.d = alloca [72 x i8], align 8                ; 9 uses
   %i.e = alloca [72 x i8], align 8                ; 9 uses
@@ -461,8 +461,7 @@ _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB4_5ChainINtNtB6_4take4Ta
   %i.cu = load i64, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !237, !noalias !234, !noundef !3 ; 2 uses
   %i.cv = add i64 %i.cu, 1
   store i64 %i.cv, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !237, !noalias !234
-  %5 = ptrtoint ptr %.sroa.0.0.i2.i.i.i.i to i64
-  store i64 %5, ptr %.sroa.5, align 8, !alias.scope !234, !noalias !237
+  store ptr %.sroa.0.0.i2.i.i.i.i, ptr %.sroa.5, align 8, !alias.scope !234, !noalias !237
   br label %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtB6_5chain5ChainINtNtB6_4take4TakeINtNtB6_4skip4SkipINtNtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iter4IterNtNtCs6rR7J0NOYM8_5vt1003row3RowEEEIB1I_INtNtNtBa_5slice4iter4IterB3g_EEEB1n_EENtNtNtB8_6traits8iterator8Iterator4nextB3k_.exit
 
 _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtB6_5chain5ChainINtNtB6_4take4TakeINtNtB6_4skip4SkipINtNtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iter4IterNtNtCs6rR7J0NOYM8_5vt1003row3RowEEEIB1I_INtNtNtBa_5slice4iter4IterB3g_EEEB1n_EENtNtNtB8_6traits8iterator8Iterator4nextB3k_.exit: ; preds = %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_4take4TakeINtNtB4_4skip4SkipINtNtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iter4IterNtNtCs6rR7J0NOYM8_5vt1003row3RowEEERB2D_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB2H_.exit.thread.i.i.i.i, %bb.g, %bb.h, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_4take4TakeINtNtB4_4skip4SkipINtNtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iter4IterNtNtCs6rR7J0NOYM8_5vt1003row3RowEEERB2D_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB2H_.exit.thread.i17.i.i.i, %bb.n, %bb.o, %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB4_5ChainINtNtB6_4take4TakeINtNtB6_4skip4SkipINtNtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iter4IterNtNtCs6rR7J0NOYM8_5vt1003row3RowEEEIB10_INtNtNtBa_5slice4iter4IterB2y_EEENtNtNtB8_6traits8iterator8Iterator4nextB2C_.exit21.i.i.i
@@ -470,9 +469,8 @@ _RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_
   %.sink.i.sroa.phi = phi ptr [ %.sroa.5, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_4take4TakeINtNtB4_4skip4SkipINtNtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iter4IterNtNtCs6rR7J0NOYM8_5vt1003row3RowEEERB2D_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB2H_.exit.thread.i.i.i.i ], [ %.sroa.5, %bb.g ], [ %.sroa.5, %bb.h ], [ %.sroa.5, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_4take4TakeINtNtB4_4skip4SkipINtNtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iter4IterNtNtCs6rR7J0NOYM8_5vt1003row3RowEEERB2D_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB2H_.exit.thread.i17.i.i.i ], [ %.sroa.5, %bb.n ], [ %.sroa.5, %bb.o ], [ %.sroa.13, %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB4_5ChainINtNtB6_4take4TakeINtNtB6_4skip4SkipINtNtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iter4IterNtNtCs6rR7J0NOYM8_5vt1003row3RowEEEIB10_INtNtNtBa_5slice4iter4IterB2y_EEENtNtNtB8_6traits8iterator8Iterator4nextB2C_.exit21.i.i.i ]
   %.sroa.4.0.i.i.sink.i = phi ptr [ null, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_4take4TakeINtNtB4_4skip4SkipINtNtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iter4IterNtNtCs6rR7J0NOYM8_5vt1003row3RowEEERB2D_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB2H_.exit.thread.i.i.i.i ], [ null, %bb.g ], [ null, %bb.h ], [ null, %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chain17and_then_or_clearINtNtB4_4take4TakeINtNtB4_4skip4SkipINtNtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iter4IterNtNtCs6rR7J0NOYM8_5vt1003row3RowEEERB2D_NvYB14_NtNtNtB6_6traits8iterator8Iterator4nextEB2H_.exit.thread.i17.i.i.i ], [ null, %bb.n ], [ null, %bb.o ], [ %.sroa.4.0.i.i.i, %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters5chainINtB4_5ChainINtNtB6_4take4TakeINtNtB6_4skip4SkipINtNtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iter4IterNtNtCs6rR7J0NOYM8_5vt1003row3RowEEEIB10_INtNtNtBa_5slice4iter4IterB2y_EEENtNtNtB8_6traits8iterator8Iterator4nextB2C_.exit21.i.i.i ]
   store ptr %.sroa.4.0.i.i.sink.i, ptr %.sink.i.sroa.phi, align 8, !alias.scope !234, !noalias !237
-  %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8. = load i64, ptr %.sroa.5, align 8, !noundef !3 ; 2 uses
-  %6 = inttoptr i64 %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8. to ptr ; 2 uses
-  %.not = icmp eq i64 %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8., 0
+  %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8. = load ptr, ptr %.sroa.5, align 8, !noundef !3 ; 3 uses
+  %.not = icmp eq ptr %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8., null
   br i1 %.not, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %_RNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtB6_3zip3ZipINtNtB6_5chain5ChainINtNtB6_4take4TakeINtNtB6_4skip4SkipINtNtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iter4IterNtNtCs6rR7J0NOYM8_5vt1003row3RowEEEIB1I_INtNtNtBa_5slice4iter4IterB3g_EEEB1n_EENtNtNtB8_6traits8iterator8Iterator4nextB3k_.exit
@@ -490,21 +488,20 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 _RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResulttNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs6rR7J0NOYM8_5vt100.exit: ; preds = %bb.q
-  %.sroa.13.0..sroa.13.0..sroa.13.0..sroa.13.16. = load i64, ptr %.sroa.13, align 8, !range !304, !noundef !3
-  %7 = inttoptr i64 %.sroa.13.0..sroa.13.0..sroa.13.0..sroa.13.16. to ptr ; 2 uses
+  %.sroa.13.0..sroa.13.0..sroa.13.0..sroa.13.16. = load ptr, ptr %.sroa.13, align 8, !nonnull !3, !align !304, !noundef !3 ; 2 uses
   %.sroa.5.0.extract.shift.i = lshr i32 %.sroa.012.0.insert.insert, 16
   %.sroa.5.0.extract.trunc.i = trunc nuw i32 %.sroa.5.0.extract.shift.i to i16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.da = trunc nuw i8 %.sroa.05.0 to i1
   %i.db = trunc nuw i8 %.sroa.06.0 to i1
-  call void @_RNvMNtCs6rR7J0NOYM8_5vt1003rowNtB2_3Row19write_contents_diff(ptr noalias noundef nonnull sret([14 x i8]) align 2 captures(none) dereferenceable(14) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %6, ptr noalias noundef nonnull align 8 dereferenceable(24) %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %7, i16 noundef 0, i16 noundef %i.bf, i16 noundef %.sroa.5.0.extract.trunc.i, i1 noundef zeroext %i.da, i1 noundef zeroext %i.db, i16 noundef %.sroa.02.0, i16 noundef %.sroa.4.0, ptr noalias noundef nonnull align 1 captures(address) dereferenceable(9) %4)
+  call void @_RNvMNtCs6rR7J0NOYM8_5vt1003rowNtB2_3Row19write_contents_diff(ptr noalias noundef nonnull sret([14 x i8]) align 2 captures(none) dereferenceable(14) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8., ptr noalias noundef nonnull align 8 dereferenceable(24) %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %.sroa.13.0..sroa.13.0..sroa.13.0..sroa.13.16., i16 noundef 0, i16 noundef %i.bf, i16 noundef %.sroa.5.0.extract.trunc.i, i1 noundef zeroext %i.da, i1 noundef zeroext %i.db, i16 noundef %.sroa.02.0, i16 noundef %.sroa.4.0, ptr noalias noundef nonnull align 1 captures(address) dereferenceable(9) %4)
   %i.dc = load i16, ptr %i.b, align 2, !noundef !3
   %i.dd = load i16, ptr %i.bg, align 2, !noundef !3
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %4, ptr noundef nonnull align 2 dereferenceable(9) %i.bh, i64 9, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %i.de = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %i.de = getelementptr inbounds nuw i8, ptr %.sroa.5.0..sroa.5.0..sroa.5.0..sroa.5.8., i64 24
   %i.df = load i8, ptr %i.de, align 8, !range !148, !noundef !3
-  %i.dg = getelementptr inbounds nuw i8, ptr %7, i64 24
+  %i.dg = getelementptr inbounds nuw i8, ptr %.sroa.13.0..sroa.13.0..sroa.13.0..sroa.13.16., i64 24
   %i.dh = load i8, ptr %i.dg, align 8, !range !148, !noundef !3
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.13)
@@ -907,7 +904,7 @@ begin_hunk_1_@llvm.umin.i64
 !301 = !{!302}
 !302 = distinct !{!302, !303, !"_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResulttNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs6rR7J0NOYM8_5vt100: argument 0"}
 !303 = distinct !{!303, !"_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResulttNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs6rR7J0NOYM8_5vt100"}
-!304 = !{i64 1, i64 0}
+!304 = !{i64 8}
 !305 = !{!306}
 !306 = distinct !{!306, !307, !"_RNvMNtCs6rR7J0NOYM8_5vt1004gridNtB2_4Grid12visible_rows: argument 1"}
 !307 = distinct !{!307, !"_RNvMNtCs6rR7J0NOYM8_5vt1004gridNtB2_4Grid12visible_rows"}

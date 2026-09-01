@@ -204,8 +204,8 @@ bb.ab:                                            ; preds = %_ZNSt14_Optional_ba
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN2v88internal8compiler10turboshaft10TypeParser10ParseRangeINS2_9FloatTypeILm64EEEEESt8optionalIT_Ev(ptr dead_on_unwind noalias writable sret(%"class.std::optional.26") align 8 %0, ptr noundef nonnull align 8 dereferenceable(32) %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %.sroa.13 = alloca i64, align 8                 ; 6 uses
-  %.sroa.15 = alloca i64, align 8                 ; 4 uses
+  %.sroa.13 = alloca double, align 8              ; 6 uses
+  %.sroa.15 = alloca double, align 8              ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 9 uses
   %i.b = load i64, ptr %1, align 8                ; 3 uses
   %.promoted.i.i = load i64, ptr %i.a, align 8    ; 2 uses
@@ -398,11 +398,11 @@ _ZN2v88internal8compiler10turboshaft9FloatTypeILm64EE5RangeEddPNS0_4ZoneE.exit: 
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %.sroa.11.0, ptr %.sroa.11.0..sroa_idx, align 4
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.13.0..sroa.13.0..sroa.13.0..sroa.13.0.copyload = load i64, ptr %.sroa.13, align 8
-  store i64 %.sroa.13.0..sroa.13.0..sroa.13.0..sroa.13.0.copyload, ptr %.sroa.13.0..sroa_idx, align 8
+  %.sroa.13.0..sroa.13.0..sroa.13.0..sroa.13.0.copyload = load double, ptr %.sroa.13, align 8
+  store double %.sroa.13.0..sroa.13.0..sroa.13.0..sroa.13.0.copyload, ptr %.sroa.13.0..sroa_idx, align 8
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.15.0..sroa.15.0..sroa.15.0..sroa.15.0.copyload = load i64, ptr %.sroa.15, align 8
-  store i64 %.sroa.15.0..sroa.15.0..sroa.15.0..sroa.15.0.copyload, ptr %.sroa.15.0..sroa_idx, align 8
+  %.sroa.15.0..sroa.15.0..sroa.15.0..sroa.15.0.copyload = load double, ptr %.sroa.15, align 8
+  store double %.sroa.15.0..sroa.15.0..sroa.15.0..sroa.15.0.copyload, ptr %.sroa.15.0..sroa_idx, align 8
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 1, ptr %i.bb, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.13)

@@ -205,7 +205,7 @@ bb.ak:                                            ; preds = %bb.ap
   br label %.body40
 
 _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles10StyleChainRINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtBN_4diag16SourceDiagnosticEE17unwrap_or_defaultCs5cbCQMMIObr_10typst_eval.exit: ; preds = %bb.aj, %bb.ai
-  %.sroa.9.0.in = phi ptr [ %i.cn, %bb.ai ], [ %i.bh, %bb.aj ] ; 3 uses
+  %.sroa.9.0.in = phi ptr [ %i.cn, %bb.ai ], [ %i.bh, %bb.aj ] ; 6 uses
   %.sroa.13.0 = phi i64 [ %i.co, %bb.ai ], [ %i.bj, %bb.aj ] ; 3 uses
   invoke void @_RNvMNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7elementNtB2_7Element17field_from_styles(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.i, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.k, i8 noundef %i.ar, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.h)
           to label %bb.al unwind label %bb.at
@@ -221,6 +221,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.bf, label %bb.an, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles10StyleChainINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtB13_4diag16SourceDiagnosticEEECs5cbCQMMIObr_10typst_eval.exit
 
 bb.an:                                            ; preds = %bb.am
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.in) ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticEECs5cbCQMMIObr_10typst_eval(ptr nonnull %.sroa.9.0.in, i64 %.sroa.13.0)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles10StyleChainINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtB13_4diag16SourceDiagnosticEEECs5cbCQMMIObr_10typst_eval.exit unwind label %bb.j
 
@@ -230,6 +231,7 @@ bb.ao:                                            ; preds = %bb.al
   br i1 %i.bf, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.in) ]
   store ptr %.sroa.9.0.in, ptr %i.ae, align 8
   store i64 %.sroa.13.0, ptr %i.af, align 8
   store i64 -1, ptr %0, align 8
@@ -257,6 +259,7 @@ bb.at:                                            ; preds = %_RNvMNtCs3oUPovFnLW
   br i1 %i.bf, label %bb.au, label %.body40
 
 bb.au:                                            ; preds = %bb.at
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.0.in) ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtCsdaEETE4DqmE_13typst_library4diag16SourceDiagnosticEECs5cbCQMMIObr_10typst_eval(ptr nonnull %.sroa.9.0.in, i64 %.sroa.13.0)
           to label %.body40 unwind label %bb.av
 
@@ -659,8 +662,8 @@ bb.j:                                             ; preds = %bb.b
 ; Function Attrs: nonlazybind uwtable
 define void @_RNvXs6_NtCs5cbCQMMIObr_10typst_eval4codeNtNtCs5PEMdK7bMAG_12typst_syntax3ast7NumericNtB7_4Eval4eval(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %1, ptr noalias nofree readnone align 8 captures(none) %2) unnamed_addr #0 {
 bb.a:
-  %.sroa.4 = alloca i64, align 8                  ; 12 uses
-  %.sroa.13 = alloca i64, align 8                 ; 8 uses
+  %.sroa.4 = alloca double, align 8               ; 12 uses
+  %.sroa.13 = alloca double, align 8              ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.13)
   %i.a = tail call { double, i8 } @_RNvMsE_NtCs5PEMdK7bMAG_12typst_syntax3astNtB5_7Numeric3get(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1) ; 2 uses
@@ -684,33 +687,29 @@ default.unreachable50.i:                          ; preds = %bb.a
 bb.b:                                             ; preds = %bb.a
   %i.d = fmul double %i.b, 1.270000e+02           ; 2 uses
   %.inv49.i = fcmp ord double %i.d, 0.000000e+00
-  %3 = bitcast double %i.d to i64
-  %4 = select i1 %.inv49.i, i64 %3, i64 0
-  store i64 %4, ptr %.sroa.4, align 8, !alias.scope !18995
+  %spec.store.select.i = select i1 %.inv49.i, double %i.d, double 0.000000e+00
+  store double %spec.store.select.i, ptr %.sroa.4, align 8, !alias.scope !18995
   br label %_RNvMNtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB2_5Value7numeric.exit
 
 bb.c:                                             ; preds = %bb.a
   %i.e = fmul double %i.b, 3.600000e+02           ; 2 uses
   %.inv48.i = fcmp ord double %i.e, 0.000000e+00
-  %5 = bitcast double %i.e to i64
-  %6 = select i1 %.inv48.i, i64 %5, i64 0
-  store i64 %6, ptr %.sroa.4, align 8, !alias.scope !18995
+  %spec.store.select1.i = select i1 %.inv48.i, double %i.e, double 0.000000e+00
+  store double %spec.store.select1.i, ptr %.sroa.4, align 8, !alias.scope !18995
   br label %_RNvMNtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB2_5Value7numeric.exit
 
 bb.d:                                             ; preds = %bb.a
   %i.f = fmul double %i.b, 3.600000e+03           ; 2 uses
   %.inv47.i = fcmp ord double %i.f, 0.000000e+00
-  %7 = bitcast double %i.f to i64
-  %8 = select i1 %.inv47.i, i64 %7, i64 0
-  store i64 %8, ptr %.sroa.4, align 8, !alias.scope !18995
+  %spec.store.select2.i = select i1 %.inv47.i, double %i.f, double 0.000000e+00
+  store double %spec.store.select2.i, ptr %.sroa.4, align 8, !alias.scope !18995
   br label %_RNvMNtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB2_5Value7numeric.exit
 
 bb.e:                                             ; preds = %bb.a
   %i.g = fmul double %i.b, 9.144000e+03           ; 2 uses
   %.inv46.i = fcmp ord double %i.g, 0.000000e+00
-  %9 = bitcast double %i.g to i64
-  %10 = select i1 %.inv46.i, i64 %9, i64 0
-  store i64 %10, ptr %.sroa.4, align 8, !alias.scope !18995
+  %spec.store.select3.i = select i1 %.inv46.i, double %i.g, double 0.000000e+00
+  store double %spec.store.select3.i, ptr %.sroa.4, align 8, !alias.scope !18995
   br label %_RNvMNtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB2_5Value7numeric.exit
 
 bb.f:                                             ; preds = %bb.a
@@ -727,7 +726,7 @@ bb.g:                                             ; preds = %bb.a
 bb.h:                                             ; preds = %bb.a
   %.inv43.i = fcmp ord double %i.b, 0.000000e+00
   %spec.store.select6.i = select i1 %.inv43.i, double %i.b, double 0.000000e+00
-  store i64 0, ptr %.sroa.4, align 8, !alias.scope !18995
+  store double 0.000000e+00, ptr %.sroa.4, align 8, !alias.scope !18995
   br label %_RNvMNtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB2_5Value7numeric.exit
 
 bb.i:                                             ; preds = %bb.a
@@ -748,11 +747,11 @@ _RNvMNtNtCsdaEETE4DqmE_13typst_library11foundations5valueNtB2_5Value7numeric.exi
   store double %spec.store.select8.sink.i, ptr %.sink52.i.sroa.phi, align 8, !alias.scope !18995
   store i64 %.sink.i, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.0.copyload = load i64, ptr %.sroa.4, align 8
-  store i64 %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.0.copyload, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.0.copyload = load double, ptr %.sroa.4, align 8
+  store double %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.0.copyload, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.13.0..sroa.13.0..sroa.13.0..sroa.13.0.copyload = load i64, ptr %.sroa.13, align 8
-  store i64 %.sroa.13.0..sroa.13.0..sroa.13.0..sroa.13.0.copyload, ptr %.sroa.13.0..sroa_idx, align 8
+  %.sroa.13.0..sroa.13.0..sroa.13.0..sroa.13.0.copyload = load double, ptr %.sroa.13, align 8
+  store double %.sroa.13.0..sroa.13.0..sroa.13.0..sroa.13.0.copyload, ptr %.sroa.13.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.13)
   ret void

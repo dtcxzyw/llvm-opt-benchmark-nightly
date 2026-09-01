@@ -204,8 +204,8 @@ bb.a:
   %i.j = alloca [72 x i8], align 8                ; 4 uses
   %i.k = alloca [1 x i8], align 1                 ; 4 uses
   %i.l = alloca [48 x i8], align 8                ; 13 uses
-  %.sroa.1375 = alloca i64, align 8               ; 14 uses
-  %.sroa.22 = alloca i64, align 8                 ; 5 uses
+  %.sroa.1375 = alloca ptr, align 8               ; 14 uses
+  %.sroa.22 = alloca ptr, align 8                 ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 21 uses
   %i.n = load i64, ptr %i.m, align 8, !alias.scope !572, !noundef !12 ; 4 uses
   %i.o = icmp sgt i64 %i.n, -1
@@ -608,8 +608,7 @@ _RINvYNtCscLwnfASYtOG_16percent_encoding13PercentEncodeNtNtNtNtCs4NRVxsYgnAr_4co
   %.sroa.38.0152.i.sink = phi ptr [ %2, %bb.i ], [ %.sroa.38.0152.i, %bb.o ], [ %.sroa.38.0152.i, %._crit_edge.thread236.i ], [ %.sroa.38.0152.i, %.noexc41 ], [ %.sroa.38.0152.i, %bb.z ], [ %.sroa.38.0152.i, %.split.i ], [ %.sroa.38.0152.i, %.split.thread.i ]
   %.sroa.0.0.ph = phi i32 [ %i.bs, %bb.i ], [ %i.dk, %bb.o ], [ %i.gd, %._crit_edge.thread236.i ], [ %.sroa.061.0227.i, %.noexc41 ], [ %.sroa.442.1.i, %bb.z ], [ %i.fq, %.split.i ], [ %i.fp, %.split.thread.i ]
   %.sink.i.ph = phi ptr [ %3, %bb.i ], [ %.sroa.8.0154.i, %bb.o ], [ %.sroa.8.0154.i, %._crit_edge.thread236.i ], [ %.sroa.8.0154.i, %.noexc41 ], [ %.sroa.8.0154.i, %bb.z ], [ %.sroa.8.0154.i, %.split.i ], [ %.sroa.8.0154.i, %.split.thread.i ]
-  %6 = ptrtoint ptr %.sroa.38.0152.i.sink to i64
-  store i64 %6, ptr %.sroa.1375, align 8, !alias.scope !578, !noalias !581
+  store ptr %.sroa.38.0152.i.sink, ptr %.sroa.1375, align 8, !alias.scope !578, !noalias !581
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.ac, %.loopexit.sink.split, %_RNvXs7_NtCsl4BgoAJVhPh_3url6parserNtB5_5InputNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread.thread.i, %bb.n, %_RNvXs7_NtCsl4BgoAJVhPh_3url6parserNtB5_5InputNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit101.i, %_RNvXs7_NtCsl4BgoAJVhPh_3url6parserNtB5_5InputNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit101.i, %_RNvXs7_NtCsl4BgoAJVhPh_3url6parserNtB5_5InputNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit101.i, %bb.m, %._crit_edge.thread.thread.i, %._crit_edge.thread.i
@@ -617,9 +616,8 @@ _RINvYNtCscLwnfASYtOG_16percent_encoding13PercentEncodeNtNtNtNtCs4NRVxsYgnAr_4co
   %.sink278.i.sroa.phi = phi ptr [ %.sroa.1375, %_RNvXs7_NtCsl4BgoAJVhPh_3url6parserNtB5_5InputNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit101.i ], [ %.sroa.1375, %._crit_edge.thread.i ], [ %.sroa.1375, %_RNvXs7_NtCsl4BgoAJVhPh_3url6parserNtB5_5InputNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread.thread.i ], [ %.sroa.1375, %._crit_edge.thread.thread.i ], [ %.sroa.1375, %_RNvXs7_NtCsl4BgoAJVhPh_3url6parserNtB5_5InputNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit101.i ], [ %.sroa.22, %.loopexit.sink.split ], [ %.sroa.1375, %bb.m ], [ %.sroa.1375, %bb.n ], [ %.sroa.1375, %_RNvXs7_NtCsl4BgoAJVhPh_3url6parserNtB5_5InputNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit101.i ], [ %.sroa.1375, %bb.ac ]
   %.sink.i = phi ptr [ null, %_RNvXs7_NtCsl4BgoAJVhPh_3url6parserNtB5_5InputNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit101.i ], [ null, %._crit_edge.thread.i ], [ null, %_RNvXs7_NtCsl4BgoAJVhPh_3url6parserNtB5_5InputNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit.thread.thread.i ], [ null, %._crit_edge.thread.thread.i ], [ null, %_RNvXs7_NtCsl4BgoAJVhPh_3url6parserNtB5_5InputNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit101.i ], [ %.sink.i.ph, %.loopexit.sink.split ], [ null, %bb.m ], [ null, %bb.n ], [ null, %_RNvXs7_NtCsl4BgoAJVhPh_3url6parserNtB5_5InputNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4next.exit101.i ], [ null, %bb.ac ]
   store ptr %.sink.i, ptr %.sink278.i.sroa.phi, align 8, !alias.scope !578, !noalias !581
-  %.sroa.1375.0..sroa.1375.0..sroa.1375.0..sroa.1375.8. = load i64, ptr %.sroa.1375, align 8, !noundef !12 ; 2 uses
-  %7 = inttoptr i64 %.sroa.1375.0..sroa.1375.0..sroa.1375.0..sroa.1375.8. to ptr
-  %i.gz = icmp eq i64 %.sroa.1375.0..sroa.1375.0..sroa.1375.0..sroa.1375.8., 0
+  %.sroa.1375.0..sroa.1375.0..sroa.1375.0..sroa.1375.8. = load ptr, ptr %.sroa.1375, align 8, !noundef !12 ; 2 uses
+  %i.gz = icmp eq ptr %.sroa.1375.0..sroa.1375.0..sroa.1375.0..sroa.1375.8., null
   br i1 %i.gz, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %.loopexit
@@ -629,7 +627,7 @@ bb.ai:                                            ; preds = %.loopexit
   br label %bb.ca
 
 bb.aj:                                            ; preds = %.loopexit
-  %.sroa.22.0..sroa.22.0..sroa.22.0..sroa.22.16..sroa.6.0.copyload27 = load i64, ptr %.sroa.22, align 8
+  %.sroa.22.0..sroa.22.0..sroa.22.0..sroa.22.16..sroa.6.0.copyload27 = load ptr, ptr %.sroa.22, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.1375)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.22)
   %i.ha = load i64, ptr %i.m, align 8, !noundef !12 ; 4 uses
@@ -640,13 +638,12 @@ bb.aj:                                            ; preds = %.loopexit
   br i1 %i.hc, label %bb.ak, label %bb.ca
 
 bb.ak:                                            ; preds = %bb.aj
-  %8 = inttoptr i64 %.sroa.22.0..sroa.22.0..sroa.22.0..sroa.22.16..sroa.6.0.copyload27 to ptr
   %i.hd = trunc nuw i64 %i.ha to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   call void @llvm.experimental.noalias.scope.decl(metadata !630)
   call void @llvm.experimental.noalias.scope.decl(metadata !633)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !635
-  invoke void @_RNvMs8_NtCsl4BgoAJVhPh_3url6parserNtB5_6Parser10parse_host(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.f, ptr noundef nonnull %7, ptr noundef %8, i8 noundef range(i8 0, 3) %4)
+  invoke void @_RNvMs8_NtCsl4BgoAJVhPh_3url6parserNtB5_6Parser10parse_host(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.f, ptr noundef nonnull %.sroa.1375.0..sroa.1375.0..sroa.1375.0..sroa.1375.8., ptr noundef %.sroa.22.0..sroa.22.0..sroa.22.0..sroa.22.16..sroa.6.0.copyload27, i8 noundef range(i8 0, 3) %4)
           to label %.noexc52 unwind label %.body.thread80.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc52:                                         ; preds = %bb.ak

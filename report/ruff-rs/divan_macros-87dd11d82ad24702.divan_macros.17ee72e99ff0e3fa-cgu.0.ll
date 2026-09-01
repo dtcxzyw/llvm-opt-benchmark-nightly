@@ -202,9 +202,9 @@ bb.cn:                                            ; preds = %bb.cm
   unreachable
 
 bb.co:                                            ; preds = %bb.cl, %bb.cj, %bb.ch, %bb.cf
-  %.sink.i.i.sroa.phi.sroa.speculated.pre-phi.i.i.i = phi ptr [ %.sroa.0117, %bb.cl ], [ %.sroa.0116, %bb.cj ], [ %.sroa.0115, %bb.ch ], [ %.sroa.0, %bb.cf ]
-  %.sroa.5.0.i.i.i.i.i = phi i64 [ 10, %bb.cl ], [ 11, %bb.cj ], [ 10, %bb.ch ], [ 10, %bb.cf ]
-  %.sroa.03.0.i.i.i.i.i = phi ptr [ @43, %bb.cl ], [ @44, %bb.cj ], [ @45, %bb.ch ], [ @46, %bb.cf ]
+  %.sink.i.i.sroa.phi.sroa.speculated.pre-phi.i.i.i = phi ptr [ %.sroa.0116, %bb.cj ], [ %.sroa.0115, %bb.ch ], [ %.sroa.0, %bb.cf ], [ %.sroa.0117, %bb.cl ]
+  %.sroa.5.0.i.i.i.i.i = phi i64 [ 11, %bb.cj ], [ 10, %bb.ch ], [ 10, %bb.cf ], [ 10, %bb.cl ]
+  %.sroa.03.0.i.i.i.i.i = phi ptr [ @44, %bb.cj ], [ @45, %bb.ch ], [ @46, %bb.cf ], [ @43, %bb.cl ]
   store i8 1, ptr %.sink.i.i.sroa.phi.sroa.speculated.pre-phi.i.i.i, align 1, !noalias !71
   invoke void @_RNvMNtCslNEiUQgeYIG_3syn4metaNtB2_15ParseNestedMeta5value(ptr nonnull sret([24 x i8]) align 8 %i.br, ptr nonnull align 8 %i.el)
           to label %bb.cp unwind label %.loopexit.i.i.i.i, !noalias !71

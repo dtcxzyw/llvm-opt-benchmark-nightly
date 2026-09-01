@@ -205,8 +205,8 @@ bb.a:
   %i.ao = alloca [56 x i8], align 8               ; 7 uses
   %i.ap = alloca [48 x i8], align 8               ; 7 uses
   %i.aq = alloca [40 x i8], align 8               ; 10 uses
-  %.sroa.4.i.i.i = alloca i64, align 8            ; 5 uses
-  %.sroa.73.i.i.i = alloca i64, align 8           ; 4 uses
+  %.sroa.4.i.i.i = alloca ptr, align 8            ; 5 uses
+  %.sroa.73.i.i.i = alloca ptr, align 8           ; 4 uses
   %i.ar = alloca [40 x i8], align 8               ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !829)
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -609,8 +609,7 @@ bb.gm:                                            ; preds = %bb.bq
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af), !noalias !858
   call void @llvm.experimental.noalias.scope.decl(metadata !1460)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.mw) ]
-  %1 = ptrtoint ptr %i.mt to i64
-  store i64 %1, ptr %.sroa.4.i.i.i, align 8, !alias.scope !1461, !noalias !1462
+  store ptr %i.mt, ptr %.sroa.4.i.i.i, align 8, !alias.scope !1461, !noalias !1462
   br label %"_ZN106_$LT$core..iter..adapters..GenericShunt$LT$I$C$R$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h517383a0e0130d31E.exit"
 
 "_ZN4core3ptr137drop_in_place$LT$core..option..Option$LT$core..result..Result$LT$core..convert..Infallible$C$liquid_core..error..error..Error$GT$$GT$$GT$17hbbfd17415e1c1e41E.exit.i.i.i.i.i": ; preds = %"_ZN4core3ptr109drop_in_place$LT$core..result..Result$LT$core..convert..Infallible$C$liquid_core..error..error..Error$GT$$GT$17he66c09088c880230E.exit.i.i.i.i.i.i", %bb.gk
@@ -622,16 +621,14 @@ bb.gm:                                            ; preds = %bb.bq
   %.8.val1.sink.i.i.i.i.i = phi ptr [ %i.mw, %bb.gm ], [ null, %"_ZN4core3ptr137drop_in_place$LT$core..option..Option$LT$core..result..Result$LT$core..convert..Infallible$C$liquid_core..error..error..Error$GT$$GT$$GT$17hbbfd17415e1c1e41E.exit.i.i.i.i.i" ]
   store ptr %.8.val1.sink.i.i.i.i.i, ptr %.sink4.i.i.sroa.phi.i.i.i, align 8, !alias.scope !1461, !noalias !1462
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq), !noalias !837
-  %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i = load i64, ptr %.sroa.4.i.i.i, align 8, !alias.scope !1463, !noalias !1466, !noundef !3 ; 2 uses
-  %2 = inttoptr i64 %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i to ptr
-  %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i = load i64, ptr %.sroa.73.i.i.i, align 8, !alias.scope !1463, !noalias !1466
-  %3 = inttoptr i64 %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i to ptr
+  %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i = load ptr, ptr %.sroa.4.i.i.i, align 8, !alias.scope !1463, !noalias !1466, !align !28, !noundef !3 ; 2 uses
+  %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i = load ptr, ptr %.sroa.73.i.i.i, align 8, !alias.scope !1463, !noalias !1466
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.73.i.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !noalias !837
-  %i.yd = insertvalue { ptr, ptr } poison, ptr %2, 0
-  %.not = icmp eq i64 %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i, 0
-  %. = select i1 %.not, ptr undef, ptr %3
+  %i.yd = insertvalue { ptr, ptr } poison, ptr %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i, 0
+  %.not = icmp eq ptr %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i, null
+  %. = select i1 %.not, ptr undef, ptr %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i
   br label %"_ZN4core3ptr133drop_in_place$LT$core..ops..control_flow..ControlFlow$LT$alloc..boxed..Box$LT$dyn$u20$liquid_core..parser..filter..Filter$GT$$GT$$GT$17h100f353cfbdf32d5E.exit"
 
 "_ZN4core3ptr133drop_in_place$LT$core..ops..control_flow..ControlFlow$LT$alloc..boxed..Box$LT$dyn$u20$liquid_core..parser..filter..Filter$GT$$GT$$GT$17h100f353cfbdf32d5E.exit": ; preds = %"_ZN106_$LT$core..iter..adapters..GenericShunt$LT$I$C$R$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h517383a0e0130d31E.exit", %"_ZN106_$LT$core..iter..adapters..GenericShunt$LT$I$C$R$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8try_fold17h517383a0e0130d31E.exit.thread"
