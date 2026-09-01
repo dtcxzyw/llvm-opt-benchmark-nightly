@@ -205,10 +205,10 @@ bb.r:                                             ; preds = %_RNvXs1_NtCs1xwejQu
 _RNvXsz_NtCsakL8LGkl72C_4ecow3vecINtB5_8IntoIterNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextCs7tN9tvpkfrg_12typst_layout.exit.us.i.i.i.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs7tN9tvpkfrg_12typst_layout.exit.us.i.i.i.i.i.i.i.i
   %i.by = phi ptr [ %i.ch, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs7tN9tvpkfrg_12typst_layout.exit.us.i.i.i.i.i.i.i.i ], [ %.sroa.10.0.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ]
   %i.bz = phi i64 [ %i.cj, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs7tN9tvpkfrg_12typst_layout.exit.us.i.i.i.i.i.i.i.i ], [ 1, %.lr.ph.i.i.i.i.i.i.i.i ] ; 5 uses
-  %.val1112.us.i.i.i.i.i.i.i.i = phi i64 [ %i.ca, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs7tN9tvpkfrg_12typst_layout.exit.us.i.i.i.i.i.i.i.i ], [ %.promoted.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ] ; 2 uses
+  %.val1112.us.i.i.i.i.i.i.i.i = phi i64 [ %i.ca, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs7tN9tvpkfrg_12typst_layout.exit.us.i.i.i.i.i.i.i.i ], [ %.promoted.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !57523)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !57524
-  %i.ca = add nuw i64 %.val1112.us.i.i.i.i.i.i.i.i, 1 ; 5 uses
+  %i.ca = add nuw i64 %.val1112.us.i.i.i.i.i.i.i.i, 1 ; 4 uses
   %i.cb = getelementptr inbounds nuw [24 x i8], ptr %i.bv, i64 %.val1112.us.i.i.i.i.i.i.i.i ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %i.cb, i64 24, i1 false), !noalias !57525
   %.sroa.0.0.copyload6.us.i.i.i.i.i.i.i.i = load ptr, ptr %i.c, align 8, !noalias !57526 ; 2 uses
@@ -228,9 +228,8 @@ bb.s:                                             ; preds = %_RNvXsz_NtCsakL8LGk
   br i1 %i.cf, label %bb.t, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs7tN9tvpkfrg_12typst_layout.exit.us.i.i.i.i.i.i.i.i
 
 bb.t:                                             ; preds = %bb.s
-  %i.cg = sub i64 %i.bq, %i.ca
-  %4 = tail call i64 @llvm.uadd.sat.i64(i64 %i.cg, i64 1)
-  invoke fastcc void @_RINvNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs7tN9tvpkfrg_12typst_layout(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %i.bz, i64 noundef %4, i64 noundef 8, i64 noundef 24)
+  %i.cg = sub nuw i64 %i.bq, %.val1112.us.i.i.i.i.i.i.i.i
+  invoke fastcc void @_RINvNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs7tN9tvpkfrg_12typst_layout(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %i.bz, i64 noundef %i.cg, i64 noundef 8, i64 noundef 24)
           to label %._RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs7tN9tvpkfrg_12typst_layout.exit.us.i.i_crit_edge.i.i.i.i.i.i unwind label %.split.us.i.i.i.i.i.i.i.i, !noalias !57529
 
 ._RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs7tN9tvpkfrg_12typst_layout.exit.us.i.i_crit_edge.i.i.i.i.i.i: ; preds = %bb.t
@@ -257,10 +256,10 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11
 .lr.ph.split.i.i.i.i.i.i.i.i:                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i.i.i.i.i
   %i.cl = phi ptr [ %i.cu, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i.i.i.i.i ], [ %.sroa.10.0.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ]
   %i.cm = phi i64 [ %i.cw, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i.i.i.i.i ], [ 1, %.lr.ph.i.i.i.i.i.i.i.i ] ; 5 uses
-  %.val1112.i.i.i.i.i.i.i.i = phi i64 [ %i.cn, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i.i.i.i.i ], [ %.promoted.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ] ; 3 uses
+  %.val1112.i.i.i.i.i.i.i.i = phi i64 [ %i.cn, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i.i.i.i.i ], [ %.promoted.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ] ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !57523)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !57524
-  %i.cn = add nuw i64 %.val1112.i.i.i.i.i.i.i.i, 1 ; 6 uses
+  %i.cn = add nuw i64 %.val1112.i.i.i.i.i.i.i.i, 1 ; 5 uses
   %i.co = icmp ult i64 %.val1112.i.i.i.i.i.i.i.i, %i.bx
   tail call void @llvm.assume(i1 %i.co)
   %i.cp = getelementptr inbounds nuw [24 x i8], ptr %i.bv, i64 %.val1112.i.i.i.i.i.i.i.i
@@ -320,9 +319,8 @@ bb.w:                                             ; preds = %.split.i.i.i.i.i.i.
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentECs7tN9tvpkfrg_12typst_layout.exit.i.i.i.i.i.i.i.i unwind label %bb.y, !noalias !57527
 
 bb.x:                                             ; preds = %bb.v
-  %i.cy = sub i64 %i.bq, %i.cn
-  %5 = tail call i64 @llvm.uadd.sat.i64(i64 %i.cy, i64 1)
-  invoke fastcc void @_RINvNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs7tN9tvpkfrg_12typst_layout(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %i.cm, i64 noundef %5, i64 noundef 8, i64 noundef 24)
+  %i.cy = sub nuw i64 %i.bq, %.val1112.i.i.i.i.i.i.i.i
+  invoke fastcc void @_RINvNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs7tN9tvpkfrg_12typst_layout(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.h, i64 noundef %i.cm, i64 noundef %i.cy, i64 noundef 8, i64 noundef 24)
           to label %._RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs7tN9tvpkfrg_12typst_layout.exit.i.i_crit_edge.i.i.i.i.i.i unwind label %.split.i.i.i.i.i.i.i.i, !noalias !57529
 
 ._RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content7ContentE7reserveCs7tN9tvpkfrg_12typst_layout.exit.i.i_crit_edge.i.i.i.i.i.i: ; preds = %bb.x

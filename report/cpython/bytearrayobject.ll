@@ -205,8 +205,8 @@ Py_DECREF.exit.thread:                            ; preds = %bb.f, %Py_DECREF.ex
   %i.w = getelementptr i8, ptr %0, i64 40
   %.val.i = load ptr, ptr %i.w, align 8, !tbaa !23 ; 10 uses
   %i.x = getelementptr i8, ptr %0, i64 16
-  %.val16.i = load i64, ptr %i.x, align 8, !tbaa !25 ; 17 uses
-  %spec.store.select.i = call i64 @llvm.umin.i64(i64 %.1, i64 9223372036854775807) ; 9 uses
+  %.val16.i = load i64, ptr %i.x, align 8, !tbaa !25 ; 16 uses
+  %spec.store.select.i = call i64 @llvm.umin.i64(i64 %.1, i64 9223372036854775807) ; 8 uses
   %i.y = icmp eq ptr %.135, @_Py_NoneStruct
   br i1 %i.y, label %bb.j, label %bb.at
 
@@ -392,7 +392,7 @@ Py_DECREF.exit82.i.i:                             ; preds = %bb.aa, %bb.z, %bb.y
   br i1 %i.by, label %.preheader.i.i, label %.critedge._crit_edge.thread.i.i
 
 .preheader.i.i:                                   ; preds = %.critedge._crit_edge.i.i, %bb.ab
-  %.422.i.i = phi i64 [ %i.cf, %bb.ab ], [ %.3.i.i, %.critedge._crit_edge.i.i ] ; 5 uses
+  %.422.i.i = phi i64 [ %i.cf, %bb.ab ], [ %.3.i.i, %.critedge._crit_edge.i.i ] ; 4 uses
   %i.bz = getelementptr i8, ptr %.val.i, i64 %.422.i.i
   %i.ca = load i8, ptr %i.bz, align 1, !tbaa !22
   %i.cb = zext i8 %i.ca to i64
@@ -400,19 +400,15 @@ Py_DECREF.exit82.i.i:                             ; preds = %bb.aa, %bb.z, %bb.y
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !7
   %i.ce = and i32 %i.cd, 8
   %.not74.i.i = icmp eq i32 %i.ce, 0
-  br i1 %.not74.i.i, label %.critedge4.i.i, label %bb.ab
+  br i1 %.not74.i.i, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %.preheader.i.i
   %i.cf = add i64 %.422.i.i, 1                    ; 2 uses
   %exitcond27.not.i.i = icmp eq i64 %i.cf, %.val16.i
   br i1 %exitcond27.not.i.i, label %.critedge._crit_edge.thread.i.i, label %.preheader.i.i, !llvm.loop !200
 
-.critedge4.i.i:                                   ; preds = %.preheader.i.i
+bb.ac:                                            ; preds = %.preheader.i.i
   %5 = getelementptr i8, ptr %.val.i, i64 %.422.i.i
-  %.not75.i.i = icmp eq i64 %.422.i.i, %.val16.i
-  br i1 %.not75.i.i, label %.critedge._crit_edge.thread.i.i, label %bb.ac
-
-bb.ac:                                            ; preds = %.critedge4.i.i
   %i.cg = sub i64 %.val16.i, %.422.i.i            ; 5 uses
   %i.ch = icmp slt i64 %i.cg, 0
   br i1 %i.ch, label %bb.ad, label %bb.ae
@@ -509,8 +505,8 @@ Py_DECREF.exit78.i.i:                             ; preds = %bb.aq, %bb.ap, %bb.
   %i.dg = add nuw i64 %spec.store.select.i, 1
   br label %.critedge._crit_edge.thread.i.i
 
-.critedge._crit_edge.thread.i.i:                  ; preds = %.critedge.i.i, %bb.k, %bb.ab, %Py_DECREF.exit78.i.i, %.critedge4.i.i, %.critedge._crit_edge.i.i
-  %.1.i.i = phi i64 [ %i.dg, %Py_DECREF.exit78.i.i ], [ %spec.store.select.i, %.critedge4.i.i ], [ %spec.store.select.i, %.critedge._crit_edge.i.i ], [ %.017.i.i, %bb.k ], [ %spec.store.select.i, %bb.ab ], [ %.017.i.i, %.critedge.i.i ]
+.critedge._crit_edge.thread.i.i:                  ; preds = %.critedge.i.i, %bb.k, %bb.ab, %Py_DECREF.exit78.i.i, %.critedge._crit_edge.i.i
+  %.1.i.i = phi i64 [ %i.dg, %Py_DECREF.exit78.i.i ], [ %.017.i.i, %bb.k ], [ %spec.store.select.i, %.critedge._crit_edge.i.i ], [ %spec.store.select.i, %bb.ab ], [ %.017.i.i, %.critedge.i.i ]
   %i.dh = getelementptr i8, ptr %i.ab, i64 16
   store i64 %.1.i.i, ptr %i.dh, align 8, !tbaa !25
   br label %bytearray_split_impl.exit

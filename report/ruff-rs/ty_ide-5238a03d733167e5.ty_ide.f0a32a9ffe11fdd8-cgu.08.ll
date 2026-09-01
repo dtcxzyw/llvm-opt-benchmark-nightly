@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   br label %bb.d
 
-bb.d:                                             ; preds = %.lr.ph.i, %.critedge.backedge.i
+bb.d:                                             ; preds = %.critedge.backedge.i, %.lr.ph.i
   %i.l = phi i64 [ %i.i, %.lr.ph.i ], [ %i.m, %.critedge.backedge.i ] ; 3 uses
   %i.m = add i64 %i.l, 1                          ; 2 uses
   %i.n = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %i.l ; 3 uses

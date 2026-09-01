@@ -204,7 +204,7 @@ bb.a:
 bb.b:                                             ; preds = %tailrecurse, %.lr.ph137
   %.val = load ptr, ptr %i.d, align 8, !tbaa !21  ; 9 uses
   %i.e = getelementptr i8, ptr %.val, i64 8
-  %.val.val = load i64, ptr %i.e, align 8, !tbaa !17 ; 8 uses
+  %.val.val = load i64, ptr %i.e, align 8, !tbaa !17 ; 7 uses
   %i.f = add nsw i64 %.val.val, -1                ; 2 uses
   %i.g = icmp eq i64 %i.f, 0
   br i1 %i.g, label %sunHashMapIdxFromKey.exit, label %bb.c
@@ -266,7 +266,7 @@ SUNStlVector_SUNHashMapKeyValue_At.exit.i:        ; preds = %.preheader.i, %bb.e
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %.01728.i
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !19
   %.not81 = icmp eq ptr %i.ad, null
-  br i1 %.not81, label %SUNHashMap_Iterate.exit.thread, label %bb.e
+  br i1 %.not81, label %SUNHashMap_Iterate.exit.thread.thread.a, label %bb.e
 
 SUNHashMap_Iterate.exit:                          ; preds = %bb.e, %.preheader.i
   switch i64 %.val.val, label %bb.f [
@@ -274,26 +274,22 @@ SUNHashMap_Iterate.exit:                          ; preds = %bb.e, %.preheader.i
     i64 0, label %bb.g
   ]
 
-SUNHashMap_Iterate.exit.thread:                   ; preds = %SUNStlVector_SUNHashMapKeyValue_At.exit.i
-  %3 = icmp eq i64 %.01728.i, %.val.val
-  br i1 %3, label %SUNHashMap_Iterate.exit.thread.thread.a, label %bb.w
+SUNHashMap_Iterate.exit.thread.thread.a:          ; preds = %SUNStlVector_SUNHashMapKeyValue_At.exit.i
+  %i.ae = icmp eq i64 %.01728.i, %.val.val
+  br i1 %i.ae, label %bb.f, label %bb.w
 
-SUNHashMap_Iterate.exit.thread.thread.a:          ; preds = %SUNHashMap_Iterate.exit.thread
-  %i.ae = icmp eq i64 %.val.val, 0
-  br i1 %i.ae, label %bb.g, label %bb.f
-
-bb.f:                                             ; preds = %SUNHashMap_Iterate.exit, %SUNHashMap_Iterate.exit.thread.thread.a
+bb.f:                                             ; preds = %SUNHashMap_Iterate.exit.thread.thread.a, %SUNHashMap_Iterate.exit
   %i.af = sitofp i64 %.val.val to x86_fp80
   %i.ag = fmul nnan x86_fp80 %i.af, 1.500000e+00
   %i.ah = tail call x86_fp80 @llvm.ceil.f80(x86_fp80 %i.ag)
   %i.ai = fptosi x86_fp80 %i.ah to i64
   br label %bb.g
 
-bb.g:                                             ; preds = %SUNHashMap_Iterate.exit, %bb.f, %SUNHashMap_Iterate.exit.thread.thread.a
-  %4 = phi i64 [ %i.ai, %bb.f ], [ 2, %SUNHashMap_Iterate.exit.thread.thread.a ], [ 2, %SUNHashMap_Iterate.exit ] ; 5 uses
+bb.g:                                             ; preds = %SUNHashMap_Iterate.exit, %bb.f
+  %3 = phi i64 [ %i.ai, %bb.f ], [ 2, %SUNHashMap_Iterate.exit ] ; 5 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.val, i64 24 ; 2 uses
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !18 ; 2 uses
-  %i.al = icmp sgt i64 %4, -1
+  %i.al = icmp sgt i64 %3, -1
   %i.am = icmp ne ptr %i.ak, null
   %or.cond.i60 = and i1 %i.al, %i.am
   br i1 %or.cond.i60, label %bb.h, label %SUNStlVector_SUNHashMapKeyValue_New.exit
@@ -304,7 +300,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i62, label %SUNStlVector_SUNHashMapKeyValue_New.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ao = shl i64 %4, 3
+  %i.ao = shl i64 %3, 3
   %i.ap = tail call noalias ptr @malloc(i64 noundef %i.ao) #16 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.an, i64 16
   store ptr %i.ap, ptr %i.aq, align 8, !tbaa !11
@@ -318,7 +314,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
   store i64 0, ptr %i.an, align 8, !tbaa !16
   %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 8
-  store i64 %4, ptr %i.ar, align 8, !tbaa !17
+  store i64 %3, ptr %i.ar, align 8, !tbaa !17
   %i.as = getelementptr inbounds nuw i8, ptr %i.an, i64 24
   store ptr %i.ak, ptr %i.as, align 8, !tbaa !18
   br label %SUNStlVector_SUNHashMapKeyValue_New.exit
@@ -326,7 +322,7 @@ bb.k:                                             ; preds = %bb.i
 SUNStlVector_SUNHashMapKeyValue_New.exit:         ; preds = %bb.g, %bb.h, %bb.j, %bb.k
   %.1.i61 = phi ptr [ null, %bb.g ], [ %i.an, %bb.k ], [ null, %bb.j ], [ null, %bb.h ]
   store ptr %.1.i61, ptr %i.d, align 8, !tbaa !21
-  %.not42.i84 = icmp sgt i64 %4, 0
+  %.not42.i84 = icmp sgt i64 %3, 0
   br i1 %.not42.i84, label %.lr.ph, label %.preheader
 
 .preheader:                                       ; preds = %bb.q, %SUNStlVector_SUNHashMapKeyValue_New.exit
@@ -382,7 +378,7 @@ bb.q:                                             ; preds = %.lr.ph, %bb.n, %bb.
   %i.bn = getelementptr inbounds [8 x i8], ptr %i.bl, i64 %i.bj
   store ptr null, ptr %i.bn, align 8, !tbaa !19
   %i.bo = add nuw nsw i64 %.033.i85, 1            ; 2 uses
-  %exitcond91.not = icmp eq i64 %i.bo, %4
+  %exitcond91.not = icmp eq i64 %i.bo, %3
   br i1 %exitcond91.not, label %.preheader, label %.lr.ph
 
 SUNStlVector_SUNHashMapKeyValue_At.exit58:        ; preds = %.preheader, %SUNStlVector_SUNHashMapKeyValue_PopBack.exit
@@ -467,8 +463,8 @@ tailrecurse:                                      ; preds = %bb.v, %.preheader.i
   tail call void @free(ptr noundef nonnull %.val) #17
   br label %bb.b
 
-bb.w:                                             ; preds = %SUNHashMap_Iterate.exit.thread, %sunHashMapIdxFromKey.exit
-  %.0 = phi i64 [ %i.p, %sunHashMapIdxFromKey.exit ], [ %.01728.i, %SUNHashMap_Iterate.exit.thread ] ; 3 uses
+bb.w:                                             ; preds = %SUNHashMap_Iterate.exit.thread.thread.a, %sunHashMapIdxFromKey.exit
+  %.0 = phi i64 [ %i.p, %sunHashMapIdxFromKey.exit ], [ %.01728.i, %SUNHashMap_Iterate.exit.thread.thread.a ] ; 3 uses
   %i.cq = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #16 ; 4 uses
   %i.cr = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #19
   %i.cs = add i64 %i.cr, 1

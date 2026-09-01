@@ -205,7 +205,7 @@ hsearch_push.exit.i.i:                            ; preds = %bb.cs, %bb.cr
   %i.rp = load i8, ptr %i.ro, align 1, !tbaa !9
   store i8 0, ptr %i.ro, align 1, !tbaa !9
   %i.rq = load ptr, ptr %i.bv, align 8, !tbaa !167 ; 2 uses
-  %i.rr = load i64, ptr %i.rq, align 8, !tbaa !172 ; 4 uses
+  %i.rr = load i64, ptr %i.rq, align 8, !tbaa !172 ; 3 uses
   %i.rs = icmp slt i64 %.0351484.i.i, %i.rr
   br i1 %i.rs, label %history_get.exit.lr.ph.i.i.i, label %.loopexit434.i.i
 
@@ -218,7 +218,7 @@ history_get.exit.lr.ph.i.i.i:                     ; preds = %hsearch_push.exit.i
   br label %history_get.exit.i.i.i
 
 history_get.exit.i.i.i:                           ; preds = %bb.ct, %history_get.exit.lr.ph.i.i.i
-  %.058.i.i.i = phi i64 [ %.0351484.i.i, %history_get.exit.lr.ph.i.i.i ], [ %i.sb, %bb.ct ] ; 4 uses
+  %.058.i.i.i = phi i64 [ %.0351484.i.i, %history_get.exit.lr.ph.i.i.i ], [ %i.sb, %bb.ct ] ; 3 uses
   %i.rx = xor i64 %.058.i.i.i, -1
   %i.ry = getelementptr [8 x i8], ptr %i.rv, i64 %i.rx
   %i.rz = load ptr, ptr %i.ry, align 8, !tbaa !61 ; 2 uses
@@ -232,11 +232,9 @@ bb.ct:                                            ; preds = %history_get.exit.i.
   br i1 %exitcond.not.i.i.i, label %.loopexit434.i.i, label %history_get.exit.i.i.i, !llvm.loop !360
 
 .thread46.i.i.i:                                  ; preds = %history_get.exit.i.i.i
-  %.not.i39.i.i.i = icmp slt i64 %.058.i.i.i, %i.rr
   %i.sc = ptrtoint ptr %i.rz to i64
-  %spec.select423.i.i = select i1 %.not.i39.i.i.i, i64 %i.sc, i64 0
   %i.sd = ptrtoint ptr %i.sa to i64
-  %i.se = sub i64 %i.sd, %spec.select423.i.i
+  %i.se = sub i64 %i.sd, %i.sc
   br label %bb.cw
 
 .loopexit434.i.i:                                 ; preds = %bb.ct, %hsearch_push.exit.i.i
@@ -639,7 +637,7 @@ bb.et:                                            ; preds = %hsearch_push.exit23
 
 sbuf_string.exit242.i.i:                          ; preds = %bb.et, %hsearch_push.exit239.i.i
   %.0.i.i241.i.i = phi ptr [ %spec.select.i.i240.i.i, %bb.et ], [ null, %hsearch_push.exit239.i.i ]
-  %i.aay = load i64, ptr %i.aar, align 8, !tbaa !172 ; 4 uses
+  %i.aay = load i64, ptr %i.aar, align 8, !tbaa !172 ; 3 uses
   %i.aaz = icmp slt i64 %i.tr, %i.aay
   br i1 %i.aaz, label %history_get.exit.lr.ph.i243.i.i, label %.loopexit432.i.i
 
@@ -651,7 +649,7 @@ history_get.exit.lr.ph.i243.i.i:                  ; preds = %sbuf_string.exit242
   br label %history_get.exit.i244.i.i
 
 history_get.exit.i244.i.i:                        ; preds = %bb.eu, %history_get.exit.lr.ph.i243.i.i
-  %.058.i245.i.i = phi i64 [ %i.tr, %history_get.exit.lr.ph.i243.i.i ], [ %i.abh, %bb.eu ] ; 4 uses
+  %.058.i245.i.i = phi i64 [ %i.tr, %history_get.exit.lr.ph.i243.i.i ], [ %i.abh, %bb.eu ] ; 3 uses
   %i.abd = xor i64 %.058.i245.i.i, -1
   %i.abe = getelementptr [8 x i8], ptr %i.abc, i64 %i.abd
   %i.abf = load ptr, ptr %i.abe, align 8, !tbaa !61 ; 2 uses
@@ -665,11 +663,9 @@ bb.eu:                                            ; preds = %history_get.exit.i2
   br i1 %exitcond.not.i251.i.i, label %.loopexit432.i.i, label %history_get.exit.i244.i.i, !llvm.loop !360
 
 .thread46.i247.i.i:                               ; preds = %history_get.exit.i244.i.i
-  %.not.i39.i248.i.i = icmp slt i64 %.058.i245.i.i, %i.aay
   %i.abi = ptrtoint ptr %i.abf to i64
-  %spec.select424.i.i = select i1 %.not.i39.i248.i.i, i64 %i.abi, i64 0
   %i.abj = ptrtoint ptr %i.abg to i64
-  %i.abk = sub i64 %i.abj, %spec.select424.i.i
+  %i.abk = sub i64 %i.abj, %i.abi
   br label %.outer.i.i.outer.backedge
 
 .outer.i.i.outer.backedge:                        ; preds = %.thread46.i247.i.i, %.thread46.i263.i.i
@@ -902,7 +898,7 @@ bb.fn:                                            ; preds = %bb.fm
 
 sbuf_string.exit280.i.i:                          ; preds = %bb.fn, %bb.fm
   %.0.i.i279.i.i = phi ptr [ %spec.select.i.i278.i.i, %bb.fn ], [ null, %bb.fm ]
-  %i.aeh = load i64, ptr %i.aea, align 8, !tbaa !172 ; 4 uses
+  %i.aeh = load i64, ptr %i.aea, align 8, !tbaa !172 ; 3 uses
   %i.aei = icmp slt i64 %.4355.ph.i.i.ph, %i.aeh
   br i1 %i.aei, label %history_get.exit.lr.ph.i281.i.i, label %.loopexit.i.i
 
@@ -915,7 +911,7 @@ history_get.exit.lr.ph.i281.i.i:                  ; preds = %sbuf_string.exit280
   br label %history_get.exit.i282.i.i
 
 history_get.exit.i282.i.i:                        ; preds = %bb.fo, %history_get.exit.lr.ph.i281.i.i
-  %.058.i283.i.i = phi i64 [ %.4355.ph.i.i.ph, %history_get.exit.lr.ph.i281.i.i ], [ %i.aer, %bb.fo ] ; 4 uses
+  %.058.i283.i.i = phi i64 [ %.4355.ph.i.i.ph, %history_get.exit.lr.ph.i281.i.i ], [ %i.aer, %bb.fo ] ; 3 uses
   %i.aen = xor i64 %.058.i283.i.i, -1
   %i.aeo = getelementptr [8 x i8], ptr %i.ael, i64 %i.aen
   %i.aep = load ptr, ptr %i.aeo, align 8, !tbaa !61 ; 2 uses
@@ -929,11 +925,9 @@ bb.fo:                                            ; preds = %history_get.exit.i2
   br i1 %exitcond.not.i289.i.i, label %.loopexit.i.i, label %history_get.exit.i282.i.i, !llvm.loop !360
 
 .thread46.i285.i.i:                               ; preds = %history_get.exit.i282.i.i
-  %.not.i39.i286.i.i = icmp slt i64 %.058.i283.i.i, %i.aeh
   %i.aes = ptrtoint ptr %i.aep to i64
-  %spec.select426.i.i = select i1 %.not.i39.i286.i.i, i64 %i.aes, i64 0
   %i.aet = ptrtoint ptr %i.aeq to i64
-  %i.aeu = sub i64 %i.aet, %spec.select426.i.i
+  %i.aeu = sub i64 %i.aet, %i.aes
   %i.aev = icmp eq ptr %i.aeb, null
   %spec.select427.i.i = select i1 %i.aev, i64 0, i64 %i.aed
   br label %.outer.outer.i.i.backedge

@@ -204,7 +204,7 @@ bb.a:
   %i.g = getelementptr inbounds [32 x i8], ptr %i.d, i64 %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   %i.i = load i16, ptr %i.h, align 4, !tbaa !134  ; 6 uses
-  %i.j = zext i16 %i.i to i32                     ; 14 uses
+  %i.j = zext i16 %i.i to i32                     ; 13 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 8 uses
   %i.l = load i32, ptr %i.k, align 8, !tbaa !29
   %.not = icmp eq i32 %i.l, %i.j
@@ -453,14 +453,10 @@ bb.t:                                             ; preds = %_ZN4llvm11raw_ostre
   tail call void @_ZN4llvm16SPIRVInstPrinter12printOperandEPKNS_6MCInstEjRNS_11raw_ostreamE(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull readonly %1, i32 noundef %i.j, ptr noundef nonnull align 8 dereferenceable(48) %2)
   %i.do = add nuw nsw i32 %i.j, 1                 ; 2 uses
   %exitcond24.peel.not.i = icmp eq i32 %i.do, %i.dm
-  br i1 %exitcond24.peel.not.i, label %_ZN4llvm16SPIRVInstPrinter20printSymbolicOperandILNS_5SPIRV15OperandCategory15OperandCategoryE2EEEvPKNS_6MCInstEjRNS_11raw_ostreamE.exit, label %.lr.ph.split.split.i
+  br i1 %exitcond24.peel.not.i, label %_ZN4llvm16SPIRVInstPrinter20printSymbolicOperandILNS_5SPIRV15OperandCategory15OperandCategoryE2EEEvPKNS_6MCInstEjRNS_11raw_ostreamE.exit, label %bb.u
 
-.lr.ph.split.split.i:                             ; preds = %.lr.ph.i, %_ZN4llvm11raw_ostreamlsEc.exit.i
-  %.015.i = phi i32 [ %i.dt, %_ZN4llvm11raw_ostreamlsEc.exit.i ], [ %i.do, %.lr.ph.i ] ; 3 uses
-  %.not.i54 = icmp eq i32 %.015.i, %i.j
-  br i1 %.not.i54, label %_ZN4llvm11raw_ostreamlsEc.exit.i, label %bb.u
-
-bb.u:                                             ; preds = %.lr.ph.split.split.i
+bb.u:                                             ; preds = %.lr.ph.i, %_ZN4llvm11raw_ostreamlsEc.exit.i
+  %.015.i = phi i32 [ %i.dt, %_ZN4llvm11raw_ostreamlsEc.exit.i ], [ %i.do, %.lr.ph.i ] ; 2 uses
   %i.dp = load ptr, ptr %i.s, align 8, !tbaa !28  ; 3 uses
   %i.dq = load ptr, ptr %i.u, align 8, !tbaa !23
   %.not.i.i = icmp ult ptr %i.dp, %i.dq
@@ -476,11 +472,11 @@ bb.w:                                             ; preds = %bb.u
   store i8 32, ptr %i.dp, align 1, !tbaa !20
   br label %_ZN4llvm11raw_ostreamlsEc.exit.i
 
-_ZN4llvm11raw_ostreamlsEc.exit.i:                 ; preds = %bb.w, %bb.v, %.lr.ph.split.split.i
+_ZN4llvm11raw_ostreamlsEc.exit.i:                 ; preds = %bb.w, %bb.v
   tail call void @_ZN4llvm16SPIRVInstPrinter12printOperandEPKNS_6MCInstEjRNS_11raw_ostreamE(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull readonly %1, i32 noundef %.015.i, ptr noundef nonnull align 8 dereferenceable(48) %2)
   %i.dt = add i32 %.015.i, 1                      ; 2 uses
   %exitcond24.not.i = icmp eq i32 %i.dt, %i.dm
-  br i1 %exitcond24.not.i, label %_ZN4llvm16SPIRVInstPrinter20printSymbolicOperandILNS_5SPIRV15OperandCategory15OperandCategoryE2EEEvPKNS_6MCInstEjRNS_11raw_ostreamE.exit, label %.lr.ph.split.split.i, !llvm.loop !70
+  br i1 %exitcond24.not.i, label %_ZN4llvm16SPIRVInstPrinter20printSymbolicOperandILNS_5SPIRV15OperandCategory15OperandCategoryE2EEEvPKNS_6MCInstEjRNS_11raw_ostreamE.exit, label %bb.u, !llvm.loop !70
 
 _ZN4llvm16SPIRVInstPrinter20printSymbolicOperandILNS_5SPIRV15OperandCategory15OperandCategoryE2EEEvPKNS_6MCInstEjRNS_11raw_ostreamE.exit: ; preds = %_ZN4llvm11raw_ostreamlsEc.exit.i, %bb.o, %_ZN4llvm11raw_ostreamlsEc.exit53, %bb.p, %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %bb.g, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i40, %bb.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i43, %bb.k, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i46, %bb.m, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i49, %bb.t, %.lr.ph.i, %bb.a
   ret void
@@ -498,7 +494,7 @@ bb.a:
   %i.g = getelementptr inbounds [32 x i8], ptr %i.d, i64 %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   %i.i = load i16, ptr %i.h, align 4, !tbaa !134
-  %i.j = zext i16 %i.i to i32                     ; 5 uses
+  %i.j = zext i16 %i.i to i32                     ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.l = load i32, ptr %i.k, align 8, !tbaa !29
   %i.m = icmp eq i32 %i.l, %i.j
@@ -531,14 +527,10 @@ _ZN4llvm11raw_ostreamlsEc.exit:                   ; preds = %bb.c, %bb.d
   tail call void @_ZN4llvm16SPIRVInstPrinter12printOperandEPKNS_6MCInstEjRNS_11raw_ostreamE(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull readonly %1, i32 noundef %i.j, ptr noundef nonnull align 8 dereferenceable(48) %2)
   %i.v = add nuw nsw i32 %i.j, 1                  ; 2 uses
   %exitcond24.peel.not.i = icmp eq i32 %i.v, %i.t
-  br i1 %exitcond24.peel.not.i, label %_ZN4llvm16SPIRVInstPrinter25printRemainingVariableOpsEPKNS_6MCInstEjRNS_11raw_ostreamEbb.exit, label %.lr.ph.split.split.i
+  br i1 %exitcond24.peel.not.i, label %_ZN4llvm16SPIRVInstPrinter25printRemainingVariableOpsEPKNS_6MCInstEjRNS_11raw_ostreamEbb.exit, label %bb.e
 
-.lr.ph.split.split.i:                             ; preds = %.lr.ph.i, %_ZN4llvm11raw_ostreamlsEc.exit.i
-  %.015.i = phi i32 [ %i.aa, %_ZN4llvm11raw_ostreamlsEc.exit.i ], [ %i.v, %.lr.ph.i ] ; 3 uses
-  %.not.i9 = icmp eq i32 %.015.i, %i.j
-  br i1 %.not.i9, label %_ZN4llvm11raw_ostreamlsEc.exit.i, label %bb.e
-
-bb.e:                                             ; preds = %.lr.ph.split.split.i
+bb.e:                                             ; preds = %.lr.ph.i, %_ZN4llvm11raw_ostreamlsEc.exit.i
+  %.015.i = phi i32 [ %i.aa, %_ZN4llvm11raw_ostreamlsEc.exit.i ], [ %i.v, %.lr.ph.i ] ; 2 uses
   %i.w = load ptr, ptr %i.n, align 8, !tbaa !28   ; 3 uses
   %i.x = load ptr, ptr %i.p, align 8, !tbaa !23
   %.not.i.i = icmp ult ptr %i.w, %i.x
@@ -554,11 +546,11 @@ bb.g:                                             ; preds = %bb.e
   store i8 32, ptr %i.w, align 1, !tbaa !20
   br label %_ZN4llvm11raw_ostreamlsEc.exit.i
 
-_ZN4llvm11raw_ostreamlsEc.exit.i:                 ; preds = %bb.g, %bb.f, %.lr.ph.split.split.i
+_ZN4llvm11raw_ostreamlsEc.exit.i:                 ; preds = %bb.g, %bb.f
   tail call void @_ZN4llvm16SPIRVInstPrinter12printOperandEPKNS_6MCInstEjRNS_11raw_ostreamE(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull readonly %1, i32 noundef %.015.i, ptr noundef nonnull align 8 dereferenceable(48) %2)
   %i.aa = add i32 %.015.i, 1                      ; 2 uses
   %exitcond24.not.i = icmp eq i32 %i.aa, %i.t
-  br i1 %exitcond24.not.i, label %_ZN4llvm16SPIRVInstPrinter25printRemainingVariableOpsEPKNS_6MCInstEjRNS_11raw_ostreamEbb.exit, label %.lr.ph.split.split.i, !llvm.loop !70
+  br i1 %exitcond24.not.i, label %_ZN4llvm16SPIRVInstPrinter25printRemainingVariableOpsEPKNS_6MCInstEjRNS_11raw_ostreamEbb.exit, label %bb.e, !llvm.loop !70
 
 _ZN4llvm16SPIRVInstPrinter25printRemainingVariableOpsEPKNS_6MCInstEjRNS_11raw_ostreamEbb.exit: ; preds = %_ZN4llvm11raw_ostreamlsEc.exit.i, %.lr.ph.i, %_ZN4llvm11raw_ostreamlsEc.exit, %bb.a
   ret void
@@ -671,7 +663,7 @@ _ZN4llvm11raw_ostreamlsEPKc.exit23:               ; preds = %bb.h, %bb.i
   %i.ba = getelementptr inbounds [32 x i8], ptr %i.ax, i64 %i.az
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 4
   %i.bc = load i16, ptr %i.bb, align 4, !tbaa !134
-  %i.bd = zext i16 %i.bc to i32                   ; 5 uses
+  %i.bd = zext i16 %i.bc to i32                   ; 4 uses
   %i.be = icmp eq i32 %i.d, %i.bd
   br i1 %i.be, label %_ZN4llvm16SPIRVInstPrinter25printRemainingVariableOpsEPKNS_6MCInstEjRNS_11raw_ostreamEbb.exit, label %bb.j
 
@@ -684,14 +676,10 @@ bb.j:                                             ; preds = %_ZN4llvm11raw_ostre
   tail call void @_ZN4llvm16SPIRVInstPrinter12printOperandEPKNS_6MCInstEjRNS_11raw_ostreamE(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull readonly %1, i32 noundef %i.bd, ptr noundef nonnull align 8 dereferenceable(48) %2)
   %i.bh = add nuw nsw i32 %i.bd, 1                ; 2 uses
   %exitcond24.peel.not.i = icmp eq i32 %i.bh, %i.bf
-  br i1 %exitcond24.peel.not.i, label %_ZN4llvm16SPIRVInstPrinter25printRemainingVariableOpsEPKNS_6MCInstEjRNS_11raw_ostreamEbb.exit, label %.lr.ph.split.split.i
+  br i1 %exitcond24.peel.not.i, label %_ZN4llvm16SPIRVInstPrinter25printRemainingVariableOpsEPKNS_6MCInstEjRNS_11raw_ostreamEbb.exit, label %bb.k
 
-.lr.ph.split.split.i:                             ; preds = %.lr.ph.i, %_ZN4llvm11raw_ostreamlsEc.exit.i
-  %.015.i = phi i32 [ %i.bm, %_ZN4llvm11raw_ostreamlsEc.exit.i ], [ %i.bh, %.lr.ph.i ] ; 3 uses
-  %.not.i = icmp eq i32 %.015.i, %i.bd
-  br i1 %.not.i, label %_ZN4llvm11raw_ostreamlsEc.exit.i, label %bb.k
-
-bb.k:                                             ; preds = %.lr.ph.split.split.i
+bb.k:                                             ; preds = %.lr.ph.i, %_ZN4llvm11raw_ostreamlsEc.exit.i
+  %.015.i = phi i32 [ %i.bm, %_ZN4llvm11raw_ostreamlsEc.exit.i ], [ %i.bh, %.lr.ph.i ] ; 2 uses
   %i.bi = load ptr, ptr %i.g, align 8, !tbaa !28  ; 3 uses
   %i.bj = load ptr, ptr %i.e, align 8, !tbaa !23
   %.not.i.i = icmp ult ptr %i.bi, %i.bj
@@ -707,11 +695,11 @@ bb.m:                                             ; preds = %bb.k
   store i8 32, ptr %i.bi, align 1, !tbaa !20
   br label %_ZN4llvm11raw_ostreamlsEc.exit.i
 
-_ZN4llvm11raw_ostreamlsEc.exit.i:                 ; preds = %bb.m, %bb.l, %.lr.ph.split.split.i
+_ZN4llvm11raw_ostreamlsEc.exit.i:                 ; preds = %bb.m, %bb.l
   tail call void @_ZN4llvm16SPIRVInstPrinter12printOperandEPKNS_6MCInstEjRNS_11raw_ostreamE(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef nonnull readonly %1, i32 noundef %.015.i, ptr noundef nonnull align 8 dereferenceable(48) %2)
   %i.bm = add i32 %.015.i, 1                      ; 2 uses
   %exitcond24.not.i = icmp eq i32 %i.bm, %i.bf
-  br i1 %exitcond24.not.i, label %_ZN4llvm16SPIRVInstPrinter25printRemainingVariableOpsEPKNS_6MCInstEjRNS_11raw_ostreamEbb.exit, label %.lr.ph.split.split.i, !llvm.loop !70
+  br i1 %exitcond24.not.i, label %_ZN4llvm16SPIRVInstPrinter25printRemainingVariableOpsEPKNS_6MCInstEjRNS_11raw_ostreamEbb.exit, label %bb.k, !llvm.loop !70
 
 _ZN4llvm16SPIRVInstPrinter25printRemainingVariableOpsEPKNS_6MCInstEjRNS_11raw_ostreamEbb.exit: ; preds = %_ZN4llvm11raw_ostreamlsEc.exit.i, %.lr.ph.i, %bb.j, %_ZN4llvm11raw_ostreamlsEPKc.exit23
   ret void
