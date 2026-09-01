@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 186
 inline.NumDeleted: 64
 loop-unroll.NumCompletelyUnrolled: 5
-loop-unroll.NumRuntimeUnrolled: 6
-loop-unroll.NumUnrolled: 16
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 17
 begin_hunk_0_@_ZThn8_N9NCompress6NBZip28CDecoder6AddRefEv:bb.a
   %i.b = load i32, ptr %i.a, align 8, !tbaa !33
   %i.c = add i32 %i.b, 1                          ; 2 uses
@@ -205,20 +205,50 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph:                                           ; preds = %bb.g
   %i.ap = trunc nuw nsw i64 %indvars.iv73 to i8
-  %i.aq = zext nneg i32 %.061 to i64
+  %i.aq = zext nneg i32 %.061 to i64              ; 5 uses
   %scevgep68 = getelementptr i8, ptr %scevgep67, i64 %i.aq
   %i.ar = xor i32 %.061, -1
   %i.as = add nsw i32 %i.an, %i.ar
   %i.at = zext i32 %i.as to i64
   %i.au = add nuw nsw i64 %i.at, 1
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %scevgep68, i8 %i.ap, i64 %i.au, i1 false), !tbaa !30
+  %2 = zext nneg i32 %i.an to i64                 ; 3 uses
+  %3 = sub nsw i64 %2, %i.aq
+  %xtraiter = and i64 %3, 7                       ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
+
+.prol.preheader:                                  ; preds = %.lr.ph, %.prol.preheader
+  %indvars.iv69.prol = phi i64 [ %indvars.iv.next70.prol, %.prol.preheader ], [ %i.aq, %.lr.ph ]
+  %prol.iter = phi i64 [ %prol.iter.next, %.prol.preheader ], [ 0, %.lr.ph ]
+  %indvars.iv.next70.prol = add nuw nsw i64 %indvars.iv69.prol, 1 ; 3 uses
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !142
+
+.prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph
+  %indvars.iv69.unr = phi i64 [ %i.aq, %.lr.ph ], [ %indvars.iv.next70.prol, %.prol.preheader ]
+  %indvars.iv.next70.lcssa.unr = phi i64 [ poison, %.lr.ph ], [ %indvars.iv.next70.prol, %.prol.preheader ]
+  %4 = sub nsw i64 %i.aq, %2
+  %5 = icmp ugt i64 %4, -8
+  br i1 %5, label %.loopexit.loopexit, label %.lr.ph.new
+
+.lr.ph.new:                                       ; preds = %.prol.loopexit, %.lr.ph.new
+  %indvars.iv69 = phi i64 [ %indvars.iv.next70.7, %.lr.ph.new ], [ %indvars.iv69.unr, %.prol.loopexit ]
+  %indvars.iv.next70.7 = add nuw nsw i64 %indvars.iv69, 8 ; 3 uses
+  %6 = icmp samesign ult i64 %indvars.iv.next70.7, %2
+  br i1 %6, label %.lr.ph.new, label %.loopexit.loopexit, !llvm.loop !143
+
+.loopexit.loopexit:                               ; preds = %.lr.ph.new, %.prol.loopexit
+  %indvars.iv.next70.lcssa = phi i64 [ %indvars.iv.next70.lcssa.unr, %.prol.loopexit ], [ %indvars.iv.next70.7, %.lr.ph.new ]
+  %7 = trunc nuw nsw i64 %indvars.iv.next70.lcssa to i32
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph, %bb.g, %bb.f
-  %.2 = phi i32 [ %.061, %bb.f ], [ %.061, %bb.g ], [ %i.an, %.lr.ph ]
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.g, %bb.f
+  %.2 = phi i32 [ %.061, %bb.f ], [ %.061, %bb.g ], [ %7, %.loopexit.loopexit ]
   %indvars.iv.next74 = add nuw nsw i64 %indvars.iv73, 1 ; 2 uses
   %exitcond76 = icmp eq i64 %indvars.iv.next74, 21
-  br i1 %exitcond76, label %.preheader, label %bb.e, !llvm.loop !142
+  br i1 %exitcond76, label %.preheader, label %bb.e, !llvm.loop !144
 
 .preheader:                                       ; preds = %.loopexit, %bb.j
   %indvars.iv77 = phi i64 [ %indvars.iv.next78.1, %bb.j ], [ 0, %.loopexit ] ; 4 uses
@@ -261,7 +291,7 @@ bb.i:                                             ; preds = %.preheader.1
 bb.j:                                             ; preds = %bb.i, %.preheader.1
   %indvars.iv.next78.1 = add nuw nsw i64 %indvars.iv77, 2 ; 2 uses
   %exitcond80.not.1 = icmp eq i64 %indvars.iv.next78.1, 258
-  br i1 %exitcond80.not.1, label %.critedge, label %.preheader, !llvm.loop !143
+  br i1 %exitcond80.not.1, label %.critedge, label %.preheader, !llvm.loop !145
 
 .critedge:                                        ; preds = %bb.a, %bb.b, %bb.e, %bb.j
   %.3 = phi i1 [ true, %bb.j ], [ false, %bb.e ], [ false, %bb.b ], [ false, %bb.a ]
@@ -300,7 +330,7 @@ bb.b:                                             ; preds = %bb.a
   %i.r = load i32, ptr %i.q, align 4, !tbaa !4
   %.not = icmp ult i32 %i.g, %i.r
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  br i1 %.not, label %.loopexit.loopexit, label %.preheader, !llvm.loop !144
+  br i1 %.not, label %.loopexit.loopexit, label %.preheader, !llvm.loop !146
 
 .loopexit.loopexit:                               ; preds = %.preheader
   %i.s = trunc nuw nsw i64 %indvars.iv to i32
@@ -429,7 +459,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.aa = lshr i64 %i.w, 56                       ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
   %i.ab = icmp samesign ult i64 %indvars.iv.next, %i.r
-  br i1 %i.ab, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !145
+  br i1 %i.ab, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !147
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
   %i.ac = trunc nuw i64 %indvars.iv.next to i32
@@ -668,8 +698,10 @@ attributes #22 = { builtin allocsize(0) }
 !139 = !{ptr @_ZN9NCompress6NBZip212CNsisDecoderD0Ev}
 !140 = !{ptr @_ZN9NCompress6NBZip28CDecoder7ReleaseEv}
 !141 = distinct !{!141, !32}
-!142 = distinct !{!142, !32}
+!142 = distinct !{!142, !73}
 !143 = distinct !{!143, !32}
 !144 = distinct !{!144, !32}
 !145 = distinct !{!145, !32}
+!146 = distinct !{!146, !32}
+!147 = distinct !{!147, !32}
 end_hunk_0

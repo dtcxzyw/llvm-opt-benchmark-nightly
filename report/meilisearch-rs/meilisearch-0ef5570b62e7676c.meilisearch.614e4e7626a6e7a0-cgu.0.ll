@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.j
   br i1 %.not.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.preheader.i.i.i
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.m
-  %i.aw = shl nuw nsw i32 1, %i.av
+  %i.aw = shl nuw i32 1, %i.av
   %i.ax = freeze i32 %i.aw                        ; 3 uses
   %i.ay = add i32 %i.ax, -1
   %xtraiter = and i32 %i.ax, 7                    ; 3 uses
@@ -351,7 +351,7 @@ bb.x:                                             ; preds = %bb.v
   br i1 %.not.i.i.i17, label %._crit_edge.i.i.i21, label %.lr.ph.preheader.i.i.i18
 
 .lr.ph.preheader.i.i.i18:                         ; preds = %bb.x
-  %i.cr = shl nuw nsw i32 1, %i.cq
+  %i.cr = shl nuw i32 1, %i.cq
   %i.cs = freeze i32 %i.cr                        ; 3 uses
   %i.ct = add i32 %i.cs, -1
   %xtraiter47 = and i32 %i.cs, 7                  ; 3 uses
@@ -754,7 +754,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph.i.i.i:                                     ; preds = %"_ZN4core3ptr121drop_in_place$LT$thread_local..Entry$LT$core..cell..RefCell$LT$tracing_subscriber..registry..stack..SpanStack$GT$$GT$$GT$17h6d6578fe2d07d191E.exit.i.i.i", %bb.c
   %.sroa.0.011.i.i.i = phi i64 [ %i.f, %"_ZN4core3ptr121drop_in_place$LT$thread_local..Entry$LT$core..cell..RefCell$LT$tracing_subscriber..registry..stack..SpanStack$GT$$GT$$GT$17h6d6578fe2d07d191E.exit.i.i.i" ], [ 0, %bb.c ] ; 2 uses
   %i.e = getelementptr inbounds nuw [40 x i8], ptr %i.b, i64 %.sroa.0.011.i.i.i ; 3 uses
-  %i.f = add nuw i64 %.sroa.0.011.i.i.i, 1        ; 2 uses
+  %i.f = add nuw nsw i64 %.sroa.0.011.i.i.i, 1    ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21870)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21873)
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 32
@@ -1157,7 +1157,7 @@ bb.i:                                             ; preds = %bb.h
 .lr.ph.i.i.i.i:                                   ; preds = %"_ZN4core3ptr121drop_in_place$LT$thread_local..Entry$LT$core..cell..RefCell$LT$tracing_subscriber..registry..stack..SpanStack$GT$$GT$$GT$17h6d6578fe2d07d191E.exit.i.i.i.i", %bb.i
   %.sroa.0.011.i.i.i.i = phi i64 [ %i.ac, %"_ZN4core3ptr121drop_in_place$LT$thread_local..Entry$LT$core..cell..RefCell$LT$tracing_subscriber..registry..stack..SpanStack$GT$$GT$$GT$17h6d6578fe2d07d191E.exit.i.i.i.i" ], [ 0, %bb.i ] ; 2 uses
   %i.ab = getelementptr inbounds nuw [40 x i8], ptr %i.y, i64 %.sroa.0.011.i.i.i.i ; 3 uses
-  %i.ac = add nuw i64 %.sroa.0.011.i.i.i.i, 1     ; 2 uses
+  %i.ac = add nuw nsw i64 %.sroa.0.011.i.i.i.i, 1 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29498)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29501)
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 32

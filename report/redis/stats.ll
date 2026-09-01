@@ -202,14 +202,15 @@ bb.v:                                             ; preds = %bb.u
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.v
   %i.s = zext i1 %i.q to i32
-  %.08.i.i = shl nuw nsw i32 %i.o, %i.s
+  %.08.i.i = shl nuw i32 %i.o, %i.s
+  %smax.i.i = call i32 @llvm.smax.i32(i32 %.08.i.i, i32 1)
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %.09.i.i = phi i32 [ %i.t, %.lr.ph.i.i ], [ 0, %.lr.ph.preheader.i.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %3, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i)
   %i.t = add nuw nsw i32 %.09.i.i, 1              ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %i.t, %.08.i.i
+  %exitcond.not.i.i = icmp eq i32 %i.t, %smax.i.i
   br i1 %exitcond.not.i.i, label %emitter_indent.exit.i, label %.lr.ph.i.i, !llvm.loop !25
 
 emitter_indent.exit.i:                            ; preds = %.lr.ph.i.i, %bb.v, %bb.u
@@ -325,14 +326,15 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.g
   %i.m = zext i1 %i.k to i32
-  %.08.i.i.i = shl nuw nsw i32 %i.i, %i.m
+  %.08.i.i.i = shl nuw i32 %i.i, %i.m
+  %smax.i.i.i = tail call i32 @llvm.smax.i32(i32 %.08.i.i.i, i32 1)
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.preheader.i.i.i
   %.09.i.i.i = phi i32 [ %i.n, %.lr.ph.i.i.i ], [ 0, %.lr.ph.preheader.i.i.i ]
   tail call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i)
   %i.n = add nuw nsw i32 %.09.i.i.i, 1            ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i32 %i.n, %.08.i.i.i
+  %exitcond.not.i.i.i = icmp eq i32 %i.n, %smax.i.i.i
   br i1 %exitcond.not.i.i.i, label %emitter_json_key_prefix.exit.loopexit.i, label %.lr.ph.i.i.i, !llvm.loop !25
 
 emitter_json_key_prefix.exit.loopexit.i:          ; preds = %.lr.ph.i.i.i
@@ -653,14 +655,15 @@ bb.aa:                                            ; preds = %bb.z
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.aa
   %i.ca = zext i1 %i.by to i32
-  %.08.i.i.i = shl nuw nsw i32 %i.bw, %i.ca
+  %.08.i.i.i = shl nuw i32 %i.bw, %i.ca
+  %smax.i.i.i = call i32 @llvm.smax.i32(i32 %.08.i.i.i, i32 1)
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.preheader.i.i.i
   %.09.i.i.i = phi i32 [ %i.cb, %.lr.ph.i.i.i ], [ 0, %.lr.ph.preheader.i.i.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i)
   %i.cb = add nuw nsw i32 %.09.i.i.i, 1           ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i32 %i.cb, %.08.i.i.i
+  %exitcond.not.i.i.i = icmp eq i32 %i.cb, %smax.i.i.i
   br i1 %exitcond.not.i.i.i, label %emitter_json_object_end.exit.i, label %.lr.ph.i.i.i, !llvm.loop !25
 
 emitter_json_object_end.exit.i:                   ; preds = %.lr.ph.i.i.i, %bb.aa, %bb.z
@@ -1063,14 +1066,15 @@ bb.fc:                                            ; preds = %bb.fb
 
 .lr.ph.preheader.i.i.i160:                        ; preds = %bb.fc
   %i.ht = zext i1 %i.hr to i32
-  %.08.i.i.i161 = shl nuw nsw i32 %i.hp, %i.ht
+  %.08.i.i.i161 = shl nuw i32 %i.hp, %i.ht
+  %smax.i.i.i162 = call i32 @llvm.smax.i32(i32 %.08.i.i.i161, i32 1)
   br label %.lr.ph.i.i.i162
 
 .lr.ph.i.i.i162:                                  ; preds = %.lr.ph.i.i.i162, %.lr.ph.preheader.i.i.i160
   %.09.i.i.i163 = phi i32 [ %i.hu, %.lr.ph.i.i.i162 ], [ 0, %.lr.ph.preheader.i.i.i160 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i158)
   %i.hu = add nuw nsw i32 %.09.i.i.i163, 1        ; 2 uses
-  %exitcond.not.i.i.i164 = icmp eq i32 %i.hu, %.08.i.i.i161
+  %exitcond.not.i.i.i164 = icmp eq i32 %i.hu, %smax.i.i.i162
   br i1 %exitcond.not.i.i.i164, label %emitter_json_object_end.exit.i159, label %.lr.ph.i.i.i162, !llvm.loop !25
 
 emitter_json_object_end.exit.i159:                ; preds = %.lr.ph.i.i.i162, %bb.fc, %bb.fb
@@ -1270,14 +1274,15 @@ bb.ga:                                            ; preds = %bb.fz
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.ga
   %i.jb = zext i1 %i.iz to i32
-  %.08.i.i = shl nuw nsw i32 %i.ix, %i.jb
+  %.08.i.i = shl nuw i32 %i.ix, %i.jb
+  %smax.i.i = call i32 @llvm.smax.i32(i32 %.08.i.i, i32 1)
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %.09.i.i = phi i32 [ %i.jc, %.lr.ph.i.i ], [ 0, %.lr.ph.preheader.i.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i)
   %i.jc = add nuw nsw i32 %.09.i.i, 1             ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %i.jc, %.08.i.i
+  %exitcond.not.i.i = icmp eq i32 %i.jc, %smax.i.i
   br i1 %exitcond.not.i.i, label %emitter_indent.exit.i, label %.lr.ph.i.i, !llvm.loop !25
 
 emitter_indent.exit.i:                            ; preds = %.lr.ph.i.i, %bb.ga, %bb.fz
@@ -1330,14 +1335,15 @@ bb.gh:                                            ; preds = %bb.gg
 
 .lr.ph.preheader.i.i.i173:                        ; preds = %bb.gh
   %i.jm = zext i1 %i.jk to i32
-  %.08.i.i.i174 = shl nuw nsw i32 %i.ji, %i.jm
+  %.08.i.i.i174 = shl nuw i32 %i.ji, %i.jm
+  %smax.i.i.i176 = call i32 @llvm.smax.i32(i32 %.08.i.i.i174, i32 1)
   br label %.lr.ph.i.i.i175
 
 .lr.ph.i.i.i175:                                  ; preds = %.lr.ph.i.i.i175, %.lr.ph.preheader.i.i.i173
   %.09.i.i.i176 = phi i32 [ %i.jn, %.lr.ph.i.i.i175 ], [ 0, %.lr.ph.preheader.i.i.i173 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i172)
   %i.jn = add nuw nsw i32 %.09.i.i.i176, 1        ; 2 uses
-  %exitcond.not.i.i.i177 = icmp eq i32 %i.jn, %.08.i.i.i174
+  %exitcond.not.i.i.i177 = icmp eq i32 %i.jn, %smax.i.i.i176
   br i1 %exitcond.not.i.i.i177, label %emitter_json_key_prefix.exit.i, label %.lr.ph.i.i.i175, !llvm.loop !25
 
 emitter_json_key_prefix.exit.i:                   ; preds = %.lr.ph.i.i.i175, %bb.gh, %bb.gg, %bb.gd
@@ -1480,14 +1486,15 @@ bb.gv:                                            ; preds = %bb.gu
 
 .lr.ph.preheader.i.i183:                          ; preds = %bb.gv
   %i.ki = zext i1 %i.kg to i32
-  %.08.i.i184 = shl nuw nsw i32 %i.ke, %i.ki
+  %.08.i.i184 = shl nuw i32 %i.ke, %i.ki
+  %smax.i.i187 = call i32 @llvm.smax.i32(i32 %.08.i.i184, i32 1)
   br label %.lr.ph.i.i185
 
 .lr.ph.i.i185:                                    ; preds = %.lr.ph.i.i185, %.lr.ph.preheader.i.i183
   %.09.i.i186 = phi i32 [ %i.kj, %.lr.ph.i.i185 ], [ 0, %.lr.ph.preheader.i.i183 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i181)
   %i.kj = add nuw nsw i32 %.09.i.i186, 1          ; 2 uses
-  %exitcond.not.i.i187 = icmp eq i32 %i.kj, %.08.i.i184
+  %exitcond.not.i.i187 = icmp eq i32 %i.kj, %smax.i.i187
   br i1 %exitcond.not.i.i187, label %emitter_indent.exit.i182, label %.lr.ph.i.i185, !llvm.loop !25
 
 emitter_indent.exit.i182:                         ; preds = %.lr.ph.i.i185, %bb.gv, %bb.gu
@@ -1590,14 +1597,15 @@ bb.he:                                            ; preds = %bb.hd
 
 .lr.ph.preheader.i.i194:                          ; preds = %bb.he
   %i.lg = zext i1 %i.le to i32
-  %.08.i.i195 = shl nuw nsw i32 %i.lc, %i.lg
+  %.08.i.i195 = shl nuw i32 %i.lc, %i.lg
+  %smax.i.i199 = call i32 @llvm.smax.i32(i32 %.08.i.i195, i32 1)
   br label %.lr.ph.i.i196
 
 .lr.ph.i.i196:                                    ; preds = %.lr.ph.i.i196, %.lr.ph.preheader.i.i194
   %.09.i.i197 = phi i32 [ %i.lh, %.lr.ph.i.i196 ], [ 0, %.lr.ph.preheader.i.i194 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i192)
   %i.lh = add nuw nsw i32 %.09.i.i197, 1          ; 2 uses
-  %exitcond.not.i.i198 = icmp eq i32 %i.lh, %.08.i.i195
+  %exitcond.not.i.i198 = icmp eq i32 %i.lh, %smax.i.i199
   br i1 %exitcond.not.i.i198, label %.loopexit, label %.lr.ph.i.i196, !llvm.loop !25
 
 bb.hf:                                            ; preds = %.lr.ph242, %emitter_json_object_end.exit222
@@ -1642,14 +1650,15 @@ bb.hl:                                            ; preds = %bb.hk
 
 .lr.ph.preheader.i.i.i205:                        ; preds = %bb.hl
   %i.lr = zext i1 %i.lp to i32
-  %.08.i.i.i206 = shl nuw nsw i32 %i.ln, %i.lr
+  %.08.i.i.i206 = shl nuw i32 %i.ln, %i.lr
+  %smax.i.i.i211 = call i32 @llvm.smax.i32(i32 %.08.i.i.i206, i32 1)
   br label %.lr.ph.i.i.i207
 
 .lr.ph.i.i.i207:                                  ; preds = %.lr.ph.i.i.i207, %.lr.ph.preheader.i.i.i205
   %.09.i.i.i208 = phi i32 [ %i.ls, %.lr.ph.i.i.i207 ], [ 0, %.lr.ph.preheader.i.i.i205 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i203)
   %i.ls = add nuw nsw i32 %.09.i.i.i208, 1        ; 2 uses
-  %exitcond.not.i.i.i209 = icmp eq i32 %i.ls, %.08.i.i.i206
+  %exitcond.not.i.i.i209 = icmp eq i32 %i.ls, %smax.i.i.i211
   br i1 %exitcond.not.i.i.i209, label %emitter_json_key_prefix.exit.i204, label %.lr.ph.i.i.i207, !llvm.loop !25
 
 emitter_json_key_prefix.exit.i204:                ; preds = %.lr.ph.i.i.i207, %bb.hl, %bb.hk, %bb.hh
@@ -1711,14 +1720,15 @@ bb.hq:                                            ; preds = %bb.hp
 
 .lr.ph.preheader.i.i217:                          ; preds = %bb.hq
   %i.me = zext i1 %i.mc to i32
-  %.08.i.i218 = shl nuw nsw i32 %i.ma, %i.me
+  %.08.i.i218 = shl nuw i32 %i.ma, %i.me
+  %smax.i.i224 = call i32 @llvm.smax.i32(i32 %.08.i.i218, i32 1)
   br label %.lr.ph.i.i219
 
 .lr.ph.i.i219:                                    ; preds = %.lr.ph.i.i219, %.lr.ph.preheader.i.i217
   %.09.i.i220 = phi i32 [ %i.mf, %.lr.ph.i.i219 ], [ 0, %.lr.ph.preheader.i.i217 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i215)
   %i.mf = add nuw nsw i32 %.09.i.i220, 1          ; 2 uses
-  %exitcond.not.i.i221 = icmp eq i32 %i.mf, %.08.i.i218
+  %exitcond.not.i.i221 = icmp eq i32 %i.mf, %smax.i.i224
   br i1 %exitcond.not.i.i221, label %emitter_indent.exit.i216, label %.lr.ph.i.i219, !llvm.loop !25
 
 emitter_indent.exit.i216:                         ; preds = %.lr.ph.i.i219, %bb.hq, %bb.hp
@@ -1758,14 +1768,15 @@ bb.hs:                                            ; preds = %bb.hr
 
 .lr.ph.preheader.i.i228:                          ; preds = %bb.hs
   %i.mp = zext i1 %i.mn to i32
-  %.08.i.i229 = shl nuw nsw i32 %i.ml, %i.mp
+  %.08.i.i229 = shl nuw i32 %i.ml, %i.mp
+  %smax.i.i236 = call i32 @llvm.smax.i32(i32 %.08.i.i229, i32 1)
   br label %.lr.ph.i.i230
 
 .lr.ph.i.i230:                                    ; preds = %.lr.ph.i.i230, %.lr.ph.preheader.i.i228
   %.09.i.i231 = phi i32 [ %i.mq, %.lr.ph.i.i230 ], [ 0, %.lr.ph.preheader.i.i228 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i226)
   %i.mq = add nuw nsw i32 %.09.i.i231, 1          ; 2 uses
-  %exitcond.not.i.i232 = icmp eq i32 %i.mq, %.08.i.i229
+  %exitcond.not.i.i232 = icmp eq i32 %i.mq, %smax.i.i236
   br i1 %exitcond.not.i.i232, label %emitter_indent.exit.i227, label %.lr.ph.i.i230, !llvm.loop !25
 
 emitter_indent.exit.i227:                         ; preds = %.lr.ph.i.i230, %bb.hs, %bb.hr
@@ -2056,14 +2067,15 @@ bb.y:                                             ; preds = %bb.x
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.y
   %i.bz = zext i1 %i.bx to i32
-  %.08.i.i = shl nuw nsw i32 %i.bv, %i.bz
+  %.08.i.i = shl nuw i32 %i.bv, %i.bz
+  %smax.i.i = call i32 @llvm.smax.i32(i32 %.08.i.i, i32 1)
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %.09.i.i = phi i32 [ %i.ca, %.lr.ph.i.i ], [ 0, %.lr.ph.preheader.i.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i)
   %i.ca = add nuw nsw i32 %.09.i.i, 1             ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %i.ca, %.08.i.i
+  %exitcond.not.i.i = icmp eq i32 %i.ca, %smax.i.i
   br i1 %exitcond.not.i.i, label %emitter_indent.exit.i, label %.lr.ph.i.i, !llvm.loop !25
 
 emitter_indent.exit.i:                            ; preds = %.lr.ph.i.i, %bb.y, %bb.x
@@ -2226,14 +2238,15 @@ bb.ak:                                            ; preds = %bb.aj
 
 .lr.ph.preheader.i.i113:                          ; preds = %bb.ak
   %i.ee = zext i1 %i.ec to i32
-  %.08.i.i114 = shl nuw nsw i32 %i.ea, %i.ee
+  %.08.i.i114 = shl nuw i32 %i.ea, %i.ee
+  %smax.i.i115 = call i32 @llvm.smax.i32(i32 %.08.i.i114, i32 1)
   br label %.lr.ph.i.i115
 
 .lr.ph.i.i115:                                    ; preds = %.lr.ph.i.i115, %.lr.ph.preheader.i.i113
   %.09.i.i116 = phi i32 [ %i.ef, %.lr.ph.i.i115 ], [ 0, %.lr.ph.preheader.i.i113 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i111)
   %i.ef = add nuw nsw i32 %.09.i.i116, 1          ; 2 uses
-  %exitcond.not.i.i117 = icmp eq i32 %i.ef, %.08.i.i114
+  %exitcond.not.i.i117 = icmp eq i32 %i.ef, %smax.i.i115
   br i1 %exitcond.not.i.i117, label %emitter_indent.exit.i112, label %.lr.ph.i.i115, !llvm.loop !25
 
 emitter_indent.exit.i112:                         ; preds = %.lr.ph.i.i115, %bb.ak, %bb.aj
@@ -2584,14 +2597,15 @@ bb.bu:                                            ; preds = %bb.bt
 
 .lr.ph.preheader.i.i125:                          ; preds = %bb.bu
   %i.go = zext i1 %i.gm to i32
-  %.08.i.i126 = shl nuw nsw i32 %i.gk, %i.go
+  %.08.i.i126 = shl nuw i32 %i.gk, %i.go
+  %smax.i.i128 = call i32 @llvm.smax.i32(i32 %.08.i.i126, i32 1)
   br label %.lr.ph.i.i127
 
 .lr.ph.i.i127:                                    ; preds = %.lr.ph.i.i127, %.lr.ph.preheader.i.i125
   %.09.i.i128 = phi i32 [ %i.gp, %.lr.ph.i.i127 ], [ 0, %.lr.ph.preheader.i.i125 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i123)
   %i.gp = add nuw nsw i32 %.09.i.i128, 1          ; 2 uses
-  %exitcond.not.i.i129 = icmp eq i32 %i.gp, %.08.i.i126
+  %exitcond.not.i.i129 = icmp eq i32 %i.gp, %smax.i.i128
   br i1 %exitcond.not.i.i129, label %emitter_indent.exit.i124, label %.lr.ph.i.i127, !llvm.loop !25
 
 emitter_indent.exit.i124:                         ; preds = %.lr.ph.i.i127, %bb.bu, %bb.bt
@@ -2629,14 +2643,15 @@ bb.bx:                                            ; preds = %bb.bw
 
 .lr.ph.preheader.i.i136:                          ; preds = %bb.bx
   %i.gy = zext i1 %i.gw to i32
-  %.08.i.i137 = shl nuw nsw i32 %i.gu, %i.gy
+  %.08.i.i137 = shl nuw i32 %i.gu, %i.gy
+  %smax.i.i140 = call i32 @llvm.smax.i32(i32 %.08.i.i137, i32 1)
   br label %.lr.ph.i.i138
 
 .lr.ph.i.i138:                                    ; preds = %.lr.ph.i.i138, %.lr.ph.preheader.i.i136
   %.09.i.i139 = phi i32 [ %i.gz, %.lr.ph.i.i138 ], [ 0, %.lr.ph.preheader.i.i136 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i134)
   %i.gz = add nuw nsw i32 %.09.i.i139, 1          ; 2 uses
-  %exitcond.not.i.i140 = icmp eq i32 %i.gz, %.08.i.i137
+  %exitcond.not.i.i140 = icmp eq i32 %i.gz, %smax.i.i140
   br i1 %exitcond.not.i.i140, label %emitter_indent.exit.i135, label %.lr.ph.i.i138, !llvm.loop !25
 
 emitter_indent.exit.i135:                         ; preds = %.lr.ph.i.i138, %bb.bx, %bb.bw
@@ -2771,14 +2786,15 @@ bb.cj:                                            ; preds = %bb.ci
 
 .lr.ph.preheader.i.i147:                          ; preds = %bb.cj
   %i.id = zext i1 %i.ib to i32
-  %.08.i.i148 = shl nuw nsw i32 %i.hz, %i.id
+  %.08.i.i148 = shl nuw i32 %i.hz, %i.id
+  %smax.i.i152 = call i32 @llvm.smax.i32(i32 %.08.i.i148, i32 1)
   br label %.lr.ph.i.i149
 
 .lr.ph.i.i149:                                    ; preds = %.lr.ph.i.i149, %.lr.ph.preheader.i.i147
   %.09.i.i150 = phi i32 [ %i.ie, %.lr.ph.i.i149 ], [ 0, %.lr.ph.preheader.i.i147 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i145)
   %i.ie = add nuw nsw i32 %.09.i.i150, 1          ; 2 uses
-  %exitcond.not.i.i151 = icmp eq i32 %i.ie, %.08.i.i148
+  %exitcond.not.i.i151 = icmp eq i32 %i.ie, %smax.i.i152
   br i1 %exitcond.not.i.i151, label %emitter_indent.exit.i146, label %.lr.ph.i.i149, !llvm.loop !25
 
 emitter_indent.exit.i146:                         ; preds = %.lr.ph.i.i149, %bb.cj, %bb.ci
@@ -2820,14 +2836,15 @@ bb.cm:                                            ; preds = %bb.cl
 
 .lr.ph.preheader.i.i158:                          ; preds = %bb.cm
   %i.ip = zext i1 %i.in to i32
-  %.08.i.i159 = shl nuw nsw i32 %i.il, %i.ip
+  %.08.i.i159 = shl nuw i32 %i.il, %i.ip
+  %smax.i.i164 = call i32 @llvm.smax.i32(i32 %.08.i.i159, i32 1)
   br label %.lr.ph.i.i160
 
 .lr.ph.i.i160:                                    ; preds = %.lr.ph.i.i160, %.lr.ph.preheader.i.i158
   %.09.i.i161 = phi i32 [ %i.iq, %.lr.ph.i.i160 ], [ 0, %.lr.ph.preheader.i.i158 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i156)
   %i.iq = add nuw nsw i32 %.09.i.i161, 1          ; 2 uses
-  %exitcond.not.i.i162 = icmp eq i32 %i.iq, %.08.i.i159
+  %exitcond.not.i.i162 = icmp eq i32 %i.iq, %smax.i.i164
   br i1 %exitcond.not.i.i162, label %emitter_indent.exit.i157, label %.lr.ph.i.i160, !llvm.loop !25
 
 emitter_indent.exit.i157:                         ; preds = %.lr.ph.i.i160, %bb.cm, %bb.cl
@@ -2883,14 +2900,15 @@ bb.cq:                                            ; preds = %bb.cp
 
 .lr.ph.preheader.i.i169:                          ; preds = %bb.cq
   %i.jh = zext i1 %i.jf to i32
-  %.08.i.i170 = shl nuw nsw i32 %i.jd, %i.jh
+  %.08.i.i170 = shl nuw i32 %i.jd, %i.jh
+  %smax.i.i176 = call i32 @llvm.smax.i32(i32 %.08.i.i170, i32 1)
   br label %.lr.ph.i.i171
 
 .lr.ph.i.i171:                                    ; preds = %.lr.ph.i.i171, %.lr.ph.preheader.i.i169
   %.09.i.i172 = phi i32 [ %i.ji, %.lr.ph.i.i171 ], [ 0, %.lr.ph.preheader.i.i169 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i167)
   %i.ji = add nuw nsw i32 %.09.i.i172, 1          ; 2 uses
-  %exitcond.not.i.i173 = icmp eq i32 %i.ji, %.08.i.i170
+  %exitcond.not.i.i173 = icmp eq i32 %i.ji, %smax.i.i176
   br i1 %exitcond.not.i.i173, label %emitter_indent.exit.i168, label %.lr.ph.i.i171, !llvm.loop !25
 
 emitter_indent.exit.i168:                         ; preds = %.lr.ph.i.i171, %bb.cq, %bb.cp
@@ -2935,14 +2953,15 @@ bb.ct:                                            ; preds = %bb.cs
 
 .lr.ph.preheader.i.i180:                          ; preds = %bb.ct
   %i.ju = zext i1 %i.js to i32
-  %.08.i.i181 = shl nuw nsw i32 %i.jq, %i.ju
+  %.08.i.i181 = shl nuw i32 %i.jq, %i.ju
+  %smax.i.i188 = call i32 @llvm.smax.i32(i32 %.08.i.i181, i32 1)
   br label %.lr.ph.i.i182
 
 .lr.ph.i.i182:                                    ; preds = %.lr.ph.i.i182, %.lr.ph.preheader.i.i180
   %.09.i.i183 = phi i32 [ %i.jv, %.lr.ph.i.i182 ], [ 0, %.lr.ph.preheader.i.i180 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i178)
   %i.jv = add nuw nsw i32 %.09.i.i183, 1          ; 2 uses
-  %exitcond.not.i.i184 = icmp eq i32 %i.jv, %.08.i.i181
+  %exitcond.not.i.i184 = icmp eq i32 %i.jv, %smax.i.i188
   br i1 %exitcond.not.i.i184, label %emitter_indent.exit.i179, label %.lr.ph.i.i182, !llvm.loop !25
 
 emitter_indent.exit.i179:                         ; preds = %.lr.ph.i.i182, %bb.ct, %bb.cs
@@ -3149,14 +3168,15 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.g
   %i.m = zext i1 %i.k to i32
-  %.08.i.i.i = shl nuw nsw i32 %i.i, %i.m
+  %.08.i.i.i = shl nuw i32 %i.i, %i.m
+  %smax.i.i.i = tail call i32 @llvm.smax.i32(i32 %.08.i.i.i, i32 1)
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.preheader.i.i.i
   %.09.i.i.i = phi i32 [ %i.n, %.lr.ph.i.i.i ], [ 0, %.lr.ph.preheader.i.i.i ]
   tail call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i)
   %i.n = add nuw nsw i32 %.09.i.i.i, 1            ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i32 %i.n, %.08.i.i.i
+  %exitcond.not.i.i.i = icmp eq i32 %i.n, %smax.i.i.i
   br i1 %exitcond.not.i.i.i, label %emitter_json_key_prefix.exit.loopexit.i, label %.lr.ph.i.i.i, !llvm.loop !25
 
 emitter_json_key_prefix.exit.loopexit.i:          ; preds = %.lr.ph.i.i.i
@@ -3200,14 +3220,15 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.x, label %.lr.ph.preheader.i.i, label %emitter_indent.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.i
-  %.08.i.i = shl nuw nsw i32 %i.w, 1
+  %.08.i.i = shl nuw i32 %i.w, 1
+  %smax.i.i = tail call i32 @llvm.smax.i32(i32 %.08.i.i, i32 1)
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %.09.i.i = phi i32 [ %i.y, %.lr.ph.i.i ], [ 0, %.lr.ph.preheader.i.i ]
   tail call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull @.str.31)
   %i.y = add nuw nsw i32 %.09.i.i, 1              ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %i.y, %.08.i.i
+  %exitcond.not.i.i = icmp eq i32 %i.y, %smax.i.i
   br i1 %exitcond.not.i.i, label %emitter_indent.exit.i, label %.lr.ph.i.i, !llvm.loop !25
 
 emitter_indent.exit.i:                            ; preds = %.lr.ph.i.i, %bb.i
@@ -3273,14 +3294,15 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.g
   %i.m = zext i1 %i.k to i32
-  %.08.i.i.i = shl nuw nsw i32 %i.i, %i.m
+  %.08.i.i.i = shl nuw i32 %i.i, %i.m
+  %smax.i.i.i = tail call i32 @llvm.smax.i32(i32 %.08.i.i.i, i32 1)
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.preheader.i.i.i
   %.09.i.i.i = phi i32 [ %i.n, %.lr.ph.i.i.i ], [ 0, %.lr.ph.preheader.i.i.i ]
   tail call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i)
   %i.n = add nuw nsw i32 %.09.i.i.i, 1            ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i32 %i.n, %.08.i.i.i
+  %exitcond.not.i.i.i = icmp eq i32 %i.n, %smax.i.i.i
   br i1 %exitcond.not.i.i.i, label %emitter_json_key_prefix.exit.loopexit.i, label %.lr.ph.i.i.i, !llvm.loop !25
 
 emitter_json_key_prefix.exit.loopexit.i:          ; preds = %.lr.ph.i.i.i
@@ -3320,14 +3342,15 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.u, label %.lr.ph.preheader.i.i, label %emitter_indent.exit.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.i
-  %.08.i.i = shl nuw nsw i32 %i.t, 1
+  %.08.i.i = shl nuw i32 %i.t, 1
+  %smax.i.i = tail call i32 @llvm.smax.i32(i32 %.08.i.i, i32 1)
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %.09.i.i = phi i32 [ %i.v, %.lr.ph.i.i ], [ 0, %.lr.ph.preheader.i.i ]
   tail call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull @.str.31)
   %i.v = add nuw nsw i32 %.09.i.i, 1              ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %i.v, %.08.i.i
+  %exitcond.not.i.i = icmp eq i32 %i.v, %smax.i.i
   br i1 %exitcond.not.i.i, label %emitter_indent.exit.i, label %.lr.ph.i.i, !llvm.loop !25
 
 emitter_indent.exit.i:                            ; preds = %.lr.ph.i.i, %bb.i
@@ -3397,14 +3420,15 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.g
   %i.m = zext i1 %i.k to i32
-  %.08.i.i.i = shl nuw nsw i32 %i.i, %i.m
+  %.08.i.i.i = shl nuw i32 %i.i, %i.m
+  %smax.i.i.i = tail call i32 @llvm.smax.i32(i32 %.08.i.i.i, i32 1)
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.preheader.i.i.i
   %.09.i.i.i = phi i32 [ %i.n, %.lr.ph.i.i.i ], [ 0, %.lr.ph.preheader.i.i.i ]
   tail call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i)
   %i.n = add nuw nsw i32 %.09.i.i.i, 1            ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i32 %i.n, %.08.i.i.i
+  %exitcond.not.i.i.i = icmp eq i32 %i.n, %smax.i.i.i
   br i1 %exitcond.not.i.i.i, label %emitter_json_key_prefix.exit.loopexit.i, label %.lr.ph.i.i.i, !llvm.loop !25
 
 emitter_json_key_prefix.exit.loopexit.i:          ; preds = %.lr.ph.i.i.i
@@ -3484,14 +3508,15 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.g
   %i.m = zext i1 %i.k to i32
-  %.08.i.i.i = shl nuw nsw i32 %i.i, %i.m
+  %.08.i.i.i = shl nuw i32 %i.i, %i.m
+  %smax.i.i.i = tail call i32 @llvm.smax.i32(i32 %.08.i.i.i, i32 1)
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.preheader.i.i.i
   %.09.i.i.i = phi i32 [ %i.n, %.lr.ph.i.i.i ], [ 0, %.lr.ph.preheader.i.i.i ]
   tail call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i)
   %i.n = add nuw nsw i32 %.09.i.i.i, 1            ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i32 %i.n, %.08.i.i.i
+  %exitcond.not.i.i.i = icmp eq i32 %i.n, %smax.i.i.i
   br i1 %exitcond.not.i.i.i, label %emitter_json_key_prefix.exit.loopexit.i, label %.lr.ph.i.i.i, !llvm.loop !25
 
 emitter_json_key_prefix.exit.loopexit.i:          ; preds = %.lr.ph.i.i.i
@@ -3894,14 +3919,15 @@ bb.da:                                            ; preds = %bb.cz
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.da
   %i.uu = zext i1 %i.us to i32
-  %.08.i.i = shl nuw nsw i32 %i.uq, %i.uu
+  %.08.i.i = shl nuw i32 %i.uq, %i.uu
+  %smax.i.i = call i32 @llvm.smax.i32(i32 %.08.i.i, i32 1)
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %.09.i.i = phi i32 [ %i.uv, %.lr.ph.i.i ], [ 0, %.lr.ph.preheader.i.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i)
   %i.uv = add nuw nsw i32 %.09.i.i, 1             ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %i.uv, %.08.i.i
+  %exitcond.not.i.i = icmp eq i32 %i.uv, %smax.i.i
   br i1 %exitcond.not.i.i, label %emitter_indent.exit.i, label %.lr.ph.i.i, !llvm.loop !25
 
 emitter_indent.exit.i:                            ; preds = %.lr.ph.i.i, %bb.da, %bb.cz
@@ -4266,14 +4292,15 @@ bb.el:                                            ; preds = %bb.ek
 
 .lr.ph.preheader.i.i295:                          ; preds = %bb.el
   %i.xv = zext i1 %i.xt to i32
-  %.08.i.i296 = shl nuw nsw i32 %i.xr, %i.xv
+  %.08.i.i296 = shl nuw i32 %i.xr, %i.xv
+  %smax.i.i297 = call i32 @llvm.smax.i32(i32 %.08.i.i296, i32 1)
   br label %.lr.ph.i.i297
 
 .lr.ph.i.i297:                                    ; preds = %.lr.ph.i.i297, %.lr.ph.preheader.i.i295
   %.09.i.i298 = phi i32 [ %i.xw, %.lr.ph.i.i297 ], [ 0, %.lr.ph.preheader.i.i295 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i293)
   %i.xw = add nuw nsw i32 %.09.i.i298, 1          ; 2 uses
-  %exitcond.not.i.i299 = icmp eq i32 %i.xw, %.08.i.i296
+  %exitcond.not.i.i299 = icmp eq i32 %i.xw, %smax.i.i297
   br i1 %exitcond.not.i.i299, label %emitter_indent.exit.i294, label %.lr.ph.i.i297, !llvm.loop !25
 
 emitter_indent.exit.i294:                         ; preds = %.lr.ph.i.i297, %bb.el, %bb.ek
@@ -4676,14 +4703,15 @@ bb.gv:                                            ; preds = %bb.gu
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.gv
   %i.aio = zext i1 %i.aim to i32
-  %.08.i.i.i = shl nuw nsw i32 %i.aik, %i.aio
+  %.08.i.i.i = shl nuw i32 %i.aik, %i.aio
+  %smax.i.i.i = call i32 @llvm.smax.i32(i32 %.08.i.i.i, i32 1)
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.preheader.i.i.i
   %.09.i.i.i = phi i32 [ %i.aip, %.lr.ph.i.i.i ], [ 0, %.lr.ph.preheader.i.i.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i)
   %i.aip = add nuw nsw i32 %.09.i.i.i, 1          ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i32 %i.aip, %.08.i.i.i
+  %exitcond.not.i.i.i = icmp eq i32 %i.aip, %smax.i.i.i
   br i1 %exitcond.not.i.i.i, label %emitter_indent.exit.i.i, label %.lr.ph.i.i.i, !llvm.loop !25
 
 emitter_indent.exit.i.i:                          ; preds = %.lr.ph.i.i.i, %bb.gv, %bb.gu
@@ -5002,14 +5030,15 @@ bb.ia:                                            ; preds = %bb.hz
 
 .lr.ph.preheader.i.i24.i:                         ; preds = %bb.ia
   %i.akl = zext i1 %i.akj to i32
-  %.08.i.i25.i = shl nuw nsw i32 %i.akh, %i.akl
+  %.08.i.i25.i = shl nuw i32 %i.akh, %i.akl
+  %smax.i.i26.i = call i32 @llvm.smax.i32(i32 %.08.i.i25.i, i32 1)
   br label %.lr.ph.i.i26.i
 
 .lr.ph.i.i26.i:                                   ; preds = %.lr.ph.i.i26.i, %.lr.ph.preheader.i.i24.i
   %.09.i.i27.i = phi i32 [ %i.akm, %.lr.ph.i.i26.i ], [ 0, %.lr.ph.preheader.i.i24.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i22.i)
   %i.akm = add nuw nsw i32 %.09.i.i27.i, 1        ; 2 uses
-  %exitcond.not.i.i28.i = icmp eq i32 %i.akm, %.08.i.i25.i
+  %exitcond.not.i.i28.i = icmp eq i32 %i.akm, %smax.i.i26.i
   br i1 %exitcond.not.i.i28.i, label %emitter_indent.exit.i23.i, label %.lr.ph.i.i26.i, !llvm.loop !25
 
 emitter_indent.exit.i23.i:                        ; preds = %.lr.ph.i.i26.i, %bb.ia, %bb.hz
@@ -5412,14 +5441,15 @@ bb.kk:                                            ; preds = %bb.kj
 
 .lr.ph.preheader.i.i.i460:                        ; preds = %bb.kk
   %i.anu = zext i1 %i.ans to i32
-  %.08.i.i.i461 = shl nuw nsw i32 %i.anq, %i.anu
+  %.08.i.i.i461 = shl nuw i32 %i.anq, %i.anu
+  %smax.i.i.i463 = call i32 @llvm.smax.i32(i32 %.08.i.i.i461, i32 1)
   br label %.lr.ph.i.i.i462
 
 .lr.ph.i.i.i462:                                  ; preds = %.lr.ph.i.i.i462, %.lr.ph.preheader.i.i.i460
   %.09.i.i.i463 = phi i32 [ %i.anv, %.lr.ph.i.i.i462 ], [ 0, %.lr.ph.preheader.i.i.i460 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i458)
   %i.anv = add nuw nsw i32 %.09.i.i.i463, 1       ; 2 uses
-  %exitcond.not.i.i.i464 = icmp eq i32 %i.anv, %.08.i.i.i461
+  %exitcond.not.i.i.i464 = icmp eq i32 %i.anv, %smax.i.i.i463
   br i1 %exitcond.not.i.i.i464, label %emitter_indent.exit.i.i459, label %.lr.ph.i.i.i462, !llvm.loop !25
 
 emitter_indent.exit.i.i459:                       ; preds = %.lr.ph.i.i.i462, %bb.kk, %bb.kj
@@ -5655,14 +5685,15 @@ bb.lk:                                            ; preds = %bb.lj
 
 .lr.ph.preheader.i.i157.i:                        ; preds = %bb.lk
   %i.apl = zext i1 %i.apj to i32
-  %.08.i.i158.i = shl nuw nsw i32 %i.aph, %i.apl
+  %.08.i.i158.i = shl nuw i32 %i.aph, %i.apl
+  %smax.i.i159.i = call i32 @llvm.smax.i32(i32 %.08.i.i158.i, i32 1)
   br label %.lr.ph.i.i159.i
 
 .lr.ph.i.i159.i:                                  ; preds = %.lr.ph.i.i159.i, %.lr.ph.preheader.i.i157.i
   %.09.i.i160.i = phi i32 [ %i.apm, %.lr.ph.i.i159.i ], [ 0, %.lr.ph.preheader.i.i157.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i155.i)
   %i.apm = add nuw nsw i32 %.09.i.i160.i, 1       ; 2 uses
-  %exitcond.not.i.i161.i = icmp eq i32 %i.apm, %.08.i.i158.i
+  %exitcond.not.i.i161.i = icmp eq i32 %i.apm, %smax.i.i159.i
   br i1 %exitcond.not.i.i161.i, label %emitter_indent.exit.i156.i, label %.lr.ph.i.i159.i, !llvm.loop !25
 
 emitter_indent.exit.i156.i:                       ; preds = %.lr.ph.i.i159.i, %bb.lk, %bb.lj
@@ -5948,14 +5979,15 @@ bb.lt:                                            ; preds = %bb.ls
 
 .lr.ph.preheader.i.i203.i:                        ; preds = %bb.lt
   %i.atj = zext i1 %i.ath to i32
-  %.08.i.i204.i = shl nuw nsw i32 %i.atf, %i.atj
+  %.08.i.i204.i = shl nuw i32 %i.atf, %i.atj
+  %smax.i.i206.i = call i32 @llvm.smax.i32(i32 %.08.i.i204.i, i32 1)
   br label %.lr.ph.i.i205.i
 
 .lr.ph.i.i205.i:                                  ; preds = %.lr.ph.i.i205.i, %.lr.ph.preheader.i.i203.i
   %.09.i.i206.i = phi i32 [ %i.atk, %.lr.ph.i.i205.i ], [ 0, %.lr.ph.preheader.i.i203.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i201.i)
   %i.atk = add nuw nsw i32 %.09.i.i206.i, 1       ; 2 uses
-  %exitcond.not.i.i207.i = icmp eq i32 %i.atk, %.08.i.i204.i
+  %exitcond.not.i.i207.i = icmp eq i32 %i.atk, %smax.i.i206.i
   br i1 %exitcond.not.i.i207.i, label %emitter_json_array_end.exit.i, label %.lr.ph.i.i205.i, !llvm.loop !25
 
 emitter_json_array_end.exit.i:                    ; preds = %.lr.ph.i.i205.i, %bb.lt, %bb.ls
@@ -5983,14 +6015,15 @@ bb.lv:                                            ; preds = %bb.lu
 
 .lr.ph.preheader.i.i213.i:                        ; preds = %bb.lv
   %i.atr = zext i1 %i.atp to i32
-  %.08.i.i214.i = shl nuw nsw i32 %i.atn, %i.atr
+  %.08.i.i214.i = shl nuw i32 %i.atn, %i.atr
+  %smax.i.i217.i = call i32 @llvm.smax.i32(i32 %.08.i.i214.i, i32 1)
   br label %.lr.ph.i.i215.i
 
 .lr.ph.i.i215.i:                                  ; preds = %.lr.ph.i.i215.i, %.lr.ph.preheader.i.i213.i
   %.09.i.i216.i = phi i32 [ %i.ats, %.lr.ph.i.i215.i ], [ 0, %.lr.ph.preheader.i.i213.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i211.i)
   %i.ats = add nuw nsw i32 %.09.i.i216.i, 1       ; 2 uses
-  %exitcond.not.i.i217.i = icmp eq i32 %i.ats, %.08.i.i214.i
+  %exitcond.not.i.i217.i = icmp eq i32 %i.ats, %smax.i.i217.i
   br i1 %exitcond.not.i.i217.i, label %emitter_indent.exit.i212.i, label %.lr.ph.i.i215.i, !llvm.loop !25
 
 emitter_indent.exit.i212.i:                       ; preds = %.lr.ph.i.i215.i, %bb.lv, %bb.lu
@@ -6271,14 +6304,15 @@ bb.mx:                                            ; preds = %bb.mw
 
 .lr.ph.preheader.i.i.i.i:                         ; preds = %bb.mx
   %i.avv = zext i1 %i.avt to i32
-  %.08.i.i.i.i = shl nuw nsw i32 %i.avr, %i.avv
+  %.08.i.i.i.i = shl nuw i32 %i.avr, %i.avv
+  %smax.i.i.i.i = call i32 @llvm.smax.i32(i32 %.08.i.i.i.i, i32 1)
   br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph.i.i.i.i, %.lr.ph.preheader.i.i.i.i
   %.09.i.i.i.i = phi i32 [ %i.avw, %.lr.ph.i.i.i.i ], [ 0, %.lr.ph.preheader.i.i.i.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i.i)
   %i.avw = add nuw nsw i32 %.09.i.i.i.i, 1        ; 2 uses
-  %exitcond.not.i.i.i.i = icmp eq i32 %i.avw, %.08.i.i.i.i
+  %exitcond.not.i.i.i.i = icmp eq i32 %i.avw, %smax.i.i.i.i
   br i1 %exitcond.not.i.i.i.i, label %emitter_json_key_prefix.exit.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !25
 
 emitter_json_key_prefix.exit.i.i:                 ; preds = %.lr.ph.i.i.i.i, %bb.mx, %bb.mw, %bb.mt
@@ -6319,14 +6353,15 @@ bb.mz:                                            ; preds = %bb.my
 
 .lr.ph.preheader.i.i236.i:                        ; preds = %bb.mz
   %i.awf = zext i1 %i.awd to i32
-  %.08.i.i237.i = shl nuw nsw i32 %i.awb, %i.awf
+  %.08.i.i237.i = shl nuw i32 %i.awb, %i.awf
+  %smax.i.i241.i = call i32 @llvm.smax.i32(i32 %.08.i.i237.i, i32 1)
   br label %.lr.ph.i.i238.i
 
 .lr.ph.i.i238.i:                                  ; preds = %.lr.ph.i.i238.i, %.lr.ph.preheader.i.i236.i
   %.09.i.i239.i = phi i32 [ %i.awg, %.lr.ph.i.i238.i ], [ 0, %.lr.ph.preheader.i.i236.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i234.i)
   %i.awg = add nuw nsw i32 %.09.i.i239.i, 1       ; 2 uses
-  %exitcond.not.i.i240.i = icmp eq i32 %i.awg, %.08.i.i237.i
+  %exitcond.not.i.i240.i = icmp eq i32 %i.awg, %smax.i.i241.i
   br i1 %exitcond.not.i.i240.i, label %emitter_indent.exit.i235.i, label %.lr.ph.i.i238.i, !llvm.loop !25
 
 emitter_indent.exit.i235.i:                       ; preds = %.lr.ph.i.i238.i, %bb.mz, %bb.my
@@ -6729,14 +6764,15 @@ bb.ec:                                            ; preds = %bb.eb
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.ec
   %i.ada = zext i1 %i.acy to i32
-  %.08.i.i.i = shl nuw nsw i32 %i.acw, %i.ada
+  %.08.i.i.i = shl nuw i32 %i.acw, %i.ada
+  %smax.i.i.i = call i32 @llvm.smax.i32(i32 %.08.i.i.i, i32 1)
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.preheader.i.i.i
   %.09.i.i.i = phi i32 [ %i.adb, %.lr.ph.i.i.i ], [ 0, %.lr.ph.preheader.i.i.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i)
   %i.adb = add nuw nsw i32 %.09.i.i.i, 1          ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i32 %i.adb, %.08.i.i.i
+  %exitcond.not.i.i.i = icmp eq i32 %i.adb, %smax.i.i.i
   br i1 %exitcond.not.i.i.i, label %emitter_json_key_prefix.exit.i, label %.lr.ph.i.i.i, !llvm.loop !25
 
 emitter_json_key_prefix.exit.i:                   ; preds = %.lr.ph.i.i.i, %bb.ec, %bb.eb, %bb.dy
@@ -6782,14 +6818,15 @@ bb.ee:                                            ; preds = %bb.ed
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.ee
   %i.adk = zext i1 %i.adi to i32
-  %.08.i.i = shl nuw nsw i32 %i.adg, %i.adk
+  %.08.i.i = shl nuw i32 %i.adg, %i.adk
+  %smax.i.i = call i32 @llvm.smax.i32(i32 %.08.i.i, i32 1)
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %.09.i.i = phi i32 [ %i.adl, %.lr.ph.i.i ], [ 0, %.lr.ph.preheader.i.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i)
   %i.adl = add nuw nsw i32 %.09.i.i, 1            ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %i.adl, %.08.i.i
+  %exitcond.not.i.i = icmp eq i32 %i.adl, %smax.i.i
   br i1 %exitcond.not.i.i, label %emitter_indent.exit.i, label %.lr.ph.i.i, !llvm.loop !25
 
 emitter_indent.exit.i:                            ; preds = %.lr.ph.i.i, %bb.ee, %bb.ed
@@ -6836,14 +6873,15 @@ bb.ek:                                            ; preds = %bb.ej
 
 .lr.ph.preheader.i.i.i232:                        ; preds = %bb.ek
   %i.adv = zext i1 %i.adt to i32
-  %.08.i.i.i233 = shl nuw nsw i32 %i.adr, %i.adv
+  %.08.i.i.i233 = shl nuw i32 %i.adr, %i.adv
+  %smax.i.i.i234 = call i32 @llvm.smax.i32(i32 %.08.i.i.i233, i32 1)
   br label %.lr.ph.i.i.i234
 
 .lr.ph.i.i.i234:                                  ; preds = %.lr.ph.i.i.i234, %.lr.ph.preheader.i.i.i232
   %.09.i.i.i235 = phi i32 [ %i.adw, %.lr.ph.i.i.i234 ], [ 0, %.lr.ph.preheader.i.i.i232 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i230)
   %i.adw = add nuw nsw i32 %.09.i.i.i235, 1       ; 2 uses
-  %exitcond.not.i.i.i236 = icmp eq i32 %i.adw, %.08.i.i.i233
+  %exitcond.not.i.i.i236 = icmp eq i32 %i.adw, %smax.i.i.i234
   br i1 %exitcond.not.i.i.i236, label %emitter_json_key_prefix.exit.i231, label %.lr.ph.i.i.i234, !llvm.loop !25
 
 emitter_json_key_prefix.exit.i231:                ; preds = %.lr.ph.i.i.i234, %bb.ek, %bb.ej, %bb.eg
@@ -6890,14 +6928,15 @@ bb.em:                                            ; preds = %bb.el
 
 .lr.ph.preheader.i.i244:                          ; preds = %bb.em
   %i.aef = zext i1 %i.aed to i32
-  %.08.i.i245 = shl nuw nsw i32 %i.aeb, %i.aef
+  %.08.i.i245 = shl nuw i32 %i.aeb, %i.aef
+  %smax.i.i247 = call i32 @llvm.smax.i32(i32 %.08.i.i245, i32 1)
   br label %.lr.ph.i.i246
 
 .lr.ph.i.i246:                                    ; preds = %.lr.ph.i.i246, %.lr.ph.preheader.i.i244
   %.09.i.i247 = phi i32 [ %i.aeg, %.lr.ph.i.i246 ], [ 0, %.lr.ph.preheader.i.i244 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i242)
   %i.aeg = add nuw nsw i32 %.09.i.i247, 1         ; 2 uses
-  %exitcond.not.i.i248 = icmp eq i32 %i.aeg, %.08.i.i245
+  %exitcond.not.i.i248 = icmp eq i32 %i.aeg, %smax.i.i247
   br i1 %exitcond.not.i.i248, label %emitter_indent.exit.i243, label %.lr.ph.i.i246, !llvm.loop !25
 
 emitter_indent.exit.i243:                         ; preds = %.lr.ph.i.i246, %bb.em, %bb.el
@@ -7148,14 +7187,15 @@ bb.ff:                                            ; preds = %bb.fe
 
 .lr.ph.preheader.i.i281:                          ; preds = %bb.ff
   %i.agz = zext i1 %i.agx to i32
-  %.08.i.i282 = shl nuw nsw i32 %i.agv, %i.agz
+  %.08.i.i282 = shl nuw i32 %i.agv, %i.agz
+  %smax.i.i285 = call i32 @llvm.smax.i32(i32 %.08.i.i282, i32 1)
   br label %.lr.ph.i.i283
 
 .lr.ph.i.i283:                                    ; preds = %.lr.ph.i.i283, %.lr.ph.preheader.i.i281
   %.09.i.i284 = phi i32 [ %i.aha, %.lr.ph.i.i283 ], [ 0, %.lr.ph.preheader.i.i281 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i279)
   %i.aha = add nuw nsw i32 %.09.i.i284, 1         ; 2 uses
-  %exitcond.not.i.i285 = icmp eq i32 %i.aha, %.08.i.i282
+  %exitcond.not.i.i285 = icmp eq i32 %i.aha, %smax.i.i285
   br i1 %exitcond.not.i.i285, label %emitter_indent.exit.i280, label %.lr.ph.i.i283, !llvm.loop !25
 
 emitter_indent.exit.i280:                         ; preds = %.lr.ph.i.i283, %bb.ff, %bb.fe
@@ -7558,14 +7598,15 @@ bb.at:                                            ; preds = %bb.as
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.at
   %i.is = zext i1 %i.iq to i32
-  %.08.i.i.i = shl nuw nsw i32 %i.io, %i.is
+  %.08.i.i.i = shl nuw i32 %i.io, %i.is
+  %smax.i.i.i = call i32 @llvm.smax.i32(i32 %.08.i.i.i, i32 1)
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.preheader.i.i.i
   %.09.i.i.i = phi i32 [ %i.it, %.lr.ph.i.i.i ], [ 0, %.lr.ph.preheader.i.i.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i)
   %i.it = add nuw nsw i32 %.09.i.i.i, 1           ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i32 %i.it, %.08.i.i.i
+  %exitcond.not.i.i.i = icmp eq i32 %i.it, %smax.i.i.i
   br i1 %exitcond.not.i.i.i, label %emitter_json_key_prefix.exit.i, label %.lr.ph.i.i.i, !llvm.loop !25
 
 emitter_json_key_prefix.exit.i:                   ; preds = %.lr.ph.i.i.i, %bb.at, %bb.as, %bb.ap
@@ -7601,14 +7642,15 @@ bb.av:                                            ; preds = %bb.au
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.av
   %i.jc = zext i1 %i.ja to i32
-  %.08.i.i = shl nuw nsw i32 %i.iy, %i.jc
+  %.08.i.i = shl nuw i32 %i.iy, %i.jc
+  %smax.i.i = call i32 @llvm.smax.i32(i32 %.08.i.i, i32 1)
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %.09.i.i = phi i32 [ %i.jd, %.lr.ph.i.i ], [ 0, %.lr.ph.preheader.i.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i)
   %i.jd = add nuw nsw i32 %.09.i.i, 1             ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %i.jd, %.08.i.i
+  %exitcond.not.i.i = icmp eq i32 %i.jd, %smax.i.i
   br i1 %exitcond.not.i.i, label %emitter_indent.exit.i, label %.lr.ph.i.i, !llvm.loop !25
 
 emitter_indent.exit.i:                            ; preds = %.lr.ph.i.i, %bb.av, %bb.au
@@ -7737,14 +7779,15 @@ bb.bc:                                            ; preds = %bb.bb
 
 .lr.ph.preheader.i.i130:                          ; preds = %bb.bc
   %i.kn = zext i1 %i.kl to i32
-  %.08.i.i131 = shl nuw nsw i32 %i.kj, %i.kn
+  %.08.i.i131 = shl nuw i32 %i.kj, %i.kn
+  %smax.i.i132 = call i32 @llvm.smax.i32(i32 %.08.i.i131, i32 1)
   br label %.lr.ph.i.i132
 
 .lr.ph.i.i132:                                    ; preds = %.lr.ph.i.i132, %.lr.ph.preheader.i.i130
   %.09.i.i133 = phi i32 [ %i.ko, %.lr.ph.i.i132 ], [ 0, %.lr.ph.preheader.i.i130 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i128)
   %i.ko = add nuw nsw i32 %.09.i.i133, 1          ; 2 uses
-  %exitcond.not.i.i134 = icmp eq i32 %i.ko, %.08.i.i131
+  %exitcond.not.i.i134 = icmp eq i32 %i.ko, %smax.i.i132
   br i1 %exitcond.not.i.i134, label %emitter_indent.exit.i129, label %.lr.ph.i.i132, !llvm.loop !25
 
 emitter_indent.exit.i129:                         ; preds = %.lr.ph.i.i132, %bb.bc, %bb.bb
@@ -8147,14 +8190,15 @@ bb.ap:                                            ; preds = %bb.ao
 
 .lr.ph.preheader.i.i.i:                           ; preds = %bb.ap
   %i.ir = zext i1 %i.ip to i32
-  %.08.i.i.i = shl nuw nsw i32 %i.in, %i.ir
+  %.08.i.i.i = shl nuw i32 %i.in, %i.ir
+  %smax.i.i.i = call i32 @llvm.smax.i32(i32 %.08.i.i.i, i32 1)
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i, %.lr.ph.preheader.i.i.i
   %.09.i.i.i = phi i32 [ %i.is, %.lr.ph.i.i.i ], [ 0, %.lr.ph.preheader.i.i.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i.i)
   %i.is = add nuw nsw i32 %.09.i.i.i, 1           ; 2 uses
-  %exitcond.not.i.i.i = icmp eq i32 %i.is, %.08.i.i.i
+  %exitcond.not.i.i.i = icmp eq i32 %i.is, %smax.i.i.i
   br i1 %exitcond.not.i.i.i, label %emitter_json_key_prefix.exit.i, label %.lr.ph.i.i.i, !llvm.loop !25
 
 emitter_json_key_prefix.exit.i:                   ; preds = %.lr.ph.i.i.i, %bb.ap, %bb.ao, %bb.al
@@ -8195,14 +8239,15 @@ bb.ar:                                            ; preds = %bb.aq
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.ar
   %i.jb = zext i1 %i.iz to i32
-  %.08.i.i = shl nuw nsw i32 %i.ix, %i.jb
+  %.08.i.i = shl nuw i32 %i.ix, %i.jb
+  %smax.i.i = call i32 @llvm.smax.i32(i32 %.08.i.i, i32 1)
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.preheader.i.i
   %.09.i.i = phi i32 [ %i.jc, %.lr.ph.i.i ], [ 0, %.lr.ph.preheader.i.i ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i)
   %i.jc = add nuw nsw i32 %.09.i.i, 1             ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %i.jc, %.08.i.i
+  %exitcond.not.i.i = icmp eq i32 %i.jc, %smax.i.i
   br i1 %exitcond.not.i.i, label %emitter_indent.exit.i, label %.lr.ph.i.i, !llvm.loop !25
 
 emitter_indent.exit.i:                            ; preds = %.lr.ph.i.i, %bb.ar, %bb.aq
@@ -8293,14 +8338,15 @@ bb.aw:                                            ; preds = %bb.av
 
 .lr.ph.preheader.i.i117:                          ; preds = %bb.aw
   %i.ka = zext i1 %i.jy to i32
-  %.08.i.i118 = shl nuw nsw i32 %i.jw, %i.ka
+  %.08.i.i118 = shl nuw i32 %i.jw, %i.ka
+  %smax.i.i119 = call i32 @llvm.smax.i32(i32 %.08.i.i118, i32 1)
   br label %.lr.ph.i.i119
 
 .lr.ph.i.i119:                                    ; preds = %.lr.ph.i.i119, %.lr.ph.preheader.i.i117
   %.09.i.i120 = phi i32 [ %i.kb, %.lr.ph.i.i119 ], [ 0, %.lr.ph.preheader.i.i117 ]
   call void (ptr, ptr, ...) @emitter_printf(ptr noundef nonnull readonly %0, ptr noundef nonnull @.str.28, ptr noundef nonnull %.07.i.i115)
   %i.kb = add nuw nsw i32 %.09.i.i120, 1          ; 2 uses
-  %exitcond.not.i.i121 = icmp eq i32 %i.kb, %.08.i.i118
+  %exitcond.not.i.i121 = icmp eq i32 %i.kb, %smax.i.i119
   br i1 %exitcond.not.i.i121, label %emitter_indent.exit.i116, label %.lr.ph.i.i119, !llvm.loop !25
 
 emitter_indent.exit.i116:                         ; preds = %.lr.ph.i.i119, %bb.aw, %bb.av
@@ -8344,6 +8390,9 @@ declare void @llvm.assume(i1 noundef) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #13
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

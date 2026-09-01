@@ -205,28 +205,24 @@ bb.i:                                             ; preds = %bb.a
   %i.mb = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.mc = load ptr, ptr %i.mb, align 8, !tbaa !47 ; 8 uses
   %i.md = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
-  %i.me = load i16, ptr %i.md, align 4, !tbaa !50 ; 2 uses
-  %i.mf = zext nneg i16 %i.me to i64              ; 2 uses
+  %i.me = load i16, ptr %i.md, align 4, !tbaa !50 ; 5 uses
+  %i.mf = zext i16 %i.me to i64                   ; 3 uses
+  %1 = shl nuw i64 1, %i.mf                       ; 2 uses
   %.not = icmp eq i16 %i.me, 63
-  br i1 %.not, label %checkcmap.exit, label %.lr.ph
-
-.lr.ph:                                           ; preds = %bb.i
-  %notmask = shl nsw i64 -1, %i.mf
-  %1 = xor i64 %notmask, -1
-  br label %bb.k
+  br i1 %.not, label %checkcmap.exit, label %bb.k
 
 bb.j:                                             ; preds = %bb.m
   %i.mg = getelementptr inbounds nuw i8, ptr %.08.i63, i64 2
   %i.mh = getelementptr inbounds nuw i8, ptr %.09.i62, i64 2
-  %2 = add nsw i64 %i.mj, -1
-  %i.mi = icmp sgt i64 %i.mj, 0
+  %i.mi = icmp sgt i64 %i.mj, 1
   br i1 %i.mi, label %bb.k, label %checkcmap.exit
 
-bb.k:                                             ; preds = %.lr.ph, %bb.j
-  %i.mj = phi i64 [ %1, %.lr.ph ], [ %2, %bb.j ]  ; 2 uses
-  %.08.i63 = phi ptr [ %i.mc, %.lr.ph ], [ %i.mg, %bb.j ] ; 2 uses
-  %.09.i62 = phi ptr [ %i.ma, %.lr.ph ], [ %i.mh, %bb.j ] ; 2 uses
-  %.010.i61 = phi ptr [ %i.ly, %.lr.ph ], [ %i.mk, %bb.j ] ; 2 uses
+bb.k:                                             ; preds = %bb.i, %bb.j
+  %i.mj = phi i64 [ %2, %bb.j ], [ %1, %bb.i ]    ; 2 uses
+  %.08.i63 = phi ptr [ %i.mg, %bb.j ], [ %i.mc, %bb.i ] ; 2 uses
+  %.09.i62 = phi ptr [ %i.mh, %bb.j ], [ %i.ma, %bb.i ] ; 2 uses
+  %.010.i61 = phi ptr [ %i.mk, %bb.j ], [ %i.ly, %bb.i ] ; 2 uses
+  %2 = add nsw i64 %i.mj, -1
   %i.mk = getelementptr inbounds nuw i8, ptr %.010.i61, i64 2
   %i.ml = load i16, ptr %.010.i61, align 2, !tbaa !31
   %i.mm = icmp ugt i16 %i.ml, 255
@@ -243,17 +239,41 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.mq, label %bb.n, label %bb.j
 
 bb.n:                                             ; preds = %bb.k, %bb.m, %bb.l
-  %notmask.i10 = shl nsw i64 -1, %i.mf            ; 3 uses
-  %i.mr = xor i64 %notmask.i10, -1                ; 4 uses
-  %3 = sub i64 0, %notmask.i10                    ; 3 uses
-  %min.iters.check = icmp ult i64 %3, 16
+  %notmask.i10 = shl nsw i64 -1, %i.mf            ; 2 uses
+  %i.mr = xor i64 %notmask.i10, -1                ; 5 uses
+  %min.iters.check = icmp ult i16 %i.me, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
+scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.n
+  %lcmp.mod.not.not = icmp eq i16 %i.me, 0
+  br i1 %lcmp.mod.not.not, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
+
+scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
+  %3 = getelementptr inbounds nuw [2 x i8], ptr %i.ly, i64 %i.mr ; 2 uses
+  %4 = load i16, ptr %3, align 2, !tbaa !31
+  %5 = lshr i16 %4, 8
+  store i16 %5, ptr %3, align 2, !tbaa !31
+  %6 = getelementptr inbounds nuw [2 x i8], ptr %i.ma, i64 %i.mr ; 2 uses
+  %7 = load i16, ptr %6, align 2, !tbaa !31
+  %8 = lshr i16 %7, 8
+  store i16 %8, ptr %6, align 2, !tbaa !31
+  %9 = getelementptr inbounds nuw [2 x i8], ptr %i.mc, i64 %i.mr ; 2 uses
+  %10 = load i16, ptr %9, align 2, !tbaa !31
+  %11 = lshr i16 %10, 8
+  store i16 %11, ptr %9, align 2, !tbaa !31
+  %12 = sub nsw i64 -2, %notmask.i10
+  br label %scalar.ph.prol.loopexit
+
+scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
+  %.017.i.unr = phi i64 [ %i.mr, %scalar.ph.preheader ], [ %12, %scalar.ph.prol ]
+  %13 = icmp eq i16 %i.me, 0
+  br i1 %13, label %cvtcmap.exit, label %scalar.ph
+
 vector.memcheck:                                  ; preds = %bb.n
-  %4 = mul i64 %notmask.i10, -2                   ; 3 uses
-  %scevgep = getelementptr i8, ptr %i.ly, i64 %4  ; 2 uses
-  %scevgep64 = getelementptr i8, ptr %i.ma, i64 %4 ; 2 uses
-  %scevgep65 = getelementptr i8, ptr %i.mc, i64 %4 ; 2 uses
+  %14 = shl i64 2, %i.mf                          ; 3 uses
+  %scevgep = getelementptr i8, ptr %i.ly, i64 %14 ; 2 uses
+  %scevgep64 = getelementptr i8, ptr %i.ma, i64 %14 ; 2 uses
+  %scevgep65 = getelementptr i8, ptr %i.mc, i64 %14 ; 2 uses
   %bound0 = icmp ult ptr %i.ly, %scevgep64
   %bound1 = icmp ult ptr %i.ma, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -268,8 +288,7 @@ vector.memcheck:                                  ; preds = %bb.n
   br i1 %conflict.rdx72, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %3, -8                         ; 3 uses
-  %5 = sub i64 %i.mr, %n.vec
+  %n.vec = and i64 %1, -8
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -292,38 +311,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <8 x i16> %i.nb, ptr %i.na, align 2, !tbaa !31, !alias.scope !86
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.nc = icmp eq i64 %index.next, %n.vec
-  br i1 %i.nc, label %middle.block, label %vector.body, !llvm.loop !87
-
-middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %3
-  br i1 %cmp.n, label %cvtcmap.exit, label %scalar.ph.preheader
-
-scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.n, %middle.block
-  %.017.i.ph = phi i64 [ %i.mr, %vector.memcheck ], [ %i.mr, %bb.n ], [ %5, %middle.block ] ; 7 uses
-  %6 = and i64 %.017.i.ph, 1
-  %lcmp.mod.not.not = icmp eq i64 %6, 0
-  br i1 %lcmp.mod.not.not, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
-
-scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
-  %7 = getelementptr inbounds nuw [2 x i8], ptr %i.ly, i64 %.017.i.ph ; 2 uses
-  %8 = load i16, ptr %7, align 2, !tbaa !31
-  %9 = lshr i16 %8, 8
-  store i16 %9, ptr %7, align 2, !tbaa !31
-  %10 = getelementptr inbounds nuw [2 x i8], ptr %i.ma, i64 %.017.i.ph ; 2 uses
-  %11 = load i16, ptr %10, align 2, !tbaa !31
-  %12 = lshr i16 %11, 8
-  store i16 %12, ptr %10, align 2, !tbaa !31
-  %13 = getelementptr inbounds nuw [2 x i8], ptr %i.mc, i64 %.017.i.ph ; 2 uses
-  %14 = load i16, ptr %13, align 2, !tbaa !31
-  %15 = lshr i16 %14, 8
-  store i16 %15, ptr %13, align 2, !tbaa !31
-  %16 = add nsw i64 %.017.i.ph, -1
-  br label %scalar.ph.prol.loopexit
-
-scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
-  %.017.i.unr = phi i64 [ %.017.i.ph, %scalar.ph.preheader ], [ %16, %scalar.ph.prol ]
-  %17 = icmp eq i64 %.017.i.ph, 0
-  br i1 %17, label %cvtcmap.exit, label %scalar.ph
+  br i1 %i.nc, label %cvtcmap.exit, label %vector.body, !llvm.loop !87
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %.017.i = phi i64 [ %i.nw, %scalar.ph ], [ %.017.i.unr, %scalar.ph.prol.loopexit ] ; 5 uses
@@ -362,7 +350,7 @@ checkcmap.exit:                                   ; preds = %bb.j, %bb.i
   tail call void (ptr, ptr, ptr, ...) @TIFFWarningExtR(ptr noundef %i.nx, ptr noundef %i.ny, ptr noundef nonnull @.str.47) #11
   br label %cvtcmap.exit
 
-cvtcmap.exit:                                     ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %checkcmap.exit
+cvtcmap.exit:                                     ; preds = %vector.body, %scalar.ph.prol.loopexit, %scalar.ph, %checkcmap.exit
   %i.nz = load i16, ptr %i.md, align 4, !tbaa !50 ; 3 uses
   %i.oa = icmp ult i16 %i.nz, 9
   br i1 %i.oa, label %bb.o, label %setupMap.exit

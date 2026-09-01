@@ -1,0 +1,1394 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index f31475dca4686..c77f2d3fa5f1a 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -738,6 +738,10 @@ class ScalarEvolution {
+   LLVM_ABI const SCEV *getTruncateExpr(SCEVUse Op, Type *Ty,
+                                        unsigned Depth = 0);
+   LLVM_ABI const SCEV *getVScale(Type *Ty);
++  /// Return an expression for `2 ^ Op`, used to model `1 << Op` for a
++  /// non-constant \p Op. The operand is assumed to be less than the bit width
++  /// of its type, as a larger shift amount produces poison.
++  LLVM_ABI const SCEV *getPowerOfTwoExpr(SCEVUse Op);
+   LLVM_ABI const SCEV *
+   getElementCount(Type *Ty, ElementCount EC,
+                   SCEV::NoWrapFlags Flags = SCEV::FlagAnyWrap);
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolutionDivision.h b/llvm/include/llvm/Analysis/ScalarEvolutionDivision.h
+index da873bda9db59..b12c7c0b63ebf 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolutionDivision.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolutionDivision.h
+@@ -46,6 +46,7 @@ struct SCEVDivision : public SCEVVisitor<SCEVDivision, void> {
+ 
+   // Except in the trivial case described above, we do not know how to divide
+   // Expr by Denominator for the following functions with empty implementation.
++  void visitPowerOfTwoExpr(const SCEVPowerOfTwoExpr *Numerator) {}
+   void visitPtrToAddrExpr(const SCEVPtrToAddrExpr *Numerator) {}
+   void visitTruncateExpr(const SCEVTruncateExpr *Numerator) {}
+   void visitZeroExtendExpr(const SCEVZeroExtendExpr *Numerator) {}
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h b/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h
+index 63c822d0c7c20..2148b493bcd94 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolutionExpressions.h
+@@ -40,6 +40,7 @@ enum SCEVTypes : unsigned short {
+   // folders simpler.
+   scConstant,
+   scVScale,
++  scPowerOfTwo,
+   scTruncate,
+   scZeroExtend,
+   scSignExtend,
+@@ -184,6 +185,41 @@ class SCEVSignExtendExpr : public SCEVIntegralCastExpr {
+   }
+ };
+ 
++/// This class represents a power of two, i.e. `2 ^ Op`.
++///
++/// It is used to model a left shift by a non-constant amount, since
++/// `X << Op` is `X * (2 ^ Op)`. Modelling the shift this way lets SCEV relate
++/// expressions that differ only by a constant factor, e.g. `(3 << V)` and
++/// `(5 * (1 << V))`, which would otherwise both be opaque.
++///
++/// The operand is assumed to be less than the bit width of the type, because a
++/// shift by a larger amount produces poison. This mirrors how KnownBits models
++/// shifts by a variable amount.
++class SCEVPowerOfTwoExpr : public SCEV {
++  friend class ScalarEvolution;
++
++  SCEVUse Op;
++
++  SCEVPowerOfTwoExpr(const FoldingSetNodeIDRef ID, SCEVUse op)
++      : SCEV(ID, scPowerOfTwo, computeExpressionSize(op), op->getType()),
++        Op(op) {}
++
++public:
++  SCEVUse getOperand() const { return Op; }
++  SCEVUse getOperand(unsigned i) const {
++    assert(i == 0 && "Operand index out of range!");
++    return Op;
++  }
++  ArrayRef<SCEVUse> operands() const { return Op; }
++  size_t getNumOperands() const { return 1; }
++
++  /// Methods for support type inquiry through isa, cast, and dyn_cast:
++  static bool classof(const SCEV *S) {
++    return S->getSCEVType() == scPowerOfTwo;
++  }
++  static bool classof(const SCEVUse *U) { return classof(U->getPointer()); }
++};
++
+ /// This node is a base class providing common functionality for
+ /// n'ary operators.
+ class SCEVNAryExpr : public SCEV {
+@@ -595,6 +631,8 @@ template <typename SC, typename RetVal = void> struct SCEVVisitor {
+       return ((SC *)this)->visitConstant((const SCEVConstant *)S);
+     case scVScale:
+       return ((SC *)this)->visitVScale((const SCEVVScale *)S);
++    case scPowerOfTwo:
++      return ((SC *)this)->visitPowerOfTwoExpr((const SCEVPowerOfTwoExpr *)S);
+     case scPtrToAddr:
+       return ((SC *)this)->visitPtrToAddrExpr((const SCEVPtrToAddrExpr *)S);
+     case scTruncate:
+@@ -644,6 +682,9 @@ template <typename SC, typename RetVal = void> struct SCEVUseVisitor {
+           ->visitConstant(cast<SCEVUseT<const SCEVConstant *>>(S));
+     case scVScale:
+       return ((SC *)this)->visitVScale(cast<SCEVUseT<const SCEVVScale *>>(S));
++    case scPowerOfTwo:
++      return ((SC *)this)
++          ->visitPowerOfTwoExpr(cast<SCEVUseT<const SCEVPowerOfTwoExpr *>>(S));
+     case scPtrToAddr:
+       return ((SC *)this)
+           ->visitPtrToAddrExpr(cast<SCEVUseT<const SCEVPtrToAddrExpr *>>(S));
+@@ -727,6 +768,7 @@ template <typename SV> class SCEVTraversal {
+       case scVScale:
+       case scUnknown:
+         continue;
++      case scPowerOfTwo:
+       case scPtrToAddr:
+       case scTruncate:
+       case scZeroExtend:
+@@ -816,6 +858,11 @@ class SCEVRewriteVisitor : public SCEVVisitor<SC, const SCEV *> {
+ 
+   const SCEV *visitVScale(const SCEVVScale *VScale) { return VScale; }
+ 
++  const SCEV *visitPowerOfTwoExpr(const SCEVPowerOfTwoExpr *Expr) {
++    const SCEV *Operand = ((SC *)this)->visit(Expr->getOperand());
++    return Operand == Expr->getOperand() ? Expr : SE.getPowerOfTwoExpr(Operand);
++  }
++
+   const SCEV *visitPtrToAddrExpr(const SCEVPtrToAddrExpr *Expr) {
+     const SCEV *Operand = ((SC *)this)->visit(Expr->getOperand());
+     return Operand == Expr->getOperand() ? Expr : SE.getPtrToAddrExpr(Operand);
+diff --git a/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h b/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
+index c98c0cb52fa9c..a53999174fe13 100644
+--- a/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
++++ b/llvm/include/llvm/Transforms/Utils/ScalarEvolutionExpander.h
+@@ -524,6 +524,8 @@ class SCEVExpander : public SCEVUseVisitor<SCEVExpander, Value *> {
+ 
+   Value *visitVScale(SCEVUseT<const SCEVVScale *> S);
+ 
++  Value *visitPowerOfTwoExpr(SCEVUseT<const SCEVPowerOfTwoExpr *> S);
++
+   Value *visitPtrToAddrExpr(SCEVUseT<const SCEVPtrToAddrExpr *> S);
+ 
+   Value *visitTruncateExpr(SCEVUseT<const SCEVTruncateExpr *> S);
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 3c00947cd362b..bb0df3ab8b8c4 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -302,6 +302,11 @@ void SCEV::print(raw_ostream &OS) const {
+   case scVScale:
+     OS << "vscale";
+     return;
++  case scPowerOfTwo: {
++    const SCEV *Op = cast<SCEVPowerOfTwoExpr>(this)->getOperand();
++    OS << "(2 ^ " << *Op << ")";
++    return;
++  }
+   case scPtrToAddr: {
+     const SCEVCastExpr *PtrCast = cast<SCEVCastExpr>(this);
+     SCEVUse Op = PtrCast->getOperand();
+@@ -409,6 +414,8 @@ ArrayRef<SCEVUse> SCEV::operands() const {
+   case scVScale:
+   case scUnknown:
+     return {};
++  case scPowerOfTwo:
++    return cast<SCEVPowerOfTwoExpr>(this)->operands();
+   case scPtrToAddr:
+   case scTruncate:
+   case scZeroExtend:
+@@ -501,6 +508,37 @@ const SCEV *ScalarEvolution::getVScale(Type *Ty) {
+   return S;
+ }
+ 
++const SCEV *ScalarEvolution::getPowerOfTwoExpr(SCEVUse Op) {
++  Type *Ty = Op->getType();
++  assert(Ty->isIntegerTy() && "Can only raise two to an integer power!");
++  unsigned BitWidth = getTypeSizeInBits(Ty);
++
++  if (const SCEVConstant *SC = dyn_cast<SCEVConstant>(Op)) {
++    const APInt &Amt = SC->getAPInt();
++    // A shift amount that is not less than the bit width produces poison. Do
++    // not refine that to a concrete value: the resolution chosen here may
++    // differ from the resolution chosen in other parts of the compiler, and
++    // the range computed below assumes the amount is in range, so folding to
++    // a value would make the two disagree about the same expression.
++    if (Amt.uge(BitWidth))
++      return getUnknown(PoisonValue::get(Ty));
++    return getConstant(APInt::getOneBitSet(BitWidth, Amt.getZExtValue()));
++  }
++
++  FoldingSetNodeID ID;
++  ID.AddInteger(scPowerOfTwo);
++  ID.AddPointer(Op.getOpaqueValue());
++  FoldingSetInsertToken Token;
++  if (const SCEV *S = UniqueSCEVs.lookup(ID, Token))
++    return S;
++  SCEV *S =
++      new (SCEVAllocator) SCEVPowerOfTwoExpr(ID.Intern(SCEVAllocator), Op);
++  UniqueSCEVs.insert(S, Token);
++  S->computeAndSetCanonical(*this);
++  registerUser(S, Op);
++  return S;
++}
++
+ const SCEV *ScalarEvolution::getElementCount(Type *Ty, ElementCount EC,
+                                              SCEV::NoWrapFlags Flags) {
+   const SCEV *Res = getConstant(Ty, EC.getKnownMinValue());
+@@ -722,6 +760,7 @@ CompareSCEVComplexity(const LoopInfo *const LI, const SCEV *LHS,
+     [[fallthrough]];
+   }
+ 
++  case scPowerOfTwo:
+   case scTruncate:
+   case scZeroExtend:
+   case scSignExtend:
+@@ -4048,6 +4087,8 @@ class SCEVSequentialMinMaxDeduplicatingVisitor final
+ 
+   RetVal visitVScale(const SCEVVScale *VScale) { return VScale; }
+ 
++  RetVal visitPowerOfTwoExpr(const SCEVPowerOfTwoExpr *Expr) { return Expr; }
++
+   RetVal visitPtrToAddrExpr(const SCEVPtrToAddrExpr *Expr) { return Expr; }
+ 
+   RetVal visitTruncateExpr(const SCEVTruncateExpr *Expr) { return Expr; }
+@@ -4095,6 +4136,7 @@ static bool scevUnconditionallyPropagatesPoisonFromOperands(SCEVTypes Kind) {
+   switch (Kind) {
+   case scConstant:
+   case scVScale:
++  case scPowerOfTwo:
+   case scTruncate:
+   case scZeroExtend:
+   case scSignExtend:
+@@ -4196,6 +4238,11 @@ bool ScalarEvolution::canReuseInstruction(
+   SmallPtrSet<const Value *, 8> PoisonVals;
+   getPoisonGeneratingValues(PoisonVals, S);
+ 
++  // The amounts of the powers of two in S, collected on first use below. Only
++  // a shift by a variable amount needs them, and reaching one is rare enough
++  // not to pay for a second traversal of S on every call.
++  std::optional<SmallPtrSet<const SCEV *, 4>> ModelledShiftAmounts;
++
+   SmallVector<Value *> Worklist;
+   SmallPtrSet<Value *, 8> Visited;
+   Worklist.push_back(I);
+@@ -4231,7 +4278,47 @@ bool ScalarEvolution::canReuseInstruction(
+         II && II->getIntrinsicID() == Intrinsic::vscale)
+       continue;
+ 
+-    if (canCreatePoison(cast<Operator>(I), /*ConsiderFlagsAndMetadata*/ false))
++    // Ignoring flags, a shift by a variable amount creates poison only by
++    // shifting out of range. Where S models this shift as a multiply by a
++    // power of two, expanding S emits a shift by the same amount, so reusing
++    // the instruction is no more poisonous than not reusing it.
++    //
++    // That the power of two is still part of S is what makes this true, so it
++    // is checked rather than assumed. If the shift's contribution cancelled
++    // out, as in (X << V) + A - (X << V), expanding what remains would not
++    // reproduce its poison. The same check rejects (0 << V), whose SCEV folds
++    // to a constant containing no power of two.
++    auto ShiftIsModelledInS = [&](Instruction *Shl) {
++      Value *Amt = Shl->getOperand(1);
++      if (Shl->getType()->isVectorTy() || isa<Constant>(Amt) ||
++          !isSCEVable(Amt->getType()))
++        return false;
++      // Look the amount up without creating it. getSCEV would insert into
++      // ExprValueMap, whose sets are stored by value and handed out as
++      // ArrayRefs by getSCEVValues, and callers iterate one of those across
++      // this call. Inserting can reallocate the set being iterated, either by
++      // rehashing the map or, if the amount's SCEV is S itself, by growing that
++      // set directly. A missing entry refuses the reuse, which is conservative,
++      // but does make the decision depend on what has been queried before
++      // rather than on the IR alone.
++      const SCEV *AmtS = getExistingSCEV(Amt);
++      if (!AmtS)
++        return false;
++      if (!ModelledShiftAmounts) {
++        // Compare the amounts by pointer rather than as uses: 2 ^ V and
++        // 2 ^ (V<nuw>) are shifts by the same amount, and flags on the amount
++        // do not change which amount it is.
++        ModelledShiftAmounts.emplace();
++        SCEVExprContains(S, [&](const SCEV *Sub) {
++          if (const auto *P = dyn_cast<SCEVPowerOfTwoExpr>(Sub))
++            ModelledShiftAmounts->insert(P->getOperand().getPointer());
++          return false; // Never stop early; walk all of S.
++        });
++      }
++      return ModelledShiftAmounts->contains(AmtS);
++    };
++    if (!(I->getOpcode() == Instruction::Shl && ShiftIsModelledInS(I)) &&
++        canCreatePoison(cast<Operator>(I), /*ConsiderFlagsAndMetadata*/ false))
+       return false;
+ 
+     // If the instruction can't create poison, we can recurse to its operands.
+@@ -6313,6 +6400,9 @@ APInt ScalarEvolution::getConstantMultipleImpl(const SCEV *S,
+     return getConstantMultiple(cast<SCEVCastExpr>(S)->getOperand());
+   case scUDivExpr:
+   case scVScale:
++  // The operand of a power of two may be zero, so we cannot say more than
++  // that the result is a multiple of one.
++  case scPowerOfTwo:
+     return APInt(BitWidth, 1);
+   case scTruncate: {
+     // Only multiples that are a power of 2 will hold after truncation.
+@@ -6610,6 +6700,7 @@ ScalarEvolution::getRangeRefIter(const SCEV *S,
+       [[fallthrough]];
+     case scConstant:
+     case scVScale:
++    case scPowerOfTwo:
+     case scTruncate:
+     case scZeroExtend:
+     case scSignExtend:
+@@ -6721,6 +6812,27 @@ const ConstantRange &ScalarEvolution::getRangeRef(
+     llvm_unreachable("Already handled above.");
+   case scVScale:
+     return setRange(S, SignHint, getVScaleRange(&F, BitWidth));
++  case scPowerOfTwo: {
++    const SCEVPowerOfTwoExpr *P = cast<SCEVPowerOfTwoExpr>(S);
++    ConstantRange AmtRange = getRangeRef(
++        P->getOperand(), ScalarEvolution::HINT_RANGE_UNSIGNED, Depth + 1);
++    // If the amount is out of range on every execution, the result is always
++    // poison. Claiming a value for it here would disagree with the other
++    // refinements made for such a shift, so say nothing instead.
++    if (AmtRange.isEmptySet() || AmtRange.getUnsignedMin().uge(BitWidth))
++      return setRange(S, SignHint, std::move(ConservativeResult));
++    // An amount that is in range for at least one execution is assumed to be
++    // in range, as larger amounts produce poison. The result is then a power
++    // of two in [1 << MinAmt, 1 << MaxAmt].
++    unsigned MinAmt = AmtRange.getUnsignedMin().getLimitedValue(BitWidth - 1);
++    unsigned MaxAmt = AmtRange.getUnsignedMax().getLimitedValue(BitWidth - 1);
++    APInt One(BitWidth, 1);
++    return setRange(
++        S, SignHint,
++        ConservativeResult.intersectWith(
++            ConstantRange::getNonEmpty(One << MinAmt, (One << MaxAmt) + 1),
++            RangeType));
++  }
+   case scTruncate: {
+     const SCEVTruncateExpr *Trunc = cast<SCEVTruncateExpr>(S);
+     ConstantRange X = getRangeRef(Trunc->getOperand(), SignHint, Depth + 1);
+@@ -7651,11 +7763,15 @@ ScalarEvolution::getOperandsToCreate(Value *V, SmallVectorImpl<Value *> &Ops) {
+     case Instruction::URem:
+       break;
+     case Instruction::AShr:
+-    case Instruction::Shl:
+     case Instruction::Xor:
+       if (!IsConstArg)
+         return nullptr;
+       break;
++    case Instruction::Shl:
++      // Even a variable shift amount is modelled, as a multiply by a power of
++      // two, so createSCEV needs a SCEV for both operands. Without them it
++      // would have to build them recursively.
++      break;
+     case Instruction::And:
+     case Instruction::Or:
+       if (!IsConstArg && !BO->LHS->getType()->isIntegerTy(1))
+@@ -8109,7 +8225,29 @@ const SCEV *ScalarEvolution::createSCEV(Value *V) {
+             getContext(), APInt::getOneBitSet(BitWidth, SA->getZExtValue()));
+         return getMulExpr(getSCEV(BO->LHS), getConstant(X), Flags);
+       }
+-      break;
++      // Turn a shift left by a variable amount into a multiply by a power of
++      // two: X << V --> X * 2^V. Modelling the shift keeps expressions that
++      // differ only by a constant factor comparable, e.g. (3 << V) and
++      // (5 * (1 << V)). Instcombine canonicalizes X * (1 << V) to X << V, so
++      // without this both forms would be opaque and unrelated.
++      {
++        SCEVUse Amt = getSCEV(BO->RHS);
++        SCEV::NoWrapFlags Flags = SCEV::FlagAnyWrap;
++        if (BO->Op) {
++          unsigned BitWidth = getTypeSizeInBits(BO->Op->getType());
++          auto MulFlags = getNoWrapFlagsFromUB(BO->Op);
++          // As in the constant case above, nsw in isolation is only preserved
++          // if we are not shifting by bitwidth - 1: for i8, (-1 << 7) is nsw,
++          // but the equivalent multiply -1 * -128 overflows.
++          if (any(MulFlags & SCEV::FlagNSW) &&
++              (any(MulFlags & SCEV::FlagNUW) ||
++               getUnsignedRange(Amt).getUnsignedMax().ult(BitWidth - 1)))
++            Flags = Flags | SCEV::FlagNSW;
++          if (any(MulFlags & SCEV::FlagNUW))
++            Flags = Flags | SCEV::FlagNUW;
++        }
++        return getMulExpr(getSCEV(BO->LHS), getPowerOfTwoExpr(Amt), Flags);
++      }
+ 
+     case Instruction::AShr:
+       // AShr X, C, where C is a constant.
+@@ -10059,6 +10197,9 @@ static Constant *BuildConstantFromSCEV(const SCEV *V) {
+   case scCouldNotCompute:
+   case scAddRecExpr:
+   case scVScale:
++  // A power of two with a constant operand is folded on creation, so the
++  // operand here is not constant.
++  case scPowerOfTwo:
+     return nullptr;
+   case scConstant:
+     return cast<SCEVConstant>(V)->getValue();
+@@ -10132,6 +10273,8 @@ const SCEV *ScalarEvolution::getWithOperands(const SCEV *S,
+     return getMulExpr(NewOps, cast<SCEVMulExpr>(S)->getNoWrapFlags());
+   case scUDivExpr:
+     return getUDivExpr(NewOps[0], NewOps[1]);
++  case scPowerOfTwo:
++    return getPowerOfTwoExpr(NewOps[0]);
+   case scUMaxExpr:
+   case scSMaxExpr:
+   case scUMinExpr:
+@@ -10201,6 +10344,7 @@ const SCEV *ScalarEvolution::computeSCEVAtScope(const SCEV *V, const Loop *L) {
+ 
+     return AddRec;
+   }
++  case scPowerOfTwo:
+   case scTruncate:
+   case scZeroExtend:
+   case scSignExtend:
+@@ -14480,6 +14624,7 @@ ScalarEvolution::computeLoopDisposition(const SCEV *S, const Loop *L) {
+     // Otherwise it's loop-invariant.
+     return LoopInvariant;
+   }
++  case scPowerOfTwo:
+   case scTruncate:
+   case scZeroExtend:
+   case scSignExtend:
+@@ -14570,6 +14715,7 @@ ScalarEvolution::computeBlockDisposition(const SCEV *S, const BasicBlock *BB) {
+     // Fall through into SCEVNAryExpr handling.
+     [[fallthrough]];
+   }
++  case scPowerOfTwo:
+   case scTruncate:
+   case scZeroExtend:
+   case scSignExtend:
+diff --git a/llvm/lib/Transforms/Scalar/LoopStrengthReduce.cpp b/llvm/lib/Transforms/Scalar/LoopStrengthReduce.cpp
+index e2ca5f166dbb5..5b1e8579313f3 100644
+--- a/llvm/lib/Transforms/Scalar/LoopStrengthReduce.cpp
++++ b/llvm/lib/Transforms/Scalar/LoopStrengthReduce.cpp
+@@ -937,7 +937,8 @@ static Immediate ExtractImmediateOperand(MutableArrayRef<SCEVUse> Ops,
+ 
+   // Ops are sorted by their SCEVType (the order of SCEVTypes enum). So, for an
+   // AddExpr the possible order of operands is:
+-  // Constant < VScale < Truncate < ZeroExtend < SignExtend < MulExpr < ...
++  // Constant < VScale < PowerOfTwo < Truncate < ZeroExtend < SignExtend <
++  // MulExpr < ...
+ 
+   // This means fixed-size immediates will always appear on the LHS:
+   SCEVUse &S = Ops.front();
+@@ -1149,6 +1150,10 @@ static bool isHighCostExpansion(const SCEV *S,
+   case scConstant:
+   case scVScale:
+     return false;
++  case scPowerOfTwo:
++    // Expanded as a single shift.
++    return isHighCostExpansion(cast<SCEVPowerOfTwoExpr>(S)->getOperand(),
++                               Processed, SE);
+   case scTruncate:
+     return isHighCostExpansion(cast<SCEVTruncateExpr>(S)->getOperand(),
+                                Processed, SE);
+@@ -1179,6 +1184,12 @@ static bool isHighCostExpansion(const SCEV *S,
+     if (isa<SCEVConstant>(Op0))
+       return isHighCostExpansion(Op1, Processed, SE);
+ 
++    // Multiplication by a power of two is expanded as a shift, so it is ok
++    // for the same reason.
++    if (const auto *P = dyn_cast<SCEVPowerOfTwoExpr>(Op0))
++      return isHighCostExpansion(P->getOperand(), Processed, SE) ||
++             isHighCostExpansion(Op1, Processed, SE);
++
+     // If we have the value of one operand, check if an existing
+     // multiplication already generates this expression.
+     if (const auto *U = dyn_cast<SCEVUnknown>(Op1)) {
+diff --git a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+index f01a674609325..87824e801d4fa 100644
+--- a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
++++ b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+@@ -456,6 +456,7 @@ const Loop *SCEVExpander::getRelevantLoop(const SCEV *S) {
+   case scConstant:
+   case scVScale:
+     return nullptr; // A constant has no relevant loops.
++  case scPowerOfTwo:
+   case scTruncate:
+   case scZeroExtend:
+   case scSignExtend:
+@@ -636,6 +637,25 @@ Value *SCEVExpander::visitMulExpr(SCEVUseT<const SCEVMulExpr *> S) {
+   // Sort by loop. Use a stable sort so that constants follow non-constants.
+   llvm::stable_sort(OpsAndLoops, LoopCompare(SE.DT));
+ 
++  // Emit powers of two last within each loop, so that each becomes a shift of
++  // the running product rather than a value materialized and multiplied by it.
++  // Reordering within a loop rather than across the whole vector preserves the
++  // grouping established above: a shift by a loop-invariant amount folds into
++  // the invariant part of the product, and so is hoisted along with it, rather
++  // than being emitted after operands from inner loops have been multiplied in.
++  for (auto I = OpsAndLoops.begin(), E = OpsAndLoops.end(); I != E;) {
++    const Loop *L = I->first;
++    auto GroupEnd = std::find_if(
++        I, E, [L](const std::pair<const Loop *, const SCEV *> &Op) {
++          return Op.first != L;
++        });
++    std::stable_partition(I, GroupEnd,
++                          [](const std::pair<const Loop *, const SCEV *> &Op) {
++                            return !isa<SCEVPowerOfTwoExpr>(Op.second);
++                          });
++    I = GroupEnd;
++  }
++
+   // Emit instructions to mul all the operands. Hoist as much as possible
+   // out of loops.
+   Value *Prod = nullptr;
+@@ -690,6 +710,25 @@ Value *SCEVExpander::visitMulExpr(SCEVUseT<const SCEVMulExpr *> S) {
+       Prod = InsertBinop(Instruction::Sub, Constant::getNullValue(Ty), Prod,
+                          SCEV::FlagAnyWrap, /*IsSafeToHoist*/ true);
+       ++I;
++    } else if (const auto *P = dyn_cast<SCEVPowerOfTwoExpr>(I->second);
++               P &&
++               (std::next(I) == OpsAndLoops.end() || *std::next(I) != *I)) {
++      // Canonicalize Prod*(2^V) to Prod<<V, as in the constant case below.
++      // This recovers the shift the expression was created from, instead of
++      // materializing the power of two and multiplying by it.
++      assert(!Ty->isVectorTy() && "vector types are not SCEVable");
++      Value *Amt = expand(P->getOperand());
++      auto NWFlags = S.getNoWrapFlags();
++      // As in the constant case below, nsw only carries over if the shift
++      // cannot be by bitwidth - 1, where the multiplier 2^V is negative and
++      // the two flags stop meaning the same thing.
++      if (!SE.getUnsignedRange(P->getOperand())
++               .getUnsignedMax()
++               .ult(Ty->getScalarSizeInBits() - 1))
++        NWFlags = ScalarEvolution::clearFlags(NWFlags, SCEV::FlagNSW);
++      Prod = InsertBinop(Instruction::Shl, Prod, Amt, NWFlags,
++                         /*IsSafeToHoist*/ true);
++      ++I;
+     } else {
+       // A simple mul.
+       Value *W = ExpandOpBinPowN();
+@@ -1614,6 +1653,15 @@ Value *SCEVExpander::visitVScale(SCEVUseT<const SCEVVScale *> S) {
+   return Builder.CreateVScale(S->getType());
+ }
+ 
++Value *
++SCEVExpander::visitPowerOfTwoExpr(SCEVUseT<const SCEVPowerOfTwoExpr *> S) {
++  Value *V = expand(S->getOperand());
++  Type *Ty = S->getType();
++  // 2^V is the shift that the expression was created from, so it is poison for
++  // the same shift amounts as the original code.
++  return Builder.CreateShl(ConstantInt::get(Ty, 1), V);
++}
++
+ Value *SCEVExpander::expandCodeFor(SCEVUse SH, Type *Ty,
+                                    BasicBlock::iterator IP) {
+   setInsertPoint(IP);
+@@ -2086,6 +2134,10 @@ template<typename T> static InstructionCost costAndCollectOperands(
+   case scConstant:
+   case scVScale:
+     return 0;
++  case scPowerOfTwo:
++    // Expanded as `shl 1, Op`.
++    Cost = ArithCost(Instruction::Shl, 1);
++    break;
+   case scPtrToAddr:
+     Cost = CastCost(Instruction::PtrToAddr);
+     break;
+@@ -2119,13 +2171,22 @@ template<typename T> static InstructionCost costAndCollectOperands(
+     // Bin Pow algorithm actually used by the expander, see
+     // SCEVExpander::visitMulExpr(), ExpandOpBinPowN().
+     unsigned OpCode = Instruction::Mul;
+-    if (S->getNumOperands() == 2)
+-      if (auto *SC = dyn_cast<SCEVConstant>(S->getOperand(0))) {
++    if (S->getNumOperands() == 2) {
++      // A lone power-of-two operand is folded into a shift of the other one.
++      // Charging Shl here is what tells isHighCostExpansionHelper that the
++      // operand has already been paid for, so the two must agree: it treats a
++      // power of two reached through a Shl as free. Two of them stay on the Mul
++      // path below, where they are costed individually.
++      if (count_if(S->operands(),
++                   [](SCEVUse Op) { return isa<SCEVPowerOfTwoExpr>(Op); }) == 1)
++        OpCode = Instruction::Shl;
++      else if (auto *SC = dyn_cast<SCEVConstant>(S->getOperand(0))) {
+         if (SC->getAPInt().isAllOnes()) // -1
+           OpCode = Instruction::Sub;
+         else if (SC->getAPInt().isPowerOf2())
+           OpCode = Instruction::Shl;
+       }
++    }
+     Cost = ArithCost(OpCode, S->getNumOperands() - 1);
+     break;
+   }
+@@ -2230,6 +2291,19 @@ bool SCEVExpander::isHighCostExpansionHelper(
+         costAndCollectOperands<SCEVCastExpr>(WorkItem, TTI, CostKind, Worklist);
+     return false; // Will answer upon next entry into this function.
+   }
++  case scPowerOfTwo: {
++    // A power of two reached through a shift is one that the enclosing
++    // multiply folded into that shift, which has already been costed. Only
++    // the shift amount is left to expand.
++    if (WorkItem.ParentOpcode == Instruction::Shl) {
++      Worklist.emplace_back(Instruction::Shl, 1,
++                            cast<SCEVPowerOfTwoExpr>(S)->getOperand());
++      return false;
++    }
++    Cost += costAndCollectOperands<SCEVPowerOfTwoExpr>(WorkItem, TTI, CostKind,
++                                                       Worklist);
++    return false; // Will answer upon next entry into this function.
++  }
+   case scUDivExpr: {
+     // UDivExpr is very likely a UDiv that ScalarEvolution's HowFarToZero or
+     // HowManyLessThans produced to compute a precise expression, rather than a
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp b/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
+index 880c3a1f57e68..8c355a4d0426f 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
+@@ -883,6 +883,15 @@ VPValue *VPSCEVExpander::expand(const SCEV *S) {
+     return Builder.getPlan().getOrAddLiveIn(cast<SCEVUnknown>(S)->getValue());
+   case scVScale:
+     return Builder.createVScale(S->getType(), DL);
++  case scPowerOfTwo: {
++    // Expanded as `shl 1, Op`, matching SCEVExpander.
++    auto *P = cast<SCEVPowerOfTwoExpr>(S);
++    Type *Ty = P->getType();
++    VPValue *Amt = expand(P->getOperand());
++    return Builder.createNaryOp(
++        Instruction::Shl, {Builder.getPlan().getConstantInt(Ty, 1), Amt},
++        VPIRFlags::getDefaultFlags(Instruction::Shl), DL);
++  }
+   case scAddExpr: {
+     auto *AddE = cast<SCEVAddExpr>(S);
+     VPIRFlags::WrapFlagsTy WrapFlags(AddE->hasNoUnsignedWrap(),
+diff --git a/llvm/test/Analysis/Delinearization/byte_offset.ll b/llvm/test/Analysis/Delinearization/byte_offset.ll
+index 743dcfcca6400..5893435d114e6 100644
+--- a/llvm/test/Analysis/Delinearization/byte_offset.ll
++++ b/llvm/test/Analysis/Delinearization/byte_offset.ll
+@@ -6,11 +6,11 @@
+ ;     char *tmp = &A[i * i2];
+ ;     if (c)
+ ;       while (1)
+-;          *((float*)&tmp[arg << arg]) = 0;
++;          *((float*)&tmp[unknown()]) = 0;
+ ;   }
+ ; }
+ 
+-define void @foo(ptr %A, i64 %i2, i64 %arg, i1 %c) {
++define void @foo(ptr %A, i64 %i2, i1 %c) {
+ ; CHECK-LABEL: 'foo'
+ ; CHECK-NEXT:  Inst: store float 0.000000e+00, ptr %arrayidx, align 4
+ ; CHECK-NEXT:  AccessFunction: ({0,+,%i2}<%outer.loop> + %unknown)
+@@ -26,7 +26,9 @@ outer.loop:
+   br i1 %c, label %inner.preheader, label %outer.latch
+ 
+ inner.preheader:
+-  %unknown = shl i64 %arg, %arg
++  ; The offset must be opaque to SCEV for this test to exercise
++  ; delinearization of an unknown addend.
++  %unknown = call i64 @unknown()
+   %arrayidx = getelementptr inbounds i8, ptr %tmp, i64 %unknown
+   br label %inner.loop
+ 
+@@ -38,3 +40,5 @@ outer.latch:
+   %outer.iv.next = add nuw nsw i64 %outer.iv, 1
+   br label %outer.loop
+ }
++
++declare i64 @unknown()
+diff --git a/llvm/test/Analysis/LoopAccessAnalysis/non-constant-strides-backward.ll b/llvm/test/Analysis/LoopAccessAnalysis/non-constant-strides-backward.ll
+index 76e2d30dcdc25..e88ae3d69ef7c 100644
+--- a/llvm/test/Analysis/LoopAccessAnalysis/non-constant-strides-backward.ll
++++ b/llvm/test/Analysis/LoopAccessAnalysis/non-constant-strides-backward.ll
+@@ -229,14 +229,15 @@ exit:
+ define void @different_non_constant_strides_known_backward_via_assume(ptr %A, i64 %scale) {
+ ; CHECK-LABEL: 'different_non_constant_strides_known_backward_via_assume'
+ ; CHECK-NEXT:    loop:
+-; CHECK-NEXT:      Report: cannot identify array bounds
++; CHECK-NEXT:      Report: unsafe dependent memory operations in loop. Use #pragma clang loop distribute(enable) to allow loop distribution to attempt to isolate the offending operations into a separate loop
++; CHECK-NEXT:  Unsafe indirect dependence.
+ ; CHECK-NEXT:      Dependences:
++; CHECK-NEXT:        IndirectUnsafe:
++; CHECK-NEXT:            %l = load i32, ptr %gep, align 4 ->
++; CHECK-NEXT:            store i32 %add, ptr %gep.mul.2, align 4
++; CHECK-EMPTY:
+ ; CHECK-NEXT:      Run-time memory checks:
+ ; CHECK-NEXT:      Grouped accesses:
+-; CHECK-NEXT:        Group GRP0:
+-; CHECK-NEXT:          (Low: %A High: (1024 + %A))
+-; CHECK-NEXT:            Member: {%A,+,4}<nuw><%loop>
+-; CHECK-NEXT:      Generated run-time checks are incomplete
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
+ ; CHECK-NEXT:      SCEV assumptions:
+@@ -267,14 +268,15 @@ exit:
+ define void @different_non_constant_strides_known_backward_via_assume_distance_larger_than_trip_count(ptr %A, i64 %scale) {
+ ; CHECK-LABEL: 'different_non_constant_strides_known_backward_via_assume_distance_larger_than_trip_count'
+ ; CHECK-NEXT:    loop:
+-; CHECK-NEXT:      Report: cannot identify array bounds
++; CHECK-NEXT:      Report: unsafe dependent memory operations in loop. Use #pragma clang loop distribute(enable) to allow loop distribution to attempt to isolate the offending operations into a separate loop
++; CHECK-NEXT:  Unsafe indirect dependence.
+ ; CHECK-NEXT:      Dependences:
++; CHECK-NEXT:        IndirectUnsafe:
++; CHECK-NEXT:            %l = load i32, ptr %gep, align 4 ->
++; CHECK-NEXT:            store i32 %add, ptr %gep.mul.2, align 4
++; CHECK-EMPTY:
+ ; CHECK-NEXT:      Run-time memory checks:
+ ; CHECK-NEXT:      Grouped accesses:
+-; CHECK-NEXT:        Group GRP0:
+-; CHECK-NEXT:          (Low: %A High: (1024 + %A)<nuw>)
+-; CHECK-NEXT:            Member: {%A,+,4}<nuw><%loop>
+-; CHECK-NEXT:      Generated run-time checks are incomplete
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
+ ; CHECK-NEXT:      SCEV assumptions:
+@@ -306,14 +308,15 @@ exit:
+ define void @different_non_constant_strides_known_backward_via_assume_min_distance_3(ptr %A, i64 %scale) {
+ ; CHECK-LABEL: 'different_non_constant_strides_known_backward_via_assume_min_distance_3'
+ ; CHECK-NEXT:    loop:
+-; CHECK-NEXT:      Report: cannot identify array bounds
++; CHECK-NEXT:      Report: unsafe dependent memory operations in loop. Use #pragma clang loop distribute(enable) to allow loop distribution to attempt to isolate the offending operations into a separate loop
++; CHECK-NEXT:  Unsafe indirect dependence.
+ ; CHECK-NEXT:      Dependences:
++; CHECK-NEXT:        IndirectUnsafe:
++; CHECK-NEXT:            %l = load i32, ptr %gep, align 4 ->
++; CHECK-NEXT:            store i32 %add, ptr %gep.mul.2, align 4
++; CHECK-EMPTY:
+ ; CHECK-NEXT:      Run-time memory checks:
+ ; CHECK-NEXT:      Grouped accesses:
+-; CHECK-NEXT:        Group GRP0:
+-; CHECK-NEXT:          (Low: %A High: (1024 + %A))
+-; CHECK-NEXT:            Member: {%A,+,4}<nuw><%loop>
+-; CHECK-NEXT:      Generated run-time checks are incomplete
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
+ ; CHECK-NEXT:      SCEV assumptions:
+@@ -345,14 +348,15 @@ exit:
+ define void @different_non_constant_strides_not_known_backward(ptr %A, i64 %scale) {
+ ; CHECK-LABEL: 'different_non_constant_strides_not_known_backward'
+ ; CHECK-NEXT:    loop:
+-; CHECK-NEXT:      Report: cannot identify array bounds
++; CHECK-NEXT:      Report: unsafe dependent memory operations in loop. Use #pragma clang loop distribute(enable) to allow loop distribution to attempt to isolate the offending operations into a separate loop
++; CHECK-NEXT:  Unsafe indirect dependence.
+ ; CHECK-NEXT:      Dependences:
++; CHECK-NEXT:        IndirectUnsafe:
++; CHECK-NEXT:            %l = load i32, ptr %gep, align 4 ->
++; CHECK-NEXT:            store i32 %add, ptr %gep.mul.2, align 4
++; CHECK-EMPTY:
+ ; CHECK-NEXT:      Run-time memory checks:
+ ; CHECK-NEXT:      Grouped accesses:
+-; CHECK-NEXT:        Group GRP0:
+-; CHECK-NEXT:          (Low: %A High: (1024 + %A))
+-; CHECK-NEXT:            Member: {%A,+,4}<nuw><%loop>
+-; CHECK-NEXT:      Generated run-time checks are incomplete
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
+ ; CHECK-NEXT:      SCEV assumptions:
+diff --git a/llvm/test/Analysis/LoopAccessAnalysis/non-constant-strides-forward.ll b/llvm/test/Analysis/LoopAccessAnalysis/non-constant-strides-forward.ll
+index 9e0a1e3a03dde..3a5ae2a7c8385 100644
+--- a/llvm/test/Analysis/LoopAccessAnalysis/non-constant-strides-forward.ll
++++ b/llvm/test/Analysis/LoopAccessAnalysis/non-constant-strides-forward.ll
+@@ -81,14 +81,15 @@ exit:
+ define void @different_non_constant_strides_known_forward_via_assume(ptr %A, i64 %scale) {
+ ; CHECK-LABEL: 'different_non_constant_strides_known_forward_via_assume'
+ ; CHECK-NEXT:    loop:
+-; CHECK-NEXT:      Report: cannot identify array bounds
++; CHECK-NEXT:      Report: unsafe dependent memory operations in loop. Use #pragma clang loop distribute(enable) to allow loop distribution to attempt to isolate the offending operations into a separate loop
++; CHECK-NEXT:  Unsafe indirect dependence.
+ ; CHECK-NEXT:      Dependences:
++; CHECK-NEXT:        IndirectUnsafe:
++; CHECK-NEXT:            %l = load i32, ptr %gep.mul.2, align 4 ->
++; CHECK-NEXT:            store i32 %add, ptr %gep, align 4
++; CHECK-EMPTY:
+ ; CHECK-NEXT:      Run-time memory checks:
+ ; CHECK-NEXT:      Grouped accesses:
+-; CHECK-NEXT:        Group GRP0:
+-; CHECK-NEXT:          (Low: %A High: (1024 + %A))
+-; CHECK-NEXT:            Member: {%A,+,4}<nuw><%loop>
+-; CHECK-NEXT:      Generated run-time checks are incomplete
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
+ ; CHECK-NEXT:      SCEV assumptions:
+@@ -119,14 +120,15 @@ exit:
+ define void @different_non_constant_strides_known_forward_via_assume_min_distance_3(ptr %A, i64 %scale) {
+ ; CHECK-LABEL: 'different_non_constant_strides_known_forward_via_assume_min_distance_3'
+ ; CHECK-NEXT:    loop:
+-; CHECK-NEXT:      Report: cannot identify array bounds
++; CHECK-NEXT:      Report: unsafe dependent memory operations in loop. Use #pragma clang loop distribute(enable) to allow loop distribution to attempt to isolate the offending operations into a separate loop
++; CHECK-NEXT:  Unsafe indirect dependence.
+ ; CHECK-NEXT:      Dependences:
++; CHECK-NEXT:        IndirectUnsafe:
++; CHECK-NEXT:            %l = load i32, ptr %gep.mul.2, align 4 ->
++; CHECK-NEXT:            store i32 %add, ptr %gep, align 4
++; CHECK-EMPTY:
+ ; CHECK-NEXT:      Run-time memory checks:
+ ; CHECK-NEXT:      Grouped accesses:
+-; CHECK-NEXT:        Group GRP0:
+-; CHECK-NEXT:          (Low: %A High: (1024 + %A))
+-; CHECK-NEXT:            Member: {%A,+,4}<nuw><%loop>
+-; CHECK-NEXT:      Generated run-time checks are incomplete
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
+ ; CHECK-NEXT:      SCEV assumptions:
+@@ -158,14 +160,15 @@ exit:
+ define void @different_non_constant_strides_not_known_forward(ptr %A, i64 %scale) {
+ ; CHECK-LABEL: 'different_non_constant_strides_not_known_forward'
+ ; CHECK-NEXT:    loop:
+-; CHECK-NEXT:      Report: cannot identify array bounds
++; CHECK-NEXT:      Report: unsafe dependent memory operations in loop. Use #pragma clang loop distribute(enable) to allow loop distribution to attempt to isolate the offending operations into a separate loop
++; CHECK-NEXT:  Unsafe indirect dependence.
+ ; CHECK-NEXT:      Dependences:
++; CHECK-NEXT:        IndirectUnsafe:
++; CHECK-NEXT:            %l = load i32, ptr %gep.mul.2, align 4 ->
++; CHECK-NEXT:            store i32 %add, ptr %gep, align 4
++; CHECK-EMPTY:
+ ; CHECK-NEXT:      Run-time memory checks:
+ ; CHECK-NEXT:      Grouped accesses:
+-; CHECK-NEXT:        Group GRP0:
+-; CHECK-NEXT:          (Low: %A High: (1024 + %A))
+-; CHECK-NEXT:            Member: {%A,+,4}<nuw><%loop>
+-; CHECK-NEXT:      Generated run-time checks are incomplete
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
+ ; CHECK-NEXT:      SCEV assumptions:
+diff --git a/llvm/test/Analysis/ScalarEvolution/extract-highbits-variablemask.ll b/llvm/test/Analysis/ScalarEvolution/extract-highbits-variablemask.ll
+index 8461167891e76..b974faf93a532 100644
+--- a/llvm/test/Analysis/ScalarEvolution/extract-highbits-variablemask.ll
++++ b/llvm/test/Analysis/ScalarEvolution/extract-highbits-variablemask.ll
+@@ -40,7 +40,7 @@ define i32 @mask_b(i32 %val, i32 %numlowbits) nounwind {
+ ; CHECK-LABEL: 'mask_b'
+ ; CHECK-NEXT:  Classifying expressions for: @mask_b
+ ; CHECK-NEXT:    %mask = shl i32 -1, %numlowbits
+-; CHECK-NEXT:    --> %mask U: [-2147483648,0) S: [-2147483648,0)
++; CHECK-NEXT:    --> (-1 * (2 ^ %numlowbits)) U: [-2147483648,0) S: [-2147483648,0)
+ ; CHECK-NEXT:    %masked = and i32 %mask, %val
+ ; CHECK-NEXT:    --> %masked U: full-set S: full-set
+ ; CHECK-NEXT:  Determining loop execution counts for: @mask_b
+@@ -58,7 +58,7 @@ define i32 @mask_d(i32 %val, i32 %lowbits) nounwind {
+ ; CHECK-NEXT:    %lowbitscleared = lshr i32 %val, %numlowbits
+ ; CHECK-NEXT:    --> %lowbitscleared U: full-set S: full-set
+ ; CHECK-NEXT:    %masked = shl i32 %lowbitscleared, %numlowbits
+-; CHECK-NEXT:    --> %masked U: full-set S: full-set
++; CHECK-NEXT:    --> ((2 ^ (32 + (-1 * %lowbits))) * %lowbitscleared) U: full-set S: full-set
+ ; CHECK-NEXT:  Determining loop execution counts for: @mask_d
+ ;
+   %numlowbits = sub i32 32, %lowbits
+diff --git a/llvm/test/Analysis/ScalarEvolution/extract-lowbits-variablemask.ll b/llvm/test/Analysis/ScalarEvolution/extract-lowbits-variablemask.ll
+index 8ff829fe0e0e2..e72be57591460 100644
+--- a/llvm/test/Analysis/ScalarEvolution/extract-lowbits-variablemask.ll
++++ b/llvm/test/Analysis/ScalarEvolution/extract-lowbits-variablemask.ll
+@@ -28,9 +28,9 @@ define i32 @mask_a(i32 %val, i32 %numlowbits) nounwind {
+ ; CHECK-LABEL: 'mask_a'
+ ; CHECK-NEXT:  Classifying expressions for: @mask_a
+ ; CHECK-NEXT:    %onebit = shl i32 1, %numlowbits
+-; CHECK-NEXT:    --> %onebit U: full-set S: full-set
++; CHECK-NEXT:    --> (2 ^ %numlowbits) U: [1,-2147483647) S: [1,-2147483647)
+ ; CHECK-NEXT:    %mask = add nsw i32 %onebit, -1
+-; CHECK-NEXT:    --> (-1 + %onebit) U: full-set S: full-set
++; CHECK-NEXT:    --> (-1 + (2 ^ %numlowbits)) U: [0,-2147483648) S: [0,-2147483648)
+ ; CHECK-NEXT:    %masked = and i32 %mask, %val
+ ; CHECK-NEXT:    --> %masked U: full-set S: full-set
+ ; CHECK-NEXT:  Determining loop execution counts for: @mask_a
+@@ -45,9 +45,9 @@ define i32 @mask_b(i32 %val, i32 %numlowbits) nounwind {
+ ; CHECK-LABEL: 'mask_b'
+ ; CHECK-NEXT:  Classifying expressions for: @mask_b
+ ; CHECK-NEXT:    %notmask = shl i32 -1, %numlowbits
+-; CHECK-NEXT:    --> %notmask U: [-2147483648,0) S: [-2147483648,0)
++; CHECK-NEXT:    --> (-1 * (2 ^ %numlowbits)) U: [-2147483648,0) S: [-2147483648,0)
+ ; CHECK-NEXT:    %mask = xor i32 %notmask, -1
+-; CHECK-NEXT:    --> (-1 + (-1 * %notmask)) U: [0,-2147483648) S: [0,-2147483648)
++; CHECK-NEXT:    --> (-1 + (2 ^ %numlowbits)) U: [0,-2147483648) S: [0,-2147483648)
+ ; CHECK-NEXT:    %masked = and i32 %mask, %val
+ ; CHECK-NEXT:    --> %masked U: [0,-2147483648) S: [0,-2147483648)
+ ; CHECK-NEXT:  Determining loop execution counts for: @mask_b
+@@ -81,7 +81,7 @@ define i32 @mask_d(i32 %val, i32 %numlowbits) nounwind {
+ ; CHECK-NEXT:    %numhighbits = sub i32 32, %numlowbits
+ ; CHECK-NEXT:    --> (32 + (-1 * %numlowbits)) U: full-set S: full-set
+ ; CHECK-NEXT:    %highbitscleared = shl i32 %val, %numhighbits
+-; CHECK-NEXT:    --> %highbitscleared U: full-set S: full-set
++; CHECK-NEXT:    --> ((2 ^ (32 + (-1 * %numlowbits))) * %val) U: full-set S: full-set
+ ; CHECK-NEXT:    %masked = lshr i32 %highbitscleared, %numhighbits
+ ; CHECK-NEXT:    --> %masked U: full-set S: full-set
+ ; CHECK-NEXT:  Determining loop execution counts for: @mask_d
+diff --git a/llvm/test/Analysis/ScalarEvolution/shift-recurrences.ll b/llvm/test/Analysis/ScalarEvolution/shift-recurrences.ll
+index c4303604e9bea..33f1c8e491c71 100644
+--- a/llvm/test/Analysis/ScalarEvolution/shift-recurrences.ll
++++ b/llvm/test/Analysis/ScalarEvolution/shift-recurrences.ll
+@@ -229,7 +229,7 @@ define void @test_shl3(i1 %c) {
+ ; CHECK-NEXT:    %iv.next = add i64 %iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,6) S: [1,6) Exits: 5 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.shl.next = shl i64 %iv.shl, %shiftamt
+-; CHECK-NEXT:    --> %iv.shl.next U: [0,-3) S: [-9223372036854775808,9223372036854775805) Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
++; CHECK-NEXT:    --> ((2 ^ %shiftamt) * %iv.shl) U: [4,129) S: [4,129) Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_shl3
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is i64 4
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 4
+@@ -325,7 +325,7 @@ define void @test_shl6(i1 %c) {
+ ; CHECK-NEXT:    %shiftamt = and i64 %iv, 1
+ ; CHECK-NEXT:    --> (zext i1 {false,+,true}<%loop> to i64) U: [0,2) S: [0,2) Exits: 0 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.shl.next = shl i64 %iv.shl, %shiftamt
+-; CHECK-NEXT:    --> %iv.shl.next U: [0,-3) S: [-9223372036854775808,9223372036854775805) Exits: 16 LoopDispositions: { %loop: Variant }
++; CHECK-NEXT:    --> ((2 ^ (zext i1 {false,+,true}<%loop> to i64)) * %iv.shl) U: [4,129) S: [4,129) Exits: 16 LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_shl6
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is i64 4
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 4
+@@ -357,7 +357,7 @@ define void @test_shl7(i1 %c, i64 %shiftamt) {
+ ; CHECK-NEXT:    %iv.next = add i64 %iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,6) S: [1,6) Exits: 5 LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.shl.next = shl i64 %iv.shl, %shiftamt
+-; CHECK-NEXT:    --> %iv.shl.next U: [0,-3) S: [-9223372036854775808,9223372036854775805) Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
++; CHECK-NEXT:    --> ((2 ^ %shiftamt) * %iv.shl) U: [0,-3) S: [-9223372036854775808,9223372036854775805) Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_shl7
+ ; CHECK-NEXT:  Loop %loop: backedge-taken count is i64 4
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 4
+diff --git a/llvm/test/Analysis/ScalarEvolution/shl-by-variable-amount.ll b/llvm/test/Analysis/ScalarEvolution/shl-by-variable-amount.ll
+new file mode 100644
+index 0000000000000..d937c71333ca2
+--- /dev/null
++++ b/llvm/test/Analysis/ScalarEvolution/shl-by-variable-amount.ll
+@@ -0,0 +1,207 @@
++; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -disable-output "-passes=print<scalar-evolution>" < %s 2>&1 | FileCheck %s
++
++; A shift left by a variable amount is modelled as a multiply by a power of
++; two, so that expressions differing only by a constant factor stay
++; comparable. Previously such a shift produced an opaque SCEVUnknown.
++
++define void @shl_by_variable(i32 %x, i32 %v) {
++; CHECK-LABEL: 'shl_by_variable'
++; CHECK-NEXT:  Classifying expressions for: @shl_by_variable
++; CHECK-NEXT:    %shl = shl i32 %x, %v
++; CHECK-NEXT:    --> ((2 ^ %v) * %x) U: full-set S: full-set
++; CHECK-NEXT:  Determining loop execution counts for: @shl_by_variable
++;
++  %shl = shl i32 %x, %v
++  ret void
++}
++
++; `C << V` and `C * (1 << V)` must produce the same expression. Instcombine
++; canonicalizes the latter into the former, so without modelling the shift the
++; two forms are opaque and unrelated.
++define void @shl_and_mul_agree(i32 %v) {
++; CHECK-LABEL: 'shl_and_mul_agree'
++; CHECK-NEXT:  Classifying expressions for: @shl_and_mul_agree
++; CHECK-NEXT:    %one.shl = shl i32 1, %v
++; CHECK-NEXT:    --> (2 ^ %v) U: [1,-2147483647) S: [1,-2147483647)
++; CHECK-NEXT:    %mul = mul i32 5, %one.shl
++; CHECK-NEXT:    --> (5 * (2 ^ %v)) U: full-set S: full-set
++; CHECK-NEXT:    %shl = shl i32 5, %v
++; CHECK-NEXT:    --> (5 * (2 ^ %v)) U: full-set S: full-set
++; CHECK-NEXT:  Determining loop execution counts for: @shl_and_mul_agree
++;
++  %one.shl = shl i32 1, %v
++  %mul = mul i32 5, %one.shl
++  %shl = shl i32 5, %v
++  ret void
++}
++
++; Unlike a use-list based approach, no `1 << V` needs to exist in the IR, and
++; the shift amount does not need to be an instruction.
++define void @shl_amount_is_argument(i32 %v) {
++; CHECK-LABEL: 'shl_amount_is_argument'
++; CHECK-NEXT:  Classifying expressions for: @shl_amount_is_argument
++; CHECK-NEXT:    %shl = shl i32 3, %v
++; CHECK-NEXT:    --> (3 * (2 ^ %v)) U: full-set S: full-set
++; CHECK-NEXT:  Determining loop execution counts for: @shl_amount_is_argument
++;
++  %shl = shl i32 3, %v
++  ret void
++}
++
++; The two shifts differ by a constant factor, so their difference folds to
++; (2 ^ %v) instead of staying an opaque ((-1 * %a) + %b).
++define i32 @shl_difference(i32 %v) {
++; CHECK-LABEL: 'shl_difference'
++; CHECK-NEXT:  Classifying expressions for: @shl_difference
++; CHECK-NEXT:    %a = shl i32 3, %v
++; CHECK-NEXT:    --> (3 * (2 ^ %v)) U: full-set S: full-set
++; CHECK-NEXT:    %b = shl i32 4, %v
++; CHECK-NEXT:    --> (4 * (2 ^ %v)) U: [0,-3) S: [-2147483648,2147483645)
++; CHECK-NEXT:    %sub = sub i32 %b, %a
++; CHECK-NEXT:    --> (2 ^ %v) U: [1,-2147483647) S: [1,-2147483647)
++; CHECK-NEXT:  Determining loop execution counts for: @shl_difference
++;
++  %a = shl i32 3, %v
++  %b = shl i32 4, %v
++  %sub = sub i32 %b, %a
++  ret i32 %sub
++}
++
++; Branching on the result makes poison immediate UB, which is what lets the
++; no-wrap flags reach the SCEV at all.
++
++; A nuw shift is a nuw multiply.
++define void @shl_nuw(i32 %x, i32 %v) {
++; CHECK-LABEL: 'shl_nuw'
++; CHECK-NEXT:  Classifying expressions for: @shl_nuw
++; CHECK-NEXT:    %shl = shl nuw i32 %x, %v
++; CHECK-NEXT:    --> ((2 ^ %v) * %x)<nuw> U: full-set S: full-set
++; CHECK-NEXT:  Determining loop execution counts for: @shl_nuw
++;
++  %shl = shl nuw i32 %x, %v
++  %c = icmp eq i32 %shl, 0
++  br i1 %c, label %t, label %f
++t:
++  ret void
++f:
++  ret void
++}
++
++; `nsw` on its own cannot be preserved for an unknown amount, because that
++; would require knowing the amount is not bitwidth - 1.
++define void @shl_nsw_alone(i32 %x, i32 %v) {
++; CHECK-LABEL: 'shl_nsw_alone'
++; CHECK-NEXT:  Classifying expressions for: @shl_nsw_alone
++; CHECK-NEXT:    %shl = shl nsw i32 %x, %v
++; CHECK-NEXT:    --> ((2 ^ %v) * %x) U: full-set S: full-set
++; CHECK-NEXT:  Determining loop execution counts for: @shl_nsw_alone
++;
++  %shl = shl nsw i32 %x, %v
++  %c = icmp eq i32 %shl, 0
++  br i1 %c, label %t, label %f
++t:
++  ret void
++f:
++  ret void
++}
++
++; `nsw` alone is preserved once the amount is known to be small enough that the
++; multiplier 2^V stays positive.
++define void @shl_nsw_small_amount(i32 %x, i32 %v) {
++; CHECK-LABEL: 'shl_nsw_small_amount'
++; CHECK-NEXT:  Classifying expressions for: @shl_nsw_small_amount
++; CHECK-NEXT:    %amt = and i32 %v, 7
++; CHECK-NEXT:    --> (zext i3 (trunc i32 %v to i3) to i32) U: [0,8) S: [0,8)
++; CHECK-NEXT:    %shl = shl nsw i32 %x, %amt
++; CHECK-NEXT:    --> ((2 ^ (zext i3 (trunc i32 %v to i3) to i32)) * %x)<nsw> U: full-set S: full-set
++; CHECK-NEXT:  Determining loop execution counts for: @shl_nsw_small_amount
++;
++  %amt = and i32 %v, 7
++  %shl = shl nsw i32 %x, %amt
++  %c = icmp eq i32 %shl, 0
++  br i1 %c, label %t, label %f
++t:
++  ret void
++f:
++  ret void
++}
++
++; With nuw present, nsw can be preserved as well.
++define void @shl_nuw_nsw(i32 %x, i32 %v) {
++; CHECK-LABEL: 'shl_nuw_nsw'
++; CHECK-NEXT:  Classifying expressions for: @shl_nuw_nsw
++; CHECK-NEXT:    %shl = shl nuw nsw i32 %x, %v
++; CHECK-NEXT:    --> ((2 ^ %v) * %x)<nuw><nsw> U: full-set S: full-set
++; CHECK-NEXT:  Determining loop execution counts for: @shl_nuw_nsw
++;
++  %shl = shl nuw nsw i32 %x, %v
++  %c = icmp eq i32 %shl, 0
++  br i1 %c, label %t, label %f
++t:
++  ret void
++f:
++  ret void
++}
++
++; A constant shift amount is still folded to a constant multiply by the
++; pre-existing path, not via a power-of-two expression.
++define void @shl_by_constant(i32 %x) {
++; CHECK-LABEL: 'shl_by_constant'
++; CHECK-NEXT:  Classifying expressions for: @shl_by_constant
++; CHECK-NEXT:    %shl = shl i32 %x, 3
++; CHECK-NEXT:    --> (8 * %x) U: [0,-7) S: [-2147483648,2147483641)
++; CHECK-NEXT:  Determining loop execution counts for: @shl_by_constant
++;
++  %shl = shl i32 %x, 3
++  ret void
++}
++
++; An amount that is not a literal but folds to a constant that is not less than
++; the bit width must stay poison. Refining it to a value here would contradict
++; the range reported for the same expression, which assumes the amount is in
++; range.
++define void @shl_amount_folds_out_of_range(i32 %x) {
++; CHECK-LABEL: 'shl_amount_folds_out_of_range'
++; CHECK-NEXT:  Classifying expressions for: @shl_amount_folds_out_of_range
++; CHECK-NEXT:    %amt = udiv i32 400, 10
++; CHECK-NEXT:    --> 40 U: [40,41) S: [40,41)
++; CHECK-NEXT:    %shl = shl i32 %x, %amt
++; CHECK-NEXT:    --> (poison * %x) U: full-set S: full-set
++; CHECK-NEXT:  Determining loop execution counts for: @shl_amount_folds_out_of_range
++;
++  %amt = udiv i32 400, 10
++  %shl = shl i32 %x, %amt
++  ret void
++}
++
++; The same case reached by substituting the exit value of the amount. The range
++; and the exit value below must not disagree about whether the result is zero.
++define i32 @shl_exit_value_out_of_range() {
++; CHECK-LABEL: 'shl_exit_value_out_of_range'
++; CHECK-NEXT:  Classifying expressions for: @shl_exit_value_out_of_range
++; CHECK-NEXT:    %iv = phi i32 [ 0, %entry ], [ %iv.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,40) S: [0,40) Exits: 39 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %shl = shl i32 1, %iv
++; CHECK-NEXT:    --> (2 ^ {0,+,1}<nuw><nsw><%loop>) U: [1,-2147483647) S: [1,-2147483647) Exits: poison LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %iv.next = add nuw nsw i32 %iv, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,41) S: [1,41) Exits: 40 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @shl_exit_value_out_of_range
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i32 39
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 39
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 39
++; CHECK-NEXT:  Loop %loop: Trip multiple is 40
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i32 [ 0, %entry ], [ %iv.next, %loop ]
++  %shl = shl i32 1, %iv
++  %iv.next = add nuw nsw i32 %iv, 1
++  %c = icmp eq i32 %iv.next, 40
++  br i1 %c, label %exit, label %loop
++
++exit:
++  ret i32 %shl
++}
+diff --git a/llvm/test/Transforms/IndVarSimplify/shl-by-variable-amount.ll b/llvm/test/Transforms/IndVarSimplify/shl-by-variable-amount.ll
+new file mode 100644
+index 0000000000000..8c0d39e40ec4f
+--- /dev/null
++++ b/llvm/test/Transforms/IndVarSimplify/shl-by-variable-amount.ll
+@@ -0,0 +1,31 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=indvars -S < %s | FileCheck %s
++
++; The exit value of %shl is (%n * 2^%v). Expanding a power of two that feeds a
++; multiply must recover the single shift the expression was created from,
++; rather than materializing `shl 1, %v` and multiplying by it.
++
++define i32 @exit_value_of_shift(i32 %n, i32 %v) {
++; CHECK-LABEL: define i32 @exit_value_of_shift(
++; CHECK-SAME: i32 [[N:%.*]], i32 [[V:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    br i1 true, label %[[EXIT:.*]], label %[[LOOP]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = shl i32 [[N]], [[V]]
++; CHECK-NEXT:    ret i32 [[TMP0]]
++;
++entry:
++  br label %loop
++
++loop:
++  %iv = phi i32 [ 0, %entry ], [ %iv.next, %loop ]
++  %shl = shl i32 %iv, %v
++  %iv.next = add nuw nsw i32 %iv, 1
++  %c = icmp ugt i32 %iv.next, %n
++  br i1 %c, label %exit, label %loop
++
++exit:
++  ret i32 %shl
++}
+diff --git a/llvm/test/Transforms/LoopVectorize/induction-step-power-of-two.ll b/llvm/test/Transforms/LoopVectorize/induction-step-power-of-two.ll
+new file mode 100644
+index 0000000000000..c0ecbb0f4e850
+--- /dev/null
++++ b/llvm/test/Transforms/LoopVectorize/induction-step-power-of-two.ll
+@@ -0,0 +1,76 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=loop-vectorize -force-vector-width=4 -force-vector-interleave=1 -S < %s | FileCheck %s
++
++; The induction step is (2 * (2 ^ %v)), so widening the induction requires
++; expanding a power of two through VPlan. The step already in the IR is reused
++; rather than rebuilt from `shl 1, %v`.
++
++define void @induction_step_is_power_of_two(ptr %p, i64 %v, i64 %n) {
++; CHECK-LABEL: define void @induction_step_is_power_of_two(
++; CHECK-SAME: ptr [[P:%.*]], i64 [[V:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[STEP:%.*]] = shl i64 2, [[V]]
++; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[N]], 4
++; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label %[[SCALAR_PH:.*]], label %[[VECTOR_PH:.*]]
++; CHECK:       [[VECTOR_PH]]:
++; CHECK-NEXT:    [[TMP2:%.*]] = and i64 [[N]], 3
++; CHECK-NEXT:    [[N_VEC:%.*]] = sub i64 [[N]], [[TMP2]]
++; CHECK-NEXT:    [[TMP1:%.*]] = mul i64 [[N_VEC]], [[STEP]]
++; CHECK-NEXT:    [[BROADCAST_SPLATINSERT:%.*]] = insertelement <4 x i64> poison, i64 [[STEP]], i64 0
++; CHECK-NEXT:    [[BROADCAST_SPLAT:%.*]] = shufflevector <4 x i64> [[BROADCAST_SPLATINSERT]], <4 x i64> poison, <4 x i32> zeroinitializer
++; CHECK-NEXT:    [[TMP4:%.*]] = mul <4 x i64> <i64 0, i64 1, i64 2, i64 3>, [[BROADCAST_SPLAT]]
++; CHECK-NEXT:    [[TMP5:%.*]] = shl i64 [[STEP]], 2
++; CHECK-NEXT:    [[BROADCAST_SPLATINSERT1:%.*]] = insertelement <4 x i64> poison, i64 [[TMP5]], i64 0
++; CHECK-NEXT:    [[BROADCAST_SPLAT2:%.*]] = shufflevector <4 x i64> [[BROADCAST_SPLATINSERT1]], <4 x i64> poison, <4 x i32> zeroinitializer
++; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
++; CHECK:       [[VECTOR_BODY]]:
++; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[VEC_IND:%.*]] = phi <4 x i64> [ [[TMP4]], %[[VECTOR_PH]] ], [ [[VEC_IND_NEXT:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[TMP6:%.*]] = getelementptr inbounds i64, ptr [[P]], i64 [[INDEX]]
++; CHECK-NEXT:    store <4 x i64> [[VEC_IND]], ptr [[TMP6]], align 8
++; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 4
++; CHECK-NEXT:    [[VEC_IND_NEXT]] = add <4 x i64> [[VEC_IND]], [[BROADCAST_SPLAT2]]
++; CHECK-NEXT:    [[TMP7:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
++; CHECK-NEXT:    br i1 [[TMP7]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP0:![0-9]+]]
++; CHECK:       [[MIDDLE_BLOCK]]:
++; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i64 [[N]], [[N_VEC]]
++; CHECK-NEXT:    br i1 [[CMP_N]], label %[[EXIT:.*]], label %[[SCALAR_PH]]
++; CHECK:       [[SCALAR_PH]]:
++; CHECK-NEXT:    [[BC_RESUME_VAL:%.*]] = phi i64 [ [[N_VEC]], %[[MIDDLE_BLOCK]] ], [ 0, %[[ENTRY]] ]
++; CHECK-NEXT:    [[BC_RESUME_VAL3:%.*]] = phi i64 [ [[TMP1]], %[[MIDDLE_BLOCK]] ], [ 0, %[[ENTRY]] ]
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[BC_RESUME_VAL]], %[[SCALAR_PH]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[IDX:%.*]] = phi i64 [ [[BC_RESUME_VAL3]], %[[SCALAR_PH]] ], [ [[IDX_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i64, ptr [[P]], i64 [[IV]]
++; CHECK-NEXT:    store i64 [[IDX]], ptr [[GEP]], align 8
++; CHECK-NEXT:    [[IDX_NEXT]] = add i64 [[IDX]], [[STEP]]
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 1
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT]], label %[[LOOP]], !llvm.loop [[LOOP3:![0-9]+]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %step = shl i64 2, %v
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %idx = phi i64 [ 0, %entry ], [ %idx.next, %loop ]
++  %gep = getelementptr inbounds i64, ptr %p, i64 %iv
++  store i64 %idx, ptr %gep, align 8
++  %idx.next = add i64 %idx, %step
++  %iv.next = add nuw nsw i64 %iv, 1
++  %c = icmp eq i64 %iv.next, %n
++  br i1 %c, label %exit, label %loop
++
++exit:
++  ret void
++}
++;.
++; CHECK: [[LOOP0]] = distinct !{[[LOOP0]], [[META1:![0-9]+]], [[META2:![0-9]+]]}
++; CHECK: [[META1]] = !{!"llvm.loop.isvectorized", i32 1}
++; CHECK: [[META2]] = !{!"llvm.loop.unroll.runtime.disable"}
++; CHECK: [[LOOP3]] = distinct !{[[LOOP3]], [[META2]], [[META1]]}
++;.
+diff --git a/llvm/test/Transforms/LoopVectorize/reuse-shift-by-variable-amount.ll b/llvm/test/Transforms/LoopVectorize/reuse-shift-by-variable-amount.ll
+new file mode 100644
+index 0000000000000..99cd07ece447c
+--- /dev/null
++++ b/llvm/test/Transforms/LoopVectorize/reuse-shift-by-variable-amount.ll
+@@ -0,0 +1,163 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=loop-vectorize -force-vector-width=4 -force-vector-interleave=1 -S < %s | FileCheck %s
++
++; A shift by a variable amount may be reused for an expression that models it
++; as a multiply by a power of two, because expanding that model emits a shift
++; by the same amount. It may not be reused once the shift has cancelled out of
++; the expression, since what remains expands to something that is not poison.
++;
++; %x and %v are noundef in both tests so that the shift is the only possible
++; source of poison. Without that the poison walk stops at %x, a possibly-poison
++; value absent from the expression, and never judges the shift at all, which
++; would leave these passing while testing nothing.
++
++; %t is ((%x << %v) + %a1 + %a2) - (%x << %v), so its SCEV is (%a1 + %a2) and no
++; power of two survives. %t is the only value with that SCEV, so expanding the
++; induction step tries to reuse it, and must be refused: %t is poison for a
++; large %v where (%a1 + %a2) is not.
++define void @step_where_shift_cancels(ptr %p, i64 noundef %x, i64 noundef %v, i64 %a1, i64 %a2, i64 %n) {
++; CHECK-LABEL: define void @step_where_shift_cancels(
++; CHECK-SAME: ptr [[P:%.*]], i64 noundef [[X:%.*]], i64 noundef [[V:%.*]], i64 [[A1:%.*]], i64 [[A2:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[S:%.*]] = shl i64 [[X]], [[V]]
++; CHECK-NEXT:    [[P1:%.*]] = add i64 [[S]], [[A1]]
++; CHECK-NEXT:    [[P2:%.*]] = add i64 [[P1]], [[A2]]
++; CHECK-NEXT:    [[T:%.*]] = sub i64 [[P2]], [[S]]
++; CHECK-NEXT:    [[TMP0:%.*]] = add i64 [[A2]], [[A1]]
++; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[N]], 4
++; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label %[[SCALAR_PH:.*]], label %[[VECTOR_PH:.*]]
++; CHECK:       [[VECTOR_PH]]:
++; CHECK-NEXT:    [[TMP1:%.*]] = and i64 [[N]], 3
++; CHECK-NEXT:    [[N_VEC:%.*]] = sub i64 [[N]], [[TMP1]]
++; CHECK-NEXT:    [[TMP2:%.*]] = mul i64 [[N_VEC]], [[TMP0]]
++; CHECK-NEXT:    [[BROADCAST_SPLATINSERT:%.*]] = insertelement <4 x i64> poison, i64 [[TMP0]], i64 0
++; CHECK-NEXT:    [[BROADCAST_SPLAT:%.*]] = shufflevector <4 x i64> [[BROADCAST_SPLATINSERT]], <4 x i64> poison, <4 x i32> zeroinitializer
++; CHECK-NEXT:    [[TMP3:%.*]] = mul <4 x i64> <i64 0, i64 1, i64 2, i64 3>, [[BROADCAST_SPLAT]]
++; CHECK-NEXT:    [[TMP4:%.*]] = shl i64 [[TMP0]], 2
++; CHECK-NEXT:    [[BROADCAST_SPLATINSERT1:%.*]] = insertelement <4 x i64> poison, i64 [[TMP4]], i64 0
++; CHECK-NEXT:    [[BROADCAST_SPLAT2:%.*]] = shufflevector <4 x i64> [[BROADCAST_SPLATINSERT1]], <4 x i64> poison, <4 x i32> zeroinitializer
++; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
++; CHECK:       [[VECTOR_BODY]]:
++; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[VEC_IND:%.*]] = phi <4 x i64> [ [[TMP3]], %[[VECTOR_PH]] ], [ [[VEC_IND_NEXT:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[TMP5:%.*]] = getelementptr inbounds i64, ptr [[P]], i64 [[INDEX]]
++; CHECK-NEXT:    store <4 x i64> [[VEC_IND]], ptr [[TMP5]], align 8
++; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 4
++; CHECK-NEXT:    [[VEC_IND_NEXT]] = add <4 x i64> [[VEC_IND]], [[BROADCAST_SPLAT2]]
++; CHECK-NEXT:    [[TMP6:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
++; CHECK-NEXT:    br i1 [[TMP6]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP0:![0-9]+]]
++; CHECK:       [[MIDDLE_BLOCK]]:
++; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i64 [[N]], [[N_VEC]]
++; CHECK-NEXT:    br i1 [[CMP_N]], label %[[EXIT:.*]], label %[[SCALAR_PH]]
++; CHECK:       [[SCALAR_PH]]:
++; CHECK-NEXT:    [[BC_RESUME_VAL:%.*]] = phi i64 [ [[N_VEC]], %[[MIDDLE_BLOCK]] ], [ 0, %[[ENTRY]] ]
++; CHECK-NEXT:    [[BC_RESUME_VAL3:%.*]] = phi i64 [ [[TMP2]], %[[MIDDLE_BLOCK]] ], [ 0, %[[ENTRY]] ]
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[BC_RESUME_VAL]], %[[SCALAR_PH]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[IDX:%.*]] = phi i64 [ [[BC_RESUME_VAL3]], %[[SCALAR_PH]] ], [ [[IDX_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i64, ptr [[P]], i64 [[IV]]
++; CHECK-NEXT:    store i64 [[IDX]], ptr [[GEP]], align 8
++; CHECK-NEXT:    [[IDX_NEXT]] = add i64 [[IDX]], [[T]]
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 1
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT]], label %[[LOOP]], !llvm.loop [[LOOP3:![0-9]+]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %s = shl i64 %x, %v
++  %p1 = add i64 %s, %a1
++  %p2 = add i64 %p1, %a2
++  %t = sub i64 %p2, %s
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %idx = phi i64 [ 0, %entry ], [ %idx.next, %loop ]
++  %gep = getelementptr inbounds i64, ptr %p, i64 %iv
++  store i64 %idx, ptr %gep, align 8
++  %idx.next = add i64 %idx, %t
++  %iv.next = add nuw nsw i64 %iv, 1
++  %c = icmp eq i64 %iv.next, %n
++  br i1 %c, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; The shift survives into the SCEV of %t, so the power of two is present and %t
++; is reused as the step.
++define void @step_where_shift_survives(ptr %p, i64 noundef %x, i64 noundef %v, i64 %a1, i64 %n) {
++; CHECK-LABEL: define void @step_where_shift_survives(
++; CHECK-SAME: ptr [[P:%.*]], i64 noundef [[X:%.*]], i64 noundef [[V:%.*]], i64 [[A1:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[S:%.*]] = shl i64 [[X]], [[V]]
++; CHECK-NEXT:    [[T:%.*]] = add i64 [[S]], [[A1]]
++; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[N]], 4
++; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label %[[SCALAR_PH:.*]], label %[[VECTOR_PH:.*]]
++; CHECK:       [[VECTOR_PH]]:
++; CHECK-NEXT:    [[TMP0:%.*]] = and i64 [[N]], 3
++; CHECK-NEXT:    [[N_VEC:%.*]] = sub i64 [[N]], [[TMP0]]
++; CHECK-NEXT:    [[TMP1:%.*]] = mul i64 [[N_VEC]], [[T]]
++; CHECK-NEXT:    [[BROADCAST_SPLATINSERT:%.*]] = insertelement <4 x i64> poison, i64 [[T]], i64 0
++; CHECK-NEXT:    [[BROADCAST_SPLAT:%.*]] = shufflevector <4 x i64> [[BROADCAST_SPLATINSERT]], <4 x i64> poison, <4 x i32> zeroinitializer
++; CHECK-NEXT:    [[TMP2:%.*]] = mul <4 x i64> <i64 0, i64 1, i64 2, i64 3>, [[BROADCAST_SPLAT]]
++; CHECK-NEXT:    [[TMP3:%.*]] = shl i64 [[T]], 2
++; CHECK-NEXT:    [[BROADCAST_SPLATINSERT1:%.*]] = insertelement <4 x i64> poison, i64 [[TMP3]], i64 0
++; CHECK-NEXT:    [[BROADCAST_SPLAT2:%.*]] = shufflevector <4 x i64> [[BROADCAST_SPLATINSERT1]], <4 x i64> poison, <4 x i32> zeroinitializer
++; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
++; CHECK:       [[VECTOR_BODY]]:
++; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[VEC_IND:%.*]] = phi <4 x i64> [ [[TMP2]], %[[VECTOR_PH]] ], [ [[VEC_IND_NEXT:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[TMP4:%.*]] = getelementptr inbounds i64, ptr [[P]], i64 [[INDEX]]
++; CHECK-NEXT:    store <4 x i64> [[VEC_IND]], ptr [[TMP4]], align 8
++; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 4
++; CHECK-NEXT:    [[VEC_IND_NEXT]] = add <4 x i64> [[VEC_IND]], [[BROADCAST_SPLAT2]]
++; CHECK-NEXT:    [[TMP5:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
++; CHECK-NEXT:    br i1 [[TMP5]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP4:![0-9]+]]
++; CHECK:       [[MIDDLE_BLOCK]]:
++; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i64 [[N]], [[N_VEC]]
++; CHECK-NEXT:    br i1 [[CMP_N]], label %[[EXIT:.*]], label %[[SCALAR_PH]]
++; CHECK:       [[SCALAR_PH]]:
++; CHECK-NEXT:    [[BC_RESUME_VAL:%.*]] = phi i64 [ [[N_VEC]], %[[MIDDLE_BLOCK]] ], [ 0, %[[ENTRY]] ]
++; CHECK-NEXT:    [[BC_RESUME_VAL3:%.*]] = phi i64 [ [[TMP1]], %[[MIDDLE_BLOCK]] ], [ 0, %[[ENTRY]] ]
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[BC_RESUME_VAL]], %[[SCALAR_PH]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[IDX:%.*]] = phi i64 [ [[BC_RESUME_VAL3]], %[[SCALAR_PH]] ], [ [[IDX_NEXT:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i64, ptr [[P]], i64 [[IV]]
++; CHECK-NEXT:    store i64 [[IDX]], ptr [[GEP]], align 8
++; CHECK-NEXT:    [[IDX_NEXT]] = add i64 [[IDX]], [[T]]
++; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 1
++; CHECK-NEXT:    [[C:%.*]] = icmp eq i64 [[IV_NEXT]], [[N]]
++; CHECK-NEXT:    br i1 [[C]], label %[[EXIT]], label %[[LOOP]], !llvm.loop [[LOOP5:![0-9]+]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %s = shl i64 %x, %v
++  %t = add i64 %s, %a1
++  br label %loop
++
++loop:
++  %iv = phi i64 [ 0, %entry ], [ %iv.next, %loop ]
++  %idx = phi i64 [ 0, %entry ], [ %idx.next, %loop ]
++  %gep = getelementptr inbounds i64, ptr %p, i64 %iv
++  store i64 %idx, ptr %gep, align 8
++  %idx.next = add i64 %idx, %t
++  %iv.next = add nuw nsw i64 %iv, 1
++  %c = icmp eq i64 %iv.next, %n
++  br i1 %c, label %exit, label %loop
++
++exit:
++  ret void
++}
++;.
++; CHECK: [[LOOP0]] = distinct !{[[LOOP0]], [[META1:![0-9]+]], [[META2:![0-9]+]]}
++; CHECK: [[META1]] = !{!"llvm.loop.isvectorized", i32 1}
++; CHECK: [[META2]] = !{!"llvm.loop.unroll.runtime.disable"}
++; CHECK: [[LOOP3]] = distinct !{[[LOOP3]], [[META2]], [[META1]]}
++; CHECK: [[LOOP4]] = distinct !{[[LOOP4]], [[META1]], [[META2]]}
++; CHECK: [[LOOP5]] = distinct !{[[LOOP5]], [[META2]], [[META1]]}
++;.

@@ -205,7 +205,7 @@ iter.check:                                       ; preds = %.epilog-lcssa
   br i1 %.not137.3, label %.loopexit140, label %.preheader175, !llvm.loop !268
 
 .loopexit140:                                     ; preds = %.preheader175.prol.loopexit, %.preheader175, %bb.b
-  %.2 = phi i32 [ %.197151, %bb.b ], [ %i.ai, %.preheader175 ], [ %i.ai, %.preheader175.prol.loopexit ] ; 6 uses
+  %.2 = phi i32 [ %.197151, %bb.b ], [ %i.ai, %.preheader175 ], [ %i.ai, %.preheader175.prol.loopexit ] ; 5 uses
   %i.bb = add nuw nsw i16 %.0105150, 1            ; 2 uses
   %i.bc = icmp samesign ult i16 %i.bb, %i.d
   br i1 %i.bc, label %bb.b, label %bb.e, !llvm.loop !269
@@ -228,7 +228,6 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.bi, label %.preheader139.preheader, label %.preheader138.preheader
 
 .preheader139.preheader:                          ; preds = %bb.g
-  %4 = trunc i32 %.2 to i16
   %xtraiter227 = and i32 %1, 3                    ; 3 uses
   %unroll_iter233 = and i32 %1, 12
   %lcmp.mod229.not = icmp eq i32 %xtraiter227, 0
@@ -236,8 +235,7 @@ bb.g:                                             ; preds = %bb.f
   br label %.preheader139
 
 .preheader139:                                    ; preds = %.preheader139.preheader, %.epilog-lcssa230
-  %i.bj = phi i32 [ %6, %.epilog-lcssa230 ], [ %i.bh, %.preheader139.preheader ]
-  %.1106155 = phi i16 [ %5, %.epilog-lcssa230 ], [ %4, %.preheader139.preheader ]
+  %i.bj = phi i32 [ %indvars.iv.next, %.epilog-lcssa230 ], [ %i.bh, %.preheader139.preheader ] ; 2 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.h, %.preheader139
@@ -245,7 +243,7 @@ bb.h:                                             ; preds = %bb.h, %.preheader13
   %.1114 = phi i32 [ %i.bj, %.preheader139 ], [ %i.bx, %bb.h ] ; 5 uses
   %niter234 = phi i32 [ 0, %.preheader139 ], [ %niter234.next.3, %bb.h ]
   %i.bk = shl i32 %.2118, 3
-  %i.bl = shl nsw i32 %.1114, 2
+  %i.bl = shl i32 %.1114, 2
   %i.bm = and i32 %i.bl, 4
   %i.bn = or disjoint i32 %i.bk, %i.bm
   %i.bo = and i32 %.1114, 2
@@ -286,10 +284,9 @@ bb.i:                                             ; preds = %bb.i, %.epil.prehea
   %i.cc = zext i32 %.lcssa218 to i64
   %i.cd = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %i.cc
   store i16 -1, ptr %i.cd, align 2, !tbaa !50
-  %5 = add nuw i16 %.1106155, 1                   ; 2 uses
-  %6 = zext i16 %5 to i32                         ; 2 uses
-  %7 = icmp samesign ugt i32 %i.a, %6
-  br i1 %7, label %.preheader139, label %.preheader138.preheader, !llvm.loop !273
+  %indvars.iv.next = add nuw nsw i32 %i.bj, 1     ; 2 uses
+  %exitcond.not = icmp eq i32 %indvars.iv.next, %i.a
+  br i1 %exitcond.not, label %.preheader138.preheader, label %.preheader139, !llvm.loop !273
 
 .preheader138.preheader:                          ; preds = %.epilog-lcssa230, %bb.g
   %i.ce = shl nuw nsw i32 65536, %1               ; 2 uses
@@ -692,7 +689,7 @@ begin_hunk_1_@llvm.assume
 !265 = distinct !{!265, !33}
 !266 = distinct !{!266, !45}
 !267 = distinct !{!267, !45}
-!268 = distinct !{!268, !33, !56}
+!268 = distinct !{!268, !33}
 !269 = distinct !{!269, !33}
 !270 = distinct !{!270, !33}
 !271 = distinct !{!271, !33}

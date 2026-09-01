@@ -205,8 +205,8 @@ middle.block85:                                   ; preds = %vector.body77
   %i.mx = fadd reassoc nsz arcp contract afn float %i.mw, %i.mq
   store float %i.mx, ptr %i.mu, align 4, !tbaa !49, !alias.scope !97, !noalias !98
   %indvars.iv.next140.i = add nuw nsw i64 %indvars.iv139.i, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next140.i, %i.ie
-  br i1 %exitcond.not, label %._crit_edge.i31, label %.lr.ph124.i, !llvm.loop !103
+  %5 = icmp ugt i64 %i.ie, %indvars.iv.next140.i
+  br i1 %5, label %.lr.ph124.i, label %._crit_edge.i31, !llvm.loop !103
 
 ._crit_edge128.i:                                 ; preds = %.lr.ph127.i, %middle.block85, %._crit_edge.i31
   br i1 %brmerge.i, label %.loopexit.i, label %iter.check
@@ -307,8 +307,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.oo = fadd reassoc nsz arcp contract afn float %i.on, %i.oh
   store float %i.oo, ptr %i.ol, align 4, !tbaa !49, !alias.scope !97, !noalias !98
   %indvars.iv.next143.i = add nuw nsw i64 %indvars.iv142.i, 1 ; 2 uses
-  %exitcond42.not = icmp eq i64 %indvars.iv.next143.i, %i.a
-  br i1 %exitcond42.not, label %._crit_edge128.i, label %.lr.ph127.i, !llvm.loop !106
+  %6 = icmp ult i64 %indvars.iv.next143.i, %i.a
+  br i1 %6, label %.lr.ph127.i, label %._crit_edge128.i, !llvm.loop !106
 
 .lr.ph130.i:                                      ; preds = %.lr.ph130.i.preheader, %.lr.ph130.i
   %indvars.iv145.i = phi i64 [ %indvars.iv.next146.i, %.lr.ph130.i ], [ %indvars.iv145.i.ph, %.lr.ph130.i.preheader ] ; 3 uses

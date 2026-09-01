@@ -202,11 +202,11 @@ fls.exit:                                         ; preds = %_kzalloc_noprof.exi
   %i.h = tail call i32 asm "bsrl $1,$0", "=r,r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.g, i32 -1) #29, !srcloc !275
   %i.i = add i32 %i.h, -5                         ; 2 uses
   %i.j = tail call i32 @llvm.smax.i32(i32 %i.i, i32 1)
-  %i.k = tail call i32 @llvm.umin.i32(i32 %i.j, i32 8) ; 4 uses
+  %i.k = tail call i32 @llvm.umin.i32(i32 %i.j, i32 8) ; 3 uses
   %i.l = getelementptr i8, ptr %i.b, i64 368      ; 4 uses
   %i.m = shl nuw nsw i32 1, %i.k
-  %1 = shl nuw nsw i32 64, %i.k
-  %2 = zext nneg i32 %1 to i64
+  %1 = zext nneg i32 %i.m to i64                  ; 2 uses
+  %2 = shl nuw nsw i64 %1, 6
   %i.n = tail call noalias ptr @__kvmalloc_node_noprof(i64 noundef %2, i64 noundef 1, i32 noundef 4197568, i32 noundef -1) #31 ; 2 uses
   store ptr %i.n, ptr %i.l, align 8
   %.not25.i = icmp eq ptr %i.n, null
@@ -223,8 +223,8 @@ fls.exit:                                         ; preds = %_kzalloc_noprof.exi
 .lr.ph:                                           ; preds = %.lr.ph.i.preheader, %.lr.ph.i
   %.01926.i101 = phi i32 [ %i.q, %.lr.ph.i ], [ %i.k, %.lr.ph.i.preheader ]
   %i.q = add nsw i32 %.01926.i101, -1             ; 4 uses
-  %i.r = shl nuw nsw i32 1, %i.q                  ; 2 uses
-  %i.s = zext nneg i32 %i.r to i64
+  %i.r = shl nuw nsw i32 1, %i.q
+  %i.s = zext nneg i32 %i.r to i64                ; 2 uses
   %i.t = shl nuw nsw i64 %i.s, 6
   %i.u = tail call noalias ptr @__kvmalloc_node_noprof(i64 noundef %i.t, i64 noundef 1, i32 noundef 4197568, i32 noundef -1) #31 ; 2 uses
   store ptr %i.u, ptr %i.l, align 8
@@ -232,20 +232,19 @@ fls.exit:                                         ; preds = %_kzalloc_noprof.exi
   br i1 %.not.i, label %.lr.ph.i, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph, %fls.exit
-  %.019.lcssa.i = phi i32 [ %i.k, %fls.exit ], [ %i.q, %.lr.ph ]
-  %.lcssa.i = phi i32 [ %i.m, %fls.exit ], [ %i.r, %.lr.ph ]
+  %wide.trip.count.pre-phi.i = phi i64 [ %1, %fls.exit ], [ %i.s, %.lr.ph ]
+  %.lcssa.i = phi i32 [ %i.k, %fls.exit ], [ %i.q, %.lr.ph ]
   %i.v = getelementptr i8, ptr %i.b, i64 376
-  store i32 %.019.lcssa.i, ptr %i.v, align 8
+  store i32 %.lcssa.i, ptr %i.v, align 8
   br label %bb.a
 
 bb.a:                                             ; preds = %bb.a, %._crit_edge.i
-  %.02128.i = phi i32 [ 0, %._crit_edge.i ], [ %4, %bb.a ] ; 2 uses
+  %indvars.iv.i = phi i64 [ 0, %._crit_edge.i ], [ %indvars.iv.next.i, %bb.a ] ; 2 uses
   %i.w = load ptr, ptr %i.l, align 8
-  %3 = sext i32 %.02128.i to i64
-  %i.x = getelementptr [64 x i8], ptr %i.w, i64 %3
+  %i.x = getelementptr [64 x i8], ptr %i.w, i64 %indvars.iv.i
   store ptr null, ptr %i.x, align 64
-  %4 = add nuw i32 %.02128.i, 1                   ; 2 uses
-  %exitcond.not.i = icmp eq i32 %4, %.lcssa.i
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.pre-phi.i
   br i1 %exitcond.not.i, label %bb.b, label %bb.a, !llvm.loop !276
 
 bb.b:                                             ; preds = %bb.a

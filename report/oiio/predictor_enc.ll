@@ -41,30 +41,33 @@ bb.a:
   %i.i = sext i32 %.fr to i64                     ; 3 uses
   %i.j = shl nsw i64 %i.i, 2
   %i.k = sext i32 %.fr131 to i64
+  %6 = add i32 %4, 1
+  %7 = sub i32 %6, %3
   br label %bb.b
 
 .loopexit:                                        ; preds = %bb.c, %bb.b
-  %exitcond.not = icmp eq i32 %i.l, %4
+  %indvars.iv.next = add i32 %indvars.iv, 1       ; 2 uses
+  %exitcond.not = icmp eq i32 %indvars.iv.next, %7
   br i1 %exitcond.not, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph115, %.loopexit
+  %indvars.iv = phi i32 [ 1, %.lr.ph115 ], [ %indvars.iv.next, %.loopexit ] ; 2 uses
   %.090114 = phi i32 [ %3, %.lr.ph115 ], [ %i.l, %.loopexit ] ; 3 uses
-  %i.l = add i32 %.090114, 1                      ; 3 uses
+  %8 = shl nuw i32 1, %indvars.iv
+  %9 = sext i32 %8 to i64
+  %i.l = add nsw i32 %.090114, 1
   %i.m = sub nsw i32 %.090114, %3
   %i.n = shl nuw i32 1, %i.m                      ; 2 uses
   %i.o = icmp slt i32 %i.n, %.fr131
   br i1 %i.o, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.b
-  %6 = sub nsw i32 %i.l, %3
-  %7 = shl nuw i32 1, %6
-  %8 = sext i32 %7 to i64
   %i.p = sext i32 %i.n to i64                     ; 2 uses
   %invariant.op = sub nsw i64 %i.k, %i.p
   br label %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph
-  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, %8 ; 2 uses
+  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, %9 ; 2 uses
   %i.q = icmp slt i64 %indvars.iv.next.a, %invariant.op
   br i1 %i.q, label %.lr.ph, label %.loopexit, !llvm.loop !7
 
@@ -80,7 +83,7 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %.not, label %bb.c, label %.thread
 
 .thread:                                          ; preds = %.loopexit, %.lr.ph
-  %.090112 = phi i32 [ %.090114, %.lr.ph ], [ %4, %.loopexit ] ; 5 uses
+  %.090112 = phi i32 [ %.090114, %.lr.ph ], [ %4, %.loopexit ] ; 6 uses
   %i.w = icmp eq i32 %.090112, %3
   br i1 %i.w, label %.thread.thread, label %.preheader108
 
@@ -95,16 +98,20 @@ bb.c:                                             ; preds = %.lr.ph
   %i.aa = zext nneg i32 %.fr131 to i64
   %smin = tail call i32 @llvm.smin.i32(i32 %.090112, i32 %3) ; 2 uses
   %i.ab = icmp sgt i32 %.090112, %3
-  br i1 %i.ab, label %.preheader107.lr.ph.us.us, label %.split.us
+  br i1 %i.ab, label %.preheader107.us.us.us.preheader.lr.ph, label %.split.us
 
-.preheader107.lr.ph.us.us:                        ; preds = %.preheader108.split.us.split.us.preheader, %._crit_edge119.split.us.us.us
-  %.3.us.us183 = phi i32 [ %i.am, %._crit_edge119.split.us.us.us ], [ %.090112, %.preheader108.split.us.split.us.preheader ] ; 3 uses
-  %9 = sub nsw i32 %.3.us.us183, %3
-  %i.ac = shl nuw i32 1, %9
+.preheader107.us.us.us.preheader.lr.ph:           ; preds = %.preheader108.split.us.split.us.preheader
+  %10 = sub i32 %.090112, %3
+  br label %.preheader107.lr.ph.us.us
+
+.preheader107.lr.ph.us.us:                        ; preds = %.preheader107.us.us.us.preheader.lr.ph, %._crit_edge119.split.us.us.us
+  %.3.us.us183 = phi i32 [ %.090112, %.preheader107.us.us.us.preheader.lr.ph ], [ %i.am, %._crit_edge119.split.us.us.us ] ; 2 uses
+  %indvars.iv139187 = phi i32 [ %10, %.preheader107.us.us.us.preheader.lr.ph ], [ %indvars.iv.next140, %._crit_edge119.split.us.us.us ] ; 2 uses
+  %i.ac = shl nuw i32 1, %indvars.iv139187
   %i.ad = sext i32 %i.ac to i64
   br label %.preheader107.us.us.us
 
-.preheader107.us.us.us:                           ; preds = %._crit_edge.us.us.us, %.preheader107.lr.ph.us.us
+.preheader107.us.us.us:                           ; preds = %.preheader107.lr.ph.us.us, %._crit_edge.us.us.us
   %indvars.iv143 = phi i64 [ %indvars.iv.next144, %._crit_edge.us.us.us ], [ 0, %.preheader107.lr.ph.us.us ] ; 2 uses
   %i.ae = mul nuw nsw i64 %indvars.iv143, %i.z    ; 2 uses
   %invariant.gep169 = getelementptr [4 x i8], ptr %0, i64 %i.ae
@@ -149,6 +156,7 @@ bb.d:                                             ; preds = %.lr.ph181
 
 ._crit_edge119.split.us.us.us:                    ; preds = %.lr.ph181
   %i.am = add nsw i32 %.3.us.us183, -1            ; 2 uses
+  %indvars.iv.next140 = add i32 %indvars.iv139187, -1
   %i.an = icmp sgt i32 %i.am, %3
   br i1 %i.an, label %.preheader107.lr.ph.us.us, label %.split.us
 
@@ -171,6 +179,7 @@ bb.e:                                             ; preds = %.split.us
 
 .preheader.preheader:                             ; preds = %bb.e
   %i.ax = zext i32 %.fr to i64
+  %11 = zext nneg i32 %i.as to i64
   %wide.trip.count153 = zext nneg i32 %i.au to i64
   %wide.trip.count = zext nneg i32 %i.as to i64   ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
@@ -183,9 +192,7 @@ bb.e:                                             ; preds = %.split.us
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge
   %indvars.iv150.a = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next151, %._crit_edge ] ; 3 uses
   %i.az = mul i64 %indvars.iv150.a, %i.ax         ; 3 uses
-  %10 = trunc i64 %indvars.iv150.a to i32
-  %11 = mul i32 %i.as, %10
-  %12 = zext i32 %11 to i64
+  %12 = mul nuw nsw i64 %indvars.iv150.a, %11
   %invariant.gep171 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %12 ; 3 uses
   br i1 %i.ay, label %.epil.preheader, label %.preheader.new
 
@@ -588,7 +595,7 @@ bb.a:
   %10 = alloca %struct.VP8LMultipliers, align 4   ; 4 uses
   %i.a = alloca [256 x i32], align 16             ; 6 uses
   %i.b = alloca [256 x i32], align 16             ; 6 uses
-  %i.c = shl nuw i32 1, %2                        ; 5 uses
+  %i.c = shl nuw i32 1, %2                        ; 7 uses
   %i.d = add i32 %i.c, -1                         ; 2 uses
   %i.e = add i32 %i.d, %0
   %i.f = lshr i32 %i.e, %2                        ; 3 uses
@@ -604,11 +611,12 @@ bb.a:
 
 .preheader.lr.ph:                                 ; preds = %bb.a
   %i.k = icmp sgt i32 %i.f, 0
-  %i.l = sext i32 %0 to i64                       ; 2 uses
+  %i.l = sext i32 %0 to i64                       ; 3 uses
   br i1 %i.k, label %.preheader.us.preheader, label %.preheader
 
 .preheader.us.preheader:                          ; preds = %.preheader.lr.ph
   %i.m = add nsw i32 %0, 2
+  %11 = shl i32 %0, %2
   %i.n = sext i32 %i.m to i64
   %i.o = zext nneg i32 %i.f to i64                ; 2 uses
   %wide.trip.count208 = zext nneg i32 %i.h to i64
@@ -617,14 +625,17 @@ bb.a:
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %bb.n
   %indvars.iv206 = phi i64 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next207, %bb.n ] ; 5 uses
+  %indvars.iv203 = phi i32 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next204, %bb.n ] ; 2 uses
+  %indvars.iv = phi i32 [ 0, %.preheader.us.preheader ], [ %indvars.iv.next, %bb.n ] ; 2 uses
   %.sroa.0.0191.us = phi i8 [ 0, %.preheader.us.preheader ], [ %.sroa.0.2.us, %bb.n ]
   %.sroa.6.0190.us = phi i8 [ 0, %.preheader.us.preheader ], [ %.sroa.6.2.us, %bb.n ]
   %.sroa.8.0189.us = phi i8 [ 0, %.preheader.us.preheader ], [ %.sroa.8.2.us, %bb.n ]
   %.sroa.0126.0188.us = phi i8 [ 0, %.preheader.us.preheader ], [ %.sink226.off0, %bb.n ]
   %.sroa.8133.sroa.0.0187.us = phi i8 [ 0, %.preheader.us.preheader ], [ %.sroa.8133.sroa.0.0.extract.trunc.us, %bb.n ]
   %.sroa.8133.sroa.8.0186.us = phi i16 [ 0, %.preheader.us.preheader ], [ %.sroa.8133.sroa.8.0.extract.shift.us, %bb.n ]
+  %12 = sext i32 %indvars.iv203 to i64
   %i.p = trunc nuw nsw i64 %indvars.iv206 to i32  ; 2 uses
-  %i.q = shl i32 %i.p, %2                         ; 5 uses
+  %i.q = shl i32 %i.p, %2                         ; 4 uses
   %i.r = add nsw i32 %i.q, %i.c
   %i.s = call noundef i32 @llvm.smin.i32(i32 %i.r, i32 %1) ; 2 uses
   %i.t = mul nuw nsw i64 %indvars.iv206, %i.o
@@ -632,12 +643,14 @@ bb.a:
   %i.u = sub nsw i32 %1, %i.q
   %i.v = call i32 @llvm.smin.i32(i32 %i.c, i32 %i.u) ; 2 uses
   %i.w = icmp sgt i32 %i.v, 0
-  %i.x = mul i32 %i.q, %0                         ; 3 uses
+  %i.x = mul nsw i32 %i.q, %0
   %i.y = icmp slt i32 %i.q, %i.s
+  %13 = sext i32 %i.s to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader.us, %._crit_edge171.us
   %indvars.iv203.a = phi i64 [ 0, %.preheader.us ], [ %indvars.iv.next204.a, %._crit_edge171.us ] ; 3 uses
+  %indvars.iv196 = phi i32 [ %indvars.iv, %.preheader.us ], [ %indvars.iv.next197, %._crit_edge171.us ] ; 2 uses
   %.sroa.0.1177.us = phi i8 [ %.sroa.0.0191.us, %.preheader.us ], [ %.sroa.0.2.us, %._crit_edge171.us ] ; 2 uses
   %.sroa.6.1176.us = phi i8 [ %.sroa.6.0190.us, %.preheader.us ], [ %.sroa.6.2.us, %._crit_edge171.us ] ; 2 uses
   %.sroa.8.1175.us = phi i8 [ %.sroa.8.0189.us, %.preheader.us ], [ %.sroa.8.2.us, %._crit_edge171.us ] ; 2 uses
@@ -645,9 +658,9 @@ bb.b:                                             ; preds = %.preheader.us, %._c
   %.sroa.8133.sroa.0.1173.us = phi i8 [ %.sroa.8133.sroa.0.0187.us, %.preheader.us ], [ %.sroa.8133.sroa.0.0.extract.trunc.us, %._crit_edge171.us ] ; 2 uses
   %.sroa.8133.sroa.8.1172.us = phi i16 [ %.sroa.8133.sroa.8.0186.us, %.preheader.us ], [ %.sroa.8133.sroa.8.0.extract.shift.us, %._crit_edge171.us ] ; 2 uses
   %i.z = trunc nuw nsw i64 %indvars.iv203.a to i32 ; 3 uses
-  %i.aa = shl i32 %i.z, %2                        ; 5 uses
+  %i.aa = shl i32 %i.z, %2                        ; 4 uses
   %i.ab = add nsw i32 %i.aa, %i.c
-  %i.ac = call noundef i32 @llvm.smin.i32(i32 %i.ab, i32 %0) ; 2 uses
+  %i.ac = call noundef i32 @llvm.smin.i32(i32 %i.ab, i32 %0)
   %i.ad = add nuw nsw i64 %indvars.iv203.a, %i.t  ; 2 uses
   br i1 %.not113.us, label %.split.us, label %.split107.us
 
@@ -749,17 +762,18 @@ CopyTileWithColorTransform.exit.us:               ; preds = %bb.d, %bb.c
   br i1 %i.y, label %.lr.ph170.us, label %._crit_edge171.us
 
 bb.e:                                             ; preds = %.lr.ph170.us, %._crit_edge.us
-  %indvars.iv199 = phi i32 [ %15, %.lr.ph170.us ], [ %indvars.iv.next200, %._crit_edge.us ] ; 2 uses
-  %indvars.iv = phi i32 [ %14, %.lr.ph170.us ], [ %indvars.iv.next, %._crit_edge.us ] ; 2 uses
-  %.0101169.us = phi i32 [ %i.q, %.lr.ph170.us ], [ %13, %._crit_edge.us ] ; 2 uses
-  %11 = mul nsw i32 %.0101169.us, %0              ; 2 uses
-  %i.bg = add nsw i32 %11, %i.aa
-  %12 = add i32 %11, %i.ac
-  %i.bh = icmp slt i32 %i.bg, %12
+  %indvars.iv205 = phi i64 [ %12, %.lr.ph170.us ], [ %indvars.iv.next206, %._crit_edge.us ] ; 2 uses
+  %indvars.iv199 = phi i32 [ %indvars.iv196, %.lr.ph170.us ], [ %indvars.iv.next200, %._crit_edge.us ] ; 2 uses
+  %14 = mul nsw i64 %indvars.iv205, %i.l          ; 2 uses
+  %15 = add nsw i64 %14, %20
+  %16 = trunc nsw i64 %14 to i32
+  %i.bg = add i32 %i.ac, %16
+  %17 = sext i32 %i.bg to i64                     ; 2 uses
+  %i.bh = icmp slt i64 %15, %17
   br i1 %i.bh, label %.lr.ph.us.preheader, label %._crit_edge.us
 
 .lr.ph.us.preheader:                              ; preds = %bb.e
-  %i.bi = sext i32 %indvars.iv to i64
+  %i.bi = sext i32 %indvars.iv199 to i64
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %bb.m
@@ -826,30 +840,30 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i,
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.g
   %indvars.iv.next197.a = add nsw i64 %indvars.iv196.a, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next197.a to i32
-  %exitcond201.not = icmp eq i32 %indvars.iv199, %lftr.wideiv
-  br i1 %exitcond201.not, label %._crit_edge.us, label %.lr.ph.us, !llvm.loop !46
+  %18 = icmp slt i64 %indvars.iv.next197.a, %17
+  br i1 %18, label %.lr.ph.us, label %._crit_edge.us, !llvm.loop !46
 
 ._crit_edge.us:                                   ; preds = %bb.m, %bb.e
-  %13 = add nsw i32 %.0101169.us, 1               ; 2 uses
-  %indvars.iv.next = add i32 %indvars.iv, %0
+  %indvars.iv.next206 = add nsw i64 %indvars.iv205, 1 ; 2 uses
+  %19 = icmp slt i64 %indvars.iv.next206, %13
   %indvars.iv.next200 = add i32 %indvars.iv199, %0
-  %exitcond202.not = icmp eq i32 %13, %i.s
-  br i1 %exitcond202.not, label %._crit_edge171.us, label %bb.e, !llvm.loop !47
+  br i1 %19, label %bb.e, label %._crit_edge171.us, !llvm.loop !47
 
 ._crit_edge171.us:                                ; preds = %._crit_edge.us, %CopyTileWithColorTransform.exit.us
   %indvars.iv.next204.a = add nuw nsw i64 %indvars.iv203.a, 1 ; 2 uses
+  %indvars.iv.next197 = add i32 %indvars.iv196, %i.c
   %exitcond205.not = icmp eq i64 %indvars.iv.next204.a, %wide.trip.count
   br i1 %exitcond205.not, label %._crit_edge180.us, label %bb.b, !llvm.loop !48
 
 bb.n:                                             ; preds = %._crit_edge180.us
   %indvars.iv.next207 = add nuw nsw i64 %indvars.iv206, 1 ; 2 uses
+  %indvars.iv.next = add i32 %indvars.iv, %11
+  %indvars.iv.next204 = add i32 %indvars.iv203, %i.c
   %exitcond209.not = icmp eq i64 %indvars.iv.next207, %wide.trip.count208
   br i1 %exitcond209.not, label %._crit_edge193, label %.preheader.us, !llvm.loop !49
 
 .lr.ph170.us:                                     ; preds = %CopyTileWithColorTransform.exit.us
-  %14 = add i32 %i.x, %i.aa
-  %15 = add i32 %i.x, %i.ac
+  %20 = sext i32 %i.aa to i64
   br label %bb.e
 
 ._crit_edge180.us:                                ; preds = %._crit_edge171.us

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.w = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 11 uses
   store i32 0, ptr %i.k, align 8, !alias.scope !28
   %i.x = icmp ne i32 %i.t, 0                      ; 3 uses
-  br i1 %i.o, label %.lr.ph.us.peel, label %.lr.ph
+  br i1 %i.o, label %.lr.ph.us.peel, label %bb.aa
 
 .lr.ph.us.peel:                                   ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -478,10 +478,6 @@ bb.t:                                             ; preds = %bb.z, %bb.a
   %.us-phi302 = phi i1 [ %.sroa.09.2.us.2, %.loopexit264.us.2 ], [ %spec.select.us.us.3, %bb.p ]
   br i1 %.us-phi302, label %bb.v, label %bb.u
 
-.lr.ph:                                           ; preds = %bb.b
-  %16 = zext i32 %i.v to i64
-  br label %bb.aa
-
 bb.u:                                             ; preds = %.split286.3, %.split286.us.us.3, %.loopexit264.3, %bb.y, %.split300.us
   invoke void @_RNvNtNtCs4GWW6M5ZWyU_6brotli3enc9metablock25RecomputeDistancePrefixes(ptr noalias nofree noundef nonnull align 4 %8, i64 noundef %9, i64 noundef %10, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.r, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.w)
           to label %bb.z unwind label %.loopexit.split-lp
@@ -516,20 +512,19 @@ bb.z:                                             ; preds = %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %bb.t
 
-bb.aa:                                            ; preds = %.lr.ph, %bb.ap
-  %indvars.iv353 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next354, %bb.ap ] ; 5 uses
-  %.sroa.09.1281 = phi i1 [ true, %.lr.ph ], [ %spec.select, %bb.ap ]
-  %.sroa.011.1280 = phi double [ f0x547D42AEA2879F2E, %.lr.ph ], [ %i.dn, %bb.ap ] ; 3 uses
+bb.aa:                                            ; preds = %bb.b, %bb.ap
+  %indvars.iv353 = phi i64 [ %indvars.iv.next354, %bb.ap ], [ 0, %bb.b ] ; 3 uses
+  %.sroa.09.1281 = phi i1 [ %spec.select, %bb.ap ], [ true, %bb.b ]
+  %.sroa.011.1280 = phi double [ %i.dn, %bb.ap ], [ f0x547D42AEA2879F2E, %bb.b ] ; 3 uses
+  %16 = trunc nuw nsw i64 %indvars.iv353 to i32   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store double 0.000000e+00, ptr %i.b, align 8
-  %17 = trunc nuw nsw i64 %indvars.iv353 to i32   ; 2 uses
-  store i32 %17, ptr %i.l, align 4, !alias.scope !28
+  store i32 %16, ptr %i.l, align 4, !alias.scope !28
   %i.cd = add nuw nsw i64 %indvars.iv353, 67108860
-  %18 = trunc i64 %indvars.iv353 to i32
-  %i.ce = add i32 %18, 64
+  %i.ce = add nuw nsw i32 %16, 64
   store i32 %i.ce, ptr %i.q, align 8, !alias.scope !28
   store i64 %i.cd, ptr %i.p, align 8, !alias.scope !28
-  %i.cf = icmp ne i64 %indvars.iv353, %16
+  %i.cf = icmp ne i32 %i.v, %16
   %or.cond.not = select i1 %i.x, i1 true, i1 %i.cf
   %spec.select = select i1 %or.cond.not, i1 %.sroa.09.1281, i1 false ; 3 uses
   %i.cg = invoke noundef zeroext i1 @_RNvNtNtCs4GWW6M5ZWyU_6brotli3enc9metablock19ComputeDistanceCost(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %8, i64 noundef %9, i64 noundef %10, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.r, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.p, ptr noalias nofree noundef nonnull %14, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b)
@@ -537,37 +532,35 @@ bb.aa:                                            ; preds = %.lr.ph, %bb.ap
 
 .loopexit264:                                     ; preds = %bb.an, %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %i.ch = call i32 @llvm.usub.sat.i32(i32 %17, i32 1) ; 3 uses
-  %i.ci = lshr i32 %i.ch, 1
+  %i.ch = call i32 @llvm.usub.sat.i32(i32 %16, i32 1) ; 2 uses
+  %i.ci = lshr i32 %i.ch, 1                       ; 2 uses
   %i.cj = icmp ult i32 %i.ch, 32
   br i1 %i.cj, label %.lr.ph.1, label %.loopexit264.1
 
 .lr.ph.1:                                         ; preds = %bb.ap, %.loopexit264
-  %.sroa.04.1271406 = phi i32 [ %i.ch, %.loopexit264 ], [ 15, %bb.ap ]
+  %.sroa.04.1271406 = phi i32 [ %i.ci, %.loopexit264 ], [ 7, %bb.ap ]
   %.sroa.011.1276405 = phi double [ %.sroa.011.1280, %.loopexit264 ], [ %i.dn, %bb.ap ]
   store i32 1, ptr %i.k, align 8, !alias.scope !39
   %i.ck = icmp ne i32 %i.t, 1
-  %19 = lshr i32 %.sroa.04.1271406, 1
-  %20 = zext nneg i32 %19 to i64
-  %i.cl = zext i32 %i.v to i64
+  %i.cl = zext nneg i32 %.sroa.04.1271406 to i64
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.ae, %.lr.ph.1
-  %indvars.iv350 = phi i64 [ %indvars.iv.next351, %bb.ae ], [ %20, %.lr.ph.1 ] ; 4 uses
-  %.sroa.09.1281.1 = phi i1 [ %spec.select.1, %bb.ae ], [ %spec.select, %.lr.ph.1 ]
-  %.sroa.011.1280.1 = phi double [ %i.cq, %bb.ae ], [ %.sroa.011.1276405, %.lr.ph.1 ] ; 2 uses
-  %21 = shl nuw nsw i64 %indvars.iv350, 1         ; 3 uses
+  %indvars.iv350 = phi i64 [ %i.cl, %.lr.ph.1 ], [ %indvars.iv.next351, %bb.ae ] ; 3 uses
+  %.sroa.09.1281.1 = phi i1 [ %spec.select, %.lr.ph.1 ], [ %spec.select.1, %bb.ae ]
+  %.sroa.011.1280.1 = phi double [ %.sroa.011.1276405, %.lr.ph.1 ], [ %i.cq, %bb.ae ] ; 2 uses
+  %17 = trunc nuw nsw i64 %indvars.iv350 to i32   ; 2 uses
+  %18 = shl nuw nsw i32 %17, 1                    ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store double 0.000000e+00, ptr %i.b, align 8
-  %22 = trunc nuw i64 %21 to i32
-  store i32 %22, ptr %i.l, align 4, !alias.scope !39
+  store i32 %18, ptr %i.l, align 4, !alias.scope !39
   %i.cm = shl nuw i64 %indvars.iv350, 1
   %i.cn = add i64 %i.cm, 134217720
-  %23 = trunc i64 %21 to i32
-  %24 = add i32 %23, 112
-  store i32 %24, ptr %i.q, align 8, !alias.scope !39
-  store i64 %i.cn, ptr %i.p, align 8, !alias.scope !39
-  %i.co = icmp ne i64 %21, %i.cl
+  %.sroa.01.0.i.reass.1 = add nuw nsw i32 %18, 112
+  store i32 %.sroa.01.0.i.reass.1, ptr %i.q, align 8, !alias.scope !39
+  %19 = and i64 %i.cn, 4294967294
+  store i64 %19, ptr %i.p, align 8, !alias.scope !39
+  %i.co = icmp ne i32 %18, %i.v
   %or.cond.not.1 = select i1 %i.ck, i1 true, i1 %i.co
   %spec.select.1 = select i1 %or.cond.not.1, i1 %.sroa.09.1281.1, i1 false ; 3 uses
   %i.cp = invoke noundef zeroext i1 @_RNvNtNtCs4GWW6M5ZWyU_6brotli3enc9metablock19ComputeDistanceCost(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %8, i64 noundef %9, i64 noundef %10, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.r, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.p, ptr noalias nofree noundef nonnull %14, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b)
@@ -589,43 +582,40 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %exitcond.1.not, label %.loopexit264.1, label %bb.ab
 
 .split286.1:                                      ; preds = %bb.ad, %bb.ac
-  %25 = trunc nuw i64 %indvars.iv350 to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %.loopexit264.1
 
 .loopexit264.1:                                   ; preds = %bb.ae, %.split286.1, %.loopexit264
   %.sroa.011.1276.1 = phi double [ %.sroa.011.1280.1, %.split286.1 ], [ %.sroa.011.1280, %.loopexit264 ], [ %i.cq, %bb.ae ] ; 2 uses
-  %.sroa.04.1271.1 = phi i32 [ %25, %.split286.1 ], [ %i.ci, %.loopexit264 ], [ 16, %bb.ae ]
+  %.sroa.04.1271.1 = phi i32 [ %17, %.split286.1 ], [ %i.ci, %.loopexit264 ], [ 16, %bb.ae ]
   %.sroa.09.2.1 = phi i1 [ %spec.select.1, %.split286.1 ], [ %spec.select, %.loopexit264 ], [ %spec.select.1, %bb.ae ] ; 2 uses
-  %i.cs = call i32 @llvm.usub.sat.i32(i32 %.sroa.04.1271.1, i32 1) ; 3 uses
-  %i.ct = lshr i32 %i.cs, 1
+  %i.cs = call i32 @llvm.usub.sat.i32(i32 %.sroa.04.1271.1, i32 1) ; 2 uses
+  %i.ct = lshr i32 %i.cs, 1                       ; 2 uses
   %i.cu = icmp ult i32 %i.cs, 32
   br i1 %i.cu, label %.lr.ph.2, label %.loopexit264.2
 
 .lr.ph.2:                                         ; preds = %.loopexit264.1
   store i32 2, ptr %i.k, align 8, !alias.scope !41
   %i.cv = icmp ne i32 %i.t, 2
-  %26 = lshr i32 %i.cs, 1
-  %27 = zext nneg i32 %26 to i64
-  %i.cw = zext i32 %i.v to i64
+  %i.cw = zext nneg i32 %i.ct to i64
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ai, %.lr.ph.2
-  %indvars.iv347 = phi i64 [ %indvars.iv.next348, %bb.ai ], [ %27, %.lr.ph.2 ] ; 4 uses
-  %.sroa.09.1281.2 = phi i1 [ %spec.select.2, %bb.ai ], [ %.sroa.09.2.1, %.lr.ph.2 ]
-  %.sroa.011.1280.2 = phi double [ %i.db, %bb.ai ], [ %.sroa.011.1276.1, %.lr.ph.2 ] ; 2 uses
-  %28 = shl nuw nsw i64 %indvars.iv347, 2         ; 3 uses
+  %indvars.iv347 = phi i64 [ %i.cw, %.lr.ph.2 ], [ %indvars.iv.next348, %bb.ai ] ; 3 uses
+  %.sroa.09.1281.2 = phi i1 [ %.sroa.09.2.1, %.lr.ph.2 ], [ %spec.select.2, %bb.ai ]
+  %.sroa.011.1280.2 = phi double [ %.sroa.011.1276.1, %.lr.ph.2 ], [ %i.db, %bb.ai ] ; 2 uses
+  %20 = trunc nuw nsw i64 %indvars.iv347 to i32   ; 2 uses
+  %21 = shl nuw nsw i32 %20, 2                    ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store double 0.000000e+00, ptr %i.b, align 8
-  %29 = trunc nuw i64 %28 to i32
-  store i32 %29, ptr %i.l, align 4, !alias.scope !41
+  store i32 %21, ptr %i.l, align 4, !alias.scope !41
   %i.cx = shl i64 %indvars.iv347, 2
   %i.cy = add i64 %i.cx, 268435440
-  %30 = trunc i64 %28 to i32
-  %31 = add i32 %30, 208
-  store i32 %31, ptr %i.q, align 8, !alias.scope !41
-  store i64 %i.cy, ptr %i.p, align 8, !alias.scope !41
-  %i.cz = icmp ne i64 %28, %i.cw
+  %.sroa.01.0.i.reass.2 = add nuw nsw i32 %21, 208
+  store i32 %.sroa.01.0.i.reass.2, ptr %i.q, align 8, !alias.scope !41
+  %22 = and i64 %i.cy, 4294967292
+  store i64 %22, ptr %i.p, align 8, !alias.scope !41
+  %i.cz = icmp ne i32 %21, %i.v
   %or.cond.not.2 = select i1 %i.cv, i1 true, i1 %i.cz
   %spec.select.2 = select i1 %or.cond.not.2, i1 %.sroa.09.1281.2, i1 false ; 3 uses
   %i.da = invoke noundef zeroext i1 @_RNvNtNtCs4GWW6M5ZWyU_6brotli3enc9metablock19ComputeDistanceCost(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %8, i64 noundef %9, i64 noundef %10, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.r, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.p, ptr noalias nofree noundef nonnull %14, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b)
@@ -647,42 +637,40 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %exitcond.2.not, label %.loopexit264.2, label %bb.af
 
 .split286.2:                                      ; preds = %bb.ah, %bb.ag
-  %32 = trunc nuw i64 %indvars.iv347 to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %.loopexit264.2
 
 .loopexit264.2:                                   ; preds = %bb.ai, %.split286.2, %.loopexit264.1
   %.sroa.011.1276.2 = phi double [ %.sroa.011.1280.2, %.split286.2 ], [ %.sroa.011.1276.1, %.loopexit264.1 ], [ %i.db, %bb.ai ] ; 2 uses
-  %.sroa.04.1271.2 = phi i32 [ %32, %.split286.2 ], [ %i.ct, %.loopexit264.1 ], [ 16, %bb.ai ]
+  %.sroa.04.1271.2 = phi i32 [ %20, %.split286.2 ], [ %i.ct, %.loopexit264.1 ], [ 16, %bb.ai ]
   %.sroa.09.2.2 = phi i1 [ %spec.select.2, %.split286.2 ], [ %.sroa.09.2.1, %.loopexit264.1 ], [ %spec.select.2, %bb.ai ] ; 2 uses
   %i.dd = call i32 @llvm.usub.sat.i32(i32 %.sroa.04.1271.2, i32 1) ; 2 uses
   %i.de = icmp ult i32 %i.dd, 32
   br i1 %i.de, label %.lr.ph.3, label %.loopexit264.3
 
 .lr.ph.3:                                         ; preds = %.loopexit264.2
+  %23 = lshr i32 %i.dd, 1
   store i32 3, ptr %i.k, align 8, !alias.scope !43
   %i.df = icmp ne i32 %i.t, 3
-  %33 = lshr i32 %i.dd, 1
-  %34 = zext nneg i32 %33 to i64
-  %i.dg = zext i32 %i.v to i64
+  %i.dg = zext nneg i32 %23 to i64
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.am, %.lr.ph.3
-  %indvars.iv = phi i64 [ %indvars.iv.next.a, %bb.am ], [ %34, %.lr.ph.3 ] ; 3 uses
-  %.sroa.09.1281.3 = phi i1 [ %spec.select.3, %bb.am ], [ %.sroa.09.2.2, %.lr.ph.3 ]
-  %.sroa.011.1280.3 = phi double [ %i.dl, %bb.am ], [ %.sroa.011.1276.2, %.lr.ph.3 ] ; 2 uses
-  %35 = shl nuw nsw i64 %indvars.iv, 3            ; 3 uses
+  %indvars.iv = phi i64 [ %i.dg, %.lr.ph.3 ], [ %indvars.iv.next.a, %bb.am ] ; 3 uses
+  %.sroa.09.1281.3 = phi i1 [ %.sroa.09.2.2, %.lr.ph.3 ], [ %spec.select.3, %bb.am ]
+  %.sroa.011.1280.3 = phi double [ %.sroa.011.1276.2, %.lr.ph.3 ], [ %i.dl, %bb.am ] ; 2 uses
+  %24 = trunc nuw nsw i64 %indvars.iv to i32
+  %25 = shl nuw nsw i32 %24, 3                    ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store double 0.000000e+00, ptr %i.b, align 8
-  %36 = trunc nuw i64 %35 to i32
-  store i32 %36, ptr %i.l, align 4, !alias.scope !43
+  store i32 %25, ptr %i.l, align 4, !alias.scope !43
   %i.dh = shl i64 %indvars.iv, 3
   %i.di = add i64 %i.dh, 536870880
-  %37 = trunc i64 %35 to i32
-  %38 = add i32 %37, 400
-  store i32 %38, ptr %i.q, align 8, !alias.scope !43
-  store i64 %i.di, ptr %i.p, align 8, !alias.scope !43
-  %i.dj = icmp ne i64 %35, %i.dg
+  %.sroa.01.0.i.reass.3 = add nuw nsw i32 %25, 400
+  store i32 %.sroa.01.0.i.reass.3, ptr %i.q, align 8, !alias.scope !43
+  %26 = and i64 %i.di, 4294967288
+  store i64 %26, ptr %i.p, align 8, !alias.scope !43
+  %i.dj = icmp ne i32 %25, %i.v
   %or.cond.not.3 = select i1 %i.df, i1 true, i1 %i.dj
   %spec.select.3 = select i1 %or.cond.not.3, i1 %.sroa.09.1281.3, i1 false ; 3 uses
   %i.dk = invoke noundef zeroext i1 @_RNvNtNtCs4GWW6M5ZWyU_6brotli3enc9metablock19ComputeDistanceCost(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %8, i64 noundef %9, i64 noundef %10, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.r, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.p, ptr noalias nofree noundef nonnull %14, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b)

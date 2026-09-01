@@ -205,10 +205,12 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.i, %bb.h
-  %.0188.i = phi i32 [ 1, %bb.h ], [ %i.ap, %bb.i ] ; 5 uses
+  %indvars.iv263.i = phi i32 [ %i.ap, %bb.i ], [ 0, %bb.h ] ; 2 uses
+  %.0188.i = phi i32 [ %9, %bb.i ], [ 1, %bb.h ]  ; 5 uses
   %i.an = shl nuw i32 1, %.0188.i                 ; 2 uses
   %i.ao = icmp slt i32 %i.an, %i.am
-  %i.ap = add nuw nsw i32 %.0188.i, 1
+  %9 = add nuw nsw i32 %.0188.i, 1
+  %i.ap = add nuw nsw i32 %indvars.iv263.i, 1
   br i1 %i.ao, label %bb.i, label %bb.j, !llvm.loop !431
 
 bb.j:                                             ; preds = %bb.i
@@ -556,7 +558,7 @@ bb.af:                                            ; preds = %.critedge.i
 
 .lr.ph241.i:                                      ; preds = %bb.af
   %i.ha = getelementptr inbounds nuw i8, ptr %0, i64 1054568
-  %i.hb = shl i32 2, %i.aq                        ; 3 uses
+  %i.hb = shl i32 2, %i.aq                        ; 2 uses
   %i.hc = icmp sgt i32 %i.hb, 0
   %i.hd = sitofp nsz i32 %i.ar to double
   %i.he = fdiv nnan nsz double 1.000000e+00, %i.hd
@@ -564,9 +566,10 @@ bb.af:                                            ; preds = %.critedge.i
   %i.hg = getelementptr inbounds nuw i8, ptr %0, i64 1054552
   %i.hh = getelementptr inbounds nuw i8, ptr %0, i64 1054544
   %i.hi = sext i32 %i.ar to i64
+  %10 = shl i32 2, %indvars.iv263.i
   %i.hj = sext i32 %i.hb to i64
   %wide.trip.count266.i = zext nneg i32 %i.ge to i64
-  %wide.trip.count.i = zext nneg i32 %i.hb to i64
+  %wide.trip.count.i = zext i32 %10 to i64
   br label %bb.ag
 
 bb.ag:                                            ; preds = %._crit_edge.i, %.lr.ph241.i

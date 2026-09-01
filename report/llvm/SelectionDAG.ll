@@ -205,8 +205,7 @@ select.unfold:                                    ; preds = %bb.t, %bb.s
   %i.cq = getelementptr inbounds nuw i8, ptr %.056.ph, i64 88
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !811
   %i.cs = zext i32 %i.bw to i64
-  %smax = call i32 @llvm.smax.i32(i32 %i.bw, i32 1)
-  %wide.trip.count = zext nneg i32 %smax to i64
+  %11 = sext i32 %i.bw to i64
   br label %bb.w
 
 bb.u:                                             ; preds = %bb.t, %select.unfold
@@ -217,8 +216,8 @@ bb.u:                                             ; preds = %bb.t, %select.unfol
 
 bb.v:                                             ; preds = %bb.w
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.critedge70, label %bb.w, !llvm.loop !1788
+  %.not64 = icmp slt i64 %indvars.iv.next, %11
+  br i1 %.not64, label %bb.w, label %.critedge70, !llvm.loop !1788
 
 bb.w:                                             ; preds = %.lr.ph, %bb.v
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.v ] ; 3 uses

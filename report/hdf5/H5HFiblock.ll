@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.f
 
 H5VM_log2_gen.exit:                               ; preds = %bb.d, %bb.e, %bb.g, %bb.h
   %.0.i = phi i32 [ %i.x, %bb.e ], [ %i.ac, %bb.g ], [ %i.t, %bb.d ], [ %i.af, %bb.h ]
-  %i.ag = shl nuw i32 2, %.0.i                    ; 8 uses
+  %i.ag = shl i32 2, %.0.i                        ; 8 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 600 ; 5 uses
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !64
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 4 uses
@@ -523,7 +523,7 @@ bb.am:                                            ; preds = %bb.ak, %.thread
   %i.gi = getelementptr inbounds nuw i8, ptr %i.b, i64 352
   %i.gj = load ptr, ptr %i.gi, align 8, !tbaa !91
   %i.gk = add i32 %i.ag, -1
-  %i.gl = zext nneg i32 %i.gk to i64
+  %i.gl = zext i32 %i.gk to i64
   %i.gm = getelementptr inbounds nuw [8 x i8], ptr %i.gj, i64 %i.gl
   %i.gn = load i64, ptr %i.gm, align 8, !tbaa !51
   %i.go = shl i64 %i.gn, 1

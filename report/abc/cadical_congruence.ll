@@ -205,7 +205,7 @@ _ZNSt6vectorIN7CaDiCaL9LitIdPairESaIS1_EE9push_backEOS1_.exit172: ; preds = %_ZN
   br i1 %i.qm, label %.lr.ph.i174, label %_ZN7CaDiCaL8inc_litsERSt6vectorIiSaIiEE.exit, !llvm.loop !472
 
 _ZN7CaDiCaL8inc_litsERSt6vectorIiSaIiEE.exit:     ; preds = %.lr.ph.i174, %_ZNSt6vectorIN7CaDiCaL9LitIdPairESaIS1_EE9push_backEOS1_.exit172
-  %i.qn = add i64 %.047504, 1                     ; 2 uses
+  %i.qn = add nuw nsw i64 %.047504, 1             ; 2 uses
   %.not48 = icmp eq i64 %i.qn, %i.gm
   br i1 %.not48, label %bb.ak, label %bb.al, !llvm.loop !473
 
@@ -608,6 +608,7 @@ _ZNSt6vectorIiSaIiEE9push_backEOi.exit:           ; preds = %bb.e, %_ZNSt6vector
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 744 ; 12 uses
   %i.bk = sub nsw i32 0, %2                       ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 752 ; 5 uses
+  %4 = zext i32 %i.bg to i64
   br label %.preheader
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIiSaIiEE9push_backEOi.exit, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
@@ -954,10 +955,8 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad, %_ZN
   br i1 %i.gb, label %.thread, label %_ZNSt6vectorIlSaIlEE9push_backERKl.exit86
 
 .thread:                                          ; preds = %.critedge, %bb.af
-  %4 = trunc nuw i64 %indvars.iv to i32
-  %5 = shl i32 %4, 1                              ; 2 uses
-  %6 = zext i32 %5 to i64
-  %i.gc = getelementptr inbounds nuw [16 x i8], ptr %i.ax, i64 %6
+  %5 = shl nuw nsw i64 %indvars.iv, 1             ; 2 uses
+  %i.gc = getelementptr inbounds nuw [16 x i8], ptr %i.ax, i64 %5
   %i.gd = getelementptr inbounds nuw i8, ptr %i.gc, i64 8
   %i.ge = load ptr, ptr %i.gd, align 8, !tbaa !366 ; 2 uses
   %i.gf = load ptr, ptr %i.bj, align 8, !tbaa !271 ; 4 uses
@@ -1027,10 +1026,8 @@ _ZNSt6vectorIlSaIlEE17_M_realloc_insertIJRKlEEEvN9__gnu_cxx17__normal_iteratorIP
 _ZNSt6vectorIlSaIlEE9push_backERKl.exit:          ; preds = %bb.ag, %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJRKlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i
   %i.hd = phi ptr [ %i.gg, %bb.ag ], [ %i.hc, %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJRKlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i ] ; 2 uses
   %i.he = phi ptr [ %i.gi, %bb.ag ], [ %i.gy, %_ZNSt6vectorIlSaIlEE17_M_realloc_insertIJRKlEEEvN9__gnu_cxx17__normal_iteratorIPlS1_EEDpOT_.exit.i ] ; 3 uses
-  %7 = or disjoint i32 %5, 1
-  %8 = zext i32 %7 to i64
-  %i.hf = getelementptr inbounds nuw [16 x i8], ptr %i.ax, i64 %8
-  %i.hg = getelementptr inbounds nuw i8, ptr %i.hf, i64 8
+  %i.hf = getelementptr inbounds nuw [16 x i8], ptr %i.ax, i64 %5
+  %i.hg = getelementptr inbounds nuw i8, ptr %i.hf, i64 24
   %i.hh = load ptr, ptr %i.hg, align 8, !tbaa !366 ; 2 uses
   %.not.i79 = icmp eq ptr %i.he, %i.hd
   br i1 %.not.i79, label %bb.am, label %bb.al
@@ -1252,8 +1249,7 @@ bb.az:                                            ; preds = %_ZNSt6vectorIlSaIlE
 
 _ZN7CaDiCaL8inc_litsERSt6vectorIiSaIiEE.exit100:  ; preds = %.lr.ph.i98, %bb.az
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond = icmp eq i32 %i.bg, %lftr.wideiv
+  %exitcond = icmp eq i64 %indvars.iv.next, %4
   br i1 %exitcond, label %.critedge42, label %.preheader, !llvm.loop !529
 
 .critedge42:                                      ; preds = %_ZN7CaDiCaL8inc_litsERSt6vectorIiSaIiEE.exit100
@@ -1656,7 +1652,7 @@ bb.t:                                             ; preds = %_ZNSt6vectorIlSaIlE
   br i1 %i.dx, label %.lr.ph.i33, label %_ZN7CaDiCaL8inc_litsERSt6vectorIiSaIiEE.exit35, !llvm.loop !472
 
 _ZN7CaDiCaL8inc_litsERSt6vectorIiSaIiEE.exit35:   ; preds = %.lr.ph.i33, %bb.t
-  %i.dy = add i32 %.047, 1                        ; 2 uses
+  %i.dy = add nuw i32 %.047, 1                    ; 2 uses
   %.not22 = icmp eq i32 %i.dy, %i.au
   br i1 %.not22, label %bb.o, label %.preheader, !llvm.loop !530
 
@@ -2059,7 +2055,7 @@ _ZNSt6vectorIN7CaDiCaL13LitClausePairESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gn
   br i1 %i.ev, label %.lr.ph.i145, label %_ZN7CaDiCaL8inc_litsERSt6vectorIiSaIiEE.exit147, !llvm.loop !472
 
 _ZN7CaDiCaL8inc_litsERSt6vectorIiSaIiEE.exit147:  ; preds = %.lr.ph.i145, %.critedge121
-  %i.ew = add i32 %.080251, 1                     ; 2 uses
+  %i.ew = add nuw i32 %.080251, 1                 ; 2 uses
   %.not110 = icmp eq i32 %i.ew, %i.ci
   br i1 %.not110, label %.critedge124.preheader, label %.preheader210, !llvm.loop !570
 

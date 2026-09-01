@@ -204,8 +204,8 @@ folio_size.exit:                                  ; preds = %bb.a, %bb.b
   %i.p = shl i64 4096, %.0.i.i
   %i.q = zext i32 %i.k to i64                     ; 2 uses
   %i.r = zext nneg i8 %.val168 to i64
-  %i.s = lshr i64 %i.p, %i.r
-  %i.t = trunc i64 %i.s to i32                    ; 4 uses
+  %i.s = lshr i64 %i.p, %i.r                      ; 2 uses
+  %i.t = trunc i64 %i.s to i32                    ; 3 uses
   %.not = icmp eq i32 %i.t, 0
   br i1 %.not, label %.thread, label %bb.c, !prof !23
 
@@ -339,13 +339,15 @@ bb.k:                                             ; preds = %.lr.ph210, %bb.j
 .lr.ph215:                                        ; preds = %._crit_edge
   %i.bm = ptrtoint ptr %0 to i64
   %i.bn = getelementptr i8, ptr %i.f, i64 20
+  %wide.trip.count232 = and i64 %i.s, 2147483647
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph215, %bb.ae
+  %indvars.iv229 = phi i64 [ 0, %.lr.ph215 ], [ %indvars.iv.next230, %bb.ae ] ; 2 uses
   %.0139213 = phi ptr [ %1, %.lr.ph215 ], [ %.1, %bb.ae ] ; 4 uses
   %.3212 = phi i32 [ %.0140.lcssa, %.lr.ph215 ], [ %.4, %bb.ae ] ; 3 uses
-  %.2144211 = phi i32 [ 0, %.lr.ph215 ], [ %3, %bb.ae ] ; 3 uses
-  %i.bo = add i32 %.2144211, %i.bk                ; 2 uses
+  %3 = trunc nuw nsw i64 %indvars.iv229 to i32    ; 2 uses
+  %i.bo = add i32 %3, %i.bk                       ; 2 uses
   %i.bp = ashr i32 %i.bo, 1                       ; 9 uses
   %.not158 = icmp ult i32 %i.bp, %.val.val
   br i1 %.not158, label %bb.m, label %._crit_edge216
@@ -371,7 +373,7 @@ bb.n:                                             ; preds = %buffer_verified.exi
   %i.bz = load i64, ptr @page_offset_base, align 8
   %i.ca = add i64 %i.by, %i.bz
   %i.cb = inttoptr i64 %i.ca to ptr
-  %i.cc = shl i32 %.2144211, %i.j
+  %i.cc = shl i32 %3, %i.j
   %i.cd = zext i32 %i.cc to i64
   %i.ce = getelementptr i8, ptr %i.cb, i64 %i.cd  ; 6 uses
   %i.cf = getelementptr i8, ptr %i.bt, i64 40
@@ -638,8 +640,8 @@ bb.ad:                                            ; preds = %ext4_lock_group.exi
 bb.ae:                                            ; preds = %.sink.split, %buffer_verified.exit, %bb.m
   %.4 = phi i32 [ %.3212, %buffer_verified.exit ], [ %.3212, %bb.m ], [ 0, %.sink.split ] ; 2 uses
   %.1 = phi ptr [ %.0139213, %buffer_verified.exit ], [ %.0139213, %bb.m ], [ %.1.ph, %.sink.split ]
-  %3 = add nuw nsw i32 %.2144211, 1               ; 2 uses
-  %exitcond229.not = icmp eq i32 %3, %i.t
+  %indvars.iv.next230 = add nuw nsw i64 %indvars.iv229, 1 ; 2 uses
+  %exitcond229.not = icmp eq i64 %indvars.iv.next230, %wide.trip.count232
   br i1 %exitcond229.not, label %._crit_edge216, label %bb.l, !llvm.loop !273
 
 ._crit_edge216:                                   ; preds = %bb.ae, %bb.l, %._crit_edge

@@ -205,8 +205,8 @@ bb.a:
   %i.w = extractelement <2 x double> %i.v, i64 0
   %i.x = tail call double @llvm.floor.f64(double %i.w)
   %i.y = fptosi double %i.x to i32                ; 2 uses
-  %i.z = shl nsw i32 %i.y, 1
-  %i.aa = or disjoint i32 %i.z, 1                 ; 2 uses
+  %i.z = shl i32 %i.y, 1                          ; 2 uses
+  %i.aa = or disjoint i32 %i.z, 1
   %i.ab = add nsw i32 %i.y, 1
   %notmask = shl nsw i32 -1, %i.ab
   %i.ac = xor i32 %notmask, -1
@@ -357,24 +357,31 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.ci = load ptr, ptr @refbits, align 8, !tbaa !53 ; 3 uses
   store i32 1, ptr %i.ci, align 4, !tbaa !4
   %.not106123 = icmp slt i32 %i.aa, 3
-  br i1 %.not106123, label %._crit_edge127, label %.lr.ph126
+  br i1 %.not106123, label %._crit_edge127, label %.lr.ph126.preheader
 
-.lr.ph126:                                        ; preds = %._crit_edge118, %._crit_edge122
-  %.1102124 = phi i32 [ %i.db, %._crit_edge122 ], [ 3, %._crit_edge118 ] ; 4 uses
+.lr.ph126.preheader:                              ; preds = %._crit_edge118
+  %0 = add nsw i32 %i.z, -2
+  %1 = lshr exact i32 %0, 1
+  %2 = add nuw i32 %1, 1
+  br label %.lr.ph126
+
+.lr.ph126:                                        ; preds = %.lr.ph126.preheader, %._crit_edge122
+  %indvars.iv148 = phi i32 [ 1, %.lr.ph126.preheader ], [ %indvars.iv.next149, %._crit_edge122 ] ; 3 uses
+  %.1102124 = phi i32 [ 3, %.lr.ph126.preheader ], [ %i.db, %._crit_edge122 ] ; 4 uses
   %i.cj = lshr i32 %.1102124, 1
-  %i.ck = shl nuw i32 2, %i.cj                    ; 3 uses
+  %i.ck = shl nuw i32 2, %i.cj                    ; 2 uses
   %i.cl = add i32 %i.ck, -1                       ; 2 uses
   %i.cm = icmp sgt i32 %i.ck, 1
   br i1 %i.cm, label %.lr.ph121.preheader, label %._crit_edge122
 
 .lr.ph121.preheader:                              ; preds = %.lr.ph126
-  %0 = zext nneg i32 %i.ck to i64
-  %1 = add nsw i64 %0, -2
-  %2 = lshr exact i64 %1, 1                       ; 4 uses
-  %3 = trunc i64 %2 to i32                        ; 2 uses
-  %i.cn = add i32 %3, 1
+  %3 = shl i32 2, %indvars.iv148
+  %4 = add i32 %3, -2
+  %5 = lshr exact i32 %4, 1                       ; 3 uses
+  %6 = zext nneg i32 %5 to i64                    ; 3 uses
+  %i.cn = add nuw i32 %5, 1
   %i.co = tail call i32 @llvm.smax.i32(i32 %i.cl, i32 %i.cn)
-  %i.cp = xor i32 %3, -1
+  %i.cp = xor i32 %5, -1
   %i.cq = add i32 %i.co, %i.cp                    ; 2 uses
   %i.cr = zext i32 %i.cq to i64
   %i.cs = add nuw nsw i64 %i.cr, 1                ; 2 uses
@@ -383,15 +390,15 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 
 vector.ph:                                        ; preds = %.lr.ph121.preheader
   %n.vec = and i64 %i.cs, 8589934584              ; 3 uses
-  %i.ct = add nuw i64 %2, %n.vec
+  %i.ct = add nuw nsw i64 %n.vec, %6
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.1102124, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %i.cu = getelementptr inbounds nuw [4 x i8], ptr %i.ci, i64 %2
+  %i.cu = getelementptr [4 x i8], ptr %i.ci, i64 %6
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.cu, i64 %index ; 2 uses
+  %i.cv = getelementptr [4 x i8], ptr %i.cu, i64 %index ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 16
   store <4 x i32> %broadcast.splat, ptr %i.cv, align 4, !tbaa !4
   store <4 x i32> %broadcast.splat, ptr %i.cw, align 4, !tbaa !4
@@ -404,7 +411,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge122, label %.lr.ph121.preheader300
 
 .lr.ph121.preheader300:                           ; preds = %.lr.ph121.preheader, %middle.block
-  %indvars.iv148.ph = phi i64 [ %2, %.lr.ph121.preheader ], [ %i.ct, %middle.block ]
+  %indvars.iv148.ph = phi i64 [ %6, %.lr.ph121.preheader ], [ %i.ct, %middle.block ]
   br label %.lr.ph121
 
 .lr.ph121:                                        ; preds = %.lr.ph121.preheader300, %.lr.ph121
@@ -417,9 +424,10 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.da, label %.lr.ph121, label %._crit_edge122, !llvm.loop !60
 
 ._crit_edge122:                                   ; preds = %.lr.ph121, %middle.block, %.lr.ph126
-  %i.db = add nuw nsw i32 %.1102124, 2            ; 2 uses
-  %.not106 = icmp sgt i32 %i.db, %i.aa
-  br i1 %.not106, label %._crit_edge127, label %.lr.ph126, !llvm.loop !61
+  %i.db = add nuw nsw i32 %.1102124, 2
+  %indvars.iv.next149 = add nuw i32 %indvars.iv148, 1
+  %exitcond = icmp eq i32 %indvars.iv148, %2
+  br i1 %exitcond, label %._crit_edge127, label %.lr.ph126, !llvm.loop !61
 
 ._crit_edge127:                                   ; preds = %._crit_edge122, %._crit_edge118
   store i32 0, ptr %i.bx, align 4, !tbaa !4

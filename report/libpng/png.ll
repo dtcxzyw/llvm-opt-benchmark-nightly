@@ -205,10 +205,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not54, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.b
-  %i.g = sub nsw i32 8, %i.f
-  %i.h = shl nuw i32 1, %i.g
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.h, i32 1)
-  %wide.trip.count = zext nneg i32 %smax to i64
+  %i.g = sub i32 8, %i.f
+  %i.h = shl nuw nsw i32 1, %i.g
+  %wide.trip.count = zext nneg i32 %i.h to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -252,10 +251,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not55, label %._crit_edge49, label %.lr.ph48.preheader
 
 .lr.ph48.preheader:                               ; preds = %bb.d
-  %i.u = sub nsw i32 8, %i.t
-  %i.v = shl nuw i32 1, %i.u
-  %smax61 = tail call i32 @llvm.smax.i32(i32 %i.v, i32 1)
-  %wide.trip.count62 = zext nneg i32 %smax61 to i64
+  %i.u = sub i32 8, %i.t
+  %i.v = shl nuw nsw i32 1, %i.u
+  %wide.trip.count62 = zext nneg i32 %i.v to i64
   br label %.lr.ph48
 
 .lr.ph48:                                         ; preds = %.lr.ph48.preheader, %.lr.ph48
@@ -291,10 +289,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not56, label %._crit_edge53, label %.lr.ph52.preheader
 
 .lr.ph52.preheader:                               ; preds = %bb.f
-  %i.ae = sub nsw i32 8, %i.ad
-  %i.af = shl nuw i32 1, %i.ae
-  %smax67 = tail call i32 @llvm.smax.i32(i32 %i.af, i32 1)
-  %wide.trip.count68 = zext nneg i32 %smax67 to i64
+  %i.ae = sub i32 8, %i.ad
+  %i.af = shl nuw nsw i32 1, %i.ae
+  %wide.trip.count68 = zext nneg i32 %i.af to i64
   br label %.lr.ph52
 
 .lr.ph52:                                         ; preds = %.lr.ph52.preheader, %.lr.ph52

@@ -205,9 +205,8 @@ Kit_DsdCofactoringGetVars.exit:                   ; preds = %.critedge.i
   %i.nq = getelementptr inbounds nuw [128 x i8], ptr %i.b, i64 %i.np ; 2 uses
   %i.nr = getelementptr inbounds nuw [128 x i8], ptr %i.b, i64 %indvars.iv286.a
   %i.ns = getelementptr inbounds nuw [128 x i8], ptr %i.a, i64 %i.np ; 2 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.mk, i32 1)
+  %5 = sext i32 %i.mk to i64
   %wide.trip.count278 = zext nneg i32 %.1.lcssa.i to i64
-  %wide.trip.count = zext nneg i32 %smax to i64
   br label %.preheader239.us
 
 .preheader239.us:                                 ; preds = %.preheader239.us.preheader, %bb.ac
@@ -422,8 +421,8 @@ bb.z:                                             ; preds = %bb.y
 Kit_DsdNtkFree.exit200.us:                        ; preds = %bb.z, %bb.y
   tail call void @free(ptr noundef nonnull %i.of) #29
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond273.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond273.not, label %._crit_edge.us, label %bb.j, !llvm.loop !392
+  %6 = icmp slt i64 %indvars.iv.next, %5
+  br i1 %6, label %bb.j, label %._crit_edge.us, !llvm.loop !392
 
 bb.aa:                                            ; preds = %._crit_edge.us
   %i.qf = icmp eq i32 %.0151251.us, %.0.lcssa.i184.us
@@ -460,8 +459,7 @@ bb.ad:                                            ; preds = %._crit_edge255
   %i.qk = getelementptr inbounds nuw [128 x i8], ptr %i.b, i64 %i.qj ; 2 uses
   %i.ql = getelementptr inbounds nuw [128 x i8], ptr %i.b, i64 %indvars.iv286.a
   %i.qm = getelementptr inbounds nuw [128 x i8], ptr %i.a, i64 %i.qj ; 2 uses
-  %smax283 = tail call i32 @llvm.smax.i32(i32 %i.mk, i32 1)
-  %wide.trip.count284 = zext nneg i32 %smax283 to i64
+  %7 = sext i32 %i.mk to i64
   %i.qn = trunc nuw nsw i64 %i.qj to i32          ; 2 uses
   br label %bb.ae
 
@@ -646,8 +644,8 @@ Kit_DsdPrint.exit226:                             ; preds = %Kit_DsdPrint.exit, 
 
 bb.au:                                            ; preds = %bb.ae, %Kit_DsdPrint.exit226
   %indvars.iv.next281 = add nuw nsw i64 %indvars.iv280, 1 ; 2 uses
-  %exitcond285.not = icmp eq i64 %indvars.iv.next281, %wide.trip.count284
-  br i1 %exitcond285.not, label %._crit_edge, label %bb.ae, !llvm.loop !394
+  %8 = icmp slt i64 %indvars.iv.next281, %7
+  br i1 %8, label %bb.ae, label %._crit_edge, !llvm.loop !394
 
 ._crit_edge:                                      ; preds = %bb.au
   %exitcond290.not = icmp eq i64 %i.qj, %wide.trip.count289

@@ -89,12 +89,12 @@ bb.f:                                             ; preds = %bb.e, %bb.e
   br i1 %i.y, label %.lr.ph90, label %._crit_edge101
 
 .lr.ph90:                                         ; preds = %bb.f, %.lr.ph90
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph90 ], [ 0, %bb.f ] ; 5 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph90 ], [ 0, %bb.f ] ; 4 uses
   %.06687 = phi i32 [ %i.ab, %.lr.ph90 ], [ 0, %bb.f ]
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv ; 2 uses
   %i.aa = call i32 @Dau_DsdCheckDecExist_rec(ptr noundef %0, ptr noundef nonnull %1, ptr noundef nonnull %2, ptr noundef nonnull %i.z)
   %i.ab = or i32 %i.aa, %.06687                   ; 3 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
   %i.ac = load i32, ptr %i.z, align 4, !tbaa !14
   %i.ad = load i32, ptr %3, align 4, !tbaa !14
   %i.ae = add nsw i32 %i.ad, %i.ac
@@ -112,12 +112,11 @@ bb.f:                                             ; preds = %bb.e, %bb.e
   br i1 %i.aj, label %.preheader.us.preheader, label %._crit_edge101
 
 .preheader.us.preheader:                          ; preds = %._crit_edge91
-  %4 = add nuw i64 %indvars.iv, 1                 ; 2 uses
   %i.ak = icmp eq i64 %indvars.iv, 0
-  %unroll_iter = and i64 %4, -2
+  %unroll_iter = and i64 %indvars.iv.next, 9223372036854775806
   %i.al = and i64 %indvars.iv, 1
   %lcmp.mod.not.not = icmp eq i64 %i.al, 0
-  %lcmp.mod144 = trunc i64 %4 to i1
+  %lcmp.mod144 = trunc i64 %indvars.iv.next to i1
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge97.us
@@ -353,7 +352,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.y, label %.lr.ph110, label %.loopexit
 
 .lr.ph110:                                        ; preds = %bb.f, %.lr.ph110
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph110 ], [ 0, %bb.f ] ; 5 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph110 ], [ 0, %bb.f ] ; 4 uses
   %.074108 = phi i32 [ %i.af, %.lr.ph110 ], [ 0, %bb.f ] ; 4 uses
   %.079106 = phi i32 [ %i.ab, %.lr.ph110 ], [ 0, %bb.f ]
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv ; 2 uses
@@ -363,7 +362,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ad = icmp eq i32 %i.ac, 1                    ; 3 uses
   %i.ae = zext i1 %i.ad to i32
   %i.af = add nuw nsw i32 %.074108, %i.ae         ; 5 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 4 uses
   %i.ag = load i32, ptr %3, align 4, !tbaa !14
   %i.ah = add nsw i32 %i.ag, %i.ac
   store i32 %i.ah, ptr %3, align 4, !tbaa !14
@@ -384,15 +383,14 @@ bb.g:                                             ; preds = %._crit_edge111
   br i1 %i.am, label %.preheader96.us.preheader, label %.preheader
 
 .preheader96.us.preheader:                        ; preds = %bb.g
-  %4 = add nuw i64 %indvars.iv, 1                 ; 2 uses
   %i.an = add nsw i32 %.074108, -1
   %i.ao = zext i1 %i.ad to i32
   %i.ap = add nsw i32 %i.an, %i.ao
   %i.aq = icmp eq i64 %indvars.iv, 0
-  %unroll_iter = and i64 %4, -2
+  %unroll_iter = and i64 %indvars.iv.next, -2
   %i.ar = and i64 %indvars.iv, 1
   %lcmp.mod.not.not = icmp eq i64 %i.ar, 0
-  %lcmp.mod178 = trunc i64 %4 to i1
+  %lcmp.mod178 = trunc i64 %indvars.iv.next to i1
   %xtraiter180 = and i32 %i.af, 3                 ; 3 uses
   %i.as = icmp ult i32 %i.ap, 3
   %unroll_iter184 = and i32 %i.af, 2147483644

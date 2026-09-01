@@ -202,18 +202,20 @@ ensure_valid_bucket_pointers.exit:                ; preds = %bb.c, %bb.d
   br label %bb.e
 
 .loopexit:                                        ; preds = %._crit_edge, %bb.e
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %exitcond46.not = icmp eq i64 %i.ad, 128
   br i1 %exitcond46.not, label %.preheader, label %bb.e, !llvm.loop !22
 
 bb.e:                                             ; preds = %ensure_valid_bucket_pointers.exit, %.loopexit
+  %indvars.iv = phi i64 [ 1, %ensure_valid_bucket_pointers.exit ], [ %indvars.iv.next, %.loopexit ] ; 2 uses
   %.143 = phi i64 [ 0, %ensure_valid_bucket_pointers.exit ], [ %i.ad, %.loopexit ] ; 4 uses
   %i.y = load ptr, ptr %i.a, align 8
   %i.z = getelementptr inbounds nuw [24 x i8], ptr %i.y, i64 %.143
   %i.aa = load i64, ptr %i.g, align 8
-  %i.ab = add i64 %i.aa, -7                       ; 2 uses
+  %i.ab = add i64 %i.aa, -7                       ; 3 uses
   %i.ac = shl i64 %.143, %i.ab                    ; 2 uses
   %i.ad = add nuw nsw i64 %.143, 1                ; 3 uses
-  %i.ae = shl i64 %i.ad, %i.ab                    ; 2 uses
+  %i.ae = shl i64 %i.ad, %i.ab
   %i.af = load ptr, ptr @stderr, align 8
   %i.ag = tail call i32 (ptr, ptr, ...) @pg_fprintf(ptr noundef %i.af, ptr noundef nonnull @.str.4, i64 noundef %.143) #11 ; 0 uses
   %i.ah = load ptr, ptr @stderr, align 8
@@ -221,10 +223,14 @@ bb.e:                                             ; preds = %ensure_valid_bucket
   %i.aj = load i64, ptr %i.ai, align 8
   %i.ak = tail call i32 (ptr, ptr, ...) @pg_fprintf(ptr noundef %i.ah, ptr noundef nonnull @.str.5, i64 noundef %i.aj) #11 ; 0 uses
   %i.al = icmp ult i64 %i.ac, %i.ae
-  br i1 %i.al, label %.lr.ph42, label %.loopexit
+  br i1 %i.al, label %.lr.ph42.preheader, label %.loopexit
 
-.lr.ph42:                                         ; preds = %bb.e, %._crit_edge
-  %.03440 = phi i64 [ %i.at, %._crit_edge ], [ %i.ac, %bb.e ] ; 3 uses
+.lr.ph42.preheader:                               ; preds = %bb.e
+  %1 = shl i64 %indvars.iv, %i.ab
+  br label %.lr.ph42
+
+.lr.ph42:                                         ; preds = %.lr.ph42.preheader, %._crit_edge
+  %.03440 = phi i64 [ %i.at, %._crit_edge ], [ %i.ac, %.lr.ph42.preheader ] ; 3 uses
   %i.am = load ptr, ptr %i.x, align 8
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %.03440
   %.03236 = load i64, ptr %i.an, align 8          ; 2 uses
@@ -246,7 +252,7 @@ bb.e:                                             ; preds = %ensure_valid_bucket
   %i.ar = load ptr, ptr @stderr, align 8
   %i.as = tail call i32 (ptr, ptr, ...) @pg_fprintf(ptr noundef %i.ar, ptr noundef nonnull @.str.6, i64 noundef %.03440, i64 noundef %.033.lcssa) #11 ; 0 uses
   %i.at = add nuw i64 %.03440, 1                  ; 2 uses
-  %exitcond45.not = icmp eq i64 %i.at, %i.ae
+  %exitcond45.not = icmp eq i64 %i.at, %1
   br i1 %exitcond45.not, label %.loopexit, label %.lr.ph42, !llvm.loop !24
 
 .preheader:                                       ; preds = %.loopexit, %.preheader

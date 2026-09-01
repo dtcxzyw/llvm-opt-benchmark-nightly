@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %.lr.ph11, %._crit_e
 
 .lr.ph6:                                          ; preds = %bb.b
   %i.an = getelementptr inbounds nuw [32 x i8], ptr %i.aa, i64 %indvars.iv22 ; 9 uses
-  %i.ao = shl nuw nsw i32 1, %i.am
-  %i.ap = zext nneg i32 %i.ao to i64              ; 2 uses
+  %i.ao = shl nuw i32 1, %i.am
+  %i.ap = zext i32 %i.ao to i64                   ; 2 uses
   %min.iters.check41 = icmp ult i32 %i.am, 3
   br i1 %min.iters.check41, label %scalar.ph40, label %vector.ph42
 
 vector.ph42:                                      ; preds = %.lr.ph6
-  %n.vec43 = and i64 %i.ap, 2147483640
+  %n.vec43 = and i64 %i.ap, 4294967288
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %spec.select72, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body44
@@ -614,8 +614,7 @@ mdct_butterfly_first.exit:                        ; preds = %bb.c
   %i.dh = ashr i32 %i.de, 1
   %i.di = sext i32 %i.dh to i64
   %i.dj = sext i32 %i.df to i64                   ; 4 uses
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.dd, i32 1)
-  %wide.trip.count = zext nneg i32 %smax to i64
+  %2 = sext i32 %i.dd to i64
   br label %bb.d
 
 .preheader:                                       ; preds = %._crit_edge, %bb.a, %mdct_butterfly_first.exit
@@ -1018,8 +1017,8 @@ bb.e:                                             ; preds = %bb.e, %bb.d
 
 mdct_butterfly_generic.exit:                      ; preds = %bb.e
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !499
+  %3 = icmp slt i64 %indvars.iv.next, %2
+  br i1 %3, label %bb.d, label %._crit_edge, !llvm.loop !499
 
 ._crit_edge:                                      ; preds = %mdct_butterfly_generic.exit, %.preheader1
   %i.agl = add nuw i32 %.0233, 1

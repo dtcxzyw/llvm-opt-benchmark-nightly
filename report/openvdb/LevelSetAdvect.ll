@@ -205,7 +205,7 @@ _ZN3tbb6detail2d010raii_guardIZNS0_2d213hash_map_baseINS0_2d113tbb_allocatorISt4
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eg, i64 56
   store ptr inttoptr (i64 3 to ptr), ptr %i.ei, align 8, !tbaa !128
   %i.ej = add nuw i64 %.06.i.i.i, 4
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKPN7openvdb5v13_04tree17ValueAccessorBaseIKNS8_4TreeINS8_8RootNodeINS8_12InternalNodeINSC_INS8_8LeafNodeINS7_4math4Vec3IfEELj3EEELj4EEELj5EEEEEEELb1EEEbEEENS3_13spin_rw_mutexEE12init_bucketsEPNST_6bucketEmb.exit.i, label %.lr.ph.i.i.i, !llvm.loop !130
 
@@ -608,7 +608,7 @@ _ZN3tbb6detail2d010raii_guardIZNS0_2d213hash_map_baseINS0_2d113tbb_allocatorISt4
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eg, i64 56
   store ptr inttoptr (i64 3 to ptr), ptr %i.ei, align 8, !tbaa !128
   %i.ej = add nuw i64 %.06.i.i.i, 4
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKPN7openvdb5v13_04tree17ValueAccessorBaseIKNS8_4TreeINS8_8RootNodeINS8_12InternalNodeINSC_INS8_8LeafNodeIfLj3EEELj4EEELj5EEEEEEELb1EEEbEEENS3_13spin_rw_mutexEE12init_bucketsEPNSQ_6bucketEmb.exit.i, label %.lr.ph.i.i.i, !llvm.loop !676
 
@@ -1011,7 +1011,7 @@ _ZN3tbb6detail2d010raii_guardIZNS0_2d213hash_map_baseINS0_2d113tbb_allocatorISt4
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eg, i64 56
   store ptr inttoptr (i64 3 to ptr), ptr %i.ei, align 8, !tbaa !128
   %i.ej = add nuw i64 %.06.i.i.i, 4
-  %niter.next.3 = add i64 %niter, 4               ; 2 uses
+  %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %_ZN3tbb6detail2d213hash_map_baseINS0_2d113tbb_allocatorISt4pairIKPN7openvdb5v13_04tree17ValueAccessorBaseIKNS8_4TreeINS8_8RootNodeINS8_12InternalNodeINSC_INS8_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbEEENS3_13spin_rw_mutexEE12init_bucketsEPNSQ_6bucketEmb.exit.i, label %.lr.ph.i.i.i, !llvm.loop !5663
 

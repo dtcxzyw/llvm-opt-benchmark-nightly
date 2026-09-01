@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.preheader150, %bb.
   %i.af = load i32, ptr %0, align 8, !tbaa !293   ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #37
-  %i.ag = add nsw i32 %i.af, -1                   ; 3 uses
+  %i.ag = add i32 %i.af, -1                       ; 3 uses
   %i.ah = icmp sgt i32 %i.af, 2
   %i.ai = add nsw i32 %i.af, -3
   %i.aj = shl nuw i32 1, %i.ai
@@ -220,9 +220,8 @@ bb.b:                                             ; preds = %.preheader150, %bb.
   br i1 %.not22.i, label %Abc_TwoExactCofactorHex.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b
-  %i.ap = shl nuw i32 1, %i.ag
+  %i.ap = shl nuw nsw i32 1, %i.ag
   %i.aq = shl nuw i32 %.0116154, %.0117156
-  %smax.i = call i32 @llvm.smax.i32(i32 %i.ap, i32 1)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.e, %.lr.ph.i
@@ -257,7 +256,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.bm = add nuw nsw i32 %.021.i, 1              ; 2 uses
-  %exitcond.not.i = icmp eq i32 %i.bm, %smax.i
+  %exitcond.not.i = icmp eq i32 %i.bm, %i.ap
   br i1 %exitcond.not.i, label %Abc_TwoExactCofactorHex.exit, label %bb.c, !llvm.loop !1566
 
 Abc_TwoExactCofactorHex.exit:                     ; preds = %bb.e, %bb.b
@@ -660,9 +659,9 @@ Vec_WrdStart.exit:                                ; preds = %bb.a, %bb.b
 
 .lr.ph36.split.us.split.us:                       ; preds = %.lr.ph36.split.us.split.us.preheader, %..loopexit30_crit_edge.us.us
   %indvars.iv75 = phi i64 [ 0, %.lr.ph36.split.us.split.us.preheader ], [ %indvars.iv.next76, %..loopexit30_crit_edge.us.us ] ; 5 uses
-  %i.t = trunc nuw nsw i64 %indvars.iv75 to i32
+  %i.t = trunc i64 %indvars.iv75 to i32
   %i.u = xor i32 %i.t, -1
-  %i.v = add nsw i32 %0, %i.u
+  %i.v = add i32 %0, %i.u
   %i.w = shl i32 %i.v, %i.e
   %i.x = sext i32 %i.w to i64
   %i.y = getelementptr inbounds [8 x i8], ptr %i.l, i64 %i.x ; 4 uses

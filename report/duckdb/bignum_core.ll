@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/duckdb/original/bignum_core?download=true
 inline.NumInlined: 59
 inline.NumDeleted: 18
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumRuntimeUnrolled: 17
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 16
 loop-unroll.NumUnrolled: 19
 begin_hunk_0_@_Z23mbedtls_mpi_core_randomPmmPKmmPFiPvPhmES2_:bb.a
   %reverse56 = or <2 x i64> %i.bt, %i.bu
@@ -205,10 +205,9 @@ _ZL38exp_mod_calc_first_bit_optionally_safePKmmiPmS1_.exit: ; preds = %bb.a, %_Z
   %.2 = phi i64 [ %i.m, %_Z23mbedtls_mpi_core_bitlenPKmm.exit.i ], [ %5, %bb.a ] ; 3 uses
   %storemerge.i = phi i64 [ %i.n, %_Z23mbedtls_mpi_core_bitlenPKmm.exit.i ], [ 0, %bb.a ] ; 2 uses
   %i.o = shl i64 %.2, 6
-  %9 = icmp ugt i64 %i.o, 79                      ; 2 uses
-  %i.p = select i1 %9, i64 3, i64 1               ; 4 uses
-  %i.q = shl nuw nsw i64 1, %i.p
-  %10 = freeze i64 %i.q                           ; 5 uses
+  %9 = icmp ult i64 %i.o, 80                      ; 3 uses
+  %i.p = select i1 %9, i64 1, i64 3               ; 4 uses
+  %i.q = shl nuw nsw i64 1, %i.p                  ; 2 uses
   %i.r = shl i64 %3, %i.p
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.r ; 11 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %3 ; 6 uses
@@ -235,7 +234,7 @@ _ZL38exp_mod_calc_first_bit_optionally_safePKmmiPmS1_.exit: ; preds = %bb.a, %_Z
   tail call void @_Z24mbedtls_mpi_core_montmulPmPKmS1_mS1_mmS_(ptr noundef nonnull %8, ptr noundef nonnull %8, ptr noundef readonly %7, i64 noundef %3, ptr noundef nonnull readonly %2, i64 noundef %3, i64 noundef %.neg11.i, ptr noundef nonnull %i.t)
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %3 ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ak, ptr readonly align 8 %1, i64 %i.aj, i1 false)
-  br i1 %9, label %.lr.ph.i, label %_ZL25exp_mod_precompute_windowPKmS0_mmS0_mPmS1_.exit
+  br i1 %9, label %_ZL25exp_mod_precompute_windowPKmS0_mmS0_mPmS1_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZL38exp_mod_calc_first_bit_optionally_safePKmmiPmS1_.exit, %.lr.ph.i
   %.032.i = phi i64 [ %i.am, %.lr.ph.i ], [ 2, %_ZL38exp_mod_calc_first_bit_optionally_safePKmmiPmS1_.exit ]
@@ -243,7 +242,7 @@ _ZL38exp_mod_calc_first_bit_optionally_safePKmmiPmS1_.exit: ; preds = %bb.a, %_Z
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %.03031.i, i64 %3 ; 2 uses
   tail call void @_Z24mbedtls_mpi_core_montmulPmPKmS1_mS1_mmS_(ptr noundef %i.al, ptr noundef %.03031.i, ptr noundef nonnull %i.ak, i64 noundef %3, ptr noundef nonnull readonly %2, i64 noundef %3, i64 noundef %.neg11.i, ptr noundef nonnull %i.t)
   %i.am = add nuw nsw i64 %.032.i, 1              ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.am, %10
+  %exitcond.not.i = icmp eq i64 %i.am, %i.q
   br i1 %exitcond.not.i, label %_ZL25exp_mod_precompute_windowPKmS0_mmS0_mPmS1_.exit, label %.lr.ph.i, !llvm.loop !52
 
 _ZL25exp_mod_precompute_windowPKmS0_mmS0_mPmS1_.exit: ; preds = %.lr.ph.i, %_ZL38exp_mod_calc_first_bit_optionally_safePKmmiPmS1_.exit
@@ -263,12 +262,6 @@ _ZL25exp_mod_precompute_windowPKmS0_mmS0_mPmS1_.exit.split.preheader: ; preds = 
   %unroll_iter101 = and i64 %3, -2
   %lcmp.mod99.not = icmp eq i64 %xtraiter98, 0
   %lcmp.mod100 = trunc i64 %3 to i1
-  %11 = add i64 %10, -1
-  %xtraiter103 = and i64 %10, 3                   ; 3 uses
-  %12 = icmp ult i64 %11, 3
-  %unroll_iter106 = and i64 %10, -4
-  %lcmp.mod104.not = icmp eq i64 %xtraiter103, 0
-  %lcmp.mod105 = icmp ne i64 %xtraiter103, 0
   br label %_ZL25exp_mod_precompute_windowPKmS0_mmS0_mPmS1_.exit.split
 
 _ZL25exp_mod_precompute_windowPKmS0_mmS0_mPmS1_.exit.split.us: ; preds = %_ZL25exp_mod_precompute_windowPKmS0_mmS0_mPmS1_.exit, %bb.f
@@ -335,10 +328,19 @@ bb.g:                                             ; preds = %_ZL25exp_mod_precom
   br i1 %.not.i.i60, label %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.preheader, label %.split.i.i
 
 _Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.preheader: ; preds = %bb.g
-  br i1 %12, label %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.epil.preheader, label %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i
+  %10 = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
+  %11 = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
+  %12 = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
+  %13 = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
+  %14 = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
+  %15 = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
+  br i1 %9, label %_ZL36exp_mod_table_lookup_optionally_safePmS_mmmi.exit, label %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i
 
-_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i: ; preds = %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.preheader, %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i
-  %niter107 = phi i64 [ %niter107.next.3, %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i ], [ 0, %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.preheader ]
+_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i: ; preds = %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.preheader
+  %16 = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
+  %17 = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
+  %18 = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
+  %19 = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
   %i.bq = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
   %i.br = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
   %i.bs = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
@@ -351,9 +353,9 @@ _Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i: ; preds = %_Z28mbedtls_mpi_
   %i.bz = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
   %i.ca = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
   %i.cb = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
-  %niter107.next.3 = add i64 %niter107, 4         ; 2 uses
-  %niter107.ncmp.3 = icmp eq i64 %niter107.next.3, %unroll_iter106
-  br i1 %niter107.ncmp.3, label %_ZL36exp_mod_table_lookup_optionally_safePmS_mmmi.exit.loopexit.unr-lcssa, label %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i, !llvm.loop !54
+  %20 = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
+  %21 = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
+  br label %_ZL36exp_mod_table_lookup_optionally_safePmS_mmmi.exit
 
 .split.i.i:                                       ; preds = %bb.g, %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.i.i
   %.012.i.i = phi ptr [ %i.dz, %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.i.i ], [ %8, %bb.g ] ; 5 uses
@@ -462,26 +464,10 @@ _Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.i.i.loopexit91.unr-lcssa: ; preds =
 _Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.i.i: ; preds = %.lr.ph.i.us.i.i.epil.preheader, %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.i.i.loopexit91.unr-lcssa, %.lr.ph.i.i.i.epil.preheader, %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.i.i.loopexit.unr-lcssa, %.split.i.i
   %i.dy = add nuw nsw i64 %.01011.i.i, 1          ; 2 uses
   %i.dz = getelementptr inbounds nuw [8 x i8], ptr %.012.i.i, i64 %3
-  %exitcond.not.i.i = icmp eq i64 %i.dy, %10
+  %exitcond.not.i.i = icmp eq i64 %i.dy, %i.q
   br i1 %exitcond.not.i.i, label %_ZL36exp_mod_table_lookup_optionally_safePmS_mmmi.exit, label %.split.i.i, !llvm.loop !54
 
-_ZL36exp_mod_table_lookup_optionally_safePmS_mmmi.exit.loopexit.unr-lcssa: ; preds = %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i
-  br i1 %lcmp.mod104.not, label %_ZL36exp_mod_table_lookup_optionally_safePmS_mmmi.exit, label %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.epil.preheader
-
-_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.epil.preheader: ; preds = %_ZL36exp_mod_table_lookup_optionally_safePmS_mmmi.exit.loopexit.unr-lcssa, %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.preheader
-  tail call void @llvm.assume(i1 %lcmp.mod105)
-  br label %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.epil
-
-_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.epil: ; preds = %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.epil, %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.epil.preheader
-  %epil.iter = phi i64 [ 0, %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.epil.preheader ], [ %epil.iter.next, %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.epil ]
-  %13 = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
-  %14 = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
-  %15 = load volatile i64, ptr @mbedtls_ct_zero, align 8, !tbaa !9 ; 0 uses
-  %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
-  %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter103
-  br i1 %epil.iter.cmp.not, label %_ZL36exp_mod_table_lookup_optionally_safePmS_mmmi.exit, label %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.epil, !llvm.loop !55
-
-_ZL36exp_mod_table_lookup_optionally_safePmS_mmmi.exit: ; preds = %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.i.i, %_ZL36exp_mod_table_lookup_optionally_safePmS_mmmi.exit.loopexit.unr-lcssa, %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.epil
+_ZL36exp_mod_table_lookup_optionally_safePmS_mmmi.exit: ; preds = %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.i.i, %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i.preheader, %_Z28mbedtls_mpi_core_cond_assignPmPKmmm.exit.us.i.i
   tail call void @_Z24mbedtls_mpi_core_montmulPmPKmS1_mS1_mmS_(ptr noundef %0, ptr noundef %0, ptr noundef nonnull %i.s, i64 noundef %3, ptr noundef nonnull %2, i64 noundef %3, i64 noundef %.neg11.i, ptr noundef nonnull %i.t)
   br label %bb.h
 
@@ -560,7 +546,7 @@ bb.a:
   %i.u = add nuw i64 %.01213, 2                   ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !56
+  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !55
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
@@ -599,7 +585,7 @@ bb.a:
   %i.e = add nuw i64 %.09.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !57
+  br i1 %epil.iter.cmp.not, label %._crit_edge, label %.lr.ph.epil, !llvm.loop !56
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.epil, %bb.a
   %.07.lcssa = phi i64 [ 0, %bb.a ], [ %i.ap, %._crit_edge.loopexit.unr-lcssa ], [ %i.d, %.lr.ph.epil ]
@@ -650,7 +636,7 @@ bb.a:
   %i.aq = add nuw i64 %.09, 8                     ; 2 uses
   %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
-  br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !58
+  br i1 %niter.ncmp.7, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !57
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -753,8 +739,7 @@ attributes #12 = { nounwind }
 !52 = distinct !{!52, !8}
 !53 = distinct !{!53, !8}
 !54 = distinct !{!54, !8}
-!55 = distinct !{!55, !37}
-!56 = distinct !{!56, !8}
-!57 = distinct !{!57, !37}
-!58 = distinct !{!58, !8}
+!55 = distinct !{!55, !8}
+!56 = distinct !{!56, !37}
+!57 = distinct !{!57, !8}
 end_hunk_0

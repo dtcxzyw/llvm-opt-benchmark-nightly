@@ -60,7 +60,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.w = zext i32 %i.f to i64                     ; 7 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.w ; 3 uses
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %i.w ; 5 uses
-  %i.z = zext nneg i32 %i.o to i64                ; 7 uses
+  %i.z = zext nneg i32 %i.o to i64                ; 6 uses
   %i.aa = getelementptr inbounds nuw [2 x i8], ptr %i.y, i64 %i.z ; 4 uses
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %i.z ; 6 uses
   %i.ac = shl nuw nsw i64 %i.z, 1
@@ -110,11 +110,10 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br label %.preheader213.i
 
 .preheader213.i:                                  ; preds = %.preheader213.i.preheader, %._crit_edge.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %._crit_edge.i ], [ 0, %.preheader213.i.preheader ] ; 5 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %._crit_edge.i ], [ 0, %.preheader213.i.preheader ] ; 4 uses
   %.0175227.i = phi i32 [ %i.bi, %._crit_edge.i ], [ 0, %.preheader213.i.preheader ]
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %indvars.iv.i
-  %3 = icmp samesign ult i64 %indvars.iv.i, %i.z
-  br i1 %3, label %.lr.ph218.us.i, label %._crit_edge.i
+  br label %.lr.ph218.us.i
 
 .lr.ph218.us.i:                                   ; preds = %.preheader213.i, %bb.h
   %storemerge222.us.i = phi i32 [ %i.bg, %bb.h ], [ 32, %.preheader213.i ] ; 3 uses
@@ -131,7 +130,7 @@ bb.g:                                             ; preds = %bb.f
   %i.bb = load i16, ptr %i.ba, align 2, !tbaa !8
   %i.bc = zext i16 %i.bb to i32
   %spec.select195.us.i = tail call i32 @llvm.umin.i32(i32 %storemerge222.us.i, i32 %i.bc)
-  %i.bd = add nuw nsw i32 %spec.select195.us.i, %.0167217.us.i ; 2 uses
+  %i.bd = add nuw nsw i32 %spec.select195.us.i, %.0167217.us.i ; 3 uses
   %i.be = add nuw nsw i64 %.0168216.us.i, %i.w    ; 2 uses
   %i.bf = icmp samesign ult i64 %i.be, %i.z
   br i1 %i.bf, label %bb.f, label %._crit_edge.i, !llvm.loop !13
@@ -140,13 +139,11 @@ bb.h:                                             ; preds = %bb.f
   %i.bg = add i32 %storemerge222.us.i, -1
   br label %.lr.ph218.us.i
 
-._crit_edge.i:                                    ; preds = %bb.g, %.preheader213.i
-  %storemerge.i = phi i32 [ 32, %.preheader213.i ], [ %storemerge222.us.i, %bb.g ]
-  %.0167.lcssa.i = phi i32 [ 0, %.preheader213.i ], [ %i.bd, %bb.g ] ; 2 uses
-  store i32 %storemerge.i, ptr %i.ay, align 4, !tbaa !10
+._crit_edge.i:                                    ; preds = %bb.g
+  store i32 %storemerge222.us.i, ptr %i.ay, align 4, !tbaa !10
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %indvars.iv.i
-  store i32 %.0167.lcssa.i, ptr %i.bh, align 4, !tbaa !10
-  %i.bi = add i32 %.0167.lcssa.i, %.0175227.i     ; 3 uses
+  store i32 %i.bd, ptr %i.bh, align 4, !tbaa !10
+  %i.bi = add i32 %i.bd, %.0175227.i              ; 3 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.w
   br i1 %exitcond.not.i, label %.new, label %.preheader213.i, !llvm.loop !14
@@ -199,7 +196,7 @@ bb.i:                                             ; preds = %bb.i, %.new
   %i.cg = add i32 %i.cf, %i.cc
   store i32 0, ptr %i.ce, align 4, !tbaa !10
   %indvars.iv.next238.i.1 = add nuw nsw i64 %indvars.iv237.i, 2
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
+  %niter.next.1 = add nuw nsw i64 %niter, 2       ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader.preheader.i.unr-lcssa, label %bb.i, !llvm.loop !22
 

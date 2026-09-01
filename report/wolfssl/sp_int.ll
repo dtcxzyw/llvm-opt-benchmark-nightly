@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
   %.5.i311.i = phi i32 [ %.5.i.i, %bb.q ], [ %.5.i.i, %sp_count_bits.exit.i ], [ %.5.i.i, %bb.p ], [ %.5.i.i, %bb.r ], [ 0, %bb.m ] ; 3 uses
   %.0262.i = phi i32 [ 3, %bb.q ], [ 6, %sp_count_bits.exit.i ], [ 2, %bb.p ], [ %..i, %bb.r ], [ 2, %bb.m ] ; 18 uses
   %i.az = add nsw i32 %.0262.i, -1
-  %i.ba = shl nuw nsw i32 1, %i.az
+  %i.ba = shl nuw i32 1, %i.az
   %.fr = freeze i32 %i.ba                         ; 4 uses
   %i.bb = icmp ult i16 %i.i, 65
   br i1 %i.bb, label %bb.s, label %_sp_exptmod_nct.exit
@@ -238,7 +238,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.bq, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.t
-  %unroll_iter = and i64 %i.bp, 4294967292
+  %unroll_iter = and i64 %i.bp, 8589934588
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.u, %.new

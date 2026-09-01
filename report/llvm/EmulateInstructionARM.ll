@@ -204,6 +204,7 @@ bb.s:                                             ; preds = %bb.r, %bb.p
   %i.bi = zext nneg i32 %i.n to i64               ; 2 uses
   %i.bj = add nuw nsw i32 %i.m, 3
   %i.bk = or disjoint i32 %i.t, 256
+  %wide.trip.count = zext nneg i32 %i.o to i64
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.v, %bb.s
@@ -212,7 +213,7 @@ bb.s:                                             ; preds = %bb.r, %bb.p
   br label %bb.t
 
 bb.t:                                             ; preds = %.preheader, %bb.u
-  %.0125 = phi i32 [ 0, %.preheader ], [ %5, %bb.u ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.u ] ; 2 uses
   %.073124 = phi i64 [ 0, %.preheader ], [ %i.bt, %bb.u ]
   %.177123 = phi i64 [ %.076126, %.preheader ], [ %i.bp, %bb.u ] ; 3 uses
   store i32 12, ptr %4, align 8, !tbaa !45
@@ -227,12 +228,13 @@ bb.t:                                             ; preds = %.preheader, %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.bp = add i64 %.177123, %i.bi                 ; 2 uses
-  %i.bq = shl i32 %.0125, %i.bj
+  %5 = trunc nuw nsw i64 %indvars.iv to i32
+  %i.bq = shl i32 %5, %i.bj
   %i.br = zext nneg i32 %i.bq to i64
   %i.bs = shl i64 %i.bm, %i.br
   %i.bt = or i64 %i.bs, %.073124                  ; 2 uses
-  %5 = add nuw nsw i32 %.0125, 1                  ; 2 uses
-  %exitcond.not = icmp eq i32 %5, %i.o
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %bb.v, label %bb.t, !llvm.loop !90
 
 bb.v:                                             ; preds = %bb.u
@@ -635,6 +637,7 @@ bb.o:                                             ; preds = %bb.n, %bb.l
   %i.bd = getelementptr inbounds nuw i8, ptr %4, i64 168
   %i.be = zext nneg i32 %i.n to i64               ; 2 uses
   %i.bf = shl nuw nsw i32 8, %i.m
+  %wide.trip.count = zext nneg i32 %i.o to i64
   %i.bg = zext nneg i32 %i.bf to i64
   %notmask.i = shl nsw i64 -1, %i.bg
   %i.bh = xor i64 %notmask.i, -1
@@ -642,7 +645,7 @@ bb.o:                                             ; preds = %bb.n, %bb.l
 
 bb.p:                                             ; preds = %bb.o, %bb.q
   %.077129 = phi i32 [ 0, %bb.o ], [ %i.bw, %bb.q ] ; 2 uses
-  %.079128 = phi i64 [ %i.ak, %bb.o ], [ %i.bp, %bb.q ]
+  %.079128 = phi i64 [ %i.ak, %bb.o ], [ %6, %bb.q ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   %i.bi = add nuw nsw i32 %.077129, %i.az         ; 2 uses
   %i.bj = load ptr, ptr %0, align 8, !tbaa !25
@@ -655,24 +658,25 @@ bb.p:                                             ; preds = %bb.o, %bb.q
   br i1 %i.bo, label %.preheader.preheader, label %.critedge
 
 .preheader:                                       ; preds = %.preheader.preheader
-  %6 = add nuw nsw i32 %.0139, 1                  ; 2 uses
-  %i.bp = add i64 %.1138, %i.be                   ; 2 uses
-  %exitcond.not = icmp eq i32 %6, %i.o
+  %6 = add i64 %.1139, %i.be                      ; 2 uses
+  %i.bp = add nuw nsw i64 %.1138, 1               ; 2 uses
+  %exitcond.not = icmp eq i64 %i.bp, %wide.trip.count
   br i1 %exitcond.not, label %bb.q, label %.preheader.preheader, !llvm.loop !96
 
 .preheader.preheader:                             ; preds = %bb.p, %.preheader
-  %.0139 = phi i32 [ %6, %.preheader ], [ 0, %bb.p ] ; 2 uses
-  %.1138 = phi i64 [ %i.bp, %.preheader ], [ %.079128, %bb.p ] ; 3 uses
-  %i.bq = shl i32 %.0139, %i.ba
+  %.1139 = phi i64 [ %6, %.preheader ], [ %.079128, %bb.p ] ; 3 uses
+  %.1138 = phi i64 [ %i.bp, %.preheader ], [ 0, %bb.p ] ; 2 uses
+  %7 = trunc nuw nsw i64 %.1138 to i32
+  %i.bq = shl i32 %7, %i.ba
   %i.br = zext nneg i32 %i.bq to i64
   %i.bs = lshr i64 %i.bm, %i.br
   %i.bt = and i64 %i.bs, %i.bh
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.bb, ptr noundef nonnull align 8 dereferenceable(80) %5, i64 80, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.bc, ptr noundef nonnull align 8 dereferenceable(80) %3, i64 80, i1 false)
-  %i.bu = sub i64 %.1138, %i.ak
+  %i.bu = sub i64 %.1139, %i.ak
   store i32 2, ptr %i.ao, align 4, !tbaa !49
   store i64 %i.bu, ptr %i.bd, align 8, !tbaa !61
-  %i.bv = call noundef zeroext i1 @_ZN12lldb_private18EmulateInstruction19WriteMemoryUnsignedERKNS0_7ContextEmmm(ptr noundef nonnull align 8 dereferenceable(209) %0, ptr noundef nonnull align 8 dereferenceable(248) %4, i64 noundef %.1138, i64 noundef %i.bt, i64 noundef %i.be) #20
+  %i.bv = call noundef zeroext i1 @_ZN12lldb_private18EmulateInstruction19WriteMemoryUnsignedERKNS0_7ContextEmmm(ptr noundef nonnull align 8 dereferenceable(209) %0, ptr noundef nonnull align 8 dereferenceable(248) %4, i64 noundef %.1139, i64 noundef %i.bt, i64 noundef %i.be) #20
   br i1 %i.bv, label %.preheader, label %.critedge, !llvm.loop !96
 
 bb.q:                                             ; preds = %.preheader

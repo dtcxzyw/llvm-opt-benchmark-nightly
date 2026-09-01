@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.m
 
 .lr.ph.i.i.i:                                     ; preds = %bb.o, %.lr.ph.i.i.i
   %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i.1, %.lr.ph.i.i.i ], [ 0, %bb.o ] ; 4 uses
-  %i.cp = shl i64 %indvars.iv.i.i.i, 4
+  %i.cp = shl nuw nsw i64 %indvars.iv.i.i.i, 4
   %i.cq = and i64 %i.cp, 4294967264
   %i.cr = add i64 %i.cq, %i.bl
   %i.cs = getelementptr inbounds nuw [32 x i8], ptr %i.co, i64 %indvars.iv.i.i.i ; 2 uses
@@ -213,7 +213,7 @@ bb.o:                                             ; preds = %bb.m
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   store i32 -1, ptr %i.ct, align 8
   %indvars.iv.next.i.i.i = or disjoint i64 %indvars.iv.i.i.i, 1 ; 2 uses
-  %i.cu = shl i64 %indvars.iv.next.i.i.i, 4
+  %i.cu = shl nuw nsw i64 %indvars.iv.next.i.i.i, 4
   %i.cv = and i64 %i.cu, 4294967280
   %i.cw = add i64 %i.cv, %i.bl
   %i.cx = getelementptr inbounds nuw [32 x i8], ptr %i.co, i64 %indvars.iv.next.i.i.i ; 2 uses
@@ -481,7 +481,7 @@ bb.d:                                             ; preds = %bb.b
 
 .lr.ph.i.i:                                       ; preds = %bb.d, %.lr.ph.i.i
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i.1, %.lr.ph.i.i ], [ 0, %bb.d ] ; 4 uses
-  %i.aq = shl i64 %indvars.iv.i.i, 4
+  %i.aq = shl nuw nsw i64 %indvars.iv.i.i, 4
   %i.ar = and i64 %i.aq, 4294967264
   %i.as = add i64 %i.ar, %i.i
   %i.at = getelementptr inbounds nuw [32 x i8], ptr %i.ap, i64 %indvars.iv.i.i ; 2 uses
@@ -489,7 +489,7 @@ bb.d:                                             ; preds = %bb.b
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   store i32 -1, ptr %i.au, align 8
   %indvars.iv.next.i.i = or disjoint i64 %indvars.iv.i.i, 1 ; 2 uses
-  %i.av = shl i64 %indvars.iv.next.i.i, 4
+  %i.av = shl nuw nsw i64 %indvars.iv.next.i.i, 4
   %i.aw = and i64 %i.av, 4294967280
   %i.ax = add i64 %i.aw, %i.i
   %i.ay = getelementptr inbounds nuw [32 x i8], ptr %i.ap, i64 %indvars.iv.next.i.i ; 2 uses

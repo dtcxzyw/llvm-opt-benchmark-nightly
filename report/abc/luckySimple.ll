@@ -204,12 +204,12 @@ factorial.exit:                                   ; preds = %factorial.exit.loop
 
 .lr.ph.i.preheader:                               ; preds = %factorial.exit
   %i.y = icmp sgt i32 %0, 0
-  %umax20 = tail call i32 @llvm.umax.i32(i32 %i.c, i32 1)
-  %1 = add nuw i32 %umax20, 1
-  %wide.trip.count21 = zext i32 %1 to i64         ; 2 uses
-  br i1 %i.y, label %.lr.ph.i.us, label %.lr.ph.i.preheader25
+  br i1 %i.y, label %.lr.ph.i.us.preheader, label %.lr.ph.i.preheader25
 
 .lr.ph.i.preheader25:                             ; preds = %.lr.ph.i.preheader
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.c, i32 1)
+  %1 = add nuw i32 %umax, 1
+  %wide.trip.count = zext i32 %1 to i64
   %min.iters.check29 = icmp samesign ugt i32 %notmask, -9
   br i1 %min.iters.check29, label %.lr.ph.i.preheader38, label %vector.ph30
 
@@ -239,9 +239,14 @@ middle.block35:                                   ; preds = %vector.body32
   %indvars.iv.ph = phi i64 [ 1, %.lr.ph.i.preheader25 ], [ %i.z, %middle.block35 ]
   br label %.lr.ph.i
 
-.lr.ph.i.us:                                      ; preds = %.lr.ph.i.preheader, %oneBitPosition.exit.i.loopexit.us
-  %indvars.iv17 = phi i64 [ %indvars.iv.next18, %oneBitPosition.exit.i.loopexit.us ], [ 1, %.lr.ph.i.preheader ] ; 3 uses
-  %.014.i.us = phi i32 [ %i.af, %oneBitPosition.exit.i.loopexit.us ], [ 0, %.lr.ph.i.preheader ]
+.lr.ph.i.us.preheader:                            ; preds = %.lr.ph.i.preheader
+  %2 = shl nuw i32 1, %0
+  %wide.trip.count20 = zext i32 %2 to i64
+  br label %.lr.ph.i.us
+
+.lr.ph.i.us:                                      ; preds = %.lr.ph.i.us.preheader, %oneBitPosition.exit.i.loopexit.us
+  %indvars.iv17 = phi i64 [ 1, %.lr.ph.i.us.preheader ], [ %indvars.iv.next18, %oneBitPosition.exit.i.loopexit.us ] ; 3 uses
+  %.014.i.us = phi i32 [ 0, %.lr.ph.i.us.preheader ], [ %i.af, %oneBitPosition.exit.i.loopexit.us ]
   %i.ad = trunc nuw nsw i64 %indvars.iv17 to i32  ; 2 uses
   %i.ae = lshr i32 %i.ad, 1
   %i.af = xor i32 %i.ae, %i.ad                    ; 2 uses
@@ -266,7 +271,7 @@ oneBitPosition.exit.i.loopexit.us:                ; preds = %bb.b, %.lr.ph.i.i.u
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.ak
   store i32 %.07.i.i.ph.us, ptr %i.al, align 4, !tbaa !17
   %indvars.iv.next18 = add nuw nsw i64 %indvars.iv17, 1 ; 2 uses
-  %exitcond22.not = icmp eq i64 %indvars.iv.next18, %wide.trip.count21
+  %exitcond22.not = icmp eq i64 %indvars.iv.next18, %wide.trip.count20
   br i1 %exitcond22.not, label %fillInFlipArray.exit, label %.lr.ph.i.us, !llvm.loop !34
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader38, %.lr.ph.i
@@ -275,7 +280,7 @@ oneBitPosition.exit.i.loopexit.us:                ; preds = %bb.b, %.lr.ph.i.i.u
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.am
   store i32 -1, ptr %i.an, align 4, !tbaa !17
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count21
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %fillInFlipArray.exit, label %.lr.ph.i, !llvm.loop !40
 
 fillInFlipArray.exit:                             ; preds = %.lr.ph.i, %oneBitPosition.exit.i.loopexit.us, %middle.block35, %factorial.exit

@@ -205,7 +205,7 @@ _ZN6bufferIbLb1ELj16EE9push_backERKb.exit.i:      ; preds = %bb.d, %_ZN6bufferIb
   store i8 0, ptr %i.bj, align 1, !tbaa !172
   %i.bk = add i32 %i.bh, 1                        ; 2 uses
   store i32 %i.bk, ptr %i.s, align 8, !tbaa !165
-  %i.bl = add i32 %.01320.i, 1                    ; 2 uses
+  %i.bl = add nuw i32 %.01320.i, 1                ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.bl, %i.n
   br i1 %exitcond.not.i, label %_ZN6bufferIbLb1ELj16EE6resizeEjRKb.exit, label %bb.d, !llvm.loop !178
 
@@ -554,7 +554,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %.not171, label %._crit_edge, label %.lr.ph165.preheader
 
 .lr.ph165.preheader:                              ; preds = %bb.ad
-  %i.fw = trunc nuw i64 %indvars.iv to i32
+  %i.fw = trunc nuw nsw i64 %indvars.iv to i32
   br label %.lr.ph165
 
 ._crit_edge:                                      ; preds = %_ZN8rationalpLERKS_.exit, %bb.ad

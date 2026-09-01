@@ -2,7 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 150
 inline.NumDeleted: 97
 loop-unroll.NumCompletelyUnrolled: 7
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_RNvNtNtCsjkkKzr5dxZe_11miniz_oxide7inflate4core9init_tree:bb.a
   %i.ej = getelementptr inbounds nuw i8, ptr %0, i64 8896
   %i.ek = getelementptr inbounds nuw i8, ptr %0, i64 8912
@@ -204,7 +205,7 @@ vector.ph171:                                     ; preds = %bb.b
 _RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit83: ; preds = %vector.ph171, %_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit
   %.sroa.758.1 = phi i64 [ %.sroa.758.0, %_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit ], [ 19, %vector.ph171 ]
   %.sroa.054.1 = phi ptr [ %.sroa.054.0, %_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit ], [ %i.e, %vector.ph171 ] ; 3 uses
-  %.sroa.01.0 = phi ptr [ %i.ep, %_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit ], [ %.ptr84, %vector.ph171 ] ; 3 uses
+  %.sroa.01.0 = phi ptr [ %i.ep, %_RNvXs3_NtNtCshzWfHUSfYae_4core5slice10specializeSsINtB5_8SpecFillsE9spec_fill.exit ], [ %.ptr84, %vector.ph171 ] ; 11 uses
   %i.fe = getelementptr inbounds nuw [2 x i8], ptr %i.i, i64 %i.eo
   %i.ff = load i16, ptr %i.fe, align 2, !noundef !5 ; 3 uses
   %i.fg = zext i16 %i.ff to i64                   ; 4 uses
@@ -331,7 +332,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.gm = add i64 %.sroa.062.0108, 1              ; 4 uses
   %i.gn = getelementptr inbounds nuw i8, ptr %.sroa.054.1, i64 %.sroa.062.0108
   %i.go = load i8, ptr %i.gn, align 1, !noundef !5
-  %i.gp = and i8 %i.go, 15                        ; 8 uses
+  %i.gp = and i8 %i.go, 15                        ; 9 uses
   %i.gq = icmp eq i8 %i.gp, 0
   br i1 %i.gq, label %.loopexit, label %bb.r
 
@@ -361,7 +362,7 @@ bb.q:                                             ; preds = %.outer.split._crit_
   %i.gv = insertvalue { i8, i8 } %i.gu, i8 %.sroa.9.2, 1
   ret { i8, i8 } %i.gv
 
-.loopexit:                                        ; preds = %bb.ac, %bb.v, %.lr.ph109
+.loopexit:                                        ; preds = %.prol.loopexit, %bb.ac, %bb.v, %.lr.ph109
   %exitcond.not = icmp eq i64 %i.gm, %i.fg
   br i1 %exitcond.not, label %.outer.split._crit_edge, label %.lr.ph109
 
@@ -401,15 +402,36 @@ bb.v:                                             ; preds = %bb.t
   %i.ho = zext nneg i8 %i.gp to i16               ; 2 uses
   %i.hp = shl nuw nsw i16 %i.ho, 9
   %i.hq = trunc nuw nsw i64 %.sroa.062.0108 to i16
-  %i.hr = or i16 %i.hp, %i.hq
+  %i.hr = or i16 %i.hp, %i.hq                     ; 9 uses
   %i.hs = icmp samesign ult i16 %i.hj, 1024
   br i1 %i.hs, label %.lr.ph107, label %.loopexit
 
 .lr.ph107:                                        ; preds = %bb.v
   %i.ht = shl nuw nsw i16 1, %i.ho
-  %i.hu = zext nneg i16 %i.hj to i64
-  %i.hv = zext nneg i16 %i.ht to i64
-  br label %bb.ac
+  %i.hu = zext nneg i16 %i.hj to i64              ; 3 uses
+  %2 = zext nneg i16 %i.ht to i64                 ; 9 uses
+  %3 = sub nuw nsw i64 1023, %i.hu
+  %i.hv = zext nneg i8 %i.gp to i64
+  %4 = lshr i64 %3, %i.hv                         ; 2 uses
+  %5 = add nuw nsw i64 %4, 1
+  %xtraiter = and i64 %5, 7                       ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
+
+.prol.preheader:                                  ; preds = %.lr.ph107, %.prol.preheader
+  %indvars.iv.prol = phi i64 [ %indvars.iv.next.prol, %.prol.preheader ], [ %i.hu, %.lr.ph107 ] ; 2 uses
+  %prol.iter = phi i64 [ %prol.iter.next, %.prol.preheader ], [ 0, %.lr.ph107 ]
+  %6 = getelementptr inbounds nuw [2 x i8], ptr %.sroa.01.0, i64 %indvars.iv.prol
+  store i16 %i.hr, ptr %6, align 2
+  %indvars.iv.next.prol = add nuw nsw i64 %indvars.iv.prol, %2 ; 2 uses
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !737
+
+.prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph107
+  %indvars.iv.unr = phi i64 [ %i.hu, %.lr.ph107 ], [ %indvars.iv.next.prol, %.prol.preheader ]
+  %7 = icmp samesign ult i64 %4, 7
+  br i1 %7, label %.loopexit, label %bb.ac
 
 bb.w:                                             ; preds = %bb.t
   %i.hw = and i16 %i.hj, 1023
@@ -481,11 +503,32 @@ bb.ab:                                            ; preds = %bb.z, %bb.aa
   %exitcond133.not = icmp eq i8 %i.ih, %i.gp
   br i1 %exitcond133.not, label %._crit_edge117, label %.lr.ph116
 
-bb.ac:                                            ; preds = %.lr.ph107, %bb.ac
-  %indvars.iv = phi i64 [ %i.hu, %.lr.ph107 ], [ %indvars.iv.next.a, %bb.ac ] ; 2 uses
-  %i.iw = getelementptr inbounds nuw [2 x i8], ptr %.sroa.01.0, i64 %indvars.iv
+bb.ac:                                            ; preds = %.prol.loopexit, %bb.ac
+  %indvars.iv = phi i64 [ %indvars.iv.next.a, %bb.ac ], [ %indvars.iv.unr, %.prol.loopexit ] ; 2 uses
+  %8 = getelementptr inbounds nuw [2 x i8], ptr %.sroa.01.0, i64 %indvars.iv
+  store i16 %i.hr, ptr %8, align 2
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, %2 ; 2 uses
+  %9 = getelementptr inbounds nuw [2 x i8], ptr %.sroa.01.0, i64 %indvars.iv.next
+  store i16 %i.hr, ptr %9, align 2
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv.next, %2 ; 2 uses
+  %10 = getelementptr inbounds nuw [2 x i8], ptr %.sroa.01.0, i64 %indvars.iv.next.1
+  store i16 %i.hr, ptr %10, align 2
+  %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv.next.1, %2 ; 2 uses
+  %11 = getelementptr inbounds nuw [2 x i8], ptr %.sroa.01.0, i64 %indvars.iv.next.2
+  store i16 %i.hr, ptr %11, align 2
+  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv.next.2, %2 ; 2 uses
+  %12 = getelementptr inbounds nuw [2 x i8], ptr %.sroa.01.0, i64 %indvars.iv.next.3
+  store i16 %i.hr, ptr %12, align 2
+  %indvars.iv.next.4 = add nuw nsw i64 %indvars.iv.next.3, %2 ; 2 uses
+  %13 = getelementptr inbounds nuw [2 x i8], ptr %.sroa.01.0, i64 %indvars.iv.next.4
+  store i16 %i.hr, ptr %13, align 2
+  %indvars.iv.next.5 = add nuw nsw i64 %indvars.iv.next.4, %2 ; 2 uses
+  %14 = getelementptr inbounds nuw [2 x i8], ptr %.sroa.01.0, i64 %indvars.iv.next.5
+  store i16 %i.hr, ptr %14, align 2
+  %indvars.iv.next.6 = add nuw nsw i64 %indvars.iv.next.5, %2 ; 2 uses
+  %i.iw = getelementptr inbounds nuw [2 x i8], ptr %.sroa.01.0, i64 %indvars.iv.next.6
   store i16 %i.hr, ptr %i.iw, align 2
-  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv, %i.hv ; 2 uses
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.next.6, %2 ; 2 uses
   %i.ix = icmp samesign ult i64 %indvars.iv.next.a, 1024
   br i1 %i.ix, label %bb.ac, label %.loopexit
 }
@@ -888,4 +931,6 @@ begin_hunk_1_@llvm.umin.i32
 !734 = !{!735}
 !735 = distinct !{!735, !736, !"_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItertEINtBZ_7IterMutmEEINtB5_7ZipImplBW_B1o_E4nextCsjkkKzr5dxZe_11miniz_oxide: argument 0"}
 !736 = distinct !{!736, !"_RNvXs3_NtNtNtCshzWfHUSfYae_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4ItertEINtBZ_7IterMutmEEINtB5_7ZipImplBW_B1o_E4nextCsjkkKzr5dxZe_11miniz_oxide"}
+!737 = distinct !{!737, !738}
+!738 = !{!"llvm.loop.unroll.disable"}
 end_hunk_1

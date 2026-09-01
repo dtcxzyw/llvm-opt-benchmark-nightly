@@ -96,7 +96,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ad, label %.lr.ph, label %._crit_edge100.split
 
 .lr.ph:                                           ; preds = %bb.e
-  %i.ae = sdiv i32 %.072, %i.m                    ; 3 uses
+  %i.ae = sdiv i32 %.072, %i.m                    ; 2 uses
   %i.af = icmp sgt i32 %i.ae, 0
   %i.ag = shl nuw nsw i32 1, %i.q
   %i.ah = zext nneg i32 %i.ag to i64              ; 6 uses
@@ -104,6 +104,7 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   %wide.trip.count122 = zext nneg i32 %i.f to i64 ; 2 uses
+  %wide.trip.count125 = zext nneg i32 %i.ae to i64 ; 2 uses
   br i1 %i.k, label %.preheader.lr.ph.us, label %.preheader.lr.ph
 
 .preheader.lr.ph.us:                              ; preds = %.lr.ph.split, %._crit_edge.split.us.us
@@ -116,9 +117,10 @@ bb.e:                                             ; preds = %bb.d
   br label %.preheader.us.us
 
 .preheader.us.us:                                 ; preds = %.split93.us.us.us, %.preheader.lr.ph.us
-  %.096.us.us = phi ptr [ %i.aj, %.preheader.lr.ph.us ], [ %i.fc, %.split93.us.us.us ]
-  %.07095.us.us = phi i32 [ 0, %.preheader.lr.ph.us ], [ %4, %.split93.us.us.us ] ; 2 uses
-  %i.an = mul nuw nsw i32 %.07095.us.us, %i.f
+  %indvars.iv122 = phi i64 [ %indvars.iv.next123, %.split93.us.us.us ], [ 0, %.preheader.lr.ph.us ] ; 2 uses
+  %.096.us.us = phi ptr [ %i.fc, %.split93.us.us.us ], [ %i.aj, %.preheader.lr.ph.us ]
+  %4 = trunc i64 %indvars.iv122 to i32
+  %i.an = mul i32 %i.f, %4
   %i.ao = add nuw i32 %i.an, %i.am
   %i.ap = shl i32 %i.ao, %i.l
   %i.aq = sext i32 %i.ap to i64
@@ -300,8 +302,8 @@ chomp3.exit.us.us.us.us.2:                        ; preds = %bb.k, %bb.j
   br i1 %i.fe, label %.split.us.us.us.us, label %.split93.us.us.us, !llvm.loop !48
 
 .split93.us.us.us:                                ; preds = %chomp3.exit.us.us.us.us.2
-  %4 = add nuw nsw i32 %.07095.us.us, 1           ; 2 uses
-  %exitcond118.not = icmp eq i32 %4, %i.ae
+  %indvars.iv.next123 = add nuw nsw i64 %indvars.iv122, 1 ; 2 uses
+  %exitcond118.not = icmp eq i64 %indvars.iv.next123, %wide.trip.count125
   br i1 %exitcond118.not, label %._crit_edge.split.us.us, label %.preheader.us.us, !llvm.loop !50
 
 ._crit_edge.split.us.us:                          ; preds = %.split93.us.us.us
@@ -322,9 +324,10 @@ chomp3.exit.us.us.us.us.2:                        ; preds = %bb.k, %bb.j
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.split93
+  %indvars.iv107 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next108, %.split93 ] ; 2 uses
   %.096 = phi ptr [ %i.fg, %.preheader.lr.ph ], [ %i.nz, %.split93 ]
-  %.07095 = phi i32 [ 0, %.preheader.lr.ph ], [ %5, %.split93 ] ; 2 uses
-  %i.fn = mul nuw nsw i32 %.07095, %i.f
+  %5 = trunc i64 %indvars.iv107 to i32
+  %i.fn = mul i32 %i.f, %5
   %i.fo = add nuw i32 %i.fn, %i.fm
   %i.fp = shl i32 %i.fo, %i.l
   %i.fq = sext i32 %i.fp to i64
@@ -655,8 +658,8 @@ chomp6.exit.2:                                    ; preds = %bb.w, %bb.v
   br i1 %i.ob, label %.split, label %.split93, !llvm.loop !48
 
 .split93:                                         ; preds = %chomp6.exit.2
-  %5 = add nuw nsw i32 %.07095, 1                 ; 2 uses
-  %exitcond.not = icmp eq i32 %5, %i.ae
+  %indvars.iv.next108 = add nuw nsw i64 %indvars.iv107, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next108, %wide.trip.count125
   br i1 %exitcond.not, label %._crit_edge.split, label %.preheader, !llvm.loop !50
 
 ._crit_edge.split:                                ; preds = %.split93

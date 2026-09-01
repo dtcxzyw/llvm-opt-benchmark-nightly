@@ -205,8 +205,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.ax = shl nuw i32 1, %i.aw
   %i.ay = getelementptr inbounds nuw [64 x i8], ptr %i.c, i64 %indvars.iv151.a ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 64
-  %smax148 = tail call i32 @llvm.smax.i32(i32 %i.ax, i32 1)
-  %wide.trip.count149 = zext nneg i32 %smax148 to i64
+  %6 = sext i32 %i.ax to i64
   br label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph119, %Lpk_MergeBoundSets.exit
@@ -368,8 +367,8 @@ Lpk_MergeBoundSets.exit:                          ; preds = %.critedge2.i, %bb.k
   %i.dm = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %indvars.iv145
   store ptr %i.bi, ptr %i.dm, align 8, !tbaa !54
   %indvars.iv.next146 = add nuw nsw i64 %indvars.iv145, 1 ; 2 uses
-  %exitcond150.not = icmp eq i64 %indvars.iv.next146, %wide.trip.count149
-  br i1 %exitcond150.not, label %._crit_edge120, label %bb.k, !llvm.loop !57
+  %7 = icmp slt i64 %indvars.iv.next146, %6
+  br i1 %7, label %bb.k, label %._crit_edge120, !llvm.loop !57
 
 ._crit_edge120:                                   ; preds = %Lpk_MergeBoundSets.exit, %.preheader103
   %indvars.iv.next152.a = add nsw i64 %indvars.iv151.a, -1
@@ -396,8 +395,7 @@ Lpk_MergeBoundSets.exit:                          ; preds = %.critedge2.i, %bb.k
   %i.ds = trunc nuw nsw i64 %indvars.iv160 to i32
   %i.dt = shl nuw i32 1, %i.ds
   %i.du = getelementptr inbounds nuw [64 x i8], ptr %i.c, i64 %indvars.iv160
-  %smax157 = tail call i32 @llvm.smax.i32(i32 %i.dt, i32 1)
-  %wide.trip.count158 = zext nneg i32 %smax157 to i64
+  %8 = sext i32 %i.dt to i64
   br label %bb.w
 
 bb.w:                                             ; preds = %.lr.ph124, %Vec_IntFree.exit
@@ -416,8 +414,8 @@ bb.x:                                             ; preds = %bb.w
 Vec_IntFree.exit:                                 ; preds = %bb.w, %bb.x
   tail call void @free(ptr noundef nonnull %i.dw) #11
   %indvars.iv.next155.a = add nuw nsw i64 %indvars.iv154, 1 ; 2 uses
-  %exitcond159.not = icmp eq i64 %indvars.iv.next155.a, %wide.trip.count158
-  br i1 %exitcond159.not, label %._crit_edge125, label %bb.w, !llvm.loop !59
+  %9 = icmp slt i64 %indvars.iv.next155.a, %8
+  br i1 %9, label %bb.w, label %._crit_edge125, !llvm.loop !59
 
 ._crit_edge125:                                   ; preds = %Vec_IntFree.exit, %.preheader
   %indvars.iv.next161 = add nsw i64 %indvars.iv160, -1
@@ -820,8 +818,8 @@ bb.ag:                                            ; preds = %.lr.ph, %bb.ag
   %i.ce = sext i8 %i.cd to i32
   tail call void @Kit_TruthCofactor1New(ptr noundef %i.by, ptr noundef %i.bz, i32 noundef %i.cc, i32 noundef %i.ce) #11
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.ag, !llvm.loop !86
+  %5 = icmp samesign ult i64 %indvars.iv.next, %wide.trip.count
+  br i1 %5, label %bb.ag, label %._crit_edge, !llvm.loop !86
 
 ._crit_edge:                                      ; preds = %bb.ag, %.preheader98
   %indvars.iv.next114 = add nuw nsw i64 %indvars.iv113, 1 ; 2 uses
@@ -881,8 +879,7 @@ bb.ah:                                            ; preds = %.lr.ph104, %bb.ah
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 128
   %i.da = getelementptr i8, ptr %2, i64 %indvars.iv130
   %i.db = getelementptr i8, ptr %i.da, i64 -1
-  %smax127 = tail call i32 @llvm.smax.i32(i32 %i.cx, i32 1)
-  %wide.trip.count128 = zext nneg i32 %smax127 to i64
+  %6 = sext i32 %i.cx to i64
   br label %bb.ai
 
 bb.ai:                                            ; preds = %.lr.ph106, %bb.ai
@@ -901,8 +898,8 @@ bb.ai:                                            ; preds = %.lr.ph106, %bb.ai
   %i.dm = sext i8 %i.dl to i32
   tail call void @Kit_TruthMuxVar(ptr noundef %i.dd, ptr noundef %i.df, ptr noundef %i.dh, i32 noundef %i.dk, i32 noundef %i.dm) #11
   %indvars.iv.next125.a = add nuw nsw i64 %indvars.iv124, 1 ; 2 uses
-  %exitcond129.not = icmp eq i64 %indvars.iv.next125.a, %wide.trip.count128
-  br i1 %exitcond129.not, label %._crit_edge107, label %bb.ai, !llvm.loop !90
+  %7 = icmp slt i64 %indvars.iv.next125.a, %6
+  br i1 %7, label %bb.ai, label %._crit_edge107, !llvm.loop !90
 
 ._crit_edge107:                                   ; preds = %bb.ai, %.preheader
   %indvars.iv.next131 = add nsw i64 %indvars.iv130, -1

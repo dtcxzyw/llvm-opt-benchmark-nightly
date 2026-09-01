@@ -206,7 +206,7 @@ bb.a:
   br i1 %.b, label %bb.ad, label %.noexc.i.i
 
 .noexc.i.i:                                       ; preds = %bb.a
-  %i.e = shl nsw i32 %0, 1
+  %i.e = shl i32 %0, 1
   %i.f = zext nneg i32 %i.e to i64
   %i.g = shl nuw i64 1, %i.f                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #27
@@ -609,7 +609,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i76
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit78
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit78: ; preds = %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExSt4lessIS5_ESaISt4pairIKS5_xEEED2Ev.exit75, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i76
-  %i.ga = add nuw nsw i64 %.0115, 1               ; 2 uses
+  %i.ga = add nuw i64 %.0115, 1                   ; 2 uses
   %exitcond.not = icmp eq i64 %i.ga, %i.g
   br i1 %exitcond.not, label %bb.j, label %._crit_edge.i.i56, !llvm.loop !158
 

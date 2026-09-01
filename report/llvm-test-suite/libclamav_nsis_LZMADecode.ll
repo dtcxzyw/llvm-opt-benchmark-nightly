@@ -202,10 +202,10 @@ bb.g:                                             ; preds = %bb.f
   %i.aa = xor i32 %notmask, -1
   %notmask456 = shl nsw i32 -1, %i.x
   %i.ab = xor i32 %notmask456, -1
-  %i.ac = add nuw nsw i32 %i.z, %i.u              ; 2 uses
-  %i.ad = shl nuw nsw i32 768, %i.ac
-  %1 = shl nuw nsw i32 1536, %i.ac
-  %2 = add nuw nsw i32 %1, 3692                   ; 3 uses
+  %i.ac = add nuw nsw i32 %i.z, %i.u
+  %i.ad = shl nuw nsw i32 768, %i.ac              ; 2 uses
+  %1 = add nuw nsw i32 %i.ad, 1846                ; 2 uses
+  %2 = shl nuw nsw i32 %1, 1                      ; 3 uses
   %.not457 = icmp eq i32 %2, %.sroa.37.0.ph.ph
   br i1 %.not457, label %iter.check, label %bb.h
 
@@ -226,26 +226,25 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 iter.check:                                       ; preds = %bb.j, %bb.g
   %.sroa.37.1 = phi i32 [ %.sroa.37.0.ph.ph, %bb.g ], [ %2, %bb.j ]
   %.sroa.505.1 = phi ptr [ %.sroa.505.0.ph.ph, %bb.g ], [ %i.af, %bb.j ] ; 5 uses
-  %narrow = add nuw i32 %i.ad, 1846
-  %3 = zext i32 %narrow to i64                    ; 2 uses
-  %invariant.gep = getelementptr [2 x i8], ptr %.sroa.505.1, i64 %3
-  %4 = add nsw i64 %3, -22
+  %narrow = add nuw i32 %i.ad, 1824
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %iter.check
-  %index = phi i64 [ 0, %iter.check ], [ %index.next, %vector.body ] ; 3 uses
-  %5 = xor i64 %index, -1
-  %gep = getelementptr [2 x i8], ptr %invariant.gep, i64 %5 ; 2 uses
+  %index = phi i32 [ 0, %iter.check ], [ %index.next, %vector.body ] ; 3 uses
+  %3 = xor i32 %index, -1
+  %4 = add i32 %1, %3
+  %5 = zext i32 %4 to i64
+  %gep = getelementptr inbounds nuw [2 x i8], ptr %.sroa.505.1, i64 %5 ; 2 uses
   %i.ag = getelementptr inbounds i8, ptr %gep, i64 -14
   %i.ah = getelementptr inbounds i8, ptr %gep, i64 -30
   store <8 x i16> splat (i16 1024), ptr %i.ag, align 2, !tbaa !17
   store <8 x i16> splat (i16 1024), ptr %i.ah, align 2, !tbaa !17
-  %index.next = add nuw i64 %index, 16
-  %i.ai = icmp eq i64 %index, %4
+  %index.next = add nuw i32 %index, 16
+  %i.ai = icmp eq i32 %index, %narrow
   br i1 %i.ai, label %vec.epilog.vector.body, label %vector.body, !llvm.loop !19
 
 vec.epilog.vector.body:                           ; preds = %vector.body
-  %i.aj = getelementptr i8, ptr %.sroa.505.1, i64 4
+  %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.505.1, i64 4
   store <4 x i16> splat (i16 1024), ptr %i.aj, align 2, !tbaa !17
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.505.1, i64 2
   store i16 1024, ptr %i.ak, align 2, !tbaa !17

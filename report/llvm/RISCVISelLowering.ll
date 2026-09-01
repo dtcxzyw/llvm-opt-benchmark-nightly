@@ -205,8 +205,8 @@ _ZN4llvm12PowerOf2CeilEm.exit593:                 ; preds = %_ZN4llvm3MVT11getVe
   br i1 %i.ik, label %_ZN4llvm12PowerOf2CeilEm.exit596, label %_ZN4llvm12PowerOf2CeilEm.exit593.thread
 
 _ZN4llvm12PowerOf2CeilEm.exit596:                 ; preds = %_ZN4llvm12PowerOf2CeilEm.exit593
-  %i.il = shl nuw nsw i64 1, %i.ij                ; 2 uses
-  %i.im = sub nsw i64 %i.il, %i.am                ; 6 uses
+  %i.il = shl nuw i64 1, %i.ij                    ; 2 uses
+  %i.im = sub i64 %i.il, %i.am                    ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #34
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %19, i8 0, i64 16, i1 false)
   %i.in = call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTE(ptr noundef nonnull align 8 dereferenceable(920) %3, i32 noundef 53, ptr noundef nonnull align 8 dereferenceable(12) %19, i16 %.sroa.0.0.copyload.i.i.i, ptr null) #34 ; 2 uses
@@ -256,7 +256,7 @@ _ZN4llvm23SmallVectorTemplateBaseINS_7SDValueELb1EE28reserveForParamAndGetAddres
 .lr.ph.i.i.i.i.prol.loopexit:                     ; preds = %.lr.ph.i.i.i.i.prol, %.lr.ph.i.i.i.preheader.i
   %.09.i.i.i.i.unr = phi ptr [ %i.iv, %.lr.ph.i.i.i.preheader.i ], [ %i.ix, %.lr.ph.i.i.i.i.prol ]
   %.068.i.i.i.i.unr = phi i64 [ %i.im, %.lr.ph.i.i.i.preheader.i ], [ %i.iw, %.lr.ph.i.i.i.i.prol ]
-  %i.iy = sub nsw i64 %i.am, %i.il
+  %i.iy = sub i64 %i.am, %i.il
   %i.iz = icmp ugt i64 %i.iy, -8
   br i1 %i.iz, label %_ZSt20uninitialized_fill_nIPN4llvm7SDValueEmS1_ET_S3_T0_RKT1_.exit.loopexit.i, label %.lr.ph.i.i.i.i
 

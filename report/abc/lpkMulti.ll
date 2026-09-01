@@ -205,8 +205,8 @@ bb.a:                                             ; preds = %.lr.ph, %bb.a
   %i.fu = load i32, ptr %i.fm, align 4, !tbaa !20
   call void @Kit_TruthCofactor1New(ptr noundef %i.ft, ptr noundef %i.fq, i32 noundef %2, i32 noundef %i.fu) #12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.a, !llvm.loop !90
+  %4 = icmp samesign ult i64 %indvars.iv.next, %wide.trip.count
+  br i1 %4, label %bb.a, label %._crit_edge, !llvm.loop !90
 
 ._crit_edge:                                      ; preds = %bb.a, %.lr.ph172
   %indvars.iv.next221 = add nuw nsw i64 %indvars.iv220, 1 ; 2 uses
@@ -569,8 +569,7 @@ bb.t:                                             ; preds = %.lr.ph197, %bb.t
   %i.ke = getelementptr inbounds nuw [64 x i8], ptr %i.f, i64 %indvars.iv.next285
   %i.kf = getelementptr inbounds nuw [64 x i8], ptr %i.f, i64 %indvars.iv284
   %i.kg = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next285
-  %smax281 = call i32 @llvm.smax.i32(i32 %i.kd, i32 1)
-  %wide.trip.count282 = zext nneg i32 %smax281 to i64
+  %5 = sext i32 %i.kd to i64
   br label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph200, %bb.u
@@ -585,8 +584,8 @@ bb.u:                                             ; preds = %.lr.ph200, %bb.u
   %i.kn = load i32, ptr %i.kg, align 4, !tbaa !20
   call void @Kit_TruthMuxVar(ptr noundef %i.ki, ptr noundef %i.kk, ptr noundef %i.km, i32 noundef %2, i32 noundef %i.kn) #12
   %indvars.iv.next279 = add nuw nsw i64 %indvars.iv278, 1 ; 2 uses
-  %exitcond283.not = icmp eq i64 %indvars.iv.next279, %wide.trip.count282
-  br i1 %exitcond283.not, label %.loopexit, label %bb.u, !llvm.loop !106
+  %6 = icmp slt i64 %indvars.iv.next279, %5
+  br i1 %6, label %bb.u, label %.loopexit, !llvm.loop !106
 
 ._crit_edge205:                                   ; preds = %.loopexit, %.preheader
   %i.ko = icmp sgt i32 %i.p, 0

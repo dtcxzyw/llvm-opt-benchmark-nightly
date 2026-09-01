@@ -1,4 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/qtpalette?download=true
+loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
@@ -46,8 +47,9 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %bb.d
-  %indvars.iv105 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next106.1.a, %bb.e ] ; 3 uses
+  %indvars.iv105 = phi i64 [ 0, %bb.d ], [ %indvars.iv.next106.1, %bb.e ] ; 3 uses
   %.08194 = phi i32 [ 255, %bb.d ], [ %spec.store.select.1, %bb.e ] ; 4 uses
+  %niter = phi i64 [ 0, %bb.d ], [ %indvars.iv.next106.1.a, %bb.e ]
   %i.p = shl i32 %.08194, 16
   %i.q = shl i32 %.08194, 8
   %i.r = or i32 %i.q, %i.p
@@ -67,7 +69,8 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   store i32 %i.aa, ptr %i.ac, align 4, !tbaa !9
   %i.ad = sub nsw i32 %spec.store.select, %i.o
   %spec.store.select.1 = tail call i32 @llvm.smax.i32(i32 %i.ad, i32 0)
-  %indvars.iv.next106.1.a = add nuw nsw i64 %indvars.iv105, 2 ; 2 uses
+  %indvars.iv.next106.1 = add nuw nsw i64 %indvars.iv105, 2
+  %indvars.iv.next106.1.a = add nuw nsw i64 %niter, 2 ; 2 uses
   %exitcond108.not.1 = icmp eq i64 %indvars.iv.next106.1.a, %wide.trip.count
   br i1 %exitcond108.not.1, label %.loopexit, label %bb.e, !llvm.loop !10
 

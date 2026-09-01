@@ -202,7 +202,8 @@ bb.bn:                                            ; preds = %bb.ba, %bb.ay, %bb.
 .lr.ph247.preheader:                              ; preds = %bb.bn
   %.lobit = lshr exact i64 %i.ee, 1
   %i.fy = xor i64 %.lobit, 1
-  %spec.select221 = shl nuw nsw i64 %i.eq, %i.fy
+  %spec.select221 = shl nuw i64 %i.eq, %i.fy
+  %smax = call i64 @llvm.smax.i64(i64 %spec.select221, i64 1)
   br label %.lr.ph247
 
 .lr.ph247:                                        ; preds = %.lr.ph247.preheader, %.lr.ph247
@@ -212,7 +213,7 @@ bb.bn:                                            ; preds = %bb.ba, %bb.ay, %bb.
   %i.gb = call ptr @lpNext(ptr noundef %i.ga, ptr noundef %i.fz) #18 ; 3 uses
   store ptr %i.gb, ptr %i.o, align 8, !tbaa !126
   %i.gc = add nuw nsw i64 %.0150245, 1            ; 2 uses
-  %exitcond.not = icmp eq i64 %i.gc, %spec.select221
+  %exitcond.not = icmp eq i64 %i.gc, %smax
   br i1 %exitcond.not, label %.loopexit225.backedge, label %.lr.ph247, !llvm.loop !139
 
 bb.bo:                                            ; preds = %bb.bh, %bb.bg, %bb.bi

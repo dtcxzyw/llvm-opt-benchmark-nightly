@@ -205,7 +205,6 @@ bb.x:                                             ; preds = %bb.w
 
 .lr.ph.preheader:                                 ; preds = %bb.x
   call fastcc void @_ZL14copy_to_prebufPK9bignum_stiPmii(ptr noundef %6, i32 noundef %i.cw, ptr noundef %i.dp, i32 noundef 2)
-  %umax = call i32 @llvm.umax.i32(i32 %i.dd, i32 4)
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.y
@@ -216,8 +215,8 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %.lr.ph
   call fastcc void @_ZL14copy_to_prebufPK9bignum_stiPmii(ptr noundef %6, i32 noundef %i.cw, ptr noundef %i.dp, i32 noundef %.0114158)
-  %i.ek = add nuw nsw i32 %.0114158, 1            ; 2 uses
-  %exitcond.not = icmp eq i32 %i.ek, %umax
+  %i.ek = add nuw i32 %.0114158, 1                ; 2 uses
+  %exitcond.not = icmp eq i32 %i.ek, %i.dd
   br i1 %exitcond.not, label %.loopexit151, label %.lr.ph, !llvm.loop !396
 
 .loopexit151:                                     ; preds = %bb.y, %bb.w
@@ -620,7 +619,11 @@ bn_wexpand.exit:                                  ; preds = %_ZL14OPENSSL_memcpy
   %i.aw = phi i32 [ %i.ei, %bn_select_words.exit ], [ %i.au, %.lr.ph.preheader ] ; 3 uses
   %i.ax = phi ptr [ %i.eg, %bn_select_words.exit ], [ %.pre40, %.lr.ph.preheader ] ; 12 uses
   %i.ay = phi ptr [ %i.eh, %bn_select_words.exit ], [ %.pre39, %.lr.ph.preheader ] ; 10 uses
-  %.02438 = phi i32 [ %i.fz, %bn_select_words.exit ], [ 0, %.lr.ph.preheader ] ; 4 uses
+  %.02438 = phi i32 [ %i.fz, %bn_select_words.exit ], [ 0, %.lr.ph.preheader ] ; 5 uses
+  %4 = shl nuw i32 1, %.02438
+  %5 = lshr i32 %4, 3
+  %6 = and i32 %5, 536870904
+  %7 = zext nneg i32 %6 to i64                    ; 2 uses
   %i.az = lshr i32 %2, %.02438
   %i.ba = and i32 %i.az, 1
   %i.bb = zext nneg i32 %i.ba to i64
@@ -629,7 +632,7 @@ bn_wexpand.exit:                                  ; preds = %_ZL14OPENSSL_memcpy
   %i.be = sext i32 %i.aw to i64                   ; 8 uses
   %i.bf = and i32 %i.bd, 63                       ; 2 uses
   %i.bg = lshr i32 %i.bd, 6                       ; 3 uses
-  %i.bh = zext nneg i32 %i.bg to i64              ; 16 uses
+  %i.bh = zext nneg i32 %i.bg to i64              ; 15 uses
   %.not.i29 = icmp ugt i32 %i.aw, %i.bg
   br i1 %.not.i29, label %bb.r, label %bb.p
 
@@ -663,10 +666,9 @@ bb.r:                                             ; preds = %.lr.ph
 vector.memcheck60:                                ; preds = %.lr.ph.i
   %scevgep61 = getelementptr i8, ptr %i.ay, i64 -8
   %i.bs = shl nsw i64 %i.be, 3                    ; 2 uses
-  %4 = shl nuw nsw i64 %i.bh, 3                   ; 2 uses
-  %i.bt = sub nsw i64 %i.bs, %4
+  %i.bt = sub nsw i64 %i.bs, %7
   %scevgep62 = getelementptr i8, ptr %scevgep61, i64 %i.bt
-  %scevgep63 = getelementptr i8, ptr %i.ax, i64 %4
+  %scevgep63 = getelementptr i8, ptr %i.ax, i64 %7
   %scevgep64 = getelementptr i8, ptr %i.ax, i64 %i.bs
   %bound065 = icmp ult ptr %i.ay, %scevgep64
   %bound166 = icmp ult ptr %scevgep63, %scevgep62
@@ -1068,9 +1070,6 @@ declare i32 @llvm.smax.i32(i32, i32) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #29
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #29
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #35

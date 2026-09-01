@@ -204,7 +204,6 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph:                                           ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 440
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.f, i64 1)
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.c
@@ -226,7 +225,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.u = sub nuw i64 %.04050, %spec.select        ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.04248, i64 3
   %i.w = add nuw nsw i64 %.03951, 1               ; 2 uses
-  %exitcond.not = icmp eq i64 %i.w, %umax
+  %exitcond.not = icmp eq i64 %i.w, %i.f
   br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !72
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.b
@@ -628,9 +627,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #10
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
