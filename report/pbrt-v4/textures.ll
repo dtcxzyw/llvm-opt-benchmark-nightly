@@ -205,7 +205,7 @@ bb.a:
   %57 = alloca %class.anon.77, align 8            ; 4 uses
   %58 = alloca %class.anon.61, align 8            ; 4 uses
   %59 = alloca %"struct.pbrt::TextureEvalContext", align 8 ; 4 uses
-  %60 = alloca %"struct.pbrt::TexCoord2D", align 4 ; 5 uses
+  %60 = alloca %"struct.pbrt::TexCoord2D", align 8 ; 4 uses
   %61 = alloca %"class.pbrt::SampledWavelengths", align 8 ; 7 uses
   %62 = alloca %class.anon.77, align 8            ; 4 uses
   %63 = alloca %"class.pbrt::SampledWavelengths", align 8 ; 4 uses
@@ -560,9 +560,6 @@ bb.o:                                             ; preds = %bb.a
   call void @_ZN4pbrt6detail8DispatchIRZNKS_16TextureMapping2D3MapENS_18TextureEvalContextEEUlT_E_NS_10TexCoord2DENS_9UVMappingENS_16SphericalMappingENS_18CylindricalMappingENS_13PlanarMappingEEET0_OS4_PKvi(ptr dead_on_unwind nonnull writable sret(%"struct.pbrt::TexCoord2D") align 4 %60, ptr noundef nonnull align 8 dereferenceable(8) %58, ptr noundef %i.eg, i32 noundef %i.ej)
   call void @llvm.lifetime.end.p0(ptr nonnull %58) #26, !noalias !762
   call void @llvm.lifetime.end.p0(ptr nonnull %59)
-  %66 = load float, ptr %60, align 4, !tbaa !54   ; 3 uses
-  %67 = getelementptr inbounds nuw i8, ptr %60, i64 4
-  %68 = load float, ptr %67, align 4, !tbaa !54   ; 3 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %57) #26
   store ptr %61, ptr %57, align 8, !tbaa !658
@@ -572,14 +569,17 @@ bb.o:                                             ; preds = %bb.a
   %i.eo = lshr i64 %i.el, 57
   %i.ep = trunc nuw nsw i64 %i.eo to i32
   %i.eq = add nsw i32 %i.ep, -1
+  %66 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %67 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %68 = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %69 = load <2 x float>, ptr %60, align 8, !tbaa !54 ; 5 uses
   %i.er = call { <2 x float>, <2 x float> } @_ZN4pbrt6detail8DispatchIRZNKS_8Spectrum6SampleERKNS_18SampledWavelengthsEEUlT_E_NS_15SampledSpectrumENS_16ConstantSpectrumENS_22DenselySampledSpectrumENS_23PiecewiseLinearSpectrumENS_17RGBAlbedoSpectrumENS_20RGBUnboundedSpectrumENS_21RGBIlluminantSpectrumENS_17BlackbodySpectrumEEET0_OS6_PKvi(ptr noundef nonnull align 8 dereferenceable(8) %57, ptr noundef %i.en, i32 noundef %i.eq) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %57) #26
   %i.es = extractvalue { <2 x float>, <2 x float> } %i.er, 0
   %i.et = extractvalue { <2 x float>, <2 x float> } %i.er, 1
-  %69 = getelementptr inbounds nuw i8, ptr %1, i64 24
   call void @llvm.lifetime.start.p0(ptr nonnull %56) #26
   store ptr %61, ptr %56, align 8, !tbaa !658
-  %i.eu = load i64, ptr %69, align 8, !tbaa !245  ; 2 uses
+  %i.eu = load i64, ptr %66, align 8, !tbaa !245  ; 2 uses
   %i.ev = and i64 %i.eu, 144115188075855871
   %i.ew = inttoptr i64 %i.ev to ptr
   %i.ex = lshr i64 %i.eu, 57
@@ -589,10 +589,9 @@ bb.o:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %56) #26
   %i.fb = extractvalue { <2 x float>, <2 x float> } %i.fa, 0
   %i.fc = extractvalue { <2 x float>, <2 x float> } %i.fa, 1
-  %70 = getelementptr inbounds nuw i8, ptr %1, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %55) #26
   store ptr %61, ptr %55, align 8, !tbaa !658
-  %i.fd = load i64, ptr %70, align 8, !tbaa !245  ; 2 uses
+  %i.fd = load i64, ptr %67, align 8, !tbaa !245  ; 2 uses
   %i.fe = and i64 %i.fd, 144115188075855871
   %i.ff = inttoptr i64 %i.fe to ptr
   %i.fg = lshr i64 %i.fd, 57
@@ -602,10 +601,9 @@ bb.o:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %55) #26
   %i.fk = extractvalue { <2 x float>, <2 x float> } %i.fj, 0
   %i.fl = extractvalue { <2 x float>, <2 x float> } %i.fj, 1
-  %71 = getelementptr inbounds nuw i8, ptr %1, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %54) #26
   store ptr %61, ptr %54, align 8, !tbaa !658
-  %i.fm = load i64, ptr %71, align 8, !tbaa !245  ; 2 uses
+  %i.fm = load i64, ptr %68, align 8, !tbaa !245  ; 2 uses
   %i.fn = and i64 %i.fm, 144115188075855871
   %i.fo = inttoptr i64 %i.fn to ptr
   %i.fp = lshr i64 %i.fm, 57
@@ -615,29 +613,29 @@ bb.o:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %54) #26
   %i.ft = extractvalue { <2 x float>, <2 x float> } %i.fs, 0
   %i.fu = extractvalue { <2 x float>, <2 x float> } %i.fs, 1
-  %72 = fsub float 1.000000e+00, %66              ; 2 uses
-  %i.fv = fsub float 1.000000e+00, %68
-  %73 = fmul float %68, %72
-  %74 = fmul float %66, %68
-  %75 = insertelement <2 x float> poison, float %66, i64 0
-  %i.fw = insertelement <2 x float> %75, float %72, i64 1
-  %i.fx = insertelement <2 x float> poison, float %i.fv, i64 0
+  %70 = extractelement <2 x float> %69, i64 0
+  %i.fv = fsub float 1.000000e+00, %70
+  %71 = extractelement <2 x float> %69, i64 1
+  %72 = fsub float 1.000000e+00, %71
+  %73 = shufflevector <2 x float> %69, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %i.fw = insertelement <2 x float> %73, float %i.fv, i64 0 ; 2 uses
+  %i.fx = insertelement <2 x float> poison, float %72, i64 0
   %i.fy = shufflevector <2 x float> %i.fx, <2 x float> poison, <2 x i32> zeroinitializer
   %i.fz = fmul <2 x float> %i.fw, %i.fy           ; 2 uses
-  %76 = shufflevector <2 x float> %i.fz, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  %74 = shufflevector <2 x float> %i.fz, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 0, i32 0>
   %i.ga = shufflevector <2 x float> %i.fb, <2 x float> %i.et, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.gb = fmul <4 x float> %76, %i.ga
-  %77 = shufflevector <2 x float> %i.fz, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 0, i32 0>
+  %i.gb = fmul <4 x float> %74, %i.ga
+  %75 = shufflevector <2 x float> %i.fz, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.gc = shufflevector <2 x float> %i.es, <2 x float> %i.fc, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.gd = fmul <4 x float> %77, %i.gc
+  %i.gd = fmul <4 x float> %75, %i.gc
   %i.ge = fadd <4 x float> %i.gb, %i.gd
-  %78 = insertelement <4 x float> poison, float %73, i64 0
-  %79 = shufflevector <4 x float> %78, <4 x float> poison, <4 x i32> zeroinitializer
+  %76 = shufflevector <2 x float> %69, <2 x float> %i.fw, <2 x i32> <i32 1, i32 2>
+  %77 = fmul <2 x float> %69, %76                 ; 2 uses
+  %78 = shufflevector <2 x float> %77, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %i.gf = shufflevector <2 x float> %i.fk, <2 x float> %i.fl, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.gg = fmul <4 x float> %79, %i.gf
+  %i.gg = fmul <4 x float> %78, %i.gf
   %i.gh = fadd <4 x float> %i.ge, %i.gg
-  %80 = insertelement <4 x float> poison, float %74, i64 0
-  %i.gi = shufflevector <4 x float> %80, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.gi = shufflevector <2 x float> %77, <2 x float> poison, <4 x i32> zeroinitializer
   %i.gj = shufflevector <2 x float> %i.ft, <2 x float> %i.fu, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.gk = fmul <4 x float> %i.gi, %i.gj
   %i.gl = fadd <4 x float> %i.gh, %i.gk           ; 2 uses

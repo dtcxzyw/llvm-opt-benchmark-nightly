@@ -205,34 +205,35 @@ bb.l:                                             ; preds = %._crit_edge.i
   %i.el = fsub double %.015.lcssa.i, %.032.lcssa.i
   %i.em = fsub double %.0.lcssa.i, %.034.lcssa.i
   %i.en = fdiv double %i.el, %i.em                ; 2 uses
-  %9 = fadd double %i.en, 1.000000e+00            ; 4 uses
   %i.eo = fneg double %i.en
   %i.ep = call double @llvm.fmuladd.f64(double %i.eo, double %.034.lcssa.i, double %.032.lcssa.i)
   %i.eq = fdiv double %i.ep, %i.bl                ; 3 uses
+  %9 = insertelement <2 x double> poison, double %i.en, i64 0
+  %10 = insertelement <2 x double> %9, double %i.eq, i64 1 ; 2 uses
+  %11 = fadd <2 x double> %10, <double 1.000000e+00, double poison> ; 2 uses
   %i.er = fcmp une double %i.eq, 0.000000e+00
+  %12 = extractelement <2 x double> %11, i64 0    ; 3 uses
   br i1 %i.er, label %bb.m, label %.thread.i.i.i
 
 bb.m:                                             ; preds = %bb.l
   %shift = shufflevector <2 x double> %i.ej, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fsub <2 x double> %i.ej, %shift
   %i.es = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %10 = insertelement <2 x double> poison, double %9, i64 0
-  %i.et = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
-  %11 = insertelement <2 x double> poison, double %i.eq, i64 0
-  %12 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.eu = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.et, <2 x double> %i.ej, <2 x double> %12) ; 2 uses
+  %i.et = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
+  %13 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.eu = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.et, <2 x double> %i.ej, <2 x double> %13) ; 2 uses
   %i.ev = extractelement <2 x double> %i.eu, i64 0
   %i.ew = call double @log(double noundef %i.ev) #11, !noalias !62
   %i.ex = extractelement <2 x double> %i.eu, i64 1
   %i.ey = call double @log(double noundef %i.ex) #11, !noalias !62
   %i.ez = fsub double %i.ew, %i.ey
   %i.fa = fneg double %i.eq
-  %i.fb = fdiv double %i.fa, %9
+  %i.fb = fdiv double %i.fa, %12
   %i.fc = call double @llvm.fmuladd.f64(double %i.fb, double %i.ez, double %i.es)
   br label %.thread
 
 .thread.i.i.i:                                    ; preds = %bb.l, %._crit_edge.i
-  %.03238.i.i.i = phi double [ %9, %bb.l ], [ 1.000000e+00, %._crit_edge.i ]
+  %.03238.i.i.i = phi double [ %12, %bb.l ], [ 1.000000e+00, %._crit_edge.i ]
   %shift109 = shufflevector <2 x double> %i.ej, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop110 = fsub <2 x double> %i.ej, %shift109
   %i.fd = extractelement <2 x double> %foldExtExtBinop110, i64 0
@@ -267,41 +268,42 @@ bb.o:                                             ; preds = %bb.n
   %i.fr = fsub double %.01533.i, %.03237.i
   %i.fs = fsub double %.035.i, %.03436.i
   %i.ft = fdiv double %i.fr, %i.fs                ; 2 uses
-  %13 = fadd double %i.ft, 1.000000e+00           ; 4 uses
   %i.fu = fneg double %i.ft
   %i.fv = call double @llvm.fmuladd.f64(double %i.fu, double %.03436.i, double %.03237.i)
   %i.fw = fdiv double %i.fv, %i.bl                ; 3 uses
+  %14 = insertelement <2 x double> poison, double %i.ft, i64 0
+  %15 = insertelement <2 x double> %14, double %i.fw, i64 1 ; 2 uses
+  %16 = fadd <2 x double> %15, <double 1.000000e+00, double poison> ; 2 uses
   %i.fx = fcmp une double %i.fw, 0.000000e+00
+  %17 = extractelement <2 x double> %16, i64 0    ; 3 uses
   br i1 %i.fx, label %bb.p, label %.thread.i.i71.i
 
 bb.p:                                             ; preds = %bb.o
   %shift112 = shufflevector <2 x double> %i.fp, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop113 = fsub <2 x double> %i.fp, %shift112
   %i.fy = extractelement <2 x double> %foldExtExtBinop113, i64 0
-  %14 = insertelement <2 x double> poison, double %13, i64 0
-  %i.fz = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
-  %15 = insertelement <2 x double> poison, double %i.fw, i64 0
-  %16 = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ga = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fz, <2 x double> %i.fp, <2 x double> %16) ; 2 uses
+  %i.fz = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> zeroinitializer
+  %18 = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.ga = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.fz, <2 x double> %i.fp, <2 x double> %18) ; 2 uses
   %i.gb = extractelement <2 x double> %i.ga, i64 0
   %i.gc = call double @log(double noundef %i.gb) #11, !noalias !62
   %i.gd = extractelement <2 x double> %i.ga, i64 1
   %i.ge = call double @log(double noundef %i.gd) #11, !noalias !62
   %i.gf = fsub double %i.gc, %i.ge
   %i.gg = fneg double %i.fw
-  %i.gh = fdiv double %i.gg, %13
+  %i.gh = fdiv double %i.gg, %17
   %i.gi = call double @llvm.fmuladd.f64(double %i.gh, double %i.gf, double %i.fy)
   br label %"_ZZN7xgboost6metric11BinaryPRAUCEPKNS_7ContextENS_6common4SpanIKfLm18446744073709551615EEENS_6linalg10TensorViewIS6_Li1EEENS4_15OptionalWeightsEENK3$_0clEdddd.exit76.i"
 
 .thread.i.i71.i:                                  ; preds = %bb.o, %bb.n
-  %.03238.i.i72.i = phi double [ %13, %bb.o ], [ 1.000000e+00, %bb.n ]
+  %.03238.i.i72.i = phi double [ %17, %bb.o ], [ 1.000000e+00, %bb.n ]
   %shift115 = shufflevector <2 x double> %i.fp, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop116 = fsub <2 x double> %i.fp, %shift115
   %i.gj = extractelement <2 x double> %foldExtExtBinop116, i64 0
   br label %"_ZZN7xgboost6metric11BinaryPRAUCEPKNS_7ContextENS_6common4SpanIKfLm18446744073709551615EEENS_6linalg10TensorViewIS6_Li1EEENS4_15OptionalWeightsEENK3$_0clEdddd.exit76.i"
 
 "_ZZN7xgboost6metric11BinaryPRAUCEPKNS_7ContextENS_6common4SpanIKfLm18446744073709551615EEENS_6linalg10TensorViewIS6_Li1EEENS4_15OptionalWeightsEENK3$_0clEdddd.exit76.i": ; preds = %.thread.i.i71.i, %bb.p
-  %.03237.i.i73.i = phi double [ %13, %bb.p ], [ %.03238.i.i72.i, %.thread.i.i71.i ]
+  %.03237.i.i73.i = phi double [ %17, %bb.p ], [ %.03238.i.i72.i, %.thread.i.i71.i ]
   %.pn.i.i74.i = phi double [ %i.gi, %bb.p ], [ %i.gj, %.thread.i.i71.i ]
   %.0.i.i75.i = fdiv double %.pn.i.i74.i, %.03237.i.i73.i
   %i.gk = fadd double %.01732.i, %.0.i.i75.i
@@ -350,7 +352,7 @@ bb.t:                                             ; preds = %bb.f
   unreachable
 
 .thread:                                          ; preds = %bb.m, %.thread.i.i.i
-  %.03237.i.i.i = phi double [ %9, %bb.m ], [ %.03238.i.i.i, %.thread.i.i.i ]
+  %.03237.i.i.i = phi double [ %12, %bb.m ], [ %.03238.i.i.i, %.thread.i.i.i ]
   %.pn.i.i.i = phi double [ %i.fc, %bb.m ], [ %i.fd, %.thread.i.i.i ]
   %.0.i.i.i = fdiv double %.pn.i.i.i, %.03237.i.i.i
   %i.ha = fadd double %.017.lcssa.i, %.0.i.i.i

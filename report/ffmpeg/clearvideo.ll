@@ -97,7 +97,7 @@ bb.e:                                             ; preds = %bb.a, %bb.c, %bb.b
   %i.u = load i8, ptr %i.t, align 1, !tbaa !31
   %i.v = zext i8 %i.u to i32
   %i.w = add nuw nsw i32 %.1.i, %i.v              ; 4 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 220 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 220
   store i32 %i.w, ptr %i.x, align 4, !tbaa !40
   %i.y = shl nuw i32 1, %i.w
   %.not61 = icmp ne i32 %i.y, %.sink
@@ -137,16 +137,13 @@ bb.h:                                             ; preds = %bb.g
   %i.aq = getelementptr inbounds nuw i8, ptr %i.b, i64 168
   %i.ar = ashr <2 x i32> %i.ap, splat (i32 4)
   store <2 x i32> %i.ar, ptr %i.aq, align 8, !tbaa !42
-  %1 = load i32, ptr %i.o, align 8, !tbaa !32
-  %2 = load i32, ptr %i.x, align 4, !tbaa !40
   %i.as = getelementptr inbounds nuw i8, ptr %i.b, i64 176 ; 2 uses
-  %3 = insertelement <2 x i32> poison, i32 %1, i64 0
-  %i.at = add <2 x i32> %3, <i32 -1, i32 poison>
+  %1 = load <2 x i32>, ptr %i.o, align 8, !tbaa !42 ; 2 uses
+  %i.at = add <2 x i32> %1, <i32 -1, i32 poison>
   %i.au = shufflevector <2 x i32> %i.at, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.av = add <2 x i32> %i.au, %i.ad
-  %4 = insertelement <2 x i32> poison, i32 %2, i64 0
-  %5 = shufflevector <2 x i32> %4, <2 x i32> poison, <2 x i32> zeroinitializer
-  %i.aw = ashr <2 x i32> %i.av, %5
+  %2 = shufflevector <2 x i32> %1, <2 x i32> poison, <2 x i32> <i32 1, i32 1>
+  %i.aw = ashr <2 x i32> %i.av, %2
   store <2 x i32> %i.aw, ptr %i.as, align 16, !tbaa !42
   %i.ax = tail call ptr @av_frame_alloc() #14
   %i.ay = getelementptr inbounds nuw i8, ptr %i.b, i64 128 ; 2 uses

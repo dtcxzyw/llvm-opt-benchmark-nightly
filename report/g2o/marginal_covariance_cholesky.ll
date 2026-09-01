@@ -204,10 +204,10 @@ _ZNSt6vectorIN3g2o10MatrixElemESaIS1_EED2Ev.exit: ; preds = %._crit_edge210, %bb
 
 bb.p:                                             ; preds = %.lr.ph209, %._crit_edge206
   %.067208 = phi i64 [ 0, %.lr.ph209 ], [ %i.eg, %._crit_edge206 ] ; 3 uses
-  %.1207 = phi i32 [ 0, %.lr.ph209 ], [ %i.cq, %._crit_edge206 ] ; 6 uses
+  %.1207 = phi i32 [ 0, %.lr.ph209 ], [ %i.cq, %._crit_edge206 ] ; 5 uses
   %i.cp = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %.067208
   %i.cq = load i32, ptr %i.cp, align 4, !tbaa !40 ; 2 uses
-  %i.cr = sub nsw i32 %i.cq, %.1207               ; 8 uses
+  %i.cr = sub nsw i32 %i.cq, %.1207               ; 7 uses
   %i.cs = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.067208
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !73 ; 6 uses
   %i.cu = icmp sgt i32 %i.cr, 0
@@ -222,37 +222,35 @@ bb.p:                                             ; preds = %.lr.ph209, %._crit_
   br i1 %.not.not.i.i, label %.preheader153.lr.ph.split.us, label %.preheader153.lr.ph.split
 
 .preheader153.lr.ph.split.us:                     ; preds = %.preheader153.lr.ph
+  %3 = zext nneg i32 %i.cr to i64                 ; 5 uses
   br i1 %.not, label %.preheader153.us.us.preheader, label %.preheader153.us.preheader
 
 .preheader153.us.preheader:                       ; preds = %.preheader153.lr.ph.split.us
   %i.cy = sext i32 %.1207 to i64                  ; 2 uses
-  %3 = zext nneg i32 %i.cr to i64
   %wide.trip.count246 = zext nneg i32 %i.cr to i64 ; 2 uses
   %invariant.gep316.a = getelementptr [4 x i8], ptr %i.cv, i64 %i.cy
   %invariant.gep312 = getelementptr [4 x i8], ptr %i.cv, i64 %i.cy
   br label %.preheader153.us
 
 .preheader153.us.us.preheader:                    ; preds = %.preheader153.lr.ph.split.us
-  %i.cz = zext nneg i32 %i.cr to i64              ; 4 uses
+  %4 = zext i32 %.1207 to i64                     ; 2 uses
+  %i.cz = zext i32 %i.cw to i64
   br label %.preheader153.us.us
 
 .preheader153.us.us:                              ; preds = %.preheader153.us.us.preheader, %.split.us.us.split.us.us
-  %indvars.iv248 = phi i64 [ 0, %.preheader153.us.us.preheader ], [ %indvars.iv.next249, %.split.us.us.split.us.us ] ; 6 uses
-  %i.da = mul nuw nsw i64 %indvars.iv248, %i.cz
-  %4 = trunc i64 %indvars.iv248 to i32
-  %5 = add i32 %.1207, %4                         ; 2 uses
+  %indvars.iv257 = phi i64 [ %4, %.preheader153.us.us.preheader ], [ %indvars.iv.next258, %.split.us.us.split.us.us ] ; 2 uses
+  %indvars.iv248 = phi i64 [ 0, %.preheader153.us.us.preheader ], [ %indvars.iv.next249, %.split.us.us.split.us.us ] ; 5 uses
+  %i.da = mul nuw nsw i64 %indvars.iv248, %3
+  %5 = mul i64 %indvars.iv257, %i.cz
+  %invariant.op = add i64 %5, %4
   %invariant.gep318 = getelementptr inbounds nuw [8 x i8], ptr %i.ct, i64 %i.da
   %invariant.gep320.a = getelementptr inbounds nuw [8 x i8], ptr %i.ct, i64 %indvars.iv248
   br label %.preheader.us.us.us.us
 
 .preheader.us.us.us.us:                           ; preds = %bb.s, %.preheader153.us.us
   %indvars.iv250 = phi i64 [ %indvars.iv.next251.a, %bb.s ], [ %indvars.iv248, %.preheader153.us.us ] ; 5 uses
-  %6 = trunc i64 %indvars.iv250 to i32
-  %7 = add i32 %.1207, %6                         ; 2 uses
-  %spec.select150.us.us.us.us = tail call i32 @llvm.smin.i32(i32 %5, i32 %7)
-  %spec.select151.us.us.us.us = tail call i32 @llvm.smax.i32(i32 %5, i32 %7)
-  %8 = mul nsw i32 %i.cw, %spec.select150.us.us.us.us
-  %9 = add nsw i32 %8, %spec.select151.us.us.us.us
+  %.reass = add i64 %indvars.iv250, %invariant.op
+  %6 = trunc i64 %.reass to i32
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.q, %.preheader.us.us.us.us
@@ -260,18 +258,18 @@ bb.q:                                             ; preds = %bb.q, %.preheader.u
   %.sroa.06.0.i.i.us.us.us.us = load ptr, ptr %.sroa.06.0.in.i.i.us.us.us.us, align 8, !tbaa !32, !nonnull !74, !noundef !74 ; 3 uses
   %i.db = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i.i.us.us.us.us, i64 8
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !40
-  %i.dd = icmp eq i32 %9, %i.dc
+  %i.dd = icmp eq i32 %i.dc, %6
   br i1 %i.dd, label %_ZNSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEE4findERS5_.exit.loopexit.us.us.us.us, label %bb.q, !llvm.loop !47
 
 bb.r:                                             ; preds = %_ZNSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEE4findERS5_.exit.loopexit.us.us.us.us
-  %i.de = mul nuw nsw i64 %indvars.iv250, %i.cz
+  %i.de = mul nuw nsw i64 %indvars.iv250, %3
   %gep321.a = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep320.a, i64 %i.de
   store double %i.dg, ptr %gep321.a, align 8, !tbaa !41
   br label %bb.s
 
 bb.s:                                             ; preds = %_ZNSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEE4findERS5_.exit.loopexit.us.us.us.us, %bb.r
   %indvars.iv.next251.a = add nuw nsw i64 %indvars.iv250, 1 ; 2 uses
-  %exitcond254.not = icmp eq i64 %indvars.iv.next251.a, %i.cz
+  %exitcond254.not = icmp eq i64 %indvars.iv.next251.a, %3
   br i1 %exitcond254.not, label %.split.us.us.split.us.us, label %.preheader.us.us.us.us, !llvm.loop !75
 
 _ZNSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEE4findERS5_.exit.loopexit.us.us.us.us: ; preds = %bb.q
@@ -284,7 +282,8 @@ _ZNSt13unordered_mapIidSt4hashIiESt8equal_toIiESaISt4pairIKidEEE4findERS5_.exit.
 
 .split.us.us.split.us.us:                         ; preds = %bb.s
   %indvars.iv.next249 = add nuw nsw i64 %indvars.iv248, 1 ; 2 uses
-  %exitcond257.not = icmp eq i64 %indvars.iv.next249, %i.cz
+  %indvars.iv.next258 = add i64 %indvars.iv257, 1
+  %exitcond257.not = icmp eq i64 %indvars.iv.next249, %3
   br i1 %exitcond257.not, label %._crit_edge206, label %.preheader153.us.us, !llvm.loop !76
 
 .preheader153.us:                                 ; preds = %.preheader153.us.preheader, %.split.us.us.split

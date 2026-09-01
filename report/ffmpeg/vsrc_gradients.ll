@@ -204,7 +204,7 @@ lerp_colors16.exit:                               ; preds = %bb.e, %bb.g, %bb.h
 define internal noundef i32 @draw_gradients_slice32_planar(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3) #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 9 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.d = load i32, ptr %i.c, align 8, !tbaa !64   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 108
@@ -249,7 +249,6 @@ bb.a:
 .preheader.lr.ph:                                 ; preds = %bb.a
   %i.ap = icmp sgt i32 %i.d, 0
   %i.aq = getelementptr inbounds nuw i8, ptr %i.b, i64 236
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 240
   %i.ar = getelementptr inbounds nuw i8, ptr %i.b, i64 244
   %i.as = getelementptr inbounds nuw i8, ptr %i.b, i64 88 ; 4 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.b, i64 92
@@ -299,20 +298,17 @@ bb.a:
 
 bb.b:                                             ; preds = %.preheader, %lerp_colors32.exit
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %lerp_colors32.exit ] ; 6 uses
-  %5 = load float, ptr %i.aq, align 4, !tbaa !68  ; 2 uses
-  %6 = load float, ptr %4, align 8, !tbaa !69
+  %4 = load <2 x float>, ptr %i.aq, align 4, !tbaa !35 ; 3 uses
   %i.bp = load <2 x float>, ptr %i.ar, align 4, !tbaa !35 ; 3 uses
   %i.bq = trunc nuw nsw i64 %indvars.iv to i32
   %i.br = uitofp nneg i32 %i.bq to float          ; 2 uses
-  %7 = insertelement <2 x float> %i.bp, float %i.br, i64 1
-  %i.bs = insertelement <2 x float> poison, float %5, i64 0
-  %i.bt = shufflevector <2 x float> %i.bs, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.bu = fsub nsz <2 x float> %7, %i.bt          ; 7 uses
+  %i.bs = insertelement <2 x float> %i.bp, float %i.br, i64 1
+  %i.bt = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.bu = fsub nsz <2 x float> %i.bs, %i.bt       ; 7 uses
   %i.bv = shufflevector <2 x float> %i.bp, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %8 = insertelement <2 x float> %i.bv, float %i.bj, i64 1
-  %i.bw = insertelement <2 x float> poison, float %6, i64 0
-  %9 = shufflevector <2 x float> %i.bw, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.bx = fsub nsz <2 x float> %8, %9             ; 7 uses
+  %i.bw = insertelement <2 x float> %i.bv, float %i.bj, i64 1
+  %5 = shufflevector <2 x float> %4, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.bx = fsub nsz <2 x float> %i.bw, %5          ; 7 uses
   switch i32 %i.an, label %project.exit [
     i32 0, label %.thread.i
     i32 1, label %.thread42.i
@@ -356,8 +352,9 @@ bb.d:                                             ; preds = %bb.b
   %i.cr = tail call nsz float @llvm.atan2.f32(float %i.cp, float %i.cq)
   %i.cs = fpext nsz float %i.cr to double
   %i.ct = fadd nsz double %i.cs, f0x400921FB54442D18
+  %6 = extractelement <2 x float> %4, i64 0
   %i.cu = extractelement <2 x float> %i.bp, i64 0
-  %i.cv = tail call nsz float @llvm.maxnum.f32(float %5, float %i.cu)
+  %i.cv = tail call nsz float @llvm.maxnum.f32(float %6, float %i.cu)
   %i.cw = fdiv nsz float %i.br, %i.cv
   %i.cx = fpext nsz float %i.cw to double
   %i.cy = fadd nsz double %i.ct, %i.cx

@@ -204,16 +204,19 @@ bb.a:
   %i.n = icmp ult i32 %2, %.fr53
   %i.o = sext i32 %2 to i64                       ; 2 uses
   %i.p = getelementptr inbounds [2 x i8], ptr %i.m, i64 %i.o
+  br i1 %i.n, label %.preheader.split.us.preheader, label %.sink.split
+
+.preheader.split.us.preheader:                    ; preds = %.preheader
   %4 = sext i32 %.fr53 to i64
-  br i1 %i.n, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.us, label %.sink.split
+  br label %_ZNK6icu_7813UnicodeString6charAtEi.exit.us
 
 .preheader.split.us:                              ; preds = %_ZNK6icu_7813UnicodeString6charAtEi.exit38.us
   %i.q = trunc nsw i64 %indvars.iv.next59 to i32
   %i.r = icmp ugt i32 %.fr53, %i.q
   br i1 %i.r, label %_ZNK6icu_7813UnicodeString6charAtEi.exit.us, label %.sink.split, !llvm.loop !179
 
-_ZNK6icu_7813UnicodeString6charAtEi.exit.us:      ; preds = %.preheader, %.preheader.split.us
-  %indvars.iv5871 = phi i64 [ %indvars.iv.next59, %.preheader.split.us ], [ %i.o, %.preheader ] ; 3 uses
+_ZNK6icu_7813UnicodeString6charAtEi.exit.us:      ; preds = %.preheader.split.us.preheader, %.preheader.split.us
+  %indvars.iv5871 = phi i64 [ %i.o, %.preheader.split.us.preheader ], [ %indvars.iv.next59, %.preheader.split.us ] ; 3 uses
   %i.s = getelementptr inbounds [2 x i8], ptr %i.m, i64 %indvars.iv5871
   %i.t = load i16, ptr %i.s, align 2, !tbaa !76
   %i.u = and i16 %i.t, -33

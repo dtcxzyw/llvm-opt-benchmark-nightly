@@ -204,26 +204,22 @@ middle.block47:                                   ; preds = %vector.body42
 bb.s:                                             ; preds = %middle.block47
   %i.gd = insertelement <2 x double> <double poison, double f0x41F0000000000000>, double %.pre27.i, i64 0
   %i.ge = insertelement <2 x double> <double 3.600000e+06, double poison>, double %i.ee, i64 1
-  %i.gf = fdiv nnan <2 x double> %i.gd, %i.ge     ; 4 uses
-  %2 = fmul nnan <2 x double> %i.gf, <double poison, double 3.700000e+00>
-  %3 = extractelement <2 x double> %i.gf, i64 0
-  %shift = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fmul <2 x double> %i.gf, %shift
-  %4 = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %5 = fptosi double %4 to i32
-  %6 = extractelement <2 x double> %i.gf, i64 1
-  %7 = fmul nnan double %6, 6.400000e+00
-  %8 = fmul double %3, %7
-  %9 = fptosi double %8 to i32
+  %i.gf = fdiv nnan <2 x double> %i.gd, %i.ge     ; 2 uses
+  %2 = shufflevector <2 x double> %i.gf, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %foldExtExtBinop = fmul nnan <2 x double> %2, <double 3.700000e+00, double 6.400000e+00>
+  %3 = shufflevector <2 x double> %i.gf, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = fmul <2 x double> %3, %foldExtExtBinop
+  %5 = fptosi <2 x double> %4 to <2 x i32>
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %middle.block47, %bb.s
-  %.sink.i = phi i32 [ %5, %bb.s ], [ 0, %middle.block47 ]
-  %10 = phi i32 [ %9, %bb.s ], [ 0, %middle.block47 ]
-  %11 = getelementptr inbounds nuw i8, ptr %calloc, i64 4788
-  store i32 %.sink.i, ptr %11, align 4
+  %6 = phi <2 x i32> [ %5, %bb.s ], [ zeroinitializer, %middle.block47 ] ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %calloc, i64 4788
+  %8 = extractelement <2 x i32> %6, i64 0
+  store i32 %8, ptr %7, align 4
   %i.gg = getelementptr inbounds nuw i8, ptr %calloc, i64 4796
-  store i32 %10, ptr %i.gg, align 4
+  %9 = extractelement <2 x i32> %6, i64 1
+  store i32 %9, ptr %i.gg, align 4
   %i.gh = getelementptr inbounds nuw i8, ptr %calloc, i64 28
   store i32 0, ptr %i.gh, align 4
   %i.gi = getelementptr inbounds nuw i8, ptr %calloc, i64 25 ; 5 uses

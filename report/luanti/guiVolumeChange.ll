@@ -204,7 +204,7 @@ define dso_local void @_ZN15GUIVolumeChange13regenerateGuiEN4core8vector2dIjEE(p
   %2 = alloca %"struct.GUIModalMenu::ScalingInfo", align 4 ; 6 uses
   %i.a = alloca i32, align 4                      ; 6 uses
   %3 = alloca %"class.std::__cxx11::basic_string.6", align 8 ; 10 uses
-  %4 = alloca %"class.core::rect", align 8        ; 10 uses
+  %4 = alloca %"class.core::rect", align 16       ; 10 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %6 = alloca %"class.core::rect", align 8        ; 9 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -260,10 +260,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.a,
   %i.x = fptosi float %i.w to i32                 ; 3 uses
   %i.y = fmul nsz float %i.e, 2.000000e+01
   %i.z = fptosi float %i.y to i32                 ; 3 uses
-  store i32 0, ptr %4, align 8, !tbaa !61
+  store i32 0, ptr %4, align 16, !tbaa !61
   %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 4
   store i32 0, ptr %i.aa, align 4, !tbaa !62
-  %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i32 %i.x, ptr %i.ab, align 8, !tbaa !61
   %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 12
   store i32 %i.z, ptr %i.ac, align 4, !tbaa !62
@@ -271,33 +271,21 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.a,
   %i.ae = sitofp <2 x i32> %i.ad to <2 x float>   ; 3 uses
   %i.af = insertelement <2 x float> poison, float %i.e, i64 0
   %i.ag = shufflevector <2 x float> %i.af, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.ah = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ag, <2 x float> <float -1.500000e+02, float -7.000000e+01>, <2 x float> %i.ae) ; 2 uses
-  %11 = extractelement <2 x float> %i.ah, i64 0
-  %12 = fptosi float %11 to i32                   ; 6 uses
-  %13 = extractelement <2 x float> %i.ah, i64 1
-  %14 = fptosi float %13 to i32                   ; 2 uses
-  %.sroa.0.0.copyload2.i = load i64, ptr %4, align 8 ; 2 uses
-  %.sroa.0.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.0.0.copyload2.i to i32
-  %.sroa.0.sroa.6.0.extract.shift.i = lshr i64 %.sroa.0.0.copyload2.i, 32
-  %.sroa.0.sroa.6.0.extract.trunc.i = trunc nuw i64 %.sroa.0.sroa.6.0.extract.shift.i to i32
-  %.sroa.8.0.copyload.i = load i64, ptr %i.ab, align 8 ; 2 uses
-  %15 = add nsw i32 %.sroa.0.sroa.0.0.extract.trunc.i, %12
-  %16 = add nsw i32 %.sroa.0.sroa.6.0.extract.trunc.i, %14
-  %.sroa.8.8.extract.trunc.i = trunc i64 %.sroa.8.0.copyload.i to i32
-  %17 = add nsw i32 %.sroa.8.8.extract.trunc.i, %12
-  %.sroa.8.8.insert.ext.i = zext i32 %17 to i64
-  %.sroa.8.12.extract.shift.i = lshr i64 %.sroa.8.0.copyload.i, 32
-  %.sroa.8.12.extract.trunc.i = trunc nuw i64 %.sroa.8.12.extract.shift.i to i32
-  %18 = add nsw i32 %.sroa.8.12.extract.trunc.i, %14
-  %.sroa.8.12.insert.ext.i = zext i32 %18 to i64
-  %.sroa.8.12.insert.shift.i = shl nuw i64 %.sroa.8.12.insert.ext.i, 32
-  %.sroa.8.12.insert.insert.i = or disjoint i64 %.sroa.8.12.insert.shift.i, %.sroa.8.8.insert.ext.i
-  %.sroa.0.sroa.6.0.insert.ext.i = zext i32 %16 to i64
-  %.sroa.0.sroa.6.0.insert.shift.i = shl nuw i64 %.sroa.0.sroa.6.0.insert.ext.i, 32
-  %.sroa.0.sroa.0.0.insert.ext.i = zext i32 %15 to i64
-  %.sroa.0.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.0.sroa.6.0.insert.shift.i, %.sroa.0.sroa.0.0.insert.ext.i
-  store i64 %.sroa.0.sroa.0.0.insert.insert.i, ptr %4, align 8
-  store i64 %.sroa.8.12.insert.insert.i, ptr %i.ab, align 8
+  %i.ah = call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ag, <2 x float> <float -1.500000e+02, float -7.000000e+01>, <2 x float> %i.ae)
+  %11 = fptosi <2 x float> %i.ah to <2 x i32>     ; 3 uses
+  %12 = load <2 x i64>, ptr %4, align 16          ; 2 uses
+  %13 = trunc <2 x i64> %12 to <2 x i32>
+  %14 = shufflevector <2 x i32> %11, <2 x i32> poison, <2 x i32> zeroinitializer
+  %15 = add nsw <2 x i32> %14, %13
+  %16 = lshr <2 x i64> %12, splat (i64 32)
+  %17 = trunc nuw <2 x i64> %16 to <2 x i32>
+  %18 = shufflevector <2 x i32> %11, <2 x i32> poison, <2 x i32> <i32 1, i32 1>
+  %19 = add nsw <2 x i32> %18, %17
+  %20 = zext <2 x i32> %19 to <2 x i64>
+  %21 = shl nuw <2 x i64> %20, splat (i64 32)
+  %22 = zext <2 x i32> %15 to <2 x i64>
+  %23 = or disjoint <2 x i64> %21, %22
+  store <2 x i64> %23, ptr %4, align 16
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 4 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !63
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
@@ -387,7 +375,8 @@ _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i58
 _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit60: ; preds = %bb.c, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i58
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
-  %i.bv = add nsw i32 %12, %i.x
+  %24 = extractelement <2 x i32> %11, i64 0       ; 4 uses
+  %i.bv = add nsw i32 %24, %i.x
   %.sroa.8.8.insert.ext.i68 = zext i32 %i.bv to i64
   %i.bw = extractelement <2 x i32> %i.ad, i64 1   ; 2 uses
   %i.bx = add nsw i32 %i.bw, %i.z
@@ -396,7 +385,7 @@ _ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEED2Ev.exit60: ; preds = %bb.
   %.sroa.8.12.insert.insert.i73 = or disjoint i64 %.sroa.8.12.insert.shift.i72, %.sroa.8.8.insert.ext.i68
   %.sroa.0.sroa.6.0.insert.ext.i74 = zext i32 %i.bw to i64
   %.sroa.0.sroa.6.0.insert.shift.i75 = shl nuw i64 %.sroa.0.sroa.6.0.insert.ext.i74, 32
-  %.sroa.0.sroa.0.0.insert.ext.i76 = zext i32 %12 to i64
+  %.sroa.0.sroa.0.0.insert.ext.i76 = zext i32 %24 to i64
   %.sroa.0.sroa.0.0.insert.insert.i77 = or disjoint i64 %.sroa.0.sroa.6.0.insert.shift.i75, %.sroa.0.sroa.0.0.insert.ext.i76
   %i.by = call noalias noundef nonnull dereferenceable(440) ptr @_Znwm(i64 noundef 440) #20, !noalias !66 ; 8 uses
   %i.bz = load ptr, ptr %i.ai, align 8, !tbaa !69, !noalias !66
@@ -455,10 +444,10 @@ _ZN7irr_ptrI12GUIScrollBarED2Ev.exit:             ; preds = %bb.f, %bb.g
   %.sroa.0.sroa.6.0.extract.shift.i82 = lshr i64 %.sroa.0.0.copyload2.i80, 32
   %.sroa.0.sroa.6.0.extract.trunc.i83 = trunc nuw i64 %.sroa.0.sroa.6.0.extract.shift.i82 to i32
   %.sroa.8.0.copyload.i85 = load i64, ptr %i.cl, align 8 ; 2 uses
-  %i.cp = add nsw i32 %.sroa.0.sroa.0.0.extract.trunc.i81, %12
+  %i.cp = add nsw i32 %24, %.sroa.0.sroa.0.0.extract.trunc.i81
   %i.cq = add nsw i32 %.sroa.0.sroa.6.0.extract.trunc.i83, %i.co
   %.sroa.8.8.extract.trunc.i86 = trunc i64 %.sroa.8.0.copyload.i85 to i32
-  %i.cr = add nsw i32 %.sroa.8.8.extract.trunc.i86, %12
+  %i.cr = add nsw i32 %24, %.sroa.8.8.extract.trunc.i86
   %.sroa.8.8.insert.ext.i87 = zext i32 %i.cr to i64
   %.sroa.8.12.extract.shift.i88 = lshr i64 %.sroa.8.0.copyload.i85, 32
   %.sroa.8.12.extract.trunc.i89 = trunc nuw i64 %.sroa.8.12.extract.shift.i88 to i32
