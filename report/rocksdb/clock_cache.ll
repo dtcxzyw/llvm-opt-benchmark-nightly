@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %.epil.preheader
 bb.h:                                             ; preds = %bb.n, %.new
   %.03945 = phi i64 [ 0, %.new ], [ %i.cw, %bb.n ] ; 5 uses
   %niter = phi i64 [ 0, %.new ], [ %niter.next.1, %bb.n ]
-  %i.cb = add i64 %.03945, %i.bm                  ; 3 uses
+  %i.cb = add nuw i64 %.03945, %i.bm              ; 3 uses
   %i.cc = icmp ult i64 %i.cb, %i.br
   %i.cd = load ptr, ptr %i.k, align 32, !tbaa !144
   %i.ce = getelementptr inbounds nuw [64 x i8], ptr %i.cd, i64 %.03945
@@ -231,7 +231,7 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.i, %bb.j
   %i.cl = or disjoint i64 %.03945, 1              ; 3 uses
-  %i.cm = add i64 %i.cl, %i.bm                    ; 3 uses
+  %i.cm = add nuw i64 %i.cl, %i.bm                ; 3 uses
   %i.cn = icmp ult i64 %i.cm, %i.br
   %i.co = load ptr, ptr %i.k, align 32, !tbaa !144
   %i.cp = getelementptr inbounds nuw [64 x i8], ptr %i.co, i64 %i.cl
@@ -313,20 +313,15 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 48
   %i.o = load atomic i64, ptr %i.n monotonic, align 8
   %.not = icmp eq i64 %i.o, 0
-  br i1 %.not, label %.critedge.loopexit, label %bb.c
+  br i1 %.not, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.p = add i64 %.0912, 1                        ; 2 uses
+  %i.p = add nuw i64 %.0912, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.p, %i.j
-  br i1 %exitcond.not, label %.critedge.loopexit, label %bb.b, !llvm.loop !233
+  br i1 %exitcond.not, label %.critedge, label %bb.b, !llvm.loop !233
 
-.critedge.loopexit:                               ; preds = %bb.c, %bb.b
-  %.09.lcssa.ph = phi i64 [ %.0912, %bb.b ], [ %i.j, %bb.c ]
-  %1 = tail call i64 @llvm.umax.i64(i64 %.09.lcssa.ph, i64 1)
-  br label %.critedge
-
-.critedge:                                        ; preds = %.critedge.loopexit, %bb.a
-  %.09.lcssa = phi i64 [ %i.f, %bb.a ], [ %1, %.critedge.loopexit ]
+.critedge:                                        ; preds = %bb.b, %bb.c, %bb.a
+  %.09.lcssa = phi i64 [ %i.f, %bb.a ], [ %i.j, %bb.c ], [ %.0912, %bb.b ]
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 136
   br label %bb.e
 

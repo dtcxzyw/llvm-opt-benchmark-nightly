@@ -204,18 +204,16 @@ bb.a:
   %i.o = getelementptr i8, ptr %0, i64 16832      ; 4 uses
   %i.p = getelementptr i8, ptr %i.b, i64 504      ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
+  %wide.trip.count83 = zext nneg i32 %1 to i64    ; 4 uses
   br i1 %4, label %.lr.ph.split.us.split, label %.lr.ph.split
 
 .lr.ph.split.us.split:                            ; preds = %.lr.ph
-  br i1 %.not15.i.i, label %.lr.ph.split.us.split.split.preheader, label %.lr.ph.split.us.split.split.us
-
-.lr.ph.split.us.split.split.preheader:            ; preds = %.lr.ph.split.us.split
-  %wide.trip.count75 = zext nneg i32 %1 to i64
-  br label %.lr.ph.split.us.split.split
+  br i1 %.not15.i.i, label %.lr.ph.split.us.split.split, label %.lr.ph.split.us.split.split.us
 
 .lr.ph.split.us.split.split.us:                   ; preds = %.lr.ph.split.us.split, %.critedge.us.us
-  %.027.us.us = phi i32 [ %5, %.critedge.us.us ], [ 0, %.lr.ph.split.us.split ] ; 3 uses
-  %i.r = add i32 %.027.us.us, %3
+  %indvars.iv75 = phi i64 [ %indvars.iv.next76, %.critedge.us.us ], [ 0, %.lr.ph.split.us.split ] ; 2 uses
+  %5 = trunc nuw nsw i64 %indvars.iv75 to i32     ; 2 uses
+  %i.r = add i32 %3, %5
   %i.s = shl i32 %i.r, %i.f
   %i.t = sext i32 %i.s to i64
   %i.u = getelementptr inbounds [8 x i8], ptr %2, i64 %i.t
@@ -245,12 +243,12 @@ cluster_needs_new_alloc.exit.us.us:               ; preds = %bb.c, %bb.b
   br i1 %or.cond.i.us.us, label %.critedge.us.us, label %.cluster_needs_new_alloc.exit_crit_edge._crit_edge
 
 .critedge.us.us:                                  ; preds = %cluster_needs_new_alloc.exit.us.us, %.lr.ph.split.us.split.split.us
-  %5 = add nuw nsw i32 %.027.us.us, 1             ; 2 uses
-  %exitcond71.not = icmp eq i32 %5, %1
+  %indvars.iv.next76 = add nuw nsw i64 %indvars.iv75, 1 ; 2 uses
+  %exitcond71.not = icmp eq i64 %indvars.iv.next76, %wide.trip.count83
   br i1 %exitcond71.not, label %.cluster_needs_new_alloc.exit_crit_edge._crit_edge.thread, label %.lr.ph.split.us.split.split.us, !llvm.loop !39
 
-.lr.ph.split.us.split.split:                      ; preds = %.lr.ph.split.us.split.split.preheader, %.critedge.us
-  %indvars.iv72 = phi i64 [ 0, %.lr.ph.split.us.split.split.preheader ], [ %indvars.iv.next73, %.critedge.us ] ; 2 uses
+.lr.ph.split.us.split.split:                      ; preds = %.lr.ph.split.us.split, %.critedge.us
+  %indvars.iv72 = phi i64 [ %indvars.iv.next73, %.critedge.us ], [ 0, %.lr.ph.split.us.split ] ; 2 uses
   %i.z = trunc nuw nsw i64 %indvars.iv72 to i32   ; 2 uses
   %i.aa = add i32 %3, %i.z
   %i.ab = sext i32 %i.aa to i64
@@ -284,20 +282,17 @@ cluster_needs_new_alloc.exit.us:                  ; preds = %bb.d, %bb.e
 
 .critedge.us:                                     ; preds = %cluster_needs_new_alloc.exit.us, %.lr.ph.split.us.split.split
   %indvars.iv.next73 = add nuw nsw i64 %indvars.iv72, 1 ; 2 uses
-  %exitcond76.not = icmp eq i64 %indvars.iv.next73, %wide.trip.count75
+  %exitcond76.not = icmp eq i64 %indvars.iv.next73, %wide.trip.count83
   br i1 %exitcond76.not, label %.cluster_needs_new_alloc.exit_crit_edge._crit_edge.thread, label %.lr.ph.split.us.split.split, !llvm.loop !39
 
 .lr.ph.split:                                     ; preds = %.lr.ph
-  br i1 %.not15.i.i, label %.lr.ph.split.split.preheader, label %.lr.ph.split.split.us
-
-.lr.ph.split.split.preheader:                     ; preds = %.lr.ph.split
-  %wide.trip.count = zext nneg i32 %1 to i64
-  br label %.lr.ph.split.split
+  br i1 %.not15.i.i, label %.lr.ph.split.split, label %.lr.ph.split.split.us
 
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split, %.critedge.us50
-  %.027.us34 = phi i32 [ %6, %.critedge.us50 ], [ 0, %.lr.ph.split ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.critedge.us50 ], [ 0, %.lr.ph.split ] ; 2 uses
   %.02226.us35 = phi i64 [ %i.as, %.critedge.us50 ], [ %i.l, %.lr.ph.split ] ; 2 uses
-  %i.ai = add i32 %.027.us34, %3
+  %6 = trunc nuw nsw i64 %indvars.iv to i32       ; 3 uses
+  %i.ai = add i32 %3, %6
   %i.aj = shl i32 %i.ai, %i.f
   %i.ak = sext i32 %i.aj to i64
   %i.al = getelementptr inbounds [8 x i8], ptr %2, i64 %i.ak
@@ -332,13 +327,13 @@ cluster_needs_new_alloc.exit.us46:                ; preds = %bb.g, %bb.f
   %i.aq = load i32, ptr %i.q, align 4
   %i.ar = sext i32 %i.aq to i64
   %i.as = add nsw i64 %.02226.us35, %i.ar
-  %6 = add nuw nsw i32 %.027.us34, 1              ; 2 uses
-  %exitcond.not = icmp eq i32 %6, %1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count83
   br i1 %exitcond.not, label %.cluster_needs_new_alloc.exit_crit_edge._crit_edge.thread, label %.lr.ph.split.split.us, !llvm.loop !39
 
-.lr.ph.split.split:                               ; preds = %.lr.ph.split.split.preheader, %.critedge
-  %indvars.iv.a = phi i64 [ 0, %.lr.ph.split.split.preheader ], [ %indvars.iv.next.a, %.critedge ] ; 2 uses
-  %.02226 = phi i64 [ %i.l, %.lr.ph.split.split.preheader ], [ %i.bf, %.critedge ] ; 2 uses
+.lr.ph.split.split:                               ; preds = %.lr.ph.split, %.critedge
+  %indvars.iv.a = phi i64 [ %indvars.iv.next.a, %.critedge ], [ 0, %.lr.ph.split ] ; 2 uses
+  %.02226 = phi i64 [ %i.bf, %.critedge ], [ %i.l, %.lr.ph.split ] ; 2 uses
   %i.at = trunc nuw nsw i64 %indvars.iv.a to i32  ; 3 uses
   %i.au = add i32 %3, %i.at
   %i.av = sext i32 %i.au to i64
@@ -379,11 +374,11 @@ cluster_needs_new_alloc.exit:                     ; preds = %bb.h, %bb.i
   %i.be = sext i32 %i.bd to i64
   %i.bf = add nsw i64 %.02226, %i.be
   %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
-  %exitcond70.not = icmp eq i64 %indvars.iv.next.a, %wide.trip.count
+  %exitcond70.not = icmp eq i64 %indvars.iv.next.a, %wide.trip.count83
   br i1 %exitcond70.not, label %.cluster_needs_new_alloc.exit_crit_edge._crit_edge.thread, label %.lr.ph.split.split, !llvm.loop !39
 
 .cluster_needs_new_alloc.exit_crit_edge._crit_edge: ; preds = %cluster_needs_new_alloc.exit.us46, %.lr.ph.split.split.us, %cluster_needs_new_alloc.exit, %.lr.ph.split.split, %cluster_needs_new_alloc.exit.us.us, %cluster_needs_new_alloc.exit.us, %bb.a
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.z, %cluster_needs_new_alloc.exit.us ], [ %.027.us.us, %cluster_needs_new_alloc.exit.us.us ], [ %i.at, %cluster_needs_new_alloc.exit ], [ %i.at, %.lr.ph.split.split ], [ %.027.us34, %.lr.ph.split.split.us ], [ %.027.us34, %cluster_needs_new_alloc.exit.us46 ] ; 2 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %i.z, %cluster_needs_new_alloc.exit.us ], [ %5, %cluster_needs_new_alloc.exit.us.us ], [ %i.at, %cluster_needs_new_alloc.exit ], [ %i.at, %.lr.ph.split.split ], [ %6, %.lr.ph.split.split.us ], [ %6, %cluster_needs_new_alloc.exit.us46 ] ; 2 uses
   %.not23 = icmp sgt i32 %.0.lcssa, %1
   br i1 %.not23, label %bb.j, label %.cluster_needs_new_alloc.exit_crit_edge._crit_edge.thread
 

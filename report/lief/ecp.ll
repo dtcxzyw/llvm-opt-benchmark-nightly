@@ -205,8 +205,8 @@ ecp_pick_window_size.exit.i:                      ; preds = %.critedge.i.i, %bb.
   %spec.store.select.i.i = select i1 %.not11.i.i.not, i8 %.1.i.i, i8 2 ; 2 uses
   %i.bl = zext nneg i8 %spec.store.select.i.i to i32
   %i.bm = add nsw i32 %i.bl, -1                   ; 2 uses
-  %i.bn = shl nuw nsw i32 1, %i.bm                ; 7 uses
-  %i.bo = trunc nuw nsw i32 %i.bn to i8           ; 2 uses
+  %i.bn = shl nuw nsw i32 1, %i.bm                ; 5 uses
+  %i.bo = trunc nuw nsw i32 %i.bn to i8           ; 3 uses
   %i.bp = zext nneg i8 %spec.store.select.i.i to i64 ; 6 uses
   %i.bq = add i64 %i.bj, -1
   %i.br = add i64 %i.bq, %i.bp                    ; 4 uses
@@ -220,7 +220,7 @@ bb.x:                                             ; preds = %ecp_pick_window_siz
   br i1 %.not62.i, label %bb.y, label %bb.ai
 
 bb.y:                                             ; preds = %bb.x, %ecp_pick_window_size.exit.i
-  %i.bv = zext nneg i32 %i.bn to i64              ; 4 uses
+  %i.bv = zext nneg i32 %i.bn to i64              ; 5 uses
   %i.bw = call noalias ptr @calloc(i64 noundef %i.bv, i64 noundef 48) #19 ; 18 uses
   %i.bx = icmp eq ptr %i.bw, null
   br i1 %i.bx, label %.thread17.i, label %.preheader24.i
@@ -359,9 +359,8 @@ bb.af:                                            ; preds = %.lr.ph95
 
 ._crit_edge96:                                    ; preds = %bb.af, %.lr.ph16.i.i
   %i.dx = shl i8 %.15415.i.i, 1                   ; 2 uses
-  %16 = zext i8 %i.dx to i32
-  %17 = icmp samesign ugt i32 %i.bn, %16
-  br i1 %17, label %.lr.ph16.i.i, label %.lr.ph18.i.i.preheader, !llvm.loop !41
+  %16 = icmp ult i8 %i.dx, %i.bo
+  br i1 %16, label %.lr.ph16.i.i, label %.lr.ph18.i.i.preheader, !llvm.loop !41
 
 .lr.ph18.i.i.preheader:                           ; preds = %._crit_edge96
   %i.dy = add nsw i64 %i.bv, -1                   ; 2 uses
@@ -413,19 +412,15 @@ middle.block:                                     ; preds = %vector.body
   %.lcssa = phi i64 [ %n.vec, %middle.block ], [ %i.ed, %.lr.ph18.i.i ]
   %i.ei = call fastcc i32 @ecp_normalize_jac_many(ptr noundef %0, ptr noundef %i.b, i64 noundef %.lcssa) ; 2 uses
   %.not69.i.i = icmp eq i32 %i.ei, 0
-  br i1 %.not69.i.i, label %.preheader.i.i.preheader, label %ecp_precompute_comb.exit.i
+  br i1 %.not69.i.i, label %.preheader.i.i, label %ecp_precompute_comb.exit.i
 
-.preheader.i.i.preheader:                         ; preds = %._crit_edge19.i.i
-  %wide.trip.count = zext nneg i32 %i.bn to i64
-  br label %.preheader.i.i
-
-.preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %.preheader.i.i
-  %indvars.iv = phi i64 [ 0, %.preheader.i.i.preheader ], [ %indvars.iv.next, %.preheader.i.i ] ; 2 uses
+.preheader.i.i:                                   ; preds = %._crit_edge19.i.i, %.preheader.i.i
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.preheader.i.i ], [ 0, %._crit_edge19.i.i ] ; 2 uses
   %i.ej = getelementptr inbounds nuw [48 x i8], ptr %i.bw, i64 %indvars.iv
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 32
   call void @mbedtls_mpi_free(ptr noundef nonnull %i.ek) #18
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.bv
   br i1 %exitcond.not, label %ecp_precompute_comb.exit.i, label %.preheader.i.i, !llvm.loop !46
 
 ecp_precompute_comb.exit.i:                       ; preds = %bb.ae, %mbedtls_ecp_copy.exit78.i.i, %bb.ad, %bb.ac, %.lr.ph95, %.preheader.i.i, %._crit_edge19.i.i, %._crit_edge.i.i, %mbedtls_ecp_copy.exit.i.i, %bb.aa, %bb.z

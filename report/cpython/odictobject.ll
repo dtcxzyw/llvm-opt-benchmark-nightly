@@ -202,7 +202,7 @@ bb.a:
 ._crit_edge:                                      ; preds = %bb.a
   %.phi.trans.insert = getelementptr i8, ptr %i.d, i64 8
   %.pre = load i8, ptr %.phi.trans.insert, align 8, !tbaa !24 ; 2 uses
-  %.pre16 = zext nneg i8 %.pre to i64             ; 2 uses
+  %.pre16 = zext i8 %.pre to i64                  ; 2 uses
   %.pre17 = shl nuw i64 1, %.pre16
   br label %bb.c
 
@@ -211,20 +211,20 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load i64, ptr %i.g, align 8, !tbaa !87
   %i.i = getelementptr i8, ptr %i.d, i64 8
   %i.j = load i8, ptr %i.i, align 8, !tbaa !24    ; 2 uses
-  %i.k = zext nneg i8 %i.j to i64                 ; 2 uses
+  %i.k = zext i8 %i.j to i64                      ; 2 uses
   %i.l = shl nuw i64 1, %i.k                      ; 2 uses
   %.not13 = icmp eq i64 %i.h, %i.l
   br i1 %.not13, label %bb.i, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge, %bb.b
-  %.pre-phi18 = phi i64 [ %.pre17, %._crit_edge ], [ %i.l, %bb.b ] ; 2 uses
+  %.pre-phi18 = phi i64 [ %.pre17, %._crit_edge ], [ %i.l, %bb.b ]
   %.pre-phi = phi i64 [ %.pre16, %._crit_edge ], [ %i.k, %bb.b ]
   %i.m = phi i8 [ %.pre, %._crit_edge ], [ %i.j, %bb.b ]
   %i.n = icmp ugt i8 %i.m, 59
   br i1 %i.n, label %.thread.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = shl nuw nsw i64 8, %.pre-phi
+  %i.o = shl nuw nsw i64 8, %.pre-phi             ; 2 uses
   %i.p = tail call ptr @PyMem_Malloc(i64 noundef %i.o) #6 ; 5 uses
   %i.q = icmp eq ptr %i.p, null
   br i1 %i.q, label %.thread.i, label %._crit_edge.i
@@ -234,9 +234,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_odict_resize.exit.thread
 
 ._crit_edge.i:                                    ; preds = %bb.d
-  %smax.i = tail call i64 @llvm.smax.i64(i64 %.pre-phi18, i64 1)
-  %3 = shl nuw i64 %smax.i, 3
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.p, i8 0, i64 %3, i1 false), !tbaa !44
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.p, i8 0, i64 %i.o, i1 false), !tbaa !44
   %i.s = getelementptr i8, ptr %0, i64 48
   %.033.i = load ptr, ptr %i.s, align 8, !tbaa !44 ; 2 uses
   %.not34.i = icmp eq ptr %.033.i, null

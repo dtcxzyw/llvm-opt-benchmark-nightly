@@ -205,21 +205,20 @@ bb.b:                                             ; preds = %._crit_edge
   ret void
 
 bb.c:                                             ; preds = %bb.a, %._crit_edge
-  %.0810 = phi i32 [ 7, %bb.a ], [ %i.d, %._crit_edge ] ; 5 uses
-  %i.a = shl i32 16, %.0810                       ; 2 uses
+  %.0810 = phi i32 [ 7, %bb.a ], [ %i.d, %._crit_edge ] ; 6 uses
+  %i.a = shl i32 16, %.0810
   %i.b = icmp sgt i32 %i.a, 0
   br i1 %i.b, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.c
-  %0 = sub nsw i32 0, %i.a
-  %1 = trunc i32 %.0810 to i8
-  %2 = sext i32 %0 to i64
-  %scevgep = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @fcode_tab, i64 4096), i64 %2
-  %i.c = shl i32 32, %.0810
-  %3 = add i32 %i.c, -32
-  %4 = zext i32 %3 to i64
-  %5 = add nuw nsw i64 %4, 32
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %scevgep, i8 %1, i64 %5, i1 false), !tbaa !50
+  %0 = shl nuw i32 1, %.0810
+  %1 = zext nneg i32 %0 to i64
+  %2 = shl nuw nsw i64 %1, 5
+  %i.c = shl nsw i32 -16, %.0810
+  %3 = sext i32 %i.c to i64
+  %scevgep = getelementptr i8, ptr getelementptr inbounds nuw (i8, ptr @fcode_tab, i64 4096), i64 %3
+  %4 = trunc i32 %.0810 to i8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %scevgep, i8 %4, i64 %2, i1 false), !tbaa !50
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.c

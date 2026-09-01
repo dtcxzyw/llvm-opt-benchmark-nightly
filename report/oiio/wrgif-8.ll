@@ -202,8 +202,7 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
   %i.bl = sext i32 %1 to i64
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.m, i32 1)
-  %wide.trip.count = zext nneg i32 %smax to i64
+  %3 = sext i32 %i.m to i64
   br label %.lr.ph.split
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
@@ -284,8 +283,8 @@ bb.k:                                             ; preds = %bb.j, %bb.h, %bb.i
   %i.db = load ptr, ptr %i.p, align 8, !tbaa !72
   %i.dc = tail call i32 @putc(i32 noundef %.sink94, ptr noundef %i.db) ; 0 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !87
+  %4 = icmp slt i64 %indvars.iv.next, %3
+  br i1 %4, label %.lr.ph.split, label %._crit_edge, !llvm.loop !87
 
 ._crit_edge:                                      ; preds = %bb.k, %bb.f, %bb.d
   %i.dd = load ptr, ptr %i.p, align 8, !tbaa !72

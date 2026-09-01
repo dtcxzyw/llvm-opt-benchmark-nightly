@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/recon_tmpl?download=true
 inline.NumInlined: 111
 inline.NumDeleted: 16
-loop-unroll.NumCompletelyUnrolled: 24
+loop-unroll.NumCompletelyUnrolled: 23
 loop-unroll.NumRuntimeUnrolled: 15
-loop-unroll.NumUnrolled: 39
+loop-unroll.NumUnrolled: 38
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -37,9 +37,9 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !8    ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 2168
   %i.i = load i32, ptr %i.h, align 8, !tbaa !29   ; 3 uses
-  %i.j = icmp eq i32 %i.i, 1
+  %i.j = icmp eq i32 %i.i, 1                      ; 2 uses
   %i.k = icmp ne i32 %i.i, 3
-  %i.l = zext i1 %i.j to i32                      ; 18 uses
+  %i.l = zext i1 %i.j to i32                      ; 16 uses
   %i.m = zext i1 %i.k to i32                      ; 16 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 16 uses
   %i.o = load i32, ptr %i.n, align 8, !tbaa !62   ; 4 uses
@@ -186,6 +186,7 @@ bb.g:                                             ; preds = %bb.d
   br i1 %i.de, label %.lr.ph.preheader, label %._crit_edge.split
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph290
+  %3 = select i1 %i.j, i32 2, i32 1
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.do = insertelement <2 x i32> poison, i32 %i.m, i64 0
   %i.dp = insertelement <2 x i32> %i.do, i32 %i.l, i64 1 ; 2 uses
@@ -193,6 +194,7 @@ bb.g:                                             ; preds = %bb.d
 
 ..loopexit247_crit_edge:                          ; preds = %.loopexit
   %i.dq = icmp slt i32 %i.dt, %i.ci
+  %indvars.iv.next = add nuw nsw i32 %i.ds, 32
   br i1 %i.dq, label %.lr.ph, label %._crit_edge.split
 
 ._crit_edge.split:                                ; preds = %..loopexit247_crit_edge, %.lr.ph290, %bb.g
@@ -200,22 +202,25 @@ bb.g:                                             ; preds = %bb.d
   br label %bb.ag
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %..loopexit247_crit_edge
-  %i.dr = phi i32 [ %i.oa, %..loopexit247_crit_edge ], [ %i.o, %.lr.ph.preheader ]
-  %i.ds = phi i32 [ %i.ob, %..loopexit247_crit_edge ], [ %i.r, %.lr.ph.preheader ]
-  %.0230289 = phi i32 [ %i.dt, %..loopexit247_crit_edge ], [ 0, %.lr.ph.preheader ] ; 9 uses
+  %4 = phi i32 [ %i.o, %.lr.ph.preheader ], [ %i.oa, %..loopexit247_crit_edge ]
+  %i.dr = phi i32 [ %i.r, %.lr.ph.preheader ], [ %i.ob, %..loopexit247_crit_edge ]
+  %i.ds = phi i32 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %..loopexit247_crit_edge ] ; 2 uses
+  %.0230289 = phi i32 [ 0, %.lr.ph.preheader ], [ %i.dt, %..loopexit247_crit_edge ] ; 7 uses
   %i.dt = add nuw nsw i32 %.0230289, 16           ; 4 uses
   %i.du = call noundef i32 @llvm.smin.i32(i32 %i.ci, i32 %i.dt)
   %i.dv = icmp ne i32 %.0230289, 0
   %i.dw = zext i1 %i.dv to i32
   %i.dx = lshr exact i32 %i.dt, %i.l
-  %i.dy = call i32 @llvm.smin.i32(i32 %i.cm, i32 %i.dx) ; 5 uses
+  %i.dy = call i32 @llvm.smin.i32(i32 %i.cm, i32 %i.dx) ; 4 uses
   %i.dz = lshr exact i32 %.0230289, %i.l          ; 5 uses
   %i.ea = icmp slt i32 %i.dz, %i.dy
+  %5 = shl i32 %i.dz, %3
+  %6 = sub i32 %i.ds, %5
   br label %.lr.ph.us.preheader
 
 .lr.ph.us.preheader:                              ; preds = %.lr.ph, %.loopexit
-  %i.eb = phi i32 [ %i.dr, %.lr.ph ], [ %i.oa, %.loopexit ]
-  %i.ec = phi i32 [ %i.ds, %.lr.ph ], [ %i.ob, %.loopexit ]
+  %i.eb = phi i32 [ %4, %.lr.ph ], [ %i.oa, %.loopexit ]
+  %i.ec = phi i32 [ %i.dr, %.lr.ph ], [ %i.ob, %.loopexit ]
   %.0229288 = phi i32 [ 0, %.lr.ph ], [ %i.ed, %.loopexit ] ; 7 uses
   %i.ed = add nuw nsw i32 %.0229288, 16           ; 4 uses
   %i.ee = call noundef i32 @llvm.smin.i32(i32 %i.ce, i32 %i.ed)
@@ -381,7 +386,7 @@ bb.p:                                             ; preds = %._crit_edge254
 
 .split.us:                                        ; preds = %bb.p
   %i.hm = icmp slt i32 %i.hl, %i.hk
-  br i1 %i.hm, label %.lr.ph262.us.us.preheader, label %.split.us.split.a
+  br i1 %i.hm, label %.lr.ph262.us.us.preheader, label %bb.ae
 
 .lr.ph262.us.us.preheader:                        ; preds = %.split.us
   %i.hn = add nsw i32 %i.hi, %.0230289
@@ -671,49 +676,37 @@ dav1d_memset_likely_pow2.exit245.us.us.us.1:      ; preds = %bb.ad, %bb.ac
   %i.nw = add nsw i32 %i.ks, %i.nv                ; 2 uses
   store i32 %i.nw, ptr %i.q, align 4, !tbaa !63
   %i.nx = icmp slt i32 %i.nu, %i.dy
-  br i1 %i.nx, label %.lr.ph.us266.us.us.1, label %.loopexit.sink.split
+  br i1 %i.nx, label %.lr.ph.us266.us.us.1, label %.split.us.split.a
 
-.split.us.split.a:                                ; preds = %.split.us
-  %3 = load i8, ptr %i.dm, align 1, !tbaa !82
-  %4 = zext i8 %3 to i32                          ; 3 uses
-  %i.ny = shl nuw nsw i32 %4, %i.l                ; 2 uses
-  %5 = add nsw i32 %i.hi, %.0230289
-  br label %bb.ae
+.split.us.split.a:                                ; preds = %._crit_edge.us267.us.us.1
+  %i.ny = shl nuw i32 %i.nu, %i.l
+  %7 = sub nsw i32 %i.nw, %i.ny
+  br label %.loopexit.sink.split
 
-bb.ae:                                            ; preds = %.split.us.split.a, %bb.ae
-  %6 = phi i32 [ %5, %.split.us.split.a ], [ %8, %bb.ae ]
-  %.1227260.us276 = phi i32 [ %i.dz, %.split.us.split.a ], [ %7, %bb.ae ]
-  %7 = add nuw nsw i32 %.1227260.us276, %4        ; 3 uses
-  %8 = add nsw i32 %i.ny, %6                      ; 2 uses
-  %9 = icmp slt i32 %7, %i.dy
-  br i1 %9, label %bb.ae, label %._crit_edge263.split.us277.a
+bb.ae:                                            ; preds = %.split.us
+  %8 = load i8, ptr %i.dm, align 1, !tbaa !82
+  %9 = zext i8 %8 to i32
+  br label %._crit_edge263.split.us277.a
 
-._crit_edge263.split.us277.a:                     ; preds = %bb.ae
-  %10 = shl nuw i32 %7, %i.l
-  %11 = sub nsw i32 %8, %10
-  %12 = add nsw i32 %11, %.0230289
-  br label %bb.af
+._crit_edge263.split.us277.a:                     ; preds = %bb.ae, %._crit_edge263.split.us277.a
+  %.1227260.us276 = phi i32 [ %i.dz, %bb.ae ], [ %10, %._crit_edge263.split.us277.a ]
+  %10 = add nuw nsw i32 %.1227260.us276, %9       ; 2 uses
+  %11 = icmp slt i32 %10, %i.dy
+  br i1 %11, label %._crit_edge263.split.us277.a, label %bb.af
 
-bb.af:                                            ; preds = %bb.af, %._crit_edge263.split.us277.a
-  %13 = phi i32 [ %12, %._crit_edge263.split.us277.a ], [ %i.nz, %bb.af ]
-  %.1227260.us276.1 = phi i32 [ %i.dz, %._crit_edge263.split.us277.a ], [ %14, %bb.af ]
-  %14 = add nuw nsw i32 %.1227260.us276.1, %4     ; 3 uses
-  %i.nz = add nsw i32 %i.ny, %13                  ; 2 uses
-  %15 = icmp slt i32 %14, %i.dy
-  br i1 %15, label %bb.af, label %.loopexit.sink.split
+bb.af:                                            ; preds = %._crit_edge263.split.us277.a
+  %i.nz = add i32 %6, %i.hi
+  br label %.loopexit.sink.split
 
-.loopexit.sink.split:                             ; preds = %bb.af, %._crit_edge.us267.us.us.1
-  %.lcssa341.sink = phi i32 [ %i.nu, %._crit_edge.us267.us.us.1 ], [ %14, %bb.af ]
-  %.lcssa340.sink = phi i32 [ %i.nw, %._crit_edge.us267.us.us.1 ], [ %i.nz, %bb.af ]
-  %.ph = phi i32 [ %i.nt, %._crit_edge.us267.us.us.1 ], [ %i.ha, %bb.af ]
-  %16 = shl nuw i32 %.lcssa341.sink, %i.l
-  %17 = sub nsw i32 %.lcssa340.sink, %16          ; 2 uses
-  store i32 %17, ptr %i.q, align 4, !tbaa !63
+.loopexit.sink.split:                             ; preds = %bb.af, %.split.us.split.a
+  %.lcssa340.sink = phi i32 [ %7, %.split.us.split.a ], [ %i.nz, %bb.af ] ; 2 uses
+  %.ph = phi i32 [ %i.nt, %.split.us.split.a ], [ %i.ha, %bb.af ]
+  store i32 %.lcssa340.sink, ptr %i.q, align 4, !tbaa !63
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.loopexit.sink.split, %bb.p, %._crit_edge254
   %i.oa = phi i32 [ %i.ha, %bb.p ], [ %i.ha, %._crit_edge254 ], [ %.ph, %.loopexit.sink.split ] ; 2 uses
-  %i.ob = phi i32 [ %i.hi, %bb.p ], [ %i.hi, %._crit_edge254 ], [ %17, %.loopexit.sink.split ] ; 2 uses
+  %i.ob = phi i32 [ %i.hi, %bb.p ], [ %i.hi, %._crit_edge254 ], [ %.lcssa340.sink, %.loopexit.sink.split ] ; 2 uses
   %i.oc = icmp slt i32 %i.ed, %i.ce
   br i1 %i.oc, label %.lr.ph.us.preheader, label %..loopexit247_crit_edge
 

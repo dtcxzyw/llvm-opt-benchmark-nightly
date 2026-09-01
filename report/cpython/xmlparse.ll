@@ -205,48 +205,44 @@ bb.bd:                                            ; preds = %bb.ax
   br i1 %.not521, label %.preheader693, label %.loopexit694
 
 .preheader693:                                    ; preds = %.thread921, %bb.bd
-  %.1408927 = phi i32 [ %.1408924, %.thread921 ], [ %.1408, %bb.bd ] ; 6 uses
+  %.1408927 = phi i32 [ %.1408924, %.thread921 ], [ %.1408, %bb.bd ] ; 4 uses
   %i.if = getelementptr i8, ptr %0, i64 792
   %i.ig = load ptr, ptr %i.if, align 8, !tbaa !183 ; 5 uses
-  %xtraiter = and i32 %.1408927, 3                ; 2 uses
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  %7 = zext i32 %.1408927 to i64                  ; 3 uses
+  %xtraiter = and i64 %7, 3                       ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
 
 .prol.preheader:                                  ; preds = %.preheader693, %.prol.preheader
-  %.0412771.prol = phi i32 [ %7, %.prol.preheader ], [ %.1408927, %.preheader693 ]
-  %prol.iter = phi i32 [ %prol.iter.next, %.prol.preheader ], [ 0, %.preheader693 ]
-  %7 = add i32 %.0412771.prol, -1                 ; 3 uses
-  %8 = zext i32 %7 to i64
+  %indvars.iv860.prol = phi i64 [ %8, %.prol.preheader ], [ %7, %.preheader693 ]
+  %prol.iter = phi i64 [ %prol.iter.next, %.prol.preheader ], [ 0, %.preheader693 ]
+  %8 = add nsw i64 %indvars.iv860.prol, -1        ; 3 uses
   %i.ih = getelementptr [24 x i8], ptr %i.ig, i64 %8
   store i64 4294967295, ptr %i.ih, align 8, !tbaa !370
-  %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
-  %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !372
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.preheader693
-  %.0412771.unr = phi i32 [ %.1408927, %.preheader693 ], [ %7, %.prol.preheader ]
+  %indvars.iv860.unr = phi i64 [ %7, %.preheader693 ], [ %8, %.prol.preheader ]
   %i.ii = icmp ult i32 %.1408927, 4
   br i1 %i.ii, label %.loopexit694, label %.preheader693.new
 
 .preheader693.new:                                ; preds = %.prol.loopexit, %.preheader693.new
-  %.0412771 = phi i32 [ %15, %.preheader693.new ], [ %.0412771.unr, %.prol.loopexit ] ; 4 uses
-  %9 = add i32 %.0412771, -1
-  %10 = zext i32 %9 to i64
-  %i.ij = getelementptr [24 x i8], ptr %i.ig, i64 %10
-  store i64 4294967295, ptr %i.ij, align 8, !tbaa !370
-  %11 = add i32 %.0412771, -2
-  %12 = zext i32 %11 to i64
-  %i.ik = getelementptr [24 x i8], ptr %i.ig, i64 %12
-  store i64 4294967295, ptr %i.ik, align 8, !tbaa !370
-  %13 = add i32 %.0412771, -3
-  %14 = zext i32 %13 to i64
-  %i.il = getelementptr [24 x i8], ptr %i.ig, i64 %14
-  store i64 4294967295, ptr %i.il, align 8, !tbaa !370
-  %15 = add i32 %.0412771, -4                     ; 3 uses
-  %16 = zext i32 %15 to i64
-  %i.im = getelementptr [24 x i8], ptr %i.ig, i64 %16
+  %indvars.iv860 = phi i64 [ %12, %.preheader693.new ], [ %indvars.iv860.unr, %.prol.loopexit ] ; 4 uses
+  %i.ij = getelementptr [24 x i8], ptr %i.ig, i64 %indvars.iv860
+  %9 = getelementptr i8, ptr %i.ij, i64 -24
+  store i64 4294967295, ptr %9, align 8, !tbaa !370
+  %i.ik = getelementptr [24 x i8], ptr %i.ig, i64 %indvars.iv860
+  %10 = getelementptr i8, ptr %i.ik, i64 -48
+  store i64 4294967295, ptr %10, align 8, !tbaa !370
+  %i.il = getelementptr [24 x i8], ptr %i.ig, i64 %indvars.iv860
+  %11 = getelementptr i8, ptr %i.il, i64 -72
+  store i64 4294967295, ptr %11, align 8, !tbaa !370
+  %12 = add nsw i64 %indvars.iv860, -4            ; 3 uses
+  %i.im = getelementptr [24 x i8], ptr %i.ig, i64 %12
   store i64 4294967295, ptr %i.im, align 8, !tbaa !370
-  %.not522.3 = icmp eq i32 %15, 0
+  %.not522.3 = icmp eq i64 %12, 0
   br i1 %.not522.3, label %.loopexit694, label %.preheader693.new, !llvm.loop !374
 
 .loopexit694:                                     ; preds = %.prol.loopexit, %.preheader693.new, %bb.bd

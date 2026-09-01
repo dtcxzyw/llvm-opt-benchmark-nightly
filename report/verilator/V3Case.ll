@@ -205,23 +205,24 @@ bb.a:
 _ZNK7AstNode5widthEv.exit:                        ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 152
   %i.h = load i32, ptr %i.g, align 8, !tbaa !170  ; 2 uses
-  %i.i = zext nneg i32 %i.h to i64                ; 2 uses
-  %i.j = shl nuw i64 1, %i.i
-  %11 = trunc i64 %i.j to i32                     ; 2 uses
+  %i.i = zext nneg i32 %i.h to i64
+  %i.j = shl nuw i64 1, %i.i                      ; 2 uses
   %.not580 = icmp ugt i32 %i.h, 31
   br i1 %.not580, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %_ZNK7AstNode5widthEv.exit
-  %12 = phi i32 [ %11, %_ZNK7AstNode5widthEv.exit ], [ 1, %bb.a ]
-  %i.k = phi i64 [ %i.i, %_ZNK7AstNode5widthEv.exit ], [ 0, %bb.a ]
+  %i.k = phi i64 [ %i.j, %_ZNK7AstNode5widthEv.exit ], [ 1, %bb.a ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 248
-  %13 = shl nuw nsw i64 24, %i.k
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.l, i8 0, i64 %13, i1 false), !tbaa !254
+  %11 = add nuw nsw i64 %i.k, 4294967295
+  %12 = and i64 %11, 4294967295
+  %13 = mul nuw nsw i64 %12, 24
+  %14 = add nuw nsw i64 %13, 24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.l, i8 0, i64 %14, i1 false), !tbaa !254
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %_ZNK7AstNode5widthEv.exit
   %.not580680 = phi i1 [ false, %.lr.ph ], [ true, %_ZNK7AstNode5widthEv.exit ] ; 2 uses
-  %14 = phi i32 [ %12, %.lr.ph ], [ %11, %_ZNK7AstNode5widthEv.exit ] ; 2 uses
+  %15 = phi i64 [ %i.k, %.lr.ph ], [ %i.j, %_ZNK7AstNode5widthEv.exit ] ; 5 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 242 ; 2 uses
   store i8 1, ptr %i.n, align 2, !tbaa !140
@@ -278,13 +279,11 @@ _ZNK7AstNode5widthEv.exit:                        ; preds = %bb.a
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses
   %i.be = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 6 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 6 uses
-  %umax617 = tail call i32 @llvm.umax.i32(i32 %14, i32 1) ; 2 uses
-  %wide.trip.count = zext i32 %umax617 to i64     ; 3 uses
-  %xtraiter = and i64 %wide.trip.count, 1
-  %15 = icmp ult i32 %14, 2
-  %unroll_iter = and i64 %wide.trip.count, 4294967294
+  %xtraiter = and i64 %15, 1
+  %16 = icmp eq i64 %15, 1
+  %unroll_iter = and i64 %15, -2
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %lcmp.mod826 = trunc i32 %umax617 to i1
+  %lcmp.mod826 = trunc i64 %15 to i1
   br label %_ZN7AstNode2asI11AstCaseItemS_EEPT_PT0_.exit
 
 ._crit_edge576:                                   ; preds = %.loopexit
@@ -308,7 +307,7 @@ _ZN7AstNode2asI11AstCaseItemS_EEPT_PT0_.exit:     ; preds = %bb.db, %.lr.ph575
 
 .lr.ph567:                                        ; preds = %.preheader272
   %i.bl = getelementptr inbounds nuw i8, ptr %.0105573, i64 32 ; 3 uses
-  br i1 %15, label %.epil.preheader, label %.lr.ph567.new
+  br i1 %16, label %.epil.preheader, label %.lr.ph567.new
 
 .lr.ph567.new:                                    ; preds = %.lr.ph567, %bb.e
   %indvars.iv618 = phi i64 [ %indvars.iv.next619.1, %bb.e ], [ 0, %.lr.ph567 ] ; 3 uses
@@ -711,7 +710,7 @@ bb.an:                                            ; preds = %bb.ak, %bb.al, %bb.
   %.378 = phi ptr [ %.075556, %.lr.ph559 ], [ %.075556, %bb.ak ], [ %.075556, %bb.al ], [ %i.fv, %bb.am ] ; 4 uses
   %.3 = phi i32 [ %.074557, %.lr.ph559 ], [ %.074557, %bb.ak ], [ %.074557, %bb.al ], [ %i.fm, %bb.am ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %15
   br i1 %exitcond.not, label %._crit_edge560, label %.lr.ph559, !llvm.loop !278
 
 bb.ao:                                            ; preds = %._crit_edge560
@@ -1114,6 +1113,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK7AstNode5widthEv.exit:                        ; preds = %bb.a, %bb.b
   %i.h = phi i64 [ %i.g, %bb.b ], [ 0, %bb.a ]    ; 2 uses
+  %7 = shl nuw i64 1, %i.h
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 6 uses
   store ptr %i.i, ptr %4, align 8, !tbaa !47
@@ -1126,8 +1126,6 @@ _ZNK7AstNode5widthEv.exit:                        ; preds = %bb.a, %bb.b
   br i1 %.not124, label %._crit_edge.thread, label %.lr.ph127
 
 .lr.ph127:                                        ; preds = %_ZNK7AstNode5widthEv.exit
-  %7 = shl nuw i64 1, %i.h
-  %8 = trunc i64 %7 to i32
   %i.m = getelementptr inbounds nuw i8, ptr %5, i64 56 ; 3 uses
   %.not128 = icmp samesign ugt i64 %i.h, 31
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 248
@@ -1140,8 +1138,6 @@ _ZNK7AstNode5widthEv.exit:                        ; preds = %bb.a, %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %5, i64 36
   %i.v = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.w = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
-  %umax = call i32 @llvm.umax.i32(i32 %8, i32 1)
-  %wide.trip.count = zext i32 %umax to i64
   br label %_ZN7AstNode2asI11AstEnumItemS_EEPT_PT0_.exit
 
 ._crit_edge:                                      ; preds = %_ZNSt4pairI8V3NumberS0_ED2Ev.exit
@@ -1390,7 +1386,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i53
 
 bb.s:                                             ; preds = %bb.j, %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %7
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !393
 
 .loopexit:                                        ; preds = %bb.s, %.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit

@@ -204,11 +204,10 @@ bb.b:                                             ; preds = %bb.d
           to label %bb.l unwind label %bb.u       ; 13 uses
 
 bb.c:                                             ; preds = %.preheader, %bb.d
-  %.04681 = phi i32 [ 0, %.preheader ], [ %i.m, %bb.d ] ; 3 uses
-  %i.k = shl nuw nsw i32 1, %.04681
-  %i.l = zext nneg i32 %i.k to i64
-  %2 = shl nuw nsw i32 2, %.04681
-  %3 = zext nneg i32 %2 to i64
+  %.04681 = phi i32 [ 0, %.preheader ], [ %i.m, %bb.d ] ; 2 uses
+  %i.k = shl nuw i32 1, %.04681
+  %i.l = zext nneg i32 %i.k to i64                ; 2 uses
+  %2 = shl nuw nsw i64 %i.l, 1
   br label %bb.e
 
 bb.d:                                             ; preds = %_ZN9AstConcatC2EP8FileLineP11AstNodeExprS3_.exit
@@ -330,7 +329,7 @@ _ZN9AstConcatC2EP8FileLineP11AstNodeExprS3_.exit: ; preds = %_ZN7AstNode18dtypeS
   store ptr %i.n, ptr %i.bi, align 8, !tbaa !364
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.bh, i64 %i.u
   store ptr null, ptr %i.bj, align 8, !tbaa !364
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, %3 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, %2 ; 2 uses
   %i.bk = icmp samesign ult i64 %indvars.iv.next, 64
   br i1 %i.bk, label %bb.e, label %bb.d, !llvm.loop !368
 

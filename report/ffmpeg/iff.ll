@@ -205,15 +205,15 @@ bb.c:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.m = load i32, ptr %i.l, align 8, !tbaa !30
   %i.n = zext i16 %i.f to i32
-  %i.o = sub nsw i32 %i.m, %i.n                   ; 3 uses
-  %i.p = shl nuw nsw i32 1, %i.j                  ; 6 uses
+  %i.o = sub nsw i32 %i.m, %i.n                   ; 2 uses
+  %i.p = shl nuw i32 1, %i.j                      ; 5 uses
   %i.q = udiv i32 %i.o, 3
-  %. = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.p) ; 4 uses
+  %. = tail call i32 @llvm.umin.i32(i32 %i.q, i32 %i.p) ; 6 uses
   %.not = icmp ult i32 %i.o, 3
   br i1 %.not, label %.preheader.preheader, label %.lr.ph.preheader
 
 .preheader.preheader:                             ; preds = %bb.c
-  %wide.trip.count94 = zext nneg i32 %i.p to i64  ; 4 uses
+  %wide.trip.count94 = zext i32 %i.p to i64       ; 4 uses
   %min.iters.check = icmp ult i32 %i.j, 3
   br i1 %min.iters.check, label %.preheader.preheader129, label %vector.memcheck104
 
@@ -223,7 +223,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.r, label %.preheader.epil.preheader, label %.preheader.preheader129.new
 
 .preheader.preheader129.new:                      ; preds = %.preheader.preheader129
-  %unroll_iter136 = and i64 %wide.trip.count94, 2147483646
+  %unroll_iter136 = and i64 %wide.trip.count94, 4294967294
   br label %.preheader
 
 vector.memcheck104:                               ; preds = %.preheader.preheader
@@ -270,13 +270,10 @@ vector.body112:                                   ; preds = %vector.body112, %ve
   br i1 %i.al, label %.loopexit75, label %vector.body112, !llvm.loop !183
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %umax = tail call i32 @llvm.umax.i32(i32 %., i32 1) ; 2 uses
-  %wide.trip.count = zext nneg i32 %umax to i64   ; 2 uses
-  %2 = udiv i32 %i.o, 3
-  %3 = tail call i32 @llvm.umin.i32(i32 %2, i32 %i.p)
+  %wide.trip.count = zext nneg i32 %. to i64      ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
-  %4 = icmp samesign ult i32 %3, 2
-  br i1 %4, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
+  %2 = icmp eq i32 %., 1
+  br i1 %2, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
   %unroll_iter = and i64 %wide.trip.count, 2147483646
@@ -331,7 +328,7 @@ vector.body112:                                   ; preds = %vector.body112, %ve
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ] ; 2 uses
-  %lcmp.mod132 = trunc i32 %umax to i1
+  %lcmp.mod132 = trunc i32 %. to i1
   tail call void @llvm.assume(i1 %lcmp.mod132)
   %i.bs = mul nuw nsw i64 %indvars.iv.epil.init, 3
   %i.bt = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.bs ; 3 uses

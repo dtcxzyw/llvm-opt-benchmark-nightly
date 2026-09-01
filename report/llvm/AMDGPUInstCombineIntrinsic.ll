@@ -205,11 +205,10 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.as = trunc i32 %i.ar to i8
-  %4 = and i64 %.sroa.050.066, 4294967295
   %i.at = load ptr, ptr %3, align 8, !tbaa !498
-  %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 %4
+  %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 %.sroa.050.066
   store i8 %i.as, ptr %i.au, align 1, !tbaa !15
-  %i.av = add i64 %.sroa.050.066, 1               ; 2 uses
+  %i.av = add nuw nsw i64 %.sroa.050.066, 1       ; 2 uses
   %.not62 = icmp eq i64 %i.av, %i.ah
   br i1 %.not62, label %.critedge41, label %bb.f
 
@@ -250,11 +249,10 @@ bb.j:                                             ; preds = %.critedge.i, %_ZN4l
 
 .critedge.i:                                      ; preds = %bb.j
   %i.bd = trunc i64 %i.bb to i8
-  %5 = and i64 %.sroa.025.030.i, 4294967295
   %i.be = load ptr, ptr %3, align 8, !tbaa !498
-  %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 %5
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 %.sroa.025.030.i
   store i8 %i.bd, ptr %i.bf, align 1, !tbaa !15
-  %i.bg = add i64 %.sroa.025.030.i, 1             ; 2 uses
+  %i.bg = add nuw nsw i64 %.sroa.025.030.i, 1     ; 2 uses
   %.not29.i = icmp eq i64 %i.bg, %i.ah
   br i1 %.not29.i, label %.critedge41, label %bb.j
 

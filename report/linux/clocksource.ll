@@ -161,38 +161,34 @@ define dso_local void @clocks_calc_mult_shift(ptr nofree noundef writeonly captu
   br label %bb.a
 
 bb.a:                                             ; preds = %bb.c, %.preheader
-  %indvars.iv = phi i64 [ 32, %.preheader ], [ %indvars.iv.next.1, %bb.c ] ; 4 uses
-  %i.k = shl i64 %i.h, %indvars.iv
+  %.02228 = phi i32 [ 32, %.preheader ], [ %8, %bb.c ] ; 4 uses
+  %5 = zext nneg i32 %.02228 to i64
+  %i.k = shl i64 %i.h, %5
   %i.l = add i64 %i.k, %i.j
   %i.m = udiv i64 %i.l, %i.b                      ; 2 uses
   %i.n = lshr i64 %i.m, %i.g
   %i.o = icmp eq i64 %i.n, 0
-  br i1 %i.o, label %.split.loop.exit, label %bb.b
+  br i1 %i.o, label %.split.loop.exit31, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.p = shl i64 %i.h, %indvars.iv.next
+  %6 = add nsw i32 %.02228, -1                    ; 2 uses
+  %7 = zext nneg i32 %6 to i64
+  %i.p = shl i64 %i.h, %7
   %i.q = add i64 %i.p, %i.j
   %i.r = udiv i64 %i.q, %i.b                      ; 3 uses
   %i.s = lshr i64 %i.r, %i.g
   %i.t = icmp eq i64 %i.s, 0
-  br i1 %i.t, label %.split.loop.exit, label %bb.c
+  br i1 %i.t, label %.split.loop.exit31, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %indvars.iv.next.1 = add nsw i64 %indvars.iv, -2 ; 2 uses
-  %.not24.1 = icmp eq i64 %indvars.iv.next.1, 0
+  %8 = add nsw i32 %.02228, -2                    ; 2 uses
+  %.not24.1 = icmp eq i32 %8, 0
   br i1 %.not24.1, label %.split.loop.exit31, label %bb.a, !llvm.loop !10
 
-.split.loop.exit:                                 ; preds = %bb.b, %bb.a
-  %indvars.iv.lcssa = phi i64 [ %indvars.iv, %bb.a ], [ %indvars.iv.next, %bb.b ]
-  %.lcssa = phi i64 [ %i.m, %bb.a ], [ %i.r, %bb.b ]
-  %5 = trunc nuw nsw i64 %indvars.iv.lcssa to i32
-  br label %.split.loop.exit31
-
-.split.loop.exit31:                               ; preds = %bb.c, %.split.loop.exit
-  %6 = phi i64 [ %.lcssa, %.split.loop.exit ], [ %i.r, %bb.c ]
-  %.022.lcssa = phi i32 [ %5, %.split.loop.exit ], [ 0, %bb.c ]
-  %i.u = trunc i64 %6 to i32
+.split.loop.exit31:                               ; preds = %bb.c, %bb.b, %bb.a
+  %.lcssa = phi i64 [ %i.m, %bb.a ], [ %i.r, %bb.c ], [ %i.r, %bb.b ]
+  %.022.lcssa = phi i32 [ %.02228, %bb.a ], [ 0, %bb.c ], [ %6, %bb.b ]
+  %i.u = trunc i64 %.lcssa to i32
   store i32 %i.u, ptr %0, align 4
   store i32 %.022.lcssa, ptr %1, align 4
   ret void
@@ -595,45 +591,41 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.j, %bb.g
-  %indvars.iv.i.i = phi i64 [ 32, %bb.g ], [ %indvars.iv.next.i.i.1, %bb.j ] ; 4 uses
-  %i.al = shl i64 %i.ai, %indvars.iv.i.i
+  %.02228.i.i = phi i32 [ 32, %bb.g ], [ %6, %bb.j ] ; 4 uses
+  %3 = zext nneg i32 %.02228.i.i to i64
+  %i.al = shl i64 %i.ai, %3
   %i.am = add i64 %i.al, %i.ak
   %i.an = udiv i64 %i.am, %i.q                    ; 2 uses
   %i.ao = lshr i64 %i.an, %i.ah
   %i.ap = icmp eq i64 %i.ao, 0
-  br i1 %i.ap, label %.split.loop.exit.i.i, label %bb.i
+  br i1 %i.ap, label %.loopexit.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, -1 ; 2 uses
-  %i.aq = shl i64 %i.ai, %indvars.iv.next.i.i
+  %4 = add nsw i32 %.02228.i.i, -1                ; 2 uses
+  %5 = zext nneg i32 %4 to i64
+  %i.aq = shl i64 %i.ai, %5
   %i.ar = add i64 %i.aq, %i.ak
   %i.as = udiv i64 %i.ar, %i.q                    ; 3 uses
   %i.at = lshr i64 %i.as, %i.ah
   %i.au = icmp eq i64 %i.at, 0
-  br i1 %i.au, label %.split.loop.exit.i.i, label %bb.j
+  br i1 %i.au, label %.loopexit.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %indvars.iv.next.i.i.1 = add nsw i64 %indvars.iv.i.i, -2 ; 2 uses
-  %.not24.i.i.1 = icmp eq i64 %indvars.iv.next.i.i.1, 0
+  %6 = add nsw i32 %.02228.i.i, -2                ; 2 uses
+  %.not24.i.i.1 = icmp eq i32 %6, 0
   br i1 %.not24.i.i.1, label %.loopexit.i, label %bb.h, !llvm.loop !10
 
-.split.loop.exit.i.i:                             ; preds = %bb.i, %bb.h
-  %indvars.iv.i.i.lcssa = phi i64 [ %indvars.iv.i.i, %bb.h ], [ %indvars.iv.next.i.i, %bb.i ]
-  %.lcssa54 = phi i64 [ %i.an, %bb.h ], [ %i.as, %bb.i ]
-  %3 = trunc nuw nsw i64 %indvars.iv.i.i.lcssa to i32
-  br label %.loopexit.i
-
-.loopexit.i:                                      ; preds = %bb.j, %.split.loop.exit.i.i
-  %4 = phi i64 [ %.lcssa54, %.split.loop.exit.i.i ], [ %i.as, %bb.j ] ; 2 uses
-  %.022.lcssa.i.i = phi i32 [ %3, %.split.loop.exit.i.i ], [ 0, %bb.j ] ; 2 uses
-  %i.av = trunc i64 %4 to i32                     ; 5 uses
+.loopexit.i:                                      ; preds = %bb.j, %bb.i, %bb.h
+  %.lcssa47 = phi i64 [ %i.as, %bb.j ], [ %i.an, %bb.h ], [ %i.as, %bb.i ] ; 2 uses
+  %.022.lcssa.i.i = phi i32 [ 0, %bb.j ], [ %.02228.i.i, %bb.h ], [ %4, %bb.i ] ; 2 uses
+  %i.av = trunc i64 %.lcssa47 to i32              ; 5 uses
   store i32 %i.av, ptr %i.w, align 8
   store i32 %.022.lcssa.i.i, ptr %i.x, align 4
   %i.aw = udiv i64 %i.s, 1000
   %i.ax = trunc i64 %i.aw to i32
   %i.ay = getelementptr i8, ptr %0, i64 80
   store i32 %i.ax, ptr %i.ay, align 8
-  %storemerge.in.in.in65.i = and i64 %4, 4294967295
+  %storemerge.in.in.in65.i = and i64 %.lcssa47, 4294967295
   %storemerge.in.in66.i = mul nuw nsw i64 %storemerge.in.in.in65.i, 11
   %storemerge.in67.i = udiv i64 %storemerge.in.in66.i, 100
   %storemerge68.i = trunc nuw nsw i64 %storemerge.in67.i to i32 ; 3 uses

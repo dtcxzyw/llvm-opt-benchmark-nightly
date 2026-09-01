@@ -205,10 +205,10 @@ iter.check:                                       ; preds = %.epilog-lcssa
   %i.az = add i32 %i.aw, %i.g
   %i.ba = add i32 %.1106, -4                      ; 2 uses
   %.not140.3 = icmp eq i32 %i.ba, 0
-  br i1 %.not140.3, label %.loopexit143, label %.preheader178, !llvm.loop !59
+  br i1 %.not140.3, label %.loopexit143, label %.preheader178
 
 .loopexit143:                                     ; preds = %.preheader178.prol.loopexit, %.preheader178, %bb.b
-  %.2 = phi i32 [ %.199154, %bb.b ], [ %i.ai, %.preheader178 ], [ %i.ai, %.preheader178.prol.loopexit ] ; 6 uses
+  %.2 = phi i32 [ %.199154, %bb.b ], [ %i.ai, %.preheader178 ], [ %i.ai, %.preheader178.prol.loopexit ] ; 5 uses
   %i.bb = add nuw nsw i16 %.0121153, 1            ; 2 uses
   %i.bc = icmp samesign ult i16 %i.bb, %i.d
   br i1 %i.bc, label %bb.b, label %bb.e
@@ -231,7 +231,6 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.bi, label %.preheader142.preheader, label %.preheader141.preheader
 
 .preheader142.preheader:                          ; preds = %bb.g
-  %4 = trunc i32 %.2 to i16
   %xtraiter224 = and i32 %1, 3                    ; 3 uses
   %unroll_iter230 = and i32 %1, 12
   %lcmp.mod226.not = icmp eq i32 %xtraiter224, 0
@@ -239,8 +238,7 @@ bb.g:                                             ; preds = %bb.f
   br label %.preheader142
 
 .preheader142:                                    ; preds = %.preheader142.preheader, %.epilog-lcssa227
-  %i.bj = phi i32 [ %6, %.epilog-lcssa227 ], [ %i.bh, %.preheader142.preheader ]
-  %.1122158 = phi i16 [ %5, %.epilog-lcssa227 ], [ %4, %.preheader142.preheader ]
+  %i.bj = phi i32 [ %indvars.iv.next, %.epilog-lcssa227 ], [ %i.bh, %.preheader142.preheader ] ; 2 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.h, %.preheader142
@@ -248,7 +246,7 @@ bb.h:                                             ; preds = %bb.h, %.preheader14
   %.1103 = phi i32 [ %i.bj, %.preheader142 ], [ %i.bx, %bb.h ] ; 5 uses
   %niter231 = phi i32 [ 0, %.preheader142 ], [ %niter231.next.3, %bb.h ]
   %i.bk = shl i32 %.2112, 3
-  %i.bl = shl nsw i32 %.1103, 2
+  %i.bl = shl i32 %.1103, 2
   %i.bm = and i32 %i.bl, 4
   %i.bn = or disjoint i32 %i.bk, %i.bm
   %i.bo = and i32 %.1103, 2
@@ -282,17 +280,16 @@ bb.i:                                             ; preds = %bb.i, %.epil.prehea
   %i.cb = lshr i32 %.1103.epil, 1
   %epil.iter225.next = add i32 %epil.iter225, 1   ; 2 uses
   %epil.iter225.cmp.not = icmp eq i32 %epil.iter225.next, %xtraiter224
-  br i1 %epil.iter225.cmp.not, label %.epilog-lcssa227, label %bb.i, !llvm.loop !60
+  br i1 %epil.iter225.cmp.not, label %.epilog-lcssa227, label %bb.i, !llvm.loop !59
 
 .epilog-lcssa227:                                 ; preds = %bb.i, %.unr-lcssa222
   %.lcssa215 = phi i32 [ %i.bw, %.unr-lcssa222 ], [ %i.ca, %bb.i ]
   %i.cc = zext i32 %.lcssa215 to i64
   %i.cd = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %i.cc
   store i16 -1, ptr %i.cd, align 2, !tbaa !42
-  %5 = add nuw i16 %.1122158, 1                   ; 2 uses
-  %6 = zext i16 %5 to i32                         ; 2 uses
-  %7 = icmp samesign ugt i32 %i.a, %6
-  br i1 %7, label %.preheader142, label %.preheader141.preheader
+  %indvars.iv.next = add nuw nsw i32 %i.bj, 1     ; 2 uses
+  %exitcond.not = icmp eq i32 %indvars.iv.next, %i.a
+  br i1 %exitcond.not, label %.preheader141.preheader, label %.preheader142
 
 .preheader141.preheader:                          ; preds = %.epilog-lcssa227, %bb.g
   %i.ce = shl nuw nsw i32 65536, %1               ; 2 uses
@@ -372,7 +369,7 @@ bb.l:                                             ; preds = %bb.l, %.epil.prehea
   %i.df = lshr i32 %.2104.us.epil, 1
   %epil.iter235.next = add i32 %epil.iter235, 1   ; 2 uses
   %epil.iter235.cmp.not = icmp eq i32 %epil.iter235.next, %xtraiter234
-  br i1 %epil.iter235.cmp.not, label %.preheader.us.preheader, label %bb.l, !llvm.loop !61
+  br i1 %epil.iter235.cmp.not, label %.preheader.us.preheader, label %bb.l, !llvm.loop !60
 
 .preheader.us.preheader:                          ; preds = %bb.l, %.preheader.us.preheader.unr-lcssa
   %.lcssa = phi i32 [ %i.da, %.preheader.us.preheader.unr-lcssa ], [ %i.de, %bb.l ]
@@ -530,7 +527,6 @@ attributes #7 = { nounwind }
 !56 = distinct !{!56, !45}
 !57 = distinct !{!57, !41}
 !58 = distinct !{!58, !41}
-!59 = distinct !{!59, !45}
+!59 = distinct !{!59, !41}
 !60 = distinct !{!60, !41}
-!61 = distinct !{!61, !41}
 end_hunk_0

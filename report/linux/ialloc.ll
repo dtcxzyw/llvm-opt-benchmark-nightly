@@ -204,15 +204,14 @@ get_orlov_stats.exit.thread.thread:               ; preds = %bb.j
   br i1 %i.bp, label %.loopexit.sink.split, label %bb.k
 
 bb.k:                                             ; preds = %.loopexit205
-  %i.bq = shl i32 %.2138, %.val180                ; 2 uses
-  %6 = call i32 @llvm.usub.sat.i32(i32 %.val179.val, i32 %i.bq)
+  %i.bq = shl i32 %.2138, %.val180
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.o
-  %.1140217 = phi i32 [ 0, %bb.k ], [ %i.bu, %bb.o ] ; 3 uses
-  %i.br = add nuw i32 %.1140217, %i.bq            ; 2 uses
-  %exitcond237.not = icmp eq i32 %.1140217, %6
-  br i1 %exitcond237.not, label %.loopexit203, label %bb.m
+  %.1140217 = phi i32 [ 0, %bb.k ], [ %i.bu, %bb.o ] ; 2 uses
+  %i.br = add nuw i32 %.1140217, %i.bq            ; 3 uses
+  %.not158 = icmp ult i32 %i.br, %.val179.val
+  br i1 %.not158, label %bb.m, label %.loopexit203
 
 bb.m:                                             ; preds = %bb.l
   %i.bs = call ptr @ext4_get_group_desc(ptr noundef %0, i32 noundef %i.br, ptr noundef null) #10 ; 2 uses
@@ -613,9 +612,6 @@ declare i32 @llvm.smax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.usub.sat.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #8

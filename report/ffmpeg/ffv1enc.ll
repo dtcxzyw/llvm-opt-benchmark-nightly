@@ -205,15 +205,17 @@ load_rgb_float32_frame.exit:                      ; preds = %bb.gl, %bb.hj
 bb.hk:                                            ; preds = %bb.id, %.lr.ph19.i
   %indvars.iv46.i = phi i64 [ 0, %.lr.ph19.i ], [ %indvars.iv.next47.i, %bb.id ] ; 7 uses
   %.015016.i = phi i32 [ 0, %.lr.ph19.i ], [ %spec.select171.i, %bb.id ] ; 2 uses
+  %indvars1274 = trunc i64 %indvars.iv46.i to i32 ; 3 uses
+  %3 = shl nuw i32 1, %indvars1274                ; 4 uses
+  %4 = sext i32 %3 to i64                         ; 6 uses
+  %smax = call i64 @llvm.smax.i64(i64 %4, i64 1)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(94300) %i.i, i8 0, i64 94300, i1 false)
   %i.dbc = getelementptr inbounds [4100 x i8], ptr %i.h, i64 %indvars.iv46.i ; 3 uses
-  %3 = trunc nsw i64 %indvars.iv46.i to i32       ; 3 uses
-  %4 = shl nuw i32 1, %3                          ; 6 uses
-  %i.dbd = shl nsw i32 %3, 1
+  %i.dbd = shl nsw i32 %indvars1274, 1
   %i.dbe = sitofp nsz i32 %i.dbd to float
   %i.dbf = getelementptr inbounds [4 x i8], ptr %i.g, i64 %indvars.iv46.i ; 3 uses
-  %i.dbg = sitofp nsz i32 %4 to float             ; 2 uses
+  %i.dbg = sitofp nsz i32 %3 to float             ; 2 uses
   %i.dbh = fmul nnan nsz float %i.dbg, %i.dbg
   %i.dbi = bitcast float %i.dbh to i32
   %i.dbj = uitofp nsz nneg i32 %i.dbi to float
@@ -223,10 +225,9 @@ bb.hk:                                            ; preds = %bb.id, %.lr.ph19.i
 
 .lr.ph7.split.preheader.i:                        ; preds = %bb.hk
   %i.dbk = load ptr, ptr %i.dap, align 8, !tbaa !145 ; 2 uses
-  %5 = sext i32 %4 to i64                         ; 4 uses
   %i.dbl = icmp eq i64 %indvars.iv46.i, 9
   %or.cond.i642 = and i1 %i.dak, %i.dbl           ; 2 uses
-  %i.dbm = icmp sgt i32 %4, 1                     ; 2 uses
+  %i.dbm = icmp sgt i32 %3, 1                     ; 2 uses
   br i1 %.not162.i, label %.lr.ph7.split.i.us, label %.lr.ph7.split.i
 
 .lr.ph7.split.i.us:                               ; preds = %.lr.ph7.split.preheader.i, %..loopexit_crit_edge.i.us
@@ -237,7 +238,7 @@ bb.hk:                                            ; preds = %bb.id, %.lr.ph19.i
   %i.dbo = load i32, ptr %i.dbn, align 4, !tbaa !288
   %i.dbp = zext i32 %i.dbo to i64                 ; 4 uses
   %i.dbq = add nuw nsw i64 %i.dbp, 1
-  %i.dbr = mul nsw i64 %i.dbq, %5
+  %i.dbr = mul nsw i64 %i.dbq, %4
   %i.dbs = lshr i64 %i.dbr, 32
   %i.dbt = trunc nuw i64 %i.dbs to i32            ; 3 uses
   %.not165.i.us = icmp eq i64 %.01484.i.us, %i.dbp
@@ -245,7 +246,7 @@ bb.hk:                                            ; preds = %bb.id, %.lr.ph19.i
 
 .lr.ph.i643.us:                                   ; preds = %.lr.ph7.split.i.us
   %i.dbu = add nsw i64 %.01484.i.us, 1
-  %i.dbv = mul nsw i64 %i.dbu, %5
+  %i.dbv = mul nsw i64 %i.dbu, %4
   %i.dbw = ashr i64 %i.dbv, 32
   %i.dbx = getelementptr inbounds [92 x i8], ptr %i.i, i64 %i.dbw
   %i.dby = sub nsw i64 %i.dbp, %.01484.i.us       ; 2 uses
@@ -324,8 +325,6 @@ bb.hq:                                            ; preds = %bb.hp, %bb.ho, %bb.
 .lr.ph13.i:                                       ; preds = %.preheader.i636
   %i.ddc = icmp eq i64 %indvars.iv46.i, 9
   %or.cond5.i = and i1 %i.dak, %i.ddc
-  %smax.i637 = call i32 @llvm.smax.i32(i32 %4, i32 1)
-  %wide.trip.count44.i = zext nneg i32 %smax.i637 to i64
   br label %.lr.ph11.preheader.i
 
 .lr.ph7.split.i:                                  ; preds = %.lr.ph7.split.preheader.i, %..loopexit_crit_edge.i
@@ -336,7 +335,7 @@ bb.hq:                                            ; preds = %bb.hp, %bb.ho, %bb.
   %i.dde = load i32, ptr %i.ddd, align 4, !tbaa !288
   %i.ddf = zext i32 %i.dde to i64                 ; 4 uses
   %i.ddg = add nuw nsw i64 %i.ddf, 1
-  %i.ddh = mul nsw i64 %i.ddg, %5
+  %i.ddh = mul nsw i64 %i.ddg, %4
   %i.ddi = lshr i64 %i.ddh, 32
   %i.ddj = trunc nuw i64 %i.ddi to i32            ; 3 uses
   %.not165.i = icmp eq i64 %.01484.i, %i.ddf
@@ -344,7 +343,7 @@ bb.hq:                                            ; preds = %bb.hp, %bb.ho, %bb.
 
 .lr.ph.i643:                                      ; preds = %.lr.ph7.split.i
   %i.ddk = add nsw i64 %.01484.i, 1
-  %i.ddl = mul nsw i64 %i.ddk, %5
+  %i.ddl = mul nsw i64 %i.ddk, %4
   %i.ddm = ashr i64 %i.ddl, 32
   %i.ddn = getelementptr inbounds [92 x i8], ptr %i.i, i64 %i.ddm
   %i.ddo = sub nsw i64 %i.ddf, %.01484.i          ; 2 uses
@@ -421,10 +420,9 @@ bb.hw:                                            ; preds = %bb.hv, %bb.hu, %bb.
   store float %i.dfq, ptr %i.dbf, align 4, !tbaa !316
   br label %bb.hx
 
-bb.hx:                                            ; preds = %._crit_edge14.i, %.preheader.i636
+bb.hx:                                            ; preds = %.preheader.i636, %._crit_edge14.i
   %i.des = phi float [ %i.dfq, %._crit_edge14.i ], [ %storemerge.i, %.preheader.i636 ]
-  %6 = sext i32 %4 to i64
-  %i.det = getelementptr inbounds [4 x i8], ptr %i.dbc, i64 %6
+  %i.det = getelementptr inbounds [4 x i8], ptr %i.dbc, i64 %4
   store i32 1, ptr %i.det, align 4, !tbaa !63
   br i1 %.not163.i, label %bb.id, label %bb.ic
 
@@ -482,11 +480,11 @@ bb.ib:                                            ; preds = %bb.ia, %bb.hz, %bb.
   %i.dfp = load float, ptr %i.dfo, align 4, !tbaa !316
   %i.dfq = fadd nsz float %i.deu, %i.dfp          ; 3 uses
   %indvars.iv.next42.i = add nuw nsw i64 %indvars.iv41.i, 1 ; 2 uses
-  %exitcond45.not.i = icmp eq i64 %indvars.iv.next42.i, %wide.trip.count44.i
+  %exitcond45.not.i = icmp eq i64 %indvars.iv.next42.i, %smax
   br i1 %exitcond45.not.i, label %._crit_edge14.i, label %.lr.ph11.preheader.i, !llvm.loop !320
 
 bb.ic:                                            ; preds = %bb.hx
-  %i.dfr = call fastcc i32 @encode_float32_remap_segment(ptr noundef %1, i32 noundef %i.daq, i32 noundef %4, ptr noundef %i.dbc, i32 noundef 0, i32 noundef 0)
+  %i.dfr = call fastcc i32 @encode_float32_remap_segment(ptr noundef %1, i32 noundef %i.daq, i32 noundef %3, ptr noundef %i.dbc, i32 noundef 0, i32 noundef 0)
   %i.dfs = sitofp nsz i32 %i.dfr to float         ; 2 uses
   store float %i.dfs, ptr %i.dbf, align 4, !tbaa !316
   br label %bb.id
@@ -497,9 +495,9 @@ bb.id:                                            ; preds = %bb.ic, %bb.hx
   %i.dfv = getelementptr inbounds [4 x i8], ptr %i.g, i64 %i.dfu
   %i.dfw = load float, ptr %i.dfv, align 4, !tbaa !316
   %i.dfx = fcmp nsz olt float %i.dft, %i.dfw
-  %spec.select171.i = select i1 %i.dfx, i32 %3, i32 %.015016.i ; 3 uses
+  %spec.select171.i = select i1 %i.dfx, i32 %indvars1274, i32 %.015016.i ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #19
-  %indvars.iv.next47.i = add nsw i64 %indvars.iv46.i, %i.dan ; 2 uses
+  %indvars.iv.next47.i = add i64 %indvars.iv46.i, %i.dan ; 2 uses
   %.not.i641 = icmp sgt i64 %indvars.iv.next47.i, %i.dao
   br i1 %.not.i641, label %._crit_edge20.i, label %bb.hk, !llvm.loop !321
 

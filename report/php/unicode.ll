@@ -202,9 +202,8 @@ bb.a:
   store ptr %i.p, ptr %i.k, align 8, !tbaa !54
   store ptr %1, ptr %i.j, align 8, !tbaa !50
   %i.q = select i1 %5, i64 2, i64 0
-  %i.r = shl i64 %2, %i.q
-  %.fr127 = freeze i64 %i.r                       ; 3 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %.fr127 ; 5 uses
+  %i.r = shl i64 %2, %i.q                         ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %i.r ; 5 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 4 uses
   %i.u = load i8, ptr %i.t, align 4, !tbaa !18    ; 4 uses
   %i.v = icmp eq i8 %i.u, 0
@@ -219,13 +218,13 @@ bb.b:                                             ; preds = %bb.a
   %i.y = tail call zeroext i8 @lxb_encoding_decode_utf_8_length(i8 noundef zeroext %i.x) #11 ; 2 uses
   %i.z = zext i8 %i.y to i64                      ; 3 uses
   %i.aa = icmp ult i8 %i.u, %i.y
-  %i.ab = icmp ne i64 %.fr127, 0
+  %i.ab = icmp ne i64 %i.r, 0
   %i.ac = and i1 %i.ab, %i.aa
   br i1 %i.ac, label %iter.check, label %lxb_unicode_restore.exit
 
 iter.check:                                       ; preds = %bb.b
   %i.ad = zext i8 %i.u to i64                     ; 8 uses
-  %i.ae = add i64 %.fr127, %i.a
+  %i.ae = add i64 %i.r, %i.a
   %i.af = add i64 %i.a, 1
   %umax = tail call i64 @llvm.umax.i64(i64 %i.ae, i64 %i.af)
   %i.ag = xor i64 %i.a, -1

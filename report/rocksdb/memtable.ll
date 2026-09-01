@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %bb.b, %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %storemerge, ptr %i.e, align 8, !tbaa !425
-  %i.f = zext nneg i32 %storemerge to i64         ; 3 uses
+  %i.f = zext nneg i32 %storemerge to i64         ; 2 uses
   %i.g = icmp samesign ugt i32 %storemerge, 59
-  %i.h = shl i64 16, %i.f
+  %i.h = shl i64 16, %i.f                         ; 2 uses
   %i.i = or disjoint i64 %i.h, 8
   %i.j = select i1 %i.g, i64 -1, i64 %i.i
   %i.k = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.j) #38
@@ -217,8 +217,7 @@ bb.d:                                             ; preds = %bb.c
   %i.l = shl nuw i64 1, %i.f
   store i64 %i.l, ptr %i.k, align 16
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 2 uses
-  %1 = shl i64 16, %i.f
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.m, i8 0, i64 %1, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.m, i8 0, i64 %i.h, i1 false)
   %i.n = load ptr, ptr %0, align 8, !tbaa !426    ; 4 uses
   store ptr %i.m, ptr %0, align 8, !tbaa !426
   %.not.i.i = icmp eq ptr %i.n, null

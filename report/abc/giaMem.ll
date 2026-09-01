@@ -204,14 +204,13 @@ bb.a:
   %indvars.iv58 = phi i64 [ 0, %.lr.ph47.preheader ], [ %indvars.iv.next59, %._crit_edge45 ] ; 3 uses
   %i.y = trunc nuw nsw i64 %indvars.iv58 to i32   ; 2 uses
   %i.z = shl i32 4, %i.y                          ; 3 uses
-  %i.aa = shl i32 8, %i.y                         ; 2 uses
+  %i.aa = shl i32 8, %i.y
   %.not41.not = icmp slt i32 %i.z, %i.aa
   br i1 %.not41.not, label %.lr.ph44, label %._crit_edge45
 
 .lr.ph44:                                         ; preds = %.lr.ph47
-  %i.ab = add i32 %i.aa, -4
-  %1 = sub i32 %i.ab, %i.z
-  %i.ac = zext i32 %1 to i64
+  %i.ab = add i32 %i.z, -4
+  %i.ac = zext i32 %i.ab to i64
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv58
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !49
   %broadcast.splatinsert = insertelement <2 x ptr> poison, ptr %i.ae, i64 0

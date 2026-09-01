@@ -204,8 +204,10 @@ bb.j:                                             ; preds = %bb.j, %.lr.ph.new
 
 bb.k:                                             ; preds = %.lr.ph74, %._crit_edge
   %.06072 = phi i32 [ 1, %.lr.ph74 ], [ %i.ck, %._crit_edge ] ; 5 uses
-  %i.bo = shl nuw i32 1, %.06072                  ; 5 uses
-  %i.bp = add i32 %i.bo, -1                       ; 2 uses
+  %i.bo = shl nuw i32 1, %.06072                  ; 4 uses
+  %i.bp = add i32 %i.bo, -1
+  %0 = zext nneg i32 %i.bp to i64                 ; 2 uses
+  %1 = sext i32 %i.bo to i64                      ; 2 uses
   %i.bq = sub nsw i32 %i.h, %i.bo                 ; 3 uses
   %.not80 = icmp sgt i32 %i.bo, %i.bq
   br i1 %.not80, label %._crit_edge, label %.lr.ph71
@@ -220,8 +222,6 @@ bb.k:                                             ; preds = %.lr.ph74, %._crit_e
   %i.bt = load i32, ptr %i.ba, align 4, !tbaa !23
   %i.bu = add nsw i32 %i.bt, %i.br
   %i.bv = tail call noundef i32 @llvm.smax.i32(i32 %i.bu, i32 0)
-  %0 = zext nneg i32 %i.bp to i64
-  %1 = sext i32 %i.bo to i64
   %i.bw = sext i32 %i.bq to i64
   br label %bb.l
 
@@ -241,13 +241,11 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph71.spl
 .lr.ph71.split:                                   ; preds = %.lr.ph71
   %i.cc = sub nsw i32 %i.br, %.06072
   %i.cd = tail call noundef i32 @llvm.smax.i32(i32 %i.cc, i32 0)
-  %2 = zext nneg i32 %i.bp to i64
-  %3 = sext i32 %i.bo to i64
   %i.ce = sext i32 %i.bq to i64
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph71.split, %bb.m
-  %indvars.iv83 = phi i64 [ %2, %.lr.ph71.split ], [ %indvars.iv.next84, %bb.m ] ; 2 uses
+  %indvars.iv83 = phi i64 [ %0, %.lr.ph71.split ], [ %indvars.iv.next84, %bb.m ] ; 2 uses
   %i.cf = getelementptr inbounds [24 x i8], ptr %i.ax, i64 %indvars.iv83 ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 16
   store i32 %.06072, ptr %i.cg, align 4, !tbaa !19
@@ -255,7 +253,7 @@ bb.m:                                             ; preds = %.lr.ph71.split, %bb
   store i32 2, ptr %i.ch, align 4, !tbaa !20
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cf, i64 12
   store i32 %i.cd, ptr %i.ci, align 4, !tbaa !24
-  %indvars.iv.next84 = add nsw i64 %indvars.iv83, %3 ; 2 uses
+  %indvars.iv.next84 = add nsw i64 %indvars.iv83, %1 ; 2 uses
   %i.cj = icmp slt i64 %indvars.iv.next84, %i.ce
   br i1 %i.cj, label %bb.m, label %._crit_edge, !llvm.loop !46
 

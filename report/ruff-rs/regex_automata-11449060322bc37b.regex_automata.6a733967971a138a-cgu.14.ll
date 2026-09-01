@@ -205,8 +205,7 @@ bb.a:
 .lr.ph.i:                                         ; preds = %.lr.ph29.i, %..loopexit_crit_edge.i
   %.sroa.05.028.i = phi i64 [ %i.ac, %..loopexit_crit_edge.i ], [ 0, %.lr.ph29.i ] ; 2 uses
   %i.ac = add nuw nsw i64 %.sroa.05.028.i, 1      ; 2 uses
-  %i.ad = shl i64 %.sroa.05.028.i, %i.f           ; 2 uses
-  %3 = tail call i64 @llvm.usub.sat.i64(i64 %i.b, i64 %i.ad)
+  %i.ad = shl i64 %.sroa.05.028.i, %i.f
   br label %bb.e
 
 bb.b:                                             ; preds = %bb.d, %.lr.ph32.i
@@ -231,11 +230,11 @@ bb.d:                                             ; preds = %bb.b
   br i1 %exitcond44.not.i, label %_RINvMs4_NtNtCs98D8VPWzHuM_14regex_automata3dfa7onepassNtB6_3DFA5remapNCINvMNtB8_8remapperNtB1b_8Remapper5remapBQ_E0EBa_.exit, label %bb.b
 
 bb.e:                                             ; preds = %_RNCINvMNtNtCs98D8VPWzHuM_14regex_automata3dfa8remapperNtB5_8Remapper5remapNtNtB7_7onepass3DFAE0B9_.exit21.i, %.lr.ph.i
-  %.sroa.07.027.i = phi i64 [ 0, %.lr.ph.i ], [ %i.am, %_RNCINvMNtNtCs98D8VPWzHuM_14regex_automata3dfa8remapperNtB5_8Remapper5remapNtNtB7_7onepass3DFAE0B9_.exit21.i ] ; 3 uses
+  %.sroa.07.027.i = phi i64 [ 0, %.lr.ph.i ], [ %i.am, %_RNCINvMNtNtCs98D8VPWzHuM_14regex_automata3dfa8remapperNtB5_8Remapper5remapNtNtB7_7onepass3DFAE0B9_.exit21.i ] ; 2 uses
   %i.am = add nuw nsw i64 %.sroa.07.027.i, 1      ; 2 uses
-  %i.an = add nuw nsw i64 %.sroa.07.027.i, %i.ad  ; 2 uses
-  %exitcond.not.i = icmp eq i64 %.sroa.07.027.i, %3
-  br i1 %exitcond.not.i, label %bb.h, label %bb.f
+  %i.an = add nuw nsw i64 %.sroa.07.027.i, %i.ad  ; 3 uses
+  %3 = icmp ult i64 %i.an, %i.b
+  br i1 %3, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %i.an ; 2 uses
@@ -638,32 +637,29 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 344
   %i.c = load i64, ptr %i.b, align 8, !alias.scope !466, !noundef !3
   %i.d = and i64 %i.c, 63                         ; 3 uses
-  %i.e = shl i64 %i.a, %i.d                       ; 5 uses
+  %i.e = shl i64 %i.a, %i.d                       ; 4 uses
   %i.f = zext i32 %2 to i64
-  %i.g = shl i64 %i.f, %i.d                       ; 3 uses
+  %i.g = shl i64 %i.f, %i.d                       ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.i = load ptr, ptr %i.h, align 8, !alias.scope !466, !nonnull !3, !noundef !3 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.k = load i64, ptr %i.j, align 8, !alias.scope !466, !noundef !3 ; 5 uses
-  %3 = tail call i64 @llvm.usub.sat.i64(i64 %i.k, i64 %i.e)
-  %4 = tail call i64 @llvm.usub.sat.i64(i64 %i.k, i64 %i.g)
-  %exitcond.not.i21.not = icmp ugt i64 %i.k, %i.e
-  br i1 %exitcond.not.i21.not, label %.lr.ph, label %._crit_edge
+  %3 = icmp ult i64 %i.e, %i.k
+  br i1 %3, label %.lr.ph, label %._crit_edge
 
 bb.b:                                             ; preds = %bb.c
-  %i.l = add i64 %i.q, 1
-  %i.m = add nuw i64 %i.q, %i.e                   ; 2 uses
+  %i.l = add nuw i64 %i.q, 1
+  %i.m = add nuw i64 %i.q, %i.e                   ; 3 uses
   %i.n = add nuw i64 %i.q, %i.g
-  %exitcond.not.i = icmp eq i64 %i.q, %3
-  br i1 %exitcond.not.i, label %._crit_edge, label %.lr.ph
+  %4 = icmp ult i64 %i.m, %i.k
+  br i1 %4, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
-  %i.o = phi i64 [ %i.n, %bb.b ], [ %i.g, %bb.a ] ; 2 uses
+  %i.o = phi i64 [ %i.n, %bb.b ], [ %i.g, %bb.a ] ; 3 uses
   %i.p = phi i64 [ %i.m, %bb.b ], [ %i.e, %bb.a ]
-  %i.q = phi i64 [ %i.l, %bb.b ], [ 1, %bb.a ]    ; 6 uses
-  %.sroa.01.013.i22 = phi i64 [ %i.q, %bb.b ], [ 0, %bb.a ]
-  %exitcond20.not.i = icmp eq i64 %.sroa.01.013.i22, %4
-  br i1 %exitcond20.not.i, label %bb.d, label %bb.c
+  %i.q = phi i64 [ %i.l, %bb.b ], [ 1, %bb.a ]    ; 4 uses
+  %5 = icmp ult i64 %i.o, %i.k
+  br i1 %5, label %bb.c, label %bb.d
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   %.lcssa18 = phi i64 [ %i.e, %bb.a ], [ %i.m, %bb.b ]

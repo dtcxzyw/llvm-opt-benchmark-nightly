@@ -204,12 +204,12 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.n, label %._crit_edge.loopexit.epilog-lcssa, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = tail call i64 @llvm.usub.sat.i64(i64 %i.h, i64 2)
+  %2 = add nsw i64 %i.h, -4
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %.lr.ph.new
   %.04859 = phi i64 [ 1, %.lr.ph.new ], [ %i.ad, %bb.d ] ; 4 uses
-  %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.d ]
+  %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.d ] ; 2 uses
   %i.o = uitofp nneg i64 %.04859 to double
   %i.p = fdiv double %i.o, %i.m
   %i.q = tail call double @pow(double noundef %i.p, double noundef 2.200000e+00) #8
@@ -228,8 +228,8 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.new
   %i.ac = getelementptr inbounds nuw [2 x i8], ptr %i.j, i64 %i.v
   store i16 %i.ab, ptr %i.ac, align 2, !tbaa !35
   %i.ad = add nuw nsw i64 %.04859, 2              ; 2 uses
-  %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
+  %niter.next.1 = add nuw i64 %niter, 2
+  %niter.ncmp.1 = icmp eq i64 %niter, %2
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.epilog-lcssa, label %bb.d
 
 ._crit_edge.loopexit.epilog-lcssa:                ; preds = %.lr.ph, %bb.d
@@ -456,9 +456,6 @@ declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
