@@ -147,11 +147,9 @@ define noundef ptr @ARKStepCreate(ptr noundef %0, ptr noundef %1, double noundef
 bb.a:
   %i.a = alloca ptr, align 8                      ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
-  %5 = insertelement <2 x ptr> poison, ptr %0, i64 0
-  %6 = insertelement <2 x ptr> %5, ptr %1, i64 1
-  %7 = icmp eq <2 x ptr> %6, splat (ptr null)     ; 2 uses
-  %8 = bitcast <2 x i1> %7 to i2
-  %or.cond = icmp eq i2 %8, -1
+  %5 = icmp eq ptr %0, null
+  %6 = icmp eq ptr %1, null
+  %or.cond = and i1 %5, %6
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -312,7 +310,9 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.aa
 
 bb.m:                                             ; preds = %bb.k
-  %9 = xor <2 x i1> %7, splat (i1 true)
+  %7 = insertelement <2 x ptr> poison, ptr %0, i64 0
+  %8 = insertelement <2 x ptr> %7, ptr %1, i64 1
+  %9 = icmp ne <2 x ptr> %8, splat (ptr null)
   %i.bi = getelementptr inbounds nuw i8, ptr %calloc, i64 28
   %i.bj = getelementptr inbounds nuw i8, ptr %calloc, i64 32
   %i.bk = zext <2 x i1> %9 to <2 x i32>
@@ -715,7 +715,7 @@ declare i32 @arkStep_GetNonlinSolvStats(ptr noundef, ptr noundef, ptr noundef) #
 define range(i32 -21, 1) i32 @arkStep_SetInnerForcing(ptr noundef %0, double noundef %1, double noundef %2, ptr noundef %3, i32 noundef %4) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !73   ; 16 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !73   ; 17 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %arkStep_AccessStepMem.exit, label %bb.b
 
@@ -729,14 +729,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 28
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !134
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 460
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !134  ; 2 uses
   %.not18 = icmp ne i32 %i.f, 0
-  %6 = insertelement <2 x i1> poison, i1 %.not18, i64 0
-  %7 = shufflevector <2 x i1> %6, <2 x i1> poison, <2 x i32> zeroinitializer
-  %8 = xor <2 x i1> %7, <i1 false, i1 true>
-  %9 = zext <2 x i1> %8 to <2 x i32>
-  store <2 x i32> %9, ptr %5, align 4, !tbaa !74
+  %spec.select = zext i1 %.not18 to i32
+  %not..not18 = icmp eq i32 %i.f, 0
+  %spec.select44 = zext i1 %not..not18 to i32
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 460
+  store i32 %spec.select, ptr %5, align 4, !tbaa !166
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 464
+  store i32 %spec.select44, ptr %6, align 8, !tbaa !167
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 472
   store double %1, ptr %i.g, align 8, !tbaa !168
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 480
@@ -879,11 +880,9 @@ bb.e:                                             ; preds = %arkStep_AccessARKOD
   br label %arkStep_AccessARKODEStepMem.exit.thread
 
 bb.f:                                             ; preds = %arkStep_AccessARKODEStepMem.exit
-  %5 = insertelement <2 x ptr> poison, ptr %1, i64 0
-  %6 = insertelement <2 x ptr> %5, ptr %2, i64 1
-  %7 = icmp eq <2 x ptr> %6, splat (ptr null)     ; 2 uses
-  %8 = bitcast <2 x i1> %7 to i2
-  %or.cond = icmp eq i2 %8, -1
+  %5 = icmp eq ptr %1, null
+  %6 = icmp eq ptr %2, null
+  %or.cond = and i1 %5, %6
   br i1 %or.cond, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
@@ -899,7 +898,9 @@ bb.i:                                             ; preds = %bb.h
   br label %arkStep_AccessARKODEStepMem.exit.thread
 
 bb.j:                                             ; preds = %bb.h
-  %9 = xor <2 x i1> %7, splat (i1 true)
+  %7 = insertelement <2 x ptr> poison, ptr %1, i64 0
+  %8 = insertelement <2 x ptr> %7, ptr %2, i64 1
+  %9 = icmp ne <2 x ptr> %8, splat (ptr null)
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 28
   %i.j = zext <2 x i1> %9 to <2 x i32>
   store <2 x i32> %i.j, ptr %i.i, align 4, !tbaa !74

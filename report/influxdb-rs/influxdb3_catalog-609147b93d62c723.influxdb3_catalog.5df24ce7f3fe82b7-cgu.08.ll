@@ -205,7 +205,7 @@ _RNvMsL_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB5_16Column
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i, i64 16
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.o = invoke noundef zeroext i1 @_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapINtNtCsaaj5M71uUq9_5bimap3mem3RefINtNtCscdodAO9FK5_5alloc4sync3ArceEEIBP_NtCsbFlE7Gjht9i_12influxdb3_id16ColumnIdentifierENtNtCs3L39Jvi82fL_5ahash12random_state11RandomStateE12contains_keyINtBR_7WrappereEECs844E4pPEVZX_17influxdb3_catalog(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %i.n, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.m, i64 noundef %.sroa.4.0.i)
-          to label %bb.j unwind label %bb.h       ; 2 uses
+          to label %bb.j unwind label %bb.h
 
 bb.h:                                             ; preds = %_RNvMsL_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB5_16ColumnDefinition4name.exit
   %i.p = landingpad { ptr, i32 }
@@ -248,11 +248,10 @@ bb.l:                                             ; preds = %_RINvNtCs4NRVxsYgnA
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 248
   %i.aa = call noundef zeroext i1 @_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapINtNtCsaaj5M71uUq9_5bimap3mem3RefNtCsbFlE7Gjht9i_12influxdb3_id8ColumnIdEIBP_NtB1n_16ColumnIdentifierENtNtCs3L39Jvi82fL_5ahash12random_state11RandomStateE12contains_keyINtBR_7WrapperB1l_EECs844E4pPEVZX_17influxdb3_catalog(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %i.z, ptr noalias noundef nonnull readonly align 2 captures(address, read_provenance) dereferenceable(2) %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  %2 = and i1 %i.o, %i.aa
   br label %bb.m
 
 bb.m:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit6, %bb.l
-  %.sroa.0.0 = phi i1 [ %2, %bb.l ], [ %i.o, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit6 ]
+  %.sroa.0.0 = phi i1 [ %i.aa, %bb.l ], [ true, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc4sync3ArceEECs844E4pPEVZX_17influxdb3_catalog.exit6 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   switch i64 %.val, label %default.unreachable7 [
     i64 0, label %bb.p
@@ -293,8 +292,8 @@ bb.p:                                             ; preds = %.sink.split, %bb.m
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.am = call noundef zeroext i1 @_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapINtNtCsaaj5M71uUq9_5bimap3mem3RefNtCsbFlE7Gjht9i_12influxdb3_id16ColumnIdentifierEIBP_NtB1n_8ColumnIdENtNtCs3L39Jvi82fL_5ahash12random_state11RandomStateE12contains_keyINtBR_7WrapperB1l_EECs844E4pPEVZX_17influxdb3_catalog(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %i.al, ptr noalias noundef nonnull readonly align 2 captures(address, read_provenance) dereferenceable(6) %i.e)
   %i.an = call { i64, i64 } @_RINvMs3_NtCs96Uix8yqi9Q_8indexmap3mapINtB6_8IndexMapNtCsbFlE7Gjht9i_12influxdb3_id16ColumnIdentifierNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v216ColumnDefinitionINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsk6FPlRoJNeq_10rustc_hash8FxHasherEE12get_index_ofBO_EB1I_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(320) %0, ptr noalias noundef nonnull readonly align 2 captures(address, read_provenance) dereferenceable(6) %i.e)
-  %i.ao = extractvalue { i64, i64 } %i.an, 0
-  %i.ap = icmp eq i64 %i.ao, 1                    ; 4 uses
+  %i.ao = extractvalue { i64, i64 } %i.an, 0      ; 2 uses
+  %i.ap = icmp eq i64 %i.ao, 1                    ; 3 uses
   %i.aq = zext i1 %i.ap to i8
   store i8 %i.aq, ptr %i.c, align 1, !noalias !5499
   %i.ar = xor i1 %i.aj, %i.ap
@@ -325,7 +324,9 @@ _RNvMsw_NtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v2NtB5_9ColumnS
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !5499
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  %.sroa.0.1 = and i1 %.sroa.0.0, %i.ap
+  %.not = icmp eq i64 %i.ao, 1
+  %brmerge.not = and i1 %.not, %i.o
+  %.sroa.0.1 = and i1 %brmerge.not, %.sroa.0.0
   ret i1 %.sroa.0.1
 
 bb.t:                                             ; preds = %bb.i

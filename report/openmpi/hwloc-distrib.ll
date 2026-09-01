@@ -204,8 +204,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ac = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.v) #21
   %i.ad = sub i64 0, %i.ac                        ; 7 uses
   %i.ae = getelementptr inbounds i8, ptr getelementptr inbounds nuw (i8, ptr @.str.79, i64 34), i64 %i.ad
-  %i.af = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.v, ptr noundef nonnull dereferenceable(1) %i.ae) #21
-  %.not84.not.i = icmp eq i32 %i.af, 0            ; 4 uses
+  %i.af = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.v, ptr noundef nonnull dereferenceable(1) %i.ae) #21 ; 3 uses
+  %.not84.not.i = icmp eq i32 %i.af, 0            ; 2 uses
   %i.ag = zext i1 %.not84.not.i to i64
   %.269.i = or i64 %.06723.i, %i.ag               ; 3 uses
   %i.ah = getelementptr inbounds i8, ptr getelementptr inbounds nuw (i8, ptr @.str.80, i64 29), i64 %i.ad
@@ -284,7 +284,7 @@ bb.m:                                             ; preds = %.split.i
   %i.ay = getelementptr inbounds i8, ptr getelementptr inbounds nuw (i8, ptr @.str.81, i64 34), i64 %i.ad
   %i.az = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.v, ptr noundef nonnull dereferenceable(1) %i.ay) #21
   %.not84.2.i = icmp eq i32 %i.az, 0
-  %1 = xor i1 %.not84.not.i, true
+  %1 = icmp ne i32 %i.af, 0
   br i1 %.not84.2.i, label %bb.n, label %bb.p
 
 .thread37:                                        ; preds = %bb.l
@@ -295,7 +295,8 @@ bb.m:                                             ; preds = %.split.i
   br i1 %.not84.2.i40, label %.split19.us.i, label %bb.p
 
 bb.n:                                             ; preds = %bb.m
-  br i1 %.not84.not.i, label %.split19.us.i, label %bb.o
+  %.not85.2.i.not = icmp eq i32 %i.af, 0
+  br i1 %.not85.2.i.not, label %.split19.us.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.bd = or i64 %.269.i, 16

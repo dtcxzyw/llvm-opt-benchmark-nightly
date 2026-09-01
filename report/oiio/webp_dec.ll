@@ -95,7 +95,7 @@ bb.d:                                             ; preds = %bb.c
   %i.m = load i32, ptr %0, align 1
   %i.n = icmp ne i32 %i.m, 1179011410
   %i.o = zext i1 %i.n to i32                      ; 2 uses
-  %.not.i = icmp eq i32 %i.o, 0                   ; 3 uses
+  %.not.i = icmp eq i32 %i.o, 0                   ; 2 uses
   br i1 %.not.i, label %bb.e, label %ParseRIFF.exit.thread181
 
 bb.e:                                             ; preds = %bb.d
@@ -132,7 +132,7 @@ ParseRIFF.exit:                                   ; preds = %bb.g
 
 ParseRIFF.exit.thread181:                         ; preds = %bb.d, %ParseRIFF.exit
   %i.ab = phi i64 [ %i.z, %ParseRIFF.exit ], [ %1, %bb.d ] ; 3 uses
-  %i.ac = phi i64 [ %i.v, %ParseRIFF.exit ], [ 0, %bb.d ] ; 2 uses
+  %i.ac = phi i64 [ %i.v, %ParseRIFF.exit ], [ 0, %bb.d ] ; 3 uses
   %i.ad = phi ptr [ %i.y, %ParseRIFF.exit ], [ %0, %bb.d ] ; 9 uses
   %i.ae = load i32, ptr %i.ad, align 1
   %i.af = icmp ne i32 %i.ae, 1480085590
@@ -183,7 +183,8 @@ ParseVP8X.exit:                                   ; preds = %bb.j
   %i.bd = and i32 %.val3.i29.i, 2                 ; 2 uses
   %i.be = icmp ne i32 %i.bd, 0
   %.lobit = lshr exact i32 %i.bd, 1
-  br i1 %.not.i, label %ParseVP8X.exit.thread126, label %ParseRIFF.exit.thread
+  %9 = icmp eq i64 %i.ac, 0
+  br i1 %9, label %ParseRIFF.exit.thread, label %ParseVP8X.exit.thread126
 
 ParseVP8X.exit.thread126:                         ; preds = %ParseRIFF.exit.thread181, %ParseVP8X.exit
   %i.bf = phi ptr [ %i.bb, %ParseVP8X.exit ], [ %i.ad, %ParseRIFF.exit.thread181 ]

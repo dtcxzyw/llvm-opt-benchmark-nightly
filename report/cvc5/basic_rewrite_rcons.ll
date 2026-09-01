@@ -205,8 +205,9 @@ bb.a:
   %i.a = load ptr, ptr %3, align 8, !tbaa !23
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.c = load i64, ptr %i.b, align 8
-  %76 = and i64 %i.c, 1023
-  %i.d = icmp eq i64 %76, 77                      ; 3 uses
+  %76 = trunc i64 %i.c to i32
+  %77 = and i32 %76, 1023                         ; 2 uses
+  %i.d = icmp eq i32 %77, 77                      ; 2 uses
   %i.e = tail call noundef ptr @_ZNK4cvc58internal6EnvObj11nodeManagerEv(ptr noundef nonnull align 8 dereferenceable(16) %1) ; 0 uses
   %i.f = load ptr, ptr %3, align 8, !tbaa !23     ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
@@ -609,7 +610,7 @@ bb.en:                                            ; preds = %bb.ei
           to label %.noexc245 unwind label %bb.ms
 
 .noexc245:                                        ; preds = %bb.en
-  %not. = xor i1 %i.d, true
+  %not. = icmp ne i32 %77, 77
   %i.sm = zext i1 %not. to i64
   %i.sn = icmp eq i32 %i.sl, 2
   %i.so = zext i1 %i.sn to i64

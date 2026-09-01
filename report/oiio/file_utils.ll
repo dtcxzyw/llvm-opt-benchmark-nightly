@@ -35,11 +35,11 @@ bb.a:
   %2 = alloca %struct.stat, align 8               ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
   %i.a = load ptr, ptr %0, align 8, !tbaa !7
-  %i.b = call i32 @stat(ptr noundef %i.a, ptr noundef nonnull %2) #11
-  %.not = icmp eq i32 %i.b, 0                     ; 2 uses
-  %.not5 = icmp ne ptr %1, null
-  %or.cond.not = and i1 %.not5, %.not
-  br i1 %or.cond.not, label %bb.b, label %bb.c
+  %i.b = call i32 @stat(ptr noundef %i.a, ptr noundef nonnull %2) #11 ; 2 uses
+  %.not.not = icmp ne i32 %i.b, 0
+  %.not5 = icmp eq ptr %1, null
+  %or.cond = or i1 %.not5, %.not.not
+  br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 48
@@ -48,6 +48,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
+  %.not = icmp eq i32 %i.b, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
   ret i1 %.not
 }

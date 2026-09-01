@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.b
   %i.j = icmp ne i32 %i.i, 0                      ; 2 uses
   %i.k = zext i1 %i.j to i32
   %i.l = add nuw nsw i32 %i.g, %i.k               ; 2 uses
-  %i.m = and i32 %2, 511
-  %i.n = icmp ne i32 %i.m, 511                    ; 2 uses
+  %i.m = and i32 %2, 511                          ; 2 uses
+  %i.n = icmp ne i32 %i.m, 511
   %i.o = sext i1 %i.n to i32
   %i.p = add nsw i32 %i.h, %i.o                   ; 2 uses
   %i.q = icmp sgt i32 %i.l, %i.p
@@ -375,9 +375,10 @@ _ZN12hb_bit_set_t8page_forEjb.exit.thread.sink.split: ; preds = %_ZL9hb_memsetPv
   br label %_ZN12hb_bit_set_t8page_forEjb.exit.thread
 
 _ZN12hb_bit_set_t8page_forEjb.exit.thread:        ; preds = %bb.i, %_ZN12hb_bit_set_t8page_forEjb.exit.thread.sink.split, %._crit_edge.i, %_ZN12hb_bit_set_t8page_forEjb.exit, %bb.c
-  %.not43 = icmp ne i32 %i.g, %i.h
-  %or.cond46.not = and i1 %.not43, %i.n
-  br i1 %or.cond46.not, label %bb.q, label %_ZN12hb_bit_set_t8page_forEjb.exit75.thread
+  %.not45 = icmp eq i32 %i.m, 511
+  %.not43 = icmp eq i32 %i.g, %i.h
+  %or.cond46 = or i1 %.not45, %.not43
+  br i1 %or.cond46, label %_ZN12hb_bit_set_t8page_forEjb.exit75.thread, label %bb.q
 
 bb.q:                                             ; preds = %_ZN12hb_bit_set_t8page_forEjb.exit.thread
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses

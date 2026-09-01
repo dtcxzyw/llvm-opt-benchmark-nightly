@@ -202,8 +202,8 @@ bb.r:                                             ; preds = %bb.p
   br i1 %i.ao, label %"_ZZN6google8protobuf13json_internal9JsonLexer14ParseRawNumberEvEN3$_0clEmc.exit.thread.i.i", label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.ap = add i8 %.sroa.4.0.i.i, -48
-  %i.aq = icmp ult i8 %i.ap, 10                   ; 3 uses
+  %i.ap = add i8 %.sroa.4.0.i.i, -48              ; 2 uses
+  %i.aq = icmp ult i8 %i.ap, 10                   ; 2 uses
   %i.ar = icmp eq i32 %.sroa.0.0.i.i, 0           ; 2 uses
   %i.as = icmp eq i8 %i.am, 45
   %or.cond.i.i.i = and i1 %i.ar, %i.as
@@ -235,7 +235,8 @@ bb.v:                                             ; preds = %bb.u
   br i1 %switch.selectcmp.i.i.i, label %"_ZZN6google8protobuf13json_internal9JsonLexer14ParseRawNumberEvEN3$_0clEmc.exit.thread.i.i", label %bb.ad
 
 "_ZZN6google8protobuf13json_internal9JsonLexer14ParseRawNumberEvEN3$_0clEmc.exit.i.i": ; preds = %bb.s
-  br i1 %i.aq, label %bb.ad, label %"_ZZN6google8protobuf13json_internal9JsonLexer14ParseRawNumberEvEN3$_0clEmc.exit.thread.i.i"
+  %23 = icmp ugt i8 %i.ap, 9
+  br i1 %23, label %"_ZZN6google8protobuf13json_internal9JsonLexer14ParseRawNumberEvEN3$_0clEmc.exit.thread.i.i", label %bb.ad
 
 bb.w:                                             ; preds = %bb.q
   %i.ba = landingpad { ptr, i32 }

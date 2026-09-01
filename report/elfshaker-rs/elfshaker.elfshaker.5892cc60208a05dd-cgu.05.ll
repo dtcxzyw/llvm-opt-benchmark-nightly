@@ -202,11 +202,11 @@ bb.b:                                             ; preds = %bb.a
   %i.bu = load i64, ptr %i.bt, align 8, !noundef !6 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.az)
   call void @_RINvMs0_NtNtNtCskfBPnJUU6aB_12clap_builder6parser7matches11arg_matchesNtB6_10ArgMatches11try_get_oneNtNtCs1xwejQucwHj_5alloc6string6StringECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.az, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @38, i64 noundef 10)
-  %i.bv = call noundef align 8 ptr @_RINvMNtNtCskfBPnJUU6aB_12clap_builder6parser5errorNtB3_12MatchesError6unwrapINtNtCs3oUPovFnLWP_4core6option6OptionRNtNtCs1xwejQucwHj_5alloc6string6StringEECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @38, i64 noundef 10, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %i.az) ; 2 uses
+  %i.bv = call noundef align 8 ptr @_RINvMNtNtCskfBPnJUU6aB_12clap_builder6parser5errorNtB3_12MatchesError6unwrapINtNtCs3oUPovFnLWP_4core6option6OptionRNtNtCs1xwejQucwHj_5alloc6string6StringEECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @38, i64 noundef 10, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %i.az) ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.az)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ay)
   call void @_RINvMs0_NtNtNtCskfBPnJUU6aB_12clap_builder6parser7matches11arg_matchesNtB6_10ArgMatches11try_get_oneNtNtCs1xwejQucwHj_5alloc6string6StringECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.ay, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @39, i64 noundef 11)
-  %i.bw = call noundef align 8 ptr @_RINvMNtNtCskfBPnJUU6aB_12clap_builder6parser5errorNtB3_12MatchesError6unwrapINtNtCs3oUPovFnLWP_4core6option6OptionRNtNtCs1xwejQucwHj_5alloc6string6StringEECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @39, i64 noundef 11, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %i.ay) ; 2 uses
+  %i.bw = call noundef align 8 ptr @_RINvMNtNtCskfBPnJUU6aB_12clap_builder6parser5errorNtB3_12MatchesError6unwrapINtNtCs3oUPovFnLWP_4core6option6OptionRNtNtCs1xwejQucwHj_5alloc6string6StringEECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @39, i64 noundef 11, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(40) %i.ay) ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ay)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ax)
   call void @_RINvMs0_NtNtNtCskfBPnJUU6aB_12clap_builder6parser7matches11arg_matchesNtB6_10ArgMatches11try_get_oneNtNtCs1xwejQucwHj_5alloc6string6StringECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.ax, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @40, i64 noundef 8)
@@ -352,15 +352,17 @@ bb.r:                                             ; preds = %bb.m
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bl, i64 40 ; 2 uses
   store i64 %.sroa.575.0.copyload, ptr %.sroa.5.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
-  %.not99 = icmp eq ptr %i.bv, null               ; 4 uses
-  %.not98 = icmp eq ptr %i.bw, null               ; 2 uses
+  %.not99 = icmp eq ptr %i.bv, null
+  %.not98 = icmp eq ptr %i.bw, null
   %or.cond = or i1 %.not99, %.not98
   br i1 %or.cond, label %bb.s, label %bb.u
 
 bb.s:                                             ; preds = %bb.r
-  %brmerge.not = and i1 %.not99, %.not98
-  %.mux = select i1 %.not99, i8 0, i8 10          ; 2 uses
-  br i1 %brmerge.not, label %bb.ab, label %bb.aa
+  %.not99.not = icmp ne ptr %i.bv, null           ; 3 uses
+  %.not98.not = icmp ne ptr %i.bw, null
+  %brmerge = or i1 %.not99.not, %.not98.not
+  %.mux = select i1 %.not99.not, i8 10, i8 0      ; 2 uses
+  br i1 %brmerge, label %bb.aa, label %bb.ab
 
 .body109:                                         ; preds = %bb.gl, %bb.gm, %.body120, %bb.cd, %bb.ca, %bb.bp, %bb.bs, %common.resume.sink.split.i154, %bb.bw, %bb.bi, %bb.bj, %bb.bc, %bb.bd, %bb.ai, %bb.t, %.thread253, %.body112
   %.pn105 = phi { ptr, i32 } [ %eh.lpad-body113, %.body112 ], [ %eh.lpad-body256, %.thread253 ], [ %lpad.thr_comm.split-lp, %bb.cd ], [ %common.resume.op.ph.i156, %common.resume.sink.split.i154 ], [ %eh.lpad-body121, %.body120 ], [ %i.du, %bb.ai ], [ %i.ey, %bb.bc ], [ %i.fc, %bb.bi ], [ %i.cz, %bb.t ], [ %i.ey, %bb.bd ], [ %i.fc, %bb.bj ], [ %i.ft, %bb.bw ], [ %i.fo, %bb.bs ], [ %i.fj, %bb.bp ], [ %i.ga, %bb.ca ], [ %i.me, %bb.gm ], [ %i.me, %bb.gl ]
@@ -413,7 +415,7 @@ bb.z:                                             ; preds = %_RINvNtCs3oUPovFnLW
           to label %bb.gp unwind label %bb.e
 
 bb.aa:                                            ; preds = %bb.s
-  %.mux296 = select i1 %.not99, ptr %i.bw, ptr %i.bv ; 2 uses
+  %.mux296 = select i1 %.not99.not, ptr %i.bv, ptr %i.bw ; 2 uses
   %.sroa.0196.0.ph.in = getelementptr inbounds nuw i8, ptr %.mux296, i64 8
   %.sroa.0196.0.ph = load ptr, ptr %.sroa.0196.0.ph.in, align 8, !nonnull !6, !noundef !6 ; 2 uses
   %.sroa.6197.1.ph.in = getelementptr inbounds nuw i8, ptr %.mux296, i64 16

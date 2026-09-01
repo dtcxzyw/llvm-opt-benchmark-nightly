@@ -204,7 +204,8 @@ lean_alloc_ctor.exit872:                          ; preds = %lean_alloc_ctor.exi
 
 bb.z:                                             ; preds = %bb.hh, %bb.hi
   %.0.i976 = phi ptr [ %i.ng, %bb.hh ], [ %i.nh, %bb.hi ] ; 4 uses
-  %l_Lean_logAt___at___00Lean_logInfoAt___at___00Lean_Meta_Tactic_TryThis_addSuggestion_spec__0_spec__0___closed__0_value.l___private_Lean_Meta_Tactic_TryThis_0__Lean_Meta_Tactic_TryThis_addExactSuggestionCore___closed__7_value = select i1 %i.dl, ptr @l___private_Lean_Meta_Tactic_TryThis_0__Lean_Meta_Tactic_TryThis_addExactSuggestionCore___closed__7_value, ptr @l_Lean_logAt___at___00Lean_logInfoAt___at___00Lean_Meta_Tactic_TryThis_addSuggestion_spec__0_spec__0___closed__0_value ; 3 uses
+  %11 = icmp eq i64 %.mask, 0
+  %l_Lean_logAt___at___00Lean_logInfoAt___at___00Lean_Meta_Tactic_TryThis_addSuggestion_spec__0_spec__0___closed__0_value.l___private_Lean_Meta_Tactic_TryThis_0__Lean_Meta_Tactic_TryThis_addExactSuggestionCore___closed__7_value = select i1 %11, ptr @l_Lean_logAt___at___00Lean_logInfoAt___at___00Lean_Meta_Tactic_TryThis_addSuggestion_spec__0_spec__0___closed__0_value, ptr @l___private_Lean_Meta_Tactic_TryThis_0__Lean_Meta_Tactic_TryThis_addExactSuggestionCore___closed__7_value ; 3 uses
   %.val.i.i873 = load i32, ptr %l_Lean_logAt___at___00Lean_logInfoAt___at___00Lean_Meta_Tactic_TryThis_addSuggestion_spec__0_spec__0___closed__0_value.l___private_Lean_Meta_Tactic_TryThis_0__Lean_Meta_Tactic_TryThis_addExactSuggestionCore___closed__7_value, align 8, !tbaa !11 ; 2 uses
   %i.ci = icmp sgt i32 %.val.i.i873, 0
   br i1 %i.ci, label %lean_inc_ref.exit875, label %bb.aa, !prof !13
@@ -319,8 +320,8 @@ lean_alloc_ctor.exit883:                          ; preds = %lean_alloc_ctor.exi
 bb.al:                                            ; preds = %bb.mt, %bb.ms, %bb.mr, %lean_dec.exit.i1048
   %i.dk = getelementptr i8, ptr %i.ui, i64 8
   %.val862 = load i64, ptr %i.dk, align 8, !tbaa !14
-  %.mask = and i64 %.val862, 9223372036854775807
-  %i.dl = icmp ne i64 %.mask, 0                   ; 3 uses
+  %.mask = and i64 %.val862, 9223372036854775807  ; 2 uses
+  %i.dl = icmp ne i64 %.mask, 0                   ; 2 uses
   %. = zext i1 %i.dl to i8
   %i.dm = tail call ptr @l___private_Lean_Meta_Tactic_TryThis_0__Lean_Meta_Tactic_TryThis_mkExactSuggestionSyntax(ptr noundef nonnull %2, i8 noundef zeroext %., ptr noundef %7, ptr noundef %8, ptr noundef nonnull %i.td, ptr noundef %10) ; 14 uses
   %i.dn = ptrtoint ptr %i.dm to i64               ; 2 uses

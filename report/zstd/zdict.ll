@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %ZDICT_totalSampleSi
   %.sroa.0.0.copyload = load i32, ptr %5, align 8 ; 2 uses
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 4
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 8 ; 4 uses
+  %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 8 ; 5 uses
   %i.r = load <2 x i32>, ptr %.sroa.4.0..sroa_idx, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 12
   %.sroa.6.0.copyload = load i32, ptr %.sroa.6.0..sroa_idx, align 4
@@ -289,7 +289,7 @@ bb.e:                                             ; preds = %bb.d
   %i.au = tail call noalias ptr @malloc(i64 noundef %i.aq) #17 ; 8 uses
   %i.av = add i64 %.lcssa127, 16                  ; 2 uses
   %i.aw = tail call noalias ptr @malloc(i64 noundef %i.av) #17 ; 11 uses
-  %i.ax = icmp ugt i32 %.sroa.5.0.copyload, 1     ; 6 uses
+  %i.ax = icmp ugt i32 %.sroa.5.0.copyload, 1     ; 5 uses
   br i1 %i.ax, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
@@ -692,9 +692,10 @@ ZDICT_dictSize.exit224.thread.critedge.i:         ; preds = %bb.ax
 bb.az:                                            ; preds = %ZDICT_dictSize.exit224.i
   %i.yd = zext i32 %.lcssa to i64                 ; 2 uses
   %i.ye = lshr i64 %1, 2
-  %7 = icmp samesign ugt i64 %i.ye, %i.yd
-  %brmerge239.not.i = and i1 %i.ax, %7
-  br i1 %brmerge239.not.i, label %bb.ba, label %.critedge181.i
+  %7 = icmp samesign ule i64 %i.ye, %i.yd
+  %.not238.i = icmp ult i32 %.sroa.5.0.copyload, 2
+  %brmerge239.i = or i1 %.not238.i, %7
+  br i1 %brmerge239.i, label %.critedge181.i, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
   %i.yf = load ptr, ptr @stderr, align 8, !tbaa !13
@@ -716,8 +717,8 @@ bb.bb:                                            ; preds = %bb.ba
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba
-  %8 = icmp ugt i32 %i.al, 4
-  br i1 %8, label %bb.bd, label %.critedge181.i
+  %8 = icmp ult i32 %i.al, 5
+  br i1 %8, label %.critedge181.i, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
   %i.ys = load ptr, ptr @stderr, align 8, !tbaa !13

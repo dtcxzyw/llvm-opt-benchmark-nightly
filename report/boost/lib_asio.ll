@@ -204,11 +204,12 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 6 uses
   %i.d = and i8 %1, 1
   %.not20 = icmp eq i8 %i.d, 0
-  %i.e = and i8 %1, 4
-  %.not19 = icmp eq i8 %i.e, 0                    ; 2 uses
+  %i.e = and i8 %1, 4                             ; 2 uses
+  %.not19 = icmp eq i8 %i.e, 0
   %i.f = icmp eq i32 %0, -1
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 6
+  %.not19.not = icmp ne i8 %i.e, 0
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.p
@@ -335,13 +336,13 @@ _ZN5boost6systemeqERKNS0_10error_codeES3_.exit50: ; preds = %bb.h, %bb.g
   %.0.i18.i47 = phi ptr [ %i.bc, %bb.h ], [ @_ZN5boost6system6detail17system_cat_holderIvE8instanceE, %bb.g ] ; 2 uses
   %i.bd = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN5boost6system6detail17system_cat_holderIvE8instanceE, i64 8), align 8, !tbaa !135 ; 2 uses
   %i.be = icmp eq i64 %i.bd, 0
-  %6 = icmp eq ptr %.0.i18.i47, @_ZN5boost6system6detail17system_cat_holderIvE8instanceE
+  %6 = icmp ne ptr %.0.i18.i47, @_ZN5boost6system6detail17system_cat_holderIvE8instanceE
   %i.bf = getelementptr inbounds nuw i8, ptr %.0.i18.i47, i64 8
   %i.bg = load i64, ptr %i.bf, align 8
-  %7 = icmp eq i64 %i.bg, %i.bd
+  %7 = icmp ne i64 %i.bg, %i.bd
   %i.bh = select i1 %i.be, i1 %6, i1 %7
-  %brmerge.not = and i1 %i.bh, %.not19
-  br i1 %brmerge.not, label %bb.j, label %.thread79
+  %brmerge = or i1 %i.bh, %.not19.not
+  br i1 %brmerge, label %.thread79, label %bb.j
 
 bb.i:                                             ; preds = %_ZN5boost6system10error_codeC2INS_4asio5error12basic_errorsEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit39.thread
   %i.bi = load ptr, ptr %i.c, align 8, !tbaa !151

@@ -205,14 +205,15 @@ bb.g:                                             ; preds = %bb.a
   %i.o = tail call noundef nonnull align 8 dereferenceable(124) ptr %i.n(ptr noundef nonnull align 8 dereferenceable(688) %i.k)
   %i.p = tail call noundef nonnull align 8 dereferenceable(96) ptr @_ZN6duckdb9DataTable23GetOptimisticCollectionERNS_13ClientContextENS_13PhysicalIndexE(ptr noundef nonnull align 8 dereferenceable(124) %i.o, ptr noundef nonnull align 8 dereferenceable(512) %1, i64 %4) ; 4 uses
   %i.q = tail call noundef nonnull align 8 dereferenceable(217) ptr @_ZNK6duckdb10shared_ptrINS_18RowGroupCollectionELb1EEdeEv(ptr noundef nonnull align 8 dereferenceable(16) %i.p)
-  %i.r = tail call noundef i64 @_ZNK6duckdb18RowGroupCollection12GetTotalRowsEv(ptr noundef nonnull align 8 dereferenceable(217) %i.q) ; 2 uses
+  %i.r = tail call noundef i64 @_ZNK6duckdb18RowGroupCollection12GetTotalRowsEv(ptr noundef nonnull align 8 dereferenceable(217) %i.q) ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 376
-  %i.t = load i64, ptr %i.s, align 8, !tbaa !690
-  %i.u = icmp ult i64 %i.r, %i.t                  ; 3 uses
+  %i.t = load i64, ptr %i.s, align 8, !tbaa !690  ; 2 uses
+  %i.u = icmp ult i64 %i.r, %i.t                  ; 2 uses
   %i.v = zext i1 %i.u to i8
-  %12 = icmp eq ptr %5, null
-  %or.cond.not = select i1 %i.u, i1 true, i1 %12
-  br i1 %or.cond.not, label %bb.i, label %bb.h
+  %.not = icmp uge i64 %i.r, %i.t
+  %12 = icmp ne ptr %5, null
+  %or.cond.not = select i1 %.not, i1 %12, i1 false
+  br i1 %or.cond.not, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   call void @_ZNK6duckdb12optional_ptrINS_20OptimisticDataWriterELb1EE10CheckValidEv(ptr noundef nonnull align 8 dereferenceable(8) %6)

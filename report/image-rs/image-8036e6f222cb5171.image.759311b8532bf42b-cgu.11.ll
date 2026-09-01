@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.g, label %.peel.begin, label %bb.o
 
 .peel.begin:                                      ; preds = %bb.c
-  %i.h = icmp eq i64 %4, 0                        ; 3 uses
+  %i.h = icmp eq i64 %4, 0                        ; 2 uses
   %. = zext i1 %i.h to i64                        ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 416
   %i.j = getelementptr inbounds nuw [48 x i8], ptr %i.i, i64 %3 ; 27 uses
@@ -342,7 +342,8 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.bu = getelementptr inbounds nuw i8, ptr @96, i64 %.
   %i.bv = load i8, ptr %i.bu, align 1, !noundef !5
   %i.bw = zext i8 %i.bv to i64
-  %.sroa.020.0.peel = select i1 %i.h, i16 %7, i16 %6
+  %.not.peel.not = icmp eq i64 %4, 0
+  %.sroa.020.0.peel = select i1 %.not.peel.not, i16 %7, i16 %6
   %i.bx = sext i16 %.sroa.020.0.peel to i32
   %i.by = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.bw
   %i.bz = mul nsw i32 %spec.select.peel, %i.bx

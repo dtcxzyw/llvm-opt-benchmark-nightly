@@ -204,12 +204,13 @@ bb.au:                                            ; preds = %bb.at
 bb.av:                                            ; preds = %bb.v
   %i.hr = trunc nuw i64 %i.ct to i1               ; 2 uses
   %i.hs = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.ht = load i64, ptr %i.hs, align 8, !noundef !5
+  %i.ht = load i64, ptr %i.hs, align 8, !noundef !5 ; 2 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.hv = load i64, ptr %i.hu, align 8, !noundef !5
-  %i.hw = icmp eq i64 %i.ht, %i.hv                ; 2 uses
+  %i.hv = load i64, ptr %i.hu, align 8, !noundef !5 ; 2 uses
+  %i.hw = icmp eq i64 %i.ht, %i.hv
   %.not = xor i1 %i.hr, true
-  %brmerge.not = and i1 %i.hw, %i.hr
+  %.not22 = icmp eq i64 %i.ht, %i.hv
+  %brmerge.not = and i1 %.not22, %i.hr
   %.mux = and i1 %i.hw, %.not
   br i1 %brmerge.not, label %bb.aw, label %bb.c
 
@@ -224,12 +225,13 @@ bb.aw:                                            ; preds = %bb.av
 bb.ax:                                            ; preds = %bb.w
   %i.ic = trunc nuw i64 %i.cy to i1               ; 2 uses
   %i.id = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.ie = load i64, ptr %i.id, align 8, !noundef !5
+  %i.ie = load i64, ptr %i.id, align 8, !noundef !5 ; 2 uses
   %i.if = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.ig = load i64, ptr %i.if, align 8, !noundef !5
-  %i.ih = icmp eq i64 %i.ie, %i.ig                ; 2 uses
+  %i.ig = load i64, ptr %i.if, align 8, !noundef !5 ; 2 uses
+  %i.ih = icmp eq i64 %i.ie, %i.ig
   %.not23 = xor i1 %i.ic, true
-  %brmerge25.not = and i1 %i.ih, %i.ic
+  %.not24 = icmp eq i64 %i.ie, %i.ig
+  %brmerge25.not = and i1 %.not24, %i.ic
   %.mux26 = and i1 %i.ih, %.not23
   br i1 %brmerge25.not, label %bb.ay, label %bb.c
 
@@ -281,12 +283,13 @@ bb.bf:                                            ; preds = %bb.ab
 bb.bg:                                            ; preds = %bb.ac
   %i.jc = trunc nuw i64 %i.a to i1                ; 2 uses
   %i.jd = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.je = load i64, ptr %i.jd, align 8, !noundef !5
+  %i.je = load i64, ptr %i.jd, align 8, !noundef !5 ; 2 uses
   %i.jf = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.jg = load i64, ptr %i.jf, align 8, !noundef !5
-  %i.jh = icmp eq i64 %i.je, %i.jg                ; 2 uses
+  %i.jg = load i64, ptr %i.jf, align 8, !noundef !5 ; 2 uses
+  %i.jh = icmp eq i64 %i.je, %i.jg
   %.not27 = xor i1 %i.jc, true
-  %brmerge29.not = and i1 %i.jh, %i.jc
+  %.not28 = icmp eq i64 %i.je, %i.jg
+  %brmerge29.not = and i1 %.not28, %i.jc
   %.mux30 = and i1 %i.jh, %.not27
   br i1 %brmerge29.not, label %bb.bh, label %bb.c
 

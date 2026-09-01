@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 64 ; 60 uses
-  %i.k = load i8, ptr %1, align 1, !tbaa !81      ; 7 uses
+  %i.k = load i8, ptr %1, align 1, !tbaa !81      ; 8 uses
   %i.l = zext i8 %i.k to i64                      ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr @char_table1, i64 %i.l
   %i.n = load i8, ptr %i.m, align 1, !tbaa !81
@@ -226,7 +226,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.q, label %read_str_opt.exit, label %bb.ny, !prof !169
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = icmp eq i8 %i.k, 45                      ; 58 uses
+  %i.r = icmp eq i8 %i.k, 45                      ; 57 uses
   %i.s = zext i1 %i.r to i64
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 %i.s ; 7 uses
   %i.u = load i8, ptr %i.t, align 1, !tbaa !81    ; 6 uses
@@ -245,9 +245,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.us.peel, label %.split787.us, label %bb.e, !prof !25
 
 bb.e:                                             ; preds = %.lr.ph.split.us.preheader
-  %i.z = icmp ne i8 %i.u, 43
-  %or.cond990.i.us.peel.not = or i1 %i.z, %i.r
-  br i1 %or.cond990.i.us.peel.not, label %.split789.us, label %bb.f
+  %8 = icmp eq i8 %i.u, 43
+  %i.z = icmp ne i8 %i.k, 45
+  %or.cond990.i.us.peel = and i1 %i.z, %8
+  br i1 %or.cond990.i.us.peel, label %bb.f, label %.split789.us
 
 bb.f:                                             ; preds = %bb.e
   %i.aa = load i8, ptr %i.y, align 1, !tbaa !81   ; 4 uses
@@ -650,8 +651,8 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.h, label %bb.in, label %bb.im
 
 bb.f:                                             ; preds = %bb.e
-  %i.i = load i8, ptr %0, align 1, !tbaa !81      ; 3 uses
-  %i.j = icmp eq i8 %i.i, 45                      ; 58 uses
+  %i.i = load i8, ptr %0, align 1, !tbaa !81      ; 4 uses
+  %i.j = icmp eq i8 %i.i, 45                      ; 57 uses
   %i.k = zext i1 %i.j to i64
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 %i.k ; 7 uses
   %i.m = load i8, ptr %i.l, align 1, !tbaa !81    ; 6 uses
@@ -670,9 +671,10 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i.us.peel, label %.split221.us, label %bb.g, !prof !25
 
 bb.g:                                             ; preds = %.lr.ph.split.us.preheader
-  %i.r = icmp ne i8 %i.m, 43
-  %or.cond990.i.us.peel.not = or i1 %i.r, %i.j
-  br i1 %or.cond990.i.us.peel.not, label %.split223.us, label %bb.h
+  %7 = icmp eq i8 %i.m, 43
+  %i.r = icmp ne i8 %i.i, 45
+  %or.cond990.i.us.peel = and i1 %i.r, %7
+  br i1 %or.cond990.i.us.peel, label %bb.h, label %.split223.us
 
 bb.h:                                             ; preds = %bb.g
   %i.s = load i8, ptr %i.q, align 1, !tbaa !81    ; 4 uses
@@ -1075,12 +1077,12 @@ bb.p:                                             ; preds = %bb.o
   %i.bb = load i8, ptr %.289202, align 1, !tbaa !81
   %i.bc = zext i8 %i.bb to i64
   %i.bd = getelementptr inbounds nuw i8, ptr @hex_conv_table, i64 %i.bc
-  %i.be = load i8, ptr %i.bd, align 1, !tbaa !81
-  %.not195.not = icmp ne i8 %i.be, -16            ; 2 uses
+  %i.be = load i8, ptr %i.bd, align 1, !tbaa !81  ; 2 uses
+  %.not195.not.not = icmp eq i8 %i.be, -16
   %i.bf = getelementptr inbounds nuw i8, ptr %.289202, i64 1 ; 2 uses
-  %exitcond.not = icmp ne ptr %i.bf, %2
-  %or.cond.not = select i1 %.not195.not, i1 %exitcond.not, i1 false
-  br i1 %or.cond.not, label %.lr.ph, label %is_truncated_str.exit144, !llvm.loop !320
+  %exitcond.not = icmp eq ptr %i.bf, %2
+  %or.cond.not = select i1 %.not195.not.not, i1 true, i1 %exitcond.not
+  br i1 %or.cond.not, label %.thread186.a, label %.lr.ph, !llvm.loop !320
 
 bb.q:                                             ; preds = %bb.n
   %i.bg = icmp ult i64 %i.as, 12
@@ -1325,18 +1327,22 @@ bb.ao:                                            ; preds = %bb.an, %.thread185
   %i.fj = icmp eq ptr %.188, %0
   %i.fk = icmp ult i64 %i.fi, 3
   %or.cond5 = and i1 %i.fj, %i.fk
-  br i1 %or.cond5, label %bb.ap, label %.thread186.a
+  br i1 %or.cond5, label %bb.ap, label %.thread186
 
 bb.ap:                                            ; preds = %bb.ao
   %bcmp = tail call i32 @bcmp(ptr %0, ptr nonnull @.str.58, i64 %i.fi)
   %.not122 = icmp eq i32 %bcmp, 0
-  br i1 %.not122, label %is_truncated_str.exit144, label %.thread186.a
+  br i1 %.not122, label %is_truncated_str.exit144, label %.thread186
 
-.thread186.a:                                     ; preds = %bb.ao, %bb.ap
+.thread186:                                       ; preds = %bb.ao, %bb.ap
   br label %is_truncated_str.exit144
 
-is_truncated_str.exit144:                         ; preds = %bb.f, %bb.g, %.lr.ph, %bb.k, %is_truncated_utf8.exit, %.split227, %.split, %bb.p, %bb.aa, %bb.al, %bb.ah, %bb.ag, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %bb.ab, %bb.ac, %bb.r, %bb.o, %bb.m, %bb.q, %bb.an, %.thread185, %.thread186.a, %bb.ap, %bb.am, %is_truncated_str.exit, %is_truncated_str.exit133, %is_truncated_str.exit139, %bb.a
-  %.4 = phi i1 [ true, %is_truncated_utf8.exit ], [ true, %bb.a ], [ true, %is_truncated_str.exit ], [ true, %bb.am ], [ true, %.split227 ], [ %i.ez, %bb.al ], [ true, %bb.ap ], [ false, %bb.an ], [ true, %is_truncated_str.exit139 ], [ true, %is_truncated_str.exit133 ], [ %.not195.not, %.lr.ph ], [ true, %bb.k ], [ false, %.thread186.a ], [ true, %bb.m ], [ false, %.thread185 ], [ true, %bb.ah ], [ true, %bb.ag ], [ true, %bb.ab ], [ false, %bb.aa ], [ true, %bb.z ], [ false, %bb.y ], [ true, %bb.x ], [ false, %bb.w ], [ true, %bb.v ], [ false, %bb.u ], [ true, %bb.t ], [ false, %bb.q ], [ false, %bb.s ], [ false, %bb.r ], [ false, %bb.o ], [ %i.de, %bb.ac ], [ true, %bb.p ], [ true, %bb.g ], [ true, %.split ], [ true, %bb.f ]
+.thread186.a:                                     ; preds = %.lr.ph
+  %.not195.not = icmp ne i8 %i.be, -16
+  br label %is_truncated_str.exit144
+
+is_truncated_str.exit144:                         ; preds = %bb.f, %bb.g, %bb.k, %.thread186.a, %is_truncated_utf8.exit, %.split227, %.split, %bb.p, %bb.aa, %bb.al, %bb.ah, %bb.ag, %bb.s, %bb.t, %bb.u, %bb.v, %bb.w, %bb.x, %bb.y, %bb.z, %bb.ab, %bb.ac, %bb.r, %bb.o, %bb.m, %bb.q, %bb.an, %.thread185, %.thread186, %bb.ap, %bb.am, %is_truncated_str.exit, %is_truncated_str.exit133, %is_truncated_str.exit139, %bb.a
+  %.4 = phi i1 [ true, %is_truncated_utf8.exit ], [ true, %bb.a ], [ true, %is_truncated_str.exit ], [ true, %bb.am ], [ true, %.split227 ], [ %i.ez, %bb.al ], [ true, %bb.ap ], [ false, %bb.an ], [ true, %is_truncated_str.exit139 ], [ true, %is_truncated_str.exit133 ], [ true, %bb.k ], [ %.not195.not, %.thread186.a ], [ false, %.thread186 ], [ true, %bb.m ], [ false, %.thread185 ], [ true, %bb.ah ], [ true, %bb.ag ], [ true, %bb.ab ], [ false, %bb.aa ], [ true, %bb.z ], [ false, %bb.y ], [ true, %bb.x ], [ false, %bb.w ], [ true, %bb.v ], [ false, %bb.u ], [ true, %bb.t ], [ false, %bb.q ], [ false, %bb.s ], [ false, %bb.r ], [ false, %bb.o ], [ %i.de, %bb.ac ], [ true, %bb.p ], [ true, %bb.g ], [ true, %.split ], [ true, %bb.f ]
   ret i1 %.4
 }
 
@@ -1739,8 +1745,8 @@ declare noundef i64 @fread(ptr noundef writeonly captures(none), i64 noundef, i6
 define internal fastcc noundef zeroext i1 @read_num_raw(ptr nofree noundef nonnull captures(none) %0, ptr nofree noundef nonnull captures(none) %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) %3, ptr nofree noundef nonnull writeonly captures(none) %4) unnamed_addr #26 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !92     ; 16 uses
-  %i.b = load i8, ptr %i.a, align 1, !tbaa !81    ; 3 uses
-  %i.c = icmp eq i8 %i.b, 45                      ; 4 uses
+  %i.b = load i8, ptr %i.a, align 1, !tbaa !81    ; 4 uses
+  %i.c = icmp eq i8 %i.b, 45                      ; 3 uses
   %i.d = zext i1 %i.c to i64
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.d ; 4 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !81    ; 4 uses
@@ -1755,9 +1761,10 @@ bb.a:
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 3 uses
-  %i.k = icmp ne i8 %i.f, 43
-  %or.cond.us.peel.not = or i1 %i.k, %i.c
-  br i1 %or.cond.us.peel.not, label %.split.us, label %bb.b
+  %5 = icmp eq i8 %i.f, 43
+  %i.k = icmp ne i8 %i.b, 45
+  %or.cond.us.peel = and i1 %i.k, %5
+  br i1 %or.cond.us.peel, label %bb.b, label %.split.us
 
 bb.b:                                             ; preds = %.lr.ph.split.us.preheader
   %i.l = load i8, ptr %i.j, align 1, !tbaa !81    ; 3 uses

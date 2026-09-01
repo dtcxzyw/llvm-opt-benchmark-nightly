@@ -126,7 +126,7 @@ bb.j:                                             ; preds = %bb.h
   %i.o = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %spec.select) #15 ; 6 uses
   %i.p = icmp eq i32 %4, 0
   %i.q = icmp ne i32 %6, 0
-  %or.cond = or i1 %i.p, %i.q                     ; 3 uses
+  %or.cond = or i1 %i.p, %i.q                     ; 2 uses
   br i1 %or.cond, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -156,7 +156,10 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.n
   %i.z = tail call ptr @strncpy(ptr noundef nonnull %i.y, ptr noundef nonnull %spec.select, i64 noundef %i.v) #14 ; 0 uses
-  %i.aa = select i1 %or.cond, i8 58, i8 47
+  %8 = icmp ne i32 %4, 0
+  %not. = icmp eq i32 %6, 0
+  %9 = and i1 %8, %not.
+  %i.aa = select i1 %9, i8 47, i8 58
   %i.ab = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.o ; 2 uses
   store i8 %i.aa, ptr %i.ab, align 1, !tbaa !13
   br i1 %or.cond, label %bb.q, label %bb.r

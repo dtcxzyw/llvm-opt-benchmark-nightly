@@ -142,10 +142,10 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.n, %bb.o
-  %.0208 = phi i64 [ %i.ar, %bb.o ], [ %5, %bb.n ] ; 2 uses
-  %.0204 = phi i64 [ %i.av, %bb.o ], [ %5, %bb.n ] ; 7 uses
+  %.0208 = phi i64 [ %i.ar, %bb.o ], [ %5, %bb.n ] ; 3 uses
+  %.0204 = phi i64 [ %i.av, %bb.o ], [ %5, %bb.n ] ; 8 uses
   %.not241 = icmp eq ptr %8, null                 ; 3 uses
-  %i.aw = icmp sle i64 %.0204, %.0208             ; 4 uses
+  %i.aw = icmp sle i64 %.0204, %.0208             ; 3 uses
   %.not243346 = icmp eq i64 %4, 0
   br i1 %.not243346, label %.thread263.thread, label %.lr.ph
 
@@ -548,8 +548,9 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %.not247, label %.loopexit279, label %.lr.ph358, !llvm.loop !43
 
 .loopexit279:                                     ; preds = %.lr.ph358, %bb.bc, %bb.bb
+  %.0183.shrunk.not = icmp sle i64 %.0204, %.0208
   %.not249359 = icmp eq i64 %.1186344376470, 0
-  %or.cond573 = or i1 %i.aw, %.not249359
+  %or.cond573 = or i1 %.0183.shrunk.not, %.not249359
   br i1 %or.cond573, label %.loopexit, label %.lr.ph362.preheader
 
 .lr.ph362.preheader:                              ; preds = %.loopexit279

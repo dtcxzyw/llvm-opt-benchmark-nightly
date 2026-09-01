@@ -204,11 +204,12 @@ bb.aa:                                            ; preds = %.split270, %.split2
 
 .loopexit.thread:                                 ; preds = %.loopexit.thread.sink.split, %bb.e, %.split270, %.split269, %.split268, %.split267, %.split, %bb.z, %.loopexit
   %i.cj = phi i1 [ false, %bb.e ], [ false, %.loopexit ], [ true, %.split270 ], [ true, %.split269 ], [ true, %.split268 ], [ true, %.split267 ], [ true, %.split ], [ true, %bb.z ], [ true, %.loopexit.thread.sink.split ]
-  %.1151411 = phi ptr [ %i.o, %bb.e ], [ %.1151, %.loopexit ], [ %.1151, %.split270 ], [ %.1151, %.split269 ], [ %.1151, %.split268 ], [ %.1151, %.split267 ], [ %.1151, %.split ], [ %.1151, %bb.z ], [ %.1151, %.loopexit.thread.sink.split ] ; 6 uses
+  %.1151411 = phi ptr [ %i.o, %bb.e ], [ %.1151, %.loopexit ], [ %.1151, %.split270 ], [ %.1151, %.split269 ], [ %.1151, %.split268 ], [ %.1151, %.split267 ], [ %.1151, %.split ], [ %.1151, %bb.z ], [ %.1151, %.loopexit.thread.sink.split ] ; 7 uses
   %.sroa.0.0410 = phi ptr [ %i.o, %bb.e ], [ %.sroa.0.0, %.loopexit ], [ %.sroa.0.0, %.split270 ], [ %.sroa.0.0, %.split269 ], [ %.sroa.0.0, %.split268 ], [ %.sroa.0.0, %.split267 ], [ %.sroa.0.0, %.split ], [ %.sroa.0.0, %bb.z ], [ %.sroa.0.0, %.loopexit.thread.sink.split ] ; 2 uses
   %.sroa.23.0409 = phi ptr [ %i.d, %bb.e ], [ %.sroa.23.0, %.loopexit ], [ %.sroa.23.0, %.split270 ], [ %.sroa.23.0, %.split269 ], [ %.sroa.23.0, %.split268 ], [ %.sroa.23.0, %.split267 ], [ %.sroa.23.0, %.split ], [ %.sroa.23.0, %bb.z ], [ %.sroa.23.0, %.loopexit.thread.sink.split ]
-  %i.ck = icmp ne ptr %.1151411, null             ; 3 uses
-  br i1 %i.ck, label %bb.ab, label %bb.ac
+  %i.ck = icmp ne ptr %.1151411, null             ; 2 uses
+  %.not.i198 = icmp eq ptr %.1151411, null
+  br i1 %.not.i198, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %.loopexit.thread
   %i.cl = add i64 %.val189, 1                     ; 2 uses

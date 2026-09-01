@@ -205,8 +205,8 @@ bb.h:                                             ; preds = %bb.g
   %foldExtExtBinop = fadd <2 x float> %i.o, %i.q
   %.sroa.0.4.vec.insert.i = shufflevector <2 x float> %i.o, <2 x float> %foldExtExtBinop, <2 x i32> <i32 0, i32 3>
   %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 360
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !814
-  %i.ab = icmp ne ptr %i.aa, null                 ; 3 uses
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !814 ; 2 uses
+  %i.ab = icmp ne ptr %i.aa, null                 ; 2 uses
   br i1 %i.ab, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h
@@ -223,7 +223,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
   %i.ai = phi i1 [ false, %bb.i ], [ false, %bb.h ], [ %i.ah, %bb.j ]
-  %6 = xor i1 %i.ab, true
+  %6 = icmp eq ptr %i.aa, null
   %or.cond40.i = select i1 %6, i1 true, i1 %i.ai
   %or.cond9.i = or i1 %i.r, %i.ab
   %or.cond41.i = and i1 %or.cond9.i, %or.cond40.i
@@ -415,8 +415,8 @@ bb.k:                                             ; preds = %bb.j
   %foldExtExtBinop = fadd <2 x float> %i.n, %i.p
   %.sroa.0.4.vec.insert.i28 = shufflevector <2 x float> %i.n, <2 x float> %foldExtExtBinop, <2 x i32> <i32 0, i32 3>
   %i.br = getelementptr inbounds nuw i8, ptr %i.b, i64 360
-  %i.bs = load ptr, ptr %i.br, align 8, !tbaa !814
-  %i.bt = icmp ne ptr %i.bs, null                 ; 3 uses
+  %i.bs = load ptr, ptr %i.br, align 8, !tbaa !814 ; 2 uses
+  %i.bt = icmp ne ptr %i.bs, null                 ; 2 uses
   br i1 %i.bt, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
@@ -433,7 +433,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
   %i.ca = phi i1 [ false, %bb.l ], [ false, %bb.k ], [ %i.bz, %bb.m ]
-  %6 = xor i1 %i.bt, true
+  %6 = icmp eq ptr %i.bs, null
   %or.cond40.i = select i1 %6, i1 true, i1 %i.ca
   %or.cond9.i = or i1 %i.ao, %i.bt
   %or.cond41.i = and i1 %or.cond9.i, %or.cond40.i
@@ -535,8 +535,8 @@ bb.h:                                             ; preds = %bb.g
   %foldExtExtBinop = fadd <2 x float> %i.p, %i.r
   %.sroa.0.4.vec.insert.i = shufflevector <2 x float> %i.p, <2 x float> %foldExtExtBinop, <2 x i32> <i32 0, i32 3>
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 360
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !814
-  %i.ac = icmp ne ptr %i.ab, null                 ; 3 uses
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !814 ; 2 uses
+  %i.ac = icmp ne ptr %i.ab, null                 ; 2 uses
   br i1 %i.ac, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h
@@ -553,7 +553,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
   %i.aj = phi i1 [ false, %bb.i ], [ false, %bb.h ], [ %i.ai, %bb.j ]
-  %5 = xor i1 %i.ac, true
+  %5 = icmp eq ptr %i.ab, null
   %or.cond40.i = select i1 %5, i1 true, i1 %i.aj
   %or.cond9.i = or i1 %i.s, %i.ac
   %or.cond41.i = and i1 %or.cond9.i, %or.cond40.i
@@ -779,8 +779,8 @@ bb.h:                                             ; preds = %bb.g
   %foldExtExtBinop = fadd <2 x float> %i.p, %i.r
   %.sroa.0.4.vec.insert.i = shufflevector <2 x float> %i.p, <2 x float> %foldExtExtBinop, <2 x i32> <i32 0, i32 3>
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 360
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !814
-  %i.ac = icmp ne ptr %i.ab, null                 ; 3 uses
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !814 ; 2 uses
+  %i.ac = icmp ne ptr %i.ab, null                 ; 2 uses
   br i1 %i.ac, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h
@@ -797,7 +797,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
   %i.aj = phi i1 [ false, %bb.i ], [ false, %bb.h ], [ %i.ai, %bb.j ]
-  %7 = xor i1 %i.ac, true
+  %7 = icmp eq ptr %i.ab, null
   %or.cond40.i = select i1 %7, i1 true, i1 %i.aj
   %or.cond9.i = or i1 %i.s, %i.ac
   %or.cond41.i = and i1 %or.cond9.i, %or.cond40.i
@@ -923,8 +923,8 @@ bb.h:                                             ; preds = %bb.g
   %foldExtExtBinop = fadd <2 x float> %i.p, %i.r
   %.sroa.0.4.vec.insert.i = shufflevector <2 x float> %i.p, <2 x float> %foldExtExtBinop, <2 x i32> <i32 0, i32 3>
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 360
-  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !814
-  %i.ac = icmp ne ptr %i.ab, null                 ; 3 uses
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !814 ; 2 uses
+  %i.ac = icmp ne ptr %i.ab, null                 ; 2 uses
   br i1 %i.ac, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h
@@ -941,7 +941,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
   %i.aj = phi i1 [ false, %bb.i ], [ false, %bb.h ], [ %i.ai, %bb.j ]
-  %7 = xor i1 %i.ac, true
+  %7 = icmp eq ptr %i.ab, null
   %or.cond40.i = select i1 %7, i1 true, i1 %i.aj
   %or.cond9.i = or i1 %i.s, %i.ac
   %or.cond41.i = and i1 %or.cond9.i, %or.cond40.i
@@ -1344,8 +1344,8 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  %i.bc = load i8, ptr %i.al, align 1, !tbaa !1125 ; 2 uses
-  %.not74 = icmp eq i8 %i.bc, 0                   ; 2 uses
+  %i.bc = load i8, ptr %i.al, align 1, !tbaa !1125 ; 3 uses
+  %.not74 = icmp eq i8 %i.bc, 0
   %.not75 = icmp eq i8 %.sink, %i.bc
   %or.cond = select i1 %.not74, i1 true, i1 %.not75
   br i1 %or.cond, label %bb.s, label %bb.r
@@ -1356,9 +1356,10 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.u
 
 bb.s:                                             ; preds = %bb.q
-  %.not76.a = icmp ne i8 %.sink, 0
-  %brmerge.not = and i1 %.not76.a, %.not74
-  br i1 %brmerge.not, label %bb.t, label %bb.u
+  %.not76 = icmp eq i8 %.sink, 0
+  %.not76.a = icmp ne i8 %i.bc, 0
+  %brmerge = or i1 %.not76, %.not76.a
+  br i1 %brmerge, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   store i32 0, ptr %i.p, align 4, !tbaa !896
@@ -1761,7 +1762,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %i.fi = getelementptr inbounds nuw i8, ptr %i.b, i64 360
-  %i.fj = load ptr, ptr %i.fi, align 8, !tbaa !814
+  %i.fj = load ptr, ptr %i.fi, align 8, !tbaa !814 ; 2 uses
   %foldExtExtBinop191 = fadd <2 x float> %i.r, %i.t
   %i.fk = extractelement <2 x float> %foldExtExtBinop191, i64 1
   %i.fl = getelementptr inbounds nuw i8, ptr %0, i64 9612
@@ -1772,7 +1773,7 @@ bb.s:                                             ; preds = %bb.r
   %i.fp = load i32, ptr %i.fo, align 8, !tbaa !903 ; 3 uses
   %i.fq = add i32 %i.fp, 1
   store i32 %i.fq, ptr %i.fo, align 8, !tbaa !903
-  %i.fr = icmp ne ptr %i.fj, null                 ; 4 uses
+  %i.fr = icmp ne ptr %i.fj, null                 ; 3 uses
   br i1 %i.fr, label %bb.t, label %bb.v
 
 bb.t:                                             ; preds = %bb.s
@@ -1789,7 +1790,7 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s
   %i.fy = phi i1 [ false, %bb.t ], [ false, %bb.s ], [ %i.fx, %bb.u ]
-  %7 = xor i1 %i.fr, true
+  %7 = icmp eq ptr %i.fj, null
   %or.cond45.i = select i1 %7, i1 true, i1 %i.fy
   %or.cond9.i = or i1 %i.u, %i.fr
   %or.cond46.i = and i1 %or.cond9.i, %or.cond45.i
@@ -2192,7 +2193,7 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %i.fh = getelementptr inbounds nuw i8, ptr %i.b, i64 360
-  %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !814
+  %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !814 ; 2 uses
   %foldExtExtBinop177 = fadd <2 x float> %i.p, %i.r
   %i.fj = extractelement <2 x float> %foldExtExtBinop177, i64 1
   %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 9612
@@ -2203,7 +2204,7 @@ bb.v:                                             ; preds = %bb.u
   %i.fo = load i32, ptr %i.fn, align 8, !tbaa !903 ; 3 uses
   %i.fp = add i32 %i.fo, 1
   store i32 %i.fp, ptr %i.fn, align 8, !tbaa !903
-  %i.fq = icmp ne ptr %i.fi, null                 ; 4 uses
+  %i.fq = icmp ne ptr %i.fi, null                 ; 3 uses
   br i1 %i.fq, label %bb.w, label %bb.y
 
 bb.w:                                             ; preds = %bb.v
@@ -2220,7 +2221,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v
   %i.fx = phi i1 [ false, %bb.w ], [ false, %bb.v ], [ %i.fw, %bb.x ]
-  %5 = xor i1 %i.fq, true
+  %5 = icmp eq ptr %i.fi, null
   %or.cond45.i = select i1 %5, i1 true, i1 %i.fx
   %or.cond9.i = or i1 %i.s, %i.fq
   %or.cond46.i = and i1 %or.cond9.i, %or.cond45.i
@@ -2607,7 +2608,7 @@ bb.u:                                             ; preds = %nk_draw_button_symb
 
 bb.v:                                             ; preds = %bb.u
   %i.ev = getelementptr inbounds nuw i8, ptr %i.b, i64 360
-  %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !814
+  %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !814 ; 2 uses
   %foldExtExtBinop176 = fadd <2 x float> %i.p, %i.r
   %i.ex = extractelement <2 x float> %foldExtExtBinop176, i64 1
   %i.ey = getelementptr inbounds nuw i8, ptr %0, i64 9612
@@ -2618,7 +2619,7 @@ bb.v:                                             ; preds = %bb.u
   %i.fc = load i32, ptr %i.fb, align 8, !tbaa !903 ; 3 uses
   %i.fd = add i32 %i.fc, 1
   store i32 %i.fd, ptr %i.fb, align 8, !tbaa !903
-  %i.fe = icmp ne ptr %i.ew, null                 ; 4 uses
+  %i.fe = icmp ne ptr %i.ew, null                 ; 3 uses
   br i1 %i.fe, label %bb.w, label %bb.y
 
 bb.w:                                             ; preds = %bb.v
@@ -2635,7 +2636,7 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v
   %i.fl = phi i1 [ false, %bb.w ], [ false, %bb.v ], [ %i.fk, %bb.x ]
-  %5 = xor i1 %i.fe, true
+  %5 = icmp eq ptr %i.ew, null
   %or.cond45.i = select i1 %5, i1 true, i1 %i.fl
   %or.cond9.i = or i1 %i.s, %i.fe
   %or.cond46.i = and i1 %or.cond9.i, %or.cond45.i
@@ -3038,7 +3039,7 @@ bb.t:                                             ; preds = %nk_draw_button_symb
 
 bb.u:                                             ; preds = %bb.t
   %i.fv = getelementptr inbounds nuw i8, ptr %i.b, i64 360
-  %i.fw = load ptr, ptr %i.fv, align 8, !tbaa !814
+  %i.fw = load ptr, ptr %i.fv, align 8, !tbaa !814 ; 2 uses
   %foldExtExtBinop224 = fadd <2 x float> %i.o, %i.q
   %i.fx = extractelement <2 x float> %foldExtExtBinop224, i64 1
   %i.fy = getelementptr inbounds nuw i8, ptr %0, i64 9612
@@ -3049,7 +3050,7 @@ bb.u:                                             ; preds = %bb.t
   %i.gc = load i32, ptr %i.gb, align 8, !tbaa !903 ; 3 uses
   %i.gd = add i32 %i.gc, 1
   store i32 %i.gd, ptr %i.gb, align 8, !tbaa !903
-  %i.ge = icmp ne ptr %i.fw, null                 ; 4 uses
+  %i.ge = icmp ne ptr %i.fw, null                 ; 3 uses
   br i1 %i.ge, label %bb.v, label %bb.x
 
 bb.v:                                             ; preds = %bb.u
@@ -3066,7 +3067,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
   %i.gl = phi i1 [ false, %bb.v ], [ false, %bb.u ], [ %i.gk, %bb.w ]
-  %8 = xor i1 %i.ge, true
+  %8 = icmp eq ptr %i.fw, null
   %or.cond45.i = select i1 %8, i1 true, i1 %i.gl
   %or.cond9.i = or i1 %i.r, %i.ge
   %or.cond46.i = and i1 %or.cond9.i, %or.cond45.i
@@ -3419,7 +3420,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.es = getelementptr inbounds nuw i8, ptr %i.b, i64 360
-  %i.et = load ptr, ptr %i.es, align 8, !tbaa !814
+  %i.et = load ptr, ptr %i.es, align 8, !tbaa !814 ; 2 uses
   %foldExtExtBinop163 = fadd <2 x float> %i.p, %i.r
   %i.eu = extractelement <2 x float> %foldExtExtBinop163, i64 1
   %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 9612
@@ -3430,7 +3431,7 @@ bb.p:                                             ; preds = %bb.o
   %i.ez = load i32, ptr %i.ey, align 8, !tbaa !903 ; 3 uses
   %i.fa = add i32 %i.ez, 1
   store i32 %i.fa, ptr %i.ey, align 8, !tbaa !903
-  %i.fb = icmp ne ptr %i.et, null                 ; 4 uses
+  %i.fb = icmp ne ptr %i.et, null                 ; 3 uses
   br i1 %i.fb, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %bb.p
@@ -3447,7 +3448,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p
   %i.fi = phi i1 [ false, %bb.q ], [ false, %bb.p ], [ %i.fh, %bb.r ]
-  %5 = xor i1 %i.fb, true
+  %5 = icmp eq ptr %i.et, null
   %or.cond45.i = select i1 %5, i1 true, i1 %i.fi
   %or.cond9.i = or i1 %i.s, %i.fb
   %or.cond46.i = and i1 %or.cond9.i, %or.cond45.i
@@ -3850,7 +3851,7 @@ bb.q:                                             ; preds = %nk_rgb_factor.exit1
 
 bb.r:                                             ; preds = %bb.q
   %i.fr = getelementptr inbounds nuw i8, ptr %i.b, i64 360
-  %i.fs = load ptr, ptr %i.fr, align 8, !tbaa !814
+  %i.fs = load ptr, ptr %i.fr, align 8, !tbaa !814 ; 2 uses
   %foldExtExtBinop215 = fadd <2 x float> %i.o, %i.q
   %i.ft = extractelement <2 x float> %foldExtExtBinop215, i64 1
   %i.fu = getelementptr inbounds nuw i8, ptr %0, i64 9612
@@ -3861,7 +3862,7 @@ bb.r:                                             ; preds = %bb.q
   %i.fy = load i32, ptr %i.fx, align 8, !tbaa !903 ; 3 uses
   %i.fz = add i32 %i.fy, 1
   store i32 %i.fz, ptr %i.fx, align 8, !tbaa !903
-  %i.ga = icmp ne ptr %i.fs, null                 ; 4 uses
+  %i.ga = icmp ne ptr %i.fs, null                 ; 3 uses
   br i1 %i.ga, label %bb.s, label %bb.u
 
 bb.s:                                             ; preds = %bb.r
@@ -3878,7 +3879,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
   %i.gh = phi i1 [ false, %bb.s ], [ false, %bb.r ], [ %i.gg, %bb.t ]
-  %8 = xor i1 %i.ga, true
+  %8 = icmp eq ptr %i.fs, null
   %or.cond45.i = select i1 %8, i1 true, i1 %i.gh
   %or.cond9.i = or i1 %i.r, %i.ga
   %or.cond46.i = and i1 %or.cond9.i, %or.cond45.i

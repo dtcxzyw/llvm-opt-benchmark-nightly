@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define range(i32 -461, 2) i32 @wolfSSL_CTX_load_system_CA_certs(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp ne ptr %0, null                     ; 2 uses
-  br i1 %i.a, label %.lr.ph.split.preheader.i, label %LoadSystemCaCertsNix.exit.thread
+  br i1 %i.a, label %.lr.ph.split.preheader.i, label %bb.b
 
 .lr.ph.split.preheader.i:                         ; preds = %bb.a
   %i.b = load ptr, ptr @systemCaDirs, align 16, !tbaa !228
@@ -225,13 +225,16 @@ bb.a:
   %.not.2.i = icmp eq i32 %i.g, 1
   br i1 %.not.2.i, label %LoadSystemCaCertsNix.exit.thread, label %bb.b
 
-LoadSystemCaCertsNix.exit.thread:                 ; preds = %bb.a, %.lr.ph.split.2.i, %.lr.ph.split.1.i, %.lr.ph.split.preheader.i
-  %spec.select.i4 = zext i1 %i.a to i32
+LoadSystemCaCertsNix.exit.thread:                 ; preds = %.lr.ph.split.2.i, %.lr.ph.split.1.i, %.lr.ph.split.preheader.i
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph.split.2.i, %LoadSystemCaCertsNix.exit.thread
-  %1 = phi i32 [ %spec.select.i4, %LoadSystemCaCertsNix.exit.thread ], [ -461, %.lr.ph.split.2.i ]
-  ret i32 %1
+bb.b:                                             ; preds = %bb.a, %.lr.ph.split.2.i, %LoadSystemCaCertsNix.exit.thread
+  %1 = phi i1 [ true, %LoadSystemCaCertsNix.exit.thread ], [ false, %.lr.ph.split.2.i ], [ false, %bb.a ]
+  %spec.select.i = zext i1 %i.a to i32
+  %2 = icmp eq ptr %0, null
+  %or.cond = or i1 %2, %1
+  %spec.store.select = select i1 %or.cond, i32 %spec.select.i, i32 -461
+  ret i32 %spec.store.select
 }
 
 ; Function Attrs: nounwind uwtable

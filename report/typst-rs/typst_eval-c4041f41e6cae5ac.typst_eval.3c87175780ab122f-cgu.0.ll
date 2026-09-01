@@ -205,8 +205,8 @@ select.unfold.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i:      ; preds = %.lr.ph.split.i.back
 
 .split.i.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i:      ; preds = %select.unfold.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.sroa.0.1.i.i.ph.i39.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.hb, i64 %i.jr
-  %bcmp.i.i.i40.i.i.i.i.i.i.i.i.i.i.i.i.i.i = call i32 @bcmp(ptr nonnull readonly %.sroa.0.1.i.i.ph.i39.i.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr nonnull readonly %.sroa.0.1.i.i.ph.i.i.i.i.i.i.i.i.i.i.i, i64 %.sroa.4.1.i.i.ph.i.i.i.i.i.i.i.i.i.i.i), !noalias !355
-  %.not.i.i.i.i.i.i.i.i.i.i58.i = icmp ne i32 %bcmp.i.i.i40.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 0 ; 2 uses
+  %bcmp.i.i.i40.i.i.i.i.i.i.i.i.i.i.i.i.i.i = call i32 @bcmp(ptr nonnull readonly %.sroa.0.1.i.i.ph.i39.i.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr nonnull readonly %.sroa.0.1.i.i.ph.i.i.i.i.i.i.i.i.i.i.i, i64 %.sroa.4.1.i.i.ph.i.i.i.i.i.i.i.i.i.i.i), !noalias !355 ; 2 uses
+  %.not.i.i.i.i.i.i.i.i.i.i58.i = icmp ne i32 %bcmp.i.i.i40.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 0
   %brmerge.i.i.i.i.i.i.i.i.i.i.i = or i1 %i.ix, %.not.i.i.i.i.i.i.i.i.i.i58.i
   br i1 %brmerge.i.i.i.i.i.i.i.i.i.i.i, label %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCINvMNtCseVcqU0FIJnD_5codex6sharedINtBU_11ModifierSetNtNtCsakL8LGkl72C_4ecow6string9EcoStringE13best_match_inINtNtBb_6option6OptionReEINtNtNtNtBb_4iter8adapters3map3MapNtNtNtCsdaEETE4DqmE_13typst_library11foundations6symbol8VariantsNCINvMB3z_NtB3z_6Symbol8modifiedTQNtNtB3D_6engine6EngineNtNtCs5PEMdK7bMAG_12typst_syntax4span4SpanEE0EE0INtB7_5FnMutTRTIB1o_B2W_EB2A_EEE8call_mutCs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.i.i.i, label %.lr.ph.i.split.i.i.i.i.i.i.i.i.i.i.backedge
 
@@ -235,7 +235,8 @@ select.unfold.i.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.ca
   br i1 %.not12.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %select.unfold.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.lr.ph.split.i.i.i.i.i.preheader.i.i.i.i.i.i.i.i.i.i.i.i.i
 
 _RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCINvMNtCseVcqU0FIJnD_5codex6sharedINtBU_11ModifierSetNtNtCsakL8LGkl72C_4ecow6string9EcoStringE13best_match_inINtNtBb_6option6OptionReEINtNtNtNtBb_4iter8adapters3map3MapNtNtNtCsdaEETE4DqmE_13typst_library11foundations6symbol8VariantsNCINvMB3z_NtB3z_6Symbol8modifiedTQNtNtB3D_6engine6EngineNtNtCs5PEMdK7bMAG_12typst_syntax4span4SpanEE0EE0INtB7_5FnMutTRTIB1o_B2W_EB2A_EEE8call_mutCs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.i.i.i: ; preds = %.split.i.thread.i.i.i.i.i.i.i.i.i.i.i.i.i.i
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i58.i, label %_RNvXNtNtCs3oUPovFnLWP_4core3ops12control_flowINtB2_11ControlFlowTINtNtCseVcqU0FIJnD_5codex6shared11ModifierSetReEINtNtB6_6option6OptionB1K_EEENtNtB4_9try_trait3Try6branchCs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.i, label %_RINvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapNtNtNtCsdaEETE4DqmE_13typst_library11foundations6symbol8VariantsNCINvMBT_NtBT_6Symbol8modifiedTQNtNtBX_6engine6EngineNtNtCs5PEMdK7bMAG_12typst_syntax4span4SpanEE0ENtNtNtBa_6traits8iterator8Iterator4findQNCINvMNtCseVcqU0FIJnD_5codex6sharedINtB4e_11ModifierSetNtNtCsakL8LGkl72C_4ecow6string9EcoStringE13best_match_inINtNtBc_6option6OptionReEB3_E0ECs5cbCQMMIObr_10typst_eval.exit.thread58.i.i
+  %6 = icmp eq i32 %bcmp.i.i.i40.i.i.i.i.i.i.i.i.i.i.i.i.i.i, 0
+  br i1 %6, label %_RINvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapNtNtNtCsdaEETE4DqmE_13typst_library11foundations6symbol8VariantsNCINvMBT_NtBT_6Symbol8modifiedTQNtNtBX_6engine6EngineNtNtCs5PEMdK7bMAG_12typst_syntax4span4SpanEE0ENtNtNtBa_6traits8iterator8Iterator4findQNCINvMNtCseVcqU0FIJnD_5codex6sharedINtB4e_11ModifierSetNtNtCsakL8LGkl72C_4ecow6string9EcoStringE13best_match_inINtNtBc_6option6OptionReEB3_E0ECs5cbCQMMIObr_10typst_eval.exit.thread58.i.i, label %_RNvXNtNtCs3oUPovFnLWP_4core3ops12control_flowINtB2_11ControlFlowTINtNtCseVcqU0FIJnD_5codex6shared11ModifierSetReEINtNtB6_6option6OptionB1K_EEENtNtB4_9try_trait3Try6branchCs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.i
 
 _RNvXNtNtCs3oUPovFnLWP_4core3ops12control_flowINtB2_11ControlFlowTINtNtCseVcqU0FIJnD_5codex6shared11ModifierSetReEINtNtB6_6option6OptionB1K_EEENtNtB4_9try_trait3Try6branchCs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.i: ; preds = %select.unfold.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %bb.bs, %bb.br, %.preheader.i.i.i.i.i.us.i.i.i.i.i.i.i.i.i.i, %.noexc62.i, %bb.bq, %_RNvXs1_NtNtNtCs3oUPovFnLWP_4core3ops8function5implsQNCINvMNtCseVcqU0FIJnD_5codex6sharedINtBU_11ModifierSetNtNtCsakL8LGkl72C_4ecow6string9EcoStringE13best_match_inINtNtBb_6option6OptionReEINtNtNtNtBb_4iter8adapters3map3MapNtNtNtCsdaEETE4DqmE_13typst_library11foundations6symbol8VariantsNCINvMB3z_NtB3z_6Symbol8modifiedTQNtNtB3D_6engine6EngineNtNtCs5PEMdK7bMAG_12typst_syntax4span4SpanEE0EE0INtB7_5FnMutTRTIB1o_B2W_EB2A_EEE8call_mutCs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa), !noalias !285
@@ -638,10 +639,10 @@ bb.e:                                             ; preds = %bb.d
   %i.av = load i64, ptr %i.au, align 8, !alias.scope !20109, !noalias !20110, !noundef !4 ; 3 uses
   call void @_RNvXNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash128NtB2_12StableHasherNtNtCs3oUPovFnLWP_4core4hash6Hasher11write_usize(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.q, i64 noundef %i.av), !noalias !20113
   %i.aw = load ptr, ptr %i.at, align 8, !alias.scope !20109, !noalias !20110, !noundef !4 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i = icmp ne ptr %i.aw, null
-  %3 = icmp ne i64 %i.av, 0
-  %.not63.i.i.i.i.i.i.i.i = and i1 %3, %.not.i.i.i.i.i.i.i.i
-  br i1 %.not63.i.i.i.i.i.i.i.i, label %.lr.ph.preheader.i.i.i.i.i.i.i.i, label %_RINvXs1r_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB7_8BTreeMapNtNtBd_6string6StringINtNtBd_3vec3VecjEENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash12812StableHasherECs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.i.i.i
+  %3 = icmp eq i64 %i.av, 0
+  %not..not.i.i.i.i.i.i.i.i = icmp eq ptr %i.aw, null
+  %4 = or i1 %3, %not..not.i.i.i.i.i.i.i.i
+  br i1 %4, label %_RINvXs1r_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB7_8BTreeMapNtNtBd_6string6StringINtNtBd_3vec3VecjEENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash12812StableHasherECs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.i.i.i, label %.lr.ph.preheader.i.i.i.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i.i.i.i:                 ; preds = %bb.e
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ap, i64 48

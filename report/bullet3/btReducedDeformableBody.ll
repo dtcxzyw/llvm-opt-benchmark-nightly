@@ -205,15 +205,19 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.b ] ; 2 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv.i
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !369
-  %2 = icmp ne ptr %i.g, %1                       ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !369  ; 2 uses
+  %.not = icmp eq ptr %i.g, %1
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp ne i64 %indvars.iv.next.i, %wide.trip.count.i
-  %or.cond.not = select i1 %2, i1 %exitcond.not.i, i1 false
-  br i1 %or.cond.not, label %bb.b, label %_ZNK20btAlignedObjectArrayIPK17btCollisionObjectE16findLinearSearchERKS2_.exit, !llvm.loop !371
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
+  %or.cond.not = select i1 %.not, i1 true, i1 %exitcond.not.i
+  br i1 %or.cond.not, label %_ZNK20btAlignedObjectArrayIPK17btCollisionObjectE16findLinearSearchERKS2_.exit.loopexit, label %bb.b, !llvm.loop !371
 
-_ZNK20btAlignedObjectArrayIPK17btCollisionObjectE16findLinearSearchERKS2_.exit: ; preds = %bb.b, %bb.a
-  %.06.i = phi i1 [ true, %bb.a ], [ %2, %bb.b ]
+_ZNK20btAlignedObjectArrayIPK17btCollisionObjectE16findLinearSearchERKS2_.exit.loopexit: ; preds = %bb.b
+  %2 = icmp ne ptr %i.g, %1
+  br label %_ZNK20btAlignedObjectArrayIPK17btCollisionObjectE16findLinearSearchERKS2_.exit
+
+_ZNK20btAlignedObjectArrayIPK17btCollisionObjectE16findLinearSearchERKS2_.exit: ; preds = %_ZNK20btAlignedObjectArrayIPK17btCollisionObjectE16findLinearSearchERKS2_.exit.loopexit, %bb.a
+  %.06.i = phi i1 [ true, %bb.a ], [ %2, %_ZNK20btAlignedObjectArrayIPK17btCollisionObjectE16findLinearSearchERKS2_.exit.loopexit ]
   ret i1 %.06.i
 }
 

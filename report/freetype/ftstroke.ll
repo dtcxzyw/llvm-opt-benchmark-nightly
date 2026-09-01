@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 24 ; 2 uses
   %i.n = load i8, ptr %i.m, align 8, !tbaa !50
   %i.o = icmp eq i8 %i.n, 0
-  %i.p = icmp eq i64 %1, 0                        ; 3 uses
+  %i.p = icmp eq i64 %1, 0
   %or.cond.i = or i1 %i.p, %i.o
   %i.q = add i64 %i.k, -11763714
   %i.r = icmp ult i64 %i.q, -23527427
@@ -392,9 +392,10 @@ bb.m:                                             ; preds = %bb.l
   %i.dp = sub i64 %factor95.i, %i.dk
   store i64 %i.dp, ptr %i.dc, align 8, !tbaa !41
   %i.dq = call fastcc i32 @ft_stroke_border_lineto(ptr noundef %i.aw, ptr noundef %5, i8 noundef zeroext 0) ; 2 uses
-  %.not86.i = icmp eq i32 %i.dq, 0
-  %brmerge.not = and i1 %i.p, %.not86.i
-  br i1 %brmerge.not, label %bb.n, label %bb.o
+  %.not86.i = icmp ne i32 %i.dq, 0
+  %.not15 = icmp ne i64 %1, 0
+  %brmerge = or i1 %.not15, %.not86.i
+  br i1 %brmerge, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.dr = load i64, ptr %i.b, align 8, !tbaa !44
@@ -425,9 +426,10 @@ bb.p:                                             ; preds = %bb.k, %bb.i
   %i.ed = add nsw <2 x i64> %i.ec, %i.eb
   store <2 x i64> %i.ed, ptr %6, align 16, !tbaa !45
   %i.ee = call fastcc i32 @ft_stroke_border_lineto(ptr noundef %i.aw, ptr noundef %6, i8 noundef zeroext 0) ; 2 uses
-  %.not83.i = icmp eq i32 %i.ee, 0
-  %brmerge17.not = and i1 %i.p, %.not83.i
-  br i1 %brmerge17.not, label %bb.q, label %bb.r
+  %.not83.i = icmp ne i32 %i.ee, 0
+  %.not16 = icmp ne i64 %1, 0
+  %brmerge17 = or i1 %.not16, %.not83.i
+  br i1 %brmerge17, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.ef = load i64, ptr %i.bc, align 8, !tbaa !30
@@ -830,8 +832,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 40 ; 6 uses
   %i.h = call i32 @FT_Outline_Get_Orientation(ptr noundef nonnull %i.g) #10
-  %4 = icmp ne i32 %i.h, 0
-  %.not49 = icmp ne i8 %2, 0
+  %.not49 = icmp eq i8 %2, 0
+  %4 = icmp eq i32 %i.h, 0
   %.0.v = xor i1 %.not49, %4                      ; 2 uses
   %.0 = zext i1 %.0.v to i32
   %i.i = call i32 @FT_Stroker_ParseOutline(ptr noundef %1, ptr noundef nonnull %i.g, i8 noundef zeroext 0) ; 2 uses

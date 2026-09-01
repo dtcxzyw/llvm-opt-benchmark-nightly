@@ -202,7 +202,7 @@ select_keytype.exit:                              ; preds = %bb.a
   %i.k = zext nneg i8 %i.j to i32
   %i.l = add nuw nsw i32 %i.k, 1460
   %i.m = tail call ptr @OBJ_nid2ln(i32 noundef %i.l) #5 ; 2 uses
-  %i.n = load i64, ptr %1, align 8, !tbaa !12     ; 2 uses
+  %i.n = load i64, ptr %1, align 8, !tbaa !12     ; 3 uses
   %i.o = icmp eq i64 %i.n, 0
   br i1 %i.o, label %consume_uint8t.exit66.thread, label %bb.b
 
@@ -217,9 +217,11 @@ bb.b:                                             ; preds = %select_keytype.exit
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 1 ; 5 uses
   store ptr %i.s, ptr %0, align 8, !tbaa !14
   %i.t = icmp ugt i64 %i.r, 255
-  %.not = trunc i8 %i.q to i1
-  %i.u = and i1 %i.t, %.not                       ; 2 uses
-  %narrow = xor i1 %i.u, true
+  %.not = trunc i8 %i.q to i1                     ; 2 uses
+  %not..not = xor i1 %.not, true
+  %i.u = and i1 %i.t, %.not
+  %not. = icmp ult i64 %i.n, 257
+  %narrow = or i1 %not., %not..not
   %.0 = zext i1 %narrow to i32
   store i64 0, ptr %1, align 8, !tbaa !12
   %i.v = and i8 %i.q, 1

@@ -204,7 +204,9 @@ bb.g:                                             ; preds = %bb.f
 
 _Z10tMPI_Get_NPiPPPcPKcS_.exit:                   ; preds = %bb.g, %.thread.i
   %.0 = phi i32 [ %spec.store.select.i, %.thread.i ], [ %i.r, %bb.g ]
-  %i.w = call fastcc noundef i32 @_ZL18tMPI_Start_threadsii22tMPI_Affinity_strategyPiPPPcPFvPKvES5_PFiiS2_E(i32 noundef 1, i32 noundef %.0, i32 noundef 1, ptr noundef nonnull %0, ptr noundef %1, ptr noundef null, ptr noundef null, ptr noundef %2)
+  %i.w = call fastcc noundef i32 @_ZL18tMPI_Start_threadsii22tMPI_Affinity_strategyPiPPPcPFvPKvES5_PFiiS2_E(i32 noundef 1, i32 noundef %.0, i32 noundef 1, ptr noundef nonnull %0, ptr noundef %1, ptr noundef null, ptr noundef null, ptr noundef %2) ; 2 uses
+  %3 = icmp ne i32 %i.w, 0
+  %4 = zext i1 %3 to i32
   %.not = icmp eq i32 %i.w, 0
   br i1 %.not, label %bb.h, label %bb.i
 
@@ -212,7 +214,7 @@ bb.h:                                             ; preds = %bb.a, %_Z10tMPI_Get
   br label %bb.i
 
 bb.i:                                             ; preds = %_Z10tMPI_Get_NPiPPPcPKcS_.exit, %bb.h
-  %.1 = phi i32 [ 0, %bb.h ], [ 1, %_Z10tMPI_Get_NPiPPPcPKcS_.exit ]
+  %.1 = phi i32 [ 0, %bb.h ], [ %4, %_Z10tMPI_Get_NPiPPPcPKcS_.exit ]
   ret i32 %.1
 }
 

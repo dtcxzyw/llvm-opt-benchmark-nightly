@@ -205,8 +205,8 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.bc = load i32, ptr %i.az, align 8, !tbaa !161
-  %.fr349 = freeze i32 %i.bc
-  %i.bd = icmp sgt i32 %.fr349, 0                 ; 7 uses
+  %.fr349 = freeze i32 %i.bc                      ; 3 uses
+  %i.bd = icmp sgt i32 %.fr349, 0                 ; 5 uses
   %i.be = load i32, ptr %i.ag, align 8, !tbaa !69
   switch i32 %i.be, label %bb.bz [
     i32 1, label %bb.u
@@ -297,7 +297,7 @@ _ZN7obj_refIN10polynomial10polynomialENS0_7managerEED2Ev.exit160: ; preds = %bb.
           to label %bb.ac unwind label %bb.ag
 
 bb.ac:                                            ; preds = %_ZN7obj_refIN10polynomial10polynomialENS0_7managerEED2Ev.exit160
-  %10 = xor i1 %i.bd, true
+  %10 = icmp slt i32 %.fr349, 1
   br i1 %i.bw, label %bb.ad, label %bb.cb
 
 bb.ad:                                            ; preds = %bb.ac
@@ -389,7 +389,8 @@ bb.ao:                                            ; preds = %bb.an
 
 _ZN7obj_refIN10polynomial10polynomialENS0_7managerEED2Ev.exit178: ; preds = %bb.an, %_ZngRK7obj_refIN10polynomial10polynomialENS0_7managerEE.exit173
   store ptr %i.cm, ptr %4, align 8, !tbaa !96
-  br i1 %i.bd, label %.thread325, label %.thread
+  %11 = icmp slt i32 %.fr349, 1
+  br i1 %11, label %.thread, label %.thread325
 
 bb.ap:                                            ; preds = %bb.aj, %bb.ai
   %i.cr = landingpad { ptr, i32 }

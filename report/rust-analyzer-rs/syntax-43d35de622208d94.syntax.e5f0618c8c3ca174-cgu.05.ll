@@ -204,6 +204,7 @@ bb.a:
   %.val2.i = load i64, ptr %i.b, align 8, !alias.scope !288, !noalias !285 ; 2 uses
   %.not.i.i.i.i = icmp ne ptr %.val.i, null
   %spec.select.i.i.i = zext i1 %.not.i.i.i.i to i64 ; 2 uses
+  %not..not.i.i.i.i = icmp eq ptr %.val.i, null
   %i.c = tail call i64 @llvm.usub.sat.i64(i64 %spec.select.i.i.i, i64 %.val2.i) ; 3 uses
   %.not.not.i = icmp ult i64 %.val2.i, %spec.select.i.i.i
   br i1 %.not.not.i, label %bb.c, label %_RNvXs2_NtNtNtCshzWfHUSfYae_4core4iter6traits7collectTINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes11PathSegmentEIBQ_INtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtB1u_11syntax_node12RustLanguageEEEINtB5_6ExtendTB1m_B2r_EE14extend_reserveB1u_.exit.i
@@ -241,8 +242,7 @@ bb.d:                                             ; preds = %_RNvXsj_NtCsbSS6DM8
 bb.e:                                             ; preds = %bb.d, %bb.c
   %lpad.thr_comm.i = landingpad { ptr, i32 }
           cleanup                                 ; 3 uses
-  %2 = icmp eq ptr %.val.i, null
-  br i1 %2, label %.body, label %bb.f
+  br i1 %not..not.i.i.i.i, label %.body, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.j = getelementptr inbounds nuw i8, ptr %.val.i, i64 48 ; 2 uses
@@ -375,9 +375,10 @@ bb.a:
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 2 uses
   store i64 0, ptr %.sroa.3.0..sroa_idx.i, align 8, !alias.scope !310
   tail call void @llvm.experimental.noalias.scope.decl(metadata !313)
-  %i.b = icmp ne ptr %1, null                     ; 2 uses
+  %i.b = icmp ne ptr %1, null
   %i.c = zext i1 %i.b to i64                      ; 3 uses
-  br i1 %i.b, label %bb.c, label %_RNvXs2_NtNtNtCshzWfHUSfYae_4core4iter6traits7collectTINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeEIBQ_INtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtB1u_11syntax_node12RustLanguageEEEINtB5_6ExtendTB1m_B2m_EE14extend_reserveB1u_.exit.i
+  %.not.i = icmp eq ptr %1, null
+  br i1 %.not.i, label %_RNvXs2_NtNtNtCshzWfHUSfYae_4core4iter6traits7collectTINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeEIBQ_INtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtB1u_11syntax_node12RustLanguageEEEINtB5_6ExtendTB1m_B2m_EE14extend_reserveB1u_.exit.i, label %bb.c
 
 bb.b:                                             ; preds = %_RNvXs2_NtNtNtCshzWfHUSfYae_4core4iter6traits7collectTINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7UseTreeEIBQ_INtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtB1u_11syntax_node12RustLanguageEEEINtB5_6ExtendTB1m_B2m_EE14extend_reserveB1u_.exit.i
   %i.d = landingpad { ptr, i32 }

@@ -205,7 +205,7 @@ define hidden noundef double @_ZN6cvtest9getMinValEi(i32 noundef %0) local_unnam
 bb.a:
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %2 = alloca %"class.std::allocator", align 1    ; 3 uses
-  %i.a = and i32 %0, 31                           ; 4 uses
+  %i.a = and i32 %0, 31                           ; 5 uses
   %i.b = icmp samesign ult i32 %i.a, 13
   %switch.maskindex = trunc nuw nsw i32 %i.a to i16
   %switch.shifted = lshr i16 7679, %switch.maskindex
@@ -214,9 +214,10 @@ bb.a:
   br i1 %or.cond, label %switch.lookup, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = icmp ne i32 %i.a, 9                      ; 2 uses
-  %3 = uitofp nneg i1 %i.c to double
-  br i1 %i.c, label %bb.c, label %.thread
+  %i.c = icmp ne i32 %i.a, 9
+  %3 = sitofp i1 %i.c to double
+  %4 = icmp eq i32 %i.a, 9
+  br i1 %4, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #30

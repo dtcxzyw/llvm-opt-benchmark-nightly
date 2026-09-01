@@ -204,24 +204,25 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   br i1 %i.ao, label %bb.c, label %.loopexit104, !llvm.loop !54
 
 .loopexit104:                                     ; preds = %bb.c, %bb.b
-  %i.ap = phi i32 [ %i.e, %bb.b ], [ %i.am, %bb.c ]
+  %i.ap = phi i32 [ %i.e, %bb.b ], [ %i.am, %bb.c ] ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 3 uses
   %i.ar = load ptr, ptr %i.aq, align 8
   %.not.i47 = icmp ne ptr %i.ar, null
-  %i.as = icmp ne i32 %i.ap, 0                    ; 2 uses
+  %i.as = icmp ne i32 %i.ap, 0
   %i.at = select i1 %.not.i47, i1 %i.as, i1 false
   br i1 %i.at, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.loopexit104
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.av = load ptr, ptr %i.au, align 8
-  %.not.i48 = icmp ne ptr %i.av, null
+  %.not.i48 = icmp eq ptr %i.av, null
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.ax = load ptr, ptr %i.aw, align 8
-  %.not1.i = icmp ne ptr %i.ax, null
-  %or.cond.i.not101 = select i1 %.not.i48, i1 %.not1.i, i1 false
-  %brmerge.not = select i1 %or.cond.i.not101, i1 %i.as, i1 false
-  br i1 %brmerge.not, label %bb.e, label %_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.thread
+  %.not1.i = icmp eq ptr %i.ax, null
+  %or.cond.i.not101 = select i1 %.not.i48, i1 true, i1 %.not1.i
+  %.not = icmp eq i32 %i.ap, 0
+  %brmerge.not = select i1 %or.cond.i.not101, i1 true, i1 %.not
+  br i1 %brmerge.not, label %_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.loopexit104
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19

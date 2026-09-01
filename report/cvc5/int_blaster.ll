@@ -204,9 +204,10 @@ bb.o:                                             ; preds = %bb.n
           to label %bb.p unwind label %bb.y
 
 bb.p:                                             ; preds = %bb.o
-  %i.bp = load ptr, ptr %4, align 8, !tbaa !122   ; 4 uses
-  %i.bq = load ptr, ptr %3, align 8, !tbaa !122
-  %.not36.a = icmp ne ptr %i.bp, %i.bq            ; 2 uses
+  %i.bp = load ptr, ptr %4, align 8, !tbaa !122   ; 5 uses
+  %i.bq = load ptr, ptr %3, align 8, !tbaa !122   ; 2 uses
+  %.not36 = icmp ne ptr %i.bp, %i.bq
+  %.not36.a = icmp ne ptr %i.bp, %i.bq
   %..017 = select i1 %.not36.a, i1 true, i1 %.01744
   %i.br = load i64, ptr %i.bp, align 8            ; 3 uses
   %i.bs = and i64 %i.br, 1152920405095219200
@@ -291,7 +292,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 _ZNK4cvc57context9CDHashMapINS_8internal12NodeTemplateILb1EEES4_St4hashIS4_EE4findERKS4_.exit.thread: ; preds = %.lr.ph.i.i.i.i.i, %bb.g, %.noexc, %..loopexit_crit_edge21.i.i.i.i.i, %_ZN4cvc58internal8TypeNodeD2Ev.exit27, %_ZNK4cvc57context9CDHashMapINS_8internal12NodeTemplateILb1EEES4_St4hashIS4_EE4findERKS4_.exit
   %i.cn = phi ptr [ %.pre, %_ZN4cvc58internal8TypeNodeD2Ev.exit27 ], [ %i.bk, %_ZNK4cvc57context9CDHashMapINS_8internal12NodeTemplateILb1EEES4_St4hashIS4_EE4findERKS4_.exit ], [ %.pre52, %..loopexit_crit_edge21.i.i.i.i.i ], [ %i.aj, %bb.g ], [ %.pre52, %.noexc ], [ %.pre52, %.lr.ph.i.i.i.i.i ] ; 3 uses
   %.320 = phi i1 [ %..017, %_ZN4cvc58internal8TypeNodeD2Ev.exit27 ], [ %.01744, %_ZNK4cvc57context9CDHashMapINS_8internal12NodeTemplateILb1EEES4_St4hashIS4_EE4findERKS4_.exit ], [ %.01744, %..loopexit_crit_edge21.i.i.i.i.i ], [ %.01744, %bb.g ], [ %.01744, %.noexc ], [ %.01744, %.lr.ph.i.i.i.i.i ] ; 2 uses
-  %.116 = phi i1 [ %.not36.a, %_ZN4cvc58internal8TypeNodeD2Ev.exit27 ], [ false, %_ZNK4cvc57context9CDHashMapINS_8internal12NodeTemplateILb1EEES4_St4hashIS4_EE4findERKS4_.exit ], [ false, %..loopexit_crit_edge21.i.i.i.i.i ], [ false, %bb.g ], [ false, %.noexc ], [ false, %.lr.ph.i.i.i.i.i ]
+  %.116 = phi i1 [ %.not36, %_ZN4cvc58internal8TypeNodeD2Ev.exit27 ], [ false, %_ZNK4cvc57context9CDHashMapINS_8internal12NodeTemplateILb1EEES4_St4hashIS4_EE4findERKS4_.exit ], [ false, %..loopexit_crit_edge21.i.i.i.i.i ], [ false, %bb.g ], [ false, %.noexc ], [ false, %.lr.ph.i.i.i.i.i ]
   %i.co = load i64, ptr %i.cn, align 8            ; 3 uses
   %i.cp = and i64 %i.co, 1152920405095219200
   %.not.i.i28 = icmp eq i64 %i.cp, 1152920405095219200

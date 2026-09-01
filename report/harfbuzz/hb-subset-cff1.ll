@@ -205,8 +205,8 @@ _ZL9hb_memcpyPvPKvm.exit.i.i:                     ; preds = %bb.j
   br label %bb.l
 
 bb.l:                                             ; preds = %_ZL9hb_memcpyPvPKvm.exit.i.i, %bb.k, %.lr.ph.i18.i
-  %.136.ph.i.i = phi ptr [ %.03580.i.i, %.lr.ph.i18.i ], [ %i.cg, %_ZL9hb_memcpyPvPKvm.exit.i.i ], [ %i.ce, %bb.k ]
-  %.1.ph.i.i = phi i32 [ %.03481.i.i, %.lr.ph.i18.i ], [ %i.bz, %_ZL9hb_memcpyPvPKvm.exit.i.i ], [ %i.bz, %bb.k ]
+  %.136.ph.i.i = phi ptr [ %i.cg, %_ZL9hb_memcpyPvPKvm.exit.i.i ], [ %i.ce, %bb.k ], [ %.03580.i.i, %.lr.ph.i18.i ]
+  %.1.ph.i.i = phi i32 [ %i.bz, %_ZL9hb_memcpyPvPKvm.exit.i.i ], [ %i.bz, %bb.k ], [ %.03481.i.i, %.lr.ph.i18.i ]
   %i.ch = getelementptr inbounds nuw i8, ptr %.082.i.i, i64 16 ; 2 uses
   %.not44.i.i = icmp eq ptr %i.ch, %i.bu
   br i1 %.not44.i.i, label %.loopexit277, label %.lr.ph.i18.i
@@ -503,8 +503,8 @@ _ZL9hb_memcpyPvPKvm.exit.i:                       ; preds = %bb.ab
   br label %bb.ad
 
 bb.ad:                                            ; preds = %_ZL9hb_memcpyPvPKvm.exit.i, %bb.ac, %.lr.ph.i
-  %.136.ph.i = phi ptr [ %.03580.i, %.lr.ph.i ], [ %i.gl, %_ZL9hb_memcpyPvPKvm.exit.i ], [ %i.gj, %bb.ac ]
-  %.1.ph.i = phi i32 [ %.03481.i, %.lr.ph.i ], [ %i.ge, %_ZL9hb_memcpyPvPKvm.exit.i ], [ %i.ge, %bb.ac ]
+  %.136.ph.i = phi ptr [ %i.gl, %_ZL9hb_memcpyPvPKvm.exit.i ], [ %i.gj, %bb.ac ], [ %.03580.i, %.lr.ph.i ]
+  %.1.ph.i = phi i32 [ %i.ge, %_ZL9hb_memcpyPvPKvm.exit.i ], [ %i.ge, %bb.ac ], [ %.03481.i, %.lr.ph.i ]
   %i.gm = getelementptr inbounds nuw i8, ptr %.082.i, i64 16 ; 2 uses
   %.not44.i = icmp eq ptr %i.gm, %i.fz
   br i1 %.not44.i, label %.thread, label %.lr.ph.i
@@ -907,8 +907,8 @@ _ZL9hb_memcpyPvPKvm.exit.i201:                    ; preds = %bb.bq
   br label %bb.bs
 
 bb.bs:                                            ; preds = %_ZL9hb_memcpyPvPKvm.exit.i201, %bb.br, %.lr.ph.i196
-  %.136.ph.i202 = phi ptr [ %.03580.i199, %.lr.ph.i196 ], [ %i.oc, %_ZL9hb_memcpyPvPKvm.exit.i201 ], [ %i.oa, %bb.br ]
-  %.1.ph.i203 = phi i32 [ %.03481.i198, %.lr.ph.i196 ], [ %i.nv, %_ZL9hb_memcpyPvPKvm.exit.i201 ], [ %i.nv, %bb.br ]
+  %.136.ph.i202 = phi ptr [ %i.oc, %_ZL9hb_memcpyPvPKvm.exit.i201 ], [ %i.oa, %bb.br ], [ %.03580.i199, %.lr.ph.i196 ]
+  %.1.ph.i203 = phi i32 [ %i.nv, %_ZL9hb_memcpyPvPKvm.exit.i201 ], [ %i.nv, %bb.br ], [ %.03481.i198, %.lr.ph.i196 ]
   %i.od = getelementptr inbounds nuw i8, ptr %.082.i197, i64 16 ; 2 uses
   %.not44.i204 = icmp eq ptr %i.od, %i.nq
   br i1 %.not44.i204, label %.loopexit, label %.lr.ph.i196
@@ -1311,17 +1311,18 @@ bb.r:                                             ; preds = %bb.q
 _ZN11hb_vector_tIPN22hb_serialize_context_t8object_tELb0EE4pushIJRS2_EEEPS2_DpOT_.exit: ; preds = %bb.r, %.critedge.i
   %i.cy = load i32, ptr %i.ck, align 8, !tbaa !185
   %i.cz = icmp sgt i32 %i.cy, -1
-  %i.da = load i32, ptr %i.e, align 4, !tbaa !54
-  %.not.i.i.i = icmp ne i32 %i.da, 0              ; 2 uses
+  %i.da = load i32, ptr %i.e, align 4, !tbaa !54  ; 2 uses
+  %.not.i.i.i = icmp ne i32 %i.da, 0
   %brmerge.i.i = or i1 %i.cz, %.not.i.i.i
-  br i1 %brmerge.i.i, label %_ZN22hb_serialize_context_t15propagate_errorIR11hb_vector_tIPNS_8object_tELb0EEEEbOT_.exit, label %_ZN22hb_serialize_context_t15propagate_errorIR11hb_vector_tIPNS_8object_tELb0EEEEbOT_.exit.thread, !prof !79
+  br i1 %brmerge.i.i, label %_ZN22hb_serialize_context_t15propagate_errorIR11hb_vector_tIPNS_8object_tELb0EEEEbOT_.exit, label %_ZN22hb_serialize_context_t15propagate_errorIR11hb_vector_tIPNS_8object_tELb0EEEEbOT_.exit.thread
 
 _ZN22hb_serialize_context_t15propagate_errorIR11hb_vector_tIPNS_8object_tELb0EEEEbOT_.exit.thread: ; preds = %_ZN11hb_vector_tIPN22hb_serialize_context_t8object_tELb0EE4pushIJRS2_EEEPS2_DpOT_.exit
   store i32 1, ptr %i.e, align 4, !tbaa !54
   br label %bb.s
 
 _ZN22hb_serialize_context_t15propagate_errorIR11hb_vector_tIPNS_8object_tELb0EEEEbOT_.exit: ; preds = %_ZN11hb_vector_tIPN22hb_serialize_context_t8object_tELb0EE4pushIJRS2_EEEPS2_DpOT_.exit
-  br i1 %.not.i.i.i, label %bb.s, label %bb.t, !prof !78
+  %4 = icmp eq i32 %i.da, 0
+  br i1 %4, label %bb.t, label %bb.s, !prof !162
 
 bb.s:                                             ; preds = %_ZN22hb_serialize_context_t15propagate_errorIR11hb_vector_tIPNS_8object_tELb0EEEEbOT_.exit.thread, %_ZN22hb_serialize_context_t15propagate_errorIR11hb_vector_tIPNS_8object_tELb0EEEEbOT_.exit
   %i.db = load ptr, ptr %i.a, align 8, !tbaa !168
@@ -1724,8 +1725,8 @@ _ZL9hb_memcpyPvPKvm.exit.i:                       ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %_ZL9hb_memcpyPvPKvm.exit.i, %bb.n, %.lr.ph.i
-  %.136.ph.i = phi ptr [ %.03580.i, %.lr.ph.i ], [ %i.bl, %_ZL9hb_memcpyPvPKvm.exit.i ], [ %i.bj, %bb.n ]
-  %.1.ph.i = phi i32 [ %.03481.i, %.lr.ph.i ], [ %i.bf, %_ZL9hb_memcpyPvPKvm.exit.i ], [ %i.bf, %bb.n ]
+  %.136.ph.i = phi ptr [ %i.bl, %_ZL9hb_memcpyPvPKvm.exit.i ], [ %i.bj, %bb.n ], [ %.03580.i, %.lr.ph.i ]
+  %.1.ph.i = phi i32 [ %i.bf, %_ZL9hb_memcpyPvPKvm.exit.i ], [ %i.bf, %bb.n ], [ %.03481.i, %.lr.ph.i ]
   %i.bm = getelementptr inbounds nuw i8, ptr %.082.i, i64 16 ; 2 uses
   %.not44.i = icmp eq ptr %i.bm, %i.ba
   br i1 %.not44.i, label %_ZN2OT8CFFIndexINS_7NumTypeILb1EtLj2EEEE9serializeI11hb_vector_tI10hb_array_tIKhELb0EETnPN12hb_enable_ifIXsr14hb_is_iterableIT_EE5valueEvE4typeELPv0EEEbP22hb_serialize_context_tRKSB_PKjj.exit, label %.lr.ph.i
@@ -2128,15 +2129,19 @@ bb.m:                                             ; preds = %bb.l
 .lr.ph.i:                                         ; preds = %bb.m, %.lr.ph.i
   %.01117.i = phi ptr [ %i.cn, %.lr.ph.i ], [ %i.cg, %bb.m ] ; 2 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %.01117.i, i64 8
-  %i.cm = load i32, ptr %i.cl, align 8, !tbaa !125
-  %.not14.i.not = icmp ne i32 %i.cm, 16           ; 2 uses
+  %i.cm = load i32, ptr %i.cl, align 8, !tbaa !125 ; 2 uses
+  %.not14.i.not.not = icmp eq i32 %i.cm, 16
   %i.cn = getelementptr inbounds nuw i8, ptr %.01117.i, i64 24 ; 2 uses
-  %.not.not.i = icmp ne ptr %i.cn, %i.ck
-  %or.cond.not = select i1 %.not14.i.not, i1 %.not.not.i, i1 false
-  br i1 %or.cond.not, label %.lr.ph.i, label %_ZNK3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6has_opEj.exit
+  %.not.not.i = icmp eq ptr %i.cn, %i.ck
+  %or.cond.not = select i1 %.not14.i.not.not, i1 true, i1 %.not.not.i
+  br i1 %or.cond.not, label %_ZNK3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6has_opEj.exit.loopexit, label %.lr.ph.i
 
-_ZNK3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6has_opEj.exit: ; preds = %.lr.ph.i, %bb.m, %bb.l
-  %i.co = phi i1 [ false, %bb.l ], [ true, %bb.m ], [ %.not14.i.not, %.lr.ph.i ] ; 2 uses
+_ZNK3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6has_opEj.exit.loopexit: ; preds = %.lr.ph.i
+  %.not14.i.not = icmp ne i32 %i.cm, 16
+  br label %_ZNK3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6has_opEj.exit
+
+_ZNK3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6has_opEj.exit: ; preds = %_ZNK3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6has_opEj.exit.loopexit, %bb.m, %bb.l
+  %i.co = phi i1 [ false, %bb.l ], [ true, %bb.m ], [ %.not14.i.not, %_ZNK3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6has_opEj.exit.loopexit ] ; 2 uses
   br i1 %i.bn, label %bb.n, label %_ZNK3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6has_opEj.exit90
 
 bb.n:                                             ; preds = %_ZNK3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6has_opEj.exit

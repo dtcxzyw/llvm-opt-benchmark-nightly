@@ -205,9 +205,9 @@ _RNvMs0_NtNtCsdaEETE4DqmE_13typst_library13introspection12introspectorINtB5_19El
   store ptr %.sroa.07.0.copyload, ptr %i.p, align 8, !alias.scope !14089
   %.sroa.4444.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4444.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %i.aq, i64 16, i1 false)
-  %.not.i = icmp eq ptr %.sroa.07.0.copyload, null
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !14086
-  br i1 %.not.i, label %.thread613, label %bb.dh
+  %.not.i.i246 = icmp eq ptr %.sroa.07.0.copyload, null
+  br i1 %.not.i.i246, label %.thread613, label %bb.dh
 
 .thread613:                                       ; preds = %_RNvMs0_NtNtCsdaEETE4DqmE_13typst_library13introspection12introspectorINtB5_19ElementIntrospectorNtNtB7_8position12HtmlPositionE10get_by_locCs9gmjTwvRRSu_10typst_html.exit.thread.thread, %_RNvMs0_NtNtCsdaEETE4DqmE_13typst_library13introspection12introspectorINtB5_19ElementIntrospectorNtNtB7_8position12HtmlPositionE10get_by_locCs9gmjTwvRRSu_10typst_html.exit.thread
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !14093
@@ -610,7 +610,7 @@ bb.bm:                                            ; preds = %_RNvNtCs9gmjTwvRRSu
           to label %.noexc92.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i, !noalias !16499
 
 .noexc92.i:                                       ; preds = %.noexc91.i
-  %i.nv = extractvalue { ptr, i64 } %i.nu, 1      ; 19 uses
+  %i.nv = extractvalue { ptr, i64 } %i.nu, 1      ; 21 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !16503
   invoke void @_RNvMsu_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcher3new(ptr noalias nofree noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.m, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.6.0.copyload.i, i64 noundef %.sroa.9.0.copyload.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1460, i64 noundef 2)
           to label %.noexc93.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i, !noalias !16499
@@ -631,7 +631,8 @@ bb.bm:                                            ; preds = %_RNvNtCs9gmjTwvRRSu
   %i.oa = icmp ugt i64 %i.nv, 15
   %i.ob = and i64 %i.nv, 15
   %i.oc = lshr i64 %i.nv, 4
-  %i.od = icmp eq i64 %i.ob, 0
+  %2 = icmp eq i64 %i.ob, 0
+  %i.od = icmp eq i64 %i.nv, 0
   %.not.i27.i.i.i.i.i619 = icmp eq i64 %i.nv, 0
   br label %bb.bn
 
@@ -657,14 +658,14 @@ bb.bp:                                            ; preds = %bb.bo
   br i1 %i.ok, label %bb.bq, label %_RNvNtNtCs3oUPovFnLWP_4core3str6traits11check_range.exit.thread3.i.i.i.i.i.invoke.i
 
 bb.bq:                                            ; preds = %bb.bp, %.split.i.i.i.i.i.i, %bb.bn
-  %i.ol = sub nuw i64 %.sroa.9.0.copyload.i, %i.of ; 7 uses
+  %i.ol = sub nuw i64 %.sroa.9.0.copyload.i, %i.of ; 8 uses
   %i.om = getelementptr inbounds nuw i8, ptr %.sroa.6.0.copyload.i, i64 %i.of ; 8 uses
   %.not19.i.i.i.i.i = icmp ult i64 %i.ol, %i.nv
   br i1 %.not19.i.i.i.i.i, label %.loopexit.i.i.i, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
   %.not.i23.i.i.i.i.i = icmp ult i64 %i.nv, %i.ol ; 2 uses
-  %or.cond.i.i.i.i.i = and i1 %i.nz, %.not.i23.i.i.i.i.i ; 2 uses
+  %or.cond.i.i.i.i.i = and i1 %i.nz, %.not.i23.i.i.i.i.i
   br i1 %or.cond.i.i.i.i.i, label %bb.bs, label %.split.i24.i.i.i.i.i
 
 bb.bs:                                            ; preds = %bb.br
@@ -726,7 +727,7 @@ bb.bw:                                            ; preds = %.lr.ph.i.i.i.i.i.i
   br i1 %exitcond.not.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %bb.bw
-  br i1 %i.od, label %.loopexit.i.i.i.i.i, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCs9gmjTwvRRSu_10typst_html.exit24.i.i.i.i.i.i
+  br i1 %2, label %.loopexit.i.i.i.i.i, label %_RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCs9gmjTwvRRSu_10typst_html.exit24.i.i.i.i.i.i
 
 _RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCs9gmjTwvRRSu_10typst_html.exit24.i.i.i.i.i.i: ; preds = %._crit_edge.i.i.i.i.i.i
   %i.pg = getelementptr i8, ptr %i.om, i64 %i.nv
@@ -772,7 +773,9 @@ _RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCs9gmjTwvRRSu_10typst_html.exit24.i.i
   br i1 %i.ql, label %bb.bw, label %.loopexit.i.i.i
 
 .loopexit.i.i.i.i.i:                              ; preds = %bb.bv, %bb.bu, %._crit_edge.i.i.i.i.i.i
-  br i1 %or.cond.i.i.i.i.i, label %bb.bx, label %.split.i30.i.i.i.i.i
+  %.not.i23.i.i.i.not.i.i = icmp uge i64 %i.nv, %i.ol
+  %brmerge.i.i = or i1 %i.od, %.not.i23.i.i.i.not.i.i
+  br i1 %brmerge.i.i, label %.split.i30.i.i.i.i.i, label %bb.bx
 
 .loopexit.i.i.i.thread.i.i:                       ; preds = %_RNvMNtCs3oUPovFnLWP_4core5sliceSh8split_atCs9gmjTwvRRSu_10typst_html.exit24.i.i.i.i.i.i
   br i1 %.not.i23.i.i.i.i.i, label %bb.bx, label %.split.i30.i.i.i.i.i
@@ -1175,10 +1178,10 @@ bb.e:                                             ; preds = %bb.d
   %i.bd = load i64, ptr %i.bc, align 8, !alias.scope !21364, !noalias !21365, !noundef !7 ; 3 uses
   call void @_RNvXNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash128NtB2_12StableHasherNtNtCs3oUPovFnLWP_4core4hash6Hasher11write_usize(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.y, i64 noundef %i.bd), !noalias !21368
   %i.be = load ptr, ptr %i.bb, align 8, !alias.scope !21364, !noalias !21365, !noundef !7 ; 2 uses
-  %.not.i.i.i.i.i.i.i.i = icmp ne ptr %i.be, null
-  %3 = icmp ne i64 %i.bd, 0
-  %.not63.i.i.i.i.i.i.i.i = and i1 %3, %.not.i.i.i.i.i.i.i.i
-  br i1 %.not63.i.i.i.i.i.i.i.i, label %.lr.ph.preheader.i.i.i.i.i.i.i.i, label %_RINvXs1r_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB7_8BTreeMapNtNtBd_6string6StringINtNtBd_3vec3VecjEENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash12812StableHasherECs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i
+  %3 = icmp eq i64 %i.bd, 0
+  %not..not.i.i.i.i.i.i.i.i = icmp eq ptr %i.be, null
+  %4 = or i1 %3, %not..not.i.i.i.i.i.i.i.i
+  br i1 %4, label %_RINvXs1r_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB7_8BTreeMapNtNtBd_6string6StringINtNtBd_3vec3VecjEENtNtCs3oUPovFnLWP_4core4hash4Hash4hashNtNvNtCs6xpQEr8gLsQ_11typst_utils4hash7hash12812StableHasherECs9gmjTwvRRSu_10typst_html.exit.i.i.i.i.i.i.i, label %.lr.ph.preheader.i.i.i.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i.i.i.i:                 ; preds = %bb.e
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ax, i64 48

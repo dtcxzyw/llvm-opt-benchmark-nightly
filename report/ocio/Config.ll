@@ -205,17 +205,17 @@ bb.g:                                             ; preds = %_ZSt9use_facetISt5c
   %i.y = load ptr, ptr %i.p, align 8, !tbaa !19
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 32
   %i.aa = load ptr, ptr %i.z, align 8
-  %i.ab = call noundef signext i8 %i.aa(ptr noundef nonnull align 8 dereferenceable(570) %i.p, i8 noundef signext %i.w), !inline_history !1769
+  %i.ab = call noundef signext i8 %i.aa(ptr noundef nonnull align 8 dereferenceable(570) %i.p, i8 noundef signext %i.w), !inline_history !1769 ; 2 uses
   %i.ac = load ptr, ptr %i.p, align 8, !tbaa !19
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 32
   %i.ae = load ptr, ptr %i.ad, align 8
-  %i.af = call noundef signext i8 %i.ae(ptr noundef nonnull align 8 dereferenceable(570) %i.p, i8 noundef signext %i.x), !inline_history !1769
-  %6 = icmp eq i8 %i.ab, %i.af                    ; 2 uses
+  %i.af = call noundef signext i8 %i.ae(ptr noundef nonnull align 8 dereferenceable(570) %i.p, i8 noundef signext %i.x), !inline_history !1769 ; 2 uses
+  %.not = icmp ne i8 %i.ab, %i.af
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.05.010.i.i, i64 1 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.02.09.i.i, i64 1
-  %.not.i.i = icmp ne ptr %i.ag, %2
-  %or.cond.not = select i1 %6, i1 %.not.i.i, i1 false
-  br i1 %or.cond.not, label %.lr.ph.i.i, label %_ZSt8__equal4IN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESA_EbT_SB_T0_SC_.exit, !llvm.loop !1770
+  %.not.i.i = icmp eq ptr %i.ag, %2
+  %or.cond.not = select i1 %.not, i1 true, i1 %.not.i.i
+  br i1 %or.cond.not, label %_ZSt8__equal4IN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESA_EbT_SB_T0_SC_.exit.loopexit, label %.lr.ph.i.i, !llvm.loop !1770
 
 bb.h:                                             ; preds = %bb.f
   %i.ai = landingpad { ptr, i32 }
@@ -224,8 +224,12 @@ bb.h:                                             ; preds = %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #31
   resume { ptr, i32 } %i.ai
 
-_ZSt8__equal4IN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESA_EbT_SB_T0_SC_.exit: ; preds = %.lr.ph.i.i, %bb.g, %_ZSt9use_facetISt5ctypeIcEERKT_RKSt6locale.exit, %bb.d, %bb.c, %bb.b
-  %.0 = phi i1 [ true, %bb.c ], [ false, %bb.b ], [ %.not9.i.i.i.i.i, %bb.d ], [ false, %_ZSt9use_facetISt5ctypeIcEERKT_RKSt6locale.exit ], [ true, %bb.g ], [ %6, %.lr.ph.i.i ]
+_ZSt8__equal4IN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESA_EbT_SB_T0_SC_.exit.loopexit: ; preds = %.lr.ph.i.i
+  %6 = icmp eq i8 %i.ab, %i.af
+  br label %_ZSt8__equal4IN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESA_EbT_SB_T0_SC_.exit
+
+_ZSt8__equal4IN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESA_EbT_SB_T0_SC_.exit: ; preds = %_ZSt8__equal4IN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESA_EbT_SB_T0_SC_.exit.loopexit, %bb.g, %_ZSt9use_facetISt5ctypeIcEERKT_RKSt6locale.exit, %bb.d, %bb.c, %bb.b
+  %.0 = phi i1 [ true, %bb.c ], [ false, %bb.b ], [ %.not9.i.i.i.i.i, %bb.d ], [ false, %_ZSt9use_facetISt5ctypeIcEERKT_RKSt6locale.exit ], [ true, %bb.g ], [ %6, %_ZSt8__equal4IN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESA_EbT_SB_T0_SC_.exit.loopexit ]
   ret i1 %.0
 }
 

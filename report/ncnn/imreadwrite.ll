@@ -205,7 +205,7 @@ bb.aw:                                            ; preds = %.preheader415, %.lo
   %.0217 = phi i32 [ %.2219, %.loopexit ], [ 1, %.preheader415 ] ; 10 uses
   %.0211 = phi i32 [ %.2213, %.loopexit ], [ 0, %.preheader415 ] ; 19 uses
   %.0207 = phi i32 [ %.2209, %.loopexit ], [ 0, %.preheader415 ] ; 20 uses
-  %.0204 = phi i32 [ %.1205, %.loopexit ], [ 0, %.preheader415 ] ; 17 uses
+  %.0204 = phi i32 [ %.1205, %.loopexit ], [ 0, %.preheader415 ] ; 18 uses
   %i.gp = tail call fastcc noundef i32 @_ZL13stbi__get16beP13stbi__context(ptr noundef %i.d)
   %i.gq = shl nuw i32 %i.gp, 16                   ; 4 uses
   %i.gr = tail call fastcc noundef i32 @_ZL13stbi__get16beP13stbi__context(ptr noundef %i.d) ; 4 uses
@@ -608,7 +608,7 @@ bb.fe:                                            ; preds = %bb.fc
   %i.rp = mul i32 %i.ro, %i.rn
   %i.rq = mul i32 %i.rp, %i.rm
   %i.rr = add i32 %i.rq, %i.rn                    ; 2 uses
-  %i.rs = icmp ne i32 %.0204, 0                   ; 2 uses
+  %i.rs = icmp ne i32 %.0204, 0
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #35
   %i.rt = sext i32 %i.rr to i64
   %i.ru = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -2147483648, 4294967296) %i.rt) #36 ; 2 uses
@@ -616,7 +616,7 @@ bb.fe:                                            ; preds = %bb.fc
   br i1 %i.rv, label %stbi_zlib_decode_malloc_guesssize_headerflag.exit.thread, label %bb.ff
 
 bb.ff:                                            ; preds = %bb.fe
-  %4 = xor i1 %i.rs, true
+  %4 = icmp eq i32 %.0204, 0
   %i.rw = zext i1 %4 to i32
   store ptr %i.rg, ptr %3, align 8, !tbaa !208
   %i.rx = sext i32 %.0230 to i64
@@ -1019,7 +1019,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 ; Function Attrs: mustprogress nofree nounwind memory(readwrite, target_mem: none) uwtable
 define internal fastcc noundef range(i32 0, 2) i32 @_ZL26stbi__create_png_image_rawP9stbi__pngPhjijjii(ptr nofree noundef nonnull captures(none) initializes((24, 32)) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 noundef range(i32 0, 256) %7) unnamed_addr #15 {
 bb.a:
-  %i.a = icmp eq i32 %6, 16                       ; 5 uses
+  %i.a = icmp eq i32 %6, 16                       ; 3 uses
   %i.b = load ptr, ptr %0, align 8, !tbaa !46
   %i.c = mul i32 %4, %3                           ; 4 uses
   %i.d = zext i1 %i.a to i32                      ; 3 uses
@@ -1076,8 +1076,8 @@ bb.d:                                             ; preds = %_ZL17stbi__malloc_m
   br i1 %or.cond.not.i.i, label %bb.e, label %.critedge.sink.split
 
 bb.e:                                             ; preds = %bb.d
-  %8 = icmp ne i32 %4, 0                          ; 2 uses
-  br i1 %8, label %_ZL21stbi__mul2sizes_validii.exit.i, label %_ZL21stbi__mul2sizes_validii.exit.thread15.i
+  %8 = icmp eq i32 %4, 0                          ; 2 uses
+  br i1 %8, label %_ZL21stbi__mul2sizes_validii.exit.thread15.i, label %_ZL21stbi__mul2sizes_validii.exit.i
 
 _ZL21stbi__mul2sizes_validii.exit.i:              ; preds = %bb.e
   %i.w = udiv i32 2147483647, %4
@@ -1127,7 +1127,7 @@ _ZL21stbi__mad3sizes_validiiii.exit._crit_edge:   ; preds = %bb.f, %_ZL21stbi__m
   %i.aq = sext i32 %i.g to i64                    ; 2 uses
   %i.ar = sext i32 %3 to i64
   %or.cond = select i1 %i.ai, i1 true, i1 %.not606
-  %.6567743 = add i32 %4, -1                      ; 8 uses
+  %.6567743 = add i32 %4, -1                      ; 9 uses
   %.not608744 = icmp eq i32 %.6567743, 0          ; 7 uses
   %wide.trip.count966 = zext i32 %5 to i64
   %i.as = add i32 %4, -2                          ; 2 uses
@@ -1173,9 +1173,10 @@ _ZL21stbi__mad3sizes_validiiii.exit._crit_edge:   ; preds = %bb.f, %_ZL21stbi__m
   %stride.check1348 = icmp slt i32 %i.h, 0
   %stride.check1302 = icmp slt i32 %i.h, 0
   %stride.check = icmp slt i32 %i.h, 0
-  %brmerge.not = and i1 %8, %i.a
+  %.not1033 = icmp ne i32 %6, 16
+  %brmerge = or i1 %.not1033, %8
   %xtraiter1643 = and i32 %4, 7                   ; 3 uses
-  %i.cc = icmp ult i32 %4, 8
+  %i.cc = icmp ult i32 %.6567743, 7
   %unroll_iter = and i32 %4, -8
   %lcmp.mod1644.not = icmp eq i32 %xtraiter1643, 0
   %lcmp.mod1645 = icmp ne i32 %xtraiter1643, 0
@@ -1578,7 +1579,7 @@ vec.epilog.middle.block1600:                      ; preds = %vec.epilog.vector.b
 
 .loopexit725:                                     ; preds = %._crit_edge742, %._crit_edge750, %._crit_edge759, %._crit_edge769, %._crit_edge779, %._crit_edge789, %._crit_edge798, %.preheader736, %.preheader734, %.preheader732, %.preheader730, %.preheader728, %.preheader726, %.preheader724, %bb.af
   %.9582 = phi ptr [ %.1574, %bb.af ], [ %i.wx, %._crit_edge779 ], [ %i.zu, %._crit_edge769 ], [ %i.acs, %._crit_edge759 ], [ %i.ael, %._crit_edge750 ], [ %i.tt, %._crit_edge798 ], [ %i.vf, %._crit_edge789 ], [ %.1574, %.preheader724 ], [ %.1574, %.preheader726 ], [ %.1574, %.preheader728 ], [ %.1574, %.preheader730 ], [ %.1574, %.preheader732 ], [ %.1574, %.preheader734 ], [ %.1574, %.preheader736 ], [ %i.afx, %._crit_edge742 ] ; 3 uses
-  br i1 %brmerge.not, label %.lr.ph808, label %.loopexit723
+  br i1 %brmerge, label %.loopexit723, label %.lr.ph808
 
 .lr.ph808:                                        ; preds = %.loopexit725
   %i.afz = load ptr, ptr %i.u, align 8, !tbaa !48
@@ -1655,7 +1656,8 @@ bb.ag:                                            ; preds = %bb.ag, %.epil.prehe
   br i1 %i.ahd, label %.lr.ph863, label %bb.aw
 
 ._crit_edge826.thread:                            ; preds = %.preheader738
-  br i1 %i.a, label %bb.ax, label %.critedge
+  %.not1034.not = icmp eq i32 %6, 16
+  br i1 %.not1034.not, label %bb.ax, label %.critedge
 
 .lr.ph863:                                        ; preds = %._crit_edge826
   %i.ahe = zext i32 %i.c to i64

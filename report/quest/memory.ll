@@ -202,15 +202,19 @@ bb.a:
 .lr.ph:                                           ; preds = %.preheader, %.lr.ph
   %.0710 = phi i64 [ %i.e, %.lr.ph ], [ 0, %.preheader ] ; 2 uses
   %i.c = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0710
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !23
-  %.not = icmp ne ptr %i.d, null                  ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !23   ; 2 uses
+  %.not.not = icmp eq ptr %i.d, null
   %i.e = add nuw nsw i64 %.0710, 1                ; 2 uses
-  %exitcond.not = icmp ne i64 %i.e, %1
-  %or.cond.not = select i1 %.not, i1 %exitcond.not, i1 false
-  br i1 %or.cond.not, label %.lr.ph, label %.loopexit, !llvm.loop !26
+  %exitcond.not = icmp eq i64 %i.e, %1
+  %or.cond.not = select i1 %.not.not, i1 true, i1 %exitcond.not
+  br i1 %or.cond.not, label %.loopexit.loopexit, label %.lr.ph, !llvm.loop !26
 
-.loopexit:                                        ; preds = %.lr.ph, %.preheader, %bb.a
-  %.1 = phi i1 [ false, %bb.a ], [ true, %.preheader ], [ %.not, %.lr.ph ]
+.loopexit.loopexit:                               ; preds = %.lr.ph
+  %.not = icmp ne ptr %i.d, null
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %.preheader, %bb.a
+  %.1 = phi i1 [ false, %bb.a ], [ true, %.preheader ], [ %.not, %.loopexit.loopexit ]
   ret i1 %.1
 }
 
@@ -232,12 +236,12 @@ bb.a:
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.lr.ph.split.us
   %.0813.us = phi i64 [ %i.g, %.lr.ph.split.us ], [ 0, %.lr.ph ] ; 2 uses
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0813.us
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !27
-  %.not30 = icmp ne ptr %i.f, null                ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !27   ; 2 uses
+  %.not30.not = icmp eq ptr %i.f, null
   %i.g = add nuw nsw i64 %.0813.us, 1             ; 2 uses
-  %exitcond21.not = icmp ne i64 %i.g, %i.b
-  %or.cond.not = select i1 %.not30, i1 %exitcond21.not, i1 false
-  br i1 %or.cond.not, label %.lr.ph.split.us, label %_Z15mem_isAllocatedPPSt7complexIdEx.exit, !llvm.loop !30
+  %exitcond21.not = icmp eq i64 %i.g, %i.b
+  %or.cond.not = select i1 %.not30.not, i1 true, i1 %exitcond21.not
+  br i1 %or.cond.not, label %_Z15mem_isAllocatedPPSt7complexIdEx.exit.loopexit, label %.lr.ph.split.us, !llvm.loop !30
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %.loopexit
   %.0813 = phi i64 [ %i.m, %.loopexit ], [ 0, %.lr.ph ] ; 2 uses
@@ -263,8 +267,12 @@ bb.b:                                             ; preds = %.lr.ph.i
   %exitcond.not = icmp eq i64 %i.m, %i.b
   br i1 %exitcond.not, label %_Z15mem_isAllocatedPPSt7complexIdEx.exit, label %.lr.ph.split, !llvm.loop !30
 
-_Z15mem_isAllocatedPPSt7complexIdEx.exit:         ; preds = %.lr.ph.split, %.loopexit, %.lr.ph.i, %.lr.ph.split.us, %.preheader, %bb.a
-  %.1 = phi i1 [ false, %bb.a ], [ false, %.lr.ph.i ], [ true, %.preheader ], [ %.not30, %.lr.ph.split.us ], [ %.not.not, %.loopexit ], [ %.not.not, %.lr.ph.split ]
+_Z15mem_isAllocatedPPSt7complexIdEx.exit.loopexit: ; preds = %.lr.ph.split.us
+  %.not30 = icmp ne ptr %i.f, null
+  br label %_Z15mem_isAllocatedPPSt7complexIdEx.exit
+
+_Z15mem_isAllocatedPPSt7complexIdEx.exit:         ; preds = %.lr.ph.split, %.loopexit, %.lr.ph.i, %_Z15mem_isAllocatedPPSt7complexIdEx.exit.loopexit, %.preheader, %bb.a
+  %.1 = phi i1 [ false, %bb.a ], [ %.not30, %_Z15mem_isAllocatedPPSt7complexIdEx.exit.loopexit ], [ true, %.preheader ], [ false, %.lr.ph.i ], [ %.not.not, %.loopexit ], [ %.not.not, %.lr.ph.split ]
   ret i1 %.1
 }
 

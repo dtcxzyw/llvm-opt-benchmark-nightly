@@ -202,7 +202,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 define internal fastcc i32 @__io_read(ptr noundef %0, ptr nofree noundef captures(none) %1, i32 noundef %2) unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
   %3 = alloca %struct.poll_table_struct, align 8  ; 7 uses
-  %i.a = icmp slt i32 %2, 0                       ; 4 uses
+  %i.a = icmp slt i32 %2, 0                       ; 3 uses
   %i.b = getelementptr i8, ptr %0, i64 184        ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8              ; 21 uses
   %i.d = getelementptr i8, ptr %0, i64 72         ; 12 uses
@@ -426,9 +426,10 @@ bb.x:                                             ; preds = %bb.w
   br label %io_rw_import_reg_vec.exit
 
 io_file_can_poll.exit:                            ; preds = %bb.w, %bb.v
+  %.not153 = icmp slt i32 %2, 0
   %i.cc = and i64 %i.bw, 2199023255552
   %.not91 = icmp ne i64 %i.cc, 0
-  %or.cond154.not156 = or i1 %.not91, %i.a
+  %or.cond154.not156 = or i1 %.not153, %.not91
   %i.cd = and i64 %i.bw, 2048
   %.not92 = icmp eq i64 %i.cd, 0
   %or.cond155 = and i1 %or.cond154.not156, %.not92

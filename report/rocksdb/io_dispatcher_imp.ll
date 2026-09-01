@@ -204,7 +204,8 @@ _ZNSt6vectorIN7rocksdb22CoalescedPrefetchGroupESaIS1_EE12emplace_backIJEEERS1_Dp
   br i1 %i.j, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN7rocksdb22CoalescedPrefetchGroupESaIS1_EE12emplace_backIJEEERS1_DpOT_.exit
-  %.not = icmp eq i64 %5, 0                       ; 2 uses
+  %.not = icmp eq i64 %5, 0
+  %.not.not = icmp ne i64 %5, 0
   %i.k = add i64 %i.g, 5
   br label %bb.d
 
@@ -221,9 +222,9 @@ bb.d:                                             ; preds = %.lr.ph, %bb.p
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !13
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.m
   %i.r = load i64, ptr %i.q, align 8, !tbaa !33   ; 3 uses
-  %6 = icmp ule i64 %i.r, %5
-  %or.cond.not = select i1 %.not, i1 true, i1 %6
-  br i1 %or.cond.not, label %bb.e, label %bb.p
+  %6 = icmp ugt i64 %i.r, %5
+  %or.cond.not = select i1 %.not.not, i1 %6, i1 false
+  br i1 %or.cond.not, label %bb.p, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.s = load ptr, ptr %i.h, align 8, !tbaa !494  ; 10 uses

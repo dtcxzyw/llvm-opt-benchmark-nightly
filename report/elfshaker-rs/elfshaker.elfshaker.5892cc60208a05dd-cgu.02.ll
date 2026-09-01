@@ -204,7 +204,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailNtNtCs1
   br label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i
-  %i.al = getelementptr i8, ptr %i.bl, i64 24     ; 2 uses
+  %i.al = getelementptr i8, ptr %i.bl, i64 24     ; 3 uses
   %i.am = getelementptr i8, ptr %i.bk, i64 24
   %i.an = and i64 %1, 1
   %i.ao = icmp eq i64 %i.an, 0
@@ -232,14 +232,15 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailNtNtCs1
   %i.av = sext i32 %i.au to i64
   %i.aw = icmp eq i32 %i.au, 0
   %i.ax = sub nsw i64 %.sroa.011.0.val22.i, %.sroa.06.0.val23.i
-  %spec.select.i.i.i.i.i.i = select i1 %i.aw, i64 %i.ax, i64 %i.av ; 2 uses
-  %5 = icmp sgt i64 %spec.select.i.i.i.i.i.i, -1  ; 2 uses
-  %..i21.i = select i1 %5, ptr %.sroa.06.08.i, ptr %.sroa.011.07.i
+  %spec.select.i.i.i.i.i.i = select i1 %i.aw, i64 %i.ax, i64 %i.av ; 3 uses
+  %5 = icmp slt i64 %spec.select.i.i.i.i.i.i, 0
+  %..i21.i = select i1 %5, ptr %.sroa.011.07.i, ptr %.sroa.06.08.i
+  %6 = icmp sgt i64 %spec.select.i.i.i.i.i.i, -1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.010.i, ptr noundef nonnull align 8 dereferenceable(24) %..i21.i, i64 24, i1 false), !noalias !572
   %spec.select.i.i.i.i.i.lobit.i = lshr i64 %spec.select.i.i.i.i.i.i, 63
   %i.ay = getelementptr inbounds nuw [24 x i8], ptr %.sroa.011.07.i, i64 %spec.select.i.i.i.i.i.lobit.i ; 4 uses
-  %i.az = zext i1 %5 to i64
-  %i.ba = getelementptr inbounds nuw [24 x i8], ptr %.sroa.06.08.i, i64 %i.az ; 5 uses
+  %i.az = zext i1 %6 to i64
+  %i.ba = getelementptr inbounds nuw [24 x i8], ptr %.sroa.06.08.i, i64 %i.az ; 6 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.0.010.i, i64 24 ; 2 uses
   %i.bc = getelementptr i8, ptr %.sroa.017.05.i, i64 8
   %.sroa.017.0.val.i = load ptr, ptr %i.bc, align 8, !alias.scope !565, !nonnull !6, !noundef !6
@@ -254,11 +255,12 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailNtNtCs1
   %i.bh = sext i32 %i.bg to i64
   %i.bi = icmp eq i32 %i.bg, 0
   %i.bj = sub nsw i64 %.sroa.017.0.val24.i, %.sroa.015.0.val25.i
-  %spec.select.i.i.i.i.i27.i = select i1 %i.bi, i64 %i.bj, i64 %i.bh ; 2 uses
-  %6 = icmp sgt i64 %spec.select.i.i.i.i.i27.i, -1 ; 2 uses
-  %..i.i = select i1 %6, ptr %.sroa.017.05.i, ptr %.sroa.015.06.i
+  %spec.select.i.i.i.i.i27.i = select i1 %i.bi, i64 %i.bj, i64 %i.bh ; 3 uses
+  %7 = icmp slt i64 %spec.select.i.i.i.i.i27.i, 0
+  %..i.i = select i1 %7, ptr %.sroa.015.06.i, ptr %.sroa.017.05.i
+  %8 = icmp sgt i64 %spec.select.i.i.i.i.i27.i, -1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.019.04.i, ptr noundef nonnull align 8 dereferenceable(24) %..i.i, i64 24, i1 false), !noalias !580
-  %.neg.i.i = sext i1 %6 to i64
+  %.neg.i.i = sext i1 %8 to i64
   %i.bk = getelementptr [24 x i8], ptr %.sroa.017.05.i, i64 %.neg.i.i ; 2 uses
   %spec.select.i.i.i.i.i27.lobit.i = ashr i64 %spec.select.i.i.i.i.i27.i, 63
   %i.bl = getelementptr [24 x i8], ptr %.sroa.015.06.i, i64 %spec.select.i.i.i.i.i27.lobit.i ; 2 uses
@@ -267,13 +269,13 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailNtNtCs1
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i
 
 bb.j:                                             ; preds = %._crit_edge.i
-  %i.bn = icmp ult ptr %i.ba, %i.al               ; 3 uses
+  %i.bn = icmp ult ptr %i.ba, %i.al               ; 2 uses
   %.sroa.06.0..sroa.011.0.i = select i1 %i.bn, ptr %i.ba, ptr %i.ay
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bb, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.0..sroa.011.0.i, i64 24, i1 false)
   %i.bo = zext i1 %i.bn to i64
   %i.bp = getelementptr inbounds nuw [24 x i8], ptr %i.ba, i64 %i.bo
-  %7 = xor i1 %i.bn, true
-  %i.bq = zext i1 %7 to i64
+  %9 = icmp uge ptr %i.ba, %i.al
+  %i.bq = zext i1 %9 to i64
   %i.br = getelementptr inbounds nuw [24 x i8], ptr %i.ay, i64 %i.bq
   br label %bb.k
 

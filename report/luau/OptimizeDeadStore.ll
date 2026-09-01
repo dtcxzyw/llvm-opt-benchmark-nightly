@@ -205,8 +205,8 @@ bb.a:
   %9 = alloca %"struct.Luau::CodeGen::IrInst", align 8 ; 12 uses
   %10 = alloca %"struct.Luau::CodeGen::IrInst", align 8 ; 12 uses
   %11 = alloca %"struct.Luau::CodeGen::IrInst", align 8 ; 12 uses
-  %i.a = load i32, ptr %7, align 4, !tbaa !160    ; 2 uses
-  %.not = icmp eq i32 %i.a, -1                    ; 2 uses
+  %i.a = load i32, ptr %7, align 4, !tbaa !160    ; 3 uses
+  %.not = icmp eq i32 %i.a, -1
   %i.b = getelementptr inbounds nuw i8, ptr %7, i64 4 ; 8 uses
   %i.c = load i32, ptr %i.b, align 4
   %.not85 = icmp eq i32 %i.c, -1
@@ -609,9 +609,10 @@ _ZN4Luau11SmallVectorINS_7CodeGen4IrOpELj6EE5clearEv.exit.i.i144: ; preds = %.lr
 bb.ag:                                            ; preds = %bb.p
   %i.dt = getelementptr inbounds nuw i8, ptr %7, i64 14
   %i.du = load i8, ptr %i.dt, align 2, !tbaa !166 ; 2 uses
-  %.not87.a = icmp ne i8 %i.du, -1
-  %brmerge.not = and i1 %.not, %.not87.a
-  br i1 %brmerge.not, label %_ZN4Luau11SmallVectorINS_7CodeGen4IrOpELj6EEC2ESt16initializer_listIS2_E.exit151, label %.thread
+  %.not87 = icmp eq i8 %i.du, -1
+  %.not87.a = icmp ne i32 %i.a, -1
+  %brmerge = or i1 %.not87.a, %.not87
+  br i1 %brmerge, label %.thread, label %_ZN4Luau11SmallVectorINS_7CodeGen4IrOpELj6EEC2ESt16initializer_listIS2_E.exit151
 
 _ZN4Luau11SmallVectorINS_7CodeGen4IrOpELj6EEC2ESt16initializer_listIS2_E.exit151: ; preds = %bb.ag
   %i.dv = tail call i32 @_ZN4Luau7CodeGen9IrBuilder8constTagEh(ptr noundef nonnull align 8 dereferenceable(1056) %1, i8 noundef zeroext %i.du)

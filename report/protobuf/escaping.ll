@@ -205,11 +205,11 @@ bb.a:
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %5 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 5 uses
   %6 = alloca %"class.absl::lts_20250512::AlphaNum", align 8 ; 5 uses
-  %i.a = and i32 %0, -2048
-  %or.cond = icmp eq i32 %i.a, 55296              ; 2 uses
-  %.not = icmp ne ptr %3, null
-  %or.cond8.not = and i1 %or.cond, %.not
-  br i1 %or.cond8.not, label %bb.b, label %bb.i
+  %i.a = and i32 %0, -2048                        ; 2 uses
+  %or.cond.not = icmp ne i32 %i.a, 55296
+  %.not = icmp eq ptr %3, null
+  %or.cond8 = or i1 %or.cond.not, %.not
+  br i1 %or.cond8, label %bb.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
@@ -319,6 +319,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %or.cond = icmp eq i32 %i.a, 55296
   ret i1 %or.cond
 }
 

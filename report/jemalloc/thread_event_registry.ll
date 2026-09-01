@@ -74,10 +74,10 @@ declare zeroext i1 @je_malloc_mutex_init(ptr noundef, ptr noundef, i32 noundef, 
 define hidden range(i32 0, 3) i32 @je_te_user_event_enabled(i64 noundef %0, i1 noundef zeroext %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw [8 x i8], ptr @uevent_obj_p, i64 %0
-  %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 2 uses
-  %.not = icmp eq ptr %i.b, null                  ; 2 uses
+  %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 3 uses
+  %.not = icmp eq ptr %i.b, null
   %brmerge = or i1 %1, %.not
-  %not..not = xor i1 %.not, true
+  %not..not = icmp ne ptr %i.b, null
   %.mux = zext i1 %not..not to i32
   br i1 %brmerge, label %bb.c, label %bb.b
 
@@ -480,8 +480,10 @@ handler_wrapper.exit:                             ; preds = %pre_reentrancy.exit
 ; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
 define internal range(i32 0, 3) i32 @te_user_dalloc_enabled0() #2 {
 bb.a:
-  %i.a = load atomic ptr, ptr @uevent_obj_p acquire, align 16 ; 2 uses
+  %i.a = load atomic ptr, ptr @uevent_obj_p acquire, align 16 ; 3 uses
   %.not.i.not = icmp eq ptr %i.a, null
+  %not..not.i = icmp ne ptr %i.a, null
+  %.mux.i = zext i1 %not..not.i to i32
   br i1 %.not.i.not, label %je_te_user_event_enabled.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -492,7 +494,7 @@ bb.b:                                             ; preds = %bb.a
   br label %je_te_user_event_enabled.exit
 
 je_te_user_event_enabled.exit:                    ; preds = %bb.a, %bb.b
-  %.0.i = phi i32 [ 0, %bb.a ], [ %spec.select.i, %bb.b ]
+  %.0.i = phi i32 [ %.mux.i, %bb.a ], [ %spec.select.i, %bb.b ]
   ret i32 %.0.i
 }
 
@@ -537,8 +539,10 @@ handler_wrapper.exit:                             ; preds = %pre_reentrancy.exit
 ; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
 define internal range(i32 0, 3) i32 @te_user_dalloc_enabled1() #2 {
 bb.a:
-  %i.a = load atomic ptr, ptr getelementptr inbounds nuw (i8, ptr @uevent_obj_p, i64 8) acquire, align 8 ; 2 uses
+  %i.a = load atomic ptr, ptr getelementptr inbounds nuw (i8, ptr @uevent_obj_p, i64 8) acquire, align 8 ; 3 uses
   %.not.i.not = icmp eq ptr %i.a, null
+  %not..not.i = icmp ne ptr %i.a, null
+  %.mux.i = zext i1 %not..not.i to i32
   br i1 %.not.i.not, label %je_te_user_event_enabled.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -549,7 +553,7 @@ bb.b:                                             ; preds = %bb.a
   br label %je_te_user_event_enabled.exit
 
 je_te_user_event_enabled.exit:                    ; preds = %bb.a, %bb.b
-  %.0.i = phi i32 [ 0, %bb.a ], [ %spec.select.i, %bb.b ]
+  %.0.i = phi i32 [ %.mux.i, %bb.a ], [ %spec.select.i, %bb.b ]
   ret i32 %.0.i
 }
 
@@ -594,8 +598,10 @@ handler_wrapper.exit:                             ; preds = %pre_reentrancy.exit
 ; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
 define internal range(i32 0, 3) i32 @te_user_dalloc_enabled2() #2 {
 bb.a:
-  %i.a = load atomic ptr, ptr getelementptr inbounds nuw (i8, ptr @uevent_obj_p, i64 16) acquire, align 16 ; 2 uses
+  %i.a = load atomic ptr, ptr getelementptr inbounds nuw (i8, ptr @uevent_obj_p, i64 16) acquire, align 16 ; 3 uses
   %.not.i.not = icmp eq ptr %i.a, null
+  %not..not.i = icmp ne ptr %i.a, null
+  %.mux.i = zext i1 %not..not.i to i32
   br i1 %.not.i.not, label %je_te_user_event_enabled.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -606,7 +612,7 @@ bb.b:                                             ; preds = %bb.a
   br label %je_te_user_event_enabled.exit
 
 je_te_user_event_enabled.exit:                    ; preds = %bb.a, %bb.b
-  %.0.i = phi i32 [ 0, %bb.a ], [ %spec.select.i, %bb.b ]
+  %.0.i = phi i32 [ %.mux.i, %bb.a ], [ %spec.select.i, %bb.b ]
   ret i32 %.0.i
 }
 
@@ -651,8 +657,10 @@ handler_wrapper.exit:                             ; preds = %pre_reentrancy.exit
 ; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
 define internal range(i32 0, 3) i32 @te_user_dalloc_enabled3() #2 {
 bb.a:
-  %i.a = load atomic ptr, ptr getelementptr inbounds nuw (i8, ptr @uevent_obj_p, i64 24) acquire, align 8 ; 2 uses
+  %i.a = load atomic ptr, ptr getelementptr inbounds nuw (i8, ptr @uevent_obj_p, i64 24) acquire, align 8 ; 3 uses
   %.not.i.not = icmp eq ptr %i.a, null
+  %not..not.i = icmp ne ptr %i.a, null
+  %.mux.i = zext i1 %not..not.i to i32
   br i1 %.not.i.not, label %je_te_user_event_enabled.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -663,7 +671,7 @@ bb.b:                                             ; preds = %bb.a
   br label %je_te_user_event_enabled.exit
 
 je_te_user_event_enabled.exit:                    ; preds = %bb.a, %bb.b
-  %.0.i = phi i32 [ 0, %bb.a ], [ %spec.select.i, %bb.b ]
+  %.0.i = phi i32 [ %.mux.i, %bb.a ], [ %spec.select.i, %bb.b ]
   ret i32 %.0.i
 }
 

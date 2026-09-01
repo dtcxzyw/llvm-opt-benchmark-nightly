@@ -205,7 +205,7 @@ bb.a:
   %i.c = sdiv i64 %6, 4
   %i.d = shl nsw i64 %i.c, 2                      ; 14 uses
   %i.e = sdiv i64 %4, 4
-  %i.f = shl nsw i64 %i.e, 2                      ; 6 uses
+  %i.f = shl nsw i64 %i.e, 2                      ; 7 uses
   %i.g = sub nsw i64 %4, %i.f
   %i.h = sdiv i64 %i.g, 2
   %i.i = shl nsw i64 %i.h, 1
@@ -238,7 +238,7 @@ bb.a:
   %.not = icmp eq i64 %i.s, %5                    ; 3 uses
   %i.ab = insertelement <2 x double> poison, double %7, i64 0
   %i.ac = shufflevector <2 x double> %i.ab, <2 x double> poison, <2 x i32> zeroinitializer ; 13 uses
-  %13 = icmp slt i64 %i.d, %6
+  %13 = icmp sge i64 %i.d, %6
   %invariant.gep737 = getelementptr [8 x i8], ptr %3, i64 %11 ; 2 uses
   %i.ad = fmul <2 x double> %i.ac, zeroinitializer ; 2 uses
   br label %bb.b
@@ -373,16 +373,17 @@ bb.a:
   br i1 %i.co, label %.preheader663.us, label %.preheader662, !llvm.loop !1022
 
 bb.b:                                             ; preds = %.lr.ph772, %.loopexit670
-  %.0247770 = phi i64 [ 0, %.lr.ph772 ], [ %i.cp, %.loopexit670 ] ; 6 uses
+  %.0247770 = phi i64 [ 0, %.lr.ph772 ], [ %i.cp, %.loopexit670 ] ; 7 uses
   %i.cp = add nuw nsw i64 %.0247770, %i.w         ; 3 uses
   %.sroa.speculated = tail call i64 @llvm.smin.i64(i64 %i.f, i64 %i.cp) ; 4 uses
-  %i.cq = icmp sgt i64 %i.f, %.0247770            ; 2 uses
+  %i.cq = icmp sgt i64 %i.f, %.0247770
   %or.cond = select i1 %i.y, i1 %i.cq, i1 false
   br i1 %or.cond, label %.preheader668, label %.preheader669
 
 .preheader669:                                    ; preds = %._crit_edge713, %bb.b
-  %brmerge.not = select i1 %13, i1 %i.cq, i1 false
-  br i1 %brmerge.not, label %.preheader667.lr.ph.split.us, label %.loopexit670
+  %.not919 = icmp sle i64 %i.f, %.0247770
+  %brmerge.not = select i1 %13, i1 true, i1 %.not919
+  br i1 %brmerge.not, label %.loopexit670, label %.preheader667.lr.ph.split.us
 
 .preheader667.lr.ph.split.us:                     ; preds = %.preheader669
   br i1 %i.aa, label %.preheader667.us.us, label %.preheader667.lr.ph.split.us.split

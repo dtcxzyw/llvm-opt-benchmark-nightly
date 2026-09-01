@@ -202,13 +202,14 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.b, %bb.a
   %.0.in = phi ptr [ %0, %bb.a ], [ %.0, %bb.b ]
-  %.0 = load ptr, ptr %.0.in, align 8, !tbaa !100 ; 3 uses
-  %.not = icmp ne ptr %.0, null                   ; 2 uses
-  %2 = icmp ne ptr %.0, %1
-  %or.cond.not = and i1 %2, %.not
-  br i1 %or.cond.not, label %bb.b, label %bb.c, !llvm.loop !101
+  %.0 = load ptr, ptr %.0.in, align 8, !tbaa !100 ; 4 uses
+  %.not.not = icmp eq ptr %.0, null
+  %2 = icmp eq ptr %.0, %1
+  %or.cond = or i1 %.not.not, %2
+  br i1 %or.cond, label %bb.c, label %bb.b, !llvm.loop !101
 
 bb.c:                                             ; preds = %bb.b
+  %.not = icmp ne ptr %.0, null
   ret i1 %.not
 }
 

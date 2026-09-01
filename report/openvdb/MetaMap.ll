@@ -202,17 +202,19 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit:
 
 _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread17: ; preds = %bb.c, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.011.023, i64 64
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !21   ; 2 uses
-  %i.v = icmp ne ptr %i.u, null                   ; 2 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !21   ; 3 uses
+  %i.v = icmp ne ptr %i.u, null
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.06.024, i64 64
-  %i.x = load ptr, ptr %i.w, align 8, !tbaa !21   ; 2 uses
-  %i.y = icmp ne ptr %i.x, null                   ; 2 uses
+  %i.x = load ptr, ptr %i.w, align 8, !tbaa !21   ; 3 uses
+  %i.y = icmp ne ptr %i.x, null
   %i.z = xor i1 %i.v, %i.y
   br i1 %i.z, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread17
-  %brmerge.demorgan = and i1 %i.v, %i.y
-  br i1 %brmerge.demorgan, label %bb.e, label %bb.f
+  %.not18 = icmp eq ptr %i.u, null
+  %.not19 = icmp eq ptr %i.x, null
+  %brmerge = or i1 %.not18, %.not19
+  br i1 %brmerge, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.aa = tail call noundef zeroext i1 @_ZNK7openvdb5v13_08MetadataeqERKS1_(ptr noundef nonnull align 8 dereferenceable(8) %i.u, ptr noundef nonnull align 8 dereferenceable(8) %i.x)

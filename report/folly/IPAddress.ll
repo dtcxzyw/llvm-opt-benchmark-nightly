@@ -205,8 +205,8 @@ bb.a:
   %4 = alloca %"class.folly::IPAddressV6", align 4 ; 7 uses
   %5 = alloca %"class.folly::IPAddressV6", align 4 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 4 uses
-  %i.d = load i16, ptr %i.c, align 4, !tbaa !12   ; 5 uses
-  %i.e = icmp eq i16 %i.d, 0                      ; 4 uses
+  %i.d = load i16, ptr %i.c, align 4, !tbaa !12   ; 7 uses
+  %i.e = icmp eq i16 %i.d, 0                      ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 4 uses
   %.pre = load i16, ptr %.phi.trans.insert, align 4, !tbaa !12 ; 3 uses
   %i.f = icmp eq i16 %.pre, 0                     ; 2 uses
@@ -214,9 +214,10 @@ bb.a:
   br i1 %brmerge, label %._crit_edge, label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.a
-  %not. = xor i1 %i.e, true
+  %not. = icmp ne i16 %i.d, 0
   %.mux = select i1 %not., i1 true, i1 %i.f
-  %i.g = select i1 %i.e, i8 1, i8 -1
+  %.not65 = icmp eq i16 %i.d, 0
+  %i.g = select i1 %.not65, i8 1, i8 -1
   %i.h = xor i1 %i.e, %.mux
   %i.i = select i1 %i.h, i8 %i.g, i8 0
   br label %_ZN5folly12_GLOBAL__N_19compareV6ERKNS_11IPAddressV6ES3_.exit

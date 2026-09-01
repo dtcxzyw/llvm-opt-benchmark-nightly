@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.h
   br i1 %i.s, label %.critedge, label %.thread
 
 .thread:                                          ; preds = %bb.k, %bb.l, %bb.m
-  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !38 ; 2 uses
   %.not.i.i18 = icmp eq ptr %i.ae, null
   br i1 %.not.i.i18, label %_ZN7rocksdb6StatusD2Ev.exit20.a, label %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i19
@@ -237,7 +237,8 @@ bb.n:                                             ; preds = %_ZN7rocksdb6StatusD
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %_ZN7rocksdb6StatusD2Ev.exit20.a
-  store ptr null, ptr %i.ad, align 8, !tbaa !22, !alias.scope !39
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr null, ptr %13, align 8, !tbaa !22, !alias.scope !39
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 6, i1 false), !alias.scope !39
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11

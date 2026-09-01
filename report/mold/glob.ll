@@ -205,7 +205,7 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE9ends_withES2_.exit.thread: ; pred
   %i.q = ptrtoint ptr %i.c to i64
   %i.r = ptrtoint ptr %i.a to i64
   %i.s = sub i64 %i.q, %i.r
-  %i.t = sdiv exact i64 %i.s, 72                  ; 3 uses
+  %i.t = sdiv exact i64 %i.s, 72                  ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 %1
   %i.v = ptrtoint ptr %i.u to i64
   %i.w = ptrtoint ptr %2 to i64
@@ -233,11 +233,11 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE9ends_withES2_.exit.thread: ; pred
   br label %.outer
 
 .outer:                                           ; preds = %.outer.backedge, %.outer.outer
-  %.047.ph = phi i64 [ %.047.ph.ph, %.outer.outer ], [ %.047.ph.be, %.outer.backedge ] ; 13 uses
+  %.047.ph = phi i64 [ %.047.ph.ph, %.outer.outer ], [ %.047.ph.be, %.outer.backedge ] ; 14 uses
   %.041.ph = phi i64 [ %.041.ph.ph, %.outer.outer ], [ %.041.ph.be, %.outer.backedge ] ; 21 uses
   %i.ag = icmp ult i64 %.041.ph, %1               ; 7 uses
-  %i.ah = icmp ult i64 %.047.ph, %i.t             ; 3 uses
-  %or.cond153 = select i1 %i.ag, i1 true, i1 %i.ah ; 2 uses
+  %i.ah = icmp ult i64 %.047.ph, %i.t             ; 2 uses
+  %or.cond153 = select i1 %i.ag, i1 true, i1 %i.ah ; 3 uses
   br i1 %or.cond.fr, label %.outer.split.us, label %.outer.split.preheader, !llvm.loop !48
 
 .outer.split.preheader:                           ; preds = %.outer
@@ -304,7 +304,9 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.peel: ; preds = %bb.j
   br i1 %or.cond154, label %.critedge, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE9ends_withES2_.exit.thread82
 
 .outer.split.us:                                  ; preds = %.outer
-  br i1 %i.ah, label %bb.k, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE9ends_withES2_.exit.thread82.loopexit.loopexit.split.loop.exit286
+  %.not213 = icmp ult i64 %.047.ph, %i.t
+  %brmerge.not = select i1 %or.cond153, i1 %.not213, i1 false
+  br i1 %brmerge.not, label %bb.k, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE9ends_withES2_.exit.thread82.loopexit.loopexit.split.loop.exit286
 
 bb.k:                                             ; preds = %.outer.split.us
   %i.bd = getelementptr inbounds nuw [72 x i8], ptr %i.a, i64 %.047.ph ; 4 uses

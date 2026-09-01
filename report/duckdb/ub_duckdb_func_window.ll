@@ -205,10 +205,11 @@ bb.y:                                             ; preds = %bb.x
   %i.ej = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.ek = load ptr, ptr %i.ej, align 8, !tbaa !231, !nonnull !42, !align !232 ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.ek, i64 232 ; 2 uses
-  %i.em = load ptr, ptr %i.el, align 8, !tbaa !134
-  %.not246 = icmp eq ptr %i.em, null              ; 2 uses
+  %i.em = load ptr, ptr %i.el, align 8, !tbaa !134 ; 2 uses
+  %.not246 = icmp eq ptr %i.em, null
   %brmerge.not.not = or i1 %.not246, %i.eh
-  %narrow = and i1 %.not246, %i.ei
+  %not..not246 = icmp eq ptr %i.em, null
+  %narrow = and i1 %not..not246, %i.ei
   br i1 %brmerge.not.not, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %bb.y

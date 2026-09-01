@@ -204,13 +204,13 @@ bb.bw:                                            ; preds = %bb.ag
   br i1 %i.iv, label %bb.bx, label %.invoke.i, !prof !5
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.iw = load i32, ptr %.sroa.2.sroa.5.0..sroa.2.0..sroa_idx.sroa_idx.i, align 8, !noalias !1933, !noundef !6 ; 3 uses
-  %.not644.i = icmp slt i32 %i.iw, 0              ; 4 uses
+  %i.iw = load i32, ptr %.sroa.2.sroa.5.0..sroa.2.0..sroa_idx.sroa_idx.i, align 8, !noalias !1933, !noundef !6 ; 4 uses
+  %.not644.i = icmp slt i32 %i.iw, 0              ; 3 uses
   %i.ix = load i32, ptr %.sroa.258.sroa.5.0..sroa.258.0..sroa_idx.sroa_idx.i, align 8, !noalias !1933 ; 3 uses
   %i.iy = icmp slt i32 %i.ix, 0
   %.sroa.0151.0.i = select i1 %.not644.i, i1 true, i1 %i.iy ; 2 uses
-  %i.iz = and i32 %i.iw, 1073741824               ; 2 uses
-  %.not645.i = icmp ne i32 %i.iz, 0               ; 3 uses
+  %i.iz = and i32 %i.iw, 1073741824               ; 3 uses
+  %.not645.i = icmp ne i32 %i.iz, 0               ; 2 uses
   %i.ja = and i32 %i.ix, 1073741824
   %i.jb = icmp ne i32 %i.ja, 0
   %.sroa.0153.0.i = select i1 %.not645.i, i1 true, i1 %i.jb ; 2 uses
@@ -302,9 +302,10 @@ bb.cg:                                            ; preds = %bb.ce
 
 ._crit_edge494.i:                                 ; preds = %bb.dj, %bb.cg
   %.sroa.0.6.lcssa.i = phi i64 [ %i.jn, %bb.cg ], [ %i.mg, %bb.dj ] ; 2 uses
-  %.not647.i423 = icmp slt i32 %i.ix, 0
-  %.not647.i.not = select i1 %.not644.i, i1 %.not647.i423, i1 false
-  br i1 %.not647.i.not, label %bb.ci, label %bb.cf
+  %.not647.i424 = icmp sgt i32 %i.ix, -1
+  %not..not644.i = icmp sgt i32 %i.iw, -1
+  %.not647.i.not = select i1 %not..not644.i, i1 true, i1 %.not647.i424
+  br i1 %.not647.i.not, label %bb.cf, label %bb.ci
 
 bb.ch:                                            ; preds = %bb.dj, %.lr.ph493.i
   %.sroa.0.6491.i = phi i64 [ %i.jn, %.lr.ph493.i ], [ %i.mg, %bb.dj ]
@@ -349,11 +350,12 @@ bb.cm:                                            ; preds = %bb.cl
           to label %bb.cx unwind label %.loopexit.split-lp226.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i, !noalias !1931
 
 bb.cn:                                            ; preds = %bb.cf
+  %not..not645.i = icmp eq i32 %i.iz, 0
   %.lobit214.i = lshr exact i32 %i.iz, 30
   %.662.i = zext nneg i32 %.lobit214.i to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ae), !noalias !1933
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad), !noalias !1933
-  %i.kn = select i1 %.not645.i, ptr %2, ptr %4
+  %i.kn = select i1 %not..not645.i, ptr %4, ptr %2
   invoke void @_RINvMs1_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structsNtB6_15FileMetadataExt11deserializeINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRINtNtCsexYYUdYSQU6_5alloc3vec3VechEEECs9SMuO7kbZ2K_7git_xet(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.ad, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.kn)
           to label %bb.co unwind label %.loopexit.split-lp226.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i, !noalias !1931
 

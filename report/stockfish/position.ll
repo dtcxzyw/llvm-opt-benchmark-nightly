@@ -205,8 +205,8 @@ bb.i:                                             ; preds = %.lr.ph62, %bb.q
   br i1 %.not26, label %bb.j, label %.critedge2
 
 bb.j:                                             ; preds = %bb.i
-  %i.de = call i32 @islower(i32 noundef %i.dc) #28
-  %.not30 = icmp ne i32 %i.de, 0                  ; 7 uses
+  %i.de = call i32 @islower(i32 noundef %i.dc) #28 ; 2 uses
+  %.not30 = icmp ne i32 %i.de, 0                  ; 6 uses
   %i.df = select i1 %.not30, i8 12, i8 4          ; 2 uses
   %i.dg = call i32 @toupper(i32 noundef %i.dc) #28 ; 2 uses
   %i.dh = trunc i32 %i.dg to i8                   ; 3 uses
@@ -272,7 +272,8 @@ bb.p:                                             ; preds = %bb.o
   %i.ed = trunc nuw nsw i64 %i.ec to i8
   %i.ee = icmp ugt i8 %.2, %i.ed
   %i.ef = select i1 %i.ee, i8 5, i8 10
-  %i.eg = select i1 %.not30, i8 12, i8 3
+  %5 = icmp eq i32 %i.de, 0
+  %i.eg = select i1 %5, i8 3, i8 12
   %i.eh = and i8 %i.ef, %i.eg                     ; 2 uses
   %i.ei = zext nneg i8 %i.eh to i32               ; 4 uses
   %i.ej = load ptr, ptr %i.x, align 8, !tbaa !68
@@ -675,11 +676,12 @@ bb.x:                                             ; preds = %bb.v, %bb.w, %bb.t
 
 bb.y:                                             ; preds = %bb.x
   %i.jp = load i8, ptr %i.a, align 1, !tbaa !100  ; 5 uses
-  %i.jq = xor i8 %i.jp, %i.w
-  %i.jr = icmp eq i8 %i.jq, 16                    ; 2 uses
-  %i.js = icmp ne i16 %i.ac, 16384
-  %or.cond201.not = or i1 %i.js, %i.jr
-  br i1 %or.cond201.not, label %._crit_edge, label %bb.z
+  %i.jq = xor i8 %i.jp, %i.w                      ; 2 uses
+  %i.jr = icmp eq i8 %i.jq, 16
+  %i.js = icmp ne i8 %i.jq, 16
+  %8 = icmp eq i16 %i.ac, 16384
+  %or.cond201 = and i1 %8, %i.js
+  br i1 %or.cond201, label %bb.z, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.y
   %.pre213.a = load ptr, ptr %i.d, align 8, !tbaa !68

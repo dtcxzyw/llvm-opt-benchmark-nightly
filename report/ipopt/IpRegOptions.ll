@@ -202,19 +202,23 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.07.014 = phi ptr [ %i.o, %.lr.ph ], [ %i.g, %.lr.ph.preheader ] ; 2 uses
   %i.h = load i8, ptr %.sroa.09.015, align 1, !tbaa !15
   %i.i = sext i8 %i.h to i32
-  %i.j = tail call i32 @toupper(i32 noundef %i.i) #23
+  %i.j = tail call i32 @toupper(i32 noundef %i.i) #23 ; 2 uses
   %i.k = load i8, ptr %.sroa.07.014, align 1, !tbaa !15
   %i.l = sext i8 %i.k to i32
-  %i.m = tail call i32 @toupper(i32 noundef %i.l) #23
-  %.not6 = icmp eq i32 %i.j, %i.m                 ; 2 uses
+  %i.m = tail call i32 @toupper(i32 noundef %i.l) #23 ; 2 uses
+  %.not6.not = icmp ne i32 %i.j, %i.m
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.09.015, i64 1 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.07.014, i64 1
-  %.not12 = icmp ne ptr %i.n, %i.f
-  %or.cond.not = select i1 %.not6, i1 %.not12, i1 false
-  br i1 %or.cond.not, label %.lr.ph, label %.loopexit, !llvm.loop !55
+  %.not12 = icmp eq ptr %i.n, %i.f
+  %or.cond.not = select i1 %.not6.not, i1 true, i1 %.not12
+  br i1 %or.cond.not, label %.loopexit.loopexit, label %.lr.ph, !llvm.loop !55
 
-.loopexit:                                        ; preds = %.lr.ph, %bb.b, %bb.a
-  %.1 = phi i1 [ false, %bb.a ], [ true, %bb.b ], [ %.not6, %.lr.ph ]
+.loopexit.loopexit:                               ; preds = %.lr.ph
+  %.not6 = icmp eq i32 %i.j, %i.m
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.b, %bb.a
+  %.1 = phi i1 [ false, %bb.a ], [ true, %bb.b ], [ %.not6, %.loopexit.loopexit ]
   ret i1 %.1
 }
 

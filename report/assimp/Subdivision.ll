@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZNSt6vectorISt4pairIjjESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i: ; preds = %bb.c
-  %.not.i.i.i.i = icmp ne i64 %2, 0               ; 7 uses
+  %.not.i.i.i.i = icmp ne i64 %2, 0               ; 2 uses
   br i1 %.not.i.i.i.i, label %.lr.ph.preheader.i.i.i.i.i, label %._crit_edge
 
 .lr.ph.preheader.i.i.i.i.i:                       ; preds = %_ZNSt6vectorISt4pairIjjESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i
@@ -227,6 +227,7 @@ _ZNSt6vectorISt4pairIjjESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i: ; preds = %bb
   %.sink.i3983 = phi i64 [ 0, %_ZNSt6vectorISt4pairIjjESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ], [ %i.g, %._crit_edge.loopexit ] ; 2 uses
   %.sroa.01962.03981 = phi ptr [ null, %_ZNSt6vectorISt4pairIjjESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ], [ %i.e, %._crit_edge.loopexit ] ; 12 uses
   %.02242.lcssa = phi i32 [ 0, %_ZNSt6vectorISt4pairIjjESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i ], [ %i.h, %._crit_edge.loopexit ] ; 2 uses
+  %.not33193984 = icmp eq i64 %2, 0               ; 5 uses
   invoke void @_ZN6Assimp11SpatialSort8FinalizeEv(ptr noundef nonnull align 8 dereferenceable(49) %7)
           to label %bb.h unwind label %bb.k
 
@@ -294,7 +295,7 @@ bb.j:                                             ; preds = %bb.i
 _ZNSt6vectorIN6Assimp6VertexESaIS1_EEC2EmRKS2_.exit: ; preds = %.noexc420, %bb.j
   %.sroa.01946.0 = phi ptr [ %i.ab, %.noexc420 ], [ null, %bb.j ] ; 10 uses
   %.sink.i418 = phi i64 [ %i.ad, %.noexc420 ], [ 0, %bb.j ] ; 2 uses
-  br i1 %.not.i.i.i.i, label %.lr.ph3042, label %._crit_edge3043
+  br i1 %.not33193984, label %._crit_edge3043, label %.lr.ph3042
 
 .lr.ph3042:                                       ; preds = %_ZNSt6vectorIN6Assimp6VertexESaIS1_EEC2EmRKS2_.exit
   %i.ae = getelementptr inbounds nuw i8, ptr %8, i64 8
@@ -336,7 +337,7 @@ _ZNSt6vectorIN6Assimp6VertexESaIS1_EEC2EmRKS2_.exit: ; preds = %.noexc420, %bb.j
   store float 1.000000e+00, ptr %i.bf, align 8
   %i.bg = getelementptr inbounds nuw i8, ptr %9, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bg, i8 0, i64 16, i1 false)
-  br i1 %.not.i.i.i.i, label %.lr.ph3055, label %._crit_edge3056.thread
+  br i1 %.not33193984, label %._crit_edge3056.thread, label %.lr.ph3055
 
 ._crit_edge3056.thread:                           ; preds = %._crit_edge3043
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
@@ -739,7 +740,7 @@ bb.at:                                            ; preds = %_ZNSt6vectorIjSaIjE
 _ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit446:         ; preds = %.noexc445, %_ZNSt6vectorIjSaIjEE17_S_check_init_lenEmRKS0_.exit.i437
   %.sroa.01870.0 = phi ptr [ null, %_ZNSt6vectorIjSaIjEE17_S_check_init_lenEmRKS0_.exit.i437 ], [ %i.ahp, %.noexc445 ] ; 13 uses
   %.sroa.141876.0 = phi i64 [ 0, %_ZNSt6vectorIjSaIjEE17_S_check_init_lenEmRKS0_.exit.i437 ], [ %i.ahr, %.noexc445 ] ; 2 uses
-  br i1 %.not.i.i.i.i, label %.lr.ph3071, label %.preheader2281
+  br i1 %.not33193984, label %.preheader2281, label %.lr.ph3071
 
 .lr.ph3071:                                       ; preds = %_ZNSt6vectorIjSaIjEEC2EmRKjRKS0_.exit446
   %i.ahs = load ptr, ptr %6, align 8
@@ -873,7 +874,7 @@ bb.ba:                                            ; preds = %.lr.ph3064, %bb.ba
   br i1 %epil.iter.cmp.not, label %.preheader2280, label %.lr.ph3074.epil, !llvm.loop !46
 
 .preheader2280:                                   ; preds = %.preheader2280.loopexit.unr-lcssa, %.lr.ph3074.epil, %.preheader2281
-  br i1 %.not.i.i.i.i, label %.lr.ph3085, label %._crit_edge3086
+  br i1 %.not33193984, label %._crit_edge3086, label %.lr.ph3085
 
 .lr.ph3085:                                       ; preds = %.preheader2280
   %i.ajl = load ptr, ptr %6, align 8
@@ -1064,7 +1065,7 @@ _ZNSt6vectorISt4pairIbN6Assimp6VertexEESaIS3_EEC2EmRKS3_RKS4_.exit.loopexit: ; p
 _ZNSt6vectorISt4pairIbN6Assimp6VertexEESaIS3_EEC2EmRKS3_RKS4_.exit: ; preds = %_ZNSt6vectorISt4pairIbN6Assimp6VertexEESaIS3_EEC2EmRKS3_RKS4_.exit.loopexit, %._crit_edge3086
   %.sroa.01862.0 = phi ptr [ null, %._crit_edge3086 ], [ %i.aki, %_ZNSt6vectorISt4pairIbN6Assimp6VertexEESaIS3_EEC2EmRKS3_RKS4_.exit.loopexit ] ; 7 uses
   %.sroa.121866.0 = phi i64 [ 0, %._crit_edge3086 ], [ %i.amq, %_ZNSt6vectorISt4pairIbN6Assimp6VertexEESaIS3_EEC2EmRKS3_RKS4_.exit.loopexit ] ; 2 uses
-  br i1 %.not.i.i.i.i, label %.lr.ph3316, label %._crit_edge3317
+  br i1 %.not33193984, label %._crit_edge3317, label %.lr.ph3316
 
 .lr.ph3316:                                       ; preds = %_ZNSt6vectorISt4pairIbN6Assimp6VertexEESaIS3_EEC2EmRKS3_RKS4_.exit
   %i.amr = getelementptr inbounds nuw i8, ptr %13, i64 8

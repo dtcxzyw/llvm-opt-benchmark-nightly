@@ -204,7 +204,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3
   br label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %.noexc32
-  %i.aw = getelementptr i8, ptr %i.ce, i64 48     ; 2 uses
+  %i.aw = getelementptr i8, ptr %i.ce, i64 48     ; 3 uses
   %i.ax = getelementptr i8, ptr %i.cd, i64 48
   %i.ay = and i64 %1, 1
   %i.az = icmp eq i64 %i.ay, 0
@@ -245,14 +245,15 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3
   %i.bk = sext i32 %i.bj to i64
   %i.bl = icmp eq i32 %i.bj, 0
   %i.bm = sub i64 %i.bf, %i.bi
-  %spec.select.i.i.i.i.i.i = select i1 %i.bl, i64 %i.bm, i64 %i.bk ; 2 uses
-  %5 = icmp sgt i64 %spec.select.i.i.i.i.i.i, -1  ; 2 uses
-  %..i21.i = select i1 %5, ptr %.sroa.06.08.i, ptr %.sroa.011.07.i
+  %spec.select.i.i.i.i.i.i = select i1 %i.bl, i64 %i.bm, i64 %i.bk ; 3 uses
+  %5 = icmp slt i64 %spec.select.i.i.i.i.i.i, 0
+  %..i21.i = select i1 %5, ptr %.sroa.011.07.i, ptr %.sroa.06.08.i
+  %6 = icmp sgt i64 %spec.select.i.i.i.i.i.i, -1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0.010.i, ptr noundef nonnull align 8 dereferenceable(48) %..i21.i, i64 48, i1 false), !noalias !129
   %spec.select.i.i.i.i.i.lobit.i = lshr i64 %spec.select.i.i.i.i.i.i, 63
   %i.bn = getelementptr inbounds nuw [48 x i8], ptr %.sroa.011.07.i, i64 %spec.select.i.i.i.i.i.lobit.i ; 4 uses
-  %i.bo = zext i1 %5 to i64
-  %i.bp = getelementptr inbounds nuw [48 x i8], ptr %.sroa.06.08.i, i64 %i.bo ; 5 uses
+  %i.bo = zext i1 %6 to i64
+  %i.bp = getelementptr inbounds nuw [48 x i8], ptr %.sroa.06.08.i, i64 %i.bo ; 6 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %.sroa.0.010.i, i64 48 ; 2 uses
   %.sroa.017.0.val.i = load ptr, ptr %.sroa.017.05.i, align 8, !alias.scope !116, !nonnull !5, !noundef !5
   %i.br = getelementptr i8, ptr %.sroa.017.05.i, i64 8
@@ -280,11 +281,12 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3
   %i.ca = sext i32 %i.bz to i64
   %i.cb = icmp eq i32 %i.bz, 0
   %i.cc = sub i64 %i.bv, %i.by
-  %spec.select.i.i.i.i.i27.i = select i1 %i.cb, i64 %i.cc, i64 %i.ca ; 2 uses
-  %6 = icmp sgt i64 %spec.select.i.i.i.i.i27.i, -1 ; 2 uses
-  %..i.i = select i1 %6, ptr %.sroa.017.05.i, ptr %.sroa.015.06.i
+  %spec.select.i.i.i.i.i27.i = select i1 %i.cb, i64 %i.cc, i64 %i.ca ; 3 uses
+  %7 = icmp slt i64 %spec.select.i.i.i.i.i27.i, 0
+  %..i.i = select i1 %7, ptr %.sroa.015.06.i, ptr %.sroa.017.05.i
+  %8 = icmp sgt i64 %spec.select.i.i.i.i.i27.i, -1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.019.04.i, ptr noundef nonnull align 8 dereferenceable(48) %..i.i, i64 48, i1 false), !noalias !143
-  %.neg.i.i = sext i1 %6 to i64
+  %.neg.i.i = sext i1 %8 to i64
   %i.cd = getelementptr [48 x i8], ptr %.sroa.017.05.i, i64 %.neg.i.i ; 2 uses
   %spec.select.i.i.i.i.i27.lobit.i = ashr i64 %spec.select.i.i.i.i.i27.i, 63
   %i.ce = getelementptr [48 x i8], ptr %.sroa.015.06.i, i64 %spec.select.i.i.i.i.i27.lobit.i ; 2 uses
@@ -293,13 +295,13 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailNtNtCs3
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i
 
 bb.k:                                             ; preds = %._crit_edge.i
-  %i.cg = icmp ult ptr %i.bp, %i.aw               ; 3 uses
+  %i.cg = icmp ult ptr %i.bp, %i.aw               ; 2 uses
   %.sroa.06.0..sroa.011.0.i = select i1 %i.cg, ptr %i.bp, ptr %i.bn
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.bq, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.06.0..sroa.011.0.i, i64 48, i1 false)
   %i.ch = zext i1 %i.cg to i64
   %i.ci = getelementptr inbounds nuw [48 x i8], ptr %i.bp, i64 %i.ch
-  %7 = xor i1 %i.cg, true
-  %i.cj = zext i1 %7 to i64
+  %9 = icmp uge ptr %i.bp, %i.aw
+  %i.cj = zext i1 %9 to i64
   %i.ck = getelementptr inbounds nuw [48 x i8], ptr %i.bn, i64 %i.cj
   br label %bb.l
 
@@ -580,7 +582,7 @@ _RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort11insert_tailTReNtNt
   br label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %_RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_byNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate21unit_designator_match11write_match0E0B1r_.exit27.i
-  %i.ai = getelementptr i8, ptr %i.bh, i64 24     ; 2 uses
+  %i.ai = getelementptr i8, ptr %i.bh, i64 24     ; 3 uses
   %i.aj = getelementptr i8, ptr %i.bg, i64 24
   %i.ak = and i64 %1, 1
   %i.al = icmp eq i64 %i.ak, 0
@@ -618,7 +620,7 @@ _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_
   %i.au = zext i1 %.sroa.01.0.neg.i.i.i to i64
   %i.av = getelementptr inbounds nuw [24 x i8], ptr %.sroa.011.07.i, i64 %i.au ; 4 uses
   %i.aw = zext i1 %i.at to i64
-  %i.ax = getelementptr inbounds nuw [24 x i8], ptr %.sroa.06.08.i, i64 %i.aw ; 5 uses
+  %i.ax = getelementptr inbounds nuw [24 x i8], ptr %.sroa.06.08.i, i64 %i.aw ; 6 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.0.010.i, i64 24 ; 2 uses
   %i.az = getelementptr i8, ptr %.sroa.017.05.i, i64 8
   %.sroa.017.0.val24.i = load i64, ptr %i.az, align 8, !alias.scope !163, !noundef !5 ; 3 uses
@@ -649,12 +651,12 @@ _RNCINvMNtCs1xwejQucwHj_5alloc5sliceSTReNtNtCsa9sSWSfjDbm_4jiff4span4UnitE7sort_
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i
 
 bb.k:                                             ; preds = %._crit_edge.i
-  %i.bj = icmp ult ptr %i.ax, %i.ai               ; 3 uses
+  %i.bj = icmp ult ptr %i.ax, %i.ai               ; 2 uses
   %.sroa.06.0..sroa.011.0.i = select i1 %i.bj, ptr %i.ax, ptr %i.av
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ay, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.0..sroa.011.0.i, i64 24, i1 false)
   %i.bk = zext i1 %i.bj to i64
   %i.bl = getelementptr inbounds nuw [24 x i8], ptr %i.ax, i64 %i.bk
-  %5 = xor i1 %i.bj, true
+  %5 = icmp uge ptr %i.ax, %i.ai
   %i.bm = zext i1 %5 to i64
   %i.bn = getelementptr inbounds nuw [24 x i8], ptr %i.av, i64 %i.bm
   br label %bb.l

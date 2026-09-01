@@ -204,12 +204,12 @@ _ZN7AstNode4castI9AstVarRef11AstNodeExprEEPT_PT0_.exit.i: ; preds = %bb.c
   br label %_ZN12_GLOBAL__N_116FsmDetectVisitor17describeResetCondEP11AstNodeExpr.exit
 
 _ZN12_GLOBAL__N_116FsmDetectVisitor17describeResetCondEP11AstNodeExpr.exit: ; preds = %_ZNSt6vectorIN12_GLOBAL__N_110FsmSenDescESaIS1_EED2Ev.exit, %bb.c, %_ZN7AstNode4castI9AstVarRef11AstNodeExprEEPT_PT0_.exit.i
-  %.sroa.0.0.i = phi ptr [ %i.v, %_ZN7AstNode4castI9AstVarRef11AstNodeExprEEPT_PT0_.exit.i ], [ null, %_ZNSt6vectorIN12_GLOBAL__N_110FsmSenDescESaIS1_EED2Ev.exit ], [ null, %bb.c ] ; 2 uses
+  %.sroa.0.0.i = phi ptr [ %i.v, %_ZN7AstNode4castI9AstVarRef11AstNodeExprEEPT_PT0_.exit.i ], [ null, %_ZNSt6vectorIN12_GLOBAL__N_110FsmSenDescESaIS1_EED2Ev.exit ], [ null, %bb.c ] ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 64
   store ptr %.sroa.0.0.i, ptr %i.w, align 8, !tbaa !184
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 72
   store i8 0, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !412
-  %i.x = icmp ne ptr %.sroa.0.0.i, null           ; 2 uses
+  %i.x = icmp ne ptr %.sroa.0.0.i, null
   %i.y = zext i1 %i.x to i8
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 104
   store i8 %i.y, ptr %i.z, align 8, !tbaa !230
@@ -236,9 +236,10 @@ _ZN12_GLOBAL__N_116FsmDetectVisitor17describeResetCondEP11AstNodeExpr.exit: ; pr
 bb.d:                                             ; preds = %_ZN12_GLOBAL__N_116FsmDetectVisitor17describeResetCondEP11AstNodeExpr.exit
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 64
   %.sroa.0.0.copyload.i.i.i = load i16, ptr %i.ap, align 8, !tbaa !189
-  %i.aq = icmp eq i16 %.sroa.0.0.copyload.i.i.i, 481
-  %brmerge.not = select i1 %i.aq, i1 %i.x, i1 false
-  br i1 %brmerge.not, label %bb.e, label %_ZN7AstNode4castI5AstIfS_EEPT_PT0_.exit.thread
+  %6 = icmp ne i16 %.sroa.0.0.copyload.i.i.i, 481
+  %i.aq = icmp eq ptr %.sroa.0.0.i, null
+  %brmerge.not = select i1 %6, i1 true, i1 %i.aq
+  br i1 %brmerge.not, label %_ZN7AstNode4castI5AstIfS_EEPT_PT0_.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26

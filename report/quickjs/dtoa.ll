@@ -205,19 +205,20 @@ bb.r:                                             ; preds = %mpb_renorm.exit112
   br i1 %i.ds, label %mp_add_ui.exit.thread, label %.lr.ph.i113
 
 .lr.ph.i113:                                      ; preds = %bb.r, %.lr.ph.i113
-  %.01415.i = phi i64 [ %4, %.lr.ph.i113 ], [ 0, %bb.r ] ; 2 uses
+  %.01415.i = phi i64 [ %3, %.lr.ph.i113 ], [ 0, %bb.r ] ; 2 uses
   %i.dt = getelementptr inbounds nuw [4 x i8], ptr %i.dq, i64 %.01415.i ; 2 uses
   %i.du = load i32, ptr %i.dt, align 4, !tbaa !14
-  %i.dv = add i32 %i.du, 1                        ; 2 uses
-  %3 = icmp eq i32 %i.dv, 0                       ; 2 uses
+  %i.dv = add i32 %i.du, 1                        ; 3 uses
   store i32 %i.dv, ptr %i.dt, align 4, !tbaa !14
-  %4 = add nuw i64 %.01415.i, 1                   ; 2 uses
-  %5 = icmp ult i64 %4, %i.dr
-  %or.cond.not.i = select i1 %5, i1 %3, i1 false
-  br i1 %or.cond.not.i, label %.lr.ph.i113, label %mp_add_ui.exit, !llvm.loop !36
+  %3 = add nuw i64 %.01415.i, 1                   ; 2 uses
+  %4 = icmp uge i64 %3, %i.dr
+  %5 = icmp ne i32 %i.dv, 0
+  %or.cond.not.i = select i1 %4, i1 true, i1 %5
+  br i1 %or.cond.not.i, label %mp_add_ui.exit, label %.lr.ph.i113, !llvm.loop !36
 
 mp_add_ui.exit:                                   ; preds = %.lr.ph.i113
-  br i1 %3, label %mp_add_ui.exit.thread, label %bb.s
+  %.not126 = icmp eq i32 %i.dv, 0
+  br i1 %.not126, label %mp_add_ui.exit.thread, label %bb.s
 
 mp_add_ui.exit.thread:                            ; preds = %bb.r, %mp_add_ui.exit
   %i.dw = add nsw i32 %i.dp, 1

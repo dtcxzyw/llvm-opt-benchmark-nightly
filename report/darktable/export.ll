@@ -202,12 +202,13 @@ _is_style_set.exit.thread:                        ; preds = %bb.r, %bb.q, %.loop
 
 _is_style_set.exit:                               ; preds = %bb.r
   %i.jv = call i32 @dt_styles_exists(ptr noundef nonnull %i.jq) #16
-  %.fr309 = freeze i32 %i.jv
-  %i.jw = icmp ne i32 %.fr309, 0                  ; 2 uses
+  %.fr309 = freeze i32 %i.jv                      ; 2 uses
+  %i.jw = icmp ne i32 %.fr309, 0
   %i.jx = zext i1 %i.jw to i32
   %i.jy = load ptr, ptr %i.ew, align 8, !tbaa !102
   call void @g_free(ptr noundef %i.jy) #16
-  %spec.select = select i1 %i.jw, ptr %i.jq, ptr @.str.19
+  %.not298 = icmp eq i32 %.fr309, 0
+  %spec.select = select i1 %.not298, ptr @.str.19, ptr %i.jq
   br label %g_strdup_inline.exit
 
 g_strdup_inline.exit:                             ; preds = %_is_style_set.exit, %_is_style_set.exit.thread

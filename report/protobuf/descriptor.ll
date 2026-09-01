@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %_ZN6google8protobuf
 
 bb.k:                                             ; preds = %bb.j
   %.val = load ptr, ptr %2, align 8, !tbaa !731   ; 4 uses
-  %.val19 = load ptr, ptr %i.v, align 8, !tbaa !731 ; 4 uses
+  %.val19 = load ptr, ptr %i.v, align 8, !tbaa !731 ; 5 uses
   %i.ag = ptrtoint ptr %.val19 to i64             ; 2 uses
   %i.ah = ptrtoint ptr %.val to i64
   %i.ai = sub i64 %i.ag, %i.ah                    ; 3 uses
@@ -317,8 +317,7 @@ bb.s:                                             ; preds = %._crit_edge._crit_e
   br label %"_ZN4absl12lts_202505129c_find_ifISt6vectorIPKN6google8protobuf15FieldDescriptorESaIS7_EEZNKS4_14DescriptorPool23ResolvesFeaturesForImplEiE3$_0EEDTcl5beginclsr3stdE7declvalIRT_EEEESD_OT0_.exit"
 
 "_ZN4absl12lts_202505129c_find_ifISt6vectorIPKN6google8protobuf15FieldDescriptorESaIS7_EEZNKS4_14DescriptorPool23ResolvesFeaturesForImplEiE3$_0EEDTcl5beginclsr3stdE7declvalIRT_EEEESD_OT0_.exit": ; preds = %bb.l, %"_ZN4absl12lts_202505129c_find_ifISt6vectorIPKN6google8protobuf15FieldDescriptorESaIS7_EEZNKS4_14DescriptorPool23ResolvesFeaturesForImplEiE3$_0EEDTcl5beginclsr3stdE7declvalIRT_EEEESD_OT0_.exit.loopexit.split.loop.exit", %"_ZN4absl12lts_202505129c_find_ifISt6vectorIPKN6google8protobuf15FieldDescriptorESaIS7_EEZNKS4_14DescriptorPool23ResolvesFeaturesForImplEiE3$_0EEDTcl5beginclsr3stdE7declvalIRT_EEEESD_OT0_.exit.loopexit.split.loop.exit56", %"_ZN4absl12lts_202505129c_find_ifISt6vectorIPKN6google8protobuf15FieldDescriptorESaIS7_EEZNKS4_14DescriptorPool23ResolvesFeaturesForImplEiE3$_0EEDTcl5beginclsr3stdE7declvalIRT_EEEESD_OT0_.exit.loopexit.split.loop.exit58", %._crit_edge._crit_edge64.i.i.i.i, %._crit_edge._crit_edge.i.i.i.i, %bb.q, %._crit_edge.i.i.i.i
-  %.sroa.08.0.in.sroa.speculated.i.i.i.i = phi ptr [ %.sroa.038.1.i.i.i.i, %._crit_edge._crit_edge.i.i.i.i ], [ %spec.select.i.i.i.i, %._crit_edge._crit_edge64.i.i.i.i ], [ %.val19, %._crit_edge.i.i.i.i ], [ %.sroa.038.0.lcssa.i.i.i.i, %bb.q ], [ %i.bs, %"_ZN4absl12lts_202505129c_find_ifISt6vectorIPKN6google8protobuf15FieldDescriptorESaIS7_EEZNKS4_14DescriptorPool23ResolvesFeaturesForImplEiE3$_0EEDTcl5beginclsr3stdE7declvalIRT_EEEESD_OT0_.exit.loopexit.split.loop.exit58" ], [ %i.br, %"_ZN4absl12lts_202505129c_find_ifISt6vectorIPKN6google8protobuf15FieldDescriptorESaIS7_EEZNKS4_14DescriptorPool23ResolvesFeaturesForImplEiE3$_0EEDTcl5beginclsr3stdE7declvalIRT_EEEESD_OT0_.exit.loopexit.split.loop.exit56" ], [ %i.bq, %"_ZN4absl12lts_202505129c_find_ifISt6vectorIPKN6google8protobuf15FieldDescriptorESaIS7_EEZNKS4_14DescriptorPool23ResolvesFeaturesForImplEiE3$_0EEDTcl5beginclsr3stdE7declvalIRT_EEEESD_OT0_.exit.loopexit.split.loop.exit" ], [ %.sroa.038.057.i.i.i.i, %bb.l ]
-  %.not64 = icmp ne ptr %.sroa.08.0.in.sroa.speculated.i.i.i.i, %.val19 ; 2 uses
+  %.sroa.08.0.in.sroa.speculated.i.i.i.i = phi ptr [ %.sroa.038.1.i.i.i.i, %._crit_edge._crit_edge.i.i.i.i ], [ %spec.select.i.i.i.i, %._crit_edge._crit_edge64.i.i.i.i ], [ %.val19, %._crit_edge.i.i.i.i ], [ %.sroa.038.0.lcssa.i.i.i.i, %bb.q ], [ %i.bs, %"_ZN4absl12lts_202505129c_find_ifISt6vectorIPKN6google8protobuf15FieldDescriptorESaIS7_EEZNKS4_14DescriptorPool23ResolvesFeaturesForImplEiE3$_0EEDTcl5beginclsr3stdE7declvalIRT_EEEESD_OT0_.exit.loopexit.split.loop.exit58" ], [ %i.br, %"_ZN4absl12lts_202505129c_find_ifISt6vectorIPKN6google8protobuf15FieldDescriptorESaIS7_EEZNKS4_14DescriptorPool23ResolvesFeaturesForImplEiE3$_0EEDTcl5beginclsr3stdE7declvalIRT_EEEESD_OT0_.exit.loopexit.split.loop.exit56" ], [ %i.bq, %"_ZN4absl12lts_202505129c_find_ifISt6vectorIPKN6google8protobuf15FieldDescriptorESaIS7_EEZNKS4_14DescriptorPool23ResolvesFeaturesForImplEiE3$_0EEDTcl5beginclsr3stdE7declvalIRT_EEEESD_OT0_.exit.loopexit.split.loop.exit" ], [ %.sroa.038.057.i.i.i.i, %bb.l ] ; 2 uses
   call void @_ZN6google8protobuf10FeatureSetD1Ev(ptr noundef nonnull align 8 dereferenceable(72) %3) #40
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #40
   %i.bt = load ptr, ptr %2, align 8, !tbaa !733   ; 3 uses
@@ -335,10 +334,11 @@ bb.t:                                             ; preds = %"_ZN4absl12lts_2025
 
 _ZNSt6vectorIPKN6google8protobuf15FieldDescriptorESaIS4_EED2Ev.exit: ; preds = %"_ZN4absl12lts_202505129c_find_ifISt6vectorIPKN6google8protobuf15FieldDescriptorESaIS7_EEZNKS4_14DescriptorPool23ResolvesFeaturesForImplEiE3$_0EEDTcl5beginclsr3stdE7declvalIRT_EEEESD_OT0_.exit", %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #40
+  %.not64.not = icmp eq ptr %.sroa.08.0.in.sroa.speculated.i.i.i.i, %.val19
   %i.by = getelementptr inbounds nuw i8, ptr %.sroa.027.044, i64 8 ; 2 uses
-  %.not = icmp ne ptr %i.by, %i.u
-  %or.cond.not = select i1 %.not64, i1 %.not, i1 false
-  br i1 %or.cond.not, label %bb.h, label %._crit_edge
+  %.not = icmp eq ptr %i.by, %i.u
+  %or.cond.not = select i1 %.not64.not, i1 true, i1 %.not
+  br i1 %or.cond.not, label %._crit_edge.loopexit, label %bb.h
 
 bb.u:                                             ; preds = %bb.h
   %i.bz = landingpad { ptr, i32 }
@@ -370,8 +370,12 @@ _ZNSt6vectorIPKN6google8protobuf15FieldDescriptorESaIS4_EED2Ev.exit23: ; preds =
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #40
   br label %common.resume
 
-._crit_edge:                                      ; preds = %_ZNSt6vectorIPKN6google8protobuf15FieldDescriptorESaIS4_EED2Ev.exit, %_ZNK6google8protobuf14DescriptorPool21GetFeatureSetDefaultsEv.exit
-  %.not.lcssa = phi i1 [ true, %_ZNK6google8protobuf14DescriptorPool21GetFeatureSetDefaultsEv.exit ], [ %.not64, %_ZNSt6vectorIPKN6google8protobuf15FieldDescriptorESaIS4_EED2Ev.exit ]
+._crit_edge.loopexit:                             ; preds = %_ZNSt6vectorIPKN6google8protobuf15FieldDescriptorESaIS4_EED2Ev.exit
+  %.not64.le = icmp ne ptr %.sroa.08.0.in.sroa.speculated.i.i.i.i, %.val19
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZNK6google8protobuf14DescriptorPool21GetFeatureSetDefaultsEv.exit
+  %.not.lcssa = phi i1 [ true, %_ZNK6google8protobuf14DescriptorPool21GetFeatureSetDefaultsEv.exit ], [ %.not64.le, %._crit_edge.loopexit ]
   ret i1 %.not.lcssa
 }
 

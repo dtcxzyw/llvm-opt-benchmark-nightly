@@ -204,7 +204,7 @@ bb.a:
   %i.a = zext i16 %0 to i32
   %i.b = shl nuw i32 %i.a, 16
   %i.c = zext i16 %1 to i32
-  %i.d = or disjoint i32 %i.b, %i.c               ; 2 uses
+  %i.d = or disjoint i32 %i.b, %i.c               ; 3 uses
   %i.e = load i32, ptr getelementptr inbounds nuw (i8, ptr @old_xboxone_controllers, i64 32), align 8 ; 2 uses
   %i.f = icmp sgt i32 %i.e, 0
   br i1 %i.f, label %.lr.ph.i, label %.preheader.i
@@ -239,15 +239,19 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i
 bb.d:                                             ; preds = %bb.d, %.lr.ph18.i
   %indvars.iv23.i = phi i64 [ 0, %.lr.ph18.i ], [ %indvars.iv.next24.i, %bb.d ] ; 2 uses
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv23.i
-  %i.o = load i32, ptr %i.n, align 4
-  %.not = icmp ne i32 %i.d, %i.o                  ; 2 uses
+  %i.o = load i32, ptr %i.n, align 4              ; 2 uses
+  %.not.not = icmp eq i32 %i.d, %i.o
   %indvars.iv.next24.i = add nuw nsw i64 %indvars.iv23.i, 1 ; 2 uses
-  %exitcond27.not.i = icmp ne i64 %indvars.iv.next24.i, %wide.trip.count26.i
-  %or.cond.not = select i1 %.not, i1 %exitcond27.not.i, i1 false
-  br i1 %or.cond.not, label %bb.d, label %SDL_VIDPIDInList.exit, !llvm.loop !12
+  %exitcond27.not.i = icmp eq i64 %indvars.iv.next24.i, %wide.trip.count26.i
+  %or.cond.not = select i1 %.not.not, i1 true, i1 %exitcond27.not.i
+  br i1 %or.cond.not, label %SDL_VIDPIDInList.exit.loopexit, label %bb.d, !llvm.loop !12
 
-SDL_VIDPIDInList.exit:                            ; preds = %bb.c, %bb.d, %.preheader.i
-  %.0 = phi i1 [ true, %.preheader.i ], [ %.not, %bb.d ], [ true, %bb.c ]
+SDL_VIDPIDInList.exit.loopexit:                   ; preds = %bb.d
+  %.not = icmp ne i32 %i.d, %i.o
+  br label %SDL_VIDPIDInList.exit
+
+SDL_VIDPIDInList.exit:                            ; preds = %bb.c, %SDL_VIDPIDInList.exit.loopexit, %.preheader.i
+  %.0 = phi i1 [ true, %.preheader.i ], [ %.not, %SDL_VIDPIDInList.exit.loopexit ], [ true, %bb.c ]
   ret i1 %.0
 }
 

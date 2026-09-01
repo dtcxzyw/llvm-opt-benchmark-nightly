@@ -78,12 +78,13 @@ bb.a:
   %i.ac = getelementptr inbounds [8 x i8], ptr %12, i64 %i.ab ; 6 uses
   %i.ad = getelementptr inbounds i8, ptr %14, i64 -8 ; 3 uses
   %i.ae = tail call i32 @lsame_(ptr noundef %0, ptr noundef nonnull @.str) #6
-  %.not = icmp eq i32 %i.ae, 0                    ; 2 uses
+  %.not = icmp eq i32 %i.ae, 0
   br i1 %.not, label %bb.b, label %.thread771
 
 bb.b:                                             ; preds = %bb.a
-  %i.af = tail call i32 @lsame_(ptr noundef %0, ptr noundef nonnull @.str.1) #6
+  %i.af = tail call i32 @lsame_(ptr noundef %0, ptr noundef nonnull @.str.1) #6 ; 2 uses
   %.not571.not = icmp eq i32 %i.af, 0             ; 2 uses
+  %not..not571 = icmp ne i32 %i.af, 0             ; 3 uses
   %i.ag = tail call i32 @lsame_(ptr noundef %1, ptr noundef nonnull @.str) #6
   %.not572 = icmp eq i32 %i.ag, 0
   br i1 %.not572, label %bb.c, label %.thread
@@ -113,13 +114,14 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %.thread785, %bb.c
   %i.ak = phi i32 [ %i.ai, %.thread785 ], [ %i.aj, %bb.c ]
+  %17 = phi i1 [ false, %.thread785 ], [ %not..not571, %bb.c ]
   %.not573.not = icmp eq i32 %i.ak, 0
   br i1 %.not573.not, label %.thread617.sink.split, label %.thread608
 
 .thread608:                                       ; preds = %.thread.thread, %.thread, %bb.d
   %.not572773 = phi i1 [ true, %bb.d ], [ false, %.thread ], [ false, %.thread.thread ] ; 4 uses
-  %i.al = phi i1 [ %.not, %bb.d ], [ true, %.thread ], [ false, %.thread.thread ] ; 4 uses
-  %i.am = phi i1 [ true, %bb.d ], [ true, %.thread ], [ false, %.thread.thread ] ; 4 uses
+  %i.al = phi i1 [ %17, %bb.d ], [ %not..not571, %.thread ], [ false, %.thread.thread ] ; 4 uses
+  %i.am = phi i1 [ true, %bb.d ], [ %not..not571, %.thread ], [ false, %.thread.thread ] ; 4 uses
   %i.an = load i32, ptr %15, align 4, !tbaa !8    ; 2 uses
   %i.ao = icmp eq i32 %i.an, -1                   ; 2 uses
   %i.ap = load i32, ptr %2, align 4, !tbaa !8     ; 5 uses

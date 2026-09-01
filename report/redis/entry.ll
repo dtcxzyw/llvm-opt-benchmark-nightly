@@ -202,10 +202,10 @@ bb.a:
   %i.d = lshr i8 %.val.i, 3
   %.lobit.i = and i8 %i.d, 1
   %narrow.i = select i1 %i.c, i8 0, i8 %.lobit.i
-  %.0.i.i = zext nneg i8 %narrow.i to i32
+  %.0.i.i = zext nneg i8 %narrow.i to i32         ; 3 uses
   %i.e = lshr i32 %2, 2
-  %.lobit = and i32 %i.e, 1
-  %i.f = icmp ne i32 %.lobit, %.0.i.i             ; 3 uses
+  %.lobit = and i32 %i.e, 1                       ; 3 uses
+  %i.f = icmp ne i32 %.lobit, %.0.i.i
   %i.g = icmp ne ptr %1, null                     ; 2 uses
   %or.cond = select i1 %i.g, i1 true, i1 %i.f
   br i1 %or.cond, label %bb.f, label %bb.b
@@ -293,12 +293,14 @@ entryGetValue.exit:                               ; preds = %sdslen.exit.i, %ent
   %.043 = phi ptr [ %i.ad, %sdslen.exit.i ], [ %i.o, %entryGetValueRef.exit.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   call fastcc void @setEntryWriteInfo(ptr noundef %4, ptr noundef nonnull %0, ptr noundef %.043, i32 noundef %2)
-  br i1 %i.f, label %needsNewAlloc.exit.thread, label %needsNewAlloc.exit.thread94
+  %.not.i55 = icmp eq i32 %.lobit, %.0.i.i
+  br i1 %.not.i55, label %needsNewAlloc.exit.thread94, label %needsNewAlloc.exit.thread
 
 entryGetValue.exit.thread:                        ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   call fastcc void @setEntryWriteInfo(ptr noundef %4, ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef %2)
-  br i1 %i.f, label %needsNewAlloc.exit.thread.thread, label %.thread
+  %.not.i5582 = icmp eq i32 %.lobit, %.0.i.i
+  br i1 %.not.i5582, label %.thread, label %needsNewAlloc.exit.thread.thread
 
 .thread:                                          ; preds = %entryGetValue.exit.thread
   %i.ae = load i32, ptr %4, align 8, !tbaa !60    ; 2 uses

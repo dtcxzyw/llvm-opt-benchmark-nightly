@@ -205,7 +205,7 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtNtC
   br label %.lr.ph.i.i, !dbg !6534
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
-  %i.bn = getelementptr i8, ptr %i.do, i64 32, !dbg !6535 ; 2 uses
+  %i.bn = getelementptr i8, ptr %i.do, i64 32, !dbg !6535 ; 3 uses
     #dbg_value(ptr %i.bn, !6422, !DIExpression(), !6536)
   %i.bo = getelementptr i8, ptr %i.dn, i64 32, !dbg !6537
     #dbg_value(ptr %i.bo, !6424, !DIExpression(), !6538)
@@ -320,7 +320,7 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtNtC
     #dbg_value(ptr %i.co, !6562, !DIExpression(), !6568)
   %i.cp = zext i1 %i.cm to i64, !dbg !6678
     #dbg_value(i64 %i.cp, !6565, !DIExpression(), !6566)
-  %i.cq = getelementptr inbounds nuw [32 x i8], ptr %.sroa.06.08.i.i, i64 %i.cp, !dbg !6679 ; 5 uses
+  %i.cq = getelementptr inbounds nuw [32 x i8], ptr %.sroa.06.08.i.i, i64 %i.cp, !dbg !6679 ; 6 uses
     #dbg_value(ptr %i.cq, !6543, !DIExpression(), !6560)
     #dbg_value(ptr %i.cq, !6562, !DIExpression(), !6566)
   %i.cr = getelementptr inbounds nuw i8, ptr %.sroa.0.010.i.i, i64 32, !dbg !6680 ; 2 uses
@@ -448,7 +448,7 @@ _RINvNtNtNtNtCsj6eKBz9Db1c_4core5slice4sort6shared9smallsort11insert_tailNtNtNtC
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !dbg !6534
 
 bb.k:                                             ; preds = %._crit_edge.i.i
-  %i.dq = icmp ult ptr %i.cq, %i.bn, !dbg !6822   ; 3 uses
+  %i.dq = icmp ult ptr %i.cq, %i.bn, !dbg !6822   ; 2 uses
     #dbg_value(i1 %i.dq, !6426, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !6823)
   %.sroa.06.0..sroa.011.0.i.i = select i1 %i.dq, ptr %i.cq, ptr %i.co, !dbg !6824
     #dbg_value(ptr %.sroa.06.0..sroa.011.0.i.i, !6436, !DIExpression(), !6438)
@@ -459,7 +459,7 @@ bb.k:                                             ; preds = %._crit_edge.i.i
   %i.ds = getelementptr inbounds nuw [32 x i8], ptr %i.cq, i64 %i.dr, !dbg !6828
     #dbg_value(ptr %i.ds, !6408, !DIExpression(), !6515)
     #dbg_value(ptr %i.ds, !6494, !DIExpression(), !6513)
-  %7 = xor i1 %i.dq, true, !dbg !6829
+  %7 = icmp uge ptr %i.cq, %i.bn, !dbg !6829
   %i.dt = zext i1 %7 to i64, !dbg !6829
     #dbg_value(i64 %i.dt, !6497, !DIExpression(), !6516)
   %i.du = getelementptr inbounds nuw [32 x i8], ptr %i.co, i64 %i.dt, !dbg !6830
@@ -862,23 +862,24 @@ bb.i:                                             ; preds = %.lr.ph1391, %_RINvN
     #dbg_value(i64 %i.cd, !16403, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !16646)
     #dbg_value(i64 %.sroa.0.02611389, !16403, !DIExpression(DW_OP_constu, 18446744073709551615, DW_OP_eq, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value, DW_OP_LLVM_fragment, 128, 8), !16646)
     #dbg_value(i64 %.sroa.0.02611389, !16410, !DIExpression(), !16661)
-  %4 = icmp eq i64 %i.cc, 0, !dbg !16662          ; 2 uses
-    #dbg_value(i1 %4, !16412, !DIExpression(DW_OP_constu, 18446744073709551615, DW_OP_xor, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !16663)
-    #dbg_value(ptr %i.u, !16664, !DIExpression(), !16667)
-    #dbg_value(ptr %i.u, !16669, !DIExpression(), !16672)
-  %5 = load i64, ptr %i.v, align 8, !dbg !16674, !noundef !29
-  %i.ce = icmp eq i64 %5, 0, !dbg !16675
-  br i1 %i.ce, label %bb.k, label %bb.j, !dbg !16676
+    #dbg_value(i64 %i.cc, !16412, !DIExpression(DW_OP_lit0, DW_OP_eq, DW_OP_constu, 18446744073709551615, DW_OP_xor, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !16662)
+    #dbg_value(ptr %i.u, !16663, !DIExpression(), !16666)
+    #dbg_value(ptr %i.u, !16668, !DIExpression(), !16671)
+  %4 = load i64, ptr %i.v, align 8, !dbg !16673, !noundef !29
+  %5 = icmp eq i64 %4, 0, !dbg !16674
+  %i.ce = icmp eq i64 %i.cc, 0, !dbg !16675       ; 2 uses
+  br i1 %5, label %bb.k, label %bb.j, !dbg !16676
 
 bb.j:                                             ; preds = %bb.i
-  %brmerge = or i1 %.sroa.0.0, %4, !dbg !16677
+    #dbg_value(i1 %i.ce, !16412, !DIExpression(DW_OP_constu, 18446744073709551615, DW_OP_xor, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !16662)
+  %brmerge = or i1 %.sroa.0.0, %i.ce, !dbg !16677
   br i1 %brmerge, label %bb.l, label %_RNvMs3_NtNtNtCs9GYDdpCSJ4S_14regex_automata3nfa8thompson6pikevmNtB5_6PikeVM15epsilon_closure.exit, !dbg !16677
 
 bb.k:                                             ; preds = %bb.i
-    #dbg_value(i1 %4, !16412, !DIExpression(DW_OP_constu, 18446744073709551615, DW_OP_xor, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !16663)
+    #dbg_value(i1 %i.ce, !16412, !DIExpression(DW_OP_not, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !16662)
   %i.cf = icmp ugt i64 %.sroa.0.02611389, %i.ab
   %or.cond46 = select i1 %.sroa.0.1.i.ph, i1 %i.cf, i1 false ; 2 uses
-  br i1 %4, label %bb.is, label %bb.it, !dbg !16678
+  br i1 %i.ce, label %bb.is, label %bb.it, !dbg !16678
 
 bb.l:                                             ; preds = %bb.it, %bb.is, %bb.j
     #dbg_value(ptr inttoptr (i64 8 to ptr), !16414, !DIExpression(), !16679)
@@ -1281,20 +1282,20 @@ begin_hunk_2_@llvm.memset.p0.i64
 !16659 = distinct !DISubprogram(name: "overflowing_add", linkageName: "_RNvMs9_NtCsj6eKBz9Db1c_4core3numj15overflowing_add", scope: !5381, file: !4584, line: 2989, type: !16652, scopeLine: 2989, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !632, templateParams: !29)
 !16660 = distinct !DILocation(line: 350, column: 40, scope: !16651, inlinedAt: !16657)
 !16661 = !DILocation(line: 0, scope: !16411)
-!16662 = !DILocation(line: 1284, column: 9, scope: !16484, inlinedAt: !16491)
-!16663 = !DILocation(line: 0, scope: !16413)
-!16664 = !DILocalVariable(name: "self", arg: 1, scope: !16665, file: !11498, line: 157, type: !11794)
-!16665 = distinct !DISubprogram(name: "is_empty", linkageName: "_RNvMs_NtNtCs9GYDdpCSJ4S_14regex_automata4util10sparse_setNtB4_9SparseSet8is_empty", scope: !1578, file: !11498, line: 157, type: !11792, scopeLine: 157, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !632, templateParams: !29, declaration: !11795, retainedNodes: !16666)
-!16666 = !{!16664}
-!16667 = !DILocation(line: 157, column: 28, scope: !16665, inlinedAt: !16668)
-!16668 = !DILocation(line: 1431, column: 25, scope: !16413)
-!16669 = !DILocalVariable(name: "self", arg: 1, scope: !16670, file: !11498, line: 151, type: !11794)
-!16670 = distinct !DISubprogram(name: "len", linkageName: "_RNvMs_NtNtCs9GYDdpCSJ4S_14regex_automata4util10sparse_setNtB4_9SparseSet3len", scope: !1578, file: !11498, line: 151, type: !11801, scopeLine: 151, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !632, templateParams: !29, declaration: !11803, retainedNodes: !16671)
-!16671 = !{!16669}
-!16672 = !DILocation(line: 151, column: 23, scope: !16670, inlinedAt: !16673)
-!16673 = !DILocation(line: 158, column: 14, scope: !16665, inlinedAt: !16668)
-!16674 = !DILocation(line: 152, column: 9, scope: !16670, inlinedAt: !16673)
-!16675 = !DILocation(line: 158, column: 9, scope: !16665, inlinedAt: !16668)
+!16662 = !DILocation(line: 0, scope: !16413)
+!16663 = !DILocalVariable(name: "self", arg: 1, scope: !16664, file: !11498, line: 157, type: !11794)
+!16664 = distinct !DISubprogram(name: "is_empty", linkageName: "_RNvMs_NtNtCs9GYDdpCSJ4S_14regex_automata4util10sparse_setNtB4_9SparseSet8is_empty", scope: !1578, file: !11498, line: 157, type: !11792, scopeLine: 157, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !632, templateParams: !29, declaration: !11795, retainedNodes: !16665)
+!16665 = !{!16663}
+!16666 = !DILocation(line: 157, column: 28, scope: !16664, inlinedAt: !16667)
+!16667 = !DILocation(line: 1431, column: 25, scope: !16413)
+!16668 = !DILocalVariable(name: "self", arg: 1, scope: !16669, file: !11498, line: 151, type: !11794)
+!16669 = distinct !DISubprogram(name: "len", linkageName: "_RNvMs_NtNtCs9GYDdpCSJ4S_14regex_automata4util10sparse_setNtB4_9SparseSet3len", scope: !1578, file: !11498, line: 151, type: !11801, scopeLine: 151, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !632, templateParams: !29, declaration: !11803, retainedNodes: !16670)
+!16670 = !{!16668}
+!16671 = !DILocation(line: 151, column: 23, scope: !16669, inlinedAt: !16672)
+!16672 = !DILocation(line: 158, column: 14, scope: !16664, inlinedAt: !16667)
+!16673 = !DILocation(line: 152, column: 9, scope: !16669, inlinedAt: !16672)
+!16674 = !DILocation(line: 158, column: 9, scope: !16664, inlinedAt: !16667)
+!16675 = !DILocation(line: 1430, scope: !16411)
 !16676 = !DILocation(line: 1431, column: 16, scope: !16413)
 !16677 = !DILocation(line: 1439, column: 17, scope: !16413)
 !16678 = !DILocation(line: 1432, column: 20, scope: !16413)

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.b, %bb.c
-  %.08 = phi i8 [ %i.k, %bb.c ], [ %1, %bb.b ]
+  %.08 = phi i8 [ %i.k, %bb.c ], [ %1, %bb.b ]    ; 2 uses
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader
@@ -214,15 +214,19 @@ bb.c:                                             ; preds = %bb.b
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !70
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 40
   %i.o = load ptr, ptr %i.n, align 8
-  %i.p = tail call noundef zeroext i8 %i.o(ptr noundef nonnull align 8 dereferenceable(40) %i.l) #52
-  %.not = icmp eq i8 %i.p, %.08                   ; 2 uses
+  %i.p = tail call noundef zeroext i8 %i.o(ptr noundef nonnull align 8 dereferenceable(40) %i.l) #52 ; 2 uses
+  %.not.not = icmp ne i8 %i.p, %.08
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.012.017, i64 8 ; 2 uses
-  %.not15 = icmp ne ptr %i.q, %i.d
-  %or.cond.not = select i1 %.not, i1 %.not15, i1 false
-  br i1 %or.cond.not, label %.lr.ph, label %.loopexit
+  %.not15 = icmp eq ptr %i.q, %i.d
+  %or.cond.not = select i1 %.not.not, i1 true, i1 %.not15
+  br i1 %or.cond.not, label %.loopexit.loopexit, label %.lr.ph
 
-.loopexit:                                        ; preds = %.lr.ph, %bb.a
-  %.3 = phi i1 [ false, %bb.a ], [ %.not, %.lr.ph ]
+.loopexit.loopexit:                               ; preds = %.lr.ph
+  %.not = icmp eq i8 %i.p, %.08
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.a
+  %.3 = phi i1 [ false, %bb.a ], [ %.not, %.loopexit.loopexit ]
   ret i1 %.3
 }
 
@@ -625,15 +629,19 @@ bb.b:                                             ; preds = %._crit_edge._crit_e
 
 .lr.ph38:                                         ; preds = %.lr.ph38, %.lr.ph38.preheader
   %.33036 = phi ptr [ %i.p, %.lr.ph38 ], [ %.229, %.lr.ph38.preheader ] ; 2 uses
-  %i.o = load i8, ptr %.33036, align 1, !tbaa !17
-  %2 = icmp sgt i8 %i.o, -1                       ; 2 uses
+  %i.o = load i8, ptr %.33036, align 1, !tbaa !17 ; 2 uses
+  %.not48 = icmp slt i8 %i.o, 0
   %i.p = getelementptr inbounds nuw i8, ptr %.33036, i64 1 ; 2 uses
-  %exitcond.not = icmp ne ptr %i.p, %scevgep
-  %or.cond.not = select i1 %2, i1 %exitcond.not, i1 false
-  br i1 %or.cond.not, label %.lr.ph38, label %.critedge, !llvm.loop !459
+  %exitcond.not = icmp eq ptr %i.p, %scevgep
+  %or.cond.not = select i1 %.not48, i1 true, i1 %exitcond.not
+  br i1 %or.cond.not, label %.critedge.loopexit, label %.lr.ph38, !llvm.loop !459
 
-.critedge:                                        ; preds = %.lr.ph38, %bb.b, %._crit_edge
-  %.3 = phi i1 [ false, %._crit_edge ], [ true, %bb.b ], [ %2, %.lr.ph38 ]
+.critedge.loopexit:                               ; preds = %.lr.ph38
+  %2 = icmp sgt i8 %i.o, -1
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.loopexit, %bb.b, %._crit_edge
+  %.3 = phi i1 [ false, %._crit_edge ], [ true, %bb.b ], [ %2, %.critedge.loopexit ]
   ret i1 %.3
 }
 
@@ -1036,15 +1044,19 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !70
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 40
   %i.i = load ptr, ptr %i.h, align 8
-  %i.j = tail call noundef zeroext i8 %i.i(ptr noundef nonnull align 8 dereferenceable(40) %i.f) #52, !inline_history !702
-  %.not.i = icmp eq i8 %i.j, 1                    ; 2 uses
+  %i.j = tail call noundef zeroext i8 %i.i(ptr noundef nonnull align 8 dereferenceable(40) %i.f) #52, !inline_history !702 ; 2 uses
+  %.not.i.not = icmp ne i8 %i.j, 1
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.012.017.i, i64 8 ; 2 uses
-  %.not15.i = icmp ne ptr %i.k, %i.d
-  %or.cond.not = select i1 %.not.i, i1 %.not15.i, i1 false
-  br i1 %or.cond.not, label %.lr.ph.i, label %_ZNK4toml2v35array14is_homogeneousENS0_9node_typeE.exit
+  %.not15.i = icmp eq ptr %i.k, %i.d
+  %or.cond.not = select i1 %.not.i.not, i1 true, i1 %.not15.i
+  br i1 %or.cond.not, label %_ZNK4toml2v35array14is_homogeneousENS0_9node_typeE.exit.loopexit, label %.lr.ph.i
 
-_ZNK4toml2v35array14is_homogeneousENS0_9node_typeE.exit: ; preds = %.lr.ph.i, %bb.a
-  %.3.i = phi i1 [ false, %bb.a ], [ %.not.i, %.lr.ph.i ]
+_ZNK4toml2v35array14is_homogeneousENS0_9node_typeE.exit.loopexit: ; preds = %.lr.ph.i
+  %.not.i = icmp eq i8 %i.j, 1
+  br label %_ZNK4toml2v35array14is_homogeneousENS0_9node_typeE.exit
+
+_ZNK4toml2v35array14is_homogeneousENS0_9node_typeE.exit: ; preds = %_ZNK4toml2v35array14is_homogeneousENS0_9node_typeE.exit.loopexit, %bb.a
+  %.3.i = phi i1 [ false, %bb.a ], [ %.not.i, %_ZNK4toml2v35array14is_homogeneousENS0_9node_typeE.exit.loopexit ]
   ret i1 %.3.i
 }
 
@@ -1447,8 +1459,8 @@ bb.l:                                             ; preds = %bb.i
   br label %bb.gz
 
 bb.m:                                             ; preds = %bb.h
-  %i.n = load i32, ptr %i.j, align 4, !tbaa !488  ; 2 uses
-  %i.o = icmp eq i32 %i.n, 91                     ; 9 uses
+  %i.n = load i32, ptr %i.j, align 4, !tbaa !488  ; 3 uses
+  %i.o = icmp eq i32 %i.n, 91                     ; 8 uses
   br i1 %i.o, label %bb.n, label %bb.ab
 
 bb.n:                                             ; preds = %bb.m
@@ -1851,9 +1863,10 @@ _ZN4toml2v34impl4findIN9__gnu_cxx17__normal_iteratorIPPNS0_5arrayESt6vectorIS6_S
   %i.ne = getelementptr inbounds nuw i8, ptr %i.ll, i64 144
   %i.nf = load ptr, ptr %i.ne, align 8
   %i.ng = call noundef ptr %i.nf(ptr noundef nonnull align 8 dereferenceable(40) %i.le) #52 ; 8 uses
-  %50 = icmp eq ptr %i.ng, null
-  %or.cond9.not = or i1 %i.o, %50
-  br i1 %or.cond9.not, label %_ZN4toml2v313source_regionD2Ev.exit285, label %bb.em
+  %.not = icmp ne i32 %i.n, 91
+  %50 = icmp ne ptr %i.ng, null
+  %or.cond9 = and i1 %.not, %50
+  br i1 %or.cond9, label %bb.em, label %_ZN4toml2v313source_regionD2Ev.exit285
 
 bb.em:                                            ; preds = %_ZN4toml2v34impl4findIN9__gnu_cxx17__normal_iteratorIPPNS0_5arrayESt6vectorIS6_SaIS6_EEEES6_EEDTaddefp_ET_SD_RKT0_.exit272.thread
   %i.nh = getelementptr inbounds nuw i8, ptr %0, i64 3200

@@ -205,13 +205,14 @@ bb.m:                                             ; preds = %.thread511.i.i
   call void @llvm.assume(i1 %i.bd)
   %.sroa.010.0.i.i.i = call i32 @llvm.abs.i32(i32 %i.ao, i1 true)
   %i.be = mul i32 %.sroa.010.0.i.i.i, 33555415
-  %i.bf = and i32 %i.be, 100695055
-  %i.bg = icmp samesign ult i32 %i.bf, 31745      ; 2 uses
+  %i.bf = and i32 %i.be, 100695055                ; 2 uses
+  %i.bg = icmp samesign ult i32 %i.bf, 31745
   %or.cond1.i.i.i = icmp samesign ult i16 %.sroa.12.0.copyload26.i378409, 366
   br i1 %or.cond1.i.i.i, label %bb.p, label %bb.n, !prof !2000
 
 bb.n:                                             ; preds = %bb.m
-  br i1 %i.bg, label %bb.p, label %bb.o
+  %.not2.i.i.i = icmp samesign ugt i32 %i.bf, 31744
+  br i1 %.not2.i.i.i, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %.sroa.0.sroa.15.0.extract.shift.i = lshr i64 ptrtoint (ptr @31 to i64), 32
@@ -393,15 +394,16 @@ switch.lookup:                                    ; preds = %bb.af
 bb.ag:                                            ; preds = %switch.lookup
   %.sroa.010.0.i345.i.i = call i32 @llvm.abs.i32(i32 %i.ao, i1 true)
   %i.dp = mul i32 %.sroa.010.0.i345.i.i, 33555415
-  %i.dq = and i32 %i.dp, 100695055
-  %i.dr = icmp samesign ult i32 %i.dq, 31745      ; 2 uses
+  %i.dq = and i32 %i.dp, 100695055                ; 2 uses
+  %i.dr = icmp samesign ult i32 %i.dq, 31745
   %or.cond1.i346.i.i = icmp ult i16 %i.dm, 365
   br i1 %or.cond1.i346.i.i, label %bb.aj, label %bb.ah, !prof !2000
 
 bb.ah:                                            ; preds = %bb.ag
-  %3 = icmp eq i16 %i.dn, 366
-  %brmerge.not.i347.i.i = and i1 %i.dr, %3
-  br i1 %brmerge.not.i347.i.i, label %bb.aj, label %bb.ai
+  %3 = icmp ne i16 %i.dn, 366
+  %.not2.i347.i.i = icmp samesign ugt i32 %i.dq, 31744
+  %brmerge.i348.i.i = or i1 %.not2.i347.i.i, %3
+  br i1 %brmerge.i348.i.i, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah, %switch.lookup
   %.sroa.0377.0.ph.i.i = phi ptr [ @31, %bb.ah ], [ @13, %switch.lookup ]
@@ -469,15 +471,16 @@ switch.lookup448:                                 ; preds = %bb.am
 bb.an:                                            ; preds = %switch.lookup448
   %.sroa.010.0.i359.i.i = call i32 @llvm.abs.i32(i32 %i.ao, i1 true)
   %i.ew = mul i32 %.sroa.010.0.i359.i.i, 33555415
-  %i.ex = and i32 %i.ew, 100695055
-  %i.ey = icmp samesign ult i32 %i.ex, 31745      ; 2 uses
+  %i.ex = and i32 %i.ew, 100695055                ; 2 uses
+  %i.ey = icmp samesign ult i32 %i.ex, 31745
   %or.cond1.i360.i.i = icmp ult i16 %i.et, 365
   br i1 %or.cond1.i360.i.i, label %bb.aq, label %bb.ao, !prof !2000
 
 bb.ao:                                            ; preds = %bb.an
-  %4 = icmp eq i16 %i.eu, 366
-  %brmerge.not.i361.i.i = and i1 %i.ey, %4
-  br i1 %brmerge.not.i361.i.i, label %bb.aq, label %bb.ap
+  %4 = icmp ne i16 %i.eu, 366
+  %.not2.i362.i.i = icmp samesign ugt i32 %i.ex, 31744
+  %brmerge.i363.i.i = or i1 %.not2.i362.i.i, %4
+  br i1 %brmerge.i363.i.i, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao, %switch.lookup448
   %.sroa.0384.0.ph.i.i = phi ptr [ @31, %bb.ao ], [ @13, %switch.lookup448 ]

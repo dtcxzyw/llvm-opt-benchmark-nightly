@@ -205,9 +205,9 @@ _ZNK9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE7is_openEv.exit: ; pred
 
 _ZNK9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE7is_openEv.exit.thread: ; preds = %.backedge, %_ZNK9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE7is_openEv.exit
   %i.p = load ptr, ptr %i.g, align 8, !tbaa !49
-  %i.q = call i32 @shm_open(ptr noundef %i.p, i32 noundef 194, i32 noundef 438) #28 ; 2 uses
+  %i.q = call i32 @shm_open(ptr noundef %i.p, i32 noundef 194, i32 noundef 438) #28 ; 4 uses
   store i32 %i.q, ptr %i.d, align 8, !tbaa !270
-  %i.r = icmp ne i32 %i.q, -1                     ; 7 uses
+  %i.r = icmp ne i32 %i.q, -1                     ; 5 uses
   br i1 %i.r, label %.preheader.i.preheader, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE7is_openEv.exit.thread
@@ -306,6 +306,7 @@ bb.l:                                             ; preds = %bb.g
   br label %.thread64
 
 .thread57:                                        ; preds = %.split, %.thread61
+  %4 = icmp eq i32 %i.q, -1                       ; 2 uses
   %i.aw = load ptr, ptr %i.g, align 8, !tbaa !49
   %i.ax = call i32 @shm_unlink(ptr noundef %i.aw) #28 ; 0 uses
   %.pr = load ptr, ptr %i.e, align 8, !tbaa !656  ; 2 uses
@@ -319,7 +320,7 @@ _ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE12unmap_regionEv.exit: ;
   br label %.thread64
 
 .thread64:                                        ; preds = %bb.l, %_ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE12unmap_regionEv.exit, %.thread57
-  %.not26.a = phi i1 [ %i.r, %.thread57 ], [ %i.r, %_ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE12unmap_regionEv.exit ], [ true, %bb.l ]
+  %.not26.a = phi i1 [ %4, %.thread57 ], [ %4, %_ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE12unmap_regionEv.exit ], [ false, %bb.l ]
   %i.ba = load i32, ptr %i.d, align 8, !tbaa !270
   %i.bb = icmp eq i32 %i.ba, -1
   br i1 %i.bb, label %_ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE11unlock_fileEv.exit, label %.preheader.i35
@@ -348,7 +349,10 @@ _ZN9Stockfish3shm12SharedMemoryINS_4Eval4NNUE8NetworksEE11unlock_fileEv.exit: ; 
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
   %i.bk = load ptr, ptr %i.k, align 8, !tbaa !49
   store i8 0, ptr %i.bk, align 1, !tbaa !52
-  %or.cond5 = or i1 %.not26.a, %.020
+  %.not = icmp eq i32 %i.q, -1
+  %or.cond3 = and i1 %.not, %.not26.a
+  %or.cond3.not = xor i1 %or.cond3, true
+  %or.cond5 = or i1 %.020, %or.cond3.not
   br i1 %or.cond5, label %.thread70, label %.backedge.backedge
 
 bb.n:                                             ; preds = %.split

@@ -205,9 +205,9 @@ _RNvXs1_NtNtNtCsa5QsYiPB8Gl_5image6codecs3hdr7encoderNtB5_11RunIteratorNtNtNtNtC
   store i64 127, ptr %i.c, align 8, !noalias !1379
   %i.s = call noundef i64 @_RNvXs_NvNtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator10advance_byINtNtNtBc_8adapters10take_while9TakeWhileINtNtNtBe_5slice4iter4IterhENCNvXs1_NtNtNtCsa5QsYiPB8Gl_5image6codecs3hdr7encoderNtB2s_11RunIteratorB6_4next0ENtB4_13SpecAdvanceBy15spec_advance_byB2y_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.k, i64 noundef range(i64 1, 0) 127), !noalias !1379
   %i.t = load i64, ptr %i.c, align 8, !alias.scope !1380, !noalias !1379
-  %i.u = sub i64 %i.t, %i.s                       ; 4 uses
+  %i.u = sub i64 %i.t, %i.s                       ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1379
-  %i.v = icmp ult i64 %i.u, 3                     ; 4 uses
+  %i.v = icmp ult i64 %i.u, 3                     ; 3 uses
   %i.w = load i8, ptr %i.d, align 1, !noalias !1379
   %.sroa.43.0.i = select i1 %i.v, i64 %i.m, i64 %i.u
   %.sroa.3.0.i = select i1 %i.v, i8 undef, i8 %i.w
@@ -219,7 +219,8 @@ _RNvXs1_NtNtNtCsa5QsYiPB8Gl_5image6codecs3hdr7encoderNtB5_11RunIteratorNtNtNtNtC
   store i64 %.sroa.43.0.i, ptr %.sroa.43.0..sroa_idx.i, align 8, !alias.scope !1374, !noalias !1377
   store i64 %i.u, ptr %.sroa.64.0..sroa_idx.i, align 8, !alias.scope !1374, !noalias !1377
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !1379
-  br i1 %i.v, label %bb.f, label %_RNvXs1_NtNtNtCsa5QsYiPB8Gl_5image6codecs3hdr7encoderNtB5_11RunIteratorNtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4next.exit36.thread
+  %cond127 = icmp ugt i64 %i.u, 2
+  br i1 %cond127, label %_RNvXs1_NtNtNtCsa5QsYiPB8Gl_5image6codecs3hdr7encoderNtB5_11RunIteratorNtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4next.exit36.thread, label %bb.f
 
 .loopexit:                                        ; preds = %bb.c
   store i8 2, ptr %0, align 8
@@ -262,12 +263,12 @@ _RNvXs1_NtNtNtCsa5QsYiPB8Gl_5image6codecs3hdr7encoderNtB5_11RunIteratorNtNtNtNtC
   %i.af = load i64, ptr %i.a, align 8, !alias.scope !1388, !noalias !1386
   %i.ag = sub i64 %i.af, %i.ae                    ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1386
-  %2 = icmp ult i64 %i.ag, 3
   %i.ah = load i8, ptr %i.b, align 1, !noalias !1386
   %i.ai = add i64 %i.ag, %i.m                     ; 2 uses
   store i64 %i.ai, ptr %i.f, align 8, !alias.scope !1383, !noalias !1391
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1386
-  br i1 %2, label %bb.j, label %bb.k
+  %cond = icmp ugt i64 %i.ag, 2
+  br i1 %cond, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %_RNvXs1_NtNtNtCsa5QsYiPB8Gl_5image6codecs3hdr7encoderNtB5_11RunIteratorNtNtNtNtCsj6eKBz9Db1c_4core4iter6traits8iterator8Iterator4next.exit36
   %i.aj = add i64 %i.ag, %i.z                     ; 4 uses

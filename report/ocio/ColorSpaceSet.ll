@@ -202,15 +202,19 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.013.019.i = phi ptr [ %i.s, %.lr.ph.i ], [ %i.f, %.preheader.i ] ; 2 uses
   %i.p = load ptr, ptr %.sroa.013.019.i, align 8, !tbaa !40
   %i.q = tail call noundef ptr @_ZNK16OpenColorIO_v2_510ColorSpace7getNameEv(ptr noundef nonnull align 8 dereferenceable(8) %i.p) #22
-  %i.r = tail call noundef i32 @_ZNK16OpenColorIO_v2_513ColorSpaceSet4Impl8getIndexEPKc(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef %i.q)
-  %.not17.not.i.not = icmp ne i32 %i.r, -1        ; 2 uses
+  %i.r = tail call noundef i32 @_ZNK16OpenColorIO_v2_513ColorSpaceSet4Impl8getIndexEPKc(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef %i.q) ; 2 uses
+  %.not17.not.i.not.not = icmp eq i32 %i.r, -1
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.013.019.i, i64 16 ; 2 uses
-  %.not16.i = icmp ne ptr %i.s, %i.e
-  %or.cond.not = select i1 %.not17.not.i.not, i1 %.not16.i, i1 false
-  br i1 %or.cond.not, label %.lr.ph.i, label %_ZNK16OpenColorIO_v2_513ColorSpaceSet4ImpleqERKS1_.exit
+  %.not16.i = icmp eq ptr %i.s, %i.e
+  %or.cond.not = select i1 %.not17.not.i.not.not, i1 true, i1 %.not16.i
+  br i1 %or.cond.not, label %_ZNK16OpenColorIO_v2_513ColorSpaceSet4ImpleqERKS1_.exit.loopexit, label %.lr.ph.i
 
-_ZNK16OpenColorIO_v2_513ColorSpaceSet4ImpleqERKS1_.exit: ; preds = %.lr.ph.i, %bb.a, %bb.b, %.preheader.i
-  %.3.i = phi i1 [ false, %bb.b ], [ true, %bb.a ], [ true, %.preheader.i ], [ %.not17.not.i.not, %.lr.ph.i ]
+_ZNK16OpenColorIO_v2_513ColorSpaceSet4ImpleqERKS1_.exit.loopexit: ; preds = %.lr.ph.i
+  %.not17.not.i.not = icmp ne i32 %i.r, -1
+  br label %_ZNK16OpenColorIO_v2_513ColorSpaceSet4ImpleqERKS1_.exit
+
+_ZNK16OpenColorIO_v2_513ColorSpaceSet4ImpleqERKS1_.exit: ; preds = %_ZNK16OpenColorIO_v2_513ColorSpaceSet4ImpleqERKS1_.exit.loopexit, %bb.a, %bb.b, %.preheader.i
+  %.3.i = phi i1 [ false, %bb.b ], [ true, %bb.a ], [ true, %.preheader.i ], [ %.not17.not.i.not, %_ZNK16OpenColorIO_v2_513ColorSpaceSet4ImpleqERKS1_.exit.loopexit ]
   ret i1 %.3.i
 }
 

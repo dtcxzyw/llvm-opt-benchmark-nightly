@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.t, %bb.u
-  %i.cm = phi i32 [ %i.cl, %bb.u ], [ 2147483647, %bb.t ] ; 2 uses
+  %i.cm = phi i32 [ %i.cl, %bb.u ], [ 2147483647, %bb.t ] ; 3 uses
   %i.cn = load i32, ptr %i.bo, align 8, !tbaa !37 ; 2 uses
   %i.co = icmp eq i32 %i.cn, 2147483647
   br i1 %i.co, label %.preheader, label %bb.w
@@ -225,7 +225,7 @@ bb.w:                                             ; preds = %bb.v
   store i32 %i.cx, ptr %i.cv, align 8, !tbaa !40
   %spec.select.1 = tail call i32 @llvm.smin.i32(i32 %i.bw, i32 %i.ce)
   %spec.select.2 = tail call i32 @llvm.smin.i32(i32 %spec.select.1, i32 %i.cm) ; 2 uses
-  %spec.select.3 = tail call i32 @llvm.smin.i32(i32 %spec.select.2, i32 %i.cu) ; 3 uses
+  %spec.select.3 = tail call i32 @llvm.smin.i32(i32 %spec.select.2, i32 %i.cu) ; 4 uses
   %i.cy = icmp eq i32 %spec.select.3, %i.bw
   br i1 %i.cy, label %bb.x, label %bb.aa
 
@@ -282,7 +282,7 @@ bb.ad:                                            ; preds = %bb.ab
 bb.ae:                                            ; preds = %bb.aa, %bb.ad, %bb.ac
   %.sroa.9180.0 = phi ptr [ %i.dn, %bb.ad ], [ %i.dq, %bb.ac ], [ %2, %bb.aa ] ; 4 uses
   %.sroa.9.0 = phi ptr [ %i.dx, %bb.ad ], [ %i.dv, %bb.ac ], [ %2, %bb.aa ] ; 4 uses
-  %i.dy = icmp eq i32 %spec.select.3, %i.cm       ; 3 uses
+  %i.dy = icmp eq i32 %spec.select.3, %i.cm       ; 2 uses
   br i1 %i.dy, label %bb.af, label %bb.ai
 
 bb.af:                                            ; preds = %bb.ae
@@ -351,7 +351,8 @@ bb.an:                                            ; preds = %bb.am
   br label %bb.au
 
 bb.ao:                                            ; preds = %bb.ai
-  br i1 %i.dy, label %bb.ap, label %.thread237
+  %.not155.not = icmp eq i32 %spec.select.3, %i.cm
+  br i1 %.not155.not, label %bb.ap, label %.thread237
 
 bb.ap:                                            ; preds = %bb.ao
   %.not150 = icmp eq ptr %.sroa.16184.0, %i.i     ; 2 uses

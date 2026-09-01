@@ -205,7 +205,7 @@ switch.early.test.us:                             ; preds = %bb.q
 bb.r:                                             ; preds = %switch.early.test.us, %switch.early.test.us, %switch.early.test.us, %bb.q
   %i.bg = ptrtoint ptr %.073.us to i64
   %i.bh = ptrtoint ptr %.063.us to i64
-  %i.bi = sub i64 %i.bg, %i.bh                    ; 2 uses
+  %i.bi = sub i64 %i.bg, %i.bh                    ; 3 uses
   br i1 %.not83, label %_ZL23lambda_components_checkPK19lambda_components_tiPKcm.exit.thread, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -223,8 +223,8 @@ bb.t:                                             ; preds = %bb.s
 
 .thread31.i.us:                                   ; preds = %bb.t
   %i.bp = icmp eq ptr %.073.us, %.063.us
-  %i.bq = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.bn) #26
-  %.not29.i.us = icmp ne i64 %i.bq, %i.bi         ; 2 uses
+  %i.bq = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.bn) #26 ; 2 uses
+  %.not29.i.us = icmp ne i64 %i.bq, %i.bi
   %brmerge.i.us = or i1 %i.bp, %.not29.i.us
   br i1 %brmerge.i.us, label %_ZL23lambda_components_checkPK19lambda_components_tiPKcm.exit.us, label %.split.us
 
@@ -234,7 +234,8 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.bs, label %bb.u, label %_ZL23lambda_components_checkPK19lambda_components_tiPKcm.exit.thread
 
 _ZL23lambda_components_checkPK19lambda_components_tiPKcm.exit.us: ; preds = %.thread31.i.us
-  br i1 %.not29.i.us, label %_ZL23lambda_components_checkPK19lambda_components_tiPKcm.exit.thread, label %bb.u
+  %not..not29.i.us = icmp eq i64 %i.bq, %i.bi
+  br i1 %not..not29.i.us, label %bb.u, label %_ZL23lambda_components_checkPK19lambda_components_tiPKcm.exit.thread
 
 bb.u:                                             ; preds = %_ZL23lambda_components_checkPK19lambda_components_tiPKcm.exit.us, %.split.us
   %i.bt = add nsw i32 %.064.us, 1

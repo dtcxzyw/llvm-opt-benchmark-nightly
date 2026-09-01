@@ -205,9 +205,8 @@ _RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeer
 
 .critedge:                                        ; preds = %_RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3map4IterNtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key8DistanceNtNtNtNtB28_5query5peers7closest4PeerEENtNtNtB8_6traits8iterator8Iterator3nthCs2Bxje7pdMIr_13libp2p_server.exit, %_RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeersIter10on_successINtNtNtNtCskKLDkoKarTP_4core4iter7sources5empty5EmptyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEEs_0Cs2Bxje7pdMIr_13libp2p_server.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  %i.bd = load i64, ptr %i.an, align 8, !noundef !6
-  %i.be = load i64, ptr %i.ah, align 8, !range !211, !noundef !6
-  %2 = icmp uge i64 %i.bd, %i.be                  ; 2 uses
+  %i.bd = load i64, ptr %i.an, align 8, !noundef !6 ; 2 uses
+  %i.be = load i64, ptr %i.ah, align 8, !range !211, !noundef !6 ; 2 uses
   %i.bf = load i64, ptr %0, align 8, !range !5, !noundef !6 ; 2 uses
   switch i64 %i.bf, label %default.unreachable56 [
     i64 0, label %bb.l
@@ -216,16 +215,18 @@ _RNCINvMs_NtNtNtCskC4O4hr3vz7_10libp2p_kad5query5peers7closestNtB7_16ClosestPeer
   ]
 
 bb.l:                                             ; preds = %.critedge
+  %2 = icmp ult i64 %i.bd, %i.be
   %i.bg = load i64, ptr %i.i, align 8
   %i.bh = add i64 %i.bg, 1
-  %.sroa.011.0 = select i1 %2, i64 %i.bh, i64 0   ; 2 uses
+  %.sroa.011.0 = select i1 %2, i64 0, i64 %i.bh   ; 2 uses
   %i.bi = load i64, ptr %i.ag, align 8, !range !211, !noundef !6
   %.not46 = icmp uge i64 %.sroa.011.0, %i.bi
   %spec.select49 = zext i1 %.not46 to i64
   br label %bb.n
 
 bb.m:                                             ; preds = %.critedge
-  %.47 = zext i1 %2 to i64
+  %not. = icmp uge i64 %i.bd, %i.be
+  %.47 = zext i1 %not. to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.l, %.critedge, %bb.m

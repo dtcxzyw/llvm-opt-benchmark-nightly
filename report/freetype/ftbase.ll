@@ -205,8 +205,8 @@ bb.am:                                            ; preds = %bb.al, %bb.av
   %i.et = getelementptr inbounds nuw [16 x i8], ptr @ft_raccess_guess_table, i64 %indvars.iv317
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 8
   %i.ev = load i32, ptr %i.eu, align 8, !tbaa !353
-  %.off.i.i = add i32 %i.ev, -3
-  %switch.i.i = icmp ult i32 %.off.i.i, 2         ; 3 uses
+  %.off.i.i = add i32 %i.ev, -3                   ; 2 uses
+  %switch.i.i = icmp ult i32 %.off.i.i, 2         ; 2 uses
   %i.ew = icmp ne i8 %.0.i180305, 0
   %or.cond.i = select i1 %switch.i.i, i1 %i.ew, i1 false
   br i1 %or.cond.i, label %bb.av, label %bb.an
@@ -280,7 +280,8 @@ FT_Stream_Free.exit.i:                            ; preds = %bb.as, %bb.at
   br i1 %.not45.i, label %bb.aw, label %bb.au
 
 bb.au:                                            ; preds = %FT_Stream_Free.exit.i
-  %spec.select.i186 = select i1 %switch.i.i, i8 1, i8 %.0.i180305
+  %.not48.i = icmp ugt i32 %.off.i.i, 1
+  %spec.select.i186 = select i1 %.not48.i, i8 %.0.i180305, i8 1
   br label %bb.av
 
 bb.av:                                            ; preds = %FT_Stream_New.exit.i.thread, %bb.au, %bb.an, %bb.am
@@ -683,9 +684,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 define range(i32 0, 8) i32 @FT_Face_Properties(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr nofree noundef readonly captures(address_is_null) %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = icmp eq i32 %1, 0                        ; 2 uses
-  %i.b = icmp ne ptr %2, null                     ; 2 uses
+  %i.b = icmp ne ptr %2, null
   %or.cond = or i1 %i.a, %i.b
-  %3 = xor i1 %i.b, true
+  %3 = icmp eq ptr %2, null
   %brmerge = or i1 %i.a, %3
   %.mux = select i1 %or.cond, i32 0, i32 6
   br i1 %brmerge, label %.loopexit, label %.lr.ph
@@ -1088,7 +1089,7 @@ bb.x:                                             ; preds = %bb.w
 
 FT_MulDiv.exit133:                                ; preds = %bb.w, %bb.x
   %i.ew = phi i64 [ %i.ev, %bb.x ], [ 2147483647, %bb.w ] ; 2 uses
-  %i.ex = xor i64 %.sroa.0.0, %.0102
+  %i.ex = xor i64 %.0102, %.sroa.0.0
   %i.ey = icmp slt i64 %i.ex, 0
   %i.ez = sub i64 0, %i.ew
   %i.fa = select i1 %i.ey, i64 %i.ez, i64 %i.ew
@@ -1132,7 +1133,7 @@ bb.aa:                                            ; preds = %bb.z
 
 FT_MulDiv.exit149:                                ; preds = %bb.z, %bb.aa
   %i.fs = phi i64 [ %i.fr, %bb.aa ], [ 2147483647, %bb.z ] ; 2 uses
-  %i.ft = xor i64 %.sroa.11.0, %.0102
+  %i.ft = xor i64 %.0102, %.sroa.11.0
   %i.fu = icmp slt i64 %i.ft, 0
   %i.fv = sub i64 0, %i.fs
   %i.fw = select i1 %i.fu, i64 %i.fv, i64 %i.fs

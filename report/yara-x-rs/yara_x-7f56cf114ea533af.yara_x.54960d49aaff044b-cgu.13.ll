@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1071)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1074)
   %i.cy = ptrtoaddr ptr %i.cw to i64
-  %i.cz = icmp samesign ne i64 %3, 0              ; 10 uses
+  %i.cz = icmp samesign ne i64 %3, 0              ; 2 uses
   %spec.select.idx.i = zext i1 %i.cz to i64
   %spec.select.i = getelementptr inbounds nuw i8, ptr %2, i64 %spec.select.idx.i
   %spec.select1391.i = select i1 %i.cz, ptr %2, ptr null
@@ -247,6 +247,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecTjmEE8push_mutCs7gfv9tzbXmh_6yara_x.
   br i1 %i.dt, label %_RINvNtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson6pikevm15epsilon_closureNtB6_10FwdCodeLocEB8_.exit165.preheader.i, label %.lr.ph1711.i
 
 .lr.ph1711.i:                                     ; preds = %_RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecTjmEE8push_mutCs7gfv9tzbXmh_6yara_x.exit.i
+  %not..i = icmp samesign eq i64 %3, 0            ; 8 uses
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 9 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.ct, i64 8
   %i.dw = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -566,13 +567,13 @@ bb.ag:                                            ; preds = %.thread907.i, %bb.j
   br i1 %i.de, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultlNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit218.i, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson6pikevmNtB4_19EpsilonClosureState8executed.exit.threadthread-pre-split.i
 
 bb.ah:                                            ; preds = %.thread907.i, %bb.j
-  br i1 %i.cz, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson6pikevmNtB4_19EpsilonClosureState8executed.exit.threadthread-pre-split.i, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultlNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit223.i
+  br i1 %not..i, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultlNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit223.i, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson6pikevmNtB4_19EpsilonClosureState8executed.exit.threadthread-pre-split.i
 
 bb.ai:                                            ; preds = %.thread907.i, %bb.j
   br i1 %i.de, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultlNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit228.i, label %bb.bm
 
 bb.aj:                                            ; preds = %.thread907.i, %bb.j
-  br i1 %i.cz, label %bb.br, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultlNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit233.i
+  br i1 %not..i, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultlNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit233.i, label %bb.br
 
 bb.ak:                                            ; preds = %bb.m, %.thread907.i, %bb.j
   %i.hn = phi i1 [ true, %bb.m ], [ false, %.thread907.i ], [ false, %bb.j ] ; 3 uses
@@ -959,7 +960,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecTjmEE8push_mutCs7gfv9tzbXmh_6yara_x.
 
 bb.bm:                                            ; preds = %bb.ai
   %i.lp = load i8, ptr %i.df, align 1, !alias.scope !1079, !noalias !1265, !noundef !27 ; 2 uses
-  br i1 %i.cz, label %bb.bn, label %bb.bo
+  br i1 %not..i, label %bb.bo, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
   switch i8 %i.lp, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson6pikevmNtB4_19EpsilonClosureState8executed.exit.threadthread-pre-split.i [
@@ -1041,10 +1042,10 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecTjmEE8push_mutCs7gfv9tzbXmh_6yara_x.
   br label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson6pikevmNtB4_19EpsilonClosureState8executed.exit.thread.i
 
 bb.bw:                                            ; preds = %bb.ak
-  br i1 %i.cz, label %bb.ca, label %bb.bz
+  br i1 %not..i, label %bb.bz, label %bb.ca
 
 bb.bx:                                            ; preds = %bb.ak
-  br i1 %i.cz, label %bb.bz, label %bb.by
+  br i1 %not..i, label %bb.by, label %bb.bz
 
 bb.by:                                            ; preds = %bb.bx
   br i1 %i.hn, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultlNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit238.i, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson6pikevmNtB4_19EpsilonClosureState8executed.exit.threadthread-pre-split.i
@@ -1129,10 +1130,10 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecTjmEE8push_mutCs7gfv9tzbXmh_6yara_x.
   br label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson6pikevmNtB4_19EpsilonClosureState8executed.exit.thread.i
 
 bb.cj:                                            ; preds = %bb.al
-  br i1 %i.cz, label %bb.cm, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson6pikevmNtB4_19EpsilonClosureState8executed.exit.threadthread-pre-split.i
+  br i1 %not..i, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson6pikevmNtB4_19EpsilonClosureState8executed.exit.threadthread-pre-split.i, label %bb.cm
 
 bb.ck:                                            ; preds = %bb.al
-  br i1 %i.cz, label %bb.cl, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson6pikevmNtB4_19EpsilonClosureState8executed.exit.threadthread-pre-split.i
+  br i1 %not..i, label %_RNvMs_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson6pikevmNtB4_19EpsilonClosureState8executed.exit.threadthread-pre-split.i, label %bb.cl
 
 bb.cl:                                            ; preds = %bb.ck
   %i.mx = load i8, ptr %2, align 1, !alias.scope !1076, !noalias !1266, !noundef !27 ; 6 uses
@@ -1201,7 +1202,7 @@ _RNvMsG_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecTjmEE8push_mutCs7gfv9tzbXmh_6yara_x.
 bb.cr:                                            ; preds = %_RNvMs7_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson5instrNtB5_11InstrParser12decode_instr.exit.i
   %i.nu = load i8, ptr %i.df, align 1, !alias.scope !1079, !noalias !1265, !noundef !27 ; 11 uses
   %i.nv = icmp eq i8 %i.nu, 95                    ; 2 uses
-  br i1 %i.cz, label %bb.ct, label %bb.cs
+  br i1 %not..i, label %bb.cs, label %bb.ct
 
 bb.cs:                                            ; preds = %bb.cr
   br i1 %i.nv, label %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultlNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs7gfv9tzbXmh_6yara_x.exit248.i, label %bb.cu

@@ -205,8 +205,9 @@ _ZN4llvm14TargetLowering16CallLoweringInfo9setCalleeEjPNS_4TypeENS_7SDValueEOSt6
   %i.fs = phi i16 [ %i.fb, %bb.q ], [ %.pre, %bb.r ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %i.ft = and i16 %i.fs, -12
-  %i.fu = select i1 %i.d, i16 9, i16 10
-  %i.fv = or disjoint i16 %i.fu, %i.ft
+  %i.fu = select i1 %i.d, i16 1, i16 2
+  %21 = or disjoint i16 %i.fu, %i.ft
+  %i.fv = or disjoint i16 %21, 8
   store i16 %i.fv, ptr %i.cu, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #38
   call void @_ZNK4llvm14TargetLowering11LowerCallToERNS0_16CallLoweringInfoE(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair.633") align 8 %20, ptr noundef nonnull align 8 dereferenceable(518435) %0, ptr noundef nonnull align 8 dereferenceable(4664) %19) #38

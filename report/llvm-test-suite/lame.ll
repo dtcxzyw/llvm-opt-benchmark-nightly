@@ -195,8 +195,8 @@ bb.u:                                             ; preds = %bb.s
 
 bb.v:                                             ; preds = %._crit_edge399, %bb.i, %bb.l, %bb.p, %bb.t, %bb.u, %bb.r, %bb.n, %bb.j
   %i.ar = phi i32 [ %i.u, %bb.i ], [ %i.u, %bb.l ], [ %i.u, %bb.p ], [ %i.u, %bb.t ], [ %i.u, %bb.u ], [ %i.u, %bb.r ], [ %i.u, %bb.n ], [ %i.u, %bb.j ], [ %.pre401, %._crit_edge399 ] ; 2 uses
-  %i.as = phi i32 [ %.sink449, %bb.i ], [ 16000, %bb.l ], [ 24000, %bb.p ], [ 44100, %bb.t ], [ 48000, %bb.u ], [ 32000, %bb.r ], [ 22050, %bb.n ], [ %.sink449, %bb.j ], [ %i.l, %._crit_edge399 ] ; 4 uses
-  %i.at = icmp sgt i32 %i.as, 24000               ; 3 uses
+  %i.as = phi i32 [ %.sink449, %bb.i ], [ 16000, %bb.l ], [ 24000, %bb.p ], [ 44100, %bb.t ], [ 48000, %bb.u ], [ 32000, %bb.r ], [ 22050, %bb.n ], [ %.sink449, %bb.j ], [ %i.l, %._crit_edge399 ] ; 5 uses
+  %i.at = icmp sgt i32 %i.as, 24000               ; 2 uses
   %i.au = select i1 %i.at, i32 2, i32 1
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 200
   store i32 %i.au, ptr %i.av, align 8, !tbaa !20
@@ -211,7 +211,8 @@ bb.v:                                             ; preds = %._crit_edge399, %bb
   br i1 %i.bb, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
-  %spec.store.select349 = select i1 %i.at, i32 128, i32 64 ; 2 uses
+  %not. = icmp slt i32 %i.as, 24001
+  %spec.store.select349 = select i1 %not., i32 64, i32 128 ; 2 uses
   store i32 %spec.store.select349, ptr %i.ba, align 8
   br label %bb.x
 

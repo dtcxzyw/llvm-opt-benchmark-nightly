@@ -204,9 +204,10 @@ bb.a:
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 40 ; 2 uses
   store i64 0, ptr %.sroa.3.0..sroa_idx.i, align 8, !alias.scope !902
   tail call void @llvm.experimental.noalias.scope.decl(metadata !905)
-  %i.b = icmp ne ptr %1, null                     ; 2 uses
+  %i.b = icmp ne ptr %1, null
   %i.c = zext i1 %i.b to i64                      ; 3 uses
-  br i1 %i.b, label %bb.c, label %_RNvXs2_NtNtNtCshzWfHUSfYae_4core4iter6traits7collectTINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4AttrEIBQ_INtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtB1u_11syntax_node12RustLanguageEEEINtB5_6ExtendTB1m_B2j_EE14extend_reserveCscA5P7HRgTCP_15ide_diagnostics.exit.i
+  %.not.i = icmp eq ptr %1, null
+  br i1 %.not.i, label %_RNvXs2_NtNtNtCshzWfHUSfYae_4core4iter6traits7collectTINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4AttrEIBQ_INtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtB1u_11syntax_node12RustLanguageEEEINtB5_6ExtendTB1m_B2j_EE14extend_reserveCscA5P7HRgTCP_15ide_diagnostics.exit.i, label %bb.c
 
 bb.b:                                             ; preds = %_RNvXs2_NtNtNtCshzWfHUSfYae_4core4iter6traits7collectTINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4AttrEIBQ_INtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtB1u_11syntax_node12RustLanguageEEEINtB5_6ExtendTB1m_B2j_EE14extend_reserveCscA5P7HRgTCP_15ide_diagnostics.exit.i
   %i.d = landingpad { ptr, i32 }

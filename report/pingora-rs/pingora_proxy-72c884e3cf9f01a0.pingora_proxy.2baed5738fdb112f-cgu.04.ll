@@ -204,13 +204,14 @@ bb.a:
   br i1 %2, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = load ptr, ptr %1, align 8, !noundef !4   ; 3 uses
-  %.not.a = icmp eq ptr %i.h, null                ; 2 uses
+  %i.h = load ptr, ptr %1, align 8, !noundef !4   ; 4 uses
+  %.not.a = icmp eq ptr %i.h, null
+  %.not18 = icmp ne ptr %i.h, null
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.j = load i64, ptr %i.i, align 8
-  %5 = icmp ne i64 %i.j, 0
-  %or.cond.not = select i1 %.not.a, i1 true, i1 %5
-  br i1 %or.cond.not, label %bb.h, label %bb.c
+  %5 = icmp eq i64 %i.j, 0
+  %or.cond.not = select i1 %.not18, i1 %5, i1 false
+  br i1 %or.cond.not, label %bb.c, label %bb.h
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 1

@@ -204,12 +204,13 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = alloca [200 x i8], align 8               ; 32 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %.val = load i64, ptr %i.c, align 8, !noundef !4
+  %.val = load i64, ptr %i.c, align 8, !noundef !4 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 136
-  %.val2 = load i64, ptr %i.d, align 8, !noundef !4
-  %i.e = icmp ne i64 %.val2, %.val                ; 2 uses
+  %.val2 = load i64, ptr %i.d, align 8, !noundef !4 ; 2 uses
+  %i.e = icmp ne i64 %.val2, %.val
   %.sroa.0.0.i.i.i.i = zext i1 %i.e to i64        ; 4 uses
-  br i1 %i.e, label %bb.ch, label %_RNvXs2_NtNtNtCsbvkFyIu7lgC_4core4iter6traits7collectTINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEIBQ_ReEEINtB5_6ExtendTjB1s_EE14extend_reserveCshbKHpCRGxgC_16deltalake_derive.exit
+  %.not = icmp eq i64 %.val2, %.val
+  br i1 %.not, label %_RNvXs2_NtNtNtCsbvkFyIu7lgC_4core4iter6traits7collectTINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEIBQ_ReEEINtB5_6ExtendTjB1s_EE14extend_reserveCshbKHpCRGxgC_16deltalake_derive.exit, label %bb.ch
 
 _RNvXs2_NtNtNtCsbvkFyIu7lgC_4core4iter6traits7collectTINtNtCs6Po7BT7Nknu_5alloc3vec3VecjEIBQ_ReEEINtB5_6ExtendTjB1s_EE14extend_reserveCshbKHpCRGxgC_16deltalake_derive.exit: ; preds = %bb.cj, %_RNvXsi_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecjEINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect6ExtendjE14extend_reserveCshbKHpCRGxgC_16deltalake_derive.exit.i, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)

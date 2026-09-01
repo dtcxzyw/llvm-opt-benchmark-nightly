@@ -145,7 +145,7 @@ define range(i32 -2147483647, -2147483648) i32 @utrace_vformat_78(ptr nofree nou
 bb.a:
   %i.a = alloca i32, align 4                      ; 31 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
-  %.old.i = icmp sgt i32 %2, 0                    ; 28 uses
+  %.old.i = icmp sgt i32 %2, 0                    ; 27 uses
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 22 uses
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 11 uses
   %i.d = sext i32 %1 to i64                       ; 37 uses
@@ -548,9 +548,10 @@ _ZL10outputCharcPcPiii.exit175:                   ; preds = %_ZL10outputCharcPcP
   br label %.outer, !llvm.loop !18
 
 bb.ht:                                            ; preds = %bb.k
-  %5 = icmp eq i32 %.promoted517, 0
-  %brmerge.not = and i1 %5, %.old.i
-  br i1 %brmerge.not, label %iter.check2383, label %.loopexit.i355
+  %5 = icmp ne i32 %.promoted517, 0
+  %.old.i.not = icmp slt i32 %2, 1
+  %brmerge = or i1 %5, %.old.i.not
+  br i1 %brmerge, label %.loopexit.i355, label %iter.check2383
 
 iter.check2383:                                   ; preds = %bb.ht
   %min.iters.check2303 = icmp ult i32 %2, 4

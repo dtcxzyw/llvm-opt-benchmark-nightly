@@ -202,23 +202,24 @@ declare void @_mi_arenas_free(ptr noundef, ptr noundef, i64 noundef, ptr noundef
 define hidden zeroext i1 @_mi_meta_is_meta_page(ptr nofree noundef captures(none) %0, ptr nofree noundef readnone captures(address) %1) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 3 uses
-  %.not10 = icmp ne ptr %i.b, null                ; 2 uses
-  %2 = icmp ne ptr %i.b, %1
-  %or.cond.not11 = and i1 %2, %.not10
-  br i1 %or.cond.not11, label %.lr.ph, label %._crit_edge
+  %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
+  %.not.not9 = icmp eq ptr %i.b, null
+  %2 = icmp eq ptr %i.b, %1
+  %or.cond10 = or i1 %.not.not9, %2
+  br i1 %or.cond10, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.012 = phi ptr [ %i.c, %.lr.ph ], [ %i.b, %bb.a ]
-  %i.c = load atomic ptr, ptr %.012 acquire, align 64 ; 3 uses
-  %.not = icmp ne ptr %i.c, null                  ; 2 uses
-  %3 = icmp ne ptr %i.c, %1
-  %or.cond.not = and i1 %3, %.not
-  br i1 %or.cond.not, label %.lr.ph, label %._crit_edge, !llvm.loop !33
+  %i.c = load atomic ptr, ptr %.012 acquire, align 64 ; 4 uses
+  %.not.not = icmp eq ptr %i.c, null
+  %3 = icmp eq ptr %i.c, %1
+  %or.cond = or i1 %.not.not, %3
+  br i1 %or.cond, label %._crit_edge, label %.lr.ph, !llvm.loop !33
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
-  %.not.lcssa = phi i1 [ %.not10, %bb.a ], [ %.not, %.lr.ph ]
-  ret i1 %.not.lcssa
+  %.0.lcssa = phi ptr [ %i.b, %bb.a ], [ %i.c, %.lr.ph ]
+  %.not = icmp ne ptr %.0.lcssa, null
+  ret i1 %.not
 }
 
 declare zeroext i1 @mi_bbitmap_try_find_and_clear(ptr noundef, i64 noundef, ptr noundef) local_unnamed_addr #2

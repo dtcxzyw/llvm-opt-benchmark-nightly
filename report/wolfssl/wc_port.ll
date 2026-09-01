@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not84, label %wc_ReadDirClose.exit, label %bb.f
 
 bb.i:                                             ; preds = %wc_FileExists.exit, %wc_FileExists.exit.thread
-  %.1 = phi i32 [ -1, %wc_FileExists.exit ], [ -244, %wc_FileExists.exit.thread ]
+  %.1 = phi i32 [ %..i, %wc_FileExists.exit ], [ -244, %wc_FileExists.exit.thread ]
   %i.af = load ptr, ptr %i.e, align 8, !tbaa !20
   %i.ag = tail call ptr @readdir(ptr noundef %i.af) #19 ; 3 uses
   store ptr %i.ag, ptr %0, align 8, !tbaa !21
@@ -238,10 +238,12 @@ wc_FileExists.exit.thread:                        ; preds = %bb.j
 
 wc_FileExists.exit:                               ; preds = %bb.j
   %i.au = load i32, ptr %i.n, align 8, !tbaa !14
-  %i.av = and i32 %i.au, 61440
-  %.not83 = icmp eq i32 %i.av, 32768
+  %i.av = and i32 %i.au, 61440                    ; 2 uses
+  %4 = icmp ne i32 %i.av, 32768
+  %..i = sext i1 %4 to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
-  br i1 %.not83, label %.thread56, label %bb.i
+  %.not67 = icmp eq i32 %i.av, 32768
+  br i1 %.not67, label %.thread56, label %bb.i
 
 .thread56:                                        ; preds = %wc_FileExists.exit
   store ptr %i.h, ptr %2, align 8, !tbaa !9
@@ -378,7 +380,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not77, label %wc_ReadDirClose.exit, label %bb.e
 
 bb.h:                                             ; preds = %wc_FileExists.exit, %wc_FileExists.exit.thread
-  %.1 = phi i32 [ -1, %wc_FileExists.exit ], [ -244, %wc_FileExists.exit.thread ]
+  %.1 = phi i32 [ %..i, %wc_FileExists.exit ], [ -244, %wc_FileExists.exit.thread ]
   %i.af = load ptr, ptr %i.f, align 8, !tbaa !20
   %i.ag = tail call ptr @readdir(ptr noundef %i.af) #19 ; 3 uses
   store ptr %i.ag, ptr %0, align 8, !tbaa !21
@@ -415,10 +417,12 @@ wc_FileExists.exit.thread:                        ; preds = %bb.i
 
 wc_FileExists.exit:                               ; preds = %bb.i
   %i.au = load i32, ptr %i.n, align 8, !tbaa !14
-  %i.av = and i32 %i.au, 61440
-  %.not76 = icmp eq i32 %i.av, 32768
+  %i.av = and i32 %i.au, 61440                    ; 2 uses
+  %4 = icmp ne i32 %i.av, 32768
+  %..i = sext i1 %4 to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
-  br i1 %.not76, label %.thread, label %bb.h
+  %.not60 = icmp eq i32 %i.av, 32768
+  br i1 %.not60, label %.thread, label %bb.h
 
 .thread:                                          ; preds = %wc_FileExists.exit
   store ptr %i.c, ptr %2, align 8, !tbaa !9

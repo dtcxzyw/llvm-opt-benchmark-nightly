@@ -205,17 +205,18 @@ iter.check:                                       ; preds = %bb.m
 bb.n:                                             ; preds = %bb.n, %iter.check
   %.051 = phi i64 [ 0, %iter.check ], [ %i.bj, %bb.n ] ; 2 uses
   %.sroa.0.050 = phi ptr [ %1, %iter.check ], [ %i.bk, %bb.n ] ; 2 uses
-  %i.bg = load i8, ptr %.sroa.0.050, align 1, !tbaa !60
+  %i.bg = load i8, ptr %.sroa.0.050, align 1, !tbaa !60 ; 2 uses
   %i.bh = trunc i64 %.051 to i8
-  %i.bi = add i8 %i.bh, 100
-  %.not43 = icmp eq i8 %i.bg, %i.bi               ; 2 uses
+  %i.bi = add i8 %i.bh, 100                       ; 2 uses
+  %.not43.not = icmp ne i8 %i.bg, %i.bi
   %i.bj = add nuw nsw i64 %.051, 1                ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.0.050, i64 1
-  %.not42 = icmp ne i64 %i.bj, 100
-  %or.cond.not = select i1 %.not43, i1 %.not42, i1 false
-  br i1 %or.cond.not, label %bb.n, label %bb.o, !llvm.loop !68
+  %.not42 = icmp eq i64 %i.bj, 100
+  %or.cond.not = select i1 %.not43.not, i1 true, i1 %.not42
+  br i1 %or.cond.not, label %bb.o, label %bb.n, !llvm.loop !68
 
 bb.o:                                             ; preds = %bb.n
+  %.not43 = icmp eq i8 %i.bg, %i.bi
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #25
   br label %bb.p
 

@@ -202,20 +202,24 @@ bb.ae:                                            ; preds = %bb.ad
   %i.do = call i32 %i.dj(ptr noundef %i.dl, ptr noundef %i.dn, i32 noundef 12334, ptr noundef nonnull %i.e) #6 ; 0 uses
   %i.dp = load ptr, ptr %i.bh, align 8            ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 48
-  %i.dr = load i32, ptr %i.dq, align 8
-  %i.ds = load i32, ptr %i.e, align 4
-  %2 = icmp eq i32 %i.dr, %i.ds                   ; 2 uses
+  %i.dr = load i32, ptr %i.dq, align 8            ; 2 uses
+  %i.ds = load i32, ptr %i.e, align 4             ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #6
   %.pre.pre = load i32, ptr %i.b, align 4         ; 2 uses
+  %.not196 = icmp ne i32 %i.dr, %i.ds
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.dt = sext i32 %.pre.pre to i64
-  %3 = icmp sge i64 %indvars.iv.next, %i.dt
-  %or.cond198.not = select i1 %2, i1 true, i1 %3
-  br i1 %or.cond198.not, label %.loopexit, label %.lr.ph, !llvm.loop !11
+  %2 = icmp slt i64 %indvars.iv.next, %i.dt
+  %or.cond198.not = select i1 %.not196, i1 %2, i1 false
+  br i1 %or.cond198.not, label %.lr.ph, label %.loopexit.loopexit, !llvm.loop !11
 
-.loopexit:                                        ; preds = %.lr.ph, %bb.ae
-  %i.du = phi i32 [ %i.db, %bb.ae ], [ %.pre.pre, %.lr.ph ]
-  %.2144 = phi i1 [ false, %bb.ae ], [ %2, %.lr.ph ]
+.loopexit.loopexit:                               ; preds = %.lr.ph
+  %3 = icmp eq i32 %i.dr, %i.ds
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.ae
+  %i.du = phi i32 [ %i.db, %bb.ae ], [ %.pre.pre, %.loopexit.loopexit ]
+  %.2144 = phi i1 [ false, %bb.ae ], [ %3, %.loopexit.loopexit ]
   %i.dv = icmp sgt i32 %i.du, 0
   br i1 %i.dv, label %.lr.ph172, label %._crit_edge
 

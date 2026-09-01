@@ -200,9 +200,9 @@ bb.a:
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 172
   %.sroa.12.0.copyload = load i32, ptr %.sroa.12.0..sroa_idx, align 4, !tbaa !33 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !45   ; 3 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !45   ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 108
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !46   ; 3 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !46   ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !35
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24
@@ -263,11 +263,12 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br label %bb.r
 
 bb.g:                                             ; preds = %bb.e
-  %i.ao = icmp sgt i32 %i.d, 0                    ; 2 uses
+  %i.ao = icmp sgt i32 %i.d, 0
+  %.not = icmp slt i32 %i.d, 1
   %i.ap = zext nneg i32 %i.d to i64               ; 2 uses
-  %.not123 = icmp sge i64 %i.q, %i.ap
-  %or.cond127.not = select i1 %i.ao, i1 %.not123, i1 false
-  br i1 %or.cond127.not, label %bb.h, label %bb.i
+  %.not123 = icmp slt i64 %i.q, %i.ap
+  %or.cond127.not = select i1 %.not, i1 true, i1 %.not123
+  br i1 %or.cond127.not, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -276,11 +277,11 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.r
 
 bb.i:                                             ; preds = %bb.g
-  %2 = icmp sgt i32 %i.f, 0                       ; 2 uses
+  %.not128 = icmp slt i32 %i.f, 1
   %i.at = zext nneg i32 %i.f to i64               ; 2 uses
-  %.not124 = icmp sge i64 %i.u, %i.at
-  %or.cond129.not = select i1 %2, i1 %.not124, i1 false
-  br i1 %or.cond129.not, label %bb.j, label %bb.k
+  %.not124 = icmp slt i64 %i.u, %i.at
+  %or.cond129.not = select i1 %.not128, i1 true, i1 %.not124
+  br i1 %or.cond129.not, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -289,6 +290,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.r
 
 bb.k:                                             ; preds = %bb.i
+  %2 = icmp sgt i32 %i.f, 0
   %or.cond41 = and i1 %i.ao, %2
   br i1 %or.cond41, label %bb.l, label %.thread133
 

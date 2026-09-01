@@ -205,9 +205,9 @@ LitEnc_Encode.exit275:                            ; preds = %RangeEnc_EncodeBit.
   br label %bb.kh
 
 bb.hf:                                            ; preds = %GetOptimumFast.exit.thread, %GetOptimumFast.exit
-  %i.buw = phi i1 [ false, %GetOptimumFast.exit.thread ], [ %i.bqp, %GetOptimumFast.exit ] ; 2 uses
+  %i.buw = phi i1 [ false, %GetOptimumFast.exit.thread ], [ %i.bqp, %GetOptimumFast.exit ]
   %i.bux = phi i32 [ %i.sv, %GetOptimumFast.exit.thread ], [ %i.bqo, %GetOptimumFast.exit ] ; 3 uses
-  %.0198357 = phi i32 [ 2, %GetOptimumFast.exit.thread ], [ %.0198, %GetOptimumFast.exit ] ; 6 uses
+  %.0198357 = phi i32 [ 2, %GetOptimumFast.exit.thread ], [ %.0198, %GetOptimumFast.exit ] ; 7 uses
   %.0355 = phi i32 [ %i.ss, %GetOptimumFast.exit.thread ], [ %.0, %GetOptimumFast.exit ] ; 8 uses
   %i.buy = load i32, ptr %i.ed, align 8, !tbaa !25
   %i.buz = zext i32 %i.buy to i64
@@ -303,11 +303,12 @@ RangeEnc_EncodeBit.exit285:                       ; preds = %bb.hj, %bb.hk
   %i.bww = phi i32 [ %i.bwp, %bb.hj ], [ %.pre478, %bb.hk ] ; 2 uses
   %i.bwx = getelementptr inbounds nuw [32 x i8], ptr %i.ep, i64 %.pre-phi485
   %i.bwy = getelementptr inbounds nuw [2 x i8], ptr %i.bwx, i64 %i.bvb ; 2 uses
+  %not..not = icmp eq i32 %.0198357, 1
   %i.bwz = load i16, ptr %i.bwy, align 2, !tbaa !23
   %i.bxa = zext i16 %i.bwz to i32                 ; 5 uses
   %i.bxb = lshr i32 %i.bww, 11
   %i.bxc = mul i32 %i.bxb, %i.bxa                 ; 3 uses
-  br i1 %i.buw, label %bb.hl, label %bb.hm
+  br i1 %not..not, label %bb.hl, label %bb.hm
 
 bb.hl:                                            ; preds = %RangeEnc_EncodeBit.exit285
   %i.bxd = sub nsw i32 2048, %i.bxa

@@ -205,14 +205,14 @@ bb.a:
   %.sroa.0.0.copyload = load ptr, ptr %i.b, align 8, !tbaa !290 ; 2 uses
   %i.c = ptrtoint ptr %.sroa.0.0.copyload to i64
   %i.d = ptrtoint ptr %.sroa.01.0.copyload to i64
-  %i.e = sub i64 %i.c, %i.d
+  %i.e = sub i64 %i.c, %i.d                       ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !1040 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.i = load i32, ptr %i.h, align 8, !tbaa !448  ; 2 uses
-  %i.j = sext i32 %i.i to i64
-  %1 = icmp sge i64 %i.e, %i.j                    ; 2 uses
-  br i1 %1, label %bb.b, label %bb.c
+  %i.j = sext i32 %i.i to i64                     ; 2 uses
+  %1 = icmp slt i64 %i.e, %i.j
+  br i1 %1, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.k = sub nsw i32 0, %i.i
@@ -225,7 +225,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  ret i1 %1
+  %.1 = icmp sge i64 %i.e, %i.j
+  ret i1 %.1
 }
 
 ; Function Attrs: inlinehint mustprogress uwtable

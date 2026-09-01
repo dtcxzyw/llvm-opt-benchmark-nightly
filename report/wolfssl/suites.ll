@@ -203,8 +203,8 @@ bb.ak:                                            ; preds = %.lr.ph159
   %i.dv = load i32, ptr @execute_test_case.tests, align 4, !tbaa !24
   %i.dw = add nsw i32 %i.dv, 1
   store i32 %i.dw, ptr @execute_test_case.tests, align 4, !tbaa !24
-  %i.dx = call ptr @strstr(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull dereferenceable(1) @exitWithRetFlag) #22
-  %.not101 = icmp eq ptr %i.dx, null              ; 3 uses
+  %i.dx = call ptr @strstr(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull dereferenceable(1) @exitWithRetFlag) #22 ; 2 uses
+  %12 = icmp ne ptr %i.dx, null                   ; 2 uses
   store i8 0, ptr %i.c, align 16, !tbaa !25
   %i.dy = icmp sgt i32 %2, 0
   br i1 %i.dy, label %.lr.ph162.preheader, label %.loopexit150
@@ -390,16 +390,17 @@ bb.bg:                                            ; preds = %.lr.ph165
   %i.gf = load i32, ptr @execute_test_case.tests, align 4, !tbaa !24
   %i.gg = add nsw i32 %i.gf, 1
   store i32 %i.gg, ptr @execute_test_case.tests, align 4, !tbaa !24
-  %i.gh = call ptr @strstr(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull dereferenceable(1) @exitWithRetFlag) #22
-  %.not115 = icmp eq ptr %i.gh, null              ; 3 uses
+  %i.gh = call ptr @strstr(ptr noundef nonnull dereferenceable(1) %i.c, ptr noundef nonnull dereferenceable(1) @exitWithRetFlag) #22 ; 2 uses
+  %13 = icmp ne ptr %i.gh, null                   ; 2 uses
   %i.gi = call ptr @client_test(ptr noundef nonnull %9) #17 ; 0 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.gk = load i32, ptr %i.gj, align 8, !tbaa !21 ; 2 uses
   %i.gl = icmp ne i32 %i.gk, 0
-  %or.cond120 = xor i1 %.not115, %i.gl
-  br i1 %or.cond120, label %bb.bi, label %bb.bh
+  %or.cond120 = xor i1 %13, %i.gl
+  br i1 %or.cond120, label %bb.bh, label %bb.bi
 
 bb.bh:                                            ; preds = %.loopexit
+  %.not115 = icmp eq ptr %i.gh, null
   %i.gm = select i1 %.not115, ptr @.str.57, ptr @.str.56
   %i.gn = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.55, i32 noundef %i.gk, ptr noundef nonnull %i.gm) ; 0 uses
   call void @exit(i32 noundef 1) #23
@@ -411,10 +412,11 @@ bb.bi:                                            ; preds = %.loopexit
   %i.gp = getelementptr inbounds nuw i8, ptr %10, i64 16
   %i.gq = load i32, ptr %i.gp, align 8, !tbaa !21 ; 2 uses
   %i.gr = icmp ne i32 %i.gq, 0
-  %or.cond121 = xor i1 %.not101, %i.gr
-  br i1 %or.cond121, label %bb.bk, label %bb.bj
+  %or.cond121 = xor i1 %12, %i.gr
+  br i1 %or.cond121, label %bb.bj, label %bb.bk
 
 bb.bj:                                            ; preds = %bb.bi
+  %.not101 = icmp eq ptr %i.dx, null
   %i.gs = select i1 %.not101, ptr @.str.57, ptr @.str.56
   %i.gt = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.58, i32 noundef %i.gq, ptr noundef nonnull %i.gs) ; 0 uses
   call void @exit(i32 noundef 1) #23
@@ -422,8 +424,8 @@ bb.bj:                                            ; preds = %bb.bi
 
 bb.bk:                                            ; preds = %bb.bi
   call fastcc void @FreeTcpReady(ptr noundef %11)
-  %or.cond9.demorgan = and i1 %.not101, %.not115
-  %. = select i1 %or.cond9.demorgan, i32 0, i32 -123
+  %or.cond9 = or i1 %12, %13
+  %. = select i1 %or.cond9, i32 -123, i32 0
   br label %IsValidCipherSuite.exit.thread
 
 IsValidCipherSuite.exit.thread:                   ; preds = %bb.j, %bb.l, %bb.m, %IsTls10Version.exit.thread, %.loopexit152, %bb.f, %IsValidCert.exit.thread, %bb.bk, %bb.ao, %bb.an, %.loopexit150, %IsOldTlsVersion.exit, %IsTls10Version.exit, %IsSslVersion.exit, %IsValidCert.exit, %IsKyberLevelAvailable.exit, %IsValidCipherSuite.exit

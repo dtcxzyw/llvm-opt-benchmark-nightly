@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br label %.thread
 
 bb.e:                                             ; preds = %bb.c, %bb.a
-  %i.av = load i32, ptr %i.l, align 4, !tbaa !42  ; 2 uses
-  %i.aw = icmp eq i32 %i.av, 1                    ; 3 uses
+  %i.av = load i32, ptr %i.l, align 4, !tbaa !42  ; 3 uses
+  %i.aw = icmp eq i32 %i.av, 1                    ; 2 uses
   br i1 %i.aw, label %bb.f, label %bb.i
 
 bb.f:                                             ; preds = %bb.e
@@ -227,8 +227,8 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 
 bb.i:                                             ; preds = %bb.g, %bb.e
   %i.be = load i32, ptr %i.n, align 8, !tbaa !43  ; 2 uses
-  %2 = icmp eq i32 %i.be, 1                       ; 3 uses
-  br i1 %2, label %bb.j, label %bb.l
+  %2 = icmp ne i32 %i.be, 1                       ; 3 uses
+  br i1 %2, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.bf = load i32, ptr %i.v, align 8, !tbaa !47
@@ -248,8 +248,9 @@ bb.l:                                             ; preds = %bb.j, %bb.i
   br i1 %i.bk, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
-  %brmerge.not = and i1 %i.aw, %2
-  br i1 %brmerge.not, label %bb.n, label %.thread
+  %.not = icmp ne i32 %i.av, 1
+  %brmerge = or i1 %.not, %2
+  br i1 %brmerge, label %.thread, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -264,7 +265,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.bm, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %bb.p
-  br i1 %2, label %bb.r, label %.thread
+  br i1 %2, label %.thread, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 8

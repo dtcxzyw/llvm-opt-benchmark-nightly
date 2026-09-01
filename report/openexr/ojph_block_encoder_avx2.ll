@@ -204,10 +204,12 @@ bb.i:                                             ; preds = %bb.h, %bb.e
   %i.gn = shufflevector <8 x i32> %i.gh, <8 x i32> %i.gm, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 8>
   %i.go = call <8 x i32> @llvm.smax.v8i32(<8 x i32> %i.gn, <8 x i32> %i.gg)
   %i.gp = add <8 x i32> %i.go, splat (i32 -1)
-  %11 = call <8 x i32> @llvm.smax.v8i32(<8 x i32> %i.gp, <8 x i32> splat (i32 1))
-  %12 = call range(i32 0, 5) <8 x i32> @llvm.ctpop.v8i32(<8 x i32> %.inner278)
-  %.inv = icmp samesign ugt <8 x i32> %12, splat (i32 1)
-  %i.gq = select <8 x i1> %.inv, <8 x i32> %11, <8 x i32> splat (i32 1) ; 2 uses
+  %11 = call range(i32 0, 5) <8 x i32> @llvm.ctpop.v8i32(<8 x i32> %.inner278)
+  %12 = icmp samesign ult <8 x i32> %11, splat (i32 2) ; 2 uses
+  %13 = zext <8 x i1> %12 to <8 x i32>
+  %14 = call <8 x i32> @llvm.smax.v8i32(<8 x i32> %i.gp, <8 x i32> %13)
+  %15 = call <8 x i32> @llvm.umax.v8i32(<8 x i32> %14, <8 x i32> splat (i32 1))
+  %i.gq = select <8 x i1> %12, <8 x i32> splat (i32 1), <8 x i32> %15 ; 2 uses
   %i.gr = trunc nuw nsw i64 %indvars.iv to i32
   %i.gs = call noundef <4 x i64> %.0101228.us(i32 noundef %i.gr, ptr noundef nonnull %i.e, ptr noundef nonnull align 32 dereferenceable(32) %i.h, <4 x i64> noundef <i64 8589934593, i64 17179869187, i64 25769803781, i64 7>), !callees !41
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #13
@@ -609,6 +611,9 @@ declare i32 @llvm.umax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i32> @llvm.ctpop.v8i32(<8 x i32>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i32> @llvm.umax.v8i32(<8 x i32>, <8 x i32>) #9
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, argmem: read, inaccessiblemem: write, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
