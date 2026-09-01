@@ -205,23 +205,24 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4, !tbaa !8
   %i.c = sitofp i32 %i.b to double
   %i.d = trunc i64 %2 to i32
-  %4 = shl nuw i32 1, %i.d
-  %5 = sitofp i32 %4 to double                    ; 2 uses
-  %6 = fmul nnan double %5, %i.c
-  %7 = trunc i64 %3 to i32
-  %i.e = shl nuw i32 1, %7
-  %8 = sitofp i32 %i.e to double                  ; 2 uses
+  %4 = trunc i64 %3 to i32
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %9 = load <2 x i32>, ptr %1, align 4, !tbaa !8
-  %i.f = sitofp <2 x i32> %9 to <2 x double>
-  %10 = insertelement <2 x double> poison, double %5, i64 0
-  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
-  %12 = fmul nnan <2 x double> %11, %i.f
-  %13 = insertelement <2 x double> poison, double %8, i64 0
-  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.g = fdiv <2 x double> %12, %14
+  %5 = load <2 x i32>, ptr %1, align 4, !tbaa !8
+  %6 = sitofp <2 x i32> %5 to <2 x double>
+  %i.e = shl nuw i32 1, %4
+  %7 = shl nuw i32 1, %i.d
+  %8 = insertelement <2 x i32> poison, i32 %7, i64 0
+  %9 = insertelement <2 x i32> %8, i32 %i.e, i64 1
+  %i.f = sitofp <2 x i32> %9 to <2 x double>      ; 4 uses
+  %10 = shufflevector <2 x double> %i.f, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = fmul nnan <2 x double> %10, %6
+  %12 = extractelement <2 x double> %i.f, i64 0
+  %13 = fmul nnan double %12, %i.c
+  %14 = shufflevector <2 x double> %i.f, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.g = fdiv <2 x double> %11, %14
   store <2 x double> %i.g, ptr %0, align 8, !tbaa !249, !alias.scope !251
-  %i.h = fdiv double %6, %8
+  %15 = extractelement <2 x double> %i.f, i64 1
+  %i.h = fdiv double %13, %15
   store double %i.h, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !249, !alias.scope !251
   ret void
 }
@@ -230,24 +231,25 @@ bb.a:
 define weak_odr void @_ZN7openvdb5v13_05tools12MultiResGridINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS3_8LeafNodeIfLj3EEELj4EEELj5EEEEEEEE3xyzERKNS0_4math4Vec3IdEEmm(ptr dead_on_unwind noalias writable sret(%"class.openvdb::v13_0::math::Vec3") align 8 %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #5 comdat align 2 {
 bb.a:
   %i.a = trunc i64 %2 to i32
-  %4 = shl nuw i32 1, %i.a
-  %5 = sitofp i32 %4 to double                    ; 2 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.8.0.copyload = load double, ptr %.sroa.8.0..sroa_idx, align 8
-  %6 = fmul double %.sroa.8.0.copyload, %5
-  %7 = trunc i64 %3 to i32
-  %i.b = shl nuw i32 1, %7
-  %8 = sitofp i32 %i.b to double                  ; 2 uses
+  %4 = trunc i64 %3 to i32
   %.sroa.8.0..sroa_idx5 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %9 = load <2 x double>, ptr %1, align 8
-  %10 = insertelement <2 x double> poison, double %5, i64 0
-  %i.c = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.d = fmul <2 x double> %9, %i.c
-  %11 = insertelement <2 x double> poison, double %8, i64 0
-  %12 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = load <2 x double>, ptr %1, align 8
+  %i.b = shl nuw i32 1, %4
+  %6 = shl nuw i32 1, %i.a
+  %7 = insertelement <2 x i32> poison, i32 %6, i64 0
+  %8 = insertelement <2 x i32> %7, i32 %i.b, i64 1
+  %9 = sitofp <2 x i32> %8 to <2 x double>        ; 4 uses
+  %i.c = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.d = fmul <2 x double> %5, %i.c
+  %10 = extractelement <2 x double> %9, i64 0
+  %11 = fmul double %.sroa.8.0.copyload, %10
+  %12 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.e = fdiv <2 x double> %i.d, %12
   store <2 x double> %i.e, ptr %0, align 8, !tbaa !249, !alias.scope !254
-  %i.f = fdiv double %6, %8
+  %13 = extractelement <2 x double> %9, i64 1
+  %i.f = fdiv double %11, %13
   store double %i.f, ptr %.sroa.8.0..sroa_idx5, align 8, !tbaa !249, !alias.scope !254
   ret void
 }
@@ -650,23 +652,24 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4, !tbaa !8
   %i.c = sitofp i32 %i.b to double
   %i.d = trunc i64 %2 to i32
-  %4 = shl nuw i32 1, %i.d
-  %5 = sitofp i32 %4 to double                    ; 2 uses
-  %6 = fmul nnan double %5, %i.c
-  %7 = trunc i64 %3 to i32
-  %i.e = shl nuw i32 1, %7
-  %8 = sitofp i32 %i.e to double                  ; 2 uses
+  %4 = trunc i64 %3 to i32
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %9 = load <2 x i32>, ptr %1, align 4, !tbaa !8
-  %i.f = sitofp <2 x i32> %9 to <2 x double>
-  %10 = insertelement <2 x double> poison, double %5, i64 0
-  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
-  %12 = fmul nnan <2 x double> %11, %i.f
-  %13 = insertelement <2 x double> poison, double %8, i64 0
-  %14 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.g = fdiv <2 x double> %12, %14
+  %5 = load <2 x i32>, ptr %1, align 4, !tbaa !8
+  %6 = sitofp <2 x i32> %5 to <2 x double>
+  %i.e = shl nuw i32 1, %4
+  %7 = shl nuw i32 1, %i.d
+  %8 = insertelement <2 x i32> poison, i32 %7, i64 0
+  %9 = insertelement <2 x i32> %8, i32 %i.e, i64 1
+  %i.f = sitofp <2 x i32> %9 to <2 x double>      ; 4 uses
+  %10 = shufflevector <2 x double> %i.f, <2 x double> poison, <2 x i32> zeroinitializer
+  %11 = fmul nnan <2 x double> %10, %6
+  %12 = extractelement <2 x double> %i.f, i64 0
+  %13 = fmul nnan double %12, %i.c
+  %14 = shufflevector <2 x double> %i.f, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.g = fdiv <2 x double> %11, %14
   store <2 x double> %i.g, ptr %0, align 8, !tbaa !249, !alias.scope !581
-  %i.h = fdiv double %6, %8
+  %15 = extractelement <2 x double> %i.f, i64 1
+  %i.h = fdiv double %13, %15
   store double %i.h, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !249, !alias.scope !581
   ret void
 }
@@ -675,24 +678,25 @@ bb.a:
 define weak_odr void @_ZN7openvdb5v13_05tools12MultiResGridINS0_4tree4TreeINS3_8RootNodeINS3_12InternalNodeINS6_INS3_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEE3xyzERKNS0_4math4Vec3IdEEmm(ptr dead_on_unwind noalias writable sret(%"class.openvdb::v13_0::math::Vec3") align 8 %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #5 comdat align 2 {
 bb.a:
   %i.a = trunc i64 %2 to i32
-  %4 = shl nuw i32 1, %i.a
-  %5 = sitofp i32 %4 to double                    ; 2 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.8.0.copyload = load double, ptr %.sroa.8.0..sroa_idx, align 8
-  %6 = fmul double %.sroa.8.0.copyload, %5
-  %7 = trunc i64 %3 to i32
-  %i.b = shl nuw i32 1, %7
-  %8 = sitofp i32 %i.b to double                  ; 2 uses
+  %4 = trunc i64 %3 to i32
   %.sroa.8.0..sroa_idx5 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %9 = load <2 x double>, ptr %1, align 8
-  %10 = insertelement <2 x double> poison, double %5, i64 0
-  %i.c = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.d = fmul <2 x double> %9, %i.c
-  %11 = insertelement <2 x double> poison, double %8, i64 0
-  %12 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = load <2 x double>, ptr %1, align 8
+  %i.b = shl nuw i32 1, %4
+  %6 = shl nuw i32 1, %i.a
+  %7 = insertelement <2 x i32> poison, i32 %6, i64 0
+  %8 = insertelement <2 x i32> %7, i32 %i.b, i64 1
+  %9 = sitofp <2 x i32> %8 to <2 x double>        ; 4 uses
+  %i.c = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.d = fmul <2 x double> %5, %i.c
+  %10 = extractelement <2 x double> %9, i64 0
+  %11 = fmul double %.sroa.8.0.copyload, %10
+  %12 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.e = fdiv <2 x double> %i.d, %12
   store <2 x double> %i.e, ptr %0, align 8, !tbaa !249, !alias.scope !584
-  %i.f = fdiv double %6, %8
+  %13 = extractelement <2 x double> %9, i64 1
+  %i.f = fdiv double %11, %13
   store double %i.f, ptr %.sroa.8.0..sroa_idx5, align 8, !tbaa !249, !alias.scope !584
   ret void
 }

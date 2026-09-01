@@ -204,11 +204,9 @@ bb.d:                                             ; preds = %bb.b
   br label %common.resume
 
 bb.e:                                             ; preds = %bb.a
-  %13 = load double, ptr %0, align 8, !tbaa !16
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %14 = load double, ptr %i.e, align 8, !tbaa !9  ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.f = load <2 x double>, ptr %15, align 8, !tbaa !31 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %13 = load <2 x double>, ptr %0, align 8, !tbaa !31 ; 3 uses
+  %i.f = load <2 x double>, ptr %i.e, align 8, !tbaa !31 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   call void @_ZN4gdcm11PixelFormatC1ENS0_10ScalarTypeE(ptr noundef nonnull align 2 dereferenceable(10) %1, i32 noundef 14)
   %i.g = extractelement <2 x double> %i.f, i64 0
@@ -232,14 +230,13 @@ bb.h:                                             ; preds = %bb.f
   br label %common.resume
 
 bb.i:                                             ; preds = %bb.e
-  %16 = insertelement <2 x double> poison, double %13, i64 0
-  %i.l = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.l = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> zeroinitializer
   %i.m = fsub <2 x double> %i.f, %i.l
-  %17 = fcmp olt double %14, 0.000000e+00
-  %18 = insertelement <2 x double> poison, double %14, i64 0
-  %19 = shufflevector <2 x double> %18, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.n = fdiv <2 x double> %i.m, %19              ; 2 uses
-  %i.o = insertelement <2 x i1> poison, i1 %17, i64 0
+  %14 = extractelement <2 x double> %13, i64 1
+  %15 = fcmp olt double %14, 0.000000e+00
+  %16 = shufflevector <2 x double> %13, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.n = fdiv <2 x double> %i.m, %16              ; 2 uses
+  %i.o = insertelement <2 x i1> poison, i1 %15, i64 0
   %i.p = shufflevector <2 x i1> %i.o, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.q = shufflevector <2 x double> %i.n, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.r = select <2 x i1> %i.p, <2 x double> %i.n, <2 x double> %i.q ; 2 uses

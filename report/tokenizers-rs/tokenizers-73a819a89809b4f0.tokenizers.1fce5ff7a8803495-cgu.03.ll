@@ -205,9 +205,9 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o
   call void @llvm.assume(i1 %i.ie)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.if = getelementptr inbounds nuw i8, ptr %.sroa.0.0.ph143, i64 %i.id ; 5 uses
-  %i.ig = load i32, ptr %i.if, align 4            ; 6 uses
+  %i.ig = load i32, ptr %i.if, align 4            ; 13 uses
   %i.ih = getelementptr inbounds nuw i8, ptr %i.if, i64 4
-  %i.ii = load i32, ptr %i.ih, align 4            ; 4 uses
+  %i.ii = load i32, ptr %i.ih, align 4            ; 7 uses
   store i32 %i.ig, ptr %i.a, align 4
   store i32 %i.ii, ptr %i.c, align 4
   br i1 %.not, label %bb.t, label %bb.s
@@ -229,10 +229,6 @@ bb.t:                                             ; preds = %bb.r, %bb.s
 
 bb.u:                                             ; preds = %bb.t
   %i.im = getelementptr [8 x i8], ptr %2, i64 %.sroa.16.0136314 ; 3 uses
-  %7 = insertelement <4 x i32> poison, i32 %i.ig, i64 0
-  %8 = shufflevector <4 x i32> %7, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %9 = insertelement <4 x i32> poison, i32 %i.ii, i64 0
-  %10 = shufflevector <4 x i32> %9, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %bb.w
 
 bb.v:                                             ; preds = %bb.t
@@ -250,57 +246,74 @@ bb.w:                                             ; preds = %bb.x, %bb.u
   br i1 %i.ip, label %.lr.ph.i42, label %._crit_edge.i
 
 .lr.ph.i42:                                       ; preds = %bb.w, %.lr.ph.i42
-  %.sroa.9.131.i = phi ptr [ %i.jc, %.lr.ph.i42 ], [ %.sroa.9.0.i, %bb.w ] ; 6 uses
+  %.sroa.9.131.i = phi ptr [ %i.jc, %.lr.ph.i42 ], [ %.sroa.9.0.i, %bb.w ] ; 10 uses
   %.sroa.27.130.i = phi i64 [ %i.jb, %.lr.ph.i42 ], [ %.sroa.27.0.i, %bb.w ] ; 2 uses
-  %.sroa.43.129.i = phi ptr [ %17, %.lr.ph.i42 ], [ %.sroa.43.0.i, %bb.w ] ; 4 uses
-  %i.iq = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -8
-  %11 = load i64, ptr %.sroa.9.131.i, align 4, !alias.scope !1297, !noalias !1302
-  %12 = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 8
-  %13 = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -16
-  %14 = load i64, ptr %12, align 4, !alias.scope !1297, !noalias !1305
-  %i.ir = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 16
-  %15 = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -24
-  %i.is = load i64, ptr %i.ir, align 4, !alias.scope !1297, !noalias !1308
-  %16 = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 24
-  %17 = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -32 ; 3 uses
-  %18 = load i64, ptr %16, align 4, !alias.scope !1297, !noalias !1311
-  %19 = load <8 x i32>, ptr %.sroa.9.131.i, align 4, !alias.scope !1297, !noalias !1300 ; 2 uses
-  %20 = shufflevector <8 x i32> %19, <8 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6> ; 2 uses
-  %21 = icmp eq <4 x i32> %8, %20
-  %22 = icmp ult <4 x i32> %8, %20
-  %23 = shufflevector <8 x i32> %19, <8 x i32> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
-  %24 = icmp samesign ult <4 x i32> %10, %23
-  %25 = select <4 x i1> %21, <4 x i1> %24, <4 x i1> %22 ; 4 uses
-  %26 = extractelement <4 x i1> %25, i64 0        ; 2 uses
-  %.sroa.01.0.i.i.a = select i1 %26, ptr %2, ptr %i.iq
-  %i.it = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i.i.a, i64 %.sroa.27.130.i
-  store i64 %11, ptr %i.it, align 4, !alias.scope !1300, !noalias !1314
-  %i.iu = zext i1 %26 to i64
-  %i.iv = add i64 %.sroa.27.130.i, %i.iu          ; 2 uses
-  %27 = extractelement <4 x i1> %25, i64 1        ; 2 uses
-  %.sroa.01.0.i35.i = select i1 %27, ptr %2, ptr %13
+  %.sroa.43.129.i = phi ptr [ %32, %.lr.ph.i42 ], [ %.sroa.43.0.i, %bb.w ] ; 4 uses
+  %.val30.i = load i32, ptr %.sroa.9.131.i, align 4, !alias.scope !1297, !noalias !1300, !noundef !3 ; 2 uses
+  %i.iq = getelementptr i8, ptr %.sroa.9.131.i, i64 4
+  %.val31.i = load i32, ptr %i.iq, align 4, !range !36, !alias.scope !1297, !noalias !1300, !noundef !3
+  %7 = icmp eq i32 %i.ig, %.val30.i
+  %8 = icmp ult i32 %i.ig, %.val30.i
+  %9 = icmp samesign ult i32 %i.ii, %.val31.i
+  %.sroa.0.0.i.i.i.i43 = select i1 %7, i1 %9, i1 %8 ; 2 uses
+  %i.ir = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -8
+  %.sroa.01.0.i.i = select i1 %.sroa.0.0.i.i.i.i43, ptr %2, ptr %i.ir
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i.i, i64 %.sroa.27.130.i
+  %i.is = load i64, ptr %.sroa.9.131.i, align 4, !alias.scope !1297, !noalias !1302
+  store i64 %i.is, ptr %10, align 4, !alias.scope !1300, !noalias !1305
+  %11 = zext i1 %.sroa.0.0.i.i.i.i43 to i64
+  %12 = add i64 %.sroa.27.130.i, %11              ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 8 ; 2 uses
+  %.val26.i = load i32, ptr %13, align 4, !alias.scope !1297, !noalias !1300, !noundef !3 ; 2 uses
+  %14 = getelementptr i8, ptr %.sroa.9.131.i, i64 12
+  %.val27.i = load i32, ptr %14, align 4, !range !36, !alias.scope !1297, !noalias !1300, !noundef !3
+  %15 = icmp eq i32 %i.ig, %.val26.i
+  %16 = icmp ult i32 %i.ig, %.val26.i
+  %17 = icmp samesign ult i32 %i.ii, %.val27.i
+  %.sroa.0.0.i.i.i34.i = select i1 %15, i1 %17, i1 %16 ; 2 uses
+  %18 = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -16
+  %.sroa.01.0.i.i.a = select i1 %.sroa.0.0.i.i.i34.i, ptr %2, ptr %18
+  %i.it = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i.i.a, i64 %12
+  %19 = load i64, ptr %13, align 4, !alias.scope !1297, !noalias !1306
+  store i64 %19, ptr %i.it, align 4, !alias.scope !1300, !noalias !1309
+  %i.iu = zext i1 %.sroa.0.0.i.i.i34.i to i64
+  %i.iv = add i64 %12, %i.iu                      ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 16 ; 2 uses
+  %.val22.i = load i32, ptr %20, align 4, !alias.scope !1297, !noalias !1300, !noundef !3 ; 2 uses
+  %21 = getelementptr i8, ptr %.sroa.9.131.i, i64 20
+  %.val23.i = load i32, ptr %21, align 4, !range !36, !alias.scope !1297, !noalias !1300, !noundef !3
+  %22 = icmp eq i32 %i.ig, %.val22.i
+  %23 = icmp ult i32 %i.ig, %.val22.i
+  %24 = icmp samesign ult i32 %i.ii, %.val23.i
+  %.sroa.0.0.i.i.i36.i = select i1 %22, i1 %24, i1 %23 ; 2 uses
+  %25 = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -24
+  %.sroa.01.0.i35.i = select i1 %.sroa.0.0.i.i.i36.i, ptr %2, ptr %25
   %i.iw = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i35.i, i64 %i.iv
-  store i64 %14, ptr %i.iw, align 4, !alias.scope !1300, !noalias !1315
-  %i.ix = zext i1 %27 to i64
+  %26 = load i64, ptr %20, align 4, !alias.scope !1297, !noalias !1310
+  store i64 %26, ptr %i.iw, align 4, !alias.scope !1300, !noalias !1313
+  %i.ix = zext i1 %.sroa.0.0.i.i.i36.i to i64
   %i.iy = add i64 %i.iv, %i.ix                    ; 2 uses
-  %28 = extractelement <4 x i1> %25, i64 2        ; 2 uses
-  %.sroa.01.0.i37.i = select i1 %28, ptr %2, ptr %15
-  %29 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i37.i, i64 %i.iy
-  store i64 %i.is, ptr %29, align 4, !alias.scope !1300, !noalias !1316
-  %30 = zext i1 %28 to i64
-  %31 = add i64 %i.iy, %30                        ; 2 uses
-  %32 = extractelement <4 x i1> %25, i64 3        ; 2 uses
-  %.sroa.01.0.i39.i = select i1 %32, ptr %2, ptr %17
-  %i.iz = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i39.i, i64 %31
-  store i64 %18, ptr %i.iz, align 4, !alias.scope !1300, !noalias !1317
-  %i.ja = zext i1 %32 to i64
-  %i.jb = add i64 %31, %i.ja                      ; 2 uses
+  %27 = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 24 ; 2 uses
+  %.val18.i = load i32, ptr %27, align 4, !alias.scope !1297, !noalias !1300, !noundef !3 ; 2 uses
+  %28 = getelementptr i8, ptr %.sroa.9.131.i, i64 28
+  %.val19.i = load i32, ptr %28, align 4, !range !36, !alias.scope !1297, !noalias !1300, !noundef !3
+  %29 = icmp eq i32 %i.ig, %.val18.i
+  %30 = icmp ult i32 %i.ig, %.val18.i
+  %31 = icmp samesign ult i32 %i.ii, %.val19.i
+  %.sroa.0.0.i.i.i38.i = select i1 %29, i1 %31, i1 %30 ; 2 uses
+  %32 = getelementptr inbounds i8, ptr %.sroa.43.129.i, i64 -32 ; 3 uses
+  %.sroa.01.0.i39.i = select i1 %.sroa.0.0.i.i.i38.i, ptr %2, ptr %32
+  %i.iz = getelementptr inbounds nuw [8 x i8], ptr %.sroa.01.0.i39.i, i64 %i.iy
+  %33 = load i64, ptr %27, align 4, !alias.scope !1297, !noalias !1314
+  store i64 %33, ptr %i.iz, align 4, !alias.scope !1300, !noalias !1317
+  %i.ja = zext i1 %.sroa.0.0.i.i.i38.i to i64
+  %i.jb = add i64 %i.iy, %i.ja                    ; 2 uses
   %i.jc = getelementptr inbounds nuw i8, ptr %.sroa.9.131.i, i64 32 ; 3 uses
   %i.jd = icmp ult ptr %i.jc, %i.io
   br i1 %i.jd, label %.lr.ph.i42, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i42, %bb.w
-  %.sroa.43.1.lcssa.i = phi ptr [ %.sroa.43.0.i, %bb.w ], [ %17, %.lr.ph.i42 ] ; 2 uses
+  %.sroa.43.1.lcssa.i = phi ptr [ %.sroa.43.0.i, %bb.w ], [ %32, %.lr.ph.i42 ] ; 2 uses
   %.sroa.27.1.lcssa.i = phi i64 [ %.sroa.27.0.i, %bb.w ], [ %i.jb, %.lr.ph.i42 ] ; 2 uses
   %.sroa.9.1.lcssa.i = phi ptr [ %.sroa.9.0.i, %bb.w ], [ %i.jc, %.lr.ph.i42 ] ; 3 uses
   %i.je = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0.0.ph143, i64 %.sroa.0.0.i40 ; 2 uses
@@ -703,19 +716,19 @@ begin_hunk_1_@llvm.memset.p0.i64
 !1302 = !{!1303, !1301}
 !1303 = distinct !{!1303, !1304, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers: argument 0"}
 !1304 = distinct !{!1304, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers"}
-!1305 = !{!1306, !1301}
-!1306 = distinct !{!1306, !1307, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers: argument 0"}
-!1307 = distinct !{!1307, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers"}
-!1308 = !{!1309, !1301}
-!1309 = distinct !{!1309, !1310, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers: argument 0"}
-!1310 = distinct !{!1310, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers"}
-!1311 = !{!1312, !1301}
-!1312 = distinct !{!1312, !1313, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers: argument 0"}
-!1313 = distinct !{!1313, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers"}
-!1314 = !{!1303, !1298}
-!1315 = !{!1306, !1298}
-!1316 = !{!1309, !1298}
-!1317 = !{!1312, !1298}
+!1305 = !{!1303, !1298}
+!1306 = !{!1307, !1301}
+!1307 = distinct !{!1307, !1308, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers: argument 0"}
+!1308 = distinct !{!1308, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers"}
+!1309 = !{!1307, !1298}
+!1310 = !{!1311, !1301}
+!1311 = distinct !{!1311, !1312, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers: argument 0"}
+!1312 = distinct !{!1312, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers"}
+!1313 = !{!1311, !1298}
+!1314 = !{!1315, !1301}
+!1315 = distinct !{!1315, !1316, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers: argument 0"}
+!1316 = distinct !{!1316, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers"}
+!1317 = !{!1315, !1298}
 !1318 = !{!1319, !1301}
 !1319 = distinct !{!1319, !1320, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers: argument 0"}
 !1320 = distinct !{!1320, !"_RNvMNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksortINtB2_14PartitionStateTmcEE13partition_oneCs2JiOgHzbbc7_10tokenizers"}

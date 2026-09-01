@@ -204,46 +204,44 @@ _ZN4pbrt6Tuple3INS_7Normal3EfEixEi.exit.2:
   %.sroa.04.0.vec.extract.i.i51 = extractelement <2 x float> %3, i64 0 ; 3 uses
   %i.au = fmul float %4, %i.p                     ; 2 uses
   %i.av = fneg float %i.au
-  %5 = tail call noundef float @llvm.fma.f32(float %4, float %i.p, float %i.av)
   %.sroa.04.4.vec.extract.i.i53 = extractelement <2 x float> %3, i64 1 ; 3 uses
-  %6 = tail call noundef float @llvm.fma.f32(float %.sroa.04.4.vec.extract.i.i53, float %i.n, float %i.au)
-  %7 = fadd float %5, %6
-  %8 = tail call noundef float @llvm.fma.f32(float %.sroa.04.0.vec.extract.i.i51, float %i.m, float %7)
-  %9 = tail call noundef float @llvm.fabs.f32(float %8)
-  %10 = extractvalue { <2 x float>, <2 x float> } %i.ap, 1
-  %11 = fneg float %.sroa.01.4.vec.extract.i.i    ; 2 uses
-  %i.aw = fmul float %4, %11                      ; 2 uses
+  %5 = extractvalue { <2 x float>, <2 x float> } %i.ap, 1
+  %6 = fneg float %.sroa.01.4.vec.extract.i.i     ; 2 uses
+  %7 = fmul float %4, %6                          ; 2 uses
+  %8 = fneg float %7
+  %9 = extractvalue { <2 x float>, <2 x float> } %i.an, 0
+  %10 = extractvalue { <2 x float>, <2 x float> } %i.ap, 0
+  %i.aw = fmul float %4, %.sroa.226.0.copyload    ; 2 uses
   %i.ax = fneg float %i.aw
-  %i.ay = tail call noundef float @llvm.fma.f32(float %4, float %11, float %i.ax)
-  %i.az = tail call noundef float @llvm.fma.f32(float %.sroa.04.4.vec.extract.i.i53, float %i.s, float %i.aw)
-  %12 = fadd float %i.ay, %i.az
-  %i.ba = tail call noundef float @llvm.fma.f32(float %.sroa.04.0.vec.extract.i.i51, float %i.i, float %12)
-  %13 = tail call noundef float @llvm.fabs.f32(float %i.ba)
-  %14 = extractvalue { <2 x float>, <2 x float> } %i.an, 0
-  %15 = extractvalue { <2 x float>, <2 x float> } %i.ap, 0
-  %16 = fmul float %4, %.sroa.226.0.copyload      ; 2 uses
-  %i.bb = tail call noundef float @llvm.fma.f32(float %.sroa.04.4.vec.extract.i.i53, float %.sroa.01.4.vec.extract.i.i, float %16)
-  %17 = fneg float %16
-  %i.bc = tail call noundef float @llvm.fma.f32(float %4, float %.sroa.226.0.copyload, float %17)
-  %18 = fadd float %i.bb, %i.bc
-  %19 = tail call noundef float @llvm.fma.f32(float %.sroa.04.0.vec.extract.i.i51, float %.sroa.01.0.vec.extract.i.i, float %18)
-  %20 = tail call noundef float @llvm.fabs.f32(float %19)
-  %21 = shufflevector <2 x float> %14, <2 x float> %i.at, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %22 = insertelement <4 x float> poison, float %9, i64 0
-  %i.bd = shufflevector <4 x float> %22, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.be = fmul <4 x float> %21, %i.bd
+  %11 = tail call noundef float @llvm.fma.f32(float %.sroa.04.4.vec.extract.i.i53, float %.sroa.01.4.vec.extract.i.i, float %i.aw)
+  %i.ay = tail call noundef float @llvm.fma.f32(float %4, float %6, float %8)
+  %i.az = tail call noundef float @llvm.fma.f32(float %4, float %i.p, float %i.av)
+  %12 = tail call noundef float @llvm.fma.f32(float %4, float %.sroa.226.0.copyload, float %i.ax)
+  %i.ba = tail call noundef float @llvm.fma.f32(float %.sroa.04.4.vec.extract.i.i53, float %i.s, float %7)
+  %13 = tail call noundef float @llvm.fma.f32(float %.sroa.04.4.vec.extract.i.i53, float %i.n, float %i.au)
+  %14 = fadd float %11, %12
+  %15 = fadd float %i.ay, %i.ba
+  %16 = fadd float %i.az, %13
+  %i.bb = tail call noundef float @llvm.fma.f32(float %.sroa.04.0.vec.extract.i.i51, float %.sroa.01.0.vec.extract.i.i, float %14)
+  %17 = tail call noundef float @llvm.fma.f32(float %.sroa.04.0.vec.extract.i.i51, float %i.i, float %15)
+  %i.bc = tail call noundef float @llvm.fma.f32(float %.sroa.04.0.vec.extract.i.i51, float %i.m, float %16)
+  %18 = insertelement <3 x float> poison, float %i.bc, i64 0
+  %19 = insertelement <3 x float> %18, float %17, i64 1
+  %20 = insertelement <3 x float> %19, float %i.bb, i64 2
+  %21 = tail call <3 x float> @llvm.fabs.v3f32(<3 x float> %20) ; 3 uses
+  %22 = shufflevector <2 x float> %9, <2 x float> %i.at, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.bd = shufflevector <3 x float> %21, <3 x float> poison, <4 x i32> zeroinitializer
+  %i.be = fmul <4 x float> %22, %i.bd
   %i.bf = fmul <4 x float> %i.be, splat (float 2.500000e-01)
   %i.bg = fadd <4 x float> %i.bf, zeroinitializer
-  %i.bh = shufflevector <2 x float> %15, <2 x float> %10, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %23 = insertelement <4 x float> poison, float %13, i64 0
-  %24 = shufflevector <4 x float> %23, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.bi = fmul <4 x float> %i.bh, %24
+  %i.bh = shufflevector <2 x float> %10, <2 x float> %5, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %23 = shufflevector <3 x float> %21, <3 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %i.bi = fmul <4 x float> %i.bh, %23
   %i.bj = fmul <4 x float> %i.bi, splat (float 2.500000e-01)
   %i.bk = fadd <4 x float> %i.bg, %i.bj
   %i.bl = shufflevector <2 x float> %i.as, <2 x float> %i.ar, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %25 = insertelement <4 x float> poison, float %20, i64 0
-  %26 = shufflevector <4 x float> %25, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.bm = fmul <4 x float> %i.bl, %26
+  %24 = shufflevector <3 x float> %21, <3 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
+  %i.bm = fmul <4 x float> %i.bl, %24
   %i.bn = fmul <4 x float> %i.bm, splat (float 5.000000e-01)
   %i.bo = fadd <4 x float> %i.bk, %i.bn           ; 2 uses
   %i.bp = shufflevector <4 x float> %i.bo, <4 x float> poison, <2 x i32> <i32 0, i32 1>
@@ -644,6 +642,9 @@ declare i32 @llvm.smin.i32(i32, i32) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fma.v2f32(<2 x float>, <2 x float>, <2 x float>) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <3 x float> @llvm.fabs.v3f32(<3 x float>) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #14

@@ -204,11 +204,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = add i64 %i.e, 1
-  %.sroa.0106.0.insert.ext.a = and i64 %i.h, 4294967295
-  %.sroa.0106.4.extract.shift = and i64 %i.d, -4294967296
-  %.sroa.0106.4.insert.insert = or disjoint i64 %.sroa.0106.0.insert.ext.a, %.sroa.0106.4.extract.shift
+  %.sroa.0106.0.insert.ext.a = and i64 %i.d, -4294967296
   %6 = add i64 %i.d, 4294967295
+  %.sroa.0106.0.insert.ext = and i64 %i.h, 4294967295
   %.sroa.24.8.insert.ext = and i64 %6, 4294967295
+  %.sroa.0106.4.insert.insert = or disjoint i64 %.sroa.0106.0.insert.ext, %.sroa.0106.0.insert.ext.a
   %.sroa.24.12.extract.shift = and i64 %i.e, -4294967296
   %.sroa.24.12.insert.insert = or disjoint i64 %.sroa.24.8.insert.ext, %.sroa.24.12.extract.shift
   br label %bb.c
@@ -222,12 +222,12 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.k = and i64 %.sroa.24.0, -4294967296
+  %.sroa.0106.4.insert.mask137 = and i64 %.sroa.0106.0, 4294967295
+  %.sroa.0106.4.insert.mask137.a = and i64 %.sroa.0106.0, -4294967296
   %.sroa.0106.4.insert.shift136 = add i64 %i.k, 4294967296
-  %.sroa.0106.4.insert.mask137.a = and i64 %.sroa.0106.0, 4294967295
-  %.sroa.0106.4.insert.insert138 = or disjoint i64 %.sroa.0106.4.insert.shift136, %.sroa.0106.4.insert.mask137.a
-  %7 = and i64 %.sroa.0106.0, -4294967296
+  %.sroa.0106.4.insert.insert138 = or disjoint i64 %.sroa.0106.4.insert.shift136, %.sroa.0106.4.insert.mask137
   %i.l = or i64 %.sroa.24.0, -4294967296
-  %.sroa.24.12.insert.insert179 = add i64 %7, %i.l
+  %.sroa.24.12.insert.insert179 = add i64 %.sroa.0106.4.insert.mask137.a, %i.l
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -247,9 +247,9 @@ bb.f:                                             ; preds = %bb.e
   %sh.diff190 = lshr i64 %.sroa.0106.1, 31
   %.sroa.0102.0.extract.trunc = trunc i64 %i.m to i32
   %tr.sh.diff191 = trunc i64 %sh.diff190 to i32
-  %i.n = insertelement <2 x i32> poison, i32 %tr.sh.diff191, i64 0
-  %i.o = insertelement <2 x i32> %i.n, i32 %.sroa.0102.0.extract.trunc, i64 1
-  %i.p = and <2 x i32> %i.o, <i32 -2, i32 -1>
+  %i.n = insertelement <2 x i32> poison, i32 %.sroa.0102.0.extract.trunc, i64 0
+  %i.o = insertelement <2 x i32> %i.n, i32 %tr.sh.diff191, i64 1
+  %i.p = and <2 x i32> %i.o, <i32 -1, i32 -2>
   %i.q = sitofp <2 x i32> %i.p to <2 x double>
   %i.r = fmul nnan <2 x double> %i.q, splat (double 5.000000e-01) ; 2 uses
   %i.s = call <2 x double> @llvm.copysign.v2f64(<2 x double> splat (double 5.000000e-01), <2 x double> %i.r)
@@ -260,10 +260,9 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %.sroa.0106.4.extract.shift143 = lshr i64 %.sroa.0106.1, 32
-  %.sroa.096.0.extract.trunc = trunc i64 %.sroa.24.1 to i32
-  %.sroa.0106.4.extract.trunc144 = trunc nuw i64 %.sroa.0106.4.extract.shift143 to i32
-  %8 = insertelement <2 x i32> poison, i32 %.sroa.0106.4.extract.trunc144, i64 0
-  %9 = insertelement <2 x i32> %8, i32 %.sroa.096.0.extract.trunc, i64 1
+  %7 = insertelement <2 x i64> poison, i64 %.sroa.24.1, i64 0
+  %8 = insertelement <2 x i64> %7, i64 %.sroa.0106.4.extract.shift143, i64 1
+  %9 = trunc <2 x i64> %8 to <2 x i32>
   %i.w = sitofp <2 x i32> %9 to <2 x double>
   br label %bb.y
 
@@ -275,8 +274,8 @@ bb.h:                                             ; preds = %bb.e
   %.sroa.0106.4.extract.trunc147 = trunc nuw i64 %.sroa.0106.4.extract.shift146 to i32
   %.sroa.092.0.extract.trunc = shl i32 %.sroa.24.1.tr, 1
   %i.x = add i32 %.sroa.489.0.extract.trunc, %.sroa.0106.4.extract.trunc147
-  %i.y = insertelement <2 x i32> poison, i32 %i.x, i64 0
-  %i.z = insertelement <2 x i32> %i.y, i32 %.sroa.092.0.extract.trunc, i64 1
+  %i.y = insertelement <2 x i32> poison, i32 %.sroa.092.0.extract.trunc, i64 0
+  %i.z = insertelement <2 x i32> %i.y, i32 %i.x, i64 1
   %i.aa = sitofp <2 x i32> %i.z to <2 x double>
   %i.ab = fmul nnan <2 x double> %i.aa, splat (double 5.000000e-01) ; 2 uses
   %i.ac = call <2 x double> @llvm.copysign.v2f64(<2 x double> splat (double 5.000000e-01), <2 x double> %i.ab)
@@ -290,9 +289,9 @@ bb.i:                                             ; preds = %bb.e
   %sh.diff = lshr i64 %.sroa.24.1, 31
   %.sroa.084.0.extract.trunc = trunc i64 %i.ag to i32
   %tr.sh.diff = trunc i64 %sh.diff to i32
-  %i.ah = insertelement <2 x i32> poison, i32 %tr.sh.diff, i64 0
-  %i.ai = insertelement <2 x i32> %i.ah, i32 %.sroa.084.0.extract.trunc, i64 1
-  %i.aj = and <2 x i32> %i.ai, <i32 -2, i32 -1>
+  %i.ah = insertelement <2 x i32> poison, i32 %.sroa.084.0.extract.trunc, i64 0
+  %i.ai = insertelement <2 x i32> %i.ah, i32 %tr.sh.diff, i64 1
+  %i.aj = and <2 x i32> %i.ai, <i32 -1, i32 -2>
   %i.ak = sitofp <2 x i32> %i.aj to <2 x double>
   %i.al = fmul nnan <2 x double> %i.ak, splat (double 5.000000e-01) ; 2 uses
   %i.am = call <2 x double> @llvm.copysign.v2f64(<2 x double> splat (double 5.000000e-01), <2 x double> %i.al)
@@ -305,8 +304,8 @@ bb.j:                                             ; preds = %bb.e
   %.sroa.24.12.extract.shift184 = lshr i64 %.sroa.24.1, 32
   %.sroa.078.0.extract.trunc = trunc i64 %.sroa.0106.1 to i32
   %.sroa.24.12.extract.trunc185 = trunc nuw i64 %.sroa.24.12.extract.shift184 to i32
-  %i.aq = insertelement <2 x i32> poison, i32 %.sroa.24.12.extract.trunc185, i64 0
-  %i.ar = insertelement <2 x i32> %i.aq, i32 %.sroa.078.0.extract.trunc, i64 1
+  %i.aq = insertelement <2 x i32> poison, i32 %.sroa.078.0.extract.trunc, i64 0
+  %i.ar = insertelement <2 x i32> %i.aq, i32 %.sroa.24.12.extract.trunc185, i64 1
   %i.as = sitofp <2 x i32> %i.ar to <2 x double>
   br label %bb.y
 
@@ -318,8 +317,8 @@ bb.k:                                             ; preds = %bb.e
   %.sroa.473.0.extract.trunc = trunc nuw i64 %.sroa.473.0.extract.shift to i32
   %.sroa.074.0.extract.trunc = shl i32 %.sroa.0106.1.tr, 1
   %i.at = add i32 %.sroa.24.12.extract.trunc188, %.sroa.473.0.extract.trunc
-  %i.au = insertelement <2 x i32> poison, i32 %i.at, i64 0
-  %i.av = insertelement <2 x i32> %i.au, i32 %.sroa.074.0.extract.trunc, i64 1
+  %i.au = insertelement <2 x i32> poison, i32 %.sroa.074.0.extract.trunc, i64 0
+  %i.av = insertelement <2 x i32> %i.au, i32 %i.at, i64 1
   %i.aw = sitofp <2 x i32> %i.av to <2 x double>
   %i.ax = fmul nnan <2 x double> %i.aw, splat (double 5.000000e-01) ; 2 uses
   %i.ay = call <2 x double> @llvm.copysign.v2f64(<2 x double> splat (double 5.000000e-01), <2 x double> %i.ax)
@@ -500,9 +499,9 @@ bb.y:                                             ; preds = %_ZN6QDebuglsEi.exit
   %i.co = phi <2 x double> [ zeroinitializer, %_ZN6QDebuglsEi.exit ], [ %i.v, %bb.f ], [ %i.w, %bb.g ], [ %i.af, %bb.h ], [ %i.ap, %bb.i ], [ %i.as, %bb.j ], [ %i.bb, %bb.k ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #51
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #51
-  %i.cp = extractelement <2 x double> %i.co, i64 1
+  %i.cp = extractelement <2 x double> %i.co, i64 0
   %.fca.0.insert = insertvalue { double, double } poison, double %i.cp, 0
-  %i.cq = extractelement <2 x double> %i.co, i64 0
+  %i.cq = extractelement <2 x double> %i.co, i64 1
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %i.cq, 1
   ret { double, double } %.fca.1.insert
 }
@@ -905,7 +904,7 @@ bb.a:
   %8 = alloca %class.QPen, align 8                ; 7 uses
   %9 = alloca %class.QLineF, align 16             ; 6 uses
   %10 = alloca %class.QPen, align 8               ; 7 uses
-  %11 = alloca %class.QLineF, align 8             ; 6 uses
+  %11 = alloca %class.QLineF, align 16            ; 6 uses
   %12 = alloca %class.QFont, align 8              ; 8 uses
   %13 = alloca %class.QPen, align 8               ; 7 uses
   %14 = alloca %class.QLineF, align 8             ; 7 uses
@@ -1058,7 +1057,7 @@ _ZN10QCPPainter6setPenERK4QPen.exit49:            ; preds = %.noexc47, %bb.i
 .lr.ph:                                           ; preds = %_ZN10QCPPainter6setPenERK4QPen.exit49
   %i.bp = getelementptr i8, ptr %0, i64 472
   %i.bq = getelementptr i8, ptr %0, i64 308
-  %.sroa.4143.0..sroa_idx = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %.sroa.4143.0..sroa_idx = getelementptr inbounds nuw i8, ptr %11, i64 16
   %.sroa.4139.0..sroa_idx = getelementptr inbounds nuw i8, ptr %11, i64 24
   %i.br = shufflevector <2 x double> %i.u, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.bs = shufflevector <2 x double> %i.u, <2 x double> poison, <2 x i32> zeroinitializer
@@ -1085,30 +1084,31 @@ bb.l:                                             ; preds = %.lr.ph, %_ZN10QCPPa
   %i.bx = getelementptr [8 x i8], ptr %i.bw, i64 %i.bv
   %i.by = load double, ptr %i.bx, align 8
   %i.bz = call noundef double @_ZNK18QCPPolarAxisRadial13coordToRadiusEd(ptr noundef align 8 dereferenceable_or_null(776) %0, double noundef %i.by)
+  call void @llvm.lifetime.start.p0(ptr nonnull %11) #51
   %i.ca = load <2 x double>, ptr %6, align 16
   %i.cb = insertelement <2 x double> poison, double %i.bz, i64 0
   %i.cc = shufflevector <2 x double> %i.cb, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cd = fmul <2 x double> %i.cc, %i.ca
   %i.ce = load <2 x double>, ptr %i.ac, align 8
   %i.cf = fadd <2 x double> %i.cd, %i.ce          ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %11) #51
   %16 = load <2 x i32>, ptr %i.bq, align 4
-  %i.cg = sitofp <2 x i32> %16 to <2 x double>    ; 2 uses
+  %17 = shufflevector <2 x i32> %16, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
+  %i.cg = sitofp <2 x i32> %17 to <2 x double>    ; 2 uses
   %i.ch = fmul <2 x double> %i.bs, %i.cg          ; 2 uses
   %i.ci = fmul <2 x double> %i.br, %i.cg          ; 2 uses
   %i.cj = shufflevector <2 x double> %i.cf, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ck = fsub <2 x double> %i.cj, %i.ch          ; 2 uses
   %i.cl = fadd <2 x double> %i.cj, %i.ch          ; 2 uses
-  %i.cm = shufflevector <2 x double> %i.ck, <2 x double> %i.cl, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %i.cm = shufflevector <2 x double> %i.cl, <2 x double> %i.ck, <2 x i32> <i32 0, i32 3> ; 2 uses
   %i.cn = shufflevector <2 x double> %i.cf, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   %i.co = fsub <2 x double> %i.cn, %i.ci          ; 2 uses
   %i.cp = fadd <2 x double> %i.cn, %i.ci          ; 2 uses
-  %i.cq = shufflevector <2 x double> %i.co, <2 x double> %i.cp, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %17 = extractelement <2 x double> %i.ck, i64 0
-  store double %17, ptr %11, align 8
-  %18 = shufflevector <2 x double> %i.co, <2 x double> %i.cl, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %18, ptr %.sroa.4143.0..sroa_idx, align 8
-  %i.cr = extractelement <2 x double> %i.cp, i64 1
+  %i.cq = shufflevector <2 x double> %i.cp, <2 x double> %i.co, <2 x i32> <i32 0, i32 3> ; 2 uses
+  %18 = shufflevector <2 x double> %i.ck, <2 x double> %i.co, <2 x i32> <i32 1, i32 3>
+  store <2 x double> %18, ptr %11, align 16
+  %19 = extractelement <2 x double> %i.cl, i64 0
+  store double %19, ptr %.sroa.4143.0..sroa_idx, align 16
+  %i.cr = extractelement <2 x double> %i.cp, i64 0
   store double %i.cr, ptr %.sroa.4139.0..sroa_idx, align 8
   %i.cs = load i8, ptr %i.an, align 4, !range !6, !noundef !7
   %i.ct = trunc nuw i8 %i.cs to i1
@@ -1136,7 +1136,8 @@ bb.o:                                             ; preds = %bb.m
   %i.dd = shl nuw <2 x i64> %i.dc, splat (i64 32)
   %i.de = zext <2 x i32> %i.cz to <2 x i64>
   %i.df = or disjoint <2 x i64> %i.dd, %i.de
-  store <2 x i64> %i.df, ptr %3, align 16
+  %20 = shufflevector <2 x i64> %i.df, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x i64> %20, ptr %3, align 16
   call void @_ZN8QPainter9drawLinesEPK5QLinei(ptr noundef align 8 dereferenceable_or_null(40) %1, ptr noundef nonnull align 4 dereferenceable(16) %3, i32 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #51
   br label %_ZN10QCPPainter8drawLineERK6QLineF.exit71
@@ -1539,7 +1540,7 @@ bb.a:
   %10 = alloca %class.QPen, align 8               ; 7 uses
   %11 = alloca %class.QPointF, align 16           ; 6 uses
   %i.a = getelementptr i8, ptr %0, i64 552        ; 5 uses
-  %i.b = getelementptr i8, ptr %0, i64 568        ; 4 uses
+  %i.b = getelementptr i8, ptr %0, i64 568        ; 3 uses
   %i.c = load double, ptr %i.b, align 8
   tail call void @_ZN19QCPPolarAxisAngular14drawBackgroundEP10QCPPainterRK7QPointFd(ptr noundef align 8 dereferenceable_or_null(1080) %0, ptr noundef %1, ptr noundef align 8 dereferenceable(16) %i.a, double noundef %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #51
@@ -1569,7 +1570,6 @@ _ZN10QCPPainter6setPenERK4QPen.exit:              ; preds = %.noexc, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #51
   %i.k = load double, ptr %i.b, align 8           ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #51
-  %12 = getelementptr i8, ptr %0, i64 560
   %i.l = fmul double %i.k, 2.000000e+00           ; 2 uses
   %i.m = load <2 x double>, ptr %i.a, align 8
   %i.n = insertelement <2 x double> poison, double %i.k, i64 0
@@ -1641,32 +1641,23 @@ bb.g:                                             ; preds = %.lr.ph, %_ZN10QCPPa
   %i.ah = phi i64 [ 0, %.lr.ph ], [ %i.bn, %_ZN10QCPPainter8drawLineERK7QPointFS2_.exit ]
   %.02598 = phi i32 [ 0, %.lr.ph ], [ %i.bm, %_ZN10QCPPainter8drawLineERK7QPointFS2_.exit ]
   %i.ai = load ptr, ptr %i.ac, align 8
-  %i.aj = getelementptr [16 x i8], ptr %i.ai, i64 %i.ah ; 2 uses
-  %13 = load double, ptr %i.b, align 8
-  %14 = load double, ptr %i.aj, align 8
-  %15 = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
-  %16 = load double, ptr %15, align 8
-  %17 = load double, ptr %i.a, align 8
-  %18 = load double, ptr %12, align 8
+  %i.aj = getelementptr [16 x i8], ptr %i.ai, i64 %i.ah
+  %12 = load <2 x double>, ptr %i.aj, align 8     ; 2 uses
+  %13 = load <3 x double>, ptr %i.a, align 8      ; 3 uses
   %i.ak = load <2 x i32>, ptr %i.ad, align 4
   %i.al = sitofp <2 x i32> %i.ak to <2 x double>  ; 2 uses
-  %19 = insertelement <2 x double> poison, double %13, i64 0
-  %20 = shufflevector <2 x double> %19, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.am = fsub <2 x double> %20, %i.al
-  %i.an = fadd <2 x double> %20, %i.al
+  %14 = shufflevector <3 x double> %13, <3 x double> poison, <2 x i32> <i32 2, i32 2> ; 2 uses
+  %i.am = fsub <2 x double> %14, %i.al
+  %i.an = fadd <2 x double> %14, %i.al
   %i.ao = shufflevector <2 x double> %i.am, <2 x double> %i.an, <2 x i32> <i32 0, i32 3> ; 2 uses
-  %21 = insertelement <2 x double> poison, double %14, i64 0
-  %i.ap = shufflevector <2 x double> %21, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.ap = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aq = fmul <2 x double> %i.ap, %i.ao
-  %22 = insertelement <2 x double> poison, double %16, i64 0
-  %23 = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ar = fmul <2 x double> %i.ao, %23
-  %24 = insertelement <2 x double> poison, double %17, i64 0
-  %i.as = shufflevector <2 x double> %24, <2 x double> poison, <2 x i32> zeroinitializer
+  %15 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.ar = fmul <2 x double> %i.ao, %15
+  %i.as = shufflevector <3 x double> %13, <3 x double> poison, <2 x i32> zeroinitializer
   %i.at = fadd <2 x double> %i.as, %i.aq          ; 4 uses
-  %25 = insertelement <2 x double> poison, double %18, i64 0
-  %26 = shufflevector <2 x double> %25, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.au = fadd <2 x double> %i.ar, %26            ; 4 uses
+  %16 = shufflevector <3 x double> %13, <3 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.au = fadd <2 x double> %i.ar, %16            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #51
   %i.av = extractelement <2 x double> %i.at, i64 0
   store double %i.av, ptr %5, align 8

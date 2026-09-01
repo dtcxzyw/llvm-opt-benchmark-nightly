@@ -204,16 +204,16 @@ bb.k:                                             ; preds = %_ZNK4geos4geom11Lin
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZNK4geos4geom11LineSegment12closestPointERKNS0_10CoordinateERS2_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %3 = load double, ptr %1, align 8, !tbaa !11    ; 4 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %4 = load double, ptr %i.a, align 8             ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load <2 x double>, ptr %0, align 8       ; 3 uses
-  %i.c = load double, ptr %5, align 8             ; 4 uses
-  %i.d = extractelement <2 x double> %i.b, i64 0  ; 4 uses
-  %6 = fcmp oeq double %3, %i.d
-  %i.e = fcmp oeq double %4, %i.c
-  %.0.i.i.i = select i1 %6, i1 %i.e, i1 false
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %3 = load <2 x double>, ptr %1, align 8         ; 6 uses
+  %i.b = load <2 x double>, ptr %0, align 8       ; 5 uses
+  %i.c = load double, ptr %i.a, align 8           ; 4 uses
+  %i.d = extractelement <2 x double> %i.b, i64 0  ; 2 uses
+  %4 = fcmp oeq <2 x double> %3, %i.b
+  %5 = extractelement <2 x i1> %4, i64 0
+  %6 = extractelement <2 x double> %3, i64 1      ; 3 uses
+  %i.e = fcmp oeq double %6, %i.c
+  %.0.i.i.i = select i1 %5, i1 %i.e, i1 false
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.pre = load double, ptr %.phi.trans.insert, align 8, !tbaa !11 ; 3 uses
   br i1 %.0.i.i.i, label %._ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.thread_crit_edge, label %bb.b
@@ -224,10 +224,11 @@ bb.a:
   br label %_ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.thread
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = fcmp oeq double %3, %.pre
+  %7 = extractelement <2 x double> %3, i64 0
+  %i.f = fcmp oeq double %7, %.pre
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.h = load double, ptr %i.g, align 8           ; 4 uses
-  %i.i = fcmp oeq double %4, %i.h
+  %i.i = fcmp oeq double %6, %i.h
   %.0.i.i14.i = select i1 %i.f, i1 %i.i, i1 false
   br i1 %.0.i.i14.i, label %_ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.thread, label %_ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit
 
@@ -237,9 +238,10 @@ _ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit: ; preds 
   %i.l = fmul double %i.j, %i.j
   %i.m = fmul double %i.k, %i.k
   %i.n = fadd double %i.l, %i.m
-  %7 = fsub double %3, %i.d
-  %i.o = fmul double %7, %i.j
-  %i.p = fsub double %4, %i.c
+  %foldExtExtBinop = fsub <2 x double> %3, %i.b
+  %8 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.o = fmul double %8, %i.j
+  %i.p = fsub double %6, %i.c
   %i.q = fmul double %i.p, %i.k
   %i.r = fadd double %i.o, %i.q
   %i.s = fdiv double %i.r, %i.n                   ; 4 uses
@@ -263,14 +265,12 @@ _ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit: ; preds = %_ZNK4ge
 _ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.thread: ; preds = %._ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.thread_crit_edge, %bb.b, %_ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit
   %i.z = phi double [ %.pre17, %._ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.thread_crit_edge ], [ %i.h, %bb.b ], [ %i.h, %_ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit ]
   %i.aa = insertelement <2 x double> %i.b, double %.pre, i64 1
-  %8 = insertelement <2 x double> poison, double %3, i64 0
-  %i.ab = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.ab = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ac = fsub <2 x double> %i.aa, %i.ab          ; 2 uses
   %i.ad = shufflevector <2 x double> %i.b, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %9 = insertelement <2 x double> %i.ad, double %i.z, i64 1
-  %i.ae = insertelement <2 x double> poison, double %4, i64 0
-  %10 = shufflevector <2 x double> %i.ae, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.af = fsub <2 x double> %9, %10               ; 2 uses
+  %i.ae = insertelement <2 x double> %i.ad, double %i.z, i64 1
+  %9 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.af = fsub <2 x double> %i.ae, %9             ; 2 uses
   %i.ag = fmul <2 x double> %i.ac, %i.ac
   %i.ah = fmul <2 x double> %i.af, %i.af
   %i.ai = fadd <2 x double> %i.ag, %i.ah
@@ -496,13 +496,12 @@ bb.b:                                             ; preds = %_ZNK4geos4geom11Lin
   %i.p = load <2 x double>, ptr %2, align 8       ; 10 uses
   %i.q = extractelement <2 x double> %i.p, i64 0  ; 8 uses
   %i.r = load double, ptr %i.o, align 8           ; 15 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.s = load <2 x double>, ptr %1, align 8       ; 10 uses
-  %i.t = extractelement <2 x double> %i.s, i64 0  ; 7 uses
-  %5 = load double, ptr %4, align 8               ; 14 uses
+  %i.s = load <2 x double>, ptr %1, align 8       ; 13 uses
+  %i.t = extractelement <2 x double> %i.s, i64 1  ; 12 uses
+  %4 = extractelement <2 x double> %i.s, i64 0    ; 7 uses
   %i.u = fcmp oeq <2 x double> %i.p, %i.s
   %i.v = extractelement <2 x i1> %i.u, i64 0
-  %i.w = fcmp oeq double %i.r, %5
+  %i.w = fcmp oeq double %i.r, %i.t
   %.0.i.i.i.i = select i1 %i.v, i1 %i.w, i1 false ; 2 uses
   %.pre.i = load double, ptr %i.e, align 8, !tbaa !11 ; 13 uses
   br i1 %.0.i.i.i.i, label %._ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.thread_crit_edge.i, label %bb.c
@@ -521,15 +520,15 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.0.i.i14.i.i, label %_ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.thread.i, label %_ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.i
 
 _ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.i: ; preds = %bb.c
-  %i.ab = fsub double %.pre.i, %i.t               ; 4 uses
-  %i.ac = fsub double %i.z, %5                    ; 4 uses
+  %i.ab = fsub double %.pre.i, %4                 ; 4 uses
+  %i.ac = fsub double %i.z, %i.t                  ; 4 uses
   %i.ad = fmul double %i.ab, %i.ab
   %i.ae = fmul double %i.ac, %i.ac
   %i.af = fadd double %i.ad, %i.ae
   %foldExtExtBinop = fsub <2 x double> %i.p, %i.s
   %i.ag = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.ah = fmul double %i.ag, %i.ab
-  %i.ai = fsub double %i.r, %5
+  %i.ai = fsub double %i.r, %i.t
   %i.aj = fmul double %i.ai, %i.ac
   %i.ak = fadd double %i.ah, %i.aj
   %i.al = fdiv double %i.ak, %i.af                ; 4 uses
@@ -540,9 +539,9 @@ _ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.i: ; pred
 
 _ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i: ; preds = %_ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.i
   %i.ao = fmul double %i.ab, %i.al
-  %i.ap = fadd double %i.t, %i.ao                 ; 2 uses
+  %i.ap = fadd double %4, %i.ao                   ; 2 uses
   %i.aq = fmul double %i.ac, %i.al
-  %i.ar = fadd double %5, %i.aq                   ; 2 uses
+  %i.ar = fadd double %i.t, %i.aq                 ; 2 uses
   %.pre = fsub double %i.ap, %i.q                 ; 2 uses
   %.pre131 = fsub double %i.ar, %i.r              ; 2 uses
   %.pre133 = fmul double %.pre, %.pre
@@ -556,8 +555,8 @@ _ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.thread.i:
   %i.as = insertelement <2 x double> %i.s, double %.pre.i, i64 1
   %i.at = shufflevector <2 x double> %i.p, <2 x double> poison, <2 x i32> zeroinitializer
   %i.au = fsub <2 x double> %i.as, %i.at          ; 2 uses
-  %6 = insertelement <2 x double> poison, double %5, i64 0
-  %i.av = insertelement <2 x double> %6, double %.sroa.8112.0.copyload114, i64 1
+  %5 = shufflevector <2 x double> %i.s, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.av = insertelement <2 x double> %5, double %.sroa.8112.0.copyload114, i64 1
   %i.aw = insertelement <2 x double> poison, double %i.r, i64 0
   %i.ax = shufflevector <2 x double> %i.aw, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ay = fsub <2 x double> %i.av, %i.ax          ; 2 uses
@@ -583,8 +582,8 @@ bb.e:                                             ; preds = %_ZNK4geos4geom11Lin
 _ZNK4geos4geom11LineSegment12closestPointERKNS0_10CoordinateERS2_.exit: ; preds = %_ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i, %bb.d, %bb.e
   %sqrt.i.pre-phi = phi double [ %.pre139, %_ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i ], [ %i.bd, %bb.d ], [ %i.be, %bb.e ] ; 2 uses
   %i.bg = phi double [ %i.z, %_ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i ], [ %.sroa.8112.0.copyload114, %bb.d ], [ %.sroa.8112.0.copyload114, %bb.e ] ; 9 uses
-  %.sroa.0109.0 = phi double [ %i.ap, %_ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i ], [ %i.t, %bb.d ], [ %.pre.i, %bb.e ]
-  %.sroa.8112.0 = phi double [ %i.ar, %_ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i ], [ %5, %bb.d ], [ %.sroa.8112.0.copyload114, %bb.e ]
+  %.sroa.0109.0 = phi double [ %i.ap, %_ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i ], [ %4, %bb.d ], [ %.pre.i, %bb.e ]
+  %.sroa.8112.0 = phi double [ %i.ar, %_ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i ], [ %i.t, %bb.d ], [ %.sroa.8112.0.copyload114, %bb.e ]
   %.sroa.10117.0 = phi double [ +qnan, %_ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i ], [ %.sroa.10117.0.copyload121, %bb.d ], [ %.sroa.10117.0.copyload119, %bb.e ]
   store double %.sroa.0109.0, ptr %0, align 8, !tbaa !9
   %.sroa.8112.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -597,7 +596,7 @@ _ZNK4geos4geom11LineSegment12closestPointERKNS0_10CoordinateERS2_.exit: ; preds 
   %i.bk = extractelement <2 x double> %i.bi, i64 0 ; 5 uses
   %i.bl = fcmp oeq <2 x double> %i.bi, %i.s
   %i.bm = extractelement <2 x i1> %i.bl, i64 0
-  %i.bn = fcmp oeq double %i.bj, %5
+  %i.bn = fcmp oeq double %i.bj, %i.t
   %.0.i.i.i.i22 = select i1 %i.bm, i1 %i.bn, i1 false ; 2 uses
   br i1 %.0.i.i.i.i22, label %_ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.thread.i28, label %bb.f
 
@@ -608,15 +607,15 @@ bb.f:                                             ; preds = %_ZNK4geos4geom11Lin
   br i1 %.0.i.i14.i.i25, label %_ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.thread.i28, label %_ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.i26
 
 _ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.i26: ; preds = %bb.f
-  %i.bq = fsub double %.pre.i, %i.t               ; 4 uses
-  %i.br = fsub double %i.bg, %5                   ; 4 uses
+  %i.bq = fsub double %.pre.i, %4                 ; 4 uses
+  %i.br = fsub double %i.bg, %i.t                 ; 4 uses
   %i.bs = fmul double %i.bq, %i.bq
   %i.bt = fmul double %i.br, %i.br
   %i.bu = fadd double %i.bs, %i.bt
   %foldExtExtBinop179 = fsub <2 x double> %i.bi, %i.s
   %i.bv = extractelement <2 x double> %foldExtExtBinop179, i64 0
   %i.bw = fmul double %i.bq, %i.bv
-  %i.bx = fsub double %i.bj, %5
+  %i.bx = fsub double %i.bj, %i.t
   %i.by = fmul double %i.bx, %i.br
   %i.bz = fadd double %i.bw, %i.by
   %i.ca = fdiv double %i.bz, %i.bu                ; 4 uses
@@ -627,9 +626,9 @@ _ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.i26: ; pr
 
 _ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i31: ; preds = %_ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.i26
   %i.cd = fmul double %i.bq, %i.ca
-  %i.ce = fadd double %i.t, %i.cd                 ; 2 uses
+  %i.ce = fadd double %4, %i.cd                   ; 2 uses
   %i.cf = fmul double %i.br, %i.ca
-  %i.cg = fadd double %5, %i.cf                   ; 2 uses
+  %i.cg = fadd double %i.t, %i.cf                 ; 2 uses
   %.pre140 = fsub double %i.ce, %i.bk             ; 2 uses
   %.pre142 = fsub double %i.cg, %i.bj             ; 2 uses
   %.pre144 = fmul double %.pre140, %.pre140
@@ -668,8 +667,8 @@ bb.h:                                             ; preds = %_ZNK4geos4geom11Lin
 
 _ZNK4geos4geom11LineSegment12closestPointERKNS0_10CoordinateERS2_.exit37: ; preds = %_ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i31, %bb.g, %bb.h
   %sqrt.i38.pre-phi = phi double [ %.pre150, %_ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i31 ], [ %i.ct, %bb.g ], [ %i.cu, %bb.h ] ; 2 uses
-  %.sroa.096.0 = phi double [ %i.ce, %_ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i31 ], [ %i.t, %bb.g ], [ %.pre.i, %bb.h ]
-  %.sroa.899.0 = phi double [ %i.cg, %_ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i31 ], [ %5, %bb.g ], [ %i.bg, %bb.h ]
+  %.sroa.096.0 = phi double [ %i.ce, %_ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i31 ], [ %4, %bb.g ], [ %.pre.i, %bb.h ]
+  %.sroa.899.0 = phi double [ %i.cg, %_ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i31 ], [ %i.t, %bb.g ], [ %i.bg, %bb.h ]
   %.sroa.10104.0 = phi double [ +qnan, %_ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i31 ], [ %.sroa.10104.0.copyload108, %bb.g ], [ %.sroa.10104.0.copyload106, %bb.h ]
   %i.cw = fcmp olt double %sqrt.i38.pre-phi, %sqrt.i.pre-phi
   br i1 %i.cw, label %bb.i, label %bb.j
@@ -696,7 +695,7 @@ _ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.i43: ; pr
   %foldExtExtBinop185 = fsub <2 x double> %i.s, %i.p
   %foldExtExtBinop187 = fmul <2 x double> %foldExtExtBinop185, %foldExtExtBinop181
   %i.db = extractelement <2 x double> %foldExtExtBinop187, i64 0
-  %i.dc = fsub double %5, %i.r
+  %i.dc = fsub double %i.t, %i.r
   %i.dd = fmul double %i.dc, %i.cx
   %i.de = fadd double %i.db, %i.dd
   %i.df = fdiv double %i.de, %i.da                ; 4 uses
@@ -711,8 +710,8 @@ _ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i48: ; preds = %_ZN
   %i.dk = fadd double %i.q, %i.dj                 ; 2 uses
   %i.dl = fmul double %i.cx, %i.df
   %i.dm = fadd double %i.r, %i.dl                 ; 2 uses
-  %.pre151 = fsub double %i.dk, %i.t              ; 2 uses
-  %.pre153 = fsub double %i.dm, %5                ; 2 uses
+  %.pre151 = fsub double %i.dk, %4                ; 2 uses
+  %.pre153 = fsub double %i.dm, %i.t              ; 2 uses
   %.pre155 = fmul double %.pre151, %.pre151
   %.pre157 = fmul double %.pre153, %.pre153
   %.pre159 = fadd double %.pre155, %.pre157
@@ -721,10 +720,9 @@ _ZNK4geos4geom11LineSegment7projectEdRNS0_10CoordinateE.exit.i48: ; preds = %_ZN
 
 _ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.thread.i45: ; preds = %bb.j, %_ZNK4geos4geom11LineSegment16projectionFactorERKNS0_10CoordinateE.exit.i43
   %i.dn = insertelement <2 x double> poison, double %i.r, i64 0
-  %7 = insertelement <2 x double> %i.dn, double %i.bj, i64 1
-  %i.do = insertelement <2 x double> poison, double %5, i64 0
-  %8 = shufflevector <2 x double> %i.do, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.dp = fsub <2 x double> %7, %8                ; 2 uses
+  %i.do = insertelement <2 x double> %i.dn, double %i.bj, i64 1
+  %6 = shufflevector <2 x double> %i.s, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.dp = fsub <2 x double> %i.do, %6             ; 2 uses
   %i.dq = shufflevector <2 x double> %i.p, <2 x double> %i.bi, <2 x i32> <i32 0, i32 2>
   %i.dr = shufflevector <2 x double> %i.s, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ds = fsub <2 x double> %i.dq, %i.dr          ; 2 uses

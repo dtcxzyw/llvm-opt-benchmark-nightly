@@ -205,25 +205,21 @@ bb.c:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !683
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 24
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !687  ; 3 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !687  ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.v, null
   br i1 %.not.i.i.i.i, label %_ZNK11ast_manager6is_andEPK4expr.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %5 = load i32, ptr %i.v, align 8, !tbaa !690    ; 2 uses
-  %6 = icmp eq i32 %5, 0
-  %7 = getelementptr inbounds nuw i8, ptr %i.v, i64 4
-  %8 = load i32, ptr %7, align 4                  ; 2 uses
-  %9 = icmp eq i32 %8, 6
-  %10 = select i1 %6, i1 %9, i1 false
-  %11 = icmp eq i32 %5, 0
-  %12 = icmp eq i32 %8, 5
-  %13 = select i1 %11, i1 %12, i1 false
+  %5 = load <2 x i32>, ptr %i.v, align 8          ; 2 uses
+  %6 = icmp eq <2 x i32> %5, zeroinitializer
+  %7 = shufflevector <2 x i1> %6, <2 x i1> poison, <2 x i32> zeroinitializer
+  %8 = shufflevector <2 x i32> %5, <2 x i32> poison, <2 x i32> <i32 1, i32 1>
+  %9 = icmp eq <2 x i32> %8, <i32 6, i32 5>
+  %10 = select <2 x i1> %7, <2 x i1> %9, <2 x i1> zeroinitializer
   br label %_ZNK11ast_manager6is_andEPK4expr.exit
 
 _ZNK11ast_manager6is_andEPK4expr.exit:            ; preds = %bb.c, %bb.b, %bb.d
-  %14 = phi i1 [ %10, %bb.d ], [ false, %bb.b ], [ false, %bb.c ] ; 2 uses
-  %15 = phi i1 [ %13, %bb.d ], [ false, %bb.b ], [ false, %bb.c ]
+  %11 = phi <2 x i1> [ %10, %bb.d ], [ zeroinitializer, %bb.b ], [ zeroinitializer, %bb.c ] ; 3 uses
   %i.w = load ptr, ptr %i.h, align 8, !tbaa !694, !nonnull !50, !align !569 ; 3 uses
   %i.x = load i32, ptr %i.n, align 4, !tbaa !650  ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 8928
@@ -261,13 +257,16 @@ bb.f:                                             ; preds = %_ZNK3smt7context14b
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !647 ; 4 uses
   %i.ap = sext i8 %i.ao to i32
   %i.aq = icmp eq i8 %i.ao, 1
-  %or.cond = and i1 %14, %i.aq
+  %12 = extractelement <2 x i1> %11, i64 0
+  %or.cond = and i1 %12, %i.aq
   %i.ar = icmp eq i8 %i.ao, -1
-  %or.cond4 = and i1 %15, %i.ar
+  %13 = extractelement <2 x i1> %11, i64 1
+  %or.cond4 = and i1 %13, %i.ar
   %or.cond34 = or i1 %or.cond, %or.cond4
   br i1 %or.cond34, label %bb.g, label %bb.k
 
 .thread:                                          ; preds = %_ZNK3smt7context14b_internalizedEPK4expr.exit
+  %14 = extractelement <2 x i1> %11, i64 0
   br i1 %14, label %bb.g, label %.critedge36
 
 bb.g:                                             ; preds = %.thread, %bb.f
