@@ -1,0 +1,688 @@
+pola-rs/polars_core-ad80a04fff11224b.polars_core.149bbfd31402d64a-cgu.09.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_core-ad80a04fff11224b.polars_core.149bbfd31402d64a-cgu.09.bc?download=true
+openvdb/openvdb.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openvdb/original/openvdb.bc?download=true
+pola-rs/polars_ops-f10fbde8402c1e77.polars_ops.acb822c2e599fb91-cgu.15.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_ops-f10fbde8402c1e77.polars_ops.acb822c2e599fb91-cgu.15.bc?download=true
+velox/ProbabilityTrigonometricFunctionsRegistration.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/ProbabilityTrigonometricFunctionsRegistration.bc?download=true
+meilisearch-rs/index_scheduler-0c73470abd85ee5a.index_scheduler.34b94f085cb09947-cgu.0.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/meilisearch-rs/original/index_scheduler-0c73470abd85ee5a.index_scheduler.34b94f085cb09947-cgu.0.bc?download=true
+velox/CastExpr.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/CastExpr.bc?download=true
+velox/ArrayConcatRegistration.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/ArrayConcatRegistration.bc?download=true
+velox/GenericWriter.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/GenericWriter.bc?download=true
+pola-rs/polars_plan-a78d50bf479d2301.polars_plan.b121b8564f397b47-cgu.04.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_plan-a78d50bf479d2301.polars_plan.b121b8564f397b47-cgu.04.bc?download=true
+openvdb/MeshToVolume.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openvdb/original/MeshToVolume.bc?download=true
+pola-rs/polars_stream-fcae4413b3f98c0a.polars_stream.1a4d324d1ee8f0d2-cgu.12.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_stream-fcae4413b3f98c0a.polars_stream.1a4d324d1ee8f0d2-cgu.12.bc?download=true
+pola-rs/polars_expr-c150671a77946377.polars_expr.f440eb239ff47e82-cgu.03.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_expr-c150671a77946377.polars_expr.f440eb239ff47e82-cgu.03.bc?download=true
+velox/ArrayNGramsRegistration.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/ArrayNGramsRegistration.bc?download=true
+velox/MapSubset.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/MapSubset.bc?download=true
+meilisearch-rs/rhai-9665971fb07cf480.rhai.24354a9ba4a54370-cgu.0.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/meilisearch-rs/original/rhai-9665971fb07cf480.rhai.24354a9ba4a54370-cgu.0.bc?download=true
+pola-rs/polars_stream-fcae4413b3f98c0a.polars_stream.1a4d324d1ee8f0d2-cgu.13.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_stream-fcae4413b3f98c0a.polars_stream.1a4d324d1ee8f0d2-cgu.13.bc?download=true
+typst-rs/typst_layout-dbf6d821f089d5d9.typst_layout.57215e5c6dfa9aa8-cgu.0.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/typst-rs/original/typst_layout-dbf6d821f089d5d9.typst_layout.57215e5c6dfa9aa8-cgu.0.bc?download=true
+velox/JsonCastOperator.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/JsonCastOperator.bc?download=true
+velox/BaseVector.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/BaseVector.bc?download=true
+duckdb/ub_duckdb_core_functions_holistic.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/duckdb/original/ub_duckdb_core_functions_holistic.bc?download=true
+velox/VectorFuzzer.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/VectorFuzzer.bc?download=true
+libigl/triangulate.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/triangulate.bc?download=true
+velox/VectorSaver.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/VectorSaver.bc?download=true
+velox/PrestoSerializerSerializationUtils.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/PrestoSerializerSerializationUtils.bc?download=true
+duckdb/ub_duckdb_optimizer.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/duckdb/original/ub_duckdb_optimizer.bc?download=true
+g2o/solver_dense.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/g2o/original/solver_dense.bc?download=true
+velox/MinMaxAggregateBase.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/MinMaxAggregateBase.bc?download=true
+meilisearch-rs/fuzz_indexing-6b65dc084f7ace2a.fuzz_indexing.ea400c9b89110869-cgu.0.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/meilisearch-rs/original/fuzz_indexing-6b65dc084f7ace2a.fuzz_indexing.ea400c9b89110869-cgu.0.bc?download=true
+gromacs/freeenergykernel.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/freeenergykernel.bc?download=true
+node/elements.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/elements.bc?download=true
+velox/Bridge.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/Bridge.bc?download=true
+velox/Utils.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/Utils.bc?download=true
+velox/ConstrainedVectorGenerator.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/ConstrainedVectorGenerator.bc?download=true
+libigl/signed_distance_isosurface.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/signed_distance_isosurface.bc?download=true
+openvdb/points.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openvdb/original/points.bc?download=true
+velox/ArraySum.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/ArraySum.bc?download=true
+libigl/projected_delaunay.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/projected_delaunay.bc?download=true
+velox/KeyEncoder.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/KeyEncoder.bc?download=true
+libigl/insert_into_cdt.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/insert_into_cdt.bc?download=true
+libigl/projected_cdt.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/projected_cdt.bc?download=true
+wireshark/qcustomplot.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/qcustomplot.bc?download=true
+libigl/point_areas.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/point_areas.bc?download=true
+velox/PrestoSerializerDeserializationUtils.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/PrestoSerializerDeserializationUtils.bc?download=true
+libigl/convex_hull.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/convex_hull.bc?download=true
+pola-rs/polars_sql-4f9f54f7d5831ee1.polars_sql.cafc849952b8d473-cgu.09.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pola-rs/original/polars_sql-4f9f54f7d5831ee1.polars_sql.cafc849952b8d473-cgu.09.bc?download=true
+harfbuzz/hb-subset-table-other.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/harfbuzz/original/hb-subset-table-other.bc?download=true
+tev/ImageCanvas.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/ImageCanvas.bc?download=true
+velox/EncodedVectorCopy.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/EncodedVectorCopy.bc?download=true
+velox/PrestoBatchVectorSerializer.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/PrestoBatchVectorSerializer.bc?download=true
+tev/enc_frame.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/enc_frame.bc?download=true
+velox/Rank.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/Rank.bc?download=true
+velox/InPredicate.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/InPredicate.bc?download=true
+velox/SharedArbitrator.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/SharedArbitrator.bc?download=true
+velox/PrestoSerializerEstimationUtils.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/PrestoSerializerEstimationUtils.bc?download=true
+libigl/minkowski_sum.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/minkowski_sum.bc?download=true
+velox/Expressions.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/Expressions.bc?download=true
+proj/crs.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/proj/original/crs.bc?download=true
+velox/Comparisons.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/Comparisons.bc?download=true
+proj/coordinateoperationfactory.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/proj/original/coordinateoperationfactory.bc?download=true
+g2o/structure_only.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/g2o/original/structure_only.bc?download=true
+abseil-cpp/numbers_test.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abseil-cpp/original/numbers_test.bc?download=true
+libigl/snap_rounding.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/snap_rounding.bc?download=true
+velox/IsNull.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/IsNull.bc?download=true
+velox/Not.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/Not.bc?download=true
+opencv/filter.dispatch.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/filter.dispatch.bc?download=true
+opencv/calibinit.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/calibinit.bc?download=true
+g2o/line3d.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/g2o/original/line3d.bc?download=true
+velox/MapZipWith.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/MapZipWith.bc?download=true
+opencv/warpfield.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/warpfield.bc?download=true
+anki-rs/anki-0407df152365de94.anki.49bf70e6e198d769-cgu.01.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/anki-rs/original/anki-0407df152365de94.anki.49bf70e6e198d769-cgu.01.bc?download=true
+tev/enc_modular.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/enc_modular.bc?download=true
+velox/CumeDist.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/CumeDist.bc?download=true
+llvm/RegAllocPBQP.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/RegAllocPBQP.bc?download=true
+libigl/tetgen.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/tetgen.bc?download=true
+arrow/api_aggregate.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/arrow/original/api_aggregate.bc?download=true
+libigl/resolve_intersections.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/resolve_intersections.bc?download=true
+tev/dec_group.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/dec_group.bc?download=true
+libigl/curve_intersector_virtual_4v.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/curve_intersector_virtual_4v.bc?download=true
+libigl/curve_intersector_virtual_4i.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/curve_intersector_virtual_4i.bc?download=true
+libigl/curve_intersector_virtual_4i_mb.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/curve_intersector_virtual_4i_mb.bc?download=true
+libigl/bvh_intersector_hybrid4_bvh4.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/bvh_intersector_hybrid4_bvh4.bc?download=true
+llvm-test-suite/sqlite3.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/sqlite3.bc?download=true
+abseil-cpp/beta_distribution_test.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abseil-cpp/original/beta_distribution_test.bc?download=true
+casadi/dm_instantiator.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/casadi/original/dm_instantiator.bc?download=true
+faiss/ScalarQuantizer.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/faiss/original/ScalarQuantizer.bc?download=true
+arrow/bpacking_simd_avx2.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/arrow/original/bpacking_simd_avx2.bc?download=true
+raylib/raudio.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/raylib/original/raudio.bc?download=true
+tev/enc_group.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/enc_group.bc?download=true
+libigl/outer_hull_legacy.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/outer_hull_legacy.bc?download=true
+casadi/integrator.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/casadi/original/integrator.bc?download=true
+velox/api_aggregate.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/api_aggregate.bc?download=true
+arrow/bpacking_simd_avx512.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/arrow/original/bpacking_simd_avx512.bc?download=true
+opencv/chessboard.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/chessboard.bc?download=true
+llvm-test-suite/oggenc.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/oggenc.bc?download=true
+raylib/rtextures.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/raylib/original/rtextures.bc?download=true
+bullet3/btSoftBody.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/btSoftBody.bc?download=true
+ocio/FixedFunctionOpCPU.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ocio/original/FixedFunctionOpCPU.bc?download=true
+arrow/compare.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/arrow/original/compare.bc?download=true
+imgui/imgui_widgets.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/imgui/original/imgui_widgets.bc?download=true
+pbrt-v4/aggregates.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/aggregates.bc?download=true
+gromacs/toppush.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/toppush.bc?download=true
+libp2p-rs/chat_example.chat_example.5f8e00b7a503922-cgu.02.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libp2p-rs/original/chat_example.chat_example.5f8e00b7a503922-cgu.02.bc?download=true
+arrow/bpacking_scalar.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/arrow/original/bpacking_scalar.bc?download=true
+oiio/FixedFunctionOpCPU.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/FixedFunctionOpCPU.bc?download=true
+llvm/IR2Vec.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/IR2Vec.bc?download=true
+raylib/rmodels.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/raylib/original/rmodels.bc?download=true
+faiss/HNSW.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/faiss/original/HNSW.bc?download=true
+abseil-cpp/uniform_real_distribution_test.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abseil-cpp/original/uniform_real_distribution_test.bc?download=true
+ncnn/binaryop_x86_avx512.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/binaryop_x86_avx512.bc?download=true
+pbrt-v4/math_test.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/math_test.bc?download=true
+tev/butteraugli.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/butteraugli.bc?download=true
+stb/stb_image_resize2.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/stb/original/stb_image_resize2.bc?download=true
+libp2p-rs/ipfs_private_example.ipfs_private_example.c9cf337336d19c9e-cgu.11.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libp2p-rs/original/ipfs_private_example.ipfs_private_example.c9cf337336d19c9e-cgu.11.bc?download=true
+libp2p-rs/chat_example.chat_example.5f8e00b7a503922-cgu.11.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libp2p-rs/original/chat_example.chat_example.5f8e00b7a503922-cgu.11.bc?download=true
+libp2p-rs/chat_example.chat_example.5f8e00b7a503922-cgu.10.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libp2p-rs/original/chat_example.chat_example.5f8e00b7a503922-cgu.10.bc?download=true
+xgboost/json.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/xgboost/original/json.bc?download=true
+raylib/rcore.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/raylib/original/rcore.bc?download=true
+velox/compare.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/compare.bc?download=true
+node/builtins-array.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/builtins-array.bc?download=true
+faiss/test_hnsw.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/faiss/original/test_hnsw.bc?download=true
+libigl/imgui_widgets.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/imgui_widgets.bc?download=true
+imgui/imgui_draw.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/imgui/original/imgui_draw.bc?download=true
+gromacs/bonded.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/bonded.bc?download=true
+pbrt-v4/vecmath_test.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/vecmath_test.bc?download=true
+libp2p-rs/ipfs_private_example.ipfs_private_example.c9cf337336d19c9e-cgu.06.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libp2p-rs/original/ipfs_private_example.ipfs_private_example.c9cf337336d19c9e-cgu.06.bc?download=true
+ncnn/binaryop_x86_fma.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/binaryop_x86_fma.bc?download=true
+ncnn/binaryop_x86_avx.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/binaryop_x86_avx.bc?download=true
+velox/FirstLastValue.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/FirstLastValue.bc?download=true
+libp2p-rs/chat_example.chat_example.5f8e00b7a503922-cgu.07.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libp2p-rs/original/chat_example.chat_example.5f8e00b7a503922-cgu.07.bc?download=true
+oiio/jpegr.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/jpegr.bc?download=true
+casadi/qrqp.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/casadi/original/qrqp.bc?download=true
+llvm-test-suite/btSoftBody.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/btSoftBody.bc?download=true
+pbrt-v4/spectrum.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/spectrum.bc?download=true
+gromacs/topio.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/topio.bc?download=true
+assimp/IFCGeometry.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/assimp/original/IFCGeometry.bc?download=true
+gromacs/sim_util.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/sim_util.bc?download=true
+assimp/clipper.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/assimp/original/clipper.bc?download=true
+tev/enc_detect_dots.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/enc_detect_dots.bc?download=true
+casadi/constant_mx.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/casadi/original/constant_mx.bc?download=true
+opencv/degeneracy.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/degeneracy.bc?download=true
+llvm/AArch64PBQPRegAlloc.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/AArch64PBQPRegAlloc.bc?download=true
+luanti/sky.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luanti/original/sky.bc?download=true
+gromacs/shellfc.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/shellfc.bc?download=true
+libigl/imgui_draw.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/imgui_draw.bc?download=true
+ncnn/binaryop_x86.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/binaryop_x86.bc?download=true
+tokenizers-rs/tokenizers-73a819a89809b4f0.tokenizers.1fce5ff7a8803495-cgu.03.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tokenizers-rs/original/tokenizers-73a819a89809b4f0.tokenizers.1fce5ff7a8803495-cgu.03.bc?download=true
+libigl/unique.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/unique.bc?download=true
+darktable/introspection_demosaic.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/introspection_demosaic.bc?download=true
+casadi/fast_newton.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/casadi/original/fast_newton.bc?download=true
+pbrt-v4/render.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/render.bc?download=true
+ncnn/binaryop_x86_avx512bf16.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/binaryop_x86_avx512bf16.bc?download=true
+g2o/optimization_algorithm_dogleg.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/g2o/original/optimization_algorithm_dogleg.bc?download=true
+lodepng/lodepng.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lodepng/original/lodepng.bc?download=true
+assimp/IFCUtil.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/assimp/original/IFCUtil.bc?download=true
+qemu/sme_helper.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/sme_helper.bc?download=true
+opencv/sparse_matching_gpc.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/sparse_matching_gpc.bc?download=true
+ocio/GradingBSplineCurve.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ocio/original/GradingBSplineCurve.bc?download=true
+pbrt-v4/lodepng.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/lodepng.bc?download=true
+darktable/introspection_ashift.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/introspection_ashift.bc?download=true
+opencv/aruco_board.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/aruco_board.bc?download=true
+wireshark/packet-dns.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/wireshark/original/packet-dns.bc?download=true
+libigl/isolines_intrinsic.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/isolines_intrinsic.bc?download=true
+casadi/linsol_qr.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/casadi/original/linsol_qr.bc?download=true
+quest/utilities.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/quest/original/utilities.bc?download=true
+imgui/imgui_tables.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/imgui/original/imgui_tables.bc?download=true
+oiio/GradingBSplineCurve.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/GradingBSplineCurve.bc?download=true
+darktable/introspection_channelmixerrgb.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/introspection_channelmixerrgb.bc?download=true
+ocio/GammaOpCPU.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ocio/original/GammaOpCPU.bc?download=true
+gromacs/orires.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/orires.bc?download=true
+oiio/GammaOpCPU.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/GammaOpCPU.bc?download=true
+luanti/touchscreenlayout.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luanti/original/touchscreenlayout.bc?download=true
+bullet3/btDeformableMultiBodyDynamicsWorld.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/btDeformableMultiBodyDynamicsWorld.bc?download=true
+velox/SegmentNodeList.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/SegmentNodeList.bc?download=true
+gromacs/domainpaircomm.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/domainpaircomm.bc?download=true
+bullet3/btMultiBody.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/btMultiBody.bc?download=true
+opencv/apriltag_quad_thresh.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/apriltag_quad_thresh.bc?download=true
+qemu/softfloat.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/softfloat.bc?download=true
+gromacs/mshift.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/mshift.bc?download=true
+ocio/ConfigUtils.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ocio/original/ConfigUtils.bc?download=true
+gromacs/pullutil.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/pullutil.bc?download=true
+bullet3/btCollisionWorld.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/btCollisionWorld.bc?download=true
+casadi/casadi_misc.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/casadi/original/casadi_misc.bc?download=true
+duckdb/ub_duckdb_progress_bar.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/duckdb/original/ub_duckdb_progress_bar.bc?download=true
+oiio/ConfigUtils.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/ConfigUtils.bc?download=true
+velox/ByteStream.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/ByteStream.bc?download=true
+ocio/Lut1DOpData.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ocio/original/Lut1DOpData.bc?download=true
+opencv/KAZEFeatures.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/KAZEFeatures.bc?download=true
+darktable/introspection_colorequal.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/introspection_colorequal.bc?download=true
+pbrt-v4/math.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/math.bc?download=true
+ruff-rs/criterion-524b2807e12f564b.criterion.5ad8dacf280593c5-cgu.11.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/criterion-524b2807e12f564b.criterion.5ad8dacf280593c5-cgu.11.bc?download=true
+darktable/develop.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/develop.bc?download=true
+opencv/stereo_geom.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/stereo_geom.bc?download=true
+opencv/daisy.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/daisy.bc?download=true
+pbrt-v4/color.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/color.bc?download=true
+oiio/Lut1DOpData.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/Lut1DOpData.bc?download=true
+darktable/introspection_colorzones.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/introspection_colorzones.bc?download=true
+xgboost/column_matrix.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/xgboost/original/column_matrix.bc?download=true
+casadi/idas.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/casadi/original/idas.bc?download=true
+gromacs/cellsizes.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/cellsizes.bc?download=true
+nanosvg/nanosvgrast.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nanosvg/original/nanosvgrast.bc?download=true
+darktable/path.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/path.bc?download=true
+ocio/GammaOpData.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ocio/original/GammaOpData.bc?download=true
+bullet3/btMultiBodyDynamicsWorld.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/btMultiBodyDynamicsWorld.bc?download=true
+darktable/thumbnail.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/thumbnail.bc?download=true
+velox/Geometry.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/Geometry.bc?download=true
+sundials/arkode_mri_tables.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sundials/original/arkode_mri_tables.bc?download=true
+ocio/MatrixOpData.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ocio/original/MatrixOpData.bc?download=true
+qdrant-rs/qdrant.qdrant.3f8cc1c7dccbb09-cgu.117.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/qdrant.qdrant.3f8cc1c7dccbb09-cgu.117.bc?download=true
+qdrant-rs/collection-65f4deb478ee6f80.collection.9c3f6a4bd60d140-cgu.232.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/collection-65f4deb478ee6f80.collection.9c3f6a4bd60d140-cgu.232.bc?download=true
+oiio/GammaOpData.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/GammaOpData.bc?download=true
+ocio/Lut3DOpData.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ocio/original/Lut3DOpData.bc?download=true
+stb/stb_vorbis.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/stb/original/stb_vorbis.bc?download=true
+hdf5/h5diff_array.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/hdf5/original/h5diff_array.bc?download=true
+oiio/MatrixOpData.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/MatrixOpData.bc?download=true
+libigl/ray_box_intersect.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/ray_box_intersect.bc?download=true
+ocio/LogOpData.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ocio/original/LogOpData.bc?download=true
+oiio/Lut3DOpData.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/Lut3DOpData.bc?download=true
+opencv/sqpnp.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/sqpnp.bc?download=true
+ruff-rs/criterion-524b2807e12f564b.criterion.5ad8dacf280593c5-cgu.14.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ruff-rs/original/criterion-524b2807e12f564b.criterion.5ad8dacf280593c5-cgu.14.bc?download=true
+gromacs/gmx_arpack.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/gmx_arpack.bc?download=true
+darktable/colorspaces.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/colorspaces.bc?download=true
+faiss/RaBitQuantizer.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/faiss/original/RaBitQuantizer.bc?download=true
+oiio/LogOpData.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/LogOpData.bc?download=true
+ocio/FixedFunctionOpData.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ocio/original/FixedFunctionOpData.bc?download=true
+darktable/introspection_colorchecker.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/introspection_colorchecker.bc?download=true
+qdrant-rs/collection-65f4deb478ee6f80.collection.9c3f6a4bd60d140-cgu.207.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qdrant-rs/original/collection-65f4deb478ee6f80.collection.9c3f6a4bd60d140-cgu.207.bc?download=true
+oiio/FixedFunctionOpData.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/FixedFunctionOpData.bc?download=true
+php/math.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/php/original/math.bc?download=true
+velox/LineString.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/LineString.bc?download=true
+darktable/ellipse.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/ellipse.bc?download=true
+opencv/face_recognize.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/face_recognize.bc?download=true
+darktable/amaze.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/amaze.bc?download=true
+llvm-test-suite/susan.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/susan.bc?download=true
+yoga/AbsoluteLayout.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/yoga/original/AbsoluteLayout.bc?download=true
+bullet3/btQuantizedBvh.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/btQuantizedBvh.bc?download=true
+darktable/densecrf.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/densecrf.bc?download=true
+opencv/min_enclosing_triangle.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/min_enclosing_triangle.bc?download=true
+bullet3/b3QuantizedBvh.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/b3QuantizedBvh.bc?download=true
+gromacs/splineutil.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/splineutil.bc?download=true
+darktable/introspection_bilateral.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/introspection_bilateral.bc?download=true
+rust-analyzer-rs/crossbeam_channel-f577dbc8a62b13af.crossbeam_channel.9088afb8a5d1370-cgu.0.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rust-analyzer-rs/original/crossbeam_channel-f577dbc8a62b13af.crossbeam_channel.9088afb8a5d1370-cgu.0.bc?download=true
+sundials/idaa.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sundials/original/idaa.bc?download=true
+tev/quantize.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/quantize.bc?download=true
+sundials/cvodea.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sundials/original/cvodea.bc?download=true
+opencv/downhill_simplex.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/downhill_simplex.bc?download=true
+casadi/idaa.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/casadi/original/idaa.bc?download=true
+darktable/gradientslider.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/gradientslider.bc?download=true
+darktable/introspection_colormapping.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/introspection_colormapping.bc?download=true
+casadi/cvodea.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/casadi/original/cvodea.bc?download=true
+darktable/blendif_lab.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/blendif_lab.bc?download=true
+llvm-test-suite/btQuantizedBvh.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/btQuantizedBvh.bc?download=true
+postgres/pathnode.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/postgres/original/pathnode.bc?download=true
+ffmpeg/af_astats.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/af_astats.bc?download=true
+luanti/mapgen_fractal.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/luanti/original/mapgen_fractal.bc?download=true
+openblas/dgejsv.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dgejsv.bc?download=true
+opencv/intersection.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/intersection.bc?download=true
+darktable/blendif_rgb_hsl.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/blendif_rgb_hsl.bc?download=true
+assimp/ComputeUVMappingProcess.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/assimp/original/ComputeUVMappingProcess.bc?download=true
+darktable/introspection_tonemap.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/introspection_tonemap.bc?download=true
+opencv/types.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/types.bc?download=true
+ffmpeg/avfilter.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/avfilter.bc?download=true
+darktable/blend.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/blend.bc?download=true
+darktable/blendif_rgb_jzczhz.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/blendif_rgb_jzczhz.bc?download=true
+gromacs/expfit.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/expfit.bc?download=true
+ipopt/IpMonotoneMuUpdate.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ipopt/original/IpMonotoneMuUpdate.bc?download=true
+abc/superGate.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/superGate.bc?download=true
+velox/CoordinateSequence.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/CoordinateSequence.bc?download=true
+stat-rs/statrs-c9f133f833af4886.statrs.6131f3d7c2ead0b9-cgu.06.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/stat-rs/original/statrs-c9f133f833af4886.statrs.6131f3d7c2ead0b9-cgu.06.bc?download=true
+tev/cmsopt.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/cmsopt.bc?download=true
+darktable/navigation.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/navigation.bc?download=true
+graphviz/routespl.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/graphviz/original/routespl.bc?download=true
+darktable/locallaplacian.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/locallaplacian.bc?download=true
+stat-rs/statrs-c9f133f833af4886.statrs.6131f3d7c2ead0b9-cgu.03.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/stat-rs/original/statrs-c9f133f833af4886.statrs.6131f3d7c2ead0b9-cgu.03.bc?download=true
+bullet3/btGjkPairDetector.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/btGjkPairDetector.bc?download=true
+openblas/dhgeqz.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dhgeqz.bc?download=true
+bullet3/btGhostObject.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/btGhostObject.bc?download=true
+stat-rs/statrs-c9f133f833af4886.statrs.6131f3d7c2ead0b9-cgu.05.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/stat-rs/original/statrs-c9f133f833af4886.statrs.6131f3d7c2ead0b9-cgu.05.bc?download=true
+cpython/cmathmodule.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/cpython/original/cmathmodule.bc?download=true
+assimp/sweep.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/assimp/original/sweep.bc?download=true
+llvm-test-suite/btGhostObject.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/btGhostObject.bc?download=true
+openblas/dtrevc3.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dtrevc3.bc?download=true
+velox/LineIntersector.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/velox/original/LineIntersector.bc?download=true
+llvm-test-suite/pifft.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/pifft.bc?download=true
+openblas/dbbcsd.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dbbcsd.bc?download=true
+ocio/GradingPrimary.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ocio/original/GradingPrimary.bc?download=true
+darktable/introspection_grain.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/introspection_grain.bc?download=true
+oiio/GradingPrimary.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/GradingPrimary.bc?download=true
+tev/cmsgamma.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/cmsgamma.bc?download=true
+ipopt/IpPiecewisePenalty.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ipopt/original/IpPiecewisePenalty.bc?download=true
+icu/tzrule.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/icu/original/tzrule.bc?download=true
+ncnn/hardswish_x86_avx512.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ncnn/original/hardswish_x86_avx512.bc?download=true
+lvgl/lv_draw_sw_blend_to_rgb888.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lvgl/original/lv_draw_sw_blend_to_rgb888.bc?download=true
+ffmpeg/avsscanf.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/avsscanf.bc?download=true
+darktable/introspection_soften.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/introspection_soften.bc?download=true
+bullet3/btLemkeAlgorithm.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/btLemkeAlgorithm.bc?download=true
+ffmpeg/af_apsyclip.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/af_apsyclip.bc?download=true
+node/tzrule.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/tzrule.bc?download=true
+llvm-test-suite/quantize.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/quantize.bc?download=true
+ocio/MathUtils.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ocio/original/MathUtils.bc?download=true
+llvm-test-suite/KDTree.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/KDTree.bc?download=true
+oiio/MathUtils.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/MathUtils.bc?download=true
+darktable/blendif_raw.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/blendif_raw.bc?download=true
+openblas/dlarre.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dlarre.bc?download=true
+ocio/Lut3DOpCPU_AVX512.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ocio/original/Lut3DOpCPU_AVX512.bc?download=true
+oiio/Lut3DOpCPU_AVX512.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/Lut3DOpCPU_AVX512.bc?download=true
+openblas/dlarrd.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dlarrd.bc?download=true
+bullet3/btGeometryUtil.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/btGeometryUtil.bc?download=true
+ffmpeg/af_pan.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/af_pan.bc?download=true
+ocio/Lut3DOpCPU_SSE2.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ocio/original/Lut3DOpCPU_SSE2.bc?download=true
+bullet3/b3GeometryUtil.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/bullet3/original/b3GeometryUtil.bc?download=true
+postgres/multirangetypes_selfuncs.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/postgres/original/multirangetypes_selfuncs.bc?download=true
+abc/utilLinear.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/utilLinear.bc?download=true
+oiio/Lut3DOpCPU_SSE2.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/oiio/original/Lut3DOpCPU_SSE2.bc?download=true
+llvm-test-suite/btGeometryUtil.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/btGeometryUtil.bc?download=true
+postgres/rangetypes_selfuncs.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/postgres/original/rangetypes_selfuncs.bc?download=true
+openblas/dsteqr.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dsteqr.bc?download=true
+graphviz/xlayout.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/graphviz/original/xlayout.bc?download=true
+openblas/dtbrfs.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dtbrfs.bc?download=true
+openblas/dtgsna.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dtgsna.bc?download=true
+openblas/dsptrf.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dsptrf.bc?download=true
+openblas/dtprfs.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dtprfs.bc?download=true
+openblas/dtrrfs.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dtrrfs.bc?download=true
+ffmpeg/vf_freezedetect.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/vf_freezedetect.bc?download=true
+libigl/is_planar.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/is_planar.bc?download=true
+openblas/dlamch.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dlamch.bc?download=true
+openblas/slamch.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/slamch.bc?download=true
+openblas/dsytf2.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dsytf2.bc?download=true
+openblas/dgtrfs.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dgtrfs.bc?download=true
+graphviz/hedges.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/graphviz/original/hedges.bc?download=true
+llvm-test-suite/sradKernel.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/sradKernel.bc?download=true
+openblas/dpbrfs.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dpbrfs.bc?download=true
+openblas/dgbrfs.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dgbrfs.bc?download=true
+openblas/dsyrfs.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dsyrfs.bc?download=true
+openblas/dporfs.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dporfs.bc?download=true
+openblas/dsprfs.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dsprfs.bc?download=true
+openblas/dpprfs.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dpprfs.bc?download=true
+openblas/dgerfs.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dgerfs.bc?download=true
+graphviz/triang.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/graphviz/original/triang.bc?download=true
+openblas/dptrfs.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dptrfs.bc?download=true
+openblas/dtgexc.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dtgexc.bc?download=true
+yoga/LayoutResults.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/yoga/original/LayoutResults.bc?download=true
+ffmpeg/pamenc.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/pamenc.bc?download=true
+openblas/dtrexc.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openblas/original/dtrexc.bc?download=true
+ffmpeg/rmsipr.bc: failed to run opt
+Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/rmsipr.bc?download=true
