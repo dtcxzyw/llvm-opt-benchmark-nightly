@@ -204,14 +204,14 @@ bb.a:
   br i1 %i.al, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.am = fmul <2 x double> %i.ai, splat (double 5.000000e-01) ; 7 uses
+  %i.am = fmul <2 x double> %i.ai, splat (double 5.000000e-01) ; 10 uses
   %i.an = fmul double %i.aj, 5.000000e-01         ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0120)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %.sroa.0120, i8 0, i64 40, i1 false), !alias.scope !118
   %i.ao = fneg double %i.an
   %.sroa.0120.24..07.i.i.i.i.ptr.3.i.i.i.i.i.i.i.i.i.i.sroa_idx189 = getelementptr inbounds nuw i8, ptr %.sroa.0120, i64 24
   store double %i.ao, ptr %.sroa.0120.24..07.i.i.i.i.ptr.3.i.i.i.i.i.i.i.i.i.i.sroa_idx189, align 8, !tbaa !8, !alias.scope !118
-  %.sroa.0164.8.vec.extract = extractelement <2 x double> %i.am, i64 1 ; 2 uses
+  %.sroa.0164.8.vec.extract = extractelement <2 x double> %i.am, i64 1
   %i.ap = shufflevector <2 x double> %i.am, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   %.sroa.0120.8..07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i.i.i.sroa_idx187 = getelementptr inbounds nuw i8, ptr %.sroa.0120, i64 8
   store double %i.an, ptr %.sroa.0120.8..07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i.i.i.sroa_idx187, align 8, !tbaa !8, !alias.scope !118
@@ -231,10 +231,8 @@ bb.b:                                             ; preds = %bb.a
   %i.aw = fmul <2 x double> %i.au, %i.av
   %i.ax = fadd <2 x double> %i.at, %i.aw
   %.sroa.0120.16..07.i.i.i.i.ptr.2.i.i.i.i.i.i.i.i.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0120, i64 16
-  %.sroa.0120.16..sroa.0120.16..sroa.0120.16. = load <2 x double>, ptr %.sroa.0120.16..07.i.i.i.i.ptr.2.i.i.i.i.i.i.i.i.i.i.sroa_idx, align 16 ; 6 uses
+  %.sroa.0120.16..sroa.0120.16..sroa.0120.16. = load <2 x double>, ptr %.sroa.0120.16..07.i.i.i.i.ptr.2.i.i.i.i.i.i.i.i.i.i.sroa_idx, align 16 ; 5 uses
   %i.ay = shufflevector <2 x double> %.sroa.0120.16..sroa.0120.16..sroa.0120.16., <2 x double> poison, <2 x i32> zeroinitializer
-  %2 = extractelement <2 x double> %.sroa.0120.16..sroa.0120.16..sroa.0120.16., i64 0
-  %3 = fmul double %2, f0x3FB5555555555555        ; 2 uses
   %i.az = shufflevector <2 x double> %.sroa.0120.16..sroa.0120.16..sroa.0120.16., <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.ba = fmul <2 x double> %i.ar, %i.az
   %i.bb = shufflevector <2 x double> %.sroa.0120.24..sroa.0120.24..sroa.0120.24., <2 x double> poison, <2 x i32> <i32 1, i32 1>
@@ -242,14 +240,12 @@ bb.b:                                             ; preds = %bb.a
   %i.bd = fadd <2 x double> %i.ba, %i.bc
   %i.be = shufflevector <2 x double> %i.am, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bf = fmul <2 x double> %i.ar, %i.ap
-  %4 = fmul double %3, %.sroa.0164.8.vec.extract
-  %.sroa.0164.0.vec.extract = extractelement <2 x double> %i.am, i64 0 ; 3 uses
+  %.sroa.0164.0.vec.extract = extractelement <2 x double> %i.am, i64 0
   %i.bg = fneg double %.sroa.0164.0.vec.extract   ; 2 uses
   %.sroa.16132.56.vec.insert = insertelement <2 x double> %i.ap, double %i.bg, i64 1
   %i.bh = fmul <2 x double> %.sroa.16132.56.vec.insert, splat (double f0x3FB5555555555555) ; 3 uses
   %i.bi = fmul <2 x double> %i.bh, %i.ay
   %i.bj = fadd <2 x double> %i.ax, %i.bi
-  %5 = fmul double %.sroa.0164.0.vec.extract, f0x3FB5555555555555 ; 2 uses
   %i.bk = fmul <2 x double> %i.be, %i.bh
   %i.bl = fadd <2 x double> %i.bk, %i.bd
   %i.bm = insertelement <2 x double> poison, double %i.bg, i64 0
@@ -258,9 +254,6 @@ bb.b:                                             ; preds = %bb.a
   %i.bp = fadd <2 x double> %i.bo, %i.bf
   %i.bq = fmul <2 x double> %i.bh, zeroinitializer
   %i.br = fadd <2 x double> %i.bq, %i.bp
-  %6 = fmul double %.sroa.0164.0.vec.extract, %5
-  %7 = fsub double 0.000000e+00, %6
-  %8 = fadd double %4, %7
   %i.bs = shufflevector <2 x double> %.sroa.0120.0..sroa.0120.0..sroa.0120.0., <2 x double> %.sroa.0120.8..sroa.0120.8..sroa.0120.8., <2 x i32> <i32 0, i32 2>
   %i.bt = fmul <2 x double> %i.bs, splat (double 5.000000e-01)
   %i.bu = fsub <2 x double> <double 1.000000e+00, double 0.000000e+00>, %i.bt
@@ -273,21 +266,27 @@ bb.b:                                             ; preds = %bb.a
   %i.cb = fsub <2 x double> <double poison, double 0.000000e+00>, %i.ca
   %i.cc = fmul <2 x double> %i.ca, <double 5.000000e-01, double poison>
   %i.cd = shufflevector <2 x double> %i.cb, <2 x double> %i.cc, <2 x i32> <i32 1, i32 2>
+  %2 = shufflevector <2 x double> %i.am, <2 x double> %.sroa.0120.16..sroa.0120.16..sroa.0120.16., <2 x i32> <i32 0, i32 2> ; 3 uses
+  %3 = fmul <2 x double> %2, splat (double f0x3FB5555555555555) ; 3 uses
   %i.ce = shufflevector <2 x double> %.sroa.0120.16..sroa.0120.16..sroa.0120.16., <2 x double> %.sroa.0120.0..sroa.0120.0..sroa.0120.0., <2 x i32> <i32 1, i32 2>
-  %9 = insertelement <2 x double> poison, double %3, i64 0
-  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.cf = fmul <2 x double> %i.ce, %10
-  %11 = insertelement <2 x double> poison, double %5, i64 0
-  %i.cg = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %5 = fmul <2 x double> %i.ce, %4
+  %i.cf = fmul <2 x double> %3, %i.am
+  %6 = extractelement <2 x double> %i.cf, i64 1
+  %7 = fmul <2 x double> %i.am, <double f0x3FB5555555555555, double poison>
+  %i.cg = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ch = shufflevector <2 x double> %.sroa.0120.24..sroa.0120.24..sroa.0120.24., <2 x double> %.sroa.0120.8..sroa.0120.8..sroa.0120.8., <2 x i32> <i32 1, i32 2>
-  %i.ci = fmul <2 x double> %i.cg, %i.ch
-  %12 = shufflevector <2 x double> %i.am, <2 x double> %.sroa.0120.16..sroa.0120.16..sroa.0120.16., <2 x i32> <i32 0, i32 2> ; 2 uses
-  %i.cj = fmul <2 x double> %12, zeroinitializer
-  %13 = fadd <2 x double> %i.ci, %i.cj
-  %14 = fadd <2 x double> %i.cf, %13
-  %i.ck = fmul <2 x double> %12, splat (double 5.000000e-01)
+  %8 = fmul <2 x double> %i.cg, %i.ch
+  %i.ci = fmul <2 x double> %2, zeroinitializer
+  %9 = fadd <2 x double> %8, %i.ci
+  %10 = fadd <2 x double> %5, %9
+  %i.cj = fmul <2 x double> %i.am, %3
+  %11 = extractelement <2 x double> %i.cj, i64 0
+  %12 = fsub double 0.000000e+00, %11
+  %13 = fadd double %6, %12
+  %i.ck = fmul <2 x double> %2, splat (double 5.000000e-01)
   %i.cl = fsub <2 x double> zeroinitializer, %i.ck
-  %i.cm = fadd <2 x double> %i.cl, %14
+  %i.cm = fadd <2 x double> %i.cl, %10
   %i.cn = fadd <2 x double> %i.cd, <double -0.000000e+00, double 0.000000e+00>
   %i.co = fadd <2 x double> %i.cn, %i.br
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0120)
@@ -411,7 +410,7 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.10.0 = phi <2 x double> [ %i.bz, %bb.b ], [ %i.ey, %bb.c ]
   %.sroa.0146.0 = phi <2 x double> [ %i.bv, %bb.b ], [ %i.eu, %bb.c ]
   %.sroa.18.0 = phi <2 x double> [ %i.co, %bb.b ], [ %i.ga, %bb.c ]
-  %.sroa.23.0.in = phi double [ %8, %bb.b ], [ %i.fu, %bb.c ]
+  %.sroa.23.0.in = phi double [ %13, %bb.b ], [ %i.fu, %bb.c ]
   %.sroa.0164.0 = phi <2 x double> [ %i.am, %bb.b ], [ %i.dc, %bb.c ]
   %.sroa.9.0 = phi double [ %i.an, %bb.b ], [ %i.de, %bb.c ]
   %i.gb = phi <2 x double> [ %i.cm, %bb.b ], [ %i.fy, %bb.c ]
@@ -684,7 +683,7 @@ define void @_ZN3g2o13EdgeSE3Expmap14linearizeOplusEv(ptr nofree noundef nonnull
   %i.ga = fmul <2 x double> %i.fb, %i.fz
   %i.gb = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dr, <2 x double> %i.fx, <2 x double> %i.ga)
   %i.gc = fadd <2 x double> %i.fw, %i.gb
-  %i.gd = fadd <2 x double> %i.fg, %i.gc          ; 5 uses
+  %i.gd = fadd <2 x double> %i.fg, %i.gc          ; 2 uses
   %bc7.i7 = bitcast <2 x i64> %i.u to <2 x double> ; 2 uses
   %i.ge = shufflevector <2 x double> %bc7.i7, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 3 uses
   %bc.i6 = bitcast <2 x i64> %i.t to <2 x double> ; 4 uses
@@ -990,6 +989,7 @@ define void @_ZN3g2o13EdgeSE3Expmap14linearizeOplusEv(ptr nofree noundef nonnull
   %i.nu = insertelement <2 x double> poison, double %i.nq, i64 0 ; 2 uses
   %.sroa.19.i50.0..sroa.19.i50.0..sroa.19.i50.0..sroa.19.0..sroa.19.48..i60 = load <2 x double>, ptr %.sroa.19.i50, align 16, !noalias !203 ; 2 uses
   %i.nv = insertelement <2 x double> poison, double %i.ns, i64 0 ; 2 uses
+  %1 = extractelement <2 x double> %.sroa.0118.i49.0..sroa.0118.i49.0..sroa.0118.i49.0..sroa.0118.0..sroa.0118.0.119.i58, i64 0
   %i.nw = bitcast <2 x double> %.sroa.0118.i49.0..sroa.0118.i49.0..sroa.0118.i49.0..sroa.0118.0..sroa.0118.0.119.i58 to <2 x i64>
   %.sroa.28.168.vec.insert207 = shufflevector <2 x i64> %i.nw, <2 x i64> poison, <2 x i32> <i32 poison, i32 0>
   %.sroa.0118.i49.8.i49.8.i49.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0118.i49, i64 8
@@ -1002,9 +1002,9 @@ define void @_ZN3g2o13EdgeSE3Expmap14linearizeOplusEv(ptr nofree noundef nonnull
   %.sroa.19.i50.8..sroa.19.i50.8..sroa.19.i50.8..sroa.19.8..sroa.19.56..i63225 = load <2 x i64>, ptr %.sroa.19.i50.8.i50.8.i50.8..sroa_idx, align 8, !tbaa !58, !noalias !203
   %i.nx = fneg <2 x double> %foldExtExtBinop267
   %.sroa.6.24.vec.insert.i64273 = insertelement <2 x double> %i.nx, double 0.000000e+00, i64 1 ; 3 uses
-  %.sroa.091.sroa.16.40.vec.extract = extractelement <2 x double> %i.gd, i64 1
-  %.sroa.9.48.vec.insert.i65 = shufflevector <2 x double> %i.gd, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %.sroa.091.sroa.16.32.vec.extract = extractelement <2 x double> %i.gd, i64 0 ; 2 uses
+  %.sroa.091.sroa.16.40.vec.extract = extractelement <2 x double> %i.gd, i64 1 ; 4 uses
+  %.sroa.9.48.vec.insert.i65 = insertelement <2 x double> poison, double %.sroa.091.sroa.16.40.vec.extract, i64 0
+  %.sroa.091.sroa.16.32.vec.extract = extractelement <2 x double> %i.gd, i64 0 ; 4 uses
   %i.ny = fneg double %.sroa.091.sroa.16.32.vec.extract
   %.sroa.9.56.vec.insert.i66 = insertelement <2 x double> %.sroa.9.48.vec.insert.i65, double %i.ny, i64 1 ; 3 uses
   %.sroa.0.8.vec.insert.i67 = shufflevector <2 x double> <double 0.000000e+00, double poison>, <2 x double> %foldExtExtBinop267, <2 x i32> <i32 0, i32 2> ; 3 uses
@@ -1018,6 +1018,14 @@ define void @_ZN3g2o13EdgeSE3Expmap14linearizeOplusEv(ptr nofree noundef nonnull
   %i.oe = shufflevector <2 x double> %.sroa.0118.i49.16..sroa.0118.i49.16..sroa.0118.i49.16..sroa.0118.16..sroa.0118.16..i68, <2 x double> poison, <2 x i32> zeroinitializer
   %i.of = fmul <2 x double> %.sroa.9.56.vec.insert.i66, %i.oe
   %i.og = fadd <2 x double> %i.od, %i.of          ; 2 uses
+  %2 = extractelement <2 x double> %.sroa.0118.i49.8..sroa.0118.i49.8..sroa.0118.i49.8..sroa.0118.8..sroa.0118.8.121.i61, i64 0
+  %3 = fmul double %2, %.sroa.091.sroa.16.32.vec.extract
+  %4 = extractelement <2 x double> %.sroa.0118.i49.16..sroa.0118.i49.16..sroa.0118.i49.16..sroa.0118.16..sroa.0118.16..i68, i64 0
+  %5 = fmul double %4, 0.000000e+00
+  %6 = fadd double %3, %5
+  %7 = fmul double %1, %.sroa.091.sroa.16.40.vec.extract
+  %8 = fsub double %6, %7
+  %9 = extractelement <2 x double> %.sroa.0118.i49.16..sroa.0118.i49.16..sroa.0118.i49.16..sroa.0118.16..sroa.0118.16..i68, i64 1
   %i.oh = shufflevector <2 x double> %.sroa.0118.i49.16..sroa.0118.i49.16..sroa.0118.i49.16..sroa.0118.16..sroa.0118.16..i68, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.oi = fmul <2 x double> %.sroa.0.8.vec.insert.i67, %i.oh
   %i.oj = insertelement <2 x double> poison, double %i.nn, i64 0
@@ -1027,6 +1035,11 @@ define void @_ZN3g2o13EdgeSE3Expmap14linearizeOplusEv(ptr nofree noundef nonnull
   %i.on = shufflevector <2 x double> %i.nu, <2 x double> poison, <2 x i32> zeroinitializer
   %i.oo = fmul <2 x double> %i.on, %.sroa.9.56.vec.insert.i66
   %i.op = fadd <2 x double> %i.oo, %i.om          ; 2 uses
+  %10 = fmul double %i.nn, %.sroa.091.sroa.16.32.vec.extract
+  %11 = fmul double %i.nq, 0.000000e+00
+  %12 = fadd double %11, %10
+  %13 = fmul double %.sroa.091.sroa.16.40.vec.extract, %9
+  %14 = fsub double %12, %13
   %i.oq = insertelement <2 x double> poison, double %i.nk, i64 0
   %i.or = shufflevector <2 x double> %i.oq, <2 x double> poison, <2 x i32> zeroinitializer
   %i.os = fmul <2 x double> %.sroa.0.8.vec.insert.i67, %i.or
@@ -1042,20 +1055,16 @@ define void @_ZN3g2o13EdgeSE3Expmap14linearizeOplusEv(ptr nofree noundef nonnull
   %i.pc = fadd double %i.pb, %i.pa
   %i.pd = fmul double %i.nk, %.sroa.091.sroa.16.40.vec.extract
   %i.pe = fsub double %i.pc, %i.pd
-  %.sroa.4.24.vec.insert.uncasted = shufflevector <2 x double> %i.nt, <2 x double> %i.og, <2 x i32> <i32 0, i32 2>
-  %.sroa.12.72.vec.insert195.uncasted.a = shufflevector <2 x double> %i.nu, <2 x double> %i.op, <2 x i32> <i32 0, i32 2>
-  %1 = insertelement <2 x double> %.sroa.0118.i49.8..sroa.0118.i49.8..sroa.0118.i49.8..sroa.0118.8..sroa.0118.8.121.i61, double %i.nn, i64 1
-  %2 = shufflevector <2 x double> %i.gd, <2 x double> poison, <2 x i32> zeroinitializer
-  %3 = fmul <2 x double> %1, %2
-  %4 = insertelement <2 x double> %.sroa.0118.i49.16..sroa.0118.i49.16..sroa.0118.i49.16..sroa.0118.16..sroa.0118.16..i68, double %i.nq, i64 1
-  %5 = fmul <2 x double> %4, zeroinitializer
-  %6 = fadd <2 x double> %5, %3
-  %7 = shufflevector <2 x double> %.sroa.0118.i49.0..sroa.0118.i49.0..sroa.0118.i49.0..sroa.0118.0..sroa.0118.0.119.i58, <2 x double> %.sroa.0118.i49.16..sroa.0118.i49.16..sroa.0118.i49.16..sroa.0118.16..sroa.0118.16..i68, <2 x i32> <i32 0, i32 3>
-  %8 = shufflevector <2 x double> %i.gd, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %9 = fmul <2 x double> %7, %8
-  %10 = fsub <2 x double> %6, %9                  ; 2 uses
-  %11 = shufflevector <2 x double> %i.og, <2 x double> %10, <2 x i32> <i32 1, i32 2>
-  %12 = shufflevector <2 x double> %i.op, <2 x double> %10, <2 x i32> <i32 1, i32 3>
+  %.sroa.12.72.vec.insert195.uncasted.a = shufflevector <2 x double> %i.nt, <2 x double> %i.og, <2 x i32> <i32 0, i32 2>
+  %bc227 = bitcast <2 x double> %i.og to <2 x i64>
+  %.sroa.7.32.vec.insert190 = shufflevector <2 x i64> %bc227, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
+  %15 = bitcast double %8 to i64
+  %.sroa.7.40.vec.insert191 = insertelement <2 x i64> %.sroa.7.32.vec.insert190, i64 %15, i64 1
+  %.sroa.12.72.vec.insert195.uncasted = shufflevector <2 x double> %i.nu, <2 x double> %i.op, <2 x i32> <i32 0, i32 2>
+  %bc229 = bitcast <2 x double> %i.op to <2 x i64>
+  %.sroa.15.80.vec.insert197 = shufflevector <2 x i64> %bc229, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
+  %16 = bitcast double %14 to i64
+  %.sroa.15.88.vec.insert198 = insertelement <2 x i64> %.sroa.15.80.vec.insert197, i64 %16, i64 1
   %.sroa.20.120.vec.insert202.uncasted = shufflevector <2 x double> %i.nv, <2 x double> %i.oz, <2 x i32> <i32 0, i32 2>
   %bc231 = bitcast <2 x double> %i.oz to <2 x i64>
   %.sroa.23.128.vec.insert204 = shufflevector <2 x i64> %bc231, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
@@ -1072,20 +1081,20 @@ define void @_ZN3g2o13EdgeSE3Expmap14linearizeOplusEv(ptr nofree noundef nonnull
   %i.pj = fneg <2 x double> %.sroa.0118.i49.0..sroa.0118.i49.0..sroa.0118.i49.0..sroa.0118.0..sroa.0118.0.119.i58
   store <2 x double> %i.pj, ptr %i.pi, align 16, !tbaa !58
   %i.pk = getelementptr i8, ptr %i.pi, i64 16
-  %i.pl = fneg <2 x double> %.sroa.4.24.vec.insert.uncasted
+  %i.pl = fneg <2 x double> %.sroa.12.72.vec.insert195.uncasted.a
   store <2 x double> %i.pl, ptr %i.pk, align 16, !tbaa !58
   %i.pm = getelementptr i8, ptr %i.pi, i64 32
-  %13 = fneg <2 x double> %11
-  store <2 x double> %13, ptr %i.pm, align 16, !tbaa !58
+  %17 = xor <2 x i64> %.sroa.7.40.vec.insert191, splat (i64 -9223372036854775808)
+  store <2 x i64> %17, ptr %i.pm, align 16, !tbaa !58
   %i.pn = getelementptr i8, ptr %i.pi, i64 48
   %i.po = fneg <2 x double> %.sroa.0118.i49.24..sroa.0118.i49.24..sroa.0118.i49.24..sroa.0118.24..sroa.0118.24..i59
   store <2 x double> %i.po, ptr %i.pn, align 16, !tbaa !58
   %i.pp = getelementptr i8, ptr %i.pi, i64 64
-  %i.pq = fneg <2 x double> %.sroa.12.72.vec.insert195.uncasted.a
+  %i.pq = fneg <2 x double> %.sroa.12.72.vec.insert195.uncasted
   store <2 x double> %i.pq, ptr %i.pp, align 16, !tbaa !58
   %i.pr = getelementptr i8, ptr %i.pi, i64 80
-  %14 = fneg <2 x double> %12
-  store <2 x double> %14, ptr %i.pr, align 16, !tbaa !58
+  %18 = xor <2 x i64> %.sroa.15.88.vec.insert198, splat (i64 -9223372036854775808)
+  store <2 x i64> %18, ptr %i.pr, align 16, !tbaa !58
   %i.ps = getelementptr i8, ptr %i.pi, i64 96
   %i.pt = fneg <2 x double> %.sroa.19.i50.0..sroa.19.i50.0..sroa.19.i50.0..sroa.19.0..sroa.19.48..i60
   store <2 x double> %i.pt, ptr %i.ps, align 16, !tbaa !58
