@@ -204,11 +204,10 @@ bb.ac:                                            ; preds = %bb.z, %bb.p, %bb.s,
 
 .critedge:                                        ; preds = %bb.ac, %.thread
   %indvars.iv.next12141348 = phi i64 [ %indvars.iv.next12141344, %.thread ], [ %indvars.iv.next1214, %bb.ac ]
-  %.not4591347 = phi i1 [ false, %.thread ], [ true, %bb.ac ] ; 2 uses
+  %4 = phi i32 [ -1, %.thread ], [ 0, %bb.ac ]
+  %.not4591347 = phi i1 [ false, %.thread ], [ true, %bb.ac ]
   %i.dd = trunc nuw nsw i64 %indvars.iv.next12141348 to i32
-  %not..not459 = xor i1 %.not4591347, true
-  %4 = sext i1 %not..not459 to i32
-  %spec.select493 = add i32 %i.dd, %4             ; 4 uses
+  %spec.select493 = add i32 %4, %i.dd             ; 4 uses
   %i.de = icmp ult i32 %spec.select493, 2
   br i1 %i.de, label %bb.ad, label %.lr.ph954.preheader
 

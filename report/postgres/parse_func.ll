@@ -205,7 +205,7 @@ bb.cx:                                            ; preds = %bb.cw
   br label %bb.ds
 
 bb.cy:                                            ; preds = %bb.cw
-  %i.qr = icmp ne i32 %i.ec, 4
+  %i.qr = icmp ne i32 %i.ec, 4                    ; 2 uses
   %or.cond47 = select i1 %i.qr, i1 true, i1 %i.dk
   br i1 %or.cond47, label %bb.dg, label %bb.cz
 
@@ -295,7 +295,7 @@ bb.dg:                                            ; preds = %bb.cy
   store ptr %.2488, ptr %i.sd, align 8
   %i.se = getelementptr inbounds nuw i8, ptr %i.ry, i64 52
   store i8 %i.ab, ptr %i.se, align 4
-  %i.sf = icmp eq i32 %i.ec, 4                    ; 3 uses
+  %i.sf = icmp eq i32 %i.ec, 4                    ; 2 uses
   %i.sg = getelementptr inbounds nuw i8, ptr %i.ry, i64 53
   %i.sh = zext i1 %i.sf to i8
   store i8 %i.sh, ptr %i.sg, align 1
@@ -319,8 +319,7 @@ bb.dh:                                            ; preds = %bb.dg
 
 bb.di:                                            ; preds = %bb.dg
   %i.sq = icmp ne ptr %.2488, null
-  %not. = xor i1 %i.sf, true
-  %or.cond53 = select i1 %not., i1 true, i1 %i.sq
+  %or.cond53 = select i1 %i.qr, i1 true, i1 %i.sq
   %or.cond55 = or i1 %i.di, %or.cond53
   br i1 %or.cond55, label %bb.dk, label %bb.dj
 
