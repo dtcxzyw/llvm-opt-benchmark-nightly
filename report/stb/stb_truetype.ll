@@ -204,24 +204,24 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph472, %stbtt__handle_clipped_edge.exit351
-  %.0293469 = phi ptr [ %3, %.lr.ph472 ], [ %i.afw, %stbtt__handle_clipped_edge.exit351 ] ; 19 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %.0293469, i64 8
-  %5 = load <2 x float>, ptr %i.i, align 8, !tbaa !74 ; 10 uses
-  %6 = extractelement <2 x float> %5, i64 0       ; 40 uses
-  %7 = extractelement <2 x float> %5, i64 1       ; 2 uses
-  %8 = fcmp oeq float %7, 0.000000e+00
-  br i1 %8, label %bb.c, label %bb.ak
+  %.0293469 = phi ptr [ %3, %.lr.ph472 ], [ %i.afw, %stbtt__handle_clipped_edge.exit351 ] ; 20 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %.0293469, i64 12
+  %5 = load float, ptr %i.i, align 4, !tbaa !114  ; 3 uses
+  %6 = fcmp oeq float %5, 0.000000e+00
+  %7 = getelementptr inbounds nuw i8, ptr %.0293469, i64 8
+  %8 = load float, ptr %7, align 8, !tbaa !118    ; 47 uses
+  br i1 %6, label %bb.c, label %bb.ak
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = fcmp olt float %6, %i.b
+  %i.j = fcmp olt float %8, %i.b
   br i1 %i.j, label %bb.d, label %stbtt__handle_clipped_edge.exit351
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = fcmp ult float %6, 0.000000e+00
+  %i.k = fcmp ult float %8, 0.000000e+00
   br i1 %i.k, label %bb.z, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.l = fptosi float %6 to i32                   ; 6 uses
+  %i.l = fptosi float %8 to i32                   ; 6 uses
   br i1 %i.d, label %stbtt__handle_clipped_edge.exit351, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -241,31 +241,30 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.s, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %foldExtExtBinop = fsub <2 x float> %5, %5
-  %9 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %9 = fsub float %8, %8
   %i.t = fsub float %i.q, %4
   %i.u = fmul float %9, %i.t
   %i.v = fdiv float %i.u, %i.e
-  %i.w = fadd float %6, %i.v
+  %i.w = fadd float %8, %i.v
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %.055.i = phi float [ %i.w, %bb.i ], [ %6, %bb.h ] ; 4 uses
+  %.055.i = phi float [ %i.w, %bb.i ], [ %8, %bb.h ] ; 4 uses
   %.054.i = phi float [ %i.q, %bb.i ], [ %4, %bb.h ] ; 3 uses
   %i.x = fcmp ogt float %i.a, %i.n
   br i1 %i.x, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.y = fsub float %6, %.055.i
+  %i.y = fsub float %8, %.055.i
   %i.z = fsub float %i.n, %i.a
   %i.aa = fmul float %i.z, %i.y
   %i.ab = fsub float %i.a, %.054.i
   %i.ac = fdiv float %i.aa, %i.ab
-  %i.ad = fadd float %6, %i.ac
+  %i.ad = fadd float %8, %i.ac
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %.053.i = phi float [ %i.ad, %bb.k ], [ %6, %bb.j ] ; 3 uses
+  %.053.i = phi float [ %i.ad, %bb.k ], [ %8, %bb.j ] ; 3 uses
   %.0.i = phi float [ %i.n, %bb.k ], [ %i.a, %bb.j ] ; 2 uses
   %i.ae = sitofp i32 %i.l to float                ; 4 uses
   %i.af = fcmp ugt float %.055.i, %i.ae
@@ -326,31 +325,30 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.bl, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
-  %foldExtExtBinop561 = fsub <2 x float> %5, %5
-  %10 = extractelement <2 x float> %foldExtExtBinop561, i64 0
+  %10 = fsub float %8, %8
   %i.bm = fsub float %i.bj, %4
   %i.bn = fmul float %10, %i.bm
   %i.bo = fdiv float %i.bn, %i.e
-  %i.bp = fadd float %6, %i.bo
+  %i.bp = fadd float %8, %i.bo
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  %.055.i345 = phi float [ %i.bp, %bb.s ], [ %6, %bb.r ] ; 4 uses
+  %.055.i345 = phi float [ %i.bp, %bb.s ], [ %8, %bb.r ] ; 4 uses
   %.054.i346 = phi float [ %i.bj, %bb.s ], [ %4, %bb.r ] ; 3 uses
   %i.bq = fcmp ogt float %i.a, %i.bg
   br i1 %i.bq, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
-  %i.br = fsub float %6, %.055.i345
+  %i.br = fsub float %8, %.055.i345
   %i.bs = fsub float %i.bg, %i.a
   %i.bt = fmul float %i.bs, %i.br
   %i.bu = fsub float %i.a, %.054.i346
   %i.bv = fdiv float %i.bt, %i.bu
-  %i.bw = fadd float %6, %i.bv
+  %i.bw = fadd float %8, %i.bv
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  %.053.i347 = phi float [ %i.bw, %bb.u ], [ %6, %bb.t ] ; 3 uses
+  %.053.i347 = phi float [ %i.bw, %bb.u ], [ %8, %bb.t ] ; 3 uses
   %.0.i348 = phi float [ %i.bg, %bb.u ], [ %i.a, %bb.t ] ; 2 uses
   %i.bx = sitofp i32 %i.bf to float               ; 4 uses
   %i.by = fcmp ugt float %.055.i345, %i.bx
@@ -414,31 +412,30 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.de, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
-  %foldExtExtBinop563 = fsub <2 x float> %5, %5
-  %11 = extractelement <2 x float> %foldExtExtBinop563, i64 0
+  %11 = fsub float %8, %8
   %i.df = fsub float %i.dc, %4
   %i.dg = fmul float %11, %i.df
   %i.dh = fdiv float %i.dg, %i.e
-  %i.di = fadd float %6, %i.dh
+  %i.di = fadd float %8, %i.dh
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
-  %.055.i352 = phi float [ %i.di, %bb.ad ], [ %6, %bb.ac ] ; 4 uses
+  %.055.i352 = phi float [ %i.di, %bb.ad ], [ %8, %bb.ac ] ; 4 uses
   %.054.i353 = phi float [ %i.dc, %bb.ad ], [ %4, %bb.ac ] ; 3 uses
   %i.dj = fcmp ogt float %i.a, %i.cz
   br i1 %i.dj, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
-  %i.dk = fsub float %6, %.055.i352
+  %i.dk = fsub float %8, %.055.i352
   %i.dl = fsub float %i.cz, %i.a
   %i.dm = fmul float %i.dl, %i.dk
   %i.dn = fsub float %i.a, %.054.i353
   %i.do = fdiv float %i.dm, %i.dn
-  %i.dp = fadd float %6, %i.do
+  %i.dp = fadd float %8, %i.do
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae
-  %.053.i354 = phi float [ %i.dp, %bb.af ], [ %6, %bb.ae ] ; 3 uses
+  %.053.i354 = phi float [ %i.dp, %bb.af ], [ %8, %bb.ae ] ; 3 uses
   %.0.i355 = phi float [ %i.cz, %bb.af ], [ %i.a, %bb.ae ] ; 2 uses
   %i.dq = fcmp ugt float %.055.i352, 0.000000e+00
   %i.dr = fcmp ugt float %.053.i354, 0.000000e+00
@@ -474,7 +471,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %stbtt__handle_clipped_edge.exit351
 
 bb.ak:                                            ; preds = %bb.b
-  %i.ei = fadd float %7, %6                       ; 34 uses
+  %i.ei = fadd float %5, %8                       ; 34 uses
   %i.ej = getelementptr inbounds nuw i8, ptr %.0293469, i64 16
   %i.ek = load float, ptr %i.ej, align 8, !tbaa !117 ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %.0293469, i64 24 ; 16 uses
@@ -483,11 +480,13 @@ bb.ak:                                            ; preds = %bb.b
   %i.eo = extractelement <2 x float> %i.en, i64 0 ; 2 uses
   %i.ep = fcmp ogt float %i.eo, %4                ; 2 uses
   %i.eq = fsub <2 x float> %i.en, %i.h
-  %12 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
-  %i.er = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.es = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %12, <2 x float> %i.eq, <2 x float> %i.er) ; 2 uses
+  %12 = insertelement <2 x float> poison, float %5, i64 0
+  %13 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %14 = insertelement <2 x float> poison, float %8, i64 0
+  %i.er = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.es = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %13, <2 x float> %i.eq, <2 x float> %i.er) ; 2 uses
   %i.et = extractelement <2 x float> %i.es, i64 0
-  %.0305 = select i1 %i.ep, float %i.et, float %6 ; 7 uses
+  %.0305 = select i1 %i.ep, float %i.et, float %8 ; 7 uses
   %.0301 = select i1 %i.ep, float %i.eo, float %4 ; 3 uses
   %i.eu = extractelement <2 x float> %i.en, i64 1 ; 2 uses
   %i.ev = fcmp olt float %i.eu, %i.a              ; 2 uses
@@ -549,31 +548,31 @@ bb.ap:                                            ; preds = %bb.ao
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
   %.pre-phi479 = phi i32 [ %i.fb, %bb.ap ], [ %i.fc, %bb.ao ] ; 7 uses
   %.pre-phi = phi i32 [ %i.fc, %bb.ap ], [ %i.fb, %bb.ao ] ; 4 uses
-  %.0307 = phi float [ %i.ei, %bb.ap ], [ %6, %bb.ao ]
+  %.0307 = phi float [ %i.ei, %bb.ap ], [ %8, %bb.ao ]
   %.1306 = phi float [ %.0303, %bb.ap ], [ %.0305, %bb.ao ]
   %.1304 = phi float [ %.0305, %bb.ap ], [ %.0303, %bb.ao ]
   %.1302 = phi float [ %i.ga, %bb.ap ], [ %.0301, %bb.ao ] ; 2 uses
   %.1300 = phi float [ %i.fy, %bb.ap ], [ %.0299, %bb.ao ] ; 2 uses
   %.0298 = phi float [ %i.gb, %bb.ap ], [ %i.ek, %bb.ao ] ; 2 uses
   %i.gc = add nsw i32 %.pre-phi, 1                ; 3 uses
-  %13 = sitofp i32 %.pre-phi479 to float          ; 3 uses
-  %14 = sitofp i32 %i.gc to float                 ; 2 uses
-  %15 = insertelement <2 x float> poison, float %13, i64 0
-  %16 = insertelement <2 x float> %15, float %14, i64 1
+  %15 = insertelement <2 x i32> poison, i32 %i.gc, i64 0
+  %16 = insertelement <2 x i32> %15, i32 %.pre-phi479, i64 1
+  %17 = sitofp <2 x i32> %16 to <2 x float>       ; 3 uses
   %i.gd = insertelement <2 x float> poison, float %.0307, i64 0
   %i.ge = shufflevector <2 x float> %i.gd, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.gf = fsub <2 x float> %16, %i.ge
+  %i.gf = fsub <2 x float> %17, %i.ge
   %i.gg = insertelement <2 x float> poison, float %.0298, i64 0
   %i.gh = shufflevector <2 x float> %i.gg, <2 x float> poison, <2 x i32> zeroinitializer
   %i.gi = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.gh, <2 x float> %i.gf, <2 x float> %i.h) ; 2 uses
-  %i.gj = extractelement <2 x float> %i.gi, i64 1 ; 2 uses
+  %i.gj = extractelement <2 x float> %i.gi, i64 0 ; 2 uses
   %i.gk = fcmp ogt float %i.gj, %i.a
   %.0296 = select i1 %i.gk, float %i.a, float %i.gj ; 2 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %.0293469, i64 20
   %i.gm = load float, ptr %i.gl, align 4, !tbaa !120 ; 4 uses
   %i.gn = fsub float %.0296, %.1302
   %i.go = fmul float %i.gm, %i.gn                 ; 5 uses
-  %i.gp = fsub nnan float %14, %.1306
+  %18 = extractelement <2 x float> %17, i64 0
+  %i.gp = fsub nnan float %18, %.1306
   %i.gq = fmul float %i.gp, %i.go
   %i.gr = fmul float %i.gq, 5.000000e-01
   %i.gs = sext i32 %.pre-phi to i64               ; 3 uses
@@ -581,7 +580,7 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
   %i.gu = load float, ptr %i.gt, align 4, !tbaa !74
   %i.gv = fadd float %i.gu, %i.gr
   store float %i.gv, ptr %i.gt, align 4, !tbaa !74
-  %i.gw = extractelement <2 x float> %i.gi, i64 0 ; 2 uses
+  %i.gw = extractelement <2 x float> %i.gi, i64 1 ; 2 uses
   %i.gx = fcmp ogt float %i.gw, %i.a              ; 2 uses
   %i.gy = fsub float %i.a, %.0296
   %i.gz = sub nsw i32 %.pre-phi479, %i.gc
@@ -643,8 +642,9 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
 ._crit_edge:                                      ; preds = %.prol.loopexit, %.lr.ph467.new, %bb.aq
   %.0294.lcssa = phi float [ %i.go, %bb.aq ], [ %.lcssa.unr, %.prol.loopexit ], [ %i.hz, %.lr.ph467.new ]
   %i.ia = fsub float %.1300, %.0295
-  %i.ib = fadd float %13, 1.000000e+00            ; 2 uses
-  %i.ic = fsub nnan float %i.ib, %13
+  %19 = extractelement <2 x float> %17, i64 1     ; 2 uses
+  %i.ib = fadd float %19, 1.000000e+00            ; 2 uses
+  %i.ic = fsub nnan float %i.ib, %19
   %i.id = fsub float %i.ib, %.1304
   %i.ie = fadd float %i.ic, %i.id
   %i.if = fmul float %i.ie, 5.000000e-01
@@ -666,7 +666,7 @@ bb.ar:                                            ; preds = %bb.al, %bb.ak
   br i1 %i.c, label %.lr.ph, label %stbtt__handle_clipped_edge.exit351
 
 .lr.ph:                                           ; preds = %bb.ar
-  %i.iq = fsub float %i.ei, %6
+  %i.iq = fsub float %i.ei, %8
   %i.ir = getelementptr inbounds nuw i8, ptr %.0293469, i64 20 ; 30 uses
   br label %bb.as
 
@@ -680,12 +680,12 @@ bb.as:                                            ; preds = %.lr.ph, %stbtt__han
   %i.iw = insertelement <2 x float> poison, float %i.iv, i64 0
   %i.ix = insertelement <2 x float> %i.iw, float %i.iu, i64 1
   %i.iy = fsub <2 x float> %i.ix, %i.er           ; 7 uses
-  %i.iz = fdiv <2 x float> %i.iy, %12             ; 2 uses
+  %i.iz = fdiv <2 x float> %i.iy, %13             ; 2 uses
   %i.ja = extractelement <2 x float> %i.iz, i64 0
   %i.jb = fadd float %4, %i.ja                    ; 52 uses
   %i.jc = extractelement <2 x float> %i.iz, i64 1
   %i.jd = fadd float %4, %i.jc                    ; 52 uses
-  %i.je = fcmp olt float %6, %i.iv                ; 2 uses
+  %i.je = fcmp olt float %8, %i.iv                ; 2 uses
   %i.jf = fcmp ogt float %i.ei, %i.iu             ; 2 uses
   %or.cond339 = select i1 %i.je, i1 %i.jf, i1 false
   br i1 %or.cond339, label %bb.at, label %bb.by
@@ -714,11 +714,11 @@ bb.ax:                                            ; preds = %bb.aw
   %i.jo = fmul float %i.jn, %i.jm
   %i.jp = fsub float %i.jb, %4
   %i.jq = fdiv float %i.jo, %i.jp
-  %i.jr = fadd float %6, %i.jq
+  %i.jr = fadd float %8, %i.jq
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax, %bb.aw
-  %.055.i359 = phi float [ %i.jr, %bb.ax ], [ %6, %bb.aw ] ; 4 uses
+  %.055.i359 = phi float [ %i.jr, %bb.ax ], [ %8, %bb.aw ] ; 4 uses
   %.054.i360 = phi float [ %i.jj, %bb.ax ], [ %4, %bb.aw ] ; 3 uses
   %i.js = fcmp ogt float %i.jb, %i.jh
   br i1 %i.js, label %bb.az, label %bb.ba
@@ -932,7 +932,7 @@ bb.bx:                                            ; preds = %bb.bw
 
 bb.by:                                            ; preds = %bb.as
   %i.nt = fcmp olt float %i.ei, %i.iv             ; 2 uses
-  %i.nu = fcmp ogt float %6, %i.iu                ; 2 uses
+  %i.nu = fcmp ogt float %8, %i.iu                ; 2 uses
   %or.cond340 = select i1 %i.nt, i1 %i.nu, i1 false
   br i1 %or.cond340, label %bb.bz, label %bb.de
 
@@ -960,11 +960,11 @@ bb.cd:                                            ; preds = %bb.cc
   %i.od = fmul float %i.oc, %i.ob
   %i.oe = fsub float %i.jd, %4
   %i.of = fdiv float %i.od, %i.oe
-  %i.og = fadd float %6, %i.of
+  %i.og = fadd float %8, %i.of
   br label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd, %bb.cc
-  %.055.i380 = phi float [ %i.og, %bb.cd ], [ %6, %bb.cc ] ; 4 uses
+  %.055.i380 = phi float [ %i.og, %bb.cd ], [ %8, %bb.cc ] ; 4 uses
   %.054.i381 = phi float [ %i.ny, %bb.cd ], [ %4, %bb.cc ] ; 3 uses
   %i.oh = fcmp ogt float %i.jd, %i.nw
   br i1 %i.oh, label %bb.cf, label %bb.cg
@@ -1205,11 +1205,11 @@ bb.dj:                                            ; preds = %bb.di
   %i.sr = fmul float %i.sq, %i.sp
   %i.ss = fsub float %i.jb, %4
   %i.st = fdiv float %i.sr, %i.ss
-  %i.su = fadd float %6, %i.st
+  %i.su = fadd float %8, %i.st
   br label %bb.dk
 
 bb.dk:                                            ; preds = %bb.dj, %bb.di
-  %.055.i401 = phi float [ %i.su, %bb.dj ], [ %6, %bb.di ] ; 4 uses
+  %.055.i401 = phi float [ %i.su, %bb.dj ], [ %8, %bb.di ] ; 4 uses
   %.054.i402 = phi float [ %i.sm, %bb.dj ], [ %4, %bb.di ] ; 3 uses
   %i.sv = fcmp ogt float %i.jb, %i.sk
   br i1 %i.sv, label %bb.dl, label %bb.dm
@@ -1342,7 +1342,7 @@ bb.dz:                                            ; preds = %bb.dy
   br label %stbtt__handle_clipped_edge.exit379
 
 bb.ea:                                            ; preds = %bb.de
-  %i.vj = fcmp ogt float %6, %i.iv
+  %i.vj = fcmp ogt float %8, %i.iv
   %or.cond342 = and i1 %i.nt, %i.vj
   br i1 %or.cond342, label %bb.eb, label %bb.ew
 
@@ -1370,11 +1370,11 @@ bb.ef:                                            ; preds = %bb.ee
   %i.vs = fmul float %i.vr, %i.vq
   %i.vt = fsub float %i.jb, %4
   %i.vu = fdiv float %i.vs, %i.vt
-  %i.vv = fadd float %6, %i.vu
+  %i.vv = fadd float %8, %i.vu
   br label %bb.eg
 
 bb.eg:                                            ; preds = %bb.ef, %bb.ee
-  %.055.i415 = phi float [ %i.vv, %bb.ef ], [ %6, %bb.ee ] ; 4 uses
+  %.055.i415 = phi float [ %i.vv, %bb.ef ], [ %8, %bb.ee ] ; 4 uses
   %.054.i416 = phi float [ %i.vn, %bb.ef ], [ %4, %bb.ee ] ; 3 uses
   %i.vw = fcmp ogt float %i.jb, %i.vl
   br i1 %i.vw, label %bb.eh, label %bb.ei
@@ -1507,7 +1507,7 @@ bb.ev:                                            ; preds = %bb.eu
   br label %stbtt__handle_clipped_edge.exit379
 
 bb.ew:                                            ; preds = %bb.ea
-  %i.yk = fcmp olt float %6, %i.iu
+  %i.yk = fcmp olt float %8, %i.iu
   %or.cond343 = and i1 %i.yk, %i.jf
   br i1 %or.cond343, label %bb.ex, label %bb.fs
 
@@ -1535,11 +1535,11 @@ bb.fb:                                            ; preds = %bb.fa
   %i.yt = fmul float %i.ys, %i.yr
   %i.yu = fsub float %i.jd, %4
   %i.yv = fdiv float %i.yt, %i.yu
-  %i.yw = fadd float %6, %i.yv
+  %i.yw = fadd float %8, %i.yv
   br label %bb.fc
 
 bb.fc:                                            ; preds = %bb.fb, %bb.fa
-  %.055.i429 = phi float [ %i.yw, %bb.fb ], [ %6, %bb.fa ] ; 4 uses
+  %.055.i429 = phi float [ %i.yw, %bb.fb ], [ %8, %bb.fa ] ; 4 uses
   %.054.i430 = phi float [ %i.yo, %bb.fb ], [ %4, %bb.fa ] ; 3 uses
   %i.yx = fcmp ogt float %i.jd, %i.ym
   br i1 %i.yx, label %bb.fd, label %bb.fe
@@ -1700,11 +1700,11 @@ bb.fx:                                            ; preds = %bb.fw
   %i.abu = fmul float %i.abt, %i.abs
   %i.abv = fsub float %i.jd, %4
   %i.abw = fdiv float %i.abu, %i.abv
-  %i.abx = fadd float %6, %i.abw
+  %i.abx = fadd float %8, %i.abw
   br label %bb.fy
 
 bb.fy:                                            ; preds = %bb.fx, %bb.fw
-  %.055.i443 = phi float [ %i.abx, %bb.fx ], [ %6, %bb.fw ] ; 4 uses
+  %.055.i443 = phi float [ %i.abx, %bb.fx ], [ %8, %bb.fw ] ; 4 uses
   %.054.i444 = phi float [ %i.abp, %bb.fx ], [ %4, %bb.fw ] ; 3 uses
   %i.aby = fcmp ogt float %i.jd, %i.abn
   br i1 %i.aby, label %bb.fz, label %bb.ga
@@ -1854,8 +1854,8 @@ bb.gr:                                            ; preds = %bb.gq
   %i.aer = fsub float %i.aeo, %4
   %i.aes = fmul float %i.iq, %i.aer
   %i.aet = fdiv float %i.aes, %i.e
-  %i.aeu = fadd float %6, %i.aet
-  %.055.i457 = select i1 %i.aeq, float %i.aeu, float %6 ; 4 uses
+  %i.aeu = fadd float %8, %i.aet
+  %.055.i457 = select i1 %i.aeq, float %i.aeu, float %8 ; 4 uses
   %.054.i458 = select i1 %i.aeq, float %i.aeo, float %4 ; 3 uses
   %i.aev = fcmp ogt float %i.a, %i.aem
   br i1 %i.aev, label %bb.gs, label %bb.gt
@@ -2258,7 +2258,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 define range(i32 0, 3) i32 @stbtt__ray_intersect_bezier(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef writeonly captures(none) %5) local_unnamed_addr #25 {
 bb.a:
   %i.a = load float, ptr %1, align 4, !tbaa !74
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.c = load float, ptr %i.b, align 4, !tbaa !74
   %i.d = fneg float %i.c
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 4
@@ -2336,33 +2336,31 @@ bb.f:                                             ; preds = %bb.c
   %.3130 = phi i1 [ false, %bb.f ], [ %or.cond.not.not.not, %bb.d ], [ false, %bb.e ]
   %.1106129 = phi float [ %i.ao, %bb.f ], [ %i.ao, %bb.d ], [ 0.000000e+00, %bb.e ] ; 5 uses
   %.3110128 = phi float [ %i.am, %bb.f ], [ %.0107, %bb.d ], [ %i.aw, %bb.e ] ; 5 uses
-  %6 = load <2 x float>, ptr %1, align 4, !tbaa !74 ; 4 uses
-  %foldExtExtBinop139 = fmul <2 x float> %6, %6
-  %7 = extractelement <2 x float> %foldExtExtBinop139, i64 1
-  %8 = extractelement <2 x float> %6, i64 0       ; 2 uses
-  %i.az = tail call float @llvm.fmuladd.f32(float %8, float %8, float %7)
-  %i.ba = fdiv float 1.000000e+00, %i.az
-  %9 = insertelement <2 x float> poison, float %i.ba, i64 0
-  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer
-  %11 = fmul <2 x float> %6, %10                  ; 4 uses
+  %6 = load float, ptr %1, align 4, !tbaa !74     ; 3 uses
+  %7 = load float, ptr %i.b, align 4, !tbaa !74   ; 3 uses
+  %8 = fmul float %7, %7
+  %i.az = tail call float @llvm.fmuladd.f32(float %6, float %6, float %8)
+  %i.ba = fdiv float 1.000000e+00, %i.az          ; 2 uses
+  %9 = fmul float %6, %i.ba                       ; 3 uses
+  %10 = fmul float %7, %i.ba                      ; 3 uses
   %i.bb = load <2 x float>, ptr %2, align 4, !tbaa !74 ; 2 uses
   %i.bc = load <2 x float>, ptr %3, align 4, !tbaa !74 ; 2 uses
   %i.bd = shufflevector <2 x float> %i.bc, <2 x float> %i.bb, <2 x i32> <i32 1, i32 3>
-  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %11 = insertelement <2 x float> poison, float %10, i64 0
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
   %i.be = fmul <2 x float> %i.bd, %12
   %i.bf = shufflevector <2 x float> %i.bc, <2 x float> %i.bb, <2 x i32> <i32 0, i32 2>
-  %i.bg = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
+  %13 = insertelement <2 x float> poison, float %9, i64 0
+  %i.bg = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bh = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bf, <2 x float> %i.bg, <2 x float> %i.be) ; 2 uses
   %i.bi = load float, ptr %4, align 4, !tbaa !74
   %i.bj = load float, ptr %i.e, align 4, !tbaa !74
-  %13 = extractelement <2 x float> %11, i64 1     ; 2 uses
-  %i.bk = fmul float %13, %i.bj
-  %14 = extractelement <2 x float> %11, i64 0     ; 2 uses
-  %i.bl = tail call float @llvm.fmuladd.f32(float %i.bi, float %14, float %i.bk)
+  %i.bk = fmul float %10, %i.bj
+  %i.bl = tail call float @llvm.fmuladd.f32(float %i.bi, float %9, float %i.bk)
   %i.bm = load float, ptr %0, align 4, !tbaa !74
   %i.bn = load float, ptr %i.f, align 4, !tbaa !74
-  %i.bo = fmul float %13, %i.bn
-  %i.bp = tail call float @llvm.fmuladd.f32(float %i.bm, float %14, float %i.bo)
+  %i.bo = fmul float %10, %i.bn
+  %i.bp = tail call float @llvm.fmuladd.f32(float %i.bm, float %9, float %i.bo)
   %i.bq = extractelement <2 x float> %i.bh, i64 0
   %i.br = extractelement <2 x float> %i.bh, i64 1 ; 3 uses
   %i.bs = fsub float %i.bq, %i.br                 ; 2 uses

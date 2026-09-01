@@ -204,28 +204,26 @@ bb.a:
   br i1 %i.r, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.s = tail call nsz float @llvm.acos.f32(float %.020.i) ; 2 uses
+  %i.s = tail call nsz float @llvm.acos.f32(float %.020.i) ; 3 uses
   %i.t = tail call nsz float @llvm.sin.f32(float %i.s)
-  %i.u = fdiv nsz float 1.000000e+00, %i.t
+  %i.u = fdiv nsz float 1.000000e+00, %i.t        ; 2 uses
   %i.v = fsub nsz float 1.000000e+00, %.0
-  %3 = insertelement <2 x float> poison, float %.0, i64 0
-  %4 = insertelement <2 x float> %3, float %i.v, i64 1
-  %5 = insertelement <2 x float> poison, float %i.s, i64 0
-  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
-  %7 = fmul nsz <2 x float> %4, %6
-  %8 = tail call nsz <2 x float> @llvm.sin.v2f32(<2 x float> %7)
-  %i.w = insertelement <2 x float> poison, float %i.u, i64 0
-  %i.x = shufflevector <2 x float> %i.w, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.y = fmul nsz <2 x float> %8, %i.x            ; 2 uses
-  %9 = shufflevector <2 x float> %i.y, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %10 = shufflevector <2 x float> %.sroa.08.0.copyload, <2 x float> %.sroa.10.0.i, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %11 = fmul nsz <4 x float> %10, %9
-  %12 = shufflevector <2 x float> %.sroa.047.0.i, <2 x float> %.sroa.29.0.copyload, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
-  %13 = shufflevector <2 x float> %i.y, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
-  %14 = fmul nsz <4 x float> %12, %13
-  %15 = fadd nsz <4 x float> %11, %14             ; 2 uses
-  %16 = shufflevector <4 x float> %15, <4 x float> poison, <2 x i32> <i32 0, i32 2>
-  %17 = shufflevector <4 x float> %15, <4 x float> poison, <2 x i32> <i32 1, i32 3>
+  %3 = fmul nsz float %i.v, %i.s
+  %4 = tail call nsz float @llvm.sin.f32(float %3)
+  %5 = fmul nsz float %4, %i.u
+  %6 = fmul nsz float %.0, %i.s
+  %7 = tail call nsz float @llvm.sin.f32(float %6)
+  %8 = fmul nsz float %7, %i.u
+  %i.w = insertelement <2 x float> poison, float %5, i64 0
+  %i.x = shufflevector <2 x float> %i.w, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.y = fmul nsz <2 x float> %.sroa.047.0.i, %i.x
+  %9 = insertelement <2 x float> poison, float %8, i64 0
+  %10 = shufflevector <2 x float> %9, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %11 = fmul nsz <2 x float> %.sroa.08.0.copyload, %10
+  %12 = fadd nsz <2 x float> %i.y, %11
+  %13 = fmul nsz <2 x float> %.sroa.10.0.i, %i.x
+  %14 = fmul nsz <2 x float> %.sroa.29.0.copyload, %10
+  %15 = fadd nsz <2 x float> %13, %14
   br label %_ZN4core10quaternion5slerpES0_S0_ff.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -259,8 +257,8 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN4core10quaternion5slerpES0_S0_ff.exit
 
 _ZN4core10quaternion5slerpES0_S0_ff.exit:         ; preds = %bb.b, %bb.c
-  %.sroa.0.4.vec.insert.i29.sink.i = phi <2 x float> [ %i.ax, %bb.c ], [ %16, %bb.b ] ; 6 uses
-  %.sroa.3.12.vec.insert.i31.sink.i = phi <2 x float> [ %i.ay, %bb.c ], [ %17, %bb.b ] ; 4 uses
+  %.sroa.0.4.vec.insert.i29.sink.i = phi <2 x float> [ %i.ax, %bb.c ], [ %12, %bb.b ] ; 6 uses
+  %.sroa.3.12.vec.insert.i31.sink.i = phi <2 x float> [ %i.ay, %bb.c ], [ %15, %bb.b ] ; 4 uses
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.ba = load i8, ptr %i.az, align 4, !tbaa !1003, !range !31, !noundef !32
   %i.bb = trunc nuw i8 %i.ba to i1
@@ -662,9 +660,6 @@ declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #19
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.sin.v2f32(<2 x float>) #19
 
 attributes #0 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree nounwind }

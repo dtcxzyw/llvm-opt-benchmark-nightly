@@ -180,37 +180,34 @@ bb.c:                                             ; preds = %bb.b
   %i.z = and i32 %1, 524288
   %.not91 = icmp eq i32 %i.z, 0                   ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 12784 ; 2 uses
-  %3 = load i64, ptr %i.aa, align 16
-  %i.ab = select i1 %.not91, i64 0, i64 2097152   ; 5 uses
-  %4 = and i64 %3, -6291457
-  %5 = or disjoint i64 %4, %i.ab
-  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 12792 ; 2 uses
+  %i.ab = select i1 %.not91, i64 0, i64 2097152   ; 4 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 12840 ; 2 uses
   %i.ad = load i64, ptr %i.ac, align 8
   %i.ae = and i64 %i.ad, -6291457
   %i.af = or disjoint i64 %i.ae, %i.ab
-  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 12840 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 12808 ; 2 uses
   %i.ah = load i64, ptr %i.ag, align 8
   %i.ai = and i64 %i.ah, -6291457
   %i.aj = or disjoint i64 %i.ai, %i.ab
-  %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 12808 ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 12824 ; 2 uses
   %i.al = load i64, ptr %i.ak, align 8
   %i.am = and i64 %i.al, -6291457
   %i.an = or disjoint i64 %i.am, %i.ab
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 12824 ; 2 uses
-  %7 = load i64, ptr %6, align 8
-  %8 = and i64 %7, -6291457
-  %9 = or disjoint i64 %8, %i.ab
-  %10 = select i1 %.not91, i64 0, i64 4194304     ; 5 uses
-  %11 = or disjoint i64 %5, %10
-  store i64 %11, ptr %i.aa, align 16
-  %12 = or disjoint i64 %i.af, %10
-  store i64 %12, ptr %i.ac, align 8
-  %i.ao = or disjoint i64 %i.aj, %10
-  store i64 %i.ao, ptr %i.ag, align 8
-  %i.ap = or disjoint i64 %i.an, %10
-  store i64 %i.ap, ptr %i.ak, align 8
-  %i.aq = or disjoint i64 %9, %10
-  store i64 %i.aq, ptr %6, align 8
+  %3 = select i1 %.not91, i64 0, i64 4194304      ; 4 uses
+  %4 = load <2 x i64>, ptr %i.aa, align 16
+  %5 = and <2 x i64> %4, splat (i64 -6291457)
+  %6 = insertelement <2 x i64> poison, i64 %i.ab, i64 0
+  %7 = insertelement <2 x i64> poison, i64 %3, i64 0
+  %8 = or <2 x i64> %7, %6
+  %9 = shufflevector <2 x i64> %8, <2 x i64> poison, <2 x i32> zeroinitializer
+  %10 = or disjoint <2 x i64> %9, %5
+  store <2 x i64> %10, ptr %i.aa, align 16
+  %i.ao = or disjoint i64 %i.af, %3
+  store i64 %i.ao, ptr %i.ac, align 8
+  %i.ap = or disjoint i64 %i.aj, %3
+  store i64 %i.ap, ptr %i.ag, align 8
+  %i.aq = or disjoint i64 %i.an, %3
+  store i64 %i.aq, ptr %i.ak, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b

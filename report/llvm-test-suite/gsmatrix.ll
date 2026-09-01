@@ -203,32 +203,27 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 .lr.ph.2:                                         ; preds = %bb.c
-  br label %._crit_edge.loopexit
+  br label %._crit_edge
 
 ._crit_edge.loopexit.fold.split:                  ; preds = %bb.c
-  br label %._crit_edge.loopexit
+  br label %._crit_edge
 
-._crit_edge.loopexit:                             ; preds = %bb.c, %._crit_edge.loopexit.fold.split, %.lr.ph.2
-  %.048.lcssa = phi i32 [ 1, %bb.c ], [ -1, %.lr.ph.2 ], [ 0, %._crit_edge.loopexit.fold.split ]
-  %.lcssa = phi i32 [ 0, %bb.c ], [ 0, %.lr.ph.2 ], [ -1, %._crit_edge.loopexit.fold.split ]
-  %3 = insertelement <2 x i32> poison, i32 %.lcssa, i64 0
-  %4 = insertelement <2 x i32> %3, i32 %.048.lcssa, i64 1
-  %5 = sitofp <2 x i32> %4 to <2 x float>
+._crit_edge.loopexit:                             ; preds = %bb.c
   br label %._crit_edge
 
 bb.d:                                             ; preds = %bb.b, %bb.a
   %i.h = fmul double %1, f0x3F91DF46A2529D39
   %i.i = fptrunc double %i.h to float
   %i.j = fpext float %i.i to double               ; 2 uses
-  %6 = tail call double @sin(double noundef %i.j) #6, !tbaa !4
-  %i.k = tail call double @cos(double noundef %i.j) #6, !tbaa !4
-  %7 = insertelement <2 x double> poison, double %i.k, i64 0
-  %8 = insertelement <2 x double> %7, double %6, i64 1
-  %9 = fptrunc <2 x double> %8 to <2 x float>
+  %i.k = tail call double @sin(double noundef %i.j) #6, !tbaa !4
+  %3 = fptrunc double %i.k to float
+  %4 = tail call double @cos(double noundef %i.j) #6, !tbaa !4
+  %5 = fptrunc double %4 to float
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.c, %._crit_edge.loopexit, %bb.d
-  %10 = phi <2 x float> [ %9, %bb.d ], [ <float 1.000000e+00, float 0.000000e+00>, %bb.c ], [ %5, %._crit_edge.loopexit ] ; 2 uses
+._crit_edge:                                      ; preds = %bb.c, %.lr.ph.2, %._crit_edge.loopexit.fold.split, %._crit_edge.loopexit, %bb.d
+  %.042 = phi float [ %3, %bb.d ], [ 0.000000e+00, %bb.c ], [ -1.000000e+00, %.lr.ph.2 ], [ 0.000000e+00, %._crit_edge.loopexit.fold.split ], [ 1.000000e+00, %._crit_edge.loopexit ]
+  %.041 = phi float [ %5, %bb.d ], [ 1.000000e+00, %bb.c ], [ 0.000000e+00, %.lr.ph.2 ], [ -1.000000e+00, %._crit_edge.loopexit.fold.split ], [ 0.000000e+00, %._crit_edge.loopexit ]
   %i.l = load float, ptr %0, align 8, !tbaa !16   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.n = load float, ptr %i.m, align 8, !tbaa !18 ; 2 uses
@@ -240,13 +235,15 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   %i.t = fneg float %i.l
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.v = fneg float %i.n
-  %11 = shufflevector <2 x float> %10, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %6 = insertelement <4 x float> poison, float %.042, i64 0
+  %7 = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> zeroinitializer
   %i.w = insertelement <4 x float> poison, float %i.p, i64 0
   %i.x = insertelement <4 x float> %i.w, float %i.r, i64 1
   %i.y = insertelement <4 x float> %i.x, float %i.t, i64 2
   %i.z = insertelement <4 x float> %i.y, float %i.v, i64 3
-  %i.aa = fmul <4 x float> %11, %i.z
-  %i.ab = shufflevector <2 x float> %10, <2 x float> poison, <4 x i32> zeroinitializer
+  %i.aa = fmul <4 x float> %7, %i.z
+  %8 = insertelement <4 x float> poison, float %.041, i64 0
+  %i.ab = shufflevector <4 x float> %8, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ac = insertelement <4 x float> poison, float %i.l, i64 0
   %i.ad = insertelement <4 x float> %i.ac, float %i.n, i64 1
   %i.ae = insertelement <4 x float> %i.ad, float %i.p, i64 2
