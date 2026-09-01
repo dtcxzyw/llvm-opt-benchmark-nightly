@@ -204,19 +204,20 @@ bb.g:                                             ; preds = %bb.e, %bb.f, %bb.d
 define internal double @arrow_length_tee(double noundef %0, double noundef %1, double noundef %2, i32 %3) #9 {
 bb.a:
   %i.a = fmul double %0, %1
-  %4 = fmul double %i.a, 1.000000e+01             ; 3 uses
-  %5 = fmul double %2, 5.000000e-01
-  %6 = insertelement <2 x double> poison, double %4, i64 0
+  %4 = insertelement <2 x double> poison, double %i.a, i64 0
+  %5 = insertelement <2 x double> %4, double %2, i64 1
+  %6 = fmul <2 x double> %5, <double 1.000000e+01, double 5.000000e-01> ; 4 uses
   %i.b = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
-  %7 = insertelement <2 x double> poison, double %5, i64 0
-  %8 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
-  %9 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.b, <2 x double> <double -4.000000e-01, double -2.000000e-01>, <2 x double> %8) ; 2 uses
-  %i.c = extractelement <2 x double> %9, i64 0    ; 2 uses
-  %10 = fcmp ogt double %i.c, 0.000000e+00
-  %11 = fadd double %4, %i.c
-  %12 = extractelement <2 x double> %9, i64 1
-  %13 = fadd double %12, %11
-  %.1 = select i1 %10, double %13, double %4
+  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %8 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.b, <2 x double> <double -4.000000e-01, double -2.000000e-01>, <2 x double> %7) ; 3 uses
+  %9 = extractelement <2 x double> %8, i64 0
+  %10 = fcmp ogt double %9, 0.000000e+00
+  %i.c = extractelement <2 x double> %6, i64 0
+  %foldExtExtBinop = fadd <2 x double> %6, %8
+  %shift = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop16 = fadd <2 x double> %shift, %foldExtExtBinop
+  %11 = extractelement <2 x double> %foldExtExtBinop16, i64 0
+  %.1 = select i1 %10, double %11, double %i.c
   ret double %.1
 }
 
