@@ -206,24 +206,22 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.sroa.11.0..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.hs, i64 8 ; 2 uses
   %.sroa.11.0.copyload.i.i.i.i.i.i.i.i = load float, ptr %.sroa.11.0..sroa_idx.i.i.i.i.i.i.i.i, align 4, !tbaa !175, !alias.scope !618, !noalias !619
   %i.ht = getelementptr inbounds [12 x i8], ptr %i.co, i64 %indvars.iv.i.i.i.i.i.i.i.i ; 2 uses
-  %i.hu = load <2 x float>, ptr %i.ht, align 4, !tbaa !177, !alias.scope !620, !noalias !621 ; 5 uses
-  %31 = getelementptr inbounds nuw i8, ptr %i.ht, i64 8
-  %i.hv = load float, ptr %31, align 4, !tbaa !177, !alias.scope !620, !noalias !621 ; 3 uses
-  %32 = load <2 x float>, ptr %i.hs, align 4, !alias.scope !618, !noalias !619
-  %i.hw = shufflevector <2 x float> %i.hu, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.hu = load <2 x float>, ptr %i.hs, align 4, !alias.scope !618, !noalias !619
+  %31 = load <3 x float>, ptr %i.ht, align 4, !tbaa !177, !alias.scope !620, !noalias !621 ; 5 uses
+  %i.hv = load float, ptr %i.ht, align 4, !tbaa !177, !alias.scope !620, !noalias !621 ; 2 uses
+  %i.hw = shufflevector <3 x float> %31, <3 x float> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   %i.hx = fmul <2 x float> %i.hc, %i.hw
-  %i.hy = shufflevector <2 x float> %i.hu, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.hy = shufflevector <3 x float> %31, <3 x float> poison, <2 x i32> zeroinitializer
   %i.hz = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.hy, <2 x float> %i.hb, <2 x float> %i.hx)
-  %33 = insertelement <2 x float> poison, float %i.hv, i64 0
-  %34 = shufflevector <2 x float> %33, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.ia = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %34, <2 x float> %i.ha, <2 x float> %i.hz)
+  %32 = shufflevector <3 x float> %31, <3 x float> poison, <2 x i32> <i32 2, i32 2>
+  %i.ia = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %32, <2 x float> %i.ha, <2 x float> %i.hz)
   %i.ib = fsub <2 x float> %i.ia, %i.fz           ; 2 uses
-  %i.ic = fsub <2 x float> %32, %i.ib             ; 6 uses
-  %i.id = extractelement <2 x float> %i.hu, i64 1
+  %i.ic = fsub <2 x float> %i.hu, %i.ib           ; 6 uses
+  %i.id = extractelement <3 x float> %31, i64 1
   %i.ie = fmul float %i.gy, %i.id
-  %35 = extractelement <2 x float> %i.hu, i64 0
-  %36 = call float @llvm.fmuladd.f32(float %35, float %i.gx, float %i.ie)
-  %i.if = call noundef float @llvm.fmuladd.f32(float %i.hv, float %i.gz, float %36)
+  %33 = call float @llvm.fmuladd.f32(float %i.hv, float %i.gx, float %i.ie)
+  %34 = extractelement <3 x float> %31, i64 2     ; 2 uses
+  %i.if = call noundef float @llvm.fmuladd.f32(float %34, float %i.gz, float %33)
   %i.ig = fsub float %i.if, %i.gd                 ; 2 uses
   %i.ih = fsub float %.sroa.11.0.copyload.i.i.i.i.i.i.i.i, %i.ig ; 4 uses
   br i1 %i.en, label %bb.n, label %bb.o
@@ -272,7 +270,8 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.js = fdiv <2 x float> %i.jp, %i.jr
   %i.jt = fadd <2 x float> %i.ib, %i.js           ; 2 uses
   store <2 x float> %i.jt, ptr %i.hs, align 4, !tbaa !177, !alias.scope !618, !noalias !619
-  %i.ju = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.jt, <2 x float> %i.he, <2 x float> %i.hu)
+  %35 = insertelement <2 x float> %i.hw, float %i.hv, i64 0
+  %i.ju = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.jt, <2 x float> %i.he, <2 x float> %35)
   store <2 x float> %i.ju, ptr %i.ix, align 4, !tbaa !177, !alias.scope !626, !noalias !627
   %i.jv = getelementptr inbounds nuw i8, ptr %i.iu, i64 8
   %i.jw = load float, ptr %i.jv, align 4, !tbaa !177, !alias.scope !624, !noalias !625
@@ -287,7 +286,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.kf = fdiv float %i.ke, %i.iw
   %i.kg = fadd float %i.ig, %i.kf                 ; 2 uses
   store float %i.kg, ptr %.sroa.11.0..sroa_idx.i.i.i.i.i.i.i.i, align 4, !tbaa !177, !alias.scope !618, !noalias !619
-  %i.kh = call float @llvm.fmuladd.f32(float %i.kg, float %i.cu, float %i.hv)
+  %i.kh = call float @llvm.fmuladd.f32(float %i.kg, float %i.cu, float %34)
   %i.ki = getelementptr inbounds nuw i8, ptr %i.ix, i64 8
   store float %i.kh, ptr %i.ki, align 4, !tbaa !177, !alias.scope !626, !noalias !627
   %indvars.iv.next.i.i.i.i.i.i.i.i = add nsw i64 %indvars.iv.i.i.i.i.i.i.i.i, 1 ; 2 uses

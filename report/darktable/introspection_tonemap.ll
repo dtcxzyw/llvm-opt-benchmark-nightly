@@ -205,23 +205,21 @@ define linkonce_odr hidden void @_ZNK20PermutohedralLatticeILi3ELi2EE5splatEPfS1
   %i.cq = shufflevector <2 x i32> %i.bb, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 3 uses
   %i.cr = shufflevector <4 x i32> %i.be, <4 x i32> %i.cq, <4 x i32> <i32 1, i32 0, i32 5, i32 4>
   %i.cs = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.cr) ; 3 uses
-  %i.ct = sdiv i32 %i.cs, 4                       ; 6 uses
+  %i.ct = sdiv i32 %i.cs, 4                       ; 4 uses
   %i.cu = icmp sgt i32 %i.cs, 3
   br i1 %i.cu, label %.preheader107, label %bb.a
 
 .preheader107:                                    ; preds = %.lr.ph
-  %6 = sub nsw i32 4, %i.ct
-  %7 = add nsw i32 %i.ct, -4
+  %6 = insertelement <2 x i32> <i32 4, i32 poison>, i32 %i.ct, i64 1 ; 2 uses
+  %7 = insertelement <2 x i32> <i32 poison, i32 4>, i32 %i.ct, i64 0
+  %8 = sub nsw <2 x i32> %6, %7                   ; 2 uses
   %i.cv = shufflevector <4 x i32> %i.be, <4 x i32> %i.cq, <4 x i32> <i32 0, i32 4, i32 5, i32 1> ; 2 uses
   %i.cw = add nsw <4 x i32> %i.cv, splat (i32 -4)
-  %8 = insertelement <4 x i32> poison, i32 %6, i64 0
-  %i.cx = shufflevector <4 x i32> %8, <4 x i32> poison, <4 x i32> zeroinitializer
+  %i.cx = shufflevector <2 x i32> %8, <2 x i32> poison, <4 x i32> zeroinitializer
   %i.cy = icmp slt <4 x i32> %i.cp, %i.cx         ; 2 uses
-  %9 = insertelement <4 x i32> poison, i32 %i.ct, i64 0
-  %10 = shufflevector <4 x i32> %9, <4 x i32> poison, <4 x i32> zeroinitializer
-  %11 = insertelement <4 x i32> poison, i32 %7, i64 0
-  %12 = shufflevector <4 x i32> %11, <4 x i32> poison, <4 x i32> zeroinitializer
-  %i.cz = select <4 x i1> %i.cy, <4 x i32> %10, <4 x i32> %12
+  %9 = shufflevector <2 x i32> %6, <2 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %10 = shufflevector <2 x i32> %8, <2 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %i.cz = select <4 x i1> %i.cy, <4 x i32> %9, <4 x i32> %10
   %i.da = select <4 x i1> %i.cy, <4 x i32> %i.cv, <4 x i32> %i.cw
   %i.db = add nsw <4 x i32> %i.cz, %i.cp
   br label %.loopexit
@@ -232,18 +230,16 @@ bb.a:                                             ; preds = %.lr.ph
   br i1 %i.dc, label %.preheader108, label %.loopexit
 
 .preheader108:                                    ; preds = %bb.a
-  %13 = sub nsw i32 0, %i.ct
-  %14 = add nsw i32 %i.ct, 4
-  %15 = add nsw <4 x i32> %i.dd, splat (i32 4)
-  %16 = insertelement <4 x i32> poison, i32 %13, i64 0
-  %i.de = shufflevector <4 x i32> %16, <4 x i32> poison, <4 x i32> zeroinitializer
+  %11 = insertelement <2 x i32> <i32 0, i32 poison>, i32 %i.ct, i64 1 ; 2 uses
+  %12 = insertelement <2 x i32> <i32 poison, i32 -4>, i32 %i.ct, i64 0
+  %13 = sub nsw <2 x i32> %11, %12                ; 2 uses
+  %14 = add nsw <4 x i32> %i.dd, splat (i32 4)
+  %i.de = shufflevector <2 x i32> %13, <2 x i32> poison, <4 x i32> zeroinitializer
   %i.df = icmp slt <4 x i32> %i.cp, %i.de         ; 2 uses
-  %17 = insertelement <4 x i32> poison, i32 %14, i64 0
-  %18 = shufflevector <4 x i32> %17, <4 x i32> poison, <4 x i32> zeroinitializer
-  %19 = insertelement <4 x i32> poison, i32 %i.ct, i64 0
-  %20 = shufflevector <4 x i32> %19, <4 x i32> poison, <4 x i32> zeroinitializer
-  %i.dg = select <4 x i1> %i.df, <4 x i32> %18, <4 x i32> %20
-  %i.dh = select <4 x i1> %i.df, <4 x i32> %15, <4 x i32> %i.dd
+  %15 = shufflevector <2 x i32> %13, <2 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %16 = shufflevector <2 x i32> %11, <2 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %i.dg = select <4 x i1> %i.df, <4 x i32> %15, <4 x i32> %16
+  %i.dh = select <4 x i1> %i.df, <4 x i32> %14, <4 x i32> %i.dd
   %i.di = add nsw <4 x i32> %i.dg, %i.cp
   br label %.loopexit
 

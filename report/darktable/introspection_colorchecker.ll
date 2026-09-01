@@ -205,11 +205,7 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 512
-  %3 = load float, ptr %i.h, align 16, !tbaa !13
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 516
-  %5 = load float, ptr %4, align 4, !tbaa !13
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 520
-  %7 = load float, ptr %6, align 8, !tbaa !13
+  %3 = load <3 x float>, ptr %i.h, align 16, !tbaa !13 ; 3 uses
   %.not41 = icmp eq i32 %i.f, 1
   br i1 %.not41, label %._crit_edge, label %.lr.ph
 
@@ -226,12 +222,9 @@ bb.a:
   %.pre = load float, ptr %i.b, align 4, !tbaa !13 ; 2 uses
   %.pre50 = load float, ptr %i.i, align 4, !tbaa !13 ; 2 uses
   %.pre51 = load float, ptr %i.j, align 4, !tbaa !13 ; 2 uses
-  %8 = insertelement <2 x float> poison, float %5, i64 0
-  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer ; 3 uses
-  %10 = insertelement <2 x float> poison, float %3, i64 0
-  %i.n = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer ; 3 uses
-  %11 = insertelement <2 x float> poison, float %7, i64 0
-  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer ; 3 uses
+  %4 = shufflevector <3 x float> %3, <3 x float> poison, <2 x i32> <i32 1, i32 1> ; 3 uses
+  %i.n = shufflevector <3 x float> %3, <3 x float> poison, <2 x i32> zeroinitializer ; 3 uses
+  %5 = shufflevector <3 x float> %3, <3 x float> poison, <2 x i32> <i32 2, i32 2> ; 3 uses
   %i.o = add nsw i64 %wide.trip.count47, -1       ; 3 uses
   %xtraiter = and i64 %i.o, 1
   %i.p = icmp eq i32 %i.f, 2
@@ -260,12 +253,12 @@ bb.a:
   %i.ac = fmul reassoc nsz arcp contract afn <2 x float> %i.ab, %i.ab
   %i.ad = insertelement <2 x float> poison, float %i.w, i64 0
   %i.ae = insertelement <2 x float> %i.ad, float %i.r, i64 1
-  %i.af = fsub reassoc nsz arcp contract afn <2 x float> %9, %i.ae ; 2 uses
+  %i.af = fsub reassoc nsz arcp contract afn <2 x float> %4, %i.ae ; 2 uses
   %i.ag = fmul reassoc nsz arcp contract afn <2 x float> %i.af, %i.af
   %i.ah = fadd reassoc nsz arcp contract afn <2 x float> %i.ag, %i.ac
   %i.ai = insertelement <2 x float> poison, float %i.y, i64 0
   %i.aj = insertelement <2 x float> %i.ai, float %i.q, i64 1
-  %i.ak = fsub reassoc nsz arcp contract afn <2 x float> %12, %i.aj ; 2 uses
+  %i.ak = fsub reassoc nsz arcp contract afn <2 x float> %5, %i.aj ; 2 uses
   %i.al = fmul reassoc nsz arcp contract afn <2 x float> %i.ak, %i.ak
   %i.am = fadd reassoc nsz arcp contract afn <2 x float> %i.ah, %i.al ; 2 uses
   %shift = shufflevector <2 x float> %i.am, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
@@ -289,12 +282,12 @@ bb.a:
   %i.bc = fmul reassoc nsz arcp contract afn <2 x float> %i.bb, %i.bb
   %i.bd = insertelement <2 x float> poison, float %i.aw, i64 0
   %i.be = insertelement <2 x float> %i.bd, float %i.ar, i64 1
-  %i.bf = fsub reassoc nsz arcp contract afn <2 x float> %9, %i.be ; 2 uses
+  %i.bf = fsub reassoc nsz arcp contract afn <2 x float> %4, %i.be ; 2 uses
   %i.bg = fmul reassoc nsz arcp contract afn <2 x float> %i.bf, %i.bf
   %i.bh = fadd reassoc nsz arcp contract afn <2 x float> %i.bg, %i.bc
   %i.bi = insertelement <2 x float> poison, float %i.ay, i64 0
   %i.bj = insertelement <2 x float> %i.bi, float %i.as, i64 1
-  %i.bk = fsub reassoc nsz arcp contract afn <2 x float> %12, %i.bj ; 2 uses
+  %i.bk = fsub reassoc nsz arcp contract afn <2 x float> %5, %i.bj ; 2 uses
   %i.bl = fmul reassoc nsz arcp contract afn <2 x float> %i.bk, %i.bk
   %i.bm = fadd reassoc nsz arcp contract afn <2 x float> %i.bh, %i.bl ; 2 uses
   %shift.1 = shufflevector <2 x float> %i.bm, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
@@ -334,12 +327,12 @@ bb.a:
   %i.cc = fmul reassoc nsz arcp contract afn <2 x float> %i.cb, %i.cb
   %i.cd = insertelement <2 x float> poison, float %i.bw, i64 0
   %i.ce = insertelement <2 x float> %i.cd, float %.epil.init55, i64 1
-  %i.cf = fsub reassoc nsz arcp contract afn <2 x float> %9, %i.ce ; 2 uses
+  %i.cf = fsub reassoc nsz arcp contract afn <2 x float> %4, %i.ce ; 2 uses
   %i.cg = fmul reassoc nsz arcp contract afn <2 x float> %i.cf, %i.cf
   %i.ch = fadd reassoc nsz arcp contract afn <2 x float> %i.cg, %i.cc
   %i.ci = insertelement <2 x float> poison, float %i.by, i64 0
   %i.cj = insertelement <2 x float> %i.ci, float %.epil.init, i64 1
-  %i.ck = fsub reassoc nsz arcp contract afn <2 x float> %12, %i.cj ; 2 uses
+  %i.ck = fsub reassoc nsz arcp contract afn <2 x float> %5, %i.cj ; 2 uses
   %i.cl = fmul reassoc nsz arcp contract afn <2 x float> %i.ck, %i.ck
   %i.cm = fadd reassoc nsz arcp contract afn <2 x float> %i.ch, %i.cl ; 2 uses
   %shift.epil = shufflevector <2 x float> %i.cm, <2 x float> poison, <2 x i32> <i32 1, i32 poison>

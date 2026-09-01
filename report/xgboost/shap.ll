@@ -205,21 +205,19 @@ _ZNK7xgboost6common4SpanIKNS_16interpretability12_GLOBAL__N_121QuadraturePathEle
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !1149 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %8 = fadd float %4, -1.000000e+00               ; 2 uses
-  %9 = fcmp oeq float %5, 1.000000e+00
-  %10 = fadd float %5, -1.000000e+00
-  br i1 %9, label %_ZNK7xgboost6common4SpanIKNS_16interpretability12_GLOBAL__N_121QuadraturePathElementELm18446744073709551615EEixEm.exit.i.i.us.preheader, label %_ZNK7xgboost6common4SpanIKNS_16interpretability12_GLOBAL__N_121QuadraturePathElementELm18446744073709551615EEixEm.exit.i.i.preheader
+  %8 = insertelement <2 x float> poison, float %4, i64 0
+  %9 = insertelement <2 x float> %8, float %5, i64 1
+  %10 = fadd <2 x float> %9, splat (float -1.000000e+00) ; 3 uses
+  %11 = fcmp oeq float %5, 1.000000e+00
+  br i1 %11, label %_ZNK7xgboost6common4SpanIKNS_16interpretability12_GLOBAL__N_121QuadraturePathElementELm18446744073709551615EEixEm.exit.i.i.us.preheader, label %_ZNK7xgboost6common4SpanIKNS_16interpretability12_GLOBAL__N_121QuadraturePathElementELm18446744073709551615EEixEm.exit.i.i.preheader
 
 _ZNK7xgboost6common4SpanIKNS_16interpretability12_GLOBAL__N_121QuadraturePathElementELm18446744073709551615EEixEm.exit.i.i.preheader: ; preds = %_ZNK7xgboost6common4SpanIKNS_16interpretability12_GLOBAL__N_121QuadraturePathElementELm18446744073709551615EEixEm.exit.lr.ph.i.i
-  %11 = insertelement <8 x float> poison, float %8, i64 0
-  %i.af = shufflevector <8 x float> %11, <8 x float> poison, <8 x i32> zeroinitializer ; 2 uses
-  %12 = insertelement <8 x float> poison, float %10, i64 0
-  %13 = shufflevector <8 x float> %12, <8 x float> poison, <8 x i32> zeroinitializer ; 2 uses
+  %i.af = shufflevector <2 x float> %10, <2 x float> poison, <8 x i32> zeroinitializer ; 2 uses
+  %12 = shufflevector <2 x float> %10, <2 x float> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1> ; 2 uses
   br label %_ZNK7xgboost6common4SpanIKNS_16interpretability12_GLOBAL__N_121QuadraturePathElementELm18446744073709551615EEixEm.exit.i.i
 
 _ZNK7xgboost6common4SpanIKNS_16interpretability12_GLOBAL__N_121QuadraturePathElementELm18446744073709551615EEixEm.exit.i.i.us.preheader: ; preds = %_ZNK7xgboost6common4SpanIKNS_16interpretability12_GLOBAL__N_121QuadraturePathElementELm18446744073709551615EEixEm.exit.lr.ph.i.i
-  %14 = insertelement <8 x float> poison, float %8, i64 0
-  %i.ag = shufflevector <8 x float> %14, <8 x float> poison, <8 x i32> zeroinitializer ; 2 uses
+  %i.ag = shufflevector <2 x float> %10, <2 x float> poison, <8 x i32> zeroinitializer ; 2 uses
   %.val.i.i.i.i.i.us = load ptr, ptr %i.ad, align 8
   br label %_ZNK7xgboost6common4SpanIKNS_16interpretability12_GLOBAL__N_121QuadraturePathElementELm18446744073709551615EEixEm.exit.i.i.us
 
@@ -352,8 +350,8 @@ bb.m:                                             ; preds = %_ZNK7xgboost6common
   %i.cq = load <8 x float>, ptr %1, align 4, !tbaa !92 ; 3 uses
   %i.cr = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %i.af, <8 x float> %i.cq, <8 x float> splat (float 1.000000e+00))
   %i.cs = fdiv <8 x float> %i.af, %i.cr
-  %i.ct = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %13, <8 x float> %i.cq, <8 x float> splat (float 1.000000e+00))
-  %i.cu = fdiv <8 x float> %13, %i.ct
+  %i.ct = tail call <8 x float> @llvm.fmuladd.v8f32(<8 x float> %12, <8 x float> %i.cq, <8 x float> splat (float 1.000000e+00))
+  %i.cu = fdiv <8 x float> %12, %i.ct
   %i.cv = fsub <8 x float> %i.cs, %i.cu
   %i.cw = load <8 x float>, ptr %3, align 4, !tbaa !92
   %i.cx = insertelement <8 x float> poison, float %i.cp, i64 0

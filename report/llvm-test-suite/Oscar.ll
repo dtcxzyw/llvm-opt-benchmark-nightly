@@ -204,13 +204,11 @@ bb.g:                                             ; preds = %.loopexit, %bb.f
   %i.jd = mul i64 %i.iy, %indvar                  ; 2 uses
   %scevgep39 = getelementptr i8, ptr %i.ja, i64 %i.jd ; 2 uses
   %scevgep44 = getelementptr i8, ptr %i.jc, i64 %i.jd
-  %i.je = getelementptr [8 x i8], ptr @e, i64 %.084.i ; 2 uses
-  %0 = getelementptr i8, ptr %i.je, i64 8
-  %i.jf = getelementptr i8, ptr %i.je, i64 12
+  %i.je = getelementptr [8 x i8], ptr @e, i64 %.084.i
+  %i.jf = getelementptr i8, ptr %i.je, i64 8
   %invariant.gep112.i = getelementptr [8 x i8], ptr @w, i64 %.084.i ; 2 uses
   %invariant.gep114.i = getelementptr [8 x i8], ptr @w, i64 %indvars.iv99.i ; 4 uses
-  %1 = load float, ptr %0, align 8, !tbaa !10     ; 2 uses
-  %2 = load float, ptr %i.jf, align 4, !tbaa !13  ; 2 uses
+  %0 = load <2 x float>, ptr %i.jf, align 8, !tbaa !16 ; 4 uses
   %smax = tail call i64 @llvm.smax.i64(i64 %.086.i, i64 %indvars.iv99.i) ; 6 uses
   %i.jg = add nuw i64 %smax, 1
   %i.jh = add nuw i64 %smax, 1
@@ -262,10 +260,8 @@ vector.memcheck:                                  ; preds = %vector.scevcheck
 vector.ph49:                                      ; preds = %vector.memcheck
   %n.vec = and i64 %i.ji, -4                      ; 3 uses
   %i.jz = add i64 %.086.i, %n.vec
-  %broadcast.splatinsert = insertelement <4 x float> poison, float %1, i64 0
-  %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
-  %broadcast.splatinsert50 = insertelement <4 x float> poison, float %2, i64 0
-  %broadcast.splat51 = shufflevector <4 x float> %broadcast.splatinsert50, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat = shufflevector <2 x float> %0, <2 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat51 = shufflevector <2 x float> %0, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1> ; 2 uses
   br label %vector.body52
 
 vector.body52:                                    ; preds = %vector.body52, %vector.ph49
@@ -302,10 +298,8 @@ middle.block63:                                   ; preds = %vector.body52
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %bb.g, %middle.block63
   %indvars.iv.i6.ph = phi i64 [ %.086.i, %vector.memcheck ], [ %.086.i, %vector.scevcheck ], [ %.086.i, %bb.g ], [ %i.jz, %middle.block63 ]
-  %3 = insertelement <2 x float> poison, float %2, i64 0
-  %4 = shufflevector <2 x float> %3, <2 x float> poison, <2 x i32> zeroinitializer
-  %5 = insertelement <2 x float> poison, float %1, i64 0
-  %i.kn = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %1 = shufflevector <2 x float> %0, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.kn = shufflevector <2 x float> %0, <2 x float> poison, <2 x i32> zeroinitializer
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
@@ -321,7 +315,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ks = fsub <2 x float> %i.kp, %i.kq           ; 3 uses
   %i.kt = fneg <2 x float> %i.ks
   %i.ku = shufflevector <2 x float> %i.kt, <2 x float> %i.ks, <2 x i32> <i32 1, i32 2>
-  %i.kv = fmul <2 x float> %4, %i.ku
+  %i.kv = fmul <2 x float> %1, %i.ku
   %i.kw = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.kn, <2 x float> %i.ks, <2 x float> %i.kv)
   store <2 x float> %i.kw, ptr %gep115.i, align 8, !tbaa !16
   %indvars.iv.next.i8 = add i64 %indvars.iv.i6, 1

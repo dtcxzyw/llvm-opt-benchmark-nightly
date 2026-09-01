@@ -146,40 +146,39 @@ _ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit.thread: ; pre
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.bu = load double, ptr %i.bt, align 8, !tbaa !8, !noalias !10 ; 8 uses
   %.sroa.10247.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %.sroa.17.0.copyload = load double, ptr %.sroa.17.0..sroa_idx, align 8 ; 8 uses
-  %6 = load <2 x double>, ptr %3, align 8         ; 3 uses
-  %.sroa.10247.0.copyload = load double, ptr %.sroa.10247.0..sroa_idx, align 8 ; 7 uses
-  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
-  %i.bv = insertelement <2 x double> %7, double %i.b, i64 0
+  %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %.sroa.7237.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %.sroa.10247.0.copyload = load double, ptr %.sroa.10247.0..sroa_idx, align 8 ; 6 uses
+  %6 = load <3 x double>, ptr %3, align 8         ; 7 uses
+  %7 = shufflevector <3 x double> %6, <3 x double> poison, <2 x i32> <i32 0, i32 poison>
+  %i.bv = insertelement <2 x double> %7, double %i.b, i64 1
   %i.bw = insertelement <2 x double> poison, double %i.a, i64 0
   %i.bx = shufflevector <2 x double> %i.bw, <2 x double> poison, <2 x i32> zeroinitializer
   %i.by = fsub <2 x double> %i.bv, %i.bx          ; 11 uses
-  %i.bz = insertelement <2 x double> %6, double %.sroa.10258.0.copyload, i64 0
+  %8 = shufflevector <3 x double> %6, <3 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.bz = insertelement <2 x double> %8, double %.sroa.10258.0.copyload, i64 1
   %i.ca = insertelement <2 x double> poison, double %i.br, i64 0
   %i.cb = shufflevector <2 x double> %i.ca, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cc = fsub <2 x double> %i.bz, %i.cb          ; 13 uses
-  %8 = insertelement <2 x double> poison, double %.sroa.17262.0.copyload, i64 0
-  %i.cd = insertelement <2 x double> %8, double %.sroa.17.0.copyload, i64 1
+  %9 = shufflevector <3 x double> %6, <3 x double> poison, <2 x i32> <i32 2, i32 poison>
+  %i.cd = insertelement <2 x double> %9, double %.sroa.17262.0.copyload, i64 1
   %i.ce = insertelement <2 x double> poison, double %i.bu, i64 0
   %i.cf = shufflevector <2 x double> %i.ce, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cg = fsub <2 x double> %i.cd, %i.cf          ; 9 uses
-  %.sroa.0234.0.copyload = load double, ptr %4, align 8 ; 3 uses
-  %.sroa.7237.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %.sroa.7237.0.copyload = load double, ptr %.sroa.7237.0..sroa_idx, align 8 ; 3 uses
-  %.sroa.11240.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %.sroa.11240.0.copyload = load double, ptr %.sroa.11240.0..sroa_idx, align 8 ; 3 uses
-  %9 = fsub double %.sroa.0234.0.copyload, %i.a
-  %10 = fsub double %.sroa.7237.0.copyload, %i.br
-  %11 = fsub double %.sroa.11240.0.copyload, %i.bu
-  %12 = insertelement <2 x double> poison, double %10, i64 0
-  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ch = fmul <2 x double> %i.cc, %13
-  %14 = insertelement <2 x double> poison, double %9, i64 0
-  %15 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ci = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.by, <2 x double> %15, <2 x double> %i.ch)
-  %16 = insertelement <2 x double> poison, double %11, i64 0
-  %i.cj = shufflevector <2 x double> %16, <2 x double> poison, <2 x i32> zeroinitializer
+  %10 = load <2 x double>, ptr %.sroa.7237.0..sroa_idx, align 8
+  %11 = load <3 x double>, ptr %4, align 8        ; 2 uses
+  %12 = shufflevector <3 x double> %11, <3 x double> poison, <3 x i32> <i32 2, i32 0, i32 poison>
+  %13 = shufflevector <2 x double> %10, <2 x double> poison, <3 x i32> <i32 poison, i32 poison, i32 0>
+  %14 = shufflevector <3 x double> %12, <3 x double> %13, <3 x i32> <i32 0, i32 1, i32 5> ; 2 uses
+  %15 = insertelement <3 x double> poison, double %i.bu, i64 0
+  %16 = insertelement <3 x double> %15, double %i.a, i64 1
+  %17 = insertelement <3 x double> %16, double %i.br, i64 2
+  %18 = fsub <3 x double> %14, %17                ; 3 uses
+  %19 = shufflevector <3 x double> %18, <3 x double> poison, <2 x i32> <i32 2, i32 2>
+  %i.ch = fmul <2 x double> %i.cc, %19
+  %20 = shufflevector <3 x double> %18, <3 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.ci = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.by, <2 x double> %20, <2 x double> %i.ch)
+  %i.cj = shufflevector <3 x double> %18, <3 x double> poison, <2 x i32> zeroinitializer
   %i.ck = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cg, <2 x double> %i.cj, <2 x double> %i.ci) ; 6 uses
   br i1 %i.e, label %_ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit.i.i144, label %_ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit.thread.i.i139
 
@@ -226,7 +225,7 @@ _ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit146: ; preds =
   br i1 %i.di, label %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit146.thread, label %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit146.thread269
 
 _ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit146.thread269: ; preds = %_ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit6.thread.i.i140, %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit146
-  %i.dj = extractelement <2 x double> %i.ck, i64 1 ; 3 uses
+  %i.dj = extractelement <2 x double> %i.ck, i64 0 ; 3 uses
   %i.dk = fcmp ugt double %i.dj, 0.000000e+00
   br i1 %i.dk, label %bb.c, label %bb.b
 
@@ -236,10 +235,10 @@ bb.b:                                             ; preds = %_ZN7openvdb5v13_04m
 
 bb.c:                                             ; preds = %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit146.thread269
   %foldExtExtBinop = fmul <2 x double> %i.cc, %i.cc
-  %i.dl = extractelement <2 x double> %foldExtExtBinop, i64 1
-  %i.dm = extractelement <2 x double> %i.by, i64 1 ; 2 uses
+  %i.dl = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.dm = extractelement <2 x double> %i.by, i64 0 ; 2 uses
   %i.dn = tail call double @llvm.fmuladd.f64(double %i.dm, double %i.dm, double %i.dl)
-  %i.do = extractelement <2 x double> %i.cg, i64 1 ; 3 uses
+  %i.do = extractelement <2 x double> %i.cg, i64 0 ; 3 uses
   %i.dp = tail call noundef double @llvm.fmuladd.f64(double %i.do, double %i.do, double %i.dn) ; 2 uses
   %i.dq = fcmp ult double %i.dj, %i.dp
   br i1 %i.dq, label %bb.e, label %bb.d
@@ -252,10 +251,10 @@ bb.e:                                             ; preds = %bb.c
   %i.dr = fdiv double %i.dj, %i.dp                ; 3 uses
   %i.ds = fmul double %i.do, %i.dr
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull readonly align 8 dereferenceable(24) %1, i64 24, i1 false)
-  %17 = shufflevector <2 x double> %i.by, <2 x double> %i.cc, <2 x i32> <i32 1, i32 3>
+  %21 = shufflevector <2 x double> %i.by, <2 x double> %i.cc, <2 x i32> <i32 0, i32 2>
   %i.dt = insertelement <2 x double> poison, double %i.dr, i64 0
   %i.du = shufflevector <2 x double> %i.dt, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.dv = fmul <2 x double> %17, %i.du
+  %i.dv = fmul <2 x double> %21, %i.du
   %i.dw = load <2 x double>, ptr %0, align 8, !tbaa !8, !alias.scope !13
   %i.dx = fadd <2 x double> %i.dv, %i.dw
   store <2 x double> %i.dx, ptr %0, align 8, !tbaa !8, !alias.scope !13
@@ -274,7 +273,7 @@ _ZN7openvdb5v13_04math28closestPointOnSegmentToPointERKNS1_4Vec3IdEES5_S5_Rd.exi
   br label %bb.x
 
 _ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit146.thread: ; preds = %_ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit.i.i144, %_ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit6.i.i142, %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit146
-  %i.ed = extractelement <2 x double> %6, i64 0   ; 7 uses
+  %i.ed = extractelement <3 x double> %6, i64 0   ; 6 uses
   %i.ee = fsub double %i.a, %i.ed                 ; 2 uses
   %i.ef = tail call noundef double @llvm.fabs.f64(double %i.ee)
   %i.eg = fcmp ogt double %i.ef, f0x3E7AD7F29ABCAF48
@@ -307,16 +306,17 @@ _ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit6.i.i150: ; pre
   br i1 %i.ev, label %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit154.thread, label %_ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit6.thread.i.i148
 
 _ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit6.thread.i.i148: ; preds = %_ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit6.i.i150, %_ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit.thread.i.i147
-  %i.ew = fsub double %i.bu, %.sroa.17.0.copyload ; 2 uses
+  %22 = extractelement <3 x double> %6, i64 2     ; 3 uses
+  %i.ew = fsub double %i.bu, %22                  ; 2 uses
   %i.ex = tail call noundef double @llvm.fabs.f64(double %i.ew)
   %i.ey = fcmp ogt double %i.ex, f0x3E7AD7F29ABCAF48
   br i1 %i.ey, label %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit154, label %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit154.thread270
 
 _ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit154: ; preds = %_ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit6.thread.i.i148
-  %i.ez = tail call noundef double @llvm.fabs.f64(double %.sroa.17.0.copyload)
+  %i.ez = tail call noundef double @llvm.fabs.f64(double %22)
   %i.fa = tail call noundef double @llvm.fabs.f64(double %i.bu)
   %i.fb = fcmp ogt double %i.ez, %i.fa
-  %..i8.i.i149 = select i1 %i.fb, double %.sroa.17.0.copyload, double %i.bu
+  %..i8.i.i149 = select i1 %i.fb, double %22, double %i.bu
   %i.fc = fdiv double %i.ew, %..i8.i.i149
   %i.fd = tail call noundef double @llvm.fabs.f64(double %i.fc)
   %i.fe = fcmp ugt double %i.fd, f0x3E7AD7F29ABCAF48
@@ -355,23 +355,24 @@ _ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit6.i.i158: ; pre
   br i1 %i.fw, label %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit162.thread, label %_ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit6.thread.i.i156
 
 _ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit6.thread.i.i156: ; preds = %_ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit6.i.i158, %_ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit.thread.i.i155
-  %i.fx = fsub double %.sroa.17262.0.copyload, %.sroa.17.0.copyload ; 2 uses
+  %23 = extractelement <3 x double> %6, i64 2     ; 3 uses
+  %i.fx = fsub double %.sroa.17262.0.copyload, %23 ; 2 uses
   %i.fy = tail call noundef double @llvm.fabs.f64(double %i.fx)
   %i.fz = fcmp ogt double %i.fy, f0x3E7AD7F29ABCAF48
   br i1 %i.fz, label %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit162, label %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit154.thread270
 
 _ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit162: ; preds = %_ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit6.thread.i.i156
-  %i.ga = tail call noundef double @llvm.fabs.f64(double %.sroa.17.0.copyload)
+  %i.ga = tail call noundef double @llvm.fabs.f64(double %23)
   %i.gb = tail call noundef double @llvm.fabs.f64(double %.sroa.17262.0.copyload)
   %i.gc = fcmp ogt double %i.ga, %i.gb
-  %..i8.i.i157 = select i1 %i.gc, double %.sroa.17.0.copyload, double %.sroa.17262.0.copyload
+  %..i8.i.i157 = select i1 %i.gc, double %23, double %.sroa.17262.0.copyload
   %i.gd = fdiv double %i.fx, %..i8.i.i157
   %i.ge = tail call noundef double @llvm.fabs.f64(double %i.gd)
   %i.gf = fcmp ugt double %i.ge, f0x3E7AD7F29ABCAF48
   br i1 %i.gf, label %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit162.thread, label %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit154.thread270
 
 _ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit154.thread270: ; preds = %_ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit6.thread.i.i156, %_ZN7openvdb5v13_04math18isRelOrApproxEqualIdEEbRKT_S5_S5_S5_.exit6.thread.i.i148, %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit162, %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit154
-  %i.gg = extractelement <2 x double> %i.ck, i64 0 ; 3 uses
+  %i.gg = extractelement <2 x double> %i.ck, i64 1 ; 3 uses
   %i.gh = fcmp ugt double %i.gg, 0.000000e+00
   br i1 %i.gh, label %bb.g, label %bb.f
 
@@ -381,10 +382,10 @@ bb.f:                                             ; preds = %_ZN7openvdb5v13_04m
 
 bb.g:                                             ; preds = %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit154.thread270
   %foldExtExtBinop283 = fmul <2 x double> %i.cc, %i.cc
-  %i.gi = extractelement <2 x double> %foldExtExtBinop283, i64 0
-  %i.gj = extractelement <2 x double> %i.by, i64 0 ; 2 uses
+  %i.gi = extractelement <2 x double> %foldExtExtBinop283, i64 1
+  %i.gj = extractelement <2 x double> %i.by, i64 1 ; 2 uses
   %i.gk = tail call double @llvm.fmuladd.f64(double %i.gj, double %i.gj, double %i.gi)
-  %i.gl = extractelement <2 x double> %i.cg, i64 0 ; 3 uses
+  %i.gl = extractelement <2 x double> %i.cg, i64 1 ; 3 uses
   %i.gm = tail call noundef double @llvm.fmuladd.f64(double %i.gl, double %i.gl, double %i.gk) ; 2 uses
   %i.gn = fcmp ult double %i.gg, %i.gm
   br i1 %i.gn, label %bb.i, label %bb.h
@@ -397,10 +398,10 @@ bb.i:                                             ; preds = %bb.g
   %i.go = fdiv double %i.gg, %i.gm                ; 3 uses
   %i.gp = fmul double %i.gl, %i.go
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull readonly align 8 dereferenceable(24) %1, i64 24, i1 false)
-  %18 = shufflevector <2 x double> %i.by, <2 x double> %i.cc, <2 x i32> <i32 0, i32 2>
+  %24 = shufflevector <2 x double> %i.by, <2 x double> %i.cc, <2 x i32> <i32 1, i32 3>
   %i.gq = insertelement <2 x double> poison, double %i.go, i64 0
   %i.gr = shufflevector <2 x double> %i.gq, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.gs = fmul <2 x double> %18, %i.gr
+  %i.gs = fmul <2 x double> %24, %i.gr
   %i.gt = load <2 x double>, ptr %0, align 8, !tbaa !8, !alias.scope !18
   %i.gu = fadd <2 x double> %i.gs, %i.gt
   store <2 x double> %i.gu, ptr %0, align 8, !tbaa !8, !alias.scope !18
@@ -430,21 +431,19 @@ bb.j:                                             ; preds = %_ZN7openvdb5v13_04m
   br label %bb.x
 
 bb.k:                                             ; preds = %_ZN7openvdb5v13_04math13isApproxEqualIdEEbRKNS1_4Vec3IT_EES7_.exit162.thread
-  %19 = fsub double %.sroa.0234.0.copyload, %i.b
-  %20 = fsub double %.sroa.7237.0.copyload, %.sroa.10258.0.copyload
-  %21 = fsub double %.sroa.11240.0.copyload, %.sroa.17262.0.copyload
-  %22 = insertelement <2 x double> poison, double %20, i64 0
-  %23 = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.hc = fmul <2 x double> %i.cc, %23
-  %24 = insertelement <2 x double> poison, double %19, i64 0
-  %25 = shufflevector <2 x double> %24, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.hd = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.by, <2 x double> %25, <2 x double> %i.hc)
-  %26 = insertelement <2 x double> poison, double %21, i64 0
-  %i.he = shufflevector <2 x double> %26, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.hf = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cg, <2 x double> %i.he, <2 x double> %i.hd) ; 3 uses
-  %i.hg = extractelement <2 x double> %i.hf, i64 0 ; 6 uses
+  %25 = insertelement <3 x double> poison, double %.sroa.17262.0.copyload, i64 0
+  %26 = insertelement <3 x double> %25, double %i.b, i64 1
+  %27 = insertelement <3 x double> %26, double %.sroa.10258.0.copyload, i64 2
+  %28 = fsub <3 x double> %14, %27                ; 3 uses
+  %29 = shufflevector <3 x double> %28, <3 x double> poison, <2 x i32> <i32 2, i32 2>
+  %i.hc = fmul <2 x double> %i.cc, %29
+  %30 = shufflevector <3 x double> %28, <3 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.hd = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.by, <2 x double> %30, <2 x double> %i.hc)
+  %i.he = shufflevector <3 x double> %28, <3 x double> poison, <2 x i32> zeroinitializer
+  %i.hf = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cg, <2 x double> %i.he, <2 x double> %i.hd) ; 2 uses
+  %i.hg = extractelement <2 x double> %i.hf, i64 1 ; 7 uses
   %i.hh = fcmp ult double %i.hg, 0.000000e+00
-  %i.hi = extractelement <2 x double> %i.hf, i64 1 ; 4 uses
+  %i.hi = extractelement <2 x double> %i.hf, i64 0 ; 4 uses
   %i.hj = fcmp ugt double %i.hi, %i.hg
   %or.cond129 = or i1 %i.hh, %i.hj
   br i1 %or.cond129, label %bb.m, label %bb.l
@@ -456,10 +455,10 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.x
 
 bb.m:                                             ; preds = %bb.k
-  %i.hl = extractelement <2 x double> %i.ck, i64 1 ; 5 uses
+  %i.hl = extractelement <2 x double> %i.ck, i64 0 ; 4 uses
   %i.hm = fneg double %i.hl
   %i.hn = fmul double %i.hg, %i.hm
-  %i.ho = extractelement <2 x double> %i.ck, i64 0 ; 4 uses
+  %i.ho = extractelement <2 x double> %i.ck, i64 1 ; 5 uses
   %i.hp = tail call double @llvm.fmuladd.f64(double %i.ho, double %i.hi, double %i.hn) ; 3 uses
   %i.hq = fcmp ole double %i.hp, 0.000000e+00
   %i.hr = fcmp oge double %i.ho, 0.000000e+00
@@ -469,18 +468,17 @@ bb.m:                                             ; preds = %bb.k
   br i1 %or.cond5, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %foldExtExtBinop287 = fsub <2 x double> %i.ck, %i.hf
-  %27 = extractelement <2 x double> %foldExtExtBinop287, i64 0
-  %i.ht = fdiv double %i.ho, %27                  ; 5 uses
+  %31 = fsub double %i.ho, %i.hg
+  %i.ht = fdiv double %i.ho, %31                  ; 5 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %5, i64 8
   store double %i.ht, ptr %i.hu, align 8, !tbaa !8
   %i.hv = fsub double 1.000000e+00, %i.ht
   store double %i.hv, ptr %5, align 8, !tbaa !8
-  %i.hw = extractelement <2 x double> %i.by, i64 0
+  %i.hw = extractelement <2 x double> %i.by, i64 1
   %i.hx = fmul double %i.hw, %i.ht
-  %i.hy = extractelement <2 x double> %i.cc, i64 0
+  %i.hy = extractelement <2 x double> %i.cc, i64 1
   %i.hz = fmul double %i.hy, %i.ht
-  %i.ia = extractelement <2 x double> %i.cg, i64 0
+  %i.ia = extractelement <2 x double> %i.cg, i64 1
   %i.ib = fmul double %i.ia, %i.ht
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
   %i.ic = load double, ptr %0, align 8, !tbaa !8, !alias.scope !23
@@ -497,21 +495,16 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.x
 
 bb.o:                                             ; preds = %bb.m
-  %28 = fsub double %.sroa.0234.0.copyload, %i.ed
-  %29 = fsub double %.sroa.7237.0.copyload, %.sroa.10247.0.copyload
-  %30 = fsub double %.sroa.11240.0.copyload, %.sroa.17.0.copyload
-  %31 = insertelement <2 x double> poison, double %29, i64 0
-  %32 = shufflevector <2 x double> %31, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ik = fmul <2 x double> %i.cc, %32
-  %33 = insertelement <2 x double> poison, double %28, i64 0
-  %i.il = shufflevector <2 x double> %33, <2 x double> poison, <2 x i32> zeroinitializer
+  %32 = fsub <3 x double> %11, %6                 ; 3 uses
+  %33 = shufflevector <3 x double> %32, <3 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.ik = fmul <2 x double> %i.cc, %33
+  %i.il = shufflevector <3 x double> %32, <3 x double> poison, <2 x i32> zeroinitializer
   %i.im = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.by, <2 x double> %i.il, <2 x double> %i.ik)
-  %34 = insertelement <2 x double> poison, double %30, i64 0
-  %35 = shufflevector <2 x double> %34, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.in = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cg, <2 x double> %35, <2 x double> %i.im) ; 2 uses
-  %i.io = extractelement <2 x double> %i.in, i64 1 ; 7 uses
+  %34 = shufflevector <3 x double> %32, <3 x double> poison, <2 x i32> <i32 2, i32 2>
+  %i.in = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cg, <2 x double> %34, <2 x double> %i.im) ; 3 uses
+  %i.io = extractelement <2 x double> %i.in, i64 0 ; 6 uses
   %i.ip = fcmp ult double %i.io, 0.000000e+00
-  %i.iq = extractelement <2 x double> %i.in, i64 0 ; 4 uses
+  %i.iq = extractelement <2 x double> %i.in, i64 1 ; 4 uses
   %i.ir = fcmp ugt double %i.iq, %i.io
   %or.cond130 = or i1 %i.ip, %i.ir
   br i1 %or.cond130, label %bb.q, label %bb.p
@@ -534,17 +527,18 @@ bb.q:                                             ; preds = %bb.o
   br i1 %or.cond9, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  %36 = fsub double %i.hl, %i.io
-  %i.iz = fdiv double %i.hl, %36                  ; 5 uses
+  %foldExtExtBinop287 = fsub <2 x double> %i.ck, %i.in
+  %35 = extractelement <2 x double> %foldExtExtBinop287, i64 0
+  %i.iz = fdiv double %i.hl, %35                  ; 5 uses
   %i.ja = getelementptr inbounds nuw i8, ptr %5, i64 16
   store double %i.iz, ptr %i.ja, align 8, !tbaa !8
   %i.jb = fsub double 1.000000e+00, %i.iz
   store double %i.jb, ptr %5, align 8, !tbaa !8
-  %i.jc = extractelement <2 x double> %i.by, i64 1
+  %i.jc = extractelement <2 x double> %i.by, i64 0
   %i.jd = fmul double %i.jc, %i.iz
-  %i.je = extractelement <2 x double> %i.cc, i64 1
+  %i.je = extractelement <2 x double> %i.cc, i64 0
   %i.jf = fmul double %i.je, %i.iz
-  %i.jg = extractelement <2 x double> %i.cg, i64 1
+  %i.jg = extractelement <2 x double> %i.cg, i64 0
   %i.jh = fmul double %i.jg, %i.iz
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
   %i.ji = load double, ptr %0, align 8, !tbaa !8, !alias.scope !26
@@ -618,11 +612,11 @@ bb.w:                                             ; preds = %bb.u, %bb.t, %bb.s
   %i.ky = fsub double 1.000000e+00, %i.kw
   %i.kz = fsub double %i.ky, %i.ku
   store double %i.kz, ptr %5, align 8, !tbaa !8
-  %i.la = extractelement <2 x double> %i.by, i64 0
+  %i.la = extractelement <2 x double> %i.by, i64 1
   %i.lb = fmul double %i.la, %i.kw
-  %i.lc = extractelement <2 x double> %i.cc, i64 0
+  %i.lc = extractelement <2 x double> %i.cc, i64 1
   %i.ld = fmul double %i.lc, %i.kw
-  %i.le = extractelement <2 x double> %i.cg, i64 0
+  %i.le = extractelement <2 x double> %i.cg, i64 1
   %i.lf = fmul double %i.le, %i.kw
   %.sroa.0183.0.copyload = load double, ptr %1, align 8
   %.sroa.6185.0.copyload = load double, ptr %i.bs, align 8
@@ -630,11 +624,11 @@ bb.w:                                             ; preds = %bb.u, %bb.t, %bb.s
   %i.lg = fadd double %i.lb, %.sroa.0183.0.copyload
   %i.lh = fadd double %i.ld, %.sroa.6185.0.copyload
   %i.li = fadd double %i.lf, %.sroa.8.0.copyload
-  %i.lj = extractelement <2 x double> %i.by, i64 1
+  %i.lj = extractelement <2 x double> %i.by, i64 0
   %i.lk = fmul double %i.lj, %i.ku
-  %i.ll = extractelement <2 x double> %i.cc, i64 1
+  %i.ll = extractelement <2 x double> %i.cc, i64 0
   %i.lm = fmul double %i.ll, %i.ku
-  %i.ln = extractelement <2 x double> %i.cg, i64 1
+  %i.ln = extractelement <2 x double> %i.cg, i64 0
   %i.lo = fmul double %i.ln, %i.ku
   %.sroa.6185.0..sroa_idx186 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.8.0..sroa_idx188 = getelementptr inbounds nuw i8, ptr %0, i64 16

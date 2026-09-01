@@ -205,8 +205,6 @@ bb.a:
   br i1 %.not20, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   br label %bb.b
@@ -230,36 +228,34 @@ bb.d:                                             ; preds = %bb.c
   %i.k = load ptr, ptr %.021, align 8             ; 5 uses
   call void @SDL_AssertJoysticksLocked() #9
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 272
-  %7 = load float, ptr %3, align 4                ; 2 uses
-  %8 = load float, ptr %5, align 4                ; 2 uses
-  %i.m = load float, ptr %6, align 4              ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.k, i64 288
+  %5 = getelementptr inbounds nuw i8, ptr %i.k, i64 288
+  %i.m = load float, ptr %3, align 4
+  %6 = load <3 x float>, ptr %3, align 4          ; 5 uses
   %i.n = load <4 x float>, ptr %i.l, align 4      ; 3 uses
   %i.o = shufflevector <4 x float> %i.n, <4 x float> poison, <2 x i32> <i32 0, i32 3>
-  %10 = insertelement <2 x float> poison, float %7, i64 0
-  %i.p = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.p = shufflevector <3 x float> %6, <3 x float> poison, <2 x i32> zeroinitializer
   %i.q = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.o, <2 x float> %i.p, <2 x float> zeroinitializer)
-  %i.r = load <2 x float>, ptr %9, align 4        ; 2 uses
+  %i.r = load <2 x float>, ptr %5, align 4        ; 2 uses
   %i.s = shufflevector <4 x float> %i.n, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
   %i.t = shufflevector <2 x float> %i.r, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.u = shufflevector <4 x float> %i.n, <4 x float> %i.t, <2 x i32> <i32 1, i32 4>
-  %11 = insertelement <2 x float> poison, float %8, i64 0
-  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.v = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.u, <2 x float> %12, <2 x float> %i.q)
+  %7 = shufflevector <3 x float> %6, <3 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.v = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.u, <2 x float> %7, <2 x float> %i.q)
   %i.w = shufflevector <2 x float> %i.s, <2 x float> %i.r, <2 x i32> <i32 0, i32 3>
-  %13 = insertelement <2 x float> poison, float %i.m, i64 0
-  %14 = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.x = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.w, <2 x float> %14, <2 x float> %i.v)
+  %8 = shufflevector <3 x float> %6, <3 x float> poison, <2 x i32> <i32 2, i32 2>
+  %i.x = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.w, <2 x float> %8, <2 x float> %i.v)
   store <2 x float> %i.x, ptr %i.a, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %i.k, i64 296
   %i.z = load float, ptr %i.y, align 4
-  %i.aa = call float @llvm.fmuladd.f32(float %i.z, float %7, float 0.000000e+00)
+  %i.aa = call float @llvm.fmuladd.f32(float %i.z, float %i.m, float 0.000000e+00)
   %i.ab = getelementptr inbounds nuw i8, ptr %i.k, i64 300
   %i.ac = load float, ptr %i.ab, align 4
-  %i.ad = call float @llvm.fmuladd.f32(float %i.ac, float %8, float %i.aa)
+  %9 = extractelement <3 x float> %6, i64 1
+  %i.ad = call float @llvm.fmuladd.f32(float %i.ac, float %9, float %i.aa)
   %i.ae = getelementptr inbounds nuw i8, ptr %i.k, i64 304
   %i.af = load float, ptr %i.ae, align 4
-  %i.ag = call float @llvm.fmuladd.f32(float %i.af, float %i.m, float %i.ad)
+  %10 = extractelement <3 x float> %6, i64 2
+  %i.ag = call float @llvm.fmuladd.f32(float %i.af, float %10, float %i.ad)
   store float %i.ag, ptr %i.c, align 8
   %i.ah = load ptr, ptr %.021, align 8
   call void @SDL_SendJoystickSensor(i64 noundef %0, ptr noundef %i.ah, i32 noundef 1, i64 noundef %2, ptr noundef nonnull %i.a, i32 noundef 3) #9
@@ -285,36 +281,34 @@ bb.g:                                             ; preds = %bb.f
   %i.ao = load ptr, ptr %.021, align 8            ; 5 uses
   call void @SDL_AssertJoysticksLocked() #9
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 272
-  %15 = load float, ptr %3, align 4               ; 2 uses
-  %16 = load float, ptr %5, align 4               ; 2 uses
-  %i.aq = load float, ptr %6, align 4             ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %i.ao, i64 288
+  %11 = getelementptr inbounds nuw i8, ptr %i.ao, i64 288
+  %i.aq = load float, ptr %3, align 4
+  %12 = load <3 x float>, ptr %3, align 4         ; 5 uses
   %i.ar = load <4 x float>, ptr %i.ap, align 4    ; 3 uses
   %i.as = shufflevector <4 x float> %i.ar, <4 x float> poison, <2 x i32> <i32 0, i32 3>
-  %18 = insertelement <2 x float> poison, float %15, i64 0
-  %i.at = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.at = shufflevector <3 x float> %12, <3 x float> poison, <2 x i32> zeroinitializer
   %i.au = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.as, <2 x float> %i.at, <2 x float> zeroinitializer)
-  %i.av = load <2 x float>, ptr %17, align 4      ; 2 uses
+  %i.av = load <2 x float>, ptr %11, align 4      ; 2 uses
   %i.aw = shufflevector <4 x float> %i.ar, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
   %i.ax = shufflevector <2 x float> %i.av, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.ay = shufflevector <4 x float> %i.ar, <4 x float> %i.ax, <2 x i32> <i32 1, i32 4>
-  %19 = insertelement <2 x float> poison, float %16, i64 0
-  %20 = shufflevector <2 x float> %19, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.az = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ay, <2 x float> %20, <2 x float> %i.au)
+  %13 = shufflevector <3 x float> %12, <3 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.az = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ay, <2 x float> %13, <2 x float> %i.au)
   %i.ba = shufflevector <2 x float> %i.aw, <2 x float> %i.av, <2 x i32> <i32 0, i32 3>
-  %21 = insertelement <2 x float> poison, float %i.aq, i64 0
-  %22 = shufflevector <2 x float> %21, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.bb = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ba, <2 x float> %22, <2 x float> %i.az)
+  %14 = shufflevector <3 x float> %12, <3 x float> poison, <2 x i32> <i32 2, i32 2>
+  %i.bb = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ba, <2 x float> %14, <2 x float> %i.az)
   store <2 x float> %i.bb, ptr %i.b, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ao, i64 296
   %i.bd = load float, ptr %i.bc, align 4
-  %i.be = call float @llvm.fmuladd.f32(float %i.bd, float %15, float 0.000000e+00)
+  %i.be = call float @llvm.fmuladd.f32(float %i.bd, float %i.aq, float 0.000000e+00)
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ao, i64 300
   %i.bg = load float, ptr %i.bf, align 4
-  %i.bh = call float @llvm.fmuladd.f32(float %i.bg, float %16, float %i.be)
+  %15 = extractelement <3 x float> %12, i64 1
+  %i.bh = call float @llvm.fmuladd.f32(float %i.bg, float %15, float %i.be)
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ao, i64 304
   %i.bj = load float, ptr %i.bi, align 4
-  %i.bk = call float @llvm.fmuladd.f32(float %i.bj, float %i.aq, float %i.bh)
+  %16 = extractelement <3 x float> %12, i64 2
+  %i.bk = call float @llvm.fmuladd.f32(float %i.bj, float %16, float %i.bh)
   store float %i.bk, ptr %i.d, align 8
   %i.bl = load ptr, ptr %.021, align 8
   call void @SDL_SendJoystickSensor(i64 noundef %0, ptr noundef %i.bl, i32 noundef 2, i64 noundef %2, ptr noundef nonnull %i.b, i32 noundef 3) #9

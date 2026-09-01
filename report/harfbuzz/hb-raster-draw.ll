@@ -205,6 +205,10 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
 define range(i32 0, 2) i32 @hb_raster_draw_set_glyph_extents(ptr nofree noundef captures(none) initializes((48, 69)) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load <2 x i32>, ptr %1, align 4, !tbaa !57
   %i.c = sitofp <2 x i32> %i.b to <2 x float>     ; 2 uses
   %i.d = load <2 x i32>, ptr %i.a, align 4, !tbaa !57
@@ -216,10 +220,6 @@ bb.a:
   %i.j = fcmp ole <4 x float> %i.g, %i.h
   %i.k = shufflevector <4 x i1> %i.i, <4 x i1> %i.j, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.l = select <4 x i1> %i.k, <4 x float> %i.h, <4 x float> %i.g ; 4 uses
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.m = load <2 x float>, ptr %3, align 4, !tbaa !13 ; 2 uses
   %i.n = load <2 x float>, ptr %2, align 4, !tbaa !13 ; 2 uses
   %i.o = shufflevector <4 x float> %i.l, <4 x float> poison, <2 x i32> <i32 1, i32 1>
@@ -622,9 +622,6 @@ define internal void @_ZL18hb_raster_cubic_toP15hb_draw_funcs_tPvP15hb_draw_stat
 bb.a:
   %10 = alloca [16 x %struct.cubic_node_t], align 16 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 12
-  %11 = load float, ptr %i.a, align 4, !tbaa !147
-  %12 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %13 = load float, ptr %12, align 4, !tbaa !149
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -632,12 +629,11 @@ bb.a:
   %i.f = load <2 x float>, ptr %i.c, align 4, !tbaa !13 ; 4 uses
   %i.g = load <2 x float>, ptr %i.b, align 4, !tbaa !13 ; 4 uses
   %i.h = load <2 x float>, ptr %i.d, align 4, !tbaa !13 ; 4 uses
-  %14 = insertelement <2 x float> poison, float %11, i64 0
-  %i.i = shufflevector <2 x float> %14, <2 x float> poison, <2 x i32> zeroinitializer
+  %11 = load <2 x float>, ptr %i.a, align 4, !tbaa !13 ; 2 uses
+  %i.i = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
   %i.j = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.g, <2 x float> %i.i, <2 x float> %i.f)
-  %15 = insertelement <2 x float> poison, float %13, i64 0
-  %16 = shufflevector <2 x float> %15, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.k = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.h, <2 x float> %16, <2 x float> %i.j)
+  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.k = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.h, <2 x float> %12, <2 x float> %i.j)
   %i.l = load <2 x float>, ptr %i.e, align 8, !tbaa !13 ; 4 uses
   %i.m = fdiv <2 x float> %i.k, %i.l
   %i.n = insertelement <2 x float> poison, float %3, i64 0
