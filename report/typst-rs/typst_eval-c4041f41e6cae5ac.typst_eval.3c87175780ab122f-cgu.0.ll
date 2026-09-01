@@ -205,8 +205,8 @@ bb.bw:                                            ; preds = %bb.bx
           to label %bb.bt unwind label %bb.by, !noalias !18284
 
 bb.bx:                                            ; preds = %bb.bv
-  %i.gx = sub i64 %i.gd, %i.gj
-  %3 = call i64 @llvm.uadd.sat.i64(i64 %i.gx, i64 1)
+  %i.gx = sub nuw i64 %i.gd, %i.gj
+  %3 = add nuw i64 %i.gx, 1
   invoke fastcc void @_RINvNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs5cbCQMMIObr_10typst_eval(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.am, i64 noundef %i.gp, i64 noundef range(i64 1, 0) %3, i64 noundef 8, i64 noundef 72)
           to label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtNtCsdaEETE4DqmE_13typst_library11foundations4args3ArgE7reserveCs5cbCQMMIObr_10typst_eval.exit.i unwind label %bb.bw, !noalias !18274
 
