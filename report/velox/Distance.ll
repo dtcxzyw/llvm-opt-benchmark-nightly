@@ -159,25 +159,23 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef double @_ZN4geos9algorithm8Distance16segmentToSegmentERKNS_4geom10CoordinateES5_S5_S5_(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.c = load <2 x double>, ptr %0, align 8       ; 18 uses
-  %6 = load double, ptr %4, align 8               ; 20 uses
+  %i.c = load <2 x double>, ptr %0, align 8       ; 19 uses
   %i.d = load <2 x double>, ptr %1, align 8       ; 12 uses
   %i.e = load double, ptr %i.a, align 8           ; 13 uses
   %i.f = fcmp oeq <2 x double> %i.c, %i.d
   %i.g = extractelement <2 x i1> %i.f, i64 0
-  %i.h = fcmp oeq double %6, %i.e
+  %4 = extractelement <2 x double> %i.c, i64 1    ; 19 uses
+  %i.h = fcmp oeq double %4, %i.e
   %.0.i.i = select i1 %i.g, i1 %i.h, i1 false
-  %i.i = load <2 x double>, ptr %2, align 8       ; 15 uses
-  %7 = load double, ptr %5, align 8               ; 17 uses
+  %i.i = load <2 x double>, ptr %2, align 8       ; 16 uses
   %i.j = load <2 x double>, ptr %3, align 8       ; 15 uses
   %i.k = load double, ptr %i.b, align 8           ; 16 uses
   %i.l = fcmp oeq <2 x double> %i.i, %i.j
   %i.m = extractelement <2 x i1> %i.l, i64 0
-  %i.n = fcmp oeq double %7, %i.k
+  %5 = extractelement <2 x double> %i.i, i64 1    ; 16 uses
+  %i.n = fcmp oeq double %5, %i.k
   %.0.i.i.i = select i1 %i.m, i1 %i.n, i1 false   ; 2 uses
   br i1 %.0.i.i, label %bb.b, label %bb.i
 
@@ -186,7 +184,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.0.i.i.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.o = fsub double %6, %7                       ; 2 uses
+  %i.o = fsub double %4, %5                       ; 2 uses
   %foldExtExtBinop124 = fmul <2 x double> %foldExtExtBinop, %foldExtExtBinop
   %i.p = extractelement <2 x double> %foldExtExtBinop124, i64 0
   %i.q = fmul double %i.o, %i.o
@@ -199,8 +197,8 @@ bb.d:                                             ; preds = %bb.b
   %i.s = extractelement <2 x double> %foldExtExtBinop126, i64 0
   %foldExtExtBinop128 = fmul <2 x double> %foldExtExtBinop, %foldExtExtBinop126
   %i.t = extractelement <2 x double> %foldExtExtBinop128, i64 0
-  %i.u = fsub double %6, %7                       ; 3 uses
-  %i.v = fsub double %i.k, %7                     ; 4 uses
+  %i.u = fsub double %4, %5                       ; 3 uses
+  %i.v = fsub double %i.k, %5                     ; 4 uses
   %i.w = fmul double %i.u, %i.v
   %i.x = fadd double %i.t, %i.w
   %foldExtExtBinop130 = fmul <2 x double> %foldExtExtBinop126, %foldExtExtBinop126
@@ -225,7 +223,7 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %foldExtExtBinop134 = fsub <2 x double> %i.c, %i.j ; 2 uses
-  %i.ah = fsub double %6, %i.k                    ; 2 uses
+  %i.ah = fsub double %4, %i.k                    ; 2 uses
   %foldExtExtBinop136 = fmul <2 x double> %foldExtExtBinop134, %foldExtExtBinop134
   %i.ai = extractelement <2 x double> %foldExtExtBinop136, i64 0
   %i.aj = fmul double %i.ah, %i.ah
@@ -234,7 +232,7 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN4geos9algorithm8Distance14pointToSegmentERKNS_4geom10CoordinateES5_S5_.exit
 
 bb.h:                                             ; preds = %bb.f
-  %i.al = fsub double %7, %6
+  %i.al = fsub double %5, %4
   %i.am = fmul double %i.s, %i.al
   %foldExtExtBinop138 = fsub <2 x double> %i.i, %i.c
   %i.an = extractelement <2 x double> %foldExtExtBinop138, i64 0
@@ -255,8 +253,8 @@ bb.j:                                             ; preds = %bb.i
   %i.at = extractelement <2 x double> %foldExtExtBinop142, i64 0
   %foldExtExtBinop144 = fmul <2 x double> %foldExtExtBinop142, %foldExtExtBinop140
   %i.au = extractelement <2 x double> %foldExtExtBinop144, i64 0
-  %i.av = fsub double %i.k, %6                    ; 3 uses
-  %i.aw = fsub double %i.e, %6                    ; 4 uses
+  %i.av = fsub double %i.k, %4                    ; 3 uses
+  %i.aw = fsub double %i.e, %4                    ; 4 uses
   %i.ax = fmul double %i.aw, %i.av
   %i.ay = fadd double %i.au, %i.ax
   %foldExtExtBinop146 = fmul <2 x double> %foldExtExtBinop142, %foldExtExtBinop142
@@ -290,7 +288,7 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZN4geos9algorithm8Distance14pointToSegmentERKNS_4geom10CoordinateES5_S5_.exit
 
 bb.n:                                             ; preds = %bb.l
-  %i.bm = fsub double %6, %i.k
+  %i.bm = fsub double %4, %i.k
   %i.bn = fmul double %i.at, %i.bm
   %foldExtExtBinop154 = fsub <2 x double> %i.c, %i.j
   %i.bo = extractelement <2 x double> %foldExtExtBinop154, i64 0
@@ -303,12 +301,12 @@ bb.n:                                             ; preds = %bb.l
   br label %_ZN4geos9algorithm8Distance14pointToSegmentERKNS_4geom10CoordinateES5_S5_.exit
 
 bb.o:                                             ; preds = %bb.i
-  %i.bu = shufflevector <2 x double> %i.d, <2 x double> %i.j, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %i.bv = shufflevector <2 x double> %i.c, <2 x double> %i.i, <2 x i32> <i32 0, i32 2> ; 2 uses
+  %i.bu = shufflevector <2 x double> %i.d, <2 x double> %i.j, <2 x i32> <i32 0, i32 2> ; 3 uses
+  %i.bv = shufflevector <2 x double> %i.c, <2 x double> %i.i, <2 x i32> <i32 0, i32 2> ; 3 uses
   %i.bw = fcmp olt <2 x double> %i.bu, %i.bv
   %i.bx = select <2 x i1> %i.bw, <2 x double> %i.bu, <2 x double> %i.bv
-  %i.by = shufflevector <2 x double> %i.i, <2 x double> %i.c, <2 x i32> <i32 0, i32 2> ; 3 uses
-  %i.bz = shufflevector <2 x double> %i.j, <2 x double> %i.d, <2 x i32> <i32 0, i32 2> ; 3 uses
+  %i.by = shufflevector <2 x double> %i.i, <2 x double> %i.c, <2 x i32> <i32 0, i32 2> ; 2 uses
+  %i.bz = shufflevector <2 x double> %i.j, <2 x double> %i.d, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.ca = fcmp olt <2 x double> %i.by, %i.bz
   %i.cb = select <2 x i1> %i.ca, <2 x double> %i.bz, <2 x double> %i.by
   %i.cc = fcmp ogt <2 x double> %i.bx, %i.cb
@@ -317,28 +315,28 @@ bb.o:                                             ; preds = %bb.i
   br i1 %or.cond.i.not, label %bb.p, label %_ZN4geos4geom8Envelope10intersectsERKNS0_10CoordinateES4_S4_S4_.exit.thread
 
 bb.p:                                             ; preds = %bb.o
-  %i.ce = fcmp olt double %7, %i.k
-  %i.cf = select i1 %i.ce, double %i.k, double %7
-  %i.cg = fcmp olt double %i.e, %6
-  %i.ch = select i1 %i.cg, double %i.e, double %6
+  %i.ce = fcmp olt double %5, %i.k
+  %i.cf = select i1 %i.ce, double %i.k, double %5
+  %i.cg = fcmp olt double %i.e, %4
+  %i.ch = select i1 %i.cg, double %i.e, double %4
   %i.ci = fcmp ogt double %i.ch, %i.cf
   br i1 %i.ci, label %_ZN4geos4geom8Envelope10intersectsERKNS0_10CoordinateES4_S4_S4_.exit.thread, label %_ZN4geos4geom8Envelope10intersectsERKNS0_10CoordinateES4_S4_S4_.exit
 
 _ZN4geos4geom8Envelope10intersectsERKNS0_10CoordinateES4_S4_S4_.exit: ; preds = %bb.p
-  %i.cj = fcmp olt double %6, %i.e
-  %i.ck = fcmp olt double %i.k, %7
-  %i.cl = select i1 %i.ck, double %i.k, double %7
-  %i.cm = select i1 %i.cj, double %i.e, double %6
+  %i.cj = fcmp olt double %4, %i.e
+  %i.ck = fcmp olt double %i.k, %5
+  %i.cl = select i1 %i.ck, double %i.k, double %5
+  %i.cm = select i1 %i.cj, double %i.e, double %4
   %i.cn = fcmp uge double %i.cm, %i.cl
   br i1 %i.cn, label %bb.q, label %_ZN4geos4geom8Envelope10intersectsERKNS0_10CoordinateES4_S4_S4_.exit.thread
 
 bb.q:                                             ; preds = %_ZN4geos4geom8Envelope10intersectsERKNS0_10CoordinateES4_S4_S4_.exit
-  %i.co = fsub <2 x double> %i.bz, %i.by          ; 2 uses
-  %i.cp = shufflevector <2 x double> %i.j, <2 x double> %i.d, <2 x i32> <i32 1, i32 3>
-  %i.cq = shufflevector <2 x double> %i.i, <2 x double> %i.c, <2 x i32> <i32 1, i32 3>
+  %i.co = fsub <2 x double> %i.bu, %i.bv          ; 2 uses
+  %i.cp = shufflevector <2 x double> %i.d, <2 x double> %i.j, <2 x i32> <i32 1, i32 3>
+  %i.cq = shufflevector <2 x double> %i.c, <2 x double> %i.i, <2 x i32> <i32 1, i32 3>
   %i.cr = fsub <2 x double> %i.cp, %i.cq          ; 2 uses
-  %i.cs = shufflevector <2 x double> %i.co, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.ct = fmul <2 x double> %i.cr, %i.cs          ; 2 uses
+  %i.cs = shufflevector <2 x double> %i.cr, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  %i.ct = fmul <2 x double> %i.cs, %i.co          ; 2 uses
   %shift158 = shufflevector <2 x double> %i.ct, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop159 = fsub <2 x double> %i.ct, %shift158 ; 2 uses
   %i.cu = extractelement <2 x double> %foldExtExtBinop159, i64 0
@@ -346,19 +344,17 @@ bb.q:                                             ; preds = %_ZN4geos4geom8Envel
   br i1 %i.cv, label %_ZN4geos4geom8Envelope10intersectsERKNS0_10CoordinateES4_S4_S4_.exit.thread, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %8 = fsub double %6, %7
-  %foldExtExtBinop161.a = fsub <2 x double> %i.c, %i.i
-  %9 = insertelement <2 x double> poison, double %8, i64 0
-  %10 = shufflevector <2 x double> %9, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.cw = fmul <2 x double> %i.co, %10
+  %foldExtExtBinop161.a = fsub <2 x double> %i.c, %i.i ; 2 uses
+  %6 = shufflevector <2 x double> %foldExtExtBinop161.a, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.cw = fmul <2 x double> %i.co, %6
   %i.cx = shufflevector <2 x double> %foldExtExtBinop161.a, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cy = fmul <2 x double> %i.cr, %i.cx
   %i.cz = fsub <2 x double> %i.cw, %i.cy
   %i.da = shufflevector <2 x double> %foldExtExtBinop159, <2 x double> poison, <2 x i32> zeroinitializer
   %i.db = fdiv <2 x double> %i.cz, %i.da
-  %11 = shufflevector <2 x double> %i.db, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 2 uses
-  %i.dc = fcmp ogt <4 x double> %11, <double 1.000000e+00, double 1.000000e+00, double 0.000000e+00, double 0.000000e+00>
-  %i.dd = fcmp olt <4 x double> %11, <double 1.000000e+00, double 1.000000e+00, double 0.000000e+00, double 0.000000e+00>
+  %7 = shufflevector <2 x double> %i.db, <2 x double> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0> ; 2 uses
+  %i.dc = fcmp ogt <4 x double> %7, <double 1.000000e+00, double 1.000000e+00, double 0.000000e+00, double 0.000000e+00>
+  %i.dd = fcmp olt <4 x double> %7, <double 1.000000e+00, double 1.000000e+00, double 0.000000e+00, double 0.000000e+00>
   %i.de = shufflevector <4 x i1> %i.dc, <4 x i1> %i.dd, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   %i.df = bitcast <4 x i1> %i.de to i4
   %.not = icmp eq i4 %i.df, 0
@@ -371,8 +367,8 @@ _ZN4geos4geom8Envelope10intersectsERKNS0_10CoordinateES4_S4_S4_.exit.thread: ; p
   %i.dh = extractelement <2 x double> %foldExtExtBinop165.a, i64 0 ; 2 uses
   %foldExtExtBinop167.a = fmul <2 x double> %foldExtExtBinop163.a, %foldExtExtBinop165.a
   %i.di = extractelement <2 x double> %foldExtExtBinop167.a, i64 0
-  %i.dj = fsub double %6, %7                      ; 4 uses
-  %i.dk = fsub double %i.k, %7                    ; 6 uses
+  %i.dj = fsub double %4, %5                      ; 4 uses
+  %i.dk = fsub double %i.k, %5                    ; 6 uses
   %i.dl = fmul double %i.dj, %i.dk
   %i.dm = fadd double %i.di, %i.dl
   %foldExtExtBinop169.a = fmul <2 x double> %foldExtExtBinop165.a, %foldExtExtBinop165.a
@@ -397,7 +393,7 @@ bb.t:                                             ; preds = %_ZN4geos4geom8Envel
 
 bb.u:                                             ; preds = %bb.t
   %foldExtExtBinop173.a = fsub <2 x double> %i.c, %i.j ; 2 uses
-  %i.dw = fsub double %6, %i.k                    ; 2 uses
+  %i.dw = fsub double %4, %i.k                    ; 2 uses
   %foldExtExtBinop175.a = fmul <2 x double> %foldExtExtBinop173.a, %foldExtExtBinop173.a
   %i.dx = extractelement <2 x double> %foldExtExtBinop175.a, i64 0
   %i.dy = fmul double %i.dw, %i.dw
@@ -406,7 +402,7 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.w
 
 bb.v:                                             ; preds = %bb.t
-  %i.ea = fsub double %7, %6
+  %i.ea = fsub double %5, %4
   %i.eb = fmul double %i.dh, %i.ea
   %foldExtExtBinop177.a = fsub <2 x double> %i.i, %i.c
   %i.ec = extractelement <2 x double> %foldExtExtBinop177.a, i64 0
@@ -423,7 +419,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.s
   %foldExtExtBinop179.a = fsub <2 x double> %i.d, %i.i ; 3 uses
   %foldExtExtBinop181.a = fmul <2 x double> %foldExtExtBinop179.a, %foldExtExtBinop165.a
   %i.ei = extractelement <2 x double> %foldExtExtBinop181.a, i64 0
-  %i.ej = fsub double %i.e, %7                    ; 3 uses
+  %i.ej = fsub double %i.e, %5                    ; 3 uses
   %i.ek = fmul double %i.ej, %i.dk
   %i.el = fadd double %i.ei, %i.ek
   %i.em = fdiv double %i.el, %i.dp                ; 2 uses
@@ -453,7 +449,7 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.ab
 
 bb.aa:                                            ; preds = %bb.y
-  %i.ew = fsub double %7, %i.e
+  %i.ew = fsub double %5, %i.e
   %i.ex = fmul double %i.dh, %i.ew
   %foldExtExtBinop189.a = fsub <2 x double> %i.i, %i.d
   %i.ey = extractelement <2 x double> %foldExtExtBinop189.a, i64 0
@@ -472,8 +468,8 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.x
   %i.fe = extractelement <2 x double> %foldExtExtBinop193.a, i64 0 ; 2 uses
   %foldExtExtBinop195.a = fmul <2 x double> %foldExtExtBinop193.a, %foldExtExtBinop191.a
   %i.ff = extractelement <2 x double> %foldExtExtBinop195.a, i64 0
-  %i.fg = fsub double %7, %6                      ; 3 uses
-  %i.fh = fsub double %i.e, %6                    ; 6 uses
+  %i.fg = fsub double %5, %4                      ; 3 uses
+  %i.fh = fsub double %i.e, %4                    ; 6 uses
   %i.fi = fmul double %i.fh, %i.fg
   %i.fj = fadd double %i.ff, %i.fi
   %foldExtExtBinop197.a = fmul <2 x double> %foldExtExtBinop193.a, %foldExtExtBinop193.a
@@ -498,7 +494,7 @@ bb.ad:                                            ; preds = %bb.ab
 
 bb.ae:                                            ; preds = %bb.ad
   %foldExtExtBinop201.a = fsub <2 x double> %i.i, %i.d ; 2 uses
-  %i.ft = fsub double %7, %i.e                    ; 2 uses
+  %i.ft = fsub double %5, %i.e                    ; 2 uses
   %foldExtExtBinop203.a = fmul <2 x double> %foldExtExtBinop201.a, %foldExtExtBinop201.a
   %i.fu = extractelement <2 x double> %foldExtExtBinop203.a, i64 0
   %i.fv = fmul double %i.ft, %i.ft
@@ -521,7 +517,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.
   %foldExtExtBinop205.a = fsub <2 x double> %i.j, %i.c ; 3 uses
   %foldExtExtBinop207.a = fmul <2 x double> %foldExtExtBinop193.a, %foldExtExtBinop205.a
   %i.gd = extractelement <2 x double> %foldExtExtBinop207.a, i64 0
-  %i.ge = fsub double %i.k, %6                    ; 3 uses
+  %i.ge = fsub double %i.k, %4                    ; 3 uses
   %i.gf = fmul double %i.fh, %i.ge
   %i.gg = fadd double %i.gd, %i.gf
   %i.gh = fdiv double %i.gg, %i.fm                ; 2 uses
@@ -551,7 +547,7 @@ bb.aj:                                            ; preds = %bb.ai
   br label %_ZN4geos9algorithm8Distance14pointToSegmentERKNS_4geom10CoordinateES5_S5_.exit103
 
 bb.ak:                                            ; preds = %bb.ai
-  %i.gr = fsub double %6, %i.k
+  %i.gr = fsub double %4, %i.k
   %i.gs = fmul double %i.fe, %i.gr
   %foldExtExtBinop215 = fsub <2 x double> %i.c, %i.j
   %i.gt = extractelement <2 x double> %foldExtExtBinop215, i64 0

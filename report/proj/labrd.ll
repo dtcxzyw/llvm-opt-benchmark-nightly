@@ -200,7 +200,7 @@ bb.c:                                             ; preds = %bb.b
 define internal { double, double } @_ZL15labrd_e_forward5PJ_LPP8PJconsts(double %0, double %1, ptr nofree noundef readonly captures(none) %2) #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 88
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !42   ; 6 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !42   ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.d = tail call double @llvm.fmuladd.f64(double %1, double 5.000000e-01, double f0x3FE921FB54442D18)
   %i.e = tail call double @tan(double noundef %i.d) #8
@@ -216,9 +216,8 @@ bb.a:
   %i.o = tail call double @log(double noundef %i.n) #8
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.q = load double, ptr %i.p, align 8, !tbaa !54
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 40
+  %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.t = load double, ptr %i.c, align 8, !tbaa !51 ; 8 uses
   %i.u = fmul double %i.t, %i.f
   %i.v = fmul double %i.t, %i.k
@@ -229,7 +228,7 @@ bb.a:
   %i.aa = tail call double @atan(double noundef %i.z) #8
   %i.ab = fadd double %i.aa, f0xBFE921FB54442D18
   %i.ac = fmul double %i.ab, 2.000000e+00         ; 3 uses
-  %i.ad = load double, ptr %3, align 8, !tbaa !49
+  %i.ad = load double, ptr %i.r, align 8, !tbaa !49
   %i.ae = tail call double @cos(double noundef %i.ac) #8 ; 3 uses
   %i.af = fmul double %i.ae, %i.ae                ; 4 uses
   %i.ag = tail call double @sin(double noundef %i.ac) #8 ; 3 uses
@@ -279,8 +278,6 @@ bb.a:
   %i.by = insertelement <2 x double> %i.bx, double %i.bm, i64 1
   %i.bz = fmul <2 x double> %i.by, %i.bw          ; 7 uses
   %foldExtExtBinop = fmul <2 x double> %i.bz, %i.bz
-  %4 = load double, ptr %i.r, align 8, !tbaa !55
-  %5 = load double, ptr %i.s, align 8, !tbaa !56
   %i.ca = fmul <2 x double> %i.bz, <double 3.000000e+00, double 1.000000e+00>
   %i.cb = shufflevector <2 x double> %foldExtExtBinop, <2 x double> %i.bz, <2 x i32> <i32 0, i32 3> ; 2 uses
   %i.cc = insertelement <2 x double> %i.bz, double 3.000000e+00, i64 0
@@ -288,16 +285,15 @@ bb.a:
   %i.ce = fneg <2 x double> %i.cb
   %i.cf = shufflevector <2 x double> %i.bz, <2 x double> %i.cd, <2 x i32> <i32 0, i32 2>
   %i.cg = fmul <2 x double> %i.cf, %i.ce
-  %6 = shufflevector <2 x double> %i.cd, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %7 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ca, <2 x double> %6, <2 x double> %i.cg) ; 3 uses
-  %8 = insertelement <2 x double> poison, double %5, i64 0
-  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ch = fneg <2 x double> %7
-  %i.ci = shufflevector <2 x double> %7, <2 x double> %i.ch, <2 x i32> <i32 1, i32 2>
-  %i.cj = fmul <2 x double> %9, %i.ci
-  %10 = insertelement <2 x double> poison, double %4, i64 0
-  %i.ck = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.cl = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ck, <2 x double> %7, <2 x double> %i.cj)
+  %3 = load <2 x double>, ptr %i.s, align 8, !tbaa !63 ; 2 uses
+  %4 = shufflevector <2 x double> %i.cd, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %5 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ca, <2 x double> %4, <2 x double> %i.cg) ; 3 uses
+  %6 = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.ch = fneg <2 x double> %5
+  %i.ci = shufflevector <2 x double> %5, <2 x double> %i.ch, <2 x i32> <i32 1, i32 2>
+  %i.cj = fmul <2 x double> %6, %i.ci
+  %i.ck = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.cl = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ck, <2 x double> %5, <2 x double> %i.cj)
   %i.cm = fadd <2 x double> %i.bz, %i.cl          ; 2 uses
   %i.cn = extractelement <2 x double> %i.cm, i64 0
   %.fca.0.insert = insertvalue { double, double } poison, double %i.cn, 0
@@ -392,4 +388,5 @@ attributes #8 = { nounwind }
 !60 = !{!9, !11, i64 104}
 !61 = distinct !{!61, !62}
 !62 = !{!"llvm.loop.mustprogress"}
+!63 = !{!16, !16, i64 0}
 end_hunk_0

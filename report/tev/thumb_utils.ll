@@ -202,37 +202,32 @@ bb.y:                                             ; preds = %._crit_edge
 .lr.ph195:                                        ; preds = %.lr.ph195.preheader, %._crit_edge192
   %i.fm = phi i32 [ %i.gk, %._crit_edge192 ], [ %.pre283, %.lr.ph195.preheader ] ; 2 uses
   %.1133194 = phi i32 [ %i.gl, %._crit_edge192 ], [ 0, %.lr.ph195.preheader ]
-  %.3193 = phi ptr [ %i.gm, %._crit_edge192 ], [ %.2138197, %.lr.ph195.preheader ] ; 6 uses
-  %1 = load i16, ptr %.3193, align 2, !tbaa !92
-  %2 = uitofp i16 %1 to float                     ; 2 uses
-  %3 = tail call float @llvm.fmuladd.f32(float %2, float f0xBD1B4998, float 0.000000e+00)
-  %i.fn = getelementptr inbounds nuw i8, ptr %.3193, i64 2
-  %4 = load i16, ptr %i.fn, align 2, !tbaa !92
-  %5 = uitofp i16 %4 to float                     ; 2 uses
-  %6 = tail call float @llvm.fmuladd.f32(float %5, float f0xBF642A32, float %3)
-  %7 = getelementptr inbounds nuw i8, ptr %.3193, i64 4 ; 2 uses
-  %8 = load i16, ptr %7, align 2, !tbaa !92
-  %9 = uitofp i16 %8 to float                     ; 2 uses
-  %i.fo = tail call float @llvm.fmuladd.f32(float %9, float f0x3FF6EF66, float %6)
-  %10 = insertelement <2 x float> poison, float %2, i64 0
-  %11 = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.fp = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %11, <2 x float> <float f0x403453C6, float f0xBDE514C0>, <2 x float> zeroinitializer)
-  %12 = insertelement <2 x float> poison, float %5, i64 0
-  %13 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer
-  %14 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %13, <2 x float> <float f0xBFFDE99D, float f0x3FDE524A>, <2 x float> %i.fp)
-  %15 = insertelement <2 x float> poison, float %9, i64 0
-  %16 = shufflevector <2 x float> %15, <2 x float> poison, <2 x i32> zeroinitializer
-  %17 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %16, <2 x float> <float f0x3E2A1084, float f0xBF2001FD>, <2 x float> %14)
-  %i.fq = fptosi <2 x float> %17 to <2 x i32>
+  %.3193 = phi ptr [ %i.gm, %._crit_edge192 ], [ %.2138197, %.lr.ph195.preheader ] ; 5 uses
+  %i.fn = getelementptr inbounds nuw i8, ptr %.3193, i64 4
+  %1 = load <3 x i16>, ptr %.3193, align 2, !tbaa !92
+  %2 = uitofp <3 x i16> %1 to <3 x float>         ; 6 uses
+  %3 = shufflevector <3 x float> %2, <3 x float> poison, <2 x i32> zeroinitializer
+  %4 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %3, <2 x float> <float f0x403453C6, float f0xBDE514C0>, <2 x float> zeroinitializer)
+  %5 = extractelement <3 x float> %2, i64 0
+  %i.fo = tail call float @llvm.fmuladd.f32(float %5, float f0xBD1B4998, float 0.000000e+00)
+  %6 = shufflevector <3 x float> %2, <3 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.fp = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %6, <2 x float> <float f0xBFFDE99D, float f0x3FDE524A>, <2 x float> %4)
+  %7 = extractelement <3 x float> %2, i64 1
+  %8 = tail call float @llvm.fmuladd.f32(float %7, float f0xBF642A32, float %i.fo)
+  %9 = shufflevector <3 x float> %2, <3 x float> poison, <2 x i32> <i32 2, i32 2>
+  %10 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %9, <2 x float> <float f0x3E2A1084, float f0xBF2001FD>, <2 x float> %i.fp)
+  %11 = extractelement <3 x float> %2, i64 2
+  %12 = tail call float @llvm.fmuladd.f32(float %11, float f0x3FF6EF66, float %8)
+  %i.fq = fptosi <2 x float> %10 to <2 x i32>
   %i.fr = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.fq, <2 x i32> zeroinitializer)
   %i.fs = tail call <2 x i32> @llvm.umin.v2i32(<2 x i32> %i.fr, <2 x i32> splat (i32 65535))
   %i.ft = trunc nuw <2 x i32> %i.fs to <2 x i16>
   store <2 x i16> %i.ft, ptr %.3193, align 2, !tbaa !92
-  %i.fu = fptosi float %i.fo to i32
+  %i.fu = fptosi float %12 to i32
   %i.fv = tail call i32 @llvm.smax.i32(i32 %i.fu, i32 0)
   %i.fw = tail call i32 @llvm.umin.i32(i32 %i.fv, i32 65535)
   %i.fx = trunc nuw i32 %i.fw to i16
-  store i16 %i.fx, ptr %7, align 2, !tbaa !92
+  store i16 %i.fx, ptr %i.fn, align 2, !tbaa !92
   %i.fy = icmp sgt i32 %i.fm, 0
   br i1 %i.fy, label %.lr.ph191, label %._crit_edge192
 

@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.0 = phi double [ %i.p, %bb.b ], [ %1, %bb.a ] ; 2 uses
-  %i.q = tail call double @sin(double noundef %.0) #10 ; 6 uses
+  %i.q = tail call double @sin(double noundef %.0) #10 ; 5 uses
   %i.r = tail call double @cos(double noundef %.0) #10
   %i.s = tail call double @sin(double noundef %0) #10
   %i.t = tail call double @cos(double noundef %0) #10
@@ -212,11 +212,11 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.v = shufflevector <2 x double> %i.u, <2 x double> poison, <2 x i32> zeroinitializer
   %i.w = insertelement <2 x double> poison, double %i.t, i64 0
   %i.x = insertelement <2 x double> %i.w, double %i.s, i64 1
-  %i.y = fmul <2 x double> %i.v, %i.x             ; 7 uses
+  %i.y = fmul <2 x double> %i.v, %i.x             ; 6 uses
   %i.z = extractelement <2 x double> %i.y, i64 1  ; 2 uses
-  %3 = extractelement <2 x double> %i.y, i64 0    ; 2 uses
-  %4 = fneg double %i.z                           ; 2 uses
-  %5 = insertelement <2 x double> poison, double %i.q, i64 1 ; 2 uses
+  %3 = fneg double %i.z                           ; 2 uses
+  %4 = insertelement <2 x double> poison, double %i.q, i64 1 ; 2 uses
+  %5 = extractelement <2 x double> %i.y, i64 0    ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %_Z16is_point_in_facePK6PJ_XYZPKN12_GLOBAL__N_17pj_faceE.exit.thread.i, %bb.c
@@ -242,7 +242,7 @@ bb.d:                                             ; preds = %_Z16is_point_in_fac
   %i.as = shufflevector <2 x double> %i.ag, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
   %i.at = insertelement <2 x double> %i.as, double %i.aq, i64 0
   %i.au = fneg <2 x double> %i.at                 ; 2 uses
-  %i.av = insertelement <2 x double> %5, double %i.ao, i64 0
+  %i.av = insertelement <2 x double> %4, double %i.ao, i64 0
   %i.aw = fmul <2 x double> %i.av, %i.au
   %i.ax = insertelement <2 x double> %i.ag, double %i.an, i64 0
   %i.ay = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.y, <2 x double> %i.ax, <2 x double> %i.aw) ; 2 uses
@@ -262,9 +262,9 @@ bb.e:                                             ; preds = %bb.d
   %i.bj = extractelement <2 x double> %i.bg, i64 0 ; 2 uses
   %i.bk = tail call double @llvm.fmuladd.f64(double %i.bj, double %i.af, double %i.bi)
   %i.bl = fneg double %i.bk
-  %i.bm = fmul double %3, %i.bl
+  %i.bm = fmul double %5, %i.bl
   %i.bn = tail call double @llvm.fmuladd.f64(double %i.bd, double %i.aq, double %i.bm)
-  %i.bo = fmul double %i.bh, %4
+  %i.bo = fmul double %i.bh, %3
   %i.bp = tail call double @llvm.fmuladd.f64(double %i.bj, double %i.q, double %i.bo) ; 2 uses
   %i.bq = tail call noundef double @llvm.fmuladd.f64(double %i.ar, double %i.bp, double %i.bn)
   %i.br = fcmp ugt double %i.bq, 0.000000e+00
@@ -272,7 +272,7 @@ bb.e:                                             ; preds = %bb.d
 
 _Z16is_point_in_facePK6PJ_XYZPKN12_GLOBAL__N_17pj_faceE.exit.i: ; preds = %bb.e
   %i.bs = shufflevector <2 x double> %i.ag, <2 x double> %i.bg, <2 x i32> <i32 1, i32 3>
-  %i.bt = insertelement <2 x double> %i.au, double %4, i64 0
+  %i.bt = insertelement <2 x double> %i.au, double %3, i64 0
   %i.bu = fmul <2 x double> %i.bs, %i.bt
   %i.bv = fneg double %i.bp
   %i.bw = fmul double %i.ao, %i.bv
@@ -282,7 +282,7 @@ _Z16is_point_in_facePK6PJ_XYZPKN12_GLOBAL__N_17pj_faceE.exit.i: ; preds = %bb.e
   %i.ca = extractelement <2 x double> %i.bz, i64 0
   %i.cb = tail call double @llvm.fmuladd.f64(double %i.bd, double %i.ca, double %i.bw)
   %i.cc = extractelement <2 x double> %i.bz, i64 1
-  %i.cd = tail call noundef double @llvm.fmuladd.f64(double %3, double %i.cc, double %i.cb)
+  %i.cd = tail call noundef double @llvm.fmuladd.f64(double %5, double %i.cc, double %i.cb)
   %i.ce = fcmp ugt double %i.cd, 0.000000e+00
   br i1 %i.ce, label %_Z16is_point_in_facePK6PJ_XYZPKN12_GLOBAL__N_17pj_faceE.exit.thread.i, label %_Z18get_ico_face_indexPKN12_GLOBAL__N_116pj_airocean_dataEPK6PJ_XYZ.exit
 
@@ -299,48 +299,42 @@ _Z18get_ico_face_indexPKN12_GLOBAL__N_116pj_airocean_dataEPK6PJ_XYZ.exit: ; pred
   %i.cg = getelementptr inbounds nuw i8, ptr %i.b, i64 1656
   %i.ch = getelementptr inbounds nuw [24 x i8], ptr %i.cg, i64 %indvars.iv.i ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.b, i64 2208
-  %i.cj = getelementptr inbounds nuw [24 x i8], ptr %i.ci, i64 %indvars.iv.i ; 3 uses
-  %6 = load double, ptr %i.cj, align 8, !tbaa !57, !noalias !71
-  %7 = getelementptr inbounds nuw i8, ptr %i.cj, i64 8
-  %8 = load double, ptr %7, align 8, !tbaa !45, !noalias !71
-  %9 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
-  %10 = load double, ptr %9, align 8, !tbaa !62, !noalias !71
-  %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 16
+  %i.cj = getelementptr inbounds nuw [24 x i8], ptr %i.ci, i64 %indvars.iv.i
+  %i.ck = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
   %i.cl = load double, ptr %i.ck, align 8, !tbaa !62, !noalias !71
   %i.cm = load <2 x double>, ptr %i.ch, align 8, !tbaa !50, !noalias !71 ; 2 uses
-  %11 = shufflevector <2 x double> %i.cm, <2 x double> %i.y, <2 x i32> <i32 1, i32 3>
-  %12 = insertelement <2 x double> poison, double %8, i64 0
-  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.cn = fmul <2 x double> %11, %13
+  %6 = load <3 x double>, ptr %i.cj, align 8, !tbaa !50, !noalias !71 ; 3 uses
+  %7 = shufflevector <2 x double> %i.cm, <2 x double> %i.y, <2 x i32> <i32 1, i32 3>
+  %8 = shufflevector <3 x double> %6, <3 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.cn = fmul <2 x double> %7, %8
   %i.co = shufflevector <2 x double> %i.cm, <2 x double> %i.y, <2 x i32> <i32 0, i32 2>
-  %14 = insertelement <2 x double> poison, double %6, i64 0
-  %i.cp = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.cp = shufflevector <3 x double> %6, <3 x double> poison, <2 x i32> zeroinitializer
   %i.cq = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.co, <2 x double> %i.cp, <2 x double> %i.cn)
-  %15 = insertelement <2 x double> %5, double %10, i64 0
-  %i.cr = insertelement <2 x double> poison, double %i.cl, i64 0
-  %16 = shufflevector <2 x double> %i.cr, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.cs = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %15, <2 x double> %16, <2 x double> %i.cq) ; 2 uses
+  %i.cr = insertelement <2 x double> %4, double %i.cl, i64 0
+  %9 = shufflevector <3 x double> %6, <3 x double> poison, <2 x i32> <i32 2, i32 2>
+  %i.cs = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cr, <2 x double> %9, <2 x double> %i.cq) ; 2 uses
   %i.ct = extractelement <2 x double> %i.cs, i64 0
   %i.cu = extractelement <2 x double> %i.cs, i64 1
   %i.cv = fdiv double %i.ct, %i.cu
   %i.cw = fsub double 1.000000e+00, %i.cv
-  %i.cx = fneg double %i.cw                       ; 2 uses
-  %17 = insertelement <2 x double> poison, double %i.cx, i64 0
-  %18 = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> zeroinitializer
-  %19 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %18, <2 x double> %i.y, <2 x double> %i.y) ; 2 uses
-  %20 = tail call double @llvm.fmuladd.f64(double %i.cx, double %i.q, double %i.q)
-  %21 = getelementptr inbounds nuw i8, ptr %i.b, i64 4416
-  %22 = getelementptr inbounds nuw [128 x i8], ptr %21, i64 %indvars.iv.i
-  %i.cy = load <8 x double>, ptr %22, align 8, !tbaa !50 ; 4 uses
+  %i.cx = fneg double %i.cw
+  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 4416
+  %11 = getelementptr inbounds nuw [128 x i8], ptr %10, i64 %indvars.iv.i
+  %12 = insertelement <3 x double> poison, double %i.cx, i64 0
+  %13 = shufflevector <3 x double> %12, <3 x double> poison, <3 x i32> zeroinitializer
+  %14 = insertelement <3 x double> poison, double %i.q, i64 0
+  %15 = shufflevector <2 x double> %i.y, <2 x double> poison, <3 x i32> <i32 0, i32 1, i32 poison>
+  %16 = shufflevector <3 x double> %14, <3 x double> %15, <3 x i32> <i32 0, i32 3, i32 4> ; 2 uses
+  %17 = tail call <3 x double> @llvm.fmuladd.v3f64(<3 x double> %13, <3 x double> %16, <3 x double> %16) ; 3 uses
+  %i.cy = load <8 x double>, ptr %11, align 8, !tbaa !50 ; 4 uses
   %i.cz = shufflevector <8 x double> %i.cy, <8 x double> poison, <2 x i32> <i32 1, i32 5>
-  %23 = shufflevector <2 x double> %19, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.da = fmul <2 x double> %i.cz, %23
+  %18 = shufflevector <3 x double> %17, <3 x double> poison, <2 x i32> <i32 2, i32 2>
+  %i.da = fmul <2 x double> %i.cz, %18
   %i.db = shufflevector <8 x double> %i.cy, <8 x double> poison, <2 x i32> <i32 0, i32 4>
-  %24 = shufflevector <2 x double> %19, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.dc = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.db, <2 x double> %24, <2 x double> %i.da)
+  %19 = shufflevector <3 x double> %17, <3 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.dc = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.db, <2 x double> %19, <2 x double> %i.da)
   %i.dd = shufflevector <8 x double> %i.cy, <8 x double> poison, <2 x i32> <i32 2, i32 6>
-  %25 = insertelement <2 x double> poison, double %20, i64 0
-  %i.de = shufflevector <2 x double> %25, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.de = shufflevector <3 x double> %17, <3 x double> poison, <2 x i32> zeroinitializer
   %i.df = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dd, <2 x double> %i.de, <2 x double> %i.dc)
   %i.dg = shufflevector <8 x double> %i.cy, <8 x double> poison, <2 x i32> <i32 3, i32 7>
   %i.dh = fadd <2 x double> %i.dg, %i.df
@@ -648,6 +642,9 @@ declare double @llvm.sqrt.f64(double) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <3 x double> @llvm.fmuladd.v3f64(<3 x double>, <3 x double>, <3 x double>) #6
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

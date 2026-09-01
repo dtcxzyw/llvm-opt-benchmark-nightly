@@ -204,9 +204,7 @@ bb.ef:                                            ; preds = %bb.dw
   %.024.i.15.sroa.phi = phi ptr [ %.sroa.0.28.gep.sroa_idx706, %bb.ee ], [ %.sroa.0.30.gep688.sroa_idx708, %bb.ef ]
   %i.wy = load i16, ptr %i.bd, align 2, !tbaa !145, !noalias !148
   store i16 %i.wy, ptr %.024.i.15.sroa.phi, align 2, !tbaa !145, !noalias !148
-  %i.wz = load i32, ptr %i.w, align 4, !tbaa !134, !noalias !148 ; 2 uses
-  %5 = shl nsw i32 %i.wz, 1
-  %6 = or disjoint i32 %5, 1
+  %i.wz = load i32, ptr %i.w, align 4, !tbaa !134, !noalias !148
   %i.xa = icmp samesign ult i32 %1, %i.cy
   %i.xb = mul nuw nsw i32 %i.db, %1
   %i.xc = zext nneg i32 %i.xb to i64
@@ -217,29 +215,29 @@ bb.ef:                                            ; preds = %bb.dw
   %i.xg = icmp samesign ult i64 %indvars.iv.next461.14, %i.xe
   %.sroa.0.0..sroa.0.0. = load <16 x i16>, ptr %.sroa.0, align 32, !tbaa !145
   %i.xh = sext <16 x i16> %.sroa.0.0..sroa.0.0. to <16 x i32>
-  %7 = insertelement <16 x i32> poison, i32 %6, i64 0
-  %8 = shufflevector <16 x i32> %7, <16 x i32> poison, <16 x i32> zeroinitializer
-  %9 = mul nsw <16 x i32> %8, %i.xh
-  %10 = insertelement <16 x i32> poison, i32 %i.wz, i64 0
-  %11 = shufflevector <16 x i32> %10, <16 x i32> poison, <16 x i32> zeroinitializer
-  %12 = add nsw <16 x i32> %9, %11
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15, !noalias !148
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15, !noalias !148
-  %13 = load i32, ptr %i.an, align 8, !tbaa !101  ; 2 uses
-  %14 = icmp ult i32 %13, 17
+  %5 = load i32, ptr %i.an, align 8, !tbaa !101   ; 2 uses
+  %6 = insertelement <2 x i32> <i32 poison, i32 -1>, i32 %i.wz, i64 0 ; 2 uses
+  %7 = insertelement <2 x i32> <i32 1, i32 poison>, i32 %5, i64 1
+  %8 = shl nsw <2 x i32> %6, %7
+  %9 = or disjoint <2 x i32> %8, <i32 1, i32 0>   ; 2 uses
+  %10 = shufflevector <2 x i32> %9, <2 x i32> poison, <16 x i32> zeroinitializer
+  %11 = mul nsw <16 x i32> %10, %i.xh
+  %12 = shufflevector <2 x i32> %6, <2 x i32> poison, <16 x i32> zeroinitializer
+  %13 = add nsw <16 x i32> %11, %12
+  %14 = icmp ult i32 %5, 17
   tail call void @llvm.assume(i1 %14)
-  %notmask.i = shl nsw i32 -1, %13
-  %15 = xor i32 %notmask.i, -1
+  %15 = xor <2 x i32> %9, <i32 poison, i32 -1>
   tail call void @llvm.assume(i1 %i.xa)
   %i.xi = load <16 x i16>, ptr %4, align 2, !tbaa !145
   %i.xj = zext <16 x i16> %i.xi to <16 x i32>
-  %i.xk = add nsw <16 x i32> %12, %i.xj           ; 2 uses
-  %16 = insertelement <16 x i32> poison, i32 %15, i64 0
-  %17 = shufflevector <16 x i32> %16, <16 x i32> poison, <16 x i32> zeroinitializer ; 2 uses
-  %i.xl = icmp sgt <16 x i32> %i.xk, %17
+  %i.xk = add nsw <16 x i32> %13, %i.xj           ; 2 uses
+  %16 = shufflevector <2 x i32> %15, <2 x i32> poison, <16 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1> ; 2 uses
+  %i.xl = icmp sgt <16 x i32> %i.xk, %16
   %i.xm = tail call <16 x i32> @llvm.smax.v16i32(<16 x i32> %i.xk, <16 x i32> zeroinitializer)
-  %i.xn = select <16 x i1> %i.xl, <16 x i32> %17, <16 x i32> %i.xm
+  %i.xn = select <16 x i1> %i.xl, <16 x i32> %16, <16 x i32> %i.xm
   %i.xo = trunc <16 x i32> %i.xn to <16 x i16>
   tail call void @llvm.assume(i1 %i.xg)
   store <16 x i16> %i.xo, ptr %i.xf, align 2, !tbaa !145

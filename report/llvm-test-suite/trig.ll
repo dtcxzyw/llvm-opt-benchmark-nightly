@@ -131,39 +131,32 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define dso_local void @MultMatrixHPoint(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.HPointStruct) align 8 captures(none) initializes((0, 32)) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly byval(%struct.HPointStruct) align 8 captures(none) %2) local_unnamed_addr #3 {
 bb.a:
-  %3 = load <2 x double>, ptr %2, align 8
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %5 = load <2 x double>, ptr %4, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %7 = load <2 x double>, ptr %6, align 8
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %9 = load double, ptr %8, align 8, !tbaa !12
+  %3 = load <4 x double>, ptr %2, align 8, !tbaa !8 ; 4 uses
   %i.a = load <8 x double>, ptr %1, align 8, !tbaa !8 ; 4 uses
-  %10 = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %4 = shufflevector <4 x double> %3, <4 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   %i.b = shufflevector <8 x double> %i.a, <8 x double> poison, <2 x i32> <i32 1, i32 5>
-  %i.c = fmul <2 x double> %10, %i.b
-  %i.d = shufflevector <2 x double> %3, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.c = fmul <2 x double> %4, %i.b
+  %i.d = shufflevector <4 x double> %3, <4 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.e = shufflevector <8 x double> %i.a, <8 x double> poison, <2 x i32> <i32 0, i32 4>
   %i.f = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.d, <2 x double> %i.e, <2 x double> %i.c)
-  %11 = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %5 = shufflevector <4 x double> %3, <4 x double> poison, <2 x i32> <i32 2, i32 2> ; 2 uses
   %i.g = shufflevector <8 x double> %i.a, <8 x double> poison, <2 x i32> <i32 2, i32 6>
-  %i.h = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %11, <2 x double> %i.g, <2 x double> %i.f)
-  %12 = insertelement <2 x double> poison, double %9, i64 0
-  %13 = shufflevector <2 x double> %12, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.h = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %5, <2 x double> %i.g, <2 x double> %i.f)
+  %6 = shufflevector <4 x double> %3, <4 x double> poison, <2 x i32> <i32 3, i32 3> ; 2 uses
   %i.i = shufflevector <8 x double> %i.a, <8 x double> poison, <2 x i32> <i32 3, i32 7>
-  %i.j = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %13, <2 x double> %i.i, <2 x double> %i.h)
+  %i.j = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %6, <2 x double> %i.i, <2 x double> %i.h)
   store <2 x double> %i.j, ptr %0, align 8, !tbaa !8
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.m = load <8 x double>, ptr %i.k, align 8, !tbaa !8 ; 4 uses
   %i.n = shufflevector <8 x double> %i.m, <8 x double> poison, <2 x i32> <i32 1, i32 5>
-  %i.o = fmul <2 x double> %10, %i.n
+  %i.o = fmul <2 x double> %4, %i.n
   %i.p = shufflevector <8 x double> %i.m, <8 x double> poison, <2 x i32> <i32 0, i32 4>
   %i.q = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.d, <2 x double> %i.p, <2 x double> %i.o)
   %i.r = shufflevector <8 x double> %i.m, <8 x double> poison, <2 x i32> <i32 2, i32 6>
-  %i.s = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %11, <2 x double> %i.r, <2 x double> %i.q)
+  %i.s = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %5, <2 x double> %i.r, <2 x double> %i.q)
   %i.t = shufflevector <8 x double> %i.m, <8 x double> poison, <2 x i32> <i32 3, i32 7>
-  %i.u = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %13, <2 x double> %i.t, <2 x double> %i.s)
+  %i.u = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %6, <2 x double> %i.t, <2 x double> %i.s)
   store <2 x double> %i.u, ptr %i.l, align 8, !tbaa !8
   ret void
 }
@@ -372,7 +365,7 @@ bb.a:
   call void @PointToHPoint(ptr dead_on_unwind nonnull writable sret(%struct.HPointStruct) align 8 %5, ptr noundef nonnull byval(%struct.ObjPointStruct) align 8 %1) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
   %i.a = call ptr @RotateMatrix(double noundef %2, double noundef %3, double noundef %4) ; 0 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %1, i64 48, i1 false), !tbaa.struct !14
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %1, i64 48, i1 false), !tbaa.struct !12
   ret void
 }
 
@@ -461,7 +454,5 @@ attributes #15 = { nounwind }
 !9 = !{!"double", !6, i64 0}
 !10 = distinct !{!10, !11}
 !11 = !{!"llvm.loop.mustprogress"}
-!12 = !{!13, !9, i64 24}
-!13 = !{!"HPointStruct", !9, i64 0, !9, i64 8, !9, i64 16, !9, i64 24}
-!14 = !{i64 0, i64 8, !8, i64 8, i64 8, !8, i64 16, i64 8, !8, i64 24, i64 8, !8, i64 32, i64 8, !8, i64 40, i64 8, !8}
+!12 = !{i64 0, i64 8, !8, i64 8, i64 8, !8, i64 16, i64 8, !8, i64 24, i64 8, !8, i64 32, i64 8, !8, i64 40, i64 8, !8}
 end_hunk_0

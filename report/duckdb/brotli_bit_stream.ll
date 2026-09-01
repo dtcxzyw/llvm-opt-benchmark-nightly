@@ -205,17 +205,16 @@ bb.u:                                             ; preds = %._crit_edge270
 bb.v:                                             ; preds = %bb.u, %._crit_edge282
   %indvars.iv = phi i64 [ %i.bo, %bb.u ], [ %indvars.iv.next, %._crit_edge282 ] ; 2 uses
   %i.bp = getelementptr inbounds nuw [8 x i8], ptr @_ZN13duckdb_brotli16kBrotliShellGapsE, i64 %indvars.iv
-  %i.bq = load i64, ptr %i.bp, align 8, !tbaa !7  ; 5 uses
+  %i.bq = load i64, ptr %i.bp, align 8, !tbaa !7  ; 4 uses
   %i.br = icmp ult i64 %i.bq, %i.bc
   br i1 %i.br, label %.lr.ph281, label %._crit_edge282
 
 .lr.ph281:                                        ; preds = %bb.v, %.critedge.i
-  %.044.i279 = phi i64 [ %i.ca, %.critedge.i ], [ %i.bq, %bb.v ] ; 5 uses
+  %.044.i279 = phi i64 [ %i.ca, %.critedge.i ], [ %i.bq, %bb.v ] ; 3 uses
   %i.bs = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.044.i279
   %i.bt = load i64, ptr %i.bs, align 4            ; 2 uses
   %.sroa.0243.0.extract.trunc = trunc i64 %i.bt to i32
-  %.not.i272 = icmp ult i64 %.044.i279, %i.bq
-  br i1 %.not.i272, label %.critedge.i, label %.lr.ph275
+  br label %.lr.ph275
 
 .lr.ph275:                                        ; preds = %.lr.ph281, %bb.w
   %.0.i273 = phi i64 [ %i.bu, %bb.w ], [ %.044.i279, %.lr.ph281 ] ; 3 uses
@@ -232,9 +231,9 @@ bb.w:                                             ; preds = %.lr.ph275
   %.not.i = icmp ult i64 %i.bu, %i.bq
   br i1 %.not.i, label %.critedge.i, label %.lr.ph275, !llvm.loop !62
 
-.critedge.i:                                      ; preds = %bb.w, %.lr.ph275, %.lr.ph281
-  %.0.i.lcssa = phi i64 [ %.044.i279, %.lr.ph281 ], [ %.0.i273, %.lr.ph275 ], [ %i.bu, %bb.w ]
-  %i.bz = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0.i.lcssa
+.critedge.i:                                      ; preds = %bb.w, %.lr.ph275
+  %.0.i.lcssa.ph = phi i64 [ %i.bu, %bb.w ], [ %.0.i273, %.lr.ph275 ]
+  %i.bz = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.0.i.lcssa.ph
   store i64 %i.bt, ptr %i.bz, align 4
   %i.ca = add nuw i64 %.044.i279, 1               ; 2 uses
   %exitcond.not = icmp eq i64 %i.ca, %i.bc

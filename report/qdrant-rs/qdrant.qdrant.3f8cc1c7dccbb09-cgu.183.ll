@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %._crit_edge67
   %indvars.iv = phi i64 [ %i.d, %bb.b ], [ %indvars.iv.next, %._crit_edge67 ] ; 2 uses
   %i.e = getelementptr inbounds nuw [8 x i8], ptr @_RNvNvNtNtCs4GWW6M5ZWyU_6brotli3enc14entropy_encode20SortHuffmanTreeItems4gaps, i64 %indvars.iv
-  %i.f = load i64, ptr %i.e, align 8, !noundef !11 ; 6 uses
+  %i.f = load i64, ptr %i.e, align 8, !noundef !11 ; 5 uses
   %i.g = icmp ult i64 %i.f, %2
   br i1 %i.g, label %.lr.ph66.preheader, label %._crit_edge67
 
@@ -216,7 +216,7 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge6
   br i1 %exitcond86.not, label %.loopexit, label %bb.c
 
 .lr.ph66:                                         ; preds = %.lr.ph66.preheader, %bb.h
-  %.sroa.031.064 = phi i64 [ %i.h, %bb.h ], [ %i.f, %.lr.ph66.preheader ] ; 6 uses
+  %.sroa.031.064 = phi i64 [ %i.h, %bb.h ], [ %i.f, %.lr.ph66.preheader ] ; 4 uses
   %i.h = add i64 %.sroa.031.064, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %.sroa.031.064, %umax
   br i1 %exitcond.not, label %bb.e, label %bb.d
@@ -225,8 +225,7 @@ bb.d:                                             ; preds = %.lr.ph66
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.031.064
   %i.j = load i64, ptr %i.i, align 4              ; 2 uses
   %.sroa.042.0.extract.trunc = trunc i64 %i.j to i32
-  %.not60 = icmp ult i64 %.sroa.031.064, %i.f
-  br i1 %.not60, label %._crit_edge, label %.lr.ph
+  br label %.lr.ph
 
 bb.e:                                             ; preds = %.lr.ph66
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %umax, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @106) #22
@@ -238,9 +237,9 @@ bb.e:                                             ; preds = %.lr.ph66
   %i.l = icmp ult i64 %i.k, %1
   br i1 %i.l, label %bb.f, label %bb.g
 
-._crit_edge:                                      ; preds = %bb.j, %bb.f, %bb.d
-  %.sroa.019.0.lcssa = phi i64 [ %.sroa.031.064, %bb.d ], [ %.sroa.019.061, %bb.f ], [ %i.k, %bb.j ] ; 3 uses
-  %i.m = icmp ult i64 %.sroa.019.0.lcssa, %1
+._crit_edge:                                      ; preds = %bb.j, %bb.f
+  %.sroa.019.0.lcssa.ph = phi i64 [ %i.k, %bb.j ], [ %.sroa.019.061, %bb.f ] ; 3 uses
+  %i.m = icmp ult i64 %.sroa.019.0.lcssa.ph, %1
   br i1 %i.m, label %bb.h, label %bb.i
 
 bb.f:                                             ; preds = %.lr.ph
@@ -254,13 +253,13 @@ bb.g:                                             ; preds = %.lr.ph
   unreachable
 
 bb.h:                                             ; preds = %._crit_edge
-  %i.p = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.019.0.lcssa
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.019.0.lcssa.ph
   store i64 %i.j, ptr %i.p, align 4
   %exitcond84.not = icmp eq i64 %i.h, %2
   br i1 %exitcond84.not, label %._crit_edge67, label %.lr.ph66
 
 bb.i:                                             ; preds = %._crit_edge
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %.sroa.019.0.lcssa, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @108) #22
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %.sroa.019.0.lcssa.ph, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @108) #22
   unreachable
 
 bb.j:                                             ; preds = %bb.f

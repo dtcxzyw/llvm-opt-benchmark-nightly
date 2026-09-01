@@ -14,21 +14,21 @@ bb.a:
   %i.b = extractelement <2 x double> %i.a, i64 1  ; 5 uses
   %i.c = extractelement <2 x double> %i.a, i64 0  ; 3 uses
   %i.d = load <2 x double>, ptr %0, align 8, !tbaa !8 ; 8 uses
-  %i.e = extractelement <2 x double> %i.d, i64 1  ; 9 uses
-  %i.f = extractelement <2 x double> %i.d, i64 0  ; 5 uses
-  %i.g = fsub double %i.b, %i.e                   ; 9 uses
+  %i.e = extractelement <2 x double> %i.d, i64 0  ; 5 uses
+  %i.f = extractelement <2 x double> %i.d, i64 1  ; 8 uses
+  %i.g = fsub double %i.b, %i.f                   ; 9 uses
   %foldExtExtBinop = fsub <2 x double> %i.a, %i.d ; 3 uses
   %i.h = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 7 uses
   %i.i = tail call double @llvm.fmuladd.f64(double %i.h, double %i.h, double 0.000000e+00)
   %i.j = tail call double @llvm.fmuladd.f64(double %i.g, double %i.g, double %i.i) ; 4 uses
   %i.k = tail call double @sqrt(double noundef %i.j) #3 ; 4 uses
-  %i.l = load <2 x double>, ptr %3, align 8, !tbaa !8 ; 8 uses
-  %i.m = extractelement <2 x double> %i.l, i64 1  ; 4 uses
-  %4 = extractelement <2 x double> %i.l, i64 0    ; 3 uses
-  %5 = load <2 x double>, ptr %2, align 8, !tbaa !8 ; 8 uses
-  %i.n = extractelement <2 x double> %5, i64 1    ; 8 uses
-  %i.o = extractelement <2 x double> %5, i64 0    ; 5 uses
-  %i.p = fsub <2 x double> %i.l, %5               ; 4 uses
+  %i.l = load <2 x double>, ptr %2, align 8, !tbaa !8 ; 8 uses
+  %i.m = extractelement <2 x double> %i.l, i64 0  ; 5 uses
+  %4 = load <2 x double>, ptr %3, align 8, !tbaa !8 ; 8 uses
+  %5 = extractelement <2 x double> %4, i64 1      ; 4 uses
+  %i.n = extractelement <2 x double> %4, i64 0    ; 3 uses
+  %i.o = extractelement <2 x double> %i.l, i64 1  ; 7 uses
+  %i.p = fsub <2 x double> %4, %i.l               ; 4 uses
   %i.q = extractelement <2 x double> %i.p, i64 1  ; 8 uses
   %i.r = extractelement <2 x double> %i.p, i64 0  ; 6 uses
   %i.s = fneg double %i.r                         ; 2 uses
@@ -39,8 +39,8 @@ bb.a:
   %i.x = extractelement <2 x double> %i.w, i64 0
   %i.y = tail call double @llvm.fmuladd.f64(double %i.q, double %i.q, double %i.x) ; 4 uses
   %i.z = tail call double @sqrt(double noundef %i.y) #3 ; 4 uses
-  %foldExtExtBinop139 = fsub <2 x double> %i.d, %5 ; 3 uses
-  %i.aa = fsub double %i.e, %i.n                  ; 3 uses
+  %foldExtExtBinop139 = fsub <2 x double> %i.d, %i.l ; 3 uses
+  %i.aa = fsub double %i.f, %i.o                  ; 3 uses
   %i.ab = fcmp ugt double %i.y, f0x3C9CD2B297D889BC
   br i1 %i.ab, label %bb.b, label %bb.d
 
@@ -55,17 +55,17 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond.i.i, label %.preheader.preheader.i.i, label %bb.c
 
 .preheader.preheader.i.i:                         ; preds = %bb.b
-  %i.ai = tail call double @llvm.fmuladd.f64(double %i.af, double %i.r, double %i.o)
-  %i.aj = fsub double %i.f, %i.ai                 ; 2 uses
+  %i.ai = tail call double @llvm.fmuladd.f64(double %i.af, double %i.r, double %i.m)
+  %i.aj = fsub double %i.e, %i.ai                 ; 2 uses
   %i.ak = tail call double @llvm.fmuladd.f64(double %i.aj, double %i.aj, double 0.000000e+00)
-  %i.al = tail call double @llvm.fmuladd.f64(double %i.af, double %i.q, double %i.n)
-  %i.am = fsub double %i.e, %i.al                 ; 2 uses
+  %i.al = tail call double @llvm.fmuladd.f64(double %i.af, double %i.q, double %i.o)
+  %i.am = fsub double %i.f, %i.al                 ; 2 uses
   %i.an = tail call double @llvm.fmuladd.f64(double %i.am, double %i.am, double %i.ak)
   %sqrt.i = tail call double @llvm.sqrt.f64(double %i.an)
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %i.ao = fsub <2 x double> %i.d, %i.l            ; 2 uses
+  %i.ao = fsub <2 x double> %i.d, %4              ; 2 uses
   %i.ap = shufflevector <2 x double> %foldExtExtBinop139, <2 x double> %i.ao, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.aq = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ap, <2 x double> %i.ap, <2 x double> zeroinitializer)
   %i.ar = insertelement <2 x double> %i.ao, double %i.aa, i64 0 ; 2 uses
@@ -78,7 +78,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
-  %i.ay = fsub <2 x double> %i.a, %5              ; 2 uses
+  %i.ay = fsub <2 x double> %i.a, %i.l            ; 2 uses
   %i.az = shufflevector <2 x double> %i.ay, <2 x double> %foldExtExtBinop139, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.ba = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.az, <2 x double> %i.az, <2 x double> zeroinitializer)
   %i.bb = shufflevector <2 x double> %i.ay, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
@@ -89,9 +89,9 @@ bb.d:                                             ; preds = %bb.a
 
 bb.e:                                             ; preds = %bb.c, %.preheader.preheader.i.i
   %.054.i.ph.i = phi double [ %i.ax, %bb.c ], [ %sqrt.i, %.preheader.preheader.i.i ] ; 2 uses
-  %foldExtExtBinop141 = fsub <2 x double> %i.a, %5 ; 2 uses
+  %foldExtExtBinop141 = fsub <2 x double> %i.a, %i.l ; 2 uses
   %i.bf = extractelement <2 x double> %foldExtExtBinop141, i64 0
-  %i.bg = fsub double %i.b, %i.n                  ; 2 uses
+  %i.bg = fsub double %i.b, %i.o                  ; 2 uses
   %i.bh = tail call double @llvm.fmuladd.f64(double %i.bf, double %i.r, double 0.000000e+00)
   %i.bi = tail call double @llvm.fmuladd.f64(double %i.bg, double %i.q, double %i.bh)
   %i.bj = fdiv double %i.bi, %i.y                 ; 4 uses
@@ -101,10 +101,10 @@ bb.e:                                             ; preds = %bb.c, %.preheader.p
   br i1 %or.cond.i26.i, label %.preheader.preheader.i29.i, label %bb.f
 
 .preheader.preheader.i29.i:                       ; preds = %bb.e
-  %i.bm = tail call double @llvm.fmuladd.f64(double %i.bj, double %i.r, double %i.o)
+  %i.bm = tail call double @llvm.fmuladd.f64(double %i.bj, double %i.r, double %i.m)
   %i.bn = fsub double %i.c, %i.bm                 ; 2 uses
   %i.bo = tail call double @llvm.fmuladd.f64(double %i.bn, double %i.bn, double 0.000000e+00)
-  %i.bp = tail call double @llvm.fmuladd.f64(double %i.bj, double %i.q, double %i.n)
+  %i.bp = tail call double @llvm.fmuladd.f64(double %i.bj, double %i.q, double %i.o)
   %i.bq = fsub double %i.b, %i.bp                 ; 2 uses
   %i.br = tail call double @llvm.fmuladd.f64(double %i.bq, double %i.bq, double %i.bo)
   %sqrt15.i = tail call double @llvm.sqrt.f64(double %i.br)
@@ -113,7 +113,7 @@ bb.e:                                             ; preds = %bb.c, %.preheader.p
   br label %point_line_distance.exit30.i
 
 bb.f:                                             ; preds = %bb.e
-  %i.bu = fsub <2 x double> %i.a, %i.l            ; 2 uses
+  %i.bu = fsub <2 x double> %i.a, %4              ; 2 uses
   %i.bv = shufflevector <2 x double> %foldExtExtBinop141, <2 x double> %i.bu, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.bw = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bv, <2 x double> %i.bv, <2 x double> zeroinitializer)
   %i.bx = insertelement <2 x double> %i.bu, double %i.bg, i64 0 ; 2 uses
@@ -129,14 +129,14 @@ bb.f:                                             ; preds = %bb.e
 
 point_line_distance.exit30.i:                     ; preds = %bb.f, %.preheader.preheader.i29.i, %bb.d
   %i.cg = phi <2 x double> [ %i.be, %bb.d ], [ %i.bt, %.preheader.preheader.i29.i ], [ %i.cf, %bb.f ] ; 2 uses
-  %foldExtExtBinop143.a = fsub <2 x double> %5, %i.d ; 4 uses
-  %6 = fsub double %i.n, %i.e                     ; 4 uses
+  %foldExtExtBinop143.a = fsub <2 x double> %i.l, %i.d ; 8 uses
   %i.ch = fcmp ugt double %i.j, f0x3C9CD2B297D889BC
   br i1 %i.ch, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %point_line_distance.exit30.i
   %i.ci = extractelement <2 x double> %foldExtExtBinop143.a, i64 0
   %i.cj = tail call double @llvm.fmuladd.f64(double %i.ci, double %i.h, double 0.000000e+00)
+  %6 = extractelement <2 x double> %foldExtExtBinop143.a, i64 1
   %i.ck = tail call double @llvm.fmuladd.f64(double %6, double %i.g, double %i.cj)
   %i.cl = fdiv double %i.ck, %i.j                 ; 4 uses
   %i.cm = fcmp oge double %i.cl, 0.000000e+00
@@ -145,20 +145,20 @@ bb.g:                                             ; preds = %point_line_distance
   br i1 %or.cond.i33.i, label %.preheader.preheader.i36.i, label %bb.h
 
 .preheader.preheader.i36.i:                       ; preds = %bb.g
-  %i.co = tail call double @llvm.fmuladd.f64(double %i.cl, double %i.h, double %i.f)
-  %i.cp = fsub double %i.o, %i.co                 ; 2 uses
+  %i.co = tail call double @llvm.fmuladd.f64(double %i.cl, double %i.h, double %i.e)
+  %i.cp = fsub double %i.m, %i.co                 ; 2 uses
   %i.cq = tail call double @llvm.fmuladd.f64(double %i.cp, double %i.cp, double 0.000000e+00)
-  %i.cr = tail call double @llvm.fmuladd.f64(double %i.cl, double %i.g, double %i.e)
-  %i.cs = fsub double %i.n, %i.cr                 ; 2 uses
+  %i.cr = tail call double @llvm.fmuladd.f64(double %i.cl, double %i.g, double %i.f)
+  %i.cs = fsub double %i.o, %i.cr                 ; 2 uses
   %i.ct = tail call double @llvm.fmuladd.f64(double %i.cs, double %i.cs, double %i.cq)
   %sqrt16.i = tail call double @llvm.sqrt.f64(double %i.ct)
   br label %bb.j
 
 bb.h:                                             ; preds = %bb.g
-  %i.cu = fsub <2 x double> %5, %i.a              ; 2 uses
+  %i.cu = fsub <2 x double> %i.l, %i.a            ; 2 uses
   %i.cv = shufflevector <2 x double> %foldExtExtBinop143.a, <2 x double> %i.cu, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.cw = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cv, <2 x double> %i.cv, <2 x double> zeroinitializer)
-  %7 = insertelement <2 x double> %i.cu, double %6, i64 0 ; 2 uses
+  %7 = shufflevector <2 x double> %foldExtExtBinop143.a, <2 x double> %i.cu, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.cx = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> %7, <2 x double> %i.cw)
   %i.cy = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.cx) ; 2 uses
   %i.cz = extractelement <2 x double> %i.cy, i64 0 ; 2 uses
@@ -168,20 +168,19 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.j
 
 bb.i:                                             ; preds = %point_line_distance.exit30.i
-  %i.dd = fsub <2 x double> %i.l, %i.d            ; 2 uses
+  %i.dd = fsub <2 x double> %4, %i.d              ; 2 uses
   %i.de = shufflevector <2 x double> %i.dd, <2 x double> %foldExtExtBinop143.a, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.df = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.de, <2 x double> %i.de, <2 x double> zeroinitializer)
-  %8 = shufflevector <2 x double> %i.dd, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %9 = insertelement <2 x double> %8, double %6, i64 1 ; 2 uses
-  %i.dg = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %9, <2 x double> %i.df)
+  %8 = shufflevector <2 x double> %foldExtExtBinop143.a, <2 x double> %i.dd, <2 x i32> <i32 3, i32 1> ; 2 uses
+  %i.dg = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %8, <2 x double> %8, <2 x double> %i.df)
   %i.dh = tail call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.dg)
   br label %line_segments_distance.exit
 
 bb.j:                                             ; preds = %bb.h, %.preheader.preheader.i36.i
   %.054.i32.ph.i = phi double [ %i.dc, %bb.h ], [ %sqrt16.i, %.preheader.preheader.i36.i ] ; 2 uses
-  %foldExtExtBinop145 = fsub <2 x double> %i.l, %i.d ; 2 uses
+  %foldExtExtBinop145 = fsub <2 x double> %4, %i.d ; 2 uses
   %i.di = extractelement <2 x double> %foldExtExtBinop145, i64 0
-  %i.dj = fsub double %i.m, %i.e                  ; 2 uses
+  %i.dj = fsub double %5, %i.f                    ; 2 uses
   %i.dk = tail call double @llvm.fmuladd.f64(double %i.di, double %i.h, double 0.000000e+00)
   %i.dl = tail call double @llvm.fmuladd.f64(double %i.dj, double %i.g, double %i.dk)
   %i.dm = fdiv double %i.dl, %i.j                 ; 4 uses
@@ -191,11 +190,11 @@ bb.j:                                             ; preds = %bb.h, %.preheader.p
   br i1 %or.cond.i40.i, label %.preheader.preheader.i43.i, label %bb.k
 
 .preheader.preheader.i43.i:                       ; preds = %bb.j
-  %i.dp = tail call double @llvm.fmuladd.f64(double %i.dm, double %i.h, double %i.f)
-  %i.dq = fsub double %4, %i.dp                   ; 2 uses
+  %i.dp = tail call double @llvm.fmuladd.f64(double %i.dm, double %i.h, double %i.e)
+  %i.dq = fsub double %i.n, %i.dp                 ; 2 uses
   %i.dr = tail call double @llvm.fmuladd.f64(double %i.dq, double %i.dq, double 0.000000e+00)
-  %i.ds = tail call double @llvm.fmuladd.f64(double %i.dm, double %i.g, double %i.e)
-  %i.dt = fsub double %i.m, %i.ds                 ; 2 uses
+  %i.ds = tail call double @llvm.fmuladd.f64(double %i.dm, double %i.g, double %i.f)
+  %i.dt = fsub double %5, %i.ds                   ; 2 uses
   %i.du = tail call double @llvm.fmuladd.f64(double %i.dt, double %i.dt, double %i.dr)
   %sqrt17.i = tail call double @llvm.sqrt.f64(double %i.du)
   %i.dv = insertelement <2 x double> poison, double %sqrt17.i, i64 0
@@ -203,7 +202,7 @@ bb.j:                                             ; preds = %bb.h, %.preheader.p
   br label %line_segments_distance.exit
 
 bb.k:                                             ; preds = %bb.j
-  %i.dx = fsub <2 x double> %i.l, %i.a            ; 2 uses
+  %i.dx = fsub <2 x double> %4, %i.a              ; 2 uses
   %i.dy = shufflevector <2 x double> %foldExtExtBinop145, <2 x double> %i.dx, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.dz = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dy, <2 x double> %i.dy, <2 x double> zeroinitializer)
   %i.ea = insertelement <2 x double> %i.dx, double %i.dj, i64 0 ; 2 uses
@@ -241,12 +240,11 @@ line_segments_distance.exit:                      ; preds = %bb.i, %.preheader.p
   br i1 %i.fc, label %.preheader113.preheader, label %bb.l
 
 .preheader113.preheader:                          ; preds = %line_segments_distance.exit
-  %10 = insertelement <2 x double> poison, double %6, i64 0
-  %11 = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %9 = shufflevector <2 x double> %foldExtExtBinop143.a, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.fd = insertelement <2 x double> poison, double %i.s, i64 0
   %i.fe = fneg <2 x double> %foldExtExtBinop
   %i.ff = shufflevector <2 x double> %i.fd, <2 x double> %i.fe, <2 x i32> <i32 0, i32 2>
-  %i.fg = fmul <2 x double> %11, %i.ff
+  %i.fg = fmul <2 x double> %9, %i.ff
   %i.fh = shufflevector <2 x double> %foldExtExtBinop143.a, <2 x double> poison, <2 x i32> zeroinitializer
   %i.fi = insertelement <2 x double> poison, double %i.q, i64 0
   %i.fj = insertelement <2 x double> %i.fi, double %i.g, i64 1
@@ -276,14 +274,14 @@ bb.m:                                             ; preds = %.preheader113.prehe
   %i.fw = tail call double @llvm.fmuladd.f64(double %i.h, double %i.r, double 0.000000e+00)
   %i.fx = tail call double @llvm.fmuladd.f64(double %i.g, double %i.q, double %i.fw)
   %i.fy = fdiv double %i.fx, %i.fu                ; 5 uses
-  %i.fz = fcmp oeq double %i.f, %i.o
-  %i.ga = fcmp oeq double %i.e, %i.n
+  %i.fz = fcmp oeq double %i.e, %i.m
+  %i.ga = fcmp oeq double %i.f, %i.o
   %or.cond111 = select i1 %i.fz, i1 %i.ga, i1 false
   br i1 %or.cond111, label %bb.t, label %bb.n
 
 bb.n:                                             ; preds = %.preheader.preheader
-  %i.gb = fcmp oeq double %i.f, %4
-  %i.gc = fcmp oeq double %i.e, %i.m
+  %i.gb = fcmp oeq double %i.e, %i.n
+  %i.gc = fcmp oeq double %i.f, %5
   %or.cond112 = select i1 %i.gb, i1 %i.gc, i1 false
   br i1 %or.cond112, label %bb.o, label %bb.p
 
@@ -292,8 +290,8 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.t
 
 bb.p:                                             ; preds = %bb.n
-  %i.ge = fcmp oeq double %i.c, %i.o
-  %i.gf = fcmp oeq double %i.b, %i.n
+  %i.ge = fcmp oeq double %i.c, %i.m
+  %i.gf = fcmp oeq double %i.b, %i.o
   %or.cond136 = select i1 %i.ge, i1 %i.gf, i1 false
   br i1 %or.cond136, label %bb.q, label %bb.r
 
@@ -302,8 +300,8 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.t
 
 bb.r:                                             ; preds = %bb.p
-  %i.gh = fcmp oeq double %i.c, %4
-  %i.gi = fcmp oeq double %i.b, %i.m
+  %i.gh = fcmp oeq double %i.c, %i.n
+  %i.gi = fcmp oeq double %i.b, %5
   %or.cond137 = select i1 %i.gh, i1 %i.gi, i1 false
   br i1 %or.cond137, label %bb.t, label %bb.s
 

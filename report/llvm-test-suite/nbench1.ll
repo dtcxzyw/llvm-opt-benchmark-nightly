@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %._crit_edge.i, %bb.a
   %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge.i ], [ 1, %bb.a ] ; 6 uses
-  %.028 = phi i64 [ %i.u, %._crit_edge.i ], [ 0, %bb.a ] ; 19 uses
+  %.028 = phi i64 [ %i.u, %._crit_edge.i ], [ 0, %bb.a ] ; 18 uses
   %.063.i = phi i64 [ %.164.lcssa.i, %._crit_edge.i ], [ 0, %bb.a ] ; 4 uses
   %i.e = tail call i32 @abs_randwc(i32 noundef 76) #11
   %i.f = trunc i32 %i.e to i8
@@ -405,16 +405,14 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge8
   br i1 %i.v, label %.lr.ph91.i.preheader.preheader, label %LoadStringArray.exit
 
 .lr.ph91.i.preheader.preheader:                   ; preds = %.preheader.i
-  %3 = shl i64 %.028, 3
-  %4 = add i64 %3, 8
-  %min.iters.check71 = icmp ult i64 %indvars.iv, 10
+  %min.iters.check71 = icmp ult i64 %indvars.iv, 8
   %i.bk = and i64 %.028, 4294967295
   %i.bl = icmp eq i64 %i.bk, 4294967295
   %i.bm = icmp ugt i64 %.028, 4294967295
   %i.bn = or i1 %i.bl, %i.bm
   %n.vec73 = and i64 %indvars.iv, -4              ; 3 uses
   %cmp.n80 = icmp eq i64 %indvars.iv, %n.vec73
-  br label %.lr.ph91.i.preheader
+  br label %vector.scevcheck66
 
 .lr.ph88.i:                                       ; preds = %.lr.ph88.i, %.lr.ph88.i.preheader.new
   %.05886.i = phi i64 [ 0, %.lr.ph88.i.preheader.new ], [ %i.cp, %.lr.ph88.i ] ; 5 uses
@@ -456,19 +454,11 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge8
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
   br i1 %niter.ncmp.3, label %.preheader.i.unr-lcssa, label %.lr.ph88.i, !llvm.loop !41
 
-.lr.ph91.i.preheader:                             ; preds = %.lr.ph91.i.preheader.preheader, %._crit_edge92.i
-  %indvar68 = phi i64 [ 0, %.lr.ph91.i.preheader.preheader ], [ %indvar.next69, %._crit_edge92.i ] ; 2 uses
-  %.15794.i = phi i32 [ 1, %.lr.ph91.i.preheader.preheader ], [ %i.da, %._crit_edge92.i ]
-  %.06593.i = phi ptr [ %i.ba, %.lr.ph91.i.preheader.preheader ], [ %5, %._crit_edge92.i ]
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %.06593.i, i64 %i.u ; 3 uses
-  br i1 %min.iters.check71, label %.lr.ph91.i.preheader145, label %vector.scevcheck66
-
-vector.scevcheck66:                               ; preds = %.lr.ph91.i.preheader
-  %6 = add i64 %indvar68, 1
-  %7 = mul i64 %4, %6
-  %8 = add i64 %7, -1
-  %diff.check70 = icmp ult i64 %8, 31
-  %or.cond138 = select i1 %i.bn, i1 true, i1 %diff.check70
+vector.scevcheck66:                               ; preds = %.lr.ph91.i.preheader.preheader, %._crit_edge92.i
+  %.15794.i = phi i32 [ %i.da, %._crit_edge92.i ], [ 1, %.lr.ph91.i.preheader.preheader ]
+  %.06593.i = phi ptr [ %3, %._crit_edge92.i ], [ %i.ba, %.lr.ph91.i.preheader.preheader ]
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %.06593.i, i64 %i.u ; 3 uses
+  %or.cond138 = select i1 %min.iters.check71, i1 true, i1 %i.bn
   br i1 %or.cond138, label %.lr.ph91.i.preheader145, label %vector.body74
 
 vector.body74:                                    ; preds = %vector.scevcheck66, %vector.body74
@@ -477,7 +467,7 @@ vector.body74:                                    ; preds = %vector.scevcheck66,
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 16
   %wide.load76 = load <2 x i64>, ptr %i.cq, align 8, !tbaa !15
   %wide.load77 = load <2 x i64>, ptr %i.cr, align 8, !tbaa !15
-  %i.cs = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %index75 ; 2 uses
+  %i.cs = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %index75 ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 16
   store <2 x i64> %wide.load76, ptr %i.cs, align 8, !tbaa !15
   store <2 x i64> %wide.load77, ptr %i.ct, align 8, !tbaa !15
@@ -488,15 +478,15 @@ vector.body74:                                    ; preds = %vector.scevcheck66,
 middle.block79:                                   ; preds = %vector.body74
   br i1 %cmp.n80, label %._crit_edge92.i, label %.lr.ph91.i.preheader145
 
-.lr.ph91.i.preheader145:                          ; preds = %vector.scevcheck66, %.lr.ph91.i.preheader, %middle.block79
-  %indvars.iv40.ph = phi i64 [ 0, %vector.scevcheck66 ], [ 0, %.lr.ph91.i.preheader ], [ %n.vec73, %middle.block79 ]
+.lr.ph91.i.preheader145:                          ; preds = %vector.scevcheck66, %middle.block79
+  %indvars.iv40.ph = phi i64 [ %n.vec73, %middle.block79 ], [ 0, %vector.scevcheck66 ]
   br label %.lr.ph91.i
 
 .lr.ph91.i:                                       ; preds = %.lr.ph91.i.preheader145, %.lr.ph91.i
   %indvars.iv40 = phi i64 [ %indvars.iv.next41, %.lr.ph91.i ], [ %indvars.iv40.ph, %.lr.ph91.i.preheader145 ] ; 3 uses
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %indvars.iv40
   %i.cw = load i64, ptr %i.cv, align 8, !tbaa !15
-  %i.cx = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %indvars.iv40
+  %i.cx = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv40
   store i64 %i.cw, ptr %i.cx, align 8, !tbaa !15
   %indvars.iv.next41 = add i64 %indvars.iv40, 1   ; 2 uses
   %i.cy = and i64 %indvars.iv.next41, 4294967295
@@ -506,8 +496,7 @@ middle.block79:                                   ; preds = %vector.body74
 ._crit_edge92.i:                                  ; preds = %.lr.ph91.i, %middle.block79
   %i.da = add nuw nsw i32 %.15794.i, 1            ; 2 uses
   %exitcond105.not.i = icmp eq i32 %i.da, %1
-  %indvar.next69 = add i64 %indvar68, 1
-  br i1 %exitcond105.not.i, label %LoadStringArray.exit.thread, label %.lr.ph91.i.preheader, !llvm.loop !44
+  br i1 %exitcond105.not.i, label %LoadStringArray.exit.thread, label %vector.scevcheck66, !llvm.loop !44
 
 LoadStringArray.exit.thread:                      ; preds = %._crit_edge92.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
