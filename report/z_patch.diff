@@ -1,0 +1,515 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 3c00947cd362b..a219b9d60db77 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -6919,13 +6919,16 @@ const ConstantRange &ScalarEvolution::getRangeRef(
+ 
+     // See if ValueTracking can give us a useful range.
+     const DataLayout &DL = getDataLayout();
+-    KnownBits Known = computeKnownBits(V, DL, &AC, nullptr, &DT);
++    Instruction *CxtI = isa<Argument>(V) ? &*F.getEntryBlock().begin()
++                                         : dyn_cast<Instruction>(V);
++    KnownBits Known = computeKnownBits(
++        V, SimplifyQuery(DL, &DT, &AC, CxtI).allowEphemerals(true));
+     if (Known.getBitWidth() != BitWidth)
+       Known = Known.zextOrTrunc(BitWidth);
+ 
+     // ValueTracking may be able to compute a tighter result for the number of
+     // sign bits than for the value of those sign bits.
+-    unsigned NS = ComputeNumSignBits(V, DL, &AC, nullptr, &DT);
++    unsigned NS = ComputeNumSignBits(V, DL, &AC, CxtI, &DT);
+     if (U->getType()->isPointerTy()) {
+       // If the pointer size is larger than the index size type, this can cause
+       // NS to be larger than BitWidth. So compensate for this.
+diff --git a/llvm/test/Analysis/LoopAccessAnalysis/offset-range-known-via-assume.ll b/llvm/test/Analysis/LoopAccessAnalysis/offset-range-known-via-assume.ll
+index 74b65acda2d01..13f3403bab75c 100644
+--- a/llvm/test/Analysis/LoopAccessAnalysis/offset-range-known-via-assume.ll
++++ b/llvm/test/Analysis/LoopAccessAnalysis/offset-range-known-via-assume.ll
+@@ -64,8 +64,8 @@ define void @offset_i32_known_positive_via_assume_forward_dep_1(ptr %A, i64 %off
+ ; CHECK-NEXT:          (Low: %A High: (-3 + (4 * %N) + %A))
+ ; CHECK-NEXT:            Member: {%A,+,4}<nuw><%loop>
+ ; CHECK-NEXT:        Group GRP1:
+-; CHECK-NEXT:          (Low: ((4 * %offset)<nsw> + %A) High: (-3 + (4 * %offset)<nsw> + (4 * %N) + %A))
+-; CHECK-NEXT:            Member: {((4 * %offset)<nsw> + %A),+,4}<nw><%loop>
++; CHECK-NEXT:          (Low: ((4 * %offset)<nuw><nsw> + %A) High: (-3 + (4 * %offset)<nuw><nsw> + (4 * %N) + %A))
++; CHECK-NEXT:            Member: {((4 * %offset)<nuw><nsw> + %A),+,4}<nw><%loop>
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
+ ; CHECK-NEXT:      SCEV assumptions:
+diff --git a/llvm/test/Analysis/LoopAccessAnalysis/positive-dependence-distance-different-access-sizes.ll b/llvm/test/Analysis/LoopAccessAnalysis/positive-dependence-distance-different-access-sizes.ll
+index 468b22568277e..74622276fbee2 100644
+--- a/llvm/test/Analysis/LoopAccessAnalysis/positive-dependence-distance-different-access-sizes.ll
++++ b/llvm/test/Analysis/LoopAccessAnalysis/positive-dependence-distance-different-access-sizes.ll
+@@ -95,8 +95,8 @@ define void @test_distance_positive_via_assume(ptr %A, i64 %off) {
+ ; CHECK-NEXT:          %gep.A = getelementptr inbounds i8, ptr %A, i64 %iv
+ ; CHECK-NEXT:      Grouped accesses:
+ ; CHECK-NEXT:        Group GRP0:
+-; CHECK-NEXT:          (Low: (%off + %A) High: (404 + %off + %A))
+-; CHECK-NEXT:            Member: {(%off + %A),+,4}<nw><%loop>
++; CHECK-NEXT:          (Low: (%off + %A)<nuw> High: (404 + %off + %A))
++; CHECK-NEXT:            Member: {(%off + %A)<nuw>,+,4}<nuw><%loop>
+ ; CHECK-NEXT:        Group GRP1:
+ ; CHECK-NEXT:          (Low: %A High: (101 + %A))
+ ; CHECK-NEXT:            Member: {%A,+,1}<nuw><%loop>
+diff --git a/llvm/test/Analysis/LoopAccessAnalysis/unknown-dependence-retry-with-runtime-checks.ll b/llvm/test/Analysis/LoopAccessAnalysis/unknown-dependence-retry-with-runtime-checks.ll
+index 0c0e03843f51e..5bc51d5073cc3 100644
+--- a/llvm/test/Analysis/LoopAccessAnalysis/unknown-dependence-retry-with-runtime-checks.ll
++++ b/llvm/test/Analysis/LoopAccessAnalysis/unknown-dependence-retry-with-runtime-checks.ll
+@@ -20,8 +20,8 @@ define void @test_dependence_with_non_constant_offset_and_other_accesses_to_noal
+ ; CHECK-NEXT:          %gep.A = getelementptr inbounds i8, ptr %A, i64 %iv
+ ; CHECK-NEXT:      Grouped accesses:
+ ; CHECK-NEXT:        Group GRP0:
+-; CHECK-NEXT:          (Low: (%off + %A) High: (404 + %off + %A))
+-; CHECK-NEXT:            Member: {(%off + %A),+,4}<nw><%loop>
++; CHECK-NEXT:          (Low: (%off + %A)<nuw> High: (404 + %off + %A))
++; CHECK-NEXT:            Member: {(%off + %A)<nuw>,+,4}<nuw><%loop>
+ ; CHECK-NEXT:        Group GRP1:
+ ; CHECK-NEXT:          (Low: %A High: (101 + %A))
+ ; CHECK-NEXT:            Member: {%A,+,1}<nuw><%loop>
+@@ -85,8 +85,8 @@ define void @test_dependence_with_non_constant_offset_and_other_accesses_to_maya
+ ; CHECK-NEXT:          %gep.A = getelementptr inbounds i8, ptr %A, i64 %iv
+ ; CHECK-NEXT:      Grouped accesses:
+ ; CHECK-NEXT:        Group GRP0:
+-; CHECK-NEXT:          (Low: (%off + %A) High: (404 + %off + %A))
+-; CHECK-NEXT:            Member: {(%off + %A),+,4}<nw><%loop>
++; CHECK-NEXT:          (Low: (%off + %A)<nuw> High: (404 + %off + %A))
++; CHECK-NEXT:            Member: {(%off + %A)<nuw>,+,4}<nuw><%loop>
+ ; CHECK-NEXT:        Group GRP1:
+ ; CHECK-NEXT:          (Low: %B High: (102 + %B))
+ ; CHECK-NEXT:            Member: {(1 + %B)<nuw>,+,1}<nuw><%loop>
+diff --git a/llvm/test/Analysis/ScalarEvolution/implied-via-addition.ll b/llvm/test/Analysis/ScalarEvolution/implied-via-addition.ll
+index 7ab6221d0da53..cbaf29cc0de31 100644
+--- a/llvm/test/Analysis/ScalarEvolution/implied-via-addition.ll
++++ b/llvm/test/Analysis/ScalarEvolution/implied-via-addition.ll
+@@ -6,9 +6,9 @@ define void @implied1(i32 %n) {
+ ; Prove that (n s> 1) ===> (n - 1 s> 0).
+ ; CHECK-LABEL: 'implied1'
+ ; CHECK-NEXT:  Determining loop execution counts for: @implied1
+-; CHECK-NEXT:  Loop %header: backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %header: backedge-taken count is (-2 + %n)<nsw>
+ ; CHECK-NEXT:  Loop %header: constant max backedge-taken count is i32 2147483645
+-; CHECK-NEXT:  Loop %header: symbolic max backedge-taken count is (-2 + %n)
++; CHECK-NEXT:  Loop %header: symbolic max backedge-taken count is (-2 + %n)<nsw>
+ ; CHECK-NEXT:  Loop %header: Trip multiple is 1
+ ;
+ entry:
+@@ -89,9 +89,9 @@ define void @implied2_neg(i32 %n) {
+ ; Prove that (n u>= -1) =\=> (n - 1 s>= 0).
+ ; CHECK-LABEL: 'implied2_neg'
+ ; CHECK-NEXT:  Determining loop execution counts for: @implied2_neg
+-; CHECK-NEXT:  Loop %header: backedge-taken count is (-1 + (1 smax %n))<nsw>
+-; CHECK-NEXT:  Loop %header: constant max backedge-taken count is i32 2147483646
+-; CHECK-NEXT:  Loop %header: symbolic max backedge-taken count is (-1 + (1 smax %n))<nsw>
++; CHECK-NEXT:  Loop %header: backedge-taken count is i32 0
++; CHECK-NEXT:  Loop %header: constant max backedge-taken count is i32 0
++; CHECK-NEXT:  Loop %header: symbolic max backedge-taken count is i32 0
+ ; CHECK-NEXT:  Loop %header: Trip multiple is 1
+ ;
+ entry:
+diff --git a/llvm/test/Analysis/ScalarEvolution/implied-via-division.ll b/llvm/test/Analysis/ScalarEvolution/implied-via-division.ll
+index d83301243ef30..6500eba5bf025 100644
+--- a/llvm/test/Analysis/ScalarEvolution/implied-via-division.ll
++++ b/llvm/test/Analysis/ScalarEvolution/implied-via-division.ll
+@@ -514,9 +514,9 @@ define void @swapped_predicate(i32 %n) {
+ ; Prove that (n s>= 1) ===> (0 s>= -n / 2).
+ ; CHECK-LABEL: 'swapped_predicate'
+ ; CHECK-NEXT:  Determining loop execution counts for: @swapped_predicate
+-; CHECK-NEXT:  Loop %header: backedge-taken count is (1 + %n.div.2)<nuw><nsw>
++; CHECK-NEXT:  Loop %header: backedge-taken count is (1 + (%n /u 2))<nuw><nsw>
+ ; CHECK-NEXT:  Loop %header: constant max backedge-taken count is i32 1073741824
+-; CHECK-NEXT:  Loop %header: symbolic max backedge-taken count is (1 + %n.div.2)<nuw><nsw>
++; CHECK-NEXT:  Loop %header: symbolic max backedge-taken count is (1 + (%n /u 2))<nuw><nsw>
+ ; CHECK-NEXT:  Loop %header: Trip multiple is 1
+ ;
+ entry:
+diff --git a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+index 18aff4f73830b..15dfb3636d1b7 100644
+--- a/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
++++ b/llvm/test/Analysis/ScalarEvolution/max-backedge-taken-count-guard-info.ll
+@@ -625,15 +625,15 @@ define void @test_guard_and_assume(ptr nocapture readonly %data, i64 %count) {
+ ; CHECK-LABEL: 'test_guard_and_assume'
+ ; CHECK-NEXT:  Classifying expressions for: @test_guard_and_assume
+ ; CHECK-NEXT:    %iv = phi i64 [ %iv.next, %loop ], [ 0, %entry ]
+-; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,4) S: [0,4) Exits: (-1 + %count) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,4) S: [0,4) Exits: (-1 + %count)<nsw> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %idx = getelementptr inbounds i32, ptr %data, i64 %iv
+-; CHECK-NEXT:    --> {%data,+,4}<nuw><%loop> U: full-set S: full-set Exits: (-4 + (4 * %count) + %data) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> {%data,+,4}<nuw><%loop> U: full-set S: full-set Exits: (-4 + (4 * %count)<nuw><nsw> + %data) LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.next = add nuw i64 %iv, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,5) S: [1,5) Exits: %count LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_guard_and_assume
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + %count)
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + %count)<nsw>
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 3
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + %count)
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + %count)<nsw>
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+diff --git a/llvm/test/Analysis/ScalarEvolution/ranges.ll b/llvm/test/Analysis/ScalarEvolution/ranges.ll
+index cf54b1e63ad39..7aff6c2dbdbf3 100644
+--- a/llvm/test/Analysis/ScalarEvolution/ranges.ll
++++ b/llvm/test/Analysis/ScalarEvolution/ranges.ll
+@@ -43,7 +43,7 @@ define i32 @shl(i32 %a) {
+ ; CHECK-LABEL: 'shl'
+ ; CHECK-NEXT:  Classifying expressions for: @shl
+ ; CHECK-NEXT:    %res = shl i32 %a, 2
+-; CHECK-NEXT:    --> (4 * %a) U: [0,-3) S: [-2147483648,2147483645)
++; CHECK-NEXT:    --> (4 * %a)<nuw><nsw> U: [0,4093) S: [0,4093)
+ ; CHECK-NEXT:  Determining loop execution counts for: @shl
+ ;
+   %res = shl i32 %a, 2
+@@ -56,7 +56,7 @@ define i32 @lshr(i32 %a) {
+ ; CHECK-LABEL: 'lshr'
+ ; CHECK-NEXT:  Classifying expressions for: @lshr
+ ; CHECK-NEXT:    %res = lshr i32 %a, 31
+-; CHECK-NEXT:    --> (%a /u -2147483648) U: [0,2) S: [0,2)
++; CHECK-NEXT:    --> (%a /u -2147483648) U: [0,1) S: [0,1)
+ ; CHECK-NEXT:  Determining loop execution counts for: @lshr
+ ;
+   %res = lshr i32 %a, 31
+@@ -70,7 +70,7 @@ define i32 @udiv(i32 %a) {
+ ; CHECK-LABEL: 'udiv'
+ ; CHECK-NEXT:  Classifying expressions for: @udiv
+ ; CHECK-NEXT:    %res = udiv i32 %a, -2147483648
+-; CHECK-NEXT:    --> (%a /u -2147483648) U: [0,2) S: [0,2)
++; CHECK-NEXT:    --> (%a /u -2147483648) U: [0,1) S: [0,1)
+ ; CHECK-NEXT:  Determining loop execution counts for: @udiv
+ ;
+   %res = udiv i32 %a, 2147483648
+@@ -83,7 +83,7 @@ define i64 @sext(i8 %a) {
+ ; CHECK-LABEL: 'sext'
+ ; CHECK-NEXT:  Classifying expressions for: @sext
+ ; CHECK-NEXT:    %res = sext i8 %a to i64
+-; CHECK-NEXT:    --> (sext i8 %a to i64) U: [-128,128) S: [-128,128)
++; CHECK-NEXT:    --> (zext i8 %a to i64) U: [0,128) S: [0,128)
+ ; CHECK-NEXT:  Determining loop execution counts for: @sext
+ ;
+   %res = sext i8 %a to i64
+@@ -96,7 +96,7 @@ define i64 @zext(i8 %a) {
+ ; CHECK-LABEL: 'zext'
+ ; CHECK-NEXT:  Classifying expressions for: @zext
+ ; CHECK-NEXT:    %res = zext i8 %a to i64
+-; CHECK-NEXT:    --> (zext i8 %a to i64) U: [0,256) S: [0,256)
++; CHECK-NEXT:    --> (zext i8 %a to i64) U: [0,128) S: [0,128)
+ ; CHECK-NEXT:  Determining loop execution counts for: @zext
+ ;
+   %res = zext i8 %a to i64
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll b/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll
+index 1f08a620b2e15..7746e2e1b20c0 100644
+--- a/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll
++++ b/llvm/test/Analysis/ScalarEvolution/trip-count-unknown-stride.ll
+@@ -271,9 +271,9 @@ define void @ne_nsw_pos_step(ptr nocapture %A, i32 %n, i32 %s) mustprogress {
+ ;
+ ; CHECK-LABEL: 'ne_nsw_pos_step'
+ ; CHECK-NEXT:  Determining loop execution counts for: @ne_nsw_pos_step
+-; CHECK-NEXT:  Loop %for.body: backedge-taken count is (((-1 * %s) + %n) /u %s)
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is (((-1 * %s)<nsw> + %n) /u %s)
+ ; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 -1
+-; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (((-1 * %s) + %n) /u %s)
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (((-1 * %s)<nsw> + %n) /u %s)
+ ; CHECK-NEXT:  Loop %for.body: Trip multiple is 1
+ ;
+ entry:
+@@ -383,9 +383,9 @@ define void @ne_nuw_pos_step(ptr nocapture %A, i32 %n, i32 %s) mustprogress {
+ ;
+ ; CHECK-LABEL: 'ne_nuw_pos_step'
+ ; CHECK-NEXT:  Determining loop execution counts for: @ne_nuw_pos_step
+-; CHECK-NEXT:  Loop %for.body: backedge-taken count is (((-1 * %s) + %n) /u %s)
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is (((-1 * %s)<nsw> + %n) /u %s)
+ ; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 -1
+-; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (((-1 * %s) + %n) /u %s)
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (((-1 * %s)<nsw> + %n) /u %s)
+ ; CHECK-NEXT:  Loop %for.body: Trip multiple is 1
+ ;
+ entry:
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-multiple-guard-info.ll b/llvm/test/Analysis/ScalarEvolution/trip-multiple-guard-info.ll
+index 512e583928804..32e5208095cad 100644
+--- a/llvm/test/Analysis/ScalarEvolution/trip-multiple-guard-info.ll
++++ b/llvm/test/Analysis/ScalarEvolution/trip-multiple-guard-info.ll
+@@ -143,13 +143,13 @@ define void @test_trip_multiple_4_sgt_5(i32 %num) {
+ ; CHECK-NEXT:    %u = urem i32 %num, 4
+ ; CHECK-NEXT:    --> (zext i2 (trunc i32 %num to i2) to i32) U: [0,4) S: [0,4)
+ ; CHECK-NEXT:    %i.010 = phi i32 [ 0, %entry ], [ %inc, %for.body ]
+-; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,2147483647) S: [0,2147483647) Exits: (-1 + %num) LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,2147483647) S: [0,2147483647) Exits: (-1 + %num)<nsw> LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:    %inc = add nuw nsw i32 %i.010, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%for.body> U: [1,-2147483648) S: [1,-2147483648) Exits: %num LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_trip_multiple_4_sgt_5
+-; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + %num)
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + %num)<nsw>
+ ; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 2147483646
+-; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + %num)
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + %num)<nsw>
+ ; CHECK-NEXT:  Loop %for.body: Trip multiple is 4
+ ;
+ entry:
+@@ -177,13 +177,13 @@ define void @test_trip_multiple_4_sgt_5_order_swapped(i32 %num) {
+ ; CHECK-NEXT:    %u = urem i32 %num, 4
+ ; CHECK-NEXT:    --> (zext i2 (trunc i32 %num to i2) to i32) U: [0,4) S: [0,4)
+ ; CHECK-NEXT:    %i.010 = phi i32 [ 0, %entry ], [ %inc, %for.body ]
+-; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,2147483647) S: [0,2147483647) Exits: (-1 + %num) LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,2147483647) S: [0,2147483647) Exits: (-1 + %num)<nsw> LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:    %inc = add nuw nsw i32 %i.010, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%for.body> U: [1,-2147483648) S: [1,-2147483648) Exits: %num LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_trip_multiple_4_sgt_5_order_swapped
+-; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + %num)
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + %num)<nsw>
+ ; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 2147483646
+-; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + %num)
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + %num)<nsw>
+ ; CHECK-NEXT:  Loop %for.body: Trip multiple is 4
+ ;
+ entry:
+@@ -278,13 +278,13 @@ define void @test_trip_multiple_4_sge_5(i32 %num) {
+ ; CHECK-NEXT:    %u = urem i32 %num, 4
+ ; CHECK-NEXT:    --> (zext i2 (trunc i32 %num to i2) to i32) U: [0,4) S: [0,4)
+ ; CHECK-NEXT:    %i.010 = phi i32 [ 0, %entry ], [ %inc, %for.body ]
+-; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,2147483647) S: [0,2147483647) Exits: (-1 + %num) LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,2147483647) S: [0,2147483647) Exits: (-1 + %num)<nsw> LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:    %inc = add nuw nsw i32 %i.010, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%for.body> U: [1,-2147483648) S: [1,-2147483648) Exits: %num LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_trip_multiple_4_sge_5
+-; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + %num)
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + %num)<nsw>
+ ; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 2147483646
+-; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + %num)
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + %num)<nsw>
+ ; CHECK-NEXT:  Loop %for.body: Trip multiple is 4
+ ;
+ entry:
+@@ -311,13 +311,13 @@ define void @test_trip_multiple_4_sge_5_order_swapped(i32 %num) {
+ ; CHECK-NEXT:    %u = urem i32 %num, 4
+ ; CHECK-NEXT:    --> (zext i2 (trunc i32 %num to i2) to i32) U: [0,4) S: [0,4)
+ ; CHECK-NEXT:    %i.010 = phi i32 [ 0, %entry ], [ %inc, %for.body ]
+-; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,2147483647) S: [0,2147483647) Exits: (-1 + %num) LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,2147483647) S: [0,2147483647) Exits: (-1 + %num)<nsw> LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:    %inc = add nuw nsw i32 %i.010, 1
+ ; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%for.body> U: [1,-2147483648) S: [1,-2147483648) Exits: %num LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_trip_multiple_4_sge_5_order_swapped
+-; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + %num)
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + %num)<nsw>
+ ; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 2147483646
+-; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + %num)
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + %num)<nsw>
+ ; CHECK-NEXT:  Loop %for.body: Trip multiple is 4
+ ;
+ entry:
+@@ -378,13 +378,13 @@ define void @test_trip_multiple_4_upper_lower_bounds(i32 %num) {
+ ; CHECK-NEXT:    %u = urem i32 %num, 4
+ ; CHECK-NEXT:    --> (zext i2 (trunc i32 %num to i2) to i32) U: [0,4) S: [0,4)
+ ; CHECK-NEXT:    %i.010 = phi i32 [ 0, %entry ], [ %inc, %for.body ]
+-; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,-2147483648) S: [0,-2147483648) Exits: (-1 + %num) LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,65535) S: [0,65535) Exits: (-1 + %num)<nsw> LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:    %inc = add nuw nsw i32 %i.010, 1
+-; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%for.body> U: [1,-2147483648) S: [1,-2147483648) Exits: %num LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%for.body> U: [1,65536) S: [1,65536) Exits: %num LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_trip_multiple_4_upper_lower_bounds
+-; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + %num)
+-; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 -2
+-; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + %num)
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + %num)<nsw>
++; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 65534
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + %num)<nsw>
+ ; CHECK-NEXT:  Loop %for.body: Trip multiple is 4
+ ;
+ entry:
+@@ -413,13 +413,13 @@ define void @test_trip_multiple_4_upper_lower_bounds_swapped1(i32 %num) {
+ ; CHECK-NEXT:    %u = urem i32 %num, 4
+ ; CHECK-NEXT:    --> (zext i2 (trunc i32 %num to i2) to i32) U: [0,4) S: [0,4)
+ ; CHECK-NEXT:    %i.010 = phi i32 [ 0, %entry ], [ %inc, %for.body ]
+-; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,-2147483648) S: [0,-2147483648) Exits: (-1 + %num) LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,65535) S: [0,65535) Exits: (-1 + %num)<nsw> LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:    %inc = add nuw nsw i32 %i.010, 1
+-; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%for.body> U: [1,-2147483648) S: [1,-2147483648) Exits: %num LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%for.body> U: [1,65536) S: [1,65536) Exits: %num LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_trip_multiple_4_upper_lower_bounds_swapped1
+-; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + %num)
+-; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 -2
+-; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + %num)
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + %num)<nsw>
++; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 65534
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + %num)<nsw>
+ ; CHECK-NEXT:  Loop %for.body: Trip multiple is 4
+ ;
+ entry:
+@@ -448,13 +448,13 @@ define void @test_trip_multiple_4_upper_lower_bounds_swapped2(i32 %num) {
+ ; CHECK-NEXT:    %u = urem i32 %num, 4
+ ; CHECK-NEXT:    --> (zext i2 (trunc i32 %num to i2) to i32) U: [0,4) S: [0,4)
+ ; CHECK-NEXT:    %i.010 = phi i32 [ 0, %entry ], [ %inc, %for.body ]
+-; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,-2147483648) S: [0,-2147483648) Exits: (-1 + %num) LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,65535) S: [0,65535) Exits: (-1 + %num)<nsw> LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:    %inc = add nuw nsw i32 %i.010, 1
+-; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%for.body> U: [1,-2147483648) S: [1,-2147483648) Exits: %num LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%for.body> U: [1,65536) S: [1,65536) Exits: %num LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_trip_multiple_4_upper_lower_bounds_swapped2
+-; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + %num)
+-; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 -2
+-; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + %num)
++; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + %num)<nsw>
++; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 65534
++; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + %num)<nsw>
+ ; CHECK-NEXT:  Loop %for.body: Trip multiple is 4
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/Attributor/value-simplify-assume.ll b/llvm/test/Transforms/Attributor/value-simplify-assume.ll
+index c1ffb599febf6..b4e31e9699bb1 100644
+--- a/llvm/test/Transforms/Attributor/value-simplify-assume.ll
++++ b/llvm/test/Transforms/Attributor/value-simplify-assume.ll
+@@ -33,7 +33,7 @@ define i1 @keep_assume_1c_nr() norecurse {
+ ; CHECK-NEXT:    call void @useI1p(ptr noundef nonnull dereferenceable(1) [[STACK]])
+ ; CHECK-NEXT:    [[L:%.*]] = load i1, ptr [[STACK]], align 1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 noundef [[L]])
+-; CHECK-NEXT:    ret i1 [[L]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %stack = alloca i1
+   store i1 true, ptr %stack
+@@ -96,7 +96,7 @@ define i1 @keep_assume_3c_nr() norecurse {
+ ; TUNIT-NEXT:    [[L:%.*]] = load i1, ptr [[STACK]], align 1
+ ; TUNIT-NEXT:    call void @llvm.assume(i1 noundef [[L]]) #[[ATTR7]]
+ ; TUNIT-NEXT:    call void @useI1p(ptr noundef nonnull dereferenceable(1) [[STACK]])
+-; TUNIT-NEXT:    ret i1 [[L]]
++; TUNIT-NEXT:    ret i1 true
+ ;
+ ; CGSCC: Function Attrs: norecurse
+ ; CGSCC-LABEL: define {{[^@]+}}@keep_assume_3c_nr
+@@ -106,7 +106,7 @@ define i1 @keep_assume_3c_nr() norecurse {
+ ; CGSCC-NEXT:    [[L:%.*]] = load i1, ptr [[STACK]], align 1
+ ; CGSCC-NEXT:    call void @llvm.assume(i1 noundef [[L]]) #[[ATTR8]]
+ ; CGSCC-NEXT:    call void @useI1p(ptr noundef nonnull dereferenceable(1) [[STACK]])
+-; CGSCC-NEXT:    ret i1 [[L]]
++; CGSCC-NEXT:    ret i1 true
+ ;
+   %stack = alloca i1
+   store i1 true, ptr %stack
+@@ -152,7 +152,7 @@ define i1 @keep_assume_1_nr(i1 %arg) norecurse {
+ ; CHECK-NEXT:    call void @useI1p(ptr noundef nonnull dereferenceable(1) [[STACK]])
+ ; CHECK-NEXT:    [[L:%.*]] = load i1, ptr [[STACK]], align 1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 noundef [[L]])
+-; CHECK-NEXT:    ret i1 [[L]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %stack = alloca i1
+   store i1 %arg, ptr %stack
+@@ -219,7 +219,7 @@ define i1 @keep_assume_3_nr(i1 %arg) norecurse {
+ ; TUNIT-NEXT:    [[L:%.*]] = load i1, ptr [[STACK]], align 1
+ ; TUNIT-NEXT:    call void @llvm.assume(i1 noundef [[L]]) #[[ATTR7]]
+ ; TUNIT-NEXT:    call void @useI1p(ptr noundef nonnull dereferenceable(1) [[STACK]])
+-; TUNIT-NEXT:    ret i1 [[L]]
++; TUNIT-NEXT:    ret i1 true
+ ;
+ ; CGSCC: Function Attrs: norecurse
+ ; CGSCC-LABEL: define {{[^@]+}}@keep_assume_3_nr
+@@ -229,7 +229,7 @@ define i1 @keep_assume_3_nr(i1 %arg) norecurse {
+ ; CGSCC-NEXT:    [[L:%.*]] = load i1, ptr [[STACK]], align 1
+ ; CGSCC-NEXT:    call void @llvm.assume(i1 noundef [[L]]) #[[ATTR8]]
+ ; CGSCC-NEXT:    call void @useI1p(ptr noundef nonnull dereferenceable(1) [[STACK]])
+-; CGSCC-NEXT:    ret i1 [[L]]
++; CGSCC-NEXT:    ret i1 true
+ ;
+   %stack = alloca i1
+   store i1 %arg, ptr %stack
+@@ -662,7 +662,7 @@ define i1 @keep_assume_1c() {
+ ; CHECK-NEXT:    call void @useI1p(ptr noundef nonnull dereferenceable(1) [[STACK]])
+ ; CHECK-NEXT:    [[L:%.*]] = load i1, ptr [[STACK]], align 1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 noundef [[L]])
+-; CHECK-NEXT:    ret i1 [[L]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %stack = alloca i1
+   store i1 true, ptr %stack
+@@ -721,7 +721,7 @@ define i1 @keep_assume_3c() {
+ ; TUNIT-NEXT:    [[L:%.*]] = load i1, ptr [[STACK]], align 1
+ ; TUNIT-NEXT:    call void @llvm.assume(i1 noundef [[L]]) #[[ATTR7]]
+ ; TUNIT-NEXT:    call void @useI1p(ptr noundef nonnull dereferenceable(1) [[STACK]])
+-; TUNIT-NEXT:    ret i1 [[L]]
++; TUNIT-NEXT:    ret i1 true
+ ;
+ ; CGSCC-LABEL: define {{[^@]+}}@keep_assume_3c() {
+ ; CGSCC-NEXT:    [[STACK:%.*]] = alloca i1, align 1
+@@ -729,7 +729,7 @@ define i1 @keep_assume_3c() {
+ ; CGSCC-NEXT:    [[L:%.*]] = load i1, ptr [[STACK]], align 1
+ ; CGSCC-NEXT:    call void @llvm.assume(i1 noundef [[L]]) #[[ATTR8]]
+ ; CGSCC-NEXT:    call void @useI1p(ptr noundef nonnull dereferenceable(1) [[STACK]])
+-; CGSCC-NEXT:    ret i1 [[L]]
++; CGSCC-NEXT:    ret i1 true
+ ;
+   %stack = alloca i1
+   store i1 true, ptr %stack
+@@ -746,7 +746,7 @@ define i1 @keep_assume_4c() {
+ ; TUNIT-NEXT:    [[L4:%.*]] = load i1, ptr [[STACK]], align 1
+ ; TUNIT-NEXT:    call void @llvm.assume(i1 noundef [[L4]]) #[[ATTR7]]
+ ; TUNIT-NEXT:    call void @useI1p(ptr noalias noundef nonnull captures(none) dereferenceable(1) [[STACK]])
+-; TUNIT-NEXT:    ret i1 [[L4]]
++; TUNIT-NEXT:    ret i1 true
+ ;
+ ; CGSCC-LABEL: define {{[^@]+}}@keep_assume_4c() {
+ ; CGSCC-NEXT:    [[STACK:%.*]] = alloca i1, align 1
+@@ -754,7 +754,7 @@ define i1 @keep_assume_4c() {
+ ; CGSCC-NEXT:    [[L4:%.*]] = load i1, ptr [[STACK]], align 1
+ ; CGSCC-NEXT:    call void @llvm.assume(i1 noundef [[L4]]) #[[ATTR8]]
+ ; CGSCC-NEXT:    call void @useI1p(ptr noalias noundef nonnull captures(none) dereferenceable(1) [[STACK]])
+-; CGSCC-NEXT:    ret i1 [[L4]]
++; CGSCC-NEXT:    ret i1 true
+ ;
+   %stack = alloca i1
+   store i1 true, ptr %stack
+@@ -772,7 +772,7 @@ define i1 @keep_assume_1(i1 %arg) {
+ ; CHECK-NEXT:    call void @useI1p(ptr noundef nonnull dereferenceable(1) [[STACK]])
+ ; CHECK-NEXT:    [[L:%.*]] = load i1, ptr [[STACK]], align 1
+ ; CHECK-NEXT:    call void @llvm.assume(i1 noundef [[L]])
+-; CHECK-NEXT:    ret i1 [[L]]
++; CHECK-NEXT:    ret i1 true
+ ;
+   %stack = alloca i1
+   store i1 %arg, ptr %stack
+@@ -837,7 +837,7 @@ define i1 @keep_assume_3(i1 %arg) {
+ ; TUNIT-NEXT:    [[L:%.*]] = load i1, ptr [[STACK]], align 1
+ ; TUNIT-NEXT:    call void @llvm.assume(i1 noundef [[L]]) #[[ATTR7]]
+ ; TUNIT-NEXT:    call void @useI1p(ptr noundef nonnull dereferenceable(1) [[STACK]])
+-; TUNIT-NEXT:    ret i1 [[L]]
++; TUNIT-NEXT:    ret i1 true
+ ;
+ ; CGSCC-LABEL: define {{[^@]+}}@keep_assume_3
+ ; CGSCC-SAME: (i1 [[ARG:%.*]]) {
+@@ -846,7 +846,7 @@ define i1 @keep_assume_3(i1 %arg) {
+ ; CGSCC-NEXT:    [[L:%.*]] = load i1, ptr [[STACK]], align 1
+ ; CGSCC-NEXT:    call void @llvm.assume(i1 noundef [[L]]) #[[ATTR8]]
+ ; CGSCC-NEXT:    call void @useI1p(ptr noundef nonnull dereferenceable(1) [[STACK]])
+-; CGSCC-NEXT:    ret i1 [[L]]
++; CGSCC-NEXT:    ret i1 true
+ ;
+   %stack = alloca i1
+   store i1 %arg, ptr %stack
+@@ -865,7 +865,7 @@ define i1 @keep_assume_4(i1 %arg) {
+ ; TUNIT-NEXT:    [[L:%.*]] = load i1, ptr [[STACK]], align 1
+ ; TUNIT-NEXT:    call void @llvm.assume(i1 noundef [[L]]) #[[ATTR7]]
+ ; TUNIT-NEXT:    call void @useI1p(ptr noalias noundef nonnull captures(none) dereferenceable(1) [[STACK]])
+-; TUNIT-NEXT:    ret i1 [[L]]
++; TUNIT-NEXT:    ret i1 true
+ ;
+ ; CGSCC-LABEL: define {{[^@]+}}@keep_assume_4
+ ; CGSCC-SAME: (i1 [[ARG:%.*]]) {
+@@ -874,7 +874,7 @@ define i1 @keep_assume_4(i1 %arg) {
+ ; CGSCC-NEXT:    [[L:%.*]] = load i1, ptr [[STACK]], align 1
+ ; CGSCC-NEXT:    call void @llvm.assume(i1 noundef [[L]]) #[[ATTR8]]
+ ; CGSCC-NEXT:    call void @useI1p(ptr noalias noundef nonnull captures(none) dereferenceable(1) [[STACK]])
+-; CGSCC-NEXT:    ret i1 [[L]]
++; CGSCC-NEXT:    ret i1 true
+ ;
+   %stack = alloca i1
+   store i1 %arg, ptr %stack
+diff --git a/llvm/test/Transforms/IndVarSimplify/invalidate-modified-lcssa-phi.ll b/llvm/test/Transforms/IndVarSimplify/invalidate-modified-lcssa-phi.ll
+index 72c292a5f2bcf..e8a3dcbc22286 100644
+--- a/llvm/test/Transforms/IndVarSimplify/invalidate-modified-lcssa-phi.ll
++++ b/llvm/test/Transforms/IndVarSimplify/invalidate-modified-lcssa-phi.ll
+@@ -170,7 +170,7 @@ define i32 @pr58750(i16 %a, ptr %dst, i1 %c.0) {
+ ; CHECK-NEXT:    br label [[INNER:%.*]]
+ ; CHECK:       inner:
+ ; CHECK-NEXT:    store i16 0, ptr [[DST:%.*]], align 1
+-; CHECK-NEXT:    br i1 false, label [[INNER]], label [[OUTER_LATCH]]
++; CHECK-NEXT:    br label [[OUTER_LATCH]]
+ ; CHECK:       outer.latch:
+ ; CHECK-NEXT:    [[LCSSA]] = phi i32 [ [[XOR]], [[INNER]] ]
+ ; CHECK-NEXT:    br i1 [[C_0:%.*]], label [[OUTER_HEADER]], label [[EXIT:%.*]]
