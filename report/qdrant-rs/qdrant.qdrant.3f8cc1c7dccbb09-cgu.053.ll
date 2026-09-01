@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.h
 
 .loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i, %bb.j, %bb.i, %_RINvXsz_NtNtCs577yCKf7gy3_4http6header4nameNtB6_10HeaderNameNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit.i
   %i.fc = phi i8 [ %i.ah, %_RINvXsz_NtNtCs577yCKf7gy3_4http6header4nameNtB6_10HeaderNameNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit.i ], [ %i.ey, %bb.j ], [ %i.dc, %bb.i ], [ %i.dc, %.lr.ph.i.i.i.i.i ], [ %i.dc, %.lr.ph.i.i.i.i.i.prol.loopexit ]
-  %.sroa.0115.0.copyload = phi ptr [ %i.y, %_RINvXsz_NtNtCs577yCKf7gy3_4http6header4nameNtB6_10HeaderNameNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit.i ], [ null, %bb.j ], [ %i.cs, %bb.i ], [ %i.cs, %.lr.ph.i.i.i.i.i ], [ %i.cs, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 8 uses
+  %.sroa.0115.0.copyload = phi ptr [ %i.y, %_RINvXsz_NtNtCs577yCKf7gy3_4http6header4nameNtB6_10HeaderNameNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit.i ], [ null, %bb.j ], [ %i.cs, %bb.i ], [ %i.cs, %.lr.ph.i.i.i.i.i ], [ %i.cs, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 9 uses
   %.sroa.0.0.i = phi i64 [ %i.cr, %_RINvXsz_NtNtCs577yCKf7gy3_4http6header4nameNtB6_10HeaderNameNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECsl8OoimOLbh_6qdrant.exit.i ], [ %i.fb, %bb.j ], [ %i.cw, %bb.i ], [ %.lcssa239.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ], [ %i.ew, %.lr.ph.i.i.i.i.i ]
   %i.fd = trunc i64 %.sroa.0.0.i to i16
   %i.fe = and i16 %i.fd, 32767                    ; 6 uses
@@ -222,8 +222,7 @@ bb.j:                                             ; preds = %bb.h
   %i.fp = load i64, ptr %i.fo, align 8            ; 15 uses
   %i.fq = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
   %i.fr = load ptr, ptr %i.fq, align 8, !nonnull !6 ; 3 uses
-  %i.fs = icmp eq ptr %.sroa.0115.0.copyload, null ; 8 uses
-  %not..i.i = xor i1 %i.fs, true
+  %i.fs = icmp eq ptr %.sroa.0115.0.copyload, null ; 7 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.fu = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.fv = load i64, ptr %i.fu, align 8            ; 9 uses
@@ -418,7 +417,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.hr, label %bb.ae, label %_RNvXsy_NtNtCs577yCKf7gy3_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit
 
 bb.ae:                                            ; preds = %bb.ad
-  tail call void @llvm.assume(i1 %not..i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0115.0.copyload) ]
   %i.ht = getelementptr inbounds nuw i8, ptr %i.ho, i64 80
   %i.hu = load i64, ptr %i.ht, align 8, !noundef !6
   %i.hv = icmp eq i64 %i.hu, %i.fv

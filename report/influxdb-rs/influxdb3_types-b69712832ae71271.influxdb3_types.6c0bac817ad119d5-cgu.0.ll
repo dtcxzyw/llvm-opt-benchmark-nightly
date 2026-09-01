@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   store i64 %i.r, ptr %i.b, align 8, !noalias !118
   call fastcc void @_RNvXs2_NtNtCs2AWtUsOyxgP_3std4hash6randomNtB5_13DefaultHasherNtNtCs4NRVxsYgnAr_4core4hash6Hasher5write(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.c, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef 8), !noalias !112
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !118
-  %.not.i.i.i.i.i.i = icmp eq ptr %i.p, null      ; 2 uses
+  %.not.i.i.i.i.i.i = icmp eq ptr %i.p, null
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   br i1 %.not.i.i.i.i.i.i, label %bb.e, label %bb.d
 
@@ -397,9 +397,8 @@ bb.h:                                             ; preds = %bb.f
   br label %_RINvNtNtCs6P5GRezSnwZ_4http6header3map15hash_elem_usingNtNtB4_4name10HeaderNameECs9h7Hq22ZyhR_15influxdb3_types.exit.i.i.i
 
 _RINvNtNtCs6P5GRezSnwZ_4http6header3map15hash_elem_usingNtNtB4_4name10HeaderNameECs9h7Hq22ZyhR_15influxdb3_types.exit.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i, %bb.h, %bb.g, %_RINvXsz_NtNtCs6P5GRezSnwZ_4http6header4nameNtB6_10HeaderNameNtNtCs4NRVxsYgnAr_4core4hash4Hash4hashNtNtNtCs2AWtUsOyxgP_3std4hash6random13DefaultHasherECs9h7Hq22ZyhR_15influxdb3_types.exit.i.i.i.i
-  %i.et = phi ptr [ %i.p, %_RINvXsz_NtNtCs6P5GRezSnwZ_4http6header4nameNtB6_10HeaderNameNtNtCs4NRVxsYgnAr_4core4hash4Hash4hashNtNtNtCs2AWtUsOyxgP_3std4hash6random13DefaultHasherECs9h7Hq22ZyhR_15influxdb3_types.exit.i.i.i.i ], [ null, %bb.h ], [ %i.cj, %bb.g ], [ %i.cj, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.cj, %.lr.ph.i.i.i.i.i.i.i.i.prol.loopexit ] ; 5 uses
+  %i.et = phi ptr [ %i.p, %_RINvXsz_NtNtCs6P5GRezSnwZ_4http6header4nameNtB6_10HeaderNameNtNtCs4NRVxsYgnAr_4core4hash4Hash4hashNtNtNtCs2AWtUsOyxgP_3std4hash6random13DefaultHasherECs9h7Hq22ZyhR_15influxdb3_types.exit.i.i.i.i ], [ null, %bb.h ], [ %i.cj, %bb.g ], [ %i.cj, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.cj, %.lr.ph.i.i.i.i.i.i.i.i.prol.loopexit ] ; 6 uses
   %i.eu = phi i8 [ %i.y, %_RINvXsz_NtNtCs6P5GRezSnwZ_4http6header4nameNtB6_10HeaderNameNtNtCs4NRVxsYgnAr_4core4hash4Hash4hashNtNtNtCs2AWtUsOyxgP_3std4hash6random13DefaultHasherECs9h7Hq22ZyhR_15influxdb3_types.exit.i.i.i.i ], [ %i.ep, %bb.h ], [ %i.ct, %bb.g ], [ %i.ct, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.ct, %.lr.ph.i.i.i.i.i.i.i.i.prol.loopexit ]
-  %2 = phi i1 [ %.not.i.i.i.i.i.i, %_RINvXsz_NtNtCs6P5GRezSnwZ_4http6header4nameNtB6_10HeaderNameNtNtCs4NRVxsYgnAr_4core4hash4Hash4hashNtNtNtCs2AWtUsOyxgP_3std4hash6random13DefaultHasherECs9h7Hq22ZyhR_15influxdb3_types.exit.i.i.i.i ], [ true, %bb.h ], [ false, %bb.g ], [ false, %.lr.ph.i.i.i.i.i.i.i.i ], [ false, %.lr.ph.i.i.i.i.i.i.i.i.prol.loopexit ] ; 3 uses
   %.sroa.0.0.i.i.i.i = phi i64 [ %i.ci, %_RINvXsz_NtNtCs6P5GRezSnwZ_4http6header4nameNtB6_10HeaderNameNtNtCs4NRVxsYgnAr_4core4hash4Hash4hashNtNtNtCs2AWtUsOyxgP_3std4hash6random13DefaultHasherECs9h7Hq22ZyhR_15influxdb3_types.exit.i.i.i.i ], [ %i.es, %bb.h ], [ %i.cn, %bb.g ], [ %.lcssa24.unr, %.lr.ph.i.i.i.i.i.i.i.i.prol.loopexit ], [ %i.en, %.lr.ph.i.i.i.i.i.i.i.i ]
   %i.ev = trunc i64 %.sroa.0.0.i.i.i.i to i16
   %i.ew = and i16 %i.ev, 32767                    ; 2 uses
@@ -416,7 +415,7 @@ _RINvNtNtCs6P5GRezSnwZ_4http6header3map15hash_elem_usingNtNtB4_4name10HeaderName
   %i.fh = load ptr, ptr %i.fg, align 8, !alias.scope !98, !noalias !99, !nonnull !6
   %i.fi = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.fj = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %not..i.i.i.i.i = xor i1 %2, true
+  %2 = icmp eq ptr %i.et, null                    ; 3 uses
   %i.fk = load i64, ptr %i.fj, align 8            ; 3 uses
   %i.fl = load ptr, ptr %i.fi, align 8            ; 3 uses
   %i.fm = ptrtoint ptr %i.fl to i64
@@ -477,7 +476,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.gh, label %bb.n, label %_RNvXsy_NtNtCs6P5GRezSnwZ_4http6header4nameNtB5_10HeaderNameNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit.i.i.i
 
 bb.n:                                             ; preds = %bb.m
-  tail call void @llvm.assume(i1 %not..i.i.i.i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.et) ]
   %i.gj = getelementptr inbounds nuw i8, ptr %i.ge, i64 80
   %i.gk = load i64, ptr %i.gj, align 8, !noalias !146, !noundef !6
   %i.gl = icmp eq i64 %i.gk, %i.fk
@@ -513,8 +512,7 @@ bb.p:                                             ; preds = %bb.o
           cleanup
   tail call void @llvm.experimental.noalias.scope.decl(metadata !147)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !150)
-  %3 = icmp eq ptr %i.et, null
-  br i1 %3, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs6P5GRezSnwZ_4http6header4name10HeaderNameECs9h7Hq22ZyhR_15influxdb3_types.exit, label %bb.q
+  br i1 %2, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs6P5GRezSnwZ_4http6header4name10HeaderNameECs9h7Hq22ZyhR_15influxdb3_types.exit, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   tail call void @llvm.experimental.noalias.scope.decl(metadata !153)

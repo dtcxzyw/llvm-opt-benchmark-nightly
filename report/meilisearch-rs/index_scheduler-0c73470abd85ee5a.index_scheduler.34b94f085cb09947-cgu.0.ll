@@ -206,9 +206,8 @@ bb.aa:                                            ; preds = %bb.z
   %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 64
   %i.en = load ptr, ptr %i.em, align 8, !noundef !14
   %i.eo = icmp ne ptr %i.en, null                 ; 2 uses
-  %i.ep = load ptr, ptr %1, align 8, !noundef !14
-  %i.eq = icmp eq ptr %i.ep, null                 ; 3 uses
-  %not..i.i = xor i1 %i.eq, true
+  %i.ep = load ptr, ptr %1, align 8, !noundef !14 ; 2 uses
+  %i.eq = icmp eq ptr %i.ep, null                 ; 2 uses
   %i.er = xor i1 %i.eo, %i.eq
   br i1 %i.er, label %bb.ab, label %"_ZN71_$LT$http..header..name..HeaderName$u20$as$u20$core..cmp..PartialEq$GT$2eq17hd9fe00166c2a3e98E.exit.thread"
 
@@ -216,7 +215,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.eo, label %bb.ac, label %"_ZN71_$LT$http..header..name..HeaderName$u20$as$u20$core..cmp..PartialEq$GT$2eq17hd9fe00166c2a3e98E.exit"
 
 bb.ac:                                            ; preds = %bb.ab
-  tail call void @llvm.assume(i1 %not..i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ep) ]
   %i.es = getelementptr inbounds nuw i8, ptr %i.el, i64 80
   %i.et = load i64, ptr %i.es, align 8, !noundef !14 ; 2 uses
   %i.eu = load i64, ptr %i.da, align 8, !noundef !14
