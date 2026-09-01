@@ -205,10 +205,14 @@ _ZL15compute_offsetsP12fft5d_plan_tPiS1_S1_S1_i.exit: ; preds = %bb.q, %bb.s, %b
 
 .preheader50.lr.ph.split:                         ; preds = %.preheader50.lr.ph
   %i.bh = icmp sgt i32 %.sroa.035.3.fr, 0
-  br i1 %i.bh, label %.preheader50.us, label %.preheader50
+  br i1 %i.bh, label %.preheader50.us.preheader, label %.preheader50
 
-.preheader50.us:                                  ; preds = %.preheader50.lr.ph.split, %._crit_edge57.split.us.us
-  %.02359.us = phi i32 [ %i.cb, %._crit_edge57.split.us.us ], [ 0, %.preheader50.lr.ph.split ] ; 2 uses
+.preheader50.us.preheader:                        ; preds = %.preheader50.lr.ph.split
+  %wide.trip.count = zext nneg i32 %.sroa.035.3.fr to i64
+  br label %.preheader50.us
+
+.preheader50.us:                                  ; preds = %.preheader50.us.preheader, %._crit_edge57.split.us.us
+  %.02359.us = phi i32 [ %i.cb, %._crit_edge57.split.us.us ], [ 0, %.preheader50.us.preheader ] ; 2 uses
   %factor.op.mul55.reass.us = mul i32 %.02359.us, %factor.op.mul58
   br label %.preheader.lr.ph.us.us
 
@@ -238,13 +242,14 @@ bb.u:                                             ; preds = %.preheader.us.us, %
 bb.v:                                             ; preds = %bb.u
   %i.bu = load ptr, ptr @debug, align 8, !tbaa !13
   %fputc27.us.us = tail call i32 @fputc(i32 44, ptr %i.bu) ; 0 uses
-  %4 = add nuw nsw i32 %.02554.us.us, 1           ; 2 uses
-  %exitcond65.not = icmp eq i32 %4, %.sroa.035.3.fr
+  %indvars.iv.next66 = add nuw nsw i64 %indvars.iv65, 1 ; 2 uses
+  %exitcond65.not = icmp eq i64 %indvars.iv.next66, %wide.trip.count
   br i1 %exitcond65.not, label %._crit_edge.us.us, label %.preheader.us.us, !llvm.loop !143
 
 .preheader.us.us:                                 ; preds = %bb.v, %.preheader.lr.ph.us.us
-  %.02554.us.us = phi i32 [ 0, %.preheader.lr.ph.us.us ], [ %4, %bb.v ] ; 2 uses
-  %i.bv = mul nsw i32 %.02554.us.us, %.sroa.042.2
+  %indvars.iv65 = phi i64 [ %indvars.iv.next66, %bb.v ], [ 0, %.preheader.lr.ph.us.us ] ; 2 uses
+  %4 = trunc i64 %indvars.iv65 to i32
+  %i.bv = mul i32 %.sroa.042.2, %4
   %i.bw = shl i32 %i.bv, %i.bg
   %i.bx = add nsw i32 %i.bw, %i.bm
   %i.by = sext i32 %i.bx to i64

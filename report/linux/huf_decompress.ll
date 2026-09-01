@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.m, label %bb.d, label %bb.o
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = load i32, ptr %i.a, align 4              ; 5 uses
+  %i.n = load i32, ptr %i.a, align 4              ; 8 uses
   %i.o = icmp ugt i32 %i.n, %i.c
   br i1 %i.o, label %bb.o, label %bb.e
 
@@ -232,7 +232,7 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %i.v = icmp samesign ult i32 %i.n, 12
   %i.w = icmp eq i32 %i.c, 12
   %or.cond = select i1 %i.v, i1 %i.w, i1 false
-  %spec.store.select = select i1 %or.cond, i32 11, i32 %i.c ; 7 uses
+  %spec.store.select = select i1 %or.cond, i32 11, i32 %i.c ; 10 uses
   %i.x = add i32 %.092, 1                         ; 4 uses
   %i.y = icmp ugt i32 %i.x, 1                     ; 2 uses
   br i1 %i.y, label %.lr.ph.preheader, label %._crit_edge
@@ -521,10 +521,37 @@ bb.h:                                             ; preds = %bb.h, %.epil.prehea
   %i.dz = getelementptr i8, ptr %3, i64 736       ; 12 uses
   %i.ea = sub nsw i32 %i.p, %spec.store.select
   %i.eb = icmp sgt i32 %i.x, 1
-  br i1 %i.eb, label %.lr.ph79.i, label %HUF_fillDTableX2.exit
+  br i1 %i.eb, label %.lr.ph79.i.preheader, label %HUF_fillDTableX2.exit
 
-.lr.ph79.i:                                       ; preds = %._crit_edge135.split, %.loopexit.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.loopexit.i ], [ 1, %._crit_edge135.split ] ; 4 uses
+.lr.ph79.i.preheader:                             ; preds = %._crit_edge135.split
+  %6 = trunc nuw i32 %spec.store.select to i5
+  %7 = trunc i32 %i.n to i5
+  %8 = shl i5 %7, 1
+  %9 = xor i5 %8, -1
+  %10 = add i5 %9, %6
+  %11 = shl i32 %i.n, 1
+  %12 = or disjoint i32 %11, 1
+  %13 = sub i32 %spec.store.select, %i.n
+  br label %.lr.ph79.i
+
+.lr.ph79.i:                                       ; preds = %.lr.ph79.i.preheader, %.loopexit.i
+  %indvar292 = phi i32 [ 0, %.lr.ph79.i.preheader ], [ %indvar.next293, %.loopexit.i ] ; 3 uses
+  %indvar = phi i5 [ 0, %.lr.ph79.i.preheader ], [ %indvar.next, %.loopexit.i ] ; 2 uses
+  %indvars.iv.i = phi i64 [ 1, %.lr.ph79.i.preheader ], [ %indvars.iv.next.i, %.loopexit.i ] ; 4 uses
+  %14 = add i32 %13, %indvar292
+  %15 = and i32 %14, 31
+  %16 = shl nuw i32 1, %15
+  %17 = zext i32 %16 to i64
+  %18 = shl nuw nsw i64 %17, 2
+  %19 = add nsw i64 %18, -32                      ; 2 uses
+  %20 = lshr i64 %19, 5
+  %21 = add nuw nsw i64 %20, 1
+  %22 = add i5 %10, %indvar
+  %23 = add i32 %spec.store.select, %indvar292
+  %24 = sub i32 %12, %23
+  %smax = call i32 @llvm.smax.i32(i32 %24, i32 1)
+  %25 = trunc i32 %smax to i5
+  %26 = add i5 %22, %25
   %i.ec = getelementptr [4 x i8], ptr %i.f, i64 %indvars.iv.i
   %i.ed = load i32, ptr %i.ec, align 4            ; 15 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 3 uses
@@ -680,7 +707,16 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.m
 
 bb.m:                                             ; preds = %HUF_fillDTableX2ForWeight.exit.us.i, %.loopexit.i.us.i
-  %indvars.iv55.i.us.i = phi i64 [ %i.et, %.loopexit.i.us.i ], [ %indvars.iv.next56.i.us.i, %HUF_fillDTableX2ForWeight.exit.us.i ] ; 4 uses
+  %indvar294 = phi i5 [ %indvar.next295, %HUF_fillDTableX2ForWeight.exit.us.i ], [ 0, %.loopexit.i.us.i ] ; 2 uses
+  %indvars.iv55.i.us.i = phi i64 [ %indvars.iv.next56.i.us.i, %HUF_fillDTableX2ForWeight.exit.us.i ], [ %i.et, %.loopexit.i.us.i ] ; 4 uses
+  %27 = add i5 %26, %indvar294
+  %28 = zext i5 %27 to i32
+  %29 = shl nuw i32 1, %28
+  %30 = zext i32 %29 to i64
+  %31 = shl nuw nsw i64 %30, 2
+  %32 = add nsw i64 %31, -32                      ; 2 uses
+  %33 = lshr i64 %32, 5
+  %34 = add nuw nsw i64 %33, 1
   %i.gl = getelementptr [4 x i8], ptr %i.f, i64 %indvars.iv55.i.us.i
   %i.gm = load i32, ptr %i.gl, align 4            ; 2 uses
   %indvars.iv.next56.i.us.i = add nuw nsw i64 %indvars.iv55.i.us.i, 1 ; 3 uses
@@ -1016,14 +1052,11 @@ bb.m:                                             ; preds = %HUF_fillDTableX2For
 .lr.ph119.i.us.i:                                 ; preds = %.preheader.i59.us.i
   %i.mn = shl i32 %i.gq, 16
   %i.mo = zext i32 %i.hb to i64
-  %.idx.i.us.i = shl nuw nsw i64 %i.mo, 2         ; 2 uses
+  %.idx.i.us.i = shl nuw nsw i64 %i.mo, 2
   %invariant.op139.reass = add i32 %i.mn, %invariant.op140
-  %6 = add nsw i64 %.idx.i.us.i, -32              ; 2 uses
-  %7 = lshr i64 %6, 5
-  %8 = add nuw nsw i64 %7, 1
-  %xtraiter292 = and i64 %8, 3                    ; 2 uses
+  %xtraiter292 = and i64 %34, 3                   ; 2 uses
   %lcmp.mod293.not = icmp eq i64 %xtraiter292, 0
-  %i.mp = icmp ult i64 %6, 96
+  %i.mp = icmp ult i64 %32, 96
   br label %.lr.ph115.preheader.i.us.i
 
 .lr.ph115.preheader.i.us.i:                       ; preds = %._crit_edge.i.us.i, %.lr.ph119.i.us.i
@@ -1101,6 +1134,7 @@ bb.m:                                             ; preds = %HUF_fillDTableX2For
 
 HUF_fillDTableX2ForWeight.exit.us.i:              ; preds = %.prol.loopexit, %.lr.ph.i57.us.i.new, %.prol.loopexit279, %.lr.ph98.i.us.i.new, %.prol.loopexit283, %.lr.ph104.i.us.i.new, %.prol.loopexit288, %.lr.ph110.i.us.i.new, %._crit_edge.i.us.i, %.preheader.i59.us.i, %.preheader84.i.us.i, %.preheader86.i.us.i, %.preheader88.i.us.i, %.preheader90.i.us.i
   %exitcond.not.i.us.i = icmp eq i64 %indvars.iv.next56.i.us.i, %i.aw
+  %indvar.next295 = add i5 %indvar294, 1
   br i1 %exitcond.not.i.us.i, label %HUF_fillDTableX2Level2.exit.loopexit.us.i, label %bb.m, !llvm.loop !47
 
 HUF_fillDTableX2Level2.exit.loopexit.us.i:        ; preds = %HUF_fillDTableX2ForWeight.exit.us.i
@@ -1503,13 +1537,10 @@ begin_hunk_1_@HUF_readDTableX2_wksp:bb.a
   %i.yu = shl i32 %i.eh, 16
   %i.yv = add i32 %i.yu, 16777216
   %i.yw = zext i32 %i.sk to i64
-  %.idx.i = shl nuw nsw i64 %i.yw, 2              ; 2 uses
-  %9 = add nsw i64 %.idx.i, -32                   ; 2 uses
-  %10 = lshr i64 %9, 5
-  %11 = add nuw nsw i64 %10, 1
-  %xtraiter307 = and i64 %11, 3                   ; 2 uses
+  %.idx.i = shl nuw nsw i64 %i.yw, 2
+  %xtraiter307 = and i64 %21, 3                   ; 2 uses
   %lcmp.mod308.not = icmp eq i64 %xtraiter307, 0
-  %i.yx = icmp ult i64 %9, 96
+  %i.yx = icmp ult i64 %19, 96
   br label %.lr.ph115.preheader.i
 
 .lr.ph115.preheader.i:                            ; preds = %._crit_edge.i, %.lr.ph119.i
@@ -1586,6 +1617,8 @@ begin_hunk_1_@HUF_readDTableX2_wksp:bb.a
 
 .loopexit.i:                                      ; preds = %.loopexit.i.us76.i.prol.loopexit, %.loopexit.i.us76.i, %.loopexit.i.us69.i.prol.loopexit, %.loopexit.i.us69.i, %.loopexit.i.i, %HUF_fillDTableX2Level2.exit.loopexit.us.i, %.lr.ph.split.us.i100.prol.loopexit, %.lr.ph.split.us.i100, %.lr.ph98.split.us.i.prol.loopexit, %.lr.ph98.split.us.i, %.lr.ph104.split.us.i.prol.loopexit, %.lr.ph104.split.us.i, %.lr.ph110.split.us.i.prol.loopexit, %.lr.ph110.split.us.i, %._crit_edge.i, %.preheader.i, %.preheader84.i, %.preheader86.i, %.preheader88.i, %.preheader90.i, %.lr.ph.split.i, %bb.i
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.aw
+  %indvar.next = add i5 %indvar, 1
+  %indvar.next293 = add i32 %indvar292, 1
   br i1 %exitcond.not.i, label %HUF_fillDTableX2.exit, label %.lr.ph79.i, !llvm.loop !54
 
 HUF_fillDTableX2.exit:                            ; preds = %.loopexit.i, %._crit_edge122, %._crit_edge135.split

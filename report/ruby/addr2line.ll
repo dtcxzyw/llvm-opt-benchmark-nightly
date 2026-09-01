@@ -205,14 +205,13 @@ uleb128.exit.1:                                   ; preds = %.lr.ph.i.1, %uleb12
 
 uleb128.exit53:                                   ; preds = %._crit_edge, %._crit_edge.loopexit.i48
   %.278 = phi ptr [ %i.t, %._crit_edge ], [ %i.ad, %._crit_edge.loopexit.i48 ] ; 3 uses
-  %.011.lcssa.i49 = phi i64 [ 0, %._crit_edge ], [ %.112.i47, %._crit_edge.loopexit.i48 ]
-  %.010.lcssa.i50 = phi i64 [ 0, %._crit_edge ], [ %i.ag, %._crit_edge.loopexit.i48 ]
-  %.lcssa.i51 = phi i8 [ %i.u, %._crit_edge ], [ %i.ae, %._crit_edge.loopexit.i48 ]
+  %.011.lcssa.i49 = phi i64 [ 0, %._crit_edge ], [ %.112.i47, %._crit_edge.loopexit.i48 ] ; 2 uses
+  %.010.lcssa.i50 = phi i64 [ 0, %._crit_edge ], [ %i.ag, %._crit_edge.loopexit.i48 ] ; 2 uses
+  %.lcssa.i51 = phi i8 [ %i.u, %._crit_edge ], [ %i.ae, %._crit_edge.loopexit.i48 ] ; 2 uses
   %i.ah = zext nneg i8 %.lcssa.i51 to i64
   %i.ai = shl i64 %i.ah, %.010.lcssa.i50
   %.11217.i52 = add i64 %i.ai, %.011.lcssa.i49
-  %.11217.i52.fr = freeze i64 %.11217.i52
-  %i.aj = trunc i64 %.11217.i52.fr to i32         ; 3 uses
+  %i.aj = trunc i64 %.11217.i52 to i32            ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #15
   %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2184) %i.ak, i8 0, i64 2184, i1 false)
@@ -250,7 +249,14 @@ uleb128.exit53:                                   ; preds = %._crit_edge, %._cri
   br i1 %.not98, label %.preheader.preheader, label %.preheader.us
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %i.bg = add nsw i32 %i.aj, -1
+  %9 = zext nneg i8 %.lcssa.i51 to i32
+  %10 = shl nuw i64 1, %.010.lcssa.i50
+  %11 = trunc i64 %10 to i32
+  %12 = mul i32 %9, %11
+  %13 = trunc i64 %.011.lcssa.i49 to i32
+  %14 = add i32 %12, %13
+  %.fr = freeze i32 %14
+  %i.bg = add i32 %.fr, -1
   %.not = icmp ugt i32 %1, %i.bg
   %spec.select = select i1 %.not, ptr %.278, ptr null
   br label %.loopexit
@@ -368,8 +374,8 @@ bb.f:                                             ; preds = %.thread.us, %bb.e, 
 
 bb.g:                                             ; preds = %._crit_edge95.us
   %i.cy = add nuw nsw i32 %.03496.us, 1           ; 2 uses
-  %exitcond112.not = icmp eq i32 %i.cy, %i.aj
-  br i1 %exitcond112.not, label %._crit_edge97.loopexit101, label %.preheader.us, !llvm.loop !153
+  %15 = icmp slt i32 %i.cy, %i.aj
+  br i1 %15, label %.preheader.us, label %._crit_edge97.loopexit101, !llvm.loop !153
 
 ._crit_edge95.us:                                 ; preds = %bb.f
   %.not.us = icmp eq i32 %.03496.us, %1

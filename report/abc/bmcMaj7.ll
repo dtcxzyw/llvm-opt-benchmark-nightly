@@ -205,7 +205,7 @@ Vec_WrdStart.exit.i:                              ; preds = %bb.jy, %bb.jx
   %i.bxn = sext i32 %i.bxe to i64
   %i.bxo = shl nsw i64 %i.bxn, 3
   call void @llvm.memset.p0.i64(ptr align 8 %i.bxk, i8 0, i64 %i.bxo, i1 false)
-  %i.bxp = load i32, ptr %i.fo, align 8, !tbaa !37 ; 2 uses
+  %i.bxp = load i32, ptr %i.fo, align 8, !tbaa !37 ; 3 uses
   %i.bxq = icmp slt i32 %i.bxp, %i.bxb
   br i1 %i.bxq, label %.lr.ph60.i, label %Exa7_ManSaveTruthTables.exit
 
@@ -216,16 +216,22 @@ Vec_WrdStart.exit.i:                              ; preds = %bb.jy, %bb.jx
   br label %bb.jz
 
 bb.jz:                                            ; preds = %bb.kf, %.lr.ph60.i
-  %i.bxt = phi i32 [ %i.bxb, %.lr.ph60.i ], [ %i.byn, %bb.kf ]
-  %i.bxu = phi i32 [ %.pre.i338, %.lr.ph60.i ], [ %i.byo, %bb.kf ] ; 3 uses
-  %.05059.i = phi i32 [ %i.bxp, %.lr.ph60.i ], [ %i.bzw, %bb.kf ] ; 4 uses
+  %5 = phi i32 [ %i.bxb, %.lr.ph60.i ], [ %i.byn, %bb.kf ]
+  %i.bxt = phi i32 [ %.pre.i338, %.lr.ph60.i ], [ %i.byo, %bb.kf ] ; 3 uses
+  %i.bxu = phi i32 [ 0, %.lr.ph60.i ], [ %indvar.next.i, %bb.kf ] ; 2 uses
+  %.05059.i = phi i32 [ %i.bxp, %.lr.ph60.i ], [ %i.bzw, %bb.kf ] ; 3 uses
+  %6 = add i32 %i.bxu, %i.bxp
+  %7 = shl i32 %6, %i.bxd
+  %8 = sext i32 %7 to i64
+  %9 = shl nsw i64 %8, 3
+  %scevgep.i = getelementptr i8, ptr %i.bxk, i64 %9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, i8 0, i64 32, i1 false)
   %i.bxv = load i32, ptr %i.fo, align 8, !tbaa !37
   %i.bxw = sub nsw i32 %.05059.i, %i.bxv
-  %i.bxx = mul nsw i32 %i.bxw, %i.bxu
+  %i.bxx = mul nsw i32 %i.bxw, %i.bxt
   %i.bxy = add nsw i32 %i.bxx, 1
-  %i.bxz = icmp sgt i32 %i.bxu, 0
+  %i.bxz = icmp sgt i32 %i.bxt, 0
   br i1 %i.bxz, label %.lr.ph.i352, label %._crit_edge.i339
 
 .lr.ph.i352:                                      ; preds = %bb.jz, %.lr.ph._crit_edge.i
@@ -259,8 +265,8 @@ bb.ka:                                            ; preds = %.lr.ph.i352
   br label %._crit_edge.i339
 
 ._crit_edge.i339:                                 ; preds = %._crit_edge.loopexit.i354, %bb.jz
-  %i.byn = phi i32 [ %.pre66.i, %._crit_edge.loopexit.i354 ], [ %i.bxt, %bb.jz ] ; 3 uses
-  %i.byo = phi i32 [ %i.byl, %._crit_edge.loopexit.i354 ], [ %i.bxu, %bb.jz ]
+  %i.byn = phi i32 [ %.pre66.i, %._crit_edge.loopexit.i354 ], [ %5, %bb.jz ] ; 3 uses
+  %i.byo = phi i32 [ %i.byl, %._crit_edge.loopexit.i354 ], [ %i.bxt, %bb.jz ]
   %i.byp = add nsw i32 %i.byn, -1
   %i.byq = icmp eq i32 %.05059.i, %i.byp
   %or.cond.i340 = and i1 %i.byq, %.not112
@@ -328,14 +334,11 @@ bb.ke:                                            ; preds = %.loopexit.i341
   br label %bb.kf
 
 bb.kf:                                            ; preds = %bb.ke, %.loopexit.i341
-  %5 = shl i32 %.05059.i, %i.bxd
-  %6 = sext i32 %5 to i64
-  %7 = shl nsw i64 %6, 3
-  %scevgep.i = getelementptr i8, ptr %i.bxk, i64 %7
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i, ptr noundef nonnull align 16 dereferenceable(1) %i.a, i64 %i.bxs, i1 false), !tbaa !59
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   %i.bzw = add nsw i32 %.05059.i, 1               ; 2 uses
   %i.bzx = icmp slt i32 %i.bzw, %i.byn
+  %indvar.next.i = add i32 %i.bxu, 1
   br i1 %i.bzx, label %bb.jz, label %Exa7_ManSaveTruthTables.exit, !llvm.loop !204
 
 Exa7_ManSaveTruthTables.exit:                     ; preds = %bb.kf, %Vec_WrdStart.exit.i

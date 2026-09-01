@@ -205,12 +205,14 @@ bb.ef:                                            ; preds = %bb.ee
   %.not679 = icmp eq i32 %i.aty, 0
   %i.atz = and i32 %i.ato, 32
   %.not680 = icmp eq i32 %i.atz, 0
+  %wide.trip.count1407 = zext nneg i32 %i.att to i64
   %i.aua = trunc nuw nsw i64 %i.atf to i32
   br label %bb.eg
 
 bb.eg:                                            ; preds = %.lr.ph1252, %bb.fk
-  %.05881250 = phi i32 [ 0, %.lr.ph1252 ], [ %2, %bb.fk ] ; 2 uses
-  %i.aub = shl nuw i32 %.05881250, %i.atv
+  %indvars.iv1404 = phi i64 [ 0, %.lr.ph1252 ], [ %indvars.iv.next1405, %bb.fk ] ; 2 uses
+  %2 = trunc nuw nsw i64 %indvars.iv1404 to i32
+  %i.aub = shl nuw i32 %2, %i.atv
   %i.auc = add nsw i32 %i.aub, %i.aua
   %i.aud = sext i32 %i.auc to i64                 ; 3 uses
   %i.aue = getelementptr inbounds i8, ptr @scan8, i64 %i.aud
@@ -613,8 +615,8 @@ bb.fk:                                            ; preds = %._crit_edge1481, %b
   store i16 %.pre1482, ptr %i.auh, align 2, !tbaa !108
   %i.bfn = getelementptr inbounds nuw i8, ptr %i.auh, i64 2
   store i16 %.pre-phi1484, ptr %i.bfn, align 2, !tbaa !108
-  %2 = add nuw nsw i32 %.05881250, 1              ; 2 uses
-  %exitcond1404.not = icmp eq i32 %2, %i.att
+  %indvars.iv.next1405 = add nuw nsw i64 %indvars.iv1404, 1 ; 2 uses
+  %exitcond1404.not = icmp eq i64 %indvars.iv.next1405, %wide.trip.count1407
   br i1 %exitcond1404.not, label %.loopexit1177, label %bb.eg, !llvm.loop !144
 
 bb.fl:                                            ; preds = %bb.ee

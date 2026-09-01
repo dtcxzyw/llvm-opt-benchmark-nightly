@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %bb.h
   %i.hy = trunc nuw i8 %i.hx to i1                ; 2 uses
   %i.hz = select i1 %i.hy, i32 31, i32 63         ; 2 uses
   %i.ia = add i32 %i.hz, %i.hw
-  %i.ib = select i1 %i.hy, i32 5, i32 6           ; 3 uses
+  %i.ib = select i1 %i.hy, i32 5, i32 6           ; 4 uses
   %i.ic = lshr i32 %i.ia, %i.ib                   ; 2 uses
   %.not223 = icmp eq i32 %i.ic, 0
   br i1 %.not223, label %._crit_edge222, label %.lr.ph221
@@ -243,6 +243,7 @@ bb.ac:                                            ; preds = %bb.h
   %i.jf = getelementptr inbounds nuw i8, ptr %9, i64 4
   %i.jg = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.jh = icmp ne ptr %4, null
+  %29 = shl nuw nsw i32 1, %i.ib
   %i.ji = zext nneg i32 %i.hz to i64
   br label %bb.ad
 
@@ -251,8 +252,9 @@ bb.ac:                                            ; preds = %bb.h
   br label %.loopexit
 
 bb.ad:                                            ; preds = %.lr.ph221, %.critedge.thread
+  %indvars.iv234 = phi i32 [ 0, %.lr.ph221 ], [ %indvars.iv.next235, %.critedge.thread ] ; 2 uses
   %.0108219 = phi i32 [ 0, %.lr.ph221 ], [ %i.jk, %.critedge.thread ] ; 4 uses
-  %i.jj = shl i32 %.0108219, %i.ib                ; 2 uses
+  %i.jj = shl i32 %.0108219, %i.ib
   %i.jk = add nuw nsw i32 %.0108219, 1            ; 3 uses
   %i.jl = shl i32 %i.jk, %i.ib
   %i.jm = load i32, ptr %i.aw, align 8, !tbaa !52
@@ -261,7 +263,7 @@ bb.ad:                                            ; preds = %.lr.ph221, %.crited
   br i1 %i.jn, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.ad
-  %i.jo = zext i32 %i.jj to i64
+  %i.jo = zext i32 %indvars.iv234 to i64
   %wide.trip.count237 = zext i32 %.sroa.speculated to i64
   br label %.lr.ph
 
@@ -664,8 +666,8 @@ bb.au:                                            ; preds = %_ZN4llvm11SlotIndex
   br label %_ZN4llvm11SlotIndexes25replaceMachineInstrInMapsERNS_12MachineInstrES2_.exit152._crit_edge
 
 _ZN4llvm11SlotIndexes25replaceMachineInstrInMapsERNS_12MachineInstrES2_.exit152._crit_edge: ; preds = %_ZN4llvm11SlotIndexes25replaceMachineInstrInMapsERNS_12MachineInstrES2_.exit152, %bb.au
-  %exitcond238.not = icmp eq i64 %i.sp, %wide.trip.count237
-  br i1 %exitcond238.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1050
+  %30 = icmp samesign ult i64 %i.sp, %wide.trip.count237
+  br i1 %30, label %.lr.ph, label %._crit_edge, !llvm.loop !1050
 
 .critedge:                                        ; preds = %._crit_edge
   %i.su = load i32, ptr %i.y, align 4, !tbaa !839
@@ -702,6 +704,7 @@ bb.av:                                            ; preds = %.critedge
   br label %.critedge.thread
 
 .critedge.thread:                                 ; preds = %._crit_edge, %bb.av, %.critedge
+  %indvars.iv.next235 = add i32 %indvars.iv234, %29
   %exitcond239.not = icmp eq i32 %i.jk, %i.ic
   br i1 %exitcond239.not, label %._crit_edge222, label %bb.ad, !llvm.loop !1051
 
@@ -1104,7 +1107,7 @@ bb.t:                                             ; preds = %bb.h
   %i.gu = load i32, ptr %i.aw, align 8, !tbaa !912
   %i.gv = add i32 %i.gu, -1
   %i.gw = add i32 %i.gv, %i.gt
-  %i.gx = select i1 %i.gs, i32 5, i32 6           ; 3 uses
+  %i.gx = select i1 %i.gs, i32 5, i32 6           ; 4 uses
   %i.gy = lshr i32 %i.gw, %i.gx                   ; 2 uses
   %.not159 = icmp eq i32 %i.gy, 0
   br i1 %.not159, label %._crit_edge, label %.lr.ph158
@@ -1133,9 +1136,11 @@ bb.t:                                             ; preds = %bb.h
   %i.hs = xor i64 %i.hr, %i.hq
   %i.ht = trunc i64 %i.hs to i32
   %i.hu = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
+  %21 = shl nuw nsw i32 1, %i.gx
   br label %bb.u
 
 .loopexit:                                        ; preds = %_ZN4llvm11SlotIndexes25replaceMachineInstrInMapsERNS_12MachineInstrES2_.exit111, %bb.u
+  %indvars.iv.next171 = add i32 %indvars.iv170, %21
   %exitcond174.not = icmp eq i32 %i.hw, %i.gy
   br i1 %exitcond174.not, label %._crit_edge, label %bb.u, !llvm.loop !1212
 
@@ -1144,21 +1149,22 @@ bb.t:                                             ; preds = %bb.h
   br label %.loopexit145
 
 bb.u:                                             ; preds = %.lr.ph158, %.loopexit
+  %indvars.iv170 = phi i32 [ 0, %.lr.ph158 ], [ %indvars.iv.next171, %.loopexit ] ; 2 uses
   %.071157 = phi i32 [ 0, %.lr.ph158 ], [ %i.hw, %.loopexit ] ; 3 uses
   call void @_ZN4llvm16SGPRSpillBuilder16readWriteTmpVGPREjb(ptr noundef nonnull align 8 dereferenceable(136) %19, i32 noundef %.071157, i1 noundef zeroext true)
-  %i.hv = shl i32 %.071157, %i.gx                 ; 2 uses
+  %i.hv = shl i32 %.071157, %i.gx
   %i.hw = add nuw nsw i32 %.071157, 1             ; 3 uses
   %i.hx = shl i32 %i.hw, %i.gx
   %i.hy = load i32, ptr %i.aw, align 8, !tbaa !52
-  %.sroa.speculated = call i32 @llvm.umin.i32(i32 %i.hy, i32 %i.hx) ; 4 uses
+  %.sroa.speculated = call i32 @llvm.umin.i32(i32 %i.hy, i32 %i.hx) ; 3 uses
   %i.hz = icmp ult i32 %i.hv, %.sroa.speculated
   br i1 %i.hz, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.u
-  %21 = add i32 %.sroa.speculated, -1
-  %22 = zext i32 %i.hv to i64
-  %i.ia = zext i32 %.sroa.speculated to i64
-  %i.ib = zext i32 %21 to i64
+  %22 = zext i32 %indvars.iv170 to i64
+  %23 = add i32 %.sroa.speculated, -1
+  %i.ia = zext i32 %.sroa.speculated to i64       ; 2 uses
+  %i.ib = zext i32 %23 to i64
   br label %bb.v
 
 bb.v:                                             ; preds = %.lr.ph, %_ZN4llvm11SlotIndexes25replaceMachineInstrInMapsERNS_12MachineInstrES2_.exit111
@@ -1561,9 +1567,8 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_12MachineInstrENS_9SlotIndexENS_12Dense
   br label %_ZN4llvm11SlotIndexes25replaceMachineInstrInMapsERNS_12MachineInstrES2_.exit111
 
 _ZN4llvm11SlotIndexes25replaceMachineInstrInMapsERNS_12MachineInstrES2_.exit111: ; preds = %.lr.ph.i.i, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_12MachineInstrENS_9SlotIndexENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S5_EEEES4_S5_S7_SA_E22findBucketForInsertionIS4_EEPSA_RKT_SE_.exit.i, %bb.ad, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_12MachineInstrENS_9SlotIndexENS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S5_EEEES4_S5_S7_SA_E4findES4_.exit.i103, %bb.y
-  %lftr.wideiv = trunc i64 %indvars.iv.next171.a to i32
-  %exitcond173.not = icmp eq i32 %.sroa.speculated, %lftr.wideiv
-  br i1 %exitcond173.not, label %.loopexit, label %bb.v, !llvm.loop !1260
+  %24 = icmp samesign ult i64 %indvars.iv.next171.a, %i.ia
+  br i1 %24, label %bb.v, label %.loopexit, !llvm.loop !1260
 
 .loopexit145:                                     ; preds = %_ZN4llvm11SlotIndexes25replaceMachineInstrInMapsERNS_12MachineInstrES2_.exit, %._crit_edge
   %i.rb = call ptr @_ZN4llvm12MachineInstr15eraseFromParentEv(ptr noundef nonnull align 8 dereferenceable(80) %1) #27 ; 0 uses
@@ -1669,7 +1674,7 @@ bb.a:
   %i.ar = trunc nuw i8 %i.aq to i1                ; 2 uses
   %i.as = select i1 %i.ar, i32 31, i32 63         ; 3 uses
   %i.at = add i32 %i.as, %i.ap
-  %i.au = select i1 %i.ar, i32 5, i32 6           ; 5 uses
+  %i.au = select i1 %i.ar, i32 5, i32 6           ; 7 uses
   %i.av = lshr i32 %i.at, %i.au                   ; 3 uses
   %.not124 = icmp eq i32 %i.av, 0
   br i1 %.not124, label %._crit_edge.thread, label %.lr.ph116
@@ -1700,10 +1705,12 @@ bb.a:
   %i.bn = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %9, i64 4 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
+  %15 = shl nuw nsw i32 1, %i.au
   %i.bq = zext nneg i32 %i.as to i64
   br label %bb.b
 
 .loopexit112:                                     ; preds = %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit._crit_edge, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.peel._crit_edge, %bb.b
+  %indvars.iv.next = add i32 %indvars.iv, %15
   %exitcond128.not = icmp eq i32 %i.ce, %i.av
   br i1 %exitcond128.not, label %.lr.ph122, label %bb.b, !llvm.loop !1261
 
@@ -1722,27 +1729,30 @@ bb.a:
   %i.ca = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.cb = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.cc = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %16 = shl nuw nsw i32 1, %i.au
   br label %bb.g
 
 bb.b:                                             ; preds = %.lr.ph116, %.loopexit112
+  %indvars.iv = phi i32 [ 0, %.lr.ph116 ], [ %indvars.iv.next, %.loopexit112 ] ; 3 uses
   %.0115 = phi i32 [ 0, %.lr.ph116 ], [ %i.ce, %.loopexit112 ] ; 2 uses
-  %i.cd = shl i32 %.0115, %i.au                   ; 3 uses
+  %17 = zext i32 %indvars.iv to i64               ; 2 uses
+  %i.cd = shl i32 %.0115, %i.au
   %i.ce = add nuw nsw i32 %.0115, 1               ; 3 uses
   %i.cf = shl i32 %i.ce, %i.au
   %i.cg = load i32, ptr %i.am, align 8, !tbaa !52 ; 2 uses
-  %.sroa.speculated107 = call i32 @llvm.umin.i32(i32 %i.cg, i32 %i.cf) ; 3 uses
+  %.sroa.speculated107 = call i32 @llvm.umin.i32(i32 %i.cg, i32 %i.cf) ; 2 uses
   %i.ch = icmp ult i32 %i.cd, %.sroa.speculated107
   br i1 %i.ch, label %.lr.ph.preheader, label %.loopexit112
 
 .lr.ph.preheader:                                 ; preds = %bb.b
-  %i.ci = zext i32 %i.cd to i64                   ; 2 uses
+  %i.ci = zext i32 %.sroa.speculated107 to i64    ; 2 uses
   %i.cj = icmp eq i32 %i.cg, 1
   %i.ck = load i32, ptr %14, align 8, !tbaa !52   ; 2 uses
   br i1 %i.cj, label %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.peel, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.preheader
   %i.cl = load ptr, ptr %i.h, align 8, !tbaa !942
-  %i.cm = getelementptr inbounds nuw [2 x i8], ptr %i.cl, i64 %i.ci
+  %i.cm = getelementptr inbounds nuw [2 x i8], ptr %i.cl, i64 %17
   %i.cn = load i16, ptr %i.cm, align 2, !tbaa !9
   %i.co = sext i16 %i.cn to i32
   %i.cp = call i32 @_ZNK4llvm14MCRegisterInfo9getSubRegENS_10MCRegisterEj(ptr noundef nonnull align 8 dereferenceable(240) %0, i32 %i.ck, i32 noundef %i.co) #27
@@ -1793,7 +1803,7 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12Ma
   store i32 %i.bf, ptr %12, align 8, !alias.scope !1265
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.cy, ptr noundef nonnull align 8 dereferenceable(1065) %i.cx, ptr noundef nonnull align 8 dereferenceable(32) %12) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #27
-  %i.dj = and i32 %i.cd, %i.as
+  %i.dj = and i32 %indvars.iv, %i.as
   %i.dk = zext nneg i32 %i.dj to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #27
   store i32 1, ptr %11, align 8, !alias.scope !1268
@@ -1811,7 +1821,7 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12Ma
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #27
   %i.dl = load i32, ptr %i.am, align 8, !tbaa !912 ; 2 uses
   %i.dm = icmp ugt i32 %i.dl, 1
-  %i.dn = or disjoint i64 %i.ci, 1                ; 3 uses
+  %i.dn = or disjoint i64 %17, 1                  ; 3 uses
   br i1 %i.dm, label %bb.d, label %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.peel._crit_edge
 
 bb.d:                                             ; preds = %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.peel
@@ -1832,9 +1842,8 @@ bb.d:                                             ; preds = %_ZN4llvm7BuildMIERN
   br label %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.peel._crit_edge
 
 _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.peel._crit_edge: ; preds = %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.peel, %bb.d
-  %lftr.wideiv.peel = trunc nuw i64 %i.dn to i32
-  %exitcond.peel.not = icmp eq i32 %.sroa.speculated107, %lftr.wideiv.peel
-  br i1 %exitcond.peel.not, label %.loopexit112, label %.lr.ph
+  %18 = icmp samesign ult i64 %i.dn, %i.ci
+  br i1 %18, label %.lr.ph, label %.loopexit112
 
 .lr.ph:                                           ; preds = %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.peel._crit_edge, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit._crit_edge
   %indvars.iv.a = phi i64 [ %i.ew, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit._crit_edge ], [ %i.dn, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.peel._crit_edge ] ; 3 uses
@@ -1934,11 +1943,11 @@ bb.f:                                             ; preds = %_ZN4llvm7BuildMIERN
   br label %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit._crit_edge
 
 _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit._crit_edge: ; preds = %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit, %bb.f
-  %lftr.wideiv = trunc i64 %i.ew to i32
-  %exitcond.not = icmp eq i32 %.sroa.speculated107, %lftr.wideiv
-  br i1 %exitcond.not, label %.loopexit112, label %.lr.ph, !llvm.loop !1277
+  %19 = icmp samesign ult i64 %i.ew, %i.ci
+  br i1 %19, label %.lr.ph, label %.loopexit112, !llvm.loop !1277
 
 .loopexit:                                        ; preds = %bb.j, %bb.g
+  %indvars.iv.next131 = add i32 %indvars.iv130, %16
   %exitcond134.not = icmp eq i32 %i.fh, %i.av
   br i1 %exitcond134.not, label %._crit_edge123, label %bb.g, !llvm.loop !1278
 
@@ -1954,18 +1963,19 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12Ma
   ret i1 false
 
 bb.g:                                             ; preds = %.lr.ph122, %.loopexit
+  %indvars.iv130 = phi i32 [ 0, %.lr.ph122 ], [ %indvars.iv.next131, %.loopexit ] ; 2 uses
   %.063120 = phi i32 [ 0, %.lr.ph122 ], [ %i.fh, %.loopexit ] ; 2 uses
-  %i.fg = shl i32 %.063120, %i.au                 ; 2 uses
+  %i.fg = shl i32 %.063120, %i.au
   %i.fh = add nuw nsw i32 %.063120, 1             ; 3 uses
   %i.fi = shl i32 %i.fh, %i.au
   %i.fj = load i32, ptr %i.am, align 8, !tbaa !52
-  %.sroa.speculated = call i32 @llvm.umin.i32(i32 %i.fj, i32 %i.fi) ; 3 uses
+  %.sroa.speculated = call i32 @llvm.umin.i32(i32 %i.fj, i32 %i.fi) ; 2 uses
   %i.fk = icmp ult i32 %i.fg, %.sroa.speculated
   br i1 %i.fk, label %.lr.ph119.preheader, label %.loopexit
 
 .lr.ph119.preheader:                              ; preds = %bb.g
-  %i.fl = zext i32 %i.fg to i64
-  %i.fm = zext i32 %.sroa.speculated to i64
+  %i.fl = zext i32 %indvars.iv130 to i64
+  %i.fm = zext i32 %.sroa.speculated to i64       ; 2 uses
   br label %.lr.ph119
 
 .lr.ph119:                                        ; preds = %.lr.ph119.preheader, %bb.j
@@ -2055,9 +2065,8 @@ bb.i:                                             ; preds = %_ZN4llvm7BuildMIERN
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit80
-  %lftr.wideiv132 = trunc i64 %indvars.iv.next130 to i32
-  %exitcond133.not = icmp eq i32 %.sroa.speculated, %lftr.wideiv132
-  br i1 %exitcond133.not, label %.loopexit, label %.lr.ph119, !llvm.loop !1291
+  %20 = icmp samesign ult i64 %indvars.iv.next130, %i.fm
+  br i1 %20, label %.lr.ph119, label %.loopexit, !llvm.loop !1291
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

@@ -205,13 +205,9 @@ bb.a:
   %i.o = mul nsw i32 %5, 255                      ; 2 uses
   %i.p = sext i32 %i.d to i64                     ; 2 uses
   %.not113 = icmp eq i32 %i.h, 31
-  %6 = add nsw i32 %2, %i.i
   %i.q = sext i32 %2 to i64
-  %7 = sext i32 %6 to i64
-  %8 = add nsw i32 %i.i, %2
-  %i.r = add i32 %i.i, %2                         ; 2 uses
-  %i.s = add nsw i32 %i.r, %i.i
-  %9 = sext i32 %i.r to i64
+  %i.r = add i32 %2, %i.i
+  %i.s = add i32 %2, %i.i                         ; 2 uses
   %i.t = sext i32 %i.s to i64
   %i.u = or disjoint i32 %2, -2147483648
   br label %.preheader
@@ -219,15 +215,16 @@ bb.a:
 .preheader:                                       ; preds = %bb.a, %.split.us
   %i.v = phi i1 [ true, %bb.a ], [ false, %.split.us ]
   %indvars.iv125 = phi i64 [ 0, %bb.a ], [ 1, %.split.us ] ; 2 uses
+  %indvars.iv118 = phi i32 [ %3, %bb.a ], [ %indvars.iv.next119, %.split.us ] ; 2 uses
+  %6 = sext i32 %indvars.iv118 to i64             ; 2 uses
   %i.w = shl nuw nsw i64 %indvars.iv125, 1        ; 4 uses
   %i.x = trunc nuw nsw i64 %indvars.iv125 to i32
   %i.y = shl nuw i32 %i.x, %i.h
-  %i.z = add i32 %i.y, %3                         ; 6 uses
+  %i.z = add nsw i32 %i.y, %3                     ; 5 uses
   br i1 %.not113, label %.preheader.split.preheader, label %.preheader.split.us.preheader
 
 .preheader.split.us.preheader:                    ; preds = %.preheader
   %i.aa = add nsw i32 %i.z, %i.i
-  %10 = sext i32 %i.z to i64                      ; 2 uses
   %i.ab = sext i32 %i.aa to i64                   ; 2 uses
   %i.ac = load ptr, ptr %i.g, align 8, !tbaa !164
   %i.ad = getelementptr inbounds nuw [40 x i8], ptr %i.ac, i64 %i.w ; 4 uses
@@ -271,7 +268,7 @@ bb.b:                                             ; preds = %.preheader.split.us
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
-  %indvars.iv116 = phi i64 [ %10, %.lr.ph.us.preheader ], [ %indvars.iv.next117, %._crit_edge.us ] ; 4 uses
+  %indvars.iv116 = phi i64 [ %6, %.lr.ph.us.preheader ], [ %indvars.iv.next117, %._crit_edge.us ] ; 4 uses
   %i.bb = sub nsw i64 0, %indvars.iv116           ; 3 uses
   %i.bc = trunc nsw i64 %indvars.iv116 to i32
   %i.bd = xor i32 %i.bc, -1
@@ -350,10 +347,12 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %i.cy = icmp slt i64 %indvars.iv.next, %7
+  %i.cy = icmp slt i64 %indvars.iv.next, %i.t
   br i1 %i.cy, label %bb.c, label %._crit_edge.us, !llvm.loop !180
 
 ..loopexit_crit_edge.split.us:                    ; preds = %._crit_edge.us, %bb.b
+  %indvars.iv.next.pre-phi = phi i32 [ %i.r, %bb.b ], [ %i.s, %._crit_edge.us ] ; 3 uses
+  %7 = sext i32 %indvars.iv.next.pre-phi to i64
   %i.cz = load ptr, ptr %i.g, align 8, !tbaa !164
   %i.da = getelementptr inbounds nuw [40 x i8], ptr %i.cz, i64 %i.w ; 3 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 40 ; 2 uses
@@ -363,7 +362,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %.not.us.1, label %.lr.ph.us.preheader.1, label %bb.f
 
 bb.f:                                             ; preds = %..loopexit_crit_edge.split.us
-  tail call fastcc void @var_size_bmc(ptr noundef %0, ptr noundef nonnull %i.db, i32 noundef %8, i32 noundef %i.z, i32 noundef %i.h, i32 noundef %5)
+  tail call fastcc void @var_size_bmc(ptr noundef %0, ptr noundef nonnull %i.db, i32 noundef %indvars.iv.next.pre-phi, i32 noundef %i.z, i32 noundef %i.h, i32 noundef %5)
   br label %.split.us
 
 .lr.ph.us.preheader.1:                            ; preds = %..loopexit_crit_edge.split.us
@@ -382,14 +381,16 @@ bb.f:                                             ; preds = %..loopexit_crit_edg
   %i.dp = sdiv i32 %.neg97.us.1, 1024             ; 2 uses
   %.neg99.us.1 = mul i32 %i.dk, %.neg
   %i.dq = sdiv i32 %.neg99.us.1, 1024             ; 2 uses
-  %i.dr = sext i32 %i.dm to i64
-  %i.ds = sext i32 %i.dp to i64
+  %8 = add nsw i32 %indvars.iv.next.pre-phi, %i.i
+  %9 = sext i32 %i.dm to i64
+  %i.dr = sext i32 %i.dp to i64
+  %i.ds = sext i32 %8 to i64
   %i.dt = sext i32 %i.do to i64
   %i.du = sext i32 %i.dq to i64
   br label %.lr.ph.us.1
 
 .lr.ph.us.1:                                      ; preds = %._crit_edge.us.1, %.lr.ph.us.preheader.1
-  %indvars.iv116.1 = phi i64 [ %10, %.lr.ph.us.preheader.1 ], [ %indvars.iv.next117.1, %._crit_edge.us.1 ] ; 4 uses
+  %indvars.iv116.1 = phi i64 [ %6, %.lr.ph.us.preheader.1 ], [ %indvars.iv.next117.1, %._crit_edge.us.1 ] ; 4 uses
   %i.dv = sub nsw i64 0, %indvars.iv116.1         ; 3 uses
   %i.dw = trunc nsw i64 %indvars.iv116.1 to i32
   %i.dx = xor i32 %i.dw, -1
@@ -407,7 +408,7 @@ bb.f:                                             ; preds = %..loopexit_crit_edg
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.i, %.lr.ph.us.1
-  %indvars.iv.1 = phi i64 [ %indvars.iv.next.1, %bb.i ], [ %9, %.lr.ph.us.1 ] ; 4 uses
+  %indvars.iv.1 = phi i64 [ %indvars.iv.next.1, %bb.i ], [ %7, %.lr.ph.us.1 ] ; 4 uses
   %i.ef = add nsw i64 %indvars.iv.1, %i.dz        ; 3 uses
   %i.eg = load ptr, ptr %i.j, align 8, !tbaa !82
   %i.eh = getelementptr inbounds [36 x i8], ptr %i.eg, i64 %i.ef ; 3 uses
@@ -432,7 +433,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ew = sext i32 %i.ev to i64
   %i.ex = getelementptr inbounds [4 x i8], ptr %i.em, i64 %i.ew
   store i32 %i.n, ptr %i.ex, align 4, !tbaa !56
-  %i.ey = icmp slt i64 %i.dr, %i.es
+  %i.ey = icmp slt i64 %9, %i.es
   %..i104.us.1 = tail call i32 @llvm.smin.i32(i32 %i.dm, i32 %i.er)
   %i.ez = trunc nsw i64 %i.es to i32              ; 2 uses
   %.0.i105.us.1 = select i1 %i.ey, i32 %i.ez, i32 %..i104.us.1
@@ -452,7 +453,7 @@ bb.h:                                             ; preds = %bb.g
   %i.fj = sext i32 %i.fi to i64
   %i.fk = getelementptr inbounds [4 x i8], ptr %i.em, i64 %i.fj
   store i32 %i.o, ptr %i.fk, align 4, !tbaa !56
-  %i.fl = icmp slt i64 %i.ds, %i.es
+  %i.fl = icmp slt i64 %i.dr, %i.es
   %..i100.us.1 = tail call i32 @llvm.smin.i32(i32 %i.dp, i32 %i.er)
   %.0.i101.us.1 = select i1 %i.fl, i32 %i.ez, i32 %..i100.us.1
   %i.fm = trunc i32 %.0.i101.us.1 to i16
@@ -468,7 +469,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %indvars.iv.next.1 = add nsw i64 %indvars.iv.1, 1 ; 2 uses
-  %i.fs = icmp slt i64 %indvars.iv.next.1, %i.t
+  %i.fs = icmp slt i64 %indvars.iv.next.1, %i.ds
   br i1 %i.fs, label %bb.g, label %._crit_edge.us.1, !llvm.loop !180
 
 ._crit_edge.us.1:                                 ; preds = %bb.i
@@ -500,6 +501,7 @@ bb.k:                                             ; preds = %.loopexit
   br label %.split.us
 
 .split.us:                                        ; preds = %._crit_edge.us.1, %.loopexit, %bb.k, %bb.f
+  %indvars.iv.next119 = add i32 %indvars.iv118, %i.i
   br i1 %i.v, label %.preheader, label %bb.l, !llvm.loop !182
 
 bb.l:                                             ; preds = %.split.us

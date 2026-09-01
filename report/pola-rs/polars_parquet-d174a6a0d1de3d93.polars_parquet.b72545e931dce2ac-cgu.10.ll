@@ -205,6 +205,7 @@ bb.m:                                             ; preds = %bb.l
 .lr.ph.split:                                     ; preds = %.lr.ph
   %.pn.i = shl nuw nsw i32 48, %i.ar
   %invariant.op = add nuw nsw i32 %.pn.i, 16, !dbg !28939
+  %16 = zext nneg i32 %.sroa.04.0740 to i64, !dbg !28939
   br label %bb.t, !dbg !28939
 
 bb.n:                                             ; preds = %bb.r, %bb.d
@@ -264,15 +265,17 @@ bb.s:                                             ; preds = %bb.n
   br label %bb.c, !dbg !28996
 
 bb.t:                                             ; preds = %.lr.ph.split, %bb.w
-  %.sroa.04.1725 = phi i32 [ %.sroa.04.0740, %.lr.ph.split ], [ %16, %bb.w ] ; 5 uses
+  %indvars.iv = phi i64 [ %16, %.lr.ph.split ], [ %indvars.iv.next, %bb.w ] ; 3 uses
   %.sroa.09.1724 = phi i1 [ %.sroa.09.0739, %.lr.ph.split ], [ %spec.select, %bb.w ]
   %.sroa.011.1723 = phi double [ %.sroa.011.0738, %.lr.ph.split ], [ %i.bt, %bb.w ] ; 3 uses
-  %i.bl = shl nuw nsw i32 %.sroa.04.1725, %i.ar, !dbg !28944 ; 3 uses
+  %17 = trunc nuw nsw i64 %indvars.iv to i32, !dbg !28944 ; 3 uses
+  %i.bl = shl nuw nsw i32 %17, %i.ar, !dbg !28944 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !dbg !28945
   store double 0.000000e+00, ptr %i.o, align 8, !dbg !28947
   call void @llvm.experimental.noalias.scope.decl(metadata !28941), !dbg !28948
   store i32 %i.bl, ptr %i.aa, align 4, !dbg !28950, !alias.scope !28941
-  %i.bm = add nuw nsw i32 %.sroa.04.1725, 67108860, !dbg !28997
+  %18 = trunc i64 %indvars.iv to i32, !dbg !28997
+  %i.bm = add i32 %18, 67108860, !dbg !28997
   %i.bn = shl nuw nsw i32 %i.bm, %i.ar, !dbg !28997
   %.sroa.01.0.i.reass = add nuw nsw i32 %i.bl, %invariant.op
   store i32 %.sroa.01.0.i.reass, ptr %i.af, align 8, !dbg !28972, !alias.scope !28941
@@ -304,15 +307,15 @@ bb.v:                                             ; preds = %bb.u
 .split729.us:                                     ; preds = %bb.u, %bb.v, %bb.k, %bb.l
   %.us-phi730 = phi i1 [ %spec.select.us, %bb.k ], [ %spec.select.us, %bb.l ], [ %spec.select, %bb.v ], [ %spec.select, %bb.u ], !dbg !28982
   %.us-phi731 = phi double [ %.sroa.011.1723.us, %bb.k ], [ %.sroa.011.1723.us, %bb.l ], [ %.sroa.011.1723, %bb.v ], [ %.sroa.011.1723, %bb.u ], !dbg !28982
-  %.us-phi732 = phi i32 [ %.sroa.04.1725.us, %bb.k ], [ %.sroa.04.1725.us, %bb.l ], [ %.sroa.04.1725, %bb.v ], [ %.sroa.04.1725, %bb.u ], !dbg !28982
+  %.us-phi732 = phi i32 [ %.sroa.04.1725.us, %bb.k ], [ %.sroa.04.1725.us, %bb.l ], [ %17, %bb.v ], [ %17, %bb.u ], !dbg !28982
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !dbg !28982
   br label %.loopexit601, !dbg !29005
 
 bb.w:                                             ; preds = %bb.v
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.al, ptr noundef nonnull align 8 dereferenceable(24) %i.ae, i64 24, i1 false), !dbg !28980
-  %16 = add nuw i32 %.sroa.04.1725, 1, !dbg !28981 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !28981 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !dbg !28982
-  %exitcond.not = icmp eq i32 %16, 16, !dbg !28939
+  %exitcond.not = icmp eq i64 %indvars.iv.next, 16, !dbg !28939
   br i1 %exitcond.not, label %.loopexit601, label %bb.t, !dbg !28939
 
 bb.x:                                             ; preds = %bb.c

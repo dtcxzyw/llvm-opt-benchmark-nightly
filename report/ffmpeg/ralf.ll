@@ -2,6 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 22
 inline.NumDeleted: 10
 loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 3
 loop-unroll.NumUnrolled: 4
 begin_hunk_0_@decode_frame:bb.a
 bb.s:                                             ; preds = %bb.r
@@ -204,7 +205,8 @@ bb.ae:                                            ; preds = %get_vlc2.exit146.i.
 
 bb.af:                                            ; preds = %bb.af, %.preheader.i.i
   %i.hu = phi i32 [ %i.hl, %.preheader.i.i ], [ %i.ip, %bb.af ] ; 3 uses
-  %indvars.iv170.i.i.a = phi i64 [ 0, %.preheader.i.i ], [ %indvars.iv.next171.i.i.1.a, %bb.af ] ; 3 uses
+  %indvars.iv170.i.i = phi i64 [ 0, %.preheader.i.i ], [ %indvars.iv.next171.i.i.1, %bb.af ] ; 3 uses
+  %indvars.iv170.i.i.a = phi i64 [ 0, %.preheader.i.i ], [ %indvars.iv.next171.i.i.1.a, %bb.af ]
   %i.hv = lshr i32 %i.hu, 3
   %i.hw = zext nneg i32 %i.hv to i64
   %i.hx = getelementptr inbounds nuw i8, ptr %i.fp, i64 %i.hw
@@ -215,7 +217,7 @@ bb.af:                                            ; preds = %bb.af, %.preheader.
   %i.ic = lshr i32 %i.ib, %i.ht
   %i.id = add i32 %i.hu, %i.fu
   %i.ie = tail call i32 @llvm.umin.i32(i32 %i.ga, i32 %i.id) ; 3 uses
-  %i.if = getelementptr inbounds nuw [4 x i8], ptr %i.fx, i64 %indvars.iv170.i.i.a
+  %i.if = getelementptr inbounds nuw [4 x i8], ptr %i.fx, i64 %indvars.iv170.i.i
   store i32 %i.ic, ptr %i.if, align 4, !tbaa !47
   %i.ig = lshr i32 %i.ie, 3
   %i.ih = zext nneg i32 %i.ig to i64
@@ -227,10 +229,11 @@ bb.af:                                            ; preds = %bb.af, %.preheader.
   %i.in = lshr i32 %i.im, %i.ht
   %i.io = add i32 %i.ie, %i.fu
   %i.ip = tail call i32 @llvm.umin.i32(i32 %i.ga, i32 %i.io) ; 2 uses
-  %i.iq = getelementptr inbounds nuw [4 x i8], ptr %i.fx, i64 %indvars.iv170.i.i.a
+  %i.iq = getelementptr inbounds nuw [4 x i8], ptr %i.fx, i64 %indvars.iv170.i.i
   %i.ir = getelementptr inbounds nuw i8, ptr %i.iq, i64 4
   store i32 %i.in, ptr %i.ir, align 4, !tbaa !47
-  %indvars.iv.next171.i.i.1.a = add nuw nsw i64 %indvars.iv170.i.i.a, 2 ; 2 uses
+  %indvars.iv.next171.i.i.1 = add nuw nsw i64 %indvars.iv170.i.i, 2
+  %indvars.iv.next171.i.i.1.a = add i64 %indvars.iv170.i.i.a, 2 ; 2 uses
   %exitcond.not.i.i.1 = icmp eq i64 %indvars.iv.next171.i.i.1.a, %i.fj
   br i1 %exitcond.not.i.i.1, label %._crit_edge.i.i, label %bb.af, !llvm.loop !70
 
@@ -633,20 +636,21 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.acb, label %.loopexit, label %vector.body, !llvm.loop !88
 
 scalar.ph189:                                     ; preds = %.preheader161.i, %scalar.ph189
-  %indvars.iv194.i.a = phi i64 [ %indvars.iv.next195.i.1.a, %scalar.ph189 ], [ 0, %.preheader161.i ] ; 6 uses
-  %i.acc = getelementptr inbounds nuw [4 x i8], ptr %i.zv, i64 %indvars.iv194.i.a
+  %indvars.iv194.i = phi i64 [ %indvars.iv.next195.i.1, %scalar.ph189 ], [ 0, %.preheader161.i ] ; 6 uses
+  %indvars.iv194.i.a = phi i64 [ %indvars.iv.next195.i.1.a, %scalar.ph189 ], [ 0, %.preheader161.i ]
+  %i.acc = getelementptr inbounds nuw [4 x i8], ptr %i.zv, i64 %indvars.iv194.i
   %i.acd = load i32, ptr %i.acc, align 4, !tbaa !47
   %i.ace = add i32 %i.acd, %i.abf
   %i.acf = trunc i32 %i.ace to i16
-  %i.acg = getelementptr inbounds nuw [2 x i8], ptr %i.du, i64 %indvars.iv194.i.a
+  %i.acg = getelementptr inbounds nuw [2 x i8], ptr %i.du, i64 %indvars.iv194.i
   store i16 %i.acf, ptr %i.acg, align 2, !tbaa !83
-  %i.ach = getelementptr inbounds nuw [4 x i8], ptr %i.zw, i64 %indvars.iv194.i.a
+  %i.ach = getelementptr inbounds nuw [4 x i8], ptr %i.zw, i64 %indvars.iv194.i
   %i.aci = load i32, ptr %i.ach, align 4, !tbaa !47
   %i.acj = add i32 %i.aci, %i.abh
   %i.ack = trunc i32 %i.acj to i16
-  %i.acl = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %indvars.iv194.i.a
+  %i.acl = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %indvars.iv194.i
   store i16 %i.ack, ptr %i.acl, align 2, !tbaa !83
-  %indvars.iv.next195.i = or disjoint i64 %indvars.iv194.i.a, 1 ; 4 uses
+  %indvars.iv.next195.i = or disjoint i64 %indvars.iv194.i, 1 ; 4 uses
   %i.acm = getelementptr inbounds nuw [4 x i8], ptr %i.zv, i64 %indvars.iv.next195.i
   %i.acn = load i32, ptr %i.acm, align 4, !tbaa !47
   %i.aco = add i32 %i.acn, %i.abf
@@ -659,7 +663,8 @@ scalar.ph189:                                     ; preds = %.preheader161.i, %s
   %i.acu = trunc i32 %i.act to i16
   %i.acv = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %indvars.iv.next195.i
   store i16 %i.acu, ptr %i.acv, align 2, !tbaa !83
-  %indvars.iv.next195.i.1.a = add nuw nsw i64 %indvars.iv194.i.a, 2 ; 2 uses
+  %indvars.iv.next195.i.1 = add nuw nsw i64 %indvars.iv194.i, 2
+  %indvars.iv.next195.i.1.a = add i64 %indvars.iv194.i.a, 2 ; 2 uses
   %exitcond198.not.i.1 = icmp eq i64 %indvars.iv.next195.i.1.a, %wide.trip.count197.i
   br i1 %exitcond198.not.i.1, label %.loopexit, label %scalar.ph189, !llvm.loop !89
 
@@ -686,21 +691,22 @@ bb.br:                                            ; preds = %bb.br, %.preheader1
   br i1 %exitcond193.not.i, label %.loopexit, label %bb.br, !llvm.loop !90
 
 scalar.ph207:                                     ; preds = %.preheader165.i, %scalar.ph207
-  %indvars.iv184.i.a = phi i64 [ %indvars.iv.next185.i.1.a, %scalar.ph207 ], [ 0, %.preheader165.i ] ; 6 uses
-  %i.adj = getelementptr inbounds nuw [4 x i8], ptr %i.zv, i64 %indvars.iv184.i.a
+  %indvars.iv184.i = phi i64 [ %indvars.iv.next185.i.1, %scalar.ph207 ], [ 0, %.preheader165.i ] ; 6 uses
+  %indvars.iv184.i.a = phi i64 [ %indvars.iv.next185.i.1.a, %scalar.ph207 ], [ 0, %.preheader165.i ]
+  %i.adj = getelementptr inbounds nuw [4 x i8], ptr %i.zv, i64 %indvars.iv184.i
   %i.adk = load i32, ptr %i.adj, align 4, !tbaa !47
   %i.adl = add i32 %i.adk, %i.aar                 ; 2 uses
-  %i.adm = getelementptr inbounds nuw [4 x i8], ptr %i.zw, i64 %indvars.iv184.i.a
+  %i.adm = getelementptr inbounds nuw [4 x i8], ptr %i.zw, i64 %indvars.iv184.i
   %i.adn = load i32, ptr %i.adm, align 4, !tbaa !47
   %i.ado = add i32 %i.adn, %i.aat
   %i.adp = add i32 %i.ado, %i.adl
   %i.adq = trunc i32 %i.adp to i16
-  %i.adr = getelementptr inbounds nuw [2 x i8], ptr %i.du, i64 %indvars.iv184.i.a
+  %i.adr = getelementptr inbounds nuw [2 x i8], ptr %i.du, i64 %indvars.iv184.i
   store i16 %i.adq, ptr %i.adr, align 2, !tbaa !83
   %i.ads = trunc i32 %i.adl to i16
-  %i.adt = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %indvars.iv184.i.a
+  %i.adt = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %indvars.iv184.i
   store i16 %i.ads, ptr %i.adt, align 2, !tbaa !83
-  %indvars.iv.next185.i = or disjoint i64 %indvars.iv184.i.a, 1 ; 4 uses
+  %indvars.iv.next185.i = or disjoint i64 %indvars.iv184.i, 1 ; 4 uses
   %i.adu = getelementptr inbounds nuw [4 x i8], ptr %i.zv, i64 %indvars.iv.next185.i
   %i.adv = load i32, ptr %i.adu, align 4, !tbaa !47
   %i.adw = add i32 %i.adv, %i.aar                 ; 2 uses
@@ -714,7 +720,8 @@ scalar.ph207:                                     ; preds = %.preheader165.i, %s
   %i.aed = trunc i32 %i.adw to i16
   %i.aee = getelementptr inbounds nuw [2 x i8], ptr %i.dv, i64 %indvars.iv.next185.i
   store i16 %i.aed, ptr %i.aee, align 2, !tbaa !83
-  %indvars.iv.next185.i.1.a = add nuw nsw i64 %indvars.iv184.i.a, 2 ; 2 uses
+  %indvars.iv.next185.i.1 = add nuw nsw i64 %indvars.iv184.i, 2
+  %indvars.iv.next185.i.1.a = add i64 %indvars.iv184.i.a, 2 ; 2 uses
   %exitcond188.not.i.1 = icmp eq i64 %indvars.iv.next185.i.1.a, %wide.trip.count187.i
   br i1 %exitcond188.not.i.1, label %.loopexit, label %scalar.ph207, !llvm.loop !91
 

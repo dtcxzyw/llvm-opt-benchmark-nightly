@@ -204,25 +204,25 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.i, %bb.a
-  %.022.i = phi i32 [ 0, %bb.a ], [ %4, %bb.i ]   ; 4 uses
-  %i.h = icmp eq i32 %.022.i, 3
+  %indvars.iv.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i, %bb.i ] ; 3 uses
+  %i.h = icmp eq i64 %indvars.iv.i, 3
   br i1 %i.h, label %bb.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = sub nuw nsw i32 7, %.022.i
-  %i.i = load ptr, ptr %i.c, align 8              ; 7 uses
-  %3 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cpu_regs, i64 32), align 16 ; 2 uses
-  %i.j = shl i32 %.022.i, %i.b                    ; 2 uses
+  %2 = load ptr, ptr %i.c, align 8                ; 7 uses
+  %i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cpu_regs, i64 32), align 16 ; 2 uses
+  %3 = trunc nuw nsw i64 %indvars.iv.i to i32     ; 2 uses
+  %i.j = shl i32 %3, %i.b                         ; 2 uses
   %.not.i.i = icmp eq i32 %i.j, 0
   br i1 %.not.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.k = sext i32 %i.j to i64
-  tail call void @tcg_gen_addi_i64(ptr noundef %i.i, ptr noundef %3, i64 noundef range(i64 -2147483648, 2147483648) %i.k) #14
+  tail call void @tcg_gen_addi_i64(ptr noundef %2, ptr noundef %i.i, i64 noundef range(i64 -2147483648, 2147483648) %i.k) #14
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.0.i.i = phi ptr [ %i.i, %bb.d ], [ %3, %bb.c ] ; 3 uses
+  %.0.i.i = phi ptr [ %2, %bb.d ], [ %i.i, %bb.c ] ; 3 uses
   %.val.i.i = load i32, ptr %i.d, align 8         ; 3 uses
   %i.l = and i32 %.val.i.i, 32768
   %.not.i.i.i = icmp eq i32 %i.l, 0               ; 2 uses
@@ -240,19 +240,19 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.r, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @tcg_gen_ext_i64(ptr noundef %i.i, ptr noundef %.0.i.i, i32 noundef %i.o) #14
+  tail call void @tcg_gen_ext_i64(ptr noundef %2, ptr noundef %.0.i.i, i32 noundef %i.o) #14
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.021.i.i.i = phi ptr [ %i.i, %bb.g ], [ %.0.i.i, %bb.f ]
+  %.021.i.i.i = phi ptr [ %2, %bb.g ], [ %.0.i.i, %bb.f ]
   %i.s = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cpu_seg_base, i64 16), align 16
-  tail call void @tcg_gen_add_i64(ptr noundef %i.i, ptr noundef %.021.i.i.i, ptr noundef %i.s) #14
+  tail call void @tcg_gen_add_i64(ptr noundef %2, ptr noundef %.021.i.i.i, ptr noundef %i.s) #14
   br label %gen_lea_ss_ofs.exit.i
 
 gen_lea_ss_ofs.exit.i:                            ; preds = %bb.h, %bb.e
-  %.1.i.i.i = phi ptr [ %i.i, %bb.h ], [ %.0.i.i, %bb.e ]
+  %.1.i.i.i = phi ptr [ %2, %bb.h ], [ %.0.i.i, %bb.e ]
   %.0.i.i.i = phi i32 [ %i.q, %bb.h ], [ %i.o, %bb.e ]
-  tail call void @tcg_gen_ext_i64(ptr noundef %i.i, ptr noundef %.1.i.i.i, i32 noundef %.0.i.i.i) #14
+  tail call void @tcg_gen_ext_i64(ptr noundef %2, ptr noundef %.1.i.i.i, i32 noundef %.0.i.i.i) #14
   %i.t = load ptr, ptr %i.e, align 8
   %i.u = load ptr, ptr %i.c, align 8
   %.val.i = load i32, ptr %i.f, align 4
@@ -262,12 +262,13 @@ gen_lea_ss_ofs.exit.i:                            ; preds = %bb.h, %bb.e
   %i.y = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.x
   tail call void @tcg_gen_qemu_ld_i64_chk(ptr noundef %i.t, ptr noundef %i.y, i64 noundef range(i64 -2147483648, 2147483648) %i.v, i32 noundef %i.b, i32 noundef 1) #14
   %i.z = load ptr, ptr %i.e, align 8
-  %i.aa = tail call fastcc ptr @gen_op_deposit_reg_v(ptr noundef nonnull readonly %0, i32 noundef %i.b, i32 noundef range(i32 -128, -2147483640) %2, ptr noundef null, ptr noundef %i.z) ; 0 uses
+  %4 = sub nuw i32 7, %3
+  %i.aa = tail call fastcc ptr @gen_op_deposit_reg_v(ptr noundef nonnull readonly %0, i32 noundef %i.b, i32 noundef range(i32 -128, -2147483640) %4, ptr noundef null, ptr noundef %i.z) ; 0 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %gen_lea_ss_ofs.exit.i, %bb.b
-  %4 = add nuw nsw i32 %.022.i, 1                 ; 2 uses
-  %exitcond.not.i = icmp eq i32 %4, 8
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 8
   br i1 %exitcond.not.i, label %bb.j, label %bb.b, !llvm.loop !20
 
 bb.j:                                             ; preds = %bb.i
@@ -670,7 +671,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.b = load i64, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 120
-  %i.d = load i64, ptr %i.c, align 8
+  %i.d = load i64, ptr %i.c, align 8              ; 2 uses
   %i.e = trunc i64 %i.d to i32
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 132
   %i.g = load i32, ptr %i.f, align 4              ; 2 uses
@@ -730,7 +731,7 @@ gen_lea_ss_ofs.exit.i:                            ; preds = %bb.d, %bb.a
   %i.ah = ptrtoint ptr %i.ac to i64
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.ah
   tail call void @tcg_gen_qemu_st_i64_chk(ptr noundef %i.ab, ptr noundef %i.ai, i64 noundef range(i64 -2147483648, 2147483648) %i.ae, i32 noundef %.0.i.i, i32 noundef 1) #14
-  %i.aj = and i32 %i.e, 31                        ; 4 uses
+  %i.aj = and i32 %i.e, 31                        ; 3 uses
   switch i32 %i.aj, label %.lr.ph.preheader.i [
     i32 0, label %gen_enter.exit
     i32 1, label %.loopexit.i
@@ -738,13 +739,15 @@ gen_lea_ss_ofs.exit.i:                            ; preds = %bb.d, %bb.a
 
 .lr.ph.preheader.i:                               ; preds = %gen_lea_ss_ofs.exit.i
   %i.ak = tail call ptr @tcg_temp_new_i64() #14   ; 2 uses
+  %wide.trip.count.i = and i64 %i.d, 31
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %gen_lea_ss_ofs.exit82.i, %.lr.ph.preheader.i
-  %.093.i = phi i32 [ %2, %gen_lea_ss_ofs.exit82.i ], [ 1, %.lr.ph.preheader.i ] ; 2 uses
+  %indvars.iv.i = phi i64 [ 1, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %gen_lea_ss_ofs.exit82.i ] ; 2 uses
   %i.al = load ptr, ptr %i.q, align 8             ; 7 uses
   %i.am = load ptr, ptr getelementptr inbounds nuw (i8, ptr @cpu_regs, i64 40), align 8 ; 2 uses
-  %i.an = shl i32 %.093.i, %.0.i.i                ; 2 uses
+  %2 = trunc nuw nsw i64 %indvars.iv.i to i32
+  %i.an = shl i32 %2, %.0.i.i                     ; 2 uses
   %i.ao = sub i32 0, %i.an
   %i.ap = sext i32 %i.ao to i64                   ; 2 uses
   %.not.i63.i = icmp eq i32 %i.an, 0              ; 2 uses
@@ -840,8 +843,8 @@ gen_lea_ss_ofs.exit82.i:                          ; preds = %bb.n, %bb.k
   %i.bq = ptrtoint ptr %i.bn to i64
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bq
   tail call void @tcg_gen_qemu_st_i64_chk(ptr noundef %i.ak, ptr noundef %i.br, i64 noundef range(i64 -2147483648, 2147483648) %i.bo, i32 noundef %.0.i.i, i32 noundef 1) #14
-  %2 = add nuw nsw i32 %.093.i, 1                 ; 2 uses
-  %exitcond.not.i = icmp eq i32 %2, %i.aj
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !21
 
 .loopexit.i:                                      ; preds = %gen_lea_ss_ofs.exit82.i, %gen_lea_ss_ofs.exit.i

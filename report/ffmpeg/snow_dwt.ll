@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %._crit_edge, %.spli
   %.07815 = phi i32 [ 0, %._crit_edge ], [ %.us-phi, %.split14.us ] ; 2 uses
   %i.ck = sub nuw nsw i64 %i.ch, %indvars.iv33.a  ; 2 uses
   %i.cl = trunc nuw nsw i64 %i.ck to i32          ; 2 uses
-  %i.cm = lshr i32 %3, %i.cl                      ; 5 uses
+  %i.cm = lshr i32 %3, %i.cl                      ; 4 uses
   %i.cn = shl nuw nsw i32 32, %i.cl
   %i.co = lshr exact i32 %i.cn, 1
   %.not17 = icmp eq i32 %i.cm, 0
@@ -214,23 +214,23 @@ bb.i:                                             ; preds = %._crit_edge, %.spli
 
 .preheader.lr.ph.us.preheader:                    ; preds = %bb.i
   %.not = icmp ne i64 %indvars.iv33.a, 0
-  %i.cq = zext i1 %.not to i64
+  %6 = zext i1 %.not to i64
+  %i.cq = zext nneg i32 %i.cm to i64              ; 4 uses
   %i.cr = trunc nuw i64 %i.ck to i32
   %i.cs = add nuw nsw i32 %i.cr, 5
-  %wide.trip.count26 = zext nneg i32 %i.cm to i64 ; 3 uses
   %min.iters.check = icmp samesign ult i32 %i.cm, 8
-  %n.vec = and i64 %wide.trip.count26, 56         ; 8 uses
+  %n.vec = and i64 %i.cq, 56                      ; 8 uses
   %i.ct = icmp eq i64 %n.vec, 8
   %i.cu = icmp eq i64 %n.vec, 16
   %i.cv = icmp eq i64 %n.vec, 24
   %i.cw = icmp eq i64 %n.vec, 32
   %i.cx = icmp eq i64 %n.vec, 40
   %i.cy = icmp eq i64 %n.vec, 48
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count26
+  %cmp.n = icmp eq i64 %n.vec, %i.cq
   br label %.preheader.lr.ph.us
 
 .preheader.lr.ph.us:                              ; preds = %.preheader.lr.ph.us.preheader, %._crit_edge10.us
-  %indvars.iv29 = phi i64 [ %i.cq, %.preheader.lr.ph.us.preheader ], [ %indvars.iv.next30, %._crit_edge10.us ] ; 4 uses
+  %indvars.iv29 = phi i64 [ %6, %.preheader.lr.ph.us.preheader ], [ %indvars.iv.next30, %._crit_edge10.us ] ; 4 uses
   %.17911.us = phi i32 [ %.07815, %.preheader.lr.ph.us.preheader ], [ %.lcssa, %._crit_edge10.us ]
   %i.cz = and i64 %indvars.iv29, 1
   %.not84.us = icmp eq i64 %i.cz, 0
@@ -253,19 +253,20 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.dh = call i32 @llvm.abs.i32(i32 %i.dg, i1 true)
   %i.di = add nuw nsw i32 %i.dh, %.36.us          ; 2 uses
   %indvars.iv.next24 = add nuw nsw i64 %indvars.iv23, 1 ; 2 uses
-  %exitcond27.not = icmp eq i64 %indvars.iv.next24, %wide.trip.count26
+  %exitcond27.not = icmp eq i64 %indvars.iv.next24, %i.cq
   br i1 %exitcond27.not, label %.loopexit, label %scalar.ph, !llvm.loop !357
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block
   %.lcssa = phi i32 [ %i.fp, %middle.block ], [ %i.di, %scalar.ph ] ; 3 uses
-  %6 = add nuw nsw i32 %.1779.us, 1               ; 2 uses
-  %exitcond28.not = icmp eq i32 %6, %i.cm
+  %indvars.iv.next29 = add nuw nsw i64 %indvars.iv28, 1 ; 2 uses
+  %exitcond28.not = icmp eq i64 %indvars.iv.next29, %i.cq
   br i1 %exitcond28.not, label %._crit_edge10.us, label %.preheader.us, !llvm.loop !358
 
 .preheader.us:                                    ; preds = %.preheader.lr.ph.us, %.loopexit
-  %.1779.us = phi i32 [ 0, %.preheader.lr.ph.us ], [ %6, %.loopexit ] ; 2 uses
+  %indvars.iv28 = phi i64 [ 0, %.preheader.lr.ph.us ], [ %indvars.iv.next29, %.loopexit ] ; 2 uses
   %.28.us = phi i32 [ %.17911.us, %.preheader.lr.ph.us ], [ %.lcssa, %.loopexit ] ; 2 uses
-  %i.dj = shl i32 %.1779.us, %i.cs
+  %7 = trunc nuw nsw i64 %indvars.iv28 to i32
+  %i.dj = shl i32 %7, %i.cs
   %i.dk = add nsw i32 %i.dc, %i.dj
   %i.dl = sext i32 %i.dk to i64
   %invariant.gep40 = getelementptr [4 x i8], ptr %i.a, i64 %i.dl ; 15 uses

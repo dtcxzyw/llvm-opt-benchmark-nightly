@@ -146,18 +146,21 @@ bb.a:
   %i.o = icmp eq i64 %indvars.iv.a, %i.i          ; 2 uses
   %i.p = shl nuw nsw i64 4, %indvars.iv.a
   %i.q = add nsw i64 %i.p, -16
-  %i.r = zext nneg i32 %i.m to i64
+  %11 = zext nneg i32 %i.m to i64
+  %i.r = zext nneg i32 %.0148289 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.m
+  %indvars.iv = phi i64 [ %i.r, %.lr.ph ], [ %indvars.iv.next, %bb.m ] ; 4 uses
   %.1280 = phi double [ %.0143291, %.lr.ph ], [ %i.eg, %bb.m ] ; 2 uses
   %.1145279 = phi i32 [ %.0144290, %.lr.ph ], [ %.2146, %bb.m ]
-  %.1149278 = phi i32 [ %.0148289, %.lr.ph ], [ %11, %bb.m ] ; 5 uses
-  %i.s = shl nuw nsw i32 %.1149278, %i.k          ; 9 uses
+  %12 = trunc i64 %indvars.iv to i32              ; 2 uses
+  %i.s = shl nuw nsw i32 %12, %i.k                ; 9 uses
   %i.t = load i32, ptr %i.d, align 4, !tbaa !14
   %i.u = add nuw nsw i32 %i.s, 16                 ; 3 uses
   %i.v = add nuw nsw i32 %i.u, %i.l               ; 2 uses
-  %i.w = add nuw nsw i32 %.1149278, 67108860
+  %13 = trunc i64 %indvars.iv to i32
+  %i.w = add i32 %13, 67108860
   %i.x = shl nuw nsw i32 %i.w, %i.k
   %.not.i = icmp eq i32 %i.t, 0
   br i1 %.not.i, label %_ZN13duckdb_brotli24BrotliInitDistanceParamsEP20BrotliDistanceParamsjji.exit, label %bb.c
@@ -287,7 +290,7 @@ bb.j:                                             ; preds = %bb.i
   %i.cj = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.ci, i1 true)
   %i.ck = sub nsw i32 30, %i.cj
   %i.cl = zext i32 %i.ck to i64                   ; 2 uses
-  %i.cm = and i64 %i.ch, %i.r
+  %i.cm = and i64 %i.ch, %11
   %i.cn = lshr i64 %i.ch, %i.cl
   %i.co = sub nsw i64 %i.cl, %indvars.iv.a        ; 2 uses
   %i.cp = shl nsw i64 %i.co, 10
@@ -380,8 +383,8 @@ bb.m:                                             ; preds = %.loopexit271
   store i32 %.0.i183, ptr %.sroa.20.0..sroa_idx, align 8, !tbaa !3
   store i32 %.020.i, ptr %.sroa.11.0..sroa_idx, align 4, !tbaa !3
   store i64 %i.ay, ptr %.sroa.20252.0..sroa_idx, align 8, !tbaa !44
-  %11 = add i32 %.1149278, 1                      ; 2 uses
-  %exitcond.not = icmp eq i32 %11, 16
+  %indvars.iv.next = add i64 %indvars.iv, 1       ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, 16
   br i1 %exitcond.not, label %.thread.thread, label %bb.b, !llvm.loop !45
 
 .thread.thread:                                   ; preds = %bb.m, %.preheader
@@ -393,8 +396,8 @@ bb.m:                                             ; preds = %.loopexit271
   br label %bb.n
 
 .thread:                                          ; preds = %.loopexit271, %_ZN13duckdb_brotliL26CommandRestoreDistanceCodeEPKNS_7CommandEPK20BrotliDistanceParams.exit.us.i
-  %.not177 = icmp eq i32 %.1149278, 0
-  %i.ek = add i32 %.1149278, -1
+  %.not177 = icmp eq i64 %indvars.iv, 0
+  %i.ek = add i32 %12, -1
   %i.el = lshr i32 %i.ek, 1
   %spec.select = select i1 %.not177, i32 0, i32 %i.el
   br label %bb.n

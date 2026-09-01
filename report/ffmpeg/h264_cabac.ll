@@ -204,14 +204,16 @@ bb.ep:                                            ; preds = %bb.eo
   %.not981 = icmp eq i32 %i.blt, 0
   %i.blu = and i32 %i.blk, 32
   %.not982 = icmp eq i32 %i.blu, 0
+  %wide.trip.count = zext nneg i32 %i.blq to i64
   %i.blv = trunc nuw nsw i64 %i.blb to i32
   br label %bb.eq
 
 bb.eq:                                            ; preds = %.lr.ph1575, %bb.fr
-  %.08671573 = phi i32 [ 0, %.lr.ph1575 ], [ %2, %bb.fr ] ; 2 uses
+  %indvars.iv1675 = phi i64 [ 0, %.lr.ph1575 ], [ %indvars.iv.next1676, %bb.fr ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #10
-  %i.blw = shl nuw i32 %.08671573, %i.blr
+  %2 = trunc nuw nsw i64 %indvars.iv1675 to i32
+  %i.blw = shl nuw i32 %2, %i.blr
   %i.blx = add nsw i32 %i.blw, %i.blv
   %i.bly = sext i32 %i.blx to i64                 ; 3 uses
   %i.blz = getelementptr inbounds i8, ptr @scan8, i64 %i.bly
@@ -614,8 +616,8 @@ bb.fr:                                            ; preds = %._crit_edge1792, %b
   store i8 %.pre-phi1799, ptr %i.bvu, align 1, !tbaa !74
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #10
-  %2 = add nuw nsw i32 %.08671573, 1              ; 2 uses
-  %exitcond1675.not = icmp eq i32 %2, %i.blq
+  %indvars.iv.next1676 = add nuw nsw i64 %indvars.iv1675, 1 ; 2 uses
+  %exitcond1675.not = icmp eq i64 %indvars.iv.next1676, %wide.trip.count
   br i1 %exitcond1675.not, label %.loopexit1515, label %bb.eq, !llvm.loop !152
 
 .thread1379:                                      ; preds = %pred_motion.exit1051
@@ -1018,7 +1020,7 @@ bb.nh:                                            ; preds = %get_cabac.exit1274.
   %.pre1772 = load i32, ptr %i.c, align 4, !tbaa !98
   %i.fbb = and i32 %.pre1772, 7
   %.not1024 = icmp eq i32 %i.fbb, 0
-  %i.fbc = select i1 %.not1024, i64 3, i64 0
+  %i.fbc = select i1 %.not1024, i64 4, i64 1
   br label %bb.ni
 
 .loopexit1507:                                    ; preds = %decode_cabac_residual_nondc.exit1098.3
@@ -1035,9 +1037,9 @@ bb.ni:                                            ; preds = %.preheader1508, %.l
   %i.fbi = sext i32 %i.fbh to i64
   %i.fbj = getelementptr inbounds [2 x i8], ptr %i.fat, i64 %i.fbi
   %i.fbk = load ptr, ptr %i.o, align 8, !tbaa !85
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.fbk, i64 %i.fbc
+  %3 = getelementptr inbounds nuw i8, ptr %i.fbk, i64 173808
   %i.fbl = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv1714.a
-  %4 = getelementptr inbounds nuw i8, ptr %i.fbl, i64 173816
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.fbl, i64 %i.fbc
   %i.fbm = load ptr, ptr %4, align 8, !tbaa !169
   %i.fbn = getelementptr inbounds nuw [4 x i8], ptr %i.fau, i64 %indvars.iv1714.a
   %i.fbo = load i32, ptr %i.fbn, align 4, !tbaa !98

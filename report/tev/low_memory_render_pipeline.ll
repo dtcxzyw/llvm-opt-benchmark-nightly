@@ -204,7 +204,7 @@ bb.a:
   %i.ak = sext i32 %i.aj to i64                   ; 5 uses
   %i.al = add nsw i64 %i.ak, -1                   ; 4 uses
   %i.am = add i64 %i.al, %i.ah
-  %i.an = udiv i64 %i.am, %i.ak                   ; 2 uses
+  %i.an = udiv i64 %i.am, %i.ak                   ; 4 uses
   %.sroa.speculated232 = tail call i64 @llvm.umin.i64(i64 %i.an, i64 %i.af)
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !9
@@ -259,15 +259,15 @@ bb.c:                                             ; preds = %bb.b
   %i.bw = udiv i64 %i.bv, %i.ak
   %.not139 = icmp ult i64 %i.bv, %i.ak
   %i.bx = sub i64 %i.bw, %i.au
-  %spec.select142 = select i1 %.not139, i64 0, i64 %i.bx ; 15 uses
+  %spec.select142 = select i1 %.not139, i64 0, i64 %i.bx ; 17 uses
   %i.by = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.bz = load i64, ptr %i.by, align 8, !tbaa !101
   %i.ca = add i64 %i.bz, %i.bs
   %i.cb = shl i64 %i.ca, %i.o
   %i.cc = add i64 %i.al, %i.cb
   %i.cd = udiv i64 %i.cc, %i.ak
-  %i.ce = add i64 %i.cd, %i.au
-  %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.an, i64 %i.ce) ; 9 uses
+  %i.ce = add i64 %i.cd, %i.au                    ; 3 uses
+  %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.an, i64 %i.ce) ; 7 uses
   %i.cf = icmp ult i64 %spec.select142, %i.ad
   br i1 %i.cf, label %bb.d, label %_ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5RectTImEERKNS_5PlaneIT_EES5_PS8_.exit.thread
 
@@ -539,7 +539,6 @@ bb.o:                                             ; preds = %bb.n
   %i.ib = shl i64 %i.d, 1
   %i.ic = add i64 %i.ib, -2
   %i.id = mul i64 %i.bc, %i.ic                    ; 4 uses
-  %5 = sub i64 %.sroa.speculated, %spec.select142 ; 4 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %0, i64 288
   %i.if = load ptr, ptr %i.ie, align 8, !tbaa !75
   %i.ig = getelementptr inbounds nuw [56 x i8], ptr %i.if, i64 %2 ; 4 uses
@@ -563,6 +562,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.iv, label %bb.p, label %_ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5RectTImEERKNS_5PlaneIT_EES5_PS8_.exit
 
 bb.p:                                             ; preds = %bb.o
+  %5 = sub i64 %.sroa.speculated, %spec.select142
   %i.iw = load i32, ptr %4, align 8, !tbaa !79, !alias.scope !108
   %i.ix = zext i32 %i.iw to i64
   %i.iy = getelementptr inbounds nuw i8, ptr %4, i64 4
@@ -588,13 +588,15 @@ bb.q:                                             ; preds = %bb.p
   %i.jj = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.jk = load i64, ptr %i.jj, align 8, !tbaa !84, !alias.scope !108 ; 3 uses
   %i.jl = shl i64 %i.bc, 2                        ; 3 uses
+  %umin = tail call i64 @llvm.umin.i64(i64 %i.an, i64 %i.ce) ; 2 uses
+  %6 = sub i64 %umin, %spec.select142             ; 3 uses
   %.neg = add i64 %spec.select142, 1
-  %xtraiter274 = and i64 %5, 1
-  %i.jm = icmp eq i64 %.sroa.speculated, %.neg
+  %xtraiter274 = and i64 %6, 1
+  %i.jm = icmp eq i64 %umin, %.neg
   br i1 %i.jm, label %.epil.preheader273, label %.lr.ph.i156.new
 
 .lr.ph.i156.new:                                  ; preds = %.lr.ph.i156
-  %unroll_iter277 = and i64 %5, -2
+  %unroll_iter277 = and i64 %6, -2
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.r, %.lr.ph.i156.new
@@ -638,7 +640,7 @@ _ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5RectTImEERKNS_5PlaneIT_EES5_PS8_.exit15
 
 .epil.preheader273:                               ; preds = %_ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5RectTImEERKNS_5PlaneIT_EES5_PS8_.exit158.thread.loopexit.unr-lcssa, %.lr.ph.i156
   %.024.i157.epil.init = phi i64 [ 0, %.lr.ph.i156 ], [ %i.ki, %_ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5RectTImEERKNS_5PlaneIT_EES5_PS8_.exit158.thread.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod276 = trunc i64 %5 to i1
+  %lcmp.mod276 = trunc i64 %6 to i1
   tail call void @llvm.assume(i1 %lcmp.mod276)
   %i.kj = add i64 %.024.i157.epil.init, %spec.select142
   %i.kk = load ptr, ptr %i.jf, align 8, !tbaa !83, !noalias !108
@@ -668,7 +670,6 @@ bb.t:                                             ; preds = %bb.s
   %i.kw = shl i64 %i.d, 1
   %i.kx = or disjoint i64 %i.kw, 1
   %i.ky = mul i64 %i.bc, %i.kx                    ; 4 uses
-  %6 = sub i64 %.sroa.speculated, %spec.select142 ; 4 uses
   %i.kz = getelementptr inbounds nuw i8, ptr %0, i64 288
   %i.la = load ptr, ptr %i.kz, align 8, !tbaa !75
   %i.lb = getelementptr inbounds nuw [56 x i8], ptr %i.la, i64 %2 ; 4 uses
@@ -693,6 +694,7 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.lr, label %bb.u, label %_ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5RectTImEERKNS_5PlaneIT_EES5_PS8_.exit
 
 bb.u:                                             ; preds = %bb.t
+  %7 = sub i64 %.sroa.speculated, %spec.select142
   %i.ls = load i32, ptr %4, align 8, !tbaa !79, !alias.scope !111
   %i.lt = zext i32 %i.ls to i64
   %i.lu = getelementptr inbounds nuw i8, ptr %4, i64 4
@@ -700,7 +702,7 @@ bb.u:                                             ; preds = %bb.t
   %i.lw = zext i32 %i.lv to i64
   %i.lx = add i64 %i.lf, %i.bc
   %.not5.i.i20.i161 = icmp ule i64 %i.lx, %i.lt
-  %i.ly = add i64 %i.lj, %6
+  %i.ly = add i64 %i.lj, %7
   %i.lz = icmp ule i64 %i.ly, %i.lw
   %i.ma = select i1 %.not5.i.i20.i161, i1 %i.lz, i1 false
   br i1 %i.ma, label %bb.v, label %_ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5RectTImEERKNS_5PlaneIT_EES5_PS8_.exit
@@ -719,13 +721,15 @@ bb.v:                                             ; preds = %bb.u
   %i.mg = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.mh = load i64, ptr %i.mg, align 8, !tbaa !84, !alias.scope !111 ; 3 uses
   %i.mi = shl i64 %i.bc, 2                        ; 3 uses
+  %umin280 = tail call i64 @llvm.umin.i64(i64 %i.an, i64 %i.ce) ; 2 uses
+  %8 = sub i64 %umin280, %spec.select142          ; 3 uses
   %.neg285 = add i64 %spec.select142, 1
-  %xtraiter280 = and i64 %6, 1
-  %i.mj = icmp eq i64 %.sroa.speculated, %.neg285
+  %xtraiter280 = and i64 %8, 1
+  %i.mj = icmp eq i64 %umin280, %.neg285
   br i1 %i.mj, label %.epil.preheader279, label %.lr.ph.i164.new
 
 .lr.ph.i164.new:                                  ; preds = %.lr.ph.i164
-  %unroll_iter283 = and i64 %6, -2
+  %unroll_iter283 = and i64 %8, -2
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.w, %.lr.ph.i164.new
@@ -769,7 +773,7 @@ _ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5RectTImEERKNS_5PlaneIT_EES5_PS8_.exit.l
 
 .epil.preheader279:                               ; preds = %_ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5RectTImEERKNS_5PlaneIT_EES5_PS8_.exit.loopexit.unr-lcssa, %.lr.ph.i164
   %.024.i165.epil.init = phi i64 [ 0, %.lr.ph.i164 ], [ %i.nf, %_ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5RectTImEERKNS_5PlaneIT_EES5_PS8_.exit.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod282 = trunc i64 %6 to i1
+  %lcmp.mod282 = trunc i64 %8 to i1
   tail call void @llvm.assume(i1 %lcmp.mod282)
   %i.ng = add i64 %.024.i165.epil.init, %spec.select142
   %i.nh = load ptr, ptr %i.mc, align 8, !tbaa !83, !noalias !111

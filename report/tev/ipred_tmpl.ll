@@ -205,9 +205,9 @@ bb.a:
   %i.n = and i64 %2, 1
   %.not.i106 = icmp eq i64 %i.n, 0
   tail call void @llvm.assume(i1 %.not.i106)
-  %i.o = ashr exact i64 %2, 1
-  %i.p = zext nneg i32 %8 to i64
-  %i.q = shl nsw i64 %i.o, %i.p                   ; 11 uses
+  %i.o = ashr exact i64 %2, 1                     ; 5 uses
+  %i.p = zext nneg i32 %8 to i64                  ; 7 uses
+  %i.q = shl nsw i64 %i.o, %i.p                   ; 3 uses
   br i1 %i.j, label %.preheader116.lr.ph.split.us, label %.preheader116.us147.preheader
 
 .preheader116.us147.preheader:                    ; preds = %.preheader116.lr.ph
@@ -233,13 +233,16 @@ bb.a:
   %i.w = add i32 %6, %i.v
   %i.x = zext i32 %i.w to i64                     ; 2 uses
   %i.y = mul nuw i64 %i.m, %i.x
+  %9 = shl nuw nsw i64 %wide.trip.count241, 1
   %i.z = add i64 %i.y, %wide.trip.count241
   %i.aa = shl i64 %i.z, 1
   %scevgep344 = getelementptr i8, ptr %0, i64 %i.aa
-  %i.ab = mul i64 %i.q, %i.x
-  %9 = add i64 %i.ab, %wide.trip.count241
-  %i.ac = shl i64 %9, 1
-  %scevgep345 = getelementptr i8, ptr %1, i64 %i.ac
+  %i.ab = mul i64 %i.o, %i.x
+  %10 = shl i64 %i.ab, 1
+  %i.ac = shl i64 %10, %i.p
+  %11 = getelementptr i8, ptr %1, i64 %i.ac
+  %scevgep345 = getelementptr i8, ptr %11, i64 %9
+  %12 = shl i64 %2, %i.p
   %i.ad = xor i32 %i.e, -1
   %i.ae = add i32 %6, %i.ad
   %i.af = zext i32 %i.ae to i64                   ; 2 uses
@@ -249,11 +252,13 @@ bb.a:
   %i.aj = shl i64 %i.ai, 1
   %scevgep372 = getelementptr i8, ptr %0, i64 %i.aj ; 2 uses
   %scevgep373 = getelementptr i8, ptr %1, i64 %2
-  %i.ak = mul i64 %i.q, %i.af
-  %i.al = shl i64 %i.ak, 1                        ; 2 uses
+  %i.ak = mul i64 %i.o, %i.af
+  %13 = shl i64 %i.ak, 1
+  %i.al = shl i64 %13, %i.p                       ; 2 uses
   %i.am = getelementptr i8, ptr %1, i64 %2
   %i.an = getelementptr i8, ptr %i.am, i64 %i.al
   %scevgep374 = getelementptr i8, ptr %i.an, i64 %i.ah
+  %14 = shl i64 %2, %i.p
   %i.ao = getelementptr i8, ptr %1, i64 %i.al
   %scevgep375 = getelementptr i8, ptr %i.ao, i64 %i.ah
   %i.ap = shl nuw nsw i64 %wide.trip.count241, 1
@@ -268,8 +273,7 @@ bb.a:
   %bound0380 = icmp ult ptr %0, %scevgep375
   %bound1381 = icmp ult ptr %1, %scevgep372
   %found.conflict382 = and i1 %bound0380, %bound1381
-  %.mask466 = and i64 %i.q, 4611686018427387904
-  %stride.check383 = icmp ne i64 %.mask466, 0
+  %stride.check383 = icmp slt i64 %14, 0
   %i.au = or i1 %found.conflict382, %stride.check383
   %conflict.rdx384 = or i1 %found.conflict378, %i.au
   %n.vec388 = and i64 %wide.trip.count241, 2147483640 ; 3 uses
@@ -283,8 +287,7 @@ bb.a:
   %bound0346 = icmp ult ptr %0, %scevgep345
   %bound1347 = icmp ult ptr %1, %scevgep344
   %found.conflict348 = and i1 %bound0346, %bound1347
-  %.mask467 = and i64 %i.q, 4611686018427387904
-  %stride.check349 = icmp ne i64 %.mask467, 0
+  %stride.check349 = icmp slt i64 %12, 0
   %i.aw = or i1 %found.conflict348, %stride.check349
   %min.iters.check352 = icmp ult i32 %i.i, 16
   %i.ax = and i64 %wide.trip.count241, 12
@@ -579,12 +582,14 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .preheader116.us.preheader:                       ; preds = %.preheader116.lr.ph.split.us.split
   %scevgep303 = getelementptr i8, ptr %1, i64 %2
-  %i.fn = mul i64 %i.q, %i.fj
-  %i.fo = shl i64 %i.fn, 1                        ; 2 uses
+  %i.fn = mul i64 %i.o, %i.fj
+  %15 = shl i64 %i.fn, 1
+  %i.fo = shl i64 %15, %i.p                       ; 2 uses
   %i.fp = shl nuw nsw i64 %wide.trip.count241, 2  ; 2 uses
   %i.fq = getelementptr i8, ptr %1, i64 %2
   %i.fr = getelementptr i8, ptr %i.fq, i64 %i.fo
   %scevgep304 = getelementptr i8, ptr %i.fr, i64 %i.fp
+  %16 = shl i64 %2, %i.p
   %i.fs = getelementptr i8, ptr %1, i64 %i.fo
   %scevgep305 = getelementptr i8, ptr %i.fs, i64 %i.fp
   %i.ft = shl nuw nsw i64 %i.m, 1
@@ -598,8 +603,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %bound0306 = icmp ult ptr %0, %scevgep305
   %bound1307 = icmp ult ptr %1, %scevgep320
   %found.conflict308 = and i1 %bound0306, %bound1307
-  %.mask = and i64 %i.q, 4611686018427387904
-  %stride.check309 = icmp ne i64 %.mask, 0
+  %stride.check309 = icmp slt i64 %16, 0
   %i.fv = or i1 %found.conflict308, %stride.check309
   %conflict.rdx = or i1 %found.conflict, %i.fv
   %n.vec = and i64 %wide.trip.count241, 2147483644 ; 5 uses
@@ -610,7 +614,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.preheader116.us
 
 .preheader116.us.us159.preheader:                 ; preds = %.preheader116.lr.ph.split.us.split
-  %i.fx = mul i64 %i.q, %i.fj
+  %i.fx = mul i64 %i.o, %i.fj
   %i.fy = shl i64 %i.fx, 1
   %i.fz = shl nuw nsw i64 %wide.trip.count241, 2
   %i.ga = getelementptr i8, ptr %1, i64 %i.fy
@@ -623,8 +627,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %bound0322 = icmp ult ptr %0, %scevgep321
   %bound1323 = icmp ult ptr %1, %scevgep320
   %found.conflict324 = and i1 %bound0322, %bound1323
-  %.mask465 = and i64 %i.q, 4611686018427387904
-  %stride.check325 = icmp ne i64 %.mask465, 0
+  %stride.check325 = icmp slt i64 %2, 0
   %i.gd = or i1 %found.conflict324, %stride.check325
   %n.vec329 = and i64 %wide.trip.count241, 2147483644 ; 5 uses
   %i.ge = or disjoint i64 %n.vec329, 1

@@ -204,6 +204,9 @@ Extra_TruthCopy.exit.thread.i.i:                  ; preds = %Abc_NodeDecomposeSo
 .preheader288.us.i.i:                             ; preds = %.preheader288.us.i.i.preheader, %._crit_edge.split.us.us.i.i
   %indvars.iv374.i.i = phi i64 [ %indvars.iv.next375.i.i, %._crit_edge.split.us.us.i.i ], [ 0, %.preheader288.us.i.i.preheader ] ; 4 uses
   %.0179300.us.i.i = phi i32 [ %.1180.lcssa.us.i.i, %._crit_edge.split.us.us.i.i ], [ 2, %.preheader288.us.i.i.preheader ] ; 2 uses
+  %4 = trunc nuw nsw i64 %indvars.iv374.i.i to i32
+  %5 = shl nuw i32 1, %4
+  %smax372.i.i = tail call i32 @llvm.smax.i32(i32 %5, i32 1)
   %.not346.i.i = icmp eq i64 %indvars.iv374.i.i, 31
   br i1 %.not346.i.i, label %._crit_edge.split.us.us.i.i, label %.lr.ph.us.i.i
 
@@ -218,8 +221,6 @@ Extra_TruthCopy.exit.thread.i.i:                  ; preds = %Abc_NodeDecomposeSo
   br i1 %exitcond.not, label %._crit_edge302.i.i, label %.preheader288.us.i.i, !llvm.loop !91
 
 .lr.ph.us.i.i:                                    ; preds = %.preheader288.us.i.i
-  %4 = trunc nuw nsw i64 %indvars.iv374.i.i to i32
-  %5 = shl nuw nsw i32 1, %4
   %i.na = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %indvars.iv374.i.i
   %i.nb = sext i32 %.0179300.us.i.i to i64
   %i.nc = load i32, ptr %i.na, align 4, !tbaa !43 ; 2 uses
@@ -313,7 +314,7 @@ Extra_TruthCopy.exit221.loopexit.us.us.i.i:       ; preds = %vector.body523, %se
   tail call void @Extra_TruthCofactor1(ptr noundef %i.or, i32 noundef %.val71117.i, i32 noundef %i.nc) #18
   %indvars.iv.next370.i.i = add nsw i64 %indvars.iv369.i.i, 2 ; 2 uses
   %i.os = add nuw nsw i32 %.0181298.us.us.i.i, 1  ; 2 uses
-  %exitcond373.not.i.i = icmp eq i32 %i.os, %5
+  %exitcond373.not.i.i = icmp eq i32 %i.os, %smax372.i.i
   br i1 %exitcond373.not.i.i, label %._crit_edge.split.us.us.loopexit.i.i, label %select.unfold.preheader.i211.us.us.i.i, !llvm.loop !96
 
 .preheader288.i.i:                                ; preds = %Extra_TruthCopy.exit.thread.i.i, %._crit_edge.split.i.i
@@ -321,12 +322,13 @@ Extra_TruthCopy.exit221.loopexit.us.us.i.i:       ; preds = %vector.body523, %se
   %i.ou = phi i32 [ %i.pf, %._crit_edge.split.i.i ], [ %i.kv, %Extra_TruthCopy.exit.thread.i.i ]
   %indvars.iv366.i.i = phi i64 [ %indvars.iv.next367.i.i, %._crit_edge.split.i.i ], [ 0, %Extra_TruthCopy.exit.thread.i.i ] ; 4 uses
   %.0179300.i.i = phi i32 [ %.1180.lcssa.i.i, %._crit_edge.split.i.i ], [ 2, %Extra_TruthCopy.exit.thread.i.i ] ; 2 uses
+  %6 = trunc nuw nsw i64 %indvars.iv366.i.i to i32
+  %7 = shl nuw i32 1, %6
+  %smax.i.i = tail call i32 @llvm.smax.i32(i32 %7, i32 1)
   %.not345.i.i = icmp eq i64 %indvars.iv366.i.i, 31
   br i1 %.not345.i.i, label %._crit_edge.split.i.i, label %.lr.ph.i87.i
 
 .lr.ph.i87.i:                                     ; preds = %.preheader288.i.i
-  %6 = trunc nuw nsw i64 %indvars.iv366.i.i to i32
-  %7 = shl nuw nsw i32 1, %6
   %i.ov = getelementptr inbounds nuw [4 x i8], ptr %i.cz, i64 %indvars.iv366.i.i
   %i.ow = sext i32 %.0179300.i.i to i64
   %i.ox = load i32, ptr %i.ov, align 4, !tbaa !43 ; 2 uses
@@ -343,7 +345,7 @@ Extra_TruthCopy.exit215.i.i:                      ; preds = %Extra_TruthCopy.exi
   tail call void @Extra_TruthCofactor1(ptr noundef %i.pb, i32 noundef %.val71117.i, i32 noundef %i.ox) #18
   %indvars.iv.next.i89.i = add nsw i64 %indvars.iv.i88.i, 2 ; 2 uses
   %i.pc = add nuw nsw i32 %.0181298.i.i, 1        ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %i.pc, %7
+  %exitcond.not.i.i = icmp eq i32 %i.pc, %smax.i.i
   br i1 %exitcond.not.i.i, label %._crit_edge.split.loopexit.i.i, label %Extra_TruthCopy.exit215.i.i, !llvm.loop !96
 
 ._crit_edge.split.loopexit.i.i:                   ; preds = %Extra_TruthCopy.exit215.i.i
@@ -744,6 +746,9 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctlz.i32(i32, i1 immarg) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32, i32) #15

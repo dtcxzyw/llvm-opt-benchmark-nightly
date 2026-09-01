@@ -204,7 +204,7 @@ bb.ac:                                            ; preds = %fib_count_nexthops.
   %.1225 = phi i32 [ %i.ce, %fib_count_nexthops.exit ], [ %.0224, %bb.y ] ; 4 uses
   %i.co = getelementptr i8, ptr %i.b, i64 1368    ; 4 uses
   %i.cp = load i32, ptr %i.co, align 8            ; 2 uses
-  %i.cq = shl nuw i32 1, %i.cp                    ; 3 uses
+  %i.cq = shl nuw i32 1, %i.cp                    ; 2 uses
   %i.cr = getelementptr i8, ptr %i.b, i64 1372    ; 3 uses
   %i.cs = load i32, ptr %i.cr, align 4
   %i.ct = icmp ult i32 %i.cs, %i.cq
@@ -228,7 +228,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.dc = load i32, ptr %i.co, align 8
   %i.dd = add i32 %i.dc, 1
   store i32 %i.dd, ptr %i.co, align 8
-  %wide.trip.count.i = zext i32 %i.cq to i64      ; 2 uses
+  %wide.trip.count.i = zext i32 %i.cq to i64      ; 3 uses
   br label %bb.af
 
 bb.af:                                            ; preds = %.critedge.i, %bb.ae
@@ -375,14 +375,15 @@ hlist_add_head.exit.i:                            ; preds = %bb.ai, %fib_info_ha
 .critedge.i:                                      ; preds = %hlist_add_head.exit.i, %bb.af
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %.preheader.i, label %bb.af, !llvm.loop !50
+  br i1 %exitcond.not.i, label %.preheader.preheader.i, label %bb.af, !llvm.loop !50
 
-.preheader.i:                                     ; preds = %.critedge.i, %.critedge2.i
-  %indvars.iv86.i = phi i64 [ %indvars.iv.next87.i, %.critedge2.i ], [ 0, %.critedge.i ] ; 2 uses
-  %2 = trunc nuw i64 %indvars.iv86.i to i32
-  %3 = add i32 %i.cq, %2
-  %4 = zext i32 %3 to i64
-  %i.fx = getelementptr [8 x i8], ptr %i.db, i64 %4
+.preheader.preheader.i:                           ; preds = %.critedge.i
+  %invariant.gep.i = getelementptr [8 x i8], ptr %i.db, i64 %wide.trip.count.i
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.critedge2.i, %.preheader.preheader.i
+  %indvars.iv86.i = phi i64 [ 0, %.preheader.preheader.i ], [ %indvars.iv.next87.i, %.critedge2.i ] ; 2 uses
+  %i.fx = getelementptr [8 x i8], ptr %invariant.gep.i, i64 %indvars.iv86.i
   %i.fy = load ptr, ptr %i.fx, align 8            ; 2 uses
   %.not65.i = icmp eq ptr %i.fy, null
   %i.fz = getelementptr i8, ptr %i.fy, i64 -16    ; 2 uses
