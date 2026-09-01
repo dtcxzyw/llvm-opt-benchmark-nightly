@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
   br label %bb.cl
 
 bb.e:                                             ; preds = %bb.c
-  %i.o = and i32 %i.l, 64
-  %i.p = icmp eq i32 %i.o, 0                      ; 2 uses
+  %i.o = and i32 %i.l, 64                         ; 2 uses
+  %i.p = icmp eq i32 %i.o, 0
   %i.q = shl i32 %i.l, 2
   %i.r = and i32 %i.q, 252
   %i.s = zext nneg i32 %i.r to i64
@@ -215,10 +215,11 @@ bb.e:                                             ; preds = %bb.c
   %i.v = trunc i32 %i.u to i8                     ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 252 ; 2 uses
   store i8 %i.v, ptr %i.w, align 4, !tbaa !17
+  %.0184.not = icmp ne i32 %i.o, 0
   %i.x = and i32 %i.u, 255
-  %6 = icmp ne i32 %i.x, 0
-  %or.cond209.not = select i1 %i.p, i1 true, i1 %6
-  br i1 %or.cond209.not, label %bb.g, label %bb.f
+  %6 = icmp eq i32 %i.x, 0
+  %or.cond209.not = select i1 %.0184.not, i1 %6, i1 false
+  br i1 %or.cond209.not, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   store i32 13, ptr %3, align 4, !tbaa !37

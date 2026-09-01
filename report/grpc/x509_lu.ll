@@ -202,13 +202,15 @@ _ZL26X509_OBJECT_retrieve_matchP20stack_st_X509_OBJECTP14x509_object_st.exit: ; 
 
 bb.o:                                             ; preds = %_ZL26X509_OBJECT_retrieve_matchP20stack_st_X509_OBJECTP14x509_object_st.exit, %_ZL26X509_OBJECT_retrieve_matchP20stack_st_X509_OBJECTP14x509_object_st.exit.thread
   %i.al = load ptr, ptr %0, align 8, !tbaa !24
-  %i.am = call i64 @OPENSSL_sk_push(ptr noundef %i.al, ptr noundef nonnull %i.c) #7
+  %i.am = call i64 @OPENSSL_sk_push(ptr noundef %i.al, ptr noundef nonnull %i.c) #7 ; 2 uses
+  %3 = icmp ne i64 %i.am, 0
+  %4 = zext i1 %3 to i32                          ; 2 uses
   %.not39 = icmp eq i64 %i.am, 0
   call void @CRYPTO_MUTEX_unlock_write(ptr noundef nonnull %i.h) #7
   br i1 %.not39, label %bb.p, label %bb.s
 
 bb.p:                                             ; preds = %bb.o, %.thread31
-  %.01934 = phi i32 [ 1, %.thread31 ], [ 0, %bb.o ]
+  %.01934 = phi i32 [ 1, %.thread31 ], [ %4, %bb.o ]
   %i.an = load i32, ptr %i.c, align 8, !tbaa !29
   switch i32 %i.an, label %X509_OBJECT_free.exit [
     i32 1, label %bb.q
@@ -233,7 +235,7 @@ X509_OBJECT_free.exit:                            ; preds = %bb.p, %bb.q, %bb.r
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.b, %X509_OBJECT_free.exit, %bb.o, %bb.a
-  %.1 = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %.01934, %X509_OBJECT_free.exit ], [ 1, %bb.o ]
+  %.1 = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ %.01934, %X509_OBJECT_free.exit ], [ %4, %bb.o ]
   ret i32 %.1
 }
 

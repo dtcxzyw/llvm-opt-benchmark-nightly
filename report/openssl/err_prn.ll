@@ -182,7 +182,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.f, %bb.g, %bb.h
-  %.069 = phi i64 [ %i.v, %bb.h ], [ 0, %bb.g ], [ 0, %bb.f ] ; 3 uses
+  %.069 = phi i64 [ %i.v, %bb.h ], [ 0, %bb.g ], [ 0, %bb.f ] ; 4 uses
   %i.w = load i8, ptr %spec.store.select, align 1, !tbaa !14
   %i.x = icmp eq i8 %i.w, 0
   br i1 %i.x, label %bb.j, label %.preheader
@@ -227,13 +227,14 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.1 = phi i32 [ %i.ai, %bb.k ], [ %.061113, %bb.l ] ; 2 uses
   %.not80 = icmp eq i8 %i.al, 0
   %i.am = ptrtoint ptr %.265 to i64
-  %i.an = sub i64 %i.am, %i.y
-  %.not81 = icmp ugt i64 %i.an, %.069             ; 2 uses
+  %i.an = sub i64 %i.am, %i.y                     ; 2 uses
+  %.not81 = icmp ugt i64 %i.an, %.069
   %or.cond = select i1 %.not80, i1 true, i1 %.not81
   br i1 %or.cond, label %.critedge, label %.lr.ph, !llvm.loop !15
 
 .critedge:                                        ; preds = %bb.m
-  br i1 %.not81, label %.thread100, label %.thread
+  %2 = icmp ugt i64 %i.an, %.069
+  br i1 %2, label %.thread100, label %.thread
 
 .thread100:                                       ; preds = %.critedge, %bb.j
   %.268105 = phi ptr [ %.164112, %.critedge ], [ %i.ac, %bb.j ] ; 3 uses

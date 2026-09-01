@@ -202,8 +202,8 @@ _ZN6Assimp3FBX12_GLOBAL__N_18ReadByteEPKcRS3_S3_.exit: ; preds = %bb.g
   store i32 %.0.copyload.i84, ptr %i.b, align 4
   %i.x = tail call noundef ptr @_ZN6Assimp13DefaultLogger3getEv()
   call void @_ZN6Assimp6Logger5debugIJRA14_KcRKjEEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(12) %i.x, ptr noundef nonnull align 1 dereferenceable(14) @.str.4, ptr noundef nonnull align 4 dereferenceable(4) %i.b)
-  %i.y = load i32, ptr %i.b, align 4
-  %i.z = icmp ugt i32 %i.y, 7499                  ; 2 uses
+  %i.y = load i32, ptr %i.b, align 4              ; 2 uses
+  %i.z = icmp ugt i32 %i.y, 7499
   %.old56.not = icmp eq i64 %2, 27
   br i1 %.old56.not, label %.loopexit, label %.preheader
 
@@ -233,9 +233,10 @@ bb.n:                                             ; preds = %.preheader
 bb.o:                                             ; preds = %bb.n
   %i.ah = extractvalue { ptr, i32 } %i.ad, 0
   %i.ai = call ptr @__cxa_begin_catch(ptr %i.ah) #20 ; 2 uses
-  %i.aj = icmp ult i64 %2, 4294967296
-  %or.cond95.not = or i1 %i.aj, %i.z
-  br i1 %or.cond95.not, label %bb.u, label %bb.p
+  %i.aj = icmp ult i32 %i.y, 7500
+  %9 = icmp ugt i64 %2, 4294967295
+  %or.cond95 = and i1 %9, %i.aj
+  br i1 %or.cond95, label %bb.p, label %bb.u
 
 bb.p:                                             ; preds = %bb.o
   %i.ak = call ptr @__cxa_allocate_exception(i64 16) #20 ; 3 uses

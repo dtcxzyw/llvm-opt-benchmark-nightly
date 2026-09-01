@@ -204,10 +204,11 @@ bb.ad:                                            ; preds = %bb.ac, %.lr.ph160.i
   %i.cc = load ptr, ptr %1, align 8, !tbaa !16
   %i.cd = call ptr %i.cc(ptr noundef %i.cb) #8, !inline_history !105
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ca, i64 12 ; 2 uses
-  %i.cf = load i32, ptr %i.ce, align 4, !tbaa !35
+  %i.cf = load i32, ptr %i.ce, align 4, !tbaa !35 ; 2 uses
   %i.cg = icmp ult i32 %i.cf, 2
   %i.ch = load ptr, ptr %1, align 8, !tbaa !16
   %i.ci = call ptr %i.ch(ptr noundef %i.cb) #8, !inline_history !105
+  %.not82.i = icmp ugt i32 %i.cf, 1
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ax, %bb.ad
@@ -342,8 +343,10 @@ bb.am:                                            ; preds = %.lr.ph.i11
 
 bb.an:                                            ; preds = %bb.am
   %i.ec = icmp eq i64 %.060153.i, %i.dx
-  %i.ed = icmp samesign ule i64 %.060153.i, %i.dx
-  %or.cond84.i = select i1 %i.cg, i1 %i.ed, i1 %i.ec
+  %or.cond.i = select i1 %.not82.i, i1 %i.ec, i1 false
+  %i.ed = icmp ule i64 %.060153.i, %i.dx
+  %3 = select i1 %i.cg, i1 %i.ed, i1 false
+  %or.cond84.i = select i1 %or.cond.i, i1 true, i1 %3, !prof !106
   br i1 %or.cond84.i, label %.critedge.i, label %.loopexit198.i, !prof !106
 
 .loopexit198.i:                                   ; preds = %bb.an

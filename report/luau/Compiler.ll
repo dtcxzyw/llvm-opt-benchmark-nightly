@@ -204,8 +204,8 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4, !tbaa !223  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 4 uses
   %i.d = load i32, ptr %i.c, align 4, !tbaa !547
-  %i.e = and i32 %i.d, -2
-  %spec.select = icmp eq i32 %i.e, 8              ; 6 uses
+  %i.e = and i32 %i.d, -2                         ; 3 uses
+  %spec.select = icmp eq i32 %i.e, 8              ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !551  ; 13 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -260,14 +260,15 @@ bb.g:                                             ; preds = %bb.d
 
 _ZN4Luau8Compiler10isConstantEPNS_7AstExprE.exit: ; preds = %bb.f, %bb.e, %bb.g
   %i.ah = phi i1 [ %i.ag, %bb.g ], [ false, %bb.e ], [ false, %bb.f ] ; 2 uses
-  %.not = xor i1 %spec.select, true
-  %or.cond = or i1 %i.ah, %.not
+  %.not = icmp ne i32 %i.e, 8
+  %or.cond = or i1 %.not, %i.ah
   br i1 %or.cond, label %bb.l, label %.thread
 
 _ZN4Luau8Compiler10isConstantEPNS_7AstExprE.exit.thread: ; preds = %bb.b
-  %i.ai = icmp ne ptr %i.g, %i.o
-  %or.cond173.not = select i1 %spec.select, i1 %i.ai, i1 false
-  br i1 %or.cond173.not, label %bb.h, label %.thread97
+  %i.ai = icmp ne i32 %i.e, 8
+  %3 = icmp eq ptr %i.g, %i.o
+  %or.cond173.not = select i1 %i.ai, i1 true, i1 %3
+  br i1 %or.cond173.not, label %.thread97, label %bb.h
 
 .thread:                                          ; preds = %_ZN4Luau8Compiler10isConstantEPNS_7AstExprE.exit
   %.old = icmp eq ptr %i.g, %i.o
@@ -670,8 +671,8 @@ bb.a:
   %i.a = alloca i8, align 1                       ; 7 uses
   %4 = alloca %"class.std::vector.277", align 8   ; 11 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !547
-  %i.d = icmp eq i32 %i.c, 14                     ; 4 uses
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !547  ; 2 uses
+  %i.d = icmp eq i32 %i.c, 14                     ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1532 ; 9 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !223  ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 264
@@ -923,7 +924,7 @@ bb.ac:                                            ; preds = %_ZN4Luau8Compiler8a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %i.cm = load ptr, ptr %i.h, align 8, !tbaa !551
-  %5 = xor i1 %i.d, true
+  %5 = icmp ne i32 %i.c, 14
   invoke void @_ZN4Luau8Compiler21compileConditionValueEPNS_7AstExprEPKhRSt6vectorImSaImEEb(ptr noundef nonnull align 8 dereferenceable(1904) %0, ptr noundef %i.cm, ptr noundef nonnull %i.a, ptr noundef nonnull align 8 dereferenceable(24) %4, i1 noundef zeroext %5)
           to label %bb.ad unwind label %bb.aj
 

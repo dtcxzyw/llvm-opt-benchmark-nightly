@@ -205,13 +205,12 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.q = load i32, ptr %i.p, align 8, !tbaa !95   ; 2 uses
-  %i.r = icmp ult i32 %i.q, 14                    ; 2 uses
+  %i.r = icmp ult i32 %i.q, 14
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 4 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !113  ; 3 uses
   %.not107 = icmp eq ptr %i.t, null
-  %2 = icmp ult i32 %i.q, 8
-  %.not121 = xor i1 %i.r, true
-  %3 = or i1 %2, %.not121
+  %2 = add i32 %i.q, -14
+  %3 = icmp ult i32 %2, -6
   %brmerge = select i1 %.not107, i1 true, i1 %3
   br i1 %brmerge, label %bb.l, label %bb.k
 

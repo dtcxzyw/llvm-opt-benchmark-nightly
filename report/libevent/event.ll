@@ -204,10 +204,10 @@ gettime.exit:                                     ; preds = %bb.ao, %bb.ap, %bb.
 is_common_timeout.exit:                           ; preds = %gettime.exit
   %i.fk = trunc i64 %.val to i32
   %i.fl = lshr i32 %i.fk, 20
-  %i.fm = and i32 %i.fl, 255
+  %i.fm = and i32 %i.fl, 255                      ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %i.b, i64 288
-  %i.fo = load i32, ptr %i.fn, align 8
-  %i.fp = icmp sge i32 %i.fm, %i.fo               ; 2 uses
+  %i.fo = load i32, ptr %i.fn, align 8            ; 2 uses
+  %i.fp = icmp sge i32 %i.fm, %i.fo
   br i1 %i.de, label %bb.as, label %bb.at
 
 is_common_timeout.exit.thread:                    ; preds = %gettime.exit
@@ -224,8 +224,9 @@ bb.as:                                            ; preds = %is_common_timeout.e
   br label %bb.ay
 
 bb.at:                                            ; preds = %is_common_timeout.exit
+  %.not143.not = icmp slt i32 %i.fm, %i.fo
   %.pre210 = load i64, ptr %5, align 16           ; 2 uses
-  br i1 %i.fp, label %.thread191, label %bb.au
+  br i1 %.not143.not, label %bb.au, label %.thread191
 
 bb.au:                                            ; preds = %bb.at
   %.sroa.0.0.copyload = load i64, ptr %1, align 8

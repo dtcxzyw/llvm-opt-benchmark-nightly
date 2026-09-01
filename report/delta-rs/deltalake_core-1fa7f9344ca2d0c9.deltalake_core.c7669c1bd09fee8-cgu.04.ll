@@ -204,11 +204,11 @@ define internal fastcc noundef zeroext i1 @_RNvXs2m_NtNtCs8VI8w5SIoU4_15datafusi
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !68, !noundef !27
   %i.b = icmp ne i64 %i.a, -9223372036854775808   ; 2 uses
-  %i.c = load i64, ptr %1, align 8, !range !68, !noundef !27
-  %i.d = icmp eq i64 %i.c, -9223372036854775808   ; 3 uses
-  %not. = xor i1 %i.d, true
-  %i.e = xor i1 %i.b, %i.d
-  br i1 %i.e, label %bb.b, label %_RNvXs2t_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4planNtB6_10DistinctOnNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
+  %i.c = load i64, ptr %1, align 8, !range !68, !noundef !27 ; 2 uses
+  %i.d = icmp eq i64 %i.c, -9223372036854775808
+  %not. = icmp ne i64 %i.c, -9223372036854775808  ; 2 uses
+  %i.e = xor i1 %i.b, %not.
+  br i1 %i.e, label %_RNvXs2t_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4planNtB6_10DistinctOnNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.c, label %bb.o
@@ -611,7 +611,7 @@ bb.e:                                             ; preds = %.split, %bb.c
   %i.o = load i64, ptr %i.n, align 8, !range !1923, !noundef !27 ; 2 uses
   %.not7 = icmp eq i64 %i.o, -9223372036854775807
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 160
-  %i.q = load i64, ptr %i.p, align 8, !range !1923, !noundef !27 ; 2 uses
+  %i.q = load i64, ptr %i.p, align 8, !range !1923, !noundef !27 ; 3 uses
   %i.r = icmp eq i64 %i.q, -9223372036854775807   ; 2 uses
   br i1 %.not7, label %bb.g, label %bb.f
 
@@ -625,7 +625,7 @@ bb.h:                                             ; preds = %bb.f
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20348)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20351)
   %i.s = icmp eq i64 %i.o, -9223372036854775808   ; 2 uses
-  %i.t = icmp eq i64 %i.q, -9223372036854775808   ; 3 uses
+  %i.t = icmp eq i64 %i.q, -9223372036854775808   ; 2 uses
   %i.u = xor i1 %i.s, %i.t
   br i1 %i.u, label %_RNvXs4D_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_17ExcludeSelectItemNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread, label %bb.i
 
@@ -642,7 +642,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.z, label %.split18, label %_RNvXs4D_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_17ExcludeSelectItemNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread
 
 bb.k:                                             ; preds = %bb.i
-  %2 = xor i1 %i.t, true
+  %2 = icmp ne i64 %i.q, -9223372036854775808
   tail call void @llvm.assume(i1 %2)
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.ab = load i64, ptr %i.aa, align 8, !alias.scope !20348, !noalias !20351, !noundef !27 ; 2 uses
@@ -1045,8 +1045,8 @@ define internal fastcc noundef zeroext i1 @_RNvXs4N_NtNtCs4lawaffTVVK_9sqlparser
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !68, !noundef !27
   %i.b = icmp eq i64 %i.a, -9223372036854775808   ; 2 uses
-  %i.c = load i64, ptr %1, align 8, !range !68, !noundef !27
-  %i.d = icmp eq i64 %i.c, -9223372036854775808   ; 3 uses
+  %i.c = load i64, ptr %1, align 8, !range !68, !noundef !27 ; 2 uses
+  %i.d = icmp eq i64 %i.c, -9223372036854775808   ; 2 uses
   %i.e = xor i1 %i.b, %i.d
   br i1 %i.e, label %_RNvXs49_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14IdentWithAliasNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, label %bb.b
 
@@ -1067,7 +1067,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.j, label %bb.n, label %_RNvXs49_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_14IdentWithAliasNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.d:                                             ; preds = %bb.b
-  %2 = xor i1 %i.d, true
+  %2 = icmp ne i64 %i.c, -9223372036854775808
   tail call void @llvm.assume(i1 %2)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20394)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20397)
@@ -1470,17 +1470,16 @@ bb.dd:                                            ; preds = %bb.dc
   tail call void @llvm.experimental.noalias.scope.decl(metadata !23840)
   %i.td = load ptr, ptr %i.sr, align 8, !alias.scope !23842, !noalias !23843, !noundef !27 ; 2 uses
   %i.te = icmp ne ptr %i.td, null                 ; 2 uses
-  %i.tf = load ptr, ptr %i.ss, align 8, !alias.scope !23843, !noalias !23842, !noundef !27 ; 3 uses
-  %i.tg = icmp eq ptr %i.tf, null                 ; 3 uses
-  %not..i.i = xor i1 %i.tg, true
-  %i.th = xor i1 %i.te, %i.tg
-  br i1 %i.th, label %bb.de, label %_RNvXsn_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan3ddlNtB5_19CreateExternalTableNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
+  %i.tf = load ptr, ptr %i.ss, align 8, !alias.scope !23843, !noalias !23842, !noundef !27 ; 4 uses
+  %i.tg = icmp eq ptr %i.tf, null
+  %not..i.i = icmp ne ptr %i.tf, null
+  %i.th = xor i1 %i.te, %not..i.i
+  br i1 %i.th, label %_RNvXsn_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan3ddlNtB5_19CreateExternalTableNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit, label %bb.de
 
 bb.de:                                            ; preds = %bb.dd
   br i1 %i.te, label %bb.df, label %bb.dg
 
 bb.df:                                            ; preds = %bb.de
-  tail call void @llvm.assume(i1 %not..i.i)
   %i.ti = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.tj = load i64, ptr %i.ti, align 16, !alias.scope !23842, !noalias !23843, !noundef !27 ; 2 uses
   %i.tk = getelementptr inbounds nuw i8, ptr %1, i64 16

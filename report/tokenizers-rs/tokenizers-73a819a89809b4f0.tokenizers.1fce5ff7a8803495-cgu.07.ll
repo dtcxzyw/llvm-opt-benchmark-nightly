@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %_RINvXs0_NtNtNtCs4N
 define void @_RNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizer13char_to_bytes(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = or i64 %4, %3
-  %or.cond = icmp eq i64 %i.a, 0                  ; 3 uses
+  %or.cond = icmp eq i64 %i.a, 0
   %i.b = icmp eq i64 %3, %4
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %2 ; 25 uses
   br i1 %i.b, label %bb.m, label %bb.b
@@ -275,7 +275,6 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   %i.an = ptrtoint ptr %i.g to i64
   %i.ao = sub i64 %.sroa.1866.0, %i.f
   %i.ap = add i64 %i.ao, %i.an
-  %.sroa.9.2.peel163 = select i1 %or.cond, i64 0, i64 %.sroa.1866.0
   br label %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkTjcENCNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizer13char_to_bytess_0E0B1Q_.exit.i.i.i.peel
 
 bb.d:                                             ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i.peel, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit14.i.i.i.i.i.peel, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit12.i.i.i.i.i.peel
@@ -286,7 +285,6 @@ bb.d:                                             ; preds = %_RNvXs2J_NtNtCs4NRV
   %i.as = ptrtoint ptr %i.aq to i64
   %i.at = sub i64 %.sroa.1866.0, %i.f
   %i.au = add i64 %i.at, %i.as                    ; 3 uses
-  %.sroa.9.2.peel = select i1 %or.cond, i64 0, i64 %.sroa.1866.0 ; 3 uses
   %i.av = icmp samesign ult i32 %.sroa.4.0.i.ph.i.i.i.i.peel, 128
   br i1 %i.av, label %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkTjcENCNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizer13char_to_bytess_0E0B1Q_.exit.i.i.i.peel, label %bb.e
 
@@ -300,7 +298,6 @@ bb.f:                                             ; preds = %bb.e
   br label %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkTjcENCNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizer13char_to_bytess_0E0B1Q_.exit.i.i.i.peel
 
 _RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkTjcENCNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizer13char_to_bytess_0E0B1Q_.exit.i.i.i.peel: ; preds = %.thread161, %bb.f, %bb.e, %bb.d
-  %.sroa.9.2.peel164 = phi i64 [ %.sroa.9.2.peel, %bb.e ], [ %.sroa.9.2.peel, %bb.f ], [ %.sroa.9.2.peel, %bb.d ], [ %.sroa.9.2.peel163, %.thread161 ] ; 2 uses
   %i.ay = phi i64 [ %i.au, %bb.e ], [ %i.au, %bb.f ], [ %i.au, %bb.d ], [ %i.ap, %.thread161 ]
   %i.az = phi ptr [ %i.aq, %bb.e ], [ %i.aq, %bb.f ], [ %i.aq, %bb.d ], [ %i.g, %.thread161 ] ; 2 uses
   %.sroa.0.0.i.i.i.i.i.peel = phi i64 [ 2, %bb.e ], [ %..i.i.i.i.i.peel, %bb.f ], [ 1, %bb.d ], [ 1, %.thread161 ]
@@ -606,7 +603,7 @@ _RINvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtB6_4TakeINtNtB8_4skip4Sk
 
 .thread:                                          ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit12.i.i.i.i.i31, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit14.i.i.i.i.i33, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i34, %.lr.ph119, %.thread.loopexit172, %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkTjcENCNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizer13char_to_bytess_0E0B1Q_.exit.i.i.i.peel, %_RINvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtB6_4TakeINtNtB8_4skip4SkipNtNtNtBc_3str4iter11CharIndicesEENtB6_8SpecTake13spec_for_eachNCNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizer13char_to_bytess_0EB2p_.exit
   %.sroa.8.08592 = phi i64 [ %i.fz, %.thread.loopexit172 ], [ 0, %_RINvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtB6_4TakeINtNtB8_4skip4SkipNtNtNtBc_3str4iter11CharIndicesEENtB6_8SpecTake13spec_for_eachNCNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizer13char_to_bytess_0EB2p_.exit ], [ %i.ba, %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkTjcENCNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizer13char_to_bytess_0E0B1Q_.exit.i.i.i.peel ], [ %.sroa.18.0, %.lr.ph119 ], [ %.sroa.18.0, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i34 ], [ %.sroa.18.0, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit14.i.i.i.i.i33 ], [ %.sroa.18.0, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit12.i.i.i.i.i31 ]
-  %.sroa.9.08791 = phi i64 [ %.sroa.9.2.peel164, %.thread.loopexit172 ], [ 0, %_RINvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtB6_4TakeINtNtB8_4skip4SkipNtNtNtBc_3str4iter11CharIndicesEENtB6_8SpecTake13spec_for_eachNCNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizer13char_to_bytess_0EB2p_.exit ], [ %.sroa.9.2.peel164, %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkTjcENCNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizer13char_to_bytess_0E0B1Q_.exit.i.i.i.peel ], [ %.sroa.18.0, %.lr.ph119 ], [ %.sroa.18.0, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i34 ], [ %.sroa.18.0, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit14.i.i.i.i.i33 ], [ %.sroa.18.0, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit12.i.i.i.i.i31 ]
+  %.sroa.9.08791 = phi i64 [ %.sroa.1866.0, %.thread.loopexit172 ], [ 0, %_RINvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtB6_4TakeINtNtB8_4skip4SkipNtNtNtBc_3str4iter11CharIndicesEENtB6_8SpecTake13spec_for_eachNCNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizer13char_to_bytess_0EB2p_.exit ], [ %.sroa.1866.0, %_RNCINvNvXs7_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4takeINtBa_4TakepENtBa_8SpecTake13spec_for_each5checkTjcENCNvNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizer13char_to_bytess_0E0B1Q_.exit.i.i.i.peel ], [ %.sroa.18.0, %.lr.ph119 ], [ %.sroa.18.0, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit16.i.i.i.i.i34 ], [ %.sroa.18.0, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit14.i.i.i.i.i33 ], [ %.sroa.18.0, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2JiOgHzbbc7_10tokenizers.exit12.i.i.i.i.i31 ]
   %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.9.08791, ptr %i.ga, align 8
   %i.gb = getelementptr inbounds nuw i8, ptr %0, i64 16

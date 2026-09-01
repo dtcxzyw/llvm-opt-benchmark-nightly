@@ -205,8 +205,8 @@ bb.gt:                                            ; preds = %bb.gs, %bb.gr, %ff_
 
 bb.gu:                                            ; preds = %bb.gs, %bb.gj
   call void @ff_hevc_clear_refs(ptr noundef nonnull %i.ayh) #15
-  %i.bay = call fastcc i32 @set_sps(ptr noundef nonnull %0, ptr noundef nonnull %i.ayh, ptr noundef nonnull %i.ayr) ; 2 uses
-  %i.baz = icmp slt i32 %i.bay, 0                 ; 2 uses
+  %i.bay = call fastcc i32 @set_sps(ptr noundef nonnull %0, ptr noundef nonnull %i.ayh, ptr noundef nonnull %i.ayr) ; 3 uses
+  %i.baz = icmp slt i32 %i.bay, 0
   %brmerge.i.i.i = or i1 %i.azd, %i.baz
   br i1 %brmerge.i.i.i, label %bb.hu, label %bb.gv
 
@@ -478,7 +478,8 @@ bb.ht:                                            ; preds = %bb.hr, %bb.hq, %.pr
   br label %decode_slice.exit.thread.i
 
 bb.hu:                                            ; preds = %bb.gu
-  br i1 %i.baz, label %.loopexit145, label %bb.hv
+  %not..i.i.i = icmp sgt i32 %i.bay, -1
+  br i1 %not..i.i.i, label %bb.hv, label %.loopexit145
 
 bb.hv:                                            ; preds = %bb.hu, %.thread300.i.i.i, %bb.gi
   %.2.i.i.i = phi i32 [ %i.azp, %bb.hu ], [ %i.azp, %bb.gi ], [ 1, %.thread300.i.i.i ]

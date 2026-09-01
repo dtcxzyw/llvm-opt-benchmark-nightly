@@ -204,15 +204,19 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   %.pn32.pn = phi ptr [ %.12844, %.lr.ph45 ], [ %0, %.critedge ]
   %.043 = phi i32 [ %i.f, %.lr.ph45 ], [ 1, %.critedge ]
   %.12844 = getelementptr inbounds i8, ptr %.pn32.pn, i64 %i.e ; 2 uses
-  %bcmp = tail call i32 @bcmp(ptr %0, ptr %.12844, i64 %i.e)
-  %.not33 = icmp eq i32 %bcmp, 0                  ; 2 uses
+  %bcmp = tail call i32 @bcmp(ptr %0, ptr %.12844, i64 %i.e) ; 2 uses
+  %.not33.not = icmp ne i32 %bcmp, 0
   %i.f = add nuw nsw i32 %.043, 1                 ; 2 uses
-  %exitcond50.not = icmp ne i32 %i.f, %2
-  %or.cond.not = select i1 %.not33, i1 %exitcond50.not, i1 false
-  br i1 %or.cond.not, label %.lr.ph45, label %.loopexit, !llvm.loop !44
+  %exitcond50.not = icmp eq i32 %i.f, %2
+  %or.cond.not = select i1 %.not33.not, i1 true, i1 %exitcond50.not
+  br i1 %or.cond.not, label %.loopexit.loopexit, label %.lr.ph45, !llvm.loop !44
 
-.loopexit:                                        ; preds = %bb.c, %.lr.ph45, %.critedge
-  %.2 = phi i1 [ true, %.critedge ], [ %.not33, %.lr.ph45 ], [ false, %bb.c ]
+.loopexit.loopexit:                               ; preds = %.lr.ph45
+  %.not33 = icmp eq i32 %bcmp, 0
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.c, %.loopexit.loopexit, %.critedge
+  %.2 = phi i1 [ true, %.critedge ], [ %.not33, %.loopexit.loopexit ], [ false, %bb.c ]
   ret i1 %.2
 }
 

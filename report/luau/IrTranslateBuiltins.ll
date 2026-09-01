@@ -202,19 +202,21 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN4Luau7CodeGenL18builtinCheckDoubleERNS0_9IrBuilderENS0_4IrOpEi.exit
 
 _ZN4Luau7CodeGenL18builtinCheckDoubleERNS0_9IrBuilderENS0_4IrOpEi.exit: ; preds = %bb.a, %bb.b
-  %i.g = icmp eq i32 %1, 3                        ; 2 uses
+  %i.g = icmp eq i32 %1, 3
   %or.cond = and i1 %i.g, %9
-  %10 = and i32 %4, 15                            ; 2 uses
   br i1 %or.cond, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZN4Luau7CodeGenL18builtinCheckDoubleERNS0_9IrBuilderENS0_4IrOpEi.exit
+  %10 = and i32 %4, 15
   %i.h = icmp eq i32 %10, 2
   br i1 %i.h, label %_ZN4Luau7CodeGenL17builtinCheckInt64ERNS0_9IrBuilderENS0_4IrOpEi.exit, label %_ZN4Luau7CodeGenL17builtinCheckInt64ERNS0_9IrBuilderENS0_4IrOpEi.exit.sink.split
 
 bb.d:                                             ; preds = %_ZN4Luau7CodeGenL18builtinCheckDoubleERNS0_9IrBuilderENS0_4IrOpEi.exit
-  %i.i = icmp ne i32 %10, 2
-  %or.cond53.not = select i1 %i.g, i1 %i.i, i1 false
-  br i1 %or.cond53.not, label %_ZN4Luau7CodeGenL17builtinCheckInt64ERNS0_9IrBuilderENS0_4IrOpEi.exit.sink.split, label %_ZN4Luau7CodeGenL17builtinCheckInt64ERNS0_9IrBuilderENS0_4IrOpEi.exit
+  %i.i = icmp ne i32 %1, 3
+  %11 = and i32 %4, 15
+  %12 = icmp eq i32 %11, 2
+  %or.cond53.not = select i1 %i.i, i1 true, i1 %12
+  br i1 %or.cond53.not, label %_ZN4Luau7CodeGenL17builtinCheckInt64ERNS0_9IrBuilderENS0_4IrOpEi.exit, label %_ZN4Luau7CodeGenL17builtinCheckInt64ERNS0_9IrBuilderENS0_4IrOpEi.exit.sink.split
 
 _ZN4Luau7CodeGenL17builtinCheckInt64ERNS0_9IrBuilderENS0_4IrOpEi.exit.sink.split: ; preds = %bb.d, %bb.c
   %.sink = phi i8 [ 4, %bb.c ], [ 3, %bb.d ]

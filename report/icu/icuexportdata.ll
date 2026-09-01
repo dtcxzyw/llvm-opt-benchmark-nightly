@@ -204,7 +204,7 @@ define dso_local noundef range(i32 0, 6) i32 @main(i32 noundef %0, ptr noundef %
 bb.a:
   %i.a = tail call ptr @u_getDataDirectory_78()
   store ptr %i.a, ptr getelementptr inbounds nuw (i8, ptr @_ZL7options, i64 208), align 16, !tbaa !183
-  %i.b = tail call i32 @u_parseArgs(i32 noundef %0, ptr noundef %1, i32 noundef 11, ptr noundef nonnull @_ZL7options) ; 4 uses
+  %i.b = tail call i32 @u_parseArgs(i32 noundef %0, ptr noundef %1, i32 noundef 11, ptr noundef nonnull @_ZL7options) ; 5 uses
   %i.c = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL7options, i64 194), align 2, !tbaa !179
   %.not = icmp eq i8 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -216,7 +216,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = icmp sgt i32 %i.b, -1                    ; 4 uses
+  %i.e = icmp sgt i32 %i.b, -1                    ; 3 uses
   br i1 %i.e, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -246,8 +246,7 @@ bb.f:                                             ; preds = %bb.e
   %i.t = select i1 %i.e, ptr %i.s, ptr %i.r
   %i.u = load ptr, ptr %1, align 8, !tbaa !83
   %i.v = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.t, ptr noundef nonnull @.str.60, ptr noundef %i.u) #25 ; 0 uses
-  %not. = xor i1 %i.e, true
-  %2 = zext i1 %not. to i32
+  %.lobit = lshr i32 %i.b, 31
   br label %bb.r
 
 bb.g:                                             ; preds = %bb.e
@@ -318,7 +317,7 @@ bb.q:                                             ; preds = %bb.o
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.l, %bb.n, %bb.p, %bb.q, %bb.j, %bb.f
-  %.1 = phi i32 [ %2, %bb.f ], [ 1, %bb.j ], [ 0, %bb.l ], [ %i.ao, %bb.n ], [ %i.ar, %bb.p ], [ 1, %bb.q ]
+  %.1 = phi i32 [ %.lobit, %bb.f ], [ 1, %bb.j ], [ 0, %bb.l ], [ %i.ao, %bb.n ], [ %i.ar, %bb.p ], [ 1, %bb.q ]
   ret i32 %.1
 }
 

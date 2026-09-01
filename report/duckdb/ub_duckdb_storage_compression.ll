@@ -205,18 +205,19 @@ bb.a:
 
 .noexc:                                           ; preds = %.lr.ph.i
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 40
-  %i.f = load i64, ptr %i.e, align 8, !tbaa !770
+  %i.f = load i64, ptr %i.e, align 8, !tbaa !770  ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 88
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !779
-  %i.i = icmp ne i64 %i.f, %i.h                   ; 2 uses
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !779  ; 2 uses
+  %i.i = icmp ne i64 %i.f, %i.h
   %i.j = zext i1 %i.i to i64                      ; 2 uses
   %i.k = add i64 %.01820.i, %4
   invoke void @_ZN6duckdb13ZSTDScanState12ScanInternalERNS_19ZSTDVectorScanStateEmRNS_6VectorEm(ptr noundef nonnull align 8 dereferenceable(160) %5, ptr noundef nonnull align 8 dereferenceable(128) %i.d, i64 noundef %i.j, ptr noundef nonnull align 8 dereferenceable(104) %3, i64 noundef %i.k)
           to label %.noexc5 unwind label %bb.b
 
 .noexc5:                                          ; preds = %.noexc
-  %i.l = add nuw nsw i64 %.01820.i, %i.j
-  br i1 %i.i, label %_ZN6duckdb13ZSTDScanState11ScanPartialEmRNS_6VectorEmm.exit, label %.lr.ph.i, !llvm.loop !780
+  %not..not = icmp eq i64 %i.f, %i.h
+  %i.l = add i64 %.01820.i, %i.j
+  br i1 %not..not, label %.lr.ph.i, label %_ZN6duckdb13ZSTDScanState11ScanPartialEmRNS_6VectorEmm.exit, !llvm.loop !780
 
 _ZN6duckdb13ZSTDScanState11ScanPartialEmRNS_6VectorEmm.exit: ; preds = %.noexc5
   call void @_ZN6duckdb13ZSTDScanStateD2Ev(ptr noundef nonnull align 8 dereferenceable(160) %5) #30

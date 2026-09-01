@@ -204,13 +204,14 @@ bb.a:
   %i.c = tail call i32 @llvm.umax.i32(i32 %i.a, i32 %i.b) ; 2 uses
   %i.d = tail call i32 @llvm.umin.i32(i32 %i.a, i32 %i.b) ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !19
-  %i.g = icmp ne i32 %i.f, 0                      ; 3 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !19   ; 2 uses
+  %i.g = icmp ne i32 %i.f, 0                      ; 2 uses
+  %2 = icmp eq i32 %i.f, 0
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.i = load i32, ptr %i.h, align 8, !tbaa !19
   %i.j = icmp ne i32 %i.i, 0                      ; 3 uses
-  %i.k = xor i1 %i.g, %i.j
-  br i1 %i.k, label %bb.b, label %bb.c
+  %i.k = xor i1 %2, %i.j
+  br i1 %i.k, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.l = zext i1 %i.g to i32

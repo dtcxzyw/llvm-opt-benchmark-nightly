@@ -205,15 +205,15 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNK6vectorIjLb0EjE4sizeEv.exit.i
 
 _ZNK6vectorIjLb0EjE4sizeEv.exit.i:                ; preds = %bb.b, %bb.a
-  %.0.i.i = phi i32 [ %i.e, %bb.b ], [ 0, %bb.a ]
+  %.0.i.i = phi i32 [ %i.e, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %i.f = load ptr, ptr %i.a, align 8, !tbaa !204  ; 4 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %_ZN2lp16is_proper_factorI7svectorIjjEEEbRKT_S5_.exit.thread, label %_ZNK6vectorIjLb0EjE4sizeEv.exit17.i
 
 _ZNK6vectorIjLb0EjE4sizeEv.exit17.i:              ; preds = %_ZNK6vectorIjLb0EjE4sizeEv.exit.i
   %i.h = getelementptr inbounds i8, ptr %i.f, i64 -4
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !270  ; 2 uses
-  %i.j = icmp uge i32 %.0.i.i, %i.i               ; 2 uses
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !270  ; 3 uses
+  %i.j = icmp uge i32 %.0.i.i, %i.i
   %brmerge.i = or i1 %i.c, %i.j
   br i1 %brmerge.i, label %_ZN2lp16is_proper_factorI7svectorIjjEEEbRKT_S5_.exit, label %.preheader.split.i
 
@@ -259,7 +259,8 @@ _ZNK6vectorIjLb0EjE3endEv.exit.i:                 ; preds = %bb.c
   br i1 %i.y, label %_ZN2lp16is_proper_factorI7svectorIjjEEEbRKT_S5_.exit.thread, label %bb.c
 
 _ZN2lp16is_proper_factorI7svectorIjjEEEbRKT_S5_.exit: ; preds = %_ZNK6vectorIjLb0EjE4sizeEv.exit17.i
-  br i1 %i.j, label %_ZN2lp16is_proper_factorI7svectorIjjEEEbRKT_S5_.exit.thread, label %_ZN2lp16is_proper_factorI7svectorIjjEEEbRKT_S5_.exit.thread39
+  %not..i = icmp ult i32 %.0.i.i, %i.i
+  br i1 %not..i, label %_ZN2lp16is_proper_factorI7svectorIjjEEEbRKT_S5_.exit.thread39, label %_ZN2lp16is_proper_factorI7svectorIjjEEEbRKT_S5_.exit.thread
 
 _ZN2lp16is_proper_factorI7svectorIjjEEEbRKT_S5_.exit.thread39: ; preds = %.split.i, %.preheader.split.i, %_ZN2lp16is_proper_factorI7svectorIjjEEEbRKT_S5_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25

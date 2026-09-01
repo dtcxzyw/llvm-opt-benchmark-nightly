@@ -205,11 +205,16 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %.loopexit, %bb.ab, %bb.z, %bb.x
   %.6236 = phi ptr [ %i.bb, %bb.x ], [ %i.bi, %bb.ab ], [ %i.be, %bb.z ], [ %.5235, %.loopexit ] ; 4 uses
-  %.6229 = phi i8 [ %i.az, %bb.x ], [ %i.bg, %bb.ab ], [ %i.bc, %bb.z ], [ %.5228, %.loopexit ] ; 7 uses
+  %.6229 = phi i8 [ %i.az, %bb.x ], [ %i.bg, %bb.ab ], [ %i.bc, %bb.z ], [ %.5228, %.loopexit ] ; 6 uses
   %.0215 = phi i8 [ %.5228, %bb.x ], [ 76, %bb.ab ], [ %.5228, %bb.z ], [ 100, %.loopexit ] ; 2 uses
-  switch i8 %.6229, label %4 [
+  switch i8 %.6229, label %bb.dh [
     i8 37, label %mi_outc.exit286
     i8 115, label %bb.ad
+    i8 120, label %bb.ai
+    i8 117, label %bb.ai
+    i8 112, label %bb.bd
+    i8 105, label %bb.bx
+    i8 100, label %bb.bx
   ]
 
 mi_outc.exit286:                                  ; preds = %bb.ac
@@ -260,18 +265,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.cc = select i1 %i.ca, i1 %i.cb, i1 false
   br i1 %i.cc, label %.lr.ph.i, label %mi_outs.exit, !llvm.loop !28
 
-4:                                                ; preds = %bb.ac
-  %5 = icmp eq i8 %.6229, 112                     ; 2 uses
-  %6 = icmp eq i8 %.6229, 120
-  switch i8 %.6229, label %bb.dh [
-    i8 120, label %bb.ai
-    i8 117, label %bb.ai
-    i8 112, label %bb.bd
-    i8 105, label %bb.bx
-    i8 100, label %bb.bx
-  ]
-
-bb.ai:                                            ; preds = %4, %4
+bb.ai:                                            ; preds = %bb.ac, %bb.ac
   %i.cd = add i8 %.0215, -76                      ; 2 uses
   %i.ce = tail call i8 @llvm.fshl.i8(i8 %i.cd, i8 %i.cd, i8 7)
   %i.cf = load i32, ptr %3, align 8               ; 11 uses
@@ -394,7 +388,7 @@ bb.bc:                                            ; preds = %bb.bb, %bb.ba
   %i.dv = zext i32 %i.du to i64
   br label %bb.bg
 
-bb.bd:                                            ; preds = %4
+bb.bd:                                            ; preds = %bb.ac
   %i.dw = load i32, ptr %3, align 8               ; 3 uses
   %i.dx = icmp ult i32 %i.dw, 41
   br i1 %i.dx, label %bb.be, label %bb.bf
@@ -450,15 +444,17 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bh
   %i.en = icmp ult i64 %.0210, 281474976710656
   %i.eo = select i1 %i.en, i64 12, i64 16
   %i.ep = select i1 %i.em, i64 8, i64 %i.eo
-  %spec.store.select = select i1 %5, i64 %i.ep, i64 2
+  %not..not = icmp eq i8 %.6229, 112
+  %spec.store.select = select i1 %not..not, i64 %i.ep, i64 2
   %spec.select274 = select i1 %.not269, i8 %.0218, i8 48
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bh, %bb.bg
   %.1219 = phi i8 [ %.0218, %bb.bg ], [ %spec.select274, %bb.bi ], [ %.0218, %bb.bh ] ; 3 uses
   %.6 = phi i64 [ %.4, %bb.bg ], [ %spec.store.select, %bb.bi ], [ 0, %bb.bh ] ; 3 uses
-  %7 = or i1 %6, %5
-  %i.eq = select i1 %7, i64 16, i64 10            ; 3 uses
+  %4 = and i8 %.6229, -9
+  %5 = icmp eq i8 %4, 112
+  %i.eq = select i1 %5, i64 16, i64 10            ; 3 uses
   %i.er = icmp eq i64 %.0210, 0
   br i1 %i.er, label %bb.bk, label %bb.bn
 
@@ -631,7 +627,7 @@ mi_outc.exit41.i.3:                               ; preds = %bb.bw, %mi_outc.exi
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   br label %mi_outs.exit
 
-bb.bx:                                            ; preds = %4, %4
+bb.bx:                                            ; preds = %bb.ac, %bb.ac
   %i.gj = add i8 %.0215, -76                      ; 2 uses
   %i.gk = tail call i8 @llvm.fshl.i8(i8 %i.gj, i8 %i.gj, i8 7)
   %i.gl = load i32, ptr %3, align 8               ; 11 uses
@@ -931,7 +927,7 @@ mi_outc.exit41.i309.3:                            ; preds = %bb.dg, %mi_outc.exi
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   br label %mi_outs.exit
 
-bb.dh:                                            ; preds = %4
+bb.dh:                                            ; preds = %bb.ac
   %i.jt = add i8 %.6229, -32
   %or.cond48 = icmp ult i8 %i.jt, 95
   br i1 %or.cond48, label %mi_outc.exit318, label %mi_outs.exit

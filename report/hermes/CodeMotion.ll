@@ -90,10 +90,15 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %.not91.i, label %bb.c, label %_ZL8hoistCBIPN6hermes14CondBranchInstE.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.o = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %i.j, i32 noundef 1) #6 ; 4 uses
-  %i.p = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %i.j, i32 noundef 2) #6 ; 4 uses
+  %i.o = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %i.j, i32 noundef 1) #6 ; 5 uses
+  %5 = icmp eq ptr %i.o, null
+  %i.p = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %i.j, i32 noundef 2) #6 ; 6 uses
+  %6 = icmp eq ptr %i.p, null
   %i.q = icmp eq ptr %i.p, %i.o
-  br i1 %i.q, label %_ZL8hoistCBIPN6hermes14CondBranchInstE.exit, label %bb.d
+  %not..i = icmp ne ptr %i.p, null
+  %7 = and i1 %not..i, %i.q
+  %8 = select i1 %5, i1 %6, i1 %7
+  br i1 %8, label %_ZL8hoistCBIPN6hermes14CondBranchInstE.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 8

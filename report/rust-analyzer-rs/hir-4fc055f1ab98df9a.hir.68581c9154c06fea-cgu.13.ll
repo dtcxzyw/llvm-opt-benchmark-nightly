@@ -205,12 +205,13 @@ bb.e:                                             ; preds = %_RNCINvNtNtNtCshzWf
           to label %.noexc.i unwind label %bb.d, !noalias !585
 
 .noexc.i:                                         ; preds = %bb.e
-  %.val.i.i.i.i.i.i = load i8, ptr %i.d, align 4, !range !450, !noalias !594, !noundef !4
-  %3 = icmp ne i8 %.val.i.i.i.i.i.i, 2            ; 2 uses
+  %.val.i.i.i.i.i.i = load i8, ptr %i.d, align 4, !range !450, !noalias !594, !noundef !4 ; 2 uses
+  %3 = icmp eq i8 %.val.i.i.i.i.i.i, 2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !594
-  %i.aa = zext i1 %3 to i8
+  %4 = icmp ne i8 %.val.i.i.i.i.i.i, 2
+  %i.aa = zext i1 %4 to i8
   %i.ab = or i8 %.sroa.0.0, %i.aa                 ; 2 uses
-  br i1 %3, label %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6filter15filter_try_foldNtCs8Xq8PKFYOms_3hir5FieldINtNtNtCsbSS6DM8SDEO_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB1v_zENCNvNtB17_7display14visible_fields0NCINvNtB1A_16in_place_collect24write_in_place_with_dropB15_E0E0B17_.exit.i.i.i.i, label %bb.f
+  br i1 %3, label %bb.f, label %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6filter15filter_try_foldNtCs8Xq8PKFYOms_3hir5FieldINtNtNtCsbSS6DM8SDEO_5alloc3vec13in_place_drop11InPlaceDropB15_EINtNtBa_6result6ResultB1v_zENCNvNtB17_7display14visible_fields0NCINvNtB1A_16in_place_collect24write_in_place_with_dropB15_E0E0B17_.exit.i.i.i.i
 
 bb.f:                                             ; preds = %.noexc.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.4.010.i.i.i.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.x, i64 16, i1 false), !noalias !586

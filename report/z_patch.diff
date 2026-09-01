@@ -1,0 +1,28 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
+index cd7fed74a4cf3..5d7586655440c 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
+@@ -5285,13 +5285,16 @@ Instruction *InstCombinerImpl::foldNot(BinaryOperator &I) {
+ 
+   // not (cmp A, B) = !cmp A, B
+   CmpPredicate Pred;
+-  if (match(NotOp, m_Cmp(Pred, m_Value(), m_Value())) &&
+-      (NotOp->hasOneUse() ||
+-       InstCombiner::canFreelyInvertAllUsersOf(cast<Instruction>(NotOp),
+-                                               /*IgnoredUser=*/nullptr))) {
+-    cast<CmpInst>(NotOp)->setPredicate(CmpInst::getInversePredicate(Pred));
+-    freelyInvertAllUsersOf(NotOp);
+-    return &I;
++  if (auto *Cmp = dyn_cast<CmpInst>(NotOp)) {
++    Pred = CmpPredicate::getInverse(CmpPredicate::get(Cmp));
++    if (Cmp->hasOneUse() ||
++        InstCombiner::canFreelyInvertAllUsersOf(Cmp,
++                                                /*IgnoredUser=*/nullptr)) {
++      Cmp->setPredicate(Pred);
++      freelyInvertAllUsersOf(Cmp);
++      return &I;
++    }
++    return new ICmpInst(Pred, Cmp->getOperand(0), Cmp->getOperand(1));
+   }
+ 
+   // not (bitcast (cmp A, B) --> bitcast (!cmp A, B)

@@ -84,8 +84,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local zeroext i1 @Curl_safecmp(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #2 {
 bb.a:
-  %i.a = icmp ne ptr %0, null                     ; 2 uses
-  %i.b = icmp ne ptr %1, null                     ; 2 uses
+  %i.a = icmp ne ptr %0, null
+  %i.b = icmp ne ptr %1, null
   %or.cond = and i1 %i.a, %i.b
   br i1 %or.cond, label %bb.b, label %bb.c
 
@@ -95,8 +95,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %spec.select.demorgan = or i1 %i.a, %i.b
-  %spec.select = xor i1 %spec.select.demorgan, true
+  %2 = icmp eq ptr %1, null
+  %not. = icmp eq ptr %0, null
+  %spec.select = and i1 %not., %2
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b

@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.m, %bb.e
 
 _ZN7lodepngL6isSRGBEPK11LodePNGInfo.exit.i:       ; preds = %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.d, %bb.c, %bb.b, %bb.a
   %i.z = phi i1 [ true, %bb.a ], [ false, %bb.b ], [ true, %bb.c ], [ false, %bb.d ], [ false, %bb.f ], [ false, %bb.h ], [ false, %bb.j ], [ true, %bb.n ], [ false, %bb.g ], [ false, %bb.i ], [ false, %bb.k ], [ false, %bb.m ], [ false, %bb.l ] ; 3 uses
-  %.0.i.i = phi i32 [ 1, %bb.a ], [ 0, %bb.b ], [ 1, %bb.c ], [ 0, %bb.d ], [ 0, %bb.f ], [ 0, %bb.h ], [ 0, %bb.j ], [ 1, %bb.n ], [ 0, %bb.g ], [ 0, %bb.i ], [ 0, %bb.k ], [ 0, %bb.m ], [ 0, %bb.l ]
+  %.0.i.i = phi i32 [ 1, %bb.a ], [ 0, %bb.b ], [ 1, %bb.c ], [ 0, %bb.d ], [ 0, %bb.f ], [ 0, %bb.h ], [ 0, %bb.j ], [ 1, %bb.n ], [ 0, %bb.g ], [ 0, %bb.i ], [ 0, %bb.k ], [ 0, %bb.m ], [ 0, %bb.l ] ; 2 uses
   br i1 %.not57.i, label %_ZN7lodepngL6isSRGBEPK11LodePNGInfo.exit91.i, label %bb.o
 
 bb.o:                                             ; preds = %_ZN7lodepngL6isSRGBEPK11LodePNGInfo.exit.i
@@ -285,8 +285,8 @@ bb.aa:                                            ; preds = %bb.z, %bb.r
 
 _ZN7lodepngL6isSRGBEPK11LodePNGInfo.exit91.i:     ; preds = %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.q, %bb.p, %bb.o, %_ZN7lodepngL6isSRGBEPK11LodePNGInfo.exit.i
   %or.cond.i = phi i1 [ %i.z, %_ZN7lodepngL6isSRGBEPK11LodePNGInfo.exit.i ], [ false, %bb.o ], [ %i.z, %bb.p ], [ false, %bb.q ], [ false, %bb.s ], [ false, %bb.u ], [ false, %bb.w ], [ %i.z, %bb.aa ], [ false, %bb.t ], [ false, %bb.v ], [ false, %bb.x ], [ false, %bb.z ], [ false, %bb.y ]
-  %.0.i79.i = phi i32 [ 1, %_ZN7lodepngL6isSRGBEPK11LodePNGInfo.exit.i ], [ 0, %bb.o ], [ 1, %bb.p ], [ 0, %bb.q ], [ 0, %bb.s ], [ 0, %bb.u ], [ 0, %bb.w ], [ 1, %bb.aa ], [ 0, %bb.t ], [ 0, %bb.v ], [ 0, %bb.x ], [ 0, %bb.z ], [ 0, %bb.y ]
-  %.not58.i = icmp ne i32 %.0.i.i, %.0.i79.i      ; 2 uses
+  %.0.i79.i = phi i32 [ 1, %_ZN7lodepngL6isSRGBEPK11LodePNGInfo.exit.i ], [ 0, %bb.o ], [ 1, %bb.p ], [ 0, %bb.q ], [ 0, %bb.s ], [ 0, %bb.u ], [ 0, %bb.w ], [ 1, %bb.aa ], [ 0, %bb.t ], [ 0, %bb.v ], [ 0, %bb.x ], [ 0, %bb.z ], [ 0, %bb.y ] ; 2 uses
+  %.not58.i = icmp ne i32 %.0.i.i, %.0.i79.i
   %brmerge.i = or i1 %or.cond.i, %.not58.i
   br i1 %brmerge.i, label %_ZN7lodepngL11modelsEqualEPK12LodePNGStateS2_.exit, label %bb.ab
 
@@ -445,7 +445,8 @@ bb.au:                                            ; preds = %bb.at
   br i1 %.not75.i, label %_ZN7lodepngL11modelsEqualEPK12LodePNGStateS2_.exit.thread36, label %_ZN7lodepngL11modelsEqualEPK12LodePNGStateS2_.exit.thread
 
 _ZN7lodepngL11modelsEqualEPK12LodePNGStateS2_.exit: ; preds = %_ZN7lodepngL6isSRGBEPK11LodePNGInfo.exit91.i
-  br i1 %.not58.i, label %_ZN7lodepngL11modelsEqualEPK12LodePNGStateS2_.exit.thread, label %_ZN7lodepngL11modelsEqualEPK12LodePNGStateS2_.exit.thread36
+  %not..not58.i.not = icmp eq i32 %.0.i.i, %.0.i79.i
+  br i1 %not..not58.i.not, label %_ZN7lodepngL11modelsEqualEPK12LodePNGStateS2_.exit.thread36, label %_ZN7lodepngL11modelsEqualEPK12LodePNGStateS2_.exit.thread
 
 _ZN7lodepngL11modelsEqualEPK12LodePNGStateS2_.exit.thread36: ; preds = %bb.ae, %bb.am, %bb.au, %.preheader.i, %bb.ah, %_ZN7lodepngL11modelsEqualEPK12LodePNGStateS2_.exit
   %i.dm = getelementptr inbounds nuw i8, ptr %4, i64 168

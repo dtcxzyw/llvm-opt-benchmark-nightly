@@ -205,16 +205,17 @@ bb.j:                                             ; preds = %_RNvMNtCs6JMX4GRUq9
   br i1 %i.cq, label %bb.k, label %bb.ax
 
 .preheader:                                       ; preds = %bb.ax, %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultNtNtNtCsipSpXIjCLRi_5regex5regex6string5RegexNtNtBN_5error5ErrorE6unwrapCsgy7pbN39oAf_6uu_ptx.exit
-  %i.cr = load ptr, ptr %2, align 8, !noundef !4  ; 5 uses
-  %.not79 = icmp ne ptr %i.cr, null               ; 2 uses
+  %i.cr = load ptr, ptr %2, align 8, !noundef !4  ; 6 uses
+  %.not79.not = icmp eq ptr %i.cr, null
   %i.cs = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ct = load i64, ptr %i.cs, align 8            ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.cv = load i64, ptr %i.cu, align 8            ; 2 uses
-  %.sroa.15.0.ph = select i1 %.not79, i64 %i.ct, i64 undef ; 5 uses
-  %5 = icmp ne i64 %i.cv, 0
-  %.not477.a = select i1 %.not79, i1 %5, i1 false
-  br i1 %.not477.a, label %.lr.ph, label %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.thread
+  %.sroa.15.0.ph = select i1 %.not79.not, i64 undef, i64 %i.ct ; 5 uses
+  %5 = icmp eq i64 %i.cv, 0
+  %not..not79 = icmp eq ptr %i.cr, null
+  %.not477.a = select i1 %not..not79, i1 true, i1 %5
+  br i1 %.not477.a, label %_RNvXsk_NtNtNtCs7tKScEop1B6_5alloc11collections5btree3mapINtB5_4IterNtCsgy7pbN39oAf_6uu_ptx7WordRefNtNtB7_7set_val9SetValZSTENtNtNtNtCs6JMX4GRUq9U_4core4iter6traits8iterator8Iterator4nextB15_.exit.thread, label %.lr.ph
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.experimental.noalias.scope.decl(metadata !2332)

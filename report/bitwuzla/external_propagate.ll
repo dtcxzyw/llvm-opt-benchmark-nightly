@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %_ZN7C
   br i1 %i.cl, label %.thread64, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.cm = load ptr, ptr %i.d, align 8, !tbaa !205
+  %i.cm = load ptr, ptr %i.d, align 8, !tbaa !205 ; 2 uses
   %.not41 = icmp ne ptr %i.cm, null               ; 2 uses
   %brmerge = select i1 %.not41, i1 true, i1 %.not49
   br i1 %brmerge, label %bb.aa, label %bb.y
@@ -222,7 +222,9 @@ bb.z:                                             ; preds = %bb.y
   br i1 %.not42, label %.sink.split, label %.thread64
 
 bb.aa:                                            ; preds = %bb.x
-  br i1 %.not41, label %bb.ac, label %bb.ab
+  %.mux50 = select i1 %.not41, i32 5, i32 0
+  %not..not41 = icmp eq ptr %i.cm, null
+  br i1 %not..not41, label %bb.ab, label %bb.ac
 
 .sink.split:                                      ; preds = %bb.z, %bb.o
   tail call void @_ZN7CaDiCaL8Internal18notify_assignmentsEv(ptr noundef nonnull align 8 dereferenceable(7288) %0)
@@ -243,7 +245,8 @@ bb.ab:                                            ; preds = %.sink.split, %bb.p,
 
 bb.ac:                                            ; preds = %bb.aa, %bb.ab
   %.128 = phi i32 [ %i.cx, %bb.ab ], [ %.027, %bb.aa ]
-  %1 = phi i1 [ true, %bb.ab ], [ false, %bb.aa ]
+  %.125 = phi i32 [ 0, %bb.ab ], [ %.mux50, %bb.aa ]
+  %1 = icmp eq i32 %.125, 0
   br i1 %1, label %bb.e, label %.thread64
 
 .thread64:                                        ; preds = %bb.z, %bb.w, %bb.y, %bb.n, %bb.o, %bb.m, %_ZN7CaDiCaL8Internal28learn_external_reason_clauseEiib.exit, %bb.ac, %bb.e

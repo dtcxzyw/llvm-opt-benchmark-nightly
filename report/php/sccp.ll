@@ -204,10 +204,9 @@ can_ct_eval_func_call.exit:                       ; preds = %bb.g
   %i.ax = tail call { i64, i64 } asm "mulq $3\0A\09adc $$0,$1", "=&{ax},=&{dx},%0,rm,~{cc},~{dirflag},~{fpsr},~{flags}"(i64 %i.av, i64 %i.aw) #15, !srcloc !199 ; 2 uses
   %i.ay = extractvalue { i64, i64 } %i.ax, 0
   %i.az = extractvalue { i64, i64 } %i.ax, 1
-  %.not.i11.i = icmp ne i64 %i.az, 0              ; 2 uses
   %i.ba = icmp ult i64 %i.ay, 65536
-  %7 = select i1 %.not.i11.i, i1 true, i1 %i.ba, !prof !43
-  %spec.select.i = xor i1 %.not.i11.i, %7
+  %7 = icmp eq i64 %i.az, 0
+  %spec.select.i = select i1 %7, i1 %i.ba, i1 false
   br i1 %spec.select.i, label %can_ct_eval_func_call.exit.thread54, label %can_ct_eval_func_call.exit.thread
 
 can_ct_eval_func_call.exit.thread54:              ; preds = %bb.d, %zend_string_equals_cstr.exit10.i, %can_ct_eval_func_call.exit

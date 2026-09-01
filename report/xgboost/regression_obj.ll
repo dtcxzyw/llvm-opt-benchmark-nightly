@@ -205,7 +205,7 @@ bb.aa:                                            ; preds = %bb.z, %.lr.ph203
 
 bb.ab:                                            ; preds = %._crit_edge204, %._crit_edge204
   %i.dl = getelementptr inbounds nuw i8, ptr %.9, i64 1 ; 2 uses
-  %i.dm = load i8, ptr %i.dl, align 1, !tbaa !15  ; 2 uses
+  %i.dm = load i8, ptr %i.dl, align 1, !tbaa !15  ; 3 uses
   %i.dn = icmp eq i8 %i.dm, 45                    ; 3 uses
   %i.do = getelementptr inbounds nuw i8, ptr %.9, i64 2
   %i.dp = icmp eq i8 %i.dm, 43
@@ -249,9 +249,12 @@ bb.ae:                                            ; preds = %._crit_edge212
   br i1 %i.ef, label %bb.af, label %bb.ai
 
 bb.af:                                            ; preds = %bb.ae
+  %.not = icmp ne i8 %i.dm, 45
   %i.eg = fcmp ogt float %.0121, f0x4059C7DC
+  %or.cond8 = select i1 %.not, i1 %i.eg, i1 false
   %i.eh = fcmp olt float %.0121, f0x3F967699
-  %or.cond = select i1 %i.dn, i1 %i.eh, i1 %i.eg
+  %or.cond10 = select i1 %i.dn, i1 %i.eh, i1 false
+  %or.cond = select i1 %or.cond8, i1 true, i1 %or.cond10
   br i1 %or.cond, label %bb.ag, label %.lr.ph218.preheader
 
 bb.ag:                                            ; preds = %bb.af

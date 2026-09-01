@@ -202,10 +202,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   %i.b = icmp eq i64 %0, 4
   %spec.store.select = select i1 %i.b, i64 0, i64 %0 ; 9 uses
-  %i.c = icmp sgt i32 %3, -1                      ; 2 uses
-  %not. = xor i1 %i.c, true
-  %5 = sext i1 %not. to i32
-  %spec.select = xor i32 %3, %5                   ; 3 uses
+  %i.c = icmp sgt i32 %3, -1
+  %.lobit = ashr i32 %3, 31
+  %spec.select = xor i32 %.lobit, %3              ; 3 uses
   %i.d = icmp sgt i32 %2, 0
   br i1 %i.d, label %.lr.ph, label %._crit_edge.thread
 

@@ -204,8 +204,8 @@ bb.al:                                            ; preds = %bb.ak
 
 .thread.thread.i.i:                               ; preds = %.thread139.i.i, %.thread.i.i, %bb.ae
   %.3117.i.i = phi i64 [ %i.dt, %.thread139.i.i ], [ %.2116.i.i, %.thread.i.i ], [ %.2116.i.i, %bb.ae ] ; 2 uses
-  %i.du = and i64 %.3117.i.i, %i.ba
-  %.not131.i.i = icmp ne i64 %i.du, 0             ; 2 uses
+  %i.du = and i64 %.3117.i.i, %i.ba               ; 2 uses
+  %.not131.i.i = icmp ne i64 %i.du, 0
   %i.dv = icmp eq ptr %.0113.i.i, %.0.i
   %or.cond.i.i = or i1 %i.dv, %.not131.i.i
   br i1 %or.cond.i.i, label %sfast.exit.i, label %bb.am
@@ -217,7 +217,8 @@ bb.am:                                            ; preds = %.thread.thread.i.i
 
 sfast.exit.i:                                     ; preds = %.thread.thread.i.i
   store ptr %spec.select.i.i, ptr %i.bb, align 8, !tbaa !45
-  br i1 %.not131.i.i, label %bb.ao, label %bb.an
+  %not..not131.i.i = icmp eq i64 %i.du, 0
+  br i1 %not..not131.i.i, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %sfast.exit.i
   %i.dy = load ptr, ptr %i.at, align 8, !tbaa !34

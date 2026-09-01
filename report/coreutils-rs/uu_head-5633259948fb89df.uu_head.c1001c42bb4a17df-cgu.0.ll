@@ -204,12 +204,12 @@ bb.az:                                            ; preds = %bb.ay
   %.sroa.320.0..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.x, i64 56
   %.sroa.320.0.copyload.i.i.i.i.i.i.i.i = load i32, ptr %.sroa.320.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !834 ; 2 uses
   %.sroa.828.0..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.x, i64 80
-  %.sroa.828.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %.sroa.828.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !834
+  %.sroa.828.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %.sroa.828.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !834 ; 2 uses
   %i.gg = getelementptr inbounds nuw i8, ptr %i.x, i64 176
   %i.gh = load i32, ptr %i.gg, align 8, !range !445, !noalias !834, !noundef !19
   %i.gi = getelementptr inbounds nuw i8, ptr %i.x, i64 180
   %i.gj = load i32, ptr %i.gi, align 4, !noalias !834 ; 3 uses
-  %.sroa.038.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %i.w, align 8, !noalias !834 ; 3 uses
+  %.sroa.038.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %i.w, align 8, !noalias !834 ; 4 uses
   %.sroa.645.0..sroa_idx.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.w, i64 56
   %.sroa.645.0.copyload.i.i.i.i.i.i.i.i = load i32, ptr %.sroa.645.0..sroa_idx.i.i.i.i.i.i.i.i, align 8, !noalias !834 ; 4 uses
   %i.gk = getelementptr inbounds nuw i8, ptr %i.w, i64 180
@@ -244,9 +244,9 @@ bb.bb:                                            ; preds = %bb.ba
 bb.bc:                                            ; preds = %bb.bb
   %i.gt = and i32 %.sroa.320.0.copyload.i.i.i.i.i.i.i.i, 61440 ; 3 uses
   %i.gu = icmp eq i32 %i.gt, 32768
-  %i.gv = icmp ne i64 %.sroa.828.0.copyload.i.i.i.i.i.i.i.i, 0 ; 2 uses
+  %i.gv = icmp ne i64 %.sroa.828.0.copyload.i.i.i.i.i.i.i.i, 0
   %or.cond.i.i.i.i.i.i.i.i = select i1 %i.gu, i1 %i.gv, i1 false
-  %i.gw = icmp ult i64 %.sroa.038.0.copyload.i.i.i.i.i.i.i.i, 2 ; 3 uses
+  %i.gw = icmp ult i64 %.sroa.038.0.copyload.i.i.i.i.i.i.i.i, 2 ; 2 uses
   %or.cond67.i.i.i.i.i.i.i.i = select i1 %or.cond.i.i.i.i.i.i.i.i, i1 %i.gw, i1 false
   %i.gx = and i32 %.sroa.645.0.copyload.i.i.i.i.i.i.i.i, 61440
   %i.gy = icmp eq i32 %i.gx, 32768
@@ -297,8 +297,10 @@ bb.bi:                                            ; preds = %bb.bc
   ]
 
 bb.bj:                                            ; preds = %bb.bi
-  %i.hh = select i1 %i.gv, i1 %i.gw, i1 false
-  br i1 %i.hh, label %bb.bm, label %bb.br
+  %.not.i.i.i.i.i.i.i.i = icmp eq i64 %.sroa.828.0.copyload.i.i.i.i.i.i.i.i, 0
+  %.not92.i.i.i.i.i.i.i.i = icmp ugt i64 %.sroa.038.0.copyload.i.i.i.i.i.i.i.i, 1
+  %i.hh = select i1 %.not.i.i.i.i.i.i.i.i, i1 true, i1 %.not92.i.i.i.i.i.i.i.i
+  br i1 %i.hh, label %bb.br, label %bb.bm
 
 bb.bk:                                            ; preds = %bb.bi
   br i1 %i.gw, label %bb.bm, label %bb.br

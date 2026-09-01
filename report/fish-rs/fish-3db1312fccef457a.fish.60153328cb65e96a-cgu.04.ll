@@ -205,7 +205,10 @@ bb.b:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0.01.us.i.us.i62, i64 24 ; 2 uses
   %i.t = add nuw nsw i64 %.sroa.8.0.us.i.us.i61, 1
   tail call void @llvm.experimental.noalias.scope.decl(metadata !364)
-  %i.u = load i64, ptr %.sroa.0.01.us.i.us.i62, align 8, !range !356, !alias.scope !364, !noalias !367, !noundef !4
+  %i.u = load i64, ptr %.sroa.0.01.us.i.us.i62, align 8, !range !356, !alias.scope !364, !noalias !367, !noundef !4 ; 2 uses
+  %not..i.us.i.us.i = icmp ne i64 %i.u, -1
+  %.neg.i.us.i.us.i = sext i1 %not..i.us.i.us.i to i8
+  %2 = add nsw i8 %.neg.i.us.i.us.i, %i.f
   %.not.i.us.i = icmp eq i64 %i.u, -1
   br i1 %.not.i.us.i, label %_RNvXsF_NtNtCs8frGy5WneL6_4fish7history7historyNtB5_9HistoryIdNtNtCs3oUPovFnLWP_4core3cmp3Ord3cmp.exit.us.i.us.i, label %bb.c
 
@@ -243,7 +246,7 @@ bb.d:                                             ; preds = %.lr.ph.i.i.us.i.us.
   br label %_RNvXsF_NtNtCs8frGy5WneL6_4fish7history7historyNtB5_9HistoryIdNtNtCs3oUPovFnLWP_4core3cmp3Ord3cmp.exit.us.i.us.i
 
 _RNvXsF_NtNtCs8frGy5WneL6_4fish7history7historyNtB5_9HistoryIdNtNtCs3oUPovFnLWP_4core3cmp3Ord3cmp.exit.us.i.us.i: ; preds = %._crit_edge.i.i.us.i.us.i, %.loopexit.i.i.us.i.us.i, %.lr.ph63
-  %.sroa.0.0.i6.us.i.us.i = phi i8 [ %i.f, %.lr.ph63 ], [ %i.ad, %.loopexit.i.i.us.i.us.i ], [ %i.ae, %._crit_edge.i.i.us.i.us.i ]
+  %.sroa.0.0.i6.us.i.us.i = phi i8 [ %2, %.lr.ph63 ], [ %i.ad, %.loopexit.i.i.us.i.us.i ], [ %i.ae, %._crit_edge.i.i.us.i.us.i ]
   switch i8 %.sroa.0.0.i6.us.i.us.i, label %.split17.us.i.i [
     i8 -1, label %.loopexit.us.i
     i8 0, label %_RINvMs_NtNtNtCs1xwejQucwHj_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker5ImmutNtNtNtCs8frGy5WneL6_4fish7history7history9HistoryIdINtNtBb_4sync3ArcNtB1C_7HistoryENtB1i_14LeafOrInternalE11search_treeB1A_EB1G_.exit
@@ -646,8 +649,8 @@ bb.a:
   %i.x = alloca [24 x i8], align 8                ; 6 uses
   %.sroa.7 = alloca [16 x i8], align 8            ; 4 uses
   %.sroa.02.0.extract.trunc.i = trunc i32 %3 to i16 ; 4 uses
-  %i.y = and i16 %.sroa.02.0.extract.trunc.i, 15
-  %i.z = icmp ne i16 %i.y, 0                      ; 4 uses
+  %i.y = and i16 %.sroa.02.0.extract.trunc.i, 15  ; 2 uses
+  %i.z = icmp ne i16 %i.y, 0                      ; 3 uses
   %i.aa = trunc i32 %3 to i8                      ; 7 uses
   br i1 %i.z, label %bb.b, label %bb.c
 
@@ -705,7 +708,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not15.i, label %_RNvMsb_NtNtNtCs8frGy5WneL6_4fish3env4impl11environmentNtB5_12EnvStackImpl16try_set_electric.exit, label %bb.d
 
 bb.d:                                             ; preds = %.noexc
-  %.not.i = xor i1 %i.z, true
+  %.not.i = icmp eq i16 %i.y, 0
   %i.bc = trunc nuw i8 %.sroa.04.0.i.i to i1
   %or.cond.i = or i1 %.not.i, %i.bc
   br i1 %or.cond.i, label %bb.e, label %bb.ag
@@ -1108,7 +1111,10 @@ bb.b:                                             ; preds = %bb.a
   %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.0.01.us.i.us.i.i436, i64 24 ; 2 uses
   %i.ak = add nuw nsw i64 %.sroa.8.0.us.i.us.i.i435, 1
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3348)
-  %i.al = load i64, ptr %.sroa.0.01.us.i.us.i.i436, align 8, !range !356, !alias.scope !3348, !noalias !3351, !noundef !4
+  %i.al = load i64, ptr %.sroa.0.01.us.i.us.i.i436, align 8, !range !356, !alias.scope !3348, !noalias !3351, !noundef !4 ; 2 uses
+  %not..i.us.i.us.i.i = icmp ne i64 %i.al, -1
+  %.neg.i.us.i.us.i.i = sext i1 %not..i.us.i.us.i.i to i8
+  %3 = add nsw i8 %.neg.i.us.i.us.i.i, %i.w
   %.not.i.us.i.i = icmp eq i64 %i.al, -1
   br i1 %.not.i.us.i.i, label %_RNvXsF_NtNtCs8frGy5WneL6_4fish7history7historyNtB5_9HistoryIdNtNtCs3oUPovFnLWP_4core3cmp3Ord3cmp.exit.us.i.us.i.i, label %bb.c
 
@@ -1146,7 +1152,7 @@ bb.d:                                             ; preds = %.lr.ph.i.i.us.i.us.
   br label %_RNvXsF_NtNtCs8frGy5WneL6_4fish7history7historyNtB5_9HistoryIdNtNtCs3oUPovFnLWP_4core3cmp3Ord3cmp.exit.us.i.us.i.i
 
 _RNvXsF_NtNtCs8frGy5WneL6_4fish7history7historyNtB5_9HistoryIdNtNtCs3oUPovFnLWP_4core3cmp3Ord3cmp.exit.us.i.us.i.i: ; preds = %._crit_edge.i.i.us.i.us.i.i, %.loopexit.i.i.us.i.us.i.i, %.lr.ph437
-  %.sroa.0.0.i6.us.i.us.i.i = phi i8 [ %i.w, %.lr.ph437 ], [ %i.au, %.loopexit.i.i.us.i.us.i.i ], [ %i.av, %._crit_edge.i.i.us.i.us.i.i ]
+  %.sroa.0.0.i6.us.i.us.i.i = phi i8 [ %3, %.lr.ph437 ], [ %i.au, %.loopexit.i.i.us.i.us.i.i ], [ %i.av, %._crit_edge.i.i.us.i.us.i.i ]
   switch i8 %.sroa.0.0.i6.us.i.us.i.i, label %.split17.us.i.i.i [
     i8 -1, label %.loopexit.us.i.i
     i8 0, label %_RINvMs_NtNtNtCs1xwejQucwHj_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBY_6marker3MutNtNtNtCs8frGy5WneL6_4fish7history7history9HistoryIdINtNtBb_4sync3ArcNtB1A_7HistoryENtB1i_14LeafOrInternalE11search_treeB1y_EB1E_.exit.i

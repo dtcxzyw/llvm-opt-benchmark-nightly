@@ -154,12 +154,9 @@ define ptr @MRIStepCreate(ptr noundef %0, ptr noundef %1, double noundef %2, ptr
 bb.a:
   %i.a = alloca ptr, align 8                      ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
-  %6 = insertelement <2 x ptr> poison, ptr %0, i64 0
-  %7 = insertelement <2 x ptr> %6, ptr %1, i64 1
-  %8 = icmp eq <2 x ptr> %7, splat (ptr null)     ; 3 uses
-  %9 = extractelement <2 x i1> %8, i64 0
-  %10 = extractelement <2 x i1> %8, i64 1         ; 2 uses
-  %or.cond = and i1 %9, %10
+  %6 = icmp eq ptr %0, null
+  %7 = icmp eq ptr %1, null                       ; 2 uses
+  %or.cond = and i1 %6, %7
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -322,9 +319,11 @@ bb.o:                                             ; preds = %bb.m
   store i32 0, ptr %i.be, align 4, !tbaa !78
   %i.bf = getelementptr inbounds nuw i8, ptr %i.f, i64 64
   store i32 0, ptr %i.bf, align 8, !tbaa !79
-  %11 = xor <2 x i1> %8, splat (i1 true)
+  %8 = insertelement <2 x ptr> poison, ptr %0, i64 0
+  %9 = insertelement <2 x ptr> %8, ptr %1, i64 1
+  %10 = icmp ne <2 x ptr> %9, splat (ptr null)
   %i.bg = getelementptr inbounds nuw i8, ptr %i.f, i64 24
-  %i.bh = zext <2 x i1> %11 to <2 x i32>
+  %i.bh = zext <2 x i1> %10 to <2 x i32>
   store <2 x i32> %i.bh, ptr %i.bg, align 8, !tbaa !80
   %i.bi = getelementptr inbounds nuw i8, ptr %i.d, i64 904 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.d, i64 896 ; 4 uses
@@ -335,7 +334,7 @@ bb.o:                                             ; preds = %bb.m
   store ptr null, ptr %i.bm, align 8, !tbaa !82
   %i.bn = getelementptr inbounds nuw i8, ptr %i.f, i64 168 ; 2 uses
   store i32 0, ptr %i.bn, align 8, !tbaa !83
-  br i1 %10, label %bb.u, label %bb.p
+  br i1 %7, label %bb.u, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.bo = load ptr, ptr %i.d, align 8, !tbaa !84
@@ -738,8 +737,7 @@ mriStepInnerStepper_Reset.exit319.thread:         ; preds = %bb.al, %bb.am, %mri
 mriStepInnerStepper_Reset.exit319.thread406:      ; preds = %bb.an, %bb.aj, %bb.ak, %mriStepInnerStepper_Reset.exit319
   %i.gi = load ptr, ptr %i.dv, align 8, !tbaa !138
   %i.gj = getelementptr inbounds nuw [4 x i8], ptr %i.gi, i64 %indvars.iv454
-  %i.gk = load i32, ptr %i.gj, align 4, !tbaa !80
-  %3 = icmp ne i32 %i.gk, -1                      ; 2 uses
+  %i.gk = load i32, ptr %i.gj, align 4, !tbaa !80 ; 2 uses
   br i1 %i.i, label %bb.ap, label %bb.ao
 
 bb.ao:                                            ; preds = %mriStepInnerStepper_Reset.exit319.thread406
@@ -747,12 +745,14 @@ bb.ao:                                            ; preds = %mriStepInnerStepper
   %i.gm = getelementptr inbounds nuw [4 x i8], ptr %i.gl, i64 %indvars.iv454
   %i.gn = getelementptr inbounds nuw i8, ptr %i.gm, i64 4
   %i.go = load i32, ptr %i.gn, align 4, !tbaa !80
-  %4 = icmp ne i32 %i.go, -1
-  %or.cond436.not = select i1 %4, i1 %3, i1 false
-  br i1 %or.cond436.not, label %bb.aq, label %.thread409
+  %3 = icmp eq i32 %i.go, -1
+  %.not296 = icmp eq i32 %i.gk, -1
+  %or.cond436.not = select i1 %3, i1 true, i1 %.not296
+  br i1 %or.cond436.not, label %.thread409, label %bb.aq
 
 bb.ap:                                            ; preds = %mriStepInnerStepper_Reset.exit319.thread406
-  br i1 %3, label %bb.aq, label %.thread409
+  %.not = icmp eq i32 %i.gk, -1
+  br i1 %.not, label %.thread409, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ao, %bb.ap
   %i.gp = load ptr, ptr %i.dw, align 8, !tbaa !165 ; 2 uses
@@ -1155,12 +1155,9 @@ bb.e:                                             ; preds = %mriStep_AccessARKOD
   br label %mriStep_AccessARKODEStepMem.exit.thread
 
 bb.f:                                             ; preds = %mriStep_AccessARKODEStepMem.exit
-  %5 = insertelement <2 x ptr> poison, ptr %1, i64 0
-  %6 = insertelement <2 x ptr> %5, ptr %2, i64 1
-  %7 = icmp eq <2 x ptr> %6, splat (ptr null)     ; 3 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1          ; 2 uses
-  %or.cond = and i1 %8, %9
+  %5 = icmp eq ptr %1, null
+  %6 = icmp eq ptr %2, null                       ; 2 uses
+  %or.cond = and i1 %5, %6
   br i1 %or.cond, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
@@ -1176,11 +1173,13 @@ bb.i:                                             ; preds = %bb.h
   br label %mriStep_AccessARKODEStepMem.exit.thread
 
 bb.j:                                             ; preds = %bb.h
-  %10 = xor <2 x i1> %7, splat (i1 true)
+  %7 = insertelement <2 x ptr> poison, ptr %1, i64 0
+  %8 = insertelement <2 x ptr> %7, ptr %2, i64 1
+  %9 = icmp ne <2 x ptr> %8, splat (ptr null)
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  %i.k = zext <2 x i1> %10 to <2 x i32>
+  %i.k = zext <2 x i1> %9 to <2 x i32>
   store <2 x i32> %i.k, ptr %i.j, align 8, !tbaa !80
-  br i1 %9, label %bb.q, label %bb.k
+  br i1 %6, label %bb.q, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 160
@@ -1583,7 +1582,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
 
 bb.af:                                            ; preds = %.lr.ph, %.thread393
   %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %.thread393 ] ; 5 uses
-  %indvars.iv422 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next423, %.thread393 ] ; 31 uses
+  %indvars.iv422 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next423, %.thread393 ] ; 32 uses
   %i.fk = shl nuw nsw i64 %indvar, 3              ; 2 uses
   %i.fl = add nuw i64 %i.fk, 16                   ; 2 uses
   %i.fm = add nuw i64 %i.fk, 8                    ; 2 uses
@@ -1594,8 +1593,8 @@ bb.af:                                            ; preds = %.lr.ph, %.thread393
   %i.fr = add nsw i32 %i.fq, -1
   %i.fs = zext i32 %i.fr to i64
   %i.ft = icmp eq i64 %indvars.iv422, %i.fs       ; 2 uses
-  %i.fu = zext i32 %i.fq to i64
-  %i.fv = icmp eq i64 %indvars.iv422, %i.fu       ; 4 uses
+  %i.fu = zext i32 %i.fq to i64                   ; 2 uses
+  %i.fv = icmp eq i64 %indvars.iv422, %i.fu       ; 3 uses
   %i.fw = icmp samesign ugt i64 %indvars.iv422, 1 ; 2 uses
   br i1 %i.fw, label %bb.ag, label %bb.ah
 
@@ -1671,7 +1670,7 @@ mriStepInnerStepper_Reset.exit281.thread369:      ; preds = %mriStepInnerStepper
   %i.gt = phi ptr [ %.pre429, %mriStepInnerStepper_Reset.exit281.mriStepInnerStepper_Reset.exit281.thread369_crit_edge ], [ %.pre430, %bb.an ], [ %.pre430, %bb.ak ]
   %i.gu = phi double [ %.pre427, %mriStepInnerStepper_Reset.exit281.mriStepInnerStepper_Reset.exit281.thread369_crit_edge ], [ %.pre428, %bb.an ], [ %.pre428, %bb.ak ]
   %i.gv = load double, ptr %i.ei, align 8, !tbaa !177
-  %3 = xor i1 %i.fv, true
+  %3 = icmp ne i64 %indvars.iv422, %i.fu
   %narrow = select i1 %.not245, i1 %3, i1 false
   %i.gw = zext i1 %narrow to i32
   %i.gx = tail call i32 @mriStep_StageERKFast(ptr noundef nonnull %0, ptr noundef nonnull %i.b, double noundef %i.gu, double noundef %i.gv, ptr noundef %i.gt, ptr poison, i32 noundef %i.gw) ; 2 uses

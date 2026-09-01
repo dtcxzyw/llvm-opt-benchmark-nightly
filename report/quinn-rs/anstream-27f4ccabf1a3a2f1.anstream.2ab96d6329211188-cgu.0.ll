@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.0.sroa.0.0.extract.trunc1441 = trunc i32 %.sroa.0.0.copyload to i8, !dbg !4756 ; 5 uses
     #dbg_value(i8 %.sroa.0.sroa.0.0.extract.trunc1441, !4443, !DIExpression(DW_OP_LLVM_fragment, 0, 8), !4757)
   %.sroa.0.sroa.45.0.extract.shift1529 = lshr i32 %.sroa.0.0.copyload, 8, !dbg !4756
-  %.sroa.0.sroa.45.0.extract.trunc1530 = trunc i32 %.sroa.0.sroa.45.0.extract.shift1529 to i8, !dbg !4756 ; 3 uses
+  %.sroa.0.sroa.45.0.extract.trunc1530 = trunc i32 %.sroa.0.sroa.45.0.extract.shift1529 to i8, !dbg !4756 ; 4 uses
     #dbg_value(i8 %.sroa.0.sroa.45.0.extract.trunc1530, !4443, !DIExpression(DW_OP_LLVM_fragment, 8, 8), !4757)
   %.sroa.0.sroa.48.0.extract.shift1644 = lshr i32 %.sroa.0.0.copyload, 16, !dbg !4756
   %.sroa.0.sroa.48.0.extract.trunc1645 = trunc i32 %.sroa.0.sroa.48.0.extract.shift1644 to i8, !dbg !4756 ; 3 uses
@@ -215,7 +215,7 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.50.sroa.0.0.extract.trunc = trunc i32 %.sroa.50.0.copyload to i8, !dbg !4756 ; 5 uses
     #dbg_value(i8 %.sroa.50.sroa.0.0.extract.trunc, !4443, !DIExpression(DW_OP_LLVM_fragment, 32, 8), !4757)
   %.sroa.50.sroa.45.0.extract.shift = lshr i32 %.sroa.50.0.copyload, 8, !dbg !4756
-  %.sroa.50.sroa.45.0.extract.trunc = trunc i32 %.sroa.50.sroa.45.0.extract.shift to i8, !dbg !4756 ; 3 uses
+  %.sroa.50.sroa.45.0.extract.trunc = trunc i32 %.sroa.50.sroa.45.0.extract.shift to i8, !dbg !4756 ; 4 uses
     #dbg_value(i8 %.sroa.50.sroa.45.0.extract.trunc, !4443, !DIExpression(DW_OP_LLVM_fragment, 40, 8), !4757)
   %.sroa.50.sroa.48.0.extract.shift = lshr i32 %.sroa.50.0.copyload, 16, !dbg !4756
   %.sroa.50.sroa.48.0.extract.trunc = trunc i32 %.sroa.50.sroa.48.0.extract.shift to i8, !dbg !4756 ; 3 uses
@@ -225,10 +225,10 @@ bb.c:                                             ; preds = %bb.a
     #dbg_value(i8 %.sroa.50.sroa.49.0.extract.trunc, !4443, !DIExpression(DW_OP_LLVM_fragment, 56, 8), !4757)
   %.sroa.72.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32, !dbg !4756 ; 2 uses
   %.sroa.72.0.copyload = load i32, ptr %.sroa.72.0..sroa_idx, align 8, !dbg !4756 ; 4 uses
-  %.sroa.72.sroa.0.0.extract.trunc = trunc i32 %.sroa.72.0.copyload to i8, !dbg !4756 ; 5 uses
+  %.sroa.72.sroa.0.0.extract.trunc = trunc i32 %.sroa.72.0.copyload to i8, !dbg !4756 ; 6 uses
     #dbg_value(i8 %.sroa.72.sroa.0.0.extract.trunc, !4443, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !4757)
   %.sroa.72.sroa.48.0.extract.shift = lshr i32 %.sroa.72.0.copyload, 8, !dbg !4756
-  %.sroa.72.sroa.48.0.extract.trunc = trunc i32 %.sroa.72.sroa.48.0.extract.shift to i8, !dbg !4756 ; 3 uses
+  %.sroa.72.sroa.48.0.extract.trunc = trunc i32 %.sroa.72.sroa.48.0.extract.shift to i8, !dbg !4756 ; 4 uses
     #dbg_value(i8 %.sroa.72.sroa.48.0.extract.trunc, !4443, !DIExpression(DW_OP_LLVM_fragment, 72, 8), !4757)
   %.sroa.72.sroa.49.0.extract.shift = lshr i32 %.sroa.72.0.copyload, 16, !dbg !4756
   %.sroa.72.sroa.49.0.extract.trunc = trunc i32 %.sroa.72.sroa.49.0.extract.shift to i8, !dbg !4756 ; 3 uses
@@ -631,15 +631,15 @@ begin_hunk_1_@_RNvXs1_NtNtCs3Fq4IkdSWsS_8anstream7adapter6winconNtB5_13WinconCap
 ._crit_edge:                                      ; preds = %.loopexit2103, %.loopexit2103.jt4, %._crit_edge.loopexit3277.loopexit, %._crit_edge.loopexit3277.loopexit3699, %.loopexit2103.jt1, %bb.ak, %._crit_edge.loopexit3283, %bb.c
   %.sroa.0.sroa.49.0.lcssa = phi i8 [ %.sroa.0.sroa.49.0.extract.trunc1761, %bb.c ], [ %.sroa.0.sroa.49.2.jt0, %bb.ak ], [ %.sroa.0.sroa.49.0.extract.trunc1759.peel.le4211, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.0.sroa.49.020682308, %.loopexit2103.jt1 ], [ %.sroa.0.sroa.49.0.extract.trunc1749.le4217, %._crit_edge.loopexit3283 ], [ %.sroa.0.sroa.49.020682308, %.loopexit2103.jt4 ], [ %.sroa.0.sroa.49.0.extract.trunc1759.le4205, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.0.sroa.49.2, %.loopexit2103 ], !dbg !4756 ; 2 uses
   %.sroa.0.sroa.48.0.lcssa = phi i8 [ %.sroa.0.sroa.48.0.extract.trunc1645, %bb.c ], [ %.sroa.0.sroa.48.2.jt0, %bb.ak ], [ %.sroa.0.sroa.48.0.extract.trunc1643.peel, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.0.sroa.48.020692301, %.loopexit2103.jt1 ], [ %.sroa.0.sroa.48.0.extract.trunc1633, %._crit_edge.loopexit3283 ], [ %.sroa.0.sroa.48.020692301, %.loopexit2103.jt4 ], [ %.sroa.0.sroa.48.0.extract.trunc1643, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.0.sroa.48.2, %.loopexit2103 ], !dbg !4756 ; 2 uses
-  %.sroa.0.sroa.45.0.lcssa = phi i8 [ %.sroa.0.sroa.45.0.extract.trunc1530, %bb.c ], [ %.sroa.0.sroa.45.2.jt0, %bb.ak ], [ %.sroa.0.sroa.45.0.extract.trunc1528.peel, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.0.sroa.45.020702294, %.loopexit2103.jt1 ], [ %.sroa.0.sroa.45.0.extract.trunc1518, %._crit_edge.loopexit3283 ], [ %.sroa.0.sroa.45.020702294, %.loopexit2103.jt4 ], [ %.sroa.0.sroa.45.0.extract.trunc1528, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.0.sroa.45.2, %.loopexit2103 ], !dbg !4756 ; 2 uses
+  %.sroa.0.sroa.45.0.lcssa = phi i8 [ %.sroa.0.sroa.45.0.extract.trunc1530, %bb.c ], [ %.sroa.0.sroa.45.2.jt0, %bb.ak ], [ %.sroa.0.sroa.45.0.extract.trunc1528.peel, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.0.sroa.45.020702294, %.loopexit2103.jt1 ], [ %.sroa.0.sroa.45.0.extract.trunc1518, %._crit_edge.loopexit3283 ], [ %.sroa.0.sroa.45.020702294, %.loopexit2103.jt4 ], [ %.sroa.0.sroa.45.0.extract.trunc1528, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.0.sroa.45.2, %.loopexit2103 ], !dbg !4756 ; 3 uses
   %.sroa.0.sroa.0.0.lcssa = phi i8 [ %.sroa.0.sroa.0.0.extract.trunc1441, %bb.c ], [ %.sroa.0.sroa.0.2.jt0, %bb.ak ], [ %.sroa.0.sroa.0.0.extract.trunc1440.peel, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.0.sroa.0.020712287, %.loopexit2103.jt1 ], [ %.sroa.0.sroa.0.0.extract.trunc1433, %._crit_edge.loopexit3283 ], [ %.sroa.0.sroa.0.020712287, %.loopexit2103.jt4 ], [ %.sroa.0.sroa.0.0.extract.trunc1440, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.0.sroa.0.2, %.loopexit2103 ], !dbg !4756 ; 3 uses
   %.sroa.50.sroa.49.0.lcssa = phi i8 [ %.sroa.50.sroa.49.0.extract.trunc, %bb.c ], [ %.sroa.50.sroa.49.2.jt0, %bb.ak ], [ %.sroa.50.sroa.49.0.extract.trunc1396.peel.le4209, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.50.sroa.49.020722280, %.loopexit2103.jt1 ], [ %.sroa.50.sroa.49.0.extract.trunc1386.le4215, %._crit_edge.loopexit3283 ], [ %.sroa.50.sroa.49.020722280, %.loopexit2103.jt4 ], [ %.sroa.50.sroa.49.0.extract.trunc1396.le4203, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.50.sroa.49.2, %.loopexit2103 ], !dbg !4756 ; 2 uses
   %.sroa.50.sroa.48.0.lcssa = phi i8 [ %.sroa.50.sroa.48.0.extract.trunc, %bb.c ], [ %.sroa.50.sroa.48.2.jt0, %bb.ak ], [ %.sroa.50.sroa.48.0.extract.trunc1280.peel, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.50.sroa.48.020732273, %.loopexit2103.jt1 ], [ %.sroa.50.sroa.48.0.extract.trunc1270, %._crit_edge.loopexit3283 ], [ %.sroa.50.sroa.48.020732273, %.loopexit2103.jt4 ], [ %.sroa.50.sroa.48.0.extract.trunc1280, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.50.sroa.48.2, %.loopexit2103 ], !dbg !4756 ; 2 uses
-  %.sroa.50.sroa.45.0.lcssa = phi i8 [ %.sroa.50.sroa.45.0.extract.trunc, %bb.c ], [ %.sroa.50.sroa.45.2.jt0, %bb.ak ], [ %.sroa.50.sroa.45.0.extract.trunc1165.peel, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.50.sroa.45.020742266, %.loopexit2103.jt1 ], [ %.sroa.50.sroa.45.0.extract.trunc1155, %._crit_edge.loopexit3283 ], [ %.sroa.50.sroa.45.020742266, %.loopexit2103.jt4 ], [ %.sroa.50.sroa.45.0.extract.trunc1165, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.50.sroa.45.2, %.loopexit2103 ], !dbg !4756 ; 2 uses
+  %.sroa.50.sroa.45.0.lcssa = phi i8 [ %.sroa.50.sroa.45.0.extract.trunc, %bb.c ], [ %.sroa.50.sroa.45.2.jt0, %bb.ak ], [ %.sroa.50.sroa.45.0.extract.trunc1165.peel, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.50.sroa.45.020742266, %.loopexit2103.jt1 ], [ %.sroa.50.sroa.45.0.extract.trunc1155, %._crit_edge.loopexit3283 ], [ %.sroa.50.sroa.45.020742266, %.loopexit2103.jt4 ], [ %.sroa.50.sroa.45.0.extract.trunc1165, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.50.sroa.45.2, %.loopexit2103 ], !dbg !4756 ; 3 uses
   %.sroa.50.sroa.0.0.lcssa = phi i8 [ %.sroa.50.sroa.0.0.extract.trunc, %bb.c ], [ %.sroa.50.sroa.0.2.jt0, %bb.ak ], [ %.sroa.50.sroa.0.0.extract.trunc1057.peel, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.50.sroa.0.020752259, %.loopexit2103.jt1 ], [ %.sroa.50.sroa.0.0.extract.trunc1050, %._crit_edge.loopexit3283 ], [ %.sroa.50.sroa.0.020752259, %.loopexit2103.jt4 ], [ %.sroa.50.sroa.0.0.extract.trunc1057, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.50.sroa.0.2, %.loopexit2103 ], !dbg !4756 ; 3 uses
   %.sroa.72.sroa.50.0.lcssa = phi i8 [ %.sroa.72.sroa.50.0.extract.trunc, %bb.c ], [ %.sroa.72.sroa.50.02076, %bb.ak ], [ %.sroa.72.sroa.50.0.extract.trunc975.peel.le4207, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.72.sroa.50.02076, %.loopexit2103.jt1 ], [ %.sroa.72.sroa.50.0.extract.trunc965.le4213, %._crit_edge.loopexit3283 ], [ %.sroa.72.sroa.50.02076, %.loopexit2103.jt4 ], [ %.sroa.72.sroa.50.0.extract.trunc975.le4201, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.72.sroa.50.2, %.loopexit2103 ], !dbg !4756 ; 2 uses
   %.sroa.72.sroa.49.0.lcssa = phi i8 [ %.sroa.72.sroa.49.0.extract.trunc, %bb.c ], [ %.sroa.72.sroa.49.02077, %bb.ak ], [ %.sroa.72.sroa.49.0.extract.trunc847.peel, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.72.sroa.49.02077, %.loopexit2103.jt1 ], [ %.sroa.72.sroa.49.0.extract.trunc837, %._crit_edge.loopexit3283 ], [ %.sroa.72.sroa.49.02077, %.loopexit2103.jt4 ], [ %.sroa.72.sroa.49.0.extract.trunc847, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.72.sroa.49.2, %.loopexit2103 ], !dbg !4756 ; 2 uses
-  %.sroa.72.sroa.48.0.lcssa = phi i8 [ %.sroa.72.sroa.48.0.extract.trunc, %bb.c ], [ %.sroa.72.sroa.48.02078, %bb.ak ], [ %.sroa.72.sroa.48.0.extract.trunc719.peel, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.72.sroa.48.02078, %.loopexit2103.jt1 ], [ %.sroa.72.sroa.48.0.extract.trunc709, %._crit_edge.loopexit3283 ], [ %.sroa.72.sroa.48.02078, %.loopexit2103.jt4 ], [ %.sroa.72.sroa.48.0.extract.trunc719, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.72.sroa.48.2, %.loopexit2103 ], !dbg !4756 ; 2 uses
+  %.sroa.72.sroa.48.0.lcssa = phi i8 [ %.sroa.72.sroa.48.0.extract.trunc, %bb.c ], [ %.sroa.72.sroa.48.02078, %bb.ak ], [ %.sroa.72.sroa.48.0.extract.trunc719.peel, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.72.sroa.48.02078, %.loopexit2103.jt1 ], [ %.sroa.72.sroa.48.0.extract.trunc709, %._crit_edge.loopexit3283 ], [ %.sroa.72.sroa.48.02078, %.loopexit2103.jt4 ], [ %.sroa.72.sroa.48.0.extract.trunc719, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.72.sroa.48.2, %.loopexit2103 ], !dbg !4756 ; 3 uses
   %.sroa.72.sroa.0.0.lcssa = phi i8 [ %.sroa.72.sroa.0.0.extract.trunc, %bb.c ], [ %.sroa.72.sroa.0.2.jt0, %bb.ak ], [ %.sroa.72.sroa.0.0.extract.trunc597.peel, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.72.sroa.0.020792231, %.loopexit2103.jt1 ], [ %.sroa.72.sroa.0.0.extract.trunc590, %._crit_edge.loopexit3283 ], [ %.sroa.72.sroa.0.020792231, %.loopexit2103.jt4 ], [ %.sroa.72.sroa.0.0.extract.trunc597, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.72.sroa.0.2, %.loopexit2103 ], !dbg !4756 ; 3 uses
   %.sroa.89.0.lcssa = phi i16 [ %.sroa.89.0.copyload, %bb.c ], [ %.sroa.89.2.jt0, %bb.ak ], [ %.sroa.89.12017, %._crit_edge.loopexit3277.loopexit ], [ %.sroa.89.12017, %.loopexit2103.jt1 ], [ %.sroa.89.12017, %._crit_edge.loopexit3283 ], [ %.sroa.89.12017, %.loopexit2103.jt4 ], [ %.sroa.89.12017, %._crit_edge.loopexit3277.loopexit3699 ], [ %.sroa.89.2, %.loopexit2103 ], !dbg !4756 ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !4816
@@ -668,9 +668,8 @@ bb.e:                                             ; preds = %._crit_edge
 
 bb.f:                                             ; preds = %bb.d
     #dbg_value(i8 %.sroa.0.sroa.0.0.lcssa, !4600, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !4820)
-  %6 = icmp eq i8 %.sroa.0.sroa.45.0.lcssa, %.sroa.0.sroa.45.0.extract.trunc1530, !dbg !4821 ; 2 uses
   %i.w = icmp ne i8 %.sroa.0.sroa.0.0.extract.trunc1441, 2, !dbg !4823 ; 2 uses
-  %.not9.i.i = xor i1 %6, true, !dbg !4823
+  %.not9.i.i = icmp ne i8 %.sroa.0.sroa.45.0.lcssa, %.sroa.0.sroa.45.0.extract.trunc1530, !dbg !4823
   %brmerge.i.i = or i1 %i.w, %.not9.i.i, !dbg !4823
   br i1 %brmerge.i.i, label %_RNvXsi_NtCs2Skuq3AeSHR_7anstyle5colorNtB5_5ColorNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i, label %bb.g, !dbg !4823
 
@@ -681,6 +680,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %or.cond1844, label %bb.h, label %_RNvXsf_NtCs2Skuq3AeSHR_7anstyle5styleNtB5_5StyleNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread, !dbg !4824
 
 _RNvXsi_NtCs2Skuq3AeSHR_7anstyle5colorNtB5_5ColorNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.i: ; preds = %bb.f
+  %6 = icmp eq i8 %.sroa.0.sroa.45.0.lcssa, %.sroa.0.sroa.45.0.extract.trunc1530, !dbg !4821
   %.mux.i.i = and i1 %i.w, %6, !dbg !4823
   br i1 %.mux.i.i, label %bb.h, label %_RNvXsf_NtCs2Skuq3AeSHR_7anstyle5styleNtB5_5StyleNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread, !dbg !4822
 
@@ -707,9 +707,8 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.i
     #dbg_value(i8 %.sroa.50.sroa.0.0.lcssa, !4600, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !4854)
-  %7 = icmp eq i8 %.sroa.50.sroa.45.0.lcssa, %.sroa.50.sroa.45.0.extract.trunc, !dbg !4855 ; 2 uses
   %i.ab = icmp ne i8 %.sroa.50.sroa.0.0.extract.trunc, 2, !dbg !4857 ; 2 uses
-  %.not9.i18.i = xor i1 %7, true, !dbg !4857
+  %.not9.i18.i = icmp ne i8 %.sroa.50.sroa.45.0.lcssa, %.sroa.50.sroa.45.0.extract.trunc, !dbg !4857
   %brmerge.i19.i = or i1 %i.ab, %.not9.i18.i, !dbg !4857
   br i1 %brmerge.i19.i, label %_RNvXsi_NtCs2Skuq3AeSHR_7anstyle5colorNtB5_5ColorNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit21.i, label %bb.l, !dbg !4857
 
@@ -720,6 +719,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %or.cond1847, label %bb.m, label %_RNvXsf_NtCs2Skuq3AeSHR_7anstyle5styleNtB5_5StyleNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread, !dbg !4858
 
 _RNvXsi_NtCs2Skuq3AeSHR_7anstyle5colorNtB5_5ColorNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit21.i: ; preds = %bb.k
+  %7 = icmp eq i8 %.sroa.50.sroa.45.0.lcssa, %.sroa.50.sroa.45.0.extract.trunc, !dbg !4855
   %.mux.i20.i = and i1 %i.ab, %7, !dbg !4857
   br i1 %.mux.i20.i, label %bb.m, label %_RNvXsf_NtCs2Skuq3AeSHR_7anstyle5styleNtB5_5StyleNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread, !dbg !4856
 
@@ -727,30 +727,30 @@ bb.m:                                             ; preds = %bb.l, %_RNvXsi_NtCs
     #dbg_value(ptr undef, !4571, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !4861)
     #dbg_value(ptr %i.c, !4578, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !4863)
   %.not15.i = icmp eq i8 %.sroa.72.sroa.0.0.lcssa, -1, !dbg !4864
-  %8 = icmp eq i8 %.sroa.72.sroa.0.0.extract.trunc, -1, !dbg !4864 ; 2 uses
   br i1 %.not15.i, label %bb.o, label %bb.n, !dbg !4865
 
 bb.n:                                             ; preds = %bb.m
+  %i.ae = icmp ne i8 %.sroa.72.sroa.0.0.extract.trunc, -1, !dbg !4865
     #dbg_value(ptr undef, !4586, !DIExpression(), !4866)
     #dbg_value(ptr %.sroa.72.0..sroa_idx, !4588, !DIExpression(), !4866)
     #dbg_value(ptr undef, !4592, !DIExpression(), !4867)
     #dbg_value(ptr %.sroa.72.0..sroa_idx, !4599, !DIExpression(), !4867)
     #dbg_value(i8 %.sroa.72.sroa.0.0.lcssa, !4600, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !4869)
     #dbg_value(i8 %.sroa.72.sroa.0.0.extract.trunc, !4602, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !4870)
-  %i.ae = icmp ne i8 %.sroa.72.sroa.0.0.lcssa, %.sroa.72.sroa.0.0.extract.trunc
-  %or.cond1862.not = select i1 %8, i1 true, i1 %i.ae, !dbg !4865
-  br i1 %or.cond1862.not, label %_RNvXsf_NtCs2Skuq3AeSHR_7anstyle5styleNtB5_5StyleNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread, label %bb.p, !dbg !4865
+  %8 = icmp eq i8 %.sroa.72.sroa.0.0.lcssa, %.sroa.72.sroa.0.0.extract.trunc
+  %or.cond1862.not = select i1 %i.ae, i1 %8, i1 false, !dbg !4865
+  br i1 %or.cond1862.not, label %bb.p, label %_RNvXsf_NtCs2Skuq3AeSHR_7anstyle5styleNtB5_5StyleNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread, !dbg !4865
 
 bb.o:                                             ; preds = %bb.m
+  %9 = icmp eq i8 %.sroa.72.sroa.0.0.extract.trunc, -1, !dbg !4864
   %.old = icmp eq i16 %.sroa.89.0.lcssa, %.sroa.89.0.copyload
-  %or.cond1852 = select i1 %8, i1 %.old, i1 false, !dbg !4871
+  %or.cond1852 = select i1 %9, i1 %.old, i1 false, !dbg !4871
   br i1 %or.cond1852, label %bb.r, label %_RNvXsf_NtCs2Skuq3AeSHR_7anstyle5styleNtB5_5StyleNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread, !dbg !4871
 
 bb.p:                                             ; preds = %bb.n
     #dbg_value(i8 %.sroa.72.sroa.0.0.lcssa, !4600, !DIExpression(DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_LLVM_convert, 64, DW_ATE_unsigned, DW_OP_stack_value), !4869)
-  %9 = icmp eq i8 %.sroa.72.sroa.48.0.lcssa, %.sroa.72.sroa.48.0.extract.trunc, !dbg !4870 ; 2 uses
   %i.af = icmp ne i8 %.sroa.72.sroa.0.0.extract.trunc, 2, !dbg !4872 ; 2 uses
-  %.not9.i23.i = xor i1 %9, true, !dbg !4872
+  %.not9.i23.i = icmp ne i8 %.sroa.72.sroa.48.0.lcssa, %.sroa.72.sroa.48.0.extract.trunc, !dbg !4872
   %brmerge.i24.i = or i1 %i.af, %.not9.i23.i, !dbg !4872
   br i1 %brmerge.i24.i, label %_RNvXsi_NtCs2Skuq3AeSHR_7anstyle5colorNtB5_5ColorNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit26.i, label %bb.q, !dbg !4872
 
@@ -763,7 +763,8 @@ bb.q:                                             ; preds = %bb.p
   br i1 %or.cond1851, label %bb.r, label %_RNvXsf_NtCs2Skuq3AeSHR_7anstyle5styleNtB5_5StyleNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread, !dbg !4873
 
 _RNvXsi_NtCs2Skuq3AeSHR_7anstyle5colorNtB5_5ColorNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit26.i: ; preds = %bb.p
-  %.mux.i25.i = and i1 %i.af, %9, !dbg !4872
+  %10 = icmp eq i8 %.sroa.72.sroa.48.0.lcssa, %.sroa.72.sroa.48.0.extract.trunc, !dbg !4870
+  %.mux.i25.i = and i1 %i.af, %10, !dbg !4872
   %.old.old = icmp eq i16 %.sroa.89.0.lcssa, %.sroa.89.0.copyload
   %or.cond1853 = select i1 %.mux.i25.i, i1 %.old.old, i1 false, !dbg !4871
   br i1 %or.cond1853, label %bb.r, label %_RNvXsf_NtCs2Skuq3AeSHR_7anstyle5styleNtB5_5StyleNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread, !dbg !4871

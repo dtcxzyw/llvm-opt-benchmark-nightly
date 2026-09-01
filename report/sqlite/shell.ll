@@ -206,8 +206,8 @@ line_is_complete.exit.thread:                     ; preds = %bb.ao, %line_is_com
 
 line_is_command_terminator.exit.thread:           ; preds = %bb.al, %bb.am, %line_is_complete.exit.thread, %line_is_complete.exit, %line_is_command_terminator.exit, %bb.ah
   %i.fh = tail call fastcc i32 @quickscan(ptr noundef %.1.i.ph, i32 noundef %.0129, ptr noundef nonnull @dynPrompt) ; 3 uses
-  %i.fi = and i32 %i.fh, -513
-  %i.fj = icmp eq i32 %i.fi, 0                    ; 2 uses
+  %i.fi = and i32 %i.fh, -513                     ; 2 uses
+  %i.fj = icmp eq i32 %i.fi, 0
   %i.fk = icmp eq i64 %.0137, 0                   ; 4 uses
   %or.cond5 = and i1 %i.fk, %i.fj
   br i1 %or.cond5, label %bb.ap, label %bb.ar
@@ -351,7 +351,7 @@ bb.bd:                                            ; preds = %shell_check_oom.exi
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.bd, %.critedge9
-  %.1138 = phi i64 [ %i.ha, %.critedge9 ], [ %i.hf, %bb.bd ] ; 4 uses
+  %.1138 = phi i64 [ %i.ha, %.critedge9 ], [ %i.hf, %bb.bd ] ; 5 uses
   %.1131 = phi i64 [ %i.gz, %.critedge9 ], [ %.0130.ph, %bb.bd ] ; 3 uses
   %i.hg = icmp sgt i64 %.1138, 2147418112
   br i1 %i.hg, label %bb.bf, label %bb.bg
@@ -366,11 +366,12 @@ bb.bf:                                            ; preds = %bb.be
   br label %cli_puts.exit.thread
 
 bb.bg:                                            ; preds = %bb.be
-  %.not158 = icmp eq i64 %.1138, 0                ; 2 uses
+  %.not158 = icmp eq i64 %.1138, 0
+  %.not158.not = icmp ne i64 %.1138, 0
   %i.hk = and i32 %i.fh, -257
-  %2 = icmp ne i32 %i.hk, 512
-  %or.cond165.not = or i1 %2, %.not158
-  br i1 %or.cond165.not, label %bb.bs, label %bb.bh
+  %2 = icmp eq i32 %i.hk, 512
+  %or.cond165 = and i1 %2, %.not158.not
+  br i1 %or.cond165, label %bb.bh, label %bb.bs
 
 bb.bh:                                            ; preds = %bb.bg
   %i.hl = tail call i32 @sqlite3_complete(ptr noundef %.1142) #45
@@ -465,8 +466,8 @@ bb.br:                                            ; preds = %modePop.exit, %clea
   br label %.outer.backedge
 
 bb.bs:                                            ; preds = %bb.bh, %bb.bg
-  %.not166 = xor i1 %i.fj, true
-  %brmerge = or i1 %.not158, %.not166
+  %.not166 = icmp ne i32 %i.fi, 0
+  %brmerge = or i1 %.not166, %.not158
   br i1 %brmerge, label %.outer.backedge, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
@@ -869,14 +870,15 @@ bb.c:                                             ; preds = %bb.b
   %i.j = load ptr, ptr %i.d, align 8, !tbaa !66   ; 2 uses
   %i.k = icmp eq ptr %i.j, null
   %spec.store.select.i = select i1 %i.k, ptr @.str.48, ptr %i.j
-  %i.l = tail call i32 @strncmp(ptr noundef nonnull %spec.store.select.i, ptr noundef nonnull @.str.1074, i64 noundef range(i64 -2147483648, 2147483648) %i.h) #46
-  %i.m = icmp eq i32 %i.l, 0                      ; 2 uses
+  %i.l = tail call i32 @strncmp(ptr noundef nonnull %spec.store.select.i, ptr noundef nonnull @.str.1074, i64 noundef range(i64 -2147483648, 2147483648) %i.h) #46 ; 2 uses
+  %1 = icmp eq i32 %i.l, 0
+  %i.m = icmp eq i32 %i.l, 0
   %i.n = select i1 %i.m, i8 2, i8 0
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %strlen30.exit, %bb.a, %bb.b
   %.0152 = phi i32 [ 0, %bb.b ], [ 119, %bb.a ], [ 120, %strlen30.exit ], [ 0, %bb.c ] ; 2 uses
-  %i.o = phi i1 [ false, %bb.b ], [ true, %bb.a ], [ true, %strlen30.exit ], [ %i.m, %bb.c ]
+  %i.o = phi i1 [ false, %bb.b ], [ true, %bb.a ], [ true, %strlen30.exit ], [ %1, %bb.c ]
   %.not182 = phi i8 [ 0, %bb.b ], [ 2, %bb.a ], [ 2, %strlen30.exit ], [ %i.n, %bb.c ]
   %i.p = icmp sgt i32 %i.b, 1
   br i1 %i.p, label %.lr.ph, label %.loopexit

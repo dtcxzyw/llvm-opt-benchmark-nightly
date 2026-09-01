@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.h, %bb.f
-  %.051 = phi ptr [ %i.v, %bb.f ], [ %.152, %bb.h ] ; 4 uses
+  %.051 = phi ptr [ %i.v, %bb.f ], [ %.152, %bb.h ] ; 5 uses
   %.050 = phi ptr [ %i.i, %bb.f ], [ %.1, %bb.h ] ; 6 uses
   %i.y = icmp ult ptr %.050, %.051
   br i1 %i.y, label %bb.h, label %.loopexit
@@ -219,10 +219,11 @@ bb.h:                                             ; preds = %bb.g
   %i.ae = sub i64 %i.ac, %i.ad
   %i.af = tail call i64 %i.aa(ptr noundef %.050, i64 noundef %i.ae) #37 ; 2 uses
   %i.ag = icmp ne i64 %i.af, 0
-  %i.ah = getelementptr i8, ptr %.050, i64 %i.af  ; 2 uses
-  %i.ai = icmp ule ptr %i.ah, %.051               ; 3 uses
+  %i.ah = getelementptr i8, ptr %.050, i64 %i.af  ; 3 uses
+  %i.ai = icmp ule ptr %i.ah, %.051               ; 2 uses
   %.152 = select i1 %i.ai, ptr %.051, ptr %.050   ; 2 uses
-  %.1 = select i1 %i.ai, ptr %i.ah, ptr %.050
+  %6 = icmp ugt ptr %i.ah, %.051
+  %.1 = select i1 %6, ptr %.050, ptr %i.ah
   %cond = and i1 %i.ag, %i.ai
   br i1 %cond, label %bb.g, label %.loopexit, !llvm.loop !1578
 

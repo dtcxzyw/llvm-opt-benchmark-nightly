@@ -202,6 +202,7 @@ bb.d:                                             ; preds = %.critedge.i
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   %i.m = extractelement <2 x double> %i.e, i64 0  ; 2 uses
   %i.n = extractelement <2 x double> %i.e, i64 1  ; 2 uses
+  %11 = icmp ne i32 %3, 59
   br label %.critedge.i98
 
 .critedge.i98:                                    ; preds = %.critedge.i98.backedge, %.thread
@@ -217,16 +218,15 @@ bb.d:                                             ; preds = %.critedge.i
   br label %.critedge.i98, !llvm.loop !41
 
 _ZN7msdfgen9readCharFEP8_IO_FILE.exit100:         ; preds = %.critedge.i98
-  %.not91 = icmp eq i32 %i.o, %3                  ; 7 uses
-  %.not92 = icmp ne i32 %i.o, 59
-  %or.cond.not = or i1 %.not92, %.not91
-  br i1 %or.cond.not, label %.thread121, label %bb.e
+  %.not91 = icmp eq i32 %i.o, 59
+  %or.cond = and i1 %.not91, %11
+  br i1 %or.cond, label %bb.e, label %.thread121.loopexit224
 
 bb.e:                                             ; preds = %_ZN7msdfgen9readCharFEP8_IO_FILE.exit100
   %i.p = call noundef i32 (ptr, ptr, ...) @__isoc23_fscanf(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull %i.g)
   switch i32 %i.p, label %.critedge.i101 [
     i32 2, label %bb.f
-    i32 1, label %.thread121
+    i32 1, label %.thread121.loopexit224
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -335,7 +335,7 @@ bb.n:                                             ; preds = %.critedge.i101, %.c
   %i.x = call noundef i32 (ptr, ptr, ...) @__isoc23_fscanf(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull %i.g)
   switch i32 %i.x, label %.critedge.i14.i [
     i32 2, label %.critedge.i.i
-    i32 1, label %.thread121
+    i32 1, label %.thread121.loopexit224
   ]
 
 .critedge.i.i:                                    ; preds = %.loopexit135, %.critedge.i.i.backedge
@@ -355,7 +355,7 @@ bb.n:                                             ; preds = %.critedge.i101, %.c
 bb.o:                                             ; preds = %.critedge.i.i
   %i.z = call noundef i32 (ptr, ptr, ...) @__isoc23_fscanf(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull %i.i)
   %i.aa = icmp eq i32 %i.z, 2
-  br i1 %i.aa, label %.critedge.i11.i, label %.thread121
+  br i1 %i.aa, label %.critedge.i11.i, label %.thread121.loopexit224
 
 .critedge.i11.i:                                  ; preds = %bb.o, %.critedge.i11.i.backedge
   %i.ab = call i32 @fgetc(ptr noundef %0)
@@ -408,7 +408,7 @@ _ZN7msdfgenL17readControlPointsI8_IO_FILETnPFiPT_EXadL_ZNS_9readCharFEPS1_EETnPF
   %i.ai = call noundef i32 (ptr, ptr, ...) @__isoc23_fscanf(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull align 8 dereferenceable(16) %i.ag, ptr noundef nonnull %i.ah)
   switch i32 %i.ai, label %.critedge.i110.preheader [
     i32 2, label %bb.q
-    i32 1, label %.thread121
+    i32 1, label %.thread121.loopexit224
   ]
 
 .loopexit.jt0:                                    ; preds = %.critedge.i101, %.critedge.i104
@@ -416,7 +416,7 @@ _ZN7msdfgenL17readControlPointsI8_IO_FILETnPFiPT_EXadL_ZNS_9readCharFEPS1_EETnPF
   %i.aj = call noundef i32 (ptr, ptr, ...) @__isoc23_fscanf(ptr noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull align 8 dereferenceable(16) %i.k, ptr noundef nonnull %i.l)
   switch i32 %i.aj, label %.critedge.i110.preheader [
     i32 2, label %bb.r
-    i32 1, label %.thread121
+    i32 1, label %.thread121.loopexit224
   ]
 
 .critedge.i110.preheader:                         ; preds = %.loopexit.jt0, %.loopexit
@@ -540,8 +540,12 @@ bb.aa:                                            ; preds = %bb.k, %bb.t, %bb.w,
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   resume { ptr, i32 } %.pn96
 
-.thread121:                                       ; preds = %.loopexit135, %bb.o, %.loopexit, %bb.e, %_ZN7msdfgen9readCharFEP8_IO_FILE.exit100, %.loopexit.jt0, %.critedge.i104, %.critedge.i.i, %.critedge.i11.i, %.critedge.i14.i, %.critedge.i107, %.critedge.i110, %bb.c, %bb.d, %bb.m
-  %.6 = phi i1 [ %i.d, %bb.d ], [ %i.v, %bb.m ], [ false, %bb.c ], [ false, %.critedge.i104 ], [ false, %.critedge.i107 ], [ false, %.critedge.i.i ], [ false, %.critedge.i14.i ], [ false, %.critedge.i110 ], [ false, %.critedge.i11.i ], [ %.not91, %.loopexit.jt0 ], [ %.not91, %_ZN7msdfgen9readCharFEP8_IO_FILE.exit100 ], [ %.not91, %bb.e ], [ %.not91, %.loopexit ], [ %.not91, %bb.o ], [ %.not91, %.loopexit135 ]
+.thread121.loopexit224:                           ; preds = %.loopexit.jt0, %_ZN7msdfgen9readCharFEP8_IO_FILE.exit100, %bb.e, %.loopexit, %bb.o, %.loopexit135
+  %.not91.le = icmp eq i32 %i.o, %3
+  br label %.thread121
+
+.thread121:                                       ; preds = %.critedge.i104, %.critedge.i.i, %.critedge.i11.i, %.critedge.i14.i, %.critedge.i107, %.critedge.i110, %.thread121.loopexit224, %bb.c, %bb.d, %bb.m
+  %.6 = phi i1 [ %i.d, %bb.d ], [ %i.v, %bb.m ], [ false, %bb.c ], [ %.not91.le, %.thread121.loopexit224 ], [ false, %.critedge.i107 ], [ false, %.critedge.i.i ], [ false, %.critedge.i14.i ], [ false, %.critedge.i110 ], [ false, %.critedge.i11.i ], [ false, %.critedge.i104 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   ret i1 %.6
 }
@@ -944,11 +948,11 @@ bb.i:                                             ; preds = %.backedge, %bb.h
   br label %.critedge.i101
 
 _ZN7msdfgen9readCharSEPPKc.exit104:               ; preds = %.critedge.i101
-  %i.aj = sext i8 %i.ai to i32
-  %.not91 = icmp eq i32 %3, %i.aj                 ; 2 uses
-  %.not92 = icmp ne i8 %i.ai, 59
-  %or.cond.not = or i1 %.not92, %.not91
-  br i1 %or.cond.not, label %.thread155, label %bb.j
+  %i.aj = sext i8 %i.ai to i32                    ; 2 uses
+  %.not91.not = icmp ne i32 %3, %i.aj
+  %.not92 = icmp eq i8 %i.ai, 59
+  %or.cond = and i1 %.not91.not, %.not92
+  br i1 %or.cond, label %bb.j, label %.thread155.loopexit419
 
 _ZN7msdfgen9readCharSEPPKc.exit104.thread:        ; preds = %.critedge.i101
   %.not91159 = icmp eq i32 %3, -1
@@ -1351,8 +1355,12 @@ bb.ao:                                            ; preds = %bb.r, %bb.ah, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   resume { ptr, i32 } %.pn96
 
-.thread155:                                       ; preds = %_ZN7msdfgen9readCharSEPPKc.exit104, %.critedge.i118, %.critedge.i26.i, %.critedge.i11.i, %.critedge.i21.i, %.critedge.i124, %.critedge.i136, %_ZN7msdfgen9readCharSEPPKc.exit104.thread, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit19.thread.i, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit.thread.i, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit134.thread, %_ZN7msdfgen9readCharSEPPKc.exit116.thread, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit111.thread, %.thread, %_ZN7msdfgen9readCharSEPPKc.exit
-  %.6 = phi i1 [ false, %.critedge.i26.i ], [ %i.bb, %_ZN7msdfgen9readCharSEPPKc.exit116.thread ], [ %i.v, %_ZN7msdfgen9readCharSEPPKc.exit ], [ false, %.critedge.i21.i ], [ %.not91159, %_ZN7msdfgen9readCharSEPPKc.exit104.thread ], [ false, %.thread ], [ false, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit.thread.i ], [ false, %.critedge.i136 ], [ false, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit111.thread ], [ false, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit19.thread.i ], [ false, %.critedge.i124 ], [ false, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit134.thread ], [ false, %.critedge.i118 ], [ false, %.critedge.i11.i ], [ %.not91, %_ZN7msdfgen9readCharSEPPKc.exit104 ]
+.thread155.loopexit419:                           ; preds = %_ZN7msdfgen9readCharSEPPKc.exit104
+  %.not91 = icmp eq i32 %3, %i.aj
+  br label %.thread155
+
+.thread155:                                       ; preds = %.critedge.i118, %.critedge.i26.i, %.critedge.i11.i, %.critedge.i21.i, %.critedge.i124, %.critedge.i136, %.thread155.loopexit419, %_ZN7msdfgen9readCharSEPPKc.exit104.thread, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit19.thread.i, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit.thread.i, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit134.thread, %_ZN7msdfgen9readCharSEPPKc.exit116.thread, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit111.thread, %.thread, %_ZN7msdfgen9readCharSEPPKc.exit
+  %.6 = phi i1 [ false, %.critedge.i26.i ], [ %i.bb, %_ZN7msdfgen9readCharSEPPKc.exit116.thread ], [ %i.v, %_ZN7msdfgen9readCharSEPPKc.exit ], [ false, %.critedge.i21.i ], [ %.not91159, %_ZN7msdfgen9readCharSEPPKc.exit104.thread ], [ false, %.thread ], [ false, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit.thread.i ], [ false, %.critedge.i136 ], [ false, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit111.thread ], [ false, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit19.thread.i ], [ false, %.critedge.i124 ], [ false, %_ZN7msdfgen10readCoordSEPPKcRNS_7Vector2E.exit134.thread ], [ %.not91, %.thread155.loopexit419 ], [ false, %.critedge.i11.i ], [ false, %.critedge.i118 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   ret i1 %.6
 }

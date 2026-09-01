@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.y = load i64, ptr %i.x, align 8, !tbaa !83
   %i.z = icmp ult i64 %i.n, %i.y
   %.neg.i.i = sext i1 %i.z to i32
-  %i.aa = add nsw i32 %.neg.i.i, %i.v             ; 8 uses
+  %i.aa = add nsw i32 %.neg.i.i, %i.v             ; 9 uses
   %i.ab = add nsw i32 %i.aa, %i.p                 ; 4 uses
   %i.ac = add nsw i32 %i.ab, -1                   ; 2 uses
   %i.ad = add i32 %i.ab, 3
@@ -404,8 +404,10 @@ _ZN3fmt3v1214basic_appenderIcEaSEc.exit:          ; preds = %bb.o, %bb.p
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZN3fmt3v1214basic_appenderIcEaSEc.exit, %_ZN3fmt3v126detail7reserveIcEENS0_14basic_appenderIT_EES5_m.exit
+  %6 = select i1 %.not, i8 46, i8 0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
-  br i1 %.not, label %bb.u, label %bb.r
+  %not..not = icmp eq i32 %i.aa, 1
+  br i1 %not..not, label %bb.r, label %bb.u
 
 bb.r:                                             ; preds = %bb.q
   %i.dg = icmp ugt i64 %i.n, 99
@@ -502,7 +504,7 @@ bb.w:                                             ; preds = %bb.v, %._crit_edge.
   %.130.i.i = phi i64 [ %i.ew, %bb.v ], [ %.029.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
   %.1.i.i = phi ptr [ %i.ev, %bb.v ], [ %.028.lcssa.i.i, %._crit_edge.i.i ] ; 2 uses
   %i.ex = getelementptr inbounds i8, ptr %.1.i.i, i64 -1
-  store i8 46, ptr %i.ex, align 1, !tbaa !33
+  store i8 %6, ptr %i.ex, align 1, !tbaa !33
   %i.ey = getelementptr inbounds i8, ptr %.1.i.i, i64 -2 ; 3 uses
   %i.ez = icmp ugt i64 %.130.i.i, 99
   br i1 %i.ez, label %.lr.ph.i37.i.i, label %._crit_edge.i33.i.i

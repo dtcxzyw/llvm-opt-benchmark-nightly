@@ -152,8 +152,8 @@ opal_datatype_span.exit:                          ; preds = %bb.j, %bb.k
 bb.l:                                             ; preds = %opal_datatype_span.exit
   %i.ae = getelementptr i8, ptr %4, i64 84
   %.val181 = load i32, ptr %i.ae, align 4, !tbaa !59
-  %i.af = and i32 %.val181, 64
-  %i.ag = icmp eq i32 %i.af, 0                    ; 3 uses
+  %i.af = and i32 %.val181, 64                    ; 2 uses
+  %i.ag = icmp eq i32 %i.af, 0                    ; 2 uses
   %i.ah = icmp slt i32 %.val175.val, 3
   %or.cond6.not249 = or i1 %i.ah, %i.ag
   %.not165 = icmp slt i32 %2, %i.ac
@@ -179,12 +179,11 @@ bb.n:                                             ; preds = %opal_datatype_span.
   br i1 %or.cond173, label %.thread231, label %.thread
 
 bb.o:                                             ; preds = %bb.m
-  %not. = xor i1 %i.ag, true
-  %spec.select = zext i1 %not. to i32             ; 2 uses
+  %.lobit = lshr exact i32 %i.af, 6
   br i1 %i.ag, label %.thread, label %.thread231
 
 .thread:                                          ; preds = %opal_datatype_span.exit, %bb.m, %bb.n, %bb.l, %bb.o
-  %.0143229 = phi i32 [ %spec.select, %bb.o ], [ 0, %opal_datatype_span.exit ], [ 2, %bb.l ], [ 0, %bb.m ], [ 2, %bb.n ] ; 2 uses
+  %.0143229 = phi i32 [ 0, %bb.o ], [ 0, %opal_datatype_span.exit ], [ 2, %bb.l ], [ 0, %bb.m ], [ 2, %bb.n ] ; 2 uses
   %i.ap = icmp eq i32 %.val, %5
   br i1 %i.ap, label %bb.p, label %bb.q
 
@@ -208,7 +207,7 @@ bb.q:                                             ; preds = %.thread
   br label %bb.r
 
 .thread231:                                       ; preds = %bb.n, %opal_datatype_span.exit, %bb.o
-  %.0143234 = phi i32 [ %spec.select, %bb.o ], [ 1, %bb.n ], [ 1, %opal_datatype_span.exit ]
+  %.0143234 = phi i32 [ %.lobit, %bb.o ], [ 1, %bb.n ], [ 1, %opal_datatype_span.exit ]
   %i.bd = tail call noalias ptr @malloc(i64 noundef %.0.i183) #11
   br label %bb.r
 

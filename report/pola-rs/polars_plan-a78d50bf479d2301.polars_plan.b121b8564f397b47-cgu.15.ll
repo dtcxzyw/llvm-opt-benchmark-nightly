@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.c
   %i.w = trunc nuw i8 %i.v to i1, !dbg !136538    ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !136539), !dbg !136533
   tail call void @llvm.experimental.noalias.scope.decl(metadata !136542), !dbg !136533
-  %i.x = and i32 %5, 65536, !dbg !136544
-  %i.y = icmp ne i32 %i.x, 0, !dbg !136544        ; 6 uses
+  %i.x = and i32 %5, 65536, !dbg !136544          ; 3 uses
+  %i.y = icmp ne i32 %i.x, 0, !dbg !136544        ; 4 uses
   switch i8 %i.s, label %.thread.i [
     i8 15, label %bb.e
     i8 16, label %bb.f
@@ -249,9 +249,11 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.aj = tail call noundef i8 @_RNvMs7_NtNtCsfcROwRM8ZtH_11polars_plan5plans3litNtB5_12LiteralValue4bool(ptr noalias noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(96) %i.ac), !dbg !136584, !noalias !136567
-  %or.cond.not.i = trunc i8 %i.aj to i1, !dbg !136585
-  %brmerge.not.i = and i1 %i.y, %or.cond.not.i, !dbg !136585
-  br i1 %brmerge.not.i, label %bb.m, label %bb.l, !dbg !136585
+  %6 = and i8 %i.aj, 1, !dbg !136585
+  %or.cond.not.i = icmp eq i8 %6, 0, !dbg !136585
+  %.not.i = icmp eq i32 %i.x, 0, !dbg !136585
+  %brmerge.i = or i1 %.not.i, %or.cond.not.i, !dbg !136585
+  br i1 %brmerge.i, label %bb.l, label %bb.m, !dbg !136585
 
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ae, i64 112, !dbg !136588 ; 3 uses
@@ -441,9 +443,10 @@ bb.aq:                                            ; preds = %bb.ao
 
 bb.ar:                                            ; preds = %bb.aq
   %i.cm = tail call noundef i8 @_RNvMs7_NtNtCsfcROwRM8ZtH_11polars_plan5plans3litNtB5_12LiteralValue4bool(ptr noalias noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(96) %i.cf), !dbg !136709, !noalias !136567
-  %or.cond11.not.not.i.a = icmp eq i8 %i.cm, 0, !dbg !136710
-  %brmerge86.not.i = and i1 %i.y, %or.cond11.not.not.i.a, !dbg !136710
-  br i1 %brmerge86.not.i, label %bb.at, label %bb.as, !dbg !136710
+  %or.cond11.not.not.i = icmp ne i8 %i.cm, 0, !dbg !136710
+  %or.cond11.not.not.i.a = icmp eq i32 %i.x, 0, !dbg !136710
+  %brmerge86.i = or i1 %or.cond11.not.not.i.a, %or.cond11.not.not.i, !dbg !136710
+  br i1 %brmerge86.i, label %bb.as, label %bb.at, !dbg !136710
 
 bb.as:                                            ; preds = %bb.ar, %bb.aq
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ch, i64 112, !dbg !136712 ; 2 uses

@@ -202,19 +202,20 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.fj, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
-  %i.fk = sub nsw i32 %i.dc, %.0.i79.i            ; 3 uses
+  %i.fk = sub nsw i32 %i.dc, %.0.i79.i            ; 4 uses
   %i.fl = icmp sgt i32 %i.fk, 1
   %i.fm = shl i32 %i.fk, 1
   %.neg48.i.i = sub i32 3, %i.fm
   %.neg49.i.i = select i1 %i.fl, i32 %.neg48.i.i, i32 -1
-  %i.fn = icmp slt i32 %i.fk, 1                   ; 3 uses
+  %i.fn = icmp slt i32 %i.fk, 1                   ; 2 uses
   %i.fo = zext i1 %i.fn to i32                    ; 2 uses
   store i32 %i.fo, ptr %i.cu, align 4, !tbaa !118
   %i.fp = add nsw i32 %i.fg, -2
   %i.fq = add nuw nsw i32 %i.fp, %i.fo
   store i32 %i.fq, ptr %i.cn, align 8, !tbaa !115
   %i.fr = load i32, ptr %i.cm, align 4, !tbaa !114 ; 2 uses
-  %i.fs = select i1 %i.fn, i32 0, i32 %.neg49.i.i
+  %not..i.i = icmp sgt i32 %i.fk, 0
+  %i.fs = select i1 %not..i.i, i32 %.neg49.i.i, i32 0
   %i.ft = add nsw i32 %i.fr, %i.fs
   %i.fu = select i1 %i.fn, i32 2, i32 0
   %i.fv = add nsw i32 %i.fr, %i.fu

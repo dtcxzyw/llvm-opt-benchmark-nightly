@@ -204,14 +204,15 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.f = load i32, ptr %i.e, align 8, !range !69
-  %.not = icmp eq i32 %i.f, 2                     ; 2 uses
+  %i.f = load i32, ptr %i.e, align 8, !range !69  ; 2 uses
+  %.not = icmp eq i32 %i.f, 2
   %or.cond = select i1 %i.d, i1 true, i1 %.not
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.h = load i32, ptr %i.g, align 8, !range !69
   %.not3 = icmp eq i32 %i.h, 2                    ; 2 uses
   %or.cond8 = select i1 %or.cond, i1 true, i1 %.not3
-  %i.i = select i1 %or.cond8, i1 %.not, i1 false
+  %.not.not = icmp eq i32 %i.f, 2
+  %i.i = select i1 %or.cond8, i1 %.not.not, i1 false
   br i1 %i.i, label %.thread, label %bb.h
 
 bb.c:                                             ; preds = %bb.a

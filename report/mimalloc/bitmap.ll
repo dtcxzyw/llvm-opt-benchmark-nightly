@@ -205,16 +205,16 @@ bb.j:                                             ; preds = %.lr.ph
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.at
   %i.aw = shl nuw i64 1, %i.au                    ; 2 uses
   %i.ax = atomicrmw or ptr %i.av, i64 %i.aw acq_rel, align 8
-  %i.ay = and i64 %i.ax, %i.aw
-  %4 = icmp eq i64 %i.ay, 0                       ; 2 uses
-  %not..i.i.peel = xor i1 %4, true
-  %5 = zext i1 %not..i.i.peel to i64              ; 2 uses
-  store i64 %5, ptr %i.a, align 8, !tbaa !8
+  %i.ay = and i64 %i.ax, %i.aw                    ; 2 uses
+  %not..i.i.peel = icmp ne i64 %i.ay, 0
+  %4 = zext i1 %not..i.i.peel to i64              ; 2 uses
+  store i64 %4, ptr %i.a, align 8, !tbaa !8
+  %5 = icmp eq i64 %i.ay, 0
   br label %mi_bchunk_setN.exit.peel
 
 mi_bchunk_setN.exit.peel:                         ; preds = %bb.j, %bb.i, %bb.h, %bb.f
-  %i.az = phi i64 [ %.pre, %bb.f ], [ %5, %bb.j ], [ %i.ak, %bb.h ], [ %i.ar, %bb.i ] ; 2 uses
-  %.0.i.peel = phi i1 [ %i.r, %bb.f ], [ %4, %bb.j ], [ %i.al, %bb.h ], [ %i.as, %bb.i ] ; 2 uses
+  %i.az = phi i64 [ %4, %bb.j ], [ %.pre, %bb.f ], [ %i.ar, %bb.i ], [ %i.ak, %bb.h ] ; 2 uses
+  %.0.i.peel = phi i1 [ %5, %bb.j ], [ %i.r, %bb.f ], [ %i.as, %bb.i ], [ %i.al, %bb.h ] ; 2 uses
   %i.ba = lshr i64 %1, 15
   %i.bb = and i64 %i.h, 63
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.ba
@@ -239,12 +239,11 @@ mi_bchunk_setN.exit.peel:                         ; preds = %bb.j, %bb.i, %bb.h,
   br i1 %i.bi, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %.peel.next
-  %i.bj = atomicrmw or ptr %i.bh, i64 1 acq_rel, align 8
+  %i.bj = atomicrmw or ptr %i.bh, i64 1 acq_rel, align 8 ; 2 uses
   %i.bk = and i64 %i.bj, 1
-  %6 = icmp eq i64 %i.bk, 0                       ; 2 uses
-  %not..i.i = xor i1 %6, true
-  %7 = zext i1 %not..i.i to i64                   ; 2 uses
-  store i64 %7, ptr %i.a, align 8, !tbaa !8
+  %6 = and i64 %i.bj, 1                           ; 2 uses
+  store i64 %6, ptr %i.a, align 8, !tbaa !8
+  %7 = icmp eq i64 %i.bk, 0
   br label %mi_bchunk_setN.exit
 
 bb.l:                                             ; preds = %.peel.next
@@ -269,8 +268,8 @@ bb.n:                                             ; preds = %bb.l
   br label %mi_bchunk_setN.exit
 
 mi_bchunk_setN.exit:                              ; preds = %bb.k, %bb.m, %bb.n
-  %i.bs = phi i64 [ %.pre49, %bb.n ], [ %7, %bb.k ], [ %i.bp, %bb.m ]
-  %.0.i = phi i1 [ %i.br, %bb.n ], [ %6, %bb.k ], [ %i.bq, %bb.m ]
+  %i.bs = phi i64 [ %6, %bb.k ], [ %.pre49, %bb.n ], [ %i.bp, %bb.m ]
+  %.0.i = phi i1 [ %7, %bb.k ], [ %i.br, %bb.n ], [ %i.bq, %bb.m ]
   %i.bt = select i1 %.0.i, i1 %.03144, i1 false   ; 2 uses
   %i.bu = add i64 %i.bs, %.03045                  ; 2 uses
   %i.bv = lshr i64 %.03342, 6
@@ -673,7 +672,7 @@ bb.j:                                             ; preds = %.lr.ph
   br label %mi_bchunk_setN.exit.peel
 
 mi_bchunk_setN.exit.peel:                         ; preds = %bb.j, %bb.i, %bb.h, %bb.f
-  %.0.i.peel = phi i1 [ %i.r, %bb.f ], [ %i.ah, %bb.h ], [ %i.au, %bb.j ], [ %i.an, %bb.i ] ; 2 uses
+  %.0.i.peel = phi i1 [ %i.au, %bb.j ], [ %i.r, %bb.f ], [ %i.an, %bb.i ], [ %i.ah, %bb.h ] ; 2 uses
   %i.av = load atomic i64, ptr %i.o monotonic, align 8
   %.not.i.i.peel = icmp eq i64 %i.av, -1
   br i1 %.not.i.i.peel, label %bb.k, label %mi_bchunk_all_are_set_relaxed.exit.thread.i.peel
@@ -778,7 +777,7 @@ bb.v:                                             ; preds = %bb.t
   br label %mi_bchunk_setN.exit
 
 mi_bchunk_setN.exit:                              ; preds = %bb.s, %bb.u, %bb.v
-  %.0.i = phi i1 [ %i.ce, %bb.v ], [ %i.cd, %bb.u ], [ %i.by, %bb.s ]
+  %.0.i = phi i1 [ %i.by, %bb.s ], [ %i.ce, %bb.v ], [ %i.cd, %bb.u ]
   %i.cf = select i1 %.0.i, i1 %.02637, i1 false   ; 2 uses
   %i.cg = load atomic i64, ptr %i.bu monotonic, align 8
   %.not.i.i = icmp eq i64 %i.cg, -1

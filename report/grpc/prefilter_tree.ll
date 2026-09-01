@@ -202,7 +202,8 @@ bb.j:                                             ; preds = %bb.h
   br i1 %or.cond, label %_ZNSt6vectorIiSaIiEE5clearEv.exit, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.k
-  br i1 %i.bg, label %.lr.ph37, label %_ZNSt6vectorIiSaIiEE5clearEv.exit
+  %.not51 = icmp slt i32 %i.bf, 2
+  br i1 %.not51, label %_ZNSt6vectorIiSaIiEE5clearEv.exit, label %.lr.ph37
 
 .lr.ph:                                           ; preds = %.lr.ph40, %.lr.ph.backedge
   %.01834 = phi i1 [ %.01834.be, %.lr.ph.backedge ], [ true, %.lr.ph40 ]
@@ -213,8 +214,8 @@ bb.k:                                             ; preds = %.lr.ph
   %i.bc = load i32, ptr %.sroa.026.033, align 4, !tbaa !87
   %i.bd = sext i32 %i.bc to i64
   %i.be = getelementptr inbounds nuw [56 x i8], ptr %i.ak, i64 %i.bd
-  %i.bf = load i32, ptr %i.be, align 8, !tbaa !88
-  %i.bg = icmp sgt i32 %i.bf, 1                   ; 2 uses
+  %i.bf = load i32, ptr %i.be, align 8, !tbaa !88 ; 2 uses
+  %i.bg = icmp sgt i32 %i.bf, 1
   %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.026.033, i64 4 ; 2 uses
   %.not = icmp eq ptr %i.bh, %i.aw
   br i1 %.not, label %._crit_edge, label %.lr.ph.backedge

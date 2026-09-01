@@ -202,7 +202,7 @@ bb.a:
   %48 = alloca %class.QString, align 8            ; 9 uses
   %49 = alloca %class.QVariant, align 8           ; 7 uses
   %50 = alloca %class.QString, align 8            ; 10 uses
-  %i.b = tail call noundef ptr @_ZNK15DisStreamDialog14selectedStreamEv(ptr noundef align 8 dereferenceable_or_null(288) %0) ; 2 uses
+  %i.b = tail call noundef ptr @_ZNK15DisStreamDialog14selectedStreamEv(ptr noundef align 8 dereferenceable_or_null(288) %0) ; 3 uses
   %i.c = getelementptr i8, ptr %0, i64 192        ; 2 uses
   %i.d = load i8, ptr %i.c, align 8, !range !36, !noundef !37
   %i.e = trunc nuw i8 %i.d to i1
@@ -254,6 +254,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not586, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
+  %51 = icmp ne ptr %i.b, null
   %.not439 = icmp eq ptr %i.b, null
   %i.u = getelementptr inbounds nuw i8, ptr %25, i64 16
   %i.v = getelementptr inbounds nuw i8, ptr %17, i64 16
@@ -298,8 +299,10 @@ bb.k:                                             ; preds = %_ZN8QVariant9fromVa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #20
   %i.aj = icmp ne ptr %i.b, %i.ac
+  %or.cond170 = select i1 %.not439, i1 true, i1 %i.aj
   %i.ak = icmp ne ptr %.0107588, null
-  %or.cond171 = select i1 %.not439, i1 %i.ak, i1 %i.aj
+  %or.cond = select i1 %51, i1 true, i1 %i.ak
+  %or.cond171 = select i1 %or.cond170, i1 %or.cond, i1 false
   %.1108 = select i1 %or.cond171, ptr %.0107588, ptr %i.ad ; 2 uses
   %i.al = invoke ptr @address_to_display(ptr noundef null, ptr noundef %i.ac)
           to label %bb.r unwind label %bb.m       ; 4 uses

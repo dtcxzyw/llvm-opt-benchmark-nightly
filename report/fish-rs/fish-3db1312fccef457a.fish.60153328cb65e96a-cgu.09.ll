@@ -205,7 +205,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
-  %i.g = load i64, ptr %i.f, align 8, !noundef !13 ; 3 uses
+  %i.g = load i64, ptr %i.f, align 8, !noundef !13 ; 5 uses
   %i.h = icmp eq i64 %i.g, 0
   br i1 %i.h, label %._crit_edge.thread, label %.lr.ph.preheader
 
@@ -215,7 +215,7 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %.sroa.01.022 = phi i64 [ %i.w, %bb.d ], [ 0, %.lr.ph.preheader ] ; 4 uses
+  %.sroa.01.022 = phi i64 [ %i.w, %bb.d ], [ 0, %.lr.ph.preheader ] ; 6 uses
   %.sroa.06.021 = phi i64 [ %i.k, %bb.d ], [ %i.g, %.lr.ph.preheader ]
   %.sroa.08.020 = phi ptr [ %i.m, %bb.d ], [ %i.i, %.lr.ph.preheader ] ; 5 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.08.020) ]
@@ -228,10 +228,10 @@ bb.a:
   br i1 %i.p, label %bb.b, label %bb.d
 
 ._crit_edge:                                      ; preds = %bb.c
-  %4 = icmp ult i64 %.sroa.01.022, %i.g           ; 3 uses
-  %.not = icmp ne i64 %.sroa.01.022, 0
-  %or.cond.not = and i1 %.not, %4
-  br i1 %or.cond.not, label %bb.e, label %._crit_edge.thread
+  %.not18 = icmp uge i64 %.sroa.01.022, %i.g
+  %.not = icmp eq i64 %.sroa.01.022, 0
+  %or.cond = or i1 %.not18, %.not
+  br i1 %or.cond, label %._crit_edge.thread, label %bb.e
 
 bb.b:                                             ; preds = %.lr.ph
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.08.020, i64 8
@@ -252,8 +252,9 @@ bb.d:                                             ; preds = %bb.b, %.lr.ph, %bb.
   br i1 %i.x, label %._crit_edge.thread, label %.lr.ph
 
 ._crit_edge.thread:                               ; preds = %bb.d, %bb.a, %bb.o, %._crit_edge
-  %5 = phi i1 [ %4, %._crit_edge ], [ %4, %bb.o ], [ false, %bb.a ], [ false, %bb.d ]
-  ret i1 %5
+  %.sroa.01.0.lcssa33 = phi i64 [ %.sroa.01.022, %._crit_edge ], [ %.sroa.01.022, %bb.o ], [ 0, %bb.a ], [ %i.g, %bb.d ]
+  %4 = icmp ult i64 %.sroa.01.0.lcssa33, %i.g
+  ret i1 %4
 
 bb.e:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)

@@ -204,13 +204,15 @@ bb.s:                                             ; preds = %lean_obj_tag.exit48
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !9
   %i.ax = ptrtoint ptr %i.aw to i64
   %i.ay = lshr i64 %i.ax, 1
-  %i.az = trunc i64 %i.ay to i32                  ; 2 uses
+  %i.az = trunc i64 %i.ay to i32                  ; 3 uses
   %i.ba = icmp ult i32 %i.az, 48
   br i1 %i.ba, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.bb = icmp ult i32 %i.az, 58
-  %..042 = select i1 %i.bb, i8 %.042, i8 0
+  %3 = zext i1 %i.bb to i8
+  %4 = icmp ugt i32 %i.az, 57
+  %..042 = select i1 %4, i8 %3, i8 %.042
   br label %bb.u
 
 .fold.split:                                      ; preds = %bb.n, %bb.n

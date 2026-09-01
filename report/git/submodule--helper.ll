@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.c, %.critedge, %
   %.020 = phi i32 [ %i.ax, %bb.g ], [ %i.bq, %bb.f ], [ 0, %bb.c ], [ %i.be, %bb.d ], [ 0, %.critedge ] ; 2 uses
   %i.cb = load i32, ptr %i.d, align 4, !tbaa !22
   %.not27.not = icmp eq i32 %i.cb, 0              ; 3 uses
-  %.pre = load i32, ptr %i.b, align 4, !tbaa !22  ; 2 uses
+  %.pre = load i32, ptr %i.b, align 4, !tbaa !22  ; 3 uses
   br i1 %.not27.not, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -225,7 +225,7 @@ bb.l:                                             ; preds = %bb.j, %bb.i
   store ptr %.021, ptr %i.ce, align 8, !tbaa !246
   %i.cf = getelementptr inbounds nuw i8, ptr %8, i64 16
   store ptr %2, ptr %i.cf, align 8, !tbaa !247
-  %i.cg = icmp ne i32 %.pre, 0                    ; 4 uses
+  %i.cg = icmp ne i32 %.pre, 0                    ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 2 uses
   %i.ci = zext i1 %i.cg to i8
   %i.cj = load i8, ptr %i.ch, align 8
@@ -247,7 +247,8 @@ bb.l:                                             ; preds = %bb.j, %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, i8 0, i64 16, i1 false)
   %i.cs = call ptr @strvec_push(ptr noundef nonnull %5, ptr noundef nonnull %.str.320..str.270.i.i) #18 ; 0 uses
-  br i1 %i.cg, label %bb.m, label %bb.n
+  %.not.i = icmp eq i32 %.pre, 0                  ; 2 uses
+  br i1 %.not.i, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ct = call ptr @strvec_push(ptr noundef nonnull %5, ptr noundef nonnull @.str.273) #18 ; 0 uses
@@ -286,7 +287,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   store ptr @submodule_summary_callback, ptr %i.db, align 8, !tbaa !250
   %i.dc = getelementptr inbounds nuw i8, ptr %6, i64 2048
   store ptr %7, ptr %i.dc, align 8, !tbaa !251
-  br i1 %i.cg, label %bb.v, label %bb.s
+  br i1 %.not.i, label %bb.s, label %bb.v
 
 bb.s:                                             ; preds = %bb.r
   br i1 %.not27.not, label %bb.t, label %bb.u

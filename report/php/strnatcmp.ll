@@ -164,8 +164,8 @@ bb.m:                                             ; preds = %bb.l
   %i.bl = zext i8 %i.bk to i64
   %i.bm = getelementptr inbounds nuw [2 x i8], ptr %i.ab, i64 %i.bl
   %i.bn = load i16, ptr %i.bm, align 2, !tbaa !16
-  %i.bo = and i16 %i.bn, 2048
-  %.not24.i = icmp eq i16 %i.bo, 0                ; 2 uses
+  %i.bo = and i16 %i.bn, 2048                     ; 2 uses
+  %.not24.i = icmp eq i16 %i.bo, 0
   %brmerge.i = or i1 %i.bd, %.not24.i
   br i1 %brmerge.i, label %.split.loop.exit.i, label %.thread.i
 
@@ -206,8 +206,9 @@ bb.q:                                             ; preds = %bb.p
   br label %.preheader
 
 .split.loop.exit.i:                               ; preds = %bb.m
-  %not..not24.le.i = xor i1 %.not24.i, true
-  %.mux.le.i = sext i1 %not..not24.le.i to i32
+  %5 = shl nuw i16 %i.bo, 4
+  %sext.le.i = ashr exact i16 %5, 15
+  %.mux.le.i = sext i16 %sext.le.i to i32
   br label %compare_left.exit
 
 .preheader137:                                    ; preds = %bb.j, %bb.aa

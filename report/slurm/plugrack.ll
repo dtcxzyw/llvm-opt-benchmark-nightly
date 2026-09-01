@@ -202,9 +202,9 @@ bb.q:                                             ; preds = %._crit_edge, %bb.o,
   br label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph123, %bb.u
-  %i.be = phi i64 [ %i.ba, %.lr.ph123 ], [ %i.by, %bb.u ]
+  %i.be = phi i64 [ %i.ba, %.lr.ph123 ], [ %i.by, %bb.u ] ; 2 uses
   %i.bf = phi ptr [ %.pre, %.lr.ph123 ], [ %i.bz, %bb.u ] ; 2 uses
-  %.070121 = phi i64 [ 0, %.lr.ph123 ], [ %i.ca, %bb.u ] ; 6 uses
+  %.070121 = phi i64 [ 0, %.lr.ph123 ], [ %i.ca, %bb.u ] ; 7 uses
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %.070121
   %i.bh = load ptr, ptr %i.bg, align 8
   %i.bi = icmp eq ptr %i.bh, null
@@ -235,6 +235,7 @@ bb.t:                                             ; preds = %bb.s
   %i.bw = load ptr, ptr %i.bv, align 8
   %i.bx = call i32 (ptr, ...) @error(ptr noundef nonnull @.str.20, ptr noundef nonnull @__func__.load_plugins, ptr noundef %i.bw) #11 ; 0 uses
   %.pre131 = load i64, ptr %i.az, align 8
+  %8 = icmp ult i64 %.070121, %i.be
   br label %.loopexit
 
 bb.u:                                             ; preds = %._crit_edge129, %bb.r
@@ -246,7 +247,8 @@ bb.u:                                             ; preds = %._crit_edge129, %bb
 
 .loopexit:                                        ; preds = %bb.u, %bb.q, %bb.t
   %i.cc = phi i64 [ %.pre131, %bb.t ], [ 0, %bb.q ], [ %i.by, %bb.u ]
-  %i.cd = phi i1 [ true, %bb.t ], [ false, %bb.q ], [ false, %bb.u ] ; 2 uses
+  %.070120 = phi i1 [ %8, %bb.t ], [ false, %bb.q ], [ false, %bb.u ]
+  %i.cd = phi i1 [ true, %bb.t ], [ false, %bb.q ], [ false, %bb.u ]
   %.177 = phi i32 [ 8002, %bb.t ], [ 0, %bb.q ], [ 0, %bb.u ]
   %i.ce = getelementptr inbounds nuw i8, ptr %.075, i64 8 ; 3 uses
   %i.cf = call ptr @slurm_xrecalloc(ptr noundef nonnull %i.ce, i64 noundef %i.cc, i64 noundef 8, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str, i32 noundef 602, ptr noundef nonnull @__func__.load_plugins) #11 ; 0 uses
@@ -305,7 +307,7 @@ bb.z:                                             ; preds = %._crit_edge132, %bb
   br i1 %i.df, label %bb.v, label %.thread99, !llvm.loop !18
 
 bb.aa:                                            ; preds = %.loopexit
-  br i1 %i.cd, label %.thread107, label %.thread99
+  br i1 %.070120, label %.thread107, label %.thread99
 
 .thread99:                                        ; preds = %bb.z, %bb.j, %bb.aa
   store ptr %.075, ptr %0, align 8

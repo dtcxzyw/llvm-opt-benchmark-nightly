@@ -202,17 +202,21 @@ bb.z:                                             ; preds = %bb.y
   %.0139 = phi i64 [ %i.cq, %.lr.ph140 ], [ 2, %.lr.ph140.preheader ] ; 3 uses
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %.0139
   %i.cm = load i64, ptr %i.cl, align 8, !tbaa !13
-  %i.cn = add i64 %i.cm, %.neg144
+  %i.cn = add i64 %i.cm, %.neg144                 ; 2 uses
   %i.co = mul nsw i64 %.0139, %i.ck
-  %i.cp = add nsw i64 %i.ch, %i.co
-  %.not66 = icmp eq i64 %i.cn, %i.cp              ; 2 uses
+  %i.cp = add nsw i64 %i.ch, %i.co                ; 2 uses
+  %.not66.not = icmp ne i64 %i.cn, %i.cp
   %i.cq = add nuw i64 %.0139, 1                   ; 2 uses
-  %exitcond154.not = icmp ne i64 %i.cq, %umax153
-  %or.cond.not = select i1 %.not66, i1 %exitcond154.not, i1 false
-  br i1 %or.cond.not, label %.lr.ph140, label %.critedge78, !llvm.loop !96
+  %exitcond154.not = icmp eq i64 %i.cq, %umax153
+  %or.cond.not = select i1 %.not66.not, i1 true, i1 %exitcond154.not
+  br i1 %or.cond.not, label %.critedge78.loopexit, label %.lr.ph140, !llvm.loop !96
 
-.critedge78:                                      ; preds = %.lr.ph.split, %bb.b, %.lr.ph140, %bb.a, %.critedge, %bb.z
-  %.364 = phi i1 [ true, %bb.a ], [ %i.cg, %bb.z ], [ true, %.critedge ], [ false, %bb.b ], [ %.not66, %.lr.ph140 ], [ false, %.lr.ph.split ]
+.critedge78.loopexit:                             ; preds = %.lr.ph140
+  %.not66 = icmp eq i64 %i.cn, %i.cp
+  br label %.critedge78
+
+.critedge78:                                      ; preds = %.lr.ph.split, %bb.b, %.critedge78.loopexit, %bb.a, %.critedge, %bb.z
+  %.364 = phi i1 [ true, %bb.a ], [ %i.cg, %bb.z ], [ true, %.critedge ], [ %.not66, %.critedge78.loopexit ], [ false, %bb.b ], [ false, %.lr.ph.split ]
   ret i1 %.364
 
 bb.aa:                                            ; preds = %bb.m

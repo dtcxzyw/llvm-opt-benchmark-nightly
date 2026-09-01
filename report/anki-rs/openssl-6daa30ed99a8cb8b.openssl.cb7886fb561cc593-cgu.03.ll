@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.d
           to label %.critedge unwind label %bb.c
 
 bb.f:                                             ; preds = %bb.d
-  %i.g = tail call noundef i32 @DSA_set0_pqg(ptr noundef nonnull %i.e, ptr noundef %1, ptr noundef %2, ptr noundef %3) #12
-  %i.h = icmp slt i32 %i.g, 1                     ; 3 uses
+  %i.g = tail call noundef i32 @DSA_set0_pqg(ptr noundef nonnull %i.e, ptr noundef %1, ptr noundef %2, ptr noundef %3) #12 ; 2 uses
+  %i.h = icmp slt i32 %i.g, 1                     ; 2 uses
   br i1 %i.h, label %bb.h, label %bb.g
 
 .critedge:                                        ; preds = %bb.e
@@ -268,10 +268,11 @@ bb.n:                                             ; preds = %bb.o, %bb.m
   store i64 %.sroa.022.0.copyload.sink, ptr %0, align 8
   %.sroa.269.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %.sroa.624.0.copyload.sink, ptr %.sroa.269.0..sroa_idx, align 8
+  %6 = icmp sgt i32 %i.g, 0
   call void @DSA_free(ptr noundef nonnull %i.e) #12
   call void @BN_free(ptr noundef %5) #12
   call void @BN_free(ptr noundef %4) #12
-  br i1 %i.h, label %bb.p, label %bb.k
+  br i1 %6, label %bb.k, label %bb.p
 
 bb.o:                                             ; preds = %bb.h
   %.sroa.022.0.copyload = load i64, ptr %i.b, align 8

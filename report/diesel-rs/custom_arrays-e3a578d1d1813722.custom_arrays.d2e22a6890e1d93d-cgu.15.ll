@@ -204,7 +204,7 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort11insert_tailINtNtCs
   br label %.lr.ph.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.noexc30.i
-  %i.ah = getelementptr i8, ptr %i.av, i64 16     ; 2 uses
+  %i.ah = getelementptr i8, ptr %i.av, i64 16     ; 3 uses
   %i.ai = getelementptr i8, ptr %i.au, i64 16
   %i.aj = and i64 %1, 1
   %i.ak = icmp eq i64 %i.aj, 0
@@ -243,7 +243,7 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort11insert_tailINtNtCs
 .noexc30.i:                                       ; preds = %.noexc.i
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.0.010.i.i, i64 16 ; 2 uses
   %.sroa.sel4.idx.sroa.sel.idx.sroa.sel.idx = select i1 %i.ao, i64 0, i64 16
-  %.sroa.sel4.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %.sroa.06.08.i.i, i64 %.sroa.sel4.idx.sroa.sel.idx.sroa.sel.idx ; 5 uses
+  %.sroa.sel4.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %.sroa.06.08.i.i, i64 %.sroa.sel4.idx.sroa.sel.idx.sroa.sel.idx ; 6 uses
   %.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx = select i1 %i.ao, i64 16, i64 0
   %.sroa.sel.idx.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %.sroa.011.07.i.i, i64 %.sroa.sel.idx.sroa.sel.idx.sroa.sel.idx ; 4 uses
   %..i.i.i = select i1 %i.ar, ptr %.sroa.015.06.i.i, ptr %.sroa.017.05.i.i
@@ -258,12 +258,13 @@ _RINvNtNtNtNtCscI6d9CVNmLh_4core5slice4sort6shared9smallsort11insert_tailINtNtCs
   br i1 %exitcond.not.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i
 
 bb.k:                                             ; preds = %._crit_edge.i.i
-  %.not.a = icmp ult ptr %.sroa.sel4.idx.sroa.sel.idx.sroa.sel, %i.ah ; 3 uses
+  %.not.a = icmp ult ptr %.sroa.sel4.idx.sroa.sel.idx.sroa.sel, %i.ah ; 2 uses
   %.sroa.06.0..sroa.011.0.i.i = select i1 %.not.a, ptr %.sroa.sel4.idx.sroa.sel.idx.sroa.sel, ptr %.sroa.sel.idx.sroa.sel.idx.sroa.sel
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.as, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.06.0..sroa.011.0.i.i, i64 16, i1 false), !alias.scope !37
   %.sroa.sel28.idx.sroa.sel.idx = select i1 %.not.a, i64 16, i64 0
   %.sroa.sel28.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %.sroa.sel4.idx.sroa.sel.idx.sroa.sel, i64 %.sroa.sel28.idx.sroa.sel.idx
-  %.sroa.sel.idx.sroa.sel.idx = select i1 %.not.a, i64 0, i64 16
+  %.not = icmp ult ptr %.sroa.sel4.idx.sroa.sel.idx.sroa.sel, %i.ah
+  %.sroa.sel.idx.sroa.sel.idx = select i1 %.not, i64 0, i64 16
   %.sroa.sel.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %.sroa.sel.idx.sroa.sel.idx.sroa.sel, i64 %.sroa.sel.idx.sroa.sel.idx
   br label %bb.l
 

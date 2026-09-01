@@ -204,10 +204,11 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %i.a, ptr noundef nonnull readonly align 8 dereferenceable(160) %1, i64 160, i1 false), !alias.scope !13329
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13333)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !13336)
-  %.val.i = load i64, ptr %i.a, align 8, !alias.scope !13336, !noalias !13333 ; 2 uses
-  %i.b = icmp ne i64 %.val.i, -1                  ; 2 uses
+  %.val.i = load i64, ptr %i.a, align 8, !alias.scope !13336, !noalias !13333 ; 3 uses
+  %i.b = icmp ne i64 %.val.i, -1
   %i.c = zext i1 %i.b to i64                      ; 4 uses
-  br i1 %i.b, label %bb.b, label %_RNvXs2_NtNtNtCskKLDkoKarTP_4core4iter6traits7collectTINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCsl8OoimOLbh_6qdrant6common9inference15inference_input14InferenceInputEIBQ_jEEINtB5_6ExtendTB1m_jEE14extend_reserveB1u_.exit.i
+  %.not.i = icmp eq i64 %.val.i, -1
+  br i1 %.not.i, label %_RNvXs2_NtNtNtCskKLDkoKarTP_4core4iter6traits7collectTINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtNtCsl8OoimOLbh_6qdrant6common9inference15inference_input14InferenceInputEIBQ_jEEINtB5_6ExtendTB1m_jEE14extend_reserveB1u_.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses

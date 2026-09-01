@@ -204,7 +204,8 @@ declare void @Curl_failf(ptr noundef, ptr noundef, ...) local_unnamed_addr #5
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 49) i32 @setopt_long_bool(ptr noundef %0, i32 noundef %1, i64 noundef %2) unnamed_addr #0 {
 bb.a:
-  %i.a = icmp ne i64 %2, 0                        ; 55 uses
+  %i.a = icmp ne i64 %2, 0                        ; 52 uses
+  %3 = icmp eq i64 %2, 0                          ; 3 uses
   switch i32 %1, label %.thread [
     i32 75, label %bb.b
     i32 74, label %bb.c
@@ -316,7 +317,7 @@ bb.g:                                             ; preds = %bb.a
   %i.ae = or disjoint i32 %i.ad, %i.ac
   store i32 %i.ae, ptr %i.aa, align 1
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 2044 ; 3 uses
-  br i1 %i.a, label %bb.h, label %bb.i
+  br i1 %3, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   store i8 5, ptr %i.af, align 4, !tbaa !102
@@ -422,7 +423,7 @@ bb.u:                                             ; preds = %bb.a
 bb.v:                                             ; preds = %bb.a
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 2053 ; 2 uses
   %i.cb = load i16, ptr %i.ca, align 1
-  %i.cc = select i1 %i.a, i16 0, i16 2
+  %i.cc = select i1 %3, i16 2, i16 0
   %i.cd = and i16 %i.cb, -3
   %i.ce = or disjoint i16 %i.cd, %i.cc
   store i16 %i.ce, ptr %i.ca, align 1
@@ -431,7 +432,7 @@ bb.v:                                             ; preds = %bb.a
 bb.w:                                             ; preds = %bb.a
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 2053 ; 2 uses
   %i.cg = load i16, ptr %i.cf, align 1
-  %i.ch = select i1 %i.a, i16 0, i16 4
+  %i.ch = select i1 %3, i16 4, i16 0
   %i.ci = and i16 %i.cg, -5
   %i.cj = or disjoint i16 %i.ci, %i.ch
   store i16 %i.cj, ptr %i.cf, align 1

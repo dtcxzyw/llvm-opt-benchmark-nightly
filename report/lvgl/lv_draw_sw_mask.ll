@@ -205,7 +205,7 @@ bb.bd:                                            ; preds = %bb.bb
   %i.fk = lshr i32 %i.fj, 10
   %i.fl = ashr i32 %i.fj, 18                      ; 2 uses
   %i.fm = and i32 %i.fk, 255
-  %i.fn = sub nsw i32 %i.fg, %i.f                 ; 16 uses
+  %i.fn = sub nsw i32 %i.fg, %i.f                 ; 17 uses
   %.not.i = icmp eq i32 %i.fg, %i.fl
   br i1 %.not.i, label %.thread248.i, label %bb.be
 
@@ -299,7 +299,7 @@ bb.bo:                                            ; preds = %bb.bn
   br label %line_mask_flat.exit
 
 bb.bp:                                            ; preds = %bb.be
-  %i.gu = icmp sgt i32 %i.fn, -1                  ; 2 uses
+  %i.gu = icmp sgt i32 %i.fn, -1
   %i.gv = icmp slt i32 %i.fn, %3                  ; 2 uses
   %or.cond208.i = and i1 %i.gu, %i.gv             ; 2 uses
   br i1 %i.fo, label %bb.bq, label %bb.ce
@@ -517,10 +517,11 @@ bb.cm:                                            ; preds = %mask_mix.exit225.i,
   br i1 %.not192.i, label %bb.cp, label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cm
-  %5 = icmp sle i32 %i.fn, %3                     ; 2 uses
-  %brmerge.not.i = and i1 %5, %i.gu
-  %.mux.i = select i1 %5, i32 2, i32 0
-  br i1 %brmerge.not.i, label %bb.co, label %line_mask_flat.exit
+  %5 = icmp sgt i32 %i.fn, %3                     ; 2 uses
+  %.not249.i = icmp slt i32 %i.fn, 0
+  %brmerge.i = or i1 %5, %.not249.i
+  %.mux.i = select i1 %5, i32 0, i32 2
+  br i1 %brmerge.i, label %line_mask_flat.exit, label %bb.co
 
 bb.co:                                            ; preds = %bb.cn
   %i.kr = zext nneg i32 %i.fn to i64
@@ -632,12 +633,12 @@ define internal range(i32 0, 3) i32 @lv_draw_mask_angle(ptr noundef %0, i32 noun
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 20 ; 5 uses
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !47   ; 6 uses
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !47   ; 7 uses
   %i.d = sub nsw i32 %2, %i.c                     ; 4 uses
   %i.e = load i32, ptr %i.a, align 8, !tbaa !48
   %.neg275 = sub i32 %i.e, %1                     ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 24
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !43   ; 12 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !43   ; 13 uses
   %i.h = icmp sgt i32 %i.g, 179                   ; 2 uses
   br i1 %i.h, label %bb.p, label %bb.b
 
@@ -862,8 +863,12 @@ bb.ae:                                            ; preds = %.thread264
   br label %bb.ag
 
 .thread264.thread:                                ; preds = %bb.q, %.thread264
+  %5 = icmp slt i32 %i.g, 180
   %i.cq = icmp sge i32 %2, %i.c
-  %or.cond = xor i1 %i.h, %i.cq
+  %or.cond267.not278 = select i1 %i.h, i1 true, i1 %i.cq
+  %.not251 = icmp slt i32 %2, %i.c
+  %or.cond269 = select i1 %5, i1 true, i1 %.not251
+  %or.cond = select i1 %or.cond267.not278, i1 %or.cond269, i1 false
   br i1 %or.cond, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %.thread264.thread

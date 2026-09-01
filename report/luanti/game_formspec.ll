@@ -202,12 +202,12 @@ declare void @_ZN12GUIModalMenu8quitMenuEv(ptr noundef nonnull align 8 dereferen
 define dso_local noundef zeroext i1 @_ZN12GameFormSpec19handleEmptyFormspecERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !47
-  %3 = icmp eq i64 %i.b, 0                        ; 2 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !47   ; 2 uses
+  %.not11 = icmp ne i64 %i.b, 0
   %i.c = load ptr, ptr getelementptr inbounds nuw (i8, ptr @g_menumgr, i64 8), align 8
-  %4 = icmp ne ptr %i.c, getelementptr inbounds nuw (i8, ptr @g_menumgr, i64 8)
-  %or.cond.not = select i1 %3, i1 %4, i1 false
-  br i1 %or.cond.not, label %bb.b, label %_ZNK15MainMenuManager13tryGetTopMenuEv.exit.thread
+  %3 = icmp eq ptr %i.c, getelementptr inbounds nuw (i8, ptr @g_menumgr, i64 8)
+  %or.cond.not = select i1 %.not11, i1 true, i1 %3
+  br i1 %or.cond.not, label %_ZNK15MainMenuManager13tryGetTopMenuEv.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr getelementptr inbounds nuw (i8, ptr @g_menumgr, i64 16), align 8, !tbaa !48
@@ -252,7 +252,8 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   br label %_ZNK15MainMenuManager13tryGetTopMenuEv.exit.thread
 
 _ZNK15MainMenuManager13tryGetTopMenuEv.exit.thread: ; preds = %bb.d, %bb.b, %bb.a, %_ZNK15MainMenuManager13tryGetTopMenuEv.exit, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  ret i1 %3
+  %4 = icmp eq i64 %i.b, 0
+  ret i1 %4
 }
 
 ; Function Attrs: mustprogress uwtable

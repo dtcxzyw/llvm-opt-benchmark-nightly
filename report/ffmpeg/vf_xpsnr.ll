@@ -204,8 +204,8 @@ bb.h:                                             ; preds = %.sink.split, %bb.g
   store i32 %spec.select, ptr %i.at, align 4, !tbaa !43
   %i.au = getelementptr inbounds nuw i8, ptr %i.g, i64 184
   %i.av = load i32, ptr %i.a, align 4, !tbaa !46
-  %i.aw = tail call i32 @ff_fill_rgba_map(ptr noundef nonnull %i.au, i32 noundef %i.av) #13
-  %i.ax = icmp sgt i32 %i.aw, -1                  ; 4 uses
+  %i.aw = tail call i32 @ff_fill_rgba_map(ptr noundef nonnull %i.au, i32 noundef %i.av) #13 ; 2 uses
+  %i.ax = icmp sgt i32 %i.aw, -1                  ; 3 uses
   %i.ay = zext i1 %i.ax to i32
   %i.az = getelementptr inbounds nuw i8, ptr %i.g, i64 356
   store i32 %i.ay, ptr %i.az, align 4, !tbaa !69
@@ -215,7 +215,8 @@ bb.h:                                             ; preds = %.sink.split, %bb.g
   %i.bc = select i1 %i.ax, i8 103, i8 117
   %i.bd = getelementptr inbounds nuw i8, ptr %i.g, i64 17
   store i8 %i.bc, ptr %i.bd, align 1, !tbaa !42
-  %i.be = select i1 %i.ax, i8 98, i8 118
+  %.not74 = icmp slt i32 %i.aw, 0
+  %i.be = select i1 %.not74, i8 118, i8 98
   %i.bf = getelementptr inbounds nuw i8, ptr %i.g, i64 18
   store i8 %i.be, ptr %i.bf, align 2, !tbaa !42
   %i.bg = getelementptr inbounds nuw i8, ptr %i.g, i64 19

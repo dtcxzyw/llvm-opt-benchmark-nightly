@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %bb.z, %bb.w, %bb.aa
 
 bb.ad:                                            ; preds = %bb.ac, %bb.u
   %.1203 = phi i1 [ %i.bj, %bb.ac ], [ true, %bb.u ] ; 5 uses
-  %.6201 = phi i32 [ %.5200, %bb.ac ], [ %.4199, %bb.u ] ; 2 uses
+  %.6201 = phi i32 [ %.5200, %bb.ac ], [ %.4199, %bb.u ] ; 4 uses
   %.5189 = phi i32 [ %i.bk, %bb.ac ], [ %.2186, %bb.u ] ; 3 uses
   %.6182 = phi i32 [ %.5181, %bb.ac ], [ %.4180, %bb.u ]
   call void @png_set_alpha_mode_fixed(ptr noundef nonnull %i.d, i32 noundef %.6182, i32 noundef %.0183) #13
@@ -280,7 +280,7 @@ bb.ar:                                            ; preds = %bb.aq
 bb.as:                                            ; preds = %bb.aq
   call void @png_set_keep_unknown_chunks(ptr noundef nonnull %i.d, i32 noundef 1, ptr noundef null, i32 noundef -1) #13
   call void @png_set_keep_unknown_chunks(ptr noundef nonnull %i.d, i32 noundef 0, ptr noundef nonnull @png_image_skip_unused_chunks.chunks_to_process, i32 noundef 7) #13
-  %i.bt = icmp ne i32 %.6201, 2                   ; 7 uses
+  %i.bt = icmp ne i32 %.6201, 2                   ; 4 uses
   %or.cond = and i1 %.1203, %i.bt
   br i1 %or.cond, label %bb.at, label %bb.au
 
@@ -318,8 +318,9 @@ bb.ax:                                            ; preds = %png_read_update_inf
   br i1 %.1203, label %bb.ay, label %bb.bb
 
 bb.ay:                                            ; preds = %bb.ax
+  %.not243.not = icmp eq i32 %.6201, 2
   %i.cd = and i32 %.3, 1
-  %i.ce = select i1 %i.bt, i32 1, i32 %i.cd
+  %i.ce = select i1 %.not243.not, i32 %i.cd, i32 1
   %spec.select249 = or disjoint i32 %i.ce, %spec.select242
   br label %bb.bb
 
@@ -410,8 +411,9 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   store ptr %.0168, ptr %i.dj, align 8, !tbaa !174
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i64 %spec.select248, ptr %i.dk, align 8, !tbaa !175
-  %brmerge264.demorgan = and i1 %.1203, %i.bt
-  %brmerge264 = xor i1 %brmerge264.demorgan, true
+  %.1203.not = xor i1 %.1203, true
+  %.not = icmp eq i32 %.6201, 2                   ; 2 uses
+  %brmerge264 = or i1 %.not, %.1203.not
   %brmerge265 = select i1 %brmerge264, i1 true, i1 %.1194
   br i1 %brmerge265, label %.loopexit253.sink.split, label %.preheader
 
@@ -454,7 +456,7 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   br i1 %.not238, label %.loopexit, label %.lr.ph, !llvm.loop !189
 
 .loopexit253.sink.split:                          ; preds = %bb.bk
-  %png_image_read_composite.mux = select i1 %i.bt, ptr @png_image_read_direct_scaled, ptr @png_image_read_background
+  %png_image_read_composite.mux = select i1 %.not, ptr @png_image_read_background, ptr @png_image_read_direct_scaled
   %png_image_read_composite.mux.mux = select i1 %.1203, ptr %png_image_read_composite.mux, ptr @png_image_read_composite
   %i.dv = call i64 @png_get_rowbytes(ptr noundef nonnull %i.d, ptr noundef nonnull %i.f) #13
   %i.dw = call noalias ptr @png_malloc(ptr noundef nonnull %i.d, i64 noundef %i.dv) #13 ; 2 uses
@@ -495,8 +497,8 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !140    ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 20 ; 2 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !120  ; 2 uses
-  %i.d = and i32 %i.c, 4
-  %i.e = icmp ne i32 %i.d, 0                      ; 6 uses
+  %i.d = and i32 %i.c, 4                          ; 2 uses
+  %i.e = icmp ne i32 %i.d, 0                      ; 5 uses
   %i.f = select i1 %i.e, i32 2, i32 1
   %i.g = and i32 %i.c, 2
   %i.h = icmp eq i32 %i.g, 0
@@ -723,7 +725,8 @@ bb.t:                                             ; preds = %bb.r
   br label %.thread178
 
 bb.u:                                             ; preds = %.thread
-  br i1 %i.e, label %.thread178, label %bb.v
+  %not. = icmp eq i32 %i.d, 0
+  br i1 %not., label %bb.v, label %.thread178
 
 bb.v:                                             ; preds = %bb.u
   %i.ee = mul i32 %.1156170, 255                  ; 2 uses
@@ -1126,13 +1129,13 @@ bb.aa:                                            ; preds = %bb.l
   %i.fa = sdiv i64 %i.ez, 2                       ; 2 uses
   %i.fb = trunc i32 %.fr236 to i1
   %i.fc = add nuw nsw i32 %i.r, 1                 ; 4 uses
-  %i.fd = and i32 %.fr236, 33
-  %or.cond208.not = icmp eq i32 %i.fd, 33         ; 2 uses
+  %i.fd = and i32 %.fr236, 33                     ; 2 uses
+  %or.cond208.not = icmp eq i32 %i.fd, 33
   %i.fe = shl i32 %i.i, %i.r
   %i.ff = zext i32 %i.fe to i64                   ; 4 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.fh = zext i1 %or.cond208.not to i64          ; 2 uses
-  %1 = xor i1 %or.cond208.not, true
+  %1 = icmp ne i32 %i.fd, 33
   %i.fi = zext i1 %1 to i64
   br i1 %i.fb, label %.split.us, label %.split
 

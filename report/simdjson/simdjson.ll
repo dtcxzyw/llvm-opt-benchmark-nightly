@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %_ZN8simdjson7haswel
   %i.abz = insertelement <2 x i64> poison, i64 %i.aby, i64 0
   %i.aca = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.abz, <2 x i64> <i64 -1, i64 poison>, i8 0)
   %i.acb = extractelement <2 x i64> %i.aca, i64 0
-  %i.acc = xor i64 %i.acb, %i.zs                  ; 3 uses
+  %i.acc = xor i64 %i.acb, %i.zs                  ; 4 uses
   %i.acd = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> <i8 32, i8 100, i8 100, i8 100, i8 17, i8 100, i8 113, i8 2, i8 100, i8 9, i8 10, i8 112, i8 100, i8 13, i8 100, i8 100, i8 32, i8 100, i8 100, i8 100, i8 17, i8 100, i8 113, i8 2, i8 100, i8 9, i8 10, i8 112, i8 100, i8 13, i8 100, i8 100>, <32 x i8> %i.aax)
   %i.ace = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> <i8 32, i8 100, i8 100, i8 100, i8 17, i8 100, i8 113, i8 2, i8 100, i8 9, i8 10, i8 112, i8 100, i8 13, i8 100, i8 100, i8 32, i8 100, i8 100, i8 100, i8 17, i8 100, i8 113, i8 2, i8 100, i8 9, i8 10, i8 112, i8 100, i8 13, i8 100, i8 100>, <32 x i8> %i.aaz)
   %i.acf = icmp eq <32 x i8> %i.acd, %i.aax
@@ -607,7 +607,8 @@ begin_hunk_1_@_ZN8simdjson7haswell25dom_parser_implementation6stage1EPKhmNS_11st
 
 .noexc.i:                                         ; preds = %.loopexit.i, %_ZN8simdjson7haswell12_GLOBAL__N_16stage123json_structural_indexer4stepILm128EEEvPKhRNS2_16buf_block_readerIXT_EEE.exit.i
   %.sroa.89.5.i = phi ptr [ %.sroa.89.2.i, %_ZN8simdjson7haswell12_GLOBAL__N_16stage123json_structural_indexer4stepILm128EEEvPKhRNS2_16buf_block_readerIXT_EEE.exit.i ], [ %i.bcs, %.loopexit.i ]
-  %.not.i.i64.i.a = icmp sgt i64 %i.acc, -1       ; 3 uses
+  %.not.i.i64.i = icmp slt i64 %i.acc, 0          ; 2 uses
+  %.not.i.i64.i.a = icmp sgt i64 %i.acc, -1
   %brmerge.i = select i1 %.not.i, i1 true, i1 %.not.i.i64.i.a, !prof !113
   br i1 %brmerge.i, label %.thread.i, label %_ZN8simdjson7haswell12_GLOBAL__N_16stage123json_structural_indexer6finishERNS0_25dom_parser_implementationEmmNS_11stage1_modeE.exit.i, !prof !114
 
@@ -659,7 +660,7 @@ bb.r:                                             ; preds = %bb.q
   ]
 
 bb.s:                                             ; preds = %bb.r
-  br i1 %.not.i.i64.i.a, label %.preheader.i, label %bb.t
+  br i1 %.not.i.i64.i, label %bb.t, label %.preheader.i
 
 bb.t:                                             ; preds = %bb.s
   store i32 %i.bdn, ptr %i.bcy, align 8, !tbaa !73
@@ -801,7 +802,7 @@ _ZN8simdjson7haswell12_GLOBAL__N_16stage124find_next_document_indexERNS0_25dom_p
   br label %bb.ax
 
 bb.aj:                                            ; preds = %bb.r
-  br i1 %.not.i.i64.i.a, label %.preheader2241.i, label %thread-pre-split2219.i
+  br i1 %.not.i.i64.i, label %thread-pre-split2219.i, label %.preheader2241.i
 
 thread-pre-split2219.i:                           ; preds = %bb.aj
   store i32 %i.bdn, ptr %i.bcy, align 8, !tbaa !73
@@ -1204,7 +1205,7 @@ bb.y:                                             ; preds = %_ZN8simdjson7icelak
   %i.kk = insertelement <2 x i64> poison, i64 %i.kj, i64 0
   %i.kl = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.kk, <2 x i64> <i64 -1, i64 poison>, i8 0)
   %i.km = extractelement <2 x i64> %i.kl, i64 0
-  %i.kn = xor i64 %i.km, %i.jg                    ; 3 uses
+  %i.kn = xor i64 %i.km, %i.jg                    ; 4 uses
   %i.ko = tail call <64 x i8> @llvm.x86.avx512.pshuf.b.512(<64 x i8> <i8 32, i8 100, i8 100, i8 100, i8 17, i8 100, i8 113, i8 2, i8 100, i8 9, i8 10, i8 112, i8 100, i8 13, i8 100, i8 100, i8 32, i8 100, i8 100, i8 100, i8 17, i8 100, i8 113, i8 2, i8 100, i8 9, i8 10, i8 112, i8 100, i8 13, i8 100, i8 100, i8 32, i8 100, i8 100, i8 100, i8 17, i8 100, i8 113, i8 2, i8 100, i8 9, i8 10, i8 112, i8 100, i8 13, i8 100, i8 100, i8 32, i8 100, i8 100, i8 100, i8 17, i8 100, i8 113, i8 2, i8 100, i8 9, i8 10, i8 112, i8 100, i8 13, i8 100, i8 100>, <64 x i8> %i.jv)
   %i.kp = icmp eq <64 x i8> %i.ko, %i.jv
   %i.kq = tail call <64 x i8> @llvm.x86.avx512.pshuf.b.512(<64 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 58, i8 123, i8 44, i8 125, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 58, i8 123, i8 44, i8 125, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 58, i8 123, i8 44, i8 125, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 58, i8 123, i8 44, i8 125, i8 0, i8 0>, <64 x i8> %i.jv)
@@ -1464,7 +1465,8 @@ bb.an:                                            ; preds = %bb.am, %bb.al, %bb.
 
 .noexc.i:                                         ; preds = %bb.an, %_ZN8simdjson7icelake12_GLOBAL__N_16stage123json_structural_indexer4stepILm128EEEvPKhRNS2_16buf_block_readerIXT_EEE.exit.i
   %.sroa.81.5.i = phi ptr [ %.sroa.81.2.i, %_ZN8simdjson7icelake12_GLOBAL__N_16stage123json_structural_indexer4stepILm128EEEvPKhRNS2_16buf_block_readerIXT_EEE.exit.i ], [ %i.ra, %bb.an ]
-  %.not.i53.i.i.a = icmp sgt i64 %i.kn, -1        ; 3 uses
+  %.not.i53.i.i = icmp slt i64 %i.kn, 0           ; 2 uses
+  %.not.i53.i.i.a = icmp sgt i64 %i.kn, -1
   %brmerge.i = select i1 %.not.i, i1 true, i1 %.not.i53.i.i.a, !prof !113
   br i1 %brmerge.i, label %.thread.i, label %_ZN8simdjson7icelake12_GLOBAL__N_16stage123json_structural_indexer6finishERNS0_25dom_parser_implementationEmmNS_11stage1_modeE.exit.i, !prof !114
 
@@ -1517,7 +1519,7 @@ bb.aq:                                            ; preds = %bb.ap
   ]
 
 bb.ar:                                            ; preds = %bb.aq
-  br i1 %.not.i53.i.i.a, label %.preheader.i, label %bb.as
+  br i1 %.not.i53.i.i, label %bb.as, label %.preheader.i
 
 bb.as:                                            ; preds = %bb.ar
   store i32 %i.rw, ptr %i.rh, align 8, !tbaa !73
@@ -1660,7 +1662,7 @@ _ZN8simdjson7icelake12_GLOBAL__N_16stage124find_next_document_indexERNS0_25dom_p
   br label %bb.bw
 
 bb.bi:                                            ; preds = %bb.aq
-  br i1 %.not.i53.i.i.a, label %.preheader875.i, label %thread-pre-split853.i
+  br i1 %.not.i53.i.i, label %thread-pre-split853.i, label %.preheader875.i
 
 thread-pre-split853.i:                            ; preds = %bb.bi
   store i32 %i.rw, ptr %i.rh, align 8, !tbaa !73
@@ -2063,7 +2065,7 @@ bb.m:                                             ; preds = %_ZNK8simdjson8westm
   %i.rk = insertelement <2 x i64> poison, i64 %i.rj, i64 0
   %i.rl = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %i.rk, <2 x i64> <i64 -1, i64 poison>, i8 0)
   %i.rm = extractelement <2 x i64> %i.rl, i64 0
-  %i.rn = xor i64 %i.rm, %.sroa.18.0.lcssa1779.i  ; 3 uses
+  %i.rn = xor i64 %i.rm, %.sroa.18.0.lcssa1779.i  ; 4 uses
   %i.ro = tail call <16 x i8> @llvm.x86.ssse3.pshuf.b.128(<16 x i8> <i8 32, i8 100, i8 100, i8 100, i8 17, i8 100, i8 113, i8 2, i8 100, i8 9, i8 10, i8 112, i8 100, i8 13, i8 100, i8 100>, <16 x i8> %i.pw)
   %i.rp = tail call <16 x i8> @llvm.x86.ssse3.pshuf.b.128(<16 x i8> <i8 32, i8 100, i8 100, i8 100, i8 17, i8 100, i8 113, i8 2, i8 100, i8 9, i8 10, i8 112, i8 100, i8 13, i8 100, i8 100>, <16 x i8> %i.py)
   %i.rq = tail call <16 x i8> @llvm.x86.ssse3.pshuf.b.128(<16 x i8> <i8 32, i8 100, i8 100, i8 100, i8 17, i8 100, i8 113, i8 2, i8 100, i8 9, i8 10, i8 112, i8 100, i8 13, i8 100, i8 100>, <16 x i8> %i.qa)
@@ -2466,7 +2468,8 @@ begin_hunk_4_@_ZN8simdjson8westmere25dom_parser_implementation6stage1EPKhmNS_11s
 
 .noexc.i:                                         ; preds = %.loopexit.i, %_ZN8simdjson8westmere12_GLOBAL__N_16stage123json_structural_indexer4stepILm64EEEvPKhRNS2_16buf_block_readerIXT_EEE.exit.i
   %.sroa.59.3.i = phi ptr [ %.sroa.59.1.i, %_ZN8simdjson8westmere12_GLOBAL__N_16stage123json_structural_indexer4stepILm64EEEvPKhRNS2_16buf_block_readerIXT_EEE.exit.i ], [ %i.all, %.loopexit.i ]
-  %.not.i.i53.i.a = icmp sgt i64 %i.rn, -1        ; 3 uses
+  %.not.i.i53.i = icmp slt i64 %i.rn, 0           ; 2 uses
+  %.not.i.i53.i.a = icmp sgt i64 %i.rn, -1
   %brmerge.i = select i1 %.not.i, i1 true, i1 %.not.i.i53.i.a, !prof !113
   br i1 %brmerge.i, label %.thread.i, label %_ZN8simdjson8westmere12_GLOBAL__N_16stage123json_structural_indexer6finishERNS0_25dom_parser_implementationEmmNS_11stage1_modeE.exit.i, !prof !114
 
@@ -2519,7 +2522,7 @@ bb.p:                                             ; preds = %bb.o
   ]
 
 bb.q:                                             ; preds = %bb.p
-  br i1 %.not.i.i53.i.a, label %.preheader.i, label %bb.r
+  br i1 %.not.i.i53.i, label %bb.r, label %.preheader.i
 
 bb.r:                                             ; preds = %bb.q
   store i32 %i.amh, ptr %i.als, align 8, !tbaa !73
@@ -2662,7 +2665,7 @@ _ZN8simdjson8westmere12_GLOBAL__N_16stage124find_next_document_indexERNS0_25dom_
   br label %bb.av
 
 bb.ah:                                            ; preds = %bb.p
-  br i1 %.not.i.i53.i.a, label %.preheader1656.i, label %thread-pre-split1634.i
+  br i1 %.not.i.i53.i, label %thread-pre-split1634.i, label %.preheader1656.i
 
 thread-pre-split1634.i:                           ; preds = %bb.ah
   store i32 %i.amh, ptr %i.als, align 8, !tbaa !73

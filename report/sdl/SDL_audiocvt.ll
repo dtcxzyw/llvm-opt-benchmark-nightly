@@ -85,18 +85,22 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 4 uses
   %i.b = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
   %i.c = load i32, ptr %i.b, align 4
-  %i.d = zext i32 %i.c to i64
-  %.not11 = icmp eq i64 %indvars.iv, %i.d         ; 2 uses
+  %i.d = zext i32 %i.c to i64                     ; 2 uses
+  %.not11.not = icmp ne i64 %indvars.iv, %i.d
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp ne i64 %indvars.iv.next, %wide.trip.count
-  %or.cond18.not = select i1 %.not11, i1 %exitcond.not, i1 false
-  br i1 %or.cond18.not, label %.lr.ph, label %.thread, !llvm.loop !5
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %or.cond18.not = select i1 %.not11.not, i1 true, i1 %exitcond.not
+  br i1 %or.cond18.not, label %.thread.loopexit, label %.lr.ph, !llvm.loop !5
 
-.thread:                                          ; preds = %.lr.ph, %bb.a
-  %.1 = phi i1 [ true, %bb.a ], [ %.not11, %.lr.ph ]
+.thread.loopexit:                                 ; preds = %.lr.ph
+  %.not11 = icmp eq i64 %indvars.iv, %i.d
+  br label %.thread
+
+.thread:                                          ; preds = %.thread.loopexit, %bb.a
+  %.1 = phi i1 [ true, %bb.a ], [ %.not11, %.thread.loopexit ]
   ret i1 %.1
 }
 

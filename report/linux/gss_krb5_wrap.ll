@@ -103,12 +103,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr i8, ptr %i.f, i64 2
-  %i.i = load i8, ptr %i.h, align 2               ; 2 uses
+  %i.i = load i8, ptr %i.h, align 2               ; 3 uses
   %i.j = load i32, ptr %0, align 8
   %.not55.not = icmp eq i32 %i.j, 0
   %i.k = and i8 %i.i, 1
   %.not56 = icmp eq i8 %i.k, 0
-  %or.cond67 = xor i1 %.not56, %.not55.not
+  %not..not56 = trunc i8 %i.i to i1
+  %or.cond67 = select i1 %.not55.not, i1 %not..not56, i1 %.not56
   br i1 %or.cond67, label %bb.o, label %bb.c
 
 bb.c:                                             ; preds = %bb.b

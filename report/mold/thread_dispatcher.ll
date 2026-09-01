@@ -205,20 +205,24 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not26.1, label %.loopexit, label %bb.d
 
 .preheader.2:                                     ; preds = %bb.d
-  %.019.ptr.2 = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
+  %.019.ptr.2 = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %.preheader.2
   %.019.ptr.pn.2 = phi ptr [ %.019.ptr.2, %.preheader.2 ], [ %.sroa.027.0.2, %bb.f ]
   %.sroa.027.0.in.2 = getelementptr inbounds nuw i8, ptr %.019.ptr.pn.2, i64 8
-  %.sroa.027.0.2 = load ptr, ptr %.sroa.027.0.in.2, align 8, !tbaa !92 ; 3 uses
-  %.not33.2 = icmp ne ptr %.sroa.027.0.2, %.019.ptr.2 ; 2 uses
-  %.not26.2 = icmp ne ptr %1, %.sroa.027.0.2
-  %or.cond.not = and i1 %.not26.2, %.not33.2
-  br i1 %or.cond.not, label %bb.f, label %.loopexit
+  %.sroa.027.0.2 = load ptr, ptr %.sroa.027.0.in.2, align 8, !tbaa !92 ; 4 uses
+  %.not33.2.not = icmp eq ptr %.sroa.027.0.2, %.019.ptr.2
+  %.not26.2 = icmp eq ptr %1, %.sroa.027.0.2
+  %or.cond = or i1 %.not33.2.not, %.not26.2
+  br i1 %or.cond, label %.loopexit.loopexit, label %bb.f
 
-.loopexit:                                        ; preds = %bb.c, %bb.e, %bb.f, %bb.a
-  %.5 = phi i1 [ false, %bb.a ], [ true, %bb.e ], [ %.not33.2, %bb.f ], [ true, %bb.c ]
+.loopexit.loopexit:                               ; preds = %bb.f
+  %.not33.2 = icmp ne ptr %.sroa.027.0.2, %.019.ptr.2
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.c, %bb.e, %.loopexit.loopexit, %bb.a
+  %.5 = phi i1 [ false, %bb.a ], [ %.not33.2, %.loopexit.loopexit ], [ true, %bb.e ], [ true, %bb.c ]
   ret i1 %.5
 }
 

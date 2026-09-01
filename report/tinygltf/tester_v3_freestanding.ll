@@ -205,17 +205,18 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %.in.i = phi i64 [ %i.b, %bb.c ], [ %i.e, %bb.d ]
   %.017.i = phi ptr [ %2, %bb.c ], [ %i.g, %bb.d ] ; 2 uses
   %.0916.i = phi ptr [ %0, %bb.c ], [ %i.f, %bb.d ] ; 2 uses
-  %i.c = load i8, ptr %.0916.i, align 1, !tbaa !12
-  %i.d = load i8, ptr %.017.i, align 1, !tbaa !12
-  %.not14.i = icmp eq i8 %i.c, %i.d               ; 2 uses
+  %i.c = load i8, ptr %.0916.i, align 1, !tbaa !12 ; 2 uses
+  %i.d = load i8, ptr %.017.i, align 1, !tbaa !12 ; 2 uses
+  %.not14.i.not = icmp ne i8 %i.c, %i.d
   %i.e = add nsw i64 %.in.i, -1                   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.0916.i, i64 1
   %i.g = getelementptr inbounds nuw i8, ptr %.017.i, i64 1
-  %.not.i = icmp ne i64 %i.e, 0
-  %or.cond.not = select i1 %.not14.i, i1 %.not.i, i1 false
-  br i1 %or.cond.not, label %bb.d, label %tg3__memcmp.exit, !llvm.loop !168
+  %.not.i = icmp eq i64 %i.e, 0
+  %or.cond.not = select i1 %.not14.i.not, i1 true, i1 %.not.i
+  br i1 %or.cond.not, label %tg3__memcmp.exit, label %bb.d, !llvm.loop !168
 
 tg3__memcmp.exit:                                 ; preds = %bb.d
+  %.not14.i = icmp eq i8 %i.c, %i.d
   %i.h = zext i1 %.not14.i to i32
   br label %bb.e
 
@@ -261,18 +262,22 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   %.in.i = phi i64 [ %i.i, %bb.d ], [ %i.l, %bb.e ]
   %.017.i = phi ptr [ %2, %bb.d ], [ %i.n, %bb.e ] ; 2 uses
   %.0916.i = phi ptr [ %0, %bb.d ], [ %i.m, %bb.e ] ; 2 uses
-  %i.j = load i8, ptr %.0916.i, align 1, !tbaa !12
-  %i.k = load i8, ptr %.017.i, align 1, !tbaa !12
-  %.not14.i = icmp eq i8 %i.j, %i.k               ; 2 uses
+  %i.j = load i8, ptr %.0916.i, align 1, !tbaa !12 ; 2 uses
+  %i.k = load i8, ptr %.017.i, align 1, !tbaa !12 ; 2 uses
+  %.not14.i.not = icmp ne i8 %i.j, %i.k
   %i.l = add nsw i64 %.in.i, -1                   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.0916.i, i64 1
   %i.n = getelementptr inbounds nuw i8, ptr %.017.i, i64 1
-  %.not.i10 = icmp ne i64 %i.l, 0
-  %or.cond.not = select i1 %.not14.i, i1 %.not.i10, i1 false
-  br i1 %or.cond.not, label %bb.e, label %tg3__memcmp.exit, !llvm.loop !168
+  %.not.i10 = icmp eq i64 %i.l, 0
+  %or.cond.not = select i1 %.not14.i.not, i1 true, i1 %.not.i10
+  br i1 %or.cond.not, label %tg3__memcmp.exit.loopexit, label %bb.e, !llvm.loop !168
 
-tg3__memcmp.exit:                                 ; preds = %bb.e, %bb.c, %tg3__strlen.exit, %bb.b
-  %.0.shrunk = phi i1 [ %i.a, %bb.b ], [ false, %tg3__strlen.exit ], [ true, %bb.c ], [ %.not14.i, %bb.e ]
+tg3__memcmp.exit.loopexit:                        ; preds = %bb.e
+  %.not14.i = icmp eq i8 %i.j, %i.k
+  br label %tg3__memcmp.exit
+
+tg3__memcmp.exit:                                 ; preds = %tg3__memcmp.exit.loopexit, %bb.c, %tg3__strlen.exit, %bb.b
+  %.0.shrunk = phi i1 [ %i.a, %bb.b ], [ false, %tg3__strlen.exit ], [ true, %bb.c ], [ %.not14.i, %tg3__memcmp.exit.loopexit ]
   %.0 = zext i1 %.0.shrunk to i32
   ret i32 %.0
 }
@@ -675,16 +680,16 @@ tg3__strlen.exit.i.i1859:                         ; preds = %iter.check4475
   %.0916.i.i.i1864 = phi ptr [ %i.enn, %.preheader2763 ], [ %i.enh, %tg3__strlen.exit.i.i1859 ] ; 2 uses
   %i.enk = load i8, ptr %.0916.i.i.i1864, align 1, !tbaa !12
   %i.enl = load i8, ptr %.017.i.i.i1863, align 1, !tbaa !12
-  %.not14.i.i.i1865 = icmp eq i8 %i.enk, %i.enl   ; 2 uses
+  %.not14.i.not.i.i1863 = icmp ne i8 %i.enk, %i.enl ; 2 uses
   %i.enm = add nsw i64 %.in.i.i.i1862, -1         ; 2 uses
   %i.enn = getelementptr inbounds nuw i8, ptr %.0916.i.i.i1864, i64 1
   %i.eno = getelementptr inbounds nuw i8, ptr %.017.i.i.i1863, i64 1
-  %.not.i10.i.i = icmp ne i64 %i.enm, 0
-  %or.cond.not.i.i = select i1 %.not14.i.i.i1865, i1 %.not.i10.i.i, i1 false
-  br i1 %or.cond.not.i.i, label %.preheader2763, label %tg3_str_equals_cstr.exit.i, !llvm.loop !168
+  %.not.i10.i.i = icmp eq i64 %i.enm, 0
+  %or.cond.not.i.i = select i1 %.not14.i.not.i.i1863, i1 true, i1 %.not.i10.i.i
+  br i1 %or.cond.not.i.i, label %tg3_str_equals_cstr.exit.i, label %.preheader2763, !llvm.loop !168
 
 tg3_str_equals_cstr.exit.i:                       ; preds = %.preheader2763
-  br i1 %.not14.i.i.i1865, label %bb.oy, label %tg3__parse_camera.exit
+  br i1 %.not14.i.not.i.i1863, label %tg3__parse_camera.exit, label %bb.oy
 
 bb.oy:                                            ; preds = %tg3_str_equals_cstr.exit.i
   %i.enp = load i32, ptr %i.ems, align 8, !tbaa !13
@@ -809,16 +814,16 @@ bb.oz:                                            ; preds = %tg3__json_is_object
   %.0916.i.i65.i = phi ptr [ %i.epf, %.preheader2765 ], [ %i.enh, %tg3__strlen.exit.i.i1859 ] ; 2 uses
   %i.epc = load i8, ptr %.0916.i.i65.i, align 1, !tbaa !12
   %i.epd = load i8, ptr %.017.i.i64.i, align 1, !tbaa !12
-  %.not14.i.i66.i = icmp eq i8 %i.epc, %i.epd     ; 2 uses
+  %.not14.i.not.i66.i = icmp ne i8 %i.epc, %i.epd ; 2 uses
   %i.epe = add nsw i64 %.in.i.i63.i, -1           ; 2 uses
   %i.epf = getelementptr inbounds nuw i8, ptr %.0916.i.i65.i, i64 1
   %i.epg = getelementptr inbounds nuw i8, ptr %.017.i.i64.i, i64 1
-  %.not.i10.i67.i = icmp ne i64 %i.epe, 0
-  %or.cond.not.i68.i = select i1 %.not14.i.i66.i, i1 %.not.i10.i67.i, i1 false
-  br i1 %or.cond.not.i68.i, label %.preheader2765, label %tg3_str_equals_cstr.exit69.i, !llvm.loop !168
+  %.not.i10.i67.i = icmp eq i64 %i.epe, 0
+  %or.cond.not.i68.i = select i1 %.not14.i.not.i66.i, i1 true, i1 %.not.i10.i67.i
+  br i1 %or.cond.not.i68.i, label %tg3_str_equals_cstr.exit69.i, label %.preheader2765, !llvm.loop !168
 
 tg3_str_equals_cstr.exit69.i:                     ; preds = %.preheader2765
-  br i1 %.not14.i.i66.i, label %bb.pa, label %tg3__parse_camera.exit
+  br i1 %.not14.i.not.i66.i, label %tg3__parse_camera.exit, label %bb.pa
 
 bb.pa:                                            ; preds = %tg3_str_equals_cstr.exit69.i
   %i.eph = load i32, ptr %i.ems, align 8, !tbaa !13
@@ -1221,18 +1226,19 @@ tg3__strlen.exit.i:                               ; preds = %tg3__serialize_str.
   %.in.i.i = phi i64 [ %i.ef, %.preheader ], [ 11, %tg3__strlen.exit.i ]
   %.017.i.i = phi ptr [ %i.eh, %.preheader ], [ @.str.186, %tg3__strlen.exit.i ] ; 2 uses
   %.0916.i.i = phi ptr [ %i.eg, %.preheader ], [ %i.eb, %tg3__strlen.exit.i ] ; 2 uses
-  %i.ed = load i8, ptr %.0916.i.i, align 1, !tbaa !12
-  %i.ee = load i8, ptr %.017.i.i, align 1, !tbaa !12
-  %.not14.i.i = icmp eq i8 %i.ed, %i.ee           ; 2 uses
+  %i.ed = load i8, ptr %.0916.i.i, align 1, !tbaa !12 ; 2 uses
+  %i.ee = load i8, ptr %.017.i.i, align 1, !tbaa !12 ; 2 uses
+  %.not14.i.not.i = icmp ne i8 %i.ed, %i.ee
   %i.ef = add nsw i64 %.in.i.i, -1                ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %.0916.i.i, i64 1
   %i.eh = getelementptr inbounds nuw i8, ptr %.017.i.i, i64 1
-  %.not.i10.i = icmp ne i64 %i.ef, 0
-  %or.cond.not.i = select i1 %.not14.i.i, i1 %.not.i10.i, i1 false
-  br i1 %or.cond.not.i, label %.preheader, label %tg3_str_equals_cstr.exit, !llvm.loop !168
+  %.not.i10.i = icmp eq i64 %i.ef, 0
+  %or.cond.not.i = select i1 %.not14.i.not.i, i1 true, i1 %.not.i10.i
+  br i1 %or.cond.not.i, label %tg3_str_equals_cstr.exit, label %.preheader, !llvm.loop !168
 
 tg3_str_equals_cstr.exit:                         ; preds = %.preheader
-  br i1 %.not14.i.i, label %tg3_str_equals_cstr.exit.thread156, label %tg3__json_set_take.exit
+  %.not14.i.i.not = icmp eq i8 %i.ed, %i.ee
+  br i1 %.not14.i.i.not, label %tg3_str_equals_cstr.exit.thread156, label %tg3__json_set_take.exit
 
 tg3_str_equals_cstr.exit.thread156:               ; preds = %tg3_str_equals_cstr.exit
   %i.ei = getelementptr inbounds nuw i8, ptr %12, i64 4
@@ -1360,18 +1366,19 @@ bb.f:                                             ; preds = %tg3__json_set_take.
   %.in.i.i103 = phi i64 [ %i.fp, %.preheader1 ], [ 12, %tg3__strlen.exit.i ]
   %.017.i.i104 = phi ptr [ %i.fr, %.preheader1 ], [ @.str.192, %tg3__strlen.exit.i ] ; 2 uses
   %.0916.i.i105 = phi ptr [ %i.fq, %.preheader1 ], [ %i.eb, %tg3__strlen.exit.i ] ; 2 uses
-  %i.fn = load i8, ptr %.0916.i.i105, align 1, !tbaa !12
-  %i.fo = load i8, ptr %.017.i.i104, align 1, !tbaa !12
-  %.not14.i.i106 = icmp eq i8 %i.fn, %i.fo        ; 2 uses
+  %i.fn = load i8, ptr %.0916.i.i105, align 1, !tbaa !12 ; 2 uses
+  %i.fo = load i8, ptr %.017.i.i104, align 1, !tbaa !12 ; 2 uses
+  %.not14.i.not.i107 = icmp ne i8 %i.fn, %i.fo
   %i.fp = add nsw i64 %.in.i.i103, -1             ; 2 uses
   %i.fq = getelementptr inbounds nuw i8, ptr %.0916.i.i105, i64 1
   %i.fr = getelementptr inbounds nuw i8, ptr %.017.i.i104, i64 1
-  %.not.i10.i107 = icmp ne i64 %i.fp, 0
-  %or.cond.not.i108 = select i1 %.not14.i.i106, i1 %.not.i10.i107, i1 false
-  br i1 %or.cond.not.i108, label %.preheader1, label %tg3_str_equals_cstr.exit109, !llvm.loop !168
+  %.not.i10.i108 = icmp eq i64 %i.fp, 0
+  %or.cond.not.i108 = select i1 %.not14.i.not.i107, i1 true, i1 %.not.i10.i108
+  br i1 %or.cond.not.i108, label %tg3_str_equals_cstr.exit109, label %.preheader1, !llvm.loop !168
 
 tg3_str_equals_cstr.exit109:                      ; preds = %.preheader1
-  br i1 %.not14.i.i106, label %tg3_str_equals_cstr.exit109.thread173, label %tg3__json_set_take.exit
+  %.not14.i.i111.not = icmp eq i8 %i.fn, %i.fo
+  br i1 %.not14.i.i111.not, label %tg3_str_equals_cstr.exit109.thread173, label %tg3__json_set_take.exit
 
 tg3_str_equals_cstr.exit109.thread173:            ; preds = %tg3_str_equals_cstr.exit109
   %i.fs = getelementptr inbounds nuw i8, ptr %12, i64 4
@@ -1774,9 +1781,9 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load i8, ptr %0, align 1, !tbaa !12
-  %i.d = icmp ne i8 %i.c, 45                      ; 2 uses
-  %not. = xor i1 %i.d, true
+  %i.c = load i8, ptr %0, align 1, !tbaa !12      ; 2 uses
+  %i.d = icmp ne i8 %i.c, 45
+  %not. = icmp eq i8 %i.c, 45
   %spec.select184.idx = zext i1 %not. to i64
   %spec.select184 = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select184.idx
   br label %bb.c

@@ -202,7 +202,7 @@ bb.a:
   %.sroa.79.0.copyload = load i64, ptr %.sroa.79.0..sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 96
   %.sroa.8.0.copyload = load i32, ptr %.sroa.8.0..sroa_idx, align 8
-  %.sroa.8.0.copyload.fr = freeze i32 %.sroa.8.0.copyload ; 6 uses
+  %.sroa.8.0.copyload.fr = freeze i32 %.sroa.8.0.copyload ; 7 uses
   %.sroa.1011.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 104
   %.sroa.1011.0.copyload = load ptr, ptr %.sroa.1011.0..sroa_idx, align 8
   %.sroa.1112.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 168
@@ -299,7 +299,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 2 uses
   %i.ap = load i64, ptr %i.ao, align 8
   %.not233 = icmp ne i64 %i.ap, 0
-  %i.aq = icmp ult i32 %.sroa.8.0.copyload.fr, 2147483647 ; 5 uses
+  %i.aq = icmp ult i32 %.sroa.8.0.copyload.fr, 2147483647 ; 4 uses
   %or.cond340 = and i1 %.not233, %i.aq
   br i1 %or.cond340, label %.lr.ph294, label %.loopexit282
 
@@ -347,9 +347,10 @@ bb_granularity.exit:                              ; preds = %bb.g, %bb.h
 .loopexit282:                                     ; preds = %bb.e, %bb_granularity.exit, %._crit_edge._crit_edge
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.bh = load i32, ptr %i.bg, align 8
-  %.not343 = icmp ne i32 %i.bh, 0
-  %brmerge447.not = and i1 %.not343, %i.aq
-  br i1 %brmerge447.not, label %.lr.ph300.split.us.preheader, label %._crit_edge301
+  %.not343 = icmp eq i32 %i.bh, 0
+  %.not446 = icmp ugt i32 %.sroa.8.0.copyload.fr, 2147483646
+  %brmerge447 = or i1 %.not343, %.not446
+  br i1 %brmerge447, label %._crit_edge301, label %.lr.ph300.split.us.preheader
 
 .lr.ph300.split.us.preheader:                     ; preds = %.loopexit282
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 16

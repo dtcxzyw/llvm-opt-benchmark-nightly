@@ -204,12 +204,13 @@ bb.af:                                            ; preds = %.lr.ph.i.i.i
   %.01727.i.i.i = phi i1 [ %.118.i.i.i, %bb.af ], [ undef, %bb.ae ]
   %i.cj = getelementptr [8 x i8], ptr %i.al, i64 %.01628.i.i.i
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !19
-  %i.cl = tail call i64 @PyUnicode_Tailmatch(ptr noundef nonnull %i.bx, ptr noundef %i.ck, i64 noundef 0, i64 noundef 9223372036854775807, i32 noundef -1) #7 ; 2 uses
-  %i.cm = icmp eq i64 %i.cl, 1                    ; 2 uses
+  %i.cl = tail call i64 @PyUnicode_Tailmatch(ptr noundef nonnull %i.bx, ptr noundef %i.ck, i64 noundef 0, i64 noundef 9223372036854775807, i32 noundef -1) #7 ; 3 uses
+  %i.cm = icmp eq i64 %i.cl, 1
   %i.cn = icmp sgt i64 %i.cl, -1                  ; 2 uses
   %..017.i.i.i = select i1 %i.cn, i1 %.01727.i.i.i, i1 false
   %.118.i.i.i = select i1 %i.cm, i1 true, i1 %..017.i.i.i ; 2 uses
-  %cond1.i.i.i = xor i1 %i.cm, %i.cn
+  %not..i.i.i = icmp ne i64 %i.cl, 1
+  %cond1.i.i.i = and i1 %not..i.i.i, %i.cn
   br i1 %cond1.i.i.i, label %bb.af, label %is_filename_to_skip.exit.i.i
 
 is_filename_to_skip.exit.i.i:                     ; preds = %.lr.ph.i.i.i

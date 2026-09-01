@@ -202,12 +202,12 @@ bb.q:                                             ; preds = %bb.p, %.thread303, 
 
 bb.r:                                             ; preds = %bb.q
   %i.be = load i32, ptr %i.bd, align 4, !tbaa !37
-  %.fr = freeze i32 %i.be                         ; 2 uses
+  %.fr = freeze i32 %i.be                         ; 3 uses
   store i32 %.fr, ptr %i.ba, align 8, !tbaa !79
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 1088 ; 2 uses
   store ptr null, ptr %i.bf, align 8, !tbaa !77
-  %.not221 = icmp ne i32 %.fr, 0                  ; 2 uses
+  %.not221 = icmp ne i32 %.fr, 0
   %i.bg = load ptr, ptr getelementptr inbounds nuw (i8, ptr @mca_coll_tuned_component, i64 288), align 8, !tbaa !81 ; 2 uses
   %.not222 = icmp eq ptr %i.bg, null
   br i1 %.not222, label %select.unfold307, label %bb.s
@@ -232,7 +232,8 @@ bb.s:                                             ; preds = %.thread392, %bb.r
   br i1 %or.cond352, label %.thread308, label %select.unfold307.thread
 
 select.unfold307:                                 ; preds = %bb.r
-  br i1 %.not221, label %.thread308, label %select.unfold307.thread
+  %.old351.not = icmp eq i32 %.fr, 0
+  br i1 %.old351.not, label %select.unfold307.thread, label %.thread308
 
 .thread308:                                       ; preds = %bb.s, %select.unfold307
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 72

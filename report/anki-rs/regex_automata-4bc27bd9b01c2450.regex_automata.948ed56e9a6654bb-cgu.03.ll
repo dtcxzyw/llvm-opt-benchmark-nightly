@@ -202,15 +202,18 @@ bb.a:
   %i.b = alloca [16 x i8], align 8                ; 3 uses
   %i.c = alloca [48 x i8], align 8                ; 6 uses
   %i.d = icmp eq i64 %4, 0
-  %6 = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %3)
-  %7 = icmp eq i64 %6, 1                          ; 2 uses
   br i1 %i.d, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
+  %6 = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %3)
+  %7 = icmp eq i64 %6, 1
   br i1 %7, label %bb.d, label %bb.e
 
 bb.c:                                             ; preds = %bb.a
-  br i1 %7, label %bb.f, label %bb.e
+  %8 = icmp eq i64 %2, 0
+  %9 = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %3)
+  %10 = icmp eq i64 %9, 1
+  br i1 %10, label %bb.f, label %bb.e
 
 bb.d:                                             ; preds = %bb.b
   %i.e = ptrtoint ptr %0 to i64
@@ -233,19 +236,21 @@ bb.e:                                             ; preds = %bb.c, %bb.b
           to label %bb.m unwind label %bb.i
 
 bb.f:                                             ; preds = %bb.c
-  %8 = icmp eq i64 %2, 0                          ; 2 uses
   %i.m = ptrtoint ptr %0 to i64
   %i.n = add i64 %3, -1                           ; 2 uses
   %i.o = and i64 %i.n, %i.m
   %i.p = icmp eq i64 %i.o, 0
-  %.not = icmp ne ptr %0, null
-  %or.cond18.not = select i1 %8, i1 true, i1 %.not
-  %or.cond20 = select i1 %i.p, i1 %or.cond18.not, i1 false
-  br i1 %or.cond20, label %bb.g, label %bb.k
+  br i1 %i.p, label %11, label %bb.k
 
-bb.g:                                             ; preds = %bb.d, %bb.f
-  %.sroa.011.0 = phi i64 [ %i.f, %bb.d ], [ %i.n, %bb.f ]
-  %.sroa.0.0.shrunk = phi i1 [ true, %bb.d ], [ %8, %bb.f ]
+11:                                               ; preds = %bb.f
+  %.not17 = icmp ne i64 %2, 0
+  %.not = icmp eq ptr %0, null
+  %or.cond18 = select i1 %.not17, i1 %.not, i1 false
+  br i1 %or.cond18, label %bb.k, label %bb.g
+
+bb.g:                                             ; preds = %bb.d, %11
+  %.sroa.011.0 = phi i64 [ %i.f, %bb.d ], [ %i.n, %11 ]
+  %.sroa.0.0.shrunk = phi i1 [ true, %bb.d ], [ %8, %11 ]
   %i.q = ptrtoint ptr %1 to i64
   %i.r = and i64 %.sroa.011.0, %i.q
   %i.s = icmp eq i64 %i.r, 0
@@ -267,7 +272,7 @@ bb.i:                                             ; preds = %bb.h, %bb.e
 bb.j:                                             ; preds = %bb.h
   br i1 %i.u, label %bb.l, label %bb.k
 
-bb.k:                                             ; preds = %bb.d, %bb.f, %bb.g, %bb.j
+bb.k:                                             ; preds = %11, %bb.d, %bb.f, %bb.g, %bb.j
   store ptr @95, ptr %i.b, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 283, ptr %i.w, align 8

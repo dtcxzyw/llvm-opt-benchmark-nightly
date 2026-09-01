@@ -202,8 +202,8 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !55   ; 2 uses
   %i.d = icmp eq ptr %i.c, null                   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 3 uses
-  %i.f = load ptr, ptr %i.e, align 8              ; 2 uses
-  %i.g = icmp eq ptr %i.f, null                   ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8              ; 3 uses
+  %i.g = icmp eq ptr %i.f, null
   %or.cond = select i1 %i.d, i1 %i.g, i1 false
   br i1 %or.cond, label %bb.b, label %bb.j
 
@@ -290,8 +290,7 @@ bb.l:                                             ; preds = %_ZN4toku8treenode9c
   br label %bb.o
 
 _ZN4toku8treenode9child_ptr10get_lockedEv.exit23: ; preds = %bb.j
-  %2 = xor i1 %i.g, true
-  tail call void @llvm.assume(i1 %2)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
   %i.ak = tail call i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(202) %i.f) #16 ; 0 uses
   %i.al = load ptr, ptr %i.e, align 8, !tbaa !28  ; 5 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 168

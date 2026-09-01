@@ -204,12 +204,11 @@ bb.a:
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit: ; preds = %bb.a
   %i.d = load ptr, ptr %3, align 8, !tbaa !48
   %i.e = load i128, ptr %i.d, align 1
-  %i.f = icmp ne i128 %i.e, 154789821822021061062872824256367126852
+  %i.f = icmp ne i128 %i.e, 154789821822021061062872824256367126852 ; 2 uses
   %i.g = zext i1 %i.f to i32
-  %i.h = icmp eq i32 %i.g, 0                      ; 2 uses
+  %i.h = icmp eq i32 %i.g, 0
   %spec.select30 = zext i1 %i.h to i8
-  %not. = xor i1 %i.h, true
-  %spec.select31 = sext i1 %not. to i32
+  %spec.select31 = sext i1 %i.f to i32
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit11: ; preds = %bb.a

@@ -204,8 +204,8 @@ bb.bx:                                            ; preds = %bb.bw
   %i.jm = load i32, ptr %.sroa.258.sroa.5.0..sroa.258.0..sroa_idx.sroa_idx.i, align 8, !noalias !4594 ; 2 uses
   %i.jn = icmp slt i32 %i.jm, 0
   %.sroa.0151.0.i = select i1 %.not644.i, i1 true, i1 %i.jn ; 2 uses
-  %i.jo = and i32 %i.jl, 1073741824               ; 2 uses
-  %.not645.i = icmp ne i32 %i.jo, 0               ; 3 uses
+  %i.jo = and i32 %i.jl, 1073741824               ; 3 uses
+  %.not645.i = icmp ne i32 %i.jo, 0               ; 2 uses
   %i.jp = and i32 %i.jm, 1073741824
   %i.jq = icmp ne i32 %i.jp, 0
   %.sroa.0153.0.i = select i1 %.not645.i, i1 true, i1 %i.jq ; 2 uses
@@ -351,11 +351,12 @@ bb.cm:                                            ; preds = %bb.cl
           to label %bb.cx unwind label %.loopexit.split-lp238.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i, !noalias !4592
 
 bb.cn:                                            ; preds = %bb.cf
+  %not..not645.i = icmp eq i32 %i.jo, 0
   %.lobit226.i = lshr exact i32 %i.jo, 30
   %.662.i = zext nneg i32 %.lobit226.i to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah), !noalias !4594
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag), !noalias !4594
-  %i.le = select i1 %.not645.i, ptr %2, ptr %4
+  %i.le = select i1 %not..not645.i, ptr %4, ptr %2
   invoke void @_RINvMs1_NtNtCs31YAwBA1AlL_19xet_core_structures14metadata_shard12file_structsNtB6_15FileMetadataExt11deserializeINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorRINtNtCsexYYUdYSQU6_5alloc3vec3VechEEECsQbU2fm3lSD_3xet(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.ag, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.le)
           to label %bb.co unwind label %.loopexit.split-lp238.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i, !noalias !4592
 

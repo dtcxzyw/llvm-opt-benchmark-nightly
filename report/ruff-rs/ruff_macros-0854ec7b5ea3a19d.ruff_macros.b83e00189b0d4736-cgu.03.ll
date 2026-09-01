@@ -202,14 +202,13 @@ bb.ex:                                            ; preds = %bb.ew
 
 bb.ey:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtCsfq6Q4Do6HaX_3syn4path4PathIBY_NtNtB1y_4attr9AttributeEEEEECsfOIrz68VyyU_11ruff_macros.exit.i, %.lr.ph.i
   %.sroa.0.0132.i = phi i64 [ 1, %.lr.ph.i ], [ %spec.select109.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCscdodAO9FK5_5alloc3vec3VecTNtNtCsfq6Q4Do6HaX_3syn4path4PathIBY_NtNtB1y_4attr9AttributeEEEEECsfOIrz68VyyU_11ruff_macros.exit.i ] ; 9 uses
-  %i.qw = icmp samesign uge i64 %.sroa.0.0132.i, %i.qt ; 2 uses
-  %not..i = xor i1 %i.qw, true
+  %i.qw = icmp samesign uge i64 %.sroa.0.0132.i, %i.qt
+  %not..i = icmp samesign ult i64 %.sroa.0.0132.i, %i.qt ; 2 uses
   %i.qx = zext i1 %not..i to i64
   %spec.select109.i = add nuw nsw i64 %.sroa.0.0132.i, %i.qx ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.eq), !noalias !1248
   %i.qy = load ptr, ptr %i.qv, align 8, !noalias !1248, !nonnull !4, !noundef !4 ; 3 uses
-  %.not.i90.i = icmp samesign ult i64 %.sroa.0.0132.i, %i.qt
-  br i1 %.not.i90.i, label %bb.ez, label %.split.i.i
+  br i1 %not..i, label %bb.ez, label %.split.i.i
 
 bb.ez:                                            ; preds = %bb.ey
   %i.qz = getelementptr inbounds nuw i8, ptr %i.qy, i64 %.sroa.0.0132.i

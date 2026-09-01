@@ -202,7 +202,7 @@ bb.ac:                                            ; preds = %bb.y, %bb.ab, %bb.a
 bb.ad:                                            ; preds = %bb.ac
   %i.cd = getelementptr inbounds nuw i8, ptr %i.i, i64 80
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !90 ; 2 uses
-  %.not123 = icmp eq ptr %i.ce, null              ; 3 uses
+  %.not123 = icmp eq ptr %i.ce, null              ; 2 uses
   %.pre = load ptr, ptr %i.g, align 8, !tbaa !90  ; 3 uses
   %.not124 = icmp eq ptr %.pre, null
   %or.cond193 = select i1 %.not123, i1 true, i1 %.not124
@@ -210,9 +210,8 @@ bb.ad:                                            ; preds = %bb.ac
 
 bb.ae:                                            ; preds = %bb.ad
   %i.cf = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.ce, ptr noundef nonnull dereferenceable(1) %.pre) #12
-  %.not125 = icmp ne i32 %i.cf, 0
-  %or.cond194.not = or i1 %.not125, %.not123
-  br i1 %or.cond194.not, label %.thread156, label %bb.ag
+  %.not125 = icmp eq i32 %i.cf, 0
+  br i1 %.not125, label %bb.ag, label %.thread156
 
 bb.af:                                            ; preds = %bb.ad
   %.old = icmp ne ptr %.pre, null

@@ -204,9 +204,9 @@ bb.ag:                                            ; preds = %bb.ap, %.lr.ph.i104
   %i.qw = getelementptr inbounds [8 x i8], ptr %0, i64 %indvars.iv.i105
   %i.qx = load i64, ptr %i.qw, align 8, !tbaa !13 ; 2 uses
   %i.qy = and i64 %i.qx, %i.qm
-  %i.qz = shl i64 %i.qy, %i.qo                    ; 3 uses
+  %i.qz = shl i64 %i.qy, %i.qo                    ; 4 uses
   %i.ra = and i64 %i.qx, %i.qr
-  %i.rb = shl i64 %i.ra, %i.qt                    ; 3 uses
+  %i.rb = shl i64 %i.ra, %i.qt                    ; 4 uses
   %i.rc = icmp eq i64 %i.qz, %i.rb
   br i1 %i.rc, label %bb.ap, label %bb.ah
 
@@ -279,9 +279,10 @@ minTemp3_fast.exit:                               ; preds = %bb.ah, %bb.aj, %bb.
   br i1 %i.se, label %.lr.ph.i118, label %.lr.ph.i124
 
 .lr.ph.i118:                                      ; preds = %minTemp3_fast.exit
-  %.not37.i.not = icmp ugt i64 %i.qz, %i.rb       ; 2 uses
+  %.not37.i = icmp ugt i64 %i.qz, %i.rb
+  %.not37.i.not = icmp ugt i64 %i.qz, %i.rb
   %i.sf = select i1 %.not37.i.not, i32 %.024.i, i32 %.026.i ; 5 uses
-  %i.sg = select i1 %.not37.i.not, i32 %.026.i, i32 %.024.i ; 4 uses
+  %i.sg = select i1 %.not37.i, i32 %.026.i, i32 %.024.i ; 4 uses
   %i.sh = xor i32 %i.sf, 3                        ; 2 uses
   %i.si = xor i32 %i.sg, 3                        ; 2 uses
   %i.sj = zext nneg i32 %i.sf to i64

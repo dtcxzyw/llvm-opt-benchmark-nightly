@@ -202,32 +202,33 @@ bb.s:                                             ; preds = %._crit_edge.i.i.i
 
 .preheader.i.i.i:                                 ; preds = %bb.s
   %i.fx = icmp ne i32 %.015.lcssa.i.i.i, -1074
-  %i.fy = and i64 %.016.lcssa.i.i.i, 4503599627370496
-  %i.fz = icmp eq i64 %i.fy, 0                    ; 2 uses
+  %i.fy = and i64 %.016.lcssa.i.i.i, 4503599627370496 ; 2 uses
+  %i.fz = icmp eq i64 %i.fy, 0
   %i.ga = and i1 %i.fx, %i.fz
   br i1 %i.ga, label %.lr.ph25.i.i.i, label %._crit_edge26.i.i.i
 
 .lr.ph25.i.i.i:                                   ; preds = %.preheader.i.i.i, %.lr.ph25.i.i.i
   %.124.i.i.i = phi i32 [ %i.gc, %.lr.ph25.i.i.i ], [ %.015.lcssa.i.i.i, %.preheader.i.i.i ] ; 2 uses
-  %.11723.i.i.i = phi i64 [ %i.gb, %.lr.ph25.i.i.i ], [ %.016.lcssa.i.i.i, %.preheader.i.i.i ] ; 2 uses
-  %i.gb = shl i64 %.11723.i.i.i, 1                ; 2 uses
+  %.11723.i.i.i = phi i64 [ %i.gb, %.lr.ph25.i.i.i ], [ %.016.lcssa.i.i.i, %.preheader.i.i.i ]
+  %i.gb = shl i64 %.11723.i.i.i, 1                ; 3 uses
   %i.gc = add nsw i32 %.124.i.i.i, -1             ; 2 uses
   %i.gd = icmp sgt i32 %.124.i.i.i, -1073
-  %i.ge = and i64 %.11723.i.i.i, 2251799813685248
-  %i.gf = icmp eq i64 %i.ge, 0                    ; 2 uses
+  %i.ge = and i64 %i.gb, 4503599627370496         ; 2 uses
+  %i.gf = icmp eq i64 %i.ge, 0
   %i.gg = select i1 %i.gd, i1 %i.gf, i1 false
   br i1 %i.gg, label %.lr.ph25.i.i.i, label %._crit_edge26.i.i.i, !llvm.loop !21
 
 ._crit_edge26.i.i.i:                              ; preds = %.lr.ph25.i.i.i, %.preheader.i.i.i
   %.117.lcssa.i.i.i = phi i64 [ %.016.lcssa.i.i.i, %.preheader.i.i.i ], [ %i.gb, %.lr.ph25.i.i.i ]
   %.1.lcssa.i.i.i = phi i32 [ %.015.lcssa.i.i.i, %.preheader.i.i.i ], [ %i.gc, %.lr.ph25.i.i.i ] ; 2 uses
-  %.lcssa.i.i.i = phi i1 [ %i.fz, %.preheader.i.i.i ], [ %i.gf, %.lr.ph25.i.i.i ]
-  %5 = icmp eq i32 %.1.lcssa.i.i.i, -1074
-  %brmerge.not.i.i.i = select i1 %5, i1 %.lcssa.i.i.i, i1 false
+  %.lcssa.i.i.i = phi i64 [ %i.fy, %.preheader.i.i.i ], [ %i.ge, %.lr.ph25.i.i.i ]
+  %5 = icmp ne i32 %.1.lcssa.i.i.i, -1074
+  %.not19.i.i.i = icmp ne i64 %.lcssa.i.i.i, 0
+  %brmerge.not.i.i.i = select i1 %5, i1 true, i1 %.not19.i.i.i
   %i.gh = add nsw i32 %.1.lcssa.i.i.i, 1075
   %i.gi = zext nneg i32 %i.gh to i64
   %i.gj = shl nuw nsw i64 %i.gi, 52
-  %.0.i.i.i = select i1 %brmerge.not.i.i.i, i64 0, i64 %i.gj
+  %.0.i.i.i = select i1 %brmerge.not.i.i.i, i64 %i.gj, i64 0
   %i.gk = and i64 %.117.lcssa.i.i.i, 4503599627370495
   %i.gl = or disjoint i64 %.0.i.i.i, %i.gk
   %i.gm = bitcast i64 %i.gl to double

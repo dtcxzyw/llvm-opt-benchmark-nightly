@@ -204,8 +204,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i58
 .critedge430:                                     ; preds = %bb.cs, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i581
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #25
   %i.ri = load i16, ptr %i.jg, align 8            ; 6 uses
-  %i.rj = and i16 %i.ri, 32
-  %.not1054 = icmp eq i16 %i.rj, 0                ; 3 uses
+  %i.rj = and i16 %i.ri, 32                       ; 2 uses
+  %.not1054 = icmp eq i16 %i.rj, 0                ; 2 uses
   %i.rk = getelementptr inbounds nuw i8, ptr %i.qu, i64 313 ; 5 uses
   %i.rl = load i16, ptr %i.rk, align 1
   %i.rm = select i1 %.not1054, i16 4, i16 0
@@ -225,8 +225,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i58
   %i.sa = getelementptr inbounds nuw i8, ptr %i.qu, i64 315 ; 9 uses
   %i.sb = load i8, ptr %i.sa, align 1
   %i.sc = and i8 %i.sb, -22
-  %51 = select i1 %.not1054, i8 0, i8 4
-  %i.sd = or disjoint i8 %51, %i.rz
+  %51 = lshr exact i16 %i.rj, 3
+  %52 = trunc nuw nsw i16 %51 to i8
+  %i.sd = or disjoint i8 %i.rz, %52
   %i.se = or disjoint i8 %i.sd, %i.sc
   %i.sf = getelementptr inbounds nuw i8, ptr %1, i64 258 ; 5 uses
   %i.sg = load i8, ptr %i.sf, align 2             ; 2 uses

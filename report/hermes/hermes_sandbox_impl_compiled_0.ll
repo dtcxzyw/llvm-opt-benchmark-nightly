@@ -205,9 +205,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %sext = shl nuw i32 %.1, 24
   %i.bg = ashr exact i32 %sext, 24                ; 2 uses
   %i.bh = icmp slt i32 %i.bg, 0                   ; 4 uses
-  %i.bi = select i1 %i.bh, i32 %.0232, i32 %.1    ; 6 uses
+  %i.bi = select i1 %i.bh, i32 %.0232, i32 %.1    ; 7 uses
   %i.bj = or i32 %i.bi, 15                        ; 2 uses
-  %i.bk = icmp ult i32 %i.bi, 11                  ; 3 uses
+  %i.bk = icmp ult i32 %i.bi, 11                  ; 2 uses
   %i.bl = select i1 %i.bk, i32 10, i32 %i.bj
   %i.bm = add nuw nsw i64 %i.b, 104               ; 2 uses
   %.val244 = load ptr, ptr %i.a, align 8, !tbaa !21
@@ -221,7 +221,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %.v, label %bb.q, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  br i1 %i.bk, label %bb.o, label %bb.j
+  %3 = icmp ugt i32 %i.bi, 10
+  br i1 %3, label %bb.j, label %bb.o
 
 bb.j:                                             ; preds = %bb.i
   %i.br = add i32 %i.bj, 1                        ; 2 uses

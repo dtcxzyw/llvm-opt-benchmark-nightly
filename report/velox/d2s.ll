@@ -111,8 +111,8 @@ bb.a:
   %i.c = or disjoint i64 %0, 4503599627370496
   %.0126 = select i1 %i.a, i64 %0, i64 %i.c       ; 2 uses
   %.0 = select i1 %i.a, i32 -1076, i32 %i.b       ; 7 uses
-  %i.d = and i64 %.0126, 1
-  %i.e = icmp eq i64 %i.d, 0                      ; 4 uses
+  %i.d = and i64 %.0126, 1                        ; 2 uses
+  %i.e = icmp eq i64 %i.d, 0                      ; 3 uses
   %i.f = shl nuw nsw i64 %.0126, 2                ; 11 uses
   %i.g = icmp ne i64 %0, 0
   %i.h = icmp ult i32 %1, 2
@@ -285,9 +285,7 @@ bb.g:                                             ; preds = %bb.a
   br i1 %i.do, label %.thread, label %bb.h
 
 .thread:                                          ; preds = %bb.g
-  %not.309 = xor i1 %i.e, true
-  %2 = sext i1 %not.309 to i64
-  %spec.select = add i64 %i.cw, %2
+  %spec.select = sub i64 %i.cw, %i.d
   %spec.select267 = and i1 %i.e, %i.i
   br label %.preheader270
 

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = load i64, ptr %i.c, align 8, !tbaa !354  ; 2 uses
   %i.e = icmp ugt i64 %2, %i.d
-  %i.f = icmp ne i64 %2, -1                       ; 2 uses
+  %i.f = icmp ne i64 %2, -1
   %or.cond = and i1 %i.f, %i.e
   br i1 %or.cond, label %bb.d, label %bb.c
 
@@ -216,8 +216,9 @@ bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = load i64, ptr %i.i, align 8, !tbaa !1502
   %i.k = sub i64 %i.d, %i.j
+  %.not23 = icmp eq i64 %2, -1
   %i.l = tail call i64 @llvm.umin.i64(i64 %2, i64 %i.k)
-  %spec.store.select = select i1 %i.f, i64 %i.l, i64 -1
+  %spec.store.select = select i1 %.not23, i64 -1, i64 %i.l
   store i64 %spec.store.select, ptr %i.h, align 8
   br label %bb.d
 
@@ -620,14 +621,14 @@ ma_data_source_set_range_in_pcm_frames.exit:      ; preds = %bb.k, %bb.n, %bb.p,
   %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.bc = load i64, ptr %i.bb, align 8, !tbaa !2307 ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %i.be = load i64, ptr %i.bd, align 8, !tbaa !2308 ; 4 uses
+  %i.be = load i64, ptr %i.bd, align 8, !tbaa !2308 ; 5 uses
   %i.bf = icmp ult i64 %i.be, %i.bc
   br i1 %i.bf, label %bb.w, label %bb.u
 
 bb.u:                                             ; preds = %ma_data_source_set_range_in_pcm_frames.exit
   %i.bg = load i64, ptr %i.p, align 8, !tbaa !354 ; 2 uses
   %i.bh = icmp ugt i64 %i.be, %i.bg
-  %i.bi = icmp ne i64 %i.be, -1                   ; 2 uses
+  %i.bi = icmp ne i64 %i.be, -1
   %or.cond.i91 = and i1 %i.bi, %i.bh
   br i1 %or.cond.i91, label %bb.w, label %bb.v
 
@@ -637,8 +638,9 @@ bb.v:                                             ; preds = %bb.u
   %i.bk = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bl = load i64, ptr %i.bk, align 8, !tbaa !1502
   %i.bm = sub i64 %i.bg, %i.bl
+  %.not23.i = icmp eq i64 %i.be, -1
   %i.bn = call i64 @llvm.umin.i64(i64 %i.be, i64 %i.bm)
-  %spec.store.select.i = select i1 %i.bi, i64 %i.bn, i64 -1
+  %spec.store.select.i = select i1 %.not23.i, i64 -1, i64 %i.bn
   store i64 %spec.store.select.i, ptr %i.q, align 8
   br label %bb.w
 
@@ -1041,7 +1043,7 @@ ma_data_source_set_range_in_pcm_frames.exit:      ; preds = %bb.z, %bb.ai, %bb.a
   %i.dn = load i64, ptr %i.dm, align 8, !tbaa !2631 ; 3 uses
   %.not71 = icmp eq i64 %i.dn, 0
   %i.do = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %i.dp = load i64, ptr %i.do, align 8, !tbaa !2536 ; 5 uses
+  %i.dp = load i64, ptr %i.do, align 8, !tbaa !2536 ; 6 uses
   %.not72 = icmp eq i64 %i.dp, -1
   %or.cond122 = select i1 %.not71, i1 %.not72, i1 false
   br i1 %or.cond122, label %ma_data_source_set_loop_point_in_pcm_frames.exit, label %ma_sound_get_data_source.exit81
@@ -1057,7 +1059,7 @@ bb.aj:                                            ; preds = %ma_sound_get_data_s
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dq, i64 16
   %i.du = load i64, ptr %i.dt, align 8, !tbaa !354 ; 2 uses
   %i.dv = icmp ugt i64 %i.dp, %i.du
-  %i.dw = icmp ne i64 %i.dp, -1                   ; 2 uses
+  %i.dw = icmp ne i64 %i.dp, -1
   %or.cond.i82 = and i1 %i.dw, %i.dv
   br i1 %or.cond.i82, label %ma_data_source_set_loop_point_in_pcm_frames.exit, label %bb.ak
 
@@ -1068,8 +1070,9 @@ bb.ak:                                            ; preds = %bb.aj
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dq, i64 8
   %i.ea = load i64, ptr %i.dz, align 8, !tbaa !1502
   %i.eb = sub i64 %i.du, %i.ea
+  %.not23.i = icmp eq i64 %i.dp, -1
   %i.ec = call i64 @llvm.umin.i64(i64 %i.dp, i64 %i.eb)
-  %spec.store.select.i = select i1 %i.dw, i64 %i.ec, i64 -1
+  %spec.store.select.i = select i1 %.not23.i, i64 -1, i64 %i.ec
   store i64 %spec.store.select.i, ptr %i.dy, align 8
   br label %ma_data_source_set_loop_point_in_pcm_frames.exit
 
@@ -1472,7 +1475,7 @@ ma_data_source_set_range_in_pcm_frames.exit:      ; preds = %ma_audio_buffer_ini
   %i.cq = load i64, ptr %i.cp, align 8, !tbaa !2307 ; 3 uses
   %.not43 = icmp eq i64 %i.cq, 0
   %i.cr = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %i.cs = load i64, ptr %i.cr, align 8, !tbaa !2308 ; 5 uses
+  %i.cs = load i64, ptr %i.cr, align 8, !tbaa !2308 ; 6 uses
   %.not44 = icmp eq i64 %i.cs, -1
   %or.cond99 = select i1 %.not43, i1 %.not44, i1 false
   %i.ct = icmp ult i64 %i.cs, %i.cq
@@ -1483,7 +1486,7 @@ bb.m:                                             ; preds = %ma_data_source_set_
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.cv = load i64, ptr %i.cu, align 8, !tbaa !354 ; 2 uses
   %i.cw = icmp ugt i64 %i.cs, %i.cv
-  %i.cx = icmp ne i64 %i.cs, -1                   ; 2 uses
+  %i.cx = icmp ne i64 %i.cs, -1
   %or.cond.i48 = and i1 %i.cx, %i.cw
   br i1 %or.cond.i48, label %ma_data_source_set_loop_point_in_pcm_frames.exit, label %bb.n
 
@@ -1494,8 +1497,9 @@ bb.n:                                             ; preds = %bb.m
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.db = load i64, ptr %i.da, align 8, !tbaa !1502
   %i.dc = sub i64 %i.cv, %i.db
+  %.not23.i = icmp eq i64 %i.cs, -1
   %i.dd = call i64 @llvm.umin.i64(i64 %i.cs, i64 %i.dc)
-  %spec.store.select.i = select i1 %i.cx, i64 %i.dd, i64 -1
+  %spec.store.select.i = select i1 %.not23.i, i64 -1, i64 %i.dd
   store i64 %spec.store.select.i, ptr %i.cz, align 8
   br label %ma_data_source_set_loop_point_in_pcm_frames.exit
 
@@ -1696,7 +1700,7 @@ ma_data_source_get_loop_point_in_pcm_frames.exit: ; preds = %ma_data_source_get_
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.bm = load i64, ptr %i.bl, align 8, !tbaa !1504 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.bo = load i64, ptr %i.bn, align 8, !tbaa !355 ; 4 uses
+  %i.bo = load i64, ptr %i.bn, align 8, !tbaa !355 ; 5 uses
   %i.bp = icmp ult i64 %i.bo, %i.bm
   br i1 %i.bp, label %ma_data_source_set_loop_point_in_pcm_frames.exit, label %bb.k
 
@@ -1704,7 +1708,7 @@ bb.k:                                             ; preds = %ma_data_source_get_
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.br = load i64, ptr %i.bq, align 8, !tbaa !354 ; 2 uses
   %i.bs = icmp ugt i64 %i.bo, %i.br
-  %i.bt = icmp ne i64 %i.bo, -1                   ; 2 uses
+  %i.bt = icmp ne i64 %i.bo, -1
   %or.cond.i = and i1 %i.bt, %i.bs
   br i1 %or.cond.i, label %ma_data_source_set_loop_point_in_pcm_frames.exit, label %bb.l
 
@@ -1715,8 +1719,9 @@ bb.l:                                             ; preds = %bb.k
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.bx = load i64, ptr %i.bw, align 8, !tbaa !1502
   %i.by = sub i64 %i.br, %i.bx
+  %.not23.i = icmp eq i64 %i.bo, -1
   %i.bz = call i64 @llvm.umin.i64(i64 %i.bo, i64 %i.by)
-  %spec.store.select.i = select i1 %i.bt, i64 %i.bz, i64 -1
+  %spec.store.select.i = select i1 %.not23.i, i64 -1, i64 %i.bz
   store i64 %spec.store.select.i, ptr %i.bv, align 8
   br label %ma_data_source_set_loop_point_in_pcm_frames.exit
 

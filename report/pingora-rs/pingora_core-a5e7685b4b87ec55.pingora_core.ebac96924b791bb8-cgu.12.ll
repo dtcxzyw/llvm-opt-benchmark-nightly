@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.h
 
 .loopexit:                                        ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i, %bb.j, %bb.i, %_RINvXsz_NtNtCs84JG9zk80ZV_4http6header4nameNtB6_10HeaderNameNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECskeugdADtBsi_12pingora_core.exit.i
   %i.fb = phi i8 [ %i.ag, %_RINvXsz_NtNtCs84JG9zk80ZV_4http6header4nameNtB6_10HeaderNameNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECskeugdADtBsi_12pingora_core.exit.i ], [ %i.ex, %bb.j ], [ %i.db, %bb.i ], [ %i.db, %.lr.ph.i.i.i.i.i ], [ %i.db, %.lr.ph.i.i.i.i.i.prol.loopexit ]
-  %.sroa.0102.0.copyload = phi ptr [ %i.x, %_RINvXsz_NtNtCs84JG9zk80ZV_4http6header4nameNtB6_10HeaderNameNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECskeugdADtBsi_12pingora_core.exit.i ], [ null, %bb.j ], [ %i.cr, %bb.i ], [ %i.cr, %.lr.ph.i.i.i.i.i ], [ %i.cr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 8 uses
+  %.sroa.0102.0.copyload = phi ptr [ %i.x, %_RINvXsz_NtNtCs84JG9zk80ZV_4http6header4nameNtB6_10HeaderNameNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECskeugdADtBsi_12pingora_core.exit.i ], [ null, %bb.j ], [ %i.cr, %bb.i ], [ %i.cr, %.lr.ph.i.i.i.i.i ], [ %i.cr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 10 uses
   %.sroa.0.0.i = phi i64 [ %i.cq, %_RINvXsz_NtNtCs84JG9zk80ZV_4http6header4nameNtB6_10HeaderNameNtNtCskKLDkoKarTP_4core4hash4Hash4hashNtNtNtCsG258MDvU3F_3std4hash6random13DefaultHasherECskeugdADtBsi_12pingora_core.exit.i ], [ %i.fa, %bb.j ], [ %i.cv, %bb.i ], [ %.lcssa223.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ], [ %i.ev, %.lr.ph.i.i.i.i.i ]
   %i.fc = trunc i64 %.sroa.0.0.i to i16
   %i.fd = and i16 %i.fc, 32767                    ; 6 uses
@@ -222,8 +222,8 @@ bb.j:                                             ; preds = %bb.h
   %i.fo = load i64, ptr %i.fn, align 8            ; 14 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.fq = load ptr, ptr %i.fp, align 8, !nonnull !18 ; 3 uses
-  %i.fr = icmp eq ptr %.sroa.0102.0.copyload, null ; 8 uses
-  %not..i.i = xor i1 %i.fr, true
+  %i.fr = icmp eq ptr %.sroa.0102.0.copyload, null ; 6 uses
+  %not..i.i = icmp ne ptr %.sroa.0102.0.copyload, null
   %i.fs = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ft = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.fu = load i64, ptr %i.ft, align 8            ; 9 uses
@@ -401,14 +401,14 @@ bb.ab:                                            ; preds = %bb.aa
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hm, i64 64
   %i.ho = load ptr, ptr %i.hn, align 8, !noundef !18
   %i.hp = icmp ne ptr %i.ho, null                 ; 2 uses
-  %i.hq = xor i1 %i.hp, %i.fr
-  br i1 %i.hq, label %bb.ac, label %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread
+  %i.hq = xor i1 %i.hp, %not..i.i
+  br i1 %i.hq, label %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit.thread, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   br i1 %i.hp, label %bb.ad, label %_RNvXsy_NtNtCs84JG9zk80ZV_4http6header4nameNtB5_10HeaderNameNtNtCskKLDkoKarTP_4core3cmp9PartialEq2eq.exit
 
 bb.ad:                                            ; preds = %bb.ac
-  tail call void @llvm.assume(i1 %not..i.i)
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0102.0.copyload) ]
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hm, i64 80
   %i.hs = load i64, ptr %i.hr, align 8, !noundef !18
   %i.ht = icmp eq i64 %i.hs, %i.fu
@@ -811,7 +811,7 @@ bb.a:
   %i.b = alloca [32 x i8], align 8                ; 4 uses
   %i.c = alloca [32 x i8], align 8                ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 104
-  %i.e = load i16, ptr %i.d, align 8, !range !1487, !noundef !18 ; 5 uses
+  %i.e = load i16, ptr %i.d, align 8, !range !1487, !noundef !18 ; 6 uses
   switch i16 %i.e, label %bb.c [
     i16 204, label %bb.b
     i16 304, label %bb.b
@@ -846,7 +846,7 @@ bb.d:                                             ; preds = %bb.c
 .critedge.thread:                                 ; preds = %bb.d
   %i.l = add i16 %i.e, -200
   %spec.select.i17 = icmp ult i16 %i.l, -100
-  %.not1319 = icmp eq i16 %i.e, 101               ; 2 uses
+  %.not1319 = icmp eq i16 %i.e, 101
   %or.cond20 = or i1 %.not1319, %spec.select.i17
   br i1 %or.cond20, label %bb.f, label %bb.n
 
@@ -871,9 +871,10 @@ _RNvMNtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http2v16serverNtB2_11HttpSes
 _RNvMNtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http2v16serverNtB2_11HttpSession10is_upgrade.exit: ; preds = %_RNvMNtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http2v16serverNtB2_11HttpSession14is_upgrade_req.exit.i
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 106
   %i.r = load i8, ptr %i.q, align 2, !range !1486, !alias.scope !1629
-  %2 = icmp eq i8 %i.r, 2
-  %narrow.i.not = select i1 %.not1319, i1 %2, i1 false
-  br i1 %narrow.i.not, label %bb.m, label %_RNvMNtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http2v16serverNtB2_11HttpSession10is_upgrade.exit.thread
+  %2 = icmp ne i8 %i.r, 2
+  %not..not1319 = icmp ne i16 %i.e, 101
+  %narrow.i.not = select i1 %not..not1319, i1 true, i1 %2
+  br i1 %narrow.i.not, label %_RNvMNtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http2v16serverNtB2_11HttpSession10is_upgrade.exit.thread, label %bb.m
 
 _RNvMNtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http2v16serverNtB2_11HttpSession10is_upgrade.exit.thread: ; preds = %bb.f, %bb.e, %_RNvMNtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http2v16serverNtB2_11HttpSession14is_upgrade_req.exit.i, %_RNvMNtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http2v16serverNtB2_11HttpSession10is_upgrade.exit
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
@@ -1276,7 +1277,7 @@ bb.a:
   %i.b = alloca [32 x i8], align 8                ; 4 uses
   %i.c = alloca [32 x i8], align 8                ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 104
-  %i.e = load i16, ptr %i.d, align 8, !range !1487, !noundef !18 ; 5 uses
+  %i.e = load i16, ptr %i.d, align 8, !range !1487, !noundef !18 ; 6 uses
   switch i16 %i.e, label %bb.c [
     i16 204, label %bb.b
     i16 304, label %bb.b
@@ -1313,7 +1314,7 @@ bb.d:                                             ; preds = %bb.c
 .critedge.thread:                                 ; preds = %bb.d
   %i.n = add i16 %i.e, -200
   %spec.select.i28 = icmp ult i16 %i.n, -100
-  %.not2530 = icmp eq i16 %i.e, 101               ; 2 uses
+  %.not2530 = icmp eq i16 %i.e, 101
   %or.cond31 = or i1 %.not2530, %spec.select.i28
   br i1 %or.cond31, label %bb.f, label %bb.n
 
@@ -1339,9 +1340,10 @@ _RNvMNtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http2v16serverNtB2_11HttpSes
 _RNvMs_NtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http10subrequest6serverNtB4_11HttpSession10is_upgrade.exit: ; preds = %_RNvMNtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http2v16serverNtB2_11HttpSession14is_upgrade_req.exit.i.i
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 106
   %i.t = load i8, ptr %i.s, align 2, !range !1486, !alias.scope !1876, !noalias !1877
-  %2 = icmp eq i8 %i.t, 2
-  %narrow.i.i.not = select i1 %.not2530, i1 %2, i1 false
-  br i1 %narrow.i.i.not, label %bb.g, label %_RNvMs_NtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http10subrequest6serverNtB4_11HttpSession10is_upgrade.exit.thread
+  %2 = icmp ne i8 %i.t, 2
+  %not..not2530 = icmp ne i16 %i.e, 101
+  %narrow.i.i.not = select i1 %not..not2530, i1 true, i1 %2
+  br i1 %narrow.i.i.not, label %_RNvMs_NtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http10subrequest6serverNtB4_11HttpSession10is_upgrade.exit.thread, label %bb.g
 
 _RNvMs_NtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http10subrequest6serverNtB4_11HttpSession10is_upgrade.exit.thread: ; preds = %bb.f, %bb.e, %_RNvMNtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http2v16serverNtB2_11HttpSession14is_upgrade_req.exit.i.i, %_RNvMs_NtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http10subrequest6serverNtB4_11HttpSession10is_upgrade.exit
   %i.u = call fastcc noundef zeroext i1 @_RNvNtNtNtNtCskeugdADtBsi_12pingora_core9protocols4http2v16common32is_chunked_encoding_from_headers(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(96) %1)

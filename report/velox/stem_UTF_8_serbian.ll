@@ -202,12 +202,14 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not25, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.p = load i32, ptr %i.a, align 8, !tbaa !8    ; 2 uses
+  %i.p = load i32, ptr %i.a, align 8, !tbaa !8    ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 20
   store i32 %i.p, ptr %i.q, align 4, !tbaa !15
   %i.r = getelementptr i8, ptr %0, i64 40
   %.val27 = load ptr, ptr %i.r, align 8, !tbaa !19
-  %.val27.val = load i32, ptr %.val27, align 4, !tbaa !20
+  %.val27.val = load i32, ptr %.val27, align 4, !tbaa !20 ; 2 uses
+  %.not.i = icmp sle i32 %.val27.val, %i.p
+  %..i = zext i1 %.not.i to i32
   %.not.i.not = icmp sgt i32 %.val27.val, %i.p
   br i1 %.not.i.not, label %bb.g, label %bb.f
 
@@ -218,7 +220,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.a, %bb.b, %bb.c
-  %.2 = phi i32 [ 0, %bb.a ], [ 0, %bb.d ], [ %spec.select, %bb.f ], [ 0, %bb.e ], [ 0, %bb.c ], [ 0, %bb.b ]
+  %.2 = phi i32 [ 0, %bb.a ], [ 0, %bb.d ], [ %spec.select, %bb.f ], [ %..i, %bb.e ], [ 0, %bb.c ], [ 0, %bb.b ]
   ret i32 %.2
 }
 

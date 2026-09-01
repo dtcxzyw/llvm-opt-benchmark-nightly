@@ -204,7 +204,8 @@ _RNvXs4_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufwriterINtB5_9BufWriterNtNtNtCs
   br label %.lr.ph.i.i
 
 ._crit_edge.i.i:                                  ; preds = %bb.ay
-  br i1 %i.hv, label %bb.an, label %._crit_edge.thread.i.i
+  %8 = icmp ult i8 %.sroa.09.0.i.i, 58
+  br i1 %8, label %._crit_edge.thread.i.i, label %bb.an
 
 .lr.ph.i.i:                                       ; preds = %bb.ay, %.lr.ph.i.preheader.i
   %.sroa.0.042.i.i = phi i64 [ %i.ha, %bb.ay ], [ %..i.i, %.lr.ph.i.preheader.i ]
@@ -272,7 +273,7 @@ bb.au:                                            ; preds = %.lr.ph.i.i
   br i1 %i.hp, label %bb.aw, label %bb.ax
 
 bb.av:                                            ; preds = %bb.aw, %.lr.ph.i.i
-  %.sroa.09.0.i.i = phi i8 [ %i.hu, %bb.aw ], [ %i.hd, %.lr.ph.i.i ] ; 3 uses
+  %.sroa.09.0.i.i = phi i8 [ %i.hu, %bb.aw ], [ %i.hd, %.lr.ph.i.i ] ; 4 uses
   %i.hq = icmp ult i64 %i.ha, %i.dy
   br i1 %i.hq, label %bb.ay, label %bb.az
 
@@ -288,7 +289,7 @@ bb.ax:                                            ; preds = %bb.au
   unreachable
 
 bb.ay:                                            ; preds = %bb.av
-  %i.hv = icmp ugt i8 %.sroa.09.0.i.i, 57         ; 3 uses
+  %i.hv = icmp ugt i8 %.sroa.09.0.i.i, 57         ; 2 uses
   %.sroa.06.1.i.i = zext i1 %i.hv to i8
   %i.hw = add i8 %.sroa.09.0.i.i, -10
   %.sroa.09.1.i.i = select i1 %i.hv, i8 %i.hw, i8 %.sroa.09.0.i.i

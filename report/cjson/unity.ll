@@ -204,14 +204,14 @@ bb.a:
   br i1 %or.cond, label %bb.l, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = icmp ne i64 %0, %1                       ; 2 uses
+  %i.e = icmp ne i64 %0, %1
   %i.f = and i32 %2, 1
   %.not = icmp eq i32 %i.f, 0                     ; 2 uses
   %or.cond38 = or i1 %i.e, %.not
   br i1 %or.cond38, label %bb.c, label %bb.l
 
 bb.c:                                             ; preds = %bb.b
-  %not. = xor i1 %i.e, true
+  %not. = icmp eq i64 %0, %1
   %spec.select = zext i1 %not. to i32             ; 2 uses
   %i.g = and i32 %5, 16
   %.not28 = icmp eq i32 %i.g, 0
@@ -614,11 +614,12 @@ bb.h:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h, %bb.d, %bb.e
-  %.sink = phi i64 [ %i.j, %bb.g ], [ %i.k, %bb.h ], [ %i.g, %bb.d ], [ %i.h, %bb.e ]
-  %i.l = icmp ugt i64 %.sink, %0                  ; 2 uses
+  %.sink = phi i64 [ %i.j, %bb.g ], [ %i.k, %bb.h ], [ %i.g, %bb.d ], [ %i.h, %bb.e ] ; 2 uses
+  %i.l = icmp ugt i64 %.sink, %0
   %i.m = zext i1 %i.l to i64
   store i64 %i.m, ptr getelementptr inbounds nuw (i8, ptr @Unity, i64 64), align 8, !tbaa !19
-  br i1 %i.l, label %bb.j, label %bb.k
+  %.not29.not = icmp ugt i64 %.sink, %0
+  br i1 %.not29.not, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   tail call fastcc void @UnityTestResultsFailBegin(i64 noundef %4)

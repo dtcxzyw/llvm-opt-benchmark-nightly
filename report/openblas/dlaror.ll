@@ -41,8 +41,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = tail call i32 @lsame_(ptr noundef %0, ptr noundef nonnull @.str) #5
-  %.not = icmp ne i32 %i.l, 0                     ; 6 uses
+  %i.l = tail call i32 @lsame_(ptr noundef %0, ptr noundef nonnull @.str) #5 ; 2 uses
+  %.not = icmp ne i32 %i.l, 0                     ; 4 uses
   br i1 %.not, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -62,6 +62,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e, %bb.f, %bb.c, %bb.d
   %.ph = phi i1 [ false, %bb.d ], [ false, %bb.c ], [ true, %bb.f ], [ true, %bb.e ] ; 3 uses
+  %or.cond7.ph = icmp eq i32 %i.l, 0              ; 2 uses
   %i.p = load i32, ptr %2, align 4, !tbaa !8      ; 4 uses
   %i.q = icmp slt i32 %i.p, 0
   br i1 %i.q, label %.thread184.sink.split, label %bb.h
@@ -191,7 +192,7 @@ bb.q:                                             ; preds = %bb.p
   %i.bj = fneg double %i.bf
   store double %i.bj, ptr %i.b, align 8, !tbaa !9
   call void @dger_(ptr noundef nonnull %i.c, ptr noundef nonnull %3, ptr noundef nonnull %i.b, ptr noundef nonnull %i.al, ptr noundef nonnull @c__1, ptr noundef %i.ae, ptr noundef nonnull @c__1, ptr noundef %i.bi, ptr noundef nonnull %5) #5
-  br i1 %.not, label %bb.r, label %.thread
+  br i1 %or.cond7.ph, label %.thread, label %bb.r
 
 .thread:                                          ; preds = %bb.p, %bb.q
   %i.bk = mul nsw i32 %i.ah, %i.d
@@ -250,7 +251,7 @@ bb.s:                                             ; preds = %._crit_edge200
   br i1 %.not171.not, label %.lr.ph204, label %.loopexit188, !llvm.loop !14
 
 .loopexit188:                                     ; preds = %.lr.ph204, %bb.s
-  br i1 %.not, label %.loopexit, label %.loopexit188.thread
+  br i1 %or.cond7.ph, label %.loopexit188.thread, label %.loopexit
 
 .loopexit188.thread:                              ; preds = %._crit_edge200, %.loopexit188
   %i.ce = load i32, ptr %3, align 4, !tbaa !8     ; 2 uses

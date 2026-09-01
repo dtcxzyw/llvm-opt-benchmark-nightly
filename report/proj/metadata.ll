@@ -204,8 +204,8 @@ bb.a:
 
 .critedge:                                        ; preds = %bb.a, %"_ZZN5osgeo4proj8metadata10Identifier16isEquivalentNameEPKcS4_bENK3$_1clEcS4_RmS4_.exit253"
   %i.c = phi i8 [ %i.px, %"_ZZN5osgeo4proj8metadata10Identifier16isEquivalentNameEPKcS4_bENK3$_1clEcS4_RmS4_.exit253" ], [ %i.b, %bb.a ] ; 7 uses
-  %.not479 = phi i1 [ %.not, %"_ZZN5osgeo4proj8metadata10Identifier16isEquivalentNameEPKcS4_bENK3$_1clEcS4_RmS4_.exit253" ], [ %.not472, %bb.a ] ; 2 uses
-  %i.d = phi i8 [ %i.pv, %"_ZZN5osgeo4proj8metadata10Identifier16isEquivalentNameEPKcS4_bENK3$_1clEcS4_RmS4_.exit253" ], [ %i.a, %bb.a ] ; 3 uses
+  %.not479 = phi i1 [ %.not, %"_ZZN5osgeo4proj8metadata10Identifier16isEquivalentNameEPKcS4_bENK3$_1clEcS4_RmS4_.exit253" ], [ %.not472, %bb.a ]
+  %i.d = phi i8 [ %i.pv, %"_ZZN5osgeo4proj8metadata10Identifier16isEquivalentNameEPKcS4_bENK3$_1clEcS4_RmS4_.exit253" ], [ %i.a, %bb.a ] ; 4 uses
   %i.e = phi ptr [ %i.pu, %"_ZZN5osgeo4proj8metadata10Identifier16isEquivalentNameEPKcS4_bENK3$_1clEcS4_RmS4_.exit253" ], [ %0, %bb.a ] ; 23 uses
   %.075478 = phi i8 [ %.176, %"_ZZN5osgeo4proj8metadata10Identifier16isEquivalentNameEPKcS4_bENK3$_1clEcS4_RmS4_.exit253" ], [ 0, %bb.a ] ; 10 uses
   %.077477 = phi i8 [ %.178, %"_ZZN5osgeo4proj8metadata10Identifier16isEquivalentNameEPKcS4_bENK3$_1clEcS4_RmS4_.exit253" ], [ 0, %bb.a ] ; 10 uses
@@ -266,9 +266,10 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not88, label %bb.i, label %"_ZZN5osgeo4proj8metadata10Identifier16isEquivalentNameEPKcS4_bENK3$_1clEcS4_RmS4_.exit253", !llvm.loop !275
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.e
-  %.not14.i.a = icmp ne i8 %i.h, 95
-  %or.cond455.not = or i1 %.not14.i.a, %.not479
-  br i1 %or.cond455.not, label %_ZN5osgeo4proj8metadataL16matchesLowerCaseEPKcS3_.exit119.thread, label %bb.j
+  %.not14.i.a = icmp ne i8 %i.d, 0
+  %.not14.i = icmp eq i8 %i.h, 95
+  %or.cond455 = and i1 %.not14.i.a, %.not14.i
+  br i1 %or.cond455, label %bb.j, label %_ZN5osgeo4proj8metadataL16matchesLowerCaseEPKcS3_.exit119.thread
 
 bb.j:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds nuw i8, ptr %i.e, i64 1

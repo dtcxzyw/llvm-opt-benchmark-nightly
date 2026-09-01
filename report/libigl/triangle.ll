@@ -205,9 +205,10 @@ _Z16counterclockwiseP4meshP8behaviorPdS3_S3_.exit109: ; preds = %_Z16countercloc
   %i.bz = load ptr, ptr %i.r, align 8, !tbaa !83
   %i.ca = ptrtoint ptr %i.bz to i64
   %i.cb = and i64 %i.ca, -4
-  %i.cc = inttoptr i64 %i.cb to ptr
+  %i.cc = inttoptr i64 %i.cb to ptr               ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 82856
-  %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !85
+  %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !85 ; 2 uses
+  %4 = icmp eq ptr %i.ce, %i.cc                   ; 2 uses
   %i.cf = icmp eq ptr %i.ce, %i.cc
   br i1 %i.cf, label %.preheader, label %.lr.ph
 
@@ -215,7 +216,7 @@ bb.p:                                             ; preds = %_Z16counterclockwis
   br i1 %i.bb, label %.lr.ph, label %.preheader
 
 .lr.ph:                                           ; preds = %.split, %bb.p
-  %.089.shrunk216 = phi i1 [ false, %.split ], [ %i.by, %bb.p ] ; 2 uses
+  %.089.shrunk216 = phi i1 [ %4, %.split ], [ %i.by, %bb.p ] ; 2 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 82856
   %i.ch = load ptr, ptr %i.cg, align 8, !tbaa !85 ; 2 uses
   %i.ci = load double, ptr @_ZL12ccwerrboundA, align 8
@@ -327,7 +328,7 @@ bb.y:                                             ; preds = %_Z16counterclockwis
   br i1 %i.ee, label %.lr.ph.split, label %.preheader, !llvm.loop !285
 
 .preheader:                                       ; preds = %bb.y, %bb.q, %.split, %bb.p
-  %.089.shrunk215 = phi i1 [ %i.by, %bb.p ], [ true, %.split ], [ %.089.shrunk216, %bb.q ], [ %.089.shrunk216, %bb.y ]
+  %.089.shrunk215 = phi i1 [ %i.by, %bb.p ], [ %4, %.split ], [ %.089.shrunk216, %bb.q ], [ %.089.shrunk216, %bb.y ]
   %i.ef = phi i64 [ %i.bc, %bb.p ], [ %i.bc, %.split ], [ %i.df, %bb.q ], [ %i.hb, %bb.y ] ; 2 uses
   %i.eg = phi i32 [ %i.g, %bb.p ], [ %i.g, %.split ], [ %i.cv, %bb.q ], [ %i.gn, %bb.y ] ; 2 uses
   %i.eh = phi ptr [ %i.e, %bb.p ], [ %i.e, %.split ], [ %i.cx, %bb.q ], [ %i.gp, %bb.y ] ; 2 uses

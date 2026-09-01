@@ -202,7 +202,7 @@ bb.aa:                                            ; preds = %bb.a
     #dbg_value(ptr %0, !3689, !DIExpression(DW_OP_plus_uconst, 24, DW_OP_stack_value), !3692)
     #dbg_value(ptr %0, !3694, !DIExpression(DW_OP_plus_uconst, 24, DW_OP_stack_value), !3697)
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 48, !dbg !3700
-  %i.dd = load i64, ptr %i.dc, align 8, !dbg !3700, !noundef !136
+  %i.dd = load i64, ptr %i.dc, align 8, !dbg !3700, !noundef !136 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3701), !dbg !3704
     #dbg_value(ptr poison, !3705, !DIExpression(), !3712)
     #dbg_value(i64 1, !3717, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !3727)
@@ -235,7 +235,7 @@ bb.aa:                                            ; preds = %bb.a
 
 bb.ab:                                            ; preds = %bb.aa
     #dbg_value(ptr undef, !3705, !DIExpression(), !3712)
-  %i.dm = icmp ne i64 %i.dd, 0                    ; 3 uses
+  %i.dm = icmp ne i64 %i.dd, 0                    ; 2 uses
   br i1 %i.dm, label %bb.ad, label %_RINvXsd_NtCsenfyI6F4F2A_10serde_json3serNtB6_15PrettyFormatterNtB6_9Formatter10end_objectQDNtNtNtCskKLDkoKarTP_4core2io5write5WriteNtNtB1x_6marker4SendNtB27_4SyncEL_ECsi2C7WdEh0SA_3h3i.exit.i, !dbg !3772
 
 _RINvXsd_NtCsenfyI6F4F2A_10serde_json3serNtB6_15PrettyFormatterNtB6_9Formatter10end_objectQDNtNtNtCskKLDkoKarTP_4core2io5write5WriteNtNtB1x_6marker4SendNtB27_4SyncEL_ECsi2C7WdEh0SA_3h3i.exit.i: ; preds = %bb.ab
@@ -638,6 +638,7 @@ _RINvYINtNtCsenfyI6F4F2A_10serde_json3ser8CompoundQDNtNtNtCskKLDkoKarTP_4core2io
   br i1 %i.fx, label %._crit_edge.thread, label %bb.ae, !dbg !3893
 
 ._crit_edge:                                      ; preds = %bb.ad
+  %2 = icmp eq i64 %i.dd, 0, !dbg !3841
     #dbg_value(ptr poison, !2755, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !3882)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4203), !dbg !4206
     #dbg_value(ptr %1, !4207, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4213)
@@ -645,7 +646,7 @@ _RINvYINtNtCsenfyI6F4F2A_10serde_json3ser8CompoundQDNtNtNtCskKLDkoKarTP_4core2io
     #dbg_declare(ptr poison, !4215, !DIExpression(), !4223)
     #dbg_value(ptr %1, !4210, !DIExpression(), !4225)
     #dbg_value(i8 poison, !4212, !DIExpression(), !4225)
-  br i1 %i.dm, label %._crit_edge.thread, label %_RNvXs1_NtCsenfyI6F4F2A_10serde_json3serQINtB5_10SerializerQDNtNtNtCskKLDkoKarTP_4core2io5write5WriteNtNtB12_6marker4SendNtB1C_4SyncEL_NtB5_15PrettyFormatterENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer14serialize_unitCsi2C7WdEh0SA_3h3i.exit, !dbg !4226
+  br i1 %2, label %_RNvXs1_NtCsenfyI6F4F2A_10serde_json3serQINtB5_10SerializerQDNtNtNtCskKLDkoKarTP_4core2io5write5WriteNtNtB12_6marker4SendNtB1C_4SyncEL_NtB5_15PrettyFormatterENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer14serialize_unitCsi2C7WdEh0SA_3h3i.exit, label %._crit_edge.thread, !dbg !4226
 
 ._crit_edge.thread:                               ; preds = %_RINvYINtNtCsenfyI6F4F2A_10serde_json3ser8CompoundQDNtNtNtCskKLDkoKarTP_4core2io5write5WriteNtNtBT_6marker4SendNtB1t_4SyncEL_NtB6_15PrettyFormatterENtNtCs9xKKqPmwf7Y_10serde_core3ser12SerializeMap15serialize_entryNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtB8_5value5ValueECsi2C7WdEh0SA_3h3i.exit, %._crit_edge
   %i.fy = getelementptr inbounds nuw i8, ptr %1, i64 16, !dbg !4227
@@ -946,6 +947,11 @@ _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator12try_for_each
   br i1 %i.p, label %bb.d, label %bb.b, !dbg !4921
 
 bb.d:                                             ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator12try_for_each4callRNtNtCsjfnSKV9Rz3v_3h3i5frame17CloseTriggerFrameINtNtBe_6result6ResultuNtNtCsenfyI6F4F2A_10serde_json5error5ErrorENCINvYQINtNtB2x_3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB3k_15PrettyFormatterENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIB3I_B1l_EE0E0Csi2C7WdEh0SA_3h3i.exit.i.i.i
+    #dbg_value(i8 2, !4589, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !4881)
+    #dbg_value(ptr %0, !4909, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !4917)
+    #dbg_value(i8 2, !4909, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !4917)
+    #dbg_value(ptr %0, !4914, !DIExpression(), !4919)
+    #dbg_value(i8 2, !4916, !DIExpression(), !4919)
   %.val.i19.i = load ptr, ptr %0, align 8, !dbg !5024, !alias.scope !5025, !nonnull !136, !noundef !136 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5026), !dbg !5024
     #dbg_value(ptr %0, !4859, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !5029)
@@ -1348,6 +1354,11 @@ _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator12try_for_each
   br i1 %i.aa, label %bb.d, label %.lr.ph.i.i.i.i.i, !dbg !7121
 
 bb.d:                                             ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator12try_for_each4callRNtNtCsjfnSKV9Rz3v_3h3i5frame18SerializableHeaderINtNtBe_6result6ResultuNtNtCsenfyI6F4F2A_10serde_json5error5ErrorENCINvYQINtNtB2y_3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB3l_15PrettyFormatterENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIB3J_B1l_EE0E0Csi2C7WdEh0SA_3h3i.exit.i.i.i.i.i
+    #dbg_value(i8 2, !6773, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !7001)
+    #dbg_value(ptr %i.a, !4909, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7029)
+    #dbg_value(i8 2, !4909, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !7029)
+    #dbg_value(ptr %i.a, !4914, !DIExpression(), !7031)
+    #dbg_value(i8 2, !4916, !DIExpression(), !7031)
   %.val.i19.i.i.i = load ptr, ptr %i.a, align 8, !dbg !7122, !alias.scope !7123, !nonnull !136, !noundef !136 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7124), !dbg !7122
     #dbg_value(ptr %i.a, !4859, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !7127)
@@ -1736,6 +1747,11 @@ _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator12try_for_each
   br i1 %i.aa, label %bb.d, label %.lr.ph.i.i.i.i.i, !dbg !7785
 
 bb.d:                                             ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator12try_for_each4callRNtNtNtCsjfnSKV9Rz3v_3h3i6client18connection_summary21SerializablePathStatsINtNtBe_6result6ResultuNtNtCsenfyI6F4F2A_10serde_json5error5ErrorENCINvYQINtNtB2Y_3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB3L_15PrettyFormatterENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIB49_B1l_EE0E0Csi2C7WdEh0SA_3h3i.exit.i.i.i.i.i
+    #dbg_value(i8 2, !7437, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !7665)
+    #dbg_value(ptr %i.a, !4909, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7693)
+    #dbg_value(i8 2, !4909, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !7693)
+    #dbg_value(ptr %i.a, !4914, !DIExpression(), !7695)
+    #dbg_value(i8 2, !4916, !DIExpression(), !7695)
   %.val.i19.i.i.i = load ptr, ptr %i.a, align 8, !dbg !7786, !alias.scope !7787, !nonnull !136, !noundef !136 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7788), !dbg !7786
     #dbg_value(ptr %i.a, !4859, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !7791)
@@ -2138,6 +2154,11 @@ _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator12try_for_each
   br i1 %i.au, label %bb.e, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i, !dbg !10207
 
 bb.e:                                             ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator12try_for_each4callRNtNtCsjfnSKV9Rz3v_3h3i5frame8H3iFrameINtNtBe_6result6ResultuNtNtCsenfyI6F4F2A_10serde_json5error5ErrorENCINvYQINtNtB2n_3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB3a_15PrettyFormatterENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIB3y_B1l_EE0E0Csi2C7WdEh0SA_3h3i.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i
+    #dbg_value(i8 2, !9858, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !10086)
+    #dbg_value(ptr %i.c, !4909, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !10114)
+    #dbg_value(i8 2, !4909, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !10114)
+    #dbg_value(ptr %i.c, !4914, !DIExpression(), !10116)
+    #dbg_value(i8 2, !4916, !DIExpression(), !10116)
   %.val.i19.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.c, align 8, !dbg !10208, !alias.scope !10209, !noalias !9818, !nonnull !136, !noundef !136 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !10210), !dbg !10208
     #dbg_value(ptr %i.c, !4859, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !10213)
@@ -2540,6 +2561,11 @@ _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator12try_for_each
   br i1 %i.ap, label %bb.f, label %bb.d, !dbg !12011
 
 bb.f:                                             ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator12try_for_each4callRTyyEINtNtBe_6result6ResultuNtNtCsenfyI6F4F2A_10serde_json5error5ErrorENCINvYQINtNtB1Q_3ser10SerializerQINtNtCsexYYUdYSQU6_5alloc3vec3VechENtB2D_15PrettyFormatterENtNtCs9xKKqPmwf7Y_10serde_core3ser10Serializer11collect_seqRIB31_B1l_EE0E0Csi2C7WdEh0SA_3h3i.exit.i.i.i.i.i.i.i.i
+    #dbg_value(i8 2, !11752, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !11978)
+    #dbg_value(ptr %i.c, !4909, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !12006)
+    #dbg_value(i8 2, !4909, !DIExpression(DW_OP_LLVM_fragment, 64, 8), !12006)
+    #dbg_value(ptr %i.c, !4914, !DIExpression(), !12008)
+    #dbg_value(i8 2, !4916, !DIExpression(), !12008)
   call void @llvm.experimental.noalias.scope.decl(metadata !12441), !dbg !12444
     #dbg_value(ptr %i.c, !4859, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !12445)
     #dbg_value(ptr poison, !4862, !DIExpression(), !12445)

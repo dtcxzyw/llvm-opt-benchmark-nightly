@@ -202,10 +202,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i67
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit680: ; preds = %bb.fu, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i678
   call void @llvm.lifetime.end.p0(ptr nonnull %94) #13
   %i.adm = invoke noundef i32 @_ZN2cv7waitKeyEi(i32 noundef 1)
-          to label %bb.fv unwind label %bb.gc     ; 2 uses
+          to label %bb.fv unwind label %bb.gc     ; 3 uses
 
 bb.fv:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit680
-  %i.adn = icmp eq i32 %i.adm, 32                 ; 2 uses
+  %i.adn = icmp eq i32 %i.adm, 32
   %spec.select309 = or i1 %i.adn, %i.co
   br i1 %spec.select309, label %bb.gd, label %bb.gu
 
@@ -462,7 +462,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit713: ; preds = %_Z
 bb.gu:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit703, %bb.fv
   %i.afz = add nuw nsw i32 %.045, 1               ; 2 uses
   %i.aga = icmp sgt i32 %i.adm, 0
-  %102 = xor i1 %i.adn, %i.aga
+  %not. = icmp ne i32 %i.adm, 32
+  %102 = and i1 %not., %i.aga
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %93) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %93) #13
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %90) #13
