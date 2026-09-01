@@ -205,13 +205,16 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %i.ef = add nuw nsw i64 %.0226, 1               ; 3 uses
   %i.eg = load i64, ptr %i.s, align 8, !tbaa !40  ; 3 uses
   %i.eh = sub i64 %i.eg, %i.ef
-  %5 = call i64 @llvm.usub.sat.i64(i64 %i.eg, i64 256) ; 2 uses
-  %6 = icmp ult i64 %5, %i.eg
-  br i1 %6, label %.lr.ph, label %._crit_edge
+  %.not331 = icmp eq i64 %i.eg, 0
+  br i1 %.not331, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %bb.ai, %.lr.ph
-  %.0218328 = phi i64 [ %i.ew, %.lr.ph ], [ %5, %bb.ai ] ; 3 uses
-  %.0239327 = phi i64 [ %i.ev, %.lr.ph ], [ 0, %bb.ai ]
+.lr.ph.preheader:                                 ; preds = %bb.ai
+  %5 = call i64 @llvm.usub.sat.i64(i64 %i.eg, i64 256)
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %.0218328 = phi i64 [ %i.ew, %.lr.ph ], [ %5, %.lr.ph.preheader ] ; 3 uses
+  %.0239327 = phi i64 [ %i.ev, %.lr.ph ], [ 0, %.lr.ph.preheader ]
   %i.ei = call { i64, i64, i64 } asm sideeffect "mov $1, $0                                 \0A\09xor $2, $0                                 \0A\09sub $2, $1                                 \0A\09and $0, $2                                 \0A\09not $0                                       \0A\09and $0, $1                                 \0A\09or $2, $1                                  \0A\09sar $$63, $1                                  \0A\09", "=&{ax},=&{di},=&{si},1,2,~{dirflag},~{fpsr},~{flags}"(i64 %.0218328, i64 %i.eh) #19, !srcloc !57
   %i.ej = extractvalue { i64, i64, i64 } %i.ei, 1
   %i.ek = and i64 %i.ej, 1
