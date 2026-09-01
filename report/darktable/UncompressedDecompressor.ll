@@ -205,7 +205,7 @@ _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit.preheader
 
 iter.check175:                                    ; preds = %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit.preheader.i.i
   %i.cb = zext nneg i32 %i.au to i64              ; 9 uses
-  %i.cc = and i64 %i.av, 2147483647               ; 8 uses
+  %i.cc = and i64 %i.av, 2147483647               ; 6 uses
   %i.cd = zext nneg i32 %i.d to i64               ; 9 uses
   %min.iters.check149 = icmp samesign ult i64 %i.cc, 8
   br i1 %min.iters.check149, label %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i.preheader, label %vector.scevcheck144
@@ -289,10 +289,8 @@ _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i.pre
   br i1 %lcmp.mod206.not, label %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i.prol.loopexit, label %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i.prol
 
 _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i.prol: ; preds = %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i.preheader, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i.prol
-  %indvars.iv.i.i.prol = phi i64 [ %indvars.iv.next.i.i.prol, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i.prol ], [ %indvars.iv.i.i.ph, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i.preheader ] ; 4 uses
+  %indvars.iv.i.i.prol = phi i64 [ %indvars.iv.next.i.i.prol, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i.prol ], [ %indvars.iv.i.i.ph, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i.preheader ] ; 3 uses
   %prol.iter207 = phi i64 [ %prol.iter207.next, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i.prol ], [ 0, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i.preheader ]
-  %1 = icmp samesign ult i64 %indvars.iv.i.i.prol, %i.cc
-  tail call void @llvm.assume(i1 %1)
   %i.cw = mul nuw nsw i64 %indvars.iv.i.i.prol, %i.cd
   %i.cx = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.cw
   %i.cy = mul nuw nsw i64 %indvars.iv.i.i.prol, %i.cb ; 2 uses
@@ -314,7 +312,7 @@ _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i.pro
   br i1 %i.de, label %_ZN8rawspeed10copyPixelsEPSt4byteiPKS0_iii.exit, label %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i
 
 _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.preheader.i.i: ; preds = %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit.preheader.i.i
-  %i.df = and i64 %i.av, 2147483647               ; 3 uses
+  %i.df = and i64 %i.av, 2147483647
   %i.dg = zext nneg i32 %i.d to i64               ; 9 uses
   %i.dh = zext nneg i32 %i.au to i64              ; 9 uses
   %i.di = add nsw i64 %i.df, -1
@@ -391,9 +389,7 @@ _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i:
   tail call void @llvm.assume(i1 %i.ey)
   %i.ez = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.ew
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.ev, ptr nonnull align 1 %i.ez, i64 %i.ca, i1 false)
-  %indvars.iv.next47.i.i.6 = or disjoint i64 %indvars.iv46.i.i, 7 ; 3 uses
-  %2 = icmp samesign ult i64 %indvars.iv.next47.i.i.6, %i.df
-  tail call void @llvm.assume(i1 %2)
+  %indvars.iv.next47.i.i.6 = or disjoint i64 %indvars.iv46.i.i, 7 ; 2 uses
   %i.fa = mul nuw nsw i64 %indvars.iv.next47.i.i.6, %i.dg
   %i.fb = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.fa
   %i.fc = mul nuw nsw i64 %indvars.iv.next47.i.i.6, %i.dh ; 2 uses
@@ -403,7 +399,7 @@ _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i:
   %i.ff = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.fc
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.fb, ptr nonnull align 1 %i.ff, i64 %i.ca, i1 false)
   %indvars.iv.next47.i.i.7 = add nuw nsw i64 %indvars.iv46.i.i, 8 ; 2 uses
-  %niter213.next.7 = add nuw i64 %niter213, 8     ; 2 uses
+  %niter213.next.7 = add i64 %niter213, 8         ; 2 uses
   %niter213.ncmp.7 = icmp eq i64 %niter213.next.7, %unroll_iter212
   br i1 %niter213.ncmp.7, label %_ZN8rawspeed10copyPixelsEPSt4byteiPKS0_iii.exit.loopexit.unr-lcssa, label %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i, !llvm.loop !242
 
@@ -492,9 +488,7 @@ _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i: ; 
   %i.he = getelementptr inbounds nuw i8, ptr %i.bl, i64 %i.hb
   %i.hf = load i8, ptr %i.he, align 1, !tbaa !111
   store i8 %i.hf, ptr %i.ha, align 1, !tbaa !111
-  %indvars.iv.next.i.i.6 = add nuw nsw i64 %indvars.iv.i.i, 7 ; 3 uses
-  %3 = icmp samesign ult i64 %indvars.iv.next.i.i.6, %i.cc
-  tail call void @llvm.assume(i1 %3)
+  %indvars.iv.next.i.i.6 = add nuw nsw i64 %indvars.iv.i.i, 7 ; 2 uses
   %i.hg = mul nuw nsw i64 %indvars.iv.next.i.i.6, %i.cd
   %i.hh = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.hg
   %i.hi = mul nuw nsw i64 %indvars.iv.next.i.i.6, %i.cb ; 2 uses
@@ -667,7 +661,7 @@ _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit.preheader
 
 iter.check:                                       ; preds = %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit.preheader.i.i46
   %i.kb = zext nneg i32 %i.iu to i64              ; 9 uses
-  %i.kc = and i64 %i.iv, 2147483647               ; 8 uses
+  %i.kc = and i64 %i.iv, 2147483647               ; 6 uses
   %i.kd = zext nneg i32 %i.d to i64               ; 9 uses
   %min.iters.check = icmp samesign ult i64 %i.kc, 8
   br i1 %min.iters.check, label %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48.preheader, label %vector.scevcheck
@@ -751,10 +745,8 @@ _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48.p
   br i1 %lcmp.mod.not, label %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48.prol.loopexit, label %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48.prol
 
 _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48.prol: ; preds = %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48.preheader, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48.prol
-  %indvars.iv.i.i49.prol = phi i64 [ %indvars.iv.next.i.i50.prol, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48.prol ], [ %indvars.iv.i.i49.ph, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48.preheader ] ; 4 uses
+  %indvars.iv.i.i49.prol = phi i64 [ %indvars.iv.next.i.i50.prol, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48.prol ], [ %indvars.iv.i.i49.ph, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48.preheader ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48.prol ], [ 0, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48.preheader ]
-  %4 = icmp samesign ult i64 %indvars.iv.i.i49.prol, %i.kc
-  tail call void @llvm.assume(i1 %4)
   %i.kw = mul nuw nsw i64 %indvars.iv.i.i49.prol, %i.kd
   %i.kx = getelementptr inbounds nuw i8, ptr %i.is, i64 %i.kw
   %i.ky = mul nuw nsw i64 %indvars.iv.i.i49.prol, %i.kb ; 2 uses
@@ -776,7 +768,7 @@ _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48.p
   br i1 %i.le, label %_ZN8rawspeed10copyPixelsEPSt4byteiPKS0_iii.exit, label %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48
 
 _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.preheader.i.i52: ; preds = %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit.preheader.i.i46
-  %i.lf = and i64 %i.iv, 2147483647               ; 3 uses
+  %i.lf = and i64 %i.iv, 2147483647
   %i.lg = zext nneg i32 %i.d to i64               ; 9 uses
   %i.lh = zext nneg i32 %i.iu to i64              ; 9 uses
   %i.li = add nsw i64 %i.lf, -1
@@ -853,9 +845,7 @@ _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i5
   tail call void @llvm.assume(i1 %i.my)
   %i.mz = getelementptr inbounds nuw i8, ptr %i.jl, i64 %i.mw
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.mv, ptr nonnull align 1 %i.mz, i64 %i.ka, i1 false)
-  %indvars.iv.next47.i.i55.6 = or disjoint i64 %indvars.iv46.i.i54, 7 ; 3 uses
-  %5 = icmp samesign ult i64 %indvars.iv.next47.i.i55.6, %i.lf
-  tail call void @llvm.assume(i1 %5)
+  %indvars.iv.next47.i.i55.6 = or disjoint i64 %indvars.iv46.i.i54, 7 ; 2 uses
   %i.na = mul nuw nsw i64 %indvars.iv.next47.i.i55.6, %i.lg
   %i.nb = getelementptr inbounds nuw i8, ptr %i.is, i64 %i.na
   %i.nc = mul nuw nsw i64 %indvars.iv.next47.i.i55.6, %i.lh ; 2 uses
@@ -865,7 +855,7 @@ _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i5
   %i.nf = getelementptr inbounds nuw i8, ptr %i.jl, i64 %i.nc
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.nb, ptr nonnull align 1 %i.nf, i64 %i.ka, i1 false)
   %indvars.iv.next47.i.i55.7 = add nuw nsw i64 %indvars.iv46.i.i54, 8 ; 2 uses
-  %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
+  %niter.next.7 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN8rawspeed10copyPixelsEPSt4byteiPKS0_iii.exit.loopexit200.unr-lcssa, label %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i53, !llvm.loop !242
 
@@ -954,9 +944,7 @@ _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.i.i48: 
   %i.pe = getelementptr inbounds nuw i8, ptr %i.jl, i64 %i.pb
   %i.pf = load i8, ptr %i.pe, align 1, !tbaa !111
   store i8 %i.pf, ptr %i.pa, align 1, !tbaa !111
-  %indvars.iv.next.i.i50.6 = add nuw nsw i64 %indvars.iv.i.i49, 7 ; 3 uses
-  %6 = icmp samesign ult i64 %indvars.iv.next.i.i50.6, %i.kc
-  tail call void @llvm.assume(i1 %6)
+  %indvars.iv.next.i.i50.6 = add nuw nsw i64 %indvars.iv.i.i49, 7 ; 2 uses
   %i.pg = mul nuw nsw i64 %indvars.iv.next.i.i50.6, %i.kd
   %i.ph = getelementptr inbounds nuw i8, ptr %i.is, i64 %i.pg
   %i.pi = mul nuw nsw i64 %indvars.iv.next.i.i50.6, %i.kb ; 2 uses
@@ -985,10 +973,8 @@ _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i.
   br label %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i.epil
 
 _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i.epil: ; preds = %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i.epil, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i.epil.preheader
-  %indvars.iv46.i.i.epil = phi i64 [ %indvars.iv46.i.i.epil.init, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i.epil.preheader ], [ %indvars.iv.next47.i.i.epil, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i.epil ] ; 4 uses
+  %indvars.iv46.i.i.epil = phi i64 [ %indvars.iv46.i.i.epil.init, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i.epil.preheader ], [ %indvars.iv.next47.i.i.epil, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i.epil ] ; 3 uses
   %epil.iter209 = phi i64 [ 0, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i.epil.preheader ], [ %epil.iter209.next, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i.epil ]
-  %7 = icmp samesign ult i64 %indvars.iv46.i.i.epil, %i.df
-  tail call void @llvm.assume(i1 %7)
   %i.pn = mul nuw nsw i64 %indvars.iv46.i.i.epil, %i.dg
   %i.po = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.pn
   %i.pp = mul nuw nsw i64 %indvars.iv46.i.i.epil, %i.dh ; 2 uses
@@ -1013,10 +999,8 @@ _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i5
   br label %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i53.epil
 
 _ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i53.epil: ; preds = %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i53.epil, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i53.epil.preheader
-  %indvars.iv46.i.i54.epil = phi i64 [ %indvars.iv46.i.i54.epil.init, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i53.epil.preheader ], [ %indvars.iv.next47.i.i55.epil, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i53.epil ] ; 4 uses
+  %indvars.iv46.i.i54.epil = phi i64 [ %indvars.iv46.i.i54.epil.init, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i53.epil.preheader ], [ %indvars.iv.next47.i.i55.epil, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i53.epil ] ; 3 uses
   %epil.iter = phi i64 [ 0, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i53.epil.preheader ], [ %epil.iter.next, %_ZN8rawspeed14copyPixelsImplENS_10Array1DRefISt4byteEENS0_IKS1_EE.exit30.us.i.i53.epil ]
-  %8 = icmp samesign ult i64 %indvars.iv46.i.i54.epil, %i.lf
-  tail call void @llvm.assume(i1 %8)
   %i.pt = mul nuw nsw i64 %indvars.iv46.i.i54.epil, %i.lg
   %i.pu = getelementptr inbounds nuw i8, ptr %i.is, i64 %i.pt
   %i.pv = mul nuw nsw i64 %indvars.iv46.i.i54.epil, %i.lh ; 2 uses
