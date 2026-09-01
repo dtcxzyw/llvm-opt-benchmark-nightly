@@ -202,16 +202,16 @@ bb.a:
 define dso_local { double, double } @_Py_c_prod(double %0, double %1, double %2, double %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = insertelement <2 x double> poison, double %1, i64 0
-  %i.b = insertelement <2 x double> %i.a, double %0, i64 1 ; 2 uses
+  %i.b = insertelement <2 x double> %i.a, double %0, i64 1 ; 4 uses
   %i.c = insertelement <2 x double> poison, double %2, i64 0
   %i.d = shufflevector <2 x double> %i.c, <2 x double> poison, <2 x i32> zeroinitializer
   %i.e = fmul <2 x double> %i.b, %i.d             ; 3 uses
-  %4 = shufflevector <2 x double> %i.b, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 3 uses
   %i.f = insertelement <2 x double> poison, double %3, i64 0 ; 3 uses
   %i.g = shufflevector <2 x double> %i.f, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.h = fmul <2 x double> %4, %i.g               ; 3 uses
-  %i.i = fadd <2 x double> %i.e, %i.h             ; 2 uses
-  %i.j = fsub <2 x double> %i.e, %i.h             ; 2 uses
+  %i.h = fmul <2 x double> %i.b, %i.g             ; 2 uses
+  %4 = shufflevector <2 x double> %i.h, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
+  %i.i = fadd <2 x double> %i.e, %4               ; 2 uses
+  %i.j = fsub <2 x double> %i.e, %4               ; 2 uses
   %i.k = shufflevector <2 x double> %i.i, <2 x double> %i.j, <2 x i32> <i32 0, i32 3> ; 2 uses
   %i.l = extractelement <2 x double> %i.j, i64 1
   %i.m = fcmp uno double %i.l, 0.000000e+00
@@ -235,9 +235,9 @@ bb.c:                                             ; preds = %bb.b
   %i.t = phi double [ 0.000000e+00, %bb.c ], [ 1.000000e+00, %bb.b ]
   %i.u = fcmp oeq double %.pre, +inf
   %i.v = select i1 %i.u, double 1.000000e+00, double 0.000000e+00
-  %i.w = insertelement <2 x double> poison, double %i.t, i64 0
-  %i.x = insertelement <2 x double> %i.w, double %i.v, i64 1
-  %i.y = tail call <2 x double> @llvm.copysign.v2f64(<2 x double> %i.x, <2 x double> %4)
+  %i.w = insertelement <2 x double> poison, double %i.v, i64 0
+  %i.x = insertelement <2 x double> %i.w, double %i.t, i64 1
+  %i.y = tail call <2 x double> @llvm.copysign.v2f64(<2 x double> %i.x, <2 x double> %i.b)
   %i.z = insertelement <2 x double> %i.f, double %2, i64 1 ; 3 uses
   %i.aa = fcmp uno <2 x double> %i.z, zeroinitializer
   %i.ab = tail call <2 x double> @llvm.copysign.v2f64(<2 x double> zeroinitializer, <2 x double> %i.z)
@@ -246,12 +246,12 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %._crit_edge, %bb.c
   %.not = phi i1 [ false, %._crit_edge ], [ true, %bb.c ]
-  %i.ad = phi <2 x double> [ %i.y, %._crit_edge ], [ %4, %bb.c ] ; 7 uses
-  %i.ae = phi <2 x double> [ %i.ac, %._crit_edge ], [ %i.s, %bb.c ] ; 7 uses
-  %i.af = extractelement <2 x double> %i.ae, i64 1
+  %i.ad = phi <2 x double> [ %i.ac, %._crit_edge ], [ %i.s, %bb.c ] ; 7 uses
+  %i.ae = phi <2 x double> [ %i.y, %._crit_edge ], [ %i.b, %bb.c ] ; 7 uses
+  %i.af = extractelement <2 x double> %i.ad, i64 1
   %i.ag = tail call double @llvm.fabs.f64(double %i.af) #12
   %i.ah = fcmp oeq double %i.ag, +inf
-  %i.ai = extractelement <2 x double> %i.ae, i64 0
+  %i.ai = extractelement <2 x double> %i.ad, i64 0
   %.pre87 = tail call double @llvm.fabs.f64(double %i.ai) #12 ; 2 uses
   br i1 %i.ah, label %.thread, label %bb.e
 
@@ -265,17 +265,17 @@ bb.e:                                             ; preds = %bb.d
   %i.am = select i1 %i.al, double 1.000000e+00, double 0.000000e+00
   %i.an = insertelement <2 x double> poison, double %i.am, i64 0
   %i.ao = insertelement <2 x double> %i.an, double %i.ak, i64 1
-  %i.ap = tail call <2 x double> @llvm.copysign.v2f64(<2 x double> %i.ao, <2 x double> %i.ae)
-  %i.aq = fcmp uno <2 x double> %i.ad, zeroinitializer
-  %i.ar = tail call <2 x double> @llvm.copysign.v2f64(<2 x double> zeroinitializer, <2 x double> %i.ad)
-  %i.as = select <2 x i1> %i.aq, <2 x double> %i.ar, <2 x double> %i.ad
+  %i.ap = tail call <2 x double> @llvm.copysign.v2f64(<2 x double> %i.ao, <2 x double> %i.ad)
+  %i.aq = fcmp uno <2 x double> %i.ae, zeroinitializer
+  %i.ar = tail call <2 x double> @llvm.copysign.v2f64(<2 x double> zeroinitializer, <2 x double> %i.ae)
+  %i.as = select <2 x i1> %i.aq, <2 x double> %i.ar, <2 x double> %i.ae
   br label %bb.i
 
 bb.f:                                             ; preds = %bb.e
   br i1 %.not, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %bb.f
-  %5 = shufflevector <2 x double> %i.e, <2 x double> %i.h, <4 x i32> <i32 1, i32 3, i32 2, i32 0>
+  %5 = shufflevector <2 x double> %i.e, <2 x double> %i.h, <4 x i32> <i32 1, i32 2, i32 3, i32 0>
   %i.at = tail call <4 x double> @llvm.fabs.v4f64(<4 x double> %5)
   %i.au = fcmp oeq <4 x double> %i.at, splat (double +inf)
   %i.av = bitcast <4 x i1> %i.au to i4
@@ -283,23 +283,23 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not92, label %.critedge, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.aw = fcmp uno <2 x double> %i.ad, zeroinitializer
-  %i.ax = tail call <2 x double> @llvm.copysign.v2f64(<2 x double> zeroinitializer, <2 x double> %i.ad)
-  %i.ay = select <2 x i1> %i.aw, <2 x double> %i.ax, <2 x double> %i.ad
-  %i.az = fcmp uno <2 x double> %i.ae, zeroinitializer
-  %i.ba = tail call <2 x double> @llvm.copysign.v2f64(<2 x double> zeroinitializer, <2 x double> %i.ae)
-  %i.bb = select <2 x i1> %i.az, <2 x double> %i.ba, <2 x double> %i.ae
+  %i.aw = fcmp uno <2 x double> %i.ae, zeroinitializer
+  %i.ax = tail call <2 x double> @llvm.copysign.v2f64(<2 x double> zeroinitializer, <2 x double> %i.ae)
+  %i.ay = select <2 x i1> %i.aw, <2 x double> %i.ax, <2 x double> %i.ae
+  %i.az = fcmp uno <2 x double> %i.ad, zeroinitializer
+  %i.ba = tail call <2 x double> @llvm.copysign.v2f64(<2 x double> zeroinitializer, <2 x double> %i.ad)
+  %i.bb = select <2 x i1> %i.az, <2 x double> %i.ba, <2 x double> %i.ad
   br label %bb.i
 
 bb.i:                                             ; preds = %.thread, %bb.f, %bb.h
-  %i.bc = phi <2 x double> [ %i.ad, %bb.f ], [ %i.ay, %bb.h ], [ %i.as, %.thread ] ; 2 uses
-  %i.bd = phi <2 x double> [ %i.ae, %bb.f ], [ %i.bb, %bb.h ], [ %i.ap, %.thread ] ; 3 uses
-  %6 = shufflevector <2 x double> %i.bc, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.be = fneg <2 x double> %i.bd
-  %i.bf = shufflevector <2 x double> %i.bd, <2 x double> %i.be, <2 x i32> <i32 1, i32 2>
+  %i.bc = phi <2 x double> [ %i.ad, %bb.f ], [ %i.bb, %bb.h ], [ %i.ap, %.thread ] ; 3 uses
+  %i.bd = phi <2 x double> [ %i.ae, %bb.f ], [ %i.ay, %bb.h ], [ %i.as, %.thread ] ; 2 uses
+  %6 = shufflevector <2 x double> %i.bd, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.be = fneg <2 x double> %i.bc
+  %i.bf = shufflevector <2 x double> %i.bc, <2 x double> %i.be, <2 x i32> <i32 1, i32 2>
   %i.bg = fmul <2 x double> %6, %i.bf
-  %7 = shufflevector <2 x double> %i.bc, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.bh = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> %i.bd, <2 x double> %i.bg)
+  %7 = shufflevector <2 x double> %i.bd, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.bh = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> %i.bc, <2 x double> %i.bg)
   %i.bi = fmul <2 x double> %i.bh, splat (double +inf)
   br label %.critedge
 
