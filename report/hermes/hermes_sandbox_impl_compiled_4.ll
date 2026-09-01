@@ -204,9 +204,9 @@ bb.a:
   %.val2773 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.ae = getelementptr inbounds nuw i8, ptr %.val2773, i64 %i.ad
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 4
-  %.0.copyload.i2939 = load i32, ptr %i.af, align 1 ; 7 uses
+  %.0.copyload.i2939 = load i32, ptr %i.af, align 1 ; 6 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i2939) #6, !srcloc !13
-  %i.ag = tail call i32 @llvm.usub.sat.i32(i32 %.0.copyload.i2939, i32 1) ; 7 uses
+  %i.ag = tail call i32 @llvm.usub.sat.i32(i32 %.0.copyload.i2939, i32 1) ; 6 uses
   %i.ah = tail call i32 @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AJSArray0x3A0x3Acreate0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20int0x2C0x20unsigned0x20int0x29(ptr noundef %0, i32 noundef %2, i32 noundef %i.ag, i32 noundef %i.ag) #6 ; 3 uses
   %i.ai = icmp eq i32 %i.ah, -1
   br i1 %i.ai, label %bb.b, label %bb.c
@@ -513,9 +513,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.et = shl i32 %i.ag, 3
   %reass.sub = sub i32 %.0.copyload.i2955, %i.et
   %i.eu = add i32 %reass.sub, -8
-  %.not2581 = icmp ugt i32 %.0.copyload.i2939, %i.ag
-  %5 = select i1 %.not2581, i32 %i.eu, i32 70392
-  %i.ev = tail call i32 @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AtoString_RJS0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x29(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %5) #6 ; 2 uses
+  %i.ev = tail call i32 @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AtoString_RJS0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x29(ptr noundef nonnull %0, i32 noundef %2, i32 noundef %i.eu) #6 ; 2 uses
   %i.ew = icmp eq i32 %i.ev, -1
   br i1 %i.ew, label %bb.v, label %bb.w
 

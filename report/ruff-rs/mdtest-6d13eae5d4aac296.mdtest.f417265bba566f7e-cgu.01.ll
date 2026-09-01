@@ -204,20 +204,19 @@ bb.gk:                                            ; preds = %bb.cn
   %.not13.i.i.i.i = icmp eq i64 %i.ud, 0
   %i.ue = load ptr, ptr %i.hg, align 8, !alias.scope !582, !noalias !583 ; 10 uses
   %.not14.i.i.i.i = icmp eq ptr %i.ue, null
-  %i.uf = load i64, ptr %i.hh, align 8, !alias.scope !582, !noalias !583 ; 32 uses
+  %i.uf = load i64, ptr %i.hh, align 8, !alias.scope !582, !noalias !583 ; 31 uses
   %i.ug = icmp eq i64 %i.uf, 0
   %i.uh = icmp eq i64 %i.uf, 1
   %i.ui = icmp ult i64 %i.uf, 33
   %i.uj = add nsw i64 %i.uf, -1
   %i.uk = icmp eq i64 %i.uf, 2
-  %i.ul = call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.uf, i64 4) ; 2 uses
+  %i.ul = call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.uf, i64 4)
   %i.um = add nuw nsw i64 %i.uf, 15               ; 3 uses
   %.phi.trans.insert.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ue, i64 1 ; 12 uses
   %i.un = add nuw nsw i64 %i.uf, 63               ; 2 uses
   %i.uo = icmp slt i64 %i.uf, 5                   ; 5 uses
   %i.up = getelementptr i8, ptr %i.ue, i64 %i.uf  ; 6 uses
   %i.uq = getelementptr i8, ptr %i.up, i64 -4     ; 5 uses
-  %11 = icmp ult i64 %i.ul, %i.uf
   %invariant.op2142.a = sub i64 -15, %i.uf
   br label %bb.gl
 
@@ -483,7 +482,7 @@ bb.hv:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   %exitcond.not.i.i.i.i.i.i.i = icmp eq i64 %i.we, %i.vs
   br i1 %exitcond.not.i.i.i.i.i.i.i, label %.loopexit.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i
 
-_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit.i.i.i.i.i.i: ; preds = %.preheader.i.i.i, %.preheader.i.i.i.preheader, %bb.hs
+_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit.i.i.i.i.i.i: ; preds = %.preheader.i.i.i, %bb.hs
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !632
   invoke void @_RNvMsu_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.n, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.vr, i64 noundef %i.vs, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ue, i64 noundef %i.uf)
           to label %.noexc6.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.i.loopexit.i.i.i, !noalias !586
@@ -886,17 +885,14 @@ bb.je:                                            ; preds = %bb.hs
   call void @llvm.experimental.noalias.scope.decl(metadata !676)
   call void @llvm.experimental.noalias.scope.decl(metadata !679)
   %i.acd = load i8, ptr %i.ue, align 1, !alias.scope !681, !noalias !682, !noundef !29 ; 3 uses
-  br i1 %i.uk, label %.thread.i.i.i.i.i.i.i, label %.preheader.i.i.i.preheader
-
-.preheader.i.i.i.preheader:                       ; preds = %bb.je
-  br i1 %11, label %.lr.ph1650, label %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit.i.i.i.i.i.i
+  br i1 %i.uk, label %.thread.i.i.i.i.i.i.i, label %.lr.ph1650
 
 .preheader.i.i.i:                                 ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CskXhPDodhyTq_6mdtest.exit.i.i.i.i.i.i.i.i
   %i.ace = icmp ult i64 %i.ul, %i.acg
   br i1 %i.ace, label %.lr.ph1650, label %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit.i.i.i.i.i.i
 
-.lr.ph1650:                                       ; preds = %.preheader.i.i.i.preheader, %.preheader.i.i.i
-  %i.acf = phi i64 [ %i.acg, %.preheader.i.i.i ], [ %i.uf, %.preheader.i.i.i.preheader ]
+.lr.ph1650:                                       ; preds = %bb.je, %.preheader.i.i.i
+  %i.acf = phi i64 [ %i.acg, %.preheader.i.i.i ], [ %i.uf, %bb.je ]
   %i.acg = add nsw i64 %i.acf, -1                 ; 6 uses
   %i.ach = icmp ult i64 %i.acg, %i.uf
   br i1 %i.ach, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CskXhPDodhyTq_6mdtest.exit.i.i.i.i.i.i.i.i, label %.invoke.i.i.i.i.i

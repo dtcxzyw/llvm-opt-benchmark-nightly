@@ -204,14 +204,13 @@ bb.bh:                                            ; preds = %_RNvMs5_CsgN7rS7e43
   %.sroa.49.0.copyload.i.i = load ptr, ptr %.sroa.49.0..sroa_idx.i.i, align 8, !noalias !352 ; 17 uses
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %.sroa.5.0.copyload.i.i = load i64, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !noalias !352
-  %.sroa.5.0.copyload.fr.i.i = freeze i64 %.sroa.5.0.copyload.i.i ; 23 uses
+  %.sroa.5.0.copyload.fr.i.i = freeze i64 %.sroa.5.0.copyload.i.i ; 22 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !352
   %i.gv = load i64, ptr %i.ce, align 8, !alias.scope !352, !noundef !4 ; 12 uses
   %i.gw = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 6 uses
   %i.gx = icmp ult i64 %.sroa.5.0.copyload.fr.i.i, 33
   %i.gy = add nsw i64 %.sroa.5.0.copyload.fr.i.i, -1
-  %7 = icmp eq i64 %.sroa.5.0.copyload.fr.i.i, 2
-  %i.gz = call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %.sroa.5.0.copyload.fr.i.i, i64 4) ; 2 uses
+  %i.gz = call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %.sroa.5.0.copyload.fr.i.i, i64 4)
   %i.ha = add nuw nsw i64 %.sroa.5.0.copyload.fr.i.i, 15 ; 3 uses
   %.phi.trans.insert.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.49.0.copyload.i.i, i64 1 ; 2 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %i.e, i64 8
@@ -248,7 +247,6 @@ _RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager8get_line.exit.i.lr.ph.i: ; preds = %.s
   br i1 %i.gx, label %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager8get_line.exit.i.us.i.preheader, label %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager8get_line.exit.i.i
 
 _RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager8get_line.exit.i.us.i.preheader: ; preds = %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager8get_line.exit.i.lr.ph.i
-  %8 = icmp ult i64 %i.gz, %.sroa.5.0.copyload.fr.i.i
   %invariant.op = sub i64 -15, %.sroa.5.0.copyload.fr.i.i
   br label %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager8get_line.exit.i.us.i
 
@@ -290,17 +288,17 @@ bb.bl:                                            ; preds = %bb.bi
   call void @llvm.experimental.noalias.scope.decl(metadata !369)
   call void @llvm.experimental.noalias.scope.decl(metadata !372)
   %i.hy = load i8, ptr %.sroa.49.0.copyload.i.i, align 1, !alias.scope !374, !noalias !375, !noundef !4 ; 3 uses
-  br i1 %7, label %.thread.i.i.i.us.i, label %.preheader.i.us.i.preheader
-
-.preheader.i.us.i.preheader:                      ; preds = %bb.bl
-  br i1 %8, label %.lr.ph, label %_RNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_contains.exit.i.i.loopexit.us.i
+  switch i64 %.sroa.5.0.copyload.fr.i.i, label %.lr.ph [
+    i64 2, label %.thread.i.i.i.us.i
+    i64 0, label %_RNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_contains.exit.i.i.loopexit.us.i
+  ]
 
 .preheader.i.us.i:                                ; preds = %_RNCINvNvNtNtNtNtCs6JMX4GRUq9U_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgN7rS7e43TA_7uu_more.exit.i.i.i.i.us.i
   %i.hz = icmp ult i64 %i.gz, %i.ib
   br i1 %i.hz, label %.lr.ph, label %_RNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_contains.exit.i.i.loopexit.us.i
 
-.lr.ph:                                           ; preds = %.preheader.i.us.i.preheader, %.preheader.i.us.i
-  %i.ia = phi i64 [ %i.ib, %.preheader.i.us.i ], [ %.sroa.5.0.copyload.fr.i.i, %.preheader.i.us.i.preheader ]
+.lr.ph:                                           ; preds = %bb.bl, %.preheader.i.us.i
+  %i.ia = phi i64 [ %i.ib, %.preheader.i.us.i ], [ %.sroa.5.0.copyload.fr.i.i, %bb.bl ]
   %i.ib = add nsw i64 %i.ia, -1                   ; 6 uses
   %i.ic = icmp ult i64 %i.ib, %.sroa.5.0.copyload.fr.i.i
   br i1 %i.ic, label %_RNCINvNvNtNtNtNtCs6JMX4GRUq9U_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgN7rS7e43TA_7uu_more.exit.i.i.i.i.us.i, label %.split98.us.i
@@ -532,7 +530,7 @@ _RNvXst_NtNtCs6JMX4GRUq9U_4core3str7patternReNtB5_7Pattern15is_contained_in.exit
   %i.lv = trunc i64 %i.lu to i8
   br i1 %.not3.i.i.us.i, label %_RNvMs5_CsgN7rS7e43TA_7uu_moreNtB5_5Pager8get_line.exit.i.us.i, label %.split.split.i._crit_edge.i
 
-_RNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_contains.exit.i.i.loopexit.us.i: ; preds = %.preheader.i.us.i, %.preheader.i.us.i.preheader
+_RNvNtNtCs6JMX4GRUq9U_4core3str7pattern13simd_contains.exit.i.i.loopexit.us.i: ; preds = %.preheader.i.us.i, %bb.bl
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !402
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !402
   call void @_RNvMsu_NtNtCs6JMX4GRUq9U_4core3str7patternNtB5_11StrSearcher3new(ptr noalias nofree noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.hr, i64 noundef %i.ht, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.49.0.copyload.i.i, i64 noundef %.sroa.5.0.copyload.fr.i.i) #26

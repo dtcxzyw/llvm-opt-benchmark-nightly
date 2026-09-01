@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.ak, %.split, %bb
   ret void
 
 bb.j:                                             ; preds = %bb.d
-  %i.ay = extractvalue { ptr, i64 } %i.ak, 1      ; 19 uses
+  %i.ay = extractvalue { ptr, i64 } %i.ak, 1      ; 18 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5700)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5703)
   %i.az = icmp eq i64 %i.ay, 0
@@ -259,7 +259,7 @@ bb.q:                                             ; preds = %.lr.ph.i.i.i
   %exitcond.not.i.i.i = icmp eq i64 %i.bm, %i.n
   br i1 %exitcond.not.i.i.i, label %_RNvXst_NtNtCskKLDkoKarTP_4core3str7patternReNtB5_7Pattern15is_contained_in.exit.thread32, label %.lr.ph.i.i.i
 
-_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit.i: ; preds = %bb.t, %bb.s, %bb.n
+_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit.i: ; preds = %bb.t, %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !5710
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !5710
   call void @_RNvMsu_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcher3new(ptr noalias nofree noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.l, i64 noundef %i.n, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.al, i64 noundef %i.ay)
@@ -279,16 +279,15 @@ bb.r:                                             ; preds = %bb.n
   br i1 %i.br, label %.thread.i.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.bs = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.ay, i64 4) ; 2 uses
-  %2 = icmp ult i64 %i.bs, %i.ay
-  br i1 %2, label %.lr.ph161, label %_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit.i
+  %i.bs = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.ay, i64 4)
+  br label %.lr.ph161
 
 bb.t:                                             ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs7gfv9tzbXmh_6yara_x.exit.i.i.i
   %i.bt = icmp ult i64 %i.bs, %i.bv
   br i1 %i.bt, label %.lr.ph161, label %_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit.i
 
 .lr.ph161:                                        ; preds = %bb.s, %bb.t
-  %i.bu = phi i64 [ %i.bv, %bb.t ], [ %i.ay, %bb.s ]
+  %i.bu = phi i64 [ %i.ay, %bb.s ], [ %i.bv, %bb.t ]
   %i.bv = add nsw i64 %i.bu, -1                   ; 6 uses
   %i.bw = icmp ult i64 %i.bv, %i.ay
   br i1 %i.bw, label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs7gfv9tzbXmh_6yara_x.exit.i.i.i, label %bb.u

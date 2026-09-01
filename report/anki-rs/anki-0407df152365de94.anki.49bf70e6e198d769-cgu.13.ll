@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.lr.ph.i
   %exitcond.not.i = icmp eq i64 %i.r, %3
   br i1 %exitcond.not.i, label %_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit.thread, label %.lr.ph.i
 
-_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit: ; preds = %bb.k, %bb.j, %bb.e
+_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit: ; preds = %bb.k, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_ZN4core3str7pattern11StrSearcher3new17h06c723456276c09fE(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(address) dereferenceable(104) %i.b, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %2, i64 noundef %3, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %0, i64 noundef %1)
@@ -225,16 +225,15 @@ bb.i:                                             ; preds = %bb.e
   br i1 %i.w, label %.thread.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.x = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %1, i64 4) ; 2 uses
-  %4 = icmp ult i64 %i.x, %1
-  br i1 %4, label %.lr.ph, label %_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit
+  %i.x = tail call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %1, i64 4)
+  br label %.lr.ph
 
 bb.k:                                             ; preds = %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i"
   %i.y = icmp ult i64 %i.x, %i.aa
   br i1 %i.y, label %.lr.ph, label %_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit
 
 .lr.ph:                                           ; preds = %bb.j, %bb.k
-  %i.z = phi i64 [ %i.aa, %bb.k ], [ %1, %bb.j ]
+  %i.z = phi i64 [ %1, %bb.j ], [ %i.aa, %bb.k ]
   %i.aa = add nsw i64 %i.z, -1                    ; 6 uses
   %i.ab = icmp ult i64 %i.aa, %1
   br i1 %i.ab, label %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h8cf97fd87c52b215E.exit.i.i", label %bb.l
@@ -637,7 +636,7 @@ bb.a:
   %i.a = alloca [16 x i8], align 8                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 6 uses
   %i.c = alloca [32 x i8], align 8                ; 8 uses
-  %i.d = tail call i64 @llvm.usub.sat.i64(i64 %3, i64 32768) ; 3 uses
+  %i.d = tail call i64 @llvm.usub.sat.i64(i64 %3, i64 32768) ; 2 uses
   %i.e = icmp eq i64 %3, %4
   br i1 %i.e, label %bb.c, label %bb.b
 
@@ -708,8 +707,8 @@ bb.h:                                             ; preds = %bb.g
           to label %.preheader.preheader unwind label %.thread50.loopexit.split-lp
 
 .preheader.preheader:                             ; preds = %bb.h
-  %7 = icmp ult i64 %i.d, %3
-  br i1 %7, label %.lr.ph82, label %.preheader._crit_edge
+  %.not88 = icmp eq i64 %3, 0
+  br i1 %.not88, label %.preheader._crit_edge, label %.lr.ph82
 
 bb.i:                                             ; preds = %bb.g
   invoke void @_ZN4core5slice5index16slice_index_fail17h69cf93148e2c0fa9E(i64 noundef 0, i64 noundef %4, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @889) #39
@@ -985,13 +984,13 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i, label %bb.g, label %bb.f, !prof !37
 
 bb.f:                                             ; preds = %.noexc
-  %i.ai = call i64 @llvm.usub.sat.i64(i64 %4, i64 32768) ; 3 uses
+  %i.ai = call i64 @llvm.usub.sat.i64(i64 %4, i64 32768) ; 2 uses
   invoke void @_ZN6zopfli4hash10ZopfliHash6warmup17h04ebcd04568fc9d5E(ptr noalias noundef nonnull align 2 dereferenceable(720900) %i.ah, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %2, i64 noundef %5, i64 noundef %i.ai, i64 noundef %5)
           to label %.preheader82.i.preheader unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i
 
 .preheader82.i.preheader:                         ; preds = %bb.f
-  %8 = icmp ult i64 %i.ai, %4
-  br i1 %8, label %.lr.ph, label %.preheader75.i
+  %.not449 = icmp eq i64 %4, 0
+  br i1 %.not449, label %.preheader75.i, label %.lr.ph
 
 bb.g:                                             ; preds = %.noexc
   invoke void @_ZN4core5slice5index16slice_index_fail17h69cf93148e2c0fa9E(i64 noundef 0, i64 noundef %5, i64 noundef %3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @891) #39
@@ -1306,7 +1305,7 @@ bb.ad:                                            ; preds = %.noexc53
   %i.cw = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.cy = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %i.cz = call i64 @llvm.usub.sat.i64(i64 %4, i64 32768) ; 3 uses
+  %i.cz = call i64 @llvm.usub.sat.i64(i64 %4, i64 32768) ; 2 uses
   %.not.i.i = icmp ugt i64 %5, %3
   %i.da = icmp ugt i64 %i.cj, 1
   %.sroa.13.0.i13.i = add i64 %i.ci, -1           ; 3 uses
@@ -1346,7 +1345,7 @@ bb.ad:                                            ; preds = %.noexc53
   %i.ed = getelementptr inbounds nuw i8, ptr %i.t, i64 16
   %i.ee = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   %i.ef = getelementptr inbounds nuw i8, ptr %i.t, i64 32
-  %9 = icmp ult i64 %i.cz, %4
+  %.not450 = icmp eq i64 %4, 0
   %i.eg = add i64 %5, -2
   %i.eh = sub i64 %i.eg, %4
   br label %bb.ae
@@ -1429,7 +1428,7 @@ bb.aj:                                            ; preds = %bb.ai
           to label %.preheader.i.i.preheader unwind label %.thread135.loopexit.split-lp.i.i.loopexit, !noalias !12322
 
 .preheader.i.i.preheader:                         ; preds = %bb.aj
-  br i1 %9, label %.lr.ph447, label %.preheader.i.i._crit_edge
+  br i1 %.not450, label %.preheader.i.i._crit_edge, label %.lr.ph447
 
 bb.ak:                                            ; preds = %bb.ai
   invoke void @_ZN4core5slice5index16slice_index_fail17h69cf93148e2c0fa9E(i64 noundef 0, i64 noundef %5, i64 noundef %3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @913) #39
@@ -1832,7 +1831,7 @@ bb.f:                                             ; preds = %.noexc
   br i1 %i.ai, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %"_ZN62_$LT$T$u20$as$u20$alloc..vec..spec_from_elem..SpecFromElem$GT$9from_elem17hc2a67f6587c4b4c6E.exit.i.i"
-  %i.aj = call i64 @llvm.usub.sat.i64(i64 %3, i64 32768) ; 3 uses
+  %i.aj = call i64 @llvm.usub.sat.i64(i64 %3, i64 32768) ; 2 uses
   invoke void @_ZN6zopfli4hash10ZopfliHash5reset17h9ec13e5981fa2b54E(ptr noalias noundef nonnull align 2 dereferenceable(720900) %i.w)
           to label %bb.i unwind label %.thread132.loopexit.split-lp.i.i, !noalias !12376
 
@@ -1859,8 +1858,8 @@ bb.j:                                             ; preds = %bb.i
           to label %.preheader.i.i.preheader unwind label %.thread132.loopexit.split-lp.i.i, !noalias !12376
 
 .preheader.i.i.preheader:                         ; preds = %bb.j
-  %6 = icmp ult i64 %i.aj, %3
-  br i1 %6, label %.lr.ph, label %.preheader.i.i._crit_edge
+  %.not92 = icmp eq i64 %3, 0
+  br i1 %.not92, label %.preheader.i.i._crit_edge, label %.lr.ph
 
 bb.k:                                             ; preds = %bb.i
   invoke void @_ZN4core5slice5index16slice_index_fail17h69cf93148e2c0fa9E(i64 noundef 0, i64 noundef %4, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @913) #39

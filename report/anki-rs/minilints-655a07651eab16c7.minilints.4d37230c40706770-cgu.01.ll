@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %i.e = icmp samesign ult i64 %1, 33
   br i1 %i.e, label %bb.ar, label %_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit
 
-_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit: ; preds = %bb.as, %bb.ar, %bb.c
+_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit: ; preds = %bb.as, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @_ZN4core3str7pattern11StrSearcher3new17h06c723456276c09fE(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(address) dereferenceable(104) %i.b, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %2, i64 noundef %3, ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) %0, i64 noundef %1)
   call void @llvm.experimental.noalias.scope.decl(metadata !51)
@@ -607,16 +607,15 @@ bb.ar:                                            ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !99)
   %i.fs = load i8, ptr %0, align 1, !alias.scope !96, !noalias !99, !noundef !4 ; 2 uses
   %i.ft = add nsw i64 %1, -1                      ; 2 uses
-  %i.fu = tail call i64 @llvm.usub.sat.i64(i64 range(i64 3, 33) %1, i64 4) ; 2 uses
-  %4 = icmp samesign ult i64 %i.fu, %1
-  br i1 %4, label %.lr.ph, label %_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit
+  %i.fu = tail call i64 @llvm.usub.sat.i64(i64 range(i64 3, 33) %1, i64 4)
+  br label %.lr.ph
 
 bb.as:                                            ; preds = %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h325b65bd1619f38fE.exit.i.i"
   %i.fv = icmp ult i64 %i.fu, %i.fx
   br i1 %i.fv, label %.lr.ph, label %_ZN4core3str7pattern13simd_contains17h262b55a152c75fb2E.exit
 
 .lr.ph:                                           ; preds = %bb.ar, %bb.as
-  %i.fw = phi i64 [ %i.fx, %bb.as ], [ %1, %bb.ar ]
+  %i.fw = phi i64 [ %1, %bb.ar ], [ %i.fx, %bb.as ]
   %i.fx = add nsw i64 %i.fw, -1                   ; 11 uses
   %i.fy = icmp ult i64 %i.fx, %1
   br i1 %i.fy, label %"_ZN4core4iter6traits12double_ended19DoubleEndedIterator5rfind5check28_$u7b$$u7b$closure$u7d$$u7d$17h325b65bd1619f38fE.exit.i.i", label %bb.at

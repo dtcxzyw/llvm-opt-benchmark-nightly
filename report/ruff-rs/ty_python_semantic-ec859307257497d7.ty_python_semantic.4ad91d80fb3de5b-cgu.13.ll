@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.o = load i64, ptr %i.n, align 8, !noundef !15 ; 16 uses
   %i.p = call { ptr, i64 } @_RINvMs9_NvNtNtCsoTR8nlGN3X_18ty_python_semantic5types7literals2_1__NtB8_17StringLiteralType5valueDNtNtBc_2db2DbEL_EBc_(i32 noundef %.sroa.56.0.copyload, i32 noundef %.sroa.6.0.copyload, ptr noundef nonnull %i.f, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %i.h) ; 2 uses
   %i.q = extractvalue { ptr, i64 } %i.p, 0        ; 9 uses
-  %i.r = extractvalue { ptr, i64 } %i.p, 1        ; 19 uses
+  %i.r = extractvalue { ptr, i64 } %i.p, 1        ; 18 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !12191)
   call void @llvm.experimental.noalias.scope.decl(metadata !12194)
   %i.s = icmp eq i64 %i.r, 0
@@ -251,7 +251,7 @@ bb.i:                                             ; preds = %.lr.ph.i.i
   %exitcond.not.i.i = icmp eq i64 %i.ag, %i.o
   br i1 %exitcond.not.i.i, label %_RNvXst_NtNtCs4NRVxsYgnAr_4core3str7patternReNtB5_7Pattern15is_contained_in.exit, label %.lr.ph.i.i
 
-_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit.i: ; preds = %bb.aw, %bb.av, %bb.f
+_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit.i: ; preds = %bb.aw, %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !12199
   call void @_RNvMsu_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.m, i64 noundef %i.o, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.q, i64 noundef %i.r)
   call void @llvm.experimental.noalias.scope.decl(metadata !12200)
@@ -654,16 +654,15 @@ bb.au:                                            ; preds = %bb.f
   br i1 %i.gw, label %.thread.i.i, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  %i.gx = call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.r, i64 4) ; 2 uses
-  %2 = icmp ult i64 %i.gx, %i.r
-  br i1 %2, label %.lr.ph, label %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit.i
+  %i.gx = call i64 @llvm.usub.sat.i64(i64 range(i64 2, 33) %i.r, i64 4)
+  br label %.lr.ph
 
 bb.aw:                                            ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i
   %i.gy = icmp ult i64 %i.gx, %i.ha
   br i1 %i.gy, label %.lr.ph, label %_RNvNtNtCs4NRVxsYgnAr_4core3str7pattern13simd_contains.exit.i
 
 .lr.ph:                                           ; preds = %bb.av, %bb.aw
-  %i.gz = phi i64 [ %i.ha, %bb.aw ], [ %i.r, %bb.av ]
+  %i.gz = phi i64 [ %i.r, %bb.av ], [ %i.ha, %bb.aw ]
   %i.ha = add nsw i64 %i.gz, -1                   ; 6 uses
   %i.hb = icmp ult i64 %i.ha, %i.r
   br i1 %i.hb, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsoTR8nlGN3X_18ty_python_semantic.exit.i.i.i, label %bb.ax
